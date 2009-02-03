@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/io/raw/raw.cc
+/// \file tests/io/dump/dump.cc
 ///
-/// Test on mln::io::raw::*.
+/// Test on mln::io::dump::*.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/io/raw/load.hh>
-#include <mln/io/raw/save.hh>
+#include <mln/io/dump/load.hh>
+#include <mln/io/dump/save.hh>
 
 #include <mln/level/compare.hh>
 
@@ -52,10 +52,10 @@ int main()
 		     1, 0 };
     image2d<bool> pic = make::image2d(data);
 
-    io::raw::save(pic, "pic.raw");
+    io::dump::save(pic, "pic.dump");
 
     image2d<bool> pic2;
-    io::raw::load(pic2, "pic.raw");
+    io::dump::load(pic2, "pic.dump");
 
     mln_assertion(pic.domain() == pic2.domain());
     mln_assertion(pic == pic2);
@@ -66,10 +66,10 @@ int main()
     value::int_u8 data[4] = { 5, 1,
 			      1, 9 };
     image2d<value::int_u8> pic = make::image2d(data);
-    io::raw::save(pic, "pic.raw");
+    io::dump::save(pic, "pic.dump");
 
     image2d<value::int_u8> pic2;
-    io::raw::load(pic2, "pic.raw");
+    io::dump::load(pic2, "pic.dump");
 
     mln_assertion(pic.domain() == pic2.domain());
     mln_assertion(pic == pic2);
@@ -81,10 +81,10 @@ int main()
     value::rgb8 data[4] = { rgb8(2,4,5),     rgb8(1,23,255),
 			    rgb8(64,41,150), rgb8(23,53,49) };
     image2d<value::rgb8> pic = make::image2d(data);
-    io::raw::save(pic, "pic.raw");
+    io::dump::save(pic, "pic.dump");
 
     image2d<value::rgb8> pic2;
-    io::raw::load(pic2, "pic.raw");
+    io::dump::load(pic2, "pic.dump");
 
     mln_assertion(pic.domain() == pic2.domain());
     mln_assertion(pic == pic2);

@@ -963,13 +963,13 @@ mln_io_ppm_save \
 mln_io_pfm_load \
 mln_io_pfm_all \
 mln_io_pfm_save \
-mln_io_raw_load \
-mln_io_raw_all \
-mln_io_raw_save \
 mln_io_cloud_load \
 mln_io_cloud_all \
 mln_io_cloud_save \
 mln_io_all \
+mln_io_dump_load \
+mln_io_dump_all \
+mln_io_dump_save \
 mln_io_pbm_load \
 mln_io_pbm_all \
 mln_io_pbm_save \
@@ -2005,13 +2005,13 @@ mln_io_ppm_save_SOURCES = mln_io_ppm_save.cc
 mln_io_pfm_load_SOURCES = mln_io_pfm_load.cc
 mln_io_pfm_all_SOURCES = mln_io_pfm_all.cc
 mln_io_pfm_save_SOURCES = mln_io_pfm_save.cc
-mln_io_raw_load_SOURCES = mln_io_raw_load.cc
-mln_io_raw_all_SOURCES = mln_io_raw_all.cc
-mln_io_raw_save_SOURCES = mln_io_raw_save.cc
 mln_io_cloud_load_SOURCES = mln_io_cloud_load.cc
 mln_io_cloud_all_SOURCES = mln_io_cloud_all.cc
 mln_io_cloud_save_SOURCES = mln_io_cloud_save.cc
 mln_io_all_SOURCES = mln_io_all.cc
+mln_io_dump_load_SOURCES = mln_io_dump_load.cc
+mln_io_dump_all_SOURCES = mln_io_dump_all.cc
+mln_io_dump_save_SOURCES = mln_io_dump_save.cc
 mln_io_pbm_load_SOURCES = mln_io_pbm_load.cc
 mln_io_pbm_all_SOURCES = mln_io_pbm_all.cc
 mln_io_pbm_save_SOURCES = mln_io_pbm_save.cc

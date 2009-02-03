@@ -47,6 +47,7 @@ namespace mln
 }
 
 # include <mln/io/cloud/all.hh>
+# include <mln/io/dump/all.hh>
 # include <mln/io/pbm/all.hh>
 # include <mln/io/pfm/all.hh>
 # include <mln/io/pgm/all.hh>

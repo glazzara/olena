@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,18 +29,13 @@
 #ifndef MLN_IO_ESSENTIAL_HH_
 # define MLN_IO_ESSENTIAL_HH_
 
-/*! \file mln/io/essential.hh
- *
- * \brief File that includes the most useful io routines.
- *
- */
+/// \file mln/io/essential.hh
+///
+/// File that includes the most useful io routines.
 
 # include <mln/io/pbm/all.hh>
-# include <mln/io/pfm/all.hh>
 # include <mln/io/pgm/all.hh>
-# include <mln/io/pnm/all.hh>
 # include <mln/io/ppm/all.hh>
-# include <mln/io/txt/all.hh>
 
 #endif // !MLN_IO_ESSENTIAL_HH_
 

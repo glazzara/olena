@@ -997,13 +997,13 @@ mln/io/ppm/save.hh \
 mln/io/pfm/load.hh \
 mln/io/pfm/all.hh \
 mln/io/pfm/save.hh \
-mln/io/raw/load.hh \
-mln/io/raw/all.hh \
-mln/io/raw/save.hh \
 mln/io/cloud/load.hh \
 mln/io/cloud/all.hh \
 mln/io/cloud/save.hh \
 mln/io/all.hh \
+mln/io/dump/load.hh \
+mln/io/dump/all.hh \
+mln/io/dump/save.hh \
 mln/io/pbm/load.hh \
 mln/io/pbm/all.hh \
 mln/io/pbm/save.hh \

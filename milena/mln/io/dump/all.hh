@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_RAW_ALL_HH
-# define MLN_IO_RAW_ALL_HH
+#ifndef MLN_IO_DUMP_ALL_HH
+# define MLN_IO_DUMP_ALL_HH
 
-/// \file mln/io/raw/all.hh
+/// \file mln/io/dump/all.hh
 ///
-/// File that includes all raw io materials.
+/// File that includes all dump io materials.
 
 
 namespace mln
@@ -38,13 +38,13 @@ namespace mln
 
   namespace io
   {
-    /// Namespace of raw input/output handling.
-    namespace raw {}
+    /// Namespace of dump input/output handling.
+    namespace dump {}
   }
 
 }
 
-# include <mln/io/raw/load.hh>
-# include <mln/io/raw/save.hh>
+# include <mln/io/dump/load.hh>
+# include <mln/io/dump/save.hh>
 
-#endif // ! MLN_IO_RAW_ALL_HH
+#endif // ! MLN_IO_DUMP_ALL_HH

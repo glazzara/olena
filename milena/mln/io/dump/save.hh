@@ -25,18 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_RAW_LOAD_HH
-# define MLN_IO_RAW_LOAD_HH
+#ifndef MLN_IO_DUMP_SAVE_HH
+# define MLN_IO_DUMP_SAVE_HH
 
-/// \file mln/io/raw/load.hh
+/// \file mln/io/dump/save.hh
 ///
-/// Load a Milena image dumped into a file.
+/// Save a Milena image by dumping its data to a file.
+/// \todo handle endianness.
 
 # include <iostream>
 # include <fstream>
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/routine/initialize.hh>
 # include <mln/core/box_runstart_piter.hh>
 # include <mln/core/pixel.hh>
 # include <mln/data/memcpy_.hh>
@@ -47,15 +47,15 @@ namespace mln
   namespace io
   {
 
-    namespace raw
+    namespace dump
     {
 
-      /// Load a Milena image by dumped into a file.
+      /// Save a Milena image by dumping its data to a file.
       ///
-      /// \param[in,out] ima_ The image to load.
+      /// \param[in] ima_ The image to save.
       /// \param[in] filename the destination.
       template <typename I>
-      void load(Image<I>& ima_, const std::string& filename);
+      void save(const Image<I>& ima_, const std::string& filename);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -63,41 +63,26 @@ namespace mln
       namespace internal
       {
 
-	template <typename P>
-	inline
-	void read_point(std::ifstream& file, P& p)
-	{
-	  char tmp[sizeof (P)];
-	  file.read(tmp, sizeof (P));
-	  p = *(P*)(void*)(&tmp);
-	}
-
-
         template <typename I>
         inline
-        void load_header(Image<I>& ima, std::ifstream& file)
+        void save_header(const I& ima,
+			 std::ofstream& file)
 	{
-	  unsigned dim;
-	  file >> dim;
-
 	  typedef mln_site(I) P;
-	  mln_assertion(P::dim == dim);
+	  file << P::dim;
 
-	  P pmin, pmax;
-	  read_point<P>(file, pmin);
-	  read_point<P>(file, pmax);
+	  mln_site(I) p = ima.domain().pmin();
+	  file.write((char*) (&p), sizeof (P));
 
-	  mln_concrete(I) result(box<P>(pmin, pmax));
-	  initialize(ima, result);
+	  p = ima.domain().pmax();
+	  file.write((char*) (&p), sizeof (P));
 	}
 
 
 	template <typename I>
         inline
-        void load_data(Image<I>& ima_, std::ifstream& file)
+        void save_data(I& ima, std::ofstream& file)
 	{
-	  I& ima = exact(ima_);
-
 	  // Handle padding.
 	  unsigned data_size = sizeof (mln_value(I)) + sizeof (mln_value(I)) % 2;
 
@@ -105,40 +90,40 @@ namespace mln
 	  for_all(p)
 	  {
 	    pixel<I> src(ima, p);
-	    file.read((char*) (&src.val()), p.run_length() * data_size);
+	    file.write((char*) (&src.val()), p.run_length() * data_size);
 	  }
-
 	}
 
-      } // end of namespace mln::io::raw::internal
-
+      } // end of namespace mln::io::dump::internal
 
 
       template <typename I>
-      void load(Image<I>& ima, const std::string& filename)
+      void save(const Image<I>& ima_, const std::string& filename)
       {
-	trace::entering("mln::io::raw::load");
+	trace::entering("mln::io::dump::save");
 
-	std::ifstream file(filename.c_str());
+	const I& ima = exact(ima_);
+
+	std::ofstream file(filename.c_str());
 	if (! file)
 	{
 	  std::cerr << "error: cannot open file '" << filename << "'!";
 	  abort();
 	}
 
-	internal::load_header(ima, file);
-	internal::load_data(ima, file);
+	internal::save_header(ima, file);
+	internal::save_data(ima, file);
 
-	trace::exiting("mln::io::raw::load");
+	trace::exiting("mln::io::dump::save");
       }
 
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::io::raw
+    } // end of namespace mln::io::dump
 
   } // end of namespace mln::io
 
 } // end of namespace mln
 
-#endif // ! MLN_IO_RAW_LOAD_HH
+#endif // ! MLN_IO_DUMP_SAVE_HH

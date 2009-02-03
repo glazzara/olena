@@ -1,5 +1,35 @@
 2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rename io::raw as io::dump.
+
+	* headers.mk: update distributed headers.
+
+	* tests/unit_test/mln_io_raw_all.cc,
+	* tests/unit_test/mln_io_raw_load.cc,
+	* tests/unit_test/mln_io_raw_save.cc,
+	* tests/io/raw/raw.cc,
+	* tests/io/raw/Makefile.am, 
+	* tests/io/raw/pbm.cc,
+	* mln/io/raw/all.hh,
+	* mln/io/raw/load.hh,
+	* mln/io/raw/save.hh: move to...
+
+	* tests/unit_test/mln_io_dump_all,
+	* tests/unit_test/mln_io_dump_load,
+	* tests/unit_test/mln_io_dump_save,
+	* tests/io/dump/Makefile.am,
+	* tests/io/dump/dump.cc,
+	* mln/io/dump/all.hh,
+	* mln/io/dump/load.hh,
+	* mln/io/dump/save.hh: ... here.
+
+	* mln/io/all.hh
+	* mln/io/essential.hh: update includes.
+
+	* tests/unit_test/Makefile.am: update unit test list.
+
+2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update new version of ICP.
 
 	* mln/registration/icp2.hh: Make it work and make it more generic.
