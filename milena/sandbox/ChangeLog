@@ -1,3 +1,9 @@
+2009-02-03  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	First tries of accus with specialisation.
+	* accu.cc: New.
+	* fredwin.cc: .
+
 2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Rename io::raw as io::dump in sandbox.

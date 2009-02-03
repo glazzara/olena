@@ -1,5 +1,7 @@
 
 
+// TODO : ajouter un trait when_pix
+// when_pix in {use_p
 template <typename E>
 struct Accumulator
 {
@@ -46,15 +48,16 @@ namespace accu
 
 
 
+
 namespace impl
 {
 
   // Leveling
   // --------
 
-  template <typename I, typename A>
+  template <typename I, typename PX>
   void
-  leveling(const Image<I>& input, const Accumulator<A>& acc)
+  leveling_generic(const Image<I>& input, const Accumulator<PX>& acc)
   {
     const I& ima = exact(input);
     // algo en resume :
@@ -80,29 +83,15 @@ namespace impl
   // spécialisation pour les images fastest
 
 
-  // Algebraic
-  // ---------
-
-
-  template <typename I, typename A>
-  void
-  generic_algebraic(const Image<I>& input, const Accumulator<A>& acc)
-  {
-    // algo en resume :
-    mln_piter(I) p(ima.domain());
-    for_all(p)
-      acc.take(p); // psite
-  }
-
-  template <typename I, typename A>
-  void
-  algebraic_fastest(const Image<I>& input, const Accumulator<A>& acc)
-  { 
-    // algo en resume :
-    mln_pixter(const I) pxl(input);
-    for_all(pxl)
-      acc.take(pxl);
-  }
+  // template <typename I, typename A>
+//   void
+//   algebraic_fastest(const Image<I>& input, const Accumulator<A>& acc)
+//   { 
+//     // algo en resume :
+//     mln_pixter(const I) pxl(input);
+//     for_all(pxl)
+//       acc.take(pxl);
+//   }
 
 
   // FIXME: pb: soit on passe du "site", soit du "pixel"...
@@ -123,29 +112,60 @@ namespace impl
 
   // FIXME: On veut qqch qui ressemble à :
 
-  template <typename I, typename A>
-  void
-  generic_algebraic_or_leveling(const Image<I>& input, const Accumulator<A>& acc)
-  {
-    // algo en resume :
-    mln_piter(I) p(ima.domain());
-    for_all(p)
-      acc.take( FIXME );
-  }
+//   template <typename I, typename A>
+//   void
+//   generic_algebraic_or_leveling(const Image<I>& input, const Accumulator<A>& acc)
+//   {
+//     const I& ima = exact(input);
+//     // algo en resume :
+//     mln_piter(I) p(ima.domain());
+//     for_all(p)
+//       acc.take( FIXME );
+//   }
 
-  template <typename I, typename A>
-  void
-  algebraic_or_leveling_fastest(const Image<I>& input, const Accumulator<A>& acc)
-  {
-    // algo en resume :
-    mln_pixter(const I) pxl(input);
-    for_all(pxl)
-      acc.take( FIXME );
-  }
+//   template <typename I, typename A>
+//   void
+//   algebraic_or_leveling_fastest(const Image<I>& input, const Accumulator<A>& acc)
+//   {
+//     const I& ima = exact(input);
+//     // algo en resume :
+//     mln_pixter(const I) pxl(ima);
+//     for_all(pxl)
+//       acc.take( FIXME );
+//   }
 
 
   // FIXME: Mais ce n'est peut-être pas possible avec des
   // Accumulator...
+
+  // Algebraic
+  // ---------
+
+
+  template <typename I, template<typename E> typename A>
+  void
+  algebraic(const Image<I>& input, const Accumulator< A<point2d> >& acc)
+  {
+    const I& ima = exact(input);
+
+    // algo en resume :
+    mln_piter(I) p(ima.domain());
+    for_all(p)
+      acc.take(p); // psite
+  }
+
+
+
+  template <typename I, template<typename E> typename A>
+  void
+  leveling (const Image<I>& input, const Accumulator< A< pix<I> > >& acc)
+  {
+    const I& ima = exact(input);
+
+    mln_pixter(const I) px(ima);
+    for_all(px)
+      acc.take(px);
+  }
 
 
 } // impl
