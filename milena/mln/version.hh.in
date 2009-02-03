@@ -1,11 +1,16 @@
-/** The address where bug reports should be sent. */
-#undef MLN_PACKAGE_BUGREPORT
+#ifndef MLN_VERSION_HH
+# define MLN_VERSION_HH
 
-/** The full name of this package. */
-#undef MLN_PACKAGE_NAME
+/// The address where bug reports should be sent.
+#undef OLN_PACKAGE_BUGREPORT
 
-/** The full name and version of this package. */
-#undef MLN_PACKAGE_STRING
+/// The full name of this package.
+#undef OLN_PACKAGE_NAME
 
-/** The version of this package. */
-#undef MLN_PACKAGE_VERSION
+// The full name and version of this package.
+#undef OLN_PACKAGE_STRING
+
+/// The version of this package.
+#undef OLN_PACKAGE_VERSION
+
+#endif // ! MLN_VERSION_HH

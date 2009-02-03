@@ -1,5 +1,17 @@
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Catch up with names in configure.ac.
+
+	* mln/version.hh.in: Add guards.
+	(OLN_PACKAGE_BUGREPORT, OLN_PACKAGE_NAME)
+	(OLN_PACKAGE_STRING, OLN_PACKAGE_VERSION):
+	Rename as...
+	(MLN_PACKAGE_BUGREPORT, MLN_PACKAGE_NAME)
+	(MLN_PACKAGE_STRING, MLN_PACKAGE_VERSION):
+	...this.
+
+2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove dead code in mln::internal::site_relative_iterator_base.
 
 	* mln/core/internal/site_relative_iterator_base.hh
