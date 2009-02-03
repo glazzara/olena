@@ -34,6 +34,7 @@
 
 
 // Sub-directories.
+# include <mln/core/alias/all.hh>
 # include <mln/core/concept/all.hh>
 # include <mln/core/def/all.hh>
 # include <mln/core/image/all.hh>

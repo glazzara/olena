@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,32 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_ALIAS_BOX2D_HH
-# define MLN_CORE_ALIAS_BOX2D_HH
+#ifndef MLN_CORE_ALIAS_ALL_HH
+# define MLN_CORE_ALIAS_ALL_HH
 
-/// \file mln/core/alias/box2d.hh
+/// \file mln/core/alias/all.hh
 ///
-/// Definition of the mln::box2d alias and of construction
-/// routines.
+/// File that includes all the aliases.
 
-# include <mln/core/site_set/box.hh>
-# include <mln/core/alias/point2d.hh>
+#include <box1d.hh>
+#include <box2d.hh>
+#include <box2d_h.hh>
+#include <box3d.hh>
+#include <complex_geometry.hh>
+#include <complex_image.hh>
+#include <dpoint1d.hh>
+#include <dpoint2d.hh>
+#include <dpoint2d_h.hh>
+#include <dpoint3d.hh>
+#include <neighb1d.hh>
+#include <neighb2d.hh>
+#include <neighb3d.hh>
+#include <p_run2d.hh>
+#include <p_runs2d.hh>
+#include <point1d.hh>
+#include <point2d.hh>
+#include <point2d_h.hh>
+#include <point3d.hh>
+#include <point3df.hh>
+#include <vec3d.hh>
+#include <w_window1d_float.hh>
+#include <w_window1d_int.hh>
+#include <w_window2d_float.hh>
+#include <w_window2d_int.hh>
+#include <w_window3d_float.hh>
+#include <w_window3d_int.hh>
+#include <window1d.hh>
+#include <window2d.hh>
+#include <window3d.hh>
 
-
-namespace mln
-{
-
-  /// Type alias for a box defined on the 2D square grid with
-  /// integer coordinates.
-  ///
-  /// \see mln::win::rectangle2d.
-  typedef box<mln::point2d> box2d;
-
-
-} // end of namespace mln
-
-
-# include <mln/make/box2d.hh>
-
-
-#endif // ! MLN_CORE_ALIAS_BOX2D_HH
+#endif // ! MLN_CORE_ALIAS_ALL_HH

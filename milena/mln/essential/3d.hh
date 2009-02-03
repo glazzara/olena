@@ -34,11 +34,13 @@
 # include <mln/core/alias/dpoint3d.hh>
 # include <mln/core/alias/neighb3d.hh>
 # include <mln/core/alias/point3d.hh>
+# include <mln/core/alias/vec3d.hh>
 # include <mln/core/alias/w_window3d_float.hh>
 # include <mln/core/alias/w_window3d_int.hh>
 # include <mln/core/alias/window3d.hh>
 # include <mln/geom/size3d.hh>
 # include <mln/make/box3d.hh>
+# include <mln/make/image3d.hh>
 # include <mln/make/w_window3d.hh>
 # include <mln/make/w_window3d_int.hh>
 # include <mln/metal/array3d.hh>

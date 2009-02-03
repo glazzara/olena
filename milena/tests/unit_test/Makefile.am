@@ -131,6 +131,7 @@ mln_trace_stop \
 mln_trace_essential \
 mln_make_graph \
 mln_make_double_neighb2d \
+mln_make_image3d \
 mln_make_dpoint2d_h \
 mln_make_w_window \
 mln_make_image \
@@ -791,11 +792,13 @@ mln_core_alias_p_run2d \
 mln_core_alias_point3d \
 mln_core_alias_neighb3d \
 mln_core_alias_window3d \
+mln_core_alias_all \
 mln_core_alias_neighb2d \
 mln_core_alias_complex_image \
 mln_core_alias_w_window1d_float \
 mln_core_alias_neighb1d \
 mln_core_alias_w_window2d_float \
+mln_core_alias_vec3d \
 mln_core_alias_w_window2d_int \
 mln_core_alias_box1d \
 mln_core_alias_box2d \

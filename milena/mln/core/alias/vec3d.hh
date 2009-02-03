@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,32 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_ALIAS_BOX2D_HH
-# define MLN_CORE_ALIAS_BOX2D_HH
+#ifndef MLN_CORE_ALIAS_VEC3D_HH
+# define MLN_CORE_ALIAS_VEC3D_HH
 
-/// \file mln/core/alias/box2d.hh
+/// \file mln/core/alias/vec3d.hh
 ///
-/// Definition of the mln::box2d alias and of construction
-/// routines.
+/// Definition of the mln::vec3d* alias
 
-# include <mln/core/site_set/box.hh>
-# include <mln/core/alias/point2d.hh>
 
+# include <mln/algebra/vec.hh>
 
 namespace mln
 {
 
-  /// Type alias for a box defined on the 2D square grid with
-  /// integer coordinates.
-  ///
-  /// \see mln::win::rectangle2d.
-  typedef box<mln::point2d> box2d;
+  /// 3D vector with float coordinates.
+  typedef algebra::vec<3u,float> vec3d_f;
+
+  /// 3D vector with double coordinates.
+  typedef algebra::vec<3u,double> vec3d_d;
 
 
 } // end of namespace mln
 
 
-# include <mln/make/box2d.hh>
+# include <mln/make/box3d.hh>
 
 
-#endif // ! MLN_CORE_ALIAS_BOX2D_HH
+#endif // ! MLN_CORE_ALIAS_VEC3D_HH

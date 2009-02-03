@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,14 +26,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_SITE_SET_BOX3D_HH
-# define MLN_CORE_SITE_SET_BOX3D_HH
+#ifndef MLN_CORE_ALIAS_BOX3D_HH
+# define MLN_CORE_ALIAS_BOX3D_HH
 
-/*! \file mln/core/alias/box3d.hh
- *
- * \brief Definition of the mln::box3d alias and of construction
- * routines.
- */
+/// \file mln/core/alias/box3d.hh
+///
+/// Definition of the mln::box3d alias and of construction
+/// routines.
 
 # include <mln/core/site_set/box.hh>
 # include <mln/core/alias/point3d.hh>
@@ -41,11 +41,10 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a box defined on the 3D square grid with
-   * integer coordinates.
-   *
-   * \see mln::win::rectangle3d.
-   */
+  /// Type alias for a box defined on the 3D square grid with
+  /// integer coordinates.
+  ///
+  /// \see mln::win::rectangle3d.
   typedef box<point3d> box3d;
 
 
@@ -55,4 +54,4 @@ namespace mln
 # include <mln/make/box3d.hh>
 
 
-#endif // ! MLN_CORE_SITE_SET_BOX3D_HH
+#endif // ! MLN_CORE_ALIAS_BOX3D_HH

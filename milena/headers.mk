@@ -134,6 +134,7 @@ mln/trace/stop.hh \
 mln/trace/essential.hh \
 mln/make/graph.hh \
 mln/make/double_neighb2d.hh \
+mln/make/image3d.hh \
 mln/make/dpoint2d_h.hh \
 mln/make/w_window.hh \
 mln/make/image.hh \
@@ -800,11 +801,13 @@ mln/core/alias/p_run2d.hh \
 mln/core/alias/point3d.hh \
 mln/core/alias/neighb3d.hh \
 mln/core/alias/window3d.hh \
+mln/core/alias/all.hh \
 mln/core/alias/neighb2d.hh \
 mln/core/alias/complex_image.hh \
 mln/core/alias/w_window1d_float.hh \
 mln/core/alias/neighb1d.hh \
 mln/core/alias/w_window2d_float.hh \
+mln/core/alias/vec3d.hh \
 mln/core/alias/w_window2d_int.hh \
 mln/core/alias/box1d.hh \
 mln/core/alias/box2d.hh \
