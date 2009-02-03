@@ -1,5 +1,12 @@
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a target to regen milena/headers.mk.
+
+	* Makefile.am (regen-dist): New phony target.
+	($(srcdir)/headers.mk): New target.
+
+2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Generate tests/unit_test/unit-tests.mk.
 
 	* tests/unit_test/build_unit_test.sh (output): New variable.

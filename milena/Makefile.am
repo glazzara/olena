@@ -15,7 +15,16 @@ doc:
 tutorial:
 	$(MAKE) -C doc tutorial
 
-include $(top_srcdir)/milena/headers.mk
+.PHONY: regen-dist
+regen-dist: $(srcdir)/headers.mk
+# FIXME: Change generate_dist_headers.sh so that the action looks like this:
+#
+#	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
+#
+$(srcdir)/headers.mk: $(srcdir)/generate_dist_headers.sh
+	cd $(srcdir) && ./generate_dist_headers.sh && chmod -w $@
+
+include $(srcdir)/headers.mk
 
 EXTRA_DIST = 		\
 img/README 		\
