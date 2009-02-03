@@ -159,8 +159,6 @@ namespace mln
       exact(this)->do_start_();
       if (this->is_valid())
 	p_ = exact(this)->compute_p_();
-//       else
-// 	exact(this)->invalidate();
     }
 
     template <typename S, typename E>
@@ -171,8 +169,6 @@ namespace mln
       exact(this)->do_next_();
       if (this->is_valid())
 	p_ = exact(this)->compute_p_();
-//       else
-// 	exact(this)->invalidate();
     }
 
     template <typename S, typename E>
