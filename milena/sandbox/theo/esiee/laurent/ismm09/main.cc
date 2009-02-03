@@ -19,13 +19,15 @@
 #include <mln/labeling/compute.hh>
 #include <mln/level/sort_psites.hh>
 
+#include <mln/core/site_set/p_queue.hh>
+#include <mln/core/site_set/p_priority.hh>
+
 #include <mln/morpho/gradient.hh>
 #include <mln/morpho/meyer_wst.hh>
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
 
 #include <mln/accu/count.hh>
-#include <mln/accu/height.hh>
 
 
 
@@ -160,99 +162,67 @@ namespace mln
     }
 
 
+    inline
+    point2d p1_from_e(const point2d& e)
+    {
+      return e + (is_row_odd(e) ? up : left);
+    }
+    
+    inline
+    point2d p2_from_e(const point2d& e)
+    {
+      return e + (is_row_odd(e) ? down : right);
+    }
+
+    template <typename W, typename L>
+    inline
+    void
+    e_to_labels(const W& w, const point2d& e, L& l1, L& l2)
+    {
+      mln_precondition(w(e) == 0);
+      l1 = 0;
+      l2 = 0;
+      mln_niter(dbl_neighb2d) n(e2e(), e);
+      for_all(n)
+	if (w.has(n) && w(n) != 0)
+	  {
+	    if (l1 == 0) // First label to be stored.
+	      l1 = w(n);
+	    else
+	      if (w(n) != l1 && l2 == 0) // Second label to be stored.
+		l2 = w(n);
+	      else
+		mln_invariant(w(n) == l1 || w(n) == l2);
+	  }
+      mln_invariant(l1 != 0 && l2 != 0);
+      if (l1 > l2)
+	std::swap(l1, l2);
+      mln_postcondition(l2 >= l1);
+    }
+
+
   } // end of namespace mln::cplx2d
 
 
-  namespace internal
+
+  template <typename A, typename L>
+  util::array<L>
+  sort_by_increasing_attributes(const util::array<A>& a, L n_basins)
   {
+    typedef std::pair<A,L> pair_t;
+    std::vector<pair_t> v;
+    v.reserve(n_basins);
+    for (L l = 1; l <= n_basins; ++l)
+      v.push_back(pair_t(a[l], l));
 
-    template <typename T>
-    struct node_pred : Function_p2b< node_pred<T> >
-    {
-      typedef bool result;
-      
-      template <typename P>
-      bool operator()(const P& p) const
-      {
-	return t->is_a_node(p);
-      }
-      
-      const T* t;
-    };
-  
-    template <typename T, typename I, typename M>
-    mln_value(I)  rec(const T& t, // tree
-		      I& a,       // attribute image
-		      M& mark,
-		      const mln_psite(I)& p)
-    {
-      mln_invariant(mark(p) == false);
-      mark(p) = true;
-      if (t.parent(p) == p || mark(t.parent(p)) == true) // Stop.
-	return a(p);
-      return a(p) = rec(t, a, mark, t.parent(p));
-    }
+    std::sort(v.begin(), v.end());
 
-  } // internal
+    util::array<L> l(n_basins);
+    for (unsigned i = 0; i < n_basins; ++i)
+      l[i] = v[i].second;
 
-
-  template <typename T, typename A>
-  void
-  extinct_attributes(const T& t, // Tree.
-		     A& a) // Attribute image.
-  {
-    mln_ch_value(A, bool) mark;
-    initialize(mark, a);
-    data::fill(mark, false);
-    
-    internal::node_pred<T> node_only;
-    node_only.t = &t;
-
-    typedef p_array<mln_site(A)> S;
-    S s = level::sort_psites_increasing(a | node_only);
-
-    mln_fwd_piter(S) p(s);
-    for_all(p)
-      {
-	if (mark(p) == true)
-	  continue;
-	internal::rec(t, a, mark, p);
-      }
+    return l;
   }
-
-
-  template <typename F, typename N, typename A, typename W>
-  void // util::array<unsigned>
-  compute_attribute_extincted(const F& f, const N& nbh, const A& a,
-			      const W& w)
-  {
-    typedef value::label_16 L;
-    L n_basins;
-    mln_ch_value(F,L) regmins = labeling::regional_minima(f, nbh, n_basins);
-    
-    typedef p_array<mln_psite(F)> S;
-    S s = level::sort_psites_decreasing(f);
-    
-    typedef morpho::tree::data<F,S> tree_t;
-    tree_t t(f, s, nbh);
-    mln_VAR(a_ima, morpho::tree::compute_attribute_image(a, t));
-
-    std::cout << "BEFORE:" << std::endl;
-    debug::println("a_ima:", a_ima);
-    debug::println("a_ima | w_line:", a_ima | (pw::value(w) == 0));
-    debug::println("a_ima | basins:", a_ima | (pw::value(w) != 0));
-    // debug::println("a_ima | regmins:", a_ima | (pw::value(regmins) != 0));
-
-
-    extinct_attributes(t, a_ima);
-
-    std::cout << "AFTER:" << std::endl;
-    debug::println("a_ima:", a_ima);
-    debug::println("a_ima | w_line:", a_ima | (pw::value(w) == 0));
-    debug::println("a_ima | basins:", a_ima | (pw::value(w) != 0));
-    debug::println("a_ima | regmins:", a_ima | (pw::value(regmins) != 0));
-  }
-
 
 
 
@@ -291,34 +261,125 @@ int main(int argc, char* argv[])
   mln_VAR(g, cplx2d::f_to_g(f) );
   debug::println("g:", g);
 
+  typedef mln_value_(g_t) T;                 //  <---  Type of edge values.
+  typedef mln_psite_(g_t) E;                 //  <---  Type of edges.
+
+
+  mln_VAR(nbh_g, cplx2d::e2e()); // Neighborhood between edges.
+
 
   // w: watershed labeling on edges.
 
-  typedef label_16 L;
+  typedef label_16 L;                        //  <---  Type of labels.
   L n_basins;
-  mln_VAR( w, morpho::meyer_wst(g, cplx2d::e2e(), n_basins) );
+  mln_VAR( w, morpho::meyer_wst(g, nbh_g, n_basins) );
+  debug::println("w:", w);
+
+
+  mln_VAR( w_line, pw::value(w) == pw::cst(0) );
+  mln_VAR( g_line, g | w_line );
+  debug::println("g | line:", g_line);
+
 
   {
-    L n_regmins;
-    mln_VAR(regmins, labeling::regional_minima(g, cplx2d::e2e(), n_regmins));
-    mln_invariant(n_regmins == n_basins);
-    debug::println("regmins(g):", regmins);
-
-    debug::println("w:", w);
-    std::cout << "n basins = " << n_basins << std::endl
-	      << std::endl;
-
-//     mln_VAR(w_ext, cplx2d::extend_w_edges_to_all_faces(w));
-//     debug::println("w_ext:", w_ext);
-    
-//     mln_VAR(is_line, pw::value(w_ext) == pw::cst(0));
-//     debug::println("w line:", w_ext | is_line);
+    /*
+    // debug::println("w | line:", w | w_line);
+    mln_VAR(w_ext, cplx2d::extend_w_edges_to_all_faces(w));
+    debug::println("w_ext:", w_ext);
+    // debug::println("w_ext | line:", w_ext | (pw::value(w_ext) == pw::cst(0)));
+    */
   }
 
-  // accu::count< util::pix<g_t> > a_;
-  accu::height<g_t> a_;
 
-  compute_attribute_extincted(g, cplx2d::e2e(), a_,
-			      w);
+
+  // a: array "label -> attribute".
+
+  typedef unsigned A;                        //  <---  Type of attributes.
+
+  util::array<A> a = labeling::compute(accu::meta::count(),
+				       g, // image of values
+				       w, // image of labels
+				       n_basins);
+
+  util::array<L> l = sort_by_increasing_attributes(a, n_basins);
+
+  {
+    /*
+    std::cout << "l:" << std::endl;
+    for (unsigned i = 0; i < l.nelements(); ++i)
+      std::cout << l[i] << "(" << a[l[i]] << ") ";
+    std::cout << std::endl;
+    */
+  }
+
+
+//   {
+//     // Test adjacency "e -> (l1, l2)".
+//     L l1, l2;
+//     mln_piter_(g_t) e(g.domain());
+//     for_all(e)
+//       if (w(e) == 0)
+// 	{
+// 	  cplx2d::e_to_labels(w, e, l1, l2);
+// 	  std::cout << e << ':' << l1 << ',' << l2 << std::endl;
+// 	}
+//   }
+
+
+
+  // Edges -> Priority queue.
+
+  typedef p_priority< T, p_queue<E> > Q;
+  util::array<Q> q(n_basins.next());
+
+  {
+    L l1, l2;
+    mln_piter_(g_t) e(g.domain());
+    for_all(e)
+      if (w(e) == 0)
+	{
+	  cplx2d::e_to_labels(w, e,    // input
+			      l1, l2); // output
+	  q[l1].push(mln_max(T) - g(e), e);
+	  q[l2].push(mln_max(T) - g(e), e);
+	}
+  }
+
+
+  // Information "label l -> edge e".
+
+  E null = E(0,0);  // Impossible value.
+
+  util::array<E> edge(n_basins.next());
+  for (L l = 0; l <= n_basins; ++l)
+    edge[l] = null;
+
+
+  // Initialization.
+
+  util::array<L> lpar(n_basins.next());
+  for (L l = 0; l <= n_basins; ++l)
+    lpar[l] = l; // Make-Set.
+
+
+
+  mln_ch_value_(g_line_t, E)
+    epar,   // Edge forest.
+    z_epar; // Auxiliary data: edge forest with compression and balancing.
+
+  {
+    initialize(epar, g_line);
+    initialize(z_epar, g_line);
+    mln_piter_(g_line_t) e(g_line.domain());
+    for_all(e)
+    {
+      // Make-Set.
+      epar(e) = e;
+      z_epar(e) = e;
+    }
+    debug::println("all edges:", epar); // epar(e) == e so we depict the edges!
+  }
+
+
 
 }

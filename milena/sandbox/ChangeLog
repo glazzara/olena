@@ -1,3 +1,11 @@
+2009-02-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update Laurent's cleanup code.
+
+	* theo/esiee/laurent/ismm09/trash.hh: New.
+	* theo/esiee/laurent/ismm09/util.hh: New.
+	* theo/esiee/laurent/ismm09/main.cc: Update.
+
 2009-02-02  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add dispatch functions for accumulator.
