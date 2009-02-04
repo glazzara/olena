@@ -1,3 +1,9 @@
+2009-02-04  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add card accu and some traits.
+	* accu.cc: Add traits and fix bugs.
+	* accu_trait.hh: New.
+
 2009-02-04  Fabien Freling  <freling@lrde.epita.fr>
 
 	Add my own sandbox directory to modify labeling.hh.
