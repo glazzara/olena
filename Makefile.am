@@ -1,6 +1,6 @@
 ## Process this file through Automake to produce Makefile.in -*- Makefile -*-
 
-ACLOCAL_AMFLAGS = -I build-aux
+ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = build-aux external milena
 

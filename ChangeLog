@@ -1,3 +1,27 @@
+2009-02-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Move M4 files into m4/.
+
+	* Makefile.am (ACLOCAL_AMFLAGS): s/build-aux/m4/.
+	* configure.ac: Add AC_CONFIG_MACRO_DIR([m4]).
+	* m4/: New directory.
+	* build-aux/cfitsio.m4,
+	* build-aux/freeimageplus.m4,
+	* build-aux/pypath.m4,
+	* build-aux/swig.m4,
+	* build-aux/trimesh.m4,
+	* build-aux/with-swilena.m4:
+	Move files...
+	* m4/cfitsio.m4,
+	* m4/freeimageplus.m4,
+	* m4/pypath.m4,
+	* m4/swig.m4,
+	* m4/trimesh.m4,
+	* m4/with-swilena.m4:
+	...here.
+	* m4/.gitignore: New.
+	* build-aux/.gitignore: Adjust.
+
 2009-02-04  Frederic Bour  <bour@lrde.epita.fr>
 
 	[sandbox][bour] Backup of accuprops.cc.

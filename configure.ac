@@ -12,6 +12,9 @@ AC_PREREQ([2.61])
 
 AC_INIT([Olena], [1.0], [olena@lrde.epita.fr], [olena])
 
+# M4 macros.
+AC_CONFIG_MACRO_DIR([m4])
+
 # Auxiliary files.
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_FILES([build-aux/Makefile])
