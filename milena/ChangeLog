@@ -114,7 +114,7 @@
 	* tests/unit_test/mln_io_raw_load.cc,
 	* tests/unit_test/mln_io_raw_save.cc,
 	* tests/io/raw/raw.cc,
-	* tests/io/raw/Makefile.am, 
+	* tests/io/raw/Makefile.am,
 	* tests/io/raw/pbm.cc,
 	* mln/io/raw/all.hh,
 	* mln/io/raw/load.hh,
@@ -156,7 +156,7 @@
 	* mln/trace/exiting.hh,
 	* mln/transform/internal/closest_point_functor.hh: add missing
 	includes.
-	
+
 	* mln/debug/slices_2d.hh: remove an unused variable.
 
 2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
@@ -186,7 +186,7 @@
 	* doc/tutorial/tutorial.tex: include the right files.
 
 2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
-	
+
 	Introduce subject_point_impl.
 
 	* mln/core/point.hh: All Point proxies will inherit from that class
@@ -207,7 +207,7 @@
 
 	* mln/core/internal/graph_psite_base.hh: remove a useless forward
 	declaration.
-	
+
 	* mln/io/raw/all.hh: Rewrite, completely wrong...
 
 	* mln/accu/compute.hh,
@@ -256,7 +256,7 @@
 
 	* mln/transform/internal/closest_point_functor.hh: New. Construct an
 	image of closest point.
-	
+
 	* tests/unit_test/Makefile.am,
 	* tests/unit_test/mln_transform_internal_closest_point_functor.cc: add
 	new unit test.
@@ -341,7 +341,7 @@
 2009-02-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Activate fastest version of algebraic union-find.
-	
+
 	* mln/morpho/closing_attribute.hh
 	(closing_attribute_dispatch): Activate for fastest images.
 	* mln/canvas/morpho/algebraic_union_find.hh: Likewise.
@@ -579,7 +579,7 @@
 	* Makefile.am: fix list of distributed images.
 
 	* doc/tutorial/Makefile.am: include new mk files.
-	
+
 	* doc/tutorial/generate_dist_files.sh: new script to generate the following
 	list of files.
 
@@ -623,7 +623,7 @@
 	* doc/tutorial/figures/tuto4_genericity_and_algorithms-7.pgm,
 	* doc/tutorial/figures/tuto4_genericity_and_algorithms-8.ppm,
 	* doc/tutorial/figures/tuto4_genericity_and_algorithms-9.ppm: update.
-	
+
 	* doc/tutorial/figures/tuto4_genericity_and_algorithms-10.ppm: delete,
 	not needed anymore.
 
@@ -738,7 +738,7 @@
 2009-01-21  Thierry GERAUD  <thierry.geraud@lrde.epita.fr>
 
 	Add some images.
-	
+
 	* img/space_debris.pgm: Remove; unused.
 	* img/small.ppm: Fix file format.
 	* img/fly.ppm,
@@ -759,7 +759,7 @@
 	* headers.mk: remove to_rgb.hh from distribution.
 
 	* mln/convert/all.hh: remove to_rgb.hh.
-	
+
 	* mln/convert/from_to.hxx: add more predeclarations.
 
 	* mln/convert/impl/from_value_to_value.hh: if no value concept is
@@ -881,7 +881,7 @@
 	Add implementation of Fibonacci heap.
 
 	* headers.mk: add a new header to distribution.
-	
+
 	* mln/util/fibonacci_heap.hh: new file. The implementation.
 
 	* tests/unit_test/Makefile.am,
@@ -1038,7 +1038,7 @@
 2009-01-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove a useless test in level/median.
-	
+
 	* tests/level/Makefile.am,
 	* tests/level/median_.cc: remove this test. It is already tested by
 	level/median/approx/median.cc.
@@ -1055,9 +1055,9 @@
 	* mln/core/dpsites_piter.hh,
 	* mln/core/neighb.hh,
 	* mln/win/multiple_size.hh: remove empty implementation of center_at_().
-	
+
 	* mln/core/image/complex_neighborhood_piter.hh: add a new line.
-	
+
 	* mln/core/internal/site_relative_iterator_base.hh: add default
 	implementation of center_at_().
 
@@ -1130,7 +1130,7 @@
 
 	* mln/fun/meta/blue.hh,
 	* mln/fun/meta/green.hh: Add new meta functions to use with fun_image.
-	
+
 	* headers.mk: Add new headers to distribution.
 
 	* tests/unit_test/Makefile.am,
@@ -1416,8 +1416,8 @@
 	* doc/tutorial/outputs/ima2d-3.txt,
 	* doc/tutorial/samples/ima2d-3.cc,
 	* doc/tutorial/tutorial.tex: use opt::at(ima,...) instead of ima.at()
-	
-        * doc/tutorial/outputs/ima2d-3-output.txt: remove useless file.
+
+	* doc/tutorial/outputs/ima2d-3-output.txt: remove useless file.
 
 2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -1628,7 +1628,7 @@
 	* mln/core/image/complex_image.hh: update comments.
 
 	* mln/core/image/complex_neighborhood_piter.hh: avoid a warning.
-	
+
 	* mln/core/internal/site_relative_iterator_base.hh: call center_at_()
 	earlier.
 
@@ -1735,7 +1735,7 @@
 
 	Various small fixes.
 
-        * mln/accu/count_adjacent_vertices.hh: add missing is_valid().
+	* mln/accu/count_adjacent_vertices.hh: add missing is_valid().
 
 	* mln/canvas/labeling.hh: cleanup.
 
@@ -1782,7 +1782,7 @@
 	* tests/unit_test/Makefile.am,
 	* tests/unit_test/mln_geom_resize.cc: update unit tests.
 
-        * mln/accu/count_adjacent_vertices.hh: add missing is_valid().
+	* mln/accu/count_adjacent_vertices.hh: add missing is_valid().
 
 2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -1853,7 +1853,7 @@
 2008-12-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a call to center_at_() in
-        site_relative_iterator_base::center_at() (ticket #176).
+	site_relative_iterator_base::center_at() (ticket #176).
 
 	* mln/core/dpsites_piter.hh,
 	* mln/core/image/complex_neighborhood_piter.hh,
@@ -1865,7 +1865,7 @@
 
 2008-12-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	Fix from_to dispatch.	
+	Fix from_to dispatch.
 
 	* mln/convert/from_to.hh: dispatch functions where not called at all.
 
@@ -2590,7 +2590,7 @@
 	* trash/display_color_pretty.cc,
 	* doc/benchmark/canvas.cc,
 	* doc/examples/erosion.cc: fix doxygen warnings.
-	
+
 	* doc/tutorial/samples/Makefile.am: do not install sample programs.
 
 	* mln/fun/l2l/relabel.hh: fix wrong guards.
@@ -2878,7 +2878,7 @@
 
 	Add missing concept for bijective functions.
 
-	* mln/core/concept/function.hh: 
+	* mln/core/concept/function.hh:
 	    Add Function_v2w2v and Function_v2w_w2v.
 
 2008-12-15  Alexandre Abraham  <abraham@lrde.epita.fr>
@@ -2911,10 +2911,10 @@
 	since they are not update with the new property names.
 
 	* milena/mln/core/image/bgraph_psite.hh: fix wrong include.
- 
-	* milena/mln/core/image/fi_adaptor.hh, 
-	* milena/mln/core/image/graph_image.hh, 
-	* milena/mln/core/image/line_graph_image.hh: move to... 
+
+	* milena/mln/core/image/fi_adaptor.hh,
+	* milena/mln/core/image/graph_image.hh,
+	* milena/mln/core/image/line_graph_image.hh: move to...
 
 	* milena/trash/fi_adaptor.hh,
 	* milena/trash/graph_image.hh,
@@ -2989,7 +2989,7 @@
 
 	* tests/core/image/graph_image.cc,
 	* tests/core/image/line_graph_image.cc: use id() instead of
-	element().id(). 
+	element().id().
 
 2008-12-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -3054,7 +3054,7 @@
 	* mln/core/image/hexa_piter.hh: update attribute name.
 
 	* mln/core/internal/piter_adaptor.hh: update change_target();
-	
+
 	* mln/debug/iota.spe.hh: cleanup.
 
 	* mln/debug/println.spe.hh: remove wrong ifndef.
@@ -3070,7 +3070,7 @@
 	* mln/morpho/line_gradient.hh: update with the new graph structure.
 
 	* mln/subsampling/gaussian_subsampling.hh: add missing coma.
-	
+
 	* mln/topo/face_iter.hh,
 	* mln/topo/internal/complex_set_iterator_base.hh,
 	* mln/topo/internal/complex_relative_iterator_base.hh,
@@ -4190,7 +4190,7 @@
 	Fix various tests.
 
 	* headers.mk: Update distributed headers list.
-	
+
 	* mln/make/image.hh,
 	* mln/make/image2d.hh,
 	* mln/fun/v2v/convert.hh,
@@ -4247,7 +4247,7 @@
 	* doc/tutorial/samples/fill-subimage-cfun.cc
 	* doc/tutorial/samples/labeling-compute.cc: rename label8 to label_8
 	and label16 to label_16.
-	
+
 	* doc/tutorial/tutorial.tex: fix wrong include.
 
 	* mln/core/site_set/p_graph_piter.hh: add a conversion toward the
@@ -4272,7 +4272,7 @@
 
 2008-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	Fix build system. 
+	Fix build system.
 
 	* Makefile.am: Split and move data related to headers distribution...
 	* headers.mk: here.
@@ -4351,7 +4351,7 @@
 	Update unit tests.
 
 	* milena/tests/unit_test/Makefile.am: Update.
-	
+
 	* milena/tests/unit_test/mln_convert_to_tiles.cc,
 	* milena/tests/unit_test/mln_core_image_graph_neighborhood_piter.cc,
 	* milena/tests/unit_test/mln_core_image_line_graph_elt_piter.cc,
@@ -4656,7 +4656,7 @@
 
 	* mln/util/line_graph.hh: add graph().
 
-	* doc/tutorial/outputs/labeling-compute-1, 
+	* doc/tutorial/outputs/labeling-compute-1,
 	* doc/tutorial/outputs/labeling-compute.txt: update reference output
 	files for tutorial.
 
@@ -4854,7 +4854,7 @@
 
 	* mln/util/internal/graph_vertex_impl.hh: rename as...
 	* mln/util/internal/vertex_impl.hh: ... this.
-	
+
 	* tests/morpho/Makefile.am: disable more tests.
 
 	* tests/unit_test/build_unit_test.sh: do not include mln/core/doc
@@ -4933,7 +4933,7 @@
 	* tests/core/image/Makefile.am,
 	* tests/convert/Makefile.am,
 	* tests/Makefile.am: comment known non working tests.
-	
+
 	* tests/core/image/flat_image.cc,
 	* tests/convert/to_p_array.cc: write test.
 
@@ -4955,7 +4955,7 @@
 
 	* doc/examples/tuto_bis.cc
 	(fill, gradient, dilation): Remove dedicated code; instead use
-	library routines. Their proper arg is nbh.win(). 
+	library routines. Their proper arg is nbh.win().
 	(ima): Ensure there is no outer border.
 	(include): Update.
 	* mln/core/image/extended.hh: Upgrade doc style.
@@ -5021,7 +5021,7 @@
 	* img/fly.pgm: New.
 
 2008-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
-	
+
 	Add new examples.
 
 	* doc/examples/erosion.cc: Apply a vertical and a horizontal erosion
@@ -5040,7 +5040,7 @@
 
 	* mln/debug/colorize.hh: Pass the color type as arguments instead of
 	passing the return type as template parameter.
-	
+
 	* mln/debug/draw_graph.hh: add a new signature.
 
 	* mln/literal/colors.hh,
@@ -5077,12 +5077,12 @@
 	Upgrade tutorial.
 
 	* Doxyfile.in: add new path to included files.
-	
+
 	* tutorial/Makefile.am,
 	* Makefile.am: update target dependencies.
-	
+
 	* doc.mk: add new global variables.
-	
+
 	* tutorial/figures/fill-subdomain-1.pbm,
 	* tutorial/figures/fill-subdomain-2.ppm,
 	* tutorial/figures/fill-subdomain-3.ppm,
@@ -5258,7 +5258,7 @@
 	(zfind_root): Move from impl::generic to internal.
 
 2008-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
-  
+
 	Add a missing Makefile.am
 
 	* milena/tests/morpho/elementary/Makefile.am: new.
@@ -5332,7 +5332,7 @@
 	* doc/tutorial/samples/ima2d-decl-2-blobs.cc,
 	* doc/tutorial/samples/labeling-compute-full.cc: Use label8 instead of
 	int_u8.
-	
+
 	* doc/tutorial/samples/graph-data-full.cc: Add new example.
 
 2008-11-25  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
@@ -5434,7 +5434,7 @@
 	* mln/morpho/tree/compute_parent.hh: New; revamp of...
 	* sandbox/geraud/max_tree_nnodes.cc: ...this file.
 	* tests/morpho/tree: New directory.
-	* tests/morpho/tree/compute_parent.cc: 
+	* tests/morpho/tree/compute_parent.cc:
 	* tests/morpho/tree/Makefile.am: New.
 	* tests/morpho/Makefile.am: Update.
 	* mln/canvas/morpho/all.hh: Upgrade doc style.
@@ -5565,7 +5565,7 @@
 
 
 2008-11-20  Guillaume Lazzara  <z@lrde.epita.fr>
-      
+
 	Add labeling::relabel.
 
 	* mln/core/concept/function.hh: add Function_l2b and Function_l2l.
@@ -5654,7 +5654,7 @@
 	* mln/fun/i2v/array.hh: add two from_to;
 	  - from_to(util::array, fun::i2v::array)
 	  - from_to(std::vector, fun::i2v::array)
-	
+
 	* mln/convert/to.hh,
 	* doc/examples/labeling_algo.cc: cleanup.
 
@@ -6074,7 +6074,7 @@
 	into...
 	(erosion_dispatch_line): ...this new overloaded routine.
 	(erosion_dispatch_diagonal): Remove check on kind::logic cause it
-	also works on this case. 
+	also works on this case.
 
 	To be consistent:
 	* mln/accu/snake_2d.hh: Rename as...
@@ -6149,7 +6149,7 @@
 	* tests/core/image/graph_image.cc,
 	* tests/core/image/line_graph_image.cc: fix tests.
 
-        * mln/make/all.hh
+	* mln/make/all.hh
 	* mln/make/essential.hh: uncomment inclusion of voronoi.hh.
 
 2008-11-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
@@ -6321,7 +6321,7 @@
 	* mln/arith/revert.spe.hh,
 	* mln/arith/times.hh,
 	* mln/arith/times.spe.hh: Cleanup comments.
-	 
+
 	* mln/morpho/hit_or_miss.hh,
 	* mln/display/save.hh,
 	* mln/canvas/browsing/backdiagonal2d.hh,
@@ -6373,7 +6373,7 @@
 
 	* tests/border/get.cc,
 	* tests/border/resize_image_if.cc: Fix tests.
-	
+
 2008-11-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Specialize accu tranform for fastest images.
@@ -7005,14 +7005,14 @@
 
 	Update use of level::transform().
 
-        * mln/binarization/binarization.hh,
-        * mln/level/abs.hh,
-        * mln/level/saturate.hh,
-        * mln/level/to_enc.hh,
-        * tests/io/pgm/pgm16.cc,
-        * tests/io/pgm/pgm19.cc,
-        * tests/io/pgm/pgm27.cc,
-        * tests/value/float01.cc: Update here.
+	* mln/binarization/binarization.hh,
+	* mln/level/abs.hh,
+	* mln/level/saturate.hh,
+	* mln/level/to_enc.hh,
+	* tests/io/pgm/pgm16.cc,
+	* tests/io/pgm/pgm19.cc,
+	* tests/io/pgm/pgm27.cc,
+	* tests/value/float01.cc: Update here.
 
 	* mln/level/transform.hh: Remove useless prototype.
 
@@ -8107,7 +8107,7 @@
 	* doc/tutorial/samples/mln_var-3.tex:
 	New. Add sample code.
 
-	* doc/tutorial/tutorial.tex: rewrite graph section. 
+	* doc/tutorial/tutorial.tex: rewrite graph section.
 
 2008-11-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -8116,7 +8116,7 @@
 	* mln/debug/graph.hh: update in order to support p_vertices.
 
 	* tests/core/image/graph_image.cc: Add assertions.
-	
+
 	* tests/core/site_set/p_vertices.cc: use fun::i2v::array.
 
 2008-11-04  Guillaume Lazzara  <z@lrde.epita.fr>
@@ -8160,7 +8160,7 @@
 
 	* milena/tests/core/other/box_runstart_piter.cc: remove make::
 	prefix.
-	
+
 	* milena/tests/core/other/point_set_compatibility.cc: update test
 	according last changes in p_vertices.
 
@@ -8356,7 +8356,7 @@
 	* mln/io/ppm/save.hh: Update copyright.
 
 	* mln/io/txt/save.hh: save an image<char> to a txt file.
-	
+
 	* mln/io/off/all.hh,
 	* mln/io/txt/all.hh: new missing 'all' headers.
 
@@ -8375,7 +8375,7 @@
 	* mln/logical/not.spe.hh: Write a dedicated version of not_inplace.
 
 2008-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
-	
+
 	Add trace::warning.
 
 	* mln/trace/warning.hh: new file.
@@ -8384,7 +8384,7 @@
 
 	* mln/trace/resume.hh,
 	* mln/trace/stop.hh: cleanup includes.
-	
+
 	* mln/debug/put_word.hh: use trace::warning.
 
 
@@ -8873,7 +8873,7 @@
 
 	Fix return type of i2v::array::operator().
 
-	* mln/fun/i2v/array.hh (operator() const): Return a reference instead of a copy.	
+	* mln/fun/i2v/array.hh (operator() const): Return a reference instead of a copy.
 
 2008-10-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -9326,7 +9326,7 @@
 
 	Fix namespace path to update_tests().
 
-	* mln/level/update.hh: specify full namespace path to update_tests().	
+	* mln/level/update.hh: specify full namespace path to update_tests().
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -9744,11 +9744,11 @@
 	Add neighborhoods based on lower/higher-dimension connected n-faces.
 
 	* mln/core/image/complex_neighborhoods.hh
-	(mln::complex_lower_dim_connected_n_face_neighborhood<D, G>): 
+	(mln::complex_lower_dim_connected_n_face_neighborhood<D, G>):
 	(mln::complex_higher_dim_connected_n_face_neighborhood<D, G>):
 	New neighborhoods.
 	Exercise them...
-	* tests/core/image/complex_image.cc: ...here.	
+	* tests/core/image/complex_image.cc: ...here.
 
 2008-10-18  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -9856,7 +9856,7 @@
 	* mln/core/image/complex_neighborhoods.hh: New.
 	Replace...
 	* mln/core/image/complex_lower_neighborhood.hh,
-	* mln/core/image/complex_higher_neighborhood.hh, 
+	* mln/core/image/complex_higher_neighborhood.hh,
 	* mln/core/image/complex_lower_higher_neighborhood.hh:
 	...these files.
 	Remove.
@@ -9869,7 +9869,7 @@
 	* mln/core/image/complex_windows.hh: New.
 	Replace...
 	* mln/core/image/complex_lower_window_p.hh,
-	* mln/core/image/complex_higher_window_p.hh, 
+	* mln/core/image/complex_higher_window_p.hh,
 	* mln/core/image/complex_lower_higher_window_p.hh:
 	...these files.
 	Remove.
@@ -9882,7 +9882,7 @@
 	Factor concrete windows of complex image.
 
 	* mln/core/image/complex_lower_window_p.hh,
-	* mln/core/image/complex_higher_window_p.hh, 
+	* mln/core/image/complex_higher_window_p.hh,
 	* mln/core/image/complex_lower_higher_window_p.hh:
 	Factor using mln::internal::complex_window_p_base.
 
@@ -9897,7 +9897,7 @@
 	Factor concrete neighborhoods of complex image.
 
 	* mln/core/image/complex_lower_neighborhood.hh,
-	* mln/core/image/complex_higher_neighborhood.hh, 
+	* mln/core/image/complex_higher_neighborhood.hh,
 	* mln/core/image/complex_lower_higher_neighborhood.hh:
 	Factor using mln::internal::complex_neighborhood_base.
 
@@ -10046,10 +10046,10 @@
 	(mln::topo::edge(const n_face<0, D>&, const n_face<0, D>&)):
 	New function.
 	* mln/topo/face_data.hh
-	(mln::topo::internal::lower_dim_faces_data_mixin): Make 
+	(mln::topo::internal::lower_dim_faces_data_mixin): Make
 	mln::topo::n_face<N, D>::lower_dim_adj_faces a friend of this
 	class.
-	(mln::topo::internal::higher_dim_faces_data_mixin): Make 
+	(mln::topo::internal::higher_dim_faces_data_mixin): Make
 	mln::topo::n_face<N, D>::higher_dim_adj_faces a friend of this
 	class.
 
@@ -10348,29 +10348,29 @@
 
 	Add is_valid() in the accumulator concept and move meta-accumulators
 	in meta namespace.
-	
-        * mln/accu/count.hh,
-        * mln/accu/height.hh,
-        * mln/accu/histo.hh,
-        * mln/accu/max.hh,
-        * mln/accu/max_h.hh,
-        * mln/accu/mean.hh,
-        * mln/accu/median_alt.hh,
-        * mln/accu/min.hh,
-        * mln/accu/min_h.hh,
-        * mln/accu/nil.hh,
-        * mln/accu/p.hh,
-        * mln/accu/pair.hh,
-        * mln/accu/rank.hh,
-        * mln/accu/rank_bool.hh,
-        * mln/accu/rank_high_quant.hh,
-        * mln/accu/sum.hh,
-        * mln/accu/tuple.hh,
-        * mln/accu/v.hh,
-        * mln/accu/volume.hh:
+
+	* mln/accu/count.hh,
+	* mln/accu/height.hh,
+	* mln/accu/histo.hh,
+	* mln/accu/max.hh,
+	* mln/accu/max_h.hh,
+	* mln/accu/mean.hh,
+	* mln/accu/median_alt.hh,
+	* mln/accu/min.hh,
+	* mln/accu/min_h.hh,
+	* mln/accu/nil.hh,
+	* mln/accu/p.hh,
+	* mln/accu/pair.hh,
+	* mln/accu/rank.hh,
+	* mln/accu/rank_bool.hh,
+	* mln/accu/rank_high_quant.hh,
+	* mln/accu/sum.hh,
+	* mln/accu/tuple.hh,
+	* mln/accu/v.hh,
+	* mln/accu/volume.hh:
 	Add is_valid() and move meta-accumulators in meta namespace if needed.
 
-        * mln/core/concept/accumulator.hh:
+	* mln/core/concept/accumulator.hh:
 	Add is_valid() static test.
 
 	* tests/accu/all_accus.cc,
@@ -10579,7 +10579,7 @@
 	* tests/timer.hh: New. Tool to bench tests.
 
 2008-10-07  Guillaume Lazzara  <z@lrde.epita.fr>
-      
+
 	Fix most of the doxygen warnings.
 
 	* mln/arith/min.hh,
@@ -10954,17 +10954,17 @@
 	Various small fixes.
 
 	* mln/algebra/vec.hh: add missing header.
-	
+
 	* mln/core/image/obased_rle_image.hh,
 	* mln/core/image/rle_image.hh: Use pruns.
-	
+
 	* mln/core/image/obased_rle_image.hh,
 	* mln/core/image/t_image.hh: add missing init_ function.
-	
+
 	* mln/core/image/tr_image.hh,
 	* tests/core/alias/point1d.cc,
 	* tests/core/alias/point2d.cc: cleanup.
-	
+
 	* tests/core/image/Makefile.am: Disable known broken test
 	such as graph related tests.
 
@@ -11106,12 +11106,12 @@
 
 2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
-        Add p_edges.
-  
-        * mln/core/site_set/p_edges.hh:
-        The site set p_edges.
+	Add p_edges.
 
-        * mln/util/internal/graph_edge_psite.hh:
+	* mln/core/site_set/p_edges.hh:
+	The site set p_edges.
+
+	* mln/util/internal/graph_edge_psite.hh:
 	The associated psite.
 
 	* tests/core/site_set/Makefile.am,
@@ -11119,28 +11119,28 @@
 	Add a basic test.
 
 2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
-    
+
 	Refactor graph_vertex_psite.
 
 	* mln/util/internal/graph_vertex_psite.hh:
 	Refactor this class...
-        * mln/util/internal/graph_psite_base.hh:
-        ... here.
+	* mln/util/internal/graph_psite_base.hh:
+	... here.
 
 2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
-        Fix util::graph<G>::is_subgraph_of().
+	Fix util::graph<G>::is_subgraph_of().
 
-        * mln/util/graph.hh: here.
+	* mln/util/graph.hh: here.
 
 2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add missing methods to vertex and edge.
 
-        * mln/util/internal/graph_edge.hh:
-        Add change_graph().
-        * mln/util/internal/graph_vertex.hh:
-        Add invalidate().
+	* mln/util/internal/graph_edge.hh:
+	Add change_graph().
+	* mln/util/internal/graph_vertex.hh:
+	Add invalidate().
 
 
 2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
@@ -11149,10 +11149,10 @@
 
 	* mln/core/site_set/p_vertices.hh:
 	The site set p_vertices.
-	
+
 	* mln/util/internal/graph_vertex_psite.hh:
 	The psite associated to p_vertices.
-	
+
 	* tests/core/site_set/p_vertices.cc,
 	* tests/core/site_set/Makefile.am:
 	Add a small test.
@@ -11170,7 +11170,7 @@
 
 	* mln/util/internal/graph_vertex.hh:
 	Remove useless const and a wrong precondition.
-  
+
 2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix missing methods in graph_base.
@@ -11182,7 +11182,7 @@
 
 	Update p_graph_piter.
 
-	* mln/core/site_set/p_graph_piter.hh: 
+	* mln/core/site_set/p_graph_piter.hh:
 	update in order to make it work with the new graph structure.
 
 2008-10-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>

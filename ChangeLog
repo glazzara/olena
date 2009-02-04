@@ -22,16 +22,6 @@
 	* m4/.gitignore: New.
 	* build-aux/.gitignore: Adjust.
 
-2009-02-04  Frederic Bour  <bour@lrde.epita.fr>
-
-	[sandbox][bour] Backup of accuprops.cc.
-	* milena/sandbox/fred/accuprops2.cc: New.
-
-2009-02-04  Frederic Bour  <bour@lrde.epita.fr>
-
-	[sandbox][fred] Mean morphological accumulator working with.
-	* milena/sandbox/fred/accuprops.cc: New.
-
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Typo: s/splitted/split/.
@@ -170,7 +160,7 @@
 	* configure.ac: Update.
 
 2008-12-16  Guillaume Lazzara  <z@lrde.epita.fr>
-	
+
 	Make use of milena/generate_dist_headers.sh.
 
 	* bootstrap: update here.

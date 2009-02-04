@@ -1,8 +1,17 @@
 2009-02-04  Fabien Freling  <freling@lrde.epita.fr>
 
 	Add my own sandbox directory to modify labeling.hh.
-	* .: New.
-	* labeling.hh: New.
+	* fabien/labeling.hh: New.
+
+2009-02-04  Frederic Bour  <bour@lrde.epita.fr>
+
+	Backup of accuprops.cc.
+	* fred/accuprops2.cc: New.
+
+2009-02-04  Frederic Bour  <bour@lrde.epita.fr>
+
+	Mean morphological accumulator working with.
+	* fred/accuprops.cc: New.
 
 2009-02-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -15,16 +24,16 @@
 2009-02-03  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	First tries of accus with specialisation.
-	* accu.cc: New.
-	* fredwin.cc: .
+	* edwin/accu.cc: New.
+	* edwin/fredwin.cc: .
 
 2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Rename io::raw as io::dump in sandbox.
 
-	* sandbox/theo/igr/irm_anat_segm.cc,
-	* sandbox/theo/igr/pgms2raw.cc,
-	* sandbox/theo/igr/raw2pgm.cc: rename here.
+	* theo/igr/irm_anat_segm.cc,
+	* theo/igr/pgms2raw.cc,
+	* theo/igr/raw2pgm.cc: rename here.
 
 2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -43,20 +52,18 @@
 2009-02-02  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add dispatch functions for accumulator.
-	* .: New.
 	* fredwin.cc: New.
 
 2009-02-02  Frederic Bour  <bour@lrde.epita.fr>
 
-	[sandbox] p2p morpher with translation, composition and flip.
-	* .: New.
-	* p2p/Makefile: New.
-	* p2p/compose_p2p.hh: New.
-	* p2p/p2p_morpher.hh: New.
-	* p2p/symmetry_p2p.hh: New.
-	* p2p/test_morph_image.cc: New.
-	* p2p/translate_p2p.hh: New.
-	* p2p: New.
+	p2p morpher with translation, composition and flip.
+	* fred/p2p/Makefile: New.
+	* fred/p2p/compose_p2p.hh: New.
+	* fred/p2p/p2p_morpher.hh: New.
+	* fred/p2p/symmetry_p2p.hh: New.
+	* fred/p2p/test_morph_image.cc: New.
+	* fred/p2p/translate_p2p.hh: New.
+	* fred/p2p: New.
 
 2009-02-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -211,7 +218,7 @@
 2009-01-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a new LCA implementation to Laurent's code.
-	
+
 	* laurent/ismm2009.cc: Use the implementation written by Alexandre
 	Abraham for one of its previous seminar (#0821).
 
@@ -293,7 +300,7 @@
 	Work on reconstruction.
 
 	* garrigues/union_find/canvas/reconstruction_on_function.hh: Remove
-          useless escape value.
+	  useless escape value.
 	* garrigues/union_find/canvas/reconstruction_on_set.hh: Optimizations.
 	* garrigues/union_find/canvas/self_dual_reconstruction.hh: .
 	* garrigues/union_find/images/marker_to_dilate.pbm: Fix it.
@@ -1791,13 +1798,13 @@
 
 	Examples : ( | == object, - = background)
 
-         - - |
-         | P | Here P is simple in the c4 and c8 case.
-         | | |
+	 - - |
+	 | P | Here P is simple in the c4 and c8 case.
+	 | | |
 
-         - | -
-         | P | Here P is never simple.
-         | | |
+	 - | -
+	 | P | Here P is never simple.
+	 | | |
 
 	* garrigues/ocr/simple_point.cc: New. A simple test that shows all the
 	simple points of a binary image.
@@ -1961,7 +1968,7 @@
 	* abraham/mln/core/image/shell.hh: Fix result value.
 	* abraham/mln/core/concept/meta_fun.hh:
 	    (mln::meta::impl) : now templated by return type
-	                        (necessary to typedef result).
+				(necessary to typedef result).
 	* abraham/mln/fun/meta/red.hh: .
 
 2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
@@ -2085,7 +2092,7 @@
 
 	Fix an endless loop.
 
-	* scribo/demat.hh: Fix a endless loop. 
+	* scribo/demat.hh: Fix a endless loop.
 
 2008-10-22  Maxime van Noppen  <yabo@lrde.epita.fr>
 
@@ -2105,7 +2112,7 @@
 
 	Improve debug output.
 
-	* scribo/demat.hh: 
+	* scribo/demat.hh:
 	Use color images for debug output.
 	Improve the way the small components are erased.
 
@@ -2152,7 +2159,7 @@
 	Extract text bboxes for Scribo.
 
 	* scribo/main.cc: Change usage message.
-	
+
 	* scribo/demat.hh:
 	  - Cleanup.
 	  - Remove too small components using level::transform.
@@ -2187,7 +2194,7 @@
 
 	Get and display character bboxes.
 
-	* sandbox/scribo/demat.hh: update. 
+	* sandbox/scribo/demat.hh: update.
 	Does not create text bboxes yet.
 
 2008-10-15  Guillaume Lazzara  <z@lrde.epita.fr>
