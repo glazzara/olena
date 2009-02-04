@@ -1,3 +1,10 @@
+2009-02-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the generation of milena/headers.mk.
+
+	* Makefile.am ($(srcdir)/headers.mk): Fix path to headers.mk in
+	action.
+
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	* generate_dist_headers.sh (last_line): Fix shebang.

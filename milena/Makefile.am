@@ -22,7 +22,7 @@ regen-dist: $(srcdir)/headers.mk
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
 #
 $(srcdir)/headers.mk: $(srcdir)/generate_dist_headers.sh
-	cd $(srcdir) && ./generate_dist_headers.sh && chmod -w $@
+	cd $(srcdir) && ./generate_dist_headers.sh && chmod -w headers.mk
 
 include $(srcdir)/headers.mk
 
