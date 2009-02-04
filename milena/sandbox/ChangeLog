@@ -1,3 +1,8 @@
+2009-02-04  Fabien Freling  <freling@lrde.epita.fr>
+
+	Implement fastest versions of canvas::labeling.
+	* fabien/regional_maxima.hh: New.
+
 2009-02-04  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add card accu and some traits.
