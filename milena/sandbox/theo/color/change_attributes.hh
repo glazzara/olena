@@ -77,6 +77,9 @@ namespace mln
       const T* t;
     };
 
+
+    // Vachier's version.
+
     template <typename T, typename I, typename M>
     inline
     mln_value(I)
@@ -92,9 +95,30 @@ namespace mln
       return a(p) = extinct_rec(t, a, mark, t.parent(p));
     }
 
+
+    // Modified version.
+
+    template <typename T, typename I, typename M>
+    inline
+    mln_value(I)
+    extinct_rec__(const T& t, // tree
+		  const I& a, // original attribute image
+		  I& ea,      // extincted attribute image
+		  M& mark,
+		  const mln_psite(I)& p)
+    {
+      mln_invariant(mark(p) == false);
+      mark(p) = true;
+      if (t.parent(p) == p || mark(t.parent(p)) == true) // Stop.
+	return a(t.parent(p)); // The parent attribute!
+      return ea(p) = extinct_rec__(t, a, ea, mark, t.parent(p));
+    }
+
+
   } // end of internal
 
 
+  // Vachier's version.
 
   template <typename T, typename I>
   void
@@ -122,6 +146,44 @@ namespace mln
 	  continue;
 	internal::extinct_rec(t, a, mark, p);
       }
+
+    // debug::println(mark | t.nodes());
+  }
+
+
+
+  // Modified version.
+
+  template <typename T, typename I>
+  void
+  extinct_attributes__(const T& t, // Tree.
+		       I& a) // Attribute image.
+  {
+    typedef mln_site(I) P;
+    typedef mln_value(I) A; // Type of attributes.
+
+    mln_ch_value(I, bool) mark;
+    initialize(mark, a);
+    data::fill(mark, false);
+
+    mln_concrete(I) ea = duplicate(a);
+    
+    internal::node_pred<T> node_only;
+    node_only.t = &t;
+
+    typedef p_array<P> S;
+    S s = level::sort_psites_increasing(a | node_only);
+    mln_invariant(geom::nsites(a | t.nodes()) == s.nsites());
+
+    mln_fwd_piter(S) p(s);
+    for_all(p)
+      {
+	if (mark(p) == true)
+	  continue;
+	internal::extinct_rec__(t, a, ea, mark, p);
+      }
+
+    data::fill(a, ea);
 
     // debug::println(mark | t.nodes());
   }

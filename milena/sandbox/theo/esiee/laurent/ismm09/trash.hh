@@ -36,6 +36,50 @@ namespace mln
   }
 
 
+    inline
+    point2d p1_from_e(const point2d& e)
+    {
+      return e + (is_row_odd(e) ? up : left);
+    }
+    
+    inline
+    point2d p2_from_e(const point2d& e)
+    {
+      return e + (is_row_odd(e) ? down : right);
+    }
+
+
+
+    struct e_to_labels_t 
+    {
+      template <typename W, typename L>
+      inline
+      void
+      operator()(const W& w, const point2d& e, L& l1, L& l2) const
+      {
+	mln_precondition(w(e) == 0);
+	l1 = 0;
+	l2 = 0;
+	mln_niter(dbl_neighb2d) n(e2e(), e);
+	for_all(n)
+	  if (w.has(n) && w(n) != 0)
+	    {
+	      if (l1 == 0) // First label to be stored.
+		l1 = w(n);
+	      else
+		if (w(n) != l1 && l2 == 0) // Second label to be stored.
+		  l2 = w(n);
+		else
+		  mln_invariant(w(n) == l1 || w(n) == l2);
+	    }
+	mln_invariant(l1 != 0 && l2 != 0);
+	if (l1 > l2)
+	  std::swap(l1, l2);
+	mln_postcondition(l2 >= l1);
+      }
+    };
+
+
 } // end of namespace mln
 
 

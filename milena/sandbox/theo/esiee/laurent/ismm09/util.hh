@@ -1,4 +1,14 @@
 
+#include <mln/core/concept/function.hh>
+#include <mln/core/site_set/p_array.hh>
+
+#include <mln/level/sort_psites.hh>
+
+#include <mln/morpho/tree/data.hh>
+#include <mln/morpho/tree/compute_attribute_image.hh>
+
+
+
 namespace mln
 {
 
