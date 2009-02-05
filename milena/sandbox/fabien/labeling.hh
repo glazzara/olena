@@ -39,6 +39,7 @@
 # include <mln/data/fill.hh>
 # include <mln/literal/zero.hh>
 # include <mln/convert/to_upper_window.hh>
+# include <mln/extension/adjust_fill.hh>
 
 # include <mln/level/sort_psites.hh>
 # include <mln/level/sort_offsets.hh>
@@ -233,12 +234,14 @@ namespace mln
       labeling_video_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	  F& f, L& nlabels)
       {
-	trace::entering("canvas::impl::labeling");
+	trace::entering("canvas::impl::labeling_video_fastest");
 
 	// FIXME: Test?!
 
 	const I& input = exact(input_);
 	const N& nbh   = exact(nbh_);
+
+	extension::adjust(input, nbh);
 
 	// Local type.
 	typedef mln_psite(I) P;
@@ -255,6 +258,7 @@ namespace mln
 	{
 	  initialize(deja_vu, input);
 	  mln::data::fill(deja_vu, false);
+	  extension::fill(deja_vu, false); // So that the extension is ignored.
 
 	  initialize(parent, input);
 
@@ -276,7 +280,7 @@ namespace mln
 	    f.init_attr(p);
 
 	    for_all(n)
-	      if (input.has(n) && deja_vu(n))
+	      if (input.domain().has(n) && deja_vu(n))
 	      {
 		if (f.equiv_(n, p))
 		{
@@ -290,8 +294,8 @@ namespace mln
 		}
 		else
 		  f.do_no_union_(n, p);
-		(p) = true;
 	      }
+	    deja_vu(p) = true;
 	  }
 	}
 
@@ -318,7 +322,7 @@ namespace mln
 	  status = true;
 	}
 
-	trace::exiting("canvas::impl::labeling");
+	trace::exiting("canvas::impl::labeling_video_fastest");
 	return output;
       }
 
@@ -332,12 +336,14 @@ namespace mln
       labeling_sorted_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_, L& nlabels,
 			      const S& s, F& f)
       {
-	trace::entering("canvas::impl::labeling");
+	trace::entering("canvas::impl::labeling_sorted_fastest");
 
 	// FIXME: Test?!
 
 	const I& input = exact(input_);
 	const N& nbh   = exact(nbh_);
+
+	extension::adjust(input, nbh);
 
 	// Local type.
 	typedef mln_psite(I) P;
@@ -354,6 +360,7 @@ namespace mln
 	{
 	  initialize(deja_vu, input);
 	  mln::data::fill(deja_vu, false);
+	  extension::fill(deja_vu, false); // So that the extension is ignored.
 
 	  initialize(parent, input);
 
@@ -375,7 +382,7 @@ namespace mln
 	  for (unsigned i = 0; i < n_points; ++i)
 	    {
 	      unsigned p = s[i];
-	      if (!f.handles_(p))
+	      if (! f.handles_(p))
 		continue;
 
 	      // Make-Set.
@@ -385,14 +392,14 @@ namespace mln
 	      for (unsigned j = 0; j < n_nbhs; ++j)
 		{
 		  unsigned n = p + dp[j];
-		  if (!deja_vu.element(n))
+		  if (! deja_vu.element(n))
 		    continue;
 
 		  if (f.equiv_(n, p))
 		    {
 		      // Do-Union.
 		      unsigned r = find_root_fastest(parent, n);
-		      if (input.element(r) != input.element(p))
+		      if (r != p)
 			{
 			  parent.element(r) = p;
 			  f.merge_attr_(r, p);
@@ -411,7 +418,7 @@ namespace mln
 	  for (int i = n_points - 1; i >=0; --i)
 	    {
 	      unsigned p = s[i];
-	      if (!f.handles_(p))
+	      if (! f.handles_(p))
 		continue;
 
 	      if (parent.element(p) == p) // if p is root
@@ -432,7 +439,7 @@ namespace mln
 	  status = true;
 	}
 
-	trace::exiting("canvas::impl::labeling");
+	trace::exiting("canvas::impl::labeling_sorted_fastest");
 	return output;
       }
 

@@ -1,3 +1,11 @@
+2009-02-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix sorted labeling fastest canvas.
+
+	* fabien/labeling.hh: Fix.
+	(labeling_video_fastest): Handle extension.
+	(labeling_sorted_fastest): Likewise.
+
 2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update IGR's code.
