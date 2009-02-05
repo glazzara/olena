@@ -1,5 +1,13 @@
 2009-02-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Cleanup Fabien's 1st try.
+
+	* fabien/regional_maxima.hh,
+	* fabien/labeling.hh: Fix paren balancing.
+	Cleanup a bit.
+
+2009-02-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add a topological wst following Laurent's ISMM09 scheme.
 
 	* theo/esiee/laurent/ismm09/main.cc: Copy to...
