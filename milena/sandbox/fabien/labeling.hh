@@ -223,115 +223,15 @@ namespace mln
 	if (parent.element(x) == x)
 	  return x;
 	else
-	  return parent.element(x) = find_root(parent, parent.element(x));
+	  return parent.element(x) = find_root_fastest(parent, parent.element(x));
       }
 
-//       // FIXME: Use the same functer for the generic and the fastest versions 
 
-//       template <typename I, typename N, typename L,
-// 		typename F>
-//       mln_ch_value(I, L)
-// 	labeling_fastest_video(const Image<I>& input_, const Neighborhood<N>& nbh_,
-// 			       F& f, L& nlabels)
-//       {
-// 	trace::entering("canvas::impl::labeling");
-
-// 	// FIXME: Test?!
-
-// 	const I& input = exact(input_);
-// 	const N& nbh   = exact(nbh_);
-
-// 	// Local type.
-// 	typedef mln_psite(I) P;
-
-// 	// Auxiliary data.
-// 	mln_ch_value(I, bool) deja_vu;
-// 	mln_ch_value(I, P)    parent;
-
-// 	// Output.
-// 	mln_ch_value(I, L) output;
-// 	bool status;
-
-// 	// Initialization.
-// 	{
-// 	  initialize(deja_vu, input);
-// 	  mln::data::fill(deja_vu, false);
-
-// 	  initialize(parent, input);
-
-// 	  initialize(output, input);
-// 	  mln::data::fill(output, L(literal::zero));
-// 	  nlabels = 0;
-
-// 	  f.init(); // Client initialization.
-// 	}
-
-// 	// First Pass.
-// 	{
-// 	  mln_pixter(const S) p(f.s);
-// 	  mln_nixter(const S, N) n(p, nbh);
-// 	  for_all(p) if (f.handles(p))
-// 	    {
-// 	      // Make-Set.
-// 	      parent.element(p) = p;
-// 	      f.init_attr(p);
-
-// 	      for_all(n)
-// 		if (input.has(n) && deja_vu(n))
-// 		  {
-// 		    if (f.equiv(n, p))
-// 		      {
-// 			// Do-Union.
-// 			unsigned r = find_root_fastest(parent, n);
-// 			if (r != p)
-// 			  {
-// 			    parent.element(r) = p;
-// 			    f.merge_attr(r, p);
-// 			  }
-// 		      }
-// 		    else
-// 		      f.do_no_union(n, p);
-// 		    (p) = true;
-// 		  }
-// 	    }
-// 	}
-
-// 	// Second Pass.
-// 	{
-// 	  mln_bkd_pixter(S) p(f.s);
-// 	  for_all(p) if (f.handles(p))
-// 	    {
-// 	      if (parent.element(p) == p) // if p is root
-// 		{
-// 		  if (f.labels(p))
-// 		    {
-// 		      if (nlabels == mln_max(L))
-// 			{
-// 			  status = false;
-// 			  return output;
-// 			}
-// 		      output.element(p) = ++nlabels;
-// 		    }
-// 		}
-// 	      else
-// 		output.element(p) = output(parent.element(p));
-// 	    }
-// 	  status = true;
-// 	}
-
-// 	trace::exiting("canvas::impl::labeling");
-// 	return output;
-//       }
-
-
-
-      // Fastest sorted version
-
-      template <typename I, typename N, typename L, 
-		typename S, typename F>
+      template <typename I, typename N, typename L,
+	       typename F>
       mln_ch_value(I, L)
-	labeling_sorted_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_, L& nlabels,
-				const S& s, F& f)
+      labeling_video_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_,
+	  F& f, L& nlabels)
       {
 	trace::entering("canvas::impl::labeling");
 
@@ -362,13 +262,112 @@ namespace mln
 	  mln::data::fill(output, L(literal::zero));
 	  nlabels = 0;
 
-	  f.init(); // Client initialization.
+	  f.init_(); // Client initialization.
 	}
 
-	util::array<int> dp = offsers_wrt(input, nbh);
+	// First Pass.
+	{
+	  mln_pixter(const I) p(input);
+	  mln_nixter(const I, N) n(p, nbh);
+	  for_all(p) if (f.handles_(p))
+	  {
+	    // Make-Set.
+	    parent.element(p) = p;
+	    f.init_attr(p);
+
+	    for_all(n)
+	      if (input.has(n) && deja_vu(n))
+	      {
+		if (f.equiv_(n, p))
+		{
+		  // Do-Union.
+		  unsigned r = find_root_fastest(parent, n);
+		  if (r != p)
+		  {
+		    parent.element(r) = p;
+		    f.merge_attr_(r, p);
+		  }
+		}
+		else
+		  f.do_no_union_(n, p);
+		(p) = true;
+	      }
+	  }
+	}
+
+	// Second Pass.
+	{
+	  mln_bkd_pixter(I) p(input);
+	  for_all(p) if (f.handles_(p))
+	  {
+	    if (parent.element(p) == p) // if p is root
+	    {
+	      if (f.labels_(p))
+	      {
+		if (nlabels == mln_max(L))
+		{
+		  status = false;
+		  return output;
+		}
+		output.element(p) = ++nlabels;
+	      }
+	    }
+	    else
+	      output.element(p) = output(parent.element(p));
+	  }
+	  status = true;
+	}
+
+	trace::exiting("canvas::impl::labeling");
+	return output;
+      }
+
+
+
+      // Fastest sorted version
+
+      template <typename I, typename N, typename L,
+		typename S, typename F>
+      mln_ch_value(I, L)
+      labeling_sorted_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_, L& nlabels,
+			      const S& s, F& f)
+      {
+	trace::entering("canvas::impl::labeling");
+
+	// FIXME: Test?!
+
+	const I& input = exact(input_);
+	const N& nbh   = exact(nbh_);
+
+	// Local type.
+	typedef mln_psite(I) P;
+
+	// Auxiliary data.
+	mln_ch_value(I, bool) deja_vu;
+	mln_ch_value(I, unsigned)    parent;
+
+	// Output.
+	mln_ch_value(I, L) output;
+	bool status;
+
+	// Initialization.
+	{
+	  initialize(deja_vu, input);
+	  mln::data::fill(deja_vu, false);
+
+	  initialize(parent, input);
+
+	  initialize(output, input);
+	  mln::data::fill(output, L(literal::zero));
+	  nlabels = 0;
+
+	  f.init_(); // Client initialization.
+	}
+
+	util::array<int> dp = offsets_wrt(input, nbh);
 	const unsigned n_nbhs = dp.nelements();
 
-	const unsigned n_points = s.elements();
+	const unsigned n_points = s.nelements();
 
 	// First Pass.
 	{
@@ -376,31 +375,31 @@ namespace mln
 	  for (unsigned i = 0; i < n_points; ++i)
 	    {
 	      unsigned p = s[i];
-	      if (!f.handles(p))
+	      if (!f.handles_(p))
 		continue;
 
 	      // Make-Set.
 	      parent.element(p) = p;
-	      f.init_attr(p);
+	      f.init_attr_(p);
 
 	      for (unsigned j = 0; j < n_nbhs; ++j)
 		{
 		  unsigned n = p + dp[j];
-		  if (!deja_vu[n])
+		  if (!deja_vu.element(n))
 		    continue;
 
-		  if (f.equiv(n, p))
+		  if (f.equiv_(n, p))
 		    {
 		      // Do-Union.
 		      unsigned r = find_root_fastest(parent, n);
 		      if (input.element(r) != input.element(p))
 			{
 			  parent.element(r) = p;
-			  f.merge_attr(r, p);
+			  f.merge_attr_(r, p);
 			}
 		    }
 		  else
-		    f.do_no_union(n, p);
+		    f.do_no_union_(n, p);
 		}
 	      deja_vu.element(p) = true;
 
@@ -412,12 +411,12 @@ namespace mln
 	  for (int i = n_points - 1; i >=0; --i)
 	    {
 	      unsigned p = s[i];
-	      if (!f.handles(p))
+	      if (!f.handles_(p))
 		continue;
 
 	      if (parent.element(p) == p) // if p is root
 		{
-		  if (f.labels(p))
+		  if (f.labels_(p))
 		    {
 		      if (nlabels == mln_max(L))
 			{
@@ -428,7 +427,7 @@ namespace mln
 		    }
 		}
 	      else
-		output.element(p) = output(parent.element(p));
+		output.element(p) = output.element(parent.element(p));
 	    }
 	  status = true;
 	}
@@ -446,45 +445,45 @@ namespace mln
     namespace internal
     {
 
-//       // Video
+      // Video
 
-//       template <typename I, typename N, typename L,
-// 		typename F>
-//       inline
-//       mln_ch_value(I, L)
-// 	labeling_video(metal::false_, const Image<I>& input,
-// 		       const Neighborhood<N>& nbh, L& nlabels, F& functor)
-//       {
-// 	return impl::generic::labeling(input, nbh, input.domain(),
-// 				       nlabels, functor);
-//       }
+      template <typename I, typename N, typename L,
+		typename F>
+      inline
+      mln_ch_value(I, L)
+      labeling_video(metal::false_, const Image<I>& input,
+	  const Neighborhood<N>& nbh, L& nlabels, F& functor)
+      {
+	return impl::generic::labeling(input, nbh, input.domain(),
+	    nlabels, functor);
+      }
 
-//       template <typename I, typename N, typename L,
-// 		typename F>
-//       inline
-//       mln_ch_value(I, L)
-// 	labeling_video(metal::true_, const Image<I>& input,
-// 		       const Neighborhood<N>& nbh, L& nlabels, F& functor)
-//       {
-// 	return impl::labeling_fastest_video(input, nbh, nlabels, functor);
-//       }
+      template <typename I, typename N, typename L,
+	        typename F>
+      inline
+      mln_ch_value(I, L)
+      labeling_video(metal::true_, const Image<I>& input,
+	  const Neighborhood<N>& nbh, L& nlabels, F& functor)
+      {
+	return impl::labeling_video_fastest(input, nbh, nlabels, functor);
+      }
 
-//       template <typename I, typename N, typename L,
-// 		typename F>
-//       inline
-//       mln_ch_value(I, L)
-// 	labeling_video_dispatch(const Image<I>& input, const Neighborhood<N>& nbh,
-// 				L& nlabels, F& functor)
-//       {
-// 	enum {
-// 	  test = mlc_equal(mln_trait_image_speed(I),
-// 			   trait::image::speed::fastest)::value
-// 	  &&
-// 	  mln_is_simple_neighborhood(N)::value
-// 	};
-// 	return impl::generic::labeling_video(metal::bool_<test>(), input,
-// 					     nbh, nlabels, functor);
-//       }
+      template <typename I, typename N, typename L,
+	        typename F>
+      inline
+      mln_ch_value(I, L)
+      labeling_video_dispatch(const Image<I>& input, const Neighborhood<N>& nbh,
+	  L& nlabels, F& functor)
+      {
+	enum {
+	  test = mlc_equal(mln_trait_image_speed(I),
+	      trait::image::speed::fastest)::value
+	    &&
+	    mln_is_simple_neighborhood(N)::value
+	};
+	return impl::generic::labeling(metal::bool_<test>(), input,
+	    nbh, nlabels, functor);
+      }
 
 
       // Sorted dispatch.
@@ -493,47 +492,47 @@ namespace mln
       inline
       mln_ch_value(I, L)
       labeling_sorted_dispatch(metal::false_,
-			       const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
-			       F& functor, bool increasing)
+	  const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
+	  F& functor, bool increasing)
       {
 	p_array<mln_psite(I)> s =
 	  increasing ?
 	  level::sort_psites_increasing(input) :
 	  level::sort_psites_decreasing(input);
-	return impl::generic::labeling(input, nbh, nlabels, 
-				       s, functor);
+	return impl::generic::labeling(input, nbh, nlabels,
+	    s, functor);
       }
 
       template <typename I, typename N, typename L, typename F>
       inline
       mln_ch_value(I, L)
       labeling_sorted_dispatch(metal::true_,
-			       const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
-			       F& functor, bool increasing)
+	  const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
+	  F& functor, bool increasing)
       {
 	util::array<unsigned> s =
 	  increasing ?
 	  level::sort_offsets_increasing(input) :
 	  level::sort_offsets_decreasing(input);
 	return impl::labeling_sorted_fastest(input, nbh, nlabels,
-					     s, functor);
+	    s, functor);
       }
 
       template <typename I, typename N, typename L, typename F>
       inline
       mln_ch_value(I, L)
       labeling_sorted_dispatch(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
-			       F& functor, bool increasing)
+	  F& functor, bool increasing)
       {
 	enum {
 	  test = mlc_equal(mln_trait_image_speed(I),
-			   trait::image::speed::fastest)::value
-	  &&
-	  mln_is_simple_neighborhood(N)::value
+	      trait::image::speed::fastest)::value
+	    &&
+	    mln_is_simple_neighborhood(N)::value
 	};
 	return labeling_sorted_dispatch(metal::bool_<test>(),
-					input, nbh, nlabels,
-					functor, increasing);
+	    input, nbh, nlabels,
+	    functor, increasing);
       }
 
 
@@ -545,11 +544,11 @@ namespace mln
 
 
     template <typename I, typename N, typename L,
-	      typename F>
+	     typename F>
     inline
     mln_ch_value(I, L)
-      labeling_video(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
-		     F& functor)
+    labeling_video(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
+	F& functor)
     {
       trace::entering("canvas::labeling_video");
 
@@ -557,7 +556,7 @@ namespace mln
 
       mln_ch_value(I, L) output;
       output = internal::labeling_video_dispatch(input, nbh, nlabels,
-						 functor);
+	  functor);
 
       trace::exiting("canvas::labeling_video");
       return output;
@@ -565,11 +564,11 @@ namespace mln
 
 
     template <typename I, typename N, typename L,
-	      typename F>
+	     typename F>
     inline
     mln_ch_value(I, L)
-      labeling_sorted(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
-		      F& functor, bool increasing)
+    labeling_sorted(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
+	F& functor, bool increasing)
     {
       trace::entering("canvas::labeling_sorted");
 
@@ -577,7 +576,7 @@ namespace mln
 
       mln_ch_value(I, L) output;
       output = internal::labeling_sorted_dispatch(input, nbh, nlabels,
-						  functor, increasing);
+	  functor, increasing);
 
       trace::exiting("canvas::labeling_sorted");
       return output;

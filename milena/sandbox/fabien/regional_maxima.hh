@@ -35,7 +35,9 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/canvas/labeling.hh>
+
+# include "labeling.hh"
+
 # include <mln/data/fill.hh>
 # include <mln/level/sort_psites.hh>
 
@@ -102,7 +104,7 @@ namespace mln
 	void do_no_union_(unsigned n, unsigned p) { mln_invariant(input.element(n) >
 								  input.element(p));
 	  attr.element(p) = false; }
-	void init_attr_(const P&)                 {}
+	void init_attr_(unsigned)                 {}
 	void merge_attr_(unsigned r, unsigned p)  { attr.element(p) = attr.element(p) &&
 	    attr.element(r); }
 
@@ -110,7 +112,7 @@ namespace mln
 
 	mln_ch_value(I, bool) attr;
 
-	regional_maxima_functor(const I_& input, const N_& nbh)
+	regional_maxima_functor(const I& input)
 	  : input(input)
 	{
 	  initialize(attr, input);

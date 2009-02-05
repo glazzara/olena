@@ -1,3 +1,10 @@
+2009-02-05  Fabien Freling  <freling@lrde.epita.fr>
+
+	Compile fastest versions of labeling.
+	* fabien/labeling.hh: Compile fastest versions.
+	* fabien/regional_maxima.cc: Simple test file.
+	* fabien/regional_maxima.hh: Functor in fastest implementation.
+
 2009-02-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Augment Laurent's code.
