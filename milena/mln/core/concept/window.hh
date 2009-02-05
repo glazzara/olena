@@ -185,6 +185,8 @@ namespace mln
 	m3 = 0;
 	unsigned (E::*m4)() const = &E::delta;
 	m4 = 0;
+	bool (E::*m5)() const = &E::is_valid;
+	m5 = 0;
       }
 
       static void run(mln::trait::window::definition::unique)

@@ -137,6 +137,9 @@ namespace mln
       bool is_empty() const;
       /// Is this window centered?  (Always returns \c true).
       bool is_centered() const;
+
+      /// Return true by default.
+      bool is_valid() const;
       /// \}
     };
 
@@ -158,8 +161,15 @@ namespace mln
       return true;
     }
 
+    template <unsigned D, typename G, typename F, typename B, typename E>
+    bool
+    complex_window_p_base<D, G, F, B, E>::is_valid() const
+    {
+      return true;
+    }
+
 # endif // ! MLN_INCLUDE_ONLY
-    
+
   } // end of namespace mln::internal
 
 } // end of namespace mln

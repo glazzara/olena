@@ -105,6 +105,9 @@ namespace mln
     /// Create a window corresponding to this neighborhood.
     const window& win() const;
     /// \}
+
+    /// Return true by default.
+    bool is_valid() const;
   };
 
 
@@ -120,6 +123,14 @@ namespace mln
   {
     // FIXME: Dummy.
     return exact(*this);
+  }
+
+  template <unsigned D, typename G, typename F, typename B, typename E>
+  inline
+  bool
+  complex_neighborhood_base<D, G, F, B, E>::is_valid() const
+  {
+    return true;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

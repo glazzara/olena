@@ -88,6 +88,9 @@ namespace mln
       /// the definition is unique.
       bool has(const mln_dpsite(W)& dp) const;
 
+      /// return true by default.
+      bool is_valid() const;
+
     protected:
       weighted_window_base();
     };
@@ -155,7 +158,7 @@ namespace mln
       mln_precondition(i < this->size());
       return exact(this)->win().dp(i);
     }
- 
+
     template <typename W, typename E>
     inline
     bool
@@ -166,6 +169,14 @@ namespace mln
       mlc_equal(mln_trait_window_definition(W),
 		trait::window::definition::unique)::check();
       return exact(this)->win().has(dp);
+    }
+
+    template <typename W, typename E>
+    inline
+    bool
+    weighted_window_base<W,E>::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

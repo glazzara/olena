@@ -117,6 +117,9 @@ namespace mln
     typedef mln_window(E) window;
     bool m = (& E::win) == (& E::win);
     m = 0;
+    bool (E::*m2)() const = &E::is_valid;
+    m2 = 0;
+
 # if 0
     /* FIXME: Disabled, as win() can either return a const reference
        or a copy of the window (see documentation above).  Hence the

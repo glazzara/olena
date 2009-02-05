@@ -1,5 +1,22 @@
 2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix missing is_valid() in complex and graph windows/neighborhoods.
+
+	* mln/accu/transform_diagonal.hh,
+	* mln/accu/transform_directional.hh,
+	* mln/accu/transform_snake.hh: fix wrong precondition.
+
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/window.hh: add static check to be sure the method
+	is present.
+
+	* mln/core/internal/complex_neighborhood_base.hh,
+	* mln/core/internal/complex_window_p_base.hh,
+	* mln/core/internal/graph_window_base.hh,
+	* mln/core/internal/weighted_window_base.hh: add missing is_valid.
+
+2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new ICP variants.
 
 	* mln/registration/icp2.hh: Add two new variants.

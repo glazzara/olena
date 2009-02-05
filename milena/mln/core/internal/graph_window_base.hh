@@ -82,6 +82,9 @@ namespace mln
     bool is_neighbable_() const;
     /// \}
 
+    /// Return true by default.
+    bool is_valid() const;
+
   protected:
     graph_window_base();
   };
@@ -145,6 +148,15 @@ namespace mln
   {
     return true;
   }
+
+  template <typename P, typename E>
+  inline
+  bool
+  graph_window_base<P,E>::is_valid() const
+  {
+    return true;
+  }
+
 
 
 # endif // !MLN_INCLUDE_ONLY
