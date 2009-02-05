@@ -3,7 +3,6 @@
 
 # include <mln/trait/undef.hh>
 
-
 # define mln_trait_accu_when_pix(A) typename trait::accu::accu_traits<A>::when_pix
 
 
@@ -41,7 +40,7 @@ namespace mln
       template <typename T>
       struct accu_traits< mln::morpho::accu::card <T> >
       {
-	typedef when_pix::use_v when_pix;
+	typedef when_pix::use_p when_pix;
       };
     } //accu
 

@@ -1,3 +1,13 @@
+2009-02-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Fix bugs for algebraic filter and cleaning.
+	* edwin/accu.cc: Separate and make clean.
+	* edwin/accu_trait.hh: Test use_p and use_whatever traits.
+	* edwin/algebraic.hh: Algebraic filter.
+	* edwin/card.hh: Card accumulator.
+	* edwin/fredwin.cc: Remove.
+	* edwin/leveling.hh: Leveling filter.
+
 2009-02-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix sorted labeling fastest canvas.
