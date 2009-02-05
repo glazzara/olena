@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CORE_INTERNAL_WINDOW_BASE_HH
 # define MLN_CORE_INTERNAL_WINDOW_BASE_HH
 
-/*! \file mln/core/internal/window_base.hh
- *
- * \brief Definition of a base class for window classes.
- */
+/// \file mln/core/internal/window_base.hh
+///
+/// Definition of a base class for window classes.
 
 # include <mln/core/concept/window.hh>
 
@@ -43,10 +43,10 @@ namespace mln
   {
 
 
-    /*! A base class for window classes.
-     *
-     * \p D is a dpsite type.
-     */
+    /// A base class for window classes.
+    ///
+    /// \p D is a dpsite type.
+    ///
     template <typename D, typename E>
     struct window_base : public Window<E>
     {
@@ -64,6 +64,9 @@ namespace mln
       // This method is used in the neighborhood window-adapter.
       bool is_neighbable_() const;
 
+      /// return true by default.
+      bool is_valid() const;
+
     protected:
       window_base();
     };
@@ -75,6 +78,14 @@ namespace mln
     inline
     window_base<D,E>::window_base()
     {
+    }
+
+    template <typename D, typename E>
+    inline
+    bool
+    window_base<D,E>::is_valid() const
+    {
+      return true;
     }
 
     template <typename D, typename E>

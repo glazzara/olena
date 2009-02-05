@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -70,7 +70,7 @@ namespace mln
 	const N& nbh   = exact(nbh_);
 
 	mln_precondition(input.is_valid());
-	// mln_precondition(nbh.is_valid());
+	mln_precondition(nbh.is_valid());
 
 	(void) input;
 	(void) nbh;

@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -98,7 +98,7 @@ namespace mln
     template <typename W>
     unsigned delta(const Window<W>& win)
     {
-      // mln_precondition(exact(win).is_valid());
+      mln_precondition(exact(win).is_valid());
       return internal::delta_dispatch(mln_trait_window_support(W)(),
 				      mln_trait_window_definition(W)(),
 				      exact(win));
@@ -107,14 +107,14 @@ namespace mln
     template <typename W>
     unsigned delta(const Weighted_Window<W>& wwin)
     {
-      // mln_precondition(exact(wwin).is_valid());
+      mln_precondition(exact(wwin).is_valid());
       return delta(exact(wwin).win());
     }
 
     template <typename N>
     unsigned delta(const Neighborhood<N>& nbh)
     {
-      // mln_precondition(exact(nbh).is_valid());
+      mln_precondition(exact(nbh).is_valid());
       return delta(exact(nbh).win());
     }
 

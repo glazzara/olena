@@ -1,4 +1,47 @@
 2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add is_valid() to window and neighborhood.
+
+	* mln/core/internal/neighborhood_base.hh,
+	* mln/core/internal/window_base.hh: add is_valid()
+
+	* mln/accu/transform.hh,
+	* mln/accu/transform_diagonal.hh,
+	* mln/accu/transform_directional.hh,
+	* mln/accu/transform_snake.hh,
+	* mln/accu/transform_stop.hh,
+	* mln/canvas/distance_front.hh,
+	* mln/canvas/distance_geodesic.hh,
+	* mln/canvas/labeling.hh,
+	* mln/convert/to_image.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/w_window.hh,
+	* mln/geom/delta.hh,
+	* mln/labeling/background.hh,
+	* mln/labeling/foreground.hh,
+	* mln/labeling/level.hh,
+	* mln/level/median.hh,
+	* mln/linear/convolve.hh,
+	* mln/morpho/elementary/closing.hh,
+	* mln/morpho/elementary/dilation.hh,
+	* mln/morpho/elementary/erosion.hh,
+	* mln/morpho/elementary/gradient.hh,
+	* mln/morpho/elementary/gradient_external.hh,
+	* mln/morpho/elementary/gradient_internal.hh,
+	* mln/morpho/elementary/laplacian.hh,
+	* mln/morpho/elementary/opening.hh,
+	* mln/morpho/elementary/top_hat.hh,
+	* mln/morpho/general.hh,
+	* mln/morpho/tree/compute_parent.hh,
+	* mln/morpho/tree/max.hh,
+	* mln/transform/distance_front.hh,
+	* mln/transform/distance_geodesic.hh,
+	* mln/transform/influence_zone_front.hh,
+	* mln/transform/influence_zone_geodesic.hh,
+	* mln/win/sym.hh: enable preconditions.
+
+2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
   
 	Cleanup accu::rms.
 

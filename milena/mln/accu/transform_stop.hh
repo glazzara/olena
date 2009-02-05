@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -65,7 +66,7 @@ namespace mln
 
       namespace generic
       {
-	
+
 	template <typename I, typename A, typename W>
 	mln_ch_value(I, mln_result(A))
 	transform_stop(const Image<I>& input_,
@@ -79,10 +80,10 @@ namespace mln
 	  A a = exact(a_);
 
 	  mln_precondition(input.is_valid());
-	  // mln_precondition(win.is_valid());
+	  mln_precondition(win.is_valid());
 
 	  extension::adjust(input, win);
-	  
+
 	  mln_ch_value(I, mln_result(A)) output;
 	  initialize(output, input);
 
@@ -106,7 +107,7 @@ namespace mln
 
       } // end of namespace mln::accu::impl::generic
 
-	
+
       // Fastest version.
 
       template <typename I, typename A, typename W>
@@ -120,10 +121,10 @@ namespace mln
 	A a = exact(a_);
 
 	mln_precondition(input.is_valid());
-	// mln_precondition(win.is_valid());
+	mln_precondition(win.is_valid());
 
 	extension::adjust(input, win);
-	  
+
 	typedef mln_ch_value(I, mln_result(A)) O;
 	O output;
 	initialize(output, input);
@@ -147,7 +148,7 @@ namespace mln
 	return output;
       }
 
-      
+
     } // end of namespace mln::accu::impl
 
 
@@ -193,7 +194,7 @@ namespace mln
       trace::entering("accu::transform_stop");
 
       mln_precondition(exact(input).is_valid());
-      // mln_precondition(exact(win).is_valid());
+      mln_precondition(exact(win).is_valid());
 
       mln_ch_value(I, mln_result(A)) output;
       output = internal::transform_stop_dispatch(input, a, win);
@@ -209,7 +210,7 @@ namespace mln
       trace::entering("accu::transform_stop");
 
       mln_precondition(exact(input).is_valid());
-      // mln_precondition(exact(win).is_valid());
+      mln_precondition(exact(win).is_valid());
 
       typedef mln_accu_with(A, mln_value(I)) A_;
       A_ a_ = accu::unmeta(exact(a), mln_value(I)());

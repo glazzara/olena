@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -100,10 +101,10 @@ namespace mln
 	trace::entering("morpho::elementary::dilation");
 
 	mln_precondition(exact(input).is_valid());
-	// mln_precondition(exact(nbh).is_valid());
+	mln_precondition(exact(nbh).is_valid());
 
 	mln_concrete(I) output = internal::dilation_dispatch(input, nbh);
-	
+
 	mln_postcondition(output >= input);
 	trace::exiting("morpho::elementary::dilation");
 	return output;

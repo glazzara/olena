@@ -100,10 +100,10 @@ namespace mln
 	trace::entering("morpho::elementary::erosion");
 
 	mln_precondition(exact(input).is_valid());
-	// mln_precondition(exact(nbh).is_valid());
+	mln_precondition(exact(nbh).is_valid());
 
 	mln_concrete(I) output = internal::erosion_dispatch(input, nbh);
-	
+
 	mln_postcondition(output <= input);
 	trace::exiting("morpho::elementary::erosion");
 	return output;

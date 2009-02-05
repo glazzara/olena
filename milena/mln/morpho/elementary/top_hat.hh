@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_MORPHO_ELEMENTARY_TOP_HAT_HH
 # define MLN_MORPHO_ELEMENTARY_TOP_HAT_HH
 
-/*! \file mln/morpho/elementary/top_hat.hh
- *
- * \brief Morphological elementary top-hats.
- *
- * \todo Save memory.
- */
+/// \file mln/morpho/elementary/top_hat.hh
+///
+/// Morphological elementary top-hats.
+///
+/// \todo Save memory.
 
 # include <mln/morpho/elementary/opening.hh>
 # include <mln/morpho/elementary/closing.hh>
@@ -89,7 +89,7 @@ namespace mln
       {
 	trace::entering("morpho::elementary::top_hat_white");
 	mln_precondition(exact(input).is_valid());
-	// mln_precondition(exact(nbh).is_valid());
+	mln_precondition(exact(nbh).is_valid());
 
 	mln_concrete(I) output = morpho::minus(input,
 					       opening(input, nbh));
@@ -107,7 +107,7 @@ namespace mln
       {
 	trace::entering("morpho::elementary::top_hat_black");
 	mln_precondition(exact(input).is_valid());
-	// mln_precondition(exact(nbh).is_valid());
+	mln_precondition(exact(nbh).is_valid());
 
 	mln_concrete(I) output = morpho::minus(closing(input, nbh),
 					       input);
@@ -125,7 +125,7 @@ namespace mln
       {
 	trace::entering("morpho::elementary::top_hat_self_complementary");
 	mln_precondition(exact(input).is_valid());
-	// mln_precondition(exact(nbh).is_valid());
+	mln_precondition(exact(nbh).is_valid());
 
 	mln_concrete(I) output = morpho::minus(closing(input, nbh),
 					       opening(input, nbh));

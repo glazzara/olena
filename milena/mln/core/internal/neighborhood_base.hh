@@ -133,6 +133,9 @@ namespace mln
       /// Site associated type.
       typedef mln_site(W) site;
 
+      /// Return true by default.
+      bool is_valid() const;
+
     protected:
       neighborhood_base();
     };
@@ -151,6 +154,13 @@ namespace mln
     {
     }
 
+    template <typename W, typename E>
+    inline
+    bool
+    neighborhood_base<W,E>::is_valid() const
+    {
+      return true;
+    }
 
     // neighborhood_impl
 

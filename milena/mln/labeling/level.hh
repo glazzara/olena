@@ -79,7 +79,7 @@ namespace mln
 		  L& nlabels)
       {
 	mln_precondition(exact(input).is_valid());
-	// mln_precondition(exact(nbh).is_valid());
+	mln_precondition(exact(nbh).is_valid());
 
 	(void) input;
 	(void) val;

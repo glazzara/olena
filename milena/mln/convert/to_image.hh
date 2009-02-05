@@ -108,7 +108,7 @@ namespace mln
     to_image(const Window<W>& win)
     {
       mln_is_simple_window(W)::check();
-      // mln_precondition(exact(win).is_valid());
+      mln_precondition(exact(win).is_valid());
       mln_image_from_grid(mln_site(W)::grid, bool) tmp;
       convert::from_to(win, tmp);
       return tmp;
@@ -120,7 +120,7 @@ namespace mln
     to_image(const Weighted_Window<W>& w_win)
     {
       mln_is_simple_window(W)::check();
-      // mln_precondition(exact(w_win).is_valid());
+      mln_precondition(exact(w_win).is_valid());
       mln_image_from_grid(mln_site(W)::grid, mln_weight(W)) tmp;
       convert::from_to(exact(w_win), tmp);
       return tmp;
@@ -131,7 +131,7 @@ namespace mln
     mln_image_from_grid(mln_site(N)::grid, bool)
     to_image(const Neighborhood<N>& nbh)
     {
-      // mln_precondition(exact(nbh).is_valid());
+      mln_precondition(exact(nbh).is_valid());
       return to_image(exact(nbh).win());
     }
 

@@ -77,7 +77,7 @@ namespace mln
       mlc_equal(mln_trait_image_kind(I),
 		mln::trait::image::kind::binary)::check();
       mln_precondition(exact(input).is_valid());
-      // mln_precondition(exact(nbh).is_valid());
+      mln_precondition(exact(nbh).is_valid());
 
       mln_ch_value(I, L) output = labeling::level(input, false, nbh, nlabels);
 

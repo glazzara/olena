@@ -69,7 +69,7 @@ namespace mln
 	const N& nbh = exact(nbh_);
 
 	mln_precondition(f.is_valid());
-	// mln_precondition(nbh.is_valid());
+	mln_precondition(nbh.is_valid());
 
 	// For the max-tree, childhood maps "increasing level":
 	p_array<mln_psite(I)> s = level::sort_psites_increasing(f);

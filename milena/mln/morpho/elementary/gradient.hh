@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -62,7 +62,7 @@ namespace mln
 	gradient_tests(const Image<I>& input, const Neighborhood<N>& nbh)
 	{
 	  mln_precondition(exact(input).is_valid());
-	  // mln_precondition(exact(nbh).is_valid());
+	  mln_precondition(exact(nbh).is_valid());
 	  (void) input;
 	  (void) nbh;
 	}

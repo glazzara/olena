@@ -348,7 +348,7 @@ namespace mln
 
 	I& ima = exact(ima_);
 	mln_precondition(! ima.is_valid());
-	// mln_precondition(w_win.is_valid());
+	mln_precondition(w_win.is_valid());
 
 	ima.init_(geom::bbox(w_win));
 	{

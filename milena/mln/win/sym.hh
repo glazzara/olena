@@ -62,7 +62,7 @@ namespace mln
     W sym(const Window<W>& win)
     {
       trace::entering("win::sym");
-      // mln_precondition(win.is_valid());
+      mln_precondition(exact(win).is_valid());
       W tmp = exact(win);
       tmp.sym();
       trace::exiting("win::sym");
@@ -74,7 +74,7 @@ namespace mln
     W sym(const Weighted_Window<W>& w_win)
     {
       trace::entering("win::sym");
-      // mln_precondition(win.is_valid());
+      mln_precondition(exact(w_win).is_valid());
       W tmp = exact(w_win);
       tmp.sym();
       trace::exiting("win::sym");

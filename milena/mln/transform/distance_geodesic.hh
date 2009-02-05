@@ -59,7 +59,7 @@ namespace mln
       trace::entering("transform::distance_geodesic");
 
       mln_precondition(exact(input).is_valid());
-      // mln_precondition(exact(nbh).is_valid());
+      mln_precondition(exact(nbh).is_valid());
 
       mln_ch_value(I, D) output;
       internal::distance_functor<I> f;

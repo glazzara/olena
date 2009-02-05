@@ -65,8 +65,8 @@ namespace mln
       trace::entering("transform::influence_zone_front");
 
       mln_precondition(exact(input).is_valid());
-      // mln_precondition(exact(nbh).is_valid());
-      // mln_precondition(exact(w_win).is_valid());
+      mln_precondition(exact(nbh).is_valid());
+      mln_precondition(exact(w_win).is_valid());
 
       internal::influence_zone_functor<I> f;
       (void) mln::canvas::distance_front(input, nbh, w_win, max, f);

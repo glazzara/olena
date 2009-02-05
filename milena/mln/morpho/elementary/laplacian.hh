@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -66,7 +67,7 @@ namespace mln
 	trace::entering("morpho::elementary::laplacian");
 
 	mln_precondition(exact(input).is_valid());
-	// mln_precondition(exact(nbh).is_valid());
+	mln_precondition(exact(nbh).is_valid());
 
 	mln_trait_op_minus_twice(mln_concrete(I)) output;
 	output = gradient_external(input, nbh) - gradient_internal(input, nbh);

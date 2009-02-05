@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_MORPHO_ELEMENTARY_OPENING_HH
 # define MLN_MORPHO_ELEMENTARY_OPENING_HH
 
-/*! \file mln/morpho/elementary/opening.hh
- *
- * \brief Morphological elementary opening.
- */
+/// \file mln/morpho/elementary/opening.hh
+///
+/// Morphological elementary opening.
 
 # include <mln/morpho/elementary/erosion.hh>
 # include <mln/morpho/elementary/dilation.hh>
@@ -62,7 +62,7 @@ namespace mln
 	trace::entering("morpho::elementary::opening");
 
 	mln_precondition(exact(input).is_valid());
-	// mln_precondition(exact(nbh).is_valid());
+	mln_precondition(exact(nbh).is_valid());
 
 	mln_concrete(I) output = dilation(erosion(input, nbh), nbh);
 

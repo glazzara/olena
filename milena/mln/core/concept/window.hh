@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,8 +33,6 @@
 /// Definition of the concept of mln::Window.
 ///
 /// \todo Operator== should test if the cmp is possible.
-///
-/// \todo Add an is_valid() method.
 ///
 /// \todo The is_centered() method could also exist when the window is
 /// not regular...
@@ -327,7 +325,7 @@ namespace mln
     const I& ima = exact(ima_);
     const W& win = exact(win_);
     mln_precondition(ima.is_valid());
-    // mln_precondition(win.is_valid());
+    mln_precondition(win.is_valid());
 
     util::array<int> arr;
     unsigned n = win.size();
@@ -357,7 +355,7 @@ namespace mln
 	const W& win = exact(win_);
 	I& ima = exact(ima_);
 
-	// mln_precondition(win.is_valid());
+	mln_precondition(win.is_valid());
 	mln_precondition(! ima.is_valid());
 
 	// Hack (below) to avoid circular dependency.
