@@ -11,8 +11,11 @@
 
 #include <mln/essential/3d.hh>
 #include <mln/core/image/slice_image.hh>
+#include <mln/core/image/tr_image.hh>
+#include <mln/core/image/interpolated.hh>
 
 #include <mln/io/cloud/load.hh>
+#include <mln/util/timer.hh>
 
 struct threshold : mln::Function_p2b<threshold>
 {
@@ -219,11 +222,11 @@ keep_largest_component(const mln::Image<I>& ima)
   using namespace mln;
 
   image2d<bool> in_bw_cleaned = fill_holes(ima);
-  io::pbm::save(in_bw_cleaned, "0x_in_bw_cleaned.pbm");
+  io::pbm::save(in_bw_cleaned, "in_bw_cleaned.pbm");
 
   logical::not_inplace(in_bw_cleaned);
   image2d<bool> in_bw_cleaned_full = fill_holes(in_bw_cleaned);
-  io::pbm::save(in_bw_cleaned_full, "0x_in_bw_cleaned_full.pbm");
+  io::pbm::save(in_bw_cleaned_full, "in_bw_cleaned_full.pbm");
 
   logical::not_inplace(in_bw_cleaned_full);
   return in_bw_cleaned_full;
@@ -244,13 +247,47 @@ get_main_object_shape(const mln::Image<I>& in)
 //  J ima = keep_largest_component(in_bw);
   J ima = keep_largest_component(in);
 //  io::pbm::save(in_bw, "02_ima.pbm");
-  io::pbm::save(in, "02_ima.pbm");
+  io::pbm::save(in, "ima.pbm");
 
   std::cout << "Compute gradient" << std::endl;
   J ima_grad = morpho::gradient(ima, win_c4p());
-  io::pbm::save(ima_grad, "03_ima_grad.pbm");
+  io::pbm::save(ima_grad, "ima_grad.pbm");
 
   return ima_grad;
+}
+
+
+namespace mln
+{
+
+  namespace debug
+  {
+    template <typename I, typename T>
+    void
+    compare_registration(Image<I>& P_, Image<I>& X_, const T& transf)
+    {
+      I& P = exact(P_);
+      I& X = exact(X_);
+
+      mln_pset(I) box = geom::bbox(X);
+      box.enlarge(40);
+
+      typedef mln_ch_value(I,value::rgb8) result_t;
+      result_t result(box);
+      extension_fun<result_t,pw::cst_<mln_value(result_t)> > ext_result(result, pw::cst(value::rgb8(0,0,0)));
+      extension_fun<I,pw::cst_<mln_value(I)> > ext_X(X, pw::cst(false));
+
+      data::fill(ext_result, literal::black);
+      data::fill((ext_result | (pw::value(ext_X) == true)).rw(), literal::white);
+
+      mln_VAR(ig, (P | pw::value(P) == true));
+      mln_piter(ig_t) p(ig.domain());
+      for_all(p)
+	ext_result(transf(p.to_vec())) = literal::green;
+
+      io::ppm::save(slice(ext_result,0), "registered-1.ppm");
+    }
+  }
 }
 
 
@@ -288,21 +325,19 @@ int main(int, char* argv[])
   K in_3d = convert::to<K>(in_3d_);
   K ref_3d = convert::to<K>(ref_3d_);
 
-  registration::basic_closest_point<point3d> closest_point(ref_3d_);
+  registration::closest_point_with_map<point3d> closest_point(ref_3d_);
+//  registration::closest_point_basic<point3d> closest_point(ref_3d_);
+
+  util::timer t;
+  t.start();
+
   typedef rotation<3u,float> rot_t;
   typedef translation<3u,float> trans_t;
-  composed<rot_t,trans_t> qk = registration::icp(in_3d_, ref_3d_, closest_point);
+  composed<trans_t,rot_t> qk = registration::icp_clean2(in_3d_, ref_3d_, closest_point);
+
+  std::cout << "igr.cc - Registration - " << t << std::endl;
 
   std::cout << "* Build result image" << std::endl;
-  box3d box = geom::bbox(ref_3d);
-  box.enlarge(40);
-  K res(box);
-  data::fill(res, false);
+  debug::compare_registration(in_3d, ref_3d, qk);
 
-  mln_VAR(ig, (in_3d | pw::value(in_3d) == true));
-  mln_piter_(ig_t) p(ig.domain());
-  for_all(p)
-    res(qk(p.to_vec())) = true;
-
-  io::pbm::save(slice(res,0), "04_registered.pbm");
 }

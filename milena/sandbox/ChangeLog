@@ -1,3 +1,10 @@
+2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update IGR's code.
+
+	* lazzara/igr.cc: update code. Add more debug and use a new variant of
+	ICP.
+
 2009-02-05  Fabien Freling  <freling@lrde.epita.fr>
 
 	Enable the fastest version of labeling.
