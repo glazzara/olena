@@ -1,4 +1,11 @@
 2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
+  
+	Cleanup accu::rms.
+
+	* mln/accu/rms.hh: rename attributes and add a hook to the underlying
+	values.
+
+2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add debug::histo.
 

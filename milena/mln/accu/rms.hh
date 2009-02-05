@@ -66,13 +66,17 @@ namespace mln
       /// Get the value of the accumulator.
       V to_result() const;
 
+      /// Return the underlying value used to compute the result.
+      /// v = sum(t * t);
+      V hook_value_() const;
+
       /// Check whether this accu is able to return a result.
       /// Always true here.
       bool is_valid() const;
 
     protected:
 
-      V t_;
+      V v_;
       unsigned count_;
     };
 
@@ -107,7 +111,7 @@ namespace mln
     void
     rms<T,V>::init()
     {
-      t_ = literal::zero;
+      v_ = literal::zero;
       count_ = 0;
     }
 
@@ -116,7 +120,7 @@ namespace mln
     void
     rms<T,V>::take_as_init(const T& t)
     {
-      t_ += t * t;
+      v_ += t * t;
       ++count_;
     }
 
@@ -125,7 +129,7 @@ namespace mln
     void
     rms<T,V>::take(const T& t)
     {
-      t_ += t * t;
+      v_ += t * t;
       ++count_;
     }
 
@@ -134,7 +138,7 @@ namespace mln
     void
     rms<T,V>::take(const rms<T,V>& other)
     {
-      t_ += other.t_;
+      v_ += other.v_;
       count_ += other.count_;
     }
 
@@ -144,8 +148,16 @@ namespace mln
     rms<T,V>::to_result() const
     {
       if (count_ == 0)
-	return literal::zero;
-      return math::sqrt<V>(t_ / count_);
+	return V(0);
+      return math::sqrt<V>(v_ / count_);
+    }
+
+    template <typename T, typename V>
+    inline
+    V
+    rms<T,V>::hook_value_() const
+    {
+      return v_;
     }
 
     template <typename T, typename V>
