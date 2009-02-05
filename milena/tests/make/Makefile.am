@@ -4,6 +4,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
   dual_neighb					\
+  h_mat 					\
   image2d					\
   image3d					\
   mat						\
@@ -11,6 +12,7 @@ check_PROGRAMS =				\
   w_window_directional
 
 dual_neighb_SOURCES = dual_neighb.cc
+h_mat_SOURCES = h_mat.cc
 image2d_SOURCES = image2d.cc
 image3d_SOURCES = image3d.cc
 mat_SOURCES = mat.cc

@@ -1,5 +1,14 @@
 2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix make::h_mat.
+
+	* mln/make/h_mat.hh: fix wrong loop.
+
+	* tests/make/Makefile.am,
+	* tests/make/h_mat.cc: add a missing test.
+	
+2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix wrong comments in fun::x2x:composed.
 
 	* mln/fun/x2x/composed.hh: Comments were wrong, they are fixed. The

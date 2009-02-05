@@ -78,22 +78,23 @@ namespace mln
     template <typename T, unsigned d>
     inline
     algebra::h_mat<d,T>
-    h_mat(const T (&tab)[(d+1)*(d+1)])
+    h_mat(const T (&tab)[(d)*(d)])
     {
+      std::cout << "plap" << std::endl;
       algebra::h_mat<d,T> tmp;
-      for (unsigned i = 0; i <= d; ++i)
-	tmp(i / (d+1), i % (d+1)) = tab[i];
+      for (unsigned i = 0; i < d; ++i)
+	tmp(i / (d), i % (d)) = tab[i];
       return tmp;
     }
 
 
     template <typename T, unsigned d>
     algebra::h_mat<d,T>
-    h_mat(const T (&tab)[d+1][d+1])
+    h_mat(const T (&tab)[d][d])
     {
       algebra::h_mat<d,T> tmp;
-      for (unsigned i = 0; i <= d; ++i)
-        for (unsigned j = 0; j <= d; ++j)
+      for (unsigned i = 0; i < d; ++i)
+        for (unsigned j = 0; j < d; ++j)
 	  tmp(i, j) = tab[i][j];
       return tmp;
     }
