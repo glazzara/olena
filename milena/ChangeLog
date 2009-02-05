@@ -1,5 +1,12 @@
 2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix wrong comments in fun::x2x:composed.
+
+	* mln/fun/x2x/composed.hh: Comments were wrong, they are fixed. The
+	template parameter names are also more explicit.
+
+2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add is_valid() to window and neighborhood.
 
 	* mln/core/internal/neighborhood_base.hh,
