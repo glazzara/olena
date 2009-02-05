@@ -98,7 +98,7 @@ namespace mln
       inline
       void closest_point_functor<I>::process(const P& p, const P& n)
       {
-	cp_ima(n) = p;
+	cp_ima(n) = cp_ima(p);
       }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,4 +1,18 @@
 2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
+    
+	Small changes in transformation related classes.
+
+	* mln/algebra/quat.hh: use mln_precondition instead of assert.
+
+	* mln/core/image/interpolated.hh: add a fixme.
+
+	* mln/fun/x2x/translation.hh: add a missing accessor to the
+	translation vector.
+
+	* mln/transform/internal/closest_point_functor.hh: fix wrong update of
+	the closest point image.
+
+2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix make::h_mat.
 

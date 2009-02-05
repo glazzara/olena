@@ -105,6 +105,7 @@ namespace mln
 
 
     /// Constructors.
+    ///FIXME: don't we want a 'const' here?
     interpolated(I& ima);
     interpolated();
 

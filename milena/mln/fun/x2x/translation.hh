@@ -75,6 +75,9 @@ namespace mln
         /// Set a net translation vector.
         void set_t(const algebra::vec<n,C>& t);
 
+	/// Return the translation vector.
+	const algebra::vec<n,C>& t() const;
+
       protected:
         void update();
 
@@ -123,6 +126,14 @@ namespace mln
       {
         this->t_ = t;
         this->update();
+      }
+
+      template <unsigned n, typename C>
+      inline
+      const algebra::vec<n,C>&
+      translation<n,C>::t() const
+      {
+        return this->t_;
       }
 
       template <unsigned n, typename C>

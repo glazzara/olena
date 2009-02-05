@@ -410,7 +410,7 @@ namespace mln
     inline
     quat quat::inv() const
     {
-      assert(! is_null());
+      mln_precondition(! is_null());
       float f = norm::l2(v_);
       return conj().to_vec() / (f * f);
     }
