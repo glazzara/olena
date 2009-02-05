@@ -47,9 +47,6 @@ int main(int argc, char* argv[])
   mln_VAR(g, cplx2d::f_to_g(f) );
   debug::println("g:", g);
 
-  typedef mln_value_(g_t) T;                 //  <---  Type of edge values.
-  typedef mln_psite_(g_t) E;                 //  <---  Type of edges.
-
 
   // w: watershed labeling on edges.
 
@@ -109,5 +106,4 @@ int main(int argc, char* argv[])
   // -> pseudo-tree
 
   compute_pseudo_tree(w, g, ls, a, e_to_l1_l2);
-
 }
