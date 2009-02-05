@@ -154,7 +154,7 @@ namespace mln
 
 	  // First Pass.
 	  {
-	    mln_fwd_piter(S) p(f.s);
+	    mln_fwd_piter(S) p(s);
 	    mln_niter(N) n(nbh, p);
 	    for_all(p) if (f.handles(p))
 	      {
@@ -184,7 +184,7 @@ namespace mln
 
 	  // Second Pass.
 	  {
-	    mln_bkd_piter(S) p(f.s);
+	    mln_bkd_piter(S) p(s);
 	    for_all(p) if (f.handles(p))
 	      {
 		if (parent(p) == p) // if p is root
@@ -530,7 +530,7 @@ namespace mln
 	    &&
 	    mln_is_simple_neighborhood(N)::value
 	};
-	return labeling_sorted_dispatch(metal::bool_<test>(),
+	return labeling_sorted_dispatch(metal::false_(),
 	    input, nbh, nlabels,
 	    functor, increasing);
       }

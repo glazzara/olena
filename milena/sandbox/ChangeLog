@@ -1,5 +1,12 @@
 2009-02-05  Fabien Freling  <freling@lrde.epita.fr>
 
+	Correct generic implementation labeling.
+	* fabien/labeling.hh: Minor fixes, fastest version off.
+	* fabien/regional_maxima.cc: Print output.
+	* fabien/regional_maxima.hh: Correct generic impl.
+
+2009-02-05  Fabien Freling  <freling@lrde.epita.fr>
+
 	Compile fastest versions of labeling.
 	* fabien/labeling.hh: Compile fastest versions.
 	* fabien/regional_maxima.cc: Simple test file.

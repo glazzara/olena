@@ -84,15 +84,15 @@ namespace mln
 
 	void init()                              { data::fill(attr, true); }
 	bool handles(const P&) const             { return true; }
-	bool labels(const P& p) const            { return attr.element(p); }
-	bool equiv(const P& n, const P& p) const { return input.element(n) ==
-	    input.element(p); }
-	void do_no_union(const P& n, const P& p) { mln_invariant(input.element(n) >
-								 input.element(p));
-	  attr.element(p) = false; }
+	bool labels(const P& p) const            { return attr(p); }
+	bool equiv(const P& n, const P& p) const { return input(n) ==
+						   input(p); }
+	void do_no_union(const P& n, const P& p) { mln_invariant(input(n) >
+								 input(p));
+						   attr(p) = false; }
 	void init_attr(const P&)                 {}
-	void merge_attr(const P& r, const P& p)  { attr.element(p) = attr.element(p) &&
-	    attr.element(r); }
+	void merge_attr(const P& r, const P& p)  { attr(p) = attr(p) &&
+	    attr(r); }
 
 	// Fastest implementation
 

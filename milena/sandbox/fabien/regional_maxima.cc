@@ -38,6 +38,7 @@
 #include "regional_maxima.hh"
 
 #include <tests/data.hh>
+#include <mln/debug/println.hh>
 
 
 int main()
@@ -48,6 +49,6 @@ int main()
   image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/tiny.pgm");
 
   unsigned n;
-  labeling::regional_maxima(lena, c4(), n);
+  debug::println(labeling::regional_maxima(lena, c4(), n));
   mln_assertion(n == 25);
 }
