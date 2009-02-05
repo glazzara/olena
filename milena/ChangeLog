@@ -1,4 +1,10 @@
 2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new ICP variants.
+
+	* mln/registration/icp2.hh: Add two new variants.
+
+2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
     
 	Small changes in transformation related classes.
 
