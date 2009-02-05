@@ -46,9 +46,12 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/tiny.pgm");
+  image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/lena.pgm");
 
   unsigned n;
-  debug::println(labeling::regional_maxima(lena, c4(), n));
+  for (int i = 0; i < 10; ++i)
+  {
+    labeling::regional_maxima(lena, c4(), n);
+  }
   mln_assertion(n == 25);
 }

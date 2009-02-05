@@ -530,7 +530,7 @@ namespace mln
 	    &&
 	    mln_is_simple_neighborhood(N)::value
 	};
-	return labeling_sorted_dispatch(metal::false_(),
+	return labeling_sorted_dispatch(metal::bool_<test>(),
 	    input, nbh, nlabels,
 	    functor, increasing);
       }

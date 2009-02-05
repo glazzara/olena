@@ -1,5 +1,11 @@
 2009-02-05  Fabien Freling  <freling@lrde.epita.fr>
 
+	Enable the fastest version of labeling.
+	* fabien/labeling.hh: Fastest version enabled.
+	* fabien/regional_maxima.cc: Launch 10 times the test.
+
+2009-02-05  Fabien Freling  <freling@lrde.epita.fr>
+
 	Correct generic implementation labeling.
 	* fabien/labeling.hh: Minor fixes, fastest version off.
 	* fabien/regional_maxima.cc: Print output.
