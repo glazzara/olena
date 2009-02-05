@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -26,37 +26,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DEBUG_ALL_HH
-# define MLN_DEBUG_ALL_HH
+#ifndef MLN_DEBUG_HISTO_HH
+# define MLN_DEBUG_HISTO_HH
 
-/// \file mln/debug/all.hh
+/// \file mln/debug/histo.hh
 ///
-/// File that includes all debug-related routines.
+/// save a histogram to a plot data file.
 
+# include <vector>
+# include <mln/core/image/image2d.hh>
+# include <mln/draw/line.hh>
 
 namespace mln
 {
 
-  /// Namespace of routines that help to debug.
   namespace debug
   {
-    /// Implementation namespace of debug namespace.
-    namespace impl {}
-  }
-
-}
 
 
-# include <mln/debug/colorize.hh>
-# include <mln/debug/format.hh>
-# include <mln/debug/draw_graph.hh>
-# include <mln/debug/histo.hh>
-# include <mln/debug/iota.hh>
-# include <mln/debug/println.hh>
-# include <mln/debug/println_with_border.hh>
-# include <mln/debug/put_word.hh>
-# include <mln/debug/quiet.hh>
-# include <mln/debug/slices_2d.hh>
+    void
+    histo_plot(const histo::array<unsigned>& h, const std::string& filename);
+
+    void
+    histo_plot(const std::vector<unsigned>& h, const std::string& filename);
+
+# ifndef MLN_INCLUDE_ONLY
+
+    void
+    histo_plot(const histo::array<unsigned>& h, const std::string& filename)
+    {
+      mln_precondition(h.is_valid());
+      histo_plot(h.vect(), filename);
+    }
+
+    void
+    histo_plot(const std::vector<unsigned>& h, const std::string& filename)
+    {
+      std::ofstream file(filename.c_str());
+      if (! file)
+      {
+	std::cerr << "error: cannot open file '" << filename << "'!";
+	abort();
+      }
+
+      for (unsigned i = 0; i < h.size(); ++i)
+	file << i << ' ' << h[i] << std::endl;
+    }
 
 
-#endif // ! MLN_DEBUG_ALL_HH
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::debug
+
+} // end of namespace mln
+
+
+#endif // ! MLN_DEBUG_HISTO_HH

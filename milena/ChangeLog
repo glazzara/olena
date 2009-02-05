@@ -1,3 +1,11 @@
+2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add debug::histo.
+
+	* mln/debug/histo.hh: new. Print a histogram into a plot data file.
+
+	* mln/debug/all.hh: include this new header.
+
 2009-02-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the generation of milena/headers.mk.
