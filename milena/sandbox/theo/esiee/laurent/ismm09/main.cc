@@ -91,19 +91,20 @@ int main(int argc, char* argv[])
 				       w, // image of labels
 				       l_max);
 
-  util::array<L> ls = sort_by_increasing_attributes(a, l_max);
+  util::array<L> l_ = sort_by_increasing_attributes(a, l_max);
 
-//   {
-//     std::cout << "ls:" << std::endl;
-//     for (unsigned i = 1; i <= l_max; ++i)
-//       std::cout << ls[i] << "(" << a[ls[i]] << ") ";
-//     std::cout << std::endl
-// 	      << std::endl;
-//   }
+  {
+    std::cout << "l_:" << std::endl;
+    for (unsigned i = 1; i <= l_max; ++i)
+      std::cout << l_[i] << "(" << a[l_[i]] << ") ";
+    std::cout << std::endl
+	      << std::endl;
+  }
 
 
 
   // -> pseudo-tree
 
-  compute_pseudo_tree(w, g, ls, a, e_to_l1_l2);
+  compute_pseudo_tree(w_ext, g, l_, a, e_to_l1_l2);
+
 }

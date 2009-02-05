@@ -1,9 +1,24 @@
 
 #include <mln/core/concept/image.hh>
+#include <mln/core/site_set/p_set.hh>
 #include <mln/core/site_set/p_queue.hh>
 #include <mln/core/site_set/p_priority.hh>
+
 #include <mln/data/fill.hh>
+#include <mln/data/paste.hh>
 #include <mln/util/array.hh>
+
+#include "lca.hh"
+
+
+// FIXME: Move elsewhere.
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/morpho/dilation.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/io/pgm/save.hh>
+#include <mln/level/stretch.hh>
+
 
 
 
@@ -178,18 +193,22 @@ namespace mln
 	    typename F>
   void
   compute_pseudo_tree(const W& w,
-		      const G& g,
-		      const util::array<L>& ls,
-		      const A& a,
+		      const G& g, // FIXME: Directly input g_line?
+		      const util::array<L>& l_,
+		      const util::array<A>& a,
 		      const F& e_to_l1_l2)
   {
 
     typedef mln_value(G) T;    //  <---  Type of edge values.
     typedef mln_psite(G) E;    //  <---  Type of edges.
 
-    const L l_max = ls.nelements() - 1;
+    const L l_max = l_.nelements() - 1;
 
     mln_VAR( g_line, g | (pw::value(w) == 0) );
+
+
+    // Initialization.
+    // -----------------------------------
 
 
     // Edges -> Priority queue.
@@ -212,8 +231,12 @@ namespace mln
 
 
 
-    // Initialization.
-    // -----------------------------------
+
+    // 'aa' is the resulting attributes on edges.
+
+    mln_ch_value(g_line_t, A) aa;
+    initialize(aa, g_line);
+    data::fill(aa, 0); // FIXME: Safety iff 0 is an invalidate attribute value!
 
 
 
@@ -274,12 +297,13 @@ namespace mln
 
     for (unsigned i = 1; i < l_max; ++i)
       {
-	L l = ls[i]; // Region label.
+	L l = l_[i]; // Region label.
 	L l1, l2;
 	E e;
 	get_smallest_edge(q, // in-out
 			  l, w, lpar, e_to_l1_l2, // in
 			  e, l1, l2); // out
+	aa(e) = a[l];
 
 	L l1r = find_root_l(lpar, l1),
 	  l2r = find_root_l(lpar, l2);
@@ -288,7 +312,7 @@ namespace mln
 	{
 	  if (i > 1)
 	    {
-	      L former_l = ls[i-1];
+	      L former_l = l_[i-1];
 	      mln_invariant(a[l] >= a[former_l]);
 	    }
 	  mln_invariant(epar(e) == e); // 'e' has not been processed yet.
@@ -300,11 +324,6 @@ namespace mln
 			|| ((lr == l1r && lr != l2r) || // or l belongs to l1r xor l2r.
 			    (lr == l2r && lr != l1r)));
 	}
-
-
-
-	// aa(e) = a[l]; // FIXME: Re-activate.
-
 
 
 	/*
@@ -422,7 +441,11 @@ namespace mln
 
 
     {
-      // Display edge tree.
+      // Display 'aa' over all edges.
+
+      debug::println("aa (on 'passing' edges):", aa);
+
+      // Display "edge tree".
 
       mln_ch_value(g_line_t, bool) deja_vu;
       initialize(deja_vu, g_line);
@@ -435,15 +458,140 @@ namespace mln
 	  E e = edge[l];
 	  while (! deja_vu(e))
 	    {
-	      std::cout << e << " -> ";
+	      std::cout << e << " [" << aa(e) << "] -> ";
+	      mln_invariant(aa(e) != 0 && aa(epar(e)) != 0); // aa is valid
+	      mln_invariant(aa(epar(e)) >= aa(e));           // edge parenthood goes with 'aa' increasing
 	      deja_vu(e) = true;
 	      e = epar(e);
 	    }
 	  std::cout << e << std::endl;
 	}
+      std::cout << std::endl;
+
+      // Display "region l -> edge e".
+
+      std::cout << "region:(edge)  =  ";
+      for (L l = 1; l <= l_max; ++l)
+	std::cout << l << ':' << edge[l] << "  ";
+      std::cout << std::endl
+		<< std::endl;
+	
+    } // end of Display.
+
+
+
+    // Testing both that all regions and all "smallest" edges have
+    // merged (assumption: connected domain!).
+
+    {
+      L l_1 = l_[1],
+	l_root = find_root_l(lpar, l_1);
+      mln_invariant(edge[l_1] != null);
+      E e_root = find_root_e(z_epar, edge[l_1]);
+      for (unsigned i = 2; i <= l_max; ++i)
+	{
+	  L l = l_[i];
+	  mln_invariant(find_root_l(lpar, l) == l_root);
+	  mln_invariant(edge[l] != null);
+	  mln_invariant(find_root_e(z_epar, edge[l]) == e_root);
+	}
     }
 
+
+    // Finalization.
+
+    A aa_max = mln_min(A);
+
+    {
+      mln_VAR(aa_ext, aa.unmorph_().unmorph_());
+
+
+      debug::println("aa ext (1):", aa_ext);
+
+
+      std::vector<E> roots;
+      mln_VAR(chl, compute_children(epar, edge, l_max, roots));
+
+      // Connected domain so:
+      mln_invariant(roots.size() == 1);
+      E root = roots[0]; // THE root.
+
+      lca_t<L,chl_t,E> lca(l_max, chl, roots);
+
+      mln_piter(g_line_t) e(g_line.domain());
+      for_all(e)
+      {
+	L l1, l2;
+	e_to_l1_l2(e, l1, l2);
+	mln_invariant(l1 != 0 && l2 > l1);
+	E e_ = lca(edge[l1],edge[l2]);
+
+	mln_invariant(g_line.has(e_)); // e_ is a valid edge.
+	mln_invariant(aa(e_) != 0);    // aa is valid at e_.
+      
+	// The attribute value propagates from the lca to the current edge
+	// of the line:
+	aa(e) = aa(e_);
+	if (aa(e) > aa_max)
+	  aa_max = aa(e);
+      }
+      
+      debug::println("aa:", aa);
+
+      debug::println("aa ext (2):", aa_ext);
+
+      {
+	mln_VAR( aa_line, aa_ext | (pw::value(w) == 0) );
+
+	data::paste(morpho::dilation(extend(aa_line | (pw::value(aa_line) == 0),
+					    aa_line),
+				     c4().win()),
+		    aa_line);
+      }
+
+      debug::println("aa ext (3):", aa_ext);
+
+
+      {
+	using value::int_u8;
+	if (aa_max < 256)
+	  {
+	    image2d<int_u8> output(aa_ext.domain());
+	    data::fill(output, 0);
+	    data::paste(aa_ext, output);
+	    io::pgm::save(output, "aa_line.pgm");
+	  }
+	else
+	  {
+	    std::cerr << "warning: stretching [0," << aa_max << "] to int_u8" << std::endl;
+	  
+	    image2d<int_u8> output(aa_ext.domain());
+	    data::fill(output, 0);
+	    data::paste(aa_ext, output);
+	    io::pgm::save(level::stretch(int_u8(), output),
+			  "aa_line.pgm");
+	  }
+      }
+
+
+//       mln_VAR(aa_basins, aa_ext | (pw::value(w) != 0));
+//       {
+// 	mln_piter(aa_basins_t) p(aa_basins.domain());
+// 	for_all(p)
+// 	{
+// 	  L l = w(p);
+// 	  aa_basins(p) = aa( edge[l] ); // FIXME: was: a[w(p)];
+// 	}
+//       }
+
+
+//       debug::println("aa ext (4):", aa_ext);
+
+    }
+
+
   }
+
 
 } // end of namespace mln
 

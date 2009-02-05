@@ -7,7 +7,7 @@ namespace mln
 
   template <typename I, typename E, typename L>
   mln_ch_value(I, std::vector<mln_psite(I)>)
-    compute_children(const I& epar, const std::vector<E>& edge, L l_max, std::vector<E>& roots)
+    compute_children(const I& epar, const util::array<E>& edge, L l_max, std::vector<E>& roots)
   {
     typedef std::vector<mln_psite(I)> C; // Children.
     mln_ch_value(I,C) chl;

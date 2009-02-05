@@ -1,5 +1,15 @@
 2009-02-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Augment Laurent's code.
+
+	* theo/esiee/laurent/ismm09/topo_wst.cc (ls): Rename as...
+	(l_): ...this.
+	* theo/esiee/laurent/ismm09/main.cc: Update.
+	* theo/esiee/laurent/ismm09/pseudo_tree.hh: Augment.
+	* theo/esiee/laurent/ismm09/lca.hh: Update.
+
+2009-02-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Cleanup Fabien's 1st try.
 
 	* fabien/regional_maxima.hh,
