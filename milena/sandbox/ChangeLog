@@ -1,3 +1,9 @@
+2009-02-05  Fabien Freling  <freling@lrde.epita.fr>
+
+	Handle fastest version of functor.
+	* fabien/labeling.hh: .
+	* fabien/regional_maxima.hh: Fastest version of functor
+
 2009-02-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Clean-up Laurent's code.

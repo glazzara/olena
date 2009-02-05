@@ -56,110 +56,93 @@ namespace mln
      *
      */
     template <typename I, typename N, typename L>
-    mln_ch_value(I, L)
-    regional_maxima(const Image<I>& input, const Neighborhood<N>& nbh,
-		    L& nlabels);
+	  mln_ch_value(I, L)
+	  regional_maxima(const Image<I>& input, const Neighborhood<N>& nbh,
+		  L& nlabels);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
-    {
-
-      // Generic functor.
-
-      template <typename I_, typename N_, typename L_>
-      struct regional_maxima_functor
-      {
-	typedef mln_psite(I_) P;
-
-	// requirements from mln::canvas::labeling:
-
-	typedef I_ I;
-	typedef N_ N;
-	typedef L_ L;
-	typedef p_array<P> S;
-
-	const I& input;
-	const N& nbh;
-	S s;
-
- 	void init()                              { data::fill(attr, true); }
-	bool handles(const P&) const             { return true; }
-	bool labels(const P& p) const            { return attr(p); }
-	bool equiv(const P& n, const P& p) const { return input(n) ==
-                                                          input(p); }
-	void do_no_union(const P& n, const P& p) { mln_invariant(input(n) >
-								 input(p));
-	                                           attr(p) = false; }
-	void init_attr(const P&)                 {}
-	void merge_attr(const P& r, const P& p)  { attr(p) = attr(p) &&
-	                                           attr(r); }
-
-	// end of requirements
-
-	mln_ch_value(I, bool) attr;
-
-	regional_maxima_functor(const I_& input, const N_& nbh)
-	  : input(input),
-	    nbh(nbh),
-	    s(level::sort_psites_decreasing(input))
+	namespace impl
 	{
-	  initialize(attr, input);
-	}
-      };
+
+	  // Generic functor.
+
+	  template <typename I>
+		struct regional_maxima_functor
+		{
+		  typedef mln_psite(I) P;
+
+		  // requirements from mln::canvas::labeling:
+
+		  const I& input;
+
+		  // Generic implementation
+
+		  void init()                              { data::fill(attr, true); }
+		  bool handles(const P&) const             { return true; }
+		  bool labels(const P& p) const            { return attr.element(p); }
+		  bool equiv(const P& n, const P& p) const { return input.element(n) ==
+													 input.element(p); }
+		  void do_no_union(const P& n, const P& p) { mln_invariant(input.element(n) >
+			  										 input.element(p));
+		  											 attr.element(p) = false; }
+		  void init_attr(const P&)                 {}
+		  void merge_attr(const P& r, const P& p)  { attr.element(p) = attr.element(p) &&
+													 attr.element(r); }
+
+		  // Fastest implementation
+
+		  void init_()                              { data::fill(attr, true); }
+		  bool handles_(unsigned p) const           { return true; }
+		  bool labels_(unsigned p) const            { return attr.element(p); }
+		  bool equiv_(unsigned n, unsigned p) const { return input.element(n) ==
+													  input.element(p); }
+		  void do_no_union_(unsigned n, unsigned p) { mln_invariant(input.element(n) >
+			  										  input.element(p));
+		  											  attr.element(p) = false; }
+		  void init_attr_(const P&)                 {}
+		  void merge_attr_(unsigned r, unsigned p)  { attr.element(p) = attr.element(p) &&
+													  attr.element(r); }
+
+		  // end of requirements
+
+		  mln_ch_value(I, bool) attr;
+
+		  regional_maxima_functor(const I_& input, const N_& nbh)
+			: input(input)
+		  {
+			initialize(attr, input);
+		  }
+		};
 
 
-      // Generic implementation.
+	} // end of namespace mln::labeling::impl
 
-      namespace generic
-      {
+
+
+	// Facade.
 
 	template <typename I, typename N, typename L>
-	mln_ch_value(I, L)
-	regional_maxima(const I& input, const N& nbh,
-			 L& nlabels)
-	{
-	  trace::entering("labeling::impl::generic::regional_maxima");
+	  mln_ch_value(I, L)
+	  regional_maxima(const Image<I>& input_, const Neighborhood<N>& nbh_,
+		  			  bool increasing, L& nlabels)
+	  {
+		trace::entering("labeling::regional_maxima");
 
-	  // FIXME: abort if L is not wide enough to encode the set of
-	  // maxima.
+		const I& input = exact(input_);
+		const N& nbh = exact(nbh_);
+		mln_precondition(input.is_valid());
 
-	  typedef impl::regional_maxima_functor<I,N,L> F;
-	  F f(exact(input), exact(nbh));
-	  mln_ch_value(I, L) output = canvas::labeling(input, nbh, f, nlabels);
+		typedef impl::regional_maxima_functor<I> F;
+		F f(exact(input));
+		mln_ch_value(I, L) output = canvas::labeling_sorted(input, nbh, increasing,
+															f, nlabels);
 
-	  trace::exiting("labeling::impl::generic::regional_maxima");
-	  return output;
-	}
-
-      } // end of namespace mln::labeling::impl::generic
-
-
-    } // end of namespace mln::labeling::impl
-
-
-
-    // Facade.
-
-    template <typename I, typename N, typename L>
-    mln_ch_value(I, L)
-      regional_maxima(const Image<I>& input_, const Neighborhood<N>& nbh_,
-		      L& nlabels)
-    {
-      trace::entering("labeling::regional_maxima");
-
-      const I& input = exact(input_);
-      const N& nbh = exact(nbh_);
-      mln_precondition(input.is_valid());
-
-      // Calls the only (generic) impl.
-      mln_ch_value(I, L) output = impl::generic::regional_maxima(input, nbh, nlabels);
-
-      trace::exiting("labeling::regional_maxima");
-      return output;
-    }
+		trace::exiting("labeling::regional_maxima");
+		return output;
+	  }
 
 # endif // ! MLN_INCLUDE_ONLY
 
