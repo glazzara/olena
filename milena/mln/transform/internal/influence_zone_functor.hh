@@ -49,14 +49,21 @@ namespace mln
       struct influence_zone_functor
       {
 	typedef mln_value(I) V;
-	typedef mln_site(I)  P;
+	typedef mln_psite(I)  P;
 
 	mln_concrete(I) output;
 
 	void init(const I& input);
 	bool inqueue_p_wrt_input_p(const V& input_p);
 	bool inqueue_p_wrt_input_n(const V& input_n);
+	void init_p(const P&) {} // FIXME: move def below.
 	void process(const P& p, const P& n);
+
+	void init_(const I& input) { output = duplicate(input); }
+	bool inqueue_p_wrt_input_p_(const V& input_p) { return input_p != 0u; }
+	bool inqueue_p_wrt_input_n_(const V& input_n) { return input_n == 0u; }
+	void init_p_(unsigned) {}
+	void process_(unsigned p, unsigned n) { output.element(n) = output.element(p); }
       };
 
 

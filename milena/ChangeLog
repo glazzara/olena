@@ -1,3 +1,26 @@
+2009-02-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make distance-geodesic-based routines have fastest versions.
+
+	* mln/canvas/distance_geodesic.hh
+	(distance_geodesic_tests, distance_geodesic_dispatch): New.
+	(distance_geodesic_fastest): New.
+	(distance_geodesic): Call dispatch.
+
+	* mln/transform/internal/influence_zone_functor.hh
+	(init_p): New; fix missing.
+	* mln/transform/internal/influence_zone_functor.hh,
+	* mln/transform/internal/closest_point_functor.hh,
+	* mln/transform/internal/distance_functor.hh,
+	(P): Fix.
+	(init_, init_p_, process_): New.
+	(inqueue_p_wrt_input_p_, inqueue_p_wrt_input_n_): New.
+	* mln/transform/closest_point_geodesic.hh: New.
+	* mln/transform/all.hh: Update.
+	* tests/transform/bench_closest_point_geodesic.cc: New.
+	* tests/transform/closest_point_geodesic.cc: New.
+	* tests/transform/Makefile.am: Update.
+
 2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix missing is_valid() in complex and graph windows/neighborhoods.

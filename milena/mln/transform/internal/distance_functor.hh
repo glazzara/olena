@@ -31,6 +31,8 @@
 /// \file mln/transform/internal/distance_functor.hh
 ///
 /// Distance functor.
+///
+/// \todo Move all functors into their corresponding file.
 
 # include <mln/core/macros.hh>
 
@@ -56,6 +58,13 @@ namespace mln
 	void init_p(const P&);
 	bool inqueue_p_wrt_input_n(const V& input_n);
 	void process(const P&, const P&);
+
+
+	void init_(const I&) {}
+	bool inqueue_p_wrt_input_p_(const V& input_p) { return input_p == true; }
+	void init_p_(unsigned) {}
+	bool inqueue_p_wrt_input_n_(const V& input_n) { return input_n == false; }
+	void process_(unsigned, unsigned) {}
       };
 
 

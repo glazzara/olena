@@ -48,7 +48,9 @@ namespace mln
       struct closest_point_functor
       {
 	typedef mln_value(I) V;
-	typedef mln_site(I)  P;
+	typedef mln_psite(I)  P;
+
+	mln_ch_value(I,P) cp_ima;
 
 	void init(const I&);
 	bool inqueue_p_wrt_input_p(const V& input_p);
@@ -56,7 +58,11 @@ namespace mln
 	bool inqueue_p_wrt_input_n(const V& input_n);
 	void process(const P&, const P&);
 
-	mln_ch_value(I,P) cp_ima;
+	void init_(const I& input) { initialize(cp_ima, input); }
+	bool inqueue_p_wrt_input_p_(const V& input_p) { return input_p == true; }
+	void init_p_(unsigned p) { cp_ima.element(p) = cp_ima.point_at_index(p); }
+	bool inqueue_p_wrt_input_n_(const V& input_n) { return input_n == false; }
+	void process_(unsigned p, unsigned n) { cp_ima.element(n) = cp_ima.element(p); }
       };
 
 

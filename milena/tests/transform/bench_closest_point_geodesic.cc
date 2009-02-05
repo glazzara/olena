@@ -25,28 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRANSFORM_ALL_HH
-# define MLN_TRANSFORM_ALL_HH
-
-/// \file mln/transform/all.hh
+/// \file tests/transform/bench_closest_point_geodesic.cc
 ///
-/// File that includes all transforms.
+/// Test on mln::transform::closest_point_geodesic.
+
+#include <cstdlib>
+
+#include <mln/core/image/image3d.hh>
+#include <mln/core/alias/neighb3d.hh>
+#include <mln/data/fill.hh>
+#include <mln/opt/at.hh>
+#include <mln/transform/closest_point_geodesic.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  /// Namespace of transforms.
-  namespace transform {}
+  const unsigned
+    nslis = 100,
+    nrows = 250,
+    ncols = 250;
+  image3d<bool> input(nslis, nrows, ncols);
+  data::fill(input, false);
+  for (unsigned i = 0; i < 100; ++i)
+    opt::at(input,
+	    std::rand() % nslis,
+	    std::rand() % nrows,
+	    std::rand() % ncols) = true;
 
-} // end of namespace mln
+  trace::quiet = false;
 
-
-# include <mln/transform/closest_point_geodesic.hh>
-# include <mln/transform/distance_front.hh>
-# include <mln/transform/distance_geodesic.hh>
-# include <mln/transform/influence_zone_front.hh>
-# include <mln/transform/influence_zone_geodesic.hh>
-
-
-#endif // ! MLN_TRANSFORM_ALL_HH
+  image3d<point3d> output = transform::closest_point_geodesic(input,
+							      c6(),
+							      mln_max(unsigned));
+}
