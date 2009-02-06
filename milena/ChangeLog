@@ -1,5 +1,17 @@
 2009-02-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Have fastest morpho wst flooding, plus several fixes.
+
+	* mln/morpho/watershed/flooding.hh
+	(flooding_fastest): Finalize it.
+	(flooding_dispatch): Activate the fastest version.
+	* mln/io/pnm/load.hh (io::pnm::load): Fix trace balancing.
+	* sandbox/fabien/labeling.hh
+	(labeling_video_fastest): Make it work.
+	* tests/morpho/watershed/flooding.cc: Augment.
+
+2009-02-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Prepare to fast the morpho wst by flooding.
 
 	* mln/morpho/watershed: New directory.

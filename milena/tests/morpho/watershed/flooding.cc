@@ -36,26 +36,54 @@
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/value/int_u8.hh>
+#include <mln/value/int_u16.hh>
 
 #include <mln/morpho/watershed/flooding.hh>
+#include <mln/level/transform.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include "tests/data.hh"
+#include <mln/util/timer.hh>
+
+
+struct f_16_to_8 : mln::Function_v2v< f_16_to_8 >
+{
+  typedef mln::value::int_u8 result;
+  result operator()(const mln::value::int_u16& v) const
+  {
+    if (v == 0)
+      return 0;
+    return 1 + (v - 1) % 255;
+  }
+};
 
 
 int main()
 {
   using namespace mln;
   using value::int_u8;
+  using value::int_u16;
 
   image2d<int_u8> input;
-  io::pgm::load(input, MLN_IMG_DIR "/squares.pgm");
+  io::pgm::load(input, "/squares.pgm");
 
-  typedef int_u8 L;
-  L nbasins;
-  image2d<L> output = morpho::watershed::flooding(input, c4(), nbasins);
-
-  io::pgm::save(output, "out.pgm");
+  typedef int_u16 L;
+  L n_basins;
+  {
+    util::timer t;
+    t.start();
+    image2d<L> output = morpho::watershed::impl::generic::flooding(input, c4(), n_basins);
+    std::cout << "gen:  " << t << std::endl;
+    io::pgm::save(level::transform(output, f_16_to_8()),
+		  "tmp_ref.pgm");
+  }
+  {
+    util::timer t;
+    t.start();
+    image2d<L> output = morpho::watershed::impl::flooding_fastest(input, c4(), n_basins);
+    std::cout << "fast: " << t << std::endl;
+    io::pgm::save(level::transform(output, f_16_to_8()),
+		  "tmp_out.pgm");
+  }
 }

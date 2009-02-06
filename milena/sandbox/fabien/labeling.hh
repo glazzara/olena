@@ -243,12 +243,9 @@ namespace mln
 
 	extension::adjust(input, nbh);
 
-	// Local type.
-	typedef mln_psite(I) P;
-
 	// Auxiliary data.
 	mln_ch_value(I, bool) deja_vu;
-	mln_ch_value(I, P)    parent;
+	mln_ch_value(I, unsigned) parent;
 
 	// Output.
 	mln_ch_value(I, L) output;
@@ -271,53 +268,63 @@ namespace mln
 
 	// First Pass.
 	{
-	  mln_pixter(const I) p(input);
-	  mln_nixter(const I, N) n(p, nbh);
-	  for_all(p) if (f.handles_(p.offset()))
+	  mln_pixter(const I) px(input);
+	  mln_nixter(const I, N) nx(px, nbh);
+	  for_all(px)
 	  {
-	    // Make-Set.
-	    parent(p).val() = p;
-	    f.init_attr_(p.offset());
+	    unsigned p = px.offset();
+	    if (! f.handles_(p))
+	      continue;
 
-	    for_all(n)
-	      if (input.has(n) && deja_vu(n))
-	      {
-		if (f.equiv_(n.offset(), p.offset()))
+	    // Make-Set.
+	    parent.element(p) = p;
+	    f.init_attr_(p);
+	    for_all(nx)
+	    {
+	      unsigned n = nx.offset();
+	      if (deja_vu.element(n))
 		{
-		  // Do-Union.
-		  unsigned r = find_root_fastest(parent, n.val());
-		  if (r != p)
-		  {
-		    parent.element(r) = p;
-		    f.merge_attr_(r, p.offset());
-		  }
-		}
-		else
-		  f.do_no_union_(n.offset(), p.offset());
+		  if (f.equiv_(n, p))
+		    {
+		      // Do-Union.
+		      unsigned r = find_root_fastest(parent, n);
+		      if (r != p)
+			{
+			  parent.element(r) = p;
+			  f.merge_attr_(r, p);
+			}
+		    }
+		  else
+		    f.do_no_union_(n, p);
 	      }
-	    deja_vu(p) = true;
+	    }
+
+	    deja_vu.element(p) = true;
 	  }
 	}
 
 	// Second Pass.
 	{
-	  mln_bkd_pixter(I) p(input);
-	  for_all(p) if (f.handles_(p))
+	  mln_bkd_pixter(const I) px(input);
+	  for_all(px)
 	  {
+	    unsigned p = px.offset();
+	    if (! f.handles_(p))
+	      continue;
 	    if (parent.element(p) == p) // if p is root
-	    {
-	      if (f.labels_(p.offset()))
 	      {
-		if (nlabels == mln_max(L))
-		{
-		  status = false;
-		  return output;
-		}
-		output.element(p) = ++nlabels;
+		if (f.labels_(p))
+		  {
+		    if (nlabels == mln_max(L))
+		      {
+			status = false;
+			return output;
+		      }
+		    output.element(p) = ++nlabels;
+		  }
 	      }
-	    }
 	    else
-	      output.element(p) = output(parent.element(p));
+	      output.element(p) = output.element(parent.element(p));
 	  }
 	  status = true;
 	}

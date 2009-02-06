@@ -192,7 +192,7 @@ namespace mln
 	  if (type == (type_ - 3))
 	    pnm::load_ascii(file, ima);
 
-	trace::entering("mln::io::pnm::load");
+	trace::exiting("mln::io::pnm::load");
 
 	return ima;
       }

@@ -51,6 +51,8 @@
 # include <mln/core/site_set/p_queue_fast.hh>
 # include <mln/core/site_set/p_priority.hh>
 
+# include <mln/extension/adjust_fill.hh>
+
 
 namespace mln
 {
@@ -140,7 +142,7 @@ namespace mln
 	    // the grey level input(P).
 	    mln_piter(I) p(output.domain());
 	    mln_niter(N) n(nbh, p);
-	    for_all (p)
+	    for_all(p)
 	      if (output(p) == unmarked)
 		for_all(n)
 		  if (output.domain().has(n) && output(n) != unmarked)
@@ -157,6 +159,7 @@ namespace mln
 	      {
 		psite p = queue.front();
 		queue.pop();
+
 		// Last seen marker adjacent to P.
 		marker adjacent_marker = unmarked;
 		// Has P a single adjacent marker?
@@ -193,109 +196,127 @@ namespace mln
 			}
 		  }
 	      }
+
 	    trace::exiting("morpho::watershed::impl::generic::flooding");
 	    return output;
 	  }
 
+	} // end of namespace mln::morpho::watershed::impl::generic
 
-	  // Fastest version.
 
-	  template <typename I, typename N, typename L>
-	  mln_ch_value(I, L)
-	    flooding_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_,
-			     L& n_basins)
-	  {
-	    trace::entering("morpho::watershed::impl::flooding_fastest");
-	    /* FIXME: Ensure the input image has scalar values.  */
 
-	    const I input = exact(input_);
-	    const N nbh = exact(nbh_);
+	// Fastest version.
 
-	    typedef L marker;
-	    const marker unmarked = literal::zero;
+	template <typename I, typename N, typename L>
+	mln_ch_value(I, L)
+	  flooding_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_,
+			   L& n_basins)
+	{
+	  trace::entering("morpho::watershed::impl::flooding_fastest");
+	  /* FIXME: Ensure the input image has scalar values.  */
 
-	    typedef mln_value(I) V;
-	    const V max = mln_max(V);
+	  const I input = exact(input_);
+	  const N nbh = exact(nbh_);
 
-	    // Initialize the output with the markers (minima components).
-	    mln_ch_value(I, marker) output =
-	      labeling::regional_minima (input, nbh, n_basins);
+	  typedef L marker;
+	  const marker unmarked = literal::zero;
 
-	    typedef mln_psite(I) psite;
+	  typedef mln_value(I) V;
+	  const V max = mln_max(V);
 
-	    // Ordered queue.
-	    typedef p_queue_fast<psite> Q;
-	    p_priority<V, Q> queue;
+	  extension::adjust_fill(input, nbh, max);
 
-	    // In_queue structure to avoid processing sites several times.
-	    mln_ch_value(I, bool) in_queue;
-	    initialize(in_queue, input);
-	    data::fill(in_queue, false);
+	  // Initialize the output with the markers (minima components).
+	  typedef mln_ch_value(I, L) O;
+	  O output = labeling::regional_minima(input, nbh, n_basins);
+	  extension::fill(output, unmarked);
 
-	    // Insert every neighbor P of every marked area in a
-	    // hierarchical queue, with a priority level corresponding to
-	    // the grey level input(P).
-	    mln_piter(I) p(output.domain());
-	    mln_niter(N) n(nbh, p);
-	    for_all (p)
-	      if (output(p) == unmarked)
-		for_all(n)
-		  if (output.domain().has(n) && output(n) != unmarked)
-		    {
-		      queue.push(max - input(p), p);
-		      in_queue(p) = true;
-		      break;
-		    }
+	  // Ordered queue.
+	  typedef p_queue_fast<unsigned> Q;
+	  p_priority<V, Q> queue;
 
-	    /* Until the queue is empty, extract a psite P from the
-	       hierarchical queue, at the highest priority level, that is,
-	       the lowest level.  */
-	    while (! queue.is_empty())
-	      {
-		psite p = queue.front();
-		queue.pop();
-		// Last seen marker adjacent to P.
-		marker adjacent_marker = unmarked;
-		// Has P a single adjacent marker?
-		bool single_adjacent_marker_p = true;
-		mln_niter(N) n(nbh, p);
-		for_all(n)
-		  if (output.domain().has(n) && output(n) != unmarked)
+	  // FIXME:  With  typedef std::pair<V, unsigned> VU;
+	  //               std::priority_queue<VU> queue;
+	  // we do not get the same results!!!
+
+	  // In_queue structure to avoid processing sites several times.
+	  mln_ch_value(I, bool) in_queue;
+	  initialize(in_queue, input);
+	  data::fill(in_queue, false);
+	  extension::fill(in_queue, true);
+
+	  // Insert every neighbor P of every marked area in a
+	  // hierarchical queue, with a priority level corresponding to
+	  // the grey level input(P).
+	  mln_pixter(const O)    p_out(output);
+	  mln_nixter(const O, N) n_out(p_out, nbh);
+	  for_all(p_out)
+	    if (p_out.val() == unmarked)
+	      for_all(n_out)
+		if (n_out.val() != unmarked)
+		  {
+		    unsigned po = p_out.offset();
+		    queue.push(max - input.element(po), po);
+		    in_queue.element(po) = true;
+		    break;
+		  }
+
+	  /* Until the queue is empty, extract a psite P from the
+	     hierarchical queue, at the highest priority level, that is,
+	     the lowest level.  */
+	  util::array<int> dp = offsets_wrt(input, nbh);
+	  const unsigned n_nbhs = dp.nelements();
+	  while (! queue.is_empty())
+	    {
+	      unsigned p = queue.front();
+	      queue.pop();
+
+	      // Last seen marker adjacent to P.
+	      marker adjacent_marker = unmarked;
+	      // Has P a single adjacent marker?
+	      bool single_adjacent_marker_p = true;
+	      for (unsigned i = 0; i < n_nbhs; ++i)
+		{
+		  unsigned n = p + dp[i];
+		  if (output.element(n) != unmarked) // In the border, output is unmarked so n is ignored.
 		    {
 		      if (adjacent_marker == unmarked)
 			{
-			  adjacent_marker = output(n);
+			  adjacent_marker = output.element(n);
 			  single_adjacent_marker_p = true;
 			}
 		      else
-			if (adjacent_marker != output(n))
+			if (adjacent_marker != output.element(n))
 			  {
 			    single_adjacent_marker_p = false;
 			    break;
 			  }
 		    }
-		/* If the neighborhood of P contains only psites with the
-		   same label, then P is marked with this label, and its
-		   neighbors that are not yet marked are put into the
-		   hierarchical queue.  */
-		if (single_adjacent_marker_p)
-		  {
-		    output(p) = adjacent_marker;
-		    for_all(n)
-		      if (output.domain().has(n) && output(n) == unmarked
-			  && ! in_queue(n))
+		}
+	      /* If the neighborhood of P contains only psites with the
+		 same label, then P is marked with this label, and its
+		 neighbors that are not yet marked are put into the
+		 hierarchical queue.  */
+	      if (single_adjacent_marker_p)
+		{
+		  output.element(p) = adjacent_marker;
+		  for (unsigned i = 0; i < n_nbhs; ++i)
+		    {
+		      unsigned n = p + dp[i];
+		      if (output.element(n) == unmarked
+			  && ! in_queue.element(n)) // In the border, in_queue is true so n is ignored.
 			{
-			  queue.push(max - input(n), n);
-			  in_queue(n) = true;
+			  queue.push(max - input.element(n), n);
+			  in_queue.element(n) = true;
 			}
-		  }
-	      }
-	    trace::exiting("morpho::watershed::impl::flooding_fastest");
-	    return output;
-	  }
+		    }
+		}
+	    }
 
+	  trace::exiting("morpho::watershed::impl::flooding_fastest");
+	  return output;
+	}
 
-	} // end of namespace mln::morpho::watershed::impl::generic
 
       } // end of namespace mln::morpho::watershed::impl
 
@@ -322,8 +343,7 @@ namespace mln
 	  flooding_dispatch(metal::true_,
 			    const Image<I>& input, const Neighborhood<N>& nbh, L& n_basins)
 	{
-	  return impl::generic::flooding(input, nbh, n_basins);
-// 	  return impl::generic::flooding_fastest(input, nbh, n_basins);
+ 	  return impl::flooding_fastest(input, nbh, n_basins);
 	}
 
 	template <typename I, typename N, typename L>
@@ -341,7 +361,7 @@ namespace mln
 				   input, nbh, n_basins);
 	}
 
-      } // end of namespace mln::morpho::watershed::impl
+      } // end of namespace mln::morpho::watershed::internal
 
 
       // Facade.
