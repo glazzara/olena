@@ -86,6 +86,7 @@ namespace mln
 
 # include <mln/morpho/elementary/all.hh>
 # include <mln/morpho/tree/all.hh>
+# include <mln/morpho/watershed/all.hh>
 
 
 

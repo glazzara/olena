@@ -1,5 +1,26 @@
 2009-02-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Prepare to fast the morpho wst by flooding.
+
+	* mln/morpho/watershed: New directory.
+	* mln/morpho/meyer_wst.hh: Copy to...
+	* mln/morpho/watershed/flooding.hh: ...this new file.
+	(watershed): New namespace.
+	(nbasins): Rename as...
+	(n_basins): ...this.
+	(meyer_wst): Remove overload without n_basins.
+	(meyer_wst): Rename this only remaining routine as...
+	(flooding): ...this.
+	(flooding_dispatch): New.
+	* mln/morpho/watershed/all.hh: New.
+	* mln/morpho/all.hh: Update.
+	* tests/morpho/watershed: New directory.
+	* tests/morpho/watershed/flooding.cc: New.
+	* tests/morpho/watershed/Makefile.am: New.
+	* tests/morpho/Makefile.am: Update.
+
+2009-02-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update icp.
 
 	* mln/registration/icp2.hh
