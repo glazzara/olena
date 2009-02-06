@@ -1,3 +1,11 @@
+2009-02-06  Fabien Freling  <freling@lrde.epita.fr>
+
+	Implement fastest regional_minima.
+	* fabien/level.hh: New file to implement fastest level.
+	* fabien/regional_maxima.hh: Fix.
+	* fabien/regional_minima.cc: New file to test regional_minima.
+	* fabien/regional_minima.hh: Fastest implementation.
+
 2009-02-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Fix bugs for algebraic filter and cleaning.

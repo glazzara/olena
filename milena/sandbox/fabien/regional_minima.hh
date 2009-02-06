@@ -26,12 +26,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LABELING_REGIONAL_MAXIMA_HH
-# define MLN_LABELING_REGIONAL_MAXIMA_HH
+#ifndef MLN_LABELING_REGIONAL_MINIMA_HH
+# define MLN_LABELING_REGIONAL_MINIMA_HH
 
-/// \file mln/labeling/regional_maxima.hh
+/// \file mln/labeling/regional_minima.hh
 ///
-/// Connected component labeling of the regional maxima of an image.
+/// Connected component labeling of the regional minima of an image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -48,20 +48,19 @@ namespace mln
   namespace labeling
   {
 
-    /*! Connected component labeling of the regional maxima of an
+    /*! Connected component labeling of the regional minima of an
      * image.
      *
-     * \param[in]  input    The input image.
-     * \param[in]  nbh      The connexity of the regional maxima.
-     * \param[out] nlabels  The number of labeled regions.
-     * \return              The label image.
+     * \param[in]  input   The input image.
+     * \param[in]  nbh     The connexity of the regional minima.
+     * \param[out] nlabels The number of labeled regions.
+     * \return The label image.
      *
      */
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
-      regional_maxima(const Image<I>& input, const Neighborhood<N>& nbh,
-		      L& nlabels);
-
+    regional_minima(const Image<I>& input, const Neighborhood<N>& nbh,
+		    L& nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -72,7 +71,7 @@ namespace mln
       // Generic functor.
 
       template <typename I>
-      struct regional_maxima_functor
+      struct regional_minima_functor
       {
 	typedef mln_psite(I) P;
 
@@ -86,33 +85,47 @@ namespace mln
 	bool handles(const P&) const             { return true; }
 	bool labels(const P& p) const            { return attr(p); }
 	bool equiv(const P& n, const P& p) const { return input(n) ==
-						   input(p); }
-	void do_no_union(const P& n, const P& p) { mln_invariant(input(n) >
-								 input(p));
-						   attr(p) = false; }
+                                                          input(p); }
+	void do_no_union(const P& n, const P& p)
+	{
+	  // Avoid a warning about an undefined variable when NDEBUG
+	  // is not defined.
+	  (void)n;
+
+	  mln_invariant(input(n) < input(p));
+	  attr(p) = false;
+	}
+
 	void init_attr(const P&)                 {}
 	void merge_attr(const P& r, const P& p)  { attr(p) = attr(p) &&
-	    attr(r); }
+                                                   attr(r); }
 
 	// Fastest implementation
 
 	void init_()                              { data::fill(attr, true); }
-	bool handles_(unsigned p) const           { return true; }
+	bool handles_(unsigned p) const             { return true; }
 	bool labels_(unsigned p) const            { return attr.element(p); }
 	bool equiv_(unsigned n, unsigned p) const { return input.element(n) ==
-	    input.element(p); }
-	void do_no_union_(unsigned n, unsigned p) { mln_invariant(input.element(n) >
-								  input.element(p));
-	  attr.element(p) = false; }
+                                                           input.element(p); }
+	void do_no_union_(unsigned n, unsigned p)
+	{
+	  // Avoid a warning about an undefined variable when NDEBUG
+	  // is not defined.
+	  (void)n;
+
+	  mln_invariant(input.element(n) < input.element(p));
+	  attr.element(p) = false;
+	}
+
 	void init_attr_(unsigned)                 {}
 	void merge_attr_(unsigned r, unsigned p)  { attr.element(p) = attr.element(p) &&
-	    attr.element(r); }
+                                                   attr.element(r); }
 
 	// end of requirements
 
 	mln_ch_value(I, bool) attr;
 
-	regional_maxima_functor(const I& input)
+	regional_minima_functor(const I& input)
 	  : input(input)
 	{
 	  initialize(attr, input);
@@ -124,26 +137,28 @@ namespace mln
 
 
 
-
     // Facade.
 
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
-      regional_maxima(const Image<I>& input_, const Neighborhood<N>& nbh_,
+      regional_minima(const Image<I>& input_, const Neighborhood<N>& nbh_,
 		      L& nlabels)
     {
-      trace::entering("labeling::regional_maxima");
+      trace::entering("labeling::regional_minima");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
       mln_precondition(input.is_valid());
 
-      typedef impl::regional_maxima_functor<I> F;
+      // FIXME: abort if L is not wide enough to encode the set of
+      // minima.
+
+      typedef impl::regional_minima_functor<I> F;
       F f(exact(input));
       mln_ch_value(I, L) output = canvas::labeling_sorted(input, nbh, nlabels,
-							  f, false);
+	                                                  f, true);
 
-      trace::exiting("labeling::regional_maxima");
+      trace::exiting("labeling::regional_minima");
       return output;
     }
 
@@ -154,4 +169,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_LABELING_REGIONAL_MAXIMA_HH
+#endif // ! MLN_LABELING_REGIONAL_MINIMA_HH
