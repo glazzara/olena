@@ -1,3 +1,9 @@
+2009-02-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix registration std dev computation.
+
+	* mln/registration/icp2.hh (compute_standard_deviation): Fix.
+
 2009-02-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make distance-geodesic-based routines have fastest versions.

@@ -32,6 +32,7 @@
 ///
 /// Register an image over an another using the ICP algorithm.
 
+# include <cmath>
 # include <algorithm>
 
 # include <mln/core/alias/vec3d.hh>
@@ -114,7 +115,10 @@ namespace mln
 	const p_array<P>& X,
 	const F& closest_point);
 
+
+
 # ifndef MLN_INCLUDE_ONLY
+
 
     /// Closest point functor based on map distance.
     template <typename P>
@@ -267,7 +271,7 @@ namespace mln
       }
 
       float d = e_k_accu.to_result();
-      sd = math::sqrt((e_k_accu.hook_value_() - 2.5 * math::sqr(d)) / P_.nsites());
+      sd = std::sqrt(e_k_accu.hook_value_() / P_.nsites() - d * d);
       return sd;
     }
 
@@ -399,7 +403,7 @@ namespace mln
       Qk(2,3) = Spx(1,2) + Spx(2,1);
       Qk(3,2) = Spx(1,2) + Spx(2,1);
 
-      return mln::math::jacobi(Qk);
+      return math::jacobi(Qk);
     }
 
 
