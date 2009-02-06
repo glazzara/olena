@@ -103,7 +103,8 @@ fi
 ## ------------------ ##
 
 # Use Libtool.
-LT_INIT
+# To be replaced by a call to LT_INIT as soon as Libtool 2.2 is used.
+AC_PROG_LIBTOOL
 
 # Check for Darwin.
 AC_CANONICAL_HOST
