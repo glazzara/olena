@@ -67,6 +67,7 @@
 #include <mln/core/image/extension_fun.hh>
 
 #include <mln/accu/histo.hh>
+#include <mln/accu/sum.hh>
 #include <mln/debug/histo.hh>
 
 
@@ -278,14 +279,37 @@ namespace mln
 
     template <typename P, typename F>
     p_array<P>
-    remove_too_far_sites(image3d<value::rgb8>& out, const p_array<P>& P_bak,
+    remove_too_far_sites(image3d<value::rgb8>& out, const p_array<P>& P_,
 			 const F& closest_point,
 			 const std::pair<algebra::quat,mln_vec(P)>& pair,
 			 const p_array<P>& X, p_array<P>& removed_set,
 			 unsigned r)
     {
-      float sd = compute_standard_deviation(P_bak, pair, closest_point);
+      mln_piter(p_array<P>) p(P_);
+      accu::histo<value::int_u8> h;
+//       float sd = compute_standard_deviation(P_, pair, closest_point);
+
+      float sd;
+      int d_min, d_max;
+      {
+	accu::sum<float> s, s2;
+	for_all(p)
+	{
+	  vec3d_f Pk_i = pair.first.rotate(p.to_vec()) + pair.second;
+	  unsigned d_i = closest_point.dmap_X_(Pk_i);
+	  h.take(d_i);
+	  s.take(d_i);
+	  s2.take(d_i * d_i);
+	}
+	float mean = s / P_.nsites();
+	sd = std::sqrt(s2 / P_.nsites() - mean * mean);
+	d_min = int(mean - sd);
+	d_max = int(mean + sd);
+      }
+      
+
       std::cout << "Standard deviation = " << sd << std::endl;
+      std::cout << "d thresholds = " << d_min << ' ' << d_max << std::endl;
 
       p_array<P> tmp;
       unsigned removed = 0;
@@ -293,16 +317,13 @@ namespace mln
       data::fill(out, literal::white);
       data::fill((out | X).rw(), literal::black);
 
-      accu::histo<value::int_u8> h;
-      mln_piter(p_array<P>) p(P_bak);
       for_all(p)
       {
 	vec3d_f Pk_i = pair.first.rotate(p.to_vec()) + pair.second;
 	vec3d_f Yk_i = closest_point(Pk_i).to_vec();
 
-	float norm = norm::l2_distance(Yk_i, Pk_i);
-	h.take(closest_point.dmap_X_(Pk_i));
-	if (norm < sd && norm > sd / 2)
+	int d_i = closest_point.dmap_X_(Pk_i);
+	if (d_i >= d_min && d_i <= d_max)
 	{
 	  tmp.append(p);
 	  out(Pk_i) = literal::green;
