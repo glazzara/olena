@@ -1,5 +1,12 @@
 2009-02-06  Fabien Freling  <freling@lrde.epita.fr>
 
+	Implement labeling_video_fastest.
+	* fabien/labeling.hh: Implement video_fastest.
+	* fabien/level.cc: Test file.
+	* fabien/level.hh: Implement fastest implementation.
+
+2009-02-06  Fabien Freling  <freling@lrde.epita.fr>
+
 	Implement fastest regional_minima.
 	* fabien/level.hh: New file to implement fastest level.
 	* fabien/regional_maxima.hh: Fix.

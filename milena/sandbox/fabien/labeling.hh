@@ -232,7 +232,7 @@ namespace mln
 	       typename F>
       mln_ch_value(I, L)
       labeling_video_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_,
-	  F& f, L& nlabels)
+			     L& nlabels, F& f)
       {
 	trace::entering("canvas::impl::labeling_video_fastest");
 
@@ -273,27 +273,27 @@ namespace mln
 	{
 	  mln_pixter(const I) p(input);
 	  mln_nixter(const I, N) n(p, nbh);
-	  for_all(p) if (f.handles_(p))
+	  for_all(p) if (f.handles_(p.offset()))
 	  {
 	    // Make-Set.
-	    parent.element(p) = p;
-	    f.init_attr(p);
+	    parent(p).val() = p;
+	    f.init_attr_(p.offset());
 
 	    for_all(n)
-	      if (input.domain().has(n) && deja_vu(n))
+	      if (input.has(n) && deja_vu(n))
 	      {
-		if (f.equiv_(n, p))
+		if (f.equiv_(n.offset(), p.offset()))
 		{
 		  // Do-Union.
-		  unsigned r = find_root_fastest(parent, n);
+		  unsigned r = find_root_fastest(parent, n.val());
 		  if (r != p)
 		  {
 		    parent.element(r) = p;
-		    f.merge_attr_(r, p);
+		    f.merge_attr_(r, p.offset());
 		  }
 		}
 		else
-		  f.do_no_union_(n, p);
+		  f.do_no_union_(n.offset(), p.offset());
 	      }
 	    deja_vu(p) = true;
 	  }
@@ -306,7 +306,7 @@ namespace mln
 	  {
 	    if (parent.element(p) == p) // if p is root
 	    {
-	      if (f.labels_(p))
+	      if (f.labels_(p.offset()))
 	      {
 		if (nlabels == mln_max(L))
 		{
@@ -488,7 +488,7 @@ namespace mln
 	    &&
 	    mln_is_simple_neighborhood(N)::value
 	};
-	return impl::generic::labeling(metal::bool_<test>(), input,
+	return labeling_video(metal::bool_<test>(), input,
 	    nbh, nlabels, functor);
       }
 
