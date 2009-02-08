@@ -329,8 +329,11 @@ namespace mln
   mln_concrete(F)
   filter(const F& f,  // a "gradient" of color image
 	 const N& nbh,
+
 	 const A& a_, // an attribute
+	 unsigned change_kind,
 	 bool do_extinction,
+
 	 unsigned n_objects,
 	 bool echo = false)
   {
@@ -350,8 +353,25 @@ namespace mln
 	debug::println("a = ", a);
       }
 
+    switch (change_kind)
+      {
+      case 0:
+	break;
+      case 1:
+	std::cout << "move down attributes" << std::endl;
+	move_down_attributes(t, a, echo);
+	break;
+      case 2:
+	std::cout << "fuse up attributes" << std::endl;
+	fuse_down_attributes(t, a, echo);
+	break;
+      }
+
     if (do_extinction)
-      extinct_attributes(t, a);
+      {
+	std::cout << "do extinction" << std::endl;
+	extinct_attributes(t, a, echo);
+      }
 
     if (echo)
       debug::println("a' =", a | t.nodes());
@@ -362,10 +382,13 @@ namespace mln
 				   less, lambda,         // output
 				   echo);
 
-    if (do_extinction == false)
-      test_filter(a_, lambda, f, g, nbh,
-		  n_objects, less,
-		  echo);
+    if (do_extinction == false && change_kind == 0)
+      {
+	std::cout << "testing filter result v. classical method" << std::endl;
+	test_filter(a_, lambda, f, g, nbh,
+		    n_objects, less,
+		    echo);
+      }
 
     return g;
   }

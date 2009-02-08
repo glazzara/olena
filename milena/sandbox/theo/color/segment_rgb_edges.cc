@@ -22,10 +22,11 @@
 #include <mln/morpho/dilation.hh>
 #include <mln/morpho/erosion.hh>
 #include <mln/morpho/meyer_wst.hh>
-
+#include <mln/labeling/compute.hh>
 
 #include <mln/accu/count.hh>
 #include <mln/accu/volume.hh>
+#include <mln/accu/mean.hh>
 
 #include "sum_pix.hh"
 
@@ -241,8 +242,9 @@ namespace mln
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.ppm n extinction output.ppm echo" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input.ppm n change extinction echo output.ppm" << std::endl;
   std::cerr << "  n >= 2" << std::endl;
+  std::cerr << "  change = 0 (none), 1 (move-down), or 2 (fuse-up)" << std::endl;
   std::cerr << "  extinction = 0 (none) or 1 (effective)" << std::endl;
   std::cerr << "  echo = 0 (mute) or 1 (verbose)" << std::endl;
   abort();
@@ -256,117 +258,123 @@ int main(int argc, char* argv[])
   using value::int_u8;
   using value::rgb8;
 
-  if (argc != 6)
+  if (argc != 7)
     usage(argv);
 
 
+  // Color version.
+  // --------------
+
+
+  image2d<rgb8> input;
+  io::ppm::load(input, argv[1]);
+
+
+  unsigned n_objects = atoi(argv[2]);
+
+  int change_kind = atoi(argv[3]);
+  if (change_kind < 0 || change_kind > 2)
+    usage(argv);
+
+  int do_extinction = atoi(argv[4]);
+  if (do_extinction != 0 && do_extinction != 1)
+    usage(argv);
+
+  bool echo = atoi(argv[5]);
+
+
+  // Changing input into 'f on edges'.
+
+  image2d<int_u8> f_;
+  image2d<rgb8> input_ = image2full(input);
   {
-
-    // Color version.
-    // --------------
-
-
-    image2d<rgb8> input;
-    io::ppm::load(input, argv[1]);
-
-    unsigned n_objects = atoi(argv[2]);
-
-    bool do_extinction = atoi(argv[3]);
-    bool echo = atoi(argv[5]);
-
-
-    // Changing input into 'f on edges'.
-
-    image2d<int_u8> f_;
-    image2d<rgb8> input_ = image2full(input);
-    {
-      f_ = dist(extend(input_ | is_edge, pw::value(input_)),
-		e2c());
-    }
-    mln_VAR(f, f_ | is_edge);
-    typedef f_t I;
-
-
-    // accu::count< util::pix<I> > a_;
-    // accu::volume<I> a_;
-    // accu::sum_pix< util::pix<I> > a_;
-
-    blen_image = input_;
-    accu::blen_pix<I> a_;
-
-    f_t g = filter(f, e2e(),
-		   a_, do_extinction,
-		   n_objects,
-		   echo);
-
-    if (echo)
-      debug::println("activity (g != f) = ", (pw::value(g) != pw::value(f)) | f.domain());
-
-    // Watershed transform.
-
-    typedef value::label_16 L;
-    L nbasins;
-    mln_ch_value_(f_t, L) w = morpho::meyer_wst(g, e2e(), nbasins);
-
-    // io::pgm::save(display_edge(w.unmorph_(), 0, 3), "temp_w.pgm");
-
-    if (echo)
-      {
-	image2d<int_u8> g_(f_.domain());
-
-	data::fill(g_, 0);
-	data::paste(g | (pw::value(w) != 0), g_);
-	debug::println("g | basins = ", g_ | is_edge);
-
-	data::fill(g_, 0);
-	data::paste(g | (pw::value(w) == 0), g_);
-	debug::println("g | w line = ", g_ | is_edge);
-      }
-
-    image2d<L> w_all = w.unmorph_();
-    {
-      // edges -> squares
-      mln_VAR(w_squares, w_all | is_square);
-      data::paste(morpho::dilation(extend(w_squares, pw::value(w_all)),
-				   c4().win()),
-		  w_all);
-      // edges -> points
-      mln_VAR(w_points, w_all | is_point);
-      data::paste(morpho::erosion(extend(w_points, pw::value(w_all)),
-				  c4().win()),
-		  w_all);
-    }
-
-    io::pgm::save( level::transform(w_all, convert::to_fun(L_to_int_u8)),
-		   "temp_w_all.pgm" );
+    f_ = dist(extend(input_ | is_edge, pw::value(input_)),
+	      e2c());
   }
+  mln_VAR(f, f_ | is_edge);
+  typedef f_t I;
 
 
-//   {
-//     // Gray-level version.
+  // accu::count< util::pix<I> > a_;
+  // accu::volume<I> a_;
+  // accu::sum_pix< util::pix<I> > a_;
 
-//     image2d<int_u8> f_;
-//     io::pgm::load(f_, argv[1]);
+  blen_image = input_;
+  accu::blen_pix<I> a_;
 
-//     unsigned n_objects = atoi(argv[2]);
+  f_t g = filter(f, e2e(),
+		 a_,
+		 change_kind, do_extinction,
+		 n_objects,
+		 echo);
 
-//     mln_VAR(f, f_ | is_edge);
-//     typedef f_t I;
+  if (echo)
+    debug::println("activity (g != f) = ", (pw::value(g) != pw::value(f)) | f.domain());
 
-//     typedef p_array<point2d> S;
-//     S s = level::sort_psites_decreasing(f);
+  // Watershed transform.
 
-//     typedef morpho::tree::data<I,S> tree_t;
-//     tree_t t(f, s, e2e());
+  typedef value::label_16 L;
+  L nbasins;
+  mln_ch_value_(f_t, L) w = morpho::meyer_wst(g, e2e(), nbasins);
 
-//     accu::count< util::pix<I> > a_;
-//     mln_VAR(a, compute_attribute_on_nodes(a_, t));
+  // io::pgm::save(display_edge(w.unmorph_(), 0, 3), "temp_w.pgm");
 
-//     f_t g = filter(a, t, e2e(), n_objects);
+  if (echo)
+    {
+      image2d<int_u8> g_(f_.domain());
 
-//     unsigned nbasins;
-//     debug::println("wst =", morpho::meyer_wst(g, e2e(), nbasins));
-//   }
+      data::fill(g_, 0);
+      data::paste(g | (pw::value(w) != 0), g_);
+      debug::println("g | basins = ", g_ | is_edge);
 
+      data::fill(g_, 0);
+      data::paste(g | (pw::value(w) == 0), g_);
+      debug::println("g | w line = ", g_ | is_edge);
+    }
+
+  image2d<L> w_all = w.unmorph_();
+
+  // edges -> squares
+  mln_VAR(w_squares, w_all | is_square);
+  data::paste(morpho::dilation(extend(w_squares, pw::value(w_all)),
+			       c4().win()),
+	      w_all);
+  // edges -> points
+  mln_VAR(w_points, w_all | is_point);
+  data::paste(morpho::erosion(extend(w_points, pw::value(w_all)),
+			      c4().win()),
+	      w_all);
+
+
+
+  // Outputing.
+  // ----------
+
+
+  typedef algebra::vec<3,float> vec3f;
+
+  util::array<vec3f> m_3f = labeling::compute(accu::mean<rgb8>(),
+					      input,
+					      full2image(w_all),
+					      nbasins);
+  m_3f[0] = vec3f::zero;
+
+  util::array<rgb8> m;
+  convert::from_to(m_3f, m);
+  
+  io::ppm::save( level::transform(w_all,
+				  convert::to< fun::i2v::array<rgb8> >(m) ),
+		 argv[6] );
+
+
+//   debug::println("input_", input_);
+//   debug::println("w_squares", w_squares);
+
+// FIXME: The code below does not work!
+
+//   util::array<vec3f> m_3f = labeling::compute(accu::mean<rgb8>(),
+// 					      input_,
+// 					      w_squares,
+// 					      nbasins);
 
 }

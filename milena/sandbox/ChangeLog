@@ -1,3 +1,18 @@
+2009-02-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update segmentation code.
+
+	* theo/color/segment.cc: Rename as...
+	* theo/color/segment_rgb_edges.cc: ...this.
+	Update.
+	* theo/color/segment_debase.cc: Rename as...
+	* theo/color/segment_gl_pixels.cc: ...this.
+	Update.
+	* theo/color/segment.hh (filter): Add change_kind.
+	* theo/color/change_attributes.hh
+	(extinct_attributes, move_down_attributes): Use echo.
+	(fuse_down_attributes): Use echo.
+
 2009-02-06  Fabien Freling  <freling@lrde.epita.fr>
 
 	Implement labeling_video_fastest.

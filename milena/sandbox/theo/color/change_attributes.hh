@@ -96,25 +96,6 @@ namespace mln
     }
 
 
-    // Modified version.
-
-    template <typename T, typename I, typename M>
-    inline
-    mln_value(I)
-    extinct_rec__(const T& t, // tree
-		  const I& a, // original attribute image
-		  I& ea,      // extincted attribute image
-		  M& mark,
-		  const mln_psite(I)& p)
-    {
-      mln_invariant(mark(p) == false);
-      mark(p) = true;
-      if (t.parent(p) == p || mark(t.parent(p)) == true) // Stop.
-	return a(t.parent(p)); // The parent attribute!
-      return ea(p) = extinct_rec__(t, a, ea, mark, t.parent(p));
-    }
-
-
   } // end of internal
 
 
@@ -123,8 +104,15 @@ namespace mln
   template <typename T, typename I>
   void
   extinct_attributes(const T& t, // Tree.
-		     I& a) // Attribute image.
+		     I& a, // Attribute image.
+		     bool echo = false)
   {
+    if (echo)
+      {
+	std::cout << "before:" << std::endl;
+	display_tree_attributes(t, a);
+      }
+
     typedef mln_site(I) P;
     typedef mln_value(I) A; // Type of attributes.
 
@@ -148,16 +136,48 @@ namespace mln
       }
 
     // debug::println(mark | t.nodes());
+
+    if (echo)
+      {
+	std::cout << "after:" << std::endl;
+	display_tree_attributes(t, a);
+      }
   }
 
 
+  /*
 
   // Modified version.
+  //
+  // The extinction moves down the parent attribute.  With the 1st
+  // experiments, that does not work.  Yet, it is better to first modify
+  // the attributes (move down the parent values) the classically extinct.
+
+  namespace internal
+  {
+
+    template <typename T, typename I, typename M>
+    inline
+    mln_value(I)
+    extinct_rec__(const T& t, // tree
+		  const I& a, // original attribute image
+		  I& ea,      // extincted attribute image
+		  M& mark,
+		  const mln_psite(I)& p)
+    {
+      mln_invariant(mark(p) == false);
+      mark(p) = true;
+      if (t.parent(p) == p || mark(t.parent(p)) == true) // Stop.
+	return a(t.parent(p)); // The parent attribute!
+      return ea(p) = extinct_rec__(t, a, ea, mark, t.parent(p));
+    }
+
+  } // end of internal
 
   template <typename T, typename I>
   void
-  extinct_attributes__(const T& t, // Tree.
-		       I& a) // Attribute image.
+  extinct_attributes_new(const T& t, // Tree.
+			 I& a) // Attribute image.
   {
     typedef mln_site(I) P;
     typedef mln_value(I) A; // Type of attributes.
@@ -188,23 +208,36 @@ namespace mln
     // debug::println(mark | t.nodes());
   }
 
+  */
 
 
   // Move down.
   // ----------
 
-  template <typename A, typename T>
+  template <typename T, typename A>
   inline
   void
-  move_down_attributes(A& a, const T& t)
+  move_down_attributes(const T& t, A& a, bool echo = false)
   {
+    if (echo)
+      {
+	std::cout << "before:" << std::endl;
+	display_tree_attributes(t, a);
+      }
     typedef typename T::nodes_t N;
     mln_fwd_piter(N) n(t.nodes());
     for_all(n)
       a(n) = a(t.parent(n));
-    
+
+    // Test.
     for_all(n)
       mln_invariant(a(n) <= a(t.parent(n)));
+
+    if (echo)
+      {
+	std::cout << "after:" << std::endl;
+	display_tree_attributes(t, a);
+      }
   }
 
 
@@ -213,11 +246,16 @@ namespace mln
   // Fuse down.
   // ----------
 
-  template <typename A, typename T>
+  template <typename T, typename A>
   inline
   void
-  fuse_down_attributes(A& a, const T& t)
+  fuse_down_attributes(const T& t, A& a, bool echo = false)
   {
+    if (echo)
+      {
+	std::cout << "before:" << std::endl;
+	display_tree_attributes(t, a);
+      }
     typedef typename T::nodes_t N;
     mln_fwd_piter(N) n(t.nodes());
     for_all(n)
@@ -225,6 +263,12 @@ namespace mln
     
     for_all(n)
       mln_invariant(a(n) <= a(t.parent(n)));
+
+    if (echo)
+      {
+	std::cout << "after:" << std::endl;
+	display_tree_attributes(t, a);
+      }
   }
 
 
