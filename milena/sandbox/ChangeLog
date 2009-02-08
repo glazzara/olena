@@ -1,5 +1,21 @@
 2009-02-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix missing update from 'raw' to 'dump'.
+
+	* theo/igr/raw2pgm.cc: Rename as...
+	* theo/igr/dump2pgm.cc: ...this.
+	(include, usage): Fix missing update.
+	* theo/igr/pgms2raw.cc: Rename as...
+	* theo/igr/pgms2dump.cc: ...this.
+	(usage): Fix missing update.
+	(main): Fix io save.
+	* theo/igr/irm_anat_segm.cc: Update.
+	* theo/igr/irm_anat_segm__2D_ONLY.cc: Update.
+	* theo/irm.cc: Rename as...
+	* theo/igr/irm_seg_with_mm_and_rag.cc: ...this.
+
+2009-02-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add a color segmentation on pixels (not on edges).
 
 	* theo/color/segment.hh: Update.

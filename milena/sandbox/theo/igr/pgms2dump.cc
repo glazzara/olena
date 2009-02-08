@@ -4,13 +4,13 @@
 
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
-#include <mln/io/raw/save.hh>
+#include <mln/io/dump/save.hh>
 
 
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " output.raw input1.pgm .. inputn.pgm" << std::endl;
+  std::cerr << "usage: " << argv[0] << " output.dump input1.pgm .. inputn.pgm" << std::endl;
   abort();
 }
 
@@ -34,5 +34,5 @@ int main(int argc, char* argv[])
       arr.append(ima);
     }
   image3d<int_u8> vol = make::image3d(arr);
-  io::save(vol, argv[1]);
+  io::dump::save(vol, argv[1]);
 }

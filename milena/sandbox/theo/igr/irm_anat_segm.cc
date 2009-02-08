@@ -3,12 +3,12 @@
 #include <mln/core/alias/neighb3d.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/io/raw/load.hh>
-#include <mln/io/raw/save.hh>
+#include <mln/io/dump/load.hh>
+#include <mln/io/dump/save.hh>
 
 #include <mln/morpho/elementary/gradient.hh>
 #include <mln/morpho/closing_volume.hh>
-#include <mln/morpho/meyer_wst.hh>
+#include <mln/morpho/watershed/flooding.hh>
 
 #include <mln/accu/mean.hh>
 #include <mln/labeling/compute.hh>
@@ -19,7 +19,7 @@
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.raw output.raw" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input.dump output.dump" << std::endl;
   abort();
 }
 
@@ -35,6 +35,8 @@ int main(int argc, char* argv[])
 
   trace::quiet = false;
 
+  trace::entering("main");
+
   image3d<int_u8> vol, grad, clo;
   io::dump::load(vol, argv[1]);
 
@@ -43,7 +45,7 @@ int main(int argc, char* argv[])
 
   typedef value::label_16 L;
   L n_basins;
-  image3d<L> wst = morpho::meyer_wst(clo, c6(), n_basins);
+  image3d<L> wst = morpho::watershed::flooding(clo, c6(), n_basins);
 
   std::cout << n_basins << std::endl;
 
@@ -59,4 +61,7 @@ int main(int argc, char* argv[])
   image3d<int_u8> out = level::transform(wst, f);
 
   io::dump::save(out, argv[2]);
+
+
+  trace::exiting("main");
 }

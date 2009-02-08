@@ -4,14 +4,14 @@
 #include <mln/debug/slices_2d.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/io/raw/load.hh>
+#include <mln/io/dump/load.hh>
 #include <mln/io/pgm/save.hh>
 
 
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.raw output.pgm" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input.dump output.pgm" << std::endl;
   abort();
 }
 

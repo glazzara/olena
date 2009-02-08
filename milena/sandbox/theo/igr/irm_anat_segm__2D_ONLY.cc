@@ -32,8 +32,6 @@ int main(int argc, char* argv[])
   if (argc != 3)
     usage(argv);
 
-  trace::quiet = false;
-
   image2d<int_u8> vol, grad, clo;
   io::pgm::load(vol, argv[1]);
 
