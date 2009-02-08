@@ -38,12 +38,58 @@ namespace mln
 
 
 
+  // Test attribute growing property.
+  // --------------------------------
+
+  template <typename T, typename A>
+  inline
+  bool
+  test_attribute_growing_property(const T& t, const A& a)
+  {
+    typedef typename T::nodes_t N;
+    mln_fwd_piter(N) n(t.nodes());
+    for_all(n)
+      if (a(t.parent(n)) < a(n))
+	return false;
+    return true;
+  }
+
+  template <typename T, typename A>
+  inline
+  void
+  invariant__attribute_growing_property(const T& t, const A& a)
+  {
+    mln_invariant(test_attribute_growing_property(t, a));
+  }
+
+
+
+
+  // Make attributes grow.
+  // --------------------------------
+
+  template <typename T, typename A>
+  inline
+  void
+  make_attribute_grow(const T& t, A& a)
+  {
+    typedef typename T::nodes_t N;
+    mln_fwd_piter(N) n(t.nodes());
+    for_all(n)
+      if (a(t.parent(n)) < a(n))
+	a(t.parent(n)) = a(n);
+
+    mln_postcondition(test_attribute_growing_property(t, a));
+  }
+
+
+
   // Back-propagate values from nodes to component sites.
   // ----------------------------------------------------
 
-  template <typename A, typename T>
+  template <typename T, typename A>
   void
-  back_propagate(A& a, const T& t)
+  back_propagate(const T& t, A& a)
   {
     mln_fwd_piter(T) p(t.domain());
     for_all(p)
@@ -243,13 +289,13 @@ namespace mln
 
 
 
-  // Fuse down.
+  // Fuse up.
   // ----------
 
   template <typename T, typename A>
   inline
   void
-  fuse_down_attributes(const T& t, A& a, bool echo = false)
+  fuse_up_attributes(const T& t, A& a, bool echo = false)
   {
     if (echo)
       {
@@ -270,6 +316,7 @@ namespace mln
 	display_tree_attributes(t, a);
       }
   }
+
 
 
 

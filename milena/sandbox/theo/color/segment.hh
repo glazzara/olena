@@ -8,6 +8,9 @@
 #include <mln/make/pix.hh>
 #include <mln/debug/println.hh>
 
+#include <mln/value/rgb8.hh>
+#include <mln/math/diff_abs.hh>
+
 #include <mln/level/sort_psites.hh>
 #include <mln/labeling/regional_minima.hh>
 #include <mln/pw/all.hh>
@@ -21,6 +24,31 @@
 
 namespace mln
 {
+
+
+  // Distance between 2 rgb8 colors.
+
+  value::int_u8 dist(const value::rgb8& c1, const value::rgb8& c2)
+  {
+    unsigned d = 0;
+    d += (math::diff_abs(c1.red(), c2.red()) + 2) / 3;
+    d += (math::diff_abs(c1.green(), c2.green()) + 2) / 3;
+    d += (math::diff_abs(c1.blue(), c2.blue()) + 2) / 3;
+    if (d > 255)
+      d = 255;
+    return d;
+  }
+
+  value::int_u8 dist_(const value::rgb8& c1, const value::rgb8& c2)
+  {
+    unsigned d = 0;
+    d += math::diff_abs(c1.red(), c2.red());
+    d += math::diff_abs(c1.green(), c2.green());
+    d += math::diff_abs(c1.blue(), c2.blue());
+    if (d > 255)
+      d = 255;
+    return d;
+  }
 
 
   // Sorting.
@@ -110,6 +138,58 @@ namespace mln
 	mln_invariant(t.is_a_node(p));
 	attr(p) = acc(p).to_result();
       }
+    }
+
+    return attr;
+  } 
+
+
+
+
+
+
+  // Tree -> attributes on every pixel.
+  // Warning : it is not an attribute per flat zone!
+  // -----------------------------------------------
+
+  template <typename A, typename T>
+  inline
+  mln_ch_value(typename T::function, mln_result(A))
+  compute_attribute_on_pixels__not_on_flat_zones(const A& a, const T& t)
+  {
+    typedef typename T::function I;
+
+    mln_ch_value(I, A) acc;
+    mln_ch_value(I, mln_result(A)) attr;
+
+    // Initialization of 'acc'.
+    {
+      initialize(acc, t.f());
+      data::fill(acc, a); // Transfer "dynamic data" (state) of 'a'.
+    }
+
+    // Initialize every attribute with the corresponding pixel.
+    {
+      mln_piter(I) p(t.f().domain());
+      for_all(p)
+	acc(p).take_as_init(make::pix(t.f(), p));
+    }
+
+    // Propagate attribute from a site to its parent.
+    {
+      mln_fwd_piter(T) p(t.domain());
+      for_all(p)
+	if (! t.is_root(p))
+	  acc(t.parent(p)).take(acc(p));
+    }
+
+
+    // Change accumulator into its result.
+    {
+      initialize(attr, acc);
+      mln_piter(I) p(t.f().domain()); // The main difference is here!
+      for_all(p)
+	attr(p) = acc(p).to_result();
     }
 
     return attr;
@@ -228,7 +308,7 @@ namespace mln
 
     if (echo)
       {
-	back_propagate(filtered, t);
+	back_propagate(t, filtered);
 	debug::println("filtered =", filtered);
 	debug::println("a < lambda = ", (pw::value(a) < pw::cst(lambda)) | a.domain());
       }
@@ -344,7 +424,7 @@ namespace mln
     tree_t t(f, s, nbh);
 
     mln_VAR(a, compute_attribute_on_nodes(a_, t));
-    back_propagate(a, t);
+    back_propagate(t, a);
 
     if (echo)
       {
@@ -363,7 +443,7 @@ namespace mln
 	break;
       case 2:
 	std::cout << "fuse up attributes" << std::endl;
-	fuse_down_attributes(t, a, echo);
+	fuse_up_attributes(t, a, echo);
 	break;
       }
 
@@ -409,7 +489,7 @@ namespace mln
     T t(f, s, nbh);
 
     mln_VAR(a, compute_attribute_on_nodes(a_, t));
-    back_propagate(a, t);
+    back_propagate(t, a);
 
 
     unsigned n_regmins_f; // This value can be obtained while computing the attributes!

@@ -1,5 +1,15 @@
 2009-02-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add a color segmentation on pixels (not on edges).
+
+	* theo/color/segment.hh: Update.
+	* theo/color/segment_rgb_pixels.cc: New.
+	* theo/color/segment_rgb_edges.cc: Update.
+	* theo/color/mean_rgb_pix.hh: New.
+	* theo/color/change_attributes.hh: Update.
+
+2009-02-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update segmentation code.
 
 	* theo/color/segment.cc: Rename as...

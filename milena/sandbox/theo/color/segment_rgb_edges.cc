@@ -17,8 +17,6 @@
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
 
-#include <mln/math/diff_abs.hh>
-
 #include <mln/morpho/dilation.hh>
 #include <mln/morpho/erosion.hh>
 #include <mln/morpho/meyer_wst.hh>
@@ -29,9 +27,8 @@
 #include <mln/accu/mean.hh>
 
 #include "sum_pix.hh"
-
-
 #include "segment.hh"
+
 
 
 namespace mln
@@ -192,22 +189,11 @@ namespace mln
 
 
 
-  // Distance.
-
-  value::int_u8 dist(const value::rgb8& c1, const value::rgb8& c2)
-  {
-    unsigned d = 0;
-    d += (math::diff_abs(c1.red(), c2.red()) + 2) / 3;
-    d += (math::diff_abs(c1.green(), c2.green()) + 2) / 3;
-    d += (math::diff_abs(c1.blue(), c2.blue()) + 2) / 3;
-    if (d > 255)
-      d = 255;
-    return d;
-  }
+  // Distance, stored on edges, of a couple of colors.
 
   template <typename I, typename N>
   image2d<value::int_u8>
-  dist(const I& input, const N& nbh)
+  dist_on_edges(const I& input, const N& nbh)
   {
     image2d<value::int_u8> output;
     initialize(output, input);
@@ -223,6 +209,8 @@ namespace mln
       value::rgb8 c2 = input(n);
       output(p) = dist(c1, c2);
     }
+
+    io::pgm::save(output, "temp_dist.pgm");
 
     return output;
   }
@@ -288,8 +276,8 @@ int main(int argc, char* argv[])
   image2d<int_u8> f_;
   image2d<rgb8> input_ = image2full(input);
   {
-    f_ = dist(extend(input_ | is_edge, pw::value(input_)),
-	      e2c());
+    f_ = dist_on_edges(extend(input_ | is_edge, pw::value(input_)),
+		       e2c());
   }
   mln_VAR(f, f_ | is_edge);
   typedef f_t I;
