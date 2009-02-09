@@ -1,5 +1,12 @@
 2009-02-09  Fabien Freling  <freling@lrde.epita.fr>
 
+	Fix header inclusion of labeling.hh.
+	* mln/labeling/level.hh: Fix.
+	* mln/labeling/regional_maxima.hh: Fix.
+	* mln/labeling/regional_minima.hh: Fix.
+
+2009-02-09  Fabien Freling  <freling@lrde.epita.fr>
+
 	Implement fastest versions of labeling.
 	* mln/canvas/labeling.hh: Change labeling() to labeling_video() and
 	* labeling_sorted().

@@ -35,9 +35,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-
-# include "labeling.hh"
-
+# include <mln/canvas/labeling.hh>
 # include <mln/data/fill.hh>
 # include <mln/level/sort_psites.hh>
 
