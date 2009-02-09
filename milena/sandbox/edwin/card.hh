@@ -18,6 +18,8 @@ namespace mln
 	void init () { c_ = 0; };
 	void take (const card<T>& accu) { c_ += accu.c_; };
 	void take (const T& elt) { ++c_; };
+	void untake (const T& elt) { --c_; };
+	void setvalue (const unsigned v) { c_ = v; };
 	unsigned to_result() const { return c_; };
 	bool is_valid () const { return true; };
 

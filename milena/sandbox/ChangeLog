@@ -1,3 +1,9 @@
+2009-02-09  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add untake and setvalue property to card accu.
+	* edwin/accu_trait.hh: Add properties untake, stop, setvalue.
+	* edwin/card.hh: Add untake/setvalue method.
+
 2009-02-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update IRM segmentation.
