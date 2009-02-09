@@ -31,6 +31,8 @@
 /// \file mln/registration/icp.hh
 ///
 /// Register an image over an another using the ICP algorithm.
+///
+/// \todo encode distances on 12 bits.
 
 # include <cmath>
 # include <algorithm>
@@ -61,7 +63,6 @@
 # include <mln/literal/colors.hh>
 
 # include <mln/core/image/slice_image.hh>
-# include <mln/util/timer.hh>
 
 #include <mln/core/image/tr_image.hh>
 #include <mln/core/image/extension_fun.hh>
@@ -70,6 +71,7 @@
 #include <mln/accu/sum.hh>
 #include <mln/debug/histo.hh>
 
+# include <mln/util/timer.hh>
 
 namespace mln
 {
@@ -77,7 +79,8 @@ namespace mln
 
   namespace registration
   {
-
+        //  std::string method = "compute_on_subsets";
+    std::string method = "compute_on_subset_and_p";
     using namespace fun::x2x;
 
     /*! Register point in \p c using a function of closest points
@@ -127,15 +130,15 @@ namespace mln
     {
       typedef mln_image_from_grid(mln_grid(P), P) I;
       typedef mln_ch_value(I, P) cp_ima_t;
-      typedef mln_ch_value(I,value::int_u8) dmap_t;
+      typedef mln_ch_value(I,value::int_u16) dmap_t;
 
     public:
 
       closest_point_with_map(const p_array<P>& X)
       {
 	box3d box = geom::bbox(X);
-	box.enlarge(1, box.nrows() / 2);
-	box.enlarge(2, box.ncols() / 2);
+	box.enlarge(1, box.nrows());
+	box.enlarge(2, box.ncols());
 	std::cout << "Map image defined on " << box << std::endl;
 
 	typedef mln_ch_value(I, bool) model_t;
@@ -147,13 +150,13 @@ namespace mln
 	util::timer t;
 	t.start();
 	dmap_X_ = canvas::distance_geodesic(model, c6(),
-					    mln_max(value::int_u8),
+					    mln_max(value::int_u16),
 					    f);
 	std::cout << "canvas::distance_geodesic - " << t << "s" << std::endl;
 
 	cp_ima_ = f.cp_ima;
 
-#ifndef NDEBUG
+//#ifndef NDEBUG
 	mln_ch_value(I, bool) debug2(box);
 	data::fill(debug2, false);
 	mln_ch_value(I, value::rgb8) debug(box);
@@ -175,7 +178,7 @@ namespace mln
 	io::pbm::save(slice(debug2,0), "debug2-b.ppm");
 	io::ppm::save(slice(debug,0), "debug.ppm");
 	std::cout << "map saved" << std::endl;
-#endif
+//#endif
       }
 
       mln_site(I) operator()(const mln_site(I)& p) const
@@ -278,19 +281,58 @@ namespace mln
 
 
     template <typename P, typename F>
-    p_array<P>
-    remove_too_far_sites(image3d<value::rgb8>& out, const p_array<P>& P_,
+    void
+    remove_too_far_sites_debug(image3d<value::rgb8>& out, const p_array<P>& P_,
 			 const F& closest_point,
 			 const std::pair<algebra::quat,mln_vec(P)>& pair,
-			 const p_array<P>& X, p_array<P>& removed_set,
-			 unsigned r)
+			 const p_array<P>& X,
+			 unsigned r, int d_min, int d_max, unsigned prefix)
+    {
+      unsigned removed = 0;
+      accu::histo<value::int_u8> h;
+      mln_piter(p_array<P>) p(P_);
+      data::fill(out, literal::black);
+      data::fill((out | X).rw(), literal::white);
+
+      for_all(p)
+      {
+	vec3d_f Pk_i = pair.first.rotate(p.to_vec()) + pair.second;
+	vec3d_f Yk_i = closest_point(Pk_i).to_vec();
+
+	int d_i = closest_point.dmap_X_(Pk_i);
+	if (d_i >= d_min && d_i <= d_max)
+	  out(Pk_i) = literal::green;
+	else
+	{
+	  ++removed;
+	  out(Pk_i) = literal::red;
+	}
+      }
+
+      std::ostringstream ss1;
+      ss1 << "histo_" << prefix << r << ".dat";
+//      debug::histo_plot(h, ss1.str());
+      std::cout << h << std::endl;
+
+      std::ostringstream ss2;
+      ss2 << "out_" << prefix << r << ".ppm";
+      io::ppm::save(mln::slice(out,0), ss2.str());
+
+      std::cout << "Points removed with the whole set and current d_min/d_max: " << removed << std::endl;
+
+    }
+
+    template <typename P, typename F>
+    void
+    compute_distance_criteria(const p_array<P>& P_,
+			 const F& closest_point,
+			 const std::pair<algebra::quat,mln_vec(P)>& pair,
+			 unsigned r, int& d_min, int& d_max)
     {
       mln_piter(p_array<P>) p(P_);
       accu::histo<value::int_u8> h;
-//       float sd = compute_standard_deviation(P_, pair, closest_point);
 
       float sd;
-      int d_min, d_max;
       {
 	accu::sum<float> s, s2;
 	for_all(p)
@@ -306,17 +348,31 @@ namespace mln
 	d_min = int(mean - sd);
 	d_max = int(mean + sd);
       }
-      
 
       std::cout << "Standard deviation = " << sd << std::endl;
+      std::ostringstream ss1;
+      ss1 << "histo_" << r << ".dat";
+      debug::histo_plot(h, ss1.str());
+      std::cout << h << std::endl;
       std::cout << "d thresholds = " << d_min << ' ' << d_max << std::endl;
+    }
 
+    template <typename P, typename F>
+    p_array<P>
+    remove_too_far_sites(image3d<value::rgb8>& out, const p_array<P>& P_,
+			 const F& closest_point,
+			 const std::pair<algebra::quat,mln_vec(P)>& pair,
+			 const p_array<P>& X, p_array<P>& removed_set,
+			 unsigned r, int d_min, int d_max,
+			 const std::string& method)
+    {
       p_array<P> tmp;
       unsigned removed = 0;
 
-      data::fill(out, literal::white);
-      data::fill((out | X).rw(), literal::black);
+      data::fill(out, literal::black);
+      data::fill((out | X).rw(), literal::white);
 
+      mln_piter(p_array<P>) p(P_);
       for_all(p)
       {
 	vec3d_f Pk_i = pair.first.rotate(p.to_vec()) + pair.second;
@@ -336,18 +392,44 @@ namespace mln
 	}
       }
 
-      std::ostringstream ss1;
-      ss1 << "histo_" << r << ".dat";
-      debug::histo_plot(h, ss1.str());
-      std::cout << h << std::endl;
-
       std::ostringstream ss2;
-      ss2 << "out_0" << r << ".ppm";
+      ss2 << method << "_" << r << "_removed_sites" << ".ppm";
       io::ppm::save(mln::slice(out,0), ss2.str());
 
       std::cout << "Points removed: " << removed << std::endl;
 
       return tmp;
+    }
+
+    template <typename P>
+    void
+    display_sites_used_in_icp(image3d<value::rgb8>& out, const p_array<P>& P_sub,
+			      const p_array<P>& P_, const p_array<P>& X,
+			      unsigned r, const std::string& prefix,
+			      const std::pair<algebra::quat,mln_vec(P)>& pair,
+			      const std::string& period, const value::rgb8& c)
+    {
+      data::fill(out, literal::black);
+      data::fill((out | X).rw(), literal::white);
+
+      mln_piter(p_array<P>) p1(P_);
+      for_all(p1)
+      {
+	vec3d_f Pk_i = pair.first.rotate(p1.to_vec()) + pair.second;
+	out(Pk_i) = literal::red;
+      }
+
+      mln_piter(p_array<P>) p2(P_sub);
+      for_all(p2)
+      {
+	vec3d_f Pk_i = pair.first.rotate(p2.to_vec()) + pair.second;
+	out(Pk_i) = c;
+      }
+
+      std::ostringstream ss;
+      ss << prefix << "_" << r << "_" << period << ".ppm";
+
+      io::ppm::save(slice(out,0), ss.str());
     }
 
 
@@ -591,85 +673,18 @@ namespace mln
       return result;
     }
 
-
-    /// Shuffle the sites in P_.
-    /// Use one third of P_'s sites for each run.
-    /// For each run, it removes sites which are too close or too far.
-    template <typename P, typename F>
-    inline
-    composed< translation<P::dim,float>,rotation<P::dim,float> >
-    icp_clean(const p_array<P>& P_,
-	      const p_array<P>& X,
-	      const F& closest_point)
-    {
-      util::timer t;
-      t.start();
-
-      // P_bak is shuffled.
-      p_array<P> P_bak = P_;
-      std::vector<mln_element(p_array<P>)>& v = P_bak.hook_std_vector_();
-      std::random_shuffle(v.begin(), v.end());
-
-      // P_sub = 1/3 * P_bak;
-      p_array<P> P_sub = P_bak;
-      P_sub.hook_std_vector_().resize(P_bak.nsites() / 3);
-
-      unsigned r = 0;
-      std::pair<algebra::quat,mln_vec(P)> pair;
-      pair.first = algebra::quat(1,0,0,0);
-      pair.second = literal::zero;
-      box3d box = geom::bbox(X);
-      box.enlarge(40);
-      image3d<value::rgb8> out(box);
-      p_array<P> removed_set;
-      do
-      {
-	/// Compute transformation.
-	pair = icp(P_sub, X, closest_point,
-		   pair.first,
-		   pair.second);
-
-	pair = icp(P_sub, X, closest_point,
-		   pair.first,
-		   pair.second);
-
-	P_sub = remove_too_far_sites(out, P_sub,
-				     closest_point, pair, X, removed_set, r);
-
-
-	++r;
-
-	//Add more data
-	if (r < 3)
-	  for (unsigned i = (P_bak.nsites() / 3) * r;
-	      i < (P_bak.nsites() / 3) * (r + 1); ++i)
-	  {
-	    P_sub.append(P_bak[i]);
-	  }
-
-      } while (r < 4);
-      std::cout << "icp = " << t << std::endl;
-
-      typedef rotation<3u,float> rot_t;
-      rot_t tqR(pair.first);
-      typedef translation<3u,float> trans_t;
-      trans_t tqT(pair.second);
-      composed<trans_t,rot_t> result(tqT, tqR);
-
-      return result;
-    }
-
-
     /// Shuffle sites in P_.
     /// Do the first run with all sites.
     /// For each run, remove sites which are too far or too close.
-    template <typename P, typename F>
+    template <typename P>
     inline
     composed< translation<P::dim,float>,rotation<P::dim,float> >
-    icp_clean2(const p_array<P>& P_,
-	      const p_array<P>& X,
-	      const F& closest_point)
+    registration(const p_array<P>& P_,
+		 const p_array<P>& X)
     {
+      registration::closest_point_with_map<P> closest_point(X);
+//  registration::closest_point_basic<point3d> closest_point(X);
+
       util::timer t;
       t.start();
 
@@ -681,21 +696,38 @@ namespace mln
       pair.first = algebra::quat(1,0,0,0);
       pair.second = literal::zero;
       box3d box = geom::bbox(X);
-      box.enlarge(40);
+      box.enlarge(1, 60);
+      box.enlarge(2, 60);
       image3d<value::rgb8> out(box);
       p_array<P> removed_set;
+
       do
       {
+	std::cout << std::endl << std::endl << "==== New run - " << r << std::endl;
 	pair = icp(P_bak, X, closest_point,
 		   pair.first,
 		   pair.second);
 
+	display_sites_used_in_icp(out, P_bak, P_, X, r, method, pair, "final", literal::blue);
+
+	int d_min, d_max;
+	compute_distance_criteria(P_bak, closest_point, pair, r, d_min, d_max);
+
 	P_bak = remove_too_far_sites(out, P_bak,
-				     closest_point, pair, X, removed_set, r);
+				     closest_point, pair, X, removed_set,
+				     r, d_min, d_max, method);
+
+//	P_bak = remove_too_far_sites(out, P_,
+//				     closest_point, pair, X, removed_set,
+//				     r, d_min, d_max, method);
+
+
+	display_sites_used_in_icp(out, P_bak, P_, X, r, method, pair, "schanges", literal::green);
 
 	++r;
 
-      } while (r < 4);
+	std::cout << "==== End of run" << std::endl;
+      } while (r < 10);
       std::cout << "icp = " << t << std::endl;
 
       draw_last_run(box, P_bak, removed_set, X, pair.first, pair.second);
@@ -709,45 +741,6 @@ namespace mln
       return result;
     }
 
-
-
-    /// Run icp once with 1/10 of the sites and run it once again with the
-    /// resulting tranformation and all the sites.
-    template <typename P, typename F>
-    inline
-    composed< translation<P::dim,float>,rotation<P::dim,float> >
-    icp_fast(const p_array<P>& P_,
-	     const p_array<P>& X,
-	     const F& closest_point)
-    {
-      typedef std::pair<algebra::quat,mln_vec(P)> pair_t;
-
-      p_array<P> P_sub = P_;
-      std::vector<mln_element(p_array<P>)>& v = P_sub.hook_std_vector_();
-      std::random_shuffle(v.begin(), v.end());
-      v.resize(P_.nsites() / 10);
-
-      util::timer t;
-      t.start();
-      pair_t tmp = icp(P_sub, X, closest_point,
-		     algebra::quat(1,0,0,0), literal::zero);
-
-      std::cout << "icp_1 - " << t << "s" << std::endl;
-      t.restart();
-
-      pair_t tmp2 = icp(P_, X, closest_point,
-			tmp.first, tmp.second);
-
-      std::cout << "icp_2 - " << t << "s" << std::endl;
-
-      typedef rotation<3u,float> rot_t;
-      rot_t tqR(tmp2.first);
-      typedef translation<3u,float> trans_t;
-      trans_t tqT(tmp2.second);
-      composed<rot_t,trans_t> result(tqR, tqT);
-
-      return result;
-    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
