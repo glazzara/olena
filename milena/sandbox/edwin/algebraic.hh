@@ -9,7 +9,22 @@
 namespace mln
 {
   namespace impl
-  {
+  {    
+
+    // fast implementation
+    template <typename I, typename A>
+    void
+    algebraic_fast (const Image<I>& input,
+		   Accumulator<A>& acc)
+    {
+      const I& ima = exact(input);
+      A& accu = exact (acc);
+
+      mln_pixter(const I) px(ima);
+      for_all(px)
+		accu.take ();	
+    }
+
     template <typename I, typename A>
     void
     algebraic(const Image<I>& input,
@@ -20,7 +35,7 @@ namespace mln
 
       mln_piter(I) p(ima.domain());
       for_all(p)
-	accu.take(p);
+	  accu.take(p);
     }
   } // impl
 
@@ -33,8 +48,19 @@ namespace mln
 		       const Image<I>& input,
 		       Accumulator<A>& acc)
     {
-      impl::algebraic(input, acc);
+      impl::algebraic_fast(input, acc);
     }
+
+    template <typename I, typename A>
+    inline
+    void
+    algebraic_dispatch(metal::false_,
+		       const Image<I>& input,
+		       Accumulator<A>& acc)
+    {
+      impl::algebraic (input, acc);
+    }
+
 
     template <typename I, typename A>
     inline
@@ -43,9 +69,9 @@ namespace mln
 		       Accumulator<A>& acc)
     {
       enum {
-	test = (mlc_equal(mln_trait_accu_when_pix(A),
-			  trait::accu::when_pix::use_p)::value ||
-		mlc_equal(mln_trait_accu_when_pix(A),
+	test = (mlc_equal(mln_trait_image_speed(I),
+				  trait::image::speed::fastest)::value &&
+			mlc_equal(mln_trait_accu_when_pix(A),
 			  trait::accu::when_pix::use_whatever)::value)
       };
       algebraic_dispatch(metal::bool_<test>(), input, acc);

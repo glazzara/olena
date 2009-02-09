@@ -220,8 +220,9 @@ namespace mln {
                     public Accumulator< mean<T> >
       {
         typedef mln::accu::mean<T, typename internal::sum_handling_pixels<T>::ret> super;
+	typedef typename super::result result;
 
-        using super::operator typename super::result;
+        using super::operator result;
         using super::take;
 
         void take(const mean<T>& m);
@@ -233,8 +234,9 @@ namespace mln {
       {
         typedef mean< mln_value(I) > super;
         typedef util::pix<I> argument;
+	typedef typename super::result result;
 
-        using super::operator typename super::result;
+        using super::operator result;
         using super::take;
 
         void take(const argument& t);
@@ -292,16 +294,15 @@ namespace mln {
 # include <mln/util/timer.hh>
 int main()
 {
-  using namespace mln;
-  typedef image2d<int> I;
+  typedef mln::image2d<int> I;
 
   I ima(1000, 1000);
-  morpho::accu::mean<util::pix<I> > acc;
+  mln::morpho::accu::mean< mln::util::pix<I> > acc;
 
   float elapsed;
   mln::util::timer chrono;
 
-  debug::iota(ima);
+  mln::debug::iota(ima);
   std::cout << "50 mean of a 1000x1000 image2d<int>" << std::endl;
 
   acc.init();

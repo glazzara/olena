@@ -1,6 +1,7 @@
 #ifndef ACCU_TRAIT_HH_
 # define ACCU_TRAIT_HH_
 
+# include <string>
 # include <mln/trait/undef.hh>
 
 /// Shortcut to the accumulator property about untake method disponibility
@@ -83,7 +84,7 @@ namespace mln
 	typedef undef has_untake;
 	typedef undef has_stop;
 	typedef undef has_setvalue;
-	typedef undef when_pix;
+	typedef when_pix::use_pix when_pix;
       };
 
       template <>
@@ -91,9 +92,9 @@ namespace mln
       struct accu_traits< mln::morpho::accu::card <T> >
       {
 	typedef has_stop::no has_stop;
-	typedef has_untake::yes has_untake;
-	typedef has_setvalue::yes has_setvalue;
-	typedef when_pix::use_p when_pix;
+	typedef has_untake::no has_untake;
+	typedef has_setvalue::no has_setvalue;
+	typedef when_pix::use_whatever when_pix;
       };
     } //mln::accu
 

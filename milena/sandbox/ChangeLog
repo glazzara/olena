@@ -1,3 +1,15 @@
+2009-02-09  Frederic Bour  <bour@epita.lrde.epita.fr>
+
+	[sandbox][bour][carlinet] Work on properties and accumulators.
+	* ChangeLog: .
+	* edwin/accu.cc: .
+	* edwin/accu_trait.hh: .
+	* edwin/algebraic.hh: .
+	* edwin/card.hh: .
+	* edwin/leveling.hh: .
+	* fred/accuprops.cc: .
+	* fred/p2p/p2p_morpher.hh: .
+
 2009-02-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update igr's code.

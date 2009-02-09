@@ -176,13 +176,13 @@ namespace mln
   {
     typedef mln_psite(I) P;
     mln_precondition(ima.is_valid());
-    
+
     /* FIXME: Add a precondition on the fact that the domain of ima is
        a box.  */
 
     // Create transformed bounding box
     accu::bbox<P> tbox;
-    
+
     tbox.take_as_init (fun (ima.domain ().pmin ()));
     tbox.take (fun (ima.domain ().pmax ()));
 
@@ -224,13 +224,13 @@ namespace mln
 
     // Create transformed bounding box
     accu::bbox<P> tbox;
-    
+
     tbox.take_as_init (this->data_->funinv_ (this->data_->ima_.domain ().pmin ()));
     tbox.take (this->data_->funinv_ (this->data_->ima_.domain ().pmax ()));
 
     return tbox;
   }
-  
+
   template <typename I, typename F>
   inline
   const box<mln_psite(I)>&

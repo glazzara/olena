@@ -2,6 +2,7 @@
 # define CARD_HH_
 
 # include <mln/accu/all.hh>
+# include <mln/util/pix.hh>
 
 namespace mln
 {
@@ -9,18 +10,23 @@ namespace mln
   {
     namespace accu
     {
-      template <typename T>
-      struct card : public mln::accu::internal::base< unsigned, card<T> >
+      template <typename I>
+      struct card : public mln::accu::internal::base< unsigned, card<I> >
       {
-	typedef T argument;
+	typedef mln_psite(I) argument;
 
 	card () { init(); };
 	void init () { c_ = 0; };
-	void take (const card<T>& accu) { c_ += accu.c_; };
-	void take (const T& elt) { ++c_; };
-	void untake (const T& elt) { --c_; };
-	void setvalue (const unsigned v) { c_ = v; };
+
+	void take (const card<I>& accu) { c_ += accu.c_; };
+
+	void take () { ++c_; };
+	void take (const mln_psite(I)& elt) { ++c_; };
+	void take (const mln_value(I)& elt) { ++c_; };
+	void take (const util::pix<I>& pix) { ++c_; };
+
 	unsigned to_result() const { return c_; };
+
 	bool is_valid () const { return true; };
 
       private:

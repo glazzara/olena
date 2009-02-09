@@ -25,7 +25,7 @@ namespace mln
       A& accu = exact (acc);
 
       mln_pixter(const I) px(ima);
-      for_all(px)
+      for_all(px)	
 	accu.take (px.val ());
     }
 
@@ -73,10 +73,12 @@ namespace mln
 		      Accumulator<A>& acc)
     {
       enum {
-	test = (mlc_equal(mln_trait_image_speed(I),
-			  trait::image::speed::fastest)::value &&
-		mlc_equal(mln_trait_accu_when_pix(A),
-			  trait::accu::when_pix::use_v)::value)
+		test = (mlc_equal(mln_trait_image_speed(I),
+				  trait::image::speed::fastest)::value &&
+			(mlc_equal(mln_trait_accu_when_pix(A),
+				  trait::accu::when_pix::use_v)::value ||
+			mlc_equal(mln_trait_accu_when_pix(A),
+				  trait::accu::when_pix::use_whatever)::value))
       };
       leveling_dispatch(metal::bool_<test>(), input, acc);
     }

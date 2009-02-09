@@ -21,7 +21,7 @@ int main()
   typedef image2d<int> I;
 
   I ima(1000, 1000);
-  mln::morpho::accu::card<point2d> acc;
+  mln::morpho::accu::card<I> acc;  
 
   float elapsed;
   mln::util::timer chrono;
@@ -29,14 +29,32 @@ int main()
   debug::iota(ima);
   std::cout << "50 mean of a 1000x1000 image2d<int>" << std::endl;
 
+  std::cout << "Algebric" << std::endl;
   acc.init();
   chrono.start();
   for (int i = 0; i < 50; i++)
     algebraic(ima, acc);
   elapsed = chrono.stop();
 
-  std::cout << "(alge) " << elapsed << "s : " << acc.to_result() << std::endl;
-  /*
+  std::cout << "(auto) " << elapsed << "s : " << acc.to_result() << std::endl;
+
+  acc.init();
+  chrono.start();
+  for (int i = 0; i < 50; i++)
+    mln::impl::algebraic(ima, acc);
+  elapsed = chrono.stop();
+
+  std::cout << "(generic) " << elapsed << "s : " << acc.to_result() << std::endl;
+
+  acc.init();
+  chrono.start();
+  for (int i = 0; i < 50; i++)
+    mln::impl::algebraic_fast(ima, acc);
+  elapsed = chrono.stop();
+
+  std::cout << "(fast) " << elapsed << "s : " << acc.to_result() << std::endl;
+
+  std::cout << "Leveling" << std::endl;  
   acc.init();
   chrono.start();
   for (int i = 0; i < 50; i++)
@@ -60,6 +78,6 @@ int main()
   elapsed = chrono.stop();
 
   std::cout << "(fast) " << elapsed << "s : " << acc.to_result() << std::endl;
-  */
+
 }
 
