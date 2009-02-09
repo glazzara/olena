@@ -7,7 +7,7 @@
 #include <mln/io/dump/save.hh>
 
 #include <mln/morpho/elementary/gradient.hh>
-#include <mln/morpho/closing_volume.hh>
+#include <mln/morpho/closing_height.hh>
 #include <mln/morpho/watershed/flooding.hh>
 
 #include <mln/accu/mean.hh>
@@ -19,7 +19,8 @@
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.dump output.dump" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input.dump lambda output.dump" << std::endl
+	    << "  It relies on height closing; e.g., take lambda = 20" << std::endl;
   abort();
 }
 
@@ -30,7 +31,7 @@ int main(int argc, char* argv[])
   using namespace mln;
   using value::int_u8;
 
-  if (argc != 3)
+  if (argc != 4)
     usage(argv);
 
   trace::quiet = false;
@@ -40,8 +41,10 @@ int main(int argc, char* argv[])
   image3d<int_u8> vol, grad, clo;
   io::dump::load(vol, argv[1]);
 
+  unsigned lambda = atoi(argv[2]);
+
   grad = morpho::elementary::gradient(vol, c6());
-  clo  = morpho::closing_volume(grad, c6(), 666);
+  clo  = morpho::closing_height(grad, c6(), lambda);
 
   typedef value::label_16 L;
   L n_basins;
@@ -60,8 +63,7 @@ int main(int argc, char* argv[])
   convert::from_to(a, f);
   image3d<int_u8> out = level::transform(wst, f);
 
-  io::dump::save(out, argv[2]);
-
+  io::dump::save(out, argv[3]);
 
   trace::exiting("main");
 }
