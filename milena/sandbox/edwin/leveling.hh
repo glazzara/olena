@@ -19,28 +19,28 @@ namespace mln
     template <typename I, typename A>
     void
     leveling_fast (const Image<I>& input,
-		   Accumulator<A>& acc)
+                   Accumulator<A>& acc)
     {
-      const I& ima = exact(input);
+      const I& ima = exact (input);
       A& accu = exact (acc);
 
-      mln_pixter(const I) px(ima);
-      for_all(px)	
-	accu.take (px.val ());
+      mln_pixter (const I) px (ima);
+      for_all (px)
+		accu.take (px.val ());
     }
 
     // generic implementation
-    template <typename I, typename A>
+    template < typename I, typename A>
     void
     leveling (const Image<I>& input,
-	      Accumulator<A>& acc)
+              Accumulator<A>& acc)
     {
-      const I& ima = exact(input);
+      const I& ima = exact (input);
       A& accu = exact (acc);
 
-      mln_piter(I) p(ima.domain());
-      for_all(p)
-	accu.take (mln::make::pix(ima, p));
+      mln_piter (I) p (ima.domain());
+      for_all (p)
+		accu.take (mln::make::pix (ima, p));
     }
 
   } // mln::impl
@@ -49,38 +49,39 @@ namespace mln
   {
     template <typename I, typename A>
     void
-    leveling_dispatch(metal::false_,
-		      const Image<I>& input,
-		      Accumulator<A>& acc)
+    leveling_dispatch (metal::false_,
+                       const Image<I>& input,
+                       Accumulator<A>& acc)
     {
-      impl::leveling(input, acc);
+      impl::leveling (input, acc);
     }
 
     template <typename I, typename A>
     inline
     void
-    leveling_dispatch(metal::true_,
-		      const Image<I>& input,
-		      Accumulator<A>& acc)
+    leveling_dispatch (metal::true_,
+                       const Image<I>& input,
+                       Accumulator<A>& acc)
     {
-      impl::leveling_fast(input, acc);
+      impl::leveling_fast (input, acc);
     }
 
     template <typename I, typename A>
     inline
     void
-    leveling_dispatch(const Image<I>& input,
-		      Accumulator<A>& acc)
+    leveling_dispatch (const Image<I>& input,
+                       Accumulator<A>& acc)
     {
-      enum {
-		test = (mlc_equal(mln_trait_image_speed(I),
-				  trait::image::speed::fastest)::value &&
-			(mlc_equal(mln_trait_accu_when_pix(A),
-				  trait::accu::when_pix::use_v)::value ||
-			mlc_equal(mln_trait_accu_when_pix(A),
-				  trait::accu::when_pix::use_whatever)::value))
+      enum
+      {
+        test = (mlc_equal (mln_trait_image_speed (I),
+                           trait::image::speed::fastest) ::value &&
+                (mlc_equal (mln_trait_accu_when_pix (A),
+                            trait::accu::when_pix::use_v) ::value ||
+                 mlc_equal (mln_trait_accu_when_pix (A),
+                            trait::accu::when_pix::use_whatever) ::value))
       };
-      leveling_dispatch(metal::bool_<test>(), input, acc);
+      leveling_dispatch (metal::bool_<test>(), input, acc);
     }
 
   } // mln::internal
@@ -91,10 +92,10 @@ namespace mln
 // Facade.
 template <typename I, typename A>
 void
-leveling(const Image<I>& input,
-	 Accumulator<A>& acc)
+leveling (const Image<I>& input,
+          Accumulator<A>& acc)
 {
-  mln::internal::leveling_dispatch(input, acc);
+  mln::internal::leveling_dispatch (input, acc);
 }
 
 

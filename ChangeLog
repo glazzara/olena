@@ -1,3 +1,9 @@
+2009-02-09  Frederic Bour  <bour@epita.lrde.epita.fr>
+
+	[sandbox][bour] Added Makefile to sandbox/edwin for algebraic/lvl.
+	* milena/sandbox/edwin/Makefile: New.
+	* milena/sandbox/edwin/leveling.hh: .
+
 2009-02-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Move M4 files into m4/.
