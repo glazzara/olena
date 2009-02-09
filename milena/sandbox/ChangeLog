@@ -1,3 +1,9 @@
+2009-02-09  Fabien Freling  <freling@lrde.epita.fr>
+
+	New IGR test files.
+	* fabien/igr/igr.cc: New test file.
+	* fabien/igr/img/slice_7.pgm: New test picture.
+
 2009-02-09  Frederic Bour  <bour@epita.lrde.epita.fr>
 
 	[sandbox][bour][carlinet] Work on properties and accumulators.
