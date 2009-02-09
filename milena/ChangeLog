@@ -1,3 +1,13 @@
+2009-02-09  Fabien Freling  <freling@lrde.epita.fr>
+
+	Implement fastest versions of labeling.
+	* mln/canvas/labeling.hh: Change labeling() to labeling_video() and
+	* labeling_sorted().
+	* mln/labeling/flat_zones.hh: Implement fastest version.
+	* mln/labeling/level.hh: Implement fastest version.
+	* mln/labeling/regional_maxima.hh: Implement fastest version.
+	* mln/labeling/regional_minima.hh: Implement fastest version.
+
 2009-02-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Have fastest morpho wst flooding, plus several fixes.

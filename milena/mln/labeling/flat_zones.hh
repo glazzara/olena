@@ -64,62 +64,45 @@ namespace mln
 
       // Flat zone functor for the labeling canvas.
 
-      template <typename I_, typename N_, typename L_>
+      template <typename I>
       struct flat_zones_functor
       {
-	typedef mln_psite(I_) P;
+	typedef mln_psite(I) P;
 
-	// requirements from mln::canvas::labeling:
+	// Requirements from mln::canvas::labeling:
 
-	typedef I_ I;
-	typedef N_ N;
-	typedef L_ L;
         typedef mln_pset(I) S;
 
 	const I& input;
-	const N& nbh;
-        const S& s;
 
+	// Generic implementation.
+
+	void init()                          {}
 	bool handles(const P&) const             { return true; }
 	bool equiv(const P& n, const P& p) const { return input(n) ==
                                                           input(p); }
-
- 	void init()                          {}
 	bool labels(const P&) const          { return true;  }
 	void do_no_union(const P&, const P&) {}
 	void init_attr(const P&)             {}
 	void merge_attr(const P&, const P&)  {}
 
-	// end of requirements
+	// Fastest implementation.
+
+	void init_()                          {}
+	bool handles_(unsigned) const             { return true; }
+	bool equiv_(unsigned n, unsigned p) const { return input.element(n) ==
+                                                           input.element(p); }
+	bool labels_(unsigned) const          { return true;  }
+	void do_no_union_(unsigned, unsigned) {}
+	void init_attr_(unsigned)             {}
+	void merge_attr_(unsigned, unsigned)  {}
+
+	// end of requirements.
 
 	flat_zones_functor(const I& input, const N& nbh)
-	  : input(input),
-	    nbh(nbh),
-	    s(input.domain())
+	  : input(input)
 	{}
       };
-
-
-      // Generic implementation.
-
-      namespace generic
-      {
-
-	template <typename I, typename N, typename L>
-	mln_ch_value(I, L)
-	  flat_zones(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels)
-	{
-	  trace::entering("labeling::impl::generic::flat_zones");
-
-	  typedef flat_zones_functor<I,N,L> F;
-	  F f(exact(input), exact(nbh));
-	  mln_ch_value(I, L) output = canvas::labeling(input, nbh, f, nlabels);
-
-	  trace::exiting("labeling::impl::generic::flat_zones");
-	  return output;
-	}
-
-      } // end of namespace mln::labeling::impl::generic
 
 
     } // end of namespace mln::labeling::impl
@@ -139,8 +122,10 @@ namespace mln
       const N& nbh = exact(nbh_);
       mln_precondition(input.is_valid());
 
-      // Calls the only (generic) impl.
-      mln_ch_value(I, L) output = impl::generic::flat_zones(input, nbh, nlabels);
+      // Calls the only implementation.
+      typedef flat_zones_functor<I,N,L> F;
+      F f(exact(input), exact(nbh));
+      mln_ch_value(I, L) output = canvas::labeling_video(input, nbh, nlabels, f);
 
       trace::exiting("labeling::flat_zones");
       return output;

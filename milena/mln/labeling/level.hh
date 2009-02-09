@@ -36,11 +36,10 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/canvas/labeling.hh>
-# include <mln/data/fill.hh>
 
-// The 'fastest' specialization is in:
-# include <mln/labeling/level.spe.hh>
+# include "labeling.hh"
+
+# include <mln/data/fill.hh>
 
 
 
@@ -79,7 +78,7 @@ namespace mln
 		  L& nlabels)
       {
 	mln_precondition(exact(input).is_valid());
-	mln_precondition(exact(nbh).is_valid());
+	// mln_precondition(exact(nbh).is_valid());
 
 	(void) input;
 	(void) val;
@@ -91,40 +90,13 @@ namespace mln
 
 
 
-    // Generic implementation.
-
     namespace impl
     {
-
-
-      struct labeling_functor_base
-      {
- 	void init()                          {}
-
-	template <typename P>
-	bool handles(const P&) const         { return true; }
-
-	template <typename L, typename R>
-	bool equiv(const L&, const R&) const { return false; }
-
-	template <typename P>
-	bool labels(const P&) const          { return true; }
-
-	template <typename L, typename R>
-	void do_no_union(const L&, const R&) {}
-
-	template <typename P>
-	void init_attr(const P&)             {}
-
-	template <typename L, typename R>
-	void merge_attr(const L&, const R&)  {}
-      };
-
 
       // Generic functor.
 
       template <typename I>
-      struct level_functor : labeling_functor_base
+      struct level_functor
       {
 	typedef mln_psite(I) P;
 
@@ -134,67 +106,38 @@ namespace mln
 	// Requirements from mln::canvas::labeling.
 
         typedef mln_pset(I) S;
-        const S& s;
 
- 	void init()                             {}
-	bool handles(const P& p) const          { return input(p) == val; }
-	bool equiv(const P& n, const P&) const  { return input(n) == val; }
-	bool labels(const P&) const             { return true; }
+	// Generic implementation
+
+	void init()				  {}
+	bool handles(const P& p) const		  { return input(p) == val; }
+	bool equiv(const P& n, const P&) const	  { return input(n) == val; }
+	bool labels(const P&) const		  { return true; }
+	void do_no_union(const P& n, const P& p)  {}
+	void init_attr(const P&)		  {}
+	void merge_attr(const P& r, const P& p)	  {}
+
+	// Fastest implementation
+
+	void init_()				  {}
+	bool handles_(unsigned p) const		  { return input.element(p) == val; }
+	bool equiv_(unsigned n, unsigned) const	  { return input.element(n) == val; }
+	bool labels_(unsigned) const		  { return true; }
+	void do_no_union_(unsigned n, unsigned p) {}
+	void init_attr_(unsigned)		  {}
+	void merge_attr_(unsigned r, unsigned p)  {}
 
 	// end of Requirements.
 
 	level_functor(const Image<I>& input_, const mln_value(I)& val)
 	  : input(exact(input_)),
-	    val(val),
-	    s(input.domain())
+	    val(val)
 	{
 	}
       };
 
-
-
-      // Generic implementation.
-
-      namespace generic
-      {
-
-	template <typename I, typename N, typename L>
-	mln_ch_value(I, L)
-	level(const Image<I>& input, const mln_value(I)& val,
-	      const Neighborhood<N>& nbh,
-	      L& nlabels)
-	{
-	  trace::entering("labeling::impl::generic::level");
-
-	  internal::level_tests(input, val, nbh, nlabels);
-
-	  level_functor<I> f(input, val);
-	  mln_ch_value(I, L) output = canvas::labeling(input, nbh, f, nlabels);
-
-	  trace::exiting("labeling::impl::generic::level");
-	  return output;
-	}
-
-      } // end of namespace mln::labeling::impl::generic
-
-
     } // end of namespace mln::labeling::impl
 
-
-    // Dispatch.
-
-    namespace internal
-    {
-
-      template <typename I, typename N, typename L>
-      mln_ch_value(I, L)
-      level_dispatch(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-		     L& nlabels)
-      {
-	return impl::generic::level(input, val, nbh, nlabels);
-      }
-
-    } // end of namespace mln::labeling::internal
 
 
 
@@ -210,7 +153,8 @@ namespace mln
       internal::level_tests(input, val, nbh, nlabels);
 
       mln_ch_value(I, L) output;
-      output = internal::level_dispatch(input, val, nbh, nlabels);
+      impl::level_functor<I> f(input, val);
+      output = canvas::labeling_video(input, nbh, nlabels, f);
 
       trace::exiting("labeling::level");
       return output;

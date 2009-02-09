@@ -35,7 +35,9 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/canvas/labeling.hh>
+
+# include "labeling.hh"
+
 # include <mln/data/fill.hh>
 # include <mln/level/sort_psites.hh>
 
@@ -68,23 +70,18 @@ namespace mln
 
       // Generic functor.
 
-      template <typename I_, typename N_, typename L_>
+      template <typename I>
       struct regional_minima_functor
       {
-	typedef mln_psite(I_) P;
+	typedef mln_psite(I) P;
 
 	// requirements from mln::canvas::labeling:
 
-	typedef I_ I;
-	typedef N_ N;
-	typedef L_ L;
-	typedef p_array<P> S;
-
 	const I& input;
-	const N& nbh;
-	S s;
 
- 	void init()                              { data::fill(attr, true); }
+	// Generic implementation
+
+	void init()                              { data::fill(attr, true); }
 	bool handles(const P&) const             { return true; }
 	bool labels(const P& p) const            { return attr(p); }
 	bool equiv(const P& n, const P& p) const { return input(n) ==
@@ -103,43 +100,37 @@ namespace mln
 	void merge_attr(const P& r, const P& p)  { attr(p) = attr(p) &&
                                                    attr(r); }
 
+	// Fastest implementation
+
+	void init_()                              { data::fill(attr, true); }
+	bool handles_(unsigned p) const             { return true; }
+	bool labels_(unsigned p) const            { return attr.element(p); }
+	bool equiv_(unsigned n, unsigned p) const { return input.element(n) ==
+                                                           input.element(p); }
+	void do_no_union_(unsigned n, unsigned p)
+	{
+	  // Avoid a warning about an undefined variable when NDEBUG
+	  // is not defined.
+	  (void)n;
+
+	  mln_invariant(input.element(n) < input.element(p));
+	  attr.element(p) = false;
+	}
+
+	void init_attr_(unsigned)                 {}
+	void merge_attr_(unsigned r, unsigned p)  { attr.element(p) = attr.element(p) &&
+                                                   attr.element(r); }
+
 	// end of requirements
 
 	mln_ch_value(I, bool) attr;
 
-	regional_minima_functor(const I_& input, const N_& nbh)
-	  : input(input),
-	    nbh(nbh),
-	    s(level::sort_psites_increasing(input))
+	regional_minima_functor(const I& input)
+	  : input(input)
 	{
 	  initialize(attr, input);
 	}
       };
-
-
-      // Generic implementation.
-
-      namespace generic
-      {
-
-	template <typename I, typename N, typename L>
-	mln_ch_value(I, L)
-	regional_minima(const I& input, const N& nbh, L& nlabels)
-	{
-	  trace::entering("labeling::impl::generic::regional_minima");
-
-	  // FIXME: abort if L is not wide enough to encode the set of
-	  // minima.
-
-	  typedef impl::regional_minima_functor<I,N,L> F;
-	  F f(exact(input), exact(nbh));
-	  mln_ch_value(I, L) output = canvas::labeling(input, nbh, f, nlabels);
-
-	  trace::exiting("labeling::impl::generic::regional_minima");
-	  return output;
-	}
-
-      } // end of namespace mln::labeling::impl::generic
 
 
     } // end of namespace mln::labeling::impl
@@ -159,8 +150,13 @@ namespace mln
       const N& nbh = exact(nbh_);
       mln_precondition(input.is_valid());
 
-      // Calls the only (generic) impl.
-      mln_ch_value(I, L) output = impl::generic::regional_minima(input, nbh, nlabels);
+      // FIXME: abort if L is not wide enough to encode the set of
+      // minima.
+
+      typedef impl::regional_minima_functor<I> F;
+      F f(exact(input));
+      mln_ch_value(I, L) output = canvas::labeling_sorted(input, nbh, nlabels,
+	                                                  f, true);
 
       trace::exiting("labeling::regional_minima");
       return output;
