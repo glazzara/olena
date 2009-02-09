@@ -90,8 +90,6 @@ namespace mln
 
 
 
-    // Generic implementation.
-
     namespace impl
     {
 

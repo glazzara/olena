@@ -1,3 +1,9 @@
+2009-02-09  Fabien Freling  <freling@lrde.epita.fr>
+
+	Implement fastest versions of labeling.
+	* fabien/flat_zones.hh: Implement fastest version.
+	* fabien/level.hh: Fix.
+
 2009-02-09  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add untake and setvalue property to card accu.
