@@ -1,3 +1,14 @@
+2009-02-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update igr's code.
+
+      	* lazzara/igr.cc: update code. More debug.
+
+	* lazzara/igr-cloud.cc: new. Register clouds of points.
+
+	* lazzara/irm_seg_with_mm_and_rag.mine.cc: new. Segment using
+	meyer_wst and register clouds of points.
+
 2009-02-09  Fabien Freling  <freling@lrde.epita.fr>
 
 	Implement fastest versions of labeling.
