@@ -102,6 +102,10 @@ namespace mln
   util::array<int>
   offsets_wrt(const Image<I>& ima, const Neighborhood<N>& nbh);
 
+  template <typename I, typename N>
+  util::array<int>
+  negative_offsets_wrt(const Image<I>& ima, const Neighborhood<N>& nbh);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -158,6 +162,20 @@ namespace mln
     mln_precondition(nbh.is_valid());
 
     return offsets_wrt(ima, nbh.win());
+  }
+
+  template <typename I, typename N>
+  util::array<int>
+  negative_offsets_wrt(const Image<I>& ima_, const Neighborhood<N>& nbh_)
+  {
+    mln_is_simple_neighborhood(N)::check();
+
+    const I& ima = exact(ima_);
+    const N& nbh = exact(nbh_);
+    mln_precondition(ima.is_valid());
+    mln_precondition(nbh.is_valid());
+
+    return negative_offsets_wrt(ima, nbh.win());
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -67,15 +67,11 @@ namespace mln
       template <typename I>
       struct flat_zones_functor
       {
-	typedef mln_psite(I) P;
-
-	// Requirements from mln::canvas::labeling:
-
-        typedef mln_pset(I) S;
-
 	const I& input;
 
 	// Generic implementation.
+
+	typedef mln_psite(I) P;
 
 	void init()                          {}
 	bool handles(const P&) const             { return true; }
@@ -99,7 +95,7 @@ namespace mln
 
 	// end of requirements.
 
-	flat_zones_functor(const I& input, const N& nbh)
+	flat_zones_functor(const I& input)
 	  : input(input)
 	{}
       };
@@ -122,9 +118,9 @@ namespace mln
       const N& nbh = exact(nbh_);
       mln_precondition(input.is_valid());
 
-      // Calls the only implementation.
-      typedef flat_zones_functor<I,N,L> F;
-      F f(exact(input), exact(nbh));
+      // Call the labeling canvas.
+      typedef impl::flat_zones_functor<I> F;
+      F f(input);
       mln_ch_value(I, L) output = canvas::labeling_video(input, nbh, nlabels, f);
 
       trace::exiting("labeling::flat_zones");

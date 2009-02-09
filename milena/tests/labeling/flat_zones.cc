@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/labeling/flat_zones.cc
- *
- * \brief Test on mln::labeling::flat_zones.
- */
+/// \file tests/labeling/flat_zones.cc
+///
+/// Test on mln::labeling::flat_zones.
+///
+/// \todo Move commented bench to the 'bench' directory.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -38,6 +40,7 @@
 
 #include <mln/labeling/blobs.hh>
 #include <mln/pw/all.hh>
+#include <mln/level/compare.hh>
 
 #include "tests/data.hh"
 
@@ -49,9 +52,42 @@ int main()
 
   image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/tiny.pgm");
 
+
+  // Bench code:
+
+//   for (unsigned i = 0; i < 10; ++i)
+//   {
+//     typedef image2d<int_u8> I;
+//     labeling::impl::flat_zones_functor<I> f(lena);
+//     unsigned n;
+//     canvas::impl::labeling_video_fastest(lena,
+// 					 c4(),
+// 					 n,
+// 					 f);
+//   }
+
+
   unsigned n;
   image2d<unsigned> labels = labeling::flat_zones(lena, c4(), n);
   mln_assertion(n == 247);
+
+  {
+    typedef image2d<int_u8> I;
+    labeling::impl::flat_zones_functor<I> f(lena);
+
+    unsigned nlabels_generic, nlabels_fastest;
+    mln_assertion(canvas::impl::generic::labeling(lena,
+						  c4(),
+						  nlabels_generic,
+						  lena.domain(),
+						  f)
+		  ==
+		  canvas::impl::labeling_video_fastest(lena,
+						       c4(),
+						       nlabels_fastest,
+						       f));
+    mln_assertion(nlabels_generic == nlabels_fastest);
+  }
 
   {
     unsigned n_ = 0;
@@ -64,4 +100,5 @@ int main()
       }
     mln_assertion(n_ == n);
   }
+
 }

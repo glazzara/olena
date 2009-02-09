@@ -1,3 +1,19 @@
+2009-02-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Optimize the video labeling canvas.
+
+	* mln/core/concept/neighborhood.hh (negative_offsets_wrt): New.
+	* mln/core/concept/window.hh: Likewise.
+	* mln/canvas/labeling.hh (labeling): Strenghten 's' type.
+	Use negative_offsets_wrt.
+	* mln/labeling/flat_zones.hh
+	(flat_zones_functor): Remove useless typedef S.
+	Fix ctor.
+	(flat_zones): Fix.
+	* tests/labeling/flat_zones.cc: Upgrade file doc style.
+	Add commented bench.
+	Add consistency test wrt both implementations.
+
 2009-02-09  Fabien Freling  <freling@lrde.epita.fr>
 
 	Fix header inclusion of labeling.hh.

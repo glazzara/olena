@@ -119,7 +119,7 @@ namespace mln
 		  typename S, typename F>
 	mln_ch_value(I, L)
 	  labeling(const Image<I>& input_, const Neighborhood<N>& nbh_, L& nlabels,
-		   const S& s, F& f)
+		   const Site_Set<S>& s_, F& f)
 	{
 	  trace::entering("canvas::impl::generic::labeling");
 
@@ -127,6 +127,7 @@ namespace mln
 
 	  const I& input = exact(input_);
 	  const N& nbh   = exact(nbh_);
+	  const S& s     = exact(s_);
 
 	  // Local type.
 	  typedef mln_psite(I) P;
@@ -254,7 +255,7 @@ namespace mln
 	// Initialization.
 	{
 	  initialize(deja_vu, input);
-	  mln::data::fill(deja_vu, false);
+   	  mln::data::fill(deja_vu, true);
 	  extension::fill(deja_vu, false); // So that the extension is ignored.
 
 	  initialize(parent, input);
@@ -268,8 +269,10 @@ namespace mln
 
 	// First Pass.
 	{
+	  util::array<int> dp = negative_offsets_wrt(input, nbh);
+	  const unsigned n_nbhs = dp.nelements();
+
 	  mln_pixter(const I) px(input);
-	  mln_nixter(const I, N) nx(px, nbh);
 	  for_all(px)
 	  {
 	    unsigned p = px.offset();
@@ -279,10 +282,10 @@ namespace mln
 	    // Make-Set.
 	    parent.element(p) = p;
 	    f.init_attr_(p);
-	    for_all(nx)
+	    for (unsigned i = 0; i < n_nbhs; ++i)
 	    {
-	      unsigned n = nx.offset();
-	      if (deja_vu.element(n))
+	      unsigned n = p + dp[i];
+ 	      if (deja_vu.element(n)) // Only false in the external border.
 		{
 		  if (f.equiv_(n, p))
 		    {
@@ -298,8 +301,6 @@ namespace mln
 		    f.do_no_union_(n, p);
 	      }
 	    }
-
-	    deja_vu.element(p) = true;
 	  }
 	}
 
@@ -465,19 +466,21 @@ namespace mln
 		typename F>
       inline
       mln_ch_value(I, L)
-      labeling_video(metal::false_, const Image<I>& input,
-	  const Neighborhood<N>& nbh, L& nlabels, F& functor)
+      labeling_video_dispatch(metal::false_,
+			      const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
+			      F& functor)
       {
-	return impl::generic::labeling(input, nbh, input.domain(),
-	    nlabels, functor);
+	return impl::generic::labeling(input, nbh, input.domain(), nlabels,
+				       functor);
       }
 
       template <typename I, typename N, typename L,
 	        typename F>
       inline
       mln_ch_value(I, L)
-      labeling_video(metal::true_, const Image<I>& input,
-	  const Neighborhood<N>& nbh, L& nlabels, F& functor)
+      labeling_video_dispatch(metal::true_,
+			      const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
+			      F& functor)
       {
 	return impl::labeling_video_fastest(input, nbh, nlabels, functor);
       }
@@ -486,8 +489,8 @@ namespace mln
 	        typename F>
       inline
       mln_ch_value(I, L)
-      labeling_video_dispatch(const Image<I>& input, const Neighborhood<N>& nbh,
-	  L& nlabels, F& functor)
+      labeling_video_dispatch(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
+			      F& functor)
       {
 	enum {
 	  test = mlc_equal(mln_trait_image_speed(I),
@@ -495,8 +498,9 @@ namespace mln
 	    &&
 	    mln_is_simple_neighborhood(N)::value
 	};
-	return labeling_video(metal::bool_<test>(), input,
-	    nbh, nlabels, functor);
+	return labeling_video_dispatch(metal::bool_<test>(),
+				       input, nbh, nlabels,
+				       functor);
       }
 
 
@@ -506,37 +510,37 @@ namespace mln
       inline
       mln_ch_value(I, L)
       labeling_sorted_dispatch(metal::false_,
-	  const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
-	  F& functor, bool increasing)
+			       const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
+			       F& functor, bool increasing)
       {
 	p_array<mln_psite(I)> s =
 	  increasing ?
 	  level::sort_psites_increasing(input) :
 	  level::sort_psites_decreasing(input);
-	return impl::generic::labeling(input, nbh, nlabels,
-	    s, functor);
+	return impl::generic::labeling(input, nbh, nlabels, s,
+				       functor);
       }
 
       template <typename I, typename N, typename L, typename F>
       inline
       mln_ch_value(I, L)
       labeling_sorted_dispatch(metal::true_,
-	  const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
-	  F& functor, bool increasing)
+			       const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
+			       F& functor, bool increasing)
       {
 	util::array<unsigned> s =
 	  increasing ?
 	  level::sort_offsets_increasing(input) :
 	  level::sort_offsets_decreasing(input);
-	return impl::labeling_sorted_fastest(input, nbh, nlabels,
-	    s, functor);
+	return impl::labeling_sorted_fastest(input, nbh, nlabels, s,
+					     functor);
       }
 
       template <typename I, typename N, typename L, typename F>
       inline
       mln_ch_value(I, L)
       labeling_sorted_dispatch(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
-	  F& functor, bool increasing)
+			       F& functor, bool increasing)
       {
 	enum {
 	  test = mlc_equal(mln_trait_image_speed(I),
@@ -545,8 +549,8 @@ namespace mln
 	    mln_is_simple_neighborhood(N)::value
 	};
 	return labeling_sorted_dispatch(metal::bool_<test>(),
-	    input, nbh, nlabels,
-	    functor, increasing);
+					input, nbh, nlabels,
+					functor, increasing);
       }
 
 
@@ -562,7 +566,7 @@ namespace mln
     inline
     mln_ch_value(I, L)
     labeling_video(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
-	F& functor)
+		   F& functor)
     {
       trace::entering("canvas::labeling_video");
 
@@ -570,7 +574,7 @@ namespace mln
 
       mln_ch_value(I, L) output;
       output = internal::labeling_video_dispatch(input, nbh, nlabels,
-	  functor);
+						 functor);
 
       trace::exiting("canvas::labeling_video");
       return output;
@@ -582,7 +586,7 @@ namespace mln
     inline
     mln_ch_value(I, L)
     labeling_sorted(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
-	F& functor, bool increasing)
+		    F& functor, bool increasing)
     {
       trace::entering("canvas::labeling_sorted");
 
@@ -590,7 +594,7 @@ namespace mln
 
       mln_ch_value(I, L) output;
       output = internal::labeling_sorted_dispatch(input, nbh, nlabels,
-	  functor, increasing);
+						  functor, increasing);
 
       trace::exiting("canvas::labeling_sorted");
       return output;
