@@ -1,3 +1,10 @@
+2009-02-09  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Try to make algebraic_union_find filter work with new accus.
+	* edwin/algebraic_union_find.hh: First version of algebraic
+	filter according to new accus.
+	* edwin/card.hh: Make card cleaner with MLN_INCLUDE_ONLY.
+
 2009-02-09  Frederic Bour  <bour@lrde.epita.fr>
 
 	[sandbox][bour] Wip of algebraic filter implementation.

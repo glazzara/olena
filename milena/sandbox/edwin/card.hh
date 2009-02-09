@@ -15,23 +15,101 @@ namespace mln
       {
 	typedef mln_psite(I) argument;
 
-	card () { init(); };
-	void init () { c_ = 0; };
+	card ();
+	void init ();
 
-	void take (const card<I>& accu) { c_ += accu.c_; };
+	void take (const card<I>& accu);
 
-	void take () { ++c_; };
-	void take (const mln_psite(I)& elt) { ++c_; };
-	void take (const mln_value(I)& elt) { ++c_; };
-	void take (const util::pix<I>& pix) { ++c_; };
+	void take ();
+	void take (const mln_psite(I)& elt);
+	void take (const mln_value(I)& elt);
+	void take (const util::pix<I>& pix);
 
-	unsigned to_result() const { return c_; };
+	unsigned to_result() const;
 
-	bool is_valid () const { return true; };
+	bool is_valid () const;
 
       private:
 	unsigned c_;
       };
+
+# ifndef MLN_INCLUDE_ONLY
+      template <typename I>
+      inline
+      card<I>::card () :
+	c_ (0)
+      {
+      }
+
+      template <typename I>
+      inline
+      void
+      card<I>::init ()
+      {
+	c_ = 0;
+      }
+
+      template <typename I>
+      inline
+      void
+      card<I>::take (const card<I>& accu)
+      {
+	c_ += accu.c_;
+      }
+
+
+      template <typename I>
+      inline
+      void
+      card<I>::take ()
+      {
+	++c_;
+      };
+
+      template <typename I>
+      inline
+      void
+      card<I>::take (const mln_psite(I)& elt)
+      {
+	++c_;
+      };
+
+
+      template <typename I>
+      inline
+      void
+      card<I>::take (const mln_value(I)& elt)
+      {
+	++c_;
+      };
+
+
+      template <typename I>
+      inline
+      void
+      card<I>::take (const util::pix<I>& pix)
+      {
+	++c_;
+      };
+
+      template <typename I>
+      inline
+      unsigned
+      card<I>::to_result() const
+      {
+	return c_;
+      };
+
+      template <typename I>
+      inline
+      bool
+      card<I>::is_valid () const
+      {
+	return true;
+      };
+# endif
+
+
     } // mln::morpho::accu
   } // mln::morpho
 } // mln
