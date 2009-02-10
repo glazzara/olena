@@ -29,11 +29,11 @@
 #ifndef MLN_MORPHO_ACCU_MEAN_HH
 # define MLN_MORPHO_ACCU_MEAN_HH
 
-/// \file mln/canvas/algebraic.hh
+/// \file mln/morpho/accu/mean.hh
 ///
-/// Apply leveling connected filter to images.
+/// Mean leveling accumulator.
 ///
-/// \todo Debug, add input validity check.
+/// \todo Debug.
 
 # include <mln/core/macros.hh>
 # include <mln/core/concept/accumulator.hh>
@@ -52,45 +52,86 @@ namespace mln {
       /// Morphological (i.e. for pixel and pixel values) accumulator calculating mean.
       /// Valid for leveling algorithm.
       /// FIXME: is inclusion polyphormism really appliable ?
-      struct mean: public Accumulator< mean<I> >,
-                   private mln::accu::mean<mln_value(I)>
+      class mean: public mln::accu::internal::base<typename mln::accu::mean<mln_value(I)>::result, mean<I> >
       {
-        typedef mln::accu::mean<mln_value(I)> super;
+      public:
         typedef util::pix<I> argument;
-        typedef typename super::result result;
-        typedef typename super::q_result q_result;
+        typedef typename mln::accu::mean<mln_value(I)>::result result;
+        typedef typename mln::accu::mean<mln_value(I)>::q_result q_result;
 
-        using super::take;
-        using super::take_as_init;
-        using super::init;
+        mean();
+
+        void init();
 
         void take(const mln_value(I)& v);
         void take(const argument& t);
         void take(const mean<I>& m);
+
+        result to_result() const;
+
+        bool is_valid() const;
+
+      private:
+        mln::accu::mean<mln_value(I)> accu_;
       };
 
       # ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
       inline
-      void mean<I>::take(const typename mean<I>::argument& t)
+      mean<I>::mean () :
+        accu_ ()
       {
-        this->take(t.v());
       }
 
       template <typename I>
       inline
-      void mean<I>::take(const mln_value(I)& v)
+      void
+      mean<I>::init ()
       {
-        this->super::take(v);
+        accu_.init();
       }
 
       template <typename I>
       inline
-      void mean<I>::take(const mean<I>& m)
+      void
+      mean<I>::take (const mean<I>& accu)
       {
-        this->super::take(m);
+        accu_.take(accu.accu_);
       }
+
+      template <typename I>
+      inline
+      void
+      mean<I>::take (const util::pix<I>& elt)
+      {
+        take(elt.v());
+      };
+
+
+      template <typename I>
+      inline
+      void
+      mean<I>::take (const mln_value(I)& elt)
+      {
+        accu_.take(elt);
+      };
+
+      template <typename I>
+      inline
+      typename mean<I>::result
+      mean<I>::to_result() const
+      {
+        return accu_.to_result();
+      };
+
+      template <typename I>
+      inline
+      bool
+      mean<I>::is_valid() const
+      {
+        return accu_.is_valid();
+      };
 
       # endif // ! MLN_INCLUDE_ONLY
 

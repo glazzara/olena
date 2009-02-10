@@ -1,3 +1,10 @@
+2009-02-10  Frederic Bour  <bour@lrde.epita.fr>
+
+	[sandbox][bour] Leveling filter with test.
+	* fred/Makefile: Modified to test leveling.
+	* fred/leveling.cc: Working leveling filter.
+	* fred/mean.hh: Corrected bugs.
+
 2009-02-09  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Try to make algebraic_union_find filter work with new accus.

@@ -295,7 +295,7 @@ namespace mln
     namespace internal
     {
 
-      // Algebraic
+      // Leveling
       template < typename I, typename N, typename A, typename L>
       mln_concrete(I)
       leveling_dispatch(metal::false_,
@@ -336,8 +336,8 @@ namespace mln
                             trait::accu::when_pix::use_only_v)::value
               && mln_is_simple_neighborhood(N)::value
         };
-        return algebraic_dispatch(metal::bool_<test>(),
-                                            input, nbh, a, lambda, increasing);
+        return leveling_dispatch(metal::bool_<test>(),
+                                  input, nbh, a, lambda, increasing);
       }
 
 
@@ -366,13 +366,14 @@ namespace mln
 #include <mln/core/image/image2d.hh>
 #include <mln/io/pgm/all.hh>
 #include <mln/util/timer.hh>
+#include "../edwin/card.hh"
 
-int main()
+int main(int argc, char** argv)
 {
   using namespace mln;
   using value::int_u8;
 
-  std::cout << "Algebraic filter test, reference: closing_area" << std::endl;
+  std::cout << "Leveling filter test" << std::endl;
 
   typedef mln::image2d<int_u8> I;
   I lena;
@@ -380,25 +381,26 @@ int main()
   float elapsed;
   mln::util::timer chrono;
   mln::morpho::accu::mean<I> c;
+  int lambda = atoi(argv[1]);
 
   mln::io::pgm::load(lena, "../../img/lena.pgm");
   I out;
 
   chrono.start();
-  out = mln::canvas::leveling<I, typeof(c4()), mln::morpho::accu::mean<I>, int> (lena, c4(), c, 510, true);
+  out = mln::canvas::leveling(lena, c4(), c, lambda, true);
   elapsed = chrono.stop();
   std::cout << "(auto) " << elapsed << "s" << std::endl;
   mln::io::pgm::save(out, "auto.pgm");
 
   chrono.start();
-//  out = mln::canvas::internal::leveling_dispatch(mln::metal::true_(), lena, c4(), mln::morpho::accu::mean<I>(), 510, true);
+  out = mln::canvas::internal::leveling_dispatch(mln::metal::true_(), lena, c4(), c, lambda, true);
   elapsed = chrono.stop();
   std::cout << "(fast) " << elapsed << "s" << std::endl;
 
   mln::io::pgm::save(out, "fast.pgm");
 
   chrono.start();
-//  out = mln::canvas::internal::leveling_dispatch(mln::metal::false_(), lena, c4(), mln::morpho::accu::mean<I>(), 510, true);
+  out = mln::canvas::internal::leveling_dispatch(mln::metal::false_(), lena, c4(), c, lambda, true);
   elapsed = chrono.stop();
   std::cout << "(slow) " << elapsed << "s" << std::endl;
 
