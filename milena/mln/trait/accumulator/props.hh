@@ -73,7 +73,8 @@ namespace mln
         struct any { protected: any() {}; };
         struct use_v : any { std::string name() const { return "when_pix::use_v"; } };
         struct use_p : any { std::string name() const { return "when_pix::use_p"; } };
-        struct use_pix : any { std::string name() const { return "when_pix::use_pix"; } };
+        struct use_pix  : any { std::string name() const { return "when_pix::use_pix"; } };
+        struct use_none : any { std::string name() const { return "when_pix::use_none"; } };
         struct not_ok : any { std::string name() const { return "when_pix::not_ok"; } };
       };
 

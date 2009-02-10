@@ -1,5 +1,32 @@
 2009-02-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fetch card and algebraic_union_find.hh from Edwin's sandbox.
+
+	* mln/trait/accumulator/props.hh (use_none): New.
+	* mln/trait/accumulators.hh
+	(mln_trait_accumulator_has_setvalue): Rename as...
+	(mln_trait_accumulator_has_set_value): ...this.
+	* mln/morpho/attribute: New directory.
+	* mln/morpho/attribute/all.hh: New.
+	* sandbox/edwin/card.hh: Copy to...
+	* mln/morpho/attribute/card.hh: ...this new file.
+	Update.
+	* mln/morpho/all.hh: Update.
+	* sandbox/edwin/algebraic_union_find.hh: Copy to...
+	* mln/canvas/morpho/algebraic_filter.hh: ...this new file.
+	(algebraic_union_find): Rename as...
+	(algebraic_filter): ...this.
+	Fix.
+	* mln/morpho/closing_algebraic.hh: New.
+	* mln/canvas/morpho/all.hh: Update.
+	* tests/morpho/attribute: New directory.
+	* tests/morpho/attribute/Makefile.am: New.
+	* tests/morpho/attribute/card.cc: New.
+	* tests/morpho/Makefile.am: Update.
+	* tests/morpho/closing_algebraic.cc: New.
+
+2009-02-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fetch accumulator properties from Fred's sandbox.
 
 	* mln/trait/accumulator: New directory.

@@ -40,7 +40,7 @@
 # define mln_trait_accumulator_has_untake(A) typename mln::trait::accumulator_< A >::has_untake
 
 /// Shortcut to the accumulator property about setvalue method disponibility
-# define mln_trait_accumulator_has_setvalue(A) typename mln::trait::accumulator_< A >::has_setvalue
+# define mln_trait_accumulator_has_set_value(A) typename mln::trait::accumulator_< A >::has_set_value
 
 /// Shortcut to the accumulator property about stop method disponibility
 # define mln_trait_accumulator_has_stop(A) typename mln::trait::accumulator_< A >::has_stop

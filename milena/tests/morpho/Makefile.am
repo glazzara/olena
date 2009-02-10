@@ -3,12 +3,14 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS =					\
+  attribute					\
   elementary					\
   tree						\
   watershed
 
 check_PROGRAMS =				\
   artificial_line_graph_image_wst		\
+  closing_algebraic				\
   closing_area					\
   closing_height				\
   closing_volume				\
@@ -45,6 +47,7 @@ check_PROGRAMS =				\
 erosion_SOURCES = erosion.cc
 
 opening_area_SOURCES = opening_area.cc
+closing_algebraic_SOURCES = closing_algebraic.cc
 closing_area_SOURCES = closing_area.cc
 closing_height_SOURCES = closing_height.cc
 opening_height_SOURCES = opening_height.cc

@@ -26,28 +26,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_MORPHO_ALL_HH
-# define MLN_CANVAS_MORPHO_ALL_HH
+#ifndef MLN_MORPHO_CLOSING_ALGEBRAIC_HH
+# define MLN_MORPHO_CLOSING_ALGEBRAIC_HH
 
-/// \file mln/canvas/morpho/all.hh
+/// \file mln/morpho/closing_algebraic.hh
 ///
-/// File that includes morphological canvas-related routines.
+/// Morphological algebraic closing.
+
+# include <mln/morpho/includes.hh>
+# include <mln/canvas/morpho/algebraic_filter.hh>
 
 
 namespace mln
 {
-  namespace canvas
+
+  namespace morpho
   {
 
-    /// Namespace of morphological canvas.
-    namespace morpho {}
-
-  }
-}
-
-
-# include <mln/canvas/morpho/algebraic_filter.hh>
-# include <mln/canvas/morpho/algebraic_union_find.hh>
+    /// Morphological algebraic closing.
+    template <typename I, typename N, typename A>
+    mln_concrete(I)
+    closing_algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
+		      const Accumulator<A>& accu, const mln_result(A)& lambda);
 
 
-#endif // ! MLN_CANVAS_MORPHO_ALL_HH
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+    template <typename I, typename N, typename A>
+    inline
+    mln_concrete(I)
+    closing_algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
+		      const Accumulator<A>& accu, const mln_result(A)& lambda)
+    {
+      trace::entering("morpho::closing_algebraic");
+
+      mln_precondition(exact(input).is_valid());
+
+      mln_concrete(I) output;
+      output = canvas::morpho::algebraic_filter(input, nbh, accu, lambda,
+						/* increasing = */ true);
+
+      mln_postcondition(output >= input);
+
+      trace::exiting("morpho::closing_algebraic");
+      return output;
+    }
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::morpho
+
+} // end of namespace mln
+
+
+#endif // ! MLN_MORPHO_CLOSING_ALGEBRAIC_HH

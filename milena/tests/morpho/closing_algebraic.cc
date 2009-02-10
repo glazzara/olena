@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,28 +25,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_MORPHO_ALL_HH
-# define MLN_CANVAS_MORPHO_ALL_HH
-
-/// \file mln/canvas/morpho/all.hh
+/// \file tests/morpho/closing_algebraic.cc
 ///
-/// File that includes morphological canvas-related routines.
+/// Test on mln::morpho::closing_algebraic.
+
+#include <mln/core/image/image2d.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/core/alias/neighb2d.hh>
+
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
+
+#include <mln/morpho/closing_algebraic.hh>
+#include <mln/morpho/attribute/card.hh>
+#include <mln/accu/count.hh>
+
+#include "tests/data.hh"
 
 
-namespace mln
+
+int main()
 {
-  namespace canvas
+  using namespace mln;
+  using value::int_u8;
+
+  trace::quiet = false;
+
+  typedef image2d<int_u8> I;
+  I lena;
+  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");//lena.pgm");
   {
-
-    /// Namespace of morphological canvas.
-    namespace morpho {}
-
+    accu::count<point2d> a;
+    io::pgm::save(morpho::closing_algebraic(lena, c4(), a, 10),
+		  "ref.pgm");
+  }
+  {
+    morpho::attribute::card<I> a;
+    io::pgm::save(morpho::closing_algebraic(lena, c4(), a, 10),
+		  "out.pgm");
   }
 }
-
-
-# include <mln/canvas/morpho/algebraic_filter.hh>
-# include <mln/canvas/morpho/algebraic_union_find.hh>
-
-
-#endif // ! MLN_CANVAS_MORPHO_ALL_HH

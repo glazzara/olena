@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -84,6 +84,7 @@ namespace mln
 
 // Sub-directories.
 
+# include <mln/morpho/attribute/all.hh>
 # include <mln/morpho/elementary/all.hh>
 # include <mln/morpho/tree/all.hh>
 # include <mln/morpho/watershed/all.hh>

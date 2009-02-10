@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,28 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_MORPHO_ALL_HH
-# define MLN_CANVAS_MORPHO_ALL_HH
-
-/// \file mln/canvas/morpho/all.hh
+/// \file tests/morpho/attribute/card.cc
 ///
-/// File that includes morphological canvas-related routines.
+/// Test on mln::morpho::attribute::card.
+
+#include <mln/core/image/image2d.hh>
+#include <mln/morpho/attribute/card.hh>
 
 
-namespace mln
+int main()
 {
-  namespace canvas
-  {
+  using namespace mln;
 
-    /// Namespace of morphological canvas.
-    namespace morpho {}
+  typedef image2d<int> I;
+  I ima(3, 3);
+  point2d p(0, 0);
+  util::pix<I> px(ima, p);
 
-  }
+  morpho::attribute::card<I> c;
+  c.take();
+  c.take(p);
+  c.take(px);
+  mln_assertion(c == 3);
 }
-
-
-# include <mln/canvas/morpho/algebraic_filter.hh>
-# include <mln/canvas/morpho/algebraic_union_find.hh>
-
-
-#endif // ! MLN_CANVAS_MORPHO_ALL_HH
