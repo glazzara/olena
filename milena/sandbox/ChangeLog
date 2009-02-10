@@ -10,10 +10,20 @@
 
 2009-02-10  Frederic Bour  <bour@lrde.epita.fr>
 
-	[sandbox][bour] Leveling filter with test.
+	Leveling filter with test.
 	* fred/Makefile: Modified to test leveling.
 	* fred/leveling.cc: Working leveling filter.
 	* fred/mean.hh: Corrected bugs.
+
+2009-02-10  Frederic Bour  <bour@lrde.epita.fr>
+
+	Working algebraic, wip leveling.
+	* milena/sandbox/fred/Makefile: .
+	* milena/sandbox/fred/accu_trait.hh: New.
+	* milena/sandbox/fred/algebraic.cc: .
+	* milena/sandbox/fred/closing_area.cc: New.
+	* milena/sandbox/fred/leveling.cc: New.
+	* milena/sandbox/fred/mean.hh: New.
 
 2009-02-09  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
@@ -24,7 +34,7 @@
 
 2009-02-09  Frederic Bour  <bour@lrde.epita.fr>
 
-	[sandbox][bour] Wip of algebraic filter implementation.
+	Wip of algebraic filter implementation.
 	* fred/Makefile: New.
 	* fred/algebraic.cc: New.
 
@@ -36,7 +46,13 @@
 
 2009-02-09  Frederic Bour  <bour@epita.lrde.epita.fr>
 
-	[sandbox][bour][carlinet] Work on properties and accumulators.
+	Added Makefile to sandbox/edwin for algebraic/lvl.
+	* milena/sandbox/edwin/Makefile: New.
+	* milena/sandbox/edwin/leveling.hh: .
+
+2009-02-09  Frederic Bour  <bour@epita.lrde.epita.fr>
+
+	Work on properties and accumulators.
 	* ChangeLog: .
 	* edwin/accu.cc: .
 	* edwin/accu_trait.hh: .
@@ -50,7 +66,7 @@
 
 	Update igr's code.
 
-      	* lazzara/igr.cc: update code. More debug.
+	* lazzara/igr.cc: update code. More debug.
 
 	* lazzara/igr-cloud.cc: new. Register clouds of points.
 
@@ -2571,7 +2587,7 @@
 	* abraham/mln/math/cos.hh: New
 	    templated mln::math::cos function.
 	* abraham/mln/math/acos.hh: New
- 	    templated mln::math::acos function.
+	    templated mln::math::acos function.
 
 2008-10-06  Alexandre Abraham  <abraham@lrde.epita.fr>
 

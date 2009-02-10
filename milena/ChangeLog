@@ -191,7 +191,7 @@
 	* mln/registration/icp2.hh: Add two new variants.
 
 2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
-    
+
 	Small changes in transformation related classes.
 
 	* mln/algebra/quat.hh: use mln_precondition instead of assert.
@@ -212,7 +212,7 @@
 
 	* tests/make/Makefile.am,
 	* tests/make/h_mat.cc: add a missing test.
-	
+
 2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix wrong comments in fun::x2x:composed.
@@ -264,7 +264,7 @@
 	* mln/win/sym.hh: enable preconditions.
 
 2009-02-05  Guillaume Lazzara  <z@lrde.epita.fr>
-  
+
 	Cleanup accu::rms.
 
 	* mln/accu/rms.hh: rename attributes and add a hook to the underlying
@@ -6723,7 +6723,7 @@
 	Rename target "internal" to "complete.
 
 	* doc/tutorial/todoxygen.sh: script to convert .tex files to .html
-    	files. It uses Hevea.
+	files. It uses Hevea.
 
 	* doc/tutorial/samples/borderthickness.cc,
 	* doc/tutorial/samples/extension-ignore2.cc,
