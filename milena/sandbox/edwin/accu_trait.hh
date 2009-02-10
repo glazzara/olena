@@ -23,7 +23,7 @@ namespace mln
   namespace morpho {
     namespace accu
     {
-      template <typename T>
+      template <typename I>
       struct card;
     }
   }

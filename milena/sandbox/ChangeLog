@@ -1,3 +1,12 @@
+2009-02-10  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Make leveling filter and mean accumulator clean.
+	* edwin/Makefile: Correct some errors.
+	* edwin/accu_trait.hh: Correct some errors.
+	* fred/leveling.cc: Main file to test leveling.
+	* fred/leveling_filter.hh: The leveling filter.
+	* fred/mean.hh: Accumulator to perform mean calculus.
+
 2009-02-10  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add test file for IGR.

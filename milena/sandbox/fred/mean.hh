@@ -26,32 +26,51 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_ACCU_MEAN_HH
-# define MLN_MORPHO_ACCU_MEAN_HH
+#ifndef MLN_MORPHO_ATTRIBUTE_MEAN_HH
+# define MLN_MORPHO_ATTRIBUTE_MEAN_HH
 
-/// \file mln/morpho/accu/mean.hh
+/// \file mln/morpho/attribute/mean.hh
 ///
-/// Mean leveling accumulator.
+/// Define an accumulator that computes the mean of a
+/// component.
 ///
-/// \todo Debug.
 
-# include <mln/core/macros.hh>
-# include <mln/core/concept/accumulator.hh>
-# include <mln/util/pix.hh>
+# include <mln/accu/internal/base.hh>
 # include <mln/accu/mean.hh>
-
-# include "accu_trait.hh"
+# include <mln/util/pix.hh>
 
 namespace mln {
 
+  // Forward declaration.
+
+  namespace morpho {
+    namespace attribute {
+      template <typename I> class mean;
+    }
+  }
+
+  // Traits
+
+  namespace trait {
+    template <typename I>
+    struct accumulator_< morpho::attribute::mean<I> >
+    {
+      typedef accumulator::has_untake::no	has_untake;
+      typedef accumulator::has_set_value::no	has_set_value;
+      typedef accumulator::has_stop::no		has_stop;
+      typedef accumulator::when_pix::use_v	when_pix;
+    };
+  }
+
+
   namespace morpho {
 
-    namespace accu {
+    namespace attribute {
 
-      template <typename I>
       /// Morphological (i.e. for pixel and pixel values) accumulator calculating mean.
       /// Valid for leveling algorithm.
       /// FIXME: is inclusion polyphormism really appliable ?
+      template <typename I>
       class mean: public mln::accu::internal::base<typename mln::accu::mean<mln_value(I)>::result, mean<I> >
       {
       public:
@@ -61,21 +80,30 @@ namespace mln {
 
         mean();
 
+
+	/// Manipulators.
+	/// \{
         void init();
 
         void take(const mln_value(I)& v);
         void take(const argument& t);
         void take(const mean<I>& m);
+	/// \}
 
+	/// Get the value of the accumulator.
         result to_result() const;
 
+	/// Check whether this accu is able to return a result.
         bool is_valid() const;
 
-      private:
+      protected:
+	/// The mean
         mln::accu::mean<mln_value(I)> accu_;
       };
 
-      # ifndef MLN_INCLUDE_ONLY
+
+
+# ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
       inline
@@ -133,23 +161,12 @@ namespace mln {
         return accu_.is_valid();
       };
 
-      # endif // ! MLN_INCLUDE_ONLY
+# endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::morpho::accu
+    } // end of namespace mln::morpho::attribute
 
   } // end of namespace mln::morpho
 
-  namespace trait {
-
-    template <typename I>
-    struct accu_< morpho::accu::mean<I> > :
-    public undefined_accu_ < morpho::accu::mean<I> >
-    {
-      typedef accu::when_pix::use_only_v when_pix;
-    };
-
-  } // end of namespace mln::trait
-
 } // end of namespace mln
 
-#endif /* ! MLN_MORPHO_ACCU_MEAN_HH */
+#endif /* ! MLN_MORPHO_ATTRIBUTE_MEAN_HH */
