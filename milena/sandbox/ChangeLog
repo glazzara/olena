@@ -1,3 +1,13 @@
+2009-02-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add programs for Camille Couprie.
+
+	* camille/: New directory.
+	* camille/graph-line-gradient-closing.cc,
+	* camille/graph-wst.cc: New.
+	* camille/Makefile: New.
+	* camille/.gitignore: New.
+
 2009-02-10  Frederic Bour  <bour@lrde.epita.fr>
 
 	[sandbox][bour] Leveling filter with test.
