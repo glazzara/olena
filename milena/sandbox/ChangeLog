@@ -1,3 +1,9 @@
+2009-02-10  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add test file for IGR.
+	* fabien/igr/dump2ppm.cc: New tool to convert dump file to ppm.
+	* fabien/igr/igr.cc: New test file for IRM dump.
+
 2009-02-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add programs for Camille Couprie.
