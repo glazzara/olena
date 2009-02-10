@@ -1,3 +1,7 @@
+2009-02-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	* .gitignore: Ignore pattern `*.dSYM'.
+
 2009-02-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Move M4 files into m4/.
