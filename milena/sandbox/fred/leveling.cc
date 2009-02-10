@@ -26,27 +26,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_ALGEBRAIC_HH
-# define MLN_CANVAS_ALGEBRAIC_HH
+#ifndef MLN_CANVAS_LEVELING_HH
+# define MLN_CANVAS_LEVELING_HH
 
-/// \file mln/canvas/algebraic.hh
+/// \file mln/canvas/leveling.hh
 ///
-/// Apply algebraic connected filter to images.
+/// Apply leveling connected filter to images.
 ///
-/// \todo Test inputs validity.
+/// \todo Debug, add input validity check.
 
 # include <mln/core/concept/image.hh>
 # include <mln/data/fill.hh>
 # include <mln/literal/zero.hh>
 # include <mln/convert/to_upper_window.hh>
 # include <mln/extension/adjust_fill.hh>
-
 # include <mln/level/sort_psites.hh>
 # include <mln/level/sort_offsets.hh>
 # include <mln/core/alias/neighb2d.hh>
+# include <mln/util/pix.hh>
 
-# include "../edwin/accu_trait.hh"
-# include "../edwin/card.hh"
+# include "accu_trait.hh"
+# include "mean.hh"
 
 namespace mln
 {
@@ -56,8 +56,8 @@ namespace mln
 
     template < typename I, typename N, typename A, typename L>
     mln_concrete(I)
-    algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
-              Accumulator<A>& a, L lambda, bool increasing);
+    leveling(const Image<I>& input, const Neighborhood<N>& nbh,
+             const Accumulator<A>& a, L lambda, bool increasing);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -82,10 +82,10 @@ namespace mln
 
         template < typename I, typename N, typename S, typename A, typename L>
         mln_concrete(I)
-        algebraic(const Image<I>& input_, const Neighborhood<N>& nbh_,
+        leveling(const Image<I>& input_, const Neighborhood<N>& nbh_,
                   const Site_Set<S>& s_, const Accumulator<A>& a_, L lambda)
         {
-          trace::entering("canvas::impl::generic::algebraic");
+          trace::entering("canvas::impl::generic::leveling");
 
           // FIXME: Test?!
 
@@ -127,7 +127,7 @@ namespace mln
               // Make set.
               {
                 parent(p) = p;
-                data(p).take_as_init(p);
+                data(p).take_as_init(make::pix(input, p));
               }
 
               for_all(n)
@@ -177,7 +177,7 @@ namespace mln
                 output(p) = output(parent(p));
           }
 
-          trace::exiting("canvas::morpho::impl::generic::algebraic");
+          trace::exiting("canvas::morpho::impl::generic::leveling");
           return output;
         }
 
@@ -197,10 +197,10 @@ namespace mln
 
       template < typename I, typename N, typename A, typename L>
       mln_concrete(I)
-      algebraic_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_,
+      leveling_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_,
                         const util::array<unsigned>& s, const Accumulator<A>& a_, L lambda)
       {
-        trace::entering("canvas::impl::algebraic_fastest");
+        trace::entering("canvas::impl::leveling_fastest");
 
         // FIXME: Tests?
 
@@ -243,7 +243,7 @@ namespace mln
 
             // Make set.
             parent.element(p) = p;
-            data.element(p).take_as_init();
+            data.element(p).take_as_init(input.element(p));
 
             for (unsigned j = 0; j < n_nbhs; ++j)
             {
@@ -285,7 +285,7 @@ namespace mln
           }
         }
 
-        trace::exiting("canvas::impl::algebraic_fastest");
+        trace::exiting("canvas::impl::leveling_fastest");
         return output;
       }
 
@@ -298,42 +298,42 @@ namespace mln
       // Algebraic
       template < typename I, typename N, typename A, typename L>
       mln_concrete(I)
-      algebraic_dispatch(metal::false_,
-                          const Image<I>& input, const Neighborhood<N>& nbh,
-                          const Accumulator<A>& a, L lambda, bool increasing)
+      leveling_dispatch(metal::false_,
+                         const Image<I>& input, const Neighborhood<N>& nbh,
+                         const Accumulator<A>& a, L lambda, bool increasing)
       {
         p_array < mln_psite(I) > s =
           increasing ?
           level::sort_psites_increasing(input) :
           level::sort_psites_decreasing(input);
-        return impl::generic::algebraic(input, nbh, s, a, lambda);
+        return impl::generic::leveling(input, nbh, s, a, lambda);
       }
 
       template < typename I, typename N, typename A, typename L>
       mln_concrete(I)
-      algebraic_dispatch(metal::true_,
-                          const Image<I>& input, const Neighborhood<N>& nbh,
-                          const Accumulator<A>& a, L lambda, bool increasing)
+      leveling_dispatch(metal::true_,
+                         const Image<I>& input, const Neighborhood<N>& nbh,
+                         const Accumulator<A>& a, L lambda, bool increasing)
       {
         util::array<unsigned> s =
           increasing ?
           level::sort_offsets_increasing(input) :
           level::sort_offsets_decreasing(input);
-        return impl::algebraic_fastest(input, nbh, s, a, lambda);
+        return impl::leveling_fastest(input, nbh, s, a, lambda);
       }
 
       template < typename I, typename N, typename A, typename L>
       inline
       mln_concrete(I)
-      algebraic_dispatch(const Image<I>& input, const Neighborhood<N>& nbh,
-                          const Accumulator<A>& a, L lambda, bool increasing)
+      leveling_dispatch(const Image<I>& input, const Neighborhood<N>& nbh,
+                         const Accumulator<A>& a, L lambda, bool increasing)
       {
         enum
         {
           test = mlc_equal(mln_trait_image_speed(I),
                             trait::image::speed::fastest)::value
               && mlc_equal(mln_trait_accu_when_pix(A),
-                            trait::accu::when_pix::use_whatever)::value
+                            trait::accu::when_pix::use_only_v)::value
               && mln_is_simple_neighborhood(N)::value
         };
         return algebraic_dispatch(metal::bool_<test>(),
@@ -347,11 +347,11 @@ namespace mln
     template < typename I, typename N, typename A, typename L>
     inline
     mln_concrete(I)
-    algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
+    leveling(const Image<I>& input, const Neighborhood<N>& nbh,
               const Accumulator<A>& a, L lambda, bool increasing)
     {
 //      FIXME: Do we need to check input validity ?
-      return internal::algebraic_dispatch(input, nbh, a, lambda, increasing);
+      return internal::leveling_dispatch(input, nbh, a, lambda, increasing);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -361,13 +361,13 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CANVAS_ALGEBRAIC_HH
+#endif // ! MLN_CANVAS_LEVELING_HH
 
 #include <mln/core/image/image2d.hh>
 #include <mln/io/pgm/all.hh>
 #include <mln/util/timer.hh>
 
-int main(int argc, char **argv)
+int main()
 {
   using namespace mln;
   using value::int_u8;
@@ -379,26 +379,26 @@ int main(int argc, char **argv)
 
   float elapsed;
   mln::util::timer chrono;
+  mln::morpho::accu::mean<I> c;
 
   mln::io::pgm::load(lena, "../../img/lena.pgm");
   I out;
-  int lambda = atoi(argv[1]);
 
   chrono.start();
-  out = mln::canvas::algebraic (lena, c4(), mln::morpho::accu::card<I>(), lambda, true);
+  out = mln::canvas::leveling<I, typeof(c4()), mln::morpho::accu::mean<I>, int> (lena, c4(), c, 510, true);
   elapsed = chrono.stop();
   std::cout << "(auto) " << elapsed << "s" << std::endl;
   mln::io::pgm::save(out, "auto.pgm");
 
   chrono.start();
-  out = mln::canvas::internal::algebraic_dispatch(mln::metal::true_(), lena, c4(), mln::morpho::accu::card<I>(), lambda, true);
+//  out = mln::canvas::internal::leveling_dispatch(mln::metal::true_(), lena, c4(), mln::morpho::accu::mean<I>(), 510, true);
   elapsed = chrono.stop();
   std::cout << "(fast) " << elapsed << "s" << std::endl;
 
   mln::io::pgm::save(out, "fast.pgm");
 
   chrono.start();
-  out = mln::canvas::internal::algebraic_dispatch(mln::metal::false_(), lena, c4(), mln::morpho::accu::card<I>(), lambda, true);
+//  out = mln::canvas::internal::leveling_dispatch(mln::metal::false_(), lena, c4(), mln::morpho::accu::mean<I>(), 510, true);
   elapsed = chrono.stop();
   std::cout << "(slow) " << elapsed << "s" << std::endl;
 

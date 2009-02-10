@@ -1,3 +1,13 @@
+2009-02-10  Frederic Bour  <bour@lrde.epita.fr>
+
+	[sandbox][bour] ~Working algebraic, wip leveling.
+	* milena/sandbox/fred/Makefile: .
+	* milena/sandbox/fred/accu_trait.hh: New.
+	* milena/sandbox/fred/algebraic.cc: .
+	* milena/sandbox/fred/closing_area.cc: New.
+	* milena/sandbox/fred/leveling.cc: New.
+	* milena/sandbox/fred/mean.hh: New.
+
 2009-02-09  Frederic Bour  <bour@epita.lrde.epita.fr>
 
 	[sandbox][bour] Added Makefile to sandbox/edwin for algebraic/lvl.
