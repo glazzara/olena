@@ -88,7 +88,7 @@ namespace mln
 
       typedef trait::image::vw_io::none                    vw_io;
       typedef trait::image::vw_set::none                   vw_set;
-      typedef trait::image::value_alignement::not_aligned  value_alignement;
+      typedef trait::image::value_alignment::not_aligned   value_alignment;
       typedef trait::image::value_storage::disrupted value_storage;
       // HOT FIXME: except if S is a Box
     };

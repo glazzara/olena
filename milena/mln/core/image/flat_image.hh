@@ -83,7 +83,7 @@ namespace mln
       typedef trait::image::value_access::direct            value_access;
       typedef trait::image::value_storage::singleton        value_storage;
       typedef mln::trait::image::value_browsing::value_wise value_browsing;
-      typedef trait::image::value_alignement::with_grid     value_alignement;
+      typedef trait::image::value_alignment::with_grid      value_alignment;
       typedef trait::image::value_io::read_only             value_io;
 
       // site / domain

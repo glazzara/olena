@@ -93,7 +93,7 @@ namespace mln
       typedef trait::image::vw_set::none                   vw_set;
       typedef trait::image::value_storage::disrupted       value_storage;
       typedef trait::image::value_browsing::site_wise_only value_browsing;
-      typedef trait::image::value_alignement::irrelevant   value_alignement;
+      typedef trait::image::value_alignment::irrelevant    value_alignment;
       typedef trait::image::value_io::read_write           value_io;
 
       // Site / domain.

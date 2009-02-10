@@ -252,10 +252,10 @@ namespace mln
 
 
         /// Check basic properties
-        if (mlc_is(mln_trait_image_value_alignement(I),
-                   trait::image::value_alignement::with_grid)::value &&
-            mlc_is(mln_trait_image_value_alignement(J),
-                   trait::image::value_alignement::with_grid)::value)
+        if (mlc_is(mln_trait_image_value_alignment(I),
+                   trait::image::value_alignment::with_grid)::value &&
+            mlc_is(mln_trait_image_value_alignment(J),
+                   trait::image::value_alignment::with_grid)::value)
           {
             fill_with_image_(mln_trait_image_value_access(I)(),
                              mln_trait_image_value_access(J)(),

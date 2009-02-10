@@ -443,9 +443,9 @@ namespace mln
       {
 	const I& input  = exact(input_);
 
-	/// Check alignement property
-	if (mlc_is(mln_trait_image_value_alignement(I),
-		   trait::image::value_alignement::with_grid)::value)
+	/// Check alignment property
+	if (mlc_is(mln_trait_image_value_alignment(I),
+		   trait::image::value_alignment::with_grid)::value)
 	  return transform_dispatch(mln_trait_image_quant(I)(),
 				    mln_trait_image_value_access(I)(),
 				    input, exact(f_));
@@ -461,8 +461,8 @@ namespace mln
 
       template <typename I1, typename I2, typename F>
       mln_ch_value(I1, mln_result(F))
-	transform_dispatch_2(trait::image::value_alignement::any,
-                             trait::image::value_alignement::any,
+	transform_dispatch_2(trait::image::value_alignment::any,
+                             trait::image::value_alignment::any,
                              trait::image::speed::any,
 			     trait::image::speed::any,
 			     const Image<I1>& input1, const Image<I2>& input2,
@@ -473,8 +473,8 @@ namespace mln
 
       template <typename I1, typename I2, typename F>
       mln_ch_value(I1, mln_result(F))
-	transform_dispatch_2(trait::image::value_alignement::with_grid,
-                             trait::image::value_alignement::with_grid,
+	transform_dispatch_2(trait::image::value_alignment::with_grid,
+                             trait::image::value_alignment::with_grid,
                              trait::image::speed::fastest,
 			     trait::image::speed::fastest,
 			     const Image<I1>& input1, const Image<I2>& input2,
@@ -502,8 +502,8 @@ namespace mln
 	transform_dispatch(const Image<I1>& input1, const Image<I2>& input2,
 			   const Function_vv2v<F>& f)
       {
-	return transform_dispatch_2(mln_trait_image_value_alignement(I1)(),
-                                    mln_trait_image_value_alignement(I2)(),
+	return transform_dispatch_2(mln_trait_image_value_alignment(I1)(),
+                                    mln_trait_image_value_alignment(I2)(),
                                     mln_trait_image_speed(I1)(),
 				    mln_trait_image_speed(I2)(),
 				    input1, input2, f);

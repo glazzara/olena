@@ -436,8 +436,8 @@ namespace mln
 
       template <typename I1, typename I2, typename F>
       void
-      transform_inplace_dispatch(trait::image::value_alignement::any,
-                                 trait::image::value_alignement::any,
+      transform_inplace_dispatch(trait::image::value_alignment::any,
+                                 trait::image::value_alignment::any,
                                  trait::image::speed::any,
 				 trait::image::speed::any,
 				 Image<I1>& ima, const Image<I2>& aux,
@@ -448,8 +448,8 @@ namespace mln
 
       template <typename I1, typename I2, typename F>
       void
-      transform_inplace_dispatch(trait::image::value_alignement::with_grid,
-                                 trait::image::value_alignement::with_grid,
+      transform_inplace_dispatch(trait::image::value_alignment::with_grid,
+                                 trait::image::value_alignment::with_grid,
                                  trait::image::speed::fastest,
 				 trait::image::speed::fastest,
 				 Image<I1>& ima, const Image<I2>& aux,
@@ -463,8 +463,8 @@ namespace mln
       transform_inplace_dispatch(Image<I1>& ima, const Image<I2>& aux,
                                  const Function_vv2v<F>& f)
       {
-	transform_inplace_dispatch(mln_trait_image_value_alignement(I1)(),
-                                   mln_trait_image_value_alignement(I2)(),
+	transform_inplace_dispatch(mln_trait_image_value_alignment(I1)(),
+                                   mln_trait_image_value_alignment(I2)(),
                                    mln_trait_image_speed(I1)(),
 				   mln_trait_image_speed(I2)(),
 				   ima, aux, f);

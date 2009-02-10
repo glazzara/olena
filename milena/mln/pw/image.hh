@@ -98,7 +98,7 @@ namespace mln
       typedef trait::image::value_access::computed         value_access;
       typedef trait::image::value_storage::disrupted       value_storage;
       typedef trait::image::value_browsing::site_wise_only value_browsing;
-      typedef trait::image::value_alignement::irrelevant   value_alignement;
+      typedef trait::image::value_alignment::irrelevant    value_alignment;
       typedef mlc_if(is_mutable,
 		     trait::image::value_io::read_write,
 		     trait::image::value_io::read_only)    value_io;

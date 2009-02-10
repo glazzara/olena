@@ -1,3 +1,25 @@
+2009-02-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	s/alignement/alignment/g.
+
+	* mln/core/image/complex_image.hh,
+	* mln/core/image/flat_image.hh,
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image3d.hh,
+	* mln/core/image/image_if.hh,
+	* mln/core/image/p2p_image.hh,
+	* mln/core/image/slice_image.hh,
+	* mln/core/image/sub_image.hh,
+	* mln/data/fill_with_image.spe.hh,
+	* mln/data/paste.spe.hh,
+	* mln/level/transform.spe.hh,
+	* mln/level/transform_inplace.hh,
+	* mln/pw/image.hh,
+	* mln/trait/image/props.hh,
+	* mln/trait/images.hh:
+	Here.
+
 2009-02-10  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix save function for cloud.

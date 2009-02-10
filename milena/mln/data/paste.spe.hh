@@ -295,10 +295,10 @@ namespace mln
 			  const Image<I>& input,
 			  Image<J>& output)
       {
-	enum { alignments = mlc_is(mln_trait_image_value_alignement(I),
-				   trait::image::value_alignement::with_grid)::value
-	       && mlc_is(mln_trait_image_value_alignement(J),
-			 trait::image::value_alignement::with_grid)::value };
+	enum { alignments = mlc_is(mln_trait_image_value_alignment(I),
+				   trait::image::value_alignment::with_grid)::value
+	       && mlc_is(mln_trait_image_value_alignment(J),
+			 trait::image::value_alignment::with_grid)::value };
 	paste_one_block_dispatch(metal::bool_<alignments>(), input, output);
       }
 

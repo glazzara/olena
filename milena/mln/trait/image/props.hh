@@ -183,7 +183,7 @@
 
 // * image geometry
 
-// value_alignement:/any/
+// value_alignment:/any/
 //                   |
 //                   +-- with_grid
 //                   |
@@ -458,22 +458,22 @@ namespace mln
 	struct disrupted : any  { std::string name() const { return "value_storage::disrupted"; } };
       };
 
-// value_alignement:/any/
+// value_alignment:/any/
 //                   |
 //                   +-- with_grid
 //                   |
 //                   +-- not_aligned
 //                   |
 //                   +-- irrelevant
-      struct value_alignement
+      struct value_alignment
       {
         struct any { protected: any() {} };
         struct with_grid
-          : any { std::string name() const { return "value_alignement::with_grid"; } };
+          : any { std::string name() const { return "value_alignment::with_grid"; } };
         struct not_aligned
-          : any { std::string name() const { return "value_alignement::not_aligned"; } };
+          : any { std::string name() const { return "value_alignment::not_aligned"; } };
         struct irrelevant
-          : any { std::string name() const { return "value_alignement::irrelevant"; } };
+          : any { std::string name() const { return "value_alignment::irrelevant"; } };
       };
 
 // pw_io:  /any/

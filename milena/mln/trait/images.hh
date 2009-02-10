@@ -62,7 +62,7 @@
 # define mln_trait_image_pw_io(I)            typename mln::trait::image_< I >::pw_io
 # define mln_trait_image_vw_io(I)            typename mln::trait::image_< I >::vw_io
 # define mln_trait_image_vw_set(I)           typename mln::trait::image_< I >::vw_set
-# define mln_trait_image_value_alignement(I) typename mln::trait::image_< I>::value_alignement
+# define mln_trait_image_value_alignment(I)  typename mln::trait::image_< I>::value_alignment
 
 # define mln_trait_image_localization(I) typename mln::trait::image_< I >::localization
 # define mln_trait_image_dimension(I)    typename mln::trait::image_< I >::dimension
@@ -141,7 +141,7 @@ namespace mln
       // value
       typedef undef vw_io;
       typedef undef vw_set;
-      typedef undef value_alignement;
+      typedef undef value_alignment;
       typedef undef value_access;
       typedef undef value_storage;
       typedef undef value_browsing;
@@ -207,7 +207,7 @@ namespace mln
       typedef typename image_<D>::dimension    dimension;
 
       // Memory organization
-      typedef typename image_<D>::value_alignement value_alignement;
+      typedef typename image_<D>::value_alignment  value_alignment;
       typedef typename image_<D>::value_access     value_access;
       typedef typename image_<D>::value_storage    value_storage;
       typedef typename image_<D>::value_browsing   value_browsing;
