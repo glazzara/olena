@@ -1,3 +1,17 @@
+2009-02-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fetch accumulator properties from Fred's sandbox.
+
+	* mln/trait/accumulator: New directory.
+	* sandbox/fred/accuprops.cc: Copy to...
+	* mln/trait/accumulator/props.hh,
+	* mln/trait/accumulators.hh: ...these new files.
+	Rename entities to enforce consistency.
+	Remove leveling related code.
+	* mln/trait/accumulator/print.hh: New.
+	* mln/core/concept/accumulator.hh: Include props.
+	* tests/accu/max.cc: Upgrade file doc style.
+
 2009-02-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix accu::center.

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/max.cc
- *
- * \brief Tests on mln::accu::max.
- */
+/// \file tests/accu/max.cc
+///
+/// Tests on mln::accu::max.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
@@ -50,4 +50,6 @@ int main()
   mln_assertion(level::compute(accu::meta::max(), ima) == 9);
   accu::max<int> M;
   mln_assertion(level::compute(M, ima) == 9);
+
+  // mln::trait::accumulator::print(M);
 }
