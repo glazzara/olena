@@ -73,7 +73,7 @@ namespace mln
       bool is_valid() const;
 
     protected:
-      V center_;
+      algebra::vec<P::dim, mln_sum(mln_coord(P))> center_;
       unsigned nsites_;
     };
 
@@ -87,7 +87,7 @@ namespace mln
 	template <typename P, typename V>
 	struct with
 	{
-	  typedef accu::center<P,V> ret;
+	  typedef accu::center<P, V> ret;
 	};
 
       };

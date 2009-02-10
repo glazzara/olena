@@ -1,3 +1,10 @@
+2009-02-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix accu::center.
+
+	* mln/accu/center.hh: use a vector of type mln_sum(P::coord) instead
+	of P::vec. Avoid an overflow.
+
 2009-02-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update ICP.
