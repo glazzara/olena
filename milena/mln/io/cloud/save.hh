@@ -64,10 +64,10 @@ namespace mln
         inline
         void save_data(const p_array<P>& arr, std::ofstream& file)
 	{
-	  std::ostringstream sline;
 	  mln_piter(p_array<P>) p(arr);
 	  for_all(p)
           {
+	    std::ostringstream sline;
 	    algebra::vec<P::dim,float> v = p.to_site().to_vec();
 	    sline << v[0];
 	    for (unsigned i = 1; i < P::dim; ++i)

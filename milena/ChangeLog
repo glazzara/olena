@@ -1,3 +1,8 @@
+2009-02-10  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Fix save function for cloud.
+	* mln/io/cloud/save.hh: Fix (save_data).
+
 2009-02-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix missing specialization for bkd_pixter in image1d and image3d.
