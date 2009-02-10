@@ -53,7 +53,7 @@ int main()
 
   typedef image2d<int_u8> I;
   I lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");//lena.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
   {
     accu::count<point2d> a;
     io::pgm::save(morpho::closing_algebraic(lena, c4(), a, 10),

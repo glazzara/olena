@@ -44,7 +44,7 @@ namespace mln
 
   namespace morpho {
     namespace attribute {
-      template <typename I> struct card;
+      template <typename I> class card;
     }
   }
 
@@ -61,7 +61,6 @@ namespace mln
       typedef accumulator::has_set_value::no  has_set_value;
       typedef accumulator::has_stop::no       has_stop;
       typedef accumulator::when_pix::use_none when_pix;
-      
     };
 
   } // end of namespace mln::trait
@@ -76,8 +75,11 @@ namespace mln
       /// Cardinality accumulator class.
 
       template <typename I>
-      struct card : public mln::accu::internal::base< unsigned, card<I> >
+      class card : public mln::accu::internal::base< unsigned, card<I> >
       {
+	typedef mln::accu::internal::base< unsigned, card<I> > super_;
+      public:
+
 	typedef mln_psite(I) argument;
 
 	card();
@@ -93,6 +95,7 @@ namespace mln
 
 	void take();
 	void take_as_init();
+	using super_::take_as_init;
 	/// \}
 
 	/// Get the value of the accumulator.

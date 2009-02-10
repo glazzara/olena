@@ -1,5 +1,17 @@
 2009-02-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix missing specialization for bkd_pixter in image1d and image3d.
+
+	* mln/core/image/image1d.hh
+	(bkd_pixter): Fix missing specialization.
+	* mln/core/image/image3d.hh
+	(bkd_pixter): Fix missing specialization.
+	* mln/morpho/attribute/card.hh: Fix missing using.
+	* mln/canvas/morpho/algebraic_filter.hh: Layout.
+	* tests/morpho/closing_algebraic.cc: Remove dead code.
+
+2009-02-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fetch card and algebraic_union_find.hh from Edwin's sandbox.
 
 	* mln/trait/accumulator/props.hh (use_none): New.

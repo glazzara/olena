@@ -168,7 +168,7 @@ namespace mln
 				activity(p) = false;
 			    }
 			  else
-			    activity(p) = false;
+ 			    activity(p) = false;
 			}
 		    }
 		deja_vu(p) = true;
