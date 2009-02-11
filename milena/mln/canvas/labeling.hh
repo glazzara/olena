@@ -470,7 +470,7 @@ namespace mln
 			      const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels,
 			      F& functor)
       {
-	return impl::generic::labeling(input, nbh, input.domain(), nlabels,
+	return impl::generic::labeling(input, nbh, nlabels, exact(input).domain(),
 				       functor);
       }
 
