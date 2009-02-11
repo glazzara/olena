@@ -1,3 +1,9 @@
+2009-02-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix debug::histo.
+
+	* mln/debug/histo.hh: add missing includes and a wrong precondition.
+
 2009-02-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	s/alignement/alignment/g.

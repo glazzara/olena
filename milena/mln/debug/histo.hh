@@ -33,7 +33,11 @@
 ///
 /// save a histogram to a plot data file.
 
+# include <iostream>
+# include <fstream>
 # include <vector>
+# include <string>
+# include <mln/histo/array.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/draw/line.hh>
 
@@ -45,22 +49,21 @@ namespace mln
 
 
     void
-    histo_plot(const histo::array<unsigned>& h, const std::string& filename);
+    histo(const histo::array<unsigned>& h, const std::string& filename);
 
     void
-    histo_plot(const std::vector<unsigned>& h, const std::string& filename);
+    histo(const std::vector<unsigned>& h, const std::string& filename);
 
 # ifndef MLN_INCLUDE_ONLY
 
     void
-    histo_plot(const histo::array<unsigned>& h, const std::string& filename)
+    histo(const histo::array<unsigned>& h, const std::string& filename)
     {
-      mln_precondition(h.is_valid());
-      histo_plot(h.vect(), filename);
+      histo(h.vect(), filename);
     }
 
     void
-    histo_plot(const std::vector<unsigned>& h, const std::string& filename)
+    histo(const std::vector<unsigned>& h, const std::string& filename)
     {
       std::ofstream file(filename.c_str());
       if (! file)
