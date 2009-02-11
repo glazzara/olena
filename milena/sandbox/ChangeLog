@@ -1,3 +1,12 @@
+2009-02-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Cleanup pseudo-tree computation.
+
+	* theo/esiee/laurent/ismm09/pseudo_tree.hh
+	(compute_pseudo_tree): Move lca stuff..
+	(compute_lca): ...this new routine.
+	Update
+
 2009-02-11  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix IGR test file for segmentation (2D & 3D).

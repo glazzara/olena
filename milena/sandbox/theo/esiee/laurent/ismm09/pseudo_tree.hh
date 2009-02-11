@@ -18,6 +18,8 @@
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/level/stretch.hh>
+#include <mln/level/compute.hh>
+#include <mln/accu/max.hh>
 
 
 
@@ -177,6 +179,20 @@ namespace mln
   }
 
 
+  template <typename I, typename E, typename L>
+  lca_t<L, mln_ch_value(I, std::vector<mln_psite(I)>), E>
+  compute_lca(const I& epar, const util::array<E>& edge, L l_max)
+  {
+    std::vector<E> roots;
+    mln_VAR(chl, compute_children(epar, edge, l_max, roots));
+    
+    // Connected domain so:
+    mln_invariant(roots.size() == 1);
+    E root = roots[0]; // THE root.
+    
+    lca_t<L,chl_t,E> lca(l_max, chl, roots);
+    return lca;
+  }
 
 
   // ###################################################################
@@ -500,78 +516,61 @@ namespace mln
 
     // Finalization.
 
-    A aa_max = mln_min(A);
+    mln_VAR(lca, compute_lca(epar, edge, l_max));
+
+
+    mln_piter(g_line_t) e(g_line.domain());
+    for_all(e)
+    {
+      L l1, l2;
+      e_to_l1_l2(e, l1, l2);
+      mln_invariant(l1 != 0 && l2 > l1);
+      E e_ = lca(edge[l1],edge[l2]);
+      
+      mln_invariant(g_line.has(e_)); // e_ is a valid edge.
+      mln_invariant(aa(e_) != 0);    // aa is valid at e_.
+      
+      // The attribute value propagates from the lca to the current edge
+      // of the line:
+      aa(e) = aa(e_);
+    }
+
+    mln_VAR(aa_ext, aa.unmorph_().unmorph_());
+    {
+      mln_VAR( aa_line, aa_ext | (pw::value(w) == 0) );
+      
+      data::paste(morpho::dilation(extend(aa_line | (pw::value(aa_line) == 0),
+					  aa_line),
+				   c4().win()),
+		  aa_line);
+      debug::println("aa ext:", aa_ext);
+    }
+    
+
+
+    // Outputing.
 
     {
-      mln_VAR(aa_ext, aa.unmorph_().unmorph_());
-
-
-      debug::println("aa ext (1):", aa_ext);
-
-
-      std::vector<E> roots;
-      mln_VAR(chl, compute_children(epar, edge, l_max, roots));
-
-      // Connected domain so:
-      mln_invariant(roots.size() == 1);
-      E root = roots[0]; // THE root.
-
-      lca_t<L,chl_t,E> lca(l_max, chl, roots);
-
-      mln_piter(g_line_t) e(g_line.domain());
-      for_all(e)
-      {
-	L l1, l2;
-	e_to_l1_l2(e, l1, l2);
-	mln_invariant(l1 != 0 && l2 > l1);
-	E e_ = lca(edge[l1],edge[l2]);
-
-	mln_invariant(g_line.has(e_)); // e_ is a valid edge.
-	mln_invariant(aa(e_) != 0);    // aa is valid at e_.
-      
-	// The attribute value propagates from the lca to the current edge
-	// of the line:
-	aa(e) = aa(e_);
-	if (aa(e) > aa_max)
-	  aa_max = aa(e);
-      }
-      
-      debug::println("aa:", aa);
-
-      debug::println("aa ext (2):", aa_ext);
-
-      {
-	mln_VAR( aa_line, aa_ext | (pw::value(w) == 0) );
-
-	data::paste(morpho::dilation(extend(aa_line | (pw::value(aa_line) == 0),
-					    aa_line),
-				     c4().win()),
-		    aa_line);
-      }
-
-      debug::println("aa ext (3):", aa_ext);
-
-
-      {
-	using value::int_u8;
-	if (aa_max < 256)
-	  {
-	    image2d<int_u8> output(aa_ext.domain());
-	    data::fill(output, 0);
-	    data::paste(aa_ext, output);
-	    io::pgm::save(output, "aa_line.pgm");
-	  }
-	else
-	  {
-	    std::cerr << "warning: stretching [0," << aa_max << "] to int_u8" << std::endl;
+      A aa_max = level::compute(accu::max<A>(), aa);
+      using value::int_u8;
+      if (aa_max < 256)
+	{
+	  image2d<int_u8> output(aa_ext.domain());
+	  data::fill(output, 0);
+	  data::paste(aa_ext, output);
+	  io::pgm::save(output, "aa_line.pgm");
+	}
+      else
+	{
+	  std::cerr << "warning: stretching [0," << aa_max << "] to int_u8" << std::endl;
 	  
-	    image2d<int_u8> output(aa_ext.domain());
-	    data::fill(output, 0);
-	    data::paste(aa_ext, output);
-	    io::pgm::save(level::stretch(int_u8(), output),
-			  "aa_line.pgm");
-	  }
-      }
+	  image2d<int_u8> output(aa_ext.domain());
+	  data::fill(output, 0);
+	  data::paste(aa_ext, output);
+	  io::pgm::save(level::stretch(int_u8(), output),
+			"aa_line.pgm");
+	}
+    }
 
 
 //       mln_VAR(aa_basins, aa_ext | (pw::value(w) != 0));
@@ -585,9 +584,7 @@ namespace mln
 //       }
 
 
-//       debug::println("aa ext (4):", aa_ext);
-
-    }
+//       debug::println("aa ext with basins:", aa_ext);
 
 
   }
