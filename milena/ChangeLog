@@ -1,5 +1,12 @@
 2009-02-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add labeling::mean_values.
+
+	* mln/labeling/mean_values.hh: New. Create an image with the component
+	mean values.
+
+2009-02-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Various small fixes.
 
 	* mln/convert/from_to.hxx

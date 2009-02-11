@@ -1,0 +1,190 @@
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+// Boston, MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
+
+#ifndef MLN_LABELING_MEAN_VALUES_HH
+# define MLN_LABELING_MEAN_VALUES_HH
+
+# include <mln/core/concept/image.hh>
+
+/// \file mln/labeling/mean_values.hh
+///
+/// Construct from a labeled image a new image, the labels values are
+/// replaced by the components mean values.
+
+
+namespace mln
+{
+
+  // Forward declaration
+  namespace value
+  {
+    template <unsigned n> struct rgb;
+  }
+
+
+  namespace labeling
+  {
+
+    template <typename I, typename L>
+    mln_concrete(I)
+    mean_colors(const Image<I>& input,
+		const Image<L>& lbl, mln_value(L) nlabels);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    namespace internal
+    {
+
+      template <typename I, typename L>
+      void
+      mean_values_tests(const Image<I>& input,
+			const Image<L>& lbl, mln_value(L) nlabels)
+      {
+	mln_precondition(exact(input).is_valid());
+	mln_precondition(exact(lbl).is_valid());
+	(void) input;
+	(void) lbl;
+	(void) nlabels;
+      }
+
+    } // end of namespace mln::labeling::internal
+
+
+    namespace impl
+    {
+
+      namespace generic
+      {
+
+        template <typename I, typename L>
+        mln_concrete(I)
+        mean_values(const Image<I>& input,
+		    const Image<L>& lbl, mln_value(L) nlabels)
+	{
+	  internal::mean_values_tests(input, lbl, nlabels);
+
+	  trace::warning("labeling::impl::generic::mean_values() is not \
+			  implemented!");
+	  //FIXME: to write!
+	  abort();
+	}
+
+      }
+
+      template <typename I, typename L>
+      mln_concrete(I)
+      mean_values_rgb(const Image<I>& input_,
+		      const Image<L>& lbl_, mln_value(L) nlabels)
+      {
+	trace::entering("mln::labeling::mean_values_rgb");
+
+	internal::mean_values_tests(input_, lbl_, nlabels);
+
+	const I& input = exact(input_);
+	const L& lbl = exact(lbl_);
+
+	util::array<vec3d_f> m_3f = labeling::compute(accu::mean<mln_value(I)>(),
+	    input, // input color image
+	    lbl, // watershed labeling
+	    nlabels);
+	m_3f[0] = literal::zero;
+
+	util::array<mln_value(I)> m;
+	convert::from_to(m_3f, m);
+	m[0] = literal::white; //FIXME: handle label 0 correctly.
+
+	mln_concrete(I) output = level::transform(lbl,
+	    convert::to< fun::i2v::array<mln_value(I)> >(m));
+
+
+        trace::exiting("mln::labeling::mean_values_rgb");
+	return output;
+      }
+
+    } // end of namespace mln::morpho::impl
+
+
+    namespace internal
+    {
+
+      template <unsigned n, typename I, typename L>
+      mln_concrete(I)
+      mean_values_dispatch(const value::rgb<n>&,
+			   const Image<I>& input,
+			   const Image<L>& lbl, mln_value(L) nlabels)
+      {
+	return impl::mean_values_rgb(input, lbl, nlabels);
+      }
+
+      template <typename I, typename L>
+      mln_concrete(I)
+      mean_values_dispatch(const mln_value(I)&,
+			   const Image<I>& input,
+			   const Image<L>& lbl, mln_value(L) nlabels)
+      {
+	return impl::generic::mean_values(input, lbl, nlabels);
+      }
+
+      template <typename I, typename L>
+      mln_concrete(I)
+      mean_values_dispatch(const Image<I>& input,
+			   const Image<L>& lbl, mln_value(L) nlabels)
+      {
+	return mean_values_dispatch(mln_value(I)(), input, lbl, nlabels);
+      }
+
+    } // end of namespace mln::morpho::internal
+
+
+
+    // Facade
+
+    template <typename I, typename L>
+    mln_concrete(I)
+    mean_values(const Image<I>& input,
+		const Image<L>& lbl, mln_value(L) nlabels)
+
+    {
+      trace::entering("mln::labeling::mean_values");
+
+      internal::mean_values_tests(input, lbl, nlabels);
+
+      mln_concrete(I) output = internal::mean_values_dispatch(input, lbl, nlabels);
+
+      trace::exiting("mln::labeling::mean_values");
+      return output;
+    }
+
+
+# endif // !MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::labeling
+
+} // end of namespace mln
+
+#endif // ! MLN_LABELING_MEAN_VALUES_HH
