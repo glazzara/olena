@@ -26,35 +26,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/closing_volume.cc
+#ifndef MLN_MORPHO_OPENING_ALGEBRAIC_HH
+# define MLN_MORPHO_OPENING_ALGEBRAIC_HH
+
+/// \file mln/morpho/opening_algebraic.hh
 ///
-/// Test on mln::morpho::closing_volume.
+/// Morphological algebraic opening.
 
-#include <mln/core/image/image2d.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/core/alias/neighb2d.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
-#include <mln/morpho/closing_volume.hh>
-#include <mln/morpho/attribute/volume.hh>
-
-#include "tests/data.hh"
+# include <mln/morpho/includes.hh>
+# include <mln/canvas/morpho/algebraic_filter.hh>
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
-  using value::int_u8;
 
-  typedef image2d<int_u8> I;
-  I lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-  io::pgm::save(morpho::closing_volume(lena, c4(), 10000),
-		"ref.pgm");
+  namespace morpho
+  {
 
-  typedef morpho::attribute::volume<I> A;
-  io::pgm::save(morpho::closing_attribute<A>(lena, c4(), 10000),
- 		"out.pgm");
-}
+    /// Morphological algebraic opening.
+    template <typename I, typename N, typename A>
+    mln_concrete(I)
+    opening_algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
+		      const Accumulator<A>& accu, const mln_result(A)& lambda);
+
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+    template <typename I, typename N, typename A>
+    inline
+    mln_concrete(I)
+    opening_algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
+		      const Accumulator<A>& accu, const mln_result(A)& lambda)
+    {
+      trace::entering("morpho::opening_algebraic");
+
+      mln_precondition(exact(input).is_valid());
+
+      mln_concrete(I) output;
+      output = canvas::morpho::algebraic_filter(input, nbh, accu, lambda,
+						/* increasing = */ false);
+
+      mln_postcondition(output <= input);
+
+      trace::exiting("morpho::opening_algebraic");
+      return output;
+    }
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::morpho
+
+} // end of namespace mln
+
+
+#endif // ! MLN_MORPHO_OPENING_ALGEBRAIC_HH

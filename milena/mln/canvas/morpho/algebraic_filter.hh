@@ -32,6 +32,8 @@
 /// \file mln/canvas/morpho/algebraic_filter.hh
 ///
 /// Canvas for morphological algebraic filters.
+///
+/// \todo Add a version without 'activity' thanx to set_value.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>

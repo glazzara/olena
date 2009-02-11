@@ -1,3 +1,16 @@
+2009-02-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add morpho algebraic closing.
+
+	* mln/morpho/attribute/volume.hh: New.
+	* mln/morpho/closing_algebraic.hh: Copy to...
+	* mln/morpho/opening_algebraic.hh: ...this new file.
+	Make it a closing.
+	* mln/canvas/morpho/algebraic_filter.hh (todo): New.
+	* tests/morpho/closing_volume.cc: Test that the new version
+	with morpho::attribute::volume gives the same result as the
+	former version.
+
 2009-02-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix debug::histo.
