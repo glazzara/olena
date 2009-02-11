@@ -1,5 +1,5 @@
-TARGET=leveling
-OBJS=leveling.o
+TARGET=meantest
+OBJS=meantest.o
 
 OLENADIR=../../..
 MILENADIR=$(OLENADIR)/milena

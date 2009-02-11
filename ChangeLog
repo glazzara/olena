@@ -1,3 +1,10 @@
+2009-02-11  Frederic Bour  <bour@lrde.epita.fr>
+
+	Wip of mean attribute set_value.
+	* milena/sandbox/fred/Makefile: .
+	* milena/sandbox/fred/mean.hh: set_value WIP.
+	* milena/sandbox/fred/meantest.cc: New.
+
 2009-02-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	* .gitignore: Ignore pattern `*.dSYM'.

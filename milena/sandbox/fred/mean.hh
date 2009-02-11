@@ -56,7 +56,7 @@ namespace mln {
     struct accumulator_< morpho::attribute::mean<I> >
     {
       typedef accumulator::has_untake::no	has_untake;
-      typedef accumulator::has_set_value::no	has_set_value;
+      typedef accumulator::has_set_value::yes	has_set_value;
       typedef accumulator::has_stop::no		has_stop;
       typedef accumulator::when_pix::use_v	when_pix;
     };
@@ -67,16 +67,30 @@ namespace mln {
 
     namespace attribute {
 
+      namespace internal {
+
+        template <typename T,
+                  typename S = mln_sum(T),
+                  typename M = S>
+        struct accu_mean_set_value : public mln::accu::mean<T, S, M>
+        {
+          typedef mln::accu::mean<T, S, M> super;
+	  typedef typename super::result result;
+
+          void set_value(const result& v);
+        };
+
+      }
+
       /// Morphological (i.e. for pixel and pixel values) accumulator calculating mean.
       /// Valid for leveling algorithm.
-      /// FIXME: is inclusion polyphormism really appliable ?
       template <typename I>
-      class mean: public mln::accu::internal::base<typename mln::accu::mean<mln_value(I)>::result, mean<I> >
+      class mean: public mln::accu::internal::base<typename internal::accu_mean_set_value<mln_value(I)>::result, mean<I> >
       {
       public:
         typedef util::pix<I> argument;
-        typedef typename mln::accu::mean<mln_value(I)>::result result;
-        typedef typename mln::accu::mean<mln_value(I)>::q_result q_result;
+        typedef typename internal::accu_mean_set_value<mln_value(I)>::result result;
+        typedef typename internal::accu_mean_set_value<mln_value(I)>::q_result q_result;
 
         mean();
 
@@ -88,6 +102,8 @@ namespace mln {
         void take(const mln_value(I)& v);
         void take(const argument& t);
         void take(const mean<I>& m);
+
+        void set_value(const result& r);
 	/// \}
 
 	/// Get the value of the accumulator.
@@ -98,12 +114,27 @@ namespace mln {
 
       protected:
 	/// The mean
-        mln::accu::mean<mln_value(I)> accu_;
+        internal::accu_mean_set_value<mln_value(I)> accu_;
       };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+      namespace internal {
+
+	template <typename T,
+                  typename S,
+                  typename M>
+	void
+	accu_mean_set_value<T, S, M>::set_value(const typename internal::accu_mean_set_value<T, S, M>::result& v)
+	{
+	  // FIXME: bad
+	  this->sum_.init();
+	  this->sum_.take(v * this->count_.to_result());
+	}
+
+      }
 
       template <typename I>
       inline
@@ -136,13 +167,20 @@ namespace mln {
         take(elt.v());
       };
 
-
       template <typename I>
       inline
       void
       mean<I>::take (const mln_value(I)& elt)
       {
         accu_.take(elt);
+      };
+
+      template <typename I>
+      inline
+      void
+      mean<I>::set_value(const typename mean<I>::result& r)
+      {
+        accu_.set_value(r);
       };
 
       template <typename I>
