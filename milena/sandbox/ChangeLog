@@ -1,3 +1,8 @@
+2009-02-11  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Fix IGR test file for segmentation (2D & 3D).
+	* fabien/igr/igr.cc: Fix segmentation bugs.
+
 2009-02-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add code to merge components thanks to a graph.

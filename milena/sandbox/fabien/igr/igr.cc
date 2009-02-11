@@ -39,18 +39,25 @@
 #include <mln/io/pbm/all.hh>
 #include <mln/io/ppm/all.hh>
 #include <mln/io/cloud/all.hh>
+#include <mln/io/dump/all.hh>
 
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/alias/neighb3d.hh>
 #include <mln/labeling/flat_zones.hh>
+#include <mln/labeling/background.hh>
 #include <mln/literal/colors.hh>
 #include <mln/norm/l1.hh>
 
-#include <mln/io/dump/all.hh>
+#include <mln/geom/bbox.hh>
 
 #include <mln/labeling/blobs.hh>
 #include <mln/labeling/compute.hh>
+
 #include <mln/level/compare.hh>
+#include <mln/level/transform.hh>
+
+#include <mln/fun/internal/selector.hh>
+
 #include <mln/fun/v2b/threshold.hh>
 #include <mln/level/transform.hh>
 #include <mln/accu/count.hh>
@@ -66,15 +73,32 @@
 #include <iostream>
 #include <mln/debug/println.hh>
 
+using namespace mln;
+using value::int_u8;
+using value::rgb8;
+using value::label_16;
+
+
+template <typename T>
+struct L_to_int_u8
+: mln::fun::internal::selector_<int_u8, T, L_to_int_u8<T> >::ret
+{
+  typedef int_u8 result;
+  int_u8 operator()(const T& t) const;
+};
+
+template <typename T>
+inline
+int_u8
+L_to_int_u8<T>::operator()(const T& t) const
+{
+  return static_cast<int_u8>(t == 0 ?  0 : 1 + ((unsigned) t - 1) % 255);
+}
 
 template <typename I, typename N, typename L>
 mln_ch_value(I, mln::value::rgb8)
 igr(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_, L& nlabels)
 {
-  using namespace mln;
-  using value::int_u8;
-  using value::rgb8;
-
   const I& input = exact(input_);
   const N& nbh = exact(nbh_);
 
@@ -93,6 +117,11 @@ igr(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_, L& nlabels)
   mln_ch_value(I, bool) big_second;
   initialize(big_second, input);
   data::fill(big_second, false);
+
+//  mln_ch_value(I, bool) in_bool;
+//  initialize(in_bool, input);
+//  data::fill(in_bool, false);
+
   unsigned big_third_count = 0;
   unsigned big_third_lbl = 0;
   unsigned big_second_count = 0;
@@ -125,9 +154,28 @@ igr(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_, L& nlabels)
       big_second_lbl = swap_lbl;
     }
   }
+  data::fill((big_second | (pw::value(labels) == big_second_lbl)).rw(), true);
   mln_VAR(big_third, threshold | pw::value(labels) == big_third_lbl);
+//  data::fill((in_bool | (pw::value(labels) == big_second_lbl || pw::value(labels) == big_third_lbl)).rw(), true);
 
-  data::fill((big_second | pw::value(labels) == big_second_lbl).rw(), true);
+  // Fill holes.
+
+//  box<mln_site(I)> h_box = geom::bbox((in_bool | pw::value(labels) == big_second_lbl).domain());
+  //h_box.enlarge(1);
+  mln_ch_value(I, L) h_lbls = labeling::background(big_second /*in_bool | h_box*/, nbh, nlabels);
+  util::array<unsigned> arr_holes = labeling::compute(a_, big_second /*in_bool | h_box*/, h_lbls, nlabels);
+  int bg_count = 0;
+  int bg_lbl = 0;
+  for (int i = 0; i < arr_holes.nelements(); ++i)
+  {
+    if (arr_holes[i] > bg_count)
+    {
+      bg_count = a[i];
+      bg_lbl = i;
+    }
+  }
+  data::fill((/*(*/big_second /*in_bool | h_box).rw()*/ | pw::value(h_lbls) != bg_lbl).rw(), true);
+  /*return level::transform(h_lbls, L_to_int_u8<label_16>());*/
 
   // Gradient.
 
@@ -141,7 +189,7 @@ igr(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_, L& nlabels)
 
   accu::center<mln_site(I)> center_;
   mln_site(I) center = set::compute(center_, big_third.domain());
-  result(center) = literal::red;
+  result(center) = literal::blue;
 
   // Distance.
 
@@ -159,7 +207,6 @@ igr(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_, L& nlabels)
 
   // Save the cloud in a file.
 
-  std::cout << "Nbr sites = " << arr.nsites() << std::endl;
   io::cloud::save(arr, "cloud.txt");
 
   return result;
@@ -167,19 +214,15 @@ igr(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_, L& nlabels)
 
 int main()
 {
-  using namespace mln;
-  using value::int_u8;
-  using value::label_16;
-
   trace::quiet = false;
 
-//  image2d<int_u8> src;
-//  io::pgm::load(src, "img/slice_7.pgm");
+  image2d<int_u8> src;
+  io::pgm::load(src, "img/slice_7.pgm");
   image3d<int_u8> vol;
   io::dump::load(vol, "img/IRM.dump");
 
   label_16 nlabels;
 
-//  io::ppm::save(igr(src, c4(), nlabels), "out.ppm");
-  io::dump::save(igr(vol, c6(), nlabels), "out.raw");
+  //io::ppm::save(igr(src, c4(), nlabels), "slice_out.ppm");
+  io::dump::save(igr(vol, c6(), nlabels), "vol_out.dump");
 }
