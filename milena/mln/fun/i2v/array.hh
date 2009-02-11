@@ -34,6 +34,9 @@
 ///
 /// \todo Change design so that there is no multiple inheritance:
 ///       array<T> : internal::array_base<T, E==array<T> > : Function_i2v<E>
+///
+/// \todo We should convert (with from_to) arrays that do not hold the
+/// same element type, e.g., int_u8 -> int or vec<3,f> -> rgb8.
 
 # include <vector>
 # include <algorithm>

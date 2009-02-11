@@ -1,3 +1,13 @@
+2009-02-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Minor fixes.
+
+	* mln/accu/mean.hh (to_result): Make it work even if it is
+	not valid.  That is a safety when computing mean values of a
+	collection of labels.
+	* mln/value/label.hh: Fix missing forward declaration.
+	* mln/fun/i2v/array.hh: Upgrade file doc style.
+
 2009-02-11  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix minor bug in labeling canvas..

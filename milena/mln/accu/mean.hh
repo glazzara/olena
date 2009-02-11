@@ -151,6 +151,8 @@ namespace mln
     mean<T,S,M>::to_result() const
     {
       unsigned n = count_.to_result();
+      if (n == 0u)
+	return M(); // Safety.
       return static_cast<M>(sum_.to_result() / n);
     }
 
