@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,7 +42,7 @@
 #include <mln/morpho/closing_area.hh>
 #include <mln/morpho/meyer_wst.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/literal/zero.hh>
 
 #include <mln/math/max.hh>
@@ -103,7 +103,7 @@ int main(int argc, char* argv[])
 
   // Compute the max curvature at each vertex.
   ima_t max_curv(input.domain());
-  mln::level::fill(max_curv, mln::literal::zero);
+  mln::data::fill(max_curv, mln::literal::zero);
   mln::p_n_faces_fwd_piter<D, G> v(max_curv.domain(), 0);
   for_all(v)
     max_curv(v) = mln::math::max(mln::math::sqr(curv.first(v)),
@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
      the only values accepted a an RGB floating-point component in the
      OFF file format.  */
   ima_t output(max_curv.domain());
-  mln::level::fill(output, mln::literal::zero);
+  mln::data::fill(output, mln::literal::zero);
   std::pair<float, float> min_max(acc);
   // FIXME: Taken from mln/level/stretch.hh (this should be factored).
   float min = min_max.first;

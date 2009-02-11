@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -131,8 +131,7 @@ int main(int argc, char* argv[])
     adj_edges_nbh_t;
   adj_edges_nbh_t adj_edges_nbh;
 
-  ima_t closed_input(input.domain());
-  mln::morpho::closing_area(input, adj_edges_nbh, lambda, closed_input);
+  ima_t closed_input = mln::morpho::closing_area(input, adj_edges_nbh, lambda);
 
   /*------.
   | WST.  |
@@ -168,7 +167,7 @@ int main(int argc, char* argv[])
   `---------*/
 
   mln::rgb8_2complex_image3df output(wshed.domain());
-  mln::level::fill(output, mln::literal::white);
+  mln::data::fill(output, mln::literal::white);
 
   // FIXME: Use a colorize functor instead.
   // Choose random colors for each basin number.

@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,6 +38,8 @@
 # include <mln/algebra/mat.hh>
 
 # include <mln/norm/l2.hh>
+
+# include <mln/data/fill.hh>
 
 
 /** See http://gcc.gnu.org/onlinedocs/gcc-4.3.2/gcc/Other-Builtins.html
@@ -166,7 +168,7 @@ namespace mln
       typedef complex_image< D, G, vec3f > normal_t;
 
       normal_t normal(mesh);
-      level::fill(normal, literal::zero);
+      data::fill(normal, literal::zero);
 
       mln::p_n_faces_fwd_piter<D, G> f(mesh, 2);
       // A neighborhood where neighbors are the set of 0-faces
@@ -263,8 +265,8 @@ namespace mln
       output_t output(mesh, mesh);
       corner_area_t& corner_area = output.first;
       point_area_t& point_area = output.second;
-      level::fill(corner_area, literal::zero);
-      level::fill(point_area, literal::zero);
+      data::fill(corner_area, literal::zero);
+      data::fill(point_area, literal::zero);
 
       mln::p_n_faces_fwd_piter<D, G> f(mesh, 2);
       // A neighborhood where neighbors are the set of 0-faces

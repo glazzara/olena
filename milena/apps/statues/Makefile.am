@@ -68,11 +68,15 @@ TESTS += test-mesh-max-curv
 noinst_HEADERS = trimesh/misc.hh
 EXTRA_DIST = trimesh/README
 
-# A small test exercising the curvature computation routines ported
+# A small program exercising the curvature computation routines ported
 # from Trimesh to Milena.
 bin_PROGRAMS += mesh-complex-max-curv
 mesh_complex_max_curv_SOURCES = mesh-complex-max-curv.cc
 TESTS += test-mesh-complex-max-curv
+
+# FIXME: Write a program showing the local minima (and maxima) of
+# scalar-valued complex-based mesh (to see the curvature extrema).
+# ...
 
 # Segmentation program working on precomputed meshes with curvatures data.
 bin_PROGRAMS += mesh-complex-segm

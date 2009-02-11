@@ -1,5 +1,17 @@
 2009-02-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update apps/statues/ to catch up with recent changes of interface.
+
+	* apps/statues/mesh-complex-max-curv-segm.cc,
+	* apps/statues/mesh-complex-max-curv.cc, 
+	* apps/statues/mesh-complex-segm.cc, 
+	* apps/statues/trimesh/misc.hh: 
+	Adjust to the new interface of mln::morpho::closing_area and the
+	renaming of mln::level as mln::data.
+	* apps/statues/Makefile.am: Adjust comments.
+
+2009-02-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a shortcut for planar 1-complex-based images.
 
 	* mln/core/alias/complex_image.hh (mln::int_u8_1complex_image2d): 
