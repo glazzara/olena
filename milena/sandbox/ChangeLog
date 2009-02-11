@@ -1,3 +1,9 @@
+2009-02-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add code to merge components thanks to a graph.
+
+	* lazzara/irm/wst_rag.cc: New. Related to IGR.
+
 2009-02-10  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Make leveling filter and mean accumulator clean.
