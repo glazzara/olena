@@ -44,7 +44,7 @@ namespace mln
 
     /// Timer structure.
     class timer : public Proxy< timer >,
-		  public internal::proxy_impl<float, timer>
+		  public mln::internal::proxy_impl<float, timer>
     {
     public:
 

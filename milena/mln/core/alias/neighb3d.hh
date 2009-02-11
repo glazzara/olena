@@ -50,6 +50,23 @@ namespace mln
    */
   typedef neighb<window3d> neighb3d;
 
+  /// 4-connectivity neighborhood on the 3D grid.
+  ///
+  ///     . . .
+  ///    . . .
+  ///   . . .
+  ///
+  ///     . o .
+  ///    o x o
+  ///   . o .
+  ///
+  ///     . . .
+  ///    . . .
+  ///   . . .
+  ///
+  /// \return A neighb3d.
+  ///
+  const neighb3d& c4_3d();
 
   /*! \brief 6-connectivity neighborhood on the 3D grid.
    *
@@ -124,6 +141,22 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  inline
+  const neighb3d& c4_3d()
+  {
+    static neighb3d it;
+    if (it.size() == 0)
+      {
+	window3d& win = it.hook_win_();
+	win
+	  .insert(0, 1, 0)
+	  .insert(0, 0, 1);
+	win
+	  .insert(win::sym(win));
+      }
+    return it;
+  }
 
   inline
   const neighb3d& c6()

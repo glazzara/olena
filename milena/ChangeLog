@@ -1,3 +1,20 @@
+2009-02-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Various small fixes.
+
+	* mln/convert/from_to.hxx
+	* mln/value/label.hh: add a missing from_to(int_u, label).
+
+	* mln/core/alias/neighb3d.hh: add c4_3d().
+
+	* mln/core/concept/function.hh
+	* mln/labeling/regional_maxima.hh
+	* mln/labeling/regional_minima.hh: fix warnings.
+
+	* mln/util/timer.hh: fix unit test.
+
+	* mln/value/rgb.hh: remove a useless exact().
+
 2009-02-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add morpho algebraic closing.

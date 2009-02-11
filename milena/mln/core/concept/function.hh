@@ -537,7 +537,8 @@ namespace mln
   template <typename E>
   inline
   Function_p2p<E>::Function_p2p(const Function_p2p<E>& rhs)
-    : Function_p2v<E>(rhs)
+    : Function_v2v<E>(rhs),
+      Function_p2v<E>(rhs)
   {
   }
 

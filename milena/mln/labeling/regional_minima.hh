@@ -101,7 +101,7 @@ namespace mln
 	// Fastest implementation
 
 	void init_()                              { data::fill(attr, true); }
-	bool handles_(unsigned p) const             { return true; }
+	bool handles_(unsigned) const             { return true; }
 	bool labels_(unsigned p) const            { return attr.element(p); }
 	bool equiv_(unsigned n, unsigned p) const { return input.element(n) ==
                                                            input.element(p); }

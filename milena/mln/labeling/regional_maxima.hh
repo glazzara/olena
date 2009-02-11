@@ -87,7 +87,7 @@ namespace mln
 						   input(p); }
 	void do_no_union(const P& n, const P& p) { mln_invariant(input(n) >
 								 input(p));
-						   attr(p) = false; }
+						   attr(p) = false; (void)n; }
 	void init_attr(const P&)                 {}
 	void merge_attr(const P& r, const P& p)  { attr(p) = attr(p) &&
 	    attr(r); }
@@ -101,7 +101,9 @@ namespace mln
 	    input.element(p); }
 	void do_no_union_(unsigned n, unsigned p) { mln_invariant(input.element(n) >
 								  input.element(p));
-	  attr.element(p) = false; }
+	  attr.element(p) = false;
+	  (void) n;
+	}
 	void init_attr_(unsigned)                 {}
 	void merge_attr_(unsigned r, unsigned p)  { attr.element(p) = attr.element(p) &&
 	    attr.element(r); }

@@ -81,6 +81,20 @@ namespace mln
   } // end of namespace trait
 
 
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      // int_u -> label.
+      template <unsigned n>
+      void
+      from_to_(const value::int_u<n>& from, value::label<n>& to_);
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
 
   namespace value
   {
@@ -148,7 +162,35 @@ namespace mln
     std::ostream& operator<<(std::ostream& ostr, const label<n>& l);
 
 
+  } // end of namespace mln::value
+
+
 # ifndef MLN_INCLUDE_ONLY
+
+
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      // int_u -> label.
+      template <unsigned n>
+      inline
+      void
+      from_to_(const value::int_u<n>& from, value::label<n>& to_)
+      {
+	to_ = from;
+      }
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
+
+
+
+  namespace value
+  {
 
     template <unsigned n>
     inline

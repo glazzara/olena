@@ -723,9 +723,8 @@ namespace mln
       template <typename T, unsigned m>
       inline
       void
-      from_to_(const algebra::vec<3,T>& from, value::rgb<m>& to_)
+      from_to_(const algebra::vec<3,T>& from, value::rgb<m>& to)
       {
-	value::rgb<m>& to = exact(to_);
 	algebra::vec<3, unsigned> tmp;
 	for (unsigned i = 0; i < 3; ++i)
 	  tmp[i] = static_cast<unsigned>(from[i]); // FIXME: Use from_to_ instead of cast.
