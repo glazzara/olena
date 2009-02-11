@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,6 +30,9 @@
 
 /// \file mln/core/alias/complex_image.hh
 /// \brief Definition of mln::complex_image aliases.
+///
+/// As C++ does not allow template typedefs (yet), using shortcuts for
+/// very long image names is handy.
 
 # include <mln/core/image/complex_image.hh>
 # include <mln/core/alias/complex_geometry.hh>
@@ -40,6 +43,19 @@
 
 namespace mln
 {
+  /*------------------------------.
+  | 2-d plane 1-complex aliases.  |
+  `------------------------------*/
+
+  /// \brief Type alias for an 8-bit gray-level image based on a
+  /// 1-complex, where 0-faces are located at discrete (integer)
+  /// 2-dimensional points.
+  typedef
+  mln::complex_image<1, mln::discrete_plane_1complex_geometry,
+		     mln::value::int_u8>
+  int_u8_1complex_image2d;
+
+
   /*------------------------------.
   | 2-d plane 2-complex aliases.  |
   `------------------------------*/

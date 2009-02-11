@@ -1,5 +1,12 @@
 2009-02-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a shortcut for planar 1-complex-based images.
+
+	* mln/core/alias/complex_image.hh (mln::int_u8_1complex_image2d): 
+	New typedef.
+
+2009-02-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a shortcut for planar 1-complex geometry.
 
 	* mln/core/alias/complex_geometry.hh
