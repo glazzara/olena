@@ -1,5 +1,12 @@
 2009-02-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a shortcut for planar 1-complex geometry.
+
+	* mln/core/alias/complex_geometry.hh
+	(mln::discrete_plane_1complex_geometry): New typedef.
+
+2009-02-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix and factor mln::point3df and mln::point3d.
 
 	* mln/core/alias/point3df.hh (mln::point3df): Move typedef...

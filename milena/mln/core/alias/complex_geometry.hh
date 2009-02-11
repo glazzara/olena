@@ -40,6 +40,12 @@
 namespace mln
 {
 
+  /// \brief Type alias for the geometry of a 1-complex (e.g., a
+  /// graph) located in a discrete 2-dimensional plane (with integer
+  /// coordinates).
+  typedef mln::geom::complex_geometry<1, point2d>
+  discrete_plane_1complex_geometry;
+
   /// \brief Type alias for the geometry of a 2-complex located in a
   /// discrete 2-dimensional plane (with integer coordinates).
   typedef mln::geom::complex_geometry<2, point2d>
