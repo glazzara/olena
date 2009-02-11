@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -47,6 +47,11 @@ namespace mln
    * integer coordinates.
    */
   typedef point<grid::cube, def::coord> point3d;
+
+  /*! \brief Type alias for a point defined on the 3D square grid with
+   * floating-point coordinates.
+   */
+  typedef point<grid::cube, def::coordf> point3df;
 
   namespace internal
   {

@@ -51,7 +51,6 @@
 #include <mln/core/alias/point2d.hh>
 #include <mln/core/alias/point2d_h.hh>
 #include <mln/core/alias/point3d.hh>
-#include <mln/core/alias/point3df.hh>
 #include <mln/core/alias/vec3d.hh>
 #include <mln/core/alias/w_window1d_float.hh>
 #include <mln/core/alias/w_window1d_int.hh>

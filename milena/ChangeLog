@@ -1,3 +1,14 @@
+2009-02-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix and factor mln::point3df and mln::point3d.
+
+	* mln/core/alias/point3df.hh (mln::point3df): Move typedef...
+	* mln/core/alias/point3d.hh: ...here.
+	* mln/core/alias/point3df.hh: Remove file.
+	* mln/core/alias/all.hh: Remove inclusion of
+	mln/core/alias/point3df.hh.
+	* mln/core/alias/complex_geometry.hh: Adjust.
+
 2009-02-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Minor fixes.
