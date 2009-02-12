@@ -69,118 +69,109 @@ namespace mln {
 
       namespace internal {
 
-        template <typename T,
-                  typename S = mln_sum(T),
-                  typename M = S>
-        struct accu_mean_set_value : public mln::accu::mean<T, S, M>
-        {
-          typedef mln::accu::mean<T, S, M> super;
-	  typedef typename super::result result;
-
-          void set_value(const result& v);
-        };
-
+	template <typename T, typename S>
+	struct sum_set_value : public mln::accu::sum<T, S>
+	{
+	  void set_value(const S& s);
+	};
+	
       }
 
       /// Morphological (i.e. for pixel and pixel values) accumulator calculating mean.
       /// Valid for leveling algorithm.
       template <typename I>
-      class mean: public mln::accu::internal::base<typename internal::accu_mean_set_value<mln_value(I)>::result, mean<I> >
+      class mean: public mln::accu::internal::base<mln_sum(mln_value(I)), mean<I> >
       {
       public:
-        typedef util::pix<I> argument;
-        typedef typename internal::accu_mean_set_value<mln_value(I)>::result result;
-        typedef typename internal::accu_mean_set_value<mln_value(I)>::q_result q_result;
+	typedef util::pix<I> argument;
+	typedef mln_value(I) value;
+	typedef mln_sum(value) result;
 
-        mean();
-
+	mean();
 
 	/// Manipulators.
 	/// \{
-        void init();
+	void init();
+        void take(const value& v);
+	void take(const argument& t);
+	void take(const mean<I>& other);
 
-        void take(const mln_value(I)& v);
-        void take(const argument& t);
-        void take(const mean<I>& m);
-
-        void set_value(const result& r);
+	void set_value(const result& r);
 	/// \}
 
-	/// Get the value of the accumulator.
-        result to_result() const;
+        /// Get the value of the accumulator.
+	result to_result() const;
 
 	/// Check whether this accu is able to return a result.
-        bool is_valid() const;
+	/// Always true here.
+	bool is_valid() const;
 
       protected:
-	/// The mean
-        internal::accu_mean_set_value<mln_value(I)> accu_;
+	
+	accu::count<value> count_;
+	internal::sum_set_value<value,result>   sum_;
       };
-
-
-
+    
 # ifndef MLN_INCLUDE_ONLY
 
       namespace internal {
 
-	template <typename T,
-                  typename S,
-                  typename M>
+	template <typename T, typename S>
 	void
-	accu_mean_set_value<T, S, M>::set_value(const typename internal::accu_mean_set_value<T, S, M>::result& v)
+	sum_set_value<T, S>::set_value(const S& s)
 	{
-	  // FIXME: bad
-	  this->sum_.init();
-	  this->sum_.take(v * this->count_.to_result());
-	}
-
+	  this->s_ = s;
+	};
+	
       }
 
       template <typename I>
       inline
-      mean<I>::mean () :
-        accu_ ()
+      mean<I>::mean()
       {
-      }
-
-      template <typename I>
-      inline
-      void
-      mean<I>::init ()
-      {
-        accu_.init();
+	init();
       }
 
       template <typename I>
       inline
       void
-      mean<I>::take (const mean<I>& accu)
+      mean<I>::init()
       {
-        accu_.take(accu.accu_);
+	count_.init();
+	sum_.init();
       }
-
+      
       template <typename I>
       inline
       void
-      mean<I>::take (const util::pix<I>& elt)
+      mean<I>::take(const value& t)
       {
-        take(elt.v());
-      };
-
+	count_.take(t);
+	sum_.take(t);
+      }
+      
       template <typename I>
       inline
       void
-      mean<I>::take (const mln_value(I)& elt)
+      mean<I>::take(const argument& t)
       {
-        accu_.take(elt);
-      };
-
+	take(t.v());
+      }
+      
       template <typename I>
       inline
       void
-      mean<I>::set_value(const typename mean<I>::result& r)
+      mean<I>::take(const mean<I>& other)
       {
-        accu_.set_value(r);
+	count_.take(other.count_);
+	sum_.take(other.sum_);
+      }
+      
+      template <typename I>
+      void
+      mean<I>::set_value(const result& r)
+      {
+	sum_.set_value(r * count_.to_result());
       };
 
       template <typename I>
@@ -188,19 +179,20 @@ namespace mln {
       typename mean<I>::result
       mean<I>::to_result() const
       {
-        return accu_.to_result();
-      };
-
+	unsigned n = count_.to_result();
+	return sum_.to_result() / n;
+      }
+      
       template <typename I>
       inline
       bool
       mean<I>::is_valid() const
       {
-        return accu_.is_valid();
-      };
-
+	return count_.to_result() != 0;
+      }
+      
 # endif // ! MLN_INCLUDE_ONLY
-
+      
     } // end of namespace mln::morpho::attribute
 
   } // end of namespace mln::morpho

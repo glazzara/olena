@@ -59,10 +59,11 @@ namespace mln {
     namespace morpho {
 
       // Facade Fwd Declaration
-      template < typename I, typename N, typename A, typename L>
+      template <typename I, typename N, typename A>
       mln_concrete(I)
       leveling_filter(const Image<I>& input, const Neighborhood<N>& nbh,
-		      const Accumulator<A>& a, L lambda, bool increasing);
+		       const Accumulator<A>& a, const typename A::result& lambda,
+		       bool increasing);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -86,10 +87,11 @@ namespace mln {
 	      return parent(x) = find_root(parent, parent(x));
 	  }
 
-	  template < typename I, typename N, typename S, typename A, typename L>
+	  template <typename I, typename N, typename S, typename A>
 	  mln_concrete(I)
 	  leveling_filter(const Image<I>& input_, const Neighborhood<N>& nbh_,
-			  const Site_Set<S>& s_, const Accumulator<A>& a_, L lambda)
+			   const Site_Set<S>& s_,
+			   const Accumulator<A>& a_, const typename A::result& lambda)
 	  {
 	    trace::entering("canvas::morpho::impl::generic::leveling_filter");
           // FIXME: Test?!
@@ -204,10 +206,11 @@ namespace mln {
 	    return parent.element(x) = find_root_fastest(parent, parent.element(x));
 	}
 
-	template < typename I, typename N, typename A, typename L>
+	template <typename I, typename N, typename A>
 	mln_concrete(I)
 	leveling_filter_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_,
-				const util::array<unsigned>& s, const Accumulator<A>& a_, L lambda)
+				 const util::array<unsigned>& s,
+				 const Accumulator<A>& a_, const typename A::result& lambda)
 	{
 	  trace::entering("canvas::morpho::impl::leveling_fastest");
 
@@ -305,11 +308,12 @@ namespace mln {
       {
 
 	// Leveling
-	template < typename I, typename N, typename A, typename L>
+	template <typename I, typename N, typename A>
 	mln_concrete(I)
 	leveling_filter_dispatch(metal::false_,
-				 const Image<I>& input, const Neighborhood<N>& nbh,
-				 const Accumulator<A>& a, L lambda, bool increasing)
+				  const Image<I>& input, const Neighborhood<N>& nbh,
+				  const Accumulator<A>& a, const typename A::result& lambda,
+				  bool increasing)
 	{
 	  p_array < mln_psite(I) > s =
 	    increasing ?
@@ -318,11 +322,12 @@ namespace mln {
 	  return impl::generic::leveling_filter(input, nbh, s, a, lambda);
 	}
 
-	template < typename I, typename N, typename A, typename L>
+	template <typename I, typename N, typename A>
 	mln_concrete(I)
 	leveling_filter_dispatch(metal::true_,
-				 const Image<I>& input, const Neighborhood<N>& nbh,
-				 const Accumulator<A>& a, L lambda, bool increasing)
+				  const Image<I>& input, const Neighborhood<N>& nbh,
+				  const Accumulator<A>& a, const typename A::result& lambda,
+				  bool increasing)
 	{
 	  util::array<unsigned> s =
 	    increasing ?
@@ -331,11 +336,11 @@ namespace mln {
 	  return impl::leveling_filter_fastest(input, nbh, s, a, lambda);
 	}
 
-	template < typename I, typename N, typename A, typename L>
+	template <typename I, typename N, typename A>
 	inline
 	mln_concrete(I)
 	leveling_filter_dispatch(const Image<I>& input, const Neighborhood<N>& nbh,
-				 const Accumulator<A>& a, L lambda, bool increasing)
+				 const Accumulator<A>& a, const typename A::result& lambda, bool increasing)
 	{
 	  enum
 	  {
@@ -357,11 +362,12 @@ namespace mln {
 
       // Facade.
 
-      template < typename I, typename N, typename A, typename L>
+      template <typename I, typename N, typename A>
       inline
       mln_concrete(I)
       leveling_filter(const Image<I>& input, const Neighborhood<N>& nbh,
-		      const Accumulator<A>& a, L lambda, bool increasing)
+		       const Accumulator<A>& a, const typename A::result& lambda,
+		       bool increasing)
       {
 	//FIXME: Do we need to check input validity ?
 	return internal::leveling_filter_dispatch(input, nbh, a, lambda, increasing);

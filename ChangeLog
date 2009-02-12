@@ -1,3 +1,11 @@
+2009-02-12  Frederic Bour  <bour@lrde.epita.fr>
+
+	Add connected filters dispatcher (not tested)..
+	* milena/sandbox/fred/Makefile: .
+	* milena/sandbox/fred/connected_filter.hh: New.
+	* milena/sandbox/fred/leveling_filter.hh: .
+	* milena/sandbox/fred/mean.hh: .
+
 2009-02-11  Frederic Bour  <bour@lrde.epita.fr>
 
 	Wip of mean attribute set_value.
