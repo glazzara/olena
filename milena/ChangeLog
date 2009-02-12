@@ -1,3 +1,12 @@
+2009-02-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix from_to overloads and add missing operators in value::hsl.
+
+	* mln/convert/from_to.hxx: Update forward declarations to from_to
+				   overloads.
+
+	* mln/value/hsl.hh: Add missing operators +,-,/,*.
+
 2009-02-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update apps/statues/ to catch up with recent changes of interface.

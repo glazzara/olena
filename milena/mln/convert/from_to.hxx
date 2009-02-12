@@ -170,14 +170,12 @@ namespace mln
 
 
       // rgb to hsl
-      template <typename H, typename S, typename L>
       void
-      from_to_(const value::rgb<16>& from, value::hsl_<H,S,L>& to);
+      from_to_(const value::rgb<16>& from, value::hsl_<float,float,float>& to);
 
       // rgb to hsl
-      template <typename H, typename S, typename L>
       void
-      from_to_(const value::rgb<8>& from, value::hsl_<H,S,L>& to);
+      from_to_(const value::rgb<8>& from, value::hsl_<float,float,float>& to);
 
 
       // C-array -> Image.

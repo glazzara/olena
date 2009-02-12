@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,6 +31,7 @@
 /// Color class.
 ///
 /// \todo write a better doc.
+/// \todo Cleanup/Revamp!
 
 #ifndef MLN_VALUE_HSL_HH
 # define MLN_VALUE_HSL_HH
@@ -39,8 +41,6 @@
 #include <mln/value/concept/vectorial.hh>
 #include <mln/value/int_u.hh>
 #include <mln/algebra/vec.hh>
-
-#include <mln/value/float01_8.hh>
 
 // Used in from_to
 #include <mln/fun/v2v/rgb_to_hsl.hh>
@@ -66,26 +66,90 @@ namespace mln
     namespace over_load
     {
 
-      // rgb to hsl
-      template <typename H, typename S, typename L>
+      // rgb to hsl_
       void
-      from_to_(const value::rgb<16>& from, value::hsl_<H,S,L>& to);
+      from_to_(const value::rgb<16>& from, value::hsl_<float,float,float>& to);
 
-      // rgb to hsl
-      template <typename H, typename S, typename L>
+      // rgb to hsl_
       void
-      from_to_(const value::rgb<8>& from, value::hsl_<H,S,L>& to);
+      from_to_(const value::rgb<8>& from, value::hsl_<float,float,float>& to);
 
     } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 
 
+
+  namespace trait
+  {
+
+    template <typename H, typename S, typename L>
+    struct set_precise_binary_< op::plus, mln::value::hsl_<H,S,L>, mln::value::hsl_<H,S,L> >
+    {
+      typedef mln::value::hsl_<H,S,L> ret;
+    };
+
+    template <typename H, typename S, typename L>
+    struct set_precise_binary_< op::minus, mln::value::hsl_<H,S,L>, mln::value::hsl_<H,S,L> >
+    {
+      typedef mln::value::hsl_<H,S,L> ret;
+    };
+
+    template <typename H, typename S, typename L, typename S2>
+    struct set_precise_binary_< op::times, mln::value::hsl_<H,S,L>, mln::value::scalar_<S2> >
+    {
+      typedef mln::value::hsl_<H,S,L> ret;
+    };
+
+    template <typename H, typename S, typename L, typename S2>
+    struct set_precise_binary_< op::div, mln::value::hsl_<H,S,L>, mln::value::scalar_<S2> >
+    {
+      typedef mln::value::hsl_<H,S,L> ret;
+    };
+
+
+    // FIXME : Is there any way more generic? a way to factor
+    //  set_precise_binary_< op::div, mln::value::hsl_<H,S,L>, mln::value::scalar_<S> >
+    //  and
+    //  set_precise_binary_< op::div, mln::value::hsl_<H,S,L>, mln::value::int_u<m> >
+    //  as for op::times.
+
+    template <typename H, typename S, typename L, unsigned m>
+    struct set_precise_binary_< op::times, mln::value::hsl_<H,S,L>, mln::value::int_u<m> >
+    {
+      typedef mln::value::hsl_<H,S,L> ret;
+    };
+
+    template <typename H, typename S, typename L, unsigned m>
+    struct set_precise_binary_< op::div, mln::value::hsl_<H,S,L>, mln::value::int_u<m> >
+    {
+      typedef mln::value::hsl_<H,S,L> ret;
+    };
+
+    template <typename H, typename S, typename L>
+    struct value_< mln::value::hsl_<H,S,L> >
+    {
+      enum {
+	nbits = (sizeof (H) + sizeof (S) + sizeof (L)) * 8,
+	card  = mln_value_card_from_(nbits)
+      };
+
+      typedef trait::value::nature::vectorial nature;
+      typedef trait::value::kind::color       kind;
+      typedef mln_value_quant_from_(card)     quant;
+
+//      typedef algebra::vec<3, float> sum;
+      typedef mln::value::hsl_<H,S,L> sum;
+    };
+
+  } // end of namespace trait
+
+
   namespace value
   {
 
     template <typename E>
-    struct HSL
+    struct HSL : Object<E>
     {
     };
 
@@ -100,6 +164,13 @@ namespace mln
 
       /// Constructor without argument.
       hsl_()
+      {
+      }
+
+      hsl_(const literal::zero_t&)
+	: hue_(0),
+	  sat_(0),
+	  lum_(0)
       {
       }
 
@@ -122,6 +193,7 @@ namespace mln
       L& lum();
 
     private:
+      //FIXME: Don't we want to store these values in a vector?
       H hue_;
       S sat_;
       L lum_;
@@ -140,6 +212,35 @@ namespace mln
     /// \return The modified output stream \p ostr.
     template <typename H, typename S, typename L>
     std::ostream& operator<<(std::ostream& ostr, const hsl_<H,S,L>& c);
+
+
+    /// Addition.
+    /// {
+    template <typename H, typename S, typename L>
+    hsl_<H,S,L>
+    operator+(const hsl_<H,S,L>& lhs, const hsl_<H,S,L>& rhs);
+    /// \}
+
+    /// Subtraction.
+    /// \{
+    template <typename H, typename S, typename L>
+    hsl_<H,S,L>
+    operator-(const hsl_<H,S,L>& lhs, const hsl_<H,S,L>& rhs);
+    /// \}
+
+    /// Product.
+    /// \{
+    template <typename H, typename S, typename L, typename S2>
+    hsl_<H,S,L>
+    operator*(const hsl_<H,S,L>& lhs, const mln::value::scalar_<S2>& s);
+    /// \}
+
+    /// Division.
+    /// \{
+    template <typename H, typename S, typename L, typename S2>
+    hsl_<H,S,L>
+    operator/(const hsl_<H,S,L>& lhs, const mln::value::scalar_<S2>& s);
+    /// \}
 
   } // end of namespace mln::value
 
@@ -221,6 +322,46 @@ namespace mln
 		  << ')';
     }
 
+
+    template <typename H, typename S, typename L>
+    hsl_<H,S,L>
+    operator+(const hsl_<H,S,L>& lhs, const hsl_<H,S,L>& rhs)
+    {
+      return hsl_<H,S,L>(lhs.hue() + rhs.hue(),
+			 lhs.sat() + rhs.sat(),
+			 lhs.lum() + rhs.lum());
+    }
+
+
+    template <typename H, typename S, typename L>
+    hsl_<H,S,L>
+    operator-(const hsl_<H,S,L>& lhs, const hsl_<H,S,L>& rhs)
+    {
+      return hsl_<H,S,L>(lhs.hue() - rhs.hue(),
+			 lhs.sat() - rhs.sat(),
+			 lhs.lum() - rhs.lum());
+    }
+
+
+    template <typename H, typename S, typename L, typename S2>
+    hsl_<H,S,L>
+    operator*(const hsl_<H,S,L>& lhs, const mln::value::scalar_<S2>& s)
+    {
+      return hsl_<H,S,L>(lhs.hue() * s,
+			 lhs.sat() * s,
+			 lhs.lum() * s);
+    }
+
+
+    template <typename H, typename S, typename L, typename S2>
+    hsl_<H,S,L>
+    operator/(const hsl_<H,S,L>& lhs, const mln::value::scalar_<S2>& s)
+    {
+      return hsl_<H,S,L>(lhs.hue() / s,
+			 lhs.sat() / s,
+			 lhs.lum() / s);
+    }
+
   } // end of namespace mln::value
 
 
@@ -230,17 +371,16 @@ namespace mln
     namespace over_load
     {
 
-      template <typename H, typename S, typename L>
+      inline
       void
-      from_to_(const value::rgb<16>& from, value::hsl_<H,S,L>& to)
+      from_to_(const value::rgb<16>& from, value::hsl_<float,float,float>& to)
       {
 	to = fun::v2v::f_rgb_to_hsl_f(from);
       }
 
-
-      template <typename H, typename S, typename L>
+      inline
       void
-      from_to_(const value::rgb<8>& from, value::hsl_<H,S,L>& to)
+      from_to_(const value::rgb<8>& from, value::hsl_<float,float,float>& to)
       {
 	to = fun::v2v::f_rgb_to_hsl_f(from);
       }
