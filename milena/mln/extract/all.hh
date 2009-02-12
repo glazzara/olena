@@ -38,13 +38,16 @@ namespace mln
 
   namespace extract
   {
-  }
+  } // end of namespace mln::extract
 
-}
+} // end of namespace mln
 
 # include <mln/extract/red.hh>
 # include <mln/extract/green.hh>
 # include <mln/extract/blue.hh>
+# include <mln/extract/hue.hh>
+# include <mln/extract/sat.hh>
+# include <mln/extract/lum.hh>
 
 
 #endif // ! MLN_EXTRACT_ALL_HH

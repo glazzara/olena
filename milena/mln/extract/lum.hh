@@ -25,16 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_EXTRACT_BLUE_HH
-# define MLN_EXTRACT_BLUE_HH
+#ifndef MLN_EXTRACT_LUM_HH
+# define MLN_EXTRACT_LUM_HH
 
-/// \file mln/extract/blue.hh
+/// \file mln/extract/lum.hh
 ///
-/// Extract the blue component of an image.
+/// Extract the lum component of an image.
 
 
 # include <mln/core/image/fun_image.hh>
-# include <mln/fun/meta/blue.hh>
+# include <mln/fun/meta/lum.hh>
 
 namespace mln
 {
@@ -43,16 +43,16 @@ namespace mln
   {
 
     template <typename I>
-    fun_image<meta::blue<mln_value(I)>,I>
-    blue(Image<I>& ima);
+    fun_image<meta::lum<mln_value(I)>,I>
+    lum(Image<I>& ima);
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    fun_image<meta::blue<mln_value(I)>,I>
-    blue(Image<I>& ima)
+    fun_image<meta::lum<mln_value(I)>,I>
+    lum(Image<I>& ima)
     {
-      fun_image<meta::blue<mln_value(I)>,I> result(ima);
+      fun_image<meta::lum<mln_value(I)>,I> result(ima);
       return result;
     }
 
@@ -62,4 +62,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_EXTRACT_BLUE_HH
+#endif // ! MLN_EXTRACT_LUM_HH

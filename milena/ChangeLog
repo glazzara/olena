@@ -1,5 +1,18 @@
 2009-02-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new routines to extract HSL components.
+
+	* mln/extract/all.hh: include new includes.
+
+	* mln/extract/hue.hh,
+	* mln/extract/lum.hh,
+	* mln/extract/sat.hh: new. Construct a fun_image from a hsl image and
+	the appropriate meta function.
+
+	* mln/extract/blue.hh: fix a wrong guard.
+
+2009-02-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new meta functions to retrieve HSL components.
 
 	* mln/fun/all.hh: include meta/all.hh.
