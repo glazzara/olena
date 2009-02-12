@@ -1,5 +1,19 @@
 2009-02-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new meta functions to retrieve HSL components.
+
+	* mln/fun/all.hh: include meta/all.hh.
+
+	* mln/fun/meta/all.hh: new. Includes meta/*.hh.
+
+	* mln/fun/meta/hue.hh: add new specialization for value::hsl.
+
+	* mln/fun/meta/lum.hh,
+	* mln/fun/meta/sat.hh: new. Introduce new meta functions to retrieve
+	HSL components.
+
+2009-02-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix from_to overloads and add missing operators in value::hsl.
 
 	* mln/convert/from_to.hxx: Update forward declarations to from_to

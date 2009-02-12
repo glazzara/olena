@@ -33,6 +33,7 @@
 ///
 /// Meta function to retrieve/modify the color saturation.
 
+# include <mln/value/hsl.hh>
 # include <mln/value/hsi.hh>
 # include <mln/core/concept/meta_fun.hh>
 
@@ -65,8 +66,21 @@ namespace mln
   };
 
 
-# ifndef MLN_INCLUDE_ONLY
+  template <class H, class S, class L>
+  struct function< meta::sat< value::hsl_<H, S, L> > >
+    : public Function_v2w_w2v<function< meta::sat < value::hsl_<H, S, L> > > >
+  {
+    typedef value::hsl_<H, S, L> value;
 
+    typedef H result;
+    H read(const value& h);
+
+    typedef H& lresult;
+    H& write(value& h);
+  };
+
+
+# ifndef MLN_INCLUDE_ONLY
 
   template <class H, class S, class I>
   inline
@@ -80,6 +94,24 @@ namespace mln
   inline
   H&
   function< meta::sat< value::hsi_<H, S, I> > >::write(value& h)
+  {
+    return h.sat();
+  }
+
+
+
+  template <class H, class S, class L>
+  inline
+  H
+  function< meta::sat< value::hsl_<H, S, L> > >::read(const value& h)
+  {
+    return h.sat();
+  }
+
+  template <class H, class S, class L>
+  inline
+  H&
+  function< meta::sat< value::hsl_<H, S, L> > >::write(value& h)
   {
     return h.sat();
   }

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,43 +26,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_ALL_HH
-# define MLN_FUN_ALL_HH
-
-/*! \file mln/fun/all.hh
- *
- * \brief File that includes all fun-related routines.
- */
-
+#ifndef MLN_FUN_META_ALL_HH
+# define MLN_FUN_META_ALL_HH
 
 namespace mln
 {
 
-  /// Namespace of image processing routines related to functions.
-  namespace fun
+  namespace meta
   {
 
-    /// Internal namespace of functions.
-    namespace internal
-    {
-    }
-  }
+  } // end of namespace mln::meta
 
-}
+} // end of namespace mln
 
 
-# include <mln/fun/c.hh>
-# include <mln/fun/ops.hh>
-# include <mln/fun/i2v/all.hh>
-# include <mln/fun/p2b/all.hh>
-# include <mln/fun/p2v/all.hh>
-# include <mln/fun/v2b/all.hh>
-# include <mln/fun/v2v/all.hh>
-# include <mln/fun/vv2v/all.hh>
-# include <mln/fun/x2p/all.hh>
-# include <mln/fun/x2v/all.hh>
-# include <mln/fun/x2x/all.hh>
-# include <mln/fun/meta/all.hh>
+#include<mln/fun/meta/red.hh>
+#include<mln/fun/meta/hue.hh>
+#include<mln/fun/meta/lum.hh>
+#include<mln/fun/meta/all.hh>
+#include<mln/fun/meta/green.hh>
+#include<mln/fun/meta/inty.hh>
+#include<mln/fun/meta/blue.hh>
+#include<mln/fun/meta/sat.hh>
+#include<mln/fun/meta/to_enc.hh>
 
+#endif // ! MLN_FUN_META_ALL_HH
 
-#endif // ! MLN_FUN_ALL_HH
