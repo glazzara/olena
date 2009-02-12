@@ -1,3 +1,15 @@
+2009-02-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update code related to Region Adjacency Graph.
+
+	* lazzara/irm/hsl_grad_and_wst.cc: perform a gradient on a HSL image
+	and compute the watershed.
+
+	* lazzara/irm/wst_rag.cc: Improve output and add a usage.
+
+	* lazzara/irm/wst_rag_hsl.cc: new. Similar code to wst_rag.cc but
+	the graph values are computed thanks to the HSL image.
+
 2009-02-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Cleanup pseudo-tree computation.

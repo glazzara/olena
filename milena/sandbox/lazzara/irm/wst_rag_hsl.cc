@@ -1,28 +1,44 @@
 #include <mln/essential/2d.hh>
-#include <mln/core/alias/vec3d.hh>
-#include <mln/debug/draw_graph.hh>
-#include <mln/util/graph.hh>
-#include <mln/accu/center.hh>
-#include <mln/io/dump/all.hh>
-#include <mln/value/label_16.hh>
-#include <mln/value/label_8.hh>
-#include <mln/value/rgb8.hh>
-#include <mln/value/rgb16.hh>
-#include <mln/accu/compute.hh>
+
+
 #include <mln/core/alias/dpoint2d.hh>
-#include <mln/draw/box.hh>
-#include <mln/level/stretch.hh>
-#include <mln/canvas/morpho/algebraic_union_find.hh>
-#include <mln/fun/v2v/id.hh>
+#include <mln/core/alias/vec3d.hh>
 #include <mln/core/image/line_graph_elt_neighborhood.hh>
-#include <mln/morpho/elementary/dilation.hh>
-#include <mln/labeling/mean_values.hh>
+
+#include <mln/accu/center.hh>
+#include <mln/accu/compute.hh>
+
+#include <mln/canvas/morpho/algebraic_union_find.hh>
+
+#include <mln/debug/draw_graph.hh>
+
+#include <mln/draw/box.hh>
 
 #include <mln/extract/all.hh>
 
+#include <mln/fun/v2v/id.hh>
+
+#include <mln/io/dump/all.hh>
+
+#include <mln/labeling/mean_values.hh>
+
+#include <mln/level/stretch.hh>
+
+#include <mln/morpho/elementary/dilation.hh>
+
+#include <mln/util/graph.hh>
+
+#include <mln/value/label_16.hh>
+#include <mln/value/label_8.hh>
+#include <mln/value/rgb16.hh>
+#include <mln/value/rgb8.hh>
+
+#include <mln/value/hsl.hh>
+
 
 // Given a color image and a wshed image, computes the component graph.
-// Vertex values are computed thanks to a RGB image.
+// Vertex values are computed thanks to a HSL image.
+
 
 namespace mln
 {
@@ -81,15 +97,12 @@ namespace mln
   }
 
 
-
-
-  template <typename V>
-  value::int_u8 dist(const V& c1, const V& c2)
+  value::int_u8 dist(const value::hsl_f& c1, const value::hsl_f& c2)
   {
     unsigned d = 0;
-    d += (math::diff_abs(c1.red(), c2.red()) + 2) / 3;
-    d += (math::diff_abs(c1.green(), c2.green()) + 2) / 3;
-    d += (math::diff_abs(c1.blue(), c2.blue()) + 2) / 3;
+    d += (math::diff_abs(c1.hue(), c2.hue()) + 2) / 3;
+    d += (math::diff_abs(c1.sat(), c2.sat()) + 2) / 3;
+    d += (math::diff_abs(c1.lum(), c2.lum()) + 2) / 3;
     if (d > 255)
       d = 255;
     return d;
@@ -103,6 +116,7 @@ namespace mln
 	    p_edges<util::graph, fun::i2v::array<mln_site(I)> > >
   make_edge_graph_image(const I& ima_v, const util::graph& g)
   {
+
     // edge sites.
     typedef fun::i2v::array<mln_site(I)> edge_site_t;
     edge_site_t edge_site(g.e_nmax(), literal::origin);
@@ -133,23 +147,18 @@ namespace mln
   {
     // Cf. sandbox/theo/color/segment_rgb_pixels.cc
 
-    util::array<vec3d_f> m_3f = labeling::compute(accu::mean<mln_value(I)>(),
+    util::array<value::hsl_f> m_3f = labeling::compute(accu::mean<mln_value(I)>(),
 						  input, // input color image
 						  w, // watershed labeling
 						  nbasins);
-    m_3f[0] = literal::zero;
+    m_3f[0] = value::hsl_f(0,0,0);;
 
     util::array<mln_value(I)> m;
     convert::from_to(m_3f, m);
-    m[0] = literal::yellow;
-
-    io::ppm::save(level::transform(w,
-	  convert::to< fun::i2v::array<mln_value(I)> >(m)),
-	"wst_rag_wshd_color.ppm");
+    m[0] = value::hsl_f(360,0.5,255);
 
     return m;
   }
-
 
   template <typename I, typename J>
   pw::image<fun::i2v::array<mln_value(I)>,
@@ -160,7 +169,7 @@ namespace mln
     typedef util::array<mln_site(I)> vertex_sites_t;
     vertex_sites_t site_values;
     convert::from_to(labeling::compute(accu::center<mln_site(I)>(), w, nbasins),
-				       site_values);
+		     site_values);
 
     typedef fun::i2v::array<mln_site(J)> f_sites_t;
     f_sites_t sites;
@@ -173,8 +182,7 @@ namespace mln
 
     typedef fun::i2v::array<mln_value(I)> vertex_values_t;
     vertex_values_t vertex_values;
-    convert::from_to(mean_color_values(input, w, nbasins),
-		     vertex_values);
+    convert::from_to(mean_color_values(input, w, nbasins), vertex_values);
 
     mln_VAR(ima_v, (vertex_values | pv));
 
@@ -254,8 +262,11 @@ int main(int argc, char *argv[])
   using value::label_8;
   using value::rgb16;
   using value::rgb8;
+  using value::hsl_f;
 
-  typedef image2d<rgb8> I;
+//  typedef image2d<rgb8> I;
+  typedef image2d<rgb8> K;
+  typedef image2d<hsl_f> I;
   typedef image2d<label_16> J;
 
   if (argc < 5)
@@ -272,9 +283,9 @@ int main(int argc, char *argv[])
 
   unsigned box_size = atoi(argv[4]);
 
-  I input;
-  io::ppm::load(input, argv[1]);
-//  image2d<rgb16> input = level::convert(rgb16(), input_);
+  K input_;
+  io::ppm::load(input_, argv[1]);
+  I input = level::convert(hsl_f(), input_);
 
   J vol;
   io::dump::load(vol, argv[2]);
@@ -284,13 +295,12 @@ int main(int argc, char *argv[])
 
   util::graph g = make_graph(vol, c4(), nbasins);
 
-  // Compute value distances with a RGB image.
   mln_VAR(ima_v, make_vertex_graph_image(g, input, vol, nbasins));
   mln_VAR(ima_e, make_edge_graph_image(ima_v, g));
 
   //DEBUG
-//  io::ppm::save(make_debug_graph_image(input, ima_v, ima_e, box_size),
-//				       "wst_rag_graph_image.ppm");
+  io::ppm::save(make_debug_graph_image(input, ima_v, ima_e, box_size),
+				       "wst_rag_graph_image.ppm");
 
 
   mln_piter_(ima_e_t) e(ima_e.domain());
@@ -323,7 +333,8 @@ int main(int argc, char *argv[])
 
   J vol2 = level::transform(vol, f);
   util::graph g2 = make_graph(vol2, c4(), nbasins2);
-  // Compute value distances with a RGB image.
+
+  // Compute values distance on the HSL Image.
   mln_VAR(ima_v2, make_vertex_graph_image(g2, input, vol2, nbasins2));
   mln_VAR(ima_e2, make_edge_graph_image(ima_v2, g2));
 
@@ -334,8 +345,9 @@ int main(int argc, char *argv[])
 
   data::fill((vol2 | (pw::value(vol2) == 0u)).rw(), vol2_);
 
-  io::ppm::save(labeling::mean_values(input, vol2, nbasins2),
+  io::ppm::save(labeling::mean_values(input_, vol2, nbasins2),
 		"wst_rag_mean_colors.ppm");
-  io::ppm::save(make_debug_graph_image(input, ima_v2, ima_e2, box_size),
+  io::ppm::save(make_debug_graph_image(input_, ima_v2, ima_e2, box_size),
 		"wst_rag_graph_image2.ppm");
+
 }
