@@ -1,3 +1,9 @@
+2009-02-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Call the fill_holes() function.
+	* fabien/igr/igr.cc: Call the fill_holes() function
+	  instead of doing the computation.
+
 2009-02-12  Frederic Bour  <bour@lrde.epita.fr>
 
 	First version of when_pix::use_p -> when_pix::use_v wrapper.

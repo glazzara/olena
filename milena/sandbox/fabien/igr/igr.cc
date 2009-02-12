@@ -52,6 +52,7 @@
 
 #include <mln/labeling/blobs.hh>
 #include <mln/labeling/compute.hh>
+#include <mln/labeling/fill_holes.hh>
 
 #include <mln/level/compare.hh>
 #include <mln/level/transform.hh>
@@ -160,21 +161,24 @@ igr(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_, L& nlabels)
 
   // Fill holes.
 
+  big_second = labeling::fill_holes(big_second, nbh, nlabels);
 //  box<mln_site(I)> h_box = geom::bbox((in_bool | pw::value(labels) == big_second_lbl).domain());
   //h_box.enlarge(1);
-  mln_ch_value(I, L) h_lbls = labeling::background(big_second /*in_bool | h_box*/, nbh, nlabels);
-  util::array<unsigned> arr_holes = labeling::compute(a_, big_second /*in_bool | h_box*/, h_lbls, nlabels);
-  int bg_count = 0;
-  int bg_lbl = 0;
-  for (int i = 0; i < arr_holes.nelements(); ++i)
-  {
-    if (arr_holes[i] > bg_count)
-    {
-      bg_count = a[i];
-      bg_lbl = i;
-    }
-  }
-  data::fill((/*(*/big_second /*in_bool | h_box).rw()*/ | pw::value(h_lbls) != bg_lbl).rw(), true);
+
+  //mln_ch_value(I, L) h_lbls = labeling::background(big_second /*in_bool | h_box*/, nbh, nlabels);
+  //util::array<unsigned> arr_holes = labeling::compute(a_, big_second /*in_bool | h_box*/, h_lbls, nlabels);
+  //int bg_count = 0;
+  //int bg_lbl = 0;
+  //for (int i = 0; i < arr_holes.nelements(); ++i)
+  //{
+  //  if (arr_holes[i] > bg_count)
+  //  {
+  //    bg_count = a[i];
+  //    bg_lbl = i;
+  //  }
+  //}
+  //data::fill((/*(*/big_second /*in_bool | h_box).rw()*/ | pw::value(h_lbls) != bg_lbl).rw(), true);
+
   /*return level::transform(h_lbls, L_to_int_u8<label_16>());*/
 
   // Gradient.
@@ -218,11 +222,11 @@ int main()
 
   image2d<int_u8> src;
   io::pgm::load(src, "img/slice_7.pgm");
-  image3d<int_u8> vol;
-  io::dump::load(vol, "img/IRM.dump");
+  //image3d<int_u8> vol;
+  //io::dump::load(vol, "img/IRM.dump");
 
   label_16 nlabels;
 
-  //io::ppm::save(igr(src, c4(), nlabels), "slice_out.ppm");
-  io::dump::save(igr(vol, c6(), nlabels), "vol_out.dump");
+  io::ppm::save(igr(src, c4(), nlabels), "slice_out.ppm");
+  //io::dump::save(igr(vol, c6(), nlabels), "vol_out.dump");
 }
