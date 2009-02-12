@@ -1,3 +1,8 @@
+2009-02-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add fill_holes() function in new file.
+	* mln/labeling/fill_holes.hh: Implement fill_holes().
+
 2009-02-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add new routines to extract HSL components.
