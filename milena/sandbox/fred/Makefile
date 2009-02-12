@@ -1,10 +1,10 @@
-TARGET=meantest
-OBJS=meantest.o
+TARGET=connected
+OBJS=$(TARGET).o
 
 OLENADIR=../../..
 MILENADIR=$(OLENADIR)/milena
 
-CXXFLAGS=-I$(MILENADIR) -I./ -DNDEBUG -O2 -ffast-math
+CXXFLAGS=-I$(MILENADIR) -I./ -DNDEBUG -O1 -ffast-math
 CXX=g++
 LD=g++
 LDFLAGS=

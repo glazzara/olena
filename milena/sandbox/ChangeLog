@@ -1,3 +1,9 @@
+2009-02-12  Frederic Bour  <bour@lrde.epita.fr>
+
+	First version of when_pix::use_p -> when_pix::use_v wrapper.
+	* Makefile: Tested connected filter dispatch.
+	* value_wrapper.hh: New.
+
 2009-02-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Merge algebraic and leveling filter, and implement dispatch.
