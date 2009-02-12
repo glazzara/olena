@@ -1,3 +1,14 @@
+2009-02-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Merge algebraic and leveling filter, and implement dispatch.
+	* edwin/Makefile: Fix some bugs.
+	* edwin/filtres/connectes/Makefile: New.
+	* edwin/filtres/connectes/connected_filter.hh: File merging
+	algebraic and leveling filter.
+	* edwin/filtres/connectes/filter.cc: Main file for testing.
+	* edwin/filtres/connectes: New.
+	* edwin/filtres: New.
+
 2009-02-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update code related to Region Adjacency Graph.

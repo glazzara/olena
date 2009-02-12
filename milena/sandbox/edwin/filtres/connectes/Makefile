@@ -1,11 +1,11 @@
-TARGET=leveling_opt
+TARGET=filter
 REF=leveling
-SRC=leveling_opt.cc
+SRC=filter.cc
 SRC_REF=leveling.cc
 OBJS=${SRC:.cc=.o}
 OBJS_REF=${SRC_REF:.cc=.o}
 
-OLENADIR=../../..
+OLENADIR=../../../../..
 MILENADIR=$(OLENADIR)/milena
 
 CXXFLAGS=-I$(MILENADIR) -I./ -DNDEBUG -O3 -ffast-math
@@ -13,7 +13,7 @@ CXX=g++
 LD=g++
 LDFLAGS=
 
-all: $(REF) $(TARGET)
+all: $(TARGET)
 
 $(TARGET): $(OBJS) $(SRC)
 	$(LD) $(LDFLAGS) -o $@ $(OBJS)
