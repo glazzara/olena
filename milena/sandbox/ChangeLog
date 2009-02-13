@@ -1,5 +1,16 @@
 2009-02-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Finalize ICIP 2009 code.
+
+	* theo/publis/icip2009/compute_a.cc (a_data): New.
+	(compute_a): Rename as...
+	(compute_data): ...this.
+	Update.
+	(compute_filter): New.
+	(main): Update.
+
+2009-02-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update ICIP 2009 code.
 
 	* theo/publis,

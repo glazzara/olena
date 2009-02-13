@@ -34,7 +34,9 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
 #include <mln/debug/println.hh>
+#include <mln/core/routine/duplicate.hh>
 
 #include <mln/core/site_set/p_array.hh>
 #include <mln/level/sort_psites.hh>
@@ -44,6 +46,8 @@
 
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
+#include <mln/morpho/watershed/flooding.hh>
+#include <mln/morpho/elementary/gradient.hh>
 #include <mln/labeling/regional_minima.hh>
 
 #include <mln/accu/count.hh>
@@ -93,14 +97,37 @@ namespace mln
   }
 
 
-  //-------------------------------   compute_a
+
+  //-------------------------------   data
+
+
+
+  template <typename I, typename A>
+  struct a_data
+  {
+    typedef mln_site(I) P;
+    typedef p_array<P>  S;
+
+    unsigned n_regmins;
+    S s;
+
+    mln_ch_value(I, mln_result(A)) a;
+    mln_ch_value(I, unsigned)      nchildren;
+    mln_ch_value(I, P)             par;
+    mln_ch_value(I, bool)          flag;
+  };
+
+
+
+
+  //-------------------------------   compute_data
 
 
 
   template <typename I, typename N, typename A>
-  mln_ch_value(I, mln_result(A))
-    compute_a(const I& f, const N& nbh, A, unsigned& n_regmins,
-	      bool echo = false)
+  a_data<I,A>
+    compute_data(const I& f, const N& nbh, A, unsigned& n_regmins,
+		 bool echo = false)
   {
     typedef mln_site(I) P;
     typedef p_array<P> S;
@@ -192,22 +219,15 @@ namespace mln
 
 
 
-    // Output is the attribute image.
-    mln_ch_value(I, mln_result(A)) a;
+    // Outputing.
+
+    mln_ch_value(I, mln_result(A)) a; // Attribute image.
     initialize(a, f);
     data::paste(attr, a);
 
-
-    // Back-propagate flags to non-representant component sites.
-    {
-      mln_bkd_piter(S) p(s); // Reverse.
-      for_all(p)
-	if (f(par(p)) == f(p) && flag(par(p)) != flag(p))
-	  flag(p) = flag(par(p));
-      if (echo)
-	debug::println("flag", flag);
-    }
-
+    mln_ch_value(I, unsigned) nchildren; // Number of children.
+    initialize(nchildren, f);
+    data::fill(nchildren, 0);
 
     unsigned
       n_sites = 0,
@@ -215,24 +235,80 @@ namespace mln
       n_nodes = 0;
 
 
-    // Tree canonization
+    // Finalization.
     {
       mln_bkd_piter(S) p(s); // Reverse.
       for_all(p)
       {
-	P q = par(p);
-	if (f(par(q)) == f(q))
-	  par(p) = par(q);
-	++n_sites;
-	if (par(p) == p)
-	  ++n_roots;
-	if (par(p) == p || f(par(p)) != f(p))
-	  ++n_nodes;
+
+	// Tree canonization
+	P par_p = par(p);
+	if (f(par(par_p)) == f(par_p) && par(p) != par(par_p))
+	  {
+	    par(p) = par(par_p);
+	    par_p = par(p);
+	  }
+
+	++n_sites; // Counting.
+
+	if (f(par_p) == f(p))
+	  {
+	    if (par_p == p)
+	      {
+		++n_roots; // Counting.
+		++n_nodes; // Counting.
+	      }
+	    else
+	      {
+		a(p) = a(par_p);       // Attribute image.
+		flag(p) = flag(par_p); // Flag (regional minima image).
+	      }
+	  }
+	else
+	  {
+	    ++nchildren(par_p); // Nchildren.
+	    ++n_nodes; // Counting.
+	  }
+
+
+// 	// Counting.
+// 	++n_sites;
+// 	if (par_p == p)
+// 	  ++n_roots;
+// 	if (par_p == p || f(par_p) != f(p))
+// 	  ++n_nodes;
+
+// 	// Attributes.
+// 	if (f(par_p) == f(p))
+// 	  a(p) = a(par_p);
+
+// 	// Flag (regional minima image).
+// 	if (f(par_p) == f(p) && flag(par_p) != flag(p))
+// 	  flag(p) = flag(par_p);
+
+// 	// Nchildren.
+//   	if (f(par_p) != f(p))
+// 	  ++nchildren(par_p);
+
       }
 
-      // Test.
+    }
+
+
+
+
+    std::cout << "%age nodes = "
+	      << (float(n_nodes) / n_sites * 100.f) << std::endl
+	      << std::endl;
+
+    /*
+
+    // Tests.
+    {
+
+      // Tree canonization
       {
-	mln_piter(S) p(s);
+	mln_bkd_piter(S) p(s); // Reverse.
 	for_all(p)
 	{
 	  P q = par(p);
@@ -244,96 +320,35 @@ namespace mln
 	    mln_invariant(f(par(q)) != f(q));
 	}
       }
-    }
 
-
-    std::cout << "%age nodes = "
-	      << (float(n_nodes) / n_sites * 100.f) << std::endl
-	      << std::endl;
-    
-
-    {
-      // The attr image is not correct on flat zones since there is
-      // no back-propagation of the attribute value of the component
-      // root.  For instance with f="v v v" we get attr="1 2 3"
-      // instead of "3 3 3".  So a finalization is required.
-
-
-      mln_bkd_piter(S) p(s); // Reverse.
-      for_all(p)
-	if (f(par(p)) == f(p))
-	  a(p) = a(par(p));
-    }
-
-
-    // Display tree.
-    if (echo)
-      {
-	mln_ch_value(I, char) tree;
-	initialize(tree, f);
-	data::fill(tree, ' ');
-	mln_piter(I) p(f.domain());
-	for_all(p)
-	  if (par(p) == p) // Root.
-	    tree(p) = '@';
-	  else
-	    if (f(par(p)) != f(p)) // Representative.
-	      tree(p) = 'o';
-	    else 
-	      tree(p) = '.';
-	debug::println(tree);
-      }
-
-
-
-    {
-      mln_ch_value(I, unsigned) nchildren;
-      initialize(nchildren, f);
-      data::fill(nchildren, 0);
-
-      mln_fwd_piter(S) p(s);
-      for_all(p)
-  	if (f(par(p)) != f(p))
-  	  {
-	    // Since the tree is canonized, par(p) is a node
-	    // (a component representative):
-	    P q = par(p);
-  	    mln_invariant(par(q) == q || f(par(q)) != f(q));
-  	    ++nchildren(par(p));
-  	  }
-
-      if (echo)
-	debug::println("nchildren", nchildren);
-
-      // Test.
+      // Nchildren and Attributes.
       {
 	typedef morpho::tree::data<I,S> T;
  	S s_ = reverse(s);
 	T t(f, s_, nbh);
 
 	typedef typename T::function C;
-	mln_ch_value(C, unsigned) ref;
-	initialize(ref, t.f());
-	data::fill(ref, 0);
+	mln_ch_value(C, unsigned) nc_ref;
+	initialize(nc_ref, t.f());
+	data::fill(nc_ref, 0);
 
 	mln_fwd_piter(T) p(t.domain());
 	for_all(p)
 	  if (t.is_a_non_root_node(p))
 	    {
 	      mln_invariant(t.is_a_node(t.parent(p)));
-	      ++ref(t.parent(p));
+	      ++nc_ref(t.parent(p));
 	    }
 
-	mln_invariant((nchildren | t.domain()) == ref);
+	mln_invariant((nchildren | t.domain()) == nc_ref);
+
+	accu::count< util::pix<I> > fixme_;
+	mln_ch_value(I, mln_result(A)) a_ref;
+	a_ref = morpho::tree::compute_attribute_image(fixme_, t);
+	mln_assertion(a == a_ref);
       }
-    }
-    
 
-
-
-
-    // Tests.
-    {
+      // Nregmins.
       {
 	unsigned n_ref;
 	mln_ch_value(I, unsigned) ref;
@@ -351,13 +366,150 @@ namespace mln
 	    ++n;
 	mln_assertion(n == n_regmins);
       }
+
+
     } // end of Tests.
 
+
+    if (echo)
+      {
+	// Display tree, attributes, flags, and nchildren.
+
+	mln_ch_value(I, char) tree;
+	initialize(tree, f);
+	data::fill(tree, ' ');
+	mln_piter(I) p(f.domain());
+	for_all(p)
+	  if (par(p) == p) // Root.
+	    tree(p) = '@';
+	  else
+	    if (f(par(p)) != f(p)) // Representative.
+	      tree(p) = 'o';
+	    else 
+	      tree(p) = '.';
+	debug::println(tree);
+
+	debug::println("a", a);
+	debug::println("flag", flag);
+	debug::println("nchildren", nchildren);
+      }
+
+*/
+
+    a_data<I,A> dta;
+    dta.s = s;
+    dta.a = a;
+    dta.nchildren = nchildren;
+    dta.par = par;
+    dta.flag = flag;
+    dta.n_regmins = n_regmins;
     
-    return a;
+    return dta;
 
-  } // compute
+  } // compute_data
 
+
+
+
+
+
+  //-------------------------------   compute_filter
+
+
+
+  template <typename I, typename A>
+  mln_concrete(I)
+  compute_filter(const I& f, const a_data<I,A>& dta,
+		 unsigned n_objects,
+		 mln_result(A)& lambda,
+		 bool echo = false)
+  {
+    typedef mln_site(I) P;
+    typedef p_array<P>  S;
+
+    const S& s = dta.s;
+    mln_ch_value(I, mln_result(A)) a         = dta.a;
+    mln_ch_value(I, unsigned)      nchildren = dta.nchildren;
+    mln_ch_value(I, P)             par       = dta.par;
+    unsigned                       n_regmins = dta.n_regmins;
+
+    if (n_objects >= n_regmins)
+      {
+	std::cout << "warning: number of expected objects is greater than number of regmins!" << std::endl;
+	std::cout << "aborting..." << std::endl;
+	return duplicate(f);
+      }
+    
+    unsigned
+      count = dta.n_regmins,
+      less  = 0;
+
+
+
+    // NOW attributes are sorted increasingly!
+
+    S s_a = level::sort_psites_increasing(a);
+
+
+    mln_fwd_piter(S) p(s_a);
+    for_all(p) // with increasing attribute.
+    {
+      if (! (par(p) == p || f(par(p)) != f(p))) // Not a node.
+	continue;
+
+      if (a(p) < lambda && par(p) != p)
+	{
+	  mln_assertion(nchildren(par(p)) > 0);
+	  --nchildren(par(p));
+	  if (nchildren(par(p)) != 0)
+	    {
+	      if (count <= n_objects)
+		{
+		  ++less; // minus 1 object wrt the expected number!
+		}
+	      --count;
+	      if (count == n_objects)
+		{
+		  lambda = a(p) + 1;
+		  std::cout << "lambda = " << lambda << std::endl
+			    << std::endl;
+		}
+	    }
+	}
+    }
+
+    if (less != 0)
+      std::cerr << "WARNING: less objects (" << less << ") than expected..." << std::endl
+		<< std::endl;
+
+    if (echo)
+      debug::println("nchildren =", nchildren);
+
+
+    // Filtering.
+    mln_concrete(I) g;
+    initialize(g, f);
+
+    {
+      mln_bkd_piter(S) p(s); // Reverse.
+      for_all(p)
+      {
+	if ((par(p) == p || f(par(p)) != f(p)) // p is a node.
+	    &&
+	    a(p) >= lambda) // Keep it.
+	  g(p) = f(p);
+	else
+	  g(p) = g(par(p)); // Propagate => filtering.
+      }
+
+
+      if (echo)
+	debug::println("g =", g);
+    }
+
+    return g;
+
+  } // compute_filter
 
 
 } // mln
@@ -367,7 +519,7 @@ namespace mln
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.pgm echo" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input.pgm n_objects filtered.pgm echo" << std::endl;
   std::abort();
 }
 
@@ -378,10 +530,14 @@ int main(int argc, char* argv[])
   using namespace mln;
   using value::int_u8;
 
-  if (argc != 3)
+  if (argc != 5)
     usage(argv);
 
-  int echo = std::atoi(argv[2]);
+  int n_objects = std::atoi(argv[2]);
+  if (n_objects < 0)
+    usage(argv);
+
+  int echo = std::atoi(argv[4]);
   if (echo != 0 && echo != 1)
     usage(argv);
 
@@ -390,37 +546,33 @@ int main(int argc, char* argv[])
 
 
   typedef image2d<int_u8> I;
-  I f;
-  io::pgm::load(f, argv[1]);
+  I input;
+  io::pgm::load(input, argv[1]);
   if (echo)
-    debug::println("f", f);
+    debug::println("input", input);
 
-  accu::count<point2d> area;
+
+  I f = morpho::elementary::gradient(input, nbh);
+  if (echo)
+    debug::println("f (gradient)", f);
+
+
+  typedef accu::count<point2d> A;
+  typedef mln_result_(A) L;
+
+  A area;
   unsigned n_regmins;
 
-  image2d<unsigned> a = compute_a(f, nbh, area, n_regmins, echo);
-  if (echo)
-    debug::println("a", a);
+  a_data<I,A> dta = compute_data(f, nbh, area, n_regmins, echo);
     
+  L lambda;
+  I g = compute_filter(f, dta, n_objects, lambda, echo);
+
+  io::pgm::save(g, argv[3]);
 
 
-
-  {
-    // Test of 'a'.
-    typedef p_array<point2d> S;
-    S s = level::sort_psites_decreasing(f);
-    morpho::tree::data<I,S> t(f, s, nbh);
-    accu::count< util::pix<I> > area;
-    image2d<unsigned> a_ref = morpho::tree::compute_attribute_image(area, t);
-    // debug::println("a_ref", a_ref);
-    mln_assertion(a == a_ref);
-  }
-
-
-
-
-
-//   unsigned n_wanted = 10;
-//   I g = filtering(f, a, nbh, n_regmins, n_wanted);
+  unsigned n_basins;
+  morpho::watershed::flooding(g, nbh, n_basins);
+  std::cout << "n basins = " << n_basins << std::endl;
 
 }
