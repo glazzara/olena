@@ -1,3 +1,14 @@
+2009-02-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a label wrapper in fun::l2l.
+
+	* mln/fun/l2l/wrap.hh: New.
+	* mln/fun/l2l/all.hh: Update.
+	* tests/fun/l2l: New directory.
+	* tests/fun/Makefile.am: Update.
+	* tests/fun/l2l/wrap.cc: New.
+	* tests/fun/l2l/Makefile.am: New.
+
 2009-02-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add fill_holes() function in new file.

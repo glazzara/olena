@@ -1,5 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,12 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_L2L_ALL_HH
-# define MLN_FUN_L2L_ALL_HH
+#ifndef MLN_FUN_L2L_WRAP_HH
+# define MLN_FUN_L2L_WRAP_HH
 
-/// \file mln/fun/l2l/all.hh
+/// \file mln/fun/l2l/wrap.hh
 ///
-/// File that includes all functions from index to value.
+/// Function to wrap labels such as 0 -> 0 and [1, lmax] maps to [1,
+/// Lmax] (using modulus).
+///
+/// \todo Prefer not to cast towards 'unsigned long'; use a procedure
+/// such as enc(l) that can work on 'unsigned', 'int_u8', 'label<n>', and
+/// also other label types.
+
+# include <mln/core/concept/function.hh>
 
 
 namespace mln
@@ -40,18 +46,42 @@ namespace mln
   namespace fun
   {
 
-    /// Namespace of functions from label to label.
     namespace l2l
     {
-    }
-  }
 
-}
+      template <typename L>
+      struct wrap : public Function_l2l< wrap<L> >
+      {
+      public:
+
+	typedef L result;
+
+	template <typename L_>
+	L operator()(const L_& l_) const;
+
+      };
 
 
-# include <mln/fun/l2l/relabel.hh>
-# include <mln/fun/l2l/wrap.hh>
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename L>
+      template <typename L_>
+      inline
+      L
+      wrap<L>::operator()(const L_& l_) const
+      {
+	mlc_converts_to(L_, unsigned long)::check();
+	unsigned long l = static_cast<unsigned long>(l_);
+	return l == 0ul ? L(0ul) : L(1 + (l - 1) % 255);
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::l2l
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
 
 
-
-#endif // ! MLN_FUN_L2L_ALL_HH
+#endif // ! MLN_FUN_L2L_WRAP_HH

@@ -1,5 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,32 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_L2L_ALL_HH
-# define MLN_FUN_L2L_ALL_HH
-
-/// \file mln/fun/l2l/all.hh
+/// \file tests/fun/l2l/wrap.cc
 ///
-/// File that includes all functions from index to value.
+/// Test on mln::fun::l2l::wrap.
+
+#include <mln/fun/l2l/wrap.hh>
+
+#include <mln/value/int_u8.hh>
+#include <mln/value/label_16.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace fun
-  {
+  fun::l2l::wrap<value::int_u8> f;
 
-    /// Namespace of functions from label to label.
-    namespace l2l
-    {
-    }
-  }
+  value::label_16
+    l0   = 0,
+    l1   = 1,
+    l255 = 255,
+    l256 = 256,
+    l510 = 510,
+    l511 = 511;
 
+  mln_assertion( f(l0) == 0 );
+  mln_assertion( f(l1) == 1 );
+  mln_assertion( f(l255) == 255 );
+  mln_assertion( f(l256) == 1 );
+  mln_assertion( f(l510) == 255 );
+  mln_assertion( f(l511) == 1 );
 }
-
-
-# include <mln/fun/l2l/relabel.hh>
-# include <mln/fun/l2l/wrap.hh>
-
-
-
-#endif // ! MLN_FUN_L2L_ALL_HH
