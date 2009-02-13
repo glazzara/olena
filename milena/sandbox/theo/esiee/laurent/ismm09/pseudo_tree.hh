@@ -212,7 +212,8 @@ namespace mln
 		      const G& g, // FIXME: Directly input g_line?
 		      const util::array<L>& l_,
 		      const util::array<A>& a,
-		      const F& e_to_l1_l2)
+		      const F& e_to_l1_l2,
+		      bool echo = true)
   {
 
     typedef mln_value(G) T;    //  <---  Type of edge values.
@@ -303,7 +304,8 @@ namespace mln
 	epar(e) = e;
 	z_epar(e) = e;
       }
-      debug::println("epar (init):", epar); // epar(e) == e so we depict the edges!
+      if (echo)
+	debug::println("epar (init):", epar); // epar(e) == e so we depict the edges!
     }
 
 
@@ -455,44 +457,44 @@ namespace mln
 
       } // end of "for every region with increasing attribute"
 
+    if (echo)
+      {
+	// Display 'aa' over all edges.
 
-    {
-      // Display 'aa' over all edges.
+	debug::println("aa (on 'passing' edges):", aa);
 
-      debug::println("aa (on 'passing' edges):", aa);
+	// Display "edge tree".
 
-      // Display "edge tree".
+	mln_ch_value(g_line_t, bool) deja_vu;
+	initialize(deja_vu, g_line);
+	data::fill(deja_vu, false);
 
-      mln_ch_value(g_line_t, bool) deja_vu;
-      initialize(deja_vu, g_line);
-      data::fill(deja_vu, false);
+	std::cout << "edge tree: " << std::endl;
+	for (L l = 1; l <= l_max; ++l)
+	  {
+	    std::cout << l << ": ";
+	    E e = edge[l];
+	    while (! deja_vu(e))
+	      {
+		std::cout << e << " [" << aa(e) << "] -> ";
+		mln_invariant(aa(e) != 0 && aa(epar(e)) != 0); // aa is valid
+		mln_invariant(aa(epar(e)) >= aa(e));           // edge parenthood goes with 'aa' increasing
+		deja_vu(e) = true;
+		e = epar(e);
+	      }
+	    std::cout << e << std::endl;
+	  }
+	std::cout << std::endl;
 
-      std::cout << "edge tree: " << std::endl;
-      for (L l = 1; l <= l_max; ++l)
-	{
-	  std::cout << l << ": ";
-	  E e = edge[l];
-	  while (! deja_vu(e))
-	    {
-	      std::cout << e << " [" << aa(e) << "] -> ";
-	      mln_invariant(aa(e) != 0 && aa(epar(e)) != 0); // aa is valid
-	      mln_invariant(aa(epar(e)) >= aa(e));           // edge parenthood goes with 'aa' increasing
-	      deja_vu(e) = true;
-	      e = epar(e);
-	    }
-	  std::cout << e << std::endl;
-	}
-      std::cout << std::endl;
+	// Display "region l -> edge e".
 
-      // Display "region l -> edge e".
-
-      std::cout << "region:(edge)  =  ";
-      for (L l = 1; l <= l_max; ++l)
-	std::cout << l << ':' << edge[l] << "  ";
-      std::cout << std::endl
-		<< std::endl;
+	std::cout << "region:(edge)  =  ";
+	for (L l = 1; l <= l_max; ++l)
+	  std::cout << l << ':' << edge[l] << "  ";
+	std::cout << std::endl
+		  << std::endl;
 	
-    } // end of Display.
+      } // end of Display.
 
 
 
@@ -543,7 +545,8 @@ namespace mln
 					  aa_line),
 				   c4().win()),
 		  aa_line);
-      debug::println("aa ext:", aa_ext);
+      if (echo)
+	debug::println("aa ext:", aa_ext);
     }
     
 
@@ -573,18 +576,18 @@ namespace mln
     }
 
 
-//       mln_VAR(aa_basins, aa_ext | (pw::value(w) != 0));
-//       {
-// 	mln_piter(aa_basins_t) p(aa_basins.domain());
-// 	for_all(p)
-// 	{
-// 	  L l = w(p);
-// 	  aa_basins(p) = aa( edge[l] ); // FIXME: was: a[w(p)];
-// 	}
-//       }
+    //       mln_VAR(aa_basins, aa_ext | (pw::value(w) != 0));
+    //       {
+    // 	mln_piter(aa_basins_t) p(aa_basins.domain());
+    // 	for_all(p)
+    // 	{
+    // 	  L l = w(p);
+    // 	  aa_basins(p) = aa( edge[l] ); // FIXME: was: a[w(p)];
+    // 	}
+    //       }
 
 
-//       debug::println("aa ext with basins:", aa_ext);
+    //       debug::println("aa ext with basins:", aa_ext);
 
 
   }

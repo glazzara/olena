@@ -1,3 +1,16 @@
+2009-02-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add some source to get binaries.
+
+	* theo/exec: New directory.
+	* theo/exec/filetype.hh: New.
+	* theo/exec/elementary_gradient.cc: New.
+	* theo/exec/closing_volume.cc: New.
+	* theo/exec/watershed_flooding.cc: New.
+	* theo/esiee/laurent/ismm09/topo_wst.cc (echo): New.
+	(L): Change from 16 to 32 bit.
+	* theo/esiee/laurent/ismm09/pseudo_tree.hh: Use echo.
+
 2009-02-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Call the fill_holes() function.
