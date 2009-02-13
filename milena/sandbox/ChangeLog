@@ -1,3 +1,19 @@
+2009-02-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add source for command executables.
+
+	* theo/igr/dump2pgm.cc: Move and rename as...
+	* theo/exec/dump2pnm.cc: ...this.
+	Update to also handle pbm and ppm.
+	* theo/igr/pgms2dump.cc: Move and rename as...
+	* theo/exec/pnms2dump.cc: ...this.
+	Update to also handle pbm and ppm.
+	* theo/exec/clean_holes.cc: New.
+	* theo/exec/threshold_low.cc: New.
+	* theo/exec/dump2cloud.cc: New.
+	* theo/exec/closing_area.cc: New.
+	* theo/exec/closing_isotropic.cc: New.
+
 2009-02-13  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Call the n_max() function..
