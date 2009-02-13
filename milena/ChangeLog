@@ -1,3 +1,8 @@
+2009-02-13  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add n_max() function to compute n maxima in an array.
+	* mln/labeling/n_max.hh: Implement the n_max() function.
+
 2009-02-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add more doc to ICP.
