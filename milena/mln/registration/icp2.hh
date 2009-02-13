@@ -79,8 +79,9 @@ namespace mln
 
   namespace registration
   {
-        //  std::string method = "compute_on_subsets";
-    std::string method = "compute_on_subset_and_p";
+
+    //FIXME: used for debug purpose. Should be removed later.
+
     using namespace fun::x2x;
 
     /*! Register point in \p c using a function of closest points
@@ -105,7 +106,6 @@ namespace mln
      *
      */
     template <typename P, typename F>
-//    composed< translation<P::dim,float>,rotation<P::dim,float> >
     std::pair<algebra::quat,mln_vec(P)>
     icp(const p_array<P>& P_,
 	const p_array<P>& X,
@@ -120,6 +120,39 @@ namespace mln
 	const F& closest_point);
 
 
+    //FIXME: move to registration.hh
+    /// Call ICP once and return the resulting transformation.
+    template <typename P, typename F>
+    inline
+    composed< translation<P::dim,float>,rotation<P::dim,float> >
+    registration1(const p_array<P>& P_,
+		  const p_array<P>& X);
+
+    //FIXME: move to registration.hh
+    /// Call ICP 10 times.
+    /// Do the first call to ICP with all sites then work on a subset of
+    /// which size is decreasing.
+    /// For each call, sites part of the subset which are too far or too
+    /// close are removed.
+    /// Removed sites are *NOT* reused later in the subset.
+    template <typename P>
+    inline
+    composed< translation<P::dim,float>,rotation<P::dim,float> >
+    registration2(const p_array<P>& P_,
+		  const p_array<P>& X);
+
+    //FIXME: move to registration.hh
+    /// Call ICP 10 times.
+    /// Do the first call to ICP with all sites then work on a subset.
+    /// For each call, a distance criterion is computed on a subset.
+    /// A new subset is computed from the whole set of points according
+    /// to this distance. It will be used in the next call.
+    /// Sites which have been removed can be reintegrated.
+    template <typename P>
+    inline
+    composed< translation<P::dim,float>,rotation<P::dim,float> >
+    registration3(const p_array<P>& P_,
+		  const p_array<P>& X);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -156,7 +189,7 @@ namespace mln
 
 	cp_ima_ = f.cp_ima;
 
-//#ifndef NDEBUG
+#ifndef NDEBUG
 	mln_ch_value(I, bool) debug2(box);
 	data::fill(debug2, false);
 	mln_ch_value(I, value::rgb8) debug(box);
@@ -178,7 +211,7 @@ namespace mln
 	io::pbm::save(slice(debug2,0), "debug2-b.ppm");
 	io::ppm::save(slice(debug,0), "debug.ppm");
 	std::cout << "map saved" << std::endl;
-//#endif
+#endif
       }
 
       mln_site(I) operator()(const mln_site(I)& p) const
@@ -309,15 +342,15 @@ namespace mln
 	}
       }
 
+#ifndef NDEBUG
       std::ostringstream ss1;
       ss1 << "histo_" << prefix << r << ".dat";
-//      debug::histo_plot(h, ss1.str());
       std::cout << h << std::endl;
 
       std::ostringstream ss2;
       ss2 << "out_" << prefix << r << ".ppm";
       io::ppm::save(mln::slice(out,0), ss2.str());
-
+#endif
       std::cout << "Points removed with the whole set and current d_min/d_max: " << removed << std::endl;
 
     }
@@ -352,7 +385,6 @@ namespace mln
       std::cout << "Standard deviation = " << sd << std::endl;
       std::ostringstream ss1;
       ss1 << "histo_" << r << ".dat";
-      debug::histo_plot(h, ss1.str());
       std::cout << h << std::endl;
       std::cout << "d thresholds = " << d_min << ' ' << d_max << std::endl;
     }
@@ -542,7 +574,6 @@ namespace mln
     /// Base version of the ICP algorithm. It is called in other variants.
     template <typename P, typename F>
     inline
-//    composed< translation<P::dim,float>,rotation<P::dim,float> >
     std::pair<algebra::quat,mln_vec(P)>
     icp(const p_array<P>& P_,
 	const p_array<P>& X,
@@ -648,16 +679,18 @@ namespace mln
 
 
 
-    /// Single call to ICP with all sites.
     template <typename P, typename F>
     inline
     composed< translation<P::dim,float>,rotation<P::dim,float> >
-    icp(const p_array<P>& P_,
-	const p_array<P>& X,
-	const F& closest_point)
+    registration1(const p_array<P>& P_,
+		  const p_array<P>& X)
     {
+      trace::entering("mln::registration::registration1");
+
       util::timer t;
       t.start();
+
+      registration::closest_point_with_map<P> closest_point(X);
 
       std::pair<algebra::quat,mln_vec(P)> pair = icp(P_, X, closest_point,
 						     algebra::quat(1,0,0,0),
@@ -670,20 +703,23 @@ namespace mln
       trans_t tqT(pair.second);
       composed<trans_t, rot_t> result(tqT, tqR);
 
+      trace::exiting("mln::registration::registration1");
+
       return result;
     }
 
-    /// Shuffle sites in P_.
-    /// Do the first run with all sites.
-    /// For each run, remove sites which are too far or too close.
+
     template <typename P>
     inline
     composed< translation<P::dim,float>,rotation<P::dim,float> >
-    registration(const p_array<P>& P_,
-		 const p_array<P>& X)
+    registration2(const p_array<P>& P_,
+		  const p_array<P>& X)
     {
+      trace::entering("mln::registration::registration2");
+
+      std::string method = "compute_on_subsets";
+
       registration::closest_point_with_map<P> closest_point(X);
-//  registration::closest_point_basic<point3d> closest_point(X);
 
       util::timer t;
       t.start();
@@ -717,12 +753,9 @@ namespace mln
 				     closest_point, pair, X, removed_set,
 				     r, d_min, d_max, method);
 
-//	P_bak = remove_too_far_sites(out, P_,
-//				     closest_point, pair, X, removed_set,
-//				     r, d_min, d_max, method);
-
-
+#ifndef NDEBUG
 	display_sites_used_in_icp(out, P_bak, P_, X, r, method, pair, "schanges", literal::green);
+#endif
 
 	++r;
 
@@ -730,13 +763,87 @@ namespace mln
       } while (r < 10);
       std::cout << "icp = " << t << std::endl;
 
+#ifndef NDEBUG
       draw_last_run(box, P_bak, removed_set, X, pair.first, pair.second);
+#endif
 
       typedef rotation<3u,float> rot_t;
       rot_t tqR(pair.first);
       typedef translation<3u,float> trans_t;
       trans_t tqT(pair.second);
       composed<trans_t,rot_t> result(tqT, tqR);
+
+      trace::exiting("mln::registration::registration2");
+
+      return result;
+    }
+
+
+    template <typename P>
+    inline
+    composed< translation<P::dim,float>,rotation<P::dim,float> >
+    registration3(const p_array<P>& P_,
+		  const p_array<P>& X)
+    {
+      trace::entering("mln::registration::registration3");
+
+      registration::closest_point_with_map<P> closest_point(X);
+
+      std::string method = "compute_on_subset_and_p";
+
+      util::timer t;
+      t.start();
+
+      // P_bak is shuffled.
+      p_array<P> P_bak = P_;
+
+      unsigned r = 0;
+      std::pair<algebra::quat,mln_vec(P)> pair;
+      pair.first = algebra::quat(1,0,0,0);
+      pair.second = literal::zero;
+      box3d box = geom::bbox(X);
+      box.enlarge(1, 60);
+      box.enlarge(2, 60);
+      image3d<value::rgb8> out(box);
+      p_array<P> removed_set;
+
+      do
+      {
+	std::cout << std::endl << std::endl << "==== New run - " << r << std::endl;
+	pair = icp(P_bak, X, closest_point,
+		   pair.first,
+		   pair.second);
+
+	display_sites_used_in_icp(out, P_bak, P_, X, r, method, pair, "final", literal::blue);
+
+	int d_min, d_max;
+	compute_distance_criteria(P_bak, closest_point, pair, r, d_min, d_max);
+
+	P_bak = remove_too_far_sites(out, P_,
+				     closest_point, pair, X, removed_set,
+				     r, d_min, d_max, method);
+
+#ifndef NDEBUG
+	display_sites_used_in_icp(out, P_bak, P_, X, r, method, pair, "schanges", literal::green);
+#endif
+
+	++r;
+
+	std::cout << "==== End of run" << std::endl;
+      } while (r < 10);
+      std::cout << "icp = " << t << std::endl;
+
+#ifndef NDEBUG
+      draw_last_run(box, P_bak, removed_set, X, pair.first, pair.second);
+#endif
+
+      typedef rotation<3u,float> rot_t;
+      rot_t tqR(pair.first);
+      typedef translation<3u,float> trans_t;
+      trans_t tqT(pair.second);
+      composed<trans_t,rot_t> result(tqT, tqR);
+
+      trace::exiting("mln::registration::registration3");
 
       return result;
     }
