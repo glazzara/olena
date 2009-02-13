@@ -1,3 +1,15 @@
+2009-02-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update ICIP 2009 code.
+
+	* theo/publis,
+	* theo/publis/icip2009: New directories.
+	* theo/tufa_2008/regmin_count.cc: Move...
+	* theo/publis/icip2009/regmin_count.cc: ...here.
+	* theo/tufa_2008/compute_a.cc: Move...
+	* theo/publis/icip2009/compute_a.cc: ...here.
+	Update.
+
 2009-02-13  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Create a sandbox for DICOM support..
