@@ -1,3 +1,10 @@
+2009-02-13  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add unit test for n_max.hh.
+	* mln/labeling/all.hh: Update for n_max.hh
+	* tests/labeling/Makefile.am: Update for n_max.cc
+	* tests/labeling/n_max.cc: Unit test for n_max().
+
 2009-02-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix labeling fill holes and add a 3D ball window.

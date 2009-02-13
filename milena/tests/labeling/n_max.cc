@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,43 +25,46 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LABELING_ALL_HH
-# define MLN_LABELING_ALL_HH
-
-/// \file mln/labeling/all.hh
+/// \file tests/labeling/n_max.cc
 ///
-/// File that includes all labeling routines.
-///
-/// \todo Many files in this directory have to be updated with the
-/// test and dispatch mechanisms.
+/// Test on mln::labeling::n_max.
+
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/value/label_16.hh>
+
+#include <mln/labeling/flat_zones.hh>
+#include <mln/labeling/compute.hh>
+#include <mln/labeling/n_max.hh>
+
+#include <mln/fun/v2b/threshold.hh>
+#include <mln/level/transform.hh>
+
+#include <mln/accu/count.hh>
+
+#include <mln/io/pgm/all.hh>
+
+#include "tests/data.hh"
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
+  using value::label_16;
 
-  /// Namespace of labeling routines.
-  namespace labeling
-  {
-    /// Implementation namespace of labeling namespace.
-    namespace impl {
+  image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/lena.pgm");
 
-      /// Generic implementation namespace of labeling namespace.
-      namespace generic {}
+  image2d<bool> threshold = level::transform(lena, fun::v2b::threshold<int_u8>(100));
+  label_16 nlabels;
+  image2d<label_16> labels = labeling::flat_zones(threshold, c4(), nlabels);
+  accu::count<int_u8> a_;
 
-    }
-  }
+  util::array<unsigned> a = labeling::compute(a_, threshold, labels, nlabels);
+  util::array<label_16> arr_big = labeling::n_max<label_16>(a, 3);
+
+  mln_assertion(arr_big[1] == 4);
+  mln_assertion(arr_big[2] == 6);
+  mln_assertion(arr_big[3] == 323);
 }
-
-# include <mln/labeling/background.hh>
-# include <mln/labeling/blobs.hh>
-# include <mln/labeling/compute.hh>
-# include <mln/labeling/fill_holes.hh>
-# include <mln/labeling/flat_zones.hh>
-# include <mln/labeling/foreground.hh>
-# include <mln/labeling/level.hh>
-# include <mln/labeling/n_max.hh>
-# include <mln/labeling/regional_maxima.hh>
-# include <mln/labeling/regional_minima.hh>
-
-
-#endif // ! MLN_LABELING_ALL_HH

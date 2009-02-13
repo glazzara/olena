@@ -10,6 +10,7 @@ check_PROGRAMS =				\
   flat_zones					\
   foreground					\
   level						\
+  n_max						\
   regional_maxima				\
   regional_minima 				\
   relabel
@@ -21,6 +22,7 @@ fill_holes_SOURCES = fill_holes.cc
 flat_zones_SOURCES = flat_zones.cc
 foreground_SOURCES = foreground.cc
 level_SOURCES = level.cc
+n_max_SOURCES = n_max.cc
 regional_maxima_SOURCES = regional_maxima.cc
 regional_minima_SOURCES = regional_minima.cc
 relabel_SOURCES = relabel.cc
