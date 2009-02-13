@@ -53,6 +53,7 @@
 #include <mln/labeling/blobs.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/labeling/fill_holes.hh>
+#include <mln/labeling/n_max.hh>
 
 #include <mln/level/compare.hh>
 #include <mln/level/transform.hh>
@@ -119,67 +120,13 @@ igr(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_, L& nlabels)
   initialize(big_second, input);
   data::fill(big_second, false);
 
-//  mln_ch_value(I, bool) in_bool;
-//  initialize(in_bool, input);
-//  data::fill(in_bool, false);
-
-  unsigned big_third_count = 0;
-  unsigned big_third_lbl = 0;
-  unsigned big_second_count = 0;
-  unsigned big_second_lbl = 0;
-  unsigned big_first_count = 0;
-  unsigned big_first_lbl = 0;
-  for (int i = 0; i < a.nelements(); ++i)
-  {
-    if (a[i] > big_third_count)
-    {
-      big_third_count = a[i];
-      big_third_lbl = i;
-    }
-    if (big_third_count > big_second_count)
-    {
-      int swap = big_second_count;
-      int swap_lbl = big_second_lbl;
-      big_second_count = big_third_count;
-      big_second_lbl = big_third_lbl;
-      big_third_count = swap;
-      big_third_lbl = swap_lbl;
-    }
-    if (big_second_count > big_first_count)
-    {
-      int swap = big_first_count;
-      int swap_lbl = big_first_lbl;
-      big_first_count = big_second_count;
-      big_first_lbl = big_second_lbl;
-      big_second_count = swap;
-      big_second_lbl = swap_lbl;
-    }
-  }
-  data::fill((big_second | (pw::value(labels) == big_second_lbl)).rw(), true);
-  mln_VAR(big_third, threshold | pw::value(labels) == big_third_lbl);
-//  data::fill((in_bool | (pw::value(labels) == big_second_lbl || pw::value(labels) == big_third_lbl)).rw(), true);
+  util::array<L> arr_big = labeling::n_max<L>(a, 3);
+  data::fill((big_second | (pw::value(labels) == arr_big[2])).rw(), true);
+  mln_VAR(big_third, threshold | pw::value(labels) == arr_big[3]);
 
   // Fill holes.
 
   big_second = labeling::fill_holes(big_second, nbh, nlabels);
-//  box<mln_site(I)> h_box = geom::bbox((in_bool | pw::value(labels) == big_second_lbl).domain());
-  //h_box.enlarge(1);
-
-  //mln_ch_value(I, L) h_lbls = labeling::background(big_second /*in_bool | h_box*/, nbh, nlabels);
-  //util::array<unsigned> arr_holes = labeling::compute(a_, big_second /*in_bool | h_box*/, h_lbls, nlabels);
-  //int bg_count = 0;
-  //int bg_lbl = 0;
-  //for (int i = 0; i < arr_holes.nelements(); ++i)
-  //{
-  //  if (arr_holes[i] > bg_count)
-  //  {
-  //    bg_count = a[i];
-  //    bg_lbl = i;
-  //  }
-  //}
-  //data::fill((/*(*/big_second /*in_bool | h_box).rw()*/ | pw::value(h_lbls) != bg_lbl).rw(), true);
-
-  /*return level::transform(h_lbls, L_to_int_u8<label_16>());*/
 
   // Gradient.
 
