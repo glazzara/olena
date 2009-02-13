@@ -88,13 +88,13 @@ namespace mln
 	/// \{
 	void init();
 
+	void take();
 	void take(const argument& s);
+	void take(const util::pix<I>& px);
 	void take(const card<I>& other);
 
-	void take(const util::pix<I>& px);
-
-	void take();
 	void take_as_init();
+	void take_as_init(const util::pix<I>& px);
 	using super_::take_as_init;
 	/// \}
 
@@ -129,20 +129,22 @@ namespace mln
 	c_ = 0;
       }
 
+      // take.
+
+      template <typename I>
+      inline
+      void
+      card<I>::take()
+      {
+	++c_;
+      }
+
       template <typename I>
       inline
       void
       card<I>::take(const argument&)
       {
 	take();
-      }
-
-      template <typename I>
-      inline
-      void
-      card<I>::take(const card<I>& other)
-      {
-	c_ += other.c_;
       }
 
       template <typename I>
@@ -156,10 +158,12 @@ namespace mln
       template <typename I>
       inline
       void
-      card<I>::take()
+      card<I>::take(const card<I>& other)
       {
-	++c_;
+	c_ += other.c_;
       }
+
+      // take_as_init.
 
       template <typename I>
       inline
@@ -168,6 +172,14 @@ namespace mln
       {
 	init();
 	take();
+      }
+
+      template <typename I>
+      inline
+      void
+      card<I>::take_as_init(const util::pix<I>&)
+      {
+	take_as_init();
       }
 
       template <typename I>

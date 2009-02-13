@@ -3,8 +3,12 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  card
+  card						\
+  sum						\
+  volume
 
 card_SOURCES = card.cc
+sum_SOURCES = sum.cc
+volume_SOURCES = volume.cc
 
 TESTS = $(check_PROGRAMS)

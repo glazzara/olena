@@ -1,5 +1,18 @@
 2009-02-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add the morphological sum attribute.
+
+	* mln/morpho/attribute/sum.hh: New.
+	* mln/morpho/attribute/volume.hh (area): New .
+	* mln/morpho/attribute/card.hh: Layout.
+	(take_as_init): New overload for util::pix.
+	* mln/morpho/attribute/all.hh: Update.
+	* tests/morpho/attribute/sum.cc: New.
+	* tests/morpho/attribute/volume.cc: New.
+	* tests/morpho/attribute/Makefile.am: Update.
+
+2009-02-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add a label wrapper in fun::l2l.
 
 	* mln/fun/l2l/wrap.hh: New.

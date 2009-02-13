@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,25 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_ATTRIBUTE_VOLUME_HH
-# define MLN_MORPHO_ATTRIBUTE_VOLUME_HH
+#ifndef MLN_MORPHO_ATTRIBUTE_SUM_HH
+# define MLN_MORPHO_ATTRIBUTE_SUM_HH
 
-/// \file mln/morpho/attribute/volume.hh
+/// \file mln/morpho/attribute/sum.hh
 ///
-/// Define an accumulator that computes the volume of a
-/// component.
+/// Define an accumulator that computes the sum of component values.
 
 # include <mln/accu/internal/base.hh>
-# include <mln/math/diff_abs.hh>
+
+# include <mln/trait/value_.hh>      // For mln_sum.
+# include <mln/value/builtin/all.hh> // In the case of summing builtin values.
+# include <mln/literal/zero.hh>      // For initialization.
 
 
 namespace mln
 {
 
+
   // Forward declaration.
+
   namespace morpho {
     namespace attribute {
-      template <typename I> class volume;
+      template <typename I, typename S> class sum;
     }
   }
 
@@ -54,8 +57,8 @@ namespace mln
   namespace trait
   {
 
-    template <typename I>
-    struct accumulator_< morpho::attribute::volume<I> >
+    template <typename I, typename S>
+    struct accumulator_< morpho::attribute::sum<I,S> >
     {
       typedef accumulator::has_untake::no    has_untake;
       typedef accumulator::has_set_value::no has_set_value;
@@ -72,146 +75,120 @@ namespace mln
     namespace attribute
     {
 
-      /// Volume accumulator class.
-      ///
-      /// The parameter \p I is the image type on which the accumulator
-      /// of pixels is built.
-      template <typename I>
-      struct volume
-	: public mln::accu::internal::base< unsigned , volume<I> >
+      /// Suminality accumulator class.
+
+      template <typename I, typename S = mln_sum(mln_value(I))>
+      class sum : public mln::accu::internal::base< S, sum<I,S> >
       {
+	typedef mln::accu::internal::base< S, sum<I> > super_;
+      public:
+
 	typedef mln_value(I) argument;
 
-	volume();
+	sum();
 
 	/// Manipulators.
 	/// \{
 	void init();
 
-	void take(const mln_value(I)& v);
+	void take(const argument& v);
 	void take(const util::pix<I>& px);
-	void take(const volume<I>& other);
+	void take(const sum<I,S>& other);
 
-	void take_as_init(const mln_value(I)& v);
+	void take_as_init(const argument& v);
 	void take_as_init(const util::pix<I>& px);
 	/// \}
 
 	/// Get the value of the accumulator.
-	unsigned to_result() const;
+	S to_result() const;
 
 	/// Check whether this accu is able to return a result.
-	/// Always true here.
+	/// Return always true.
 	bool is_valid() const;
 
-	/// Give the area.
-	unsigned area() const;
-
       protected:
-	/// The current level.
-	mln_value(I) level_;
-	/// The area of the component.
-	unsigned area_;
-	/// The volume of the component.
-	unsigned volume_;
+
+	/// The sum value.
+	S s_;
       };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename I>
+      template <typename I, typename S>
       inline
-      volume<I>::volume()
+      sum<I,S>::sum()
       {
 	init();
       }
 
-      template <typename I>
+      template <typename I, typename S>
       inline
       void
-      volume<I>::init()
+      sum<I,S>::init()
       {
-	volume_ = 0;
+	s_ = literal::zero;
       }
 
-      template <typename I>
+      // take.
+
+      template <typename I, typename S>
       inline
       void
-      volume<I>::take(const mln_value(I)& v)
+      sum<I,S>::take(const argument& v)
       {
-	mln_invariant(volume_ != mln_max(unsigned));
-	if (! is_valid())
-	  {
-	    take_as_init(v);
-	    return;
-	  }
-	++area_;
-	volume_ += 1 + math::diff_abs(v, level_);
-	level_ = v;
+	s_ += v;
       }
 
-      template <typename I>
+      template <typename I, typename S>
       inline
       void
-      volume<I>::take(const util::pix<I>& px)
+      sum<I,S>::take(const util::pix<I>& px)
       {
-	mln_invariant(volume_ != mln_max(unsigned));
 	take(px.v());
       }
 
-      template <typename I>
+      template <typename I, typename S>
       inline
       void
-      volume<I>::take(const volume<I>& other)
+      sum<I,S>::take(const sum<I,S>& other)
       {
-	mln_invariant(volume_ != mln_max(unsigned));
-	area_ += other.area_;
-	volume_ +=
-	  other.volume_  +
-	  other.area_ * math::diff_abs(other.level_, level_);
-	// level_ do not change.
+	s_ += other.s_;
       }
 
-      template <typename I>
+      // take_as_init.
+
+      template <typename I, typename S>
       inline
       void
-      volume<I>::take_as_init(const mln_value(I)& v)
+      sum<I,S>::take_as_init(const argument& v)
       {
-	level_ = v;
-	area_ = 1;
-	volume_ = 1;
+	s_ = v;
       }
 
-      template <typename I>
+      template <typename I, typename S>
       inline
       void
-      volume<I>::take_as_init(const util::pix<I>& px)
+      sum<I,S>::take_as_init(const util::pix<I>& px)
       {
 	take_as_init(px.v());
       }
 
-      template <typename I>
+      template <typename I, typename S>
       inline
-      unsigned
-      volume<I>::to_result() const
+      S
+      sum<I,S>::to_result() const
       {
-	return volume_;
+	return s_;
       }
 
-      template <typename I>
-      inline
-      unsigned
-      volume<I>::area() const
-      {
-	return area_;
-      }
-
-      template <typename I>
+      template <typename I, typename S>
       inline
       bool
-      volume<I>::is_valid() const
+      sum<I,S>::is_valid() const
       {
-	return volume_ != 0;
+	return true;
       }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -223,4 +200,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_ATTRIBUTE_VOLUME_HH
+#endif // ! MLN_MORPHO_ATTRIBUTE_SUM_HH

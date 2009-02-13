@@ -25,29 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_ATTRIBUTE_ALL_HH
-# define MLN_MORPHO_ATTRIBUTE_ALL_HH
-
-/// \file mln/morpho/attribute/all.hh
+/// \file tests/morpho/attribute/volume.cc
 ///
-/// File that includes all attributes used in mathematical morphology.
+/// Test on mln::morpho::attribute::volume.
+
+#include <mln/core/image/image2d.hh>
+#include <mln/morpho/attribute/volume.hh>
 
 
-namespace mln
+int main()
 {
-  namespace morpho
-  {
+  using namespace mln;
 
-    /// Namespace of attributes used in mathematical morphology.
-    namespace attribute {}
+  typedef image2d<int> I;
+  I ima(3, 3);
 
-  }
+  util::pix<I> px(ima, point2d(0,0));
+
+  morpho::attribute::volume<I> v;
+  v.take(px);
+  mln_assertion(v == 1);
 }
-
-
-# include <mln/morpho/attribute/card.hh>
-# include <mln/morpho/attribute/sum.hh>
-# include <mln/morpho/attribute/volume.hh>
-
-
-#endif // ! MLN_MORPHO_ATTRIBUTE_ALL_HH
