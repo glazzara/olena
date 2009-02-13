@@ -1,3 +1,14 @@
+2009-02-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix labeling fill holes and add a 3D ball window.
+
+	* mln/labeling/fill_holes.hh: Fix.
+	* mln/labeling/all.hh: Update.
+	* tests/labeling/fill_holes.cc: New.
+	* tests/labeling/Makefile.am: Update.
+	* mln/win/ball3d.hh: New.
+	* mln/win/all.hh: Update.
+
 2009-02-13  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add n_max() function to compute n maxima in an array.

@@ -36,9 +36,8 @@
 # include <mln/labeling/background.hh>
 # include <mln/labeling/compute.hh>
 
+# include <mln/core/image/image_if.hh>
 # include <mln/accu/count.hh>
-
-# include <mln/value/int_u8.hh>
 
 
 namespace mln
@@ -81,19 +80,20 @@ namespace mln
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(nbh).is_valid());
 
-      using value::int_u8;
-
       mln_ch_value(I, bool) output;
       initialize(output, input);
       data::fill(output, false);
 
-      accu::count<int_u8> a_;
       mln_ch_value(I, L) lbls = labeling::background(input, nbh, nlabels);
+
+      accu::count<mln_value(I)> a_;
       util::array<unsigned> arr = labeling::compute(a_, input, lbls, nlabels);
+
       int bg_count = 0;
       int bg_lbl = 0;
 
-      for (int i = 0; i < arr.nelements(); ++i)
+      // We start at 1 to ignore the object.
+      for (int i = 1; i < arr.nelements(); ++i)
       {
 	if (arr[i] > bg_count)
 	{
@@ -102,7 +102,7 @@ namespace mln
 	}
       }
 
-      data::fill((output | pw::value(lbls) != bg_lbl).rw(), true);
+      data::fill((output | (pw::value(lbls) != bg_lbl)).rw(), true);
 
       trace::exiting("labeling::fill_holes");
       return output;

@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA, 2009 Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,46 +25,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WIN_ALL_HH
-# define MLN_WIN_ALL_HH
-
-/// \file mln/win/all.hh
+/// \file tests/labeling/fill_holes.cc
 ///
-/// File that includes all win-related routines.
+/// Test on mln::labeling::fill_holes.
+
+#include <mln/core/image/image2d.hh>
+#include <mln/io/pbm/load.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/labeling/fill_holes.hh>
+#include <mln/value/label_8.hh>
+
+#include <mln/debug/println.hh>
+#include <mln/io/pbm/save.hh>
+
+#include "tests/data.hh"
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of image processing routines related to win.
-  namespace win {}
-
+  image2d<bool> pic = io::pbm::load(MLN_IMG_DIR "/picasso.pbm");
+  debug::println(pic);
+  value::label_8 n;
+  image2d<bool> out = labeling::fill_holes(pic, c4(), n);
+  debug::println(out);
+  io::pbm::save(out, "out.pbm");
+//   mln_assertion(n == 33);
 }
-
-
-// Types.
-
-# include <mln/win/backdiag2d.hh>
-# include <mln/win/ball3d.hh>
-# include <mln/win/cube3d.hh>
-# include <mln/win/cuboid3d.hh>
-# include <mln/win/diag2d.hh>
-# include <mln/win/disk2d.hh>
-# include <mln/win/hline2d.hh>
-# include <mln/win/line.hh>
-# include <mln/win/multiple.hh>
-# include <mln/win/multiple_size.hh>
-# include <mln/win/octagon2d.hh>
-# include <mln/win/rectangle2d.hh>
-# include <mln/win/segment1d.hh>
-# include <mln/win/vline2d.hh>
-
-// Routines.
-
-# include <mln/win/diff.hh>
-# include <mln/win/shift.hh>
-# include <mln/win/sym.hh>
-
-
-
-#endif // ! MLN_WIN_ALL_HH
