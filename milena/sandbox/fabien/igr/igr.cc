@@ -41,7 +41,7 @@
 #include <mln/io/cloud/all.hh>
 #include <mln/io/dump/all.hh>
 
-#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/alias/neigyyhb2d.hh>
 #include <mln/core/alias/neighb3d.hh>
 #include <mln/labeling/flat_zones.hh>
 #include <mln/labeling/background.hh>

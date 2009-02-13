@@ -1,3 +1,10 @@
+2009-02-13  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Create a sandbox for DICOM support..
+	* fabien/dicom/load.hh: Load implementation.
+	* fabien/dicom/save.hh: Save implementation.
+	* fabien/igr/igr.cc: Minor fixes.
+
 2009-02-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add source for command executables.
