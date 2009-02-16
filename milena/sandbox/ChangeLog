@@ -1,3 +1,13 @@
+2009-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update Igr's code.
+
+	* lazzara/irm/hsl_grad_and_wst.cc,
+	* lazzara/irm/irm_seg_with_mm_and_rag.cc,
+	* lazzara/irm/wst_rag.cc,
+	* lazzara/irm/wst_rag_hsl.cc: revamp and make use of make::graph.
+
+
 2009-02-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Finalize ICIP 2009 code.

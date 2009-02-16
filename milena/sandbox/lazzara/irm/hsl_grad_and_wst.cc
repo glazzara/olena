@@ -1,18 +1,22 @@
 #include <mln/essential/2d.hh>
-#include <mln/value/hsl.hh>
+
 #include <mln/core/image/violent_cast_image.hh>
+
 #include <mln/extract/all.hh>
+
 #include <mln/value/label_16.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/morpho/closing_area.hh>
-#include <mln/io/dump/save.hh>
+#include <mln/value/hsl.hh>
 
-mln::value::int_u8 foo(unsigned u)
-{
-  return u == 0 ?
-    0 : // wshed line
-    1 + (u - 1) % 255; // basin
-}
+#include <mln/morpho/closing_area.hh>
+#include <mln/morpho/closing_volume.hh>
+
+#include <mln/io/dump/save.hh>
+#include <mln/io/ppm/all.hh>
+
+#include <mln/labeling/mean_values.hh>
+
+#include <mln/fun/l2l/wrap.hh>
 
 
 namespace mln
@@ -33,9 +37,7 @@ namespace mln
 
 }
 
-
-
-int main(int, char *argv[])
+int main(int argc, char *argv[])
 {
   using namespace mln;
 
@@ -48,16 +50,48 @@ int main(int, char *argv[])
   typedef image2d<rgb8> I;
   typedef image2d<hsl_f> J;
 
+  if (argc < 3)
+  {
+    std::cout << "Usage: " << argv[0] << " <ima.ppm> <closure_lambda>"
+	      << std::endl;
+  }
+
   I input_;
   io::ppm::load(input_, argv[1]);
   J input = level::convert(hsl_f(), input_);
+  io::ppm::save(level::transform(input, hsl2rgb()), "input-hsl.ppm");
 
-  std::cout << "input_rgb(p) = " << input_(point2d(310,0)) << " - input_hsl(p) = " << input(point2d(310,0))
-	    << " hsl2rgb(p) = " << hsl2rgb()(input(point2d(310,0)))
-	    << std::endl;
-  std::cout << "input_rgb(p) = " << input_(point2d(311,0)) << " - input_hsl(p) = " << input(point2d(311,0))
-	    << " hsl2rgb(p) = " << hsl2rgb()(input(point2d(311,0)))
-	    << std::endl;
+  {
+    I tmp = level::transform(input, hsl2rgb());
+
+    image2d<int_u8> grad_hue;
+    initialize(grad_hue, input);
+    data::fill(grad_hue, extract::blue(tmp));
+    image2d<int_u8> grad_sat;
+    initialize(grad_sat, input);
+    data::fill(grad_sat, extract::green(tmp));
+    image2d<int_u8> grad_lum;
+    initialize(grad_lum, input);
+    data::fill(grad_lum, extract::blue(tmp));
+
+
+    grad_hue = morpho::gradient(grad_hue, win_c4p());
+    io::pgm::save(grad_hue, "hsl2rgb_grad_hue.pgm");
+
+    grad_sat = morpho::gradient(grad_sat, win_c4p());
+    io::pgm::save(grad_sat, "hsl2rgb_grad_sat.pgm");
+
+    grad_lum = morpho::gradient(grad_lum, win_c4p());
+    io::pgm::save(grad_lum, "hsl2rgb_grad_lum.pgm");
+
+    image2d<value::int_u8> grad;
+    initialize(grad, grad_hue);
+    mln_piter_(image2d<value::int_u8>) p(grad.domain());
+    for_all(p)
+      grad(p) = math::max(grad_hue(p), math::max(grad_sat(p), grad_lum(p)));
+    io::pgm::save(grad, "hsl2rgb_grad_rgb.pgm");
+
+  }
 
   /// Compute the gradient on each component of the HSL image.
   /// Then keep the max values in the three images.
@@ -70,9 +104,15 @@ int main(int, char *argv[])
   image2d<float> grad_lum;
   initialize(grad_lum, input);
   data::fill(grad_lum, extract::lum(input));
+
   grad_hue = morpho::gradient(grad_hue, win_c4p());
+//  io::pgm::save(grad_hue, "hsl2rgb_grad_hue.pgm");
+
   grad_sat = morpho::gradient(grad_sat, win_c4p());
+//  io::pgm::save(grad_sat, "hsl2rgb_grad_sat.pgm");
+
   grad_lum = morpho::gradient(grad_lum, win_c4p());
+//  io::pgm::save(grad_lum, "hsl2rgb_grad_lum.pgm");
 
   image2d<value::int_u8> grad;
   initialize(grad, grad_hue);
@@ -82,14 +122,19 @@ int main(int, char *argv[])
   io::pgm::save(grad, "hsl2rgb_grad.pgm");
 
   image2d<int_u8> clo = morpho::closing_area(grad, c4(), 10);
+//  image2d<int_u8> clo = morpho::closing_volume(grad, c4(), atoi(argv[2]));
   io::pgm::save(clo, "hsl2rgb_clo_a100.pgm");
 
   label_16 nbasins;
   image2d<label_16> wshed = morpho::meyer_wst(clo, c4(), nbasins);
   io::dump::save(wshed, "hsl2rgb_wshed.dump");
   std::cout << "nbasins = " << nbasins << std::endl;
-  io::pgm::save(level::transform(wshed, convert::to_fun(foo)),
+
+  io::pgm::save(level::transform(wshed, fun::l2l::wrap<int_u8>()),
 		"hsl2rgb_wshed.pgm");
+  io::ppm::save(labeling::mean_values(level::transform(input, hsl2rgb()), wshed, nbasins),
+		"hsl2rgb_wshed_mean_colors.ppm");
+
 
   I out = level::transform(input, hsl2rgb());
   io::ppm::save(out, "hsl2rgb_out.ppm");

@@ -17,9 +17,9 @@
 #include <mln/core/image/line_graph_elt_neighborhood.hh>
 #include <mln/morpho/elementary/dilation.hh>
 #include <mln/labeling/mean_values.hh>
-
+#include <mln/extension/adjust_fill.hh>
 #include <mln/extract/all.hh>
-
+#include <mln/make/region_adjacency_graph.hh>
 
 // Given a color image and a wshed image, computes the component graph.
 // Vertex values are computed thanks to a RGB image.
@@ -27,71 +27,20 @@
 namespace mln
 {
 
-
-  template <typename I, typename N>
-  util::graph
-  make_graph(const I& w, const N& nbh, const mln_value(I)& nbasins)
-  {
-
-    image2d<bool> adj(box2d(nbasins.next(), nbasins.next()));
-    data::fill(adj, false);
-
-    typedef mln_value(I) L;
-    L l1, l2;
-    mln_piter(I) p(w.domain());
-    mln_niter(N) n(nbh, p);
-    for_all(p)
-    {
-      if (w(p) != 0u)
-	continue;
-      // p is in the watershed line.
-      l1 = l2 = 0;
-      for_all(n)
-	if (w.has(n) && w(n) != 0u)
-	{
-	  if (l1 == 0u) // First label to be stored.
-	    l1 = w(n);
-	  else
-	    if (w(n) != l1) // Useless: && l2 == 0)
-	    { // Second label to be stored.
-	      mln_invariant(l2 == 0u);
-	      l2 = w(n);
-	      break;
-	    }
-	}
-      if (l2 == 0u || l1 == 0u)
-	continue;
-      if (l2 < l1)
-	std::swap(l1, l2);
-
-      // adjacency l1 l2
-      adj(point2d(l1,l2)) = true;
-      adj(point2d(l2,l1)) = true;
-    }
-
-    // Construct graph.
-    util::graph g;
-    g.add_vertices(nbasins.next());
-    for (unsigned i = 1; i < geom::nrows(adj); ++i)
-      for (unsigned j = 1; j < i; ++j)
-	if (adj(point2d(i,j)))
-	  g.add_edge(i, j);
-
-    return g;
-  }
-
-
-
-
   template <typename V>
   value::int_u8 dist(const V& c1, const V& c2)
   {
-    unsigned d = 0;
-    d += (math::diff_abs(c1.red(), c2.red()) + 2) / 3;
-    d += (math::diff_abs(c1.green(), c2.green()) + 2) / 3;
-    d += (math::diff_abs(c1.blue(), c2.blue()) + 2) / 3;
-    if (d > 255)
-      d = 255;
+    unsigned d = math::diff_abs(c1.red(), c2.red());
+    unsigned d_;
+    d_ = math::diff_abs(c1.green(), c2.green());
+
+    if (d_ > d)
+      d = d_;
+
+    d_ = math::diff_abs(c1.blue(), c2.blue());
+
+    if (d_ > d)
+      d = d_;
     return d;
   }
 
@@ -218,12 +167,12 @@ namespace mln
   image2d<mln_value(I)>
   make_debug_graph_image(const I& input,
 			 const V& ima_v, const E& ima_e,
-			 unsigned box_size)
+			 unsigned box_size, const value::rgb8& bg)
   {
     image2d<mln_value(I)> ima;
     initialize(ima, input);
 
-    data::fill(ima, literal::white);
+    data::fill(ima, bg);
     debug::draw_graph(ima, ima_v.domain(),
 		      pw::cst(mln_value(I)(literal::green)),
 		      edge_to_color<E, mln_value(I)>(ima_e));
@@ -258,7 +207,7 @@ int main(int argc, char *argv[])
   typedef image2d<rgb8> I;
   typedef image2d<label_16> J;
 
-  if (argc < 5)
+  if (argc < 6)
   {
     std::cout << argv[0] << " <input.ppm> <wsh-label16.dump> <nbasins> <box_size> <dist_max>"
 			 << std::endl << std::endl;
@@ -282,15 +231,17 @@ int main(int argc, char *argv[])
   label_16 nbasins = atoi(argv[3]);
   std::cout << "nbasins = " << nbasins << std::endl;
 
-  util::graph g = make_graph(vol, c4(), nbasins);
+  util::graph g = make::graph(vol, c4(), nbasins);
 
   // Compute value distances with a RGB image.
   mln_VAR(ima_v, make_vertex_graph_image(g, input, vol, nbasins));
   mln_VAR(ima_e, make_edge_graph_image(ima_v, g));
 
   //DEBUG
-//  io::ppm::save(make_debug_graph_image(input, ima_v, ima_e, box_size),
-//				       "wst_rag_graph_image.ppm");
+  io::ppm::save(make_debug_graph_image(input, ima_v, ima_e, box_size, literal::white),
+				       "wst_rag_graph_image_white.ppm");
+  io::ppm::save(make_debug_graph_image(input, ima_v, ima_e, box_size, literal::black),
+				       "wst_rag_graph_image_black.ppm");
 
 
   mln_piter_(ima_e_t) e(ima_e.domain());
@@ -313,16 +264,17 @@ int main(int argc, char *argv[])
   for (unsigned i = 0; i < parent.nelements(); ++i)
   {
     unsigned p = find_root(parent, i);
+    mln_assertion(parent[p] == find_root(parent, i));
     if (new_label[p] == 0)
       new_label[p] = nbasins2++;
     f(i) = new_label[p];
   }
-  mln_invariant(f(0) == 0);
+  mln_invariant(f(0) == 0u);
   --nbasins2; //nbasins2 does not count the basin with label 0.
   std::cout << "nbasins2 = " << nbasins2 << std::endl;
 
   J vol2 = level::transform(vol, f);
-  util::graph g2 = make_graph(vol2, c4(), nbasins2);
+  util::graph g2 = make::graph(vol2, c4(), nbasins2);
   // Compute value distances with a RGB image.
   mln_VAR(ima_v2, make_vertex_graph_image(g2, input, vol2, nbasins2));
   mln_VAR(ima_e2, make_edge_graph_image(ima_v2, g2));
@@ -336,6 +288,8 @@ int main(int argc, char *argv[])
 
   io::ppm::save(labeling::mean_values(input, vol2, nbasins2),
 		"wst_rag_mean_colors.ppm");
-  io::ppm::save(make_debug_graph_image(input, ima_v2, ima_e2, box_size),
-		"wst_rag_graph_image2.ppm");
+  io::ppm::save(make_debug_graph_image(input, ima_v2, ima_e2, box_size, literal::white),
+		"wst_rag_graph_image2_white.ppm");
+  io::ppm::save(make_debug_graph_image(input, ima_v2, ima_e2, box_size, literal::black),
+		"wst_rag_graph_image2_black.ppm");
 }
