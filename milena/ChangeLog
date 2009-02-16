@@ -1,3 +1,16 @@
+2009-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix make::graph and add make::region_adjacency_graph.
+
+	* mln/make/graph.hh: use an adjacency matrix and a neighborhood.
+
+	* mln/make/region_adjacency_graph.hh: make a graph from a watershed
+	image.
+
+	* tests/make/Makefile.am,
+	* tests/make/graph.cc,
+	* tests/make/region_adjacency_graph.cc: add new tests.
+
 2009-02-13  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add unit test for n_max.hh.

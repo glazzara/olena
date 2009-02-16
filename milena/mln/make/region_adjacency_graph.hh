@@ -1,5 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_GRAPH_HH
-# define MLN_MAKE_GRAPH_HH
+#ifndef MLN_MAKE_REGION_ADJACENCY_GRAPH_HH
+# define MLN_MAKE_REGION_ADJACENCY_GRAPH_HH
 
-/// \file mln/make/graph.hh
+/// \file mln/make/region_adjacency_graph.hh
 ///
-/// Create a graph from an influence zone image.
+/// Create a region_adjacency_graph from a watershed image.
 ///
-/// \sa transform::influence_zone_geodesic.
+/// \sa morpho::meyer_wst.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -48,16 +47,17 @@ namespace mln
   namespace make
   {
 
-    /// Create a graph from an influence zone image.
+    /// Create a region adjacency graph from a watershed image.
     ///
-    /// \param[in] iz influence zone image.
-    /// \param[in] nlabels number of influence zone in \p iz.
+    /// \param[in] wshd watershed image.
+    /// \param[in] nbasins number of influence zone in \p wshd.
     ///
     /// \return util::graph Graph based on the adjacency of the influence zones.
     template <typename I, typename N>
     util::graph
-    graph(const Image<I>& iz_, const Neighborhood<N>& nbh,
-	  mln_value(I) nlabels);
+    region_adjacency_graph(const Image<I>& wshd_,
+			   const Neighborhood<N>& nbh,
+			   mln_value(I) nbasins);
 
 
 
@@ -69,12 +69,13 @@ namespace mln
 
       template <typename I, typename N>
       void
-      graph_tests(const Image<I>& iz, const Neighborhood<N>& nbh,
-		  mln_value(I))
+      region_adjacency_graph_tests(const Image<I>& wshd,
+				   const Neighborhood<N>& nbh,
+				   mln_value(I))
       {
-	mln_precondition(exact(iz).is_valid());
+	mln_precondition(exact(wshd).is_valid());
 	mln_precondition(exact(nbh).is_valid());
-	(void) iz;
+	(void) wshd;
 	(void) nbh;
       }
 
@@ -89,50 +90,62 @@ namespace mln
 
 	template <typename I, typename N>
 	util::graph
-	graph(const Image<I>& iz_, const Neighborhood<N>& nbh_,
-	      mln_value(I) nlabels)
+	region_adjacency_graph(const Image<I>& wshd_,
+			       const Neighborhood<N>& nbh_,
+			       mln_value(I) nbasins)
 	{
-	  trace::entering("make::impl::generic::graph");
+	  trace::entering("make::impl::generic::region_adjacency_graph");
 
-	  internal::graph_tests(iz_, nbh_, nlabels);
-	  const I& iz = exact(iz_);
+	  internal::region_adjacency_graph_tests(wshd_, nbh_, nbasins);
+	  const I& wshd = exact(wshd_);
 	  const N& nbh = exact(nbh_);
 
-	  mln::image2d<bool> adj(mln::box2d(nlabels.next(), nlabels.next()));
-          data::fill(adj, false);
+	  mln::image2d<bool> adj(mln::box2d(nbasins.next(), nbasins.next()));
+	  data::fill(adj, false);
+	  extension::adjust_fill(wshd, nbh, 0u);
 
 	  typedef mln_value(I) L;
-	  mln_piter(I) p(iz.domain());
+	  L l1, l2;
+	  mln_piter(I) p(wshd.domain());
 	  mln_niter(N) n(nbh, p);
 	  for_all(p)
 	  {
-	    L l1 = iz(p);
+	    if (wshd(p) != 0u)
+	      continue;
+	    // p is in the watershed line.
+	    l1 = l2 = 0;
 	    for_all(n)
-	    {
-	      if (iz.domain().has(n))
+	      if (wshd.has(n) && wshd(n) != 0u)
 	      {
-		L l2 = iz(n);
-		if (iz(n) != iz((p)))
-		{
-		  // l2 is adjacent to l1
-		  if (l2 < l1)
-		    adj(point2d(l1,l2)) = true;
-		  else
-		    adj(point2d(l2,l1)) = true;
-		}
+		if (l1 == 0u) // First label to be stored.
+		  l1 = wshd(n);
+		else
+		  if (wshd(n) != l1) // Useless: && l2 == 0)
+		  { // Second label to be stored.
+		    mln_invariant(l2 == 0u);
+		    l2 = wshd(n);
+		    break;
+		  }
 	      }
-	    }
+	    if (l2 == 0u || l1 == 0u)
+	      continue;
+	    if (l2 < l1)
+	      std::swap(l1, l2);
+
+	    // adjacency l1 l2
+	    adj(point2d(l2,l1)) = true;
 	  }
 
 	  // Construct graph.
 	  util::graph g;
-	  g.add_vertices(nlabels.next());
-	  for (unsigned i = 0; i < geom::nrows(adj); ++i)
-	    for (unsigned j = 0; j < i; ++j)
+	  g.add_vertices(nbasins.next());
+	  for (unsigned i = 1; i < geom::nrows(adj); ++i)
+	    for (unsigned j = 1; j < i; ++j)
 	      if (adj(point2d(i,j)))
 		g.add_edge(i, j);
 
-	  trace::exiting("make::impl::generic::graph");
+
+	  trace::exiting("make::impl::generic::region_adjacency_graph");
 	  return g;
 	}
 
@@ -147,10 +160,11 @@ namespace mln
 
       template <typename I, typename N>
       util::graph
-      graph_dispatch(const Image<I>& iz, const Neighborhood<N>& nbh,
-		     mln_value(I) nlabels)
+      region_adjacency_graph_dispatch(const Image<I>& wshd,
+				      const Neighborhood<N>& nbh,
+				      mln_value(I) nbasins)
       {
-	return make::impl::generic::graph(iz, nbh, nlabels);
+	return make::impl::generic::region_adjacency_graph(wshd, nbh, nbasins);
       }
 
     } // end of namespace mln::make::internal
@@ -162,16 +176,17 @@ namespace mln
     template <typename I, typename N>
     inline
     util::graph
-    graph(const Image<I>& iz, const Neighborhood<N>& nbh,
-	  mln_value(I) nlabels)
+    region_adjacency_graph(const Image<I>& wshd,
+			   const Neighborhood<N>& nbh,
+			   mln_value(I) nbasins)
     {
-      trace::entering("make::graph");
+      trace::entering("make::region_adjacency_graph");
 
-      internal::graph_tests(iz, nbh, nlabels);
+      internal::region_adjacency_graph_tests(wshd, nbh, nbasins);
 
-      util::graph g = internal::graph_dispatch(iz, nbh, nlabels);
+      util::graph g = internal::region_adjacency_graph_dispatch(wshd, nbh, nbasins);
 
-      trace::exiting("make::graph");
+      trace::exiting("make::region_adjacency_graph");
       return g;
     }
 
@@ -184,4 +199,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_GRAPH_HH
+#endif // ! MLN_MAKE_REGION_ADJACENCY_GRAPH_HH

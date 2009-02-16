@@ -71,8 +71,11 @@ namespace mln
       vertices_t vertices_;
       /// The edges.
       edges_t edges_;
+
+# ifndef NDEBUG
       /// An index of the set of edges, for fast-access purpose.
       edges_set_t edges_set_;
+# endif // ! NDEBUG
     };
 
   } // end of namespace mln::internal
@@ -383,8 +386,10 @@ namespace mln
     unsigned
     graph::add_edge(unsigned id_v1, unsigned id_v2)
     {
+      //FIXME: to be removed! We should not check that, except in without NDEBUG.
       // Does this edge already exist in the graph?
       edge_data_t edge(id_v1, id_v2);
+# ifndef NDEBUG
       if (data_->edges_set_.find(edge) != data_->edges_set_.end ())
         {
           // Return the erroneous value.
@@ -392,6 +397,7 @@ namespace mln
         }
       else
         {
+# endif // ! NDEBUG
           // Otherwise insert it into the graph.
           /* FIXME: This is not thread-proof (these two lines should
              form an atomic section).  */
@@ -404,7 +410,11 @@ namespace mln
           data_->vertices_[edge.second()].push_back(id);
 
           return id;
+
+# ifndef NDEBUG
         }
+# endif // ! NDEBUG
+
     }
 
     inline
