@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,12 +30,13 @@
 
 /// \file mln/registration/registration.hh
 ///
-/// image registration
+/// Image registration
+/// \sa registration::icp
 
-# include <mln/registration/icp.hh>
+# include <mln/core/image/image3d.hh>
+# include <mln/registration/icp2.hh>
 # include <mln/fun/x2x/all.hh>
 # include <mln/fun/x2p/closest_point.hh>
-# include <mln/core/image/lazy_image.hh>
 # include <mln/convert/to_p_array.hh>
 
 namespace mln
@@ -46,63 +47,334 @@ namespace mln
 
     using namespace mln::fun::x2x;
 
-    /// Register an image \p cloud over the image \p surface.
-    template <typename I, typename J>
+
+    //FIXME: move to registration.hh
+    /// Call ICP once and return the resulting transformation.
+    template <typename P>
     inline
-    composed< rotation<I::psite::dim, float>, translation<I::psite::dim, float> >
-    registration(const Image<I>& cloud,
-                 const Image<J>& surface);
+    composed< translation<P::dim,float>,rotation<P::dim,float> >
+    registration1(const p_array<P>& P_,
+		  const p_array<P>& X);
+
+    //FIXME: move to registration.hh
+    /// Call ICP 10 times.
+    /// Do the first call to ICP with all sites then work on a subset of
+    /// which size is decreasing.
+    /// For each call, a distance criterion is computed on a subset.
+    /// Sites part of the subset which are too far or too
+    /// close are removed.
+    /// Removed sites are *NOT* reused later in the subset.
+    template <typename P>
+    inline
+    composed< translation<P::dim,float>,rotation<P::dim,float> >
+    registration2(const p_array<P>& P_,
+		  const p_array<P>& X);
+
+    //FIXME: move to registration.hh
+    /// Call ICP 10 times.
+    /// Do the first call to ICP with all sites then work on a subset.
+    /// For each call, a distance criterion is computed on a subset.
+    /// A new subset is computed from the whole set of points according
+    /// to this distance. It will be used in the next call.
+    /// Removed Sites *MAY* be reintegrated.
+    template <typename P>
+    inline
+    composed< translation<P::dim,float>,rotation<P::dim,float> >
+    registration3(const p_array<P>& P_,
+		  const p_array<P>& X);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+    namespace internal
+    {
+
+      template <typename P>
+      inline
+      void
+      registration_tests(const p_array<P>& P_, const p_array<P>& X)
+      {
+	mln_assertion(P_.is_valid());
+	mln_assertion(X.is_valid());
+	mln_assertion(!X.is_empty());
+	mln_assertion(!P_.is_empty());
+
+	// FIXME: Work only in 3D for now...
+        mln_precondition(P::dim == 3);
+	(void) P_;
+	(void) X;
+      }
+
+    } // end of namespace mln::registration::internal
+
+
     namespace impl
     {
 
-      template <typename I, typename J>
+      template <typename P>
       inline
-      composed< rotation<I::psite::dim, float>, translation<I::psite::dim, float> >
-      registration_(const I& cloud,
-                    const J& surface)
+      composed< translation<P::dim,float>,rotation<P::dim,float> >
+      registration1(const p_array<P>& P_,
+	  const p_array<P>& X)
       {
-        //FIXME: Use convert::to< p_array<mln_psite(I)> >()
-        p_array<mln_psite(I)> c = convert::to< p_array<mln_psite(I)> >(cloud);
-        p_array<mln_psite(J)> x = convert::to< p_array<mln_psite(J)> >(surface);
+	trace::entering("mln::registration::registration1");
 
-        //init rigid transform qk
-        composed< rotation<I::psite::dim, float>, translation<I::psite::dim, float> > qk;
+# ifndef NDEBUG
+	util::timer t;
+	t.start();
+# endif // ! NDEBUG
 
-        //working box
-        const box<mln_psite(I)> working_box =
-          larger_than(geom::bbox(c), geom::bbox(x)).to_larger(100);
+	registration::closest_point_with_map<P> closest_point(X);
 
-        //make a lazy_image map via function closest_point
-        fun::x2p::closest_point<mln_psite(I)> fun(x, working_box);
-        lazy_image< I, fun::x2p::closest_point<mln_psite(I)>, box<mln_psite(I)> >
-          map(fun, fun.domain());
+	std::pair<algebra::quat,mln_vec(P)> pair = icp(P_, X, closest_point,
+						       algebra::quat(1,0,0,0),
+						       literal::zero);
+# ifndef NDEBUG
+	std::cout << "icp = " << t << std::endl;
+# endif // ! NDEBUG
 
-        //run registration
-        return registration::icp(c, map, 1e-3);
+	typedef rotation<3u,float> rot_t;
+	rot_t tqR(pair.first);
+	typedef translation<3u,float> trans_t;
+	trans_t tqT(pair.second);
+	composed<trans_t, rot_t> result(tqT, tqR);
 
+	trace::exiting("mln::registration::registration1");
+
+	return result;
       }
 
+
+      template <typename P>
+      inline
+      composed< translation<P::dim,float>,rotation<P::dim,float> >
+      registration2(const p_array<P>& P_,
+	  const p_array<P>& X)
+      {
+	trace::entering("mln::registration::registration2");
+
+	// Used for debug.
+	std::string method = "registration2";
+
+	registration::closest_point_with_map<P> closest_point(X);
+
+# ifndef NDEBUG
+	util::timer t;
+	t.start();
+# endif // ! NDEBUG
+
+	// P_bak is shuffled.
+	p_array<P> P_bak = P_;
+
+	unsigned r = 0;
+	std::pair<algebra::quat,mln_vec(P)> pair;
+	pair.first = algebra::quat(1,0,0,0);
+	pair.second = literal::zero;
+	box3d box = geom::bbox(X);
+	box.enlarge(1, 60);
+	box.enlarge(2, 60);
+
+	// Used for debug.
+	image3d<value::rgb8> out(box);
+
+	p_array<P> removed_set;
+
+	do
+	{
+
+# ifndef NDEBUG
+	  std::cout << std::endl << std::endl << "==== New run - " << r << std::endl;
+# endif // ! NDEBUG
+
+	  pair = icp(P_bak, X, closest_point,
+	      pair.first,
+	      pair.second);
+
+# ifndef NDEBUG
+	  display_sites_used_in_icp(out, P_bak, P_, X, r, method, pair,
+				    "final", literal::blue);
+# endif // ! NDEBUG
+
+	  int d_min, d_max;
+	  compute_distance_criteria(P_bak, closest_point, pair, r, d_min, d_max);
+
+	  P_bak = remove_too_far_sites(out, P_bak,
+	      closest_point, pair, X, removed_set,
+	      r, d_min, d_max, method);
+
+# ifndef NDEBUG
+	  display_sites_used_in_icp(out, P_bak, P_, X, r, method, pair,
+				    "schanges", literal::green);
+	  std::cout << "==== End of run" << std::endl;
+# endif
+
+	  ++r;
+
+	} while (r < 10);
+
+# ifndef NDEBUG
+	std::cout << "icp = " << t << std::endl;
+	draw_last_run(box, P_bak, removed_set, X, pair.first, pair.second);
+# endif
+
+	typedef rotation<3u,float> rot_t;
+	rot_t tqR(pair.first);
+	typedef translation<3u,float> trans_t;
+	trans_t tqT(pair.second);
+	composed<trans_t,rot_t> result(tqT, tqR);
+
+	trace::exiting("mln::registration::registration2");
+
+	return result;
+      }
+
+
+      template <typename P>
+      inline
+      composed< translation<P::dim,float>,rotation<P::dim,float> >
+      registration3(const p_array<P>& P_,
+	  const p_array<P>& X)
+      {
+	trace::entering("mln::registration::registration3");
+
+	registration::closest_point_with_map<P> closest_point(X);
+	std::cout << " pmin and pmax: " << std::endl;
+	std::cout << closest_point.cp_ima_.domain().pmin() << std::endl;
+	std::cout << closest_point.cp_ima_.domain().pmax() << std::endl;
+
+	// Used for debug.
+	std::string method = "registration3";
+
+# ifndef NDEBUG
+	util::timer t;
+	t.start();
+# endif // ! NDEBUG
+
+	// P_bak is shuffled.
+	p_array<P> P_bak = P_;
+
+	unsigned r = 0;
+	std::pair<algebra::quat,mln_vec(P)> pair;
+	pair.first = algebra::quat(1,0,0,0);
+	pair.second = literal::zero;
+	box3d box = geom::bbox(X);
+	box.enlarge(1, 60);
+	box.enlarge(2, 60);
+
+	// Used for debug.
+	image3d<value::rgb8> out(box);
+
+	p_array<P> removed_set;
+
+	do
+	{
+# ifndef NDEBUG
+	  std::cout << std::endl << std::endl << "==== New run - "
+		    << r << std::endl;
+# endif // ! NDEBUG
+
+	  pair = icp(P_bak, X, closest_point,
+	      pair.first,
+	      pair.second);
+
+# ifndef NDEBUG
+	  display_sites_used_in_icp(out, P_bak, P_, X, r, method, pair,
+				    "final", literal::blue);
+# endif // ! NDEBUG
+
+	  int d_min, d_max;
+	  compute_distance_criteria(P_bak, closest_point, pair, r, d_min, d_max);
+
+	  P_bak = remove_too_far_sites(out, P_,
+	      closest_point, pair, X, removed_set,
+	      r, d_min, d_max, method);
+
+# ifndef NDEBUG
+	  display_sites_used_in_icp(out, P_bak, P_, X, r, method, pair,
+				    "schanges", literal::green);
+	  std::cout << "==== End of run" << std::endl;
+# endif // ! NDEBUG
+
+	  ++r;
+
+	} while (r < 10);
+
+# ifndef NDEBUG
+	std::cout << "icp = " << t << std::endl;
+	draw_last_run(box, P_bak, removed_set, X, pair.first, pair.second);
+# endif // ! NDEBUG
+
+	typedef rotation<3u,float> rot_t;
+	rot_t tqR(pair.first);
+	typedef translation<3u,float> trans_t;
+	trans_t tqT(pair.second);
+	composed<trans_t,rot_t> result(tqT, tqR);
+
+	trace::exiting("mln::registration::registration3");
+
+	return result;
+      }
+
+    } // end of namespace mln::registration::impl
+
+
+
+    // Facade
+
+    template <typename P>
+    inline
+    composed< translation<P::dim,float>,rotation<P::dim,float> >
+    registration1(const p_array<P>& cloud,
+                  const p_array<P>& surface)
+    {
+      trace::entering("registration::registration1");
+
+      registration_tests(cloud, surface);
+
+      composed< translation<P::dim,float>, rotation<P::dim,float> >
+	      qk = impl::registration1(cloud, surface);
+
+      trace::exiting("registration::registration1");
+
+      return qk;
     }
 
-    template <typename I, typename J>
+
+    template <typename P>
     inline
-    composed< rotation<I::psite::dim, float>, translation<I::psite::dim, float> >
-    registration(const Image<I>& cloud,
-                 const Image<J>& surface)
+    composed< translation<P::dim,float>,rotation<P::dim,float> >
+    registration2(const p_array<P>& cloud,
+                  const p_array<P>& surface)
     {
-      trace::entering("registration::registration");
+      trace::entering("registration::registration2");
 
-      mln_precondition(I::psite::dim == J::psite::dim);
-      mln_precondition(I::psite::dim == 3 || J::psite::dim == 2);
+      registration_tests(cloud, surface);
 
-      composed< rotation<I::psite::dim, float>, translation<I::psite::dim, float> >
-        qk = impl::registration_(exact(cloud), exact(surface));
+      composed< translation<P::dim,float>, rotation<P::dim,float> >
+	      qk = impl::registration2(cloud, surface);
 
-      trace::exiting("registration::registration");
+      trace::exiting("registration::registration2");
+
+      return qk;
+    }
+
+
+    template <typename P>
+    inline
+    composed< translation<P::dim,float>,rotation<P::dim,float> >
+    registration3(const p_array<P>& cloud,
+                  const p_array<P>& surface)
+    {
+      trace::entering("registration::registration3");
+
+      internal::registration_tests(cloud, surface);
+
+      composed< translation<P::dim,float>, rotation<P::dim,float> >
+	      qk = impl::registration3(cloud, surface);
+
+      trace::exiting("registration::registration3");
 
       return qk;
     }

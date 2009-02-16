@@ -113,46 +113,13 @@ namespace mln
 	const algebra::quat& initial_rot,
 	const mln_vec(P)& initial_translation);
 
+
     template <typename P, typename F>
     composed< translation<P::dim,float>,rotation<P::dim,float> >
     icp(const p_array<P>& P_,
 	const p_array<P>& X,
 	const F& closest_point);
 
-
-    //FIXME: move to registration.hh
-    /// Call ICP once and return the resulting transformation.
-    template <typename P, typename F>
-    inline
-    composed< translation<P::dim,float>,rotation<P::dim,float> >
-    registration1(const p_array<P>& P_,
-		  const p_array<P>& X);
-
-    //FIXME: move to registration.hh
-    /// Call ICP 10 times.
-    /// Do the first call to ICP with all sites then work on a subset of
-    /// which size is decreasing.
-    /// For each call, sites part of the subset which are too far or too
-    /// close are removed.
-    /// Removed sites are *NOT* reused later in the subset.
-    template <typename P>
-    inline
-    composed< translation<P::dim,float>,rotation<P::dim,float> >
-    registration2(const p_array<P>& P_,
-		  const p_array<P>& X);
-
-    //FIXME: move to registration.hh
-    /// Call ICP 10 times.
-    /// Do the first call to ICP with all sites then work on a subset.
-    /// For each call, a distance criterion is computed on a subset.
-    /// A new subset is computed from the whole set of points according
-    /// to this distance. It will be used in the next call.
-    /// Sites which have been removed can be reintegrated.
-    template <typename P>
-    inline
-    composed< translation<P::dim,float>,rotation<P::dim,float> >
-    registration3(const p_array<P>& P_,
-		  const p_array<P>& X);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -172,8 +139,21 @@ namespace mln
 	box3d box = geom::bbox(X);
 	box.enlarge(1, box.nrows());
 	box.enlarge(2, box.ncols());
+
+	mln_postcondition(box.is_valid());
+
 	std::cout << "Map image defined on " << box << std::endl;
 
+	init(X, box);
+      }
+
+      closest_point_with_map(const p_array<P>& X, const box<P>& box)
+      {
+	init(X, box);
+      }
+
+      void init(const p_array<P>& X, const box<P>& box)
+      {
 	typedef mln_ch_value(I, bool) model_t;
 	model_t model(box);
 	data::fill(model, false);
@@ -187,30 +167,36 @@ namespace mln
 					    f);
 	std::cout << "canvas::distance_geodesic - " << t << "s" << std::endl;
 
-	cp_ima_ = f.cp_ima;
+	initialize(this->cp_ima_, f.cp_ima);
+	this->cp_ima_ = f.cp_ima;
+
+	mln_postcondition(cp_ima_.is_valid());
+	mln_postcondition(cp_ima_.domain().is_valid());
+        std::cout << "pmin = " << cp_ima_.domain().pmin() << std::endl;;
+        std::cout << "pmax = " << cp_ima_.domain().pmax() << std::endl;;
 
 #ifndef NDEBUG
-	mln_ch_value(I, bool) debug2(box);
-	data::fill(debug2, false);
-	mln_ch_value(I, value::rgb8) debug(box);
-	mln_piter(p_array<P>) p(X);
-	for_all(p)
-	{
-	  debug(p) = debug::internal::random_color(value::rgb8());
-	  debug2(p) = true;
-	}
-	io::pbm::save(slice(debug2,0), "debug2-a.ppm");
-
-	mln_piter(I) pi(cp_ima_.domain());
-	for_all(pi)
-	{
-	  debug(pi) = debug(cp_ima_(pi));
-	  debug2(pi) = debug2(cp_ima_(pi));
-	}
-
-	io::pbm::save(slice(debug2,0), "debug2-b.ppm");
-	io::ppm::save(slice(debug,0), "debug.ppm");
-	std::cout << "map saved" << std::endl;
+//	mln_ch_value(I, bool) debug2(box);
+//	data::fill(debug2, false);
+//	mln_ch_value(I, value::rgb8) debug(box);
+//	mln_piter(p_array<P>) p(X);
+//	for_all(p)
+//	{
+//	  debug(p) = debug::internal::random_color(value::rgb8());
+//	  debug2(p) = true;
+//	}
+//	io::pbm::save(slice(debug2,0), "debug2-a.ppm");
+//
+//	mln_piter(I) pi(cp_ima_.domain());
+//	for_all(pi)
+//	{
+//	  debug(pi) = debug(cp_ima_(pi));
+//	  debug2(pi) = debug2(cp_ima_(pi));
+//	}
+//
+//	io::pbm::save(slice(debug2,0), "debug2-b.ppm");
+//	io::ppm::save(slice(debug,0), "debug.ppm");
+//	std::cout << "map saved" << std::endl;
 #endif
       }
 
@@ -219,9 +205,11 @@ namespace mln
 	return cp_ima_(p);
       }
 
+      // Distance map
       dmap_t dmap_X_;
-    private:
+      // Closest point image.
       cp_ima_t cp_ima_;
+    private:
     };
 
 
@@ -355,6 +343,7 @@ namespace mln
 
     }
 
+
     template <typename P, typename F>
     void
     compute_distance_criteria(const p_array<P>& P_,
@@ -401,8 +390,10 @@ namespace mln
       p_array<P> tmp;
       unsigned removed = 0;
 
+# ifndef NDEBUG
       data::fill(out, literal::black);
       data::fill((out | X).rw(), literal::white);
+# endif // ! NDEBUG
 
       mln_piter(p_array<P>) p(P_);
       for_all(p)
@@ -424,11 +415,19 @@ namespace mln
 	}
       }
 
+
+# ifndef NDEBUG
       std::ostringstream ss2;
       ss2 << method << "_" << r << "_removed_sites" << ".ppm";
       io::ppm::save(mln::slice(out,0), ss2.str());
 
       std::cout << "Points removed: " << removed << std::endl;
+# endif // ! NDEBUG
+      // They are used for debug purpose only.
+      // When NDEBUG is set, they are unused.
+      (void) X;
+      (void) r;
+      (void) method;
 
       return tmp;
     }
@@ -441,8 +440,10 @@ namespace mln
 			      const std::pair<algebra::quat,mln_vec(P)>& pair,
 			      const std::string& period, const value::rgb8& c)
     {
+# ifndef NDEBUG
       data::fill(out, literal::black);
       data::fill((out | X).rw(), literal::white);
+# endif // !NDEBUG
 
       mln_piter(p_array<P>) p1(P_);
       for_all(p1)
@@ -458,10 +459,12 @@ namespace mln
 	out(Pk_i) = c;
       }
 
+# ifndef NDEBUG
       std::ostringstream ss;
       ss << prefix << "_" << r << "_" << period << ".ppm";
 
       io::ppm::save(slice(out,0), ss.str());
+# endif // ! NDEBUG
     }
 
 
@@ -486,6 +489,7 @@ namespace mln
       }
       return accu.to_result();
     }
+
 
     /// FIXME: work only for 3d images.
     template <typename P, typename F>
@@ -639,7 +643,7 @@ namespace mln
 	for_all(p_dbg)
 	  tmp_(qR_old.rotate(p_dbg.to_vec()) + qT_old) = literal::green;
 	std::ostringstream ss;
-	ss << "reg/tmp_0";
+	ss << "tmp_0";
 	if (k < 10)
 	  ss << "0";
 	ss << k << ".ppm";
@@ -650,14 +654,16 @@ namespace mln
 	std::cout << "d_" << k << "=" << d_k << std::endl;
 
 	// Check distance and error according to the related paper.
-	mln_assertion(0 <= d_k);
-	mln_assertion(d_k <= e_k);
-
 	// Disabled because of the following 'if'
+//	mln_assertion(0 <= d_k);
+//	mln_assertion(d_k <= e_k);
+
 //	mln_assertion(e_k <= d_k_old);
 //	mln_assertion(d_k_old <= e_k_old);
 
-	if (d_k > d_k_old)
+	// During the first runs, d_k may be higher than e_k.
+	// Hence, there we test k > 3.
+	if (k > 3 && (d_k > e_k || d_k > d_k_old || e_k > e_k_old))
 	{
 	  qR = qR_old;
 	  qT = qT_old;
@@ -675,177 +681,6 @@ namespace mln
 
       trace::exiting("registration::icp");
       return std::make_pair(qR, qT);
-    }
-
-
-
-    template <typename P, typename F>
-    inline
-    composed< translation<P::dim,float>,rotation<P::dim,float> >
-    registration1(const p_array<P>& P_,
-		  const p_array<P>& X)
-    {
-      trace::entering("mln::registration::registration1");
-
-      util::timer t;
-      t.start();
-
-      registration::closest_point_with_map<P> closest_point(X);
-
-      std::pair<algebra::quat,mln_vec(P)> pair = icp(P_, X, closest_point,
-						     algebra::quat(1,0,0,0),
-						     literal::zero);
-      std::cout << "icp = " << t << std::endl;
-
-      typedef rotation<3u,float> rot_t;
-      rot_t tqR(pair.first);
-      typedef translation<3u,float> trans_t;
-      trans_t tqT(pair.second);
-      composed<trans_t, rot_t> result(tqT, tqR);
-
-      trace::exiting("mln::registration::registration1");
-
-      return result;
-    }
-
-
-    template <typename P>
-    inline
-    composed< translation<P::dim,float>,rotation<P::dim,float> >
-    registration2(const p_array<P>& P_,
-		  const p_array<P>& X)
-    {
-      trace::entering("mln::registration::registration2");
-
-      std::string method = "compute_on_subsets";
-
-      registration::closest_point_with_map<P> closest_point(X);
-
-      util::timer t;
-      t.start();
-
-      // P_bak is shuffled.
-      p_array<P> P_bak = P_;
-
-      unsigned r = 0;
-      std::pair<algebra::quat,mln_vec(P)> pair;
-      pair.first = algebra::quat(1,0,0,0);
-      pair.second = literal::zero;
-      box3d box = geom::bbox(X);
-      box.enlarge(1, 60);
-      box.enlarge(2, 60);
-      image3d<value::rgb8> out(box);
-      p_array<P> removed_set;
-
-      do
-      {
-	std::cout << std::endl << std::endl << "==== New run - " << r << std::endl;
-	pair = icp(P_bak, X, closest_point,
-		   pair.first,
-		   pair.second);
-
-	display_sites_used_in_icp(out, P_bak, P_, X, r, method, pair, "final", literal::blue);
-
-	int d_min, d_max;
-	compute_distance_criteria(P_bak, closest_point, pair, r, d_min, d_max);
-
-	P_bak = remove_too_far_sites(out, P_bak,
-				     closest_point, pair, X, removed_set,
-				     r, d_min, d_max, method);
-
-#ifndef NDEBUG
-	display_sites_used_in_icp(out, P_bak, P_, X, r, method, pair, "schanges", literal::green);
-#endif
-
-	++r;
-
-	std::cout << "==== End of run" << std::endl;
-      } while (r < 10);
-      std::cout << "icp = " << t << std::endl;
-
-#ifndef NDEBUG
-      draw_last_run(box, P_bak, removed_set, X, pair.first, pair.second);
-#endif
-
-      typedef rotation<3u,float> rot_t;
-      rot_t tqR(pair.first);
-      typedef translation<3u,float> trans_t;
-      trans_t tqT(pair.second);
-      composed<trans_t,rot_t> result(tqT, tqR);
-
-      trace::exiting("mln::registration::registration2");
-
-      return result;
-    }
-
-
-    template <typename P>
-    inline
-    composed< translation<P::dim,float>,rotation<P::dim,float> >
-    registration3(const p_array<P>& P_,
-		  const p_array<P>& X)
-    {
-      trace::entering("mln::registration::registration3");
-
-      registration::closest_point_with_map<P> closest_point(X);
-
-      std::string method = "compute_on_subset_and_p";
-
-      util::timer t;
-      t.start();
-
-      // P_bak is shuffled.
-      p_array<P> P_bak = P_;
-
-      unsigned r = 0;
-      std::pair<algebra::quat,mln_vec(P)> pair;
-      pair.first = algebra::quat(1,0,0,0);
-      pair.second = literal::zero;
-      box3d box = geom::bbox(X);
-      box.enlarge(1, 60);
-      box.enlarge(2, 60);
-      image3d<value::rgb8> out(box);
-      p_array<P> removed_set;
-
-      do
-      {
-	std::cout << std::endl << std::endl << "==== New run - " << r << std::endl;
-	pair = icp(P_bak, X, closest_point,
-		   pair.first,
-		   pair.second);
-
-	display_sites_used_in_icp(out, P_bak, P_, X, r, method, pair, "final", literal::blue);
-
-	int d_min, d_max;
-	compute_distance_criteria(P_bak, closest_point, pair, r, d_min, d_max);
-
-	P_bak = remove_too_far_sites(out, P_,
-				     closest_point, pair, X, removed_set,
-				     r, d_min, d_max, method);
-
-#ifndef NDEBUG
-	display_sites_used_in_icp(out, P_bak, P_, X, r, method, pair, "schanges", literal::green);
-#endif
-
-	++r;
-
-	std::cout << "==== End of run" << std::endl;
-      } while (r < 10);
-      std::cout << "icp = " << t << std::endl;
-
-#ifndef NDEBUG
-      draw_last_run(box, P_bak, removed_set, X, pair.first, pair.second);
-#endif
-
-      typedef rotation<3u,float> rot_t;
-      rot_t tqR(pair.first);
-      typedef translation<3u,float> trans_t;
-      trans_t tqT(pair.second);
-      composed<trans_t,rot_t> result(tqT, tqR);
-
-      trace::exiting("mln::registration::registration3");
-
-      return result;
     }
 
 

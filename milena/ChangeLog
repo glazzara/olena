@@ -1,5 +1,12 @@
 2009-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Revamp icp2.hh.
+
+	* registration/icp2.hh: move registration*... 
+	* registration/registration.hh: ... here.
+
+2009-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix make::graph and add make::region_adjacency_graph.
 
 	* mln/make/graph.hh: use an adjacency matrix and a neighborhood.
