@@ -1,3 +1,12 @@
+2009-02-17  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add sandbox for ImageMagick support.
+	* fabien/dicom/load.hh: Minor update of dcmtk support.
+	* fabien/dicom/save.hh: Minor update of dcmtk support.
+	* fabien/magick/Makefile: New file to help testing.
+	* fabien/magick/load.hh: ImageMagick load support.
+	* fabien/magick/magick.cc: Test file.
+
 2009-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update Igr's code.
