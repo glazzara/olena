@@ -42,6 +42,7 @@
 # include <mln/core/alias/p_runs2d.hh>
 # include <mln/core/alias/point2d.hh>
 # include <mln/core/alias/point2d_h.hh>
+# include <mln/core/alias/vec2d.hh>
 # include <mln/core/alias/w_window2d_float.hh>
 # include <mln/core/alias/w_window2d_int.hh>
 # include <mln/core/alias/window2d.hh>

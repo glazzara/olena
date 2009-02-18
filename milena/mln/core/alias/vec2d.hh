@@ -25,42 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_ALIAS_ALL_HH
-# define MLN_CORE_ALIAS_ALL_HH
+#ifndef MLN_CORE_ALIAS_VEC2D_HH
+# define MLN_CORE_ALIAS_VEC2D_HH
 
-/// \file mln/core/alias/all.hh
+/// \file mln/core/alias/vec2d.hh
 ///
-/// File that includes all the aliases.
+/// Definition of the mln::vec2d* alias
 
-#include <mln/core/alias/box1d.hh>
-#include <mln/core/alias/box2d.hh>
-#include <mln/core/alias/box2d_h.hh>
-#include <mln/core/alias/box3d.hh>
-#include <mln/core/alias/complex_geometry.hh>
-#include <mln/core/alias/complex_image.hh>
-#include <mln/core/alias/dpoint1d.hh>
-#include <mln/core/alias/dpoint2d.hh>
-#include <mln/core/alias/dpoint2d_h.hh>
-#include <mln/core/alias/dpoint3d.hh>
-#include <mln/core/alias/neighb1d.hh>
-#include <mln/core/alias/neighb2d.hh>
-#include <mln/core/alias/neighb3d.hh>
-#include <mln/core/alias/p_run2d.hh>
-#include <mln/core/alias/p_runs2d.hh>
-#include <mln/core/alias/point1d.hh>
-#include <mln/core/alias/point2d.hh>
-#include <mln/core/alias/point2d_h.hh>
-#include <mln/core/alias/point3d.hh>
-#include <mln/core/alias/vec2d.hh>
-#include <mln/core/alias/vec3d.hh>
-#include <mln/core/alias/w_window1d_float.hh>
-#include <mln/core/alias/w_window1d_int.hh>
-#include <mln/core/alias/w_window2d_float.hh>
-#include <mln/core/alias/w_window2d_int.hh>
-#include <mln/core/alias/w_window3d_float.hh>
-#include <mln/core/alias/w_window3d_int.hh>
-#include <mln/core/alias/window1d.hh>
-#include <mln/core/alias/window2d.hh>
-#include <mln/core/alias/window3d.hh>
 
-#endif // ! MLN_CORE_ALIAS_ALL_HH
+# include <mln/algebra/vec.hh>
+
+namespace mln
+{
+
+  /// 2D vector with float coordinates.
+  typedef algebra::vec<2u,float> vec2d_f;
+
+  /// 2D vector with double coordinates.
+  typedef algebra::vec<2u,double> vec2d_d;
+
+
+} // end of namespace mln
+
+
+# include <mln/make/box2d.hh>
+
+
+#endif // ! MLN_CORE_ALIAS_VEC2D_HH
