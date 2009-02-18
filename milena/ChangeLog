@@ -1,3 +1,15 @@
+2009-02-18  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Merge leveling and algebraic filters into connected filter.
+	* mln/canvas/morpho/connected_filter.hh: File merging the
+	two filters.
+	* sandbox/edwin/filtres/connectes/connected_filter.hh: Add
+	static tests about accumaltors properties when calling directly
+	algebraic and leveling filters. Add leveling and algebraic facade.
+	* sandbox/edwin/filtres/connectes/filter.cc: Fix bugs.
+	* tests/canvas/morpho/connected_filter.cc: Test file for
+	connected filters.
+
 2009-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Revamp icp2.hh.
