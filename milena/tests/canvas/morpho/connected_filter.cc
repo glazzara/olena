@@ -6,12 +6,15 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/morpho/attribute/volume.hh>
 #include <mln/morpho/attribute/card.hh>
-#include "connected_filter.hh"
+#include <mln/canvas/morpho/connected_filter.hh>
 
 int main(int argc, char** argv)
 {
   using namespace mln;
   using value::int_u8;
+
+  if (argc < 2)
+    return 1;
 
   std::cout << "Leveling filter test" << std::endl;
 

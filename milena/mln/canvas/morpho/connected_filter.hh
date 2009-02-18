@@ -74,6 +74,8 @@ namespace mln {
 	void take_as_init_fastest (trait::accumulator::when_pix::use_none, A& accu,
 			   const I& input, const unsigned p)
 	{
+	  (void)input;
+	  (void)p;
 	  accu.take_as_init ();
 	}
 
@@ -81,6 +83,7 @@ namespace mln {
 	void take_as_init (trait::accumulator::when_pix::use_p, A& accu,
 			   const I& input, const P& p)
 	{
+	  (void)input;
 	  accu.take_as_init (p);
 	}
 
@@ -88,6 +91,7 @@ namespace mln {
 	void take_as_init (trait::accumulator::when_pix::use_none, A& accu,
 			   const I& input, const P& p)
 	{
+	  (void)input;
 	  accu.take_as_init (p);
 	}
 
@@ -279,11 +283,11 @@ namespace mln {
 				 const typename A::result& lambda)
 	{
 	  trace::entering("canvas::morpho::impl::connected_filter_fastest");
-
 	  // FIXME: Tests?
 
 	  const I& input = exact(input_);
 	  const N& nbh = exact(nbh_);
+	  (void)a_;
 
 	  mln_concrete(I) output;
 	  initialize(output, input);

@@ -1,5 +1,13 @@
 2009-02-18  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Fix bugs in connected filters tests and add Makefile rules.
+	* mln/canvas/morpho/connected_filter.hh: Fix bugs to avoid
+	warning at compile.
+	* tests/canvas/morpho/Makefile.am: Add check rule.
+	* tests/canvas/morpho/connected_filter.cc: Fix include mistakes.
+
+2009-02-18  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Merge leveling and algebraic filters into connected filter.
 	* mln/canvas/morpho/connected_filter.hh: File merging the
 	two filters.
