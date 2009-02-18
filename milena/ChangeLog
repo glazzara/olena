@@ -8,6 +8,16 @@
 	* mln/core/alias/all.hh,
 	* mln/essential/2d.hh: include the new header.
 
+2009-02-18 Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add aliases for 2D algebra::vec.
+
+	* mln/core/alias/vec2d.hh: new. new aliases for float and double 2d
+	vectors.
+
+	* mln/core/alias/all.hh,
+	* mln/essential/2d.hh: include the new header.
+
 2009-02-18  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Fix bugs in connected filters tests and add Makefile rules.
