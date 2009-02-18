@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -105,6 +105,9 @@ namespace mln
     /// FIXME: not in constant time!
     mln::window<D> win() const;
 
+    /// Return whether this neighborhood is valid.
+    bool is_valid() const;
+
   private:
     std::vector<D>	vec_;
   };
@@ -145,6 +148,17 @@ namespace mln
       result.insert(vec_[i]);
     return result;
   }
+
+  template <typename D>
+  inline
+  bool
+  clock_neighb<D>::is_valid() const
+  {
+    //FIXME: correct?
+    return true;
+  }
+
+
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln

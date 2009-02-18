@@ -121,9 +121,9 @@ namespace mln
 	bool handles_(unsigned p) const		  { return input.element(p) == val; }
 	bool equiv_(unsigned n, unsigned) const	  { return input.element(n) == val; }
 	bool labels_(unsigned) const		  { return true; }
-	void do_no_union_(unsigned n, unsigned p) {}
+	void do_no_union_(unsigned, unsigned)	  {}
 	void init_attr_(unsigned)		  {}
-	void merge_attr_(unsigned r, unsigned p)  {}
+	void merge_attr_(unsigned, unsigned)	  {}
 
 	// end of Requirements.
 

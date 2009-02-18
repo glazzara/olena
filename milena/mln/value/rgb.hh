@@ -51,6 +51,11 @@
 namespace mln
 {
 
+  // Forward declaration.
+  namespace value { template <unsigned n> struct rgb; }
+
+
+
   namespace fun
   {
 

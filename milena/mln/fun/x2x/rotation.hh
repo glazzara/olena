@@ -35,6 +35,9 @@
 ///
 /// \todo store the quaternion instead of (axis, alpha)
 ///	  => better precision while composing two rotation matrices.
+///
+/// Conversion from Quaternion to (angle,axis), Source:
+///   http://jeux.developpez.com/faq/matquat/?page=quaternions#Q56
 
 # include <cmath>
 # include <mln/core/concept/function.hh>

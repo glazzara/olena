@@ -29,6 +29,13 @@
 # define MLN_LABELING_MEAN_VALUES_HH
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/alias/vec3d.hh>
+
+# include <mln/accu/mean.hh>
+
+# include <mln/labeling/compute.hh>
+
+# include <mln/literal/colors.hh>
 
 /// \file mln/labeling/mean_values.hh
 ///
@@ -116,7 +123,7 @@ namespace mln
 
 	util::array<mln_value(I)> m;
 	convert::from_to(m_3f, m);
-	m[0] = literal::white; //FIXME: handle label 0 correctly.
+	m[0] = literal::yellow; //FIXME: handle label 0 correctly.
 
 	mln_concrete(I) output = level::transform(lbl,
 	    convert::to< fun::i2v::array<mln_value(I)> >(m));

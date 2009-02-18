@@ -51,6 +51,16 @@ namespace mln
     namespace morpho
     {
 
+      template <typename I, typename N, typename F>
+      inline
+      mln_concrete(I)
+      algebraic_union_find(const Image<I>& input,
+			   const Neighborhood<N>& nbh,
+			   F& f);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
       namespace impl
       {
 
@@ -392,6 +402,8 @@ namespace mln
 	return internal::algebraic_union_find_dispatch(input, nbh, f);
       }
 
+
+# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::canvas::morpho
 

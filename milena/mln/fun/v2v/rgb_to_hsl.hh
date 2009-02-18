@@ -36,6 +36,8 @@
 
 # include <mln/trait/value_.hh>
 
+# include <mln/value/rgb8.hh>
+# include <mln/value/rgb16.hh>
 
 namespace mln
 {
@@ -43,7 +45,6 @@ namespace mln
   // Forward declaration
   namespace value
   {
-    template <unsigned n> struct rgb;
     template <typename H, typename S, typename L> class hsl_;
     typedef hsl_<float, float, float> hsl_f;
   }

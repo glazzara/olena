@@ -129,6 +129,8 @@ namespace mln
 	internal::load_header(ima, file);
 	internal::load_data(ima, file);
 
+	mln_postcondition(exact(ima).is_valid());
+
 	trace::exiting("mln::io::dump::load");
       }
 

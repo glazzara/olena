@@ -34,10 +34,13 @@
 /// \sa registration::icp
 
 # include <mln/core/image/image3d.hh>
-# include <mln/registration/icp2.hh>
+# include <mln/registration/icp.hh>
 # include <mln/fun/x2x/all.hh>
 # include <mln/fun/x2p/closest_point.hh>
 # include <mln/convert/to_p_array.hh>
+
+//FIXME: to be removed.
+# include <mln/util/timer.hh>
 
 namespace mln
 {
@@ -331,7 +334,7 @@ namespace mln
     {
       trace::entering("registration::registration1");
 
-      registration_tests(cloud, surface);
+      internal::registration_tests(cloud, surface);
 
       composed< translation<P::dim,float>, rotation<P::dim,float> >
 	      qk = impl::registration1(cloud, surface);
@@ -350,7 +353,7 @@ namespace mln
     {
       trace::entering("registration::registration2");
 
-      registration_tests(cloud, surface);
+      internal::registration_tests(cloud, surface);
 
       composed< translation<P::dim,float>, rotation<P::dim,float> >
 	      qk = impl::registration2(cloud, surface);

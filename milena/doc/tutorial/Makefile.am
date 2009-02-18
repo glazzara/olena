@@ -41,24 +41,24 @@ tutorial.tex 		\
 tutorial.pdf
 
 .PHONY: regen-dist
-regen-dist: $(srcdir)/headers.stamp
+regen-dist: $(top_srcdir)/headers.stamp
 
-$(srcdir)/examples/examples.mk: $(srcdir)/headers.stamp
-$(srcdir)/figures/figures.mk: $(srcdir)/headers.stamp
-$(srcdir)/outputs/outputs.mk: $(srcdir)/headers.stamp
-$(srcdir)/samples/samples.mk: $(srcdir)/headers.stamp
+$(top_srcdir)/milena/doc/tutorial/examples/examples.mk: $(top_srcdir)/headers.stamp
+$(top_srcdir)/milena/doc/tutorial/figures/figures.mk: $(top_srcdir)/headers.stamp
+$(top_srcdir)/milena/doc/tutorial/outputs/outputs.mk: $(top_srcdir)/headers.stamp
+$(top_srcdir)/milena/doc/tutorial/samples/samples.mk: $(top_srcdir)/headers.stamp
 
-EXTRA_DIST += $(srcdir)/headers.stamp
-$(srcdir)/headers.stamp: $(srcdir)/generate_dist_files.sh
+EXTRA_DIST += $(top_srcdir)/headers.stamp
+$(top_srcdir)/headers.stamp: $(top_srcdir)/milena/doc/tutorial/generate_dist_files.sh
 	@rm -f $@.tmp
 	@touch $@.tmp
 	cd $(srcdir) && ./generate_dist_files.sh
 	@mv -f $@.tmp $@
 
-include $(srcdir)/examples/examples.mk
-include $(srcdir)/figures/figures.mk
-include $(srcdir)/outputs/outputs.mk
-include $(srcdir)/samples/samples.mk
+include $(top_srcdir)/milena/doc/tutorial/examples/examples.mk
+include $(top_srcdir)/milena/doc/tutorial/figures/figures.mk
+include $(top_srcdir)/milena/doc/tutorial/outputs/outputs.mk
+include $(top_srcdir)/milena/doc/tutorial/samples/samples.mk
 
 EXTRA_DIST += 		\
 tools/sample_utils.hh 	\

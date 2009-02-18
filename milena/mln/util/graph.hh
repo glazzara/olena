@@ -405,7 +405,9 @@ namespace mln
           unsigned id = data_->edges_.size() - 1;
 
           // Update the set of edges.
+# ifndef NDEBUG
           data_->edges_set_.insert(edge);
+# endif // ! NDEBUG
           data_->vertices_[edge.first()].push_back(id);
           data_->vertices_[edge.second()].push_back(id);
 

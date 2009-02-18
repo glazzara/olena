@@ -1,5 +1,37 @@
 2009-02-18 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various small fixes.
+
+	* doc/tutorial/Makefile.am: fix wrong include path.
+
+	* mln/canvas/morpho/algebraic_union_find.hh: add missing
+	MLN_INCLUDE_ONLY guards.
+
+	* mln/core/clock_neighb.hh: add missing is_valid().
+
+	* mln/labeling/mean_values.hh,
+	* mln/fun/v2v/rgb_to_hsl.hh: add missing includes.
+
+	* mln/fun/x2x/rotation.hh: add more comments.
+
+	* mln/io/dump/load.hh: check if the loaded image is valid.
+
+	* mln/labeling/level.hh: Fix warnings.
+
+	* mln/registration/all.hh: update comments.
+
+	* mln/registration/icp2.hh: rename as...
+	* mln/registration/icp.hh: ... this.
+
+	* mln/registration/registration.hh: fix wrong call to
+	registration_tests.
+
+	* mln/util/graph.hh: add NDEBUG guards.
+
+	* mln/value/rgb.hh: add missing forward declaration.
+
+2009-02-18 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add support for 3D images in fun::x2v::bilinear.
 
 	* mln/fun/x2v/bilinear.hh: Add a new specialization for 3d Images.
