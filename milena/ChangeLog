@@ -1,5 +1,11 @@
 2009-02-18 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add support for 3D images in fun::x2v::bilinear.
+
+	* mln/fun/x2v/bilinear.hh: Add a new specialization for 3d Images.
+
+2009-02-18 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix fun::x2v::rotation.
 
 	* mln/fun/x2x/rotation.hh:

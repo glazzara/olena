@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -59,9 +60,15 @@ namespace mln
 
         bilinear(const I& ima);
 
-        template <unsigned n, typename T>
+	/// Bilinear filtering on 2d images.
+        template <typename T>
         mln_value(I)
-        operator()(const algebra::vec<n,T>& v) const;
+        operator()(const algebra::vec<2,T>& v) const;
+
+	/// Bilinear filtering on 3d images. Work on slices.
+	template <typename T>
+        mln_value(I)
+        operator()(const algebra::vec<3,T>& v) const;
 
         const I& ima;
       };
@@ -72,13 +79,13 @@ namespace mln
       template <typename I>
       bilinear<I>::bilinear(const I& ima) : ima(ima)
       {
-        mlc_bool(I::psite::dim == 2)::check();
+        //mlc_bool(I::psite::dim == 2)::check();
       }
 
       template <typename I>
-      template <unsigned n, typename T>
+      template <typename T>
       mln_value(I)
-      bilinear<I>::operator()(const algebra::vec<n,T>& v) const
+      bilinear<I>::operator()(const algebra::vec<2,T>& v) const
       {
         typedef mln_sum(mln_value(I)) vsum;
 
@@ -102,6 +109,52 @@ namespace mln
         vsum q12 = ima(point2d(static_cast<unsigned>(x1), static_cast<unsigned>(y2)));
         vsum q21 = ima(point2d(static_cast<unsigned>(x2), static_cast<unsigned>(y1)));
         vsum q22 = ima(point2d(static_cast<unsigned>(x2), static_cast<unsigned>(y2)));
+
+        double x2_x1 = x2 - x1;
+        double y2_y1 = y2 - y1;
+
+        // linear interpolation #1
+        vsum img_r1 = q11 * (x2 - x) / (x2_x1) +
+          q21 * (x - x1) / (x2_x1);
+
+        // linear interpolation #2
+        vsum img_r2 =  q12 * (x2 - x) / (x2_x1) + q22 * (x - x1) / (x2_x1);
+
+        // interpolating in y direction
+        vsum res = (img_r1 * (y2 - y) / (y2_y1)
+                    + img_r2 * (y - y1) / (y2_y1));
+
+        return convert::to<mln_value(I)>(res);
+      }
+
+
+      template <typename I>
+      template <typename T>
+      mln_value(I)
+      bilinear<I>::operator()(const algebra::vec<3,T>& v) const
+      {
+        typedef mln_sum(mln_value(I)) vsum;
+
+        //  q12----r2----q22
+        //   |      |     |
+        //   |      x     |
+        //   |      |     |
+        //  q11----r1----q21
+
+        double x = v[1];
+        double y = v[2];
+
+        double x1 = std::floor(x);
+        double x2 = std::floor(x) + 1;
+        double y1 = std::floor(y);
+        double y2 = std::floor(y) + 1;
+	def::coord z  = math::round<float>()(v[0]);
+
+        //Following access are supposed valid.
+        vsum q11 = ima(point3d(z, static_cast<unsigned>(x1), static_cast<unsigned>(y1)));
+        vsum q12 = ima(point3d(z, static_cast<unsigned>(x1), static_cast<unsigned>(y2)));
+        vsum q21 = ima(point3d(z, static_cast<unsigned>(x2), static_cast<unsigned>(y1)));
+        vsum q22 = ima(point3d(z, static_cast<unsigned>(x2), static_cast<unsigned>(y2)));
 
         double x2_x1 = x2 - x1;
         double y2_y1 = y2 - y1;
