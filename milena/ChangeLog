@@ -1,5 +1,24 @@
 2009-02-18 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix fun::x2v::rotation.
+
+	* mln/fun/x2x/rotation.hh:
+	    (get_rot_h_mat 3d): fix matrix construction.
+	    (rotation(algebra::quat)): update attributes in order to produce a
+				       valid inverted rotation. 
+
+	* tests/fun/x2x/rotation.cc: improve test.
+
+2009-02-18 Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add fun::x2v::trilinear.
+
+	* mln/fun/x2v/trilinear.hh: new file. New interpolation algorithm.
+
+	* mln/fun/x2v/all.hh: include new file.
+
+2009-02-18 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add aliases for 2D algebra::vec.
 
 	* mln/core/alias/vec2d.hh: new. new aliases for float and double 2d

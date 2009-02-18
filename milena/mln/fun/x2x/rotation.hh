@@ -32,6 +32,9 @@
 /// \file mln/fun/x2x/rotation.hh
 ///
 /// Define a rotation function.
+///
+/// \todo store the quaternion instead of (axis, alpha)
+///	  => better precision while composing two rotation matrices.
 
 # include <cmath>
 # include <mln/core/concept/function.hh>
@@ -70,6 +73,10 @@ namespace mln
 	  //FIXME: cannot use '!=' operator.
           mln_precondition(!(axis_ == vec_t(literal::zero)));
 
+	  /// Be sure that axis is normalized.
+	  algebra::vec<3,C> axis = axis_;
+	  axis.normalize();
+
           const float cos_a = cos(alpha_);
           const float sin_a = sin(alpha_);
           const float u = axis_[0];
@@ -78,23 +85,22 @@ namespace mln
           const float u2 = u * u;
           const float v2 = v * v;
           const float w2 = w * w;
-          const float uvw2 = u2 + v2 + w2;
 
           algebra::h_mat<3, C> m_;
 
-          m_(0,0) = (u2 + (v2 + w2) * cos_a) / uvw2;
-          m_(0,1) = (u*v * (1 - cos_a) - u * std::sqrt(uvw2) * sin_a) / uvw2;
-          m_(0,2) = (u*w * (1 - cos_a) + v * std::sqrt(uvw2) * sin_a) / uvw2;
+	  m_(0,0) = u2 + (1 - u2) * cos_a;
+          m_(0,1) = u*v * (1 - cos_a) - w * sin_a;
+          m_(0,2) = u*w * (1 - cos_a) + v * sin_a;
           m_(0,3) = 0;
 
-          m_(1,0) = (u*v * (1 - cos_a) + w * std::sqrt(uvw2) * sin_a) / uvw2;
-          m_(1,1) = (v2 + (u2 + w2) * cos_a) / uvw2;
-          m_(1,2) = (v*w * (1 - cos_a) - u * std::sqrt(uvw2) * sin_a) / uvw2;
+          m_(1,0) = u*v * (1 - cos_a) + w * sin_a;
+          m_(1,1) = v2 + (1 - v2) * cos_a;
+          m_(1,2) = v * w * (1 - cos_a) - u * sin_a;
           m_(1,3) = 0;
 
-          m_(2,0) = (u*w * (1 - cos_a) - v * std::sqrt(uvw2) * sin_a) / uvw2;
-          m_(2,1) = (v*w * (1 - cos_a) + u * std::sqrt(uvw2) * sin_a) / uvw2;
-          m_(2,2) = (u2 + (u2 + v2) * cos_a) / uvw2;
+          m_(2,0) = u * w * (1 - cos_a) - v * sin_a;
+          m_(2,1) = u * w * (1 - cos_a) + u * sin_a;
+          m_(2,2) = w2 + (1 - w2) * cos_a;
           m_(2,3) = 0;
 
           m_(3,0) = 0;
@@ -189,19 +195,29 @@ namespace mln
       rotation<n,C>::rotation(const algebra::quat& q)
       {
         mln_precondition(q.is_unit());
+
         // FIXME: Should also work for 2d.
         mln_precondition(n == 3);
+
         float
           w = q.to_vec()[0],
           x = q.to_vec()[1],  x2 = 2*x*x,  xw = 2*x*w,
           y = q.to_vec()[2],  y2 = 2*y*y,  xy = 2*x*y,  yw = 2*y*w,
           z = q.to_vec()[3],  z2 = 2*z*z,  xz = 2*x*z,  yz = 2*y*z,  zw = 2*z*w;
+
         float t[9] = {1.f - y2 - z2,  xy - zw,  xz + yw,
                       xy + zw,  1.f - x2 - z2,  yz - xw,
                       xz - yw,  yz + xw,  1.f - x2 - y2};
 
         this->m_ = mln::make::h_mat(t);
 	mln_assertion(check_rotation(q));
+
+	/// Update attributes
+
+	alpha_ = acos(w) * 2;
+	axis_[0] = x;
+	axis_[1] = y;
+	axis_[2] = z;
       }
 
 

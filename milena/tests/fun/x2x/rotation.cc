@@ -33,14 +33,9 @@
 
 #include <iostream>
 #include <mln/fun/x2x/rotation.hh>
-#include <mln/core/image/image2d.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-#include <mln/core/image/interpolated.hh>
+#include <mln/core/alias/vec2d.hh>
+#include <mln/core/alias/vec3d.hh>
 #include <mln/make/vec.hh>
-#include <mln/fun/x2v/bilinear.hh>
-#include <mln/extension/adjust.hh>
 
 #include "tests/data.hh"
 
@@ -48,36 +43,28 @@
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
-  algebra::vec<2,float> axis;
-  axis[0] = 0;
-  axis[1] = 1;
-  typedef image2d<int_u8> ima_t;
-  ima_t lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+  {
+    algebra::vec<2,float> axis;
+    axis[0] = 0;
+    axis[1] = 1;
+    fun::x2x::rotation<2,float> rot(0.1f, axis);
 
-  ima_t out;
-  initialize(out, lena);
+    vec2d_f v = make::vec(4, 4);
+    vec2d_f res = rot(v);
+    mln_assertion(rot.inv()(res) == v);
+  }
 
-  interpolated<ima_t, fun::x2v::bilinear> inter(lena);
+  {
+    algebra::vec<3,float> axis;
+    axis[0] = 1;
+    axis[1] = 0;
+    axis[2] = 0;
+    fun::x2x::rotation<3,float> rot(0.1f, axis);
 
-  fun::x2x::rotation<2,float> rot1(0.1, axis);
+    vec3d_f v = make::vec(4, 1, 2);
+    vec3d_f res = rot(v);
+    mln_assertion(rot.inv()(res) == v);
+  }
 
-  mln_piter_(ima_t) p(out.domain());
-  for_all(p)
-    {
-      algebra::vec<2,float> v = rot1.inv()(p.to_site().to_vec());
-      if (inter.domain().has(v))
-	out(p) = inter(v);
-      else
-	out(p) = 255;
-    }
-  io::pgm::save(out, "out.pgm");
-
-  fun::x2x::rotation<2,float> rot2(3.14116, axis);
-  mln_assertion(fabs(rot2(make::vec(0.0, 1.0))[0] -
-		     make::vec(0.0, -1.0)[0]) <= 0.125);
-  mln_assertion(fabs(rot2(make::vec(0.0, 1.0))[1] -
-		     make::vec(0.0, -1.0)[1]) <= 0.125);
 }
