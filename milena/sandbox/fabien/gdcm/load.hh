@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_MAGICK_LOAD_HH
-# define MLN_IO_MAGICK_LOAD_HH
+#ifndef MLN_IO_DICOM_LOAD_HH
+# define MLN_IO_DICOM_LOAD_HH
 
 /*!
  * \file   mln/io/magick/load.hh
@@ -37,7 +37,15 @@
  */
 
 # include <mln/core/image/image2d.hh>
-# include <Magick++.h>
+# include <mln/core/image/image3d.hh>
+
+# include <mln/value/int_u16.hh>
+
+# include <gdcmReader.h>
+# include <gdcmImageReader.h>
+# include <gdcmWriter.h>
+# include <gdcmDataSet.h>
+# include <gdcmAttribute.h>
 
 
 namespace mln
@@ -46,10 +54,10 @@ namespace mln
   namespace io
   {
 
-    namespace magick
+    namespace dicom
     {
 
-      /*! Load a magick image in a Milena image.
+      /*! Load a gdcm image in a Milena image.
        *
        * \param[out] ima A reference to the image which will receive
        * data.
@@ -59,7 +67,7 @@ namespace mln
       void load(Image<I>& ima,
 		const std::string& filename);
 
-      /*! Load a magick image in a Milena image. To use this routine, you
+      /*! Load a gdcm image in a Milena image. To use this routine, you
        *  should specialize the template whith the value type of the
        *  image loaded. (ex : load<value::int_u8>("...") )
        *
@@ -70,7 +78,7 @@ namespace mln
       template <typename V>
       image2d<V> load(const std::string& filename);
 
-      /*! Load a magick image in a Milena image. To use this routine, you
+      /*! Load a gdcm image in a Milena image. To use this routine, you
        *  should specialize the template whith the value type of the
        *  image loaded. (ex : load<value::int_u8>("...") )
        *
@@ -87,9 +95,9 @@ namespace mln
       inline
       image2d<V> load(const std::string& filename)
       {
-	trace::entering("mln::io::magick::load");
+	trace::entering("mln::io::gdcm::load");
 	image2d<V> ima;// = io::pnm::load<V>(MAGICK, filename);
-	trace::exiting("mln::io::magick::load");
+	trace::exiting("mln::io::gdcm::load");
 	return ima;
       }
 
@@ -97,56 +105,92 @@ namespace mln
       inline
       image3d<V> load(const std::string& filename)
       {
-	trace::entering("mln::io::magick::load");
+	trace::entering("mln::io::gdcm::load");
 	image2d<V> ima;// = io::pnm::load<V>(MAGICK, filename);
-	trace::exiting("mln::io::magick::load");
+	trace::exiting("mln::io::gdcm::load");
 	return ima;
       }
 
 
       template <typename I>
       inline
-      void load(Image<I>& ima,
+      void load(Image<I>& ima_,
 		const std::string& filename)
       {
-	trace::entering("mln::io::magick::load");
+	trace::entering("mln::io::gdcm::load");
 
-	//std::ifstream file(filename.c_str());
-	//if (! file)
-	//{
-	//  std::cerr << "error: cannot open file '" << filename << "'!";
-	//  abort();
-	//}
+	using value::int_u16;
+	I& ima = exact(ima_);
 
-	Magick::Image file(filename);
-	//std::cout << "file attribute: " << file.attribute() << std::endl;
-	std::cout << "width: " << file.columns() << std::endl;
-	std::cout << "height: " << file.rows() << std::endl;
-	std::cout << "x resolution: " << file.xResolution() << std::endl;
-	std::cout << "y resolution: " << file.yResolution() << std::endl;
-	std::cout << "depth: " << file.depth() << std::endl;
-	//std::cout << "packets: " << file.packets() << std::endl;
-	//std::cout << "packet size: " << file.packetSize() << std::endl;
-	std::cout << "comment: " << file.comment() << std::endl;
-	std::cout << "format: " << file.format() << std::endl;
-	std::cout << "number of scenes: " << file.imageInfo()->number_scenes << std::endl;
-	std::cout << "scene: " << file.imageInfo()->scene << std::endl;
-	std::cout << "filename: " << file.imageInfo()->filename << std::endl;
+	gdcm::ImageReader r;
+	r.SetFileName(filename.c_str());
+	if (!r.Read())
+	{
+	  std::cerr << "error: cannot open file '" << filename << "'!";
+	  abort();
+	}
 
-	//Magick::Pixels::Pixels pixels(file);
-	//std::cout << "sizeof PixelPacket: " << sizeof (pixel_cache) << std::endl;
-	//std::cout << "sizeof *PixelPacket: " << sizeof (*pixel_cache) << std::endl;
+	gdcm::File &file = r.GetFile();
+	gdcm::DataSet& ds = file.GetDataSet();
 
-	trace::exiting("mln::io::magick::load");
+	gdcm::Image& image = r.GetImage();
+
+	std::cout << std::endl << "Image information" << std::endl
+		  << "=================" << std::endl;
+	image.Print(std::cout);
+
+	std::cout << std::endl << "Buffer information" << std::endl
+		  << "=================" << std::endl;
+	std::cout << "Buffer length: " << image.GetBufferLength() << std::endl;
+	char* dataBuffer = new char[image.GetBufferLength()];
+	if (image.GetBuffer(dataBuffer))
+	  std::cout << "GetBuffer success" << std::endl;
+	else
+	  std::cout << "GetBuffer failure" << std::endl;
+
+	int ndims = image.GetNumberOfDimensions();
+	const unsigned int* dims = image.GetDimensions();
+
+	// FIXME: Check ScalarType
+	if (ndims == 1)
+	{
+
+	}
+	if (ndims == 2)
+	{
+	  //image2d<int_u16> mln_ima(dims[1], dims[0]);
+	  //mln_piter(image2d<int_u16>) p(ima.domain());
+	  //for_all(p)
+	  //{
+	  //  ima(p) = dataBuffer[(p.col() + p.row() * dims[0]) * 2] * 256 +
+	//	     dataBuffer[(p.col() + p.row() * dims[0]) * 2 + 1];
+	  //}
+	}
+	if (ndims == 3)
+	{
+	  //image3d<int_u16> ima(dims[2], dims[1], dims[0]);
+	  mln_site(I) pmin(0, 0, 0);
+	  mln_site(I) pmax(dims[2], dims[1], dims[0]);
+	  mln_concrete(I) result(box<mln_site(I)>(pmin, pmax));
+	  initialize(ima, result);
+	  mln_piter(image3d<int_u16>) p(ima.domain());
+	  for_all(p)
+	  {
+	    ima(p) = dataBuffer[(p.col() + p.row() * dims[0] + p.sli() * dims[0] * dims[1]) * 2] * 256+
+		     dataBuffer[(p.col() + p.row() * dims[0] + p.sli() * dims[0] * dims[1]) * 2 + 1];
+	  }
+	}
+
+	trace::exiting("mln::io::dicom::load");
       }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::io::magick
+    } // end of namespace mln::io::dicom
 
   } // end of namespace mln::io
 
 } // end of namespace mln
 
 
-#endif // ! MLN_IO_MAGICK_LOAD_HH
+#endif // ! MLN_IO_DICOM_LOAD_HH

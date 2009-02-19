@@ -1,3 +1,13 @@
+2009-02-19  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Experiment DICOM support with GDCM.
+	* fabien/gdcm/Makefile: Specific Makefile to test.
+	* fabien/gdcm/gdcm.cc: New test file.
+	* fabien/gdcm/load.hh: Implement GDCM DICOM support.
+	* fabien/magick/Makefile: Update.
+	* fabien/magick/load.hh: Update ImageMagick DICOM support.
+	* fabien/magick/magick.cc: Update.
+
 2009-02-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add sample code of 'inf' for Fred.

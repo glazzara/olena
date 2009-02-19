@@ -10,5 +10,6 @@ int main()
 
   image2d<int_u8> lena;
 
-  io::magick::load(lena, "/Users/HiSoKa/Work/LRDE/Olena/resources/CardiacCT/178562160.dcm");
+  //io::magick::load(lena, "/Users/HiSoKa/Work/LRDE/Olena/resources/CardiacCT/178562160.dcm");
+  io::magick::load(lena, "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0052.dcm");
 }
