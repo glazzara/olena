@@ -1,3 +1,10 @@
+2009-02-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add sample code of 'inf' for Fred.
+
+	* theo/csi: New directory.
+	* theo/csi/fred.cc: New.
+
 2009-02-17  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add sandbox for ImageMagick support.
