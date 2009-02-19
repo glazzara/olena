@@ -1,3 +1,11 @@
+2009-02-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a resolve mechanism for use in meta functions.
+
+	* mln/fun/internal/resolve.hh New.
+	* mln/metal/is_a.hh (mlc_is_a__1comma): New macro.
+	* mln/trait/solve_binary.hh: Upgrade file doc style.
+
 2009-02-18 Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Various small fixes.

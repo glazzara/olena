@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_METAL_IS_A_HH
 # define MLN_METAL_IS_A_HH
 
-/*! \file mln/metal/is_a.hh
- *
- *  \brief Definition of a type that means "is_a".
- */
+/// \file mln/metal/is_a.hh
+///
+/// \brief Definition of a type that means "is_a".
 
 # include <mln/metal/bool.hh>
 
@@ -45,6 +45,11 @@
 /// This macro is the recommended user interface of the "is_a"
 /// facility.
 # define mlc_is_a(T, M) mln::metal::is_a<T, M>
+
+
+// Allows to write somthing like "mlc_is_a(T<P1,P2>, M)" without
+// getting trouble with the preprocessor due to the 1st comma.
+# define mlc_is_a__1comma(Tleft, Tright, M) mln::metal::is_a< Tleft,Tright , M >
 
 
 
