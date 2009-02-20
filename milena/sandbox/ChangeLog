@@ -1,3 +1,30 @@
+2009-02-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup sandbox.
+
+	* lazzara/igr/igr-biggest-comp.cc: new. Variant of igr.cc which
+	extract the biggest component before registrating.
+
+	* lazzara/irm/wst_rag.cc,
+	* lazzara/irm_seg_with_mm_and_rag.mine.cc,
+	* lazzara/igr-cloud.cc,
+	* lazzara/igr.cc,
+	* lazzara/irm/hsl_grad_and_wst.cc,
+	* lazzara/irm/irm_seg_with_mm_and_rag.cc,
+	* lazzara/irm/wst_rag_hsl.cc: Move to...
+
+	* lazzara/igr/irm/wst_rag.cc,
+	* lazzara/igr/irm_seg_with_mm_and_rag.mine.cc,
+	* lazzara/igr/igr-cloud.cc,
+	* lazzara/igr/igr.cc,
+	* lazzara/igr/irm/hsl_grad_and_wst.cc,
+	* lazzara/igr/irm/irm_seg_with,
+	* lazzara/igr/irm/wst_rag_hsl.cc: ... here.
+
+	* lazzara/igr/registration_3d.cc: 3D registration.
+
+	* lazzara/igr/tr_image.cc: quick test on transformed image.
+
 2009-02-20  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Update DICOM support to n dimensions.

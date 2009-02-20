@@ -202,21 +202,10 @@ namespace mln
 
       typedef extension_fun<I,pw::cst_<mln_value(I)> > ext_P_t;
       ext_P_t ext_P(P, pw::cst(value::rgb8(literal::black)));
-      tr_image<box3d, ext_P_t, T> trima(P.domain(), ext_P, transf);
+      typedef interpolated<ext_P_t, fun::x2v::bilinear> inter_t;
+      inter_t inter(ext_P);
+      tr_image<box3d, inter_t, T> trima(X.domain(), inter, transf);
       io::ppm::save(slice(trima, 0), "trima.ppm");
-
-      I reg(X.domain());
-      data::fill(reg, literal::black);
-      mln_piter(I) p(P.domain());
-      for_all(p)
-	if (reg.domain().has(transf(p.to_vec())))
-	  reg(transf(p.to_vec())) = P(p);
-      io::ppm::save(slice(reg,0), "registered-2.ppm");
-
-      I tmp2 = duplicate(X);
-      fun::p2b::big_chess<box3d> fun2(tmp2.domain(), 20);
-      data::paste((reg | fun2), tmp2);
-      io::ppm::save(slice(tmp2,0), "registration_filter-a.ppm");
 
       I tmp = duplicate(X);
       fun::p2b::big_chess<box3d> fun(tmp.domain(), 20);
