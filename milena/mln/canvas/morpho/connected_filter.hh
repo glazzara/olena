@@ -74,11 +74,8 @@ namespace mln {
 	void take_as_init_fastest (trait::accumulator::when_pix::use_none, A& accu,
 			   const I& input, const unsigned p)
 	{
-<<<<<<< HEAD:milena/mln/canvas/morpho/connected_filter.hh
 	  (void)input;
 	  (void)p;
-=======
->>>>>>> Merge leveling and algebraic filters into connected filter.:milena/mln/canvas/morpho/connected_filter.hh
 	  accu.take_as_init ();
 	}
 
@@ -86,10 +83,7 @@ namespace mln {
 	void take_as_init (trait::accumulator::when_pix::use_p, A& accu,
 			   const I& input, const P& p)
 	{
-<<<<<<< HEAD:milena/mln/canvas/morpho/connected_filter.hh
 	  (void)input;
-=======
->>>>>>> Merge leveling and algebraic filters into connected filter.:milena/mln/canvas/morpho/connected_filter.hh
 	  accu.take_as_init (p);
 	}
 
@@ -97,10 +91,7 @@ namespace mln {
 	void take_as_init (trait::accumulator::when_pix::use_none, A& accu,
 			   const I& input, const P& p)
 	{
-<<<<<<< HEAD:milena/mln/canvas/morpho/connected_filter.hh
 	  (void)input;
-=======
->>>>>>> Merge leveling and algebraic filters into connected filter.:milena/mln/canvas/morpho/connected_filter.hh
 	  accu.take_as_init (p);
 	}
 

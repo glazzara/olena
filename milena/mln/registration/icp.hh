@@ -229,17 +229,18 @@ namespace mln
 
       mln_site(I) operator()(const vec3d_f& v) const
       {
-	vec3d_f best_x = convert::to<vec3d_f>(X_[0].to_vec());
+	vec3d_f best_x = X_[0];
 
 	float best_d = norm::l2_distance(v, best_x);
 	mln_piter(X_t) X_i(X_);
 	for_all(X_i)
 	{
-	  float d = norm::l2_distance(v, convert::to<vec3d_f>(X_i));
+	  vec3d_f X_i_vec = X_i;
+	  float d = norm::l2_distance(v, X_i_vec);
 	  if (d < best_d)
 	  {
 	    best_d = d;
-	    best_x = X_i.to_vec();
+	    best_x = X_i_vec;
 	  }
 	}
 	return best_x;
@@ -266,11 +267,11 @@ namespace mln
 
       mln_piter(p_array<P>) p(kept);
       for_all(p)
-	ext_result(qR.rotate(p.to_vec()) + qT) = literal::green;
+	ext_result(qR.rotate(p) + qT) = literal::green;
 
       mln_piter(p_array<P>) p2(removed);
       for_all(p2)
-	ext_result(qR.rotate(p2.to_vec()) + qT) = literal::red;
+	ext_result(qR.rotate(p2) + qT) = literal::red;
 
       io::ppm::save(slice(ext_result,0), "registered-2.ppm");
     }
@@ -289,7 +290,7 @@ namespace mln
       mln_piter(p_array<P>) p(P_);
       for_all(p)
       {
-	vec3d_f Pk_i = pair.first.rotate(p.to_vec()) + pair.second;
+	vec3d_f Pk_i = pair.first.rotate(p) + pair.second;
 	vec3d_f Yk_i = closest_point(Pk_i).to_vec();
 	// yk_i - pk_i
 	e_k_accu.take(Yk_i - Pk_i);
@@ -317,8 +318,8 @@ namespace mln
 
       for_all(p)
       {
-	vec3d_f Pk_i = pair.first.rotate(p.to_vec()) + pair.second;
-	vec3d_f Yk_i = closest_point(Pk_i).to_vec();
+	vec3d_f Pk_i = pair.first.rotate(p) + pair.second;
+	vec3d_f Yk_i = closest_point(Pk_i);
 
 	int d_i = closest_point.dmap_X_(Pk_i);
 	if (d_i >= d_min && d_i <= d_max)
@@ -399,7 +400,7 @@ namespace mln
       for_all(p)
       {
 	vec3d_f Pk_i = pair.first.rotate(p.to_vec()) + pair.second;
-	vec3d_f Yk_i = closest_point(Pk_i).to_vec();
+	vec3d_f Yk_i = closest_point(Pk_i);
 
 	int d_i = closest_point.dmap_X_(Pk_i);
 	if (d_i >= d_min && d_i <= d_max)
@@ -440,31 +441,27 @@ namespace mln
 			      const std::pair<algebra::quat,mln_vec(P)>& pair,
 			      const std::string& period, const value::rgb8& c)
     {
-# ifndef NDEBUG
       data::fill(out, literal::black);
       data::fill((out | X).rw(), literal::white);
-# endif // !NDEBUG
 
       mln_piter(p_array<P>) p1(P_);
       for_all(p1)
       {
-	vec3d_f Pk_i = pair.first.rotate(p1.to_vec()) + pair.second;
+	vec3d_f Pk_i = pair.first.rotate(p1) + pair.second;
 	out(Pk_i) = literal::red;
       }
 
       mln_piter(p_array<P>) p2(P_sub);
       for_all(p2)
       {
-	vec3d_f Pk_i = pair.first.rotate(p2.to_vec()) + pair.second;
+	vec3d_f Pk_i = pair.first.rotate(p2) + pair.second;
 	out(Pk_i) = c;
       }
 
-# ifndef NDEBUG
       std::ostringstream ss;
       ss << prefix << "_" << r << "_" << period << ".ppm";
 
       io::ppm::save(slice(out,0), ss.str());
-# endif // ! NDEBUG
     }
 
 
@@ -483,8 +480,9 @@ namespace mln
       for_all(p)
       {
 	// yk_i - pk+1_i
-	vec3d_f Pk_i = qR_old.rotate(p.to_vec()) + qT_old;
-	vec3d_f Pk_1_i = qR.rotate(p.to_vec()) + qT;
+	vec3d_f P_i = p;
+	vec3d_f Pk_i = qR_old.rotate(P_i) + qT_old;
+	vec3d_f Pk_1_i = qR.rotate(P_i) + qT;
         accu.take(closest_point(Pk_i).to_vec() - Pk_1_i);
       }
       return accu.to_result();
@@ -508,9 +506,9 @@ namespace mln
       // FIXME: could we use an accu?
       for_all(p)
       {
-	vec3d_f P_i  = p.to_vec();
-	vec3d_f Pk_i = qR.rotate(p.to_vec()) + qT;
-	vec3d_f Yk_i = closest_point(Pk_i).to_vec();
+	vec3d_f P_i  = p;
+	vec3d_f Pk_i = qR.rotate(P_i) + qT;
+	vec3d_f Yk_i = closest_point(Pk_i);
 	Spx += make::mat(P_i - mu_P) * trans(make::mat(Yk_i - mu_Yk));
       }
       Spx /= P_.nsites();
@@ -564,7 +562,7 @@ namespace mln
       {
 	// yk_i - pk_i
 	vec3d_f Pk_i = qR.rotate(p.to_vec()) + qT;
-	vec3d_f Yk_i = closest_point(Pk_i).to_vec();
+	vec3d_f Yk_i = closest_point(Pk_i);
 	mu_yk.take(Yk_i);
         e_k_accu.take(Yk_i - Pk_i);
       }
@@ -641,7 +639,7 @@ namespace mln
 	image3d<value::rgb8> tmp_ = duplicate(debug);
 	mln_piter(p_array<P>) p_dbg(P_);
 	for_all(p_dbg)
-	  tmp_(qR_old.rotate(p_dbg.to_vec()) + qT_old) = literal::green;
+	  tmp_(qR_old.rotate(p_dbg) + qT_old) = literal::green;
 	std::ostringstream ss;
 	ss << "tmp_0";
 	if (k < 10)
