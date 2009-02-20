@@ -77,10 +77,15 @@ namespace mln
 
           using super_::operator();
 
-          /// Set the new second transformation.
-          void set_first(const T2& f);
+	  /// Set the new second transformation.
+          const T2& second() const;
           /// Set the new first transformation.
-          void set_second(const T1& g);
+	  const T1& first() const;
+
+          /// Set the new second transformation.
+          void set_second(const T2& f);
+          /// Set the new first transformation.
+          void set_first(const T1& g);
 
           /// Type of the inverse function.
           typedef composed<mln_invert(T1),mln_invert(T2)> invert;
@@ -111,9 +116,14 @@ namespace mln
           using super_::operator();
 
           /// Set the new second transformation.
-          void set_first(const T2& f);
+          void set_second(const T2& f);
           /// Set the new first transformation.
-          void set_second(const T1& g);
+          void set_first(const T1& g);
+
+	  /// Set the new second transformation.
+	  const T2& second() const;
+          /// Set the new first transformation.
+          const T1& first() const;
 
           //protected:
 
@@ -198,7 +208,7 @@ namespace mln
         template <typename T2, typename T1, typename E>
         inline
         void
-        helper_composed_<T2,T1,E,true>::set_first(const T2& f)
+        helper_composed_<T2,T1,E,true>::set_second(const T2& f)
         {
           this->f_ = f;
           this->m_ = this->f_.mat() * this->g_.mat();
@@ -207,10 +217,26 @@ namespace mln
         template <typename T2, typename T1, typename E>
         inline
         void
-        helper_composed_<T2,T1,E,true>::set_second(const T1& g)
+        helper_composed_<T2,T1,E,true>::set_first(const T1& g)
         {
           this->g_ = g;
           this->m_ = this->f_.mat() * this->g_.mat();
+        }
+
+	template <typename T2, typename T1, typename E>
+        inline
+        const T2&
+        helper_composed_<T2,T1,E,true>::second() const
+        {
+	  return this->f_;
+        }
+
+        template <typename T2, typename T1, typename E>
+        inline
+        const T1&
+        helper_composed_<T2,T1,E,true>::first() const
+        {
+	  return this->g_;
         }
 
         // Implementation of the non bijective version.
@@ -232,7 +258,7 @@ namespace mln
         template <typename T2, typename T1, typename E>
         inline
         void
-        helper_composed_<T2,T1,E,false>::set_first(const T2& f)
+        helper_composed_<T2,T1,E,false>::set_second(const T2& f)
         {
           this->f_ = f;
           this->m_ = this->f_.mat() * this->g_.mat();
@@ -241,11 +267,28 @@ namespace mln
         template <typename T2, typename T1, typename E>
         inline
         void
-        helper_composed_<T2,T1,E,false>::set_second(const T1& g)
+        helper_composed_<T2,T1,E,false>::set_first(const T1& g)
         {
           this->g_ = g;
           this->m_ = this->f_.mat() * this->g_.mat();
         }
+
+	template <typename T2, typename T1, typename E>
+        inline
+        const T2&
+        helper_composed_<T2,T1,E,false>::second() const
+        {
+	  return this->f_;
+        }
+
+        template <typename T2, typename T1, typename E>
+        inline
+        const T1&
+        helper_composed_<T2,T1,E,false>::first() const
+        {
+	  return this->g_;
+        }
+
 
       } // end of namespace mln::fun::x2x::internal
 
