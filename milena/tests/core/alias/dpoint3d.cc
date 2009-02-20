@@ -49,5 +49,5 @@ int main()
   mln_assertion(q == p + dp);
 
   algebra::vec<3, float> v = dp;
-  mln_assertion(v[1] == 6);
+  mln_assertion(v[0] == 6);
 }

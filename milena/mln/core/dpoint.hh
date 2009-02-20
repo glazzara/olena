@@ -125,7 +125,7 @@ namespace mln
     operator mln::algebra::vec<dpoint<G,C>::dim, Q>() const;
 
     /// Explicit conversion.
-    const vec& to_vec() const;
+    vec to_vec() const;
 
   protected:
     mln::algebra::vec<G::dim, C> coord_;
@@ -161,7 +161,17 @@ namespace mln
   inline
   dpoint<G,C>::dpoint(const algebra::vec<dim,C2>& v)
   {
-    coord_ = v;
+    // FIXME: to be improved.
+    if (dim < 3)
+      coord_ = v;
+    else
+    {
+      unsigned j = 0;
+      for (unsigned i = dim - 2; i < dim; ++i)
+	coord_[i] = v[j++];
+      for (unsigned i = 2; i < dim; ++i, ++j)
+	coord_[i-j] = v[j];
+    }
   }
 
   template <typename G, typename C>
@@ -249,15 +259,29 @@ namespace mln
   inline
   dpoint<G,C>::operator mln::algebra::vec<dpoint<G,C>::dim, Q> () const
   {
-    return coord_;
+    return to_vec();
   }
 
   template <typename G, typename C>
   inline
-  const typename dpoint<G,C>::vec&
+  typename dpoint<G,C>::vec
   dpoint<G,C>::to_vec() const
   {
-    return coord_;
+    algebra::vec<G::dim, float> tmp;
+
+    // FIXME: to be improved.
+    if (dim == 1)
+      tmp[0] = coord_[0];
+    else
+    {
+      unsigned j = 0;
+      for (unsigned i = dim - 2; i < dim; ++i)
+	tmp[j++] = coord_[i];
+      for (unsigned i = 2; i < dim; ++i, ++j)
+	tmp[j] = coord_[i-j];
+    }
+
+    return tmp;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

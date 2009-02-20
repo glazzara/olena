@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/algebra/h_vec.cc
- *
- * \brief Tests on mln::algebra::h_vec.
- */
+/// \file tests/algebra/h_vec.cc
+///
+/// Tests on mln::algebra::h_vec.
 
 #include <mln/algebra/h_vec.hh>
 #include <mln/core/alias/point3d.hh>
@@ -36,11 +36,11 @@
 using namespace mln;
 
 
-void run_in_3d(const algebra::vec<3, def::coord>&)
+void run_in_3d(const algebra::vec<3, float>&)
 {
 }
 
-void run_in_3d_h(const algebra::h_vec<3, def::coord>&)
+void run_in_3d_h(const algebra::h_vec<3, float>&)
 {
 }
 

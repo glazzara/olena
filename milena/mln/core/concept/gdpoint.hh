@@ -166,7 +166,7 @@ namespace mln
   {
     typedef mln_grid(E) grid;
     typedef mln_vec(E)  vec;
-    const vec& (E::*m)() const = & E::to_vec;
+    vec (E::*m)() const = & E::to_vec;
     m = 0;
   }
 

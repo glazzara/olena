@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/alias/point1d.cc
- *
- * \brief Tests on mln::point1d.
- */
+/// \file tests/core/alias/point1d.cc
+///
+/// Tests on mln::point1d.
 
 #include <mln/core/alias/point1d.hh>
 
@@ -43,7 +43,7 @@ int main()
   // assignment
 
   p[0] = 4;
-  algebra::vec<1,def::coord> v = p;
+  algebra::vec<1,float> v = p;
 
   p.ind() += 1;
   mln_assertion(p.ind() == 5 && p[0] == 5);

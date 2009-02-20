@@ -1,5 +1,26 @@
 2009-02-20 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Reorder data in the vector returned by to_vec().
+
+	* mln/core/concept/gdpoint.hh,
+	* mln/core/concept/gpoint.hh: make to_vec return a new object.
+
+	* mln/core/dpoint.hh,
+	* mln/core/point.hh: make to_vec return a vector of float with
+	coordinates ordered as a user would expect, (x,y,z...).
+
+	* mln/fun/x2v/bilinear.hh,
+	* mln/fun/x2v/trilinear.hh: get the coordinates in the proper vector
+	index.
+
+	* mln/fun/x2x/rotation.hh: normalize the axis.
+
+	* tests/algebra/h_vec.cc,
+	* tests/core/alias/dpoint3d.cc,
+	* tests/core/alias/point1d.cc: fix tests according these changes.
+
+2009-02-20 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Revert patch #3397.
 
 	* mln/algebra/quat.hh,
