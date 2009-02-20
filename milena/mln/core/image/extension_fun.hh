@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -264,6 +265,17 @@ namespace mln
   void init_(tag::extension_t, F& target, const extension_fun<I,F>& model)
   {
     target = model.extension();
+  }
+
+  template <typename I, typename F>
+  extension_fun<I,F>
+  extended_with(Image<I>& ima, const Function_v2v<F>& f)
+  {
+    mlc_not_equal(mln_trait_image_ext_domain(I),
+		  trait::image::ext_domain::none)::check();
+    mln_precondition(exact(ima).is_valid());
+    extension_fun<I,F> tmp(exact(ima), exact(f));
+    return tmp;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
