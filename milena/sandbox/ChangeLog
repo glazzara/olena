@@ -1,5 +1,12 @@
 2009-02-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add csv2vtk converter.
+
+	* lazzara/csv2vtk/csv2vtk.cc: convert a cloud of points in CSV format
+	to a VTK file.
+
+2009-02-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Cleanup sandbox.
 
 	* lazzara/igr/igr-biggest-comp.cc: new. Variant of igr.cc which
