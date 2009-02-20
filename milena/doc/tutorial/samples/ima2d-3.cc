@@ -1,6 +1,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/box2d.hh>
 #include <mln/opt/at.hh>
+#include <mln/value/int_u8.hh>
 
 int main()
 {

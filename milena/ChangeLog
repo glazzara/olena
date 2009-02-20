@@ -1,3 +1,23 @@
+2009-02-20 Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix doc generation.
+
+	* doc/Doxyfile.in,
+	* doc/doc.mk,
+	* doc/tutorial/tools/split_sample.sh,
+	* doc/tutorial/tutorial.tex: fix typo.
+
+	* doc/tutorial/Makefile.am: use $(srcdir) instead of $(top_srcdir).
+
+	* doc/tutorial/examples/examples.mk,
+	* doc/tutorial/figures/figures.mk,
+	* doc/tutorial/outputs/outputs.mk,
+	* doc/tutorial/samples/samples.mk: update.
+
+	* doc/tutorial/figures/tuto2_first_image-1.pbm: new figure.
+
+	* doc/tutorial/samples/ima2d-3.cc: fix missing include.
+
 2009-02-19 Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Give access to the underlying transformation in fun::x2x:composed.
