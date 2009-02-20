@@ -13,6 +13,6 @@ int main()
 
   image3d<int_u16> lena;
 
-  io::dicom::load(lena, "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0052.dcm");
-  io::dump::save(lena, "IM_0052.dump");
+  io::dicom::load(lena, "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0061.dcm");
+  io::dump::save(lena, "IM_0061.dump");
 }

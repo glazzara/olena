@@ -143,10 +143,7 @@ namespace mln
 		  << "=================" << std::endl;
 	std::cout << "Buffer length: " << image.GetBufferLength() << std::endl;
 	char* dataBuffer = new char[image.GetBufferLength()];
-	if (image.GetBuffer(dataBuffer))
-	  std::cout << "GetBuffer success" << std::endl;
-	else
-	  std::cout << "GetBuffer failure" << std::endl;
+	image.GetBuffer(dataBuffer);
 
 	int ndims = image.GetNumberOfDimensions();
 	const unsigned int* dims = image.GetDimensions();
@@ -170,16 +167,23 @@ namespace mln
 	{
 	  //image3d<int_u16> ima(dims[2], dims[1], dims[0]);
 	  mln_site(I) pmin(0, 0, 0);
-	  mln_site(I) pmax(dims[2], dims[1], dims[0]);
+	  mln_site(I) pmax(dims[2] - 1, dims[1] - 1, dims[0] - 1);
 	  mln_concrete(I) result(box<mln_site(I)>(pmin, pmax));
 	  initialize(ima, result);
-	  mln_piter(image3d<int_u16>) p(ima.domain());
+	  mln_piter(I) p(ima.domain());
 	  for_all(p)
 	  {
-	    ima(p) = dataBuffer[(p.col() + p.row() * dims[0] + p.sli() * dims[0] * dims[1]) * 2] * 256+
+	    ima(p) = dataBuffer[(p.col() + p.row() * dims[0] + p.sli() * dims[0] * dims[1]) * 2] * 256 +
 		     dataBuffer[(p.col() + p.row() * dims[0] + p.sli() * dims[0] * dims[1]) * 2 + 1];
+	    std::cout << (p.col() + p.row() * dims[0] + p.sli() * dims[0] * dims[1]) * 2 << " ["
+		      << "p.col = " << p.col() << "] ["
+		      << "p.row = " << p.row() << "] ["
+		      << "p.sli = " << p.sli() << "]"
+		      << std::endl;
 	  }
 	}
+
+	delete(dataBuffer);
 
 	trace::exiting("mln::io::dicom::load");
       }

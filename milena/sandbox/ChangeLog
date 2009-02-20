@@ -1,3 +1,12 @@
+2009-02-20  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Update DICOM loader.
+	* fabien/gdcm/Makefile: Update.
+	* fabien/gdcm/dump2pgm.cc: New tool to convert dump volume
+	  to a pgm flat image.
+	* fabien/gdcm/gdcm.cc: Update.
+	* fabien/gdcm/load.hh: Update.
+
 2009-02-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add sample code for Edwin.
