@@ -39,7 +39,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/image3d.hh>
 
-# include <mln/value/int_u16.hh>
+# include <mln/algebra/vec.hh>
 
 # include <gdcmReader.h>
 # include <gdcmImageReader.h>
@@ -57,7 +57,7 @@ namespace mln
     namespace dicom
     {
 
-      /*! Load a gdcm image in a Milena image.
+      /*! Load a dicom image in a Milena image.
        *
        * \param[out] ima A reference to the image which will receive
        * data.
@@ -66,28 +66,6 @@ namespace mln
       template <typename I>
       void load(Image<I>& ima,
 		const std::string& filename);
-
-      /*! Load a gdcm image in a Milena image. To use this routine, you
-       *  should specialize the template whith the value type of the
-       *  image loaded. (ex : load<value::int_u8>("...") )
-       *
-       * \param[in] filename The image source.
-       *
-       * \return An image2d which contains loaded data.
-       */
-      template <typename V>
-      image2d<V> load(const std::string& filename);
-
-      /*! Load a gdcm image in a Milena image. To use this routine, you
-       *  should specialize the template whith the value type of the
-       *  image loaded. (ex : load<value::int_u8>("...") )
-       *
-       * \param[in] filename The image source.
-       *
-       * \return An image2d which contains loaded data.
-       */
-      template <typename V>
-      image3d<V> load(const std::string& filename);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -135,52 +113,40 @@ namespace mln
 
 	gdcm::Image& image = r.GetImage();
 
-	std::cout << std::endl << "Image information" << std::endl
-		  << "=================" << std::endl;
-	image.Print(std::cout);
-
-	std::cout << std::endl << "Buffer information" << std::endl
-		  << "=================" << std::endl;
-	std::cout << "Buffer length: " << image.GetBufferLength() << std::endl;
 	char* dataBuffer = new char[image.GetBufferLength()];
 	image.GetBuffer(dataBuffer);
 
 	int ndims = image.GetNumberOfDimensions();
 	const unsigned int* dims = image.GetDimensions();
 
-	// FIXME: Check ScalarType
-	if (ndims == 1)
+	algebra::vec<mln_site_(I)::dim, unsigned int> vmin;
+	algebra::vec<mln_site_(I)::dim, unsigned int> vmax;
+	algebra::vec<mln_site_(I)::dim, unsigned int> vdims;
+	for (int i = ndims - 1; i >= 0; --i)
 	{
+	  vmin[i] = 0;
+	  vmax[i] = dims[ndims - i - 1] - 1;
+	  if (i == ndims - 1)
+	    vdims[i] = 1;
+	  else
+	    vdims[i] = dims[ndims - i - 2] * vdims[i + 1];
+	}
 
-	}
-	if (ndims == 2)
+	mln_site(I) pmin(vmin);
+	mln_site(I) pmax(vmax);
+	mln_concrete(I) result(box<mln_site(I)>(pmin, pmax));
+	initialize(ima, result);
+	mln_piter(I) p(ima.domain());
+	// FIXME: Check ScalarType and HighBit
+	unsigned int index = 0;
+	for_all(p)
 	{
-	  //image2d<int_u16> mln_ima(dims[1], dims[0]);
-	  //mln_piter(image2d<int_u16>) p(ima.domain());
-	  //for_all(p)
-	  //{
-	  //  ima(p) = dataBuffer[(p.col() + p.row() * dims[0]) * 2] * 256 +
-	//	     dataBuffer[(p.col() + p.row() * dims[0]) * 2 + 1];
-	  //}
-	}
-	if (ndims == 3)
-	{
-	  //image3d<int_u16> ima(dims[2], dims[1], dims[0]);
-	  mln_site(I) pmin(0, 0, 0);
-	  mln_site(I) pmax(dims[2] - 1, dims[1] - 1, dims[0] - 1);
-	  mln_concrete(I) result(box<mln_site(I)>(pmin, pmax));
-	  initialize(ima, result);
-	  mln_piter(I) p(ima.domain());
-	  for_all(p)
+	  index = 0;
+	  for (int i = 0; i < ndims; ++i)
 	  {
-	    ima(p) = dataBuffer[(p.col() + p.row() * dims[0] + p.sli() * dims[0] * dims[1]) * 2] * 256 +
-		     dataBuffer[(p.col() + p.row() * dims[0] + p.sli() * dims[0] * dims[1]) * 2 + 1];
-	    std::cout << (p.col() + p.row() * dims[0] + p.sli() * dims[0] * dims[1]) * 2 << " ["
-		      << "p.col = " << p.col() << "] ["
-		      << "p.row = " << p.row() << "] ["
-		      << "p.sli = " << p.sli() << "]"
-		      << std::endl;
+	    index += p.to_site().to_vec()[i] * vdims[i];
 	  }
+	  ima(p) = dataBuffer[index * 2] * 256 + dataBuffer[index * 2 + 1];
 	}
 
 	delete(dataBuffer);

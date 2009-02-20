@@ -1,5 +1,12 @@
 2009-02-20  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
+	Update DICOM support to n dimensions.
+	* fabien/gdcm/gdcm.cc: Update.
+	* fabien/gdcm/load.hh: Update load support for
+	  multidimensional DICOM.
+
+2009-02-20  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
 	Update DICOM loader.
 	* fabien/gdcm/Makefile: Update.
 	* fabien/gdcm/dump2pgm.cc: New tool to convert dump volume
