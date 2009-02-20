@@ -1,5 +1,12 @@
 2009-02-20 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add implicit conversion from algebra::quat to algebra::vec.
+
+	* mln/algebra/quat.hh: add implicit conversion operator to
+	algebra::vec.
+
+2009-02-20 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update ICP.
 
 	* mln/registration/icp.hh: store point indexes instead of points in
