@@ -1,3 +1,7 @@
+2009-02-20 Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: configure tests/fun/l2l.
+
 2009-02-18 Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* configure.ac: configure tests/morpho/watershed and
