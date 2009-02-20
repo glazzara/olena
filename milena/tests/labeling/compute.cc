@@ -37,6 +37,7 @@
 #include <mln/accu/count.hh>
 #include <mln/accu/sum.hh>
 #include <mln/value/int_u8.hh>
+#include <mln/value/label_8.hh>
 #include <mln/util/array.hh>
 
 int main()

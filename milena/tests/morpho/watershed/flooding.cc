@@ -46,6 +46,7 @@
 
 #include <mln/util/timer.hh>
 
+#include "tests/data.hh"
 
 struct f_16_to_8 : mln::Function_v2v< f_16_to_8 >
 {
@@ -66,7 +67,7 @@ int main()
   using value::int_u16;
 
   image2d<int_u8> input;
-  io::pgm::load(input, "/squares.pgm");
+  io::pgm::load(input, MLN_IMG_DIR "/squares.pgm");
 
   typedef int_u16 L;
   L n_basins;

@@ -36,7 +36,7 @@
 # include <cmath>
 # include <cstdlib>
 
-# include <mln/value/all.hh>
+# include <mln/value/int_u.hh>
 
 
 namespace mln

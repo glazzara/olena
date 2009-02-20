@@ -34,6 +34,7 @@
 /// component.
 
 # include <mln/accu/internal/base.hh>
+# include <mln/util/pix.hh>
 
 
 namespace mln

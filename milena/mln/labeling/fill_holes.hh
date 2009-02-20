@@ -89,11 +89,11 @@ namespace mln
       accu::count<mln_value(I)> a_;
       util::array<unsigned> arr = labeling::compute(a_, input, lbls, nlabels);
 
-      int bg_count = 0;
-      int bg_lbl = 0;
+      unsigned bg_count = 0;
+      unsigned bg_lbl = 0;
 
       // We start at 1 to ignore the object.
-      for (int i = 1; i < arr.nelements(); ++i)
+      for (unsigned i = 1; i < arr.nelements(); ++i)
       {
 	if (arr[i] > bg_count)
 	{

@@ -36,6 +36,7 @@
 
 # include <mln/accu/internal/base.hh>
 # include <mln/math/diff_abs.hh>
+# include <mln/util/pix.hh>
 
 
 namespace mln

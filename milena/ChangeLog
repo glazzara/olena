@@ -1,5 +1,44 @@
 2009-02-20 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix tests.
+
+	* generate_dist_headers.sh: add only .hh and .hxx to headers.mk.
+
+	* headers.mk: update.
+
+	* mln/canvas/morpho/algebraic_filter.hh: fix wrong merge.
+
+	* mln/debug/println_with_border.spe.hh: check the right guards.
+
+	* mln/fun/v2v/rgb_to_hsl.hh: do not include rgb aliases.
+
+	* mln/labeling/fill_holes.hh: use unsigned instead of int. Avoid
+	warnings.
+
+	* tests/labeling/compute.cc,
+	* mln/morpho/attribute/card.hh
+	* mln/morpho/attribute/sum.hh
+	* mln/morpho/attribute/volume.hh
+	* mln/labeling/mean_values.hh: add missing includes.
+
+	* mln/math/abs.hh: include only int_u.hh.
+
+	* tests/registration/multiscale.cc,
+	* mln/registration/multiscale.hh: remove.
+	
+	* tests/registration/Makefile.am: remove multiscale.cc from test list.
+
+	* mln/value/rgb.hh: fix a recursive inclusion.
+
+	* tests/morpho/watershed/flooding.cc: fix path to test image.
+
+	* tests/registration/registration.cc: fix according update made in
+	registration.hh.
+
+	* tests/unit_test/unit-tests.mk: update list.
+
+2009-02-20 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix doc generation.
 
 	* doc/Doxyfile.in,

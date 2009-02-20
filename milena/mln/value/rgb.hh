@@ -45,9 +45,6 @@
 # include <mln/value/int_u.hh>
 # include <mln/algebra/vec.hh>
 
-// Needed by from_to_.
-# include <mln/fun/v2v/rgb_to_hsl.hh>
-
 namespace mln
 {
 
@@ -378,7 +375,22 @@ namespace mln
     /// \}
 
 
+  } // end of namespace mln::value
+
+} // end of namespace mln
+
+
+// Needed by from_to_.
+# include <mln/fun/v2v/rgb_to_hsl.hh>
+
+
 # ifndef MLN_INCLUDE_ONLY
+
+namespace mln
+{
+
+  namespace value
+  {
 
     /*---------------.
     | Construction.  |

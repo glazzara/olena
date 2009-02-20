@@ -36,8 +36,7 @@
 
 # include <mln/trait/value_.hh>
 
-# include <mln/value/rgb8.hh>
-# include <mln/value/rgb16.hh>
+# include <mln/value/rgb.hh>
 
 namespace mln
 {

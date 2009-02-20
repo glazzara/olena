@@ -31,20 +31,29 @@
 ///
 
 #include "tests/data.hh"
-#include <mln/io/pbm/all.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
 #include <mln/registration/registration.hh>
+#include <mln/make/image3d.hh>
+#include <mln/io/pbm/all.hh>
 
 int main()
 {
   using namespace mln;
 
-  image2d< bool > img1;
-  image2d< bool > img2;
+  image2d<bool> img1_;
+  image2d<bool> img2_;
 
   //load images
-  io::pbm::load(img1, MLN_IMG_DIR "/lena.pbm");
-  io::pbm::load(img2, MLN_IMG_DIR "/lena.pbm");
+  io::pbm::load(img1_, MLN_IMG_DIR "/fly.pbm");
+  io::pbm::load(img2_, MLN_IMG_DIR "/fly.pbm");
 
-  registration::registration(img1,img2);
+  image3d<bool> img1 = make::image3d(img1_);
+  image3d<bool> img2 = make::image3d(img2_);
+
+  typedef p_array<point3d> arr_t;
+  arr_t arr1 = convert::to<arr_t>(img1);
+  arr_t arr2 = convert::to<arr_t>(img2);
+  registration::registration1(arr1,arr2);
   //FIXME: Auto test result
 }

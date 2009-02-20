@@ -33,6 +33,8 @@
 
 # include <mln/accu/mean.hh>
 
+# include <mln/level/transform.hh>
+
 # include <mln/labeling/compute.hh>
 
 # include <mln/literal/colors.hh>

@@ -38,6 +38,7 @@
 # include <mln/value/builtin/all.hh> // In the case of summing builtin values.
 # include <mln/literal/zero.hh>      // For initialization.
 
+# include <mln/util/pix.hh>
 
 namespace mln
 {

@@ -108,6 +108,7 @@ namespace mln
 	    const I& input = exact(input_);
 	    const N& nbh   = exact(nbh_);
 	    const S& s     = exact(s_);
+	    (void) accu_;
 
 	    mln_concrete(I) output;
 	    initialize(output, input);
@@ -231,6 +232,7 @@ namespace mln
 
 	  const I& input = exact(input_);
 	  const N& nbh   = exact(nbh_);
+	  (void) accu_;
 
 	  extension::adjust(input, nbh);
 
