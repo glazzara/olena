@@ -1,5 +1,18 @@
 2009-02-20 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Revert patch #3397.
+
+	* mln/algebra/quat.hh,
+	* mln/core/concept/gpoint.hh,
+	* mln/core/point.hh,
+	* mln/fun/x2v/bilinear.hh,
+	* mln/fun/x2v/trilinear.hh,
+	* mln/fun/x2x/rotation.hh,
+	* mln/registration/icp.hh: undo changes.
+
+
+2009-02-20 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix tests.
 
 	* generate_dist_headers.sh: add only .hh and .hxx to headers.mk.

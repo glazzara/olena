@@ -79,7 +79,7 @@ namespace mln
       template <typename I>
       bilinear<I>::bilinear(const I& ima) : ima(ima)
       {
-        mlc_or(mlc_bool(I::psite::dim == 2), mlc_bool(I::psite::dim == 3))::check();
+        //mlc_bool(I::psite::dim == 2)::check();
       }
 
       template <typename I>
@@ -141,14 +141,14 @@ namespace mln
         //   |      |     |
         //  q11----r1----q21
 
-        double x = v[0];
-        double y = v[1];
+        double x = v[1];
+        double y = v[2];
 
         double x1 = std::floor(x);
         double x2 = std::floor(x) + 1;
         double y1 = std::floor(y);
         double y2 = std::floor(y) + 1;
-	def::coord z  = math::round<float>()(v[3]);
+	def::coord z  = math::round<float>()(v[0]);
 
         //Following access are supposed valid.
         vsum q11 = ima(point3d(z, static_cast<unsigned>(x1), static_cast<unsigned>(y1)));

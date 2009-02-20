@@ -162,11 +162,6 @@ namespace mln
       /// Explicit conversion to a 4D algebra::vec.
       const algebra::vec<4,float>& to_vec() const;
 
-      /// Implicit conversion to a 4D algebra::vec.
-      operator const algebra::vec<4,float>&() const;
-      operator const algebra::vec<4,float>&();
-      operator algebra::vec<4,float>() const;
-      operator algebra::vec<4,float>();
 
       /// Give the scalar part.
       float  s() const;
@@ -343,26 +338,6 @@ namespace mln
     {
       return this->v_;
     }
-
-    inline
-    quat::operator const algebra::vec<4,float>&() const
-    {
-      return this->v_;
-    }
-
-    inline
-    quat::operator const algebra::vec<4,float>&()
-    {
-      return this->v_;
-    }
-
-    inline
-    quat::operator algebra::vec<4,float>()
-    {
-      return this->v_;
-    }
-
-
 
     inline
     float

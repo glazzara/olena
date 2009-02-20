@@ -61,6 +61,22 @@ namespace mln
   /// \}
 
 
+  namespace internal
+  {
+
+    // Helper point_to_.
+
+    template <typename G, typename C>
+    struct point_to_
+    {
+      typedef algebra::vec<G::dim, C> metal_vec;
+      typedef mln::algebra::h_vec<G::dim, C> h_vec;
+    };
+
+  } // end of namespace mln::internal
+
+
+
   /// Generic point class.
   ///
   /// Parameters are \c n the dimension of the space and \c C the
@@ -92,10 +108,10 @@ namespace mln
     typedef C coord;
 
     /// Algebra vector (vec) associated type.
-    typedef algebra::vec<G::dim, float> vec;
+    typedef algebra::vec<G::dim, C> vec;
 
     /// Algebra hexagonal vector (hvec) associated type.
-    typedef algebra::h_vec<G::dim, float> h_vec;
+    typedef algebra::h_vec<G::dim, C> h_vec;
 
     /// Read-only access to the \p i-th coordinate value.
     /// \param[in] i The coordinate index.
@@ -155,17 +171,23 @@ namespace mln
     /// Shifting by \p the inverse of dp.
     point<G,C>& operator-=(const delta& dp);
 
-  /* FIXME: Seems highly non-generic!
+    /// Hook to coordinates.
+    operator typename internal::point_to_<G, C>::metal_vec () const;
+  /* FIXME: Seems highly non-generic!  Moreover, causes
+     overloading/duplicate errors with the previous operator when
+     C == float.  Disable it for the moment.
+
      This (non documented change, even in ChangeLog) change was
      introduce by revision 1224, see
      https://trac.lrde.org/olena/changeset/1224#file2
      https://www.lrde.epita.fr/pipermail/olena-patches/2007-October/001592.html
   */
+#if 0
     operator algebra::vec<G::dim, float> () const;
-    operator algebra::vec<G::dim, float> ();
+#endif
 
     /// Explicit conversion towards mln::algebra::vec.
-    vec to_vec() const;
+    const vec& to_vec() const;
 
     /// Transform to point in homogene coordinate system.
     h_vec to_h_vec() const;
@@ -192,8 +214,7 @@ namespace mln
     template <typename G, typename C, typename E>
     struct subject_point_impl< point<G,C>, E >
     {
-      typename point<G,C>::vec to_vec() const;
-      operator algebra::vec<G::dim, float>() const;
+      const typename point<G,C>::vec& to_vec() const;
 
     private:
       const E& exact_() const;
@@ -260,11 +281,7 @@ namespace mln
   inline
   point<G,C>::point(const algebra::vec<dim,C2>& v)
   {
-    unsigned j = 0;
-    for (unsigned i = dim - 2; i < dim; ++i)
-      coord_[i] = v[j++];
-    for (unsigned i = 2; i < dim; ++i, ++j)
-      coord_[i-j] = v[j];
+    coord_ = v;
   }
 
   template <typename G, typename C>
@@ -389,33 +406,30 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  point<G,C>::operator algebra::vec<G::dim,float> () const
+  point<G,C>::operator typename internal::point_to_<G, C>::metal_vec () const
   {
-    return to_vec();
+    return coord_; // FIXME: Is it OK?
   }
+
+  // FIXME: See declaration of this member above.
+#if 0
+  template <typename G, typename C>
+  inline
+  point<G,C>::operator algebra::vec<G::dim, float> () const
+  {
+    algebra::vec<dim, float> tmp;
+    for (unsigned int i = 0; i < dim; ++i)
+      tmp[i] = coord_[i];
+    return tmp;
+  }
+#endif
 
   template <typename G, typename C>
   inline
-  point<G,C>::operator algebra::vec<G::dim,float> ()
-  {
-    return to_vec();
-  }
-
-
-  template <typename G, typename C>
-  inline
-  typename point<G,C>::vec
+  const typename point<G,C>::vec&
   point<G,C>::to_vec() const
   {
-    algebra::vec<G::dim, float> tmp;
-
-    unsigned j = 0;
-    for (unsigned i = dim - 2; i < dim; ++i)
-      tmp[j++] = coord_[i];
-    for (unsigned i = 2; i < dim; ++i, ++j)
-      tmp[j] = coord_[i-j];
-
-    return tmp;
+    return coord_;
   }
 
   template <typename G, typename C>
@@ -423,15 +437,9 @@ namespace mln
   typename point<G,C>::h_vec
   point<G,C>::to_h_vec() const
   {
-    algebra::h_vec<G::dim, float> tmp;
-
-    unsigned j = 0;
-    for (unsigned i = dim - 2; i < dim; ++i)
-      tmp[j++] = coord_[i];
-
-    for (unsigned i = 2; i < dim; ++i, ++j)
-      tmp[j] = coord_[i-j];
-
+    algebra::h_vec<G::dim, C> tmp;
+    for (unsigned i = 0; i < dim; ++i)
+      tmp[i] = coord_[i];
     tmp[G::dim] = 1;
     return tmp;
   }
@@ -468,27 +476,20 @@ namespace mln
 
     template <typename G, typename C, typename E>
     inline
-    typename point<G,C>::vec
+    const typename point<G,C>::vec&
     subject_point_impl< point<G,C>, E >::to_vec() const
     {
       return exact_().get_subject().to_vec();
-    }
-
-    template <typename G, typename C, typename E>
-    inline
-    subject_point_impl< point<G,C>, E >::operator algebra::vec<G::dim, float>() const
-    {
-      return exact_().get_subject();
     }
 
   } // end of namespace mln::internal
 
   template <typename G, typename C>
   inline
-  algebra::vec<point<G,C>::dim - 1, C>
+  const algebra::vec<point<G,C>::dim - 1, C>&
   cut_(const point<G,C>& p)
   {
-    return *(algebra::vec<point<G,C>::dim - 1, C>*)(& p.to_vec());
+    return *(const algebra::vec<point<G,C>::dim - 1, C>*)(& p.to_vec());
   }
 
   template <typename C>
@@ -501,8 +502,7 @@ namespace mln
   }
 
 # endif // ! MLN_INCLUDE_ONLY
-
-
+  
 } // end of namespace mln
 
 

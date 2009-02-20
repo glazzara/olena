@@ -86,9 +86,9 @@ namespace mln
       {
         typedef mln_sum(mln_value(I)) vsum;
 
-        double x = v[0]; // row
-        double y = v[1]; // col
-        double z = v[2]; // sli
+        double x = v[1]; // row
+        double y = v[2]; // col
+        double z = v[0]; // sli
 
 	math::round<double> f;
         unsigned x1 = f(std::floor(x));

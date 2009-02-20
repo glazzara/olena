@@ -281,7 +281,7 @@ namespace mln
     typedef mln_grid(E)  grid;
     typedef mln_delta(E) delta;
     typedef mln_vec(E)   vec;
-    vec (E::*m)() const = & E::to_vec;
+    const vec& (E::*m)() const = & E::to_vec;
     m = 0;
   }
 

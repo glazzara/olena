@@ -197,9 +197,10 @@ namespace mln
       inline
       rotation<n,C>::rotation(const algebra::quat& q)
       {
-        // FIXME: Should also work for 2d.
-        mlc_bool(n == 3)::check();
         mln_precondition(q.is_unit());
+
+        // FIXME: Should also work for 2d.
+        mln_precondition(n == 3);
 
         float
           w = q.to_vec()[0],
@@ -220,7 +221,6 @@ namespace mln
 	axis_[0] = x;
 	axis_[1] = y;
 	axis_[2] = z;
-	axis_.normalize();
       }
 
 
