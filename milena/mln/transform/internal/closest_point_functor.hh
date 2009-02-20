@@ -50,7 +50,10 @@ namespace mln
 	typedef mln_value(I) V;
 	typedef mln_psite(I)  P;
 
-	mln_ch_value(I,P) cp_ima;
+	closest_point_functor(const p_array<P>& pset);
+
+	mln_ch_value(I,unsigned) cp_ima;
+	const p_array<P>& pset_;
 
 	void init(const I&);
 	bool inqueue_p_wrt_input_p(const V& input_p);
@@ -58,9 +61,13 @@ namespace mln
 	bool inqueue_p_wrt_input_n(const V& input_n);
 	void process(const P&, const P&);
 
-	void init_(const I& input) { initialize(cp_ima, input); }
+	void init_(const I& input)
+	{
+	  init(input);
+	}
+
 	bool inqueue_p_wrt_input_p_(const V& input_p) { return input_p == true; }
-	void init_p_(unsigned p) { cp_ima.element(p) = cp_ima.point_at_index(p); }
+	void init_p_(unsigned) { }//cp_ima.element(p) = pset_(cp_ima.point_at_index(p)); }
 	bool inqueue_p_wrt_input_n_(const V& input_n) { return input_n == false; }
 	void process_(unsigned p, unsigned n) { cp_ima.element(n) = cp_ima.element(p); }
       };
@@ -70,10 +77,22 @@ namespace mln
 
       template <typename I>
       inline
+      closest_point_functor<I>::closest_point_functor(const p_array<mln_psite(I)>& pset)
+	: pset_(pset)
+      {
+      }
+
+      template <typename I>
+      inline
       void
       closest_point_functor<I>::init(const I& input)
       {
 	initialize(cp_ima, input);
+	data::fill(cp_ima, 0u);
+
+	mln_piter(p_array<mln_psite(I)>) p(pset_);
+	for_all(p)
+	  cp_ima(p) = p.index();
       }
 
       template <typename I>
@@ -87,9 +106,9 @@ namespace mln
       template <typename I>
       inline
       void
-      closest_point_functor<I>::init_p(const P& p)
+      closest_point_functor<I>::init_p(const P&)
       {
-	cp_ima(p) = p;
+//	cp_ima(p) = p;
       }
 
       template <typename I>

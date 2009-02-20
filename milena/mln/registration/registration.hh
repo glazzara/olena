@@ -34,6 +34,7 @@
 /// \sa registration::icp
 
 # include <mln/core/image/image3d.hh>
+# include <mln/core/site_set/box.hh>
 # include <mln/registration/icp.hh>
 # include <mln/fun/x2x/all.hh>
 # include <mln/fun/x2p/closest_point.hh>
@@ -56,7 +57,8 @@ namespace mln
     template <typename P>
     inline
     composed< translation<P::dim,float>,rotation<P::dim,float> >
-    registration1(const p_array<P>& P_,
+    registration1(const box<P>& domain,
+		  const p_array<P>& P_,
 		  const p_array<P>& X);
 
     //FIXME: move to registration.hh
@@ -70,7 +72,8 @@ namespace mln
     template <typename P>
     inline
     composed< translation<P::dim,float>,rotation<P::dim,float> >
-    registration2(const p_array<P>& P_,
+    registration2(const box<P>& domain,
+		  const p_array<P>& P_,
 		  const p_array<P>& X);
 
     //FIXME: move to registration.hh
@@ -83,7 +86,8 @@ namespace mln
     template <typename P>
     inline
     composed< translation<P::dim,float>,rotation<P::dim,float> >
-    registration3(const p_array<P>& P_,
+    registration3(const box<P>& domain,
+		  const p_array<P>& P_,
 		  const p_array<P>& X);
 
 
@@ -119,8 +123,9 @@ namespace mln
       template <typename P>
       inline
       composed< translation<P::dim,float>,rotation<P::dim,float> >
-      registration1(const p_array<P>& P_,
-	  const p_array<P>& X)
+      registration1(const box<P>& domain,
+		    const p_array<P>& P_,
+		    const p_array<P>& X)
       {
 	trace::entering("mln::registration::registration1");
 
@@ -129,7 +134,7 @@ namespace mln
 	t.start();
 # endif // ! NDEBUG
 
-	registration::closest_point_with_map<P> closest_point(X);
+	registration::closest_point_with_map<P> closest_point(X, domain);
 
 	std::pair<algebra::quat,mln_vec(P)> pair = icp(P_, X, closest_point,
 						       algebra::quat(1,0,0,0),
@@ -153,15 +158,16 @@ namespace mln
       template <typename P>
       inline
       composed< translation<P::dim,float>,rotation<P::dim,float> >
-      registration2(const p_array<P>& P_,
-	  const p_array<P>& X)
+      registration2(const box<P>& domain,
+		    const p_array<P>& P_,
+		    const p_array<P>& X)
       {
 	trace::entering("mln::registration::registration2");
 
 	// Used for debug.
 	std::string method = "registration2";
 
-	registration::closest_point_with_map<P> closest_point(X);
+	registration::closest_point_with_map<P> closest_point(X, domain);
 
 # ifndef NDEBUG
 	util::timer t;
@@ -175,12 +181,9 @@ namespace mln
 	std::pair<algebra::quat,mln_vec(P)> pair;
 	pair.first = algebra::quat(1,0,0,0);
 	pair.second = literal::zero;
-	box3d box = geom::bbox(X);
-	box.enlarge(1, 60);
-	box.enlarge(2, 60);
 
 	// Used for debug.
-	image3d<value::rgb8> out(box);
+	image3d<value::rgb8> out(domain);
 
 	p_array<P> removed_set;
 
@@ -219,7 +222,7 @@ namespace mln
 
 # ifndef NDEBUG
 	std::cout << "icp = " << t << std::endl;
-	draw_last_run(box, P_bak, removed_set, X, pair.first, pair.second);
+	draw_last_run(domain, P_bak, removed_set, X, pair.first, pair.second);
 # endif
 
 	typedef rotation<3u,float> rot_t;
@@ -237,15 +240,13 @@ namespace mln
       template <typename P>
       inline
       composed< translation<P::dim,float>,rotation<P::dim,float> >
-      registration3(const p_array<P>& P_,
-	  const p_array<P>& X)
+      registration3(const box<P>& domain,
+		    const p_array<P>& P_,
+		    const p_array<P>& X)
       {
 	trace::entering("mln::registration::registration3");
 
-	registration::closest_point_with_map<P> closest_point(X);
-	std::cout << " pmin and pmax: " << std::endl;
-	std::cout << closest_point.cp_ima_.domain().pmin() << std::endl;
-	std::cout << closest_point.cp_ima_.domain().pmax() << std::endl;
+	registration::closest_point_with_map<P> closest_point(X, domain);
 
 	// Used for debug.
 	std::string method = "registration3";
@@ -262,12 +263,9 @@ namespace mln
 	std::pair<algebra::quat,mln_vec(P)> pair;
 	pair.first = algebra::quat(1,0,0,0);
 	pair.second = literal::zero;
-	box3d box = geom::bbox(X);
-	box.enlarge(1, 60);
-	box.enlarge(2, 60);
 
 	// Used for debug.
-	image3d<value::rgb8> out(box);
+	image3d<value::rgb8> out(domain);
 
 	p_array<P> removed_set;
 
@@ -306,7 +304,7 @@ namespace mln
 
 # ifndef NDEBUG
 	std::cout << "icp = " << t << std::endl;
-	draw_last_run(box, P_bak, removed_set, X, pair.first, pair.second);
+	draw_last_run(domain, P_bak, removed_set, X, pair.first, pair.second);
 # endif // ! NDEBUG
 
 	typedef rotation<3u,float> rot_t;
@@ -329,7 +327,8 @@ namespace mln
     template <typename P>
     inline
     composed< translation<P::dim,float>,rotation<P::dim,float> >
-    registration1(const p_array<P>& cloud,
+    registration1(const box<P>& domain,
+		  const p_array<P>& cloud,
                   const p_array<P>& surface)
     {
       trace::entering("registration::registration1");
@@ -337,7 +336,7 @@ namespace mln
       internal::registration_tests(cloud, surface);
 
       composed< translation<P::dim,float>, rotation<P::dim,float> >
-	      qk = impl::registration1(cloud, surface);
+	      qk = impl::registration1(domain, cloud, surface);
 
       trace::exiting("registration::registration1");
 
@@ -348,7 +347,8 @@ namespace mln
     template <typename P>
     inline
     composed< translation<P::dim,float>,rotation<P::dim,float> >
-    registration2(const p_array<P>& cloud,
+    registration2(const box<P>& domain,
+		  const p_array<P>& cloud,
                   const p_array<P>& surface)
     {
       trace::entering("registration::registration2");
@@ -356,7 +356,7 @@ namespace mln
       internal::registration_tests(cloud, surface);
 
       composed< translation<P::dim,float>, rotation<P::dim,float> >
-	      qk = impl::registration2(cloud, surface);
+	      qk = impl::registration2(domain, cloud, surface);
 
       trace::exiting("registration::registration2");
 
@@ -367,7 +367,8 @@ namespace mln
     template <typename P>
     inline
     composed< translation<P::dim,float>,rotation<P::dim,float> >
-    registration3(const p_array<P>& cloud,
+    registration3(const box<P>& domain,
+		  const p_array<P>& cloud,
                   const p_array<P>& surface)
     {
       trace::entering("registration::registration3");
@@ -375,7 +376,7 @@ namespace mln
       internal::registration_tests(cloud, surface);
 
       composed< translation<P::dim,float>, rotation<P::dim,float> >
-	      qk = impl::registration3(cloud, surface);
+	      qk = impl::registration3(domain, cloud, surface);
 
       trace::exiting("registration::registration3");
 

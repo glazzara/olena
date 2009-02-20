@@ -1,5 +1,18 @@
 2009-02-20 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Update ICP.
+
+	* mln/registration/icp.hh: store point indexes instead of points in
+	closest point image. Remove useless to_vec().
+
+	* mln/registration/registration.hh: remove useless to_vec(). Pass a
+	domain to the function to be used to compute the closest point image.
+
+	* mln/transform/internal/closest_point_functor.hh: Store point indexes
+	instead of points.
+
+2009-02-20 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Reorder data in the vector returned by to_vec().
 
 	* mln/core/concept/gdpoint.hh,
