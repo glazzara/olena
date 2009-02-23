@@ -1,4 +1,4 @@
-TARGET=connected
+TARGET=overload
 OBJS=$(TARGET).o
 
 OLENADIR=../../..

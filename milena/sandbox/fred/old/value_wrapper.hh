@@ -31,14 +31,13 @@
 
 /// \file mln/morpho/attribute/volume.hh
 ///
-/// Transform a site (when_pix::use_p) accumulator to a 
-/// value (when_pix::use_v) accumulator.
+/// Transform an accumulator to a value (when_pix::use_v) accumulator.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/util/pix.hh>
 
-# define mln_morpho_attribute_use_v_(T) mln::morpho::attribute::value_wrapper_t< T >
-# define mln_morpho_attribute_use_v(T) mln::morpho::attribute::value_wrapper_t< T >
+# define mln_morpho_attribute_use_v_(T) mln::morpho::attribute::value_wrapper< T >
+# define mln_morpho_attribute_use_v(T) mln::morpho::attribute::value_wrapper< T >
 
 namespace mln
 {
@@ -50,7 +49,7 @@ namespace mln
     }
   }
 
-  
+
   // Traits.
 
   namespace trait
@@ -125,14 +124,14 @@ namespace mln
       {
 	accu_.init();
       }
-      
+
       template <typename A>
       void
       value_wrapper<A>::take(const argument& v)
       {
 	accu_.take(v);
       }
-      
+
       template <typename A>
       template <typename I>
       void
@@ -140,14 +139,14 @@ namespace mln
       {
 	take(px.v());
       }
-      
+
       template <typename A>
       void
       value_wrapper<A>::take(const value_wrapper<A>& other)
       {
 	accu_.take(other.accu_);
       }
-      
+
       template <typename A>
       void
       value_wrapper<A>::take_as_init(const argument& v)
@@ -162,23 +161,23 @@ namespace mln
       {
 	accu_.take_as_init(px);
       }
-      
+
       template <typename A>
-      typename value_wrapper<A>::result 
+      typename value_wrapper<A>::result
       value_wrapper<A>::to_result() const
       {
 	return accu_.to_result();
       }
 
       template <typename A>
-      bool 
+      bool
       value_wrapper<A>::is_valid() const
       {
 	return accu_.is_valid();
       }
-      
+
 # endif // ! MLN_INCLUDE_ONLY
- 
+
     } // end of namespace mln::morpho::attribute
 
   } // end of namespace mln::morpho

@@ -1,3 +1,34 @@
+2009-02-23  Frederic Bour  <bour@lrde.epita.fr>
+
+	Work on meta-functions and overloading added..
+	* Makefile: .
+	* accu_trait.hh: Remove.
+	* accuprops.cc: Remove.
+	* accuprops2.cc: Remove.
+	* algebraic.cc: Remove.
+	* closing_area.cc: Remove.
+	* connected_filter.hh: Remove.
+	* leveling.cc: Remove.
+	* leveling_filter.hh: Remove.
+	* mean.hh: Remove.
+	* meantest.cc: Remove.
+	* old/accu_trait.hh: New.
+	* old/accuprops.cc: New.
+	* old/accuprops2.cc: New.
+	* old/algebraic.cc: New.
+	* old/closing_area.cc: New.
+	* old/connected_filter.hh: New.
+	* old/leveling.cc: New.
+	* old/leveling_filter.hh: New.
+	* old/mean.hh: New.
+	* old/meantest.cc: New.
+	* old/p2p: New.
+	* old/value_wrapper.hh: New.
+	* old: New.
+	* overload.cc: New.
+	* p2p: Remove.
+	* value_wrapper.hh: Remove.
+
 2009-02-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update different files.
