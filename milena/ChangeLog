@@ -1,3 +1,8 @@
+2009-02-23  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add DICOM support.
+	* mln/io/dicom/load.hh: DICOM support through GDCM library.
+
 2009-02-23 Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a missing test for labeling::mean_values.
