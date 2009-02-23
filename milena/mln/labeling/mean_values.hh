@@ -28,6 +28,15 @@
 #ifndef MLN_LABELING_MEAN_VALUES_HH
 # define MLN_LABELING_MEAN_VALUES_HH
 
+/// \file mln/labeling/mean_values.hh
+///
+/// Construct from a labeled image a new image, the labels values are
+/// replaced by the components mean values.
+///
+/// \todo handle mean value for label 0 correctly.
+/// \todo merge rgb and generic version.
+
+
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/vec3d.hh>
 
@@ -38,11 +47,6 @@
 # include <mln/labeling/compute.hh>
 
 # include <mln/literal/colors.hh>
-
-/// \file mln/labeling/mean_values.hh
-///
-/// Construct from a labeled image a new image, the labels values are
-/// replaced by the components mean values.
 
 
 namespace mln
@@ -92,15 +96,35 @@ namespace mln
 
         template <typename I, typename L>
         mln_concrete(I)
-        mean_values(const Image<I>& input,
-		    const Image<L>& lbl, mln_value(L) nlabels)
+        mean_values(const Image<I>& input_,
+		    const Image<L>& lbl_, mln_value(L) nlabels)
 	{
-	  internal::mean_values_tests(input, lbl, nlabels);
+	  trace::entering("mln::labeling::impl::generic::mean_values");
 
-	  trace::warning("labeling::impl::generic::mean_values() is not \
-			  implemented!");
-	  //FIXME: to write!
-	  abort();
+	  internal::mean_values_tests(input_, lbl_, nlabels);
+
+	  const I& input = exact(input_);
+	  const L& lbl = exact(lbl_);
+	  typedef mln_value(L) LV;
+	  typedef mln_value(I) IV;
+
+	  util::array<float> m_3f
+	      = labeling::compute(accu::mean<IV>(),
+				  input, // input color image
+				  lbl, // watershed labeling
+				  nlabels);
+	  m_3f[0] = 0.f;
+
+	  util::array<IV> m;
+	  convert::from_to(m_3f, m);
+	  m[0] = 150u; //FIXME: handle label 0 correctly.
+
+	  mln_concrete(I) output = level::transform(lbl,
+	      convert::to< fun::i2v::array<IV> >(m));
+
+
+	  trace::exiting("mln::labeling::impl::generic::mean_values");
+	  return output;
 	}
 
       }
@@ -110,7 +134,7 @@ namespace mln
       mean_values_rgb(const Image<I>& input_,
 		      const Image<L>& lbl_, mln_value(L) nlabels)
       {
-	trace::entering("mln::labeling::mean_values_rgb");
+	trace::entering("mln::labeling::impl::mean_values_rgb");
 
 	internal::mean_values_tests(input_, lbl_, nlabels);
 
@@ -131,7 +155,7 @@ namespace mln
 	    convert::to< fun::i2v::array<mln_value(I)> >(m));
 
 
-        trace::exiting("mln::labeling::mean_values_rgb");
+        trace::exiting("mln::labeling::impl::mean_values_rgb");
 	return output;
       }
 

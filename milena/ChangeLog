@@ -1,5 +1,14 @@
 2009-02-23 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a missing test for labeling::mean_values.
+
+	* mln/labeling/mean_values.hh: add a more generic version.
+
+	* tests/labeling/Makefile.am,
+	* tests/labeling/mean_values.cc: add missing test.
+
+2009-02-23 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Various small fixes.
 
 	* doc/tutorial/samples/win-create-1.cc: fix ref output.
