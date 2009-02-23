@@ -5,6 +5,7 @@
 
 # include <mln/io/pgm/load.hh>
 # include <mln/io/ppm/save.hh>
+# include <mln/io/pgm/save.hh>
 
 # include <mln/core/var.hh>
 # include <mln/core/image/image2d.hh>
@@ -15,10 +16,13 @@
 # include <mln/literal/black.hh>
 # include <mln/debug/println.hh>
 
+# include <mln/extension/adjust_duplicate.hh>
+
 # include <mln/morpho/closing_area.hh>
 # include <mln/morpho/gradient.hh>
 # include <mln/accu/min_max.hh>
 # include <mln/morpho/meyer_wst.hh>
+
 
 
 using namespace mln;
@@ -31,6 +35,8 @@ morpho_gradient(const Image<I>& input_, const Neighborhood<N>& nbh_)
 {
   const I& input = exact(input_);
   const N& nbh   = exact(nbh_);
+
+  extension::adjust_duplicate(input, nbh);
 
   mln_concrete(I) output;
   initialize(output, input);
@@ -91,6 +97,8 @@ void do_it(const I& ima,
 	   const std::string& filename)
 {
   I grad = morpho_gradient(ima, nbh);
+
+  io::pgm::save(grad, "temp_grad.pgm");
 
   I clo;
   if (lambda > 1)

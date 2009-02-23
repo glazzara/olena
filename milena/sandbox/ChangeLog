@@ -1,3 +1,12 @@
+2009-02-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update different files.
+
+	* theo/exec/superpose.cc: New.
+	* theo/esiee/laurent/presentation/wst2d.cc: Update.
+	* theo/esiee/laurent/presentation/classif.cc: Update.
+	* theo/csi/edwin.cc: Update.
+
 2009-02-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add csv2vtk converter.

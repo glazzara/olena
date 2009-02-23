@@ -358,8 +358,8 @@ int main(int argc, char* argv[])
   `-----------------*/
 
   // Currently, does nothing (lambda = 1).
-  dist_ima_t closed_dist_ima (dist_ima.domain());
-  morpho::closing_height(dist_ima, nbh, atoi(argv[1]), closed_dist_ima);
+  dist_ima_t closed_dist_ima; // (dist_ima.domain());
+  closed_dist_ima = morpho::closing_height(dist_ima, nbh, atoi(argv[1]));
 
   /*------.
   | WST.  |

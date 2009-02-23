@@ -28,7 +28,7 @@ namespace mln
   void
   back_propagate(const T& t, A& a)
     // a value propagates from the representative point to every point
-    // of the component...
+    // of the component at the same level (NOT to the branch points!)
   {
     mln_fwd_piter(T) p(t.domain());
     for_all(p)
@@ -37,6 +37,19 @@ namespace mln
 	  mln_assertion(t.is_a_node(t.parent(p)));
 	  a(p) = a(t.parent(p)); // ...here!
 	}
+  }
+
+
+  template <typename T, typename A>
+  void
+  back_propagate_II(const T& t, A& a)
+    // a value propagates from a representative point to every point
+    // of the component and the children components (branch).
+  {
+    mln_bkd_piter(T) p(t.domain());
+    for_all(p)
+      if (t.is_a_node(p) && a(t.parent(p)) == true)
+	a(p) = a(t.parent(p));
   }
 
 
@@ -57,6 +70,7 @@ namespace mln
     
     if (echo) debug::println("aa (before)", aa);
 
+    back_propagate_II(t, aa);
     back_propagate(t, aa);
 
     if (echo) debug::println("aa (after)", aa);
@@ -71,7 +85,8 @@ namespace mln
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.pgm output.pbm" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input.pgm echo output.pbm" << std::endl;
+  std::cerr << "  echo: 0 (none) or 1 (verbose)" << std::endl;
   abort();
 }
 
@@ -84,11 +99,15 @@ int main(int argc, char* argv[])
 
   mln_VAR(nbh, c4());
 
-  if (argc != 3)
+  if (argc != 4)
     usage(argv);
 
-  bool echo = false;
-
+  int echo = std::atoi(argv[2]);
+  if (echo != 0 && echo != 1)
+    {
+      std::cerr << "bad 'echo' value!" << std::endl;
+      usage(argv);
+    }
 
   typedef image2d<int_u8> I;
 
@@ -96,6 +115,7 @@ int main(int argc, char* argv[])
   io::pgm::load(input, argv[1]);
   if (echo) debug::println("input", input);
 
+//   I f = input;
   I f = morpho::elementary::gradient(input, nbh);
   if (echo) debug::println("f", f);
 
@@ -115,8 +135,10 @@ int main(int argc, char* argv[])
       debug::println("a | nodes", a | t.nodes());
     }  
 
-  image2d<bool> b = duplicate((pw::value(a) < pw::cst(10)) | a.domain());
+  image2d<bool> b = duplicate((pw::value(a) < pw::cst(21)) | a.domain());
   if (echo) debug::println("b", b | t.nodes());
 
-  io::pbm::save(sample(t, b), argv[2]);
+  io::pbm::save(sample(t, b,
+		       echo),
+		argv[3]);
 }
