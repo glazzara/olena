@@ -214,6 +214,17 @@ namespace mln
 	  return impl::gradient_on_set(input, nbh);
 	}
 
+	// May be redundant with the previous version but fixes an ambiguity
+	// with image*d<bool> which is fasted AND logic.
+	template <typename I, typename N>
+	mln_concrete(I)
+	gradient_dispatch(trait::image::kind::logic,
+			  trait::image::speed::fastest,
+			  const Image<I>& input, const Neighborhood<N>& nbh)
+	{
+	  return impl::gradient_on_set(input, nbh);
+	}
+
 	template <typename I, typename N>
 	mln_concrete(I)
 	gradient_dispatch(const Image<I>& input, const Neighborhood<N>& nbh)

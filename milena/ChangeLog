@@ -1,5 +1,12 @@
 2009-02-23 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix ambiguity in morpho::elementary::gradient dispatch.
+
+	* mln/morpho/elementary/gradient.hh: Ambiguity with images both
+	fastest and logic.
+
+2009-02-23 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new routines to make a 3D image from a list of files.
 
 	* mln/io/pbm/load.hh,
