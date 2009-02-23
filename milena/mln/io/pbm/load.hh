@@ -1,5 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
-// Research and Development Laboratory (LRDE)
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
+// EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,7 +40,10 @@
 # include <string>
 
 # include <mln/core/image/image2d.hh>
+# include <mln/core/image/image3d.hh>
 # include <mln/io/pnm/load_header.hh>
+
+# include <mln/make/image3d.hh>
 
 namespace mln
 {
@@ -68,6 +71,14 @@ namespace mln
       /// \return An image2d<float> which contains loaded data.
       ///
       image2d<bool> load(const std::string& filename);
+
+      /// Load ppm images as slices of a 3D Milena image.
+      ///
+      /// \param[out] ima A reference to the 3D image which will receive
+      /// data.
+      /// \param[in] filenames The list of 2D images to load..
+      void load(image3d<bool>& ima,
+		const util::array<std::string>& filenames);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -159,6 +170,29 @@ namespace mln
       {
 	ima = load(filename);
       }
+
+
+      inline
+      void load(image3d<bool>& ima,
+		const util::array<std::string>& filenames)
+      {
+	trace::entering("mln::io::pbm::load");
+	mln_precondition(!filenames.is_empty());
+
+	util::array<image2d<bool> > slices;
+
+	for (unsigned i = 0; i < filenames.nelements(); ++i)
+	{
+	  image2d<bool> tmp;
+	  io::pbm::load(tmp, filenames[i]);
+	  slices.append(tmp);
+	}
+
+	ima = make::image3d(slices);
+
+	trace::exiting("mln::io::pbm::load");
+      }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

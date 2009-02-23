@@ -1,5 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
+// EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,11 +42,13 @@
 # include <string>
 
 # include <mln/core/image/image2d.hh>
+# include <mln/core/image/image3d.hh>
 
 # include <mln/value/int_u8.hh>
 
 # include <mln/io/pnm/load.hh>
 
+# include <mln/make/image3d.hh>
 
 namespace mln
 {
@@ -57,27 +59,37 @@ namespace mln
     namespace pgm
     {
 
-      /*! Load a pgm image in a Milena image.
-       *
-       * \param[out] ima A reference to the image which will receive
-       * data.
-       * \param[in] filename The source.
-       */
+      /// Load a pgm image in a Milena image.
+      ///
+      /// \param[out] ima A reference to the image which will receive
+      /// data.
+      /// \param[in] filename The source.
       template <typename I>
       void load(Image<I>& ima,
 		const std::string& filename);
 
 
-      /*! Load a pgm image in a Milena image. To use this routine, you
-       *  should specialize the template whith the value type of the
-       *  image loaded. (ex : load<value::int_u8>("...") )
-       *
-       * \param[in] filename The image source.
-       *
-       * \return An image2d which contains loaded data.
-       */
+      /// Load a pgm image in a Milena image. To use this routine, you
+      /// should specialize the template whith the value type of the
+      /// image loaded. (ex : load<value::int_u8>("...") )
+      ///
+      /// \param[in] filename The image source.
+      ///
+      /// \return An image2d which contains loaded data.
       template <typename V>
       image2d<V> load(const std::string& filename);
+
+
+      /// Load ppm images as slices of a 3D Milena image.
+      ///
+      /// \param[out] ima A reference to the 3D image which will receive
+      /// data.
+      /// \param[in] filenames The list of 2D images to load..
+      ///
+      template <typename V>
+      void load(image3d<V>& ima,
+		const util::array<std::string>& filenames);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -98,6 +110,29 @@ namespace mln
       {
 	trace::entering("mln::io::pgm::load");
 	io::pnm::load<I>(PGM, ima, filename);
+	trace::exiting("mln::io::pgm::load");
+      }
+
+
+      template <typename V>
+      inline
+      void load(image3d<V>& ima,
+		const util::array<std::string>& filenames)
+      {
+	trace::entering("mln::io::pgm::load");
+	mln_precondition(!filenames.is_empty());
+
+	util::array<image2d<V> > slices;
+
+	for (unsigned i = 0; i < filenames.nelements(); ++i)
+	{
+	  image2d<V> tmp;
+	  io::pnm::load<image2d<V> >(PGM, tmp, filenames[i]);
+	  slices.append(tmp);
+	}
+
+	ima = make::image3d(slices);
+
 	trace::exiting("mln::io::pgm::load");
       }
 

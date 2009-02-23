@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/io/pbm/pbm.cc
- *
- * \brief Test on mln::io::pbm::.
- */
+/// \file tests/io/pbm/pbm.cc
+///
+/// Test on mln::io::pbm::.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/io/pbm/load.hh>
@@ -44,10 +44,26 @@ int main()
   using namespace mln;
 
   image2d<bool> pic = io::pbm::load(MLN_IMG_DIR "/picasso.pbm");
-  io::pbm::save(pic, "pic.pbm");
-  image2d<bool> pic2 = io::pbm::load("pic.pbm");
+  io::pbm::save(pic, "out.pbm");
+  image2d<bool> pic2 = io::pbm::load("out.pbm");
 
   mln_assertion(pic == pic2);
+
+
+  pic2(point2d(0,0)) = true;
+  io::pbm::save(pic2, "out.pbm");
+
+  util::array<std::string> files(2);
+  files[0] = MLN_IMG_DIR "/picasso.pbm";
+  files[1] = "out.pbm";
+
+  image3d<bool> ima3d;
+  io::pbm::load(ima3d, files);
+
+  mln_assertion(ima3d.nslices() == 2);
+  mln_assertion(slice(ima3d, 0) == pic);
+  mln_assertion(slice(ima3d, 1) == pic2);
+
 }
 
 

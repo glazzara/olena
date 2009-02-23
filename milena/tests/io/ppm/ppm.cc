@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,18 +26,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/io/ppm/ppm.cc
- *
- * \brief Test on mln::io::ppm::load and mln::io::ppm::save.
- */
+/// \file tests/io/ppm/ppm.cc
+///
+/// Test on mln::io::ppm::load and mln::io::ppm::save.
+
 
 #include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
 #include <mln/value/rgb8.hh>
 
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
 
 #include <mln/level/compare.hh>
+
+#include <mln/util/array.hh>
+
+#include <mln/literal/colors.hh>
 
 #include "tests/data.hh"
 
@@ -52,4 +58,21 @@ int main()
   image2d<rgb8> lena2;
   io::ppm::load(lena2, "out.ppm");
   mln_assertion(lena2 == lena);
+
+
+
+  lena2(point2d(0,0)) = literal::green;
+  io::ppm::save(lena2, "out.ppm");
+
+  util::array<std::string> files(2);
+  files[0] = MLN_IMG_DIR "/lena.ppm";
+  files[1] = "out.ppm";
+
+  image3d<rgb8> ima3d;
+  io::ppm::load(ima3d, files);
+
+  mln_assertion(ima3d.nslices() == 2);
+  mln_assertion(slice(ima3d, 0) == lena);
+  mln_assertion(slice(ima3d, 1) == lena2);
 }
+

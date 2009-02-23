@@ -1,5 +1,18 @@
 2009-02-23 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new routines to make a 3D image from a list of files.
+
+	* mln/io/pbm/load.hh,
+	* mln/io/pgm/load.hh,
+	* mln/io/ppm/load.hh: load a list of 2D image files and build a 3D
+	image from that.
+
+	* tests/io/pbm/pbm.cc,
+	* tests/io/pgm/pgm.cc,
+	* tests/io/ppm/ppm.cc: update tests.
+
+2009-02-23 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add more trace::warning in labeling canvas.
 
 	* mln/canvas/labeling.hh: add new trace::warnings.
