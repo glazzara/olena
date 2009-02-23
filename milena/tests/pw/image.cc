@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -42,7 +42,9 @@ int main()
 {
   using namespace mln;
 
-  mln_VAR(ima, fun::p2b::chess() | make::box2d(8, 8));
+  typedef pw::image<fun::p2b::chess,
+		    box<mln::point<grid::square, short int> > > ima_t;
+  ima_t ima = fun::p2b::chess() | make::box2d(8, 8);
   // trait::image::print(ima);
 
   unsigned i = 0;
@@ -61,7 +63,8 @@ int main()
   {
     p_array<int> arr; // Sites are ints (why not?)
     arr.insert(51); // Site 51.
-    mln_VAR(ima, fun::i2v::array<int>(1) | arr); // An array psite converts to int so that works :-)
+    typedef pw::image<fun::i2v::array<int>, p_array<int> > ima_t;
+    ima_t ima = fun::i2v::array<int>(1) | arr; // An array psite converts to int so that works :-)
     // trait::image::print(ima);
 
     p_array<int>::psite p(ima.domain(), 0); // index 0 means the 1st element of arr

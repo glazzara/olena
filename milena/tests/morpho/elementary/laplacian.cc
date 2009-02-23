@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho/elementary/laplacian.cc
- *
- * \brief Test on mln::morpho::elementary::laplacian.
- */
+/// \file tests/morpho/elementary/laplacian.cc
+///
+/// Test on mln::morpho::elementary::laplacian.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
@@ -46,13 +46,12 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-//   trace::quiet = false;
-
   image2d<int_u8> ima(3, 3, 0);
   debug::iota(ima);
   debug::println(ima);
 
-  mln_VAR(lap, morpho::elementary::laplacian(ima, c4()));
+  typedef image2d<int> lap_t;
+  lap_t lap = morpho::elementary::laplacian(ima, c4());
   mln_assertion(lap.border() == 1);
   debug::println(lap);
 

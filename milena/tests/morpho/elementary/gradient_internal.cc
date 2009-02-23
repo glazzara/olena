@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,19 +26,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho/elementary/gradient_internal.cc
- *
- * \brief Test on mln::morpho::elementary::gradient_internal.
- */
+/// \file tests/morpho/elementary/gradient_internal.cc
+///
+/// Test on mln::morpho::elementary::gradient_internal.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/sub_image.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/var.hh>
 #include <mln/value/int_u8.hh>
+#include <mln/make/image2d.hh>
 
 #include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
 
 #include <mln/morpho/elementary/gradient_internal.hh>
 
@@ -47,27 +47,29 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-//    trace::quiet = false;
-
   image2d<int_u8> ima(3, 3, 0);
   debug::iota(ima);
-  debug::println(ima);
-
-  mln_VAR(b, ima.domain());
 
   {
-    mln_VAR(gra,
-	    morpho::elementary::gradient_internal(ima | b, c4()));
-    debug::println(gra);
+    int_u8 ref_[9] = { 0, 1, 1,
+		       3, 3, 3,
+		       3, 3, 3 };
+    image2d<int_u8> ref = make::image2d(ref_);
+
+    image2d<int_u8> gra = morpho::elementary::gradient_internal(ima, c4());
+    mln_assertion(gra == ref);
   }
 
-  image2d<bool> msk(3, 3, 0);
-  data::fill(msk, pw::value(ima) >= pw::cst(5u));
-  debug::println(msk);
   {
-    mln_VAR(gra,
-	    morpho::elementary::gradient_internal(msk | b, c4()));
-    debug::println(gra);
+    bool ref_[9] = { 0, 0, 0,
+		     0, 1, 1,
+		     1, 0, 0 };
+    image2d<bool> ref = make::image2d(ref_);
+
+    image2d<bool> msk(3, 3, 0);
+    data::fill(msk, pw::value(ima) >= pw::cst(5u));
+    image2d<bool> gra = morpho::elementary::gradient_internal(msk, c4());
+    mln_assertion(gra == ref);
   }
 
 }

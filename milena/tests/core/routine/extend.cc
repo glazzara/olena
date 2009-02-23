@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/routine/extend.cc
- *
- *  \brief Tests on mln::extend.
- */
+/// \file tests/core/routine/extend.cc
+///
+/// Tests on mln::extend.
 
 #include <mln/core/var.hh>
 
@@ -58,7 +58,8 @@ int main()
   debug::println(ima);
   debug::println(extended_to(ima, bb));
 
-  mln_VAR(ima_, extend(ima | make::box2d(2,2), 7));
+  typedef extension_val<const sub_image<image2d<int>, box2d> > ima_t_;
+  ima_t_ ima_ = extend(ima | make::box2d(2,2), 7);
   debug::println(ima_);
 
   debug::println(extended_to(ima_, BB));

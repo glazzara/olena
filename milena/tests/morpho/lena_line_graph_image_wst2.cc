@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -103,7 +104,9 @@ int main()
   `----------------*/
 
   // Line graph image.
-  mln_VAR(lg_ima, morpho::line_gradient(input));
+  typedef pw::image<fun::i2v::array<input_val_t>, p_edges<util::graph,
+		    fun::i2v::array< util::site_pair<point2d> > > > lg_ima_t;
+  lg_ima_t lg_ima = morpho::line_gradient(input);
 
   /*-----------------.
   | Simplification.  |
@@ -112,7 +115,7 @@ int main()
   typedef line_graph_elt_neighborhood<util::graph, lg_ima_t::pset::fun_t> nbh_t;
   nbh_t nbh;
 
-  mln_VAR(closed_lg_ima, morpho::closing_area_on_vertices(lg_ima, nbh, 20));
+  lg_ima_t closed_lg_ima = morpho::closing_area_on_vertices(lg_ima, nbh, 20);
 
   /*------.
   | WST.  |
@@ -120,8 +123,10 @@ int main()
 
   // Perform a Watershed Transform.
   unsigned nbasins;
-  mln_VAR(wshed, morpho::meyer_wst(closed_lg_ima, nbh, nbasins));
-  std::cout << "nbasins = " << nbasins << std::endl;
+  typedef pw::image<fun::i2v::array<unsigned>, p_edges<util::graph,
+		    fun::i2v::array< util::site_pair<point2d> > > > wshed_t;
+  wshed_t wshed = morpho::meyer_wst(closed_lg_ima, nbh, nbasins);
+  mln_assertion(nbasins == 46);
 
   /*---------.
   | Output.  |

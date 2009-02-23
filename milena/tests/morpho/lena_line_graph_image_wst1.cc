@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -149,8 +150,8 @@ int main()
   pe_t pe(g, edge_sites);
 
   // Line graph image
-  typedef pw::image<edge_values_t, pe_t> ima_t;
-  mln_VAR(lg_ima, (edge_values | pe));
+  typedef pw::image<edge_values_t, pe_t> lg_ima_t;
+  lg_ima_t lg_ima = (edge_values | pe);
 
   /*------.
   | WST.  |
@@ -161,8 +162,10 @@ int main()
 
   // Perform a Watershed Transform.
   int_u8 nbasins;
-  mln_VAR(wshed, morpho::meyer_wst(lg_ima, nbh, nbasins));
-  std::cout << "nbasins = " << nbasins << std::endl;
+  typedef pw::image<fun::i2v::array<int_u8>, p_edges<util::graph,
+		    fun::i2v::array< util::site_pair<point2d> > > > wshed_t;
+  wshed_t wshed = morpho::meyer_wst(lg_ima, nbh, nbasins);
+  mln_assertion(nbasins == 5);
 
   /*---------.
   | Output.  |

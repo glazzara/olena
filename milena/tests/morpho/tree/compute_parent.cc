@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,15 +32,50 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/core/var.hh>
 #include <mln/core/image/image_if.hh>
 #include <mln/core/site_set/p_array.hh>
 
 #include <mln/level/sort_psites.hh>
+#include <mln/level/compare.hh>
 #include <mln/pw/value.hh>
 #include <mln/debug/println.hh>
 
 #include <mln/morpho/tree/compute_parent.hh>
+
+static mln::image2d<mln::point2d> ref1()
+{
+  using namespace mln;
+
+  image2d<point2d> ref1(make::box2d(3,3));
+
+  ref1(point2d(0,0)) = point2d(0,0);
+  ref1(point2d(0,1)) = point2d(0,0);
+  ref1(point2d(0,2)) = point2d(0,0);
+  ref1(point2d(1,1)) = point2d(0,0);
+  ref1(point2d(2,2)) = point2d(2,2);
+
+  return ref1;
+}
+
+
+static mln::image2d<mln::point2d> ref2()
+{
+  using namespace mln;
+
+  image2d<point2d> ref2(make::box2d(3,3));
+
+  ref2(point2d(0,0)) = point2d(0,1);
+  ref2(point2d(0,1)) = point2d(0,2);
+  ref2(point2d(0,2)) = point2d(0,2);
+  ref2(point2d(1,0)) = point2d(0,0);
+  ref2(point2d(1,1)) = point2d(0,1);
+  ref2(point2d(1,2)) = point2d(0,1);
+  ref2(point2d(2,0)) = point2d(0,0);
+  ref2(point2d(2,1)) = point2d(0,0);
+  ref2(point2d(2,2)) = point2d(0,2);
+
+  return ref2;
+}
 
 
 int main()
@@ -51,11 +87,12 @@ int main()
 		    0, 1, 0,
 		    0, 0, 1  };
     image2d<bool> ima = make::image2d(vals);
-    mln_VAR(sub, ima | pw::value(ima));
-    debug::println(sub);
+    typedef image_if<image2d<bool>, pw::value_<image2d<bool> > > sub_t;
+    sub_t sub = ima | pw::value(ima);
 
-    mln_VAR(par, morpho::tree::compute_parent(sub, c4(), sub.domain()));
-    debug::println("par =", par);
+    typedef image_if<image2d<point2d>, pw::value_<image2d<bool> > > par_t;
+    par_t par = morpho::tree::compute_parent(sub, c4(), sub.domain());
+    mln_assertion(par == (ref1() | sub.domain()));
   }
 
   {
@@ -63,12 +100,11 @@ int main()
 			     3, 2, 3,
 			     3, 4, 1 };
     image2d<unsigned char> ima = make::image2d(vals);
-    debug::println(ima);
 
     typedef p_array<point2d> S;
     S s = level::sort_psites_increasing(ima);
-    mln_VAR(par, morpho::tree::compute_parent(ima, c4(), s));
-    debug::println("par =", par);
+    image2d<point2d> par = morpho::tree::compute_parent(ima, c4(), s);
+    mln_assertion(par == ref2());
   }
 
 }

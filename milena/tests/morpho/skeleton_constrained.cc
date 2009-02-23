@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,8 +43,6 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
 #include <mln/data/fill.hh>
-#include <mln/debug/println.hh>
-#include <mln/debug/println_with_border.hh>
 
 #include <mln/pw/value.hh>
 #include <mln/core/image/image_if.hh>
@@ -52,6 +51,8 @@
 #include <mln/logical/not.hh>
 #include <mln/arith/revert.hh>
 #include <mln/transform/distance_geodesic.hh>
+
+#include <mln/level/compare.hh>
 
 #include "tests/data.hh"
 
@@ -65,8 +66,6 @@ namespace mln
   {
     extension::adjust_duplicate(ima, nbh);
 
-    debug::println_with_border(ima);
-
     image2d<unsigned> when_true(ima.domain()), when_false(ima.domain());
     mln_piter(box2d) p(ima.domain());
     for_all(p)
@@ -74,12 +73,33 @@ namespace mln
 	when_true(p)  = connectivity_number_2d(ima, nbh.foreground(), p, true);
 	when_false(p) = connectivity_number_2d(ima, nbh.background(), p, false);
       }
-    debug::println("when true  = ", when_true  | pw::value(ima));
-    debug::println("when false = ", when_false | pw::value(ima));
   }
 
 } // mln
 
+
+bool skl_ref_[22][18] = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 },
+			  { 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0 },
+			  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0 } };
 
 int main()
 {
@@ -91,8 +111,9 @@ int main()
   image2d<bool> pic;
   io::pbm::load(pic, MLN_IMG_DIR "/tiny.pbm");
 
-  mln_VAR( nbh,
-	   make::dual_neighb(pic, c4(), c8()) );
+  typedef neighb<win::multiple_size<2u, window<dpoint<grid::square, short int> >,
+		 pw::value_<image2d<bool> > > > nbh_t;
+  nbh_t nbh = make::dual_neighb(pic, c4(), c8());
 
   show_connectivity_numbers(pic, nbh);
 
@@ -104,14 +125,11 @@ int main()
   image2d<int_u8> dmap = transform::distance_geodesic(logical::not_(pic),
 						      nbh.foreground(),
 						      mln_max(int_u8));
-  debug::println("dst =", dmap | pw::value(pic));
   dmap = arith::revert(dmap);
 
-  mln_VAR( skl,
-	   morpho::skeleton_constrained(pic,
-					nbh, is_simple_2d_t(),
-					K, dmap) );
-
-  debug::println("pic =", pic);
-  debug::println("skl =", skl);
+  image2d<bool> skl = morpho::skeleton_constrained(pic,
+						   nbh, is_simple_2d_t(),
+						   K, dmap);
+  image2d<bool> skl_ref = make::image(skl_ref_);
+  mln_assertion(skl == skl_ref);
 }

@@ -33,12 +33,14 @@
 int main()
 {
   using namespace mln;
+  using value::rgb8;
 
-  image2d<value::rgb8> ima(2,2);
+  typedef image2d<rgb8> I;
+  I ima(2,2);
   point2d p(1,1);
   ima(p) = value::rgb8(200, 230, 240);
 
-  mln_VAR(ima_green, extract::green(ima));
+  fun_image<meta::green<rgb8>,I> ima_green = extract::green(ima);
 
   mln_assertion(ima(p).green() == ima_green(p));
 }

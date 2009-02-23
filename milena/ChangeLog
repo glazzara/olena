@@ -1,8 +1,29 @@
 2009-02-23 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Do not use mln_VAR in tests.
+
+	* tests/core/routine/extend.cc,
+	* tests/extract/blue.cc,
+	* tests/extract/green.cc,
+	* tests/extract/red.cc,
+	* tests/labeling/blobs.cc,
+	* tests/morpho/artificial_line_graph_image_wst.cc,
+	* tests/morpho/elementary/gradient.cc,
+	* tests/morpho/elementary/gradient_external.cc,
+	* tests/morpho/elementary/gradient_internal.cc,
+	* tests/morpho/elementary/laplacian.cc,
+	* tests/morpho/lena_line_graph_image_wst1.cc,
+	* tests/morpho/lena_line_graph_image_wst2.cc,
+	* tests/morpho/skeleton_constrained.cc,
+	* tests/morpho/tree/compute_parent.cc,
+	* tests/pw/image.cc: Use the proper type for variables instead of
+	mln_VAR.
+
+2009-02-23 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix ambiguity in morpho::elementary::gradient dispatch.
 
-	* mln/morpho/elementary/gradient.hh: Ambiguity with images both
+	* mln/morpho/elementary/gradient.hh: Fix ambiguity with images both
 	fastest and logic.
 
 2009-02-23 Guillaume Lazzara  <z@lrde.epita.fr>

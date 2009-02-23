@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -108,15 +109,17 @@ int main()
 	((r / square_length) % 2 == (c / square_length) % 2)
 	? mln_min(input_val_t)
 	: mln_max(input_val_t);
-  std::cout << "nvertices = " << nrows * ncols << std::endl
-	    << "nedges = " << 2 * nrows * ncols - (nrows + ncols) << std::endl;
+  mln_assertion((nrows * ncols) == 10000);
+  mln_assertion((2 * nrows * ncols - (rows + ncols)) == 19800);
 
   /*----------------.
   | Line gradient.  |
   `----------------*/
 
   // Line graph image.
-  mln_VAR(lg_ima, morpho::line_gradient(input));
+  typedef pw::image<fun::i2v::array<input_val_t>, p_edges<util::graph,
+		    fun::i2v::array< util::site_pair<point2d> > > > lg_ima_t;
+  lg_ima_t lg_ima = morpho::line_gradient(input);
 
   /*------.
   | WST.  |
@@ -126,9 +129,11 @@ int main()
   nbh_t nbh;
 
   // Perform a Watershed Transform.
+  typedef pw::image<fun::i2v::array<unsigned>, p_edges<util::graph,
+		    fun::i2v::array< util::site_pair<point2d> > > > wshed_t;
   unsigned nbasins;
-  mln_VAR(wshed, morpho::meyer_wst(lg_ima, nbh, nbasins));
-  std::cout << "nbasins = " << nbasins << std::endl;
+  wshed_t wshed = morpho::meyer_wst(lg_ima, nbh, nbasins);
+  mln_assertion(nbasins == 1155);
 
   /*---------.
   | Output.  |
