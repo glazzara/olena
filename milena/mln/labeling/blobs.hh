@@ -101,7 +101,10 @@ namespace mln
 		// Label this point component.
 		if (nlabels == mln_max(L))
 		  {
-		    trace::warning("labeling aborted!");
+		    trace::warning("labeling aborted! Too much labels \
+				    for this label type: nlabels > \
+				    max(label_type).");
+
 		    return output;
 		  }
 		++nlabels;

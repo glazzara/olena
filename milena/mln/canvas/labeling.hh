@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -34,6 +34,7 @@
 /// Connected component labeling of the object part in a binary image.
 ///
 /// \todo Make the fastest version work.
+/// FIXME: is 'status' useful?
 
 # include <mln/core/concept/image.hh>
 # include <mln/data/fill.hh>
@@ -196,6 +197,10 @@ namespace mln
 			if (nlabels == mln_max(L))
 			  {
 			    status = false;
+			    trace::warning("labeling aborted! Too much labels \
+					    for this label type: nlabels > \
+					    max(label_type).");
+
 			    return output;
 			  }
 			output(p) = ++nlabels;
@@ -319,6 +324,9 @@ namespace mln
 		    if (nlabels == mln_max(L))
 		      {
 			status = false;
+			trace::warning("labeling aborted! Too much labels for \
+					this label type: nlabels > \
+					max(label_type).");
 			return output;
 		      }
 		    output.element(p) = ++nlabels;
@@ -436,6 +444,9 @@ namespace mln
 		      if (nlabels == mln_max(L))
 			{
 			  status = false;
+			  trace::warning("labeling aborted! Too much labels \
+					  for this label type: nlabels > \
+					  max(label_type).");
 			  return output;
 			}
 		      output.element(p) = ++nlabels;
