@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_DEBUG_PRINTLN_WITH_BORDER_SPE_HH
 # define MLN_DEBUG_PRINTLN_WITH_BORDER_SPE_HH
 
-/*! \file mln/debug/println_with_border_spe.hh
- *
- * \brief  Specializations for mln::debug::println_with_border.
- */
+/// \file mln/debug/println_with_border_spe.hh
+///
+/// Specializations for mln::debug::println_with_border.
 
 # ifndef MLN_DEBUG_PRINTLN_WITH_BORDER_HH
 #  error "Forbidden inclusion of *.spe.hh"

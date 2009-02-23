@@ -1,5 +1,28 @@
 2009-02-23 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various small fixes.
+
+	* doc/tutorial/samples/win-create-1.cc: fix ref output.
+
+	* doc/tutorial/tutorial.tex: change chapter alias.
+
+	* mln/core/image/extension_val.hh: fix wrong prototype of
+	extended_with routine.
+
+	* mln/morpho/elementary/laplacian.hh,
+	* mln/debug/println_with_border.spe.hh: update comments.
+
+	* mln/io/dump/load.hh: add missing assertion.
+
+	* mln/registration/all.hh: remove not existing included header.
+
+	* mln/registration/icp.hh: add missing to_vec.
+
+	* mln/transform/internal/closest_point_functor.hh: add missing
+	includes.
+
+2009-02-23 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Do not use mln_VAR in tests.
 
 	* tests/core/routine/extend.cc,

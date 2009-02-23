@@ -650,7 +650,7 @@ namespace mln
 	image3d<value::rgb8> tmp_ = duplicate(debug);
 	mln_piter(p_array<P>) p_dbg(P_);
 	for_all(p_dbg)
-	  tmp_(qR_old.rotate(p_dbg) + qT_old) = literal::green;
+	  tmp_(qR_old.rotate(p_dbg.to_vec()) + qT_old) = literal::green;
 	std::ostringstream ss;
 	ss << "tmp_0";
 	if (k < 10)

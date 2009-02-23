@@ -46,7 +46,6 @@ namespace mln
 # include <mln/registration/get_rot.hh>
 # include <mln/registration/get_rtransf.hh>
 # include <mln/registration/icp.hh>
-# include <mln/registration/multiscale.hh>
 # include <mln/registration/registration.hh>
 
 #endif // ! MLN_REGISTRATION_ALL_HH

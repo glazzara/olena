@@ -29,12 +29,11 @@
 #ifndef MLN_MORPHO_ELEMENTARY_LAPLACIAN_HH
 # define MLN_MORPHO_ELEMENTARY_LAPLACIAN_HH
 
-/*! \file mln/morpho/elementary/laplacian.hh
- *
- * \brief Morphological elementary laplacian.
- *
- * \todo Handle the set case?
- */
+/// \file mln/morpho/elementary/laplacian.hh
+///
+/// Morphological elementary laplacian.
+///
+/// \todo Handle the set case?
 
 # include <mln/morpho/elementary/gradient_internal.hh>
 # include <mln/morpho/elementary/gradient_external.hh>

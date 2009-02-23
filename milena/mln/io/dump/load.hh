@@ -89,6 +89,7 @@ namespace mln
 
 	  mln_concrete(I) result(box<P>(pmin, pmax));
 	  initialize(ima, result);
+	  mln_assertion(exact(ima).is_valid());
 	}
 
 

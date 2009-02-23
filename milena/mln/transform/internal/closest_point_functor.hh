@@ -32,7 +32,9 @@
 ///
 /// Closest point functor.
 
+# include <mln/core/site_set/p_array.hh>
 # include <mln/core/macros.hh>
+# include <mln/data/fill.hh>
 # include <mln/trait/ch_value.hh>
 
 namespace mln
