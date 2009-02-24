@@ -1,5 +1,32 @@
 2009-02-24 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various small fixes.
+
+	* mln/essential/routine.hh
+	* mln/canvas/morpho/connected_filter.hh
+	* mln/canvas/morpho/all.hh
+	* mln/all.hh: add missing includes.
+
+	* mln/canvas/morpho/algebraic_filter.hh,
+	* mln/canvas/morpho/algebraic_union_find.hh: move implementation of
+	find_root()...
+	* mln/canvas/morpho/internal/find_root.hh: ... here.
+
+	* mln/core/image/extension_fun.hh,
+	* mln/core/image/extension_ima.hh,
+	* mln/core/image/extension_val.hh: remove extended_with() (duplicate
+	    core/routine/extend).
+
+	* mln/value/label.hh
+	* mln/value/rgb.hh: fix badly closed namespace.
+
+	* tests/registration/registration.cc: fix call to registration.
+
+	* tests/util/Makefile.am,
+	* tests/util/set.cc: re-enable this test.
+
+2009-02-24 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update tutorial.
 
 	* doc/tutorial/doxyfile_tuto.local: new doxyfile. Generate only the

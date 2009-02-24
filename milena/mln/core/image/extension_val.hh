@@ -268,17 +268,6 @@ namespace mln
     target = static_cast<V>(model.extension());
   }
 
-  template <typename I>
-  extension_val<I>
-  extended_with(Image<I>& ima, const mln_value(I)& val)
-  {
-    mlc_not_equal(mln_trait_image_ext_domain(I),
-		  trait::image::ext_domain::none)::check();
-    mln_precondition(exact(ima).is_valid());
-    extension_val<I> tmp(exact(ima), val);
-    return tmp;
-  }
-
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln

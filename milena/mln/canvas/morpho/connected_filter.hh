@@ -32,7 +32,8 @@
 /// \file mln/canvas/morpho/connected_filter.hh
 ///
 /// Connected filters dispatch (algebraic & leveling filters).
-///
+
+
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/concept/accumulator.hh>
@@ -42,6 +43,9 @@
 # include <mln/level/sort_psites.hh>
 # include <mln/level/sort_offsets.hh>
 
+# include <mln/util/pix.hh>
+
+# include <mln/data/fill.hh>
 
 namespace mln {
   namespace canvas {
@@ -181,9 +185,9 @@ namespace mln {
 	    // Initialization.
 	    {
 	      initialize(deja_vu, input);
-	      mln::data::fill(deja_vu, false);
+	      data::fill(deja_vu, false);
 	      initialize(activity, input);
-	      mln::data::fill(activity, true);
+	      data::fill(activity, true);
 	      initialize(parent, input);
 	      initialize(data, input);
 	      //a.init(); // init required.
@@ -304,11 +308,11 @@ namespace mln {
 	  // Initialization.
 	  {
 	    initialize(deja_vu, input);
-	    mln::data::fill(deja_vu, false);
+	    data::fill(deja_vu, false);
 	    initialize(activity, input);
-	    mln::data::fill(activity, true);
+	    data::fill(activity, true);
 	    initialize(parent, input);
-	    mln::data::fill(parent, 0);
+	    data::fill(parent, 0);
 	    initialize(data, input);
 	  }
 
@@ -506,7 +510,7 @@ namespace mln {
 	template <typename I, typename N, typename A>
 	inline
 	mln_concrete(I)
-	connected_filter_dispatch(mln::trait::accumulator::when_pix::use_none,
+	connected_filter_dispatch(trait::accumulator::when_pix::use_none,
 				  const Image<I>& input,
 				  const Neighborhood<N>& nbh,
 				  const Accumulator<A>& a,
@@ -519,7 +523,7 @@ namespace mln {
 	template <typename I, typename N, typename A>
 	inline
 	mln_concrete(I)
-	connected_filter_dispatch(mln::trait::accumulator::when_pix::use_p,
+	connected_filter_dispatch(trait::accumulator::when_pix::use_p,
 				  const Image<I>& input,
 				  const Neighborhood<N>& nbh,
 				  const Accumulator<A>& a,
@@ -532,7 +536,7 @@ namespace mln {
 	template <typename I, typename N, typename A>
 	inline
 	mln_concrete(I)
-	connected_filter_dispatch(mln::trait::accumulator::when_pix::use_v,
+	connected_filter_dispatch(trait::accumulator::when_pix::use_v,
 				  const Image<I>& input,
 				  const Neighborhood<N>& nbh,
 				  const Accumulator<A>& a,
@@ -545,7 +549,7 @@ namespace mln {
 	template <typename I, typename N, typename A>
 	inline
 	mln_concrete(I)
-	connected_filter_dispatch(mln::trait::accumulator::when_pix::use_pix,
+	connected_filter_dispatch(trait::accumulator::when_pix::use_pix,
 				  const Image<I>& input,
 				  const Neighborhood<N>& nbh,
 				  const Accumulator<A>& a,

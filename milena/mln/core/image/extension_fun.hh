@@ -267,17 +267,6 @@ namespace mln
     target = model.extension();
   }
 
-  template <typename I, typename F>
-  extension_fun<I,F>
-  extended_with(Image<I>& ima, const Function_v2v<F>& f)
-  {
-    mlc_not_equal(mln_trait_image_ext_domain(I),
-		  trait::image::ext_domain::none)::check();
-    mln_precondition(exact(ima).is_valid());
-    extension_fun<I,F> tmp(exact(ima), exact(f));
-    return tmp;
-  }
-
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln

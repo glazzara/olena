@@ -41,6 +41,7 @@
 # include <mln/data/fill.hh>
 # include <mln/util/pix.hh>
 
+# include <mln/canvas/morpho/internal/find_root.hh>
 
 namespace mln
 {
@@ -68,17 +69,6 @@ namespace mln
 
 	namespace generic
 	{
-
-	  template <typename I>
-	  inline
-	  mln_psite(I)
-	  find_root(I& parent, const mln_psite(I)& x)
-	  {
-	    if (parent(x) == x)
-	      return x;
-	    else
-	      return parent(x) = find_root(parent, parent(x));
-	  }
 
 	  template <typename I, typename N, typename F>
 	  inline
@@ -218,17 +208,6 @@ namespace mln
 
 
 	// Fastest version.
-
-	template <typename I>
-	inline
-	unsigned
-	find_root_fastest(I& parent, unsigned x)
-	{
-	  if (parent.element(x) == x)
-	    return x;
-	  else
-	    return parent.element(x) = find_root_fastest(parent, parent.element(x));
-	}
 
 
 	template <typename I, typename N, typename F>

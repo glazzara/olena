@@ -275,9 +275,10 @@ namespace mln
       return ostr << debug::format(i.to_equiv());
     }
 
-# endif // ! MLN_INCLUDE_ONLY
-
   } // end of namespace mln::value
+
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

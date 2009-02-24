@@ -57,6 +57,7 @@
 # include <mln/metal/essential.hh>
 # include <mln/morpho/essential.hh>
 # include <mln/norm/essential.hh>
+# include <mln/opt/essential.hh>
 # include <mln/pw/essential.hh>
 # include <mln/registration/essential.hh>
 # include <mln/set/essential.hh>

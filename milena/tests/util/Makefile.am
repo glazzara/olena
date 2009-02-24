@@ -13,6 +13,7 @@ check_PROGRAMS =				\
   lemmings					\
   line_graph 					\
   ord_pair					\
+  set 						\
   soft_heap 					\
   tree						\
   tree_fast					\
@@ -29,6 +30,7 @@ lazy_set_SOURCES = lazy_set.cc
 lemmings_SOURCES = lemmings.cc
 line_graph_SOURCES = line_graph.cc
 ord_pair_SOURCES = ord_pair.cc
+set_SOURCES = set.cc
 soft_heap_SOURCES = soft_heap.cc
 tree_SOURCES = tree.cc
 tree_fast_SOURCES = tree_fast.cc

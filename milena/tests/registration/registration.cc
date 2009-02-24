@@ -54,6 +54,10 @@ int main()
   typedef p_array<point3d> arr_t;
   arr_t arr1 = convert::to<arr_t>(img1);
   arr_t arr2 = convert::to<arr_t>(img2);
-  registration::registration1(arr1,arr2);
+
+  box3d bbox = img2.bbox();
+  bbox.enlarge(1, 10);
+  bbox.enlarge(2, 10);
+  registration::registration1(bbox, arr1, arr2);
   //FIXME: Auto test result
 }

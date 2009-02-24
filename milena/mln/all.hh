@@ -60,6 +60,7 @@
 #include <mln/metal/all.hh>
 #include <mln/morpho/all.hh>
 #include <mln/norm/all.hh>
+#include <mln/opt/all.hh>
 #include <mln/pw/all.hh>
 #include <mln/set/all.hh>
 #include <mln/tag/all.hh>
