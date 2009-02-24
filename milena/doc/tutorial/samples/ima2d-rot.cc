@@ -41,7 +41,7 @@ int main()
   }
 
   draw::box(ima2, ima2.bbox(), literal::red);
-  doc::ppmsave(ima2 | extended_domain, IMA2_PPM);
+  doc::ppmsave(extended_to(ima2, extended_domain), IMA2_PPM);
   // \}
 
 }

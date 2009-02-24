@@ -30,7 +30,7 @@ sed -i -e 's/&#X2261/\&equiv/g' $out
 
 #Doxygen wants us to preserve '\n' after commands. 
 #\ref and \see do not need that extra new line.
-for keyword in include section page subpage subsection image; do
+for keyword in include section page subpage subsection subsubsection image; do
   sed -i -e "s/\\\\endhtmlonly\\\\$keyword/\\\\endhtmlonly\n\n\\\\$keyword/g" $out
   sed -i -e "s/\\\\$keyword \(.*\)\\\\htmlonly/\\\\$keyword \1\n\n\\\\htmlonly\n/g" $out
 done

@@ -1,3 +1,28 @@
+2009-02-24 Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update tutorial.
+
+	* doc/tutorial/doxyfile_tuto.local: new doxyfile. Generate only the
+	tutorial.
+
+	* doc/tutorial/figures/extend-1.ppm,
+	* doc/tutorial/figures/extend-2.ppm,
+	* doc/tutorial/figures/extend-3.ppm,
+	* doc/tutorial/figures/extend-4.ppm,
+	* doc/tutorial/figures/extend-5.ppm,
+	* doc/tutorial/outputs/extend.txt: new reference files for the new
+	example.
+
+	* doc/tutorial/samples/Makefile.am,
+	* doc/tutorial/samples/extend.cc: new example for the tutorial,
+	related to the image extension.
+
+	* doc/tutorial/samples/ima2d-rot.cc: use extended_to().
+
+	* doc/tutorial/tools/todoxygen.sh: support keyword subsubsection.
+
+	* doc/tutorial/tutorial.tex: add more details about image extension.
+
 2009-02-23  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add DICOM support.

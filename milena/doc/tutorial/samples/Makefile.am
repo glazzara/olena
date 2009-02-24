@@ -9,6 +9,7 @@ noinst_PROGRAMS =		\
   domain-display 		\
   dpoint-1 			\
   estim-sites 			\
+  extend 			\
   extension-ignore 		\
   fill 				\
   fill-call-1			\
@@ -55,6 +56,7 @@ box2d_bbox_SOURCES = box2d-bbox.cc
 domain_display_SOURCES = domain-display.cc
 dpoint_1_SOURCES = dpoint-1.cc
 estim_sites_SOURCES = estim-sites.cc
+extend_SOURCES = extend.cc
 extension_ignore_SOURCES = extension-ignore.cc
 fill_SOURCES = fill.cc
 fill_call_1_SOURCES = fill-call-1.cc

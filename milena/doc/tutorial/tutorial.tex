@@ -73,6 +73,13 @@
 \backslash htmlonly %
 }
 
+\newcommand{\doxysubsubsection}[2]{%
+\label{#1}
+\backslash endhtmlonly%
+\backslash subsubsection #1 #2%
+\backslash htmlonly %
+}
+
 % #1 - part number (Optional)
 % #2 - file name
 \newcommand{\doxycode}[2][1]{
@@ -150,6 +157,7 @@ $$
 \renewcommand{\doxychapter}[2]{\chapter{#2}\label{#1}}
 \renewcommand{\doxysection}[2]{\section{#2}\label{#1}}
 \renewcommand{\doxysubsection}[2]{\subsection{#2}\label{#1}}
+\renewcommand{\doxysubsubsection}[2]{\subsubsection{#2}\label{#1}}
 \renewcommand{\doxycode}[2][1]{\lstinputlisting[frame=single]{samples/#2-#1.cc}}
 \renewcommand{\doxyrawcode}[1]{\lstinputlisting[frame=single]{samples/#1.cc.raw}}
 \renewcommand{\doxyoutput}[1]{\lstinputlisting[frame=single]{outputs/#1.txt}}
@@ -564,7 +572,8 @@ restricted to the region of interest \var{roi}'. Actually this is not directly
 
 Note the use of \code{rw()} which is mandatory due to C++ limitations. In C++,
 the image created by \code{lena | roi} is \code{const}, e.g. read-only, though
-\code{data::fill} expect a \code{non-const} image, e.g. read-write.
+\code{data::fill} expect a \code{non-const} image, e.g. read-write. \code{rw()}
+is a workaround to make it read-write.
 
 \begin{center}
   \begin{tabular}{c c c}
@@ -1214,6 +1223,8 @@ image domain. In the library, both the concept of border and of extension can be
 These concepts are useful in many algorithms and can avoid costly tests while
 working with sites located on image edges.
 
+\doxysubsection{imabordersection}{Image border}
+
 A border is a finite extension provided to a basic image type, such as
 \type{image2d}. By default, every image is created with a border. The default width is
 defined through the global variable \var{border::thickness} defined in
@@ -1234,8 +1245,6 @@ ignored while saving or printing an image.
 Some operations can be performed on the border. The functions are located in
 \hpath{mln/border}.\\
 
-FIXME: More details about border manipulation! border:get(), \ldots
-
 %
 \bigskip
 %
@@ -1254,7 +1263,9 @@ resize & Set image border to a specific size.\\
 \end{tabular} \\
 
 
-On morphed images, decribed in section \doxyref{imamorphed}, the border concept
+\doxysubsection{imextgeneral}{Generality on image extension}
+
+On morphed images, described in section \doxyref{imamorphed}, the border concept
 does not exist and is generalized to the extension concept.
 A simple example of a morphed image is a sub-image. A sub image does not have
 border nor extension by default.
@@ -1263,8 +1274,6 @@ function. This means that the extension can be infinite.
 Another point is that an image can be used as extension. For instance, in the
 case of a sub-image, you may be interested in extending the sub-image with the
 image itself.
-
-[FIXME: schema - voir cahier]
 
 The extension supports the following operations. These functions are located in
 \hpath{mln/extension}.\\
@@ -1275,8 +1284,64 @@ The extension supports the following operations. These functions are located in
 \begin{tabular}{l|p{10cm}}
 Routine & Description \\ 
 \hline
+adjust & Adjust the extension given a structural element.\\
+adjust\_duplicate & Adjust the size of the extension given a structural element and duplicate the image inner boundary.\\
+adjust\_fill & Adjust the size of the extension given a structural element and fill it with a value.\\
+duplicate & Duplicate the values of the image inner boundary in the extension.\\ 
 fill & Fill the extension with a given value.\\
 \end{tabular} \\
+
+
+In order to extend an image, a routine \code{extend} is available in
+\hpath{mln/core/routine/extend.hh}. The routine \code{extended\_to} may
+also help during debug. It allows to extend the image domain to a larger
+one. The values associated to the new sites comes from the extension.
+
+\doxysubsection{extexample}{Different extensions}
+
+Let's say we have want to extract a sub domain from an image. In the following
+example, \var{ima\_roi} holds several small rectangles from the original image.
+\doxycode[2]{extend}
+
+\begin{center}
+  \begin{tabular}{c c c}
+    \doxyimg{small-enlarged} & ~\huge{\rightarrow}~ & \doxyfigure[1]{extend}{3cm} \\
+    \var{lena} & & \var{ima\_roi} (black color means the sites are not included in the domain) \\
+  \end{tabular}
+\end{center}
+
+
+Then, we may extend this sub image with one of the three following extension type.
+
+\doxysubsubsection{extval}{Extension with a value}
+
+Let's extend with the value \code{literal::blue}.
+\doxycode[3]{extend}
+\doxyfigure[2]{extend}{3cm}
+
+Note the use of the \code{extended\_to()} routine. We used a larger bbox to
+extend the image domain. That is the reason why the image is surrounded by the
+extension value, blue.
+
+\doxysubsubsection{extfun}{Extension with a function}
+
+Let's use the following function:
+\doxycode[1]{extend}
+\doxycode[4]{extend}
+\doxyfigure[3]{extend}{3cm}
+
+\doxysubsubsection{extima}{Extension with an image}
+
+Let's extend with the original image, \var{lena}.
+\doxycode[5]{extend}
+
+\begin{center}
+  \begin{tabular}{c c}
+    \doxyfigure[4]{extend}{3cm} & \doxyfigure[5]{extend}{3cm} \\
+    \var{ext\_with\_ima}, the extended image. & The actual data in the domain (light) with its extension (dark) \\
+  \end{tabular}
+\end{center}
+
 
 %----------------
 \subsection*{IMPORTANT NOTE}
@@ -1559,7 +1624,8 @@ cuboid3d & Cuboid & - \\
 These predefined windows can be passed directly to a function. The headers are
 located in \header{mln/core/alias/window*.hh}.
 
-
+\doxysubsection{wwindow}{Weighted window}
+FIXME
 
 \doxysubsection{neighborhood}{Neighborhood}
 
