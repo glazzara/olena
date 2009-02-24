@@ -8,7 +8,7 @@ struct keep_specific_colors : public mln::Function_v2b<keep_specific_colors>
 {
   bool operator()(const mln::value::rgb8& v) const
   {
-    return v.green() < 20000 && v.blue() > 10000;
+    return v.green() < 200 && v.blue() > 100;
   }
 };
 
@@ -83,7 +83,7 @@ int main()
   doc::ppmsave(debug::colorize(value::rgb8(), label, nlabels), "tuto4_genericity_and_algorithms");
 
   // \{
-  data::fill((lena | (pw::value(label) == pw::cst(16u))).rw(), literal::green);
+  data::fill((lena | (pw::value(label) == pw::cst(0u))).rw(), literal::blue);
   // \}
   doc::ppmsave(lena, "tuto4_genericity_and_algorithms");
 
@@ -103,7 +103,7 @@ int main()
 
   lena = duplicate(lena_bak);
   // \{
-  mln_VAR(object, pw::value(label) == pw::cst(16u));
+  mln_VAR(object, pw::value(label) == pw::cst(0u));
   data::fill((extract::green(lena).rw() | object).rw(), literal::max);
   // \}
   //FIXME: how to display an image which is not defined on a box!?
