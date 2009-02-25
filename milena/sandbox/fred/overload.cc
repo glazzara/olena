@@ -3,6 +3,11 @@
 #include <mln/fun/internal/resolve.hh>
 #include <mln/trait/op/plus.hh>
 
+
+#define mln_result__1comma(Tleft, Tright)  \
+  typename Tleft, Tright ::result
+
+
 // Avantage de cette methode:
 //  - la surcharge est rendue effectivement possible pour des familles de types
 //    et permet de passer en argument une fonction meme s'il existe de multiple definitions
@@ -163,13 +168,18 @@ namespace mln
   {
 
     // Default (whatever the category):
-    // "inf" performs a "min"!
-    template <template <class> class Category_L, typename L, template <class> class Category_R, typename R>
-    struct set_binary_< fun::vv2v::plus, Category_L, L, Category_R, R>
+    // "plus(l, r)" performs "l + r"!
+    template <template <class> class Category_L, typename L,
+	      template <class> class Category_R, typename R>
+    struct set_binary_< fun::vv2v::plus,
+			Category_L, L,
+			Category_R, R>
     {
       typedef set_binary_< fun::vv2v::plus, Category_L, L, Category_R, R> ret;
 
-      static mln_trait_op_plus(L,R) exec(const L& t1, const R& t2)
+      typedef mln_trait_op_plus(L,R) result;
+
+      static result exec(const L& t1, const R& t2)
       {
 	return t1 + t2;
       }
@@ -194,9 +204,8 @@ namespace mln
       template <typename L, typename R>
       struct plus : Function_vv2v< plus<L,R> >
       {
-	typedef mln_trait_op_plus(L,R) result;
-
 	typedef mln_fun_internal_resolve(plus) impl;
+	typedef mln_result(impl) result;
 
 	result operator()(const L& t1, const R& t2) const
 	{
@@ -216,9 +225,10 @@ namespace mln
 	  // A meta-fun can act as a function :-)
 
 	  template <typename L, typename R>
-	  typename fun::vv2v::plus<L,R>::result operator()(const L& t1, const R& t2) const
-	  // Here, we know the result type of vv2v::plus<L,R> so
-	  // we explictly write it.
+	  mln_result__1comma(fun::vv2v::plus<L,R>)
+	  operator()(const L& t1, const R& t2) const
+	  // Here, we do NOT know the result type of vv2v::plus<L,R> so
+	  // we cannot explictly write it.
 	  {
 	    fun::vv2v::plus<L,R> f;
 	    return f(t1, t2);
@@ -239,6 +249,7 @@ namespace mln
 
   } // mln::fun
 
+
   namespace trait
   {
 
@@ -246,10 +257,11 @@ namespace mln
     struct set_precise_binary_< fun::vv2v::plus, rgb, rgb >
     {
       typedef set_precise_binary_< fun::vv2v::plus, rgb, rgb > ret;
+      typedef rgb result;
 
       static rgb exec(const rgb& c1, const rgb& c2)
       {
-	// "Inf" is component-wise "min".
+	// "plus" is component-wise "plus".
 	return rgb(c1.r + c2.r,
 		   c1.g + c2.g,
 		   c1.b + c2.b);
@@ -265,6 +277,7 @@ namespace mln
   } // mln::trait
 
 } // mln
+
 
 using namespace mln;
 

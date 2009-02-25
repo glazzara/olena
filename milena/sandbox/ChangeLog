@@ -1,3 +1,9 @@
+2009-02-25  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update Fred's overload code.
+
+	* fred/overload.cc: Update.
+
 2009-02-23  Frederic Bour  <bour@lrde.epita.fr>
 
 	Work on meta-functions and overloading added..
