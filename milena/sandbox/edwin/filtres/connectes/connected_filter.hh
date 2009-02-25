@@ -74,6 +74,8 @@ namespace mln {
 	void take_as_init_fastest (trait::accumulator::when_pix::use_none, A& accu,
 			   const I& input, const unsigned p)
 	{
+	  (void)input;
+	  (void)p;
 	  accu.take_as_init ();
 	}
 
@@ -81,6 +83,7 @@ namespace mln {
 	void take_as_init (trait::accumulator::when_pix::use_p, A& accu,
 			   const I& input, const P& p)
 	{
+	  (void)input;
 	  accu.take_as_init (p);
 	}
 
@@ -88,6 +91,7 @@ namespace mln {
 	void take_as_init (trait::accumulator::when_pix::use_none, A& accu,
 			   const I& input, const P& p)
 	{
+	  (void)input;
 	  accu.take_as_init (p);
 	}
 
@@ -279,11 +283,11 @@ namespace mln {
 				 const typename A::result& lambda)
 	{
 	  trace::entering("canvas::morpho::impl::connected_filter_fastest");
-
 	  // FIXME: Tests?
 
 	  const I& input = exact(input_);
 	  const N& nbh = exact(nbh_);
+	  (void)a_;
 
 	  mln_concrete(I) output;
 	  initialize(output, input);
@@ -372,71 +376,10 @@ namespace mln {
       } // end of namespace mln::canvas::morpho::impl
 
 
-
-
 	// Dispatch.
-
 
       namespace internal
       {
-	// Leveling
-	template <typename I, typename N, typename A>
-	mln_concrete(I)
-	leveling_filter_dispatch(metal::false_,
-				 const Image<I>& input,
-				 const Neighborhood<N>& nbh,
-				 const Accumulator<A>& a,
-				 const typename A::result& lambda,
-				 bool increasing)
-	{
-	  p_array < mln_psite(I) > s =
-	    increasing ?
-	    level::sort_psites_increasing(input) :
-	    level::sort_psites_decreasing(input);
-	  return impl::generic::connected_filter(input, nbh, s, a, lambda);
-	}
-
-	template <typename I, typename N, typename A>
-	mln_concrete(I)
-	leveling_filter_dispatch(metal::true_,
-				 const Image<I>& input,
-				 const Neighborhood<N>& nbh,
-				 const Accumulator<A>& a,
-				 const typename A::result& lambda,
-				 bool increasing)
-	{
-	  util::array<unsigned> s =
-	    increasing ?
-	    level::sort_offsets_increasing(input) :
-	    level::sort_offsets_decreasing(input);
-	  return impl::connected_filter_fastest(input, nbh, s, a, lambda);
-	}
-
-	template <typename I, typename N, typename A>
-	inline
-	mln_concrete(I)
-	leveling_filter_dispatch(const Image<I>& input,
-				 const Neighborhood<N>& nbh,
-				 const Accumulator<A>& a,
-				 const typename A::result& lambda,
-				 bool increasing)
-	{
-	  mlc_or(mlc_equal(mln_trait_accumulator_when_pix(A),
-			   trait::accumulator::when_pix::use_pix),
-		 mlc_equal(mln_trait_accumulator_when_pix(A),
-			   trait::accumulator::when_pix::use_v))::check();
-
-	  enum
-	  {
-	    test = mlc_equal(mln_trait_image_speed(I),
-			     trait::image::speed::fastest)::value
-	    && mlc_equal(mln_trait_accumulator_when_pix(A),
-			 trait::accumulator::when_pix::use_v)::value
-	    && mln_is_simple_neighborhood(N)::value
-	  };
-	  return leveling_filter_dispatch(metal::bool_<test>(),
-					  input, nbh, a, lambda, increasing);
-	}
 
 	// Alegebraic
 	template <typename I, typename N, typename A>

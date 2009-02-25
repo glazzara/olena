@@ -1,11 +1,15 @@
-TARGET=filter
-SRC=filter.cc
+TARGET=a.out
+SRC=edwin.cc
 OBJS=${SRC:.cc=.o}
 
-OLENADIR=../../../../..
+OLENADIR=../../..
 MILENADIR=$(OLENADIR)/milena
 
-CXXFLAGS=-I$(MILENADIR) -I./ -DNDEBUG -O3 -ffast-math
+CXXFLAGS=-I$(MILENADIR) -I./
+
+CXXFLAGS += "-DNDEBUG -O1"
+
+
 CXX=g++
 LD=g++
 LDFLAGS=
@@ -26,4 +30,4 @@ $(REF): $(OBJS_REF) $(SRC_REF)
 	$(CXX) $(CXXFLAGS) -c $<
 
 clean:
-	rm -f *.o *.pgm $(TARGET)
+	rm -f *.o $(REF) $(TARGET)
