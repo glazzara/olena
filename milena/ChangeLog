@@ -1,3 +1,24 @@
+2009-02-25 Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add all.hh and essential.hh in mln/opt.
+
+	* mln/opt/all.hh,
+	* mln/opt/essential.hh: new.
+
+2009-02-24 Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix step 4 in tutorial.
+
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-5.ppm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-6.ppm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-9.ppm: update
+	reference file.
+
+	* doc/tutorial/samples/tuto4_genericity_and_algorithms.cc: fix
+	threshold function.
+
+	* doc/tutorial/tutorial.tex: include the proper image in step 4.
+
 2009-02-24 Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Various small fixes.
