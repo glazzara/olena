@@ -1,3 +1,8 @@
+2009-02-25  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Fix DICOM implementation: was DCMTK, now is GDCM.
+	* mln/io/dicom/load.hh: GDCM version.
+
 2009-02-25 Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add all.hh and essential.hh in mln/opt.
