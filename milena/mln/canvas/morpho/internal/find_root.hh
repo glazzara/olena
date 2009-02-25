@@ -34,6 +34,8 @@
 ///
 /// \todo write a 'parent' image instead?
 
+# include <mln/core/concept/image.hh>
+
 namespace mln
 {
 

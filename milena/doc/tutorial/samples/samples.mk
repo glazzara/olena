@@ -30,6 +30,7 @@ samples/fill-subdomain-shorter.cc \
 samples/tuto3_rw_image.cc \
 samples/ima2d-2.cc \
 samples/extension-ignore.cc \
+samples/extend.cc \
 samples/Makefile.am \
 samples/parray-bbox.cc \
 samples/graph-data.cc \

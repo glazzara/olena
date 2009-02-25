@@ -4,6 +4,7 @@ EXTRA_DIST +=  \
 outputs/win-create-1-display.txt \
 outputs/win-create-2.txt \
 outputs/accu-right-instanciation.txt \
+outputs/extend.txt \
 outputs/ima2d-1.txt \
 outputs/borderthickness.txt \
 outputs/ima-save.txt \

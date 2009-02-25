@@ -111,6 +111,7 @@ mln_data_memcpy_ \
 mln_data_all \
 mln_data_paste \
 mln_data_fill_with_image \
+mln_data_swap \
 mln_data_fill_with_value \
 mln_data_fill \
 mln_data_essential \
@@ -201,6 +202,7 @@ mln_fun_vv2v_essential \
 mln_fun_internal_array_base \
 mln_fun_internal_x2x_linear_impl \
 mln_fun_internal_ch_function_value_impl \
+mln_fun_internal_resolve \
 mln_fun_internal_selector \
 mln_fun_v2w_w2v_norm \
 mln_fun_p2v_ternary \
@@ -440,8 +442,10 @@ mln_math_essential \
 mln_math_acos \
 mln_math_round_sat \
 mln_opt_at \
+mln_opt_all \
 mln_opt_element \
 mln_opt_value \
+mln_opt_essential \
 mln_binarization_includes \
 mln_binarization_all \
 mln_binarization_binarization \
@@ -521,6 +525,7 @@ mln_canvas_chamfer \
 mln_canvas_distance_geodesic \
 mln_canvas_all \
 mln_canvas_distance_front \
+mln_canvas_morpho_internal_find_root \
 mln_canvas_morpho_all \
 mln_canvas_morpho_connected_filter \
 mln_canvas_morpho_algebraic_filter \
@@ -1006,6 +1011,7 @@ mln_io_pnm_save \
 mln_io_pnm_save_header \
 mln_io_txt_all \
 mln_io_txt_save \
+mln_io_dicom_load \
 mln_io_abort \
 mln_io_fits_load \
 mln_io_fits_all \
@@ -1180,6 +1186,7 @@ mln_data_memcpy__SOURCES = mln_data_memcpy_.cc
 mln_data_all_SOURCES = mln_data_all.cc
 mln_data_paste_SOURCES = mln_data_paste.cc
 mln_data_fill_with_image_SOURCES = mln_data_fill_with_image.cc
+mln_data_swap_SOURCES = mln_data_swap.cc
 mln_data_fill_with_value_SOURCES = mln_data_fill_with_value.cc
 mln_data_fill_SOURCES = mln_data_fill.cc
 mln_data_essential_SOURCES = mln_data_essential.cc
@@ -1270,6 +1277,7 @@ mln_fun_vv2v_essential_SOURCES = mln_fun_vv2v_essential.cc
 mln_fun_internal_array_base_SOURCES = mln_fun_internal_array_base.cc
 mln_fun_internal_x2x_linear_impl_SOURCES = mln_fun_internal_x2x_linear_impl.cc
 mln_fun_internal_ch_function_value_impl_SOURCES = mln_fun_internal_ch_function_value_impl.cc
+mln_fun_internal_resolve_SOURCES = mln_fun_internal_resolve.cc
 mln_fun_internal_selector_SOURCES = mln_fun_internal_selector.cc
 mln_fun_v2w_w2v_norm_SOURCES = mln_fun_v2w_w2v_norm.cc
 mln_fun_p2v_ternary_SOURCES = mln_fun_p2v_ternary.cc
@@ -1509,8 +1517,10 @@ mln_math_essential_SOURCES = mln_math_essential.cc
 mln_math_acos_SOURCES = mln_math_acos.cc
 mln_math_round_sat_SOURCES = mln_math_round_sat.cc
 mln_opt_at_SOURCES = mln_opt_at.cc
+mln_opt_all_SOURCES = mln_opt_all.cc
 mln_opt_element_SOURCES = mln_opt_element.cc
 mln_opt_value_SOURCES = mln_opt_value.cc
+mln_opt_essential_SOURCES = mln_opt_essential.cc
 mln_binarization_includes_SOURCES = mln_binarization_includes.cc
 mln_binarization_all_SOURCES = mln_binarization_all.cc
 mln_binarization_binarization_SOURCES = mln_binarization_binarization.cc
@@ -1590,6 +1600,7 @@ mln_canvas_chamfer_SOURCES = mln_canvas_chamfer.cc
 mln_canvas_distance_geodesic_SOURCES = mln_canvas_distance_geodesic.cc
 mln_canvas_all_SOURCES = mln_canvas_all.cc
 mln_canvas_distance_front_SOURCES = mln_canvas_distance_front.cc
+mln_canvas_morpho_internal_find_root_SOURCES = mln_canvas_morpho_internal_find_root.cc
 mln_canvas_morpho_all_SOURCES = mln_canvas_morpho_all.cc
 mln_canvas_morpho_connected_filter_SOURCES = mln_canvas_morpho_connected_filter.cc
 mln_canvas_morpho_algebraic_filter_SOURCES = mln_canvas_morpho_algebraic_filter.cc
@@ -2075,6 +2086,7 @@ mln_io_pnm_save_SOURCES = mln_io_pnm_save.cc
 mln_io_pnm_save_header_SOURCES = mln_io_pnm_save_header.cc
 mln_io_txt_all_SOURCES = mln_io_txt_all.cc
 mln_io_txt_save_SOURCES = mln_io_txt_save.cc
+mln_io_dicom_load_SOURCES = mln_io_dicom_load.cc
 mln_io_abort_SOURCES = mln_io_abort.cc
 mln_io_fits_load_SOURCES = mln_io_fits_load.cc
 mln_io_fits_all_SOURCES = mln_io_fits_all.cc

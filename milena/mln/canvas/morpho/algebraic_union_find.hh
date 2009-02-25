@@ -148,7 +148,7 @@ namespace mln
 		  if (input.domain().has(n) && deja_vu(n))
 		    {
 		      //do_union(n, p);
-		      P r = find_root(parent, n);
+		      P r = internal::find_root(parent, n);
 		      if (r != p)
 			{
 			  if (input(r) == input(p) || (activity(r) && f.is_active(data(r)))) // Equiv(r, p)
@@ -274,7 +274,7 @@ namespace mln
 		    if (! deja_vu.element(n))
 		      continue;
 
-		    unsigned r = find_root_fastest(parent, n);
+		    unsigned r = internal::find_root_fastest(parent, n);
 		    if (r != p)
 		      {
 			if (input.element(r) == input.element(p)

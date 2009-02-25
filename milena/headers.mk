@@ -59,7 +59,6 @@ mln/registration/get_rtransf.hh \
 mln/registration/internal/rms.hh \
 mln/registration/get_rot.hh \
 mln/registration/all.hh \
-mln/registration/multiscale.hh \
 mln/registration/registration.hh \
 mln/registration/essential.hh \
 mln/registration/icp.hh \
@@ -116,6 +115,7 @@ mln/data/all.hh \
 mln/data/paste.hh \
 mln/data/fill_with_image.hh \
 mln/data/fill_with_image.spe.hh \
+mln/data/swap.hh \
 mln/data/fill_with_value.hh \
 mln/data/fill_with_value.spe.hh \
 mln/data/fill.hh \
@@ -207,6 +207,7 @@ mln/fun/vv2v/essential.hh \
 mln/fun/internal/array_base.hh \
 mln/fun/internal/x2x_linear_impl.hh \
 mln/fun/internal/ch_function_value_impl.hh \
+mln/fun/internal/resolve.hh \
 mln/fun/internal/selector.hh \
 mln/fun/v2w_w2v/norm.hh \
 mln/fun/p2v/ternary.hh \
@@ -448,8 +449,10 @@ mln/math/essential.hh \
 mln/math/acos.hh \
 mln/math/round_sat.hh \
 mln/opt/at.hh \
+mln/opt/all.hh \
 mln/opt/element.hh \
 mln/opt/value.hh \
+mln/opt/essential.hh \
 mln/binarization/includes.hh \
 mln/binarization/all.hh \
 mln/binarization/binarization.hh \
@@ -529,6 +532,7 @@ mln/canvas/chamfer.hh \
 mln/canvas/distance_geodesic.hh \
 mln/canvas/all.hh \
 mln/canvas/distance_front.hh \
+mln/canvas/morpho/internal/find_root.hh \
 mln/canvas/morpho/all.hh \
 mln/canvas/morpho/connected_filter.hh \
 mln/canvas/morpho/algebraic_filter.hh \
@@ -1036,6 +1040,7 @@ mln/io/pnm/save.hh \
 mln/io/pnm/save_header.hh \
 mln/io/txt/all.hh \
 mln/io/txt/save.hh \
+mln/io/dicom/load.hh \
 mln/io/abort.hh \
 mln/io/fits/load.hh \
 mln/io/fits/all.hh \
