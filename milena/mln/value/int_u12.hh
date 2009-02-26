@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,37 +25,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_ALL_HH
-# define MLN_IO_ALL_HH
+#ifndef MLN_VALUE_INT_U12_HH
+# define MLN_VALUE_INT_U12_HH
 
-/// \file mln/io/all.hh
-///
-/// File that includes all io materials.
+/*! \file mln/value/int_u12.hh
+ *
+ * \brief Define the alias value::int_u12.
+ */
 
+# include <mln/value/int_u.hh>
 
 
 namespace mln
 {
 
-  /// Namespace of input/output handling.
-  namespace io
+  namespace value
   {
-    /// Internal namespace of io namespace.
-    namespace internal {}
-  }
 
-}
 
-# include <mln/io/cloud/all.hh>
-# include <mln/io/dump/all.hh>
-# include <mln/io/dicom/load.hh>
-# include <mln/io/pbm/all.hh>
-# include <mln/io/pfm/all.hh>
-# include <mln/io/pgm/all.hh>
-# include <mln/io/pnm/all.hh>
-# include <mln/io/ppm/all.hh>
-# include <mln/io/txt/all.hh>
-//# include <mln/io/fits/all.hh>
-//# include <mln/io/off/all.hh>
+    /// Alias for unsigned 12-bit integers.
+    typedef int_u<12> int_u12;
 
-#endif // ! MLN_IO_ALL_HH
+
+  } // end of namespace mln::value
+
+} // end of namespace mln
+
+
+#endif // ! MLN_VALUE_INT_U12_HH

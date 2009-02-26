@@ -95,9 +95,8 @@ namespace mln
       void load(Image<I>& ima_,
 		const std::string& filename)
       {
-	trace::entering("mln::io::gdcm::load");
+	trace::entering("mln::io::dicom::load");
 
-	using value::int_u16;
 	I& ima = exact(ima_);
 
 	gdcm::ImageReader r;
@@ -119,8 +118,17 @@ namespace mln
 	int ndims = image.GetNumberOfDimensions();
 	const unsigned int* dims = image.GetDimensions();
 
-	unsigned short bytes_allocated = image.GetPixelFormat().GetBitsAllocated() / 8;
+	unsigned short bits_allocated = image.GetPixelFormat().GetBitsAllocated();
+	unsigned short bytes_allocated = bits_allocated / 8;
+	unsigned short bits_stored = image.GetPixelFormat().GetBitsStored();
 	unsigned short samples_per_pixel = image.GetPixelFormat().GetSamplesPerPixel();
+
+	unsigned int offset = 8 - (bits_allocated - bits_stored);
+	unsigned int off_pow = 1;
+	for (int i = 0; i < offset; ++i)
+	{
+	  off_pow *= 2;
+	}
 
 	if (mln_site_(I)::dim != ndims)
 	{
@@ -154,13 +162,18 @@ namespace mln
 	  {
 	    index += p.to_site().to_vec()[i] * vdims[i];
 	  }
-	  ima(p) = dataBuffer[index * bytes_allocated * samples_per_pixel];
-	  // FIXME: RGB support, HighBit
-	  for (int j = 1; j < bytes_allocated; ++j)
+
+	  ima(p) = (unsigned char) dataBuffer[(index * bytes_allocated) * samples_per_pixel];
+	  // FIXME: RGB support, HighBit if HB == 1
+	  for (int j = 0; j < bytes_allocated; ++j)
 	  {
-	    ima(p) *= 256;
-	    ima(p) += dataBuffer[(index * bytes_allocated + j) * samples_per_pixel];
+	    ima(p) += ((unsigned char) dataBuffer[(index * bytes_allocated + j) * samples_per_pixel]) * 256 * j;
 	  }
+	  /*std::cout << "[ x = " << p.to_site().to_vec()[2]
+		    << " | y = " << p.to_site().to_vec()[1]
+		    << " | z = " << p.to_site().to_vec()[0]
+		    << " ] => " << ima(p)
+		    << std::endl;*/
 	}
 
 	delete(dataBuffer);

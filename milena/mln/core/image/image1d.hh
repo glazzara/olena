@@ -118,6 +118,27 @@ namespace mln
 
 
 
+  // Forward declaration.
+  template <typename T> struct image1d;
+
+
+
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      // histo::array -> image1d.
+      template <typename V, typename T>
+      void from_to_(const histo::array<V>& from, image1d<T>& to);
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
+
+
+
   /*! \brief Basic 1D image class.
    *
    * The parameter \c T is the type of pixel values.  This image class
@@ -520,8 +541,32 @@ namespace mln
 # include <mln/core/w_window.hh>
 
 
+
 namespace mln
 {
+
+
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      // histo::array -> image1d.
+      template <typename V, typename T>
+      inline
+      void
+      from_to_(const histo::array<V>& from, image1d<T>& to)
+      {
+	to.init_(make::box1d(from.nvalues()), 0);
+	for (unsigned i = 0; i < from.nvalues(); ++i)
+	  from_to(from[i], to(point1d(i)));
+      }
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
+
 
   namespace trait
   {

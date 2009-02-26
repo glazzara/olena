@@ -65,6 +65,8 @@ namespace mln
   template <typename D> class window;
   template <typename D, typename W> class w_window;
 
+  template <typename T> struct image1d;
+
   namespace algebra {
     template <unsigned n, typename T> class vec;
     template <unsigned d, typename C> class h_vec;
@@ -74,6 +76,10 @@ namespace mln
     namespace i2v {
       template <typename T> class array;
     }
+  }
+
+  namespace histo {
+    template <typename T> struct array;
   }
 
   namespace util {
@@ -359,6 +365,11 @@ namespace mln
       template <typename P, typename _C, typename S>
       void
       from_to_(const std::set<P,_C>& from, Site_Set<S>& to);
+
+      // histo::array -> image1d
+      template <typename V, typename T>
+      void
+      from_to_(const histo::array<V>& from, image1d<T>& to);
 
     } // end of namespace mln::convert::over_load
 
