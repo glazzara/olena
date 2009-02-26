@@ -1,8 +1,8 @@
 TARGET=a.out
-SRC=edwin.cc
+SRC=tree.cc
 OBJS=${SRC:.cc=.o}
 
-OLENADIR=../../..
+OLENADIR=../../../..
 MILENADIR=$(OLENADIR)/milena
 
 CXXFLAGS=-I$(MILENADIR) -I./

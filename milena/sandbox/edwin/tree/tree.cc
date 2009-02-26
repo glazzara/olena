@@ -17,6 +17,7 @@
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
 #include <mln/morpho/attribute/card.hh>
+#include "../attributes/occupation.hh"
 
 #include <mln/debug/println.hh>
 
@@ -127,7 +128,7 @@ int main(int argc, char* argv[])
   typedef morpho::tree::data<I,S> tree_t;
   tree_t t(f, s, nbh);
 
-  morpho::attribute::card<I> a_;
+  morpho::attribute::occupation<I> a_;
   mln_VAR(a, morpho::tree::compute_attribute_image(a_, t));
 
   if (echo > 1)
