@@ -157,7 +157,7 @@ namespace mln
 	volume_.take(v);
 	if (v < min_)
 	  min_ = v;
-	else if (v > max_)
+	if (v > max_)
 	  max_ = v;
       }
 
@@ -178,7 +178,7 @@ namespace mln
 	volume_.take(other.volume_);
 	if (other.min_ < min_)
 	  min_ = other.min_;
-	else if (other.max_ > max_)
+	if (other.max_ > max_)
 	  max_ = other.max_;
       }
 
@@ -205,7 +205,7 @@ namespace mln
       double
       occupation<I>::to_result() const
       {
-	return (double)volume_.to_result() / (double)(volume_.area() * (max_ - min_));
+	return (double)volume_.to_result() / (double)(volume_.area() * height());
       }
 
       template <typename I>

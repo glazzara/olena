@@ -14,7 +14,7 @@ CXX=g++
 LD=g++
 LDFLAGS=
 
-all: $(TARGET)
+all: clean $(TARGET)
 
 $(TARGET): $(OBJS) $(SRC)
 	$(LD) $(LDFLAGS) -o $@ $(OBJS)

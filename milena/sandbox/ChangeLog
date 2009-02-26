@@ -1,5 +1,11 @@
 2009-02-26  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Continue experiments about attribute and morpho math.
+	* edwin/attributes/occupation.hh: Correct bugs.
+	* edwin/tree/tree.cc: Test file.
+
+2009-02-26  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Test a new attribute to perform occupation calculus.
 	* edwin/attributes/occupation.hh: Attribute performing occupation calculus.
 	* edwin/attributes: New.
