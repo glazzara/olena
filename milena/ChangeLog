@@ -1,5 +1,13 @@
 2009-02-27 Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make test::predicate more robust.
+
+	* mln/test/predicate.hh: add predicate_tests() function and call it
+	in test::impl::* functions.
+	Fix a wrong pixter type.
+
+2009-02-27 Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes for doc generation.
 
 	* doc/Doxyfile.in: add doc/tutorial/img to IMAGE_PATH.
