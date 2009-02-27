@@ -1,3 +1,23 @@
+2009-02-27 Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes for doc generation.
+
+	* doc/Doxyfile.in: add doc/tutorial/img to IMAGE_PATH.
+
+	* doc/doc.mk: Set the path to doc/tutorial/img in a variable.
+
+	* doc/tutorial/Makefile.am: Add IMG_SRCDIR to to TEXINPUTS.
+
+	* img/small-enlarged.png,
+	* img/small.png: move...
+	* doc/tutorial/img/small-enlarged.png,
+	* doc/tutorial/img/small.png: ... here.
+
+	* doc/tutorial/samples/accu-wrong-instanciation.cc.raw: use a
+	different accumulator.
+
+	* doc/tutorial/tools/sample_utils.hh: do not include all io headers.
+
 2009-02-26  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add int_u12 type and fix DICOM support.

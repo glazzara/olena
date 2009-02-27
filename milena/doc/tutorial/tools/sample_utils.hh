@@ -29,7 +29,9 @@
 # define DOC_TUTORIAL_TOOLS_SAMPLE_UTILS_HH
 
 # include <mln/core/image/image2d.hh>
-# include <mln/io/all.hh>
+# include <mln/io/pbm/all.hh>
+# include <mln/io/pgm/all.hh>
+# include <mln/io/ppm/all.hh>
 
 namespace doc
 {

@@ -96,7 +96,7 @@ EXAMPLE_PATH           = @top_srcdir@/milena/doc/tutorial/samples   \
 			 @top_srcdir@/milena/doc/tutorial/outputs 
 EXAMPLE_PATTERNS       = 
 EXAMPLE_RECURSIVE      = NO
-IMAGE_PATH             = @top_srcdir@/milena/img		    \
+IMAGE_PATH             = @top_srcdir@/milena/doc/tutorial/img	    \
 			 @top_srcdir@/milena/doc/tutorial/figures   \
 			 @top_builddir@/milena/doc/tutorial/figures
 INPUT_FILTER           = 

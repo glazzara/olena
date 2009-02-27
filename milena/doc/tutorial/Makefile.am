@@ -3,7 +3,7 @@ SUBDIRS = samples
 .PHONY: tutorial tuto_html
 
 include $(top_srcdir)/milena/doc/doc.mk
-TEXINPUTS = $(TUTORIAL_SRCDIR):$(TUTORIAL_BUILDDIR):$(OUTPUTS_SRCDIR):
+TEXINPUTS = $(TUTORIAL_SRCDIR):$(TUTORIAL_BUILDDIR):$(OUTPUTS_SRCDIR):$(IMG_SRCDIR):
 
 tutorial: data fig-convert
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(TUTORIAL_SRCDIR)/tutorial.tex

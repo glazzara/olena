@@ -4,10 +4,12 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 AM_CPPFLAGS += -I$(top_srcdir)/milena/doc/tutorial/tools
 
+
 TUTORIAL_SRCDIR = $(top_srcdir)/milena/doc/tutorial
 OUTPUTS_SRCDIR = $(TUTORIAL_SRCDIR)/outputs
 FIGURES_SRCDIR = $(TUTORIAL_SRCDIR)/figures
 SAMPLES_SRCDIR = $(TUTORIAL_SRCDIR)/samples
+IMG_SRCDIR = $(TUTORIAL_SRCDIR)/img
 
 TUTORIAL_BUILDDIR = $(top_builddir)/milena/doc/tutorial
 OUTPUTS_BUILDDIR = $(TUTORIAL_BUILDDIR)/outputs
