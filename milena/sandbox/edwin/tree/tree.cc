@@ -38,14 +38,14 @@ namespace mln
     mln_fwd_piter(N) n(t.nodes());
     for_all(n)
       // We only keep "highest" nodes at 'true' => largest component.
-      //aa(n) = (a(n) == true && a(t.parent(n)) == false);
-      aa(n) = a(n);
+      // aa(n) = (a(n) == true && a(t.parent(n)) == false);
+       aa(n) = a(n);
 
     if (echo) io::pbm::save(aa, "before.pbm");
     if (echo > 1) debug::println("aa (before)", aa);
 
-    //back_propagate_subbranch(t, aa, true);
-    //if (echo > 1) debug::println("aa (After subbranch propagation)", aa);
+    back_propagate_subbranch(t, aa, true);
+    if (echo > 1) debug::println("aa (After subbranch propagation)", aa);
     back_propagate_level(t, aa);
 
     if (echo > 1) debug::println("aa (Final)", aa);
@@ -62,7 +62,7 @@ int echo = 0;
 template <typename I, typename A>
 inline
 void
-create_tree_and_compute(I& f_, A a_, float lambda = mln_min(float), float lambda2 = mln_max(float))
+create_tree_and_compute(Image<I>& f_, Accumulator<A> a_, float lambda, float lambda2 = mln_max(float))
 {
   using namespace mln;
   using value::int_u8;
@@ -84,13 +84,14 @@ create_tree_and_compute(I& f_, A a_, float lambda = mln_min(float), float lambda
       debug::println("a | nodes", a | t.nodes());
     }
 
-  image2d<bool> b = duplicate((pw::value(a) < pw::cst(lambda1) && pw::value(a) < pw::cst(lambda2)) | a.domain());
+  std::cout << lambda;
+  image2d<bool> b = duplicate((pw::cst(lambda) < pw::value(a) && pw::value(a) < pw::cst(lambda2)) | a.domain());
   sample(t, b, echo);
 }
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.pgm echo lambda" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input.pgm echo lambda1 lamda2" << std::endl;
   std::cerr << "\techo:\t0 (none)" << std::endl
 	    << "\t\t1 (img output)" << std::endl
 	    << "\t\t2 (debug)" << std::endl;
@@ -104,10 +105,12 @@ int main(int argc, char* argv[])
 
   mln_VAR(nbh, c4());
 
-  if (argc != 4)
+  if (argc < 4)
     usage(argv);
 
   echo = std::atoi(argv[2]);
+  float lambda1 = atof(argv[3]);
+  float lambda2 = (argc == 5) ? atof(argv[4]) : mln_max(float);
 
   typedef image2d<int_u8> I;
 
@@ -139,6 +142,6 @@ int main(int argc, char* argv[])
   //create_tree_and_compute(img, morpho::attribute::volume<I2>());
   //
 
-  create_tree_and_compute(f, morpho::attribute::card<I>(), std::atof(argv[3]));
+  create_tree_and_compute(f, morpho::attribute::coccupation<I>(), lambda1, lambda2);
 
 }

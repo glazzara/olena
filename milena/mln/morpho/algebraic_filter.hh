@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -24,54 +25,47 @@
 // License.  This exception does not however invalidate any other
 // reasons why the executable file might be covered by the GNU General
 // Public License.
+#ifndef MLN_MORPHO_ALGEBRAIC_FILTER_HH_
+# define MLN_MORPHO_ALGEBRAIC_FILTER_HH_
 
-#ifndef MLN_MORPHO_TREE_PROPAGATE_HH_
-# define MLN_MORPHO_TREE_PROPAGATE_HH_
-
-/// \file mln/morpho/tree/propagate.hh
+/// \file mln/morpho/leveling_filter.hh
 ///
-/// Functions to propagate a node value in the tree.
+/// Leveling filter calls attribute canvas.
 
-#include <mln/morpho/tree/data.hh>
+
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/neighborhood.hh>
+# include <mln/core/concept/accumulator.hh>
+
+# include <mln/trait/accumulators.hh>
+
+# include <mln/level/sort_psites.hh>
+# include <mln/level/sort_offsets.hh>
+
+# include <mln/canvas/morpho/attribute_filter.hh>
 
 namespace mln {
   namespace morpho {
-    namespace tree {
 
+    template <typename I, typename N, typename A>
+    mln_concrete(I)
+    algebraic_filter(const Image<I>& input,
+		     const Neighborhood<N>& nbh,
+		     const Accumulator<A>& a,
+		     const typename A::result& lambda,
+		     bool increasing)
+    {
+      mlc_or(mlc_equal(mln_trait_accumulator_when_pix(A),
+		       trait::accumulator::when_pix::use_none),
+	     mlc_equal(mln_trait_accumulator_when_pix(A),
+		       trait::accumulator::when_pix::use_p))::check();
 
-      /// The representative point propagates its value to
-      /// its non-representative children nodes.
-      template <typename T, typename A>
-      void
-      back_propagate_level(const T& t, A& a)
-      {
-	mln_fwd_piter(T) p(t.domain());
-	for_all(p)
-	  if (! t.is_a_node(p))
-	    {
-	      mln_assertion(t.is_a_node(t.parent(p)));
-	      a(p) = a(t.parent(p));
-	    }
-      }
+      return canvas::morpho::internal::attribute_filter_dispatch(input, nbh, a, lambda, increasing);
+    }
 
-      /// The representative point having the right
-      /// value propagates to the nodes of its sub-branch.
-      template <typename T, typename A>
-      void
-      back_propagate_subbranch(const T& t, A& a, mln_value(A) v)
-      {
-	mln_bkd_piter(T) p(t.domain());
-	for_all(p)
-	  if (a(t.parent(p)) == v)
-	    {
-	      mln_assertion(t.is_a_node(t.parent(p)));
-	      a(p) = a(t.parent(p));
-	    }
-      }
-    } // end of namespace mln::morpho::tree
   } // end of namespace mln::morpho
 } // end of namespace mln
 
-#endif /* !MLN_MORPHO_TREE_PROPAGATE_HH_ */
 
 
+#endif /* !MLN_MORPHO_ALGEBRAIC_FILTER_HH_ */

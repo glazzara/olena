@@ -1,3 +1,19 @@
+2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Clean and separate connected (leveling/algebraic) filters.
+	* mln/canvas/morpho/attribute_filter.hh: Move
+	algebraic/leveling facade from attribute filter and change dispatch.
+	* mln/canvas/morpho/connected_filter.hh: Remove.
+	* mln/morpho/algebraic_filter.hh: Facade for algebraic filter.
+	* mln/morpho/closing: New.
+	* mln/morpho/leveling_filter.hh: Facade for leveling filter.
+	* mln/morpho/opening: New.
+	* sandbox/edwin/tree/propagate.hh
+	* sandbox/edwin/tree/tree.cc: Correct some bugs.
+	* tests/canvas/morpho/attribute_filter.cc: Test file for
+	attribute filters.
+	* tests/canvas/morpho/connected_filter.cc: Remove.
+
 2009-02-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix guards.
