@@ -1,4 +1,4 @@
-all: gdcm.cc
+all: seg_vol_irm.cc
 	g++ -I../../../ \
 	  -I/Users/HiSoKa/Downloads/gdcm-2.0.10/Source/Common/ \
 	  -I/Users/HiSoKa/Downloads/gdcmbin/Source/Common/ \
@@ -8,5 +8,8 @@ all: gdcm.cc
 	  -L/Users/HiSoKa/Downloads/gdcmbin/bin \
 	  -lgdcmCommon -lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib \
 	  -framework CoreFoundation \
-	  -DNDEBUG -O1 \
-	  gdcm.cc -o mln_gdcm
+	  -g \
+	  seg_vol_irm.cc -o seg_vol_irm
+
+clean:
+	rm -rf *.dump *.p?m

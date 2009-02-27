@@ -1,3 +1,21 @@
+2009-02-27  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Clean sandbox.
+	* fabien/dcmtk/Makefile: New.
+	* fabien/dcmtk/dicom.cc: New.
+	* fabien/dcmtk: New.
+	* fabien/dicom/load.hh: Remove.
+	* fabien/dicom/save.hh: Remove.
+	* fabien/dicom: Remove.
+	* fabien/gdcm/Makefile: Remove.
+	* fabien/gdcm/dump2pgm.cc: Remove.
+	* fabien/gdcm/gdcm.cc: Remove.
+	* fabien/gdcm/load.hh: Remove.
+	* fabien/gdcm: Remove.
+	* fabien/igr/Makefile: New.
+	* fabien/igr/dump2pbm.cc: New.
+	* fabien/igr/seg_vol_irm.cc: New.
+
 2009-02-26  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Continue experiments about attribute and morpho math.
