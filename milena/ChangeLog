@@ -1,3 +1,9 @@
+2009-02-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix guards.
+
+	* mln/canvas/morpho/internal/find_root.hh: Fix guards.
+
 2009-02-27  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix dimensions bug.

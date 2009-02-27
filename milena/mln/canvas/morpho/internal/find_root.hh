@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_MORPHO_FIND_ROOT_HH
-# define MLN_CANVAS_MORPHO_FIND_ROOT_HH
+#ifndef MLN_CANVAS_MORPHO_INTERNAL_FIND_ROOT_HH
+# define MLN_CANVAS_MORPHO_INTERNAL_FIND_ROOT_HH
 
 /// \file mln/canvas/morpho/internal/find_root.hh.hh
 ///
@@ -98,5 +98,5 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_CANVAS_MORPHO_FIND_ROOT_HH
+#endif // ! MLN_CANVAS_MORPHO_INTERNAL_FIND_ROOT_HH
 
