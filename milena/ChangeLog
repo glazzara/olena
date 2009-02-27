@@ -1,3 +1,8 @@
+2009-02-27  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Fix dimensions bug.
+	* mln/io/dicom/load.hh: Fix dimensions bug.
+
 2009-02-27 Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Make test::predicate more robust.

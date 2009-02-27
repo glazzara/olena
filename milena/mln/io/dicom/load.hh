@@ -139,14 +139,14 @@ namespace mln
 	algebra::vec<mln_site_(I)::dim, unsigned int> vmin;
 	algebra::vec<mln_site_(I)::dim, unsigned int> vmax;
 	algebra::vec<mln_site_(I)::dim, unsigned int> vdims;
-	for (int i = ndims - 1; i >= 0; --i)
+	for (int i = 0; i < ndims; ++i)
 	{
 	  vmin[i] = 0;
-	  vmax[i] = dims[ndims - i - 1] - 1;
-	  if (i == ndims - 1)
+	  vmax[i] = dims[i] - 1;
+	  if (i == 0)
 	    vdims[i] = 1;
 	  else
-	    vdims[i] = dims[ndims - i - 2] * vdims[i + 1];
+	    vdims[i] = dims[i - 1] * vdims[i - 1];
 	}
 
 	mln_site(I) pmin(vmin);
@@ -169,9 +169,9 @@ namespace mln
 	  {
 	    ima(p) += ((unsigned char) dataBuffer[(index * bytes_allocated + j) * samples_per_pixel]) * 256 * j;
 	  }
-	  /*std::cout << "[ x = " << p.to_site().to_vec()[2]
+	  /*std::cout << "[ x = " << p.to_site().to_vec()[0]
 		    << " | y = " << p.to_site().to_vec()[1]
-		    << " | z = " << p.to_site().to_vec()[0]
+		    << " | z = " << p.to_site().to_vec()[2]
 		    << " ] => " << ima(p)
 		    << std::endl;*/
 	}
