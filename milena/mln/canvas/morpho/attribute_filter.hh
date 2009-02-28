@@ -87,7 +87,8 @@ namespace mln {
 			   const I& input, const P& p)
 	{
 	  (void)input;
-	  accu.take_as_init (p);
+	  (void)p;
+	  accu.take_as_init ();
 	}
 
 	template <typename A, typename I, typename P>
@@ -101,7 +102,7 @@ namespace mln {
 	void take_as_init (trait::accumulator::when_pix::use_v, A& accu,
 			   const I& input, const P& p)
 	{
-	  accu.take_as_init (make::pix(input, p));
+	  accu.take_as_init (input(p));
 	}
 
 	template <typename A, typename I>

@@ -40,8 +40,8 @@
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
 
-#include <mln/accu/count.hh>
-#include <mln/accu/volume.hh>
+#include <mln/morpho/attribute/card.hh>
+#include <mln/morpho/attribute/volume.hh>
 
 
 int main()
@@ -63,16 +63,14 @@ int main()
     morpho::tree::data<I,S> t(f, s, c4());
     debug::println(t.parent_image());
 
-    typedef util::pix<I> Px;
-
     {
-      accu::count<Px> a;
+      morpho::attribute::card<I> a;
       image2d<unsigned> area = morpho::tree::compute_attribute_image(a, t);
       debug::println(area);
     }
 
     {
-      accu::volume<I> v;
+      morpho::attribute::volume<I> v;
       image2d<unsigned> volume = morpho::tree::compute_attribute_image(v, t);
       debug::println(volume);
     }

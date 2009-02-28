@@ -1,3 +1,17 @@
+2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add take_as_init specialization to compute_attribute_image.
+	* mln/canvas/morpho/attribute_filter.hh,
+	* mln/morpho/tree/compute_attribute_image.hh
+	Add take_as_init specialization.
+
+	* tests/canvas/morpho/Makefile.am,
+	* tests/morpho/Makefile.am:
+	Correct Makefile rules.
+
+	* tests/morpho/tree/compute_attribute_image.cc: Test file for
+          compute_attribute_image.
+
 2009-02-28  Frederic Bour  <bour@lrde.epita.fr>
 
 	Typos corrections in morpho, tests added and corrected.

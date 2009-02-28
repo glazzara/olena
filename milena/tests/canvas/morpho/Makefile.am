@@ -2,6 +2,6 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-check_PROGRAMS=connected_filter
+check_PROGRAMS=attribute_filter
 
-connected_filter_SOURCES=connected_filter.cc
+attribute_filter_SOURCES=attribute_filter.cc

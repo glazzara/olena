@@ -10,10 +10,6 @@ SUBDIRS =					\
 
 check_PROGRAMS =				\
   artificial_line_graph_image_wst		\
-  closing_algebraic				\
-  closing_area					\
-  closing_height				\
-  closing_volume				\
   combined					\
   complex_image_morpho				\
   complex_image_wst				\
@@ -45,14 +41,6 @@ check_PROGRAMS =				\
 
 # FIXME: Have erosion and dilation perform symmetric tests.
 erosion_SOURCES = erosion.cc
-
-opening_area_SOURCES = opening_area.cc
-closing_algebraic_SOURCES = closing_algebraic.cc
-closing_area_SOURCES = closing_area.cc
-closing_height_SOURCES = closing_height.cc
-opening_height_SOURCES = opening_height.cc
-closing_volume_SOURCES = closing_volume.cc
-opening_volume_SOURCES = opening_volume.cc
 
 contrast_SOURCES = contrast.cc
 general_SOURCES = general.cc

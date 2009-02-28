@@ -72,6 +72,45 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+      // Take_as_init specialization
+
+
+      template <typename A, typename I, typename P>
+      void take_as_init (trait::accumulator::when_pix::use_none, A& accu,
+			 const I& input, const P& p)
+      {
+	(void)input;
+	(void)p;
+	accu.take_as_init();
+      }
+
+      template <typename A, typename I, typename P>
+      void take_as_init (trait::accumulator::when_pix::use_pix, A& accu,
+			 const I& input, const P& p)
+      {
+	accu.take_as_init(make::pix(input, p));
+      }
+
+      template <typename A, typename I, typename P>
+      void take_as_init (trait::accumulator::when_pix::use_v, A& accu,
+			 const I& input, const P& p)
+      {
+	accu.take_as_init(input(p));
+      }
+
+      template <typename A, typename I, typename P>
+      void take_as_init (trait::accumulator::when_pix::use_p, A& accu,
+			 const I& input, const P& p)
+      {
+	accu.take_as_init(p);
+      }
+
+
+      template <typename A, typename I, typename P>
+      void take_as_init (A& accu, const I& input, const P& p)
+      {
+	take_as_init (mln_trait_accumulator_when_pix(A)(), accu, input, p);
+      }
 
 
       // Facade.
@@ -79,7 +118,7 @@ namespace mln
       template <typename A, typename T>
       inline
       mln_ch_value(typename T::function, mln_result(A))
-      compute_attribute_image(const Accumulator<A>& a_, const T& t)
+	compute_attribute_image(const Accumulator<A>& a_, const T& t)
       {
 	trace::entering("morpho::tree::compute_attribute_image");
 
@@ -99,7 +138,7 @@ namespace mln
 	  // Initialize every attribute with the corresponding pixel.
 	  mln_piter(I) p(t.f().domain());
 	  for_all(p)
-	    acc(p).take_as_init(make::pix(t.f(), p));
+	    take_as_init(acc(p), t.f(), p);
 	}
 	{
 	  mln_fwd_piter(T) p(t.domain());
