@@ -66,7 +66,7 @@ namespace mln
 	mln_precondition(exact(input).is_valid());
 
 	mln_concrete(I) output;
-	output = closing::algebraic< attribute::card<I> >(input, nbh, lambda);
+	output = closing::algebraic(input, nbh, attribute::card<I>(), lambda);
 
 	trace::exiting("morpho::closing::area");
 	return output;

@@ -33,7 +33,7 @@
 ///
 /// Morphological volume closing.
 
-# include <mln/morpho/closing/attribute.hh>
+# include <mln/morpho/closing/leveling.hh>
 # include <mln/morpho/attribute/volume.hh>
 
 
@@ -66,7 +66,7 @@ namespace mln
 	mln_precondition(exact(input).is_valid());
 
 	mln_concrete(I) output;
-	output = closing::attribute< attribute::volume<I> >(input, nbh, lambda);
+	output = closing::leveling(input, nbh, attribute::volume<I>(), lambda);
 
 	trace::exiting("morpho::closing::volume");
 	return output;

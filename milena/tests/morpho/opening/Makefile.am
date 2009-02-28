@@ -6,14 +6,14 @@ check_PROGRAMS =			\
 	leveling			\
 	algebraic			\
 	height				\
-	card				\
+	area				\
 	volume				\
 	sum
 
 leveling_SOURCES = leveling.cc
 algebraic_SOURCES = algebraic.cc
 height_SOURCES = height.cc
-card_SOURCES = card.cc
+area_SOURCES = area.cc
 volume_SOURCES = volume.cc
 sum_SOURCES = sum.cc
 

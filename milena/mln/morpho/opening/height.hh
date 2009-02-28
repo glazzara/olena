@@ -33,7 +33,7 @@
 ///
 /// Morphological height opening.
 
-# include <mln/morpho/opening/attribute.hh>
+# include <mln/morpho/opening/leveling.hh>
 # include <mln/morpho/attribute/height.hh>
 
 
@@ -65,7 +65,7 @@ namespace mln
 	mln_precondition(exact(input).is_valid());
 
 	mln_concrete(I) output;
-	output = opening::leveling< attribute::height<I> >(input, nbh, lambda);
+	output = opening::leveling(input, nbh, attribute::height<I>(), lambda);
 
 	trace::exiting("morpho::opening::height");
 	return output;

@@ -46,7 +46,7 @@ namespace mln {
   // Forward declaration.
   namespace morpho {
     namespace attribute {
-      template <typename I> class volume;
+      template <typename I> class height;
     }
   }
 
@@ -56,7 +56,7 @@ namespace mln {
   namespace trait {
 
     template <typename I>
-    struct accumulator_< morpho::attribute::volume<I> >
+    struct accumulator_< morpho::attribute::height<I> >
     {
       typedef accumulator::has_untake::no    has_untake;
       typedef accumulator::has_set_value::no has_set_value;
@@ -152,7 +152,9 @@ namespace mln {
       void
       height<I>::take(const height<I>& other)
       {
-	mln_invariant(ref_ < cur_ xor other.ref_ > other.cur_);
+	mln_invariant(((ref_ <= cur_) && (other.ref_ <= other.cur_))
+		      || ((ref_ >= cur_) && (other.ref_ >= other.cur_)));
+
 	if (!is_valid())
 	  {
 	    ref_ = other.ref_;
@@ -195,9 +197,9 @@ namespace mln {
       unsigned
       height<I>::to_result() const
       {
-	mln_invariant(initialized_);
-	if (is_valid())
-	  return math::diff_abs(ref_, cur_);
+	mln_invariant(is_valid());
+
+	return math::diff_abs(ref_, cur_);
       }
 
       template <typename I>

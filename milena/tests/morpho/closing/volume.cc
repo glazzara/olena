@@ -55,6 +55,6 @@ int main()
 		"ref.pgm");
 
   typedef morpho::attribute::volume<I> A;
-  io::pgm::save(morpho::closing_attribute<A>(lena, c4(), 10000),
+  io::pgm::save(morpho::closing::leveling(lena, c4(), A(), 10000),
  		"out.pgm");
 }

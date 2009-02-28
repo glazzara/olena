@@ -63,7 +63,7 @@ namespace mln
 	mln_precondition(exact(input).is_valid());
 
 	mln_concrete(I) output;
-	output = opening::leveling< attribute::volume<I> >(input, nbh, lambda);
+	output = opening::leveling(input, nbh, attribute::volume<I>(), lambda);
 
 	trace::exiting("morpho::opening::volume");
 	return output;

@@ -1,5 +1,25 @@
 2009-02-28  Frederic Bour  <bour@lrde.epita.fr>
 
+	Typos corrections in morpho, tests added and corrected.
+	* mln/morpho/attribute/height.hh,
+	* mln/morpho/closing/algebraic.hh,
+	* mln/morpho/closing/area.hh,
+	* mln/morpho/closing/height.hh,
+	* mln/morpho/closing/volume.hh,
+	* mln/morpho/opening/algebraic.hh,
+	* mln/morpho/opening/area.hh,
+	* mln/morpho/opening/height.hh,
+	* mln/morpho/opening/leveling.hh,
+	* mln/morpho/opening/volume.hh:
+	Correct typos errors, adjust names.
+	* tests/morpho/closing/Makefile.am: Add sum test.
+	* tests/morpho/closing/sum.cc: New.
+	* tests/morpho/closing/volume.cc: Correct error in function usage.
+	* tests/morpho/opening/Makefile.am: Add sum test.
+	* tests/morpho/opening/sum.cc: New.
+
+2009-02-28  Frederic Bour  <bour@lrde.epita.fr>
+
 	Adjusted tests for new opening/closing naming scheme.
 	* tests/morpho/closing/area.cc,
 	* tests/morpho/closing/height.cc,

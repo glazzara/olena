@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,61 +26,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_CLOSING_HEIGHT_HH
-# define MLN_MORPHO_CLOSING_HEIGHT_HH
-
-/// \file mln/morpho/closing/height.hh
+/// \file tests/morpho/closing/sum.cc
 ///
-/// Morphological height closing.
-///
-/// \todo The test result looks very weird...  Debug!
+/// Test on mln::morpho::closing::sum.
 
-# include <mln/morpho/closing/leveling.hh>
-# include <mln/morpho/attribute/height.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/core/alias/neighb2d.hh>
+
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
+
+#include <mln/morpho/opening/leveling.hh>
+#include <mln/morpho/attribute/sum.hh>
+
+#include "tests/data.hh"
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  namespace morpho
-  {
+  typedef image2d<int_u8> I;
+  I lena;
 
-    namespace closing
-    {
-
-      /// Morphological height closing.
-      template <typename I, typename N>
-      mln_concrete(I)
-      height(const Image<I>& input, const Neighborhood<N>& nbh,
-	     unsigned lambda);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-      template <typename I, typename N>
-      inline
-      mln_concrete(I)
-      height(const Image<I>& input, const Neighborhood<N>& nbh,
-	     unsigned lambda)
-      {
-	trace::entering("morpho::closing::height");
-
-	mln_precondition(exact(input).is_valid());
-
-	mln_concrete(I) output;
-	output = closing::leveling(input, nbh, attribute::height<I>(), lambda);
-
-	trace::exiting("morpho::closing::height");
-	return output;
-      }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::morpho::closing
-
-  } // end of namespace mln::morpho
-
-} // end of namespace mln
-
-
-#endif // ! MLN_MORPHO_CLOSING_HEIGHT_HH
+  typedef morpho::attribute::sum<I> A;
+  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+  io::pgm::save(morpho::opening::leveling(lena, c4(), A(), 10000),
+ 		"out.pgm");
+}
