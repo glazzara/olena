@@ -1,5 +1,16 @@
 2009-02-28  Frederic Bour  <bour@lrde.epita.fr>
 
+	Adjusted tests for new opening/closing naming scheme.
+	* tests/morpho/closing/area.cc,
+	* tests/morpho/closing/height.cc,
+	* tests/morpho/closing/volume.cc,
+	* tests/morpho/opening/area.cc,
+	* tests/morpho/opening/height.cc,
+	* tests/morpho/opening/volume.cc: Now use closing and opening
+	  namespaces.
+
+2009-02-28  Frederic Bour  <bour@lrde.epita.fr>
+
 	Closing and opening area, volume, height naming change..
 	* closing/area.hh: New.
 	* closing/height.hh: New.

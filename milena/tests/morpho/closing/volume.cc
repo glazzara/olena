@@ -26,9 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/closing_volume.cc
+/// \file tests/morpho/closing/volume.cc
 ///
-/// Test on mln::morpho::closing_volume.
+/// Test on mln::morpho::closing::volume.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -37,7 +37,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/morpho/closing_volume.hh>
+#include <mln/morpho/closing/volume.hh>
 #include <mln/morpho/attribute/volume.hh>
 
 #include "tests/data.hh"
@@ -51,7 +51,7 @@ int main()
   typedef image2d<int_u8> I;
   I lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-  io::pgm::save(morpho::closing_volume(lena, c4(), 10000),
+  io::pgm::save(morpho::closing::volume(lena, c4(), 10000),
 		"ref.pgm");
 
   typedef morpho::attribute::volume<I> A;

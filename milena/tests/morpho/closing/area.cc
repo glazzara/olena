@@ -26,9 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/closing_area.cc
+/// \file tests/morpho/closing/area.cc
 ///
-/// Test on mln::morpho::closing_area.
+/// Test on mln::morpho::closing::area.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -37,7 +37,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/morpho/closing_area.hh>
+#include <mln/morpho/closing/area.hh>
 
 #include "tests/data.hh"
 
@@ -50,5 +50,5 @@ int main()
 
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-  io::pgm::save(morpho::closing_area(lena, c4(), 510), "out.pgm");
+  io::pgm::save(morpho::closing::area(lena, c4(), 510), "out.pgm");
 }

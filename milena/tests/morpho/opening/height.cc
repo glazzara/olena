@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/opening_height.cc
+/// \file tests/morpho/opening/height.cc
 ///
-/// Test on mln::morpho::opening_height.
+/// Test on mln::morpho::opening::height.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -36,7 +36,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/morpho/opening_height.hh>
+#include <mln/morpho/opening/height.hh>
 
 #include "tests/data.hh"
 
@@ -49,6 +49,6 @@ int main()
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
   image2d<int_u8> out(lena.domain());
 
-  out = morpho::opening_height(lena, c4(), 20);
+  out = morpho::opening::height(lena, c4(), 20);
   io::pgm::save(out, "out.pgm");
 }
