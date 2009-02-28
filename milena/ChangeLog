@@ -1,3 +1,19 @@
+2009-02-28  Frederic Bour  <bour@lrde.epita.fr>
+
+	Closing and opening area, volume, height naming change..
+	* closing/area.hh: New.
+	* closing/height.hh: New.
+	* closing/volume.hh: New.
+	* closing_area.hh: Remove.
+	* closing_height.hh: Remove.
+	* closing_volume.hh: Remove.
+	* opening/area.hh: New.
+	* opening/height.hh: New.
+	* opening/volume.hh: New.
+	* opening_area.hh: Remove.
+	* opening_height.hh: Remove.
+	* opening_volume.hh: Remove.
+
 2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Create opening and closing morpho subdir and move opening and.

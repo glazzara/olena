@@ -26,15 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_OPENING_VOLUME_HH
-# define MLN_MORPHO_OPENING_VOLUME_HH
+#ifndef MLN_MORPHO_CLOSING_AREA_HH
+# define MLN_MORPHO_CLOSING_AREA_HH
 
-/// \file mln/morpho/opening_volume.hh
+/// \file mln/morpho/closing/area.hh
 ///
-/// Morphological volume opening.
+/// Morphological area closing.
 
-# include <mln/morpho/opening_attribute.hh>
-# include <mln/accu/volume.hh>
+# include <mln/morpho/closing/algebraic.hh>
+# include <mln/morpho/attribute/card.hh>
 
 
 namespace mln
@@ -43,36 +43,42 @@ namespace mln
   namespace morpho
   {
 
-    /// Morphological volume opening.
-    template <typename I, typename N>
-    mln_concrete(I)
-    opening_volume(const Image<I>& input, const Neighborhood<N>& nbh,
-		   unsigned lambda);
+    namespace closing
+    {
+
+      /// Morphological area closing.
+      template <typename I, typename N>
+      mln_concrete(I)
+      area(const Image<I>& input, const Neighborhood<N>& nbh,
+	   unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N>
-    inline
-    mln_concrete(I)
-    opening_volume(const Image<I>& input, const Neighborhood<N>& nbh,
-		   unsigned lambda)
-    {
-      trace::entering("morpho::opening_volume");
-      mln_precondition(exact(input).is_valid());
+      template <typename I, typename N>
+      inline
+      mln_concrete(I)
+      area(const Image<I>& input, const Neighborhood<N>& nbh,
+	   unsigned lambda)
+      {
+	trace::entering("morpho::closing::area");
 
-      mln_concrete(I) output;
-      output = opening_attribute< accu::volume<I> >(input, nbh, lambda);
+	mln_precondition(exact(input).is_valid());
 
-      trace::exiting("morpho::opening_volume");
-      return output;
-    }
+	mln_concrete(I) output;
+	output = closing::algebraic< attribute::card<I> >(input, nbh, lambda);
+
+	trace::exiting("morpho::closing::area");
+	return output;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::morpho::closing
 
   } // end of namespace mln::morpho
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_OPENING_VOLUME_HH
+#endif // ! MLN_MORPHO_CLOSING_AREA_HH

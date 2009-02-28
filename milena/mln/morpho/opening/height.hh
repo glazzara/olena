@@ -26,17 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_CLOSING_HEIGHT_HH
-# define MLN_MORPHO_CLOSING_HEIGHT_HH
+#ifndef MLN_MORPHO_OPENING_HEIGHT_HH
+# define MLN_MORPHO_OPENING_HEIGHT_HH
 
-/// \file mln/morpho/closing_height.hh
+/// \file mln/morpho/opening/height.hh
 ///
-/// Morphological height closing.
-///
-/// \todo The test result looks very weird...  Debug!
+/// Morphological height opening.
 
-# include <mln/morpho/closing_attribute.hh>
-# include <mln/accu/height.hh>
+# include <mln/morpho/opening/attribute.hh>
+# include <mln/morpho/attribute/height.hh>
 
 
 namespace mln
@@ -45,37 +43,41 @@ namespace mln
   namespace morpho
   {
 
-    /// Morphological height closing.
-    template <typename I, typename N>
-    mln_concrete(I)
-    closing_height(const Image<I>& input, const Neighborhood<N>& nbh,
-		   unsigned lambda);
+    namespace opening
+    {
+
+      /// Morphological height opening.
+      template <typename I, typename N>
+      mln_concrete(I)
+      height(const Image<I>& input, const Neighborhood<N>& nbh,
+	     unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N>
-    inline
-    mln_concrete(I)
-    closing_height(const Image<I>& input, const Neighborhood<N>& nbh,
-		   unsigned lambda)
-    {
-      trace::entering("morpho::closing_height");
+      template <typename I, typename N>
+      inline
+      mln_concrete(I)
+      height(const Image<I>& input, const Neighborhood<N>& nbh,
+	     unsigned lambda)
+      {
+	trace::entering("morpho::opening::height");
+	mln_precondition(exact(input).is_valid());
 
-      mln_precondition(exact(input).is_valid());
+	mln_concrete(I) output;
+	output = opening::leveling< attribute::height<I> >(input, nbh, lambda);
 
-      mln_concrete(I) output;
-      output = closing_attribute< accu::height<I> >(input, nbh, lambda);
-
-      trace::exiting("morpho::closing_height");
-      return output;
-    }
+	trace::exiting("morpho::opening::height");
+	return output;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::morpho::opening
 
   } // end of namespace mln::morpho
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_CLOSING_HEIGHT_HH
+#endif // ! MLN_MORPHO_OPENING_HEIGHT_HH

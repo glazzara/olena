@@ -26,16 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_CLOSING_VOLUME_HH
-# define MLN_MORPHO_CLOSING_VOLUME_HH
+#ifndef MLN_MORPHO_OPENING_VOLUME_HH
+# define MLN_MORPHO_OPENING_VOLUME_HH
 
-/// \file mln/morpho/closing_volume.hh
+/// \file mln/morpho/opening/volume.hh
 ///
-/// Morphological volume closing.
+/// Morphological volume opening.
 
-# include <mln/morpho/closing_attribute.hh>
-# include <mln/accu/volume.hh>
-
+# include <mln/morpho/opening/leveling.hh>
+# include <mln/morpho/attribute/volume.hh>
 
 namespace mln
 {
@@ -43,37 +42,40 @@ namespace mln
   namespace morpho
   {
 
-    /// Morphological volume closing.
-    template <typename I, typename N>
-    mln_concrete(I)
-    closing_volume(const Image<I>& input, const Neighborhood<N>& nbh,
-		   unsigned lambda);
+    namespace opening {
+
+      /// Morphological volume opening.
+      template <typename I, typename N>
+      mln_concrete(I)
+      volume(const Image<I>& input, const Neighborhood<N>& nbh,
+	     unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N>
-    inline
-    mln_concrete(I)
-    closing_volume(const Image<I>& input, const Neighborhood<N>& nbh,
-		   unsigned lambda)
-    {
-      trace::entering("morpho::closing_volume");
+      template <typename I, typename N>
+      inline
+      mln_concrete(I)
+      volume(const Image<I>& input, const Neighborhood<N>& nbh,
+	     unsigned lambda)
+      {
+	trace::entering("morpho::opening::volume");
+	mln_precondition(exact(input).is_valid());
 
-      mln_precondition(exact(input).is_valid());
+	mln_concrete(I) output;
+	output = opening::leveling< attribute::volume<I> >(input, nbh, lambda);
 
-      mln_concrete(I) output;
-      output = closing_attribute< accu::volume<I> >(input, nbh, lambda);
-
-      trace::exiting("morpho::closing_volume");
-      return output;
-    }
+	trace::exiting("morpho::opening::volume");
+	return output;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::morpho::opening
 
   } // end of namespace mln::morpho
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_CLOSING_VOLUME_HH
+#endif // ! MLN_MORPHO_OPENING_VOLUME_HH
