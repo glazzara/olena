@@ -38,7 +38,6 @@
 
 #include <mln/morpho/closing/leveling.hh>
 #include <mln/morpho/attribute/volume.hh>
-#include <mln/accu/count.hh>
 
 #include "tests/data.hh"
 
@@ -54,11 +53,13 @@ int main()
   typedef image2d<int_u8> I;
   I lena;
   io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
-  {
-    accu::count<point2d> a;
-    io::pgm::save(morpho::closing::leveling(lena, c4(), a, 10),
-		  "ref.pgm");
-  }
+
+// FIXME: Can't be called with new implementation. (When_pix = not_ok).
+//   {
+//     accu::volume<I> a;
+//     io::pgm::save(morpho::closing::leveling(lena, c4(), a, 10),
+// 		  "ref.pgm");
+//   }
   {
     morpho::attribute::volume<I> a;
     io::pgm::save(morpho::closing::leveling(lena, c4(), a, 10),

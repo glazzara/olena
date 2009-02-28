@@ -1,5 +1,19 @@
 2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Correct bugs in tests.
+	* milena/mln/morpho/closing/algebraic.hh,
+	* milena/mln/morpho/closing/leveling.hh: Correct some bugs.
+
+	* milena/tests/morpho/closing/Makefile.am,
+	* milena/tests/morpho/closing/algebraic.cc,
+	* milena/tests/morpho/closing/leveling.cc,
+	* milena/tests/morpho/opening/Makefile.am,
+	* milena/tests/morpho/opening/algebraic.cc,
+	* milena/tests/morpho/opening/leveling.cc:
+	Correct some bugs and comment reference code using generic accumulators.
+
+2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Add leveling/algebraic morpho tests.
 	* configure.ac: Add opening/closing subdirs to generate Makefile.
 	* milena/mln/morpho/closing/leveling.hh: Missing file from

@@ -62,8 +62,8 @@ namespace mln {
       trace::entering("morpho::closing::leveling");
 
       mln_precondition(exact(input).is_valid());
-      mln_precondition(mlc_equal(mln_trait_accumulator_when_pix(A),
-				 trait::accumulator::when_pix::not_ok)::value)
+      mln_precondition(mlc_not_equal(mln_trait_accumulator_when_pix(A),
+				     trait::accumulator::when_pix::not_ok)::value);
 
       mln_concrete(I) output;
       output = leveling_filter(input, nbh, accu, lambda,
