@@ -1,3 +1,22 @@
+2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add leveling/algebraic morpho tests.
+	* configure.ac: Add opening/closing subdirs to generate Makefile.
+	* milena/mln/morpho/closing/leveling.hh: Missing file from
+	last commit.
+	* milena/mln/morpho/opening/leveling.hh: Missing file from
+	last commit.
+	* milena/tests/morpho/closing/Makefile.am: New.
+	* milena/tests/morpho/closing/algebraic.cc: Test file for
+	algebraic closing filter.
+	* milena/tests/morpho/closing/leveling.cc:  Test file for
+	leveling closing filter.
+	* milena/tests/morpho/opening/Makefile.am: New.
+	* milena/tests/morpho/opening/algebraic.cc:  Test file for
+	algebraic opening filter.
+	* milena/tests/morpho/opening/leveling.cc:  Test file for
+	leveling opening filter.
+
 2009-02-20 Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* configure.ac: configure tests/fun/l2l.

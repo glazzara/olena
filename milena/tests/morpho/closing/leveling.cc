@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/closing/algebraic.cc
+/// \file tests/morpho/closing/leveling.cc
 ///
-/// Test on mln::morpho::closing::algebraic.
+/// Test on mln::morpho::closing::leveling.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -36,8 +36,8 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/morpho/closing/algebraic.hh>
-#include <mln/morpho/attribute/card.hh>
+#include <mln/morpho/closing/leveling.hh>
+#include <mln/morpho/attribute/volume.hh>
 #include <mln/accu/count.hh>
 
 #include "tests/data.hh"
@@ -56,12 +56,12 @@ int main()
   io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
   {
     accu::count<point2d> a;
-    io::pgm::save(morpho::closing::algebraic(lena, c4(), a, 10),
+    io::pgm::save(morpho::closing::leveling(lena, c4(), a, 10),
 		  "ref.pgm");
   }
   {
-    morpho::attribute::card<I> a;
-    io::pgm::save(morpho::closing::algebraic(lena, c4(), a, 10),
+    morpho::attribute::volume<I> a;
+    io::pgm::save(morpho::closing::leveling(lena, c4(), a, 10),
 		  "out.pgm");
   }
 }
