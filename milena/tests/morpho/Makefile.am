@@ -28,9 +28,6 @@ check_PROGRAMS =				\
   line_graph_image_morpho			\
   meyer_wst					\
   meyer_wst_long				\
-  opening_area					\
-  opening_height				\
-  opening_volume				\
   rank_filter 					\
   skeleton_constrained				\
   thinning

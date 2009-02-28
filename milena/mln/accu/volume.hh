@@ -38,8 +38,8 @@
 
     The class mln/accu/volume is not a general-purpose accumulator;
     it is used to implement volume-based connected filters.
-    \see mln::morpho::closing_volume
-    \see mln::morpho::opening_volume
+    \see mln::morpho::closing::volume
+    \see mln::morpho::opening::volume
 */
 
 # include <mln/accu/internal/base.hh>
@@ -69,6 +69,7 @@ namespace mln
       /// root pixel.  See mln::morpho::closing_volume and
       /// mln::morpho::opening_volume for actual uses of this
       /// accumulator.
+      /// FIXME: Replaced by mln::morpho::attribute::volume
       typedef util::pix<I> argument;
       /// The value type associated to the pixel type.
       typedef typename argument::value value;

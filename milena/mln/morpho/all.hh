@@ -57,6 +57,7 @@ namespace mln
 
 
 # include <mln/morpho/closing.hh>
+# include <mln/morpho/closing/all.hh>
 # include <mln/morpho/complementation.hh>
 # include <mln/morpho/contrast.hh>
 # include <mln/morpho/dilation.hh>
@@ -69,9 +70,8 @@ namespace mln
 # include <mln/morpho/meyer_wst.hh>
 # include <mln/morpho/min.hh>
 # include <mln/morpho/minus.hh>
-# include <mln/morpho/opening_area.hh>
-# include <mln/morpho/opening_attribute.hh>
 # include <mln/morpho/opening.hh>
+# include <mln/morpho/opening/all.hh>
 # include <mln/morpho/plus.hh>
 # include <mln/morpho/Rd.hh>
 # include <mln/morpho/rank_filter.hh>

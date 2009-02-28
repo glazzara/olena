@@ -51,7 +51,7 @@
 
 #include <mln/norm/l2.hh>
 
-#include <mln/morpho/closing_area.hh>
+#include <mln/morpho/closing/area.hh>
 #include <mln/morpho/meyer_wst.hh>
 
 #include <mln/convert/to.hh>
@@ -197,7 +197,7 @@ int main()
   `-----------------*/
 
   // Currently, does nothing (lambda = 1).
-  dist_ima_t closed_dist_ima = morpho::closing_area(dist_ima, nbh, 1);
+  dist_ima_t closed_dist_ima = morpho::closing::area(dist_ima, nbh, 1);
 
   /*------.
   | WST.  |

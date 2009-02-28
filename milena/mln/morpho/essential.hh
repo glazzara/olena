@@ -41,8 +41,8 @@
 # include <mln/morpho/includes.hh>
 # include <mln/morpho/laplacian.hh>
 # include <mln/morpho/meyer_wst.hh>
-# include <mln/morpho/opening_area.hh>
-# include <mln/morpho/opening_attribute.hh>
+# include <mln/morpho/opening/area.hh>
+# include <mln/morpho/opening/attribute.hh>
 # include <mln/morpho/opening.hh>
 # include <mln/morpho/rank_filter.hh>
 # include <mln/morpho/top_hat.hh>

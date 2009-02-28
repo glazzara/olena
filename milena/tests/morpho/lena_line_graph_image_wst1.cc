@@ -68,7 +68,7 @@
 #include <mln/util/graph.hh>
 
 #include <mln/morpho/gradient.hh>
-#include <mln/morpho/closing_area.hh>
+#include <mln/morpho/closing/area.hh>
 #include <mln/morpho/meyer_wst.hh>
 
 #include <mln/value/int_u8.hh>
@@ -109,7 +109,7 @@ int main()
 
   // Simplify the input image.
   image2d<input_val_t> work(input.domain());
-  work = morpho::closing_area(gradient, c4(), 10);
+  work = morpho::closing::area(gradient, c4(), 10);
 
   /*-------------.
   | Line graph.  |

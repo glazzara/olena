@@ -38,8 +38,8 @@
 
     The class mln/accu/height is not a general-purpose accumulator;
     it is used to implement height-based connected filters.
-    \see mln::morpho::closing_height
-    \see mln::morpho::opening_height
+    \see mln::morpho::closing::height
+    \see mln::morpho::opening::height
 */
 
 # include <mln/accu/internal/base.hh>
@@ -66,9 +66,10 @@ namespace mln
       /// The accumulated data type.
       ///
       /// The height of component is represented by the height of its
-      /// root pixel.  See mln::morpho::closing_height and
+      /// root pixel. See mln::morpho::closing_height and
       /// mln::morpho::opening_height for actual uses of this
       /// accumulator.
+      /// FIXME: Replaced by mln::morpho::attribute::height
       typedef util::pix<I> argument;
       /// The value type associated to the pixel type.
       typedef typename argument::value value;

@@ -1,3 +1,16 @@
+2009-02-28  Frederic Bour  <bour@lrde.epita.fr>
+
+	Correct references to mln::morpho::closing_... and opening_...
+	* mln/accu/height.hh,
+	* mln/accu/volume.hh,
+	* mln/morpho/all.hh,
+	* mln/morpho/essential.hh: Replace mln::morpho::closing_ by
+	  mln::morpho::closing::
+	* tests/morpho/Makefile.am: Removed old tests
+	* tests/morpho/complex_image_wst.cc,
+	* tests/morpho/lena_line_graph_image_wst1.cc,
+	* tests/morpho/meyer_wst_long.cc: Correct references.
+
 2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add take_as_init specialization to compute_attribute_image.

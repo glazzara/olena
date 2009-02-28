@@ -40,7 +40,7 @@
 #include <mln/value/label_16.hh>
 
 #include <mln/morpho/gradient.hh>
-#include <mln/morpho/closing_area.hh>
+#include <mln/morpho/closing/area.hh>
 #include <mln/morpho/meyer_wst.hh>
 
 #include <mln/convert/to_window.hh>
@@ -65,7 +65,7 @@ int main()
 
   image2d<int_u8>
     grad = morpho::gradient(input, c4().win()),
-    clo  = morpho::closing_area(grad, c4(), 200);
+    clo  = morpho::closing::area(grad, c4(), 200);
 
   // Perform a Watershed Transform.
   typedef value::label_16 L;
