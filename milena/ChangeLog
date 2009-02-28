@@ -1,3 +1,8 @@
+2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add sharpness accumulator.
+	* morpho/attribute/sharpness.hh: New.
+
 2009-02-28  Frederic Bour  <bour@lrde.epita.fr>
 
 	Correct references to mln::morpho::closing_... and opening_...
