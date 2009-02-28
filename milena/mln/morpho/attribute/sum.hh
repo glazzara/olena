@@ -61,10 +61,10 @@ namespace mln
     template <typename I, typename S>
     struct accumulator_< morpho::attribute::sum<I,S> >
     {
-      typedef accumulator::has_untake::no    has_untake;
-      typedef accumulator::has_set_value::no has_set_value;
-      typedef accumulator::has_stop::no      has_stop;
-      typedef accumulator::when_pix::use_v   when_pix;
+      typedef accumulator::has_untake::yes	has_untake;
+      typedef accumulator::has_set_value::yes	has_set_value;
+      typedef accumulator::has_stop::no		has_stop;
+      typedef accumulator::when_pix::use_v	when_pix;
     };
 
   } // end of namespace mln::trait
@@ -106,6 +106,15 @@ namespace mln
 	/// Check whether this accu is able to return a result.
 	/// Return always true.
 	bool is_valid() const;
+
+	/// Untake a value from the accumulator.
+	void untake(const argument& v);
+	void untake(const util::pix<I>& px);
+
+	/// Set the return value of the accumalator.
+	void set_value(const argument& v);
+	void set_value(const util::pix<I>& px);
+
 
       protected:
 
@@ -174,6 +183,38 @@ namespace mln
       sum<I,S>::take_as_init(const util::pix<I>& px)
       {
 	take_as_init(px.v());
+      }
+
+      template <typename I, typename S>
+      inline
+      void
+      sum<I,S>::untake(const argument& v)
+      {
+	s_ -= v;
+      }
+
+      template <typename I, typename S>
+      inline
+      void
+      sum<I,S>::untake(const util::pix<I>& px)
+      {
+	untake(px.v());
+      }
+
+      template <typename I, typename S>
+      inline
+      void
+      sum<I,S>::set_value(const argument& v)
+      {
+	s_ = v;
+      }
+
+      template <typename I, typename S>
+      inline
+      void
+      sum<I,S>::set_value(const util::pix<I>& px)
+      {
+	set_value(px.v());
       }
 
       template <typename I, typename S>

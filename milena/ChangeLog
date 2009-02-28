@@ -1,5 +1,15 @@
 2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Add height attribute, and implement untake and set_value method.
+	* mln/morpho/attribute/height.hh: New.
+	* mln/morpho/attribute/sum.hh: Implements untake and set_value
+	methods.
+	* mln/morpho/attribute/volume.hh: s/level_/cur_level_.
+	* tests/morpho/attribute/Makefile.am:
+	* tests/morpho/attribute/height.cc: Add height test file.
+
+2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Clean and separate connected (leveling/algebraic) filters.
 	* mln/canvas/morpho/attribute_filter.hh: Move
 	algebraic/leveling facade from attribute filter and change dispatch.

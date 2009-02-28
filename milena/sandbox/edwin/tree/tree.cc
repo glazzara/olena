@@ -57,6 +57,7 @@ namespace mln
 
 } // mln
 
+using namespace mln;
 int echo = 0;
 
 template <typename I, typename A>
@@ -64,7 +65,6 @@ inline
 void
 create_tree_and_compute(Image<I>& f_, Accumulator<A> a_, float lambda, float lambda2 = mln_max(float))
 {
-  using namespace mln;
   using value::int_u8;
 
   I f = exact(f_);
@@ -100,7 +100,6 @@ void usage(char* argv[])
 
 int main(int argc, char* argv[])
 {
-  using namespace mln;
   using value::int_u8;
 
   mln_VAR(nbh, c4());
@@ -127,21 +126,35 @@ int main(int argc, char* argv[])
   IM img(6);
   morpho::attribute::volume<IM> accu;
   img.element(0) = 50;
-  img.element(1) = 40;
-  img.element(2) = 20;
-  img.element(3) = 20;
-  img.element(4) = 40;
-  img.element(5) = 50;
+  img.element(1) = 50;
+  img.element(2) = 40;
+  img.element(3) = 40;
+  img.element(4) = 20;
+  img.element(5) = 20;
 
   mln_piter_(image1d<int>) p(img.domain());
 
-  for_all(p)
-    accu.take(img(p));
+  int tab[6] = { 50, 50, 40, 40, 20, 20 };
 
+  for (int i = 0; i < 6; i++)
+  {
+    accu.take(tab[i]);
+    std::cout << "(" << tab[i] << "," << accu.to_result() << "):";
+  }
   std::cout << "Volume:" << accu.to_result() << std::endl;
+
+  accu.init ();
+  for (int i = 5; i >= 0; i--)
+  {
+    accu.take(tab[i]);
+    std::cout << "(" << tab[i] << "," << accu.to_result() << "):";
+  }
+  std::cout << "Volume:" << accu.to_result() << std::endl;
+
+
   //create_tree_and_compute(img, morpho::attribute::volume<I2>());
   //
 
-  create_tree_and_compute(f, morpho::attribute::coccupation<I>(), lambda1, lambda2);
+  create_tree_and_compute(f, morpho::attribute::occupation<I>(), lambda1, lambda2);
 
 }

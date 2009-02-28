@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,21 +26,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_ATTRIBUTE_VOLUME_HH
-# define MLN_MORPHO_ATTRIBUTE_VOLUME_HH
+#ifndef MLN_MORPHO_ATTRIBUTE_HEIGHT_HH
+# define MLN_MORPHO_ATTRIBUTE_HEIGHT_HH
 
-/// \file mln/morpho/attribute/volume.hh
-///
-/// Define an accumulator that computes the volume of a
-/// component.
+/// \file mln/morpho/attribute/height.hh
+/// Define an accumulator that computes the height of a
+/// component through one of its pixels.
 
 # include <mln/accu/internal/base.hh>
-# include <mln/math/diff_abs.hh>
+
 # include <mln/util/pix.hh>
+# include <mln/math/diff_abs.hh>
+# include <mln/math/min.hh>
+# include <mln/math/max.hh>
 
 
-namespace mln
-{
+namespace mln {
 
   // Forward declaration.
   namespace morpho {
@@ -52,8 +53,7 @@ namespace mln
 
   // Traits.
 
-  namespace trait
-  {
+  namespace trait {
 
     template <typename I>
     struct accumulator_< morpho::attribute::volume<I> >
@@ -67,161 +67,151 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  namespace morpho
-  {
+  namespace morpho {
+    namespace attribute {
 
-    namespace attribute
-    {
-
-      /// Volume accumulator class.
+      /// Height accumulator class.
       ///
       /// The parameter \p I is the image type on which the accumulator
       /// of pixels is built.
       template <typename I>
-      struct volume
-	: public mln::accu::internal::base< unsigned , volume<I> >
+      struct height
+	: public mln::accu::internal::base< unsigned , height<I> >
       {
 	typedef mln_value(I) argument;
 
-	volume();
+	height();
 
 	/// Manipulators.
 	/// \{
 	void init();
-
 	void take(const mln_value(I)& v);
-	void take(const util::pix<I>& px);
-	void take(const volume<I>& other);
-
+	void take(const util::pix<I>& v);
+	void take(const height<I>& other);
 	void take_as_init(const mln_value(I)& v);
 	void take_as_init(const util::pix<I>& px);
 	/// \}
-
-	/// Get the value of the accumulator.
-	unsigned to_result() const;
 
 	/// Check whether this accu is able to return a result.
 	/// Always true here.
 	bool is_valid() const;
 
-	/// Give the area.
-	unsigned area() const;
+	/// Get the value of the accumulator.
+	unsigned to_result() const;
+
 
       protected:
-	/// The current level.
-	mln_value(I) cur_level_;
-	/// The area of the component.
-	unsigned area_;
-	/// The volume of the component.
-	unsigned volume_;
+	/// The reference level in the component.
+	unsigned ref_;
+	/// The current level in the component.
+	unsigned cur_;
+	/// Mark of initialization
+	bool initialized_;
       };
-
 
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
       inline
-      volume<I>::volume()
+      height<I>::height()
+	: initialized_ (false)
       {
-	init();
       }
 
       template <typename I>
       inline
       void
-      volume<I>::init()
+      height<I>::init()
       {
-	volume_ = 0;
+	mln_invariant(0);
       }
 
       template <typename I>
       inline
       void
-      volume<I>::take(const mln_value(I)& v)
+      height<I>::take(const mln_value(I)& v)
       {
-	mln_invariant(volume_ != mln_max(unsigned));
-	if (! is_valid())
+	if (!is_valid ())
 	  {
 	    take_as_init(v);
-	    return;
 	  }
-	++area_;
-	volume_ += 1 + math::diff_abs(v, cur_level_);
-	cur_level_ = v;
+	cur_ = v;
       }
 
       template <typename I>
       inline
       void
-      volume<I>::take(const util::pix<I>& px)
+      height<I>::take(const util::pix<I>& px)
       {
-	mln_invariant(volume_ != mln_max(unsigned));
 	take(px.v());
       }
 
       template <typename I>
       inline
       void
-      volume<I>::take(const volume<I>& other)
+      height<I>::take(const height<I>& other)
       {
-	mln_invariant(volume_ != mln_max(unsigned));
-	area_ += other.area_;
-	volume_ +=
-	  other.volume_  +
-	  other.area_ * math::diff_abs(other.cur_level_, cur_level_);
-	// cur_level_ do not change.
+	mln_invariant(ref_ < cur_ xor other.ref_ > other.cur_);
+	if (!is_valid())
+	  {
+	    ref_ = other.ref_;
+	    cur_ = other.cur_;
+	  }
+	else if (ref_ < cur_)
+	  {
+	    // Values are increasing.
+	    ref_ = math::min(ref_, other.ref_);
+	    cur_ = math::max(cur_, other.cur_);
+	  }
+	else
+	  {
+	    // Values are decreasing.
+	    ref_ = math::max(ref_, other.ref_);
+	    cur_ = math::min(cur_, other.cur_);
+	  }
       }
 
       template <typename I>
       inline
       void
-      volume<I>::take_as_init(const mln_value(I)& v)
+      height<I>::take_as_init(const mln_value(I)& v)
       {
-	cur_level_ = v;
-	area_ = 1;
-	volume_ = 1;
+	cur_ = ref_ = v;
+	initialized_ = true;
       }
 
       template <typename I>
       inline
       void
-      volume<I>::take_as_init(const util::pix<I>& px)
+      height<I>::take_as_init(const util::pix<I>& px)
       {
 	take_as_init(px.v());
       }
 
-      template <typename I>
-      inline
-      unsigned
-      volume<I>::to_result() const
-      {
-	return volume_;
-      }
 
       template <typename I>
       inline
       unsigned
-      volume<I>::area() const
+      height<I>::to_result() const
       {
-	return area_;
+	mln_invariant(initialized_);
+	if (is_valid())
+	  return math::diff_abs(ref_, cur_);
       }
 
       template <typename I>
       inline
       bool
-      volume<I>::is_valid() const
+      height<I>::is_valid() const
       {
-	return volume_ != 0;
+	return initialized_;
       }
 
 # endif // ! MLN_INCLUDE_ONLY
-
     } // end of namespace mln::morpho::attribute
-
   } // end of namespace mln::morpho
-
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_ATTRIBUTE_VOLUME_HH
+#endif // ! MLN_MORPHO_ATTRIBUTE_HEIGHT_HH
