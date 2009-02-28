@@ -28,9 +28,9 @@
 #ifndef MLN_MORPHO_ALGEBRAIC_FILTER_HH_
 # define MLN_MORPHO_ALGEBRAIC_FILTER_HH_
 
-/// \file mln/morpho/leveling_filter.hh
+/// \file mln/morpho/algebraic_filter.hh
 ///
-/// Leveling filter calls attribute canvas.
+/// Alegebraic filter calls attribute canvas.
 
 
 # include <mln/core/concept/image.hh>
@@ -50,22 +50,41 @@ namespace mln {
     template <typename I, typename N, typename A>
     mln_concrete(I)
     algebraic_filter(const Image<I>& input,
-		     const Neighborhood<N>& nbh,
-		     const Accumulator<A>& a,
-		     const typename A::result& lambda,
-		     bool increasing)
+		    const Neighborhood<N>& nbh,
+		    const Accumulator<A>& a,
+		    const typename A::result& lambda,
+		    bool increasing);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename I, typename N, typename A>
+    mln_concrete(I)
+    algebraic_filter(const Image<I>& input,
+		    const Neighborhood<N>& nbh,
+		    const Accumulator<A>& a,
+		    const typename A::result& lambda,
+		    bool increasing)
     {
+      trace::entering("morpho::opening::algebraic_filter");
+
+      mln_precondition(exact(input).is_valid());
+
       mlc_or(mlc_equal(mln_trait_accumulator_when_pix(A),
 		       trait::accumulator::when_pix::use_none),
 	     mlc_equal(mln_trait_accumulator_when_pix(A),
 		       trait::accumulator::when_pix::use_p))::check();
 
-      return canvas::morpho::internal::attribute_filter_dispatch(input, nbh, a, lambda, increasing);
+      mln_concrete(I) output;
+      output = canvas::morpho::internal::attribute_filter_dispatch(input, nbh, a, lambda, increasing);
+
+      trace::exiting("morpho::opening::algebraic_filter");
+
+      return output;
     }
 
+# endif // ! MLN_INCLUDE_ONLY
   } // end of namespace mln::morpho
 } // end of namespace mln
-
-
 
 #endif /* !MLN_MORPHO_ALGEBRAIC_FILTER_HH_ */

@@ -29,25 +29,23 @@
 #ifndef MLN_MORPHO_OPENING_ALGEBRAIC_HH
 # define MLN_MORPHO_OPENING_ALGEBRAIC_HH
 
-/// \file mln/morpho/opening_algebraic.hh
+/// \file mln/morpho/opening/algebraic.hh
 ///
 /// Morphological algebraic opening.
 
 # include <mln/morpho/includes.hh>
-# include <mln/canvas/morpho/algebraic_filter.hh>
+# include <mln/morpho/algebraic_filter.hh>
 
 
-namespace mln
-{
-
-  namespace morpho
-  {
+namespace mln {
+  namespace morpho {
+    namespace opening {
 
     /// Morphological algebraic opening.
     template <typename I, typename N, typename A>
     mln_concrete(I)
-    opening_algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
-		      const Accumulator<A>& accu, const mln_result(A)& lambda);
+    algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
+	      const Accumulator<A>& accu, const mln_result(A)& lambda);
 
 
 
@@ -58,28 +56,30 @@ namespace mln
     template <typename I, typename N, typename A>
     inline
     mln_concrete(I)
-    opening_algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
-		      const Accumulator<A>& accu, const mln_result(A)& lambda)
+    algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
+	      const Accumulator<A>& accu, const mln_result(A)& lambda)
     {
-      trace::entering("morpho::opening_algebraic");
+      trace::entering("morpho::opening::algebraic");
 
       mln_precondition(exact(input).is_valid());
+      mln_precondition(mlc_equal(mln_trait_accumulator_when_pix(A),
+				 trait::accumulator::when_pix::not_ok)::value)
 
       mln_concrete(I) output;
-      output = canvas::morpho::algebraic_filter(input, nbh, accu, lambda,
-						/* increasing = */ false);
+      output = algebraic_filter(input, nbh, accu, lambda,
+				/* increasing = */ false);
 
       mln_postcondition(output <= input);
 
-      trace::exiting("morpho::opening_algebraic");
+      trace::exiting("morpho::opening::algebraic");
       return output;
     }
 
 
 # endif // ! MLN_INCLUDE_ONLY
 
+    } // end of namespace mln::morpho::opening
   } // end of namespace mln::morpho
-
 } // end of namespace mln
 
 

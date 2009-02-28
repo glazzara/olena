@@ -53,15 +53,37 @@ namespace mln {
 		    const Neighborhood<N>& nbh,
 		    const Accumulator<A>& a,
 		    const typename A::result& lambda,
+		    bool increasing);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename I, typename N, typename A>
+    mln_concrete(I)
+    leveling_filter(const Image<I>& input,
+		    const Neighborhood<N>& nbh,
+		    const Accumulator<A>& a,
+		    const typename A::result& lambda,
 		    bool increasing)
     {
+      trace::entering("morpho::opening::leveling_filter");
+
+      mln_precondition(exact(input).is_valid());
+
       mlc_or(mlc_equal(mln_trait_accumulator_when_pix(A),
 		       trait::accumulator::when_pix::use_pix),
 	     mlc_equal(mln_trait_accumulator_when_pix(A),
 		       trait::accumulator::when_pix::use_v))::check();
 
-      return canvas::morpho::internal::attribute_filter_dispatch(input, nbh, a, lambda, increasing);
+      mln_concrete(I) output;
+      output = canvas::morpho::internal::attribute_filter_dispatch(input, nbh, a, lambda, increasing);
+
+      trace::exiting("morpho::opening::leveling_filter");
+
+      return output;
     }
+
+# endif // ! MLN_INCLUDE_ONLY
   } // end of namespace mln::morpho
 } // end of namespace mln
 

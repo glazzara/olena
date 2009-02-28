@@ -1,5 +1,31 @@
 2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Create opening and closing morpho subdir and move opening and.
+	* mln/morpho/algebraic_filter.hh: Add precondition and test.
+	* mln/morpho/closing/algebraic.hh: New.
+	* mln/morpho/closing_algebraic.hh: Remove.
+	* mln/morpho/leveling_filter.hh: Add precondition and test.
+	* mln/morpho/opening/algebraic.hh: New.
+	* mln/morpho/opening_algebraic.hh: Remove.
+	* tests/morpho/closing/algebraic.cc: New.
+	* tests/morpho/closing/area.cc: New.
+	* tests/morpho/closing/height.cc: New.
+	* tests/morpho/closing/volume.cc: New.
+	* tests/morpho/closing: New.
+	* tests/morpho/closing_algebraic.cc: Remove.
+	* tests/morpho/closing_area.cc: Remove.
+	* tests/morpho/closing_height.cc: Remove.
+	* tests/morpho/closing_volume.cc: Remove.
+	* tests/morpho/opening/area.cc: New.
+	* tests/morpho/opening/height.cc: New.
+	* tests/morpho/opening/volume.cc: New.
+	* tests/morpho/opening: New.
+	* tests/morpho/opening_area.cc: Remove.
+	* tests/morpho/opening_height.cc: Remove.
+	* tests/morpho/opening_volume.cc: Remove.
+
+2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Add height attribute, and implement untake and set_value method.
 	* mln/morpho/attribute/height.hh: New.
 	* mln/morpho/attribute/sum.hh: Implements untake and set_value
