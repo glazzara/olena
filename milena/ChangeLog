@@ -1,5 +1,14 @@
 2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Exo2: Perform attribute calculus on trees.
+	* sandbox/theo/rush/exo2/Makefile: New.
+	* sandbox/theo/rush/exo2/exo2.cc: New.
+	* sandbox/theo/rush/exo2/propagate.hh: New.
+	* sandbox/theo/rush/exo2: New.
+	* sandbox/theo/rush: New.
+
+2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Add sharpness accumulator.
 	* morpho/attribute/sharpness.hh: New.
 
