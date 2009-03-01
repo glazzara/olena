@@ -1,5 +1,16 @@
 2009-03-01  Frederic Bour  <bour@lrde.epita.fr>
 
+	Add exo3 "assignable" functions part, correct other parts.
+	* rush/exo3/Makefile: Added assignable target.
+	* rush/exo3/assignable.cc: New.
+	* rush/exo3/assignable.cc: New.
+	* rush/exo3/exo3_1.cc: Renamed to...
+	* rush/exo3/exo3_fun_area.cc: New.
+	* rush/exo3/exo3_2.cc: Renamed to...
+	* rush/exo3/exo3_fun_generator.cc: New.
+
+2009-03-01  Frederic Bour  <bour@lrde.epita.fr>
+
 	Mistake in previous commit..
 	* inverse.cc: Remove. Test file.
 

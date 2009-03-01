@@ -1,19 +1,18 @@
 #include <mln/core/image/image2d.hh>
-#include <mln/morpho/attribute/sharpness.hh>
+#include <mln/core/concept/function.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/var.hh>
+#include <mln/value/int_u8.hh>
 #include <mln/pw/all.hh>
 #include <mln/io/pgm/all.hh>
 #include <mln/io/pbm/all.hh>
-#include <mln/core/var.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/core/alias/neighb2d.hh>
 #include <mln/trait/all.hh>
-#include <mln/core/concept/function.hh>
 #include <mln/fun/internal/resolve.hh>
 #include <mln/morpho/attribute/card.hh>
+#include <mln/morpho/attribute/sharpness.hh>
 #include <mln/level/sort_offsets.hh>
 #include <mln/canvas/morpho/attribute_filter.hh>
 #include <mln/canvas/morpho/internal/find_root.hh>
-#include <mln/trait/op/all.hh>
 
 namespace exo3
 {
@@ -325,22 +324,43 @@ op_for_cst(neq, !=)
 
 #undef op_for_cst
 
-int main()
+void usage(char* argv[])
+{
+  std::cerr << "usage: " << argv[0] << " input.pgm sharpness minvol minarea (inclusive or)"
+	    << std::endl;
+  abort();
+}
+
+int main(int argc, char **argv)
 {
   using namespace mln;
+  using value::int_u8;
 
-  typedef image2d<value::int_u8> I;
+  typedef image2d<int_u8> I;
 
-  I lena;
-  io::pgm::load(lena, "/home/defre/affiche2.pgm");
+  float	l_sharpness;
+  unsigned l_minvol;
+  unsigned l_minarea;
+  I input;
 
-  mln_VAR(sharp, exo3_filter::attribute_filter(lena, c4(),
-		    level::sort_psites_decreasing(lena),
-		    morpho::attribute::sharpness<I>(), 0.2));
+  if (argc < 5)
+    usage(argv);
+
+  io::pgm::load(input, argv[1]);
+
+  l_sharpness = atof(argv[2]);
+  l_minvol = atoi(argv[3]);
+  l_minarea = atoi(argv[4]);
+
+  mln_VAR(sharp, exo3_filter::attribute_filter(input, c4(),
+					       level::sort_psites_decreasing(input),
+					       morpho::attribute::sharpness<I>(), l_sharpness));
 
   mln_VAR(s, pw::value(sharp));
 
   mln::fun::meta::from_accu< mln::morpho::attribute::volume > vol;
-  io::pbm::save((vol(s) > 1500U && vol(s) < 2000U) | lena.domain(), "out.pbm");
+  mln::fun::meta::from_accu< mln::morpho::attribute::card > area;
+
+  io::pbm::save((vol(s) > l_minvol || area(s) > l_minarea) | input.domain(), "out.pbm");
 
 }
