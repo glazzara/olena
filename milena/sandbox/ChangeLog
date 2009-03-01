@@ -1,3 +1,8 @@
+2009-03-01  Frederic Bour  <bour@lrde.epita.fr>
+
+	Mistake in previous commit..
+	* inverse.cc: Remove. Test file.
+
 2009-02-27  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Clean sandbox.
