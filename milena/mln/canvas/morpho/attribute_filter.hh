@@ -43,6 +43,7 @@
 # include <mln/util/pix.hh>
 
 # include <mln/data/fill.hh>
+# include <mln/level/sort_psites.hh>
 
 namespace mln {
   namespace canvas {
@@ -52,12 +53,6 @@ namespace mln {
       template <typename I, typename N, typename A>
       mln_concrete(I)
       attribute_filter(const Image<I>& input, const Neighborhood<N>& nbh,
-		       const Accumulator<A>& a, const typename A::result& lambda,
-		       bool increasing);
-
-      template <typename I, typename N, typename A>
-      mln_concrete(I)
-      algebraic_filter(const Image<I>& input, const Neighborhood<N>& nbh,
 		       const Accumulator<A>& a, const typename A::result& lambda,
 		       bool increasing);
 

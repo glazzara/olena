@@ -1,3 +1,13 @@
+2009-03-01  Frederic Bour  <bour@lrde.epita.fr>
+
+	Add rush/exo3.
+	* milena/mln/canvas/morpho/attribute_filter.hh: Add one missing include.
+	* milena/sandbox/theo/rush/exo3/Makefile: New.
+	* milena/sandbox/theo/rush/exo3/exo3_1.cc: New.
+	* milena/sandbox/theo/rush/exo3/exo3_2.cc: New.
+	* milena/sandbox/theo/rush/exo3/inverse.cc: New.
+	* milena/sandbox/theo/rush/exo3: New.
+
 2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Correct bugs in tests.
