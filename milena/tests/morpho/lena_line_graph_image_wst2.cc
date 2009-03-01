@@ -64,7 +64,7 @@
 #include <mln/util/graph.hh>
 
 #include <mln/morpho/line_gradient.hh>
-#include <mln/morpho/closing_area_on_vertices.hh>
+#include <mln/morpho/closing/area_on_vertices.hh>
 #include <mln/morpho/meyer_wst.hh>
 #include <mln/level/stretch.hh>
 
@@ -115,7 +115,7 @@ int main()
   typedef line_graph_elt_neighborhood<util::graph, lg_ima_t::pset::fun_t> nbh_t;
   nbh_t nbh;
 
-  lg_ima_t closed_lg_ima = morpho::closing_area_on_vertices(lg_ima, nbh, 20);
+  lg_ima_t closed_lg_ima = morpho::closing::area_on_vertices(lg_ima, nbh, 20);
 
   /*------.
   | WST.  |

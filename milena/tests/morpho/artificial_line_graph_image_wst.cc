@@ -62,7 +62,7 @@
 #include <mln/util/graph.hh>
 
 #include <mln/morpho/line_gradient.hh>
-#include <mln/morpho/closing_area_on_vertices.hh>
+#include <mln/morpho/closing/area_on_vertices.hh>
 #include <mln/morpho/meyer_wst.hh>
 #include <mln/level/stretch.hh>
 

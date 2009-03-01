@@ -26,18 +26,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_CLOSING_AREA_ON_VERTICES_HH
-# define MLN_MORPHO_CLOSING_AREA_ON_VERTICES_HH
+#ifndef MLN_MORPHO_OPENING_AREA_ON_VERTICES_HH
+# define MLN_MORPHO_OPENING_AREA_ON_VERTICES_HH
 
-/// \file mln/morpho/closing_area.hh
+/// \file mln/morpho/opening/area_on_vertices.hh
 ///
-/// Morphological area closing on a line graph image computing
+/// Morphological area opening on a line graph image computing
 /// the area in terms of adjacent vertices.
 
 # include <mln/pw/image.hh>
 # include <mln/core/site_set/p_edges.hh>
-# include <mln/morpho/closing_attribute.hh>
-# include <mln/accu/count_adjacent_vertices.hh>
+# include <mln/morpho/opening/algebraic.hh>
+# include <mln/morpho/attribute/count_adjacent_vertices.hh>
 
 
 namespace mln
@@ -46,13 +46,16 @@ namespace mln
   namespace morpho
   {
 
-    /// Morphological area closing on a mln::line_graph_image computing
+    namespace opening
+    {
+
+    /// Morphological area opening on a mln::line_graph_image computing
     /// the area in terms of adjacent vertices.
-    template <typename P2V, typename G, typename V2P, typename N>
-    pw::image<P2V, p_edges<G, V2P> >
-    closing_area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
-			     const Neighborhood<N>& nbh,
-			     unsigned lambda);
+      template <typename P2V, typename G, typename V2P, typename N>
+      pw::image<P2V, p_edges<G, V2P> >
+      area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
+		       const Neighborhood<N>& nbh,
+		       unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -60,28 +63,29 @@ namespace mln
     template <typename P2V, typename G, typename V2P, typename N>
     inline
     pw::image<P2V, p_edges<G, V2P> >
-    closing_area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
-			     const Neighborhood<N>& nbh,
-			     unsigned lambda)
+    area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
+		     const Neighborhood<N>& nbh,
+		     unsigned lambda)
     {
-      trace::entering("morpho::closing_area_on_vertices");
+      trace::entering("morpho::opening::area_on_vertices");
       mln_precondition(exact(input).is_valid());
 
       typedef p_edges<G, V2P> pe_t;
-      typedef accu::count_adjacent_vertices<P2V, pe_t> attribute_t;
+      typedef attribute::count_adjacent_vertices< pw::image<P2V, pe_t> > attribute_t;
 
       pw::image<P2V, p_edges<G, V2P> > output;
-      output = closing_attribute<attribute_t>(input, nbh, lambda);
+      output = opening::algebraic(input, nbh, attribute_t(), lambda);
 
-      trace::exiting("morpho::closing_area_on_vertices");
+      trace::exiting("morpho::opening::area_on_vertices");
       return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
+    } // end of namespace mln::morpho::opening
 
   } // end of namespace mln::morpho
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_CLOSING_AREA_ON_VERTICES_HH
+#endif // ! MLN_MORPHO_OPENING_AREA_ON_VERTICES_HH

@@ -1,5 +1,24 @@
 2009-03-01  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Make area_on_vertices work with new algebraic code [POST-RUSH].
+	* mln/morpho/attribute/count_adjacent_vertices.hh,
+	* mln/morpho/closing/area_on_vertices.hh,
+	* mln/morpho/opening/area_on_vertices.hh:
+	  Make area_on_vertices work with new algebraic code, and
+	adapt count_adjacent_vertices accumulator as a morpho attribute.
+
+	* mln/morpho/closing_area_on_vertices.hh,
+	* mln/morpho/closing_attribute.hh,
+	* mln/morpho/opening_area_on_vertices.hh,
+	* mln/morpho/opening_attribute.hh:
+	  Delete old implementations.
+
+	* tests/morpho/artificial_line_graph_image_wst.cc,
+	* tests/morpho/lena_line_graph_image_wst2.cc:
+	  Update test files using area_on_vertices.
+
+2009-03-01  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	[EXO2] Add shell script for exo2.
 	* sandbox/theo/rush/exo2/Makefile
 	* sandbox/theo/rush/exo2/exo2.cc
