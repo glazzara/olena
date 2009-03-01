@@ -1,3 +1,24 @@
+2009-03-01  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Remove algebraic_filter and algebraic_union_find from canvas.
+	* mln/canvas/morpho/algebraic_filter.hh,
+	* mln/canvas/morpho/algebraic_union_find.hh: Remove.
+	Now, use either mln::canvas::morpho::attribute_filter or
+	leveling/algebraic filters in mln::morpho.
+
+	* sandbox/edwin/accu.cc,
+	* sandbox/edwin/accu_trait.hh,
+	* sandbox/edwin/algebraic.hh,
+	* sandbox/edwin/algebraic_union_find.hh,
+	* sandbox/edwin/card.hh,
+	* sandbox/edwin/filtres/connectes/Makefile,
+	* sandbox/edwin/filtres/connectes/connected_filter.hh,
+	* sandbox/edwin/filtres/connectes/filter.cc,
+	* sandbox/edwin/filtres/connectes,
+	* sandbox/edwin/filtres,
+	* sandbox/edwin/leveling.hh: Remove all files related to
+	  filters from my sandbox.
+
 2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Exo2: Perform attribute calculus on trees.
