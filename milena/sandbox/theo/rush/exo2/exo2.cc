@@ -18,28 +18,36 @@
 #include <mln/morpho/attribute/card.hh>
 #include <mln/morpho/attribute/sharpness.hh>
 
+#include <string>
+
 #include "propagate.hh"
 
 
 namespace mln
 {
+  /// Structure to simplify filtering using min tree.
   template <typename I>
   struct treefilter
   {
     typedef p_array< mln_site(I) > S;
     typedef morpho::tree::data<I,S> tree_t;
 
+    /// Constructor: Make the min tree based on the image \p f_, then
+    /// performs calculus using \p a_ attribute. To finish, it filters
+    /// tree's nodes which values are in [lambda1, lambda2] set.
     template <typename A>
     treefilter(Image<I>& f_,
 	       Accumulator<A> a_,
 	       double lambda1 = mln_min(double),
 	       double lambda2 = mln_max(double));
 
+    /// Get the min tree performed.
     tree_t& tree() { return tree_; };
+
+    /// Get the boolean image got after filtering.
     mln_ch_value(I, bool)& img() {return img_; };
 
   private:
-
     S sorted_sites_;
     tree_t tree_;
     mln_ch_value(I, bool) img_;
@@ -68,7 +76,7 @@ namespace mln
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.pgm lambda1 lamda2"
+  std::cerr << "usage: " << argv[0] << " input.pgm accumulator lambda1 [lambda2]"
 	    << std::endl;
   abort();
 }
@@ -85,17 +93,26 @@ int main(int argc, char* argv[])
   float lambda2;
   I input;
 
-  if (argc < 3)
+  if (argc < 4)
     usage(argv);
 
   io::pgm::load(input, argv[1]);
-  lambda1 = atof(argv[2]);
-  lambda2 = (argc == 4) ? atof(argv[3]) : mln_max(float);
 
-  treefilter<I> f(input, morpho::attribute::sharpness<I>(), lambda1, lambda2);
+  lambda1 = atof(argv[3]);
+  lambda2 = (argc == 5) ? atof(argv[4]) : mln_max(float);
 
-  back_propagate_subbranch(f.tree(), f.img() ,true);
-  back_propagate_level(f.tree(), f.img());
+  std::string s(argv[2]);
+  treefilter<I>* f = 0;
+  if (s == "card")
+    f = new treefilter<I>(input, morpho::attribute::card<I>(), lambda1, lambda2);
+  else if (s == "sharpness")
+    f = new treefilter<I>(input, morpho::attribute::sharpness<I>(), lambda1, lambda2);
+  else
+    usage(argv);
 
-  io::pbm::save(f.img(), "out.pbm");
+  back_propagate_subbranch(f->tree(), f->img() ,true);
+  back_propagate_level(f->tree(), f->img());
+
+  io::pbm::save(f->img(), "out.pbm");
+  delete f;
 }

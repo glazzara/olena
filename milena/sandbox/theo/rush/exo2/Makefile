@@ -14,6 +14,8 @@ LD=g++
 LDFLAGS=
 
 all: clean $(TARGET)
+	chmod +x exo2.sh
+	./exo2.sh
 
 $(TARGET): $(OBJS) $(SRC)
 	$(LD) $(LDFLAGS) -o $@ $(OBJS)
@@ -30,3 +32,5 @@ $(REF): $(OBJS_REF) $(SRC_REF)
 
 clean:
 	rm -f *.o $(REF) $(TARGET)
+	rm -f *.pbm
+	find  -name "*.pgm" \! -regex ".*/affiche2?.pgm" -delete

@@ -1,5 +1,12 @@
 2009-03-01  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	[EXO2] Add shell script for exo2.
+	* sandbox/theo/rush/exo2/Makefile
+	* sandbox/theo/rush/exo2/exo2.cc
+	* sandbox/theo/rush/exo2/exo2.sh: Shell script for exo2.
+
+2009-03-01  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Remove algebraic_filter and algebraic_union_find from canvas.
 	* mln/canvas/morpho/algebraic_filter.hh,
 	* mln/canvas/morpho/algebraic_union_find.hh: Remove.
