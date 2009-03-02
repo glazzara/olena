@@ -110,11 +110,11 @@ namespace mln
     if (it.size() == 0)
       {
 	it
-	  .insert( 0, -1)
-	  .insert(-1,  0)
-	  .insert( 0,  0)
-	  .insert(+1,  0)
-	  .insert( 0, +1);
+	  .insert(0,  0, -1)
+	  .insert(0, -1,  0)
+	  .insert(0,  0,  0)
+	  .insert(0, +1,  0)
+	  .insert(0,  0, +1);
       }
     return it;
   }
@@ -126,15 +126,15 @@ namespace mln
     if (it.size() == 0)
       {
 	it
-	  .insert(-1, -1)
-	  .insert( 0, -1)
-	  .insert(+1, -1)
-	  .insert(-1,  0)
-	  .insert( 0,  0)
-	  .insert(+1,  0)
-	  .insert(-1, +1)
-	  .insert( 0, +1)
-	  .insert(+1, +1);
+	  .insert(0, -1, -1)
+	  .insert(0,  0, -1)
+	  .insert(0, +1, -1)
+	  .insert(0, -1,  0)
+	  .insert(0,  0,  0)
+	  .insert(0, +1,  0)
+	  .insert(0, -1, +1)
+	  .insert(0,  0, +1)
+	  .insert(0, +1, +1);
       }
     return it;
   }

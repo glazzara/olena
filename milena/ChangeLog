@@ -1,5 +1,11 @@
 2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Fix window3d.
+
+	* mln/core/alias/window3d.hh: add slice coordinate..
+
+2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add more window aliases.
 
 	* mln/core/alias/neighb3d.hh: add c8_3d.
