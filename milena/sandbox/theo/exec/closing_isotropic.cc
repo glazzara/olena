@@ -2,7 +2,7 @@
 
 #include <mln/morpho/closing.hh>
 #include <mln/win/disk2d.hh>
-#include <mln/win/ball3d.hh>
+#include <mln/win/sphere3d.hh>
 
 
 
@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
       {
 	image3d<bool> ima, out;
 	io::dump::load(ima, argv[1]);
-	out = morpho::closing(ima, win::ball3d(2 * r + 1));
+	out = morpho::closing(ima, win::sphere3d(2 * r + 1));
 	io::dump::save(out, argv[3]);
       }
       break;

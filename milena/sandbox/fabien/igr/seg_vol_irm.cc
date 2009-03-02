@@ -86,7 +86,7 @@
 #include <mln/morpho/erosion.hh>
 
 #include <mln/win/disk2d.hh>
-#include <mln/win/ball3d.hh>
+#include <mln/win/sphere3d.hh>
 
 #include <mln/math/diff_abs.hh>
 
@@ -137,7 +137,7 @@ template <typename I>
 I
 close_threshold(const Image<I>& input, metal::int_<3>)
 {
-  return morpho::erosion(morpho::dilation(input, win::ball3d(5)), win::ball3d(7));
+  return morpho::erosion(morpho::dilation(input, win::sphere3d(5)), win::sphere3d(7));
 }
 
 
