@@ -1,5 +1,16 @@
 2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Cleanup scribo sandbox.
+
+	* sandbox/scribo/Makefile: add new rules.
+
+	* sandbox/scribo/demat.hh: add more documentation.
+
+	* sandbox/scribo/demat31Oct2008.hh,
+	* sandbox/scribo/demat_v2.hh: remove.
+
+2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Small fixes.
 
 	* headers.mk: update dist headers.

@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -48,9 +49,10 @@
 # include <mln/transform/influence_zone_geodesic.hh>
 # include <mln/debug/draw_graph.hh>
 # include <mln/make/graph.hh>
+# include <mln/make/region_adjacency_graph.hh>
 # include <mln/util/graph.hh>
 # include <mln/util/line_graph.hh>
-# include <mln/opt/at.hh>
+# include <mln/io/txt/save.hh>
 
 # include <mln/canvas/browsing/depth_first_search.hh>
 
@@ -109,9 +111,13 @@ namespace scribo
 
       std::ostringstream os;
       os << "./"
-	 << file_id++
-	 << "_"
 	 << input_file
+	 << "_";
+
+      if (file_id < 10)
+	os << "0";
+
+      os << file_id++
 	 << "_"
 	 << name;
       return os.str();
@@ -185,7 +191,7 @@ namespace scribo
     //-*****************************************
     /// \{
 
-    /// Passes the text bboxes to Tesseract and store the result an image of
+    /// Passes the text bboxes to Tesseract and store the result in an image of
     /// char.
     /// \param[in] in image from where the text bboxes are extracted.
     /// \param[in] lbl labeled image.
@@ -258,6 +264,22 @@ namespace scribo
     ** 4 |	      |	 | {2}	 |
     ** 5 |- -	      |	 | {2}	 |
     ** 6 |	      |	 | {2}	 |
+    **
+    ** \p hboxes contains all the table lines bboxes. Each bbox is
+    ** associated with an id, its location in the array.
+    **
+    ** For each bbox, its id is marked in a vector. The location is defined,
+    ** according to the given parameter \p dim, either by the row or the col
+    ** value of the pmin site.
+    **
+    ** Ids are then propagated in the vector according a small delta value.
+    ** if bbox ids are at the same location in the vector, their related bboxes
+    ** are likely to be on the same line.
+    **
+    ** Finally, iterate over the vector until all bboxes have been treated.
+    ** For each iteration, the set with a specific number of elements is found
+    ** and all bboxes referenced in this set are aligned on the same row or col.
+    **
     */
     util::array<int>
     align_lines(unsigned nsites,
@@ -296,6 +318,9 @@ namespace scribo
 	  max_nelts = lines[i].nelements();
 
       // Aligning lines
+      // FIXME: not optimal... Make it faster!
+      // We may do too much iterations (while loop) and some of them may
+      // be done for nothing...
       util::array<int> newlines;
       while (max_nelts > 0)
       {
@@ -327,7 +352,7 @@ namespace scribo
 
 
 
-    /// Connect lines if they are close to each other.
+    /// Connect vertical and horizontal lines if they are close to each other.
     void
     connect_lines(const util::array<int>& aligned_lines,
 		  util::array<box2d>& boxes,
@@ -353,6 +378,49 @@ namespace scribo
       }
     }
 
+//    void
+//    connect_lines2(const util::array<int>& aligned_lines,
+//		   util::array<box2d>& boxes,
+//		   unsigned dim,
+//		   unsigned dim_size)
+//    {
+//      image1d<int> l(dim_size);
+//      data::fill(l, -1);
+//
+//      for_all_components(i, boxes)
+//      {
+//	opt::at(l, boxes[i].pmin()[dim]) = i;
+//	opt::at(l, boxes[i].pmax()[dim]) = i;
+//      }
+//
+//      for (unsigned i = 0; i < settings.max_dist_lines; ++i)
+//	l = morpho::elementary::dilation(l, c2());
+//
+//      for_all_components(i, boxes)
+//      {
+//	std::pair<point2d, point2d> cp = central_sites(boxes[i], dim);
+//
+//	win::segment1d seg(11);
+//	{
+//	  mln_qiter_(win::segment1d) q(seg, point1d(cp.first[dim]));
+//	  for_all(q)
+//	    if (opt::at(l, q[0]) != -1)
+//	    {
+//	      boxes[i].pmin()[dim] = boxes[opt::at(l, q[0])].pmin()[dim];
+//	      break;
+//	    }
+//	}
+//	{
+//	  mln_qiter_(win::segment1d) q(seg, point1d(cp.second[dim]));
+//	  for_all(q)
+//	    if (opt::at(l, q[0]) != -1)
+//	    {
+//	      boxes[i].pmax()[dim] = boxes[opt::at(l, q[0])].pmax()[dim];
+//	      break;
+//	    }
+//	}
+//      }
+//    }
 
 
     /// Align line bboxes vertically and horizontally. Then, try to join
@@ -372,7 +440,7 @@ namespace scribo
 					  1);
 # ifndef NOUT
       image2d<rgb8> out2(in.domain());
-      level::fill(out2, literal::black);
+      data::fill(out2, literal::black);
       for_all_components(i, tblboxes.first)
 	draw::box(out2, tblboxes.first[i], literal::red);
       for_all_components(i, tblboxes.second)
@@ -380,6 +448,12 @@ namespace scribo
       io::ppm::save(out2, output_file("after-alignment.ppm"));
 # endif
 
+      // FIXME: Rebuild incomplete lines if possible.
+      // -----   ---        =>	  ----------
+//      connect_lines2(tblboxes.first, 0, in.nrows());
+//      connect_lines2(rows, tblboxes.second, 0, in.nrows());
+
+      // Connect vertical lines with horizontal lines.
       connect_lines(rows, tblboxes.first, 0, in.nrows());
       connect_lines(cols, tblboxes.second, 1, in.ncols());
 
@@ -481,7 +555,7 @@ namespace scribo
 
     /// Find table bboxes and remove them from the image.
     std::pair<util::array<box2d>,
-		    util::array<box2d> >
+	      util::array<box2d> >
     extract_tables(image2d<bool>& in)
     {
       typedef image2d<label_16> I;
@@ -489,7 +563,7 @@ namespace scribo
       typedef util::array<mln_result_(A)> boxes_t;
 
 
-      // Lignes verticales
+      // Vertical lines
       std::cout << "Removing vertical lines" << std::endl;
       win::vline2d vline(settings.ero_line_width);
       image2d<bool> vfilter = morpho::rank_filter(in, vline, settings.rank_filter);
@@ -500,7 +574,7 @@ namespace scribo
 
       boxes_t vboxes = component_boxes(vfilter);
 
-      // Lignes horizontales
+      // Horizontal lines.
       std::cout << "Removing horizontal lines" << std::endl;
       win::hline2d hline(settings.ero_line_width);
       image2d<bool> hfilter = morpho::rank_filter(in, hline, settings.rank_filter);
@@ -596,12 +670,15 @@ namespace scribo
 
       if (settings.treat_tables)
       {
+	// Remove components which are too small
 	typedef util::array<accu_count_res_t> nsitecomp_t;
 	nsitecomp_t nsitecomp = labeling::compute(accu_count_t(), lbl, nlabels);
 	remove_small_comps<accu_count_res_t> fl2b(nsitecomp);
 	labeling::relabel_inplace(lbl, nlabels, fl2b);
       } else
       {
+	// Remove components which have too much or not enough sites and which are
+	// too heigh.
 	typedef util::array<accu_pair_res_t> nsitecomp_t;
 	nsitecomp_t nsitecomp = labeling::compute(accu_pair_t(), lbl, nlabels);
 	remove_smallandlarge_comps<accu_pair_res_t> fl2b(nsitecomp);
@@ -609,6 +686,9 @@ namespace scribo
       }
     }
 
+
+    /// Functor to be passed to depth_first_search.
+    /// Map each component vertex with its representative vertex id.
     struct make_relabel_fun_t
     {
       template <typename G>
@@ -640,6 +720,10 @@ namespace scribo
       fun::l2l::relabel<label_16> l2l;
     };
 
+
+
+    /// Functor to be passed to depth_first_search.
+    /// Computes the number of vertices per graph component.
     struct comp_size_t
     {
       template <typename G>
@@ -654,6 +738,7 @@ namespace scribo
       void next()
       {
 	unsigned compsize = comp_vertices.nelements();
+	std::cout << "compsize = " << compsize << std::endl;
 	for (unsigned i = 0; i < comp_vertices.nelements(); ++i)
 	  treated[comp_vertices[i]] = compsize;
 	comp_vertices.clear();
@@ -663,7 +748,11 @@ namespace scribo
       { comp_vertices.insert(id); }
 
       void update_queued(unsigned id)
-      { update_treated(id); }
+      {
+	std::cout << "update_queued_before " << comp_vertices << std::endl;
+	update_treated(id);
+	std::cout << "update_queued_after " << comp_vertices << std::endl;
+      }
 
       bool to_be_treated(unsigned id)
       { return treated[id] == mln_max(label_16); }
@@ -674,6 +763,8 @@ namespace scribo
       util::set<unsigned> comp_vertices;
       util::array<unsigned> treated;
     };
+
+
 
     /// Merge bboxes according to their left box neighbor.
     util::array<box2d>
@@ -710,6 +801,7 @@ namespace scribo
       comp_size_t comp_size;
       canvas::browsing::depth_first_search(g, comp_size);
 
+      std::cout << g << std::endl;
       for_all_ncomponents(i, nlabels)
 	if (tboxes[i].is_valid())
 	  if (comp_size.treated[i] < 3)
@@ -750,7 +842,7 @@ namespace scribo
 	int dmax = midcol + settings.bbox_distance;
 	point2d c = cboxes[i].center();
 	/// First site on the right of the central site
-	point2d p(c.row(), c.col() + 1);
+	point2d p = c + right;
 
 	// FIXME: Lemmings with a condition on the distance => write a special version?
 	while (lbl.domain().has(p) && (lbl(p) == 0u || lbl(p) == i)
@@ -793,21 +885,24 @@ namespace scribo
       return tboxes;
     }
 
+
+
+
+    /// Function mapping value to sites of a line graph image.
     template <typename P>
     struct lg_vertex_values : public mln::Function_p2v< lg_vertex_values<P> >
     {
       typedef float result;
 
+      // Compute the angle between P and (0,1)
       float operator()(const P& p) const
       {
-	mln::algebra::vec<2,float> v;
+	mln::algebra::vec<2,float> v, pv;
 	v[0] = 0;
 	v[1] = 1;
-	float norm = mln::math::sqrt(std::pow(p.to_vec()[0], 2)
-	    + std::pow(p.to_vec()[1], 2));
-	// FIXME: missing proxy_impl for point and line2d?
-	float res = (v * p.to_vec()) / norm;
-	return res;
+	pv = p.to_vec().normalize();
+
+	return v * pv;
       }
 
     };
@@ -848,7 +943,7 @@ namespace scribo
 #endif
 
       typedef util::graph G;
-      G g = make::graph(iz | (pw::value(iz) != pw::cst(0u)), nlabels);
+      G g = make::graph(iz | (pw::value(iz) != pw::cst(0u)), c8(), nlabels);
 
       // Compute the component centers and use them as vertex.
       //FIXME: Add fun::vertex2p
@@ -857,8 +952,6 @@ namespace scribo
 
       for_all_components(i, tboxes)
 	fv2p(i) = tboxes[i].center();
-//      util::array<point2d> centers = labeling::compute(accu::center<point2d>(), iz, nlabels);
-//      fv2p_t fv2p = convert::to<fv2p_t>(centers);
 
       // Create a p_vertices.
       p_vertices<G, fv2p_t> pv(g, fv2p);
@@ -935,6 +1028,8 @@ namespace scribo
 
     internal::settings.max_comp_size = in.ncols() * in.nrows() * 0.05;
 
+    // tblboxes.first = vertical lines.
+    // tblboxes.second = horizontal lines.
     std::pair<util::array<box2d>,
 	      util::array<box2d> > tblboxes = internal::extract_tables(in);
     image2d<bool> table = internal::rebuild_table(in, tblboxes);
