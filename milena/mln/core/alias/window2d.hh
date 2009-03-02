@@ -59,6 +59,16 @@ namespace mln
   /// \return A window2d.
   const window2d& win_c4p();
 
+  /// \brief 8-connectivity window on the 2D grid, including the
+  /// center.
+  ///
+  ///  o o o
+  ///  o x o
+  ///  o o o
+  ///
+  /// \return A window2d.
+  const window2d& win_c8p();
+
 
   namespace convert
   {
@@ -92,6 +102,26 @@ namespace mln
 	  .insert( 0,  0)
 	  .insert(+1,  0)
 	  .insert( 0, +1);
+      }
+    return it;
+  }
+
+  inline const window2d&
+  win_c8p()
+  {
+    static window2d it;
+    if (it.size() == 0)
+      {
+	it
+	  .insert(-1, -1)
+	  .insert( 0, -1)
+	  .insert(+1, -1)
+	  .insert(-1,  0)
+	  .insert( 0,  0)
+	  .insert(+1,  0)
+	  .insert(-1, +1)
+	  .insert( 0, +1)
+	  .insert(+1, +1);
       }
     return it;
   }

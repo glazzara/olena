@@ -68,6 +68,25 @@ namespace mln
   ///
   const neighb3d& c4_3d();
 
+  /// 8-connectivity neighborhood on the 3D grid.
+  ///
+  ///     . . .
+  ///    . . .
+  ///   . . .
+  ///
+  ///     o o o
+  ///    o x o
+  ///   o o o
+  ///
+  ///     . . .
+  ///    . . .
+  ///   . . .
+  ///
+  /// \return A neighb3d.
+  ///
+  const neighb3d& c8_3d();
+
+
   /*! \brief 6-connectivity neighborhood on the 3D grid.
    *
    *     . . .
@@ -154,6 +173,20 @@ namespace mln
 	  .insert(0, 0, 1);
 	win
 	  .insert(win::sym(win));
+      }
+    return it;
+  }
+
+  inline
+  const neighb3d& c8_3d()
+  {
+    static neighb3d it;
+    if (it.size() == 0)
+      {
+	static const bool vals[] = { 1, 1, 1,
+				     1, 0, 1,
+				     1, 1, 1 };
+	convert::from_to(vals, it);
       }
     return it;
   }

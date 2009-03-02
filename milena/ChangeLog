@@ -1,5 +1,15 @@
 2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add more window aliases.
+
+	* mln/core/alias/neighb3d.hh: add c8_3d.
+
+	* mln/core/alias/window2d.hh: add win_c8p.
+
+	* mln/core/alias/window3d.hh: add win_c4p_3d and win_c8p_3d.
+
+2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add missing traces in basic routines in geom/* (ticket #49).
 
 	* mln/geom/bbox.hh,

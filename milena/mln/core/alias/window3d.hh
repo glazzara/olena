@@ -47,6 +47,44 @@ namespace mln
   /// the 3D square grid with integer coordinates.
   typedef window<mln::dpoint3d> window3d;
 
+  /// \brief 4-connectivity window on the 3D grid, including the
+  /// center.
+  ///
+  ///    - - -
+  ///   - - -
+  ///  - - -
+  ///
+  ///    - o -
+  ///   o x o
+  ///  - o -
+  ///
+  ///    - - -
+  ///   - - -
+  ///  - - -
+  ///
+  ///
+  /// \return A window3d.
+  const window3d& win_c4p_3d();
+
+  /// \brief 8-connectivity window on the 3D grid, including the
+  /// center.
+  ///
+  ///    - - -
+  ///   - - -
+  ///  - - -
+  ///
+  ///    o o o
+  ///   o x o
+  ///  o o o
+  ///
+  ///    - - -
+  ///   - - -
+  ///  - - -
+  ///
+  /// \return A window3d.
+  const window3d& win_c8p_3d();
+
+
 
   namespace convert
   {
@@ -64,6 +102,42 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  inline const window3d&
+  win_c4p_3d()
+  {
+    static window3d it;
+    if (it.size() == 0)
+      {
+	it
+	  .insert( 0, -1)
+	  .insert(-1,  0)
+	  .insert( 0,  0)
+	  .insert(+1,  0)
+	  .insert( 0, +1);
+      }
+    return it;
+  }
+
+  inline const window3d&
+  win_c8p_3d()
+  {
+    static window3d it;
+    if (it.size() == 0)
+      {
+	it
+	  .insert(-1, -1)
+	  .insert( 0, -1)
+	  .insert(+1, -1)
+	  .insert(-1,  0)
+	  .insert( 0,  0)
+	  .insert(+1,  0)
+	  .insert(-1, +1)
+	  .insert( 0, +1)
+	  .insert(+1, +1);
+      }
+    return it;
+  }
 
   namespace convert
   {
