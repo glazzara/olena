@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,86 +33,22 @@
 ///
 /// Definition of the mln::win::disk2d window.
 
-# include <mln/core/internal/classical_window_base.hh>
+# include <mln/win/ball.hh>
 # include <mln/core/alias/dpoint2d.hh>
 
 
 namespace mln
 {
 
-  mln_internal_add_classical_window_trait(disk2d);
-
 
   namespace win
   {
  
-    /*! \brief Disk window defined on the 2D square grid.
-     *
-     * A disk2d is centered and symmetric.
-     *
-     */
-    struct disk2d : public internal::classical_window_base< dpoint2d, disk2d >
-    {
-      /*! \brief Constructor.
-       *
-       * \param[in] length Length, thus diameter.
-       *
-       */
-      disk2d(unsigned length);
+    /// 2D disk window; precisely, ball-shaped window defined on the
+    /// 2D square grid.
+    //
+    typedef ball<grid::square, def::coord> disk2d;
 
-      /*! \brief Give the disk diameter.
-       */
-      unsigned length() const;
-
-      /*! \brief Give the maximum coordinate gap between the window
-       * center and a window point.
-       */
-      unsigned delta_() const;
-
-      void print_(std::ostream& ostr) const;
-
-    protected:
-      unsigned length_;
-    };
-
- 
-
-# ifndef MLN_INCLUDE_ONLY
-
-    inline
-    disk2d::disk2d(unsigned length)
-      : length_(length)
-    {
-      mln_precondition(length % 2 == 1);
-      const def::coord
-	r  = static_cast<def::coord>(length / 2),
-	minus_r = static_cast<def::coord>(-r),
-	r2 = static_cast<def::coord>(r * r);
-      for (def::coord a = minus_r; a <= r; ++a)
-	for (def::coord b = minus_r; b <= r; ++b)
-	  if (a * a + b * b <= r2)
-	    insert(dpoint2d(a, b));
-    }
-
-    inline
-    unsigned disk2d::length() const
-    {
-      return length_;
-    }
-
-    inline
-    unsigned disk2d::delta_() const
-    {
-      return length_ / 2;
-    }
-
-    inline
-    void disk2d::print_(std::ostream& ostr) const
-    {
-      ostr << "[disk2d: length=" << length_ << ']';
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::win
 

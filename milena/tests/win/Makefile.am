@@ -4,6 +4,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
   backdiag2d					\
+  ball						\
   cube3d					\
   cuboid3d					\
   diag2d					\
@@ -15,10 +16,12 @@ check_PROGRAMS =				\
   rectangle2d					\
   segment1d					\
   shift						\
+  sphere3d					\
   sym						\
   vline2d
 
 backdiag2d_SOURCES = backdiag2d.cc
+ball_SOURCES = ball.cc
 cube3d_SOURCES = cube3d.cc
 cuboid3d_SOURCES = cuboid3d.cc
 diag2d_SOURCES = diag2d.cc
@@ -30,6 +33,7 @@ octagon2d_SOURCES = octagon2d.cc
 rectangle2d_SOURCES = rectangle2d.cc
 segment1d_SOURCES = segment1d.cc
 shift_SOURCES = shift.cc
+sphere3d_SOURCES = sphere3d.cc
 sym_SOURCES = sym.cc
 vline2d_SOURCES = vline2d.cc
 

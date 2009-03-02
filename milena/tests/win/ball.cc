@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,47 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WIN_ALL_HH
-# define MLN_WIN_ALL_HH
-
-/// \file mln/win/all.hh
+/// \file tests/win/ball.cc
 ///
-/// File that includes all win-related routines.
+/// Tests on mln::win::ball.
+
+#include <mln/win/ball.hh>
+#include <mln/convert/to_image.hh>
+#include <mln/debug/println.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of image processing routines related to win.
-  namespace win {}
-
+  win::ball<grid::square, def::coord> b(7);
+  mln_assertion(b.delta() == 3);
+  mln_assertion(b.size() == 29);
+ 
+  debug::println(convert::to_image(b));
+  //  - - - | - - - 
+  //  - | | | | | - 
+  //  - | | | | | - 
+  //  | | | | | | | 
+  //  - | | | | | - 
+  //  - | | | | | - 
+  //  - - - | - - - 
 }
-
-
-// Types.
-
-# include <mln/win/backdiag2d.hh>
-# include <mln/win/ball.hh>
-# include <mln/win/cube3d.hh>
-# include <mln/win/cuboid3d.hh>
-# include <mln/win/diag2d.hh>
-# include <mln/win/disk2d.hh>
-# include <mln/win/hline2d.hh>
-# include <mln/win/line.hh>
-# include <mln/win/multiple.hh>
-# include <mln/win/multiple_size.hh>
-# include <mln/win/octagon2d.hh>
-# include <mln/win/rectangle2d.hh>
-# include <mln/win/segment1d.hh>
-# include <mln/win/sphere3d.hh>
-# include <mln/win/vline2d.hh>
-
-// Routines.
-
-# include <mln/win/diff.hh>
-# include <mln/win/shift.hh>
-# include <mln/win/sym.hh>
-
-
-
-#endif // ! MLN_WIN_ALL_HH

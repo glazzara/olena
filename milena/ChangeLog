@@ -1,3 +1,26 @@
+2009-03-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Have win::disk2d and win::sphere3d (new) rely on win::ball.
+
+	* mln/win/ball.hh: New.
+	(diameter): New method; replace both...
+	(disk2d::length): ...this and...
+	(ball3d::length): ...this.
+
+	* mln/win/ball3d.hh: Rename as...
+	* mln/win/sphere3d.hh: ...this.
+	(ball3d): Remove; replace by...
+	(sphere3d): ...this new typedef.
+	* mln/win/disk2d.hh (disk2d): Remove; replace by...
+	(disk2d): ...this new typedef.
+	* mln/win/all.hh (Copyright): Fix.
+	(include): Update.
+
+	* tests/win/ball.cc: New.
+	* tests/win/sphere3d.cc: New.
+	* tests/win/disk2d.cc: Remove echo.
+	* tests/win/Makefile.am: Update.
+
 2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Fix window3d.

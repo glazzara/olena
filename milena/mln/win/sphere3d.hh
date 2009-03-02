@@ -26,47 +26,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WIN_ALL_HH
-# define MLN_WIN_ALL_HH
+#ifndef MLN_WIN_SPHERE3D_HH
+# define MLN_WIN_SPHERE3D_HH
 
-/// \file mln/win/all.hh
+/// \file mln/win/sphere3d.hh
 ///
-/// File that includes all win-related routines.
+/// Definition of the mln::win::sphere3d window.
+
+# include <mln/win/ball.hh>
+# include <mln/core/alias/dpoint3d.hh>
 
 
 namespace mln
 {
 
-  /// Namespace of image processing routines related to win.
-  namespace win {}
+  namespace win
+  {
+ 
+    /// 3D sphere window; precisely, ball-shaped window defined on the
+    /// 3D cubic grid.
+    //
+    typedef ball<grid::cube, def::coord> sphere3d;
 
-}
 
+  } // end of namespace mln::win
 
-// Types.
-
-# include <mln/win/backdiag2d.hh>
-# include <mln/win/ball.hh>
-# include <mln/win/cube3d.hh>
-# include <mln/win/cuboid3d.hh>
-# include <mln/win/diag2d.hh>
-# include <mln/win/disk2d.hh>
-# include <mln/win/hline2d.hh>
-# include <mln/win/line.hh>
-# include <mln/win/multiple.hh>
-# include <mln/win/multiple_size.hh>
-# include <mln/win/octagon2d.hh>
-# include <mln/win/rectangle2d.hh>
-# include <mln/win/segment1d.hh>
-# include <mln/win/sphere3d.hh>
-# include <mln/win/vline2d.hh>
-
-// Routines.
-
-# include <mln/win/diff.hh>
-# include <mln/win/shift.hh>
-# include <mln/win/sym.hh>
+} // end of namespace mln
 
 
 
-#endif // ! MLN_WIN_ALL_HH
+#endif // ! MLN_WIN_SPHERE3D_HH
