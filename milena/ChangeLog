@@ -1,3 +1,31 @@
+2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Small fixes.
+
+	* headers.mk: update dist headers.
+
+	* mln/canvas/morpho/all.hh: remove non existing included headers.
+
+	* mln/morpho/tree/compute_attribute_image.hh,
+	* mln/canvas/morpho/attribute_filter.hh: add missing include.
+
+	* tests/core/image/plain.cc
+	* mln/level/compare.hh,
+	* mln/core/pixter2d.hh: add more preconditions.
+
+	* mln/io/dicom/load.hh: update doc.
+
+	* mln/morpho/essential.hh,
+	* mln/morpho/all.hh,
+	* mln/morpho/closing/algebraic.hh: revamp.
+
+	* mln/morpho/closing/all.hh,
+	* mln/morpho/closing/essential.hh,
+	* mln/morpho/opening/all.hh,
+	* mln/morpho/opening/essential.hh: new files.
+
+	* tests/unit_test/unit-tests.mk: update test list.
+
 2009-03-01  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Make area_on_vertices work with new algebraic code [POST-RUSH].

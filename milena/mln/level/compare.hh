@@ -90,6 +90,8 @@ namespace mln
 
     const L& lhs = exact(lhs_);
     const R& rhs = exact(rhs_);
+    mln_precondition(lhs.is_valid());
+    mln_precondition(rhs.is_valid());
     mln_precondition(lhs.domain() == rhs.domain());
 
     return test::predicate(lhs_, rhs_, F());

@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,6 +36,7 @@
 /// \todo Specialize for low quant (and try fastest).
 
 # include <mln/core/concept/image.hh>
+# include <mln/trait/accumulators.hh>
 # include <mln/util/pix.hh>
 # include <mln/data/fill.hh>
 
@@ -67,7 +69,7 @@ namespace mln
 
       template <typename A, typename T>
       mln_ch_value(typename T::function, mln_result(A))
-	compute_attribute_image(const Accumulator<A>& a, const T& t);
+      compute_attribute_image(const Accumulator<A>& a, const T& t);
 
 
 
@@ -118,7 +120,7 @@ namespace mln
       template <typename A, typename T>
       inline
       mln_ch_value(typename T::function, mln_result(A))
-	compute_attribute_image(const Accumulator<A>& a_, const T& t)
+      compute_attribute_image(const Accumulator<A>& a_, const T& t)
       {
 	trace::entering("morpho::tree::compute_attribute_image");
 

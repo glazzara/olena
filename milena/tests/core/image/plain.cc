@@ -62,6 +62,8 @@ int main()
 
     ima(point2d(0,0)) = 124;
 
+    mln_assertion(exact(ima).is_valid());
+    mln_assertion(exact(lena).is_valid());
     mln_assertion(ima != lena);
 
     ima2 = lena;

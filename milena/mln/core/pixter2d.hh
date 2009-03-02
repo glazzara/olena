@@ -136,6 +136,8 @@ namespace mln
       row_offset_(image.bbox().ncols() + border_x2_)
   {
     mln_precondition(image.is_valid());
+    mln_precondition(image_.is_valid());
+    mln_precondition(image_.buffer() == image.buffer());
   }
 
   template <typename I>
@@ -156,6 +158,7 @@ namespace mln
   void
   fwd_pixter2d<I>::start_()
   {
+    mln_precondition(image_.is_valid());
     eor_ = & opt::at(image_, geom::min_row(image_), geom::max_col(image_)) + 1;
   }
 

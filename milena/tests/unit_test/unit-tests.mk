@@ -354,6 +354,7 @@ mln_value_int_s \
 mln_value_rgb8 \
 mln_value_int_s32 \
 mln_value_float01_ \
+mln_value_int_u12 \
 mln_value_rgb16 \
 mln_value_int_u32 \
 mln_value_gl8 \
@@ -527,9 +528,7 @@ mln_canvas_all \
 mln_canvas_distance_front \
 mln_canvas_morpho_internal_find_root \
 mln_canvas_morpho_all \
-mln_canvas_morpho_connected_filter \
-mln_canvas_morpho_algebraic_filter \
-mln_canvas_morpho_algebraic_union_find \
+mln_canvas_morpho_attribute_filter \
 mln_canvas_morpho_essential \
 mln_canvas_essential \
 mln_metal_is_const \
@@ -616,29 +615,39 @@ mln_morpho_skeleton_constrained \
 mln_morpho_complementation \
 mln_morpho_line_gradient \
 mln_morpho_hit_or_miss \
-mln_morpho_closing_height \
 mln_morpho_plus \
 mln_morpho_general \
 mln_morpho_internal_elementary \
 mln_morpho_contrast \
-mln_morpho_opening_area \
-mln_morpho_opening_height \
 mln_morpho_thickening \
 mln_morpho_dilation \
+mln_morpho_closing_all \
+mln_morpho_closing_algebraic \
+mln_morpho_closing_leveling \
+mln_morpho_closing_area_on_vertices \
+mln_morpho_closing_area \
+mln_morpho_closing_volume \
+mln_morpho_closing_height \
+mln_morpho_closing_essential \
 mln_morpho_laplacian \
 mln_morpho_all \
-mln_morpho_opening_algebraic \
-mln_morpho_opening_attribute \
-mln_morpho_opening_volume \
-mln_morpho_closing_algebraic \
 mln_morpho_watershed_flooding \
 mln_morpho_watershed_all \
-mln_morpho_closing_area_on_vertices \
-mln_morpho_closing_volume \
+mln_morpho_opening_all \
+mln_morpho_opening_algebraic \
+mln_morpho_opening_leveling \
+mln_morpho_opening_area_on_vertices \
+mln_morpho_opening_area \
+mln_morpho_opening_volume \
+mln_morpho_opening_height \
+mln_morpho_opening_essential \
 mln_morpho_attribute_all \
 mln_morpho_attribute_volume \
 mln_morpho_attribute_sum \
+mln_morpho_attribute_height \
+mln_morpho_attribute_sharpness \
 mln_morpho_attribute_card \
+mln_morpho_attribute_count_adjacent_vertices \
 mln_morpho_minus \
 mln_morpho_gradient \
 mln_morpho_tree_max \
@@ -647,15 +656,15 @@ mln_morpho_tree_all \
 mln_morpho_tree_utils \
 mln_morpho_tree_data \
 mln_morpho_tree_compute_attribute_image \
-mln_morpho_opening_area_on_vertices \
 mln_morpho_min \
 mln_morpho_closing \
 mln_morpho_top_hat \
 mln_morpho_erosion \
+mln_morpho_leveling_filter \
 mln_morpho_closing_sum \
 mln_morpho_Rd \
-mln_morpho_closing_area \
 mln_morpho_thick_miss \
+mln_morpho_algebraic_filter \
 mln_morpho_closing_attribute \
 mln_morpho_rank_filter \
 mln_morpho_essential \
@@ -1429,6 +1438,7 @@ mln_value_int_s_SOURCES = mln_value_int_s.cc
 mln_value_rgb8_SOURCES = mln_value_rgb8.cc
 mln_value_int_s32_SOURCES = mln_value_int_s32.cc
 mln_value_float01__SOURCES = mln_value_float01_.cc
+mln_value_int_u12_SOURCES = mln_value_int_u12.cc
 mln_value_rgb16_SOURCES = mln_value_rgb16.cc
 mln_value_int_u32_SOURCES = mln_value_int_u32.cc
 mln_value_gl8_SOURCES = mln_value_gl8.cc
@@ -1602,9 +1612,7 @@ mln_canvas_all_SOURCES = mln_canvas_all.cc
 mln_canvas_distance_front_SOURCES = mln_canvas_distance_front.cc
 mln_canvas_morpho_internal_find_root_SOURCES = mln_canvas_morpho_internal_find_root.cc
 mln_canvas_morpho_all_SOURCES = mln_canvas_morpho_all.cc
-mln_canvas_morpho_connected_filter_SOURCES = mln_canvas_morpho_connected_filter.cc
-mln_canvas_morpho_algebraic_filter_SOURCES = mln_canvas_morpho_algebraic_filter.cc
-mln_canvas_morpho_algebraic_union_find_SOURCES = mln_canvas_morpho_algebraic_union_find.cc
+mln_canvas_morpho_attribute_filter_SOURCES = mln_canvas_morpho_attribute_filter.cc
 mln_canvas_morpho_essential_SOURCES = mln_canvas_morpho_essential.cc
 mln_canvas_essential_SOURCES = mln_canvas_essential.cc
 mln_metal_is_const_SOURCES = mln_metal_is_const.cc
@@ -1691,29 +1699,39 @@ mln_morpho_skeleton_constrained_SOURCES = mln_morpho_skeleton_constrained.cc
 mln_morpho_complementation_SOURCES = mln_morpho_complementation.cc
 mln_morpho_line_gradient_SOURCES = mln_morpho_line_gradient.cc
 mln_morpho_hit_or_miss_SOURCES = mln_morpho_hit_or_miss.cc
-mln_morpho_closing_height_SOURCES = mln_morpho_closing_height.cc
 mln_morpho_plus_SOURCES = mln_morpho_plus.cc
 mln_morpho_general_SOURCES = mln_morpho_general.cc
 mln_morpho_internal_elementary_SOURCES = mln_morpho_internal_elementary.cc
 mln_morpho_contrast_SOURCES = mln_morpho_contrast.cc
-mln_morpho_opening_area_SOURCES = mln_morpho_opening_area.cc
-mln_morpho_opening_height_SOURCES = mln_morpho_opening_height.cc
 mln_morpho_thickening_SOURCES = mln_morpho_thickening.cc
 mln_morpho_dilation_SOURCES = mln_morpho_dilation.cc
+mln_morpho_closing_all_SOURCES = mln_morpho_closing_all.cc
+mln_morpho_closing_algebraic_SOURCES = mln_morpho_closing_algebraic.cc
+mln_morpho_closing_leveling_SOURCES = mln_morpho_closing_leveling.cc
+mln_morpho_closing_area_on_vertices_SOURCES = mln_morpho_closing_area_on_vertices.cc
+mln_morpho_closing_area_SOURCES = mln_morpho_closing_area.cc
+mln_morpho_closing_volume_SOURCES = mln_morpho_closing_volume.cc
+mln_morpho_closing_height_SOURCES = mln_morpho_closing_height.cc
+mln_morpho_closing_essential_SOURCES = mln_morpho_closing_essential.cc
 mln_morpho_laplacian_SOURCES = mln_morpho_laplacian.cc
 mln_morpho_all_SOURCES = mln_morpho_all.cc
-mln_morpho_opening_algebraic_SOURCES = mln_morpho_opening_algebraic.cc
-mln_morpho_opening_attribute_SOURCES = mln_morpho_opening_attribute.cc
-mln_morpho_opening_volume_SOURCES = mln_morpho_opening_volume.cc
-mln_morpho_closing_algebraic_SOURCES = mln_morpho_closing_algebraic.cc
 mln_morpho_watershed_flooding_SOURCES = mln_morpho_watershed_flooding.cc
 mln_morpho_watershed_all_SOURCES = mln_morpho_watershed_all.cc
-mln_morpho_closing_area_on_vertices_SOURCES = mln_morpho_closing_area_on_vertices.cc
-mln_morpho_closing_volume_SOURCES = mln_morpho_closing_volume.cc
+mln_morpho_opening_all_SOURCES = mln_morpho_opening_all.cc
+mln_morpho_opening_algebraic_SOURCES = mln_morpho_opening_algebraic.cc
+mln_morpho_opening_leveling_SOURCES = mln_morpho_opening_leveling.cc
+mln_morpho_opening_area_on_vertices_SOURCES = mln_morpho_opening_area_on_vertices.cc
+mln_morpho_opening_area_SOURCES = mln_morpho_opening_area.cc
+mln_morpho_opening_volume_SOURCES = mln_morpho_opening_volume.cc
+mln_morpho_opening_height_SOURCES = mln_morpho_opening_height.cc
+mln_morpho_opening_essential_SOURCES = mln_morpho_opening_essential.cc
 mln_morpho_attribute_all_SOURCES = mln_morpho_attribute_all.cc
 mln_morpho_attribute_volume_SOURCES = mln_morpho_attribute_volume.cc
 mln_morpho_attribute_sum_SOURCES = mln_morpho_attribute_sum.cc
+mln_morpho_attribute_height_SOURCES = mln_morpho_attribute_height.cc
+mln_morpho_attribute_sharpness_SOURCES = mln_morpho_attribute_sharpness.cc
 mln_morpho_attribute_card_SOURCES = mln_morpho_attribute_card.cc
+mln_morpho_attribute_count_adjacent_vertices_SOURCES = mln_morpho_attribute_count_adjacent_vertices.cc
 mln_morpho_minus_SOURCES = mln_morpho_minus.cc
 mln_morpho_gradient_SOURCES = mln_morpho_gradient.cc
 mln_morpho_tree_max_SOURCES = mln_morpho_tree_max.cc
@@ -1722,15 +1740,15 @@ mln_morpho_tree_all_SOURCES = mln_morpho_tree_all.cc
 mln_morpho_tree_utils_SOURCES = mln_morpho_tree_utils.cc
 mln_morpho_tree_data_SOURCES = mln_morpho_tree_data.cc
 mln_morpho_tree_compute_attribute_image_SOURCES = mln_morpho_tree_compute_attribute_image.cc
-mln_morpho_opening_area_on_vertices_SOURCES = mln_morpho_opening_area_on_vertices.cc
 mln_morpho_min_SOURCES = mln_morpho_min.cc
 mln_morpho_closing_SOURCES = mln_morpho_closing.cc
 mln_morpho_top_hat_SOURCES = mln_morpho_top_hat.cc
 mln_morpho_erosion_SOURCES = mln_morpho_erosion.cc
+mln_morpho_leveling_filter_SOURCES = mln_morpho_leveling_filter.cc
 mln_morpho_closing_sum_SOURCES = mln_morpho_closing_sum.cc
 mln_morpho_Rd_SOURCES = mln_morpho_Rd.cc
-mln_morpho_closing_area_SOURCES = mln_morpho_closing_area.cc
 mln_morpho_thick_miss_SOURCES = mln_morpho_thick_miss.cc
+mln_morpho_algebraic_filter_SOURCES = mln_morpho_algebraic_filter.cc
 mln_morpho_closing_attribute_SOURCES = mln_morpho_closing_attribute.cc
 mln_morpho_rank_filter_SOURCES = mln_morpho_rank_filter.cc
 mln_morpho_essential_SOURCES = mln_morpho_essential.cc

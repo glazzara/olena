@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,28 +26,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_MORPHO_ALL_HH
-# define MLN_CANVAS_MORPHO_ALL_HH
+#ifndef MLN_MORPHO_OPENING_ALL_HH
+# define MLN_MORPHO_OPENING_ALL_HH
 
-/// \file mln/canvas/morpho/all.hh
+/// \file mln/morpho/opening/all.hh
 ///
-/// File that includes morphological canvas-related routines.
+/// File that includes all opening attributes.
 
+#include <mln/morpho/opening/algebraic.hh>
+#include <mln/morpho/opening/leveling.hh>
+#include <mln/morpho/opening/area_on_vertices.hh>
+#include <mln/morpho/opening/area.hh>
+#include <mln/morpho/opening/volume.hh>
+#include <mln/morpho/opening/height.hh>
 
-namespace mln
-{
-  namespace canvas
-  {
+#endif // ! MLN_MORPHO_OPENING_ALL_HH
 
-    /// Namespace of morphological canvas.
-    namespace morpho {}
-
-  }
-}
-
-
-# include <mln/canvas/morpho/internal/find_root.hh>
-# include <mln/canvas/morpho/attribute_filter.hh>
-
-
-#endif // ! MLN_CANVAS_MORPHO_ALL_HH

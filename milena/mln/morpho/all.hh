@@ -57,7 +57,6 @@ namespace mln
 
 
 # include <mln/morpho/closing.hh>
-# include <mln/morpho/closing/all.hh>
 # include <mln/morpho/complementation.hh>
 # include <mln/morpho/contrast.hh>
 # include <mln/morpho/dilation.hh>
@@ -71,7 +70,6 @@ namespace mln
 # include <mln/morpho/min.hh>
 # include <mln/morpho/minus.hh>
 # include <mln/morpho/opening.hh>
-# include <mln/morpho/opening/all.hh>
 # include <mln/morpho/plus.hh>
 # include <mln/morpho/Rd.hh>
 # include <mln/morpho/rank_filter.hh>
@@ -85,7 +83,9 @@ namespace mln
 // Sub-directories.
 
 # include <mln/morpho/attribute/all.hh>
+# include <mln/morpho/closing/all.hh>
 # include <mln/morpho/elementary/all.hh>
+# include <mln/morpho/opening/all.hh>
 # include <mln/morpho/tree/all.hh>
 # include <mln/morpho/watershed/all.hh>
 

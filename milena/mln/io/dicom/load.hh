@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +28,10 @@
 #ifndef MLN_IO_DICOM_LOAD_HH
 # define MLN_IO_DICOM_LOAD_HH
 
-/*!
- * \file   mln/io/magick/load.hh
- *
- * \brief Define a function which loads an image of kind magick with
- * given path.
- *
- */
+/// \file   mln/io/magick/load.hh
+///
+/// \brief Define a function which loads an image of kind magick with
+/// given path.
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/image3d.hh>
@@ -57,12 +54,11 @@ namespace mln
     namespace dicom
     {
 
-      /*! Load a dicom image in a Milena image.
-       *
-       * \param[out] ima A reference to the image which will receive
-       * data.
-       * \param[in] filename The source.
-       */
+      /// Load a dicom image in a Milena image.
+      ///
+      /// \param[out] ima A reference to the image which will receive
+      /// data.
+      /// \param[in] filename The source.
       template <typename I>
       void load(Image<I>& ima,
 		const std::string& filename);

@@ -37,15 +37,20 @@
 # include <mln/morpho/algebraic_filter.hh>
 
 
-namespace mln {
-  namespace morpho {
-    namespace closing {
+namespace mln
+{
 
-    /// Morphological algebraic closing.
-    template <typename I, typename N, typename A>
-    mln_concrete(I)
-    algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
-	      const Accumulator<A>& accu, const mln_result(A)& lambda);
+  namespace morpho
+  {
+
+    namespace closing
+    {
+
+      /// Morphological algebraic closing.
+      template <typename I, typename N, typename A>
+      mln_concrete(I)
+      algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
+		const Accumulator<A>& accu, const mln_result(A)& lambda);
 
 
 
@@ -53,33 +58,35 @@ namespace mln {
 # ifndef MLN_INCLUDE_ONLY
 
 
-    template <typename I, typename N, typename A>
-    inline
-    mln_concrete(I)
-    algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
-	      const Accumulator<A>& accu, const mln_result(A)& lambda)
-    {
-      trace::entering("morpho::closing::algebraic");
+      template <typename I, typename N, typename A>
+      inline
+      mln_concrete(I)
+      algebraic(const Image<I>& input, const Neighborhood<N>& nbh,
+		const Accumulator<A>& accu, const mln_result(A)& lambda)
+      {
+	trace::entering("morpho::closing::algebraic");
 
-      mln_precondition(exact(input).is_valid());
-      mln_precondition(mlc_not_equal(mln_trait_accumulator_when_pix(A),
-				     trait::accumulator::when_pix::not_ok)::value);
+	mln_precondition(exact(input).is_valid());
+	mln_precondition(mlc_not_equal(mln_trait_accumulator_when_pix(A),
+	      trait::accumulator::when_pix::not_ok)::value);
 
-      mln_concrete(I) output;
-      output = algebraic_filter(input, nbh, accu, lambda,
-				/* increasing = */ true);
+	mln_concrete(I) output;
+	output = algebraic_filter(input, nbh, accu, lambda,
+	    /* increasing = */ true);
 
-      mln_postcondition(output >= input);
+	mln_postcondition(output >= input);
 
-      trace::exiting("morpho::closing::algebraic");
-      return output;
-    }
+	trace::exiting("morpho::closing::algebraic");
+	return output;
+      }
 
 
 # endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::morpho::closing
+
   } // end of namespace mln::morpho
+
 } // end of namespace mln
 
 

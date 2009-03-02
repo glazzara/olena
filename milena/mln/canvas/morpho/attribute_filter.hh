@@ -38,6 +38,8 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/concept/accumulator.hh>
 
+# include <mln/level/sort_offsets.hh>
+
 # include <mln/trait/accumulators.hh>
 
 # include <mln/util/pix.hh>
