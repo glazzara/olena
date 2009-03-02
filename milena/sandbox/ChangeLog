@@ -1,3 +1,9 @@
+2009-03-02  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Update working file.
+	* fabien/igr/Makefile: Update.
+	* fabien/igr/seg_vol_irm.cc: Update.
+
 2009-03-01  Frederic Bour  <bour@lrde.epita.fr>
 
 	Add exo3 "assignable" functions part, correct other parts.

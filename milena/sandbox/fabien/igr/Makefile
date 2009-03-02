@@ -8,7 +8,7 @@ all: seg_vol_irm.cc
 	  -L/Users/HiSoKa/Downloads/gdcmbin/bin \
 	  -lgdcmCommon -lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib \
 	  -framework CoreFoundation \
-	  -g \
+	  -DNDEBUG -O1 \
 	  seg_vol_irm.cc -o seg_vol_irm
 
 clean:
