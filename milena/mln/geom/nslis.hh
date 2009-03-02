@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_GEOM_NSLIS_HH
 # define MLN_GEOM_NSLIS_HH
 
-/*! \file mln/geom/nslis.hh
- *
- * \brief Give the number of slices of an image.
- */
+/// \file mln/geom/nslis.hh
+///
+/// Give the number of slices of an image.
 
 # include <mln/geom/min_sli.hh>
 # include <mln/geom/max_sli.hh>
@@ -54,8 +53,13 @@ namespace mln
     inline
     unsigned nslis(const Image<I>& ima)
     {
+      trace::entering("mln::geom::nslis");
+
       mln_precondition(exact(ima).is_valid());
-      return geom::max_sli(ima) - geom::min_sli(ima) + 1;
+      unsigned nslis = geom::max_sli(ima) - geom::min_sli(ima) + 1;
+
+      trace::exiting("mln::geom::nslis");
+      return nslis;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

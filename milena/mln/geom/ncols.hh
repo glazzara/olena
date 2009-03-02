@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_GEOM_NCOLS_HH
 # define MLN_GEOM_NCOLS_HH
 
-/*! \file mln/geom/ncols.hh
- *
- * \brief Give the number of columns of an image.
- */
+/// \file mln/geom/ncols.hh
+///
+/// Give the number of columns of an image.
 
 # include <mln/geom/min_col.hh>
 # include <mln/geom/max_col.hh>
@@ -58,16 +57,26 @@ namespace mln
     inline
     unsigned ncols(const Image<I>& ima)
     {
+      trace::entering("mln::geom::ncols");
+
       mln_precondition(exact(ima).is_valid());
-      return geom::max_col(ima) - geom::min_col(ima) + 1;
+      unsigned ncols = geom::max_col(ima) - geom::min_col(ima) + 1;
+
+      trace::exiting("mln::geom::ncols");
+      return ncols;
     }
 
 
     template <typename B>
     unsigned ncols(const Box<B>& b)
     {
+      trace::entering("mln::geom::ncols");
+
       metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
-      return geom::max_col(b) - geom::min_col(b) + 1;
+      unsigned ncols = geom::max_col(b) - geom::min_col(b) + 1;
+
+      trace::exiting("mln::geom::ncols");
+      return ncols;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

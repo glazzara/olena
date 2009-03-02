@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -53,8 +53,13 @@ namespace mln
     inline
     mln_deduce(I, site, coord) max_sli(const Image<I>& ima)
     {
+      trace::entering("mln::geom::max_sli");
+
       mln_precondition(exact(ima).is_valid());
-      return exact(ima).bbox().pmax().sli();
+      mln_deduce(I, site, coord) maxsli = exact(ima).bbox().pmax().sli();
+
+      trace::exiting("mln::geom::max_sli");
+      return maxsli;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

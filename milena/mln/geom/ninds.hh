@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -54,8 +54,13 @@ namespace mln
     inline
     unsigned ninds(const Image<I>& ima)
     {
+      trace::entering("mln::geom::ninds");
+
       mln_precondition(exact(ima).is_valid());
-      return geom::max_ind(ima) - geom::min_ind(ima) + 1;
+      unsigned ninds = geom::max_ind(ima) - geom::min_ind(ima) + 1;
+
+      trace::exiting("mln::geom::ninds");
+      return ninds;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,5 +1,23 @@
 2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add missing traces in basic routines in geom/* (ticket #49).
+
+	* mln/geom/bbox.hh,
+	* mln/geom/max_col.hh,
+	* mln/geom/max_ind.hh,
+	* mln/geom/max_row.hh,
+	* mln/geom/max_sli.hh,
+	* mln/geom/min_col.hh,
+	* mln/geom/min_ind.hh,
+	* mln/geom/min_row.hh,
+	* mln/geom/min_sli.hh,
+	* mln/geom/ncols.hh,
+	* mln/geom/ninds.hh,
+	* mln/geom/nrows.hh,
+	* mln/geom/nslis.hh: add missing traces.
+
+2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Cleanup scribo sandbox.
 
 	* sandbox/scribo/Makefile: add new rules.

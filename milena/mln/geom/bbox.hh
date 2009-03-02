@@ -135,27 +135,41 @@ namespace mln
     template <typename I>
     box<mln_site(I)> bbox(const Image<I>& ima_)
     {
+      trace::entering("geom::bbox");
+
       const I& ima = exact(ima_);
       mln_precondition(ima.is_valid());
-      return geom::bbox(ima.domain());
+      box<mln_site(I)> b = geom::bbox(ima.domain());
+
+      trace::exiting("geom::bbox");
+      return b;
     }
 
     template <typename W>
     box<mln_psite(W)> bbox(const Window<W>& win)
     {
+      trace::entering("geom::bbox");
+
       typedef mln_psite(W) P;
       accu::bbox<P> b;
       P O = literal::origin;
       mln_qiter(W) q(exact(win), O);
       for_all(q)
 	b.take(q);
+
+      trace::exiting("geom::bbox");
       return b;
     }
 
     template <typename W>
     box<mln_psite(W)> bbox(const Weighted_Window<W>& win)
     {
-      return bbox(exact(win).win());
+      trace::entering("geom::bbox");
+
+      box<mln_psite(W)> b = bbox(exact(win).win());
+
+      trace::exiting("geom::bbox");
+      return b;
     }
 
 
