@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,12 +26,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_OPENING_HH
-# define MLN_MORPHO_OPENING_HH
+#ifndef MLN_MORPHO_OPENING_STRUCTURAL_HH
+# define MLN_MORPHO_OPENING_STRUCTURAL_HH
 
-/// \file mln/morpho/opening.hh
+/// \file mln/morpho/opening/structural.hh
 ///
-/// Morphological opening.
+/// Morphological structural opening.
 
 # include <mln/morpho/includes.hh>
 
@@ -42,37 +42,47 @@ namespace mln
   namespace morpho
   {
 
-    /// Morphological opening.
-    ///
-    /// This operator is d_{-B} o e_B.
-    template <typename I, typename W>
-    mln_concrete(I) opening(const Image<I>& input, const Window<W>& win);
+    namespace opening
+    {
+
+      /// Morphological structural opening.
+      ///
+      /// This operator is d_{-B} o e_B.
+      template <typename I, typename W>
+      mln_concrete(I)
+      structural(const Image<I>& input, const Window<W>& win);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename W>
-    inline
-    mln_concrete(I) opening(const Image<I>& input, const Window<W>& win)
-    {
-      trace::entering("morpho::opening");
-      mln_precondition(exact(input).is_valid());
-      mln_precondition(! exact(win).is_empty());
 
-      mln_concrete(I) output = dilation(erosion(input, win), win::sym(win));
+      template <typename I, typename W>
+      inline
+      mln_concrete(I)
+      structural(const Image<I>& input, const Window<W>& win)
+      {
+	trace::entering("morpho::opening::structural");
 
-      // FIXME: Is this postcondition always true, even if the
-      // structuring element is not centered?
-      mln_postcondition(output <= input);
-      trace::exiting("morpho::opening");
-      return output;
-    }
+	mln_precondition(exact(input).is_valid());
+	mln_precondition(! exact(win).is_empty());
+
+	mln_concrete(I) output = dilation(erosion(input, win), win::sym(win));
+
+	mln_postcondition(output <= input);
+
+	trace::exiting("morpho::opening::structural");
+	return output;
+      }
+
 
 # endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::morpho::opening
 
   } // end of namespace mln::morpho
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_OPENING_HH
+#endif // ! MLN_MORPHO_OPENING_STRUCTURAL_HH

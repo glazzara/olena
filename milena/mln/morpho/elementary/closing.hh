@@ -49,6 +49,7 @@ namespace mln
       /// Morphological elementary closing.
       ///
       /// This operator is e o d.
+      //
       template <typename I, typename N>
       mln_concrete(I) closing(const Image<I>& input, const Neighborhood<N>& nbh);
 
@@ -67,6 +68,7 @@ namespace mln
 	mln_concrete(I) output = erosion(dilation(input, nbh), nbh);
 
 	mln_postcondition(output >= input);
+
 	trace::exiting("morpho::elementary::closing");
 	return output;
       }

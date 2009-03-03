@@ -1,5 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,14 +30,17 @@
 
 /// \file mln/morpho/closing/all.hh
 ///
-/// File that includes all closing attributes.
+/// File that includes all closing operators.
+
 
 #include <mln/morpho/closing/algebraic.hh>
-#include <mln/morpho/closing/leveling.hh>
-#include <mln/morpho/closing/area_on_vertices.hh>
 #include <mln/morpho/closing/area.hh>
-#include <mln/morpho/closing/volume.hh>
+#include <mln/morpho/closing/area_on_vertices.hh>
 #include <mln/morpho/closing/height.hh>
+#include <mln/morpho/closing/leveling.hh>
+#include <mln/morpho/closing/structural.hh>
+#include <mln/morpho/closing/volume.hh>
+
 
 #endif // ! MLN_MORPHO_CLOSING_ALL_HH
 

@@ -49,6 +49,7 @@ namespace mln
       /// Morphological elementary opening.
       ///
       /// This operator is d o e.
+      //
       template <typename I, typename N>
       mln_concrete(I) opening(const Image<I>& input, const Neighborhood<N>& nbh);
 
@@ -67,6 +68,7 @@ namespace mln
 	mln_concrete(I) output = dilation(erosion(input, nbh), nbh);
 
 	mln_postcondition(output <= input);
+
 	trace::exiting("morpho::elementary::opening");
 	return output;
       }

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +29,14 @@
 #ifndef MLN_MORPHO_TOP_HAT_HH
 # define MLN_MORPHO_TOP_HAT_HH
 
-/*! \file mln/morpho/top_hat.hh
- *
- * \brief Morphological top-hats.
- *
- * \todo Save memory.
- */
+/// \file mln/morpho/top_hat.hh
+///
+/// Morphological top-hats.
+///
+/// \todo Save memory.
 
-# include <mln/morpho/opening.hh>
-# include <mln/morpho/closing.hh>
+# include <mln/morpho/opening/structural.hh>
+# include <mln/morpho/closing/structural.hh>
 
 
 namespace mln
@@ -45,85 +45,98 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological white top-hat (for object / light objects).
-     *
-     * This operator is Id - ope_B.
-     */
+
+    /// Morphological white top-hat (for object / light objects).
+    ///
+    /// This operator is Id - ope_B.
+    //
     template <typename I, typename W>
     mln_concrete(I)
-      top_hat_white(const Image<I>& input, const Window<W>& win);
+    top_hat_white(const Image<I>& input, const Window<W>& win);
 
 
-    /*! Morphological black top-hat (for background / dark objects).
-     *
-     * This operator is clo_B - Id.
-     */
+    /// Morphological black top-hat (for background / dark objects).
+    ///
+    /// This operator is clo_B - Id.
+    //
     template <typename I, typename W>
     mln_concrete(I)
-      top_hat_black(const Image<I>& input, const Window<W>& win);
+    top_hat_black(const Image<I>& input, const Window<W>& win);
 
 
-    /*! Morphological self-complementary top-hat.
-     *
-     * This operator is \n
-     *   = top_hat_white + top_hat_black \n
-     *   = (input - opening) + (closing - input) \n
-     *   = closing - opening. \n
-     */
+    /// Morphological self-complementary top-hat.
+    ///
+    /// This operator is \n
+    ///   = top_hat_white + top_hat_black \n
+    ///   = (input - opening) + (closing - input) \n
+    ///   = closing - opening. \n
+    //
     template <typename I, typename W>
     mln_concrete(I)
-      top_hat_self_complementary(const Image<I>& input, const Window<W>& win);
+    top_hat_self_complementary(const Image<I>& input, const Window<W>& win);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+
     template <typename I, typename W>
     inline
-    mln_concrete(I) top_hat_white(const Image<I>& input, const Window<W>& win)
+    mln_concrete(I)
+    top_hat_white(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::top_hat_white");
+
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       mln_concrete(I) output = morpho::minus(input,
-					     opening(input, win));
+					     opening::structural(input, win));
 
       mln_postcondition(test::positive(output));
+
       trace::exiting("morpho::top_hat_white");
       return output;
     }
+
 
     template <typename I, typename W>
     inline
     mln_concrete(I) top_hat_black(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::top_hat_black");
+
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
-      mln_concrete(I) output = morpho::minus(closing(input, win),
+      mln_concrete(I) output = morpho::minus(closing::structural(input, win),
 					     input);
 
       mln_postcondition(test::positive(output));
+
       trace::exiting("morpho::top_hat_black");
       return output;
     }
+
 
     template <typename I, typename W>
     inline
     mln_concrete(I) top_hat_self_complementary(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::top_hat_self_complementary");
+
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
-      mln_concrete(I) output = morpho::minus(closing(input, win),
-					     opening(input, win));
+      mln_concrete(I) output = morpho::minus(closing::structural(input, win),
+					     opening::structural(input, win));
 
       mln_postcondition(test::positive(output));
+
       trace::exiting("morpho::top_hat_self_complementary");
       return output;
     }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

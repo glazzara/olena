@@ -49,31 +49,31 @@ namespace mln
     namespace elementary
     {
 
-      /*! Morphological elementary white top-hat (for object / light objects).
-       *
-       * This operator is Id - ope.
-       */
+      /// Morphological elementary white top-hat (for object / light objects).
+      ///
+      /// This operator is Id - ope.
+      //
       template <typename I, typename N>
       mln_concrete(I)
       top_hat_white(const Image<I>& input, const Neighborhood<N>& nbh);
 
 
-      /*! Morphological elementary black top-hat (for background / dark objects).
-       *
-       * This operator is clo - Id.
-       */
+      /// Morphological elementary black top-hat (for background / dark objects).
+      ///
+      /// This operator is clo - Id.
+      //
       template <typename I, typename N>
       mln_concrete(I)
       top_hat_black(const Image<I>& input, const Neighborhood<N>& nbh);
 
 
-      /*! Morphological elementary self-complementary top-hat.
-       *
-       * This operator is \n
-       *   = top_hat_white + top_hat_black \n
-       *   = (Id - opening) + (closing - Id) \n
-       *   = closing - opening. \n
-       */
+      /// Morphological elementary self-complementary top-hat.
+      ///
+      /// This operator is \n
+      ///   = top_hat_white + top_hat_black \n
+      ///   = (Id - opening) + (closing - Id) \n
+      ///   = closing - opening. \n
+      //
       template <typename I, typename N>
       mln_concrete(I)
       top_hat_self_complementary(const Image<I>& input, const Neighborhood<N>& nbh);
@@ -81,60 +81,66 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
       template <typename I, typename N>
       inline
       mln_concrete(I)
-      top_hat_white(const Image<I>& input,
-		    const Neighborhood<N>& nbh)
+      top_hat_white(const Image<I>& input, const Neighborhood<N>& nbh)
       {
 	trace::entering("morpho::elementary::top_hat_white");
+
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(nbh).is_valid());
 
 	mln_concrete(I) output = morpho::minus(input,
-					       opening(input, nbh));
+					       elementary::opening(input, nbh));
 
 	mln_postcondition(test::positive(output));
+
 	trace::exiting("morpho::elementary::top_hat_white");
 	return output;
       }
 
+
       template <typename I, typename N>
       inline
       mln_concrete(I)
-      top_hat_black(const Image<I>& input,
-		    const Neighborhood<N>& nbh)
+      top_hat_black(const Image<I>& input, const Neighborhood<N>& nbh)
       {
 	trace::entering("morpho::elementary::top_hat_black");
+
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(nbh).is_valid());
 
-	mln_concrete(I) output = morpho::minus(closing(input, nbh),
+	mln_concrete(I) output = morpho::minus(elementary::closing(input, nbh),
 					       input);
 
 	mln_postcondition(test::positive(output));
+
 	trace::exiting("morpho::elementary::top_hat_black");
 	return output;
       }
 
+
       template <typename I, typename N>
       inline
       mln_concrete(I)
-      top_hat_self_complementary(const Image<I>& input,
-				 const Neighborhood<N>& nbh)
+      top_hat_self_complementary(const Image<I>& input, const Neighborhood<N>& nbh)
       {
 	trace::entering("morpho::elementary::top_hat_self_complementary");
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(nbh).is_valid());
 
-	mln_concrete(I) output = morpho::minus(closing(input, nbh),
-					       opening(input, nbh));
+	mln_concrete(I) output = morpho::minus(elementary::closing(input, nbh),
+					       elementary::opening(input, nbh));
 
 	mln_postcondition(test::positive(output));
 	// mln_postcondition(output == white + black);
+
 	trace::exiting("morpho::elementary::top_hat_self_complementary");
 	return output;
       }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

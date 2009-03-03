@@ -1,5 +1,35 @@
 2009-03-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Disambiguate morphological structural opening and closing.
+
+	* mln/morpho/closing.hh: Move and rename as...
+	* mln/morpho/closing/structural.hh: ...this.
+	(closing): Rename as...
+	(closing::structural): ...this.
+	Layout.
+	* mln/morpho/closing/all.hh: Update.
+
+	* mln/morpho/opening.hh: Move and rename as...
+	* mln/morpho/opening/structural.hh: ...this.
+	(opening): Rename as...
+	(opening::structural): ...this.
+	Layout.
+	* mln/morpho/opening/all.hh: Update.
+	* mln/morpho/all.hh: Update.
+
+	* mln/morpho/elementary/closing.hh,
+	* mln/morpho/elementary/opening.hh: Layout.
+
+	* mln/morpho/elementary/top_hat.hh: Update doc style.
+	Layout.
+	(top_hat_white, top_hat_black, top_hat_self_complementary):
+	Make calls to elementary closing (resp. opening) explicit.
+	* mln/morpho/top_hat.hh: Update doc style.
+	(top_hat_white, top_hat_black, top_hat_self_complementary):
+	Make calls to structural closing (resp. opening) explicit.
+
+2009-03-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Print dimension in op<<(win::ball).
 
 	* mln/win/ball.hh (print_): Print dimension.
