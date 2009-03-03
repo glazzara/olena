@@ -50,7 +50,7 @@ int main()
 
   typedef image2d<int_u8> I;
   I lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
   io::pgm::save(morpho::closing::volume(lena, c4(), 10000),
 		"ref.pgm");
 

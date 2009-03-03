@@ -52,7 +52,7 @@ int main()
   I lena;
 
   typedef morpho::attribute::sum<I> A;
-  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
   io::pgm::save(morpho::opening::leveling(lena, c4(), A(), 10000),
  		"out.pgm");
 }

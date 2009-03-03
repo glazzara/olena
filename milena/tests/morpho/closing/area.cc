@@ -49,6 +49,6 @@ int main()
   using value::int_u8;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
   io::pgm::save(morpho::closing::area(lena, c4(), 510), "out.pgm");
 }

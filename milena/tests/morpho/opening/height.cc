@@ -48,7 +48,7 @@ int main()
   using value::int_u8;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
   image2d<int_u8> out(lena.domain());
 
   out = morpho::opening::height(lena, c4(), 20);

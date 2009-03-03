@@ -4,7 +4,9 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS =					\
   attribute					\
+  closing 					\
   elementary					\
+  opening 					\
   tree						\
   watershed
 

@@ -1,5 +1,28 @@
 2009-03-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Small fixes related to morpho.
+
+	* mln/morpho/closing/area.hh: update copyright.
+
+	* mln/morpho/closing/leveling.hh: fix guard and revamp.
+
+	* mln/morpho/rank_filter.hh: update forward declaration.
+
+	* tests/morpho/Makefile.am: run tests in morpho/closing and
+	morpho/opening.
+
+	* tests/morpho/closing/area.cc,
+	* tests/morpho/closing/height.cc,
+	* tests/morpho/closing/sum.cc,
+	* tests/morpho/closing/volume.cc,
+	* tests/morpho/opening/area.cc,
+	* tests/morpho/opening/height.cc,
+	* tests/morpho/opening/sum.cc,
+	* tests/morpho/opening/volume.cc: use tiny.ppm instead of lena.ppm, it
+	is faster.
+
+2009-03-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add a specialization of level::convert.
 
 	* mln/level/convert.hh: Add a specialization while the conversion

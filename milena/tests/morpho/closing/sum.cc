@@ -51,7 +51,7 @@ int main()
   typedef image2d<int_u8> I;
   I lena;
 
-  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
 
   typedef morpho::attribute::sum<I> A;
   io::pgm::save(morpho::closing::leveling(lena, c4(), A(), 10000),
