@@ -1,5 +1,31 @@
 2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Introduce distance_and_closest_point_geodesic.
+
+	* mln/transform/closest_point_geodesic.hh: rename as...
+	* mln/transform/distance_and_closest_point_geodesic.hh: ... this.
+	  Now returns both dmap and closest point images.
+	  Add a version returning a closest point image containing indexes.
+	
+	* mln/transform/all.hh: update includes.
+
+	* mln/transform/internal/closest_point_functor.hh: add a new functor
+	which build a closest point image containing sites.
+
+	* tests/Makefile.am: run transform tests.
+
+	* tests/transform/Makefile.am: update test names
+	.
+	* tests/transform/bench_closest_point_geodesic.cc: fix missing
+	include.
+
+	* tests/transform/closest_point_geodesic.cc: rename as...
+	* tests/transform/distance_and_closest_point_geodesic.cc: ... this.
+	  Update according modifications in
+	  distance_and_closest_point_geodesic.hh.
+
+2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add util::couple.
 
 	* mln/util/couple.hh: New. behaves like a std::pair.

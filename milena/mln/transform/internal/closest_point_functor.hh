@@ -47,31 +47,55 @@ namespace mln
     {
 
       template <typename I>
-      struct closest_point_functor
+      struct closest_point_functor_with_indexes
       {
 	typedef mln_value(I) V;
-	typedef mln_psite(I)  P;
+	typedef mln_psite(I) P;
 
-	closest_point_functor(const p_array<P>& pset);
+	closest_point_functor_with_indexes(const p_array<P>& pset);
 
 	mln_ch_value(I,unsigned) cp_ima;
 	const p_array<P>& pset_;
 
+	/// Generic version interface.
 	void init(const I&);
 	bool inqueue_p_wrt_input_p(const V& input_p);
 	void init_p(const P&);
 	bool inqueue_p_wrt_input_n(const V& input_n);
 	void process(const P&, const P&);
 
-	void init_(const I& input)
-	{
-	  init(input);
-	}
+	/// Fast version interface.
+	void init_(const I& input);
+	bool inqueue_p_wrt_input_p_(const V& input_p);
+	void init_p_(unsigned);
+	bool inqueue_p_wrt_input_n_(const V& input_n);
+	void process_(unsigned p, unsigned n);
+      };
 
-	bool inqueue_p_wrt_input_p_(const V& input_p) { return input_p == true; }
-	void init_p_(unsigned) { }//cp_ima.element(p) = pset_(cp_ima.point_at_index(p)); }
-	bool inqueue_p_wrt_input_n_(const V& input_n) { return input_n == false; }
-	void process_(unsigned p, unsigned n) { cp_ima.element(n) = cp_ima.element(p); }
+
+      template <typename I>
+      struct closest_point_functor_with_sites
+      {
+	typedef mln_value(I) V;
+	typedef mln_psite(I) P;
+
+	closest_point_functor_with_sites();
+
+	mln_ch_value(I,P) cp_ima;
+
+	/// Generic version interface.
+	void init(const I&);
+	bool inqueue_p_wrt_input_p(const V& input_p);
+	void init_p(const P&);
+	bool inqueue_p_wrt_input_n(const V& input_n);
+	void process(const P&, const P&);
+
+	/// Fast version interface.
+	void init_(const I& input);
+	bool inqueue_p_wrt_input_p_(const V& input_p);
+	void init_p_(unsigned p);
+	bool inqueue_p_wrt_input_n_(const V& input_n);
+	void process_(unsigned p, unsigned n);
       };
 
 
@@ -79,7 +103,8 @@ namespace mln
 
       template <typename I>
       inline
-      closest_point_functor<I>::closest_point_functor(const p_array<mln_psite(I)>& pset)
+      closest_point_functor_with_indexes<I>::closest_point_functor_with_indexes(
+				    const p_array<mln_psite(I)>& pset)
 	: pset_(pset)
       {
       }
@@ -87,20 +112,20 @@ namespace mln
       template <typename I>
       inline
       void
-      closest_point_functor<I>::init(const I& input)
+      closest_point_functor_with_indexes<I>::init(const I& input)
       {
 	initialize(cp_ima, input);
 	data::fill(cp_ima, 0u);
 
 	mln_piter(p_array<mln_psite(I)>) p(pset_);
 	for_all(p)
-	  cp_ima(p) = p.index();
+	  cp_ima(p) = cp_ima.index_of_point(p);
       }
 
       template <typename I>
       inline
       bool
-      closest_point_functor<I>::inqueue_p_wrt_input_p(const V& input_p)
+      closest_point_functor_with_indexes<I>::inqueue_p_wrt_input_p(const V& input_p)
       {
 	return input_p == true;
       }
@@ -108,24 +133,157 @@ namespace mln
       template <typename I>
       inline
       void
-      closest_point_functor<I>::init_p(const P&)
+      closest_point_functor_with_indexes<I>::init_p(const P&)
       {
-//	cp_ima(p) = p;
       }
 
       template <typename I>
       inline
       bool
-      closest_point_functor<I>::inqueue_p_wrt_input_n(const V& input_n)
+      closest_point_functor_with_indexes<I>::inqueue_p_wrt_input_n(const V& input_n)
       {
 	return input_n == false;
       }
 
       template <typename I>
       inline
-      void closest_point_functor<I>::process(const P& p, const P& n)
+      void closest_point_functor_with_indexes<I>::process(const P& p, const P& n)
       {
 	cp_ima(n) = cp_ima(p);
+      }
+
+
+
+      template <typename I>
+      inline
+      void
+      closest_point_functor_with_indexes<I>::init_(const I& input)
+      {
+	init(input);
+      }
+
+      template <typename I>
+      inline
+      bool
+      closest_point_functor_with_indexes<I>::inqueue_p_wrt_input_p_(const V& input_p)
+      {
+	return input_p == true;
+      }
+
+      template <typename I>
+      inline
+      void closest_point_functor_with_indexes<I>::init_p_(unsigned)
+      {
+      }
+
+      template <typename I>
+      inline
+      bool
+      closest_point_functor_with_indexes<I>::inqueue_p_wrt_input_n_(const V& input_n)
+      {
+	return input_n == false;
+      }
+
+      template <typename I>
+      inline
+      void
+      closest_point_functor_with_indexes<I>::process_(unsigned p, unsigned n)
+      {
+	cp_ima.element(n) = cp_ima.element(p);
+      }
+
+
+      ///				   ///
+      /// closest_point_functor_with_sites ///
+      ///				   ///
+
+
+      template <typename I>
+      inline
+      closest_point_functor_with_sites<I>::closest_point_functor_with_sites()
+      {
+      }
+
+      template <typename I>
+      inline
+      void
+      closest_point_functor_with_sites<I>::init(const I& input)
+      {
+	initialize(cp_ima, input);
+	data::fill(cp_ima, literal::origin);
+      }
+
+      template <typename I>
+      inline
+      bool
+      closest_point_functor_with_sites<I>::inqueue_p_wrt_input_p(const V& input_p)
+      {
+	return input_p == true;
+      }
+
+      template <typename I>
+      inline
+      void
+      closest_point_functor_with_sites<I>::init_p(const P& p)
+      {
+	cp_ima(p) = p;
+      }
+
+      template <typename I>
+      inline
+      bool
+      closest_point_functor_with_sites<I>::inqueue_p_wrt_input_n(const V& input_n)
+      {
+	return input_n == false;
+      }
+
+      template <typename I>
+      inline
+      void
+      closest_point_functor_with_sites<I>::process(const P& p, const P& n)
+      {
+	cp_ima(n) = cp_ima(p);
+      }
+
+
+
+      template <typename I>
+      inline
+      void
+      closest_point_functor_with_sites<I>::init_(const I& input)
+      {
+	init(input);
+      }
+
+      template <typename I>
+      inline
+      bool
+      closest_point_functor_with_sites<I>::inqueue_p_wrt_input_p_(const V& input_p)
+      {
+	return input_p == true;
+      }
+
+      template <typename I>
+      inline
+      void closest_point_functor_with_sites<I>::init_p_(unsigned p)
+      {
+	cp_ima.element(p) = cp_ima.point_at_index(p);
+      }
+
+      template <typename I>
+      inline
+      bool
+      closest_point_functor_with_sites<I>::inqueue_p_wrt_input_n_(const V& input_n)
+      {
+	return input_n == false;
+      }
+
+      template <typename I>
+      inline
+      void
+      closest_point_functor_with_sites<I>::process_(unsigned p, unsigned n)
+      {
+	cp_ima.element(n) = cp_ima.element(p);
       }
 
 # endif // ! MLN_INCLUDE_ONLY

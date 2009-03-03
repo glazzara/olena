@@ -36,6 +36,7 @@
 #include <mln/data/fill.hh>
 #include <mln/opt/at.hh>
 #include <mln/transform/closest_point_geodesic.hh>
+#include <mln/value/int_u8.hh>
 
 
 int main()

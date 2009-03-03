@@ -42,7 +42,7 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/transform/closest_point_geodesic.hh>
+# include <mln/transform/distance_and_closest_point_geodesic.hh>
 # include <mln/transform/distance_front.hh>
 # include <mln/transform/distance_geodesic.hh>
 # include <mln/transform/influence_zone_front.hh>

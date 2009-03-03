@@ -41,6 +41,7 @@ SUBDIRS =					\
   topo						\
   trace						\
   trait						\
+  transform 					\
   unit_test					\
   util						\
   value						\
