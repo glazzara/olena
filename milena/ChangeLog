@@ -1,5 +1,18 @@
 2009-03-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Small fixes (again).
+
+	* mln/level/approx/median.hh: call diameter() instead of length() on
+	win::ball.
+
+	* mln/level/convert.hh: fix a return type.
+
+	* mln/morpho/closing/essential.hh,
+	* mln/morpho/essential.hh,
+	* mln/morpho/opening/essential.hh: Fix includes.
+
+2009-03-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Small fixes related to morpho.
 
 	* mln/morpho/closing/area.hh: update copyright.

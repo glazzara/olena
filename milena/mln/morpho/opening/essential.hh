@@ -34,10 +34,11 @@
 /// File that includes essential opening attributes.
 
 #include <mln/morpho/opening/algebraic.hh>
-#include <mln/morpho/opening/leveling.hh>
 #include <mln/morpho/opening/area.hh>
-#include <mln/morpho/opening/volume.hh>
 #include <mln/morpho/opening/height.hh>
+#include <mln/morpho/opening/leveling.hh>
+#include <mln/morpho/opening/structural.hh>
+#include <mln/morpho/opening/volume.hh>
 
 #endif // ! MLN_MORPHO_OPENING_ESSENTIAL_HH
 

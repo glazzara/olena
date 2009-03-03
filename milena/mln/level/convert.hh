@@ -99,7 +99,7 @@ namespace mln
 
       template <typename V, typename I>
       inline
-      mln_concrete(I)
+      mln_ch_value(I,V)
       convert_identity(const V& v, const Image<I>& input)
       {
 	trace::entering("level::impl::convert_identity");

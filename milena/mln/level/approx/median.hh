@@ -136,7 +136,7 @@ namespace mln
       {
 	trace::entering("level::approx::median");
 
-	const unsigned len = win.length() / 3 + 1;
+	const unsigned len = win.diameter() / 3 + 1;
 	mln_concrete(I) output;
 
 	win::diag2d win1(len);

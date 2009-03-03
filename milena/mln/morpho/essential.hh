@@ -33,7 +33,6 @@
 /// File that includes essential morpho-related routines.
 
 
-# include <mln/morpho/closing.hh>
 # include <mln/morpho/dilation.hh>
 # include <mln/morpho/erosion.hh>
 # include <mln/morpho/gradient.hh>
@@ -41,7 +40,6 @@
 # include <mln/morpho/includes.hh>
 # include <mln/morpho/laplacian.hh>
 # include <mln/morpho/meyer_wst.hh>
-# include <mln/morpho/opening.hh>
 # include <mln/morpho/rank_filter.hh>
 # include <mln/morpho/top_hat.hh>
 

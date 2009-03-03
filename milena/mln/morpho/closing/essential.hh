@@ -34,10 +34,11 @@
 /// File that includes essential closing attributes.
 
 #include <mln/morpho/closing/algebraic.hh>
-#include <mln/morpho/closing/leveling.hh>
 #include <mln/morpho/closing/area.hh>
-#include <mln/morpho/closing/volume.hh>
 #include <mln/morpho/closing/height.hh>
+#include <mln/morpho/closing/leveling.hh>
+#include <mln/morpho/closing/structural.hh>
+#include <mln/morpho/closing/volume.hh>
 
 #endif // ! MLN_MORPHO_CLOSING_ESSENTIAL_HH
 
