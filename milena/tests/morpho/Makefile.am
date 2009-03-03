@@ -30,7 +30,9 @@ check_PROGRAMS =				\
   meyer_wst_long				\
   rank_filter 					\
   skeleton_constrained				\
-  thinning
+  thinning					\
+  top_hat
+
 
 # -------------- #
 # Normal tests.  #
@@ -38,7 +40,6 @@ check_PROGRAMS =				\
 
 # FIXME: Have erosion and dilation perform symmetric tests.
 erosion_SOURCES = erosion.cc
-
 contrast_SOURCES = contrast.cc
 general_SOURCES = general.cc
 gradient_SOURCES = gradient.cc
@@ -48,20 +49,17 @@ thinning_SOURCES = thinning.cc
 
 graph_image_morpho_SOURCES = graph_image_morpho.cc
 graph_image_wst_SOURCES = graph_image_wst.cc
-
 line_graph_image_morpho_SOURCES = line_graph_image_morpho.cc
 line_graph_image_wst_SOURCES = line_graph_image_wst.cc
-
 complex_image_morpho_SOURCES = complex_image_morpho.cc
 complex_image_wst_SOURCES = complex_image_wst.cc
 
 meyer_wst_SOURCES = meyer_wst.cc
-
 rank_filter_SOURCES = rank_filter.cc
-
 skeleton_constrained_SOURCES = skeleton_constrained.cc
-
+top_hat_SOURCES = top_hat.cc
 combined_SOURCES = combined.cc
+
 
 # --------------- #
 # Complex tests.  #

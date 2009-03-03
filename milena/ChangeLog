@@ -1,5 +1,21 @@
 2009-03-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix missing tests in morpho.
+
+	* tests/morpho/top_hat.cc: New.
+	* tests/morpho/Makefile.am: Update.
+	* tests/morpho/closing/area.cc,
+	* tests/morpho/closing/height.cc (Copyright): Fix.
+	* tests/morpho/closing/structural.cc: New.
+	* tests/morpho/closing/Makefile.am: Update.
+	* tests/morpho/opening/volume.cc,
+	* tests/morpho/opening/area.cc,
+	* tests/morpho/opening/height.cc (Copyright): Fix.
+	* tests/morpho/opening/structural.cc: New.
+	* tests/morpho/opening/Makefile.am: Update.
+
+2009-03-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Disambiguate morphological structural opening and closing.
 
 	* mln/morpho/closing.hh: Move and rename as...

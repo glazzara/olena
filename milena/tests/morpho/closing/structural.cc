@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,18 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/opening/volume.cc
+/// \file tests/morpho/closing/structural.cc
 ///
-/// Test on mln::morpho::opening::volume.
+/// Test on mln::morpho::closing::structural.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/alias/window2d.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/morpho/opening/volume.hh>
+#include <mln/morpho/closing/structural.hh>
 
 #include "tests/data.hh"
 
@@ -47,10 +46,14 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8> lena;
+  image2d<int_u8> lena, out;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-  image2d<int_u8> out(lena.domain());
 
-  out = morpho::opening::volume(lena, c4(), 10000);
+  bool w[] = { 0, 1, 1,
+	       0, 0, 1,
+	       0, 0, 1 };
+
+  out = morpho::closing::structural(lena,
+				    convert::to<window2d>(w));
   io::pgm::save(out, "out.pgm");
 }

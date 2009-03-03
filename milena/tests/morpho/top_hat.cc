@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,20 +26,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/opening/volume.cc
+/// \file tests/morpho/elementary/top_hat.cc
 ///
-/// Test on mln::morpho::opening::volume.
+/// Test on mln::morpho::top_hat.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/value/int_u8.hh>
 #include <mln/core/alias/neighb2d.hh>
+#include <mln/value/int_u8.hh>
 
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
 
-#include <mln/morpho/opening/volume.hh>
-
-#include "tests/data.hh"
+#include <mln/morpho/top_hat.hh>
 
 
 int main()
@@ -47,10 +45,21 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8> lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-  image2d<int_u8> out(lena.domain());
+//   trace::quiet = false;
 
-  out = morpho::opening::volume(lena, c4(), 10000);
-  io::pgm::save(out, "out.pgm");
+  image2d<int_u8> ima(3, 3, 0);
+  debug::iota(ima);
+  debug::println(ima);
+
+  debug::println( morpho::top_hat_white(ima, c4().win()) );
+  debug::println( morpho::top_hat_black(ima, c4().win()) );
+  debug::println( morpho::top_hat_self_complementary(ima, c4().win()) );
+
+  image2d<bool> msk(3, 3, 0);
+  data::fill(msk, pw::value(ima) >= pw::cst(5u));
+  debug::println(msk);
+
+  debug::println( morpho::top_hat_white(msk, c4().win()) );
+  debug::println( morpho::top_hat_black(msk, c4().win()) );
+  debug::println( morpho::top_hat_self_complementary(msk, c4().win()) );
 }
