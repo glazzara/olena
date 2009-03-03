@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,12 @@
 #ifndef MLN_UTIL_ESSENTIAL_HH
 # define MLN_UTIL_ESSENTIAL_HH
 
-/*! \file mln/util/essential.hh
- *
- * \brief File that includes essential util-related routines.
- */
+/// \file mln/util/essential.hh
+///
+/// File that includes essential util-related routines.
 
 # include <mln/util/array.hh>
+# include <mln/util/couple.hh>
 # include <mln/util/lazy_set.hh>
 # include <mln/util/lemmings.hh>
 # include <mln/util/ord.hh>

@@ -1,5 +1,14 @@
 2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add util::couple.
+
+	* mln/util/couple.hh: New. behaves like a std::pair.
+
+	* mln/util/all.hh,
+	* mln/util/essential.hh: include new header.
+
+2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	configure.ac: configure milena/tests/transform.
 
 2009-03-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>

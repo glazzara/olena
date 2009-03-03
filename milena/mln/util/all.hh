@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -50,6 +50,7 @@ namespace mln
 # include <mln/util/array.hh>
 # include <mln/util/branch_iter.hh>
 # include <mln/util/branch_iter_ind.hh>
+# include <mln/util/couple.hh>
 # include <mln/util/dindex.hh>
 # include <mln/util/eat.hh>
 # include <mln/util/edge.hh>
