@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,13 +26,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/convert.cc
- *
- * \brief Tests on mln::level::convert
- */
+/// \file tests/level/convert.cc
+///
+/// Tests on mln::level::convert
 
 #include <mln/core/image/image2d.hh>
 #include <mln/level/convert.hh>
+#include <mln/level/compare.hh>
 
 #include <mln/value/rgb8.hh>
 #include <mln/literal/grays.hh>
@@ -43,8 +44,6 @@ int main()
   using namespace mln;
   using value::rgb8;
 
-//   trace::quiet = false;
-
   // bool -> rgb8
   {
     image2d<bool> ima(1, 2);
@@ -54,4 +53,14 @@ int main()
     mln_assertion(opt::at(out, 0, 0) == literal::black);
     mln_assertion(opt::at(out, 0, 1) == literal::white);
   }
+  // bool -> bool
+  {
+    image2d<bool> ima(1, 2);
+    data::fill(ima, true);
+    opt::at(ima, 0, 0) = false;
+    image2d<bool> out = level::convert(bool(), ima);
+    mln_assertion(out == ima);
+    mln_assertion(out.buffer() != ima.buffer());
+  }
+
 }

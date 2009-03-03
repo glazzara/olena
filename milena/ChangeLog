@@ -1,4 +1,13 @@
-2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+2009-03-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add a specialization of level::convert.
+
+	* mln/level/convert.hh: Add a specialization while the conversion
+	value type is equal to the image value type.
+
+	* tests/level/convert.cc: add a new test.
+
+2009-03-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Introduce distance_and_closest_point_geodesic.
 
@@ -24,7 +33,7 @@
 	  Update according modifications in
 	  distance_and_closest_point_geodesic.hh.
 
-2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+2009-03-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Add util::couple.
 
@@ -33,7 +42,7 @@
 	* mln/util/all.hh,
 	* mln/util/essential.hh: include new header.
 
-2009-03-02  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+2009-03-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	configure.ac: configure milena/tests/transform.
 
