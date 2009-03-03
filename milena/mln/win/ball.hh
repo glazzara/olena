@@ -136,7 +136,7 @@ namespace mln
     void
     ball<G,C>::print_(std::ostream& ostr) const
     {
-      ostr << "[ball: diameter=" << diameter_ << ']';
+      ostr << "[" << G::dim << "D ball: diameter=" << diameter_ << ']';
     }
 
 # endif // ! MLN_INCLUDE_ONLY

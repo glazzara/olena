@@ -30,6 +30,7 @@
 /// Tests on mln::win::ball.
 
 #include <mln/win/ball.hh>
+
 #include <mln/convert/to_image.hh>
 #include <mln/debug/println.hh>
 
@@ -41,8 +42,11 @@ int main()
   win::ball<grid::square, def::coord> b(7);
   mln_assertion(b.delta() == 3);
   mln_assertion(b.size() == 29);
+  mln_assertion(b.diameter() == 7);
  
-  debug::println(convert::to_image(b));
+  //   std::cout << b << std::endl;
+
+  //   debug::println(convert::to_image(b));
   //  - - - | - - - 
   //  - | | | | | - 
   //  - | | | | | - 

@@ -1,3 +1,10 @@
+2009-03-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Print dimension in op<<(win::ball).
+
+	* mln/win/ball.hh (print_): Print dimension.
+	* tests/win/ball.cc: Inactivate echo.
+
 2009-03-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Have win::disk2d and win::sphere3d (new) rely on win::ball.
