@@ -61,6 +61,8 @@
 
 #include <mln/level/compare.hh>
 #include <mln/level/compute.hh>
+#include <mln/level/convert.hh>
+#include <mln/level/stretch.hh>
 #include <mln/level/transform.hh>
 
 #include <mln/fun/internal/selector.hh>
@@ -72,6 +74,8 @@
 #include <mln/accu/center.hh>
 #include <mln/accu/max.hh>
 #include <mln/accu/sum.hh>
+#include <mln/accu/mean.hh>
+#include <mln/accu/stat/deviation.hh>
 
 #include <mln/histo/compute.hh>
 
@@ -116,6 +120,7 @@ struct L_to_int_u8
 };
 
 
+
 template <typename T>
 inline
 int_u8
@@ -125,39 +130,43 @@ L_to_int_u8<T>::operator()(const T& t) const
 }
 
 
-template <typename I>
-I
-close_threshold(const Image<I>& input, metal::int_<2>)
-{
-  return morpho::erosion(morpho::dilation(input, win::disk2d(5)), win::disk2d(7));
-}
-
 
 template <typename I>
 I
-close_threshold(const Image<I>& input, metal::int_<3>)
+close_threshold(const Image<I>& input, metal::int_<2>, int dil, int ero)
 {
-  return morpho::erosion(morpho::dilation(input, win::sphere3d(5)), win::sphere3d(7));
+  return morpho::erosion(morpho::dilation(input, win::disk2d(dil)), win::disk2d(ero));
 }
 
 
+
 template <typename I>
+I
+close_threshold(const Image<I>& input, metal::int_<3>, int dil, int ero)
+{
+  return morpho::erosion(morpho::dilation(input, win::sphere3d(dil)), win::sphere3d(ero));
+}
+
+
+
+template <typename I, typename N>
 unsigned
-find_threshold_value(const Image<I>& input_)
+find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
 {
-  const I& input = exact(input_);
   int bg_thres = 30;
+  int obj_thres = 15;
+
   mln_ch_value(I, bool) ima_bg;
   initialize(ima_bg, input);
   data::fill(ima_bg, false);
-  int obj_thres = 50;
+
   mln_ch_value(I, bool) ima_obj;
   initialize(ima_obj, input);
   data::fill(ima_obj, false);
+
   unsigned result = 0;
 
   histo::array<mln_value(I)> arr_histo = histo::compute(input);
-
   image1d<unsigned> ima_histo;
   convert::from_to(arr_histo, ima_histo);
 
@@ -186,14 +195,37 @@ find_threshold_value(const Image<I>& input_)
     }
   }
 
-  io::dump::save(ima_bg, "bg.pbm");
-  io::dump::save(ima_obj, "obj.pbm");
+  // Debug output images
+  if (I::site::dim == 2)
+  {
+    io::pbm::save(ima_bg, "bg.pbm");
+    io::pbm::save(ima_obj, "obj.pbm");
+  }
+  if (I::site::dim == 3)
+  {
+    io::dump::save(ima_bg, "bg.dump");
+    io::dump::save(ima_obj, "obj.dump");
+  }
 
-  ima_bg = close_threshold(ima_bg, metal::int_<I::site::dim>());
-  ima_obj = close_threshold(ima_obj, metal::int_<I::site::dim>());
+  ima_bg = close_threshold(ima_bg, metal::int_<I::site::dim>(), 3, 5); // 5, 7?
+  ima_obj = close_threshold(ima_obj, metal::int_<I::site::dim>(), 3, 5);
 
-  io::dump::save(ima_bg, "bg_closed.pbm");
-  io::dump::save(ima_obj, "obj_closed.pbm");
+  // Debug output images
+  mln_ch_value(I, rgb8) out = level::convert(rgb8(), level::stretch(int_u8(), input));
+  data::fill((out | pw::value(morpho::elementary::gradient_internal(ima_bg, nbh)) == true).rw(), literal::red);
+  data::fill((out | pw::value(morpho::elementary::gradient_internal(ima_obj, nbh)) == true).rw(), literal::green);
+  if (I::site::dim == 2)
+  {
+    io::pbm::save(ima_bg, "bg_closed.pbm");
+    io::pbm::save(ima_obj, "obj_closed.pbm");
+    io::ppm::save(out, "regions_color.ppm");
+  }
+  if (I::site::dim == 3)
+  {
+    io::dump::save(ima_bg, "bg_closed.dump");
+    io::dump::save(ima_obj, "obj_closed.dump");
+    io::dump::save(out, "regions_color.dump");
+  }
 
   histo::array<mln_value(I)> bg_histo = histo::compute(input | pw::value(ima_bg) == true);
   histo::array<mln_value(I)> obj_histo = histo::compute(input | pw::value(ima_obj) == true);
@@ -223,6 +255,7 @@ find_threshold_value(const Image<I>& input_)
     fout_obj << i << " " << ima_obj_histo(point1d(i)) << std::endl;
   }
 
+  // Search for the index with the min distance between histogrammes.
   unsigned min = math::diff_abs<unsigned>(ima_bg_histo(point1d(1)), ima_obj_histo(point1d(1)));
   for (unsigned int i = 1; i < ima_bg_histo.nelements(); ++i)
   {
@@ -237,9 +270,28 @@ find_threshold_value(const Image<I>& input_)
 }
 
 
+
+template <typename I, typename N>
+unsigned
+find_threshold_mean(const Image<I>& input, const Neighborhood<N>& nbh)
+{
+  unsigned result = 0;
+
+  accu::mean<unsigned> mean_accu;
+  unsigned mean = level::compute(mean_accu, (input | (pw::value(input) != 0)));
+
+  accu::stat::deviation<unsigned, unsigned, float> dev_accu(mean);
+  float deviation = level::compute(dev_accu, (input | pw::value(input) != 0));
+
+  std::cout << "mean = " << mean << std::endl << "deviation = " << deviation << std::endl;
+  return floor(deviation);
+}
+
+
+
 template <typename I, typename N, typename L>
 mln_ch_value(I, bool)
-igr(const Image<I>& input_, const mln::Neighborhood<N>& nbh_, L& nlabels)
+igr_seg(const Image<I>& input_, const Neighborhood<N>& nbh_, L& nlabels)
 {
   const I& input = exact(input_);
   const N& nbh = exact(nbh_);
@@ -249,48 +301,9 @@ igr(const Image<I>& input_, const mln::Neighborhood<N>& nbh_, L& nlabels)
   mln_ch_value(I, bool) ima_thres;
   initialize(ima_thres, input);
   data::fill(ima_thres, false);
-  unsigned threshold_value = find_threshold_value(input);
+  //unsigned threshold_value = find_threshold_value(input, nbh);
+  unsigned threshold_value = find_threshold_mean(input, nbh);
   data::fill((ima_thres | pw::value(input) < pw::cst(threshold_value)).rw(), true);
 
   return ima_thres;
-}
-
-
-int main(int argc, char* argv[])
-{
-  //trace::quiet = false;
-
-  label_16 nlabels;
-
-  /*std::cout << "Processing IM_0049..." << std::endl;
-  image2d<int_u12> im49;
-  io::dicom::load(im49, "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0049.dcm");
-  io::pbm::save(igr(im49, c6(), nlabels), "IM_0049.pbm");
-
-  std::cout << "Processing IM_0052..." << std::endl;
-  image3d<int_u12> im52;
-  io::dicom::load(im52, "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0052.dcm");
-  io::dump::save(igr(im52, c6(), nlabels), "IM_0052.dump");
-
-  std::cout << "Processing IM_0055..." << std::endl;
-  image2d<int_u12> im55;
-  io::dicom::load(im55, "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0055.dcm");
-  io::pbm::save(igr(im55, c4(), nlabels), "IM_0055.pbm");
-
-  std::cout << "Processing IM_0058..." << std::endl;
-  image2d<int_u12> im58;
-  io::dicom::load(im58, "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0058.dcm");
-  io::pbm::save(igr(im58, c4(), nlabels), "IM_0058.pbm");
-
-  std::cout << "Processing IM_0061..." << std::endl;
-  image3d<int_u12> im61;
-  io::dicom::load(im61, "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0061.dcm");
-  io::dump::save(igr(im61, c6(), nlabels), "IM_0061.dump");*/
-
-  std::cout << "Processing IM_0064..." << std::endl;
-  image3d<int_u12> im64;
-  io::dicom::load(im64, "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0064.dcm");
-  io::dump::save(igr(im64, c6(), nlabels), "IM_0064.dump");
-
-  return 0;
 }

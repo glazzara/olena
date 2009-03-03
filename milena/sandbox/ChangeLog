@@ -1,3 +1,20 @@
+2009-03-03  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Create small tools for IGR.
+	* fabien/TODO: New.
+	* fabien/igr/dump2pbm.cc: Move this...
+	* fabien/bin/dump2pbm.cc: ...here.
+	* fabien/igr/dump2ppm.cc: Move this...
+	* fabien/bin/dump2ppm.cc: ...here.
+	* fabien/igr/Makefile: Update.
+	* fabien/igr/launch.sh: New tool.
+	* fabien/igr/launch2d.sh: New tool.
+	* fabien/igr/launch3d.sh: New tool.
+	* fabien/igr/seg2d.cc: New tool.
+	* fabien/igr/seg3d.cc: New tool.
+	* fabien/igr/seg_vol_irm.cc: Rename this...
+	* fabien/igr/seg_vol_irm.hh: ...into this.
+
 2009-03-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update calls to morphological structural closing and opening.
