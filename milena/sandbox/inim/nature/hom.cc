@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,10 +44,11 @@
 #include <mln/estim/mean.hh>
 #include <mln/morpho/hit_or_miss.hh>
 #include <mln/morpho/dilation.hh>
-#include <mln/morpho/opening.hh>
+#include <mln/morpho/opening/structural.hh>
 
 #include <mln/win/hline2d.hh>
 #include <mln/win/vline2d.hh>
+
 
 int main(int argc, const char * argv[])
 {
@@ -305,8 +307,8 @@ int main(int argc, const char * argv[])
       convert::from_to(vert, winin);
       convert::from_to(hori, winout);
 
-      image2d<bool> final = morpho::opening(inter, win::hline2d(20));
-      final += morpho::opening(inter, win::vline2d(20));
+      image2d<bool> final = morpho::opening::structural(inter, win::hline2d(20));
+      final += morpho::opening::structural(inter, win::vline2d(20));
 
       io::pbm::save( final,
 		     name.append("_hom.pbm"));

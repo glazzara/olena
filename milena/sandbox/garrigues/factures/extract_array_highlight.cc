@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,7 +32,7 @@
 #include <mln/geom/resize.hh>
 #include <mln/display/all.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/morpho/opening.hh>
+#include <mln/morpho/opening/structural.hh>
 #include <mln/win/hline2d.hh>
 #include <mln/win/vline2d.hh>
 #include <mln/win/disk2d.hh>
@@ -51,9 +52,11 @@
 
 #include <mln/draw/box.hh>
 
+
 using namespace mln;
 typedef image2d<bool> ima2d_bool;
 typedef image2d<unsigned> ima2d_unsigned;
+
 
 image2d<bool>
 filter_arrays(image2d<bool> in)
@@ -98,6 +101,7 @@ filter_arrays(image2d<bool> in)
   return output;
 }
 
+
 image2d<value::rgb8>
 highlight_vlines(image2d<bool> in)
 {
@@ -106,7 +110,7 @@ highlight_vlines(image2d<bool> in)
   tmp = filter_arrays(in);
 
   // Opening.
-  tmp = morpho::opening(tmp, win::vline2d(5));
+  tmp = morpho::opening::structural(tmp, win::vline2d(5));
 
   image2d<value::rgb8> output(tmp.domain());
   mln_fwd_piter_(ima2d_unsigned) p(tmp.domain());
@@ -127,7 +131,7 @@ highlight_hlines(image2d<bool> in)
   image2d<bool> tmp;
   tmp = filter_arrays(in);
   // Opening.
-  tmp = morpho::opening(tmp, win::hline2d(5));
+  tmp = morpho::opening::structural(tmp, win::hline2d(5));
 
   image2d<value::rgb8> output(tmp.domain());
   mln_fwd_piter_(ima2d_unsigned) p(tmp.domain());

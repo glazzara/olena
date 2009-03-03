@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,8 +41,8 @@
 # include <mln/morpho/erosion.hh>
 # include <mln/morpho/dilation.hh>
 # include <mln/morpho/complementation.hh>
-# include <mln/morpho/closing.hh>
-# include <mln/morpho/opening.hh>
+# include <mln/morpho/closing/structural.hh>
+# include <mln/morpho/opening/structural.hh>
 # include <mln/make/w_window2d.hh>
 # include <mln/win/rectangle2d.hh>
 # include <mln/win/vline2d.hh>
@@ -209,8 +210,8 @@ main(int argc, char** argv)
 //   }
 
   { // fermeture avec un disk et un element vertial pour reperer les notes.
-    IB closed1 = morpho::opening(score_b, win::vline2d(5));
-    IB closed2 = morpho::opening(score_b, win::disk2d(5));
+    IB closed1 = morpho::opening::structural(score_b, win::vline2d(5));
+    IB closed2 = morpho::opening::structural(score_b, win::disk2d(5));
     morpho::opening_area(closed1, c4(), 20, closed1);
     morpho::opening_area(closed2, c4(), 15, closed2);
     io::pbm::save(closed1, "closed1.pbm");
@@ -220,7 +221,7 @@ main(int argc, char** argv)
   }
 
   { // Fermeture avec un element struturant en horizontale pour obtenir les lignes de portée.
-//     IB hclosed = morpho::closing(score_b, win::hline2d(73));
+//     IB hclosed = morpho::closing::structural(score_b, win::hline2d(73));
 //     io::pbm::save(hclosed, "hclosed.pbm");
   }
 }

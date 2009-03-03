@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,7 +33,8 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/morpho/opening.hh>
+#include <mln/morpho/opening/structural.hh>
+
 
 int main(int argc, const char * argv[])
 {
@@ -54,6 +56,6 @@ int main(int argc, const char * argv[])
 
       std::string name(argv[i]);
       name.erase(name.length() - 4);
-      io::pgm::save(morpho::opening(ima, rect), name.append("_opened.pgm"));
+      io::pgm::save(morpho::opening::structural(ima, rect), name.append("_opened.pgm"));
     }
 }

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -53,7 +54,7 @@
 
 #include <mln/morpho/hit_or_miss.hh>
 #include <mln/morpho/gradient.hh>
-#include <mln/morpho/opening.hh>
+#include <mln/morpho/opening/structural.hh>
 
 #include <mln/binarization/threshold.hh>
 
@@ -367,8 +368,8 @@ int main (int argc, const char * argv [])
 
   image2d<bool> inter (up_left + up_right + bottom_right + bottom_left + up + bottom + left + right);
 
-  image2d<bool> final = morpho::opening(inter, win::hline2d(20));
-  final += morpho::opening(inter, win::vline2d(20));
+  image2d<bool> final = morpho::opening::structural(inter, win::hline2d(20));
+  final += morpho::opening::structural(inter, win::vline2d(20));
 
   // Now we count blank points in our result
 
@@ -398,7 +399,7 @@ int main (int argc, const char * argv [])
 
   // Last but not least : text detection thanks to FFT
 
-  transform::fft<double> fourier(morpho::opening(uinty, win::hline2d(20)));
+  transform::fft<double> fourier(morpho::opening::structural(uinty, win::hline2d(20)));
   fourier.transform();
 
   std::string name(argv[1]);
