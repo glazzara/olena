@@ -260,6 +260,7 @@ AC_CONFIG_FILES([
       milena/tests/trait/image/Makefile
       milena/tests/trait/op/Makefile
       milena/tests/trait/value/Makefile
+    milena/tests/transform/Makefile
     milena/tests/util/Makefile
     milena/tests/unit_test/Makefile
     milena/tests/value/Makefile
