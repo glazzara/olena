@@ -1,3 +1,22 @@
+2009-03-04  Vivien Delmon <vivien.delmon@lrde.epita.fr>
+
+	Two algorithms implemented during my internship in GE.
+	* delmon/growcut/Makefile: New.
+	* delmon/growcut/README: New.
+	* delmon/growcut/check.sh: New.
+	* delmon/growcut/keep_color.cc: New.
+	* delmon/growcut/main.cc: New.
+	* delmon/growcut/main_bw.cc: New.
+	* delmon/growcut/remove_if_blue.cc: New.
+	* delmon/growcut: New.
+	* delmon/minsurf/Makefile: New.
+	* delmon/minsurf/README: New.
+	* delmon/minsurf/check.sh: New.
+	* delmon/minsurf/keep_object.cc: New.
+	* delmon/minsurf/main.cc: New.
+	* delmon/minsurf: New.
+	* delmon: New.
+
 2009-03-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Cleanup IGR's code.
