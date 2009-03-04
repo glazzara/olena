@@ -1,3 +1,13 @@
+2009-03-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup IGR's code.
+
+	* lazzara/igr/irm/irm_seg_with_mm_and_rag.cc: rename as...
+	* lazzara/igr/irm/grad_clo: ... this.
+
+	* lazzara/igr/irm/wst_rag.cc,
+	* lazzara/igr/registration_3d.cc: make it compile.
+
 2009-03-03  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Create small tools for IGR.

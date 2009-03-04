@@ -12,7 +12,6 @@
 #include <mln/core/alias/dpoint2d.hh>
 #include <mln/draw/box.hh>
 #include <mln/level/stretch.hh>
-#include <mln/canvas/morpho/algebraic_union_find.hh>
 #include <mln/fun/v2v/id.hh>
 #include <mln/core/image/line_graph_elt_neighborhood.hh>
 #include <mln/morpho/elementary/dilation.hh>
@@ -20,6 +19,7 @@
 #include <mln/extension/adjust_fill.hh>
 #include <mln/extract/all.hh>
 #include <mln/make/region_adjacency_graph.hh>
+#include <mln/make/graph.hh>
 
 // Given a color image and a wshed image, computes the component graph.
 // Vertex values are computed thanks to a RGB image.
@@ -223,19 +223,19 @@ int main(int argc, char *argv[])
 
   I input;
   io::ppm::load(input, argv[1]);
-//  image2d<rgb16> input = level::convert(rgb16(), input_);
 
-  J vol;
-  io::dump::load(vol, argv[2]);
+  J wsd;
+  io::dump::load(wsd, argv[2]);
 
   label_16 nbasins = atoi(argv[3]);
   std::cout << "nbasins = " << nbasins << std::endl;
 
-  util::graph g = make::graph(vol, c4(), nbasins);
-
-  // Compute value distances with a RGB image.
-  mln_VAR(ima_v, make_vertex_graph_image(g, input, vol, nbasins));
+  /// Build graph
+  util::graph g = make::graph(wsd, c4(), nbasins);
+  // Build graph images and compute distance values with a RGB image.
+  mln_VAR(ima_v, make_vertex_graph_image(g, input, wsd, nbasins));
   mln_VAR(ima_e, make_edge_graph_image(ima_v, g));
+
 
   //DEBUG
   io::ppm::save(make_debug_graph_image(input, ima_v, ima_e, box_size, literal::white),
@@ -244,6 +244,7 @@ int main(int argc, char *argv[])
 				       "wst_rag_graph_image_black.ppm");
 
 
+  /// Try to merge vertices.
   mln_piter_(ima_e_t) e(ima_e.domain());
   util::array<label_16> parent(g.v_nmax());
   for (unsigned i = 0; i < parent.nelements(); ++i)
@@ -272,21 +273,23 @@ int main(int argc, char *argv[])
   mln_invariant(f(0) == 0u);
   --nbasins2; //nbasins2 does not count the basin with label 0.
   std::cout << "nbasins2 = " << nbasins2 << std::endl;
+  J wsd2 = level::transform(wsd, f);
 
-  J vol2 = level::transform(vol, f);
-  util::graph g2 = make::graph(vol2, c4(), nbasins2);
-  // Compute value distances with a RGB image.
-  mln_VAR(ima_v2, make_vertex_graph_image(g2, input, vol2, nbasins2));
+
+  /// Reconstruct a graph from the simplified image.
+  util::graph g2 = make::graph(wsd2, c4(), nbasins2);
+  // Compute distance values with a RGB image.
+  mln_VAR(ima_v2, make_vertex_graph_image(g2, input, wsd2, nbasins2));
   mln_VAR(ima_e2, make_edge_graph_image(ima_v2, g2));
 
-  mln_VAR(vol2_,
-      morpho::elementary::dilation(extend(vol2 | (pw::value(vol2) == 0u),
-					  vol2),
+  mln_VAR(wsd2_,
+      morpho::elementary::dilation(extend(wsd2 | (pw::value(wsd2) == 0u),
+					  wsd2),
 				    c8()));
 
-  data::fill((vol2 | (pw::value(vol2) == 0u)).rw(), vol2_);
+  data::fill((wsd2 | (pw::value(wsd2) == 0u)).rw(), wsd2_);
 
-  io::ppm::save(labeling::mean_values(input, vol2, nbasins2),
+  io::ppm::save(labeling::mean_values(input, wsd2, nbasins2),
 		"wst_rag_mean_colors.ppm");
   io::ppm::save(make_debug_graph_image(input, ima_v2, ima_e2, box_size, literal::white),
 		"wst_rag_graph_image2_white.ppm");
