@@ -1,3 +1,9 @@
+2009-03-04  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	New fast front propagation.
+	* sandbox/folio/distance_front_new.hh: New fast front propagation
+	(not tested).
+
 2009-03-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Fix compilation issues.
