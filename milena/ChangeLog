@@ -1,3 +1,15 @@
+2009-03-03  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Fix compilation issues.
+
+	* mln/canvas/morpho/attribute_filter.hh: move MLN_INCLUDE_ONLY guards.
+
+	* mln/registration/icp.hh: add missing to_vec(). Fix use of the new
+	closest_point_functor.
+
+	* mln/transform/internal/closest_point_functor.hh: fix a wrong index
+	propagation.
+
 2009-03-03  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add standard deviation accumulator.

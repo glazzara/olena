@@ -46,6 +46,11 @@ namespace mln
     namespace internal
     {
 
+
+      /// Functor to be passed to a canvas.
+      /// Computes an image of closest points.
+      ///
+      /// The image values are initialized with \p pset.nsites().
       template <typename I>
       struct closest_point_functor_with_indexes
       {
@@ -72,7 +77,10 @@ namespace mln
 	void process_(unsigned p, unsigned n);
       };
 
-
+      /// Functor to be passed to a canvas.
+      /// Computes an image of closest points.
+      ///
+      /// The image values are initialized with \p literal::origin.
       template <typename I>
       struct closest_point_functor_with_sites
       {
@@ -115,11 +123,11 @@ namespace mln
       closest_point_functor_with_indexes<I>::init(const I& input)
       {
 	initialize(cp_ima, input);
-	data::fill(cp_ima, 0u);
+	data::fill(cp_ima, pset_.nsites());
 
 	mln_piter(p_array<mln_psite(I)>) p(pset_);
 	for_all(p)
-	  cp_ima(p) = cp_ima.index_of_point(p);
+	  cp_ima(p) = p.index();
       }
 
       template <typename I>

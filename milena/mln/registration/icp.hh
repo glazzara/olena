@@ -55,7 +55,7 @@
 
 # include <mln/core/alias/neighb3d.hh>
 
-# include <mln/transform/internal/closest_point_functor.hh>
+# include <mln/transform/distance_and_closest_point_geodesic.hh>
 # include <mln/canvas/distance_geodesic.hh>
 # include <mln/pw/all.hh>
 
@@ -75,6 +75,8 @@
 # include <mln/literal/colors.hh>
 
 # include <mln/util/timer.hh>
+
+# include <mln/io/cloud/save.hh>
 
 namespace mln
 {
@@ -165,17 +167,15 @@ namespace mln
 	data::fill(model, false);
 	data::fill((model | X).rw(), true);
 
-	transform::internal::closest_point_functor<model_t> f(X);
 
-	util::timer t;
-	t.start();
-	dmap_X_ = canvas::distance_geodesic(model, c6(),
-					    mln_max(value::int_u16),
-					    f);
-	std::cout << "distance_geodesic = " << t << "s" << std::endl;
+	typedef util::couple<mln_ch_value(model_t, value::int_u16),
+			     mln_ch_value(model_t, unsigned)> couple_t;
+	couple_t cpl = transform::distance_and_closest_point_geodesic(X, box,
+								      c6(),
+								      mln_max(value::int_u16));
 
-	initialize(this->cp_ima_, f.cp_ima);
-	this->cp_ima_ = f.cp_ima;
+	dmap_X_ = cpl.first();
+	cp_ima_ = cpl.second();
 
 	mln_postcondition(cp_ima_.is_valid());
 	mln_postcondition(cp_ima_.domain().is_valid());
@@ -183,27 +183,27 @@ namespace mln
         std::cout << "pmax = " << cp_ima_.domain().pmax() << std::endl;;
 
 #ifndef NDEBUG
-//	mln_ch_value(I, bool) debug2(box);
-//	data::fill(debug2, false);
-//	mln_ch_value(I, value::rgb8) debug(box);
-//	mln_piter(p_array<P>) p(X);
-//	for_all(p)
-//	{
-//	  debug(p) = debug::internal::random_color(value::rgb8());
-//	  debug2(p) = true;
-//	}
-//	io::pbm::save(slice(debug2,0), "debug2-a.ppm");
-//
-//	mln_piter(I) pi(cp_ima_.domain());
-//	for_all(pi)
-//	{
-//	  debug(pi) = debug(cp_ima_(pi));
-//	  debug2(pi) = debug2(cp_ima_(pi));
-//	}
-//
-//	io::pbm::save(slice(debug2,0), "debug2-b.ppm");
-//	io::ppm::save(slice(debug,0), "debug.ppm");
-//	std::cout << "map saved" << std::endl;
+	mln_ch_value(I, bool) debug2(box);
+	data::fill(debug2, false);
+	mln_ch_value(I, value::rgb8) debug(box);
+	mln_piter(p_array<P>) p(X);
+	for_all(p)
+	{
+	  debug(p) = debug::internal::random_color(value::rgb8());
+	  debug2(p) = true;
+	}
+	io::pbm::save(slice(debug2,0), "debug2-a.ppm");
+
+	mln_piter(I) pi(cp_ima_.domain());
+	for_all(pi)
+	{
+	  debug(pi) = debug(cp_ima_(pi));
+	  debug2(pi) = debug2(cp_ima_(pi));
+	}
+
+	io::pbm::save(slice(debug2,0), "debug2-b.ppm");
+	io::ppm::save(slice(debug,0), "debug.ppm");
+	std::cout << "map saved" << std::endl;
 #endif
       }
 
@@ -278,11 +278,11 @@ namespace mln
 
       mln_piter(p_array<P>) p(kept);
       for_all(p)
-	ext_result(qR.rotate(p) + qT) = literal::green;
+	ext_result(qR.rotate(p.to_vec()) + qT) = literal::green;
 
       mln_piter(p_array<P>) p2(removed);
       for_all(p2)
-	ext_result(qR.rotate(p2) + qT) = literal::red;
+	ext_result(qR.rotate(p2.to_vec()) + qT) = literal::red;
 
       io::ppm::save(slice(ext_result,0), "registered-2.ppm");
     }
@@ -427,6 +427,16 @@ namespace mln
 	}
       }
 
+      {
+	std::ostringstream ss2;
+	ss2 << method << "_" << r << "_removed_sites" << ".cloud";
+	io::cloud::save(removed_set, ss2.str());
+      }
+      {
+	std::ostringstream ss2;
+	ss2 << method << "_" << r << "_kept_sites" << ".cloud";
+	io::cloud::save(tmp, ss2.str());
+      }
 
 # ifndef NDEBUG
       std::ostringstream ss2;
@@ -458,14 +468,14 @@ namespace mln
       mln_piter(p_array<P>) p1(P_);
       for_all(p1)
       {
-	vec3d_f Pk_i = pair.first.rotate(p1) + pair.second;
+	vec3d_f Pk_i = pair.first.rotate(p1.to_vec()) + pair.second;
 	out(Pk_i) = literal::red;
       }
 
       mln_piter(p_array<P>) p2(P_sub);
       for_all(p2)
       {
-	vec3d_f Pk_i = pair.first.rotate(p2) + pair.second;
+	vec3d_f Pk_i = pair.first.rotate(p2.to_vec()) + pair.second;
 	out(Pk_i) = c;
       }
 

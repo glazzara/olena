@@ -47,9 +47,14 @@
 # include <mln/data/fill.hh>
 # include <mln/level/sort_psites.hh>
 
-namespace mln {
-  namespace canvas {
-    namespace morpho {
+namespace mln
+{
+
+  namespace canvas
+  {
+
+    namespace morpho
+    {
 
       // Facade Fwd Declaration
       template <typename I, typename N, typename A>
@@ -433,10 +438,10 @@ namespace mln {
 	  };
 	  return attribute_filter_dispatch(metal::bool_<test>(), input, nbh, a, lambda, increasing);
 	}
+
       } // end of namespace mln::canvas::morpho::internal
 
 
-# endif // ! MLN_INCLUDE_ONLY
 
       // Facade.
 
@@ -451,8 +456,13 @@ namespace mln {
 	return internal::attribute_filter_dispatch(input, nbh, a, lambda, increasing);
       }
 
+
+# endif // ! MLN_INCLUDE_ONLY
+
     } // end of namespace mln::canvas::morpho
+
   } // end of namespace mln::canvas
+
 } // end of namespace mln
 
 
