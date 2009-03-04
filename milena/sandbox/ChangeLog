@@ -1,3 +1,10 @@
+2009-03-04  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add methods to check attribute computing.
+	* edwin/tree/propagate.hh,
+	* edwin/tree/tree.cc: Fix bugs and add check function.
+	* edwin/tree/routines.hh: Some utils about tree manipulation.
+
 2009-03-04  Vivien Delmon <vivien.delmon@lrde.epita.fr>
 
 	Two algorithms implemented during my internship in GE.

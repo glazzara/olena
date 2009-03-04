@@ -1,4 +1,3 @@
-
 #include <mln/core/var.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
@@ -12,149 +11,167 @@
 #include <mln/io/pbm/save.hh>
 
 #include <mln/level/sort_psites.hh>
-#include <mln/morpho/elementary/gradient.hh>
 
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
-#include <mln/morpho/attribute/card.hh>
-#include "../attributes/occupation.hh"
-#include "propagate.hh"
 
+#include <mln/morpho/attribute/card.hh>
+#include <mln/morpho/attribute/sharpness.hh>
+
+// to check:
+#include <mln/labeling/blobs.hh>
+#include <mln/labeling/compute.hh>
+#include <mln/accu/count.hh>
 #include <mln/debug/println.hh>
+#include <../../theo/color/change_attributes.hh>
+//-----------------
+
+
+#include <string>
+
+#include "propagate.hh"
+#include "routines.hh"
 
 
 namespace mln
 {
-  template <typename T, typename A>
-  inline
-  void
-  sample(const T& t, const A& a, int echo)
+  /// Structure to simplify filtering using min tree.
+  template <typename I>
+  struct treefilter : Object< treefilter<I> >
   {
-    A aa;
-    initialize(aa, a);
-    data::fill(aa, false); // 'aa' is false /a priori/.
+    typedef p_array< mln_site(I) > S;
+    typedef morpho::tree::data<I,S> tree_t;
 
-    typedef typename T::nodes_t N;
-    mln_fwd_piter(N) n(t.nodes());
-    for_all(n)
-      // We only keep "highest" nodes at 'true' => largest component.
-      // aa(n) = (a(n) == true && a(t.parent(n)) == false);
-       aa(n) = a(n);
+    /// Constructor: Make the min tree based on the image \p f_, then
+    /// performs calculus using \p a_ attribute. To finish, it filters
+    /// tree's nodes which values are in [lambda1, lambda2] set.
+    template <typename A>
+    treefilter(Image<I>& f_,
+	       Accumulator<A> a_,
+	       double lambda1 = mln_min(double),
+	       double lambda2 = mln_max(double));
 
-    if (echo) io::pbm::save(aa, "before.pbm");
-    if (echo > 1) debug::println("aa (before)", aa);
+    /// Get the min tree performed.
+    tree_t& tree() { return tree_; };
 
-    back_propagate_subbranch(t, aa, true);
-    if (echo > 1) debug::println("aa (After subbranch propagation)", aa);
-    back_propagate_level(t, aa);
+    /// Get the boolean image got after filtering.
+    mln_ch_value(I, bool)& img() {return img_; };
 
-    if (echo > 1) debug::println("aa (Final)", aa);
-    io::pbm::save(aa, "out.pbm");
+  private:
+    S sorted_sites_;
+    tree_t tree_;
+    mln_ch_value(I, bool) img_;
+  };
 
+
+  template <typename I>
+  template <typename A>
+  inline
+  treefilter<I>::treefilter(Image<I>& f_,
+			    Accumulator<A> a_,
+			    double lambda1,
+			    double lambda2)
+    : sorted_sites_(level::sort_psites_decreasing(exact(f_))),
+      tree_(exact(f_), sorted_sites_, c4())
+  {
+    mln_VAR(a, morpho::tree::compute_attribute_image(a_, tree_));
+
+    img_ = duplicate((pw::cst(lambda1) < pw::value(a) &&
+		      pw::value(a) < pw::cst(lambda2))
+		     | a.domain());
+
+    debug::println("attribut", a);
   }
 
+//   template <typename T>
+//   inline
+//   float
+//   find_treshold(const T& t)
+//   {
+//     mln_bkd_piter(T) = p(t.domain());
+
+    
+//     for_all(p)
+//       if (t.is_a_node(p))
+// 	{
+// 	  if 
+
+// 	}
+//   }
+
+  template <typename I, typename A>
+  void filtercheck(const Image<I>& img, const  Meta_Accumulator<A>& a)
+  {
+
+    using value::label_8;
+    label_8 n;
+    util::array<unsigned int> counts;
+
+    debug::println("binaire:", img);
+    mln_VAR(lbl, labeling::blobs(img, c4(), n));
+    debug::println("blob:", lbl);
+    counts = labeling::compute(a, lbl, n);
+    for (unsigned i = 0; i < counts.nelements(); i++)
+      {
+	std::cout << "counts[" << i << "]: " << counts[i]
+		  << std::endl;
+      }
+  }
+} // end of namespace mln
 
 
-} // mln
-
-using namespace mln;
-int echo = 0;
-
-template <typename I, typename A>
-inline
-void
-create_tree_and_compute(Image<I>& f_, Accumulator<A> a_, float lambda, float lambda2 = mln_max(float))
-{
-  using value::int_u8;
-
-  I f = exact(f_);
-
-  typedef p_array< mln_site(I) > S;
-  S s = level::sort_psites_decreasing(f);
-
-  typedef morpho::tree::data<I,S> tree_t;
-  tree_t t(f, s, c4());
-
-  mln_VAR(a, morpho::tree::compute_attribute_image(a_, t));
-
-  if (echo > 1)
-    {
-      debug::println("parent imagee", t.parent_image());
-      debug::println("a", a);
-      debug::println("a | nodes", a | t.nodes());
-    }
-
-  std::cout << lambda;
-  image2d<bool> b = duplicate((pw::cst(lambda) < pw::value(a) && pw::value(a) < pw::cst(lambda2)) | a.domain());
-  sample(t, b, echo);
-}
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.pgm echo lambda1 lamda2" << std::endl;
-  std::cerr << "\techo:\t0 (none)" << std::endl
-	    << "\t\t1 (img output)" << std::endl
-	    << "\t\t2 (debug)" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input.pgm accumulator lambda1 [lambda2]"
+	    << std::endl;
   abort();
 }
 
+
 int main(int argc, char* argv[])
 {
+  using namespace mln;
   using value::int_u8;
 
-  mln_VAR(nbh, c4());
+  typedef image2d<int_u8> I;
+
+  float lambda1;
+  float lambda2;
+  I input;
 
   if (argc < 4)
     usage(argv);
 
-  echo = std::atoi(argv[2]);
-  float lambda1 = atof(argv[3]);
-  float lambda2 = (argc == 5) ? atof(argv[4]) : mln_max(float);
-
-  typedef image2d<int_u8> I;
-
-  I input;
   io::pgm::load(input, argv[1]);
-  if (echo > 1) debug::println("input", input);
 
-  I f = input;
-  //  I f = morpho::elementary::gradient(input, nbh);
-  if (echo > 1) debug::println("f", f);
+  lambda1 = atof(argv[3]);
+  lambda2 = (argc == 5) ? atof(argv[4]) : mln_max(float);
 
-  // test de volume
-  typedef image1d<int> IM;
-  IM img(6);
-  morpho::attribute::volume<IM> accu;
-  img.element(0) = 50;
-  img.element(1) = 50;
-  img.element(2) = 40;
-  img.element(3) = 40;
-  img.element(4) = 20;
-  img.element(5) = 20;
+  std::string s(argv[2]);
+  treefilter<I>* f = 0;
+  if (s == "card")
+    f = new treefilter<I>(input, morpho::attribute::card<I>(), lambda1, lambda2);
+  else if (s == "sharpness")
+    f = new treefilter<I>(input, morpho::attribute::sharpness<I>(), lambda1, lambda2);
+  else
+    usage(argv);
 
-  mln_piter_(image1d<int>) p(img.domain());
+  back_propagate_subbranch(f->tree(), f->img() ,true);
+  back_propagate_level(f->tree(), f->img());
 
-  int tab[6] = { 50, 50, 40, 40, 20, 20 };
-
-  for (int i = 0; i < 6; i++)
-  {
-    accu.take(tab[i]);
-    std::cout << "(" << tab[i] << "," << accu.to_result() << "):";
-  }
-  std::cout << "Volume:" << accu.to_result() << std::endl;
-
-  accu.init ();
-  for (int i = 5; i >= 0; i--)
-  {
-    accu.take(tab[i]);
-    std::cout << "(" << tab[i] << "," << accu.to_result() << "):";
-  }
-  std::cout << "Volume:" << accu.to_result() << std::endl;
+  filtercheck(f->img(), accu::meta::count());
 
 
-  //create_tree_and_compute(img, morpho::attribute::volume<I2>());
-  //
 
-  create_tree_and_compute(f, morpho::attribute::occupation<I>(), lambda1, lambda2);
+  util::array< mln_psite_(I) > counts;
+  counts = morpho::tree::get_first_nodes(f->img(), f->tree());
+  for (unsigned i = 0; i < counts.nelements(); i++)
+    std::cout << "counts[" << i << "]: " << counts[i] << std::endl;
 
+  mln_VAR(a, morpho::tree::compute_attribute_image(morpho::attribute::card<I>(), f->tree()));
+  display_tree_attributes(f->tree(), a);
+
+  io::pbm::save(f->img(), "out.pbm");
+  delete f;
 }

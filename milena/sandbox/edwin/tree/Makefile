@@ -1,27 +1,24 @@
-TARGET=a.out
+TARGET=tree
 SRC=tree.cc
 OBJS=${SRC:.cc=.o}
 
-OLENADIR=../../../..
+OLENADIR=$(MLN_DIR)/..
 MILENADIR=$(OLENADIR)/milena
 
 CXXFLAGS=-I$(MILENADIR) -I./
 
-CXXFLAGS += "-DNDEBUG -O1"
-
+CXXFLAGS += -DNDEBUG -O1
 
 CXX=g++
 LD=g++
 LDFLAGS=
 
 all: clean $(TARGET)
+	#chmod +x exo2.sh
+	#./exo2.sh
 
 $(TARGET): $(OBJS) $(SRC)
 	$(LD) $(LDFLAGS) -o $@ $(OBJS)
-
-
-$(REF): $(OBJS_REF) $(SRC_REF)
-	$(LD) $(LDFLAGS) -o $@ $(OBJS_REF)
 
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $<
@@ -30,4 +27,6 @@ $(REF): $(OBJS_REF) $(SRC_REF)
 	$(CXX) $(CXXFLAGS) -c $<
 
 clean:
-	rm -f *.o $(REF) $(TARGET)
+	rm -f *.o $(TARGET)
+	rm -f *.pbm
+	find  -name "*.pgm" \! -regex ".*/affiche2?.pgm" -delete

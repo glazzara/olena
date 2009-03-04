@@ -62,7 +62,7 @@ namespace mln {
       {
 	mln_bkd_piter(T) p(t.domain());
 	for_all(p)
-	  if (a(t.parent(p)) == v)
+	  if (t.is_a_node(p) && a(t.parent(p)) == v)
 	    {
 	      mln_assertion(t.is_a_node(t.parent(p)));
 	      a(p) = a(t.parent(p));
