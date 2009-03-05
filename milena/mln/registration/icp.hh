@@ -197,8 +197,8 @@ namespace mln
 	mln_piter(I) pi(cp_ima_.domain());
 	for_all(pi)
 	{
-	  debug(pi) = debug(cp_ima_(pi));
-	  debug2(pi) = debug2(cp_ima_(pi));
+	  debug(pi) = debug(X[cp_ima_(pi)]);
+	  debug2(pi) = debug2(X[cp_ima_(pi)]);
 	}
 
 	io::pbm::save(slice(debug2,0), "debug2-b.ppm");

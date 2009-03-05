@@ -1,3 +1,20 @@
+2009-03-05  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Fix tests.
+
+	* mln/canvas/morpho/attribute_filter.hh: add a missing inline.
+
+	* mln/registration/icp.hh: fix compilation issues.
+
+	* tests/registration/registration.cc: enlarge the closest_point image
+	bbox.
+
+	* tests/transform/bench_closest_point_geodesic.cc: Update call to
+	distance_and_closest_point_geodesic.
+
+	* tests/transform/distance_and_closest_point_geodesic.cc: fix
+	reference resut.
+
 2009-03-04  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	New fast front propagation.

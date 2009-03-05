@@ -35,9 +35,9 @@
 #include <mln/core/alias/neighb3d.hh>
 #include <mln/data/fill.hh>
 #include <mln/opt/at.hh>
-#include <mln/transform/closest_point_geodesic.hh>
+#include <mln/transform/distance_and_closest_point_geodesic.hh>
 #include <mln/value/int_u8.hh>
-
+#include <mln/util/couple.hh>
 
 int main()
 {
@@ -56,9 +56,8 @@ int main()
 	    std::rand() % nrows,
 	    std::rand() % ncols) = true;
 
-  trace::quiet = false;
-
-  image3d<point3d> output = transform::closest_point_geodesic(input,
-							      c6(),
-							      mln_max(unsigned));
+  util::couple<image3d<unsigned>, image3d<point3d> > output =
+	  transform::distance_and_closest_point_geodesic(input,
+						         c6(),
+						         mln_max(unsigned));
 }

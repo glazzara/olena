@@ -446,6 +446,7 @@ namespace mln
       // Facade.
 
       template <typename I, typename N, typename A>
+      inline
       mln_concrete(I)
       attribute_filter(const Image<I>& input,
 		       const Neighborhood<N>& nbh,
