@@ -1,3 +1,11 @@
+2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Complete Etienne's work.
+
+	* folio/distance_front.cc: New.
+	* folio/distance_front_new.hh: Make it compile.
+	Fix missing work.
+
 2009-03-04  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add methods to check attribute computing.

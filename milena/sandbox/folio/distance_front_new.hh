@@ -38,11 +38,7 @@
 # include <mln/core/concept/weighted_window.hh>
 # include <mln/data/fill.hh>
 # include <mln/accu/max.hh>
-
-//# include <mln/core/routine/duplicate.hh>
-//# include <mln/core/site_set/p_queue_fast.hh>
-//# include <queue>
-//# include <mln/extension/adjust_fill.hh>
+# include <mln/extension/adjust_fill.hh>
 
 
 namespace mln
@@ -75,11 +71,14 @@ namespace mln
 		typename F>
       void
       distance_front_tests(const Image<I>& input_,
-			   const Neighborhood<N>& nbh, const Weighted_Window<W>& w_win, D max,
+			   const Neighborhood<N>& nbh_,
+			   const Weighted_Window<W>& w_win_,
+			   D max,
 			   F& functor)
       {
 	const I& input = exact(input_);
 	const N& nbh   = exact(nbh_);
+	const W& w_win = exact(w_win_);
 
 	mln_precondition(input.is_valid());
 	mln_precondition(nbh.is_valid());
@@ -108,7 +107,9 @@ namespace mln
 		  typename F>
 	mln_ch_value(I, D)
 	  distance_front(const Image<I>& input_,
-			 const Neighborhood<N>& nbh, const Weighted_Window<W>& w_win, D max,
+			 const Neighborhood<N>& nbh_,
+			 const Weighted_Window<W>& w_win_,
+			 D max,
 			 F& functor)
 	{
 	  trace::entering("canvas::impl::generic::distance_front");
@@ -148,61 +149,61 @@ namespace mln
 	    mln_niter(N) n(nbh, p);
 	    for_all(p)
 	      if (functor.inqueue_p_wrt_input_p(input(p))) // <-- inqueue_p_wrt_input_p
-	      {
-		dmap(p) = 0;
-		for_all(n)
-		  if (input.domain().has(n) &&
-		      functor.inqueue_p_wrt_input_n(input(n))) // <-- inqueue_p_wrt_input_n
-		  {
-		    bucket[0].push_back(p);
-		    ++bucket_size;
-		    break;
-		  }
-	      }
-	  }
+		{
+		  dmap(p) = 0;
+		  for_all(n)
+		    if (input.domain().has(n) &&
+			functor.inqueue_p_wrt_input_n(input(n))) // <-- inqueue_p_wrt_input_n
+		      {
+			bucket[0].push_back(p);
+			++bucket_size;
+			break;
+		      }
+		}
+	  } // end of Initialization.
 
 	  // Propagation.
 	  {
 	    P p;
 	    mln_qiter(W) q(w_win, p);
 	    for (unsigned d = 0; bucket_size != 0; ++d)
-	    {
-	      bucket_t& bucket_d = bucket[d % mod];
-	      for (unsigned i = 0; i < bucket_d.size(); ++i)
 	      {
-		p = bucket_d[i];
-
-		if (dmap(p) == max)
-		{
-		  // Saturation so stop.
-		  bucket_size = bucket_d.size(); // So at end bucket_size == 0.
-		  break;
-		}
-
-		if (dmap(p) < d)
-		  // p has already been processed, having a distance less than d.
-		  continue;
-
-		for_all(q)
-		  if (dmap.domain().has(q) && dmap(q) > d)
+		bucket_t& bucket_d = bucket[d % mod];
+		for (unsigned i = 0; i < bucket_d.size(); ++i)
 		  {
-		    unsigned d_ = d + q.w();
-		    if (d_ < dmap(q))
-		    {
-		      dmap(q) = d_;
-		      functor.process(p, q); // <- process
-		      bucket[d_ % mod].push_back(q);
-		      ++bucket_size;
-		    }
-		  }
-	      }
-	      bucket_size -= bucket_d.size();
-	      bucket_d.clear();
-	    }
+		    p = bucket_d[i];
 
-	    trace::exiting("canvas::impl::generic::distance_front");
-	    return dmap;
-	  }
+		    if (dmap(p) == max)
+		      {
+			// Saturation so stop.
+			bucket_size = bucket_d.size(); // So at end bucket_size == 0.
+			break;
+		      }
+
+		    if (dmap(p) < d)
+		      // p has already been processed, having a distance less than d.
+		      continue;
+
+		    for_all(q)
+		      if (dmap.domain().has(q) && dmap(q) > d)
+			{
+			  unsigned d_ = d + q.w();
+			  if (d_ < dmap(q))
+			    {
+			      dmap(q) = d_;
+			      functor.process(p, q); // <- process
+			      bucket[d_ % mod].push_back(q);
+			      ++bucket_size;
+			    }
+			}
+		  }
+		bucket_size -= bucket_d.size();
+		bucket_d.clear();
+	      }
+	  } // end of Propagation.
+	  
+	  trace::exiting("canvas::impl::generic::distance_front");
+	  return dmap;
 	}
 
       } // of namespace mln::canvas::impl::generic
@@ -216,109 +217,113 @@ namespace mln
 		typename F>
       mln_ch_value(I, D)
 	distance_front_fastest(const Image<I>& input_,
-			       const Neighborhood<N>& nbh, const Weighted_Window<W>& w_win,
+			       const Neighborhood<N>& nbh_,
+			       const Weighted_Window<W>& w_win_,
 			       D max, F& functor)
       {
-	  trace::entering("canvas::impl::distance_front_fastest");
+	trace::entering("canvas::impl::distance_front_fastest");
 
-	  const I& input = exact(input_);
-	  const N& nbh   = exact(nbh_);
-	  const W& w_win = exact(w_win_);
+	const I& input = exact(input_);
+	const N& nbh   = exact(nbh_);
+	const W& w_win = exact(w_win_);
 
-// 	  mln_precondition(input.is_valid()); // ?x
-// 	  mln_precondition(w_win.is_valid()); // ?x
-	  extension::adjust(input, w_win);    // ?
+	mln_precondition(input.is_valid());
+	mln_precondition(w_win.is_valid());
 
-//	  typedef mln_site(I) P;
-	  typedef std::vector<unsigned> bucket_t;
+	// Handling w_win.
+	extension::adjust(input, w_win);
+	const unsigned n_ws = w_win.size();
+	util::array<int> dp = offsets_wrt(input, w_win.win());
+	mln_invariant(dp.nelements() == n_ws);
 
-	  // Distance map.
-	  mln_ch_value(I, D) dmap;
-	  initialize(dmap, input);
-	  data::fill(dmap, max);
+	// Distance map.
+	mln_ch_value(I, D) dmap;
+	initialize(dmap, input);
+	data::fill(dmap, max);
 
-	  // Mod determination.
-	  unsigned mod;
-	  {
-	    accu::max<unsigned> m;
-	    for (unsigned i = 0; i < w_win.size(); ++i)
-	      m.take(w_win.w(i));
-	    mod = unsigned(m) + 1;
-	  }
+	// Mod determination.
+	unsigned mod;
+	{
+	  accu::max<unsigned> m;
+	  for (unsigned i = 0; i < w_win.size(); ++i)
+	    m.take(w_win.w(i));
+	  mod = unsigned(m) + 1;
+	}
 
-	  // Aux data.
-	  std::vector<bucket_t> bucket(mod);
-	  unsigned bucket_size = 0;
+	// Aux data.
+	typedef std::vector<unsigned> bucket_t;
+	std::vector<bucket_t> bucket(mod);
+	unsigned bucket_size = 0;
 
-	  // Initialization.
-	  {
-	    functor.init_(input); // <-- init
+	// Initialization.
+	{
+	  functor.init_(input); // <-- init
 
-	    // For the extension to be ignored: // ?
-	    extension::fill(input, true);       // ?
-	    extension::fill(dmap, D(0));        // ?
+	  // For the extension to be ignored:
+	  extension::fill(input, true);
+	  extension::fill(dmap, D(0));
 
-	    mln_pixter(const I)    p(input);
-	    mln_nixter(const I, N) n(p, nbh);
-	    for_all(p)
-	      if (functor.inqueue_p_wrt_input_p_(input(p))) // <-- inqueue_p_wrt_input_p
+	  mln_pixter(const I)    p(input);
+	  mln_nixter(const I, N) n(p, nbh);
+	  for_all(p)
+	    if (functor.inqueue_p_wrt_input_p_(p.val())) // <-- inqueue_p_wrt_input_p
 	      {
 		dmap.element(p.offset()) = 0;
 		for_all(n)
 		  if (functor.inqueue_p_wrt_input_n_(n.val())) // <-- inqueue_p_wrt_input_n
-		  {
-		    bucket[0].push_back(p.offset());
-		    ++bucket_size;
-		    break;
-		  }
+		    {
+		      bucket[0].push_back(p.offset());
+		      ++bucket_size;
+		      break;
+		    }
 	      }
-	  }
+	} // end of Initialization.
 
-	  // Propagation.
-	  {
-	    unsigned p;
+	// Propagation.
+	{
+	  unsigned p;
 
-	    mln_qiter(W) q(w_win, p);                       // ?x-
-
-	    for (unsigned d = 0; bucket_size != 0; ++d)
+	  for (unsigned d = 0; bucket_size != 0; ++d)
 	    {
 	      bucket_t& bucket_d = bucket[d % mod];
 	      for (unsigned i = 0; i < bucket_d.size(); ++i)
-	      {
-		p = bucket_d[i];
-
-		if (dmap.element(p) == max)
 		{
-		  // Saturation so stop.
-		  bucket_size = bucket_d.size(); // So at end bucket_size == 0.
-		  break;
-		}
+		  p = bucket_d[i];
 
-		if (dmap.element(p) < d)
-		  // p has already been processed, having a distance less than d.
-		  continue;
-
-		for_all(q)
-		{
-		  if (dmap.domain().has(q) && dmap(q) > d)
-		  {
-		    unsigned d_ = d + q.w();
-		    if (d_ < dmap(q))
+		  if (dmap.element(p) == max)
 		    {
-		      dmap(q) = d_;
-		      functor.process_(dmap.element(p), q); // <- process
-		      bucket[d_ % mod].push_back(q);
-		      ++bucket_size;
+		      // Saturation so stop.
+		      bucket_size = bucket_d.size(); // So at end bucket_size == 0.
+		      break;
 		    }
-		  }
-	      }
-	      bucket_size -= bucket_d.size();
-	      bucket_d.clear();
-	    }
 
-	    trace::exiting("canvas::impl::distance_front_fastest");
-	    return dmap;
-	  }
+		  if (dmap.element(p) < d)
+		    // p has already been processed, having a distance less than d.
+		    continue;
+
+		  for (unsigned i = 0; i < n_ws; ++i)
+		  {
+		    unsigned q = p + dp[i];
+		    if (dmap.element(q) > d)
+		      {
+			unsigned d_ = d + w_win.w(i);
+			if (d_ < dmap.element(q))
+			  {
+			    dmap.element(q) = d_;
+			    functor.process_(p, q); // <- process
+			    bucket[d_ % mod].push_back(q);
+			    ++bucket_size;
+			  }
+		      }
+		  }
+		  bucket_size -= bucket_d.size();
+		  bucket_d.clear();
+		}
+	    }
+	} // end of Propagation.
+
+	trace::exiting("canvas::impl::distance_front_fastest");
+	return dmap;
       }
 
 
@@ -355,7 +360,7 @@ namespace mln
 				D max, F& functor)
       {
   	return impl::distance_front_fastest(input, nbh, w_win, max, functor);
-// 	return impl::generic::distance_front(input, nbh, w_win, max, functor);
+	// 	return impl::generic::distance_front(input, nbh, w_win, max, functor);
       }
 
       template <typename I,
