@@ -1,5 +1,14 @@
 2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix fastest distance computation.
+
+	* folio/distance_front.cc (main): Remove echo.
+	Test equality between generic and fastest results.
+	* folio/distance_front_new.hh
+	(distance_front_fastest): Fix erroneous line moves.
+
+2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Complete Etienne's work.
 
 	* folio/distance_front.cc: New.

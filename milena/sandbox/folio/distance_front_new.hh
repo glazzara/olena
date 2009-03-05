@@ -316,9 +316,9 @@ namespace mln
 			  }
 		      }
 		  }
-		  bucket_size -= bucket_d.size();
-		  bucket_d.clear();
 		}
+	      bucket_size -= bucket_d.size();
+	      bucket_d.clear();
 	    }
 	} // end of Propagation.
 

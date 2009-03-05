@@ -38,9 +38,10 @@
 #include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/opt/at.hh>
+#include <mln/level/compare.hh>
 
-# include <mln/transform/internal/distance_functor.hh>
-# include "distance_front_new.hh"
+#include <mln/transform/internal/distance_functor.hh>
+#include "distance_front_new.hh"
 
 
 int main()
@@ -74,13 +75,14 @@ int main()
 					      w_win,
 					      dmax,
 					      f);
-  debug::println("ref", ref);
+  // debug::println("ref", ref);
 
   output = canvas::impl::distance_front_fastest(input,
 						nbh,
 						w_win,
 						dmax,
 						f);
-  debug::println("output", output);
+  // debug::println("output", output);
 
+  mln_invariant(output == ref);
 }
