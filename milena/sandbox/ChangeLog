@@ -1,3 +1,9 @@
+2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add 2D distance chamfer values.
+
+	* theo/dmap.txt: New.
+
 2009-03-05  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add source for dicom2dump tool.
