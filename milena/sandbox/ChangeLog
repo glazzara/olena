@@ -1,5 +1,11 @@
 2009-03-05  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
+	Fix ultrasound dump.
+	* fabien/bin/dicom2dump.cc: Minor fix.
+	* fabien/igr/dumps/souris18_us_01.dump: Correct dump.
+
+2009-03-05  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
 	Add dump example for US images..
 	* fabien/bin/dicom2dump.cc: Update.
 	* fabien/igr/dumps/souris18_us_01.dump: New example file.
