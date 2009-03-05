@@ -80,6 +80,7 @@ namespace mln
 
 // Sub-directories.
 
+# include <mln/morpho/approx/all.hh>
 # include <mln/morpho/attribute/all.hh>
 # include <mln/morpho/closing/all.hh>
 # include <mln/morpho/elementary/all.hh>

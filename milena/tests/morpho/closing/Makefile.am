@@ -2,6 +2,9 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+SUBDIRS =					\
+  approx
+
 check_PROGRAMS = 			\
 	leveling			\
 	algebraic			\

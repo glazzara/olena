@@ -1,5 +1,34 @@
 2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add morpho approximate dil, ero, clo and ope.
+
+	* mln/morpho/approx: New directory.
+	* mln/morpho/approx/dilation.hh: New.
+	* mln/morpho/approx/erosion.hh: New.
+	* mln/morpho/approx/all.hh: New.
+	* mln/morpho/closing/approx: New directory.
+	* mln/morpho/closing/approx/all.hh: New.
+	* mln/morpho/closing/approx/structural.hh: New.
+	* mln/morpho/opening/approx: New directory.
+	* mln/morpho/opening/approx/structural.hh: New.
+	* mln/morpho/opening/approx/all.hh: New.
+	* mln/morpho/all.hh: Update.
+	* tests/morpho/approx: New directory.
+	* tests/morpho/approx/erosion.cc: New.
+	* tests/morpho/approx/dilation.cc: New.
+	* tests/morpho/approx/Makefile.am: New.
+	* tests/morpho/closing/approx: New directory.
+	* tests/morpho/closing/approx/structural.cc: New.
+	* tests/morpho/closing/approx/Makefile.am: New.
+	* tests/morpho/closing/Makefile.am: Update.
+	* tests/morpho/opening/approx: New directory.
+	* tests/morpho/opening/approx/structural.cc: New.
+	* tests/morpho/opening/approx/Makefile.am: New.
+	* tests/morpho/opening/Makefile.am: Update.
+	* tests/morpho/Makefile.am: Update.
+
+2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add fastest version for thick front distance transform.
 
 	* mln/core/concept/weighted_window.hh
