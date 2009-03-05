@@ -1,3 +1,11 @@
+2009-03-05 Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add Update mln/doc configuration.
+
+	* bootstrap: update path to generate_dist_files.sh
+
+	* configure.ac: configure new directories milena/doc.
+
 2009-03-01  Frederic Bour  <bour@lrde.epita.fr>
 
 	Add rush/exo3.

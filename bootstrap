@@ -133,7 +133,7 @@ run milena ./generate_dist_headers.sh
 
 # Generate lists of files to be part of the distribution
 # for the tutorial.
-run milena/doc/tutorial ./generate_dist_files.sh
+run milena/doc ./generate_dist_files.sh
 
 # Tell what's going on.
 set -x

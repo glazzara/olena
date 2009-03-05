@@ -164,8 +164,10 @@ AC_CONFIG_FILES([
     external/Makefile
     milena/Makefile
       milena/doc/Makefile
+      milena/doc/examples/Makefile
+      milena/doc/ref_guide/Makefile
       milena/doc/tutorial/Makefile
-      milena/doc/tutorial/samples/Makefile
+      milena/doc/white_paper/Makefile
       milena/mesh/Makefile
       milena/tools/Makefile
 ])
