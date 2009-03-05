@@ -1,5 +1,13 @@
 2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add Matlab code from Anne.
+
+	* theo/igr/melimage/irm_perf: New directory.
+	* theo/igr/melimage/irm_perf/dynaparam7.m: New.
+	* theo/exec/dump_12bit_to_pgm.cc: New.
+
+2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix image commit.
 
 	* fabien/igr/dumps/souris18_us_01.dump: Remove image.
