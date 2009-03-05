@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -69,7 +69,25 @@ namespace mln
       };
 
 
+      template <typename V, typename T = V, typename R = T>
+      struct linear_sat : public Function_v2v< linear_sat<V,T,R> >
+      {
+	typedef R result;
+
+	R operator()(const V& v) const;
+
+	template <typename U> 
+	R operator()(const U& u) const;
+
+	linear_sat(T a, T b);
+	T a, b;
+      };
+
+
 # ifndef MLN_INCLUDE_ONLY
+
+
+      // linear.
 
       template <typename V, typename T, typename R>
       inline
@@ -95,6 +113,41 @@ namespace mln
       {
 	return this->operator()(static_cast<V>(u));
       }
+
+
+      // linear_sat.
+
+      template <typename V, typename T, typename R>
+      inline
+      linear_sat<V,T,R>::linear_sat(T a, T b)
+	: a(a),
+	  b(b)
+      {
+      }
+
+      template <typename V, typename T, typename R>
+      inline
+      R
+      linear_sat<V,T,R>::operator()(const V& v) const
+      {
+	T res = a * static_cast<T>(v) + b;
+	if (res > mln_max(R))
+	  res = mln_max(R);
+	else if (res < mln_min(R))
+	  res = mln_min(R);
+	return mln::convert::to<R>(res);
+      }
+
+      template <typename V, typename T, typename R>
+      template <typename U>
+      inline
+      R
+      linear_sat<V,T,R>::operator()(const U& u) const
+      {
+	mlc_converts_to(U, V)::check();
+	return this->operator()(static_cast<V>(u));
+      }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

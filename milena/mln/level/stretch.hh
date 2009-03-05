@@ -89,14 +89,14 @@ namespace mln
 	    //FIXME: we would like to use float instead of double but we
 	    //can't for precision reasons. See ticket #179.
 	    double
-	      min = float(min_),
-	      max = float(max_),
+	      min = double(min_),
+	      max = double(max_),
 	      epsilon = mln_epsilon(float),
 	      M = mln_max(V) + 0.5f - epsilon,
 	      m = 0.0f - 0.5f + epsilon,
 	      a = (M - m) / (max - min),
 	      b = (m * max - M * min) / (max - min);
-	    fun::v2v::linear<double, double, V> f(a, b);
+	    fun::v2v::linear_sat<mln_value(I), double, V> f(a, b);
 	    output = level::transform(input, f);
 	  }
 	else

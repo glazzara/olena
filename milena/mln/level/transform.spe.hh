@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -273,6 +273,7 @@ namespace mln
 	trace::exiting("level::impl::transform_fast_lowq");
         return output;
       }
+
 
       template <typename I1, typename I2, typename F>
       mln_ch_value(I1, mln_result(F))

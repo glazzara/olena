@@ -1,5 +1,25 @@
 2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix level::stretch and value::lut_vec.
+
+	* mln/level/transform.spe.hh: Upgrade file doc style.
+	* mln/fun/v2v/linear.hh (linear_sat): New.
+
+	It is very useful so that we can use both the linear effect while
+	being restricted by the destination interval.
+	Consider int_u12 -> int_u8.  When data are in [0,512[, the
+	linear conversion function is a div 2.  Yet applying this
+	function on an image can use a LUT computed from 0 to 2^12;
+	unfortunately a "linear-not-saturating" function yields to
+	value overflows, e.g., for 1000.
+
+	* mln/level/stretch.hh (min_, max_): Fix missing update.
+	(f): Use linear_sat instead of linear.
+	* mln/value/lut_vec.hh (lut_vec): Fix ctor.
+	(operator<<): New.
+
+2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add morpho approximate dil, ero, clo and ope.
 
 	* mln/morpho/approx: New directory.

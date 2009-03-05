@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,11 @@
 #ifndef MLN_VALUE_LUT_VEC_HH
 # define MLN_VALUE_LUT_VEC_HH
 
-/*! \file mln/value/lut_vec.hh
- *
- * \brief Define some basic lut_vecs of values from value types.
- */
+/// \file mln/value/lut_vec.hh
+///
+/// Define some basic lut_vecs of values from value types.
+///
+/// \todo Use fun::saturate in lut_vec ctor.
 
 # include <vector>
 
@@ -96,6 +98,10 @@ namespace mln
     };
 
 
+    template <typename S, typename T>
+    std::ostream&
+    operator<<(std::ostream& ostr, const lut_vec<S,T>& lut);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -127,7 +133,7 @@ namespace mln
       n_ = vset.nvalues();
       vec_.reserve(n_);
       for (unsigned i = 0; i < n_; ++i)
-	vec_[i] = f_(vset[i]);
+	vec_.push_back(f_(vset[i]));
     }
 
     template <typename S, typename T>
@@ -154,6 +160,19 @@ namespace mln
     lut_vec<S,T>::nvalues() const
     {
       return vec_.size();
+    }
+
+    
+    template <typename S, typename T>
+    inline
+    std::ostream&
+    operator<<(std::ostream& ostr, const lut_vec<S,T>& lut)
+    {
+      ostr << "[ ";
+      for (unsigned i = 0; i < lut.nvalues(); ++i)
+	ostr << i << ':' << lut[i] << ' ';
+      ostr << ']';
+      return ostr;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
