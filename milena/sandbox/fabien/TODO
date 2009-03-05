@@ -18,5 +18,6 @@
 [X] Check conversion for mask (everything except int_u12(0))
 [ ] Extract ROI (projection or fill holes)
 [ ] Create routine for region colors
-[ ] Create dicom2dump (2d, 3d, int_u8, int_u12)
+[X] Create dicom2dump (2d, 3d, int_u8, int_u12)
 [ ] After threshold, take biggest object and then erode, dilate
+[ ] Fix n_max

@@ -1,3 +1,10 @@
+2009-03-05  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add dump example for US images..
+	* fabien/bin/dicom2dump.cc: Update.
+	* fabien/igr/dumps/souris18_us_01.dump: New example file.
+	* fabien/igr/seg_vol_irm.hh: Update.
+
 2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add 2D distance chamfer values.

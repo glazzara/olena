@@ -87,8 +87,8 @@
 #include <mln/pw/all.hh>
 
 #include <mln/morpho/elementary/gradient_internal.hh>
-#include <mln/morpho/dilation.hh>
-#include <mln/morpho/erosion.hh>
+#include <mln/morpho/approx/dilation.hh>
+#include <mln/morpho/approx/erosion.hh>
 
 #include <mln/win/disk2d.hh>
 #include <mln/win/sphere3d.hh>
@@ -145,7 +145,7 @@ template <typename I>
 I
 close_threshold(const Image<I>& input, metal::int_<3>, int dil, int ero)
 {
-  return morpho::erosion(morpho::dilation(input, win::sphere3d(dil)), win::sphere3d(ero));
+  return morpho::approx::erosion(morpho::approx::dilation(input, win::sphere3d(dil)), win::sphere3d(ero));
 }
 
 
@@ -230,6 +230,21 @@ find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
   ima_bg = close_threshold(ima_bg, metal::int_<I::site::dim>(), 9, 15);
   ima_obj = close_threshold(ima_obj, metal::int_<I::site::dim>(), 9, 11);
 
+  // Labeling
+  /*label_16 nlabels = 0;
+
+  mln_ch_value(I, label_16) bg_labels = labeling::foreground(ima_bg, nbh, nlabels);
+  accu::count<int_u8> ab_;
+  util::array<unsigned> arr_b_label = labeling::compute(ab_, ima_bg, bg_labels, nlabels);
+  util::array<label_16> arr_b_big = labeling::n_max<label_16>(arr_b_label, 1);
+  data::fill((ima_bg | (pw::value(bg_labels) != pw::cst(arr_b_big[1]))).rw(), false);
+
+  mln_ch_value(I, label_16) obj_labels = labeling::foreground(ima_obj, nbh, nlabels);
+  accu::count<int_u8> ao_;
+  util::array<unsigned> arr_o_label = labeling::compute(ao_, ima_obj, obj_labels, nlabels);
+  util::array<label_16> arr_o_big = labeling::n_max<label_16>(arr_o_label, 1);
+  data::fill((ima_obj | (pw::value(obj_labels) != pw::cst(arr_o_big[1]))).rw(), false);*/
+
   // Debug output images
   mln_ch_value(I, rgb8) out = level::convert(rgb8(), level::stretch(int_u8(), input));
   data::fill((out | pw::value(morpho::elementary::gradient_internal(ima_bg, nbh)) == true).rw(), literal::red);
@@ -246,21 +261,6 @@ find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
     io::dump::save(ima_obj, "obj_closed.dump");
   }
 
-  // Labeling
-  /*label_16 nlabels = 0;
-
-  mln_ch_value(I, label_16) bg_labels = labeling::foreground(ima_bg, nbh, nlabels);
-  mln_ch_value(I, label_16) obj_labels = labeling::foreground(ima_obj, nbh, nlabels);
-
-  accu::count<int_u8> a_;
-  util::array<unsigned> arr_label = labeling::compute(a_, ima_bg, bg_labels, nlabels);
-  util::array<label_16> arr_big = labeling::n_max<label_16>(arr_label, 1);
-  data::fill((ima_bg | (pw::value(bg_labels) != pw::cst(arr_big[1]))).rw(), false);
-
-  arr_label = labeling::compute(a_, ima_obj, obj_labels, nlabels);
-  arr_big = labeling::n_max<label_16>(arr_label, 1);
-  data::fill((ima_obj | (pw::value(obj_labels) != pw::cst(arr_big[1]))).rw(), false);*/
-
   // Histo
   histo::array<mln_value(I)> bg_histo = histo::compute(input | pw::value(ima_bg) == true);
   histo::array<mln_value(I)> obj_histo = histo::compute(input | pw::value(ima_obj) == true);
@@ -270,7 +270,6 @@ find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
   convert::from_to(bg_histo, ima_bg_histo);
   ima_bg_histo(point1d(0)) = 0;
   unsigned bg_sum = level::compute(sum_accu, ima_bg_histo);
-  // We remove the 0 value because it is not part of the image.
   std::ofstream fout_bg("bg_histo.plot");
   std::ofstream fout_p_bg("bg_histo_norm.plot");
   for (unsigned int i = 0; i < ima_bg_histo.nelements(); ++i)
