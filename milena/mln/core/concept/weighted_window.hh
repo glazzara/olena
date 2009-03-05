@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,6 +38,12 @@
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/iterator.hh>
 # include <mln/trait/windows.hh>
+
+
+
+# define mln_is_simple_weighted_window(W)  \
+  mln_is_simple_window(typename W::window)
+
 
 
 namespace mln

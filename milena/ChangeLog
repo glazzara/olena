@@ -1,3 +1,14 @@
+2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add fastest version for thick front distance transform.
+
+	* mln/core/concept/weighted_window.hh
+	(mln_is_simple_weighted_window): New.
+	* sandbox/folio/distance_front_new.hh: Copy to and rename as...
+	* mln/canvas/distance_front.hh: ...this.
+	Update doc.
+	(distance_front_dispatch): Fix missing test.
+
 2009-03-05  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Fix tests.
