@@ -1,7 +1,7 @@
 #include <mln/essential/2d.hh>
 #include <mln/fun/p2b/big_chess.hh>
 #include <tests/data.hh>
-#include <doc/tutorial/tools/sample_utils.hh>
+#include <doc/tools/sample_utils.hh>
 
 namespace mln
 {

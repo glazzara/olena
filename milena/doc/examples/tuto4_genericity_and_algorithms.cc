@@ -2,7 +2,7 @@
 #include <mln/binarization/threshold.hh>
 #include <mln/debug/colorize.hh>
 #include <tests/data.hh>
-#include <doc/tutorial/tools/sample_utils.hh>
+#include <doc/tools/sample_utils.hh>
 
 struct keep_specific_colors : public mln::Function_v2b<keep_specific_colors>
 {

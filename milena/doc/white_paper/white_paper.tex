@@ -1,0 +1,384 @@
+\documentclass{article}
+
+%\usepackage{hevea}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{makeidx}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{html}
+\usepackage{tikz}
+\usepackage{pgf}
+
+\newcommand{\img}[4]{
+\begin{figure}[ht!]
+	\begin{center}
+      \includegraphics[width=#2]{figures/#1}
+     \caption{#4\label{fig:#1}}
+   \end{center}
+ \end{figure}
+}
+
+\title{Milena\\
+  \large{Generic image processing library} }
+\author{LRDE}
+\date{}
+\makeindex
+
+\definecolor{ccomment}{rgb}{0.5,0,0}
+\definecolor{cstring}{rgb}{0,0.32,0.5}
+\definecolor{cidentifier}{rgb}{0,0.5,0}
+\definecolor{cbg}{rgb}{0.95,0.95,0.95}
+
+%%%LISTINGS SETTINGS
+%\begin{latexonly}
+\lstset{frameround=fttt}
+\lstloadlanguages{[ISO]C++}
+\lstset{language=[ISO]C++,
+  captionpos=b,
+  basicstyle={\small\sffamily}, % normal small footnotesize scriptsize tiny
+  commentstyle=\itshape,
+  showstringspaces=false,
+  numberstyle=\tiny,
+  morekeywords={where, auto, concept, concept_map, axiom, late_check, final, abstract},
+  morecomment=[s]{/*}{*/},
+  backgroundcolor=\color{cbg},
+  identifierstyle=\color{black},
+  stringstyle=\color{cstring}
+}
+%\end{latexonly}
+
+% #1 : sub page name
+% #2 : sub page title
+\newcommand{\doxychapter}[2]{%
+\label{#1}
+\backslash endhtmlonly%
+\backslash page #1 #2%
+\backslash htmlonly %
+}
+
+% #1 : section name
+% #2 : section title
+\newcommand{\doxysection}[2]{%
+\vspace{1cm}
+\label{#1}
+\backslash endhtmlonly%
+\backslash section #1 #2%
+\backslash htmlonly %
+}
+\newcommand{\doxysubsection}[2]{%
+\label{#1}
+\backslash endhtmlonly%
+\backslash subsection #1 #2%
+\backslash htmlonly %
+}
+
+\newcommand{\doxysubsubsection}[2]{%
+\label{#1}
+\backslash endhtmlonly%
+\backslash subsubsection #1 #2%
+\backslash htmlonly %
+}
+
+% #1 - part number (Optional)
+% #2 - file name
+\newcommand{\doxycode}[2][1]{
+\backslash endhtmlonly%
+\backslash include #2-#1.cc%
+\backslash htmlonly %
+}
+
+\newcommand{\doxyrawcode}[1]{
+\backslash endhtmlonly%
+\backslash include #1.cc.raw%
+\backslash htmlonly %
+}
+
+\newcommand{\doxyoutput}[1]{
+\backslash endhtmlonly%
+\backslash include #1.txt%
+\backslash htmlonly %
+}
+
+% Include file '#1' from a split output.
+% #1 - part number (Optional)
+% #2 - file name
+\newcommand{\doxymoutput}[2][1]{
+\backslash endhtmlonly%
+\backslash include #2-#1.txt%
+\backslash htmlonly %
+}
+
+\newcommand{\doxyfigure}[3][1]{
+\backslash endhtmlonly%
+\backslash image html #2-#1.png%
+\backslash htmlonly %
+}
+
+\newcommand{\doxyimg}[2]{
+\backslash endhtmlonly%
+\backslash image html #1.png%
+\backslash htmlonly %
+}
+
+\newcommand{\doxyref}[1]{
+\backslash endhtmlonly%
+\backslash ref #1%
+\backslash htmlonly %
+}
+
+\newcommand{\doxysee}[1]{
+\backslash endhtmlonly%
+\backslash see #1%
+\backslash htmlonly %
+}
+
+\newcommand{\tutotoc}[2]{%
+\begin{center}%
+  \longleftarrow ~Go to \doxyref{#1} \hspace{1cm} | \hspace{1cm} Go to \doxyref{#2}~ \longrightarrow%
+\end{center}%
+}
+
+\newenvironment{doxymath}
+{
+%\backslash endhtmlonly%
+%\backslash f\$
+%\begin{rawtext}
+$$
+}
+{
+$$
+%\end{rawtext}
+%\backslash f\$
+%\backslash htmlonly%
+}
+
+%\begin{latexonly}
+\renewcommand{\doxychapter}[2]{\chapter{#2}\label{#1}}
+\renewcommand{\doxysection}[2]{\section{#2}\label{#1}}
+\renewcommand{\doxysubsection}[2]{\subsection{#2}\label{#1}}
+\renewcommand{\doxysubsubsection}[2]{\subsubsection{#2}\label{#1}}
+\renewcommand{\doxycode}[2][1]{\lstinputlisting[frame=single]{samples/#2-#1.cc}}
+\renewcommand{\doxyrawcode}[1]{\lstinputlisting[frame=single]{samples/#1.cc.raw}}
+\renewcommand{\doxyoutput}[1]{\lstinputlisting[frame=single]{outputs/#1.txt}}
+\renewcommand{\doxymoutput}[2][1]{\lstinputlisting[frame=single]{outputs/splitted/#2-#1.txt}}
+\renewcommand{\doxyfigure}[3][1]{%
+\pgfimage[width=#3]{figures/#2-#1}%
+\label{#1}%
+}
+\renewcommand{\doxyimg}[2]{%
+\pgfimage[width=#2]{#1}%
+\label{#1}%
+}
+\renewcommand{\doxyref}[1]{\ref{#1}}
+\renewcommand{\doxysee}[1]{\ref{#1}}
+\renewcommand{\tutotoc}[2]{}
+\renewenvironment{doxymath}
+{
+  $$
+}
+{
+  $$
+}
+
+%\end{latexonly}
+
+
+\newcommand{\code}[1]{%
+\textit{#1}%
+}
+\newcommand{\var}[1]{%
+\textit{$#1$}%
+}
+\newcommand{\val}[1]{%
+\textit{#1}%
+}
+\newcommand{\type}[1]{%
+\textit{#1}%
+}
+\newcommand{\namespace}[1]{%
+\textit{#1}%
+}
+\newcommand{\header}[1]{%
+\textit{#1}%
+}
+\newcommand{\hpath}[1]{%
+\textit{#1}%
+}
+
+\newcommand{\must}{%
+\textbf{must}
+}
+\newcommand{\should}{%
+\textbf{should}
+}
+
+
+
+\begin{document}
+
+\maketitle
+
+%#################################################################
+\section{Introduction}
+Milena is a programming framework for discrete mathematical morphology written
+in C++. It is part of the Olena project which aims at building a scientific
+computation platform oriented towards image processing, image recognition and
+artificial vision.
+
+Milena is designed with two major goals in mind:
+\begin{itemize}
+  \item Be as simple as calling C routines for end users.
+  \item Be modular enough to be extended with respect to algorithms and data
+	structures.
+\end{itemize}
+
+
+%#################################################################
+\section{Targeted audience}
+This library targets several audiences:
+\begin{itemize}
+
+  \item \textit{End users} of morphological tools who want to apply and assemble
+  algorithms to solve image processing, pattern recognition or computer vision
+  problems.
+  \item \textit{Designers} of morphological operators who build new algorithms
+  by using constructs from their software framework (language, livraries,
+      toolboxes, programs, etc.).
+  \item \textit{Providers} of data structures who are interested in extending
+  their framework with new data types (images, values, structuring elements,
+      etc.).
+
+\end{itemize}
+
+%#################################################################
+\section{Key features}
+Olena is:
+\begin{itemize}
+  \item \textbf{Generic}. If a morphological operator admis a general
+	definition whatever the context (topology of the image, structuring
+	element, etc.), then this algorithm should have a corresponding single
+	implementation.
+
+  \item \textbf{Close to theory}. Reading (and writing) algorithms should
+	eventually become natural to scientists used to mathematical morphology
+	notations.
+
+  \item \textbf{Efficient} (with respect to run time speed and memory
+	usage), when it is possible. Dedicated and efficient implementations of
+	morphological algorithms for certain cases are known and should be
+	selected whenever possible.
+
+  \item \textbf{User-friendly}. Users should not have to address
+	memory-related issues or deal with a program silently failing because of
+	an arithmetic overflow. The tool should handle these situations, and
+	help the user diagnose any problem.
+
+  \item \textbf{Reliable}. Programming by contract helps debbuging user's
+        programs. By default, a debug mode is enabled and check the data and
+	access validity at runtime. Since Olena tends to be as static as
+	possible, many static checks are also done at compile time.
+
+  \item \textbf{Free}. Milena is \textit{free} and \textit{open-source}. It is
+	released under GNU GPL V2.
+\end{itemize}
+
+
+%#################################################################
+\section{Library content}
+
+%=================================================================
+\subsection{Generic basic image types}
+
+Common basic image types are provided: 1-D, 2-D, 3-D images.
+A $N$-D image class is also available.
+These class are provided with a border in order to make them fast in algorithms
+using structural elements.
+
+%=================================================================
+\subsection{Morphers}
+
+Morphers are generic, composable and lightweight objects built on one or several
+images, that can be used as
+\begin{itemize}
+  \item \textbf{mixins}: a morpher can add extra data (e.g. a neighborhood) or
+	operations (e.g., an ordering on the values) to an image;
+  \item \textbf{adapters}: e.g., a slice morpher can be used to view a slice of
+	a 3-D image (spacemap) as a 2-D image (bitmap);
+  \item \textbf{modifiers}: a morpher can add a mask to an image, to restrict its
+	(iterable) domain;
+  \item \textbf{lazy function applications}: a morpher can present an image seen
+        through a function, either bijective or not;
+  \item etc.
+\end{itemize}
+
+\begin{center}
+  \doxyimg{house}{2.5cm}
+  \doxyimg{house_wshed}{2.5cm}
+  \doxyimg{house_wshed_mean_colors}{2.5cm}
+  \doxyimg{house_rag}{2.5cm}
+\end{center}
+
+%=================================================================
+\subsection{Generic image processing algorithms}
+
+\begin{itemize}
+  \item Morphological algorithms: dilation, erosion, watershed, leveling, etc;
+  \item Influence zone;
+  \item Labeling;
+  \item etc.
+\end{itemize}
+
+%=================================================================
+\subsection{Auxiliary tools}
+
+Since Olena is intended to \textit{designer} of algorithms and \textit{provider}
+of new data structures, various generic auxiliary tools are available in the
+library.
+
+\begin{itemize}
+  \item Topologies (grid, graph, etc.);
+  \item Points and delta-points;
+  \item neighborhoods and windows;
+  \item accumulators;
+  \item etc.
+\end{itemize}
+
+
+
+%#################################################################
+\section{Learn more}
+
+Olena's \textbf{official website}: \url{http://olena.lrde.epita.fr}
+
+Olena's \textbf{Trac}: \url{http://trac.lrde.org/olena}
+
+Milena's \textbf{documentation}:
+\url{http://www.lrde.epita.fr/dload/doc/milena-1.0}
+
+%
+\medskip
+%
+
+\textbf{Mailing lists}:
+\begin{itemize}
+  \item olena@lrde.epita.fr - Question and comments;
+  \item olena-bug@lrde.epita.fr - Bug reports;
+  \item olena-patches@lrde.epita.fr - Patches.
+\end {itemize}
+
+%
+\bigskip
+%
+
+\textbf{Contacts}:
+\begin{itemize}
+  \item Thierry Geraud - thierry.geraud@lrde.epita.fr
+  \item Roland Levillain - roland.levillain@lrde.epita.fr
+\end{itemize}
+
+%Demo + tuto + doc
+
+\end{document}

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +29,12 @@
 #ifndef MLN_CORE_IMAGE_IMAGE_IF_HH
 # define MLN_CORE_IMAGE_IMAGE_IF_HH
 
-/*! \file mln/core/image/image_if.hh
- *
- * \brief Definition of a image which domain is restricted by a
- * function.
- *
- * \todo Relax Function_p2b into Function_v2b.
- */
+/// \file mln/core/image/image_if.hh
+///
+/// Definition of a image which domain is restricted by a
+/// function.
+///
+/// \todo Relax Function_p2b into Function_v2b.
 
 # include <mln/core/internal/image_domain_morpher.hh>
 # include <mln/core/site_set/p_if.hh>
@@ -45,7 +45,7 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename I, typename F> struct image_if;
 
 
@@ -89,9 +89,9 @@ namespace mln
 
 
 
-  /*! \brief Image which domain is restricted by a function.
-   *
-   */
+  /// \brief Image which domain is restricted by a function.
+  ///
+  /// \ingroup modimagedomainmorpher
   template <typename I, typename F>
   struct image_if : public internal::image_domain_morpher< I,
 							   p_if<mln_pset(I), F>,

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file mln/core/site_set/p_soft_heap.hh
+/// \file mln/util/soft_heap.cc
 ///
 /// Test for the soft heap (approximate priority queue).
 

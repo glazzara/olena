@@ -169,10 +169,10 @@ fix-refdata:
 
 
 split-samples:
-	mkdir -p $(SAMPLES_BUILDDIR)
+	mkdir -p $(EXAMPLES_BUILDDIR)
 	@failcom='exit 1'; 						\
-	list='$(SAMPLES_SRCDIR)/*.cc'; for file in $$list; do 		\
-	$(TUTORIAL_SRCDIR)/tools/split_sample.sh $$file cc $(SAMPLES_BUILDDIR)\
+	list='$(EXAMPLES_SRCDIR)/*.cc'; for file in $$list; do 		\
+	$(DOC_SRCDIR)/tools/split_sample.sh $$file cc $(EXAMPLES_BUILDDIR)\
 					      || eval $$failcom; 	\
 	done
 
@@ -180,14 +180,14 @@ split-outputs:
 	mkdir -p $(SPLITTED_OUTPUTS_BUILDDIR)
 	@failcom='exit 1'; 						\
 	list='$(OUTPUTS_BUILDDIR)/*.txt'; for file in $$list; do 	\
-	$(TUTORIAL_SRCDIR)/tools/split_sample.sh $$file txt $(SPLITTED_OUTPUTS_BUILDDIR)\
+	$(DOC_SRCDIR)/tools/split_sample.sh $$file txt $(SPLITTED_OUTPUTS_BUILDDIR)\
 					      || eval $$failcom; 	\
 	done
 
 
 clean-local: clean-figures
 	rm -Rf $(OUTPUTS_BUILDDIR)
-	rm -f $(SAMPLES_BUILDDIR)/*.cc
+	rm -f $(EXAMPLES_BUILDDIR)/*.cc
 
 clean-figures:
 	rm -Rf $(FIGURES_BUILDDIR)

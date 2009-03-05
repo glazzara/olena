@@ -85,20 +85,20 @@ RECURSIVE              = YES
 EXCLUDE                = @top_srcdir@/milena/sandbox			\
                          @top_srcdir@/milena/mln/core/concept/proxy.hxx \
                          @top_srcdir@/milena/trash			\
-			 @top_srcdir@/milena/doc/tutorial/samples
+                         @top_srcdir@/milena/doc/examples/trash
 EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *spe.hh
 EXCLUDE_SYMBOLS	       = 
-EXAMPLE_PATH           = @top_srcdir@/milena/doc/tutorial/samples   \
-			 @top_builddir@/milena/doc/tutorial/samples \
-			 @top_builddir@/milena/doc/tutorial/outputs \ 
-			 @top_builddir@/milena/doc/tutorial/outputs/splitted \ 
-			 @top_srcdir@/milena/doc/tutorial/outputs 
+EXAMPLE_PATH           = @top_srcdir@/milena/doc/examples	    \
+			 @top_builddir@/milena/doc/examples	    \
+			 @top_builddir@/milena/doc/outputs	    \ 
+			 @top_builddir@/milena/doc/outputs/splitted \ 
+			 @top_srcdir@/milena/doc/outputs 
 EXAMPLE_PATTERNS       = 
 EXAMPLE_RECURSIVE      = NO
-IMAGE_PATH             = @top_srcdir@/milena/doc/tutorial/img	    \
-			 @top_srcdir@/milena/doc/tutorial/figures   \
-			 @top_builddir@/milena/doc/tutorial/figures
+IMAGE_PATH             = @top_srcdir@/milena/doc/img	    \
+			 @top_srcdir@/milena/doc/figures    \
+			 @top_builddir@/milena/doc/figures
 INPUT_FILTER           = 
 FILTER_PATTERNS        = 
 FILTER_SOURCE_FILES    = NO

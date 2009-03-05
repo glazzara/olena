@@ -44,6 +44,10 @@
 
 namespace mln
 {
+
+  /// \brief 2d image based on an hexagonal mesh.
+  ///
+  /// \ingroup modimageconcrete
   template <typename V>
   struct image2d_h
     : public hexa< image2d<V> >

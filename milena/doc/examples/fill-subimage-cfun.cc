@@ -1,5 +1,5 @@
 #include <mln/essential/2d.hh>
-#include <doc/tutorial/tools/sample_utils.hh>
+#include <doc/tools/sample_utils.hh>
 // \{
 bool row_oddity(mln::point2d p)
 {

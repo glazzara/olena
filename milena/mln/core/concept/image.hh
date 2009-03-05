@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -49,12 +49,11 @@
 # include <mln/tag/init.hh>
 
 
-
 namespace mln
 {
 
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename E> struct Image;
 
   // Image category flag type.
@@ -65,11 +64,10 @@ namespace mln
   };
 
 
-  /*! \brief Base class for implementation of image classes.
-   *
-   * \see mln::doc::Image for a complete documentation of this class
-   * contents.
-   */
+  /// Base class for implementation of image classes.
+  ///
+  /// \see mln::doc::Image for a complete documentation of this class
+  /// contents.
   template <typename E>
   struct Image : public Object<E>
   {

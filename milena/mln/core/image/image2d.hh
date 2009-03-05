@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -126,12 +126,13 @@ namespace mln
 
 
 
-  /// Basic 2D image class.
+  /// \brief Basic 2D image class.
   ///
   /// The parameter \c T is the type of pixel values.  This image class
   /// stores data in memory and has a virtual border with constant
   /// thickness around data.
   ///
+  /// \ingroup modimageconcrete
   template <typename T>
   class image2d : public internal::image_primary< T, mln::box2d, image2d<T> >
   {

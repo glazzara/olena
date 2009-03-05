@@ -32,6 +32,20 @@
 ///
 /// File that includes the most useful optional routines.
 
+namespace mln
+{
+
+  /// Namespace of optional routines.
+  namespace opt
+  {
+
+    /// Implementation namespace of opt namespace.
+    namespace impl {}
+
+  } // end of namespace mln::opt
+
+} // end of name
+
 # include <mln/opt/at.hh>
 # include <mln/opt/element.hh>
 # include <mln/opt/value.hh>

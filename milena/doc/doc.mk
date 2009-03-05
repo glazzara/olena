@@ -5,14 +5,14 @@ include $(top_srcdir)/milena/tests/tests.mk
 AM_CPPFLAGS += -I$(top_srcdir)/milena/doc/tutorial/tools
 
 
-TUTORIAL_SRCDIR = $(top_srcdir)/milena/doc/tutorial
-OUTPUTS_SRCDIR = $(TUTORIAL_SRCDIR)/outputs
-FIGURES_SRCDIR = $(TUTORIAL_SRCDIR)/figures
-SAMPLES_SRCDIR = $(TUTORIAL_SRCDIR)/samples
-IMG_SRCDIR = $(TUTORIAL_SRCDIR)/img
+DOC_SRCDIR = $(top_srcdir)/milena/doc/
+OUTPUTS_SRCDIR = $(DOC_SRCDIR)/outputs
+FIGURES_SRCDIR = $(DOC_SRCDIR)/figures
+EXAMPLES_SRCDIR = $(DOC_SRCDIR)/examples
+IMG_SRCDIR = $(DOC_SRCDIR)/img
 
-TUTORIAL_BUILDDIR = $(top_builddir)/milena/doc/tutorial
-OUTPUTS_BUILDDIR = $(TUTORIAL_BUILDDIR)/outputs
-SPLITTED_OUTPUTS_BUILDDIR = $(TUTORIAL_BUILDDIR)/outputs/splitted
-FIGURES_BUILDDIR = $(TUTORIAL_BUILDDIR)/figures
-SAMPLES_BUILDDIR = $(TUTORIAL_BUILDDIR)/samples
+DOC_BUILDDIR = $(top_builddir)/milena/doc/
+OUTPUTS_BUILDDIR = $(DOC_BUILDDIR)/outputs
+SPLITTED_OUTPUTS_BUILDDIR = $(DOC_BUILDDIR)/outputs/splitted
+FIGURES_BUILDDIR = $(DOC_BUILDDIR)/figures
+EXAMPLES_BUILDDIR = $(DOC_BUILDDIR)/examples

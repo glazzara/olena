@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +29,12 @@
 #ifndef MLN_CORE_IMAGE_CAST_IMAGE_HH
 # define MLN_CORE_IMAGE_CAST_IMAGE_HH
 
-/*! \file mln/core/image/cast_image.hh
- *
- * \brief Definition of an image morpher that make the user see the
- * same image but with another data type.
- *
- * \todo Rename as cast_image (without '_')!
- */
+/// \file mln/core/image/cast_image.hh
+///
+/// Definition of an image morpher that make the user see the
+/// same image but with another data type.
+///
+/// \todo Rename as cast_image (without '_')!
 
 # include <mln/core/internal/image_value_morpher.hh>
 # include <mln/value/set.hh>
@@ -112,10 +112,10 @@ namespace mln
 
 
 
-  /*! \brief Class of image morpher which takes an image to change its
-   *  data type.
-   *
-   */
+  /// \brief Class of image morpher which takes an image to change its
+  /// data type.
+  ///
+  /// \ingroup modimagevaluemorpher
   template <typename T, typename I>
   struct cast_image_ :
     public internal::image_value_morpher< I, T, cast_image_<T,I> >

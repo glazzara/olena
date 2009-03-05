@@ -2,32 +2,55 @@
 
 include $(top_srcdir)/milena/doc/doc.mk
 
-SUBDIRS = tutorial
+SUBDIRS = tutorial white_paper
 
 DOXYGEN = doxygen
 
-.PHONY: doc user-doc complete-doc html_complete html_user tutorial
+.PHONY: doc user-doc complete-doc html-complete html-user tutorial white-paper regen-dist
 
 doc: user-doc
 
-complete-doc: html_complete
+complete-doc: html-complete
 
-user-doc: html_user
+user-doc: html-user
 
-html_complete: Doxyfile tuto_html 
+html-complete: Doxyfile tuto-html ref-guide-html
 	$(DOXYGEN) Doxyfile_complete
 
-html_user: Doxyfile tuto_html 
+html-user: Doxyfile tuto-html ref-guide-html
 	$(DOXYGEN) Doxyfile_user
 
-tuto_html:
-	$(MAKE) -C tutorial tuto_html
+tuto-html: data fig-convert
+	$(MAKE) -C tutorial tuto-html
 
-tutorial: all
+tutorial: data fig-convert
 	$(MAKE) -C tutorial tutorial
 
+white-paper:
+	$(MAKE) -C white_paper white-paper
+
+ref-guide:
+	$(MAKE) -C ref_guide ref-guide
+
+ref-guide-html:
+	$(MAKE) -C ref_guide ref-guide-html
+
+
+data:
+	make -C examples data
+
 fix-refdata:
-	$(MAKE) -C tutorial fix-refdata
+	make -C examples fix-refdata
+
+fig-convert:
+	@failcom='exit 1'; 							\
+	list="$(FIGURES_BUILDDIR)/*.p*m"; for img in $$list; do 		\
+	  echo "Converting $$img to png"; 					\
+	  name=`basename $$img` 						\
+	  ext=`echo $$name | cut -d '.' -f 2`; 					\
+	  convert -scale 250 $$img $(FIGURES_BUILDDIR)/`basename $$img $$ext`png\
+	    || eval $$failcom; 							\
+	done; 
 
 edit = sed -e "s|@ID@|$$Id|" 					\
 	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g' 		\
@@ -54,10 +77,32 @@ edit_user = sed -e 's,OUTPUT_DIRECTORY       = ./complete/,OUTPUT_DIRECTORY     
 		-e 's,EXCLUDE_SYMBOLS	       =,EXCLUDE_SYMBOLS	  = *::internal* *_ mln::trait::*,g'	
 
 
+regen-dist: $(srcdir)/headers.stamp
 
-EXTRA_DIST = 			\
+$(srcdir)/examples/examples.mk: $(srcdir)/headers.stamp
+$(srcdir)/figures/figures.mk: $(srcdir)/headers.stamp
+$(srcdir)/outputs/outputs.mk: $(srcdir)/headers.stamp
+
+
+EXTRA_DIST = $(srcdir)/headers.stamp
+$(srcdir)/headers.stamp: $(srcdir)/generate_dist_files.sh
+	@rm -f $@.tmp
+	@touch $@.tmp
+	cd $(srcdir) && ./generate_dist_files.sh
+	@mv -f $@.tmp $@
+
+
+include $(srcdir)/examples/examples.mk
+include $(srcdir)/figures/figures.mk
+include $(srcdir)/outputs/outputs.mk
+
+
+EXTRA_DIST += 			\
 Doxyfile.in 			\
-$(top_builddir)/milena/doc/user
+user 				\
+tools/sample_utils.hh 		\
+tools/split_sample.sh 		\
+tools/todoxygen.sh
 
 CLEANFILES = 		\
 Doxyfile_complete 	\
