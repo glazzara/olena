@@ -16,5 +16,11 @@ all: 2d 3d
 3d: seg_vol_irm.hh seg3d.cc
 	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} ${CXXFLAGS} seg3d.cc -o seg3d
 
+grad: grad_clo_and_wshd.cc
+	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} ${CXXFLAGS} $^ -o grad_clo
+
+wst: wst_rag.cc
+	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} ${CXXFLAGS} $^ -o wst_rag
+
 clean:
 	rm -rf *.dump *.p?m *.plot *.log *.csv

@@ -9,5 +9,14 @@
 
 [X] Create binaries
 [X] Create scripts shell
-[ ] Check standard deviation
-
+[X] Generate color images for regions
+[X] Generate histograms (normal, bg, obj, p_bg, p_obj)
+[ ] Test processing chain on US
+[X] Create README file for special images
+[ ] Implement watershed
+[X] Create tool for dicom mask
+[X] Check conversion for mask (everything except int_u12(0))
+[ ] Extract ROI (projection or fill holes)
+[ ] Create routine for region colors
+[ ] Create dicom2dump (2d, 3d, int_u8, int_u12)
+[ ] After threshold, take biggest object and then erode, dilate

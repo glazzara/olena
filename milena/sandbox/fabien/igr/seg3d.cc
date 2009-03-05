@@ -36,7 +36,22 @@ int main(int argc, char* argv[])
   label_16 nlabels;
   image3d<int_u12> ima;
   io::dicom::load(ima, argv[1]);
-  io::dump::save(igr_seg(ima, c6(), nlabels), "result.dump");
+
+  image3d<bool> ima_thres;
+  initialize(ima_thres, ima);
+  data::fill(ima_thres, false);
+  unsigned threshold_value =  find_threshold_value(ima, c6());
+  std::cout << "double threshold value = " << threshold_value << std::endl;
+  data::fill((ima_thres | pw::value(ima) < pw::cst(threshold_value)).rw(), true);
+
+  io::dump::save(ima_thres, "result_double.dump");
+
+  data::fill(ima_thres, false);
+  threshold_value = find_threshold_mean(ima, c6());
+  std::cout << " deviation threshold value = " << threshold_value << std::endl;
+  data::fill((ima_thres | pw::value(ima) < pw::cst(threshold_value)).rw(), true);
+
+  io::dump::save(ima_thres, "result_deviation.dump");
 
   return 0;
 }

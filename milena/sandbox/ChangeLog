@@ -1,3 +1,19 @@
+2009-03-05  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add source for dicom2dump tool.
+	* fabien/TODO: Simple TODO reminder.
+	* fabien/bin/Makefile: Makefile to compile dicom binaries.
+	* fabien/bin/dicom2dump.cc: Binary to convert dicom to dump.
+	* fabien/bin/dicom_mask.cc: Binary to extract simple mask
+	  from dicom images.
+	* fabien/igr/Makefile: Update.
+	* fabien/igr/launch2d.sh: Update.
+	* fabien/igr/launch3d.sh: Update.
+	* fabien/igr/seg2d.cc: Update.
+	* fabien/igr/seg3d.cc: Update.
+	* fabien/igr/seg_vol_irm.hh: Implement different threshold
+	  techniques: double and deviation.
+
 2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix fastest distance computation.
