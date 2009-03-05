@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,6 +37,8 @@
 # include <mln/core/grids.hh>
 # include <mln/trait/all.hh>
 # include <mln/value/scalar.hh>
+# include <mln/debug/format.hh>
+
 
 namespace mln
 {
@@ -175,7 +177,11 @@ namespace mln
   inline
   std::ostream& operator<<(std::ostream& ostr, const Gdpoint<D>& dp)
   {
-    return ostr << exact(dp).to_vec();
+    enum { n = D::dim };
+    ostr << '(';
+    for (unsigned i = 0; i < n; ++i)
+      ostr << debug::format(exact(dp)[i]) << (i == n - 1 ? ')' : ',');
+    return ostr;
   }
 
 

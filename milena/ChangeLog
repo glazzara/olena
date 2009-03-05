@@ -1,3 +1,24 @@
+2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Rewrite the ostream op for grid points and dpoints.
+
+	* mln/core/concept/gpoint.hh,
+	* mln/core/concept/gdpoint.hh (operator<<): Rewrite.
+
+	It does not rely on to_vec anymore.  Important note: the discrete
+	coordinates on a grid do not follow those of algebra vectors.
+	For example, we have:
+	     point3d = (sli,row,col)
+	and
+	     vec3d   = (x, y, z)
+	where
+	     x = row, y = col, and z = sli.
+	Now vectors are printed with a white space after every comma,
+	whereas there is no white space for discrete grid points and
+	dpoints.  That is intuive since grid coordinates are integers
+	and vector coordinates are floating values (usually with a '.'
+	in them).
+
 2009-03-05  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Update documentation.

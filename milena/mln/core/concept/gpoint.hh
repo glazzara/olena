@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,6 +39,7 @@
 # include <mln/value/concept/scalar.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/util/ord.hh>
+# include <mln/debug/format.hh>
 
 
 namespace mln
@@ -383,7 +384,11 @@ namespace mln
   inline
   std::ostream& operator<<(std::ostream& ostr, const Gpoint<P>& p)
   {
-    return ostr << exact(p).to_vec();
+    enum { n = P::dim };
+    ostr << '(';
+    for (unsigned i = 0; i < n; ++i)
+      ostr << debug::format(exact(p)[i]) << (i == n - 1 ? ')' : ',');
+    return ostr;
   }
 
   template <typename P, typename D>
