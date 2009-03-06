@@ -1,3 +1,17 @@
+2009-03-06  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Update documentation reference outputs.
+
+	* doc/outputs/box2d-bbox.txt,
+	* doc/outputs/domain-display.txt,
+	* doc/outputs/dpoint-1.txt,
+	* doc/outputs/forall-piter.txt,
+	* doc/outputs/graph-data.txt,
+	* doc/outputs/ima2d-1.txt,
+	* doc/outputs/labeling-compute.txt,
+	* doc/outputs/parray-bbox.txt: update outputs according Theo's last
+	patch.
+
 2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Rewrite the ostream op for grid points and dpoints.
