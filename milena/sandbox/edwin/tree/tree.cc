@@ -2,6 +2,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/routine/duplicate.hh>
+#include <mln/core/site_set/p_set.hh>
 #include <mln/pw/all.hh>
 
 #include <mln/value/int_u8.hh>
@@ -76,6 +77,9 @@ namespace mln
   {
     mln_VAR(a, morpho::tree::compute_attribute_image(a_, tree_));
 
+    display_tree_attributes(tree_, a);
+    find_treshold(a, tree_);
+
     img_ = duplicate((pw::cst(lambda1) < pw::value(a) &&
 		      pw::value(a) < pw::cst(lambda2))
 		     | a.domain());
@@ -83,39 +87,125 @@ namespace mln
     debug::println("attribut", a);
   }
 
-//   template <typename T>
-//   inline
-//   float
-//   find_treshold(const T& t)
-//   {
-//     mln_bkd_piter(T) = p(t.domain());
+  template <typename I, typename T>
+  inline
+  float
+  find_treshold(const Image<I>& img_, const T& tree)
+  {
+    typedef p_set< mln_psite(I) > PS;
+    typedef p_array<mln_psite(I)> N;
 
-    
-//     for_all(p)
-//       if (t.is_a_node(p))
-// 	{
-// 	  if 
+    I img = exact(img_);
+    PS pset, ps_rm; // component container.
+    mln_value(I) val, old;
+    std::vector< mln_value(I)> f_domain;
+    std::vector< unsigned> f;
 
-// 	}
-//   }
+
+    //debug::println(img | tree.nodes());
+
+
+    N nodes = level::sort_psites_increasing(img);
+    mln_fwd_piter(N) n(nodes);
+    mln_fwd_piter(PS) p(pset), p_rm(ps_rm);
+    old = 0;
+
+    // FIXME: hack because we want iterate on nodes and we would
+    // have wanted to write:
+    //     N nodes = level::sort_psites_increasing(img | tree.nodes)
+    //
+    // but it doesn't work, so we iterate on domain regarding if n is
+    // a node.
+
+    n.start();
+    while (n.is_valid() && !tree.is_a_node(n))
+      n.next();
+
+    while (n.is_valid() && tree.is_a_node(n))
+      {
+	val = img(n);
+	do {
+	  // Remove p's children from set.
+	  // FIXME: improve deletion pass.
+	  ps_rm.clear();
+	  for_all(p)
+	    if (tree.parent(p) == n)
+	      ps_rm.insert(p);
+
+	  for_all(p_rm)
+	    pset.remove(p_rm);
+
+	  // Add the new representant to component set.
+	  pset.insert(n);
+	  do {
+	    n.next();
+	  } while (n.is_valid() && !tree.is_a_node(n));
+	} while (img(n) == val && n.is_valid());
+
+	if (pset.nsites() != old)
+	  {
+	    old = pset.nsites();
+	    f_domain.push_back(val);
+	    f.push_back(pset.nsites());
+	  }
+
+
+	  // Debug.
+	  {
+	    std::cout << " - " << val << ":" << pset.nsites() << " {";
+	    for_all(p)
+	      std::cout << p << ",";
+	    std::cout << "}" << std::endl;
+	  }
+      }
+
+    for (unsigned i = 0; i < f_domain.size() - 1; i++)
+      {
+	std::cout << "[" << f_domain[i] << ","
+		  << f_domain[i + 1] << "[ -> "
+		  << f[i] << std::endl;
+      }
+    std::cout <<  ">=" << f_domain[f_domain.size() - 1] << " -> "
+	      << f[f_domain.size() - 1] << std::endl;
+
+    return 0;
+  }
+
+
 
   template <typename I, typename A>
-  void filtercheck(const Image<I>& img, const  Meta_Accumulator<A>& a)
+  void filtercheck(treefilter<I>& f, const  Meta_Accumulator<A>& a)
   {
 
     using value::label_8;
     label_8 n;
     util::array<unsigned int> counts;
+    util::array< mln_psite(I) > fnodes;
 
-    debug::println("binaire:", img);
-    mln_VAR(lbl, labeling::blobs(img, c4(), n));
-    debug::println("blob:", lbl);
+    mln_VAR(lbl, labeling::blobs(f.img(), c4(), n));
     counts = labeling::compute(a, lbl, n);
-    for (unsigned i = 0; i < counts.nelements(); i++)
+
+    mln_VAR(acc, morpho::tree::compute_attribute_image(morpho::attribute::card<I>(), f.tree()));
+    fnodes = morpho::tree::get_first_nodes(f.img(), f.tree());
+
+    mln_assertion(counts.nelements() == fnodes.nelements() + 1);
+
+    std::vector<unsigned> counts2;
+    counts2.resize(fnodes.nelements());
+    std::transform(fnodes.hook_std_vector_().begin(), fnodes.hook_std_vector_().end(),
+		   counts2.begin(), acc);
+
+    std::sort(counts.hook_std_vector_().begin(), counts.hook_std_vector_().end());
+    std::sort(counts2.begin(), counts2.end());
+
+    for (unsigned i = 0; i < counts2.size(); i++)
       {
-	std::cout << "counts[" << i << "]: " << counts[i]
+	mln_assertion(acc.domain().has(fnodes(p)));
+	std::cout << "counts[" << i << "]: (ref " << counts[i] << ") " << counts2[i]
 		  << std::endl;
       }
+
+
   }
 } // end of namespace mln
 
@@ -157,20 +247,16 @@ int main(int argc, char* argv[])
   else
     usage(argv);
 
+
+
   back_propagate_subbranch(f->tree(), f->img() ,true);
   back_propagate_level(f->tree(), f->img());
 
-  filtercheck(f->img(), accu::meta::count());
+  filtercheck(*f, accu::meta::count());
+
+  
 
 
-
-  util::array< mln_psite_(I) > counts;
-  counts = morpho::tree::get_first_nodes(f->img(), f->tree());
-  for (unsigned i = 0; i < counts.nelements(); i++)
-    std::cout << "counts[" << i << "]: " << counts[i] << std::endl;
-
-  mln_VAR(a, morpho::tree::compute_attribute_image(morpho::attribute::card<I>(), f->tree()));
-  display_tree_attributes(f->tree(), a);
 
   io::pbm::save(f->img(), "out.pbm");
   delete f;

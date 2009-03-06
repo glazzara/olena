@@ -49,60 +49,20 @@ namespace mln {
 	data::fill(deja_vu, false);
 
 	bool can_break = false;
-	mln_bkd_piter(T) p(tree.domain());
+	mln_bkd_piter(T) p(tree.nodes());
 	for_all(p)
 	{
-	  if (tree.is_a_node(p) && bin(p) && bin(t.parent(p))
+	  mln_assertion(tree.is_a_node(p));
+	  if (bin(p) && !bin(tree.parent(p)))
 	    {
 	      fnodes.append(p);
 	    }
 	}
-
-	//   else if (can_break)
-// 	    {
-// 	      std::cout << p << std::endl;
-// 	      break;
-// 	    }
-
 	return fnodes;
       }
 
     }
   }
-
-//   namespace debug {
-
-//     template <typename T, typename I>
-//     void
-//     println(const T& t, const Image<I> f_)
-//     {
-//       //theo's code
-//     typedef mln_site(I) P;
-//     I f = exact(f_);
-
-//     mln_ch_value(I, bool) deja_vu;
-//     initialize(deja_vu, f);
-//     data::fill(deja_vu, false);
-
-//     typedef typename T::nodes_t nodes_t;
-//     mln_fwd_piter(T) p(t.nodes());
-//     for_all(p)
-//       {
-// 	if (deja_vu(p))
-// 	  continue;
-// 	P e = p;
-// 	do
-// 	  {
-// 	    std::cout << f(e) << ':' << e << "  ->  ";
-// 	    deja_vu(e) = true;
-// 	    e = t.parent(e);
-// 	  }
-// 	while (! deja_vu(e));
-// 	std::cout << f(e) << ':' << e << std::endl;
-//       }
-//     std::cout << std::endl;
-//     }
-//   }
 }
 
 

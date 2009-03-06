@@ -1,3 +1,13 @@
+2009-03-06  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add routine to calculate the number of components retaled to a createria.
+	* edwin/tree/propagate.hh: Back propagation iterates on nodes now.
+	* edwin/tree/routines.hh: Add routine to get hightest nodes
+	satifying a criteria .
+	* edwin/tree/tree.cc: Add function to calcul number of
+	components retaled to a createria (in expectation of finding a
+	treshold).
+
 2009-03-06  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add watershed implementation for IRM images.

@@ -60,13 +60,16 @@ namespace mln {
       void
       back_propagate_subbranch(const T& t, A& a, mln_value(A) v)
       {
-	mln_bkd_piter(T) p(t.domain());
-	for_all(p)
-	  if (t.is_a_node(p) && a(t.parent(p)) == v)
+	mln_fwd_piter(T::nodes_t) n(t.nodes());
+	for_all(n)
+	{
+	  mln_assertion(t.is_a_node(n));
+	  if (a(t.parent(n)) == v)
 	    {
-	      mln_assertion(t.is_a_node(t.parent(p)));
-	      a(p) = a(t.parent(p));
+	      mln_assertion(t.is_a_node(t.parent(n)));
+	      a(n) = a(t.parent(n));
 	    }
+	}
       }
     } // end of namespace mln::morpho::tree
   } // end of namespace mln::morpho
