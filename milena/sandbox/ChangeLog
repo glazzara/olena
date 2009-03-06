@@ -1,3 +1,13 @@
+2009-03-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Revamp and cleanup code for Scribo.
+
+	* scribo/+out.txt: remove.
+
+	* scribo/Makefile: add new rules.
+	
+	* scribo/demat.hh: cleanup and comment.
+
 2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add Matlab code from Anne.

@@ -55,6 +55,9 @@
 # include <mln/io/txt/save.hh>
 
 # include <mln/canvas/browsing/depth_first_search.hh>
+# include <mln/transform/distance_and_influence_zone_geodesic.hh>
+# include <mln/fun/l2l/wrap.hh>
+# include <mln/fun/meta/all.hh>
 
 # include <tesseract/baseapi.h>
 
@@ -66,8 +69,9 @@ namespace scribo
 
     using namespace mln;
     using value::label_16;
+    using value::label_8;
     using value::rgb8;
-
+    using value::int_u8;
 
 
     struct settings_t
@@ -83,6 +87,7 @@ namespace scribo
 	max_dist_lines = 10;
 	max_txt_box_height = 100;
 	max_cos = 0.994;
+	repair_max_dist = 51;
       }
 
       unsigned bbox_enlarge;
@@ -91,6 +96,7 @@ namespace scribo
       unsigned min_comp_size;
       unsigned max_comp_size;
       unsigned max_dist_lines;
+      unsigned repair_max_dist;
       int max_txt_box_height;
       unsigned rank_filter;
       bool treat_tables;
@@ -143,7 +149,7 @@ namespace scribo
     **	|---X---|
     **
     */
-    std::pair<point2d, point2d>
+    util::couple<point2d, point2d>
     central_sites(const box2d& b, unsigned dim)
     {
       unsigned n = b.pmax()[dim] - b.pmin()[dim];
@@ -153,7 +159,7 @@ namespace scribo
       point2d p2 = b.center();
       p2[dim] += n / 2;
 
-      return std::make_pair(p1, p2);
+      return make::couple(p1, p2);
     }
 
 
@@ -226,6 +232,8 @@ namespace scribo
 	      b.ncols(),		  // n cols
 	      b.nrows());		  // n rows
 
+
+
 	  point2d p = tboxes[i].center();
 	  p.col() -= (tboxes[i].pmax().col() - tboxes[i].pmin().col()) / 2;
 	  if (s != 0)
@@ -251,9 +259,10 @@ namespace scribo
     /// \{
 
     /// Align table lines bboxes according to a given dimension.
+    ///
+    /// \return A list of the resulting aligned cols. Each integer is actually
+    ///		a col number.
     /*
-    **
-    ** FIXME: DOC!
     **
     **	  0 1 3 4 5 6
     **	  ------------	  -------
@@ -281,23 +290,28 @@ namespace scribo
     ** and all bboxes referenced in this set are aligned on the same row or col.
     **
     */
+    template <typename P>
     util::array<int>
     align_lines(unsigned nsites,
 		int min_coord,
 		int max_coord,
-		util::array<box2d>& hboxes,
+		util::array<box<P> >& line_boxes,
 		unsigned dim)
     {
+      trace::entering("scribo::internal::align_lines");
+
+      mln_precondition(nsites > 0);
+
       std::cout << "extracting table lines..." << std::endl;
       util::array< util::set<unsigned> > lines;
       lines.resize(nsites);
 
       // Map components with actual lines.
-      for_all_components(i, hboxes)
+      for_all_components(i, line_boxes)
       {
-	int minline = hboxes[i].pmin()[dim] - 5;
+	int minline = line_boxes[i].pmin()[dim] - 5;
 	minline = (minline < min_coord ? min_coord : minline);
-	int maxline = hboxes[i].pmax()[dim] + 5;
+	int maxline = line_boxes[i].pmax()[dim] + 5;
 	maxline = (maxline > max_coord ? max_coord : maxline);
 
 	for (int line = minline;
@@ -307,7 +321,7 @@ namespace scribo
 
       // Init box2line
       util::array<int> box2line;
-      box2line.resize(hboxes.nelements());
+      box2line.resize(line_boxes.nelements());
       for_all_elements(i, box2line)
 	box2line[i] = -1;
 
@@ -330,15 +344,15 @@ namespace scribo
 	    accu::mean<unsigned> mean;
 	    for_all_elements(j, lines[i])
 	      if (box2line[lines[i][j]] == -1)
-		mean.take(hboxes[lines[i][j]].center()[dim]);
+		mean.take(line_boxes[lines[i][j]].center()[dim]);
 
 	    if (mean.is_valid())
 	    {
 	      for_all_elements(j, lines[i])
 		if (box2line[lines[i][j]] == -1)
 		{
-		  hboxes[lines[i][j]].pmin()[dim] = mean.to_result();
-		  hboxes[lines[i][j]].pmax()[dim] = mean.to_result();
+		  line_boxes[lines[i][j]].pmin()[dim] = mean.to_result();
+		  line_boxes[lines[i][j]].pmax()[dim] = mean.to_result();
 		  box2line[lines[i][j]] = mean.to_result();
 		}
 	      newlines.append(mean.to_result());
@@ -347,18 +361,75 @@ namespace scribo
 	--max_nelts;
       }
 
+      trace::exiting("scribo::internal::align_lines");
       return newlines;
     }
 
 
+    /// Align line bboxes verticaly.
+    ///
+    /// \param[in]	input	     Image from which the line bboxes are
+    ///				     extracted from.
+    /// \param[in, out] lines_bboxes vertical lines bounding boxes.
+    ///
+    /// \return A list of the resulting aligned cols. Each integer is actually
+    ///		a col number.
+    template <typename I>
+    util::array<int>
+    align_lines_verticaly(const Image<I>& input,
+			  util::array<box<mln_site(I)> >& lines_bboxes)
+    {
+      trace::entering("scribo::internal::align_lines_horizontaly");
+
+      mln_precondition(exact(input).is_valid());
+      util::array<int> res = align_lines(geom::ncols(input), geom::min_col(input),
+					 geom::max_col(input), lines_bboxes, 1);
+
+      trace::exiting("scribo::internal::align_lines_horizontaly");
+      return res;
+
+    }
+
+    /// Align line bboxes horizontaly.
+    ///
+    /// \param[in]	input	     Image from which the line bboxes are
+    ///				     extracted from.
+    /// \param[in, out] lines_bboxes horizontal lines bounding boxes.
+    ///
+    /// \return A list of the resulting aligned rows. Each integer is actually
+    ///		a row number.
+    template <typename I>
+    util::array<int>
+    align_lines_horizontaly(const Image<I>& input,
+			    util::array<box<mln_site(I)> >& lines_bboxes)
+    {
+      trace::entering("scribo::internal::align_lines_horizontaly");
+
+      mln_precondition(exact(input).is_valid());
+      util::array<int> res =  align_lines(geom::nrows(input), geom::min_row(input),
+					  geom::max_row(input), lines_bboxes, 0);
+
+      trace::exiting("scribo::internal::align_lines_horizontaly");
+      return res;
+    }
+
 
     /// Connect vertical and horizontal lines if they are close to each other.
+    ///
+    ///  ------                 ------
+    ///			--->          |
+    ///        |                      |
+    ///        |                      |
+    ///
+    template <typename P>
     void
     connect_lines(const util::array<int>& aligned_lines,
-		  util::array<box2d>& boxes,
+		  util::array< box<P> >& boxes,
 		  unsigned dim,
 		  unsigned dim_size)
     {
+      trace::entering("scribo::internal::connect_lines");
+
       image1d<int> l(dim_size);
       data::fill(l, -1);
 
@@ -370,13 +441,129 @@ namespace scribo
 
       for_all_components(i, boxes)
       {
-	std::pair<point2d, point2d> cp = central_sites(boxes[i], dim);
-	if (opt::at(l, cp.first[dim]) != -1)
-	  boxes[i].pmin()[dim] = aligned_lines[opt::at(l, cp.first[dim])];
-	if (opt::at(l, cp.second[dim]) != -1)
-	  boxes[i].pmax()[dim] = aligned_lines[opt::at(l, cp.second[dim])];
+	util::couple<point2d, point2d> cp = central_sites(boxes[i], dim);
+	if (opt::at(l, cp.first()[dim]) != -1)
+	  boxes[i].pmin()[dim] = aligned_lines[opt::at(l, cp.first()[dim])];
+	if (opt::at(l, cp.second()[dim]) != -1)
+	  boxes[i].pmax()[dim] = aligned_lines[opt::at(l, cp.second()[dim])];
       }
+
+      trace::exiting("scribo::internal::connect_lines");
     }
+
+
+    /// Connect vertical lines with the new aligned rows.
+    template <typename I>
+    void
+    connect_vertical_lines(const util::array<int>& aligned_rows,
+			   util::couple<util::array<box<mln_site(I)> >,
+					util::array<box<mln_site(I)> > > tblboxes,
+			   const Image<I>& input)
+    {
+      trace::entering("scribo::internal::connect_vertical_lines");
+      mln_precondition(exact(input).is_valid());
+
+      connect_lines(aligned_rows, tblboxes.first(), 0, exact(input).nrows());
+
+      trace::exiting("scribo::internal::connect_vertical_lines");
+    }
+
+
+    /// Connect horizontal lines with the new aligned columns.
+    template <typename I>
+    void
+    connect_horizontal_lines(const util::array<int>& aligned_cols,
+			     util::couple<util::array<box<mln_site(I)> >,
+					  util::array<box<mln_site(I)> > > tblboxes,
+			     const Image<I>& input)
+    {
+      trace::entering("scribo::internal::connect_horizontal_lines");
+      mln_precondition(exact(input).is_valid());
+
+      connect_lines(aligned_cols, tblboxes.second(), 1, exact(input).ncols());
+
+      trace::exiting("scribo::internal::connect_horizontal_lines");
+    }
+
+
+    /// Repair lines with small discontinuities.
+    /// FIXME: buggy. Sometimes few lines move or shrink!
+    template <unsigned axis, typename I>
+    void
+    repair_lines(const Image<I>& input_,
+		 util::array<box<mln_site(I)> >& tblboxes)
+    {
+      std::cout << "repairing lines" << std::endl;
+
+      const I& input = exact(input_);
+      typedef mln_site(I) P;
+      typedef win::line<mln_grid(P), axis, mln_coord(P)> line_t;
+
+      // Initialization
+      image2d<unsigned> l(input.domain());
+      data::fill(l, 0u);
+      for_all_components(i, tblboxes)
+      {
+	util::couple<point2d, point2d> cp = central_sites(tblboxes[i], axis);
+	l(cp.first()) = i;
+	l(cp.second()) = i;
+      }
+
+      // Repair
+      extension_val<image2d<unsigned> > l_ext(l, 0u);
+
+      util::array<box<P> > result;
+      std::vector<bool> to_keep(tblboxes.nelements(), true);
+
+      mln_VAR(tbb_ima, extend(l | pw::value(l) != 0u, l));
+      line_t vl(settings.repair_max_dist); //FIXME: use a half window, just the bottom of the vertical line.
+      mln_piter(tbb_ima_t) p(tbb_ima.domain());
+      mln_qiter(line_t) q(vl, p);
+      for_all(p)
+	for_all(q)
+	  if (l_ext(q) != 0u && l_ext(q) != l_ext(p))
+	  {
+	    to_keep[l_ext(q)] = false;
+
+	    std::cout << "Merging " << tblboxes[l_ext(p)] << " with " << tblboxes[l_ext(q)] << std::endl;
+	    tblboxes[l_ext(p)].pmax() = tblboxes[l_ext(q)].pmax();
+
+	    util::couple<P,P> cp = central_sites(tblboxes[l_ext(q)], axis);
+	    l_ext(cp.first()) = l_ext(p);
+	    l_ext(cp.second()) = l_ext(p);
+	  }
+
+
+      // Remove merged boxes.
+      for_all_elements(i, tblboxes)
+	if (to_keep[i])
+	  result.append(tblboxes[i]);
+
+      std::cout << tblboxes[0] << " - " << result[0] << std::endl;
+      std::cout << "previous box count = " << tblboxes.nelements() << " - " << " now = " << result.nelements() << std::endl;
+      tblboxes = result;
+    }
+
+
+    template <typename I>
+    void
+    repair_vertical_lines(const Image<I>& input,
+			  util::couple<util::array<box<mln_site(I)> >,
+				       util::array<box<mln_site(I)> > >& tblboxes)
+    {
+      repair_lines<0>(input, tblboxes.first());
+    }
+
+
+    template <typename I>
+    void
+    repair_horizontal_lines(const Image<I>& input,
+			    util::couple<util::array<box<mln_site(I)> >,
+					 util::array<box<mln_site(I)> > >& tblboxes)
+    {
+      repair_lines<1>(input, tblboxes.second());
+    }
+
 
 //    void
 //    connect_lines2(const util::array<int>& aligned_lines,
@@ -398,11 +585,11 @@ namespace scribo
 //
 //      for_all_components(i, boxes)
 //      {
-//	std::pair<point2d, point2d> cp = central_sites(boxes[i], dim);
+//	util::couple<point2d, point2d> cp = central_sites(boxes[i], dim);
 //
 //	win::segment1d seg(11);
 //	{
-//	  mln_qiter_(win::segment1d) q(seg, point1d(cp.first[dim]));
+//	  mln_qiter_(win::segment1d) q(seg, point1d(cp.first()[dim]));
 //	  for_all(q)
 //	    if (opt::at(l, q[0]) != -1)
 //	    {
@@ -411,7 +598,7 @@ namespace scribo
 //	    }
 //	}
 //	{
-//	  mln_qiter_(win::segment1d) q(seg, point1d(cp.second[dim]));
+//	  mln_qiter_(win::segment1d) q(seg, point1d(cp.second()[dim]));
 //	  for_all(q)
 //	    if (opt::at(l, q[0]) != -1)
 //	    {
@@ -423,56 +610,80 @@ namespace scribo
 //    }
 
 
+    /// Save lines bounding boxes in an image filled with \p bg_color.
+    /// Bounding boxes are displayed with \p bbox_color.
+    template <typename I>
+    void
+    save_table(const Image<I>& input,
+	       util::couple<util::array<box<mln_site(I)> >,
+			 util::array<box<mln_site(I)> > > tblboxes,
+	       const std::string& filename,
+	       const value::rgb8& bg_color = literal::black,
+	       const value::rgb8& bbox_color = literal::red)
+    {
+      trace::entering("scribo::internal::save_table");
+      mln_precondition(exact(input).is_valid());
+
+      image2d<rgb8> out2(exact(input).domain());
+      data::fill(out2, bg_color);
+      for_all_components(i, tblboxes.first())
+      {
+	util::couple<mln_site(I), mln_site(I)> cp = central_sites(tblboxes.first()[i], 0);
+	out2(cp.first()) = literal::green;
+	out2(cp.second()) = literal::green;
+	draw::box(out2, tblboxes.first()[i], bbox_color);
+      }
+      for_all_components(i, tblboxes.second())
+      {
+	util::couple<mln_site(I), mln_site(I)> cp = central_sites(tblboxes.second()[i], 1);
+	out2(cp.first()) = literal::green;
+	out2(cp.second()) = literal::green;
+	draw::box(out2, tblboxes.second()[i], bbox_color);
+      }
+      io::ppm::save(out2, output_file(filename.c_str()));
+
+      trace::exiting("scribo::internal::save_table");
+    }
+
     /// Align line bboxes vertically and horizontally. Then, try to join
     /// vertical and horizontal lines in order to rebuild the table.
-    image2d<bool>
-    rebuild_table(const image2d<bool>& in,
-		  std::pair<util::array<box2d>,
-		  util::array<box2d> >& tblboxes)
+    template <typename I>
+    mln_ch_value(I,bool)
+    rebuild_table(const Image<I>& in_,
+		  util::couple<util::array<box2d>,
+			    util::array<box2d> >& tblboxes)
     {
+      const I& in = exact(in_);
+
+      mlc_equal(mln_value(I), bool)::check();
+      mln_precondition(in.is_valid());
+
       std::cout << "Rebuild table" << std::endl;
 
-      util::array<int> rows = align_lines(in.nrows(), geom::min_row(in),
-					  geom::max_row(in), tblboxes.second,
-					  0);
-      util::array<int> cols = align_lines(in.ncols(), geom::min_col(in),
-					  geom::max_col(in), tblboxes.first,
-					  1);
+      util::array<int> rows = align_lines_horizontaly(in, tblboxes.second());
+      util::array<int> cols = align_lines_verticaly(in, tblboxes.first());
+
 # ifndef NOUT
-      image2d<rgb8> out2(in.domain());
-      data::fill(out2, literal::black);
-      for_all_components(i, tblboxes.first)
-	draw::box(out2, tblboxes.first[i], literal::red);
-      for_all_components(i, tblboxes.second)
-	draw::box(out2, tblboxes.second[i], literal::red);
-      io::ppm::save(out2, output_file("after-alignment.ppm"));
+      save_table(in, tblboxes, "after-alignment.ppm");
 # endif
 
-      // FIXME: Rebuild incomplete lines if possible.
-      // -----   ---        =>	  ----------
-//      connect_lines2(tblboxes.first, 0, in.nrows());
-//      connect_lines2(rows, tblboxes.second, 0, in.nrows());
+//      repair_vertical_lines(in, tblboxes);
+//      repair_horizontal_lines(in, tblboxes);
 
       // Connect vertical lines with horizontal lines.
-      connect_lines(rows, tblboxes.first, 0, in.nrows());
-      connect_lines(cols, tblboxes.second, 1, in.ncols());
+      connect_vertical_lines(rows, tblboxes, in);
+      connect_horizontal_lines(cols, tblboxes, in);
 
       image2d<bool> res;
       initialize(res, in);
       data::fill(res, false);
-      for_all_components(i, tblboxes.first)
-	draw::box(res, tblboxes.first[i], true);
-      for_all_components(i, tblboxes.second)
-	draw::box(res, tblboxes.second[i], true);
+      for_all_components(i, tblboxes.first())
+	draw::box(res, tblboxes.first()[i], true);
+      for_all_components(i, tblboxes.second())
+	draw::box(res, tblboxes.second()[i], true);
 
 # ifndef NOUT
-      image2d<rgb8> out(in.domain());
-      data::fill(out, literal::black);
-      for_all_components(i, tblboxes.first)
-	draw::box(out, tblboxes.first[i], literal::red);
-      for_all_components(i, tblboxes.second)
-	draw::box(out, tblboxes.second[i], literal::red);
-      io::ppm::save(out, output_file("table.ppm"));
+      save_table(in, tblboxes, "table.ppm");
 # endif
 
       return res;
@@ -485,9 +696,9 @@ namespace scribo
 		   const box2d& box,
 		   const rgb8& v)
     {
-      std::pair<point2d, point2d> cp = central_sites(box, dim);
+      util::couple<point2d, point2d> cp = central_sites(box, dim);
 
-      draw::line(ima, cp.first, cp.second, v);
+      draw::line(ima, cp.first(), cp.second(), v);
     }
 
 
@@ -547,26 +758,32 @@ namespace scribo
 	boxes[i].enlarge(dim, settings.bbox_enlarge);
 	boxes[i].crop_wrt(output.domain());
 	data::paste((pw::cst(false) | boxes[i] |
-		(pw::value(output) == pw::cst(true))), output);
+		(pw::value(output) == true)), output);
       }
     }
 
 
 
     /// Find table bboxes and remove them from the image.
-    std::pair<util::array<box2d>,
-	      util::array<box2d> >
-    extract_tables(image2d<bool>& in)
+    /// Use rank filter.
+    ///
+    /// \return pair of array of bounding boxes. The first array holds the
+    ///		vertical lines bboxes and the second one the horizontal lines
+    ///		bboxes.
+    template <typename I, typename HW, typename VW>
+    util::couple<util::array<box<mln_site(I)> >,
+	      util::array<box<mln_site(I)> > >
+    extract_table_lines_with_rank(const Image<I>& in,
+				  const Window<HW>& vwin,
+				  const Window<VW>& hwin,
+				  unsigned rank_k)
     {
-      typedef image2d<label_16> I;
-      typedef accu::bbox<mln_psite_(I)> A;
-      typedef util::array<mln_result_(A)> boxes_t;
-
+      typedef accu::bbox<mln_psite(I)> A;
+      typedef util::array<mln_result(A)> boxes_t;
 
       // Vertical lines
       std::cout << "Removing vertical lines" << std::endl;
-      win::vline2d vline(settings.ero_line_width);
-      image2d<bool> vfilter = morpho::rank_filter(in, vline, settings.rank_filter);
+      mln_ch_value(I,bool) vfilter = morpho::rank_filter(in, vwin, rank_k);
 
 #ifndef NOUT
       io::pbm::save(vfilter, output_file("vertical-erosion.pbm"));
@@ -576,8 +793,7 @@ namespace scribo
 
       // Horizontal lines.
       std::cout << "Removing horizontal lines" << std::endl;
-      win::hline2d hline(settings.ero_line_width);
-      image2d<bool> hfilter = morpho::rank_filter(in, hline, settings.rank_filter);
+      mln_ch_value(I,bool) hfilter = morpho::rank_filter(in, hwin, rank_k);
 
 #ifndef NOUT
       io::pbm::save(hfilter, output_file("horizontal-erosion.pbm"));
@@ -585,18 +801,41 @@ namespace scribo
 
       boxes_t hboxes = component_boxes(hfilter);
 
-      erase_table_boxes(in, vboxes, 0);
-      erase_table_boxes(in, hboxes, 1);
+      return make::couple(vboxes, hboxes);
+    }
+
+
+    /// Erase table line bboxes from an image.
+    ///
+    /// \param[in]	line_bboxes   vertical and horizontal line bounding
+    ///				      boxes.
+    ///
+    /// \param[in, out] in	      input image in which the lines are
+    ///				      erased.
+    template <typename I>
+    void
+    erase_table(util::couple<util::array<box2d>,
+			     util::array<box2d> >& line_bboxes,
+		Image<I>& in_)
+    {
+      trace::entering("scribo::internal::erase_table");
+      I& in = exact(in_);
+      mln_precondition(in.is_valid());
+
+      erase_table_boxes(in, line_bboxes.first(), 0);
+      erase_table_boxes(in, line_bboxes.second(), 1);
 
 #ifndef NOUT
-      image2d<rgb8> tmp = level::convert(rgb8(), in);
-      draw_component_boxes(tmp, vboxes);
-      draw_component_boxes(tmp, hboxes);
+      mln_ch_value(I,rgb8) tmp = level::convert(rgb8(), in);
+      draw_component_boxes(tmp, line_bboxes.first());
+      draw_component_boxes(tmp, line_bboxes.second());
       io::ppm::save(tmp, output_file("vertical-and-horizontal-erosion.ppm"));
+      io::pbm::save(in, output_file("table_removed.pbm"));
 #endif
 
-      return std::make_pair(vboxes, hboxes);
+      trace::exiting("scribo::internal::erase_table");
     }
+
 
     /// \}
     //--------------------------------------------------
@@ -764,12 +1003,50 @@ namespace scribo
       util::array<unsigned> treated;
     };
 
+    unsigned
+    find_root(util::array<unsigned>& parent, unsigned x)
+    {
+      if (parent[x] == x)
+	return x;
+      else
+	return parent[x] = find_root(parent, parent[x]);
+    }
 
-
-    /// Merge bboxes according to their left box neighbor.
+    /// Merge bboxes according to their left neighbor.
     util::array<box2d>
-    group_bboxes(const util::graph& g, image2d<label_16>& lbl,
-		 util::array<box2d>& cboxes, label_16& nlabels)
+    group_bboxes_with_single_link(util::array<unsigned>& link_array,
+				  image2d<label_16>& lbl,
+				  util::array<box2d>& cboxes, label_16& nlabels)
+    {
+      for (unsigned i = 0; i < link_array.nelements(); ++i)
+	link_array[i] = find_root(link_array, i);
+
+      util::array< accu::bbox<point2d> > tboxes;
+      tboxes.resize(nlabels.next());
+      for_all_ncomponents(i, nlabels)
+	tboxes[link_array[i]].take(cboxes[i]);
+
+      //Update labels
+      labeling::relabel_inplace(lbl, nlabels,
+				convert::to<fun::l2l::relabel<label_16> >(link_array));
+
+#ifndef NOUT
+      save_lbl_image(lbl, nlabels, "lbl-grouped-boxes.pgm");
+#endif
+
+      util::array<box2d> result;
+      convert::from_to(tboxes, result);
+
+      nlabels = result.nelements();
+
+      return result;
+    }
+
+
+    /// Merge bboxes according to their neighbors.
+    util::array<box2d>
+    group_bboxes_with_graph(const util::graph& g, image2d<label_16>& lbl,
+			    util::array<box2d>& cboxes, label_16& nlabels)
     {
       // Build relabel function.
       make_relabel_fun_t f;
@@ -805,7 +1082,7 @@ namespace scribo
       for_all_ncomponents(i, nlabels)
 	if (tboxes[i].is_valid())
 	  if (comp_size.treated[i] < 3)
-	    data::fill((lbl2 | (tboxes[i].to_result() | (pw::value(lbl2) == pw::cst(i)))).rw(), 0u);
+	    data::fill((lbl2 | (tboxes[i].to_result() | (pw::value(lbl2) == i))).rw(), 0u);
       save_lbl_image(lbl2, nlabels, "lbl-grouped-boxes-cleaned.ppm");
 #endif
 
@@ -814,8 +1091,7 @@ namespace scribo
 
 
 
-    /// Update the lookup table \p left if a neighbor is found on the right of
-    /// the current bbox.
+    /// Add an edge if a valid neighbor is found
     void update_link(util::graph& g, image2d<label_16>& lbl,
 		     const point2d& p, const point2d& c,
 		     unsigned i, int dmax)
@@ -825,14 +1101,122 @@ namespace scribo
 	  g.add_edge(lbl(p), i);
     }
 
+    /// Update the lookup table \p link_array if a neighbor is found on the right of
+    /// the current bbox.
+    void update_link_array(util::array<unsigned>& link_array, image2d<label_16>& lbl,
+			   const point2d& p, const point2d& c,
+			   unsigned i, int dmax)
+    {
+	if (lbl.domain().has(p) && lbl(p) != 0u && lbl(p) != i
+	    && (math::abs(p.col() - c.col())) < dmax && link_array[lbl(p)] == lbl(p))
+	  link_array[lbl(p)] = i;
+    }
+
+
+
+    void init_link_array(util::array<unsigned>& link_array)
+    {
+      for (unsigned i = 0; i < link_array.nelements(); ++i)
+	link_array[i] = i;
+    }
+
+    /// Map each character bbox to its left bbox neighbor if possible.
+    /// Iterate to the right but link boxes to the left.
+    ///
+    /// \return an util::array. Map a bbox to its left neighbor.
+    util::array<unsigned>
+    link_character_bboxes_with_single_link(image2d<label_16>& lbl,
+					   const util::array<box2d>& cboxes,
+					   unsigned ncomp)
+    {
+      util::array<unsigned> left_link(ncomp + 1);
+      init_link_array(left_link);
+
+      for_all_ncomponents(i, ncomp)
+      {
+	unsigned midcol = (cboxes[i].pmax().col() - cboxes[i].pmin().col()) / 2;
+	int dmax = midcol + settings.bbox_distance;
+	point2d c = cboxes[i].center();
+
+	///
+	/// Find a neighbor on the right
+	///
+
+	/// First site on the right of the central site
+	point2d p = c + right;
+
+	// FIXME: Lemmings with a condition on the distance => write a special version?
+	while (lbl.domain().has(p) && (lbl(p) == 0u || lbl(p) == i)
+		&& math::abs(p.col() - c.col()) < dmax)
+	  ++p.col();
+
+	update_link_array(left_link, lbl, p, c, i, dmax);
+
+      }
+
+      return left_link;
+    }
 
 
     /// Map each character bbox to its left bbox neighbor if possible.
     /// Iterate to the right but link boxes to the left.
+    ///
+    /// \return a pair of util::array. The first one map a bbox to its left
+    ///		neighbor and the second one map a bbox to its right neighbor.
+    util::couple<util::array<unsigned>, util::array<unsigned> >
+    link_character_bboxes_with_double_link(image2d<label_16>& lbl,
+					   const util::array<box2d>& cboxes,
+					   unsigned ncomp)
+    {
+      util::array<unsigned> left_link(ncomp + 1), right_link(ncomp + 1);
+      init_link_array(left_link);
+      init_link_array(right_link);
+
+      for_all_ncomponents(i, ncomp)
+      {
+	unsigned midcol = (cboxes[i].pmax().col() - cboxes[i].pmin().col()) / 2;
+	int dmax = midcol + settings.bbox_distance;
+	point2d c = cboxes[i].center();
+
+	///
+	/// Find a neighbor on the right
+	///
+
+	/// First site on the right of the central site
+	point2d p = c + right;
+
+	// FIXME: Lemmings with a condition on the distance => write a special version?
+	while (lbl.domain().has(p) && (lbl(p) == 0u || lbl(p) == i)
+		&& math::abs(p.col() - c.col()) < dmax)
+	  ++p.col();
+
+	update_link_array(left_link, lbl, p, c, i, dmax);
+
+
+	///
+	/// Find a neighbor on the left
+	///
+
+	/// First site on the left of the central site
+	p = c + left;
+
+	// FIXME: Lemmings with a condition on the distance => write a special version?
+	while (lbl.domain().has(p) && (lbl(p) == 0u || lbl(p) == i)
+		&& math::abs(p.col() - c.col()) < dmax)
+	  --p.col();
+
+	update_link_array(right_link, lbl, p, c, i, dmax);
+      }
+
+      return make::couple(left_link, right_link);
+    }
+
+
+    /// Map each character bbox to its left neighbors.
     util::graph
-    link_character_bboxes(image2d<label_16>& lbl,
-			  const util::array<box2d>& cboxes,
-			  unsigned ncomp)
+    link_character_bboxes_with_left_graph(image2d<label_16>& lbl,
+					  const util::array<box2d>& cboxes,
+					  unsigned ncomp)
     {
       util::graph g(ncomp + 1);
 
@@ -856,6 +1240,54 @@ namespace scribo
     }
 
 
+    /// Map each character bbox to its left and right neighbors.
+    util::graph
+    link_character_bboxes_with_left_and_right_graph(image2d<label_16>& lbl,
+						    const util::array<box2d>& cboxes,
+						    unsigned ncomp)
+    {
+      util::graph g(ncomp + 1);
+
+      for_all_ncomponents(i, ncomp)
+      {
+	unsigned midcol = (cboxes[i].pmax().col() - cboxes[i].pmin().col()) / 2;
+	int dmax = midcol + settings.bbox_distance;
+	point2d c = cboxes[i].center();
+
+	//
+	// Find neighbors on the right
+	//
+
+	/// First site on the right of the central site
+	point2d p = c + right;
+
+	// FIXME: Lemmings with a condition on the distance => write a special version?
+	while (lbl.domain().has(p) && (lbl(p) == 0u || lbl(p) == i)
+		&& math::abs(p.col() - c.col()) < dmax)
+	  ++p.col();
+
+	update_link(g, lbl, p, c, i, dmax);
+
+	//
+	// Find neighbors on the left
+	//
+
+	/// First site on the right of the central site
+	p = c + left;
+
+	// FIXME: Lemmings with a condition on the distance => write a special version?
+	while (lbl.domain().has(p) && (lbl(p) == 0u || lbl(p) == i)
+		&& math::abs(p.col() - c.col()) < dmax)
+	  --p.col();
+
+	update_link(g, lbl, p, c, i, dmax);
+
+      }
+
+      return g;
+    }
+
+
 
     util::array<box2d>
     extract_text(image2d<bool>& in,
@@ -870,6 +1302,13 @@ namespace scribo
 
       boxes_t cboxes = labeling::compute(accu::meta::bbox(), lbl, nlabels);
 
+      image2d<label_16> lbl_bbox;
+      initialize(lbl_bbox, lbl);
+      data::fill(lbl_bbox, 0u);
+
+      for_all_components(i, cboxes)
+	draw::box(lbl_bbox, cboxes[i], i);
+
 #ifndef NOUT
       image2d<rgb8> tmp = level::convert(rgb8(), in);
       draw_component_boxes(tmp, cboxes);
@@ -877,10 +1316,10 @@ namespace scribo
 #endif
 
       //Link character bboxes to their left neighboor if possible.
-      util::graph g = link_character_bboxes(lbl, cboxes, nlabels);
+      util::graph g = link_character_bboxes_with_left_graph(lbl_bbox, cboxes, nlabels);
 
-      //Merge character bboxes according to their left neighbor.
-      util::array<box2d> tboxes = group_bboxes(g, lbl, cboxes, nlabels);
+      //Merge character bboxes through a graph.
+      util::array<box2d> tboxes = group_bboxes_with_graph(g, lbl, cboxes, nlabels);
 
       return tboxes;
     }
@@ -889,20 +1328,42 @@ namespace scribo
 
 
     /// Function mapping value to sites of a line graph image.
-    template <typename P>
-    struct lg_vertex_values : public mln::Function_p2v< lg_vertex_values<P> >
+    template <typename S>
+    struct lg_vertex_values : public mln::Function_p2v< lg_vertex_values<S> >
     {
-      typedef float result;
+      /// Result is composed of a L2 distance between the two vertices of
+      /// the edge, and the angle between the edge and the origin axis.
+      typedef util::couple<unsigned,float> result;
 
       // Compute the angle between P and (0,1)
-      float operator()(const P& p) const
+      util::couple<unsigned,float> operator()(const mln_psite(S)& p) const
       {
-	mln::algebra::vec<2,float> v, pv;
-	v[0] = 0;
-	v[1] = 1;
-	pv = p.to_vec().normalize();
+	unsigned distance = norm::l2_distance(p.to_site().begin().to_vec(),
+					      p.to_site().end().to_vec());
 
-	return v * pv;
+	/// Compute angle between the edge and the axis.
+	mln::algebra::vec<2,float> v, pv;
+	v[0] = 1;
+	v[1] = 0;
+	pv = p.to_site().to_vec().normalize();
+
+	float pi = 3.14;
+	float pi_div2 = pi / 2;
+	float angle = v * pv;
+	// Be sure the angle is between 0 and pi/2
+
+	// up left part of the circle.
+	if (angle > pi_div2 && angle < pi)
+	  angle = pi - angle;
+	// down left part of the circle.
+	else if (angle < 0 && angle < -pi_div2)
+	  angle += pi;
+
+	// down right part of the circle.
+	if (angle < 0)
+	  angle *= -1;
+
+	return make::couple(distance, angle);
       }
 
     };
@@ -922,8 +1383,8 @@ namespace scribo
 
       for_all_elements(i, tboxes)
 	if (tboxes[i].is_valid())
-	  data::paste(pw::cst(color(tboxes[i].center())) | (tboxes[i] | pw::value(in) == pw::cst(true)),
-		dbg);
+	  data::paste(pw::cst(color(tboxes[i].center())) | (tboxes[i] | pw::value(in) == true),
+		      dbg);
       io::ppm::save(dbg, output_file("text2cell.ppm"));
 # endif
     }
@@ -934,27 +1395,32 @@ namespace scribo
     {
       std::cout << "Merging aligned text boxes" << std::endl;
 
-      image2d<label_16> lbl_iz = duplicate(lbl);
-      io::ppm::save(debug::colorize(rgb8(), lbl, nlabels), output_file("tboxes-lbl.ppm"));
+      io::ppm::save(debug::colorize(rgb8(), lbl, nlabels),
+		    output_file("tboxes-lbl.ppm"));
 
-      image2d<label_16> iz = transform::influence_zone_geodesic(lbl_iz, c8(), settings.bbox_distance);
+      typedef util::couple<image2d<unsigned>, image2d<label_16> > cpl_t;
+      cpl_t diz =
+	transform::distance_and_influence_zone_geodesic(lbl, c8(),
+							settings.bbox_distance);
+
 #ifndef NOUT
-      io::ppm::save(debug::colorize(rgb8(), iz, nlabels), output_file("tboxes-iz.ppm"));
+      io::pgm::save(level::transform(diz.first(), fun::l2l::wrap<label_8>()),
+		    output_file("tboxes-dmap.pgm"));
+      io::ppm::save(debug::colorize(rgb8(), diz.second(), nlabels),
+		    output_file("tboxes-iz.ppm"));
 #endif
 
       typedef util::graph G;
-      G g = make::graph(iz | (pw::value(iz) != pw::cst(0u)), c8(), nlabels);
+      G g = make::graph(diz.second() | (pw::value(diz.second()) != pw::cst(0u)),
+			c8(), nlabels);
 
-      // Compute the component centers and use them as vertex.
+      // Compute the component centers and use them as vertex sites.
       //FIXME: Add fun::vertex2p
       typedef fun::i2v::array<point2d> fv2p_t;
       fv2p_t fv2p(nlabels.next());
 
       for_all_components(i, tboxes)
 	fv2p(i) = tboxes[i].center();
-
-      // Create a p_vertices.
-      p_vertices<G, fv2p_t> pv(g, fv2p);
 
       typedef util::line_graph<G> LG;
       LG lg(g);
@@ -972,23 +1438,46 @@ namespace scribo
 
       // Construct an image from a p_edges and a function mapping
       // lines to angles.
-      typedef lg_vertex_values<p_line2d> lgv2v_t;
+      typedef lg_vertex_values<pvlg_t> lgv2v_t;
       lgv2v_t lgv2v;
 
       mln_VAR(lg_ima, lgv2v | pvlg);
 
-      fun::i2v::array<value::rgb8> ecolor(pvlg.nsites(), literal::olive);
-      mln_piter_(lg_ima_t) p(lg_ima.domain());
-      for_all (p)
-	if ((lg_ima(p) > settings.max_cos) || (lg_ima(p) < - settings.max_cos))
-	    ecolor(p) = literal::cyan;
+//      unsigned dmax = level::compute(accu::max<unsigned>(),
+//				     thru(meta::first<mln_value_(lg_ima_t)>(),
+//					  lg_ima));
+//
+//      mln_VAR(angle_ima, level::stretch(int_u8(),
+//					thru(meta::second<mln_value_(lg_ima_t)>(),
+//					     lg_ima)));
+//
+//      image2d<unsigned> stats(make::box2d(dmax, 255));
+//      data::fill(stats, 0u);
+//
+//      mln_piter_(lg_ima_t) p(lg_ima.domain());
+//      for_all(p)
+//	++stats(point2d(lg_ima(p).first(), angle_ima(p)));
 
 #ifndef NOUT
-      image2d<rgb8> output = level::convert(rgb8(), in);
-      internal::draw_component_boxes(output, tboxes);
-      debug::draw_graph(output, pvlg, pw::cst(literal::cyan), ecolor);
-      io::ppm::save(output, internal::output_file("aligned-bboxes-merged.ppm"));
+//      io::pgm::save(stats, "stats.pgm");
+      {
+	fun::i2v::array<value::rgb8> ecolor(pvlg.nsites(), literal::olive);
+	mln_piter_(lg_ima_t) p(lg_ima.domain());
+	for_all (p)
+	{
+	  mln_value_(lg_ima_t) v = lg_ima(p);
+	  if ((v.second() > settings.max_cos) || (v.second() < - settings.max_cos))
+	    ecolor(p) = literal::cyan;
+	}
+
+	image2d<rgb8> output = level::convert(rgb8(), in);
+	internal::draw_component_boxes(output, tboxes);
+	debug::draw_graph(output, pvlg, pw::cst(literal::cyan), ecolor);
+	io::ppm::save(output, internal::output_file("aligned-bboxes-merged.ppm"));
+      }
 #endif
+
+
 
     }
 
@@ -1028,10 +1517,18 @@ namespace scribo
 
     internal::settings.max_comp_size = in.ncols() * in.nrows() * 0.05;
 
-    // tblboxes.first = vertical lines.
-    // tblboxes.second = horizontal lines.
-    std::pair<util::array<box2d>,
-	      util::array<box2d> > tblboxes = internal::extract_tables(in);
+    // tblboxes.first() = vertical lines.
+    // tblboxes.second() = horizontal lines.
+    typedef util::couple<util::array<box2d>,util::array<box2d> > tblboxes_t;
+
+    win::vline2d vline(internal::settings.ero_line_width);
+    win::hline2d hline(internal::settings.ero_line_width);
+    tblboxes_t tblboxes =
+	internal::extract_table_lines_with_rank(in, vline, hline,
+					        internal::settings.rank_filter);
+
+    internal::erase_table(tblboxes, in);
+
     image2d<bool> table = internal::rebuild_table(in, tblboxes);
 
     /// relabel since the table has been removed.
@@ -1056,7 +1553,7 @@ namespace scribo
     io::ppm::save(output, internal::output_file("out.ppm"));
 #endif
 
-    internal::text_recognition(in, lbl, tboxes);
+//    internal::text_recognition(in, lbl, tboxes);
   }
 
 
