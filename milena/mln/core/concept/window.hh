@@ -121,6 +121,10 @@ namespace mln
   
   template <typename I, typename W>
   util::array<int>
+  positive_offsets_wrt(const Image<I>& ima, const Window<W>& win);
+  
+  template <typename I, typename W>
+  util::array<int>
   negative_offsets_wrt(const Image<I>& ima, const Window<W>& win);
   
 
@@ -338,6 +342,32 @@ namespace mln
     
     for (unsigned i = 0; i < n; ++i)
       arr.append(ima.delta_index(win.dp(i)));
+
+    return arr;
+  }
+
+
+  template <typename I, typename W>
+  inline
+  util::array<int>
+  positive_offsets_wrt(const Image<I>& ima_, const Window<W>& win_)
+  {
+    mln_is_simple_window(W)::check();
+
+    const I& ima = exact(ima_);
+    const W& win = exact(win_);
+    mln_precondition(ima.is_valid());
+    mln_precondition(win.is_valid());
+
+    util::array<int> arr;
+    unsigned n = win.size();
+    
+    for (unsigned i = 0; i < n; ++i)
+      {
+	int offset = ima.delta_index(win.dp(i));
+	if (offset > 0)
+	  arr.append(offset);
+      }
 
     return arr;
   }

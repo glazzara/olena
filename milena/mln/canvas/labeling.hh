@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,8 +33,8 @@
 ///
 /// Connected component labeling of the object part in a binary image.
 ///
-/// \todo Make the fastest version work.
-/// FIXME: is 'status' useful?
+/// \todo Can we get rid of 'deja_vu' (while playing with the border)
+/// in the fastest video version?
 
 # include <mln/core/concept/image.hh>
 # include <mln/data/fill.hh>
@@ -139,7 +139,7 @@ namespace mln
 
 	  // Output.
 	  mln_ch_value(I, L) output;
-	  bool status;
+	  bool status; // FIXME: Is-it useful?
 
 	  // Initialization.
 	  {
@@ -157,7 +157,7 @@ namespace mln
 
 	  // First Pass.
 	  {
-	    mln_fwd_piter(S) p(s);
+	    mln_bkd_piter(S) p(s);  // Backward.
 	    mln_niter(N) n(nbh, p);
 	    for_all(p) if (f.handles(p))
 	      {
@@ -187,7 +187,7 @@ namespace mln
 
 	  // Second Pass.
 	  {
-	    mln_bkd_piter(S) p(s);
+	    mln_fwd_piter(S) p(s); // Forward.
 	    for_all(p) if (f.handles(p))
 	      {
 		if (parent(p) == p) // if p is root
@@ -274,10 +274,10 @@ namespace mln
 
 	// First Pass.
 	{
-	  util::array<int> dp = negative_offsets_wrt(input, nbh);
+	  util::array<int> dp = positive_offsets_wrt(input, nbh);
 	  const unsigned n_nbhs = dp.nelements();
 
-	  mln_pixter(const I) px(input);
+	  mln_bkd_pixter(const I) px(input); // Backward.
 	  for_all(px)
 	  {
 	    unsigned p = px.offset();
@@ -311,7 +311,7 @@ namespace mln
 
 	// Second Pass.
 	{
-	  mln_bkd_pixter(const I) px(input);
+	  mln_fwd_pixter(const I) px(input); // Forward.
 	  for_all(px)
 	  {
 	    unsigned p = px.offset();
@@ -394,8 +394,7 @@ namespace mln
 
 	// First Pass.
 	{
-
-	  for (unsigned i = 0; i < n_points; ++i)
+	  for (int i = n_points - 1; i >=0; --i) // Backward.
 	    {
 	      unsigned p = s[i];
 	      if (! f.handles_(p))
@@ -425,13 +424,12 @@ namespace mln
 		    f.do_no_union_(n, p);
 		}
 	      deja_vu.element(p) = true;
-
 	    }
 	}
 
 	// Second Pass.
 	{
-	  for (int i = n_points - 1; i >=0; --i)
+ 	  for (unsigned i = 0; i < n_points; ++i) // Forward.
 	    {
 	      unsigned p = s[i];
 	      if (! f.handles_(p))

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,14 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/labeling/foreground.cc
- *
- * \brief Test on mln::labeling::foreground.
- */
+/// \file tests/labeling/foreground.cc
+///
+/// Test on mln::labeling::foreground.
 
 #include <mln/core/image/image2d.hh>
+#include <mln/core/var.hh>
 #include <mln/io/pbm/load.hh>
 #include <mln/core/alias/neighb2d.hh>
+#include <mln/level/compare.hh>
 #include <mln/labeling/foreground.hh>
 
 #include "tests/data.hh"
@@ -42,8 +44,30 @@ int main()
 {
   using namespace mln;
 
-  image2d<bool> pic = io::pbm::load(MLN_IMG_DIR "/picasso.pbm");
+  typedef image2d<bool> I;
+  mln_VAR(nbh, c4());
+
+  I pic = io::pbm::load(MLN_IMG_DIR "/picasso.pbm");
+  image2d<unsigned> out, ref;
+
   unsigned n;
-  labeling::foreground(pic, c4(), n);
+  out = labeling::foreground(pic, nbh, n); // Calls the fastest 'video'
+					   // version.
   mln_assertion(n == 33);
+
+  {
+    // Note that  labeling::foreground  actually is  labeling::level
+    // which calls  canvas::labeling_video  and its generic dispatch
+    // leads to  canvas::impl::generic::labeling.
+
+    labeling::impl::level_functor<I> f(pic, true);
+
+    unsigned n_;
+    ref = canvas::impl::generic::labeling(pic, nbh, n_,
+					  pic.domain(),
+					  f);
+    mln_invariant(n_ == n);
+    mln_invariant(ref == out);
+  }
+
 }

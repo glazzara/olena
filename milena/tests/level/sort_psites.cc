@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,7 +31,7 @@
 /// Tests on mln::level::sort_psites.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/debug/iota.hh>
+#include <mln/make/image2d.hh>
 #include <mln/level/sort_psites.hh>
 #include <mln/core/site_set/p_array.hh>
 
@@ -40,10 +40,19 @@ int main ()
 {
   using namespace mln;
 
-  image2d<int> ima(3, 3);
-  debug::iota (ima);
+  int vals[] = { 0, 3, 4,
+		 2, 2, 2,
+		 0, 1, 4 };
+  image2d<int> ima = make::image2d(vals);
   p_array<point2d> array_inc = level::sort_psites_increasing(ima);
   p_array<point2d> array_dec = level::sort_psites_decreasing(ima);
+
+  {
+    p_array<point2d>::fwd_piter p1(array_inc);
+    p_array<point2d>::bkd_piter p2(array_dec);
+    for_all_2(p1, p2)
+      mln_assertion(ima(p1) == ima(p2));
+  }
 
   p_array<point2d> array_inc_ref;
   p_array<point2d> array_dec_ref;

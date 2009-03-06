@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,6 +32,10 @@
 /// \file mln/morpho/tree/data.hh
 ///
 /// FIXME: First Attempt.
+///
+/// \todo Fix the issue pointed to by Edwin without modifying the way
+/// sites are browsed (see the documentation of compute_parent to
+/// learn why we want the 1st pass to be in forward scan of s).
 
 # include <mln/morpho/tree/compute_parent.hh>
 # include <mln/core/image/sub_image.hh>

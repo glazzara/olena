@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,7 +34,12 @@
 /// Compute a canonized tree from an image.
 ///
 /// \todo Specialize for low quant (and try fastest).
-
+///
+/// \todo Augment and improve documentation.
+///
+/// \todo Change level::sort so that the explanations below are valid
+/// whatever the choice 'increasing or decreasing'.
+ 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/data/fill.hh>
@@ -55,16 +61,72 @@ namespace mln
       /// "natural" childhood relationship.  The parenthood is thus
       /// inverted w.r.t. to \p s.
       ///
-      /// It is very convenient since all processing upon the parent
-      /// tree are performed following \p s (in the default "forward"
-      /// way).
+      /// It is very convenient since most processing routines upon
+      /// the parent tree are performed following \p s (in the default
+      /// "forward" way).  Indeed that is the way to propagate
+      /// information from parents to children.
       ///
-      /// FIXME: Put it more clearly...
       ///
       /// The parent result image verifies: \n
       /// - p is root iff parent(p) == p \n
       /// - p is a node iff either p is root or f(parent(p)) != f(p).
-
+      ///
+      ///
+      ///
+      /// The choice "s means childhood" is consistent with labeling
+      /// in binary images.  In that particular case, while browsing
+      /// the image in forward scan (video), we expect to find first a
+      /// tree root (a first point, representative of a component) and
+      /// then the other component points.  Please note that it leads
+      /// to increasing values of labels in the "natural" video scan.
+      ///
+      /// Since mathematical morphology on functions is related to
+      /// morphology on sets, we clearly want to keep the equivalence
+      /// between "component labeling" and "component filtering" using
+      /// trees.
+      ///
+      ///
+      /// FIXME: Put it more clearly...  Insert pictures!
+      ///
+      /// A binary image:
+      /// 
+      /// - | | - - \n
+      /// - | | - | \n
+      /// - - - - - \n
+      /// - - | | - \n
+      ///
+      /// where '|' means true and '-' means false.
+      ///
+      /// Its labeling:
+      ///
+      /// 0 1 1 0 0 \n
+      /// 0 1 1 0 2 \n
+      /// 0 0 0 0 0 \n
+      /// 0 0 3 3 0 \n
+      ///
+      /// The corresponding forest:
+      ///
+      /// x o . x x \n
+      /// x . . x o \n
+      /// x x x x x \n
+      /// x x o . x \n
+      ///
+      /// where 'x' means "no data", 'o' is a tree root
+      /// (representative point for a component), and '.' is a tree
+      /// regular (non-root) point (in a component by not its
+      /// representative point).
+      ///
+      ///
+      /// The forest, with the parent relationship looks like:
+      ///
+      ///  o < .				\n
+      ///  ^ r					\n
+      ///  .   .       o			\n
+      ///					\n
+      ///					\n
+      ///      o < .				\n
+      ///
+      ///
       template <typename I, typename N, typename S>
       mln_ch_value(I, mln_psite(I))
       compute_parent(const Image<I>& f, const Neighborhood<N>& nbh,
@@ -159,7 +221,7 @@ namespace mln
 	    data::fill(deja_vu, false);
 
 	    // Body.
-	    mln_bkd_piter(S) p(s);
+	    mln_bkd_piter(S) p(s); // Backward.
 	    mln_niter(N) n(nbh, p);
 	    for_all(p)
 	    {
@@ -183,7 +245,7 @@ namespace mln
 
 	    // Canonization.
 	    {
-	      mln_fwd_piter(S) p(s);
+	      mln_fwd_piter(S) p(s); // Forward.
 	      for_all(p)
 	      {
 		P q = parent(p);

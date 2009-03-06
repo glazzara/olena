@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -62,9 +63,17 @@ int main()
 
   {
     std::cout << "nodes = ";
-    tree_t::nodes_t::piter p(t.nodes());
+    tree_t::nodes_t::fwd_piter p(t.nodes());
     for_all(p)
       std::cout << p << ' ';
+    std::cout << std::endl;
+  }
+  {
+    std::cout << "nodes = ";
+    tree_t::fwd_piter p(t.domain());
+    for_all(p)
+      if (t.is_a_node(p))
+	std::cout << p << ' ';
     std::cout << std::endl
 	      << std::endl;
   }
@@ -73,7 +82,7 @@ int main()
   {
     image2d<unsigned> area(ima.domain());
     data::fill(area, 1);
-    tree_t::piter p(t.domain());
+    tree_t::fwd_piter p(t.domain());
     for_all(p)
       if (! t.is_root(p))
 	area(t.parent(p)) += area(p);

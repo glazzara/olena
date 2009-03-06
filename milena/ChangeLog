@@ -1,3 +1,21 @@
+2009-03-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Have all labeling routines be consistent.
+
+	* mln/core/concept/window.hh,
+	* mln/core/concept/neighborhood.hh
+	(positive_offsets_wrt): New.
+	* mln/morpho/tree/compute_parent.hh (todo): New.
+	(doc): Augment.
+	* mln/morpho/tree/data.hh (todo): New.
+	* mln/canvas/labeling.hh: Swap fwd and bkd between both passes.
+	(todo): New.
+	Now it is consistent with labeling::blobs.
+	* tests/level/sort_psites.cc: Test reversibility.
+	* tests/morpho/tree/data.cc: Precise fwd when needed.
+	* tests/labeling/foreground.cc: Upgrade doc style.
+	Augment test.
+
 2009-03-06  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Update documentation reference outputs.
