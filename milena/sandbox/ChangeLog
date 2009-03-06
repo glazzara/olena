@@ -1,3 +1,13 @@
+2009-03-06  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add watershed implementation for IRM images.
+	* fabien/bin/Makefile: Update.
+	* fabien/bin/dicom2dump.cc: Update.
+	* fabien/bin/dicom_mask.cc: Update.
+	* fabien/igr/Makefile: Update.
+	* fabien/igr/dumps: Remove.
+	* fabien/igr/watershed.cc: Watershed implementation.
+
 2009-03-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Revamp and cleanup code for Scribo.

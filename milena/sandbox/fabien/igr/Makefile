@@ -8,7 +8,7 @@ DICOM_LIB = -L/Users/HiSoKa/Downloads/gdcmbin/bin \
 	    -framework CoreFoundation
 CXXFLAGS = -DNDEBUG -O1
 
-all: 2d 3d
+all: 2d 3d wsd
 
 2d: seg_vol_irm.hh seg2d.cc
 	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} ${CXXFLAGS} seg2d.cc -o seg2d
@@ -16,11 +16,8 @@ all: 2d 3d
 3d: seg_vol_irm.hh seg3d.cc
 	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} ${CXXFLAGS} seg3d.cc -o seg3d
 
-grad: grad_clo_and_wshd.cc
-	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} ${CXXFLAGS} $^ -o grad_clo
-
-wst: wst_rag.cc
-	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} ${CXXFLAGS} $^ -o wst_rag
+wsd: watershed.cc
+	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} ${CXXFLAGS} $^ -o wsd
 
 clean:
 	rm -rf *.dump *.p?m *.plot *.log *.csv

@@ -21,3 +21,6 @@ mask: dicom_mask.cc
 
 dump: dicom2dump.cc
 	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} ${CXXFLAGS} $^ -o dicom2dump
+
+pgm: dicom2pgm.cc
+	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} ${CXXFLAGS} $^ -o dicom2pgm
