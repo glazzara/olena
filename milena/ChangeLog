@@ -1,3 +1,20 @@
+2009-03-08  Frederic Bour  <bour@lrde.epita.fr>
+
+	Add work on meta functions and thru morpher.
+	* sandbox/fred/fun/abs.hh: New.
+	* sandbox/fred/fun/cos.hh: New.
+	* sandbox/fred/fun/fun.cc: New.
+	  Some tests don't pass, see FIXMEs (operator==(rgb::red_t,int) ?)
+	* sandbox/fred/fun/inc.hh: New.
+	* sandbox/fred/fun/meta_function.hh: New.
+	* sandbox/fred/fun/norm.hh: New.
+	* sandbox/fred/fun/red.hh: New.
+	* sandbox/fred/fun/thru.cc: New.
+	* sandbox/fred/fun/thru_morpher.hh: New.
+	  Constness of thru_image has to be corrected.
+	* sandbox/fred/fun/unary.hh: New.
+	* sandbox/fred/fun: New.
+
 2009-03-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Have all labeling routines be consistent.
