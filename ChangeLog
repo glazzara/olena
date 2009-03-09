@@ -1,5 +1,11 @@
 2009-03-09  Frederic Bour  <bour@lrde.epita.fr>
 
+	Add missing trait for thru_morpher.
+	* milena/sandbox/fred/fun/unary.hh: Add is_assignable trait, just
+	a workaround.
+
+2009-03-09  Frederic Bour  <bour@lrde.epita.fr>
+
 	Verify constness of "thru" image morpher.
 	* milena/mln/trait/image/props.hh: Correct small typos errors.
 	* milena/sandbox/fred/fun/abs.hh,

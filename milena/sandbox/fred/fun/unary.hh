@@ -76,6 +76,23 @@ namespace mln
       }
     };
   }
+
+  namespace trait
+  {
+    
+    namespace fun
+    {
+
+      /// Find correct implementation
+      template <typename F>
+      struct is_assignable
+      {
+	typedef metal::true_ ret;
+      };
+      
+    }
+    
+  }
   
   namespace meta
   {
