@@ -52,6 +52,7 @@
 #include <mln/draw/box.hh>
 #include <mln/level/stretch.hh>
 #include <mln/fun/v2v/id.hh>
+#include <mln/fun/l2l/wrap.hh>
 #include <mln/core/image/line_graph_elt_neighborhood.hh>
 #include <mln/morpho/elementary/dilation.hh>
 #include <mln/labeling/mean_values.hh>
@@ -121,19 +122,19 @@ namespace mln
   {
     // Cf. sandbox/theo/color/segment_rgb_pixels.cc
 
-    util::array<vec3d_f> m_3f = labeling::compute(accu::mean<mln_value(I)>(),
-						  input, // input color image
-						  w, // watershed labeling
-						  nbasins);
+    util::array<float> m_3f = labeling::compute(accu::mean<mln_value(I)>(),
+						input, // input color image
+						w, // watershed labeling
+						nbasins);
     m_3f[0] = literal::zero;
 
     util::array<mln_value(I)> m;
     convert::from_to(m_3f, m);
-    m[0] = literal::yellow;
+    m[0] = 150u;
 
-    io::ppm::save(level::transform(w,
+    /*io::ppm::save(level::transform(w,
 	  convert::to< fun::i2v::array<mln_value(I)> >(m)),
-	"wst_rag_wshd_color.ppm");
+	"wst_rag_wshd_color.ppm");*/
 
     return m;
   }
@@ -159,7 +160,7 @@ namespace mln
 
     typedef fun::i2v::array<mln_value(I)> vertex_values_t;
     vertex_values_t vertex_values;
-    // convert::from_to(mean_color_values(input, w, nbasins), vertex_values);
+    convert::from_to(mean_color_values(input, w, nbasins), vertex_values);
 
     mln_VAR(ima_v, (vertex_values | pv));
 
@@ -203,14 +204,14 @@ namespace mln
   image2d<mln_value(I)>
   make_debug_graph_image(const I& input,
 			 const V& ima_v, const E& ima_e,
-			 unsigned box_size, const value::rgb8& bg)
+			 unsigned box_size, const value::int_u12& bg)
   {
     image2d<mln_value(I)> ima;
     initialize(ima, input);
 
     data::fill(ima, bg);
     debug::draw_graph(ima, ima_v.domain(),
-		      pw::cst(mln_value(I)(literal::green)),
+		      pw::cst(150u),
 		      edge_to_color<E, mln_value(I)>(ima_e));
 
     dpoint2d tl(-box_size,-box_size);
@@ -246,25 +247,34 @@ int main(int argc, char *argv[])
 
   if (argc < 4)
   {
-    std::cout << "Usage: " << argv[0] << " <ima.dcm> <closure_lambda> <box_size>"
+    std::cout << "Usage: " << argv[0] << " <ima.dcm> <closure_lambda> <box_size> <dist_max>"
 	      << std::endl;
     return 1;
   }
 
+  unsigned closure_lambda = atoi(argv[2]);
   unsigned box_size = atoi(argv[3]);
+  unsigned dist_max = atoi(argv[4]);
 
   image2d<int_u12> dcm;
   io::dicom::load(dcm, argv[1]);
 
+  io::pgm::save(level::stretch(int_u8(), dcm), "wsd_01_src.pgm");
+
   image2d<int_u12> grad = morpho::gradient(dcm, win_c4p());
-  image2d<int_u12> clo = morpho::closing::area(grad, c4(), atoi(argv[2]));
+  image2d<int_u12> clo = morpho::closing::area(grad, c4(), closure_lambda);
 
   label_16 nbasins;
   image2d<label_16> wshed = morpho::meyer_wst(clo, c4(), nbasins);
 
+  io::pgm::save(level::stretch(int_u8(), clo), "wsd_02.pgm");
+  io::pgm::save(level::transform(wshed, fun::l2l::wrap<int_u8>()), "wsd_03.pgm");
+
   mln_VAR(vol2_, morpho::elementary::dilation(extend(wshed | (pw::value(wshed) == 0u), wshed), c8()));
 
   data::fill((wshed | (pw::value(wshed) == 0u)).rw(), vol2_);
+
+  io::pgm::save(level::transform(wshed, fun::l2l::wrap<int_u8>()), "wsd_04.pgm");
 
   /// Build graph
   util::graph g = make::graph(wshed, c4(), nbasins);
@@ -282,8 +292,7 @@ int main(int argc, char *argv[])
   {
     unsigned v1 = e.element().v1();
     unsigned v2 = e.element().v2();
-    if (ima_e(e) <= (unsigned)(atoi(argv[5]))
-	&& find_root(parent, v1) != find_root(parent, v2))
+    if (ima_e(e) <= dist_max && find_root(parent, v1) != find_root(parent, v2))
       parent[find_root(parent, v1)] = find_root(parent, v2);
   }
 
@@ -302,6 +311,7 @@ int main(int argc, char *argv[])
   --nbasins2; // nbasins2 does not count the basin with label 0.
   image2d<label_16> wsd2 = level::transform(wshed, f);
 
+  io::pgm::save(level::transform(wsd2, fun::l2l::wrap<int_u8>()), "wsd_05.pgm");
 
   /// Reconstruct a graph from the simplified image.
   util::graph g2 = make::graph(wsd2, c4(), nbasins2);
@@ -314,7 +324,8 @@ int main(int argc, char *argv[])
 
   data::fill((wsd2 | (pw::value(wsd2) == 0u)).rw(), wsd2_);
 
+  io::pgm::save(level::transform(wsd2, fun::l2l::wrap<int_u8>()), "wsd_99_result.pgm");
   //io::ppm::save(labeling::mean_values(dcm, wsd2, nbasins2), "wst_rag_mean_colors.ppm");
-  //io::ppm::save(make_debug_graph_image(dcm, ima_v2, ima_e2, box_size, literal::white), "wst_rag_graph_image2_white.ppm");
-  //io::ppm::save(make_debug_graph_image(dcm, ima_v2, ima_e2, box_size, literal::black), "wst_rag_graph_image2_black.ppm");
+  io::pgm::save(make_debug_graph_image(dcm, ima_v2, ima_e2, box_size, 4095), "wsd_graph_image2_white.pgm");
+  io::pgm::save(make_debug_graph_image(dcm, ima_v2, ima_e2, box_size, 0), "wsd_graph_image2_black.pgm");
 }

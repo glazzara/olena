@@ -1,3 +1,9 @@
+2009-03-09  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Fix dicom_mask binary.
+	* fabien/bin/dicom_mask.cc: Fix bugs.
+	* fabien/igr/watershed.cc: Update with watershed implementation.
+
 2009-03-06  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add routine to calculate the number of components retaled to a createria.

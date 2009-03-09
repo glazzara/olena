@@ -21,3 +21,5 @@
 [X] Create dicom2dump (2d, 3d, int_u8, int_u12)
 [ ] After threshold, take biggest object and then erode, dilate
 [ ] Fix n_max
+[ ] Create routine for binary images (keep n big bg & m big objects)
+[ ] US: projection of internal gradient
