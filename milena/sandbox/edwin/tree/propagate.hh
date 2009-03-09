@@ -39,11 +39,11 @@ namespace mln {
     namespace tree {
 
 
-      /// The representative point propagates its value to
-      /// its non-representative children nodes.
+      /// Propagate the representative point's value to
+      /// non-representative points of the same node.
       template <typename T, typename A>
       void
-      back_propagate_level(const T& t, A& a)
+      propagate_to_node(const T& t, A& a)
       {
 	mln_fwd_piter(T) p(t.domain());
 	for_all(p)
@@ -54,23 +54,103 @@ namespace mln {
 	    }
       }
 
-      /// The representative point having the right
-      /// value propagates to the nodes of its sub-branch.
+      /// Propagate a tagged node's value to its subbranches.
       template <typename T, typename A>
       void
-      back_propagate_subbranch(const T& t, A& a, mln_value(A) v)
+      propagate_to_childhood(const T& t, A& a)
       {
-	mln_fwd_piter(T::nodes_t) n(t.nodes());
+	mln_bkd_piter(T::nodes_t) n(t.nodes());
 	for_all(n)
 	{
 	  mln_assertion(t.is_a_node(n));
-	  if (a(t.parent(n)) == v)
+	  if (a(t.parent(n)))
 	    {
 	      mln_assertion(t.is_a_node(t.parent(n)));
 	      a(n) = a(t.parent(n));
 	    }
 	}
       }
+
+
+      /// Propagate a tagged node's value to its direct children.
+      template <typename T, typename A>
+      void
+      propagate_to_children(const T& t, A& a)
+      {
+	mln_fwd_piter(T::nodes_t) n(t.nodes());
+	for_all(n)
+	{
+	  mln_assertion(t.is_a_node(n));
+	  if (a(t.parent(n)))
+	    {
+	      mln_assertion(t.is_a_node(t.parent(n)));
+	      a(n) = a(t.parent(n));
+	    }
+	}
+      }
+
+      /// Propagate a tagged node's value to its ancestors.
+      template <typename T, typename A>
+      void
+      propagate_to_ancestors(const T& t, A& a)
+      {
+	mln_fwd_piter(T::nodes_t) n(t.nodes());
+	for_all(n)
+	{
+	  mln_assertion(t.is_a_node(n));
+	  if (a(n))
+	    {
+	      mln_assertion(t.is_a_node(t.parent(n)));
+	      a(t.parent(n)) = a(n);
+	    }
+	}
+      }
+
+      /// Propagate a tagged node's value to its direct parents.
+      template <typename T, typename A>
+      void
+      propagate_to_parents(const T& t, A& a)
+      {
+	mln_bkd_piter(T::nodes_t) n(t.nodes());
+	for_all(n)
+	{
+	  mln_assertion(t.is_a_node(n));
+	  if (a(n))
+	    {
+	      mln_assertion(t.is_a_node(t.parent(n)));
+	      a(t.parent(n)) = a(n);
+	    }
+	}
+      }
+
+      /// Propagate a tagged leaf's value to its ancestors.
+      /// In others words, tag the branch which the tagged leaf belongs to.
+      /// At the end, the tree should get this property:
+      /// for all n
+      ///   a(n) is true iff there exits an l in tree's leaves such that
+      ///       n <== l and a(l) is true.
+      /// TODO: post-condition which checks this property.
+
+      template <typename T, typename A>
+      void
+      propagate_leaf_to_ancestors(const T& t, A& a)
+      {
+	// 1st pass: leaves' parents are set to false.
+	mln_fwd_piter(T::leaves_t) l(t.leaves());
+	for_all(l)
+	  t.parent(l) = 0;
+
+	// 2nd pass
+	mln_fwd_piter(T::nodes_t) n(t.nodes());
+	for_all(n)
+	{
+	  mln_assertion(t.is_a_node(t.parent(n)));
+	  a(t.parent(n)) = a(t.parent(n)) || a(n);
+	}
+      }
+
+
+
     } // end of namespace mln::morpho::tree
   } // end of namespace mln::morpho
 } // end of namespace mln

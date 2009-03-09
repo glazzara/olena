@@ -248,14 +248,12 @@ int main(int argc, char* argv[])
     usage(argv);
 
 
-
-  back_propagate_subbranch(f->tree(), f->img() ,true);
-  back_propagate_level(f->tree(), f->img());
-
+  std::cout << "s1" << std::endl;
+  propagate_to_childhood(f->tree(), f->img());
+  std::cout << "s2" << std::endl;
+  propagate_to_node(f->tree(), f->img());
+  std::cout << "s3" << std::endl;
   filtercheck(*f, accu::meta::count());
-
-  
-
 
 
   io::pbm::save(f->img(), "out.pbm");

@@ -37,26 +37,30 @@ namespace mln {
   namespace morpho {
     namespace tree {
 
+      // FIXME: it bugs; need a stack/queue
       template <typename I, typename T>
       util::array< mln_psite(I) >
       get_first_nodes(const Image<I>& img_, const T& tree)
       {
 	I bin = exact(img_);
-	mln_ch_value(I, bool) deja_vu;
 	util::array< mln_psite(I) > fnodes;
 
-	initialize(deja_vu, img_);
-	data::fill(deja_vu, false);
-
-	bool can_break = false;
-	mln_bkd_piter(T) p(tree.nodes());
-	for_all(p)
+	mln_bkd_piter(T::nodes_t) p(tree.nodes());
+	mln_psite(T::function) old;
+	p.start();
+	while (p.is_valid())
 	{
 	  mln_assertion(tree.is_a_node(p));
 	  if (bin(p) && !bin(tree.parent(p)))
 	    {
 	      fnodes.append(p);
+	      old = p;
+	      do {
+		p.next();
+	      } while (p.is_valid() && tree.parent(p) != tree.parent(old));
 	    }
+	  else
+	    p.next();
 	}
 	return fnodes;
       }

@@ -40,7 +40,7 @@
 # include <mln/morpho/tree/compute_parent.hh>
 # include <mln/core/image/sub_image.hh>
 # include <mln/core/site_set/p_array.hh>
-
+# include <mln/core/site_set/p_set.hh>
 
 namespace mln
 {
@@ -117,6 +117,14 @@ namespace mln
 	  return f_(parent_(p)) != f_(p);
 	}
 
+	/// Return true iff p is a leaf (in log time).
+	bool is_a_leaf(const mln_psite(I)& p) const
+	{
+	  mln_precondition(is_valid());
+	  mln_precondition(parent_.domain().has(p));
+	  return leaves_.has(p);
+	}
+
 	/// \}
 
 
@@ -132,6 +140,17 @@ namespace mln
 
 	/// \}
 
+	/// \{ Leaves-related materials.
+
+	typedef p_array<mln_psite(I)> leaves_t;
+
+	const p_set<mln_psite(I)>& leaves() const
+	{
+	  mln_precondition(is_valid());
+	  return leaves_;
+	}
+
+	/// \}
 
 	/// \{ How-to iterate on all sites.
 
@@ -167,6 +186,7 @@ namespace mln
 	const S& s_;
 	mln_ch_value(I, mln_psite(I)) parent_;
 	p_array<mln_psite(I)> nodes_;
+	p_set<mln_psite(I)> leaves_;
 	unsigned nroots_;
       };
 
@@ -186,19 +206,27 @@ namespace mln
 
 	// Compute parent image.
 	parent_ = morpho::tree::compute_parent(f_, nbh_, s_);
-	
+
 	// Store tree nodes.
 	nroots_ = 0;
 	mln_bkd_piter(S) p(s_);
+	mln_psite(I) old;
 	for_all(p)
+	{
 	  if (f_(parent_(p)) != f_(p))
-	    nodes_.insert(p);
+	    {
+	      nodes_.insert(p);
+	      if (parent_(p) != old)
+		leaves_.insert(old);
+	    }
 	  else
 	    if (parent_(p) == p)
 	      {
 		nodes_.insert(p);
 		++nroots_;
 	      }
+	  old = p;
+	}
       }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,3 +1,12 @@
+2009-03-09  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add leaves container in tree structure and test new propagations.
+	* mln/morpho/tree/data.hh: Add leaves container (not tested yet).
+	* sandbox/edwin/tree/propagate.hh: Add new propagation.
+	* sandbox/edwin/tree/routines.hh: Try to correct bug in first node
+	  calculus.
+	* sandbox/edwin/tree/tree.cc: Main file for tests.
+
 2009-03-08  Frederic Bour  <bour@lrde.epita.fr>
 
 	Add work on meta functions and thru morpher.
