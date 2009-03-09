@@ -15,7 +15,7 @@ namespace mln
   namespace trait
   {
     template <typename T>
-    struct set_unary_<fun::inc, mln::value::Scalar, T>
+    struct set_unary_<mln::fun::inc, mln::value::Scalar, T>
     {
       typedef set_unary_ ret;
       typedef T result;
@@ -36,7 +36,7 @@ namespace mln
   
   namespace meta
   {
-    typedef unary<fun::inc> inc;
+    typedef unary<mln::fun::inc> inc;
   }
 }
 

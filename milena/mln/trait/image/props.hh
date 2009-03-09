@@ -393,7 +393,7 @@ namespace mln
       {
 	struct any { protected: any() {} };
 	struct slow : any { std::string name() const { return "speed::slow"; } };
-	struct fast : any { std::string name() const { return "speedw::fast"; } };
+	struct fast : any { std::string name() const { return "speed::fast"; } };
 	struct fastest
 	  : fast { std::string name() const { return "speed::fastest"; } };
       };
@@ -502,11 +502,11 @@ namespace mln
         struct any { protected: any() {} };
         struct some : any { protected: some() {} };
         struct read
-          : some { std::string name() const { return "pw_io::read"; } };
+          : some { std::string name() const { return "vw_io::read"; } };
         struct read_write
-          : some { std::string name() const { return "pw_io::read_write"; } };
+          : some { std::string name() const { return "vw_io::read_write"; } };
         struct none
-          : any { std::string name() const { return "pw_io::none"; } };
+          : any { std::string name() const { return "vw_io::none"; } };
       };
 
 // vw_set: /any/

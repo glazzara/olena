@@ -16,7 +16,7 @@ namespace mln
   namespace trait
   {
     template <unsigned n>
-    struct set_precise_unary_<fun::red, mln::value::rgb<n> >
+    struct set_precise_unary_<mln::fun::red, mln::value::rgb<n> >
     {
       typedef set_precise_unary_ ret;
       typedef mln::value::rgb<n> argument;
@@ -37,7 +37,7 @@ namespace mln
   
   namespace meta
   {
-    typedef unary<fun::red> red;
+    typedef unary<mln::fun::red> red;
   }
 }
 

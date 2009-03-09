@@ -30,7 +30,9 @@
 # define THRU_HH
 
 # include <mln/core/internal/image_value_morpher.hh>
+# include <mln/metal/bexpr.hh>
 # include "meta_function.hh"
+# include "unary.hh" // For is_assignable trait
 
 // FIXME: constness of thru_image
 
@@ -40,10 +42,24 @@ namespace mln
   // Forward declaration.
   template <typename I, typename F> struct thru_image;
 
-
   namespace internal
   {
-
+    template <typename I, typename F> struct thru_image_write;
+    template <typename I, typename F> struct thru_image_read;
+    
+    /// Find correct implementation
+    template <typename I, typename F>
+    struct thru_find_impl
+    {
+      typedef thru_image_write<I, F> write;
+      typedef thru_image_read<I, F> read;
+      typedef mlc_if(mlc_and(typename trait::fun::is_assignable<F>::ret,
+		     mlc_and(mlc_not(mlc_is_const(I)),
+			     mlc_equal(mln_trait_image_pw_io(I),
+				       trait::image::pw_io::read_write))),
+		     write, read) ret;
+    };
+    
     /// Data structure for \c mln::thru_image<I>.
     template <typename I, typename F>
     struct data< thru_image<I, F> >
@@ -62,51 +78,82 @@ namespace mln
   {
 
     template <typename I, typename F>
-    struct image_< thru_image<I, F> > : image_< I > // Same as I except...
+    struct image_< thru_image<I, F> > : image_< typename mln::internal::thru_find_impl<I, F>::ret > // Same as I except...
     {
       // ...these changes.
       typedef trait::image::category::value_morpher category;
       typedef mln_internal_trait_image_speed_from(I) speed; // Un-fastest.
       typedef trait::image::value_access::computed value_access;
     };
-
+    
+    template <typename I, typename F>
+    struct image_< mln::internal::thru_image_write<I, F> > : image_< I > // Same as I except...
+    {
+      typedef trait::image::vw_io::read_write vw_io;
+    };
+    
+    template <typename I, typename F>
+    struct image_< mln::internal::thru_image_read<I, F> > : image_< I > // Same as I except...
+    {
+      typedef trait::image::vw_io::read vw_io;
+    };
+    
   } // end of namespace mln::trait
 
 
 
   // FIXME: Doc!
 
+  namespace internal
+  {
+    
+    template <typename I, typename F>
+    class thru_image_read : public internal::image_value_morpher< I, typename F::result, thru_image<I,F> >
+    {
+    public:
+      
+      /// Skeleton.
+      typedef thru_image<tag::image_<I>, F> skeleton;
+      
+      /// Point_Site associated type.
+      typedef mln_psite(I) psite;
+      
+      /// Value associated type.
+      typedef typename F::result value;
+      
+      /// Return type of read-only access.
+      typedef typename F::result rvalue;
+      
+      rvalue operator()(const mln_psite(I)& p) const;
+      
+    };
+    
+    // Inheritance from read ?!
+    template <typename I, typename F>
+    class thru_image_write : public thru_image_read<I,F>
+    {
+      public:
+
+	/// Type returned by the read-write pixel value operator.
+	typedef typename F::lresult lvalue;
+	
+	using thru_image_read<I,F>::operator();
+	lvalue operator()(const mln_psite(I)& p);
+	
+    };
+  }
+  
   template <typename I, typename F>
-  class thru_image : public internal::image_value_morpher< I, typename F::result, thru_image<I,F> >
+  class thru_image : public internal::thru_find_impl<I, F>::ret
   {
   public:
-
-    /// Skeleton.
-    typedef thru_image<tag::image_<I>, F> skeleton;
-    
-    /// Point_Site associated type.
-    typedef mln_psite(I) psite;
-
-    /// Value associated type.
-    typedef typename F::result value;
-
-    /// Type returned by the read-write pixel value operator.
-    typedef typename F::lresult lvalue;
-
-    /// Return type of read-only access.
-    typedef typename F::result rvalue;
     
     thru_image();
     thru_image(I& ima);
     thru_image(I& ima, const F& f);
-
-    // Initialize an empty image.
+    
     void init_(I& ima, const F& f);
-
-    rvalue operator()(const mln_psite(I)& p) const;
-
-    lvalue operator()(const mln_psite(I)& p);
-
+    
     /// Const promotion via conversion.
     operator thru_image<const I, F>() const;
   };
@@ -116,15 +163,15 @@ namespace mln
 			Image<I>& ima);
 
   template <typename I, typename F>
-  thru_image<const I, F> thru(const mln::Function<F>& f,
-			      const Image<I>& ima);
+  const thru_image<const I, F> thru(const mln::Function<F>& f,
+				    const Image<I>& ima);
 
   template <typename I, typename M>
   thru_image<I, mln_fun_with(M, mln_value(I))>
   thru(const mln::Meta_Function<M>& f, Image<I>& ima);
 
   template <typename I, typename M>
-  thru_image<const I, mln_fun_with(M, mln_value(I))>
+  const thru_image<const I, mln_fun_with(M, mln_value(I))>
   thru(const mln::Meta_Function<M>& f, const Image<I>& ima);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -180,30 +227,35 @@ namespace mln
 
   template <typename I, typename F>
   inline
-  typename thru_image<I, F>::rvalue
-  thru_image<I, F>::operator()(const mln_psite(I)& p) const
-  {
-    mln_precondition(this->is_valid());
-    return this->data_->f_(this->data_->ima_(p));
-  }
-
-  template <typename I, typename F>
-  inline
-  typename thru_image<I, F>::lvalue
-  thru_image<I, F>::operator()(const mln_psite(I)& p)
-  {
-    mln_precondition(this->is_valid());
-    return this->data_->f_(this->data_->ima_(p));    
-  }
-
-  template <typename I, typename F>
-  inline
   thru_image<I, F>::operator thru_image<const I, F>() const
   {
-    thru_image<const I, F> tmp(this->data_->ima_, this->data_->default_value_);
+    thru_image<const I, F> tmp(this->data_->ima_, this->data_->f_);
     return tmp;
   }
 
+  namespace internal
+  {
+    
+    template <typename I, typename F>
+    inline
+    typename thru_image_read<I, F>::rvalue
+    thru_image_read<I, F>::operator()(const mln_psite(I)& p) const
+    {
+      mln_precondition(this->is_valid());
+      return this->data_->f_(this->data_->ima_(p));
+    }
+    
+    template <typename I, typename F>
+    inline
+    typename thru_image_write<I, F>::lvalue
+    thru_image_write<I, F>::operator()(const mln_psite(I)& p)
+    {
+      mln_precondition(this->is_valid());
+      return this->data_->f_(this->data_->ima_(p));    
+    }
+    
+  }
+  
   // thru  
   template <typename I, typename F>
   thru_image<I, F> thru(const mln::Function<F>& f,

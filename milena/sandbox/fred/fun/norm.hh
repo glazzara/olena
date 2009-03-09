@@ -25,7 +25,7 @@ namespace mln
   namespace trait
   {
     template <unsigned n, typename T>
-    struct set_precise_unary_<fun::norm::l1, mln::algebra::vec<n, T> >
+    struct set_precise_unary_<mln::fun::norm::l1, mln::algebra::vec<n, T> >
     {
       typedef set_precise_unary_ ret;
       typedef mln::algebra::vec<n, T> argument;
@@ -44,7 +44,7 @@ namespace mln
     };
 
     template <unsigned n, typename T>
-    struct set_precise_unary_<fun::norm::l2, mln::algebra::vec<n, T> >
+    struct set_precise_unary_<mln::fun::norm::l2, mln::algebra::vec<n, T> >
     {
       typedef set_precise_unary_ ret;
       typedef mln::algebra::vec<n, T> argument;
@@ -63,7 +63,7 @@ namespace mln
     };
 
     template <unsigned n, typename T>
-    struct set_precise_unary_<fun::norm::linfty, mln::algebra::vec<n, T> >
+    struct set_precise_unary_<mln::fun::norm::linfty, mln::algebra::vec<n, T> >
     {
       typedef set_precise_unary_ ret;
       typedef mln::algebra::vec<n, T> argument;
@@ -86,9 +86,9 @@ namespace mln
   {
     namespace norm
     {
-      typedef unary<fun::norm::l1> l1;
-      typedef unary<fun::norm::l2> l2;
-      typedef unary<fun::norm::linfty> linfty;
+      typedef unary<mln::fun::norm::l1> l1;
+      typedef unary<mln::fun::norm::l2> l2;
+      typedef unary<mln::fun::norm::linfty> linfty;
     }
   }
 }

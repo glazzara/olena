@@ -18,7 +18,7 @@ namespace mln
   namespace trait
   {
     template <typename T>
-    struct set_unary_<fun::cos, mln::value::Floating, T>
+    struct set_unary_<mln::fun::cos, mln::value::Floating, T>
     {
       typedef set_unary_ ret;
       typedef T result;
@@ -39,7 +39,7 @@ namespace mln
 
   namespace meta
   {
-    typedef unary<fun::cos> cos;
+    typedef unary<mln::fun::cos> cos;
   }
 }
 

@@ -8,6 +8,7 @@
 #include <iostream>
 
 #define dbg_print(val) std::cout << #val << "\n\t -> \t" << (val) << std::endl
+
 int main()
 {
   using namespace mln;

@@ -1,3 +1,17 @@
+2009-03-09  Frederic Bour  <bour@lrde.epita.fr>
+
+	Verify constness of "thru" image morpher.
+	* milena/mln/trait/image/props.hh: Correct small typos errors.
+	* milena/sandbox/fred/fun/abs.hh,
+	* milena/sandbox/fred/fun/cos.hh,
+	* milena/sandbox/fred/fun/inc.hh,
+	* milena/sandbox/fred/fun/norm.hh,
+	* milena/sandbox/fred/fun/red.hh:
+	  Namespace name desambiguation.
+	* milena/sandbox/fred/fun/thru.cc,
+	* milena/sandbox/fred/fun/thru_morpher.hh:
+	  Verify constness (WIP).
+
 2009-03-05 Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add Update mln/doc configuration.
