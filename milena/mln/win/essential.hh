@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_WIN_ESSENTIAL_HH
 # define MLN_WIN_ESSENTIAL_HH
 
-/*! \file mln/win/essential.hh
- *
- * \brief File that includes essential win-related routines.
- */
+/// \file mln/win/essential.hh
+///
+/// File that includes essential win-related routines.
 
 // Types.
 

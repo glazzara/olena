@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +28,12 @@
 #ifndef MLN_CORE_INTERNAL_IMAGE_IDENTITY_HH
 # define MLN_CORE_INTERNAL_IMAGE_IDENTITY_HH
 
-/*! \file mln/core/internal/image_identity.hh
- *
- * \brief Definition of a base class for image morphers w.r.t. identity.
- *
- * \todo Move "fastest impl" elsewhere; it can be used by some other
- * classes.
- */
+/// \file mln/core/internal/image_identity.hh
+///
+/// Definition of a base class for image morphers w.r.t. identity.
+///
+/// \todo Move "fastest impl" elsewhere; it can be used by some other
+/// classes.
 
 # include <mln/core/internal/image_morpher.hh>
 

@@ -76,6 +76,10 @@ namespace mln
     namespace i2v {
       template <typename T> class array;
     }
+
+    namespace l2l {
+      template <typename T> class relabel;
+    }
   }
 
   namespace histo {
@@ -333,15 +337,53 @@ namespace mln
       void
       from_to_(const util::array<T>& from, fun::i2v::array<T>& to);
 
+      // util::array<T> -> fun::i2v::array<U>
+      template <typename T, typename U>
+      void
+      from_to_(const util::array<T>& from, fun::i2v::array<U>& to);
+
       // std::vector<T> -> fun::i2v::array<T>
       template <typename T>
       void
       from_to_(const std::vector<T>& from, fun::i2v::array<T>& to);
 
+      // std::vector<T> -> fun::i2v::array<U>
+      template <typename T, typename U>
+      void
+      from_to_(const std::vector<T>& from, fun::i2v::array<U>& to);
+
       // util::array<T1> -> util::array<T2>
       template <typename T1, typename T2>
       void
       from_to_(const util::array<T1>& from, util::array<T2>& to);
+
+
+
+      // util::array<T> -> fun::l2l::relabel<T>
+      template <typename T>
+      void
+      from_to_(const util::array<T>& from, fun::l2l::relabel<T>& to);
+
+      // util::array<T> -> fun::l2l::relabel<U>
+      template <typename T, typename U>
+      void
+      from_to_(const util::array<T>& from, fun::l2l::relabel<U>& to);
+
+      // std::vector<T> -> fun::l2l::relabel<T>
+      template <typename T>
+      void
+      from_to_(const std::vector<T>& from, fun::l2l::relabel<T>& to);
+
+      // std::vector<T> -> fun::l2l::relabel<U>
+      template <typename T, typename U>
+      void
+      from_to_(const std::vector<T>& from, fun::l2l::relabel<U>& to);
+
+      // util::array<T1> -> util::array<T2>
+      template <typename T1, typename T2>
+      void
+      from_to_(const util::array<T1>& from, util::array<T2>& to);
+
 
 
       // Accumulator<A> -> mln_result(A)

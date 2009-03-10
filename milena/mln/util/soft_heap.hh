@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_FAST_HEAP_HH
-# define MLN_UTIL_FAST_HEAP_HH
+#ifndef MLN_UTIL_SOFT_HEAP_HH
+# define MLN_UTIL_SOFT_HEAP_HH
 
 /// \file mln/util/soft_heap.hh
 ///
@@ -1132,4 +1132,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_UTIL_FAST_HEAP_HH
+#endif // ! MLN_UTIL_SOFT_HEAP_HH

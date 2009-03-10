@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +28,14 @@
 #ifndef MLN_FUN_ESSENTIAL_HH
 # define MLN_FUN_ESSENTIAL_HH
 
-/*! \file mln/fun/essential.hh
- *
- * \brief File that includes essential fun-related routines.
- */
+/// \file mln/fun/essential.hh
+///
+/// File that includes essential fun-related routines.
 
 # include <mln/fun/c.hh>
 # include <mln/fun/ops.hh>
 # include <mln/fun/i2v/essential.hh>
+# include <mln/fun/meta/essential.hh>
 # include <mln/fun/p2b/essential.hh>
 # include <mln/fun/p2v/essential.hh>
 # include <mln/fun/v2b/essential.hh>

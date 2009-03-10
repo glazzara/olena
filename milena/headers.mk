@@ -95,6 +95,7 @@ mln/util/line_graph.hh \
 mln/util/ord.hh \
 mln/util/tree_fast_to_image.hh \
 mln/util/tree.hh \
+mln/util/couple.hh \
 mln/util/index.hh \
 mln/util/multi_site.hh \
 mln/util/branch_iter.hh \
@@ -367,6 +368,7 @@ mln/value/label_8.hh \
 mln/value/essential.hh \
 mln/accu/tuple.hh \
 mln/accu/min_h.hh \
+mln/accu/stat/deviation.hh \
 mln/accu/max.hh \
 mln/accu/lor.hh \
 mln/accu/rank.hh \
@@ -602,7 +604,6 @@ mln/linear/log.hh \
 mln/linear/essential.hh \
 mln/morpho/thinning.hh \
 mln/morpho/meyer_wst.hh \
-mln/morpho/opening.hh \
 mln/morpho/includes.hh \
 mln/morpho/elementary/opening.hh \
 mln/morpho/elementary/gradient_internal.hh \
@@ -634,7 +635,9 @@ mln/morpho/closing/leveling.hh \
 mln/morpho/closing/area_on_vertices.hh \
 mln/morpho/closing/area.hh \
 mln/morpho/closing/volume.hh \
+mln/morpho/closing/sum.hh \
 mln/morpho/closing/height.hh \
+mln/morpho/closing/structural.hh \
 mln/morpho/closing/essential.hh \
 mln/morpho/laplacian.hh \
 mln/morpho/all.hh \
@@ -647,6 +650,7 @@ mln/morpho/opening/area_on_vertices.hh \
 mln/morpho/opening/area.hh \
 mln/morpho/opening/volume.hh \
 mln/morpho/opening/height.hh \
+mln/morpho/opening/structural.hh \
 mln/morpho/opening/essential.hh \
 mln/morpho/attribute/all.hh \
 mln/morpho/attribute/volume.hh \
@@ -665,15 +669,12 @@ mln/morpho/tree/data.hh \
 mln/morpho/tree/compute_attribute_image.hh \
 mln/morpho/general.spe.hh \
 mln/morpho/min.hh \
-mln/morpho/closing.hh \
 mln/morpho/top_hat.hh \
 mln/morpho/erosion.hh \
 mln/morpho/leveling_filter.hh \
-mln/morpho/closing_sum.hh \
 mln/morpho/Rd.hh \
 mln/morpho/thick_miss.hh \
 mln/morpho/algebraic_filter.hh \
-mln/morpho/closing_attribute.hh \
 mln/morpho/rank_filter.hh \
 mln/morpho/essential.hh \
 mln/topo/n_face_iter.hh \
@@ -708,6 +709,7 @@ mln/essential/routine.hh \
 mln/essential/3d.hh \
 mln/essential/2d.hh \
 mln/win/inter.hh \
+mln/win/sphere3d.hh \
 mln/win/backdiag2d.hh \
 mln/win/segment1d.hh \
 mln/win/cuboid3d.hh \
@@ -718,10 +720,10 @@ mln/win/multiple_size.hh \
 mln/win/cube3d.hh \
 mln/win/shift.hh \
 mln/win/sym.hh \
+mln/win/ball.hh \
 mln/win/diff.hh \
 mln/win/multiple.hh \
 mln/win/diag2d.hh \
-mln/win/ball3d.hh \
 mln/win/disk2d.hh \
 mln/win/rectangle2d.hh \
 mln/win/hline2d.hh \

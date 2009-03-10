@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -39,6 +39,7 @@
 # include <mln/core/concept/object.hh>
 
 # include <mln/literal/zero.hh>
+# include <mln/literal/origin.hh>
 # include <mln/norm/l2.hh>
 # include <mln/trait/all.hh>
 # include <mln/trait/value_.hh>
@@ -188,9 +189,14 @@ namespace mln
 
       vec();
 
-      /// \{ Constructors/assignments with literal zero.
+      /// \{ Constructors/assignments with literal::zero.
       vec(const literal::zero_t&);
       vec& operator=(const literal::zero_t&);
+      /// \}
+
+      /// \{ Constructors/assignments with literal::origin.
+      vec(const literal::origin_t&);
+      vec& operator=(const literal::origin_t&);
       /// \}
 
       vec(const vec<n, T>& rhs);
@@ -379,6 +385,22 @@ namespace mln
     inline
     vec<n,T>&
     vec<n,T>::operator=(const literal::zero_t&)
+    {
+      this->set_all(0);
+      return *this;
+    }
+
+    template <unsigned n, typename T>
+    inline
+    vec<n,T>::vec(const literal::origin_t&)
+    {
+      this->set_all(0);
+    }
+
+    template <unsigned n, typename T>
+    inline
+    vec<n,T>&
+    vec<n,T>::operator=(const literal::origin_t&)
     {
       this->set_all(0);
       return *this;

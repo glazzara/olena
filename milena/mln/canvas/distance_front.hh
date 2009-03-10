@@ -88,6 +88,7 @@ namespace mln
 	(void) nbh;
 	(void) max;
 	(void) functor;
+	(void) w_win;
       }
 
 

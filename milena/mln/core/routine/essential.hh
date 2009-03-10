@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +28,11 @@
 #ifndef MLN_CORE_ROUTINE_ESSENTIAL_HH_
 # define MLN_CORE_ROUTINE_ESSENTIAL_HH_
 
-# include <mln/core/routine/duplicate.hh>
-# include <mln/core/routine/exact.hh>
-# include <mln/core/routine/extend.hh>
-# include <mln/core/routine/initialize.hh>
-# include <mln/core/routine/ops.hh>
+/// \file mln/core/routine/essential.hh
+///
+/// File that includes essential core routines.
+
+# include <mln/core/routine/all.hh>
 
 #endif // !MLN_CORE_ROUTINE_ESSENTIAL_HH_
 

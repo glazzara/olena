@@ -75,10 +75,21 @@ namespace mln
       void
       from_to_(const util::array<T>& from, fun::i2v::array<T>& to);
 
+      template <typename T, typename U>
+      inline
+      void
+      from_to_(const util::array<T>& from, fun::i2v::array<U>& to);
+
       template <typename T>
       inline
       void
       from_to_(const std::vector<T>& from, fun::i2v::array<T>& to);
+
+      template <typename T, typename U>
+      inline
+      void
+      from_to_(const std::vector<T>& from, fun::i2v::array<U>& to);
+
 
     } // end of namespace mln::convert::over_load
 
@@ -157,6 +168,17 @@ namespace mln
 	to = fun::i2v::array<T>(from);
       }
 
+      template <typename T, typename U>
+      inline
+      void
+      from_to_(const util::array<T>& from, fun::i2v::array<U>& to)
+      {
+	mlc_converts_to(T,U)::check();
+
+	for (unsigned i = 0; i < from.nelements(); ++i)
+	  to.append(convert::to<U>(from[i]));
+      }
+
       template <typename T>
       inline
       void
@@ -164,6 +186,18 @@ namespace mln
       {
 	to = fun::i2v::array<T>(from);
       }
+
+      template <typename T, typename U>
+      inline
+      void
+      from_to_(const std::vector<T>& from, fun::i2v::array<U>& to)
+      {
+	mlc_converts_to(T,U)::check();
+
+	for (unsigned i = 0; i < from.size(); ++i)
+	  to.append(convert::to<U>(from[i]));
+      }
+
 
     } // end of namespace mln::convert::over_load
 

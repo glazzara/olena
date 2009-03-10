@@ -38,6 +38,7 @@
 # include <mln/convert/impl/from_image_to_site_set.hh>
 # include <mln/convert/impl/from_int_to_value.hh>
 # include <mln/convert/impl/from_site_set_to_image.hh>
+# include <mln/convert/impl/from_unsigned_to_value.hh>
 # include <mln/convert/impl/from_value_to_value.hh>
 
 

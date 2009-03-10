@@ -72,10 +72,22 @@ namespace mln
       from_to_(const util::array<L>& from,
 	       fun::l2l::relabel<L>& to);
 
+      template <typename T, typename L>
+      inline
+      void
+      from_to_(const util::array<T>& from,
+	       fun::l2l::relabel<L>& to);
+
       template <typename L>
       inline
       void
       from_to_(const std::vector<L>& from,
+	       fun::l2l::relabel<L>& to);
+
+      template <typename T, typename L>
+      inline
+      void
+      from_to_(const std::vector<T>& from,
 	       fun::l2l::relabel<L>& to);
 
     } // end of namespace mln::convert::over_load
@@ -155,12 +167,34 @@ namespace mln
         to = fun::l2l::relabel<L>(from);
       }
 
+      template <typename T, typename L>
+      inline
+      void
+      from_to_(const util::array<T>& from, fun::l2l::relabel<L>& to)
+      {
+	mlc_converts_to(T,L)::check();
+
+	for (unsigned i = 0; i < from.nelements(); ++i)
+	  to.append(convert::to<L>(from[i]));
+      }
+
       template <typename L>
       inline
       void
       from_to_(const std::vector<L>& from, fun::l2l::relabel<L>& to)
       {
         to = fun::l2l::relabel<L>(from);
+      }
+
+      template <typename T, typename L>
+      inline
+      void
+      from_to_(const std::vector<T>& from, fun::l2l::relabel<L>& to)
+      {
+	mlc_converts_to(T,L)::check();
+
+	for (unsigned i = 0; i < from.size(); ++i)
+	  to.append(convert::to<L>(from[i]));
       }
 
     } // end of namespace mln::convert::over_load

@@ -1,5 +1,33 @@
 2009-03-10  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Various small fixes.
+
+	* headers.mk: update dist header list.
+
+	* mln/algebra/vec.hh: add contructor and operator= with literal::zero.
+
+	* mln/canvas/distance_front.hh: avoid a warning.
+
+	* mln/fun/i2v/array.hh,
+	* mln/fun/l2l/relabel.hh,
+	* mln/convert/from_to.hxx: add new from_to over_loads.
+
+	* mln/convert/impl/all.hh,
+	* mln/convert/impl/from_unsigned_to_value.hh: add a new from_to
+	implementation to fix ambiguities with from_int_to_value and
+	from_float_to_value.
+
+	* mln/win/essential.hh,
+	* mln/core/internal/image_identity.hh: update doc.
+
+	* mln/core/routine/essential.hh: fix includes.
+
+	* mln/fun/essential.hh: include fun/meta/essential.hh.
+
+	* mln/util/soft_heap.hh: fix guards.
+
+2009-03-10  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add meta::first and meta::second.
 
 	* mln/fun/meta/all.hh,
