@@ -1,3 +1,20 @@
+2009-03-10  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Implement 3D watershed and various tools.
+	* fabien/bin/dicom2pgm.cc: New tool.
+	* fabien/bin/dump2pgm.cc: New tool.
+	* fabien/bin/dump2pgm8b.cc: New tool.
+	* fabien/bin/dump_mask.cc: New tool.
+	* fabien/bin/filetype.hh: New.
+	* fabien/bin/pnms2dump.cc: New tool.
+	* fabien/igr/Makefile: Update.
+	* fabien/igr/check2d_wsd.sh: Shell script for testing.
+	* fabien/igr/check3d_wsd.sh: Shell script for testing.
+	* fabien/igr/watershed.cc: Rename this...
+	* fabien/igr/watershed.hh: ...into this.
+	* fabien/igr/watershed2d.cc: Implement 2D watershed.
+	* fabien/igr/watershed3d.cc: Implement 3D watershed.
+
 2009-03-09  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix dicom_mask binary.

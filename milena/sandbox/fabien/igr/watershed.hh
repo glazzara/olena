@@ -324,8 +324,8 @@ int main(int argc, char *argv[])
 
   data::fill((wsd2 | (pw::value(wsd2) == 0u)).rw(), wsd2_);
 
+  io::pgm::save(level::transform(labeling::mean_values(dcm, wsd2, nbasins2), fun::l2l::wrap<int_u8>()), "wsd_06_mean_colors.pgm");
+  io::pgm::save(level::stretch(int_u8(), make_debug_graph_image(dcm, ima_v2, ima_e2, box_size, 4095)), "wsd_07_graph_image2_white.pgm");
+  io::pgm::save(level::stretch(int_u8(), make_debug_graph_image(dcm, ima_v2, ima_e2, box_size, 0)), "wsd_08_graph_image2_black.pgm");
   io::pgm::save(level::transform(wsd2, fun::l2l::wrap<int_u8>()), "wsd_99_result.pgm");
-  //io::ppm::save(labeling::mean_values(dcm, wsd2, nbasins2), "wst_rag_mean_colors.ppm");
-  io::pgm::save(make_debug_graph_image(dcm, ima_v2, ima_e2, box_size, 4095), "wsd_graph_image2_white.pgm");
-  io::pgm::save(make_debug_graph_image(dcm, ima_v2, ima_e2, box_size, 0), "wsd_graph_image2_black.pgm");
 }
