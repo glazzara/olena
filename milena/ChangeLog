@@ -1,3 +1,10 @@
+2009-03-10  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Fix bug in leaf propagation.
+	* mln/morpho/tree/data.hh: Fix leaves calculus.
+	* sandbox/edwin/tree/propagate.hh: Fix bugs in propagations.
+	* sandbox/edwin/tree/tree.cc: Test file.
+
 2009-03-10  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Make io::dump::* more robust and improve dump format.

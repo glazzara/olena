@@ -41,6 +41,7 @@
 # include <mln/core/image/sub_image.hh>
 # include <mln/core/site_set/p_array.hh>
 # include <mln/core/site_set/p_set.hh>
+# include <mln/data/fill.hh>
 
 namespace mln
 {
@@ -140,11 +141,12 @@ namespace mln
 
 	/// \}
 
-	/// \{ Leaves-related materials.
 
-	typedef p_array<mln_psite(I)> leaves_t;
+	/// \{ Nodes-related materials.
 
-	const p_set<mln_psite(I)>& leaves() const
+	typedef p_set<mln_psite(I)> leaves_t;
+
+	const leaves_t& leaves() const
 	{
 	  mln_precondition(is_valid());
 	  return leaves_;
@@ -162,7 +164,7 @@ namespace mln
 	{
 	  return s_;
 	}
-	
+
 	/// \}
 
 	unsigned nroots() const
@@ -185,8 +187,8 @@ namespace mln
 	const I& f_;
 	const S& s_;
 	mln_ch_value(I, mln_psite(I)) parent_;
+	leaves_t leaves_;
 	p_array<mln_psite(I)> nodes_;
-	p_set<mln_psite(I)> leaves_;
 	unsigned nroots_;
       };
 
@@ -210,14 +212,11 @@ namespace mln
 	// Store tree nodes.
 	nroots_ = 0;
 	mln_bkd_piter(S) p(s_);
-	mln_psite(I) old;
 	for_all(p)
 	{
 	  if (f_(parent_(p)) != f_(p))
 	    {
 	      nodes_.insert(p);
-	      if (parent_(p) != old)
-		leaves_.insert(old);
 	    }
 	  else
 	    if (parent_(p) == p)
@@ -225,7 +224,19 @@ namespace mln
 		nodes_.insert(p);
 		++nroots_;
 	      }
-	  old = p;
+	}
+
+	// Store leaves.
+	mln_ch_value(I, bool) deja_vu;
+	initialize(deja_vu, f);
+	mln::data::fill(deja_vu, false);
+
+	mln_fwd_piter(nodes_t) n(nodes_);
+	for_all(n)
+	{
+	  deja_vu(parent_(n)) = true;
+	  if (!deja_vu(n))
+	    leaves_.insert(n);
 	}
       }
 

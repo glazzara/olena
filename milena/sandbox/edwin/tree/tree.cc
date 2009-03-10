@@ -77,14 +77,18 @@ namespace mln
   {
     mln_VAR(a, morpho::tree::compute_attribute_image(a_, tree_));
 
-    display_tree_attributes(tree_, a);
-    find_treshold(a, tree_);
+    //display_tree_attributes(tree_, a);
+    //find_treshold(a, tree_);
+
+    mln_fwd_piter(tree_t::nodes_t) n(tree_.nodes());
+    for_all(n)
+      assert(tree_.is_a_leaf(tree_.parent(n)) == false);
 
     img_ = duplicate((pw::cst(lambda1) < pw::value(a) &&
 		      pw::value(a) < pw::cst(lambda2))
 		     | a.domain());
 
-    debug::println("attribut", a);
+    //debug::println("attribut", a);
   }
 
   template <typename I, typename T>
@@ -150,13 +154,13 @@ namespace mln
 	  }
 
 
-	  // Debug.
-	  {
-	    std::cout << " - " << val << ":" << pset.nsites() << " {";
-	    for_all(p)
-	      std::cout << p << ",";
-	    std::cout << "}" << std::endl;
-	  }
+// Debug.
+//  {
+// 	    std::cout << " - " << val << ":" << pset.nsites() << " {";
+// 	    for_all(p)
+// 	      std::cout << p << ",";
+// 	    std::cout << "}" << std::endl;
+// 	  }
       }
 
     for (unsigned i = 0; i < f_domain.size() - 1; i++)
@@ -213,8 +217,9 @@ namespace mln
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.pgm accumulator lambda1 [lambda2]"
-	    << std::endl;
+  std::cerr << "usage: " << argv[0] << " input.pgm accumulator propagation lambda1 [lambda2]"
+	    << "\taccu:\tcard | sharpness" << std::endl
+	    << "\tpropa:\tto_children | to_childhood | to_parent | to_ancestors | leaf_to_ancestors" << std::endl;
   abort();
 }
 
@@ -228,17 +233,29 @@ int main(int argc, char* argv[])
 
   float lambda1;
   float lambda2;
-  I input;
+
 
   if (argc < 4)
     usage(argv);
 
+  I input;
   io::pgm::load(input, argv[1]);
+//   int_u8 vals[] = { 0, 1, 0, 2, 0, 1, 0,
+// 		    1, 1, 1, 2, 1, 1, 1,
+// 		    0, 1, 0, 2, 0, 1, 0,
+// 		    2, 2, 2, 2, 2, 2, 2,
+// 		    1, 1, 1, 2, 0, 1, 0,
+// 		    1, 1, 1, 2, 1, 1, 1,
+// 		    1, 1, 1, 2, 0, 1, 0};
+//    I input = make::image2d(vals);
 
-  lambda1 = atof(argv[3]);
-  lambda2 = (argc == 5) ? atof(argv[4]) : mln_max(float);
+
+
+  lambda1 = atof(argv[4]);
+  lambda2 = (argc == 6) ? atof(argv[5]) : mln_max(float);
 
   std::string s(argv[2]);
+  std::string propa(argv[3]);
   treefilter<I>* f = 0;
   if (s == "card")
     f = new treefilter<I>(input, morpho::attribute::card<I>(), lambda1, lambda2);
@@ -249,11 +266,26 @@ int main(int argc, char* argv[])
 
 
   std::cout << "s1" << std::endl;
-  propagate_to_childhood(f->tree(), f->img());
+  if (propa == "to_childhood")
+    morpho::tree::propagate_to_childhood(f->tree(), f->img());
+  else if (propa == "to_children")
+    morpho::tree::propagate_to_children(f->tree(), f->img());
+  else if (propa == "to_ancestors")
+    morpho::tree::propagate_to_ancestors(f->tree(), f->img());
+  else if (propa == "to_parent")
+    morpho::tree::propagate_to_parent(f->tree(), f->img());
+  else if (propa == "leaf_to_ancestors")
+    morpho::tree::propagate_leaf_to_ancestors(f->tree(), f->img());
+  else
+    usage(argv);
+
   std::cout << "s2" << std::endl;
-  propagate_to_node(f->tree(), f->img());
+  morpho::tree::propagate_to_node(f->tree(), f->img());
   std::cout << "s3" << std::endl;
-  filtercheck(*f, accu::meta::count());
+
+
+
+  //filtercheck(*f, accu::meta::count());
 
 
   io::pbm::save(f->img(), "out.pbm");

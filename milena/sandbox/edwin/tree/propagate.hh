@@ -43,8 +43,9 @@ namespace mln {
       /// non-representative points of the same node.
       template <typename T, typename A>
       void
-      propagate_to_node(const T& t, A& a)
+      propagate_representant(const T& t, Image<A>& a_)
       {
+	A a = exact(a_);
 	mln_fwd_piter(T) p(t.domain());
 	for_all(p)
 	  if (! t.is_a_node(p))
@@ -54,6 +55,8 @@ namespace mln {
 	    }
       }
 
+      namespace binary {
+
       /// Propagate a tagged node's value to its subbranches.
       template <typename T, typename A>
       void
@@ -62,7 +65,6 @@ namespace mln {
 	mln_bkd_piter(T::nodes_t) n(t.nodes());
 	for_all(n)
 	{
-	  mln_assertion(t.is_a_node(n));
 	  if (a(t.parent(n)))
 	    {
 	      mln_assertion(t.is_a_node(t.parent(n)));
@@ -80,7 +82,6 @@ namespace mln {
 	mln_fwd_piter(T::nodes_t) n(t.nodes());
 	for_all(n)
 	{
-	  mln_assertion(t.is_a_node(n));
 	  if (a(t.parent(n)))
 	    {
 	      mln_assertion(t.is_a_node(t.parent(n)));
@@ -97,7 +98,6 @@ namespace mln {
 	mln_fwd_piter(T::nodes_t) n(t.nodes());
 	for_all(n)
 	{
-	  mln_assertion(t.is_a_node(n));
 	  if (a(n))
 	    {
 	      mln_assertion(t.is_a_node(t.parent(n)));
@@ -109,7 +109,7 @@ namespace mln {
       /// Propagate a tagged node's value to its direct parents.
       template <typename T, typename A>
       void
-      propagate_to_parents(const T& t, A& a)
+      propagate_to_parent(const T& t, A& a)
       {
 	mln_bkd_piter(T::nodes_t) n(t.nodes());
 	for_all(n)
@@ -131,16 +131,17 @@ namespace mln {
       ///       n <== l and a(l) is true.
       /// TODO: post-condition which checks this property.
 
+
       template <typename T, typename A>
       void
       propagate_leaf_to_ancestors(const T& t, A& a)
       {
-	// 1st pass: leaves' parents are set to false.
+
 	mln_fwd_piter(T::leaves_t) l(t.leaves());
 	for_all(l)
-	  t.parent(l) = 0;
+	  a(t.parent(l)) = 0;
 
-	// 2nd pass
+
 	mln_fwd_piter(T::nodes_t) n(t.nodes());
 	for_all(n)
 	{
