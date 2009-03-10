@@ -1,3 +1,7 @@
+2009-03-10 Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: configure tests/morpho/opening/approx.
+
 2009-03-09  Frederic Bour  <bour@lrde.epita.fr>
 
 	Add missing trait for thru_morpher.
