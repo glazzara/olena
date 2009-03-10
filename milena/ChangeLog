@@ -1,5 +1,30 @@
 2009-03-10  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Make io::dump::* more robust and improve dump format.
+
+	* mln/io/dump/load.hh,
+	* mln/io/dump/save.hh:
+	  - Add new information in the header.
+	  - Add more assertion on value type, dimension and file type.
+
+	  Important note: Old dump files are not compatible with this new
+	  format.
+
+	* mln/trait/value_.hh: add a new macro mln_trait_value_name.
+
+	* mln/value/builtin/floatings.hh
+	* mln/value/builtin/integers.hh
+	* mln/value/builtin/symbolics.hh
+	* mln/value/int_s.hh
+	* mln/value/int_u.hh
+	* mln/value/label.hh
+	* mln/value/rgb.hh: add name() member to value_<> specialization.
+	  It returns the type name as a const char*.
+
+	* tests/io/dump/dump.cc: add new tests with builtin types.
+
+2009-03-10  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Various small fixes.
 
 	* headers.mk: update dist header list.

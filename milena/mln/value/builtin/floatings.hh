@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -89,6 +89,10 @@ namespace mln
       }
 
       typedef float                        sum;
+
+      static const char* name()
+      { return "float"; }
+
     };
 
     template <>
@@ -120,6 +124,10 @@ namespace mln
       }
 
       typedef double                        sum;
+
+      static const char* name()
+      { return "float"; }
+
     };
 
   } // end of namespace mln::trait

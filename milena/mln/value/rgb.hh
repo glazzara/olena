@@ -217,6 +217,13 @@ namespace mln
       typedef mln_value_quant_from_(card)     quant;
 
       typedef algebra::vec<3, float> sum;
+
+      static const char* name()
+      {
+	static std::string s = std::string("rgb").append(1, n + '0');
+	return s.c_str();
+      }
+
     };
 
   } // end of namespace trait

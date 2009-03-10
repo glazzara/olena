@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,10 @@
 #ifndef MLN_VALUE_BUILTIN_SYMBOLICS_HH
 # define MLN_VALUE_BUILTIN_SYMBOLICS_HH
 
-/*! \file mln/value/builtin/symbolics.hh
- *
- * \brief Some definitions about built-in symbolic types.
- */
+/// \file mln/value/builtin/symbolics.hh
+///
+/// Some definitions about built-in symbolic types.
+
 
 # include <mln/value/concept/built_in.hh>
 # include <mln/value/concept/symbolic.hh>
@@ -53,7 +53,7 @@ namespace mln
   {
 
     template <>
-    struct value_< bool>
+    struct value_<bool>
     {
       typedef value::nature::symbolic nature;
       typedef value::kind::binary     kind;
@@ -63,6 +63,9 @@ namespace mln
 	card  = 2
       };
       typedef value::quant::low       quant;
+
+      static const char* name() { return "bool"; }
+
     };
 
   } // end of namespace mln::trait

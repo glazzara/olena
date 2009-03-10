@@ -67,13 +67,39 @@ int main()
 			      1, 9 };
     image2d<value::int_u8> pic = make::image2d(data);
     io::dump::save(pic, "pic.dump");
-
     image2d<value::int_u8> pic2;
     io::dump::load(pic2, "pic.dump");
 
     mln_assertion(pic.domain() == pic2.domain());
     mln_assertion(pic == pic2);
   }
+
+  /// Value: unsigned
+  {
+    unsigned data[4] = { 5, 1,
+			 1, 9 };
+    image2d<unsigned> pic = make::image2d(data);
+    io::dump::save(pic, "pic.dump");
+    image2d<unsigned> pic2;
+    io::dump::load(pic2, "pic.dump");
+
+    mln_assertion(pic.domain() == pic2.domain());
+    mln_assertion(pic == pic2);
+  }
+
+  /// Value: float
+  {
+    float data[4] = { 5, 1,
+			 1, 9 };
+    image2d<float> pic = make::image2d(data);
+    io::dump::save(pic, "pic.dump");
+    image2d<float> pic2;
+    io::dump::load(pic2, "pic.dump");
+
+    mln_assertion(pic.domain() == pic2.domain());
+    mln_assertion(pic == pic2);
+  }
+
 
   /// Value: rgb8
   {

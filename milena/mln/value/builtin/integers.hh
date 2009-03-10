@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -90,14 +90,61 @@ namespace mln
     } // end of namespace mln::trait::internal
 
 
-    template <> struct value_< unsigned char  > : internal::value_integer_< unsigned char  > {};
-    template <> struct value_<   signed char  > : internal::value_integer_<   signed char  > {};
-    template <> struct value_< unsigned short > : internal::value_integer_< unsigned short > {};
-    template <> struct value_<   signed short > : internal::value_integer_<   signed short > {};
-    template <> struct value_< unsigned int   > : internal::value_integer_< unsigned int   > {};
-    template <> struct value_<   signed int   > : internal::value_integer_<   signed int   > {};
-    template <> struct value_< unsigned long  > : internal::value_integer_< unsigned long  > {};
-    template <> struct value_<   signed long  > : internal::value_integer_<   signed long  > {};
+    template <> struct value_< unsigned char  >
+      : internal::value_integer_< unsigned char  >
+    {
+      static const char* name()
+      { return "unsigned char"; }
+    };
+
+    template <> struct value_<   signed char  >
+      : internal::value_integer_<   signed char  >
+    {
+      static const char* name()
+      { return "signed char"; }
+    };
+
+    template <> struct value_< unsigned short >
+      : internal::value_integer_< unsigned short >
+    {
+      static const char* name()
+      { return "unsigned short"; }
+    };
+
+    template <> struct value_<   signed short >
+      : internal::value_integer_<   signed short >
+    {
+      static const char* name()
+      { return "signed short"; }
+    };
+
+    template <> struct value_< unsigned int   >
+      : internal::value_integer_< unsigned int   >
+    {
+      static const char* name()
+      { return "unsigned int"; }
+    };
+
+    template <> struct value_<   signed int   >
+      : internal::value_integer_<   signed int   >
+    {
+      static const char* name()
+      { return "signed int"; }
+    };
+
+    template <> struct value_< unsigned long  >
+      : internal::value_integer_< unsigned long  >
+    {
+      static const char* name()
+      { return "unsigned long"; }
+    };
+
+    template <> struct value_<   signed long  >
+      : internal::value_integer_<   signed long  >
+    {
+      static const char* name()
+      { return "signed long"; }
+    };
 
   } // end of namespace mln::trait
 

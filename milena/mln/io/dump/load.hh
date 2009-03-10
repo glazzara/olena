@@ -73,20 +73,74 @@ namespace mln
 	}
 
 
-        template <typename I>
+	template <typename I>
         inline
-        void load_header(Image<I>& ima, std::ifstream& file)
+        void load_header(Image<I>& ima, std::ifstream& file,
+			 const std::string& filename)
 	{
+	  // Milena's file type ?
+	  std::string file_type;
+	  file >> file_type;
+	  if (file_type != "milena/dump")
+	  {
+	    std::cerr << "io::dump::load - Error: invalid file type. '"
+		      << filename
+		      << "' is NOT a valid milena/dump file!"
+		      << std::endl;
+	    abort();
+	  }
+
+	  // Dimension ?
 	  unsigned dim;
 	  file >> dim;
-
 	  typedef mln_site(I) P;
-	  mln_assertion(P::dim == dim);
+	  if (P::dim != dim)
+	  {
+	    std::cerr << "io::dump::load - Error: invalid image dimension. '"
+		      << filename << "' is a " << dim << "-D image "
+		      << "but you try to load it into a " << P::dim
+		      << "-D image!"
+		      << std::endl;
+	    abort();
+	  }
 
-	  P pmin, pmax;
+	  // Size information - Skip it, useless.
+	  std::string tmp;
+	  for (unsigned i = 0; i < dim; ++i)
+	    file >> tmp;
+	  // Skipping endline.
+	  char c;
+	  file.get(c);
+
+	  // Value type name ?
+	  // WARNING: value type name limited to 255 characters...
+	  char value_type[255];
+	  file.getline(value_type, 255);
+	  if (mln_trait_value_name(mln_value(I)) != std::string(value_type))
+	  {
+	    std::cerr << "io::dump::load - Error: invalid image value type. '"
+		      << filename << "' is an image of '" << value_type
+		      << "' but you try to load it into an image of '"
+		      << mln_trait_value_name(mln_value(I)) << "'!"
+		      << std::endl;
+	    abort();
+	  }
+
+	  // Empty line - may be used for a new information.
+	  file.get(c);
+
+	  // Empty line - may be used for a new information.
+	  file.get(c);
+
+	  // Pmin
+	  P pmin;
 	  read_point<P>(file, pmin);
+
+	  // Pmax
+	  P pmax;
 	  read_point<P>(file, pmax);
 
+	  // Initialize the image buffer.
 	  mln_concrete(I) result(box<P>(pmin, pmax));
 	  initialize(ima, result);
 	  mln_assertion(exact(ima).is_valid());
@@ -123,11 +177,13 @@ namespace mln
 	std::ifstream file(filename.c_str());
 	if (! file)
 	{
-	  std::cerr << "error: cannot open file '" << filename << "'!";
+	  std::cerr << "io::dump::load - Error: cannot open file '"
+		    << filename << "'!"
+		    << std::endl;
 	  abort();
 	}
 
-	internal::load_header(ima, file);
+	internal::load_header(ima, file, filename);
 	internal::load_data(ima, file);
 
 	mln_postcondition(exact(ima).is_valid());

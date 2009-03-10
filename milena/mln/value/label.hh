@@ -78,6 +78,13 @@ namespace mln
 
       static const self_ min() { return 0; }
       static const self_ max() { return mlc_pow_int(2, n) - 1; }
+
+      static const char* name()
+      {
+	static std::string s = std::string("label_").append(1, n + '0');
+	return s.c_str();
+      }
+
     };
 
   } // end of namespace trait

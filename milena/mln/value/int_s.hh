@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -89,6 +89,13 @@ namespace mln
       static const self_ epsilon() { return 0; }
 
       typedef float sum;
+
+      static const char* name()
+      {
+	static std::string s = std::string("int_s").append(1, n + '0');
+	return s.c_str();
+      }
+
     };
 
   } // end of namespace mln::trait

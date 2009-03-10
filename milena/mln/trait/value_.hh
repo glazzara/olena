@@ -66,7 +66,8 @@
 # define mln_sum(V)  mln_trait_value_sum(V)
 # define mln_sum_(V) mln_trait_value_sum_(V)
 
-
+/// Give the value type name
+# define mln_trait_value_name(V)         mln::trait::value_< V >::name()
 
 /// FIXME: check that the -1 is correct
 # define mln_value_quant_from_(C)					\

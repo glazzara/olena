@@ -40,6 +40,7 @@
 # include <mln/core/box_runstart_piter.hh>
 # include <mln/core/pixel.hh>
 # include <mln/data/memcpy_.hh>
+# include <mln/trait/value_.hh>
 
 namespace mln
 {
@@ -68,12 +69,35 @@ namespace mln
         void save_header(const I& ima,
 			 std::ofstream& file)
 	{
-	  typedef mln_site(I) P;
-	  file << P::dim;
+	  // Milena's file type
+	  file << "milena/dump" << std::endl;
 
+	  // Dimension
+	  typedef mln_site(I) P;
+	  file << P::dim << std::endl;
+
+	  // Image size.
+	  typedef algebra::vec<P::dim, unsigned> vec_t;
+	  vec_t size = ima.domain().pmax() - ima.domain().pmin();
+	  for (unsigned i = 0; i < P::dim - 1; ++i)
+	    file << size[i] + 1 << " ";
+	  file << size[P::dim - 1] + 1 << std::endl;
+
+	  // Value type name
+	  // WARNING: value type name limited to 255 characters...
+	  file << mln_trait_value_name(mln_value(I)) << std::endl;
+
+	  // Empty line - may be used for a new information.
+	  file << std::endl;
+
+	  // Empty line - may be used for a new information.
+	  file << std::endl;
+
+	  // Pmin
 	  mln_site(I) p = ima.domain().pmin();
 	  file.write((char*) (&p), sizeof (P));
 
+	  // Pmax
 	  p = ima.domain().pmax();
 	  file.write((char*) (&p), sizeof (P));
 	}
