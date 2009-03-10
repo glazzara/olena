@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,30 +26,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_META_ALL_HH
-# define MLN_FUN_META_ALL_HH
+#ifndef MLN_FUN_META_ESSENTIAL_HH
+# define MLN_FUN_META_ESSENTIAL_HH
 
-namespace mln
-{
+# include <mln/fun/meta/all.hh>
 
-  namespace meta
-  {
-
-  } // end of namespace mln::meta
-
-} // end of namespace mln
-
-
-# include <mln/fun/meta/blue.hh>
-# include <mln/fun/meta/first.hh>
-# include <mln/fun/meta/green.hh>
-# include <mln/fun/meta/hue.hh>
-# include <mln/fun/meta/inty.hh>
-# include <mln/fun/meta/lum.hh>
-# include <mln/fun/meta/red.hh>
-# include <mln/fun/meta/sat.hh>
-# include <mln/fun/meta/second.hh>
-# include <mln/fun/meta/to_enc.hh>
-
-#endif // ! MLN_FUN_META_ALL_HH
+#endif // ! MLN_FUN_META_ESSENTIAL_HH
 

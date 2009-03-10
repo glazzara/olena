@@ -1,3 +1,13 @@
+2009-03-10  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add meta::first and meta::second.
+
+	* mln/fun/meta/all.hh,
+	* mln/fun/meta/essential.hh: include new headers.
+
+	* mln/fun/meta/first.hh,
+	* mln/fun/meta/second.hh: meta function to access util::couple data.
+
 2009-03-09  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add leaves container in tree structure and test new propagations.

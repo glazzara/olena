@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,8 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_META_ALL_HH
-# define MLN_FUN_META_ALL_HH
+#ifndef MLN_FUN_META_FIRST_HH
+# define MLN_FUN_META_FIRST_HH
+
+/// \file mln/fun/meta/first.hh
+///
+/// Meta function to retrieve/modify the first component.
+
+# include <mln/core/concept/meta_fun.hh>
+# include <mln/util/couple.hh>
 
 namespace mln
 {
@@ -35,21 +42,52 @@ namespace mln
   namespace meta
   {
 
+    template <class T>
+    struct first : impl< first<T> >
+    {
+      typedef T value;
+    };
+
   } // end of namespace mln::meta
+
+
+  template <typename T, typename U>
+  struct function< meta::first< util::couple<T,U> > >
+    : public Function_v2w_w2v<function< meta::first < util::couple<T,U> > > >
+  {
+    typedef util::couple<T,U> value;
+
+    typedef T result;
+    result read(const value& c);
+
+    typedef result& lresult;
+    lresult write(value& c);
+  };
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+  template <typename T, typename U>
+  inline
+  typename function< meta::first< util::couple<T,U> > >::result
+  function< meta::first< util::couple<T,U> > >::read(const value& c)
+  {
+    return c.first();
+  }
+
+  template <typename T, typename U>
+  inline
+  typename function< meta::first< util::couple<T,U> > >::lresult
+  function< meta::first< util::couple<T,U> > >::write(value& c)
+  {
+    return c.first();
+  }
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
 
 } // end of namespace mln
 
-
-# include <mln/fun/meta/blue.hh>
-# include <mln/fun/meta/first.hh>
-# include <mln/fun/meta/green.hh>
-# include <mln/fun/meta/hue.hh>
-# include <mln/fun/meta/inty.hh>
-# include <mln/fun/meta/lum.hh>
-# include <mln/fun/meta/red.hh>
-# include <mln/fun/meta/sat.hh>
-# include <mln/fun/meta/second.hh>
-# include <mln/fun/meta/to_enc.hh>
-
-#endif // ! MLN_FUN_META_ALL_HH
-
+#endif // MLN_FUN_META_FIRST_HH
