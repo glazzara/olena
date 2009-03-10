@@ -1,3 +1,55 @@
+2009-03-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Split Scribo's code into several routines.
+
+	* scribo/Makefile: update include path.
+
+	* scribo/core/central_sites.hh,
+	* scribo/core/component_bboxes.hh,
+	* scribo/core/erase_bboxes.hh,
+	* scribo/core/macros.hh,
+	* scribo/debug/save_label_image.hh,
+	* scribo/debug/save_linked_textbboxes_image.hh,
+	* scribo/debug/save_table_image.hh,
+	* scribo/debug/save_textbboxes_image.hh,
+	* scribo/draw/bounding_box_links.hh,
+	* scribo/draw/bounding_boxes.hh,
+	* scribo/make/debug_filename.hh,
+	* scribo/make/influence_zone_graph.hh,
+	* scribo/table/align_lines_horizontaly.hh,
+	* scribo/table/align_lines_verticaly.hh,
+	* scribo/table/connect_horizontal_lines.hh,
+	* scribo/table/connect_vertical_lines.hh,
+	* scribo/table/erase.hh,
+	* scribo/table/extract_lines_with_rank.hh,
+	* scribo/table/internal/align_lines.hh,
+	* scribo/table/internal/connect_lines.hh,
+	* scribo/table/internal/repair_lines.hh,
+	* scribo/table/repair_horizontal_lines.hh,
+	* scribo/table/repair_vertical_lines.hh,
+	* scribo/text/extract_bboxes.hh,
+	* scribo/text/grouping/group_from_double_link.hh,
+	* scribo/text/grouping/group_from_multiple_links.hh,
+	* scribo/text/grouping/group_from_single_link.hh,
+	* scribo/text/grouping/group_with_multiple_links.hh,
+	* scribo/text/grouping/group_with_single_left_link.hh,
+	* scribo/text/grouping/group_with_single_right_link.hh,
+	* scribo/text/grouping/internal/find_root.hh,
+	* scribo/text/grouping/internal/init_link_array.hh,
+	* scribo/text/grouping/internal/update_link_array.hh,
+	* scribo/text/grouping/internal/update_link_graph.hh,
+	* scribo/text/recognition.hh: new routines.
+
+	* scribo/photo.cc,
+	* scribo/table.cc: move...
+	* scribo/src/photo.cc,
+	* scribo/src/table.cc: ... here.
+
+	* scribo/src/extract_text_double_link.cc,
+	* scribo/src/extract_text_multiple_links.cc,
+	* scribo/src/extract_text_single_link.cc: new small test related to
+	text extraction.
+
 2009-03-10  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Implement 3D watershed and various tools.
