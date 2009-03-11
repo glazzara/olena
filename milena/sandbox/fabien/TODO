@@ -25,4 +25,6 @@
 [X] US: projection of internal gradient
 [X] Create 3D US morpho with 2D stack
 [ ] Create macro for_all_slice
-[ ] Batch process watershed with 2D, 3D and any combination of parameters
+[X] Batch process watershed with 2D, 3D and any combination of parameters
+[ ] Cut into small tools
+[ ] Test 3D workflow on 2D images

@@ -1,5 +1,14 @@
 2009-03-11  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
+	Create watershed images in 3D..
+	* fabien/bin/dump2pgm8b.cc: Fix.
+	* fabien/igr/Makefile: Update.
+	* fabien/igr/nbasins_check.sh: New test file.
+	* fabien/igr/nbasins_finder.cc: New file for finding optimal parameters.
+	* fabien/igr/watershed3d.cc: Update.
+
+2009-03-11  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
 	Bug in 3D watershed.
 	* fabien/igr/Makefile: Update with debug build.
 	* fabien/igr/check3d_wsd.sh: Update.

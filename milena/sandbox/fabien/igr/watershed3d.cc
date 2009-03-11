@@ -277,6 +277,7 @@ int main(int argc, char *argv[])
   // Watershed
   label_32 nbasins;
   image3d<label_32> wshed = morpho::meyer_wst(clo, c6(), nbasins);
+  std::cout << "nbasins = " << nbasins << std::endl;
 
   // Debug
   io::dump::save(level::stretch(int_u8(), clo), "wsd_02.dump");

@@ -23,7 +23,10 @@ wsd3d: watershed.hh watershed3d.cc
 	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} ${CXXFLAGS} $^ -o wsd3d
 
 wsd3dg: watershed.hh watershed3d.cc
-	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} -DNDEBUG -g $^ -o wsd3dg
+	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} -g $^ -o wsd3dg
+
+nbasins: nbasins_finder.cc
+	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} ${CXXFLAGS} $^ -o nbasins_finder
 	
 clean:
 	rm -rf *.dump *.p?m *.plot *.log *.csv

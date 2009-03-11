@@ -3,11 +3,8 @@
 #include <mln/debug/slices_2d.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/value/int_u12.hh>
 #include <mln/io/dump/load.hh>
 #include <mln/io/pgm/save.hh>
-
-#include <mln/literal/colors.hh>
 
 
 int usage(char* argv[])
@@ -21,7 +18,6 @@ int usage(char* argv[])
 int main(int argc, char* argv[])
 {
   using namespace mln;
-  using value::rgb8;
   using value::int_u8;
 
   if (argc != 3)
@@ -30,7 +26,6 @@ int main(int argc, char* argv[])
   image3d<int_u8> vol;
   io::dump::load(vol, argv[1]);
 
-  rgb8 bg = literal::black;
   image2d<int_u8> ima = debug::slices_2d(vol, 1.f, 0);
   io::pgm::save(ima, argv[2]);
 
