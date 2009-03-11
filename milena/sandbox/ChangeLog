@@ -1,5 +1,13 @@
 2009-03-11  Etienne FOLIO  <folio@lrde.epita.fr>
 
+	Pipo type.
+	* folio/test/value/pipo.cc: New tests for the pipo type.
+	* folio/test/value: New directory for testing value-related algorithms.
+	* folio/value/pipo.hh: New pipo type.
+	* folio/value: New directory for value-related algorithms.
+
+2009-03-11  Etienne FOLIO  <folio@lrde.epita.fr>
+
 	compute_histo_rgb.
 	* folio/histo/compute_histo_rgb.hh: New algorithm for computing
 	an histogram on image2d<rgb8>.
