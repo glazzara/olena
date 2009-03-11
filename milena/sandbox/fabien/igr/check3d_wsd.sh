@@ -29,6 +29,7 @@ process_file ()
   done
 }
 
+make wsd3d
 process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0052.dcm" "52"
 process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0061.dcm" "61"
 process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0064.dcm" "64"

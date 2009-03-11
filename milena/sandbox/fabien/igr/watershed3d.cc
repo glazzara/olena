@@ -19,6 +19,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u12.hh>
 #include <mln/value/label_16.hh>
+#include <mln/value/label_32.hh>
 
 #include <mln/level/transform.hh>
 #include <mln/level/stretch.hh>
@@ -29,14 +30,14 @@
 
 #include <mln/make/graph.hh>
 
-#include <mln/morpho/gradient.hh>
-#include <mln/morpho/closing/area.hh>
+#include <mln/morpho/elementary/dilation.hh>
+#include <mln/morpho/elementary/gradient.hh>
+#include <mln/morpho/closing/volume.hh>
 #include <mln/morpho/meyer_wst.hh>
 
 #include <mln/fun/l2l/wrap.hh>
 
 #include <mln/core/var.hh>
-#include <mln/morpho/elementary/dilation.hh>
 
 #include <mln/core/routine/extend.hh>
 
@@ -247,6 +248,7 @@ int main(int argc, char *argv[])
   using value::int_u12;
   using value::rgb8;
   using value::label_16;
+  using value::label_32;
 
   if (argc < 4)
   {
@@ -262,32 +264,39 @@ int main(int argc, char *argv[])
   image3d<int_u12> dcm;
   io::dicom::load(dcm, argv[1]);
 
+  // Debug
+  assert(mln_max(label_32) == 4294967295);
   io::dump::save(level::stretch(int_u8(), dcm), "wsd_01_src.dump");
 
-  image3d<int_u12> grad = morpho::gradient(dcm, win_c4p_3d());
-  image3d<int_u12> clo = morpho::closing::area(grad, c6(), closure_lambda);
+  // Gradient
+  image3d<int_u12> grad = morpho::elementary::gradient(dcm, c6());
 
-  label_16 nbasins;
-  image3d<label_16> wshed = morpho::meyer_wst(clo, c6(), nbasins);
+  // Closure
+  image3d<int_u12> clo = morpho::closing::volume(grad, c6(), closure_lambda);
 
+  // Watershed
+  label_32 nbasins;
+  image3d<label_32> wshed = morpho::meyer_wst(clo, c6(), nbasins);
+
+  // Debug
   io::dump::save(level::stretch(int_u8(), clo), "wsd_02.dump");
   io::dump::save(level::transform(wshed, fun::l2l::wrap<int_u8>()), "wsd_03.dump");
 
-  mln_VAR(vol2_, morpho::elementary::dilation(extend(wshed | (pw::value(wshed) == 0u), wshed), c26()));
-
-  data::fill((wshed | (pw::value(wshed) == 0u)).rw(), vol2_);
+  //mln_VAR(vol2_, morpho::elementary::dilation(extend(wshed | (pw::value(wshed) == 0u), wshed), c26()));
+  //data::fill((wshed | (pw::value(wshed) == 0u)).rw(), vol2_);
 
   io::dump::save(level::transform(wshed, fun::l2l::wrap<int_u8>()), "wsd_04.dump");
 
-  /// Build graph
-  util::graph g = make::graph(wshed, c6(), nbasins);
+  /// Graph
+  trace::quiet = false;
+  util::graph g = make::region_adjacency_graph(wshed, c6(), nbasins);
   // Build graph images and compute distance values with a RGB image.
-  mln_VAR(ima_v, make_vertex_graph_image(g, dcm, wshed, nbasins));
+  /*mln_VAR(ima_v, make_vertex_graph_image(g, dcm, wshed, nbasins));
   mln_VAR(ima_e, make_edge_graph_image(ima_v, g));
 
   /// Try to merge vertices.
   mln_piter_(ima_e_t) e(ima_e.domain());
-  util::array<label_16> parent(g.v_nmax());
+  util::array<label_32> parent(g.v_nmax());
   for (unsigned i = 0; i < parent.nelements(); ++i)
     parent[i] = i;
 
@@ -299,7 +308,7 @@ int main(int argc, char *argv[])
       parent[find_root(parent, v1)] = find_root(parent, v2);
   }
 
-  fun::i2v::array<label_16> f(parent.nelements());
+  fun::i2v::array<label_32> f(parent.nelements());
   std::vector<unsigned> new_label(parent.nelements(), 0);
   unsigned nbasins2 = 0;
   for (unsigned i = 0; i < parent.nelements(); ++i)
@@ -312,7 +321,7 @@ int main(int argc, char *argv[])
   }
   mln_invariant(f(0) == 0u);
   --nbasins2; // nbasins2 does not count the basin with label 0.
-  image3d<label_16> wsd2 = level::transform(wshed, f);
+  image3d<label_32> wsd2 = level::transform(wshed, f);
 
   io::dump::save(level::transform(wsd2, fun::l2l::wrap<int_u8>()), "wsd_05.dump");
 
@@ -330,5 +339,5 @@ int main(int argc, char *argv[])
   io::dump::save(level::transform(labeling::mean_values(dcm, wsd2, nbasins2), fun::l2l::wrap<int_u8>()), "wsd_06_mean_colors.dump");
   //io::dump::save(level::stretch(int_u8(), make_debug_graph_image(dcm, ima_v2, ima_e2, box_size, 4095)), "wsd_07_graph_image2_white.dump");
   //io::dump::save(level::stretch(int_u8(), make_debug_graph_image(dcm, ima_v2, ima_e2, box_size, 0)), "wsd_08_graph_image2_black.dump");
-  io::dump::save(level::transform(wsd2, fun::l2l::wrap<int_u8>()), "wsd_99_result.dump");
+  io::dump::save(level::transform(wsd2, fun::l2l::wrap<int_u8>()), "wsd_99_result.dump");*/
 }

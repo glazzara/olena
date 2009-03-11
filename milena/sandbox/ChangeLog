@@ -1,3 +1,10 @@
+2009-03-11  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Bug in 3D watershed.
+	* fabien/igr/Makefile: Update with debug build.
+	* fabien/igr/check3d_wsd.sh: Update.
+	* fabien/igr/watershed3d.cc: Update.
+
 2009-03-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Split Scribo's code into several routines.

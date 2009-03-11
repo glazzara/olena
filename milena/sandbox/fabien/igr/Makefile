@@ -22,5 +22,8 @@ wsd2d: watershed.hh watershed2d.cc
 wsd3d: watershed.hh watershed3d.cc
 	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} ${CXXFLAGS} $^ -o wsd3d
 
+wsd3dg: watershed.hh watershed3d.cc
+	g++ -I../../../ ${DICOM_INC} ${DICOM_LIB} -DNDEBUG -g $^ -o wsd3dg
+	
 clean:
 	rm -rf *.dump *.p?m *.plot *.log *.csv
