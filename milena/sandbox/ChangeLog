@@ -1,3 +1,14 @@
+2009-03-11  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	compute_histo_rgb.
+	* folio/histo/compute_histo_rgb.hh: New algorithm for computing
+	an histogram on image2d<rgb8>.
+	* folio/histo: New directory for histogram-related algorithms.
+	* folio/test/histo/compute_histo_rgb.cc: New tests about the
+	algorithm above.
+	* folio/test/histo: New directory for testing histogram-related
+	algorithms.
+
 2009-03-11  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Create watershed images in 3D..
