@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -154,7 +154,7 @@ namespace mln
       typedef impl::regional_minima_functor<I> F;
       F f(exact(input));
       mln_ch_value(I, L) output = canvas::labeling_sorted(input, nbh, nlabels,
-	                                                  f, true);
+	                                                  f, false);
 
       trace::exiting("labeling::regional_minima");
       return output;

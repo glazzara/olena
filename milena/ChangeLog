@@ -1,3 +1,10 @@
+2009-03-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix missing update in labeling extrema.
+
+	* mln/labeling/regional_minima.hh,
+	* mln/labeling/regional_maxima.hh: Fix missing update.
+
 2009-03-10  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Fix bug in leaf propagation.
