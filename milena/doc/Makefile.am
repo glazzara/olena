@@ -6,9 +6,9 @@ SUBDIRS = tutorial white_paper
 
 DOXYGEN = doxygen
 
-.PHONY: doc user-doc complete-doc html-complete html-user tutorial white-paper regen-dist
+.PHONY: doc user-doc complete-doc html-complete html-user tutorial white-paper regen-dist examples
 
-doc: user-doc
+doc: user-doc tutorial white_paper ref-guide
 
 complete-doc: html-complete
 
@@ -20,10 +20,10 @@ html-complete: Doxyfile tuto-html ref-guide-html
 html-user: Doxyfile tuto-html ref-guide-html
 	$(DOXYGEN) Doxyfile_user
 
-tuto-html: data fig-convert
+tuto-html: examples fig-convert
 	$(MAKE) -C tutorial tuto-html
 
-tutorial: data fig-convert
+tutorial: examples fig-convert
 	$(MAKE) -C tutorial tutorial
 
 white-paper:
@@ -36,8 +36,8 @@ ref-guide-html:
 	$(MAKE) -C ref_guide ref-guide-html
 
 
-data:
-	make -C examples data
+examples:
+	make -C examples examples
 
 fix-refdata:
 	make -C examples fix-refdata

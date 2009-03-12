@@ -4,16 +4,19 @@
 SUBDIRS = 	\
   doc 		\
   mesh 	 	\
-  tests		\
-  tools
+  tests
 #  apps
 
-.PHONY: doc tutorial
+.PHONY: doc tutorial tools
+
 doc:
 	$(MAKE) -C doc doc
 
 tutorial:
 	$(MAKE) -C doc tutorial
+
+tools:
+	$(MAKE) -C tools all
 
 .PHONY: regen-dist
 regen-dist: $(srcdir)/headers.mk
@@ -54,4 +57,8 @@ img/tiny.ppm 		\
 img/toto.pbm
 
 EXTRA_DIST += 		\
-generate_dist_headers.sh
+generate_dist_headers.sh\
+tools 			\
+tools/area_flooding.cc 	\
+tools/seed2tiling.cc
+

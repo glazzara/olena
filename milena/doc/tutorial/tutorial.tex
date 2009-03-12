@@ -305,6 +305,15 @@ $$
 \end{latexonly}
 }
 
+\newcommand{\path}[1]{
+\textit{#1}
+}
+
+\newcommand{\dir}[1]{
+\textbf{\textit{#1}}
+}
+
+
 \begin{document}
 
 % Doxygen use only - Generate the left menu.
@@ -344,21 +353,684 @@ A copy of the license is provided in the file COPYING.DOC.
 
 %\begin{htmlonly}
 %====================================
-\doxychapter{tuto0}{Step 0: Foreword}
+\doxychapter{tuto1}{Welcome}
 
-- image2d
-- typical use case
+Welcome to Milena's tutorial.
 
-\begin{htmlonly}
-  \begin{center}%
-    \hspace{1cm} Go to \doxyref{tuto1}~ \longrightarrow%
-  \end{center}%
-\end{htmlonly}
+
+
+
+
+%**************************
+\doxysection{tuto1howotlearn}{How to learn Milena}
+
+Milena is only a subpart of Olena but tends to be a large system too.
+Therefore it is not possible to present all the functionalities in a
+tutorial. 
+
+
+Milena targets several audiences: \textit{end users}, \textit{designers} and
+\textit{providers}. \textit{End users} want to apply and assemble algorithms
+to solve image processing, pattern recognition or computer vision problems,
+\textit{designers} build new algorithms and \textit{providers} are interested
+in developping their own data structures and extend an existing library.
+
+
+Whatever the kind of user you are, the key to learning how to use Milena is to
+become familiar with its palette of objects and the way of combining them.
+
+As an \textit{end user}, you may start with this simple tutorial and the Quick
+tour (FIXME: ref). They describe and illustrate the key features of the library.
+\textit{End users} getting familiar with Milena and \textit{designers}, should
+take a look at the  Quick Reference Guide (FIXME: ref!).
+It is a more detailed explanations of the library's features.
+
+\textit{end users} and \textit{designers} may be also interested by all the
+examples provided with the documentation and the tutorial. The source code is
+available in \path{milena/doc/examples} (FIXME: ref) and is usually pointed
+out and commented by the documentation.
+
+Taking a look at the test suite is also a good idea. The tests usually focus on
+a single functionality and handle several use cases which may overlap your needs.
+The test suite is located at \path{milena/tests} (FIXME: ref?).
+
+Still not enough information? More information about all the functions is
+available in the User HTML documentation (FIXME:ref).
+It mainly targets \textit{designers} and \texit{providers}.
+The latter may also be interested by the Developer HTML documentation
+(FIXME:ref).
+
+
+
+%**************************
+\doxysection{tuto1obtainingthelib}{Obtaining the library}
+
+There are two ways of getting Milena on the web:
+\begin{itemize}
+  \item Download a tarball/package from the website,
+  \item Checkout the SVN repository.
+\end{itemize}
+
+Downloading a package or a tarball is the best choice for a new user. Except
+for nightly builds which are packages generated every night from the SVN repository, 
+packages and tarballs contain only a released version of Milena. It guaranties a 
+certain quality: no building issues, no bugs (ok, maybe some...), \ldots
+
+This tutorial is based on the latest released version of Milena. Therefore,
+if you decide to use the SVN version, you may notice different behaviors or results
+compared to what it is described in this document. 
+
+Using the SVN version implies some drawbacks: the code might crash, not
+compile or produce incorrect results.
+Besides, The SVN version is always up to date and you may find new functionalities,
+bug fixes and new syntax improvements.
+This version targets users familiar with build systems and compilation issues.
+We strongly advise you to not use it for production use.
+
+
+
+%**************************
+\doxysection{tuto1downloading}{Downloading the library}
+
+
+
+%download page.
+
+%--------------------------
+\subdoxysection{tuto1downloadingsvn}{Downloading from SVN}
+
+First, be sure that SVN is already installed on your system.
+Open a terminal and type:
+
+\begin{verbatim}
+\$ svn --version --quiet
+1.4.6
+\end{verbatim}
+
+You should see your version of SVN installed. If you read 'Command not found'
+then you need to install SVN.
+
+Usually, systems providing packages reference SVN's package as 'subversion'.
+
+Once you have SVN installed, go to the directory where you woudl like to 
+download Olena and create a new directory.
+
+\begin{verbatim}
+\$ cd $HOME
+\$ mkdir olena
+\$ cd olena
+\end{verbatim}
+     
+Then 'checkout' (download) the repository with the following command.
+
+\begin{verbatim}
+\$ svn co https://svn.lrde.epita.fr/svn/oln/trunk
+\end{verbatim}
+
+Enter the 'trunk' directory.
+
+\begin{verbatim}
+\$ cd trunk
+\end{verbatim}
+
+You are now ready to configure the directory and install Milena as described 
+in section \ref{tuto2}.
+We invite you to take a look at the description of the directory structure
+(\ref{tuto1dirstruct}.
+If you encounter any issues in the installation process or if you have any
+question, do not forget to join the mailing lists (\ref{tuto1mailinglists}
+and/or use the other documentations ressources (\ref{tuto1ressources}).
+
+
+
+
+
+%--------------------------
+\subdoxysection{tuto1downloadingpackages}{Downloading packaged releases}
+
+%details.
+
+Milena's packages can be downloaded from:
+
+\begin{centerize}
+\begin{verbatim}
+http://www.lrde.epita.fr/Olena/Download
+\end{verbatim}
+\end{centerize}
+
+On this page you will find the latest and past releases.
+Currently, we provide only '.tar.gz' and 'tar.bz2' archives.
+
+Once download, you just need to uncompress the archive.
+
+For the '.tar.gz' archive:
+\begin{verbatim}
+$ tar zxvf olena-1.0.tar.gz
+\end{verbatim}
+
+For the '.tar.bz2' archive:
+\begin{verbatim}
+$ tar jxvf olena-1.0.tar.bz2
+\end{verbatim}
+
+Then, enter the new created directory:
+\begin{verbatim}
+$ cd olena-1.0
+\end{verbatim}
+
+
+You are now ready to configure the directory and install Milena as described 
+in section \ref{tuto2}.
+We invite you to take a look at the description of the directory structure
+(\ref{tuto1dirstruct}.
+If you encounter any issues in the installation process or if you have any
+question, do not forget to join the mailing lists (\ref{tuto1mailinglists}
+and/or use the other documentations ressources (\ref{tuto1ressources}).
+
+
+
+%**************************
+\doxysection{tuto1mailinglists}{Join the mailing lists}
+
+Regardless your use of Olena, we strongly advise you to join our mailing lists.
+This is the best way to keep up to date about new releases, bug
+notifications/fixes and future updates.
+This is also a good opportunity to tell us what you would like to find in
+Milena and what could be improved.
+
+Currently four mailing-lists are available:
+
+\begin{tabular}{l l}
+\textbf{Olena}		& Discussion about the project Olena  \\ 
+\textbf{Olena-bugs}	& Bugs from Olena projects	      \\
+\textbf{Olena-core}	& Internal list for the Olena project \\
+\textbf{Olena-patches}	& patches for the Olena project	      \\
+\end{tabular}
+
+You can subscribe to these mailing lists at the following adress:
+
+\begin{center}
+\begin{verbatim}
+https://www.lrde.epita.fr/mailman/listinfo/
+\end{verbatim}
+\end{center}
+
+Just click on the name of the mailing list you want to subscribe to and fill
+out the form.
+
+
+
+%**************************
+\doxysection{tuto1dirstruct}{Directory structure}
+
+Milena's directory is composed of several subdirectories. In order to help
+you finding what you need, you will find a description of all these
+subdirectories.
+
+
+List of \path{milena}'s subdirectories:
+\begin{itemize}
+
+\dir{apps} --- A full example of a 3D mesh visualization tool. It
+  uses milena.
+
+\dir{doc} --- THE directory you must know. Contains all the 
+  documentation material.
+
+\dir{img} --- A set of common test images. They are used in the
+  test suite. Feel free to use it in your programs.
+
+\dir{mesh} --- A set of 3D meshes. They can be used with the full
+  example located in \path{milena/apps}.
+
+\dir{mln} --- The core of the libray. Contains all the library headers.
+
+\dir{tests} --- The test suite. Is it subdivided in sub directories.
+  The directory hierarchy respects \path{milena/mln}'s. 
+
+\dir{tools} --- Small tools written with milena. They can be used as examples.
+
+\end{itemize}
+
+
+
+List of \path{mln}'s subdirectories:
+\begin{itemize}
+  \item \dir{accu} --- Set of Accumulators.
+  \item \dir{algebra} --- Algebraic structures like vectors or matrices.
+  \item \dir{arith} --- Arithmetical operators.
+  \item \dir{binarization} --- Routines to binarize an image.
+  \item \dir{border} --- Image border related routines.
+  \item \dir{canvas} --- Generic canvas. They define generic ways of browsing
+  an image, compute data, \dots.
+  \item \dir{convert} --- Automatic conversion mechanism.
+  \item \dir{core} --- Core of the library. Here you can find the image types,
+  the site set types and basic concepts.
+  \item \dir{data} --- Routine that modify image data.
+  \item \dir{debug} --- Debug related routines.
+  \item \dir{display} --- Display images on the screen.
+  \item \dir{draw} --- Draw geometric objects in an image.
+  \item \dir{essential} --- Set of essential headers for 1,2,3-D manipulations.
+  \item \dir{estim} --- Compute data on image values.
+  \item \dir{extension} --- Image extension manipulation.
+  \item \dir{extract} --- FIXME: extract will be removed and replaced by thru().
+  \item \dir{fun} --- Set of functions applying on sites, values, \ldots
+  \item \dir{geom} --- Functions related to image geometry.
+  \item \dir{graph} --- Graph related routines.
+  \item \dir{histo} --- Histogram related functions.
+  \item \dir{io} --- I/O related routines.
+  \item \dir{labeling} --- Labeling related routines.
+  \item \dir{level} --- Point-wise operators on levels.
+  \item \dir{linear} --- Linear operators.
+  \item \dir{literal} --- Generic image values such as zero, black, white \ldots
+  \item \dir{logical} --- Logical operators.
+  \item \dir{make} --- Small routines to construct images, windows, \ldots
+  \item \dir{math} --- Mathematical functions.
+  \item \dir{metal} --- Metalic macros/structures. Static library helping
+  developing doing static tests.
+  \item \dir{morpho} --- Mathematical morphology.
+  \item \dir{norm} --- Norm computation
+  \item \dir{opt} --- Optional routines. Routines which may work on a
+  specific image type only.
+  \item \dir{pw} --- Point-wise image related routines.
+  \item \dir{registration} -- Registration related routine.
+  \item \dir{set} --- Set related routines.
+  \item \dir{subsampling} --- Subsampling related algorithms.
+  \item \dir{tag} --- Tag traits.
+  \item \dir{test} --- Definition of predicates.
+  \item \dir{topo} --- Complex related structures.
+  \item \dir{trace} --- Debug trace mechanism.
+  \item \dir{trait} --- Internal traits mechanism.
+  \item \dir{transform} --- Algorithms based on the level::transform.
+  \item \dir{util} --- Various utilitarian classes.
+  \item \dir{value} --- Set of value types which can be used in an image.
+  \item \dir{win} --- Set of various window kinds.
+\end{itemize}}
+
+
+The source code and the material of the documentation is available in \path{
+milena/doc}.
+List of \path{doc}'s subdirectories:
+\begin{itemize}
+\item \dir{examples} --- All the source code of the documentation examples.
+\item \dir{benchmark} --- Some benchmarks.
+\item \dir{tools} --- Small tools used for generating documentation /
+  building examples.
+
+\item \dir{tutorial} --- Tutorial sources.
+\item \dir{white\_paper} --- White paper sources.
+\item \dir{technical} --- Technical documentation. (DEPRECATED)
+\item \dir{ref\_guide} --- Reference guide sources.
+\item \dir{figures} --- Reference figures for documentation generation.
+\item \dir{outputs} --- Reference outputs for documentation examples.
+
+\end{itemize}
+
+
+
+
+%**************************
+\doxysection{tuto1ressources}{Documentation}
+
+This tutorial is not the only documentation of Milena. Other documents are available:
+
+\begin{itemize}
+  \item \dir{White paper} --- a small document of few pages presenting the key
+  features of the library. It intents to give a big picture of the library.
+
+  \item \dir{Quick tour} --- it aims giving an overview of Milena's possibilities.
+  It does not only give the concepts but illustrate them with small sample
+  codes.
+
+  \item \dir{Quick reference guide} --- Present in details all the main
+  functionalities of Milena.
+  Hints and full examples are also provided. The sample codes are commented
+  and each concept in the library is detailed. This is the reference document for any 
+  \textit{end user} and \textit{algorithm designer}.
+
+  \item \dir{HTML user doc} --- The full documentation of the library. The full
+  API is described in details. Each part of the library is classified by
+  categories and the source code is directly accessible from the documentation.
+  This is the reference document for any \textit{algorithm designer} and/or 
+  \textit{provider of data structures}.
+
+  \item \dir{Header files} --- Every object or algorithm is declared in a '.hh' file.
+  The documentation is provided as comments in these file. 
+\end{itemize}
+
+
+%**************************
+\doxysection{tuto1ressources}{Community and Support}
+
+Even though Milena is currently developped by the LRDE in EPITA, we are open
+for new contributors.
+
+\begin{itemize}
+  \item If you are a user, please send us feedback about the library.
+  Did you find what you wanted? Do you miss something?
+
+  \item Please report bugs and defect in the API. Mailing lists are the best
+  way for reporting that.
+
+  \item Developers, if you write cool open source programs or algorithms with Milena,
+  send them to us. We may ship your code with Olena and/or add it to
+  our download page.
+
+  \item Educators, if you use Olena for your courses and you are ready to
+  share your materials, you can send it to us through our mailing-lists.
+
+  \item We are also interested in partnership or commercial use of Milena.
+  If you are interested, contact us directly (\ref{tuto1contacts}).
+
+\end{itemize}
+
+
+%**************************
+\doxysection{tuto1projectstatus}{Project status}
+
+If you want to stay tuned to Milena's development, the best way is probably
+the mailing-lists (\ref{tuto1mailinglists}).
+
+There are other ways to get to know what is the status of the project.
+
+\begin{itemize}
+\item Olena's trac --- \href{https://trac.lrde.org/olena} --- Here is the 
+roadmap, the current open tickets/bugs/improvements which are taken in
+consideration. A source browser is also available.
+
+\item Olena's Buildfarm --- https://buildfarm.lrde.org/buildfarm/oln/ --- The
+official buildfarm. Every night and after each commit, tests are compiled and run.
+The buildfarm can show you whether it is safe to update your svn copy of Milena or not\ldots
+
+\item Test failures --- http://www.lrde.epita.fr/dload/olena/test-failures-daily.html
+--- Through this page, you can see exactly which tests do not compile or pass.
+This page is updated every night.
+
+
+
+%**************************
+\doxysection{tuto1ressources}{A brief history of Milena}
+
+The Olena project aims at building a scientific computation platform oriented
+towards image processing, image recognition, and artificial vision. 
+This environment is composed of a high performance generic library (Milena),
+a set of tools for shell scripts, together with, in the more distant future,
+an interpreter (a la Octave, MatLab etc.) and a visual programming environment. 
+
+The Olena project started in 2000 from a small prototype on 2-D images.
+From November 2001 to April 2004, this prototype evolved from version 0.1 to 0.10.
+More image types were supported and the level of genericity expected from the
+library was partially obtained. During these three years, the prototype was used
+to experiment with genericity and to try to meet our objectives.
+In February 2007, Olena 0.11 was released to conform modern C++ compilers.
+At that time, the code was not enough readable though and the compilation time
+was too long.
+
+Since June 2007 up to now, The library of the Olena platform is called Milena
+and the library has been rewritten. The programming  paradigm has been
+simplified: the code is more readable and the compilation time is acceptable.
+The level of genericity still meets our objectives though. 
+
+Milena is now getting ready for being considered as stable and distributable.
+The core of the library is getting frozen and we aim at enriching the library,
+its documentation and the related tools.
+
+
+%**************************
+\doxysection{tuto1contacts}{Contacts}
+
+If you want to reach us directly, you can contact one of the following people:
+
+\begin{itemize}
+  \item Thierry Geraud - Project Manager - thierry.geraud@lrde.epita.fr
+\end{itemize}
+
+
+
+
+
+
+%\begin{htmlonly}
+%====================================
+\doxychapter{tuto2}{Installation}
+
+%pre-requis/compatibility
+This section describes the installation process of Milena.
+Do not forget that Milena is a library, not a program. Therefore, no program
+will be installed. 
+
+Milena's examples and tests are compiled on the following platforms:
+\begin{itemize}
+  \item Apple Tiger Darwin 8, PowerPC, GCC 4.0.1
+  \item Apple Leopard Darwin 10.5, X86-64, GCC 4.0.1, 4.2
+  \item Linux, i486, GCC 3.3, 4.1, 4.2, 4.3
+  \item Linux, x86-64, GCC 4.1
+\end{itemize}
+
+We guaranty that Milena compiles on these platforms, e.g. Linux and Unix
+platforms. It may compiles on other platforms though but we have not tested.
+If you did, and you succeeded, please let us know in order to update this
+section.
+
+Milena is known NOT to work with GCC-2.95.
+
+
+Milena is actively developed under Unix systems. As a result, the build system
+is based on the Autotools.
+Autotools make sure that every dependencies are resolved before compiling
+or installing a program.
+
+Milena is different from usual libraries in a way that nothing needs to be
+compiled to use it. The library itself is composed of headers which must be
+included when you need them.
+Then, your application will be compiled with the parts of the library used in
+that program. That's all.
+
+So, why do we have a build system? It is useful for installing the library on
+your system, generating the doc and compiling the test suite and the examples.
+
+
+
+%**************************
+\doxysection{tuto2bootstrap}{Bootstrap (SVN Sources)}
+
+If you got the sources from a package/tarball, you can skip this section. Go
+to section \ref{tuto2configure}.
+
+If you downloaded the sources from the SVN repository, you must launch a
+script before configuring the build directory. 
+
+Run the following:
+\begin{verbatim}
+$ cd /my/path/to/olena-1.0
+$ ./bootstrap
+\end{verbatim}
+
+Running 'bootstrap' can take a while. Some files are generated during this
+process.
+When it's done, you are ready to configure the build directory.
+
+
+
+%**************************
+\doxysection{tuto2configure}{Configure}
+
+First, make sure you are at the root directory of the milena source:
+
+\begin{verbatim}
+$ cd /my/path/to/olena-1.0
+\end{verbatim}
+
+First, create and enter a build directory:
+\begin{verbatim}
+$ mkdir build
+$ cd build
+\end{verbatim}
+
+We are now about to configure the build directory. This process will create
+the necessary files to compile documentation, examples and tools and prepare the
+installation.
+
+\textbf{Important Note}: the Install path prefix must be chosen at this step.
+By default, Milena will be installed in /usr/local but you may like to install
+it elsewhere. To do so, pass the option \textit{--prefix=/installation/path/prefix}
+to the configure script (see below). Replace '/installation/path/prefix' with the
+wanted installation path prefix.
+  
+now, you can run:
+\begin{verbatim}
+$ ../configure
+\end{verbatim}
+OR
+\begin{verbatim}
+$ ../configure --prefix=/installation/path/prefix
+\end{verbatim}
+
+The configure script will perform various tests. If there is no dependency
+issues, the last lines shown before the prompt are:
+
+\begin{verbatim}
+config.status: creating config.h
+config.status: executing depfiles commands
+$
+\end{verbatim}
+
+The build directory is now configured, the library can be installed.
+
+
+
+%**************************
+\doxysection{tuto2install}{Install}
+
+First, be sure to be in the build directory. If you followed the previous
+steps, the build directory should be in the Milena sources root directory. 
+
+\begin{verbatim}
+$ cd /my/path/to/olena-1.0/build
+\end{verbatim}
+
+If you did not change the default install path prefix, set to 
+\path{/usr/local}, you will need to have administrator privileges to
+perform the installation. Then, you may type:
+\begin{verbatim}
+$ sudo make install
+\end{verbatim}
+
+Otherwise, if you set the install path prefix to a directory own by your
+user, simply type:
+\begin{verbatim}
+$ make install
+\end{verbatim}
+
+When the installation is finished, you are done. Milena is installed on your
+system. But maybe you would like to build the examples? This is described
+in the next section \ref{tuto2optionalcomp}.
+
+A description of the installation content is also available in section
+\ref{tuto2installcontent}.
+
+
+
+%**************************
+\doxysection{tuto2optionalcomp}{Optional compilation}
+
+The library itself does not need to be compiled, therefore installing
+Milena does not require compilation.
+
+Though, some examples and tools are provided with the library and must be 
+compiled if you want to use them.
+
+\doxysubsection{tuto2examples}{Examples}
+
+Examples are part of the documentation. The sources are located in
+\path{milena/doc/examples}. 
+
+To compile the examples simply run:
+\begin{verbatim}
+$ cd /my/path/to/olena-1.0/build/milena/doc/examples
+$ make
+\end{verbatim}
+
+These examples can produce outputs and images. May be you would like
+to run all the examples and take a look at the outputs? To do so, run:
+\begin{verbatim}
+$ cd /my/path/to/olena-1.0/build/milena/doc/examples
+$ make examples
+\end{verbatim}
+
+Text and image outputs will be respectively stored in
+\path{build/milena/doc/outputs} and \path{build/milena/doc/figures}.
+
+
+
+\doxysubsection{tuto2examples}{Tools}
+
+Few tools are provided with Milena. They can be considered as full program
+examples.
+
+Currently two tools are available:
+\begin{tabular}{l l}
+area\_flooding.cc & FIXME:description \\
+\hline
+seed2tiling.cc & FIXME:description \\
+\end{itemize}
+
+To build these tools, run:
+\begin{verbatim}
+$ cd /my/path/to/olena-1.0/build/milena/tools
+$ make
+\end{verbatim}
+
+
+\doxysubsection{tuto2examples}{Tests}
+
+The test suite used for Milena's development is shipped with the library.
+
+In order to build and run it, just do the following:
+\begin{verbatim}
+$ cd /my/path/to/olena-1.0/build/milena/tests
+$ make check
+\end{verbatim}
+
+Running the test suite is memory and CPU consumming and will take a while.
+
+
+%**************************
+\doxysection{tuto2installcontent}{Installation content}
+
+Once installed, Milena's files are located in the installed path prefix
+you passed to the configure script or in the default path /usr/local.
+
+In the installed path prefix, Milena's files are located in:
+
+\begin{itemize}
+  \item include/mln/ --- The library. All the headers are located here.
+  \item share/olena/images --- Mesh sample files which may be used with
+  example programs.
+\end{itemize}
+
+
+
+%\begin{htmlonly}
+%====================================
+\doxychapter{tuto3}{Getting started with Milena}
+
+** intent
+
+A very simple processing chain; the target is the end-user!
+
+OR (?)
+this chain plus a sample tiny generic algorithm
+
+** misc
+/!\ step by step...
+compilation time w.r.t compilation options (O1, DNDEBUG).
+
 
 
 
 %====================================
-\doxychapter{tuto1}{Step 1: Load and save images}
+\doxychapter{tuto4}{Step 4: Load and save images}
 
 After this step you shoud know how to:
 \begin{itemize}
@@ -392,12 +1064,12 @@ The supported file formats and their associated image value types are listed
 in section \doxyref{imaio}.
 
 \vspace{2cm}
-\tutotoc{tuto0}{tuto2}
+\tutotoc{tuto3}{tuto5}
 
 
 
 %====================================
-\doxychapter{tuto2}{Step 2: Create your first image}
+\doxychapter{tuto5}{Step 5: Create your first image}
 
 After this step you should know how to:
   \begin{itemize}
@@ -440,12 +1112,12 @@ though. A more detailed description can be found in section
 
 \vspace{2cm}
 \begin{center}
-  \tutotoc{tuto1}{tuto3}
+  \tutotoc{tuto4}{tuto6}
 \end{center}
 
 
 %====================================
-\doxychapter{tuto3}{Step 3: Read and write images}
+\doxychapter{tuto6}{Step 6: Read and write images}
 
 After this step you should know how to:
   \begin{itemize}
@@ -495,12 +1167,12 @@ the reference guide.
 
 \vspace{2cm}
 \begin{center}
-  \tutotoc{tuto2}{tuto4}
+  \tutotoc{tuto5}{tuto7}
 \end{center}
 
 
 %====================================
-\doxychapter{tuto4}{Step 4: Regions of interest}
+\doxychapter{tuto7}{Step 7: Regions of interest}
 
 After this step you should know how to:
   \begin{itemize}
@@ -711,23 +1383,9 @@ value in \var{label} is equal to 16'.
 
 \vspace{2cm}
 \begin{center}
-  \tutotoc{tuto3}{tuto5}
+  \tutotoc{tuto6}{tuto8}
 \end{center}
 
-%====================================%
-%%Ugly workaround to avoid missing chapter references in doxygen.
-%\begin{htmlonly}
-%  \doxychapter{1}{}
-%  \doxychapter{tuto5}{Step 5: Conversion between image values}
-%\end{htmlonly}
-
-
-%====================================
-\doxychapter{tuto6}{Step 6: Using structural elements with algorithms}
-
-
-%====================================
-\doxychapter{tuto7}{Step 7: Handle graphes with an image}
 
 %\end{htmlonly}
 

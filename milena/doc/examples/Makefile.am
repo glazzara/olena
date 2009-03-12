@@ -108,7 +108,7 @@ run-samples: all
 	done
 
 
-data: run-samples diff-data split-samples split-outputs 
+examples: run-samples diff-data split-samples split-outputs 
 
 
 diff-data:
