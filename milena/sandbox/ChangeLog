@@ -1,3 +1,14 @@
+2009-03-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Create workflow based on small tools.
+	* fabien/bin/dumpl32_to_colorize.cc: New.
+	* fabien/igr/Makefile: Update.
+	* fabien/igr/check.sh: New script shell for testing.
+	* fabien/igr/clo_vol.cc: Implement closing volume.
+	* fabien/igr/grad.cc: Implement gradient.
+	* fabien/igr/graph.cc: Implement graph.
+	* fabien/igr/wst.cc: Implement watershed.
+
 2009-03-11  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Pipo type.

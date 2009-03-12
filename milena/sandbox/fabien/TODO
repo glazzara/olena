@@ -26,5 +26,7 @@
 [X] Create 3D US morpho with 2D stack
 [ ] Create macro for_all_slice
 [X] Batch process watershed with 2D, 3D and any combination of parameters
-[ ] Cut into small tools
-[ ] Test 3D workflow on 2D images
+[X] Cut into small tools
+[X] Test 3D workflow on 2D images
+[ ] Create colorized colors for graph
+[ ] Diff with %
