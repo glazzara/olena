@@ -26,67 +26,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef ROUTINES_HH_
-# define ROUTINES_HH_
+#ifndef MLN_MORPHO_TREE_PROPAGATE_LEAF_HH_
+# define MLN_MORPHO_TREE_PROPAGATE_LEAF_HH_
 
-# include <mln/morpho/tree/data.hh>
-# include <mln/core/concept/image.hh>
-# include <mln/data/fill.hh>
+
+/// \file mln/morpho/tree/propagate_leaf.hh
+///
+/// Functions to propagate the leaf value in the tree.
 
 namespace mln {
   namespace morpho {
     namespace tree {
 
-
-      template <typename T, 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      // FIXME: it bugs; need a stack/queue
-      template <typename I, typename T>
-      util::array< mln_psite(I) >
-      get_first_nodes(const Image<I>& img_, const T& tree)
+      template <typename T, typename A>
+      void
+      propagate_leaf_to_ancestors(mln_value(A) v,
+				  const T& t,
+				  Image<A>& a_)
       {
-	I bin = exact(img_);
-	util::array< mln_psite(I) > fnodes;
+	A& a = exact(a_);
 
-	mln_bkd_piter(T::nodes_t) p(tree.nodes());
-	mln_psite(T::function) old;
-	p.start();
-	while (p.is_valid())
+	mln_fwd_piter(T::leaves_t) l(t.leaves());
+	for_all(l)
+	  a(t.parent(l)) = 0;
+
+	mln_fwd_piter(T::nodes_t) n(t.nodes());
+	for_all(n)
 	{
-	  mln_assertion(tree.is_a_node(p));
-	  if (bin(p) && !bin(tree.parent(p)))
-	    {
-	      fnodes.append(p);
-	      old = p;
-	      do {
-		p.next();
-	      } while (p.is_valid() && tree.parent(p) != tree.parent(old));
-	    }
-	  else
-	    p.next();
+	  mln_assertion(t.is_a_node(t.parent(n)));
+	  a(t.parent(n)) = a(t.parent(n)) || a(n);
 	}
-	return fnodes;
       }
-
-      template <typename T, 
-
-
-    }
-  }
-}
-
-
-#endif /* !ROUTINES_HH_ */
+    } // end of namespace mln::morpho::tree
+  } // end of namespace mln::morpho
+} // end of namespace mln
+#endif /* !MLN_MORPHO_TREE_PROPAGATE_LEAF_HH_ */

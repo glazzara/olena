@@ -1,3 +1,16 @@
+2009-03-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Clean and fix bugs on component trees propagation.
+	* edwin/tree/accumulator/max.hh: Special max accumulator for iterator.
+	* edwin/tree/accumulator: New.
+	* edwin/tree/propagate.hh,
+	* edwin/tree/propagate_leaf.hh,
+	* edwin/tree/propagate_node.hh,
+	* edwin/tree/propagate_value.hh: Improve propagation methods
+	and make them cleaner.
+	* edwin/tree/propagation.cc: Test file.
+	* edwin/tree/routines.hh: Add methods for tree traversal.
+
 2009-03-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Create workflow based on small tools.

@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -55,23 +55,26 @@ namespace mln {
 	    }
       }
 
-      namespace binary {
 
+
+
+
+      /// Dans le cas des images binaires...
       /// Propagate a tagged node's value to its subbranches.
-      template <typename T, typename A>
-      void
-      propagate_to_childhood(const T& t, A& a)
-      {
-	mln_bkd_piter(T::nodes_t) n(t.nodes());
-	for_all(n)
+	template <typename T, typename A>
+	void
+	propagate_to_childhood(const T& t, A& a)
 	{
-	  if (a(t.parent(n)))
-	    {
-	      mln_assertion(t.is_a_node(t.parent(n)));
-	      a(n) = a(t.parent(n));
+	  mln_bkd_piter(T::nodes_t) n(t.nodes());
+	  for_all(n)
+	  {
+	    if (a(t.parent(n)))
+	      {
+		mln_assertion(t.is_a_node(t.parent(n)));
+		a(n) = a(t.parent(n));
 	    }
+	  }
 	}
-      }
 
 
       /// Propagate a tagged node's value to its direct children.

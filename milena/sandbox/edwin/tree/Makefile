@@ -1,5 +1,5 @@
-TARGET=tree
-SRC=tree.cc
+TARGET=propagation
+SRC=propagation.cc
 OBJS=${SRC:.cc=.o}
 
 OLENADIR=$(MLN_DIR)/..
@@ -7,7 +7,8 @@ MILENADIR=$(OLENADIR)/milena
 
 CXXFLAGS=-I$(MILENADIR) -I./
 
-CXXFLAGS += -DNDEBUG -O1
+CXXFLAGS += -g -ggdb
+#CXXFLAGS += -DNDEBUG -O1
 
 CXX=g++
 LD=g++
