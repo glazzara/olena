@@ -243,10 +243,12 @@ AC_CONFIG_FILES([
       milena/tests/metal/math/Makefile
     milena/tests/morpho/Makefile
       milena/tests/morpho/attribute/Makefile
+      milena/tests/morpho/approx/Makefile
       milena/tests/morpho/elementary/Makefile
       milena/tests/morpho/tree/Makefile
       milena/tests/morpho/watershed/Makefile
       milena/tests/morpho/closing/Makefile
+      milena/tests/morpho/closing/approx/Makefile
       milena/tests/morpho/opening/Makefile
       milena/tests/morpho/opening/approx/Makefile
     milena/tests/norm/Makefile
