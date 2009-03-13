@@ -6,12 +6,32 @@
 #ifndef PIPO_HH_
 # define PIPO_HH_
 
-#include <mln/value/int_s.hh>
-#include <mln/value/int_u.hh>
-#include <mln/value/float01.hh>
+# include <mln/value/int_s.hh>
+# include <mln/value/int_u.hh>
+# include <mln/value/float01.hh>
 
 namespace mln
 {
+
+  namespace value { class pipo; }
+
+  namespace trait
+  {
+
+    template <>
+    struct value_< mln::value::pipo >
+    {
+      enum {
+	dim = 3
+      };
+
+      typedef mln::value::int_s<3>	comp_0;
+      typedef mln::value::float01_<8>	comp_1;
+      typedef mln::value::int_u<7>	comp_2;
+    };
+
+  } // end of namespace trait
+
   namespace value
   {
     class pipo
@@ -28,7 +48,6 @@ namespace mln
 	   int_u<7> _c2);
 
       pipo& operator=(const pipo& rhs);
-
     };
 
 # ifndef MLN_INCLUDE_ONLY
@@ -82,7 +101,7 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  }
+  } // end of namespace value
 }
 
 #endif /* !PIPO_HH_ */

@@ -1,5 +1,11 @@
 2009-03-13  Etienne FOLIO  <folio@lrde.epita.fr>
 
+	Add traits in pipo value type.
+	* folio/value/pipo.hh: Add dimension and components types in the
+	pipo type's traits.
+
+2009-03-13  Etienne FOLIO  <folio@lrde.epita.fr>
+
 	HistoRGB out image size correction.
 	* folio/histo/compute_histo_rgb.hh: Computes now the right
 	dimensions of the histogram.
