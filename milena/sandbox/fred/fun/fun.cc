@@ -27,6 +27,10 @@ int main()
   dbg_print(abs(-1));
   dbg_print(abs(-3.1415926535));
 
+  int x = 1;
+  abs(x) = 2;
+  abs.set(x, 2);
+
   // INC
   mln_invariant(inc(-1) == 0);
   dbg_print(inc(-1));
@@ -48,6 +52,7 @@ int main()
   v[2] = 0;
   dbg_print(v);
   dbg_print(l1(v));
+//   dbg_print(cos(l1)(v));
   dbg_print(l2(v));
   dbg_print(linfty(v));
 

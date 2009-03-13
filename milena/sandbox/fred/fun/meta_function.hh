@@ -57,6 +57,8 @@ namespace mln
 
   // Fwd decl.
   template <typename E> struct Meta_Function;
+  template <typename E> struct Meta_Function_v2v;
+  template <typename E> struct Meta_Function_vv2v;
 
   // Meta_Function category flag type.
   template <>
@@ -81,6 +83,49 @@ namespace mln
     Meta_Function();
   };
 
+  /*----------------------.
+  | Unary meta function.  |
+  `----------------------*/
+
+  template <>
+  struct Meta_Function_v2v<void> { typedef Meta_Function<void> super; };
+
+  /// Base class for implementation of function-objects from
+  /// value to value.
+  ///
+  /// The parameter \a E is the exact type.
+  ///
+  template <typename E>
+  struct Meta_Function_v2v : public Meta_Function<E>
+  {
+    typedef Meta_Function_v2v<void> category;
+
+    protected:
+      Meta_Function_v2v();
+      Meta_Function_v2v(const Meta_Function_v2v&);
+  };
+
+  /*-----------------------.
+  | Binary meta function.  |
+  `-----------------------*/
+
+  template <>
+  struct Meta_Function_vv2v<void> { typedef Meta_Function<void> super; };
+
+  /// Base class for implementation of function-objects from
+  /// value to value.
+  ///
+  /// The parameter \a E is the exact type.
+  ///
+  template <typename E>
+  struct Meta_Function_vv2v : public Meta_Function<E>
+  {
+    typedef Meta_Function_vv2v<void> category;
+
+    protected:
+      Meta_Function_vv2v();
+      Meta_Function_vv2v(const Meta_Function_vv2v&);
+  };
 
   namespace fun
   {
@@ -107,6 +152,32 @@ namespace mln
   Meta_Function<E>::Meta_Function()
   {
     // FIXME: Check "with" on E.
+  }
+
+  template <typename E>
+  inline
+  Meta_Function_v2v<E>::Meta_Function_v2v()
+  {
+  }
+
+  template <typename E>
+  inline
+  Meta_Function_v2v<E>::Meta_Function_v2v(const Meta_Function_v2v<E>& rhs)
+  : Meta_Function<E>(rhs)
+  {
+  }
+
+  template <typename E>
+  inline
+  Meta_Function_vv2v<E>::Meta_Function_vv2v()
+  {
+  }
+
+  template <typename E>
+  inline
+  Meta_Function_vv2v<E>::Meta_Function_vv2v(const Meta_Function_vv2v<E>& rhs)
+  : Meta_Function<E>(rhs)
+  {
   }
 
   namespace fun

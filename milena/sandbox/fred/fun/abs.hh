@@ -22,8 +22,7 @@ namespace mln
       typedef set_unary_ ret;
       typedef T result;
       typedef T argument;
-      typedef T& lvalue;
-      
+
       static result read(const argument& x)
       {
 	return math::abs(x);

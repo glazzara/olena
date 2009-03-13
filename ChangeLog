@@ -1,3 +1,29 @@
+2009-03-13  Frederic Bour  <bour@lrde.epita.fr>
+
+	fun update: add unary & binary composition.
+	
+	* milena/sandbox/fred/fun/cos.hh,
+	* milena/sandbox/fred/fun/abs.hh:
+	  WIP, switching from solve to nsolve.
+	* milena/sandbox/fred/fun/assignability.hh: New.
+	  Traits to check function properties using sfinae (should be renamed).
+	* milena/sandbox/fred/fun/binary.hh: New. Binary function
+	* milena/sandbox/fred/fun/compose.hh: New. Compose function.
+	* milena/sandbox/fred/fun/composition.hh: New.
+	  Composition result objects definition.
+	* milena/sandbox/fred/fun/cos.cc: New. Test for composition.
+	* milena/sandbox/fred/fun/fun.cc: WIP.
+	* milena/sandbox/fred/fun/meta_function.hh:
+          Added Meta_Function_v2v and Meta_Function_vv2v categories.
+	* milena/sandbox/fred/fun/nsolve.hh,
+	* milena/sandbox/fred/fun/nsolve_binary.hh,
+	* milena/sandbox/fred/fun/nsolve_unary.hh: New.
+	  Original trait solver modification now based
+	  on typename flag instead of template <class> class
+	* milena/sandbox/fred/fun/thru_morpher.hh: WIP.
+	* milena/sandbox/fred/fun/unary.hh: Update & redesign,
+	  especially for composition.
+
 2009-03-10  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	configure.ac: configure approx/ and closing/approx in

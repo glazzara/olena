@@ -11,36 +11,38 @@ namespace mln
   // COS, bijective
   namespace fun
   {
-    template <typename T>
-    struct cos : unary<cos, T> {};
+    struct cos : unary<cos> {};
   }
 
   namespace trait
   {
-    template <typename T>
-    struct set_unary_<mln::fun::cos, mln::value::Floating, T>
+
+    namespace next
     {
-      typedef set_unary_ ret;
-      typedef T result;
-      typedef T argument;
-      typedef T& lvalue;
-      
-      static result read(const argument& x)
-      {
-	return math::cos(x);
-      }
 
-      static void write(lvalue l, const result& x)
+      template <typename T>
+      struct set_unary_<mln::fun::cos, mln::value::Floating, T>
       {
-	l = math::acos(x);
-      }
-    };
+	typedef set_unary_ ret;
+	typedef T result;
+	typedef T argument;
+	typedef T& lvalue;
+
+	static result read(const argument& x)
+	{
+	  return math::cos(x);
+	}
+
+	static void write(lvalue l, const result& x)
+	{
+	  l = math::acos(x);
+	}
+      };
+
+    }
+
   }
 
-  namespace meta
-  {
-    typedef unary<mln::fun::cos> cos;
-  }
 }
 
 #endif /* ! COS_HH */
