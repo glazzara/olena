@@ -40,10 +40,9 @@
 
 namespace mln
 {
+
   namespace value
   {
-
-
     /*!
     ** \brief The sign class represents the value type
     ** composed by the set (-1, 0, 1)
@@ -201,7 +200,6 @@ namespace mln
 
   } // end of namespace value
 
-
   namespace trait
   {
 
@@ -210,6 +208,7 @@ namespace mln
     {
 
       enum {
+	dim = 1,
 	nbits = 2,
 	card  = 3
       };
@@ -222,12 +221,12 @@ namespace mln
       static mln::value::sign max() { return 1; }
       static mln::value::sign epsilon() { return 0; }
 
+      typedef int comp;
+
       typedef int sum;
     };
 
-
   } // end of namespace trait
-
 
 } // end of namespace mln
 

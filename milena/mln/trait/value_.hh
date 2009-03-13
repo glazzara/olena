@@ -107,6 +107,7 @@ namespace mln
 
       /*
        * enum {
+       *   dim = ?
        *   nbits = ?,
        *   card  = ?
        * };
@@ -124,6 +125,7 @@ namespace mln
     struct default_value_ : undefined_value_
     {
       enum {
+	dim = 0,
 	nbits = 0,
 	card = 0
       };
@@ -131,6 +133,12 @@ namespace mln
       typedef trait::value::nature::unknown nature;
       typedef trait::value::kind::data      kind;
       typedef trait::value::quant::high     quant;
+
+      /*
+       * typedef ? comp_0;
+       * typedef ? comp_1;
+       * ...
+       */
     };
 
 

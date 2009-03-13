@@ -162,6 +162,7 @@ namespace mln
     public:
 
       enum {
+	dim = 1,
 	nbits = n,
 	card  = mln_value_card_from_(n)
       };
@@ -173,6 +174,8 @@ namespace mln
       static const self_ min() { return 0; }
       static const self_ max() { return card - 1; }
       static const self_ epsilon() { return 0; }
+
+      typedef mln::value::int_u<n> comp;
 
       typedef float sum;
     };

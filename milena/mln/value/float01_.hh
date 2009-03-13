@@ -64,6 +64,7 @@ namespace mln
     struct value_< mln::value::float01_<n> >
     {
       enum constants_ {
+	dim = 1,
 	nbits = n,
 	card  = mln_value_card_from_(nbits)
       };
@@ -75,6 +76,8 @@ namespace mln
       static float min() { return 0.f; }
       static float max() { return 1.f; }
       static float epsilon() { return 0.f; }
+
+      typedef float comp;
 
       typedef float sum;
     };

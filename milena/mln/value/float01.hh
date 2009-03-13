@@ -40,7 +40,6 @@
 # include <mln/value/concept/floating.hh>
 # include <mln/trait/value_.hh>
 # include <mln/trait/all.hh> // FIXME!
-# include <mln/trait/value_.hh>
 
 
 

@@ -62,6 +62,7 @@ namespace mln
       typedef trait::value::quant::high      quant;
 
       enum {
+	dim = 1,
 	nbits = 8 * sizeof(float),
 	card  = 0
       };
@@ -69,6 +70,8 @@ namespace mln
       static float min() { return 0; }
       static float max() { return 1; }
       static float epsilon() { return mln_epsilon(float); }
+
+      typedef float comp;
 
       typedef float sum;
     };

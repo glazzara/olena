@@ -130,6 +130,7 @@ namespace mln
     struct value_< mln::value::hsl_<H,S,L> >
     {
       enum {
+	dim = 3,
 	nbits = (sizeof (H) + sizeof (S) + sizeof (L)) * 8,
 	card  = mln_value_card_from_(nbits)
       };
@@ -137,6 +138,10 @@ namespace mln
       typedef trait::value::nature::vectorial nature;
       typedef trait::value::kind::color       kind;
       typedef mln_value_quant_from_(card)     quant;
+
+      typedef H comp_0;
+      typedef S comp_1;
+      typedef L comp_2;
 
 //      typedef algebra::vec<3, float> sum;
       typedef mln::value::hsl_<H,S,L> sum;

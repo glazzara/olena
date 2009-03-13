@@ -105,9 +105,7 @@ namespace mln
   // Forward declaration.
   namespace value
   {
-    template <unsigned n> struct rgb;
     template <typename H, typename S, typename L> class hsl_;
-    template <unsigned n> struct int_u;
   }
 
 
@@ -208,7 +206,8 @@ namespace mln
     struct value_< mln::value::rgb<n> >
     {
       enum {
-	nbits = 3 * n,
+	dim = 3,
+	nbits = dim * n,
 	card  = mln_value_card_from_(nbits)
       };
 
@@ -216,7 +215,9 @@ namespace mln
       typedef trait::value::kind::color       kind;
       typedef mln_value_quant_from_(card)     quant;
 
-      typedef algebra::vec<3, float> sum;
+      typedef mln::value::int_u<n>	      comp;
+
+      typedef algebra::vec<dim, float> sum;
 
       static const char* name()
       {
@@ -260,6 +261,9 @@ namespace mln
 
       int_u<n>  blue() const  { return this->v_[2]; }
       int_u<n>& blue()        { return this->v_[2]; }
+
+      int_u<n>  comp(unsigned k) const { return this->v_[k]; }
+      int_u<n>& comp(unsigned k)       { return this->v_[k]; }
       /// \}
 
       /// Constructor without argument.

@@ -68,6 +68,7 @@ namespace mln
     public:
 
       enum {
+	dim = 1,
 	nbits = n,
 	card  = mln_value_card_from_(n)
       };
@@ -85,6 +86,7 @@ namespace mln
 	return s.c_str();
       }
 
+      typedef unsigned comp;
     };
 
   } // end of namespace trait

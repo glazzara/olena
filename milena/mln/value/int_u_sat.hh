@@ -58,20 +58,26 @@ namespace mln
     template <unsigned n>
     struct value_< mln::value::int_u_sat<n> >
     {
+      enum {
+	dim = 1,
+	card = metal::math::pow_int<2, n>::value,
+	nbits = n;
+      };
+
       // FIXME: Overhaul these traits (see other value traits).
-      static const std::size_t card = metal::math::pow_int<2, n>::value;
       static const mln::value::int_u_sat<n> min() { return 0; }
       static const mln::value::int_u_sat<n> max() { return card - 1; }
-      static const unsigned nbits = n;
 
       typedef trait::value::nature::integer nature;
       typedef trait::value::kind::data kind;
       // FIXME: Is that right?
       typedef mln_value_quant_from_(card) quant;
 
+      typedef unsigned comp;
+
       typedef float sum;
     };
-    
+
   } // end of namespace mln::trait
 
 

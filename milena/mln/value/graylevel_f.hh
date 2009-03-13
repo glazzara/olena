@@ -168,6 +168,7 @@ namespace mln
     public:
 
       enum {
+	dim = 1,
 	nbits = mln_nbits(equiv_),
 	card  = 0
       };
@@ -179,6 +180,8 @@ namespace mln
       static const equiv_ min() { return 0; }
       static const equiv_ max() { return 1; }
       static const equiv_ epsilon() { return mln_epsilon(equiv_); }
+
+      typedef float comp;
 
       typedef float sum;
     };

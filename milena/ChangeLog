@@ -1,5 +1,23 @@
 2009-03-13  Etienne FOLIO  <folio@lrde.epita.fr>
 
+	Add dimendions and components types in values' traits.
+	Everything in the title, same for each file.
+	* mln/trait/value_.hh: .
+	* mln/value/float01.hh: .
+	* mln/value/float01_.hh: .
+	* mln/value/float01_f.hh: .
+	* mln/value/graylevel.hh: .
+	* mln/value/graylevel_f.hh: .
+	* mln/value/hsl.hh: .
+	* mln/value/int_s.hh: .
+	* mln/value/int_u.hh: .
+	* mln/value/int_u_sat.hh: .
+	* mln/value/label.hh: .
+	* mln/value/rgb.hh: .
+	* mln/value/sign.hh: .
+
+2009-03-13  Etienne FOLIO  <folio@lrde.epita.fr>
+
 	Orthograph correction in error message.
 	* mln/canvas/labeling.hh: Orthograph.
 	* mln/labeling/blobs.hh: Orthograph.
