@@ -1,5 +1,59 @@
 2009-03-13  Etienne FOLIO  <folio@lrde.epita.fr>
 
+	Reorganization of the sandbox.
+	Moved a lot of things...
+	* folio/canevas_dt.hh: Remove.
+	* folio/chamfer.cc: Remove.
+	* folio/distance_front.cc: Remove.
+	* folio/distance_front_new.hh: Remove.
+	* folio/dt.cc: Remove.
+	* folio/dt.hh: Remove.
+	* folio/dt.spe.hh: Remove.
+	* folio/dt_old/canevas_dt.hh: New.
+	* folio/dt_old/chamfer.cc: New.
+	* folio/dt_old/distance_front.cc: New.
+	* folio/dt_old/distance_front_new.hh: New.
+	* folio/dt_old/dt.cc: New.
+	* folio/dt_old/dt.hh: New.
+	* folio/dt_old/dt.spe.hh: New.
+	* folio/dt_old/naive.cc: New.
+	* folio/dt_old/psn.cc: New.
+	* folio/dt_old/psn_log.cc: New.
+	* folio/dt_old: New.
+	* folio/histo/compute_histo_rgb.hh: Remove.
+	* folio/histo: Remove.
+	* folio/mln/histo: New.
+	* folio/mln/value: New.
+	* folio/mln: New.
+	* folio/naive.cc: Remove.
+	* folio/psn.cc: Remove.
+	* folio/psn_log.cc: Remove.
+	* folio/test/canvas/dt.hh: Remove.
+	* folio/test/canvas/dt.spe.hh: Remove.
+	* folio/test/canvas: Remove.
+	* folio/test/chamfer.cc: Remove.
+	* folio/test/dt.cc: Remove.
+	* folio/test/dt/canvas: New.
+	* folio/test/dt/chamfer.cc: New.
+	* folio/test/dt/dt.cc: New.
+	* folio/test/dt/dt_bench.cc: New.
+	* folio/test/dt/dt_maze.cc: New.
+	* folio/test/dt/naive.cc: New.
+	* folio/test/dt/psn.cc: New.
+	* folio/test/dt/psn_log.cc: New.
+	* folio/test/dt/tmp.ppm: New.
+	* folio/test/dt: New.
+	* folio/test/dt_bench.cc: Remove.
+	* folio/test/dt_maze.cc: Remove.
+	* folio/test/naive.cc: Remove.
+	* folio/test/psn.cc: Remove.
+	* folio/test/psn_log.cc: Remove.
+	* folio/test/tmp.ppm: Remove.
+	* folio/value/pipo.hh: Remove.
+	* folio/value: Remove.
+
+2009-03-13  Etienne FOLIO  <folio@lrde.epita.fr>
+
 	Add traits in pipo value type.
 	* folio/value/pipo.hh: Add dimension and components types in the
 	pipo type's traits.
