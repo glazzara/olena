@@ -1,3 +1,9 @@
+2009-03-13  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Orthograph correction in error message.
+	* mln/canvas/labeling.hh: Orthograph.
+	* mln/labeling/blobs.hh: Orthograph.
+
 2009-03-13  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Fix tutorial compilation.

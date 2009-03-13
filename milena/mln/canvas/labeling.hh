@@ -197,7 +197,7 @@ namespace mln
 			if (nlabels == mln_max(L))
 			  {
 			    status = false;
-			    trace::warning("labeling aborted! Too much labels \
+			    trace::warning("labeling aborted! Too many labels \
 					    for this label type: nlabels > \
 					    max(label_type).");
 
@@ -324,7 +324,7 @@ namespace mln
 		    if (nlabels == mln_max(L))
 		      {
 			status = false;
-			trace::warning("labeling aborted! Too much labels for \
+			trace::warning("labeling aborted! Too many labels for \
 					this label type: nlabels > \
 					max(label_type).");
 			return output;
@@ -442,7 +442,7 @@ namespace mln
 		      if (nlabels == mln_max(L))
 			{
 			  status = false;
-			  trace::warning("labeling aborted! Too much labels \
+			  trace::warning("labeling aborted! Too many labels \
 					  for this label type: nlabels > \
 					  max(label_type).");
 			  return output;
