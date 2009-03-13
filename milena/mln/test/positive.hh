@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_TEST_POSITIVE_HH
 # define MLN_TEST_POSITIVE_HH
 
-/*! \file mln/test/positive.hh
- *
- * \brief Test if an image only contains positive values.
- */
+/// \file mln/test/positive.hh
+///
+/// Test if an image only contains positive values.
 
 # include <mln/test/predicate.hh>
 # include <mln/pw/all.hh>
@@ -56,17 +56,22 @@ namespace mln
     inline
     bool positive(const Image<I>& input_)
     {
+      trace::entering("test::positive");
+
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
       // FIXME: Below the '>=' op should properly work with signed/unsigned without
       // FIXME: warnings; so we really need to overload ops for functions when literals
       // FIXME: are involved.
       mln_value(I) zero_ = literal::zero;
-      return test::predicate(input.domain(),
-			     pw::value(input) >= pw::cst(zero_));
+      bool res = test::predicate(input.domain(),
+				 pw::value(input) >= pw::cst(zero_));
       // FIXME: test the version below.
 //       return test::predicate(input,
 // 			     fun::v2v::id<mln_value(I)>() >= pw::cst(0));
+
+      trace::exiting("test::positive");
+      return res;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

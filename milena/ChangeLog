@@ -1,5 +1,15 @@
 2009-03-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix missing trace in mln::test routines.
+
+	* mln/level/compare.hh,
+	* mln/test/positive.hh,
+	* mln/test/predicate.hh: Add trace.
+	Upgrade doc style.
+	* tests/level/compare.cc: Upgrade doc style.
+
+2009-03-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add an identity site iterator adaptor.
 
 	* mln/core/internal/piter_identity.hh: New.

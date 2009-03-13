@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -49,6 +49,7 @@ namespace mln
     ///
     /// \param[in] ima The image.
     /// \param[in] f The predicate.
+    //
     template <typename I, typename F>
     bool predicate(const Image<I>& ima, const Function_v2b<F>& f);
 
@@ -59,6 +60,7 @@ namespace mln
     /// \param[in] lhs The image.
     /// \param[in] rhs The image.
     /// \param[in] f The predicate.
+    //
     template <typename I, typename J, typename F>
     bool predicate(const Image<I>& lhs, const Image<J>& rhs, const Function_vv2b<F>& f);
 
@@ -67,11 +69,15 @@ namespace mln
     ///
     /// \param[in] pset The point set.
     /// \param[in] f The predicate.
+    //
     template <typename S, typename F>
     bool predicate(const Site_Set<S>& pset, const Function_p2b<F>& f);
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+
+    // Tests.
 
     namespace internal
     {
@@ -114,6 +120,9 @@ namespace mln
       }
 
     } // end of namespace mln::test::internal
+
+
+    // Implementations.
 
     namespace impl
     {
@@ -191,15 +200,22 @@ namespace mln
     } // end of namespace mln::test::impl
 
 
+
     // Facades.
+
 
     template <typename I, typename F>
     inline
     bool predicate(const Image<I>& ima, const Function_v2b<F>& f)
     {
+      trace::entering("test::predicate");
+
       internal::predicate_tests(ima, f);
-      return impl::predicate_(mln_trait_image_speed(I)(), exact(ima),
-			      exact(f));
+      bool res = impl::predicate_(mln_trait_image_speed(I)(), exact(ima),
+				  exact(f));
+
+      trace::exiting("test::predicate");
+      return res;
     }
 
 
@@ -207,23 +223,34 @@ namespace mln
     inline
     bool predicate(const Image<I>& lhs_, const Image<J>& rhs_, const Function_vv2b<F>& f)
     {
+      trace::entering("test::predicate");
+
       const I& lhs = exact(lhs_);
       const J& rhs = exact(rhs_);
 
       internal::predicate_tests(lhs_, rhs_, f);
 
-      return impl::predicate_(mln_trait_image_speed(I)(),
-			      mln_trait_image_speed(J)(),
-			      lhs, rhs,
-			      exact(f));
+      bool res = impl::predicate_(mln_trait_image_speed(I)(),
+				  mln_trait_image_speed(J)(),
+				  lhs, rhs,
+				  exact(f));
+
+      trace::exiting("test::predicate");
+      return res;
     }
 
     template <typename S, typename F>
     inline
     bool predicate(const Site_Set<S>& pset, const Function_p2b<F>& f)
     {
+      trace::entering("test::predicate");
+
       internal::predicate_tests(pset, f);
-      return impl::predicate_(exact(pset), exact(f));
+
+      bool res = impl::predicate_(exact(pset), exact(f));
+
+      trace::exiting("test::predicate");
+      return res;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
