@@ -1,3 +1,9 @@
+2009-03-13  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	HistoRGB out image size correction.
+	* folio/histo/compute_histo_rgb.hh: Computes now the right
+	dimensions of the histogram.
+
 2009-03-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Clean and fix bugs on component trees propagation.

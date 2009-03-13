@@ -7,7 +7,7 @@
 #include <mln/core/image/image3d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/rgb8.hh>
-
+#include <iostream>
 namespace mln
 {
   namespace histo
@@ -17,9 +17,10 @@ namespace mln
     image3d<C> compute_histo_rgb(image2d<T> ima)
     {
       // out
-      image3d<C> out(mln_max(C),
-		     mln_max(C),
-		     mln_max(C));
+      typedef value::int_u8::enc enc;
+      image3d<C> out(mln_max(enc) + abs(mln_min(enc)) + 1,
+		     mln_max(enc) + abs(mln_min(enc)) + 1,
+		     mln_max(enc) + abs(mln_min(enc)) + 1);
       data::fill(out, mln_min(C));
 
       // count
