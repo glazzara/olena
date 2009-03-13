@@ -305,10 +305,6 @@ $$
 \end{latexonly}
 }
 
-\newcommand{\path}[1]{
-\textit{#1}
-}
-
 \newcommand{\dir}[1]{
 \textbf{\textit{#1}}
 }
@@ -387,16 +383,16 @@ It is a more detailed explanations of the library's features.
 
 \textit{end users} and \textit{designers} may be also interested by all the
 examples provided with the documentation and the tutorial. The source code is
-available in \path{milena/doc/examples} (FIXME: ref) and is usually pointed
+available in \hpath{milena/doc/examples} (FIXME: ref) and is usually pointed
 out and commented by the documentation.
 
 Taking a look at the test suite is also a good idea. The tests usually focus on
 a single functionality and handle several use cases which may overlap your needs.
-The test suite is located at \path{milena/tests} (FIXME: ref?).
+The test suite is located at \hpath{milena/tests} (FIXME: ref?).
 
 Still not enough information? More information about all the functions is
 available in the User HTML documentation (FIXME:ref).
-It mainly targets \textit{designers} and \texit{providers}.
+It mainly targets \textit{designers} and \textit{providers}.
 The latter may also be interested by the Developer HTML documentation
 (FIXME:ref).
 
@@ -437,7 +433,7 @@ We strongly advise you to not use it for production use.
 %download page.
 
 %--------------------------
-\subdoxysection{tuto1downloadingsvn}{Downloading from SVN}
+\doxysubsection{tuto1downloadingsvn}{Downloading from SVN}
 
 First, be sure that SVN is already installed on your system.
 Open a terminal and type:
@@ -486,17 +482,17 @@ and/or use the other documentations ressources (\ref{tuto1ressources}).
 
 
 %--------------------------
-\subdoxysection{tuto1downloadingpackages}{Downloading packaged releases}
+\doxysubsection{tuto1downloadingpackages}{Downloading packaged releases}
 
 %details.
 
 Milena's packages can be downloaded from:
 
-\begin{centerize}
+\begin{center}
 \begin{verbatim}
 http://www.lrde.epita.fr/Olena/Download
 \end{verbatim}
-\end{centerize}
+\end{center}
 
 On this page you will find the latest and past releases.
 Currently, we provide only '.tar.gz' and 'tar.bz2' archives.
@@ -568,33 +564,33 @@ you finding what you need, you will find a description of all these
 subdirectories.
 
 
-List of \path{milena}'s subdirectories:
+List of \hpath{milena}'s subdirectories:
 \begin{itemize}
 
-\dir{apps} --- A full example of a 3D mesh visualization tool. It
+\item \dir{apps} --- A full example of a 3D mesh visualization tool. It
   uses milena.
 
-\dir{doc} --- THE directory you must know. Contains all the 
+\item \dir{doc} --- THE directory you must know. Contains all the 
   documentation material.
 
-\dir{img} --- A set of common test images. They are used in the
+\item \dir{img} --- A set of common test images. They are used in the
   test suite. Feel free to use it in your programs.
 
-\dir{mesh} --- A set of 3D meshes. They can be used with the full
-  example located in \path{milena/apps}.
+\item \dir{mesh} --- A set of 3D meshes. They can be used with the full
+  example located in \hpath{milena/apps}.
 
-\dir{mln} --- The core of the libray. Contains all the library headers.
+\item \dir{mln} --- The core of the libray. Contains all the library headers.
 
-\dir{tests} --- The test suite. Is it subdivided in sub directories.
-  The directory hierarchy respects \path{milena/mln}'s. 
+\item \dir{tests} --- The test suite. Is it subdivided in sub directories.
+  The directory hierarchy respects \hpath{milena/mln}'s. 
 
-\dir{tools} --- Small tools written with milena. They can be used as examples.
+\item \dir{tools} --- Small tools written with milena. They can be used as examples.
 
 \end{itemize}
 
 
 
-List of \path{mln}'s subdirectories:
+List of \hpath{mln}'s subdirectories:
 \begin{itemize}
   \item \dir{accu} --- Set of Accumulators.
   \item \dir{algebra} --- Algebraic structures like vectors or matrices.
@@ -645,12 +641,12 @@ List of \path{mln}'s subdirectories:
   \item \dir{util} --- Various utilitarian classes.
   \item \dir{value} --- Set of value types which can be used in an image.
   \item \dir{win} --- Set of various window kinds.
-\end{itemize}}
+\end{itemize}
 
 
-The source code and the material of the documentation is available in \path{
+The source code and the material of the documentation is available in \hpath{
 milena/doc}.
-List of \path{doc}'s subdirectories:
+List of \hpath{doc}'s subdirectories:
 \begin{itemize}
 \item \dir{examples} --- All the source code of the documentation examples.
 \item \dir{benchmark} --- Some benchmarks.
@@ -746,6 +742,7 @@ The buildfarm can show you whether it is safe to update your svn copy of Milena 
 --- Through this page, you can see exactly which tests do not compile or pass.
 This page is updated every night.
 
+\end{itemize}
 
 
 %**************************
@@ -910,7 +907,7 @@ $ cd /my/path/to/olena-1.0/build
 \end{verbatim}
 
 If you did not change the default install path prefix, set to 
-\path{/usr/local}, you will need to have administrator privileges to
+\hpath{/usr/local}, you will need to have administrator privileges to
 perform the installation. Then, you may type:
 \begin{verbatim}
 $ sudo make install
@@ -943,7 +940,7 @@ compiled if you want to use them.
 \doxysubsection{tuto2examples}{Examples}
 
 Examples are part of the documentation. The sources are located in
-\path{milena/doc/examples}. 
+\hpath{milena/doc/examples}. 
 
 To compile the examples simply run:
 \begin{verbatim}
@@ -959,7 +956,7 @@ $ make examples
 \end{verbatim}
 
 Text and image outputs will be respectively stored in
-\path{build/milena/doc/outputs} and \path{build/milena/doc/figures}.
+\hpath{build/milena/doc/outputs} and \hpath{build/milena/doc/figures}.
 
 
 
@@ -973,7 +970,7 @@ Currently two tools are available:
 area\_flooding.cc & FIXME:description \\
 \hline
 seed2tiling.cc & FIXME:description \\
-\end{itemize}
+\end{tabular}
 
 To build these tools, run:
 \begin{verbatim}

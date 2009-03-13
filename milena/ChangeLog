@@ -1,3 +1,9 @@
+2009-03-13  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Fix tutorial compilation.
+
+	* milena/doc/tutorial/tutorial.tex: Fix syntax errors.
+
 2009-03-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix missing trace in mln::test routines.
