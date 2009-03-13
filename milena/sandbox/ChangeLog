@@ -1,3 +1,13 @@
+2009-03-13  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Find threshold value thanks to watershed.
+	* fabien/bin/dumpi12_to_pgm.cc: New tool.
+	* fabien/igr/Makefile: Update.
+	* fabien/igr/check.sh: Update.
+	* fabien/igr/graph.cc: Update.
+	* fabien/igr/med.cc: Find median region value.
+	* fabien/igr/thres.cc: Threshold image.
+
 2009-03-13  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Sandbox reorganization.

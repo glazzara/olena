@@ -28,5 +28,9 @@
 [X] Batch process watershed with 2D, 3D and any combination of parameters
 [X] Cut into small tools
 [X] Test 3D workflow on 2D images
-[ ] Create colorized colors for graph
-[ ] Diff with %
+[X] Create colorized colors for graph
+[X] Diff with %
+[ ] Find biggest dark regions (threshold value or median accu - median / 2 - )
+ [ ] Learn regions value
+  [ ] Threshold
+[ ] Profile for performance

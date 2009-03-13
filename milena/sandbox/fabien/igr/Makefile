@@ -42,5 +42,11 @@ wst: wst.cc
 graph: graph.cc
 	g++ -I../../../ ${DICOM_INC} ${DICOM_LIBS} ${CXXFLAGS} $^ -o graph
 	
+med: med.cc
+	g++ -I../../../ ${DICOM_INC} ${DICOM_LIBS} ${CXXFLAGS} $^ -o med
+	
+thres: thres.cc
+	g++ -I../../../ ${CXXFLAGS} $^ -o thres
+	
 clean:
 	rm -rf *.dump *.p?m *.plot *.log *.csv

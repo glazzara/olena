@@ -11,11 +11,13 @@
 #include <mln/io/dump/all.hh>
 #include <mln/io/dicom/load.hh>
 #include <mln/io/pgm/save.hh>
+#include <mln/io/ppm/save.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u12.hh>
 #include <mln/value/label_16.hh>
 #include <mln/value/label_32.hh>
+#include <mln/value/rgb8.hh>
 
 #include <mln/morpho/watershed/flooding.hh>
 
@@ -52,6 +54,8 @@
 #include <mln/extension/adjust_fill.hh>
 #include <mln/extract/all.hh>
 #include <mln/make/region_adjacency_graph.hh>
+
+#include <mln/debug/colorize.hh>
 
 
 
@@ -241,6 +245,7 @@ int main(int argc, char *argv[])
   using value::int_u12;
   using value::label_16;
   using value::label_32;
+  using value::rgb8;
   typedef label_32 L;
 
   if (argc != 6)
@@ -315,8 +320,12 @@ int main(int argc, char *argv[])
     mln_VAR(wsd2_, morpho::elementary::dilation(extend(wsd2 | (pw::value(wsd2) == 0u), wsd2), c8()));
     data::fill((wsd2 | (pw::value(wsd2) == 0u)).rw(), wsd2_);
 
-    io::pgm::save(level::stretch(int_u8(), labeling::mean_values(dcm, wshed, nbasins)), "wsd_original.pgm");
-    io::pgm::save(level::stretch(int_u8(), labeling::mean_values(dcm, wsd2, nbasins2)), "wsd_mean_colors.pgm");
+    mln_VAR(original, level::stretch(int_u8(), labeling::mean_values(dcm, wshed, nbasins)));
+    mln_VAR(mean, level::stretch(int_u8(), labeling::mean_values(dcm, wsd2, nbasins2)));
+    io::pgm::save(original, "wsd_original.pgm");
+    io::pgm::save(mean, "wsd_mean_colors.pgm");
+    io::ppm::save(debug::colorize(rgb8(), wshed, nbasins), "wsd_colorize_01.ppm");
+    io::ppm::save(debug::colorize(rgb8(), wsd2, nbasins2), "wsd_colorize_02.ppm");
   }
   else
   {
