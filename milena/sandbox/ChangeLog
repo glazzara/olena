@@ -1,3 +1,17 @@
+2009-03-13  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Classification of 2D images with their respective RGB histograms.
+	* sandbox/folio/mln/histo/classify_with_histo_rgb.hh: New
+	algorithm that classifies an image 2d with its rgb histogram.
+	* sandbox/folio/mln/histo/compute_histo_rgb.hh: Use component of
+	value's trait.
+	* sandbox/folio/test/histo/classify_with_histo_rgb.cc: New test
+	for the classification of 2d images with their respective RGB
+	histograms.
+	* sandbox/folio/test/histo/compute_histo_rgb.cc: Correct an include.
+	* sandbox/folio/test/histo/compute_histo_rgb_from_ppm.cc: New test
+	for building an histogram with a ppm image.
+
 2009-03-13  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Find threshold value thanks to watershed.

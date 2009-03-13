@@ -8,6 +8,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/rgb8.hh>
 #include <iostream>
+
 namespace mln
 {
   namespace histo
@@ -17,11 +18,11 @@ namespace mln
     image3d<C> compute_histo_rgb(image2d<T> ima)
     {
       // out
-      typedef value::int_u8::enc enc;
-      image3d<C> out(mln_max(enc) + abs(mln_min(enc)) + 1,
-		     mln_max(enc) + abs(mln_min(enc)) + 1,
-		     mln_max(enc) + abs(mln_min(enc)) + 1);
-      data::fill(out, mln_min(C));
+      typedef typename trait::value_<T>::comp enc;
+      image3d<C> out(mln_max(enc) + abs(mln_min(enc) + 1),
+		     mln_max(enc) + abs(mln_min(enc) + 1),
+		     mln_max(enc) + abs(mln_min(enc) + 1));
+      data::fill(out, 0);
 
       // count
       mln_fwd_piter(image2d<T>) p(ima.domain());

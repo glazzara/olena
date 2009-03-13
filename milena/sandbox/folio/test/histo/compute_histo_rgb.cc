@@ -7,7 +7,7 @@
 #include <mln/debug/println.hh>
 #include <mln/literal/all.hh>
 
-#include "../../histo/compute_histo_rgb.hh"
+#include "../../mln/histo/compute_histo_rgb.hh"
 
 int main()
 {
