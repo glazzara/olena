@@ -1,3 +1,12 @@
+2009-03-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add an identity site iterator adaptor.
+
+	* mln/core/internal/piter_identity.hh: New.
+	* mln/core/internal/site_iterator_base.hh (todo): Remove; done.
+	* mln/core/internal/site_set_iterator_base.hh (pset): New.
+	Upgrade file doc style.
+
 2009-03-12  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Improve tutorial and documentation.

@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,15 +32,10 @@
 /// \file mln/core/internal/site_iterator_base.hh
 ///
 /// Base class to factor code for site iterator classes.
-///
-/// \todo Import tech doc from home.
 
 
 # include <mln/core/concept/site_iterator.hh>
 # include <mln/core/concept/pseudo_site.hh> // Use of if_possible::change_target.
-
-
-// FIXME: See todo.
 
 
 

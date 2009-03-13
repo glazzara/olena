@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_CORE_INTERNAL_SITE_SET_ITERATOR_BASE_HH
 # define MLN_CORE_INTERNAL_SITE_SET_ITERATOR_BASE_HH
 
-/*! \file mln/core/internal/site_set_iterator_base.hh
- *
- * \brief Base class to factor code for iterator classes directly
- * working on site sets.
- */
+/// \file mln/core/internal/site_set_iterator_base.hh
+///
+/// \brief Base class to factor code for iterator classes directly
+/// working on site sets.
 
 # include <mln/core/internal/site_iterator_base.hh>
 
@@ -43,17 +43,20 @@ namespace mln
   namespace internal
   {
 
-    /*! A base class for site iterators.
-     *
-     * Parameter \c S is the targeted site set type.
-     *
-     * IMPORTANT: Sub-classes have to define start_, next_,
-     * is_valid_ and invalidate_.
-     */
+    /// A base class for iterators on site sets.
+    ///
+    /// Parameter \c S is the targeted site set type.
+    ///
+    /// IMPORTANT: Sub-classes have to define start_, next_,
+    /// is_valid_ and invalidate_.
+    //
     template <typename S, typename E>
     class site_set_iterator_base : public site_iterator_base<S, E>
     {
     public:
+
+      /// The associated site set type.
+      typedef S pset;
 
       /// Give the site set that this iterator browses.
       const S& site_set() const;
