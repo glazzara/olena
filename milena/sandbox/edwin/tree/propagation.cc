@@ -32,6 +32,20 @@ void dsp(const char* str)
 	    << "*********************" << std::endl;
 }
 
+template <typename I>
+void print(I& img, mln_psite(I) p)
+{
+  using namespace mln;
+
+  std::cout << p << " -> ";
+  mln_fwd_piter(p_array<mln_psite(I)>) it(img(p));
+//   for_all(it)
+//     std::cout << it << " ";
+//   std::cout << std::endl;
+  for_all(it)
+    print(img, it);
+}
+
 int main(int argc, char* argv[])
 {
   using namespace mln;
@@ -109,9 +123,20 @@ int main(int argc, char* argv[])
   dsp("Propagate value to descendants  : (it_max, tree, dup, 69)");
   display_tree_attributes(tree, dup);
 
+  mln_dn_node_piter_(tree_t) n(tree);
+  n.start();
+  print(tree.children_image(), n);
 
-
-
+  std::cout << "\n";
+  mln_preorder_piter_(tree_t) pit(tree);
+  mln_psite_(I) parent;
+  for_all(pit)
+  {
+    if (parent != tree.parent(pit))
+      std::cout << std::endl;
+    std::cout << pit << " -> ";
+    parent = pit;
+  }
 }
 
 

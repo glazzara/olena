@@ -51,7 +51,7 @@ namespace mln {
       */
       template <typename T, typename A>
       void
-      propagate_node_to_descendants(mln_bkd_piter(T::nodes_t)& n,
+      propagate_node_to_descendants(mln_dn_node_piter(T)& n,
 				    const T& t,
 				    Image<A>& a_,
 				    mln_value(A) v);
@@ -65,7 +65,7 @@ namespace mln {
       */
       template <typename T, typename A>
       void
-      propagate_node_to_descendants(mln_bkd_piter(T::nodes_t)& n,
+      propagate_node_to_descendants(mln_dn_node_piter(T)& n,
 				    const T& t,
 				    Image<A>& a_);
 
@@ -135,7 +135,7 @@ namespace mln {
 
       template <typename T, typename A>
       void
-      propagate_node_to_descendants(mln_bkd_piter(T::nodes_t)& n,
+      propagate_node_to_descendants(mln_dn_node_piter(T)& n,
 				    const T& t,
 				    Image<A>& a_,
 				    mln_value(A) v)
@@ -151,7 +151,7 @@ namespace mln {
 	data::fill(ancestors, false);
 	ancestors(n) = true;
 
-	mln_bkd_piter(T::nodes_t) it(n);
+	mln_dn_node_piter(T) it(n);
 	for (it.next(); it.is_valid(); it.next())
 	  {
 	    if (ancestors(t.parent(it)))
@@ -189,7 +189,7 @@ namespace mln {
 	if (!t.is_a_node(n)) // Get the representant.
 	  n = t.parent(n);
 
-	mln_bkd_piter(T::nodes_t) it = find_bkd(t.nodes(), n);
+	mln_dn_node_piter(T) it(find_bkd(t.nodes(), n));
 	propagate_node_to_descendants(it, t, a, v);
       }
 

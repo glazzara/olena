@@ -83,7 +83,7 @@ namespace mln {
 	template <typename T, typename A>
 	bool check_propagate_ancestors(const T& t, const A& a, mln_value(A) v)
 	{
-	  mln_fwd_piter(T::nodes_t) n(t.nodes());
+	  mln_up_node_piter(T) n(t.nodes());
 	  for_all(n)
 	    if (a(n) == v && a(t.parent(n)) != v)
 	      return false;
@@ -93,7 +93,7 @@ namespace mln {
 	template <typename T, typename A>
 	bool check_propagate_descendants(const T& t, const A& a, mln_value(A) v)
 	{
-	  mln_fwd_piter(T::nodes_t) n(t.nodes());
+	  mln_up_node_piter(T) n(t.nodes());
 	  for_all(n)
 	    if (a(n) != v && a(t.parent(n)) == v)
 	      return false;
@@ -123,7 +123,7 @@ namespace mln {
 	initialize(deja_vu, a);
 	data::fill(deja_vu, false);
 
-	mln_fwd_piter(T::nodes_t) n(t.nodes());
+	mln_up_node_piter(T) n(t.nodes());
 	for_all(n)
 	{
 	  if (a(n) == v || deja_vu(n))
@@ -148,7 +148,7 @@ namespace mln {
 	mln_precondition(a.is_valid());
 	mln_precondition(a.domain() == t.f().domain());
 
-	mln_fwd_piter(T::nodes_t) n(t.nodes());
+	mln_up_node_piter(T) n(t.nodes());
 	for_all(n)
 	{
 	  if (a(n) == v)
@@ -183,7 +183,7 @@ namespace mln {
 	initialize(deja_vu, a);
 	data::fill(deja_vu, false);
 
-	mln_bkd_piter(T::nodes_t) n(t.nodes());
+	mln_dn_node_piter(T) n(t.nodes());
 	for_all(n)
 	{
 	  if (a(n) == v)
@@ -211,7 +211,7 @@ namespace mln {
 	mln_precondition(a.is_valid());
 	mln_precondition(a.domain() == t.f().domain());
 
-	mln_bkd_piter(T::nodes_t) n(t.nodes());
+	mln_dn_node_piter(T) n(t.nodes());
 	for_all(n)
 	{
 	  if (a(t.parent(n)) == v)

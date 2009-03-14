@@ -1,3 +1,21 @@
+2009-03-14  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Disambiguate component tree iterators.
+	* mln/morpho/tree/data.hh:
+	  Add children image to get instant access to child relationship.
+	  Remove mln_fwd_piter, mln_bkd_piter and mln_piter definition
+	from tree structure.
+	  Add mln_up_site_piter, mln_dn_site_piter, mln_up_node_piter,
+	mln_dn_node_piter iterator adaptator.
+	  Add mln_preorder_piter, the preorder tree traversal
+	iterator.
+ 	  Move inline code out of class definition.
+	* sandbox/edwin/tree/propagate_node.hh: Fix with new iterator,
+	but not yet optimized with new tree structure.
+	* sandbox/edwin/tree/propagate_value.hh: Fix with new
+	iterator, but not yet optimized with new tree structure.
+	* sandbox/edwin/tree/propagation.cc: Update test file.
+
 2009-03-13  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Add dimendions and components types in values' traits.

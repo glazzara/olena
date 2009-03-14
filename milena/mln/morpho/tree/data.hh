@@ -38,10 +38,27 @@
 /// learn why we want the 1st pass to be in forward scan of s).
 
 # include <mln/morpho/tree/compute_parent.hh>
-# include <mln/core/image/sub_image.hh>
+//# include <mln/core/image/sub_image.hh>
 # include <mln/core/site_set/p_array.hh>
-# include <mln/core/site_set/p_set.hh>
-# include <mln/data/fill.hh>
+# include <mln/core/internal/site_set_iterator_base.hh>
+# include <mln/core/internal/piter_identity.hh>
+# include <deque>
+
+# define mln_up_site_piter(T)	typename T::up_site_piter
+# define mln_dn_site_piter(T)	typename T::dn_site_piter
+# define mln_up_node_piter(T)	typename T::up_node_piter
+# define mln_dn_node_piter(T)	typename T::dn_node_piter
+# define mln_preorder_piter(T)	typename T::preorder_piter
+
+# define mln_up_site_piter_(T)	T::up_site_piter
+# define mln_dn_site_piter_(T)  T::dn_site_piter
+# define mln_up_node_piter_(T)  T::up_node_piter
+# define mln_dn_node_piter_(T)  T::dn_node_piter
+# define mln_preorder_piter_(T) T::preorder_piter
+
+// FIXME: rename these iterators.
+//# define mln_up_leaf_piter(T) typename T::up_leaf_piter;
+//# define mln_dn_leaf_piter(T) typename T::dn_leaf_piter;
 
 namespace mln
 {
@@ -52,145 +69,244 @@ namespace mln
     namespace tree
     {
 
+      // Forward declarations.
+
+      /// Iterate on tree's sites from leaves to roots.
+      template <typename T> struct up_site_piter;
+
+      /// Iterate on tree's sites from roots to leaves.
+      template <typename T> struct dn_site_piter;
+
+      /// Iterate on tree's nodes (component representants) from leaves to roots.
+      template <typename T> struct up_node_piter;
+
+      /// Iterate on tree's nodes (component representants) from leaves to roots.
+      template <typename T> struct dn_node_piter;
+
+      /// Preorder tree traversal iterator.
+      template <typename T> struct preorder_piter;
+
+      /// Postorder tree traversal iterator.
+      //template <typename T> struct postorder_piter;
+
       // FIXME: Doc!
+
+
 
       template <typename I, typename S>
       class data
       {
+	typedef data<I, S> self_;
+
       public:
-
-
 	/// Associated type of the function f.
 	typedef I function;
+	/// Psite associated type.
+	typedef mln_psite(I) psite;
+	typedef mln_site(I) site;
+	/// Site set associated type.
+	typedef S sites_t;
+	/// Node list associated type.
+	typedef p_array<mln_psite(I)> nodes_t;
 
+	/// Parent image associated type.
+	typedef mln_ch_value(I, mln_psite(I)) parent_t;
 
-	/// Ctor.
+	// Iterate on all sites.
+	typedef mln::morpho::tree::up_site_piter<self_> up_site_piter;
+	typedef mln::morpho::tree::dn_site_piter<self_> dn_site_piter;
+
+	// Iterate on nodes only.
+	typedef mln::morpho::tree::up_node_piter<self_> up_node_piter;
+	typedef mln::morpho::tree::dn_node_piter<self_> dn_node_piter;
+
+	typedef mln::morpho::tree::preorder_piter<self_> preorder_piter;
+
+// 	typedef mln_bkd_piter(S) piter;
+// 	typedef mln_bkd_piter(S) fwd_piter;
+// 	typedef mln_fwd_piter(S) bkd_piter;
+
+	/// Constructor.
 	template <typename N>
-	data(const Image<I>& f, const Site_Set<S>& s, const Neighborhood<N>& nbh);
+	explicit data(const Image<I>& f, const Site_Set<S>& s, const Neighborhood<N>& nbh);
 
 
 
 	/// \{ Parent-related materials.
 
-	typedef mln_ch_value(I, mln_psite(I)) parent_t;
-
-	const mln_psite(I)& parent(const mln_psite(I)& p) const
-	{
-	  mln_precondition(is_valid());
-	  mln_precondition(parent_.domain().has(p));
-	  return parent_(p);
-	}
-
-	const parent_t& parent_image() const
-	{
-	  mln_precondition(is_valid());
-	  return parent_;
-	}
+	const mln_psite(I)& parent(const mln_psite(I)& p) const;
+	const parent_t& parent_image() const;
 
 	/// \}
 
+	const p_array<mln_psite(I)>& children(const mln_psite(I)& p) const
+	{
+	  return children_(p);
+	}
+
+	const mln_ch_value(I, nodes_t)& children_image() const
+	{
+	  return children_;
+	}
 
 	/// \{ Tests.
 
-	bool is_valid() const
-	{
-	  return parent_.is_valid(); // FIXME: and... (?)
-	}
-
-	bool is_root(const mln_psite(I)& p) const
-	{
-	  mln_precondition(is_valid());
-	  mln_precondition(parent_.domain().has(p));
-	  return parent_(p) == p;
-	}
-
-	bool is_a_node(const mln_psite(I)& p) const
-	{
-	  mln_precondition(is_valid());
-	  mln_precondition(parent_.domain().has(p));
-	  return parent_(p) == p || f_(parent_(p)) != f_(p);
-	}
-
-	bool is_a_non_root_node(const mln_psite(I)& p) const
-	{
-	  mln_precondition(is_valid());
-	  mln_precondition(parent_.domain().has(p));
-	  return f_(parent_(p)) != f_(p);
-	}
-
-	/// Return true iff p is a leaf (in log time).
-	bool is_a_leaf(const mln_psite(I)& p) const
-	{
-	  mln_precondition(is_valid());
-	  mln_precondition(parent_.domain().has(p));
-	  return leaves_.has(p);
-	}
+	bool is_valid() const;
+	bool is_root(const mln_psite(I)& p) const;
+	bool is_a_node(const mln_psite(I)& p) const;
+	bool is_a_non_root_node(const mln_psite(I)& p) const;
+	bool is_a_leaf(const mln_psite(I)& p) const;
 
 	/// \}
 
 
 	/// \{ Nodes-related materials.
 
-	typedef p_array<mln_psite(I)> nodes_t;
-
-	const p_array<mln_psite(I)>& nodes() const
-	{
-	  mln_precondition(is_valid());
-	  return nodes_;
-	}
+	const p_array<mln_psite(I)>& nodes() const;
 
 	/// \}
 
+	/// \{ Sites-related materials.
 
-	/// \{ Nodes-related materials.
-
-	typedef p_set<mln_psite(I)> leaves_t;
-
-	const leaves_t& leaves() const
-	{
-	  mln_precondition(is_valid());
-	  return leaves_;
-	}
+	const S& domain() const;
 
 	/// \}
 
-	/// \{ How-to iterate on all sites.
+	unsigned nroots() const;
 
-	typedef mln_bkd_piter(S) piter;
-	typedef mln_bkd_piter(S) fwd_piter;
-	typedef mln_fwd_piter(S) bkd_piter;
 
-	const S& domain() const
-	{
-	  return s_;
-	}
+	const I& f() const;
 
-	/// \}
 
-	unsigned nroots() const
-	{
-	  return nroots_;
-	}
+	mln_rvalue(I) f(const mln_psite(I)& p) const;
 
-	const I& f() const
-	{
-	  return f_;
-	}
-
-	mln_rvalue(I) f(const mln_psite(I)& p) const
-	{
-	  return f_(p);
-	}
 
       protected:
-
-	const I& f_;
-	const S& s_;
-	mln_ch_value(I, mln_psite(I)) parent_;
-	leaves_t leaves_;
-	p_array<mln_psite(I)> nodes_;
+	const function& f_;
+	const sites_t& s_;
+	mln_ch_value(I, mln_psite(I)) parent_;	// Parent image.
+	mln_ch_value(I, nodes_t) children_;	// Children image.
+	nodes_t nodes_;
 	unsigned nroots_;
       };
+
+
+      template <typename T>
+      struct up_site_piter
+	: public mln::internal::piter_identity_< typename T::sites_t::bkd_piter,	// Adaptee.
+					    up_site_piter<T> >			// Exact.
+      {
+      private:
+	typedef typename T::sites_t::bkd_piter Pi_;
+	typedef mln::internal::piter_identity_< Pi_, up_site_piter<T> > super_;
+
+      public:
+	up_site_piter(const T& t)
+	{
+	  this->change_target(t.domain());
+	}
+
+	up_site_piter(const Pi_& pi)
+	  : super_(pi)
+	{
+	}
+      };
+
+      template <typename T>
+      struct dn_site_piter
+	: public mln::internal::piter_identity_< typename T::sites_t::fwd_piter,	// Adaptee.
+						 dn_site_piter<T> >			// Exact.
+      {
+      private:
+	typedef typename T::sites_t::fwd_piter Pi_;
+	typedef mln::internal::piter_identity_< Pi_, dn_site_piter<T> > super_;
+
+      public:
+	dn_site_piter(const T& t)
+	{
+	  this->change_target(t.domain());
+	}
+
+	dn_site_piter(const Pi_& pi)
+	  : super_(pi)
+	{
+	}
+      };
+
+      template <typename T>
+      struct up_node_piter
+	: public mln::internal::piter_identity_< typename T::nodes_t::fwd_piter,	// Adaptee.
+						 up_node_piter<T> >			// Exact.
+      {
+      private:
+	typedef typename T::sites_t::fwd_piter Pi_;
+	typedef mln::internal::piter_identity_< Pi_, up_node_piter<T> > super_;
+
+      public:
+	up_node_piter(const T& t)
+	{
+	  this->change_target(t.nodes());
+	}
+
+	up_node_piter(const Pi_& pi)
+	  : super_(pi)
+	{
+	}
+      };
+
+      template <typename T>
+      struct dn_node_piter
+	: public mln::internal::piter_identity_< typename T::nodes_t::bkd_piter,	// Adaptee.
+						 dn_node_piter<T> >			// Exact.
+      {
+      private:
+	typedef typename T::sites_t::bkd_piter Pi_;
+	typedef mln::internal::piter_identity_< Pi_, dn_node_piter<T> > super_;
+
+      public:
+	dn_node_piter(const T& t)
+	{
+	  this->change_target(t.nodes());
+	}
+
+	dn_node_piter(const Pi_& pi)
+	  : super_(pi)
+	{
+	}
+      };
+
+      template <typename T>
+      class preorder_piter
+	: public mln::internal::site_set_iterator_base< T, preorder_piter<T> >
+      {
+	typedef preorder_piter<T> self_;
+	typedef mln::internal::site_set_iterator_base<T, self_> super_;
+
+      public:
+
+	/// Constructor with no argument.
+	preorder_piter();
+
+	/// Constructor.
+	preorder_piter(const T& t);
+
+	/// Test if the iterator is valid.
+	bool is_valid_() const;
+
+	/// Invalidate the iterator.
+	void invalidate_();
+
+	/// Start an iteration.
+	void start_();
+
+	/// Go to the next point.
+	void next_();
+
+      protected:
+	using super_::p_;
+	using super_::s_;
+	std::deque<mln_psite(T)> stack_; // FIXME: implement p_stack.
+  };
 
 
 
@@ -208,6 +324,7 @@ namespace mln
 
 	// Compute parent image.
 	parent_ = morpho::tree::compute_parent(f_, nbh_, s_);
+	initialize(children_, f);
 
 	// Store tree nodes.
 	nroots_ = 0;
@@ -217,6 +334,7 @@ namespace mln
 	  if (f_(parent_(p)) != f_(p))
 	    {
 	      nodes_.insert(p);
+	      children_(parent_(p)).insert(p);
 	    }
 	  else
 	    if (parent_(p) == p)
@@ -225,20 +343,182 @@ namespace mln
 		++nroots_;
 	      }
 	}
-
-	// Store leaves.
-	mln_ch_value(I, bool) deja_vu;
-	initialize(deja_vu, f);
-	mln::data::fill(deja_vu, false);
-
-	mln_fwd_piter(nodes_t) n(nodes_);
-	for_all(n)
-	{
-	  deja_vu(parent_(n)) = true;
-	  if (!deja_vu(n))
-	    leaves_.insert(n);
-	}
       }
+
+      template <typename I, typename S>
+      inline
+      const mln_psite(I)&
+      data<I,S>::parent(const mln_psite(I)& p) const
+      {
+	mln_precondition(is_valid());
+	mln_precondition(parent_.domain().has(p));
+	return parent_(p);
+      }
+
+      template <typename I, typename S>
+      inline
+      const mln_ch_value(I, mln_psite(I))&
+      data<I,S>::parent_image() const
+      {
+	mln_precondition(is_valid());
+	return parent_;
+      }
+
+      template <typename I, typename S>
+      inline
+      bool
+      data<I,S>::is_valid() const
+      {
+	return parent_.is_valid(); // FIXME: and... (?)
+      }
+
+      template <typename I, typename S>
+      inline
+      bool
+      data<I,S>::is_root(const mln_psite(I)& p) const
+      {
+	mln_precondition(is_valid());
+	mln_precondition(parent_.domain().has(p));
+	return parent_(p) == p;
+      }
+
+
+      template <typename I, typename S>
+      inline
+      bool
+      data<I,S>::is_a_node(const mln_psite(I)& p) const
+      {
+	mln_precondition(is_valid());
+	mln_precondition(parent_.domain().has(p));
+	return parent_(p) == p || f_(parent_(p)) != f_(p);
+      }
+
+      template <typename I, typename S>
+      inline
+      bool
+      data<I,S>::is_a_non_root_node(const mln_psite(I)& p) const
+      {
+	mln_precondition(is_valid());
+	mln_precondition(parent_.domain().has(p));
+	return f_(parent_(p)) != f_(p);
+      }
+
+
+      template <typename I, typename S>
+      inline
+      bool
+      data<I,S>::is_a_leaf(const mln_psite(I)& p) const
+      {
+	mln_precondition(is_valid());
+	mln_precondition(children_.domain().has(p));
+	return children_(p).nsites() == 0;
+      }
+
+      template <typename I, typename S>
+      inline
+      const p_array<mln_psite(I)>&
+      data<I,S>::nodes() const
+      {
+	mln_precondition(is_valid());
+	return nodes_;
+      }
+
+      template <typename I, typename S>
+      inline
+      const S&
+      data<I,S>::domain() const
+      {
+	return s_;
+      }
+
+      template <typename I, typename S>
+      inline
+      unsigned
+      data<I,S>::nroots() const
+      {
+	return nroots_;
+      }
+
+      template <typename I, typename S>
+      inline
+      const I&
+      data<I,S>::f() const
+      {
+	return f_;
+      }
+
+      template <typename I, typename S>
+      inline
+      mln_rvalue(I)
+      data<I,S>::f(const mln_psite(I)& p) const
+      {
+	return f_(p);
+      }
+
+
+
+      // Iterators.
+
+
+      template <typename T>
+      inline
+      preorder_piter<T>::preorder_piter()
+      {
+      }
+
+      template <typename T>
+      inline
+      preorder_piter<T>::preorder_piter(const T& t)
+      {
+	this->change_target(t);
+      }
+
+      template <typename T>
+      inline
+      bool
+      preorder_piter<T>::is_valid_() const
+      {
+	return !stack_.empty();
+      }
+
+      template <typename T>
+      inline
+      void
+      preorder_piter<T>::invalidate_()
+      {
+	stack_.clear();
+      }
+
+      template <typename T>
+      inline
+      void
+      preorder_piter<T>::start_()
+      {
+	this->invalidate();
+	mln_dn_node_piter(T) n(s_->nodes());
+	int roots = 0;
+	for (n.start(); n.is_valid() && roots < s_->nroots(); n.next())
+	  if (s_->is_root(n))
+	  {
+	    stack_.push_back(n);
+	    roots++;
+	  }
+
+	this->next();
+      }
+
+      template <typename T>
+      inline
+      void
+      preorder_piter<T>::next_()
+      {
+	p_ = stack_.back();
+	stack_.pop_back();
+	mln_fwd_piter(T::nodes_t) child(s_->children(p_));
+	for_all(child)
+	  stack_.push_back(child);
+      }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
