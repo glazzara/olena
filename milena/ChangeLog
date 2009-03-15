@@ -1,5 +1,19 @@
 2009-03-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add an ''un-projection'' image morpher.
+
+	* mln/fun/v2v/projection.hh: New.
+	* mln/fun/v2v/all.hh: Update.
+	* tests/fun/v2v/projection.cc: New.
+	* tests/fun/v2v/Makefile.am: Update.
+
+	* mln/core/image/unproject_image.hh: New.
+	* mln/core/image/all.hh: Update.
+	* tests/core/image/unproject_image.cc: New.
+	* tests/core/image/Makefile.am: Update.
+
+2009-03-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add routines to deal with images of accumulators.
 
 	* mln/accu/image: New directory.

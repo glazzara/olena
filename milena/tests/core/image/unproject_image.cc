@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,39 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_V2V_ALL_HH
-# define MLN_FUN_V2V_ALL_HH
-
-/// \file mln/fun/v2v/all.hh
+/// \file tests/core/image/unproject_image.cc
 ///
-/// File that includes all functions from value to value.
+/// Tests on mln::unproject_image.
+
+#include <mln/core/image/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/unproject_image.hh>
+#include <mln/core/var.hh>
+
+#include <mln/fun/v2v/projection.hh>
+
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
 
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
 
-  namespace fun
-  {
+  image1d<int> ima(3);
+  debug::iota(ima);
 
-    /// Namespace of functions from value to value.
-    namespace v2v {}
+  debug::println(ima);
+  std::cout << std::endl;
 
-  }
+  fun::v2v::projection<point2d, 0> f;
+
+  mln_VAR( ima_, unproject(ima, make::box2d(3, 3), f) );
+  debug::println(ima_);
+
+  ima_(point2d(1,1)) = 9;
+  debug::println(ima_);
+
+  debug::println(ima);
 }
-
-
-# include <mln/fun/v2v/abs.hh>
-# include <mln/fun/v2v/cast.hh>
-# include <mln/fun/v2v/convert.hh>
-# include <mln/fun/v2v/dec.hh>
-# include <mln/fun/v2v/enc.hh>
-# include <mln/fun/v2v/id.hh>
-# include <mln/fun/v2v/linear.hh>
-# include <mln/fun/v2v/norm.hh>
-# include <mln/fun/v2v/projection.hh>
-# include <mln/fun/v2v/rgb_to_hsi.hh>
-# include <mln/fun/v2v/saturate.hh>
-
-
-
-#endif // ! MLN_FUN_V2V_ALL_HH

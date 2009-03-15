@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,12 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_V2V_ALL_HH
-# define MLN_FUN_V2V_ALL_HH
+#ifndef MLN_FUN_V2V_PROJECTION_HH
+# define MLN_FUN_V2V_PROJECTION_HH
 
-/// \file mln/fun/v2v/all.hh
+/// \file mln/fun/v2v/projection.hh
 ///
-/// File that includes all functions from value to value.
+/// FIXME.
+
+# include <mln/core/concept/function.hh>
+# include <mln/core/point.hh>
+# include <mln/core/grids.hh>
 
 
 namespace mln
@@ -40,25 +43,49 @@ namespace mln
   namespace fun
   {
 
-    /// Namespace of functions from value to value.
-    namespace v2v {}
+    namespace v2v
+    {
 
-  }
-}
+      template <typename P, unsigned dir>
+      struct projection : public Function_v2v< projection<P,dir> >
+      {
+      private:
+	typedef mln_grid(P)  G_;
+	typedef mln_coord(P) C_;
+	enum { n_ = G_::dim };
+	
+      public:
+
+	typedef point<mln_regular_grid_from_dim(n_ - 1), C_> result;
+	typedef P argument;
+
+	result operator()(const P& p) const;
+      };
 
 
-# include <mln/fun/v2v/abs.hh>
-# include <mln/fun/v2v/cast.hh>
-# include <mln/fun/v2v/convert.hh>
-# include <mln/fun/v2v/dec.hh>
-# include <mln/fun/v2v/enc.hh>
-# include <mln/fun/v2v/id.hh>
-# include <mln/fun/v2v/linear.hh>
-# include <mln/fun/v2v/norm.hh>
-# include <mln/fun/v2v/projection.hh>
-# include <mln/fun/v2v/rgb_to_hsi.hh>
-# include <mln/fun/v2v/saturate.hh>
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename P, unsigned dir>
+      inline
+      typename projection<P, dir>::result
+      projection<P, dir>::operator()(const P& p) const
+      {
+	result tmp;
+	for (unsigned i = 0, j = 0; i < n_; ++i)
+	  if (i == dir)
+	    continue;
+	  else
+	    tmp[j++] = p[i];
+	return tmp;
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::v2v
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
 
 
-
-#endif // ! MLN_FUN_V2V_ALL_HH
+#endif // ! MLN_FUN_V2V_PROJECTION_HH

@@ -4,7 +4,6 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 ##FIXME: re-enable tests
 check_PROGRAMS =				\
-##  bgraph_image					\
   cast_image					\
   complex_image					\
   decorated_image				\
@@ -18,19 +17,24 @@ check_PROGRAMS =				\
   image_if					\
   interpolated					\
   line_graph_image				\
+  p2p_image					\
+  plain						\
+  safe_image					\
+  slice_image					\
+  sub_image					\
+  t_image					\
+  tr_image					\
+  unproject_image
+
+##  bgraph_image					\
 ##  mono_obased_rle_image				\
 ##  mono_rle_image				\
 ##  obased_rle_image				\
-  p2p_image					\
-  plain						\
 ##  rle_image					\
-  safe_image					\
-  slice_image					\
 ##  sparse_image					\
-  sub_image					\
-  t_image					\
-  tr_image					
 ##  value_enc_image
+
+
 
 noinst_HEADERS = complex_image.hh
 
@@ -60,6 +64,7 @@ slice_image_SOURCES = slice_image.cc
 sub_image_SOURCES = sub_image.cc
 t_image_SOURCES = t_image.cc
 tr_image_SOURCES = tr_image.cc
+unproject_image_SOURCES = unproject_image.cc
 ##value_enc_image_SOURCES = value_enc_image.cc
 
 # Tests depending on the FreeImagePlus library.

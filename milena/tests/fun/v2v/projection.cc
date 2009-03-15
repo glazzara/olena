@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,39 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_V2V_ALL_HH
-# define MLN_FUN_V2V_ALL_HH
-
-/// \file mln/fun/v2v/all.hh
+/// \file tests/fun/v2v/projection.cc
 ///
-/// File that includes all functions from value to value.
+/// Test on mln::fun::v2v::projection.
+
+#include <mln/fun/v2v/projection.hh>
+
+#include <mln/core/alias/point3d.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/alias/point1d.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace fun
   {
-
-    /// Namespace of functions from value to value.
-    namespace v2v {}
-
+    typedef point2d P;
+    P p(0,1);
+    {
+      fun::v2v::projection<P,0> f;
+      mln_assertion(f(p) == point1d(1));
+    }
+    {
+      fun::v2v::projection<P,1> f;
+      mln_assertion(f(p) == point1d(0));
+    }
   }
+
+  {
+    typedef point3d P;
+    P p(0,1,2);
+    {
+      fun::v2v::projection<P,0> f;
+      mln_assertion(f(p) == point2d(1,2));
+    }
+    {
+      fun::v2v::projection<P,1> f;
+      mln_assertion(f(p) == point2d(0,2));
+    }
+    {
+      fun::v2v::projection<P,2> f;
+      mln_assertion(f(p) == point2d(0,1));
+    }
+  }
+
 }
-
-
-# include <mln/fun/v2v/abs.hh>
-# include <mln/fun/v2v/cast.hh>
-# include <mln/fun/v2v/convert.hh>
-# include <mln/fun/v2v/dec.hh>
-# include <mln/fun/v2v/enc.hh>
-# include <mln/fun/v2v/id.hh>
-# include <mln/fun/v2v/linear.hh>
-# include <mln/fun/v2v/norm.hh>
-# include <mln/fun/v2v/projection.hh>
-# include <mln/fun/v2v/rgb_to_hsi.hh>
-# include <mln/fun/v2v/saturate.hh>
-
-
-
-#endif // ! MLN_FUN_V2V_ALL_HH

@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,8 +34,6 @@
 /// File that includes all image types.
 
 
-//# include <mln/core/image/bgraph_image.hh>
-//# include <mln/core/image/bgraph_psite.hh>
 # include <mln/core/image/cast_image.hh>
 # include <mln/core/image/ch_piter.hh>
 # include <mln/core/image/complex_image.hh>
@@ -46,7 +45,6 @@
 # include <mln/core/image/flat_image.hh>
 # include <mln/core/image/image_if.hh>
 # include <mln/core/image/sub_image.hh>
-//# include <mln/core/image/fi_adaptor.hh>
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/decorated_image.hh>
 # include <mln/core/image/extended.hh>
@@ -55,28 +53,16 @@
 # include <mln/core/image/extension_val.hh>
 # include <mln/core/image/flat_image.hh>
 # include <mln/core/image/graph_elt_window.hh>
-//# include <mln/core/image/graph_image.hh>
 # include <mln/core/image/graph_window_piter.hh>
-//# include <mln/core/image/hexa.hh>
-//# include <mln/core/image/hexa_piter.hh>
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>
-//# include <mln/core/image/image2d_h.hh>
 # include <mln/core/image/image3d.hh>
 # include <mln/core/image/image_if.hh>
 # include <mln/core/image/interpolated.hh>
 # include <mln/core/image/lazy_image.hh>
 # include <mln/core/image/line_graph_elt_window.hh>
-//# include <mln/core/image/mono_obased_rle_encode.hh>
-//# include <mln/core/image/mono_obased_rle_image.hh>
-//# include <mln/core/image/mono_rle_encode.hh>
-//# include <mln/core/image/mono_rle_image.hh>
-//# include <mln/core/image/obased_rle_encode.hh>
-//# include <mln/core/image/obased_rle_image.hh>
 # include <mln/core/image/p2p_image.hh>
 # include <mln/core/image/plain.hh>
-//# include <mln/core/image/rle_encode.hh>
-//# include <mln/core/image/rle_image.hh>
 # include <mln/core/image/safe.hh>
 # include <mln/core/image/slice_image.hh>
 # include <mln/core/image/sparse_encode.hh>
@@ -86,6 +72,23 @@
 # include <mln/core/image/t_image.hh>
 # include <mln/core/image/tr_image.hh>
 # include <mln/core/image/tr_mesh.hh>
+# include <mln/core/image/unproject_image.hh>
+
+//# include <mln/core/image/bgraph_image.hh>
+//# include <mln/core/image/bgraph_psite.hh>
+//# include <mln/core/image/fi_adaptor.hh>
+//# include <mln/core/image/graph_image.hh>
+//# include <mln/core/image/hexa.hh>
+//# include <mln/core/image/hexa_piter.hh>
+//# include <mln/core/image/image2d_h.hh>
+//# include <mln/core/image/mono_obased_rle_encode.hh>
+//# include <mln/core/image/mono_obased_rle_image.hh>
+//# include <mln/core/image/mono_rle_encode.hh>
+//# include <mln/core/image/mono_rle_image.hh>
+//# include <mln/core/image/obased_rle_encode.hh>
+//# include <mln/core/image/obased_rle_image.hh>
+//# include <mln/core/image/rle_encode.hh>
+//# include <mln/core/image/rle_image.hh>
 //# include <mln/core/image/value_enc_image.hh>
 //# include <mln/core/image/value_encode.hh>
 
