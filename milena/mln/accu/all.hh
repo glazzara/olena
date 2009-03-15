@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -92,6 +92,10 @@ namespace mln
 # include <mln/accu/transform_diagonal.hh>
 # include <mln/accu/transform_line.hh>
 # include <mln/accu/transform_snake.hh>
+
+// Sub-directories
+
+# include <mln/accu/image/all.hh>
 
 
 #endif // ! MLN_ACCU_ALL_HH

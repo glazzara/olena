@@ -1,3 +1,24 @@
+2009-03-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add routines to deal with images of accumulators.
+
+	* mln/accu/image: New directory.
+	* mln/accu/image/init.hh: New.
+	* mln/accu/image/take.hh: New.
+	* mln/accu/image/set_value.hh: New.
+	* mln/accu/image/all.hh: New.
+	* mln/accu/image/take_as_init.hh: New.
+	* mln/accu/image/to_result.hh: New.
+	* mln/accu/all.hh: Update.
+	* tests/accu/image: New.
+	* tests/accu/image/to_result.cc: New.
+	* tests/accu/image/init.cc: New.
+	* tests/accu/image/take.cc: New.
+	* tests/accu/image/Makefile.am: New.
+	* tests/accu/image/set_value.cc: New.
+	* tests/accu/image/take_as_init.cc: New.
+	* tests/accu/Makefile.am: Update.
+
 2009-03-14  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Disambiguate component tree iterators.
