@@ -1,15 +1,22 @@
 #include <mln/core/image/image2d.hh>
-#include <mln/value/int_u8.hh>
+#include <mln/value/rgb8.hh>
 
 #include "load.hh"
 
-int main()
+int main(int argc, char* argv[])
 {
   using namespace mln;
-  using value::int_u8;
+  using value::rgb8;
 
-  image2d<int_u8> lena;
+  if (argc != 2)
+  {
+    std::cout << "Usage: " << argv[0] << " filename.ext" << std::endl;
+    return 1;
+  }
 
-  //io::magick::load(lena, "/Users/HiSoKa/Work/LRDE/Olena/resources/CardiacCT/178562160.dcm");
-  io::magick::load(lena, "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0052.dcm");
+  image2d<rgb8> lena;
+
+  io::magick::load(lena, argv[1]);
+
+  return 0;
 }

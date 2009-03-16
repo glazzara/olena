@@ -31,6 +31,6 @@
 [X] Create colorized colors for graph
 [X] Diff with %
 [ ] Find biggest dark regions (threshold value or median accu - median / 2 - )
- [ ] Learn regions value
-  [ ] Threshold
+   [ ] Learn regions value
+      [ ] Threshold
 [ ] Profile for performance

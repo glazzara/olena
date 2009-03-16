@@ -49,4 +49,4 @@ thres: thres.cc
 	g++ -I../../../ ${CXXFLAGS} $^ -o thres
 	
 clean:
-	rm -rf *.dump *.p?m *.plot *.log *.csv
+	rm -rf *.dump *.p?m *.plot *.log *.csv *.dSYM

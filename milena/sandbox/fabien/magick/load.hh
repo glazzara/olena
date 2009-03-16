@@ -37,6 +37,7 @@
  */
 
 # include <mln/core/image/image2d.hh>
+# include <mln/value/rgb8.hh>
 # include <Magick++.h>
 
 
@@ -59,57 +60,18 @@ namespace mln
       void load(Image<I>& ima,
 		const std::string& filename);
 
-      /*! Load a magick image in a Milena image. To use this routine, you
-       *  should specialize the template whith the value type of the
-       *  image loaded. (ex : load<value::int_u8>("...") )
-       *
-       * \param[in] filename The image source.
-       *
-       * \return An image2d which contains loaded data.
-       */
-      template <typename V>
-      image2d<V> load(const std::string& filename);
-
-      /*! Load a magick image in a Milena image. To use this routine, you
-       *  should specialize the template whith the value type of the
-       *  image loaded. (ex : load<value::int_u8>("...") )
-       *
-       * \param[in] filename The image source.
-       *
-       * \return An image2d which contains loaded data.
-       */
-      template <typename V>
-      image3d<V> load(const std::string& filename);
 
 # ifndef MLN_INCLUDE_ONLY
-
-      template <typename V>
-      inline
-      image2d<V> load(const std::string& filename)
-      {
-	trace::entering("mln::io::magick::load");
-	image2d<V> ima;// = io::pnm::load<V>(MAGICK, filename);
-	trace::exiting("mln::io::magick::load");
-	return ima;
-      }
-
-      template <typename V>
-      inline
-      image3d<V> load(const std::string& filename)
-      {
-	trace::entering("mln::io::magick::load");
-	image2d<V> ima;// = io::pnm::load<V>(MAGICK, filename);
-	trace::exiting("mln::io::magick::load");
-	return ima;
-      }
 
 
       template <typename I>
       inline
-      void load(Image<I>& ima,
+      void load(Image<I>& ima_,
 		const std::string& filename)
       {
 	trace::entering("mln::io::magick::load");
+
+	I& ima = exact(ima_);
 
 	//std::ifstream file(filename.c_str());
 	//if (! file)
@@ -118,24 +80,37 @@ namespace mln
 	//  abort();
 	//}
 
-	Magick::Image file(filename);
-	//std::cout << "file attribute: " << file.attribute() << std::endl;
-	std::cout << "width: " << file.columns() << std::endl;
-	std::cout << "height: " << file.rows() << std::endl;
-	std::cout << "x resolution: " << file.xResolution() << std::endl;
-	std::cout << "y resolution: " << file.yResolution() << std::endl;
-	std::cout << "depth: " << file.depth() << std::endl;
-	//std::cout << "packets: " << file.packets() << std::endl;
-	//std::cout << "packet size: " << file.packetSize() << std::endl;
-	std::cout << "comment: " << file.comment() << std::endl;
-	std::cout << "format: " << file.format() << std::endl;
-	std::cout << "number of scenes: " << file.imageInfo()->number_scenes << std::endl;
-	std::cout << "scene: " << file.imageInfo()->scene << std::endl;
-	std::cout << "filename: " << file.imageInfo()->filename << std::endl;
+	Magick::Image im_file(filename);
+	im_file.modifyImage();
+	im_file.type(Magick::TrueColorType);
+	int columns = im_file.columns();
+	int rows = im_file.rows();
+	/*std::cout << "width: " <<columns << std::endl;
+	std::cout << "height: " <<rows << std::endl;
+	std::cout << "depth: " <<im_file.depth() << std::endl;
+	std::cout << "comment: " <<im_file.comment() << std::endl;
+	std::cout << "format: " <<im_file.format() << std::endl;
+	std::cout << "filename: " <<im_file.imageInfo()->filename << std::endl;*/
 
-	//Magick::Pixels::Pixels pixels(file);
-	//std::cout << "sizeof PixelPacket: " << sizeof (pixel_cache) << std::endl;
-	//std::cout << "sizeof *PixelPacket: " << sizeof (*pixel_cache) << std::endl;
+	const Magick::PixelPacket *pixel_cache = im_file.getConstPixels(0, 0, columns, rows);
+
+	algebra::vec<mln_site_(I)::dim, unsigned int> vmin;
+        algebra::vec<mln_site_(I)::dim, unsigned int> vmax;
+	vmin[0] = 0;
+	vmin[1] = 0;
+	vmax[0] = rows - 1;
+	vmax[1] = columns - 1;
+	mln_site(I) pmin(vmin);
+        mln_site(I) pmax(vmax);
+        mln_concrete(I) result(box<mln_site(I)>(pmin, pmax));
+        initialize(ima, result);
+        mln_piter(I) p(ima.domain());
+	for_all(p)
+	{
+	  const Magick::PixelPacket *pixel = pixel_cache + (int) p.to_site().to_vec()[0] * columns
+							 + (int) p.to_site().to_vec()[1];
+	  ima(p) = value::rgb8(pixel->red % 256, pixel->green % 256, pixel->blue % 256); // WARNING: Quantum = 16bits but rgb is 8bits
+	}
 
 	trace::exiting("mln::io::magick::load");
       }

@@ -20,9 +20,12 @@
 #include <mln/core/routine/extend.hh>
 #include <mln/accu/mean.hh>
 #include <mln/accu/median_h.hh>
-#include <mln/morpho/elementary/dilation.hh>
+#include <mln/histo/array.hh>
+#include <mln/histo/compute.hh>
+#include <mln/labeling/compute.hh>
 #include <mln/labeling/mean_values.hh>
 #include <mln/level/compute.hh>
+#include <mln/morpho/elementary/dilation.hh>
 #include <mln/pw/all.hh>
 #include <mln/util/array.hh>
 
@@ -59,6 +62,8 @@ int main(int argc, char *argv[])
     return 1;
   }
 
+  unsigned median = 0;
+
   if (dim == 2)
   {
     image2d<L> labels;
@@ -70,18 +75,27 @@ int main(int argc, char *argv[])
     data::fill((labels | (pw::value(labels) == 0u)).rw(), wst_dilate);
     mln_VAR(wst_mean, labeling::mean_values(dcm, labels, nbasins));
 
-    accu::mean<float> accu_mean;
-    util::array<float> means = level::compute(accu_mean, wst_mean);
-
-    // FIXME: Take median value of means
+    histo::array<int_u12> histogram = histo::compute(wst_mean);
+    int j = 0;
+    int k = 0;
+    for (int i = 0; i < histogram.nvalues(); ++i)
+    {
+      if (histogram[i])
+	histogram[i] = i;
+    }
+    image1d<unsigned> ima_histo;
+    convert::from_to(histogram, ima_histo);
+    accu::median_h<int_u12> accu_med;
+    median = level::compute(accu_med, ima_histo | pw::value(ima_histo) != pw::cst(0));
 
     io::dump::save(wst_mean, "med.dump");
-    std::cout << median << std::endl;
   }
   else
   {
     // FIXME
   }
+
+  std::cout << median << std::endl;
 
   return 0;
 }
