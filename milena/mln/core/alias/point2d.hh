@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -46,6 +46,7 @@ namespace mln
   /// integer coordinates.
   ///
   typedef point<grid::square, def::coord> point2d;
+  typedef point<grid::square, def::coordf> point2df;
 
 
   namespace internal

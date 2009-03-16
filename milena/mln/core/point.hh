@@ -61,6 +61,21 @@ namespace mln
   /// \}
 
 
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      template <typename G, typename C1, typename C2>
+      void from_to_(const point<G,C1>& from, point<G,C2>& to);
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
+
+
+
   /// Generic point class.
   ///
   /// Parameters are \c n the dimension of the space and \c C the
@@ -212,6 +227,26 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      template <typename G, typename C1, typename C2>
+      inline
+      void
+      from_to_(const point<G,C1>& from, point<G,C2>& to)
+      {
+	mlc_converts_to(C1,C2)::check();
+	to = point<G,C2>(from.to_vec());
+      }
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
+
 
   template <typename G, typename C>
   inline

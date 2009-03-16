@@ -29,11 +29,10 @@
 #ifndef MLN_CORE_ALIAS_POINT3D_HH
 # define MLN_CORE_ALIAS_POINT3D_HH
 
-/*! \file mln/core/alias/point3d.hh
- *
- * \brief Definition of the mln::point3d alias and of its construction
- * routine.
- */
+/// \file mln/core/alias/point3d.hh
+///
+/// Definition of the mln::point3d alias and of its construction
+/// routine.
 
 # include <mln/core/point.hh>
 // For site_const_impl and site_mutable_impl:
@@ -43,14 +42,12 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a point defined on the 3D square grid with
-   * integer coordinates.
-   */
+  /// Type alias for a point defined on the 3D square grid with
+  /// integer coordinates.
   typedef point<grid::cube, def::coord> point3d;
 
-  /*! \brief Type alias for a point defined on the 3D square grid with
-   * floating-point coordinates.
-   */
+  /// Type alias for a point defined on the 3D square grid with
+  /// floating-point coordinates.
   typedef point<grid::cube, def::coordf> point3df;
 
   namespace internal
