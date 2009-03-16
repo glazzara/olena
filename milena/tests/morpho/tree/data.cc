@@ -62,18 +62,39 @@ int main()
   debug::println( "on node = ", t.parent_image() | t.nodes()  );
 
   {
-    std::cout << "nodes = ";
-    tree_t::nodes_t::fwd_piter p(t.nodes());
-    for_all(p)
-      std::cout << p << ' ';
-    std::cout << std::endl;
+    /* Check site and node up order */
+    tree_t::up_node_piter n(t);
+    tree_t::up_site_piter s(t);
+    n.start();
+    for_all(s)
+      if (t.is_a_node(s))
+	{
+	  mln_assertion(s == n);
+	  n.next();
+	}
+    mln_assertion(!n.is_valid());
   }
+
+  {
+    /* Check site and node up order */
+    tree_t::dn_node_piter n(t);
+    tree_t::dn_site_piter s(t);
+    n.start();
+    for_all(s)
+      if (t.is_a_node(s))
+	{
+	  mln_assertion(s == n);
+	  n.next();
+	}
+    mln_assertion(!n.is_valid());
+  }
+
+
   {
     std::cout << "nodes = ";
-    tree_t::fwd_piter p(t.domain());
-    for_all(p)
-      if (t.is_a_node(p))
-	std::cout << p << ' ';
+    tree_t::up_node_piter n(t);
+    for_all(n)
+      std::cout << n << ' ';
     std::cout << std::endl
 	      << std::endl;
   }
@@ -82,7 +103,7 @@ int main()
   {
     image2d<unsigned> area(ima.domain());
     data::fill(area, 1);
-    tree_t::fwd_piter p(t.domain());
+    tree_t::up_site_piter p(t);
     for_all(p)
       if (! t.is_root(p))
 	area(t.parent(p)) += area(p);

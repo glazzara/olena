@@ -31,6 +31,7 @@
 
 #include <mln/morpho/tree/data.hh>
 #include <mln/core/site_set/p_array.hh>
+#include <stack>
 
 /// \file mln/morpho/tree/propagate_node.hh
 ///
@@ -39,35 +40,6 @@
 namespace mln {
   namespace morpho {
     namespace tree {
-
-
-      /**
-      ** Propagate a value to a node and its descendants.
-      **
-      ** @param n Forward iterator related to the node.
-      ** @param t Reference to components tree.
-      ** @param a_ Reference to image.
-      ** @param v Value to propagate. Default is a_(n).
-      */
-      template <typename T, typename A>
-      void
-      propagate_node_to_descendants(mln_dn_node_piter(T)& n,
-				    const T& t,
-				    Image<A>& a_,
-				    mln_value(A) v);
-
-      /**
-      ** Propagate the value of a node to its descendants.
-      **
-      ** @param n Forward iterator related to the node.
-      ** @param t Reference to components tree.
-      ** @param a_ Reference to image.
-      */
-      template <typename T, typename A>
-      void
-      propagate_node_to_descendants(mln_dn_node_piter(T)& n,
-				    const T& t,
-				    Image<A>& a_);
 
 
       /**
@@ -127,51 +99,10 @@ namespace mln {
 				  Image<A>& a_);
 
 
-
-
-
+# ifndef MLN_INCLUDE_ONLY
 
       /* Descendants propagation */
 
-      template <typename T, typename A>
-      void
-      propagate_node_to_descendants(mln_dn_node_piter(T)& n,
-				    const T& t,
-				    Image<A>& a_,
-				    mln_value(A) v)
-      {
-	A& a = exact(a_);
-	mln_precondition(a.is_valid());
-	mln_precondition(a.domain() == t.f().domain());
-	mln_precondition(n.is_valid());
-	mln_precondition(t.is_a_node(n));
-
-	mln_ch_value(A, bool) ancestors;
-	initialize(ancestors, a);
-	data::fill(ancestors, false);
-	ancestors(n) = true;
-
-	mln_dn_node_piter(T) it(n);
-	for (it.next(); it.is_valid(); it.next())
-	  {
-	    if (ancestors(t.parent(it)))
-	      {
-		ancestors(it) = true;
-		a(it) = v;
-	      }
-	  }
-      }
-
-      template <typename T, typename A>
-      inline
-      void
-      propagate_node_to_descendants(mln_bkd_piter(T::nodes_t)& n,
-				    const T& t,
-				    Image<A>& a_)
-      {
-	A& a = exact(a_);
-	propagate_node_to_descendants(n, t, a, a(n));
-      }
 
       template <typename T, typename A>
       void
@@ -188,9 +119,13 @@ namespace mln {
 
 	if (!t.is_a_node(n)) // Get the representant.
 	  n = t.parent(n);
+	mln_assertion(t.is_a_node(n));
 
-	mln_dn_node_piter(T) it(find_bkd(t.nodes(), n));
-	propagate_node_to_descendants(it, t, a, v);
+	typename T::preorder_piter pp(t, n);
+
+	pp.start(); // We don't set n to v.
+	for (pp.next(); pp.is_valid(); pp.next())
+	  a(pp) = v;
       }
 
       template <typename T, typename A>
@@ -220,7 +155,7 @@ namespace mln {
 	mln_precondition(a.domain() == t.f().domain());
 	mln_precondition(a.domain().has(n));
 
-	if (!t.is_a_node(n))
+	if (!t.is_a_node(n)) // Get the representant.
 	  n = t.parent(n);
 	mln_assertion(t.is_a_node(n));
 
@@ -245,6 +180,7 @@ namespace mln {
 	propagate_node_to_ancestors(n, t, a, a(n));
       }
 
+# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::morpho::tree
   } // end of namespace mln::morpho

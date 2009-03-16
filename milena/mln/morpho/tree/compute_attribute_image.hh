@@ -36,6 +36,7 @@
 /// \todo Specialize for low quant (and try fastest).
 
 # include <mln/core/concept/image.hh>
+# include <mln/morpho/tree/data.hh>
 # include <mln/trait/accumulators.hh>
 # include <mln/util/pix.hh>
 # include <mln/data/fill.hh>
@@ -143,7 +144,7 @@ namespace mln
 	    take_as_init(acc(p), t.f(), p);
 	}
 	{
-	  mln_fwd_piter(T) p(t.domain());
+	  mln_up_site_piter(T) p(t);
 	  // Propagate attribute from a site to its parent.
 	  for_all(p)
 	    if (! t.is_root(p))

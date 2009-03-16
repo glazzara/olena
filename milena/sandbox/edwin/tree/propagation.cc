@@ -90,25 +90,25 @@ int main(int argc, char* argv[])
   dsp("Propagate node to descendants  : (point2d(0, 2), tree, dup)");
   display_tree_attributes(tree, dup);
 
-  dup = duplicate(input);
-  morpho::tree::propagate_value_to_ancestors(117, tree, dup, 0);
-  dsp("Propagate value to ancestors  : (117, tree, dup, 0)");
-  display_tree_attributes(tree, dup);
+ //  dup = duplicate(input);
+//   morpho::tree::propagate_value_to_ancestors(117, tree, dup, 0);
+//   dsp("Propagate value to ancestors  : (117, tree, dup, 0)");
+//   display_tree_attributes(tree, dup);
 
-  dup = duplicate(input);
-  morpho::tree::propagate_value_to_ancestors(117, tree, dup);
-  dsp("Propagate value to ancestors  : (117, tree, dup)");
-  display_tree_attributes(tree, dup);
+//   dup = duplicate(input);
+//   morpho::tree::propagate_value_to_ancestors(117, tree, dup);
+//   dsp("Propagate value to ancestors  : (117, tree, dup)");
+//   display_tree_attributes(tree, dup);
 
-  dup = duplicate(input);
-  morpho::tree::propagate_value_to_descendants(117, tree, dup, 0);
-  dsp("Propagate value to descendants  : (117, tree, dup, 0)");
-  display_tree_attributes(tree, dup);
+//   dup = duplicate(input);
+//   morpho::tree::propagate_value_to_descendants(117, tree, dup, 0);
+//   dsp("Propagate value to descendants  : (117, tree, dup, 0)");
+//   display_tree_attributes(tree, dup);
 
-  dup = duplicate(input);
-  morpho::tree::propagate_value_to_descendants(117, tree, dup);
-  dsp("Propagate value to descendants  : (117, tree, dup)");
-  display_tree_attributes(tree, dup);
+//   dup = duplicate(input);
+//   morpho::tree::propagate_value_to_descendants(117, tree, dup);
+//   dsp("Propagate value to descendants  : (117, tree, dup)");
+//   display_tree_attributes(tree, dup);
 
 
 
@@ -123,9 +123,9 @@ int main(int argc, char* argv[])
   dsp("Propagate value to descendants  : (it_max, tree, dup, 69)");
   display_tree_attributes(tree, dup);
 
-  mln_dn_node_piter_(tree_t) n(tree);
-  n.start();
-  print(tree.children_image(), n);
+//    mln_dn_node_piter_(tree_t) n(tree);
+//    n.start();
+//    print(tree.children_image(), n);
 
   std::cout << "\n";
   mln_preorder_piter_(tree_t) pit(tree);

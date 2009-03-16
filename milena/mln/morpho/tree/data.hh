@@ -38,7 +38,6 @@
 /// learn why we want the 1st pass to be in forward scan of s).
 
 # include <mln/morpho/tree/compute_parent.hh>
-//# include <mln/core/image/sub_image.hh>
 # include <mln/core/site_set/p_array.hh>
 # include <mln/core/internal/site_set_iterator_base.hh>
 # include <mln/core/internal/piter_identity.hh>
@@ -55,10 +54,6 @@
 # define mln_up_node_piter_(T)  T::up_node_piter
 # define mln_dn_node_piter_(T)  T::dn_node_piter
 # define mln_preorder_piter_(T) T::preorder_piter
-
-// FIXME: rename these iterators.
-//# define mln_up_leaf_piter(T) typename T::up_leaf_piter;
-//# define mln_dn_leaf_piter(T) typename T::dn_leaf_piter;
 
 namespace mln
 {
@@ -139,15 +134,8 @@ namespace mln
 
 	/// \}
 
-	const p_array<mln_psite(I)>& children(const mln_psite(I)& p) const
-	{
-	  return children_(p);
-	}
-
-	const mln_ch_value(I, nodes_t)& children_image() const
-	{
-	  return children_;
-	}
+	const p_array<mln_psite(I)>& children(const mln_psite(I)& p) const;
+	const mln_ch_value(I, nodes_t)& children_image() const;
 
 	/// \{ Tests.
 
@@ -194,7 +182,7 @@ namespace mln
       template <typename T>
       struct up_site_piter
 	: public mln::internal::piter_identity_< typename T::sites_t::bkd_piter,	// Adaptee.
-					    up_site_piter<T> >			// Exact.
+						 up_site_piter<T> >			// Exact.
       {
       private:
 	typedef typename T::sites_t::bkd_piter Pi_;
@@ -290,6 +278,10 @@ namespace mln
 	/// Constructor.
 	preorder_piter(const T& t);
 
+
+	preorder_piter(const T& t,
+		       const mln_psite(T::function)& p);
+
 	/// Test if the iterator is valid.
 	bool is_valid_() const;
 
@@ -305,7 +297,8 @@ namespace mln
       protected:
 	using super_::p_;
 	using super_::s_;
-	std::deque<mln_psite(T)> stack_; // FIXME: implement p_stack.
+	std::deque<mln_psite(T::function)> stack_; // FIXME: implement p_stack.
+	const mln_psite(T::function)* root_;
   };
 
 
@@ -455,6 +448,22 @@ namespace mln
 	return f_(p);
       }
 
+      template <typename I, typename S>
+      inline
+      const p_array<mln_psite(I)>&
+      data<I,S>::children(const mln_psite(I)& p) const
+      {
+	return children_(p);
+      }
+
+      template <typename I, typename S>
+      inline
+      const mln_ch_value(I, p_array<mln_psite(I)>)&
+      data<I,S>::children_image() const
+      {
+	return children_;
+      }
+
 
 
       // Iterators.
@@ -463,12 +472,23 @@ namespace mln
       template <typename T>
       inline
       preorder_piter<T>::preorder_piter()
+	: root_ (0)
       {
       }
 
       template <typename T>
       inline
       preorder_piter<T>::preorder_piter(const T& t)
+	: root_ (0)
+      {
+	this->change_target(t);
+      }
+
+      template <typename T>
+      inline
+      preorder_piter<T>::preorder_piter(const T& t,
+					const mln_psite(T::function)& p)
+	: root_ (&p)
       {
 	this->change_target(t);
       }
@@ -495,13 +515,20 @@ namespace mln
       preorder_piter<T>::start_()
       {
 	this->invalidate();
-	mln_dn_node_piter(T) n(s_->nodes());
-	int roots = 0;
-	for (n.start(); n.is_valid() && roots < s_->nroots(); n.next())
-	  if (s_->is_root(n))
+	stack_.push_back(mln_psite(T::function)()); // needed for last element.
+
+	if (root_)
+	  stack_.push_back(*root_);
+	else
 	  {
-	    stack_.push_back(n);
-	    roots++;
+	    mln_dn_node_piter(T) n(*s_);
+	    int roots = 0;
+	    for (n.start(); n.is_valid() && roots < s_->nroots(); n.next())
+	      if (s_->is_root(n))
+		{
+		  stack_.push_back(n);
+		  roots++;
+		}
 	  }
 
 	this->next();
@@ -514,6 +541,8 @@ namespace mln
       {
 	p_ = stack_.back();
 	stack_.pop_back();
+	if (!exact(this)->is_valid())
+	  return;
 	mln_fwd_piter(T::nodes_t) child(s_->children(p_));
 	for_all(child)
 	  stack_.push_back(child);

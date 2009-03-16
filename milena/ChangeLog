@@ -1,3 +1,15 @@
+2009-03-16  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Fix component tree test to work with new iterators.
+	* mln/morpho/tree/compute_attribute_image.hh: Modify code to
+	make it work with new tree implementation.
+	* mln/morpho/tree/data.hh: Fix bug in preorder iterator (last
+	element was ignored).
+	* sandbox/edwin/tree/propagate_node.hh,
+	* sandbox/edwin/tree/propagation.cc:  Optimize propagation for
+	new component tree implementation.
+	* tests/morpho/tree/data.cc: Add some tests.
+
 2009-03-16  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Add conversion from point<G,C1> to point<G,C2>.
