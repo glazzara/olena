@@ -1,3 +1,44 @@
+2009-03-16  Frederic Bour  <bour@lrde.epita.fr>
+
+	Clean of new function implementation.
+	* sandbox/fred/mln/core/concept/meta_function.hh,
+	* sandbox/fred/mln/core/concept,
+	* sandbox/fred/mln/core/image/thru_morpher.hh,
+	* sandbox/fred/mln/core/image,
+	* sandbox/fred/mln/core,
+	* sandbox/fred/mln/fun/binary.hh,
+	* sandbox/fred/mln/fun/compose.hh,
+	* sandbox/fred/mln/fun/composition.hh,
+	* sandbox/fred/mln/fun/math/abs.hh,
+	* sandbox/fred/mln/fun/math/cos.hh,
+	* sandbox/fred/mln/fun/math/inf.hh,
+	* sandbox/fred/mln/fun/math/norm.hh,
+	* sandbox/fred/mln/fun/math/sup.hh,
+	* sandbox/fred/mln/fun/math,
+	* sandbox/fred/mln/fun/spe/binary.hh,
+	* sandbox/fred/mln/fun/spe/unary.hh,
+	* sandbox/fred/mln/fun/spe,
+	* sandbox/fred/mln/fun/unary.hh,
+	* sandbox/fred/mln/fun,
+	* sandbox/fred/mln/trait/fun.hh,
+	* sandbox/fred/mln/trait/next/solve.hh,
+	* sandbox/fred/mln/trait/next/solve_binary.hh,
+	* sandbox/fred/mln/trait/next/solve_unary.hh,
+	* sandbox/fred/mln/trait/next,
+	* sandbox/fred/mln/trait,
+	* sandbox/fred/mln: New. Clean files,
+	  respecting milena file hierarchy.
+	* sandbox/fred/Makefile,
+	* sandbox/fred/overload.cc,
+	* sandbox/fred/old/site_wrapper.hh,
+	* sandbox/fred/old/value.cc,
+	* sandbox/fred/old/overload.cc: Old files management.
+	* sandbox/fred/tests/Makefile,
+	* sandbox/fred/tests/cos.cc,
+	* sandbox/fred/tests/fun.cc,
+	* sandbox/fred/tests/thru.cc,
+	* sandbox/fred/tests: New. Small test for functions.
+
 2009-03-16  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Fix component tree test to work with new iterators.

@@ -1,10 +1,10 @@
-TARGET=overload
+TARGET=fun
 OBJS=$(TARGET).o
 
-OLENADIR=../../..
+OLENADIR=../../../..
 MILENADIR=$(OLENADIR)/milena
 
-CXXFLAGS=-I$(MILENADIR) -I./ -DNDEBUG -O1 -ffast-math
+CXXFLAGS=-I$(MILENADIR) -I../ -DNDEBUG -O1 -ffast-math
 CXX=g++
 LD=g++
 LDFLAGS=
