@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,38 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_ALL_HH
-# define MLN_IO_ALL_HH
+#ifndef MLN_IO_MAGICK_ALL_HH
+# define MLN_IO_MAGICK_ALL_HH
 
-/// \file mln/io/all.hh
-///
-/// File that includes all io materials.
-
+/*! \file mln/io/magick/all.hh
+ *
+ * \brief File that includes all magick io materials.
+ */
 
 
 namespace mln
 {
 
-  /// Namespace of input/output handling.
   namespace io
   {
-    /// Internal namespace of io namespace.
-    namespace internal {}
+    /// Namespace of magick input/output handling.
+    namespace magick {}
   }
 
 }
 
-# include <mln/io/cloud/all.hh>
-# include <mln/io/dump/all.hh>
-# include <mln/io/dicom/load.hh>
-# include <mln/io/magick/all.hh>
-# include <mln/io/pbm/all.hh>
-# include <mln/io/pfm/all.hh>
-# include <mln/io/pgm/all.hh>
-# include <mln/io/pnm/all.hh>
-# include <mln/io/ppm/all.hh>
-# include <mln/io/txt/all.hh>
-//# include <mln/io/fits/all.hh>
-//# include <mln/io/off/all.hh>
+# include <mln/io/magick/load.hh>
 
-#endif // ! MLN_IO_ALL_HH
+#endif // ! MLN_IO_MAGICK_ALL_HH

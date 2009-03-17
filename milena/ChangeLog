@@ -1,3 +1,10 @@
+2009-03-17  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Integrate ImageMagick support in Milena.
+	* mln/io/all.hh: Update.
+	* mln/io/magick/all.hh: New file, including load.hh
+	* mln/io/magick/load.hh: Implement ImageMagick load support.
+
 2009-03-16  Frederic Bour  <bour@lrde.epita.fr>
 
 	Clean of new function implementation.
