@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,42 +25,60 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_WATERSHED_ALL_HH
-# define MLN_MORPHO_WATERSHED_ALL_HH
-
-/// \file mln/morpho/watershed/all.hh
+/// \file tests/morpho/watershed/superpose.cc
 ///
-/// File that includes all morphological watershed routines.
+/// Test on mln::morpho::watershed::superpose.
 
+#include <iostream>
+
+#include <mln/core/image/image2d.hh>
+
+#include <mln/make/image2d.hh>
+
+#include <mln/value/label_8.hh>
+#include <mln/value/int_u8.hh>
+
+#include <mln/morpho/watershed/superpose.hh>
+#include <mln/level/compare.hh>
+
+#include "tests/data.hh"
+
+#include <mln/debug/println.hh>
+#include <mln/debug/iota.hh>
 
 namespace mln
 {
 
-  namespace morpho
+  struct ref_data : Function_p2v<ref_data>
   {
+    typedef value::rgb8 result;
 
-    /// Namespace of morphological watershed routines.
-    namespace watershed
+    value::rgb8 operator()(const point2d& p) const
     {
-
-      /// Namespace of morphological watershed routines
-      /// implementations.
-      namespace watershed
-      {
-
-	/// Namespace of morphological watershed routines generic
-	/// implementations.
-	namespace generic
-	{}
-
-      }
+      if (p.row() == 2 || p.col() == 2)
+	return literal::red;
+      unsigned val = p.col() + 1 + p.row() * 4;
+      return value::rgb8(val, val, val);
     }
-  }
+
+  };
+
+} // end of namespace mln
+
+int main()
+{
+  using namespace mln;
+
+  image2d<value::int_u8> ima(4,4);
+  debug::iota(ima);
+
+  value::label_8 data_ws[16] = { 1,  1,  0,  2,
+				 1,  1,  0,  2,
+				 0,  0,  0,  0,
+				 5,  5,  0,  4 };
+
+  image2d<value::label_8> ima_ws = make::image2d(data_ws);
+
+  image2d<value::rgb8> sup = morpho::watershed::superpose(ima, ima_ws);
+  mln_assertion(sup == (ref_data() | sup.domain()));
 }
-
-
-# include <mln/morpho/watershed/flooding.hh>
-# include <mln/morpho/watershed/superpose.hh>
-
-
-#endif // ! MLN_MORPHO_WATERSHED_ALL_HH

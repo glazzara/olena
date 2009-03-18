@@ -1,4 +1,18 @@
-2009-03-16  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+2009-03-18  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add morpho::watershed::superpose.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: update.
+
+	* mln/morpho/watershed/all.hh: add new include.
+
+	* mln/morpho/watershed/superpose.hh: new routine.
+
+	* tests/morpho/watershed/Makefile.am,
+	* tests/morpho/watershed/superpose.cc: add associated test.
+
+2009-03-18  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Small fixes.
 

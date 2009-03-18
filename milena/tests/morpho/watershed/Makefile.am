@@ -3,8 +3,10 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  flooding
+  flooding 					\
+  superpose
 
 flooding_SOURCES = flooding.cc
+superpose_SOURCES = superpose.cc
 
 TESTS = $(check_PROGRAMS)

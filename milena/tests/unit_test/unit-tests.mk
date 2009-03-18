@@ -229,6 +229,7 @@ mln_fun_v2v_cast \
 mln_fun_v2v_ch_function_value \
 mln_fun_v2v_rgb_to_hsi \
 mln_fun_v2v_enc \
+mln_fun_v2v_projection \
 mln_fun_v2v_convert \
 mln_fun_v2v_essential \
 mln_fun_v2w2v_cos \
@@ -405,6 +406,12 @@ mln_accu_lor_basic \
 mln_accu_transform_diagonal \
 mln_accu_nil \
 mln_accu_bbox \
+mln_accu_image_init \
+mln_accu_image_to_result \
+mln_accu_image_all \
+mln_accu_image_set_value \
+mln_accu_image_take \
+mln_accu_image_take_as_init \
 mln_accu_center \
 mln_accu_line \
 mln_accu_essential \
@@ -645,6 +652,7 @@ mln_morpho_laplacian \
 mln_morpho_all \
 mln_morpho_watershed_flooding \
 mln_morpho_watershed_all \
+mln_morpho_watershed_superpose \
 mln_morpho_opening_approx_all \
 mln_morpho_opening_approx_structural \
 mln_morpho_opening_all \
@@ -804,6 +812,7 @@ mln_core_internal_image_domain_morpher \
 mln_core_internal_image_primary \
 mln_core_internal_set_of \
 mln_core_internal_complex_window_p_base \
+mln_core_internal_piter_identity \
 mln_core_internal_graph_window_base \
 mln_core_internal_piter_adaptor \
 mln_core_internal_weighted_window_base \
@@ -911,6 +920,7 @@ mln_core_clock_neighb2d \
 mln_core_pixter3d \
 mln_core_image_obased_rle_encode \
 mln_core_image_plain \
+mln_core_image_unproject_image \
 mln_core_image_image3d \
 mln_core_image_decorated_image \
 mln_core_image_extension_ima \
@@ -1018,6 +1028,8 @@ mln_io_cloud_load \
 mln_io_cloud_all \
 mln_io_cloud_save \
 mln_io_all \
+mln_io_magick_load \
+mln_io_magick_all \
 mln_io_dump_load \
 mln_io_dump_all \
 mln_io_dump_save \
@@ -1326,6 +1338,7 @@ mln_fun_v2v_cast_SOURCES = mln_fun_v2v_cast.cc
 mln_fun_v2v_ch_function_value_SOURCES = mln_fun_v2v_ch_function_value.cc
 mln_fun_v2v_rgb_to_hsi_SOURCES = mln_fun_v2v_rgb_to_hsi.cc
 mln_fun_v2v_enc_SOURCES = mln_fun_v2v_enc.cc
+mln_fun_v2v_projection_SOURCES = mln_fun_v2v_projection.cc
 mln_fun_v2v_convert_SOURCES = mln_fun_v2v_convert.cc
 mln_fun_v2v_essential_SOURCES = mln_fun_v2v_essential.cc
 mln_fun_v2w2v_cos_SOURCES = mln_fun_v2w2v_cos.cc
@@ -1502,6 +1515,12 @@ mln_accu_lor_basic_SOURCES = mln_accu_lor_basic.cc
 mln_accu_transform_diagonal_SOURCES = mln_accu_transform_diagonal.cc
 mln_accu_nil_SOURCES = mln_accu_nil.cc
 mln_accu_bbox_SOURCES = mln_accu_bbox.cc
+mln_accu_image_init_SOURCES = mln_accu_image_init.cc
+mln_accu_image_to_result_SOURCES = mln_accu_image_to_result.cc
+mln_accu_image_all_SOURCES = mln_accu_image_all.cc
+mln_accu_image_set_value_SOURCES = mln_accu_image_set_value.cc
+mln_accu_image_take_SOURCES = mln_accu_image_take.cc
+mln_accu_image_take_as_init_SOURCES = mln_accu_image_take_as_init.cc
 mln_accu_center_SOURCES = mln_accu_center.cc
 mln_accu_line_SOURCES = mln_accu_line.cc
 mln_accu_essential_SOURCES = mln_accu_essential.cc
@@ -1742,6 +1761,7 @@ mln_morpho_laplacian_SOURCES = mln_morpho_laplacian.cc
 mln_morpho_all_SOURCES = mln_morpho_all.cc
 mln_morpho_watershed_flooding_SOURCES = mln_morpho_watershed_flooding.cc
 mln_morpho_watershed_all_SOURCES = mln_morpho_watershed_all.cc
+mln_morpho_watershed_superpose_SOURCES = mln_morpho_watershed_superpose.cc
 mln_morpho_opening_approx_all_SOURCES = mln_morpho_opening_approx_all.cc
 mln_morpho_opening_approx_structural_SOURCES = mln_morpho_opening_approx_structural.cc
 mln_morpho_opening_all_SOURCES = mln_morpho_opening_all.cc
@@ -1901,6 +1921,7 @@ mln_core_internal_image_domain_morpher_SOURCES = mln_core_internal_image_domain_
 mln_core_internal_image_primary_SOURCES = mln_core_internal_image_primary.cc
 mln_core_internal_set_of_SOURCES = mln_core_internal_set_of.cc
 mln_core_internal_complex_window_p_base_SOURCES = mln_core_internal_complex_window_p_base.cc
+mln_core_internal_piter_identity_SOURCES = mln_core_internal_piter_identity.cc
 mln_core_internal_graph_window_base_SOURCES = mln_core_internal_graph_window_base.cc
 mln_core_internal_piter_adaptor_SOURCES = mln_core_internal_piter_adaptor.cc
 mln_core_internal_weighted_window_base_SOURCES = mln_core_internal_weighted_window_base.cc
@@ -2008,6 +2029,7 @@ mln_core_clock_neighb2d_SOURCES = mln_core_clock_neighb2d.cc
 mln_core_pixter3d_SOURCES = mln_core_pixter3d.cc
 mln_core_image_obased_rle_encode_SOURCES = mln_core_image_obased_rle_encode.cc
 mln_core_image_plain_SOURCES = mln_core_image_plain.cc
+mln_core_image_unproject_image_SOURCES = mln_core_image_unproject_image.cc
 mln_core_image_image3d_SOURCES = mln_core_image_image3d.cc
 mln_core_image_decorated_image_SOURCES = mln_core_image_decorated_image.cc
 mln_core_image_extension_ima_SOURCES = mln_core_image_extension_ima.cc

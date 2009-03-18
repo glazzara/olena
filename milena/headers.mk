@@ -234,6 +234,7 @@ mln/fun/v2v/cast.hh \
 mln/fun/v2v/ch_function_value.hh \
 mln/fun/v2v/rgb_to_hsi.hh \
 mln/fun/v2v/enc.hh \
+mln/fun/v2v/projection.hh \
 mln/fun/v2v/convert.hh \
 mln/fun/v2v/essential.hh \
 mln/fun/v2w2v/cos.hh \
@@ -410,6 +411,12 @@ mln/accu/lor_basic.hh \
 mln/accu/transform_diagonal.hh \
 mln/accu/nil.hh \
 mln/accu/bbox.hh \
+mln/accu/image/init.hh \
+mln/accu/image/to_result.hh \
+mln/accu/image/all.hh \
+mln/accu/image/set_value.hh \
+mln/accu/image/take.hh \
+mln/accu/image/take_as_init.hh \
 mln/accu/center.hh \
 mln/accu/line.hh \
 mln/accu/essential.hh \
@@ -652,6 +659,7 @@ mln/morpho/laplacian.hh \
 mln/morpho/all.hh \
 mln/morpho/watershed/flooding.hh \
 mln/morpho/watershed/all.hh \
+mln/morpho/watershed/superpose.hh \
 mln/morpho/opening/approx/all.hh \
 mln/morpho/opening/approx/structural.hh \
 mln/morpho/opening/all.hh \
@@ -812,6 +820,7 @@ mln/core/internal/image_domain_morpher.hh \
 mln/core/internal/image_primary.hh \
 mln/core/internal/set_of.hh \
 mln/core/internal/complex_window_p_base.hh \
+mln/core/internal/piter_identity.hh \
 mln/core/internal/graph_window_base.hh \
 mln/core/internal/piter_adaptor.hh \
 mln/core/internal/weighted_window_base.hh \
@@ -936,6 +945,7 @@ mln/core/clock_neighb2d.hh \
 mln/core/pixter3d.hh \
 mln/core/image/obased_rle_encode.hh \
 mln/core/image/plain.hh \
+mln/core/image/unproject_image.hh \
 mln/core/image/image3d.hh \
 mln/core/image/decorated_image.hh \
 mln/core/image/extension_ima.hh \
@@ -1047,6 +1057,8 @@ mln/io/cloud/load.hh \
 mln/io/cloud/all.hh \
 mln/io/cloud/save.hh \
 mln/io/all.hh \
+mln/io/magick/load.hh \
+mln/io/magick/all.hh \
 mln/io/dump/load.hh \
 mln/io/dump/all.hh \
 mln/io/dump/save.hh \
