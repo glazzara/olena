@@ -184,6 +184,7 @@ AC_CONFIG_FILES([milena/tests/data.hh])
 AC_CONFIG_FILES([
   milena/tests/Makefile
     milena/tests/accu/Makefile
+    milena/tests/accu/image/Makefile
     milena/tests/algebra/Makefile
     milena/tests/arith/Makefile
     milena/tests/binarization/Makefile
