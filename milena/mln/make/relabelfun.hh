@@ -42,43 +42,86 @@ namespace mln
   namespace make
   {
 
-    /// Create a l2l function from a l2b function.
+    /// Create a l2l function from a v2b function.
     /// This function can be used to relabel a labeled image.
     ///
-    /// \param[in] f a l2b function.
+    /// \param[in] f a v2b function.
     ///
     /// \return a l2l function.
     ///
     /// \sa mln::labeling::relabel
     template <unsigned n, typename F>
-    mln::fun::l2l::relabel< value::label<n> >
-    relabelfun(const mln::Function_l2b<F>&  fl2b,
-	       const value::label<n>&	    nlabels);
+    fun::l2l::relabel< value::label<n> >
+    relabelfun(const Function_v2b<F>& fv2b,
+	       const value::label<n>& nlabels,
+	       value::label<n>&	      new_nlabels);
+
+    /// Create a l2l function from a v2v function.
+    /// This function can be used to relabel a labeled image.
+    ///
+    /// \param[in] f a v2v function.
+    ///
+    /// \return a l2l function.
+    ///
+    /// \sa mln::labeling::relabel
+    template <unsigned n, typename F>
+    fun::l2l::relabel< value::label<n> >
+    relabelfun(const Function_v2v<F>& fv2v,
+	       const value::label<n>& nlabels,
+	       value::label<n>&	      new_nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n, typename F>
     inline
-    mln::fun::l2l::relabel< value::label<n> >
-    relabelfun(const mln::Function_l2b<F>&  fl2b_,
-	       const value::label<n>&	    nlabels,
-	       value::label<n>&		    new_nlabels)
+    fun::l2l::relabel< value::label<n> >
+    relabelfun(const Function_v2b<F>& fv2b_,
+	       const value::label<n>& nlabels,
+	       value::label<n>&	      new_nlabels)
     {
-      trace::entering("mln::make::relabelfun");
+      trace::entering("make::relabelfun");
 
-      const F& fl2b = exact(fl2b_);
+      const F& fv2b = exact(fv2b_);
 
       value::label<n> tmp_nlabels = literal::zero;
       typedef value::label<n> label_t;
       fun::l2l::relabel<label_t> fl2l(nlabels.next(), literal::zero);
       for (label_t i = 1; i <= nlabels; ++i)
-	if (fl2b(i))
+	if (fv2b(i))
 	{
 	  fl2l(i) = ++tmp_nlabels;
 	}
       new_nlabels = tmp_nlabels;
-      trace::exiting("mln::make::relabelfun");
+      trace::exiting("make::relabelfun");
+      return fl2l;
+    }
+
+
+    template <unsigned n, typename F>
+    inline
+    fun::l2l::relabel< value::label<n> >
+    relabelfun(const Function_v2v<F>& fv2v_,
+	       const value::label<n>& nlabels,
+	       value::label<n>&	      new_nlabels)
+    {
+      trace::entering("make::relabelfun");
+
+      const F& fv2v = exact(fv2v_);
+
+      value::label<n> tmp_nlabels = literal::zero;
+      typedef value::label<n> label_t;
+      fun::l2l::relabel<label_t> fl2l(nlabels.next(), literal::zero);
+      for (label_t i = 1; i < nlabels.next(); ++i)
+	if (fl2l(fv2v(i)) == literal::zero)
+	{
+	  fl2l(fv2v(i)) = ++tmp_nlabels;
+	  fl2l(i) = tmp_nlabels;
+	}
+	else
+	  fl2l(i) = fl2l(fv2v(i));
+      new_nlabels = tmp_nlabels;
+      trace::exiting("make::relabelfun");
       return fl2l;
     }
 

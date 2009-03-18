@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,11 @@
 #ifndef MLN_CORE_ROUTINE_ALL_HH
 # define MLN_CORE_ROUTINE_ALL_HH
 
-/*! \file mln/core/routine/all.hh
- *
- * \brief File that includes all core routines.
- *
- * \todo Move files, update, and activate.
- */
+/// \file mln/core/routine/all.hh
+///
+/// File that includes all core routines.
+///
+/// \todo Move files, update, and activate.
 
 
 # include <mln/core/routine/duplicate.hh>
@@ -41,6 +40,5 @@
 # include <mln/core/routine/extend.hh>
 # include <mln/core/routine/initialize.hh>
 # include <mln/core/routine/primary.hh>
-
 
 #endif // ! MLN_CORE_ROUTINE_ALL_HH

@@ -1,3 +1,33 @@
+2009-03-16  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Small fixes.
+
+	* Makefile.am,
+	* headers.mk,
+	* tests/accu/Makefile.am,
+	* tests/make/Makefile.am,
+	* tests/unit_test/unit-tests.mk: fix build system. 'make dist' now
+	works.
+
+	* mln/convert/impl/from_unsigned_to_value.hh: add missing include.
+
+	* mln/core/image/complex_neighborhood_piter.hh,
+	* mln/io/magick/load.hh: avoid warnings.
+
+	* mln/core/routine/all.hh
+	* mln/labeling/blobs.hh: update doc
+
+	* mln/labeling/compute.hh: add a new postcondition.
+
+	* mln/labeling/relabel.hh: use v2v and v2b functions instead of l2l
+	and l2b.
+
+	* mln/make/relabelfun.hh: use v2v and v2b functions instead of l2l
+	and l2b and add a new overload.
+
+	* tools/area_flooding.cc: update use of
+	morpho::closing::area_on_vertices.
+
 2009-03-17  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Integrate ImageMagick support in Milena.

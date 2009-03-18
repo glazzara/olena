@@ -262,10 +262,13 @@ mln/fun/meta/hue.hh \
 mln/fun/meta/lum.hh \
 mln/fun/meta/all.hh \
 mln/fun/meta/green.hh \
+mln/fun/meta/second.hh \
 mln/fun/meta/inty.hh \
 mln/fun/meta/blue.hh \
 mln/fun/meta/sat.hh \
+mln/fun/meta/first.hh \
 mln/fun/meta/to_enc.hh \
+mln/fun/meta/essential.hh \
 mln/fun/x2v/trilinear.hh \
 mln/fun/x2v/linear.hh \
 mln/fun/x2v/bilinear.hh \
@@ -285,6 +288,7 @@ mln/convert/to_window.hh \
 mln/convert/from_to.hh \
 mln/convert/impl/from_value_to_value.hh \
 mln/convert/impl/all.hh \
+mln/convert/impl/from_unsigned_to_value.hh \
 mln/convert/impl/from_double_to_value.hh \
 mln/convert/impl/from_site_set_to_image.hh \
 mln/convert/impl/from_image_to_site_set.hh \
@@ -629,6 +633,11 @@ mln/morpho/internal/elementary.hh \
 mln/morpho/contrast.hh \
 mln/morpho/thickening.hh \
 mln/morpho/dilation.hh \
+mln/morpho/approx/dilation.hh \
+mln/morpho/approx/all.hh \
+mln/morpho/approx/erosion.hh \
+mln/morpho/closing/approx/all.hh \
+mln/morpho/closing/approx/structural.hh \
 mln/morpho/closing/all.hh \
 mln/morpho/closing/algebraic.hh \
 mln/morpho/closing/leveling.hh \
@@ -643,6 +652,8 @@ mln/morpho/laplacian.hh \
 mln/morpho/all.hh \
 mln/morpho/watershed/flooding.hh \
 mln/morpho/watershed/all.hh \
+mln/morpho/opening/approx/all.hh \
+mln/morpho/opening/approx/structural.hh \
 mln/morpho/opening/all.hh \
 mln/morpho/opening/algebraic.hh \
 mln/morpho/opening/leveling.hh \

@@ -28,13 +28,11 @@
 #ifndef MLN_IO_MAGICK_LOAD_HH
 # define MLN_IO_MAGICK_LOAD_HH
 
-/*!
- * \file   mln/io/magick/load.hh
- *
- * \brief Define a function which loads an image of kind magick with
- * given path.
- *
- */
+///
+/// \file   mln/io/magick/load.hh
+///
+/// Define a function which loads an image of kind magick with
+/// given path.
 
 # include <mln/core/image/image2d.hh>
 # include <mln/value/int_u8.hh>
@@ -99,6 +97,7 @@ namespace mln
       inline
       bool do_it(const value::rgb8& in, value::rgb8& out, const std::string& filename)
       {
+	(void) filename;
 	out = in;
 	return true;
       }

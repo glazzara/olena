@@ -54,7 +54,8 @@ namespace mln
     ///
     /// \param[in]  input    The input image.
     /// \param[in]  nbh      The connexity of the objects.
-    /// \param[out] nlabels  The number of labels.
+    /// \param[out] nlabels  The Number of labels. Its value is set in the
+    ///			     algorithms.
     /// \return              The label image.
     ///
     /// \pre The input image has to be binary (checked at compile-time).

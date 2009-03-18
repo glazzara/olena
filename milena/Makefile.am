@@ -43,10 +43,8 @@ img/medium.ppm 		\
 img/picasso.pbm 	\
 img/picasso.pgm 	\
 img/quite-small.pgm 	\
-img/small-enlarged.png 	\
 img/small.pbm 		\
 img/small.pgm 		\
-img/small.png 		\
 img/small.ppm 		\
 img/squares-lc.pgm 	\
 img/squares.pgm 	\

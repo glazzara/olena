@@ -93,6 +93,7 @@ mln_util_line_graph \
 mln_util_ord \
 mln_util_tree_fast_to_image \
 mln_util_tree \
+mln_util_couple \
 mln_util_index \
 mln_util_multi_site \
 mln_util_branch_iter \
@@ -256,10 +257,13 @@ mln_fun_meta_hue \
 mln_fun_meta_lum \
 mln_fun_meta_all \
 mln_fun_meta_green \
+mln_fun_meta_second \
 mln_fun_meta_inty \
 mln_fun_meta_blue \
 mln_fun_meta_sat \
+mln_fun_meta_first \
 mln_fun_meta_to_enc \
+mln_fun_meta_essential \
 mln_fun_x2v_trilinear \
 mln_fun_x2v_linear \
 mln_fun_x2v_bilinear \
@@ -279,6 +283,7 @@ mln_convert_to_window \
 mln_convert_from_to \
 mln_convert_impl_from_value_to_value \
 mln_convert_impl_all \
+mln_convert_impl_from_unsigned_to_value \
 mln_convert_impl_from_double_to_value \
 mln_convert_impl_from_site_set_to_image \
 mln_convert_impl_from_image_to_site_set \
@@ -362,6 +367,7 @@ mln_value_label_8 \
 mln_value_essential \
 mln_accu_tuple \
 mln_accu_min_h \
+mln_accu_stat_deviation \
 mln_accu_max \
 mln_accu_lor \
 mln_accu_rank \
@@ -595,7 +601,6 @@ mln_linear_log \
 mln_linear_essential \
 mln_morpho_thinning \
 mln_morpho_meyer_wst \
-mln_morpho_opening \
 mln_morpho_includes \
 mln_morpho_elementary_opening \
 mln_morpho_elementary_gradient_internal \
@@ -621,18 +626,27 @@ mln_morpho_internal_elementary \
 mln_morpho_contrast \
 mln_morpho_thickening \
 mln_morpho_dilation \
+mln_morpho_approx_dilation \
+mln_morpho_approx_all \
+mln_morpho_approx_erosion \
+mln_morpho_closing_approx_all \
+mln_morpho_closing_approx_structural \
 mln_morpho_closing_all \
 mln_morpho_closing_algebraic \
 mln_morpho_closing_leveling \
 mln_morpho_closing_area_on_vertices \
 mln_morpho_closing_area \
 mln_morpho_closing_volume \
+mln_morpho_closing_sum \
 mln_morpho_closing_height \
+mln_morpho_closing_structural \
 mln_morpho_closing_essential \
 mln_morpho_laplacian \
 mln_morpho_all \
 mln_morpho_watershed_flooding \
 mln_morpho_watershed_all \
+mln_morpho_opening_approx_all \
+mln_morpho_opening_approx_structural \
 mln_morpho_opening_all \
 mln_morpho_opening_algebraic \
 mln_morpho_opening_leveling \
@@ -640,6 +654,7 @@ mln_morpho_opening_area_on_vertices \
 mln_morpho_opening_area \
 mln_morpho_opening_volume \
 mln_morpho_opening_height \
+mln_morpho_opening_structural \
 mln_morpho_opening_essential \
 mln_morpho_attribute_all \
 mln_morpho_attribute_volume \
@@ -657,15 +672,12 @@ mln_morpho_tree_utils \
 mln_morpho_tree_data \
 mln_morpho_tree_compute_attribute_image \
 mln_morpho_min \
-mln_morpho_closing \
 mln_morpho_top_hat \
 mln_morpho_erosion \
 mln_morpho_leveling_filter \
-mln_morpho_closing_sum \
 mln_morpho_Rd \
 mln_morpho_thick_miss \
 mln_morpho_algebraic_filter \
-mln_morpho_closing_attribute \
 mln_morpho_rank_filter \
 mln_morpho_essential \
 mln_topo_n_face_iter \
@@ -700,6 +712,7 @@ mln_essential_routine \
 mln_essential_3d \
 mln_essential_2d \
 mln_win_inter \
+mln_win_sphere3d \
 mln_win_backdiag2d \
 mln_win_segment1d \
 mln_win_cuboid3d \
@@ -710,10 +723,10 @@ mln_win_multiple_size \
 mln_win_cube3d \
 mln_win_shift \
 mln_win_sym \
+mln_win_ball \
 mln_win_diff \
 mln_win_multiple \
 mln_win_diag2d \
-mln_win_ball3d \
 mln_win_disk2d \
 mln_win_rectangle2d \
 mln_win_hline2d \
@@ -1177,6 +1190,7 @@ mln_util_line_graph_SOURCES = mln_util_line_graph.cc
 mln_util_ord_SOURCES = mln_util_ord.cc
 mln_util_tree_fast_to_image_SOURCES = mln_util_tree_fast_to_image.cc
 mln_util_tree_SOURCES = mln_util_tree.cc
+mln_util_couple_SOURCES = mln_util_couple.cc
 mln_util_index_SOURCES = mln_util_index.cc
 mln_util_multi_site_SOURCES = mln_util_multi_site.cc
 mln_util_branch_iter_SOURCES = mln_util_branch_iter.cc
@@ -1340,10 +1354,13 @@ mln_fun_meta_hue_SOURCES = mln_fun_meta_hue.cc
 mln_fun_meta_lum_SOURCES = mln_fun_meta_lum.cc
 mln_fun_meta_all_SOURCES = mln_fun_meta_all.cc
 mln_fun_meta_green_SOURCES = mln_fun_meta_green.cc
+mln_fun_meta_second_SOURCES = mln_fun_meta_second.cc
 mln_fun_meta_inty_SOURCES = mln_fun_meta_inty.cc
 mln_fun_meta_blue_SOURCES = mln_fun_meta_blue.cc
 mln_fun_meta_sat_SOURCES = mln_fun_meta_sat.cc
+mln_fun_meta_first_SOURCES = mln_fun_meta_first.cc
 mln_fun_meta_to_enc_SOURCES = mln_fun_meta_to_enc.cc
+mln_fun_meta_essential_SOURCES = mln_fun_meta_essential.cc
 mln_fun_x2v_trilinear_SOURCES = mln_fun_x2v_trilinear.cc
 mln_fun_x2v_linear_SOURCES = mln_fun_x2v_linear.cc
 mln_fun_x2v_bilinear_SOURCES = mln_fun_x2v_bilinear.cc
@@ -1363,6 +1380,7 @@ mln_convert_to_window_SOURCES = mln_convert_to_window.cc
 mln_convert_from_to_SOURCES = mln_convert_from_to.cc
 mln_convert_impl_from_value_to_value_SOURCES = mln_convert_impl_from_value_to_value.cc
 mln_convert_impl_all_SOURCES = mln_convert_impl_all.cc
+mln_convert_impl_from_unsigned_to_value_SOURCES = mln_convert_impl_from_unsigned_to_value.cc
 mln_convert_impl_from_double_to_value_SOURCES = mln_convert_impl_from_double_to_value.cc
 mln_convert_impl_from_site_set_to_image_SOURCES = mln_convert_impl_from_site_set_to_image.cc
 mln_convert_impl_from_image_to_site_set_SOURCES = mln_convert_impl_from_image_to_site_set.cc
@@ -1446,6 +1464,7 @@ mln_value_label_8_SOURCES = mln_value_label_8.cc
 mln_value_essential_SOURCES = mln_value_essential.cc
 mln_accu_tuple_SOURCES = mln_accu_tuple.cc
 mln_accu_min_h_SOURCES = mln_accu_min_h.cc
+mln_accu_stat_deviation_SOURCES = mln_accu_stat_deviation.cc
 mln_accu_max_SOURCES = mln_accu_max.cc
 mln_accu_lor_SOURCES = mln_accu_lor.cc
 mln_accu_rank_SOURCES = mln_accu_rank.cc
@@ -1679,7 +1698,6 @@ mln_linear_log_SOURCES = mln_linear_log.cc
 mln_linear_essential_SOURCES = mln_linear_essential.cc
 mln_morpho_thinning_SOURCES = mln_morpho_thinning.cc
 mln_morpho_meyer_wst_SOURCES = mln_morpho_meyer_wst.cc
-mln_morpho_opening_SOURCES = mln_morpho_opening.cc
 mln_morpho_includes_SOURCES = mln_morpho_includes.cc
 mln_morpho_elementary_opening_SOURCES = mln_morpho_elementary_opening.cc
 mln_morpho_elementary_gradient_internal_SOURCES = mln_morpho_elementary_gradient_internal.cc
@@ -1705,18 +1723,27 @@ mln_morpho_internal_elementary_SOURCES = mln_morpho_internal_elementary.cc
 mln_morpho_contrast_SOURCES = mln_morpho_contrast.cc
 mln_morpho_thickening_SOURCES = mln_morpho_thickening.cc
 mln_morpho_dilation_SOURCES = mln_morpho_dilation.cc
+mln_morpho_approx_dilation_SOURCES = mln_morpho_approx_dilation.cc
+mln_morpho_approx_all_SOURCES = mln_morpho_approx_all.cc
+mln_morpho_approx_erosion_SOURCES = mln_morpho_approx_erosion.cc
+mln_morpho_closing_approx_all_SOURCES = mln_morpho_closing_approx_all.cc
+mln_morpho_closing_approx_structural_SOURCES = mln_morpho_closing_approx_structural.cc
 mln_morpho_closing_all_SOURCES = mln_morpho_closing_all.cc
 mln_morpho_closing_algebraic_SOURCES = mln_morpho_closing_algebraic.cc
 mln_morpho_closing_leveling_SOURCES = mln_morpho_closing_leveling.cc
 mln_morpho_closing_area_on_vertices_SOURCES = mln_morpho_closing_area_on_vertices.cc
 mln_morpho_closing_area_SOURCES = mln_morpho_closing_area.cc
 mln_morpho_closing_volume_SOURCES = mln_morpho_closing_volume.cc
+mln_morpho_closing_sum_SOURCES = mln_morpho_closing_sum.cc
 mln_morpho_closing_height_SOURCES = mln_morpho_closing_height.cc
+mln_morpho_closing_structural_SOURCES = mln_morpho_closing_structural.cc
 mln_morpho_closing_essential_SOURCES = mln_morpho_closing_essential.cc
 mln_morpho_laplacian_SOURCES = mln_morpho_laplacian.cc
 mln_morpho_all_SOURCES = mln_morpho_all.cc
 mln_morpho_watershed_flooding_SOURCES = mln_morpho_watershed_flooding.cc
 mln_morpho_watershed_all_SOURCES = mln_morpho_watershed_all.cc
+mln_morpho_opening_approx_all_SOURCES = mln_morpho_opening_approx_all.cc
+mln_morpho_opening_approx_structural_SOURCES = mln_morpho_opening_approx_structural.cc
 mln_morpho_opening_all_SOURCES = mln_morpho_opening_all.cc
 mln_morpho_opening_algebraic_SOURCES = mln_morpho_opening_algebraic.cc
 mln_morpho_opening_leveling_SOURCES = mln_morpho_opening_leveling.cc
@@ -1724,6 +1751,7 @@ mln_morpho_opening_area_on_vertices_SOURCES = mln_morpho_opening_area_on_vertice
 mln_morpho_opening_area_SOURCES = mln_morpho_opening_area.cc
 mln_morpho_opening_volume_SOURCES = mln_morpho_opening_volume.cc
 mln_morpho_opening_height_SOURCES = mln_morpho_opening_height.cc
+mln_morpho_opening_structural_SOURCES = mln_morpho_opening_structural.cc
 mln_morpho_opening_essential_SOURCES = mln_morpho_opening_essential.cc
 mln_morpho_attribute_all_SOURCES = mln_morpho_attribute_all.cc
 mln_morpho_attribute_volume_SOURCES = mln_morpho_attribute_volume.cc
@@ -1741,15 +1769,12 @@ mln_morpho_tree_utils_SOURCES = mln_morpho_tree_utils.cc
 mln_morpho_tree_data_SOURCES = mln_morpho_tree_data.cc
 mln_morpho_tree_compute_attribute_image_SOURCES = mln_morpho_tree_compute_attribute_image.cc
 mln_morpho_min_SOURCES = mln_morpho_min.cc
-mln_morpho_closing_SOURCES = mln_morpho_closing.cc
 mln_morpho_top_hat_SOURCES = mln_morpho_top_hat.cc
 mln_morpho_erosion_SOURCES = mln_morpho_erosion.cc
 mln_morpho_leveling_filter_SOURCES = mln_morpho_leveling_filter.cc
-mln_morpho_closing_sum_SOURCES = mln_morpho_closing_sum.cc
 mln_morpho_Rd_SOURCES = mln_morpho_Rd.cc
 mln_morpho_thick_miss_SOURCES = mln_morpho_thick_miss.cc
 mln_morpho_algebraic_filter_SOURCES = mln_morpho_algebraic_filter.cc
-mln_morpho_closing_attribute_SOURCES = mln_morpho_closing_attribute.cc
 mln_morpho_rank_filter_SOURCES = mln_morpho_rank_filter.cc
 mln_morpho_essential_SOURCES = mln_morpho_essential.cc
 mln_topo_n_face_iter_SOURCES = mln_topo_n_face_iter.cc
@@ -1784,6 +1809,7 @@ mln_essential_routine_SOURCES = mln_essential_routine.cc
 mln_essential_3d_SOURCES = mln_essential_3d.cc
 mln_essential_2d_SOURCES = mln_essential_2d.cc
 mln_win_inter_SOURCES = mln_win_inter.cc
+mln_win_sphere3d_SOURCES = mln_win_sphere3d.cc
 mln_win_backdiag2d_SOURCES = mln_win_backdiag2d.cc
 mln_win_segment1d_SOURCES = mln_win_segment1d.cc
 mln_win_cuboid3d_SOURCES = mln_win_cuboid3d.cc
@@ -1794,10 +1820,10 @@ mln_win_multiple_size_SOURCES = mln_win_multiple_size.cc
 mln_win_cube3d_SOURCES = mln_win_cube3d.cc
 mln_win_shift_SOURCES = mln_win_shift.cc
 mln_win_sym_SOURCES = mln_win_sym.cc
+mln_win_ball_SOURCES = mln_win_ball.cc
 mln_win_diff_SOURCES = mln_win_diff.cc
 mln_win_multiple_SOURCES = mln_win_multiple.cc
 mln_win_diag2d_SOURCES = mln_win_diag2d.cc
-mln_win_ball3d_SOURCES = mln_win_ball3d.cc
 mln_win_disk2d_SOURCES = mln_win_disk2d.cc
 mln_win_rectangle2d_SOURCES = mln_win_rectangle2d.cc
 mln_win_hline2d_SOURCES = mln_win_hline2d.cc

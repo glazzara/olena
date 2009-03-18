@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -58,12 +58,11 @@ namespace mln
     relabel(const Image<I>&	    label,
 	    const mln_value(I)&	    nlabels,
 	    mln_value(I)&	    new_nlabels,
-	    const Function_l2b<F>&  fl2b);
+	    const Function_v2b<F>&  fv2b);
 
     /// Remove components and relabel a labeled image.
     /// \input[in]  label the labeled image.
     /// \input[in]  nlabels the number of labels in \p label.
-    /// \input[out] new_nlabels the number of labels after relabeling.
     /// \input[in]  f function returning the new component id for each pixel
     /// value.
     ///
@@ -72,8 +71,7 @@ namespace mln
     mln_concrete(I)
     relabel(const Image<I>&	    label,
 	    const mln_value(I)&	    nlabels,
-	    mln_value(I)&	    new_nlabels,
-	    const Function_l2l<F>&  fl2l);
+	    const Function_v2v<F>&  fv2v);
 
     /// Remove components and relabel a labeled image inplace.
     /// \input[in, out] label the labeled image.
@@ -85,7 +83,7 @@ namespace mln
     void
     relabel_inplace(Image<I>&		    label,
 		    mln_value(I)&	    nlabels,
-		    const Function_l2b<F>&  fl2b);
+		    const Function_v2b<F>&  fv2b);
 
     /// Remove components and relabel a labeled image inplace.
     /// \input[in, out] label the labeled image.
@@ -97,7 +95,7 @@ namespace mln
     void
     relabel_inplace(Image<I>&		    label,
 		    mln_value(I)&	    nlabels,
-		    const Function_l2l<F>&  fl2l);
+		    const Function_v2v<F>&  fv2v);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -120,6 +118,20 @@ namespace mln
 	(void) label;
 	(void) nlabels;
 	(void) new_nlabels;
+	(void) f;
+      }
+
+      template <typename I, typename F>
+      void
+      relabel_tests(const Image<I>&	    label,
+		    const mln_value(I)&	    nlabels,
+		    const Function<F>&	    f)
+      {
+        // FIXME: we may want to check that it is exactly a label.
+        mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
+        mln_precondition(exact(label).is_valid());
+	(void) label;
+	(void) nlabels;
 	(void) f;
       }
 
@@ -147,14 +159,13 @@ namespace mln
     mln_concrete(I)
     relabel(const Image<I>&	    label,
 	    const mln_value(I)&	    nlabels,
-	    mln_value(I)&	    new_nlabels,
-	    const Function_l2l<F>&  fl2l)
+	    const Function_v2v<F>&  fv2v)
     {
       trace::entering("labeling::relabel");
 
-      internal::relabel_tests(label, nlabels, new_nlabels, fl2l);
+      internal::relabel_tests(label, nlabels, fv2v);
 
-      mln_concrete(I) output = level::transform(label, fl2l);
+      mln_concrete(I) output = level::transform(label, fv2v);
 
       trace::exiting("labeling::relabel");
       return output;
@@ -168,15 +179,15 @@ namespace mln
     relabel(const Image<I>&	    label,
 	    const mln_value(I)&	    nlabels,
 	    mln_value(I)&	    new_nlabels,
-	    const Function_l2b<F>&  fl2b)
+	    const Function_v2b<F>&  fv2b)
     {
       trace::entering("labeling::relabel");
 
-      internal::relabel_tests(label, nlabels, new_nlabels, fl2b);
+      internal::relabel_tests(label, nlabels, new_nlabels, fv2b);
 
-      typedef fun::l2l::relabel<mln_value(I)> fl2l_t;
-      fl2l_t fl2l = make::relabelfun(fl2b, nlabels, new_nlabels);
-      mln_concrete(I) output = labeling::relabel(label, nlabels, new_nlabels, fl2l);
+      typedef fun::l2l::relabel<mln_value(I)> fv2v_t;
+      fv2v_t fv2v = make::relabelfun(fv2b, nlabels, new_nlabels);
+      mln_concrete(I) output = labeling::relabel(label, nlabels, new_nlabels, fv2v);
 
       trace::exiting("labeling::relabel");
       return output;
@@ -189,13 +200,13 @@ namespace mln
     void
     relabel_inplace(Image<I>&		    label,
 		    mln_value(I)&	    nlabels,
-		    const Function_l2l<F>&  fl2l)
+		    const Function_v2v<F>&  fv2v)
     {
       trace::entering("labeling::relabel_inplace");
 
-      internal::relabel_inplace_tests(label, nlabels, fl2l);
+      internal::relabel_inplace_tests(label, nlabels, fv2v);
 
-      level::transform_inplace(label, fl2l);
+      level::transform_inplace(label, fv2v);
 
       trace::exiting("labeling::relabel_inplace");
     }
@@ -207,15 +218,15 @@ namespace mln
     void
     relabel_inplace(Image<I>&		    label,
 		    mln_value(I)&	    nlabels,
-		    const Function_l2b<F>&  fl2b)
+		    const Function_v2b<F>&  fv2b)
     {
       trace::entering("labeling::relabel_inplace");
 
-      internal::relabel_inplace_tests(label, nlabels, fl2b);
+      internal::relabel_inplace_tests(label, nlabels, fv2b);
 
-      typedef fun::l2l::relabel<mln_value(I)> fl2l_t;
-      fl2l_t fl2l = make::relabelfun(fl2b, nlabels, nlabels);
-      labeling::relabel_inplace(label, nlabels, fl2l);
+      typedef fun::l2l::relabel<mln_value(I)> fv2v_t;
+      fv2v_t fv2v = make::relabelfun(fv2b, nlabels, nlabels);
+      labeling::relabel_inplace(label, nlabels, fv2v);
 
       trace::exiting("labeling::relabel_inplace");
     }

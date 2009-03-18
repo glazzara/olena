@@ -295,6 +295,8 @@ namespace mln
       typedef util::array<mln_result(A)> R;
       R res = internal::compute_dispatch(a, label, nlabels);
 
+      mln_postcondition(res.nelements() == nlabels.next());
+
       trace::exiting("labeling::compute");
       return res;
     }

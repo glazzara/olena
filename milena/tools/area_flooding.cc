@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,7 +45,6 @@
         an average grey level of the corresponding region in the input
         image.
 
-  FIXME: do not use mln_VAR.
 */
 
 #include <cstdlib>
@@ -61,7 +61,7 @@
 #include <mln/core/var.hh>
 
 #include <mln/morpho/line_gradient.hh>
-#include <mln/morpho/closing_area_on_vertices.hh>
+#include <mln/morpho/closing/area_on_vertices.hh>
 #include <mln/labeling/regional_minima.hh>
 #include <mln/morpho/meyer_wst.hh>
 
@@ -101,10 +101,14 @@ int main(int argc, char* argv[])
   | Line gradient.  |
   `----------------*/
 
+  // Type of the function mapping graph edges and image sites.
+  typedef fun::i2v::array<util::site_pair<point2d> > fedge_site_t;
+
   // Line graph image.
   typedef fun::i2v::array<val_t> fval_t;
   fval_t values;
-  mln_VAR(lg_ima, morpho::line_gradient(input));
+  typedef pw::image<fval_t, p_edges<util::graph,fedge_site_t> > lg_ima_t;
+  lg_ima_t lg_ima = morpho::line_gradient(input);
 
   /*-----------.
   | Flooding.  |
@@ -129,7 +133,7 @@ int main(int argc, char* argv[])
 		<< "nregions = " << nregions << std::endl;
       lg_ima_t work = duplicate(result);
       // Compute the closing.
-      result = morpho::closing_area_on_vertices(work, nbh, area);
+      result = morpho::closing::area_on_vertices(work, nbh, area);
       // Compute the number of local minima (but get rid of the image,
       // as we don't need it).
       labeling::regional_minima(result, nbh, nregions);
@@ -142,7 +146,10 @@ int main(int argc, char* argv[])
   // Perform a Watershed Transform.
   typedef int_u16 wst_val_t;
   wst_val_t nbasins;
-  mln_VAR(wshed, morpho::meyer_wst(result, nbh, nbasins));
+  typedef pw::image<fun::i2v::array<wst_val_t>,
+		    p_edges<util::graph,fedge_site_t> > wshed_t;
+
+  wshed_t wshed = morpho::meyer_wst(result, nbh, nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
 
   /*---------.

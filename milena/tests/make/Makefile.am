@@ -13,7 +13,7 @@ check_PROGRAMS =				\
   w_window					\
   w_window_directional
 
-dual_neighb_SOURCES = dual_neighb.c
+dual_neighb_SOURCES = dual_neighb.cc
 graph_SOURCES = graph.cc
 h_mat_SOURCES = h_mat.cc
 image2d_SOURCES = image2d.cc

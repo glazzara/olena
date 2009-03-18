@@ -37,6 +37,7 @@
 # include <utility>
 # include <mln/value/concept/integer.hh>
 # include <mln/core/concept/value.hh>
+# include <mln/value/label.hh>
 # include <mln/math/round.hh>
 
 
