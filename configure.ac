@@ -113,9 +113,7 @@ AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 
 # (Bundled) trimesh2 library.
 OLN_WITH_TRIMESH
-if test x$with_trimesh = xyes; then
-  AC_CONFIG_SUBDIRS([external/trimesh])
-fi
+AC_CONFIG_SUBDIRS([external/trimesh])
 AM_CONDITIONAL([WITH_TRIMESH], [test x$with_trimesh = xyes])
 
 # FreeImage library.

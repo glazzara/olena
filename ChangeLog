@@ -1,3 +1,7 @@
+2009-03-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Always configure directory external/trimesh/.
+
 2009-03-13  Frederic Bour  <bour@lrde.epita.fr>
 
 	fun update: add unary & binary composition.
