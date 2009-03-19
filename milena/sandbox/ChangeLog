@@ -1,3 +1,10 @@
+2009-03-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a buggy sample case.
+
+	* bugs/concept_and_assignment.cc: sample code of what should not
+	be done while assigning an image to another.
+
 2009-03-19  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add a new file translating IGR Matlab code.
