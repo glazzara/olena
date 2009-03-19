@@ -44,6 +44,7 @@
 # include <scribo/text/grouping/internal/find_root.hh>
 
 # include <scribo/core/macros.hh>
+# include <scribo/util/text.hh>
 
 
 namespace scribo
@@ -56,38 +57,46 @@ namespace scribo
     {
 
       /// FIXME: Add much more doc!
-      template <typename P>
-      util::array< box<P> >
-      group_from_single_link(const util::array< box<P> >& textbboxes,
-			     util::array<unsigned>& link_array);
+      template <typename I>
+      scribo::util::text<I>
+      group_from_single_link(const scribo::util::text<I>& text,
+			     const mln::util::array<unsigned>& link_array);
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename P>
+      template <typename I>
       inline
-      util::array< box<P> >
-      group_from_single_link(const util::array< box<P> >& textbboxes,
-			     util::array<unsigned>& link_array)
+      scribo::util::text<I>
+      group_from_single_link(const scribo::util::text<I>& text,
+			     const mln::util::array<unsigned>& link_array)
       {
 	trace::entering("scribo::text::grouping::group_from_single_link");
 
-	for (unsigned i = 0; i < link_array.nelements(); ++i)
-	  link_array[i] = internal::find_root(link_array, i);
+	mln_precondition(text.is_valid());
+	mln_precondition(link_array.nelements() == text.nbboxes().next());
+	mln_precondition(link_array.nelements() == text.bboxes().nelements());
 
-	util::array< accu::bbox<P> > tboxes;
-	tboxes.resize(textbboxes.nelements());
-	for_all_components(i, textbboxes)
-	  tboxes[link_array[i]].take(textbboxes[i]);
+	mln::util::array<unsigned> parent_array = link_array;
+	for_all_components(i, parent_array)
+	  internal::find_root(parent_array, i);
 
-	util::array< box<P> > result;
+	mln::util::array< accu::bbox<mln_site(I)> > tboxes;
+	tboxes.resize(text.nbboxes().next());
+	for_all_components(i, text.bboxes())
+	  tboxes[parent_array[i]].take(text.bbox(i));
+
+	mln::util::array< box<mln_site(I)> > result;
 	// component 0, the background, has an invalid box.
-	result.append(box<P>());
+	result.append(box<mln_site(I)>());
 	for_all_components(i, tboxes)
 	  if (tboxes[i].is_valid())
 	    result.append(tboxes[i]);
 
+	I lbl = labeling::relabel(text.label_image(), text.nbboxes(),
+				  convert::to<fun::l2l::relabel<mln_value(I)> >(parent_array));
+	mln_value(I) new_nbboxes = result.nelements() - 1;
 	trace::exiting("scribo::text::grouping::group_from_single_link");
-	return result;
+	return scribo::make::text(result, lbl, new_nbboxes);
       }
 
 # endif // ! MLN_INCLUDE_ONLY

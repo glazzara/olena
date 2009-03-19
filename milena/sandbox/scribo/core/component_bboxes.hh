@@ -43,23 +43,28 @@
 
 # include <mln/util/array.hh>
 
+# include <mln/debug/println.hh>
 
 namespace scribo
 {
 
+  using namespace mln;
+
   /// Extract the components bboxes.
   template <typename I, typename N, typename V>
-  util::array< box<mln_site(I)> >
+  util::couple<util::array< box<mln_site(I)> >, mln_ch_value(I,V)>
   component_bboxes(const Image<I>& input,
-		   const Neighborhood<N>& nbh, const V& label_type);
+		   const Neighborhood<N>& nbh,
+		   V& nbboxes);
 
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename I, typename N, typename V>
   inline
-  util::array< box<mln_site(I)> >
+  util::couple<util::array< box<mln_site(I)> >, mln_ch_value(I,V)>
   component_bboxes(const Image<I>& input,
-		   const Neighborhood<N>& nbh, const V&)
+		   const Neighborhood<N>& nbh,
+		   V& nbboxes)
   {
     trace::entering("scribo::component_bboxes");
 
@@ -68,13 +73,15 @@ namespace scribo
     mln_precondition(exact(input).is_valid());
     mln_precondition(exact(nbh).is_valid());
 
-    V nbboxes;
     mln_ch_value(I,V) lbl = labeling::blobs(input, nbh, nbboxes);
+    mln_assertion(exact(lbl).is_valid());
+
     typedef util::array< box<mln_site(I)> > bboxes_t;
     bboxes_t bboxes = labeling::compute(accu::meta::bbox(), lbl, nbboxes);
+    mln_postcondition(bboxes.nelements() == nbboxes.next());
 
     trace::exiting("scribo::component_bboxes");
-    return bboxes;
+    return mln::make::couple(bboxes, lbl);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

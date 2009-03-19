@@ -41,10 +41,17 @@
 # include <mln/data/fill.hh>
 # include <mln/util/couple.hh>
 # include <mln/util/array.hh>
+# include <mln/util/ord.hh>
 # include <mln/win/line.hh>
 # include <mln/pw/all.hh>
 
+# include <mln/debug/colorize.hh>
+# include <mln/value/rgb8.hh>
+# include <mln/value/label_16.hh>
+# include <scribo/make/debug_filename.hh>
+
 # include <scribo/core/central_sites.hh>
+# include <scribo/core/macros.hh>
 # include <scribo/table/internal/repair_lines.hh>
 
 
@@ -57,15 +64,23 @@ namespace scribo
     namespace internal
     {
 
-
-# ifndef MLN_INCLUDE_ONLY
-
       /// Repair lines which have small discontinuities.
       /// FIXME: buggy. Sometimes few lines move or shrink!
       template <unsigned axis, typename I>
       void
       repair_lines(const Image<I>& input_,
-		   util::array<box<mln_site(I)> >& tableboxes)
+		   util::array<box<mln_site(I)> >& tableboxes,
+		   unsigned max_discontinuity);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+      template <unsigned axis, typename I>
+      void
+      repair_lines(const Image<I>& input_,
+		   util::array<box<mln_site(I)> >& tableboxes,
+		   unsigned max_discontinuity)
       {
 	trace::entering("scribo::table::internal::repair_lines");
 
@@ -76,7 +91,7 @@ namespace scribo
 	typedef win::line<mln_grid(P), axis, mln_coord(P)> line_t;
 
 	// Initialization
-	mln_ch_value(I,unsigned) l(input.domain());
+	mln_ch_value(I,value::label_16) l(input.domain());
 	data::fill(l, literal::zero);
 	for_all_components(i, tableboxes)
 	{
@@ -86,28 +101,52 @@ namespace scribo
 	}
 
 	// Repair
-	extension_val<mln_ch_value(I,unsigned)> l_ext(l, literal::zero);
+	extension_val<mln_ch_value(I,value::label_16)> l_ext(l, literal::zero);
 
 	util::array<box<P> > result;
 	std::vector<bool> to_keep(tableboxes.nelements(), true);
 
-	mln_VAR(tbb_ima, extend(l | pw::value(l) != literal::zero, l));
+	mln_VAR(tbb_ima, extend(l | pw::value(l) != pw::cst(literal::zero), l));
 	//FIXME: use a half window, just the bottom of the vertical line.
-	line_t vl(settings.repair_max_dist);
+	line_t vl(max_discontinuity);
 	mln_piter(tbb_ima_t) p(tbb_ima.domain());
 	mln_qiter(line_t) q(vl, p);
 	for_all(p)
+	{
+	  util::couple<P,P> cp_p = central_sites(tableboxes[l_ext(p)], axis);
 	  for_all(q)
 	  if (l_ext(q) != literal::zero && l_ext(q) != l_ext(p))
 	  {
-	    to_keep[l_ext(q)] = false;
+	    if (util::ord_strict(tableboxes[l_ext(p)].pmax(),
+				 tableboxes[l_ext(q)].pmax()))
+	    {
+	      tableboxes[l_ext(p)].pmax() = tableboxes[l_ext(q)].pmax();
+	      to_keep[l_ext(q)] = false;
+	    }
 
-	    tableboxes[l_ext(p)].pmax() = tableboxes[l_ext(q)].pmax();
+	    if (util::ord_strict(tableboxes[l_ext(q)].pmin(),
+				 tableboxes[l_ext(p)].pmin()))
+	    {
+	      tableboxes[l_ext(p)].pmin() = tableboxes[l_ext(q)].pmin();
+	      to_keep[l_ext(q)] = false;
+	    }
 
-	    util::couple<P,P> cp = central_sites(tableboxes[l_ext(q)], axis);
-	    l_ext(cp.first()) = l_ext(p);
-	    l_ext(cp.second()) = l_ext(p);
+	    if (!to_keep[l_ext(q)])
+	    {
+	      util::couple<P,P> cp_q = central_sites(tableboxes[l_ext(q)], axis);
+	      l_ext(cp_q.first()) = literal::zero;
+	      l_ext(cp_q.second()) = literal::zero;
+
+	      unsigned p_i = l_ext(p);
+	      l_ext(cp_p.first()) = literal::zero;
+	      l_ext(cp_p.second()) = literal::zero;
+
+	      util::couple<P,P> new_cp_p = central_sites(tableboxes[p_i], axis);
+	      l_ext(new_cp_p.first()) = p_i;
+	      l_ext(new_cp_p.second()) = p_i;
+	    }
 	  }
+	}
 
 
 	// Remove merged boxes.

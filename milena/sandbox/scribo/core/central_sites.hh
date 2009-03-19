@@ -86,7 +86,7 @@ namespace scribo
     p2[dim] += n / 2;
 
     trace::exiting("scribo::central_sites");
-    return make::couple(p1, p2);
+    return mln::make::couple(p1, p2);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

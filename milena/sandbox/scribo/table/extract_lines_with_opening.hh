@@ -27,12 +27,12 @@
 // Public License.
 
 
-#ifndef SCRIBO_TABLE_EXTRACT_LINES_WITH_RANK_HH
-# define SCRIBO_TABLE_EXTRACT_LINES_WITH_RANK_HH
+#ifndef SCRIBO_TABLE_EXTRACT_LINES_WITH_OPENING_HH
+# define SCRIBO_TABLE_EXTRACT_LINES_WITH_OPENING_HH
 
-/// \file scribo/table/extract_lines_with_rank.hh
+/// \file scribo/table/extract_lines_with_opening.hh
 ///
-/// Extract table lines using a rank filter.
+/// Extract table lines using a morphological opening filter.
 
 
 # include <mln/core/concept/image.hh>
@@ -40,7 +40,7 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/box.hh>
 
-# include <mln/morpho/rank_filter.hh>
+# include <mln/morpho/erosion.hh>
 
 # include <mln/accu/bbox.hh>
 
@@ -58,18 +58,16 @@ namespace scribo
 
     using namespace mln;
 
-    /// Find table bboxes thanks to a rank filter.
+    /// Find table bboxes thanks to a opening filter.
     /*!
      *
      * \param[in] input_ A binary image.
      * \param[in] nbh_ The neighborhood used for labeling image components.
      * \param[in] label_type The type used to store the labels.
-     * \param[in] vwin Window used to extract the vertical lines in the rank
-     *		       filter.
-     * \param[in] hwin Window used to extract the horizontal lines in the rank
-     *		       filter.
-     * \param[in] vrank_k Rank used for vertical lines filtering.
-     * \param[in] hrank_k Rank used for horizontal lines filtering.
+     * \param[in] vwin Window used to extract the vertical lines in a morphological
+     *		       opening
+     * \param[in] hwin Window used to extract the horizontal lines in a morphological
+     *		       opening
      *
      * \return pair of array of bounding boxes. The first array holds the
      *		vertical lines bounding boxes and the second one the
@@ -78,10 +76,9 @@ namespace scribo
     template <typename I, typename N, typename V, typename HW, typename VW>
     util::couple<util::array<box<mln_site(I)> >,
 		 util::array<box<mln_site(I)> > >
-    extract_lines_with_rank(const Image<I>& input_,
-			    const Neighborhood<N>& nbh_, const V& label_type,
-			    const Window<HW>& vwin, const Window<VW>& hwin,
-			    unsigned vrank_k, unsigned hrank_k);
+    extract_lines_with_opening(const Image<I>& input_,
+			       const Neighborhood<N>& nbh_, const V& label_type,
+			       const Window<HW>& vwin, const Window<VW>& hwin);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -90,12 +87,11 @@ namespace scribo
     inline
     util::couple<util::array<box<mln_site(I)> >,
 		 util::array<box<mln_site(I)> > >
-    extract_lines_with_rank(const Image<I>& input_,
+    extract_lines_with_opening(const Image<I>& input_,
 			    const Neighborhood<N>& nbh_, const V& label_type,
-			    const Window<VW>& vwin_, const Window<HW>& hwin_,
-			    unsigned vrank_k, unsigned hrank_k)
+			    const Window<VW>& vwin_, const Window<HW>& hwin_);
     {
-      trace::entering("scribo::table::extract_lines_with_rank");
+      trace::entering("scribo::table::extract_lines_with_opening");
 
       mlc_equal(mln_value(I),bool)::check();
       mlc_is_a(V, mln::value::Symbolic)::check();
@@ -114,7 +110,7 @@ namespace scribo
       typedef util::array<mln_result(A)> boxes_t;
 
       // Vertical lines
-      mln_ch_value(I,bool) vfilter = morpho::rank_filter(input, vwin, vrank_k);
+      mln_ch_value(I,bool) vfilter = morpho::erosion(input, vwin);
       boxes_t vboxes = component_bboxes(vfilter, nbh, label_type);
       for_all_components(i, vboxes)
       {
@@ -123,7 +119,7 @@ namespace scribo
       }
 
       // Horizontal lines.
-      mln_ch_value(I,bool) hfilter = morpho::rank_filter(input, hwin, hrank_k);
+      mln_ch_value(I,bool) hfilter = morpho::erosion(input, hwin);
       boxes_t hboxes = component_bboxes(hfilter, nbh, label_type);
       for_all_components(i, hboxes)
       {
@@ -131,7 +127,7 @@ namespace scribo
 	hboxes[i].crop_wrt(input.domain());
       }
 
-      trace::exiting("scribo::table::extract_lines_with_rank");
+      trace::exiting("scribo::table::extract_lines_with_opening");
       return mln::make::couple(vboxes, hboxes);
     }
 
@@ -141,4 +137,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_TABLE_EXTRACT_LINES_WITH_RANK_HH
+#endif // ! SCRIBO_TABLE_EXTRACT_LINES_WITH_OPENING_HH

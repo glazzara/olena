@@ -42,6 +42,7 @@
 
 # include <scribo/draw/bounding_boxes.hh>
 # include <scribo/draw/bounding_box_links.hh>
+# include <scribo/util/text.hh>
 
 
 namespace scribo
@@ -54,32 +55,32 @@ namespace scribo
 
 
     /// Save the bounding box links image.
-    template <typename I>
+    template <typename I, typename L>
     void
     save_linked_textbboxes_image(const Image<I>& input,
-				 const util::array< box<mln_site(I)> >& textbboxes,
-				 const util::array<unsigned>& link_array,
+				 const scribo::util::text<L>& text,
+				 const mln::util::array<unsigned>& link_array,
 				 const value::rgb8& box_value,
 				 const value::rgb8& link_value,
 				 const std::string& filename);
 
 
-    template <typename I>
+    template <typename I, typename L>
     void
     save_linked_textbboxes_image(const Image<I>& input,
-				 const util::array< box<mln_site(I)> >& textbboxes,
-				 const util::array<unsigned>& left_link,
-				 const util::array<unsigned>& right_array,
+				 const scribo::util::text<L>& text,
+				 const mln::util::array<unsigned>& left_link,
+				 const mln::util::array<unsigned>& right_array,
 				 const value::rgb8& box_value,
 				 const value::rgb8& left_link_value,
 				 const value::rgb8& right_link_value,
 				 const std::string& filename);
 
 
-    template <typename I, typename G>
+    template <typename I, typename L, typename G>
     void
     save_linked_textbboxes_image(const Image<I>& input,
-				 const util::array< box<mln_site(I)> >& textbboxes,
+				 const scribo::util::text<L>& text,
 				 const Graph<G>& g,
 				 const value::rgb8& box_value,
 				 const value::rgb8& link_value,
@@ -89,12 +90,12 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-    template <typename I>
+    template <typename I, typename L>
     inline
     void
     save_linked_textbboxes_image(const Image<I>& input,
-				 const util::array< box<mln_site(I)> >& textbboxes,
-				 const util::array<unsigned>& link_array,
+				 const scribo::util::text<L>& text,
+				 const mln::util::array<unsigned>& link_array,
 				 const value::rgb8& box_value,
 				 const value::rgb8& link_value,
 				 const std::string& filename)
@@ -103,21 +104,21 @@ namespace scribo
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
-      draw::bounding_boxes(tmp, textbboxes, box_value);
-      draw::bounding_box_links(tmp, textbboxes, link_array, link_value);
+      draw::bounding_boxes(tmp, text.bboxes(), box_value);
+      draw::bounding_box_links(tmp, text.bboxes(), link_array, link_value);
       io::ppm::save(tmp, filename);
 
       trace::exiting("scribo::debug::save_linked_textbboxes_image");
     }
 
 
-    template <typename I>
+    template <typename I, typename L>
     inline
     void
     save_linked_textbboxes_image(const Image<I>& input,
-				 const util::array< box<mln_site(I)> >& textbboxes,
-				 const util::array<unsigned>& left_link,
-				 const util::array<unsigned>& right_link,
+				 const scribo::util::text<L>& text,
+				 const mln::util::array<unsigned>& left_link,
+				 const mln::util::array<unsigned>& right_link,
 				 const value::rgb8& box_value,
 				 const value::rgb8& left_value,
 				 const value::rgb8& right_value,
@@ -127,8 +128,8 @@ namespace scribo
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
-      draw::bounding_boxes(tmp, textbboxes, box_value);
-      draw::bounding_box_links(tmp, textbboxes,
+      draw::bounding_boxes(tmp, text.bboxes(), box_value);
+      draw::bounding_box_links(tmp, text.bboxes(),
 			       left_link, right_link,
 			       left_value, right_value);
       io::ppm::save(tmp, filename);
@@ -137,11 +138,11 @@ namespace scribo
     }
 
 
-    template <typename I, typename G>
+    template <typename I, typename L, typename G>
     inline
     void
     save_linked_textbboxes_image(const Image<I>& input,
-				 const util::array< box<mln_site(I)> >& textbboxes,
+				 const scribo::util::text<L>& text,
 				 const Graph<G>& g,
 				 const value::rgb8& box_value,
 				 const value::rgb8& link_value,
@@ -152,8 +153,8 @@ namespace scribo
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
-      draw::bounding_boxes(tmp, textbboxes, box_value);
-      draw::bounding_box_links(tmp, textbboxes, g, link_value);
+      draw::bounding_boxes(tmp, text.bboxes(), box_value);
+      draw::bounding_box_links(tmp, text.bboxes(), g, link_value);
       io::ppm::save(tmp, filename);
 
       trace::exiting("scribo::debug::save_linked_textbboxes_image");

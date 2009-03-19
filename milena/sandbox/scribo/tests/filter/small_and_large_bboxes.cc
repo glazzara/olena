@@ -32,6 +32,7 @@
 #include <scribo/text/extract_bboxes.hh>
 #include <scribo/text/grouping/group_with_multiple_links.hh>
 #include <scribo/text/grouping/group_from_multiple_links.hh>
+#include <scribo/filter/small_components.hh>
 
 #include <scribo/debug/save_textbboxes_image.hh>
 #include <scribo/debug/save_linked_textbboxes_image.hh>
@@ -50,39 +51,39 @@ int main(int argc, char* argv[])
   if (argc < 1)
     return usage(argv[0]);
 
-  scribo::make::internal::debug_filename_prefix = "extract_text_multiple_links";
+  scribo::make::internal::debug_filename_prefix = argv[0];
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
   value::label_16 nbboxes;
-  scribo::util::text<image2d<value::label_16> > text
-       = text::extract_bboxes(input, c8(), nbboxes);
+  util::array<box2d> textbboxes = text::extract_bboxes(input, c8(), nbboxes);
 
-  mln::util::graph g = text::grouping::group_with_multiple_links(text, 30);
+  util::graph g = text::grouping::group_with_multiple_links(input,
+							    c8(), nbboxes,
+							    textbboxes, 30);
 
-  std::cout << "BEFORE - nbboxes = " << nbboxes.next() << std::endl;
+  std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
   scribo::debug::save_linked_textbboxes_image(input,
-					      text, g,
+					      textbboxes, g,
 					      literal::red, literal::cyan,
-					      scribo::make::debug_filename("left_linked.ppm"));
-//  io::ppm::save(mln::debug::colorize(value::rgb8(),
-//				     text.label_image(),
-//				     text.nbboxes()),
-//		scribo::make::debug_filename("lbl_before.ppm"));
+					      "test_multiple_links_left_linked.ppm");
 
-  scribo::util::text<image2d<value::label_16> > grouped_text
-      = text::grouping::group_from_multiple_links(text, g);
+  util::array<box2d> grouped_textbboxes
+    = text::grouping::group_from_multiple_links(textbboxes, g);
 
-  std::cout << "AFTER - nbboxes = " << grouped_text.bboxes().nelements() << std::endl;
+  std::cout << "AFTER - nbboxes = " << grouped_textbboxes.nelements() << std::endl;
 
-  scribo::debug::save_textbboxes_image(input, grouped_text.bboxes(),
+  scribo::debug::save_textbboxes_image(input, grouped_textbboxes,
 				       literal::red,
-				       scribo::make::debug_filename("grouped_text.ppm"));
-  io::ppm::save(mln::debug::colorize(value::rgb8(),
-				     grouped_text.label_image(),
-				     grouped_text.nbboxes()),
-		scribo::make::debug_filename("label_color.ppm"));
+				       "test_multiple_links_grouped_text.ppm");
+
+  util::array<box2d> filtered_textbboxes
+    = scribo::filter::small_components(grouped_textbboxes, 6);
+
+  scribo::debug::save_textbboxes_image(input, filtered_textbboxes,
+				       literal::red,
+				       "test_multiple_links_filtered_text.ppm");
 
 }
 

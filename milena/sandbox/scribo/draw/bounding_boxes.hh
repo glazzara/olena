@@ -51,7 +51,7 @@ namespace scribo
     template <typename I>
     void
     bounding_boxes(Image<I>& input_,
-		   const util::array< box<mln_site(I)> >& boxes,
+		   const mln::util::array< box<mln_site(I)> >& boxes,
 		   const mln_value(I)& value);
 
 
@@ -63,7 +63,7 @@ namespace scribo
     inline
     void
     bounding_boxes(Image<I>& input_,
-		   const util::array< box<mln_site(I)> >& boxes,
+		   const mln::util::array< box<mln_site(I)> >& boxes,
 		   const mln_value(I)& value)
     {
       trace::entering("scribo::draw::bounding_boxes");

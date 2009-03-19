@@ -35,6 +35,7 @@
 /// Connect vertical lines with aligned rows.
 
 # include <mln/core/image/image1d.hh>
+# include <mln/core/alias/neighb1d.hh>
 
 # include <mln/data/fill.hh>
 
@@ -45,7 +46,7 @@
 # include <mln/opt/at.hh>
 
 # include <scribo/core/macros.hh>
-
+# include <scribo/core/central_sites.hh>
 
 namespace scribo
 {
@@ -55,6 +56,8 @@ namespace scribo
 
     namespace internal
     {
+
+      using namespace mln;
 
       /// Connect vertical and horizontal lines if they are close to each other.
       ///
@@ -70,7 +73,8 @@ namespace scribo
       connect_lines(const util::array<int>& aligned_lines,
 		    util::array< box<P> >& boxes,
 		    unsigned dim,
-		    unsigned dim_size);
+		    unsigned dim_size,
+		    unsigned max_distance);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -81,7 +85,8 @@ namespace scribo
       connect_lines(const util::array<int>& aligned_lines,
 		    util::array< box<P> >& boxes,
 		    unsigned dim,
-		    unsigned dim_size)
+		    unsigned dim_size,
+		    unsigned max_distance)
       {
 	trace::entering("scribo::table::internal::connect_lines");
 
@@ -91,12 +96,12 @@ namespace scribo
 	for_all_elements(i, aligned_lines)
 	  opt::at(l, aligned_lines[i]) = i;
 
-	for (unsigned i = 0; i < settings.max_dist_lines; ++i)
+	for (unsigned i = 0; i < max_distance; ++i)
 	  l = morpho::elementary::dilation(l, c2());
 
 	for_all_components(i, boxes)
 	{
-	  util::couple<point2d, point2d> cp = central_sites(boxes[i], dim);
+	  util::couple<P,P> cp = central_sites(boxes[i], dim);
 	  if (opt::at(l, cp.first()[dim]) != -1)
 	    boxes[i].pmin()[dim] = aligned_lines[opt::at(l, cp.first()[dim])];
 	  if (opt::at(l, cp.second()[dim]) != -1)
@@ -109,6 +114,8 @@ namespace scribo
 
 # endif // ! MLN_INCLUDE_ONLY
 
+
+    } // end of namespace scribo::table::internal
 
   } // end of namespace scribo::table
 

@@ -52,7 +52,7 @@ namespace scribo
 	/// Update graph edges if a valid neighbor is found.
 	template <typename I>
 	void
-	update_link_graph(Image<I>& lbl_, util::graph& g,
+	update_link_graph(const Image<I>& lbl_, mln::util::graph& g,
 			  const mln_site(I)& p, const mln_site(I)& c,
 			  unsigned i, int dmax);
 
@@ -63,7 +63,7 @@ namespace scribo
 	template <typename I>
 	inline
 	void
-	update_link_graph(Image<I>& lbl_, util::graph& g,
+	update_link_graph(const Image<I>& lbl_, mln::util::graph& g,
 			  const mln_site(I)& p, const mln_site(I)& c,
 			  unsigned i, int dmax)
 	{
@@ -72,7 +72,7 @@ namespace scribo
 	  mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
 	  mln_precondition(exact(lbl).is_valid());
 
-	  if (lbl.domain().has(p) && lbl(p) != 0u && lbl(p) != i
+	  if (lbl.domain().has(p) && lbl(p) != literal::zero && lbl(p) != i
 	      && (math::abs(p.col() - c.col())) < dmax)
 	    g.add_edge(lbl(p), i);
 	}

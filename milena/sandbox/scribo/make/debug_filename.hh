@@ -35,6 +35,7 @@
 /// Construct and returns a formated output file name.
 
 # include <sstream>
+# include <mln/trace/all.hh>
 
 
 namespace scribo
@@ -46,25 +47,43 @@ namespace scribo
     /// Construct and returns a formated output file name:
     ///
     ///	    `input_filename`_`id`_`name`
+    /// \sa scribo::make::internal::debug_filename_prefix
     std::string
-    debug_filename(const char *input_filename,
-		   const char *name);
+    debug_filename(const std::string& name);
 
+
+    namespace internal
+    {
+
+      /// Set the default debug filename prefix.
+      extern char *debug_filename_prefix;
+
+    } // end of namespace scribo::make::internal
 
 # ifndef MLN_INCLUDE_ONLY
 
 
+
+    namespace internal
+    {
+
+      char *debug_filename_prefix = 0;
+
+    } // end of namespace scribo::make::internal
+
+
     inline
     std::string
-    debug_filename(const char *input_filename,
-		   const char *name)
+    debug_filename(const std::string& name)
     {
       static int file_id = 1;
 
       std::ostringstream os;
-      os << "./"
-	 << input_filename
-	 << "_";
+
+      if (internal::debug_filename_prefix != 0)
+	os << internal::debug_filename_prefix << "_";
+      else
+	mln::trace::warning("You may like to set a default filename prefix.");
 
       if (file_id < 10)
 	os << "0";

@@ -1,4 +1,82 @@
-2009-03-16  Guillaume Lazzara  <z@lrde.epita.fr>
+2009-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update Scribo's code.
+
+	* scribo/Makefile: add new targets.
+
+	* scribo/core/central_sites.hh,
+	* scribo/core/component_bboxes.hh: add more assertions.
+
+	* scribo/text/recognition.hh,
+	* scribo/text/grouping/internal/find_root.hh,
+	* scribo/text/grouping/internal/init_link_array.hh,
+	* scribo/text/grouping/group_from_double_link.hh,
+	* scribo/text/grouping/group_from_multiple_links.hh,
+	* scribo/text/grouping/group_from_single_link.hh,
+	* scribo/text/grouping/group_with_multiple_links.hh,
+	* scribo/text/grouping/group_with_single_left_link.hh,
+	* scribo/text/grouping/group_with_single_right_link.hh,
+	* scribo/text/extract_bboxes.hh,
+	* scribo/src/extract_text_double_link.cc,
+	* scribo/src/extract_text_multiple_links.cc,
+	* scribo/src/extract_text_single_link.cc,
+	* scribo/debug/save_linked_textbboxes_image.hh,
+	* scribo/debug/save_table_image.hh,
+	* scribo/debug/save_textbboxes_image.hh,
+	* scribo/draw/bounding_box_links.hh,
+	* scribo/draw/bounding_boxes.hh: make use of util::text.
+
+	* scribo/filter/large_components.hh,
+	* scribo/filter/small_components.hh,
+	* scribo/filter/thin_bboxes.hh: new filters.
+
+	* scribo/make/debug_filename.hh: improve.
+
+	* scribo/make/text.hh: Construct a text class.
+
+	* scribo/src/dmap.cc,
+	* scribo/src/morpho.cc,
+	* scribo/src/table_extract.cc,
+	* scribo/src/table_rebuild.cc,
+	* scribo/src/thin_bboxes.cc: new sample code.
+
+	* scribo/src/table.cc: fix include.
+
+	* scribo/table/internal/align_lines.hh,
+	* scribo/table/align_lines_horizontaly.hh,
+	* scribo/table/align_lines_verticaly.hh,
+	* scribo/table/connect_horizontal_lines.hh,
+	* scribo/table/connect_vertical_lines.hh: add more parameters.
+	
+	* scribo/table/extract.hh: new routine to extract document tables.
+
+	* scribo/table/extract_lines_with_opening.hh: new routine to extract
+	document tables.
+
+	* scribo/table/extract_lines_with_rank.hh: fix missing bbox.enlarge.
+
+	* scribo/table/internal/connect_lines.hh: make it compile.
+
+	* scribo/table/internal/repair_lines.hh: make it work.
+
+	* scribo/table/rebuild.hh: new routine to rebuild document tables.
+
+	* scribo/core/erase_bboxes.hh,
+	* scribo/table/repair_horizontal_lines.hh: revamp.
+
+	* scribo/tests/filter/small_and_large_bboxes.cc,
+	* scribo/tests/table/extract_lines_with_rank.cc,
+	* scribo/tests/table/repair_lines.cc: new tests.
+
+	* scribo/text/extract_lines.hh: new routine to extract text
+	automatically.
+
+	* scribo/text/grouping/internal/update_link_array.hh,
+	* scribo/text/grouping/internal/update_link_graph.hh: fix conditions.
+
+	* scribo/util/text.hh: new object to represent text components.
+
+2009-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a buggy sample case.
 

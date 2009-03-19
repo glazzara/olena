@@ -52,17 +52,17 @@ namespace scribo
     template <typename I>
     void
     bounding_box_links(Image<I>& input_,
-		       const util::array< box<mln_site(I)> >& bboxes,
-		       const util::array<unsigned>& link_array,
+		       const mln::util::array< box<mln_site(I)> >& bboxes,
+		       const mln::util::array<unsigned>& link_array,
 		       const mln_value(I)& value);
 
 
     template <typename I>
     void
     bounding_box_links(Image<I>& input,
-		       const util::array< box<mln_site(I)> >& bboxes,
-		       const util::array<unsigned>& left_link,
-		       const util::array<unsigned>& right_link,
+		       const mln::util::array< box<mln_site(I)> >& bboxes,
+		       const mln::util::array<unsigned>& left_link,
+		       const mln::util::array<unsigned>& right_link,
 		       const mln_value(I)& left_link_value,
 		       const mln_value(I)& right_link_value);
 
@@ -78,7 +78,7 @@ namespace scribo
       {
 
 	draw_graph_edges_functor(I& ima,
-				 const util::array<box<mln_site(I)> >& textbboxes,
+				 const mln::util::array<box<mln_site(I)> >& textbboxes,
 				 const mln_value(I)& value)
 	  : ima_(ima), textbboxes_(textbboxes), value_(value)
 	{}
@@ -114,7 +114,7 @@ namespace scribo
 	{ return to_be_treated(id); }
 
 	I& ima_;
-	const util::array<box<mln_site(I)> >& textbboxes_;
+	const mln::util::array<box<mln_site(I)> >& textbboxes_;
 	mln_value(I) value_;
 	unsigned current_vertex;
 	std::vector<bool> deja_vu;
@@ -127,8 +127,8 @@ namespace scribo
     inline
     void
     bounding_box_links(Image<I>& input_,
-		       const util::array< box<mln_site(I)> >& bboxes,
-		       const util::array<unsigned>& link_array,
+		       const mln::util::array< box<mln_site(I)> >& bboxes,
+		       const mln::util::array<unsigned>& link_array,
 		       const mln_value(I)& value)
     {
       trace::entering("scribo::draw::bounding_box_links");
@@ -152,9 +152,9 @@ namespace scribo
     inline
     void
     bounding_box_links(Image<I>& input,
-		       const util::array< box<mln_site(I)> >& bboxes,
-		       const util::array<unsigned>& left_link,
-		       const util::array<unsigned>& right_link,
+		       const mln::util::array< box<mln_site(I)> >& bboxes,
+		       const mln::util::array<unsigned>& left_link,
+		       const mln::util::array<unsigned>& right_link,
 		       const mln_value(I)& left_link_value,
 		       const mln_value(I)& right_link_value)
     {
@@ -172,7 +172,7 @@ namespace scribo
     inline
     void
     bounding_box_links(Image<I>& input,
-		       const util::array< box<mln_site(I)> >& bboxes,
+		       const mln::util::array< box<mln_site(I)> >& bboxes,
 		       const Graph<G>& g,
 		       const mln_value(I)& link_value)
     {

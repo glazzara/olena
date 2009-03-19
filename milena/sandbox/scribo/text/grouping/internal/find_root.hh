@@ -52,13 +52,13 @@ namespace scribo
 
 	/// Find root in a parent array arrays.
 	unsigned
-        find_root(util::array<unsigned>& parent, unsigned x);
+        find_root(mln::util::array<unsigned>& parent, unsigned x);
 
 # ifndef MLN_INCLUDE_ONLY
 
 	inline
 	unsigned
-        find_root(util::array<unsigned>& parent, unsigned x)
+        find_root(mln::util::array<unsigned>& parent, unsigned x)
         {
           if (parent[x] == x)
 	    return x;

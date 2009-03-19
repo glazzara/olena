@@ -54,6 +54,8 @@ namespace scribo
   namespace text
   {
 
+    using namespace mln;
+
     /// Passes the text bboxes to Tesseract (OCR) and store the result in
     /// an image of characters.
     ///
@@ -71,8 +73,8 @@ namespace scribo
     template <typename I, typename N, typename V>
     mln_ch_value(I,char)
     text_recognition(const Image<I>& input_,
-		     const Neighborhood<N>& nbh_, V& nbboxes,
-		     const util::array< box<mln_site(I)> >& textbboxes,
+		     const Neighborhood<N>& nbh_, const V& label_type,
+		     const scribo::util::text_bboxes<mln_ch_value(I,V)>& textbboxes,
 		     const char *language);
 
 
@@ -81,8 +83,8 @@ namespace scribo
     template <typename I, typename N, typename V>
     mln_ch_value(I,char)
     text_recognition(const Image<I>& input_,
-		     const Neighborhood<N>& nbh_, V& nbboxes,
-		     const util::array< box<mln_site(I)> >& textbboxes,
+		     const Neighborhood<N>& nbh_, const V& label_type,
+		     const scribo::util::text_bboxes<mln_ch_value(I,V)>& textbboxes,
 		     const char *language)
     {
       trace::entering("scribo::text::recognition");
@@ -93,6 +95,7 @@ namespace scribo
       mln_precondition(input.is_valid());
       mln_precondition(nbh.is_valid());
 
+      V nbboxes;
       mln_ch_value(I,V) lbl = labeling::blobs(input, nbh, nbboxes);
 
       /// Use text bboxes with Tesseract
@@ -104,7 +107,7 @@ namespace scribo
       {
 	if (textbboxes[i].is_valid())
 	{
-	  mln_ch_value(I,bool) b(textbboxes[i], 0);
+	  mln_ch_value(I,bool) b(textbboxes.bboxes()[i], 0);
 	  data::fill(b, false);
 	  data::fill((b | (pw::value(lbl) == pw::cst(i))).rw(), true);
 
@@ -119,9 +122,9 @@ namespace scribo
 
 
 
-	  mln_site(I) p = textbboxes[i].center();
-	  p.col() -= (textbboxes[i].pmax().col()
-			  - textbboxes[i].pmin().col()) / 2;
+	  mln_site(I) p = textbboxes.bboxes[i].center();
+	  p.col() -= (textbboxes.bboxes()[i].pmax().col()
+			  - textbboxes.bboxes()[i].pmin().col()) / 2;
 	  if (s != 0)
 	    debug::put_word(txt, p, s);
 	  free(s);

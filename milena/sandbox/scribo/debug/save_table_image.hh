@@ -36,7 +36,9 @@
 # include <string>
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/data/fill.hh>
+# include <mln/level/convert.hh>
 # include <mln/util/array.hh>
 # include <mln/util/couple.hh>
 # include <mln/value/rgb8.hh>
@@ -50,16 +52,29 @@ namespace scribo
   namespace debug
   {
 
-    /// Save lines bounding boxes in an image filled with \p bg_color.
+    using namespace mln;
+
+    /// Save lines bounding boxes in a copy of \p input_.
     /// Bounding boxes are displayed with \p bbox_color.
     template <typename I>
     void
-    save_table(const Image<I>& input_,
-	       util::couple<util::array<box<mln_site(I)> >,
-			    util::array<box<mln_site(I)> > > tableboxes,
-	       const value::rgb8& bg_color,
-	       const value::rgb8& bbox_color,
-	       const std::string& filename);
+    save_table_image(const Image<I>& input_,
+		     util::couple<util::array<box<mln_site(I)> >,
+				  util::array<box<mln_site(I)> > > tableboxes,
+		     const value::rgb8& bbox_color,
+		     const std::string& filename);
+
+    /// Save lines bounding boxes in an image defined on \p input_domain
+    /// filled with \p bg_color.
+    /// Bounding boxes are displayed with \p bbox_color.
+    template <typename S>
+    void
+    save_table_image(const Site_Set<S>& input_domain,
+		     util::couple<util::array<box<mln_site(S)> >,
+				  util::array<box<mln_site(S)> > > tableboxes,
+		     const value::rgb8& bg_color,
+		     const value::rgb8& bbox_color,
+		     const std::string& filename);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -67,18 +82,40 @@ namespace scribo
 
     template <typename I>
     void
-    save_table(const Image<I>& input_,
-	       util::couple<util::array<box<mln_site(I)> >,
-			    util::array<box<mln_site(I)> > > tableboxes,
-	       const value::rgb8& bg_color,
-	       const value::rgb8& bbox_color,
-	       const std::string& filename)
+    save_table_image(const Image<I>& input_,
+		     util::couple<util::array<box<mln_site(I)> >,
+				  util::array<box<mln_site(I)> > > tableboxes,
+		     const value::rgb8& bbox_color,
+		     const std::string& filename)
     {
       trace::entering("scribo::debug::save_table_image");
+//      mlc_converts_to(mln_value(I), value::rgb8)::check();
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
 
-      mln_ch_value(I,value::rgb8) out2(exact(input).domain());
+      mln_ch_value(I,value::rgb8) out2 = level::convert(value::rgb8(), input);
+      draw::bounding_boxes(out2, tableboxes.first(), bbox_color);
+      draw::bounding_boxes(out2, tableboxes.second(), bbox_color);
+      io::ppm::save(out2, filename);
+
+      trace::exiting("scribo::internal::save_table");
+    }
+
+
+    template <typename S>
+    void
+    save_table_image(const Site_Set<S>& input_domain_,
+		     util::couple<util::array<box<mln_site(S)> >,
+				  util::array<box<mln_site(S)> > > tableboxes,
+		     const value::rgb8& bg_color,
+		     const value::rgb8& bbox_color,
+		     const std::string& filename)
+    {
+      trace::entering("scribo::debug::save_table_image");
+      const S& input_domain = exact(input_domain_);
+      mln_precondition(input_domain.is_valid());
+
+      image2d<value::rgb8> out2(input_domain);
       data::fill(out2, bg_color);
       draw::bounding_boxes(out2, tableboxes.first(), bbox_color);
       draw::bounding_boxes(out2, tableboxes.second(), bbox_color);

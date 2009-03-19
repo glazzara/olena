@@ -26,69 +26,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef SCRIBO_TABLE_EXTRACT_HH
+# define SCRIBO_TABLE_EXTRACT_HH
 
-#ifndef SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_LINK_ARRAY_HH
-# define SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_LINK_ARRAY_HH
-
-/// \file scribo/text/grouping/internal/update_link_array.hh
+/// \file scribo/table/extract.hh
 ///
-/// Update a lookup table if a neighbor is found on the right of
-/// the current bbox.
-
+/// Extract tables from a binary image.
+/// Use arbitrary criterions.
 
 # include <mln/core/concept/image.hh>
+# include <mln/util/couple.hh>
 # include <mln/util/array.hh>
+
+# include <scribo/table/rebuild.hh>
+# include <scribo/table/erase.hh>
+# include <scribo/table/extract_lines_with_rank.hh>
+
+# include <scribo/make/debug_filename.hh>
 
 
 namespace scribo
 {
 
-  namespace text
+  namespace table
   {
 
-    namespace grouping
-    {
+    template <typename I, typename V>
+    mln_ch_value(I,V)
+    extract(const Image<I>& input_, V& ncells);
 
-      namespace internal
-      {
-
-	/// Update the lookup table \p link_array if a neighbor is found
-	/// on the right of the current bbox.
-	template <typename I>
-	void
-	update_link_array(const Image<I>& lbl, mln::util::array<unsigned>& link_array,
-			  const mln_site(I)& p, const mln_site(I)& c,
-			  unsigned i, int dmax);
 
 # ifndef MLN_INCLUDE_ONLY
 
-	template <typename I>
-	inline
-	void
-	update_link_array(const Image<I>& lbl_, mln::util::array<unsigned>& link_array,
-			  const mln_site(I)& p, const mln_site(I)& c,
-			  unsigned i, int dmax)
-	{
-	  const I& lbl = exact(lbl_);
+    template <typename I, typename V>
+    inline
+    mln_ch_value(I,V)
+    extract(const Image<I>& input_, V& ncells)
+    {
+      trace::entering("scribo::table::extract");
 
-	  mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
-	  mln_assertion(lbl.is_valid());
+      const I& input = exact(input_);
+      mln_precondition(input.is_valid());
+      mlc_equal(mln_value(I), bool)::check();
 
-	  if (lbl.domain().has(p) && lbl(p) != literal::zero && lbl(p) != i
-	      && (math::abs(p.col() - c.col())) < dmax && link_array[lbl(p)] == lbl(p)
-	      && link_array[i] != lbl(p))
-	    link_array[lbl(p)] = i;
-	}
+      typedef util::array< box<mln_site(I)> > boxarray_t;
+      typedef util::couple<boxarray_t, boxarray_t> tblboxes_t;
+
+      win::line<mln_grid(I::site), 0, mln_coord(I::site)> vline(51);
+      win::line<mln_grid(I::site), 1, mln_coord(I::site)> hline(51);
+      tblboxes_t lineboxes
+	= table::extract_lines_with_rank(input, c8(), V(),
+					 vline, hline, 6, 6);
+
+      image2d<V> tables
+	= scribo::table::rebuild(input, lineboxes, 30, ncells);
+
+      trace::exiting("scribo::table::extract");
+      return tables;
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-      } // end of namespace scribo::text::grouping::internal
-
-    } // end of namespace scribo::text::grouping
-
-  } // end of namespace scribo::text
+  } // end of namespace scribo::table
 
 } // end of namespace scribo
 
-
-#endif // ! SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_LINK_ARRAY_HH
+#endif // ! SCRIBO_TABLE_EXTRACT_HH

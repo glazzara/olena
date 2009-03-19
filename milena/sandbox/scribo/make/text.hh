@@ -1,5 +1,4 @@
 // Copyright (C) 2009 EPITA Research and Development Laboratory
-// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,13 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef SCRIBO_MAKE_TEXT_HH
+# define SCRIBO_MAKE_TEXT_HH
 
-#ifndef SCRIBO_TEXT_GROUPING_EXTRACT_BBOXES_HH
-# define SCRIBO_TEXT_GROUPING_EXTRACT_BBOXES_HH
-
-/// \file scribo/text/grouping/group_with_single_link.hh
+/// \file scribo/make/text.hh
 ///
-/// Extract text bounding boxes from a binary image.
+/// Construct a util::text.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -40,59 +38,77 @@
 # include <mln/labeling/blobs.hh>
 # include <mln/labeling/compute.hh>
 # include <mln/util/array.hh>
-
-# include <scribo/core/component_bboxes.hh>
 # include <scribo/util/text.hh>
-# include <scribo/make/text.hh>
+
 
 namespace scribo
 {
 
-  namespace text
+  namespace make
   {
 
-    using namespace mln;
 
-    /// Extract text bounding boxes from a binary image.
-    ///
-    /// \param[in] input_ A binary image.
-    ///
-    /// \return an array of bounding boxes. The first bounding box is
-    /// the background's.
+    template <typename L>
+    scribo::util::text<L>
+    text(const mln::util::array<box<mln_site(L)> >& bboxes,
+	 const Image<L>& lbl,
+	 mln_value(L)& nbboxes);
+
+
     template <typename I, typename N, typename V>
     scribo::util::text<mln_ch_value(I,V)>
-    extract_bboxes(const Image<I>& input_,
-		   const Neighborhood<N>& nbh, V& nbboxes);
+    text(const Image<I>& input_, const Neighborhood<N>& nbh_,
+	 V& nbboxes);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
+    template <typename L>
+    scribo::util::text<L>
+    text(const mln::util::array<box<mln_site(L)> >& bboxes,
+	 const Image<L>& lbl,
+	 mln_value(L)& nbboxes)
+    {
+      trace::entering("scribo::make::text");
+
+      mln_precondition(exact(lbl).is_valid());
+
+      scribo::util::text<L> result = scribo::util::text<L>(bboxes, lbl,
+							   nbboxes);
+
+      trace::exiting("scribo::make::text");
+      return result;
+    }
+
+
 
     template <typename I, typename N, typename V>
-    inline
     scribo::util::text<mln_ch_value(I,V)>
-    extract_bboxes(const Image<I>& input_,
-		   const Neighborhood<N>& nbh, V& nbboxes)
+    text(const Image<I>& input_, const Neighborhood<N>& nbh_,
+	 V& nbboxes)
     {
-      trace::entering("scribo::text::extract_bboxes");
+      trace::entering("scribo::make::text");
 
       const I& input = exact(input_);
+      const N& nbh = exact(nbh_);
 
-      mlc_equal(mln_value(I), bool)::check();
       mln_precondition(input.is_valid());
+      mln_precondition(nbh.is_valid());
 
-      typedef mln::util::array< box<mln_site(I)> > bboxes_t;
-      typedef mln::util::couple<bboxes_t, mln_ch_value(I,V)> bboxes_and_lbl_t;
-      bboxes_and_lbl_t bboxes_and_lbl = component_bboxes(input, nbh, nbboxes);
+      typedef mln::util::array< box<mln_site(I)> > boxes_t;
 
-      trace::exiting("scribo::text::extract_bboxes");
-      return scribo::make::text(bboxes_and_lbl.first(),
-				bboxes_and_lbl.second(), nbboxes);
+      mln_ch_value(I,V) lbl = labeling::blobs(input, nbh, nbboxes);
+
+      boxes_t cboxes = labeling::compute(accu::meta::bbox(), lbl, nbboxes);
+
+      trace::exiting("scribo::make::text");
+      return make::text(cboxes, lbl, nbboxes);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace scribo::text
+  } // end of namespace scribo::make
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_TEXT_GROUPING_EXTRACT_BBOXES_HH
+#endif // ! SCRIBO_MAKE_TEXT_HH

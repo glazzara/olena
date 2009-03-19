@@ -47,6 +47,9 @@
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
+# include <scribo/util/text.hh>
+# include <scribo/make/text.hh>
+
 
 namespace scribo
 {
@@ -58,9 +61,9 @@ namespace scribo
     {
 
       /// FIXME: Add much more doc!
-      template <typename G, typename P>
-      util::array<box<P> >
-      group_from_multiple_links(util::array<box<P> >& textbboxes,
+      template <typename I, typename G>
+      scribo::util::text<I>
+      group_from_multiple_links(const scribo::util::text<I>& text,
 				const Graph<G>& g_);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -71,14 +74,15 @@ namespace scribo
 
 	/// Functor to be passed to depth_first_search.
 	/// Map each component vertex with its representative vertex id.
+	template <typename V>
 	struct map_vertex_to_component_id_functor
 	{
-	    template <typename G>
-	    void init(const Graph<G>& g)
-	    {
-	      vertextocomp.resize(exact(g).v_nmax(), mln_max(unsigned));
-	      ncomp = 0;
-	    }
+	  template <typename G>
+	  void init(const Graph<G>& g)
+	  {
+	    vertextocomp.resize(exact(g).v_nmax(), mln_max(V));
+	    ncomp = 0;
+	  }
 
 	  void final()
 	  {}
@@ -96,23 +100,23 @@ namespace scribo
 	  {}
 
 	  bool to_be_treated(unsigned id)
-	  { return vertextocomp(id) == mln_max(unsigned); }
+	  { return vertextocomp(id) == mln_max(V); }
 
 	  bool to_be_queued(unsigned id)
 	  { return to_be_treated(id); }
 
 	  unsigned ncomp;
-	  fun::i2v::array<unsigned> vertextocomp;
+	  fun::l2l::relabel<V> vertextocomp;
 	};
 
       } // end of namespace scribo::text::grouping::internal
 
 
 
-      template <typename G, typename P>
+      template <typename I, typename G>
       inline
-      util::array<box<P> >
-      group_from_multiple_links(util::array<box<P> >& textbboxes,
+      scribo::util::text<I>
+      group_from_multiple_links(const scribo::util::text<I>& text,
 				const Graph<G>& g_)
       {
 	trace::entering("scribo::text::grouping::group_from_multiple_links");
@@ -121,25 +125,34 @@ namespace scribo
 
 	mln_assertion(g.is_valid());
 
-	internal::map_vertex_to_component_id_functor f;
+	internal::map_vertex_to_component_id_functor<mln_value(I)> f;
 	canvas::browsing::depth_first_search(g, f);
 
-	util::array< accu::bbox<P> > tboxes;
-	tboxes.resize(textbboxes.nelements());
-	for_all_components(i, textbboxes)
-	  tboxes[f.vertextocomp(i)].take(textbboxes[i]);
+	mln::util::array< accu::bbox<mln_site(I)> > tboxes;
+	tboxes.resize(text.nbboxes().next());
+	for_all_components(i, text.bboxes())
+	  tboxes[f.vertextocomp(i)].take(text.bbox(i));
 
-	util::array< box<P> > result;
+	// Update bounding boxes.
+	mln::util::array<box<mln_site(I)> > bresult;
 	// Component 0 - the background has not valid bboxes.
-	result.append(box<P>());
-	for_all_components(i, textbboxes)
+	bresult.append(box<mln_site(I)>());
+	for_all_components(i, text.bboxes())
 	  if (tboxes[i].is_valid())
-	    result.append(tboxes[i].to_result());
+	    bresult.append(tboxes[i].to_result());
 
-	mln_assertion(result.nelements() == f.ncomp);
+	mln_assertion(bresult.nelements() == f.ncomp);
+
+	// Update label image.
+	mln_value(I) new_nbboxes;
+	I new_lbl = labeling::relabel(text.label_image(),
+				      text.nbboxes(),
+				      f.vertextocomp);
+
+	mln_assertion(new_nbboxes.next() == bresult.nelements());
 
 	trace::exiting("scribo::text::grouping::group_from_multiple_links");
-	return result;
+	return scribo::make::text(bresult, new_lbl, new_nbboxes);
       }
 
 

@@ -29,18 +29,18 @@
 
 #include <mln/essential/2d.hh>
 
-#include <scribo/text/extract_bboxes.hh>
-#include <scribo/text/grouping/group_with_multiple_links.hh>
-#include <scribo/text/grouping/group_from_multiple_links.hh>
+#include <scribo/table/rebuild.hh>
+#include <scribo/table/erase.hh>
+#include <scribo/table/extract_lines_with_rank.hh>
+#include <scribo/make/debug_filename.hh>
 
-#include <scribo/debug/save_textbboxes_image.hh>
-#include <scribo/debug/save_linked_textbboxes_image.hh>
 
 int usage(const char *name)
 {
   std::cout << "Usage: " << name << " <input.pbm> " << std::endl;
   return 1;
 }
+
 
 int main(int argc, char* argv[])
 {
@@ -50,39 +50,30 @@ int main(int argc, char* argv[])
   if (argc < 1)
     return usage(argv[0]);
 
-  scribo::make::internal::debug_filename_prefix = "extract_text_multiple_links";
+  scribo::make::internal::debug_filename_prefix = argv[0];
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
+  logical::not_inplace(input);
 
-  value::label_16 nbboxes;
-  scribo::util::text<image2d<value::label_16> > text
-       = text::extract_bboxes(input, c8(), nbboxes);
+  typedef util::couple<util::array<box2d>,util::array<box2d> > tblboxes_t;
 
-  mln::util::graph g = text::grouping::group_with_multiple_links(text, 30);
+  win::vline2d vline(51);
+  win::hline2d hline(51);
+  tblboxes_t lineboxes
+	= table::extract_lines_with_rank(input, c8(), value::label_16(),
+					 vline, hline, 6, 6);
 
-  std::cout << "BEFORE - nbboxes = " << nbboxes.next() << std::endl;
-  scribo::debug::save_linked_textbboxes_image(input,
-					      text, g,
-					      literal::red, literal::cyan,
-					      scribo::make::debug_filename("left_linked.ppm"));
-//  io::ppm::save(mln::debug::colorize(value::rgb8(),
-//				     text.label_image(),
-//				     text.nbboxes()),
-//		scribo::make::debug_filename("lbl_before.ppm"));
+  value::label_8 ncells;
+  image2d<value::label_8> tables = scribo::table::rebuild(input, lineboxes, 30, ncells);
 
-  scribo::util::text<image2d<value::label_16> > grouped_text
-      = text::grouping::group_from_multiple_links(text, g);
 
-  std::cout << "AFTER - nbboxes = " << grouped_text.bboxes().nelements() << std::endl;
+  std::cout << "ncells (including background) = " << ncells << std::endl;
+  io::ppm::save(mln::debug::colorize(value::rgb8(), tables, ncells),
+		scribo::make::debug_filename("table_cells.ppm"));
+  io::pgm::save(tables, scribo::make::debug_filename("table_cells.pgm"));
 
-  scribo::debug::save_textbboxes_image(input, grouped_text.bboxes(),
-				       literal::red,
-				       scribo::make::debug_filename("grouped_text.ppm"));
-  io::ppm::save(mln::debug::colorize(value::rgb8(),
-				     grouped_text.label_image(),
-				     grouped_text.nbboxes()),
-		scribo::make::debug_filename("label_color.ppm"));
-
+  image2d<bool> in_wo_tables = table::erase(input, lineboxes);
+  io::pbm::save(in_wo_tables,
+      scribo::make::debug_filename("input_wo_tables.pbm"));
 }
-

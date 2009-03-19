@@ -40,6 +40,7 @@
 # include <mln/io/ppm/save.hh>
 
 # include <scribo/draw/bounding_boxes.hh>
+# include <scribo/make/debug_filename.hh>
 
 
 namespace scribo
@@ -55,7 +56,7 @@ namespace scribo
     template <typename I>
     void
     save_textbboxes_image(const Image<I>& input,
-			  const util::array< box<mln_site(I)> >& textbboxes,
+			  const mln::util::array< box<mln_site(I)> >& textbboxes,
 			  const value::rgb8& value,
 			  const std::string& filename);
 
@@ -66,7 +67,7 @@ namespace scribo
     inline
     void
     save_textbboxes_image(const Image<I>& input,
-			  const util::array< box<mln_site(I)> >& textbboxes,
+			  const mln::util::array< box<mln_site(I)> >& textbboxes,
 			  const value::rgb8& value,
 			  const std::string& filename)
     {
@@ -75,7 +76,7 @@ namespace scribo
 
       mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
       draw::bounding_boxes(tmp, textbboxes, value);
-      io::ppm::save(tmp, filename);
+      io::ppm::save(tmp, scribo::make::debug_filename(filename));
 
       trace::exiting("scribo::debug::save_textbboxes_image");
     }

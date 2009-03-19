@@ -46,6 +46,8 @@
 # include <scribo/core/macros.hh>
 # include <scribo/text/grouping/internal/init_link_array.hh>
 # include <scribo/text/grouping/internal/update_link_array.hh>
+# include <scribo/text/grouping/internal/find_root.hh>
+# include <scribo/util/text.hh>
 
 //FIXME: not generic.
 # include <mln/core/alias/dpoint2d.hh>
@@ -63,46 +65,34 @@ namespace scribo
       /// if possible.
       /// Iterate to the right but link boxes to the right.
       ///
-      /// \return an util::array. Map a bounding box to its right neighbor.
-      template <typename I, typename N, typename V>
+      /// \return an mln::util::array. Map a bounding box to its right neighbor.
+      template <typename L>
       inline
-      util::array<unsigned>
-      group_with_single_right_link(const Image<I>& input_,
-				   const Neighborhood<N>& nbh, V& nbboxes,
-				   const util::array< box<mln_site(I)> >& textbboxes,
+      mln::util::array<unsigned>
+      group_with_single_right_link(const scribo::util::text<L>& text,
 				   unsigned neighb_max_distance);
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename I, typename N, typename V>
+      template <typename L>
       inline
-      util::array<unsigned>
-      group_with_single_right_link(const Image<I>& input_,
-				   const Neighborhood<N>& nbh_, V& nbboxes,
-				   const util::array< box<mln_site(I)> >& textbboxes,
+      mln::util::array<unsigned>
+      group_with_single_right_link(const scribo::util::text<L>& text,
 				   unsigned neighb_max_distance)
       {
 	trace::entering("scribo::text::grouping::group_with_single_right_link");
 
-	const I& input = exact(input_);
-	const N& nbh = exact(nbh_);
+	mln_precondition(text.is_valid());
 
-        mlc_equal(mln_value(I), bool)::check();
-	mln_assertion(input.is_valid());
-	mln_precondition(nbh.is_valid());
-
-	typedef mln_ch_value(I,V) lbl_t;
-	lbl_t lbl = labeling::blobs(input, nbh, nbboxes);
-
-	util::array<unsigned> right_link(nbboxes.next());
+	mln::util::array<unsigned> right_link(text.nbboxes().next());
 	internal::init_link_array(right_link);
 
-	for_all_ncomponents(i, nbboxes)
+	for_all_ncomponents(i, text.nbboxes())
 	{
-	  unsigned midcol = (textbboxes[i].pmax().col()
-				- textbboxes[i].pmin().col()) / 2;
+	  unsigned midcol = (text.bbox(i).pmax().col()
+				- text.bbox(i).pmin().col()) / 2;
 	  int dmax = midcol + neighb_max_distance;
-	  mln_site(I) c = textbboxes[i].center();
+	  mln_site(L) c = text.bbox(i).center();
 
 	  ///
 	  /// Find a neighbor on the left
@@ -110,14 +100,15 @@ namespace scribo
 
 	  ///FIXME: the following code is not generic...
 	  /// First site on the left of the central site
-	  mln_site(I) p = c + left;
+	  mln_site(L) p = c + left;
 
-	  while (lbl.domain().has(p) && (lbl(p) == literal::zero || lbl(p) == i)
-	      && math::abs(p.col() - c.col()) < dmax)
+	  const L& lbl = text.label_image();
+	  while (lbl.domain().has(p) && (lbl(p) == literal::zero
+		    || lbl(p) == i || right_link[i] == lbl(p))
+		 && math::abs(p.col() - c.col()) < dmax)
 	    --p.col();
 
 	  internal::update_link_array(lbl, right_link, p, c, i, dmax);
-
 	}
 
 	trace::exiting("scribo::text::grouping::group_with_single_right_link");

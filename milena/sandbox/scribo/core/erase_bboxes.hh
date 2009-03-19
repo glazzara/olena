@@ -44,6 +44,8 @@
 namespace scribo
 {
 
+  using namespace mln;
+
   /// Remove the content of bounding boxes from an image.
   template <typename I>
   void
@@ -68,7 +70,7 @@ namespace scribo
 
     for_all_components(i, bboxes)
       data::paste((pw::cst(false) | bboxes[i] |
-	    (pw::value(input) == true)), input);
+		  (pw::value(input) == true)), input);
 
     trace::exiting("scribo::erase_bboxes");
   }

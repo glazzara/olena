@@ -41,6 +41,8 @@
 namespace scribo
 {
 
+  using namespace mln;
+
   namespace text
   {
 
@@ -51,13 +53,14 @@ namespace scribo
       {
 
 	/// Initialize a link array.
-	void init_link_array(util::array<unsigned>& link_array);
+	void
+	init_link_array(mln::util::array<unsigned>& link_array);
 
 # ifndef MLN_INCLUDE_ONLY
 
         inline
         void
-	init_link_array(util::array<unsigned>& link_array)
+	init_link_array(mln::util::array<unsigned>& link_array)
 	{
 	  for (unsigned i = 0; i < link_array.nelements(); ++i)
 	    link_array[i] = i;

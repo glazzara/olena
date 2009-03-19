@@ -38,8 +38,8 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/box.hh>
 # include <mln/geom/ncols.hh>
-# include <mln/geom/min_ncol.hh>
-# include <mln/geom/max_ncol.hh>
+# include <mln/geom/min_col.hh>
+# include <mln/geom/max_col.hh>
 
 # include <mln/util/array.hh>
 
@@ -53,18 +53,24 @@ namespace scribo
   namespace table
   {
 
+    using namespace mln;
+
     /// Align line bounding boxes verticaly.
     ///
     /// \param[in]	input	     Image from which the line bboxes are
     ///				     extracted from.
     /// \param[in, out] lines_bboxes vertical lines bounding boxes.
+    /// \param[in]	max_alignment_diff max space between two lines to
+    ///					   consider they are potentialy on the
+    ///					   same line.
     ///
     /// \return A list of the resulting aligned cols. Each integer is actually
     ///		a col number.
     template <typename I>
     util::array<int>
     align_lines_verticaly(const Image<I>& input,
-			  util::array<box<mln_site(I)> >& lines_bboxes);
+			  util::array<box<mln_site(I)> >& lines_bboxes,
+			  unsigned max_alignment_diff);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -81,7 +87,8 @@ namespace scribo
       util::array<int> res = internal::align_lines(geom::ncols(input),
 						   geom::min_col(input),
 						   geom::max_col(input),
-						   lines_bboxes, 1);
+						   lines_bboxes, 1,
+						   max_alignment_diff);
 
       trace::exiting("scribo::table::align_lines_horizontaly");
       return res;

@@ -38,8 +38,8 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/box.hh>
 # include <mln/geom/nrows.hh>
-# include <mln/geom/min_nrow.hh>
-# include <mln/geom/max_nrow.hh>
+# include <mln/geom/min_row.hh>
+# include <mln/geom/max_row.hh>
 
 # include <mln/util/array.hh>
 
@@ -52,18 +52,24 @@ namespace scribo
   namespace table
   {
 
+    using namespace mln;
+
     /// Align line bounding boxes horizontaly.
     ///
     /// \param[in]	input	     Image from which the line bboxes are
     ///				     extracted from.
     /// \param[in, out] lines_bboxes horizontal lines bounding boxes.
+    /// \param[in]	max_alignment_diff max space between two lines to
+    ///					   consider they are potentialy on the
+    ///					   same line.
     ///
     /// \return A list of the resulting aligned rows. Each integer is actually
     ///		a row number.
     template <typename I>
     util::array<int>
     align_lines_horizontaly(const Image<I>& input,
-			  util::array<box<mln_site(I)> >& lines_bboxes);
+			    util::array<box<mln_site(I)> >& lines_bboxes,
+			    unsigned max_alignment_diff);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -72,7 +78,8 @@ namespace scribo
     template <typename I>
     util::array<int>
     align_lines_horizontaly(const Image<I>& input,
-			    util::array<box<mln_site(I)> >& lines_bboxes)
+			    util::array<box<mln_site(I)> >& lines_bboxes,
+			    max_alignment_diff)
     {
       trace::entering("scribo::table::align_lines_horizontaly");
 
@@ -80,7 +87,8 @@ namespace scribo
       util::array<int> res =  internal::align_lines(geom::nrows(input),
 						    geom::min_row(input),
 						    geom::max_row(input),
-						    lines_bboxes, 0);
+						    lines_bboxes, 0,
+						    max_alignment_diff);
 
       trace::exiting("scribo::table::align_lines_horizontaly");
       return res;

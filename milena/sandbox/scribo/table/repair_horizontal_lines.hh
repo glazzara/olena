@@ -59,9 +59,9 @@ namespace scribo
     template <typename I>
     void
     repair_horizontal_lines(const Image<I>& input,
-			  util::couple<util::array<box<mln_site(I)> >,
-				       util::array<box<mln_site(I)> > >& tableboxes,
-			  unsigned max_discontinuity);
+			    util::couple<util::array<box<mln_site(I)> >,
+					 util::array<box<mln_site(I)> > >& tableboxes,
+			    unsigned max_discontinuity);
 
 # ifndef MLN_INCLUDE_ONLY
 

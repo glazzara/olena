@@ -26,7 +26,7 @@
 // Public License.
 
 
-#include "demat.hh"
+#include <demat.hh>
 
 int main(int argc, char*argv[])
 {

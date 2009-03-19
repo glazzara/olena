@@ -51,6 +51,8 @@ namespace scribo
     namespace internal
     {
 
+      using namespace mln;
+
       /// Align table lines bboxes according to a given dimension.
       ///
       /// \return A list of the resulting aligned cols. Each integer is actually
@@ -102,7 +104,8 @@ namespace scribo
 		  int min_coord,
 		  int max_coord,
 		  util::array<box<P> >& line_boxes,
-		  unsigned dim)
+		  unsigned dim,
+		  unsigned max_alignment_diff)
       {
 	trace::entering("scribo::internal::align_lines");
 
@@ -114,9 +117,9 @@ namespace scribo
 	// Map components with actual lines.
 	for_all_components(i, line_boxes)
 	{
-	  int minline = line_boxes[i].pmin()[dim] - 5;
+	  int minline = line_boxes[i].pmin()[dim] - max_alignment_diff;
 	  minline = (minline < min_coord ? min_coord : minline);
-	  int maxline = line_boxes[i].pmax()[dim] + 5;
+	  int maxline = line_boxes[i].pmax()[dim] + max_alignment_diff;
 	  maxline = (maxline > max_coord ? max_coord : maxline);
 
 	  for (int line = minline;

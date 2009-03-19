@@ -41,9 +41,13 @@
 
 # include <mln/util/array.hh>
 
+# include <mln/fun/l2l/relabel.hh>
+
 # include <scribo/text/grouping/internal/find_root.hh>
 
 # include <scribo/core/macros.hh>
+
+# include <scribo/util/text.hh>
 
 
 namespace scribo
@@ -56,42 +60,67 @@ namespace scribo
     {
 
       /// FIXME: Add much more doc!
-      template <typename P>
-      util::array< box<P> >
-      group_from_double_link(const util::array< box<P> >& textbboxes,
-			     util::array<unsigned>& left_link,
-			     util::array<unsigned>& right_link);
+      template <typename I>
+      scribo::util::text<I>
+      group_from_double_link(const scribo::util::text<I>& text,
+			     const mln::util::array<unsigned>& left_link,
+			     const mln::util::array<unsigned>& right_link);
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename P>
+      template <typename I>
       inline
-      util::array< box<P> >
-      group_from_double_link(const util::array< box<P> >& textbboxes,
-			     util::array<unsigned>& left_link,
-			     util::array<unsigned>& right_link)
+      scribo::util::text<I>
+      group_from_double_link(const scribo::util::text<I>& text,
+			     const mln::util::array<unsigned>& left_link,
+			     const mln::util::array<unsigned>& right_link)
       {
 	trace::entering("scribo::text::grouping::group_from_double_link");
 
 	mln_precondition(left_link.nelements() == right_link.nelements());
 
-	util::array< accu::bbox<P> > tboxes;
-	tboxes.resize(textbboxes.nelements());
-	for_all_components(i, textbboxes)
+	mln::util::array< accu::bbox<mln_site(I)> > tboxes;
+	tboxes.resize(text.bboxes().nelements());
+
+	mln::util::array<unsigned> left_parent = left_link;
+	for_all_components(i, left_parent)
+	  left_parent[i] = internal::find_root(left_parent, i);
+
+	fun::i2v::array<mln_value(I)> f(text.bboxes().nelements(),
+					literal::zero);
+	for_all_components(i, text.bboxes())
 	{
 	  unsigned nbh = right_link[left_link[i]];
 	  if (nbh == i)
-	    tboxes[left_link[i]].take(textbboxes[i]);
+	  {
+	    tboxes[left_parent[i]].take(text.bbox(i));
+	    f(i) = left_parent[left_link[i]];
+	  }
 	  else
-	    tboxes[i].take(textbboxes[i]);
+	  {
+	    f(i) = i;
+	    tboxes[i].take(text.bbox(i));
+	  }
 	}
 
-	util::array< box<P> > result;
+	// Update bounding boxes information.
+	mln::util::array< box<mln_site(I)> > bresult;
 	// component 0, the background, has an invalid box.
-	result.append(box<P>());
+	bresult.append(box<mln_site(I)>());
 	for_all_components(i, tboxes)
 	  if (tboxes[i].is_valid())
-	    result.append(tboxes[i]);
+	    bresult.append(tboxes[i]);
+
+	// Update label image.
+	mln_value(I) new_nbboxes;
+	I new_lbl = labeling::relabel(text.label_image(),
+				      text.nbboxes(),
+				      mln::make::relabelfun(f, text.nbboxes(),
+							    new_nbboxes));
+
+	mln_assertion(bresult.nelements() == new_nbboxes.next());
+
+	scribo::util::text<I> result(bresult, new_lbl, new_nbboxes);
 
 	trace::exiting("scribo::text::grouping::group_from_double_link");
 	return result;
