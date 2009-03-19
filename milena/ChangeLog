@@ -1,5 +1,21 @@
 2009-03-19  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add accu::site_set::rectangularity.
+
+	* mln/accu/all.hh,
+	* mln/accu/essential.hh,
+	* mln/accu/image/essential.hh,
+	* mln/accu/site_set/all.hh,
+	* mln/accu/site_set/essential.hh: update all and essential includes.
+
+	* mln/accu/site_set/rectangularity.hh: new accumulator.
+
+	* tests/accu/Makefile.am,
+	* tests/accu/site_set/Makefile.am,
+	* tests/accu/site_set/rectangularity.cc: add associated test.
+
+2009-03-19  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add accu::couple.
 
 	* mln/accu/internal/couple.hh: new class.

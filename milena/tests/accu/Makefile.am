@@ -2,6 +2,10 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+SUBDIRS =					\
+  image 					\
+  site_set
+
 check_PROGRAMS =				\
   all_accus					\
   bbox						\

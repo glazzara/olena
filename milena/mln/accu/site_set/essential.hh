@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,29 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_ESSENTIAL_HH_
-# define MLN_ACCU_ESSENTIAL_HH_
+#ifndef MLN_ACCU_SITE_SET_ESSENTIAL_HH_
+# define MLN_ACCU_SITE_SET_ESSENTIAL_HH_
 
-/// \file mln/accu/essential.hh
+/// \file mln/accu/site_set/essential.hh
 ///
-/// File that includes the most useful accumulator types.
+/// File that includes the most useful accumulator types working on site sets.
 
-# include <mln/accu/bbox.hh>
-# include <mln/accu/center.hh>
-# include <mln/accu/count.hh>
-# include <mln/accu/histo.hh>
-# include <mln/accu/max.hh>
-# include <mln/accu/max_h.hh>
-# include <mln/accu/mean.hh>
-# include <mln/accu/median_h.hh>
-# include <mln/accu/min.hh>
-# include <mln/accu/min_h.hh>
-# include <mln/accu/min_max.hh>
-# include <mln/accu/rank.hh>
-# include <mln/accu/sum.hh>
 
-# include <mln/accu/image/essential.hh>
-# include <mln/accu/site_set/essential.hh>
-
-#endif // !MLN_ACCU_ESSENTIAL_HH_
+#endif // !MLN_ACCU_SITE_SET_ESSENTIAL_HH_
 
