@@ -30,7 +30,13 @@
 [X] Test 3D workflow on 2D images
 [X] Create colorized colors for graph
 [X] Diff with %
-[ ] Find biggest dark regions (threshold value or median accu - median / 2 - )
-   [ ] Learn regions value
-      [ ] Threshold
+[X] Find biggest dark regions (threshold value or median accu - median / 2 - )
+   [X] Learn regions value
+      [X] Threshold
+         [X] 3D
+         [X] Print nb bg regions // nb fg objets
 [ ] Profile for performance
+[ ] ImageMagick support
+[ ] Integrate external libraries (GDCM, IM)
+[ ] Send result images to lrde account
+[ ] Translate Matlab code

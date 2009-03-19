@@ -48,5 +48,8 @@ med: med.cc
 thres: thres.cc
 	g++ -I../../../ ${CXXFLAGS} $^ -o thres
 	
+matlab: matlab.cc
+	g++ -I../../../ ${DICOM_INC} ${DICOM_LIBS} ${CXXFLAGS} -lm $^ -o matlab
+	
 clean:
 	rm -rf *.dump *.p?m *.plot *.log *.csv *.dSYM

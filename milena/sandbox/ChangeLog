@@ -1,3 +1,15 @@
+2009-03-19  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add a new file translating IGR Matlab code.
+	* fabien/bin/dump2pbm.cc: Minor fix.
+	* fabien/igr/Makefile: Update.
+	* fabien/igr/check.sh: Update.
+	* fabien/igr/matlab.cc: New file translating matlab code.
+	* fabien/igr/med.cc: Update.
+	* fabien/igr/thres.cc: Update.
+	* fabien/magick/load.hh: Moved to mln/io/magick.
+	* fabien/magick/magick.cc: Update.
+
 2009-03-16  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix median threshold and add ImageMagick load support..

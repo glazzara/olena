@@ -56,11 +56,14 @@ int main(int argc, char *argv[])
     image2d<int_u12> input;
     io::dump::load(input, argv[1]);
     image2d<bool> bin_result = binarization::threshold(input, threshold);
-    io::pbm::save(bin_result, "result.pbm");
+    io::dump::save(bin_result, "result.dump");
   }
   else
   {
-    // FIXME
+    image3d<int_u12> input;
+    io::dump::load(input, argv[1]);
+    image3d<bool> bin_result = binarization::threshold(input, threshold);
+    io::dump::save(bin_result, "result.dump");
   }
 
   return 0;

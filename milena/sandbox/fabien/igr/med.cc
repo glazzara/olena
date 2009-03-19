@@ -63,6 +63,8 @@ int main(int argc, char *argv[])
   }
 
   unsigned median = 0;
+  int bg = 0;
+  int fg = 0;
 
   if (dim == 2)
   {
@@ -88,14 +90,57 @@ int main(int argc, char *argv[])
     accu::median_h<int_u12> accu_med;
     median = level::compute(accu_med, ima_histo | pw::value(ima_histo) != pw::cst(0));
 
+    for (int i = 0; i < histogram.nvalues(); ++i)
+    {
+      if (histogram[i])
+      {
+	if (histogram[i] > median / 2)
+	  ++fg;
+	else ++bg;
+      }
+    }
+
     io::dump::save(wst_mean, "med.dump");
   }
   else
   {
-    // FIXME
+    image3d<L> labels;
+    io::dump::load(labels, argv[1]);
+    image3d<int_u12> dcm;
+    io::dicom::load(dcm, argv[3]);
+
+    mln_VAR(wst_dilate, morpho::elementary::dilation(extend(labels | (pw::value(labels) == 0u), labels), c26()));
+    data::fill((labels | (pw::value(labels) == 0u)).rw(), wst_dilate);
+    mln_VAR(wst_mean, labeling::mean_values(dcm, labels, nbasins));
+
+    histo::array<int_u12> histogram = histo::compute(wst_mean);
+    int j = 0;
+    int k = 0;
+    for (int i = 0; i < histogram.nvalues(); ++i)
+    {
+      if (histogram[i])
+	histogram[i] = i;
+    }
+    image1d<unsigned> ima_histo;
+    convert::from_to(histogram, ima_histo);
+    accu::median_h<int_u12> accu_med;
+    median = level::compute(accu_med, ima_histo | pw::value(ima_histo) != pw::cst(0));
+
+    for (int i = 0; i < histogram.nvalues(); ++i)
+    {
+      if (histogram[i])
+      {
+	if (histogram[i] > median / 2)
+	  ++fg;
+	else ++bg;
+      }
+    }
+
+    io::dump::save(wst_mean, "med.dump");
   }
 
   std::cout << median << std::endl;
+  std::cerr << "    [ " << bg << " <" << median / 2 << "> " << fg << " ]" << std::endl;
 
   return 0;
 }
