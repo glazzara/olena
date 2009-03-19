@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,46 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_VALUE_NATURE_HH
-# define MLN_TRAIT_VALUE_NATURE_HH
+#ifndef MLN_TRAIT_VALUE_COMP_HH
+# define MLN_TRAIT_VALUE_COMP_HH
 
-/// \file mln/trait/value/nature.hh
+/// \file mln/trait/value/comp.hh
 ///
-/// Nature of values (for use in images).
+/// Access to the i-th component type of a given type.
 
-# include <string>
-
-
-namespace mln
-{
-
-  namespace trait
-  {
-
-    namespace value
-    {
-
-      struct nature
-      {
-	struct any                 { std::string name() const { return "nature::any"; } };
-
-	struct scalar     : any    { std::string name() const { return "nature::scalar"; } };
-	struct integer    : scalar { std::string name() const { return "nature::integer"; } };
-	struct floating   : scalar { std::string name() const { return "nature::floating"; } };
-
-	struct vectorial  : any    { std::string name() const { return "nature::vectorial"; } };
-	struct matrix     : any    { std::string name() const { return "nature::matrix"; } };
-	struct symbolic   : any    { std::string name() const { return "nature::symbolic"; } };
-	struct structured : any    { std::string name() const { return "nature::structured"; } };
-
-	struct unknown    : any    { std::string name() const { return "nature::unknown"; } };
-      };
-
-    } // end of namespace mln::trait::value
-
-  } // end of namespace mln::trait
-
-} // end of namespace mln
+# include <mln/trait/value/internal/comp.hh>
 
 
-#endif // ! MLN_TRAIT_VALUE_NATURE_HH
+
+# define mln_trait_value_comp(T, i)				\
+								\
+   typename mln::trait::value::internal::comp< T, i >::ret
+
+
+
+
+#endif // ! MLN_TRAIT_VALUE_COMP_HH

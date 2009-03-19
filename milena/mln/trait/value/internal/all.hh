@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,37 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_VALUE_ALL_HH
-# define MLN_TRAIT_VALUE_ALL_HH
+#ifndef MLN_TRAIT_VALUE_INTERNAL_ALL_HH
+# define MLN_TRAIT_VALUE_INTERNAL_ALL_HH
 
-/// \file mln/trait/value/all.hh
+/// \file mln/trait/value/internal/all.hh
 ///
-/// Include all value traits.
+/// Include all internals for value traits.
 
 
-namespace mln
-{
-
-  namespace trait
-  {
-
-    /// FIXME: Doc!
-    namespace value {}
-
-  } // end of namespace mln::trait
-
-} // end of namespace mln
+# include <mln/trait/value/internal/comp.hh>
 
 
-
-# include <mln/trait/undef.hh>
-# include <mln/trait/value/nature.hh>
-# include <mln/trait/value/kind.hh>
-# include <mln/trait/value/quant.hh>
-
-// Sub-directory.
-
-# include <mln/trait/value/internal/all.hh>
-
-
-#endif // ! MLN_TRAIT_VALUE_ALL_HH
+#endif // ! MLN_TRAIT_VALUE_INTERNAL_ALL_HH

@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,46 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_VALUE_NATURE_HH
-# define MLN_TRAIT_VALUE_NATURE_HH
+#ifndef MLN_VALUE_BUILTIN_CARRAYS_HH
+# define MLN_VALUE_BUILTIN_CARRAYS_HH
 
-/// \file mln/trait/value/nature.hh
+/// \file mln/value/builtin/carrays.hh
 ///
-/// Nature of values (for use in images).
+/// Traits definition for C arrays.
 
-# include <string>
+# include <sstream>
+
+# include <mln/value/concept/built_in.hh>
+# include <mln/value/concept/vectorial.hh>
+# include <mln/trait/value_.hh>
 
 
 namespace mln
 {
 
+
+  template <unsigned n, typename T>
+  struct category< T[n] >
+  {
+    typedef value::Built_In< value::Vectorial<void> > ret;
+  };
+
+
   namespace trait
   {
 
-    namespace value
+    template <unsigned n, typename T>
+    struct value_< T[n] >
     {
-
-      struct nature
-      {
-	struct any                 { std::string name() const { return "nature::any"; } };
-
-	struct scalar     : any    { std::string name() const { return "nature::scalar"; } };
-	struct integer    : scalar { std::string name() const { return "nature::integer"; } };
-	struct floating   : scalar { std::string name() const { return "nature::floating"; } };
-
-	struct vectorial  : any    { std::string name() const { return "nature::vectorial"; } };
-	struct matrix     : any    { std::string name() const { return "nature::matrix"; } };
-	struct symbolic   : any    { std::string name() const { return "nature::symbolic"; } };
-	struct structured : any    { std::string name() const { return "nature::structured"; } };
-
-	struct unknown    : any    { std::string name() const { return "nature::unknown"; } };
+      enum {
+	dim   = n,
+	nbits = n * value_<T>::nbits,
+	card  = n * value_<T>::card
       };
+      typedef T comp;
 
-    } // end of namespace mln::trait::value
+      typedef value::nature::vectorial nature;
+      typedef mln_trait_value_kind(T)  kind;
+      typedef value::quant::high       quant;
+
+      static const char* name()
+      {
+	std::ostringstream s;
+	s << value_<T>::name() << '[' << n << ']';
+	return s.str();
+      }
+    };
 
   } // end of namespace mln::trait
 
 } // end of namespace mln
 
 
-#endif // ! MLN_TRAIT_VALUE_NATURE_HH
+#endif // ! MLN_VALUE_BUILTIN_CARRAYS_HH

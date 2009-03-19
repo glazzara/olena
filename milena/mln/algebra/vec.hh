@@ -1,5 +1,5 @@
-// Copyright (C) 2006, 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2006, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -81,11 +81,12 @@ namespace mln
       typedef trait::value::kind::data        kind;
 
       enum {
+	dim   = n,
 	nbits = n * mln_nbits(T),
 	card  = n * mln_card(T)
       };
-      typedef mln_value_quant_from_(card)     quant;
-
+      typedef T comp;
+      typedef mln_value_quant_from_(card) quant;
       typedef algebra::vec<n, mln_sum(T)> sum;
     };
 

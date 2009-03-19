@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -59,13 +60,13 @@ namespace mln
       typedef value::kind::binary     kind;
 
       enum {
+	dim   = 1,
 	nbits = 1,
 	card  = 2
       };
       typedef value::quant::low       quant;
 
       static const char* name() { return "bool"; }
-
     };
 
   } // end of namespace mln::trait

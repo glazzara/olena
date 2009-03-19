@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +29,15 @@
 #ifndef MLN_VALUE_BUILTIN_ALL_HH
 # define MLN_VALUE_BUILTIN_ALL_HH
 
-/*! \file mln/value/builtin/all.hh
- *
- * \brief File that includes all materials related to built-in types.
- */
+/// \file mln/value/builtin/all.hh
+///
+/// File that includes all materials related to built-in types.
 
 
-# include <mln/value/builtin/symbolics.hh>
+# include <mln/value/builtin/carrays.hh>
 # include <mln/value/builtin/integers.hh>
 # include <mln/value/builtin/floatings.hh>
+# include <mln/value/builtin/symbolics.hh>
 
 # include <mln/value/builtin/promotions.hh>
 # include <mln/value/builtin/ops.hh>

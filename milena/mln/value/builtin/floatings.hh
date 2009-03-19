@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -60,10 +60,14 @@ namespace mln
   namespace trait
   {
 
+
+    // float.
+
     template <>
     struct value_< float >
     {
       enum {
+	dim   = 1,
 	nbits = 8 * sizeof(float),
 	card  = 0
       };
@@ -95,10 +99,14 @@ namespace mln
 
     };
 
+
+    // double.
+
     template <>
     struct value_< double >
     {
       enum {
+	dim   = 1,
 	nbits = 8 * sizeof(double),
 	card  = 0
       };

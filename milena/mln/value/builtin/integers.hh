@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -73,10 +73,11 @@ namespace mln
       public:
 
 	enum {
+	  dim = 1,
 	  nbits = n,
 	  card  = mln_value_card_from_(n)
 	};
-
+	
 	typedef trait::value::nature::integer nature;
 	typedef trait::value::kind::data      kind;
 	typedef mln_value_quant_from_(card) quant;
