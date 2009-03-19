@@ -26,129 +26,135 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_TREE_ACCUMULATOR_MAX_HH_
-# define MLN_MORPHO_TREE_ACCUMULATOR_MAX_HH_
+#ifndef MLN_MORPHO_TREE_ACCUMULATOR_ARG_MAX_HH_
+# define MLN_MORPHO_TREE_ACCUMULATOR_ARG_MAX_HH_
 
-/// \file mln/morpho/tree/accumulator/max.hh
+/// \file mln/morpho/tree/accumulator/arg_max.hh
 ///
-/// Define an accumulator that returns iterator matching the max node value.
+/// Define an accumulator that performs arg max.
 
 
 # include <mln/core/concept/image.hh>
 # include <mln/accu/internal/base.hh>
+# include <mln/util/pix.hh>
 
 namespace mln {
-  namespace morpho {
-    namespace tree{
-      namespace accumulator {
+  namespace accumulator {
 
-	template <typename T, typename I>
-	class max : public mln::accu::internal::base< mln_bkd_piter(T::nodes_t), max<T, I> >
+	template <typename I>
+	class arg_max : public mln::accu::internal::base<const mln_psite(I)&, arg_max<I> >
 	{
-	  typedef mln::accu::internal::base< unsigned, max<T, I> > super_;
+	  typedef mln::accu::internal::base<const mln_psite(I)&, arg_max<I> > super_;
 
 	public:
-	  typedef mln_bkd_piter(T::nodes_t) argument;
+	  typedef typename util::pix<I> argument;
 
 	  /// Constructor
-	  max(const Image<I>& f);
+	  arg_max(const Image<I>& ima);
+	  /// Destructor
+	  ~arg_max();
 
 	  /// Manipulators.
 	  /// \{
 	  void init();
 
-	  void take(const argument& it);
-	  void take(const max<T, I>& other);
+	  void take(const argument& pix);
+	  void take(const arg_max<I>& other);
 
-	  void take_as_init(const argument& it);
+	  void take_as_init(const argument& pix);
 	  /// \}
 
 	  /// Get the value of the accumulator.
-	  mln_bkd_piter(T::nodes_t) to_result() const;
+	  const mln_psite(I)& to_result() const;
 
 	  /// Check whether the accumulator is able to give a result.
 	  bool is_valid() const;
 
 	private:
-	  const I& f_;
-	  mln_bkd_piter(T::nodes_t) max_;
+	  const I& ima_;
+	  mln_psite(I)* p_;
 	};
 
 # ifndef MLN_INCLUDE_ONLY
 
-	template <typename T, typename I>
+	template <typename I>
 	inline
-	max<T, I>::max(const Image<I>& f) :
-	  f_ (exact(f))
+	arg_max<I>::arg_max(const Image<I>& ima) :
+	  ima_ (exact(ima)),
+	  p_ (0)
 	{
 	}
 
-	template <typename T, typename I>
+	template <typename I>
+	inline
+	arg_max<I>::~arg_max()
+	{
+	  delete p_;
+	}
+
+
+	template <typename I>
 	inline
 	void
-	max<T, I>::init()
+	arg_max<I>::init()
 	{
 	}
 
-	template <typename T, typename I>
+	template <typename I>
 	inline
 	void
-	max<T, I>::take(const argument& it)
+	arg_max<I>::take(const argument& pix)
 	{
-	  mln_invariant(it.is_valid());
-
 	  if (!is_valid())
 	    {
-	      take_as_init(it);
+	      take_as_init(pix);
 	      return;
 	    }
 
-	  if (f_(it) > f_(max_))
-	    max_ = it;
+	  if (pix.v() > ima_(*p_))
+	    *p_ = pix.p();
 	}
 
- 	template <typename T, typename I>
+ 	template <typename I>
 	inline
 	void
-	max<T, I>::take(const max<T, I>& other)
+	arg_max<I>::take(const arg_max<I>& other)
 	{
 	  mln_invariant(other.is_valid());
 
-	  if (f_(other.max_) > f_(max_))
-	    max_ = other.max_;
+	  if (other.ima_(*other.p_) > ima_(*p_))
+	    *p_ = *other.p_;
 	}
 
-    	template <typename T, typename I>
+    	template <typename I>
 	inline
 	void
-	max<T, I>::take_as_init(const argument& it)
+	arg_max<I>::take_as_init(const argument& pix)
 	{
-	  mln_invariant(it.is_valid());
-	  max_ = it;
+	  p_ = new mln_psite(I)(pix.p());
 	}
 
-	template <typename T, typename I>
+	template <typename I>
 	inline
-	mln_bkd_piter(T::nodes_t)
-	max<T, I>::to_result() const
+	const mln_psite(I)&
+	arg_max<I>::to_result() const
 	{
-	  return max_;
+	  mln_invariant(p_ != 0);
+	  return *p_;
 	}
 
-	template <typename T, typename I>
+	template <typename I>
 	inline
 	bool
-	max<T, I>::is_valid() const
+	arg_max<I>::is_valid() const
 	{
-	  return max_.is_valid();
+	  return p_ != 0;
 	}
 
 
 # endif // ! MLN_INCLUDE_ONLY
 
-      }  // end of namespace mln::morpho::tree::accumulator
-    }  // end of namespace mln::morpho::tree
-  }  // end of namespace mln::morpho
-} // end of namespace mln
+      }  // end of namespace mln::accumulator
+    }  // end of namespace mln
 
-#endif /* ! MLN_MORPHO_TREE_ACCUMULATOR_MAX_HH_ */
+#endif /* ! MLN_MORPHO_TREE_ACCUMULATOR_ARG_MAX_HH_ */

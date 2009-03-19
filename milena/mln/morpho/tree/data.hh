@@ -47,12 +47,16 @@
 # define mln_dn_site_piter(T)	typename T::dn_site_piter
 # define mln_up_node_piter(T)	typename T::up_node_piter
 # define mln_dn_node_piter(T)	typename T::dn_node_piter
+# define mln_up_leaf_piter(T)	typename T::up_leaf_piter
+# define mln_dn_leaf_piter(T)	typename T::dn_leaf_piter
 # define mln_preorder_piter(T)	typename T::preorder_piter
 
 # define mln_up_site_piter_(T)	T::up_site_piter
 # define mln_dn_site_piter_(T)  T::dn_site_piter
 # define mln_up_node_piter_(T)  T::up_node_piter
 # define mln_dn_node_piter_(T)  T::dn_node_piter
+# define mln_up_leaf_piter_(T)	T::up_leaf_piter
+# define mln_dn_leaf_piter_(T)	T::dn_leaf_piter
 # define mln_preorder_piter_(T) T::preorder_piter
 
 namespace mln
@@ -78,6 +82,12 @@ namespace mln
       /// Iterate on tree's nodes (component representants) from leaves to roots.
       template <typename T> struct dn_node_piter;
 
+      /// Iterate on tree's leaves in the same way of up_node_piter.
+      template <typename T> struct up_leaf_piter;
+
+      /// Iterate on tree's leaves in the same way of dn_node_piter.
+      template <typename T> struct dn_leaf_piter;
+
       /// Preorder tree traversal iterator.
       template <typename T> struct preorder_piter;
 
@@ -101,8 +111,10 @@ namespace mln
 	typedef mln_site(I) site;
 	/// Site set associated type.
 	typedef S sites_t;
-	/// Node list associated type.
+	/// Node set associated type.
 	typedef p_array<mln_psite(I)> nodes_t;
+	/// Leaf set associated type.
+	typedef p_array<mln_psite(I)> leaves_t;
 
 	/// Parent image associated type.
 	typedef mln_ch_value(I, mln_psite(I)) parent_t;
@@ -115,6 +127,10 @@ namespace mln
 	typedef mln::morpho::tree::up_node_piter<self_> up_node_piter;
 	typedef mln::morpho::tree::dn_node_piter<self_> dn_node_piter;
 
+	// Iterate on leaves only.
+	typedef mln::morpho::tree::up_leaf_piter<self_> up_leaf_piter;
+	typedef mln::morpho::tree::dn_leaf_piter<self_> dn_leaf_piter;
+
 	typedef mln::morpho::tree::preorder_piter<self_> preorder_piter;
 
 // 	typedef mln_bkd_piter(S) piter;
@@ -123,7 +139,7 @@ namespace mln
 
 	/// Constructor.
 	template <typename N>
-	explicit data(const Image<I>& f, const Site_Set<S>& s, const Neighborhood<N>& nbh);
+	data(const Image<I>& f, const Site_Set<S>& s, const Neighborhood<N>& nbh);
 
 
 
@@ -134,8 +150,32 @@ namespace mln
 
 	/// \}
 
+	/// \{ Child-related materials.
+
 	const p_array<mln_psite(I)>& children(const mln_psite(I)& p) const;
 	const mln_ch_value(I, nodes_t)& children_image() const;
+
+	/// \}
+
+	/// \{ Nodes materials.
+
+	const p_array<mln_psite(I)>& nodes() const;
+
+	/// \}
+
+	/// \{ Leaves materials.
+
+	const p_array<mln_psite(I)>& leaves() const;
+
+	/// \}
+
+	/// \{ Sites materials.
+
+	const S& domain() const;
+
+	/// \}
+
+
 
 	/// \{ Tests.
 
@@ -148,17 +188,7 @@ namespace mln
 	/// \}
 
 
-	/// \{ Nodes-related materials.
 
-	const p_array<mln_psite(I)>& nodes() const;
-
-	/// \}
-
-	/// \{ Sites-related materials.
-
-	const S& domain() const;
-
-	/// \}
 
 	unsigned nroots() const;
 
@@ -175,9 +205,12 @@ namespace mln
 	mln_ch_value(I, mln_psite(I)) parent_;	// Parent image.
 	mln_ch_value(I, nodes_t) children_;	// Children image.
 	nodes_t nodes_;
+	leaves_t leaves_;
 	unsigned nroots_;
       };
 
+
+      /* Iterators */
 
       template <typename T>
       struct up_site_piter
@@ -227,7 +260,7 @@ namespace mln
 						 up_node_piter<T> >			// Exact.
       {
       private:
-	typedef typename T::sites_t::fwd_piter Pi_;
+	typedef typename T::nodes_t::fwd_piter Pi_;
 	typedef mln::internal::piter_identity_< Pi_, up_node_piter<T> > super_;
 
       public:
@@ -248,7 +281,7 @@ namespace mln
 						 dn_node_piter<T> >			// Exact.
       {
       private:
-	typedef typename T::sites_t::bkd_piter Pi_;
+	typedef typename T::nodes_t::bkd_piter Pi_;
 	typedef mln::internal::piter_identity_< Pi_, dn_node_piter<T> > super_;
 
       public:
@@ -258,6 +291,48 @@ namespace mln
 	}
 
 	dn_node_piter(const Pi_& pi)
+	  : super_(pi)
+	{
+	}
+      };
+
+      template <typename T>
+      struct up_leaf_piter
+	: public mln::internal::piter_identity_< typename T::leaves_t::fwd_piter,	// Adaptee.
+						 up_leaf_piter<T> >			// Exact.
+      {
+      private:
+	typedef typename T::leaves_t::fwd_piter Pi_;
+	typedef mln::internal::piter_identity_< Pi_, up_leaf_piter<T> > super_;
+
+      public:
+	up_leaf_piter(const T& t)
+	{
+	  this->change_target(t.leaves());
+	}
+
+	up_leaf_piter(const Pi_& pi)
+	  : super_(pi)
+	{
+	}
+      };
+
+      template <typename T>
+      struct dn_leaf_piter
+	: public mln::internal::piter_identity_< typename T::leaves_t::bkd_piter,	// Adaptee.
+						 dn_leaf_piter<T> >			// Exact.
+      {
+      private:
+	typedef typename T::leaves_t::bkd_piter Pi_;
+	typedef mln::internal::piter_identity_< Pi_, dn_leaf_piter<T> > super_;
+
+      public:
+	dn_leaf_piter(const T& t)
+	{
+	  this->change_target(t.leaves());
+	}
+
+	dn_leaf_piter(const Pi_& pi)
 	  : super_(pi)
 	{
 	}
@@ -294,6 +369,9 @@ namespace mln
 	/// Go to the next point.
 	void next_();
 
+	/// Skip current point children. Next call to next() goes to the brother point.
+	void skip_children();
+
       protected:
 	using super_::p_;
 	using super_::s_;
@@ -328,13 +406,16 @@ namespace mln
 	    {
 	      nodes_.insert(p);
 	      children_(parent_(p)).insert(p);
+	      if (is_a_leaf(p))
+		leaves_.insert(p);
 	    }
-	  else
-	    if (parent_(p) == p)
-	      {
-		nodes_.insert(p);
-		++nroots_;
-	      }
+	  else if (parent_(p) == p) //it's a root.
+	    {
+	      nodes_.insert(p);
+	      if (is_a_leaf(p)) // One pixel image...
+		leaves_.insert(p);
+	      ++nroots_;
+	    }
 	}
       }
 
@@ -418,6 +499,15 @@ namespace mln
 
       template <typename I, typename S>
       inline
+      const p_array<mln_psite(I)>&
+      data<I,S>::leaves() const
+      {
+	mln_precondition(is_valid());
+	return leaves_;
+      }
+
+      template <typename I, typename S>
+      inline
       const S&
       data<I,S>::domain() const
       {
@@ -490,6 +580,7 @@ namespace mln
 					const mln_psite(T::function)& p)
 	: root_ (&p)
       {
+	mln_assertion(t.is_a_node(p));
 	this->change_target(t);
       }
 
@@ -522,7 +613,7 @@ namespace mln
 	else
 	  {
 	    mln_dn_node_piter(T) n(*s_);
-	    int roots = 0;
+	    unsigned roots = 0;
 	    for (n.start(); n.is_valid() && roots < s_->nroots(); n.next())
 	      if (s_->is_root(n))
 		{
@@ -546,6 +637,15 @@ namespace mln
 	mln_fwd_piter(T::nodes_t) child(s_->children(p_));
 	for_all(child)
 	  stack_.push_back(child);
+      }
+
+      template <typename T>
+      inline
+      void
+      preorder_piter<T>::skip_children()
+      {
+	while (stack_.size() != 1 && s_->parent(stack_.back()) == p_)
+	  stack_.pop_back();
       }
 
 

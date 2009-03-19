@@ -1,11 +1,11 @@
-TARGET=propagation
-SRC=propagation.cc
+TARGET=test
+SRC=test.cc
 OBJS=${SRC:.cc=.o}
 
 OLENADIR=$(MLN_DIR)/..
 MILENADIR=$(OLENADIR)/milena
 
-CXXFLAGS=-I$(MILENADIR) -I./
+CXXFLAGS=-I$(MILENADIR) -I./ -W -Wall
 
 CXXFLAGS += -g -ggdb
 #CXXFLAGS += -DNDEBUG -O1

@@ -1,3 +1,25 @@
+2009-03-19  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Optimize propagations and add component processing functions.
+	* mln/morpho/tree/data.hh: Add optimization about preorder
+	iterator.
+	* tests/morpho/tree/data.cc: Update test file.
+
+	* sandbox/edwin/tree/accumulator/arg_max.hh: New accumulator
+	that returns site having the max value.
+	* sandbox/edwin/tree/accumulator/max.hh: Remove.
+	* sandbox/edwin/tree/propagate.hh: Make clean.
+	* sandbox/edwin/tree/propagate_if.hh: Functions performing
+	different propagations on nodes matching a predicate.
+	* sandbox/edwin/tree/propagate_node.hh: Basic ascendant and
+	descendant propagations computation.
+	* sandbox/edwin/tree/propagation.cc: Test file for propagations.
+	* sandbox/edwin/tree/routines.hh: Remove.
+	* sandbox/edwin/tree/run.hh: Methods to apply accumulator on
+	tree nodes, and to perform object component research with a
+	criteria (treshold...).
+	* sandbox/edwin/tree/test.cc: New.
+
 2009-03-19  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Add accu::site_set::rectangularity.

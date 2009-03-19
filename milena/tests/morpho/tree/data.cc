@@ -65,11 +65,18 @@ int main()
     /* Check site and node up order */
     tree_t::up_node_piter n(t);
     tree_t::up_site_piter s(t);
+    tree_t::up_leaf_piter l(t);
     n.start();
+    l.start();
     for_all(s)
       if (t.is_a_node(s))
 	{
 	  mln_assertion(s == n);
+	  if (t.is_a_leaf(n))
+	    {
+	      mln_assertion(l == n);
+	      l.next();
+	    }
 	  n.next();
 	}
     mln_assertion(!n.is_valid());
@@ -79,11 +86,18 @@ int main()
     /* Check site and node up order */
     tree_t::dn_node_piter n(t);
     tree_t::dn_site_piter s(t);
+    tree_t::dn_leaf_piter l(t);
     n.start();
+    l.start();
     for_all(s)
       if (t.is_a_node(s))
 	{
 	  mln_assertion(s == n);
+	  if (t.is_a_leaf(n))
+	    {
+	      mln_assertion(l == n);
+	      l.next();
+	    }
 	  n.next();
 	}
     mln_assertion(!n.is_valid());

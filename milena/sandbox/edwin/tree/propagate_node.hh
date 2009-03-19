@@ -41,41 +41,42 @@ namespace mln {
   namespace morpho {
     namespace tree {
 
-
       /**
-      ** Propagate a value to a node and its descendants.
+      ** Propagate a value \v from a node \n to its descendants.
       **
-      ** @param n The root of subtree which value propagates in.
-      ** @param t The reference to components tree.
-      ** @param a_ The reference to image.
-      ** @param v The value to propagate. Default is a_(n).
+      ** @param n Node to propagate.
+      ** @param t Component tree used for propagation.
+      ** @param a_ Attributed image where values are propagated.
+      ** @param v Value to propagate.
       */
       template <typename T, typename A>
       void
       propagate_node_to_descendants(mln_psite(A) n,
 				    const T& t,
 				    Image<A>& a_,
-				    mln_value(A) v);
+				    const mln_value(A)& v);
 
       /**
       ** Propagate the node's value to its descendants.
       **
-      ** @param n The root of subtree which value propagates in.
-      ** @param t The reference to components tree.
-      ** @param a_ The reference to image.
+      ** @param n Node to propagate.
+      ** @param t Component tree used for propagation.
+      ** @param a_ Attributed image where values are propagated.
       */
       template <typename T, typename A>
+      inline
       void
       propagate_node_to_descendants(mln_psite(A)& n,
 				    const T& t,
 				    Image<A>& a_);
 
+
       /**
-      ** Propagate a value from a node to its ancestors.
+      ** Propagate a value \v from a node \n to its ancestors.
       **
-      ** @param n Forward iterator related to the node.
-      ** @param t Reference to components tree.
-      ** @param a_ Reference to image.
+      ** @param n Node to propagate.
+      ** @param t Component tree used for propagation.
+      ** @param a_ Attributed image where values are propagated.
       ** @param v Value to propagate.
       */
       template <typename T, typename A>
@@ -83,23 +84,24 @@ namespace mln {
       propagate_node_to_ancestors(mln_psite(A) n,
 				  const T& t,
 				  Image<A>& a_,
-				  mln_value(A) v);
+				  const mln_value(A)& v);
 
       /**
       ** Propagate the node's value to its ancestors.
       **
-      ** @param n Forward iterator related to the node.
-      ** @param t Reference to components tree.
-      ** @param a_ Reference to image.
+      ** @param n Node to propagate.
+      ** @param t Component tree used for propagation.
+      ** @param a_ Attributed image where values are propagated.
       */
       template <typename T, typename A>
+      inline
       void
       propagate_node_to_ancestors(mln_psite(A) n,
 				  const T& t,
 				  Image<A>& a_);
 
 
-# ifndef MLN_INCLUDE_ONLY
+      //# ifndef MLN_INCLUDE_ONLY
 
       /* Descendants propagation */
 
@@ -109,7 +111,7 @@ namespace mln {
       propagate_node_to_descendants(mln_psite(A) n,
 				    const T& t,
 				    Image<A>& a_,
-				    mln_value(A) v)
+				    const mln_value(A)& v)
       {
 	A& a = exact(a_);
 	mln_precondition(a.is_valid());
@@ -148,7 +150,7 @@ namespace mln {
       propagate_node_to_ancestors(mln_psite(A) n,
 				  const T& t,
 				  Image<A>& a_,
-				  mln_value(A) v)
+				  const mln_value(A)& v)
       {
 	A& a = exact(a_);
 	mln_precondition(a.is_valid());
@@ -180,7 +182,7 @@ namespace mln {
 	propagate_node_to_ancestors(n, t, a, a(n));
       }
 
-# endif // ! MLN_INCLUDE_ONLY
+      //# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::morpho::tree
   } // end of namespace mln::morpho
