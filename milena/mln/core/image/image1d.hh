@@ -208,6 +208,10 @@ namespace mln
     /// Read-write access to the image value located at (\p index).
     T& at_(def::coord index);
 
+     /// Give the number of indexes.
+    unsigned ninds() const;
+
+
 
     /// Fast Image method
 
@@ -452,6 +456,15 @@ namespace mln
   {
     mln_precondition(this->has(point1d(index)));
     return this->data_->array_[index];
+  }
+
+  template <typename T>
+  inline
+  unsigned
+  image1d<T>::ninds() const
+  {
+    mln_precondition(this->is_valid());
+    return this->data_->b_.len(0);
   }
 
   template <typename T>

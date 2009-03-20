@@ -1,5 +1,11 @@
 2009-03-20  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
+	Add ninds() method to image1d class.
+	* mln/core/image/image1d.hh: Add ninds() method.
+	* mln/world/binary_2d/projected_histo.hh: Update.
+
+2009-03-20  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
 	Fix subsample() routine.
 	* mln/world/binary_2d/subsample.hh: Fix.
 

@@ -47,11 +47,14 @@ namespace mln
     {
 
       void projected_histo(const image2d<bool>& input,
-			   image1d<value::int_u12>& row_histo,
-			   image1d<value::int_u12>& col_histo)
+			   image1d<float>& row_histo,
+			   image1d<float>& col_histo,
+			   bool value = true)
       {
 	const unsigned nrows = input.nrows();
+	data::fill(row_histo, 0);
 	const unsigned ncols = input.ncols();
+	data::fill(col_histo, 0);
 	mln_precondition(row_histo.nelements() == nrows);
 	mln_precondition(col_histo.nelements() == ncols);
 
@@ -59,13 +62,19 @@ namespace mln
 	{
 	  for (unsigned col = 0; col < ncols; ++col)
 	  {
-	    if (input(point2d(row, col)))
+	    if (input.at_(row, col) == value)
 	    {
-	      ++row_histo(point1d(row));
-	      ++col_histo(point1d(col));
+	      ++row_histo.at_(row);
+	      ++col_histo.at_(col);
 	    }
 	  }
 	}
+
+	for (unsigned i = 0; i < row_histo.ninds(); ++i)
+	  row_histo.at_(i) /= ncols;
+
+	for (unsigned i = 0; i < col_histo.ninds(); ++i)
+	  col_histo.at_(i) /= nrows;
       }
 
     } // end of namespace mln::world::binary_2d
