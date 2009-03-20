@@ -1,5 +1,10 @@
 2009-03-20  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
+	Fix subsample() routine.
+	* mln/world/binary_2d/subsample.hh: Fix.
+
+2009-03-20  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
 	Implement binary 2d specific routines.
 	* mln/world/binary_2d/projected_histo.hh: New projected histogram
 	  for binary 2d images.

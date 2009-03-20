@@ -45,33 +45,48 @@ namespace mln
     namespace binary_2d
     {
 
-      image2d<value::int_u8> subsample(const image2d<bool>& input, unsigned n)
+      image2d<value::int_u8> subsample(image2d<bool>& input, unsigned n)
       {
-	bool* ptr = new bool[n];
+	using value::int_u8;
+
+	const bool** ptr = new const bool*[n];
 	const unsigned nrows = input.nrows() / n;
 	const unsigned ncols = input.ncols() / n;
-	image2d<value::int_u8> output;
-	initialize(output, input);
+	algebra::vec<2, unsigned int> vmin;
+	algebra::vec<2, unsigned int> vmax;
+	vmin[0] = 0;
+	vmin[1] = 0;
+	vmax[0] = nrows - 1;
+	vmax[1] = ncols - 1;
+	point2d pmin(vmin);
+	point2d pmax(vmax);
+	image2d<int_u8> output(box<point2d>(pmin, pmax));
 
 	dpoint2d dp_row(1, 0);
 	const unsigned delta_row = input.delta_index(dp_row);
+	unsigned count = 0;
 
 	for (unsigned row = 0; row < nrows; ++row)
 	{
-	  unsigned count = 0;
 	  ptr[0] = & input(point2d(n * row, 0));
 	  for (unsigned i = 1; i < n; ++i)
 	    ptr[i] = ptr[i - 1] + delta_row;
 	  for (unsigned col = 0; col < ncols; ++col)
 	  {
-	    for (unsigned i = 0; i < n; ++i, ++ptr)
+	    count = 0;
+	    for (unsigned i = 0; i < n; ++i)
 	    {
-	      if (ptr[i])
-		++count;
+	      for (unsigned j = 0; j < n; ++j, ++(ptr[i]))
+	      {
+		if (*(ptr[i]))
+		  ++count;
+	      }
 	    }
 	    output(point2d(row, col)) = count * 255 / n / n;
 	  }
 	}
+
+	return output;
       }
 
     } // end of namespace mln::world::binary_2d
