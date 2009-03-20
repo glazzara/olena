@@ -25,16 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WORLD_BINARY_2D_SUBSAMPLE_HH
-# define MLN_WORLD_BINARY_2D_SUBSAMPLE_HH
+#ifndef MLN_WORLD_BINARY_2D_PROJECTED_HISTO_HH
+# define MLN_WORLD_BINARY_2D_PROJECTED_HISTO_HH
 
-/// \file mln/world/binary_2d/subsample.hh
+/// \file mln/world/binary_2d/projected_histo.hh
 ///
 /// FIXME: insert comment.
 
+# include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/dpoint2d.hh>
-# include <mln/value/int_u8.hh>
+# include <mln/value/int_u12.hh>
 
 namespace mln
 {
@@ -45,31 +46,24 @@ namespace mln
     namespace binary_2d
     {
 
-      image2d<value::int_u8> subsample(const image2d<bool>& input, unsigned n)
+      void projected_histo(const image2d<bool>& input,
+			   image1d<value::int_u12>& row_histo,
+			   image1d<value::int_u12>& col_histo)
       {
-	bool* ptr = new bool[n];
-	const unsigned nrows = input.nrows() / n;
-	const unsigned ncols = input.ncols() / n;
-	image2d<value::int_u8> output;
-	initialize(output, input);
-
-	dpoint2d dp_row(1, 0);
-	const unsigned delta_row = input.delta_index(dp_row);
+	const unsigned nrows = input.nrows();
+	const unsigned ncols = input.ncols();
+	mln_precondition(row_histo.nelements() == nrows);
+	mln_precondition(col_histo.nelements() == ncols);
 
 	for (unsigned row = 0; row < nrows; ++row)
 	{
-	  unsigned count = 0;
-	  ptr[0] = & input(point2d(n * row, 0));
-	  for (unsigned i = 1; i < n; ++i)
-	    ptr[i] = ptr[i - 1] + delta_row;
 	  for (unsigned col = 0; col < ncols; ++col)
 	  {
-	    for (unsigned i = 0; i < n; ++i, ++ptr)
+	    if (input(point2d(row, col)))
 	    {
-	      if (ptr[i])
-		++count;
+	      ++row_histo(point1d(row));
+	      ++col_histo(point1d(col));
 	    }
-	    output(point2d(row, col)) = count * 255 / n / n;
 	  }
 	}
       }
@@ -80,4 +74,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_BINARY_2D_SUBSAMPLE_HH
+#endif // ! MLN_WORLD_BINARY_2D_PROJECTED_HISTO_HH
