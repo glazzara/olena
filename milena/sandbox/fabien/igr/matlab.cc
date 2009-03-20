@@ -14,6 +14,8 @@
 #include <mln/accu/sum.hh>
 #include <mln/accu/image/all.hh>
 #include <mln/arith/minus.hh>
+#include <mln/arith/plus.hh>
+#include <mln/arith/times.hh>
 #include <mln/data/fill.hh>
 #include <mln/data/paste.hh>
 #include <mln/level/compute.hh>
@@ -101,26 +103,54 @@ int main(int argc, char* argv[])
   float seuil = fseuil * ectys;
 
   // Calcul du masque
-  image2d<bool> masque; // FIXME: init this ROI, should be a domain
+  image2d<bool> masque;
   initialize(masque, datasli);
   data::fill(masque, false)
   data::fill(masque | pw::value(datasli) > pw::cst(seuil), true);
   // si on a choisi une région avec roi2
   if (nargin>2)
-    masque=masque.*roi2;
+    data::fill(masque | pw::value(roi2) == false, false);
 
-  //on applique le masque sur image et imasoustraite
+  // On applique le masque sur image et imasoustraite
+  for (int k = 0; k < arr_ima.nelements(); ++k)
+  {
+    data::fill(arr_ima[k] | pw::value(masque) == false; 0.0);
+    data::fill(arr_sous[k] | pw::value(masque) == false; 0.0);
+  }
 
-  for k=2:dim3
-    for i=1:dim1
-      for j=1:dim2
-	if(masque(i,j)==0)
-	  image(i,j,k)=0;
-  imasoustraite(i,j,k)=0;
-  end;
-  end;
-  end;
-  end;
+  // On regarde si le seuillage et le masquage sont OK
+  // FIXME: imagesc(abs(image(:,:,2)));
+
+  // On cherche les maxi (intensité c et temps T) des courbes signal(temps)
+  // On masque toute la série d'images
+
+  // Essai de lissage à parir de fin de montée vaculaire ini2 pour ameliorer
+  // les seuillages a 10 50 90        NON EVALUE RIGOUREUSEMENT
+  for (int k = init2 - 1; k < dim3 - 1; ++k)
+    arr_ima[k] = 0.5 * arr_ima[k] + 0.25 * arr_ima[k - 1] + 0.25 * arr_ima[k + 1];
+
+  for_all(p)
+  {
+    if (masque(p) == false)
+    {
+      for (int k = 0; k < arr_ima.nelements(); ++k)
+	arr_ima[k](p) = 0.0;
+      ima_c(p) = 0.0;
+      ima_t(p) = 0.0;
+      ++kk;
+    }
+  }
+
+  // FIXME: [c,T]=max(image,[ ],3);
+
+  std::cout << "kk = " << kk << std::endl;
+
+  image2d<accu::sum<float> > accu_sum;
+  accu::image::init(result);
+  for (int i = first; i < last; ++i)
+    accu::image::take(result, arr_ima[i]);
+
+  ima_auc accu::image::to_result(result);
 
   return 0;
 }

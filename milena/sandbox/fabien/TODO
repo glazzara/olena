@@ -40,3 +40,5 @@
 [ ] Integrate external libraries (GDCM, IM)
 [ ] Send result images to lrde account
 [ ] Translate Matlab code
+[ ] Subsample binary images
+[ ] Fast projected histogram
