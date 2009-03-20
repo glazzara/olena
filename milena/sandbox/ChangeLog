@@ -1,3 +1,12 @@
+2009-03-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add some useful executable source.
+
+	* theo/exec/gaussian_directional_2d.cc: New.
+	* theo/exec/rank_rectangle.cc: New.
+	* theo/exec/closing_rectangle.cc: New.
+	* theo/exec/gaussian_directional_2d.hh: New.
+
 2009-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update Scribo's code.
