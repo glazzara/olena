@@ -1,3 +1,11 @@
+2009-03-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make room for some non-generic routines.
+
+	* mln/world: New directory.
+	* mln/world/binary_2d: New directory.
+	* mln/world/binary_2d/subsample.hh: New.
+
 2009-03-20  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Debug int_u_sat.
