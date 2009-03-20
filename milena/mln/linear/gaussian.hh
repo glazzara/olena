@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2008 EPITA Research and
+// Copyright (C) 2001, 2002, 2003, 2004, 2008, 2009 EPITA Research and
 // Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -63,9 +63,15 @@ namespace mln
     ///
     /// \pre output.domain = input.domain
     ///
-    template <class I>
+    template <typename I>
     mln_concrete(I)
     gaussian(const Image<I>& input, float sigma);
+
+
+    template <typename I>
+    mln_concrete(I)
+    gaussian(const Image<I>& input, float sigma, int dir);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -637,7 +643,7 @@ namespace mln
      * \pre input.is_valid
      * \pre dir < dimension(input)
      */
-    template <class I>
+    template <typename I>
     inline
     mln_concrete(I)
     gaussian(const Image<I>& input, float sigma, int dir)
@@ -669,7 +675,7 @@ namespace mln
      * \pre input.is_valid
      * \pre dir < dimension(input)
      */
-    template <class I>
+    template <typename I>
     inline
     mln_concrete(I)
     gaussian_1st_derivative(const Image<I>& input, float sigma, int dir)
@@ -702,7 +708,7 @@ namespace mln
      * \pre input.is_valid
      * \pre dir < dimension(input)
      */
-    template <class I>
+    template <typename I>
     inline
     mln_concrete(I)
     gaussian_2nd_derivative(const Image<I>& input, float sigma, int dir)
@@ -734,7 +740,7 @@ namespace mln
      *
      * \pre input.is_valid
      */
-    template <class I>
+    template <typename I>
     inline
     mln_concrete(I)
     gaussian(const Image<I>& input, float sigma)
@@ -763,7 +769,7 @@ namespace mln
      *
      * \pre input.is_valid
      */
-    template <class I>
+    template <typename I>
     inline
     mln_concrete(I)
     gaussian_1st_derivative(const Image<I>& input, float sigma)
@@ -791,7 +797,7 @@ namespace mln
      *
      * \pre input.is_valid
      */
-    template <class I>
+    template <typename I>
     inline
     mln_concrete(I)
     gaussian_2nd_derivative(const Image<I>& input, float sigma)

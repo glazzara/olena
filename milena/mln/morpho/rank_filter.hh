@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,10 +31,15 @@
 
 /// \file mln/morpho/rank_filter.hh
 ///
-/// Morphological rank_filter.
+/// Morphological rank filter.
+///
+/// \todo Rely on the same mechanism as erosion/dilation.
 
 # include <mln/morpho/includes.hh>
+# include <mln/accu/transform_line.hh>
 # include <mln/convert/to_p_array.hh>
+
+
 
 namespace mln
 {
@@ -50,6 +55,8 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+    // Tests.
 
 
     namespace internal
@@ -71,6 +78,10 @@ namespace mln
       }
 
     } // end of namespace mln::morpho::internal
+
+
+
+    // Implementations.
 
 
     namespace impl
@@ -119,9 +130,27 @@ namespace mln
       template <typename I, typename W>
       inline
       mln_concrete(I)
+      rank_filter_line(const Image<I>& input, const Window<W>& win, unsigned k, unsigned dir)
+      {
+	trace::entering("morpho::impl::rank_filter_line");
+
+	internal::rank_filter_tests(input, win, k);
+
+	accu::rank<mln_value(I)> accu(k);
+	extension::adjust_fill(input, geom::delta(win) + 1, accu);
+	mln_concrete(I) output = accu::transform_line(accu, input, exact(win).length(), dir);
+
+	trace::exiting("morpho::impl::rank_filter_line");
+	return output;
+      }
+
+
+      template <typename I, typename W>
+      inline
+      mln_concrete(I)
       rank_filter_directional(const Image<I>& input, const Window<W>& win, unsigned k, unsigned dir)
       {
-	trace::entering("morpho::impl::generic::rank_filter_directional");
+	trace::entering("morpho::impl::rank_filter_directional");
 
 	internal::rank_filter_tests(input, win, k);
 
@@ -129,11 +158,16 @@ namespace mln
 	extension::adjust_fill(input, geom::delta(win) + 1, accu);
 	mln_concrete(I) output = accu::transform_directional(accu, input, win, dir);
 
-	trace::exiting("morpho::impl::generic::rank_filter_directional");
+	trace::exiting("morpho::impl::rank_filter_directional");
 	return output;
       }
 
+
     } // end of namespace mln::morpho::impl
+
+
+
+    // Dispatch.
 
 
     namespace internal
@@ -142,12 +176,24 @@ namespace mln
       template <typename I, typename M, unsigned i, typename C>
       inline
       mln_concrete(I)
-      rank_filter_dispatch(const Image<I>& input, const win::line<M, i, C> & win, unsigned k)
+      rank_filter_dispatch(const Image<I>& input, const win::line<M, i, C>& win, unsigned k)
       {
-	return impl::rank_filter_directional(input, win, k, i);
+	return impl::rank_filter_line(input, win, k, i);
       }
 
-
+      template <typename I>
+      inline
+      mln_concrete(I)
+      rank_filter_dispatch(const Image<I>& input, const win::rectangle2d& win, unsigned k)
+      {
+	if (win.height() <= 3 && win.width() <= 3)
+	  return impl::generic::rank_filter(input, win, k);
+	else
+	  if (win.height() < win.width())
+	    return impl::rank_filter_directional(input, win, k, 1);
+	  else
+	    return impl::rank_filter_directional(input, win, k, 0);
+      }
 
       template <typename I, typename W>
       inline
@@ -163,12 +209,14 @@ namespace mln
 
     // Facades.
 
+
     template <typename I, typename W>
     inline
     mln_concrete(I)
     rank_filter(const Image<I>& input, const Window<W>& win, unsigned k)
     {
       trace::entering("morpho::rank_filter");
+
       mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 

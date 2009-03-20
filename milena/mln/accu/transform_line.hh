@@ -66,7 +66,9 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
     // Tests.
+
 
     namespace internal
     {
@@ -87,6 +89,10 @@ namespace mln
       }
 
     } // end of namespace mln::accu::internal
+
+
+
+    // Implementations.
 
 
     namespace impl
@@ -188,8 +194,148 @@ namespace mln
 
       } // end of namespace mln::accu::impl::generic
 
+
+
+      template <typename A, typename I>
+      inline
+      mln_ch_value(I, mln_result(A))
+	transform_line_fastest(const Accumulator<A>& a_,
+			       const Image<I>& input_,
+			       unsigned length, unsigned dir)
+      {
+	trace::entering("accu::impl::transform_line_fastest");
+
+	const I& input = exact(input_);
+	A a = exact(a_);
+
+	internal::transform_line_tests(a, input);
+
+	mln_ch_value(I, mln_result(A)) output;
+	initialize(output, input);
+
+	typedef mln_psite(I) P;
+
+	mln_delta(P) dp(literal::zero);
+	dp[dir] = 1;
+	int step = input.delta_index(dp);
+
+	P pmin = input.domain().pmin(),
+	  pmax = input.domain().pmax();
+	const def::coord
+	  pmax_dir = pmax[dir],
+	  pmin_dir = pmin[dir];
+
+	P p = pmin; // Starting point.
+	def::coord& p_dir = p[dir];
+
+	do
+	  {
+	    unsigned o_qu, o_qt;
+	    unsigned o_p = input.index_of_point(p);
+
+	    // Start the line.
+ 	    // ----------------
+
+	    a.take_as_init(input.element(o_p));
+	    o_qu = o_p;
+	    for (unsigned i = 1; i <= length / 2; ++i)
+	      {
+		o_qu -= step;
+		a.take(input.element(o_qu));
+	      }
+	    o_qt = o_p;
+	    for (unsigned i = 1; i <= length / 2; ++i)
+	      {
+		o_qt += step;
+		a.take(input.element(o_qt));
+	      }
+	    output.element(o_p) = a.to_result();
+
+	    // Browse the line.
+	    // ----------------
+
+	    while (p_dir < pmax_dir)
+	      {
+		++p_dir;
+
+		o_p  += step;
+		o_qt += step;
+		o_qu += step;
+
+		a.take(input.element(o_qt));
+		a.untake(input.element(o_qu));
+
+		output.element(o_p) = a.to_result();
+	      }
+	  
+ 	    p_dir = pmin_dir;
+
+	    // Go to the next line.
+	    // --------------------
+
+	    for (int c = P::dim - 1; c >= 0; --c)
+	      {
+		if (c == int(dir))
+		  continue;
+		if (p[c] != pmax[c])
+		  {
+		    ++p[c];
+		    break;
+		  }
+		p[c] = pmin[c];
+	      }
+
+	  } while (p != pmin);
+
+	trace::exiting("accu::impl::transform_line_fastest");
+	return output;
+      }
+
+
     } // end of namespace mln::accu::impl
 
+
+
+
+    // Dispatch.
+
+
+    namespace internal
+    {
+
+      template <typename A, typename I>
+      inline
+      mln_ch_value(I, mln_result(A))
+	transform_line_dispatch(trait::image::speed::any,
+				const Accumulator<A>& a,
+				const Image<I>& input,
+				unsigned length, unsigned dir)
+      {
+	return impl::generic::transform_line(a,
+					     input,
+					     length, dir);
+      }
+
+//       template <typename A, typename I>
+//       inline
+//       mln_ch_value(I, mln_result(A))
+// 	transform_line_dispatch(trait::image::speed::fastest,
+// 				const Accumulator<A>& a,
+// 				const Image<I>& input,
+// 				unsigned length, unsigned dir)
+//       {
+// 	return impl::transform_line_fastest(a,
+// 					    input,
+// 					    length, dir);
+//       }
+
+
+    } // end of namespace mln::accu::internal
+
+
+
+
+    // Facades.
 
 
     template <typename A, typename I>
@@ -205,7 +351,8 @@ namespace mln
 
       extension::adjust(input, length / 2);
       mln_ch_value(I, mln_result(A)) output;
-      output = impl::generic::transform_line(a, input, length, dir);
+      output = internal::transform_line_dispatch(mln_trait_image_speed(I)(),
+						 a, input, length, dir);
 
       trace::exiting("accu::transform_line");
       return output;

@@ -1,3 +1,20 @@
+2009-03-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Some cleanups in classical filters.
+
+	* mln/data/memcpy_.hh: Deactivate trace.
+	This internal routine floods the trace file because it can
+	be called in a loop.
+	* mln/linear/gaussian.hh (class): Replace by...
+	(typename): ...this.
+	See sandbox/theo/exec/ for a fastest implementation.
+	* mln/accu/transform_line.hh (transform_line_fastest): New.
+	* mln/morpho/rank_filter.hh (rank_filter_line): New.
+	(rank_filter_dispatch): New overload for rectangle2d.
+	* mln/morpho/includes.hh: Update.
+	* img/BUG_lean_ascii.pgm.gz: New.
+	This file makes io::pgm::load bug.
+
 2009-03-19  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Optimize propagations and add component processing functions.

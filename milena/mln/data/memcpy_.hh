@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -78,7 +78,7 @@ namespace mln
       inline
       void memcpy__(Pd& dest, const Ps& src, std::size_t n)
       {
-	trace::entering("data::impl::memcpy__");
+	// trace::entering("data::impl::memcpy__");
 
 	typedef mln_image(Pd) Id;
 	typedef mln_image(Ps) Is;
@@ -105,7 +105,7 @@ namespace mln
 	    *p_d++ = *p_s++;
 	}
 
-	trace::exiting("data::impl::memcpy__");
+	// trace::exiting("data::impl::memcpy__");
       }
 
     }
@@ -116,7 +116,7 @@ namespace mln
 		 const Generalized_Pixel<Ps>& src_,
 		 std::size_t n)
     {
-      trace::entering("data::memcpy_");
+      // trace::entering("data::memcpy_");
 
       typedef mln_image(Pd) Id;
       metal::is_not_const<Id>::check();
@@ -143,7 +143,7 @@ namespace mln
 
       impl::memcpy__(dest, src, n);
 
-      trace::exiting("data::memcpy_");
+      // trace::exiting("data::memcpy_");
     }
 
 # endif // ! MLN_INCLUDE_ONLY
