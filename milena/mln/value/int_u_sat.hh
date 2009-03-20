@@ -61,7 +61,7 @@ namespace mln
       enum {
 	dim = 1,
 	card = metal::math::pow_int<2, n>::value,
-	nbits = n;
+	nbits = n
       };
 
       // FIXME: Overhaul these traits (see other value traits).
