@@ -1,3 +1,10 @@
+2009-03-23  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Update binarization test with projected histograms.
+	* fabien/binarization/test.cc: Update.
+	* fabien/igr/Makefile: Update.
+	* fabien/igr/matlab.cc: Update.
+
 2009-03-20  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add binarization directory for tests.

@@ -105,7 +105,7 @@ int main(int argc, char* argv[])
   // Calcul du masque
   image2d<bool> masque;
   initialize(masque, datasli);
-  data::fill(masque, false)
+  data::fill(masque, false);
   data::fill(masque | pw::value(datasli) > pw::cst(seuil), true);
   // si on a choisi une région avec roi2
   if (nargin>2)
@@ -114,8 +114,8 @@ int main(int argc, char* argv[])
   // On applique le masque sur image et imasoustraite
   for (int k = 0; k < arr_ima.nelements(); ++k)
   {
-    data::fill(arr_ima[k] | pw::value(masque) == false; 0.0);
-    data::fill(arr_sous[k] | pw::value(masque) == false; 0.0);
+    data::fill(arr_ima[k] | pw::value(masque) == false, 0.0);
+    data::fill(arr_sous[k] | pw::value(masque) == false, 0.0);
   }
 
   // On regarde si le seuillage et le masquage sont OK
@@ -143,14 +143,19 @@ int main(int argc, char* argv[])
 
   // FIXME: [c,T]=max(image,[ ],3);
 
+  // Ou 'ima_c' est la valeur du max et 'ima_t' son index, le long de la dimension 3
+  // kk est le nombre de points masques
+
   std::cout << "kk = " << kk << std::endl;
 
   image2d<accu::sum<float> > accu_sum;
   accu::image::init(result);
   for (int i = first; i < last; ++i)
     accu::image::take(result, arr_ima[i]);
-
   ima_auc accu::image::to_result(result);
+
+  // Conversion du temps du pic en secondes à partir fin période de base
+  tmax = acqui * (ima_t - ini);
 
   return 0;
 }
