@@ -1,3 +1,9 @@
+2009-03-23  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Change arguments of projected_histo().
+	* mln/world/binary_2d/projected_histo.hh: Change arguments, now returns
+	  a couple of image1d.
+
 2009-03-20  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add ninds() method to image1d class.

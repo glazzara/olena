@@ -36,6 +36,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/dpoint2d.hh>
 # include <mln/value/int_u12.hh>
+# include <mln/util/couple.hh>
 
 namespace mln
 {
@@ -46,15 +47,17 @@ namespace mln
     namespace binary_2d
     {
 
-      void projected_histo(const image2d<bool>& input,
-			   image1d<float>& row_histo,
-			   image1d<float>& col_histo,
-			   bool value = true)
+      util::couple<image1d<float>, image1d<float> >
+      projected_histo(const image2d<bool>& input, bool value = true)
       {
 	const unsigned nrows = input.nrows();
+	image1d<float> row_histo(nrows);
 	data::fill(row_histo, 0);
+
 	const unsigned ncols = input.ncols();
+	image1d<float> col_histo(ncols);
 	data::fill(col_histo, 0);
+
 	mln_precondition(row_histo.nelements() == nrows);
 	mln_precondition(col_histo.nelements() == ncols);
 
@@ -71,10 +74,12 @@ namespace mln
 	}
 
 	for (unsigned i = 0; i < row_histo.ninds(); ++i)
-	  row_histo.at_(i) /= ncols;
+	  row_histo.at_(i) = row_histo.at_(i) * 100 / ncols;
 
 	for (unsigned i = 0; i < col_histo.ninds(); ++i)
-	  col_histo.at_(i) /= nrows;
+	  col_histo.at_(i) = col_histo.at_(i) * 100 / nrows;
+
+	return util::couple<image1d<float>, image1d<float> > (row_histo, col_histo);
       }
 
     } // end of namespace mln::world::binary_2d
