@@ -46,8 +46,8 @@ namespace mln
     namespace next
     {
 
-      template <typename T, typename T>
-      struct set_binary_<mln::fun::inf, mln::Object, T, mln::Object, T>
+      template <typename T>
+      struct set_binary_<mln::fun::sup, mln::Object, T, mln::Object, T>
       {
 	typedef set_binary_ ret;
 	typedef T result;

@@ -72,7 +72,6 @@ namespace mln
       data(I& ima, const F& f);
 
       I ima_;
-      // FIXME: value or pointer or whatever ?
       F f_;
     };
 

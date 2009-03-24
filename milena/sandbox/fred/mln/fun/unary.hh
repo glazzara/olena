@@ -101,13 +101,40 @@ namespace mln
 	typedef unary_with_lvalue_helper<false, M, T> super;
 	typedef typename super::function function;
 
-	static typename function::lresult lcall(const M& m, T& x)
+	static typename function::template lresult_with<T>::ret lcall(const M& m, T& x)
 	{
 	  function f(super::inst(m));
 	  return f(x);
 	}
 
 	static void set(const M& m, typename function::lvalue v, const T& x)
+	{
+	  function f(super::inst(m));
+	  f.set(v, x);
+	}
+      };
+
+      template <typename MF, typename MG, typename T>
+      struct unary_with_lvalue_helper<true, MF, mln::fun::spe::internal::unary_modifier<MG, T> >
+      : unary_with_lvalue_helper<false, MF, mln::fun::spe::internal::unary_modifier<MG, T> >
+      {
+	typedef unary_with_lvalue_helper<false, MF, typename MG::result > super;
+	typedef typename super::function function;
+
+	static typename function::template lresult_with<typename MG::result>::ret lcall(const MF& m, T& x)
+	{
+	  function f(super::inst(m));
+	  return f(x);
+	}
+
+	static typename function::template lresult_with< mln::fun::spe::internal::unary_modifier<MG, T> >::ret
+	lcall(const MF& m, const mln::fun::spe::internal::unary_modifier<MG, T>& x)
+	{
+	  function f(super::inst(m));
+	  return f(x);
+	}
+
+	static void set(const MF& m, typename function::lvalue v, const T& x)
 	{
 	  function f(super::inst(m));
 	  f.set(v, x);
@@ -139,9 +166,16 @@ namespace mln
       }
 
       template <typename T>
-      typename with<T>::ret::lresult operator()(T& v) const
+      typename with<T>::ret::template lresult_with<T>::ret operator()(T& v) const
       {
 	return with<T>::impl::lcall(exact(*this), v);
+      }
+
+      template <typename G, typename U>
+      typename with< mln::fun::spe::internal::unary_modifier<G, U> >::ret::lresult
+      operator()(const mln::fun::spe::internal::unary_modifier<G, U>& v) const
+      {
+	return with< mln::fun::spe::internal::unary_modifier<G, U> >::impl::lcall(exact(*this), v);
       }
 
       template <typename T, typename R>

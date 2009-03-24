@@ -44,7 +44,8 @@ namespace mln
       namespace internal
       {
 
-	template <typename Impl>
+	// Wrapper for bijective functions
+	template <typename Impl, typename T>
 	struct unary_modifier
 	{
 	  typedef typename Impl::result   result;
@@ -52,7 +53,43 @@ namespace mln
 	  typedef typename Impl::lvalue   lvalue;
 	  typedef unary_modifier          lresult;
 
-	  // FIXME: "argument& x" or "lvalue x" directly? ~~~
+	  unary_modifier(const Impl& impl, T& x)
+	  : x_(&x), impl_(&impl)
+	  {
+	  }
+
+	  result to_result() const
+	  {
+	    return impl_->read(*x_);
+	  };
+
+	  operator result() const
+	  {
+	    return to_result();
+	  };
+
+	  const result& operator = (const result& r) const
+	  {
+	    argument x(*x_);
+	    impl_->write(x, r);
+	    *x_ = x;
+
+	    return r;
+	  }
+
+	  private:
+	    T *x_;
+	    const Impl *impl_;
+	};
+
+	template <typename Impl>
+	struct unary_modifier<Impl, typename Impl::argument>
+	{
+	  typedef typename Impl::result   result;
+	  typedef typename Impl::argument argument;
+	  typedef typename Impl::lvalue   lvalue;
+	  typedef unary_modifier          lresult;
+
 	  unary_modifier(const Impl& impl, argument& x)
 	  : x_(&x), impl_(&impl)
 	  {
@@ -71,12 +108,51 @@ namespace mln
 	  const result& operator = (const result& r) const
 	  {
 	    impl_->write(*x_, r);
+
 	    return r;
 	  }
 
-	private:
-	  argument *x_;
-	  const Impl *impl_;
+	  private:
+	    argument *x_;
+	    const Impl *impl_;
+	};
+
+	template <typename Impl, typename Impl2, typename T>
+	struct unary_modifier<Impl, unary_modifier<Impl2, T> >
+	{
+	  typedef typename Impl::result   result;
+	  typedef typename Impl::argument argument;
+	  typedef typename Impl::lvalue   lvalue;
+	  typedef unary_modifier lresult;
+
+	  // FIXME: "argument& x" or "lvalue x" directly? ~~~
+	  unary_modifier(const Impl& impl, const unary_modifier<Impl2, T>& m)
+	  : m_(m), impl_(&impl)
+	  {
+	  }
+
+	  result to_result() const
+	  {
+	    return impl_->read(m_.to_result());
+	  };
+
+	  operator result() const
+	  {
+	    return to_result();
+	  };
+
+	  const result& operator = (const result& r) const
+	  {
+	    argument m(m_);
+	    impl_->write(m, r);
+	    m_ = m;
+
+	    return r;
+	  }
+
+	  private:
+	    const unary_modifier<Impl2, T> m_;
+	    const Impl *impl_;
 	};
 
       } // end of namespace mln::fun::internal
@@ -118,12 +194,19 @@ namespace mln
 	struct unary_impl_set<true, Fun, T> : unary_impl_set<false, Fun, T>
 	{
 	  typedef unary_impl_set<false, Fun, T> super;
-	  typedef typename super::impl      impl;
+	  typedef typename super::impl    impl;
 
-	  typedef typename impl::argument        argument;
-	  typedef typename impl::result          result;
-	  typedef typename impl::lvalue          lvalue;
-	  typedef mln::fun::spe::internal::unary_modifier<impl> lresult;
+	  typedef typename impl::argument argument;
+	  typedef typename impl::result   result;
+	  typedef typename impl::lvalue   lvalue;
+
+	  template <typename U>
+	  struct lresult_with
+	  {
+	    typedef mln::fun::spe::internal::unary_modifier<impl, U> ret;
+	  };
+
+	  typedef typename lresult_with<argument>::ret lresult;
 
 	  unary_impl_set() {}
 	  unary_impl_set(const typename super::init_param& p) : super(p) {}
@@ -190,8 +273,8 @@ namespace mln
 
   } // end of namespace mln::fun
 
-  template <typename Impl>
-  std::ostream& operator << (std::ostream& o, const mln::fun::spe::internal::unary_modifier<Impl>& m)
+  template <typename Impl, typename T>
+  std::ostream& operator << (std::ostream& o, const mln::fun::spe::internal::unary_modifier<Impl, T>& m)
   {
     return o << m.to_result();
   }

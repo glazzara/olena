@@ -1,17 +1,16 @@
-TARGET=fun
-OBJS=$(TARGET).o
+TARGETS=fun.bin thru.bin cos.bin
 
 OLENADIR=../../../..
 MILENADIR=$(OLENADIR)/milena
 
-CXXFLAGS=-I$(MILENADIR) -I../ -DNDEBUG -O1 -ffast-math
+CXXFLAGS=-I$(MILENADIR) -I../ -DNDEBUG -O1
 CXX=g++
 LD=g++
 LDFLAGS=
 RM=rm
 
-$(TARGET): $(OBJS)
-	$(LD) $(LDFLAGS) -o $@ $(OBJS)
+%.bin: %.o
+	$(LD) $(LDFLAGS) -o $@ $<
 
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $<
@@ -19,7 +18,7 @@ $(TARGET): $(OBJS)
 %.o: %.hh
 	$(CXX) $(CXXFLAGS) -c $<
 
-all: $(TARGET)
+all: $(TARGETS)
 
 clean:
-	$(RM) -f $(TARGET) *.o *~
+	$(RM) -f $(TARGETS) *.o *~

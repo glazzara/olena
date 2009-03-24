@@ -1,3 +1,14 @@
+2009-03-24  Frederic Bour  <bour@lrde.epita.fr>
+
+	Correct new functions.
+	* fred/mln/core/image/thru_morpher.hh,
+	* fred/mln/fun/math/inf.hh,
+	* fred/mln/fun/math/sup.hh: Correct typo
+	* fred/mln/fun/spe/unary.hh,
+	* fred/mln/fun/unary.hh: Add composition with lresult.
+	* fred/tests/Makefile,
+	* fred/tests/thru.cc: Removed unnecessary include.
+
 2009-03-23  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Update binarization test with projected histograms.

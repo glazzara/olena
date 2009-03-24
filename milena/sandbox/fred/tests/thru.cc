@@ -1,5 +1,5 @@
 // Meta functions test
-#include <mln/fun/essential.hh>
+#include <mln/fun/v2v/convert.hh>
 #include <mln/fun/math/cos.hh>
 #include <mln/core/image/thru_morpher.hh>
 #include <mln/fun/compose.hh>
@@ -28,10 +28,9 @@ int main()
   debug::println(ima);
   debug::println(thru(cos, ima));
 
-  thru_image<I, fun::cos::with<fun::cos>::ret::result::with<float>::ret > ima2;
-  ima2 = thru(cos(cos), ima);
+  mln_VAR(ima2, thru(cos(cos), ima));
 
-  data::fill_with_image(ima2, (pw::value(tmp) - pw::cst(13.0f)) / pw::cst(12.0f) | tmp.domain());
+  data::fill_with_image(ima2, tmp);
 
-  debug::println(ima);
+  debug::println(ima2);
 }
