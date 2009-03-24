@@ -19,6 +19,7 @@ void usage(char* argv[])
 int main(int argc, char* argv[])
 {
   using namespace mln;
+  using value::int_u8;
 
   if (argc != 4)
     usage(argv);
@@ -43,6 +44,15 @@ int main(int argc, char* argv[])
 	io::pbm::load(ima, argv[1]);
 	out = morpho::closing::structural(ima, win::disk2d(2 * r + 1));
 	io::pbm::save(out, argv[3]);
+      }
+      break;
+
+    case filetype::pgm:
+      {
+	image2d<int_u8> ima, out;
+	io::pgm::load(ima, argv[1]);
+	out = morpho::closing::structural(ima, win::disk2d(2 * r + 1));
+	io::pgm::save(out, argv[3]);
       }
       break;
 

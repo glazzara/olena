@@ -1,3 +1,24 @@
+2009-03-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add some executable source.
+
+	* theo/icdar: New directory.
+	* theo/icdar/dibco: New directory.
+	* theo/icdar/hsc: New directory.
+	* theo/icdar/hsc/fuzzy.sh: New.
+	* theo/icdar/hsc/dist.sh: New.
+	* theo/icdar/hsc/exec: New directory.
+	* theo/icdar/hsc/exec/iz_lines.cc: New.
+	* theo/icdar/hsc/exec/relabel_lines.cc: New.
+	* theo/icdar/hsc/exec/show_lines_pbm.cc: New.
+	* theo/icdar/hsc/exec/show_lines.cc: New.
+	* theo/exec/watershed_superpose.cc: New.
+	* theo/exec/gaussian_directional_2d__float.cc: New.
+	* theo/exec/distance_thick.cc: New.
+	* theo/exec/closing_rectangle.cc: Add pbm case.
+	* theo/exec/opening_rectangle.cc: New.
+	* theo/exec/closing_isotropic.cc: Add pgm case.
+
 2009-03-24  Frederic Bour  <bour@lrde.epita.fr>
 
 	Correct new functions.

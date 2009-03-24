@@ -1,6 +1,6 @@
 #include "filetype.hh"
 
-#include <mln/morpho/closing/structural.hh>
+#include <mln/morpho/opening/structural.hh>
 
 
 
@@ -9,7 +9,7 @@ void usage(char* argv[])
   std::cerr << "usage: " << argv[0] << " input.xxx height width output.xxx" << std::endl
 	    << "  Height and width are odd positive integers." << std::endl
 	    << "  xxx is pbm or pgm." << std::endl
-	    << "  Rectangle closing on a 2D image." << std::endl;
+	    << "  Rectangle opening on a 2D image." << std::endl;
   std::abort();
 }
 
@@ -40,19 +40,19 @@ int main(int argc, char* argv[])
     {
     case filetype::pbm:
       {
-	image2d<bool> ima, clo;
+	image2d<bool> ima, ope;
 	io::pbm::load(ima, argv[1]);
-	clo = morpho::closing::structural(ima, win::rectangle2d(height, width));
-	io::pbm::save(clo, argv[4]);
+	ope = morpho::opening::structural(ima, win::rectangle2d(height, width));
+	io::pbm::save(ope, argv[4]);
       }
       break;
 
     case filetype::pgm:
       {
-	image2d<int_u8> ima, clo;
+	image2d<int_u8> ima, ope;
 	io::pgm::load(ima, argv[1]);
-	clo = morpho::closing::structural(ima, win::rectangle2d(height, width));
-	io::pgm::save(clo, argv[4]);
+	ope = morpho::opening::structural(ima, win::rectangle2d(height, width));
+	io::pgm::save(ope, argv[4]);
       }
       break;
     };
