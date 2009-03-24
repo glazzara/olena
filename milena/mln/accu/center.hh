@@ -84,10 +84,10 @@ namespace mln
       struct center : public Meta_Accumulator< center >
       {
 
-	template <typename P, typename V>
+	template <typename P>
 	struct with
 	{
-	  typedef accu::center<P, V> ret;
+	  typedef accu::center<P> ret;
 	};
 
       };
@@ -136,6 +136,7 @@ namespace mln
     V
     center<P,V>::to_result() const
     {
+      mln_precondition(is_valid());
       return center_ / nsites_;
     }
 

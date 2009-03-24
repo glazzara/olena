@@ -1,5 +1,46 @@
 2009-03-24  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Small fixes.
+
+	* headers.mk: update distributed header list.
+	
+	* doc/Doxyfile.in: Do not use mln:: prefix in class name lists.
+
+	* doc/ref_guide/ref_guide.tex: update reference to clone().
+
+	* doc/tutorial/tutorial.tex: fix references.
+
+	* mln/accu/center.hh: Fix meta accu.
+
+	* mln/canvas/browsing/depth_first_search.hh: update functor interface.
+
+	* mln/core/concept/function.hh: Introduce Function_i2b.
+
+	* mln/debug/colorize.hh: call srand.
+
+	* mln/fun/i2v/array.hh: update from_to overloads: add a special case
+	for element[0].
+
+	* mln/io/pgm/save.hh: Check if the image is compatible with pgm
+	format.
+
+	* mln/labeling/level.hh,
+	* mln/labeling/regional_maxima.hh: avoid warnings.
+
+	* mln/labeling/relabel.hh: update call to make::relabelfun.
+
+	* mln/make/graph.hh: adjust extension to structural element.
+
+	* mln/util/array.hh:
+	  - add subject_impl specialization.
+	  - Update from_to overloads: add a special case for element[0].
+
+	* tests/accu/site_set/rectangularity.cc: add more tests.
+
+	* tests/unit_test/unit-tests.mk: update unit test list.
+
+2009-03-24  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Fix compilation issues with Cygwin.
 
 	* mln/convert/from_to.hxx,

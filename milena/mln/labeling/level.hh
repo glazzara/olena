@@ -111,9 +111,9 @@ namespace mln
 	bool handles(const P& p) const		  { return input(p) == val; }
 	bool equiv(const P& n, const P&) const	  { return input(n) == val; }
 	bool labels(const P&) const		  { return true; }
-	void do_no_union(const P& n, const P& p)  {}
+	void do_no_union(const P&, const P&)  {}
 	void init_attr(const P&)		  {}
-	void merge_attr(const P& r, const P& p)	  {}
+	void merge_attr(const P&, const P&)	  {}
 
 	// Fastest implementation
 

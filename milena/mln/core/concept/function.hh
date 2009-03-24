@@ -44,6 +44,7 @@ namespace mln
   template <typename E> struct Function_v2v;
   template <typename E> struct Function_v2w2v;
   template <typename E> struct Function_v2w_w2v;
+  template <typename E> struct Function_i2b;
   template <typename E> struct Function_i2v;
   template <typename E> struct Function_p2v;
   template <typename E> struct Function_v2b;
@@ -172,6 +173,29 @@ namespace mln
   protected:
     Function_v2w_w2v();
     Function_v2w_w2v(const Function_v2w_w2v&);
+  };
+
+
+  /*-----------------.
+  | Index -> bool.  |
+  `-----------------*/
+
+  template <>
+  struct Function_i2b<void> { typedef Function_v2b<void> super; };
+
+  /// Base class for implementation of function-objects from
+  /// index to value.
+  ///
+  /// The parameter \a E is the exact type.
+  ///
+  template <typename E>
+  struct Function_i2b : public Function_v2b<E>
+  {
+    typedef Function_i2b<void> category;
+    typedef bool result;
+  protected:
+    Function_i2b();
+    Function_i2b(const Function_i2b&);
   };
 
 
@@ -473,6 +497,20 @@ namespace mln
     : Function<E>(rhs)
   {
   }
+
+  template <typename E>
+  inline
+  Function_i2b<E>::Function_i2b()
+  {
+  }
+
+  template <typename E>
+  inline
+  Function_i2b<E>::Function_i2b(const Function_i2b<E>& rhs)
+    : Function_v2b<E>(rhs)
+  {
+  }
+
 
   template <typename E>
   inline

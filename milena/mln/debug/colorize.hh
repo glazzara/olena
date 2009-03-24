@@ -117,6 +117,7 @@ namespace mln
       int diff_size = f.size() - label_count;
       if (diff_size < 0)
       {
+	srand(1);
 	f.resize(label_count);
 	unsigned i = f.size() + diff_size;
 	// We want to treat comp 0 differently since it is the background.

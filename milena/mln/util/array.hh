@@ -56,7 +56,6 @@ namespace mln
   } // end of namespace mln::util
 
 
-
   namespace convert
   {
 
@@ -174,8 +173,12 @@ namespace mln
     /// Operator<<.
     template <typename T>
     std::ostream& operator<<(std::ostream& ostr,
-			     const mln::util::array<T>& a);
+			     const array<T>& a);
 
+    /// Operator==
+    template <typename T>
+    bool operator==(const array<T>& lhs,
+		    const array<T>& rhs);
 
 
     // array_fwd_iter<T>
@@ -272,6 +275,48 @@ namespace mln
   } // end of namespace mln::util
 
 
+  namespace internal
+  {
+
+    template <typename T, typename E>
+    struct subject_impl<const util::array<T>&, E>
+    {
+      unsigned nelements() const;
+      bool is_empty() const;
+      const T& operator[](unsigned i) const;
+      const std::vector<T>& std_vector() const;
+
+      private:
+      const E& exact_() const;
+    };
+
+
+    template <typename T, typename E>
+    struct subject_impl<util::array<T>&, E>
+      : subject_impl<const util::array<T>&, E>
+    {
+      void reserve(unsigned n);
+      void resize(unsigned n);
+      void resize(unsigned n, const T& value);
+
+      util::array<T>& append(const T& elt);
+
+      template <typename U>
+      util::array<T>& append(const util::array<U>& other);
+
+      T& operator[](unsigned i);
+
+      void clear();
+
+      std::vector<T>& hook_std_vector_();
+
+      private:
+      E& exact_();
+    };
+
+
+  } // end of namespace mln::internal
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -288,9 +333,18 @@ namespace mln
       void
       from_to_(const util::array<T1>& from, util::array<T2>& to)
       {
-        to.resize(from.nelements());
-        for (unsigned i = 0; i < from.nelements(); ++i)
-	from_to(from[i], to[i]);
+	mlc_converts_to(T1,T2)::check();
+
+        to.reserve(from.nelements());
+
+	//Special case. Handle background component data.
+	if (from[0].is_valid())
+	  to.append(convert::to<T2>(from[0]));
+	else
+	  to.append(T2());
+
+        for (unsigned i = 1; i < from.nelements(); ++i)
+	  to.append(convert::to<T2>(from[i]));
       }
 
     } // end of namespace mln::convert::over_load
@@ -628,7 +682,7 @@ namespace mln
 
     template <typename T>
     std::ostream& operator<<(std::ostream& ostr,
-			     const mln::util::array<T>& a)
+			     const array<T>& a)
     {
       ostr << '[';
       const unsigned n = a.nelements();
@@ -642,11 +696,140 @@ namespace mln
       return ostr;
     }
 
+
+    // Operator <<.
+
+    template <typename T>
+    bool operator==(const array<T>& lhs,
+		    const array<T>& rhs)
+    {
+      return lhs.std_vector() == rhs.std_vector();
+    }
+
   } // end of namespace mln::util
 
 
-# endif // ! MLN_INCLUDE_ONLY
+  namespace internal
+  {
 
+    template <typename T, typename E>
+    inline
+    void
+    subject_impl<util::array<T>&, E>::reserve(unsigned n)
+    {
+      exact_().get_subject().reserve(n);
+    }
+
+    template <typename T, typename E>
+    inline
+    void
+    subject_impl<util::array<T>&, E>::resize(unsigned n)
+    {
+      exact_().get_subject().resize(n);
+    }
+
+    template <typename T, typename E>
+    inline
+    void
+    subject_impl<util::array<T>&, E>::resize(unsigned n, const T& value)
+    {
+      exact_().get_subject().resize(n, value);
+    }
+
+    template <typename T, typename E>
+    inline
+    util::array<T>&
+    subject_impl<util::array<T>&, E>::append(const T& elt)
+    {
+      return exact_().get_subject().append(elt);
+    }
+
+    template <typename T, typename E>
+    template <typename U>
+    inline
+    util::array<T>&
+    subject_impl<util::array<T>&, E>::append(const util::array<U>& other)
+    {
+      return exact_().get_subject().append(other);
+    }
+
+    template <typename T, typename E>
+    inline
+    T&
+    subject_impl<util::array<T>&, E>::operator[](unsigned i)
+    {
+      return exact_().get_subject()[i];
+    }
+
+    template <typename T, typename E>
+    inline
+    void
+    subject_impl<util::array<T>&, E>::clear()
+    {
+      exact_().get_subject().clear();
+    }
+
+    template <typename T, typename E>
+    inline
+    std::vector<T>&
+    subject_impl<util::array<T>&, E>::hook_std_vector_()
+    {
+      return exact_().get_subject().hook_std_vector_();
+    }
+
+    template <typename T, typename E>
+    inline
+    E&
+    subject_impl<util::array<T>&, E >::exact_()
+    {
+      return internal::force_exact<E>(*this);
+    }
+
+
+    template <typename T, typename E>
+    inline
+    unsigned
+    subject_impl<const util::array<T>&, E>::nelements() const
+    {
+      return exact_().get_subject().nelements();
+    }
+
+    template <typename T, typename E>
+    inline
+    bool
+    subject_impl<const util::array<T>&, E>::is_empty() const
+    {
+      return exact_().get_subject().is_empty();
+    }
+
+    template <typename T, typename E>
+    inline
+    const T&
+    subject_impl<const util::array<T>&, E>::operator[](unsigned i) const
+    {
+      return exact_().get_subject()[i];
+    }
+
+    template <typename T, typename E>
+    inline
+    const std::vector<T>&
+    subject_impl<const util::array<T>&, E>::std_vector() const
+    {
+      return exact_().get_subject().std_vector();
+    }
+
+    template <typename T, typename E>
+    inline
+    const E&
+    subject_impl<const util::array<T>&, E >::exact_() const
+    {
+      return internal::force_exact<const E>(*this);
+    }
+
+
+  } // end of namespace mln::internal
+
+# endif // ! MLN_INCLUDE_ONLY
 
 
 } // end of namespace mln

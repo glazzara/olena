@@ -318,7 +318,6 @@ $$
 \backslash endhtmlonly
 
 \backslash page tutorial Tutorial
-- \backslash subpage tuto0
 - \backslash subpage tuto1
 - \backslash subpage tuto2
 - \backslash subpage tuto3
@@ -347,7 +346,6 @@ A copy of the license is provided in the file COPYING.DOC.
 \tableofcontents
 \end{latexonly}
 
-%\begin{htmlonly}
 %====================================
 \doxychapter{tuto1}{Welcome}
 
@@ -475,7 +473,7 @@ We invite you to take a look at the description of the directory structure
 (\ref{tuto1dirstruct}.
 If you encounter any issues in the installation process or if you have any
 question, do not forget to join the mailing lists (\ref{tuto1mailinglists}
-and/or use the other documentations ressources (\ref{tuto1ressources}).
+and/or use the other documentations ressources (\ref{tuto1documentation}).
 
 
 
@@ -488,11 +486,7 @@ and/or use the other documentations ressources (\ref{tuto1ressources}).
 
 Milena's packages can be downloaded from:
 
-\begin{center}
-\begin{verbatim}
-http://www.lrde.epita.fr/Olena/Download
-\end{verbatim}
-\end{center}
+\href{http://www.lrde.epita.fr/Olena/Download}
 
 On this page you will find the latest and past releases.
 Currently, we provide only '.tar.gz' and 'tar.bz2' archives.
@@ -521,7 +515,7 @@ We invite you to take a look at the description of the directory structure
 (\ref{tuto1dirstruct}.
 If you encounter any issues in the installation process or if you have any
 question, do not forget to join the mailing lists (\ref{tuto1mailinglists}
-and/or use the other documentations ressources (\ref{tuto1ressources}).
+and/or use the other documentations ressources (\ref{tuto1documentation}).
 
 
 
@@ -666,7 +660,7 @@ List of \hpath{doc}'s subdirectories:
 
 
 %**************************
-\doxysection{tuto1ressources}{Documentation}
+\doxysection{tuto1documentation}{Documentation}
 
 This tutorial is not the only documentation of Milena. Other documents are available:
 
@@ -696,7 +690,7 @@ This tutorial is not the only documentation of Milena. Other documents are avail
 
 
 %**************************
-\doxysection{tuto1ressources}{Community and Support}
+\doxysection{tuto1community}{Community and Support}
 
 Even though Milena is currently developped by the LRDE in EPITA, we are open
 for new contributors.
@@ -730,23 +724,27 @@ the mailing-lists (\ref{tuto1mailinglists}).
 There are other ways to get to know what is the status of the project.
 
 \begin{itemize}
-\item Olena's trac --- \href{https://trac.lrde.org/olena} --- Here is the 
-roadmap, the current open tickets/bugs/improvements which are taken in
-consideration. A source browser is also available.
+\item Olena's trac\\
+      \href{https://trac.lrde.org/olena} \\
+      Here is the roadmap, the current open tickets/bugs/improvements which
+      are taken in consideration. A source browser is also available.
 
-\item Olena's Buildfarm --- https://buildfarm.lrde.org/buildfarm/oln/ --- The
-official buildfarm. Every night and after each commit, tests are compiled and run.
-The buildfarm can show you whether it is safe to update your svn copy of Milena or not\ldots
+\item Olena's Buildfarm \\
+      \href{https://buildfarm.lrde.org/buildfarm/oln/} \\
+      The official buildfarm. Every night and after each commit, tests
+      are compiled and run. The buildfarm can show you whether it is safe
+      to update your svn copy of Milena or not\ldots
 
-\item Test failures --- http://www.lrde.epita.fr/dload/olena/test-failures-daily.html
---- Through this page, you can see exactly which tests do not compile or pass.
-This page is updated every night.
+\item Test failures
+      \href{http://www.lrde.epita.fr/dload/olena/test-failures-daily.html}
+      Through this page, you can see exactly which tests do not compile or pass.
+      This page is updated every night.
 
 \end{itemize}
 
 
 %**************************
-\doxysection{tuto1ressources}{A brief history of Milena}
+\doxysection{tuto1briefhistory}{A brief history of Milena}
 
 The Olena project aims at building a scientific computation platform oriented
 towards image processing, image recognition, and artificial vision. 
@@ -787,7 +785,6 @@ If you want to reach us directly, you can contact one of the following people:
 
 
 
-%\begin{htmlonly}
 %====================================
 \doxychapter{tuto2}{Installation}
 
@@ -960,7 +957,7 @@ Text and image outputs will be respectively stored in
 
 
 
-\doxysubsection{tuto2examples}{Tools}
+\doxysubsection{tuto2tools}{Tools}
 
 Few tools are provided with Milena. They can be considered as full program
 examples.
@@ -979,7 +976,7 @@ $ make
 \end{verbatim}
 
 
-\doxysubsection{tuto2examples}{Tests}
+\doxysubsection{tuto2tests}{Tests}
 
 The test suite used for Milena's development is shipped with the library.
 
@@ -1008,7 +1005,6 @@ In the installed path prefix, Milena's files are located in:
 
 
 
-%\begin{htmlonly}
 %====================================
 \doxychapter{tuto3}{Getting started with Milena}
 

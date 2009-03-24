@@ -187,7 +187,7 @@ namespace mln
 
       typedef fun::l2l::relabel<mln_value(I)> fv2v_t;
       fv2v_t fv2v = make::relabelfun(fv2b, nlabels, new_nlabels);
-      mln_concrete(I) output = labeling::relabel(label, nlabels, new_nlabels, fv2v);
+      mln_concrete(I) output = labeling::relabel(label, new_nlabels, fv2v);
 
       trace::exiting("labeling::relabel");
       return output;

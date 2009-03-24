@@ -34,6 +34,9 @@
 /// Create a graph from an influence zone image.
 ///
 /// \sa transform::influence_zone_geodesic.
+///
+/// \todo Add dispatch for fast images.
+/// \todo Use an adjacency matrix when available in the library.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -100,6 +103,7 @@ namespace mln
 
 	  mln::image2d<bool> adj(mln::box2d(nlabels.next(), nlabels.next()));
           data::fill(adj, false);
+	  extension::adjust_fill(iz, nbh, 0u);
 
 	  typedef mln_value(I) L;
 	  mln_piter(I) p(iz.domain());

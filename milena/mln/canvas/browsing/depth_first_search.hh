@@ -103,26 +103,26 @@ namespace mln
 
 	mln_vertex_iter(G) v(g);
 	for_all(v)
-	  if (f.to_be_treated(v.id()))
+	  if (f.to_be_treated(v.id())) // <--- to_be_treated
 	  {
 	    std::queue<unsigned> queue;
 	    queue.push(v.id());
-	    f.update_treated(v.id());
+	    f.new_component_from_vertex(v.id()); // <--- new_component_from_vertex
 	    while (!queue.empty())
 	    {
 	      util::vertex<G> current_v = g.vertex(queue.front());
+	      f.process_vertex(current_v);
 	      queue.pop();
 	      for (unsigned nv = 0; nv < current_v.nmax_nbh_vertices(); ++nv)
-		if (f.to_be_queued(current_v.ith_nbh_vertex(nv)))
+		if (f.to_be_queued(current_v.ith_nbh_vertex(nv))) // <--- to_be_queued
 		{
-		  f.update_queued(current_v.ith_nbh_vertex(nv));
+		  f.added_to_queue(current_v.ith_nbh_vertex(nv)); // <--- added_to_queue
 		  queue.push(current_v.ith_nbh_vertex(nv));
 		}
 	    }
-	    f.next();
+	    f.next_component(); // <-- next_component
 	  }
-
-	f.final();
+	f.final(); // <-- final
 
 	trace::exiting("canvas::browsing::depth_first_search");
       }

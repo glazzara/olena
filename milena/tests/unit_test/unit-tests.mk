@@ -112,7 +112,6 @@ mln_data_memcpy_ \
 mln_data_all \
 mln_data_paste \
 mln_data_fill_with_image \
-mln_data_swap \
 mln_data_fill_with_value \
 mln_data_fill \
 mln_data_essential \
@@ -326,6 +325,7 @@ mln_value_all \
 mln_value_super_value \
 mln_value_builtin_symbolics \
 mln_value_builtin_ops \
+mln_value_builtin_carrays \
 mln_value_builtin_all \
 mln_value_builtin_promotions \
 mln_value_builtin_integers \
@@ -368,6 +368,9 @@ mln_value_label_8 \
 mln_value_essential \
 mln_accu_tuple \
 mln_accu_min_h \
+mln_accu_site_set_rectangularity \
+mln_accu_site_set_all \
+mln_accu_site_set_essential \
 mln_accu_stat_deviation \
 mln_accu_max \
 mln_accu_lor \
@@ -375,6 +378,7 @@ mln_accu_rank \
 mln_accu_transform_stop \
 mln_accu_maj_h \
 mln_accu_min_max \
+mln_accu_internal_couple \
 mln_accu_internal_base \
 mln_accu_transform_snake \
 mln_accu_rank_high_quant \
@@ -412,6 +416,7 @@ mln_accu_image_all \
 mln_accu_image_set_value \
 mln_accu_image_take \
 mln_accu_image_take_as_init \
+mln_accu_image_essential \
 mln_accu_center \
 mln_accu_line \
 mln_accu_essential \
@@ -472,8 +477,11 @@ mln_trait_promote \
 mln_trait_solve_binary \
 mln_trait_value_ \
 mln_trait_all \
+mln_trait_value_internal_all \
+mln_trait_value_internal_comp \
 mln_trait_value_all \
 mln_trait_value_nature \
+mln_trait_value_comp \
 mln_trait_value_quant \
 mln_trait_value_kind \
 mln_trait_value_print \
@@ -644,7 +652,6 @@ mln_morpho_closing_leveling \
 mln_morpho_closing_area_on_vertices \
 mln_morpho_closing_area \
 mln_morpho_closing_volume \
-mln_morpho_closing_sum \
 mln_morpho_closing_height \
 mln_morpho_closing_structural \
 mln_morpho_closing_essential \
@@ -995,6 +1002,7 @@ mln_test_predicate \
 mln_test_all \
 mln_test_positive \
 mln_test_essential \
+mln_transform_distance_and_closest_point_geodesic \
 mln_transform_distance_geodesic \
 mln_transform_internal_all \
 mln_transform_internal_closest_point_functor \
@@ -1002,9 +1010,9 @@ mln_transform_internal_distance_functor \
 mln_transform_internal_influence_zone_functor \
 mln_transform_all \
 mln_transform_influence_zone_front \
+mln_transform_distance_and_influence_zone_geodesic \
 mln_transform_distance_front \
 mln_transform_influence_zone_geodesic \
-mln_transform_closest_point_geodesic \
 mln_transform_essential \
 mln_arith_includes \
 mln_arith_plus \
@@ -1221,7 +1229,6 @@ mln_data_memcpy__SOURCES = mln_data_memcpy_.cc
 mln_data_all_SOURCES = mln_data_all.cc
 mln_data_paste_SOURCES = mln_data_paste.cc
 mln_data_fill_with_image_SOURCES = mln_data_fill_with_image.cc
-mln_data_swap_SOURCES = mln_data_swap.cc
 mln_data_fill_with_value_SOURCES = mln_data_fill_with_value.cc
 mln_data_fill_SOURCES = mln_data_fill.cc
 mln_data_essential_SOURCES = mln_data_essential.cc
@@ -1435,6 +1442,7 @@ mln_value_all_SOURCES = mln_value_all.cc
 mln_value_super_value_SOURCES = mln_value_super_value.cc
 mln_value_builtin_symbolics_SOURCES = mln_value_builtin_symbolics.cc
 mln_value_builtin_ops_SOURCES = mln_value_builtin_ops.cc
+mln_value_builtin_carrays_SOURCES = mln_value_builtin_carrays.cc
 mln_value_builtin_all_SOURCES = mln_value_builtin_all.cc
 mln_value_builtin_promotions_SOURCES = mln_value_builtin_promotions.cc
 mln_value_builtin_integers_SOURCES = mln_value_builtin_integers.cc
@@ -1477,6 +1485,9 @@ mln_value_label_8_SOURCES = mln_value_label_8.cc
 mln_value_essential_SOURCES = mln_value_essential.cc
 mln_accu_tuple_SOURCES = mln_accu_tuple.cc
 mln_accu_min_h_SOURCES = mln_accu_min_h.cc
+mln_accu_site_set_rectangularity_SOURCES = mln_accu_site_set_rectangularity.cc
+mln_accu_site_set_all_SOURCES = mln_accu_site_set_all.cc
+mln_accu_site_set_essential_SOURCES = mln_accu_site_set_essential.cc
 mln_accu_stat_deviation_SOURCES = mln_accu_stat_deviation.cc
 mln_accu_max_SOURCES = mln_accu_max.cc
 mln_accu_lor_SOURCES = mln_accu_lor.cc
@@ -1484,6 +1495,7 @@ mln_accu_rank_SOURCES = mln_accu_rank.cc
 mln_accu_transform_stop_SOURCES = mln_accu_transform_stop.cc
 mln_accu_maj_h_SOURCES = mln_accu_maj_h.cc
 mln_accu_min_max_SOURCES = mln_accu_min_max.cc
+mln_accu_internal_couple_SOURCES = mln_accu_internal_couple.cc
 mln_accu_internal_base_SOURCES = mln_accu_internal_base.cc
 mln_accu_transform_snake_SOURCES = mln_accu_transform_snake.cc
 mln_accu_rank_high_quant_SOURCES = mln_accu_rank_high_quant.cc
@@ -1521,6 +1533,7 @@ mln_accu_image_all_SOURCES = mln_accu_image_all.cc
 mln_accu_image_set_value_SOURCES = mln_accu_image_set_value.cc
 mln_accu_image_take_SOURCES = mln_accu_image_take.cc
 mln_accu_image_take_as_init_SOURCES = mln_accu_image_take_as_init.cc
+mln_accu_image_essential_SOURCES = mln_accu_image_essential.cc
 mln_accu_center_SOURCES = mln_accu_center.cc
 mln_accu_line_SOURCES = mln_accu_line.cc
 mln_accu_essential_SOURCES = mln_accu_essential.cc
@@ -1581,8 +1594,11 @@ mln_trait_promote_SOURCES = mln_trait_promote.cc
 mln_trait_solve_binary_SOURCES = mln_trait_solve_binary.cc
 mln_trait_value__SOURCES = mln_trait_value_.cc
 mln_trait_all_SOURCES = mln_trait_all.cc
+mln_trait_value_internal_all_SOURCES = mln_trait_value_internal_all.cc
+mln_trait_value_internal_comp_SOURCES = mln_trait_value_internal_comp.cc
 mln_trait_value_all_SOURCES = mln_trait_value_all.cc
 mln_trait_value_nature_SOURCES = mln_trait_value_nature.cc
+mln_trait_value_comp_SOURCES = mln_trait_value_comp.cc
 mln_trait_value_quant_SOURCES = mln_trait_value_quant.cc
 mln_trait_value_kind_SOURCES = mln_trait_value_kind.cc
 mln_trait_value_print_SOURCES = mln_trait_value_print.cc
@@ -1753,7 +1769,6 @@ mln_morpho_closing_leveling_SOURCES = mln_morpho_closing_leveling.cc
 mln_morpho_closing_area_on_vertices_SOURCES = mln_morpho_closing_area_on_vertices.cc
 mln_morpho_closing_area_SOURCES = mln_morpho_closing_area.cc
 mln_morpho_closing_volume_SOURCES = mln_morpho_closing_volume.cc
-mln_morpho_closing_sum_SOURCES = mln_morpho_closing_sum.cc
 mln_morpho_closing_height_SOURCES = mln_morpho_closing_height.cc
 mln_morpho_closing_structural_SOURCES = mln_morpho_closing_structural.cc
 mln_morpho_closing_essential_SOURCES = mln_morpho_closing_essential.cc
@@ -2104,6 +2119,7 @@ mln_test_predicate_SOURCES = mln_test_predicate.cc
 mln_test_all_SOURCES = mln_test_all.cc
 mln_test_positive_SOURCES = mln_test_positive.cc
 mln_test_essential_SOURCES = mln_test_essential.cc
+mln_transform_distance_and_closest_point_geodesic_SOURCES = mln_transform_distance_and_closest_point_geodesic.cc
 mln_transform_distance_geodesic_SOURCES = mln_transform_distance_geodesic.cc
 mln_transform_internal_all_SOURCES = mln_transform_internal_all.cc
 mln_transform_internal_closest_point_functor_SOURCES = mln_transform_internal_closest_point_functor.cc
@@ -2111,9 +2127,9 @@ mln_transform_internal_distance_functor_SOURCES = mln_transform_internal_distanc
 mln_transform_internal_influence_zone_functor_SOURCES = mln_transform_internal_influence_zone_functor.cc
 mln_transform_all_SOURCES = mln_transform_all.cc
 mln_transform_influence_zone_front_SOURCES = mln_transform_influence_zone_front.cc
+mln_transform_distance_and_influence_zone_geodesic_SOURCES = mln_transform_distance_and_influence_zone_geodesic.cc
 mln_transform_distance_front_SOURCES = mln_transform_distance_front.cc
 mln_transform_influence_zone_geodesic_SOURCES = mln_transform_influence_zone_geodesic.cc
-mln_transform_closest_point_geodesic_SOURCES = mln_transform_closest_point_geodesic.cc
 mln_transform_essential_SOURCES = mln_transform_essential.cc
 mln_arith_includes_SOURCES = mln_arith_includes.cc
 mln_arith_plus_SOURCES = mln_arith_plus.cc
@@ -2137,6 +2153,8 @@ mln_io_cloud_load_SOURCES = mln_io_cloud_load.cc
 mln_io_cloud_all_SOURCES = mln_io_cloud_all.cc
 mln_io_cloud_save_SOURCES = mln_io_cloud_save.cc
 mln_io_all_SOURCES = mln_io_all.cc
+mln_io_magick_load_SOURCES = mln_io_magick_load.cc
+mln_io_magick_all_SOURCES = mln_io_magick_all.cc
 mln_io_dump_load_SOURCES = mln_io_dump_load.cc
 mln_io_dump_all_SOURCES = mln_io_dump_all.cc
 mln_io_dump_save_SOURCES = mln_io_dump_save.cc

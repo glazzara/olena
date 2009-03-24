@@ -29,11 +29,12 @@
 ///
 /// Tests on mln::accu::site_set::rectangularity.
 
-
+#include <mln/core/image/image2d.hh>
 #include <mln/core/alias/point2d.hh>
 #include <mln/core/alias/box2d.hh>
 
 #include <mln/accu/site_set/rectangularity.hh>
+#include <mln/set/compute.hh>
 
 int main()
 {
@@ -53,8 +54,18 @@ int main()
     accu::site_set::rectangularity<point2d> accu;
     accu.take(point2d(0,0));
     accu.take(point2d(1,1));
-    std::cout << accu << std::endl;
     mln_assertion(accu.to_result() == 0.5f);
+  }
+
+  {
+    box2d b(2,2);
+    float r = set::compute(accu::site_set::rectangularity<point2d>(), b);
+    mln_assertion(r == 1.0f);
+  }
+
+  {
+    accu::site_set::rectangularity<point2d> a;
+    accu::site_set::rectangularity<point2d> b = exact(a);
   }
 }
 

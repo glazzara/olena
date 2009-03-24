@@ -43,7 +43,7 @@
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/array_base.hh>
 # include <mln/util/array.hh>
-
+# include <mln/metal/equal.hh>
 
 namespace mln
 {
@@ -102,16 +102,36 @@ namespace mln
     namespace i2v
     {
 
-      template <typename T>
-      class array : public Function_i2v< array<T> >,
-		    public internal::array_base<T>
+
+      namespace internal
       {
-	typedef internal::array_base<T> super_base_;
+
+        template <typename T, bool B = false >
+        struct array_selector_
+	 : public Function_i2v< i2v::array<T> >
+	{
+	};
+
+	template <typename T>
+	struct array_selector_<T,true>
+	  : public Function_i2b< i2v::array<T> >
+	{
+	};
+
+      } // end of namespace mln::fun::i2v::internal
+
+
+      template <typename T>
+      class array : public internal::array_selector_<T,mlc_equal(T,bool)::value>,
+		    public fun::internal::array_base<T>
+      {
+	typedef fun::internal::array_base<T> super_base_;
 
       public:
 
 	/// Mutable result type. The function results can be modified.
 	typedef typename super_base_::mutable_result mutable_result;
+	typedef typename fun::internal::array_base<T>::result result;
 
 	/// Constructors
 	/// \{
@@ -175,7 +195,15 @@ namespace mln
       {
 	mlc_converts_to(T,U)::check();
 
-	for (unsigned i = 0; i < from.nelements(); ++i)
+	to.reserve(from.nelements());
+
+	//Special case. Handle background component data.
+	if (from[0].is_valid())
+	  to.append(convert::to<U>(from[0]));
+	else
+	  to.append(U());
+
+	for (unsigned i = 1; i < from.nelements(); ++i)
 	  to.append(convert::to<U>(from[i]));
       }
 
@@ -194,7 +222,15 @@ namespace mln
       {
 	mlc_converts_to(T,U)::check();
 
-	for (unsigned i = 0; i < from.size(); ++i)
+	to.reserve(from.nelements());
+
+	//Special case. Handle background component data.
+	if (from[0].is_valid())
+	  to.append(convert::to<U>(from[0]));
+	else
+	  to.append(U());
+
+	for (unsigned i = 1; i < from.size(); ++i)
 	  to.append(convert::to<U>(from[i]));
       }
 

@@ -116,7 +116,6 @@ mln/data/all.hh \
 mln/data/paste.hh \
 mln/data/fill_with_image.hh \
 mln/data/fill_with_image.spe.hh \
-mln/data/swap.hh \
 mln/data/fill_with_value.hh \
 mln/data/fill_with_value.spe.hh \
 mln/data/fill.hh \
@@ -331,6 +330,7 @@ mln/value/all.hh \
 mln/value/super_value.hh \
 mln/value/builtin/symbolics.hh \
 mln/value/builtin/ops.hh \
+mln/value/builtin/carrays.hh \
 mln/value/builtin/all.hh \
 mln/value/builtin/promotions.hh \
 mln/value/builtin/integers.hh \
@@ -373,6 +373,9 @@ mln/value/label_8.hh \
 mln/value/essential.hh \
 mln/accu/tuple.hh \
 mln/accu/min_h.hh \
+mln/accu/site_set/rectangularity.hh \
+mln/accu/site_set/all.hh \
+mln/accu/site_set/essential.hh \
 mln/accu/stat/deviation.hh \
 mln/accu/max.hh \
 mln/accu/lor.hh \
@@ -380,6 +383,7 @@ mln/accu/rank.hh \
 mln/accu/transform_stop.hh \
 mln/accu/maj_h.hh \
 mln/accu/min_max.hh \
+mln/accu/internal/couple.hh \
 mln/accu/internal/base.hh \
 mln/accu/transform_snake.hh \
 mln/accu/rank_high_quant.hh \
@@ -417,6 +421,7 @@ mln/accu/image/all.hh \
 mln/accu/image/set_value.hh \
 mln/accu/image/take.hh \
 mln/accu/image/take_as_init.hh \
+mln/accu/image/essential.hh \
 mln/accu/center.hh \
 mln/accu/line.hh \
 mln/accu/essential.hh \
@@ -479,8 +484,11 @@ mln/trait/promote.hh \
 mln/trait/solve_binary.hh \
 mln/trait/value_.hh \
 mln/trait/all.hh \
+mln/trait/value/internal/all.hh \
+mln/trait/value/internal/comp.hh \
 mln/trait/value/all.hh \
 mln/trait/value/nature.hh \
+mln/trait/value/comp.hh \
 mln/trait/value/quant.hh \
 mln/trait/value/kind.hh \
 mln/trait/value/print.hh \
@@ -651,7 +659,6 @@ mln/morpho/closing/leveling.hh \
 mln/morpho/closing/area_on_vertices.hh \
 mln/morpho/closing/area.hh \
 mln/morpho/closing/volume.hh \
-mln/morpho/closing/sum.hh \
 mln/morpho/closing/height.hh \
 mln/morpho/closing/structural.hh \
 mln/morpho/closing/essential.hh \
@@ -1021,6 +1028,7 @@ mln/test/predicate.hh \
 mln/test/all.hh \
 mln/test/positive.hh \
 mln/test/essential.hh \
+mln/transform/distance_and_closest_point_geodesic.hh \
 mln/transform/distance_geodesic.hh \
 mln/transform/internal/all.hh \
 mln/transform/internal/closest_point_functor.hh \
@@ -1028,9 +1036,9 @@ mln/transform/internal/distance_functor.hh \
 mln/transform/internal/influence_zone_functor.hh \
 mln/transform/all.hh \
 mln/transform/influence_zone_front.hh \
+mln/transform/distance_and_influence_zone_geodesic.hh \
 mln/transform/distance_front.hh \
 mln/transform/influence_zone_geodesic.hh \
-mln/transform/closest_point_geodesic.hh \
 mln/transform/essential.hh \
 mln/arith/includes.hh \
 mln/arith/min.spe.hh \
