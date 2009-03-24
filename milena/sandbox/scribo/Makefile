@@ -18,6 +18,9 @@ photo: demat.hh
 dmap:
 	g++ $(CXX_FLAGS) src/dmap.cc -o bin/dmap.out
 
+rectangularity:
+	g++ $(CXX_FLAGS) src/rectangularity.cc -o bin/rectangularity.out
+
 
 extract_text_single_link:
 	g++ $(CXX_FLAGS) src/extract_text_single_link.cc -o bin/extract_text_single_link.out
@@ -25,14 +28,29 @@ extract_text_single_link:
 extract_text_double_link:
 	g++ $(CXX_FLAGS) src/extract_text_double_link.cc -o bin/extract_text_double_link.out
 
+extract_text_double_several_links:
+	g++ $(CXX_FLAGS) src/extract_text_double_several_links.cc -o bin/extract_text_double_several_links.out
+
 extract_text_multiple_links:
 	g++ $(CXX_FLAGS) src/extract_text_multiple_links.cc -o bin/extract_text_multiple_links.out
 
-table_rebuild:
-	g++ $(CXX_FLAGS) src/table_rebuild.cc -o bin/table_rebuild.out
+extract_text_several_multiple_links:
+	g++ $(CXX_FLAGS) src/extract_text_several_multiple_links.cc -o bin/extract_text_several_multiple_links.out
+
+extract_text_several_left_links:
+	g++ $(CXX_FLAGS) src/extract_text_several_left_links.cc -o bin/extract_text_several_left_links.out
+
+table_rebuild_rank:
+	g++ $(CXX_FLAGS) src/table_rebuild_rank.cc -o bin/table_rebuild_rank.out
+
+table_rebuild_opening:
+	g++ $(CXX_FLAGS) src/table_rebuild_opening.cc -o bin/table_rebuild_opening.out
 
 table_extract:
 	g++ $(CXX_FLAGS) src/table_extract.cc -o bin/table_extract.out
+
+table_erase:
+	g++ $(CXX_FLAGS) src/table_erase.cc -o bin/table_erase.out
 
 thin_bboxes:
 	g++ $(CXX_FLAGS) src/thin_bboxes.cc -o bin/thin_bboxes.out

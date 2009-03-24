@@ -37,6 +37,8 @@
 # include <mln/core/site_set/box.hh>
 # include <mln/core/routine/duplicate.hh>
 
+# include <mln/pw/all.hh>
+
 # include <mln/util/array.hh>
 # include <mln/util/couple.hh>
 
@@ -47,6 +49,8 @@ namespace scribo
 
   namespace table
   {
+
+    using namespace mln;
 
     /// Erase table line bboxes from an image.
     ///
@@ -64,7 +68,6 @@ namespace scribo
 			     util::array< box<mln_site(I)> > >& line_bboxes);
 
 
-
 # ifndef MLN_INCLUDE_ONLY
 
 
@@ -74,7 +77,7 @@ namespace scribo
 	  const util::couple<util::array< box<mln_site(I)> >,
 			     util::array< box<mln_site(I)> > >& line_bboxes)
     {
-      trace::entering("scribo::internal::erase_table");
+      trace::entering("scribo::internal::erase");
       mlc_equal(mln_value(I),bool)::check();
       mln_precondition(exact(in).is_valid());
 
@@ -83,7 +86,7 @@ namespace scribo
       erase_bboxes(output, line_bboxes.first());
       erase_bboxes(output, line_bboxes.second());
 
-      trace::exiting("scribo::internal::erase_table");
+      trace::exiting("scribo::internal::erase");
       return output;
     }
 

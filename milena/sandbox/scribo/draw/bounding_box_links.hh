@@ -56,6 +56,13 @@ namespace scribo
 		       const mln::util::array<unsigned>& link_array,
 		       const mln_value(I)& value);
 
+    template <typename I>
+    inline
+    void
+    bounding_box_links(Image<I>& input_,
+		       const mln::util::array<mln_site(I)::vec>& mass_centers,
+		       const mln::util::array<unsigned>& link_array,
+		       const mln_value(I)& value);
 
     template <typename I>
     void
@@ -63,8 +70,46 @@ namespace scribo
 		       const mln::util::array< box<mln_site(I)> >& bboxes,
 		       const mln::util::array<unsigned>& left_link,
 		       const mln::util::array<unsigned>& right_link,
+		       const mln_value(I)& value);
+
+    template <typename I>
+    inline
+    void
+    bounding_box_links(Image<I>& input_,
+		       const mln::util::array<mln_site(I)::vec>& mass_centers,
+		       const mln::util::array<unsigned>& left_link,
+		       const mln::util::array<unsigned>& right_link,
+		       const mln_value(I)& value);
+
+    template <typename I>
+    inline
+    void
+    bounding_box_links(Image<I>& input_,
+		       const mln::util::array< box<mln_site(I)> >& bboxes,
+		       const mln::util::array<unsigned>& left_link,
+		       const mln::util::array<unsigned>& right_link,
 		       const mln_value(I)& left_link_value,
-		       const mln_value(I)& right_link_value);
+		       const mln_value(I)& right_link_value,
+		       const mln_value(I)& validated_link_value);
+
+    template <typename I>
+    inline
+    void
+    bounding_box_links(Image<I>& input_,
+		       const mln::util::array<mln_site(I)::vec>& mass_centers,
+		       const mln::util::array<unsigned>& left_link,
+		       const mln::util::array<unsigned>& right_link,
+		       const mln_value(I)& left_link_value,
+		       const mln_value(I)& right_link_value,
+		       const mln_value(I)& validated_link_value);
+
+    template <typename I, typename G>
+    inline
+    void
+    bounding_box_links(Image<I>& input,
+		       const mln::util::array< box<mln_site(I)> >& bboxes,
+		       const Graph<G>& g,
+		       const mln_value(I)& link_value);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -147,22 +192,182 @@ namespace scribo
       trace::exiting("scribo::draw::bounding_box_links");
     }
 
+    template <typename I>
+    inline
+    void
+    bounding_box_links(Image<I>& input_,
+		       const mln::util::array<mln_site(I)::vec>& mass_centers,
+		       const mln::util::array<unsigned>& link_array,
+		       const mln_value(I)& value)
+    {
+      trace::entering("scribo::draw::bounding_box_links");
+
+      I& input = exact(input_);
+
+      mln_precondition(input.is_valid());
+
+      for_all_components(i, link_array)
+      {
+	if (link_array[i] != i)
+	  mln::draw::line(input,
+			  mass_centers[i],
+			  mass_centers[link_array[i]],
+			  value);
+	input(mass_centers[i]) = value;
+      }
+
+      trace::exiting("scribo::draw::bounding_box_links");
+    }
+
 
     template <typename I>
     inline
     void
-    bounding_box_links(Image<I>& input,
+    bounding_box_links(Image<I>& input_,
 		       const mln::util::array< box<mln_site(I)> >& bboxes,
 		       const mln::util::array<unsigned>& left_link,
 		       const mln::util::array<unsigned>& right_link,
-		       const mln_value(I)& left_link_value,
-		       const mln_value(I)& right_link_value)
+		       const mln_value(I)& value)
     {
       trace::entering("scribo::draw::bounding_box_links");
       mln_precondition(exact(input).is_valid());
 
-      bounding_box_links(input, bboxes, left_link, left_link_value);
-      bounding_box_links(input, bboxes, right_link, right_link_value);
+      I& input = exact(input_);
+
+      mln_precondition(input.is_valid());
+
+      for_all_components(i, left_link)
+      {
+	  unsigned nbh = right_link[left_link[i]];
+	  if (nbh == i && left_link[i] != i)
+	    mln::draw::line(input,
+			    bboxes[i].center(),
+			    bboxes[left_link[i]].center(),
+			    value);
+      }
+
+      trace::exiting("scribo::draw::bounding_box_links");
+    }
+
+    template <typename I>
+    inline
+    void
+    bounding_box_links(Image<I>& input_,
+		       const mln::util::array<mln_site(I)::vec>& mass_centers,
+		       const mln::util::array<unsigned>& left_link,
+		       const mln::util::array<unsigned>& right_link,
+		       const mln_value(I)& value)
+    {
+      trace::entering("scribo::draw::bounding_box_links");
+      mln_precondition(exact(input).is_valid());
+
+      I& input = exact(input_);
+
+      mln_precondition(input.is_valid());
+
+      for_all_components(i, left_link)
+      {
+	unsigned nbh = right_link[left_link[i]];
+	if (nbh == i && left_link[i] != i)
+	  mln::draw::line(input,
+			  mass_centers[i],
+			  mass_centers[left_link[i]],
+			  value);
+	input(mass_centers[i]) = value;
+      }
+
+      trace::exiting("scribo::draw::bounding_box_links");
+    }
+
+
+    template <typename I>
+    inline
+    void
+    bounding_box_links(Image<I>& input_,
+		       const mln::util::array<mln_site(I)::vec>& mass_centers,
+		       const mln::util::array<unsigned>& left_link,
+		       const mln::util::array<unsigned>& right_link,
+		       const mln_value(I)& left_link_value,
+		       const mln_value(I)& right_link_value,
+		       const mln_value(I)& validated_link_value)
+    {
+      trace::entering("scribo::draw::bounding_box_links");
+      mln_precondition(exact(input).is_valid());
+
+      I& input = exact(input_);
+
+      mln_precondition(input.is_valid());
+
+      mln_site(I)::vec dleft = literal::origin;
+      dleft[0] = 2;
+      mln_site(I)::vec dright = literal::origin;
+      dright[0] = -2;
+      for_all_components(i, left_link)
+      {
+	mln::draw::line(input,
+			mass_centers[i] + dleft,
+			mass_centers[left_link[i]] + dleft,
+			left_link_value);
+
+	mln::draw::line(input,
+			mass_centers[i] + dright,
+			mass_centers[right_link[i]] + dright,
+			right_link_value);
+
+	unsigned nbh = right_link[left_link[i]];
+	if (nbh == i && left_link[i] != i)
+	  mln::draw::line(input,
+			  mass_centers[i],
+			  mass_centers[left_link[i]],
+			  validated_link_value);
+
+	input(mass_centers[i]) = validated_link_value;
+      }
+
+      trace::exiting("scribo::draw::bounding_box_links");
+    }
+
+    template <typename I>
+    inline
+    void
+    bounding_box_links(Image<I>& input_,
+		       const mln::util::array< box<mln_site(I)> >& bboxes,
+		       const mln::util::array<unsigned>& left_link,
+		       const mln::util::array<unsigned>& right_link,
+		       const mln_value(I)& left_link_value,
+		       const mln_value(I)& right_link_value,
+		       const mln_value(I)& validated_link_value)
+    {
+      trace::entering("scribo::draw::bounding_box_links");
+      mln_precondition(exact(input).is_valid());
+
+      I& input = exact(input_);
+
+      mln_precondition(input.is_valid());
+
+      mln_site(I)::vec dleft = literal::origin;
+      dleft[0] = 2;
+      mln_site(I)::vec dright = literal::origin;
+      dright[0] = -2;
+      for_all_components(i, left_link)
+      {
+	mln::draw::line(input,
+			bboxes[i].center() + dleft,
+			bboxes[left_link[i]].center() + dleft,
+			left_link_value);
+
+	mln::draw::line(input,
+			bboxes[i].center() + dright,
+			bboxes[right_link[i]].center() + dright,
+			right_link_value);
+
+	unsigned nbh = right_link[left_link[i]];
+	if (nbh == i && left_link[i] != i)
+	  mln::draw::line(input,
+			  bboxes[i].center(),
+			  bboxes[left_link[i]].center(),
+			  validated_link_value);
+      }
 
       trace::exiting("scribo::draw::bounding_box_links");
     }

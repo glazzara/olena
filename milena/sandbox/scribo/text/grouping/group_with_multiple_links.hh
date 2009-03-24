@@ -35,6 +35,8 @@
 /// Group character bounding boxes with multiple links.
 
 # include <mln/core/concept/image.hh>
+# include <mln/labeling/compute.hh>
+# include <mln/accu/center.hh>
 
 # include <mln/math/abs.hh>
 
@@ -55,35 +57,47 @@ namespace scribo
     {
 
       /// Group character bounding boxes with multiple links.
-      /// Look up for neighbors on the left of each box.
-      template <typename I>
+      /// Look up for neighbors on the right of each box.
+      template <typename L>
       mln::util::graph
-      group_with_multiple_links(const scribo::util::text<I>& text,
+      group_with_multiple_links(const scribo::util::text<L>& text,
 				unsigned neighb_max_distance);
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename I>
+      template <typename L>
       inline
       mln::util::graph
-      group_with_multiple_links(const scribo::util::text<I>& text,
+      group_with_multiple_links(const scribo::util::text<L>& text,
 				unsigned neighb_max_distance)
       {
 	trace::entering("scribo::text::grouping::group_with_multiple_links");
 
 	mln::util::graph g(text.nbboxes().next());
 
+	mln::util::array<mln_site(L)::vec> centers
+	  = labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
+
 	for_all_ncomponents(i, text.nbboxes())
 	{
 	  unsigned midcol = (text.bbox(i).pmax().col()
 				- text.bbox(i).pmin().col()) / 2;
 	  int dmax = midcol + neighb_max_distance;
-	  mln_site(I) c = text.bbox(i).center();
+	  mln_site(L) c = centers[i];
 
+	  //  -------
+	  //  |	    |
+	  //  |	    |
+	  //  |	    |
+	  //  |	 X------->
+	  //  |	    |
+	  //  |	    |
+	  //  |	    |
+	  //  -------
 	  /// First site on the right of the central site
-	  mln_site(I) p = c + right;
+	  mln_site(L) p = c + right;
 
-	  const I& lbl = text.label_image();
+	  const L& lbl = text.label_image();
 	  while (lbl.domain().has(p) && (lbl(p) == literal::zero || lbl(p) == i)
 	      && math::abs(p.col() - c.col()) < dmax)
 	    ++p.col();

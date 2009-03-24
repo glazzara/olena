@@ -79,7 +79,7 @@ namespace scribo
     util::array<int>
     align_lines_horizontaly(const Image<I>& input,
 			    util::array<box<mln_site(I)> >& lines_bboxes,
-			    max_alignment_diff)
+			    unsigned max_alignment_diff)
     {
       trace::entering("scribo::table::align_lines_horizontaly");
 

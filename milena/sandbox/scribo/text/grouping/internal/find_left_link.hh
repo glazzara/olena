@@ -26,19 +26,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef SCRIBO_TEXT_GROUPING_INTERNAL_FIND_LEFT_LINK_HH
+# define SCRIBO_TEXT_GROUPING_INTERNAL_FIND_LEFT_LINK_HH
 
-#ifndef SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_LINK_ARRAY_HH
-# define SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_LINK_ARRAY_HH
-
-/// \file scribo/text/grouping/internal/update_link_array.hh
+/// \file scribo/text/grouping/internal/find_left_link.hh
 ///
-/// Update a lookup table if a neighbor is found on the right of
-/// the current bbox.
-
+///
 
 # include <mln/core/concept/image.hh>
+
+# include <mln/math/abs.hh>
+
 # include <mln/util/array.hh>
 
+# include <scribo/util/text.hh>
+# include <scribo/text/grouping/internal/update_link_array.hh>
+
+//FIXME: not generic.
+# include <mln/core/alias/dpoint2d.hh>
 
 namespace scribo
 {
@@ -52,37 +57,47 @@ namespace scribo
       namespace internal
       {
 
-	/// Update the lookup table \p link_array if a neighbor is found
-	/// on the right of the current bbox.
-	template <typename I>
+	template <typename L>
 	void
-	update_link_array(const Image<I>& lbl, mln::util::array<unsigned>& link_array,
-			  const mln_site(I)& p, const mln_site(I)& c,
-			  unsigned i, int dmax);
+	find_left_link(const scribo::util::text<L>& text,
+		       mln::util::array<unsigned>& left_link,
+		       unsigned current_comp,
+		       int dmax,
+		       const mln_site(L)& c);
 
 # ifndef MLN_INCLUDE_ONLY
 
-	template <typename I>
-	inline
+	template <typename L>
 	void
-	update_link_array(const Image<I>& lbl_, mln::util::array<unsigned>& link_array,
-			  const mln_site(I)& p, const mln_site(I)& c,
-			  unsigned i, int dmax)
+	find_left_link(const scribo::util::text<L>& text,
+		       mln::util::array<unsigned>& left_link,
+		       unsigned current_comp,
+		       int dmax,
+		       const mln_site(L)& c)
 	{
-	  const I& lbl = exact(lbl_);
+	  ///FIXME: the following code is not generic...
+	  /// First site on the right of the central site
+	  mln_site(L) p = c + left;
 
-	  mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
-	  mln_assertion(lbl.is_valid());
+	  /// Construct a new label image with the components bounding
+	  /// boxes only.
+	  /// TOO SLOW, so disabled!!!
+//	  L lbl(text.label_image().domain());
+//	  for_all_components(i, text.bboxes())
+//	    mln::draw::box(lbl, text.bbox(i), i);
+	  const L& lbl = text.label_image();
 
-	  if (lbl.domain().has(p) // Not outside image domain
-	      && lbl(p) != literal::zero // Not the background
-	      && lbl(p) != i // Not the current component
-	      && (math::abs(p.col() - c.col())) < dmax // Not too far
-	      && link_array[lbl(p)] != i) // Not creating a loop
-	    link_array[i] = lbl(p);
+	  while (lbl.domain().has(p) // Not outside image domain
+		&& (lbl(p) == literal::zero // Is the background
+		  || lbl(p) == current_comp // Is the current component
+		  || left_link[lbl(p)] == current_comp) // Creates a loop
+	      && math::abs(p.col() - c.col()) < dmax) // Not to far
+	    --p.col();
+
+	  update_link_array(lbl, left_link, p, c, current_comp, dmax);
 	}
 
-# endif // ! MLN_INCLUDE_ONLY
+# endif // MLN_INCLUDE_ONLY
 
       } // end of namespace scribo::text::grouping::internal
 
@@ -93,4 +108,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_LINK_ARRAY_HH
+#endif // ! SCRIBO_TEXT_GROUPING_INTERNAL_FIND_LEFT_LINK_HH

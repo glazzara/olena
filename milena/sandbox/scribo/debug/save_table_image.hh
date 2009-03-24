@@ -98,7 +98,7 @@ namespace scribo
       draw::bounding_boxes(out2, tableboxes.second(), bbox_color);
       io::ppm::save(out2, filename);
 
-      trace::exiting("scribo::internal::save_table");
+      trace::exiting("scribo::debug::save_table_image");
     }
 
 
@@ -121,7 +121,7 @@ namespace scribo
       draw::bounding_boxes(out2, tableboxes.second(), bbox_color);
       io::ppm::save(out2, filename);
 
-      trace::exiting("scribo::internal::save_table");
+      trace::exiting("scribo::debug::save_table_image");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

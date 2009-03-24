@@ -63,7 +63,7 @@ namespace scribo
      *
      * \param[in] input_ A binary image.
      * \param[in] nbh_ The neighborhood used for labeling image components.
-     * \param[in] label_type The type used to store the labels.
+     * \param[out] nlines The number of lines.
      * \param[in] vwin Window used to extract the vertical lines in the rank
      *		       filter.
      * \param[in] hwin Window used to extract the horizontal lines in the rank
@@ -79,7 +79,7 @@ namespace scribo
     util::couple<util::array<box<mln_site(I)> >,
 		 util::array<box<mln_site(I)> > >
     extract_lines_with_rank(const Image<I>& input_,
-			    const Neighborhood<N>& nbh_, const V& label_type,
+			    const Neighborhood<N>& nbh_, V& nlines,
 			    const Window<HW>& vwin, const Window<VW>& hwin,
 			    unsigned vrank_k, unsigned hrank_k);
 
@@ -91,7 +91,7 @@ namespace scribo
     util::couple<util::array<box<mln_site(I)> >,
 		 util::array<box<mln_site(I)> > >
     extract_lines_with_rank(const Image<I>& input_,
-			    const Neighborhood<N>& nbh_, const V& label_type,
+			    const Neighborhood<N>& nbh_, V& nlines,
 			    const Window<VW>& vwin_, const Window<HW>& hwin_,
 			    unsigned vrank_k, unsigned hrank_k)
     {
@@ -110,12 +110,11 @@ namespace scribo
       mln_precondition(vwin.is_valid());
       mln_precondition(hwin.is_valid());
 
-      typedef accu::bbox<mln_psite(I)> A;
-      typedef util::array<mln_result(A)> boxes_t;
+      typedef util::array<box<mln_site(I)> > boxes_t;
 
       // Vertical lines
       mln_ch_value(I,bool) vfilter = morpho::rank_filter(input, vwin, vrank_k);
-      boxes_t vboxes = component_bboxes(vfilter, nbh, label_type);
+      boxes_t vboxes = component_bboxes(vfilter, nbh, nlines).first();
       for_all_components(i, vboxes)
       {
 	vboxes[i].enlarge(0, vwin.length() / 2);
@@ -124,7 +123,7 @@ namespace scribo
 
       // Horizontal lines.
       mln_ch_value(I,bool) hfilter = morpho::rank_filter(input, hwin, hrank_k);
-      boxes_t hboxes = component_bboxes(hfilter, nbh, label_type);
+      boxes_t hboxes = component_bboxes(hfilter, nbh, nlines).first();
       for_all_components(i, hboxes)
       {
 	hboxes[i].enlarge(1, hwin.length() / 2);

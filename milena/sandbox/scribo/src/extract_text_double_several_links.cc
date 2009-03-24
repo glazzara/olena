@@ -29,11 +29,10 @@
 
 #include <mln/essential/2d.hh>
 #include <mln/debug/colorize.hh>
-#include <mln/debug/println.hh>
 
 #include <scribo/text/extract_bboxes.hh>
-#include <scribo/text/grouping/group_with_single_left_link.hh>
-#include <scribo/text/grouping/group_with_single_right_link.hh>
+#include <scribo/text/grouping/group_with_several_left_links.hh>
+#include <scribo/text/grouping/group_with_several_right_links.hh>
 #include <scribo/debug/save_linked_textbboxes_image.hh>
 #include <scribo/text/grouping/group_from_double_link.hh>
 #include <scribo/filter/small_components.hh>
@@ -56,7 +55,7 @@ int main(int argc, char* argv[])
   if (argc < 1)
     return usage(argv[0]);
 
-  scribo::make::internal::debug_filename_prefix = "extract_text_double_link";
+  scribo::make::internal::debug_filename_prefix = "extract_text_double_several_links";
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
@@ -68,31 +67,17 @@ int main(int argc, char* argv[])
   text = filter::small_components(text,4);
 
   mln::util::array<unsigned> left_link
-	= text::grouping::group_with_single_left_link(text, 30);
+	= text::grouping::group_with_several_left_links(text, 30);
   mln::util::array<unsigned> right_link
-	= text::grouping::group_with_single_right_link(text, 30);
+	= text::grouping::group_with_several_right_links(text, 30);
 
   std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
-
-//  scribo::debug::save_linked_textbboxes_image(input,
-//					      text, left_link,
-//					      literal::red, literal::cyan,
-//					      scribo::make::debug_filename("left_linked.ppm"));
-//  scribo::debug::save_linked_textbboxes_image(input,
-//					      text, right_link,
-//					      literal::red, literal::cyan,
-//					      scribo::make::debug_filename("right_linked.ppm"));
 
   scribo::debug::save_linked_textbboxes_image(input,
 					      text, left_link, right_link,
 					      literal::red, literal::cyan, literal::yellow,
 					      literal::green,
 					      scribo::make::debug_filename("links.ppm"));
-
-//  io::ppm::save(mln::debug::colorize(value::rgb8(),
-//				     text.label_image(),
-//				     text.nbboxes()),
-//		scribo::make::debug_filename("lbl_before.ppm"));
 
   // With validation.
   scribo::util::text<image2d<value::label_16> > grouped_text

@@ -40,6 +40,7 @@
 # include <mln/labeling/blobs.hh>
 # include <mln/labeling/relabel.hh>
 
+# include <mln/make/relabelfun.hh>
 # include <mln/util/array.hh>
 # include <mln/value/label_16.hh>
 
@@ -191,7 +192,10 @@ namespace scribo
 
       mln_value(I) new_nbboxes;
       I new_lbl = labeling::relabel(text.label_image(), text.nbboxes(),
-				    new_nbboxes, f);
+				    mln::make::relabelfun(f, text.nbboxes(),
+							  new_nbboxes));
+
+      mln_assertion(new_nbboxes.next() == bresult.nelements());
 
       trace::exiting("scribo::filter::small_components");
       return scribo::make::text(bresult, new_lbl, new_nbboxes);

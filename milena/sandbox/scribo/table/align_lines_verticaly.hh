@@ -79,9 +79,10 @@ namespace scribo
     template <typename I>
     util::array<int>
     align_lines_verticaly(const Image<I>& input,
-			  util::array<box<mln_site(I)> >& lines_bboxes)
+			  util::array<box<mln_site(I)> >& lines_bboxes,
+			  unsigned max_alignment_diff)
     {
-      trace::entering("scribo::table::align_lines_horizontaly");
+      trace::entering("scribo::table::align_lines_verticaly");
 
       mln_precondition(exact(input).is_valid());
       util::array<int> res = internal::align_lines(geom::ncols(input),
@@ -90,7 +91,7 @@ namespace scribo
 						   lines_bboxes, 1,
 						   max_alignment_diff);
 
-      trace::exiting("scribo::table::align_lines_horizontaly");
+      trace::exiting("scribo::table::align_lines_verticaly");
       return res;
     }
 

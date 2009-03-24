@@ -40,7 +40,6 @@
 # include <mln/io/ppm/save.hh>
 
 # include <scribo/draw/bounding_boxes.hh>
-# include <scribo/make/debug_filename.hh>
 
 
 namespace scribo
@@ -76,7 +75,7 @@ namespace scribo
 
       mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
       draw::bounding_boxes(tmp, textbboxes, value);
-      io::ppm::save(tmp, scribo::make::debug_filename(filename));
+      io::ppm::save(tmp, filename);
 
       trace::exiting("scribo::debug::save_textbboxes_image");
     }

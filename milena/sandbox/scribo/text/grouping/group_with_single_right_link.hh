@@ -34,10 +34,11 @@
 ///
 /// Link text bounding boxes with their right neighbor.
 ///
-/// Merge code with text::grouping::group_with_single_right_link.hh
+/// \todo Merge code with text::grouping::group_with_single_right_link.hh
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
+# include <mln/labeling/compute.hh>
 
 # include <mln/math/abs.hh>
 
@@ -47,6 +48,7 @@
 # include <scribo/text/grouping/internal/init_link_array.hh>
 # include <scribo/text/grouping/internal/update_link_array.hh>
 # include <scribo/text/grouping/internal/find_root.hh>
+# include <scribo/text/grouping/internal/find_right_link.hh>
 # include <scribo/util/text.hh>
 
 //FIXME: not generic.
@@ -87,28 +89,20 @@ namespace scribo
 	mln::util::array<unsigned> right_link(text.nbboxes().next());
 	internal::init_link_array(right_link);
 
+	mln::util::array<mln_site(L)::vec> centers
+	  = labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
+
 	for_all_ncomponents(i, text.nbboxes())
 	{
 	  unsigned midcol = (text.bbox(i).pmax().col()
 				- text.bbox(i).pmin().col()) / 2;
 	  int dmax = midcol + neighb_max_distance;
-	  mln_site(L) c = text.bbox(i).center();
+	  mln_site(L) c = centers[i];
 
 	  ///
-	  /// Find a neighbor on the left
+	  /// Find a neighbor on the right
 	  ///
-
-	  ///FIXME: the following code is not generic...
-	  /// First site on the left of the central site
-	  mln_site(L) p = c + left;
-
-	  const L& lbl = text.label_image();
-	  while (lbl.domain().has(p) && (lbl(p) == literal::zero
-		    || lbl(p) == i || right_link[i] == lbl(p))
-		 && math::abs(p.col() - c.col()) < dmax)
-	    --p.col();
-
-	  internal::update_link_array(lbl, right_link, p, c, i, dmax);
+	  internal::find_right_link(text, right_link, i, dmax, c);
 	}
 
 	trace::exiting("scribo::text::grouping::group_with_single_right_link");

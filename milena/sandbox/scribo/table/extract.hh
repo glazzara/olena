@@ -51,8 +51,20 @@ namespace scribo
   namespace table
   {
 
+    /// Extract tables from a binary image.
+    /// Use arbitrary criterions.
+    /*
+    ** \param[in] input_      A binary image.
+    ** \param[in,out] ncells  The number of cells.
+    **
+    ** \return a couple. The first element is an image containing the
+    ** cells components. The second element is a couple of vertical and
+    ** horizontal table lines.
+    */
     template <typename I, typename V>
-    mln_ch_value(I,V)
+    mln::util::couple<mln_ch_value(I,V),
+		      util::couple<util::array<box<mln_site(I)> >,
+				   util::array<box<mln_site(I)> > > >
     extract(const Image<I>& input_, V& ncells);
 
 
@@ -60,7 +72,9 @@ namespace scribo
 
     template <typename I, typename V>
     inline
-    mln_ch_value(I,V)
+    mln::util::couple<mln_ch_value(I,V),
+		      util::couple<util::array<box<mln_site(I)> >,
+				   util::array<box<mln_site(I)> > > >
     extract(const Image<I>& input_, V& ncells)
     {
       trace::entering("scribo::table::extract");
@@ -75,11 +89,14 @@ namespace scribo
       win::line<mln_grid(I::site), 0, mln_coord(I::site)> vline(51);
       win::line<mln_grid(I::site), 1, mln_coord(I::site)> hline(51);
       tblboxes_t lineboxes
-	= table::extract_lines_with_rank(input, c8(), V(),
+	= table::extract_lines_with_rank(input, c8(), ncells,
 					 vline, hline, 6, 6);
 
-      image2d<V> tables
-	= scribo::table::rebuild(input, lineboxes, 30, ncells);
+      typedef mln::util::couple<mln_ch_value(I,V),
+				util::couple<util::array<box<mln_site(I)> >,
+					     util::array<box<mln_site(I)> > > >
+	      tables_t;
+      tables_t tables = scribo::table::rebuild(input, lineboxes, 30, ncells);
 
       trace::exiting("scribo::table::extract");
       return tables;

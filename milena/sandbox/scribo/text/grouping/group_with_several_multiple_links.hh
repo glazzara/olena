@@ -27,18 +27,16 @@
 // Public License.
 
 
-#ifndef SCRIBO_TEXT_GROUPING_GROUP_WITH_SINGLE_LEFT_LINK_HH
-# define SCRIBO_TEXT_GROUPING_GROUP_WITH_SINGLE_LEFT_LINK_HH
+#ifndef SCRIBO_TEXT_GROUPING_GROUP_WITH_SEVERAL_MULTIPLE_LINKS_HH
+# define SCRIBO_TEXT_GROUPING_GROUP_WITH_SEVERAL_MULTIPLE_LINKS_HH
 
-/// \file scribo/text/grouping/group_with_single_left_link.hh
+/// \file scribo/text/grouping/group_with_several_multiple_links.hh
 ///
-/// Link text bounding boxes with their left neighbor.
-///
-/// Merge code with text::grouping::group_with_single_right_link.hh
+/// Group character bounding boxes with several multiple links.
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/concept/neighborhood.hh>
 # include <mln/labeling/compute.hh>
+# include <mln/accu/center.hh>
 
 # include <mln/math/abs.hh>
 
@@ -46,11 +44,9 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/text/grouping/internal/init_link_array.hh>
-# include <scribo/text/grouping/internal/find_left_link.hh>
+# include <scribo/text/grouping/internal/update_link_graph.hh>
+# include <scribo/text/grouping/internal/find_left_graph_link.hh>
 # include <scribo/util/text.hh>
-
-//FIXME: not generic.
-# include <mln/core/alias/dpoint2d.hh>
 
 namespace scribo
 {
@@ -61,31 +57,24 @@ namespace scribo
     namespace grouping
     {
 
-      /// Map each character bounding box to its left bounding box neighbor
-      /// if possible.
-      /// Iterate to the right but link boxes to the left.
-      ///
-      /// \return an mln::util::array. Map a bounding box to its left neighbor.
+      /// Group character bounding boxes with several_multiple links.
+      /// Look up for neighbors on the left of each box.
       template <typename L>
-      inline
-      mln::util::array<unsigned>
-      group_with_single_left_link(const scribo::util::text<L>& text,
-				  unsigned neighb_max_distance);
+      mln::util::graph
+      group_with_several_multiple_links(const scribo::util::text<L>& text,
+				unsigned neighb_max_distance);
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename L>
       inline
-      mln::util::array<unsigned>
-      group_with_single_left_link(const scribo::util::text<L>& text,
-				  unsigned neighb_max_distance)
+      mln::util::graph
+      group_with_several_multiple_links(const scribo::util::text<L>& text,
+				unsigned neighb_max_distance)
       {
-	trace::entering("scribo::text::grouping::group_with_single_left_link");
+	trace::entering("scribo::text::grouping::group_with_several_multiple_links");
 
-	mln_precondition(text.is_valid());
-
-	mln::util::array<unsigned> left_link(text.nbboxes().next());
-	internal::init_link_array(left_link);
+	mln::util::graph g(text.nbboxes().next());
 
 	mln::util::array<mln_site(L)::vec> centers
 	  = labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
@@ -97,12 +86,33 @@ namespace scribo
 	  int dmax = midcol + neighb_max_distance;
 	  mln_site(L) c = centers[i];
 
-	  /// Find a neighbor on the left
-	  internal::find_left_link(text, left_link, i, dmax, c);
+	  //  -------
+	  //  |	 X------->
+	  //  |	    |
+	  //  |	    |
+	  //  |	 X------->
+	  //  |	    |
+	  //  |	    |
+	  //  |	 X------->
+	  //  -------
+
+	  /// Left link from the top anchor.
+	  mln_site(L) a1 = c;
+	  a1.row() = text.bbox(i).pmin().row() + (c.row() - text.bbox(i).pmin().row()) / 4;
+	  internal::find_left_graph_link(g, text, i, dmax, a1);
+
+	  /// First site on the right of the central site
+	  internal::find_left_graph_link(g, text, i, dmax, c);
+
+	  /// Left link from the bottom anchor.
+	  mln_site(L) a2 = c;
+	  a2.row() = text.bbox(i).pmax().row() - (c.row() - text.bbox(i).pmin().row()) / 4;
+	  internal::find_left_graph_link(g, text, i, dmax, a2);
+
 	}
 
-	trace::exiting("scribo::text::grouping::group_with_single_left_link");
-	return left_link;
+	trace::exiting("scribo::text::grouping::group_with_several_multiple_links");
+	return g;
       }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -113,4 +123,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_TEXT_GROUPING_GROUP_WITH_SINGLE_LEFT_LINK_HH
+#endif // ! SCRIBO_TEXT_GROUPING_GROUP_WITH_SEVERAL_MULTIPLE_LINKS_HH

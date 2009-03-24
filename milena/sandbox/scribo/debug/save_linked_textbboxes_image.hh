@@ -35,6 +35,8 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/graph.hh>
+# include <mln/labeling/compute.hh>
+# include <mln/accu/center.hh>
 # include <mln/level/convert.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/util/array.hh>
@@ -72,8 +74,20 @@ namespace scribo
 				 const mln::util::array<unsigned>& left_link,
 				 const mln::util::array<unsigned>& right_array,
 				 const value::rgb8& box_value,
+				 const value::rgb8& link_value,
+				 const std::string& filename);
+
+    template <typename I, typename L>
+    inline
+    void
+    save_linked_textbboxes_image(const Image<I>& input,
+				 const scribo::util::text<L>& text,
+				 const mln::util::array<unsigned>& left_link,
+				 const mln::util::array<unsigned>& right_link,
+				 const value::rgb8& box_value,
 				 const value::rgb8& left_link_value,
 				 const value::rgb8& right_link_value,
+				 const value::rgb8& validated_link_value,
 				 const std::string& filename);
 
 
@@ -104,8 +118,13 @@ namespace scribo
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
+
+      mln::util::array<mln_site(I)::vec> mass_centers
+	= labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
+
       draw::bounding_boxes(tmp, text.bboxes(), box_value);
-      draw::bounding_box_links(tmp, text.bboxes(), link_array, link_value);
+      draw::bounding_box_links(tmp, mass_centers, link_array, link_value);
+
       io::ppm::save(tmp, filename);
 
       trace::exiting("scribo::debug::save_linked_textbboxes_image");
@@ -120,22 +139,60 @@ namespace scribo
 				 const mln::util::array<unsigned>& left_link,
 				 const mln::util::array<unsigned>& right_link,
 				 const value::rgb8& box_value,
-				 const value::rgb8& left_value,
-				 const value::rgb8& right_value,
+				 const value::rgb8& value,
 				 const std::string& filename)
     {
       trace::entering("scribo::debug::save_linked_textbboxes_image");
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
+
+      mln::util::array<mln_site(I)::vec> mass_centers
+	= labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
+
       draw::bounding_boxes(tmp, text.bboxes(), box_value);
-      draw::bounding_box_links(tmp, text.bboxes(),
+      draw::bounding_box_links(tmp, mass_centers,
 			       left_link, right_link,
-			       left_value, right_value);
+			       value);
+
       io::ppm::save(tmp, filename);
 
       trace::exiting("scribo::debug::save_linked_textbboxes_image");
     }
+
+
+    template <typename I, typename L>
+    inline
+    void
+    save_linked_textbboxes_image(const Image<I>& input,
+				 const scribo::util::text<L>& text,
+				 const mln::util::array<unsigned>& left_link,
+				 const mln::util::array<unsigned>& right_link,
+				 const value::rgb8& box_value,
+				 const value::rgb8& left_link_value,
+				 const value::rgb8& right_link_value,
+				 const value::rgb8& validated_link_value,
+				 const std::string& filename)
+    {
+      trace::entering("scribo::debug::save_linked_textbboxes_image");
+      mln_precondition(exact(input).is_valid());
+
+      mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
+
+      mln::util::array<mln_site(I)::vec> mass_centers
+	= labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
+
+      draw::bounding_boxes(tmp, text.bboxes(), box_value);
+      draw::bounding_box_links(tmp, mass_centers,
+			       left_link, right_link,
+			       left_link_value, right_link_value,
+			       validated_link_value);
+
+      io::ppm::save(tmp, filename);
+
+      trace::exiting("scribo::debug::save_linked_textbboxes_image");
+    }
+
 
 
     template <typename I, typename L, typename G>
@@ -153,8 +210,13 @@ namespace scribo
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
-      draw::bounding_boxes(tmp, text.bboxes(), box_value);
+
+      mln::util::array<mln_site(I)::vec> mass_centers
+	= labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
+
+      draw::bounding_boxes(tmp, mass_centers, box_value);
       draw::bounding_box_links(tmp, text.bboxes(), g, link_value);
+
       io::ppm::save(tmp, filename);
 
       trace::exiting("scribo::debug::save_linked_textbboxes_image");

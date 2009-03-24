@@ -57,7 +57,9 @@ namespace scribo
   {
 
     template <typename I, typename V>
-    mln_ch_value(I,V)
+    mln::util::couple<mln_ch_value(I,V),
+		      util::couple<util::array<box<mln_site(I)> >,
+				   util::array<box<mln_site(I)> > > >
     rebuild(const Image<I>& in_,
 	    const util::couple<util::array<box<mln_site(I)> >,
 			       util::array<box<mln_site(I)> > >& lineboxes,
@@ -69,7 +71,9 @@ namespace scribo
 
 
     template <typename I, typename V>
-    mln_ch_value(I,V)
+    mln::util::couple<mln_ch_value(I,V),
+		      util::couple<util::array<box<mln_site(I)> >,
+			       util::array<box<mln_site(I)> > > >
     rebuild(const Image<I>& in_,
 	    const util::couple<util::array<box<mln_site(I)> >,
 			       util::array<box<mln_site(I)> > >& lineboxes,
@@ -85,10 +89,6 @@ namespace scribo
       util::couple<util::array<box<mln_site(I)> >,
 		   util::array<box<mln_site(I)> > > tblboxes = lineboxes;
 
-//# ifndef SCRIBO_NDEBUG
-//      scribo::debug::save_table_image(in, tblboxes,
-//				      literal::red, "table.ppm");
-//# endif
       scribo::debug::save_table_image(in, tblboxes,
 				      literal::red, "table-raw.ppm");
 
@@ -121,20 +121,15 @@ namespace scribo
       mln_ch_value(I,bool) res;
       initialize(res, in);
       data::fill(res, false);
-      for_all_components(i, tblboxes.first())
+      for_all_elements(i, tblboxes.first())
 	mln::draw::box(res, tblboxes.first()[i], true);
-      for_all_components(i, tblboxes.second())
+      for_all_elements(i, tblboxes.second())
 	mln::draw::box(res, tblboxes.second()[i], true);
 
       mln_ch_value(I,V) lbl = labeling::background(res, c8(), ncells);
 
-//# ifndef SCRIBO_NDEBUG
-//      scribo::debug::save_table_image(in, tblboxes,
-//				      literal::red, "table-connected.ppm");
-//# endif
-
       trace::exiting("scribo::table::rebuild");
-      return lbl;
+      return mln::make::couple(lbl, tblboxes);
     }
 
 

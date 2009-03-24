@@ -1,3 +1,60 @@
+2009-03-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update Scribo's code.
+
+	* scribo/Makefile: add new targets.
+
+	* scribo/debug/save_linked_textbboxes_image.hh,
+	* scribo/debug/save_table_image.hh,
+	* scribo/debug/save_textbboxes_image.hh: improve outputs.
+
+	* scribo/draw/bounding_box_links.hh: draw mass centers.
+
+	* scribo/filter/small_components.hh: add an assertion.
+
+	* scribo/src/extract_text_double_link.cc,
+	* scribo/src/extract_text_double_several_links.cc,
+	* scribo/src/extract_text_multiple_links.cc,
+	* scribo/src/extract_text_single_link.cc: cleanup small components.
+	
+	* scribo/src/extract_text_several_left_links.cc,
+	* scribo/src/extract_text_several_multiple_links,
+	* scribo/src/rectangularity.cc,
+	* scribo/src/table_erase.cc,
+	* scribo/src/table_rebuild_opening.cc,
+	* scribo/src/table_rebuild_rank.cc: new sample code.
+
+	* scribo/table/align_lines_horizontaly.hh,
+	* scribo/table/align_lines_verticaly.hh: fix compilation issues.
+
+	* scribo/table/erase.hh: fix traces.
+
+	* scribo/table/extract.hh,
+	* scribo/table/extract_lines_with_opening.hh,
+	* scribo/table/extract_lines_with_rank.hh: update prototypes.
+
+	* scribo/table/rebuild.hh: use for_all_elements instead of
+	for_all_components.
+
+	* scribo/text/grouping/group_from_double_link.hh: fix wrong
+	link validation.
+
+	* scribo/text/grouping/group_with_multiple_links.hh,
+	* scribo/text/grouping/group_with_single_left_link.hh,
+	* scribo/text/grouping/group_with_single_right_link.hh: refactor code...
+
+	* scribo/text/grouping/internal/find_left_graph_link.hh,
+	* scribo/text/grouping/internal/find_left_link.hh,
+	* scribo/text/grouping/internal/find_right_link.hh: ... here.
+
+	* scribo/text/grouping/internal/update_link_array.hh: fix wrong
+	conditions.
+
+	* scribo/text/grouping/group_with_several_left_links.hh,
+	* scribo/text/grouping/group_with_several_multiple_links.hh,
+	* scribo/text/grouping/group_with_several_right_links.hh: new variants
+	using three anchors instead of one to find the left/right neighbors.
+
 2009-03-24  Frederic Bour  <bour@lrde.epita.fr>
 
 	Add from_accu functional wrapper.

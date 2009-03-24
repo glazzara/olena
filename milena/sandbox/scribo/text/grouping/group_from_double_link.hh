@@ -82,26 +82,30 @@ namespace scribo
 	mln::util::array< accu::bbox<mln_site(I)> > tboxes;
 	tboxes.resize(text.bboxes().nelements());
 
-	mln::util::array<unsigned> left_parent = left_link;
-	for_all_components(i, left_parent)
-	  left_parent[i] = internal::find_root(left_parent, i);
-
-	fun::i2v::array<mln_value(I)> f(text.bboxes().nelements(),
-					literal::zero);
+	mln::util::array<unsigned> parent(left_link.nelements());
+	internal::init_link_array(parent);
 	for_all_components(i, text.bboxes())
 	{
 	  unsigned nbh = right_link[left_link[i]];
 	  if (nbh == i)
 	  {
-	    tboxes[left_parent[i]].take(text.bbox(i));
-	    f(i) = left_parent[left_link[i]];
-	  }
-	  else
-	  {
-	    f(i) = i;
-	    tboxes[i].take(text.bbox(i));
+	    unsigned par = internal::find_root(parent, left_link[i]);
+	    if (par < i)
+	      parent[par] = i;
+	    else
+	      parent[i] = par;
 	  }
 	}
+
+	for_all_elements(i, parent)
+	for (unsigned i = parent.nelements() - 1; i < parent.nelements(); --i)
+	{
+	  parent[i] = parent[parent[i]];
+	  tboxes[parent[i]].take(text.bbox(i));
+	}
+
+	fun::i2v::array<unsigned> f;
+	convert::from_to(parent, f);
 
 	// Update bounding boxes information.
 	mln::util::array< box<mln_site(I)> > bresult;
