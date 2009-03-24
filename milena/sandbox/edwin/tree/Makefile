@@ -1,3 +1,4 @@
+include makefile.rules
 TARGET=test
 SRC=test.cc
 OBJS=${SRC:.cc=.o}
@@ -7,16 +8,15 @@ MILENADIR=$(OLENADIR)/milena
 
 CXXFLAGS=-I$(MILENADIR) -I./ -W -Wall
 
-CXXFLAGS += -g -ggdb
-#CXXFLAGS += -DNDEBUG -O1
+
+CXXFLAGS += $(if $(DEBUG), -g -ggdb, -DNDEBUG -O1)
 
 CXX=g++
 LD=g++
 LDFLAGS=
 
 all: clean $(TARGET)
-	#chmod +x exo2.sh
-	#./exo2.sh
+
 
 $(TARGET): $(OBJS) $(SRC)
 	$(LD) $(LDFLAGS) -o $@ $(OBJS)
@@ -29,5 +29,5 @@ $(TARGET): $(OBJS) $(SRC)
 
 clean:
 	rm -f *.o $(TARGET)
-	rm -f *.pbm
-	find  -name "*.pgm" \! -regex ".*/affiche2?.pgm" -delete
+	#rm -f *.pbm
+	#find  -name "*.pgm" \! -regex ".*/affiche2?.pgm" -delete

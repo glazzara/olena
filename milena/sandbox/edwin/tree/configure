@@ -1,0 +1,14 @@
+#! /bin/bash
+
+
+for arg in "$@"; do
+    if [ "$arg" == "--debug" ]; then
+	debug=1;
+    fi
+done
+
+rm -f makefile.rules
+touch makefile.rules
+if [ "$debug" ]; then
+    echo 'DEBUG=1' > makefile.rules
+fi

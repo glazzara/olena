@@ -91,7 +91,7 @@ namespace mln {
       **
       ** @param tree Component tree used for propagation.
       ** @param a Attributed image where values are propagated.
-      ** @param accu_ Accumulator to apply on tree.
+      ** @param acc Accumulator to apply on tree.
       ** @param n The repetition number.
       **
       ** @return Array of propagated nodes.
@@ -104,28 +104,6 @@ namespace mln {
 		 Accumulator<ACC>& acc,
 		 unsigned n);
 
-      /**
-      ** Apply accumulator \accu on tree nodes value until the value
-      ** accumulated by \p acc get lesser than the treshold \p n.
-      ** Each time, the result of accumulator is inserted
-      ** into the returned array, then ascendant and descendant zero-fill
-      ** propagations are performed from the node.
-      ** (This function is a shorcut of run_while with a treshold predicate).
-      **
-      ** @param tree Component tree used for propagation.
-      ** @param a Attributed image where values are propagated.
-      ** @param accu_ Accumulator to apply on tree.
-      ** @param n Treshold.
-      **
-      ** @return Array of propagated nodes.
-      */
-      template <typename T, typename A, typename ACC>
-      inline
-      p_array< mln_psite(A) >
-      run_while_treshold(const T& tree,
-			 Image<A>& a,
-			 Accumulator<ACC>& acc,
-			 mln_value(A) n);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -143,16 +121,16 @@ namespace mln {
 	  p_array< mln_psite(A) > arr_sites;
 	  util::array< mln_value(A) > arr_values;
 
-	  do  {
-	      p = morpho::tree::run(tree, a, accu);
-	      if (a(p) == 0) //there's no more objects.
-		break;
+	  p = morpho::tree::run(tree, a, accu);
+	  while (pred(p) && a(p) != 0)
+	    {
 	      arr_sites.insert(p);
 	      arr_values.append(a(p));
 	      morpho::tree::propagate_node_to_descendants(p, tree, a, 0);
 	      morpho::tree::propagate_node_to_ancestors(p, tree, a, 0);
 	      a(p) = 0;
-	  } while (pred(accu.to_result()));
+	      p = morpho::tree::run(tree, a, accu);
+	    }
 	  for (unsigned i = 0; i < arr_sites.nsites(); i++)
 	    a(arr_sites[i]) = arr_values[i];
 	  return arr_sites;
@@ -176,28 +154,6 @@ namespace mln {
 
 	private:
 	  unsigned n_;
-	};
-
-	template <typename I>
-	struct treshold : Function_p2b< treshold<I> >
-	{
-	  typedef bool result;
-
-	  treshold(const Image<I>& ima,
-		   const mln_value(I)& treshold)
-	    : ima_ (exact(ima)),
-	      treshold_ (treshold)
-	  {
-	  }
-
-	  bool operator()(const mln_psite(I)& p) const
-	  {
-	    return (ima_(p) > treshold_);
-	  }
-
-	private:
-	  const I& ima_;
-	  const mln_value(I) treshold_;
 	};
 
 
@@ -228,19 +184,6 @@ namespace mln {
 		 unsigned n)
       {
 	internal::ncard predicate(n - 1);
-	return run_while(tree, a, acc, predicate);
-      }
-
-
-      template <typename T, typename A, typename ACC>
-      inline
-      p_array< mln_psite(A) >
-      run_while_treshold(const T& tree,
-			 Image<A>& a,
-			 Accumulator<ACC>& acc,
-			 mln_value(A) n)
-      {
-	internal::treshold<A> predicate(a, n);
 	return run_while(tree, a, acc, predicate);
       }
 
