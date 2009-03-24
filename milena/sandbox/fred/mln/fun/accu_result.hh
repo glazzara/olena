@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_FROM_ACCU_HH
-# define MLN_FUN_FROM_ACCU_HH
+#ifndef MLN_FUN_ACCU_RESULT_HH
+# define MLN_FUN_ACCU_RESULT_HH
 
 # include <mln/fun/unary.hh>
 # include <mln/core/concept/accumulator.hh>
@@ -36,15 +36,10 @@
 namespace mln
 {
 
-  // from_accu: wrap an accumulator into a function
+  // accu_result: return result of given accumulator.
   namespace fun
   {
-    template <typename A>
-    struct from_accu : unary_param<from_accu<A>, A*>
-    {
-      from_accu() : unary_param<from_accu<A>, A*>() {};
-      from_accu(A* a) : unary_param<from_accu<A>, A*>(a) {};
-    };
+    struct accu_result : unary<accu_result> {};
   }
 
   namespace trait
@@ -52,38 +47,17 @@ namespace mln
 
     namespace next
     {
-      template <typename A, typename T>
-      struct set_unary_<mln::fun::from_accu<A>, mln::Object, T>
+      template <typename E>
+      struct set_unary_<mln::fun::accu_result, mln::Accumulator, E>
       {
 	typedef set_unary_           ret;
-	typedef typename A::result   result;
-	typedef typename A::argument argument;
-	typedef A*                   param;
+	typedef typename E::result   result;
+	typedef mln::Accumulator<E> argument;
 
-	set_unary_()
+	static result read(const argument& x)
 	{
+	  return exact(x).to_result();
 	}
-
-	set_unary_(const param& accu)
-	: accu_(accu)
-	{
-	}
-
-	result read(const argument& x) const
-	{
-	  mln_precondition(accu_ != 0);
-
-	  accu_->take(x);
-	  return accu_->to_result ();
-	}
-
-	void init(const param& accu)
-	{
-	  accu_ = accu;
-	}
-
-      protected:
-	A* accu_;
       };
 
     }
@@ -92,4 +66,4 @@ namespace mln
 
 }
 
-#endif /* ! MLN_FUN_FROM_ACCU_HH */
+#endif /* ! MLN_FUN_ACCU_RESULT_HH */
