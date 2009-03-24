@@ -418,6 +418,11 @@ namespace mln
       void
       from_to_(const histo::array<V>& from, image1d<T>& to);
 
+      // util::array -> image1d
+      template <typename V, typename T>
+      void
+      from_to_(const util::array<V>& from, image1d<T>& to);
+
     } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert

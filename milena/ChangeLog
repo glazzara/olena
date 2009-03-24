@@ -1,3 +1,10 @@
+2009-03-24  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Conversion from util::array to image1d.
+	* mln/convert/from_to.hxx: Update from_to for image1d.
+	* mln/core/image/image1d.hh: Update from_to.
+	* mln/world/binary_2d/projected_histo.hh: Update.
+
 2009-03-23  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Change arguments of projected_histo().

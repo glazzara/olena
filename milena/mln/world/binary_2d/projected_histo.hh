@@ -32,9 +32,12 @@
 ///
 /// FIXME: insert comment.
 
+# include <mln/core/concept/image.hh>
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/dpoint2d.hh>
+# include <mln/geom/all.hh>
+# include <mln/opt/at.hh>
 # include <mln/value/int_u12.hh>
 # include <mln/util/couple.hh>
 
@@ -47,25 +50,25 @@ namespace mln
     namespace binary_2d
     {
 
+      template <typename I>
       util::couple<image1d<float>, image1d<float> >
-      projected_histo(const image2d<bool>& input, bool value = true)
+      projected_histo(const Image<I>& input_, bool value = true)
       {
-	const unsigned nrows = input.nrows();
+	mln_ch_value(I, bool) input = exact(input_);
+
+	const unsigned nrows = geom::nrows(input);
 	image1d<float> row_histo(nrows);
 	data::fill(row_histo, 0);
 
-	const unsigned ncols = input.ncols();
+	const unsigned ncols = geom::ncols(input);
 	image1d<float> col_histo(ncols);
 	data::fill(col_histo, 0);
-
-	mln_precondition(row_histo.nelements() == nrows);
-	mln_precondition(col_histo.nelements() == ncols);
 
 	for (unsigned row = 0; row < nrows; ++row)
 	{
 	  for (unsigned col = 0; col < ncols; ++col)
 	  {
-	    if (input.at_(row, col) == value)
+	    if (opt::at(input, geom::bbox(input).min_row() + row, geom::bbox(input).min_col() + col) == value)
 	    {
 	      ++row_histo.at_(row);
 	      ++col_histo.at_(col);

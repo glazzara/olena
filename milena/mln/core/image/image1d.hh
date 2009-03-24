@@ -133,6 +133,10 @@ namespace mln
       template <typename V, typename T>
       void from_to_(const histo::array<V>& from, image1d<T>& to);
 
+      // util::array -> image1d.
+      template <typename V, typename T>
+      void from_to_(const util::array<V>& from, image1d<T>& to);
+
     } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
@@ -574,6 +578,17 @@ namespace mln
       {
 	to.init_(make::box1d(from.nvalues()), 0);
 	for (unsigned i = 0; i < from.nvalues(); ++i)
+	  from_to(from[i], to(point1d(i)));
+      }
+
+      // util::array -> image1d.
+      template <typename V, typename T>
+      inline
+      void
+      from_to_(const util::array<V>& from, image1d<T>& to)
+      {
+	to.init_(make::box1d(from.nelements()), 0);
+	for (unsigned i = 0; i < from.nelements(); ++i)
 	  from_to(from[i], to(point1d(i)));
       }
 
