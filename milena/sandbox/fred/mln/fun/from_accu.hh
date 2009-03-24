@@ -25,12 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_MATH_COS_HH
-# define MLN_FUN_MATH_COS_HH
+#ifndef MLN_FUN_FROMACCU_HH
+# define MLN_FUN_FROMACCU_HH
 
 # include <mln/fun/unary.hh>
-# include <mln/value/builtin/floatings.hh>
-# include <mln/value/builtin/integers.hh>
+# include <mln/core/concept/accumulator.hh>
 # include <mln/math/acos.hh>
 # include <mln/math/cos.hh>
 
@@ -40,7 +39,12 @@ namespace mln
   // Cosinus, bijective
   namespace fun
   {
-    struct cos : unary<cos> {};
+    template <typename A>
+    struct from_accu : unary_param<from_accu<A>, A*>
+    {
+      from_accu() : unary_param<from_accu<A>, A*>() {};
+      from_accu(A* a) : unary_param<from_accu<A>, A*>(a) {};
+    };
   }
 
   namespace trait
@@ -48,38 +52,38 @@ namespace mln
 
     namespace next
     {
-
-      template <typename T>
-      struct set_unary_<mln::fun::cos, mln::value::Floating, T>
+      template <typename A, typename T>
+      struct set_unary_<mln::fun::from_accu<A>, mln::Object, T>
       {
-	typedef set_unary_ ret;
-	typedef T result;
-	typedef T argument;
-	typedef T& lvalue;
+	typedef set_unary_           ret;
+	typedef typename A::result   result;
+	typedef typename A::argument argument;
+	typedef A*                   param;
 
-	static result read(const argument& x)
+	set_unary_()
 	{
-	  return math::cos(x);
 	}
 
-	static void write(lvalue l, const result& x)
+	set_unary_(const param& accu)
+	: accu_(accu)
 	{
-	  l = math::acos(x);
-	}
-      };
-
-      template <typename T>
-      struct set_unary_<mln::fun::cos, mln::value::Integer, T>
-      {
-	typedef set_unary_ ret;
-	typedef double result;
-	typedef T argument;
-
-	static result read(const argument& x)
-	{
-	  return math::cos((result)x);
 	}
 
+	result read(const argument& x) const
+	{
+	  mln_precondition(accu_ != 0);
+
+	  accu_->take(x);
+	  return accu_->to_result ();
+	}
+
+	void init(const param& accu)
+	{
+	  accu_ = accu;
+	}
+
+      protected:
+	A* accu_;
       };
 
     }
