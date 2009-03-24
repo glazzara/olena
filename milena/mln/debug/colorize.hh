@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -109,7 +109,7 @@ namespace mln
       mln_precondition(exact(input).is_valid());
       // FIXME: check that V is a color type.
       // FIXME: we want to be sure that this is a label.
-      mlc_is_a(mln_value(L), mln::value::Symbolic)::check();
+      // mlc_is_a(mln_value(L), mln::value::Symbolic)::check();
       (void) value;
 
       unsigned label_count = nlabels.next();

@@ -1,3 +1,13 @@
+2009-03-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Relax a couple of contraints related to labels and integers.
+
+	* mln/debug/colorize.hh: Relax the Symbolic constraint.
+	That allows for colorizing images containing integers.
+	* mln/value/int_u.hh (next): New.
+	That allows for images containing integers to be processed
+	as labeled images.
+
 2009-03-24  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Conversion from util::array to image1d.

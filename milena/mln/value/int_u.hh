@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -154,6 +154,9 @@ namespace mln
 
       /// Assignment from an integer.
       int_u<n>& operator=(int i);
+
+      /// Give the next value (i.e., i + 1).
+      int_u<n> next() const;
     };
 
 
@@ -252,6 +255,14 @@ namespace mln
       mln_precondition(unsigned(i) <= mln_max(enc_));
       this->v_ = static_cast<enc_>(i);
       return *this;
+    }
+
+    template <unsigned n>
+    inline
+    int_u<n>
+    int_u<n>::next() const
+    {
+      return this->v_ + 1;
     }
 
     template <unsigned n>
