@@ -96,13 +96,13 @@ namespace mln
     namespace over_load
     {
 
-      template <typename S, typename P, typename _C>
+      template <typename S, typename P, typename C_>
       void
-      from_to_(const Site_Set<S>& from, std::set<P,_C>& to);
+      from_to_(const Site_Set<S>& from, std::set<P,C_>& to);
 
-      template <typename P, typename _C, typename S>
+      template <typename P, typename C_, typename S>
       void
-      from_to_(const std::set<P,_C>& from, Site_Set<S>& to);
+      from_to_(const std::set<P,C_>& from, Site_Set<S>& to);
 
     } // end of namespace mln::convert::over_load
 
@@ -138,10 +138,10 @@ namespace mln
     namespace over_load
     {
 
-      template <typename S, typename P, typename _C>
+      template <typename S, typename P, typename C_>
       inline
       void
-      from_to_(const Site_Set<S>& from_, std::set<P,_C>& to)
+      from_to_(const Site_Set<S>& from_, std::set<P,C_>& to)
       {
 	mlc_converts_to(mln_psite(S), P)::check();
 	const S& from = exact(from_);
@@ -152,10 +152,10 @@ namespace mln
       }
 
 
-      template <typename P, typename _C, typename S>
+      template <typename P, typename C_, typename S>
       inline
       void
-      from_to_(const std::set<P,_C>& from, Site_Set<S>& to_)
+      from_to_(const std::set<P,C_>& from, Site_Set<S>& to_)
       {
 	mlc_converts_to(P, mln_i_element(S))::check();
 	S& to = exact(to_);

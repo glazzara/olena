@@ -404,14 +404,14 @@ namespace mln
       from_to_(const Site_Set<S>& from, Image<I>& to);
 
       // Site_Set -> std::set
-      template <typename S, typename P, typename _C>
+      template <typename S, typename P, typename C_>
       void
-      from_to_(const Site_Set<S>& from, std::set<P,_C>& to);
+      from_to_(const Site_Set<S>& from, std::set<P,C_>& to);
 
       // std::set -> Site_Set
-      template <typename P, typename _C, typename S>
+      template <typename P, typename C_, typename S>
       void
-      from_to_(const std::set<P,_C>& from, Site_Set<S>& to);
+      from_to_(const std::set<P,C_>& from, Site_Set<S>& to);
 
       // histo::array -> image1d
       template <typename V, typename T>
