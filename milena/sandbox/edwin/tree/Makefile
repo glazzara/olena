@@ -9,7 +9,8 @@ MILENADIR=$(OLENADIR)/milena
 CXXFLAGS=-I$(MILENADIR) -I./ -W -Wall
 
 
-CXXFLAGS += $(if $(DEBUG), -g -ggdb, -DNDEBUG -O1)
+CXXFLAGS += $(if $(DEBUG), -g -ggdb, -DNDEBUG\
+	$(if $(RELEASE), -O3, -O1))
 
 CXX=g++
 LD=g++

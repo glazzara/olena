@@ -1,3 +1,9 @@
+2009-03-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Clean binarisation processing chain using sharpness.
+	* sandbox/edwin/tree/run.hh: Add trace entering/exiting functions.
+	* sandbox/edwin/tree/sharp.cc: Clean file.
+
 2009-03-25  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add IO section.

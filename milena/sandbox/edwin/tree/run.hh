@@ -36,6 +36,9 @@
 # include <mln/core/site_set/p_array.hh>
 # include <mln/util/pix.hh>
 
+# include <mln/trace/entering.hh>
+# include <mln/trace/exiting.hh>
+
 # include "propagate_node.hh"
 
 namespace mln {
@@ -167,12 +170,15 @@ namespace mln {
 		Accumulator<ACC>& acc,
 		Function_p2b<P2B>& pred)
       {
+	trace::entering("mln::morpho::tree::run_while");
 	A& a = exact(a_);
 
 	mln_precondition(tree.f().domain() == a.domain());
 	mln_precondition(a.is_valid());
 
-	return internal::run_while(tree, a, exact(acc), exact(pred));
+	p_array< mln_psite(A) > arr = internal::run_while(tree, a, exact(acc), exact(pred));
+	trace::exiting("mln::morpho::tree::run_while");
+	return arr;
       }
 
       template <typename T, typename A, typename ACC>
@@ -183,8 +189,11 @@ namespace mln {
 		 Accumulator<ACC>& acc,
 		 unsigned n)
       {
+	trace::entering("mln::morpho::tree::run_ntimes");
 	internal::ncard predicate(n - 1);
-	return run_while(tree, a, acc, predicate);
+	p_array< mln_psite(A) > arr = run_while(tree, a, acc, predicate);
+	trace::exiting("mln::morpho::tree::run_ntimes");
+	return arr;
       }
 
       template <typename T, typename A, typename I>
@@ -193,8 +202,10 @@ namespace mln {
 	  const Image<I>& a_,
 	  Accumulator<A>& accu_)
       {
+	trace::entering("mln::morpho::tree::run");
 	A& accu = exact(accu_);
 	const I& a = exact(a_);
+
 
 	mln_precondition(tree.f().domain() == a.domain());
 	mln_precondition(a.is_valid());
@@ -202,6 +213,7 @@ namespace mln {
 	mln_up_node_piter(T) n(tree);
 	for_all(n)
 	  accu.take(make::pix(a, n));
+	trace::exiting("mln::morpho::tree::run");
 	return (accu.to_result());
       }
 

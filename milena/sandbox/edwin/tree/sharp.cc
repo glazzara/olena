@@ -24,7 +24,7 @@
 /* io */
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/io/ppm/save.hh>
+#include <mln/io/pbm/save.hh>
 #include <../../theo/color/change_attributes.hh>
 
 /* data & pw */
@@ -34,11 +34,8 @@
 #include <mln/data/paste.hh>
 #include <mln/pw/all.hh>
 
-/* labeling */
-#include <mln/value/label.hh>
-#include <mln/labeling/blobs.hh>
-#include <mln/debug/colorize.hh>
-
+/* trace */
+#include <mln/trace/quiet.hh>
 
 /* std */
 #include <string>
@@ -49,11 +46,11 @@ bool mydebug = false;
 
 void usage(char** argv)
 {
-  std::cerr << "usage: " << argv[0] << " input [--debug]" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input [--debug] [-n nbr_components | -s sharpness] [-c card]" << std::endl;
   abort();
 }
 
-void dsp(const char* str)
+void dsp(const std::string& str)
 {
   std::cout << std::endl
 	    << "*********************" << std::endl
@@ -67,11 +64,30 @@ int main(int argc, char* argv[])
 {
   using namespace mln;
   using value::int_u8;
+  std::string arg;
+  unsigned nb_components = 0;
+  unsigned card = 0;
+  double sharpness = 0;
 
   if (argc < 2)
     usage(argv);
 
-  mydebug = (argc >= 3 && std::string(argv[2]) == "--debug");
+  for (int i = 2; i < argc; i++)
+    {
+      arg = std::string(argv[i]);
+      if (arg == "--debug")
+	mydebug = true;
+      else if (arg == "-n" && i != argc)
+	nb_components = atoi(argv[++i]);
+      else if (arg == "-s" && i != argc)
+	sharpness = atof(argv[++i]);
+      else if (arg == "-c" && i != argc)
+	card = atoi(argv[++i]);
+      else if (arg == "--trace")
+	trace::quiet = false;
+      else
+	usage (argv);
+    }
 
 
   /* Image loadin' */
@@ -91,12 +107,11 @@ int main(int argc, char* argv[])
   typedef morpho::attribute::sharpness<I> sharp_t;
   typedef mln_ch_value_(I, double) A;
 
+  if (mydebug)
+    dsp("Image sharp attribute");
+
   A a = morpho::tree::compute_attribute_image(sharp_t (), tree);
   morpho::tree::propagate_representant(tree, a);
-
-  if (mydebug) {
-    dsp("Image sharp attribute"); display_tree_attributes(tree, a);
-  }
 
   /* We don't want little components */
 
@@ -106,29 +121,40 @@ int main(int argc, char* argv[])
   // optional extra argument to compute_attribute where the
   // accumulators image will be stored.
 
-  typedef morpho::attribute::card<I> card_t;
-  typedef mln_ch_value_(tree_t::function, mln_result_(card_t)) B;
+  if (card)
+    {
+      typedef morpho::attribute::card<I> card_t;
+      typedef mln_ch_value_(tree_t::function, mln_result_(card_t)) B;
 
-  B b = morpho::tree::compute_attribute_image(card_t (), tree);
-  morpho::tree::propagate_representant(tree, b);
+      if (mydebug)
+	dsp("Image card attribute");
 
-  if (mydebug) {
-    dsp("Image card attribute"); display_tree_attributes(tree, b);
-  }
+      B b = morpho::tree::compute_attribute_image(card_t (), tree);
+      morpho::tree::propagate_representant(tree, b);
 
-  a = duplicate((fun::p2v::ternary(pw::value(b) > pw::cst(100), pw::value(a), pw::cst(0.0))) | a.domain());
-
+      a = duplicate((fun::p2v::ternary(pw::value(b) > pw::cst(card), pw::value(a), pw::cst(0.0))) | a.domain());
+    }
 
   /* Run max accumulator */
   accumulator::arg_max<A> argmax(a);
   p_array< mln_psite_(A) > obj_array; // Array of object components.
 
-  mln_VAR(predicate, pw::value(a) > pw::cst(0.7));
-  obj_array = morpho::tree::run_while(tree, a, argmax, predicate);
-
   if (mydebug) {
-    dsp("Run max accumulator, lk 4 5 objs"); display_tree_attributes(tree, a);
+    std::stringstream s("Run max accumulator, look for ");
+    if (nb_components)
+      s << nb_components << " components.";
+    else
+      s << "components whose treshold > " << sharpness;
+    dsp(s.str());
   }
+
+  if (!nb_components) {
+    mln_VAR(predicate, pw::value(a) > pw::cst(sharpness));
+    obj_array = morpho::tree::run_while(tree, a, argmax, predicate);
+  } else {
+    obj_array = morpho::tree::run_ntimes(tree, a, argmax, nb_components);
+  }
+
 
   /* Print them */
   if (mydebug) {
@@ -139,6 +165,10 @@ int main(int argc, char* argv[])
   }
 
   /* Now Back Propagate to component */
+
+  if (mydebug) {
+    dsp("Create mask and propagate");
+  }
   typedef mln_ch_value_(I, bool) M;
   M mask;
   initialize(mask, a);
@@ -151,28 +181,26 @@ int main(int argc, char* argv[])
     propagate_node_to_descendants(c, tree, mask);
   }
   morpho::tree::propagate_representant(tree, mask);
+  io::pbm::save(mask, "binary.pbm");
 
   // mask now contains all nodes related to objects
 
-  if (mydebug) {
-    dsp("Create mask and propagate"); display_tree_attributes(tree, mask);
-  }
 
-  /* Labeling */
-  typedef mln_ch_value_(I, value::label<8>) L;
-  value::label<8> nlabel;
-  L label = labeling::blobs(mask, c4(), nlabel);
-  io::ppm::save(debug::colorize(value::rgb8(), label, nlabel), "label.pgm");
+  /* EXTRA */
 
-  /* Now store output image image */
-  I out;
-  initialize(out, input);
-  data::fill(out, 0);
-  data::paste(input | pw::value(mask), out);
+ //  /* Labeling */
+//     typedef mln_ch_value_(I, value::label<8>) L;
+//     value::label<8> nlabel;
+//     L label = labeling::blobs(mask, c4(), nlabel);
+//     io::ppm::save(debug::colorize(value::rgb8(), label, nlabel), "label.pgm");
 
-  if (mydebug) {
-    dsp("Mask input"); display_tree_attributes(tree, out);
-  }
 
-  io::pgm::save(out, "output.pgm");
+//   /* Now store output image */
+//     I out;
+//     initialize(out, input);
+//     data::fill(out, 0);
+//     data::paste(input | pw::value(mask), out);
+//     io::pgm::save(out, "output.pgm");
+
+
 }
