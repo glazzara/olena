@@ -147,7 +147,7 @@ namespace mln
 	{
 	  const Magick::PixelPacket *pixel = pixel_cache + (int) p.to_site().to_vec()[0] * columns
 					     + (int) p.to_site().to_vec()[1];
-	  value::rgb8 pix(pixel->red % 256, pixel->green % 256, pixel->blue % 256); // WARNING: Quantum = 16bits but rgb is 8bits
+	  value::rgb8 pix(pixel->red % 256, pixel->green % 256, pixel->blue % 256); // FIXME: Quantum = 16bits but rgb is 8bits
 	  mln_value(I) res;
 	  if (!do_it(pix, res, filename))
 	    abort();

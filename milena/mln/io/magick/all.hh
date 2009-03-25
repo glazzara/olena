@@ -46,5 +46,6 @@ namespace mln
 }
 
 # include <mln/io/magick/load.hh>
+# include <mln/io/magick/save.hh>
 
 #endif // ! MLN_IO_MAGICK_ALL_HH

@@ -1,3 +1,10 @@
+2009-03-25  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add ImageMagick save() support.
+	* mln/io/magick/all.hh: Update.
+	* mln/io/magick/load.hh: Update.
+	* mln/io/magick/save.hh: Implement save() routine.
+
 2009-03-24  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Test geodesic distance with component tree and try to apply.
