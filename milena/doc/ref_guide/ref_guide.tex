@@ -323,6 +323,7 @@ $$
 - \backslash subpage iterators
 - \backslash subpage imamemmgmt
 - \backslash subpage basicops
+- \backslash subpage inputoutput
 - \backslash subpage graphandima
 - \backslash subpage funs
 - \backslash subpage arithmops
@@ -1918,6 +1919,44 @@ With this operator, an intersection is applied on the image domain and the
 site set.
 
 
+
+%====================================
+\clearpage
+\newpage
+\doxychapter{inputoutput}{Input / Output}
+
+Olena offers a builtin support for PNM (PBM, PGM & PPM), PFM  and dump file formats.
+
+You can extend the range of supported files by installing third-parties libraries such as:
+
+\begin{itemize}
+  \item ImageMagick: support for usual images (PNG, TIFF, JPEG, ...)
+  \item GDCM: support for DICOM medical images 
+\end{itemize}
+
+\doxysection{ioim}{ImageMagick}
+  http://www.imagemagick.org/
+
+  You have to install ImageMagick with Magick++ support. You will be able to
+  load every file recognized as an image by ImageMagick.
+
+  Olena only support binary and 8 bits images through ImageMagick.
+
+  During the compilation, you will have to specify the ImageMagick flags and
+  libraries.
+
+  To do so, just add the following line to your compilation:
+
+  `Magick++-config --cppflags --cxxflags --ldflags --libs`
+
+  Magick++-config will automatically fill the dependencies depending of your
+  installation.
+
+\doxysection{iodcm}{GDCM}
+  http://apps.sourceforge.net/mediawiki/gdcm/
+
+  GDCM is a library for manipulating DICOM files. DICOM files are used in
+  medical imaging.
 
 %====================================
 \newpage

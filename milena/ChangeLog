@@ -1,5 +1,10 @@
 2009-03-25  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
+	Add IO section.
+	* doc/ref_guide/ref_guide.tex: Add a Input / Output section.
+
+2009-03-25  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
 	Add ImageMagick save() support.
 	* mln/io/magick/all.hh: Update.
 	* mln/io/magick/load.hh: Update.
