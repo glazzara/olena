@@ -1,3 +1,12 @@
+2009-03-25  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Update Fabien' sandbox.
+	* fabien/binarization/Makefile: Update.
+	* fabien/binarization/test.cc: Update.
+	* fabien/igr/matlab.cc: Update.
+	* fabien/magick/Makefile: Update.
+	* fabien/magick/save.cc: New test file for IM support.
+
 2009-03-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Sharpness processing chain.
