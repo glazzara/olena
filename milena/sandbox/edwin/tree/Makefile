@@ -1,6 +1,6 @@
 include makefile.rules
-TARGET=test
-SRC=test.cc
+TARGET=sharp
+SRC=sharp.cc
 OBJS=${SRC:.cc=.o}
 
 OLENADIR=$(MLN_DIR)/..
