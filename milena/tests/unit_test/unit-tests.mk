@@ -53,6 +53,8 @@ mln_literal_one \
 mln_literal_min \
 mln_literal_white \
 mln_literal_essential \
+mln_world_binary_2d_subsample \
+mln_world_binary_2d_projected_histo \
 mln_registration_get_rtransf \
 mln_registration_internal_rms \
 mln_registration_get_rot \
@@ -1170,6 +1172,8 @@ mln_literal_one_SOURCES = mln_literal_one.cc
 mln_literal_min_SOURCES = mln_literal_min.cc
 mln_literal_white_SOURCES = mln_literal_white.cc
 mln_literal_essential_SOURCES = mln_literal_essential.cc
+mln_world_binary_2d_subsample_SOURCES = mln_world_binary_2d_subsample.cc
+mln_world_binary_2d_projected_histo_SOURCES = mln_world_binary_2d_projected_histo.cc
 mln_registration_get_rtransf_SOURCES = mln_registration_get_rtransf.cc
 mln_registration_internal_rms_SOURCES = mln_registration_internal_rms.cc
 mln_registration_get_rot_SOURCES = mln_registration_get_rot.cc

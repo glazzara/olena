@@ -39,12 +39,14 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/point2d.hh>
+# include <mln/value/concept/scalar.hh>
 
 # include <mln/value/rgb.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/value/int_u8.hh>
 
 # include <mln/metal/templated_by.hh>
+# include <mln/metal/not_equal.hh>
 
 # include <mln/io/pnm/save_header.hh>
 # include <mln/io/pnm/macros.hh>
@@ -100,11 +102,19 @@ namespace mln
 	void write_value(std::ofstream& file,
 			 const V& v)
 	{
-          // if V is not a struct you are probably trying to write binary images
-          // use pbm files for binary images
-	  typedef typename V::enc E;
+	  mlc_not_equal(V,bool)::check();
+	  file.write((char*)(&v), sizeof(V));
+	}
 
-	  E c = v.to_enc();
+	// write a scalar value into for uncontiguous datas
+	template <typename S>
+	inline
+	void write_value(std::ofstream& file,
+			 const value::Scalar<S>& s)
+	{
+	  typedef typename S::enc E;
+
+	  E c = s.to_enc();
 	  file.write((char*)(&c), sizeof(E));
 	}
 

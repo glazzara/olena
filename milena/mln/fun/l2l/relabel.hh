@@ -174,6 +174,7 @@ namespace mln
       {
 	mlc_converts_to(T,L)::check();
 
+	to.reserve(from.nelements());
 	for (unsigned i = 0; i < from.nelements(); ++i)
 	  to.append(convert::to<L>(from[i]));
       }
@@ -193,6 +194,7 @@ namespace mln
       {
 	mlc_converts_to(T,L)::check();
 
+	to.reserve(from.size());
 	for (unsigned i = 0; i < from.size(); ++i)
 	  to.append(convert::to<L>(from[i]));
       }

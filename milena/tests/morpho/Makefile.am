@@ -86,5 +86,4 @@ meyer_wst_long_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
 
 TESTS = $(check_PROGRAMS)
 
-XFAIL_TESTS = combined \
-	      thinning
+

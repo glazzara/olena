@@ -337,13 +337,7 @@ namespace mln
 
         to.reserve(from.nelements());
 
-	//Special case. Handle background component data.
-	if (from[0].is_valid())
-	  to.append(convert::to<T2>(from[0]));
-	else
-	  to.append(T2());
-
-        for (unsigned i = 1; i < from.nelements(); ++i)
+        for (unsigned i = 0; i < from.nelements(); ++i)
 	  to.append(convert::to<T2>(from[i]));
       }
 

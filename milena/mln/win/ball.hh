@@ -100,7 +100,7 @@ namespace mln
       : diameter_(diameter)
     {
       mln_precondition(diameter % 2 == 1);
-      int
+      unsigned
 	radius = diameter / 2,
 	sqr_radius = radius * radius;
       typedef point<G,C> P;

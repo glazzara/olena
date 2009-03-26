@@ -55,6 +55,8 @@ mln/literal/one.hh \
 mln/literal/min.hh \
 mln/literal/white.hh \
 mln/literal/essential.hh \
+mln/world/binary_2d/subsample.hh \
+mln/world/binary_2d/projected_histo.hh \
 mln/registration/get_rtransf.hh \
 mln/registration/internal/rms.hh \
 mln/registration/get_rot.hh \

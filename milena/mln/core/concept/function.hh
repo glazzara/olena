@@ -507,7 +507,8 @@ namespace mln
   template <typename E>
   inline
   Function_i2b<E>::Function_i2b(const Function_i2b<E>& rhs)
-    : Function_v2b<E>(rhs)
+    : Function_v2v<E>(rhs),
+      Function_v2b<E>(rhs)
   {
   }
 

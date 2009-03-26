@@ -57,6 +57,9 @@ namespace mln
 	typedef T result;
 	typedef typename std::vector<T>::reference mutable_result;
 
+	/// Pre-allocate space.
+	void reserve(unsigned n);
+
 	/// Set the function size to \p n.
 	void resize(unsigned n);
 	/// Set the function size to \p n and initialize the value with
@@ -151,6 +154,14 @@ namespace mln
 	: v_(from)
       {
 
+      }
+
+      template <typename T>
+      inline
+      void
+      array_base<T>::reserve(unsigned n)
+      {
+	v_.reserve(n);
       }
 
       template <typename T>

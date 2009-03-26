@@ -1,3 +1,29 @@
+2009-03-25  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Small fixes.
+
+	* doc/tutorial/tutorial.tex: Fix a compilation issue.
+
+	* headers.mk: update distributed file list.
+
+	* mln/win/ball.hh,
+	* mln/core/concept/function.hh: avoid a warning.
+
+	* mln/util/array.hh,
+	* mln/fun/i2v/array.hh: revert invalid from_to overloads.
+
+	* mln/fun/internal/array_base.hh: add reserve().
+
+	* mln/fun/l2l/relabel.hh: reserve data before appending.
+
+	* mln/io/pnm/save.hh: Allow images of builtin types to be saved.
+
+	* tests/geom/Makefile.am,
+	* tests/morpho/Makefile.am,
+	* tests/util/Makefile.am: do not set tests as xfail tests anymore.
+
+	* tests/unit_test/unit-tests.mk: update unit test list.
+
 2009-03-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Clean binarisation processing chain using sharpness.

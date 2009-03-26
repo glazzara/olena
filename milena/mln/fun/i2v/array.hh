@@ -196,14 +196,7 @@ namespace mln
 	mlc_converts_to(T,U)::check();
 
 	to.reserve(from.nelements());
-
-	//Special case. Handle background component data.
-	if (from[0].is_valid())
-	  to.append(convert::to<U>(from[0]));
-	else
-	  to.append(U());
-
-	for (unsigned i = 1; i < from.nelements(); ++i)
+	for (unsigned i = 0; i < from.nelements(); ++i)
 	  to.append(convert::to<U>(from[i]));
       }
 
@@ -223,14 +216,7 @@ namespace mln
 	mlc_converts_to(T,U)::check();
 
 	to.reserve(from.nelements());
-
-	//Special case. Handle background component data.
-	if (from[0].is_valid())
-	  to.append(convert::to<U>(from[0]));
-	else
-	  to.append(U());
-
-	for (unsigned i = 1; i < from.size(); ++i)
+	for (unsigned i = 0; i < from.size(); ++i)
 	  to.append(convert::to<U>(from[i]));
       }
 
