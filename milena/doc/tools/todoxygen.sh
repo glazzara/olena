@@ -1,15 +1,19 @@
 #!/bin/sh
 
-if [ $# -ne 2 ]; then
-  echo "Usage: $0 <file.tex> <output dir>";
+if [ $# -ne 3 ]; then
+  echo "Usage: $0 <file.tex> <output dir> <path to .sty>";
   exit 1;
 fi
 
 out="$2/`basename $1 .tex`.hh"
 html="$2/`basename $1 .tex`.html"
 
+DOC_PACKAGES="
+  $3/doxyfuns.sty \
+  $3/milena.sty"
+
 #Convert .tex to .html
-hevea -O -fix $1 -o $html
+hevea -O -fix $DOC_PACKAGES $1 -o $html
 
 bodyl=`grep -n "<BODY >" $html | cut -d ':' -f 1`
 nlines=`wc -l $html | cut -d ' ' -f 1`

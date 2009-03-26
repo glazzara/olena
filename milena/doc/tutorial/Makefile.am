@@ -10,7 +10,7 @@ tutorial:
 
 tuto-html: 
 	chmod u+x $(DOC_SRCDIR)/tools/todoxygen.sh
-	$(DOC_SRCDIR)/tools/todoxygen.sh $(srcdir)/tutorial.tex $(DOC_BUILDDIR)/tutorial
+	$(DOC_SRCDIR)/tools/todoxygen.sh $(srcdir)/tutorial.tex $(DOC_BUILDDIR)/tutorial $(DOC_SRCDIR)
 
 clean-local:
 	rm -f tutorial.aux tutorial.toc tutorial.log tutorial.bbl tutorial.out

@@ -1,5 +1,20 @@
 2009-03-26  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Fix latex package includes in documentation.
+
+	* doc/milena.sty: fix scope of latexonly.
+
+	* doc/tutorial/Makefile.am,
+	* doc/ref_guide/Makefile.am: Pass path to .sty files to to_doxygen.sh.
+
+	* doc/tutorial/tutorial.tex,
+	* doc/white_paper/white_paper.tex,
+	* doc/ref_guide/ref_guide.tex: remove useless packages.
+
+	* doc/tools/todoxygen.sh: Pass latex packages to hevea.
+
+2009-03-26  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Revamp documentation commands.
 
 	* doc/doxyfuns.sty,

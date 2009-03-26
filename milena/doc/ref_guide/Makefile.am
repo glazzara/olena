@@ -10,7 +10,7 @@ ref-guide:
 
 ref-guide-html: 
 	chmod u+x $(DOC_SRCDIR)/tools/todoxygen.sh
-	$(DOC_SRCDIR)/tools/todoxygen.sh $(srcdir)/ref_guide.tex $(DOC_BUILDDIR)/ref_guide
+	$(DOC_SRCDIR)/tools/todoxygen.sh $(srcdir)/ref_guide.tex $(DOC_BUILDDIR)/ref_guide $(DOC_SRCDIR)
 
 clean-local:
 	rm -f ref_guide.aux ref_guide.toc ref_guide.log ref_guide.bbl ref_guide.out
