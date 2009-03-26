@@ -1,5 +1,12 @@
 2009-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a small tool to invert b&w in a color image.
+
+	* exec/Makefile,
+	* exec/bw_negate_in_color.cc: new tool.
+
+2009-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update Scribo's code.
 
 	* scribo/Makefile: add a new target.
