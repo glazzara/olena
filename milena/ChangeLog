@@ -1,3 +1,8 @@
+2009-03-26  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Update IO section of ref guide.
+	* doc/ref_guide/ref_guide.tex: Update IO section.
+
 2009-03-26  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Fix latex package includes in documentation.

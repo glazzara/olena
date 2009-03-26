@@ -42,6 +42,7 @@
 \usepackage{color}
 \usepackage{hyperref}
 \usepackage{pgf}
+\usepackage{hyperref}
 \usepackage{doxyfuns}
 \usepackage{milena}
 
@@ -1680,7 +1681,7 @@ You can extend the range of supported files by installing third-parties librarie
 \end{itemize}
 
 \doxysection{ioim}{ImageMagick}
-  http://www.imagemagick.org/
+  \href{http://www.imagemagick.org/}{http://www.imagemagick.org/}
 
   You have to install ImageMagick with Magick++ support. You will be able to
   load every file recognized as an image by ImageMagick.
@@ -1692,13 +1693,15 @@ You can extend the range of supported files by installing third-parties librarie
 
   To do so, just add the following line to your compilation:
 
+  \begin{verbatim}
   `Magick++-config --cppflags --cxxflags --ldflags --libs`
+  \end{verbatim}
 
-  Magick++-config will automatically fill the dependencies depending of your
+  \begin{verbatim}Magick++-config\end{verbatim} will automatically fill the dependencies depending of your
   installation.
 
 \doxysection{iodcm}{GDCM}
-  http://apps.sourceforge.net/mediawiki/gdcm/
+  \href{http://apps.sourceforge.net/mediawiki/gdcm/}{http://apps.sourceforge.net/mediawiki/gdcm/}
 
   GDCM is a library for manipulating DICOM files. DICOM files are used in
   medical imaging.
