@@ -1,3 +1,35 @@
+%% Copyright (C) 2009 EPITA Research and Development Laboratory
+%%
+%% This file is part of the Olena Library.  This library is free
+%% software; you can redistribute it and/or modify it under the terms
+%% of the GNU General Public License version 2 as published by the
+%% Free Software Foundation.
+%%
+%% This library is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+%% General Public License for more details.
+%%
+%% You should have received a copy of the GNU General Public License
+%% along with this library; see the file COPYING.  If not, write to
+%% the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+%% Boston, MA 02111-1307, USA.
+%%
+%% As a special exception, you may use this file as part of a free
+%% software library without restriction.  Specifically, if other files
+%% instantiate templates or use macros or inline functions from this
+%% file, or you compile this file and link it with other files to
+%% produce an executable, this file does not by itself cause the
+%% resulting executable to be covered by the GNU General Public
+%% License.  This exception does not however invalidate any other
+%% reasons why the executable file might be covered by the GNU General
+%% Public License.
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Milena's tutorial. %
+%%%%%%%%%%%%%%%%%%%%%%
+
 \documentclass{report}
 
 %\usepackage{hevea}
@@ -8,306 +40,16 @@
 \usepackage{xcolor}
 \usepackage{color}
 \usepackage{html}
-\usepackage{tikz}
 \usepackage{pgf}
+\usepackage{doxyfuns}
+\usepackage{milena}
 
-\newcommand{\img}[4]{
-\begin{figure}[ht!]
-	\begin{center}
-      \includegraphics[width=#2]{figures/#1}
-     \caption{#4\label{fig:#1}}
-   \end{center}
- \end{figure}
-}
 
 \title{Olena -- Tutorial}
 \author{LRDE}
 \date{}
 \makeindex
 
-\definecolor{ccomment}{rgb}{0.5,0,0}
-\definecolor{cstring}{rgb}{0,0.32,0.5}
-\definecolor{cidentifier}{rgb}{0,0.5,0}
-\definecolor{cbg}{rgb}{0.95,0.95,0.95}
-
-%%%LISTINGS SETTINGS
-%\begin{latexonly}
-\lstset{frameround=fttt}
-\lstloadlanguages{[ISO]C++}
-\lstset{language=[ISO]C++,
-  captionpos=b,
-  basicstyle={\small\sffamily}, % normal small footnotesize scriptsize tiny
-  commentstyle=\itshape,
-  showstringspaces=false,
-  numberstyle=\tiny,
-  morekeywords={where, auto, concept, concept_map, axiom, late_check, final, abstract},
-  morecomment=[s]{/*}{*/},
-  backgroundcolor=\color{cbg},
-  identifierstyle=\color{black},
-  stringstyle=\color{cstring}
-}
-%\end{latexonly}
-
-% #1 : sub page name
-% #2 : sub page title
-\newcommand{\doxychapter}[2]{%
-\label{#1}
-\backslash endhtmlonly%
-\backslash page #1 #2%
-\backslash htmlonly %
-}
-
-% #1 : section name
-% #2 : section title
-\newcommand{\doxysection}[2]{%
-\vspace{1cm}
-\label{#1}
-\backslash endhtmlonly%
-\backslash section #1 #2%
-\backslash htmlonly %
-}
-\newcommand{\doxysubsection}[2]{%
-\label{#1}
-\backslash endhtmlonly%
-\backslash subsection #1 #2%
-\backslash htmlonly %
-}
-
-\newcommand{\doxysubsubsection}[2]{%
-\label{#1}
-\backslash endhtmlonly%
-\backslash subsubsection #1 #2%
-\backslash htmlonly %
-}
-
-% #1 - part number (Optional)
-% #2 - file name
-\newcommand{\doxycode}[2][1]{
-\backslash endhtmlonly%
-\backslash include #2-#1.cc%
-\backslash htmlonly %
-}
-
-\newcommand{\doxyrawcode}[1]{
-\backslash endhtmlonly%
-\backslash include #1.cc.raw%
-\backslash htmlonly %
-}
-
-\newcommand{\doxyoutput}[1]{
-\backslash endhtmlonly%
-\backslash include #1.txt%
-\backslash htmlonly %
-}
-
-% Include file '#1' from a split output.
-% #1 - part number (Optional)
-% #2 - file name
-\newcommand{\doxymoutput}[2][1]{
-\backslash endhtmlonly%
-\backslash include #2-#1.txt%
-\backslash htmlonly %
-}
-
-\newcommand{\doxyfigure}[3][1]{
-\backslash endhtmlonly%
-\backslash image html #2-#1.png%
-\backslash htmlonly %
-}
-
-\newcommand{\doxyimg}[2]{
-\backslash endhtmlonly%
-\backslash image html #1.png%
-\backslash htmlonly %
-}
-
-\newcommand{\doxyref}[1]{
-\backslash endhtmlonly%
-\backslash ref #1%
-\backslash htmlonly %
-}
-
-\newcommand{\doxysee}[1]{
-\backslash endhtmlonly%
-\backslash see #1%
-\backslash htmlonly %
-}
-
-\newcommand{\tutotoc}[2]{%
-\begin{center}%
-  \longleftarrow ~Go to \doxyref{#1} \hspace{1cm} | \hspace{1cm} Go to \doxyref{#2}~ \longrightarrow%
-\end{center}%
-}
-
-\newenvironment{doxymath}
-{
-%\backslash endhtmlonly%
-%\backslash f\$
-%\begin{rawtext}
-$$
-}
-{
-$$
-%\end{rawtext}
-%\backslash f\$
-%\backslash htmlonly%
-}
-
-%\begin{latexonly}
-\renewcommand{\doxychapter}[2]{\chapter{#2}\label{#1}}
-\renewcommand{\doxysection}[2]{\section{#2}\label{#1}}
-\renewcommand{\doxysubsection}[2]{\subsection{#2}\label{#1}}
-\renewcommand{\doxysubsubsection}[2]{\subsubsection{#2}\label{#1}}
-\renewcommand{\doxycode}[2][1]{\lstinputlisting[frame=single]{examples/#2-#1.cc}}
-\renewcommand{\doxyrawcode}[1]{\lstinputlisting[frame=single]{examples/#1.cc.raw}}
-\renewcommand{\doxyoutput}[1]{\lstinputlisting[frame=single]{outputs/#1.txt}}
-\renewcommand{\doxymoutput}[2][1]{\lstinputlisting[frame=single]{outputs/splitted/#2-#1.txt}}
-\renewcommand{\doxyfigure}[3][1]{%
-\pgfimage[width=#3]{figures/#2-#1}%
-\label{#1}%
-}
-\renewcommand{\doxyimg}[2]{%
-\pgfimage[width=#2]{#1.png}%
-\label{#1}%
-}
-\renewcommand{\doxyref}[1]{\ref{#1}}
-\renewcommand{\doxysee}[1]{\ref{#1}}
-\renewcommand{\tutotoc}[2]{}
-\renewenvironment{doxymath}
-{
-  $$
-}
-{
-  $$
-}
-
-%\end{latexonly}
-
-
-\newcommand{\code}[1]{%
-\textit{#1}%
-}
-\newcommand{\var}[1]{%
-\textit{$#1$}%
-}
-\newcommand{\val}[1]{%
-\textit{#1}%
-}
-\newcommand{\type}[1]{%
-\textit{#1}%
-}
-\newcommand{\namespace}[1]{%
-\textit{#1}%
-}
-\newcommand{\header}[1]{%
-\textit{#1}%
-}
-\newcommand{\hpath}[1]{%
-\textit{#1}%
-}
-
-\newcommand{\must}{%
-\textbf{must}
-}
-\newcommand{\should}{%
-\textbf{should}
-}
-
-
-\usetikzlibrary{er}
-
-\newcommand{\neighcfour}{%
-\begin{latexonly}
-\begin{tikzpicture}%
-  \tikzstyle{every entity}=[draw=blue!50,fill=blue!20,thick]%
-  %center
-  \draw (0,0) node[fill=orange!20,draw=orange] {} ;
-  %left
-  \draw (-0.25,0) node[entity,draw] {};
-  %right
-  \draw (0.26,0) node[entity,draw] {};%
-  %top
-  \draw (0,0.25) node[entity,draw] {};%
-  %bottom
-  \draw (0,-0.25) node[entity,draw] {};%
-\end{tikzpicture}%
-\end{latexonly}
-}
-
-\newcommand{\neighceight}{%
-\begin{latexonly}
-\begin{tikzpicture}%
-  \tikzstyle{every entity}=[draw=blue!50,fill=blue!20,thick]%
-  %center
-  \draw (0,0) node[fill=orange!20,draw=orange] {} ;
-  %left
-  \draw (-0.25,0) node[entity,draw] {};
-  %right
-  \draw (0.26,0) node[entity,draw] {};%
-  %top
-  \draw (0,0.25) node[entity,draw] {};%
-  %bottom
-  \draw (0,-0.25) node[entity,draw] {};%
-  %Top left
-  \draw (-0.25,0.25) node[entity,draw] {};
-  %Top right
-  \draw (0.26,0.25) node[entity,draw] {};%
-  %Bottom left
-  \draw (-0.25,-0.25) node[entity,draw] {};%
-  %Bottom Right
-  \draw (0.26,-0.25) node[entity,draw] {};%
-\end{tikzpicture}%
-\end{latexonly}
-}
-
-\newcommand{\wincfour}{%
-\begin{latexonly}
-\begin{tikzpicture}%
-  \tikzstyle{every entity}=[draw=blue!50,fill=blue!20,thick]%
-  %center
-  \draw (0,0) node[entity,draw] {} ;
-  %left
-  \draw (-0.25,0) node[entity,draw] {};
-  %right
-  \draw (0.26,0) node[entity,draw] {};%
-  %top
-  \draw (0,0.25) node[entity,draw] {};%
-  %bottom
-  \draw (0,-0.25) node[entity,draw] {};%
-
-\end{tikzpicture}%
-\end{latexonly}
-}
-
-\newcommand{\winceight}{%
-\begin{latexonly}
-\begin{tikzpicture}%
-  \tikzstyle{every entity}=[draw=blue!50,fill=blue!20,thick]%
-  %center
-  \draw (0,0) node[entity,draw] {} ;
-  %left
-  \draw (-0.25,0) node[entity,draw] {};
-  %right
-  \draw (0.26,0) node[entity,draw] {};%
-  %top
-  \draw (0,0.25) node[entity,draw] {};%
-  %bottom
-  \draw (0,-0.25) node[entity,draw] {};%
-  %Top left
-  \draw (-0.25,0.25) node[entity,draw] {};
-  %Top right
-  \draw (0.26,0.25) node[entity,draw] {};%
-  %Bottom left
-  \draw (-0.25,-0.25) node[entity,draw] {};%
-  %Bottom Right
-  \draw (0.26,-0.25) node[entity,draw] {};%
-\end{tikzpicture}%
-\end{latexonly}
-}
-
-\newcommand{\dir}[1]{
-\textbf{\textit{#1}}
-}
 
 
 \begin{document}

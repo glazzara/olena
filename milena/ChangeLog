@@ -1,3 +1,19 @@
+2009-03-26  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Revamp documentation commands.
+
+	* doc/doxyfuns.sty,
+	* doc/milena.sty: share commands between the various documents.
+
+	* doc/ref_guide/ref_guide.tex: Fix a compilation issue.
+
+	* doc/tools/todoxygen.sh: Split doxygen pages correctly.
+
+	* doc/white_paper/Makefile.am: add path to shared commands.
+
+	* doc/tutorial/tutorial.tex,
+	* doc/white_paper/white_paper.tex: use shared commands.
+
 2009-03-25  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Small fixes.
