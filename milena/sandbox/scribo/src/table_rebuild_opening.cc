@@ -66,7 +66,8 @@ int main(int argc, char* argv[])
 					 vline, hline);
 
   value::label_8 ncells;
-  image2d<value::label_8> tables = scribo::table::rebuild(input, lineboxes, 30, ncells);
+  image2d<value::label_8> tables
+    = scribo::table::rebuild(input, lineboxes, 30, ncells).first();
 
 
   std::cout << "ncells (including background) = " << ncells << std::endl;

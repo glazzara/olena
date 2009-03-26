@@ -30,8 +30,8 @@
 #include <mln/essential/2d.hh>
 
 #include <scribo/text/extract_bboxes.hh>
-#include <scribo/text/grouping/group_with_several_multiple_links.hh>
-#include <scribo/text/grouping/group_from_multiple_links.hh>
+#include <scribo/text/grouping/group_with_several_graphes.hh>
+#include <scribo/text/grouping/group_from_graph.hh>
 
 #include <scribo/debug/save_textbboxes_image.hh>
 #include <scribo/debug/save_linked_textbboxes_image.hh>
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
   if (argc < 1)
     return usage(argv[0]);
 
-  scribo::make::internal::debug_filename_prefix = "extract_text_several_multiple_links";
+  scribo::make::internal::debug_filename_prefix = "extract_text_several_graph";
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
   scribo::util::text<image2d<value::label_16> > text
        = text::extract_bboxes(input, c8(), nbboxes);
 
-  mln::util::graph g = text::grouping::group_with_several_multiple_links(text, 30);
+  mln::util::graph g = text::grouping::group_with_several_graphes(text, 30);
 
   std::cout << "BEFORE - nbboxes = " << nbboxes.next() << std::endl;
   scribo::debug::save_linked_textbboxes_image(input,
@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
 					      scribo::make::debug_filename("left_linked.ppm"));
 
   scribo::util::text<image2d<value::label_16> > grouped_text
-      = text::grouping::group_from_multiple_links(text, g);
+      = text::grouping::group_from_graph(text, g);
 
   std::cout << "AFTER - nbboxes = " << grouped_text.bboxes().nelements() << std::endl;
 

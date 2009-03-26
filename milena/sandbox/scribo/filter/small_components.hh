@@ -198,6 +198,7 @@ namespace scribo
       mln_assertion(new_nbboxes.next() == bresult.nelements());
 
       trace::exiting("scribo::filter::small_components");
+      /// FIXME: construct a new util::text from the old one.
       return scribo::make::text(bresult, new_lbl, new_nbboxes);
     }
 

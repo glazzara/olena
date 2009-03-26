@@ -26,26 +26,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef SCRIBO_TEXT_GROUPING_INTERNAL_FIND_GRAPH_LINK_HH
+# define SCRIBO_TEXT_GROUPING_INTERNAL_FIND_GRAPH_LINK_HH
 
-#ifndef SCRIBO_TEXT_GROUPING_GROUP_WITH_MULTIPLE_LINKS_HH
-# define SCRIBO_TEXT_GROUPING_GROUP_WITH_MULTIPLE_LINKS_HH
-
-/// \file scribo/text/grouping/group_with_multiple_links.hh
+/// \file scribo/text/grouping/internal/find_graph_link.hh
 ///
-/// Group character bounding boxes with multiple links.
+///
 
 # include <mln/core/concept/image.hh>
-# include <mln/labeling/compute.hh>
-# include <mln/accu/center.hh>
+# include <mln/core/concept/graph.hh>
 
 # include <mln/math/abs.hh>
 
 # include <mln/util/array.hh>
 
-# include <scribo/core/macros.hh>
-# include <scribo/text/grouping/internal/init_link_array.hh>
-# include <scribo/text/grouping/internal/update_link_graph.hh>
 # include <scribo/util/text.hh>
+# include <scribo/text/grouping/internal/update_graph_link.hh>
+
+//FIXME: not generic.
+# include <mln/core/alias/dpoint2d.hh>
 
 namespace scribo
 {
@@ -56,60 +55,51 @@ namespace scribo
     namespace grouping
     {
 
-      /// Group character bounding boxes with multiple links.
-      /// Look up for neighbors on the right of each box.
-      template <typename L>
-      mln::util::graph
-      group_with_multiple_links(const scribo::util::text<L>& text,
-				unsigned neighb_max_distance);
+      namespace internal
+      {
+
+	template <typename G, typename L>
+	void
+	find_graph_link(Graph<G>& g_,
+			const scribo::util::text<L>& text,
+			unsigned current_comp,
+			int dmax,
+			const mln_site(L)& c);
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename L>
-      inline
-      mln::util::graph
-      group_with_multiple_links(const scribo::util::text<L>& text,
-				unsigned neighb_max_distance)
-      {
-	trace::entering("scribo::text::grouping::group_with_multiple_links");
-
-	mln::util::graph g(text.nbboxes().next());
-
-	mln::util::array<mln_site(L)::vec> centers
-	  = labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
-
-	for_all_ncomponents(i, text.nbboxes())
+	template <typename G, typename L>
+	void
+	find_graph_link(Graph<G>& g_,
+			const scribo::util::text<L>& text,
+			unsigned current_comp,
+			int dmax,
+			const mln_site(L)& c)
 	{
-	  unsigned midcol = (text.bbox(i).pmax().col()
-				- text.bbox(i).pmin().col()) / 2;
-	  int dmax = midcol + neighb_max_distance;
-	  mln_site(L) c = centers[i];
+	  trace::entering("scribo::text::grouping::internal::find_graph_link");
 
-	  //  -------
-	  //  |	    |
-	  //  |	    |
-	  //  |	    |
-	  //  |	 X------->
-	  //  |	    |
-	  //  |	    |
-	  //  |	    |
-	  //  -------
+	  G& g = exact(g_);
+	  mln_precondition(g.is_valid());
+	  mln_precondition(text.is_valid());
+
+	  ///FIXME: the following code is not generic...
 	  /// First site on the right of the central site
 	  mln_site(L) p = c + right;
 
 	  const L& lbl = text.label_image();
-	  while (lbl.domain().has(p) && (lbl(p) == literal::zero || lbl(p) == i)
+	  while (lbl.domain().has(p) && (lbl(p) == literal::zero
+		  || lbl(p) == current_comp)
 	      && math::abs(p.col() - c.col()) < dmax)
 	    ++p.col();
 
-	  internal::update_link_graph(lbl, g, p, c, i, dmax);
+	  update_graph_link(lbl, g, p, c, current_comp, dmax);
+
+	  trace::exiting("scribo::text::grouping::internal::find_graph_link");
 	}
 
-	trace::exiting("scribo::text::grouping::group_with_multiple_links");
-	return g;
-      }
+# endif // MLN_INCLUDE_ONLY
 
-# endif // ! MLN_INCLUDE_ONLY
+      } // end of namespace scribo::text::grouping::internal
 
     } // end of namespace scribo::text::grouping
 
@@ -117,4 +107,5 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_TEXT_GROUPING_GROUP_WITH_MULTIPLE_LINKS_HH
+
+#endif // ! SCRIBO_TEXT_GROUPING_INTERNAL_FIND_GRAPH_LINK_HH

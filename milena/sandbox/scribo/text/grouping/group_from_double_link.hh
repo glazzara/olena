@@ -124,6 +124,7 @@ namespace scribo
 
 	mln_assertion(bresult.nelements() == new_nbboxes.next());
 
+	/// FIXME: construct a new util::text from the old one.
 	scribo::util::text<I> result(bresult, new_lbl, new_nbboxes);
 
 	trace::exiting("scribo::text::grouping::group_from_double_link");

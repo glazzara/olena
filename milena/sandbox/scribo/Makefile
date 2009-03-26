@@ -55,6 +55,9 @@ table_erase:
 thin_bboxes:
 	g++ $(CXX_FLAGS) src/thin_bboxes.cc -o bin/thin_bboxes.out
 
+photo_basic:
+	g++ $(CXX_FLAGS) src/photo_basic.cc -o bin/photo_basic.out
+
 clean:
 	rm *.ppm *.pgm *.pbm
 

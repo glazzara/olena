@@ -36,6 +36,8 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/core/concept/proxy.hh>
 # include <mln/core/site_set/box.hh>
+# include <mln/accu/center.hh>
+# include <mln/labeling/compute.hh>
 # include <mln/value/label_16.hh>
 # include <mln/util/couple.hh>
 # include <mln/util/array.hh>
@@ -55,14 +57,19 @@ namespace scribo
     public:
       typedef mln_site(L) site;
       typedef mln::util::array<box<site> > boxes_t;
+      typedef mln::util::array<mln_site(L)::vec> mass_centers_t;
 
       text();
+      text(const mln::util::array<box<mln_site(L)> >& bboxes,
+	   const Image<L>& lbl,
+	   const mln_value(L)& nbboxes,
+	   const mln::util::array<mln_site(L)::vec>& mass_centers);
       text(const mln::util::array<box<mln_site(L)> >& bboxes,
 		  const Image<L>& lbl,
 		  const mln_value(L)& nbboxes);
 
       const L& label_image() const;
-      L& label_image();
+      void set_label_image(const Image<L>& lbl);
 
       const mln_value(L)& nbboxes() const;
       mln_value(L)& nbboxes();
@@ -73,10 +80,16 @@ namespace scribo
       const box<mln_site(L)>& bbox(unsigned i) const;
       box<mln_site(L)>& bbox(unsigned i);
 
+      const mln::util::array<mln_site(L)::vec>& mass_centers() const;
+      mln_site(L) mass_center(unsigned i) const;
+
       bool is_valid() const;
 
     private:
+      void update();
+
       boxes_t bboxes_;
+      mass_centers_t mass_centers_;
       L lbl_;
       mln_value(L) nbboxes_;
     };
@@ -95,10 +108,23 @@ namespace scribo
     inline
     text<L>::text(const mln::util::array<box<mln_site(L)> >& bboxes,
 		  const Image<L>& lbl,
+		  const mln_value(L)& nbboxes,
+		  const mln::util::array<mln_site(L)::vec>& mass_centers)
+      : bboxes_(bboxes), mass_centers_(mass_centers),
+	lbl_(exact(lbl)), nbboxes_(nbboxes)
+    {
+      mln_assertion(bboxes.nelements() == nbboxes.next());
+    }
+
+    template <typename L>
+    inline
+    text<L>::text(const mln::util::array<box<mln_site(L)> >& bboxes,
+		  const Image<L>& lbl,
 		  const mln_value(L)& nbboxes)
       : bboxes_(bboxes), lbl_(exact(lbl)), nbboxes_(nbboxes)
     {
       mln_assertion(bboxes.nelements() == nbboxes.next());
+      update();
     }
 
     template <typename L>
@@ -107,14 +133,6 @@ namespace scribo
     text<L>::label_image() const
     {
       mln_precondition(lbl_.is_valid());
-      return lbl_;
-    }
-
-    template <typename L>
-    inline
-    L&
-    text<L>::label_image()
-    {
       return lbl_;
     }
 
@@ -173,12 +191,35 @@ namespace scribo
 
     template <typename L>
     inline
+    const mln::util::array<mln_site(L)::vec>&
+    text<L>::mass_centers() const
+    {
+      return mass_centers_;
+    }
+
+    template <typename L>
+    inline
+    mln_site(L)
+    text<L>::mass_center(unsigned i) const
+    {
+      return mass_centers_[i];
+    }
+
+    template <typename L>
+    inline
     bool
     text<L>::is_valid() const
     {
       return lbl_.is_valid() && bboxes_.nelements() == nbboxes_.next();
     }
 
+    template <typename L>
+    inline
+    void
+    text<L>::update()
+    {
+      mass_centers_ = labeling::compute(accu::meta::center(), lbl_, nbboxes_);
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

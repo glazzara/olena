@@ -49,11 +49,13 @@
 # include <mln/util/graph.hh>
 # include <mln/value/label_16.hh>
 
-# include <scribo/text/grouping/group_with_multiple_links.hh>
-# include <scribo/text/grouping/group_from_multiple_links.hh>
+# include <scribo/text/grouping/group_with_several_left_links.hh>
+# include <scribo/text/grouping/group_with_several_right_links.hh>
+# include <scribo/text/grouping/group_from_double_link.hh>
 # include <scribo/filter/small_components.hh>
 # include <scribo/util/text.hh>
 
+# include <scribo/make/debug_filename.hh>
 # include <scribo/debug/save_textbboxes_image.hh>
 # include <scribo/debug/save_linked_textbboxes_image.hh>
 
@@ -95,22 +97,26 @@ namespace scribo
 
 # ifndef SCRIBO_NDEBUG
       debug::save_textbboxes_image(input, text.bboxes(), literal::red,
-				   scrib::make::debug_filename("character-bboxes.ppm"));
+				   scribo::make::debug_filename("character-bboxes.ppm"));
 # endif // ! SCRIBO_NDEBUG
 
       //Link character bboxes to their left neighboor if possible.
-      mln::util::graph g
-	= text::grouping::group_with_multiple_links(text, 30);
+      mln::util::array<unsigned> left_link
+	= text::grouping::group_with_several_left_links(text, 30);
+      mln::util::array<unsigned> right_link
+	= text::grouping::group_with_several_right_links(text, 30);
+
 # ifndef SCRIBO_NDEBUG
-      debug::save_linked_textbboxes_image(input,
-					  text, g,
-					  literal::red, literal::cyan,
-					  scribo::make::debug_filename("multiple_links_left_linked.ppm"));
+      scribo::debug::save_linked_textbboxes_image(input,
+						  text, left_link, right_link,
+						  literal::red, literal::cyan,
+						  literal::yellow, literal::green,
+						  scribo::make::debug_filename("links.ppm"));
 # endif // ! SCRIBO_NDEBUG
 
       //Merge character bboxes through a graph.
       scribo::util::text<mln_ch_value(I,V)> grouped_text
-	  = text::grouping::group_from_multiple_links(text, g);
+	  = text::grouping::group_from_double_link(text, left_link, right_link);
 
 # ifndef SCRIBO_NDEBUG
       debug::save_textbboxes_image(input, grouped_text.bboxes(),

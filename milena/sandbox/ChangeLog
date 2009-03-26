@@ -1,3 +1,73 @@
+2009-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update Scribo's code.
+
+	* scribo/Makefile: add a new target.
+
+	* scribo/Makefile.am,
+	* scribo/scribo.mk,
+	* scribo/src/Makefile.am,
+	* scribo/tests/Makefile.am,
+	* scribo/tests/data.hh.in,
+	* scribo/tests/filter/Makefile.am,
+	* scribo/tests/text/Makefile.am,
+	* scribo/tests/table/Makefile.am: prepare build system integration.
+
+	* scribo/text/grouping/group_with_single_left_link.hh,
+	* scribo/text/grouping/group_with_single_right_link.hh,
+	* scribo/text/grouping/group_with_several_right_links.hh,
+	* scribo/text/grouping/group_with_several_left_links.hh,
+	* scribo/debug/save_linked_textbboxes_image.hh: do not compute mass
+	centers anymore.
+
+	* scribo/draw/bounding_box_links.hh: remove duplicate preconditions.
+
+	* scribo/tests/table/repair_lines.cc
+	* scribo/tests/filter/small_and_large_bboxes.cc
+	* scribo/tests/table/extract_lines_with_rank.cc
+	* scribo/src/table_rebuild_opening.cc
+	* scribo/src/table_rebuild_rank.cc
+	* scribo/src/table_extract.cc
+	* scribo/src/morpho.cc,
+	* scribo/filter/large_components.hh: fix.
+
+	* scribo/text/grouping/group_from_single_link.hh,
+	* scribo/text/grouping/group_from_double_link.hh,
+	* scribo/filter/thin_bboxes.hh,
+	* scribo/filter/small_components.hh: add a fixme.
+
+	* scribo/filter/thick_bboxes.hh: new routine.
+
+	* scribo/make/debug_filename.hh: use a std::string instead of a char*.
+
+	* scribo/make/text.hh: prepare a new routine.
+
+	* scribo/src/extract_text_double_several_links.cc: add timer info.
+
+	* scribo/src/extract_text_multiple_links.cc,,
+	* scribo/src/extract_text_several_multiple_links.cc,
+	* scribo/text/grouping/group_from_multiple_links.hh,
+	* scribo/text/grouping/group_with_multiple_links.hh,
+	* scribo/text/grouping/group_with_several_multiple_links.hh,
+	* scribo/text/grouping/internal/find_left_graph_link.hh,
+	* scribo/text/grouping/internal/update_link_graph.hh: rename as...
+
+	* scribo/src/extract_text_graph.cc,
+	* scribo/src/extract_text_several_graphes.cc,
+	* scribo/text/grouping/group_from_graph.hh,
+	* scribo/text/grouping/group_with_graph.hh,
+	* scribo/text/grouping/group_with_several_graphes.hh,
+	* scribo/text/grouping/internal/find_graph_link.hh,
+	* scribo/text/grouping/internal/update_graph_link.hh: ... this.
+
+	* scribo/src/photo_basic.cc: new sample code. Process text in photos.
+
+	* scribo/src/table_rebuild.cc: remove.
+
+	* scribo/text/extract_lines.hh: use double several links routines.
+
+	* scribo/util/text.hh: store the bbox mass centers.
+
 2009-03-25  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Update Fabien' sandbox.

@@ -96,6 +96,7 @@ namespace scribo
 				  convert::to<fun::l2l::relabel<mln_value(I)> >(parent_array));
 	mln_value(I) new_nbboxes = result.nelements() - 1;
 	trace::exiting("scribo::text::grouping::group_from_single_link");
+	/// FIXME: construct a new util::text from the old one.
 	return scribo::make::text(result, lbl, new_nbboxes);
       }
 

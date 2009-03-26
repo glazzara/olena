@@ -38,7 +38,6 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/labeling/compute.hh>
 
 # include <mln/math/abs.hh>
 
@@ -89,15 +88,12 @@ namespace scribo
 	mln::util::array<unsigned> right_link(text.nbboxes().next());
 	internal::init_link_array(right_link);
 
-	mln::util::array<mln_site(L)::vec> centers
-	  = labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
-
 	for_all_ncomponents(i, text.nbboxes())
 	{
 	  unsigned midcol = (text.bbox(i).pmax().col()
 				- text.bbox(i).pmin().col()) / 2;
 	  int dmax = midcol + neighb_max_distance;
-	  mln_site(L) c = centers[i];
+	  mln_site(L) c = text.mass_center(i);
 
 	  ///
 	  /// Find a neighbor on the right

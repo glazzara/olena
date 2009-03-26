@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef SCRIBO_FILTER_THIN_BBOXES_HH
-# define SCRIBO_FILTER_THIN_BBOXES_HH
+#ifndef SCRIBO_FILTER_THICK_BBOXES_HH
+# define SCRIBO_FILTER_THICK_BBOXES_HH
 
-/// \file scribo/filter/thin_bboxes.hh
+/// \file scribo/filter/thick_bboxes.hh
 ///
-/// Remove too thin bboxes.
+/// Remove too thick bboxes.
 
 # include <mln/labeling/blobs.hh>
 # include <mln/labeling/compute.hh>
@@ -53,27 +53,27 @@ namespace scribo
       /// Filter Functor. Return false for all components which are too
       /// large.
       template <typename R>
-      struct filter_too_thin_component_functor
-	: Function_l2b< filter_too_thin_component_functor<R> >
+      struct filter_too_thick_component_functor
+	: Function_l2b< filter_too_thick_component_functor<R> >
       {
-	filter_too_thin_component_functor(const mln::util::array<R>& compbboxes,
-					  unsigned min_thickness)
-	  : compbboxes_(compbboxes), min_thickness_(min_thickness)
+	filter_too_thick_component_functor(const mln::util::array<R>& compbboxes,
+					  unsigned max_thickness)
+	  : compbboxes_(compbboxes), max_thickness_(max_thickness)
 	{
 	}
 
 
-	/// Return false if the components is thinner than
-	/// \p min_thickness_.
+	/// Return false if the components is thickner than
+	/// \p max_thickness_.
 	bool operator()(const value::label_16& l) const
 	{
-	  return compbboxes_[l].nrows() > min_thickness_
-		&& compbboxes_[l].ncols() > min_thickness_;
+	  return compbboxes_[l].nrows() < max_thickness_
+		&& compbboxes_[l].ncols() < max_thickness_;
 	}
 
 
 	const mln::util::array<R>& compbboxes_;
-	unsigned min_thickness_;
+	unsigned max_thickness_;
       };
 
 
@@ -83,12 +83,12 @@ namespace scribo
     template <typename I, typename N, typename V>
     inline
     mln_concrete(I)
-    thin_bboxes(const Image<I>& input_,
+    thick_bboxes(const Image<I>& input_,
 		const Neighborhood<N>& nbh_,
 		const V& label_type,
-		unsigned min_thickness)
+		unsigned max_thickness)
     {
-      trace::entering("scribo::filter::thin_bboxes");
+      trace::entering("scribo::filter::thick_bboxes");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -104,14 +104,14 @@ namespace scribo
       typedef mln::util::array<accu_bbox_res_t> compbboxes_t;
       compbboxes_t compbboxes = labeling::compute(accu_bbox_t(), lbl, nlabels);
 
-      typedef internal::filter_too_thin_component_functor<accu_bbox_res_t> func_t;
-      func_t fl2b(compbboxes, min_thickness);
+      typedef internal::filter_too_thick_component_functor<accu_bbox_res_t> func_t;
+      func_t fl2b(compbboxes, max_thickness);
       labeling::relabel_inplace(lbl, nlabels, fl2b);
 
       mln_concrete(I) output = duplicate(input);
       data::fill((output | pw::value(lbl) == literal::zero).rw(), false);
 
-      trace::exiting("scribo::filter::thin_bboxes");
+      trace::exiting("scribo::filter::thick_bboxes");
       return output;
     }
 
@@ -119,10 +119,10 @@ namespace scribo
     template <typename L>
     inline
     scribo::util::text<L>
-    thin_bboxes(const scribo::util::text<L>& text,
-		unsigned min_thickness)
+    thick_bboxes(const scribo::util::text<L>& text,
+		unsigned max_thickness)
     {
-      trace::entering("scribo::filter::thin_bboxes");
+      trace::entering("scribo::filter::thick_bboxes");
 
       mln_precondition(text.is_valid());
 
@@ -131,15 +131,15 @@ namespace scribo
       typedef mln_result(accu_bbox_t) accu_bbox_res_t;
       typedef mln::util::array<accu_bbox_res_t> nsitecomp_t;
 
-      typedef internal::filter_too_thin_component_functor<accu_bbox_res_t> func_t;
-      func_t is_not_too_thin(text.bboxes(), min_thickness);
+      typedef internal::filter_too_thick_component_functor<accu_bbox_res_t> func_t;
+      func_t is_not_too_thick(text.bboxes(), max_thickness);
 
       fun::i2v::array<bool> f(text.nbboxes().next(), false);
       f(0) = true;
       mln::util::array<box<P> > bresult;
       bresult.append(box<P>());
       for_all_components(i, text.bboxes())
-	if (is_not_too_thin(i))
+	if (is_not_too_thick(i))
 	{
 	  bresult.append(text.bbox(i));
 	  f(i) = true;
@@ -151,7 +151,7 @@ namespace scribo
 
       mln_assertion(new_nbboxes.next() == bresult.nelements());
 
-      trace::exiting("scribo::filter::thin_bboxes");
+      trace::exiting("scribo::filter::thick_bboxes");
       /// FIXME: construct a new util::text from the old one.
       return scribo::make::text(bresult, new_lbl, new_nbboxes);
     }
@@ -163,4 +163,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_FILTER_THIN_BBOXES_HH
+#endif // ! SCRIBO_FILTER_THICK_BBOXES_HH

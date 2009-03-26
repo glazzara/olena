@@ -30,12 +30,16 @@
 #include <mln/essential/2d.hh>
 
 #include <scribo/text/extract_bboxes.hh>
-#include <scribo/text/grouping/group_with_multiple_links.hh>
-#include <scribo/text/grouping/group_from_multiple_links.hh>
+#include <scribo/text/grouping/group_with_graph.hh>
+#include <scribo/text/grouping/group_from_graph.hh>
 #include <scribo/filter/small_components.hh>
+#include <scribo/util/text.hh>
 
+#include <scribo/make/debug_filename.hh>
 #include <scribo/debug/save_textbboxes_image.hh>
 #include <scribo/debug/save_linked_textbboxes_image.hh>
+
+#include <scribo/tests/data.hh>
 
 int usage(const char *name)
 {
@@ -48,42 +52,47 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  if (argc < 1)
-    return usage(argv[0]);
+  std::string img;
+  if (argc < 2)
+  {
+    usage(argv[0]);
+    img = SCRIBO_IMG_DIR "/text_to_group.pbm";
+  }
+  else
+    img = argv[1];
 
   scribo::make::internal::debug_filename_prefix = argv[0];
 
   image2d<bool> input;
-  io::pbm::load(input, argv[1]);
+  io::pbm::load(input, img.c_str());
 
+  typedef scribo::util::text<image2d<value::label_16> > text_t;
   value::label_16 nbboxes;
-  util::array<box2d> textbboxes = text::extract_bboxes(input, c8(), nbboxes);
+  text_t textbboxes = text::extract_bboxes(input, c8(), nbboxes);
 
-  util::graph g = text::grouping::group_with_multiple_links(input,
-							    c8(), nbboxes,
-							    textbboxes, 30);
+  mln::util::graph g = text::grouping::group_with_graph(textbboxes, 30);
 
   std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
   scribo::debug::save_linked_textbboxes_image(input,
 					      textbboxes, g,
 					      literal::red, literal::cyan,
-					      "test_multiple_links_left_linked.ppm");
+					      "test_graph_left_linked.ppm");
 
-  util::array<box2d> grouped_textbboxes
-    = text::grouping::group_from_multiple_links(textbboxes, g);
+  text_t grouped_textbboxes
+    = text::grouping::group_from_graph(textbboxes, g);
 
-  std::cout << "AFTER - nbboxes = " << grouped_textbboxes.nelements() << std::endl;
+  std::cout << "AFTER - nbboxes = " << grouped_textbboxes.nbboxes().next() << std::endl;
 
-  scribo::debug::save_textbboxes_image(input, grouped_textbboxes,
+  scribo::debug::save_textbboxes_image(input, grouped_textbboxes.bboxes(),
 				       literal::red,
-				       "test_multiple_links_grouped_text.ppm");
+				       "test_graph_grouped_text.ppm");
 
-  util::array<box2d> filtered_textbboxes
+  text_t filtered_textbboxes
     = scribo::filter::small_components(grouped_textbboxes, 6);
 
-  scribo::debug::save_textbboxes_image(input, filtered_textbboxes,
+  scribo::debug::save_textbboxes_image(input, filtered_textbboxes.bboxes(),
 				       literal::red,
-				       "test_multiple_links_filtered_text.ppm");
+				       "test_graph_filtered_text.ppm");
 
 }
 

@@ -61,4 +61,4 @@ int main(int argc, char *argv[])
 		  scribo::make::debug_filename("wsd_disk_51.ppm"));
   }
 
-???
+}

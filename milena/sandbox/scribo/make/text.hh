@@ -105,6 +105,39 @@ namespace scribo
       return make::text(cboxes, lbl, nbboxes);
     }
 
+    //FIXME: we want the following routine to construct a new util::text
+    // from another one and a relabeling function. It avoid recomputing
+    // the whole underlying data (mass centers, bboxes...)
+//    template <typename L>
+//    scribo::util::text<L>
+//    text(const scribo::util::text<L>& text,
+//	 const Function_v2v<F>& f)
+//    {
+//      trace::entering("scribo::make::text");
+//
+//      mln_precondition(text.is_valid());
+//
+//      mln_value(L) new_nbboxes;
+//      mln::fun::l2l::relabel<mln_value(L)> fl2l
+//	= mln::make::relabelfun(f, nbboxes_, new_nbboxes);
+//      lbl_ = labeling::relabel(lbl_, nbboxes_, l2l);
+//      nbboxes_ = new_nbboxes;
+//
+//      mln::util::array< accu::bbox<mln_site(I)> > tboxes(nbboxes_);
+//      mln::util::array< accu::center<mln_site(I)> > tcenters(nbboxes_);
+//      for_all_components(i, text.bboxes())
+//      {
+//	abboxes[fl2l(i)].take(text.bbox(i));
+//	acenters[fl2l(i)].take(text.bbox(i));
+//      }
+//      convert::from_to(abboxes, text.bboxes());
+//      convert::from_to(acenters, text.mass_centers_);
+//
+//      trace::exiting("scribo::make::text");
+//      return scribo::util::text<L>(;
+//    }
+
+
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace scribo::make

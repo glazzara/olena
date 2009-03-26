@@ -27,12 +27,12 @@
 // Public License.
 
 
-#ifndef SCRIBO_TEXT_GROUPING_GROUP_WITH_SEVERAL_MULTIPLE_LINKS_HH
-# define SCRIBO_TEXT_GROUPING_GROUP_WITH_SEVERAL_MULTIPLE_LINKS_HH
+#ifndef SCRIBO_TEXT_GROUPING_GROUP_WITH_SEVERAL_GRAPHES_HH
+# define SCRIBO_TEXT_GROUPING_GROUP_WITH_SEVERAL_GRAPHES_HH
 
-/// \file scribo/text/grouping/group_with_several_multiple_links.hh
+/// \file scribo/text/grouping/group_with_several_graphes.hh
 ///
-/// Group character bounding boxes with several multiple links.
+/// Group character bounding boxes with several graphes.
 
 # include <mln/core/concept/image.hh>
 # include <mln/labeling/compute.hh>
@@ -44,8 +44,7 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/text/grouping/internal/init_link_array.hh>
-# include <scribo/text/grouping/internal/update_link_graph.hh>
-# include <scribo/text/grouping/internal/find_left_graph_link.hh>
+# include <scribo/text/grouping/internal/find_graph_link.hh>
 # include <scribo/util/text.hh>
 
 namespace scribo
@@ -57,11 +56,11 @@ namespace scribo
     namespace grouping
     {
 
-      /// Group character bounding boxes with several_multiple links.
+      /// Group character bounding boxes with several graphes.
       /// Look up for neighbors on the left of each box.
       template <typename L>
       mln::util::graph
-      group_with_several_multiple_links(const scribo::util::text<L>& text,
+      group_with_several_graphes(const scribo::util::text<L>& text,
 				unsigned neighb_max_distance);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -69,22 +68,19 @@ namespace scribo
       template <typename L>
       inline
       mln::util::graph
-      group_with_several_multiple_links(const scribo::util::text<L>& text,
+      group_with_several_graphes(const scribo::util::text<L>& text,
 				unsigned neighb_max_distance)
       {
-	trace::entering("scribo::text::grouping::group_with_several_multiple_links");
+	trace::entering("scribo::text::grouping::group_with_several_graphes");
 
 	mln::util::graph g(text.nbboxes().next());
-
-	mln::util::array<mln_site(L)::vec> centers
-	  = labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
 
 	for_all_ncomponents(i, text.nbboxes())
 	{
 	  unsigned midcol = (text.bbox(i).pmax().col()
 				- text.bbox(i).pmin().col()) / 2;
 	  int dmax = midcol + neighb_max_distance;
-	  mln_site(L) c = centers[i];
+	  mln_site(L) c = text.mass_center(i);
 
 	  //  -------
 	  //  |	 X------->
@@ -95,23 +91,26 @@ namespace scribo
 	  //  |	    |
 	  //  |	 X------->
 	  //  -------
+
+	  // FIXME: may create several times the same edge.
+	  // We should use an adjacency matrix when available.
 
 	  /// Left link from the top anchor.
 	  mln_site(L) a1 = c;
 	  a1.row() = text.bbox(i).pmin().row() + (c.row() - text.bbox(i).pmin().row()) / 4;
-	  internal::find_left_graph_link(g, text, i, dmax, a1);
+	  internal::find_graph_link(g, text, i, dmax, a1);
 
 	  /// First site on the right of the central site
-	  internal::find_left_graph_link(g, text, i, dmax, c);
+	  internal::find_graph_link(g, text, i, dmax, c);
 
 	  /// Left link from the bottom anchor.
 	  mln_site(L) a2 = c;
 	  a2.row() = text.bbox(i).pmax().row() - (c.row() - text.bbox(i).pmin().row()) / 4;
-	  internal::find_left_graph_link(g, text, i, dmax, a2);
+	  internal::find_graph_link(g, text, i, dmax, a2);
 
 	}
 
-	trace::exiting("scribo::text::grouping::group_with_several_multiple_links");
+	trace::exiting("scribo::text::grouping::group_with_several_graphes");
 	return g;
       }
 
@@ -123,4 +122,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_TEXT_GROUPING_GROUP_WITH_SEVERAL_MULTIPLE_LINKS_HH
+#endif // ! SCRIBO_TEXT_GROUPING_GROUP_WITH_SEVERAL_GRAPHES_HH

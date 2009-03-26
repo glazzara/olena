@@ -38,8 +38,6 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/labeling/compute.hh>
-# include <mln/accu/center.hh>
 
 # include <mln/util/array.hh>
 
@@ -88,22 +86,17 @@ namespace scribo
 	internal::init_link_array(link_2);
 	internal::init_link_array(link_3);
 
-	//FIXME: should be removed if this information is stored in util::text.
-	mln::util::array<mln_site(L)::vec> centers
-	  = labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
-
-	std::cout << "dmax = " << neighb_max_distance << std::endl;
 	for_all_ncomponents(i, text.nbboxes())
 	{
-	  //  -------
-	  //  |	 X------->
-	  //  |	    |
-	  //  |	    |
-	  //  |	 X------->
-	  //  |	    |
-	  //  |	    |
-	  //  |	 X------->
-	  //  -------
+	  //	  -------
+	  //  <------X  |
+	  //	  |     |
+	  //	  |	|
+	  //  <------X	|
+	  //	  |     |
+	  //	  |	|
+	  //  <------X  |
+	  //	  -------
 	  unsigned midcol = (text.bbox(i).pmax().col()
 				- text.bbox(i).pmin().col()) / 2;
 	  int dmax = midcol + neighb_max_distance;
@@ -116,7 +109,7 @@ namespace scribo
 	  internal::find_left_link(text, link_1, i, dmax, a1);
 
 	  /// Left link from the central site
-	  internal::find_left_link(text, link_2, i, dmax, centers[i]);
+	  internal::find_left_link(text, link_2, i, dmax, text.mass_center(i));
 
 	  /// Left link from the bottom anchor.
 	  mln_site(L) a2 = c;

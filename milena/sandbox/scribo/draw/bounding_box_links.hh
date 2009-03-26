@@ -230,10 +230,8 @@ namespace scribo
 		       const mln_value(I)& value)
     {
       trace::entering("scribo::draw::bounding_box_links");
-      mln_precondition(exact(input).is_valid());
 
       I& input = exact(input_);
-
       mln_precondition(input.is_valid());
 
       for_all_components(i, left_link)
@@ -259,10 +257,8 @@ namespace scribo
 		       const mln_value(I)& value)
     {
       trace::entering("scribo::draw::bounding_box_links");
-      mln_precondition(exact(input).is_valid());
 
       I& input = exact(input_);
-
       mln_precondition(input.is_valid());
 
       for_all_components(i, left_link)
@@ -292,10 +288,8 @@ namespace scribo
 		       const mln_value(I)& validated_link_value)
     {
       trace::entering("scribo::draw::bounding_box_links");
-      mln_precondition(exact(input).is_valid());
 
       I& input = exact(input_);
-
       mln_precondition(input.is_valid());
 
       mln_site(I)::vec dleft = literal::origin;
@@ -339,10 +333,8 @@ namespace scribo
 		       const mln_value(I)& validated_link_value)
     {
       trace::entering("scribo::draw::bounding_box_links");
-      mln_precondition(exact(input).is_valid());
 
       I& input = exact(input_);
-
       mln_precondition(input.is_valid());
 
       mln_site(I)::vec dleft = literal::origin;

@@ -56,7 +56,7 @@ namespace scribo
     {
 
       /// Set the default debug filename prefix.
-      extern char *debug_filename_prefix;
+      extern std::string debug_filename_prefix;
 
     } // end of namespace scribo::make::internal
 
@@ -67,7 +67,7 @@ namespace scribo
     namespace internal
     {
 
-      char *debug_filename_prefix = 0;
+      std::string debug_filename_prefix = "";
 
     } // end of namespace scribo::make::internal
 
@@ -80,7 +80,7 @@ namespace scribo
 
       std::ostringstream os;
 
-      if (internal::debug_filename_prefix != 0)
+      if (! internal::debug_filename_prefix.empty())
 	os << internal::debug_filename_prefix << "_";
       else
 	mln::trace::warning("You may like to set a default filename prefix.");

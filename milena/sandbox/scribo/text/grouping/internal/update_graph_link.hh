@@ -27,15 +27,15 @@
 // Public License.
 
 
-#ifndef SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_LINK_GRAPH_HH
-# define SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_LINK_GRAPH_HH
+#ifndef SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_GRAPH_LINK_HH
+# define SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_GRAPH_LINK_HH
 
 /// \file scribo/text/grouping/internal/update_link_array.hh
 ///
 /// Update graph edges if a valid neighbor is found.
 
 # include <mln/core/concept/image.hh>
-# include <mln/util/graph.hh>
+# include <mln/core/concept/graph.hh>
 
 namespace scribo
 {
@@ -50,9 +50,9 @@ namespace scribo
       {
 
 	/// Update graph edges if a valid neighbor is found.
-	template <typename I>
+	template <typename I, typename G>
 	void
-	update_link_graph(const Image<I>& lbl_, mln::util::graph& g,
+	update_graph_link(const Image<I>& lbl_, Graph<G>& g_,
 			  const mln_site(I)& p, const mln_site(I)& c,
 			  unsigned i, int dmax);
 
@@ -60,21 +60,27 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-	template <typename I>
+	template <typename I, typename G>
 	inline
 	void
-	update_link_graph(const Image<I>& lbl_, mln::util::graph& g,
+	update_graph_link(const Image<I>& lbl_, Graph<G>& g_,
 			  const mln_site(I)& p, const mln_site(I)& c,
 			  unsigned i, int dmax)
 	{
+	  trace::entering("scribo::text::grouping::internal::update_graph_link");
+
 	  const I& lbl = exact(lbl_);
+	  G& g = exact(g_);
 
 	  mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
 	  mln_precondition(exact(lbl).is_valid());
+	  mln_precondition(g.is_valid());
 
 	  if (lbl.domain().has(p) && lbl(p) != literal::zero && lbl(p) != i
 	      && (math::abs(p.col() - c.col())) < dmax)
 	    g.add_edge(lbl(p), i);
+
+	  trace::exiting("scribo::text::grouping::internal::update_graph_link");
 	}
 
 
@@ -89,4 +95,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_LINK_GRAPH_HH
+#endif // ! SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_GRAPH_LINK_HH

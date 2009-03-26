@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef SCRIBO_TEXT_GROUPING_GROUP_FROM_MULTIPLE_LINKS_HH
-# define SCRIBO_TEXT_GROUPING_GROUP_FROM_MULTIPLE_LINKS_HH
+#ifndef SCRIBO_TEXT_GROUPING_GROUP_FROM_GRAPH_HH
+# define SCRIBO_TEXT_GROUPING_GROUP_FROM_GRAPH_HH
 
-/// \file scribo/text/grouping/group_from_multiple_links.hh
+/// \file scribo/text/grouping/group_from_graph.hh
 ///
 /// Link text bounding boxes with their neighbors.
 
@@ -63,8 +63,8 @@ namespace scribo
       /// FIXME: Add much more doc!
       template <typename I, typename G>
       scribo::util::text<I>
-      group_from_multiple_links(const scribo::util::text<I>& text,
-				const Graph<G>& g_);
+      group_from_graph(const scribo::util::text<I>& text,
+		       const Graph<G>& g_);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -116,10 +116,10 @@ namespace scribo
       template <typename I, typename G>
       inline
       scribo::util::text<I>
-      group_from_multiple_links(const scribo::util::text<I>& text,
-				const Graph<G>& g_)
+      group_from_graph(const scribo::util::text<I>& text,
+		       const Graph<G>& g_)
       {
-	trace::entering("scribo::text::grouping::group_from_multiple_links");
+	trace::entering("scribo::text::grouping::group_from_graph");
 
 	const G& g = exact(g_);
 
@@ -151,7 +151,8 @@ namespace scribo
 
 	mln_assertion(new_nbboxes.next() == bresult.nelements());
 
-	trace::exiting("scribo::text::grouping::group_from_multiple_links");
+	trace::exiting("scribo::text::grouping::group_from_graph");
+	/// FIXME: construct a new util::text from the old one.
 	return scribo::make::text(bresult, new_lbl, new_nbboxes);
       }
 
@@ -164,4 +165,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_TEXT_GROUPING_GROUP_FROM_MULTIPLE_LINKS_HH
+#endif // ! SCRIBO_TEXT_GROUPING_GROUP_FROM_GRAPH_HH

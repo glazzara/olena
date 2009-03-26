@@ -119,11 +119,8 @@ namespace scribo
 
       mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
 
-      mln::util::array<mln_site(I)::vec> mass_centers
-	= labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
-
       draw::bounding_boxes(tmp, text.bboxes(), box_value);
-      draw::bounding_box_links(tmp, mass_centers, link_array, link_value);
+      draw::bounding_box_links(tmp, text.mass_centers(), link_array, link_value);
 
       io::ppm::save(tmp, filename);
 
@@ -147,11 +144,8 @@ namespace scribo
 
       mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
 
-      mln::util::array<mln_site(I)::vec> mass_centers
-	= labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
-
       draw::bounding_boxes(tmp, text.bboxes(), box_value);
-      draw::bounding_box_links(tmp, mass_centers,
+      draw::bounding_box_links(tmp, text.mass_centers(),
 			       left_link, right_link,
 			       value);
 
@@ -179,11 +173,8 @@ namespace scribo
 
       mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
 
-      mln::util::array<mln_site(I)::vec> mass_centers
-	= labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
-
       draw::bounding_boxes(tmp, text.bboxes(), box_value);
-      draw::bounding_box_links(tmp, mass_centers,
+      draw::bounding_box_links(tmp, text.mass_centers(),
 			       left_link, right_link,
 			       left_link_value, right_link_value,
 			       validated_link_value);
@@ -211,10 +202,7 @@ namespace scribo
 
       mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
 
-      mln::util::array<mln_site(I)::vec> mass_centers
-	= labeling::compute(accu::meta::center(), text.label_image(), text.nbboxes());
-
-      draw::bounding_boxes(tmp, mass_centers, box_value);
+      draw::bounding_boxes(tmp, text.bboxes(), box_value);
       draw::bounding_box_links(tmp, text.bboxes(), g, link_value);
 
       io::ppm::save(tmp, filename);

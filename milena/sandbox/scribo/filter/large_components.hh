@@ -70,20 +70,17 @@ namespace scribo
 			       const V& label_type,
 			       unsigned max_size);
 
+    /// Remove too large text components.
+    ///
+    /// \param[in] text	      Text data.
+    /// \param[in] min_size   The minimum cardinality of a component.
+    ///
+    /// \return updated text data.
+    template <typename I>
+    scribo::util::text<I>
+    small_components(const scribo::util::text<I>& text,
+		     unsigned min_size);
 
-    /// Remove large bboxes in a binary image.
-    /// Set to 'false' all the removed bboxes.
-    ///
-    /// \param[in] input_     A binary image.
-    /// \param[in] bboxes     Bounding boxes of components extracted from \p
-    ///			      input_.
-    /// \param[in] max_size   The minimum cardinality of a component.
-    ///
-    /// \return A binary image without large bboxes.
-    template <typename P>
-    util::array< box<P> >
-    large_components(const util::array< box<P> >& bboxes,
-		     unsigned max_size);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -97,9 +94,9 @@ namespace scribo
       /// large.
       template <typename R>
       struct filter_large_components_functor
-	: Function_l2b< filter_large_and_large_functor<R> >
+	: Function_l2b< filter_large_components_functor<R> >
       {
-	filter_large_components_functor(const util::array<R>& nsitecomp,
+	filter_large_components_functor(const mln::util::array<R>& nsitecomp,
 					unsigned max_size)
 	  : nsitecomp_(nsitecomp), max_size_(max_size)
 	{
@@ -114,7 +111,7 @@ namespace scribo
 	}
 
 
-	const util::array<R>& nsitecomp_;
+	const mln::util::array<R>& nsitecomp_;
 	unsigned max_size_;
       };
 
@@ -144,10 +141,10 @@ namespace scribo
 
       typedef accu::count<mln_psite(I)> accu_count_t;
       typedef mln_result(accu_count_t) accu_count_res_t;
-      typedef util::array<accu_count_res_t> nsitecomp_t;
+      typedef mln::util::array<accu_count_res_t> nsitecomp_t;
       nsitecomp_t nsitecomp = labeling::compute(accu_count_t(), lbl, nlabels);
 
-      typedef internal::filter_large_and_large_functor<accu_count_res_t> func_t;
+      typedef internal::filter_large_components_functor<accu_count_res_t> func_t;
       func_t fl2b(nsitecomp, max_size);
       labeling::relabel_inplace(lbl, nlabels, fl2b);
 
@@ -159,31 +156,45 @@ namespace scribo
     }
 
 
-    template <typename P>
+    template <typename I>
     inline
-    util::array< box<P> >
-    large_components(const util::array< box<P> >& bboxes,
+    scribo::util::text<I>
+    large_components(const scribo::util::text<I>& text,
 		     unsigned max_size)
     {
       trace::entering("scribo::filter::large_components");
 
-      mln_precondition(input.is_valid());
+      mln_precondition(text.is_valid());
 
+      typedef mln_site(I) P;
       typedef accu::count<P> accu_count_t;
       typedef mln_result(accu_count_t) accu_count_res_t;
-      typedef util::array<accu_count_res_t> nsitecomp_t;
+      typedef mln::util::array<accu_count_res_t> nsitecomp_t;
 
-      util::array<box<P> > result;
-      result.append(box<P>());
-      for_all_components(i, bboxes)
+      fun::i2v::array<bool> f(text.nbboxes().next(), false);
+      f(0) = true;
+      mln::util::array<box<P> > bresult;
+      bresult.append(box<P>());
+      for_all_components(i, text.bboxes())
       {
-	accu_count_res_t count = set::compute(accu_count_t(), bboxes[i]);
+	accu_count_res_t count = set::compute(accu_count_t(), text.bbox(i));
 	if (count <= max_size)
-	  result.append(bboxes[i]);
+	{
+	  bresult.append(text.bbox(i));
+	  f(i) = true;
+	}
       }
 
+      mln_value(I) new_nbboxes;
+      I new_lbl = labeling::relabel(text.label_image(), text.nbboxes(),
+				    mln::make::relabelfun(f, text.nbboxes(),
+							  new_nbboxes));
+
+      mln_assertion(new_nbboxes.next() == bresult.nelements());
+
       trace::exiting("scribo::filter::large_components");
-      return result;
+      /// FIXME: construct a new util::text from the old one.
+      return scribo::make::text(bresult, new_lbl, new_nbboxes);
     }
 
 
