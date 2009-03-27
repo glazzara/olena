@@ -1,3 +1,11 @@
+2009-03-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add ICDAR-related code.
+
+	* theo/icdar/dibco/wst-based.sh: New.
+	* theo/icdar/hsc/boxes.cc: New.
+	* theo/icdar/hsc/main.cc: New.
+
 2009-03-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a small tool to invert b&w in a color image.
