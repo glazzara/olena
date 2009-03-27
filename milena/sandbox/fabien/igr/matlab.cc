@@ -36,6 +36,8 @@ image2d<float> mean_slices(util::array<image2d<float> >& arr_ima, int first, int
   mln_precondition(first >=0 && first < arr_ima.nelements());
   mln_precondition(last >=0 && last < arr_ima.nelements());
 
+  initialize(result, arr_ima[first]);
+
   accu::image::init(result);
   for (int i = first; i < last; ++i)
     accu::image::take(result, arr_ima[i]);
@@ -58,10 +60,10 @@ int main(int argc, char* argv[])
   for (int i = 0; i < input.nslices(); ++i)
     arr_ima.append(duplicate(cast_image<float>(slice(input, i))));
 
-  int acqui = 3;  // durée acqui et temps interimages; en secondes
-  int fseuil = 4; // ratio entre signaux trop faibles, éliminés, et bruit de fond mesuré sur l image
-  int ini = 9;    // nombre images ligne de base
-  int ini2 = 20;  // a la fin de la montée vasculaire, à la dixieme image post injection: lissage des images par trois
+  const int acqui = 3;  // durée acqui et temps interimages; en secondes
+  const int fseuil = 4; // ratio entre signaux trop faibles, éliminés, et bruit de fond mesuré sur l image
+  const int ini = 9;    // nombre images ligne de base
+  const int ini2 = 20;  // a la fin de la montée vasculaire, à la dixieme image post injection: lissage des images par trois
 
   // Calcul signal initialmoyen : 8 images de 2 à 9 moyennées=ligne de base
   image2d<float> imageini = mean_slices(arr_ima, 1, 8);
@@ -86,10 +88,19 @@ int main(int argc, char* argv[])
   data::fill(prodsignal1, 0.0);
   data::paste(datasli | pw::value(roi_noise) == pw::cst(true), prodsignal1);
 
-  // moyenne
+  /////////////
+  //	     //
+  // Moyenne //
+  //	     //
+  /////////////
   accu::mean<float> accu_mean;
   float moysignal1 = level::compute(accu_mean, prodsignal1 | pw::value(roi_noise) == pw::cst(true));
-  // ecart type
+
+  ////////////////
+  //		//
+  // Ecart type //
+  //		//
+  ////////////////
   int som1 = 0;
   int kk = 0;
   mln_piter_(image2d<float>) p(datasli.domain());
@@ -99,11 +110,16 @@ int main(int argc, char* argv[])
   float ectys = std::sqrt(som1 / (nbrpix1 - 1));
   float seuil = fseuil * ectys;
 
-  // Calcul du masque
+  //////////////////////
+  //		      //
+  // Calcul du masque //
+  //		      //
+  //////////////////////
   image2d<bool> masque;
   initialize(masque, datasli);
   data::fill(masque, false);
   data::fill((masque | pw::value(datasli) > pw::cst(seuil)).rw(), true);
+
   // si on a choisi une région avec roi
   int nargin = 0;
   image2d<bool> roi; // FIXME: init this ROI, should be a domain
@@ -123,6 +139,12 @@ int main(int argc, char* argv[])
   // On cherche les maxi (intensité ima_c et temps ima_t) des courbes signal(temps)
   // On masque toute la série d'images
 
+  /////////////
+  //	     //
+  // Lissage //
+  //	     //
+  /////////////
+
   // Essai de lissage à parir de fin de montée vaculaire ini2 pour ameliorer
   // les seuillages a 10 50 90        NON EVALUE RIGOUREUSEMENT
   util::array<image2d<double> > arr_smooth;
@@ -131,17 +153,33 @@ int main(int argc, char* argv[])
     arr_smooth.append(arr_ima[k] * 0.5 + arr_ima[k - 1] * 0.25 + arr_ima[k + 1] * 0.25);
   arr_smooth.append(arr_ima[dim3 - 1] * 1.0);
 
+  ///////////////////////////////////
+  //				   //
+  // Calcul image max et temps max //
+  //				   //
+  ///////////////////////////////////
+  image2d<float> ima_c;
+  initialize(ima_c, arr_smooth[0]);
+  data::fill(ima_c, 0.0);
+  image2d<unsigned> ima_t;
+  initialize(ima_t, ima_c);
   for_all(p)
     if (masque(p) == false)
     {
       for (int k = 0; k < arr_smooth.nelements(); ++k)
 	arr_smooth[k](p) = 0.0;
       ima_c(p) = 0.0;
-      ima_t(p) = 0.0;
+      ima_t(p) = 0;
       ++kk;
     }
 
-  // FIXME: [c,T]=max(image,[ ],3);
+  for_all(p)
+    for (unsigned k = 0; k < dim3; ++k)
+      if (ima_c(p) < arr_smooth[k](p))
+      {
+	ima_c(p) = arr_smooth[k](p);
+	ima_t(p) = k;
+      }
 
   // Ou 'ima_c' est la valeur du max et 'ima_t' son index, le long de la dimension 3
   // kk est le nombre de points masques
@@ -149,152 +187,180 @@ int main(int argc, char* argv[])
   std::cout << "kk = " << kk << std::endl;
 
   image2d<accu::sum<float> > accu_sum;
-  accu::image::init(result);
-  for (int i = first; i < last; ++i)
-    accu::image::take(result, arr_ima[i]);
-  ima_auc accu::image::to_result(result);
+  accu::image::init(accu_sum);
+  for (int k = 0; k < dim3; ++k)
+    accu::image::take(accu_sum, arr_smooth[k]);
+  image2d<float> ima_auc = accu::image::to_result(accu_sum);
 
   // Conversion du temps du pic en secondes à partir fin période de base
-  tmax = acqui * (ima_t - ini);
+  image2d<int> tmax = acqui * (ima_t - ini);
 
   // calcul des temps 10 et 90 et de la pente correspondante
-  for (int i = 0; i < dim1; ++i)
-    for (int j = 0; j < dim2; ++j)
-    {
-      [C10(i,j),idx_10(i,j)]=max(image(i,j,:)>=0.1*c(i,j));
-      [C90(i,j),idx_90(i,j)]=max(image(i,j,:)>=0.9*c(i,j));
-      [C50(i,j),idx_50(i,j)]=max(image(i,j,:)>=0.5*c(i,j));
-      if (idx_90(i,j)-idx_10(i,j)==0)
-	masque2(i,j)=0;
-      else
-	masque2(i,j)=1;
-    }
+  image2d<float> ima_c10;
+  initialize(ima_c10, arr_smooth[0]);
+  data::fill(ima_c10, 0.0);
+  image2d<unsigned> ima_idx10;
+  initialize(ima_idx10, ima_c10);
+  bool set_10 = false;
 
-  // calcul MTT
+  image2d<float> ima_c90;
+  initialize(ima_c90, arr_smooth[0]);
+  data::fill(ima_c90, 0.0);
+  image2d<unsigned> ima_idx90;
+  initialize(ima_idx90, ima_c90);
+  bool set_90 = false;
+
+  image2d<float> ima_c50;
+  initialize(ima_c50, arr_smooth[0]);
+  data::fill(ima_c50, 0.0);
+  image2d<unsigned> ima_idx50;
+  initialize(ima_idx50, ima_c50);
+  bool set_50 = false;
+
+  image2d<bool> masque2;
+  initialize(masque2, arr_smooth[0]);
+
+  // FIXME: This could be done with a bkw_piter.
+  for_all(p)
+  {
+    for (unsigned k = 0; k < dim3; ++k)
+    {
+      if (!set_10 && arr_smooth[k](p) >= 0.1 * ima_c(p))
+      {
+	ima_c10(p) = arr_smooth[k](p);
+	ima_idx10(p) = k;
+	set_10 = true;
+      }
+      if (!set_90 && arr_smooth[k](p) >= 0.9 * ima_c(p))
+      {
+	ima_c90(p) = arr_smooth[k](p);
+	ima_idx90(p) = k;
+	set_90 = true;
+      }
+      if (!set_50 && arr_smooth[k](p) >= 0.5 * ima_c(p))
+      {
+	ima_c50(p) = arr_smooth[k](p);
+	ima_idx50(p) = k;
+	set_50 = true;
+      }
+    }
+    masque2(p) = (ima_idx90(p) != ima_idx10(p));
+  }
+
+  ////////////////
+  //		//
+  // Calcul MTT //
+  //		//
+  ////////////////
 
   // QUAND le signal redescent significativement après le maximum
   // elimination des voxels où le signal est encore 90//  du maximum en fin
   // d'acquisition
+  image2d<bool> masque3;
+  initialize(masque3, masque2);
   int kk2 = 0;
-  for (int i = 0; i < dim1; ++i)
-    for (int j = 0; j < dim2; ++j)
-      if (image(i,j,dim3)>=0.9*c(i,j))
-      {
-	masque3(i,j)=0;
-	kk2=kk2+1;
-      }
-      else
-	masque3(i,j)=1;
+  for_all(p)
+    if (arr_smooth[dim3 - 1](p) >= 0.9 * ima_c(p))
+    {
+      masque3(p) = false;
+      ++kk2;
+    }
+    else
+      masque3(p) = true;
 
   // pour les voxels non masqués on inverse t et on cherche le max 50//  a partir de la fin
-  for (int i = 0; i < dim1; ++i)
-    for (int j = 0; j < dim2; ++j)
-      for (int k = 0; k < dim3; ++k)
-	imageinv(i,j,k)=masque3(i,j)*image(i,j,dim3+1-k);
+  util::array<image2d<float> > arr_inv;
+  for (int k = 0; k < dim3; ++k)
+  {
+    arr_inv.append(arr_ima[dim3 - 1 - k]);
+    data::fill((arr_inv[k] | pw::value(masque3) == false).rw(), 0.0);
+  }
 
-  for (int i = 0; i < dim1; ++i)
-    for (int j = 0; j < dim2; ++j)
-      if (masque3(i,j)==0)
-      {
-	idx_51(i,j)=0;
-	C51(i,j)=0;
-      }
-      else
-	[C51(i,j),idx_51(i,j)]=max(imageinv(i,j,:)>=0.8*c(i,j));
+  image2d<float> ima_c51;
+  initialize(ima_c51, arr_smooth[0]);
+  data::fill(ima_c51, 0.0);
+  image2d<unsigned> ima_idx51;
+  initialize(ima_idx51, ima_c51);
+  bool set_51 = false;
+  for_all(p)
+  {
+    if (masque3(p))
+    {
+      for (unsigned k = 0; k < dim3; ++k)
+	if (!set_50 && arr_smooth[k](p) >= 0.8 * ima_c(p))
+	{
+	  ima_c51(p) = arr_inv[k](p);
+	  ima_idx51(p) = k;
+	  set_51 = true;
+	}
+    }
+    else
+    {
+      ima_c51(p) = 0;
+      ima_idx51(p) = 0;
+    }
+  }
 
   std::cout << "kk2 = " << kk2 << std::endl;
 
   // Calcul MTT  defini comme largeur a mi hauteur de la courbe signal(temps)
   // soit t50 montant et t50 descendant
-  for (int i = 0; i < dim1; ++i)
-    for (int j = 0; j < dim2; ++j)
-      if (masque(i,j)*masque2(i,j)*masque3(i,j)==0)
-	MTT(i,j)=0;
-      else
-	MTT(i,j)=acqui*(dim3-idx_51(i,j)-idx_50(i,j));
+  image2d<int> ima_mtt;
+  initialize(ima_mtt, masque);
+  data::fill(ima_mtt, 0);
+  for_all(p)
+    if (masque(p) && masque2(p) && masque3(p))
+      ima_mtt(p) = acqui * (dim3 - ima_idx51(p) - ima_idx50(p));
 
   // calcul de la pente 10/90 (avec delta signal=80// du maximum c(i,j) et
-  // delta temps =t90 -t10
-  for (int i = 0; i < dim1; ++i)
-    for (int j = 0; j < dim2; ++j)
-      if (masque(i,j)*masque2(i,j)==0)
-	pente(i,j)=0;
-      else
-	pente(i,j)=(0.8*c(i,j))/(acqui*(idx_90(i,j)-idx_10(i,j)));
+  // delta temps = t90 - t10
+  image2d<float> ima_pente;
+  initialize(ima_pente, masque);
+  data::fill(ima_pente, 0);
+  for_all(p)
+    if (masque(p) && masque2(p))
+      ima_pente(p) = (0.8 * ima_c(p)) / (acqui * (ima_idx90(p) - ima_idx10(p)));
 
-  // calcul pente normalisée rehaussement normalisé et AUC normalisée
-  for (int i = 0; i < dim1; ++i)
-    for (int j = 0; j < dim2; ++j)
-      if (masque(i,j)==0)
-      {
-	pentenorm(i,j)=0;
-	reh(i,j)=0;
-	AUCnorm(i,j)=0;
-      }
-      else
-      {
-	pentenorm(i,j)=pente(i,j)/imageini(i,j);
-	reh(i,j)=c(i,j)/imageini(i,j);
-	AUCnorm(i,j)=AUC(i,j)/imageini(i,j);
-      }
+  ////////////////////////////////////////////////
+  //						//
+  // Normalisation de la pente, du rehaussement //
+  // et de l'AUC				//
+  //						//
+  ////////////////////////////////////////////////
+  image2d<float> ima_pentenorm;
+  initialize(ima_pentenorm, masque);
+  data::fill(ima_pentenorm, 0);
 
-  /*figure (3)
-    imagesc(AUCnorm);
-  title('image aire normalisée sous la courbe');
-  //  l'aire sous la courbe est négative là où il y a eu du bougé (bord tube)
+  image2d<float> ima_reh;
+  initialize(ima_reh, masque);
+  data::fill(ima_reh, 0);
 
+  image2d<float> ima_aucnorm;
+  initialize(ima_aucnorm, masque);
+  data::fill(ima_aucnorm, 0);
 
-  figure (4)
-    imagesc(pentenorm);
-  title('pente normalisée10-90');
-
-  figure(5)
-    imagesc(reh);
-  title('image rehaussement relatif');
-  caxis([0 5]);
-  // au dela de 5 il faut réviser la dose d'agent de contraste car surdosage
-
-  figure(6)
-    imagesc(MTT);
-  title('image MTT');
-
-  figure(9)
-    imagesc(idx_51);
-  title('idx_51');
-
-  figure(10)
-    imagesc(C51);
-
-  figure(7)
-    imagesc(tmax);
-  title('image Tmaximum');
-
-  figure(8)
-    subplot(2,2,1);
-  imagesc(pentenorm);
-  title('pente normalisée10-90');
-  subplot(2,2,2)
-    imagesc(reh);
-  title('image rehaussement relatif');
-  caxis([0 3]);
-  subplot(2,2,3)
-    imagesc(tmax);
-  title('image Tmaximum');*/
+  for_all(p)
+    if (masque(p))
+    {
+      ima_pentenorm(p) = ima_pente(p) / imageini(p);
+      ima_reh(p) = ima_c(p) / imageini(p);
+      ima_aucnorm(p) = ima_auc(p) / imageini(p);
+    }
 
   //  COURBE S(t)sur pixel choisi graphiquement
   // Permet de voir la courbe de rehaussement d'un voxel pointé
   // SI LE VOXEL EST AU BORD DU TUBE TEMOIN: UN DETECTEUR DE MOUVEMENTS
   //  coordonx=1:size(image,3);
-  x = size(image, 1) / 2;
-  y = size(image, 2) / 2;
-  while (x < size(image, 1) && y < size(image, 2))
+  float x = masque.nrows() / 2;
+  float y = masque.ncols() / 2;
+  /*while (x < masque.nrows() && y < masque.ncols())
   {
     //  la saisie du point de coordonnées x,y se fait sur la figure ouverte en
     //  dernier
     //  pour sortir: cliquer dans le gris...
     //  pour affichage interactif coordonnées pixel, mais en fait pas utile
-    h=figure(8)
-      pixval;
+    h=figure(8);
+    pixval;
     // saisie coordonnées du pixel pour lequel on veut afficher la courbe de
     // décroissance et le fit
     [x,y]=ginput(1);
@@ -305,12 +371,12 @@ int main(int argc, char* argv[])
     //  test sortie du programme
     if ((coordx > size(image, 1)) | (coordy > size(image, 2)))
       break;
-    fprintf(1,'\n// d\t// d\t// f\t// f\n',coordx,coordy,reh(coordx,coordy),image(coordx,coordy,1));
+    fprintf(1,"\n// d\t// d\t// f\t// f\n",coordx,coordy,reh(coordx,coordy),image(coordx,coordy,1));
     titi = (abs(image(coordx, coordy, :)));
     tata = squeeze(titi);
-    subplot(2,2,4)
-      plot(tata);
-  }
+    subplot(2,2,4);
+    plot(tata);
+  }*/
 
   return 0;
 }

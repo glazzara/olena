@@ -36,10 +36,11 @@
          [X] 3D
          [X] Print nb bg regions // nb fg objets
 [ ] Profile for performance
-[ ] ImageMagick support
+[X] ImageMagick support
 [ ] Integrate external libraries (GDCM, IM)
 [ ] Send result images to lrde account
-[ ] Translate Matlab code
+[X] Translate Matlab code
 [X] Subsample binary images
 [X] Fast projected histogram
 [ ] Triple histogram
+[ ] Create plot for each kind of point with each method

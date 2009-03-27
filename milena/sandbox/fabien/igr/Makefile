@@ -1,38 +1,30 @@
 CXX = llvm-g++
-DCM_SRC=/Users/HiSoKa/Downloads/gdcm-2.0.10
-DCM_BIN=/Users/HiSoKa/Downloads/gdcmbin
-DICOM_INC = -I${DCM_SRC}/Source/Common/ \
-	    -I${DCM_BIN}/Source/Common/ \
-	    -I${DCM_SRC}/Source/DataDictionary/ \
-	    -I${DCM_SRC}/Source/MediaStorageAndFileFormat/ \
-	    -I${DCM_SRC}/Source/DataStructureAndEncodingDefinition/
-DICOM_LIBS = -L${DCM_BIN}/bin \
-	     -lgdcmCommon -lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib \
+CXXFLAGS = -DNDEBUG -O4
+
+DICOM_INC = -I/usr/local/include/gdcm-2.0
+DICOM_LIBS = -lgdcmCommon -lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib \
 	     -framework CoreFoundation
-CXXFLAGS = -DNDEBUG -O1
+DICOM = ${DICOM_INC} ${DICOM_LIBS}
 
-all: 2d 3d wsd2d wsd3d grad
+MAGICK = `Magick++-config --cppflags --ldflags --libs`
 
-2d: seg_vol_irm.hh seg2d.cc
-	${CXX} -I../../../ ${DICOM_INC} ${DICOM_LIBS} ${CXXFLAGS} seg2d.cc -o seg2d
+seg2d: seg_vol_irm.hh seg2d.cc
+	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} seg2d.cc -o seg2d
 
-3d: seg_vol_irm.hh seg3d.cc
-	${CXX} -I../../../ ${DICOM_INC} ${DICOM_LIBS} ${CXXFLAGS} seg3d.cc -o seg3d
+seg3d: seg_vol_irm.hh seg3d.cc
+	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} seg3d.cc -o seg3d
 
 wsd2d: watershed.hh watershed2d.cc
-	${CXX} -I../../../ ${DICOM_INC} ${DICOM_LIBS} ${CXXFLAGS} $^ -o wsd2d
+	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o wsd2d
 
 wsd3d: watershed.hh watershed3d.cc
-	${CXX} -I../../../ ${DICOM_INC} ${DICOM_LIBS} ${CXXFLAGS} $^ -o wsd3d
-
-wsd3dg: watershed.hh watershed3d.cc
-	${CXX} -I../../../ ${DICOM_INC} ${DICOM_LIBS} -g $^ -o wsd3dg
+	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o wsd3d
 
 nbasins: nbasins_finder.cc
-	${CXX} -I../../../ ${DICOM_INC} ${DICOM_LIBS} ${CXXFLAGS} $^ -o nbasins_finder
+	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o nbasins_finder
 	
 grad: grad.cc
-	${CXX} -I../../../ ${DICOM_INC} ${DICOM_LIBS} ${CXXFLAGS} $^ -o grad
+	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o grad
 	
 clo_vol: clo_vol.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o clo_vol
@@ -41,16 +33,20 @@ wst: wst.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o wst
 	
 graph: graph.cc
-	${CXX} -I../../../ ${DICOM_INC} ${DICOM_LIBS} ${CXXFLAGS} $^ -o graph
+	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o graph
 	
 med: med.cc
-	${CXX} -I../../../ ${DICOM_INC} ${DICOM_LIBS} ${CXXFLAGS} $^ -o med
+	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o med
 	
 thres: thres.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o thres
 	
 matlab: matlab.cc
-	${CXX} -I../../../ ${DICOM_INC} ${DICOM_LIBS} ${CXXFLAGS} -lm $^ -o matlab
+	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} -lm $^ -o matlab
+	
+time_max: time_max.cc
+	${CXX} -I../../../ ${DICOM} ${MAGICK} ${CXXFLAGS} -lm $^ -o time_max
 	
 clean:
 	rm -rf *.dump *.p?m *.plot *.log *.csv *.dSYM
+	rm seg2d seg3d wsd2d wsd3d nbasins_finder grad clo_vol wst graph med thres matlab time_max
