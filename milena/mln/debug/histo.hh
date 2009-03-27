@@ -31,7 +31,9 @@
 
 /// \file mln/debug/histo.hh
 ///
-/// save a histogram to a plot data file.
+/// Save a histogram to a plot data file.
+///
+/// \todo Move to io::histo::save.
 
 # include <iostream>
 # include <fstream>
@@ -41,6 +43,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/draw/line.hh>
 
+
 namespace mln
 {
 
@@ -48,32 +51,27 @@ namespace mln
   {
 
 
+    template <typename T>
     void
-    histo(const histo::array<unsigned>& h, const std::string& filename);
+    histo(const histo::array<T>& h, const std::string& filename);
 
-    void
-    histo(const std::vector<unsigned>& h, const std::string& filename);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
+    template <typename T>
     void
-    histo(const histo::array<unsigned>& h, const std::string& filename)
-    {
-      histo(h.vect(), filename);
-    }
-
-    void
-    histo(const std::vector<unsigned>& h, const std::string& filename)
+    histo(const histo::array<T>& h, const std::string& filename)
     {
       std::ofstream file(filename.c_str());
       if (! file)
       {
 	std::cerr << "error: cannot open file '" << filename << "'!";
-	abort();
+	std::abort();
       }
-
-      for (unsigned i = 0; i < h.size(); ++i)
-	file << i << ' ' << h[i] << std::endl;
+      mln_viter(value::set<T>) v(h.vset());
+      for_all(v)
+	file << v << ' ' << h(v) << std::endl;
     }
 
 

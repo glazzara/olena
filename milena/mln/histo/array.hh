@@ -54,6 +54,9 @@ namespace mln
 
       array();
 
+      array(const array& other);
+      array& operator=(const array& other);
+
       void clear();
 
       unsigned operator()(const T& v) const;
@@ -87,6 +90,25 @@ namespace mln
 	h_(s_.nvalues(), 0)
     {
       clear();
+    }
+
+    template <typename T>
+    inline
+    array<T>::array(const array& other)
+      : s_(other.s_),
+	h_(other.h_)
+    {
+    }
+
+    template <typename T>
+    inline
+    array<T>&
+    array<T>::operator=(const array& other)
+    {
+      if (&other == this)
+	return *this;
+      h_ = other.h_;
+      return *this;
     }
 
     template <typename T>
