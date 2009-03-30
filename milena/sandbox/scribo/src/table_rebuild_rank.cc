@@ -29,6 +29,8 @@
 
 #include <mln/essential/2d.hh>
 #include <mln/pw/all.hh>
+#include <mln/level/compute.hh>
+#include <mln/accu/maj_h.hh>
 
 #include <scribo/table/rebuild.hh>
 #include <scribo/table/erase.hh>
@@ -71,7 +73,16 @@ int main(int argc, char* argv[])
 
 
   std::cout << "ncells (including background) = " << ncells << std::endl;
-  io::ppm::save(mln::debug::colorize(value::rgb8(), tables, ncells),
+  image2d<value::rgb8> table_color = mln::debug::colorize(value::rgb8(), tables, ncells);
+
+  value::label_8 bg = level::compute(accu::maj_h<value::label_8>(), tables);
+
+  image2d<value::rgb8> sup = level::convert(value::rgb8(), input);
+  data::paste((table_color | pw::value(tables) != pw::cst(bg))
+	  | (pw::value(sup) == pw::cst(literal::black)), sup);
+  io::ppm::save(sup, scribo::make::debug_filename("table_color_sup.ppm"));
+
+  io::ppm::save(table_color,
 		scribo::make::debug_filename("table_cells.ppm"));
   io::pgm::save(tables, scribo::make::debug_filename("table_cells.pgm"));
 
@@ -82,4 +93,5 @@ int main(int argc, char* argv[])
   image2d<bool> in_wo_tables = table::erase(input, lineboxes);
   io::pbm::save(in_wo_tables,
       scribo::make::debug_filename("input_wo_tables.pbm"));
+
 }

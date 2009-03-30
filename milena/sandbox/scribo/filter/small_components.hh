@@ -81,7 +81,7 @@ namespace scribo
     /// \param[in] text	      Text data.
     /// \param[in] min_size   The minimum cardinality of a component.
     ///
-    /// \return updated text data.
+    /// \return Lines of text without too small components.
     template <typename I>
     scribo::util::text<I>
     small_components(const scribo::util::text<I>& text,
@@ -95,28 +95,39 @@ namespace scribo
     {
 
 
-      /// Filter Functor. Return false for all components which are too
-      /// small.
+      /// Filter Functor.
+      /// Return false for all components which are too small.
       template <typename R>
       struct filter_small_components_functor
 	: Function_l2b< filter_small_components_functor<R> >
       {
-	filter_small_components_functor(const mln::util::array<R>& nsitecomp,
+
+	/// Constructor
+	///
+	/// \param[in] compbboxes Component bounding boxes.
+	/// \param[in] min_size Minimum component size.
+	filter_small_components_functor(const mln::util::array<R>& compbboxes,
 					unsigned min_size)
-	  : nsitecomp_(nsitecomp), min_size_(min_size)
+	  : compbboxes_(compbboxes), min_size_(min_size)
 	{
 	}
 
 
-	/// Return false if the components area is strictly inferior to
+	/// Check if the component is large enough.
+	///
+	/// \param l A label.
+	///
+	/// \return false if the component area is strictly inferion to
 	/// \p min_size_.
 	bool operator()(const value::label_16& l) const
 	{
-	  return nsitecomp_[l] >= min_size_;
+	  return compbboxes_[l] >= min_size_;
 	}
 
+	/// The component bounding boxes.
+	const mln::util::array<R>& compbboxes_;
 
-	const mln::util::array<R>& nsitecomp_;
+	/// The minimum area.
 	unsigned min_size_;
       };
 
@@ -146,11 +157,11 @@ namespace scribo
 
       typedef accu::count<mln_psite(I)> accu_count_t;
       typedef mln_result(accu_count_t) accu_count_res_t;
-      typedef mln::util::array<accu_count_res_t> nsitecomp_t;
-      nsitecomp_t nsitecomp = labeling::compute(accu_count_t(), lbl, nlabels);
+      typedef mln::util::array<accu_count_res_t> compbboxes_t;
+      compbboxes_t compbboxes = labeling::compute(accu_count_t(), lbl, nlabels);
 
       typedef internal::filter_small_components_functor<accu_count_res_t> func_t;
-      func_t fl2b(nsitecomp, min_size);
+      func_t fl2b(compbboxes, min_size);
       labeling::relabel_inplace(lbl, nlabels, fl2b);
 
       mln_concrete(I) output = duplicate(input);

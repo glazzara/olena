@@ -30,7 +30,7 @@
 #ifndef SCRIBO_TEXT_GROUPING_EXTRACT_BBOXES_HH
 # define SCRIBO_TEXT_GROUPING_EXTRACT_BBOXES_HH
 
-/// \file scribo/text/grouping/group_with_single_link.hh
+/// \file scribo/text/extract_bboxes.hh
 ///
 /// Extract text bounding boxes from a binary image.
 
@@ -55,14 +55,17 @@ namespace scribo
 
     /// Extract text bounding boxes from a binary image.
     ///
-    /// \param[in] input_ A binary image.
+    /// \param[in]     input_  A binary imag.
+    /// \param[in]     nbh_    The neighborhood used for labeling.
+    /// \param[in,out] nbboxes Will hold the number of bounding boxes at
+    ///			       the end of the routine.
     ///
     /// \return an array of bounding boxes. The first bounding box is
     /// the background's.
     template <typename I, typename N, typename V>
     scribo::util::text<mln_ch_value(I,V)>
     extract_bboxes(const Image<I>& input_,
-		   const Neighborhood<N>& nbh, V& nbboxes);
+		   const Neighborhood<N>& nbh_, V& nbboxes);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -71,14 +74,16 @@ namespace scribo
     inline
     scribo::util::text<mln_ch_value(I,V)>
     extract_bboxes(const Image<I>& input_,
-		   const Neighborhood<N>& nbh, V& nbboxes)
+		   const Neighborhood<N>& nbh_, V& nbboxes)
     {
       trace::entering("scribo::text::extract_bboxes");
 
       const I& input = exact(input_);
+      const N& nbh = exact(nbh_);
 
       mlc_equal(mln_value(I), bool)::check();
       mln_precondition(input.is_valid());
+      mln_precondition(nbh.is_valid());
 
       typedef mln::util::array< box<mln_site(I)> > bboxes_t;
       typedef mln::util::couple<bboxes_t, mln_ch_value(I,V)> bboxes_and_lbl_t;

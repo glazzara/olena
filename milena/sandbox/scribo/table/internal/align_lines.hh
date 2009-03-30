@@ -55,6 +55,13 @@ namespace scribo
 
       /// Align table lines bboxes according to a given dimension.
       ///
+      /// \param[in] nsites Number of sites in the given dimension \p dim.
+      /// \param[in] min_coord The minimal coordinate in the dimension \p dim.
+      /// \param[in] max_coord The maximal coordinate in the dimension \p dim.
+      /// \param[in] line_bboxes Line bounding boxes.
+      /// \param[in] dim The dimension according which the lines are aligned.
+      /// \param[in] max_alignment_diff Maximum alignment difference.
+      ///
       /// \return A list of the resulting aligned cols. Each integer is actually
       ///		a col number.
       /*
@@ -90,8 +97,9 @@ namespace scribo
       align_lines(unsigned nsites,
 		  int min_coord,
 		  int max_coord,
-		  util::array<box<P> >& line_boxes,
-		  unsigned dim);
+		  util::array<box<P> >& line_bboxes,
+		  unsigned dim,
+		  unsigned max_alignment_diff);
 
 
 
@@ -103,7 +111,7 @@ namespace scribo
       align_lines(unsigned nsites,
 		  int min_coord,
 		  int max_coord,
-		  util::array<box<P> >& line_boxes,
+		  util::array<box<P> >& line_bboxes,
 		  unsigned dim,
 		  unsigned max_alignment_diff)
       {
@@ -115,11 +123,11 @@ namespace scribo
 	lines.resize(nsites);
 
 	// Map components with actual lines.
-	for_all_components(i, line_boxes)
+	for_all_components(i, line_bboxes)
 	{
-	  int minline = line_boxes[i].pmin()[dim] - max_alignment_diff;
+	  int minline = line_bboxes[i].pmin()[dim] - max_alignment_diff;
 	  minline = (minline < min_coord ? min_coord : minline);
-	  int maxline = line_boxes[i].pmax()[dim] + max_alignment_diff;
+	  int maxline = line_bboxes[i].pmax()[dim] + max_alignment_diff;
 	  maxline = (maxline > max_coord ? max_coord : maxline);
 
 	  for (int line = minline;
@@ -129,7 +137,7 @@ namespace scribo
 
 	// Init box2line
 	util::array<int> box2line;
-	box2line.resize(line_boxes.nelements());
+	box2line.resize(line_bboxes.nelements());
 	for_all_elements(i, box2line)
 	  box2line[i] = -1;
 
@@ -152,15 +160,15 @@ namespace scribo
 	      accu::mean<unsigned> mean;
 	      for_all_elements(j, lines[i])
 		if (box2line[lines[i][j]] == -1)
-		  mean.take(line_boxes[lines[i][j]].center()[dim]);
+		  mean.take(line_bboxes[lines[i][j]].center()[dim]);
 
 	      if (mean.is_valid())
 	      {
 		for_all_elements(j, lines[i])
 		  if (box2line[lines[i][j]] == -1)
 		  {
-		    line_boxes[lines[i][j]].pmin()[dim] = mean.to_result();
-		    line_boxes[lines[i][j]].pmax()[dim] = mean.to_result();
+		    line_bboxes[lines[i][j]].pmin()[dim] = mean.to_result();
+		    line_bboxes[lines[i][j]].pmax()[dim] = mean.to_result();
 		    box2line[lines[i][j]] = mean.to_result();
 		  }
 		newlines.append(mean.to_result());

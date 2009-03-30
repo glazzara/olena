@@ -54,8 +54,16 @@ namespace scribo
     namespace grouping
     {
 
-      /// Group character bounding boxes with a graph.
+      /// Construct the links between each line of text and store
+      /// it as a graph.
       /// Look up for neighbors on the right of each box.
+      /*!
+      ** \param[in] text The lines of text.
+      ** \param[in] neighb_max_distance The maximum distance allowed to
+      **				look for a neighbor.
+      **
+      ** \return A graph of relationship.
+      */
       template <typename L>
       mln::util::graph
       group_with_graph(const scribo::util::text<L>& text,

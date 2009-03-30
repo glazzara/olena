@@ -78,7 +78,7 @@ namespace scribo
     /// \return updated text data.
     template <typename I>
     scribo::util::text<I>
-    small_components(const scribo::util::text<I>& text,
+    large_components(const scribo::util::text<I>& text,
 		     unsigned min_size);
 
 
@@ -90,28 +90,39 @@ namespace scribo
     {
 
 
-      /// Filter Functor. Return false for all components which are too
-      /// large.
+      /// Filter Functor.
+      /// Return false for all components which are too large.
       template <typename R>
       struct filter_large_components_functor
 	: Function_l2b< filter_large_components_functor<R> >
       {
-	filter_large_components_functor(const mln::util::array<R>& nsitecomp,
+
+	/// Constructor
+	///
+	/// \param[in] compbboxes Component bounding boxes.
+	/// \param[in] max_size Maximum component size.
+	filter_large_components_functor(const mln::util::array<R>& compbboxes,
 					unsigned max_size)
-	  : nsitecomp_(nsitecomp), max_size_(max_size)
+	  : compbboxes_(compbboxes), max_size_(max_size)
 	{
 	}
 
 
-	/// Return false if the components area is strictly inferior to
+	/// Check if the component is large enough.
+	///
+	/// \param l A label.
+	///
+	/// \return false if the component area is strictly inferion to
 	/// \p max_size_.
 	bool operator()(const value::label_16& l) const
 	{
-	  return nsitecomp_[l] <= max_size_;
+	  return compbboxes_[l] <= max_size_;
 	}
 
 
-	const mln::util::array<R>& nsitecomp_;
+	/// The component bounding boxes.
+	const mln::util::array<R>& compbboxes_;
+	/// The maximum area.
 	unsigned max_size_;
       };
 

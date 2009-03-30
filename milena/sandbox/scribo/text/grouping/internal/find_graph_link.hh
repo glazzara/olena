@@ -31,7 +31,7 @@
 
 /// \file scribo/text/grouping/internal/find_graph_link.hh
 ///
-///
+/// Find the right neighbor of a line of text if exists.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/graph.hh>
@@ -46,6 +46,7 @@
 //FIXME: not generic.
 # include <mln/core/alias/dpoint2d.hh>
 
+
 namespace scribo
 {
 
@@ -58,6 +59,13 @@ namespace scribo
       namespace internal
       {
 
+	/// Find a neighbor of a text line in a specific range if it exists.
+	///
+	/// \param g_ The link graph.
+	/// \param text The lines of text.
+	/// \param current_comp The current line being processed.
+	/// \param dmax The maximum lookup distance.
+	/// \param c Start point of the neighbor lookup.
 	template <typename G, typename L>
 	void
 	find_graph_link(Graph<G>& g_,

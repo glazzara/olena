@@ -55,34 +55,65 @@ namespace scribo
     class text
     {
     public:
+      /// The site type in the label image.
       typedef mln_site(L) site;
+      /// The bounding box list type.
       typedef mln::util::array<box<site> > boxes_t;
+      /// The mass center list type.
       typedef mln::util::array<mln_site(L)::vec> mass_centers_t;
 
+      /// Constructors
+      /// @{
+
+      /// Default.
       text();
+
+      /// \param[in] bboxes text line bounding boxes.
+      /// \param[in] lbl label image associated to the bounding boxes.
+      /// \param[in] nbboxes The number of bounding boxes.
+      /// \param[in] mass_centers Mass centers of the components.
       text(const mln::util::array<box<mln_site(L)> >& bboxes,
 	   const Image<L>& lbl,
 	   const mln_value(L)& nbboxes,
 	   const mln::util::array<mln_site(L)::vec>& mass_centers);
-      text(const mln::util::array<box<mln_site(L)> >& bboxes,
-		  const Image<L>& lbl,
-		  const mln_value(L)& nbboxes);
 
+      /// \param[in] bboxes text line bounding boxes.
+      /// \param[in] lbl label image associated to the bounding boxes.
+      /// \param[in] nbboxes The number of bounding boxes.
+      text(const mln::util::array<box<mln_site(L)> >& bboxes,
+	   const Image<L>& lbl,
+	   const mln_value(L)& nbboxes);
+      /// @}
+
+      /// Return the underlying label image.
       const L& label_image() const;
+
+      /// Update the label image.
+      /// Note: Updating the label image update the bounding boxes
+      /// and the mass centers as well.
       void set_label_image(const Image<L>& lbl);
 
+      /// Return the number of bounding boxes.
       const mln_value(L)& nbboxes() const;
+      /// Return the number of bounding boxes.
       mln_value(L)& nbboxes();
 
+      /// Return the bounding boxes.
       const boxes_t& bboxes() const;
+      /// Return the bounding boxes.
       boxes_t& bboxes();
 
+      /// Return the i-th bounding box.
       const box<mln_site(L)>& bbox(unsigned i) const;
+      /// Return the i-th bounding box.
       box<mln_site(L)>& bbox(unsigned i);
 
+      /// Return the mass centers.
       const mln::util::array<mln_site(L)::vec>& mass_centers() const;
+      /// Return the i-th mass centers.
       mln_site(L) mass_center(unsigned i) const;
 
+      /// Is this text objet consistant/valid?
       bool is_valid() const;
 
     private:

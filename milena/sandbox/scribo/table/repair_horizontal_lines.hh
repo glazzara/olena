@@ -32,6 +32,8 @@
 /// \file scribo/table/repair_horizontal_lines.hh
 ///
 /// Repair horizontal lines which have small discontinuities.
+///
+/// \todo do not modify arguments but return a new value.
 
 # include <mln/core/concept/image.hh>
 # include <mln/util/couple.hh>
@@ -52,7 +54,7 @@ namespace scribo
      *
      *	\param[in] input	      Image from which the table bounding
      *				      boxes are extracted.
-     *	\param[in,out] tablesboxes    Table line bounding boxes.
+     *	\param[in,out] tablebboxes    Table line bounding boxes.
      *	\param[in] max_discontinuity  Repair discontinuity which are smaller
      *				      than this value.
      */
@@ -60,7 +62,7 @@ namespace scribo
     void
     repair_horizontal_lines(const Image<I>& input,
 			    util::couple<util::array<box<mln_site(I)> >,
-					 util::array<box<mln_site(I)> > >& tableboxes,
+					 util::array<box<mln_site(I)> > >& tablebboxes,
 			    unsigned max_discontinuity);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -70,13 +72,13 @@ namespace scribo
     void
     repair_horizontal_lines(const Image<I>& input,
 			    util::couple<util::array<box<mln_site(I)> >,
-					 util::array<box<mln_site(I)> > >& tableboxes,
+					 util::array<box<mln_site(I)> > >& tablebboxes,
 			    unsigned max_discontinuity)
     {
       trace::entering("scribo::table::repair_horizontal_lines");
       mln_precondition(exact(input).is_valid());
 
-      internal::repair_lines<1>(input, tableboxes.second(), max_discontinuity);
+      internal::repair_lines<1>(input, tablebboxes.second(), max_discontinuity);
 
       trace::exiting("scribo::table::repair_horizontal_lines");
     }

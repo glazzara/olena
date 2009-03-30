@@ -44,11 +44,40 @@ namespace scribo
   namespace filter
   {
 
+    /// Remove components thicker or equal to \p max_thickness.
+    ///
+    /// \param[in] input_ A binary image.
+    /// \param[in] nbh_ A neighborhood used in labeling algorithms.
+    /// \param[in] label_type The label type used for labeling.
+    /// \param[in] max_thickness The maximum thickness value.
+    ///
+    /// \result A binary image without thick components.
+    template <typename I, typename N, typename V>
+    inline
+    mln_concrete(I)
+    thick_bboxes(const Image<I>& input_,
+		 const Neighborhood<N>& nbh_,
+		 const V& label_type,
+		 unsigned max_thickness);
+
+
+    /// Remove lines of text thicker or equal to \p max_thickness.
+    ///
+    /// \param[in] text Lines of text.
+    /// \param[in] max_thickness The maximum thickness value.
+    ///
+    /// \result Lines of text without too thick lines.
+    template <typename L>
+    inline
+    scribo::util::text<L>
+    thick_bboxes(const scribo::util::text<L>& text,
+		 unsigned max_thickness);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     namespace internal
     {
-
 
       /// Filter Functor. Return false for all components which are too
       /// large.
@@ -56,6 +85,11 @@ namespace scribo
       struct filter_too_thick_component_functor
 	: Function_l2b< filter_too_thick_component_functor<R> >
       {
+
+	/// Constructor
+	///
+	/// \param[in] compbboxes component bounding boxes.
+	/// \param[in] max_thickness the maximum thickness allowed.
 	filter_too_thick_component_functor(const mln::util::array<R>& compbboxes,
 					  unsigned max_thickness)
 	  : compbboxes_(compbboxes), max_thickness_(max_thickness)
@@ -63,8 +97,10 @@ namespace scribo
 	}
 
 
-	/// Return false if the components is thickner than
+	/// Return false if the components is thicker than
 	/// \p max_thickness_.
+	///
+	/// \param[in] l An image value.
 	bool operator()(const value::label_16& l) const
 	{
 	  return compbboxes_[l].nrows() < max_thickness_
@@ -72,7 +108,10 @@ namespace scribo
 	}
 
 
+	/// Component bounding boxes.
 	const mln::util::array<R>& compbboxes_;
+
+	/// The maximum thickness.
 	unsigned max_thickness_;
       };
 
@@ -120,7 +159,7 @@ namespace scribo
     inline
     scribo::util::text<L>
     thick_bboxes(const scribo::util::text<L>& text,
-		unsigned max_thickness)
+		 unsigned max_thickness)
     {
       trace::entering("scribo::filter::thick_bboxes");
 

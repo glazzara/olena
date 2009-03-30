@@ -59,7 +59,7 @@ namespace scribo
     ///
     /// \param[in]	input	     Image from which the line bboxes are
     ///				     extracted from.
-    /// \param[in, out] lines_bboxes vertical lines bounding boxes.
+    /// \param[in, out] line_bboxes vertical lines bounding boxes.
     /// \param[in]	max_alignment_diff max space between two lines to
     ///					   consider they are potentialy on the
     ///					   same line.
@@ -69,7 +69,7 @@ namespace scribo
     template <typename I>
     util::array<int>
     align_lines_verticaly(const Image<I>& input,
-			  util::array<box<mln_site(I)> >& lines_bboxes,
+			  util::array<box<mln_site(I)> >& line_bboxes,
 			  unsigned max_alignment_diff);
 
 
@@ -79,7 +79,7 @@ namespace scribo
     template <typename I>
     util::array<int>
     align_lines_verticaly(const Image<I>& input,
-			  util::array<box<mln_site(I)> >& lines_bboxes,
+			  util::array<box<mln_site(I)> >& line_bboxes,
 			  unsigned max_alignment_diff)
     {
       trace::entering("scribo::table::align_lines_verticaly");
@@ -88,7 +88,7 @@ namespace scribo
       util::array<int> res = internal::align_lines(geom::ncols(input),
 						   geom::min_col(input),
 						   geom::max_col(input),
-						   lines_bboxes, 1,
+						   line_bboxes, 1,
 						   max_alignment_diff);
 
       trace::exiting("scribo::table::align_lines_verticaly");

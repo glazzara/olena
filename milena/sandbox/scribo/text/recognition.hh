@@ -32,6 +32,9 @@
 /// \file scribo/text/recognition.hh
 ///
 /// Passes the text bounding boxes to an OCR (Tesseract).
+///
+/// \todo For each text bbox, we create a new image. We may like to avoid that.
+/// \todo Do not store the result in an image?
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -43,6 +46,7 @@
 # include <mln/debug/put_words.hh>
 
 # include <scribo/core/macros.hh>
+# include <scribo/util/text.hh>
 
 # include <tesseract/baseapi.h>
 
@@ -56,83 +60,74 @@ namespace scribo
 
     using namespace mln;
 
-    /// Passes the text bboxes to Tesseract (OCR) and store the result in
-    /// an image of characters.
+    /// Passes the text bboxes to Tesseract (OCR).
     ///
-    /// \param[in] input_ image from where the text bboxes are extracted.
-    /// \param[in] nbh_ The neighborhood used to label \p input_.
-    /// \param[in] nbboxes The value type used in the labeled image.
-    /// \param[in] textbboxes array of text bounding boxes.
+    /// \param[in] input_ Image from where the text is extracted.
+    /// \param[in] text The lines of text.
     /// \param[in] language the language which should be recognized by Tesseract.
     ///		   (fra, en, ...)
     ///
     /// \return An image of characters.
-    ///
-    /// FIXME: For each text bbox, we create a new image. We may like to avoid that.
-    /// FIXME: Do not store the result in an image?
-    template <typename I, typename N, typename V>
+    template <typename I, typename L>
     mln_ch_value(I,char)
     text_recognition(const Image<I>& input_,
-		     const Neighborhood<N>& nbh_, const V& label_type,
-		     const scribo::util::text_bboxes<mln_ch_value(I,V)>& textbboxes,
+		     const scribo::util::text<L>& text,
 		     const char *language);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename V>
+    template <typename I, typename L>
     mln_ch_value(I,char)
     text_recognition(const Image<I>& input_,
-		     const Neighborhood<N>& nbh_, const V& label_type,
-		     const scribo::util::text_bboxes<mln_ch_value(I,V)>& textbboxes,
+		     const scribo::util::text<L>& text,
 		     const char *language)
     {
       trace::entering("scribo::text::recognition");
 
       mlc_equal(mln_value(I), bool)::check();
       const I& input = exact(input_);
-      const N& nbh = exact(nbh_);
       mln_precondition(input.is_valid());
-      mln_precondition(nbh.is_valid());
+      mln_precondition(text.is_valid());
 
-      V nbboxes;
-      mln_ch_value(I,V) lbl = labeling::blobs(input, nbh, nbboxes);
-
-      /// Use text bboxes with Tesseract
+      // Initialize Tesseract.
       TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
+
       mln_ch_value(I,char) txt(input.domain());
       data::fill(txt, ' ');
 
-      for_all_components(i, textbboxes)
+      /// Use text bboxes with Tesseract
+      for_all_components(i, text.bboxes())
       {
-	if (textbboxes[i].is_valid())
-	{
-	  mln_ch_value(I,bool) b(textbboxes.bboxes()[i], 0);
-	  data::fill(b, false);
-	  data::fill((b | (pw::value(lbl) == pw::cst(i))).rw(), true);
+	mln_ch_value(I,bool) b(text.bbox(i), 0);
+	data::fill(b, false);
+	data::fill((b | (pw::value(text.label_image()) == pw::cst(i))).rw(),
+		   true);
 
-	  char* s = TessBaseAPI::TesseractRect(
-	      (unsigned char*) b.buffer(),
-	      sizeof (bool),		  // Pixel size.
-	      b.ncols() * sizeof (bool),  // Row_offset
-	      0,			  // Left
-	      0,			  // Top
-	      b.ncols(),		  // n cols
-	      b.nrows());		  // n rows
+	// Recognize characters.
+	char* s = TessBaseAPI::TesseractRect(
+	    (unsigned char*) b.buffer(),
+	    sizeof (bool),		// Pixel size.
+	    b.ncols() * sizeof (bool),  // Row_offset
+	    0,				// Left
+	    0,				// Top
+	    b.ncols(),			// n cols
+	    b.nrows());			// n rows
 
 
 
-	  mln_site(I) p = textbboxes.bboxes[i].center();
-	  p.col() -= (textbboxes.bboxes()[i].pmax().col()
-			  - textbboxes.bboxes()[i].pmin().col()) / 2;
-	  if (s != 0)
-	    debug::put_word(txt, p, s);
-	  free(s);
-	}
+	mln_site(I) p = text.bbox(i).center();
+	p.col() -= (text.bbox(i).pmax().col()
+		      - text.bbox(i).pmin().col()) / 2;
+	if (s != 0)
+	  debug::put_word(txt, p, s);
+
+	// The string has been allocated by Tesseract. We must free it.
+	free(s);
       }
 
       trace::exiting("scribo::text::recognition");
-      return text;
+      return txt;
     }
 
 

@@ -30,7 +30,8 @@
 
 /// \file scribo/text/grouping/group_from_graph.hh
 ///
-/// Link text bounding boxes with their neighbors.
+/// Group lines of text according to a graph of links between
+/// the lines of text.
 
 # include <mln/core/concept/graph.hh>
 # include <mln/core/concept/image.hh>
@@ -60,7 +61,14 @@ namespace scribo
     namespace grouping
     {
 
-      /// FIXME: Add much more doc!
+      /// Group lines of text according to a graph of links between
+      /// the lines of text.
+      /*!
+      ** \param[in] text  The lines of text.
+      ** \param[in] g_	  The graph of links between the lines of text.
+      **
+      ** \return The grouped and non-grouped lines of text.
+      */
       template <typename I, typename G>
       scribo::util::text<I>
       group_from_graph(const scribo::util::text<I>& text,
@@ -77,6 +85,8 @@ namespace scribo
 	template <typename V>
 	struct map_vertex_to_component_id_functor
 	{
+
+	  /// Initialize the functor.
 	  template <typename G>
 	  void init(const Graph<G>& g)
 	  {
@@ -84,28 +94,40 @@ namespace scribo
 	    ncomp = 0;
 	  }
 
+	  /// All components have been processed.
 	  void final()
 	  {}
 
+	  /// Starting to treat a new component.
 	  void next_component()
 	  { ++ncomp; }
 
+	  /// A vertex with id \p id has been found in the current
+	  /// component.
 	  void new_component_from_vertex(unsigned id)
 	  { vertextocomp(id) = ncomp; }
 
+	  /// A new neighbor with id \p id have been found for the
+	  /// current vertex.
 	  void added_to_queue(unsigned id)
 	  { new_component_from_vertex(id); }
 
+	  /// Starting to process a new vertex.
 	  void process_vertex(unsigned)
 	  {}
 
+	  /// Does the vertex with id \p id have been already treated?
 	  bool to_be_treated(unsigned id)
 	  { return vertextocomp(id) == mln_max(V); }
 
+	  /// Does the neighbor vertex \p id have been already treated?
 	  bool to_be_queued(unsigned id)
 	  { return to_be_treated(id); }
 
+	  /// The number of components found.
 	  unsigned ncomp;
+
+	  /// Map a verted id to its component id.
 	  fun::l2l::relabel<V> vertextocomp;
 	};
 

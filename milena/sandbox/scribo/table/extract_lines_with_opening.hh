@@ -63,22 +63,22 @@ namespace scribo
      *
      * \param[in] input_ A binary image.
      * \param[in] nbh_ The neighborhood used for labeling image components.
-     * \param[out] nlines The number of lines found.
-     * \param[in] vwin Window used to extract the vertical lines in a morphological
+     * \param[in] label_type Type used for labeling.
+     * \param[in] vwin_ Window used to extract the vertical lines in a morphological
      *		       opening
-     * \param[in] hwin Window used to extract the horizontal lines in a morphological
+     * \param[in] hwin_ Window used to extract the horizontal lines in a morphological
      *		       opening
      *
      * \return pair of array of bounding boxes. The first array holds the
      *		vertical lines bounding boxes and the second one the
      *		horizontal lines bounding boxes.
      */
-    template <typename I, typename N, typename V, typename HW, typename VW>
+    template <typename I, typename N, typename V, typename VW, typename HW>
     util::couple<util::array<box<mln_site(I)> >,
 		 util::array<box<mln_site(I)> > >
     extract_lines_with_opening(const Image<I>& input_,
-			       const Neighborhood<N>& nbh_, V& nlines,
-			       const Window<HW>& vwin, const Window<VW>& hwin);
+			       const Neighborhood<N>& nbh_, const V& label_type,
+			       const Window<VW>& vwin_, const Window<HW>& hwin_);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -88,7 +88,7 @@ namespace scribo
     util::couple<util::array<box<mln_site(I)> >,
 		 util::array<box<mln_site(I)> > >
     extract_lines_with_opening(const Image<I>& input_,
-			    const Neighborhood<N>& nbh_, V& nlines,
+			    const Neighborhood<N>& nbh_, const V& label_type,
 			    const Window<VW>& vwin_, const Window<HW>& hwin_)
     {
       trace::entering("scribo::table::extract_lines_with_opening");
@@ -108,9 +108,11 @@ namespace scribo
 
       typedef util::array<box<mln_site(I)> > boxes_t;
 
+      V ncomps;
+
       // Vertical lines
       mln_ch_value(I,bool) vfilter = morpho::erosion(input, vwin);
-      boxes_t vboxes = component_bboxes(vfilter, nbh, nlines).first();
+      boxes_t vboxes = component_bboxes(vfilter, nbh, ncomps).first();
       for_all_components(i, vboxes)
       {
 	vboxes[i].enlarge(0, vwin.length() / 2);
@@ -119,7 +121,7 @@ namespace scribo
 
       // Horizontal lines.
       mln_ch_value(I,bool) hfilter = morpho::erosion(input, hwin);
-      boxes_t hboxes = component_bboxes(hfilter, nbh, nlines).first();
+      boxes_t hboxes = component_bboxes(hfilter, nbh, ncomps).first();
       for_all_components(i, hboxes)
       {
 	hboxes[i].enlarge(1, hwin.length() / 2);

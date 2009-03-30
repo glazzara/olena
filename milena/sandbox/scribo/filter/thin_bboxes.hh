@@ -44,18 +44,52 @@ namespace scribo
   namespace filter
   {
 
+    /// Remove components thinner or equal to \p min_thickness.
+    ///
+    /// \param[in] input_ a binary image.
+    /// \param[in] nbh_ a neighborhood used in labeling algorithms.
+    /// \param[in] label_type the label type used for labeling.
+    /// \param[in] min_thickness the minimum thickness value.
+    ///
+    /// \result A binary image without thin components.
+    template <typename I, typename N, typename V>
+    inline
+    mln_concrete(I)
+    thin_bboxes(const Image<I>& input_,
+		const Neighborhood<N>& nbh_,
+		const V& label_type,
+		unsigned min_thickness);
+
+    /// Remove lines of text thinner or equal to \p min_thickness.
+    ///
+    /// \param[in] text lines of text.
+    /// \param[in] min_thickness the minimum thickness value.
+    ///
+    /// \result Lines of text without too thin lines.
+    template <typename L>
+    inline
+    scribo::util::text<L>
+    thin_bboxes(const scribo::util::text<L>& text,
+		unsigned min_thickness);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     namespace internal
     {
 
 
-      /// Filter Functor. Return false for all components which are too
-      /// large.
+      /// Filter Functor.
+      /// Return false for all components which are too large.
       template <typename R>
       struct filter_too_thin_component_functor
 	: Function_l2b< filter_too_thin_component_functor<R> >
       {
+
+	/// Constructor
+	///
+	/// \param[in] compbboxes component bounding boxes.
+	/// \param[in] min_thickness the minimum thickness allowed.
 	filter_too_thin_component_functor(const mln::util::array<R>& compbboxes,
 					  unsigned min_thickness)
 	  : compbboxes_(compbboxes), min_thickness_(min_thickness)
@@ -65,6 +99,8 @@ namespace scribo
 
 	/// Return false if the components is thinner than
 	/// \p min_thickness_.
+	///
+	/// \param[in] l An image value.
 	bool operator()(const value::label_16& l) const
 	{
 	  return compbboxes_[l].nrows() > min_thickness_
@@ -72,7 +108,10 @@ namespace scribo
 	}
 
 
+	/// Component bounding boxes.
 	const mln::util::array<R>& compbboxes_;
+
+	/// The minimum thickness.
 	unsigned min_thickness_;
       };
 

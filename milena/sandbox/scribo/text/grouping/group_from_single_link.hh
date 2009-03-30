@@ -32,7 +32,7 @@
 
 /// \file scribo/text/grouping/group_from_single_link.hh
 ///
-/// Link text bounding boxes with their left neighbor.
+/// Link lines of text with their neighbor line if they have one.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/box.hh>
@@ -56,7 +56,13 @@ namespace scribo
     namespace grouping
     {
 
-      /// FIXME: Add much more doc!
+      /// Link lines of text with their neighbor line if they have one.
+      /*!
+      ** \param[in] text       The lines of text.
+      ** \param[in] link_array The neighbor line of each line.
+      **
+      ** \return The grouped and non-grouped lines of text.
+      */
       template <typename I>
       scribo::util::text<I>
       group_from_single_link(const scribo::util::text<I>& text,
@@ -95,6 +101,7 @@ namespace scribo
 	I lbl = labeling::relabel(text.label_image(), text.nbboxes(),
 				  convert::to<fun::l2l::relabel<mln_value(I)> >(parent_array));
 	mln_value(I) new_nbboxes = result.nelements() - 1;
+
 	trace::exiting("scribo::text::grouping::group_from_single_link");
 	/// FIXME: construct a new util::text from the old one.
 	return scribo::make::text(result, lbl, new_nbboxes);

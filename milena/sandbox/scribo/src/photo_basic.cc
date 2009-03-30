@@ -28,6 +28,7 @@
 #include <iostream>
 
 #include <mln/essential/2d.hh>
+#include <mln/debug/colorize.hh>
 
 #include <scribo/text/extract_bboxes.hh>
 #include <scribo/text/grouping/group_with_single_left_link.hh>
@@ -100,6 +101,7 @@ int main(int argc, char* argv[])
 				       literal::red,
 				       scribo::make::debug_filename("test_graph_grouped_text.ppm"));
 
-
+  io::ppm::save(mln::debug::colorize(value::rgb8(), grouped_textbboxes.label_image(), grouped_textbboxes.nbboxes()),
+		scribo::make::debug_filename("grouped_text_comps.ppm"));
 }
 

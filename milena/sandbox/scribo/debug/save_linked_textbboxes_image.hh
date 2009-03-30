@@ -56,7 +56,14 @@ namespace scribo
     using namespace mln;
 
 
-    /// Save the bounding box links image.
+    /// Save the line of text links image.
+    ///
+    /// \param[in,out] input The binary from where the text is extracted.
+    /// \param[in] text The lines of text.
+    /// \param[in] link_array Lines of text links.
+    /// \param[in] box_value Value used to draw line bounding boxes.
+    /// \param[in] link_value Value used to draw line links.
+    /// \param[in] filename The target file name.
     template <typename I, typename L>
     void
     save_linked_textbboxes_image(const Image<I>& input,
@@ -66,17 +73,37 @@ namespace scribo
 				 const value::rgb8& link_value,
 				 const std::string& filename);
 
-
+    /// Save the line of text left and right links image.
+    ///
+    /// \param[in,out] input The binary from where the text is extracted.
+    /// \param[in] text The lines of text.
+    /// \param[in] left_link Lines of text left links.
+    /// \param[in] right_link Lines of text right links.
+    /// \param[in] box_value Value used to draw line bounding boxes.
+    /// \param[in] link_value Value used to draw line links.
+    /// \param[in] filename The target file name.
     template <typename I, typename L>
     void
     save_linked_textbboxes_image(const Image<I>& input,
 				 const scribo::util::text<L>& text,
 				 const mln::util::array<unsigned>& left_link,
-				 const mln::util::array<unsigned>& right_array,
+				 const mln::util::array<unsigned>& right_link,
 				 const value::rgb8& box_value,
 				 const value::rgb8& link_value,
 				 const std::string& filename);
 
+    /// Save the line of text left and right links image.
+    /// Draw also validated links.
+    ///
+    /// \param[in,out] input The binary from where the text is extracted.
+    /// \param[in] text The lines of text.
+    /// \param[in] left_link Lines of text left links.
+    /// \param[in] right_link Lines of text right links.
+    /// \param[in] box_value Value used to draw line bounding boxes.
+    /// \param[in] left_link_value Value used to draw line left links.
+    /// \param[in] right_link_value Value used to draw line left links.
+    /// \param[in] validated_link_value Value used to draw line validated links.
+    /// \param[in] filename The target file name.
     template <typename I, typename L>
     inline
     void
@@ -91,6 +118,14 @@ namespace scribo
 				 const std::string& filename);
 
 
+    /// Save the line link graph image.
+    ///
+    /// \param[in,out] input The binary from where the text is extracted.
+    /// \param[in] text The lines of text.
+    /// \param[in] g The link graph.
+    /// \param[in] box_value Value used to draw line bounding boxes.
+    /// \param[in] link_value Value used to draw line links.
+    /// \param[in] filename The target file name.
     template <typename I, typename L, typename G>
     void
     save_linked_textbboxes_image(const Image<I>& input,

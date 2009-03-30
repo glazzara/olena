@@ -48,13 +48,26 @@ namespace scribo
   {
 
 
+    /// Construct a util::text
+    ///
+    /// \param[in] bboxes Text component bounding boxes.
+    /// \param[in] lbl Associated label image.
+    /// \param[in] nbboxes The number of bounding boxes.
+    ///
+    /// \return A util::text.
     template <typename L>
     scribo::util::text<L>
     text(const mln::util::array<box<mln_site(L)> >& bboxes,
 	 const Image<L>& lbl,
 	 mln_value(L)& nbboxes);
 
-
+    /// Construct a util::text
+    ///
+    /// \param[in] input_ A binary image.
+    /// \param[in] nbh_ A neighborhood to be used with labeling algorithms.
+    /// \param[in] nbboxes The number of bounding boxes.
+    ///
+    /// \return A util::text.
     template <typename I, typename N, typename V>
     scribo::util::text<mln_ch_value(I,V)>
     text(const Image<I>& input_, const Neighborhood<N>& nbh_,
@@ -106,12 +119,12 @@ namespace scribo
     }
 
     //FIXME: we want the following routine to construct a new util::text
-    // from another one and a relabeling function. It avoid recomputing
+    // from another one and a relabeling function. It avoids recomputing
     // the whole underlying data (mass centers, bboxes...)
 //    template <typename L>
 //    scribo::util::text<L>
 //    text(const scribo::util::text<L>& text,
-//	 const Function_v2v<F>& f)
+//	 const Function_v2b<F>& f)
 //    {
 //      trace::entering("scribo::make::text");
 //
@@ -119,22 +132,22 @@ namespace scribo
 //
 //      mln_value(L) new_nbboxes;
 //      mln::fun::l2l::relabel<mln_value(L)> fl2l
-//	= mln::make::relabelfun(f, nbboxes_, new_nbboxes);
-//      lbl_ = labeling::relabel(lbl_, nbboxes_, l2l);
-//      nbboxes_ = new_nbboxes;
+//	= mln::make::relabelfun(f, text.nbboxes(), new_nbboxes);
+//      lbl_ = labeling::relabel(text.label_image(), text.nbboxes(), l2l);
+//      text.nbboxes() = new_nbboxes;
 //
-//      mln::util::array< accu::bbox<mln_site(I)> > tboxes(nbboxes_);
-//      mln::util::array< accu::center<mln_site(I)> > tcenters(nbboxes_);
+//      mln::util::array< accu::bbox<mln_site(I)> > tboxes(text.nbboxes().next());
+//      mln::util::array< accu::center<mln_site(I)> > tcenters(text.nbboxes().next());
 //      for_all_components(i, text.bboxes())
 //      {
 //	abboxes[fl2l(i)].take(text.bbox(i));
 //	acenters[fl2l(i)].take(text.bbox(i));
 //      }
 //      convert::from_to(abboxes, text.bboxes());
-//      convert::from_to(acenters, text.mass_centers_);
+//      convert::from_to(acenters, text.mass_centers());
 //
 //      trace::exiting("scribo::make::text");
-//      return scribo::util::text<L>(;
+//      return scribo::util::text<L>();
 //    }
 
 

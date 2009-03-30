@@ -1,3 +1,54 @@
+2009-03-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update Scribo's code.
+
+	* scribo/all.hh,
+	* scribo/core/all.hh,
+	* scribo/debug/all.hh,
+	* scribo/deskew/all.hh,
+	* scribo/draw/all.hh,
+	* scribo/filter/all.hh,
+	* scribo/make/all.hh,
+	* scribo/table/all.hh,
+	* scribo/text/all.hh,
+	* scribo/table/internal/all.hh,
+	* scribo/text/grouping/all.hh,
+	* scribo/text/grouping/internal/all.hh,
+	* scribo/util/all.hh: Add 'all' includes.
+
+	* scribo/debug/save_linked_textbboxes_image.hh,
+	* scribo/draw/bounding_box_links.hh,
+	* scribo/filter/large_components.hh,
+	* scribo/filter/small_components.hh,
+	* scribo/filter/thick_bboxes.hh,
+	* scribo/filter/thin_bboxes.hh,
+	* scribo/make/text.hh,
+	* scribo/src/photo_basic.cc,
+	* scribo/src/table_rebuild_rank.cc,
+	* scribo/table/align_lines_horizontaly.hh,
+	* scribo/table/align_lines_verticaly.hh,
+	* scribo/table/connect_horizontal_lines.hh,
+	* scribo/table/connect_vertical_lines.hh,
+	* scribo/table/erase.hh,
+	* scribo/table/extract_lines_with_opening.hh,
+	* scribo/table/extract_lines_with_rank.hh,
+	* scribo/table/internal/align_lines.hh,
+	* scribo/table/rebuild.hh,
+	* scribo/table/repair_horizontal_lines.hh,
+	* scribo/table/repair_vertical_lines.hh,
+	* scribo/text/extract_bboxes.hh,
+	* scribo/text/extract_lines.hh,
+	* scribo/text/grouping/group_from_double_link.hh,
+	* scribo/text/grouping/group_from_graph.hh,
+	* scribo/text/grouping/group_from_single_link.hh,
+	* scribo/text/grouping/group_with_graph.hh,
+	* scribo/text/grouping/internal/find_graph_link.hh,
+	* scribo/text/grouping/internal/find_left_link.hh,
+	* scribo/text/grouping/internal/find_right_link.hh,
+	* scribo/text/grouping/internal/is_link_valid.hh,
+	* scribo/text/recognition.hh,
+	* scribo/util/text.hh: Update doc.
+
 2009-03-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Write a solution for a common mistake.

@@ -58,7 +58,7 @@ namespace scribo
     ///
     /// \param[in]	input	     Image from which the line bboxes are
     ///				     extracted from.
-    /// \param[in, out] lines_bboxes horizontal lines bounding boxes.
+    /// \param[in, out] line_bboxes horizontal lines bounding boxes.
     /// \param[in]	max_alignment_diff max space between two lines to
     ///					   consider they are potentialy on the
     ///					   same line.
@@ -68,7 +68,7 @@ namespace scribo
     template <typename I>
     util::array<int>
     align_lines_horizontaly(const Image<I>& input,
-			    util::array<box<mln_site(I)> >& lines_bboxes,
+			    util::array<box<mln_site(I)> >& line_bboxes,
 			    unsigned max_alignment_diff);
 
 
@@ -78,7 +78,7 @@ namespace scribo
     template <typename I>
     util::array<int>
     align_lines_horizontaly(const Image<I>& input,
-			    util::array<box<mln_site(I)> >& lines_bboxes,
+			    util::array<box<mln_site(I)> >& line_bboxes,
 			    unsigned max_alignment_diff)
     {
       trace::entering("scribo::table::align_lines_horizontaly");
@@ -87,7 +87,7 @@ namespace scribo
       util::array<int> res =  internal::align_lines(geom::nrows(input),
 						    geom::min_row(input),
 						    geom::max_row(input),
-						    lines_bboxes, 0,
+						    line_bboxes, 0,
 						    max_alignment_diff);
 
       trace::exiting("scribo::table::align_lines_horizontaly");

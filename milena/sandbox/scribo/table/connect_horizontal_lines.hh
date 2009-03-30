@@ -33,6 +33,8 @@
 /// \file scribo/table/connect_horizontal_lines.hh
 ///
 /// Connect horizontal lines with the new aligned columns.
+///
+/// \todo do not modify arguments but return a new value.
 
 # include <mln/core/concept/image.hh>
 # include <mln/util/array.hh>
@@ -51,7 +53,7 @@ namespace scribo
     /// Connect horizontal lines with the new aligned columns.
     ///
     /// \param[in]	aligned_cols  a list of new aligned cols.
-    /// \param[in,out]	tableboxes    the vertical and horizontal lines
+    /// \param[in,out]	tablebboxes   the vertical and horizontal lines
     ///				      bounding boxes.
     /// \param[in]	input	      The image from where the lines are
     ///				      extracted.
@@ -59,11 +61,11 @@ namespace scribo
     ///				      and horizontal lines.
     template <typename I>
     void
-    connect_vertical_lines(const util::array<int>& aligned_rows,
-			   util::couple<util::array<box<mln_site(I)> >,
-					util::array<box<mln_site(I)> > >& tableboxes,
-			   const Image<I>& input,
-			   unsigned max_distance);
+    connect_horizontal_lines(const util::array<int>& aligned_cols,
+			     util::couple<util::array<box<mln_site(I)> >,
+					  util::array<box<mln_site(I)> > >& tablebboxes,
+			     const Image<I>& input,
+			     unsigned max_distance);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -73,14 +75,14 @@ namespace scribo
     void
     connect_horizontal_lines(const util::array<int>& aligned_cols,
 			     util::couple<util::array<box<mln_site(I)> >,
-					  util::array<box<mln_site(I)> > >& tableboxes,
+					  util::array<box<mln_site(I)> > >& tablebboxes,
 			     const Image<I>& input,
 			     unsigned max_distance)
     {
       trace::entering("scribo::table::connect_horizontal_lines");
       mln_precondition(exact(input).is_valid());
 
-      internal::connect_lines(aligned_cols, tableboxes.second(),
+      internal::connect_lines(aligned_cols, tablebboxes.second(),
 			      1, exact(input).ncols(), max_distance);
 
       trace::exiting("scribo::table::connect_horizontal_lines");

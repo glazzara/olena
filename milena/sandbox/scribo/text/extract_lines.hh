@@ -67,7 +67,15 @@ namespace scribo
 
     using namespace mln;
 
-
+    /// Extract lines of text in a binary image.
+    /*!
+    ** \param[in]     input_  A binary image.
+    ** \param[in]     nbh_    A neighborhood used for labeling.
+    ** \param[in,out] nbboxes Will hold the number of bounding boxes
+    **			      at the end of the routine.
+    **
+    ** \return The text lines.
+    */
     template <typename I, typename N, typename V>
     scribo::util::text<mln_ch_value(I,V)>
     extract_lines(const Image<I>& input_,

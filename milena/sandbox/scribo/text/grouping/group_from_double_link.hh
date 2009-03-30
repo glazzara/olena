@@ -43,11 +43,12 @@
 
 # include <mln/fun/l2l/relabel.hh>
 
-# include <scribo/text/grouping/internal/find_root.hh>
-
 # include <scribo/core/macros.hh>
 
 # include <scribo/util/text.hh>
+
+# include <scribo/text/grouping/internal/find_root.hh>
+# include <scribo/text/grouping/internal/is_link_valid.hh>
 
 
 namespace scribo
@@ -59,7 +60,16 @@ namespace scribo
     namespace grouping
     {
 
-      /// FIXME: Add much more doc!
+      /// Group text bounding boxes from left and right links and validate
+      /// These links. A link must exist in both ways to be validated.
+      /*!
+      ** \param[in] text The   Lines of text.
+      ** \param[in] left_link  The left neighbor of each line of text.
+      ** \param[in] right_link The right neighbor of each line of text.
+      **
+      ** \return New lines of text. Some of the lines of \p text may have
+      **	 been grouped.
+      */
       template <typename I>
       scribo::util::text<I>
       group_from_double_link(const scribo::util::text<I>& text,
@@ -86,10 +96,11 @@ namespace scribo
 	internal::init_link_array(parent);
 	for_all_components(i, text.bboxes())
 	{
-	  unsigned nbh = right_link[left_link[i]];
-	  if (nbh == i)
+	  mln::util::couple<bool, unsigned>
+	    nbh = internal::is_link_valid(left_link, right_link, i);
+	  if (nbh.first())
 	  {
-	    unsigned par = internal::find_root(parent, left_link[i]);
+	    unsigned par = internal::find_root(parent, nbh.second());
 	    if (par < i)
 	      parent[par] = i;
 	    else

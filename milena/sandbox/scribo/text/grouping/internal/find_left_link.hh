@@ -31,7 +31,7 @@
 
 /// \file scribo/text/grouping/internal/find_left_link.hh
 ///
-///
+/// Find the left neighbor of a line of text if exists.
 
 # include <mln/core/concept/image.hh>
 
@@ -57,6 +57,13 @@ namespace scribo
       namespace internal
       {
 
+	/// Find the left neighbor of a line of text if exists.
+	///
+	/// \param text The lines of text.
+	/// \param left_link The left neighbors.
+	/// \param current_comp A text line id.
+	/// \param dmax The maximum lookup distance.
+	/// \param c The lookup start point.
 	template <typename L>
 	void
 	find_left_link(const scribo::util::text<L>& text,
@@ -79,12 +86,6 @@ namespace scribo
 	  /// First site on the right of the central site
 	  mln_site(L) p = c + left;
 
-	  /// Construct a new label image with the components bounding
-	  /// boxes only.
-	  /// TOO SLOW, so disabled!!!
-//	  L lbl(text.label_image().domain());
-//	  for_all_components(i, text.bboxes())
-//	    mln::draw::box(lbl, text.bbox(i), i);
 	  const L& lbl = text.label_image();
 
 	  while (lbl.domain().has(p) // Not outside image domain

@@ -63,10 +63,10 @@ namespace scribo
      *
      * \param[in] input_ A binary image.
      * \param[in] nbh_ The neighborhood used for labeling image components.
-     * \param[out] nlines The number of lines.
-     * \param[in] vwin Window used to extract the vertical lines in the rank
+     * \param[in] label_type The label type used for labeling.
+     * \param[in] vwin_ Window used to extract the vertical lines in the rank
      *		       filter.
-     * \param[in] hwin Window used to extract the horizontal lines in the rank
+     * \param[in] hwin_ Window used to extract the horizontal lines in the rank
      *		       filter.
      * \param[in] vrank_k Rank used for vertical lines filtering.
      * \param[in] hrank_k Rank used for horizontal lines filtering.
@@ -75,12 +75,12 @@ namespace scribo
      *		vertical lines bounding boxes and the second one the
      *		horizontal lines bounding boxes.
      */
-    template <typename I, typename N, typename V, typename HW, typename VW>
+    template <typename I, typename N, typename V, typename VW, typename HW>
     util::couple<util::array<box<mln_site(I)> >,
 		 util::array<box<mln_site(I)> > >
     extract_lines_with_rank(const Image<I>& input_,
-			    const Neighborhood<N>& nbh_, V& nlines,
-			    const Window<HW>& vwin, const Window<VW>& hwin,
+			    const Neighborhood<N>& nbh_, const V& label_type,
+			    const Window<VW>& vwin_, const Window<HW>& hwin_,
 			    unsigned vrank_k, unsigned hrank_k);
 
 
@@ -91,7 +91,7 @@ namespace scribo
     util::couple<util::array<box<mln_site(I)> >,
 		 util::array<box<mln_site(I)> > >
     extract_lines_with_rank(const Image<I>& input_,
-			    const Neighborhood<N>& nbh_, V& nlines,
+			    const Neighborhood<N>& nbh_, const V& label_type,
 			    const Window<VW>& vwin_, const Window<HW>& hwin_,
 			    unsigned vrank_k, unsigned hrank_k)
     {
@@ -104,6 +104,7 @@ namespace scribo
       const N& nbh = exact(nbh_);
       const VW& vwin = exact(vwin_);
       const HW& hwin = exact(hwin_);
+      (void) label_type;
 
       mln_precondition(input.is_valid());
       mln_precondition(nbh.is_valid());
@@ -112,9 +113,11 @@ namespace scribo
 
       typedef util::array<box<mln_site(I)> > boxes_t;
 
+      V nbboxes;
+
       // Vertical lines
       mln_ch_value(I,bool) vfilter = morpho::rank_filter(input, vwin, vrank_k);
-      boxes_t vboxes = component_bboxes(vfilter, nbh, nlines).first();
+      boxes_t vboxes = component_bboxes(vfilter, nbh, nbboxes).first();
       for_all_components(i, vboxes)
       {
 	vboxes[i].enlarge(0, vwin.length() / 2);
@@ -123,7 +126,7 @@ namespace scribo
 
       // Horizontal lines.
       mln_ch_value(I,bool) hfilter = morpho::rank_filter(input, hwin, hrank_k);
-      boxes_t hboxes = component_bboxes(hfilter, nbh, nlines).first();
+      boxes_t hboxes = component_bboxes(hfilter, nbh, nbboxes).first();
       for_all_components(i, hboxes)
       {
 	hboxes[i].enlarge(1, hwin.length() / 2);

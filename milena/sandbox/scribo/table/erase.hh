@@ -54,18 +54,18 @@ namespace scribo
 
     /// Erase table line bboxes from an image.
     ///
-    /// \param[in]  line_bboxes   vertical and horizontal line bounding
+    /// \param[in]  tablebboxes   vertical and horizontal line bounding
     ///				  boxes.
-    /// \param[in]  in		  A binary image from which the table line
+    /// \param[in]  input	  A binary image from which the table line
     ///				  bboxes are extracted.
     ///
     ///
     ///	\return A copy of \p in where the table lines are removed.
     template <typename I>
     mln_concrete(I)
-    erase(const Image<I>& in,
+    erase(const Image<I>& input,
 	  const util::couple<util::array< box<mln_site(I)> >,
-			     util::array< box<mln_site(I)> > >& line_bboxes);
+			     util::array< box<mln_site(I)> > >& tablebboxes);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -73,18 +73,18 @@ namespace scribo
 
     template <typename I>
     mln_concrete(I)
-    erase(const Image<I>& in,
+    erase(const Image<I>& input,
 	  const util::couple<util::array< box<mln_site(I)> >,
-			     util::array< box<mln_site(I)> > >& line_bboxes)
+			     util::array< box<mln_site(I)> > >& tablebboxes)
     {
       trace::entering("scribo::internal::erase");
       mlc_equal(mln_value(I),bool)::check();
-      mln_precondition(exact(in).is_valid());
+      mln_precondition(exact(input).is_valid());
 
-      I output = duplicate(in);
+      I output = duplicate(input);
 
-      erase_bboxes(output, line_bboxes.first());
-      erase_bboxes(output, line_bboxes.second());
+      erase_bboxes(output, tablebboxes.first());
+      erase_bboxes(output, tablebboxes.second());
 
       trace::exiting("scribo::internal::erase");
       return output;
