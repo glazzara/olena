@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,37 +26,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MATH_ALL_HH
-# define MLN_MATH_ALL_HH
-
-/// \file mln/math/all.hh
-///
-/// File that includes all mathematical routines.
-
+#ifndef MLN_MATH_PI_HH
+# define MLN_MATH_PI_HH
 
 namespace mln
 {
 
-  /// Namespace of mathematical routines.
-  namespace math {}
+  namespace math
+  {
 
-}
+    extern const double pi;
 
+# ifndef MLN_INCLUDE_ONLY
 
-# include <mln/math/abs.hh>
-# include <mln/math/diff_abs.hh>
-# include <mln/math/jacobi.hh>
-# include <mln/math/max.hh>
-# include <mln/math/min.hh>
-# include <mln/math/round.hh>
-# include <mln/math/pi.hh>
-# include <mln/math/sign.hh>
-# include <mln/math/sin.hh>
-# include <mln/math/sqr.hh>
-# include <mln/math/sqrt.hh>
-# include <mln/math/cos.hh>
-# include <mln/math/acos.hh>
+    const double pi = 3.1415926535;
 
+# endif // ! MLN_INCLUDE_ONLY
 
+  } // end of namespace mln::math
 
-#endif // ! MLN_MATH_ALL_HH
+} // end of namespace mln
+
+#endif // ! MLN_MATH_PI_HH

@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,37 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MATH_ALL_HH
-# define MLN_MATH_ALL_HH
+#ifndef MLN_MATH_SIN_HH
+# define MLN_MATH_SIN_HH
 
-/// \file mln/math/all.hh
+/// \file mln/math/sin.hh
 ///
-/// File that includes all mathematical routines.
+/// Define the sininus (sin) routine.
+
+# include <cmath>
 
 
 namespace mln
 {
 
-  /// Namespace of mathematical routines.
-  namespace math {}
+  namespace math
+  {
 
-}
-
-
-# include <mln/math/abs.hh>
-# include <mln/math/diff_abs.hh>
-# include <mln/math/jacobi.hh>
-# include <mln/math/max.hh>
-# include <mln/math/min.hh>
-# include <mln/math/round.hh>
-# include <mln/math/pi.hh>
-# include <mln/math/sign.hh>
-# include <mln/math/sin.hh>
-# include <mln/math/sqr.hh>
-# include <mln/math/sqrt.hh>
-# include <mln/math/cos.hh>
-# include <mln/math/acos.hh>
+    template <typename T>
+    T sin(const T& v);
 
 
+# ifndef MLN_INCLUDE_ONLY
 
-#endif // ! MLN_MATH_ALL_HH
+    template <typename T>
+    inline
+    T sin(const T& v)
+    {
+      return std::sin(v);
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::math
+
+} // end of namespace mln
+
+
+#endif // ! MLN_MATH_SIN_HH

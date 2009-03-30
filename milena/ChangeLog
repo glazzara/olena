@@ -1,3 +1,13 @@
+2009-03-30  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add math::sin and math::pi.
+
+	* mln/math/all.hh: add new includes.
+
+	* mln/math/pi.hh: add constant.
+
+	* mln/math/sin.hh: Add math::sin().
+
 2009-03-30  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add a plot format save() routine.
