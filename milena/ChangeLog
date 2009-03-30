@@ -1,5 +1,12 @@
 2009-03-30  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Avoid invalid assigments with image concept.
+
+	* mln/core/concept/image.hh: Add an invalid operator= in order to
+	  avoid wrong assignment. See sandbox/bug/concept_and_assignment.cc.
+
+2009-03-30  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add math::sin and math::pi.
 
 	* mln/math/all.hh: add new includes.

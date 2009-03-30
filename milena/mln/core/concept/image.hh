@@ -43,6 +43,7 @@
 # include <mln/trait/concrete.hh> // FIXME: Should be in all.hh!
 # include <mln/trait/images.hh>
 
+# include <mln/metal/abort.hh>
 # include <mln/metal/is_a.hh>
 # include <mln/metal/equal.hh>
 
@@ -72,6 +73,9 @@ namespace mln
   struct Image : public Object<E>
   {
     typedef Image<void> category;
+
+    template <typename J>
+    Image<E>& operator=(const J& rhs);
 
     /*
       // provided by internal::image_base:
@@ -108,7 +112,6 @@ namespace mln
   protected:
     Image();
   };
-
 
 
   namespace convert
@@ -175,6 +178,20 @@ namespace mln
 
   } // end of namespace mln::internal
 
+
+  template <typename E>
+  template <typename J>
+  inline
+  Image<E>&
+  Image<E>::operator=(const J&)
+  {
+    /// You are assigning an image of a concrete type to
+    /// an image with a concept type. It does NOT work.
+    ///
+    /// You forgot a call to exact() on the left operand!
+    mlc_abort(E)::check();
+    return *this;
+  }
 
 
   template <typename E>
