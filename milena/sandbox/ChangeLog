@@ -1,3 +1,11 @@
+2009-03-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Write a solution for a common mistake.
+
+	* bugs/piter_slice.cc: Copy to...
+	* bugs/piter_slice.solved.cc: ...this new file.
+	Fix bug.
+
 2009-03-30  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add a test file for a bug involving slice() and piter.
