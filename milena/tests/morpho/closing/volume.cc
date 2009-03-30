@@ -40,6 +40,8 @@
 #include <mln/morpho/closing/volume.hh>
 #include <mln/morpho/attribute/volume.hh>
 
+#include <mln/border/resize.hh>
+
 #include "tests/data.hh"
 
 
@@ -51,6 +53,9 @@ int main()
   typedef image2d<int_u8> I;
   I lena;
   io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
+
+  border::resize(lena, 0);
+
   io::pgm::save(morpho::closing::volume(lena, c4(), 10000),
 		"ref.pgm");
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,24 +29,25 @@
 #ifndef MLN_CORE_ALIAS_POINT1D_HH
 # define MLN_CORE_ALIAS_POINT1D_HH
 
-/*! \file mln/core/alias/point1d.hh
- *
- * \brief Definition of the mln::point1d alias and of its construction
- * routine.
- */
+/// \file mln/core/alias/point1d.hh
+///
+/// Definition of the mln::point1d alias and of its construction
+/// routine.
 
 # include <mln/core/point.hh>
 // For site_const_impl and site_mutable_impl.
 # include <mln/core/concept/site_proxy.hh>
 # include <mln/core/internal/force_exact.hh>
 
+
 namespace mln
 {
 
-  /*! \brief Type alias for a point defined on the 1D square grid with
-   * integer coordinates.
-   */
+  /// Type alias for a point defined on the 1D square grid with
+  /// integer coordinates.
+  //
   typedef point<grid::tick, def::coord> point1d;
+
 
   namespace internal
   {
@@ -59,8 +60,8 @@ namespace mln
       typedef C coord;
       enum { dim = 1 };
 
-      typedef const C& row_t;
-      const C& row() const;
+      typedef const C& ind_t;
+      const C& ind() const;
 
       const C& operator[](unsigned i) const;
       const C& last_coord() const;
@@ -79,8 +80,8 @@ namespace mln
       typedef subject_impl< const point<grid::tick, C>, E > super_;
       E& exact_();
     public:
-      using super_::row;
-      C& row();
+      using super_::ind;
+      C& ind();
       using super_::operator[];
       C& operator[](unsigned i);
     };
@@ -94,9 +95,9 @@ namespace mln
     template <typename C, typename E>
     inline
     const C&
-    subject_impl< const point<grid::tick, C>, E >::row() const
+    subject_impl< const point<grid::tick, C>, E >::ind() const
     {
-      return exact_().get_subject().row();
+      return exact_().get_subject().ind();
     }
 
     template <typename C, typename E>
@@ -104,8 +105,9 @@ namespace mln
     const C&
     subject_impl< const point<grid::tick, C>, E >::operator[](unsigned i) const
     {
-      mln_precondition(i < 1);
-      return exact_().get_subject()[i];
+      mln_precondition(i == 0);
+      (void)i;
+      return exact_().get_subject()[0];
     }
 
     template <typename C, typename E>
@@ -121,9 +123,9 @@ namespace mln
     template <typename C, typename E>
     inline
     C&
-    subject_impl< point<grid::tick, C>, E >::row()
+    subject_impl< point<grid::tick, C>, E >::ind()
     {
-      return exact_().get_subject().row();
+      return exact_().get_subject().ind();
     }
 
     template <typename C, typename E>
@@ -131,14 +133,14 @@ namespace mln
     C&
     subject_impl< point<grid::tick, C>, E >::operator[](unsigned i)
     {
-      mln_precondition(i < 2);
-      return exact_().get_subject()[i];
+      mln_precondition(i == 0);
+      (void)i;
+      return exact_().get_subject()[0];
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::internal
-
 
 } // end of namespace mln
 

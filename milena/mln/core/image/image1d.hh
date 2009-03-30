@@ -32,6 +32,8 @@
 /// \file mln/core/image/image1d.hh
 ///
 /// Definition of the basic mln::image1d class.
+///
+/// \todo Rewrite from_to(histo, image1d) after Etienne's work.
 
 # include <mln/core/internal/fixme.hh>
 # include <mln/core/internal/image_primary.hh>
@@ -576,7 +578,13 @@ namespace mln
       void
       from_to_(const histo::array<V>& from, image1d<T>& to)
       {
-	to.init_(make::box1d(from.nvalues()), 0);
+	// FIXME: The code should looks like:
+
+// 	box1d b(point1d(mln_min(V)), point1d(mln_max(V)));
+// 	ima.init_(b, 0);
+// 	for_all(v)
+// 	  from_to(h(v), ima.at_( index_of(v) ));
+	to.init_(make::box1d(from.nvalues()));
 	for (unsigned i = 0; i < from.nvalues(); ++i)
 	  from_to(from[i], to(point1d(i)));
       }
@@ -587,7 +595,7 @@ namespace mln
       void
       from_to_(const util::array<V>& from, image1d<T>& to)
       {
-	to.init_(make::box1d(from.nelements()), 0);
+	to.init_(make::box1d(from.nelements()));
 	for (unsigned i = 0; i < from.nelements(); ++i)
 	  from_to(from[i], to(point1d(i)));
       }

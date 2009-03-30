@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,7 +40,7 @@
 # include <mln/core/concept/accumulator.hh>
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/util/array.hh>
-# include <mln/convert/to.hh>
+# include <mln/convert/from_to.hh>
 
 
 namespace mln
@@ -180,8 +181,11 @@ namespace mln
 	  for_all(p)
 	    accus[label(p)].take(p);
 
+	  util::array<mln_result(A)> res;
+	  convert::from_to(accus, res);
+
 	  trace::exiting("labeling::impl::generic::compute");
-	  return convert::to< util::array<mln_result(A)> >(accus);
+	  return res;
 	}
 
 
@@ -200,14 +204,17 @@ namespace mln
 	  const I& input = exact(input_);
 	  const L& label = exact(label_);
 
-	  util::array<A> accus (nlabels.next(), a);
+	  util::array<A> accus(nlabels.next(), a);
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
 	    accus[label(p)].take(input(p));
 
+	  util::array<mln_result(A)> res;
+	  convert::from_to(accus, res);
+
 	  trace::exiting("labeling::impl::generic::compute");
-	  return convert::to< util::array<mln_result(A)> >(accus);
+	  return res;
 	}
 
       } // end of namespace mln::labeling::impl::generic

@@ -1,3 +1,32 @@
+2009-03-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Several bug fixes.
+
+	* mln/histo/array.hh: Layout.
+	* mln/core/image/image1d.hh
+	(from_to_): Remove border setting to 0.
+	Add some hints of future code.
+	(todo): New.
+	* mln/core/alias/point1d.hh: Upgrade doc style.
+	(row, row_t): Fix naming as...
+	(ind, ind_t): ...those.
+	* mln/linear/gaussian_directional_2d.hh: New.
+	* mln/linear/gaussian_1d.hh: New.
+	Both files have been copied from my sandbox.
+	* mln/linear/all.hh: Update.
+	* mln/accu/center.hh (to_result): Make it work when invalid.
+	(todo): New.
+	* mln/value/label.hh (prev): New.
+	* mln/canvas/morpho/attribute_filter.hh
+	(lambda): Use macro for this arg type.
+	(attribute_filter_dispatch): Fix missing border adjustment for
+	the fastest version.
+	(attribute_filter_fastest): New precondition.
+	Fix missing border initialization so that it is neutral.
+	* tests/morpho/closing/volume.cc: Force no border to test
+	that the border is correctly adapted to nbh.
+	* mln/labeling/compute.hh: Move code intro trace.
+
 2009-03-30  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Avoid invalid assigments with image concept.

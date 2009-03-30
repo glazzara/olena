@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -50,8 +50,7 @@ namespace mln
     {
 
       /// Namespace of local linear routines implementation details.
-      namespace impl
-      {}
+      namespace impl {}
 
     }
   }
@@ -62,7 +61,11 @@ namespace mln
 # include <mln/linear/convolve.hh>
 # include <mln/linear/convolve_2x1d.hh>
 # include <mln/linear/convolve_directional.hh>
+
 # include <mln/linear/gaussian.hh>
+# include <mln/linear/gaussian_directional_2d.hh>
+# include <mln/linear/gaussian_1d.hh>
+
 # include <mln/linear/lap.hh>
 # include <mln/linear/log.hh>
 //# include <mln/linear/sobel.hh>

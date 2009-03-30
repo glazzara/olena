@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,7 +32,8 @@
 /// \file mln/accu/center.hh
 ///
 /// Define an accumulator that computes the mass center of a site set.
-
+///
+/// \todo Fix to_result() value when invalid...
 
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/bbox.hh>
@@ -66,7 +68,6 @@ namespace mln
 
       /// Get the value of the accumulator.
       V to_result() const;
-      operator V() const;
       operator P() const;
 
       /// Check whether this accu is able to return a result.
@@ -136,15 +137,10 @@ namespace mln
     V
     center<P,V>::to_result() const
     {
-      mln_precondition(is_valid());
+      // mln_precondition(is_valid());
+      if (! is_valid())
+	return V();
       return center_ / nsites_;
-    }
-
-    template <typename P, typename V>
-    inline
-    center<P,V>::operator V() const
-    {
-      return to_result();
     }
 
     template <typename P, typename V>

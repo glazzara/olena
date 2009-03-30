@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,13 +39,14 @@
 # include <mln/core/concept/accumulator.hh>
 
 # include <mln/level/sort_offsets.hh>
-
 # include <mln/trait/accumulators.hh>
-
 # include <mln/util/pix.hh>
 
+# include <mln/border/get.hh>
 # include <mln/data/fill.hh>
+# include <mln/extension/adjust_fill.hh>
 # include <mln/level/sort_psites.hh>
+
 
 namespace mln
 {
@@ -56,16 +57,20 @@ namespace mln
     namespace morpho
     {
 
-      // Facade Fwd Declaration
+      // FIXME: Doc!
+
       template <typename I, typename N, typename A>
       mln_concrete(I)
       attribute_filter(const Image<I>& input, const Neighborhood<N>& nbh,
-		       const Accumulator<A>& a, const typename A::result& lambda,
+		       const Accumulator<A>& a, const mln_result(A)& lambda,
 		       bool increasing);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-      namespace impl {
+      namespace impl
+      {
 
 	template <typename A, typename I>
 	void take_as_init_fastest (trait::accumulator::when_pix::use_none, A& accu,
@@ -128,8 +133,9 @@ namespace mln
 	}
 
 
-	namespace generic {
 
+	namespace generic
+	{
 
 	  ////////////////////////
 	  /// Generic version. ///
@@ -153,7 +159,7 @@ namespace mln
 			    const Neighborhood<N>& nbh_,
 			    const Site_Set<S>& s_,
 			    const Accumulator<A>& a_,
-			    const typename A::result& lambda)
+			    const mln_result(A)& lambda)
 	  {
 	    trace::entering("canvas::morpho::impl::generic::attribute_filter");
 	    // FIXME: Test?!
@@ -278,7 +284,7 @@ namespace mln
 				 const Neighborhood<N>& nbh_,
 				 const util::array<unsigned>& s,
 				 const Accumulator<A>& a_,
-				 const typename A::result& lambda)
+				 const mln_result(A)& lambda)
 	{
 	  trace::entering("canvas::morpho::impl::attribute_filter_fastest");
 	  // FIXME: Tests?
@@ -286,6 +292,10 @@ namespace mln
 	  const I& input = exact(input_);
 	  const N& nbh = exact(nbh_);
 	  (void)a_;
+
+	  // The border adaptation is performed in the calling scope since
+	  // we want offsets of 's' to match the image structure / dimensions.
+	  mln_precondition(border::get(input) >= nbh.delta());
 
 	  mln_concrete(I) output;
 	  initialize(output, input);
@@ -303,6 +313,8 @@ namespace mln
 	  {
 	    initialize(deja_vu, input);
 	    data::fill(deja_vu, false);
+	    extension::fill(deja_vu, true); // So the border is neutral.
+
 	    initialize(activity, input);
 	    data::fill(activity, true);
 	    initialize(parent, input);
@@ -324,12 +336,12 @@ namespace mln
 		parent.element(p) = p;
 
 		// Check accumulator trait to handle argument type (Value or None).
-		take_as_init_fastest (data.element(p), input, p);
+		take_as_init_fastest(data.element(p), input, p);
 
 		for (unsigned j = 0; j < n_nbhs; ++j)
 		  {
 		    unsigned n = p + dp[j];
-		    if (!deja_vu.element(n))
+		    if (! deja_vu.element(n))
 		      continue;
 
 		    unsigned r = find_root_fastest(parent, n);
@@ -387,7 +399,7 @@ namespace mln
 				  const Image<I>& input,
 				  const Neighborhood<N>& nbh,
 				  const Accumulator<A>& a,
-				  const typename A::result& lambda,
+				  const mln_result(A)& lambda,
 				  bool increasing)
 	{
 	  p_array<mln_psite(I)> s = increasing ?
@@ -405,9 +417,11 @@ namespace mln
 				  const Image<I>& input,
 				  const Neighborhood<N>& nbh,
 				  const Accumulator<A>& a,
-				  const typename A::result& lambda,
+				  const mln_result(A)& lambda,
 				  bool increasing)
 	{
+	  extension::adjust(input, nbh);
+
 	  util::array<unsigned> s =
 	    increasing ?
 	    level::sort_offsets_increasing(input) :
@@ -424,7 +438,7 @@ namespace mln
 	attribute_filter_dispatch(const Image<I>& input,
 				  const Neighborhood<N>& nbh,
 				  const Accumulator<A>& a,
-				  const typename A::result& lambda,
+				  const mln_result(A)& lambda,
 				  bool increasing)
 	{
 	  enum {
@@ -451,7 +465,7 @@ namespace mln
       attribute_filter(const Image<I>& input,
 		       const Neighborhood<N>& nbh,
 		       const Accumulator<A>& a,
-		       const typename A::result& lambda,
+		       const mln_result(A)& lambda,
 		       bool increasing)
       {
 	return internal::attribute_filter_dispatch(input, nbh, a, lambda, increasing);

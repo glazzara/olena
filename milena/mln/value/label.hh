@@ -155,6 +155,9 @@ namespace mln
       /// Return the next value.
       label<n> next() const;
 
+      /// Return the previous value.
+      label<n> prev() const;
+
     };
 
 
@@ -275,6 +278,14 @@ namespace mln
     label<n>::next() const
     {
       return label<n>(this->v_ + 1);
+    }
+
+    template <unsigned n>
+    inline
+    label<n>
+    label<n>::prev() const
+    {
+      return label<n>(this->v_ - 1);
     }
 
     template <unsigned n>
