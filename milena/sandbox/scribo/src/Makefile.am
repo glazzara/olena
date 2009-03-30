@@ -2,6 +2,9 @@
 
 include $(top_srcdir)/milena/sandbox/scribo/scribo.mk
 
+SUBDIRS =					\
+  binarization
+
 bin_PROGRAMS = 				\
   dmap                               	\
   extract_text_single_link  		\
