@@ -1,3 +1,18 @@
+2009-03-30  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add time smoothing in IGR and drafts of space smoothing.
+	* fabien/igr/Makefile.rules: New file to centralize rules.
+	* fabien/igr/img/slice_7.pgm: Remove.
+	* fabien/igr/img: Remove.
+	* fabien/igr/space_smooth/Makefile: New.
+	* fabien/igr/space_smooth/linear.cc: Implements linear space smoothing.
+	* fabien/igr/space_smooth/median.cc: Draft.
+	* fabien/igr/space_smooth/morpho.cc: Draft.
+	* fabien/igr/time_smooth/Makefile: New.
+	* fabien/igr/time_smooth/linear.cc: Implements linear time smoothing.
+	* fabien/igr/time_smooth/median.cc: Implements median time smoothing.
+	* fabien/igr/time_smooth/morpho.cc: Implements morpho time smoothing.
+
 2009-03-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update Scribo's code.

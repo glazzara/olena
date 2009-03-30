@@ -1,0 +1,9 @@
+CXX = llvm-g++
+CXXFLAGS = -DNDEBUG -O4
+
+DICOM_INC = -I/usr/local/include/gdcm-2.0
+DICOM_LIBS = -lgdcmCommon -lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib \
+	     -framework CoreFoundation
+DICOM = ${DICOM_INC} ${DICOM_LIBS}
+
+MAGICK = `Magick++-config --cppflags --ldflags --libs`
