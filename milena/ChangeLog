@@ -1,3 +1,9 @@
+2009-03-30  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add a plot format save() routine.
+	* mln/io/plot/save.hh: New routine save() for saving arrays and
+	  1d images into plot formatted file.
+
 2009-03-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Change histogram printing.
