@@ -48,12 +48,12 @@ int main(int argc, char* argv[])
   // Linear convolution //
   //			//
   ////////////////////////
-  float ws[] = {   0, 1/8,   0,
-		 1/8, 1/2, 1/8,
-		   0, 1/8,   0 };
+  float ws[] = {   0, 1/8.f,   0,
+		 1/8.f, 1/2.f, 1/8.f,
+		   0, 1/8.f,   0 };
 
   util::array<image2d<float> > ima_linear;
-  for (unsigned i = 1; i < arr_ima.nelements(); ++i)
+  for (unsigned i = 0; i < arr_ima.nelements(); ++i)
     ima_linear.append(linear::convolve(arr_ima[i], make::w_window2d(ws)));
 
   /////////////

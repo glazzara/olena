@@ -1,3 +1,12 @@
+2009-03-31  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Update spatial smoothing.
+	* fabien/igr/Makefile: Update.
+	* fabien/igr/space_smooth/linear.cc: Fix spatial smoothing.
+	* fabien/igr/space_smooth/median.cc: Implement spatial smoothing.
+	* fabien/igr/space_smooth/morpho.cc: Draft.
+	* fabien/igr/time_smooth/linear.cc: Small fix.
+
 2009-03-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add into scribo a simple binarization.

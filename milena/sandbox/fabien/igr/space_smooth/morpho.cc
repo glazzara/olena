@@ -48,15 +48,11 @@ int main(int argc, char* argv[])
   ///////////////////
   image3d<int_u12> input;
   io::dicom::load(input, argv[1]);
-  image2d<util::array<int_u12> > ima_arr(input.nrows(), input.ncols());
+  util::array<image2d<int_u12> > arr_ima;
   for (int i = 0; i < input.nslices(); ++i)
   {
     image2d<int_u12> tmp_slice = duplicate(slice(input, i));
-    mln_piter_(image2d<int_u12>) p(tmp_slice.domain());
-    for_all(p)
-    {
-      ima_arr(p).append(tmp_slice(p));
-    }
+    arr_ima.append(tmp_slice);
   }
 
   ////////////
@@ -64,10 +60,8 @@ int main(int argc, char* argv[])
   // Morpho //
   //	    //
   ////////////
-  image2d<image1d<int_u12> > ima_morpho;
-  initialize(ima_morpho, ima_arr);
+  util::array<image2d<int_u12> > ima_morpho;
   mln_piter_(image2d<int_u12>) p(ima_morpho.domain());
-  accu::median_h<int_u12> accu_med;
   for_all(p)
   {
     image1d<int_u12> tmp_ima;

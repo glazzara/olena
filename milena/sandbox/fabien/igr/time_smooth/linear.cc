@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
   image2d<util::array<int_u12> > ima_linear;
   initialize(ima_linear, ima_arr);
   mln_piter_(image2d<int_u12>) p(ima_linear.domain());
-  accu::median<int_u12> accu_med;
+  accu::median_h<int_u12> accu_med;
   for_all(p)
   {
     ima_linear(p).append(ima_arr(p)[0]);

@@ -47,6 +47,9 @@ matlab: matlab.cc
 time_max: time_max.cc
 	${CXX} -I../../../ ${DICOM} ${MAGICK} ${CXXFLAGS} -lm $^ -o time_max
 	
+first_slice_dicom: first_slice_dicom.cc
+	${CXX} -I../../../ ${DICOM} ${MAGICK} ${CXXFLAGS} -lm $^ -o first_slice_dicom
+
 clean:
 	rm -rf *.dump *.p?m *.plot *.log *.csv *.dSYM
-	rm seg2d seg3d wsd2d wsd3d nbasins_finder grad clo_vol wst graph med thres matlab time_max
+	rm seg2d seg3d wsd2d wsd3d nbasins_finder grad clo_vol wst graph med thres matlab time_max first_slice_dicom
