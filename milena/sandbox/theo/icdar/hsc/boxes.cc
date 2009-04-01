@@ -44,6 +44,9 @@
 #include <mln/logical/not.hh>
 #include <mln/io/dump/save.hh>
 
+#include <mln/io/pgm/save.hh>
+#include <mln/fun/l2l/wrap.hh>
+
 
 int usage(const char *name)
 {
@@ -74,8 +77,8 @@ int main(int argc, char* argv[])
   text = filter::small_components(text,4);
 
   mln::util::array<unsigned>
-    left_link  = text::grouping::group_with_single_left_link(text, 100),
-    right_link = text::grouping::group_with_single_right_link(text, 100);
+    left_link  = text::grouping::group_with_single_left_link(text, 30),
+    right_link = text::grouping::group_with_single_right_link(text, 30);
 
   std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
 
@@ -93,6 +96,10 @@ int main(int argc, char* argv[])
   std::cout << "AFTER double grouping - nbboxes = " << grouped_text.bboxes().nelements() << std::endl;
 
   io::dump::save(grouped_text.label_image(), argv[2]);
+  
+  io::pgm::save(level::transform(grouped_text.label_image(),
+				 fun::l2l::wrap<value::int_u8>()),
+		"tmp.pgm");
 
   scribo::debug::save_textbboxes_image(input, grouped_text.bboxes(),
 				       literal::red,
