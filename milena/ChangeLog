@@ -1,3 +1,13 @@
+2009-04-01  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Several fixes.
+
+	* mln/morpho/leveling_filter.hh: Layout.
+	(leveling_filter): Fix trace naming.
+	Call facade instead of dispatch.
+	* mln/canvas/morpho/attribute_filter.hh: Layout.
+	(attribute_filter_fastest): Fix deja_vu border value.
+
 2009-03-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Several bug fixes.

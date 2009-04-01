@@ -219,17 +219,17 @@ namespace mln
 			    // Either a flat zone or the component of r is still growing.
 			    {
 			      /* FIXME: Same remark as above concerning the
-			      initialization of data(p); instead of
+				 initialization of data(p); instead of
 
-			      data(p).take(data(r));
+				 data(p).take(data(r));
 
-			      we should (or could) have
+				 we should (or could) have
 
-			      unite_data(p, r);
+				 unite_data(p, r);
 
-			      so as to keep the generic aspect of this canvas
-			      (as long as the set of acceptable types for the
-			      template parameter A is not bound).  */
+				 so as to keep the generic aspect of this canvas
+				 (as long as the set of acceptable types for the
+				 template parameter A is not bound).  */
 
 			      data(p).take(data(r));
 			      parent(r) = p;
@@ -263,10 +263,10 @@ namespace mln
 	} // end of namespace mln::canvas::morpho::impl::generic
 
 
-	  ////////////////////////
-	  /// Fastest version. ///
-	  ////////////////////////
-
+	////////////////////////
+	/// Fastest version. ///
+	////////////////////////
+	
 	template <typename I>
 	inline
 	unsigned
@@ -313,7 +313,7 @@ namespace mln
 	  {
 	    initialize(deja_vu, input);
 	    data::fill(deja_vu, false);
-	    extension::fill(deja_vu, true); // So the border is neutral.
+	    extension::fill(deja_vu, false); // So the border is neutral.
 
 	    initialize(activity, input);
 	    data::fill(activity, true);
@@ -381,17 +381,20 @@ namespace mln
 	  trace::exiting("canvas::morpho::impl::attribute_filter_fastest");
 	  return output;
 	}
+
       } // end of namespace mln::canvas::morpho::impl
 
 
 
 
-	// Dispatch.
-
-
+      // Dispatch.
+      
+      
       namespace internal
       {
+
 	// Dispatch to generic.
+
 	template <typename I, typename N, typename A>
 	inline
 	mln_concrete(I)
@@ -409,7 +412,9 @@ namespace mln
 	  return impl::generic::attribute_filter(input, nbh, s, a, lambda);
 	}
 
+
 	// Dispatch to fastest.
+
 	template <typename I, typename N, typename A>
 	inline
 	mln_concrete(I)

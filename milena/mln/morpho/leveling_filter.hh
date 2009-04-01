@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_LEVELING_FILTER_HH_
-# define MLN_MORPHO_LEVELING_FILTER_HH_
+#ifndef MLN_MORPHO_LEVELING_FILTER_HH
+# define MLN_MORPHO_LEVELING_FILTER_HH
 
 /// \file mln/morpho/leveling_filter.hh
 ///
@@ -44,8 +44,13 @@
 
 # include <mln/canvas/morpho/attribute_filter.hh>
 
-namespace mln {
-  namespace morpho {
+
+namespace mln
+{
+
+  namespace morpho
+  {
+
 
     template <typename I, typename N, typename A>
     mln_concrete(I)
@@ -56,7 +61,9 @@ namespace mln {
 		    bool increasing);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
+
 
     template <typename I, typename N, typename A>
     mln_concrete(I)
@@ -66,7 +73,7 @@ namespace mln {
 		    const typename A::result& lambda,
 		    bool increasing)
     {
-      trace::entering("morpho::opening::leveling_filter");
+      trace::entering("morpho::leveling_filter");
 
       mln_precondition(exact(input).is_valid());
 
@@ -76,16 +83,19 @@ namespace mln {
 		       trait::accumulator::when_pix::use_v))::check();
 
       mln_concrete(I) output;
-      output = canvas::morpho::internal::attribute_filter_dispatch(input, nbh, a, lambda, increasing);
+      output = canvas::morpho::attribute_filter(input, nbh, a, lambda, increasing);
 
-      trace::exiting("morpho::opening::leveling_filter");
+      trace::exiting("morpho::leveling_filter");
 
       return output;
     }
 
+
 # endif // ! MLN_INCLUDE_ONLY
+
   } // end of namespace mln::morpho
+
 } // end of namespace mln
 
 
-#endif /* !MLN_MORPHO_LEVELING_FILTER_HH_ */
+#endif // ! MLN_MORPHO_LEVELING_FILTER_HH
