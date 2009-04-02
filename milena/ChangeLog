@@ -1,5 +1,14 @@
 2009-04-01  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add labeling::wrap routine.
+
+	* mln/labeling/wrap.hh: new routine.
+
+	* tests/labeling/Makefile.am,
+	* tests/labeling/wrap.cc: new test.
+
+2009-04-01  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add a new routine to create a region adjacency graph.
 
 	* mln/make/rag_and_labeled_wsl.hh: new routine.

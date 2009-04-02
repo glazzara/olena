@@ -14,7 +14,8 @@ check_PROGRAMS =				\
   n_max						\
   regional_maxima				\
   regional_minima 				\
-  relabel
+  relabel 					\
+  wrap
 
 background_SOURCES = background.cc
 blobs_SOURCES = blobs.cc
@@ -28,5 +29,6 @@ n_max_SOURCES = n_max.cc
 regional_maxima_SOURCES = regional_maxima.cc
 regional_minima_SOURCES = regional_minima.cc
 relabel_SOURCES = relabel.cc
+wrap_SOURCES = wrap.cc
 
 TESTS = $(check_PROGRAMS)
