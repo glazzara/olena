@@ -1,3 +1,12 @@
+2009-04-01  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add a new routine to create a region adjacency graph.
+
+	* mln/make/rag_and_labeled_wsl.hh: new routine.
+
+	* tests/make/Makefile.am,
+	* tests/make/rag_and_labeled_wsl.cc: new test.
+
 2009-04-01  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Several fixes.

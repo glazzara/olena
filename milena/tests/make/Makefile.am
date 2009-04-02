@@ -10,6 +10,7 @@ check_PROGRAMS =				\
   image3d					\
   mat						\
   region_adjacency_graph 			\
+  rag_and_labeled_wsl				\
   w_window					\
   w_window_directional
 
@@ -20,6 +21,7 @@ image2d_SOURCES = image2d.cc
 image3d_SOURCES = image3d.cc
 mat_SOURCES = mat.cc
 region_adjacency_graph_SOURCES = region_adjacency_graph.cc
+rag_and_labeled_wsl_SOURCES = rag_and_labeled_wsl.cc
 w_window_SOURCES = w_window.cc
 w_window_directional_SOURCES = w_window_directional.cc
 
