@@ -51,21 +51,27 @@ namespace mln
 
       /*! Save a Milena 1D image in a plot file.
        *
-       * \param[out] ima A reference to the image to save.
-       * \param[in] filename The output file.
+       * \param[in] ima A reference to the image to save.
+       * \param[out] filename The output file.
+       * \param[in] start_value The start index value of the plot
+       *	    (optional).
        */
       template <typename I>
       void save(image1d<I>& ima,
-		const std::string& filename);
+		const std::string& filename,
+		int start_value = 0);
 
       /*! Save a Milena array in a plot file.
        *
-       * \param[out] ima A reference to the array to save.
-       * \param[in] filename The output file.
+       * \param[in] arr A reference to the array to save.
+       * \param[out] filename The output file.
+       * \param[in] start_value The start index value of the plot
+       *	    (optional).
        */
       template <typename I>
       void save(util::array<I>& arr,
-		const std::string& filename);
+		const std::string& filename,
+		int start_value = 0);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -73,26 +79,28 @@ namespace mln
 
       template <typename I>
       inline
-      void save(image1d<I>& ima, const std::string& filename)
+      void save(image1d<I>& ima, const std::string& filename,
+		int start_value = 0)
       {
 	trace::entering("mln::io::plot::save");
 
 	std::ofstream file_out(filename.c_str());
-	for (unsigned i = 0; i < ima.ninds(); ++i)
-	  file_out << i << ", " << ima.at_(i) << std::endl;
+	for (int i = 0; i < ima.ninds(); ++i)
+	  file_out << start_value + i << ", " << ima.at_(i) << std::endl;
 
 	trace::exiting("mln::io::plot::save");
       }
 
       template <typename I>
       inline
-      void save(util::array<I>& arr, const std::string& filename)
+      void save(util::array<I>& arr, const std::string& filename,
+		int start_value = 0)
       {
 	trace::entering("mln::io::plot::save");
 
 	std::ofstream file_out(filename.c_str());
-	for (unsigned i = 0; i < arr.nelements(); ++i)
-	  file_out << i << ", " << arr[i] << std::endl;
+	for (int i = 0; i < arr.nelements(); ++i)
+	  file_out << start_value + i << ", " << arr[i] << std::endl;
 
 	trace::exiting("mln::io::plot::save");
       }
