@@ -16,6 +16,13 @@
 
 
 
+
+
+#include <mln/canvas/morpho/attribute_filter.hh>
+#include <mln/morpho/attribute/volume.hh>
+
+
+
 ///////////////////
 //               //
 // Main Function //
@@ -53,9 +60,12 @@ int main(int argc, char *argv[])
   }
   else
   {
-    image3d<int_u12> input;
+    typedef image3d<int_u12> I;
+
+    I input;
     io::dump::load(input, argv[1]);
-    image3d<int_u12> clo = morpho::closing::volume(input, c6(), closure_lambda);
+
+    I clo = morpho::closing::volume(input, c6(), closure_lambda);
     io::dump::save(clo, "clo_vol.dump");
   }
 

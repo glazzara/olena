@@ -15,7 +15,7 @@ process_file ()
     echo "    nbasins = $nbasins"
     ../bin/dumpl32_to_colorize wst.dump $dim $nbasins results/colorize_${3}_${lambda_closing}.ppm
     median=`./med wst.dump $dim $input $nbasins`
-#echo "    median = $median"
+    echo "    median = $median"
     threshold=$(($median / 2))
     ../bin/dumpi12_to_pgm med.dump $dim results/median_${3}_${lambda_closing}.pgm
     ./thres med.dump $dim $threshold
@@ -38,9 +38,9 @@ process_file ()
 #  rm *.dump
 }
 
-process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0049.dcm" 2 "49"
+#process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0049.dcm" 2 "49"
 process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0052.dcm" 3 "52"
-process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0055.dcm" 2 "55"
-process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0058.dcm" 2 "58"
-process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0061.dcm" 3 "61"
-process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0064.dcm" 3 "64"
+#process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0055.dcm" 2 "55"
+#process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0058.dcm" 2 "58"
+#process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0061.dcm" 3 "61"
+#process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0064.dcm" 3 "64"

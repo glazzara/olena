@@ -38,9 +38,9 @@
 [ ] Profile for performance
 [X] ImageMagick support
 [ ] Integrate external libraries (GDCM, IM)
-[ ] Send result images to lrde account
+[X] Send result images to lrde account
 [X] Translate Matlab code
 [X] Subsample binary images
 [X] Fast projected histogram
 [ ] Triple histogram
-[ ] Create plot for each kind of point with each method
+[X] Create plot for each kind of point with each method

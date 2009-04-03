@@ -1,3 +1,13 @@
+2009-04-03  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Create plot files depending on labels.
+	* fabien/igr/Makefile: Add new targets.
+	* fabien/igr/check.sh: Update.
+	* fabien/igr/clo_vol.cc: Minor update, helped for debug.
+	* fabien/igr/fun_labels.cc: Create plot files with labels value.
+	* fabien/igr/fun_labels.sh: New script file for testing fun_labels.
+	* fabien/igr/time_smooth/linear.cc: Update tumeur point.
+
 2009-04-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add some code for ICDAR.

@@ -1,12 +1,4 @@
-CXX = llvm-g++
-CXXFLAGS = -DNDEBUG -O4
-
-DICOM_INC = -I/usr/local/include/gdcm-2.0
-DICOM_LIBS = -lgdcmCommon -lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib \
-	     -framework CoreFoundation
-DICOM = ${DICOM_INC} ${DICOM_LIBS}
-
-MAGICK = `Magick++-config --cppflags --ldflags --libs`
+include Makefile.rules
 
 seg2d: seg_vol_irm.hh seg2d.cc
 	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} seg2d.cc -o seg2d
@@ -49,6 +41,9 @@ time_max: time_max.cc
 	
 first_slice_dicom: first_slice_dicom.cc
 	${CXX} -I../../../ ${DICOM} ${MAGICK} ${CXXFLAGS} -lm $^ -o first_slice_dicom
+
+fun_labels: fun_labels.cc
+	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o fun_labels
 
 clean:
 	rm -rf *.dump *.p?m *.plot *.log *.csv *.dSYM

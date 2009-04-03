@@ -66,11 +66,11 @@ int main(int argc, char* argv[])
   // Outputs //
   //	     //
   /////////////
-  io::plot::save(ima_arr(point2d(160, 120)), "ref_tumeur.plot");
-  io::plot::save(ima_linear(point2d(160, 120)), "linear_tumeur.plot");
-  io::plot::save(ima_arr(point2d(34, 94)), "ref_air.plot");
+  //io::plot::save(ima_arr(point2d(160, 120)), "ref_tumeur.plot");
+  io::plot::save(ima_linear(point2d(156, 114)), "linear_tumeur.plot");
+  //io::plot::save(ima_arr(point2d(34, 94)), "ref_air.plot");
   io::plot::save(ima_linear(point2d(34, 94)), "linear_air.plot");
-  io::plot::save(ima_arr(point2d(122, 115)), "ref_poumon.plot");
+  //io::plot::save(ima_arr(point2d(122, 115)), "ref_poumon.plot");
   io::plot::save(ima_linear(point2d(122, 115)), "linear_poumon.plot");
 
   return 0;
