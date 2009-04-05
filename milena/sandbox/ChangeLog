@@ -1,3 +1,8 @@
+2009-04-05  Frederic Bour  <bour@lrde.epita.fr>
+
+	Update to our line recognition using component trees..
+	*  edwin/tree/test.cc: Now use weighted distance front.
+
 2009-04-03  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Create plot files depending on labels.

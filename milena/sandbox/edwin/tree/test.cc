@@ -3,7 +3,9 @@
 #include <mln/core/image/image_if.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/routine/duplicate.hh>
+#include <mln/core/alias/window2d.hh>
 #include <mln/core/var.hh>
+#include <mln/value/int_u16.hh>
 
 /* Site set */
 #include <mln/core/site_set/p_array.hh>
@@ -16,16 +18,24 @@
 #include "run.hh"
 #include "accumulator/arg_max.hh"
 
+/* morpho closing */
+// #include <mln/morpho/opening/structural.hh>
+// #include <mln/morpho/closing/structural.hh>
+
 /* Attributes */
-#include <mln/transform/distance_geodesic.hh>
+// #include <mln/transform/distance_geodesic.hh>
+#include <mln/core/alias/window2d.hh>
+#include <mln/core/alias/w_window2d_int.hh>
+#include <mln/transform/distance_front.hh>
 #include <mln/morpho/attribute/card.hh>
 #include "../attributes/bbox.hh"
+#include <mln/make/w_window2d_int.hh>
 
 /* io */
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/ppm/save.hh>
-#include <../../theo/color/change_attributes.hh>
+//#include <../../theo/color/change_attributes.hh>
 
 /* data & pw */
 #include <mln/core/concept/function.hh>
@@ -48,14 +58,13 @@
 
 bool mydebug = false;
 
-
 void usage(char** argv)
 {
-  std::cerr << "usage: " << argv[0] << " input [--debug]" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input [--debug] [-n nbr_components | -s sharpness] [-c card]" << std::endl;
   abort();
 }
 
-void dsp(const char* str)
+void dsp(const std::string& str)
 {
   std::cout << std::endl
 	    << "*********************" << std::endl
@@ -95,27 +104,79 @@ ratio_<P2V> ratio(const mln::Function_p2v<P2V>& f)
 int main(int argc, char* argv[])
 {
   using namespace mln;
-  using value::int_u8;
+//   using value::int_u8;
+  using value::int_u16;
+
+  std::string arg;
+  unsigned nb_components = 0;
+  unsigned card = 0;
+  double treshold = 0;
 
   if (argc < 2)
     usage(argv);
 
-  mydebug = (argc >= 3 && std::string(argv[2]) == "--debug");
+  for (int i = 2; i < argc; i++)
+    {
+      arg = std::string(argv[i]);
+      if (arg == "--debug")
+	mydebug = true;
+      else if (arg == "-n" && i != argc)
+	nb_components = atoi(argv[++i]);
+      else if (arg == "-t" && i != argc)
+	treshold = atof(argv[++i]);
+      else if (arg == "-c" && i != argc)
+	card = atoi(argv[++i]);
+      else if (arg == "--trace")
+	trace::quiet = false;
+      else
+	usage (argv);
+    }
 
 
   /* Image loadin' */
-  typedef image2d<int_u8> I;
+  typedef image2d<int_u16> I;
 
   image2d<bool> input_;
   io::pbm::load(input_, argv[1]);
 
   /* Work on geodesic distance image */
-  I input = transform::distance_geodesic(input_, c8(), mln_max(int_u8));
+//   I input = transform::distance_geodesic(input_, c8(), mln_max(int_u8));
+  I input;
+  {
+    const int weights[9] =
+      { 10, 9, 10,
+        1, 0, 1,
+	10, 9, 10 };
+
+    w_window2d_int win;
+    mln::convert::from_to(weights, win);
+    input = transform::distance_front(input_, c8(), win, mln_max(int_u16));
+  }
 
   if (mydebug)
     dsp("Distance geodesic");
 
-  io::pgm::save(input, "distance.pgm");
+  /* Closing */
+  {
+    bool w[3][1];
+
+    for (int i = 0; i < 3; i++)
+      for (int j = 0; j < 1; j++)
+	w[i][j] = 1;
+
+//     input = morpho::closing::structural(input, convert::to<window2d>(w));
+  }
+
+  /* Opening */
+  {
+    bool w[1][15];
+
+    for (int i = 0; i < 1; i++)
+      for (int j = 0; j < 15; j++)
+	w[i][j] = 1;
+
+//     input = morpho::opening::structural(input, convert::to<window2d>(w));
+  }
 
   /* Component tree creation */
   typedef p_array< mln_site_(I) > S;
@@ -123,6 +184,9 @@ int main(int argc, char* argv[])
 
   S sorted_sites = level::sort_psites_decreasing(input);
   tree_t tree(input, sorted_sites, c4());
+
+
+  io::pgm::save(input, "distance.pgm");
 
   /* Compute Attribute On Image */
   typedef morpho::attribute::bbox<I> bbox_t;
@@ -133,7 +197,7 @@ int main(int argc, char* argv[])
   morpho::tree::propagate_representant(tree, a);
 
   if (mydebug) {
-    dsp("Image sharp attribute"); display_tree_attributes(tree, a);
+    dsp("Image sharp attribute");
   }
 
   /* We don't want little components */
@@ -161,11 +225,20 @@ int main(int argc, char* argv[])
   accumulator::arg_max<A> argmax(a);
   p_array< mln_psite_(A) > obj_array; // Array of object components.
 
-  mln_VAR(predicate, pw::value(a) > pw::cst(0.5));
-  obj_array = morpho::tree::run_while(tree, a, argmax, predicate);
-
   if (mydebug) {
-    dsp("Run max accumulator, lk 4 5 objs"); display_tree_attributes(tree, a);
+    std::stringstream s("Run max accumulator, look for ");
+    if (nb_components)
+      s << nb_components << " components.";
+    else
+      s << "components whose treshold > " << treshold;
+    dsp(s.str());
+  }
+
+  if (!nb_components) {
+    mln_VAR(predicate, pw::value(a) > pw::cst(treshold));
+    obj_array = morpho::tree::run_while(tree, a, argmax, predicate);
+  } else {
+    obj_array = morpho::tree::run_ntimes(tree, a, argmax, nb_components);
   }
 
   /* Print them */
@@ -193,7 +266,7 @@ int main(int argc, char* argv[])
   // mask now contains all nodes related to objects
 
   if (mydebug) {
-    dsp("Create mask and propagate"); display_tree_attributes(tree, mask);
+    dsp("Create mask and propagate");
   }
 
   /* Labeling */
@@ -211,8 +284,8 @@ int main(int argc, char* argv[])
   if (mydebug) {
     mln_fwd_piter_(p_array< mln_psite_(I) >) c(obj_array);
     for_all(c)
-      draw::box(out, attr_image(c), mln_max(int_u8));
-    dsp("Mask input"); display_tree_attributes(tree, out);
+      draw::box(out, attr_image(c), mln_max(int_u16));
+    dsp("Mask input");
   }
 
   io::pgm::save(out, "output.pgm");
