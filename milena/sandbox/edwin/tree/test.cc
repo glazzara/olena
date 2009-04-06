@@ -2,9 +2,12 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image_if.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/core/routine/duplicate.hh>
 #include <mln/core/alias/window2d.hh>
+#include <mln/core/alias/w_window2d_int.hh>
+#include <mln/core/routine/duplicate.hh>
 #include <mln/core/var.hh>
+
+/* mln value */
 #include <mln/value/int_u16.hh>
 
 /* Site set */
@@ -18,24 +21,17 @@
 #include "run.hh"
 #include "accumulator/arg_max.hh"
 
-/* morpho closing */
-// #include <mln/morpho/opening/structural.hh>
-// #include <mln/morpho/closing/structural.hh>
 
 /* Attributes */
-// #include <mln/transform/distance_geodesic.hh>
-#include <mln/core/alias/window2d.hh>
-#include <mln/core/alias/w_window2d_int.hh>
 #include <mln/transform/distance_front.hh>
-#include <mln/morpho/attribute/card.hh>
 #include "../attributes/bbox.hh"
+#include <mln/morpho/attribute/card.hh>
 #include <mln/make/w_window2d_int.hh>
 
 /* io */
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/ppm/save.hh>
-//#include <../../theo/color/change_attributes.hh>
 
 /* data & pw */
 #include <mln/core/concept/function.hh>
@@ -55,6 +51,7 @@
 /* std */
 #include <string>
 #include <iostream>
+#include <cmath>
 
 bool mydebug = false;
 
@@ -72,30 +69,33 @@ void dsp(const std::string& str)
 	    << "*********************" << std::endl;
 }
 
-template <typename P2V>
-struct ratio_ : public mln::Function_p2v< ratio_<P2V> >
+template <typename P2V, typename G>
+struct ratio_ : public mln::Function_p2v< ratio_<P2V, G> >
 {
   typedef double result;
 
-  ratio_(const P2V& f) :
-    f_ (f)
+  ratio_(const P2V& f, const G& g) :
+    f_ (f), g_ (g)
   {
   }
 
   template <typename P>
   double operator() (const P& p) const
   {
-    return (double) (f_(p).len(1)) / (double)(f_(p).len(0));
+    mln_VAR(box, f_(p));
+    double a = (double) (box.len(1)) / (double)(box.len(0));
+    return a * std::log(g_(p));
   }
 
 protected:
   const P2V& f_;
+  const G& g_;
 };
 
-template <typename P2V>
-ratio_<P2V> ratio(const mln::Function_p2v<P2V>& f)
+template <typename P2V, typename G>
+ratio_<P2V, G> ratio(const mln::Function_p2v<P2V>& f, const mln::Function_p2v<G>& g)
 {
-  return ratio_<P2V>(exact(f));
+  return ratio_<P2V, G>(exact(f), exact(g));
 }
 
 
@@ -104,7 +104,6 @@ ratio_<P2V> ratio(const mln::Function_p2v<P2V>& f)
 int main(int argc, char* argv[])
 {
   using namespace mln;
-//   using value::int_u8;
   using value::int_u16;
 
   std::string arg;
@@ -140,7 +139,6 @@ int main(int argc, char* argv[])
   io::pbm::load(input_, argv[1]);
 
   /* Work on geodesic distance image */
-//   I input = transform::distance_geodesic(input_, c8(), mln_max(int_u8));
   I input;
   {
     const int weights[9] =
@@ -153,29 +151,9 @@ int main(int argc, char* argv[])
     input = transform::distance_front(input_, c8(), win, mln_max(int_u16));
   }
 
-  if (mydebug)
+  if (mydebug) {
     dsp("Distance geodesic");
-
-  /* Closing */
-  {
-    bool w[3][1];
-
-    for (int i = 0; i < 3; i++)
-      for (int j = 0; j < 1; j++)
-	w[i][j] = 1;
-
-//     input = morpho::closing::structural(input, convert::to<window2d>(w));
-  }
-
-  /* Opening */
-  {
-    bool w[1][15];
-
-    for (int i = 0; i < 1; i++)
-      for (int j = 0; j < 15; j++)
-	w[i][j] = 1;
-
-//     input = morpho::opening::structural(input, convert::to<window2d>(w));
+    io::pgm::save(input, "distance.pgm");
   }
 
   /* Component tree creation */
@@ -185,41 +163,19 @@ int main(int argc, char* argv[])
   S sorted_sites = level::sort_psites_decreasing(input);
   tree_t tree(input, sorted_sites, c4());
 
-
-  io::pgm::save(input, "distance.pgm");
-
   /* Compute Attribute On Image */
   typedef morpho::attribute::bbox<I> bbox_t;
+  typedef morpho::attribute::card<I> card_t;
   typedef mln_ch_value_(I, double) A;
 
   mln_VAR(attr_image, morpho::tree::compute_attribute_image(bbox_t (), tree));
-  A a = duplicate(ratio(pw::value(attr_image)) | attr_image.domain());
+  mln_VAR(card_image, morpho::tree::compute_attribute_image(card_t (), tree));
+  A a = duplicate(ratio(pw::value(attr_image), pw::value(card_image)) | attr_image.domain());
   morpho::tree::propagate_representant(tree, a);
 
   if (mydebug) {
     dsp("Image sharp attribute");
   }
-
-  /* We don't want little components */
-
-  // So we compute card attribute and we filter big components
-  // FIXME: some attributes are compositions of attributes, here
-  // sharpness can give area so, it would be fine if we could give an
-  // optional extra argument to compute_attribute where the
-  // accumulators image will be stored.
-
-//   typedef morpho::attribute::card<I> card_t;
-//   typedef mln_ch_value_(tree_t::function, mln_result_(card_t)) B;
-
-//   B b = morpho::tree::compute_attribute_image(card_t (), tree);
-//   morpho::tree::propagate_representant(tree, b);
-
-//   if (mydebug) {
-//     dsp("Image card attribute"); display_tree_attributes(tree, b);
-//   }
-
-//   a = duplicate((fun::p2v::ternary(pw::value(b) > pw::cst(2), pw::value(a), pw::cst(0.0))) | a.domain());
-
 
   /* Run max accumulator */
   accumulator::arg_max<A> argmax(a);
@@ -271,22 +227,21 @@ int main(int argc, char* argv[])
 
   /* Labeling */
   typedef mln_ch_value_(I, value::label<8>) L;
+  typedef mln_ch_value_(I, value::rgb<8>) O;
   value::label<8> nlabel;
   L label = labeling::blobs(mask, c4(), nlabel);
-  io::ppm::save(debug::colorize(value::rgb8(), label, nlabel), "label.pgm");
+  O output = debug::colorize(value::rgb8(), label, nlabel);
+  io::ppm::save(output, "label.pgm");
 
   /* Now store output image image */
-  I out;
+  O out;
   initialize(out, input);
-  data::fill(out, 0);
-  data::paste(input | pw::value(mask), out);
+  data::fill(out, literal::black_t());
+  data::paste(output | pw::value(input_), out);
 
   if (mydebug) {
-    mln_fwd_piter_(p_array< mln_psite_(I) >) c(obj_array);
-    for_all(c)
-      draw::box(out, attr_image(c), mln_max(int_u16));
     dsp("Mask input");
   }
 
-  io::pgm::save(out, "output.pgm");
+  io::ppm::save(out, "output.pgm");
 }
