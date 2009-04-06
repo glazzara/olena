@@ -39,7 +39,7 @@
     \li load a 2-D, gray-level image from a PGM file;
     \li convert this 2-D image into a line graph-based one, where values
         on edges are computed as the absolute value of the difference
-        between the values on the vertices	adjacent to the edge, so as to
+        between the values on the vertices adjacent to the edge, so as to
         create a (norm of the) gradient ``between the pixels'' of the
         input image;
     \li reduce the number of minima using an area opening (counting the

@@ -125,7 +125,7 @@ int main(int argc, char* argv[])
   | Simplification.  |
   `-----------------*/
 
-  /// Adjancent edges are connected by shared polygons.
+  /// Adjacent edges are connected by shared polygons.
   typedef
     mln::complex_higher_dim_connected_n_face_neighborhood<D, G>
     adj_edges_nbh_t;

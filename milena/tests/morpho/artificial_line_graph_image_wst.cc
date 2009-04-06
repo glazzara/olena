@@ -39,7 +39,7 @@
     \li create an artificial (checkboard) 2-D image ;
     \li convert this 2-D image into a line graph-based one, where values
         on edges are computed as the absolute value of the difference
-        between the values on the vertices	adjacent to the edge, so as to
+        between the values on the vertices adjacent to the edge, so as to
         create a (norm of the) gradient ``between the pixels'' of the
         input image;
     \li perform a WST on this line graph image;
