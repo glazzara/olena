@@ -405,9 +405,8 @@ namespace mln
     {
       // Ensure LHS and RHS belong to the same complex.
       mln_precondition(lhs.cplx() == rhs.cplx());
-      // Ensure LHS and RHS have the same dimension.
-      mln_precondition(lhs.n() == rhs.n());
-      return lhs.face_id() < rhs.face_id();
+      return lhs.n() < rhs.n() ||
+	(lhs.n() == rhs.n() && lhs.face_id() < rhs.face_id());
     }
 
 

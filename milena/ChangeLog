@@ -1,5 +1,14 @@
 2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Allow the comparison of faces of different dimensions using `<'.
+
+	* mln/topo/face.hh (operator< (const face<D>&, const face<D>&)):
+	Here.
+	This way, a standard container relying on operator< can accept
+	faces of different dimensions.
+
+2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add some simple triangle meshes.
 
 	* mesh/one-triangle.off: 
