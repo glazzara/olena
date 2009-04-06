@@ -1,3 +1,12 @@
+2009-04-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	New source in ICDAR-HSC to go from input to lines.
+
+	* icdar/2009/hsc/input_to_lines.cc: Rename as...
+	* icdar/2009/hsc/old_input_to_lines.cc: ...this.
+	* icdar/2009/hsc/input_to_wsl.cc: New.
+	* icdar/2009/hsc/ws_to_wsl.hh: New.
+
 2009-04-06  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Consider box cardinality for line detection criteria.
