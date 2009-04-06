@@ -1,5 +1,9 @@
 2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/util/fibonacci_heap.hh: Convert to Unix line terminators.
+
+2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/util/ord_pair.hh: Remove outdated FIXME.
 
 2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
