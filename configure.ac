@@ -289,7 +289,8 @@ AC_CONFIG_FILES([
 #])
 
 # Configure tests.
-# FIXME: Consider using `sed' instead of `configure' to create these tests.
+# FIXME: Consider using `sed' instead of `configure' to create these
+# tests for the sake of speed.
 AC_CONFIG_FILES([milena/apps/statues/test-mesh-max-curv],
 		[chmod +x milena/apps/statues/test-mesh-max-curv])
 AC_CONFIG_FILES([milena/apps/statues/test-mesh-complex-max-curv],
@@ -301,5 +302,7 @@ AC_CONFIG_FILES([milena/apps/statues/test-mesh-complex-segm],
 AC_CONFIG_FILES([milena/apps/statues/test-mesh-complex-max-curv-segm],
 		[chmod +x milena/apps/statues/test-mesh-complex-max-curv-segm])
 
+AC_CONFIG_FILES([milena/apps/statues/test-mesh-complex-skel],
+		[chmod +x milena/apps/statues/test-mesh-complex-skel])
 
 AC_OUTPUT
