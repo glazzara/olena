@@ -1,5 +1,5 @@
 include makefile.rules
-TARGET=sharp
+TARGET=test
 sharp_SRC=sharp.cc
 sharp_OBJS=${sharp_SRC:.cc=.o}
 

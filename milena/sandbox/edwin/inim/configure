@@ -13,9 +13,9 @@ done
 rm -f makefile.rules
 touch makefile.rules
 if [ "$debug" ]; then
-    echo 'DEBUG = 1' >> makefile.rules
+    echo 'DEBUG = 1' > makefile.rules
 fi
 if [ "$release" ]; then
-    echo 'RELEASE = 1' >> makefile.rules
+    echo 'RELEASE = 1' > makefile.rules
 fi
-echo "MLN_DIR = $MLN_DIR" >> makefile.rules
+echo "MLN_DIR = $MLN_DIR" > makefile.rules

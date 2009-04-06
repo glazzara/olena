@@ -1,3 +1,16 @@
+2009-04-06  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add function to perform component tree computation until.
+	* edwin/inim/Makefile,
+	* edwin/inim/configure,
+	* edwin/inim,
+	* edwin/inim/inim.cc: Move inim project to its own directory.
+
+	* edwin/tree/run.hh,
+	* edwin/tree/sharp.cc: Add functions to perform component tree
+	computation until all leaves belong to a component.
+	* edwin/tree/test.cc: Remove.
+
 2009-04-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	New source in ICDAR-HSC to go from input to lines.

@@ -25,7 +25,6 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/pbm/save.hh>
-#include <../../theo/color/change_attributes.hh>
 
 /* data & pw */
 #include <mln/core/concept/function.hh>
@@ -34,6 +33,9 @@
 #include <mln/data/paste.hh>
 #include <mln/pw/all.hh>
 
+/* level */
+#include <mln/level/stretch.hh>
+
 /* trace */
 #include <mln/trace/quiet.hh>
 
@@ -41,6 +43,7 @@
 #include <string>
 #include <iostream>
 
+using namespace mln;
 bool mydebug = false;
 
 
@@ -59,10 +62,47 @@ void dsp(const std::string& str)
 }
 
 
+/**
+** For each component in the list \p component_list, it
+** propagates the representant value to the remaining nodes of the
+** component. The value of node that don't belong to a component is
+** set to \p null.
+**
+** @param attr_image The attribute image.
+** @param tree The component tree used to propagate value.
+** @param component_list The list of components.
+** @param null The nodes that don't belong to components will be set
+** with this value.
+**
+** @return The resulting component image.
+*/
+template <typename A, typename T>
+inline
+A set_value_to_components(const Image<A>& attr_image,
+			  const T& tree,
+			  const p_array< mln_psite(A) >& component_list,
+			  const mln_value(A)& null)
+{
+  const A& attr_img = exact(attr_image);
+  A out;
+  initialize(out, attr_img);
+  data::fill(out, null);
+
+  mln_piter(p_array<mln_psite(A)>) p(component_list);
+  for_all(p)
+  {
+    out(p) = attr_img(p);
+    morpho::tree::propagate_node_to_descendants(p, tree, out);
+  }
+  morpho::tree::propagate_representant(tree, out);
+  return out;
+}
+
+
+
 
 int main(int argc, char* argv[])
 {
-  using namespace mln;
   using value::int_u8;
   std::string arg;
   unsigned nb_components = 0;
@@ -140,19 +180,23 @@ int main(int argc, char* argv[])
   p_array< mln_psite_(A) > obj_array; // Array of object components.
 
   if (mydebug) {
-    std::stringstream s("Run max accumulator, look for ");
+    std::stringstream s("Run max accumulator, look for ", std::stringstream::out|std::stringstream::in|std::stringstream::ate);
     if (nb_components)
       s << nb_components << " components.";
-    else
+    else if (sharpness)
       s << "components whose treshold > " << sharpness;
+    else
+      s << "components util leaves are glutted";
     dsp(s.str());
   }
 
-  if (!nb_components) {
+  if (sharpness != 0) {
     mln_VAR(predicate, pw::value(a) > pw::cst(sharpness));
     obj_array = morpho::tree::run_while(tree, a, argmax, predicate);
-  } else {
+  } else if (nb_components) {
     obj_array = morpho::tree::run_ntimes(tree, a, argmax, nb_components);
+  } else {
+    obj_array = morpho::tree::run_until_glutted_leaves(tree, a, argmax);
   }
 
 
@@ -169,19 +213,24 @@ int main(int argc, char* argv[])
   if (mydebug) {
     dsp("Create mask and propagate");
   }
-  typedef mln_ch_value_(I, bool) M;
-  M mask;
-  initialize(mask, a);
-  data::fill(mask, false);
 
-  mln_fwd_piter_(p_array< mln_psite_(I) >) c(obj_array);
-  for_all(c)
-  {
-    mask(c) = true;
-    propagate_node_to_descendants(c, tree, mask);
-  }
-  morpho::tree::propagate_representant(tree, mask);
-  io::pbm::save(mask, "binary.pbm");
+  A pre_output = set_value_to_components(a, tree, obj_array, 0);
+  I output = level::stretch(int_u8(), pre_output);
+  io::pgm::save(output, "components.pgm");
+
+
+//   typedef mln_ch_value_(I, bool) M;
+//   M mask;
+//   initialize(mask, a);
+//   data::fill(mask, false);
+
+//   mln_fwd_piter_(p_array< mln_psite_(I) >) c(obj_array);
+//   for_all(c)
+//   {
+//     mask(c) = true;
+//     propagate_node_to_descendants(c, tree, mask);
+//   }
+
 
   // mask now contains all nodes related to objects
 
