@@ -267,8 +267,8 @@ void usage(char* argv[])
   std::cerr << "usage: " << argv[0] << " input.pbm output.pgm" << std::endl
 	    << "  HSC @ ICDAR'2009" << std::endl
 	    << "  input.pbm:   input 2D binary image (text is black; background is white)" << std::endl
-	    << "  output.dump: output image where line components are labeled (int_u8)" << std::endl
-	    << "               0 is the background label." << std::endl;
+	    << "  output.pgm: output image where line components are labeled (int_u8)" << std::endl
+	    << "              0 is the background label." << std::endl;
   std::abort();
 }
 

@@ -1,5 +1,13 @@
 2009-04-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Rename ICDAR-HSC 'input to lines' source.
+
+	* icdar/2009/hsc/main.cc: Rename as...
+	* icdar/2009/hsc/input_to_lines.cc: ...this.
+	(usage): Fix text.
+
+2009-04-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Make a common room for ICDAR.
 
 	* icdar: New directory.
