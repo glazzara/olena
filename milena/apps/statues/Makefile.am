@@ -110,3 +110,4 @@ TESTS += test-mesh-complex-max-curv-segm
 # Skeletonization program working on precomputed meshes with curvatures data.
 bin_PROGRAMS += mesh-complex-skel
 mesh_complex_skel_SOURCES = mesh-complex-skel.cc
+TESTS += test-mesh-complex-skel

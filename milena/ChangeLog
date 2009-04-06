@@ -1,5 +1,12 @@
 2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise apps/statues/mesh-complex-skel.
+
+	* apps/statues/test-mesh-complex-skel.in: New test.
+	* apps/statues/Makefile.am (TESTS): Add test-mesh-complex-skel.
+
+2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Write and application computing skeletons on complex-based images.
 
 	* apps/statues/mesh-complex-skel.cc: New.
