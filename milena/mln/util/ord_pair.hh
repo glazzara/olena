@@ -43,8 +43,6 @@ namespace mln
   namespace util
   {
 
-    // FIXME: Rename as ord_pair.
-
     ///  Ordered pair structure s.a. this->first <= this->second;
     /// ordered pairs are partially ordered using lexicographical
     /// ordering.

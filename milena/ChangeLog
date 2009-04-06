@@ -1,5 +1,9 @@
 2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/util/ord_pair.hh: Remove outdated FIXME.
+
+2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Typos in comments.
 
 	* apps/statues/mesh-complex-max-curv-segm.cc,
