@@ -1,5 +1,14 @@
 2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Aesthetic changes in the output of the save routine for OFF file.
+
+	* mln/io/off/save.hh
+	(mln::io::off::internal::float_off_saver::write_face_data)
+	(mln::io::off::internal::rgb8_off_saver::write_face_data):
+	Do not print extra blank lines.
+
+2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a load routine for color (RGB) OFF (surface mesh) files.
 
 	* mln/io/off/load.hh

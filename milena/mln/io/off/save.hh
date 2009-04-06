@@ -127,7 +127,6 @@ namespace mln
 	  void write_face_data(std::ostream& ostr, const value& v) const;
 	};
 
-
 	struct int_u8_off_saver
 	  : public off_saver< int_u8_2complex_image3df, int_u8_off_saver >
 	{
@@ -423,7 +422,7 @@ namespace mln
 	  mln_assertion(0.0f <= v);
 	  mln_assertion(v <= 1.0f);
 	  ostr << ' ' << v << ' ' << v << ' ' << v
-	       << ' ' << 1.0f << std::endl;
+	       << ' ' << 1.0f;
 	}
 
 	void
@@ -436,7 +435,7 @@ namespace mln
 	     the range 0..255.  A fourth channel, A, controls the
 	     transparency.  */
 	  ostr << ' ' << v.red() << ' ' << v.green() << ' ' << v.blue()
-	       << ' ' << 1.0f << std::endl;
+	       << ' ' << 1.0f;
 	}
 	/* \} */
 
