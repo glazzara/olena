@@ -1,3 +1,12 @@
+2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a load routine for color (RGB) OFF (surface mesh) files.
+
+	* mln/io/off/load.hh
+	(mln::io::off::load(rgb8_2complex_image3df, const std::string&)):
+	New function.
+	(mln::io::off::internal::rgb8_off_loader): New class.
+
 2009-04-03  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add optional paramater for plot::save().

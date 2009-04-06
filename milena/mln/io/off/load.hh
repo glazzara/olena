@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,6 +41,8 @@
 
 # include <string>
 
+# include <mln/literal/black.hh>
+
 # include <mln/core/concept/object.hh>
 # include <mln/core/alias/complex_image.hh>
 
@@ -63,6 +65,9 @@ namespace mln
 	  existence of faces.  */
       void load(bin_2complex_image3df& ima, const std::string& filename);
 
+      // FIXME: Implement a load routine for for
+      // int_u8_2complex_image3df.
+
       /** Load a floating-point OFF image into a complex image.
 
 	  \param[out] ima      A reference to the image to construct.
@@ -71,6 +76,15 @@ namespace mln
 	  Read floating-point data is attached to 2-faces only;
 	  1-faces and 0-faces are set to 0.0f.  */
       void load(float_2complex_image3df& ima, const std::string& filename);
+
+      /** Load a 3x8-bit RGB (color) OFF image into a complex image.
+
+	  \param[out] ima      A reference to the image to construct.
+	  \param[in]  filename The name of the file to load.
+
+	  Read floating-point data is attached to 2-faces only;
+	  1-faces and 0-faces are set to 0.0f.  */
+      void load(rgb8_2complex_image3df& ima, const std::string& filename);
 
 
       namespace internal
@@ -118,6 +132,10 @@ namespace mln
 	};
 
 
+	/* Factor float_off_loader::reserve and rgb8_off_loader::reserve
+	   and float_off_loader::assign and rgb8_off_loader::assign
+	   by introducing an intermediate class.  */
+
 	struct float_off_loader
 	  : public off_loader< float_2complex_image3df, float_off_loader >
 	{
@@ -132,6 +150,23 @@ namespace mln
 
 	  /// 2-face floating-point values.
 	  std::vector<float> face_value;
+	};
+
+
+	struct rgb8_off_loader
+	  : public off_loader< rgb8_2complex_image3df, rgb8_off_loader >
+	{
+	  /// Read face data.
+	  void read_face_data(std::istream& istr);
+
+	  /// Pre-allocate data.
+	  void reserve(unsigned nvertices, unsigned nedges, unsigned nfaces);
+
+	  /// Assign values to image.
+	  void assign(values& vs, const domain& s);
+
+	  /// 2-face floating-point values.
+	  std::vector<value::rgb8> face_value;
 	};
 
       } // end of namespace mln::io::off::internal
@@ -159,6 +194,15 @@ namespace mln
 	internal::float_off_loader()(ima, filename);
 	trace::exiting("mln::io::off::load");
       }
+
+      void
+      load(rgb8_2complex_image3df& ima, const std::string& filename)
+      {
+	trace::entering("mln::io::off::load");
+	internal::rgb8_off_loader()(ima, filename);
+	trace::exiting("mln::io::off::load");
+      }
+
 
 
       /*-------------------------.
@@ -485,6 +529,25 @@ namespace mln
 	  mln_assertion(0.0f <= a);  mln_assertion(a <= 1.0f);
 	  face_value.push_back(r);
 	}
+
+	void
+	rgb8_off_loader::read_face_data(std::istream& istr)
+	{
+	  /* We just use R, G, and B and ignore A (transparency) when
+	     considering the value (``color'') associated to a face.
+
+	     R must (and G, B and A should) be floating-point values
+	     between 0 and 1, according to the OFF file format
+	     definition.  */
+	  // FIXME: `A' should be optional.
+	  float r, g, b, a;
+	  istr >> r >> g >> b >> a;
+	  mln_assertion(0.0f <= r);  mln_assertion(r <= 1.0f);
+	  mln_assertion(0.0f <= g);  mln_assertion(g <= 1.0f);
+	  mln_assertion(0.0f <= b);  mln_assertion(b <= 1.0f);
+	  mln_assertion(0.0f <= a);  mln_assertion(a <= 1.0f);
+	  face_value.push_back(value::rgb8(r, g, b));
+	}
 	/* \} */
 
 
@@ -506,6 +569,15 @@ namespace mln
 
 
 	void
+	rgb8_off_loader::reserve(unsigned /* nvertices */,
+				 unsigned /* nedges */,
+				 unsigned nfaces)
+	{
+	  face_value.reserve(nfaces);
+	}
+
+
+	void
 	bin_off_loader::assign(values& vs, const domain& s)
 	{
 	  // Default values.
@@ -519,6 +591,16 @@ namespace mln
 	  // Default values for n-face with n in [0, D[.
 	  for (unsigned i = 0; i < D; ++i)
 	    vs[i].insert(vs[i].begin(), s.cplx().nfaces(i), 0.0f);
+	  // Values for D-faces.
+	  vs[D] = face_value;
+	}
+
+	void
+	rgb8_off_loader::assign(values& vs, const domain& s)
+	{
+	  // Default values for n-face with n in [0, D[.
+	  for (unsigned i = 0; i < D; ++i)
+	    vs[i].insert(vs[i].begin(), s.cplx().nfaces(i), literal::black);
 	  // Values for D-faces.
 	  vs[D] = face_value;
 	}
