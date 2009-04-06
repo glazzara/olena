@@ -1,5 +1,14 @@
 2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add some simple triangle meshes.
+
+	* mesh/one-triangle.off: 
+	* mesh/two-triangles.off: 
+	* mesh/three-triangles.off:
+	New.
+
+2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Aesthetic changes in the output of the save routine for OFF file.
 
 	* mln/io/off/save.hh
