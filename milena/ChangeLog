@@ -1,5 +1,17 @@
 2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Write and application computing skeletons on complex-based images.
+
+	* apps/statues/mesh-complex-skel.cc: New.
+	* apps/statues/save_bin_alt.hh: New.
+	Workaround over mln::io::off::save's limitations.
+	* mln/topo/complex.hh [NDEBUG]: Remove a warning.
+	* apps/statues/Makefile.am (AM_CXXFLAGS): Add -Wall -Wextra.
+	(bin_PROGRAMS): Add mesh-complex-skel.
+	(mesh_complex_skel_SOURCES): New.
+
+2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Allow the comparison of faces of different dimensions using `<'.
 
 	* mln/topo/face.hh (operator< (const face<D>&, const face<D>&)):

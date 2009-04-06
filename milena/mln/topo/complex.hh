@@ -951,6 +951,8 @@ namespace mln
       {
 	// If we reached this method, then N should be 0.
 	mln_precondition(n == 0);
+	// Prevent ``unused variable'' warnings when NDEBUG is defined.
+	(void) n;
 	return f(faces_);
       }
 

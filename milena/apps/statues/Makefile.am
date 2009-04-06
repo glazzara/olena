@@ -8,7 +8,8 @@ include $(top_srcdir)/external/trimesh/gluit/gluit.mk
 AM_CPPFLAGS = -I$(top_srcdir)/milena
 CPPFLAGS_trimesh = -I$(top_srcdir)/external/trimesh/include
 # Produce fast code.
-AM_CXXFLAGS = -O3 -DNDEBUG -ggdb
+# FIXME: This is GCC-dependent; use a variable computed by configure instead.
+AM_CXXFLAGS = -Wall -Wextra -ggdb -O3 -DNDEBUG
 # Find the trimesh library and its dependencies.
 #
 # Don't use TRIMESH_LDFLAGS, since it looks like the LDFLAGS of the
@@ -39,6 +40,9 @@ TESTS =
 #
 # TESTS += test-mesh-segm
 
+# FIXME: mesh_skel is unfinished.  Anyway, it should be superseded by
+# another program, using no Trimesh code.
+
 # mesh_skel_SOURCES = mesh-skel.cc io.hh
 # mesh_skel_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
 # mesh_skel_LDFLAGS = $(LDFLAGS_trimesh)
@@ -68,6 +72,9 @@ TESTS += test-mesh-max-curv
 noinst_HEADERS = trimesh/misc.hh
 EXTRA_DIST = trimesh/README
 
+## Segmentation.
+## ------------
+
 # A small program exercising the curvature computation routines ported
 # from Trimesh to Milena.
 bin_PROGRAMS += mesh-complex-max-curv
@@ -96,3 +103,10 @@ TESTS += test-mesh-complex-max-curv-segm
 # FIXME: Implement `mesh-complex-pinv-curv-segm' (factor as much
 # code as possible with `mesh-complex-max-curv-segm'.
 # ...
+
+## Skeletonization.
+## ----------------
+
+# Skeletonization program working on precomputed meshes with curvatures data.
+bin_PROGRAMS += mesh-complex-skel
+mesh_complex_skel_SOURCES = mesh-complex-skel.cc
