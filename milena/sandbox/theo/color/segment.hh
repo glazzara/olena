@@ -16,7 +16,7 @@
 #include <mln/pw/all.hh>
 
 #include <mln/morpho/tree/data.hh>
-#include <mln/morpho/closing_attribute.hh>
+#include <mln/morpho/closing/leveling.hh>
 
 #include "change_attributes.hh"
 
@@ -120,7 +120,7 @@ namespace mln
 
     // Propagate attribute from a site to its parent.
     {
-      mln_fwd_piter(T) p(t.domain());
+      mln_up_site_piter(T) p(t); // WAS: mln_fwd_piter(T) p(t.domain());
       for_all(p)
 	if (! t.is_root(p))
 	  acc(t.parent(p)).take(acc(p));
@@ -131,12 +131,11 @@ namespace mln
     // Change accumulator into its result.
     {
       initialize(attr, acc);
-      typedef typename T::nodes_t N;
-      mln_piter(N) p(t.nodes());
-      for_all(p)
+      mln_node_piter(T) n(t);
+      for_all(n)
       {
-	mln_invariant(t.is_a_node(p));
-	attr(p) = acc(p).to_result();
+	mln_invariant(t.is_a_node(n));
+	attr(n) = acc(n).to_result();
       }
     }
 
@@ -213,14 +212,22 @@ namespace mln
     data::fill(nchildren, 0);
 
     {
-      mln_fwd_piter(T) p(t.domain());
-      // Propagate attribute from a site to its parent.
-      for_all(p)
-  	if (t.is_a_non_root_node(p))
+      mln_up_node_piter(T) n(t);
+      for_all(n)
+  	if (! t.is_root(n))
   	  {
-  	    mln_invariant(t.is_a_node(t.parent(p)));
-  	    ++nchildren(t.parent(p)); // so parent(p) is a node
+  	    mln_invariant(t.is_a_node(t.parent(n)));
+  	    ++nchildren(t.parent(n)); // so parent(n) is a node
   	  }
+
+      // WAS:
+//       mln_fwd_piter(T) p(t.domain());
+//       for_all(p)
+//   	if (t.is_a_non_root_node(p))
+//   	  {
+//   	    mln_invariant(t.is_a_node(t.parent(p)));
+//   	    ++nchildren(t.parent(p)); // so parent(p) is a node
+//   	  }
     }
     
     return nchildren;
@@ -325,7 +332,10 @@ namespace mln
     mln_concrete(I) g;
     {
       initialize(g, t.f());
-      mln_bkd_piter(T) p(t.domain());
+
+//       mln_bkd_piter(T) p(t.domain());
+
+      mln_dn_site_piter(T) p(t);
       for_all(p)
 	if (t.is_a_node(p) && a(p) >= lambda)
 	  g(p) = t.f(p);
@@ -357,7 +367,7 @@ namespace mln
 	      unsigned n_objects, unsigned less,
 	      bool echo = false)
   {
-    mln_concrete(I) g_ref = morpho::closing_attribute<A>(f, nbh, lambda);
+    mln_concrete(I) g_ref = morpho::closing::leveling(f, nbh, A(), lambda);
 
     unsigned n_regmins_g_ref;
     mln_ch_value(I, unsigned) regmin_g_ref = labeling::regional_minima(g_ref, nbh, n_regmins_g_ref);
@@ -399,6 +409,40 @@ namespace mln
 	  }
       }
   }
+
+
+
+
+
+
+  template <typename A, typename T, typename N>
+  inline
+  mln_concrete(typename T::function)
+    do_filter(A& a, const T& t, const N& nbh,
+	      const mln_value(A)& lambda)
+  {
+    typedef typename T::function I;
+
+    const typename T::parent_t& par = t.parent_image();
+
+    // No need for attributes back propagation since we process the
+    // tree downwards: nodes are set *before* their children nodes and
+    // their related (non-nodes) sites.
+
+    mln_concrete(I) g;
+    initialize(g, t.f());
+
+    mln_dn_site_piter(T) p(t);
+    for_all(p)
+      if (t.is_a_node(p) && a(p) >= lambda)
+	g(p) = t.f(p);
+      else
+	g(p) = g(par(p));
+    
+    return g;
+  }
+
+
 
 
 

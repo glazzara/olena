@@ -16,8 +16,11 @@ namespace mln
     initialize(deja_vu, a);
     data::fill(deja_vu, false);
 
-    typedef typename T::nodes_t nodes_t;
-    mln_fwd_piter(nodes_t) p(t.nodes());
+    // WAS:
+    // typedef typename T::nodes_t nodes_t;
+    // mln_fwd_piter(nodes_t) p(t.nodes());
+
+    mln_up_node_piter(T) p(t);
     for_all(p)
       {
 	if (deja_vu(p))
@@ -91,7 +94,8 @@ namespace mln
   void
   back_propagate(const T& t, A& a)
   {
-    mln_fwd_piter(T) p(t.domain());
+    // WAS: mln_fwd_piter(T) p(t.domain());
+    mln_site_piter(T) p(t);
     for_all(p)
       if (! t.is_a_node(p))
 	{

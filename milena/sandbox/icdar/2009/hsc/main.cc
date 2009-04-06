@@ -264,8 +264,11 @@ namespace mln
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.pbm output.pgm [output.ppm]" << std::endl
-	    << "  ICDAR'2009: HSC." << std::endl;
+  std::cerr << "usage: " << argv[0] << " input.pbm output.pgm" << std::endl
+	    << "  HSC @ ICDAR'2009" << std::endl
+	    << "  input.pbm:   input 2D binary image (text is black; background is white)" << std::endl
+	    << "  output.dump: output image where line components are labeled (int_u8)" << std::endl
+	    << "               0 is the background label." << std::endl;
   std::abort();
 }
 
@@ -277,7 +280,7 @@ int main(int argc, char* argv[])
   using value::int_u8;
   using value::rgb8;
 
-  if (argc != 3 && argc != 4)
+  if (argc != 3)
     usage(argv);
 
 
@@ -362,26 +365,14 @@ int main(int argc, char* argv[])
   {
     image2d<int_u8> output(input.domain());
 
-    image2d<rgb8>
-      cool = debug::colorize(rgb8(), spc, n_basins),
-      lab(input.domain());
-
     mln_piter_(box2d) p(input.domain());
     for_all(p)
       if (input(p))
-	{
-	  output(p) = 0;
-	  lab(p) = literal::black;
-	}
+	output(p) = 0;
       else
-	{
-	  output(p) = spc.at_(p.row() / subsampling_factor, p.col() / subsampling_factor);
-	  lab(p) = cool.at_(p.row() / subsampling_factor, p.col() / subsampling_factor);
-	}
+	output(p) = spc.at_(p.row() / subsampling_factor, p.col() / subsampling_factor);
 
     io::pgm::save(output, argv[2]);
-    if (argc == 4)
-      io::ppm::save(lab, argv[3]);
   }
 
 

@@ -1,3 +1,27 @@
+2009-04-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make a common room for ICDAR.
+
+	* icdar: New directory.
+	* icdar/2009: New directory.
+	* icdar/2009/hsc: New directory.
+	* theo/icdar/hsc/main.cc (tmp_clo): New debug image.
+	Copy to...
+	* icdar/2009/hsc/main.cc: ...this new file.
+	(output): Update.
+	* theo/exec/diff_abs.cc: New.
+
+	Propagate Edwin's modifications.
+
+	* theo/esiee/laurent/presentation/wst_edge.cc: Update.
+	* theo/color/change_attributes.hh: Update.
+	* theo/color/segment.hh: Update.
+	* theo/color/segment_rgb_pixels.cc: Update.
+	* theo/color/filter_rgb_pixels.cc: New.
+	* theo/color/filter_blen_rgb_edges.cc: New.
+	* lazzara/icdar/quasi.cc: New.
+	* lazzara/icdar/binarization.cc: Augment.
+
 2009-04-05  Frederic Bour  <bour@lrde.epita.fr>
 
 	Update to our line recognition using component trees..

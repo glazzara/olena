@@ -15,7 +15,6 @@
 #include <mln/level/convert.hh>
 
 #include <mln/morpho/watershed/flooding.hh>
-#include <mln/morpho/attribute/card.hh>
 
 #include "mean_rgb_pix.hh"
 #include "segment.hh"
@@ -56,6 +55,44 @@ namespace mln
 
 
 
+  // Distance between 2 rgb8 colors.
+  // -----------------------------------------------------------
+
+
+  value::int_u8 dist_mean(const value::rgb8& c1, const value::rgb8& c2)
+  {
+    unsigned d = 0;
+    d += (math::diff_abs(c1.red(), c2.red()) + 2) / 3;
+    d += (math::diff_abs(c1.green(), c2.green()) + 2) / 3;
+    d += (math::diff_abs(c1.blue(), c2.blue()) + 2) / 3;
+    if (d > 255)
+      d = 255;
+    return d;
+  }
+
+  value::int_u8 dist_sat(const value::rgb8& c1, const value::rgb8& c2)
+  {
+    unsigned d = 0;
+    d += math::diff_abs(c1.red(), c2.red());
+    d += math::diff_abs(c1.green(), c2.green());
+    d += math::diff_abs(c1.blue(), c2.blue());
+    if (d > 255)
+      d = 255;
+    return d;
+  }
+
+  value::int_u8 dist_max(const value::rgb8& c1, const value::rgb8& c2)
+  {
+    unsigned d = 0, d_;
+    d_ = math::diff_abs(c1.red(), c2.red());
+    if (d_ > d) d = d_;
+    d_ = math::diff_abs(c1.green(), c2.green());
+    if (d_ > d) d = d_;
+    d_ = math::diff_abs(c1.blue(), c2.blue());
+    if (d_ > d) d = d_;
+    return d;
+  }
+
 
 
   // From 'mean color' attributes to 'mean difference p/par(p)'.
@@ -78,7 +115,7 @@ namespace mln
     
     mln_up_node_piter(T) n(t);
     for_all(n)
-      d(n) = dist(a(n), a(t.parent(n)));
+      d(n) = dist_max(a(n), a(t.parent(n)));
 
     if (echo)
       {
@@ -90,16 +127,19 @@ namespace mln
   }
 
 
+
+
+
 } // mln
 
 
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.ppm n echo output.ppm" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input.ppm lambda echo output.ppm" << std::endl;
   std::cerr << "color version on pixels (without edges)" << std::endl;
-  std::cerr << "attribute is 'card'" << std::endl;
-  std::cerr << "  n >= 2" << std::endl;
+  std::cerr << "attribute is 'distance of color means'" << std::endl;
+  std::cerr << "  lambda >= 0 and <= 255" << std::endl;
   std::cerr << "  echo = 0 (mute) or 1 (verbose)" << std::endl;
   abort();
 }
@@ -127,7 +167,9 @@ int main(int argc, char* argv[])
   I input;
   io::ppm::load(input, argv[1]);
 
-  unsigned n_objects = atoi(argv[2]);
+  int lambda = atoi(argv[2]);
+  if (lambda < 0 || lambda > 255)
+    usage(argv);
 
   bool echo = atoi(argv[3]);
 
@@ -149,17 +191,6 @@ int main(int argc, char* argv[])
   tree_t t(f, s, c4());
 
   
-  morpho::attribute::card<F> a_;
-  mln_VAR(a, compute_attribute_on_nodes(a_, t));
-  
-  unsigned lambda;
-  unsigned less;
-  image2d<int_u8> g = run_filter(a, t, c4(), n_objects, // input
-				 less, lambda,         // output
-				 echo);
-
-  /*
-  
   accu::rgb_image_ = input;
   accu::mean_rgb_pix< util::pix<F> > a_;
   mln_VAR(a, compute_attribute_on_nodes(a_, t));
@@ -171,23 +202,14 @@ int main(int argc, char* argv[])
       std::cout << "dists growing:" << std::endl;
       display_tree_attributes(t, d);
     }
-
-  // BAD: extinct_attributes(t, d, echo);
   
-  int_u8 lambda;
-  unsigned less;
-  image2d<int_u8> g = run_filter(d, t, c4(), n_objects, // input
-				 less, lambda,         // output
-				 echo);
-
-  */
+  image2d<int_u8> g = do_filter(d, t, c4(), lambda);
 
 
   io::pbm::save( (pw::value(g) != pw::value(f)) | f.domain(),
 		 "temp_activity.pbm" );
 
 
-//   if (echo)
 //     debug::println("activity (g != f) = ", (pw::value(g) != pw::value(f)) | f.domain());
 
 
