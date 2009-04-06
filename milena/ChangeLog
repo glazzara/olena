@@ -1,3 +1,8 @@
+2009-04-06  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add tree iterator regardless the way of traversal.
+	* mln/morpho/tree/data.hh: Add node_piter, site_piter and leaf_piter.
+
 2009-04-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	* mln/util/fibonacci_heap.hh: Convert to Unix line terminators.

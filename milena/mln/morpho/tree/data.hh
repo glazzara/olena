@@ -31,11 +31,9 @@
 
 /// \file mln/morpho/tree/data.hh
 ///
-/// FIXME: First Attempt.
+/// TODO: think about site iterator (using image site iterator instead
+/// of S container iterator) to go faster.
 ///
-/// \todo Fix the issue pointed to by Edwin without modifying the way
-/// sites are browsed (see the documentation of compute_parent to
-/// learn why we want the 1st pass to be in forward scan of s).
 
 # include <mln/morpho/tree/compute_parent.hh>
 # include <mln/core/site_set/p_array.hh>
@@ -49,6 +47,9 @@
 # define mln_dn_node_piter(T)	typename T::dn_node_piter
 # define mln_up_leaf_piter(T)	typename T::up_leaf_piter
 # define mln_dn_leaf_piter(T)	typename T::dn_leaf_piter
+# define mln_site_piter(T)	typename T::site_piter
+# define mln_node_piter(T)	typename T::node_piter
+# define mln_leaf_piter(T)	typename T::leaf_piter
 # define mln_preorder_piter(T)	typename T::preorder_piter
 
 # define mln_up_site_piter_(T)	T::up_site_piter
@@ -57,6 +58,9 @@
 # define mln_dn_node_piter_(T)  T::dn_node_piter
 # define mln_up_leaf_piter_(T)	T::up_leaf_piter
 # define mln_dn_leaf_piter_(T)	T::dn_leaf_piter
+# define mln_site_piter_(T)	T::site_piter
+# define mln_node_piter_(T)	T::node_piter
+# define mln_leaf_piter_(T)	T::leaf_piter
 # define mln_preorder_piter_(T) T::preorder_piter
 
 namespace mln
@@ -91,12 +95,6 @@ namespace mln
       /// Preorder tree traversal iterator.
       template <typename T> struct preorder_piter;
 
-      /// Postorder tree traversal iterator.
-      //template <typename T> struct postorder_piter;
-
-      // FIXME: Doc!
-
-
 
       template <typename I, typename S>
       class data
@@ -122,20 +120,19 @@ namespace mln
 	// Iterate on all sites.
 	typedef mln::morpho::tree::up_site_piter<self_> up_site_piter;
 	typedef mln::morpho::tree::dn_site_piter<self_> dn_site_piter;
+	typedef up_site_piter site_piter;
 
 	// Iterate on nodes only.
 	typedef mln::morpho::tree::up_node_piter<self_> up_node_piter;
 	typedef mln::morpho::tree::dn_node_piter<self_> dn_node_piter;
+	typedef up_node_piter node_piter;
 
 	// Iterate on leaves only.
 	typedef mln::morpho::tree::up_leaf_piter<self_> up_leaf_piter;
 	typedef mln::morpho::tree::dn_leaf_piter<self_> dn_leaf_piter;
+	typedef up_leaf_piter leaf_piter;
 
 	typedef mln::morpho::tree::preorder_piter<self_> preorder_piter;
-
-// 	typedef mln_bkd_piter(S) piter;
-// 	typedef mln_bkd_piter(S) fwd_piter;
-// 	typedef mln_fwd_piter(S) bkd_piter;
 
 	/// Constructor.
 	template <typename N>
