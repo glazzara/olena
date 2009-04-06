@@ -25,13 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_BINARY_HH
-# define MLN_FUN_BINARY_HH
-
-# include <mln/core/concept/meta_function.hh>
-# include <mln/fun/spe/binary.hh>
-# include <mln/trait/next/solve.hh>
-# include <mln/trait/fun.hh>
+#ifndef MLN_FUN_PARAM_HH
+# define MLN_FUN_PARAM_HH
 
 namespace mln
 {
@@ -39,56 +34,55 @@ namespace mln
   namespace fun
   {
 
-    template <typename F>
-    struct binary : mln::Meta_Function_vv2v< binary<F> >
+    template <typename T>
+    struct stored
     {
-      typedef F flag;
-      typedef mln_trait_fun_storage(flag) storage;
+      typedef T value;
 
-      template <typename T1, typename T2>
-      struct with
+      const T& to_value() const
       {
-	typedef spe::binary<F, T1, T2> ret;
-      };
-
-      template <typename T1, typename T2>
-      typename with<T1, T2>::ret::result operator()(const T1& a, const T2& b) const
-      {
-	return typename with<T1, T2>::ret(storage_)(a, b);
+	return t_;
       }
 
-      template <typename U>
-      void init(const U& value)
+      T& to_value()
       {
-	storage_ = mln::trait::fun::internal::introspect::has_storage_t<flag, void>::compute(value);
-      };
-
-      binary()
-      {
+	return t_;
       }
 
-      template <typename U>
-      binary(const U& param)
+      operator const T& () const
       {
-	this->init(param);
+	return to_value();
       }
 
-      stored<storage>& storage_get()
+      operator T& ()
       {
-	return storage_;
+	return to_value();
       }
 
-      const stored<storage>& storage_get() const
+      stored& operator = (const T& t)
       {
-	return storage_;
+	t_ = t;
+	return *this;
       }
 
     protected:
-      stored<storage> storage_;
+      T t_;
+    };
+
+    template <>
+    struct stored<void>
+    {
+    };
+
+    template <typename F>
+    struct parameter
+    {
+      typedef void param;
+      typedef void storage;
     };
 
   } // end of namespace mln::fun
 
 } // end of namespace mln
 
-#endif /* ! MLN_FUN_BINARY_HH */
+#endif /* ! MLN_FUN_PARAM_HH */

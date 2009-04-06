@@ -30,6 +30,7 @@
 
 # include <mln/fun/binary.hh>
 # include <mln/fun/composition.hh>
+# include <mln/fun/param.hh>
 
 namespace mln
 {
@@ -42,13 +43,29 @@ namespace mln
     {
 
       template <template <class> class CatF, typename F, template <class> class CatG, typename G>
+      struct compose_helper;
+
+    }
+
+    template <template <class> class CatF,  typename F,
+	      template <class> class CatG, typename G>
+    struct parameter< internal::compose_helper<CatF, F, CatG, G> >
+    {
+      typedef typename internal::composition<CatF, F, CatG, G>::exact_type result;
+      typedef typename result::param param;
+    };
+
+    namespace internal
+    {
+
+      template <template <class> class CatF, typename F, template <class> class CatG, typename G>
       struct compose_helper
       {
 	typedef F argument1;
 	typedef G argument2;
 
 	typedef typename composition<CatF, F, CatG, G>::exact_type result;
-	typedef typename result::param param;
+	typedef mln_trait_fun_param(result) param;
 
 	static result read(const F& f, const G& g)
 	{

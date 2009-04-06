@@ -41,216 +41,224 @@ namespace mln
     namespace spe
     {
 
-      namespace internal
+      // Wrapper for bijective functions
+      template <typename Fun, typename T>
+      struct lwrapper
       {
+	typedef typename Fun::result   result;
+	typedef typename Fun::argument argument;
+	typedef typename Fun::lvalue   lvalue;
+	typedef lwrapper               lresult;
 
-	// Wrapper for bijective functions
-	template <typename Impl, typename T>
-	struct unary_modifier
+	lwrapper(const Fun& f, T& x)
+	: x_(&x), f_(&f)
 	{
-	  typedef typename Impl::result   result;
-	  typedef typename Impl::argument argument;
-	  typedef typename Impl::lvalue   lvalue;
-	  typedef unary_modifier          lresult;
+	}
 
-	  unary_modifier(const Impl& impl, T& x)
-	  : x_(&x), impl_(&impl)
-	  {
-	  }
-
-	  result to_result() const
-	  {
-	    return impl_->read(*x_);
-	  };
-
-	  operator result() const
-	  {
-	    return to_result();
-	  };
-
-	  const result& operator = (const result& r) const
-	  {
-	    argument x(*x_);
-	    impl_->write(x, r);
-	    *x_ = x;
-
-	    return r;
-	  }
-
-	  private:
-	    T *x_;
-	    const Impl *impl_;
+	result to_result() const
+	{
+	  return (*f_)(*const_cast<const T*>(x_));
 	};
 
-	template <typename Impl>
-	struct unary_modifier<Impl, typename Impl::argument>
+	operator result() const
 	{
-	  typedef typename Impl::result   result;
-	  typedef typename Impl::argument argument;
-	  typedef typename Impl::lvalue   lvalue;
-	  typedef unary_modifier          lresult;
-
-	  unary_modifier(const Impl& impl, argument& x)
-	  : x_(&x), impl_(&impl)
-	  {
-	  }
-
-	  result to_result() const
-	  {
-	    return impl_->read(*x_);
-	  };
-
-	  operator result() const
-	  {
-	    return to_result();
-	  };
-
-	  const result& operator = (const result& r) const
-	  {
-	    impl_->write(*x_, r);
-
-	    return r;
-	  }
-
-	  private:
-	    argument *x_;
-	    const Impl *impl_;
+	  return to_result();
 	};
 
-	template <typename Impl, typename Impl2, typename T>
-	struct unary_modifier<Impl, unary_modifier<Impl2, T> >
+	const result& operator = (const result& r) const
 	{
-	  typedef typename Impl::result   result;
-	  typedef typename Impl::argument argument;
-	  typedef typename Impl::lvalue   lvalue;
-	  typedef unary_modifier lresult;
+	  argument x(*x_);
+	  f_->set(x, r);
+	  *x_ = x;
 
-	  // FIXME: "argument& x" or "lvalue x" directly? ~~~
-	  unary_modifier(const Impl& impl, const unary_modifier<Impl2, T>& m)
-	  : m_(m), impl_(&impl)
-	  {
-	  }
+	  return r;
+	}
 
-	  result to_result() const
-	  {
-	    return impl_->read(m_.to_result());
-	  };
+	private:
+	  T *x_;
+	  const Fun *f_;
+      };
 
-	  operator result() const
-	  {
-	    return to_result();
-	  };
+      template <typename Fun>
+      struct lwrapper<Fun, typename Fun::argument>
+      {
+	typedef typename Fun::result   result;
+	typedef typename Fun::argument argument;
+	typedef typename Fun::lvalue   lvalue;
+	typedef lwrapper               lresult;
 
-	  const result& operator = (const result& r) const
-	  {
-	    argument m(m_);
-	    impl_->write(m, r);
-	    m_ = m;
+	lwrapper(const Fun& f, argument& x)
+	: x_(&x), f_(&f)
+	{
+	}
 
-	    return r;
-	  }
-
-	  private:
-	    const unary_modifier<Impl2, T> m_;
-	    const Impl *impl_;
+	result to_result() const
+	{
+	  return (*f_)(*const_cast<const argument*>(x_));
 	};
 
-      } // end of namespace mln::fun::internal
+	operator result() const
+	{
+	  return to_result();
+	};
 
-      // Forward declaration (defined in mln/fun/unary.hh)
+	const result& operator = (const result& r) const
+	{
+	  f_->set(*x_, r);
+
+	  return r;
+	}
+
+	private:
+	  argument *x_;
+	  const Fun *f_;
+      };
+
+      template <typename Fun, typename Any, typename T>
+      struct lwrapper<Fun, lwrapper<Any, T> >
+      {
+	typedef typename Fun::result   result;
+	typedef typename Fun::argument argument;
+	typedef typename Fun::lvalue   lvalue;
+	typedef lwrapper               lresult;
+
+	lwrapper(const Fun& f, const lwrapper<Any, T>& m)
+	: m_(m), f_(&f)
+	{
+	}
+
+	result to_result() const
+	{
+	  return (*f_)(m_.to_result());
+	};
+
+	operator result() const
+	{
+	  return to_result();
+	};
+
+	const result& operator = (const result& r) const
+	{
+	  argument m(m_);
+	  f_->set(m, r);
+	  m_ = m;
+
+	  return r;
+	}
+
+	private:
+	  const lwrapper<Any, T> m_;
+	  const Fun *f_;
+      };
+
       template <typename Fun, typename T>
       struct unary;
 
       namespace impl
       {
 
-	template <bool set, typename Fun, typename T>
-	struct unary_impl_set;
+	template <bool param, bool set, typename Fun, typename T>
+	struct unary_impl;
 
 	template <typename Fun, typename T>
-	struct unary_impl_set<false, Fun, T> : mln::Function_v2v< unary<Fun, T> >
+	struct unary_impl<false, false, Fun, T> : Function_v2v< unary<Fun, T> >
 	{
-	  typedef mln_trait_nunary(Fun, T) impl;
+	  typedef Fun flag;
+	  typedef mln_trait_nunary(Fun, T) def;
 
-	  typedef typename impl::argument argument;
-	  typedef typename impl::result   result;
-	  typedef mln_trait_fun_param(impl) param_;
-	  typedef mlc_if(mlc_equal(param_, void), impl, param_) init_param;
-
-	  unary_impl_set() {}
-
-	  unary_impl_set(const init_param& p) : impl_(p) {}
+	  typedef typename def::argument argument;
+	  typedef typename def::result   result;
 
 	  result operator () (const argument& value) const
 	  {
-	    return this->impl_.read(value);
+	    return def::read(value);
 	  }
 
-	protected:
-	  impl impl_;
+	  template <typename U>
+	  void init(const U& value)
+	  {
+	  };
+
 	};
 
 	template <typename Fun, typename T>
-	struct unary_impl_set<true, Fun, T> : unary_impl_set<false, Fun, T>
+	struct unary_impl<false, true, Fun, T> : unary_impl<false, false, Fun, T>
 	{
-	  typedef unary_impl_set<false, Fun, T> super;
-	  typedef typename super::impl    impl;
-
-	  typedef typename impl::argument argument;
-	  typedef typename impl::result   result;
-	  typedef typename impl::lvalue   lvalue;
+	  typedef unary_impl<false, false, Fun, T> super;
+	  typedef typename super::def::lvalue lvalue;
 
 	  template <typename U>
 	  struct lresult_with
 	  {
-	    typedef mln::fun::spe::internal::unary_modifier<impl, U> ret;
+	    typedef mln::fun::spe::lwrapper< unary<Fun, T>, U> ret;
 	  };
 
-	  typedef typename lresult_with<argument>::ret lresult;
+	  typedef typename lresult_with<typename super::argument>::ret lresult;
 
-	  unary_impl_set() {}
-	  unary_impl_set(const typename super::init_param& p) : super(p) {}
-
-	  void set(lvalue l, const result& r) const
+	  void set(lvalue l, const typename super::result& r) const
 	  {
-	    this->impl_.write(l, r);
+	    super::def::write(l, r);
 	  }
 
-	  lresult operator () (argument& value) const
+	  using super::operator ();
+
+	  lresult operator () (typename super::argument& value) const
 	  {
-	    return lresult(this->impl_, value);
+	    return lresult(this, value);
 	  }
-
-	  using super::operator();
-	};
-
-	template <bool set, typename Fun, typename T>
-	struct unary_impl_param;
-
-	template <typename Fun, typename T>
-	struct unary_impl_param<false, Fun, T>
-	: impl::unary_impl_set<mln_trait_fun_is_assignable_(mln_trait_nunary(Fun, T))::value, Fun, T>
-	{
-	  typedef impl::unary_impl_set<mln_trait_fun_is_assignable_(mln_trait_nunary(Fun, T))::value, Fun, T> super;
-
-	  unary_impl_param() {}
-	  unary_impl_param(const typename super::init_param& p) : super(p) {}
 	};
 
 	template <typename Fun, typename T>
-	struct unary_impl_param<true, Fun, T>
-	: unary_impl_param<false, Fun, T>
+	struct unary_impl<true, false, Fun, T> : Function_v2v< unary<Fun, T> >
 	{
-	  typedef unary_impl_param<false, Fun, T> super;
+	  typedef Fun flag;
+	  typedef mln_trait_nunary(Fun, T) def;
 
-	  unary_impl_param() {}
-	  unary_impl_param(const typename super::init_param& p) : super(p) {}
+	  typedef typename def::argument argument;
+	  typedef typename def::result   result;
 
-	  typedef typename super::param_ param;
+	  typedef mln_trait_fun_param(def) param;
+	  typedef mln_trait_fun_storage(def) storage;
 
-	  void init(const param& p)
+	  result operator () (const argument& value) const
 	  {
-	    this->impl_.init(p);
+	    return def::read(this->storage_, value);
+	  }
+
+	  template <typename U>
+	  void init(const U& value)
+	  {
+	    storage_ = mln::trait::fun::internal::introspect::has_storage_t<def, void>::compute(value);
+	  };
+
+	protected:
+	  storage storage_;
+	};
+
+	template <typename Fun, typename T>
+	struct unary_impl<true, true, Fun, T> : unary_impl<true, false, Fun, T>
+	{
+	  typedef unary_impl<true, false, Fun, T> super;
+	  typedef typename super::def::lvalue lvalue;
+
+	  template <typename U>
+	  struct lresult_with
+	  {
+	    typedef mln::fun::spe::lwrapper< unary<Fun, T>, U> ret;
+	  };
+
+	  typedef typename lresult_with<typename super::argument>::ret lresult;
+
+	  void set(lvalue l, const typename super::result& r) const
+	  {
+	    super::def::write(this->storage_, l, r);
+	  }
+
+	  using super::operator ();
+
+	  lresult operator () (typename super::argument& value) const
+	  {
+	    return lresult(exact(*this), value);
 	  }
 	};
 
@@ -258,13 +266,23 @@ namespace mln
 
       template <typename Fun, typename T>
       struct unary
-      : impl::unary_impl_param<mln_trait_fun_is_parametrable_(mln_trait_nunary(Fun, T))::value, Fun, T>
+      : impl::unary_impl<mln_trait_fun_is_parametrable_(mln_trait_nunary(Fun, T))::value,
+			 mln_trait_fun_is_assignable_(mln_trait_nunary(Fun, T))::value, Fun, T>
       {
-	typedef impl::unary_impl_param<mln_trait_fun_is_parametrable_(mln_trait_nunary(Fun, T))::value, Fun, T>
+	typedef mln_trait_nunary(Fun, T) def;
+	typedef impl::unary_impl<mln_trait_fun_is_parametrable_(def)::value,
+				 mln_trait_fun_is_assignable_(def)::value,
+				 Fun,
+				 T>
 		super;
 
 	unary() {}
-	unary(const typename super::init_param& p) : super(p) {}
+
+	template <typename U>
+	unary(const U& param)
+	{
+	  this->init(param);
+	}
 
 	using super::operator();
       };
@@ -273,12 +291,12 @@ namespace mln
 
   } // end of namespace mln::fun
 
-  template <typename Impl, typename T>
-  std::ostream& operator << (std::ostream& o, const mln::fun::spe::internal::unary_modifier<Impl, T>& m)
-  {
-    return o << m.to_result();
-  }
-
 } // end of namespace mln
+
+template <typename F, typename T>
+std::ostream& operator << (std::ostream& o, const mln::fun::spe::lwrapper<F, T>& m)
+{
+  return o << m.to_result();
+}
 
 #endif /* ! UNARY_HH */

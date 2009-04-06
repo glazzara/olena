@@ -41,199 +41,73 @@ namespace mln
     // Forward declarations, for composition with unary::operator()(Fun)
     struct compose;
 
-    template <typename F>
-    struct unary;
-
     namespace internal
     {
 
-      template <typename T>
+      template <typename U>
       struct unary_with {};
 
-      template <bool has_param, typename M, typename T>
-      struct unary_with_param_helper;
-
-      template <typename M, typename T>
-      struct unary_with_param_helper<false, M, T>
-      {
-	typedef mln::fun::spe::unary<M, T> function;
-
-	static function inst(const M&)
-	{
-	  return function();
-	};
-
-      };
-
-      template <typename M, typename T>
-      struct unary_with_param_helper<true, M, T>
-      {
-	typedef mln::fun::spe::unary<M, T> function;
-
-	static function inst(const M& m)
-	{
-	  return function(m.parameter());
-	};
-
-      };
-
-      template <bool has_lvalue, typename M, typename T>
-      struct unary_with_lvalue_helper;
-
-      template <typename M, typename T>
-      struct unary_with_lvalue_helper<false, M, T>
-      : unary_with_param_helper<mln_trait_fun_is_parametrable_(M)::value, M, T>
-      {
-	typedef unary_with_param_helper<mln_trait_fun_is_parametrable_(M)::value, M, T> super;
-	typedef typename super::function function;
-
-	static typename function::result call(const M& m, const T& x)
-	{
-	  function f(super::inst(m));
-	  return f(x);
-	}
-      };
-
-      template <typename M, typename T>
-      struct unary_with_lvalue_helper<true, M, T>
-      : unary_with_lvalue_helper<false, M, T>
-      {
-	typedef unary_with_lvalue_helper<false, M, T> super;
-	typedef typename super::function function;
-
-	static typename function::template lresult_with<T>::ret lcall(const M& m, T& x)
-	{
-	  function f(super::inst(m));
-	  return f(x);
-	}
-
-	static void set(const M& m, typename function::lvalue v, const T& x)
-	{
-	  function f(super::inst(m));
-	  f.set(v, x);
-	}
-      };
-
-      template <typename MF, typename MG, typename T>
-      struct unary_with_lvalue_helper<true, MF, mln::fun::spe::internal::unary_modifier<MG, T> >
-      : unary_with_lvalue_helper<false, MF, mln::fun::spe::internal::unary_modifier<MG, T> >
-      {
-	typedef unary_with_lvalue_helper<false, MF, typename MG::result > super;
-	typedef typename super::function function;
-
-	static typename function::template lresult_with<typename MG::result>::ret lcall(const MF& m, T& x)
-	{
-	  function f(super::inst(m));
-	  return f(x);
-	}
-
-	static typename function::template lresult_with< mln::fun::spe::internal::unary_modifier<MG, T> >::ret
-	lcall(const MF& m, const mln::fun::spe::internal::unary_modifier<MG, T>& x)
-	{
-	  function f(super::inst(m));
-	  return f(x);
-	}
-
-	static void set(const MF& m, typename function::lvalue v, const T& x)
-	{
-	  function f(super::inst(m));
-	  f.set(v, x);
-	}
-      };
-
-      template <typename M, typename T>
-      struct unary_with_helper
-      : unary_with_lvalue_helper<mln_trait_fun_is_assignable__1comma_(mln::fun::spe::unary<M, T>)::value, M, T>
-      {
-      };
-
-    } // end of namespace mln::fun::internal
+    }
 
     template <typename F>
     struct unary: mln::Meta_Function_v2v< F >
     {
+      typedef F flag;
+      typedef mln_trait_fun_param(flag) param;
+      typedef mln_trait_fun_storage(flag) storage;
 
       template <typename T>
       struct with {
-	typedef mln_trait_nunary(internal::unary_with<F>, T) impl;
-	typedef typename impl::function ret;
+	typedef mln_trait_nunary(internal::unary_with<F>, T) def;
+	typedef typename def::ret ret;
       };
 
       template <typename T>
       typename with<T>::ret::result operator()(const T& v) const
       {
-	return with<T>::impl::call(exact(*this), v);
+	return with<T>::def::call(exact(*this), v);
       }
 
       template <typename T>
       typename with<T>::ret::template lresult_with<T>::ret operator()(T& v) const
       {
-	return with<T>::impl::lcall(exact(*this), v);
-      }
-
-      template <typename G, typename U>
-      typename with< mln::fun::spe::internal::unary_modifier<G, U> >::ret::lresult
-      operator()(const mln::fun::spe::internal::unary_modifier<G, U>& v) const
-      {
-	return with< mln::fun::spe::internal::unary_modifier<G, U> >::impl::lcall(exact(*this), v);
+	return typename with<T>::ret(storage_get())(v);
       }
 
       template <typename T, typename R>
       void set(T& v, const R& r) const
       {
-	with<T>::impl::set(exact(*this), v, r);
+	typename with<T>::ret(storage_).set(v, r);
       }
 
-    };
-
-    template <typename F, typename P>
-    struct unary_param: unary<F>
-    {
-      typedef P param;
-
-      unary_param() {};
-      unary_param(const param& p) : p_(p) {};
-
-      void init(const param& p)
+      template <typename U>
+      void init(const U& value)
       {
-	p_ = p;
+	storage_ = mln::trait::fun::internal::introspect::has_storage_t<flag, void>::compute(value);
+      };
+
+      unary()
+      {
       }
 
-      param& parameter()
+      template <typename U>
+      unary(const U& param)
       {
-	return p_;
+	this->init(param);
       }
 
-      const param& parameter() const
+      stored<storage>& storage_get()
       {
-	return p_;
+	return storage_;
+      }
+
+      const stored<storage>& storage_get() const
+      {
+	return storage_;
       }
 
     protected:
-      param p_;
-
-    };
-
-    template <typename F>
-    struct unary_param<F, F>: unary<F>
-    {
-      typedef F param;
-
-      void init(const param& p)
-      {
-	exact(*this) = p;
-      }
-
-      param& parameter()
-      {
-	return exact(*this);
-      }
-
-      const param& parameter() const
-      {
-	return exact(*this);
-      }
-
+      stored<storage> storage_;
     };
 
   } // end of namespace mln::fun
@@ -248,7 +122,17 @@ namespace mln
       template <typename F, typename T>
       struct set_unary_< mln::fun::internal::unary_with<F>, mln::Object, T>
       {
-	typedef mln::fun::internal::unary_with_helper<F, T> ret;
+	struct ret_t
+	{
+	  typedef mln::fun::spe::unary<F, T> ret;
+
+	  static typename ret::result call(const F& f, const T& v)
+	  {
+	    return ret(f.storage_get())(v);
+	  }
+	};
+
+	typedef ret_t ret;
       };
 
       // Meta Function
@@ -262,14 +146,18 @@ namespace mln
 	  typedef T ret;
 	};
 
-	typedef set_unary_ ret;
-	typedef typename identity<mln::fun::compose>::ret::template with<F, G>::ret function;
-
-	static typename function::result call(const F& f, const G& g)
+	struct ret_t
 	{
-	  function tmp;
-	  return tmp(f, g);
-	}
+	  typedef typename identity<mln::fun::compose>::ret::template with<F, G>::ret ret;
+
+	  static typename ret::result call(const F& f, const G& g)
+	  {
+	    return ret()(f, g);
+	  }
+
+	};
+
+	typedef ret_t ret;
       };
 
     } // end of namespace mln::trait::next

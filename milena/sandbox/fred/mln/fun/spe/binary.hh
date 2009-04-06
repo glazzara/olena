@@ -50,50 +50,78 @@ namespace mln
       namespace impl
       {
 
+	template <bool has_param, typename Fun, typename T1, typename T2>
+	struct binary_impl;
+
 	template <typename Fun, typename T1, typename T2>
-	struct binary_impl : mln::Function_v2v< binary<Fun, T1, T2> >
+	struct binary_impl<false, Fun, T1, T2>
+	: mln::Function_v2v< binary<Fun, T1, T2> >
 	{
-	  typedef mln_trait_nbinary(Fun, T1, T2) impl;
+	  typedef Fun flag;
+	  typedef mln_trait_nbinary(flag, T1, T2) def;
 
-	  typedef typename impl::argument1 argument1;
-	  typedef typename impl::argument2 argument2;
-	  typedef typename impl::result    result;
-
-	  binary_impl()
-	  : impl_()
-	  {
-	  }
-
-	  binary_impl(const impl& f)
-	  : impl_(f)
-	  {
-	  }
+	  typedef typename def::argument1 argument1;
+	  typedef typename def::argument2 argument2;
+	  typedef typename def::result    result;
 
 	  result operator () (const argument1& a, const argument2& b) const
 	  {
-	    return this->impl_.read(a, b);
+	    return def::read(a, b);
 	  }
 
-	protected:
-	  impl impl_;
+
+	  template <typename U>
+	  void init(const U& value)
+	  {
+	  }
+
+	};
+
+	template <typename Fun, typename T1, typename T2>
+	struct binary_impl<true, Fun, T1, T2>
+	: mln::Function_v2v< binary<Fun, T1, T2> >
+	{
+	  typedef Fun flag;
+	  typedef mln_trait_nbinary(flag, T1, T2) def;
+
+	  typedef typename def::argument1 argument1;
+	  typedef typename def::argument2 argument2;
+	  typedef typename def::result    result;
+
+	  typedef mln_trait_fun_param(def)   param;
+	  typedef mln_trait_fun_storage(def) storage;
+
+	  result operator () (const argument1& a, const argument2& b) const
+	  {
+	    return def::read(storage_, a, b);
+	  }
+
+	  template <typename U>
+	  void init(const U& value)
+	  {
+	    storage_ = mln::trait::fun::internal::introspect::has_storage_t<def, void>::compute(value);
+	  }
+
+	  protected:
+	    mln::fun::stored<storage> storage_;
 	};
 
       } // end of namespace mln::fun::spe::impl
 
       template <typename Fun, typename T1, typename T2>
       struct binary
-      : impl::binary_impl<Fun, T1, T2>
+      : impl::binary_impl<mln_trait_fun_is_parametrable_(Fun)::value, Fun, T1, T2>
       {
-	typedef impl::binary_impl<Fun, T1, T2> super;
+	typedef impl::binary_impl<mln_trait_fun_is_parametrable_(Fun)::value, Fun, T1, T2> super;
 
 	binary()
-	: super()
 	{
 	}
 
-	binary(const typename super::impl& f)
-	: super(f)
+	template <typename U>
+	binary(const U& param)
 	{
+	  this->super::init(param);
 	}
 
 	using super::operator();

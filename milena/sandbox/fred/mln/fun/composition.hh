@@ -30,6 +30,7 @@
 
 # include <mln/fun/unary.hh>
 # include <mln/fun/binary.hh>
+# include <mln/fun/param.hh>
 
 namespace mln
 {
@@ -56,27 +57,39 @@ namespace mln
 		template <class> class CatG, typename G>
       struct composition;
 
+    } // end of namespace mln::fun::internal
+
+    template <template <class> class CatF,  typename F,
+	      template <class> class CatG, typename G>
+    struct parameter< internal::composition<CatF, F, CatG, G> >
+    {
+      typedef internal::composition_param<F, G> param;
+    };
+
+    namespace internal
+    {
+
       // Meta
       template <typename F, typename G>
       struct composition<mln::Meta_Function_v2v, F, mln::Meta_Function_v2v, G>
-      : mln::fun::unary_param< composition<mln::Meta_Function_v2v, F, mln::Meta_Function_v2v, G>, composition_param<F, G> >
+      : mln::fun::unary< composition<mln::Meta_Function_v2v, F, mln::Meta_Function_v2v, G> >
       {
-	typedef mln::fun::unary_param< composition<mln::Meta_Function_v2v, F, mln::Meta_Function_v2v, G>, composition_param<F, G> > super;
+	typedef mln::fun::unary< composition<mln::Meta_Function_v2v, F, mln::Meta_Function_v2v, G> > super;
 
 	composition() {};
-	composition(const typename super::param& p) : super(p) {};
+	composition(const composition_param<F, G>& p) : super(p) {};
 
 	typedef composition exact_type;
       };
 
       template <typename F, typename G>
       struct composition<mln::Meta_Function_v2v, F, mln::Meta_Function_vv2v, G>
-      : mln::fun::binary_param< composition<mln::Meta_Function_v2v, F, mln::Meta_Function_vv2v, G>, composition_param<F, G> >
+      : mln::fun::binary< composition<mln::Meta_Function_v2v, F, mln::Meta_Function_vv2v, G> >
       {
-	typedef mln::fun::binary_param< composition<mln::Meta_Function_v2v, F, mln::Meta_Function_vv2v, G>, composition_param<F, G> > super;
+	typedef mln::fun::binary< composition<mln::Meta_Function_v2v, F, mln::Meta_Function_vv2v, G> > super;
 
 	composition() {};
-	composition(const typename super::param& p) : super(p) {};
+	composition(const composition_param<F, G>& p) : super(p) {};
 
 	typedef composition exact_type;
       };
@@ -106,23 +119,10 @@ namespace mln
 	typedef typename F_spe::result   result;
 	typedef composition_param<F, G> param;
 
-	composition_unary_impl_helper() {}
-	composition_unary_impl_helper(const param& p) : f_(p.f_), g_(p.g_) {}
-
-	void init(const param& p)
+	static result read(const param& p, const argument& x)
 	{
-	  f_ = p.f_;
-	  g_ = p.g_;
+	  return p.f_(p.g_(x));
 	}
-
-	result read(const argument& x) const
-	{
-	  return this->f_(this->g_(x));
-	}
-
-      protected:
-	F f_;
-	G g_;
       };
 
       template <typename F, typename F_spe, typename G, typename G_spe>
@@ -135,12 +135,12 @@ namespace mln
 	composition_unary_impl_helper() {}
 	composition_unary_impl_helper(const typename super::param& p) : super(p) {}
 
-	void write(lvalue l, const typename super::result& x) const
+	static void write(const typename super::param& p, lvalue l, const typename super::result& x)
 	{
-	  typename G_spe::result r(this->g_(l));
+	  typename G_spe::result r(p.g_(l));
 
-	  this->f_.set(r, x);
-	  this->g_.set(l, r);
+	  p.f_.set(r, x);
+	  p.g_.set(l, r);
 	}
       };
 
@@ -154,32 +154,18 @@ namespace mln
 	composition_unary_impl(const typename super::param& p) : super(p) {}
       };
 
-      // Binary compositions implementation inherit from composition_binary_inherit...
       template <typename F, typename F_spe, typename G, typename G_spe>
       struct composition_binary_impl
       {
 	typedef typename G_spe::argument1 argument1;
 	typedef typename G_spe::argument2 argument2;
-	typedef typename F_spe::result   result;
-	typedef composition_param<F, G> param;
+	typedef typename F_spe::result    result;
+	typedef composition_param<F, G>   param;
 
-	composition_binary_impl() {}
-	composition_binary_impl(const param& p) : f_(p.f_), g_(p.g_) {}
-
-	void init(const param& p)
+	static result read(const param& p, const argument1& a, const argument2& b)
 	{
-	  f_ = p.f_;
-	  g_ = p.g_;
+	  return p.f_(p.g_(a, b));
 	}
-
-	result read(const argument1& a, const argument2& b) const
-	{
-	  return this->f_(this->g_(a, b));
-	}
-
-      protected:
-	F f_;
-	G g_;
       };
 
     } // end of namespace mln::fun::internal
