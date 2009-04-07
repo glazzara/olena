@@ -1,3 +1,11 @@
+2009-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new known bugs in sandbox.
+
+	* bugs/algebra_vec_ne_op.cc: issues with algebra::vec operators.
+
+	* bugs/lut.cc: issues with lookup table and level::transform.
+
 2009-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a small tool to map text components to lines.
