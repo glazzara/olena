@@ -1,5 +1,17 @@
 2009-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new small tools for ICDAR.
+
+	* icdar/2009/hsc/input_lines_to_lines.cc: Iterate on lbl.domain().
+
+	* icdar/2009/hsc/label_maj.hh: new accumulator computing the most
+	represented label in a component.
+
+	* icdar/2009/hsc/lines_to_words.cc: basic canvas for splitting lines
+	into words.
+
+2009-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new known bugs in sandbox.
 
 	* bugs/algebra_vec_ne_op.cc: issues with algebra::vec operators.

@@ -6,17 +6,17 @@
 #include <mln/value/label_16.hh>
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/all.hh>
-#include <mln/accu/lbl_maj.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/pw/all.hh>
 #include <mln/core/image/image_if.hh>
 #include <mln/data/fill.hh>
+#include "label_maj.hh"
 
 void usage(char* argv[])
 {
   std::cerr << "usage: " << argv[0] << " input.pbm lines.pgm output.pgm" << std::endl
 	    << "  HSC @ ICDAR'2009" << std::endl
-	    << " Rebuild splitted components from a label image." << std::endl;
+	    << " Rebuild splitted components from a label image." << std::endl
 	    << "  input.pbm:   input 2D binary image (text is black; background is white)" << std::endl
 	    << "  lines.pgm:   output image where line components are labeled (int_u8)" << std::endl
 	    << "	       0 is the background label." << std::endl
@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
   util::array<box2d> bboxes = labeling::compute(accu::meta::bbox(), lbl, nlabels);
 
   /// Compute the most represented label for each component.
-  accu::lbl_maj<label_16, int_u8> accu(nlabels.next());
-  mln_piter_(image2d<int_u8>) p(lines.domain());
+  accu::label_maj<label_16, int_u8> accu(nlabels.next());
+  mln_piter_(image2d<int_u8>) p(lbl.domain());
   for_all(p)
     if (lines(p) != 0u)
       accu.take(lbl(p), lines(p));
@@ -55,8 +55,10 @@ int main(int argc, char *argv[])
   // Rebuild components.
   util::array<util::couple<int_u8, float> > res = accu.to_result();
   for (unsigned i = 1; i < res.nelements(); ++i)
-    if (res[i].second() >= 0.9f)
+    if (res[i].second() >= 0.70f)
       data::fill(((lines | bboxes[i]).rw() | (pw::value(lbl) != 0u)).rw(), res[i].first());
+    else
+      std::cout << res[i].first() << " - " << res[i].second() << std::endl;
 
   // Save result.
   io::pgm::save(lines, argv[3]);
