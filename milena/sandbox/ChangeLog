@@ -1,3 +1,15 @@
+2009-04-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment ICDAR-HSC.
+
+	* icdar/2009/hsc/line_to_words.hh: New.
+	* icdar/2009/hsc/input_to_wsl.cc: Add some log.
+	* icdar/2009/hsc/line_to_words.cc: New.
+	* icdar/2009/hsc/ws_to_wsl.hh (pass): New.
+	(ws_to_wslines): Use the 'pass' routine.
+	* theo/icdar/hsc/reduce.sh: New.
+	* theo/icdar/hsc/words.sh: New.
+
 2009-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add ICDAR I/O routines.

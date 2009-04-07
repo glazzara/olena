@@ -115,6 +115,11 @@ int main(int argc, char* argv[])
   int_u8 n_basins;
   ws = morpho::watershed::flooding(clo, c4(), n_basins);
 
+# ifdef LOG
+    io::pgm::save(ws, "tmp_ws.pgm");
+    io::ppm::save(debug::colorize(rgb8(), ws, n_basins), "tmp_ws.ppm");
+# endif
+
 
   image2d<int_u8> wsl = ws_to_wslines(input, small, ws, n_basins);
 

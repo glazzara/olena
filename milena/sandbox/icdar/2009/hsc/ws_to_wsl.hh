@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include <mln/core/var.hh>
 
 #include <mln/core/image/image2d.hh>
@@ -101,13 +103,17 @@ namespace mln
       if (n_ == 0)
 	return;
       mean_ /= n_;
-      algebra::mat<2,1,float> mu;
       cov_ = cov_ / n_ - to_mat(mean_) * trans(mean_);
 
       float
 	a = cov_(0, 0), b = cov_(0, 1),
 	c = cov_(1, 0), d = cov_(1, 1),
 	r = a * d - b * c;
+
+      float D = std::sqrt((a - d) * (a - d) + 4 * b * c);
+      lambda1_ = 0.5 * (a + d + D);
+      lambda2_ = 0.5 * (a + d - D);
+
       if (r > -0.001f && r < 0.001f) // too close to 0
 	{
 	  n_ = 0; // invalidation
@@ -174,12 +180,16 @@ namespace mln
       return valid_;
     }
 
+    float lambda1() const { return lambda1_; }
+    float lambda2() const { return lambda2_; }
+
   protected:
 
     bool valid_;
     unsigned n_;
     algebra::vec<2,float>   mean_;
     algebra::mat<2,2,float> cov_, cov_1_;
+    float lambda1_, lambda2_;
   };
   
 
@@ -225,13 +235,38 @@ namespace mln
 
 
 
+  bool
+  pass(const util::array<mahalanobis>& m,
+       unsigned l, unsigned r)
+  {
+    float
+      // vertical std deviations
+      vs_l = std::sqrt(m[l].cov()(0, 0)),
+      vs_r = std::sqrt(m[r].cov()(0, 0)),
+      // vertical distance
+      vd   = std::abs(m[l].mean()[0] - m[r].mean()[0]),
+      // horizontal std deviations
+      hs_l = std::sqrt(m[l].cov()(1, 1)),
+      hs_r = std::sqrt(m[r].cov()(1, 1)),
+      // horizontal means (column coordinates)
+      hm_l = m[l].mean()[1],
+      hm_r = m[r].mean()[1];
+
+    bool
+      v_criterion = (vd < 5 * std::sqrt(vs_l * vs_r)),   // FIXME: say 4?
+      h_criterion = (hm_r - 1 * hs_r > hm_l + 1 * hs_l); // FIXME: say 1.5?
+
+    return v_criterion && h_criterion;
+  }
+
+
 
   template <typename L>
   image2d<L>
-    ws_to_wslines(const image2d<bool>& input,
-		  const image2d<value::int_u8>& small,
-		  const image2d<L>& ws,
-		  L n_basins)
+  ws_to_wslines(const image2d<bool>& input,
+		const image2d<value::int_u8>& small,
+		const image2d<L>& ws,
+		L n_basins)
   {
     typedef util::graph G;
 
@@ -296,7 +331,8 @@ namespace mln
 	  if (m[v2].col() < v_col)
 	    {
 	      // v2 <-- v
-	      if (d_ < d_left_min)
+	      if (pass(m, v2, v.id())
+		  && d_ < d_left_min)
 		{
 		  d_left_min  = d_;
 		  v_left_best = v2;
@@ -305,7 +341,8 @@ namespace mln
 	  else
 	    {
 	      // v --> v2
-	      if (d_ < d_right_min)
+	      if (pass(m, v.id(), v2)
+		  && d_ < d_right_min)
 		{
 		  d_right_min  = d_;
 		  v_right_best = v2;
@@ -317,7 +354,6 @@ namespace mln
       }
 
     }
-
 
 	
     util::array<L> parent(n_basins + 1);
@@ -334,11 +370,7 @@ namespace mln
 	    continue;
 	  unsigned r = v_right[l];
 	  if (v_left[r] != l)
-	    {
-	      // std::cout << '.' << std::endl;
-	      continue;
-	    }
-	  // std::cout << l << " -> " << r << std::endl;
+	    continue;
 	  parent[l] = r;
 	}
 
