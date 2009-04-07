@@ -1,5 +1,13 @@
 2009-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add ICDAR I/O routines.
+
+	* icdar/2009/hsc/icdar_io.cc: sample / test.
+	* icdar/2009/hsc/io/icdar/load.hh,
+	* icdar/2009/hsc/io/icdar/save.hh: I/O routines.
+
+2009-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new small tools for ICDAR.
 
 	* icdar/2009/hsc/input_lines_to_lines.cc: Iterate on lbl.domain().
