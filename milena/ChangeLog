@@ -1,5 +1,17 @@
 2009-04-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Be more generic in mesh-complex-skel w.r.t. site constraints.
+
+	* apps/statues/mesh-complex-skel.cc (is_n_face<N>::operator()):
+	Make it const.
+	(skeleton): Accept a constraint functor as fourth argument.
+	Remove non generic constraints on the dimension of the candidate
+	sites.
+	(main): Adjust caller: use is_n_face<N> to constrain the dimension
+	of the considered simple faces from the outside of skeleton().
+
+2009-04-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a tautology and an antilogy p2b functors.
 
 	* mln/fun/p2b/tautology.hh,

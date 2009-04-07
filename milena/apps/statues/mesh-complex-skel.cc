@@ -54,6 +54,8 @@
 #include <mln/morpho/erosion.hh>
 #include <mln/morpho/closing/area.hh>
 
+#include <mln/fun/p2b/tautology.hh>
+
 #include <mln/io/off/load.hh>
 #include <mln/io/off/save.hh>
 /* FIXME: Remove as soon as mln::io::off::save is able to save a
@@ -433,7 +435,10 @@ detach (const mln::complex_psite<D, G>f, mln::complex_image<D, G, V>& ima)
 
 // FIXME: Move this elsewhere.
 // FIXME: Use a generic `I' instead of `mln::bin_2complex_image3df'.
-// FIXME: Add a constraint/priority argument (K/P).
+// FIXME: Update doc.
+/* FIXME: Rename `constraint' to a verb or adjective?
+   (validate_constraint? satisfy_constraint? pass_constraint?
+   is_satisfying?)  */
 /** \brief Breadth-First Thinning.
 
     A non generic implementation of a binary skeleton on a triangle
@@ -443,14 +448,16 @@ detach (const mln::complex_psite<D, G>f, mln::complex_image<D, G, V>& ima)
     does not make sense to use something other than an instance of
     mln::complex_lower_dim_connected_n_face_neighborhood if the image type is
     hard-coded as mln::bin_2complex_image3df.  */
-template <typename N, typename F>
+template <typename N, typename F, typename G>
 mln::bin_2complex_image3df
 skeleton(const mln::bin_2complex_image3df& input,
 	 const mln::Neighborhood<N>& nbh_,
-	 mln::Function_p2b<F>& is_simple_)
+	 mln::Function_p2b<F>& is_simple_,
+	 const mln::Function_p2b<G>& constraint_ = mln::fun::p2b::tautology())
 {
   const N& nbh = exact(nbh_);
   F& is_simple = exact(is_simple_);
+  const G& constraint = exact(constraint_);
 
   typedef mln::bin_2complex_image3df I;
   typedef mln_psite(I) psite;
@@ -463,19 +470,16 @@ skeleton(const mln::bin_2complex_image3df& input,
   set_t set;
 
   // Populate the set with candiate simple points.
-  mln_piter(I) p(output.domain());
-  for_all(p)
+  mln_piter(I) p_(output.domain());
+  for_all(p_)
   {
-    /* FIXME: Cheat!  We'd like to iterate on 2-cells only, but
-       we cannot constrain the domain of the input using
-       image_if (yet).  Hence this filter to restrict the
-       dimension of the considered cells.  A less dirty
-       approaach would be to use a constraint predicate (see
-       comment above).  */
-    if (p.unproxy_().n() != I::dim)
-      continue;
-
-    if (output(p) && is_simple(p))
+    /* CONSTRAINTS and IS_SIMPLE are site-to-boolean (p2b) predicate
+       functors; passing an iterator as argument might not be possible
+       (C++ cannot resolve template routines if an implicit conversion
+       of the argument is needed).  Help the compiler and pass an
+       actual, explicit psite.  */
+    psite p = p_;
+    if (output(p) && constraint(p) && is_simple(p))
       set.insert(p);
   }
 
@@ -486,45 +490,24 @@ skeleton(const mln::bin_2complex_image3df& input,
       for (unsigned i = 0; i < set.nsites(); ++i)
 	{
 	  psite p = set[i];
-
-	  /* FIXME: Cheat!  We'd like to iterate on 2-cells only, but
-	     we cannot constrain the domain of the input using
-	     image_if (yet).  Hence this filter to restrict the
-	     dimension of the considered cells.  A less dirty
-	     approaach would be to use a constraint predicate (see
-	     comment above).  */
-	  if (p.n() != I::dim)
-	    continue;
-
 	  /* FIXME: We compute the cell and attachment of P twice:
 	     within is_simple and within detach.  How could we reuse
 	     this elegantly, without breaking the genericity of the
 	     skeleton algorithm?  */
-	  if (is_simple(p))
+	  if (constraint(p) && is_simple(p))
 	    {
 	      // FIXME: `detach' could be a functor, as is `is_simple'.
 	      detach(p, output);
 	      mln_niter(N) n(nbh, p);
 	      for_all(n)
-	      {
-		/* FIXME: Cheat!  We'd like to iterate on 2-cells only, but
-		   we cannot constrain the domain of the input using
-		   image_if (yet).  Hence this filter to restrict the
-		   dimension of the considered cells.  A less dirty
-		   approaach would be to use a constraint predicate (see
-		   comment above).  */
-		if (n.unproxy_().n() != I::dim)
-		  continue;
-
-		if (output.domain().has(n) && output(n) && is_simple(n))
+		if (output.domain().has(n)
+		    && output(n) && constraint(p) && is_simple(n))
 		  next_set.insert(n);
-	      }
 	    }
 	}
       set.clear();
       std::swap(set, next_set);
     }
-
   return output;
 }
 
@@ -539,7 +522,7 @@ struct is_n_face : public mln::Function_p2b< is_n_face<N> >
   typedef bool result;
 
   template <unsigned D, typename G>
-  bool operator()(const mln::complex_psite<D, G>& p)
+  bool operator()(const mln::complex_psite<D, G>& p) const
   {
     return p.n() == N;
   }
@@ -682,7 +665,13 @@ int main(int argc, char* argv[])
   `-----------*/
 
   is_simple_cell<bin_ima_t> is_simple_p;
-  bin_ima_t skel = skeleton(surface, nbh, is_simple_p);
+    /* FIXME: Cheat!  We'd like to iterate on cells of highest
+       dimension (2-cells) only, but we cannot constrain the domain of
+       the input using image_if (yet). As a workaround, we use the
+       constraint predicate of the skeleton routine to restrict the
+       iteration to 2-cells.  */
+  is_n_face<bin_ima_t::dim> constraint;
+  bin_ima_t skel = skeleton(surface, nbh, is_simple_p, constraint);
 
   /*---------.
   | Output.  |
