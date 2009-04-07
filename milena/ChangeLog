@@ -1,5 +1,20 @@
 2009-04-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Split apps/statues/mesh-complex-skel.
+
+	* apps/statues/mesh-complex-skel.cc: Split reusable parts into...
+	* mln/make/attachment.hh,
+	* mln/make/cell.hh,
+	* mln/make/detachment.hh,
+	* mln/topo/detach.hh,
+	* mln/topo/is_facet.hh,
+	* mln/topo/is_n_face.hh,
+	* mln/topo/is_simple_cell.hh,
+	* mln/topo/skeleton/breadth_first_thinning.hh:
+	...these (new) files.
+
+2009-04-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	* apps/statues/mesh-complex-skel.cc: Remove dead code.
 
 2009-04-07  Roland Levillain  <roland@lrde.epita.fr>
