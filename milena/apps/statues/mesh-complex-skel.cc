@@ -39,7 +39,6 @@
 
 #include <mln/core/image/complex_image.hh>
 #include <mln/core/image/complex_neighborhoods.hh>
-#include <mln/core/image/image_if.hh>
 
 #include <mln/core/site_set/p_set.hh>
 
@@ -174,13 +173,9 @@ cell(const complex_psite<D, G>& f)
       for_all(g)
       {
 	f_hat.insert(g);
-// 	// FIXME: Debug.
-// 	std::cerr << g << std::endl;
       }
     }
   f_hat.insert(f);
-//   // FIXME: Debug.
-//   std::cerr << f << std::endl;
   return f_hat;
 }
 
@@ -208,8 +203,6 @@ attachment(const mln::complex_psite<D, G>& f,
   typedef p_set<psite> faces_t;
 
   faces_t f_hat = cell(f);
-//   // FIXME: Debug.
-//   std::cerr << "f_hat.nsites() = " << f_hat.nsites() << std::endl;
   faces_t att_f;
 
   typedef complex_lower_higher_neighborhood<D, G> adj_nbh_t;
@@ -223,8 +216,6 @@ attachment(const mln::complex_psite<D, G>& f,
 	att_f.insert(g);
 	break;
       }
-//   // FIXME: Debug.
-//   std::cerr << "att_f.nsites() = " << att_f.nsites() << std::endl;
   return att_f;
 }
 
@@ -311,9 +302,6 @@ public:
   // Based on the algorithm A2 from couprie.08.pami.
   bool operator()(const psite& p) const
   {
-//     // FIXME: Debug.
-//     std::cerr << "is_simple_cell(" << p << ")" << std::endl;
-
     mln_precondition(ima_);
 
     typedef p_set<psite> faces_t;
@@ -471,9 +459,6 @@ skeleton(const mln::bin_2complex_image3df& input,
   typedef mln::p_set<psite> set_t;
   set_t set;
 
-//   // FIXME: Debug.
-//   unsigned count = 0;
-
   // Populate the set with candiate simple points.
   mln_piter(I) p(output.domain());
   for_all(p)
@@ -487,37 +472,12 @@ skeleton(const mln::bin_2complex_image3df& input,
     if (p.unproxy_().n() != I::dim)
       continue;
 
-//     // FIXME: Debug.
-//     std::cerr << "skeleton: Iteration (for_all(p)) : "
-// 	      << count++ << std::endl;
-
-//     // FIXME: Debug.
-//     std::cerr << "  output(p) = " << output(p) << std::endl;
-//     std::cerr << "  is_simple(p) = " << is_simple(p) << std::endl;
-
     if (output(p) && is_simple(p))
       set.insert(p);
   }
 
-//   // FIXME: Debug.
-//   std::cerr << "skeleton: set.nsites() = " << set.nsites() << std::endl;
-
-//   // FIXME: Debug.
-//   count = 0;
-
   while (!set.is_empty())
     {
-//       // FIXME: Debug.
-//       mln_piter(set_t) ps(set);
-//       std::cerr << "set = " << std::endl;
-//       for_all(ps)
-// 	std::cerr << "  " << static_cast<psite>(ps) << std::endl;
-// 	std::cerr << std::endl;
-
-//       // FIXME: Debug.
-//       std::cerr << "skeleton: Iteration (while (!set.is_empty())) : "
-// 		<< count++ << std::endl;
-
       set_t next_set;
       // FIXME: Use a piter on SET instead of this hand-made iteration.
       for (unsigned i = 0; i < set.nsites(); ++i)
@@ -661,27 +621,6 @@ int main(int argc, char* argv[])
   for_all(t)
     if (minima(t) != mln::literal::zero)
       surface(t) = false;
-
-// #if 0
-//   /* FIXME: Debug.  But alas, this does not work (yet).
-//      Use workaround mln::io::off::save_bin_salt instead (bad!)  */
-// # if 0
-//   mln::io::off::save(surface | mln::pw::value(surface) == mln::pw::cst(true),
-// 		     "surface.off");
-// # endif
-//   mln::io::off::save_bin_alt(surface, "surface.off");
-// #endif
-
-//   // FIXME: Debug.
-//   typedef mln_ch_value_(ima_t, bool) bin_ima_t;
-//   bin_ima_t surface;
-//   mln::io::off::load(surface,
-// 		     "/Users/roland/src/olena/milena/mesh/two-triangles.off");
-//   // Set one of the two triangle to false.
-//   p_n_faces_fwd_piter<D, G> t(surface.domain(), 2);
-//   t.start();
-//   mln_precondition(t.is_valid());
-//   surface(t) = false;
 
   /*-----------.
   | Skeleton.  |
