@@ -1,3 +1,14 @@
+2009-04-07  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add new accumulators related to labels.
+
+	* mln/accu/all.hh: include new accumulators.
+	
+	* mln/accu/count_labels.hh: count how many different labels are in an
+	image.
+
+	* mln/accu/label_used.hh: Reference all the different labels used.
+
 2009-04-06  Frederic Bour  <bour@lrde.epita.fr>
 
 	Clean new fun implementation.

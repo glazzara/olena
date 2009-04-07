@@ -58,10 +58,12 @@ namespace mln
 
 # include <mln/accu/bbox.hh>
 # include <mln/accu/count.hh>
+# include <mln/accu/count_labels.hh>
 # include <mln/accu/center.hh>
 //# include <mln/accu/count_adjacent_vertices.hh>
 # include <mln/accu/height.hh>
 # include <mln/accu/histo.hh>
+# include <mln/accu/label_used.hh>
 # include <mln/accu/land.hh>
 # include <mln/accu/land_basic.hh>
 # include <mln/accu/line.hh>
