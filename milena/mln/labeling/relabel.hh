@@ -35,15 +35,26 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/make/relabelfun.hh>
+# include <mln/level/compute.hh>
 # include <mln/level/transform.hh>
 # include <mln/level/transform_inplace.hh>
 # include <mln/value/label.hh>
+# include <mln/accu/label_used.hh>
 
 namespace mln
 {
 
   namespace labeling
   {
+    /// Relabel a labeled image in order to have a contiguous labeling.
+    /// \input[in]  label	The labeled image.
+    /// \input[out] new_nlabels The number of labels after relabeling.
+    ///
+    /// \return The relabeled image.
+    template <typename I>
+    mln_concrete(I)
+    relabel(const Image<I>&	    label,
+	    mln_value(I)&	    new_nlabels);
 
     /// Remove components and relabel a labeled image.
     /// \input[in]  label the labeled image.
@@ -72,6 +83,15 @@ namespace mln
     relabel(const Image<I>&	    label,
 	    const mln_value(I)&	    nlabels,
 	    const Function_v2v<F>&  fv2v);
+
+    /// Relabel inplace a labeled image in order to have a contiguous
+    /// labeling.
+    /// \input[in]  label	The labeled image.
+    /// \input[out] new_nlabels The number of labels after relabeling.
+    template <typename I>
+    void
+    relabel_inplace(Image<I>& label,
+		    mln_value(I)&   new_nlabels);
 
     /// Remove components and relabel a labeled image inplace.
     /// \input[in, out] label the labeled image.
@@ -104,6 +124,18 @@ namespace mln
 
     namespace internal
     {
+
+      template <typename I>
+      void
+      relabel_tests(const Image<I>&	    label,
+		    mln_value(I)&	    new_nlabels)
+      {
+        // FIXME: we may want to check that it is exactly a label.
+        mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
+        mln_precondition(exact(label).is_valid());
+	(void) label;
+	(void) new_nlabels;
+      }
 
       template <typename I, typename F>
       void
@@ -153,6 +185,29 @@ namespace mln
     } // end of namespace mln::labeling::internal
 
 
+    template <typename I>
+    mln_concrete(I)
+    relabel(const Image<I>&	    label,
+	    mln_value(I)&	    new_nlabels)
+    {
+      trace::entering("labeling::relabel");
+
+      internal::relabel_tests(label, new_nlabels);
+
+      fun::i2v::array<bool>
+	fv2b = level::compute(accu::meta::label_used(), label);
+
+      mln_value(I) tmp_nlabels = fv2b.size() - 1;
+      mln_concrete(I)
+	output = level::transform(label,
+				  make::relabelfun(fv2b,
+						   tmp_nlabels,
+						   new_nlabels));
+
+      trace::exiting("labeling::relabel");
+      return output;
+    }
+
 
     template <typename I, typename F>
     inline
@@ -193,6 +248,27 @@ namespace mln
       return output;
     }
 
+
+    template <typename I>
+    void
+    relabel_inplace(Image<I>& label,
+		    mln_value(I)&   new_nlabels)
+    {
+      trace::entering("labeling::relabel_inplace");
+
+      internal::relabel_tests(label, new_nlabels);
+
+      fun::i2v::array<bool>
+	fv2b = level::compute(accu::meta::label_used(), label);
+
+      mln_value(I) tmp_nlabels = fv2b.size() - 1;
+      exact(label) = level::transform(label,
+				      make::relabelfun(fv2b,
+						       tmp_nlabels,
+						       new_nlabels));
+
+      trace::exiting("labeling::relabel_inplace");
+    }
 
 
     template <typename I, typename F>

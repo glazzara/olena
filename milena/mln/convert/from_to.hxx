@@ -175,6 +175,11 @@ namespace mln
       template <unsigned n>
       void from_to_(const value::int_u<n>& from, value::label<n>& to_);
 
+      // int_u<n> -> label<m> with n < m
+      template <unsigned n, unsigned m>
+      void
+      from_to_(const value::int_u<n>& from, value::label<m>& to_);
+
       // hsl -> rgb8.
       template <typename H, typename S, typename L>
       void from_to_(const value::hsl_<H,S,L>&, value::rgb<8>& to);

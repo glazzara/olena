@@ -45,13 +45,12 @@ namespace mln
   {
 
     template <typename T, typename U>
-    struct couple : public mln::Object< couple<T,U> >
+    class couple : public mln::Object< couple<T,U> >
     {
     public:
       couple();
       couple(const T& val1, const U& val2);
 
-    public:
       /// Get the first member of the couple.
       /// \{
       const T& first() const;

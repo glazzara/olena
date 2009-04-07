@@ -39,6 +39,7 @@
 # include <mln/fun/l2l/wrap.hh>
 # include <mln/metal/converts_to.hh>
 # include <mln/metal/is_a.hh>
+# include <mln/value/label_8.hh>
 
 namespace mln
 {
@@ -57,6 +58,15 @@ namespace mln
     mln_ch_value(I,V)
     wrap(const V& value_type, const Image<I>& input);
 
+    /// Wrap labels such as 0 -> 0 and [1, lmax] maps to [1,
+    /// Lmax] (using modulus). Use label_8 as label type.
+    ///
+    /// \param[in] input The label image.
+    ///
+    /// \return A new image with values wrapped with type label_8.
+    template <typename I>
+    mln_ch_value(I,value::label_8)
+    wrap(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -70,11 +80,21 @@ namespace mln
 
 //      mlc_is_a(mln_value(I), value::Symbolic)::check();
       mln_precondition(exact(input).is_valid());
+      (void) value_type;
 
       mln_ch_value(I,V) output = level::transform(input, fun::l2l::wrap<V>());
 
       trace::exiting("labeling::wrap");
       return output;
+    }
+
+
+    template <typename I>
+    inline
+    mln_ch_value(I,value::label_8)
+    wrap(const Image<I>& input)
+    {
+      return wrap(value::label_8(), input);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

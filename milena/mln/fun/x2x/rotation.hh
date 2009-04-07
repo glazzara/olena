@@ -148,7 +148,7 @@ namespace mln
 
 	/// Constructor without argument.
         rotation();
-	/// Constructor with grade alpha and a facultative direction (rotation axis).
+	/// Constructor with radian alpha and a facultative direction (rotation axis).
         rotation(float alpha, const algebra::vec<n,float>& axis);
         /// Constructor with quaternion
         rotation(const algebra::quat& q);

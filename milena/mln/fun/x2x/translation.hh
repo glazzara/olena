@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_FUN_X2X_TRANSLATION_HH
 # define MLN_FUN_X2X_TRANSLATION_HH
 
-/*! \file mln/fun/x2x/translation.hh
- *
- * \brief Define a translation function.
- */
+/// \file mln/fun/x2x/translation.hh
+///
+/// Define a translation function.
 
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/x2x_linear_impl.hh>
@@ -48,9 +47,7 @@ namespace mln
     namespace x2x
     {
 
-      /*! \brief Represent a translation function.
-       *
-       */
+      /// Represent a translation function.
       template <unsigned n, typename C>
       struct translation
         : fun::internal::x2x_linear_impl_< algebra::vec<n,C>, translation<n,C> >

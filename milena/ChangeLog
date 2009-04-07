@@ -1,5 +1,21 @@
 2009-04-07  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Small fixes.
+
+	* mln/convert/from_to.hxx,
+	* mln/value/label.hh: add conversion from int_u<n> to label<m>.
+
+	* mln/fun/x2x/rotation.hh,
+	* mln/fun/x2x/translation.hh: update doc.
+
+	* mln/labeling/relabel.hh: add a new overload.
+
+	* mln/labeling/wrap.hh: add a new overload with a default argument.
+
+	* mln/util/couple.hh: make it a class.
+
+2009-04-07  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add new accumulators related to labels.
 
 	* mln/accu/all.hh: include new accumulators.
