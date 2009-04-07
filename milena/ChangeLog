@@ -1,5 +1,16 @@
 2009-04-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add minima simplification to apps/statues/mesh-complex-skel.
+
+	* apps/statues/mesh-complex-skel.cc (main): Take the second
+	command line parameter into account.
+	Apply an area closing on the input before computing minima.
+	Propagate minima information to egdes and vertices.
+	* apps/statues/test-mesh-complex-skel.in: Adjust values passed as
+	second parameter (lambda) to mesh-complex-skel.
+
+2009-04-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	* apps/statues/mesh-complex-skel.cc: Remove dead code.
 
 2009-04-07  Guillaume Lazzara  <lazzara@lrde.epita.fr>

@@ -49,7 +49,10 @@
 #include <mln/literal/white.hh>
 
 #include <mln/core/routine/duplicate.hh>
+
 #include <mln/labeling/regional_minima.hh>
+#include <mln/morpho/erosion.hh>
+#include <mln/morpho/closing/area.hh>
 
 #include <mln/io/off/load.hh>
 #include <mln/io/off/save.hh>
@@ -554,9 +557,7 @@ int main(int argc, char* argv[])
 
   std::string input_filename = argv[1];
   // FIXME: Use lambda to filter the input.
-#if 0
   unsigned lambda = atoi(argv[2]);
-#endif
   std::string output_filename = argv[3];
 
   /*----------------.
@@ -582,6 +583,16 @@ int main(int argc, char* argv[])
   for_all(e)
     input(e) = mln_max(float);
 
+  /*-----------------.
+  | Simplification.  |
+  `-----------------*/
+
+  /// Adjacent triangles are connected by shared edges.
+  typedef mln::complex_lower_dim_connected_n_face_neighborhood<D, G> nbh_t;
+  nbh_t nbh;
+
+  ima_t closed_input = mln::morpho::closing::area(input, nbh, lambda);
+
   /*---------------.
   | Local minima.  |
   `---------------*/
@@ -589,38 +600,82 @@ int main(int argc, char* argv[])
   typedef mln::value::label_16 label_t;
   label_t nminima;
 
-  typedef mln::complex_lower_dim_connected_n_face_neighborhood<D, G> nbh_t;
-  nbh_t nbh;
-
   /* FIXME: We should use something like `ima_t | p_n_faces(2)' instead
      of `ima_t' here.  Or better: `input' should only associate data
      to 2-faces.  */
-  mln_ch_value_(ima_t, label_t) minima =
-    mln::labeling::regional_minima(input, nbh, nminima);
+  typedef mln_ch_value_(ima_t, label_t) label_ima_t;
+  label_ima_t minima =
+    mln::labeling::regional_minima(closed_input, nbh, nminima);
+
+  typedef mln::complex_higher_neighborhood<D, G> higher_nbh_t;
+  higher_nbh_t higher_nbh;
+
+  // Propagate minima values from triangles to edges.
+  // FIXME: Factor this inside a function.
+  mln_niter_(higher_nbh_t) adj_t(higher_nbh, e);
+  for_all(e)
+  {
+    label_t ref_adj_minimum = mln::literal::zero;
+    for_all(adj_t)
+      if (minima(adj_t) == mln::literal::zero)
+	{
+	  // If E is adjcent to a non-minimal triangle, then it must
+	  // not belong to a minima.
+	  ref_adj_minimum = mln::literal::zero;
+	  break;
+	}
+      else
+	{
+	  if (ref_adj_minimum == mln::literal::zero)
+	    // If this is the first minimum seen, use it as a reference.
+	    ref_adj_minimum = minima(adj_t);
+	  else
+	    // If this is not the first time a minimum is encountered,
+	    // ensure it is REF_ADJ_MINIMUM.
+	    mln_assertion(minima(adj_t) == ref_adj_minimum);
+	}
+    minima(e) = ref_adj_minimum;
+  }
+
+  // Likewise from edges to edges to vertices.
+  mln_niter_(higher_nbh_t) adj_e(higher_nbh, v);
+  for_all(v)
+  {
+    label_t ref_adj_minimum = mln::literal::zero;
+    for_all(adj_e)
+      if (minima(adj_e) == mln::literal::zero)
+	{
+	  // If V is adjcent to a non-minimal triangle, then it must
+	  // not belong to a minima.
+	  ref_adj_minimum = mln::literal::zero;
+	  break;
+	}
+      else
+	{
+	  if (ref_adj_minimum == mln::literal::zero)
+	    // If this is the first minimum seen, use it as a reference.
+	    ref_adj_minimum = minima(adj_e);
+	  else
+	    // If this is not the first time a minimum is encountered,
+	    // ensure it is REF_ADJ_MINIMUM.
+	    mln_assertion(minima(adj_e) == ref_adj_minimum);
+	}
+    minima(v) = ref_adj_minimum;
+  }
 
   /*-----------------------.
   | Initial binary image.  |
   `-----------------------*/
 
   typedef mln_ch_value_(ima_t, bool) bin_ima_t;
-  bin_ima_t surface(input.domain());
+  bin_ima_t surface(minima.domain());
   mln::data::fill(surface, true);
   // Dig ``holes'' in the surface surface by setting minima faces to false.
-#if 0
-  /* FIXME: The `is_n_face<2>' predicate is required because the
-     domain of SURFACE also comprises 0-faces and 1-faces...  */
-  mln::data::fill(surface
-		  | is_n_face<2>()
-		  | mln::pw::value(minima) != mln::pw::cst(mln::literal::zero),
-		  false);
-#endif
-  /* FIXME: The code above does not compile (yet).  Probably because
-     of an incompatibility between complex_image and image_if.  Use
-     this hand-made filling for the moment.  */
-  mln::p_n_faces_fwd_piter<D, G> t(input.domain(), 2);
-  for_all(t)
-    if (minima(t) != mln::literal::zero)
-      surface(t) = false;
+  // FIXME: Use fill with an image_if instead, when available/working.
+  mln_piter_(bin_ima_t) f(minima.domain());
+  for_all(f)
+    if (minima(f) != mln::literal::zero)
+      surface(f) = false;  
 
   /*-----------.
   | Skeleton.  |
