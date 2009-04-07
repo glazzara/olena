@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,13 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_P2B_ALL_HH
-# define MLN_FUN_P2B_ALL_HH
+#ifndef MLN_FUN_P2B_ANTILOGY_HH
+# define MLN_FUN_P2B_ANTILOGY_HH
 
-/*! \file mln/fun/p2b/all.hh
- *
- * \brief File that includes all functions from point to boolean.
- */
+/// \file mln/fun/p2b/antilogy.hh
+/// \brief Definition of a p2b function always returning \c false.
+
+# include <mln/core/concept/function.hh>
+# include <mln/core/alias/point2d.hh>
 
 
 namespace mln
@@ -41,20 +41,40 @@ namespace mln
   namespace fun
   {
 
-    /// Namespace of functions from point to boolean.
     namespace p2b
     {
-    }
-  }
-
-}
 
 
-# include <mln/fun/p2b/chess.hh>
-# include <mln/fun/p2b/has.hh>
-# include <mln/fun/p2b/tautology.hh>
-# include <mln/fun/p2b/antilogy.hh>
+      /// \brief A p2b function always returning \c false.
+      ///
+      /// A simpler name would be `false', but this is not a valid C++
+      /// identifier, as \c false is a keyword of the language.
+      struct antilogy : public Function_p2b< antilogy >
+      {
+	typedef bool result;
+
+	template <typename P>
+	bool operator()(const P& p) const;
+      };
 
 
+# ifndef MLN_INCLUDE_ONLY
 
-#endif // ! MLN_FUN_P2B_ALL_HH
+      template <typename P>
+      inline
+      bool
+      antilogy::operator()(const P& /* p */) const
+      {
+	return false;
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::p2b
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
+
+
+#endif // ! MLN_FUN_P2B_ANTILOGY_HH

@@ -1,5 +1,15 @@
 2009-04-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a tautology and an antilogy p2b functors.
+
+	* mln/fun/p2b/tautology.hh,
+	* mln/fun/p2b/antilogy.hh:
+	New files.
+	Include them...
+	* mln/fun/p2b/all.hh: ...here.
+
+2009-04-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add minima simplification to apps/statues/mesh-complex-skel.
 
 	* apps/statues/mesh-complex-skel.cc (main): Take the second
