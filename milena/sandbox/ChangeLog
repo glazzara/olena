@@ -1,5 +1,13 @@
 2009-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add icdar2ppm.
+
+	* icdar/2009/hsc/icdar2ppm.cc,
+	* icdar/2009/hsc/icdar2ppm.hh: new tool to convert icdar .dat files to
+	ppm.
+
+2009-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update ICDAR code.
 
 	* icdar/2009/hsc/lines_to_words.cc: Move some code...
