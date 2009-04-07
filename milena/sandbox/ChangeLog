@@ -1,3 +1,9 @@
+2009-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a small tool to map text components to lines.
+
+	* icdar/2009/hsc/input_lines_to_lines.cc: new.
+
 2009-04-06  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add function to perform component tree computation until.
