@@ -67,69 +67,6 @@
 // to the library.
 using namespace mln;
 
-// Fwd. decl.
-template <typename I> struct is_simple_triangle;
-
-// // A very simple and limited predicate for the simplicity of a point.
-// template <typename I>
-// class is_simple_triangle
-//   : public mln::Function_p2b< is_simple_triangle<I> >
-// {
-// public:
-//   /// Dimension of the image (and therefore of the complex).
-//   static const unsigned D = I::dim;
-//   /// Geometry of the image.
-//   typedef mln_geom(I) G;
-//   /// Psite type.
-//   typedef mln::complex_psite<D, G> psite;
-
-//   /// Result type of the functor.
-//   typedef bool result;
-
-//   is_simple_triangle()
-//     : ima_(0), nbh_()
-//   {
-//   }
-
-//   is_simple_triangle(const mln::Image<I>& ima)
-//     : ima_(mln::exact(&ima)), nbh_()
-//   {
-//   }
-
-//   /* FIXME: Rename as init() or something like this?  See how other
-//      functors are written.  */
-//   /// Set the underlying image.
-//   void set_image(const mln::Image<I>& ima)
-//   {
-//     ima_ = mln::exact(&ima);
-//   }
-
-//   bool operator()(const psite& p) const
-//   {
-//     mln_precondition(ima_);
-//     unsigned nneighbs = 0;
-//     mln_niter(nbh_t) n(nbh_, p);
-//     for_all(n)
-//       if ((*ima_)(n))
-// 	++nneighbs;
-//     mln_invariant(n <= 3);
-//     /* FIXME: Dummy: A triangle is considered simple if it is not
-//        completely attached nor completely detached (i.e, if it has
-//        more than 0 adjacent triangles but less than three).  This test
-//        is obiously simplistic and wrong, but we'll use it as a first
-//        approximation.  We should use the notion of free pair later.
-//        And provide efficient, mask-based version as well.  */
-//     return 0 < nneighbs && nneighbs < 3;
-//   }
-
-// private:
-//   const I* ima_;
-
-//   // FIXME: Make this type a parameter of the functor?
-//   typedef mln::complex_lower_dim_connected_n_face_neighborhood<D, G> nbh_t;
-//   nbh_t nbh_;
-// };
-
 
 // FIXME: Doc.
 template <unsigned D, typename G>
