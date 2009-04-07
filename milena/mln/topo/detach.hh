@@ -47,20 +47,19 @@ namespace mln
         \pre \a f is a facet (it does not belong to any face of higher
               dimension).
         \pre \a ima is an image of Boolean values.  */
-    template <unsigned D, typename G, typename V>
+    template <unsigned D, typename G>
     void
-    detach(const complex_psite<D, G>& f, complex_image<D, G, V>& ima);
+    detach(const complex_psite<D, G>& f, complex_image<D, G, bool>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <unsigned D, typename G, typename V>
+    template <unsigned D, typename G>
     inline
     void
-    detach(const complex_psite<D, G>& f, complex_image<D, G, V>& ima)
+    detach(const complex_psite<D, G>& f, complex_image<D, G, bool>& ima)
     {
       mln_precondition(topo::is_facet(f));
-      mlc_equal(V, bool)::check();
 
       typedef complex_psite<D, G> psite;
       typedef p_set<psite> faces_t;

@@ -36,9 +36,10 @@
 
 # include <mln/core/routine/duplicate.hh>
 
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/neighborhood.hh>
+
 # include <mln/core/site_set/p_set.hh>
-# include <mln/core/alias/complex_image.hh>
-# include <mln/topo/detach.hh>
 
 # include <mln/fun/p2b/tautology.hh>
 
@@ -51,49 +52,46 @@ namespace mln
     namespace skeleton
     {
 
-      /* FIXME: Use a generic `I' instead of
-	 `mln::bin_2complex_image3df', and adjust the
-	 documentation. */
+      /** \brief Skeleton by Breadth-First Thinning.
 
-      /* FIXME: Rename `constraint' to a verb or adjective?
-	 (validate_constraint? satisfy_constraint? pass_constraint?
-	 is_satisfying?)  */
-
-      /** \brief Breadth-First Thinning.
-
-	  A semi-generic implementation of a binary skeleton on a triangle
-	  surface (mesh).
+	  A generic implementation of the computation of a skeleton
+	  using a breadth-first thinning on a binary.
 
           \param input      The input image.
           \param nbh        The adjacency relation between triangles.
-          \param is_simple  The predicate on the simplicity of points (sites).
+          \param is_simple  The predicate on the simplicity of points
+                            (sites).  This functor must provide a method
+                            <tt>void set_image(const Image<I>&)</tt>.
+	  \param detach     A function used to detach a cell from \a input.
           \param constraint A constraint on point (site); if it
        	                    returns \c false for a point, this point
                             will not be removed.  */
-      template <typename N, typename F, typename G>
-      bin_2complex_image3df
-      breadth_first_thinning(const bin_2complex_image3df& input,
+      template <typename I, typename N, typename F, typename G, typename H>
+      mln_concrete(I)
+      breadth_first_thinning(const Image<I>& input,
 			     const Neighborhood<N>& nbh,
 			     Function_p2b<F>& is_simple,
-			     const Function_p2b<G>& constraint =
+			     G detach,
+			     const Function_p2b<H>& constraint =
 			       fun::p2b::tautology());
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename N, typename F, typename G>
+      template <typename I, typename N, typename F, typename G, typename H>
       inline
-      bin_2complex_image3df
-      breadth_first_thinning(const bin_2complex_image3df& input,
+      mln_concrete(I)
+      breadth_first_thinning(const Image<I>& input_,
 			     const Neighborhood<N>& nbh_,
 			     Function_p2b<F>& is_simple_,
-			     const Function_p2b<G>& constraint_)
+			     G detach,
+			     const Function_p2b<H>& constraint_)
       {
+	const I& input = exact(input_);
 	const N& nbh = exact(nbh_);
 	F& is_simple = exact(is_simple_);
-	const G& constraint = exact(constraint_);
+	const H& constraint = exact(constraint_);
 
-	typedef bin_2complex_image3df I;
 	typedef mln_psite(I) psite;
 
 	I output = duplicate(input);
@@ -120,18 +118,29 @@ namespace mln
 	while (!set.is_empty())
 	  {
 	    set_t next_set;
-	    // FIXME: Use a piter on SET instead of this hand-made iteration.
+
+	    /* FIXME: Using the following code does not work (it does
+	       compiles, but does not behave like the code using a
+	       hand-made loop).  There must be a bug somewhere in
+	       p_set or p_indexed_psite. */
+# if 0
+	    mln_piter(set_t) ps(set);
+	    for_all(ps);
+	    {
+	      // Same remark as above.
+	      psite p = p_;
+# endif
 	    for (unsigned i = 0; i < set.nsites(); ++i)
 	      {
 		psite p = set[i];
-		/* FIXME: We compute the cell and attachment of P
-		   twice: within is_simple and within detach.  How
-		   could we reuse this elegantly, without breaking the
-		   genericity of the skeleton algorithm?  */
+
+		/* FIXME: We compute the cell and attachment of P twice:
+		   during the call to is_simple() and within detach().
+		   How could we reuse this elegantly, without breaking
+		   the genericity of the skeleton algorithm?  */
 		if (constraint(p) && is_simple(p))
 		  {
-		    // FIXME: `detach' could be a functor, as is `is_simple'.
-		    topo::detach(p, output);
+		    detach(p, output);
 		    mln_niter(N) n(nbh, p);
 		    for_all(n)
 		      if (output.domain().has(n)

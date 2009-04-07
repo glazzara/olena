@@ -1,5 +1,22 @@
 2009-04-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make mln::topo::skeleton::breadth_first_thinning more generic.
+
+	* mln/topo/skeleton/breadth_first_thinning.hh
+	(mln::topo::skeleton::breadth_first_thinning): Add a parameter I.
+	Take an Image<I> as argument instead of a bin_2complex_image3df.
+	Adjust return type.
+	Pass the `detach' function as an additional argument.
+	Adjust and complete the documentation.
+	* apps/statues/mesh-complex-skel.cc (main): Adjust caller.
+	* mln/topo/detach.hh (mln::topo::detach<D, G, V>): Get rid of
+	parameter V (replace it by `bool'), and turn the signature of
+	the function into...
+	(mln::topo::detach<D, G>): ...this.
+	Remove a (now) useless precondition.
+
+2009-04-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	Split apps/statues/mesh-complex-skel.
 
 	* apps/statues/mesh-complex-skel.cc: Split reusable parts into...
