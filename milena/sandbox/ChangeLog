@@ -1,3 +1,21 @@
+2009-04-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update.
+
+	* icdar/2009/hsc/clean_input.cc: New.
+	* icdar/2009/hsc/clean_input.hh: New.
+	* icdar/2009/hsc/lines_to_boxes.cc: New.
+	* icdar/2009/hsc/line_to_words.hh: Remove blank line.
+	* icdar/2009/hsc/io/icdar/save.hh: Fix warning.
+	* icdar/2009/hsc/ws_to_wsl.hh: Add log.
+
+	* icdar/2009/hsc/input_to_wsl.cc: Split into...
+	* icdar/2009/hsc/input_to_lines_dat.cc,
+	* icdar/2009/hsc/input_to_ws.hh: ...these new files.
+
+	* icdar/2009/hsc/line_to_words.cc: Rename as...
+	* icdar/2009/hsc/dummy_input_to_words_dat.cc: ...this.
+
 2009-04-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add clean_lines routine.

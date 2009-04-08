@@ -25,7 +25,17 @@
 
 #include <mln/morpho/elementary/dilation.hh>
 
+#include <mln/io/pgm/save.hh>
+#include <mln/io/ppm/save.hh>
 
+#include <mln/literal/colors.hh>
+#include <mln/level/convert.hh>
+#include <mln/pw/all.hh>
+#include <mln/core/image/image_if.hh>
+
+#include <mln/fun/i2v/array.hh>
+#include <mln/level/transform.hh>
+#include <mln/debug/colorize.hh>
 
 
 
@@ -296,7 +306,12 @@ namespace mln
 	  & m1 = m[i1],
 	  & m2 = m[i2];
 
-	if (m1.n() > 1000 && m2.n() > 1000)
+// 	if (m1.n() != 0 && m2.n() != 0)
+// 	  d(e) = dist(m1, m2);
+// 	else
+// 	  d(e) = 666.f;
+
+	if (m1.n() > 10 && m2.n() > 10) // FIXME: was 1000
 	  d(e) = dist(m1, m2);
 	else
 	  d(e) = 666.f;
@@ -377,6 +392,31 @@ namespace mln
       for (L l = 1; l <= n_basins; ++l)
 	parent[l] = find_root_(parent, l);
     }
+
+
+#ifdef LOG
+    {
+      io::pgm::save(small, "tmp_small.pgm");
+      io::pgm::save(ws,    "tmp_ws.pgm");
+      
+      using value::rgb8;
+
+      image2d<rgb8> small_ws = level::convert(rgb8(), small);
+      data::fill((small_ws | (pw::value(ws) == pw::cst(0))).rw(),
+		 literal::red);
+      io::ppm::save(small_ws, "tmp_small_ws.ppm");
+
+      fun::i2v::array<L> f_relab(n_basins + 1);
+      f_relab(0) = 0;
+      for (L l = 1; l <= n_basins; ++l)
+	f_relab(l) = parent[l];
+
+      image2d<L> ws_ = level::transform(ws, f_relab);
+      io::ppm::save(debug::colorize(rgb8(), ws_, n_basins), "tmp_ws.ppm");
+
+    }
+#endif // LOG
+
 
 
     // Outputing.

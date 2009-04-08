@@ -69,7 +69,8 @@ namespace mln
 	{
 	  /// Probably too violent...
 	  unsigned int value = static_cast<unsigned int>(ima(p));
-	  fwrite(&value, sizeof (int), 1, f);
+	  int ret = fwrite(&value, sizeof (int), 1, f);
+	  (void)(ret);
 	}
 
 	fclose(f);

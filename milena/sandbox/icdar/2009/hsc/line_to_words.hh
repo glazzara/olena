@@ -1,4 +1,3 @@
-
 #include <mln/value/int_u.hh>
 
 #include <mln/core/image/image2d.hh>
