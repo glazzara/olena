@@ -1,3 +1,13 @@
+2009-04-08 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Improve and fix lut_vec with fun::i2v::array and fun::l2l::relabel.
+
+	* mln/fun/internal/array_base.hh: add accessor to the underlying std
+	vector.
+
+	* mln/value/lut_vec.hh: Use directly fun::i2v::array and
+	fun::l2l::relabel as lut.
+
 2009-04-08  Guillaume Lazzara  <lazzara@lrde.epita.fr>
   
 	Remove debug in io::tiff::load.

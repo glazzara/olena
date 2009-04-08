@@ -80,6 +80,9 @@ namespace mln
 	/// Initialize an empty function.
 	void init_(unsigned n);
 
+	/// Return the underlying std::vector.
+	const std::vector<T>& std_vector() const;
+
       protected:
 	std::vector<T> v_;
 
@@ -220,6 +223,14 @@ namespace mln
       array_base<T>::init_(unsigned n)
       {
 	v_.resize(n);
+      }
+
+      template <typename T>
+      inline
+      const std::vector<T>&
+      array_base<T>::std_vector() const
+      {
+	return v_;
       }
 
     } // end of namespace mln::fun::internal

@@ -45,6 +45,16 @@
 namespace mln
 {
 
+  /// Forward declarations.
+  namespace fun {
+    namespace i2v {
+      template <typename T> class array;
+    } // end of namespace mln::fun::i2v
+    namespace l2l {
+      template <typename L> class relabel;
+    } // end of namespace mln::fun::l2l
+  } // end of namespace mln::fun
+
   namespace value
   {
 
@@ -53,8 +63,8 @@ namespace mln
     template <typename S> struct bkd_viter_;
 
 
-    /*! \brief Class that defines FIXME
-     *
+    /// Class that defines FIXME
+    /*!
      * \warning This is a multi-set!!!
      * FIXME
      *
@@ -89,6 +99,14 @@ namespace mln
       /// Ctor. FIXME!
       template <typename F>
       lut_vec(const S& vset, const Function_v2v<F>& f);
+
+      /// Ctor. FIXME!
+      template <typename V>
+      lut_vec(const S& vset, const Function_v2v< fun::i2v::array<V> >& f);
+
+      /// Ctor. FIXME!
+      template <typename V>
+      lut_vec(const S& vset, const Function_v2v< fun::l2l::relabel<V> >& f);
 
     protected:
 
@@ -134,6 +152,28 @@ namespace mln
       vec_.reserve(n_);
       for (unsigned i = 0; i < n_; ++i)
 	vec_.push_back(f_(vset[i]));
+    }
+
+    template <typename S, typename T>
+    template <typename V>
+    inline
+    lut_vec<S,T>::lut_vec(const S& vset, const Function_v2v< fun::i2v::array<V> >& f)
+      : vset_(vset)
+    {
+      const fun::i2v::array<V>& f_ = exact(f);
+      n_ = f_.size();
+      vec_ = f_.std_vector();
+    }
+
+    template <typename S, typename T>
+    template <typename V>
+    inline
+    lut_vec<S,T>::lut_vec(const S& vset, const Function_v2v< fun::l2l::relabel<V> >& f)
+      : vset_(vset)
+    {
+      const fun::l2l::relabel<V>& f_ = exact(f);
+      n_ = f_.size();
+      vec_ = f_.std_vector();
     }
 
     template <typename S, typename T>
