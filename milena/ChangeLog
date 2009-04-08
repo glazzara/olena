@@ -1,3 +1,11 @@
+2009-04-07  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add io::tiff::load
+
+	* mln/io/all.hh,
+	* mln/io/tiff/all.hh,
+	* mln/io/tiff/load.hh: Add support for TIFF.
+
 2009-04-07  Roland Levillain  <roland@lrde.epita.fr>
 
 	Make mln::topo::skeleton::breadth_first_thinning more generic.
