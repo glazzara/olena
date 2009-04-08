@@ -1,3 +1,10 @@
+2009-04-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add clean_lines routine.
+
+	* icdar/2009/hsc/clean_lines.hh: new routine.
+	* icdar/2009/hsc/input_lines_to_lines.cc: use this new routine.
+
 2009-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add icdar2ppm.

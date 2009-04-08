@@ -11,6 +11,7 @@
 #include <mln/core/image/image_if.hh>
 #include <mln/data/fill.hh>
 #include "label_maj.hh"
+#include "clean_lines.hh"
 
 void usage(char* argv[])
 {
@@ -40,26 +41,6 @@ int main(int argc, char *argv[])
   image2d<int_u8> lines;
   io::pgm::load(lines, argv[2]);
 
-  label_16 nlabels;
-  image2d<label_16> lbl = labeling::background(input, c8(), nlabels);
-  util::array<box2d> bboxes = labeling::compute(accu::meta::bbox(), lbl, nlabels);
-
-  /// Compute the most represented label for each component.
-  accu::label_maj<label_16, int_u8> accu(nlabels.next());
-  mln_piter_(image2d<int_u8>) p(lbl.domain());
-  for_all(p)
-    if (lines(p) != 0u)
-      accu.take(lbl(p), lines(p));
-
-
-  // Rebuild components.
-  util::array<util::couple<int_u8, float> > res = accu.to_result();
-  for (unsigned i = 1; i < res.nelements(); ++i)
-    if (res[i].second() >= 0.70f)
-      data::fill(((lines | bboxes[i]).rw() | (pw::value(lbl) != 0u)).rw(), res[i].first());
-    else
-      std::cout << res[i].first() << " - " << res[i].second() << std::endl;
-
   // Save result.
-  io::pgm::save(lines, argv[3]);
+  io::pgm::save(clean_lines(input, lines, 0.7f), argv[3]);
 }
