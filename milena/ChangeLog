@@ -1,4 +1,11 @@
 2009-04-08  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+  
+	Remove debug in io::tiff::load.
+
+	* mln/io/tiff/load.hh: Remove debug.
+
+
+2009-04-08  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Fix io::tiff::load.
 

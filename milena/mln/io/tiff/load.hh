@@ -78,10 +78,7 @@ namespace mln
 	  TIFFGetField(file, TIFFTAG_IMAGEWIDTH, &width);
 	  TIFFGetField(file, TIFFTAG_IMAGELENGTH, &height);
 
-	  std::cout << "height == " << height << " - width == " << width << std::endl;
 	  mln_concrete(I) new_ima(height, width, 0);
-	  std::cout << "nrows == " << new_ima.nrows() << " - ncols == " << new_ima.ncols() << std::endl;
-	  std::cout << "nrows == height and ncols == width" << std::endl;
 	  exact(ima) = new_ima;
 	}
 
