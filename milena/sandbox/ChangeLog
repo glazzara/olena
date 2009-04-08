@@ -1,3 +1,12 @@
+2009-04-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update ICDAR-HSC code.
+
+	* icdar/2009/hsc/input_to_lines_dat.cc: Move code to...
+	* icdar/2009/hsc/input_to_lines.hh: ...this new file.
+	* icdar/2009/hsc/input_to_lines_dat.cc
+	(main): Use the 'input_to_lines' routine.
+
 2009-04-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a new variant of clean_lines.
