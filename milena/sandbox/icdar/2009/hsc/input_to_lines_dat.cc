@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 
   typedef value::label<12> L;
   L n_lines;
-  image2d<L> output = input_to_lines(input, n_lines);
+  image2d<L> output = input_to_lines(input, n_lines, 0.7); // with 70%
 
   io::icdar::save(output, argv[2]);
 

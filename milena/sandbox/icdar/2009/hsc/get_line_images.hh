@@ -39,14 +39,21 @@ namespace mln
     util::array<box<mln_site(L)> >
       bboxes = labeling::compute(accu::meta::bbox(), lines, nlines);
 
-    util::array<mln_ch_value(L,bool)> result;
+    typedef mln_ch_value(L,bool) line_t;
+    util::array<line_t> result;
 
-    for (unsigned i = 1; i < nlines; ++i)
     {
-      typedef mln_ch_value(L,bool) line_t;
+      // Skipping index 0:
+      line_t dummy(1,1);
+      result.append(dummy);
+    }
+
+    for (unsigned i = 1; i <= nlines; ++i)
+    {
       box<mln_site(L)> b = bboxes[i];
       b.enlarge(bbox_line_enlarge);
       line_t line(b);
+      data::fill(line, false);
       data::fill(((line | bboxes[i]).rw() | (pw::value(lines) == i)).rw(), true);
 
       result.append(line);

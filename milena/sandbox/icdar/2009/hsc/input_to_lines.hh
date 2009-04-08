@@ -16,7 +16,8 @@ namespace mln
 
   template <typename L>
   image2d<L>
-  input_to_lines(const image2d<bool>& raw_input, L& n_lines)
+  input_to_lines(const image2d<bool>& raw_input, L& n_lines,
+		 float tau)
   {
     // First clean.
     image2d<bool> input = clean_input(raw_input);
@@ -35,7 +36,7 @@ namespace mln
     wsl = ws_to_wslines(input, small, ws, n_reg);
     
     // Clean lines
-    wsl = clean_lines(input, wsl, 0.7f);
+    wsl = clean_lines(input, wsl, tau);
     
     return labeling::relabel(violent_cast_image_<L>(wsl),
 			     n_lines);

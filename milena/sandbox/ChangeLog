@@ -1,5 +1,16 @@
 2009-04-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add a document-to-words routine based on lines.
+
+	* icdar/2009/hsc/input_to_lines.hh (tau): New.
+	* icdar/2009/hsc/input_to_lines_dat.cc: Update.
+	* icdar/2009/hsc/input_to_words_dat.cc: New.
+	* icdar/2009/hsc/line_to_words.hh
+	(black_on_white, reduce): New.
+	* icdar/2009/hsc/get_line_images.hh: Fix 1st elt, at index 0.
+
+2009-04-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update ICDAR-HSC code.
 
 	* icdar/2009/hsc/input_to_lines_dat.cc: Move code to...
