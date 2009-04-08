@@ -34,6 +34,7 @@
 /// Load TIFF images to Milena images.
 ///
 /// \todo Add support for several tiles.
+/// \todo Handle TIFFTAG_ORIENTATION (origin of the image).
 
 
 # include <iostream>
@@ -70,16 +71,18 @@ namespace mln
 
 	template <typename I>
         inline
-        void load_header(Image<I>& ima, TIFF *file)
+        void load_header(I& ima, TIFF *file)
 	{
 	  uint32 width, height;
 
 	  TIFFGetField(file, TIFFTAG_IMAGEWIDTH, &width);
 	  TIFFGetField(file, TIFFTAG_IMAGELENGTH, &height);
 
+	  std::cout << "height == " << height << " - width == " << width << std::endl;
 	  mln_concrete(I) new_ima(height, width, 0);
+	  std::cout << "nrows == " << new_ima.nrows() << " - ncols == " << new_ima.ncols() << std::endl;
+	  std::cout << "nrows == height and ncols == width" << std::endl;
 	  exact(ima) = new_ima;
-
 	}
 
 
@@ -88,8 +91,10 @@ namespace mln
         void load_data_rgb8(I& ima, TIFF *file)
 	{
 	  uint16 bits_per_sample, samples_per_pixel;
+
 	  TIFFGetField(file, TIFFTAG_BITSPERSAMPLE, &bits_per_sample);
 	  TIFFGetField(file, TIFFTAG_SAMPLESPERPIXEL, &samples_per_pixel);
+
 	  uint16 data_size = bits_per_sample * samples_per_pixel;
 	  if (data_size != 24 || data_size != 32)
 	  {
@@ -108,19 +113,21 @@ namespace mln
 	    abort();
 	  }
 
-	  unsigned i = ima.ncols() - 1;
+	  unsigned i = ima.nrows() - 1;
 	  unsigned j = 0;
 	  mln_piter(I) p(ima.domain());
 	  for_all(p)
 	  {
 	    unsigned idx = i * ima.ncols() + j;
 	    value::rgb8 v;
+
 	    v.red() = (unsigned char) TIFFGetR(raster[idx]);
 	    v.green() = (unsigned char) TIFFGetG(raster[idx]);
 	    v.blue() = (unsigned char) TIFFGetB(raster[idx]);
 	    ima(p) = v;
+
 	    ++j;
-	    if (!(j%ima.nrows()))
+	    if (!(j%ima.ncols()))
 	    {
 	      --i;
 	      j = 0;
@@ -148,7 +155,7 @@ namespace mln
 
 	  TIFFReadRGBAImage(file, ima.ncols(), ima.nrows(), raster, 0);
 
-	  unsigned i = ima.ncols() - 1;
+	  unsigned i = ima.nrows() - 1;
 	  unsigned j = 0;
 	  mln_piter(I) p(ima.domain());
 	  for_all(p)
@@ -156,7 +163,7 @@ namespace mln
 	    unsigned idx = i * ima.ncols() + j;
 	    ima(p) = (unsigned char) TIFFGetR(raster[idx]);
 	    ++j;
-	    if (!(j%ima.nrows()))
+	    if (!(j%ima.ncols()))
 	    {
 	      --i;
 	      j = 0;
@@ -194,7 +201,7 @@ namespace mln
 	template <typename I>
 	inline
 	void
-	load_data_dispatch(Image<I>& ima, TIFF *file)
+	load_data_dispatch(I& ima, TIFF *file)
 	{
 	  load_data_dispatch(mln_value(I)(), exact(ima), file);
 	}
@@ -221,11 +228,12 @@ namespace mln
 	  abort();
 	}
 
-	internal::load_header(ima, file);
-	internal::load_data_dispatch(ima, file);
+	internal::load_header(exact(ima), file);
+	internal::load_data_dispatch(exact(ima), file);
 
 	mln_postcondition(exact(ima).is_valid());
 
+	(void) TIFFClose(file);
 	trace::exiting("mln::io::tiff::load");
       }
 
