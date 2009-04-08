@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -330,12 +330,10 @@ namespace mln
       mln_concrete(I)
       general_dispatch_for_generic(const Op& op, const I& input, const W& win) // Entry point.
       {
-	trace::entering("morpho::general_dispatch_for_generic");
 	mln_concrete(I) ima =
 	  general_dispatch_for_generic(mln_trait_image_kind(I)(),
 				       mln_trait_image_speed(I)(),
 				       op, input, win);
-	trace::entering("morpho::general_dispatch_for_generic");
 	return ima;
       }
 

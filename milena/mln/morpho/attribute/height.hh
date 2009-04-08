@@ -41,7 +41,8 @@
 # include <mln/math/max.hh>
 
 
-namespace mln {
+namespace mln
+{
 
   // Forward declaration.
   namespace morpho {
@@ -53,7 +54,8 @@ namespace mln {
 
   // Traits.
 
-  namespace trait {
+  namespace trait
+  {
 
     template <typename I>
     struct accumulator_< morpho::attribute::height<I> >
@@ -67,8 +69,11 @@ namespace mln {
   } // end of namespace mln::trait
 
 
-  namespace morpho {
-    namespace attribute {
+  namespace morpho
+  {
+
+    namespace attribute
+    {
 
       /// Height accumulator class.
       ///
@@ -211,8 +216,11 @@ namespace mln {
       }
 
 # endif // ! MLN_INCLUDE_ONLY
+
     } // end of namespace mln::morpho::attribute
+
   } // end of namespace mln::morpho
+
 } // end of namespace mln
 
 
