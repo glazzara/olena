@@ -306,15 +306,16 @@ namespace mln
 	  & m1 = m[i1],
 	  & m2 = m[i2];
 
-// 	if (m1.n() != 0 && m2.n() != 0)
+	if (m1.n() != 0 && m2.n() != 0)
+	  d(e) = dist(m1, m2);
+	else
+	  d(e) = 666.f;
+
+// 	if (m1.n() > 1000 && m2.n() > 1000) // FIXME: was 1000
 // 	  d(e) = dist(m1, m2);
 // 	else
 // 	  d(e) = 666.f;
 
-	if (m1.n() > 10 && m2.n() > 10) // FIXME: was 1000
-	  d(e) = dist(m1, m2);
-	else
-	  d(e) = 666.f;
       }
     }
 

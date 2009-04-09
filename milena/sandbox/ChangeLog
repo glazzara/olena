@@ -1,3 +1,9 @@
+2009-04-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Forget it.
+
+	* icdar/2009/hsc/ws_to_wsl.hh: Prefer testing n() v. 0.
+
 2009-04-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a document-to-words routine based on lines.
