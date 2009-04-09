@@ -68,6 +68,56 @@ namespace mln
 
       namespace internal
       {
+	
+	inline
+	point2d ij2rc_1(int i, int j, int ni_1, int nj_1)
+	{
+	  return point2d(ni_1 - i, j);
+	}
+
+	inline
+	point2d ij2rc_2(int i, int j, int ni_1, int nj_1)
+	{
+	  return point2d(ni_1 - i, nj_1 - j);
+	}
+
+	inline
+	point2d ij2rc_3(int i, int j, int ni_1, int nj_1)
+	{
+	  return point2d(i, nj_1 - j);
+	}
+
+	inline
+	point2d ij2rc_4(int i, int j, int ni_1, int nj_1)
+	{
+	  return point2d(i, j);
+	}
+
+	inline
+	point2d ij2rc_5(int i, int j, int ni_1, int nj_1)
+	{
+	  return point2d(j, ni_1 - i);
+	}
+
+	inline
+	point2d ij2rc_6(int i, int j, int ni_1, int nj_1)
+	{
+ 	  return point2d(nj_1 - j, ni_1 - i);
+	}
+
+	inline
+	point2d ij2rc_7(int i, int j, int ni_1, int nj_1)
+	{
+	  return point2d(nj_1 - j, i);
+	}
+
+	inline
+	point2d ij2rc_8(int i, int j, int ni_1, int nj_1)
+	{
+	  return point2d(j, i);
+	}
+
+
 
 	template <typename I>
         inline
@@ -134,6 +184,9 @@ namespace mln
 	  _TIFFfree(raster);
 	}
 
+
+
+
 	template <typename I>
         inline
         void load_data_scalar(I& ima, TIFF *file)
@@ -147,25 +200,61 @@ namespace mln
 	    abort();
 	  }
 
+
 	  uint32 npixels = ima.ncols() * ima.nrows();
 	  uint32 *raster = (uint32 *) _TIFFmalloc(npixels * sizeof (uint32));
 
 	  TIFFReadRGBAImage(file, ima.ncols(), ima.nrows(), raster, 0);
 
-	  unsigned i = ima.nrows() - 1;
-	  unsigned j = 0;
-	  mln_piter(I) p(ima.domain());
-	  for_all(p)
-	  {
-	    unsigned idx = i * ima.ncols() + j;
-	    ima(p) = (unsigned char) TIFFGetR(raster[idx]);
-	    ++j;
-	    if (!(j%ima.ncols()))
+
+	  uint16 orientation;
+	  TIFFGetField(file, TIFFTAG_ORIENTATION, &orientation);
+
+	  typedef point2d (*fun_t)(int, int, int, int);
+	  fun_t funs[] = { 0, ij2rc_1, ij2rc_2, ij2rc_3, ij2rc_4, ij2rc_5, ij2rc_6, ij2rc_7, ij2rc_8 };
+	  fun_t fun = funs[orientation];
+
+	  int ni_1, nj_1;
+	  unsigned idx = 0;
+
+ 	  if (orientation <= 4)
 	    {
-	      --i;
-	      j = 0;
+	      ni_1 = ima.nrows() - 1;
+	      nj_1 = ima.ncols() - 1;
+	      for (unsigned i = 0; i <= ni_1; ++i)
+		for (unsigned j = 0; j <= nj_1; ++j)
+		  {
+		    ima((*fun)(i, j, ni_1, nj_1)) = (unsigned char) TIFFGetR(raster[idx++]);
+		  }
 	    }
-	  }
+	  else
+	    {
+	      nj_1 = ima.nrows() - 1;
+	      ni_1 = ima.ncols() - 1;
+	      for (unsigned j = 0; j <= nj_1; ++j)
+		for (unsigned i = 0; i <= ni_1; ++i)
+		  {
+		    ima((*fun)(i, j, ni_1, nj_1)) = (unsigned char) TIFFGetR(raster[idx++]);
+		  }
+	    }
+
+	  std::cout << std::endl;
+
+
+// 	  unsigned i = ima.nrows() - 1;
+// 	  unsigned j = 0;
+// 	  mln_piter(I) p(ima.domain());
+// 	  for_all(p)
+// 	  {
+// 	    unsigned idx = i * ima.ncols() + j;
+// 	    ima(p) = (unsigned char) TIFFGetR(raster[idx]);
+// 	    ++j;
+// 	    if (!(j%ima.ncols()))
+// 	    {
+// 	      --i;
+// 	      j = 0;
+// 	    }
+// 	  }
 
 	  _TIFFfree(raster);
 	}

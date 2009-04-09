@@ -1,3 +1,12 @@
+2009-04-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Handle tiff orientation in scalar images.
+
+	* mln/io/tiff/load.hh: Handle tiff orientation in scalar
+	  images.
+	* tests/io/tiff: New directory.
+	* tests/io/tiff/tiff2pbm.cc: New.
+
 2009-04-08 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Improve and fix lut_vec with fun::i2v::array and fun::l2l::relabel.
