@@ -1,5 +1,12 @@
 2009-04-10  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Fix bugs related to 'glut leaves' process.
+	* edwin/tree/propagate_node.hh: Minor changes.
+	* edwin/tree/run.hh: Fix bugs.
+	* edwin/tree/sharp.cc: Nothing important.
+
+2009-04-10  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Alter propagation function to optimize the 'glutted leaves' process.
 	* edwin/inim/inim.cc: Fix path error in includes.
 	* edwin/tree/propagate_node.hh: Descendant propagation can

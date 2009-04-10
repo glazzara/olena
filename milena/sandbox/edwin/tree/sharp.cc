@@ -190,11 +190,11 @@ int main(int argc, char* argv[])
     dsp(s.str());
   }
 
-  if (sharpness != 0) {
+  if (nb_components) {
+    obj_array = morpho::tree::run_ntimes(tree, a, argmax, nb_components);
+  } else if (sharpness > 0) {
     mln_VAR(predicate, pw::value(a) > pw::cst(sharpness));
     obj_array = morpho::tree::run_while(tree, a, argmax, predicate);
-  } else if (nb_components) {
-    obj_array = morpho::tree::run_ntimes(tree, a, argmax, nb_components);
   } else {
     obj_array = morpho::tree::run_until_glutted_leaves(tree, a, argmax);
   }

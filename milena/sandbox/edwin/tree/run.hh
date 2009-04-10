@@ -139,11 +139,8 @@ namespace mln {
 	      arr_values.append(a(p));
 	      morpho::tree::propagate_node_to_descendants(p, tree, a, 0, 0);
 	      morpho::tree::propagate_node_to_ancestors(p, tree, a, 0);
-	      if (pred(p)) // may have changed
-		{
-		  a(p) = 0;
-		  p = morpho::tree::run(tree, a, accu);
-		}
+	      a(p) = 0;
+	      p = morpho::tree::run(tree, a, accu);
 	    }
 	  for (unsigned i = 0; i < arr_sites.nsites(); i++)
 	    a(arr_sites[i]) = arr_values[i];
@@ -225,11 +222,14 @@ namespace mln {
 	do
 	  {
 	    p = morpho::tree::run(tree, a, acc);
+	    if (a(p) == 0)
+	      break;
 	    arr_sites.insert(p);
 	    arr_values.append(a(p));
 	    morpho::tree::propagate_node_to_descendants(p, tree, a, 0, &nb_leaves);
 	    morpho::tree::propagate_node_to_ancestors(p, tree, a, 0);
 	    a(p) = 0;
+	    mln_assertion(nb_leaves <= n);
 	  }
 	while ((n -= nb_leaves));
 

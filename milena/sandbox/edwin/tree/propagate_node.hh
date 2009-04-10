@@ -113,6 +113,7 @@ namespace mln {
 
 
       template <typename T, typename A>
+      inline
       void
       propagate_node_to_descendants(mln_psite(A) n,
 				    const T& t,
@@ -133,8 +134,10 @@ namespace mln {
 	typename T::preorder_piter pp(t, n);
 
 	pp.start(); // We don't set n to v.
+
 	if (nb_leaves)
 	  *nb_leaves = t.is_a_leaf(pp);
+
 	for (pp.next(); pp.is_valid(); pp.next())
 	  {
 	    a(pp) = v;
