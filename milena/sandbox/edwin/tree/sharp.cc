@@ -12,8 +12,8 @@
 /* Component trees */
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
-#include "propagate.hh"
 #include "run.hh"
+#include "propagate.hh"
 #include "accumulator/arg_max.hh"
 
 /* Attributes */
@@ -65,7 +65,7 @@ void dsp(const std::string& str)
 /**
 ** For each component in the list \p component_list, it
 ** propagates the representant value to the remaining nodes of the
-** component. The value of node that don't belong to a component is
+** component. The value of a node that doesn't belong to a component is
 ** set to \p null.
 **
 ** @param attr_image The attribute image.

@@ -137,7 +137,7 @@ namespace mln {
 	    {
 	      arr_sites.insert(p);
 	      arr_values.append(a(p));
-	      morpho::tree::propagate_node_to_descendants(p, tree, a, 0);
+	      morpho::tree::propagate_node_to_descendants(p, tree, a, 0, 0);
 	      morpho::tree::propagate_node_to_ancestors(p, tree, a, 0);
 	      if (pred(p)) // may have changed
 		{
@@ -169,38 +169,6 @@ namespace mln {
 	private:
 	  unsigned n_;
 	};
-
-	template <typename T>
-	struct glut_leaves : Function_p2b< glut_leaves<T> >
-	{
-	  typedef bool result;
-
-	  glut_leaves(const T& tree) :
-	    tree_ (tree),
-	    n_ (tree.leaves().nsites())
-	  {
-	  }
-
-	  bool operator()(const mln_psite(T)& p)
-	  {
-	    (void)p;
-	    std::cout << n_ << std::endl;
-
-	    if (n_ == 0)
-	      return false;
-
-	    mln_preorder_piter(T) n(tree_, p);
-	    for_all(n)
-	      if (tree_.is_a_leaf(n))
-		n_--;
-	    return true;
-	  }
-
-	private:
-	  const T& tree_;
-	  unsigned n_;
-	};
-
 
       } // end of namespace mln::morpho::tree::internal
 
@@ -243,14 +211,33 @@ namespace mln {
       inline
       p_array< mln_psite(A) >
       run_until_glutted_leaves(const T& tree,
-			       Image<A>& a,
+			       Image<A>& a_,
 			       Accumulator<ACC>& acc)
       {
 	trace::entering("mln::morpho::tree::run_until_glutted_leaves");
-	internal::glut_leaves<T> predicate(tree);
-	p_array< mln_psite(A) > arr = run_while(tree, a, acc, predicate);
+	A& a = exact(a_);
+	mln_psite(A) p, tmp;
+	p_array< mln_psite(A) > arr_sites;
+	util::array< mln_value(A) > arr_values;
+	unsigned nb_leaves;
+	unsigned n = tree.leaves().nsites();
+
+	do
+	  {
+	    p = morpho::tree::run(tree, a, acc);
+	    arr_sites.insert(p);
+	    arr_values.append(a(p));
+	    morpho::tree::propagate_node_to_descendants(p, tree, a, 0, &nb_leaves);
+	    morpho::tree::propagate_node_to_ancestors(p, tree, a, 0);
+	    a(p) = 0;
+	  }
+	while ((n -= nb_leaves));
+
+	for (unsigned i = 0; i < arr_sites.nsites(); i++)
+	  a(arr_sites[i]) = arr_values[i];
+
 	trace::exiting("mln::morpho::tree::run_until_glutted_leaves");
-	return arr;
+	return arr_sites;
       }
 
 

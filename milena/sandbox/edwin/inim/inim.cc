@@ -17,10 +17,9 @@
 /* Component trees */
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
-#include "propagate.hh"
-#include "run.hh"
-#include "accumulator/arg_max.hh"
-
+#include "../tree/propagate.hh"
+#include "../tree/run.hh"
+#include "../tree/accumulator/arg_max.hh"
 
 /* Attributes */
 #include <mln/transform/distance_front.hh>
