@@ -51,10 +51,6 @@
 # define mln_leaf_piter(T)	typename T::leaf_piter
 # define mln_preorder_piter(T)	typename T::preorder_piter
 
-# define mln_site_piter(T)	typename T::up_site_piter
-# define mln_node_piter(T)	typename T::up_node_piter
-# define mln_leaf_piter(T)	typename T::up_leaf_piter
-
 # define mln_up_site_piter_(T)	T::up_site_piter
 # define mln_dn_site_piter_(T)  T::dn_site_piter
 # define mln_up_node_piter_(T)  T::up_node_piter

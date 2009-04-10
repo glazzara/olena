@@ -1,3 +1,9 @@
+2009-04-10  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Merge changes in component tree file.
+	* mln/morpho/tree/data.hh: Resolve conflicts between theo's
+	and edwin's code.
+
 2009-04-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Handle tiff orientation in scalar images.
