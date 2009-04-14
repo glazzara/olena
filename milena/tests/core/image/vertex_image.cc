@@ -32,6 +32,7 @@
 #include <vector>
 
 #include <mln/core/image/vertex_image.hh>
+#include <mln/make/vertex_image.hh>
 #include <mln/core/image/image2d.hh>
 
 #include <mln/accu/bbox.hh>
@@ -113,113 +114,199 @@ int main()
   for (unsigned i = 0; i < iota.size(); ++i)
     iota(i) = 10 + i;
 
-  typedef vertex_image<point2d,unsigned> ima_t;
-  ima_t ima(g, sites, iota);
+
+
+  /// Vertices are associated to image sites.
 
   {
-    // FIXME: Move this part to a special test case.
+    typedef vertex_image<point2d,unsigned> ima_t;
+    ima_t ima = make::vertex_image(g, sites, iota);
 
-    // Compute the bounding box of 'ima'.
-    accu::bbox<point2d> a;
+    {
+      // FIXME: Move this part to a special test case.
+
+      // Compute the bounding box of 'ima'.
+      accu::bbox<point2d> a;
+      mln_piter_(ima_t) p(ima.domain());
+      for_all(p)
+	a.take(p);
+      box2d bbox = a.to_result();
+      mln_assertion(bbox == make::box2d(5, 5));
+
+      // Print the image.
+      /* FIXME: Unfortunately, displaying graph images is not easy right
+	 now(2008-02-05).  We could use
+
+	 debug::println(ima);
+
+	 but there's not specialization working for graph_image; the one
+	 selected by the compiler is based on a 2-D bbox, and expects the
+	 interface of graph_image to work with points(not psites).
+	 Moreover, this implementation only shows *values*, not the graph
+	 itslef.
+
+	 An alternative is to use debug::graph,
+	 but it doesn't show the values, only the vertices and edges of the
+	 graph.
+
+	 The current solution is a mix between debug::graph and hand-made
+	 iterations.  */
+      image2d<int> ima_rep(bbox);
+
+      // We use the value 9 in debug::graph to represent edges to distinguish it
+      // from vertices holding a value of 1.
+      debug::draw_graph(ima_rep, ima.domain(), 1, 9);
+    }
+
+    /*------------.
+      | Iterators.  |
+      `------------*/
+
+    // iteration over the domain of IMA.
     mln_piter_(ima_t) p(ima.domain());
+    unsigned i = 10;
     for_all(p)
-      a.take(p);
-    box2d bbox = a.to_result();
-    mln_assertion(bbox == make::box2d(5, 5));
+      mln_assertion(ima(p) == i++);
 
-  // Print the image.
-  /* FIXME: Unfortunately, displaying graph images is not easy right
-     now(2008-02-05).  We could use
+    typedef ima_t::win_t win_t;
+    win_t win;
 
-       debug::println(ima);
-
-     but there's not specialization working for graph_image; the one
-     selected by the compiler is based on a 2-D bbox, and expects the
-     interface of graph_image to work with points(not psites).
-     Moreover, this implementation only shows *values*, not the graph
-     itslef.
-
-     An alternative is to use debug::graph,
-     but it doesn't show the values, only the vertices and edges of the
-     graph.
-
-     The current solution is a mix between debug::graph and hand-made
-     iterations.  */
-    image2d<int> ima_rep(bbox);
-
-  // We use the value 9 in debug::graph to represent edges to distinguish it
-  // from vertices holding a value of 1.
-    debug::draw_graph(ima_rep, ima.domain(), 1, 9);
-  }
-
-  /*------------.
-  | Iterators.  |
-  `------------*/
-
-  // iteration over the domain of IMA.
-  mln_piter_(ima_t) p(ima.domain());
-  unsigned i = 10;
-  for_all(p)
-    mln_assertion(ima(p) == i++);
-
-  typedef ima_t::win_t win_t;
-  win_t win;
-
-  {
-    // Window - Forward iteration
-    mln_qiter_(win_t) q(win, p);
-    for_all(p)
     {
-      i = 0;
-      for_all(q)
+      // Window - Forward iteration
+      mln_qiter_(win_t) q(win, p);
+      for_all(p)
       {
-	mln_assertion(expected_fwd_nb[p.id()][i] == q.id());
-	++i;
+	i = 0;
+	for_all(q)
+	{
+	  mln_assertion(expected_fwd_nb[p.id()][i] == q.id());
+	  ++i;
+	}
+      }
+    }
+
+    {
+      // Window - Backward iteration
+      mln_bkd_qiter_(win_t) q(win, p);
+      for_all(p)
+      {
+	i = 0;
+	for_all(q)
+	{
+	  mln_assertion(expected_bkd_nb[p.id()][i] == q.id());
+	  ++i;
+	}
+      }
+    }
+
+    typedef ima_t::nbh_t nbh_t;
+    nbh_t neigh;
+    {
+      // Neighborhood - Forward iteration
+      mln_niter_(nbh_t) n(neigh, p);
+
+      for_all(p)
+      {
+	i = 0;
+	for_all(n)
+	{
+	  mln_assertion(expected_fwd_nb[p.id()][i] == n.id());
+	  ++i;
+	}
+      }
+    }
+
+    {
+      // Neighborhood - Backward iteration
+      mln_bkd_niter_(nbh_t) n(neigh, p);
+      for_all(p)
+      {
+	i = 0;
+	for_all(n)
+	{
+	  mln_assertion(expected_bkd_nb[p.id()][i] == n.id());
+	  ++i;
+	}
       }
     }
   }
 
+
+
+  /// Vertices do not have image site information.
+  /// The associated sites are the vertex themselves.
+
   {
-    // Window - Backward iteration
-    mln_bkd_qiter_(win_t) q(win, p);
+    typedef vertex_image<void,unsigned> ima_void_t;
+    ima_void_t ima_void(g, iota);
+
+    // iteration over the domain of IMA.
+    mln_piter_(ima_void_t) p(ima_void.domain());
+    unsigned i = 10;
     for_all(p)
+      mln_assertion(ima_void(p) == i++);
+
+    typedef ima_void_t::win_t win_t;
+    win_t win;
+
     {
-      i = 0;
-      for_all(q)
+      // Window - Forward iteration
+      mln_qiter_(win_t) q(win, p);
+      for_all(p)
       {
-	mln_assertion(expected_bkd_nb[p.id()][i] == q.id());
-	++i;
+	i = 0;
+	for_all(q)
+	{
+	  mln_assertion(expected_fwd_nb[p.id()][i] == q.id());
+	  ++i;
+	}
       }
     }
-  }
 
-  typedef ima_t::nbh_t nbh_t;
-  nbh_t neigh;
-  {
-    // Neighborhood - Forward iteration
-    mln_niter_(nbh_t) n(neigh, p);
-
-    for_all(p)
     {
-      i = 0;
-      for_all(n)
+      // Window - Backward iteration
+      mln_bkd_qiter_(win_t) q(win, p);
+      for_all(p)
       {
-	mln_assertion(expected_fwd_nb[p.id()][i] == n.id());
-	++i;
+	i = 0;
+	for_all(q)
+	{
+	  mln_assertion(expected_bkd_nb[p.id()][i] == q.id());
+	  ++i;
+	}
       }
     }
-  }
 
-  {
-    // Neighborhood - Backward iteration
-    mln_bkd_niter_(nbh_t) n(neigh, p);
-    for_all(p)
+    typedef ima_void_t::nbh_t nbh_t;
+    nbh_t neigh;
     {
-      i = 0;
-      for_all(n)
+      // Neighborhood - Forward iteration
+      mln_niter_(nbh_t) n(neigh, p);
+
+      for_all(p)
       {
-	mln_assertion(expected_bkd_nb[p.id()][i] == n.id());
-	++i;
+	i = 0;
+	for_all(n)
+	{
+	  //FIXME: Ambiguities with n.id()!!!!
+	  mln_assertion(expected_fwd_nb[p.id()][i] == n.element().id());
+	  ++i;
+	}
+      }
+    }
+
+    {
+      // Neighborhood - Backward iteration
+      mln_bkd_niter_(nbh_t) n(neigh, p);
+      for_all(p)
+      {
+	i = 0;
+	for_all(n)
+	{
+	  //FIXME: Ambiguities with n.id()!!!!
+	  mln_assertion(expected_bkd_nb[p.id()][i] == n.element().id());
+	  ++i;
+	}
       }
     }
   }
