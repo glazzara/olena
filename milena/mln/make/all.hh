@@ -48,7 +48,6 @@ namespace mln
 # include <mln/make/box3d.hh>
 # include <mln/make/dpoint2d_h.hh>
 # include <mln/make/dual_neighb.hh>
-# include <mln/make/graph.hh>
 # include <mln/make/image.hh>
 # include <mln/make/image2d.hh>
 # include <mln/make/image3d.hh>
@@ -67,5 +66,9 @@ namespace mln
 # include <mln/make/w_window3d_int.hh>
 # include <mln/make/w_window_directional.hh>
 # include <mln/make/win_chamfer.hh>
+
+# include <mln/make/influence_zone_adjacency_graph.hh>
+# include <mln/make/region_adjacency_graph.hh>
+# include <mln/make/rag_and_labeled_wsl.hh>
 
 #endif // ! MLN_MAKE_ALL_HH

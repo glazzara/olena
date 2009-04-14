@@ -1,3 +1,20 @@
+2009-04-14 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add small routines to help while constructing graph images.
+
+	* mln/make/dummy_p_edges.hh,
+	* mln/make/dummy_p_vertices.hh: create graph site sets without
+	localization.
+
+	* mln/make/all.hh: update includes.
+
+	* mln/make/graph.hh: rename as...
+	* mln/make/influence_zone_adjacency_graph.hh: ...this.
+
+	* mln/make/p_edges_with_mass_centers.hh,
+	* mln/make/p_vertices_with_mass_centers.hh: new routines to construct
+	common graph site sets.
+
 2009-04-09 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Make util::array a Function_i2v.
