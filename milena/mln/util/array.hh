@@ -38,6 +38,7 @@
 # include <vector>
 # include <iostream>
 
+# include <mln/core/concept/function.hh>
 # include <mln/core/concept/proxy.hh>
 # include <mln/core/concept/iterator.hh>
 
@@ -87,14 +88,23 @@ namespace mln
     /// The parameter \c T is the element type, which shall not be
     /// const-qualified.
     template <typename T>
-    class array : public Object< mln::util::array<T> >
+    class array : public Function_i2v< mln::util::array<T> >
     {
     public:
 
       /// Element associated type.
       typedef T element;
 
+      /// Returned value types.
+      /// Related to the Function_i2v concept.
+      /// @{
+      typedef T result;
+      typedef typename std::vector<T>::reference mutable_result;
+      /// @}
 
+
+      /// Iterator types
+      /// @{
       /// Forward iterator associated type.
       typedef array_fwd_iter<T> fwd_eiter;
 
@@ -103,8 +113,11 @@ namespace mln
 
       /// Iterator associated type.
       typedef fwd_eiter eiter;
+      /// @}
 
 
+      /// Constructors
+      /// @{
       /// Constructor without arguments.
       array();
 
@@ -114,7 +127,7 @@ namespace mln
       /// Construct a new array, resize it to \n elements and fill it
       /// with \p default_value.
       array(unsigned n, const T& value);
-
+      /// @}
 
       /// Reserve memory for \p n elements.
       void reserve(unsigned n);
@@ -137,9 +150,22 @@ namespace mln
       /// Return the number of elements of the array.
       unsigned nelements() const;
 
+      /// Return the number of elements of the array.
+      /// Added for compatibility with fun::i2v::array.
+      /// \sa nelements
+      unsigned size() const;
+
       /// Test if the array is empty.
       bool is_empty() const;
 
+
+      /// \brief Return the \p i-th element of the array.
+      /// \pre i < nelements()
+      const T& operator()(unsigned i) const;
+
+      /// \brief Return the \p i-th element of the array.
+      /// \pre i < nelements()
+      T& operator()(unsigned i);
 
       /// \brief Return the \p i-th element of the array.
       /// \pre i < nelements()
@@ -165,7 +191,6 @@ namespace mln
       std::size_t memory_size() const;
 
     private:
-
       std::vector<T> v_;
     };
 
@@ -190,11 +215,14 @@ namespace mln
     {
     public:
 
+      /// Constructors
+      /// @{
       /// Constructor without argument.
       array_fwd_iter();
 
       /// Constructor from an array \p a.
       array_fwd_iter(const array<T>& a);
+      /// @}
 
       /// Change the array it iterates on to \p a.
       void change_target(const array<T>& a);
@@ -236,12 +264,14 @@ namespace mln
 							     array_bkd_iter<T> >
     {
     public:
-
+      /// Constructors
+      /// @{
       /// Constructor without argument.
       array_bkd_iter();
 
       /// Constructor from an array \p a.
       array_bkd_iter(const array<T>& a);
+      /// @}
 
       /// Change the array it iterates on to \p a.
       void change_target(const array<T>& a);
@@ -282,7 +312,9 @@ namespace mln
     struct subject_impl<const util::array<T>&, E>
     {
       unsigned nelements() const;
+      unsigned size() const;
       bool is_empty() const;
+      const T& operator()(unsigned i) const;
       const T& operator[](unsigned i) const;
       const std::vector<T>& std_vector() const;
 
@@ -304,6 +336,7 @@ namespace mln
       template <typename U>
       util::array<T>& append(const util::array<U>& other);
 
+      T& operator()(unsigned i);
       T& operator[](unsigned i);
 
       void clear();
@@ -431,9 +464,33 @@ namespace mln
     template <typename T>
     inline
     unsigned
+    array<T>::size() const
+    {
+      return nelements();
+    }
+
+    template <typename T>
+    inline
+    unsigned
     array<T>::nelements() const
     {
       return v_.size();
+    }
+
+    template <typename T>
+    inline
+    const T&
+    array<T>::operator()(unsigned i) const
+    {
+      return (*this)[i];
+    }
+
+    template <typename T>
+    inline
+    T&
+    array<T>::operator()(unsigned i)
+    {
+      return (*this)(i);
     }
 
     template <typename T>
@@ -750,6 +807,14 @@ namespace mln
     template <typename T, typename E>
     inline
     T&
+    subject_impl<util::array<T>&, E>::operator()(unsigned i)
+    {
+      return exact_().get_subject()(i);
+    }
+
+    template <typename T, typename E>
+    inline
+    T&
     subject_impl<util::array<T>&, E>::operator[](unsigned i)
     {
       return exact_().get_subject()[i];
@@ -783,6 +848,14 @@ namespace mln
     template <typename T, typename E>
     inline
     unsigned
+    subject_impl<const util::array<T>&, E>::size() const
+    {
+      return exact_().get_subject().size();
+    }
+
+    template <typename T, typename E>
+    inline
+    unsigned
     subject_impl<const util::array<T>&, E>::nelements() const
     {
       return exact_().get_subject().nelements();
@@ -794,6 +867,14 @@ namespace mln
     subject_impl<const util::array<T>&, E>::is_empty() const
     {
       return exact_().get_subject().is_empty();
+    }
+
+    template <typename T, typename E>
+    inline
+    const T&
+    subject_impl<const util::array<T>&, E>::operator()(unsigned i) const
+    {
+      return exact_().get_subject()(i);
     }
 
     template <typename T, typename E>

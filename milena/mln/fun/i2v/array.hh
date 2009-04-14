@@ -116,9 +116,10 @@ namespace mln
       public:
 
 	/// Returned value types
-	/// \{
+	/// @{
 	typedef T result;
 	typedef typename std::vector<T>::reference mutable_result;
+	/// @}
 
 	/// Constructors
 	/// \{

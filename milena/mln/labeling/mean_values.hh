@@ -119,9 +119,7 @@ namespace mln
 	  convert::from_to(m_3f, m);
 	  m[0] = 150u; //FIXME: handle label 0 correctly.
 
-	  mln_concrete(I) output = level::transform(lbl,
-	      convert::to< fun::i2v::array<IV> >(m));
-
+	  mln_concrete(I) output = level::transform(lbl, m);
 
 	  trace::exiting("mln::labeling::impl::generic::mean_values");
 	  return output;
