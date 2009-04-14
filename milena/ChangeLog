@@ -1,4 +1,16 @@
-2009-04-08 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+2009-04-09 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add labeling::pack.
+
+	* mln/labeling/all.hh: include new header.
+
+	* mln/labeling/relabel.hh: move an overload...
+	* mln/labeling/pack.hh: ... in this new routine.
+
+	* tests/labeling/Makefile.am,
+	* tests/labeling/pack.cc: add a new test.	
+
+2009-04-09 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Small fixes.
 

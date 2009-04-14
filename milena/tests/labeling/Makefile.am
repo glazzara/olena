@@ -12,6 +12,7 @@ check_PROGRAMS =				\
   level						\
   mean_values 					\
   n_max						\
+  pack 						\
   regional_maxima				\
   regional_minima 				\
   relabel 					\
@@ -26,6 +27,7 @@ foreground_SOURCES = foreground.cc
 level_SOURCES = level.cc
 mean_values_SOURCES = mean_values.cc
 n_max_SOURCES = n_max.cc
+pack_SOURCES = pack.cc
 regional_maxima_SOURCES = regional_maxima.cc
 regional_minima_SOURCES = regional_minima.cc
 relabel_SOURCES = relabel.cc

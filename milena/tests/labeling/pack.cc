@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,44 +26,45 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LABELING_ALL_HH
-# define MLN_LABELING_ALL_HH
-
-/// \file mln/labeling/all.hh
+/// \file tests/labeling/pack.cc
 ///
-/// File that includes all labeling routines.
-///
-/// \todo Many files in this directory have to be updated with the
-/// test and dispatch mechanisms.
+/// Tests on mln::labeling::pack.
 
 
-namespace mln
+#include <mln/core/image/image2d.hh>
+#include <mln/labeling/pack.hh>
+#include <mln/level/compare.hh>
+#include <mln/value/label_16.hh>
+#include <mln/debug/println.hh>
+
+int main()
 {
+  using namespace mln;
+  using value::label_16;
 
-  /// Namespace of labeling routines.
-  namespace labeling
-  {
-    /// Implementation namespace of labeling namespace.
-    namespace impl {
+  label_16 vals2[6][5] = {
+    { 0, 10, 10, 0, 0},
+    { 0, 10, 10, 4, 0},
+    { 0,  0,  0, 0, 0},
+    {12, 12,  0, 3, 0},
+    {12, 50,  3, 3, 3},
+    {12, 50, 50, 0, 0}
+  };
 
-      /// Generic implementation namespace of labeling namespace.
-      namespace generic {}
+  label_16 vals_ref[6][5] = {
+    { 0, 3, 3, 0, 0},
+    { 0, 3, 3, 2, 0},
+    { 0, 0, 0, 0, 0},
+    { 4, 4, 0, 1, 0},
+    { 4, 5, 1, 1, 1},
+    { 4, 5, 5, 0, 0}
+  };
 
-    }
-  }
+  image2d<label_16> lbl2 = make::image(vals2);
+  image2d<label_16> lbl_ref = make::image(vals_ref);
+
+  label_16 nlabels;
+  image2d<label_16> relbl = labeling::pack(lbl2, nlabels);
+
+  mln_assertion(lbl_ref == relbl);
 }
-
-# include <mln/labeling/background.hh>
-# include <mln/labeling/blobs.hh>
-# include <mln/labeling/compute.hh>
-# include <mln/labeling/fill_holes.hh>
-# include <mln/labeling/flat_zones.hh>
-# include <mln/labeling/foreground.hh>
-# include <mln/labeling/level.hh>
-# include <mln/labeling/n_max.hh>
-# include <mln/labeling/pack.hh>
-# include <mln/labeling/regional_maxima.hh>
-# include <mln/labeling/regional_minima.hh>
-
-
-#endif // ! MLN_LABELING_ALL_HH
