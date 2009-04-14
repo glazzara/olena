@@ -72,7 +72,7 @@ namespace mln
       trace::entering("level::abs");
 
       mln_precondition(exact(input).domain() == exact(output).domain());
-      output = level::transform(input, fun::v2v::abs<mln_value(I)>());
+      exact(output) = level::transform(input, fun::v2v::abs<mln_value(I)>());
 
       trace::exiting("level::abs");
     }

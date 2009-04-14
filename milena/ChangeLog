@@ -1,5 +1,23 @@
 2009-04-14 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Fix tests.
+
+	* mln/accu/stat/variance.hh,
+	* mln/io/plot/save.hh: fix missing includes.
+
+	* mln/level/abs.hh: fix invalid assignment.
+
+	* mln/make/rag_and_labeled_wsl.hh: add more doc.
+
+	* mln/util/tree_to_image.hh: fix a typo.
+
+	* tests/labeling/n_max.cc: use a smaller image.
+
+	* tests/make/rag_and_labeled_wsl.cc: Fix an invalid test and make the
+	test more readable.
+
+2009-04-14 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add new tests.
 
 	* tests/make/Makefile.am,

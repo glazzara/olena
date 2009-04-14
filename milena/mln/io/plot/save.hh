@@ -33,6 +33,8 @@
 ///
 /// Define a routine which saves in a plot format.
 
+# include <iostream>
+# include <fstream>
 # include <mln/core/image/image1d.hh>
 # include <mln/metal/equal.hh>
 # include <mln/util/array.hh>

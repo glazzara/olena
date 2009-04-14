@@ -32,7 +32,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/value/label_16.hh>
+#include <mln/value/label_8.hh>
 
 #include <mln/labeling/flat_zones.hh>
 #include <mln/labeling/compute.hh>
@@ -47,24 +47,23 @@
 
 #include "tests/data.hh"
 
-
 int main()
 {
   using namespace mln;
   using value::int_u8;
-  using value::label_16;
+  using value::label_8;
 
-  image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/lena.pgm");
+  image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/tiny.pgm");
 
   image2d<bool> threshold = level::transform(lena, fun::v2b::threshold<int_u8>(100));
-  label_16 nlabels;
-  image2d<label_16> labels = labeling::flat_zones(threshold, c4(), nlabels);
+  label_8 nlabels;
+  image2d<label_8> labels = labeling::flat_zones(threshold, c4(), nlabels);
   accu::count<int_u8> a_;
 
   util::array<unsigned> a = labeling::compute(a_, threshold, labels, nlabels);
-  util::array<label_16> arr_big = labeling::n_max<label_16>(a, 3);
+  util::array<label_8> arr_big = labeling::n_max<label_8>(a, 3);
 
-  mln_assertion(arr_big[1] == 4);
-  mln_assertion(arr_big[2] == 6);
-  mln_assertion(arr_big[3] == 323);
+  mln_assertion(arr_big[1] == 1u);
+  mln_assertion(arr_big[2] == 4u);
+  mln_assertion(arr_big[3] == 5u);
 }

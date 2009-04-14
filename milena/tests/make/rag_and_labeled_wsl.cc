@@ -55,11 +55,14 @@ int main()
   util::couple<util::graph, wst_t>
     res = make::rag_and_labeled_wsl(ima, c4(), 4u);
 
+  wst_t& lwsl = res.second();
+  util::graph& g = res.first();
+
   // check that adjacency labels map edge labels.
-  mln_piter_(wst_t) p(res.second().domain());
+  mln_piter_(wst_t) p(lwsl.domain());
   mln_niter_(neighb2d) n(c4(),p);
   for_all(p)
-    if (res.second()(p) != mln_max(value::label_8))
+    if (lwsl(p) != mln_max(value::label_8).prev())
     {
       value::label_8 l1 = 0, l2 = 0;
       for_all(n)
@@ -77,14 +80,14 @@ int main()
 	}
       if (l2 < l1)
 	std::swap(l1, l2);
-      mln_assertion(res.first().v1(res.second()(p)) == l1);
-      mln_assertion(res.first().v2(res.second()(p)) == l2);
+      mln_assertion(g.v1(lwsl(p)) == l1);
+      mln_assertion(g.v2(lwsl(p)) == l2);
     }
 
-  mln_assertion(res.first().e_nmax() == 4u);
-  mln_assertion(res.first().v_nmax() == 5u);
-  mln_assertion(res.first().v_nmax_nbh_edges(0) == 0);
+  mln_assertion(g.e_nmax() == 4u);
+  mln_assertion(g.v_nmax() == 5u);
+  mln_assertion(g.v_nmax_nbh_edges(0) == 0);
   for (unsigned i = 1; i < 4; ++i)
-    mln_assertion(res.first().v_nmax_nbh_edges(i) == 2);
+    mln_assertion(g.v_nmax_nbh_edges(i) == 2);
 }
 

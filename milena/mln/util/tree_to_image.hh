@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -56,7 +56,7 @@ namespace mln
     /// Convert a tree into an image.
     ///
     /// \param[in] tree The tree to convert.
-    /// \param[out] output_ The image containing tree informations.
+    /// \param[out] output_ The image containing tree information.
     ///
     template <typename T, typename I>
     void
