@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,35 +32,23 @@
 /// \file mln/fun/i2v/array.hh
 ///
 /// Function mapping an Id i to a value v.
-///
-/// \todo Change design so that there is no multiple inheritance:
-///       array<T> : internal::array_base<T, E==array<T> > : Function_i2v<E>
-///
-/// \todo We should convert (with from_to) arrays that do not hold the
-/// same element type, e.g., int_u8 -> int or vec<3,f> -> rgb8.
 
 # include <vector>
 # include <algorithm>
 # include <mln/core/concept/function.hh>
-# include <mln/fun/internal/array_base.hh>
 # include <mln/util/array.hh>
 # include <mln/metal/equal.hh>
+# include <mln/tag/init.hh>
+
 
 namespace mln
 {
 
   /// Forward declaration.
-  namespace fun
-  {
-
-    namespace i2v
-    {
-
-      template <typename T>
-      class array;
-
+  namespace fun {
+    namespace i2v {
+      template <typename T> class array;
     } // end of namespace mln::fun::i2v
-
   } // end of namespace mln::fun
 
 
@@ -122,16 +111,14 @@ namespace mln
 
 
       template <typename T>
-      class array : public internal::array_selector_<T,mlc_equal(T,bool)::value>,
-		    public fun::internal::array_base<T>
+      class array : public internal::array_selector_<T,mlc_equal(T,bool)::value>
       {
-	typedef fun::internal::array_base<T> super_base_;
-
       public:
 
-	/// Mutable result type. The function results can be modified.
-	typedef typename super_base_::mutable_result mutable_result;
-	typedef typename fun::internal::array_base<T>::result result;
+	/// Returned value types
+	/// \{
+	typedef T result;
+	typedef typename std::vector<T>::reference mutable_result;
 
 	/// Constructors
 	/// \{
@@ -150,6 +137,36 @@ namespace mln
 	/// Always prefer using from_to instead of this constructor.
 	array(const std::vector<T>& from);
 	/// \}
+
+
+	/// Pre-allocate space.
+	void reserve(unsigned n);
+
+	/// Set the function size to \p n.
+	void resize(unsigned n);
+	/// Set the function size to \p n and initialize the value with
+	/// \p val.
+	void resize(unsigned n, const T& val);
+
+	/// Append a new value in the function.
+	void append(const T& val);
+
+	/// Return the number of values.
+	unsigned size() const;
+
+	/// Const access to the ith value.
+	result operator()(unsigned i) const;
+	/// Read-Write access to the ith value.
+	mutable_result operator()(unsigned i);
+
+	/// Initialize an empty function.
+	void init_(unsigned n);
+
+	/// Return the underlying std::vector.
+	const std::vector<T>& std_vector() const;
+
+      protected:
+	std::vector<T> v_;
 
       };
 
@@ -244,21 +261,21 @@ namespace mln
       template <typename T>
       inline
       array<T>::array(unsigned n)
-	: super_base_(n)
+	: v_(n)
       {
       }
 
       template <typename T>
       inline
       array<T>::array(unsigned n, const T& val)
-	: super_base_(n, val)
+	: v_(n, val)
       {
       }
 
       template <typename T>
       inline
       array<T>::array(const util::array<T>& from)
-	: super_base_(from)
+	: v_(from.std_vector())
       {
 
       }
@@ -266,20 +283,96 @@ namespace mln
       template <typename T>
       inline
       array<T>::array(const std::vector<T>& from)
-	: super_base_(from)
+	: v_(from)
       {
 
       }
+
+      template <typename T>
+      inline
+      void
+      array<T>::reserve(unsigned n)
+      {
+	v_.reserve(n);
+      }
+
+      template <typename T>
+      inline
+      void
+      array<T>::resize(unsigned n)
+      {
+	v_.resize(n);
+      }
+
+      template <typename T>
+      inline
+      void
+      array<T>::append(const T& val)
+      {
+	v_.push_back(val);
+      }
+
+      template <typename T>
+      inline
+      void
+      array<T>::resize(unsigned n, const T& val)
+      {
+	v_.resize(n, val);
+      }
+
+      template <typename T>
+      inline
+      unsigned
+      array<T>::size() const
+      {
+	return v_.size();
+      }
+
+      template <typename T>
+      inline
+      typename array<T>::result
+      array<T>::operator()(unsigned i) const
+      {
+	mln_precondition(i < v_.size());
+	return v_[i];
+      }
+
+      template <typename T>
+      inline
+      typename array<T>::mutable_result
+      array<T>::operator()(unsigned i)
+      {
+	mln_precondition(i < v_.size());
+	return v_[i];
+      }
+
+      template <typename T>
+      inline
+      void
+      array<T>::init_(unsigned n)
+      {
+	v_.resize(n);
+      }
+
+      template <typename T>
+      inline
+      const std::vector<T>&
+      array<T>::std_vector() const
+      {
+	return v_;
+      }
+
 
     } // end of namespace mln::fun::i2v
 
   } // end of namespace mln::fun
 
+
   template <typename T>
   inline
-  fun::i2v::array<T> array(T t)
+  fun::i2v::array<T> array(unsigned n, const T& t)
   {
-    fun::i2v::array<T> tmp(t);
+    fun::i2v::array<T> tmp(n, t);
     return tmp;
   }
 

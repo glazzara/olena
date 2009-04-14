@@ -49,7 +49,6 @@ namespace mln
 }
 
 
-# include <mln/fun/l2l/relabel.hh>
 # include <mln/fun/l2l/wrap.hh>
 
 

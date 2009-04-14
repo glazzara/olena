@@ -50,9 +50,6 @@ namespace mln
     namespace i2v {
       template <typename T> class array;
     } // end of namespace mln::fun::i2v
-    namespace l2l {
-      template <typename L> class relabel;
-    } // end of namespace mln::fun::l2l
   } // end of namespace mln::fun
 
   namespace value
@@ -103,10 +100,6 @@ namespace mln
       /// Ctor. FIXME!
       template <typename V>
       lut_vec(const S& vset, const Function_v2v< fun::i2v::array<V> >& f);
-
-      /// Ctor. FIXME!
-      template <typename V>
-      lut_vec(const S& vset, const Function_v2v< fun::l2l::relabel<V> >& f);
 
     protected:
 
@@ -166,17 +159,6 @@ namespace mln
     }
 
     template <typename S, typename T>
-    template <typename V>
-    inline
-    lut_vec<S,T>::lut_vec(const S& vset, const Function_v2v< fun::l2l::relabel<V> >& f)
-      : vset_(vset)
-    {
-      const fun::l2l::relabel<V>& f_ = exact(f);
-      n_ = f_.size();
-      vec_ = f_.std_vector();
-    }
-
-    template <typename S, typename T>
     inline
     T
     lut_vec<S,T>::operator()(const mln_value(S)& val) const
@@ -202,7 +184,6 @@ namespace mln
       return vec_.size();
     }
 
-    
     template <typename S, typename T>
     inline
     std::ostream&

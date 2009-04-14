@@ -33,7 +33,7 @@
 /// Routines to construct a function in order to relabel a labeled image.
 
 # include <mln/core/concept/function.hh>
-# include <mln/fun/l2l/relabel.hh>
+# include <mln/fun/i2v/array.hh>
 # include <mln/value/label.hh>
 
 namespace mln
@@ -51,7 +51,7 @@ namespace mln
     ///
     /// \sa mln::labeling::relabel
     template <unsigned n, typename F>
-    fun::l2l::relabel< value::label<n> >
+    fun::i2v::array< value::label<n> >
     relabelfun(const Function_v2b<F>& fv2b,
 	       const value::label<n>& nlabels,
 	       value::label<n>&	      new_nlabels);
@@ -65,7 +65,7 @@ namespace mln
     ///
     /// \sa mln::labeling::relabel
     template <unsigned n, typename F>
-    fun::l2l::relabel< value::label<n> >
+    fun::i2v::array< value::label<n> >
     relabelfun(const Function_v2v<F>& fv2v,
 	       const value::label<n>& nlabels,
 	       value::label<n>&	      new_nlabels);
@@ -75,7 +75,7 @@ namespace mln
 
     template <unsigned n, typename F>
     inline
-    fun::l2l::relabel< value::label<n> >
+    fun::i2v::array< value::label<n> >
     relabelfun(const Function_v2b<F>& fv2b_,
 	       const value::label<n>& nlabels,
 	       value::label<n>&	      new_nlabels)
@@ -86,7 +86,7 @@ namespace mln
 
       value::label<n> tmp_nlabels = literal::zero;
       typedef value::label<n> label_t;
-      fun::l2l::relabel<label_t> fl2l(nlabels.next(), literal::zero);
+      fun::i2v::array<label_t> fl2l(nlabels.next(), literal::zero);
       for (label_t i = 1; i <= nlabels; ++i)
 	if (fv2b(i))
 	{
@@ -100,7 +100,7 @@ namespace mln
 
     template <unsigned n, typename F>
     inline
-    fun::l2l::relabel< value::label<n> >
+    fun::i2v::array< value::label<n> >
     relabelfun(const Function_v2v<F>& fv2v_,
 	       const value::label<n>& nlabels,
 	       value::label<n>&	      new_nlabels)
@@ -111,7 +111,7 @@ namespace mln
 
       value::label<n> tmp_nlabels = literal::zero;
       typedef value::label<n> label_t;
-      fun::l2l::relabel<label_t> fl2l(nlabels.next(), literal::zero);
+      fun::i2v::array<label_t> fl2l(nlabels.next(), literal::zero);
       for (label_t i = 1; i < nlabels.next(); ++i)
 	if (fl2l(fv2v(i)) == literal::zero)
 	{

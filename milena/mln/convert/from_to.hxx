@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -75,10 +76,6 @@ namespace mln
   namespace fun {
     namespace i2v {
       template <typename T> class array;
-    }
-
-    namespace l2l {
-      template <typename T> class relabel;
     }
   }
 
@@ -372,26 +369,6 @@ namespace mln
       from_to_(const util::array<T1>& from, util::array<T2>& to);
 
 
-
-      // util::array<T> -> fun::l2l::relabel<T>
-      template <typename T>
-      void
-      from_to_(const util::array<T>& from, fun::l2l::relabel<T>& to);
-
-      // util::array<T> -> fun::l2l::relabel<U>
-      template <typename T, typename U>
-      void
-      from_to_(const util::array<T>& from, fun::l2l::relabel<U>& to);
-
-      // std::vector<T> -> fun::l2l::relabel<T>
-      template <typename T>
-      void
-      from_to_(const std::vector<T>& from, fun::l2l::relabel<T>& to);
-
-      // std::vector<T> -> fun::l2l::relabel<U>
-      template <typename T, typename U>
-      void
-      from_to_(const std::vector<T>& from, fun::l2l::relabel<U>& to);
 
       // util::array<T1> -> util::array<T2>
       template <typename T1, typename T2>
