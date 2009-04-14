@@ -202,6 +202,10 @@ namespace mln
       /// Return the edge whose id is \a e.
       edge_t edge(unsigned e) const;
 
+
+      /// Return the list of all edges.
+      const std::vector<util::ord_pair<unsigned> >& edges() const;
+
       /// Return the number of edges in the graph.
       size_t e_nmax() const;
 
@@ -417,6 +421,13 @@ namespace mln
         }
 # endif // ! NDEBUG
 
+    }
+
+    inline
+    const std::vector<util::ord_pair<unsigned> >&
+    graph::edges() const
+    {
+      return this->data_->edges_;
     }
 
     inline

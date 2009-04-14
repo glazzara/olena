@@ -56,10 +56,8 @@
 #include <mln/core/alias/neighb2d.hh>
 
 /// Required for line graph images.
-#include <mln/core/site_set/p_edges.hh>
-#include <mln/core/image/line_graph_elt_neighborhood.hh>
+#include <mln/core/image/edge_image.hh>
 #include <mln/core/var.hh>
-#include <mln/pw/all.hh>
 #include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
 
@@ -104,15 +102,14 @@ int main()
   `----------------*/
 
   // Line graph image.
-  typedef pw::image<fun::i2v::array<input_val_t>, p_edges<util::graph,
-		    fun::i2v::array< util::site_pair<point2d> > > > lg_ima_t;
+  typedef edge_image<util::site_pair<point2d>,input_val_t,util::graph> lg_ima_t;
   lg_ima_t lg_ima = morpho::line_gradient(input);
 
   /*-----------------.
   | Simplification.  |
   `-----------------*/
 
-  typedef line_graph_elt_neighborhood<util::graph, lg_ima_t::pset::fun_t> nbh_t;
+  typedef lg_ima_t::nbh_t nbh_t;
   nbh_t nbh;
 
   lg_ima_t closed_lg_ima = morpho::closing::area_on_vertices(lg_ima, nbh, 20);
@@ -123,8 +120,7 @@ int main()
 
   // Perform a Watershed Transform.
   unsigned nbasins;
-  typedef pw::image<fun::i2v::array<unsigned>, p_edges<util::graph,
-		    fun::i2v::array< util::site_pair<point2d> > > > wshed_t;
+  typedef edge_image<util::site_pair<point2d>,unsigned,util::graph> wshed_t;
   wshed_t wshed = morpho::meyer_wst(closed_lg_ima, nbh, nbasins);
   mln_assertion(nbasins == 46);
 

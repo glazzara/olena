@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,16 +33,17 @@
 #include <mln/core/alias/point2d.hh>
 
 /// Required for line graph images.
-#include <mln/core/site_set/p_edges.hh>
-#include <mln/core/image/line_graph_elt_window.hh>
-#include <mln/core/var.hh>
-#include <mln/pw/all.hh>
+#include <mln/core/image/vertex_image.hh>
 #include <mln/fun/i2v/array.hh>
+#include <mln/util/line_graph.hh>
 #include <mln/util/graph.hh>
+#include <mln/util/site_pair.hh>
 
 #include <mln/morpho/erosion.hh>
 #include <mln/morpho/dilation.hh>
 
+static const unsigned dil_ref[] = { 12, 14, 13, 14, 13 };
+static const unsigned ero_ref[] = { 11, 10, 10, 12, 11 };
 
 int main()
 {
@@ -67,17 +69,8 @@ int main()
   // Graph.
   util::graph g;
 
-  // Points associated to vertices.
-  typedef fun::i2v::array<point2d> fsite_t;
-  fsite_t sites(5);
-  sites(0) = point2d(0,0); // Point associated to vertex 0.
-  sites(1) = point2d(2,2); // Point associated to vertex 1.
-  sites(2) = point2d(0,4); // Point associated to vertex 2.
-  sites(3) = point2d(4,3); // Point associated to vertex 3.
-  sites(4) = point2d(4,4); // Point associated to vertex 4.
-
   // Populate the graph with vertices.
-  g.add_vertices(sites.size());
+  g.add_vertices(5);
 
   // Populate the graph with edges.
   g.add_edge(0, 1);
@@ -86,13 +79,19 @@ int main()
   g.add_edge(3, 4);
   g.add_edge(4, 2);
 
+  /// Create the corresponding line graph.
+  /// Edges are now considered as vertices.
+  util::line_graph<util::graph> lg(g);
 
-  /*---------------------------.
-  | Line graph image support.  |
-  `---------------------------*/
-
-  typedef p_edges<util::graph, fsite_t> pe_t;
-  pe_t pe(g, sites);
+  // Points associated to the line graph vertices (edges in the graph).
+  typedef util::site_pair<point2d> P;
+  typedef fun::i2v::array<P> fsite_t;
+  fsite_t sites(5);
+  sites(0) = P(point2d(0,0), point2d(2,2)); // Site associated to vertex 0.
+  sites(1) = P(point2d(2,2), point2d(0,4)); // Site associated to vertex 1.
+  sites(2) = P(point2d(2,2), point2d(4,3)); // Site associated to vertex 2.
+  sites(3) = P(point2d(4,3), point2d(4,4)); // Site associated to vertex 3.
+  sites(4) = P(point2d(0,4), point2d(4,4)); // Site associated to vertex 4.
 
   /*-------------------.
   | Line graph image.  |
@@ -100,30 +99,31 @@ int main()
 
   // Line graph values.
   typedef fun::i2v::array<unsigned> viota_t;
-  viota_t iota(pe.nsites());
+  viota_t iota(lg.v_nmax());
   for (unsigned i = 0; i < iota.size(); ++i)
     iota(i) = 10 + i;
 
-  // Create line graph image.
-  mln_const_VAR(ima, (iota | pe));
+  typedef vertex_image<P,unsigned,util::line_graph<util::graph> > ima_t;
+  ima_t ima(lg, sites, iota);
 
 
   /*-------------------------------.
   | Processing line graph images.  |
   `-------------------------------*/
 
-  line_graph_elt_window<util::graph, fsite_t> win;
+  ima_t::win_t win;
+  unsigned i = 0;
 
-  mln_const_VAR(ima_dil, morpho::dilation(ima, win));
+  ima_t ima_dil = morpho::dilation(ima, win);
   // Manual iteration over the domain of IMA_DIL.
-  mln_piter_(ima_dil_t) p_dil(ima_dil.domain());
+  mln_piter_(ima_t) p_dil(ima_dil.domain());
   for_all (p_dil)
-    std::cout << "ima_dil (" << p_dil << ") = " << ima_dil(p_dil) << std::endl;
-  std::cout << std::endl;
+    mln_assertion(dil_ref[i++] == ima_dil(p_dil));
 
-  mln_const_VAR(ima_ero, morpho::erosion(ima, win));
+  ima_t ima_ero = morpho::erosion(ima, win);
   // Manual iteration over the domain of IMA_ERO.
-  mln_piter_(ima_ero_t) p_ero(ima_ero.domain());
+  mln_piter_(ima_t) p_ero(ima_ero.domain());
+  i = 0;
   for_all (p_ero)
-    std::cout << "ima_ero (" << p_ero << ") = " << ima_ero(p_ero) << std::endl;
+    mln_assertion(ero_ref[i++] == ima_ero(p_ero));
 }

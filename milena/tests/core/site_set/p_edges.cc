@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -38,7 +38,7 @@
 // Function mapping an edge to a specific site.
 
 template <typename G>
-struct my_fun
+struct my_fun : mln::Function< my_fun<G> >
 {
   typedef mln::point2d result;
 

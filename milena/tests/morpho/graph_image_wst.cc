@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,10 +34,8 @@
 #include <mln/core/alias/point2d.hh>
 
 /// Required for graph images.
-#include <mln/core/site_set/p_vertices.hh>
-#include <mln/core/image/graph_elt_neighborhood.hh>
+#include <mln/core/image/vertex_image.hh>
 #include <mln/core/var.hh>
-#include <mln/pw/all.hh>
 #include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
 
@@ -86,32 +85,24 @@ int main()
   g.add_edge(3, 4);
   g.add_edge(4, 2);
 
-
-  /*----------------------.
-  | Graph image support.  |
-  `----------------------*/
-
-  typedef p_vertices<util::graph, fsite_t> pv_t;
-  pv_t pv(g, sites);
-
   /*-------------.
   | Graph image.  |
   `-------------*/
 
   // Graph values.
   typedef fun::i2v::array<unsigned> viota_t;
-  viota_t iota(pv.nsites());
+  viota_t iota(g.v_nmax());
   for (unsigned i = 0; i < iota.size(); ++i)
     iota(i) = 10 + i;
 
-  // Create graph image.
-  mln_const_VAR(ima, (iota | pv));
+  typedef vertex_image<point2d,unsigned,util::graph> ima_t;
+  ima_t ima(g,sites,iota);
 
   /*------.
   | WST.  |
   `------*/
 
-  typedef graph_elt_neighborhood<util::graph, fsite_t> nbh_t;
+  typedef ima_t::nbh_t nbh_t;
   nbh_t nbh;
 
   unsigned nbasins;

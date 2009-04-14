@@ -1,4 +1,4 @@
-// Copyright(C) 2007, 2008 EPITA Research and Development Laboratory(LRDE)
+// Copyright(C) 2009 EPITA Research and Development Laboratory(LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,27 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/graph_image.cc
+/// \file tests/core/image/edge_image.cc
 ///
-/// Tests on mln::graph_image.
+/// Tests on mln::edge_image.
 
 #include <vector>
 
-#include <mln/core/site_set/p_vertices.hh>
-#include <mln/core/image/graph_elt_window.hh>
-#include <mln/core/image/graph_elt_neighborhood.hh>
-#include <mln/core/concept/function.hh>
-#include <mln/core/neighb.hh>
-#include <mln/core/var.hh>
+#include <mln/core/image/edge_image.hh>
+#include <mln/core/image/image2d.hh>
 
 #include <mln/accu/bbox.hh>
 
 #include <mln/fun/i2v/array.hh>
 
 #include <mln/util/graph.hh>
+#include <mln/util/site_pair.hh>
 
 #include <mln/debug/draw_graph.hh>
-#include <mln/debug/println.hh>
 
 /* The graph is as follows:
 
@@ -63,17 +59,17 @@
 
 // Expected neighbors for forward and backward iteration.
 // -1 is an invalid id.
-static unsigned expected_fwd_nb[5][3] = { { 1, -1, -1 },
-					  { 0,  2,  3 },
-					  { 1,  4, -1 },
-					  { 1,  4, -1 },
-					  { 3,  2, -1 } };
+static unsigned expected_fwd_nb[5][3] = { { 1,  2, -1 },
+					  { 0,  2,  4 },
+					  { 0,  1, 3 },
+					  { 2,  4, -1 },
+					  { 1,  3, -1 } };
 
-static unsigned expected_bkd_nb[5][3] = { { 1, -1, -1 },
-					  { 3,  2,  0 },
-					  { 4,  1, -1 },
-					  { 4,  1, -1 },
-					  { 2,  3, -1 } };
+static unsigned expected_bkd_nb[5][3] = { { 2,  1, -1 },
+					  { 4,  2,  0 },
+					  { 3,  1,  0 },
+					  { 4,  2, -1 },
+					  { 3,  1, -1 } };
 
 
 int main()
@@ -85,15 +81,15 @@ int main()
   `--------*/
 
   // Points associated to vertices.
-  typedef fun::i2v::array<point2d> fsite_t;
+  typedef util::site_pair<point2d> site_t;
+  typedef fun::i2v::array<site_t> fsite_t;
   fsite_t sites(5);
-  sites(0) = point2d(0,0); // Point associated to vertex 0.
-  sites(1) = point2d(2,2); // Point associated to vertex 1.
-  sites(2) = point2d(0,4); // Point associated to vertex 2.
-  sites(3) = point2d(4,3); // Point associated to vertex 3.
-  sites(4) = point2d(4,4); // Point associated to vertex 4.
+  sites(0) = site_t(point2d(0,0),point2d(2,2)); // Site associated to edge 0.
+  sites(1) = site_t(point2d(2,2),point2d(0,4)); // Site associated to edge 1.
+  sites(2) = site_t(point2d(2,2),point2d(4,3)); // Site associated to edge 2.
+  sites(3) = site_t(point2d(4,3),point2d(4,4)); // Site associated to edge 3.
+  sites(4) = site_t(point2d(4,4),point2d(0,4)); // Site associated to edge 4.
 
-  // Edges.
   util::graph g;
 
   // Populate the graph with vertices.
@@ -108,25 +104,18 @@ int main()
 
   //g.print_debug(std::cout);
 
-  /*----------------------.
-  | Graph image support.  |
-  `----------------------*/
-
-  typedef p_vertices<util::graph, fsite_t> S;
-  S pv(g, sites);
-
   /*-------------.
   | Graph image.  |
   `-------------*/
 
   // Graph values.
   typedef fun::i2v::array<unsigned> viota_t;
-  viota_t iota(pv.nsites());
+  viota_t iota(g.v_nmax());
   for (unsigned i = 0; i < iota.size(); ++i)
     iota(i) = 10 + i;
 
-  // Create graph image.
-  mln_const_VAR(ima, (iota | pv));
+  typedef edge_image<site_t,unsigned> ima_t;
+  ima_t ima(g, sites, iota);
 
   {
     // FIXME: Move this part to a special test case.
@@ -135,7 +124,10 @@ int main()
     accu::bbox<point2d> a;
     mln_piter_(ima_t) p(ima.domain());
     for_all(p)
-      a.take(p);
+    {
+      a.take(p.first());
+      a.take(p.second());
+    }
     box2d bbox = a.to_result();
     mln_assertion(bbox == make::box2d(5, 5));
 
@@ -161,7 +153,7 @@ int main()
 
   // We use the value 9 in debug::graph to represent edges to distinguish it
   // from vertices holding a value of 1.
-    debug::draw_graph(ima_rep, pv, 1, 9);
+    debug::draw_graph(ima_rep, ima.domain(), 1, 9);
   }
 
   /*------------.
@@ -174,7 +166,7 @@ int main()
   for_all(p)
     mln_assertion(ima(p) == i++);
 
-  typedef graph_elt_window<util::graph,S> win_t;
+  typedef ima_t::win_t win_t;
   win_t win;
 
   {
@@ -205,11 +197,11 @@ int main()
     }
   }
 
-  typedef graph_elt_neighborhood<util::graph,S> neighb_t;
-  neighb_t neigh;
+  typedef ima_t::nbh_t nbh_t;
+  nbh_t neigh;
   {
     // Neighborhood - Forward iteration
-    mln_niter_(neighb_t) n(neigh, p);
+    mln_niter_(nbh_t) n(neigh, p);
 
     for_all(p)
     {
@@ -224,7 +216,7 @@ int main()
 
   {
     // Neighborhood - Backward iteration
-    mln_bkd_niter_(neighb_t) n(neigh, p);
+    mln_bkd_niter_(nbh_t) n(neigh, p);
     for_all(p)
     {
       i = 0;

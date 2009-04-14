@@ -7,6 +7,7 @@ check_PROGRAMS =				\
   cast_image					\
   complex_image					\
   decorated_image				\
+  edge_image 					\
   flat_image					\
   hexa						\
   graph_image					\
@@ -24,7 +25,8 @@ check_PROGRAMS =				\
   sub_image					\
   t_image					\
   tr_image					\
-  unproject_image
+  unproject_image 				\
+  vertex_image
 
 ##  bgraph_image					\
 ##  mono_obased_rle_image				\
@@ -66,6 +68,8 @@ t_image_SOURCES = t_image.cc
 tr_image_SOURCES = tr_image.cc
 unproject_image_SOURCES = unproject_image.cc
 ##value_enc_image_SOURCES = value_enc_image.cc
+vertex_image_SOURCES = vertex_image.cc
+edge_image_SOURCES = edge_image.cc
 
 # Tests depending on the FreeImagePlus library.
 if FREEIMAGEPLUS

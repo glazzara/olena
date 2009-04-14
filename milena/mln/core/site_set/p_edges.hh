@@ -33,6 +33,8 @@
 ///
 /// Definition of a site set based on graph edges.
 
+# include <mln/core/concept/function.hh>
+# include <mln/core/concept/graph.hh>
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/site_set/p_graph_piter.hh>
 # include <mln/core/site_set/p_edges_psite.hh>
@@ -82,14 +84,25 @@ namespace mln
     /// Type of graph element this site set focuses on.
     typedef util::edge<G> graph_element;
 
+    /// Constructors
+    /// @{
+    /// Default constructor.
+    p_edges();
 
     /// Construct a graph edge psite set from a graph and a function.
     ///
     /// \param gr The graph upon which the graph edge psite set is built.
     /// \param f the function mapping edges and sites.
-    p_edges(const G& gr, const F& f);
-    /// Default constructor.
-    p_edges();
+    p_edges(const Graph<G>& gr, const Function<F>& f);
+
+    /// Construct a graph edge psite set from a graph and a function.
+    ///
+    /// \param gr The graph upon which the graph edge psite set is built.
+    /// \param f the function mapping edges and sites.
+    ///		 It must be convertible towards the function type \c F.
+    template <typename F2>
+    p_edges(const Graph<G>& gr, const Function<F2>& f);
+    ///@}
 
     /// Associated types.
     /// \{
@@ -127,6 +140,10 @@ namespace mln
     /// Does this site set has edge \a e?
     template <typename G2>
     bool has(const util::edge<G2>& e) const;
+
+    /// Does this site set has \a vertex_id?
+    /// FIXME: causes ambiguities while calling has(mln::neighb_fwd_niter<>);
+    ///    bool has(unsigned vertex_id) const;
 
     // FIXME: Dummy.
     std::size_t memory_size() const;
@@ -171,18 +188,34 @@ namespace mln
 namespace mln
 {
 
-  template <typename G, typename F>
-  inline
-  p_edges<G, F>::p_edges(const G& g, const F& f)
-    : g_ (g), f_(f)
-  {
-  }
 
   template <typename G, typename F>
   inline
   p_edges<G, F>::p_edges()
   {
   }
+
+  template <typename G, typename F>
+  inline
+  p_edges<G, F>::p_edges(const Graph<G>& g, const Function<F>& f)
+  {
+    mln_precondition(exact(g).is_valid());
+    g_ = exact(g);
+    f_ = exact(f);
+  }
+
+  template <typename G, typename F>
+  template <typename F2>
+  inline
+  p_edges<G, F>::p_edges(const Graph<G>& g, const Function<F2>& f)
+  {
+    mln_precondition(exact(g).is_valid());
+    mlc_converts_to(F2,F)::check();
+
+    g_ = exact(g);
+    convert::from_to(f, f_);
+  }
+
 
   template <typename G, typename F>
   inline
@@ -234,6 +267,16 @@ namespace mln
     mln_precondition(is_valid());
     return e.graph().is_subgraph_of(g_) && g_.has(e) && e.is_valid();
   }
+
+//  template <typename G, typename F>
+//  inline
+//  bool
+//  p_edges<G,F>::has(unsigned edge_id) const
+//  {
+//    mln_precondition(is_valid());
+//    util::edge<G> e(g_, edge_id);
+//    return has(e);
+//  }
 
   template <typename G, typename F>
   inline

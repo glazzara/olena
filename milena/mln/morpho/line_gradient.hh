@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -43,9 +43,8 @@
 # include <mln/util/ord.hh>
 
 # include <mln/core/image/image2d.hh>
+# include <mln/core/image/edge_image.hh>
 # include <mln/core/alias/window2d.hh>
-
-# include <mln/core/site_set/p_edges.hh>
 
 # include <mln/util/graph.hh>
 # include <mln/util/site_pair.hh>
@@ -65,22 +64,25 @@ namespace mln
     /* FIXME: Currently, the adjacency is set to 4-c and cannot be
        changed.  */
     template <typename V>
-    pw::image<fun::i2v::array<V>, p_edges<util::graph, fun::i2v::array< util::site_pair<point2d> > > >
+    edge_image<util::site_pair<point2d>, V, util::graph>
     line_gradient(const mln::image2d<V>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename V>
-    pw::image<fun::i2v::array<V>, p_edges<util::graph, fun::i2v::array< util::site_pair<point2d> > > >
+    edge_image<util::site_pair<point2d>, V, util::graph>
     line_gradient(const mln::image2d<V>& ima)
     {
+      trace::entering("morpho::line_gradient");
+      mln_precondition(ima.is_valid());
+
       // FIXME: Precondition: Ensure the image is scalar.
       util::graph g;
 
       // Vertices.
       image2d<unsigned> vpsite(ima.domain());
-      fun::i2v::array<mln::point2d> fv2p(ima.domain().nsites());
+      fun::i2v::array<point2d> fv2p(ima.domain().nsites());
       fun::i2v::array<V> vertex_values(ima.domain().nsites());
 
       mln_fwd_piter(image2d<V>) p(ima.domain());
@@ -111,12 +113,10 @@ namespace mln
 	    edge_sites.append(util::site_pair<point2d>(p, q));
 	  }
 
-      // Line graph point set.
-      typedef p_edges<util::graph, edge_sites_t> pe_t;
-      pe_t plg(g, edge_sites);
-      // Line graph image.
-      typedef pw::image<edge_values_t, pe_t> ima_t;
-      ima_t lg_ima = (edge_values | plg);
+      edge_image<util::site_pair<point2d>, V, util::graph>
+	lg_ima(g, edge_sites, edge_values);
+
+      trace::exiting("morpho::line_gradient");
       return lg_ima;
     }
 

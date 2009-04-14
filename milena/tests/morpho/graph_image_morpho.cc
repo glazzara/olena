@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,10 +38,8 @@
 #include <mln/morpho/erosion.hh>
 
 /// Required for graph images.
-#include <mln/core/site_set/p_vertices.hh>
-#include <mln/core/image/graph_elt_window.hh>
+#include <mln/core/image/vertex_image.hh>
 #include <mln/core/var.hh>
-#include <mln/pw/all.hh>
 #include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
 
@@ -93,25 +92,18 @@ int main()
   g.add_edge(4, 2);
 
 
-  /*----------------------.
-  | Graph image support.  |
-  `----------------------*/
-
-  typedef p_vertices<util::graph, fsite_t> pv_t;
-  pv_t pv(g, sites);
-
   /*--------------.
   | Graph image.  |
   `--------------*/
 
   // Graph values.
   typedef fun::i2v::array<unsigned> viota_t;
-  viota_t iota(pv.nsites());
+  viota_t iota(g.v_nmax());
   for (unsigned i = 0; i < iota.size(); ++i)
     iota(i) = 10 + i;
 
-  // Create graph image.
-  mln_const_VAR(ima, (iota | pv));
+  typedef vertex_image<point2d,unsigned,util::graph> ima_t;
+  ima_t ima(g, sites, iota);
 
   /*-------------------------------------.
   | Image representation/visualization.  |
@@ -148,7 +140,8 @@ int main()
   | Processing graph images.  |
   `--------------------------*/
 
-  graph_elt_window<util::graph, fsite_t> win;
+
+  ima_t::win_t win;
 
   mln_const_VAR(ima_dil, morpho::dilation(ima, win));
   debug::draw_graph(ima_rep, ima_dil.domain(), pw::cst(9), pw::cst(2));

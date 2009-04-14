@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,24 +37,46 @@
 # include <mln/core/internal/neighborhood_base.hh>
 # include <mln/core/internal/graph_window_base.hh>
 # include <mln/core/image/graph_window_piter.hh>
-# include <mln/core/site_set/p_vertices.hh>
 
 
 namespace mln
 {
 
   /// Forward declaration
-  template <typename G, typename F> class graph_elt_window;
+  template <typename G, typename S> class graph_elt_window;
+  template <typename G, typename F> struct p_edges;
+  template <typename G, typename F> struct p_vertices;
 
 
   namespace internal
   {
 
-    template <typename G, typename F, typename E>
-    struct neighborhood_impl<graph_elt_window<G,F>,E>
-      : public neighborhood_extra_impl<graph_elt_window<G,F>,E>
+    template <typename G, typename S, typename E>
+    struct neighborhood_impl<graph_elt_window<G,S>,E>
+      : public neighborhood_extra_impl<graph_elt_window<G,S>,E>
     {
     };
+
+
+    /// Default
+    /// The given site set parameter is not supported yet!
+    template <typename G, typename S>
+    struct graph_window_iter_dispatch;
+
+    template <typename G, typename F>
+    struct graph_window_iter_dispatch<G, p_edges<G,F> >
+    {
+      typedef mln_edge_nbh_edge_fwd_iter(G) nbh_fwd_iter_;
+      typedef mln_edge_nbh_edge_bkd_iter(G) nbh_bkd_iter_;
+    };
+
+    template <typename G, typename F>
+    struct graph_window_iter_dispatch<G, p_vertices<G,F> >
+    {
+      typedef mln_vertex_nbh_vertex_fwd_iter(G) nbh_fwd_iter_;
+      typedef mln_vertex_nbh_vertex_bkd_iter(G) nbh_bkd_iter_;
+    };
+
 
   } // end of namespace mln::internal
 
@@ -62,8 +84,8 @@ namespace mln
   namespace trait
   {
 
-    template <typename G, typename F>
-    struct window_< mln::graph_elt_window<G, F> >
+    template <typename G, typename S>
+    struct window_< mln::graph_elt_window<G,S> >
     {
       typedef trait::window::size::unknown       size;
       typedef trait::window::support::irregular  support;
@@ -74,20 +96,24 @@ namespace mln
 
 
   /// Elementary window on graph class.
-  template <typename G, typename F>
-  class graph_elt_window : public graph_window_base<mln_result(F),
-						    graph_elt_window<G,F> >
-
+  /// \p G is the graph type.
+  /// \p S is the image site set.
+  template <typename G, typename S>
+  class graph_elt_window
+    : public graph_window_base<mln_result(S::fun_t),
+			       graph_elt_window<G,S> >,
+      public internal::graph_window_iter_dispatch<G,S>
   {
-    typedef graph_elt_window<G, F> self_;
-    typedef mln_vertex_nbh_vertex_fwd_iter(G) nbh_fwd_iter_;
-    typedef mln_vertex_nbh_vertex_bkd_iter(G) nbh_bkd_iter_;
+    typedef graph_elt_window<G,S> self_;
+    typedef internal::graph_window_iter_dispatch<G,S> super_;
 
+    typedef typename super_::nbh_fwd_iter_ nbh_fwd_iter_;
+    typedef typename super_::nbh_bkd_iter_ nbh_bkd_iter_;
 
   public:
     /// Associated types.
     /// \{
-    typedef p_vertices<G,F> target;
+    typedef S target;
     /// The type of psite corresponding to the window.
     typedef mln_psite(target) psite;
 

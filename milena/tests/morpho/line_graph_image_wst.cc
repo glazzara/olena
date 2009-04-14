@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,16 +33,17 @@
 #include <mln/core/alias/point2d.hh>
 
 /// Required for line graph images.
-#include <mln/core/site_set/p_edges.hh>
-#include <mln/core/image/line_graph_elt_neighborhood.hh>
-#include <mln/core/var.hh>
+#include <mln/core/image/vertex_image.hh>
 #include <mln/pw/all.hh>
 #include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
+#include <mln/util/line_graph.hh>
 #include <mln/util/site_pair.hh>
 
-#include <mln/morpho/meyer_wst.hh>
+#include <mln/morpho/watershed/flooding.hh>
 
+static const unsigned ima_ref[] = { 0, 10, 5, 2, 4, 6, 0, 3, 5, 2 };
+static const unsigned ima_wst[] = { 2, 0, 1, 2, 2, 1, 1, 2, 0, 1 };
 
 int main()
 {
@@ -68,20 +70,8 @@ int main()
     foward order.  */
   util::graph g;
 
-  // Sites associated to vertices.
-  typedef fun::i2v::array<point2d> fsite_t;
-  fsite_t sites(8);
-  sites(0) = point2d(0,0); // Point associated to vertex 0.
-  sites(1) = point2d(0,1); // Point associated to vertex 1.
-  sites(2) = point2d(0,2); // Point associated to vertex 2.
-  sites(3) = point2d(0,3); // Point associated to vertex 3.
-  sites(4) = point2d(1,0); // Point associated to vertex 4.
-  sites(5) = point2d(1,1); // Point associated to vertex 5.
-  sites(6) = point2d(1,2); // Point associated to vertex 6.
-  sites(7) = point2d(1,3); // Point associated to vertex 7.
-
   // Populate the graph with vertices.
-  g.add_vertices(sites.size());
+  g.add_vertices(8);
 
   // Populate the graph with edges.
   g.add_edge(0, 1);
@@ -97,47 +87,56 @@ int main()
   g.add_edge(5, 6);
   g.add_edge(6, 7);
 
-  // Associate edges to sites.
-  typedef fun::i2v::array< util::site_pair<point2d> > edge_sites_t;
-  edge_sites_t edge_sites(g.e_nmax());
-  mln_edge_iter_(util::graph) e(g);
-  for_all(e)
-    edge_sites(e) = util::site_pair<point2d>(sites(e.v1()), sites(e.v2()));
+  util::line_graph<util::graph> lg(g);
 
-  typedef p_edges<util::graph, edge_sites_t> pe_t;
-  pe_t pe(g, edge_sites);
+  // Sites associated to vertices.
+  typedef util::site_pair<point2d> P;
+  typedef fun::i2v::array<P> fsite_t;
+  fsite_t sites(10);
+  sites(0) = P(point2d(0,0), point2d(0,1)); // Site associated to vertex 0.
+  sites(1) = P(point2d(0,1), point2d(0,2)); // Site associated to vertex 1.
+  sites(2) = P(point2d(0,2), point2d(0,3)); // Site associated to vertex 2.
+  sites(3) = P(point2d(0,0), point2d(1,0)); // Site associated to vertex 7.
+  sites(4) = P(point2d(0,1), point2d(1,1)); // Site associated to vertex 8.
+  sites(5) = P(point2d(0,2), point2d(1,2)); // Site associated to vertex 9.
+  sites(6) = P(point2d(0,3), point2d(1,3)); // Site associated to vertex 3.
+  sites(7) = P(point2d(1,0), point2d(1,1)); // Site associated to vertex 4.
+  sites(8) = P(point2d(1,1), point2d(1,2)); // Site associated to vertex 5.
+  sites(9) = P(point2d(1,2), point2d(1,3)); // Site associated to vertex 6.
 
   // Edge values.
   typedef fun::i2v::array<int> edge_values_t;
-  edge_values_t edge_values(pe.nsites());
+  edge_values_t edge_values(10);
 
   static const int values[] = { 0, 10, 5, 2, 4, 6, 0, 3, 5, 2 };
   for (unsigned i = 0; i < edge_values.size(); ++i)
     edge_values(i) = values[i];
 
-  // Create line graph image.
-  mln_const_VAR(ima,(edge_values | pe));
+  typedef vertex_image< P, int, util::line_graph<util::graph> > ima_t;
+  ima_t ima(lg, sites, edge_values);
 
 
   /*------------.
   | Iterators.  |
   `------------*/
 
+  unsigned i = 0;
+
   // Manual iteration over the domain of IMA.
   mln_piter_(ima_t) p(ima.domain());
   for_all (p)
-    std::cout << "ima (" << p << ") = " << ima(p) << std::endl;
-  std::cout << std::endl;
+    mln_assertion(ima_ref[i++] == ima(p));
 
-  typedef line_graph_elt_neighborhood<util::graph, edge_sites_t> nbh_t;
+  typedef ima_t::nbh_t nbh_t;
   nbh_t nbh;
-
   unsigned nbasins;
-  mln_const_VAR(wshed, morpho::meyer_wst(ima, nbh, nbasins));
-  std::cout << "nbasins = " << nbasins << std::endl;
+  typedef mln_ch_value_(ima_t,unsigned) wshed_t;
+  wshed_t wshed = morpho::watershed::flooding(ima, nbh, nbasins);
+  mln_assertion(nbasins == 2);
 
+  i = 0;
   // Manual iteration over the domain of WSHED.
   mln_piter_(wshed_t) pw(wshed.domain());
   for_all (pw)
-    std::cout << "wshed (" << pw << ") = " << wshed(pw) << std::endl;
+    mln_assertion(ima_wst[i++] == wshed(pw));
 }

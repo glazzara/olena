@@ -41,11 +41,11 @@ namespace mln
 {
 
   /// Elementary neighborhood on graph class.
-  template <typename G, typename F>
+  template <typename G, typename S>
   struct graph_elt_neighborhood
-    : public neighb< graph_elt_window<G,F> >
+    : public neighb< graph_elt_window<G,S> >
   {
-    typedef neighb< graph_elt_window<G,F> > super_;
+    typedef neighb< graph_elt_window<G,S> > super_;
 
     graph_elt_neighborhood();
   };
@@ -53,9 +53,9 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-template <typename G, typename F>
+template <typename G, typename S>
 inline
-graph_elt_neighborhood<G,F>::graph_elt_neighborhood()
+graph_elt_neighborhood<G,S>::graph_elt_neighborhood()
 {
 }
 

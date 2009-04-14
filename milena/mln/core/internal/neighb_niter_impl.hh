@@ -82,10 +82,10 @@ namespace mln
 
     /// Add more implementation for neighborhoods made from a
     /// graph_window_piter.
-    template <typename G, typename F, typename E>
-    struct neighb_niter_impl<graph_elt_window<G,F>, E>
-      : public neighb_niter_impl< graph_window_base< mln_result(F),
-						     graph_elt_window<G, F> >,
+    template <typename G, typename S, typename E>
+    struct neighb_niter_impl<graph_elt_window<G,S>, E>
+      : public neighb_niter_impl< graph_window_base< mln_result(S::fun_t),
+						     graph_elt_window<G,S> >,
 				  E >
     {
 

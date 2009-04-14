@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -85,7 +85,7 @@ namespace mln
     /// Return the graph associated to the target S.
     const typename S::graph_t& graph() const;
 
-    /// Return the underlying iterator.
+    /// Return the underlying graph element iterator.
     const iter& hook_elt_() const;
 
     /// Convert towards the graph element id.

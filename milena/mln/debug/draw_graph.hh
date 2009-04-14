@@ -38,8 +38,10 @@
 # include <mln/core/site_set/p_vertices.hh>
 # include <mln/core/site_set/p_edges.hh>
 # include <mln/util/line_graph.hh>
+# include <mln/util/site_pair.hh>
 # include <mln/draw/line.hh>
 # include <mln/data/fill.hh>
+# include <mln/metal/equal.hh>
 
 namespace mln
 {
@@ -92,6 +94,8 @@ namespace mln
 	       mln_value(I) vertex_v,
 	       mln_value(I) edge_v)
     {
+      trace::entering("debug::draw_graph");
+
       // Draw edges.
       typedef p_edges<G, F> pe_t;
       mln_piter(pe_t) p(pe);
@@ -105,6 +109,7 @@ namespace mln
 	  exact(ima)(p.second()) = vertex_v;
       }
 
+      trace::exiting("debug::draw_graph");
     }
 
 
@@ -116,6 +121,8 @@ namespace mln
 	       mln_value(I) vertex_v,
 	       mln_value(I) edge_v)
     {
+      trace::entering("debug::draw_graph");
+
       // Draw edges.
       const G& g = pv.graph();
       typedef p_vertices<G, F> pv_t;
@@ -128,6 +135,8 @@ namespace mln
       for_all(p)
 	if (exact(ima).has(p))
 	  exact(ima)(p) = vertex_v;
+
+      trace::exiting("debug::draw_graph");
     }
 
     // FIXME: Refactor + be more restrictive on the function type.
@@ -138,6 +147,8 @@ namespace mln
 	       const p_vertices<G, F>& pv,
 	       const Function<V>& vcolor_, const Function<E>& ecolor_)
     {
+      trace::entering("debug::draw_graph");
+
       const V& vcolor = exact(vcolor_);
       const E& ecolor = exact(ecolor_);
 
@@ -153,6 +164,8 @@ namespace mln
       for_all(p)
 	if (exact(ima).has(p))
 	  exact(ima)(p) = vcolor(p);
+
+      trace::exiting("debug::draw_graph");
     }
 
     // FIXME: Refactor + be more restrictive on the function type.
@@ -163,6 +176,8 @@ namespace mln
 	       const p_vertices<util::line_graph<G>, F>& pv,
 	       const Function<V>& vcolor_, const Function<E>& ecolor_)
     {
+      trace::entering("debug::draw_graph");
+
       const V& vcolor = exact(vcolor_);
       const E& ecolor = exact(ecolor_);
 
@@ -184,6 +199,8 @@ namespace mln
 	if (exact(ima).has(l.end()))
 	  exact(ima)(l.end()) = vcolor(g.edge(vi).v2());
       }
+
+      trace::exiting("debug::draw_graph");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

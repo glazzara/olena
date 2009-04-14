@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,11 @@
 #ifndef MLN_CORE_INTERNAL_IMAGE_BASE_HH
 # define MLN_CORE_INTERNAL_IMAGE_BASE_HH
 
-/*! \file mln/core/internal/image_base.hh
- *
- * \brief Definition of the common base class for all images.
- *
- * \todo Provide coord iff the site is a grid point.
- */
+/// \file mln/core/internal/image_base.hh
+///
+/// Definition of the common base class for all images.
+///
+/// \todo Provide coord iff the site is a grid point.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/grids.hh>
@@ -51,11 +50,11 @@
 //       ---------------------------
 //      |                           |
 // image_primary               image_morpher
-//                                  ^
-//                                  |
-//              -----------------------------------------
-//             |                    |                    |
-//     image_domain_morpher  image_value_morpher   image_identity
+//      ^                            ^
+//      |                            |
+//      |		     -----------------------------------------
+//	|		    |                    |                    |
+// pw_image_base    image_domain_morpher  image_value_morpher   image_identity
 
 
 namespace mln

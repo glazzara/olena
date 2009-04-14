@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,11 +29,10 @@
 #ifndef MLN_TAG_SKELETON_HH
 # define MLN_TAG_SKELETON_HH
 
-/*! \file mln/tag/skeleton.hh
- *
- * \brief Definition of tags used in the skeleton types associated to
- * image types.
- */
+/// \file mln/tag/skeleton.hh
+///
+/// Definition of tags used in the skeleton types associated to
+/// image types.
 
 
 namespace mln
@@ -46,6 +45,7 @@ namespace mln
     template <typename D> struct data_     { typedef D param; };
     template <typename E> struct ext_      { typedef E param; };
     template <typename F> struct function_ { typedef F param; };
+    template <typename G> struct graph_	   { typedef G param; };
     template <typename I> struct image_    { typedef I param; };
     template <typename N> struct neighb_   { typedef N param; };
     template <typename P> struct psite_    { typedef P param; };

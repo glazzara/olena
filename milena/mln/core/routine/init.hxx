@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,30 +40,23 @@ namespace mln
   // Forward declarations.
   namespace fun { namespace i2v { template <typename T> class array; } }
   namespace fun { namespace l2l { template <typename T> class relabel; } }
+  namespace pw { namespace internal { template <typename F, typename S, typename E> class image_base; } }
   namespace pw { template <typename F, typename S> class image; }
   template <typename I, typename F> class image_if;
 
 
 
   /// Kind: function_t
-  /// Type: F,
+  /// Type: F1,
   /// From: pw::image<F,S>
-  template <typename F, typename S>
-  void init_(tag::function_t, F& f, const pw::image<F,S>& model);
-
+  template <typename F, typename S, typename E, typename J>
+  void init_(tag::image_t, pw::image<F,S>& target, const Image<J>& model);
 
   /// Kind: image_t
-  /// Type: pw::image<F,S>
+  /// Type: vertex_image<P,V,G>
   /// From: J
-  template <typename F, typename S, typename J>
-  void init_(tag::image_t, mln::pw::image<F,S>& target, const J& model);
-
-
-  /// Kind: function_t
-  /// Type: F
-  /// From: image_if<I,F>
-  template <typename I, typename F>
-  void init_(tag::function_t, F& f, const image_if<I,F>& model);
+  template <typename P, typename V, typename G, typename J>
+  void init_(tag::image_t, vertex_image<P,V,G>& target, const Image<J>& model);
 
   /// Kind: image_t
   /// Type: F
@@ -70,6 +64,18 @@ namespace mln
   template <typename I, typename F, typename J>
   void init_(tag::image_t, image_if<I,F>& target, const J& model);
 
+
+  /// Kind: function_t
+  /// Type: F,
+  /// From: pw::internal::image_base<F,S,E>
+  template <typename F, typename S, typename E>
+  void init_(tag::function_t, F& f, const pw::internal::image_base<F,S,E>& model);
+
+  /// Kind: function_t
+  /// Type: F
+  /// From: image_if<I,F>
+  template <typename I, typename F>
+  void init_(tag::function_t, F& f, const image_if<I,F>& model);
 
   /// Kind: function_t
   /// Type: fun::i2v::array<T1>

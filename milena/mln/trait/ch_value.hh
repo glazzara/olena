@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -50,6 +50,8 @@ namespace mln
   namespace algebra { template <unsigned n, typename T> class vec; }
   template <typename G, typename F> class p_edges;
   template <typename G, typename F> class p_vertices;
+  template <typename P, typename V, typename G> class vertex_image;
+  template <typename P, typename V, typename G> class edge_image;
   namespace pw { template <typename F, typename S> class image; }
 
 
@@ -165,7 +167,8 @@ namespace mln
         typedef typename image_from_grid< grid, V >::ret ret;
       };
 
-      // line_graph image
+
+      // Graph image based on p_edges
       template < typename F,
 	         typename G, typename FP,
 		 typename V >
@@ -174,13 +177,34 @@ namespace mln
 	typedef pw::image< mln_ch_function_value(F, V), p_edges<G, FP> > ret;
       };
 
-      // graph image
+      // Graph image based on p_vertices
       template < typename F,
 	         typename G, typename FP,
 		 typename V >
       struct ch_value_<  pw::image< tag::function_<F>, tag::pset_<p_vertices<G, FP> > >,  V  >
+
       {
 	typedef pw::image< mln_ch_function_value(F, V), p_vertices<G, FP> > ret;
+      };
+
+      // Vertex Image
+      template < typename P, typename V1, typename G, typename V2>
+      struct ch_value_< vertex_image< tag::psite_<P>,
+				      tag::value_<V1>,
+				      tag::graph_<G> >,
+			V2 >
+      {
+	typedef vertex_image< P, V2, G > ret;
+      };
+
+      // Edge Image
+      template < typename P, typename V1, typename G, typename V2>
+      struct ch_value_< edge_image< tag::psite_<P>,
+				    tag::value_<V1>,
+				    tag::graph_<G> >,
+			V2 >
+      {
+	typedef edge_image< P, V2, G > ret;
       };
 
 

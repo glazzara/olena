@@ -41,6 +41,7 @@
 # include <mln/core/image/complex_neighborhoods.hh>
 # include <mln/core/image/complex_window_piter.hh>
 # include <mln/core/image/complex_windows.hh>
+# include <mln/core/image/edge_image.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/flat_image.hh>
 # include <mln/core/image/image_if.hh>
@@ -60,7 +61,6 @@
 # include <mln/core/image/image_if.hh>
 # include <mln/core/image/interpolated.hh>
 # include <mln/core/image/lazy_image.hh>
-# include <mln/core/image/line_graph_elt_window.hh>
 # include <mln/core/image/p2p_image.hh>
 # include <mln/core/image/plain.hh>
 # include <mln/core/image/safe.hh>
@@ -73,6 +73,7 @@
 # include <mln/core/image/tr_image.hh>
 # include <mln/core/image/tr_mesh.hh>
 # include <mln/core/image/unproject_image.hh>
+# include <mln/core/image/vertex_image.hh>
 
 //# include <mln/core/image/bgraph_image.hh>
 //# include <mln/core/image/bgraph_psite.hh>

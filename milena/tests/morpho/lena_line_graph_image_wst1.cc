@@ -60,10 +60,8 @@
 #include <mln/convert/to_window.hh>
 
 /// Required for line graph images.
-#include <mln/core/site_set/p_edges.hh>
-#include <mln/core/image/line_graph_elt_neighborhood.hh>
+#include <mln/core/image/edge_image.hh>
 #include <mln/core/var.hh>
-#include <mln/pw/all.hh>
 #include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
 
@@ -146,24 +144,19 @@ int main()
       }
 
   // Line graph point set.
-  typedef p_edges<util::graph, edge_sites_t> pe_t;
-  pe_t pe(g, edge_sites);
-
-  // Line graph image
-  typedef pw::image<edge_values_t, pe_t> lg_ima_t;
-  lg_ima_t lg_ima = (edge_values | pe);
+  typedef edge_image<util::site_pair<point2d>,int,util::graph> lg_ima_t;
+  lg_ima_t lg_ima(g, edge_sites, edge_values);
 
   /*------.
   | WST.  |
   `------*/
 
-  typedef line_graph_elt_neighborhood<util::graph, edge_sites_t> nbh_t;
+  typedef lg_ima_t::nbh_t nbh_t;
   nbh_t nbh;
 
   // Perform a Watershed Transform.
   int_u8 nbasins;
-  typedef pw::image<fun::i2v::array<int_u8>, p_edges<util::graph,
-		    fun::i2v::array< util::site_pair<point2d> > > > wshed_t;
+  typedef edge_image<util::site_pair<point2d>,int_u8,util::graph> wshed_t;
   wshed_t wshed = morpho::meyer_wst(lg_ima, nbh, nbasins);
   mln_assertion(nbasins == 5);
 

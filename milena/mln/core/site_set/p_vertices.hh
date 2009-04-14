@@ -33,6 +33,7 @@
 ///
 /// Definition of a point set based on a graph.
 
+# include <mln/core/concept/function.hh>
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/site_set/p_graph_piter.hh>
 # include <mln/core/site_set/p_vertices_psite.hh>
@@ -94,7 +95,14 @@ namespace mln
     /// Construct a graph psite set from a graph of points.
     /// \param gr The graph upon which the graph psite set is built.
     /// \param f the function which maps a vertex to a site.
-    p_vertices(const G& gr, const F& f);
+    p_vertices(const Graph<G>& gr, const Function<F>& f);
+
+    /// Construct a graph psite set from a graph of points.
+    /// \param gr The graph upon which the graph psite set is built.
+    /// \param f the function which maps a vertex to a site.
+    ///		 It must be convertible to the function type \c F.
+    template <typename F2>
+    p_vertices(const Graph<G>& gr, const Function<F2>& f);
     /// \}
 
 
@@ -139,7 +147,11 @@ namespace mln
 
     /// Does this site set has \a v?
     template <typename G2>
-    bool has(const util::vertex<G2>& p) const;
+    bool has(const util::vertex<G2>& v) const;
+
+    /// Does this site set has \a vertex_id?
+    /// FIXME: causes ambiguities while calling has(mln::neighb_fwd_niter<>);
+    /// bool has(unsigned vertex_id) const;
 
     // FIXME: Dummy.
     std::size_t memory_size() const;
@@ -202,9 +214,23 @@ namespace mln
 
   template <typename G, typename F>
   inline
-  p_vertices<G,F>::p_vertices(const G& g, const F& f)
-    : g_ (g), f_(f)
+  p_vertices<G,F>::p_vertices(const Graph<G>& g, const Function<F>& f)
   {
+    mln_precondition(exact(g).is_valid());
+    g_ = exact(g);
+    f_ = exact(f);
+  }
+
+  template <typename G, typename F>
+  template <typename F2>
+  inline
+  p_vertices<G,F>::p_vertices(const Graph<G>& g, const Function<F2>& f)
+  {
+    mln_precondition(exact(g).is_valid());
+    mlc_converts_to(F2,F)::check();
+
+    g_ = exact(g);
+    convert::from_to(f, f_);
   }
 
   template <typename G, typename F>
@@ -252,16 +278,27 @@ namespace mln
   template <typename G2>
   inline
   bool
-  p_vertices<G,F>::has(const util::vertex<G2>& p) const
+  p_vertices<G,F>::has(const util::vertex<G2>& v) const
   {
     mln_precondition(is_valid());
     return
-      // Check whether P is compatible with this psite set.
-      (p.graph() == g_) &&
+      // Check whether if the graph is 'compatible'.
+      v.graph().is_subgraph_of(g_) &&
+      g_.has(v) &&
       // Check that the vertex id of P belongs to the range of valid
       // vertex ids.
-      (p.is_valid());
+      (v.is_valid());
   }
+
+//  template <typename G, typename F>
+//  inline
+//  bool
+//  p_vertices<G,F>::has(unsigned vertex_id) const
+//  {
+//    mln_precondition(is_valid());
+//    util::vertex<G> v(g_, vertex_id);
+//    return has(v);
+//  }
 
   template <typename G, typename F>
   inline

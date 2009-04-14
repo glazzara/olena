@@ -25,6 +25,7 @@
 // License.  This exception does not however invalidate any other
 // reasons why the executable file might be covered by the GNU General
 // Public License.
+
 #ifndef MLN_MORPHO_ATTRIBUTE_COUNT_ADJACENT_VERTICES_HH_
 # define MLN_MORPHO_ATTRIBUTE_COUNT_ADJACENT_VERTICES_HH_
 
@@ -32,7 +33,10 @@
 ///
 /// Define an accumulator that counts the vertices adjacent to a
 /// set of p_edges psites.
+///
+/// \todo Check that the image is based on a graph.
 
+# include <mln/pw/internal/image_base.hh>
 # include <mln/accu/internal/base.hh>
 # include <mln/pw/image.hh>
 # include <mln/util/pix.hh>
@@ -76,12 +80,12 @@ namespace mln
       ///
       /// The parameter \p I is the image type on which the accumulator
       /// of pixels is built.
-
-      template <typename F, typename S>
-      struct count_adjacent_vertices< pw::image<F, S> >
-	: public accu::internal::base< unsigned , count_adjacent_vertices< pw::image<F, S> > >
+      //
+      template <typename I>
+      struct count_adjacent_vertices
+	: public accu::internal::base< unsigned ,
+				       count_adjacent_vertices<I> >
       {
-	typedef pw::image<F, S> I;
 	typedef mln_psite(I)    argument;
 
 	count_adjacent_vertices();
@@ -117,70 +121,70 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename F, typename S>
+      template <typename I>
       inline
-      count_adjacent_vertices< pw::image<F, S> >::count_adjacent_vertices()
+      count_adjacent_vertices<I>::count_adjacent_vertices()
       {
 	init();
       }
 
-      template <typename F, typename S>
+      template <typename I>
       inline
       void
-      count_adjacent_vertices< pw::image<F, S> >::init()
+      count_adjacent_vertices<I>::init()
       {
 	vertices_.clear();
 	update_();
       }
 
-      template <typename F, typename S>
+      template <typename I>
       inline
       void
-      count_adjacent_vertices< pw::image<F,S> >::take(const argument& p)
+      count_adjacent_vertices<I>::take(const argument& p)
       {
 	vertices_.insert(p.v1());
 	vertices_.insert(p.v2());
 	update_();
       }
 
-      template <typename F, typename S>
+      template <typename I>
       inline
       void
-      count_adjacent_vertices< pw::image<F,S> >::take(const count_adjacent_vertices< pw::image <F,S> >& other)
+      count_adjacent_vertices<I>::take(const count_adjacent_vertices<I>& other)
       {
 	vertices_.insert (other.vertices_.begin(), other.vertices_.end());
 	update_();
       }
 
-      template <typename F, typename S>
+      template <typename I>
       inline
       void
-      count_adjacent_vertices< pw::image<F,S> >::take_as_init(const argument& px)
+      count_adjacent_vertices<I>::take_as_init(const argument& px)
       {
 	vertices_.clear();
 	take(px);
       }
 
-      template <typename F, typename S>
+      template <typename I>
       inline
       unsigned
-      count_adjacent_vertices< pw::image<F,S> >::to_result() const
+      count_adjacent_vertices<I>::to_result() const
       {
 	return count__;
       }
 
-      template <typename F, typename S>
+      template <typename I>
       inline
       void
-      count_adjacent_vertices< pw::image<F,S> >::update_()
+      count_adjacent_vertices<I>::update_()
       {
 	count__ = vertices_.size();
       }
 
-      template <typename F, typename S>
+      template <typename I>
       inline
       bool
-      count_adjacent_vertices< pw::image<F,S> >::is_valid() const
+      count_adjacent_vertices<I>::is_valid() const
       {
 	return true;
       }
@@ -194,4 +198,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif /* !MLN_MORPHO_ATTRIBUTE_COUNT_ADJACENT_VERTICES_HH_ */
+#endif // ! MLN_MORPHO_ATTRIBUTE_COUNT_ADJACENT_VERTICES_HH_

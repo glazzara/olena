@@ -1,3 +1,68 @@
+2009-04-08 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Introduce edge_image and vertex_image types.
+
+	* mln/core/site_set/p_graph_piter.hh,
+	* mln/core/internal/image_base.hh,
+	* mln/core/image/essential.hh: update doc.
+	
+	* mln/core/image/all.hh: include new headers.
+
+	* mln/core/image/vertex_image.hh,
+	* mln/core/image/edge_image.hh: new image types.
+
+	* mln/core/image/graph_elt_neighborhood.hh,
+	* mln/core/image/graph_elt_window.hh: update according new image
+	types.
+
+	* mln/core/image/line_graph_elt_neighborhood.hh,
+	* mln/core/image/line_graph_elt_window.hh: not needed anymore.
+	Removed.
+
+	* mln/core/internal/neighb_niter_impl.hh: update template parameter
+	names.
+
+	* mln/core/routine/init.hxx: add new init routines for new image
+	types.
+
+	* mln/core/site_set/p_edges.hh,
+	* mln/core/site_set/p_vertices.hh: use Graph concept in constructor
+	instead of exact type.
+
+	* mln/debug/draw_graph.hh: add missing traces.
+
+	* mln/morpho/attribute/count_adjacent_vertices.hh: make it more
+	generic.
+
+	* mln/morpho/closing/area_on_vertices.hh,
+	* mln/morpho/line_gradient.hh: use the new types.
+
+	* mln/pw/image.hh: revamp and move most of the code...
+	* mln/pw/internal/image_base.hh: ... here.
+
+	* mln/tag/skeleton.hh: add tag::graph.
+
+	* mln/trait/ch_value.hh: add traits for new image types.
+
+	* mln/util/graph.hh: Add a method returning the edge vector.
+
+	* tests/core/image/Makefile.am,
+	* tests/core/image/vertex_image.cc,
+	* tests/core/image/edge_image.cc: new tests.
+
+	* tests/core/image/graph_image.cc,
+	* tests/core/image/line_graph_image.cc,
+	* tests/core/site_set/p_edges.cc,
+	* tests/morpho/artificial_line_graph_image_wst.cc,
+	* tests/morpho/graph_image_morpho.cc,
+	* tests/morpho/graph_image_wst.cc,
+	* tests/morpho/lena_line_graph_image_wst1.cc,
+	* tests/morpho/lena_line_graph_image_wst2.cc,
+	* tests/morpho/line_graph_image_morpho.cc,
+	* tests/morpho/line_graph_image_wst.cc,
+	* tests/util/graph.cc: update graph related tests. Use the new image
+	types.
+
 2009-04-10  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Merge changes in component tree file.
