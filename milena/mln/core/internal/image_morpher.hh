@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_CORE_INTERNAL_IMAGE_MORPHER_HH
 # define MLN_CORE_INTERNAL_IMAGE_MORPHER_HH
 
-/*! \file mln/core/internal/image_morpher.hh
- *
- *  \brief Definition of a base class for image morphers.
- *
- * \todo Add the appropriate checks in .rw().
- */
+/// \file mln/core/internal/image_morpher.hh
+///
+/// Definition of a base class for image morphers.
+///
+/// \todo Add the appropriate checks in .rw().
 
 # include <mln/core/internal/image_base.hh>
 # include <mln/metal/const.hh>
@@ -47,9 +47,8 @@ namespace mln
   namespace internal
   {
 
-    /*! A base class for images that are morphers. Parameter
-     * \c I is the underlying-morphed image type.
-     */
+    /// A base class for images that are morphers. Parameter
+    /// \c I is the underlying-morphed image type.
     template <typename I, typename T, typename S, typename E>
     class image_morpher : public image_base<T, S, E>
     {
@@ -79,9 +78,6 @@ namespace mln
        * also initialized.
        */
       bool is_valid() const;
-
-      /// Conversion to the underlying (morphed) image.
-      operator I() const; // FIXME: Very dangerous? Remove?
 
 
       /// State that the morpher is writable.  This allows for C++ to
@@ -163,15 +159,6 @@ namespace mln
       mlc_const(I)* ptr = delegatee_();
       mln_assertion(ptr != 0);
       return *ptr;
-    }
-
-
-    template <typename I, typename T, typename S, typename E>
-    inline
-    image_morpher<I, T, S, E>::operator I() const
-    {
-      mln_precondition(exact(this)->is_valid());
-      return * this->delegatee_();
     }
 
     template <typename I, typename T, typename S, typename E>

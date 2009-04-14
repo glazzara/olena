@@ -1,5 +1,12 @@
 2009-04-08 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Remove an invalid conversion operator from a morpher to a concrete
+	image.
+
+	* mln/core/internal/image_morpher.hh: remove operator I().
+
+2009-04-08 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Introduce edge_image and vertex_image types.
 
 	* mln/core/site_set/p_graph_piter.hh,
