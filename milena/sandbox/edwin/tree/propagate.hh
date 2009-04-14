@@ -54,7 +54,43 @@ namespace mln {
 	      a(p) = a(t.parent(p));
 	    }
       }
-      
+
+      /**
+      ** For each component in the list \p component_list, it
+      ** propagates the representant value to the remaining nodes of the
+      ** component. The value of a node that doesn't belong to a component is
+      ** set to \p null.
+      **
+      ** @param attr_image The attribute image.
+      ** @param tree The component tree used to propagate value.
+      ** @param component_list The list of components.
+      ** @param null The nodes that don't belong to components will be set
+      ** with this value.
+      **
+      ** @return The resulting component image.
+      */
+      template <typename A, typename T>
+      inline
+      A set_value_to_components(const Image<A>& attr_image,
+				const T& tree,
+				const p_array< mln_psite(A) >& component_list,
+				const mln_value(A)& null)
+      {
+	const A& attr_img = exact(attr_image);
+	A out;
+	initialize(out, attr_img);
+	data::fill(out, null);
+
+	mln_piter(p_array<mln_psite(A)>) p(component_list);
+	for_all(p)
+	{
+	  out(p) = attr_img(p);
+	  morpho::tree::propagate_node_to_descendants(p, tree, out);
+	}
+	morpho::tree::propagate_representant(tree, out);
+	return out;
+      }
+
     } // end of namespace mln::morpho::tree
   } // end of namespace mln::morpho
 } // end of namespace mln

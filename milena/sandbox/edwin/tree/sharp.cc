@@ -22,6 +22,7 @@
 
 
 /* io */
+#include <mln/io/ppm/load.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/pbm/save.hh>
@@ -61,42 +62,45 @@ void dsp(const std::string& str)
 	    << "*********************" << std::endl;
 }
 
-
-/**
-** For each component in the list \p component_list, it
-** propagates the representant value to the remaining nodes of the
-** component. The value of a node that doesn't belong to a component is
-** set to \p null.
-**
-** @param attr_image The attribute image.
-** @param tree The component tree used to propagate value.
-** @param component_list The list of components.
-** @param null The nodes that don't belong to components will be set
-** with this value.
-**
-** @return The resulting component image.
-*/
-template <typename A, typename T>
-inline
-A set_value_to_components(const Image<A>& attr_image,
-			  const T& tree,
-			  const p_array< mln_psite(A) >& component_list,
-			  const mln_value(A)& null)
+namespace mln
 {
-  const A& attr_img = exact(attr_image);
-  A out;
-  initialize(out, attr_img);
-  data::fill(out, null);
+  // Distance, stored on pixels, of neighboring colors.
 
-  mln_piter(p_array<mln_psite(A)>) p(component_list);
-  for_all(p)
+  value::int_u8 dist_mean(const value::rgb8& c1, const value::rgb8& c2)
   {
-    out(p) = attr_img(p);
-    morpho::tree::propagate_node_to_descendants(p, tree, out);
+    unsigned d = 0;
+    d += (math::diff_abs(c1.red(), c2.red()) + 2) / 3;
+    d += (math::diff_abs(c1.green(), c2.green()) + 2) / 3;
+    d += (math::diff_abs(c1.blue(), c2.blue()) + 2) / 3;
+    if (d > 255)
+      d = 255;
+    return d;
   }
-  morpho::tree::propagate_representant(tree, out);
-  return out;
+
+  template <typename N>
+  image2d<value::int_u8>
+  dist_on_pixels(const image2d<value::rgb8>& input, const N& nbh)
+  {
+    using value::int_u8;
+    image2d<int_u8> output(input.domain());
+
+    mln_piter(box2d) p(input.domain());
+    mln_niter(N) n(nbh, p);
+    for_all(p)
+    {
+      int_u8 d = 0u;
+      for_all(n) if (input.domain().has(n))
+	{
+	  int_u8 d_ = dist_mean(input(p), input(n));
+	  if (d_ > d)
+	    d = d_;
+	}
+      output(p) = 255 - d;
+    }
+    return output;
+  }
 }
+
 
 
 
@@ -104,6 +108,7 @@ A set_value_to_components(const Image<A>& attr_image,
 int main(int argc, char* argv[])
 {
   using value::int_u8;
+  using value::rgb8;
   std::string arg;
   unsigned nb_components = 0;
   unsigned card = 0;
@@ -131,10 +136,15 @@ int main(int argc, char* argv[])
 
 
   /* Image loadin' */
-  typedef image2d<int_u8> I;
+  image2d<rgb8> input_;
+  io::ppm::load(input_, argv[1]);
 
-  I input;
-  io::pgm::load(input, argv[1]);
+  typedef image2d<int_u8> I;
+  I input = dist_on_pixels(input_, c4());
+
+  if (mydebug)
+    io::pgm::save(input, "input.pgm");
+
 
   /* Component tree creation */
   typedef p_array< mln_site_(I) > S;
@@ -144,6 +154,12 @@ int main(int argc, char* argv[])
   tree_t tree(input, sorted_sites, c4());
 
   /* Compute Attribute On Image */
+
+  // TODO: l'attribut devrait favoriser les composantes plus larges
+  // dans son calcul. Ainsi au lieu de faire un sharpness, on aurait
+  // un ratio sharpness / largeur de composante (reprendre l'idee du
+  // log utilise pour INIM).
+
   typedef morpho::attribute::sharpness<I> sharp_t;
   typedef mln_ch_value_(I, double) A;
 
@@ -174,6 +190,9 @@ int main(int argc, char* argv[])
 
       a = duplicate((fun::p2v::ternary(pw::value(b) > pw::cst(card), pw::value(a), pw::cst(0.0))) | a.domain());
     }
+
+  if (mydebug)
+    io::pgm::save(level::stretch(int_u8(), a), "attr_image.pgm");
 
   /* Run max accumulator */
   accumulator::arg_max<A> argmax(a);
@@ -209,12 +228,11 @@ int main(int argc, char* argv[])
   }
 
   /* Now Back Propagate to component */
-
   if (mydebug) {
     dsp("Create mask and propagate");
   }
 
-  A pre_output = set_value_to_components(a, tree, obj_array, 0);
+  A pre_output = morpho::tree::set_value_to_components(a, tree, obj_array, 0);
   I output = level::stretch(int_u8(), pre_output);
   io::pgm::save(output, "components.pgm");
 

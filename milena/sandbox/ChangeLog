@@ -1,3 +1,10 @@
+2009-04-14  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add multivalued image support for components detection.
+	* edwin/tree/propagate.hh: Move a propagation routine from
+	sharp.cc to this file.
+	* edwin/tree/sharp.cc: Add multivalued image support.
+
 2009-04-10  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Fix bugs related to 'glut leaves' process.
