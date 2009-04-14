@@ -135,6 +135,10 @@ namespace mln
       template <typename H, typename S, typename L>
       void from_to_(const value::hsl_<H,S,L>&, value::rgb<16>& to);
 
+      // rgb -> bool.
+      template <unsigned m>
+      void from_to_(const value::rgb<m>& from, bool& to);
+
     } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
@@ -794,6 +798,13 @@ namespace mln
       from_to_(const value::hsl_<H,S,L>& from, value::rgb<16>& to)
       {
 	to = fun::v2v::f_hsl_to_rgb_3x16(from);
+      }
+
+      template <unsigned m>
+      void
+      from_to_(const value::rgb<m>& from, bool& to)
+      {
+	to = (from.red() != 0 && from.green() != 0 && from.blue() != 0);
       }
 
     } // end of namespace mln::convert::over_load

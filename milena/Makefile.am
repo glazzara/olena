@@ -55,6 +55,11 @@ img/tiny.ppm 		\
 img/toto.pbm
 
 EXTRA_DIST += 		\
+tests/img/test_rgb8.tif	\
+tests/img/test_bw.tif  	\
+tests/img/test_gl.tif
+
+EXTRA_DIST += 		\
 generate_dist_headers.sh\
 tools 			\
 tools/area_flooding.cc 	\

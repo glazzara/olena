@@ -29,7 +29,7 @@
 # define MLN_IO_MAGICK_LOAD_HH
 
 ///
-/// \file   mln/io/magick/load.hh
+/// \file mln/io/magick/load.hh
 ///
 /// Define a function which loads an image of kind magick with
 /// given path.

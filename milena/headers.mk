@@ -38,6 +38,7 @@ mln/draw/plot.hh \
 mln/draw/line.hh \
 mln/draw/essential.hh \
 mln/pw/image.hh \
+mln/pw/internal/image_base.hh \
 mln/pw/all.hh \
 mln/pw/value.hh \
 mln/pw/cst.hh \
@@ -139,10 +140,12 @@ mln/make/double_neighb2d.hh \
 mln/make/image3d.hh \
 mln/make/dpoint2d_h.hh \
 mln/make/w_window.hh \
+mln/make/cell.hh \
 mln/make/image.hh \
 mln/make/vec.hh \
 mln/make/all.hh \
 mln/make/dual_neighb.hh \
+mln/make/attachment.hh \
 mln/make/w_window3d.hh \
 mln/make/mat.hh \
 mln/make/win_chamfer.hh \
@@ -153,6 +156,7 @@ mln/make/box2d.hh \
 mln/make/h_mat.hh \
 mln/make/w_window2d.hh \
 mln/make/box3d.hh \
+mln/make/detachment.hh \
 mln/make/region_adjacency_graph.hh \
 mln/make/relabelfun.hh \
 mln/make/pixel.hh \
@@ -161,6 +165,7 @@ mln/make/box2d_h.hh \
 mln/make/w_window1d.hh \
 mln/make/image2d.hh \
 mln/make/w_window_directional.hh \
+mln/make/rag_and_labeled_wsl.hh \
 mln/make/w_window3d_int.hh \
 mln/make/essential.hh \
 mln/make/w_window1d_int.hh \
@@ -183,8 +188,10 @@ mln/extension/adjust_fill.hh \
 mln/extension/fill.hh \
 mln/extension/essential.hh \
 mln/fun/p2b/chess.hh \
+mln/fun/p2b/tautology.hh \
 mln/fun/p2b/all.hh \
 mln/fun/p2b/has.hh \
+mln/fun/p2b/antilogy.hh \
 mln/fun/p2b/big_chess.hh \
 mln/fun/p2b/essential.hh \
 mln/fun/p2p/all.hh \
@@ -378,6 +385,7 @@ mln/accu/min_h.hh \
 mln/accu/site_set/rectangularity.hh \
 mln/accu/site_set/all.hh \
 mln/accu/site_set/essential.hh \
+mln/accu/stat/variance.hh \
 mln/accu/stat/deviation.hh \
 mln/accu/max.hh \
 mln/accu/lor.hh \
@@ -399,11 +407,13 @@ mln/accu/transform.hh \
 mln/accu/median_alt.hh \
 mln/accu/volume.hh \
 mln/accu/sum.hh \
+mln/accu/label_used.hh \
 mln/accu/height.hh \
 mln/accu/land.hh \
 mln/accu/take.hh \
 mln/accu/histo.hh \
 mln/accu/pair.hh \
+mln/accu/count_labels.hh \
 mln/accu/count_adjacent_vertices.hh \
 mln/accu/convolve.hh \
 mln/accu/v.hh \
@@ -458,9 +468,11 @@ mln/level/median.hh \
 mln/math/jacobi.hh \
 mln/math/max.hh \
 mln/math/sqr.hh \
+mln/math/pi.hh \
 mln/math/all.hh \
 mln/math/sign.hh \
 mln/math/abs.hh \
+mln/math/sin.hh \
 mln/math/cos.hh \
 mln/math/diff_abs.hh \
 mln/math/round.hh \
@@ -612,10 +624,12 @@ mln/algebra/mat.hh \
 mln/algebra/h_mat.hh \
 mln/algebra/quat.hh \
 mln/algebra/essential.hh \
+mln/linear/gaussian_directional_2d.hh \
 mln/linear/convolve_2x1d.hh \
 mln/linear/all.hh \
 mln/linear/ch_convolve.hh \
 mln/linear/gaussian.hh \
+mln/linear/gaussian_1d.hh \
 mln/linear/convolve.hh \
 mln/linear/sobel_2d.hh \
 mln/linear/local/convolve.hh \
@@ -708,7 +722,9 @@ mln/morpho/essential.hh \
 mln/topo/n_face_iter.hh \
 mln/topo/face_iter.hh \
 mln/topo/is_simple_2d.hh \
+mln/topo/detach.hh \
 mln/topo/centered_iter_adapter.hh \
+mln/topo/is_n_face.hh \
 mln/topo/internal/complex_set_iterator_base.hh \
 mln/topo/internal/complex_iterator_base.hh \
 mln/topo/internal/complex_relative_iterator_base.hh \
@@ -717,6 +733,7 @@ mln/topo/algebraic_n_face.hh \
 mln/topo/attic/faces_iter.hh \
 mln/topo/adj_lower_dim_connected_n_face_iter.hh \
 mln/topo/n_face.hh \
+mln/topo/is_facet.hh \
 mln/topo/adj_lower_higher_face_iter.hh \
 mln/topo/all.hh \
 mln/topo/face_data.hh \
@@ -724,9 +741,11 @@ mln/topo/static_n_face_iter.hh \
 mln/topo/face.hh \
 mln/topo/adj_m_face_iter.hh \
 mln/topo/complex.hh \
+mln/topo/is_simple_cell.hh \
 mln/topo/adj_higher_face_iter.hh \
 mln/topo/adj_lower_face_iter.hh \
 mln/topo/complex_iterators.hh \
+mln/topo/skeleton/breadth_first_thinning.hh \
 mln/topo/center_only_iter.hh \
 mln/topo/adj_higher_dim_connected_n_face_iter.hh \
 mln/topo/algebraic_face.hh \
@@ -968,6 +987,7 @@ mln/core/image/interpolated.hh \
 mln/core/image/lazy_image.hh \
 mln/core/image/t_image.hh \
 mln/core/image/hexa_piter.hh \
+mln/core/image/edge_image.hh \
 mln/core/image/value_enc_image.hh \
 mln/core/image/fun_image.hh \
 mln/core/image/graph_elt_neighborhood.hh \
@@ -981,13 +1001,13 @@ mln/core/image/complex_window_piter.hh \
 mln/core/image/tr_image.hh \
 mln/core/image/sub_image.hh \
 mln/core/image/rle_image.hh \
-mln/core/image/line_graph_elt_window.hh \
 mln/core/image/mono_rle_encode.hh \
 mln/core/image/bgraph_psite.hh \
 mln/core/image/sparse_image.hh \
 mln/core/image/bgraph_image.hh \
 mln/core/image/complex_neighborhoods.hh \
 mln/core/image/graph_window_piter.hh \
+mln/core/image/vertex_image.hh \
 mln/core/image/sparse_encode.hh \
 mln/core/image/safe.hh \
 mln/core/image/extension_fun.hh \
@@ -995,7 +1015,6 @@ mln/core/image/image1d.hh \
 mln/core/image/extension_val.hh \
 mln/core/image/image_if.hh \
 mln/core/image/hexa.hh \
-mln/core/image/line_graph_elt_neighborhood.hh \
 mln/core/image/extended.hh \
 mln/core/image/p2p_image.hh \
 mln/core/image/slice_image.hh \
@@ -1022,6 +1041,7 @@ mln/labeling/level.hh \
 mln/labeling/flat_zones.hh \
 mln/labeling/foreground.hh \
 mln/labeling/regional_maxima.hh \
+mln/labeling/wrap.hh \
 mln/labeling/compute.hh \
 mln/labeling/regional_minima.hh \
 mln/labeling/essential.hh \
@@ -1069,6 +1089,7 @@ mln/io/cloud/save.hh \
 mln/io/all.hh \
 mln/io/magick/load.hh \
 mln/io/magick/all.hh \
+mln/io/magick/save.hh \
 mln/io/dump/load.hh \
 mln/io/dump/all.hh \
 mln/io/dump/save.hh \
@@ -1084,6 +1105,9 @@ mln/io/pnm/save.hh \
 mln/io/pnm/save_header.hh \
 mln/io/txt/all.hh \
 mln/io/txt/save.hh \
+mln/io/tiff/load.hh \
+mln/io/tiff/all.hh \
+mln/io/tiff/save.hh \
 mln/io/dicom/load.hh \
 mln/io/abort.hh \
 mln/io/fits/load.hh \
@@ -1091,6 +1115,7 @@ mln/io/fits/all.hh \
 mln/io/off/load.hh \
 mln/io/off/all.hh \
 mln/io/off/save.hh \
+mln/io/plot/save.hh \
 mln/io/essential.hh \
 mln/logical/includes.hh \
 mln/logical/and_not.hh \

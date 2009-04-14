@@ -197,6 +197,10 @@ namespace mln
       void
       from_to_(const value::rgb<8>& from, value::hsl_<float,float,float>& to);
 
+      // rgb -> bool.
+      template <unsigned m>
+      void from_to_(const value::rgb<m>& from, bool& to);
+
 
       // C-array -> Image.
       template <typename V, unsigned S, typename I>

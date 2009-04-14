@@ -34,7 +34,8 @@
 /// Load TIFF images to Milena images.
 ///
 /// \todo Add support for several tiles.
-/// \todo Handle TIFFTAG_ORIENTATION (origin of the image).
+/// \todo Use ReadScanline instead of ReadRGBAImage in order to avoid a
+///	  dispatch and share the same code whatever is the value type.
 
 
 # include <iostream>
@@ -68,10 +69,11 @@ namespace mln
 
       namespace internal
       {
-	
+
 	inline
 	point2d ij2rc_1(int i, int j, int ni_1, int nj_1)
 	{
+	  (void) nj_1;
 	  return point2d(ni_1 - i, j);
 	}
 
@@ -84,36 +86,43 @@ namespace mln
 	inline
 	point2d ij2rc_3(int i, int j, int ni_1, int nj_1)
 	{
+	  (void) ni_1;
 	  return point2d(i, nj_1 - j);
 	}
 
 	inline
 	point2d ij2rc_4(int i, int j, int ni_1, int nj_1)
 	{
+	  (void) ni_1;
+	  (void) nj_1;
 	  return point2d(i, j);
 	}
 
 	inline
 	point2d ij2rc_5(int i, int j, int ni_1, int nj_1)
 	{
+	  (void) nj_1;
 	  return point2d(j, ni_1 - i);
 	}
 
 	inline
 	point2d ij2rc_6(int i, int j, int ni_1, int nj_1)
 	{
- 	  return point2d(nj_1 - j, ni_1 - i);
+	  return point2d(nj_1 - j, ni_1 - i);
 	}
 
 	inline
 	point2d ij2rc_7(int i, int j, int ni_1, int nj_1)
 	{
+	  (void) ni_1;
 	  return point2d(nj_1 - j, i);
 	}
 
 	inline
 	point2d ij2rc_8(int i, int j, int ni_1, int nj_1)
 	{
+	  (void) ni_1;
+	  (void) nj_1;
 	  return point2d(j, i);
 	}
 
@@ -121,7 +130,7 @@ namespace mln
 
 	template <typename I>
         inline
-        void load_header(I& ima, TIFF *file)
+        I load_header(TIFF *file)
 	{
 	  uint32 width, height;
 
@@ -129,7 +138,8 @@ namespace mln
 	  TIFFGetField(file, TIFFTAG_IMAGELENGTH, &height);
 
 	  mln_concrete(I) new_ima(height, width, 0);
-	  exact(ima) = new_ima;
+
+	  return new_ima;
 	}
 
 
@@ -143,7 +153,7 @@ namespace mln
 	  TIFFGetField(file, TIFFTAG_SAMPLESPERPIXEL, &samples_per_pixel);
 
 	  uint16 data_size = bits_per_sample * samples_per_pixel;
-	  if (data_size != 24 || data_size != 32)
+	  if (data_size != 24 && data_size != 32)
 	  {
 	    std::cout << "Trying to load a non color TIFF "
 		      << "image into a color Milena image." << std::endl;
@@ -160,26 +170,51 @@ namespace mln
 	    abort();
 	  }
 
-	  unsigned i = ima.nrows() - 1;
-	  unsigned j = 0;
-	  mln_piter(I) p(ima.domain());
-	  for_all(p)
-	  {
-	    unsigned idx = i * ima.ncols() + j;
-	    value::rgb8 v;
+	  uint16 orientation;
+	  TIFFGetField(file, TIFFTAG_ORIENTATION, &orientation);
 
-	    v.red() = (unsigned char) TIFFGetR(raster[idx]);
-	    v.green() = (unsigned char) TIFFGetG(raster[idx]);
-	    v.blue() = (unsigned char) TIFFGetB(raster[idx]);
-	    ima(p) = v;
+	  typedef point2d (*fun_t)(int, int, int, int);
+	  fun_t funs[] = { 0, ij2rc_1, ij2rc_2, ij2rc_3, ij2rc_4,
+			      ij2rc_5, ij2rc_6, ij2rc_7, ij2rc_8 };
+	  fun_t fun = funs[orientation];
 
-	    ++j;
-	    if (!(j%ima.ncols()))
+	  int ni_1, nj_1;
+	  unsigned idx = 0;
+
+	  if (orientation <= 4)
 	    {
-	      --i;
-	      j = 0;
+	      ni_1 = ima.nrows() - 1;
+	      nj_1 = ima.ncols() - 1;
+	      for (int i = 0; i <= ni_1; ++i)
+		for (int j = 0; j <= nj_1; ++j)
+		  {
+		    value::rgb8 v;
+
+		    v.red() = (unsigned char) TIFFGetR(raster[idx]);
+		    v.green() = (unsigned char) TIFFGetG(raster[idx]);
+		    v.blue() = (unsigned char) TIFFGetB(raster[idx]);
+		    ima((*fun)(i, j, ni_1, nj_1)) = v;
+
+		    ++idx;
+		  }
 	    }
-	  }
+	  else
+	    {
+	      nj_1 = ima.nrows() - 1;
+	      ni_1 = ima.ncols() - 1;
+	      for (int j = 0; j <= nj_1; ++j)
+		for (int i = 0; i <= ni_1; ++i)
+		  {
+		    value::rgb8 v;
+
+		    v.red() = (unsigned char) TIFFGetR(raster[idx]);
+		    v.green() = (unsigned char) TIFFGetG(raster[idx]);
+		    v.blue() = (unsigned char) TIFFGetB(raster[idx]);
+		    ima((*fun)(i, j, ni_1, nj_1)) = v;
+
+		    ++idx;
+		  }
+	    }
 
 	  _TIFFfree(raster);
 	}
@@ -200,29 +235,33 @@ namespace mln
 	    abort();
 	  }
 
-
 	  uint32 npixels = ima.ncols() * ima.nrows();
 	  uint32 *raster = (uint32 *) _TIFFmalloc(npixels * sizeof (uint32));
 
-	  TIFFReadRGBAImage(file, ima.ncols(), ima.nrows(), raster, 0);
-
+	  if (!TIFFReadRGBAImage(file, ima.ncols(), ima.nrows(), raster, 0))
+	  {
+	    std::cout << "Error while reading the image file. Is it corrupted?"
+		      << std::endl;
+	    abort();
+	  }
 
 	  uint16 orientation;
 	  TIFFGetField(file, TIFFTAG_ORIENTATION, &orientation);
 
 	  typedef point2d (*fun_t)(int, int, int, int);
-	  fun_t funs[] = { 0, ij2rc_1, ij2rc_2, ij2rc_3, ij2rc_4, ij2rc_5, ij2rc_6, ij2rc_7, ij2rc_8 };
+	  fun_t funs[] = { 0, ij2rc_1, ij2rc_2, ij2rc_3, ij2rc_4,
+			      ij2rc_5, ij2rc_6, ij2rc_7, ij2rc_8 };
 	  fun_t fun = funs[orientation];
 
 	  int ni_1, nj_1;
 	  unsigned idx = 0;
 
- 	  if (orientation <= 4)
+	  if (orientation <= 4)
 	    {
 	      ni_1 = ima.nrows() - 1;
 	      nj_1 = ima.ncols() - 1;
-	      for (unsigned i = 0; i <= ni_1; ++i)
-		for (unsigned j = 0; j <= nj_1; ++j)
+	      for (int i = 0; i <= ni_1; ++i)
+		for (int j = 0; j <= nj_1; ++j)
 		  {
 		    ima((*fun)(i, j, ni_1, nj_1)) = (unsigned char) TIFFGetR(raster[idx++]);
 		  }
@@ -231,30 +270,12 @@ namespace mln
 	    {
 	      nj_1 = ima.nrows() - 1;
 	      ni_1 = ima.ncols() - 1;
-	      for (unsigned j = 0; j <= nj_1; ++j)
-		for (unsigned i = 0; i <= ni_1; ++i)
+	      for (int j = 0; j <= nj_1; ++j)
+		for (int i = 0; i <= ni_1; ++i)
 		  {
 		    ima((*fun)(i, j, ni_1, nj_1)) = (unsigned char) TIFFGetR(raster[idx++]);
 		  }
 	    }
-
-	  std::cout << std::endl;
-
-
-// 	  unsigned i = ima.nrows() - 1;
-// 	  unsigned j = 0;
-// 	  mln_piter(I) p(ima.domain());
-// 	  for_all(p)
-// 	  {
-// 	    unsigned idx = i * ima.ncols() + j;
-// 	    ima(p) = (unsigned char) TIFFGetR(raster[idx]);
-// 	    ++j;
-// 	    if (!(j%ima.ncols()))
-// 	    {
-// 	      --i;
-// 	      j = 0;
-// 	    }
-// 	  }
 
 	  _TIFFfree(raster);
 	}
@@ -301,9 +322,11 @@ namespace mln
 
       template <typename I>
       inline
-      void load(Image<I>& ima, const std::string& filename)
+      void load(Image<I>& ima_, const std::string& filename)
       {
 	trace::entering("mln::io::tiff::load");
+
+	I& ima = exact(ima_);
 
 	TIFF *file = TIFFOpen(filename.c_str(), "r");
 	if (file == 0)
@@ -314,10 +337,10 @@ namespace mln
 	  abort();
 	}
 
-	internal::load_header(exact(ima), file);
-	internal::load_data_dispatch(exact(ima), file);
+	ima = internal::load_header<I>(file);
+	internal::load_data_dispatch(ima, file);
 
-	mln_postcondition(exact(ima).is_valid());
+	mln_postcondition(ima.is_valid());
 
 	(void) TIFFClose(file);
 	trace::exiting("mln::io::tiff::load");

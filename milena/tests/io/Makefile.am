@@ -10,4 +10,5 @@ SUBDIRS =					\
   pfm						\
   pgm						\
   pnm						\
-  ppm
+  ppm 						\
+  tiff

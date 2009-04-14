@@ -1,5 +1,31 @@
 2009-04-08 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Small fixes.
+
+	* Makefile.am,
+	* tests/img/test_bw.tif,
+	* tests/img/test_gl.tif,
+	* tests/img/test_rgb8.tif: add new test images.
+
+	* headers.mk: update list of distributed files.
+
+	* mln/value/rgb.hh,
+	* mln/convert/from_to.hxx: add from_to overload from rgb8 to bool.
+
+	* mln/io/magick/load.hh: update doc.
+
+	* mln/io/tiff/load.hh: Fix loading of rgb files.
+
+	* tests/data.hh.in: add a new macro for test images directory.
+
+	* tests/io/Makefile.am,
+	* tests/io/tiff/Makefile.am,
+	* tests/io/tiff/load.cc: new test for io::tiff::load.
+
+	* tests/unit_test/unit-tests.mk: update unit test list.
+
+2009-04-08 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Remove an invalid conversion operator from a morpher to a concrete
 	image.
 
