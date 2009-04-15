@@ -108,11 +108,11 @@ int main()
   typedef fun::i2v::array<int> edge_values_t;
   edge_values_t edge_values(10);
 
-  static const int values[] = { 0, 10, 5, 2, 4, 6, 0, 3, 5, 2 };
+  static const unsigned values[] = { 0, 10, 5, 2, 4, 6, 0, 3, 5, 2 };
   for (unsigned i = 0; i < edge_values.size(); ++i)
     edge_values(i) = values[i];
 
-  typedef vertex_image< P, int, util::line_graph<util::graph> > ima_t;
+  typedef vertex_image< P, unsigned, util::line_graph<util::graph> > ima_t;
   ima_t ima(lg, sites, edge_values);
 
 

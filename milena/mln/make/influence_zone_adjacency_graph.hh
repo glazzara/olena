@@ -26,10 +26,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_GRAPH_HH
-# define MLN_MAKE_GRAPH_HH
+#ifndef MLN_MAKE_INFLUENCE_ZONE_ADJACENCY_GRAPH_HH
+# define MLN_MAKE_INFLUENCE_ZONE_ADJACENCY_GRAPH_HH
 
-/// \file mln/make/graph.hh
+/// \file mln/make/influence_zone_adjacency_graph.hh
 ///
 /// Create a graph from an influence zone image.
 ///
@@ -59,8 +59,9 @@ namespace mln
     /// \return util::graph Graph based on the adjacency of the influence zones.
     template <typename I, typename N>
     util::graph
-    graph(const Image<I>& iz_, const Neighborhood<N>& nbh,
-	  mln_value(I) nlabels);
+    influence_zone_adjacency_graph(const Image<I>& iz_,
+				   const Neighborhood<N>& nbh,
+				   mln_value(I) nlabels);
 
 
 
@@ -72,8 +73,9 @@ namespace mln
 
       template <typename I, typename N>
       void
-      graph_tests(const Image<I>& iz, const Neighborhood<N>& nbh,
-		  mln_value(I))
+      influence_zone_adjacency_graph_tests(const Image<I>& iz,
+					   const Neighborhood<N>& nbh,
+					   mln_value(I))
       {
 	mln_precondition(exact(iz).is_valid());
 	mln_precondition(exact(nbh).is_valid());
@@ -92,12 +94,13 @@ namespace mln
 
 	template <typename I, typename N>
 	util::graph
-	graph(const Image<I>& iz_, const Neighborhood<N>& nbh_,
-	      mln_value(I) nlabels)
+	influence_zone_adjacency_graph(const Image<I>& iz_,
+				       const Neighborhood<N>& nbh_,
+				       mln_value(I) nlabels)
 	{
-	  trace::entering("make::impl::generic::graph");
+	  trace::entering("make::impl::generic::influence_zone_adjacency_graph");
 
-	  internal::graph_tests(iz_, nbh_, nlabels);
+	  internal::influence_zone_adjacency_graph_tests(iz_, nbh_, nlabels);
 	  const I& iz = exact(iz_);
 	  const N& nbh = exact(nbh_);
 
@@ -136,7 +139,7 @@ namespace mln
 	      if (adj(point2d(i,j)))
 		g.add_edge(i, j);
 
-	  trace::exiting("make::impl::generic::graph");
+	  trace::exiting("make::impl::generic::influence_zone_adjacency_graph");
 	  return g;
 	}
 
@@ -151,10 +154,11 @@ namespace mln
 
       template <typename I, typename N>
       util::graph
-      graph_dispatch(const Image<I>& iz, const Neighborhood<N>& nbh,
-		     mln_value(I) nlabels)
+      influence_zone_adjacency_graph_dispatch(const Image<I>& iz,
+					      const Neighborhood<N>& nbh,
+					      mln_value(I) nlabels)
       {
-	return make::impl::generic::graph(iz, nbh, nlabels);
+	return make::impl::generic::influence_zone_adjacency_graph(iz, nbh, nlabels);
       }
 
     } // end of namespace mln::make::internal
@@ -166,16 +170,17 @@ namespace mln
     template <typename I, typename N>
     inline
     util::graph
-    graph(const Image<I>& iz, const Neighborhood<N>& nbh,
-	  mln_value(I) nlabels)
+    influence_zone_adjacency_graph(const Image<I>& iz,
+				   const Neighborhood<N>& nbh,
+				   mln_value(I) nlabels)
     {
-      trace::entering("make::graph");
+      trace::entering("make::influence_zone_adjacency_graph");
 
-      internal::graph_tests(iz, nbh, nlabels);
+      internal::influence_zone_adjacency_graph_tests(iz, nbh, nlabels);
 
-      util::graph g = internal::graph_dispatch(iz, nbh, nlabels);
+      util::graph g = internal::influence_zone_adjacency_graph_dispatch(iz, nbh, nlabels);
 
-      trace::exiting("make::graph");
+      trace::exiting("make::influence_zone_adjacency_graph");
       return g;
     }
 
@@ -188,4 +193,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_GRAPH_HH
+#endif // ! MLN_MAKE_INFLUENCE_ZONE_ADJACENCY_GRAPH_HH

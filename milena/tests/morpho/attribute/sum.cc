@@ -49,5 +49,5 @@ int main()
   s.take(px);
   s.take(px);
   s.take(px);
-  mln_assertion(s == 51);
+  mln_assertion(s == 51u);
 }

@@ -6,7 +6,7 @@ check_PROGRAMS =				\
   dual_neighb					\
   dummy_p_edges 				\
   dummy_p_vertices 				\
-  graph 					\
+  influence_zone_adjacency_graph		\
   h_mat 					\
   image2d					\
   image3d					\
@@ -18,10 +18,11 @@ check_PROGRAMS =				\
   w_window					\
   w_window_directional
 
+dual_neighb_SOURCES = dual_neighb.c
 dual_neighb_SOURCES = dual_neighb.cc
 dummy_p_edges_SOURCES = dummy_p_edges.cc
 dummy_p_vertices_SOURCES = dummy_p_vertices.cc
-graph_SOURCES = graph.cc
+influence_zone_adjacency_graph_SOURCES = influence_zone_adjacency_graph.cc
 h_mat_SOURCES = h_mat.cc
 image2d_SOURCES = image2d.cc
 image3d_SOURCES = image3d.cc

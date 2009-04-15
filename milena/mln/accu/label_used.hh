@@ -36,6 +36,7 @@
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/math/max.hh>
+# include <mln/fun/i2v/array.hh>
 
 
 namespace mln

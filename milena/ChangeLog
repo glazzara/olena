@@ -1,5 +1,28 @@
 2009-04-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Small fixes.
+
+	* mln/accu/label_used.hh: add missing includes.
+
+	* mln/canvas/browsing/depth_first_search.hh,
+	* mln/io/pgm/save.hh: add preconditions.
+
+	* mln/make/influence_zone_adjacency_graph.hh: rename the routine in
+	order to have the same name as the file name.
+	
+	* mln/make/rag_and_labeled_wsl.hh: Add more doc.
+	
+	* mln/value/lut_vec.hh: add a constructor overload for util::array
+	which is now considered as a function.
+
+	* tests/make/Makefile.am: update test name entry for
+	influence_zone_adjacency_graph.
+
+	* tests/morpho/attribute/sum.cc,
+	* tests/morpho/line_graph_image_wst.cc: avoid warnings.
+
+2009-04-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add a routine to generate formatted debug filenames.
 
 	* mln/debug/filename.hh: new routine.

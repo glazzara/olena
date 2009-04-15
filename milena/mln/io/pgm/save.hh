@@ -82,6 +82,9 @@ namespace mln
 	// FIXME: Is it exhaustive?
 	mlc_is_not_a(mln_value(I), value::Vectorial)::check();
 	mlc_converts_to(mln_value(I),unsigned)::check();
+	/// Make sure this is a low quantification value type
+	/// (mln_card returns 0 if it is not)
+	metal::bool_<mln_card(mln_value(I)) != 0>::check();
 
 	trace::entering("mln::io::pgm::save");
 	io::pnm::save(PGM, exact(ima), filename);

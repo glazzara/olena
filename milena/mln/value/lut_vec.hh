@@ -51,6 +51,9 @@ namespace mln
       template <typename T> class array;
     } // end of namespace mln::fun::i2v
   } // end of namespace mln::fun
+  namespace util{
+    template <typename T> class array;
+  } // end of namespace mln::util
 
   namespace value
   {
@@ -93,13 +96,20 @@ namespace mln
       /// Give the index of value \p v in this set.
       unsigned index_of(const value& v) const;
 
-      /// Ctor. FIXME!
+      /// Constructors
+      /// @{
+      /// Constructor from a Site_set and any Function_v2v.
       template <typename F>
       lut_vec(const S& vset, const Function_v2v<F>& f);
 
-      /// Ctor. FIXME!
+      /// Constructor from a Site_set and any fun::i2v::array.
       template <typename V>
       lut_vec(const S& vset, const Function_v2v< fun::i2v::array<V> >& f);
+
+      /// Constructor from a Site_set and any util::array.
+      template <typename V>
+      lut_vec(const S& vset, const Function_v2v< util::array<V> >& f);
+      /// @}
 
     protected:
 
@@ -157,6 +167,18 @@ namespace mln
       n_ = f_.size();
       vec_ = f_.std_vector();
     }
+
+    template <typename S, typename T>
+    template <typename V>
+    inline
+    lut_vec<S,T>::lut_vec(const S& vset, const Function_v2v< util::array<V> >& f)
+      : vset_(vset)
+    {
+      const util::array<V>& f_ = exact(f);
+      n_ = f_.size();
+      vec_ = f_.std_vector();
+    }
+
 
     template <typename S, typename T>
     inline

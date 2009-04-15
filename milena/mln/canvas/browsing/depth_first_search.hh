@@ -101,6 +101,7 @@ namespace mln
 	trace::entering("canvas::browsing::depth_first_search");
 
 	const G& g = exact(g_);
+	mln_precondition(g.is_valid());
 
 	f.init(g); // <--- init
 
