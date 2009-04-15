@@ -1,5 +1,11 @@
 2009-04-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Handle bool specialization correctly with util::array.
+
+	* mln/util/array.hh: update return type of operator() and operator[].
+
+2009-04-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add make::vertex_image
 
 	* mln/make/vertex_image: new routine.

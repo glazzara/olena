@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,6 +38,7 @@
 
 # include <vector>
 # include <iostream>
+# include <algorithm>
 
 # include <mln/core/concept/function.hh>
 # include <mln/core/concept/proxy.hh>
@@ -165,7 +167,7 @@ namespace mln
 
       /// \brief Return the \p i-th element of the array.
       /// \pre i < nelements()
-      T& operator()(unsigned i);
+      mutable_result operator()(unsigned i);
 
       /// \brief Return the \p i-th element of the array.
       /// \pre i < nelements()
@@ -173,13 +175,15 @@ namespace mln
 
       /// \brief Return the \p i-th element of the array.
       /// \pre i < nelements()
-      T& operator[](unsigned i);
+      mutable_result operator[](unsigned i);
 
 
       /// Empty the array.  All elements contained in the array are
       /// destroyed.  \post is_empty() == true
       void clear();
 
+      /// Fill the whole array with value \p value.
+      void fill(const T& value);
 
       /// Return the corresponding std::vector of elements.
       const std::vector<T>& std_vector() const;
@@ -327,6 +331,8 @@ namespace mln
     struct subject_impl<util::array<T>&, E>
       : subject_impl<const util::array<T>&, E>
     {
+      typedef typename util::array<T>::mutable_result mutable_result;
+
       void reserve(unsigned n);
       void resize(unsigned n);
       void resize(unsigned n, const T& value);
@@ -336,10 +342,12 @@ namespace mln
       template <typename U>
       util::array<T>& append(const util::array<U>& other);
 
-      T& operator()(unsigned i);
-      T& operator[](unsigned i);
+      mutable_result operator()(unsigned i);
+      mutable_result operator[](unsigned i);
 
       void clear();
+
+      void fill(const T& value);
 
       std::vector<T>& hook_std_vector_();
 
@@ -463,6 +471,14 @@ namespace mln
 
     template <typename T>
     inline
+    void
+    array<T>::fill(const T& value)
+    {
+      std::fill(v_.begin(), v_.end(), value);
+    }
+
+    template <typename T>
+    inline
     unsigned
     array<T>::size() const
     {
@@ -487,7 +503,7 @@ namespace mln
 
     template <typename T>
     inline
-    T&
+    typename array<T>::mutable_result
     array<T>::operator()(unsigned i)
     {
       return (*this)(i);
@@ -504,7 +520,7 @@ namespace mln
 
     template <typename T>
     inline
-    T&
+    typename array<T>::mutable_result
     array<T>::operator[](unsigned i)
     {
       mln_precondition(i < nelements());
@@ -806,7 +822,7 @@ namespace mln
 
     template <typename T, typename E>
     inline
-    T&
+    typename util::array<T>::mutable_result
     subject_impl<util::array<T>&, E>::operator()(unsigned i)
     {
       return exact_().get_subject()(i);
@@ -814,7 +830,7 @@ namespace mln
 
     template <typename T, typename E>
     inline
-    T&
+    typename util::array<T>::mutable_result
     subject_impl<util::array<T>&, E>::operator[](unsigned i)
     {
       return exact_().get_subject()[i];
@@ -826,6 +842,14 @@ namespace mln
     subject_impl<util::array<T>&, E>::clear()
     {
       exact_().get_subject().clear();
+    }
+
+    template <typename T, typename E>
+    inline
+    void
+    subject_impl<util::array<T>&, E>::fill(const T& value)
+    {
+      exact_().get_subject().fill(value);
     }
 
     template <typename T, typename E>
