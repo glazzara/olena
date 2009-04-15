@@ -25,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/make/graph.cc
+/// \file tests/make/influence_zone_adjacency_graph.cc
 ///
-/// Tests on mln::make::graph.
+/// Tests on mln::make::influence_zone_adjacency_graph.
 
 #include <mln/make/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/util/graph.hh>
-#include <mln/make/graph.hh>
+#include <mln/make/influence_zone_adjacency_graph.hh>
 #include <mln/value/label_8.hh>
 
 
@@ -46,7 +46,7 @@ int main()
 
   image2d<value::label_8> ima = make::image2d(vals);
 
-  util::graph g = make::graph(ima, c4(), 4u);
+  util::graph g = make::influence_zone_adjacency_graph(ima, c4(), 4u);
 
   mln_assertion(g.e_nmax() == 7u);
   mln_assertion(g.v_nmax() == 5u);

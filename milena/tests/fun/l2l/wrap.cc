@@ -49,10 +49,10 @@ int main()
     l510 = 510,
     l511 = 511;
 
-  mln_assertion( f(l0) == 0 );
-  mln_assertion( f(l1) == 1 );
-  mln_assertion( f(l255) == 255 );
-  mln_assertion( f(l256) == 1 );
-  mln_assertion( f(l510) == 255 );
-  mln_assertion( f(l511) == 1 );
+  mln_assertion(f(l0)	== 0u);
+  mln_assertion(f(l1)	== 1u);
+  mln_assertion(f(l255) == 255u);
+  mln_assertion(f(l256) == 1u);
+  mln_assertion(f(l510) == 255u);
+  mln_assertion(f(l511) == 1u);
 }

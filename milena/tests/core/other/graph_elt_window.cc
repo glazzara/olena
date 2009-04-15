@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -101,7 +102,7 @@ int main()
   mln_psite_(pg_t) p(pg, 1);
 
   // ``Sliding'' window of a psite of PG.
-  typedef graph_elt_window<G, F> win_t;
+  typedef graph_elt_window<G, pg_t> win_t;
   win_t win;
 
   unsigned i = 0;

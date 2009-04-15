@@ -11,8 +11,6 @@ check_PROGRAMS =				\
   dpoints_pixter				\
   graph_elt_neighborhood			\
   graph_elt_window				\
-  line_graph_elt_neighborhood			\
-  line_graph_elt_window				\
   neighb					\
   pixel						\
   pixter1d					\
@@ -32,8 +30,6 @@ category_SOURCES = category.cc
 dpoints_pixter_SOURCES = dpoints_pixter.cc
 graph_elt_neighborhood_SOURCES = graph_elt_neighborhood.cc
 graph_elt_window_SOURCES = graph_elt_window.cc
-line_graph_elt_neighborhood_SOURCES = line_graph_elt_neighborhood.cc
-line_graph_elt_window_SOURCES = line_graph_elt_window.cc
 neighb_SOURCES = neighb.cc
 pixel_SOURCES = pixel.cc
 pixter1d_SOURCES = pixter1d.cc

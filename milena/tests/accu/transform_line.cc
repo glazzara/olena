@@ -45,7 +45,7 @@ int main()
   for (unsigned dir = 0; dir < 2; ++dir)
   {
     image2d<unsigned> out = accu::transform_line(accu::meta::count(), ima, len, dir);
-    mln_assertion(out == (pw::cst(3) | ima.domain()));
+    mln_assertion(out == (pw::cst(3u) | ima.domain()));
   }
 
 }

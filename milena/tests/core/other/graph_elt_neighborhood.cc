@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -101,7 +102,7 @@ int main()
   mln_psite_(pv_t) p(pg, 1);
 
   // ``Sliding'' neighborhood of a psite of PG.
-  typedef graph_elt_neighborhood<G, F> nbh_t;
+  typedef graph_elt_neighborhood<G, pv_t> nbh_t;
   nbh_t nbh;
 
   unsigned i = 0;
