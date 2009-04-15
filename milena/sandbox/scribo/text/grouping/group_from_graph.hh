@@ -128,7 +128,7 @@ namespace scribo
 	  unsigned ncomp;
 
 	  /// Map a verted id to its component id.
-	  fun::l2l::relabel<V> vertextocomp;
+	  fun::i2v::array<V> vertextocomp;
 	};
 
       } // end of namespace scribo::text::grouping::internal

@@ -1,3 +1,15 @@
+2009-04-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Replace the use of l2l::relabel with i2v::array in Scribo.
+
+	* scribo/make/text.hh,
+	* scribo/text/grouping/group_from_graph.hh,
+	* scribo/text/grouping/group_from_single_link.hh: use
+	i2v::array.
+
+	* scribo/text/grouping/group_from_double_link.hh: remove
+	useless include.
+
 2009-04-15  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Compute histograms on 3d and generic images. Still not fully working.

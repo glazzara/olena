@@ -35,9 +35,11 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/box.hh>
+# include <mln/fun/i2v/array.hh>
 # include <mln/labeling/blobs.hh>
 # include <mln/labeling/compute.hh>
 # include <mln/util/array.hh>
+
 # include <scribo/util/text.hh>
 
 
@@ -131,7 +133,7 @@ namespace scribo
 //      mln_precondition(text.is_valid());
 //
 //      mln_value(L) new_nbboxes;
-//      mln::fun::l2l::relabel<mln_value(L)> fl2l
+//      mln::fun::i2v::array<mln_value(L)> fl2l
 //	= mln::make::relabelfun(f, text.nbboxes(), new_nbboxes);
 //      lbl_ = labeling::relabel(text.label_image(), text.nbboxes(), l2l);
 //      text.nbboxes() = new_nbboxes;

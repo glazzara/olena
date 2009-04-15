@@ -41,8 +41,6 @@
 
 # include <mln/util/array.hh>
 
-# include <mln/fun/l2l/relabel.hh>
-
 # include <scribo/core/macros.hh>
 
 # include <scribo/util/text.hh>

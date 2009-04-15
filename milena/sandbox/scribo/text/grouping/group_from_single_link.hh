@@ -36,6 +36,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/box.hh>
+# include <mln/fun/i2v/array.hh>
 
 # include <mln/accu/bbox.hh>
 
@@ -99,7 +100,7 @@ namespace scribo
 	    result.append(tboxes[i]);
 
 	I lbl = labeling::relabel(text.label_image(), text.nbboxes(),
-				  convert::to<fun::l2l::relabel<mln_value(I)> >(parent_array));
+				  convert::to<fun::i2v::array<mln_value(I)> >(parent_array));
 	mln_value(I) new_nbboxes = result.nelements() - 1;
 
 	trace::exiting("scribo::text::grouping::group_from_single_link");
