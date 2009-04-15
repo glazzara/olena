@@ -1,5 +1,13 @@
 2009-04-15  Warren Seine  <soow@lrde.epita.fr>
 
+	inim: Initial commit for "boxes".
+	* .: New.
+	* Makefile: New. Stolen from Edwin.
+	* boxes.cc: New. Stolen from Theo.
+	* configure: New. Stolen from Edwin.
+
+2009-04-15  Warren Seine  <soow@lrde.epita.fr>
+
 	inim: Add "2010" directory.
         Please add your INIM projects in subdirectories of 2010.
 	* inim/2010: New.
