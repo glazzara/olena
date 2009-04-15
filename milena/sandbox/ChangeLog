@@ -1,3 +1,13 @@
+2009-04-15  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Compute histograms on 3d and generic images. Still not fully working.
+	* folio/mln/histo/compute_histo.hh: New algorithm that
+          computes an histogram on a generic image
+	* folio/mln/histo/compute_histo_3d.hh: New algorithm that
+          computes an histogram on a 3d image.
+	* folio/test/histo/compute_histo_3d.cc: New test file for the
+          compute_histo_3d.hh algorithm.
+
 2009-04-14  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add multivalued image support for components detection.
