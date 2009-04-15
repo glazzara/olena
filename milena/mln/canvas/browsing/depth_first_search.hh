@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,23 +39,26 @@
 **    - template <typename G> void init(const Graph<G>& g)
 **	  Will be called at the beginning.
 **
-**    - void next()
-**	  Will be called after all vertices from a component have been treated.
-**
-**    - void update_treated(unsigned id)
-**	  will be called for the first vertex encountered for each component.
-**
-**    - void update_queued(unsigned id)
-**	  Will be called for every vertex encountered in each component, except
-**	  the first one.
-**
 **    - bool to_be_treated(unsigned id)
 **	  Return whether this vertex has already been marked or if it may be a
 **	  a component representative.
 **
+**    - void new_component_from_vertex(unsigned id)
+**	  will be called for the first vertex encountered for each component.
+**
+**    - void process_vertex(unsigned id)
+**	  Will be called for each vertex queued.
+**
 **    - bool to_be_queued(unsigned id)
 **	  Return whether this vertex has already been marked or if it can be added
 **	  to the current component.
+**
+**    - void added_to_queue(unsigned id)
+**	  Will be called for every vertex encountered in each component, except
+**	  the first one.
+**
+**    - void next_component()
+**	  Will be called after all vertices from a component have been treated.
 **
 **    - void final()
 **	  Will be called at the end;
@@ -99,7 +102,7 @@ namespace mln
 
 	const G& g = exact(g_);
 
-	f.init(g);
+	f.init(g); // <--- init
 
 	mln_vertex_iter(G) v(g);
 	for_all(v)
@@ -111,7 +114,7 @@ namespace mln
 	    while (!queue.empty())
 	    {
 	      util::vertex<G> current_v = g.vertex(queue.front());
-	      f.process_vertex(current_v);
+	      f.process_vertex(current_v); // <--- process_vertex
 	      queue.pop();
 	      for (unsigned nv = 0; nv < current_v.nmax_nbh_vertices(); ++nv)
 		if (f.to_be_queued(current_v.ith_nbh_vertex(nv))) // <--- to_be_queued

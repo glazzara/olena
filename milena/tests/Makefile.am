@@ -19,6 +19,7 @@ SUBDIRS =					\
   extension					\
   fun						\
   geom						\
+  graph 					\
   histo						\
   io						\
   labeling					\

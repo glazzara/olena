@@ -1,5 +1,22 @@
 2009-04-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add graph::compute and few related functors.
+
+	* mln/canvas/browsing/depth_first_search.hh: update and add more doc.
+
+	* mln/graph/attribute/card.hh,
+	* mln/graph/attribute/representative.hh,
+	* mln/graph/compute.hh: enable the possibility of computing data on a
+	graph.
+
+	* tests/Makefile.am,
+	* tests/graph/Makefile.am,
+	* tests/graph/attribute/Makefile.am,
+	* tests/graph/attribute/card.cc,
+	* tests/graph/attribute/representative.cc: add new tests.
+
+2009-04-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Handle bool specialization correctly with util::array.
 
 	* mln/util/array.hh: update return type of operator() and operator[].
