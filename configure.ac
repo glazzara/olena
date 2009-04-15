@@ -218,6 +218,8 @@ AC_CONFIG_FILES([
       milena/tests/fun/vv2v/Makefile
       milena/tests/fun/x2x/Makefile
     milena/tests/geom/Makefile
+    milena/tests/graph/Makefile
+      milena/tests/graph/attribute/Makefile
     milena/tests/histo/Makefile
     milena/tests/io/Makefile
       milena/tests/io/dump/Makefile
