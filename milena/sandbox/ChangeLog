@@ -1,3 +1,9 @@
+2009-04-15  Warren Seine  <soow@lrde.epita.fr>
+
+	inim: Add "2010" directory.
+        Please add your INIM projects in subdirectories of 2010.
+	* inim/2010: New.
+
 2009-04-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Replace the use of l2l::relabel with i2v::array in Scribo.
