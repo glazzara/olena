@@ -15,9 +15,11 @@
 
 #include <mln/arith/revert.hh>
 #include <mln/core/alias/neighb3d.hh>
-#include <mln/morpho/closing/volume.hh>
 #include <mln/value/label_8.hh>
+
+#include <mln/morpho/closing/volume.hh>
 #include <mln/morpho/watershed/flooding.hh>
+#include <mln/morpho/elementary/dilation.hh>
 
 #include "../../mln/histo/compute_histo_rgb.hh"
 #include "../../mln/histo/classify_with_histo_rgb.hh"
@@ -42,10 +44,10 @@ int main(int argc, char** argv)
   using namespace mln;
 
   // check arguments
-  if (argc < 3)
+  if (argc != 4)
   {
     std::cerr << "Usage:" << std::endl
-	      << "  ./a.out ../../../../lena.ppm 51" << std::endl
+	      << "  ./a.out ../../../../lena.ppm 51 out.pgm" << std::endl
 	      << std::endl
 	      << "BTW, the number is the closure's lambda." << std::endl;
     exit(1);
@@ -79,11 +81,11 @@ int main(int argc, char** argv)
   image3d<value::label_8> labels = morpho::watershed::flooding(closed, c6(), nbasin);
   std::cout << "found " << nbasin << " labels" << std::endl;
 
+  labels = morpho::elementary::dilation(labels, c18());
+
   std::cout << "  => computing output labelized image..." << std::endl;
   image2d<value::label_8> out = histo::classify_with_histo_rgb(ima, labels);
 
-  std::cout << "  => saving out.ppm..." << std::endl;
-  io::pgm::save(out, "out.ppm");
-
-  return 0;
+  std::cout << "  => saving " << argv[3] << "..." << std::endl;
+  io::pgm::save(out, argv[3]);
 }

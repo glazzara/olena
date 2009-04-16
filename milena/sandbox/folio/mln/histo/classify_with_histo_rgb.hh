@@ -26,7 +26,6 @@ namespace mln
       {
 	// get 3d point in regions image.
 	point3d p3 = point3d(ref(p).red(), ref(p).green(), ref(p).blue());
-
 	out(p) = regions(p3); // copy the label in out's pixel.
       }
 

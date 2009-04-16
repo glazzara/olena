@@ -1,3 +1,16 @@
+2009-04-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	New exe source files dedicated to color images.
+
+	* theo/exec/color_labeling_mean.cc: New.
+	* theo/exec/color_internal_gradient.cc: New.
+	* theo/color/filter_rgb_pixels.cc: Rename as...
+	* theo/color/filter_meandist_rgb_pixels.cc: ...this.
+	* folio/test/histo/classify_with_histo_rgb.cc
+	(main): Use dilation to get rid of watershed line.
+	Add 3rd arg to set output file and fix usage.
+	* folio/mln/histo/classify_with_histo_rgb.hh: Remove blank line.
+
 2009-04-15  Warren Seine  <soow@lrde.epita.fr>
 
 	inim: Initial commit for "boxes".
