@@ -16,7 +16,7 @@ nbasins: nbasins_finder.cc
 	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o nbasins_finder
 	
 grad: grad.cc
-	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o grad
+	${CXX} -I../../../ ${CXXFLAGS} $^ -o grad
 	
 clo_vol: clo_vol.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o clo_vol
@@ -43,7 +43,16 @@ first_slice_dicom: first_slice_dicom.cc
 	${CXX} -I../../../ ${DICOM} ${MAGICK} ${CXXFLAGS} -lm $^ -o first_slice_dicom
 
 fun_labels: fun_labels.cc
-	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o fun_labels
+	${CXX} -I../../../ ${CXXFLAGS} $^ -o fun_labels
+
+mean_slices: mean_slices.cc
+	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o mean_slices
+
+crop: crop.cc
+	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o crop
+
+label2gif: label2gif.cc
+	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o label2gif
 
 clean:
 	rm -rf *.dump *.p?m *.plot *.log *.csv *.dSYM

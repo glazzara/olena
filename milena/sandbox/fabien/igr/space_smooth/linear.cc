@@ -48,9 +48,9 @@ int main(int argc, char* argv[])
   // Linear convolution //
   //			//
   ////////////////////////
-  float ws[] = {   0, 1/8.f,   0,
-		 1/8.f, 1/2.f, 1/8.f,
-		   0, 1/8.f,   0 };
+  float ws[] = {   0.f, 0.125,   0.f,
+		 0.125,	  0.5, 0.125,
+		   0.f, 0.125,   0.f };
 
   util::array<image2d<float> > ima_linear;
   for (unsigned i = 0; i < arr_ima.nelements(); ++i)
@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
     for (int i = 0; i < ima_linear.nelements(); ++i)
       ima_result(p).append(ima_linear[i](p));
 
-  io::plot::save(ima_result(point2d(160, 120)), "linear_tumeur.plot");
+  io::plot::save(ima_result(point2d(156, 114)), "linear_tumeur.plot");
   io::plot::save(ima_result(point2d(34, 94)), "linear_air.plot");
   io::plot::save(ima_result(point2d(122, 115)), "linear_poumon.plot");
 

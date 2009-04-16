@@ -44,3 +44,9 @@
 [X] Fast projected histogram
 [ ] Triple histogram
 [X] Create plot for each kind of point with each method
+[ ] Fix mean slices values
+[X] Compatibility Windows
+[X] Fix spatial smooth
+[ ] Crop volume 52
+[ ] Plot all labels (3, 4 labels for tumeur)
+[ ] Prepare data for IGR

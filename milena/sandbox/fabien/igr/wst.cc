@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
   using value::int_u12;
   using value::label_16;
   using value::label_32;
-  typedef label_32 L;
+  typedef label_16 L;
 
   if (argc != 3)
   {

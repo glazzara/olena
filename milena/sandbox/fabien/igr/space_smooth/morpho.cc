@@ -1,5 +1,5 @@
 #include <mln/core/image/image1d.hh>
-#include <mln/core/alias/neighb1d.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
 #include <mln/core/image/image_if.hh>
@@ -61,14 +61,11 @@ int main(int argc, char* argv[])
   //	    //
   ////////////
   util::array<image2d<int_u12> > ima_morpho;
-  mln_piter_(image2d<int_u12>) p(ima_morpho.domain());
-  for_all(p)
+  for (unsigned i = 0; i < arr_ima.nelements(); ++i)
   {
-    image1d<int_u12> tmp_ima;
-    convert::from_to(ima_arr(p), tmp_ima);
-    tmp_ima = morpho::closing::area(tmp_ima, c2(), 3);
-    tmp_ima = morpho::opening::area(tmp_ima, c2(), 3);
-    ima_morpho(p) = tmp_ima;
+    image2d<int_u12> tmp_ima = morpho::closing::area(arr_ima[i], c4(), 3);
+    tmp_ima = morpho::opening::area(tmp_ima, c4(), 3);
+    ima_morpho.append(tmp_ima);
   }
 
   /////////////
@@ -87,10 +84,15 @@ int main(int argc, char* argv[])
   mln_site_(image2d<bool>) pend(vmax);
   draw::line(ima_color, pbeg, pend, literal::red);
   io::magick::save(ima_color, "test.png");*/
+  image2d<util::array<float> > ima_result(input.nrows(), input.ncols());
+  mln_piter_(image2d<util::array<float> >) p(ima_morpho[0].domain());
+  for_all(p)
+    for (int i = 0; i < ima_morpho.nelements(); ++i)
+      ima_result(p).append(ima_morpho[i](p));
 
-  io::plot::save(ima_morpho(point2d(160, 120)), "morpho_tumeur.plot");
-  io::plot::save(ima_morpho(point2d(34, 94)), "morpho_air.plot");
-  io::plot::save(ima_morpho(point2d(122, 115)), "morpho_poumon.plot");
+  io::plot::save(ima_result(point2d(156, 114)), "morpho_tumeur.plot");
+  io::plot::save(ima_result(point2d(34, 94)), "morpho_air.plot");
+  io::plot::save(ima_result(point2d(122, 115)), "morpho_poumon.plot");
 
   return 0;
 }
