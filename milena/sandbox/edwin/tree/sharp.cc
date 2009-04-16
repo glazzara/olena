@@ -12,20 +12,15 @@
 /* Component trees */
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
-#include "run.hh"
+#include "components.hh"
 #include "propagate.hh"
-#include "accumulator/arg_max.hh"
 
 /* Attributes */
 #include <mln/morpho/attribute/sharpness.hh>
-#include <mln/morpho/attribute/card.hh>
-
 
 /* io */
-#include <mln/io/ppm/load.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/io/pbm/save.hh>
 
 /* data & pw */
 #include <mln/core/concept/function.hh>
@@ -99,7 +94,68 @@ namespace mln
     }
     return output;
   }
+
+  template <typename P2V>
+  struct height_wrapper_ : Function_p2v< height_wrapper_<P2V> >
+  {
+    typedef unsigned result;
+
+    height_wrapper_(const Function_p2v<P2V>& f) :
+      f_ (exact(f))
+    {
+      mlc_is_a(mln_result(P2V), Accumulator)::check();
+    }
+
+    template <typename P>
+    unsigned operator() (const P& p) const
+    {
+      return f_(p).height();
+    }
+
+  private:
+    const P2V& f_;
+  };
+
+  template <typename P2V>
+  inline
+  height_wrapper_<P2V>
+  height_wrapper(const Function_p2v<P2V>& f)
+  {
+    return height_wrapper_<P2V>(f);
+  }
+
+  template <typename P2V>
+  struct card_wrapper_ : Function_p2v< card_wrapper_<P2V> >
+  {
+    typedef unsigned result;
+
+    card_wrapper_(const Function_p2v<P2V>& f) :
+      f_ (exact(f))
+    {
+      mlc_is_a(mln_result(P2V), Accumulator)::check();
+    }
+
+    template <typename P>
+    unsigned operator() (const P& p) const
+    {
+      return f_(p).area();
+    }
+
+  private:
+    const P2V& f_;
+  };
+
+  template <typename P2V>
+  inline
+  card_wrapper_<P2V>
+  card_wrapper(const Function_p2v<P2V>& f)
+  {
+    return card_wrapper_<P2V>(f);
+  }
+
 }
+
+
 
 
 
@@ -112,6 +168,7 @@ int main(int argc, char* argv[])
   std::string arg;
   unsigned nb_components = 0;
   unsigned card = 0;
+  unsigned height = 0;
   double sharpness = 0;
 
   if (argc < 2)
@@ -130,46 +187,60 @@ int main(int argc, char* argv[])
 	card = atoi(argv[++i]);
       else if (arg == "--trace")
 	trace::quiet = false;
+      else if (arg == "-h")
+	height = atoi(argv[++i]);
       else
 	usage (argv);
     }
-
-
-  /* Image loadin' */
-  image2d<rgb8> input_;
-  io::ppm::load(input_, argv[1]);
-
-  typedef image2d<int_u8> I;
-  I input = dist_on_pixels(input_, c4());
+  /********************/
+  /* Load & Pre-treat */
+  /********************/
 
   if (mydebug)
-    io::pgm::save(input, "input.pgm");
+    dsp("Load & Pre-treat");
 
+  typedef image2d<int_u8> I;
+  I input;
+  io::pgm::load(input, argv[1]);
 
+  /***************************/
   /* Component tree creation */
+  /***************************/
+
+  if (mydebug)
+    dsp("Component tree creation");
+
   typedef p_array< mln_site_(I) > S;
   typedef morpho::tree::data<I,S> tree_t;
 
   S sorted_sites = level::sort_psites_decreasing(input);
   tree_t tree(input, sorted_sites, c4());
 
+
+  /******************************/
   /* Compute Attribute On Image */
+  /******************************/
+  if (mydebug)
+    dsp("Image sharp attribute");
 
   // TODO: l'attribut devrait favoriser les composantes plus larges
   // dans son calcul. Ainsi au lieu de faire un sharpness, on aurait
-  // un ratio sharpness / largeur de composante (reprendre l'idee du
+  // un ratio sharpness / hauteur de composante (reprendre l'idee du
   // log utilise pour INIM).
 
   typedef morpho::attribute::sharpness<I> sharp_t;
   typedef mln_ch_value_(I, double) A;
+  typedef mln_ch_value_(I, sharp_t) B;
 
-  if (mydebug)
-    dsp("Image sharp attribute");
+  B a_img;
+  A a = morpho::tree::compute_attribute_image(sharp_t (), tree, &a_img);
+  // Note: then we work on nodes (component representant so we don't
+  // need to propagate the representant value to the component sites.
 
-  A a = morpho::tree::compute_attribute_image(sharp_t (), tree);
-  morpho::tree::propagate_representant(tree, a);
 
-  /* We don't want little components */
+  /***********************************/
+  /* Components Filtering            */
+  /***********************************/
 
   // So we compute card attribute and we filter big components
   // FIXME: some attributes are compositions of attributes, here
@@ -179,27 +250,33 @@ int main(int argc, char* argv[])
 
   if (card)
     {
-      typedef morpho::attribute::card<I> card_t;
-      typedef mln_ch_value_(tree_t::function, mln_result_(card_t)) B;
-
       if (mydebug)
 	dsp("Image card attribute");
 
-      B b = morpho::tree::compute_attribute_image(card_t (), tree);
-      morpho::tree::propagate_representant(tree, b);
-
-      a = duplicate((fun::p2v::ternary(pw::value(b) > pw::cst(card), pw::value(a), pw::cst(0.0))) | a.domain());
+      a = duplicate((fun::p2v::ternary(card_wrapper(pw::value(a_img)) > pw::cst(card),
+				       pw::value(a),
+				       pw::cst(0.0))) | a.domain());
     }
 
-  if (mydebug)
-    io::pgm::save(level::stretch(int_u8(), a), "attr_image.pgm");
+  if (height)
+    {
+      if (mydebug)
+	dsp("Image height attribute");
+      a = duplicate((fun::p2v::ternary(height_wrapper(pw::value(a_img)) > pw::cst(height),
+				       pw::value(a),
+				       pw::cst(0.0))) | a.domain());
+    }
 
-  /* Run max accumulator */
+  /************************************************/
+  /* Retrieve Components (Maximising the criteria)  */
+  /************************************************/
+
   accumulator::arg_max<A> argmax(a);
   p_array< mln_psite_(A) > obj_array; // Array of object components.
 
   if (mydebug) {
-    std::stringstream s("Run max accumulator, look for ", std::stringstream::out|std::stringstream::in|std::stringstream::ate);
+    std::stringstream s("Run max accumulator, look for ", std::stringstream::out|std::stringstream::in|
+			std::stringstream::ate);
     if (nb_components)
       s << nb_components << " components.";
     else if (sharpness)
@@ -210,12 +287,12 @@ int main(int argc, char* argv[])
   }
 
   if (nb_components) {
-    obj_array = morpho::tree::run_ntimes(tree, a, argmax, nb_components);
+    obj_array = morpho::tree::get_components(tree, a, nb_components);
   } else if (sharpness > 0) {
     mln_VAR(predicate, pw::value(a) > pw::cst(sharpness));
-    obj_array = morpho::tree::run_while(tree, a, argmax, predicate);
+    obj_array = morpho::tree::get_components(tree, a, predicate);
   } else {
-    obj_array = morpho::tree::run_until_glutted_leaves(tree, a, argmax);
+    obj_array = morpho::tree::get_components(tree, a);
   }
 
 
@@ -227,15 +304,20 @@ int main(int argc, char* argv[])
       std::cout << c;
   }
 
-  /* Now Back Propagate to component */
+  /***********************************/
+  /* Use components in output image  */
+  /***********************************/
   if (mydebug) {
     dsp("Create mask and propagate");
   }
 
+  // Note: now we must propagate the representant value to the other components sites.
   A pre_output = morpho::tree::set_value_to_components(a, tree, obj_array, 0);
-  I output = level::stretch(int_u8(), pre_output);
+  I output = level::stretch(int_u8(), pre_output); //adapt to 0-255
   io::pgm::save(output, "components.pgm");
 
+
+  /* EXTRA */
 
 //   typedef mln_ch_value_(I, bool) M;
 //   M mask;
@@ -251,9 +333,6 @@ int main(int argc, char* argv[])
 
 
   // mask now contains all nodes related to objects
-
-
-  /* EXTRA */
 
  //  /* Labeling */
 //     typedef mln_ch_value_(I, value::label<8>) L;

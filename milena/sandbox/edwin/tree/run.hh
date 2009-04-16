@@ -120,7 +120,6 @@ namespace mln {
 
       namespace internal
       {
-
 	template <typename T, typename A, typename ACC, typename P2B>
 	p_array< mln_psite(A) >
 	run_while(const T& tree,

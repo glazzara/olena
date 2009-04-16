@@ -136,7 +136,7 @@ namespace mln {
 	pp.start(); // We don't set n to v.
 
 	if (nb_leaves)
-	  *nb_leaves = t.is_a_leaf(pp);
+	  *nb_leaves += t.is_a_leaf(pp);
 
 	for (pp.next(); pp.is_valid(); pp.next())
 	  {
