@@ -1,5 +1,60 @@
 2009-04-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Grouping ICDAR files into appropriate directories.
+
+	Dibco stuff.
+
+	* icdar/2009/dibco: New directory.
+	* icdar/2009/README: New.
+
+	* theo/icdar/dibco/main.cc: Remove, obsolete.
+	This method can be found in...
+	* scribo/binarization/simple.hh: ...this file.
+
+	* theo/icdar/dibco/wst-based.sh,
+	* lazzara/icdar/quasi.cc,
+	* lazzara/icdar/binarization.cc: Rename as...
+	* icdar/2009/dibco/wst-based.sh,
+	* icdar/2009/dibco/quasi.cc,
+	* icdar/2009/dibco/binarization.cc: ...these.
+
+	* icdar/2009/dibco/svg.1.binarization.cc: New.
+	* icdar/2009/dibco/svg.2.binarization.cc: New.
+	* icdar/2009/dibco/svg.3.binarization.cc: New.
+
+	Hsc stuff.
+
+	* icdar/2009/hsc/first_attempts: New directory.
+
+	* theo/icdar/hsc/fuzzy.sh,
+	* theo/icdar/hsc/reduce.sh,
+	* theo/icdar/hsc/exec/iz_lines.cc,
+	* theo/icdar/hsc/exec/relabel_lines.cc,
+	* theo/icdar/hsc/exec/show_lines_pbm.cc,
+	* theo/icdar/hsc/exec/show_lines.cc,
+	* theo/icdar/hsc/boxes.cc,
+	* theo/icdar/hsc/words.sh,
+	* theo/icdar/hsc/main.cc,
+	* theo/icdar/hsc/dist.sh: Rename as...
+
+	* icdar/2009/hsc/first_attempts/fuzzy.sh,
+	* icdar/2009/hsc/first_attempts/reduce.sh,
+	* icdar/2009/hsc/first_attempts/boxes.cc,
+	* icdar/2009/hsc/first_attempts/exec,
+	* icdar/2009/hsc/first_attempts/words.sh,
+	* icdar/2009/hsc/first_attempts/main.cc,
+	* icdar/2009/hsc/first_attempts/dist.sh: ...these.
+
+	Get rid of private stuff.
+
+	* theo/icdar/hsc,
+	* theo/icdar/hsc/exec,
+	* theo/icdar/dibco,
+	* theo/icdar,
+	* lazzara/icdar: Remove directories.
+
+2009-04-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	New exe source files dedicated to color images.
 
 	* theo/exec/color_labeling_mean.cc: New.
