@@ -1,3 +1,9 @@
+2009-04-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update src of 'color labeling mean'.
+
+	* theo/exec/color_labeling_mean.cc: Update.
+
 2009-04-17  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add labeling output and add doc.
