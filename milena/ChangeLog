@@ -1,3 +1,34 @@
+2009-04-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Update tutorial - Write "Getting started with Milena".
+
+	* doc/doxyfuns.sty: add new commands.
+
+	* doc/examples/Makefile.am
+	* doc/examples/examples.mk
+	* doc/examples/fill.cc
+	* doc/examples/tuto3/colorize.cc
+	* doc/examples/tuto3/fill_non_generic.cc.raw
+	* doc/examples/tuto3/first_routine.cc
+	* doc/examples/tuto3/println.cc
+	* doc/examples/tuto3/trace.cc: add new examples used in the doc.
+
+	* doc/figures/colorize-1.pgm
+	* doc/figures/colorize-2.ppm
+	* doc/figures/figures.mk
+	* doc/figures/fill-1.ppm
+	* doc/figures/fill-2.ppm
+	* doc/outputs/colorize.txt
+	* doc/outputs/first_routine.txt
+	* doc/outputs/outputs.mk
+	* doc/outputs/println.txt
+	* doc/outputs/trace.txt: add new reference files.
+
+	* doc/ref_guide/ref_guide.tex: fix URL and missing spaces.
+
+	* doc/tutorial/tutorial.tex: write chapter "Getting started with
+	Milena".
+
 2009-04-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Small fixes.

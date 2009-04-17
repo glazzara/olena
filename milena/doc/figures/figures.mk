@@ -27,6 +27,7 @@ figures/logical-not-3.pbm \
 figures/tuto4_genericity_and_algorithms-3.pbm \
 figures/tuto4_genericity_and_algorithms-1.ppm \
 figures/extend-4.ppm \
+figures/fill-2.ppm \
 figures/tuto4_genericity_and_algorithms-8.ppm \
 figures/labeling-compute-1.pbm \
 figures/tuto3_rw_image-3.ppm \
@@ -35,4 +36,5 @@ figures/tuto4_genericity_and_algorithms-8.pgm \
 figures/extend-2.ppm \
 figures/tuto4_genericity_and_algorithms-2.ppm \
 figures/fill-subdomain-1.pbm \
+figures/fill-1.ppm \
 figures/tuto3_rw_image-2.ppm

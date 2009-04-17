@@ -466,18 +466,18 @@ There are other ways to get to know what is the status of the project.
 
 \begin{itemize}
 \item Olena's trac\\
-      \href{https://trac.lrde.org/olena} \\
+      \href{https://trac.lrde.org/olena}{https://trac.lrde.org/olena} \\
       Here is the roadmap, the current open tickets/bugs/improvements which
       are taken in consideration. A source browser is also available.
 
 \item Olena's Buildfarm \\
-      \href{https://buildfarm.lrde.org/buildfarm/oln/} \\
+      \href{https://buildfarm.lrde.org/buildfarm/oln/}{https://buildfarm.lrde.org/buildfarm/oln/} \\
       The official buildfarm. Every night and after each commit, tests
       are compiled and run. The buildfarm can show you whether it is safe
       to update your svn copy of Milena or not\ldots
 
 \item Test failures
-      \href{http://www.lrde.epita.fr/dload/olena/test-failures-daily.html}
+      \href{http://www.lrde.epita.fr/dload/olena/test-failures-daily.html}{http://www.lrde.epita.fr/dload/olena/test-failures-daily.html} \\
       Through this page, you can see exactly which tests do not compile or pass.
       This page is updated every night.
 
@@ -703,12 +703,17 @@ Text and image outputs will be respectively stored in
 Few tools are provided with Milena. They can be considered as full program
 examples.
 
-Currently two tools are available:
+Currently two tools are available: \\
+
 \begin{tabular}{l l}
 area\_flooding.cc & FIXME:description \\
 \hline
 seed2tiling.cc & FIXME:description \\
 \end{tabular}
+
+%
+\bigskip
+%
 
 To build these tools, run:
 \begin{verbatim}
@@ -749,7 +754,319 @@ In the installed path prefix, Milena's files are located in:
 %====================================
 \doxychapter{tuto3}{Getting started with Milena}
 
-** intent
+\doxysection{getfamiliargen}{Getting familiar with genericity}
+
+One of Milena's main features is its genericity. In order to understand how to
+take benefit of it, let's see what genericity really means for us and how it is
+illustrated in the library.
+
+A \B{Generic algorithm} is written once, without duplicates, and works on
+different kind of input.
+
+Let's have a look to a small example. In any image processing library, we may be
+interested in a small routine to fill an image with data. A common
+implementation would look like this one:
+
+\doxyrawcode{tuto3/fill_non_generic}
+
+In this example, there are a lot of \B{implicit} assumptions about the input:
+\begin{itemize}
+  \item The input image has to be 2D;
+  \item Its definition domain has to be a rectangle starting at (0,0);
+  \item Data cannot be of a different type than \type{unsigned char};
+  \item Image data need to be stored as a 2D array in RAM.
+\end{itemize}
+So, what would happen if we would like to use it for 3D images, use rgb8 as
+value or even work on a region of interest?
+
+This implementation would require to be reimplemented and the user would have to
+deal with the various version of the fill routine. For the developer, it is error
+prone, redundant and hard to maintain. For the user, it is confusing and forces
+to always think about what he is manipulating.
+According to our definition, this algorithm is clearly \B{not} generic.
+
+This is not acceptable and that's why Milena is developped considering
+genericity and user/developer friendlyness.
+
+With Milena, the previous example would be written as follow:
+
+\doxycode{fill}
+
+In this version, the routine can take any kind of image types as arguments. So
+it is for the values: The expected type depends on the value used in the
+given image.
+The \code{for\_all} loop is also significantly generic to support any kind of
+images since the iterator guarantees it will pass through every sites.
+
+This code is more generic and remains really close to the common description of
+the generic algorithm.
+
+As a result, with this algorithm we can fill an image,...
+\doxycode[2]{fill}
+\doxyfigure[1]{fill}{3cm}
+
+... Or fill only a region of interest (a set of points).
+\doxycode[3]{fill}
+\doxyfigure[2]{fill}{3cm}
+
+
+
+\doxysection{firstgenalgo}{First generic algorithm}
+In this section, we will introduce several routines/tools which are useful while
+writing generic algorithms. It is more important to focus on these
+routines/tools than what this program actually does.
+
+
+Here is the full example:
+
+\doxycode[1]{first_routine}
+Let's see the different parts of the algorithm.
+
+
+\doxycode[2]{first_routine}
+The prototype is restrictive enough, readable and still generic.
+We use concepts to statically check that the generic type passed as
+parameter is what the routine expects. The ``exact'' image type is \type{I}. For
+instance an image of type \type{image2d} inherits from \type{Image<image2d>}. So
+an \type{image2d} is an \type{Image<I>}.
+Note that the return type of this function is defined by a macro.
+\code{mln\_concrete} is a macro hidding tricky mechanisms (traits) used in Milena.
+The important point to remember is that a generic function should not return
+\type{I} directly but \code{mln\_concrete(I)} instead.
+
+
+\doxycode[3]{first_routine}
+Like any Milena's routine, note that we use \code{trace}. This debugging tool
+will be detailled in section \ref{debughints}.
+
+
+\doxycode[4]{first_routine}
+Since the function take some arguments thanks their concept, these object cannot
+be used as such. Indeed, concepts are empty shells only used for dispatching and
+concept checking, that's the reason why they are parameterized with their exact
+type. The exact type let us know what is the real type of the object. To get an
+objet with the exact type, simply call \code{exact()}.
+Of course, it is always a good idea to add few preconditions to help during
+debug.
+
+
+\doxycode[5]{first_routine}
+In this portion of code, the image is labeled and the number of site per label
+is computed. This code does not depend on the image type at all. Again, a macro
+\code{mln\_ch\_value} (``mln change value'') helps us. \code{labeling::blobs} is a routine returning an
+image of the same kind as the input image but with a different value.
+\code{mln\_ch\_value} enables the possibility of doing that, whatever the image type
+\type{I} and whatever its value type, it returns the same image type with a
+different value type.
+
+
+\doxycode[6]{first_routine}
+The output image is declared here. Like any variable, it must be initialized at
+some point. To do so, \code{initialize()} is provided. It is a generic routine
+which can initialize the geometry any kind of image with another image of the
+same kind.
+After this call, \var{output} has a valid domain and is valid. It can be used in
+an algorithm, here \code{data::fill}, to have its values modified.
+Note that the value passed to \code{data::fill} is also generic. The library
+includes few generic common values from which any value type can convert to.
+
+
+\doxycode[7]{first_routine}
+In this part, every region from the labeled image, of which cardinality is lower
+than 10 sites, is set to \val{literal::zero} in \var{output}.
+Once again, a generic value is used in order to avoid a constraints on the image
+value type.
+
+
+\doxycode[8]{first_routine}
+Don't forget to close the trace before exiting the function. Then return the
+result.
+
+
+
+%FIXME: add an example to show how a routine behavior depends on its arguments.
+%       => cf. des images etendues ou non et un parcours de voisinage.
+
+
+\doxysection{compilhints}{Compilation}
+
+\doxysubsection{howtocompile}{Include path}
+
+If Milena has been installed in a custom directory, e.g. not /usr/include or
+/usr/local/include, the path to the library headers must be passed to the
+compiler.
+
+With g++ and MinGW, the option  is \B{-I<path>}.
+\begin{verbatim}
+$ g++ -Ipath/to/mln my_program.cc 
+\end{verbatim}
+
+For other compilers, please look at the documentation and search for ``include
+path''. 
+
+
+\doxysubsection{liblink}{Library linking}
+As it is usually expected when using a library, no library linking is needed for
+the library itself.
+Milena is a ``header only'' library and is compiled ``on demand'' with your
+program.
+
+If you use specific input/output you may need to link your program with the
+right graphic library. For more information, please refer to section
+\doxyref{inputoutput} in the Quick Reference Guide.
+
+
+\doxysubsection{compildndebug}{Disable Debug}
+By default, Olena enables a lot of internal pre and post conditions. Usually,
+this is a useful feature and it should be enabled. It can heavily slow down a
+program though and these tests can be disabled by compiling using -DNDEBUG:
+
+\begin{verbatim}
+$ g++ -DNDEBUG -Ipath/to/mln my_program.cc 
+\end{verbatim}
+
+\doxysubsection{compoptimflags}{Compiler optimization flags}
+
+In this section you will find remarks about the compiler optimization flags and
+their impact on the compilation and execution time.
+
+
+\doxysubsubsection{compoptimgcc}{GCC}
+
+\begin{itemize}
+  \item \B{-O0}, combined with -DNDEBUG, it leads to the fastest compilation
+  time. The execution is somewhat slow though since dispatch functions and one
+  line members are not inlined by the compiler. 
+  \item \B{-O1}, best compromise between compilation time and execution time.
+  \item \B{-O2}, \B{-O3}, combined with -DNDEBUG, it leads to the best execution
+  time. However these optimizations dramatically slow down the compilation and
+  requires much more memory at compile time.
+\end{itemize}
+
+\doxysubsubsection{compoptimother}{Other compilers}
+
+Currently, have not tested different optimization flags with other compilers. If
+you did, please report us your results.
+
+
+
+\doxysection{debughints}{Debug hints}
+
+\doxysubsection{gdbhints}{Using assertions and GDB}
+As said above, Milena already includes a lot of post and pre conditions.
+Thus, if you made a mistake in your code there is a high probability that it
+will be detected at run time. If an assertion fail, we advice you to compile
+with the following options:
+
+\begin{verbatim}
+$ g++ -ggdb -Ipath/to/mln my_program.cc 
+\end{verbatim}
+
+Note that you \B{MUST NOT} compile \var{-DNDEBUG} other the assertions will be
+deactivated.
+Once compiled, restart the program with GDB.
+
+\begin{verbatim}
+$ gdb ./my_program 
+\end{verbatim}
+
+In the GDB console, run it again.
+\begin{verbatim}
+(gdb) run <any parameter you may want to pass to the program>
+\end{verbatim}
+
+When an assertion fails, in the GDB console simply type:
+\begin{verbatim}
+(gdb) bt 
+\end{verbatim}
+
+The full backtrace will be printed out and you will be able to find from where
+the error come from. The filenames, the line numbers and the parameters values
+are printed out in the backtrace as you can see in the following example:
+
+\begin{verbatim}
+#0  0xffffe410 in __kernel_vsyscall ()
+#1  0xb7d00640 in raise () from /lib/i686/cmov/libc.so.6
+#2  0xb7d02018 in abort () from /lib/i686/cmov/libc.so.6
+#3  0xb7cf95be in __assert_fail () from /lib/i686/cmov/libc.so.6
+#4  0x0804e094 in mln::image2d<bool>::has (this=0xbff32f34, p=@0xbff32f3c)
+    at /lrde/stockholm/lazzara/svn/olena/git/oln/milena/mln/core/image/image2d.hh:442
+#5  0x0804e6d7 in mln::image2d<bool>::operator() (this=0xbff32f34, p=@0xbff32f3c)
+    at /lrde/stockholm/lazzara/svn/olena/git/oln/milena/mln/core/image/image2d.hh:460
+#6  0x080490b0 in main () at test.cc:18
+\end{verbatim}
+
+
+
+\doxysubsection{traces}{Traces}
+Sometimes, compiling for GDB without optimization flags and with debug
+assertions enabled could lead to execution time dramaticaly high. 
+If the function parameter values are not necessary for debbuging,
+a good alternative is the trace system provided in Milena.
+Each time a routine is called, a trace log is written.
+
+This trace allows to follow the stack trace at runtime. It also provides the
+time passed in each function call if the call last at least 10ms.
+
+In order to enable traces in a program, set the related global variable to
+true:
+\begin{verbatim}
+...
+trace::quiet = true;
+...
+\end{verbatim}
+
+Since it's a global variable, at anytime in the source code, the trace can be
+disabled.
+
+\doxycode[1]{trace}
+
+The previous code will produce the following trace:
+
+\begin{verbatim}
+labeling::blobs {
+  core::initialize {}
+  data::fill {
+    data::fill_with_value {
+      data::impl::fill_with_value_one_block {
+        data::memset_ {
+          data::impl::memset_ {}
+        } data::memset_
+      } data::impl::fill_with_value_one_block
+    } data::fill_with_value
+  } data::fill
+} labeling::blobs - 0.08s
+\end{verbatim}
+
+As you can see, \code{labeling::blobs} is located just after having set
+\var{trace::quiet} to \val{true} so its trace is part of the output.
+\code{geom::bbox}'s trace is not part of the output though since traces have
+been disabled just before it is called.
+
+
+\doxysubsection{debugroutines}{Debug routines}
+Milena also provides a lot of debug tools. Here is a small list of the tools:
+\begin{itemize}
+  \item mln::debug::println, print an image in the console.
+  \doxycode[1]{println}
+  \doxymoutput[1]{println}
+
+  \item mln::debug::println\_with\_border, print an image in the console withs
+  its border.
+  \doxycode[2]{println}
+  \doxymoutput[2]{println}
+
+  \item mln::debug::colorize, colorize a label image with random colors.
+  \doxycode[1]{colorize}
+
+  \begin{center}
+    \begin{tabular}{c c c}
+      \doxyfigure[1]{colorize}{3cm} & ~\huge{$\rightarrow$}~ &
+      \doxyfigure[2]{colorize}{3cm} \\
+    \end{tabular}
+  \end{center}
+\end{itemize}
+
 
 A very simple processing chain; the target is the end-user!
 
@@ -759,6 +1076,7 @@ this chain plus a sample tiny generic algorithm
 ** misc
 /!\ step by step...
 compilation time w.r.t compilation options (O1, DNDEBUG).
+
 
 
 

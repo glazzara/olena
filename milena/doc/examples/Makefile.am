@@ -17,6 +17,7 @@ noinst_PROGRAMS =		\
   fill-subdomain 		\
   fill-subdomain-shorter	\
   fill-subimage-cfun 		\
+  first_routine 		\
   forall-piter  		\
   fun-p2v-1 			\
   graph-data 			\
@@ -50,6 +51,13 @@ tuto2_first_image 		\
 tuto3_rw_image 			\
 tuto4_genericity_and_algorithms
 
+# Tuto3
+noinst_PROGRAMS +=	 	\
+colorize 			\
+println 			\
+trace 				 
+
+
 accu_right_instanciation_SOURCES = accu-right-instanciation.cc
 borderthickness_SOURCES = borderthickness.cc
 box2d_bbox_SOURCES = box2d-bbox.cc
@@ -64,6 +72,7 @@ fill_part_image_SOURCES = fill-part-image.cc
 fill_subdomain_SOURCES = fill-subdomain.cc
 fill_subdomain_shorter_SOURCES = fill-subdomain-shorter.cc
 fill_subimage_cfun_SOURCES = fill-subimage-cfun.cc
+first_routine_SOURCES = tuto3/first_routine.cc
 forall_piter_SOURCES = forall-piter.cc
 fun_p2v_1_SOURCES = fun-p2v-1.cc
 graph_data_SOURCES = graph-data.cc
@@ -94,6 +103,11 @@ win_create_2_SOURCES = win-create-2.cc
 tuto2_first_image_SOURCES = tuto2_first_image.cc
 tuto3_rw_image_SOURCES = tuto3_rw_image.cc
 tuto4_genericity_and_algorithms_SOURCES = tuto4_genericity_and_algorithms.cc
+
+# Tuto 3
+colorize_SOURCES = tuto3/colorize.cc
+println_SOURCES = tuto3/println.cc
+trace_SOURCES = tuto3/trace.cc
 
 all: clean-figures 
 	mkdir -p $(OUTPUTS_BUILDDIR) 
@@ -171,7 +185,7 @@ fix-refdata:
 split-samples:
 	mkdir -p $(EXAMPLES_BUILDDIR)
 	@failcom='exit 1'; 						\
-	list='$(EXAMPLES_SRCDIR)/*.cc'; for file in $$list; do 		\
+	list=`find $(EXAMPLES_SRCDIR) -type f -name '*.cc'`; for file in $$list; do \
 	$(DOC_SRCDIR)/tools/split_sample.sh $$file cc $(EXAMPLES_BUILDDIR)\
 					      || eval $$failcom; 	\
 	done

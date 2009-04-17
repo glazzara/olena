@@ -7,6 +7,7 @@ outputs/accu-right-instanciation.txt \
 outputs/extend.txt \
 outputs/ima2d-1.txt \
 outputs/borderthickness.txt \
+outputs/first_routine.txt \
 outputs/ima-save.txt \
 outputs/fill-subimage-cfun.txt \
 outputs/labeling-compute.txt \

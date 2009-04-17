@@ -1,0 +1,12 @@
+labeling::blobs {
+  core::initialize {} 
+  data::fill {
+    data::fill_with_value {
+      data::impl::fill_with_value_one_block {
+        data::memset_ {
+          data::impl::memset_ {} 
+        } data::memset_ 
+      } data::impl::fill_with_value_one_block 
+    } data::fill_with_value 
+  } data::fill 
+} labeling::blobs - 0.08s 

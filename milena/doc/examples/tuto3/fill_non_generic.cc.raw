@@ -1,0 +1,8 @@
+// Java or C -like code
+
+void fill(image ima, unsigned char v)
+{
+   for (int i = 0; i < ima->nrows; ++i)
+     for (int j = 0; j < ima->ncols; ++j)
+        ima->data[i][j] = v;
+}
