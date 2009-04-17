@@ -1,3 +1,10 @@
+2009-04-17  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Remove check save + modification in compute attribute method.
+	* mln/io/pgm/save.hh: Remove static check unit_8 while saving pgm.
+	* mln/morpho/tree/compute_attribute_image.hh: Add extra
+	argument where the accumulator image will be store.
+
 2009-04-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Update tutorial - Write "Getting started with Milena".

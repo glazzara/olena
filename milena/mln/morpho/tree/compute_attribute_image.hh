@@ -35,12 +35,12 @@
 ///
 /// \todo Specialize for low quant (and try fastest).
 
+# include <mln/core/routine/duplicate.hh>
 # include <mln/core/concept/image.hh>
 # include <mln/morpho/tree/data.hh>
 # include <mln/trait/accumulators.hh>
 # include <mln/util/pix.hh>
 # include <mln/data/fill.hh>
-
 
 
 namespace mln
@@ -52,25 +52,38 @@ namespace mln
     namespace tree
     {
 
-      /// Compute a tree with a parent relationship between sites.
-      ///
-      /// Warning: \p s translates the ordering related to the
-      /// "natural" childhood relationship.  The parenthood is thus
-      /// inverted w.r.t. to \p s.
-      ///
-      /// It is very convenient since all processing upon the parent
-      /// tree are performed following \p s (in the default "forward"
-      /// way).
-      ///
-      /// FIXME: Put it more clearly...
-      ///
-      /// The parent result image verifies: \n
-      /// - p is root iff parent(p) == p \n
-      /// - p is a node iff either p is root or f(parent(p)) != f(p).
-
+      /**
+      ** Compute an attribute image using tree with a parent
+      ** relationship between sites. In the attribute image, the
+      ** resulting value at a node is the 'sum' of its sub-components
+      ** value + the attribute value at this node.
+      **
+      ** Warning: \p s translates the ordering related to the
+      ** "natural" childhood relationship.  The parenthood is thus
+      ** inverted w.r.t. to \p s.
+      **
+      ** It is very convenient since all processing upon the parent
+      ** tree are performed following \p s (in the default "forward"
+      ** way).
+      **
+      ** FIXME: Put it more clearly...
+      **
+      ** The parent result image verifies: \n
+      ** - p is root iff parent(p) == p \n
+      ** - p is a node iff either p is root or f(parent(p)) != f(p).
+      **
+      ** @param[in] a Attribute.
+      ** @param[in] t Component tree.
+      ** @param[out] accu_image Optional argument used to store image
+      ** of attribute accumulator.
+      **
+      ** @return The attribute image.
+      */
       template <typename A, typename T>
       mln_ch_value(typename T::function, mln_result(A))
-      compute_attribute_image(const Accumulator<A>& a, const T& t);
+	compute_attribute_image(const Accumulator<A>& a,
+				const T& t,
+				mln_ch_value(typename T::function, A)* accu_image = 0);
 
 
 
@@ -121,7 +134,9 @@ namespace mln
       template <typename A, typename T>
       inline
       mln_ch_value(typename T::function, mln_result(A))
-      compute_attribute_image(const Accumulator<A>& a_, const T& t)
+      compute_attribute_image(const Accumulator<A>& a_,
+			      const T& t,
+			      mln_ch_value(typename T::function, A)* accu_image = 0)
       {
 	trace::entering("morpho::tree::compute_attribute_image");
 
@@ -160,6 +175,10 @@ namespace mln
 		acc(p) = acc(t.parent(p));
 	      }
 	}
+
+	// Store accumulator image.
+	if (accu_image)
+	  *accu_image = duplicate(acc);
 
 	typedef typename T::function I;
 	mln_ch_value(I, mln_result(A)) output;
