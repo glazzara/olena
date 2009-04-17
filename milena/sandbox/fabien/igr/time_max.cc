@@ -73,22 +73,26 @@ int main(int argc, char* argv[])
 
   unsigned dim3 = arr_ima.nelements();
 
+
   /////////////
   //	     //
   // Lissage //
   //	     //
   /////////////
+
   util::array<image2d<double> > arr_smooth;
   arr_smooth.append(arr_ima[0] * 1.0);
   for (unsigned k = 1; k < dim3 - 1; ++k)
     arr_smooth.append(arr_ima[k] * 0.5 + arr_ima[k - 1] * 0.25 + arr_ima[k + 1] * 0.25);
   arr_smooth.append(arr_ima[dim3 - 1] * 1.0);
 
+
   ///////////////////////////////////
   //				   //
   // Calcul image max et temps max //
   //				   //
   ///////////////////////////////////
+
   image2d<float> ima_c;
   initialize(ima_c, arr_smooth[0]);
   data::fill(ima_c, 0.0);

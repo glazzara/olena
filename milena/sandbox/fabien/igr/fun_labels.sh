@@ -51,7 +51,7 @@ process_file ()
 
   ./crop $input 0 50 90 149 230 170 crop.dump
   ./grad crop.dump $dim
-  for lambda_closing in 5000; do
+  for lambda_closing in 10000; do
     echo "  for lambda_closing = ${lambda_closing}";
     ./clo_vol grad.dump $dim ${lambda_closing}
     nbasins=`./wst clo_vol.dump $dim`
@@ -61,13 +61,14 @@ process_file ()
 #../bin/dumpi12_to_png mean_slices.dump $dim mean_slices_${3}_${lambda_closing}.png
 #../bin/dumpi12_to_pgm mean_slices.dump $dim mean_slices_${3}_${lambda_closing}.pgm
 
-    ./fun_labels wst.dump crop.dump $nbasins
+    ./norm crop.dump norm.dump
+    ./fun_labels wst.dump norm.dump $nbasins
     rename_label_plots ${lambda_closing}
 
-    ./all_labels2gif.sh ima.dump labels.dump $nbasins ${lambda_closing}
+#./all_labels2gif.sh crop.dump labels.dump $nbasins ${lambda_closing}
 
-    mv *.gif results/plots/
-    mv *.plot results/plots/
+#mv *.gif results/
+#mv *.plot results/plots/
 
 #reconstruct_plot tumeur ${lambda_closing}
 #create_anim tumeur ${lambda_closing}

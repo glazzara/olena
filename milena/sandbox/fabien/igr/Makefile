@@ -54,6 +54,9 @@ crop: crop.cc
 label2gif: label2gif.cc
 	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o label2gif
 
+norm: norm.cc
+	${CXX} -I../../../ ${CXXFLAGS} $^ -o norm
+
 clean:
 	rm -rf *.dump *.p?m *.plot *.log *.csv *.dSYM
 	rm seg2d seg3d wsd2d wsd3d nbasins_finder grad clo_vol wst graph med thres matlab time_max first_slice_dicom

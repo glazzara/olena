@@ -1,3 +1,13 @@
+2009-04-17  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add normalization, broken.
+	* fabien/igr/Makefile: Update with norm target.
+	* fabien/igr/all_labels2gif.sh: Update.
+	* fabien/igr/fun_labels.cc: Update.
+	* fabien/igr/fun_labels.sh: Update.
+	* fabien/igr/norm.cc: Normalize plot.
+	* fabien/igr/time_max.cc: Update.
+
 2009-04-16  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add functions to plot labels.

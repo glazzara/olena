@@ -52,7 +52,7 @@ using value::label_16;
 
 template <typename I, typename L, typename V>
 inline
-void plot_label(I ima, L ima_labels, V lbl)
+void plot_label(Image<I>& ima, Image<L>& ima_labels, V lbl)
 {
   mln_VAR(vol_label, ima | pw::value(ima_labels) == pw::cst(lbl));
   util::array<float> arr;
@@ -92,7 +92,7 @@ void plot_label(I ima, L ima_labels, V lbl)
 
 template <typename I, typename L>
 inline
-void plot_all_labels(I ima, L ima_labels, unsigned nlabels)
+void plot_all_labels(Image<I>& ima, Image<L>& ima_labels, unsigned nlabels)
 {
   util::array<util::array<float> > arrays(nlabels);
   accu::mean<int_u12> accu_mean;
@@ -145,7 +145,7 @@ void save_label_plot(int count, const char* desc, L prev_lbl, util::array<float>
 
 template <typename I, typename L>
 inline
-void plot_point(I ima, L ima_labels, point2d point, const char* desc)
+void plot_point(Image<I>& ima, Image<L>& ima_labels, point2d point, const char* desc)
 {
   util::array<float> arr;
   label_16 prev_lbl;
@@ -213,7 +213,7 @@ int main(int argc, char *argv[])
   point2d p_poumon(122, 115);
   image3d<L> ima_labels;
   io::dump::load(ima_labels, argv[1]);
-  image3d<int_u12> ima;
+  image3d<float> ima;
   io::dump::load(ima, argv[2]);
   mln_VAR(dilate, morpho::elementary::dilation(extend(ima_labels | (pw::value(ima_labels) == 0u), ima_labels), c6()));
   data::fill((ima_labels | (pw::value(ima_labels) == 0u)).rw(), dilate);
