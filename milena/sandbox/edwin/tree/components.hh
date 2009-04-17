@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef COMPONENTS_HH_
-# define COMPONENTS_HH_
+#ifndef MLN_MORPHO_TREE_COMPONENTS_HH_
+# define MLN_MORPHO_TREE_COMPONENTS_HH_
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
@@ -40,19 +40,56 @@
 # include <mln/trace/exiting.hh>
 
 
+/**
+** \file mln/morpho/tree/components.hh
+**
+** Routines that offers different way of retrieving tree components.
+** Tree components are nodes maximising the attribute.
+*/
+
 
 namespace mln {
   namespace morpho {
     namespace tree {
 
+      /**
+      ** Retrieve components from the tree until all leaves belong to
+      ** components.
+      **
+      ** @param tree Component tree.
+      ** @param attr_image Attribute image.
+      **
+      ** @return Array of components.
+      */
       template <typename T, typename A>
       p_array< mln_psite(A) >
       get_components(const T& tree, const Image<A>& attr_image);
 
+      /**
+      ** Retrieve the \p n most important components from the tree. n
+      ** should be lesser than the maximum number of components. If
+      ** not, the functions stops when there's no more components.
+      **
+      ** @param tree Component tree.
+      ** @param attr_image Attribute image.
+      ** @param n Number of components to get.
+      **
+      ** @return Array of components.
+      */
       template <typename T, typename A>
       p_array< mln_psite(A) >
       get_components(const T& tree, const Image<A>& attr_image, unsigned n);
 
+      /**
+      ** Retrieve the most important components that check
+      ** predicate \p pred.
+      **
+      ** @param tree Component tree.
+      ** @param attr_image Attribute image.
+      ** @param pred Predicate that components must check.
+      **
+      ** @return Array of components.
+      */
       template <typename T, typename A, typename P2B>
       p_array< mln_psite(A) >
       get_components(const T& tree, const Image<A>& attr_image, const Function_p2b<P2B>& pred);
@@ -275,4 +312,4 @@ namespace mln {
 
 # endif /* !MLN_INCLUDE_ONLY */
 
-#endif /* !COMPONENTS_HH_ */
+#endif /* !MLN_MORPHO_TREE_COMPONENTS_HH_ */

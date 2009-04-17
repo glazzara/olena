@@ -1,3 +1,11 @@
+2009-04-17  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add labeling output and add doc.
+	* edwin/tree/components.hh,
+	* edwin/tree/propagate.hh,
+	* edwin/tree/propagate_node.hh: Clean and add documentation.
+	* edwin/tree/sharp.cc: Add labeling and benchmark.
+
 2009-04-17  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add normalization, broken.

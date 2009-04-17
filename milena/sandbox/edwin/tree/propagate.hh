@@ -71,10 +71,10 @@ namespace mln {
       */
       template <typename A, typename T>
       inline
-      A set_value_to_components(const Image<A>& attr_image,
-				const T& tree,
-				const p_array< mln_psite(A) >& component_list,
-				const mln_value(A)& null)
+      A propagate_components(const Image<A>& attr_image,
+			     const T& tree,
+			     const p_array< mln_psite(A) >& component_list,
+			     const mln_value(A)& null)
       {
 	const A& attr_img = exact(attr_image);
 	A out;
@@ -85,6 +85,29 @@ namespace mln {
 	for_all(p)
 	{
 	  out(p) = attr_img(p);
+	  morpho::tree::propagate_node_to_descendants(p, tree, out);
+	}
+	morpho::tree::propagate_representant(tree, out);
+	return out;
+      }
+
+
+      template <typename T, typename V>
+      inline
+      mln_ch_value(typename T::function, V)
+	set_value_to_components(const T& tree,
+				const p_array< mln_psite(T) >& component_list,
+				const V& value,
+				const V& null)
+      {
+	mln_ch_value(typename T::function, V) out;
+	initialize(out, tree.f());
+	data::fill(out, null);
+
+	mln_piter(p_array< mln_psite(T) >) p(component_list);
+	for_all(p)
+	{
+	  out(p) = value;
 	  morpho::tree::propagate_node_to_descendants(p, tree, out);
 	}
 	morpho::tree::propagate_representant(tree, out);

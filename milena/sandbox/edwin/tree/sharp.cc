@@ -30,10 +30,15 @@
 #include <mln/pw/all.hh>
 
 /* level */
-#include <mln/level/stretch.hh>
+//#include <mln/level/stretch.hh>
+
+/* label */
+#include <mln/labeling/blobs.hh>
+#include <mln/value/label_16.hh>
 
 /* trace */
 #include <mln/trace/quiet.hh>
+#include <mln/util/timer.hh>
 
 /* std */
 #include <string>
@@ -49,12 +54,14 @@ void usage(char** argv)
   abort();
 }
 
-void dsp(const std::string& str)
+void dsp(const std::string& str, mln::util::timer& timer)
 {
+  std::cout << "in " << timer.read() << std::endl;
   std::cout << std::endl
 	    << "*********************" << std::endl
 	    << "** " << str << std::endl
 	    << "*********************" << std::endl;
+  timer.restart();
 }
 
 namespace mln
@@ -170,6 +177,7 @@ int main(int argc, char* argv[])
   unsigned card = 0;
   unsigned height = 0;
   double sharpness = 0;
+  util::timer timer;
 
   if (argc < 2)
     usage(argv);
@@ -195,9 +203,8 @@ int main(int argc, char* argv[])
   /********************/
   /* Load & Pre-treat */
   /********************/
-
   if (mydebug)
-    dsp("Load & Pre-treat");
+    dsp("Load & Pre-treat", timer);
 
   typedef image2d<int_u8> I;
   I input;
@@ -208,7 +215,7 @@ int main(int argc, char* argv[])
   /***************************/
 
   if (mydebug)
-    dsp("Component tree creation");
+    dsp("Component tree creation", timer);
 
   typedef p_array< mln_site_(I) > S;
   typedef morpho::tree::data<I,S> tree_t;
@@ -221,7 +228,7 @@ int main(int argc, char* argv[])
   /* Compute Attribute On Image */
   /******************************/
   if (mydebug)
-    dsp("Image sharp attribute");
+    dsp("Image sharp attribute", timer);
 
   // TODO: l'attribut devrait favoriser les composantes plus larges
   // dans son calcul. Ainsi au lieu de faire un sharpness, on aurait
@@ -251,7 +258,7 @@ int main(int argc, char* argv[])
   if (card)
     {
       if (mydebug)
-	dsp("Image card attribute");
+	dsp("Image card attribute", timer);
 
       a = duplicate((fun::p2v::ternary(card_wrapper(pw::value(a_img)) > pw::cst(card),
 				       pw::value(a),
@@ -261,7 +268,7 @@ int main(int argc, char* argv[])
   if (height)
     {
       if (mydebug)
-	dsp("Image height attribute");
+	dsp("Image height attribute", timer);
       a = duplicate((fun::p2v::ternary(height_wrapper(pw::value(a_img)) > pw::cst(height),
 				       pw::value(a),
 				       pw::cst(0.0))) | a.domain());
@@ -271,7 +278,6 @@ int main(int argc, char* argv[])
   /* Retrieve Components (Maximising the criteria)  */
   /************************************************/
 
-  accumulator::arg_max<A> argmax(a);
   p_array< mln_psite_(A) > obj_array; // Array of object components.
 
   if (mydebug) {
@@ -283,7 +289,7 @@ int main(int argc, char* argv[])
       s << "components whose treshold > " << sharpness;
     else
       s << "components util leaves are glutted";
-    dsp(s.str());
+    dsp(s.str(), timer);
   }
 
   if (nb_components) {
@@ -297,48 +303,42 @@ int main(int argc, char* argv[])
 
 
   /* Print them */
-  if (mydebug) {
-    dsp("Image Filtered Components");
-    mln_fwd_piter_(p_array< mln_psite_(I) >) c(obj_array);
-    for_all(c)
-      std::cout << c;
-  }
+//   if (mydebug) {
+//     mln_fwd_piter_(p_array< mln_psite_(I) >) c(obj_array);
+//     for_all(c)
+//       std::cout << c;
+//   }
 
   /***********************************/
   /* Use components in output image  */
   /***********************************/
   if (mydebug) {
-    dsp("Create mask and propagate");
+    dsp("Propagate components and stretch", timer);
   }
 
   // Note: now we must propagate the representant value to the other components sites.
-  A pre_output = morpho::tree::set_value_to_components(a, tree, obj_array, 0);
-  I output = level::stretch(int_u8(), pre_output); //adapt to 0-255
-  io::pgm::save(output, "components.pgm");
+
+  //a = morpho::tree::propagate_components(a, tree, obj_array, 0);
+  //I output = level::stretch(int_u8(), a); //adapt to 0-255
+  //io::pgm::save(output, "components.pgm");
 
 
   /* EXTRA */
 
-//   typedef mln_ch_value_(I, bool) M;
-//   M mask;
-//   initialize(mask, a);
-//   data::fill(mask, false);
+  // labeling
+  typedef mln_ch_value_(I, bool) M;
+  typedef mln_ch_value_(I, value::label<16>) L;
 
-//   mln_fwd_piter_(p_array< mln_psite_(I) >) c(obj_array);
-//   for_all(c)
-//   {
-//     mask(c) = true;
-//     propagate_node_to_descendants(c, tree, mask);
-//   }
+  M mask = morpho::tree::set_value_to_components(tree, obj_array, true, false);
+  value::label<16> nlabel;
+  L label = labeling::blobs(mask, c4(), nlabel);
+  io::pgm::save(label, "label.pgm");
 
 
-  // mask now contains all nodes related to objects
+  if (mydebug) {
+    dsp("Finish", timer);
+  }
 
- //  /* Labeling */
-//     typedef mln_ch_value_(I, value::label<8>) L;
-//     value::label<8> nlabel;
-//     L label = labeling::blobs(mask, c4(), nlabel);
-//     io::ppm::save(debug::colorize(value::rgb8(), label, nlabel), "label.pgm");
 
 
 //   /* Now store output image */

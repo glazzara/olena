@@ -29,9 +29,9 @@
 #ifndef MLN_MORPHO_TREE_PROPAGATE_NODE_HH_
 # define MLN_MORPHO_TREE_PROPAGATE_NODE_HH_
 
-#include <mln/morpho/tree/data.hh>
-#include <mln/core/site_set/p_array.hh>
-#include <stack>
+# include <mln/core/concept/image.hh>
+# include <mln/core/macros.hh>
+# include <mln/morpho/tree/data.hh>
 
 /// \file mln/morpho/tree/propagate_node.hh
 ///
