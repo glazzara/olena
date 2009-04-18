@@ -32,7 +32,8 @@
 ///
 /// Functions to propagate a node value in the tree.
 
-#include <mln/morpho/tree/data.hh>
+# include <mln/morpho/tree/data.hh>
+# include "propagate_node.hh"
 
 namespace mln {
   namespace morpho {

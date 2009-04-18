@@ -1,3 +1,20 @@
+2009-04-19  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Routines to export leaves toward several representation.
+	* edwin/rush/Makefile: New.
+	* edwin/rush/chain.sh: Script that handles process.
+	* edwin/rush/configure: New.
+	* edwin/rush/export_leaves.hh: Leaves exportation methods.
+	* edwin/rush/get_leaves.cc: Process file that import pgm image,
+	creates tree, applies an attribute and export the leaves.
+	* edwin/rush/splot.sh: New file to autogenerate gnuplot graphics.
+	* edwin/rush/test/Makefile: New.
+	* edwin/rush/test/configure: New.
+	* edwin/rush/test/export.cc: Test file for routines.
+	* edwin/rush/test: New test folder.
+	* edwin/rush: New.
+	* edwin/tree/propagate.hh: Add missing include.
+
 2009-04-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update src of 'color labeling mean'.
