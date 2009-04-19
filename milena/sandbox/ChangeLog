@@ -1,5 +1,12 @@
 2009-04-19  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Process line: WST from color image using tree component. (BUG).
+	* edwin/rush/exo2/wst_from_tree.cc: Process line.
+	* edwin/tree/components.hh: Fix bug related to research of n
+	components method.
+
+2009-04-19  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Process line: watershed from color image after height closing.
 	* edwin/rush/*,
 	* edwin/rush/leaves: New directory for leaves export

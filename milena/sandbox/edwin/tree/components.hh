@@ -222,7 +222,7 @@ namespace mln {
 	  p_array< mln_psite(A) > components;
 	  mln_ch_value(A, bool) activity;
 	  p_array< mln_psite(A) > max_arr = tree.nodes();
-	  unsigned arr_pos = 0; //position in max_array
+	  unsigned arr_pos; //position in max_array
 	  unsigned n = 0;
 	  unsigned* nb_leaves = uses_leaves ? new unsigned(0) : 0;
 
@@ -237,11 +237,13 @@ namespace mln {
 	      p = max_arr[arr_pos];
 	      if (a(p) == 0)
 		break;
+	      //std::cout << p << " " << a(p) << std::endl;
 	      components.insert(p);
 	      morpho::tree::propagate_node_to_descendants(p, tree, activity, false, nb_leaves);
 	      morpho::tree::propagate_node_to_ancestors(p, tree, activity, false);
 	      activity(p) = false;
-	      mln_assertion(nb_leaves == 0 || *nb_leaves <= n);
+	      n++;
+	      mln_assertion(nb_leaves == 0 || *nb_leaves < mln_max(unsigned));
 	    }
 	  while (pred(p, n, nb_leaves));
 
@@ -281,8 +283,10 @@ namespace mln {
 	mln_precondition(tree.f().domain() == a.domain());
 	mln_precondition(a.is_valid());
 
-	p_array< mln_psite(A) > components =
-	  internal::get_components(tree, a, internal::pred_n_components(n), false);
+	p_array< mln_psite(A) > components;
+
+	if (n > 0)
+	  components = internal::get_components(tree, a, internal::pred_n_components(n), false);
 
 	trace::exiting("mln::morpho::tree::get_components");
 	return components;

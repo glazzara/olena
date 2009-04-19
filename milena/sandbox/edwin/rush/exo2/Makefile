@@ -13,8 +13,10 @@ LDFLAGS=
 SRC=
 
 OUT_IMG=superpose.pgm mean.pgm gradient.pgm closing.pgm
+BIN=wst_from_closing wst_from_tree
 
-all: wst_from_closing
+
+all: $(BIN)
 
 %: %.cc
 	$(CXX) $(CXXFLAGS) $< -o $@
@@ -22,8 +24,7 @@ all: wst_from_closing
 
 clean:
 	rm -f $(OUT_IMG)
-	rm -f wst_from_closing
-
+	rm -f $(BIN)
 
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $<
