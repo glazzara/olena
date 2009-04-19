@@ -1,5 +1,19 @@
 2009-04-19  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Process line: watershed from color image after height closing.
+	* edwin/rush/*,
+	* edwin/rush/leaves: New directory for leaves export
+	routines. Move rush/* to rush/leaves.*
+
+	* edwin/rush/exo2: New.
+	* edwin/rush/exo2/color_internal_gradient.hh: Routine that
+	  computes internal gradient from color image.
+	* edwin/rush/exo2/color_labeling_mean.hh: Routine that
+	  replaces a basin label by its mean color.
+	* edwin/rush/exo2/wst_from_closing.cc: Process line.
+
+2009-04-19  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Routines to export leaves toward several representation.
 	* edwin/rush/Makefile: New.
 	* edwin/rush/chain.sh: Script that handles process.

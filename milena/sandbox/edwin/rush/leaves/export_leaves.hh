@@ -32,7 +32,7 @@
 # include <mln/core/concept/image.hh>
 
 # include <mln/morpho/tree/data.hh>
-# include "../tree/propagate.hh"
+# include "../../tree/propagate.hh"
 
 
 # include <mln/data/fill.hh>
