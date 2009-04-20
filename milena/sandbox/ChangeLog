@@ -1,3 +1,9 @@
+2009-04-20  Warren Seine  <soow@lrde.epita.fr>
+
+	inim: Fix configure.
+	* boxes/Makefile: Fix bad include.
+	* boxes/configure: Add test.
+
 2009-04-19  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Process line: WST from color image using tree component. (BUG).

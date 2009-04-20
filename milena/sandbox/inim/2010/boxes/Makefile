@@ -1,4 +1,4 @@
-include makefile.rules
+include Makefile.rules
 TARGET=boxes
 
 boxes_SRC=boxes.cc

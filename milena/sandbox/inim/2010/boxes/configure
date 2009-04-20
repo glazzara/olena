@@ -10,6 +10,11 @@ for arg in "$@"; do
     fi
 done
 
+if [ x$MLN_DIR == x ]; then
+    echo "MLN_DIR not set" > /dev/stderr
+    exit 1
+fi
+
 rm -f Makefile.rules
 touch Makefile.rules
 
