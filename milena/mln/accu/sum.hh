@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -67,6 +67,7 @@ namespace mln
       /// \{
       void init();
       void take(const argument& t);
+      void take_as_init(const argument& t);
       void take(const sum<T,S>& other);
       /// \}
 
@@ -124,6 +125,13 @@ namespace mln
     void sum<T,S>::take(const argument& t)
     {
       s_ += static_cast<S>(t);
+    }
+
+    template <typename T, typename S>
+    inline
+    void sum<T,S>::take_as_init(const argument& t)
+    {
+      s_ = static_cast<S>(t);
     }
 
     template <typename T, typename S>

@@ -82,6 +82,7 @@ namespace mln
   namespace algebra
   {
 
+
     template <unsigned n, unsigned m, typename T>
     class mat : public Object< mat<n,m,T> >
     {
@@ -117,6 +118,9 @@ namespace mln
       unsigned size() const;
 
       static mat identity();
+
+      /// Return the transpose of the matrix.
+      mat<m,n,T> t() const;
 
     private:
       T data_[n][m];
@@ -229,12 +233,28 @@ namespace mln
     mat<n, m, mln_sum_product(T,U)>
     operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs);
 
+    template <unsigned o, typename T,
+	      typename U>
+    mln_sum_product(T,U)
+    operator*(const mat<1,o,T>& lhs, const mat<o,1,U>& rhs);
+
     // mat * vec
 
     template <unsigned n, unsigned m, typename T,
 	      typename U>
     vec<n, mln_sum_product(T,U)>
     operator*(const mat<n,m,T>& lhs, const vec<m,U>& rhs);
+
+    template <unsigned m, typename T,
+	      typename U>
+    mln_sum_product(T,U) // scalar
+    operator*(const mat<1,m,T>& lhs, const vec<m,U>& rhs);
+
+    // vec * mat
+
+    template <unsigned m, typename T, typename U>
+    mat<m, m, mln_trait_op_times(T,U)>
+    operator*(const vec<m,T>& lhs, const mat<1,m,U>& rhs);
 
     // mat * s
 
@@ -255,11 +275,6 @@ namespace mln
     std::ostream&
     operator<<(std::ostream& ostr, const mat<n,m,T>& v);
 
-    // transpose
-
-    template<unsigned n, unsigned m, typename T>
-    mat<m,n,T>
-    trans(const mat<n,m,T>& matrix);
 
     // trace
 
@@ -267,14 +282,61 @@ namespace mln
     float tr(const mat<n,n,T>& m);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
+
+    // vec -> mat
+
+    template <unsigned n, typename T>
+    template <typename U>
+    inline
+    vec<n,T>::operator mat<n,1,U>() const
+    {
+      mlc_converts_to(T, U)::check();
+      mat<n,1,U> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	tmp(i, 0) = data_[i];
+      return tmp;
+    }
+
+
+    // mat -> vec
+
+    template <unsigned n, typename T>
+    template <typename U>
+    inline
+    vec<n,T>::vec(const mat<n, 1, U>& rhs)
+    {
+      mlc_converts_to(T, U)::check();
+      for (unsigned i = 0; i < n; ++i)
+	data_[i] = rhs(i, 0);
+    }
+
+    template <unsigned n, typename T>
+    template <typename U>
+    inline
+    vec<n,T>&
+    vec<n,T>::operator=(const mat<n, 1, U>& rhs)
+    {
+      mlc_converts_to(T, U)::check();
+      for (unsigned i = 0; i < n; ++i)
+	data_[i] = rhs(i, 0);
+      return *this;
+    }
+
+
+
+    // Id
+
     template <unsigned n, unsigned m, typename T>
-    const mat<n,m,T> mat<n,m,T>::Id = mat<n,m,T>::identity();
+    const mat<n,m,T>
+    mat<n,m,T>::Id = mat<n,m,T>::identity();
 
     template <unsigned n, unsigned m, typename T>
     inline
-    mat<n,m,T> mat<n,m,T>::identity()
+    mat<n,m,T>
+    mat<n,m,T>::identity()
     {
       static mat<n,m,T> id_;
       static bool flower = true;
@@ -369,6 +431,18 @@ namespace mln
       return n * m;
     }
 
+    template <unsigned n, unsigned m, typename T>
+    inline
+    mat<m,n,T>
+    mat<n,m,T>::t() const
+    {
+      mat<m,n,T> tmp;
+      for (unsigned i = 0; i < n; ++i)
+        for (unsigned j = 0; j < m; ++j)
+          tmp(j,i) = data_[i][j];
+      return tmp;
+    }
+
 
     // Operators.
 
@@ -421,6 +495,8 @@ namespace mln
       return tmp;
     }
 
+    // mat * mat
+
     template <unsigned n, unsigned o, typename T,
 	      unsigned m, typename U>
     inline
@@ -438,6 +514,20 @@ namespace mln
       return tmp;
     }
 
+    template <unsigned o, typename T,
+	      typename U>
+    inline
+    mln_sum_product(T,U)
+    operator*(const mat<1,o,T>& lhs, const mat<o,1,U>& rhs)
+    {
+      mln_sum_product(T,U) tmp(literal::zero);
+      for (unsigned k = 0; k < o; ++k)
+	tmp += lhs(0, k) * rhs(k, 0);
+      return tmp;
+    }
+
+    // mat * vec
+
     template <unsigned n, unsigned m, typename T,
 	      typename U>
     inline
@@ -454,6 +544,35 @@ namespace mln
 	}
       return tmp;
     }
+
+    template <unsigned m, typename T,
+	      typename U>
+    inline
+    mln_sum_product(T,U) // scalar
+    operator*(const mat<1,m,T>& lhs, const vec<m,U>& rhs)
+    {
+      mln_sum_product(T,U) tmp(literal::zero);
+      for (unsigned j = 0; j < m; ++j)
+	tmp += lhs(0, j) * rhs[j];
+      return tmp;
+    }
+
+    // vec * mat
+
+    template <unsigned m, typename T,
+	      typename U>
+    inline
+    mat<m, m, mln_trait_op_times(T,U)>
+    operator*(const vec<m,T>& lhs, const mat<1,m,U>& rhs)
+    {
+      mat<m, m, mln_trait_op_times(T,U)> tmp;
+      for (unsigned i = 0; i < m; ++i)
+	for (unsigned j = 0; j < m; ++j)
+	  tmp(i, j) = lhs[i] * rhs(0, j);
+      return tmp;
+    }
+
+    // mat * s
 
     template <unsigned n, unsigned m, typename T, typename S>
     inline
@@ -499,16 +618,7 @@ namespace mln
     }
 
 
-    template<unsigned n, unsigned m, typename T>
-    mat<m,n,T>
-    trans(const mat<n,m,T>& matrix)
-    {
-      mat<m,n,T> tmp;
-      for (unsigned i = 0; i < n; ++i)
-        for (unsigned j = 0; j < m; ++j)
-          tmp(j,i) = matrix(i,j);
-      return tmp;
-    }
+    // Trace.
 
     template<unsigned n, typename T> inline
     float tr(const mat<n,n,T>& m)
@@ -517,6 +627,20 @@ namespace mln
       for (unsigned i = 0; i < n; ++i)
         f += m(i,i);
       return f;
+    }
+
+
+    // vec methods.
+
+    template <unsigned n, typename T>
+    inline
+    mat<1,n,T>
+    vec<n,T>::t() const
+    {
+      mat<1,n,T> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	tmp(0,i) = data_[i];
+      return tmp;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

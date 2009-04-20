@@ -1,3 +1,23 @@
+2009-04-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Improve vector and matrix interoperability.
+
+	* mln/algebra/mat.hh (t): New method to transpose; replace...
+	(trans): Remove procedure.
+	(operator*): New overloads to improve interoperatibility
+	between vectors and matrices.
+	* mln/registration/get_rot.hh: Update.
+	* mln/registration/icp.hh: Update.
+	* mln/algebra/vec.hh (mat<n, 1, U>): New conversion op, ctor,
+	and assignment; declarations only, definitions are... 
+	* mln/algebra/mat.hh (mat<n, 1, U>): ...new.
+	* tests/algebra/op_times.cc: New.
+
+	* mln/labeling/compute.hh: Disable check to run on int_u.
+	* mln/accu/sum.hh (take_as_init): New.
+	* mln/accu/image/take_as_init.hh: New overload for image as arg.
+	* tests/accu/image/take_as_init.cc: Augment.
+
 2009-04-17  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Remove check save + modification in compute attribute method.

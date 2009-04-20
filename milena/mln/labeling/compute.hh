@@ -145,7 +145,7 @@ namespace mln
       {
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(label).is_valid());
-	mlc_is_a(mln_value(L), mln::value::Symbolic)::check();
+	// mlc_is_a(mln_value(L), mln::value::Symbolic)::check();
 	(void) a;
 	(void) input;
 	(void) label;

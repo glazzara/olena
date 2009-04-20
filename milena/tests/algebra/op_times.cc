@@ -25,27 +25,48 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/accu/image/take_as_init.cc
+/// \file tests/algebra/op_times.cc
 ///
-/// Tests on mln::accu::image::take_as_init.
+/// Tests on mln::algebra::operator *.
 
-#include <mln/core/image/image2d.hh>
-#include <mln/accu/sum.hh>
-#include <mln/accu/image/take_as_init.hh>
+#include <iostream>
+#include <mln/algebra/mat.hh>
 
-#include <mln/debug/println.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  typedef accu::sum<int> A;
-  image2d<A> ima(2, 2);
+  using algebra::vec;
+  using algebra::mat;
 
-  accu::image::take_as_init(ima, 3);
-  debug::println(ima);
+  // Debase tests.
+  {
+    algebra::vec<3,  float> v3;
+    algebra::mat<2,3,float> m23;
+    algebra::mat<3,2,float> m32;
 
-  accu::image::take_as_init(ima, ima);
-  debug::println(ima);
+    algebra::mat<2,2,float> m22 = m23 * m32;
+    algebra::vec<2,  float> v2  = m23 * v3;
+
+    m22 = v2 * v2.t();
+  }
+
+  // Tests with horizontal and/or vertical matrices and/or vectors.
+  {
+    float f;
+    algebra::vec<3,  float> v3;
+    algebra::mat<1,3,float> m13;
+    algebra::mat<3,1,float> m31;
+    
+    f = m13 * m31;
+    f = m31.t() * m13.t();
+    f = m13 * v3;
+    f = v3.t() * v3;
+    
+    v3 = m31;
+    m31 = v3;
+  }
+
 }

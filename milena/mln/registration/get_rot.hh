@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -34,6 +34,7 @@
 # include <mln/algebra/quat.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/math/jacobi.hh>
+
 
 namespace mln
 {
@@ -97,7 +98,7 @@ namespace mln
         {
           algebra::vec<3u,float> ci  = convert::to< algebra::vec<3u,float> >(c[i]);
           algebra::vec<3u,float> xki = convert::to< algebra::vec<3u,float> >(map(ck[i]));
-          Mk += make::mat(ci - mu_c) * trans(make::mat(xki - mu_xk));
+          Mk += (ci - mu_c) * (xki - mu_xk).t();
         }
       Mk /= c.nsites();
 

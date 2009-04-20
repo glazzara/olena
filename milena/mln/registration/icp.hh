@@ -78,9 +78,9 @@
 
 # include <mln/io/cloud/save.hh>
 
+
 namespace mln
 {
-
 
   namespace registration
   {
@@ -530,7 +530,7 @@ namespace mln
 	vec3d_f P_i  = p;
 	vec3d_f Pk_i = qR.rotate(P_i) + qT;
 	vec3d_f Yk_i = closest_point(Pk_i);
-	Spx += make::mat(P_i - mu_P) * trans(make::mat(Yk_i - mu_Yk));
+	Spx += (P_i - mu_P) * (Yk_i - mu_Yk).t();
       }
       Spx /= P_.nsites();
 

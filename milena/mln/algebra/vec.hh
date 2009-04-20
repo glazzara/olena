@@ -59,6 +59,7 @@ namespace mln
   namespace algebra {
     template <unsigned n, typename T> class vec;
     template <unsigned d, typename C> class h_vec;
+    template <unsigned n, unsigned m, typename T> class mat;
   }
 
   namespace literal {
@@ -235,6 +236,9 @@ namespace mln
 	 lower (sic) to zero.  */
       const vec<n, T>& normalize();
 
+      /// Transposition.
+      mat<1, n, T> t() const;
+
       /// Constructor; coordinates are set by function \p f.
       template <typename F>
       vec(const Function_i2v<F>& f);
@@ -244,6 +248,19 @@ namespace mln
 
       /// Origin value.
       static const vec<n, T> origin;
+
+
+      /// Conversion to a matrix.
+      template <typename U>
+      operator mat<n, 1, U>() const;
+
+      /// Construction from a matrix.
+      template <typename U>
+      vec(const mat<n, 1, U>& rhs);
+
+      /// Assignment from a matrix.
+      template <typename U>
+      vec& operator=(const mat<n, 1, U>& rhs);
     };
 
   } // end of namespace mln::algebra
@@ -632,6 +649,7 @@ namespace mln
 
 
 # include <mln/make/vec.hh>
+# include <mln/algebra/mat.hh>
 
 
 #endif // ! MLN_ALGEBRA_VEC_HH
