@@ -6,9 +6,10 @@
 #include <mln/world/binary_2d/subsample.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/label.hh>
-#include <mln/labeling/relabel.hh>
+#include <mln/labeling/pack.hh>
 #include <mln/core/image/violent_cast_image.hh>
 
+#include <mln/io/pgm/save.hh>
 
 
 namespace mln
@@ -38,8 +39,8 @@ namespace mln
     // Clean lines
     wsl = clean_lines(input, wsl, tau);
     
-    return labeling::relabel(violent_cast_image_<L>(wsl),
-			     n_lines);
+    return labeling::pack(violent_cast_image_<L>(wsl),
+			  n_lines);
   }
 
 } // mln

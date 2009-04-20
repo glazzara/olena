@@ -43,25 +43,6 @@
 namespace mln
 {
 
-  
-  algebra::mat<1,2,float>
-  trans(const algebra::vec<2,float>& v)
-  {
-    algebra::mat<1,2,float> tmp;
-    tmp(0,0) = v[0];
-    tmp(0,1) = v[1];
-    return tmp;
-  }
-
-  algebra::mat<2,1,float>
-  to_mat(const algebra::vec<2,float>& v)
-  {
-    algebra::mat<2,1,float> tmp;
-    tmp(0,0) = v[0];
-    tmp(1,0) = v[1];
-    return tmp;
-  }
-
 
   struct mahalanobis : public mln::accu::internal::base< unsigned , mahalanobis >
   {
@@ -113,7 +94,7 @@ namespace mln
       if (n_ == 0)
 	return;
       mean_ /= n_;
-      cov_ = cov_ / n_ - to_mat(mean_) * trans(mean_);
+      cov_ = cov_ / n_ - mean_ * mean_.t();
 
       float
 	a = cov_(0, 0), b = cov_(0, 1),
@@ -174,7 +155,7 @@ namespace mln
     {
       mln_invariant(valid_);
       algebra::vec<2,float> v_ = v - mean_;
-      return (trans(v_) * cov_1_ * v_)[0];
+      return v_.t() * cov_1_ * v_;
     }
 
     /// Get the number of items.
@@ -397,15 +378,7 @@ namespace mln
 
 #ifdef LOG
     {
-      io::pgm::save(small, "tmp_small.pgm");
-      io::pgm::save(ws,    "tmp_ws.pgm");
-      
       using value::rgb8;
-
-      image2d<rgb8> small_ws = level::convert(rgb8(), small);
-      data::fill((small_ws | (pw::value(ws) == pw::cst(0))).rw(),
-		 literal::red);
-      io::ppm::save(small_ws, "tmp_small_ws.ppm");
 
       fun::i2v::array<L> f_relab(n_basins + 1);
       f_relab(0) = 0;
@@ -413,12 +386,23 @@ namespace mln
 	f_relab(l) = parent[l];
 
       image2d<L> ws_ = level::transform(ws, f_relab);
-      io::ppm::save(debug::colorize(rgb8(), ws_, n_basins), "tmp_ws.ppm");
+      image2d<rgb8> cool = debug::colorize(rgb8(), ws_, n_basins);
+      data::fill((cool | (pw::value(ws) == pw::cst(0))).rw(),
+		 literal::white);
+      mln_piter(box2d) p(small.domain());
+      for_all(p)
+      {
+	if (small(p) == 255)
+	  continue;
+	float f = float(small(p)) / 255;
+	cool(p).red()   = cool(p).red()   * f;
+	cool(p).green() = cool(p).green() * f;
+	cool(p).blue()  = cool(p).blue()  * f;
+      }
+      io::ppm::save(cool, "temp_wsl.ppm");
 
     }
 #endif // LOG
-
-
 
     // Outputing.
 

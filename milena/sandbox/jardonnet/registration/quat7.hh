@@ -145,8 +145,8 @@ namespace mln
         algebra::vec<P::dim,float> Ci  = C[i];
         algebra::vec<P::dim,float> Xki = map(Ck[i]);
 
-        Mk += make::mat(Ci - mu_C) * trans(make::mat(Xki - mu_Xk));
-        // or Mk += make::mat(Ci) * trans(make::mat(Xki)) - make::mat(mu_C) * trans(make::mat(mu_Xk))
+        Mk += (Ci - mu_C) * (Xki - mu_Xk).t();
+        // or Mk += Ci * Xki.t() - mu_C * mu_Xk.t()
       }
     Mk /= c_length;
 

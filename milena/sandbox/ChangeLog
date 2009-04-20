@@ -1,3 +1,14 @@
+2009-04-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update use of transposition.
+
+	* icdar/2009/hsc/input_to_lines.hh: Update.
+	* icdar/2009/hsc/input_to_ws.hh: Add log.
+	Update.
+	* icdar/2009/hsc/ws_to_wsl.hh: Likewise.
+	* jardonnet/registration/cov.hh: Update.
+	* jardonnet/registration/quat7.hh: Update.
+
 2009-04-20  Vincent Ordy  <ordy@lrde.epita.fr>
 
 	Fix configure.

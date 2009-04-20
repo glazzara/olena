@@ -66,7 +66,7 @@ namespace mln
           // FIXME: ugly cast.
           algebra::vec<P::dim,float> a1i  = a1[i];
           algebra::vec<P::dim,float> a2i  = a2[i];
-          Mk += make::mat(a1i - mu_a1) * trans(make::mat(a2i - mu_a2));
+          Mk += (a1i - mu_a1) * (a2i - mu_a2).t();
         }
       
       return Mk / a1.nsites();
