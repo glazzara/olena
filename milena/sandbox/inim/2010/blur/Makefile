@@ -1,4 +1,4 @@
-INCLUDES=-I "/lrde/beyrouth/lrde-2011/denuziere/olena-1.0/milena"
+INCLUDES=-I "../../../../"
 CXX=g++-4.2
 CXX_FLAGS=-W -Wall -O3 -ffast-math
 

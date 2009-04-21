@@ -1,3 +1,11 @@
+2009-04-21  Alex Hamelin  <hamelin@lrde.epita.fr>
+
+	Finder for entry point in an watersheded image.
+	* Makefile: Compile directly from the directory.
+	* cuttor.hh: Add needed include for point2d.
+	* cuttor.hxx: Add function to retrieve an entry for 
+          main algorithm.
+
 2009-04-21  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Various update for IGR demo and new fixed segmentation.
