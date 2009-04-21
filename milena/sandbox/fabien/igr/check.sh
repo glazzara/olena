@@ -2,19 +2,20 @@
 
 process_file ()
 {
-  echo "Processing $3..."
+  echo "Processing $1..." | cowsay
   dist_max=10
   input=$1
   dim=$2
 
-  ./grad $input $dim
+  ./crop $input 0 50 90 149 230 170 crop.dump
+  ./grad crop.dump $dim
   for lambda_closing in 50 100 500 1000 5000 10000 50000; do
     echo "  for lambda_closing = ${lambda_closing}";
     ./clo_vol grad.dump $dim ${lambda_closing}
     nbasins=`./wst clo_vol.dump $dim`
     echo "    nbasins = $nbasins"
-    ../bin/dumpl32_to_colorize wst.dump $dim $nbasins results/colorize_${3}_${lambda_closing}.ppm
-    median=`./med wst.dump $dim $input $nbasins`
+    ../bin/dumpl16_to_colorize wst.dump $dim $nbasins results/colorize_${3}_${lambda_closing}.ppm
+    median=`./med wst.dump $dim crop.dump $nbasins`
     echo "    median = $median"
     threshold=$(($median / 2))
     ../bin/dumpi12_to_pgm med.dump $dim results/median_${3}_${lambda_closing}.pgm
@@ -37,6 +38,8 @@ process_file ()
   done
 #  rm *.dump
 }
+
+make crop grad clo_vol wst med thres
 
 #process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0049.dcm" 2 "49"
 process_file "/Users/HiSoKa/Work/IGR/souris18/irm/IM_0052.dcm" 3 "52"

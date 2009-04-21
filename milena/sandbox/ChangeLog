@@ -1,3 +1,20 @@
+2009-04-21  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Various update for IGR demo and new fixed segmentation.
+	* fabien/igr/Makefile: Add 'seg_fixed' target.
+	* fabien/igr/check.sh: Update.
+	* fabien/igr/fun_labels.cc: Update.
+	* fabien/igr/fun_labels.sh: Update.
+	* fabien/igr/med.cc: Update.
+	* fabien/igr/norm.cc: Update.
+	* fabien/igr/seg_fixed.cc: New.
+	* fabien/igr/space_smooth/Makefile: Update.
+	* fabien/igr/space_smooth/linear.cc: Update.
+	* fabien/igr/thres.cc: Update.
+	* fabien/igr/time_max_norm.cc: New tool for tmax map.
+	* fabien/igr/time_smooth/Makefile: Update.
+	* fabien/igr/time_smooth/linear.cc: Update.
+
 2009-04-21  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Closure with flat element.

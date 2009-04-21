@@ -47,6 +47,20 @@
 [ ] Fix mean slices values
 [X] Compatibility Windows
 [X] Fix spatial smooth
-[ ] Crop volume 52
-[ ] Plot all labels (3, 4 labels for tumeur)
+[X] Crop volume 52
+[X] Plot all labels (3, 4 labels for tumeur)
 [ ] Prepare data for IGR
+   [X] crop->norm->tmax
+   [X] crop->norm->space_smooth->tmax
+
+  (comparo normalisé)
+  1)brut
+  2)time_smooth
+  3)space_smooth
+  4)current_label_smooth (lambda faible, pas de ligne watershed)
+
+   [X] plot label
+   [X] gif animés labels
+
+   [X] fausses couleurs watershed
+   [X] images moyennes

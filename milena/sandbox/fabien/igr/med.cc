@@ -9,7 +9,6 @@
 #include <mln/core/alias/window3d.hh>
 
 #include <mln/io/dump/all.hh>
-#include <mln/io/dicom/load.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u12.hh>
@@ -45,7 +44,7 @@ int main(int argc, char *argv[])
   using value::int_u12;
   using value::label_16;
   using value::label_32;
-  typedef label_32 L;
+  typedef label_16 L;
 
   if (argc != 5)
   {
@@ -70,12 +69,12 @@ int main(int argc, char *argv[])
   {
     image2d<L> labels;
     io::dump::load(labels, argv[1]);
-    image2d<int_u12> dcm;
-    io::dicom::load(dcm, argv[3]);
+    image2d<int_u12> input;
+    io::dump::load(input, argv[3]);
 
     mln_VAR(wst_dilate, morpho::elementary::dilation(extend(labels | (pw::value(labels) == 0u), labels), c8()));
     data::fill((labels | (pw::value(labels) == 0u)).rw(), wst_dilate);
-    mln_VAR(wst_mean, labeling::mean_values(dcm, labels, nbasins));
+    mln_VAR(wst_mean, labeling::mean_values(input, labels, nbasins));
 
     histo::array<int_u12> histogram = histo::compute(wst_mean);
     int j = 0;
@@ -106,12 +105,12 @@ int main(int argc, char *argv[])
   {
     image3d<L> labels;
     io::dump::load(labels, argv[1]);
-    image3d<int_u12> dcm;
-    io::dicom::load(dcm, argv[3]);
+    image3d<int_u12> input;
+    io::dump::load(input, argv[3]);
 
     mln_VAR(wst_dilate, morpho::elementary::dilation(extend(labels | (pw::value(labels) == 0u), labels), c26()));
     data::fill((labels | (pw::value(labels) == 0u)).rw(), wst_dilate);
-    mln_VAR(wst_mean, labeling::mean_values(dcm, labels, nbasins));
+    mln_VAR(wst_mean, labeling::mean_values(input, labels, nbasins));
 
     histo::array<int_u12> histogram = histo::compute(wst_mean);
     int j = 0;

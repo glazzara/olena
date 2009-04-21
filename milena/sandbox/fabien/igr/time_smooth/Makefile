@@ -2,7 +2,7 @@ include ../Makefile.rules
 
 
 linear: linear.cc
-	${CXX} -I../../../../ ${DICOM} ${CXXFLAGS} $^ -o linear
+	${CXX} -I../../../../ ${CXXFLAGS} $^ -o linear
 	
 median: median.cc
 	${CXX} -I../../../../ ${DICOM} ${CXXFLAGS} $^ -o median

@@ -7,7 +7,7 @@
 
 #include <mln/value/int_u12.hh>
 
-#include <mln/io/dicom/load.hh>
+#include <mln/io/dump/load.hh>
 #include <mln/io/plot/save.hh>
 
 #include <mln/accu/median_h.hh>
@@ -29,17 +29,19 @@ int main(int argc, char* argv[])
     return 1;
   }
 
+  typedef float I;
+
   ///////////////////
   //		   //
   // Image loading //
   //		   //
   ///////////////////
-  image3d<int_u12> input;
-  io::dicom::load(input, argv[1]);
-  util::array<image2d<int_u12> > arr_ima;
-  for (int i = 0; i < input.nslices(); ++i)
+  image3d<I> input;
+  io::dump::load(input, argv[1]);
+  util::array<image2d<I> > arr_ima;
+  for (unsigned int i = 0; i < input.nslices(); ++i)
   {
-    image2d<int_u12> tmp_slice = duplicate(slice(input, i));
+    image2d<I> tmp_slice = duplicate(slice(input, i));
     arr_ima.append(tmp_slice);
   }
 
@@ -61,14 +63,15 @@ int main(int argc, char* argv[])
   // Outputs //
   //	     //
   /////////////
-  image2d<util::array<float> > ima_result(input.nrows(), input.ncols());
+  image2d<util::array<float> > ima_result;
+  initialize(ima_result, slice(input, 0));
   mln_piter_(image2d<util::array<float> >) p(ima_linear[0].domain());
   for_all(p)
-    for (int i = 0; i < ima_linear.nelements(); ++i)
+    for (unsigned int i = 0; i < ima_linear.nelements(); ++i)
       ima_result(p).append(ima_linear[i](p));
 
   io::plot::save(ima_result(point2d(156, 114)), "linear_tumeur.plot");
-  io::plot::save(ima_result(point2d(34, 94)), "linear_air.plot");
+  io::plot::save(ima_result(point2d(54, 94)), "linear_air.plot");
   io::plot::save(ima_result(point2d(122, 115)), "linear_poumon.plot");
 
   return 0;

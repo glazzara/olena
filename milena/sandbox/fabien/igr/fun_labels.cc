@@ -71,7 +71,7 @@ void plot_label(Image<I>& ima, Image<L>& ima_labels, V lbl)
     box3d slice = make::box3d(sli, min_row, min_col,
 			      sli, max_row, max_col);
     mln_VAR(slice_label, vol_label | slice);
-    accu::mean<int_u12> accu_mean;
+    accu::mean<mln_value(I)> accu_mean;
     float mean = level::compute(accu_mean, slice_label);
     arr.append(mean);
   }
@@ -148,14 +148,15 @@ inline
 void plot_point(Image<I>& ima, Image<L>& ima_labels, point2d point, const char* desc)
 {
   util::array<float> arr;
-  label_16 prev_lbl;
+  mln_value(L) prev_lbl;
   int start = 0;
   int count = 1;
+  int nslices = geom::nslis(ima);
 
-  for (unsigned sli = 0; sli < geom::nslis(ima); ++sli)
+  for (unsigned sli = 0; sli < nslices; ++sli)
   {
-    image2d<int_u12> ima_slice = duplicate(slice(ima, sli));
-    image2d<label_16> lbl_slice = duplicate(slice(ima_labels, sli));
+    image2d<mln_value(I)> ima_slice = duplicate(slice(ima, sli));
+    image2d<mln_value(L)> lbl_slice = duplicate(slice(ima_labels, sli));
     if (sli == 0)
       prev_lbl = lbl_slice(point);
     if (lbl_slice(point) != prev_lbl)
@@ -166,13 +167,13 @@ void plot_point(Image<I>& ima, Image<L>& ima_labels, point2d point, const char* 
       start = sli + 1;
     }
     // Taking the median value of the region.
-    accu::median_h<int_u12> accu_med;
-    int_u12 median = level::compute(accu_med, ima_slice | pw::value(lbl_slice) == pw::cst(lbl_slice(point)));
-    arr.append(median);
+    accu::mean<mln_value(I)> accu_mean;
+    mln_value(I) mean = level::compute(accu_mean, ima_slice | pw::value(lbl_slice) == pw::cst(lbl_slice(point)));
+    arr.append(mean);
     prev_lbl = lbl_slice(point);
 
     // Saving a image of the selected label in the current slice for debug.
-    data::fill((ima_slice | pw::value(lbl_slice) == pw::cst(prev_lbl)).rw(), 1750);
+    /*data::fill((ima_slice | pw::value(lbl_slice) == pw::cst(prev_lbl)).rw(), 1750);
     std::ostringstream str_ima;
     str_ima << "debug_" << desc << "_";
     if (sli < 100)
@@ -180,7 +181,7 @@ void plot_point(Image<I>& ima, Image<L>& ima_labels, point2d point, const char* 
     if (sli < 10)
       str_ima << "0";
     str_ima << sli << ".pgm";
-    io::pgm::save(level::stretch(int_u8(), ima_slice), str_ima.str());
+    io::pgm::save(level::stretch(int_u8(), ima_slice), str_ima.str());*/
   }
 
   if (!arr.is_empty())
@@ -198,6 +199,7 @@ void plot_point(Image<I>& ima, Image<L>& ima_labels, point2d point, const char* 
 int main(int argc, char *argv[])
 {
   typedef label_16 L;
+  typedef float I;
 
   if (argc != 4)
   {
@@ -208,8 +210,8 @@ int main(int argc, char *argv[])
 
   L nlabels = atoi(argv[3]);
 
-  point2d p_tumeur(156, 114);
-  point2d p_air(34, 94);
+  point2d p_tumeur(163, 114);
+  point2d p_air(54, 94);
   point2d p_poumon(122, 115);
   image3d<L> ima_labels;
   io::dump::load(ima_labels, argv[1]);
@@ -220,15 +222,15 @@ int main(int argc, char *argv[])
 
   //plot_all_labels(ima, ima_labels, nlabels);
 
-  L l = 0;
+  /*L l = 0;
   for (unsigned i = 0; i < nlabels; ++i, l = i)
-    plot_label(ima, ima_labels, l);
+    plot_label(ima, ima_labels, l);*/
 
   io::dump::save(ima_labels, "labels.dump");
 
-  //plot_point(ima, ima_labels, p_tumeur, "tumeur");
-  //plot_point(ima, ima_labels, p_air, "air");
-  //plot_point(ima, ima_labels, p_poumon, "poumon");
+  plot_point(ima, ima_labels, p_tumeur, "tumeur");
+  plot_point(ima, ima_labels, p_air, "air");
+  plot_point(ima, ima_labels, p_poumon, "poumon");
 
   /*util::set<L> lbl_set;
     for (int sli = 0; sli < geom::nslis(ima_labels); ++sli)

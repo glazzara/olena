@@ -28,7 +28,7 @@ graph: graph.cc
 	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o graph
 	
 med: med.cc
-	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o med
+	${CXX} -I../../../ ${CXXFLAGS} $^ -o med
 	
 thres: thres.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o thres
@@ -38,6 +38,9 @@ matlab: matlab.cc
 	
 time_max: time_max.cc
 	${CXX} -I../../../ ${DICOM} ${MAGICK} ${CXXFLAGS} -lm $^ -o time_max
+	
+time_max_norm: time_max_norm.cc
+	${CXX} -I../../../ ${CXXFLAGS} -lm $^ -o time_max_norm
 	
 first_slice_dicom: first_slice_dicom.cc
 	${CXX} -I../../../ ${DICOM} ${MAGICK} ${CXXFLAGS} -lm $^ -o first_slice_dicom
@@ -56,6 +59,13 @@ label2gif: label2gif.cc
 
 norm: norm.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o norm
+
+#####################
+
+seg_fixed: seg_fixed.cc
+	${CXX} -I../../../ ${CXXFLAGS} $^ -o seg_fixed
+	
+#####################
 
 clean:
 	rm -rf *.dump *.p?m *.plot *.log *.csv *.dSYM

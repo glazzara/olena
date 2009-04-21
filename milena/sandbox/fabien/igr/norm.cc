@@ -18,6 +18,8 @@
 #include <mln/data/paste.hh>
 
 // DEBUG
+#include <mln/core/var.hh>
+#include <mln/estim/min_max.hh>
 /*#include <mln/accu/min.hh>
 #include <mln/accu/max.hh>
 #include <mln/level/compute.hh>*/
@@ -60,18 +62,10 @@ image3d<float> normalize(Image<I>& ima, int first, int last)
   image2d<float> ima_ini = mean_slices(ima_f, first, last);
 
   image3d<float> ima_result;
-  initialize(ima_result, ima_f);
+  initialize(ima_result, ima);
 
   for (int i = min_sli; i <= max_sli; ++i)
-    data::paste((slice(ima_f, i) - ima_ini), slice(ima_result, i).rw());
-
-  // DEBUG
-  /*accu::min<float> accu_min;
-  accu::max<float> accu_max;
-  float min = level::compute(accu_min, ima_ini);
-  float max = level::compute(accu_max, ima_ini);
-  std::cout << "min = " << min << std::endl;
-  std::cout << "max = " << max << std::endl;*/
+    data::paste((slice(ima_f, i) - ima_ini) / ima_ini, slice(ima_result, i).rw());
 
   return ima_result;
 }
