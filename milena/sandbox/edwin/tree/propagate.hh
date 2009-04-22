@@ -77,16 +77,16 @@ namespace mln {
 			     const p_array< mln_psite(A) >& component_list,
 			     const mln_value(A)& null)
       {
-	const A& attr_img = exact(attr_image);
+	const A& a = exact(attr_image);
 	A out;
-	initialize(out, attr_img);
+	initialize(out, a);
 	data::fill(out, null);
 
 	mln_piter(p_array<mln_psite(A)>) p(component_list);
 	for_all(p)
 	{
-	  out(p) = attr_img(p);
-	  morpho::tree::propagate_node_to_descendants(p, tree, out);
+	  out(p) = a(p);
+	  morpho::tree::propagate_node_to_descendants(p, tree, out, a(p));
 	}
 	morpho::tree::propagate_representant(tree, out);
 	return out;

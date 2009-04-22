@@ -222,7 +222,7 @@ namespace mln {
 	  p_array< mln_psite(A) > components;
 	  mln_ch_value(A, bool) activity;
 	  p_array< mln_psite(A) > max_arr = tree.nodes();
-	  unsigned arr_pos; //position in max_array
+	  unsigned arr_pos = 0; //position in max_array
 	  unsigned n = 0;
 	  unsigned* nb_leaves = uses_leaves ? new unsigned(0) : 0;
 
@@ -237,7 +237,7 @@ namespace mln {
 	      p = max_arr[arr_pos];
 	      if (a(p) == 0)
 		break;
-	      //std::cout << p << " " << a(p) << std::endl;
+	      std::cout << p << " " << a(p) << std::endl;
 	      components.insert(p);
 	      morpho::tree::propagate_node_to_descendants(p, tree, activity, false, nb_leaves);
 	      morpho::tree::propagate_node_to_ancestors(p, tree, activity, false);

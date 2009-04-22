@@ -200,7 +200,7 @@ int main(int argc, char** argv)
     obj_array = morpho::tree::get_components(t, a);
     std::cout << obj_array.nsites() << std::endl;
 
-    component_img = morpho::tree::propagate_components(a, t, obj_array, 1);
+    component_img = morpho::tree::propagate_components(a, t, obj_array, 1.1);
 
     // debug
     //I output = level::stretch(int_u8(),  component_img); //adapt to 0-255

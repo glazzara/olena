@@ -13,7 +13,7 @@ LDFLAGS=
 SRC=
 
 OUT_IMG=superpose.pgm mean.pgm gradient.pgm closing.pgm
-BIN=wst_from_closing wst_from_tree
+BIN=wst_from_closing wst_from_tree test
 
 
 all: $(BIN)

@@ -1,3 +1,16 @@
+2009-04-22  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Granulometry tests.
+	* edwin/rush/exo2/test.cc: Experimentation related to sharpness.
+	* edwin/rush/exo2/wst_from_tree.cc: Fix bugs linked to
+	sharpness attribute.
+	* edwin/rush/granulometry/granulometry.hh: Compute curve
+	number of components / attribute value.
+	* edwin/rush/granulometry/test.cc: Test file for granulometry.
+	* edwin/rush/granulometry: New.
+	* edwin/tree/components.hh: Minor fixes.
+	* edwin/tree/propagate.hh: Minor fixes.
+
 2009-04-21  Warren Seine  <soow@lrde.epita.fr>
 
 	inim: Implement line detection with boxes.
