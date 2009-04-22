@@ -1,7 +1,9 @@
 #ifndef CUTTOR_HXX
 # define CUTTOR_HXX
 
-# include "cuttor.hh"
+# include <mln/io/pgm/load.hh>
+# include <mln/io/pgm/save.hh>
+# include <mln/io/ppm/save.hh>
 # include <mln/linear/gaussian.hh>
 # include <mln/arith/revert.hh>
 # include <mln/morpho/watershed/flooding.hh>
@@ -12,6 +14,8 @@
 # include <mln/core/alias/point2d.hh>
 
 # include <mln/win/rectangle2d.hh>
+# include "cuttor.hh"
+# include "advance_iterator.hh"
 
 template<typename Value>
 Cuttor<Value>::Cuttor (std::string filepath)
@@ -66,6 +70,20 @@ Cuttor<Value>::start ()
   mln::image2d<mln::value::rgb8> super =
     mln::morpho::watershed::superpose (img_, water_open);
   save (super, filename_, "_super");
+}
+
+template <typename Value>
+void
+Cuttor<Value>::find_line (mln::image2d<Value>& water, mln::point2d p)
+{
+  AdvanceIterator<Value> it (water, p);
+  while (it.has_value ())
+  {
+    for_all (it)
+    {
+    }
+    it.reinit (*it);
+  }
 }
 
 template<typename Value>

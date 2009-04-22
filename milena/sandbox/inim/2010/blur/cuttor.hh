@@ -5,12 +5,6 @@
 # include <sys/stat.h>
 
 # include <mln/core/image/image2d.hh>
-
-
-# include <mln/io/pgm/load.hh>
-# include <mln/io/pgm/save.hh>
-# include <mln/io/ppm/save.hh>
-
 # include <mln/value/all.hh>
 
 template<typename Value>
@@ -24,7 +18,7 @@ class Cuttor
     void start ();
 
     // Draw the separation line which starts at the given position
-    void find_line (mln::image2d<Value> water, int y_start, int x_start = 0);
+    void find_line (mln::image2d<Value>& water, mln::point2d p);
   private:
     // TODO Private methods called by start.
 

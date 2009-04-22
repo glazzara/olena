@@ -2,7 +2,7 @@ INCLUDES=-I "../../../../"
 CXX=g++-4.2
 CXX_FLAGS=-W -Wall -O3 -ffast-math
 
-OBJS= main.o
+OBJS= main.o advance_iterator.o
 TARGET=cutthem
 
 all: $(TARGET)
