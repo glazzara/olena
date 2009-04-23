@@ -7,6 +7,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/value/all.hh>
 
+
 template<typename Value>
 class Cuttor
 {
@@ -17,10 +18,11 @@ class Cuttor
     // Lauch all the treatments needed at once on the image
     void start ();
 
-    // Draw the separation line which starts at the given position
-    void find_line (mln::image2d<Value>& water, mln::point2d p);
   private:
     // TODO Private methods called by start.
+
+    // Draw the separation line which starts at the given position
+    void find_line (mln::image2d<Value>& water, mln::point2d p);
 
     mln::point2d find_entry_point(mln::image2d<Value>& ima);
 

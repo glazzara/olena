@@ -1,3 +1,17 @@
+2009-04-23  Alex Hamelin  <hamelin@lrde.epita.fr>
+
+	Added meta code for vector search.
+	* Makefile: Small fixes.
+	* advance_iterator.cc: Remove.
+	* advance_iterator.hh: Small fixes.
+	* advance_iterator.hxx: New.
+	* cuttor.hh: Small fixes.
+	* cuttor.hxx: Small fixes.
+	* vect_it.hh: New.
+	* vect_it.hxx: New.
+	* vector.hh: New.
+	* vector.hxx: New.
+
 2009-04-22  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Granulometry tests.

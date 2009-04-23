@@ -1,5 +1,5 @@
-#ifndef ADVANCE_ITERATOR_HH_
-# define ADVANCE_ITERATOR_HH_
+#ifndef VECT_IT_HH
+# define VECT_IT_HH
 
 # define MLN_INCLUDE_ONLY
 # include <mln/core/alias/point2d.hh>
@@ -7,17 +7,21 @@
 # include <mln/core/image/image2d.hh>
 # undef MLN_INCLUDE_ONLY
 # include <list>
+# include "vect.hh"
 
 template <typename Value>
-class AdvanceIterator
+class VectorIterator
 {
 public:
-  AdvanceIterator (mln::image2d<Value>& water, mln::point2d p);
+  VectorIterator (mln::image2d<Value>& water,
+                  mln::point2d p,
+                  e_orient orient);
   void start ();
   bool is_valid ();
   bool has_point ();
   void next ();
-  void reinit (mln::point2d p);
+  void reinit (mln::point2d p,
+               e_orient orient);
   mln::point2d operator*();
   mln::point2d operator->();
 private:
@@ -29,6 +33,6 @@ private:
   static mln::dpoint2d* dpoints;
 };
 
-# include "advance_iterator.hxx"
+# include "vect_it.hxx"
 
-#endif /* !ADVANCE_ITERATOR_HH_ */
+#endif /* !VECT_IT_HH */

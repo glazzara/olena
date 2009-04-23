@@ -16,6 +16,7 @@
 # include <mln/win/rectangle2d.hh>
 # include "cuttor.hh"
 # include "advance_iterator.hh"
+//# include "vector.hh"
 
 template<typename Value>
 Cuttor<Value>::Cuttor (std::string filepath)
@@ -100,6 +101,7 @@ Cuttor<Value>::find_entry_point(mln::image2d<Value>& ima)
   return mln::point2d(-1,-1);;
 }
 
+
 template<typename Value>
 void
 save (mln::image2d<Value>& ima, std::string filename, std::string postfix)
@@ -121,5 +123,6 @@ save (mln::image2d<mln::value::rgb8>& ima, std::string filename, std::string pos
   std::cout << ">>>>> Saving " << name << std::endl;
   mln::io::ppm::save (ima, name);
 }
+
 
 #endif /* !CUTTOR_HXX */

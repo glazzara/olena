@@ -1,4 +1,7 @@
-#include "advance_iterator.hh"
+#ifndef ADVANCE_ITERATOR_HXX
+# define ADVANCE_ITERATOR_HXX
+
+# include "advance_iterator.hh"
 
 template <typename Value>
 mln::dpoint2d* AdvanceIterator<Value>::dpoints =
@@ -71,3 +74,5 @@ AdvanceIterator<Value>::operator-> ()
 {
   return *current_;
 }
+
+#endif /* !ADVANCE_ITERATOR_HXX */
