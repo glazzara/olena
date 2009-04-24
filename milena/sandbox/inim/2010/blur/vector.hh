@@ -6,7 +6,7 @@
 
 typedef enum orient
 {
-  UP,
+  UP = 0,
   UP_R,
   RIGHT,
   DOWN_R,
@@ -20,11 +20,13 @@ template<typename T>
 class Vector
 {
   public:
-    Vector(T& a);
-    void restart_from(T& a, e_orient orient);
-    bool add_point(T& a, e_orient orient);
-    int scalar(Vector<T>& vec);
-    double angle(Vector<T>& vec);
+    Vector();
+    Vector(T a);
+    void operator=(Vector<T> vect);
+    void restart_from(T a, e_orient orient);
+    bool add_point(T a, e_orient orient);
+    int scalar(Vector<T> vec);
+    double angle(Vector<T> vec);
     double norm();
   private:
     std::pair<T, T> vect_;

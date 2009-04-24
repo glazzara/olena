@@ -4,7 +4,12 @@
 # include "vector.hh"
 
 template<typename T>
-Vector<T>::Vector(T& a)
+Vector<T>::Vector()
+{}
+
+
+template<typename T>
+Vector<T>::Vector(T a)
   : vect_ (a, a),
     nb_point_ (0),
     norm_ (0),
@@ -13,7 +18,19 @@ Vector<T>::Vector(T& a)
 
 template<typename T>
 void
-Vector<T>::restart_from(T& a, e_orient orient)
+Vector<T>::operator= (Vector<T> vect)
+{
+  this->vect_.first = vect.vect_.first;
+  this->vect_.second = vect.vect_.second;
+  this->nb_point_ = vect.nb_point_;
+  this->nb_point_ = vect.nb_point_;
+  this->orient_ = vect.orient_;
+  this->norm_ = vect.norm_;
+}
+
+template<typename T>
+void
+Vector<T>::restart_from(T a, e_orient orient)
 {
   vect_.first = a;
   vect_.second = a;
@@ -31,7 +48,7 @@ Vector<T>::norm()
 
 template<typename T>
 bool
-Vector<T>::add_point(T& a, e_orient orient)
+Vector<T>::add_point(T a, e_orient orient)
 {
   if (nb_point_ == MAX_POINTS)
     return false;
@@ -50,17 +67,17 @@ Vector<T>::add_point(T& a, e_orient orient)
 
 template<typename T>
 int
-Vector<T>::scalar(Vector<T>& vec)
+Vector<T>::scalar(Vector<T> vec)
 {
-  return vec.vect_.first[0] * this.vect_.first[0]
-    + vec.vect_.second[1] * this.vect_.second[1];
+  return vec.vect_.first[0] * this->vect_.first[0]
+    + vec.vect_.second[1] * this->vect_.second[1];
 }
 
 template<typename T>
 double
-Vector<T>::angle(Vector<T>& vec)
+Vector<T>::angle(Vector<T> vec)
 {
-  return acos(this.scalar(vec) / (this.norm() * vec.norm()));
+  return acos(this->scalar(vec) / (this->norm() * vec.norm()));
 }
 
 #endif /* !VECTOR_HXX */

@@ -12,25 +12,29 @@
 template <typename Value>
 class VectorIterator
 {
-public:
-  VectorIterator (mln::image2d<Value>& water,
-                  mln::point2d p,
-                  e_orient orient);
-  void start ();
-  bool is_valid ();
-  bool has_point ();
-  void next ();
-  void reinit (mln::point2d p,
-               e_orient orient);
-  mln::point2d operator*();
-  mln::point2d operator->();
-private:
-  mln::point2d origin_;
-  std::list<mln::point2d> points_;
-  std::list<mln::point2d>::const_iterator current_;
-  mln::image2d<Value>& water_;
+  public:
+    VectorIterator (mln::image2d<Value>& water,
+                    mln::point2d p,
+                    e_orient orient);
+    unsigned count ();
+    void start ();
+    bool is_valid ();
+    bool has_point ();
+    void next ();
+    void reinit (mln::point2d p,
+                 e_orient orient);
+    e_orient orient ();
+    mln::point2d operator*();
+    mln::point2d operator->();
+  private:
+    typedef std::pair<mln::point2d, e_orient> pair_type_t;
+    typedef std::vector<pair_type_t> vector_type_t;
+    mln::point2d origin_;
+    vector_type_t points_;
+    vector_type_t::const_iterator current_;
+    mln::image2d<Value>& from_;
 
-  static mln::dpoint2d* dpoints;
+    static mln::dpoint2d dpoints[8];
 };
 
 # include "vect_it.hxx"

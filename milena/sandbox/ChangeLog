@@ -1,3 +1,13 @@
+2009-04-25  Alex Hamelin  <hamelin@lrde.epita.fr>
+
+	First version of vector cutting.
+	* cuttor.hh,
+	* cuttor.hxx: First version without debug.
+	* vect_it.hh,
+	* vect_it.hxx,
+	* vector.hh,
+	* vector.hxx: Fixes needed by the algorithm.
+
 2009-04-24  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Change data type, conversion to mln dump not yet effective.

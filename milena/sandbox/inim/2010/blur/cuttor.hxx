@@ -74,7 +74,8 @@ Cuttor<Value>::start ()
   {
     std::cout << "Entry point " << p << std::endl;
     rightmost_ = mln::point2d(-1, -1);
-    find_line (water, p);
+//    find_line (water, p);
+    find_vector_line(water, p);
     std::cout << "Line found." << std::endl;
   }
   save (lined_, filename_, "_lines");
@@ -83,6 +84,20 @@ Cuttor<Value>::start ()
   mln::image2d<mln::value::rgb8> super =
     mln::morpho::watershed::superpose (img_, lined_);
   save (super, filename_, "_super");
+}
+
+template<typename Value>
+mln::point2d
+Cuttor<Value>::find_entry_point(mln::image2d<Value>& ima)
+{
+  for (unsigned int i = last_entry_ + 1; i < ima.nrows(); ++i)
+    if (ima.at_(i, 0) == 0u)
+    {
+      last_entry_ = i;
+      return mln::point2d(last_entry_, 0);
+    }
+
+  return mln::point2d(-1,-1);;
 }
 
 template <typename Value>
@@ -126,41 +141,83 @@ Cuttor<Value>::find_line (mln::image2d<Value>& water, mln::point2d p)
   return false;
 }
 
-template<typename Value>
-mln::point2d
-Cuttor<Value>::find_entry_point(mln::image2d<Value>& ima)
-{
-  for (unsigned int i = last_entry_ + 1; i < ima.nrows(); ++i)
-    if (ima.at_(i, 0) == 0u)
-    {
-      last_entry_ = i;
-      return mln::point2d(last_entry_, 0);
-    }
-
-  return mln::point2d(-1,-1);;
-}
-
 ///////////////// VECTOR STYLE FINDER
 
 template <typename Value>
 void
 Cuttor<Value>::find_vector_line (mln::image2d<Value>& from,
-                                 mln::image2d<Value>& to,
                                  mln::point2d entry)
 {
-  AdvanceIterator<Value> it (from, entry);
+  VectorIterator<Value> it (from, entry, RIGHT);
   Vector<mln::point2d> current(entry);
   Vector<mln::point2d> previous(entry);
 
-  while (it.has_value ())
+  while (it.has_point())
   {
-    for_all (it)
+    // Pass all the pixels until an intersection
+    while (it.count() == 1 && it.has_point())
     {
+      if (!current.add_point(*it, it.orient()))
+      {
+        previous = current;
+        current.restart_from(*it, it.orient());
+      }
 
+      lined_(*it) = 0; // Add color
+      it.reinit (*it, it.orient());
     }
 
-    it.reinit (*it);
+    if (it.has_point())
+    {
+      // Draw finishing line til the end
+      // Right Edge aquired
+      return;
+    }
+    else
+    {
+      double min_angle = 360;
+      mln::point2d new_start (0,0);
+      e_orient new_orient = RIGHT ;
+
+      while (it.has_point ())
+      {
+        previous = current;
+
+        Vector<mln::point2d>
+          vect_tmp ;
+        vect_tmp = retrive_vect_from(from, *it, it.orient());
+        double angle_tmp = current.angle(vect_tmp);
+
+        if (angle_tmp < min_angle)
+        {
+          min_angle = angle_tmp;
+          new_start = *it;
+          new_orient = it.orient();
+        }
+
+        it.next();
+      }
+
+      lined_(new_start) = 0;
+      current.restart_from(new_start, new_orient);
+      it.reinit(new_start, new_orient);
+    }
   }
+}
+
+template<typename Value>
+Vector<mln::point2d>
+Cuttor<Value>::retrive_vect_from(mln::image2d<Value>& from,
+                                 mln::point2d start,
+                                 e_orient orient)
+{
+  VectorIterator<Value> it (from, start, orient);
+  Vector<mln::point2d> res(start);
+
+  while (it.count() == 1 && it.has_point() && res.add_point(*it, it.orient()))
+    it.reinit (*it, it.orient());
+
+  return res;
 }
 
 ///////////////// END OF VECTOR STYLE FINDER

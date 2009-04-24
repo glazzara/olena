@@ -6,7 +6,7 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/value/all.hh>
-
+# include "vector.hh"
 
 template<typename Value>
 class Cuttor
@@ -30,8 +30,11 @@ class Cuttor
     ///////////////// VECTOR STYLE FINDER
 
     void find_vector_line (mln::image2d<Value>& from,
-                           mln::image2d<Value>& to,
                            mln::point2d entry);
+
+    Vector<mln::point2d> retrive_vect_from(mln::image2d<Value>& from,
+                                           mln::point2d start,
+                                           e_orient orient);
 
     ///////////////// END OF VECTOR STYLE FINDER
 
