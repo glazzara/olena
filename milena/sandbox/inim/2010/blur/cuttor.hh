@@ -26,6 +26,15 @@ class Cuttor
 
     mln::point2d find_entry_point(mln::image2d<Value>& ima);
 
+
+    ///////////////// VECTOR STYLE FINDER
+
+    void find_vector_line (mln::image2d<Value>& from,
+                           mln::image2d<Value>& to,
+                           mln::point2d entry);
+
+    ///////////////// END OF VECTOR STYLE FINDER
+
     unsigned int last_entry_;
     // directory of the file
     std::string filedir_;

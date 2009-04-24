@@ -7,7 +7,7 @@
 # include <mln/core/image/image2d.hh>
 # undef MLN_INCLUDE_ONLY
 # include <list>
-# include "vect.hh"
+# include "vector.hh"
 
 template <typename Value>
 class VectorIterator

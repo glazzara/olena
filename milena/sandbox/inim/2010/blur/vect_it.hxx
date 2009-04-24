@@ -6,14 +6,14 @@
 template <typename Value>
 mln::dpoint2d* VectorIterator<Value>::dpoints =
 {
-  mln::dpoint2d (0, -1),
-  mln::dpoint2d (1, -1),
-  mln::dpoint2d (1, 0),
-  mln::dpoint2d (1, 1),
-  mln::dpoint2d (0, 1),
-  mln::dpoint2d (-1, 1),
-  mln::dpoint2d (-1, 0),
-  mln::dpoint2d (-1, -1)
+  mln::dpoint2d (0, -1), // UP
+  mln::dpoint2d (1, -1), // UP_R
+  mln::dpoint2d (1, 0),  // RIGHT
+  mln::dpoint2d (1, 1),  // DOWN_R
+  mln::dpoint2d (0, 1),  // DOWN
+  mln::dpoint2d (-1, 1), // DOWN_L
+  mln::dpoint2d (-1, 0), // LEFT
+  mln::dpoint2d (-1, -1) // UP_L
 };
 
 template <typename Value>

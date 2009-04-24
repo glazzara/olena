@@ -20,6 +20,6 @@ distclean: clean
 %.o: %.cc
 	$(CXX) $(CXX_FLAGS) $(INCLUDES) -c $<
 
-main.o: cuttor.hh cuttor.hxx
+main.o: cuttor.hh cuttor.hxx vector.hh vector.hxx vect_it.hh vect_it.hxx
 
 #

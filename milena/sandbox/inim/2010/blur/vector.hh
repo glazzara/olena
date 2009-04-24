@@ -2,11 +2,12 @@
 # define VECTOR_HH
 
 # include <utility>
+# define MAX_POINTS 10
 
 typedef enum orient
 {
   UP,
-  UP_L,
+  UP_R,
   RIGHT,
   DOWN_R,
   DOWN,
@@ -20,13 +21,16 @@ class Vector
 {
   public:
     Vector(T& a);
-    void restart_from(T& a, T& b);
-
+    void restart_from(T& a, e_orient orient);
+    bool add_point(T& a, e_orient orient);
+    int scalar(Vector<T>& vec);
+    double angle(Vector<T>& vec);
+    double norm();
   private:
     std::pair<T, T> vect_;
-    int nb_point;
+    int nb_point_;
+    double norm_;
     e_orient orient_;
-    const double delta_;
 };
 
 # include "vector.hxx"

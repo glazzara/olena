@@ -16,7 +16,7 @@
 # include <mln/win/rectangle2d.hh>
 # include "cuttor.hh"
 # include "advance_iterator.hh"
-//# include "vector.hh"
+# include "vect_it.hh"
 
 template<typename Value>
 Cuttor<Value>::Cuttor (std::string filepath)
@@ -101,6 +101,30 @@ Cuttor<Value>::find_entry_point(mln::image2d<Value>& ima)
   return mln::point2d(-1,-1);;
 }
 
+///////////////// VECTOR STYLE FINDER
+
+template <typename Value>
+void
+Cuttor<Value>::find_vector_line (mln::image2d<Value>& from,
+                                 mln::image2d<Value>& to,
+                                 mln::point2d entry)
+{
+  AdvanceIterator<Value> it (from, entry);
+  Vector<mln::point2d> current(entry);
+  Vector<mln::point2d> previous(entry);
+
+  while (it.has_value ())
+  {
+    for_all (it)
+    {
+
+    }
+
+    it.reinit (*it);
+  }
+}
+
+///////////////// END OF VECTOR STYLE FINDER
 
 template<typename Value>
 void

@@ -1,3 +1,14 @@
+2009-04-24  Alex Hamelin  <hamelin@lrde.epita.fr>
+
+	Add possibilities to Vector class.
+	* Makefile: Add dependancies.
+	* cuttor.hh,
+	* cuttor.hxx: Reordering and addind a function for vector search method.
+	* vect_it.hh: Fix typo.
+	* vect_it.hxx: Add comments.
+	* vector.hh,
+	* vector.hxx: Add norm, scalar and angle methods.
+
 2009-04-23  Alex Hamelin  <hamelin@lrde.epita.fr>
 
 	Added meta code for vector search.
