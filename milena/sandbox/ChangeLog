@@ -1,3 +1,11 @@
+2009-04-24  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add binary tools for parsing of .mat files.
+	* fabien/igr/mat2mln/mat2raw.cc: Uncompress .mat data.
+	* fabien/igr/mat2mln/raw2mlndata.cc: Convert uncompressed .mat data
+	  to Milena dump format.
+	* fabien/igr/seg_fixed.cc: Creation of edges between pixels.
+
 2009-04-24  Alex Hamelin  <hamelin@lrde.epita.fr>
 
 	Add possibilities to Vector class.

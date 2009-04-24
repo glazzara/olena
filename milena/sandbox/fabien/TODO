@@ -49,7 +49,7 @@
 [X] Fix spatial smooth
 [X] Crop volume 52
 [X] Plot all labels (3, 4 labels for tumeur)
-[ ] Prepare data for IGR
+[X] Prepare data for IGR
    [X] crop->norm->tmax
    [X] crop->norm->space_smooth->tmax
 
@@ -64,3 +64,5 @@
 
    [X] fausses couleurs watershed
    [X] images moyennes
+[ ] Watershed between pixels
+[ ] Mat2Mln

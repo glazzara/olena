@@ -59,6 +59,8 @@ compute_dist(image2d<util::array<I> > ima_arr,
     res += std::min(ima_arr(p)[i], ima_arr(n)[i]);
   res /= std::max(ima_sum(p), ima_sum(n));
 
+  std::cout << "dist = " << res << std::endl;
+
   return res;
 }
 
@@ -87,15 +89,21 @@ dist_on_edges(image2d<util::array<I> > ima_arr)
   initialize(ima_sum, ima_arr);
   compute_sum_arrays(ima_sum, ima_arr);
 
+  std::cout << "can i has a loop?" << std::endl;
   mln_piter(image2d<util::array<I> >) p(ima_arr.domain());
-  mln_niter(neighb2d) n(c4(), p);
   for_all(p)
+  {
+    std::cout << "for_all(p)" << std::endl;
+    mln_niter(neighb2d) n(c4(), p);
     for_all(n)
     {
+      std::cout << "for_all(n)" << std::endl;
       point2d location = get_edge_location(p, n);
-      if (edges(location) != -1)
+      std::cout << "location = " << p << " && edge = " << edges(location) << std::endl;
+      if (edges(location) == -1.f)
 	edges(location) = compute_dist(ima_arr, ima_sum, p, n);
     }
+  }
 
   return edges;
 }
@@ -112,23 +120,22 @@ int usage(const char* bin)
 
 int main(int argc, char* argv[])
 {
-  typedef int_u12 I;
-
   if (argc != 2)
     return usage(argv[0]);
 
-  image3d<I> input;
-  io::dump::save(input, argv[1]);
-  image2d<util::array<I> > ima_arr;
+  image3d<int_u12> input;
+  io::dump::load(input, argv[1]);
+  image2d<util::array<int_u12> > ima_arr;
   initialize(ima_arr, slice(input, 0));
   for (unsigned int i = 0; i < input.nslices(); ++i)
   {
-    image2d<I> tmp_slice = duplicate(slice(input, i));
-    mln_piter_(image2d<I>) p(tmp_slice.domain());
+    image2d<int_u12> tmp_slice = duplicate(slice(input, i));
+    mln_piter_(image2d<int_u12>) p(tmp_slice.domain());
     for_all(p)
       ima_arr(p).append(tmp_slice(p));
   }
 
+  std::cout << "ho hai _o/" << std::endl;
   image2d<float> edges = dist_on_edges(ima_arr);
 
   return 0;
