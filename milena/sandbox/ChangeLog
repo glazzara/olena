@@ -1,5 +1,11 @@
 2009-04-24  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
+	Change data type, conversion to mln dump not yet effective.
+	* fabien/igr/mat2mln/raw2mlndata.cc: Change data type
+	  (double -> int).
+
+2009-04-24  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
 	Add binary tools for parsing of .mat files.
 	* fabien/igr/mat2mln/mat2raw.cc: Uncompress .mat data.
 	* fabien/igr/mat2mln/raw2mlndata.cc: Convert uncompressed .mat data

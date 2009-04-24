@@ -4,6 +4,13 @@
 #include <mln/core/image/image3d.hh>
 #include <mln/io/dump/save.hh>
 
+#include <mln/io/pgm/save.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/level/stretch.hh>
+#include <mln/core/image/slice_image.hh>
+#include <mln/core/routine/duplicate.hh>
+#include <mln/core/image/image2d.hh>
+
 using namespace mln;
 
 
@@ -11,7 +18,7 @@ int main(int argc, char* argv[])
 {
   if (argc != 3)
   {
-    std::cout << "Usage: " << argv[0] << " input.raw output.raw" << std::endl;
+    std::cout << "Usage: " << argv[0] << " input.raw output.dump" << std::endl;
     return 1;
   }
 
@@ -99,7 +106,7 @@ int main(int argc, char* argv[])
   std::cout << "ncols: " << ncols << "; nrows: " << nrows << "; nslis: " << nslis << std::endl;
 
   // Data buffer.
-  typedef double V;
+  typedef int V;
   int data_size = ncols * nrows * nslis;
   V* data_buffer = new V[data_size];
   input.seekg(offset);
@@ -108,6 +115,11 @@ int main(int argc, char* argv[])
   image3d<V> ima(nslis, nrows, ncols);
   memcpy(ima.buffer(), data_buffer, data_size);
   io::dump::save(ima, argv[2]);
+
+  // Debug.
+  image2d<V> ima_debug;
+  ima_debug = duplicate(slice(ima, 50));
+  io::pgm::save(level::stretch(value::int_u8(), ima_debug), "debug.pgm");
 
   return 0;
 }
