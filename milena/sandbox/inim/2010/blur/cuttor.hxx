@@ -20,7 +20,7 @@
 
 template<typename Value>
 Cuttor<Value>::Cuttor (std::string filepath)
-  : last_entry_ (0)
+  : last_entry_ (-1)
 {
   // Load file
   mln::io::pgm::load (img_, filepath);
@@ -61,29 +61,104 @@ Cuttor<Value>::start ()
     mln::morpho::watershed::flooding (open, mln::c4 (), n);
   save (water, filename_, "_water");
 
-  std::cout << "First Entry point" << find_entry_point(water) << std::endl;
   // Used to unify the watershed lines
   mln::image2d<Value> water_open =
     mln::morpho::opening::structural (water, mln::win::rectangle2d (3, 3));
   save (water_open, filename_, "_water_open");
 
+  lined_ = mln::image2d<Value>(img_.domain());
+  mln::data::fill (lined_, 1);
+  // Find the horizontal line separators
+  for (mln::point2d p = find_entry_point(water_open);
+       p[1] >= 0; p = find_entry_point(water_open))
+  {
+    std::cout << "Entry point " << p << std::endl;
+    find_line (water_open, p);
+    std::cout << "Line found." << std::endl;
+  }
+  save (lined_, filename_, "_lines");
+
   // Superpose the watersheded image to the base image.
   mln::image2d<mln::value::rgb8> super =
-    mln::morpho::watershed::superpose (img_, water_open);
+    mln::morpho::watershed::superpose (img_, lined_);
   save (super, filename_, "_super");
 }
 
 template <typename Value>
-void
+mln::point2d
+find_unique_predecessor (mln::image2d<Value> ima, mln::point2d p)
+{
+  static mln::dpoint2d dp[] =
+  {
+    mln::dpoint2d (0, -1),
+    mln::dpoint2d (1, -1),
+    mln::dpoint2d (-1, -1),
+    mln::dpoint2d (1, 0),
+    mln::dpoint2d (-1, 0)
+  };
+  int i;
+  for (i = 0; i < 3 && ima(p + dp[i]) == 0u; ++i)
+    ;
+  if (i == 5)
+    return mln::point2d (-1, -1);
+  for (; i < 5; ++i)
+    if (ima(p + dp[i]) == 0u)
+      return mln::point2d (-1, -1);
+  return p + dp[i];
+}
+
+template <typename Value>
+bool
 Cuttor<Value>::find_line (mln::image2d<Value>& water, mln::point2d p)
 {
-  AdvanceIterator<Value> it (water, p);
-  while (it.has_value ())
+  AdvanceIterator<Value> it (water, lined_, p);
+
+  std::cout << "Count: " << it.count() << " at " << p << std::endl;
+  // First we advance to the next "intersection"
+  while (it.count() == 1 && water.has(*it))
   {
+    std::cout << "Advancing " << (*it) << std::endl;
+    // Only one pixel at the right: we mark it and we continue
+    lined_(it.center()) = 0;
+    it.recenter (*it);
+  }
+
+  if (!lined_.has(*it))
+    // Right edge reached !
+    return true;
+  else if (it.count() > 1)
+  {
+    // Several paths are possible
     for_all (it)
     {
+      std::cout << "Trying " << *it << std::endl;
+      if (find_line (water, *it))
+      {
+	lined_(it.center()) = 0;
+	return true;
+      }
     }
-    it.reinit (*it);
+    // Absolutely no path to the right.
+    // Default behavior is to draw a straight line to the right.
+    // (This case only happens when reaching the white block on the right
+    // of the document, so it shouldn't bring any problem)
+    for (mln::point2d p = it.center (); lined_.has(p); ++p[1])
+      lined_(p) = 0;
+    return true;
+  }
+  else // if (it.count() == 0)
+  {
+//     std::cout << "Backtrack" << std::endl;
+//     // Dead end, we must backtrack
+//     for (mln::point2d back = find_unique_predecessor (lined_, it.center());
+// 	 back[1] >= 0;
+// 	 back = find_unique_predecessor (lined_, it.center()))
+//     {
+//       lined_(it.center()) = 1;
+//       it.recenter (mln::point2d(back[1], it.center()[1] - 1));
+//     }
+//     lined_(it.center()) = 1;
+    return false;
   }
 }
 
@@ -91,7 +166,7 @@ template<typename Value>
 mln::point2d
 Cuttor<Value>::find_entry_point(mln::image2d<Value>& ima)
 {
-  for (unsigned int i = last_entry_; i < ima.nrows(); ++i)
+  for (unsigned int i = last_entry_ + 1; i < ima.nrows(); ++i)
     if (ima.at_(i, 0) == 0u)
     {
       last_entry_ = i;

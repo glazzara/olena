@@ -8,7 +8,7 @@ TARGET=cutthem
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CXX) $^ -o $@
+	$(CXX) $(DEBUG_FLAGS) $^ -o $@
 
 clean:
 	rm -f *~ *.o
@@ -18,8 +18,11 @@ distclean: clean
 	rm -rf *_result
 
 %.o: %.cc
-	$(CXX) $(CXX_FLAGS) $(INCLUDES) -c $<
+	$(CXX) $(CXX_FLAGS) $(INCLUDES) $(DEBUG_FLAGS) -c $<
 
-main.o: cuttor.hh cuttor.hxx vector.hh vector.hxx vect_it.hh vect_it.hxx
+main.o: cuttor.hh cuttor.hxx				\
+	advance_iterator.hh advance_iterator.hxx	\
+	vector.hh vector.hxx				\
+	vect_it.hh vect_it.hxx
 
 #

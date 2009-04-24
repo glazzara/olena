@@ -22,7 +22,7 @@ class Cuttor
     // TODO Private methods called by start.
 
     // Draw the separation line which starts at the given position
-    void find_line (mln::image2d<Value>& water, mln::point2d p);
+    bool find_line (mln::image2d<Value>& water, mln::point2d p);
 
     mln::point2d find_entry_point(mln::image2d<Value>& ima);
 

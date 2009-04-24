@@ -1,43 +1,53 @@
 #ifndef ADVANCE_ITERATOR_HXX
 # define ADVANCE_ITERATOR_HXX
 
-# include "advance_iterator.hh"
+#include "advance_iterator.hh"
 
 template <typename Value>
-mln::dpoint2d* AdvanceIterator<Value>::dpoints =
+mln::dpoint2d AdvanceIterator<Value>::dpoints[] =
 {
-  mln::dpoint2d (1, 0),
-  mln::dpoint2d (1, 1),
-  mln::dpoint2d (1, -1),
   mln::dpoint2d (0, 1),
-  mln::dpoint2d (0, -1)
+  mln::dpoint2d (-1, 1),
+  mln::dpoint2d (1, 1),
+  mln::dpoint2d (1, 0),
+  mln::dpoint2d (-1, 0)
 };
 
 template <typename Value>
 AdvanceIterator<Value>::AdvanceIterator (mln::image2d<Value>& water,
+					 mln::image2d<Value>& result,
 					 mln::point2d p)
   : origin_ (p),
-    water_ (water)
+    water_ (water),
+    result_ (result)
 {
-  this->reinit (p);
+  points_.reserve (5);
+  this->recenter (p);
 }
 
 template <typename Value>
 void
-AdvanceIterator<Value>::reinit (mln::point2d p)
+AdvanceIterator<Value>::recenter (mln::point2d p)
 {
   points_.clear ();
-  origin_ = current_ = p;
-  for (int i = 0; i < 5; ++i)
-    if (0 == water_ (p + dpoints[i]))
-      points_.push_front (p + dpoints[i]);
+  origin_ = p;
+  for (int i = 0; i < 3; ++i)
+    if (result_.has(p + dpoints[i])
+	&& water_ (p + dpoints[i]) == 0u
+// 	&& result_(p + dpoints[i]) != 0u
+      )
+    {
+//       std::cout << water_ (p + dpoints[i]) << std::endl;
+      points_.push_back (p + dpoints[i]);
+    }
+  current_ = points_.begin ();
 }
 
 template <typename Value>
-bool
-AdvanceIterator<Value>::has_point ()
+unsigned
+AdvanceIterator<Value>::count ()
 {
-  return current_ != points_.end ();
+  return points_.size ();
 }
 
 template <typename Value>
@@ -51,7 +61,7 @@ template <typename Value>
 bool
 AdvanceIterator<Value>::is_valid ()
 {
-  return has_point () && water_.has (*current_);
+  return current_ != points_.end ();
 }
 
 template <typename Value>
@@ -59,6 +69,13 @@ void
 AdvanceIterator<Value>::next ()
 {
   ++current_;
+}
+
+template <typename Value>
+mln::point2d
+AdvanceIterator<Value>::center ()
+{
+  return origin_;
 }
 
 template <typename Value>
