@@ -46,6 +46,8 @@ class Cuttor
 
     // The line separation image
     mln::image2d<Value> lined_;
+    // The furthest point reached in the current line being drawn
+    mln::point2d rightmost_;
 };
 
 template <typename Value>

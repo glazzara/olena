@@ -61,19 +61,20 @@ Cuttor<Value>::start ()
     mln::morpho::watershed::flooding (open, mln::c4 (), n);
   save (water, filename_, "_water");
 
-  // Used to unify the watershed lines
-  mln::image2d<Value> water_open =
-    mln::morpho::opening::structural (water, mln::win::rectangle2d (3, 3));
-  save (water_open, filename_, "_water_open");
+//   // Used to unify the watershed lines
+//   mln::image2d<Value> water_open =
+//     mln::morpho::opening::structural (water, mln::win::rectangle2d (3, 3));
+//   save (water_open, filename_, "_water_open");
 
   lined_ = mln::image2d<Value>(img_.domain());
   mln::data::fill (lined_, 1);
   // Find the horizontal line separators
-  for (mln::point2d p = find_entry_point(water_open);
-       p[1] >= 0; p = find_entry_point(water_open))
+  for (mln::point2d p = find_entry_point(water);
+       p[1] >= 0; p = find_entry_point(water))
   {
     std::cout << "Entry point " << p << std::endl;
-    find_line (water_open, p);
+    rightmost_ = mln::point2d(-1, -1);
+    find_line (water, p);
     std::cout << "Line found." << std::endl;
   }
   save (lined_, filename_, "_lines");
@@ -82,29 +83,6 @@ Cuttor<Value>::start ()
   mln::image2d<mln::value::rgb8> super =
     mln::morpho::watershed::superpose (img_, lined_);
   save (super, filename_, "_super");
-}
-
-template <typename Value>
-mln::point2d
-find_unique_predecessor (mln::image2d<Value> ima, mln::point2d p)
-{
-  static mln::dpoint2d dp[] =
-  {
-    mln::dpoint2d (0, -1),
-    mln::dpoint2d (1, -1),
-    mln::dpoint2d (-1, -1),
-    mln::dpoint2d (1, 0),
-    mln::dpoint2d (-1, 0)
-  };
-  int i;
-  for (i = 0; i < 3 && ima(p + dp[i]) == 0u; ++i)
-    ;
-  if (i == 5)
-    return mln::point2d (-1, -1);
-  for (; i < 5; ++i)
-    if (ima(p + dp[i]) == 0u)
-      return mln::point2d (-1, -1);
-  return p + dp[i];
 }
 
 template <typename Value>
@@ -124,8 +102,11 @@ Cuttor<Value>::find_line (mln::image2d<Value>& water, mln::point2d p)
   }
 
   if (!lined_.has(*it))
+  {
     // Right edge reached !
+    rightmost_ = *it;
     return true;
+  }
   else if (it.count() > 1)
   {
     // Several paths are possible
@@ -138,28 +119,11 @@ Cuttor<Value>::find_line (mln::image2d<Value>& water, mln::point2d p)
 	return true;
       }
     }
-    // Absolutely no path to the right.
-    // Default behavior is to draw a straight line to the right.
-    // (This case only happens when reaching the white block on the right
-    // of the document, so it shouldn't bring any problem)
-    for (mln::point2d p = it.center (); lined_.has(p); ++p[1])
-      lined_(p) = 0;
-    return true;
   }
-  else // if (it.count() == 0)
-  {
-//     std::cout << "Backtrack" << std::endl;
-//     // Dead end, we must backtrack
-//     for (mln::point2d back = find_unique_predecessor (lined_, it.center());
-// 	 back[1] >= 0;
-// 	 back = find_unique_predecessor (lined_, it.center()))
-//     {
-//       lined_(it.center()) = 1;
-//       it.recenter (mln::point2d(back[1], it.center()[1] - 1));
-//     }
-//     lined_(it.center()) = 1;
-    return false;
-  }
+  // Dead end :(
+  if ((*it)[0] > rightmost_[0])
+    rightmost_ = *it;
+  return false;
 }
 
 template<typename Value>
