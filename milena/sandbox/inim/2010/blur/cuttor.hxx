@@ -44,7 +44,7 @@ Cuttor<Value>::Cuttor (std::string filepath)
 
 template<typename Value>
 void
-Cuttor<Value>::start ()
+Cuttor<Value>::start (bool use_vect)
 {
   // Blur the image to loose useless information
   mln::image2d<Value> blur =
@@ -70,9 +70,10 @@ Cuttor<Value>::start ()
   {
     std::cout << "Entry point " << p << std::endl;
     rightmost_ = mln::point2d(-1, -1);
-//    find_line (water, p);
-    find_vector_line(water, p);
-    std::cout << "Line found ending at " << rightmost_ << std::endl;
+    if (use_vect)
+      find_vector_line(water, p);
+    else
+      find_line (water, p);
     for (; lined_.domain().has(rightmost_); ++rightmost_[1])
       lined_(rightmost_) = 0;
   }

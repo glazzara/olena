@@ -16,7 +16,7 @@ class Cuttor
     Cuttor (std::string filepath);
 
     // Lauch all the treatments needed at once on the image
-    void start ();
+    void start (bool use_vect);
 
   private:
     // TODO Private methods called by start.
