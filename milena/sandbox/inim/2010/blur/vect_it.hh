@@ -15,19 +15,20 @@ class VectorIterator
   public:
     VectorIterator (mln::image2d<Value>& water,
                     mln::point2d p,
-                    e_orient orient);
+                    int orient);
     unsigned count ();
     void start ();
     bool is_valid ();
     bool has_point ();
     void next ();
     void reinit (mln::point2d p,
-                 e_orient orient);
-    e_orient orient ();
+                 int orient);
+    int orient ();
+    mln::point2d origin();
     mln::point2d operator*();
     mln::point2d operator->();
   private:
-    typedef std::pair<mln::point2d, e_orient> pair_type_t;
+    typedef std::pair<mln::point2d, int> pair_type_t;
     typedef std::vector<pair_type_t> vector_type_t;
     mln::point2d origin_;
     vector_type_t points_;

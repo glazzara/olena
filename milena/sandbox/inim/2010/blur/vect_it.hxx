@@ -3,23 +3,22 @@
 
 # include "vect_it.hh"
 
+int mod(int x, int y);
+
 template <typename Value>
 mln::dpoint2d VectorIterator<Value>::dpoints[8] =
 {
-  mln::dpoint2d (-1, 0), // UP
-  mln::dpoint2d (-1, 1), // UP_R
-  mln::dpoint2d (0, 1),  // RIGHT
-  mln::dpoint2d (1, 1),  // DOWN_R
-  mln::dpoint2d (1, 0),  // DOWN
-  mln::dpoint2d (1, -1), // DOWN_L
-  mln::dpoint2d (0, -1), // LEFT
-  mln::dpoint2d (-1, -1) // UP_L
+  mln::dpoint2d (0, 1),
+  mln::dpoint2d (-1, 1),
+  mln::dpoint2d (1, 1),
+  mln::dpoint2d (1, 0),
+  mln::dpoint2d (-1, 0)
 };
 
 template <typename Value>
 VectorIterator<Value>::VectorIterator (mln::image2d<Value>& water,
                                        mln::point2d p,
-                                       e_orient orient)
+                                       int orient)
   : origin_ (p),
     from_ (water)
 {
@@ -36,29 +35,50 @@ VectorIterator<Value>::count ()
 
 template <typename Value>
 void
-VectorIterator<Value>::reinit (mln::point2d p, e_orient orient)
+VectorIterator<Value>::reinit (mln::point2d p, int orient)
 {
   points_.clear ();
+  origin_ = p;
+
+  for (int i = 0; i < 3; ++i)
+    if (from_.domain().has(p + dpoints[i])
+	&& from_ (p + dpoints[i]) == 0u)
+    {
+      points_.push_back (pair_type_t(p + dpoints[i], orient));
+    }
+
+
+//   if (0u == from_ (p + dpoints[mod(orient, 8)]))
+//   {
+// //    std::cout << "**** 0 PUSH " << p + dpoints[mod(orient, 8)] << mod(orient, 8)<< std::endl;
+//     points_.push_back (pair_type_t(p + dpoints[mod(orient, 8)], mod(orient, 8)));
+//   }
+//   if (0u == from_ (p + dpoints[mod(orient + 1, 8)]))
+//   {
+// //    std::cout << "**** 1 PUSH " << p + dpoints[mod(orient + 1, 8)] << mod(orient + 1, 8)<<std::endl;
+//     points_.push_back (pair_type_t(p + dpoints[mod(orient + 1, 8)],
+//                                    mod(orient + 1, 8)));
+//   }
+//   if (0u == from_ (p + dpoints[mod(orient - 1, 8)]))
+//   {
+// //    std::cout << "**** 2 PUSH " << p + dpoints[mod(orient - 1, 8)] << mod(orient -1, 8)<< std::endl;
+//     points_.push_back (pair_type_t(p + dpoints[mod(orient - 1, 8)],
+//                                    mod(orient - 1, 8)));
+//   }
+// //   if (0u == from_ (p + dpoints[mod(orient + 2, 8)]))
+// //   {
+// // //    std::cout << "**** 3 PUSH " << p + dpoints[mod(orient + 2, 8)] << mod(orient + 2, 8)<< std::endl;
+// //     points_.push_back (pair_type_t(p + dpoints[mod(orient + 2, 8)],
+// //                                    mod(orient + 2, 8)));
+// //   }
+// //   if (0u == from_ (p + dpoints[mod(orient - 2, 8)]))
+// //   {
+// // //    std::cout << "**** 4 PUSH " << p + dpoints[mod(orient - 2, 8)] << mod(orient - 2, 8)<< std::endl;
+// //     points_.push_back (pair_type_t(p + dpoints[mod(orient - 2, 8)],
+// //                                    mod(orient - 2, 8)));
+// //   }
+
   start();
-
-  if (0u == from_ (p + dpoints[(orient % 8)]))
-    points_.push_back (pair_type_t(p + dpoints[orient % 8], orient));
-
-  if (0u == from_ (p + dpoints[(orient + 1) % 8]))
-    points_.push_back (pair_type_t(p + dpoints[(orient + 1) % 8],
-                                   (e_orient)((orient + 1) % 8)));
-
-  if (0u == from_ (p + dpoints[(orient - 1)% 8]))
-    points_.push_back (pair_type_t(p + dpoints[(orient - 1) % 8],
-                                   (e_orient)((orient - 1) % 8)));
-
-  if (0u == from_ (p + dpoints[(orient + 2) % 8]))
-    points_.push_back (pair_type_t(p + dpoints[(orient + 2) % 8],
-                                   (e_orient)((orient + 2) % 8)));
-
-  if (0u == from_ (p + dpoints[(orient - 2) % 8]))
-    points_.push_back (pair_type_t(p + dpoints[(orient - 2) % 8],
-                                   (e_orient)((orient - 2) % 8)));
 }
 
 template <typename Value>
@@ -79,7 +99,7 @@ template <typename Value>
 bool
 VectorIterator<Value>::is_valid ()
 {
-  return has_point () && from_.has (*current_);
+  return has_point () && from_.has (current_->first);
 }
 
 template <typename Value>
@@ -98,16 +118,35 @@ VectorIterator<Value>::operator* ()
 
 template <typename Value>
 mln::point2d
+VectorIterator<Value>::origin ()
+{
+  return origin_;
+}
+
+template <typename Value>
+mln::point2d
 VectorIterator<Value>::operator-> ()
 {
   return current_->first;
 }
 
 template <typename Value>
-e_orient
+int
 VectorIterator<Value>::orient ()
 {
   return current_->second;
+}
+
+
+
+int
+mod(int x, int y)
+{
+  int t = x - y * floor(x/y);
+
+  if (t < 0)
+    return t + y;
+  return t;
 }
 
 #endif /* !VECT_IT_HXX */

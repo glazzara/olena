@@ -178,9 +178,12 @@ Cuttor<Value>::find_vector_line (mln::image2d<Value>& from,
     // Pass all the pixels until an intersection
     while (it.count() == 1 && it.has_point())
     {
+//      std::cout << "### Advancing " << (*it) << std::endl;
       if (!current.add_point(*it, it.orient()))
       {
         previous = current;
+//        std::cout << "### 10 size vector " << std::endl;
+//        current.print();
         current.restart_from(*it, it.orient());
       }
 
@@ -188,26 +191,41 @@ Cuttor<Value>::find_vector_line (mln::image2d<Value>& from,
       it.reinit (*it, it.orient());
     }
 
-    if (it.has_point())
+//    current.print();
+
+    if (!it.has_point() || !from.domain().has(*it))
     {
       // Draw finishing line til the end
-      // Right Edge aquired
+      rightmost_ = it.origin();
+      std::cout << "### END OF LINE" << std::endl;
       return;
     }
     else
     {
+//      std::cout << "### LOOK FOR ORIENTATION" << std::endl;
+
       double min_angle = 360;
       mln::point2d new_start (0,0);
-      e_orient new_orient = RIGHT ;
+      int new_orient = 2; // RIGHT
 
       while (it.has_point ())
       {
-        previous = current;
+        std::cout << "### Test on " << (*it) << " Orient " << it.orient() << std::endl;
 
-        Vector<mln::point2d>
-          vect_tmp ;
-        vect_tmp = retrive_vect_from(from, *it, it.orient());
-        double angle_tmp = current.angle(vect_tmp);
+        Vector<mln::point2d>* vect_tmp = retrive_vect_from(from, *it, it.orient());
+
+//        vect_tmp->print ();
+
+
+//        std::cout << "%%%% Scalar " << current.scalar(*vect_tmp) << std::endl;
+        double angle_tmp;
+
+        if (current.norm() != 0)
+          angle_tmp = current.angle(*vect_tmp);
+        else
+          angle_tmp = previous.angle(*vect_tmp);
+
+//        std::cout << "### Angle " << angle_tmp << std::endl;
 
         if (angle_tmp < min_angle)
         {
@@ -216,27 +234,43 @@ Cuttor<Value>::find_vector_line (mln::image2d<Value>& from,
           new_orient = it.orient();
         }
 
+        delete vect_tmp;
+
         it.next();
       }
 
+//      std::cout << "### Chosen new start: " << new_start << std::endl;
       lined_(new_start) = 0;
+      previous = current;
       current.restart_from(new_start, new_orient);
       it.reinit(new_start, new_orient);
     }
   }
+  std::cout << "!!!!!!! A PROBLEM OCCURED, UNEXPECTED BEHAVIOR" << std::endl;
 }
 
 template<typename Value>
-Vector<mln::point2d>
+Vector<mln::point2d>*
 Cuttor<Value>::retrive_vect_from(mln::image2d<Value>& from,
                                  mln::point2d start,
-                                 e_orient orient)
+                                 int orient)
 {
   VectorIterator<Value> it (from, start, orient);
-  Vector<mln::point2d> res(start);
+  Vector<mln::point2d>* res =  new Vector<mln::point2d>(start);
 
-  while (it.count() == 1 && it.has_point() && res.add_point(*it, it.orient()))
+  // std::cout << "### Inside retrive from" << start << std::endl;
+
+//   std::cout << "### OUT loop count " << it.count()
+//             << " has_point " << it.has_point()
+//             << " Cur Point " << (*it) << std::endl;
+
+  while (it.count() == 1 && it.has_point() && res->add_point(*it, it.orient()))
+  {
+//     std::cout << "### Inside loop count " << it.count()
+//               << " has_point " << it.has_point()
+//               << " Cur Point " << (*it) << std::endl;
     it.reinit (*it, it.orient());
+  }
 
   return res;
 }

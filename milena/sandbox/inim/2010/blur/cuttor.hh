@@ -32,9 +32,9 @@ class Cuttor
     void find_vector_line (mln::image2d<Value>& from,
                            mln::point2d entry);
 
-    Vector<mln::point2d> retrive_vect_from(mln::image2d<Value>& from,
-                                           mln::point2d start,
-                                           e_orient orient);
+    Vector<mln::point2d>* retrive_vect_from(mln::image2d<Value>& from,
+                                            mln::point2d start,
+                                            int orient);
 
     ///////////////// END OF VECTOR STYLE FINDER
 

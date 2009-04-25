@@ -1,5 +1,5 @@
 INCLUDES=-I "../../../../"
-CXX=g++-4.2
+CXX=g++
 CXX_FLAGS=-W -Wall -O3 -ffast-math
 
 OBJS= main.o

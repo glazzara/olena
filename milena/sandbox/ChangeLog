@@ -1,5 +1,17 @@
 2009-04-25  Alex Hamelin  <hamelin@lrde.epita.fr>
 
+	End of vector method, proved to be useless.
+	* Makefile: g++ path changed.
+	* cuttor.hh,
+	* cuttor.hxx: Debug ended and finished.
+	* vect_it.hh
+	* vect_it.hxx: Adding primitives, changing loading behavior.
+	* vect_it_OLD.hxx: New.
+	* vector.hh,
+	* vector.hxx: Modify the way some values are computed.
+
+2009-04-25  Alex Hamelin  <hamelin@lrde.epita.fr>
+
 	First version of vector cutting.
 	* cuttor.hh,
 	* cuttor.hxx: First version without debug.
