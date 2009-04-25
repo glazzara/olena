@@ -9,6 +9,7 @@
 # include <mln/morpho/watershed/flooding.hh>
 # include <mln/morpho/watershed/superpose.hh>
 # include <mln/morpho/opening/structural.hh>
+# include <mln/labeling/foreground.hh>
 
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/alias/point2d.hh>
@@ -61,11 +62,6 @@ Cuttor<Value>::start ()
     mln::morpho::watershed::flooding (open, mln::c4 (), n);
   save (water, filename_, "_water");
 
-//   // Used to unify the watershed lines
-//   mln::image2d<Value> water_open =
-//     mln::morpho::opening::structural (water, mln::win::rectangle2d (3, 3));
-//   save (water_open, filename_, "_water_open");
-
   lined_ = mln::image2d<Value>(img_.domain());
   mln::data::fill (lined_, 1);
   // Find the horizontal line separators
@@ -76,14 +72,31 @@ Cuttor<Value>::start ()
     rightmost_ = mln::point2d(-1, -1);
 //    find_line (water, p);
     find_vector_line(water, p);
-    std::cout << "Line found." << std::endl;
+    std::cout << "Line found ending at " << rightmost_ << std::endl;
+    for (; lined_.domain().has(rightmost_); ++rightmost_[1])
+      lined_(rightmost_) = 0;
   }
-  save (lined_, filename_, "_lines");
 
-  // Superpose the watersheded image to the base image.
+  // Superpose the line separator image to the base image.
   mln::image2d<mln::value::rgb8> super =
     mln::morpho::watershed::superpose (img_, lined_);
   save (super, filename_, "_super");
+
+  // Label the discovered connected components
+  int l;
+  mln::image2d<int> line_components =
+    mln::labeling::level (lined_, 1, mln::c4(), l);
+  save (line_components, filename_, "_lines");
+
+  // Finally, the labeled image.
+  mln::image2d<Value> final (img_.domain());
+  typename mln::image2d<Value>::fwd_piter p (img_.domain());
+  for_all (p)
+    if (img_(p))
+      final(p) = 0;
+    else
+      final(p) = line_components(p);
+  save (final, filename_, "_final");
 }
 
 template<typename Value>
@@ -106,20 +119,21 @@ Cuttor<Value>::find_line (mln::image2d<Value>& water, mln::point2d p)
 {
   AdvanceIterator<Value> it (water, lined_, p);
 
+  lined_(p) = 0;
   std::cout << "Count: " << it.count() << " at " << p << std::endl;
   // First we advance to the next "intersection"
-  while (it.count() == 1 && water.has(*it))
+  while (it.count() == 1 && water.domain().has(*it))
   {
     std::cout << "Advancing " << (*it) << std::endl;
     // Only one pixel at the right: we mark it and we continue
-    lined_(it.center()) = 0;
+    lined_(*it) = 0;
     it.recenter (*it);
   }
 
-  if (!lined_.has(*it))
+  if (!lined_.domain().has(it.center()))
   {
     // Right edge reached !
-    rightmost_ = *it;
+    rightmost_ = it.center();
     return true;
   }
   else if (it.count() > 1)
@@ -129,16 +143,22 @@ Cuttor<Value>::find_line (mln::image2d<Value>& water, mln::point2d p)
     {
       std::cout << "Trying " << *it << std::endl;
       if (find_line (water, *it))
-      {
-	lined_(it.center()) = 0;
 	return true;
-      }
     }
-  }
+    std::cout << "Several branches, none good at " << it.center() << std::endl;
+   }
+  std::cout << "Dead end at " << it.center() << std::endl;
   // Dead end :(
-  if ((*it)[0] > rightmost_[0])
-    rightmost_ = *it;
-  return false;
+  if (it.center()[1] > rightmost_[1])
+  {
+    std::cout << "Found " << it.center()
+              << " better than " << rightmost_ << std::endl;
+    rightmost_ = it.center();
+  }
+  else
+    std::cout << "Found " << it.center()
+              << " worse than " << rightmost_ << std::endl;
+   return false;
 }
 
 ///////////////// VECTOR STYLE FINDER

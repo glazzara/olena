@@ -32,7 +32,7 @@ AdvanceIterator<Value>::recenter (mln::point2d p)
   points_.clear ();
   origin_ = p;
   for (int i = 0; i < 3; ++i)
-    if (result_.has(p + dpoints[i])
+    if (result_.domain().has(p + dpoints[i])
 	&& water_ (p + dpoints[i]) == 0u
 // 	&& result_(p + dpoints[i]) != 0u
       )
