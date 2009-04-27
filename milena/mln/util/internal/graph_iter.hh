@@ -62,11 +62,11 @@ namespace mln
       protected:
 	/// Returns the id of the first element.
 	/// Called in start();
-	unsigned start_id_() const;
+	util::vertex_id_t start_id_() const;
 
 	/// Returns the next element id.
 	/// Called in next();
-	unsigned next_id_() const;
+	util::vertex_id_t next_id_() const;
 
 	friend class graph_iter_base<G, util::vertex<G>, vertex_fwd_iterator<G> >;
     };
@@ -90,11 +90,11 @@ namespace mln
       protected:
 	/// Returns the id of the first element.
 	/// Called in start();
-	unsigned start_id_() const;
+	util::vertex_id_t start_id_() const;
 
 	/// Returns the next element id.
 	/// Called in next();
-	unsigned next_id_() const;
+	util::vertex_id_t next_id_() const;
 
 	friend class graph_iter_base<G, util::vertex<G>, vertex_bkd_iterator<G> >;
     };
@@ -118,11 +118,11 @@ namespace mln
       protected:
 	/// Returns the id of the first element.
 	/// Called in start();
-	unsigned start_id_() const;
+	util::edge_id_t start_id_() const;
 
 	/// Returns the next element id.
 	/// Called in next();
-	unsigned next_id_() const;
+	util::edge_id_t next_id_() const;
 
 	friend class graph_iter_base<G, util::edge<G>, edge_fwd_iterator<G> >;
     };
@@ -146,11 +146,11 @@ namespace mln
       protected:
 	/// Returns the id of the first element.
 	/// Called in start();
-	unsigned start_id_() const;
+	util::edge_id_t start_id_() const;
 
 	/// Returns the next element id.
 	/// Called in next();
-	unsigned next_id_() const;
+	util::edge_id_t next_id_() const;
 
 	friend class graph_iter_base<G, util::edge<G>, edge_bkd_iterator<G> >;
     };
@@ -180,7 +180,7 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
+    util::vertex_id_t
     vertex_fwd_iterator<G>::start_id_() const
     {
       return 0;
@@ -188,7 +188,7 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
+    util::vertex_id_t
     vertex_fwd_iterator<G>::next_id_() const
     {
       return this->p_.id() + 1;
@@ -215,7 +215,7 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
+    util::vertex_id_t
     vertex_bkd_iterator<G>::start_id_() const
     {
       return this->p_.graph().v_nmax() - 1;
@@ -223,7 +223,7 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
+    util::vertex_id_t
     vertex_bkd_iterator<G>::next_id_() const
     {
       return this->p_.id() - 1;
@@ -250,7 +250,7 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
+    util::edge_id_t
     edge_fwd_iterator<G>::start_id_() const
     {
       return 0;
@@ -258,7 +258,7 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
+    util::edge_id_t
     edge_fwd_iterator<G>::next_id_() const
     {
       return this->p_.id() + 1;
@@ -285,7 +285,7 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
+    util::edge_id_t
     edge_bkd_iterator<G>::start_id_() const
     {
       return this->p_.graph().e_nmax() - 1;
@@ -293,7 +293,7 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
+    util::edge_id_t
     edge_bkd_iterator<G>::next_id_() const
     {
       return this->p_.id() - 1;

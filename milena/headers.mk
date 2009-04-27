@@ -83,6 +83,7 @@ mln/util/internal/vertex_impl.hh \
 mln/util/internal/edge_impl.hh \
 mln/util/internal/graph_base.hh \
 mln/util/internal/boost_graph.hh \
+mln/util/internal/id2element.hh \
 mln/util/internal/graph_nbh_iter_base.hh \
 mln/util/internal/boost_graph_property.hh \
 mln/util/ord_pair.hh \
@@ -110,6 +111,7 @@ mln/util/pix.hh \
 mln/util/tree_fast.hh \
 mln/util/site_pair.hh \
 mln/util/nil.hh \
+mln/util/graph_ids.hh \
 mln/util/eat.hh \
 mln/util/essential.hh \
 mln/data/memset_.hh \
@@ -135,13 +137,13 @@ mln/trace/resume.hh \
 mln/trace/quiet.hh \
 mln/trace/stop.hh \
 mln/trace/essential.hh \
-mln/make/graph.hh \
 mln/make/double_neighb2d.hh \
 mln/make/image3d.hh \
 mln/make/dpoint2d_h.hh \
 mln/make/w_window.hh \
 mln/make/cell.hh \
 mln/make/image.hh \
+mln/make/influence_zone_adjacency_graph.hh \
 mln/make/vec.hh \
 mln/make/all.hh \
 mln/make/dual_neighb.hh \
@@ -153,11 +155,15 @@ mln/make/w_window2d_int.hh \
 mln/make/box1d.hh \
 mln/make/voronoi.hh \
 mln/make/box2d.hh \
+mln/make/p_edges_with_mass_centers.hh \
 mln/make/h_mat.hh \
+mln/make/p_vertices_with_mass_centers.hh \
+mln/make/vertex_image.hh \
 mln/make/w_window2d.hh \
 mln/make/box3d.hh \
 mln/make/detachment.hh \
 mln/make/region_adjacency_graph.hh \
+mln/make/dummy_p_vertices.hh \
 mln/make/relabelfun.hh \
 mln/make/pixel.hh \
 mln/make/pix.hh \
@@ -166,6 +172,7 @@ mln/make/w_window1d.hh \
 mln/make/image2d.hh \
 mln/make/w_window_directional.hh \
 mln/make/rag_and_labeled_wsl.hh \
+mln/make/dummy_p_edges.hh \
 mln/make/w_window3d_int.hh \
 mln/make/essential.hh \
 mln/make/w_window1d_int.hh \
@@ -213,7 +220,6 @@ mln/fun/vv2v/diff_abs.hh \
 mln/fun/vv2v/land.hh \
 mln/fun/vv2v/min.hh \
 mln/fun/vv2v/essential.hh \
-mln/fun/internal/array_base.hh \
 mln/fun/internal/x2x_linear_impl.hh \
 mln/fun/internal/ch_function_value_impl.hh \
 mln/fun/internal/resolve.hh \
@@ -257,7 +263,6 @@ mln/fun/i2v/all.hh \
 mln/fun/i2v/array.hh \
 mln/fun/i2v/all_to.hh \
 mln/fun/i2v/essential.hh \
-mln/fun/l2l/relabel.hh \
 mln/fun/l2l/all.hh \
 mln/fun/l2l/wrap.hh \
 mln/fun/l2l/essential.hh \
@@ -963,6 +968,7 @@ mln/core/concept/window.hh \
 mln/core/concept/value.hh \
 mln/core/concept/accumulator.hh \
 mln/core/concept/site_set.hh \
+mln/core/concept/object_id.hh \
 mln/core/concept/object.hh \
 mln/core/concept/meta_fun.hh \
 mln/core/concept/delta_point_site.hh \
@@ -1043,6 +1049,7 @@ mln/labeling/foreground.hh \
 mln/labeling/regional_maxima.hh \
 mln/labeling/wrap.hh \
 mln/labeling/compute.hh \
+mln/labeling/pack.hh \
 mln/labeling/regional_minima.hh \
 mln/labeling/essential.hh \
 mln/labeling/fill_holes.hh \
@@ -1138,6 +1145,7 @@ mln/debug/println.spe.hh \
 mln/debug/colorize.hh \
 mln/debug/slices_2d.hh \
 mln/debug/draw_graph.hh \
+mln/debug/filename.hh \
 mln/debug/put_word.hh \
 mln/debug/histo.hh \
 mln/debug/quiet.hh \
@@ -1151,6 +1159,9 @@ mln/estim/all.hh \
 mln/estim/sum.hh \
 mln/estim/mean.hh \
 mln/estim/essential.hh \
+mln/graph/attribute/representative.hh \
+mln/graph/attribute/card.hh \
+mln/graph/compute.hh \
 mln/set/uni.hh \
 mln/set/unique.hh \
 mln/set/inter.hh \

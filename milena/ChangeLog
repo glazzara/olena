@@ -1,5 +1,61 @@
 2009-04-27 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Revamp graph images.
+	
+	* headers.mk: update distributed file list.
+
+	* mln/make/dummy_p_edges.hh,
+	* mln/make/dummy_p_vertices.hh,
+	* mln/util/line_graph.hh,
+	* mln/util/internal/graph_base.hh,
+	* mln/util/internal/graph_iter.hh,
+	* mln/util/internal/graph_iter_base.hh,
+	* mln/util/internal/graph_nbh_iter.hh,
+	* mln/util/internal/graph_nbh_iter_base.hh,
+	* mln/util/graph.hh,
+	* mln/morpho/attribute/count_adjacent_vertices.hh,
+	* mln/core/concept/graph.hh: update member signatures with vertex and
+	edge ids.
+
+	* mln/core/site_set/p_graph_piter.hh,
+	* mln/core/internal/graph_psite_base.hh,
+	* mln/core/internal/neighb_niter_impl.hh,
+	* mln/core/internal/graph_psite_base.hh,
+	* mln/core/image/graph_window_piter.hh: comment a conversion
+	operators. Cause ambiguities with iterators/proxies.
+
+	* mln/core/image/vertex_image.hh,
+	* mln/core/image/edge_image.hh: add new members.
+
+	* mln/core/internal/site_iterator_base.hh: add a 'target' typedef.
+
+	* mln/core/site_set/p_edges.hh,
+	* mln/core/site_set/p_vertices.hh: add new constructors.
+
+	* mln/make/rag_and_labeled_wsl.hh: update doc.
+
+	* mln/util/graph_ids.hh,
+	* mln/util/edge.hh,
+	* mln/util/vertex.hh: introduce vertex and edge id types.
+
+	* mln/util/internal/id2element.hh: function mapping ids to graph
+	elements.
+	
+	* mln/make/p_edges_with_mass_centers.hh: fix guards.
+
+	* tests/make/dummy_p_vertices.cc,
+	* tests/morpho/graph_image_morpho.cc,
+	* tests/morpho/graph_image_wst.cc,
+	* tests/morpho/line_graph_image_morpho.cc,
+	* tests/morpho/line_graph_image_wst.cc,
+	* tests/util/graph.cc,
+	* tests/util/line_graph.cc: update tests according the new
+	routines/constructors/types.
+
+	* mln/core/concept/object_id.hh: new concept for object ids.
+
+2009-04-27 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Fix documentation distributed files.
 
 	* doc/examples/examples.mk,

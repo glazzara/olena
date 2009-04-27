@@ -70,13 +70,14 @@ namespace mln
       protected:
 	/// The type of a vertex.
 	typedef util::vertex<E> vertex_t;
-	/// Internal vertex data type
-	typedef std::vector<unsigned> vertex_data_t;
-
 	/// The type of an edge.
 	typedef util::edge<E> edge_t;
+
+	/// Internal vertex data type
+	typedef std::vector<edge_id_t> vertex_data_t;
+
 	/// Internal edge data type.
-	typedef ord_pair<unsigned> edge_data_t;
+	typedef ord_pair<vertex_id_t> edge_data_t;
 
       public:
 	/// Misc. methods
@@ -102,7 +103,7 @@ namespace mln
 	/// Vertex and edge oriented methods.
 	/// \{
 	/// Returns the other adjacent vertex id of a given edge id \p id_e.
-	unsigned v_other(unsigned id_e, unsigned id_v) const;
+	vertex_id_t v_other(const edge_id_t& id_e, const vertex_id_t& id_v) const;
 	/// \}
 
 	// FIXME: We might want to externalize this in routine of
@@ -169,8 +170,8 @@ namespace mln
 
       template<typename E>
       inline
-      unsigned
-      graph_base<E>::v_other(unsigned id_e, unsigned id_v) const
+      vertex_id_t
+      graph_base<E>::v_other(const edge_id_t& id_e, const vertex_id_t& id_v) const
       {
 	const E *g = exact(this);
 	mln_precondition(g->has_e(id_e));

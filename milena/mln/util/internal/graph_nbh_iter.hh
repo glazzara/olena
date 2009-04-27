@@ -538,7 +538,7 @@ namespace mln
       // since it is computed thanks to the edge neighboors of its
       // two vertices.
       // We do not want the current edge to be part of its neighbors.
-      unsigned e_id = this->c_->ith_nbh_edge(this->i_);
+      util::edge_id_t e_id = this->c_->ith_nbh_edge(this->i_);
       while (e_id == this->c_->id())
       {
 	this->i_ = next_id_();

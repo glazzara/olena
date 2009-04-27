@@ -162,8 +162,8 @@ namespace mln
     const typename S::graph_t& graph() const;
     unsigned id() const;
     bool is_valid() const;
-    operator unsigned() const;
-    operator const typename S::graph_element&() const;
+//    operator unsigned() const;
+//    operator const typename S::graph_element&() const;
     const typename S::graph_element& element() const;
     const typename S::graph_element& p_hook_() const;
 

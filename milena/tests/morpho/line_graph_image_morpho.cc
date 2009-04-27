@@ -38,6 +38,7 @@
 #include <mln/util/line_graph.hh>
 #include <mln/util/graph.hh>
 #include <mln/util/site_pair.hh>
+#include <mln/make/vertex_image.hh>
 
 #include <mln/morpho/erosion.hh>
 #include <mln/morpho/dilation.hh>
@@ -103,8 +104,8 @@ int main()
   for (unsigned i = 0; i < iota.size(); ++i)
     iota(i) = 10 + i;
 
-  typedef vertex_image<P,unsigned,util::line_graph<util::graph> > ima_t;
-  ima_t ima(lg, sites, iota);
+  typedef vertex_image< P, unsigned, util::line_graph<util::graph> > ima_t;
+  ima_t ima = make::vertex_image(lg, sites, iota);
 
 
   /*-------------------------------.

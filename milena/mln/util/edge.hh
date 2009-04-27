@@ -34,24 +34,49 @@
 /// Definition of a graph edge.
 
 # include <iostream>
+# include <mln/util/graph_ids.hh>
 # include <mln/util/internal/edge_impl.hh>
 # include <mln/core/concept/proxy.hh>
+# include <mln/core/concept/site.hh>
 
 namespace mln
 {
 
+  // Forward declaration.
+  namespace util { template<typename G> class edge; }
+
+
+
+  /// edge category flag type.
+  template <typename E>
+  struct Edge
+  {
+  };
+
+  template <>
+  struct Edge<void>
+  {
+    typedef Site<void> super;
+  };
+
+
+
   namespace util
   {
-
-      /*-------.
-      | Edge.  |
-      `-------*/
 
     /// Edge of a graph \p G.
     template <typename G>
     class edge : public internal::edge_impl_<G>
     {
     public:
+      /// Object category.
+      typedef Edge<void> category;
+
+      /// The underlying type used to store edge ids.
+      typedef typename edge_id_t::value_t id_value_t;
+
+      /// The edge type id.
+      typedef edge_id_t id_t;
 
       /// Graph associated type.
       typedef G graph_t;
@@ -60,7 +85,8 @@ namespace mln
       /// \{
       edge();
       explicit edge(const G& g);
-      edge(const G& g, unsigned id);
+      edge(const G& g, id_value_t id);
+      edge(const G& g, const edge_id_t& id);
       /// \}
 
 
@@ -72,13 +98,13 @@ namespace mln
       void invalidate();
 
       /// Return the edge id.
-      unsigned id() const;
+      edge_id_t id() const;
 
       /// Set id_ with \p id;
-      void update_id(unsigned id);
+      void update_id(const edge_id_t& id);
 
       /// Conversion to the edge id.
-      operator unsigned() const;
+      operator edge_id_t() const;
 
       /// Return a reference to the graph holding this edge.
       const G& graph() const;
@@ -91,28 +117,29 @@ namespace mln
       /// Vertex and edges oriented.
       /// \{
       /// Return the vertex id of this edge which is different from \p id_v.
-      unsigned v_other(unsigned id_v)	const;
+      vertex_id_t
+      v_other(const vertex_id_t& id_v) const;
       /// \}
 
 
       /// Edge oriented.
       /// \{
       /// Return the lowest vertex id adjacent to this edge.
-      unsigned v1() const;
+      vertex_id_t v1() const;
 
       /// Return the highest vertex id adjacent to this edge.
-      unsigned v2() const;
+      vertex_id_t v2() const;
 
       /// Return the number max of adjacent edges.
       size_t nmax_nbh_edges() const;
 
       /// Return the \p i th adjacent edge.
-      unsigned ith_nbh_edge(unsigned i) const;
+      edge_id_t ith_nbh_edge(unsigned i) const;
       /// \}
 
     private:
       G g_;
-      unsigned id_;
+      edge_id_t id_;
     };
 
 
@@ -141,14 +168,18 @@ namespace mln
     template <typename G, typename E>
     struct subject_impl< const util::edge<G>, E >
     {
-      unsigned id() const;
+      util::edge_id_t id() const;
       const G& graph() const;
-      unsigned v_other(unsigned id_v)	const;
-      bool is_valid() const;
-      unsigned v1() const;
-      unsigned v2() const;
+
+      util::vertex_id_t
+      v_other(const util::vertex_id_t& id_v) const;
+
+      util::vertex_id_t v1() const;
+
+      util::vertex_id_t v2() const;
+
       size_t nmax_nbh_edges() const;
-      unsigned ith_nbh_edge(unsigned i) const;
+      util::edge_id_t ith_nbh_edge(unsigned i) const;
 
 
     private:
@@ -159,7 +190,7 @@ namespace mln
     struct subject_impl<       util::edge<G>, E > :
       subject_impl< const util::edge<G>, E >
     {
-      void update_id(unsigned id);
+      void update_id(const util::edge_id_t& id);
       void change_graph(const mlc_const(G)& g);
       void invalidate();
 
@@ -199,7 +230,7 @@ namespace mln
 
     template <typename G>
     inline
-    edge<G>::edge(const G& g, unsigned id)
+    edge<G>::edge(const G& g, id_value_t id)
       : g_(g), id_(id)
     {
       mln_precondition(g_.is_valid() && g.has_e(id));
@@ -207,7 +238,15 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
+    edge<G>::edge(const G& g, const edge_id_t& id)
+      : g_(g), id_(id)
+    {
+      mln_precondition(g_.is_valid() && g.has_e(id));
+    }
+
+    template <typename G>
+    inline
+    edge_id_t
     edge<G>::id() const
     {
       return id_;
@@ -216,14 +255,14 @@ namespace mln
     template <typename G>
     inline
     void
-    edge<G>::update_id(unsigned id)
+    edge<G>::update_id(const edge_id_t& id)
     {
       id_ = id;
     }
 
     template <typename G>
     inline
-    edge<G>::operator unsigned() const
+    edge<G>::operator edge_id_t() const
     {
       return id_;
     }
@@ -249,7 +288,7 @@ namespace mln
     bool
     edge<G>::is_valid() const
     {
-      return g_.is_valid() && g_.has_e(id_);
+      return g_.is_valid() && id_.is_valid() && g_.has_e(id_);
     }
 
     template <typename G>
@@ -257,14 +296,15 @@ namespace mln
     void
     edge<G>::invalidate()
     {
-      id_ = mln_max(unsigned);
+      //id_ = mln_max(unsigned);
+      id_.invalidate();
     }
 
 
     template <typename G>
     inline
-    unsigned
-    edge<G>::v_other(unsigned id_v) const
+    vertex_id_t
+    edge<G>::v_other(const vertex_id_t& id_v) const
     {
       mln_precondition(v1() == id_v || v2() == id_v);
       return g_.v_other(id_, id_v);
@@ -272,7 +312,7 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
+    vertex_id_t
     edge<G>::v1() const
     {
       mln_precondition(g_.has_e(id_));
@@ -281,7 +321,7 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
+    vertex_id_t
     edge<G>::v2() const
     {
       mln_precondition(g_.has_e(id_));
@@ -299,7 +339,7 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
+    edge_id_t
     edge<G>::ith_nbh_edge(unsigned i) const
     {
       mln_precondition(g_.has_e(id_));
@@ -351,7 +391,7 @@ namespace mln
 
     template <typename G, typename E>
     inline
-    unsigned
+    util::edge_id_t
     subject_impl< const util::edge<G>, E >::id() const
     {
       return exact_().get_subject().id();
@@ -367,23 +407,15 @@ namespace mln
 
     template <typename G, typename E>
     inline
-    unsigned
-    subject_impl< const util::edge<G>, E >::v_other(unsigned id_v) const
+    util::vertex_id_t
+    subject_impl< const util::edge<G>, E >::v_other(const util::vertex_id_t& id_v) const
     {
       return exact_().get_subject().v_other(id_v);
     }
 
     template <typename G, typename E>
     inline
-    bool
-    subject_impl< const util::edge<G>, E >::is_valid() const
-    {
-      return exact_().get_subject().is_valid();
-    }
-
-    template <typename G, typename E>
-    inline
-    unsigned
+    util::vertex_id_t
     subject_impl< const util::edge<G>, E >::v1() const
     {
       return exact_().get_subject().v1();
@@ -391,7 +423,7 @@ namespace mln
 
     template <typename G, typename E>
     inline
-    unsigned
+    util::vertex_id_t
     subject_impl< const util::edge<G>, E >::v2() const
     {
       return exact_().get_subject().v2();
@@ -407,7 +439,7 @@ namespace mln
 
     template <typename G, typename E>
     inline
-    unsigned
+    util::edge_id_t
     subject_impl< const util::edge<G>, E >::ith_nbh_edge(unsigned i) const
     {
       return exact_().get_subject().ith_nbh_edge(i);
@@ -415,13 +447,13 @@ namespace mln
 
 
     /*----------------------------------`
-      | subject_impl<       util::edge<G> |
-      \----------------------------------*/
+    | subject_impl<       util::edge<G> |
+    \----------------------------------*/
 
     template <typename G, typename E>
     inline
     void
-    subject_impl<	util::edge<G>, E >::update_id(unsigned id)
+    subject_impl<	util::edge<G>, E >::update_id(const util::edge_id_t& id)
     {
       return exact_().get_subject().update_id(id);
     }

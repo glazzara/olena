@@ -44,6 +44,7 @@ namespace mln
   template <typename S, typename I> class graph_psite;
 
 
+
   /*------------------------.
   | p_graph_piter<S,I>.  |
   `------------------------*/
@@ -88,9 +89,6 @@ namespace mln
     /// Return the underlying graph element iterator.
     const iter& hook_elt_() const;
 
-    /// Convert towards the graph element id.
-    operator unsigned() const;
-
     /// Return the graph element id.
     unsigned id() const;
 
@@ -109,6 +107,33 @@ namespace mln
   };
 
 
+  namespace internal
+  {
+
+    /// \{
+    /// subject_impl specialization (Proxy)
+    template <typename S, typename I, typename E>
+    struct subject_impl< const p_graph_piter<S,I>&, E >
+    {
+      const typename S::graph_t& graph() const;
+      unsigned id() const;
+
+      private:
+      const E& exact_() const;
+    };
+
+    template <typename S, typename I, typename E>
+    struct subject_impl<       p_graph_piter<S,I>&, E >
+	 : subject_impl< const p_graph_piter<S,I>&, E >
+    {
+      mln_q_subject(I) element();
+
+      private:
+      E& exact_();
+    };
+    /// \}
+
+  } // end of namespace mln::internal
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -195,13 +220,6 @@ namespace mln
 
   template <typename S, typename I>
   inline
-  p_graph_piter<S,I>::operator unsigned() const
-  {
-    return iter_.id();
-  }
-
-  template <typename S, typename I>
-  inline
   unsigned
   p_graph_piter<S,I>::id() const
   {
@@ -217,6 +235,55 @@ namespace mln
     // Update psite_.
     p_.update_id(iter_.id());
   }
+
+
+
+  namespace internal
+  {
+
+    /// Subject_impl
+
+    template <typename S, typename I, typename E>
+    inline
+    const E&
+    subject_impl< const p_graph_piter<S,I>&, E >::exact_() const
+    {
+      return internal::force_exact<const E>(*this);
+    }
+
+    template <typename S, typename I, typename E>
+    inline
+    const typename S::graph_t&
+    subject_impl< const p_graph_piter<S,I>&, E >::graph() const
+    {
+      return exact_().get_subject().graph();
+    }
+
+    template <typename S, typename I, typename E>
+    inline
+    unsigned
+    subject_impl< const p_graph_piter<S,I>&, E >::id() const
+    {
+      return exact_().get_subject().id();
+    };
+
+    template <typename S, typename I, typename E>
+    inline
+    E&
+    subject_impl< p_graph_piter<S,I>&, E >::exact_()
+    {
+      return internal::force_exact<E>(*this);
+    }
+
+    template <typename S, typename I, typename E>
+    inline
+    mln_q_subject(I)
+    subject_impl< p_graph_piter<S,I>&, E >::element()
+    {
+      return exact_().get_subject().element();
+    }
+
+  } // end of namespace mln::internal
 
 # endif // ! MLN_INCLUDE_ONLY
 

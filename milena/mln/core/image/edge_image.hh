@@ -73,11 +73,13 @@ namespace mln
     template <typename P, typename V, typename G>
     struct data< mln::edge_image<P,V,G> >
     {
+      typedef typename edge_image<P,V,G>::site_function_t site_function_t;
+
       data(const fun::i2v::array<V>& edge_values,
-	   const p_edges<G,fun::i2v::array<P> >& pv);
+	   const p_edges<G,site_function_t>& pe);
 
       fun::i2v::array<V> f_;
-      p_edges<G,fun::i2v::array<P> > pset_;
+      p_edges<G,site_function_t> pset_;
     };
 
   } // end of namespace mln::internal
@@ -90,19 +92,41 @@ namespace mln
   template <typename V, typename G, typename P>
   edge_image<P,V,G>
   operator | (const fun::i2v::array<V>& edge_values,
-	      const p_edges<G,fun::i2v::array<P> >& pv);
+	      const p_edges<G,fun::i2v::array<P> >& pe);
 
+
+  // Vertex_image_fsite_selector
+
+  namespace internal
+  {
+
+    template <typename P, typename G>
+    struct efsite_selector
+    {
+      typedef fun::i2v::array<P> site_function_t;
+    };
+
+
+
+    template <typename G>
+    struct efsite_selector<void,G>
+    {
+      typedef util::internal::id2element< G,util::edge<G> > site_function_t;
+    };
+
+
+  } // end of namespace mln::internal
 
 
 
   template <typename P, typename V, typename G = util::graph>
   class edge_image
     : public pw::internal::image_base<fun::i2v::array<V>,
-				      p_edges<G, fun::i2v::array<P> >,
+				      p_edges<G, typename internal::efsite_selector<P,G>::site_function_t >,
 				      edge_image<P,V,G> >
   {
     typedef pw::internal::image_base<fun::i2v::array<V>,
-				     p_edges<G, fun::i2v::array<P> >,
+				     p_edges<G, typename internal::efsite_selector<P,G>::site_function_t >,
 				     edge_image<P,V,G> > super_;
 
   public:
@@ -112,7 +136,8 @@ namespace mln
 			tag::graph_<G> > skeleton;
 
     /// Function mapping graph elements to sites.
-    typedef fun::i2v::array<P> site_function_t;
+    typedef typename internal::efsite_selector<P,G>::site_function_t
+	    site_function_t;
 
     /// Window type
     typedef graph_elt_window<G,p_edges<G,site_function_t> > win_t;
@@ -122,12 +147,12 @@ namespace mln
     /// Constructors.
     /// @{
     edge_image();
-
+    edge_image(const p_edges<G, site_function_t>& pe);
     edge_image(const Graph<G>& g,
-	       const Function_i2v< fun::i2v::array<P> >& edge_sites,
+	       const Function_i2v< site_function_t >& edge_sites,
 	       const Function_i2v< fun::i2v::array<V> >& edge_values);
 
-    edge_image(const p_edges<G,fun::i2v::array<P> >& pe,
+    edge_image(const p_edges<G, site_function_t >& pe,
 	       const Function_i2v< fun::i2v::array<V> >& edge_values);
 
     template <typename FP, typename FV>
@@ -136,7 +161,7 @@ namespace mln
 	       const Function_i2v<FV>& edge_values);
 
     template <typename FV>
-    edge_image(const p_edges<G,fun::i2v::array<P> >& pv,
+    edge_image(const p_edges<G,site_function_t>& pe,
 	       const Function_i2v<FV>& edge_values);
     /// @}
 
@@ -164,9 +189,9 @@ namespace mln
   inline
   edge_image<P,V,G>
   operator | (const fun::i2v::array<V>& edge_values,
-	      const p_edges<G,fun::i2v::array<P> >& pv)
+	      const p_edges<G,fun::i2v::array<P> >& pe)
   {
-    edge_image<P,V,G> tmp(edge_values, pv);
+    edge_image<P,V,G> tmp(edge_values, pe);
     return tmp;
   }
 
@@ -180,7 +205,7 @@ namespace mln
     template <typename P, typename V, typename G>
     inline
     data< mln::edge_image<P,V,G> >::data(const fun::i2v::array<V>& f,
-					 const p_edges<G,fun::i2v::array<P> >& ps)
+					 const p_edges<G,site_function_t>& ps)
       : f_(exact(f)),
 	pset_(ps)
     {
@@ -200,20 +225,28 @@ namespace mln
 
   template <typename P, typename V, typename G>
   inline
-  edge_image<P,V,G>::edge_image(const Graph<G>& g,
-				const Function_i2v< fun::i2v::array<P> >& edge_sites,
-				const Function_i2v< fun::i2v::array<V> >& edge_values)
-    : super_(exact(edge_values),
-	     p_edges<G,fun::i2v::array<P> >(g, exact(edge_sites)))
+  edge_image<P,V,G>::edge_image(const p_edges<G,site_function_t>& pe)
+    : super_(fun::i2v::array<V>(pe.nsites()), pe)
   {
   }
 
 
   template <typename P, typename V, typename G>
   inline
-  edge_image<P,V,G>::edge_image(const p_edges<G,fun::i2v::array<P> >& pv,
+  edge_image<P,V,G>::edge_image(const Graph<G>& g,
+				const Function_i2v< site_function_t >& edge_sites,
 				const Function_i2v< fun::i2v::array<V> >& edge_values)
-    : super_(exact(edge_values), pv)
+    : super_(exact(edge_values),
+	     p_edges<G,site_function_t>(g, exact(edge_sites)))
+  {
+  }
+
+
+  template <typename P, typename V, typename G>
+  inline
+  edge_image<P,V,G>::edge_image(const p_edges<G,site_function_t>& pe,
+				const Function_i2v< fun::i2v::array<V> >& edge_values)
+    : super_(exact(edge_values), pe)
   {
   }
 
@@ -225,9 +258,8 @@ namespace mln
 				const Function_i2v<FP>& edge_sites,
 				const Function_i2v<FV>& edge_values)
     : super_(convert::to<fun::i2v::array<V> >(exact(edge_values)),
-	     p_edges<G,fun::i2v::array<P> >(g, exact(edge_sites)))
+	     p_edges<G,site_function_t>(g, exact(edge_sites)))
   {
-    mlc_converts_to(FV,fun::i2v::array<V>)::check();
     mlc_equal(mln_result(FP),P)::check();
     mlc_equal(mln_result(FV),V)::check();
   }
@@ -237,11 +269,10 @@ namespace mln
   template <typename P, typename V, typename G>
   template <typename FV>
   inline
-  edge_image<P,V,G>::edge_image(const p_edges<G,fun::i2v::array<P> >& pv,
+  edge_image<P,V,G>::edge_image(const p_edges<G,site_function_t>& pe,
 				const Function_i2v<FV>& edge_values)
-    : super_(convert::to<fun::i2v::array<V> >(exact(edge_values)), pv)
+    : super_(convert::to<fun::i2v::array<V> >(exact(edge_values)), pe)
   {
-    mlc_converts_to(FV,fun::i2v::array<V>)::check();
     mlc_equal(mln_result(FV),V)::check();
   }
 

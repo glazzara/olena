@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_P_VERTICES_WITH_MASS_CENTERS_HH
-# define MLN_MAKE_P_VERTICES_WITH_MASS_CENTERS_HH
+#ifndef MLN_MAKE_P_EDGES_WITH_MASS_CENTERS_HH
+# define MLN_MAKE_P_EDGES_WITH_MASS_CENTERS_HH
 
 /// \file mln/make/p_edges_with_mass_centers.hh
 ///
@@ -118,4 +118,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_MAKE_P_VERTICES_WITH_MASS_CENTERS_HH
+#endif // ! MLN_MAKE_P_EDGES_WITH_MASS_CENTERS_HH

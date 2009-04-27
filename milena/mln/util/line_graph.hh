@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -30,6 +30,7 @@
 # define MLN_UTIL_LINE_GRAPH_HH
 
 /// \file mln/util/line_graph.hh
+///
 /// Definitions of undirected graphs.
 
 # include <mln/util/internal/graph_base.hh>
@@ -55,9 +56,9 @@ namespace mln
     template <typename G>
     struct data< util::line_graph<G> >
     {
-
-      typedef std::vector<std::vector<unsigned> > vertices_t;
-      typedef std::vector<util::ord_pair<unsigned> > edges_t;
+      typedef util::line_graph<G> lg_t;
+      typedef std::vector<std::vector<util::edge_id_t> > vertices_t;
+      typedef std::vector<util::ord_pair<util::vertex_id_t> > edges_t;
 
       data();
       data(const G& g);
@@ -153,30 +154,30 @@ namespace mln
       /// \{
       /// Return the vertex whose id is \a v.
       /// \{
-      vertex_t vertex(unsigned id_v) const;
+      vertex_t vertex(const vertex_id_t& id_v) const;
       /// \}
 
       /// Return the number of vertices in the graph.
       size_t v_nmax() const;
 
       /// Check whether a vertex id \p id_v exists in the graph.
-      bool has_v(unsigned id_v) const;
+      bool has_v(const vertex_id_t& id_v) const;
       /// Check whether an edge \p v exists in the graph.
       template <typename G2>
-      bool has_v(const util::vertex<G2>& v) const;
+      bool has(const util::vertex<G2>& v) const;
 
 
       /// Return the number of adjacent edges of vertex \p id_v.
-      size_t v_nmax_nbh_edges(unsigned id_v) const;
+      size_t v_nmax_nbh_edges(const vertex_id_t& id_v) const;
 
       /// Returns the \p i th edge adjacent to the vertex \p id_v.
-      unsigned v_ith_nbh_edge(unsigned id_v, unsigned i) const;
+      edge_id_t v_ith_nbh_edge(const vertex_id_t& id_v, unsigned i) const;
 
       /// Return the number of adjacent vertices of vertex \p id_v.
-      size_t v_nmax_nbh_vertices(unsigned id_v) const;
+      size_t v_nmax_nbh_vertices(const vertex_id_t& id_v) const;
 
       /// Returns the \p i th vertex adjacent to the vertex \p id_v.
-      unsigned v_ith_nbh_vertex(unsigned id_v, unsigned i) const;
+      vertex_id_t v_ith_nbh_vertex(const vertex_id_t& id_v, unsigned i) const;
       /// \}
 
 
@@ -185,29 +186,30 @@ namespace mln
       /// Edge oriented.
       /// \{
       /// Return the edge whose id is \a e.
-      edge_t edge(unsigned e) const;
+      edge_t edge(const edge_id_t& e) const;
 
       /// Return the number of edges in the graph.
       size_t e_nmax() const;
 
       /// Return whether \p id_e is in the graph.
-      bool has_e(unsigned id_e) const;
+      bool has_e(const util::edge_id_t& id_e) const;
+
       /// Return whether \p e is in the graph.
       template <typename G2>
-      bool has_e(const util::edge<G2>& e) const;
+      bool has(const util::edge<G2>& e) const;
 
 
       /// Return the first vertex associated to the edge \p id_e.
-      unsigned v1(unsigned id_e) const;
+      vertex_id_t v1(const edge_id_t& id_e) const;
 
       /// Return the second vertex associated to edge \p id_e
-      unsigned v2(unsigned id_e) const;
+      vertex_id_t v2(const edge_id_t& id_e) const;
 
       /// Return the number max of adjacent edge, given an edge \p id_e.
-      size_t e_nmax_nbh_edges(unsigned id_e) const;
+      size_t e_nmax_nbh_edges(const edge_id_t& id_e) const;
 
       /// Return the \p i th edge adjacent to the edge \p id_e.
-      unsigned e_ith_nbh_edge(unsigned id_e, unsigned i) const;
+      edge_id_t e_ith_nbh_edge(const edge_id_t& id_e, unsigned i) const;
 
       /// Return whether this graph is a subgraph
       /// Return true if g and *this have the same graph_id.
@@ -251,23 +253,29 @@ namespace mln
       g_ = g;
 
       // Initialize vertices and edges.
-      std::set<util::ord_pair<unsigned> > edges_set;
+      //FIXME: use an adjacency matrix!!
+      std::set<util::ord_pair<util::vertex_id_t> > edges_set;
+
       vertices_.resize(g.e_nmax());
       mln_edge_iter(G) e(g);
       mln_edge_nbh_edge_iter(G) ne(e);
 
       for_all(e)
+      {
+	util::vertex_id_t v1(e.id().value());
 	for_all(ne)
 	{
-	  util::ord_pair<unsigned> edge(e, ne);
+	  util::vertex_id_t v2(ne.id().value());
+	  util::ord_pair<util::vertex_id_t> edge(v1, v2);
 	  if (edges_set.find(edge) == edges_set.end())
 	  {
-	    vertices_[e].push_back(edges_.size());
-	    vertices_[ne].push_back(edges_.size());
+	    vertices_[v1].push_back(edges_.size());
+	    vertices_[v2].push_back(edges_.size());
 	    edges_set.insert(edge);
 	    edges_.push_back(edge);
 	  }
 	}
+      }
     }
 
     template <typename G>
@@ -302,7 +310,7 @@ namespace mln
     template <typename G>
     inline
     typename line_graph<G>::vertex_t
-    line_graph<G>::vertex(unsigned id_v) const
+    line_graph<G>::vertex(const vertex_id_t& id_v) const
     {
       mln_assertion(has_v(id_v));
       return vertex_t(*this, id_v);
@@ -320,16 +328,16 @@ namespace mln
     template <typename G>
     inline
     bool
-    line_graph<G>::has_v(unsigned id_v) const
+    line_graph<G>::has_v(const vertex_id_t& id_v) const
     {
-      return data_->g_.has_e(id_v);
+      return data_->g_.has_v(id_v);
     }
 
     template <typename G>
     template <typename G2>
     inline
     bool
-    line_graph<G>::has_v(const util::vertex<G2>& v) const
+    line_graph<G>::has(const util::vertex<G2>& v) const
     {
       //FIXME: not sure...
       return v.graph().is_subgraph_of(*this) && has_v(v.id());
@@ -338,7 +346,7 @@ namespace mln
     template <typename G>
     inline
     size_t
-    line_graph<G>::v_nmax_nbh_edges(unsigned id_v) const
+    line_graph<G>::v_nmax_nbh_edges(const vertex_id_t& id_v) const
     {
       mln_precondition(has_v(id_v));
       return data_->vertices_[id_v].size();
@@ -346,8 +354,8 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
-    line_graph<G>::v_ith_nbh_edge(unsigned id_v, unsigned i) const
+    edge_id_t
+    line_graph<G>::v_ith_nbh_edge(const vertex_id_t& id_v, unsigned i) const
     {
       mln_precondition(has_v(id_v));
       if (i >= v_nmax_nbh_edges(id_v))
@@ -358,7 +366,7 @@ namespace mln
     template <typename G>
     inline
     size_t
-    line_graph<G>::v_nmax_nbh_vertices(unsigned id_v) const
+    line_graph<G>::v_nmax_nbh_vertices(const vertex_id_t& id_v) const
     {
       mln_precondition(has_v(id_v));
       return v_nmax_nbh_edges(id_v);
@@ -366,8 +374,8 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
-    line_graph<G>::v_ith_nbh_vertex(unsigned id_v, unsigned i) const
+    vertex_id_t
+    line_graph<G>::v_ith_nbh_vertex(const vertex_id_t& id_v, unsigned i) const
     {
       mln_precondition(has_v(id_v));
 
@@ -383,7 +391,7 @@ namespace mln
     template <typename G>
     inline
     typename line_graph<G>::edge_t
-    line_graph<G>::edge(unsigned e) const
+    line_graph<G>::edge(const edge_id_t& e) const
     {
       mln_assertion(e < e_nmax());
       return edge_t(*this, e);
@@ -400,7 +408,7 @@ namespace mln
     template <typename G>
     inline
     bool
-    line_graph<G>::has_e(unsigned id_e) const
+    line_graph<G>::has_e(const edge_id_t& id_e) const
     {
       return id_e < data_->edges_.size();
     }
@@ -409,15 +417,15 @@ namespace mln
     template <typename G2>
     inline
     bool
-    line_graph<G>::has_e(const util::edge<G2>& e) const
+    line_graph<G>::has(const util::edge<G2>& e) const
     {
       return e.graph().is_subgraph_of(*this) && has_e(e.id());
     }
 
     template <typename G>
     inline
-    unsigned
-    line_graph<G>::v1(unsigned id_e) const
+    vertex_id_t
+    line_graph<G>::v1(const edge_id_t& id_e) const
     {
       mln_precondition(has_e(id_e));
       return data_->edges_[id_e].first();
@@ -425,8 +433,8 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
-    line_graph<G>::v2(unsigned id_e) const
+    vertex_id_t
+    line_graph<G>::v2(const edge_id_t& id_e) const
     {
       mln_precondition(has_e(id_e));
       return data_->edges_[id_e].second();
@@ -435,7 +443,7 @@ namespace mln
     template <typename G>
     inline
     size_t
-    line_graph<G>::e_nmax_nbh_edges(unsigned id_e) const
+    line_graph<G>::e_nmax_nbh_edges(const edge_id_t& id_e) const
     {
       mln_precondition(has_e(id_e));
       return v_nmax_nbh_edges(v1(id_e)) + v_nmax_nbh_edges(v2(id_e));
@@ -443,8 +451,8 @@ namespace mln
 
     template <typename G>
     inline
-    unsigned
-    line_graph<G>::e_ith_nbh_edge(unsigned id_e, unsigned i) const
+    edge_id_t
+    line_graph<G>::e_ith_nbh_edge(const edge_id_t& id_e, unsigned i) const
     {
       mln_precondition(has_e(id_e));
       if (i >= e_nmax_nbh_edges(id_e))

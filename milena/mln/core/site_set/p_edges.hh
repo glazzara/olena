@@ -39,6 +39,9 @@
 # include <mln/core/site_set/p_graph_piter.hh>
 # include <mln/core/site_set/p_edges_psite.hh>
 # include <mln/util/graph.hh>
+# include <mln/util/internal/id2element.hh>
+
+# include <mln/metal/equal.hh>
 
 
 namespace mln
@@ -62,7 +65,7 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  template <typename G, typename F>
+  template <typename G, typename F = util::internal::id2element<G,util::edge<G> > >
   class p_edges
     : public internal::site_set_base_< mln_result(F), p_edges<G, F> >
   {
@@ -88,6 +91,11 @@ namespace mln
     /// @{
     /// Default constructor.
     p_edges();
+
+    /// Construct a graph edge psite set from a graph and a function.
+    ///
+    /// \param gr The graph upon which the graph edge psite set is built.
+    p_edges(const Graph<G>& gr);
 
     /// Construct a graph edge psite set from a graph and a function.
     ///
@@ -193,6 +201,18 @@ namespace mln
   inline
   p_edges<G, F>::p_edges()
   {
+  }
+
+  template <typename G, typename F>
+  inline
+  p_edges<G, F>::p_edges(const Graph<G>& g)
+  {
+    typedef util::internal::id2element<G,util::edge<G> > F_REF;
+    mlc_equal(F, F_REF)::check();
+
+    mln_precondition(exact(g).is_valid());
+    g_ = exact(g);
+    f_ = util::internal::id2element< G, util::edge<G> >(g);
   }
 
   template <typename G, typename F>

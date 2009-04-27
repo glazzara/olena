@@ -91,10 +91,10 @@ namespace mln
     /// Compute the current psite.
     mln_psite(W) compute_p_() const;
 
-    /// Convert towards the graph element id.
-    operator unsigned() const;
-
     /// Return the graph element id.
+    /// FIXME: we do not want to have this member since there is an
+    /// automatic conversion to the graph element.
+    /// C++ does not seem to use this conversion operator.
     unsigned id() const;
     /// \}
 
@@ -189,13 +189,13 @@ namespace mln
     return iter_;
   }
 
-  template <typename S, typename W, typename I>
-  inline
-  graph_window_piter<S, W, I>::operator unsigned() const
-  {
-    return iter_.id();
-  }
-
+//  template <typename S, typename W, typename I>
+//  inline
+//  graph_window_piter<S, W, I>::operator unsigned() const
+//  {
+//    return iter_.id();
+//  }
+//
   template <typename S, typename W, typename I>
   inline
   unsigned

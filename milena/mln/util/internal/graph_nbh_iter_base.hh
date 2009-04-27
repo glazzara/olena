@@ -63,11 +63,19 @@ namespace mln
 	/// Go to the next value.
 	void next();
 
-	/// Return current index
+	/// Return current index.
+	/// (The current element is the i-th neighbor)
 	unsigned index() const;
 
-	/// Conversion operator. Returns the element ID.
-	operator unsigned() const;
+	/// Returns the element ID.
+	typename Elt::id_t id() const;
+
+	/// Conversion operator. Returns the element id.
+	operator typename Elt::id_t() const;
+
+	/// Conversion operator. Returns the element id.
+	/// FIXME: May cause ambiguities.
+	operator typename Elt::id_value_t() const;
 
         /// The psite around which this iterator moves.
 	const C& center() const;
@@ -173,7 +181,22 @@ namespace mln
 
     template <typename G, typename C, typename Elt, typename E>
     inline
-    nbh_iterator_base<G,C,Elt,E>::operator unsigned() const
+    typename Elt::id_t
+    nbh_iterator_base<G,C,Elt,E>::id() const
+    {
+      return elt_.id();
+    }
+
+    template <typename G, typename C, typename Elt, typename E>
+    inline
+    nbh_iterator_base<G,C,Elt,E>::operator typename Elt::id_t() const
+    {
+      return elt_.id();
+    }
+
+    template <typename G, typename C, typename Elt, typename E>
+    inline
+    nbh_iterator_base<G,C,Elt,E>::operator typename Elt::id_value_t() const
     {
       return elt_.id();
     }

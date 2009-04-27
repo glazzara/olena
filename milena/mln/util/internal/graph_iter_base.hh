@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -64,11 +65,15 @@ namespace mln
 	/// Go to the next value.
 	void next();
 
-	/// Return current index
-	unsigned index() const;
+	/// Return the element id.
+	typename Elt::id_t id() const;
 
 	/// Conversion operator. Returns the element id.
-	operator unsigned() const;
+	operator typename Elt::id_t() const;
+
+	/// Conversion operator. Returns the element id.
+	/// FIXME: May cause ambiguities.
+	operator typename Elt::id_value_t() const;
 
 	/// Conversion operator. Returns the graph element.
 	operator const Elt&() const;
@@ -134,15 +139,22 @@ namespace mln
 
     template <typename G, typename Elt, typename E>
     inline
-    unsigned
-    graph_iter_base<G, Elt, E>::index() const
+    typename Elt::id_t
+    graph_iter_base<G, Elt, E>::id() const
     {
       return p_.id();
     }
 
     template <typename G, typename Elt, typename E>
     inline
-    graph_iter_base<G, Elt, E>::operator unsigned() const
+    graph_iter_base<G, Elt, E>::operator typename Elt::id_t() const
+    {
+      return p_.id();
+    }
+
+    template <typename G, typename Elt, typename E>
+    inline
+    graph_iter_base<G, Elt, E>::operator typename Elt::id_value_t() const
     {
       return p_.id();
     }

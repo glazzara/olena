@@ -64,33 +64,31 @@ namespace mln
     /// \return A couple. First element is the graph, second element is an
     /// image with a labeled watershed line.
     /*!
-    **
-    ** \verbatim
-    **
-    **	      |-----------------|		      |-----------------|
-    **	      | 1 1 1 0 2 2 0 3 |                     | . . . 1 . . 2 . |
-    **	      | 1 1 0 2 2 2 0 3 |                     | . . 1 . . . 2 . |
-    **	      | 1 0 4 0 2 0 3 3 |           ---->     | . 1 . 3 . 4 . . |
-    **	      | 0 4 4 4 0 5 0 3 |                     | 1 . . . 5 . 6 . |
-    **	      |-----------------|                     |-----------------|
-    **
-    **		Watershed image			      Labeled watershed line
-    **	 (watershed line labeled with 0)
-    **
-    **
-    **			|
-    **			|
-    **			|
-    **			v
-    **
-    **		  1 -- 2 - 3
-    **		   \  /   /
-    **		    4 -- 5
-    **
-    **	    Region Adjacency graph (RAG)
-    **
-    ** \endverbatim
-    **
+	\verbatim
+
+	      |-----------------|		      |-----------------|
+	      | 1 1 1 0 2 2 0 3 |                     | . . . 1 . . 2 . |
+	      | 1 1 0 2 2 2 0 3 |                     | . . 1 . . . 2 . |
+	      | 1 0 4 0 2 0 3 3 |           ---->     | . 1 . 3 . 4 . . |
+	      | 0 4 4 4 0 5 0 3 |                     | 1 . . . 5 . 6 . |
+	      |-----------------|                     |-----------------|
+
+		Watershed image			      Labeled watershed line
+	 (watershed line labeled with 0)
+
+
+			|
+			|
+			|
+			v
+
+		  1 -- 2 - 3
+		   \  /   /
+		    4 -- 5
+
+	    Region Adjacency graph (RAG)
+
+	\endverbatim
     */
     template <typename I, typename N>
     util::couple<util::graph,mln_concrete(I)>

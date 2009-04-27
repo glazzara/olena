@@ -38,6 +38,7 @@
 #include <mln/core/var.hh>
 #include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
+#include <mln/make/vertex_image.hh>
 
 #include <mln/morpho/meyer_wst.hh>
 
@@ -95,8 +96,8 @@ int main()
   for (unsigned i = 0; i < iota.size(); ++i)
     iota(i) = 10 + i;
 
-  typedef vertex_image<point2d,unsigned,util::graph> ima_t;
-  ima_t ima(g,sites,iota);
+  typedef vertex_image<point2d, unsigned, util::graph> ima_t;
+  ima_t ima = make::vertex_image(g, sites, iota);
 
   /*------.
   | WST.  |

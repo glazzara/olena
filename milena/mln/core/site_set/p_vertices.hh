@@ -38,6 +38,7 @@
 # include <mln/core/site_set/p_graph_piter.hh>
 # include <mln/core/site_set/p_vertices_psite.hh>
 # include <mln/util/graph.hh>
+# include <mln/util/internal/id2element.hh>
 
 
 
@@ -64,8 +65,7 @@ namespace mln
   } // end of namespace mln::trait
 
 
-
-  template <typename G, typename F>
+  template <typename G, typename F = util::internal::id2element<G,util::vertex<G> > >
   class p_vertices
     : public internal::site_set_base_< mln_result(F), p_vertices<G,F> >
   {
@@ -91,6 +91,11 @@ namespace mln
 
     /// Constructor without argument.
     p_vertices();
+
+    /// Construct a graph psite set from a graph of points.
+    /// \param gr The graph upon which the graph psite set is built.
+    /// The identity function is used.
+    p_vertices(const Graph<G>& gr);
 
     /// Construct a graph psite set from a graph of points.
     /// \param gr The graph upon which the graph psite set is built.
@@ -210,6 +215,18 @@ namespace mln
   p_vertices<G,F>::p_vertices()
     : f_(0)
   {
+  }
+
+  template <typename G, typename F>
+  inline
+  p_vertices<G,F>::p_vertices(const Graph<G>& g)
+  {
+    typedef util::internal::id2element<G,util::vertex<G> > F_REF;
+    mlc_equal(F, F_REF)::check();
+
+    mln_precondition(exact(g).is_valid());
+    g_ = exact(g);
+    f_ = util::internal::id2element< G, util::vertex<G> >(g);
   }
 
   template <typename G, typename F>

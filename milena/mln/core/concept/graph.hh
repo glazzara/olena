@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,6 +34,7 @@
 /// Definition of the concept of mln::Graph.
 
 # include <mln/core/concept/object.hh>
+# include <mln/util/graph_ids.hh>
 
 namespace mln
 {
@@ -81,21 +83,21 @@ namespace mln
       void invalidate();
     /*
       // Vertex and edges oriented.
-      unsigned v_other(unsigned id_e, unsigned id_v) const;
+      util::vertex_id_t v_other(const util::edge_id_t& id_e, const util::vertex_id_t& id_v) const;
 
       // Vertex oriented.
       size_t v_nmax() const;
-      bool has_v(unsigned id_v) const;
-      size_t v_nmax_nbh_edges(unsigned id_v) const;
-      unsigned v_ith_nbh_edge(unsigned id_v, unsigned i) const;
+      bool has(unsigned id_v) const;
+      size_t v_nmax_nbh_edges(const util::vertex_id_t& id_v) const;
+      util::edge_id_t v_ith_nbh_edge(const util::vertex_id_t& id_v, unsigned i) const;
 
       // Edge oriented.
       size_t e_nmax() const;
-      bool has_e(unsigned id_e) const;
-      unsigned v1(unsigned id_e) const;
-      unsigned v2(unsigned id_e) const;
-      size_t e_nmax_nbh_edges(unsigned id_e) const;
-      unsigned e_ith_nbh_edge(unsigned id_e, unsigned i) const;
+      bool has_e(const util::edge_id_t& id_e) const;
+      util::vertex_id_t v1(const util::edge_id_t& id_e) const;
+      util::vertex_id_t v2(const util::edge_id_t& id_e) const;
+      size_t e_nmax_nbh_edges(const util::edge_id_t& id_e) const;
+      util::edge_id_t e_ith_nbh_edge(const util::edge_id_t& id_e, unsigned i) const;
 
      */
 
@@ -120,27 +122,27 @@ namespace mln
     // Check methods
     const void* (E::*m1)() const = & E::id;
     m1 = 0;
-    unsigned (E::*m2)(unsigned id_e, unsigned id_v) const = & E::v_other;
+    util::vertex_id_t (E::*m2)(const util::edge_id_t& id_e, const util::vertex_id_t& id_v) const = & E::v_other;
     m2 = 0;
     size_t (E::*m4)() const = & E::v_nmax;
     m4 = 0;
-    bool (E::*m5)(unsigned id_v) const = & E::has_v;
+    bool (E::*m5)(const util::vertex_id_t& id_v) const = & E::has_v;
     m5 = 0;
-    size_t (E::*m6)(unsigned id_v) const = & E::v_nmax_nbh_edges;
+    size_t (E::*m6)(const util::vertex_id_t& id_v) const = & E::v_nmax_nbh_edges;
     m6 = 0;
-    unsigned (E::*m7)(unsigned id_v, unsigned i) const = & E::v_ith_nbh_edge;
+    util::edge_id_t (E::*m7)(const util::vertex_id_t& id_v, unsigned i) const = & E::v_ith_nbh_edge;
     m7 = 0;
     size_t (E::*m8)() const = & E::e_nmax;
     m8 = 0;
-    bool (E::*m9)(unsigned id_e) const = & E::has_e;
+    bool (E::*m9)(const util::edge_id_t& id_e) const = & E::has_e;
     m9 = 0;
-    unsigned (E::*m10)(unsigned id_e) const = & E::v1;
+    util::vertex_id_t (E::*m10)(const util::edge_id_t& id_e) const = & E::v1;
     m10 = 0;
-    unsigned (E::*m11)(unsigned id_e) const = & E::v2;
+    util::vertex_id_t (E::*m11)(const util::edge_id_t& id_e) const = & E::v2;
     m11 = 0;
-    size_t (E::*m12)(unsigned id_e) const = & E::e_nmax_nbh_edges;
+    size_t (E::*m12)(const util::edge_id_t& id_e) const = & E::e_nmax_nbh_edges;
     m12 = 0;
-    unsigned (E::*m13)(unsigned id_e, unsigned i) const = & E::e_ith_nbh_edge;
+    util::edge_id_t (E::*m13)(const util::edge_id_t& id_e, unsigned i) const = & E::e_ith_nbh_edge;
     m13 = 0;
 
     //FIXME: enable this test. Currently does not work because this is

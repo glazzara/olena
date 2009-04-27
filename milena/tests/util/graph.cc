@@ -53,26 +53,26 @@ int main ()
     unsigned i = 0;
     mln_vertex_fwd_iter_(util::graph) v(g);
     for_all(v)
-      mln_assertion(i++ == v.index());
+      mln_assertion(i++ == v.id());
     mln_assertion(i != 0);
 
     i = 0;
     mln_edge_fwd_iter_(util::graph) e(g);
     for_all(e)
-      mln_assertion(i++ == e.index());
+      mln_assertion(i++ == e.id());
     mln_assertion(i != 0);
   }
   {
     unsigned i = g.v_nmax() - 1;
     mln_vertex_bkd_iter_(util::graph) v(g);
     for_all(v)
-      mln_assertion(i-- == v.index());
+      mln_assertion(i-- == v.id());
     mln_assertion(i != g.v_nmax() - 1);
 
     i = g.e_nmax() - 1;
     mln_edge_bkd_iter_(util::graph) e(g);
     for_all(e)
-      mln_assertion(i-- == e.index());
+      mln_assertion(i-- == e.id());
     mln_assertion(i != g.e_nmax() - 1);
   }
 
@@ -84,7 +84,7 @@ int main ()
     {
       unsigned i = 0;
       for_all(n)
-	mln_assertion(i++ == n.index());
+	mln_assertion(i++ == n.id());
       mln_assertion(i != 0);
     }
   }
@@ -95,7 +95,7 @@ int main ()
     {
       unsigned i = v.nmax_nbh_edges();
       for_all(e)
-	mln_assertion(--i == e.index());
+	mln_assertion(--i == e.id());
       mln_assertion((v.nmax_nbh_edges() == 0 && i == 0) || i != v.nmax_nbh_edges());
     }
   }

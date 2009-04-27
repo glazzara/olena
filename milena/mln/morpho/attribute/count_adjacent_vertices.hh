@@ -40,6 +40,7 @@
 # include <mln/accu/internal/base.hh>
 # include <mln/pw/image.hh>
 # include <mln/util/pix.hh>
+# include <mln/util/graph_ids.hh>
 
 namespace mln
 {
@@ -114,7 +115,7 @@ namespace mln
 	/// The value of the counter.
 	unsigned count__;
 	/// The set of adjacent vertices.
-	std::set<unsigned> vertices_;
+	std::set<util::vertex_id_t> vertices_;
       };
 
 

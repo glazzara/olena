@@ -36,17 +36,15 @@
 # include <mln/util/internal/graph_base.hh>
 # include <mln/util/internal/graph_iter.hh>
 # include <mln/util/internal/graph_nbh_iter.hh>
+# include <mln/util/vertex.hh>
+# include <mln/util/edge.hh>
 # include <mln/util/ord_pair.hh>
-
 
 namespace mln
 {
 
-  namespace util
-  {
-    /// Forward declaration.
-    class graph;
-  }
+  /// Forward declaration.
+  namespace util { class graph; }
 
 
   namespace internal
@@ -57,9 +55,9 @@ namespace mln
     struct data<util::graph>
     {
       typedef util::graph G;
-      typedef std::vector<std::vector<unsigned> > vertices_t;
-      typedef std::vector<util::ord_pair<unsigned> > edges_t;
-      typedef std::set<util::ord_pair<unsigned> > edges_set_t;
+      typedef std::vector<std::vector<util::edge_id_t> > vertices_t;
+      typedef std::vector<util::ord_pair<util::vertex_id_t> > edges_t;
+      typedef std::set<util::ord_pair<util::vertex_id_t> > edges_set_t;
 
       data();
       /// Constructor.
@@ -159,34 +157,34 @@ namespace mln
       /// Add \p n vertices to the graph.
       ///
       /// \return A range of vertex ids.
-      std::pair<unsigned, unsigned> add_vertices(unsigned n);
+      std::pair<vertex_id_t, vertex_id_t> add_vertices(unsigned n);
 
       /// Return the vertex whose id is \a v.
       /// \{
-      vertex_t vertex(unsigned id_v) const;
+      vertex_t vertex(vertex_id_t id_v) const;
       /// \}
 
       /// Return the number of vertices in the graph.
       size_t v_nmax() const;
 
       /// Check whether a vertex id \p id_v exists in the graph.
-      bool has_v(unsigned id_v) const;
-      /// Check whether an edge \p v exists in the graph.
-      template <typename G>
-      bool has_v(const util::vertex<G>& v) const;
+      bool has_v(const vertex_id_t& id_v) const;
 
 
       /// Return the number of adjacent edges of vertex \p id_v.
-      size_t v_nmax_nbh_edges(unsigned id_v) const;
+      size_t v_nmax_nbh_edges(const vertex_id_t& id_v) const;
 
       /// Returns the \p i th edge adjacent to the vertex \p id_v.
-      unsigned v_ith_nbh_edge(unsigned id_v, unsigned i) const;
+      edge_id_t
+      v_ith_nbh_edge(const vertex_id_t& id_v,
+		     unsigned i) const;
 
       /// Return the number of adjacent vertices of vertex \p id_v.
-      size_t v_nmax_nbh_vertices(unsigned id_v) const;
+      size_t v_nmax_nbh_vertices(const vertex_id_t& id_v) const;
 
       /// Returns the \p i th vertex adjacent to the vertex \p id_v.
-      unsigned v_ith_nbh_vertex(unsigned id_v, unsigned i) const;
+      vertex_id_t v_ith_nbh_vertex(const vertex_id_t& id_v,
+				   unsigned i) const;
       /// \}
 
 
@@ -197,36 +195,33 @@ namespace mln
       ///
       /// \return The id of the new edge if it does not exist yet;
       /// otherwise, return <tt>mln_max(unsigned)</tt>.
-      unsigned add_edge(unsigned id_v1, unsigned id_v2);
+      edge_id_t add_edge(const vertex_id_t& id_v1, const vertex_id_t& id_v2);
 
       /// Return the edge whose id is \a e.
-      edge_t edge(unsigned e) const;
+      edge_t edge(const edge_id_t& e) const;
 
 
       /// Return the list of all edges.
-      const std::vector<util::ord_pair<unsigned> >& edges() const;
+      const std::vector<util::ord_pair<vertex_id_t> >& edges() const;
 
       /// Return the number of edges in the graph.
       size_t e_nmax() const;
 
       /// Return whether \p id_e is in the graph.
-      bool has_e(unsigned id_e) const;
-      /// Return whether \p e is in the graph.
-      template <typename G>
-      bool has_e(const util::edge<G>& e) const;
+      bool has_e(const edge_id_t& id_e) const;
 
 
       /// Return the first vertex associated to the edge \p id_e.
-      unsigned v1(unsigned id_e) const;
+      vertex_id_t v1(const edge_id_t& id_e) const;
 
       /// Return the second vertex associated to edge \p id_e
-      unsigned v2(unsigned id_e) const;
+      vertex_id_t v2(const edge_id_t& id_e) const;
 
       /// Return the number max of adjacent edge, given an edge \p id_e.
-      size_t e_nmax_nbh_edges(unsigned id_e) const;
+      size_t e_nmax_nbh_edges(const edge_id_t& id_e) const;
 
       /// Return the \p i th edge adjacent to the edge \p id_e.
-      unsigned e_ith_nbh_edge(unsigned id_e, unsigned i) const;
+      edge_id_t e_ith_nbh_edge(const edge_id_t& id_e, unsigned i) const;
 
       /// Return whether this graph is a subgraph
       /// Return true if g and *this have the same graph_id.
@@ -303,7 +298,7 @@ namespace mln
     }
 
     inline
-    std::pair<unsigned, unsigned>
+    std::pair<vertex_id_t, vertex_id_t>
     graph::add_vertices(unsigned n)
     {
       /* FIXME: This is not thread-proof (these two lines should
@@ -316,7 +311,7 @@ namespace mln
 
     inline
     graph::vertex_t
-    graph::vertex(unsigned id_v) const
+    graph::vertex(vertex_id_t id_v) const
     {
       mln_assertion(has_v(id_v));
       return vertex_t(*this, id_v);
@@ -332,54 +327,46 @@ namespace mln
 
     inline
     bool
-    graph::has_v(unsigned id_v) const
+    graph::has_v(const vertex_id_t& id_v) const
     {
       return id_v < data_->vertices_.size();
     }
 
-    template <typename G>
-    inline
-    bool
-    graph::has_v(const util::vertex<G>& v) const
-    {
-      return v.graph().is_subgraph_of(*this) && has_v(v.id());
-    }
-
     inline
     size_t
-    graph::v_nmax_nbh_edges(unsigned id_v) const
+    graph::v_nmax_nbh_edges(const vertex_id_t& id_v) const
     {
       mln_precondition(has_v(id_v));
       return data_->vertices_[id_v].size();
     }
 
     inline
-    unsigned
-    graph::v_ith_nbh_edge(unsigned id_v, unsigned i) const
+    edge_id_t
+    graph::v_ith_nbh_edge(const vertex_id_t& id_v, unsigned i) const
     {
       mln_precondition(has_v(id_v));
       if (i >= v_nmax_nbh_edges(id_v))
-        return v_nmax();
+        return edge_id_t();
       return data_->vertices_[id_v][i];
     }
 
     inline
     size_t
-    graph::v_nmax_nbh_vertices(unsigned id_v) const
+    graph::v_nmax_nbh_vertices(const vertex_id_t& id_v) const
     {
       mln_precondition(has_v(id_v));
       return v_nmax_nbh_edges(id_v);
     }
 
     inline
-    unsigned
-    graph::v_ith_nbh_vertex(unsigned id_v, unsigned i) const
+    vertex_id_t
+    graph::v_ith_nbh_vertex(const vertex_id_t& id_v, unsigned i) const
     {
       mln_precondition(has_v(id_v));
 
-      unsigned id_e = v_ith_nbh_edge(id_v, i);
+      edge_id_t id_e = v_ith_nbh_edge(id_v, i);
       return v_other(id_e, id_v);
-     }
+    }
 
 
     /*--------------.
@@ -387,8 +374,8 @@ namespace mln
     `---------------*/
 
     inline
-    unsigned
-    graph::add_edge(unsigned id_v1, unsigned id_v2)
+    edge_id_t
+    graph::add_edge(const vertex_id_t& id_v1, const vertex_id_t& id_v2)
     {
       //FIXME: to be removed! We should not check that, except in without NDEBUG.
       // Does this edge already exist in the graph?
@@ -397,7 +384,7 @@ namespace mln
       if (data_->edges_set_.find(edge) != data_->edges_set_.end ())
         {
           // Return the erroneous value.
-          return mln_max(unsigned);
+          return edge_id_t();
         }
       else
         {
@@ -406,7 +393,7 @@ namespace mln
           /* FIXME: This is not thread-proof (these two lines should
              form an atomic section).  */
           data_->edges_.push_back(edge);
-          unsigned id = data_->edges_.size() - 1;
+          edge_id_t id = data_->edges_.size() - 1;
 
           // Update the set of edges.
 # ifndef NDEBUG
@@ -424,7 +411,7 @@ namespace mln
     }
 
     inline
-    const std::vector<util::ord_pair<unsigned> >&
+    const std::vector<util::ord_pair<vertex_id_t> >&
     graph::edges() const
     {
       return this->data_->edges_;
@@ -432,7 +419,7 @@ namespace mln
 
     inline
     graph::edge_t
-    graph::edge(unsigned e) const
+    graph::edge(const edge_id_t& e) const
     {
       mln_assertion(e < e_nmax());
       return edge_t(*this, e);
@@ -447,30 +434,22 @@ namespace mln
 
     inline
     bool
-    graph::has_e(unsigned id_e) const
+    graph::has_e(const edge_id_t& id_e) const
     {
       return id_e < data_->edges_.size();
     }
 
-    template <typename G>
     inline
-    bool
-    graph::has_e(const util::edge<G>& e) const
-    {
-      return e.graph().is_subgraph_of(*this) && has_e(e.id());
-    }
-
-    inline
-    unsigned
-    graph::v1(unsigned id_e) const
+    vertex_id_t
+    graph::v1(const edge_id_t& id_e) const
     {
       mln_precondition(has_e(id_e));
       return data_->edges_[id_e].first();
     }
 
     inline
-    unsigned
-    graph::v2(unsigned id_e) const
+    vertex_id_t
+    graph::v2(const edge_id_t& id_e) const
     {
       mln_precondition(has_e(id_e));
       return data_->edges_[id_e].second();
@@ -478,15 +457,15 @@ namespace mln
 
     inline
     size_t
-    graph::e_nmax_nbh_edges(unsigned id_e) const
+    graph::e_nmax_nbh_edges(const edge_id_t& id_e) const
     {
       mln_precondition(has_e(id_e));
       return v_nmax_nbh_edges(v1(id_e)) + v_nmax_nbh_edges(v2(id_e));
     }
 
     inline
-    unsigned
-    graph::e_ith_nbh_edge(unsigned id_e, unsigned i) const
+    edge_id_t
+    graph::e_ith_nbh_edge(const edge_id_t& id_e, unsigned i) const
     {
       mln_precondition(has_e(id_e));
       if (i >= e_nmax_nbh_edges(id_e))

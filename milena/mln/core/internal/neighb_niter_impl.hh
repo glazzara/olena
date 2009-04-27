@@ -72,10 +72,10 @@ namespace mln
 	return internal::force_exact<E>(*this).compute_p_().id();
       }
 
-      operator unsigned() const
-      {
-	return internal::force_exact<E>(*this).compute_p_().id();
-      }
+//      operator unsigned() const
+//      {
+//	return internal::force_exact<E>(*this).compute_p_().id();
+//      }
 
     };
 

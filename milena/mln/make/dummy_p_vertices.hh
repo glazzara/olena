@@ -67,7 +67,7 @@ namespace mln
     /// \return A p_vertices.
     //
     template <typename G>
-    p_vertices< G, pw::cst_<int> >
+    p_vertices<G>
     dummy_p_vertices(const Graph<G>& g);
 
 
@@ -91,10 +91,10 @@ namespace mln
 
 
     template <typename G>
-    p_vertices< G, pw::cst_<int> >
+    p_vertices<G>
     dummy_p_vertices(const Graph<G>& g)
     {
-      return dummy_p_vertices(g, 0);
+      return p_vertices<G>(g);
     }
 
 

@@ -39,6 +39,7 @@
 #include <mln/util/graph.hh>
 #include <mln/util/line_graph.hh>
 #include <mln/util/site_pair.hh>
+#include <mln/make/vertex_image.hh>
 
 #include <mln/morpho/watershed/flooding.hh>
 
@@ -105,7 +106,7 @@ int main()
   sites(9) = P(point2d(1,2), point2d(1,3)); // Site associated to vertex 6.
 
   // Edge values.
-  typedef fun::i2v::array<int> edge_values_t;
+  typedef fun::i2v::array<unsigned> edge_values_t;
   edge_values_t edge_values(10);
 
   static const unsigned values[] = { 0, 10, 5, 2, 4, 6, 0, 3, 5, 2 };
@@ -113,7 +114,7 @@ int main()
     edge_values(i) = values[i];
 
   typedef vertex_image< P, unsigned, util::line_graph<util::graph> > ima_t;
-  ima_t ima(lg, sites, edge_values);
+  ima_t ima = make::vertex_image(lg, sites, edge_values);
 
 
   /*------------.

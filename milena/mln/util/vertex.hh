@@ -30,6 +30,7 @@
 # define MLN_UTIL_VERTEX_HH
 
 # include <iostream>
+# include <mln/util/graph_ids.hh>
 # include <mln/util/internal/vertex_impl.hh>
 # include <mln/core/concept/proxy.hh>
 
@@ -42,15 +43,42 @@
 namespace mln
 {
 
+  // Forward declaration.
+  namespace util { template<typename G> class vertex; }
+
+  /// Vertex category flag type.
+  template <typename E>
+  struct Vertex
+  {
+  };
+
+  template <>
+  struct Vertex<void>
+  {
+    typedef Site<void> super;
+  };
+
+
+
   namespace util
   {
 
     /// Vertex of a graph \p G.
 
     template<typename G>
-    class vertex : public internal::vertex_impl_<G>
+    class vertex
+      :	public Site< vertex<G> >,
+	public internal::vertex_impl_<G>
     {
     public:
+      /// Object category.
+      typedef Vertex<void> Category;
+
+      /// The underlying type used to store vertex ids.
+      typedef typename vertex_id_t::value_t id_value_t;
+
+      /// The vertex type id.
+      typedef vertex_id_t id_t;
 
       /// Graph associated type.
       typedef G graph_t;
@@ -59,7 +87,8 @@ namespace mln
       /// \{
       vertex();
       explicit vertex(const G& g);
-      vertex(const G& g, unsigned id);
+      vertex(const G& g, const id_value_t& id);
+      vertex(const G& g, const vertex_id_t& id);
       /// \}
 
       /// Check whether the vertex is still part of the graph.
@@ -67,10 +96,11 @@ namespace mln
       /// Invalidate that vertex.
       void invalidate();
 
-      unsigned other(unsigned id_e) const;
+      /// Returns the other vertex located on edge \p id_e.
+      vertex_id_t other(const edge_id_t& id_e) const;
 
       /// Returns the ith edge starting from this vertex.
-      unsigned ith_nbh_edge(unsigned i) const;
+      edge_id_t ith_nbh_edge(unsigned i) const;
 
       /// Returns the number max of edges starting from this vertex.
       /// If g_ is a sub graph of another graph, nmax will be retrived from
@@ -78,7 +108,7 @@ namespace mln
       unsigned nmax_nbh_edges() const;
 
       /// Returns the ith vertex adjacent to this vertex.
-      unsigned ith_nbh_vertex(unsigned i) const;
+      vertex_id_t ith_nbh_vertex(unsigned i) const;
 
       /// Returns the number max of vertices adjacent to this vertex.
       unsigned nmax_nbh_vertices() const;
@@ -87,20 +117,21 @@ namespace mln
       void change_graph(const G& g);
 
       /// Update the vertex id.
-      void update_id(unsigned id);
+      void update_id(const vertex_id_t& id);
 
       /// Returns the graph pointer this vertex belongs to.
       const G& graph() const;
 
       /// Returns the vertex id.
-      unsigned id() const;
+      const vertex_id_t& id() const;
 
       /// Conversion to the vertex id.
-      operator unsigned() const;
+      /// FIXME: May cause ambiguities... :(
+      operator vertex_id_t() const;
 
     protected:
       G g_;
-      unsigned id_;
+      vertex_id_t id_;
     };
 
 
@@ -135,14 +166,18 @@ namespace mln
     template <typename G, typename E>
     struct subject_impl< const util::vertex<G>, E >
     {
-      bool is_valid() const;
-      const G& graph() const;
-      unsigned id() const;
+//	Can't be provided since there is an ambiguity with the iterator's
+//	member.
+//
+//      bool is_valid() const;
 
-      unsigned other(unsigned id_e) const;
-      unsigned ith_nbh_edge(unsigned i) const;
+      const G& graph() const;
+      const util::vertex_id_t& id() const;
+
+      util::vertex_id_t other(const util::edge_id_t& id_e) const;
+      util::edge_id_t ith_nbh_edge(unsigned i) const;
       unsigned nmax_nbh_edges() const;
-      unsigned ith_nbh_vertex(unsigned i) const;
+      util::vertex_id_t ith_nbh_vertex(unsigned i) const;
       unsigned nmax_nbh_vertices() const;
 
     private:
@@ -155,7 +190,7 @@ namespace mln
     {
       void invalidate();
       void change_graph(const G& g);
-      void update_id(unsigned id);
+      void update_id(const util::vertex_id_t& id);
 
     private:
       E& exact_();
@@ -195,7 +230,15 @@ namespace mln
 
     template<typename G>
     inline
-    vertex<G>::vertex(const G& g, unsigned id)
+    vertex<G>::vertex(const G& g, const id_value_t& id)
+      : g_(g), id_(id)
+    {
+      mln_assertion(is_valid());
+    }
+
+    template<typename G>
+    inline
+    vertex<G>::vertex(const G& g, const vertex_id_t& id)
       : g_(g), id_(id)
     {
       mln_assertion(is_valid());
@@ -219,8 +262,8 @@ namespace mln
 
     template<typename G>
     inline
-    unsigned
-    vertex<G>::other(unsigned id_e) const
+    vertex_id_t
+    vertex<G>::other(const edge_id_t& id_e) const
     {
       mln_precondition(g_.has_v(id_));
       mln_precondition(g_.has_e(id_e));
@@ -230,7 +273,7 @@ namespace mln
 
     template<typename G>
     inline
-    unsigned
+    edge_id_t
     vertex<G>::ith_nbh_edge(unsigned i) const
     {
       mln_precondition(g_.has_v(id_));
@@ -248,7 +291,7 @@ namespace mln
 
     template<typename G>
     inline
-    unsigned
+    vertex_id_t
     vertex<G>::ith_nbh_vertex(unsigned i) const
     {
       mln_precondition(g_.has_v(id_));
@@ -275,7 +318,7 @@ namespace mln
     template<typename G>
     inline
     void
-    vertex<G>::update_id(unsigned id)
+    vertex<G>::update_id(const vertex_id_t& id)
     {
       id_ = id;
     }
@@ -290,7 +333,7 @@ namespace mln
 
     template<typename G>
     inline
-    unsigned
+    const vertex_id_t&
     vertex<G>::id() const
     {
       return id_;
@@ -298,7 +341,7 @@ namespace mln
 
     template<typename G>
     inline
-    vertex<G>::operator unsigned() const
+    vertex<G>::operator vertex_id_t() const
     {
       return id_;
     }
@@ -344,14 +387,6 @@ namespace mln
 
     template <typename G, typename E>
     inline
-    bool
-    subject_impl< const util::vertex<G>, E >::is_valid() const
-    {
-      return exact_().get_subject().is_valid();
-    }
-
-    template <typename G, typename E>
-    inline
     const G&
     subject_impl< const util::vertex<G>, E >::graph() const
     {
@@ -360,7 +395,7 @@ namespace mln
 
     template <typename G, typename E>
     inline
-    unsigned
+    const util::vertex_id_t&
     subject_impl< const util::vertex<G>, E >::id() const
     {
       return exact_().get_subject().id();
@@ -370,15 +405,15 @@ namespace mln
 
     template <typename G, typename E>
     inline
-    unsigned
-    subject_impl< const util::vertex<G>, E >::other(unsigned id_e) const
+    util::vertex_id_t
+    subject_impl< const util::vertex<G>, E >::other(const util::edge_id_t& id_e) const
     {
       return exact_().get_subject().other(id_e);
     }
 
     template <typename G, typename E>
     inline
-    unsigned
+    util::edge_id_t
     subject_impl< const util::vertex<G>, E >::ith_nbh_edge(unsigned i) const
     {
       return exact_().get_subject().ith_nbh_edge(i);
@@ -394,7 +429,7 @@ namespace mln
 
     template <typename G, typename E>
     inline
-    unsigned
+    util::vertex_id_t
     subject_impl< const util::vertex<G>, E >::ith_nbh_vertex(unsigned i) const
     {
       return exact_().get_subject().ith_nbh_vertex(i);
@@ -435,7 +470,7 @@ namespace mln
     template <typename G, typename E>
     inline
     void
-    subject_impl<       util::vertex<G>, E >::update_id(unsigned id)
+    subject_impl<       util::vertex<G>, E >::update_id(const util::vertex_id_t& id)
     {
       exact_().get_subject().update_id(id);
     };

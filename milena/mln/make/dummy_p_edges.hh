@@ -67,7 +67,7 @@ namespace mln
     /// \return A p_edges.
     //
     template <typename G>
-    p_edges< G, pw::cst_<int> >
+    p_edges<G>
     dummy_p_edges(const Graph<G>& g);
 
 
@@ -91,10 +91,10 @@ namespace mln
 
 
     template <typename G>
-    p_edges< G, pw::cst_<int> >
+    p_edges<G>
     dummy_p_edges(const Graph<G>& g)
     {
-      return dummy_p_edges(g, 0);
+      return p_edges<G>(g);
     }
 
 

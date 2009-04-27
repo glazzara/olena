@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -21,55 +22,41 @@
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
 // resulting executable to be covered by the GNU General Public
-// License.  This exception does not however invalidate any other
+// License.
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/make/dummy_p_vertices.cc
+#ifndef MLN_UTIL_GRAPH_IDS_HH
+# define MLN_UTIL_GRAPH_IDS_HH
+
+/// \file mln/util/graph_ids.hh
 ///
-/// Tests on mln::make::dummy_p_vertices.
+/// Definition of graph element ids.
+
+# include <mln/core/concept/object_id.hh>
 
 
-#include <mln/core/image/image2d.hh>
-#include <mln/core/site_set/p_array.hh>
-
-#include <mln/util/graph.hh>
-
-#include <mln/value/label_8.hh>
-
-#include <mln/make/dummy_p_vertices.hh>
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  typedef util::graph G;
-  G g;
-  g.add_vertices(5);
-  g.add_edge(1,2);
-  g.add_edge(1,3);
-  g.add_edge(4,3);
-  g.add_edge(4,2);
-
+  namespace util
   {
-    typedef p_vertices<G, pw::cst_<int> > pe_t;
-    pe_t pe = make::dummy_p_vertices(g);
 
-    mln_assertion(pe.nsites() == 5);
-    mln_piter_(pe_t) p(pe);
-    for_all(p)
-      mln_assertion(p == 0);
-  }
+    /// Object id vertex tag
+    struct vertex_tag;
 
-  {
-    typedef p_vertices<G, pw::cst_<point2d> > pe_t;
-    pe_t pe = make::dummy_p_vertices(g, point2d::plus_infty());
+    /// Vertex id type.
+    typedef object_id<vertex_tag, unsigned> vertex_id_t;
 
-    mln_assertion(pe.nsites() == 5);
-    mln_piter_(pe_t) p(pe);
-    for_all(p)
-      mln_assertion(p == point2d::plus_infty());
-  }
+    // Edge tag for object_id.
+    struct edge_tag;
 
-}
+    // Edge id type.
+    typedef object_id<edge_tag, unsigned> edge_id_t;
+
+  } // end of namespace mln::util
+
+} // end of namespace mln
+
+#endif // ! MLN_UTIL_GRAPH_IDS_HH
 

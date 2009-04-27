@@ -44,6 +44,34 @@ namespace mln
   {
 
 
+    /// Construct a vertex image
+    ///
+    /// \param[in] g A graph.
+    /// \param[in] fv A function mapping vertex ids to values.
+    ///
+    /// \return A vertex image.
+    //
+    template <typename V, typename G>
+    mln::vertex_image<void,V,G>
+    vertex_image(const Graph<G>& g, const fun::i2v::array<V>& fv);
+
+
+    /// Construct a vertex image
+    ///
+    /// \param[in] g_ A graph.
+    /// \param[in] fp A function mapping vertex ids to sites.
+    /// \param[in] fv A function mapping vertex ids to values.
+    ///
+    /// \return A vertex image.
+    //
+    template <typename FP, typename FV, typename G>
+    mln::vertex_image<mln_result(FP),mln_result(FV),G>
+    vertex_image(const Graph<G>& g_,
+		 const Function_i2v<FP>& fp,
+		 const Function_i2v<FV>& fv);
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename V, typename G>

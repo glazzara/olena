@@ -59,6 +59,9 @@ namespace mln
     struct site_iterator_base : Site_Iterator<E>,
                                 proxy_impl< const mln_psite(S)&, E>
     {
+      /// The associated target type.
+      typedef S target;
+
       /// The associated site type (as a Site_Proxy).
       typedef mln_site(S) site;
 
