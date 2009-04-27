@@ -374,8 +374,6 @@ namespace mln
       void
       from_to_(const util::array<T1>& from, util::array<T2>& to)
       {
-	mlc_converts_to(T1,T2)::check();
-
         to.reserve(from.nelements());
 
         for (unsigned i = 0; i < from.nelements(); ++i)

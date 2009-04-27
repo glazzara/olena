@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -126,7 +126,7 @@ int main()
   {
     const pw::image<fun::p2v::iota, box2d> ima(fun::p2v::iota(),
                                                  make::box2d(2,2, 5,5));
-    image2d<short unsigned int> out(8, 8);
+    image2d<unsigned short> out(8, 8);
 
     data::fill(out, (short unsigned int)0);
     out = level::transform(ima, mysqrt());
@@ -151,12 +151,11 @@ int main()
     typedef image_if<I, fun::p2b::chess> II;
 
     I ima(size, size);
-    I out(size, size);
     II ima_if = ima | fun::p2b::chess();
 
     data::fill_with_value(ima, 0);
     debug::iota(ima);
-    out = level::transform(ima_if, mysqrt());
+    II out = level::transform(ima_if, mysqrt());
 
     II::piter p(ima_if.domain());
     for_all(p)
@@ -187,14 +186,13 @@ int main()
   {
     typedef image2d<int> I;
     typedef sub_image< image2d<int>, box2d > II;
-    typedef image2d<unsigned short> III;
+    typedef sub_image< image2d<unsigned short>, box2d > III;
 
     I ima(size, size);
     II sub_ima(ima, make::box2d(4,4, 10,10));
-    III out(size, size);
 
     data::fill(ima, 51);
-    out = level::transform(sub_ima, mysqrt());
+    III out = level::transform(sub_ima, mysqrt());
 
     II::piter p(sub_ima.domain());
     for_all(p)
@@ -205,14 +203,13 @@ int main()
   {
     typedef image2d<int> I;
     typedef extension_val< image2d<int> > II;
-    typedef image2d<unsigned short> III;
+    typedef extension_val< image2d<unsigned short> > III;
 
     I ima(size, size);
     II extend_ima(ima, 5);
-    III out(size, size);
 
     data::fill(ima, 51);
-    out = level::transform(extend_ima, mysqrt());
+    III out = level::transform(extend_ima, mysqrt());
 
     II::piter p(extend_ima.domain());
     for_all(p)

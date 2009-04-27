@@ -1,5 +1,27 @@
 2009-04-27 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Small fixes.
+
+	* mln/util/array.hh,
+	* mln/io/pgm/save.hh: remove a wrong precondition.
+
+	* mln/labeling/compute.hh: do not call next() anymore.
+
+	* mln/linear/gaussian_directional_2d.hh: avoid a warning.
+
+	* tests/core/image/safe_image.cc: remove invalid code.
+
+	* tests/level/transform.cc: update invalid code. No implicit
+	conversion allowed from morphers to concrete images.
+
+	* tests/make/Makefile.am: remove duplicate test entry.
+
+	* tests/unit_test/unit-tests.mk: update unit test list.
+
+	* tools/area_flooding.cc: use edge_image and vertex_image.
+
+2009-04-27 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Revamp graph images.
 	
 	* headers.mk: update distributed file list.

@@ -175,7 +175,7 @@ namespace mln
 	  const A& a = exact(a_);
 	  const L& label = exact(label_);
 
-	  util::array<A> accus(nlabels.next(), a);
+	  util::array<A> accus(static_cast<unsigned>(nlabels) + 1, a);
 
 	  mln_piter(L) p(label.domain());
 	  for_all(p)
@@ -204,7 +204,7 @@ namespace mln
 	  const I& input = exact(input_);
 	  const L& label = exact(label_);
 
-	  util::array<A> accus(nlabels.next(), a);
+	  util::array<A> accus(static_cast<unsigned>(nlabels) + 1, a);
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
@@ -302,7 +302,7 @@ namespace mln
       typedef util::array<mln_result(A)> R;
       R res = internal::compute_dispatch(a, label, nlabels);
 
-      mln_postcondition(res.nelements() == nlabels.next());
+      mln_postcondition(res.nelements() == static_cast<unsigned>(nlabels) + 1);
 
       trace::exiting("labeling::compute");
       return res;

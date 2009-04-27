@@ -81,6 +81,7 @@ mln_util_internal_vertex_impl \
 mln_util_internal_edge_impl \
 mln_util_internal_graph_base \
 mln_util_internal_boost_graph \
+mln_util_internal_id2element \
 mln_util_internal_graph_nbh_iter_base \
 mln_util_internal_boost_graph_property \
 mln_util_ord_pair \
@@ -108,6 +109,7 @@ mln_util_pix \
 mln_util_tree_fast \
 mln_util_site_pair \
 mln_util_nil \
+mln_util_graph_ids \
 mln_util_eat \
 mln_util_essential \
 mln_data_memset_ \
@@ -130,13 +132,13 @@ mln_trace_resume \
 mln_trace_quiet \
 mln_trace_stop \
 mln_trace_essential \
-mln_make_graph \
 mln_make_double_neighb2d \
 mln_make_image3d \
 mln_make_dpoint2d_h \
 mln_make_w_window \
 mln_make_cell \
 mln_make_image \
+mln_make_influence_zone_adjacency_graph \
 mln_make_vec \
 mln_make_all \
 mln_make_dual_neighb \
@@ -148,11 +150,15 @@ mln_make_w_window2d_int \
 mln_make_box1d \
 mln_make_voronoi \
 mln_make_box2d \
+mln_make_p_edges_with_mass_centers \
 mln_make_h_mat \
+mln_make_p_vertices_with_mass_centers \
+mln_make_vertex_image \
 mln_make_w_window2d \
 mln_make_box3d \
 mln_make_detachment \
 mln_make_region_adjacency_graph \
+mln_make_dummy_p_vertices \
 mln_make_relabelfun \
 mln_make_pixel \
 mln_make_pix \
@@ -161,6 +167,7 @@ mln_make_w_window1d \
 mln_make_image2d \
 mln_make_w_window_directional \
 mln_make_rag_and_labeled_wsl \
+mln_make_dummy_p_edges \
 mln_make_w_window3d_int \
 mln_make_essential \
 mln_make_w_window1d_int \
@@ -208,7 +215,6 @@ mln_fun_vv2v_diff_abs \
 mln_fun_vv2v_land \
 mln_fun_vv2v_min \
 mln_fun_vv2v_essential \
-mln_fun_internal_array_base \
 mln_fun_internal_x2x_linear_impl \
 mln_fun_internal_ch_function_value_impl \
 mln_fun_internal_resolve \
@@ -252,7 +258,6 @@ mln_fun_i2v_all \
 mln_fun_i2v_array \
 mln_fun_i2v_all_to \
 mln_fun_i2v_essential \
-mln_fun_l2l_relabel \
 mln_fun_l2l_all \
 mln_fun_l2l_wrap \
 mln_fun_l2l_essential \
@@ -938,6 +943,7 @@ mln_core_concept_window \
 mln_core_concept_value \
 mln_core_concept_accumulator \
 mln_core_concept_site_set \
+mln_core_concept_object_id \
 mln_core_concept_object \
 mln_core_concept_meta_fun \
 mln_core_concept_delta_point_site \
@@ -1017,6 +1023,7 @@ mln_labeling_foreground \
 mln_labeling_regional_maxima \
 mln_labeling_wrap \
 mln_labeling_compute \
+mln_labeling_pack \
 mln_labeling_regional_minima \
 mln_labeling_essential \
 mln_labeling_fill_holes \
@@ -1107,6 +1114,7 @@ mln_debug_println_with_border \
 mln_debug_colorize \
 mln_debug_slices_2d \
 mln_debug_draw_graph \
+mln_debug_filename \
 mln_debug_put_word \
 mln_debug_histo \
 mln_debug_quiet \
@@ -1118,6 +1126,9 @@ mln_estim_all \
 mln_estim_sum \
 mln_estim_mean \
 mln_estim_essential \
+mln_graph_attribute_representative \
+mln_graph_attribute_card \
+mln_graph_compute \
 mln_set_uni \
 mln_set_unique \
 mln_set_inter \
@@ -1225,6 +1236,7 @@ mln_util_internal_vertex_impl_SOURCES = mln_util_internal_vertex_impl.cc
 mln_util_internal_edge_impl_SOURCES = mln_util_internal_edge_impl.cc
 mln_util_internal_graph_base_SOURCES = mln_util_internal_graph_base.cc
 mln_util_internal_boost_graph_SOURCES = mln_util_internal_boost_graph.cc
+mln_util_internal_id2element_SOURCES = mln_util_internal_id2element.cc
 mln_util_internal_graph_nbh_iter_base_SOURCES = mln_util_internal_graph_nbh_iter_base.cc
 mln_util_internal_boost_graph_property_SOURCES = mln_util_internal_boost_graph_property.cc
 mln_util_ord_pair_SOURCES = mln_util_ord_pair.cc
@@ -1252,6 +1264,7 @@ mln_util_pix_SOURCES = mln_util_pix.cc
 mln_util_tree_fast_SOURCES = mln_util_tree_fast.cc
 mln_util_site_pair_SOURCES = mln_util_site_pair.cc
 mln_util_nil_SOURCES = mln_util_nil.cc
+mln_util_graph_ids_SOURCES = mln_util_graph_ids.cc
 mln_util_eat_SOURCES = mln_util_eat.cc
 mln_util_essential_SOURCES = mln_util_essential.cc
 mln_data_memset__SOURCES = mln_data_memset_.cc
@@ -1274,13 +1287,13 @@ mln_trace_resume_SOURCES = mln_trace_resume.cc
 mln_trace_quiet_SOURCES = mln_trace_quiet.cc
 mln_trace_stop_SOURCES = mln_trace_stop.cc
 mln_trace_essential_SOURCES = mln_trace_essential.cc
-mln_make_graph_SOURCES = mln_make_graph.cc
 mln_make_double_neighb2d_SOURCES = mln_make_double_neighb2d.cc
 mln_make_image3d_SOURCES = mln_make_image3d.cc
 mln_make_dpoint2d_h_SOURCES = mln_make_dpoint2d_h.cc
 mln_make_w_window_SOURCES = mln_make_w_window.cc
 mln_make_cell_SOURCES = mln_make_cell.cc
 mln_make_image_SOURCES = mln_make_image.cc
+mln_make_influence_zone_adjacency_graph_SOURCES = mln_make_influence_zone_adjacency_graph.cc
 mln_make_vec_SOURCES = mln_make_vec.cc
 mln_make_all_SOURCES = mln_make_all.cc
 mln_make_dual_neighb_SOURCES = mln_make_dual_neighb.cc
@@ -1292,11 +1305,15 @@ mln_make_w_window2d_int_SOURCES = mln_make_w_window2d_int.cc
 mln_make_box1d_SOURCES = mln_make_box1d.cc
 mln_make_voronoi_SOURCES = mln_make_voronoi.cc
 mln_make_box2d_SOURCES = mln_make_box2d.cc
+mln_make_p_edges_with_mass_centers_SOURCES = mln_make_p_edges_with_mass_centers.cc
 mln_make_h_mat_SOURCES = mln_make_h_mat.cc
+mln_make_p_vertices_with_mass_centers_SOURCES = mln_make_p_vertices_with_mass_centers.cc
+mln_make_vertex_image_SOURCES = mln_make_vertex_image.cc
 mln_make_w_window2d_SOURCES = mln_make_w_window2d.cc
 mln_make_box3d_SOURCES = mln_make_box3d.cc
 mln_make_detachment_SOURCES = mln_make_detachment.cc
 mln_make_region_adjacency_graph_SOURCES = mln_make_region_adjacency_graph.cc
+mln_make_dummy_p_vertices_SOURCES = mln_make_dummy_p_vertices.cc
 mln_make_relabelfun_SOURCES = mln_make_relabelfun.cc
 mln_make_pixel_SOURCES = mln_make_pixel.cc
 mln_make_pix_SOURCES = mln_make_pix.cc
@@ -1305,6 +1322,7 @@ mln_make_w_window1d_SOURCES = mln_make_w_window1d.cc
 mln_make_image2d_SOURCES = mln_make_image2d.cc
 mln_make_w_window_directional_SOURCES = mln_make_w_window_directional.cc
 mln_make_rag_and_labeled_wsl_SOURCES = mln_make_rag_and_labeled_wsl.cc
+mln_make_dummy_p_edges_SOURCES = mln_make_dummy_p_edges.cc
 mln_make_w_window3d_int_SOURCES = mln_make_w_window3d_int.cc
 mln_make_essential_SOURCES = mln_make_essential.cc
 mln_make_w_window1d_int_SOURCES = mln_make_w_window1d_int.cc
@@ -1352,7 +1370,6 @@ mln_fun_vv2v_diff_abs_SOURCES = mln_fun_vv2v_diff_abs.cc
 mln_fun_vv2v_land_SOURCES = mln_fun_vv2v_land.cc
 mln_fun_vv2v_min_SOURCES = mln_fun_vv2v_min.cc
 mln_fun_vv2v_essential_SOURCES = mln_fun_vv2v_essential.cc
-mln_fun_internal_array_base_SOURCES = mln_fun_internal_array_base.cc
 mln_fun_internal_x2x_linear_impl_SOURCES = mln_fun_internal_x2x_linear_impl.cc
 mln_fun_internal_ch_function_value_impl_SOURCES = mln_fun_internal_ch_function_value_impl.cc
 mln_fun_internal_resolve_SOURCES = mln_fun_internal_resolve.cc
@@ -1396,7 +1413,6 @@ mln_fun_i2v_all_SOURCES = mln_fun_i2v_all.cc
 mln_fun_i2v_array_SOURCES = mln_fun_i2v_array.cc
 mln_fun_i2v_all_to_SOURCES = mln_fun_i2v_all_to.cc
 mln_fun_i2v_essential_SOURCES = mln_fun_i2v_essential.cc
-mln_fun_l2l_relabel_SOURCES = mln_fun_l2l_relabel.cc
 mln_fun_l2l_all_SOURCES = mln_fun_l2l_all.cc
 mln_fun_l2l_wrap_SOURCES = mln_fun_l2l_wrap.cc
 mln_fun_l2l_essential_SOURCES = mln_fun_l2l_essential.cc
@@ -2082,6 +2098,7 @@ mln_core_concept_window_SOURCES = mln_core_concept_window.cc
 mln_core_concept_value_SOURCES = mln_core_concept_value.cc
 mln_core_concept_accumulator_SOURCES = mln_core_concept_accumulator.cc
 mln_core_concept_site_set_SOURCES = mln_core_concept_site_set.cc
+mln_core_concept_object_id_SOURCES = mln_core_concept_object_id.cc
 mln_core_concept_object_SOURCES = mln_core_concept_object.cc
 mln_core_concept_meta_fun_SOURCES = mln_core_concept_meta_fun.cc
 mln_core_concept_delta_point_site_SOURCES = mln_core_concept_delta_point_site.cc
@@ -2161,6 +2178,7 @@ mln_labeling_foreground_SOURCES = mln_labeling_foreground.cc
 mln_labeling_regional_maxima_SOURCES = mln_labeling_regional_maxima.cc
 mln_labeling_wrap_SOURCES = mln_labeling_wrap.cc
 mln_labeling_compute_SOURCES = mln_labeling_compute.cc
+mln_labeling_pack_SOURCES = mln_labeling_pack.cc
 mln_labeling_regional_minima_SOURCES = mln_labeling_regional_minima.cc
 mln_labeling_essential_SOURCES = mln_labeling_essential.cc
 mln_labeling_fill_holes_SOURCES = mln_labeling_fill_holes.cc
@@ -2251,6 +2269,7 @@ mln_debug_println_with_border_SOURCES = mln_debug_println_with_border.cc
 mln_debug_colorize_SOURCES = mln_debug_colorize.cc
 mln_debug_slices_2d_SOURCES = mln_debug_slices_2d.cc
 mln_debug_draw_graph_SOURCES = mln_debug_draw_graph.cc
+mln_debug_filename_SOURCES = mln_debug_filename.cc
 mln_debug_put_word_SOURCES = mln_debug_put_word.cc
 mln_debug_histo_SOURCES = mln_debug_histo.cc
 mln_debug_quiet_SOURCES = mln_debug_quiet.cc
@@ -2262,6 +2281,9 @@ mln_estim_all_SOURCES = mln_estim_all.cc
 mln_estim_sum_SOURCES = mln_estim_sum.cc
 mln_estim_mean_SOURCES = mln_estim_mean.cc
 mln_estim_essential_SOURCES = mln_estim_essential.cc
+mln_graph_attribute_representative_SOURCES = mln_graph_attribute_representative.cc
+mln_graph_attribute_card_SOURCES = mln_graph_attribute_card.cc
+mln_graph_compute_SOURCES = mln_graph_compute.cc
 mln_set_uni_SOURCES = mln_set_uni.cc
 mln_set_unique_SOURCES = mln_set_unique.cc
 mln_set_inter_SOURCES = mln_set_inter.cc

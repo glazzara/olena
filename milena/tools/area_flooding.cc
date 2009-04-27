@@ -57,7 +57,6 @@
 #include <mln/core/routine/duplicate.hh>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/line_graph_elt_neighborhood.hh>
 #include <mln/core/var.hh>
 
 #include <mln/morpho/line_gradient.hh>
@@ -102,12 +101,13 @@ int main(int argc, char* argv[])
   `----------------*/
 
   // Type of the function mapping graph edges and image sites.
-  typedef fun::i2v::array<util::site_pair<point2d> > fedge_site_t;
+  typedef util::site_pair<point2d> P;
+  typedef fun::i2v::array<P> fedge_site_t;
 
   // Line graph image.
   typedef fun::i2v::array<val_t> fval_t;
   fval_t values;
-  typedef pw::image<fval_t, p_edges<util::graph,fedge_site_t> > lg_ima_t;
+  typedef edge_image<P,val_t> lg_ima_t;
   lg_ima_t lg_ima = morpho::line_gradient(input);
 
   /*-----------.
@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
   /* FIXME: I'm not sure this is the way it should be done.  Anyway,
      we should implement this as a canvas.  */
 
-  typedef line_graph_elt_neighborhood<util::graph, lg_ima_t::pset::fun_t> nbh_t;
+  typedef lg_ima_t::nbh_t nbh_t;
   nbh_t nbh;
 
   unsigned area = 0;
@@ -146,8 +146,7 @@ int main(int argc, char* argv[])
   // Perform a Watershed Transform.
   typedef int_u16 wst_val_t;
   wst_val_t nbasins;
-  typedef pw::image<fun::i2v::array<wst_val_t>,
-		    p_edges<util::graph,fedge_site_t> > wshed_t;
+  typedef edge_image<P,wst_val_t> wshed_t;
 
   wshed_t wshed = morpho::meyer_wst(result, nbh, nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;

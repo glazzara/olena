@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/image/safe_image.cc
- *
- * \brief Tests on mln::safe_image.
- */
+/// \file tests/core/image/safe_image.cc
+///
+/// Tests on mln::safe_image.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/safe.hh>
@@ -49,13 +48,9 @@ int main()
 
     ima_(in) = 51;
     mln_assertion(ima_(in) == 51);
-    
+
     ima_(out) = 0;
     mln_assertion(ima_(out) == 7);
-
-    // test "image_adaptor_<..>::operator I() const"
-    I ima2 = ima_;
-    const I ima3 = ima_;
   }
 
   {

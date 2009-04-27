@@ -405,6 +405,7 @@ namespace mln
 
       // Non causal part
 
+      (void) bdr;
       // extension::fill(ima, bdr);
 
       unsigned
