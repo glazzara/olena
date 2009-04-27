@@ -15,9 +15,9 @@
 #include <mln/core/routine/duplicate.hh>
 #include <mln/data/fill.hh>
 
+#include <mln/core/image/vertex_image.hh>
 #include <mln/core/site_set/p_edges.hh>
 #include <mln/core/site_set/p_vertices.hh>
-#include <mln/core/image/graph_elt_neighborhood.hh>
 
 #include <mln/io/essential.hh>
 #include <mln/value/int_u8.hh>
@@ -630,7 +630,8 @@ int main(int argc, char *argv[])
   p_vertices<util::graph, fun::i2v::array<point2d> >
     pv = make::common_pvertices(ws, nbasins, rag_data.first());
 
-  mln_VAR( med, f_med | pv );
+  typedef vertex_image<point2d, int_u8> med_t;
+  med_t med(pv, f_med);
 
   int_u8
     object     = 255,
@@ -641,7 +642,7 @@ int main(int argc, char *argv[])
   initialize(out, med);
   data::fill(out, unknown);
 
-  typedef graph_elt_neighborhood<util::graph, F> N;
+  typedef med_t::nbh_t N;
   N nbh;
 
   // Initialization.

@@ -12,9 +12,10 @@
 
 #include <mln/data/fill.hh>
 
+#include <mln/core/image/edge_image.hh>
+#include <mln/core/image/vertex_image.hh>
 #include <mln/core/site_set/p_edges.hh>
 #include <mln/core/site_set/p_vertices.hh>
-#include <mln/core/image/graph_elt_neighborhood.hh>
 
 #include <mln/io/essential.hh>
 #include <mln/value/int_u8.hh>
@@ -103,7 +104,7 @@ namespace mln
     }
 
     template <typename FVV, typename G, typename V2P, typename E2P, typename FVE>
-    pw::image<fun::i2v::array<mln_result(FVE)>,p_edges<G,E2P> >
+    edge_image<mln_result(FVE),mln_result(E2P)>
     edge_image(const pw::image<FVV,p_vertices<G,V2P> >& vertex_image,
 	       const p_edges<G,E2P>& pe,
 	       const Function_vv2v<FVE>& edge_value_)
@@ -118,8 +119,8 @@ namespace mln
       edge_values_t edge_values(pe.nsites());
 
       // image on graph edges
-      typedef pw::image<edge_values_t, p_edges<G,E2P> > ima_e_t;
-      ima_e_t ima_e = (edge_values | pe);
+      typedef mln::edge_image<mln_result(FVE),mln_result(E2P)> ima_e_t;
+      ima_e_t ima_e(pe, edge_values);
 
       mln_piter(ima_e_t) e(ima_e.domain());
       for_all(e)
@@ -365,7 +366,8 @@ int main(int argc, char *argv[])
     p_vertices<util::graph, fun::i2v::array<point2d> >
       pv = make::common_pvertices(wst, nbasins, rag_data.first());
 
-    mln_VAR( med, f_med | pv );
+    typedef vertex_image<point2d, int_u8> med_t;
+    med_t med(pv, f_med);
 
     int_u8
       object     = 255,
@@ -376,7 +378,7 @@ int main(int argc, char *argv[])
     initialize(out, med);
     data::fill(out, unknown);
 
-    typedef graph_elt_neighborhood<util::graph, F> N;
+    typedef med_t::nbh_t N;
     N nbh;
 
     // Initialization.

@@ -7,6 +7,9 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/make/double_neighb2d.hh>
 
+#include <mln/core/image/vertex_image.hh>
+#include <mln/core/image/edge_image.hh>
+
 #include <mln/pw/all.hh>
 #include <mln/core/image/image_if.hh>
 #include <mln/core/site_set/p_queue.hh>
@@ -17,7 +20,6 @@
 
 #include <mln/core/site_set/p_edges.hh>
 #include <mln/core/site_set/p_vertices.hh>
-#include <mln/core/image/graph_elt_neighborhood.hh>
 
 #include <mln/io/essential.hh>
 #include <mln/value/int_u8.hh>
@@ -113,10 +115,10 @@ namespace mln
     }
 
     template <typename FVV, typename G, typename V2P, typename E2P, typename FVE>
-    pw::image<fun::i2v::array<mln_result(FVE)>,p_edges<G,E2P> >
-    edge_image(const pw::image<FVV,p_vertices<G,V2P> >& vertex_image,
-	       const p_edges<G,E2P>& pe,
-	       const Function_vv2v<FVE>& edge_value_)
+    edge_image<mln_result(E2P), mln_result(FVE), G>
+    edgeimage(const pw::image<FVV,p_vertices<G,V2P> >& vertex_image,
+	      const p_edges<G,E2P>& pe,
+	      const Function_vv2v<FVE>& edge_value_)
     {
       trace::entering("edge_image");
 
@@ -128,8 +130,8 @@ namespace mln
       edge_values_t edge_values(pe.nsites());
 
       // image on graph edges
-      typedef pw::image<edge_values_t, p_edges<G,E2P> > ima_e_t;
-      ima_e_t ima_e = (edge_values | pe);
+      typedef edge_image<mln_result(E2P), mln_result(FVE), G> ima_e_t;
+      ima_e_t ima_e(pe, edge_values);
 
       mln_piter(ima_e_t) e(ima_e.domain());
       for_all(e)
@@ -165,12 +167,12 @@ namespace mln
 
 
     template <typename A, typename G, typename F, typename I, typename W>
-    pw::image<fun::i2v::array<mln_value(I)>, p_vertices<G,F> >
-    vertex_image(const Accumulator<A>& accu,
-		 const p_vertices<G,F>& pv,
-		 const Image<I>& input_,
-		 const Image<W>& wst_,
-		 const mln_value(W)& nbasins)
+    vertex_image<mln_result(F), mln_value(I), G>
+    verteximage(const Accumulator<A>& accu,
+		const p_vertices<G,F>& pv,
+		const Image<I>& input_,
+		const Image<W>& wst_,
+		const mln_value(W)& nbasins)
     {
       trace::entering("vertex_image");
 
@@ -185,9 +187,8 @@ namespace mln
       convert::from_to(labeling::compute(accu, input, wst, nbasins),
 		       vertex_values);
 
-      pw::image<fun::i2v::array<mln_value(I)>,
-	p_vertices<util::graph, fun::i2v::array<mln_site(I)> > >
-	  ima_vertex = vertex_values | pv;
+      vertex_image<mln_result(F), mln_value(I), G>
+	ima_vertex(pv, vertex_values);
 
       trace::exiting("vertex_image");
       return ima_vertex;
@@ -730,12 +731,13 @@ int main(int argc, char *argv[])
     }
 
   p_vertices<util::graph, fun::i2v::array<point2d> >
-    pv = make::common_pvertices(ws, nbasins, rag_data.first());
+    pv = make::common_pvertices(ws, nbasins, gr);
 
-  mln_VAR( med, f_med | pv );
+  typedef vertex_image<point2d,int_u8,util::graph> med_t;
+  med_t med(pv, f_med);
 
 
-  typedef graph_elt_neighborhood<util::graph, F> N;
+  typedef med_t::nbh_t N;
   N nbh;
 
   threshold = 25; // FIXME

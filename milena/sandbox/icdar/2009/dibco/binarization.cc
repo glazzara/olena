@@ -7,6 +7,8 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/make/double_neighb2d.hh>
 
+#include <mln/core/image/vertex_image.hh>
+
 #include <mln/pw/all.hh>
 #include <mln/core/image/image_if.hh>
 #include <mln/core/site_set/p_queue.hh>
@@ -17,7 +19,7 @@
 
 #include <mln/core/site_set/p_edges.hh>
 #include <mln/core/site_set/p_vertices.hh>
-#include <mln/core/image/graph_elt_neighborhood.hh>
+#include <mln/make/p_vertices_with_mass_centers.hh>
 
 #include <mln/io/essential.hh>
 #include <mln/value/int_u8.hh>
@@ -500,11 +502,12 @@ namespace mln
 				    L& nlabels)
   {
     trace::entering("labeling__quasi_regional_minima");
-    
+
+    (void) nlabels;
     const I& input = exact(input_);
     const N& nbh = exact(nbh_);
     mln_precondition(input.is_valid());
-    
+
     typedef mln_psite(I) P;
     p_array<P> s = level::sort_psites_increasing(input);
 
@@ -694,8 +697,6 @@ int main(int argc, char *argv[])
   // -----------------------------    R A G  --------------------------------
 
 
-  util::graph& gr = rag_data.first();
-
   fun::i2v::array<int_u8> f_med;
   convert::from_to(basin_med, f_med);
 
@@ -707,12 +708,12 @@ int main(int argc, char *argv[])
     }
 
   p_vertices<util::graph, fun::i2v::array<point2d> >
-    pv = make::common_pvertices(ws, nbasins, rag_data.first());
+    pv = make::p_vertices_with_mass_centers(ws, nbasins, rag_data.first());
 
-  mln_VAR( med, f_med | pv );
+  typedef vertex_image<point2d, int_u8> med_t;
+  med_t med(pv, f_med);
 
-
-  typedef graph_elt_neighborhood<util::graph, F> N;
+  typedef med_t::nbh_t N;
   N nbh;
 
   threshold = 25; // FIXME

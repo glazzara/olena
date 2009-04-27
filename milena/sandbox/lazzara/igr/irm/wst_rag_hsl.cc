@@ -1,13 +1,12 @@
 #include <mln/essential/2d.hh>
 
+#include <mln/core/image/edge_image.hh>
+
 #include <mln/core/alias/dpoint2d.hh>
 #include <mln/core/alias/vec3d.hh>
-#include <mln/core/image/line_graph_elt_neighborhood.hh>
 
 #include <mln/accu/center.hh>
 #include <mln/accu/compute.hh>
-
-#include <mln/canvas/morpho/algebraic_union_find.hh>
 
 #include <mln/debug/draw_graph.hh>
 
@@ -34,6 +33,9 @@
 #include <mln/value/hsl.hh>
 
 #include <mln/make/region_adjacency_graph.hh>
+#include <mln/make/edge_image.hh>
+#include <mln/make/vertex_image.hh>
+#include <mln/make/p_vertices_with_mass_centers.hh>
 
 
 // Given a color image and a wshed image, computes the component graph.
@@ -58,45 +60,39 @@ namespace mln
   };
 
 
-  value::int_u8 dist(const value::rgb8& c1, const value::rgb8& c2)
+  struct dist : Function_vv2v<dist>
   {
-    unsigned d = 0;
-    d += (math::diff_abs(c1.red(), c2.red()) + 2) / 3;
-    d += (math::diff_abs(c1.green(), c2.green()) + 2) / 3;
-    d += (math::diff_abs(c1.blue(), c2.blue()) + 2) / 3;
-    if (d > 255)
-      d = 255;
-    return d;
-  }
+    typedef value::int_u8 result;
+
+    value::int_u8 operator()(const value::rgb8& c1, const value::rgb8& c2) const
+    {
+      unsigned d = 0;
+      d += (math::diff_abs(c1.red(), c2.red()) + 2) / 3;
+      d += (math::diff_abs(c1.green(), c2.green()) + 2) / 3;
+      d += (math::diff_abs(c1.blue(), c2.blue()) + 2) / 3;
+      if (d > 255u)
+	d = 255;
+      return d;
+    }
+
+  };
 
 
 
   // ima_v, image on graph vertices; value = mean color per vertex (watershed basin)
   template <typename I>
   inline
-  pw::image<fun::i2v::array<value::int_u8>,
-	    p_edges<util::graph, fun::i2v::array<mln_site(I)> > >
+  edge_image<mln_site(I),value::int_u8>
   make_edge_graph_image(const I& ima_v, const util::graph& g)
   {
 
     // edge sites.
     typedef fun::i2v::array<mln_site(I)> edge_site_t;
     edge_site_t edge_site(g.e_nmax(), literal::origin);
-    typedef p_edges<util::graph, edge_site_t > pe_t;
-    pe_t pe(g, edge_site);
-
-    // edge values
-    typedef fun::i2v::array<value::int_u8> edge_values_t;
-    edge_values_t edge_values(g.e_nmax());
 
     // image on graph edges
-    typedef pw::image<edge_values_t, pe_t> ima_e_t;
-    ima_e_t ima_e = (edge_values | pe);
-
-    mln_piter(ima_e_t) e(ima_e.domain());
-    for_all(e) // in ima_e
-      ima_e(e) = dist(ima_v.function()(e.element().v1()),
-		      ima_v.function()(e.element().v2()));
+    typedef edge_image<mln_site(I),value::int_u8> ima_e_t;
+    ima_e_t ima_e = make::edge_image(ima_v, edge_site, dist());
 
     return ima_e;
   }
@@ -123,30 +119,21 @@ namespace mln
   }
 
   template <typename I, typename J>
-  pw::image<fun::i2v::array<mln_value(I)>,
-	    p_vertices<util::graph, fun::i2v::array<mln_site(I)> > >
+  vertex_image<mln_site(I), mln_value(I)>
   make_vertex_graph_image(const util::graph& g, const I&input,
-      const J& w, const mln_value(J)& nbasins)
+			  const J& w, const mln_value(J)& nbasins)
   {
-    typedef util::array<mln_site(I)> vertex_sites_t;
-    vertex_sites_t site_values;
-    convert::from_to(labeling::compute(accu::center<mln_site(I)>(), w, nbasins),
-		     site_values);
+    /// Sites
+    typedef fun::i2v::array<mln_site(J)> vertex_sites_t;
+    typedef p_vertices<util::graph, vertex_sites_t> S;
+    S pv = make::p_vertices_with_mass_centers(w, nbasins, g);
 
-    typedef fun::i2v::array<mln_site(J)> f_sites_t;
-    f_sites_t sites;
-    convert::from_to(site_values, sites);
-
-    // p_vertices
-    typedef p_vertices<util::graph, f_sites_t> S;
-    S pv(g, sites);
-
-
+    /// Values
     typedef fun::i2v::array<mln_value(I)> vertex_values_t;
     vertex_values_t vertex_values;
     convert::from_to(mean_color_values(input, w, nbasins), vertex_values);
 
-    mln_VAR(ima_v, (vertex_values | pv));
+    vertex_image<mln_site(I), mln_value(I)> ima_v(pv, vertex_values);
 
     return ima_v;
   }
@@ -260,7 +247,7 @@ int main(int argc, char *argv[])
   unsigned nbasins2;
   fun::i2v::array<label_16> f;
   {
-    util::graph g = make::graph(vol, c4(), nbasins);
+    util::graph g = make::region_adjacency_graph(vol, c4(), nbasins);
 
     mln_VAR(ima_v, make_vertex_graph_image(g, input, vol, nbasins));
     mln_VAR(ima_e, make_edge_graph_image(ima_v, g));
@@ -302,7 +289,7 @@ int main(int argc, char *argv[])
   //  debug::println(vol);
   vol2 = level::transform(vol, f);
   //  debug::println(vol2);
-  util::graph g2 = make::graph(vol2, c4(), nbasins2);
+  util::graph g2 = make::region_adjacency_graph(vol2, c4(), nbasins2);
 
   // Compute values distance on the HSL Image.
   mln_VAR(ima_v2, make_vertex_graph_image(g2, input, vol2, nbasins2));

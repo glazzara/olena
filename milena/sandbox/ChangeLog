@@ -1,3 +1,14 @@
+2009-04-27 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Update the use of graph image in sandbox.
+
+	* icdar/2009/dibco/binarization.cc,
+	* icdar/2009/dibco/svg.1.binarization.cc,
+	* icdar/2009/dibco/svg.2.binarization.cc,
+	* icdar/2009/dibco/svg.3.binarization.cc,
+	* lazzara/igr/irm/wst_rag_hsl.cc: use vertex_image and edge_image
+	types.
+
 2009-04-25  Alex Hamelin  <hamelin@lrde.epita.fr>
 
 	End of vector method, proved to be useless.
