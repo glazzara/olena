@@ -1,5 +1,17 @@
 2009-04-27 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Fix documentation distributed files.
+
+	* doc/examples/examples.mk,
+	* doc/figures/figures.mk,
+	* doc/outputs/outputs.mk,
+	* doc/generate_dist_files.sh: do not add distributed files in
+	EXTRA_DIST.
+	
+	* doc/examples/samples.mk: remove since useless now.
+
+2009-04-27 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Fix seeds2tiling_roundness test.
 
 	* mln/geom/chamfer.hh: Fix a too restrictive test (true == 1 but not >

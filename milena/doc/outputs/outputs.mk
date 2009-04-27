@@ -2,6 +2,7 @@
 
 EXTRA_DIST +=  \
 outputs/win-create-1-display.txt \
+outputs/trace.txt \
 outputs/win-create-2.txt \
 outputs/accu-right-instanciation.txt \
 outputs/extend.txt \
@@ -29,12 +30,13 @@ outputs/fill-subdomain.txt \
 outputs/ima-size.txt \
 outputs/tuto2_first_image.txt \
 outputs/logical-not.txt \
+outputs/colorize.txt \
 outputs/ima2d-display-output-2.txt \
 outputs/ima2d-decl-2.txt \
 outputs/paste.txt \
-outputs/outputs.mk \
 outputs/ima2d-6-clone.txt \
 outputs/ima2d-7.txt \
+outputs/println.txt \
 outputs/tuto3_rw_image.txt \
 outputs/parray-bbox.txt \
 outputs/domain-display.txt \

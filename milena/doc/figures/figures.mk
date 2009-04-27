@@ -16,14 +16,15 @@ figures/tuto4_genericity_and_algorithms-9.ppm \
 figures/logical-not-1.pbm \
 figures/ima_save.pbm \
 figures/tuto2_first_image-1.pbm \
-figures/figures.mk \
 figures/fill-subimage-cfun-1.ppm \
 figures/extend-3.ppm \
 figures/fill-subdomain-4.ppm \
+figures/colorize-1.pgm \
 figures/tuto4_genericity_and_algorithms-7.ppm \
 figures/tuto4_genericity_and_algorithms-6.ppm \
 figures/extend-5.ppm \
 figures/logical-not-3.pbm \
+figures/colorize-2.ppm \
 figures/tuto4_genericity_and_algorithms-3.pbm \
 figures/tuto4_genericity_and_algorithms-1.ppm \
 figures/extend-4.ppm \
