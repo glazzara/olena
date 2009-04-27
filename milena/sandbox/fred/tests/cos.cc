@@ -11,6 +11,7 @@ int main()
   mln::fun::compose compose;
 
   double x;
+
   dbg_print(cos(compose)(cos,cos)(x) = 0.857553);
   dbg_print(x);
   dbg_print(cos(compose)(cos,cos)(0.));

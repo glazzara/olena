@@ -217,8 +217,8 @@ namespace mln
 	  typedef typename def::argument argument;
 	  typedef typename def::result   result;
 
-	  typedef mln_trait_fun_param(def) param;
-	  typedef mln_trait_fun_storage(def) storage;
+	  typedef mln_trait_fun_param(unary_impl) param;
+	  typedef mln_trait_fun_storage(unary_impl) storage;
 
 	  result operator () (const argument& value) const
 	  {
@@ -266,11 +266,11 @@ namespace mln
 
       template <typename Fun, typename T>
       struct unary
-      : impl::unary_impl<mln_trait_fun_is_parametrable_(mln_trait_nunary(Fun, T))::value,
+      : impl::unary_impl<mlc_or(mln_trait_fun_is_parametrable(mln_trait_nunary(Fun, T)), mln_trait_fun_is_parametrable(Fun))::value,
 			 mln_trait_fun_is_assignable_(mln_trait_nunary(Fun, T))::value, Fun, T>
       {
 	typedef mln_trait_nunary(Fun, T) def;
-	typedef impl::unary_impl<mln_trait_fun_is_parametrable_(def)::value,
+	typedef impl::unary_impl<mlc_or(mln_trait_fun_is_parametrable(def), mln_trait_fun_is_parametrable(Fun))::value,
 				 mln_trait_fun_is_assignable_(def)::value,
 				 Fun,
 				 T>

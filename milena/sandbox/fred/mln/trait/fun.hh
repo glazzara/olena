@@ -96,20 +96,21 @@ namespace mln
 	  };
 
 	  template <typename T>
-	  struct param_flag_solver<T, typename except_void_t<typename T::flag>::ret>
+	  struct param_flag_solver<T, typename except_void_t<typename mln::fun::parameter<typename T::flag>::param>::ret>
 	  {
-	    typedef typename param_solver<typename T::flag, void>::ret ret;
+	    typedef mln::fun::parameter<typename T::flag> ret;
 	  };
 
 	  template <typename T, typename V>
-	  struct param_def_solver : param_flag_solver<T, V>
+	  struct param_def_solver
 	  {
+	    typedef typename param_flag_solver<T, V>::ret ret;
 	  };
 
 	  template <typename T>
-	  struct param_def_solver<T, typename except_void_t<typename T::def>::ret>
+	  struct param_def_solver<T, typename except_void_t<typename mln::fun::parameter<typename T::def>::param>::ret>
 	  {
-	    typedef typename param_solver<typename T::def, void>::ret ret;
+	    typedef mln::fun::parameter<typename T::def> ret;
 	  };
 
 	  template <typename T, typename V>
@@ -135,6 +136,44 @@ namespace mln
 	  {
 	    typedef metal::true_ ret;
 	    typedef typename param_solver<T,void>::ret::param type;
+	  };
+
+	  template <typename T, typename V>
+	  struct storage_solver;
+
+	  template <typename T, typename V>
+	  struct storage_flag_solver
+	  {
+	    typedef typename mln::fun::parameter<T> ret;
+	  };
+
+	  template <typename T>
+	  struct storage_flag_solver<T, typename except_void_t<typename mln::fun::parameter<typename T::flag>::storage>::ret>
+	  {
+	    typedef mln::fun::parameter<typename T::flag> ret;
+	  };
+
+	  template <typename T, typename V>
+	  struct storage_def_solver
+	  {
+	    typedef typename storage_flag_solver<T, V>::ret ret;
+	  };
+
+	  template <typename T>
+	  struct storage_def_solver<T, typename except_void_t<typename mln::fun::parameter<typename T::def>::storage>::ret>
+	  {
+	    typedef mln::fun::parameter<typename T::def> ret;
+	  };
+
+	  template <typename T, typename V>
+	  struct storage_solver : storage_def_solver<T, V>
+	  {
+	  };
+
+	  template <typename T>
+	  struct storage_solver<T, typename except_void_t<typename T::storage>::ret>
+	  {
+	    typedef T ret;
 	  };
 
 	  template <typename T, typename V>

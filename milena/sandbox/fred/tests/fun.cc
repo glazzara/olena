@@ -3,8 +3,9 @@
 #include <mln/fun/math/cos.hh>
 #include <mln/fun/math/norm.hh>
 // #include <mln/fun/math/inc.hh>
-// #include <mln/fun/math/red.hh>
-
+#include <mln/fun/component/red.hh>
+#include <mln/fun/component/comp.hh>
+#include <mln/value/rgb8.hh>
 #include <iostream>
 
 #define dbg_print(val) std::cout << #val << "\n\t -> \t" << (val) << std::endl
@@ -13,7 +14,9 @@ int main()
   mln::fun::abs abs;
   mln::fun::cos cos;
 //   mln::fun::inc inc;
-//   mln::fun::red red;
+  mln::fun::red red;
+  mln::fun::comp comp;
+  mln::fun::pcomp comp1(1);
 
   mln::fun::norm::l1 l1;
   mln::fun::norm::l2 l2;
@@ -41,9 +44,9 @@ int main()
   dbg_print(cos(0.));
   dbg_print(cos(mln::math::acos(0.5)));
 
-//   // RED
-//   mln_invariant(red(mln::value::rgb8(8,13,21)) == 8);
-//   dbg_print(red(mln::value::rgb8(8,13,21)));
+  // RED
+  mln_invariant(red(mln::value::rgb8(8,13,21)) == 8);
+  dbg_print(red(mln::value::rgb8(8,13,21)));
 
   // NORM
   mln::algebra::vec<3, double> v;
@@ -76,14 +79,18 @@ int main()
     dbg_print(x);
   }
 
-  // RED
-//   {
-//     mln::value::rgb8 rgb(8,13,21);
-//     dbg_print(rgb);
-//     dbg_print(red(rgb) = 0);
-// // FIXME: Doesn't compile! mln_invariant(red(rgb) == 0);
-//     dbg_print(rgb);
-//   }
+// RED
+  {
+    mln::value::rgb8 rgb(8,13,21);
+    dbg_print(rgb);
+    dbg_print(red(rgb) = 0);
+    mln_invariant(red(rgb) == 0);
+    dbg_print(rgb);
+    dbg_print(comp(0, rgb));
+    dbg_print(comp(1, rgb));
+    dbg_print(comp(2, rgb));
+    comp1(rgb) = 2;
+  }
 
   // NORM
   {

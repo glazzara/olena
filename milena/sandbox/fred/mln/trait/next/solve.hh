@@ -147,6 +147,6 @@ namespace mln
 
 # include <mln/trait/next/solve_unary.hh>
 # include <mln/trait/next/solve_binary.hh>
-
+# include <mln/trait/next/solve_proxy.hh>
 
 #endif // ! MLN_TRAIT_NEXT_SOLVE_HH

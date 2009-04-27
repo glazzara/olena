@@ -1,3 +1,20 @@
+2009-04-27  Frederic Bour  <bour@lrde.epita.fr>
+
+	Add functions working on components, add proxy support for new.
+	*  fred/mln/core/image/thrubin_morpher.hh: New.
+	*  fred/mln/fun/component/blue.hh: New.
+	*  fred/mln/fun/component/comp.hh: New.
+	*  fred/mln/fun/component/green.hh: New.
+	*  fred/mln/fun/component/red.hh: New.
+	*  fred/mln/fun/component/rgb.hh: New.
+	*  fred/mln/fun/component: New.
+	*  fred/mln/fun/spe/unary.hh: Debug parameter handling.
+	*  fred/mln/trait/fun.hh: Debug parameter handling.
+	*  fred/mln/trait/next/solve.hh: Add proxy support.
+	*  fred/mln/trait/next/solve_proxy.hh: New.
+	*  fred/tests/cos.cc: Add/remove tests.
+	*  fred/tests/fun.cc: Add/remove tests.
+
 2009-04-27 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Update the use of graph image in sandbox.
