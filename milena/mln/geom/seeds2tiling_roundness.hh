@@ -88,15 +88,16 @@ namespace mln
 	I& ima = exact(ima_);
 	const N& nbh = exact(nbh_);
 	image2d<unsigned> dist = geom::chamfer(ima, w_win, max);
+
 	I out = duplicate(ima_);
-	p_priority<mln_psite(I), p_queue_fast<unsigned> > q;
+	p_priority<unsigned, p_queue_fast<mln_psite(I)> > q;
 
 	// Init.
 	{
 	  mln_piter(I) p(ima.domain());
 
 	  for_all(p)
-	    q.push(p, max - dist(p));
+	      q.push(max - dist(p), p);
 	}
 
 
@@ -104,14 +105,14 @@ namespace mln
 	{
 	  while (! q.is_empty())
 	    {
-	      mln_psite(I) p = q.highest_priority();
-	      q.pop();
-	      if (out(p) != 0) // p has already been processed so ignore
+	      mln_psite(I) p = q.pop_front();
+
+	      if (out(p) != literal::zero) // p has already been processed so ignore
 		continue;
 	      mln_niter(N) n(nbh, p);
 
 	      for_all(n) if (ima.has(n))
-		if (out(n) != 0)
+		if (out(n) != literal::zero)
 		  out(p) = out(n);
 	    }
 	}

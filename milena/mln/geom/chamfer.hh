@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -78,8 +78,8 @@ namespace mln
 	  mln_piter(O) p(output.domain());
 	  for_all(p)
 	  {
-	    if (input(p) == true)
-	      output(p) = 0;
+	    if (input(p))
+	      output(p) = 0u;
 	    else
 	      output(p) = max;
 	  }

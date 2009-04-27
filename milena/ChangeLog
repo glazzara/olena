@@ -1,3 +1,14 @@
+2009-04-27 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Fix seeds2tiling_roundness test.
+
+	* mln/geom/chamfer.hh: Fix a too restrictive test (true == 1 but not >
+	    0).
+
+	* mln/geom/seeds2tiling_roundness.hh: Fix wrong declaration/use of
+	p_priority site_set. Priority was based on sites and not on priority
+	values.
+
 2009-04-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Improve vector and matrix interoperability.
