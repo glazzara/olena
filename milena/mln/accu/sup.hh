@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -75,7 +75,7 @@ namespace mln
     protected:
 
       T t_;
-      mln::fun::sup::with<T, T>::ret fun_;
+      typename mln::fun::sup::with<T, T>::ret fun_;
     };
 
 

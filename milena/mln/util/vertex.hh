@@ -33,6 +33,7 @@
 # include <mln/util/graph_ids.hh>
 # include <mln/util/internal/vertex_impl.hh>
 # include <mln/core/concept/proxy.hh>
+# include <mln/core/concept/site.hh>
 
 /// \file mln/util/vertex.hh
 ///

@@ -52,7 +52,7 @@ int main()
   g.add_edge(4,2);
 
   {
-    typedef p_vertices<G, pw::cst_<int> > pe_t;
+    typedef p_vertices<G> pe_t;
     pe_t pe = make::dummy_p_vertices(g);
 
     mln_assertion(pe.nsites() == 5);

@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -51,6 +51,13 @@ namespace mln
     namespace next
     {
 
+      // Forward declaration
+      // Needed by mln_trait_nbinary.
+      template < typename Name, typename L_, typename R_ >
+      struct solve_binary;
+
+
+
       // Unary ops.
 
       template < typename Op, typename P >
@@ -67,8 +74,8 @@ namespace mln
       {
 	typedef mln::internal::helper_unprox_binop<L, R> helper;
 	typedef mln_trait_nbinary(Op,
-				typename helper::L_ret,
-				typename helper::R_ret) ret;
+				  typename helper::L_ret,
+				  typename helper::R_ret) ret;
       };
 
       template < typename Op, typename P, typename O >

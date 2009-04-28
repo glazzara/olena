@@ -145,6 +145,7 @@ mln/make/cell.hh \
 mln/make/image.hh \
 mln/make/influence_zone_adjacency_graph.hh \
 mln/make/vec.hh \
+mln/make/edge_image.hh \
 mln/make/all.hh \
 mln/make/dual_neighb.hh \
 mln/make/attachment.hh \
@@ -204,9 +205,11 @@ mln/fun/p2b/essential.hh \
 mln/fun/p2p/all.hh \
 mln/fun/p2p/translation.hh \
 mln/fun/p2p/mirror.hh \
+mln/fun/accu_result.hh \
 mln/fun/x2p/closest_point.hh \
 mln/fun/x2p/all.hh \
 mln/fun/x2p/essential.hh \
+mln/fun/binary.hh \
 mln/fun/ops.hh \
 mln/fun/c.hh \
 mln/fun/vv2v/max.hh \
@@ -224,6 +227,8 @@ mln/fun/internal/x2x_linear_impl.hh \
 mln/fun/internal/ch_function_value_impl.hh \
 mln/fun/internal/resolve.hh \
 mln/fun/internal/selector.hh \
+mln/fun/spe/binary.hh \
+mln/fun/spe/unary.hh \
 mln/fun/v2w_w2v/norm.hh \
 mln/fun/p2v/ternary.hh \
 mln/fun/p2v/iota.hh \
@@ -231,6 +236,12 @@ mln/fun/p2v/elifs.hh \
 mln/fun/p2v/all.hh \
 mln/fun/p2v/essential.hh \
 mln/fun/all.hh \
+mln/fun/param.hh \
+mln/fun/math/norm.hh \
+mln/fun/math/abs.hh \
+mln/fun/math/sup.hh \
+mln/fun/math/cos.hh \
+mln/fun/math/inf.hh \
 mln/fun/v2b/lnot.hh \
 mln/fun/v2b/all.hh \
 mln/fun/v2b/threshold.hh \
@@ -252,6 +263,7 @@ mln/fun/v2v/projection.hh \
 mln/fun/v2v/convert.hh \
 mln/fun/v2v/essential.hh \
 mln/fun/v2w2v/cos.hh \
+mln/fun/unary.hh \
 mln/fun/vv2b/implies.hh \
 mln/fun/vv2b/le.hh \
 mln/fun/vv2b/gt.hh \
@@ -259,6 +271,7 @@ mln/fun/vv2b/ge.hh \
 mln/fun/vv2b/lt.hh \
 mln/fun/vv2b/eq.hh \
 mln/fun/cast.hh \
+mln/fun/composition.hh \
 mln/fun/i2v/all.hh \
 mln/fun/i2v/array.hh \
 mln/fun/i2v/all_to.hh \
@@ -271,6 +284,12 @@ mln/fun/x2x/all.hh \
 mln/fun/x2x/translation.hh \
 mln/fun/x2x/rotation.hh \
 mln/fun/x2x/essential.hh \
+mln/fun/component/red.hh \
+mln/fun/component/green.hh \
+mln/fun/component/comp.hh \
+mln/fun/component/blue.hh \
+mln/fun/component/rgb.hh \
+mln/fun/compose.hh \
 mln/fun/meta/red.hh \
 mln/fun/meta/hue.hh \
 mln/fun/meta/lum.hh \
@@ -283,6 +302,7 @@ mln/fun/meta/sat.hh \
 mln/fun/meta/first.hh \
 mln/fun/meta/to_enc.hh \
 mln/fun/meta/essential.hh \
+mln/fun/from_accu.hh \
 mln/fun/x2v/trilinear.hh \
 mln/fun/x2v/linear.hh \
 mln/fun/x2v/bilinear.hh \
@@ -410,6 +430,7 @@ mln/accu/land_basic.hh \
 mln/accu/p.hh \
 mln/accu/transform.hh \
 mln/accu/median_alt.hh \
+mln/accu/sup.hh \
 mln/accu/volume.hh \
 mln/accu/sum.hh \
 mln/accu/label_used.hh \
@@ -417,6 +438,7 @@ mln/accu/height.hh \
 mln/accu/land.hh \
 mln/accu/take.hh \
 mln/accu/histo.hh \
+mln/accu/inf.hh \
 mln/accu/pair.hh \
 mln/accu/count_labels.hh \
 mln/accu/count_adjacent_vertices.hh \
@@ -517,10 +539,15 @@ mln/trait/window/props.hh \
 mln/trait/window/print.hh \
 mln/trait/accumulator/props.hh \
 mln/trait/accumulator/print.hh \
+mln/trait/next/solve_binary.hh \
+mln/trait/next/solve.hh \
+mln/trait/next/solve_unary.hh \
+mln/trait/next/solve_proxy.hh \
 mln/trait/ch_function_value.hh \
 mln/trait/ch_value.hh \
 mln/trait/solve.hh \
 mln/trait/solve_unary.hh \
+mln/trait/fun.hh \
 mln/trait/op/postdec.hh \
 mln/trait/op/mod.hh \
 mln/trait/op/lor.hh \
@@ -948,6 +975,7 @@ mln/core/concept/doc/point_iterator.hh \
 mln/core/concept/pseudo_site.hh \
 mln/core/concept/image.hh \
 mln/core/concept/value_set.hh \
+mln/core/concept/meta_function.hh \
 mln/core/concept/proxy.hh \
 mln/core/concept/site.hh \
 mln/core/concept/weighted_window.hh \
@@ -1005,8 +1033,10 @@ mln/core/image/cast_image.hh \
 mln/core/image/rle_encode.hh \
 mln/core/image/complex_window_piter.hh \
 mln/core/image/tr_image.hh \
+mln/core/image/thrubin_morpher.hh \
 mln/core/image/sub_image.hh \
 mln/core/image/rle_image.hh \
+mln/core/image/thru_morpher.hh \
 mln/core/image/mono_rle_encode.hh \
 mln/core/image/bgraph_psite.hh \
 mln/core/image/sparse_image.hh \

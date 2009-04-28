@@ -1,3 +1,34 @@
+2009-04-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Small fixes (again).
+
+	* headers.mk: update distributed file list.
+
+	* mln/accu/inf.hh,
+	* mln/accu/sup.hh: add a missing typename.
+
+	* mln/canvas/browsing/depth_first_search.hh: call id() on vertex
+	elements.
+
+	* mln/core/concept/object_id.hh: add a missing operator==.
+
+	* mln/fun/math/inf.hh,
+	* mln/fun/math/sup.hh: add a missing new line at end of file and fix
+	copyright.
+
+	* mln/trait/next/solve_proxy.hh: add a missing forward declaration.
+
+	* mln/util/vertex.hh,
+	* mln/util/internal/id2element.hh: add a missing include.
+
+	* tests/core/image/line_graph_image.cc: use make::vertex_image.
+
+	* tests/make/dummy_p_edges.cc,
+	* tests/make/dummy_p_vertices.cc,
+	* tests/util/line_graph.cc: call index() instead of id().
+
+	* tests/unit_test/unit-tests.mk: update list of unit tests.
+
 2009-04-27 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Small fixes.

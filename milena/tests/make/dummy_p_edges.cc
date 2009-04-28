@@ -52,13 +52,14 @@ int main()
   g.add_edge(4,2);
 
   {
-    typedef p_edges<G, pw::cst_<int> > pe_t;
+    typedef p_edges<G> pe_t;
     pe_t pe = make::dummy_p_edges(g);
+    unsigned i = 0;
 
     mln_assertion(pe.nsites() == 4);
     mln_piter_(pe_t) p(pe);
     for_all(p)
-      mln_assertion(p == 0);
+      mln_assertion(p.id() == i++);
   }
 
   {

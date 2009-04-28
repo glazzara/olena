@@ -94,7 +94,7 @@ int main()
     {
       unsigned i = 0;
       for_all(n)
-	mln_assertion(i++ == n.id());
+	mln_assertion(i++ == n.index());
       mln_assertion(i != 0);
     }
   }
@@ -107,7 +107,7 @@ int main()
     {
       unsigned i = v.nmax_nbh_edges();
       for_all(e)
-	mln_assertion(--i == e.id());
+	mln_assertion(--i == e.index());
       mln_assertion((v.nmax_nbh_edges() == 0 && i == 0) || i != v.nmax_nbh_edges());
     }
   }

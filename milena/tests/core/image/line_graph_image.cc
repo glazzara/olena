@@ -42,6 +42,7 @@
 #include <mln/pw/all.hh>
 #include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
+#include <mln/make/vertex_image.hh>
 
 
 /* The graph and its corresponding line graph are as follows:
@@ -113,7 +114,7 @@ int main()
 
   // Create line graph image.
   typedef vertex_image<point2d,unsigned> ima_t;
-  ima_t ima(g, sites, iota);
+  ima_t ima = make::vertex_image(g, sites, iota);
 
   /*------------.
   | Iterators.  |

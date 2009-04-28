@@ -81,17 +81,24 @@ namespace mln
     namespace browsing
     {
 
+      /// Depth-limited search algorithm for graph.
+      /// Browse over all vertices for each component.
       struct depth_first_search_t : public Browsing< depth_first_search_t >
       {
 	template <typename G, typename F>
 	void operator()(const Graph<G>&, F& f) const;
       };
 
+
       extern const depth_first_search_t depth_first_search;
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
       const depth_first_search_t depth_first_search;
+
+
 
       template <typename G, typename F>
       inline
@@ -115,7 +122,7 @@ namespace mln
 	    while (!queue.empty())
 	    {
 	      util::vertex<G> current_v = g.vertex(queue.front());
-	      f.process_vertex(current_v); // <--- process_vertex
+	      f.process_vertex(current_v.id()); // <--- process_vertex
 	      queue.pop();
 	      for (unsigned nv = 0; nv < current_v.nmax_nbh_vertices(); ++nv)
 		if (f.to_be_queued(current_v.ith_nbh_vertex(nv))) // <--- to_be_queued

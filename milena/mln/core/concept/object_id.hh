@@ -98,19 +98,10 @@ namespace mln
   template <typename Tag, typename V>
   bool
   operator==(const object_id<Tag,V>& lhs, const object_id<Tag,V>& rhs);
-//
-//  template <typename Tag, typename V>
-//  bool
-//  operator<(const object_id<Tag,V>& lhs, const object_id<Tag,V>& rhs);
-//
-//  template <typename Tag, typename V>
-//  bool
-//  operator<(const object_id<Tag,V>& lhs,
-//	    const typename object_id<Tag,V>::V& rhs);
-//
-//  template <typename Tag, typename V>
-//  std::ostream&
-//  operator<<(std::ostream& ostr, const object_id<Tag,V>& id);
+
+  template <typename Tag, typename V, typename V2>
+  bool
+  operator==(const object_id<Tag,V>& lhs, const Value<V2>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -202,15 +193,8 @@ namespace mln
   }
 
 
-//  template <typename Tag, typename V>
-//  inline
-//  std::ostream&
-//  operator<<(std::ostream& ostr, const object_id<Tag,V>& id)
-//  {
-//    return ostr << id.value();
-//  }
-//
-//
+
+
   template <typename Tag, typename V>
   inline
   bool
@@ -218,56 +202,14 @@ namespace mln
   {
     return lhs.value() == rhs.value();
   }
-//
-//  template <typename Tag, typename V>
-//  inline
-//  bool
-//  operator<(const object_id<Tag,V>& lhs, const object_id<Tag,V>& rhs)
-//  {
-//    return lhs.value() < rhs.value();
-//  }
-//
-//  template <typename Tag, typename V>
-//  inline
-//  bool
-//  operator<(const object_id<Tag,V>& lhs, const V& rhs)
-//  {
-//    return lhs.value() < rhs;
-//  }
-//
-//  template <typename Tag, typename V>
-//  inline
-//  bool
-//  operator<=(const object_id<Tag,V>& lhs, const object_id<Tag,V>& rhs)
-//  {
-//    return lhs.value() <= rhs.value();
-//  }
-//
-//  template <typename Tag, typename V>
-//  inline
-//  bool
-//  operator<=(const object_id<Tag,V>& lhs, const V& rhs)
-//  {
-//    return lhs.value() <= rhs;
-//  }
 
-//  template <typename Tag, typename V>
-//  inline
-//  object_id<Tag,V>
-//  operator+(const object_id<Tag,V>& lhs, const V& rhs)
-//  {
-//    return lhs.value() + rhs;
-//  }
-//
-//  template <typename Tag, typename V>
-//  inline
-//  object_id<Tag,V>
-//  operator+(const object_id<Tag,V>& lhs, const size_t& rhs)
-//  {
-//    return lhs.value() + rhs;
-//  }
-
-
+  template <typename Tag, typename V, typename V2>
+  inline
+  bool
+  operator==(const object_id<Tag,V>& lhs, const Value<V2>& rhs)
+  {
+    return lhs.value() == exact(rhs).to_equiv();
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

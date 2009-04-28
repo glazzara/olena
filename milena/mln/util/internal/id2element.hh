@@ -34,6 +34,7 @@
 /// Function constructing a element from an id.
 
 #include <mln/core/concept/graph.hh>
+#include <mln/core/concept/function.hh>
 
 namespace mln
 {
