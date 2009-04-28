@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,42 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ARITH_ALL_HH
-# define MLN_ARITH_ALL_HH
+#ifndef MLN_WORLD_INTER_PIXEL_FULL_HH
+# define MLN_WORLD_INTER_PIXEL_FULL_HH
 
-/*! \file mln/arith/all.hh
- *
- * \brief File that includes all arithmetic materials.
- */
+/// \file mln/world/inter_pixel/full.hh
+///
+/// FIXME: insert comment.
 
+# include <mln/core/image/image2d.hh>
 
 namespace mln
 {
 
-  /// Namespace of arithmetic.
-  namespace arith
+  namespace world
   {
-    /// Implementation namespace of arith namespace.
-    namespace impl {
 
-      /// Generic implementation namespace of arith namespace.
-      namespace generic {
+    namespace inter_pixel
+    {
 
+      template <typename T>
+      image2d<T>
+      image2full(const image2d<T>& input)
+      {
+	image2d<T> output(2 * input.nrows() - 1,
+	    2 * input.ncols() - 1);
+	for (int row = 0; row < input.nrows(); ++row)
+	  for (int col = 0; col < input.ncols(); ++col)
+	    opt::at(output, 2 * row, 2 * col) = opt::at(input, row, col);
+	return output;
       }
 
-    }
+      template <typename T>
+      image2d<T>
+      full2image(const image2d<T>& input)
+      {
+	image2d<T> output((input.nrows() + 1) / 2,
+	    (input.ncols() + 1) / 2);
+	for (int row = 0; row < input.nrows(); row += 2)
+	  for (int col = 0; col < input.ncols(); col += 2)
+	    opt::at(output, row / 2, col / 2) =
+	      opt::at(input, row, col);
+	return output;
+      }
 
-  }
+    } // end of namespace mln::world::inter_pixel
 
-}
+  } // end of namespace mln::world
 
-# include <mln/arith/diff_abs.hh>
-# include <mln/arith/div.hh>
-# include <mln/arith/min.hh>
-# include <mln/arith/minus.hh>
-# include <mln/arith/plus.hh>
-# include <mln/arith/revert.hh>
-# include <mln/arith/times.hh>
+} // end of namespace mln
 
-
-#endif // ! MLN_ARITH_ALL_HH
+#endif // ! MLN_WORLD_INTER_PIXEL_FULL

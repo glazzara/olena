@@ -102,7 +102,7 @@ namespace mln
 	    mln::metal::equal<mln_value(I), value::rgb8>::value))
 	{
 	  std::cerr << "error: trying to save an unsupported format" << std::endl;
-	  std::cerr << "formats supported: binary, 8bits grayscale (int_u8), 8bits truecolor (rgb8)" << std::endl;
+	  std::cerr << "supported formats: binary, 8bits grayscale (int_u8), 8bits truecolor (rgb8)" << std::endl;
 	  abort();
 	}
 

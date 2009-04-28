@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,42 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ARITH_ALL_HH
-# define MLN_ARITH_ALL_HH
+#ifndef MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
+# define MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
 
-/*! \file mln/arith/all.hh
- *
- * \brief File that includes all arithmetic materials.
- */
+/// \file mln/world/inter_pixel/neighb2d.hh
+///
+/// FIXME: insert comment.
 
+# include <mln/core/alias/neighb2d.hh>
+# include <mln/make/double_neighb2d.hh>
 
 namespace mln
 {
 
-  /// Namespace of arithmetic.
-  namespace arith
+  namespace world
   {
-    /// Implementation namespace of arith namespace.
-    namespace impl {
 
-      /// Generic implementation namespace of arith namespace.
-      namespace generic {
+    namespace inter_pixel
+    {
 
+      typedef neighb< win::multiple<window2d, bool(*)(const point2d&)> > dbl_neighb2d;
+
+      const dbl_neighb2d& e2c()
+      {
+	static bool e2c_h[] = { 0, 1, 0,
+	  0, 0, 0,
+	  0, 1, 0 };
+	static bool e2c_v[] = { 0, 0, 0,
+	  1, 0, 1,
+	  0, 0, 0 };
+	static dbl_neighb2d nbh = make::double_neighb2d(is_row_odd, e2c_h, e2c_v);
+	return nbh;
       }
 
-    }
+      const dbl_neighb2d& e2e()
+      {
+	static bool e2e_h[] = { 0, 0, 1, 0, 0,
+	  0, 1, 0, 1, 0,
+	  0, 0, 0, 0, 0,
+	  0, 1, 0, 1, 0,
+	  0, 0, 1, 0, 0 };
+	static bool e2e_v[] = { 0, 0, 0, 0, 0,
+	  0, 1, 0, 1, 0,
+	  1, 0, 0, 0, 1,
+	  0, 1, 0, 1, 0,
+	  0, 0, 0, 0, 0 };
+	static dbl_neighb2d nbh = make::double_neighb2d(is_row_odd, e2e_h, e2e_v);
+	return nbh;
+      }
 
-  }
+    } // end of namespace mln::world::inter_pixel
 
-}
+  } // end of namespace mln::world
 
-# include <mln/arith/diff_abs.hh>
-# include <mln/arith/div.hh>
-# include <mln/arith/min.hh>
-# include <mln/arith/minus.hh>
-# include <mln/arith/plus.hh>
-# include <mln/arith/revert.hh>
-# include <mln/arith/times.hh>
+} // end of namespace mln
 
-
-#endif // ! MLN_ARITH_ALL_HH
+#endif // ! MLN_WORLD_INTER_PIXEL_NEIGHB2D

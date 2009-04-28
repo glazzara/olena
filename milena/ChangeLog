@@ -1,3 +1,16 @@
+2009-04-28  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add world/ directory for inter_pixel images.
+	* mln/arith/all.hh: Update.
+	* mln/arith/div.hh: New div operator.
+	* mln/arith/div.spe.hh: New div operator.
+	* mln/io/magick/save.hh: Update.
+	* mln/io/plot/save.hh: Update.
+	* mln/world/inter_pixel/full.hh: Convert standard image
+	  to inter_pixel image.
+	* mln/world/inter_pixel/neighb2d.hh: Define standard
+	  inter_pixel neighborhood.
+
 2009-04-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Fix ambiguities while loading PGM images into label values.
