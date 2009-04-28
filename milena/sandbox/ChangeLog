@@ -1,3 +1,11 @@
+2009-04-28  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Convert Matlab images to Milena images.
+	* fabien/igr/mat2mln/mat2mln.cc: Convert matlab ascii format
+	  to mln format.
+	* fabien/igr/mat2mln/raw2mlndata.cc: Deprecated.
+	* fabien/igr/seg_fixed.cc: Update.
+
 2009-04-27  Frederic Bour  <bour@lrde.epita.fr>
 
 	Add functions working on components, add proxy support for new.

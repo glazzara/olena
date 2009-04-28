@@ -13,6 +13,7 @@
 
 #include <mln/accu/sum.hh>
 #include <mln/data/fill.hh>
+#include <mln/debug/quiet.hh>
 #include <mln/convert/from_to.hh>
 #include <mln/level/compute.hh>
 #include <mln/util/array.hh>
@@ -27,20 +28,20 @@ inline
 point2d
 get_edge_location(point2d p, point2d n)
 {
-  point2d res(p);
+  point2d res;
 
-  res.to_vec()[0] *= 2;
-  res.to_vec()[1] *= 2;
+  res[0] = p[0] * 2;
+  res[1] = p[1] * 2;
 
-  if (n.to_vec()[0] > p.to_vec()[0])
-    ++(res.to_vec()[0]);
-  if (n.to_vec()[0] < p.to_vec()[0])
-    --(res.to_vec()[0]);
+  if (n[0] > p[0])
+    ++(res[0]);
+  if (n[0] < p[0])
+    --(res[0]);
 
-  if (n.to_vec()[1] > p.to_vec()[1])
-    ++(res.to_vec()[1]);
-  if (n.to_vec()[1] < p.to_vec()[1])
-    --(res.to_vec()[1]);
+  if (n[1] > p[1])
+    ++(res[1]);
+  if (n[1] < p[1])
+    --(res[1]);
 
   return res;
 }
@@ -55,11 +56,12 @@ compute_dist(image2d<util::array<I> > ima_arr,
 {
   float res = 0.f;
 
+  if (!ima_sum.bbox().has(n))
+    return res;
+
   for (unsigned i = 0; i < ima_arr(p).nelements(); ++i)
     res += std::min(ima_arr(p)[i], ima_arr(n)[i]);
   res /= std::max(ima_sum(p), ima_sum(n));
-
-  std::cout << "dist = " << res << std::endl;
 
   return res;
 }
@@ -83,23 +85,22 @@ template <typename I>
 image2d<float>
 dist_on_edges(image2d<util::array<I> > ima_arr)
 {
-  image2d<float> edges(2 * ima_arr.nrows(), 2 * ima_arr.ncols());
+  box2d b = ima_arr.bbox();
+  image2d<float> edges(make::box2d(2 * b.pmin()[0], 2 * b.pmin()[1],
+				   2 * b.pmax()[0], 2 * b.pmax()[1]));
   data::fill(edges, -1.f);
   image2d<float> ima_sum;
   initialize(ima_sum, ima_arr);
   compute_sum_arrays(ima_sum, ima_arr);
 
-  std::cout << "can i has a loop?" << std::endl;
   mln_piter(image2d<util::array<I> >) p(ima_arr.domain());
+  mln_niter(neighb2d) n(c4(), p);
   for_all(p)
   {
-    std::cout << "for_all(p)" << std::endl;
-    mln_niter(neighb2d) n(c4(), p);
     for_all(n)
     {
-      std::cout << "for_all(n)" << std::endl;
       point2d location = get_edge_location(p, n);
-      std::cout << "location = " << p << " && edge = " << edges(location) << std::endl;
+      //std::cout << "p: " << p << " | n: " << n << " | e: " << location << std::endl;
       if (edges(location) == -1.f)
 	edges(location) = compute_dist(ima_arr, ima_sum, p, n);
     }
@@ -135,7 +136,6 @@ int main(int argc, char* argv[])
       ima_arr(p).append(tmp_slice(p));
   }
 
-  std::cout << "ho hai _o/" << std::endl;
   image2d<float> edges = dist_on_edges(ima_arr);
 
   return 0;

@@ -27,6 +27,7 @@ int main(int argc, char* argv[])
   unsigned int size = 0;
   unsigned int offset = 0;
 
+
   // Top level miMATRIX.
   offset += 4;
   input.seekg(offset);
@@ -64,10 +65,12 @@ int main(int argc, char* argv[])
   delete name;
   offset += 8 - size % 8;
 
+
   std::cout << "----" << std::endl;
   // FIXME: Decode data.
 
   offset = 128;
+
 
   // Data miMATRIX.
   offset += 4;
@@ -103,10 +106,11 @@ int main(int argc, char* argv[])
   input.seekg(offset);
   input.read((char*) &nslis, sizeof (unsigned int));
   offset += sizeof (unsigned int);
+  offset += sizeof (unsigned int); // Padding.
   std::cout << "ncols: " << ncols << "; nrows: " << nrows << "; nslis: " << nslis << std::endl;
 
   // Data buffer.
-  typedef int V;
+  typedef double V;
   int data_size = ncols * nrows * nslis;
   V* data_buffer = new V[data_size];
   input.seekg(offset);
@@ -119,7 +123,8 @@ int main(int argc, char* argv[])
   // Debug.
   image2d<V> ima_debug;
   ima_debug = duplicate(slice(ima, 50));
-  io::pgm::save(level::stretch(value::int_u8(), ima_debug), "debug.pgm");
+  //io::pgm::save(level::stretch(value::int_u8(), ima_debug), "debug.pgm");
+  io::pgm::save(ima_debug, "debug.pgm");
 
   return 0;
 }
