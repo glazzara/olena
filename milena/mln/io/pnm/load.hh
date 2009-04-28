@@ -47,6 +47,8 @@
 # include <mln/io/pnm/max_component.hh>
 # include <mln/io/pnm/macros.hh>
 
+# include <mln/metal/is_a.hh>
+
 namespace mln
 {
 
@@ -58,6 +60,35 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+      template <typename I>
+      void load_ascii_value(std::ifstream& file, I& ima);
+
+      template <typename I>
+      void load_ascii_builtin(std::ifstream& file, I& ima);
+
+
+      namespace internal
+      {
+
+	template <typename I>
+	inline
+	void
+	load_ascii_dispatch(std::ifstream& file, I& ima, const metal::bool_<true>&)
+	{
+	  load_ascii_value(file, ima);
+	}
+
+	template <typename I>
+	inline
+	void
+	load_ascii_dispatch(std::ifstream& file, I& ima, const metal::bool_<false>&)
+	{
+	  load_ascii_builtin(file, ima);
+	}
+
+      } // end of namespace mln::io::pnm::internal
+
 
       // Read a Milena rgb value (sizeof(int_u8) != 1).
       template <unsigned int n>
@@ -130,10 +161,24 @@ namespace mln
 	  file.read((char*)(&ima(p)), len);
       }
 
-      /// load_ascii.
+      /// load_ascii for Milena value types.
       template <typename I>
       inline
-      void load_ascii(std::ifstream& file, I& ima)
+      void load_ascii_value(std::ifstream& file, I& ima)
+      {
+	mln_equiv(mln_value_(I)) c;
+	mln_fwd_piter(I) p(ima.domain());
+	for_all(p)
+	{
+	  file >> c;
+	  ima(p) = c;
+	}
+      }
+
+      /// load_ascii for builtin value types.
+      template <typename I>
+      inline
+      void load_ascii_builtin(std::ifstream& file, I& ima)
       {
 	mln_fwd_piter(I) p(ima.domain());
 	for_all(p)
@@ -190,7 +235,7 @@ namespace mln
 	  load_raw_2d(file, ima);
 	else
 	  if (type == (type_ - 3))
-	    pnm::load_ascii(file, ima);
+	    pnm::internal::load_ascii_dispatch(file, ima, mlc_is_a(V, mln::Value)());
 
 	trace::exiting("mln::io::pnm::load");
 
@@ -242,7 +287,7 @@ namespace mln
 	  load_raw_2d(file, ima);
 	else
 	  if (type == (type_ - 3))
-	    pnm::load_ascii(file, ima);
+	    pnm::internal::load_ascii_dispatch(file, ima, mlc_is_a(mln_value(I), mln::Value)());
 
 	trace::exiting("mln::io::pnm::load");
       }
