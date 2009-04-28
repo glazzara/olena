@@ -1,3 +1,9 @@
+2009-04-28  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Circular value type.
+	* folio/mln/value/circular.hh: New type.
+	* folio/test/value/circular.cc: New tests.
+
 2009-04-28  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Convert Matlab images to Milena images.
