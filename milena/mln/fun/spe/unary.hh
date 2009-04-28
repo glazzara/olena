@@ -202,9 +202,20 @@ namespace mln
 
 	  using super::operator ();
 
+	  lresult apply_rw(typename super::argument& value) const
+	  {
+	    return lresult(exact(*this), value);
+	  }
+
+	  template <typename U>
+	  typename lresult_with<U>::ret apply_rw(U& value) const
+	  {
+	    return typename lresult_with<U>::ret(exact(*this), value);
+	  }
+
 	  lresult operator () (typename super::argument& value) const
 	  {
-	    return lresult(this, value);
+	    return apply_rw(value);
 	  }
 	};
 
@@ -256,9 +267,20 @@ namespace mln
 
 	  using super::operator ();
 
-	  lresult operator () (typename super::argument& value) const
+	  lresult apply_rw(typename super::argument& value) const
 	  {
 	    return lresult(exact(*this), value);
+	  }
+
+	  template <typename U>
+	  typename lresult_with<U>::ret apply_rw(U& value) const
+	  {
+	    return typename lresult_with<U>::ret(exact(*this), value);
+	  }
+
+	  lresult operator () (typename super::argument& value) const
+	  {
+	    return apply_rw(value);
 	  }
 	};
 

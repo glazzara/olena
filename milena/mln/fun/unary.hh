@@ -71,7 +71,7 @@ namespace mln
       template <typename T>
       typename with<T>::ret::template lresult_with<T>::ret operator()(T& v) const
       {
-	return typename with<T>::ret(storage_get())(v);
+	return typename with<T>::ret(storage_get()).apply_rw(v);
       }
 
       template <typename T, typename R>

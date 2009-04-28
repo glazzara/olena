@@ -25,17 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_PROXY_HH
-# define MLN_CORE_CONCEPT_PROXY_HH
+#ifndef MLN_TRAIT_NEXT_SOLVE_PROXY_HH
+# define MLN_TRAIT_NEXT_SOLVE_PROXY_HH
 
-/*! \file mln/core/concept/proxy.hh
+/*! \file mln/trait/next/solve_proxy.hh
  *
- * \brief Definition of the concept of mln::Proxy.
- *
- * \todo preinc and predec are not tested; post-like ops are not handled.
- *
- * \todo add "op=(T)" when possible, so add a constness property.
- * \todo add "opT()const" when possible.
+ * \brief Proxy support for "next" trait solver.
  */
 
 # include <mln/core/concept/object.hh>
@@ -99,4 +94,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_CONCEPT_PROXY_HH
+#endif // ! MLN_TRAIT_NEXT_SOLVE_PROXY_HH

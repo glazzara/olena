@@ -1,3 +1,16 @@
+2009-04-28  Frederic Bour  <bour@lrde.epita.fr>
+
+	Correct bugs, point functions.
+	*  milena/mln/fun/point/col.hh: New.
+	*  milena/mln/fun/point/row.hh: New.
+	*  milena/mln/fun/point/sli.hh: New.
+	*  milena/mln/fun/point: New.
+	*  milena/mln/fun/spe/unary.hh: Improved proxy support.
+	*  milena/mln/fun/unary.hh: Improved proxy support.
+	*  milena/mln/trait/next/solve_proxy.hh: Typo errors correction.
+	*  milena/sandbox/fred/tests/fun.cc,
+	*  milena/sandbox/fred/tests/thru.cc: Add some tests for proxy.
+
 2009-04-27  Frederic Bour  <bour@lrde.epita.fr>
 
 	Merge new fun implementation to main milena directory.

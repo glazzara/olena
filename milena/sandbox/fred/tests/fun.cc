@@ -2,10 +2,10 @@
 #include <mln/fun/math/abs.hh>
 #include <mln/fun/math/cos.hh>
 #include <mln/fun/math/norm.hh>
-// #include <mln/fun/math/inc.hh>
 #include <mln/fun/component/red.hh>
 #include <mln/fun/component/comp.hh>
 #include <mln/value/rgb8.hh>
+
 #include <iostream>
 
 #define dbg_print(val) std::cout << #val << "\n\t -> \t" << (val) << std::endl
