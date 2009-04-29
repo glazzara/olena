@@ -54,11 +54,12 @@ int main()
   {
     typedef p_vertices<G> pe_t;
     pe_t pe = make::dummy_p_vertices(g);
+    unsigned i = 0;
 
     mln_assertion(pe.nsites() == 5);
     mln_piter_(pe_t) p(pe);
     for_all(p)
-      mln_assertion(p == 0);
+      mln_assertion(p.id() == i++);
   }
 
   {

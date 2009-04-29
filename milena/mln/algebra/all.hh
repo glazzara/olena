@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,16 +29,15 @@
 #ifndef MLN_ALGEBRA_ALL_HH
 # define MLN_ALGEBRA_ALL_HH
 
-/*! \file mln/algebra/essential.hh
- *
- * \brief File that includes essential "point-wise" expression tools.
- */
+/// \file mln/algebra/all.hh
+///
+/// File that includes all algebraic structures.
 
 
 namespace mln
 {
 
-  /// Namespace of "point-wise" expression tools.
+  /// Namespace of algebraic structure.
   namespace algebra {}
 
 } // end of namespace mln

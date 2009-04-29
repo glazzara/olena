@@ -181,8 +181,17 @@ namespace mln
       void load_ascii_builtin(std::ifstream& file, I& ima)
       {
 	mln_fwd_piter(I) p(ima.domain());
+
+	// FIXME: May be wrong!
+	// Worked out with an image with a max value of 255
+	// loaded in an image2d<unsigned char>.
+	unsigned n;
+
 	for_all(p)
-	  file >> ima(p);
+	{
+	  file >> n;
+	  ima(p) = n;
+	}
       }
 
       /// load_raw_2d.

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/naive/median.cc
- *
- * \brief Test on mln::level::naive::median.
- */
+/// \file tests/level/naive/median.cc
+///
+/// Test on mln::level::naive::median.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
@@ -52,7 +52,7 @@ int main()
   border::thickness = 52;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
   image2d<int_u8> out(lena.domain());
 
   level::naive::median(lena, rec, out);

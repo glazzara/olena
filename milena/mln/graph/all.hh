@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,37 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/level/approx/median.cc
+#ifndef MLN_GRAPH_ALL_HH
+# define MLN_GRAPH_ALL_HH
+
+/// \file mln/graph/all.hh
 ///
-/// Test on mln::level::approx::median.
-
-#include <mln/core/image/image2d.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
-#include <mln/value/int_u8.hh>
-#include <mln/level/approx/median.hh>
-
-#include "tests/data.hh"
+/// File that include all graph related routines.
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
-  using value::int_u8;
 
-  image2d<int_u8> lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
+  /// Namespace of graph related routines.
+  namespace graph {}
 
-  {
-    win::octagon2d oct(49);
-    image2d<int_u8> out = level::approx::median(lena, oct);
-    io::pgm::save(out, "out_oct.pgm");
-  }
-  {
-    win::rectangle2d rec(51, 51);
-    image2d<int_u8> out = level::approx::median(lena, rec);
-    io::pgm::save(out, "out_rec.pgm");
-  }
-}
+} // end of namespace mln
+
+
+# include <mln/graph/compute.hh>
+
+
+#endif // ! MLN_GRAPH_ALL_HH

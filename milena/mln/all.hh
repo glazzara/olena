@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -48,6 +49,7 @@
 #include <mln/extract/all.hh>
 #include <mln/fun/all.hh>
 #include <mln/geom/all.hh>
+#include <mln/graph/all.hh>
 #include <mln/histo/all.hh>
 #include <mln/io/all.hh>
 #include <mln/labeling/all.hh>

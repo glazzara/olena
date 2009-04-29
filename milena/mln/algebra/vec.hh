@@ -345,7 +345,7 @@ namespace mln
     operator-(const vec<n,T>& lhs, const vec<n,U>& rhs);
 
     // vec * vec
-    
+
     /// Scalar product (dot product).
     template <unsigned n, typename T, typename U>
     mln_sum_product(T,U)
@@ -368,6 +368,12 @@ namespace mln
     template <unsigned n, typename T>
     std::ostream&
     operator<<(std::ostream& ostr, const vec<n,T>& v);
+
+    // >>
+
+    template <unsigned n, typename T>
+    std::istream&
+    operator>>(std::istream& istr, vec<n,T>& v);
 
     // vprod // FIXME: Generalize...
 
@@ -611,6 +617,16 @@ namespace mln
       for (unsigned i = 0; i < n; ++i)
 	ostr << debug::format(v[i]) << (i == n - 1 ? ")" : ", ");
       return ostr;
+    }
+
+    template <unsigned n, typename T>
+    inline
+    std::istream&
+    operator>>(std::istream& istr, vec<n,T>& v)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	istr >> v[i];
+      return istr;
     }
 
     // vprod

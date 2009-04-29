@@ -51,9 +51,9 @@ namespace mln
     ///
     /// \return A vertex image.
     //
-    template <typename V, typename G>
-    mln::vertex_image<void,V,G>
-    vertex_image(const Graph<G>& g, const fun::i2v::array<V>& fv);
+    template <typename G, typename FV>
+    mln::vertex_image<void,mln_result(FV),G>
+    vertex_image(const Graph<G>& g, const Function_i2v<FV>& fv);
 
 
     /// Construct a vertex image
@@ -74,15 +74,16 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V, typename G>
-    mln::vertex_image<void,V,G>
-    vertex_image(const Graph<G>& g, const fun::i2v::array<V>& fv)
+    template <typename G, typename FV>
+    mln::vertex_image<void,mln_result(FV),G>
+    vertex_image(const Graph<G>& g, const Function_i2v<FV>& fv)
     {
       trace::entering("make::vertex_image");
       mln_precondition(exact(g).is_valid());
 
       p_vertices<G> pv(g);
-      mln::vertex_image<void,V,G> ima(pv, fv);
+      mln::vertex_image<void,mln_result(FV),G>
+	ima(pv, mln::convert::to<fun::i2v::array<mln_result(FV)> >(fv));
 
       trace::exiting("make::vertex_image");
       return ima;

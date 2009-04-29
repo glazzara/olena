@@ -55,6 +55,7 @@ namespace mln
       // As a Proxy:
       const mln_site(S)& subj_();
 
+      typedef typename S::graph_element::id_t id_t;
 
       /// Setters.
       /// \{
@@ -77,7 +78,7 @@ namespace mln
       const typename S::graph_t& graph() const;
 
       /// Return the id of the graph element designated by this psite.
-      unsigned id() const;
+      id_t id() const;
 
       /// \}
 
@@ -88,6 +89,9 @@ namespace mln
 
       /// Convertion towards the graph element Id.
       operator unsigned() const;
+
+      /// Convertion towards the graph element Id.
+      operator id_t() const;
 
       /// Conversion towards the graph element (vertex or edge).
       operator const typename S::graph_element&() const;
@@ -258,7 +262,7 @@ namespace mln
 
   template <typename S, typename E>
   inline
-  unsigned
+  typename graph_psite_base<S,E>::id_t
   graph_psite_base<S,E>::id() const
   {
     return elt_.id();
@@ -292,6 +296,14 @@ namespace mln
     */
     // mln_precondition(is_valid());
     return site_;
+  }
+
+  template <typename S, typename E>
+  inline
+  graph_psite_base<S,E>::operator id_t() const
+  {
+    mln_precondition(is_valid());
+    return elt_.id();
   }
 
   template <typename S, typename E>

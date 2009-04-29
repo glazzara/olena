@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,6 +46,7 @@
 # include <mln/extract/essential.hh>
 # include <mln/fun/essential.hh>
 # include <mln/geom/essential.hh>
+# include <mln/graph/essential.hh>
 # include <mln/histo/essential.hh>
 # include <mln/io/essential.hh>
 # include <mln/labeling/essential.hh>

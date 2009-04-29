@@ -49,7 +49,7 @@ int main()
   using value::int_u8;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
   {
     win::rectangle2d rect(51, 51);
     image2d<int_u8> out = level::median(lena, rect);

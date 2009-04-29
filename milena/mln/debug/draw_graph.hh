@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -49,34 +49,55 @@ namespace mln
   namespace debug
   {
 
-    /// Draw an image \p ima from a mln::p_graph \p pg, with
-    /// value \p vertex_v for vertices, value \p edge_v for edges and 0 for
+    /// Draw an image \p ima from a mln::p_vertices \p pv, with
+    /// value \p vcolor for vertices, value \p ecolor for edges and 0 for
     /// the background.
-    ///
-    /// \param[in,out] ima      The image to be drawn.
-    /// \param[in]     pv       The p_vertices which contains vertices positions.
-    /// \param[in]     vertex_v The value to assign to pixels which contains
-    ///				vertices.
-    /// \param[in]     edge_v   The value to assign to pixels which contains
-    ///                         edges.
+    /*
+     * \param[in,out] ima      The image to be drawn.
+     * \param[in]     pv       The p_vertices which contains vertices positions.
+     * \param[in]     vcolor The value to assign to pixels which contains
+     *				vertices.
+     * \param[in]     ecolor   The value to assign to pixels which contains
+     *                         edges.
+     */
     template <typename I, typename G, typename F>
     void
     draw_graph(Image<I>& ima, const p_vertices<G, F>& pv,
-	       mln_value(I) vertex_v, mln_value(I) edge_v);
+	       mln_value(I) vcolor, mln_value(I) ecolor);
 
 
+    /// Draw an image \p ima from a mln::p_vertices \p pv. Colors for vertices
+    /// are defined through \p vcolor_f_. Colors for edges are defined though
+    /// \p ecolor_f_.
+    /*
+     * \param[in,out] ima       The image to be drawn.
+     * \param[in]     pv        The p_vertices which contains vertices positions.
+     * \param[in]     vcolor_f_ A function returning a color value for vertices.
+     * \param[in]     ecolor_f_ A function returning a color value for edges.
+     *
+     */
     template <typename I, typename G, typename F, typename V, typename E>
     void
     draw_graph(Image<I>& ima,
 	       const p_vertices<G, F>& pv,
-	       const Function<V>& vcolor, const Function<E>& ecolor_);
+	       const Function<V>& vcolor_f_, const Function<E>& ecolor_f_);
 
+    /// Draw an image \p ima from a mln::p_vertices \p pv. Colors for vertices
+    /// are defined through \p vcolor_f_. Colors for edges are defined though
+    /// \p ecolor_f_.
+    /*
+     * \param[in,out] ima       The image to be drawn.
+     * \param[in]     pv        The p_vertices which contains vertices positions.
+     * \param[in]     vcolor_f_ A function returning a color value for vertices.
+     * \param[in]     ecolor_f_ A function returning a color value for edges.
+     *
+     */
     template <typename I, typename G, typename F, typename V, typename E>
     inline
     void
     draw_graph(Image<I>& ima,
 	       const p_vertices<util::line_graph<G>, F>& pv,
-	       const Function<V>& vcolor_, const Function<E>& ecolor_);
+	       const Function<V>& vcolor_f_, const Function<E>& ecolor_f_);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -91,8 +112,8 @@ namespace mln
     void
     draw_graph(Image<I>& ima,
 	       const p_edges<G, F>& pe,
-	       mln_value(I) vertex_v,
-	       mln_value(I) edge_v)
+	       mln_value(I) vcolor,
+	       mln_value(I) ecolor)
     {
       trace::entering("debug::draw_graph");
 
@@ -102,11 +123,11 @@ namespace mln
       for_all(p)
       {
 	if (exact(ima).has(p.first()) && exact(ima).has(p.second()))
-	  draw::line(exact(ima), p.first(), p.second(), edge_v);
+	  draw::line(exact(ima), p.first(), p.second(), ecolor);
 	if (exact(ima).has(p.first()))
-	  exact(ima)(p.first()) = vertex_v;
+	  exact(ima)(p.first()) = vcolor;
 	if (exact(ima).has(p.second()))
-	  exact(ima)(p.second()) = vertex_v;
+	  exact(ima)(p.second()) = vcolor;
       }
 
       trace::exiting("debug::draw_graph");
@@ -118,8 +139,8 @@ namespace mln
     void
     draw_graph(Image<I>& ima,
 	       const p_vertices<G, F>& pv,
-	       mln_value(I) vertex_v,
-	       mln_value(I) edge_v)
+	       mln_value(I) vcolor,
+	       mln_value(I) ecolor)
     {
       trace::entering("debug::draw_graph");
 
@@ -128,16 +149,17 @@ namespace mln
       typedef p_vertices<G, F> pv_t;
       mln_edge_iter(G) ei(g);
       for_all(ei)
-	draw::line(exact(ima), pv(ei.v1()), pv(ei.v2()), edge_v);
+	draw::line(exact(ima), pv(ei.v1()), pv(ei.v2()), ecolor);
 
       // Draw vertices.
       mln_piter(pv_t) p(pv);
       for_all(p)
 	if (exact(ima).has(p))
-	  exact(ima)(p) = vertex_v;
+	  exact(ima)(p) = vcolor;
 
       trace::exiting("debug::draw_graph");
     }
+
 
     // FIXME: Refactor + be more restrictive on the function type.
     template <typename I, typename G, typename F, typename V, typename E>
@@ -145,28 +167,29 @@ namespace mln
     void
     draw_graph(Image<I>& ima,
 	       const p_vertices<G, F>& pv,
-	       const Function<V>& vcolor_, const Function<E>& ecolor_)
+	       const Function<V>& vcolor_f_, const Function<E>& ecolor_f_)
     {
       trace::entering("debug::draw_graph");
 
-      const V& vcolor = exact(vcolor_);
-      const E& ecolor = exact(ecolor_);
+      const V& vcolor_f = exact(vcolor_f_);
+      const E& ecolor_f = exact(ecolor_f_);
 
       // Draw edges.
       const G& g = pv.graph();
       typedef p_vertices<G, F> pv_t;
       mln_edge_iter(G) ei(g);
       for_all(ei)
-	draw::line(exact(ima), pv(ei.v1()), pv(ei.v2()), ecolor(ei.id()));
+	draw::line(exact(ima), pv(ei.v1()), pv(ei.v2()), ecolor_f(ei.id()));
 
       // Draw vertices.
       mln_piter(pv_t) p(pv);
       for_all(p)
 	if (exact(ima).has(p))
-	  exact(ima)(p) = vcolor(p);
+	  exact(ima)(p) = vcolor_f(p);
 
       trace::exiting("debug::draw_graph");
     }
+
 
     // FIXME: Refactor + be more restrictive on the function type.
     template <typename I, typename G, typename F, typename V, typename E>
@@ -174,12 +197,12 @@ namespace mln
     void
     draw_graph(Image<I>& ima,
 	       const p_vertices<util::line_graph<G>, F>& pv,
-	       const Function<V>& vcolor_, const Function<E>& ecolor_)
+	       const Function<V>& vcolor_f_, const Function<E>& ecolor_f_)
     {
       trace::entering("debug::draw_graph");
 
-      const V& vcolor = exact(vcolor_);
-      const E& ecolor = exact(ecolor_);
+      const V& vcolor_f = exact(vcolor_f_);
+      const E& ecolor_f = exact(ecolor_f_);
 
       typedef util::line_graph<G> LG;
 
@@ -191,13 +214,13 @@ namespace mln
       {
 	p_line2d l = pv(vi.id());
 	// Draw edges (Line graph vertices).
-	draw::line(exact(ima), l.begin(), l.end(), ecolor(vi.id()));
+	draw::line(exact(ima), l.begin(), l.end(), ecolor_f(vi.id()));
 
 	// Draw vertices (graph vertices).
 	if (exact(ima).has(l.begin()))
-	  exact(ima)(l.begin()) = vcolor(g.edge(vi).v1());
+	  exact(ima)(l.begin()) = vcolor_f(g.edge(vi).v1());
 	if (exact(ima).has(l.end()))
-	  exact(ima)(l.end()) = vcolor(g.edge(vi).v2());
+	  exact(ima)(l.end()) = vcolor_f(g.edge(vi).v2());
       }
 
       trace::exiting("debug::draw_graph");
