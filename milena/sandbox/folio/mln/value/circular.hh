@@ -153,8 +153,8 @@ namespace mln
     template <unsigned n, int inf, int sup>
     std::ostream& operator<<(std::ostream& ostr, const circular<n, inf, sup>& f);
 
-    template <unsigned n, int inf, int sup, unsigned m, int inf2, int sup2>
-    bool approx_equal(const circular<n, inf, sup>& lhs, const circular<m, inf2, sup2>& rhs);
+    // template <unsigned n, int inf, int sup, unsigned m, int inf2, int sup2>
+    // bool approx_equal(const circular<n, inf, sup>& lhs, const circular<m, inf2, sup2>& rhs);
 
     template <unsigned n, int inf, int sup>
     bool approx_equal(const circular<n, inf, sup>& lhs, const float f);

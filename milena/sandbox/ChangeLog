@@ -1,3 +1,13 @@
+2009-04-29  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	HSV type.
+	* folio/mln/fun/v2v/rgb_to_hsv.hh: New conversions.
+	* folio/mln/fun/v2v: New folder.
+	* folio/mln/fun: New folder.
+	* folio/mln/value/circular.hh: Comment a part of unused code.
+	* folio/mln/value/hsv.hh: New HSV type.
+	* folio/test/value/hsv.cc: New tests file for HSV type.
+
 2009-04-28  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Circular value type.
