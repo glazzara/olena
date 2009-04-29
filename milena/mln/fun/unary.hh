@@ -49,8 +49,8 @@ namespace mln
 
     }
 
-    template <typename F>
-    struct unary: mln::Meta_Function_v2v< F >
+    template <typename F, typename E = F>
+    struct unary: mln::Meta_Function_v2v< E >
     {
       typedef F flag;
       typedef mln_trait_fun_param(flag) param;

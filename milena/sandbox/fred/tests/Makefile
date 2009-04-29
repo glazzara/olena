@@ -1,4 +1,4 @@
-TARGETS=fun.bin thru.bin cos.bin
+TARGETS=fun.bin thru.bin cos.bin wip.bin
 
 OLENADIR=../../../..
 MILENADIR=$(OLENADIR)/milena

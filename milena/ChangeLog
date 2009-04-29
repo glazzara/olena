@@ -1,3 +1,18 @@
+2009-04-29  Frederic Bour  <bour@lrde.epita.fr>
+
+	Modification to parametrized functions, functions tutorial WIP.
+	*  mln/fun/binary.hh,
+	*  mln/fun/unary.hh: Modified parameters system. Now distinguish
+	   Exact type from Flag type.
+	*  mln/fun/binary_param.hh: New.
+	*  mln/fun/from_accu.hh: Updated to latest functions syntax.
+	*  mln/fun/unary.hh: Modified parameters system.
+	*  mln/fun/unary_param.hh: New.
+	*  sandbox/fred/functions.html,
+	*  sandbox/fred/functions.mkdown: New. Tutorial
+	*  sandbox/fred/tests/Makefile: Added one test.
+	*  sandbox/fred/tests/wip.cc: New.
+
 2009-04-29 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Update doc.

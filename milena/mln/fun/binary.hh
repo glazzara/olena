@@ -39,8 +39,8 @@ namespace mln
   namespace fun
   {
 
-    template <typename F>
-    struct binary : mln::Meta_Function_vv2v< binary<F> >
+    template <typename F, typename E = F>
+    struct binary : mln::Meta_Function_vv2v< E >
     {
       typedef F flag;
       typedef mln_trait_fun_storage(flag) storage;

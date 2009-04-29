@@ -24,56 +24,74 @@
 // License.  This exception does not however invalidate any other
 // reasons why the executable file might be covered by the GNU General
 // Public License.
+#include "unary.hh"
 
-#ifndef MLN_FUN_FROM_ACCU_HH
-# define MLN_FUN_FROM_ACCU_HH
+#ifndef MLN_FUN_UNARY_PARAM_HH
+# define MLN_FUN_UNARY_PARAM_HH
 
-# include <mln/fun/unary_param.hh>
-# include <mln/core/concept/accumulator.hh>
+# include <mln/fun/unary.hh>
+# include <mln/fun/param.hh>
 
 namespace mln
 {
 
-  // from_accu: wrap an accumulator into a function
   namespace fun
   {
 
-    template <typename A>
-    struct from_accu : unary_param<from_accu<A>, A*>
+    template <typename F, typename Param, typename Storage = void, typename E = F>
+    struct unary_param: unary< unary_param<F,Param,Storage,E>, E>
     {
-      from_accu() : unary_param<from_accu<A>, A*>() {};
-      from_accu(A* a) : unary_param<from_accu<A>, A*>(a) {};
+      unary_param()
+      {
+      }
+
+      template <typename U>
+      unary_param(const U& param)
+      {
+	this->init(param);
+      }
+
     };
 
-  } // end of namespace mln::fun
+    template <typename F, typename Param, typename E>
+    struct parameter< unary_param<F,Param,void,E> >
+    {
+      typedef Param param;
+      typedef void storage;
+    };
+
+    template <typename F, typename Param, typename Storage, typename E>
+    struct parameter< unary_param<F,Param,Storage,E> >
+    {
+      typedef Param param;
+      typedef Storage storage;
+
+      template <typename U>
+      storage compute(const U& u)
+      {
+	return F::compute_param(u);
+      }
+    };
+
+  }
 
   namespace trait
   {
 
     namespace next
     {
-      template <typename A, typename T>
-      struct set_unary_<mln::fun::from_accu<A>, mln::Object, T>
+
+      template <typename F, typename Param, typename Storage, typename E, typename T>
+      struct set_precise_unary_<mln::fun::unary_param<F,Param,Storage,E>, T>
       {
-	typedef set_unary_           ret;
-	typedef typename A::result   result;
-	typedef typename A::argument argument;
-	typedef A* param_t;
-
-	static inline
-	result read(const param_t& accu_, const argument& x)
-	{
-	  mln_precondition(accu_ != 0);
-
-	  accu_->take(x);
-	  return accu_->to_result ();
-	}
+	typedef mln_trait_nunary(F, T) ret;
       };
 
     } // end of namespace mln::trait::next
 
   } // end of namespace mln::trait
 
+
 } // end of namespace mln
 
-#endif /* ! MLN_FUN_FROM_ACCU_HH */
+#endif /* ! MLN_FUN_UNARY_PARAM_HH */
