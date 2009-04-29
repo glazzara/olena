@@ -12,27 +12,47 @@ namespace mln
   namespace histo
   {
 
-    template <typename C, typename T>
-    image3d<C> compute_histo_3d(image2d<T> ima)
+    template <typename T>
+    struct compute_histo_3d
     {
-      // out
+      image3d<unsigned> operator()(const image2d<T>& ima) const;
+
+      namespace internal
+      {
+      }
+
+    };
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename T>
+    inline
+    image3d<unsigned>
+    operator()(const image2d<T>& ima) const
+    {
       typedef mln_trait_value_comp(T, 0)::enc enc_0;
       typedef mln_trait_value_comp(T, 1)::enc enc_1;
       typedef mln_trait_value_comp(T, 2)::enc enc_2;
-      image3d<C> out(mln_max(enc_0) + abs(mln_min(enc_0)) + 1,
-		     mln_max(enc_1) + abs(mln_min(enc_1)) + 1,
-		     mln_max(enc_2) + abs(mln_min(enc_2)) + 1);
-      data::fill(out, mln_min(C));
 
-      // count
+      // FIXME: wrong for negative sites!
+      image3d<unsigned> out(mln_max(enc_0) + abs(mln_min(enc_0)) + 1,
+			    mln_max(enc_1) + abs(mln_min(enc_1)) + 1,
+			    mln_max(enc_2) + abs(mln_min(enc_2)) + 1);
+
+      // Count occurences.
+      data::fill(out, 0);
+
       mln_fwd_piter(box2d) p(ima.domain());
       for_all(p)
-	// FIXME: call macro comp()?
+	// comp() not implemented everywhere!
 	++out(point3d(ima(p).comp(0), ima(p).comp(1), ima(p).comp(2)));
 
       // return
       return out;
     }
+
+# endif // !MLN_INCLUDE_ONLY
 
   }
 }

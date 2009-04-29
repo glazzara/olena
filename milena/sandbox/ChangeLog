@@ -1,3 +1,9 @@
+2009-04-29  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Histograms update.
+	* folio/mln/histo/compute_histo.hh: Some brainstorming.
+	* folio/mln/histo/compute_histo_3d.hh: Some corrections from compute_histo.
+
 2009-04-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	New shell script dedicated to fast word segmentation.
