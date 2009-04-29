@@ -79,7 +79,7 @@ namespace mln
 	   const p_edges<G,site_function_t>& pe);
 
       fun::i2v::array<V> f_;
-      p_edges<G,site_function_t> pset_;
+      p_edges<G,site_function_t> domain_;
     };
 
   } // end of namespace mln::internal
@@ -207,7 +207,7 @@ namespace mln
     data< mln::edge_image<P,V,G> >::data(const fun::i2v::array<V>& f,
 					 const p_edges<G,site_function_t>& ps)
       : f_(exact(f)),
-	pset_(ps)
+	domain_(ps)
     {
     }
 

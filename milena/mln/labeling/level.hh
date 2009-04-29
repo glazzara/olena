@@ -103,7 +103,7 @@ namespace mln
 
 	// Requirements from mln::canvas::labeling.
 
-        typedef mln_pset(I) S;
+        typedef mln_domain(I) S;
 
 	// Generic implementation
 

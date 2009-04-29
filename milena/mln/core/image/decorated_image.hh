@@ -83,7 +83,7 @@ namespace mln
   template <typename I, typename D>
   struct decorated_image :
     public internal::decorated_image_impl_< I, decorated_image<I,D> >,
-    public internal::image_identity< I, mln_pset(I), decorated_image<I,D> >
+    public internal::image_identity< I, mln_domain(I), decorated_image<I,D> >
   {
   public:
     typedef decorated_image<I, D> self_;

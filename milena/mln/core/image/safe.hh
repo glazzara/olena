@@ -82,7 +82,7 @@ namespace mln
   // FIXME: Doc!
 
   template <typename I>
-  class safe_image : public internal::image_identity< I, mln_pset(I), safe_image<I> >
+  class safe_image : public internal::image_identity< I, mln_domain(I), safe_image<I> >
   {
   public:
 

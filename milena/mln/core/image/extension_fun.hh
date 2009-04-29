@@ -101,7 +101,7 @@ namespace mln
   template <typename I, typename F>
   class extension_fun :
     
-    public internal::image_identity< I, mln_pset(I), extension_fun<I, F> >,
+    public internal::image_identity< I, mln_domain(I), extension_fun<I, F> >,
     private mlc_converts_to(mln_result(F), mln_value(I))::check_t
   {
   public:

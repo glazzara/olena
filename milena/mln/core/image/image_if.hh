@@ -59,7 +59,7 @@ namespace mln
       data(I& ima, const F& f);
 
       I ima_;
-      p_if<mln_pset(I), F> pset_;
+      p_if<mln_domain(I), F> domain_;
     };
 
   } // end of namespace mln::internal
@@ -94,7 +94,7 @@ namespace mln
   /// \ingroup modimagedomainmorpher
   template <typename I, typename F>
   struct image_if : public internal::image_domain_morpher< I,
-							   p_if<mln_pset(I), F>,
+							   p_if<mln_domain(I), F>,
 							   image_if<I, F> >
   {
     /// Skeleton.
@@ -109,7 +109,7 @@ namespace mln
     void init_(I& ima, const F& f);
 
     /// Give the definition domain.
-    const p_if<mln_pset(I), F>& domain() const;
+    const p_if<mln_domain(I), F>& domain() const;
 
     /// Const promotion via conversion.
     operator image_if<const I, F>() const;
@@ -172,7 +172,7 @@ namespace mln
     inline
     data< image_if<I,F> >::data(I& ima, const F& f)
       : ima_(ima),
-	pset_(ima.domain() | f)
+	domain_(ima.domain() | f)
     {
     }
 
@@ -205,11 +205,11 @@ namespace mln
 
   template <typename I, typename F>
   inline
-  const p_if<mln_pset(I), F>&
+  const p_if<mln_domain(I), F>&
   image_if<I,F>::domain() const
   {
     mln_precondition(this->is_valid());
-    return this->data_->pset_;
+    return this->data_->domain_;
   }
 
   template <typename I, typename F>
@@ -218,7 +218,7 @@ namespace mln
   {
     mln_precondition(this->is_valid());
     image_if<const I,F> tmp(this->data_->ima_,
-			    this->data_->pset_.predicate());
+			    this->data_->domain_.predicate());
     return tmp;
   }
 

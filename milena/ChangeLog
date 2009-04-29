@@ -1,3 +1,45 @@
+2009-04-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Rename Image::pset to Image::domain_t.
+
+	* mln/core/concept/image.hh,
+	* mln/core/image/ch_piter.hh,
+	* mln/core/image/decorated_image.hh,
+	* mln/core/image/edge_image.hh,
+	* mln/core/image/extension_fun.hh,
+	* mln/core/image/extension_ima.hh,
+	* mln/core/image/extension_val.hh,
+	* mln/core/image/image_if.hh,
+	* mln/core/image/interpolated.hh,
+	* mln/core/image/lazy_image.hh,
+	* mln/core/image/p2p_image.hh,
+	* mln/core/image/plain.hh,
+	* mln/core/image/safe.hh,
+	* mln/core/image/slice_image.hh,
+	* mln/core/image/sub_image.hh,
+	* mln/core/image/t_image.hh,
+	* mln/core/image/tr_image.hh,
+	* mln/core/image/vertex_image.hh,
+	* mln/core/internal/image_base.hh,
+	* mln/core/internal/image_identity.hh,
+	* mln/core/internal/image_value_morpher.hh,
+	* mln/core/macros.hh,
+	* mln/core/routine/init.hh,
+	* mln/core/site_set/p_image.hh,
+	* mln/debug/slices_2d.hh,
+	* mln/io/off/load.hh,
+	* mln/labeling/level.hh,
+	* mln/labeling/level.spe.hh,
+	* mln/make/image3d.hh,
+	* mln/morpho/general.spe.hh,
+	* mln/pw/image.hh,
+	* mln/pw/internal/image_base.hh,
+	* mln/tag/skeleton.hh,
+	* mln/trait/ch_value.hh,
+	* mln/value/stack.hh,
+	* tests/core/image/tr_image.cc: rename pset to domain_t and introduce
+	mln_domain(I).
+
 2009-04-29  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add dim2/ funtion objects and display_edge(), untested.

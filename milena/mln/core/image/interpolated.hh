@@ -82,10 +82,10 @@ namespace mln
   ///
   template <typename I, template <class> class F>
   struct interpolated :
-    public mln::internal::image_identity< I, mln_pset(I), interpolated<I,F> >
+    public mln::internal::image_identity< I, mln_domain(I), interpolated<I,F> >
   {
 
-    typedef mln::internal::image_identity< I, mln_pset(I),
+    typedef mln::internal::image_identity< I, mln_domain(I),
 					   interpolated<I,F> > super_;
 
     /// Point_Site associated type.

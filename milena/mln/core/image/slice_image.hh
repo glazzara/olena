@@ -267,7 +267,7 @@ namespace mln
   slice_image<I>
   slice(Image<I>& ima_, def::coord sli)
   {
-    mlc_equal(mln_pset(I), box3d)::check();
+    mlc_equal(mln_domain(I), box3d)::check();
 
     I& ima = exact(ima_);
     mln_precondition(ima.is_valid());
@@ -283,7 +283,7 @@ namespace mln
   slice_image<const I>
   slice(const Image<I>& ima_, def::coord sli)
   {
-    mlc_equal(mln_pset(I), box3d)::check();
+    mlc_equal(mln_domain(I), box3d)::check();
 
     const I& ima = exact(ima_);
     mln_precondition(ima.is_valid());

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -250,6 +250,12 @@
 /// \{
 # define mln_line_piter(T) typename T::line_piter
 # define mln_line_piter_(T)         T::line_piter
+/// \}
+
+/// Shortcuts to access the domain type associated to T.
+/// \{
+# define mln_domain(T)       typename T::domain_t
+# define mln_domain_(T)               T::domain_t
 /// \}
 
 /// Shortcuts to access the type of point set (pset) associated to T.

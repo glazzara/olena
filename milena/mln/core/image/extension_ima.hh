@@ -95,7 +95,7 @@ namespace mln
   template <typename I, typename J>
   class extension_ima
 
-    : public internal::image_identity< I, mln_pset(I), extension_ima<I, J> >,
+    : public internal::image_identity< I, mln_domain(I), extension_ima<I, J> >,
       private mlc_converts_to(mln_value(J), mln_value(I))::check_t
   {
   public:

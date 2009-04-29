@@ -215,7 +215,7 @@ namespace mln
       const S&
       image_base<F,S,E>::domain() const
       {
-	return this->data_->pset_;
+	return this->data_->domain_;
       }
 
       template <typename F, typename S, typename E>
@@ -232,7 +232,7 @@ namespace mln
       typename image_base<F,S,E>::rvalue
       image_base<F,S,E>::operator()(const mln_psite(S)& p) const
       {
-	mln_precondition(this->data_->pset_.has(p));
+	mln_precondition(this->data_->domain_.has(p));
 	return this->data_->f_(p);
       }
 
@@ -241,7 +241,7 @@ namespace mln
       typename image_base<F,S,E>::lvalue
       image_base<F,S,E>::operator()(const mln_psite(S)& p)
       {
-	mln_precondition(this->data_->pset_.has(p));
+	mln_precondition(this->data_->domain_.has(p));
 	return this->data_->f_(p);
       }
 

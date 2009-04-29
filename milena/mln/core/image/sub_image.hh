@@ -60,7 +60,7 @@ namespace mln
       data(I& ima, const S& pset);
 
       I ima_;
-      S pset_;
+      S domain_;
     };
 
   } // end of namespace mln::internal
@@ -105,7 +105,7 @@ namespace mln
 							    sub_image<I,S> >
   {
     /// Skeleton.
-    typedef sub_image< tag::image_<I>, tag::pset_<S> > skeleton;
+    typedef sub_image< tag::image_<I>, tag::domain_<S> > skeleton;
 
     /// Constructor without argument.
     sub_image();
@@ -168,7 +168,7 @@ namespace mln
     inline
     data< sub_image<I,S> >::data(I& ima, const S& pset)
       : ima_(ima),
-	pset_(pset)
+	domain_(pset)
     {
     }
 
@@ -204,7 +204,7 @@ namespace mln
   const S&
   sub_image<I,S>::domain() const
   {
-    return this->data_->pset_;
+    return this->data_->domain_;
   }
 
   template <typename I, typename S>
@@ -212,7 +212,7 @@ namespace mln
   sub_image<I,S>::operator sub_image<const I, S>() const
   {
     sub_image<const I, S> tmp(this->data_->ima_,
-			      this->data_->pset_);
+			      this->data_->domain_);
     return tmp;
   }
 

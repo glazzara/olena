@@ -103,7 +103,7 @@ namespace mln
 							       sub_image_if<I,S> >
   {
     /// Skeleton.
-    typedef sub_image_if< tag::image_<I>, tag::pset_<S> > skeleton;
+    typedef sub_image_if< tag::image_<I>, tag::domain_<S> > skeleton;
 
     /// Constructor without argument.
     sub_image_if();

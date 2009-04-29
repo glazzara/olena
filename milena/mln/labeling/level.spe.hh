@@ -95,7 +95,7 @@ namespace mln
 	typedef I_ I;
 	typedef N_ N;
 	typedef L_ L;
-        typedef mln_pset(I) S;
+        typedef mln_domain(I) S;
 
 	const I& input;
 	const N& nbh;

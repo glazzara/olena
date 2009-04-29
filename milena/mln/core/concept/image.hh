@@ -80,7 +80,7 @@ namespace mln
     /*
       // provided by internal::image_base:
 
-      typedef pset;
+      typedef domain_t;
       typedef site;
       typedef psite;
 
@@ -104,7 +104,7 @@ namespace mln
       rvalue operator()(const psite& p) const;
       lvalue operator()(const psite& p);
 
-      const pset& domain() const;
+      const domain_t& domain() const;
 
       typedef skeleton;
      */
@@ -200,7 +200,7 @@ namespace mln
   {
     // provided by internal::image_base:
 
-    typedef mln_pset(E)  pset;
+    typedef mln_domain(E)  domain_t;
     typedef mln_site(E)  site;
     typedef mln_psite(E) psite;
 
@@ -236,7 +236,7 @@ namespace mln
     lvalue (E::*m7)(const psite& p) = & E::operator();
     m7 = 0;
 
-    const pset& (E::*m8)() const = & E::domain;
+    const domain_t& (E::*m8)() const = & E::domain;
     m8 = 0;
 
     const t_eligible_values_set& (E::*m9)() const = & E::values_eligible;

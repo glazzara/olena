@@ -153,14 +153,14 @@ namespace mln
 
       template < template <class, class> class M, typename I, typename S,
 		 typename V >
-      struct ch_value_<  M< tag::image_<I>, tag::pset_<S> >,  V  >
+      struct ch_value_<  M< tag::image_<I>, tag::domain_<S> >,  V  >
       {
 	typedef M< mln_ch_value(I, V), S > ret;
       };
 
       template < template <class, class> class M, typename F, typename S,
 		 typename V >
-      struct ch_value_<  M< tag::function_<F>, tag::pset_<S> >,  V  >
+      struct ch_value_<  M< tag::function_<F>, tag::domain_<S> >,  V  >
       {
         // FIXME: what about S::site having no grid?
         typedef mln_deduce(S, site, grid) grid;
@@ -172,7 +172,7 @@ namespace mln
       template < typename F,
 	         typename G, typename FP,
 		 typename V >
-      struct ch_value_<  pw::image< tag::function_<F>, tag::pset_<p_edges<G, FP> > >,  V  >
+      struct ch_value_<  pw::image< tag::function_<F>, tag::domain_<p_edges<G, FP> > >,  V  >
       {
 	typedef pw::image< mln_ch_function_value(F, V), p_edges<G, FP> > ret;
       };
@@ -181,7 +181,7 @@ namespace mln
       template < typename F,
 	         typename G, typename FP,
 		 typename V >
-      struct ch_value_<  pw::image< tag::function_<F>, tag::pset_<p_vertices<G, FP> > >,  V  >
+      struct ch_value_<  pw::image< tag::function_<F>, tag::domain_<p_vertices<G, FP> > >,  V  >
 
       {
 	typedef pw::image< mln_ch_function_value(F, V), p_vertices<G, FP> > ret;
@@ -210,7 +210,7 @@ namespace mln
 
       template < template <class, class> class M, typename T, typename S,
 		 typename V >
-      struct ch_value_<  M< tag::value_<T>, tag::pset_<S> >,  V  >
+      struct ch_value_<  M< tag::value_<T>, tag::domain_<S> >,  V  >
       {
         // FIXME: what about S::site having no grid?
         typedef mln_deduce(S, site, grid) grid;

@@ -49,7 +49,7 @@ namespace mln
     template <typename I> struct image_    { typedef I param; };
     template <typename N> struct neighb_   { typedef N param; };
     template <typename P> struct psite_    { typedef P param; };
-    template <typename S> struct pset_     { typedef S param; };
+    template <typename S> struct domain_   { typedef S param; };
     template <typename V> struct value_    { typedef V param; };
 
     // With value.

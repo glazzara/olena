@@ -96,7 +96,7 @@ namespace mln
 
   template <typename I>
   class extension_val :
-    public internal::image_identity< I, mln_pset(I), extension_val<I> >
+    public internal::image_identity< I, mln_domain(I), extension_val<I> >
   {
   public:
 

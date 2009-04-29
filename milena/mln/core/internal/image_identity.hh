@@ -148,7 +148,7 @@ namespace mln
       lvalue operator()(const mln_psite(S)& p);
 
       // FIXME Matthieu: Doc!  Cf. core/concept/doc/image
-      const mln_pset(I)& domain() const;
+      const mln_domain(I)& domain() const;
       bool has(const mln_psite(I)& p) const;
 
     protected:
@@ -187,7 +187,7 @@ namespace mln
 
     template <typename I, typename S, typename E>
     inline
-    const mln_pset(I)&
+    const mln_domain(I)&
     image_identity<I, S, E>::domain() const
     {
       mln_precondition(this->delegatee_() != 0);

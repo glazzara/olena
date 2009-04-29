@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_CORE_IMAGE_PLAIN_HH
 # define MLN_CORE_IMAGE_PLAIN_HH
 
-/*! \file mln/core/image/plain.hh
- *
- * \brief Definition of a morpher that prevents an image from sharing
- * his data.
- */
+/// \file mln/core/image/plain.hh
+///
+/// Definition of a morpher that prevents an image from sharing
+/// his data.
 
 # include <mln/core/internal/image_identity.hh>
 # include <mln/core/routine/duplicate.hh>
@@ -74,17 +74,16 @@ namespace mln
 
 
 
-  /*! \brief FIXME
-   *
-   */
+  /// Morpher that prevents an image from sharing its data.
+  /// While assigned to another image, its data is duplicated.
   template <typename I>
   class plain
 
-    : public mln::internal::image_identity< I, mln_pset(I), plain<I> >,
+    : public mln::internal::image_identity< I, mln_domain(I), plain<I> >,
       private mlc_is_not_const(I)::check_t
   {
     typedef plain<I> self_;
-    typedef mln::internal::image_identity<I, mln_pset(I), self_> super_;
+    typedef mln::internal::image_identity<I, mln_domain(I), self_> super_;
 
   public:
 

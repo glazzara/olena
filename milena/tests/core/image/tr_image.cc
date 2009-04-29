@@ -56,7 +56,7 @@ int main()
     v[1] = 1;
     fun::x2x::rotation<2, float> rot1(1.67, v);
 
-    tr_image<mln_pset_(image2d<int_u8>),
+    tr_image<mln_domain_(image2d<int_u8>),
       image2d<int_u8>,
       fun::x2x::rotation<2, float> >
 	inter(in.domain(), in, rot1);
@@ -76,7 +76,7 @@ int main()
     v[2] = 1;
     fun::x2x::rotation<3, float> rot1(1.67, v);
 
-    tr_image<mln_pset_(image3d<int_u8>),
+    tr_image<mln_domain_(image3d<int_u8>),
       image3d<int_u8>,
       fun::x2x::rotation<3, float> >
 	inter(in.domain(), in, rot1);

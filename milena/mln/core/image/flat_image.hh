@@ -58,7 +58,7 @@ namespace mln
       data(const T& val, const S& pset);
 
       T val_;
-      S pset_;
+      S domain_;
     };
 
   } // end of namespace mln::internal
@@ -107,7 +107,7 @@ namespace mln
   struct flat_image : public internal::image_primary< T, S, flat_image<T,S> >
   {
     /// Skeleton.
-    typedef flat_image< tag::value_<T>, tag::pset_<S> > skeleton;
+    typedef flat_image< tag::value_<T>, tag::domain_<S> > skeleton;
 
 
     /// Value associated type.
@@ -179,7 +179,7 @@ namespace mln
     inline
     data< flat_image<T,S> >::data(const T& val, const S& pset)
       : val_(val),
-	pset_(pset)
+	domain_(pset)
     {
     }
 
@@ -215,7 +215,7 @@ namespace mln
   const S&
   flat_image<T,S>::domain() const
   {
-    return this->data_->pset_;
+    return this->data_->domain_;
   }
 
   template <typename T, typename S>

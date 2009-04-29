@@ -68,7 +68,7 @@ namespace mln
     {
       data(const F& f, const S& ps);
       F f_;
-      S pset_;
+      S domain_;
     };
 
   } // end of namespace mln::internal
@@ -95,7 +95,7 @@ namespace mln
 
     public:
       /// Skeleton.
-      typedef image< tag::function_<F>, tag::pset_<S> > skeleton;
+      typedef image< tag::function_<F>, tag::domain_<S> > skeleton;
 
       /// Constructor without argument.
       image();
@@ -150,7 +150,7 @@ namespace mln
     inline
     data< mln::pw::image<F,S> >::data(const F& f, const S& ps)
       : f_(f),
-      pset_(ps)
+      domain_(ps)
     {
     }
 

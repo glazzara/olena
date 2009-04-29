@@ -55,7 +55,7 @@ namespace mln
 
       I ima_;
       F f_;
-      mln_pset(I) b_;
+      mln_domain(I) b_;
     };
 
   } // end of namespace mln::internal
@@ -88,7 +88,7 @@ namespace mln
   /// FIXME: Doc!
   template <typename I, typename F>
   struct p2p_image : public internal::image_domain_morpher< I,
-							    mln_pset(I),
+							    mln_domain(I),
 							    p2p_image<I, F> >
   {
     /// Skeleton.
@@ -103,7 +103,7 @@ namespace mln
     void init_(I& ima, const F& f);
 
     /// Give the definition domain.
-    const mln_pset(I)& domain() const;
+    const mln_domain(I)& domain() const;
 
     /// Give the p2p function.
     const F& fun() const;
@@ -161,7 +161,7 @@ namespace mln
 	f_(f)
     {
       accu::bbox<mln_site(I)> a;
-      mln_pset(I) b = ima.domain();
+      mln_domain(I) b = ima.domain();
       a.take(f(b.pmin()));
       a.take(f(b.pmax()));
       b_ = a.to_result();
@@ -197,7 +197,7 @@ namespace mln
 
   template <typename I, typename F>
   inline
-  const mln_pset(I)&
+  const mln_domain(I)&
   p2p_image<I,F>::domain() const
   {
     mln_precondition(this->is_valid());
@@ -241,7 +241,7 @@ namespace mln
   p2p_image<I,F>
   apply_p2p(Image<I>& ima_, const Function_p2p<F>& f)
   {
-    mlc_is_a(mln_pset(I), Box)::check();
+    mlc_is_a(mln_domain(I), Box)::check();
 
     I& ima = exact(ima_);
     mln_precondition(ima.is_valid());
@@ -255,7 +255,7 @@ namespace mln
   p2p_image<const I, F>
   apply_p2p(const Image<I>& ima_, const Function_p2p<F>& f)
   {
-    mlc_is_a(mln_pset(I), Box)::check();
+    mlc_is_a(mln_domain(I), Box)::check();
 
     const I& ima = exact(ima_);
     mln_precondition(ima.is_valid());

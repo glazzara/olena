@@ -153,7 +153,7 @@ namespace mln
       typedef mln_psite(I) psite;
 
       /// Site_Set associated type.
-      typedef mln_pset(I) pset;
+      typedef mln_domain(I) domain_t;
 
       /// Value associated type.
       typedef algebra::vec<n, mln_value(I)> value;

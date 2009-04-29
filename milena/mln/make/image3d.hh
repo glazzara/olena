@@ -69,7 +69,7 @@ namespace mln
     mln::image3d<mln_value(I)>
     image3d(const util::array<I>& ima)
     {
-      mlc_is_a(mln_pset(I), Box)::check();
+      mlc_is_a(mln_domain(I), Box)::check();
       mln_precondition(! ima.is_empty());
 
       def::coord n_slices = ima.nelements();
@@ -91,7 +91,7 @@ namespace mln
     mln::image3d<mln_value(I)>
     image3d(const I& ima)
     {
-      mlc_is_a(mln_pset(I), Box)::check();
+      mlc_is_a(mln_domain(I), Box)::check();
       mln_precondition(ima.is_valid());
 
       mln::box2d b = ima.domain();

@@ -77,7 +77,7 @@ namespace mln
 
   template <typename I, typename Fwd>
   class ch_piter_image : public internal::image_identity< I,
-							  mln_pset(I),
+							  mln_domain(I),
 							  ch_piter_image<I,Fwd> >
   {
   public:

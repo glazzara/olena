@@ -81,11 +81,11 @@ namespace mln
    */
   template <typename I>
   class t_image
-    : public internal::image_morpher<I, mln_value(I), mln_pset(I), t_image<I> >
+    : public internal::image_morpher<I, mln_value(I), mln_domain(I), t_image<I> >
   {
   public:
     /// Super type.
-    typedef internal::image_morpher< I, mln_value(I), mln_pset(I),
+    typedef internal::image_morpher< I, mln_value(I), mln_domain(I),
 				     t_image<I> > super_;
 
     /// Point_Site associated type.

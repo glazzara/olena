@@ -71,7 +71,7 @@ namespace mln
   template <typename I>
   class p_image : public internal::site_set_base_< mln_psite(I), p_image<I> >
   {
-    typedef mln_pset(I) S_;
+    typedef mln_domain(I) S_;
     typedef fun::eq_p2b_expr_< pw::value_<I>, pw::cst_<bool> > F_;
   public:
 

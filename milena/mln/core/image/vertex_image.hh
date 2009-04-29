@@ -82,7 +82,7 @@ namespace mln
 	   const p_vertices<G,F>& pv);
 
       fun::i2v::array<V> f_;
-      p_vertices<G,site_function_t> pset_;
+      p_vertices<G,site_function_t> domain_;
     };
 
   } // end of namespace mln::internal
@@ -214,7 +214,7 @@ namespace mln
     data< mln::vertex_image<P,V,G> >::data(const fun::i2v::array<V>& f,
 					   const p_vertices<G,F>& ps)
       : f_(f),
-	pset_(ps)
+	domain_(ps)
     {
     }
 

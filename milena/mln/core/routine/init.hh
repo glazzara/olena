@@ -58,7 +58,7 @@ namespace mln
   void init_(tag::border_t, unsigned& bdr, const Image<I>& ima);
 
   template <typename I>
-  void init_(tag::domain_t, mln_pset(I)& pset, const Image<I>& ima);
+  void init_(tag::domain_t, mln_domain(I)& pset, const Image<I>& ima);
 
 
 
@@ -93,7 +93,7 @@ namespace mln
 
   template <typename I>
   inline
-  void init_(tag::domain_t, mln_pset(I)& pset, const Image<I>& ima)
+  void init_(tag::domain_t, mln_domain(I)& pset, const Image<I>& ima)
   {
     pset = exact(ima).domain();
   }

@@ -82,7 +82,7 @@ namespace mln
 	      const mln_value(I)& bg)
     {
       trace::entering("debug::slices_2d");
-      mlc_equal(mln_pset(I), box3d)::check();
+      mlc_equal(mln_domain(I), box3d)::check();
 
       const I& input = exact(input_);
 
@@ -165,7 +165,7 @@ namespace mln
 	      const mln_value(I)& bg)
     {
       trace::entering("debug::slices_2d");
-      mlc_equal(mln_pset(I), box3d)::check();
+      mlc_equal(mln_domain(I), box3d)::check();
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());

@@ -92,10 +92,10 @@ namespace mln
   template <typename I, typename F, typename B>
   struct lazy_image :
     public mln::internal::image_identity< mln_ch_value(I, mln_result(F)),
-                                          mln_pset(I), lazy_image<I, F,B> >
+                                          mln_domain(I), lazy_image<I, F,B> >
   {
     typedef mln::internal::image_identity< mln_ch_value(I, mln_result(F)),
-                                           mln_pset(I),
+                                           mln_domain(I),
                                            lazy_image<I, F,B> > super_;
 
     /// Return type of read access.

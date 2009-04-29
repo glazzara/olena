@@ -100,7 +100,7 @@ namespace mln
 	  /// Type of the set of values.
 	  typedef metal::vec<D + 1, std::vector< mln_value(I) > > values;
 	  /// Type of the domain.
-	  typedef mln_pset(I) domain;
+	  typedef mln_domain(I) domain;
 
 	  /// Constructor, with static checks.
 	  off_loader();

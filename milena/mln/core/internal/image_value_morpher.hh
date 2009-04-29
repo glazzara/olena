@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -53,11 +53,11 @@ namespace mln
      * Parameter \p P is a value type.
      */
     template <typename I, typename T, typename E>
-    class image_value_morpher : public image_morpher<I, T, mln_pset(I), E>
+    class image_value_morpher : public image_morpher<I, T, mln_domain(I), E>
     {
     public:
 
-      const mln_pset(I)& domain() const;
+      const mln_domain(I)& domain() const;
       bool has(const mln_psite(I)& p) const;
 
     protected:
@@ -75,7 +75,7 @@ namespace mln
 
     template <typename I, typename T, typename E>
     inline
-    const mln_pset(I)&
+    const mln_domain(I)&
     image_value_morpher<I,T,E>::domain() const
     {
       mln_precondition(this->delegatee_() != 0);

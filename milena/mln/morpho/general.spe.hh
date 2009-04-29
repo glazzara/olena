@@ -437,7 +437,7 @@ namespace mln
 	  return general_dispatch_for_generic(op, input, win);
 	else
 	  {
-	    enum { test = mlc_is_a(mln_pset(I), Box)::value
+	    enum { test = mlc_is_a(mln_domain(I), Box)::value
 		   && mlc_equal(mln_trait_image_quant(I),
 				mln::trait::image::quant::low)::value };
 	    return general_dispatch_line(metal::bool_<test>(),
@@ -479,7 +479,7 @@ namespace mln
 	  return general_dispatch_for_generic(op, input, win);
 	else
 	  {
-	    enum { test = mlc_is_a(mln_pset(I), Box)::value
+	    enum { test = mlc_is_a(mln_domain(I), Box)::value
 		   && mlc_equal(mln_trait_image_quant(I),
 				mln::trait::image::quant::low)::value };
 	    return general_dispatch_diagonal(metal::bool_<test>(),
