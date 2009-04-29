@@ -1,3 +1,11 @@
+2009-04-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	New shell script dedicated to fast word segmentation.
+
+	* icdar/2009/hsc/first_attempts/words_25p.sh: New.
+	This version works on images reduced by 25%.
+	* icdar/2009/hsc/ws_to_wsl.hh: Add log.
+
 2009-04-29  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	HSV type.

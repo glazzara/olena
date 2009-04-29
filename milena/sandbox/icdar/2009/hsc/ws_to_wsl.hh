@@ -18,6 +18,8 @@
 #include <mln/algebra/mat.hh>
 
 #include <mln/make/region_adjacency_graph.hh>
+#include <mln/make/p_vertices_with_mass_centers.hh>
+#include <mln/debug/draw_graph.hh>
 
 #include <mln/core/site_set/p_edges.hh>
 #include <mln/core/site_set/p_vertices.hh>
@@ -262,7 +264,7 @@ namespace mln
     typedef util::graph G;
 
     G gr = make::region_adjacency_graph(ws, c8(), n_basins);
-
+    
     util::array<mahalanobis> m;
     m = mahalanobis_from_images(ws, small, n_basins);
 
@@ -299,6 +301,25 @@ namespace mln
 
       }
     }
+
+
+#ifdef LOG
+    {
+      image2d<value::rgb8> cool(small.domain());
+      data::fill(cool, literal::white);
+      data::fill((cool | (pw::value(ws) == pw::cst(0))).rw(),
+		 literal::red);
+
+      typedef p_vertices< G, fun::i2v::array<point2d> > pv_t;
+      pv_t pv = make::p_vertices_with_mass_centers(ws, n_basins, gr);
+
+      debug::draw_graph(cool, pv,
+			literal::green,
+			literal::black);
+
+      io::ppm::save(cool, "temp_cool.ppm");
+    }
+#endif // LOG
 
     
     util::array<unsigned>
