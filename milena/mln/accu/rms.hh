@@ -58,7 +58,7 @@ namespace mln
       /// Manipulators.
       /// \{
       void init();
-      void take_as_init(const T& p);
+      void take_as_init_(const T& p);
       void take(const T& p);
       void take(const rms<T,V>& other);
       /// \}
@@ -118,7 +118,7 @@ namespace mln
     template <typename T, typename V>
     inline
     void
-    rms<T,V>::take_as_init(const T& t)
+    rms<T,V>::take_as_init_(const T& t)
     {
       v_ += t * t;
       ++count_;

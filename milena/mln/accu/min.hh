@@ -60,7 +60,7 @@ namespace mln
       /// Manipulators.
       /// \{
       void init();
-      void take_as_init(const argument& t);
+      void take_as_init_(const argument& t);
       void take(const argument& t);
       void take(const min<T>& other);
       /// \}
@@ -119,7 +119,7 @@ namespace mln
 
     template <typename T>
     inline
-    void min<T>::take_as_init(const argument& t)
+    void min<T>::take_as_init_(const argument& t)
     {
       t_ = t;
     }

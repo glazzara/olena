@@ -61,7 +61,7 @@ namespace mln
       /// Manipulators.
       /// \{
       void init();
-      void take_as_init(const argument& t);
+      void take_as_init_(const argument& t);
       void take(const argument& t);
       void take(const rank<T>& other);
       void sort();
@@ -139,7 +139,7 @@ namespace mln
 
     template <typename T>
     inline
-    void rank<T>::take_as_init(const argument& t)
+    void rank<T>::take_as_init_(const argument& t)
     {
       elts_.push_back(t);
       is_sorted_ = false;

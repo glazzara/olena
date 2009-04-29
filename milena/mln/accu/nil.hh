@@ -58,7 +58,7 @@ namespace mln
       /// Manipulators.
       /// \{
       void init();
-      void take_as_init(const argument&);
+      void take_as_init_(const argument&);
       void take(const argument&);
       void take(const nil<T>&);
       /// \}
@@ -114,7 +114,7 @@ namespace mln
     template <typename T>
     inline
     void
-    nil<T>::take_as_init(const argument&)
+    nil<T>::take_as_init_(const argument&)
     {
     }
 

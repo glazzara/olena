@@ -60,11 +60,11 @@ namespace mln
       /// Manipulators.
       /// \{
       void init();
-      void take_as_init(const argument& t);
+      void take_as_init_(const argument& t);
       void take(const argument& t);
       void take(const val<A>& other);
       template <typename I>
-      void take_as_init(const util::pix<I>& pix);
+      void take_as_init_(const util::pix<I>& pix);
       template <typename I>
       void take(const util::pix<I>& pix);
       /// \}
@@ -127,9 +127,9 @@ namespace mln
     template <typename A>
     inline
     void
-    val<A>::take_as_init(const argument& t)
+    val<A>::take_as_init_(const argument& t)
     {
-      a_.take_as_init(t);
+      a_.take_as_init_(t);
     }
 
     template <typename A>
@@ -152,9 +152,9 @@ namespace mln
     template <typename I>
     inline
     void
-    val<A>::take_as_init(const util::pix<I>& pix)
+    val<A>::take_as_init_(const util::pix<I>& pix)
     {
-      a_.take_as_init(pix.v()); // FIXME: Generalize with "value(pix)".
+      a_.take_as_init_(pix.v()); // FIXME: Generalize with "value(pix)".
     }
 
     template <typename A>

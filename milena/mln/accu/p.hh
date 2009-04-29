@@ -60,7 +60,7 @@ namespace mln
       /// Manipulators.
       /// \{
       void init();
-      void take_as_init(const argument& t);
+      void take_as_init_(const argument& t);
       void take(const argument& t);
       void take(const p<A>& other);
       /// \}
@@ -123,9 +123,9 @@ namespace mln
     template <typename A>
     inline
     void
-    p<A>::take_as_init(const argument& t)
+    p<A>::take_as_init_(const argument& t)
     {
-      a_.take_as_init(t.p()); // FIXME: Generalize with "psite(t)".
+      a_.take_as_init_(t.p()); // FIXME: Generalize with "psite(t)".
     }
 
     template <typename A>

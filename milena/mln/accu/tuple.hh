@@ -85,7 +85,7 @@ namespace mln
       /// Manipulators.
       /// \{
       void init();
-      void take_as_init(const argument& t);
+      void take_as_init_(const argument& t);
       void take(const argument& t);
       void take(const tuple<A, n, BOOST_PP_ENUM_PARAMS(10, T)>& other);
       /// \}
@@ -148,10 +148,10 @@ namespace mln
 	  tuplehelper<n - 1, T>::init(a);
 	}
 
-	static void take_as_init(typename T::intern& a, const typename T::argument& argument)
+	static void take_as_init_(typename T::intern& a, const typename T::argument& argument)
 	{
-	  boost::get<n - 1>(a).take_as_init(argument);
-	  tuplehelper<n - 1, T>::take_as_init(a, argument);
+	  boost::get<n - 1>(a).take_as_init_(argument);
+	  tuplehelper<n - 1, T>::take_as_init_(a, argument);
 	}
 
 	static void take(typename T::intern& a, const typename T::argument& argument)
@@ -177,7 +177,7 @@ namespace mln
       struct tuplehelper<0, T>
       {
 	static void init(typename T::intern&) {}
-	static void take_as_init(typename T::intern&, const typename T::argument&) {}
+	static void take_as_init_(typename T::intern&, const typename T::argument&) {}
 	static void take(typename T::intern&, const typename T::argument) {}
 	static void take(typename T::intern&, const typename T::intern&) {}
 	static void to_result(const typename T::intern&, typename T::result&) {}
@@ -202,9 +202,9 @@ namespace mln
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS(10, typename T)>
     inline
     void
-    tuple<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::take_as_init(const argument& t)
+    tuple<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::take_as_init_(const argument& t)
     {
-      internal::tuplehelper<n, self>::take_as_init(this->a_, t);
+      internal::tuplehelper<n, self>::take_as_init_(this->a_, t);
     }
 
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS(10, typename T)>

@@ -94,7 +94,7 @@ namespace mln
 	void take(const mln_value(I)& v);
 	void take(const sharpness<I>& other);
 
-	void take_as_init(const mln_value(I)& v);
+	void take_as_init_(const mln_value(I)& v);
 	/// \}
 
 	/// Get the value of the accumulator.
@@ -146,7 +146,7 @@ namespace mln
       {
 	if (! is_valid())
 	  {
-	    take_as_init(v);
+	    take_as_init_(v);
 	    return;
 	  }
 	volume_.take(v);
@@ -166,10 +166,10 @@ namespace mln
       template <typename I>
       inline
       void
-      sharpness<I>::take_as_init(const mln_value(I)& v)
+      sharpness<I>::take_as_init_(const mln_value(I)& v)
       {
-	volume_.take_as_init(v);
-	height_.take_as_init(v);
+	volume_.take_as_init_(v);
+	height_.take_as_init_(v);
       }
 
       template <typename I>

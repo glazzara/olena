@@ -97,10 +97,30 @@ namespace mln
       bool is_valid() const;
      */
 
-    // Default impl.
+    /// Take as initialization the value \p t.
+    ///
+    /// Dev note: this is a final method; override if needed
+    /// by take_as_init_ (ending with '_').
     template <typename T>
     void take_as_init(const T& t); // 't' is either argument or E.
 
+    /// Default implementation of "take as initialization".
+    template <typename T>
+    void take_as_init_(const T& t);
+
+
+    /// Take \p n times the value \p t.
+    ///
+    /// Dev note: this is a final method; override if needed
+    /// by take_as_init_ (ending with '_').
+    template <typename T>
+    void take_n_times(unsigned n, const T& t);
+
+    /// Default implementation of "take n times".
+    template <typename T>
+    void take_n_times_(unsigned n, const T& t);
+
+    
   protected:
     Accumulator();
   };
@@ -160,13 +180,61 @@ namespace mln
     m6 = 0;
   }
 
+
+  // take_as_init
+
   template <typename E>
   template <typename T>
   void
-  Accumulator<E>::take_as_init(const T& t) // either argument or E
+  Accumulator<E>::take_as_init(const T& t)
   {
+    typedef mln_exact(T) T_;
+    typedef mlc_converts_to(T_, mln_argument(E)) t_is_argument;
+    typedef mlc_converts_to(T_, E)               t_is_accumulator;
+    mlc_or(t_is_argument, t_is_accumulator)::check();
+
+    // Dispatch.
+    exact(this)->take_as_init_(t);
+  }
+
+  template <typename E>
+  template <typename T>
+  void
+  Accumulator<E>::take_as_init_(const T& t)
+  {
+    // Default impl.
     exact(this)->init();
     exact(this)->take(t);
+  }
+
+
+  // take n times
+
+  template <typename E>
+  template <typename T>
+  void
+  Accumulator<E>::take_n_times(unsigned n, const T& t)
+  {
+    typedef mln_exact(T) T_;
+    typedef mlc_converts_to(T_, mln_argument(E)) t_is_argument;
+    typedef mlc_converts_to(T_, E)               t_is_accumulator;
+    mlc_or(t_is_argument, t_is_accumulator)::check();
+
+    if (n == 0u)
+      return;
+
+    // Dispatch.
+    exact(this)->take_n_times_(n, t);
+  }
+
+  template <typename E>
+  template <typename T>
+  void
+  Accumulator<E>::take_n_times_(unsigned n, const T& t)
+  {
+    // Default impl.
+    for (unsigned i = 0; i < n; ++i)
+      exact(this)->take(t);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -62,7 +62,7 @@ namespace mln
       /// Manipulators.
       /// \{
       void init();
-      void take_as_init(const argument& t);
+      void take_as_init_(const argument& t);
       void take(const argument& t);
       void take(const rank<bool>& other);
       void untake(const argument& t);
@@ -105,7 +105,7 @@ namespace mln
     }
 
     inline
-    void rank<bool>::take_as_init(const argument& t)
+    void rank<bool>::take_as_init_(const argument& t)
     {
       nfalse_ = t ? 0 : 1;
     }

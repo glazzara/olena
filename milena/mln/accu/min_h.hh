@@ -58,7 +58,7 @@ namespace mln
       /// \{
       void init();
       void   take(const argument& t);
-      void   take_as_init(const argument& t);
+      void   take_as_init_(const argument& t);
       void   take(const min_h<V>& other);
       void untake(const argument& t);
       /// \}
@@ -132,7 +132,7 @@ namespace mln
     {
       if (h_.sum() == 0)
 	{
-	  this->take_as_init(t);
+	  this->take_as_init_(t);
 	  return;
 	}
       h_.take(t);
@@ -233,7 +233,7 @@ namespace mln
     template <typename V>
     inline
     void
-    min_h<V>::take_as_init(const argument& t)
+    min_h<V>::take_as_init_(const argument& t)
     {
       h_.take(t);
       sum_ = 0;

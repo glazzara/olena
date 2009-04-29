@@ -96,8 +96,8 @@ namespace mln
 	void take(const util::pix<I>& px);
 	void take(const sum<I,S>& other);
 
-	void take_as_init(const argument& v);
-	void take_as_init(const util::pix<I>& px);
+	void take_as_init_(const argument& v);
+	void take_as_init_(const util::pix<I>& px);
 	/// \}
 
 	/// Get the value of the accumulator.
@@ -167,12 +167,12 @@ namespace mln
 	s_ += other.s_;
       }
 
-      // take_as_init.
+      // take_as_init_.
 
       template <typename I, typename S>
       inline
       void
-      sum<I,S>::take_as_init(const argument& v)
+      sum<I,S>::take_as_init_(const argument& v)
       {
 	s_ = v;
       }
@@ -180,9 +180,9 @@ namespace mln
       template <typename I, typename S>
       inline
       void
-      sum<I,S>::take_as_init(const util::pix<I>& px)
+      sum<I,S>::take_as_init_(const util::pix<I>& px)
       {
-	take_as_init(px.v());
+	take_as_init_(px.v());
       }
 
       template <typename I, typename S>

@@ -70,7 +70,7 @@ namespace mln
       /// Manipulators.
       /// \{
       void init();
-      void take_as_init(const argument& t);
+      void take_as_init_(const argument& t);
       void take(const argument& t);
       void take(const pair<A1,A2,T>& other);
       /// \}
@@ -135,10 +135,10 @@ namespace mln
     template <typename A1, typename A2, typename T>
     inline
     void
-    pair<A1,A2,T>::take_as_init(const argument& t)
+    pair<A1,A2,T>::take_as_init_(const argument& t)
     {
-      a1_.take_as_init(t);
-      a2_.take_as_init(t);
+      a1_.take_as_init_(t);
+      a2_.take_as_init_(t);
     }
 
     template <typename A1, typename A2, typename T>

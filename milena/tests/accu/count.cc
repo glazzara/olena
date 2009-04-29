@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/count.cc
- *
- * \brief Tests on mln::accu::count.
- */
-
-#include <mln/value/int_u8.hh>
+/// \file tests/accu/count.cc
+///
+/// Tests on mln::accu::count.
 
 #include <mln/accu/count.hh>
+
+
+struct toto {};
 
 
 int main()
@@ -40,15 +40,28 @@ int main()
   using namespace mln;
 
   {
-    accu::count<value::int_u8> accu;
-    mln_assertion(accu.to_result() == 0);
+    // The code below do not compile, as expected :-)
+    //     accu::count<int> a;
+    //     a.take_as_init(toto());
   }
-
   {
-    accu::count<value::int_u8> accu;
-    for (int i = 0; i < 200; i++)
-      accu.take(i);
-    mln_assertion(accu.to_result() == 200);
+    accu::count<int> a;
+    mln_assertion(a.to_result() == 0);
   }
+  {
+    accu::count<int> a;
+    for (int i = 0; i < 200; i++)
+      a.take(i);
+    mln_assertion(a.to_result() == 200);
+  }
+  {
+    accu::count<int> a, a_;
+    a.take_as_init(1);
+    mln_assertion(a == 1);
+    a.take(2);
+    mln_assertion(a == 2);
 
+    a_.take_as_init(a);
+    mln_assertion(a_ == 2);
+  }
 }

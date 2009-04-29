@@ -58,7 +58,7 @@ namespace mln
       /// Manipulators.
       /// \{
       void init();
-      void take_as_init(const P& p);
+      void take_as_init_(const P& p);
       void take(const P& p);
       void take(const bbox<P>& other);
       void take(const box<P>& b);
@@ -114,7 +114,7 @@ namespace mln
     template <typename P>
     inline
     void
-    bbox<P>::take_as_init(const P& p)
+    bbox<P>::take_as_init_(const P& p)
     {
       b_.pmin() = p;
       b_.pmax() = p;

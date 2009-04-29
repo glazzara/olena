@@ -93,8 +93,8 @@ namespace mln
 	void take(const mln_value(I)& v);
 	void take(const util::pix<I>& v);
 	void take(const height<I>& other);
-	void take_as_init(const mln_value(I)& v);
-	void take_as_init(const util::pix<I>& px);
+	void take_as_init_(const mln_value(I)& v);
+	void take_as_init_(const util::pix<I>& px);
 	/// \}
 
 	/// Check whether this accu is able to return a result.
@@ -139,7 +139,7 @@ namespace mln
       {
 	if (!is_valid ())
 	  {
-	    take_as_init(v);
+	    take_as_init_(v);
 	  }
 	cur_ = v;
       }
@@ -182,7 +182,7 @@ namespace mln
       template <typename I>
       inline
       void
-      height<I>::take_as_init(const mln_value(I)& v)
+      height<I>::take_as_init_(const mln_value(I)& v)
       {
 	cur_ = ref_ = v;
 	initialized_ = true;
@@ -191,9 +191,9 @@ namespace mln
       template <typename I>
       inline
       void
-      height<I>::take_as_init(const util::pix<I>& px)
+      height<I>::take_as_init_(const util::pix<I>& px)
       {
-	take_as_init(px.v());
+	take_as_init_(px.v());
       }
 
 

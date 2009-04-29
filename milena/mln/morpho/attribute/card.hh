@@ -94,9 +94,9 @@ namespace mln
 	void take(const util::pix<I>& px);
 	void take(const card<I>& other);
 
-	void take_as_init();
-	void take_as_init(const util::pix<I>& px);
-	using super_::take_as_init;
+	void take_as_init_();
+	void take_as_init_(const util::pix<I>& px);
+	using super_::take_as_init_;
 	/// \}
 
 	/// Get the value of the accumulator.
@@ -164,12 +164,12 @@ namespace mln
 	c_ += other.c_;
       }
 
-      // take_as_init.
+      // take_as_init_.
 
       template <typename I>
       inline
       void
-      card<I>::take_as_init()
+      card<I>::take_as_init_()
       {
 	init();
 	take();
@@ -178,9 +178,9 @@ namespace mln
       template <typename I>
       inline
       void
-      card<I>::take_as_init(const util::pix<I>&)
+      card<I>::take_as_init_(const util::pix<I>&)
       {
-	take_as_init();
+	take_as_init_();
       }
 
       template <typename I>

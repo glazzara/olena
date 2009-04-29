@@ -57,7 +57,7 @@ namespace mln
       /// Manipulators.
       /// \{
       void init();
-      void take_as_init(const argument& t);
+      void take_as_init_(const argument& t);
 
       void take(const argument& t);
       void take(const land_basic& other);
@@ -114,7 +114,7 @@ namespace mln
     }
 
     inline
-    void land_basic::take_as_init(const argument& t)
+    void land_basic::take_as_init_(const argument& t)
     {
       res_ = t;
     }

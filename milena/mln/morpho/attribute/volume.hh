@@ -93,8 +93,8 @@ namespace mln
 	void take(const util::pix<I>& px);
 	void take(const volume<I>& other);
 
-	void take_as_init(const mln_value(I)& v);
-	void take_as_init(const util::pix<I>& px);
+	void take_as_init_(const mln_value(I)& v);
+	void take_as_init_(const util::pix<I>& px);
 	/// \}
 
 	/// Get the value of the accumulator.
@@ -143,7 +143,7 @@ namespace mln
 	mln_invariant(volume_ != mln_max(unsigned));
 	if (! is_valid())
 	  {
-	    take_as_init(v);
+	    take_as_init_(v);
 	    return;
 	  }
 	++area_;
@@ -176,7 +176,7 @@ namespace mln
       template <typename I>
       inline
       void
-      volume<I>::take_as_init(const mln_value(I)& v)
+      volume<I>::take_as_init_(const mln_value(I)& v)
       {
 	cur_level_ = v;
 	area_ = 1;
@@ -186,9 +186,9 @@ namespace mln
       template <typename I>
       inline
       void
-      volume<I>::take_as_init(const util::pix<I>& px)
+      volume<I>::take_as_init_(const util::pix<I>& px)
       {
-	take_as_init(px.v());
+	take_as_init_(px.v());
       }
 
       template <typename I>

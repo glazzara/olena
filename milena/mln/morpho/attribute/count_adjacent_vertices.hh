@@ -98,7 +98,7 @@ namespace mln
 	void take(const argument& px);
 	void take(const count_adjacent_vertices<I>& other);
 
-	void take_as_init(const argument& px);
+	void take_as_init_(const argument& px);
 	/// \}
 
 	/// Get the value of the accumulator.
@@ -160,7 +160,7 @@ namespace mln
       template <typename I>
       inline
       void
-      count_adjacent_vertices<I>::take_as_init(const argument& px)
+      count_adjacent_vertices<I>::take_as_init_(const argument& px)
       {
 	vertices_.clear();
 	take(px);

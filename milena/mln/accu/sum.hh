@@ -67,7 +67,7 @@ namespace mln
       /// \{
       void init();
       void take(const argument& t);
-      void take_as_init(const argument& t);
+      void take_as_init_(const argument& t);
       void take(const sum<T,S>& other);
       /// \}
 
@@ -129,7 +129,7 @@ namespace mln
 
     template <typename T, typename S>
     inline
-    void sum<T,S>::take_as_init(const argument& t)
+    void sum<T,S>::take_as_init_(const argument& t)
     {
       s_ = static_cast<S>(t);
     }
