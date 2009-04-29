@@ -128,7 +128,7 @@ namespace mln
 		    const mln_value(L)& nlabels)
       {
 	mln_precondition(exact(label).is_valid());
-	mlc_is_a(mln_value(L), mln::value::Symbolic)::check();
+	// mlc_is_a(mln_value(L), mln::value::Symbolic)::check();
 	(void) a;
 	(void) label;
 	(void) nlabels;

@@ -34,7 +34,6 @@
 /// Remove components and relabel a labeled image in order to have a
 /// contiguous labeling.
 
-
 # include <mln/core/concept/image.hh>
 
 # include <mln/make/relabelfun.hh>
@@ -71,7 +70,7 @@ namespace mln
     //
     template <typename I>
     void
-    relabel_inplace(Image<I>& label, mln_value(I)& new_nlabels);
+    pack_inplace(Image<I>& label, mln_value(I)& new_nlabels);
 
 
 

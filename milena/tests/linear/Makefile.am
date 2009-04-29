@@ -2,7 +2,9 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-SUBDIRS = local
+SUBDIRS =					\
+  gaussian					\
+  local
 
 check_PROGRAMS =				\
   convolve					\

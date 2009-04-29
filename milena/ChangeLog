@@ -1,3 +1,27 @@
+2009-04-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Start cleaning up linear gaussian filters.
+
+	* mln/linear/gaussian: New directory.
+	* mln/linear/gaussian/internal: New directory.
+	* mln/linear/gaussian.hh: Split code into...
+	* mln/linear/gaussian/impl.hh,
+	* mln/linear/gaussian/filter.hh,
+	* mln/linear/gaussian/internal/coefficients.hh:
+	...those new files.
+
+	* tests/linear/gaussian: New directory.
+	* tests/linear/Makefile.am: Update.
+	* tests/linear/gaussian/Makefile.am: New.
+	* tests/linear/gaussian/filter.cc: New.
+
+	Misc.
+
+	* mln/labeling/compute.hh: .
+	* mln/labeling/pack.hh (relabel_inplace): Fix missing
+	renaming into...
+	(pack_inplace): ...this.
+
 2009-04-28  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add world/ directory for inter_pixel images.
