@@ -1,3 +1,13 @@
+2009-04-29  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add dim2/ funtion objects and display_edge(), untested.
+	* mln/world/inter_pixel/dim2/all.hh: New file including all directory.
+	* mln/world/inter_pixel/dim2/is_dot.hh: New function to test dot.
+	* mln/world/inter_pixel/dim2/is_edge.hh: New function to test edge.
+	* mln/world/inter_pixel/dim2/is_pixel.hh: New function to test pixel.
+	* mln/world/inter_pixel/dim2/is_row_odd.hh: New function to test row.
+	* mln/world/inter_pixel/display_edge.hh: Display edges in an image.
+
 2009-04-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Turn take_as_init as a 'template method' pattern.
