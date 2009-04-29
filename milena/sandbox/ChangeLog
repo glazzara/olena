@@ -1,3 +1,8 @@
+2009-04-29  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Debugging fixed segmentation.
+	* fabien/igr/seg_fixed.cc: Debugging, crash at runtime.
+
 2009-04-29  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Histograms update.
