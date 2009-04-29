@@ -45,8 +45,11 @@ namespace mln
   namespace accu
   {
 
-    /// Define an accumulator that references all the labels used.
+    /// \brief References all the labels used.
     /// The parameter \a L is the label type.
+    ///
+    /// \ingroup modaccuvalues
+    //
     template <typename L>
     struct label_used : public mln::accu::internal::base< const fun::i2v::array<bool>& , label_used<L> >
     {

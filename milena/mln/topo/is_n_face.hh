@@ -29,6 +29,7 @@
 # define MLN_TOPO_IS_N_FACE_HH
 
 /// \file mln/topo/is_facet.hh
+///
 /// \brief Testing whether an mln::complex_psite is an n-face.
 
 # include <mln/core/site_set/complex_psite.hh>
@@ -44,7 +45,7 @@ namespace mln
     // Forward declaration.
     template <unsigned N> struct is_n_face;
 
-    /// A functor testing wheter a mln::complex_psite is an \N-face.
+    /// A functor testing wheter a mln::complex_psite is an \p N -face.
     template <unsigned N>
     struct is_n_face : public mln::Function_p2b< is_n_face<N> >
     {

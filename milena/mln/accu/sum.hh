@@ -50,11 +50,13 @@ namespace mln
   {
 
 
-    /// Generic sum accumulator class.
+    /// \brief Generic sum accumulator class.
     /*!
      * Parameter \c T is the type of values that we sum.  Parameter \c
      * S is the type to store the value sum; the default type of
      * \c S is the summation type (property) of \c T.
+     *
+     * \ingroup modaccuvalues
      */
     template <typename T, typename S = mln_sum(T)>
     struct sum : public mln::accu::internal::base< const S&, sum<T,S> >

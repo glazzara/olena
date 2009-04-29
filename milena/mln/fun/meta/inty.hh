@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_META_INTY_HH
 # define MLN_FUN_META_INTY_HH
 
-/// \file mln/fun/meta/infy.hh
+/// \file mln/fun/meta/inty.hh
 ///
 /// Meta function to retrieve/modify the color intensity.
 

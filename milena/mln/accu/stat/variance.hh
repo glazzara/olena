@@ -46,13 +46,16 @@ namespace mln
     namespace stat
     {
 
-      /// Variance accumulator class.
+      /// \brief Variance accumulator class.
       /*!
        * Parameter \c T is the type of values that we sum.  Parameter
        * \c S is the type to store the value sum and the sum of value
        * * value; the default type of \c S is the summation type
        * (property) of \c T.  Parameter \c R is the type of the mean
        * and variance values; the default type of \c R is \c S.
+       *
+       * \ingroup modaccuvalues
+       *
        */
       template <typename T,
 		typename S = mln_sum(T),

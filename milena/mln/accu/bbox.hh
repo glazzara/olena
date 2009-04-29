@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,10 +45,12 @@ namespace mln
   {
 
 
-    /// Generic bbox accumulator class.
+    /// \brief Generic bounding box accumulator class.
     ///
     /// The parameter \c P is the type of points.
     ///
+    /// \ingroup modaccusiteset
+    //
     template <typename P>
     struct bbox : public mln::accu::internal::base< const box<P>& , bbox<P> >
     {

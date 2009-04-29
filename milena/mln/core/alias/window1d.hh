@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +30,8 @@
 # define MLN_CORE_ALIAS_WINDOW1D_HH
 
 /// \file mln/core/alias/window1d.hh
-/// \brief Definition of the mln::window1d alias and of a construction
+///
+/// Definition of the mln::window1d alias and of a construction
 /// routine.
 
 # include <mln/core/window.hh>
@@ -43,6 +44,9 @@ namespace mln
 
   /// \brief Type alias for a window with arbitrary shape, defined on
   /// the 1D square grid with integer coordinates.
+  ///
+  /// \ingroup modwin1d
+  //
   typedef window<mln::dpoint1d> window1d;
 
 

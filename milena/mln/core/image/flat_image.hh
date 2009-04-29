@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +29,11 @@
 #ifndef MLN_CORE_FLAT_IMAGE_HH
 # define MLN_CORE_FLAT_IMAGE_HH
 
-/*!
- * \file mln/core/image/flat_image.hh
- *
- * \brief Definition of a image with a signle value.
- *
- * \todo Zed: Address the values v. destination issue.
- */
+/// \file mln/core/image/flat_image.hh
+///
+/// \brief Definition of a image with a signle value.
+///
+/// \todo Zed: Address the values v. destination issue.
 
 # include <mln/core/internal/image_primary.hh>
 # include <mln/value/set.hh>
@@ -101,8 +100,10 @@ namespace mln
 
 
 
-  // FIXME: Doc!
-
+  /// \brief Image with a single value.
+  ///
+  /// \ingroup modimageconcrete
+  //
   template <typename T, typename S>
   struct flat_image : public internal::image_primary< T, S, flat_image<T,S> >
   {

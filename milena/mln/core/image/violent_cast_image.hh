@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_CORE_IMAGE_VIOLENT_CAST_IMAGE_HH
 # define MLN_CORE_IMAGE_VIOLENT_CAST_IMAGE_HH
 
-/*! \file mln/core/image/violent_cast_image.hh
- *
- * \brief Definition of an image morpher that make the user see the
- * same image but with another data type.
- */
+/// \file mln/core/image/violent_cast_image.hh
+///
+/// definition of an image morpher that make the user see the
+/// same image but with another data type.
 
 # include <mln/core/internal/image_value_morpher.hh>
 # include <mln/value/set.hh>
@@ -107,10 +107,10 @@ namespace mln
 
 
 
-  /*! \brief Class of image morpher which takes an image to change its
-   *  data type.
-   *
-   */
+  /// \brief Violently cast image values to a given type.
+  ///
+  /// \ingroup modimagevaluemorpher
+  //
   template <typename T, typename I>
   struct violent_cast_image :
     public internal::image_value_morpher< I, T, violent_cast_image<T,I> >

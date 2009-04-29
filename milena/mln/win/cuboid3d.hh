@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -51,30 +52,33 @@ namespace mln
 	rectangular prism or rectangular parallelepiped) shape.  It is
 	centered and symmetric.
 
-        For instance: \n
+        For instance:
+	\verbatim
+            o o o o o o o
+           o o o o o o o
+          o o o o o o o
+         o o o o o o o
+        o o o o o o o
 
-            o o o o o o o\n
-           o o o o o o o\n
-          o o o o o o o\n
-         o o o o o o o\n
-        o o o o o o o\n
+            o o o o o o o
+           o o o o o o o
+          o o o x o o o
+         o o o o o o o
+        o o o o o o o
 
-            o o o o o o o\n
-           o o o o o o o\n
-          o o o x o o o\n
-         o o o o o o o\n
-        o o o o o o o\n
-
-            o o o o o o o\n
-           o o o o o o o\n
-          o o o o o o o\n
-         o o o o o o o\n
-        o o o o o o o\n
+            o o o o o o o
+           o o o o o o o
+          o o o o o o o
+         o o o o o o o
+        o o o o o o o
+	\endverbatim
 
         is defined with depth = 3, height = 5 and width = 7.
 
         Reference:
           http://en.wikipedia.org/wiki/Cuboid
+
+	\ingroup modwin3d
     */
     struct cuboid3d : public internal::classical_window_base< dpoint3d, cuboid3d >
     {

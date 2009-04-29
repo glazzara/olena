@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -114,13 +115,16 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  /// Image based on a complex.
+  /// \brief Image based on a complex.
   ///
   /// Values attached to each face of the complex.
   ///
   /// \arg p D The dimension of the complex.
   /// \arg p G The geometry type of the complex.
   /// \arg p V The value type of the image.
+  ///
+  /// \ingroup modimageconcrete
+  //
   template <unsigned D, typename G, typename V>
   class complex_image
     : public internal::image_primary< V, p_complex<D, G>,

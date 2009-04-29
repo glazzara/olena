@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,10 @@
 #ifndef MLN_WIN_HLINE2D_HH
 # define MLN_WIN_HLINE2D_HH
 
-/*! \file mln/win/hline2d.hh
- *
- * \brief Definition of the mln::win::hline2d window.
- */
+/// \file mln/win/hline2d.hh
+///
+/// Definition of the mln::win::hline2d window.
+
 
 # include <mln/win/line.hh>
 # include <mln/core/grids.hh>
@@ -42,15 +43,19 @@ namespace mln
 
   namespace win
   {
- 
+
     /*! \brief Horizontal line window defined on the 2D square grid.
-     *
-     * An hline2d is centered and symmetric; so its height is 1 and
-     * its width (length) is odd.
-     *
-     * For instance: \n
-     *  o o x o o \n
-     * is defined with length = 5.
+
+       An hline2d is centered and symmetric; so its height is 1 and
+       its width (length) is odd.
+
+       For instance:
+       \verbatim
+        o o x o o
+       \endverbatim
+       is defined with length = 5.
+
+       \ingroup modwin2d
      */
     typedef line<grid::square, 1, def::coord> hline2d;
 

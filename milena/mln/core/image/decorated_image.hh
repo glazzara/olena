@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,15 +33,15 @@
 
 # include <mln/value/proxy.hh>
 
-/*! \file mln/core/image/decorated_image.hh
- *
- * \brief Definition of an image that can have additional features.
- */
+/// \file mln/core/image/decorated_image.hh
+///
+/// Definition of an image that can have additional features.
+
 
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename I, typename D> struct decorated_image;
 
 
@@ -76,10 +76,10 @@ namespace mln
 
 
 
-  /*!
-   * \brief Class of decorated image : FIXME Doc
-   *
-   */
+  /// \brief Image that can have additional features.
+  ///
+  /// \ingroup modimageidmorpher
+  //
   template <typename I, typename D>
   struct decorated_image :
     public internal::decorated_image_impl_< I, decorated_image<I,D> >,

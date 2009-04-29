@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -76,6 +76,9 @@ namespace mln
     /// mechanism.
     ///
     /// \see mln::util::ord
+    ///
+    /// \ingroup modutil
+    //
     template <typename T>
     class set : public Object< mln::util::set<T> >
     {

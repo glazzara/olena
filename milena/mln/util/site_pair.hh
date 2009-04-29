@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,6 +46,11 @@ namespace mln
        types to have a `coord' typedef, but util::ord_pair has none.
        Hence this small workaround.  Use ord_pair directly as soon as
        image_base is refurbished.  */
+    /// \brief A pair of sites.
+    /// It can be used as site.
+    ///
+    /// \ingroup modutil
+    //
     template <typename P>
     class site_pair : public mln::Object< site_pair<P> >
     {

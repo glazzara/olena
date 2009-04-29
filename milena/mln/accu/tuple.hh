@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -66,9 +66,11 @@ namespace mln
       template <unsigned n, typename T> struct tuplehelper;
     }
 
-    /// Generic tuple of accumulators.
+    /// \brief Generic tuple of accumulators.
     /*!
      * The parameter \c T is the type of values.
+     *
+     * \ingroup modaccumulti
      */
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(10, typename T, boost::tuples::null_type)>
     struct tuple

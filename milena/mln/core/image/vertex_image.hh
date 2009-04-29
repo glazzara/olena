@@ -120,7 +120,10 @@ namespace mln
   } // end of namespace mln::internal
 
 
-
+  /// \brief Image based on graph vertices.
+  ///
+  /// \ingroup modimageconcrete
+  //
   template <typename P, typename V, typename G = util::graph>
   class vertex_image
     : public pw::internal::image_base<fun::i2v::array<V>,

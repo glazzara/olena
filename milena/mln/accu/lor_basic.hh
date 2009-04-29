@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,9 +45,12 @@ namespace mln
   namespace accu
   {
 
-    /// "Logical-or" accumulator class.  Conversely to accu::lor,
-    /// this version does not have the 'untake' method but features
-    /// the 'can_stop' method.
+    /// \brief "Logical-or" accumulator class.
+    /// Conversely to accu::lor, this version does not have the 'untake'
+    /// method but features the 'can_stop' method.
+    ///
+    /// \ingroup modaccuvalues
+    //
     struct lor_basic : public mln::accu::internal::base< bool, lor_basic >
     {
       typedef bool argument;

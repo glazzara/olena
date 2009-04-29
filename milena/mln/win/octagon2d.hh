@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -54,14 +54,18 @@ namespace mln
      * where l >= 0.
      *
      * For instance: \n
-     *     o o o \n
-     *   o o o o o \n
-     * o o o o o o o \n
-     * o o o x o o o \n
-     * o o o o o o o \n
-     *   o o o o o \n
-     *     o o o \n
+     * \verbatim
+     *     o o o
+     *   o o o o o
+     * o o o o o o o
+     * o o o x o o o
+     * o o o o o o o
+     *   o o o o o
+     *     o o o
+     * \endverbatim
      * is defined with L = 7 (l = 1).
+     *
+     * \ingroup modwin2d
      */
     struct octagon2d : public internal::classical_window_base< dpoint2d, octagon2d >
     {

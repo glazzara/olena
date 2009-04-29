@@ -46,8 +46,11 @@ namespace mln
   namespace accu
   {
 
-    /// Generic counter accumulator class.
+    /// \brief Count the number of different labels in an image.
     /// The parameter \a L is the label type to be count.
+    ///
+    /// \ingroup modaccuvalues
+    //
     template <typename L>
     struct count_labels
       : public mln::accu::internal::base< unsigned , count_labels<L> >,

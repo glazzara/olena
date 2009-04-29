@@ -65,6 +65,10 @@ namespace mln
   } // end of namespace mln::trait
 
 
+  /// \brief Site set mapping graph edges and image sites.
+  ///
+  /// \ingroup modsitesetgraph
+  //
   template <typename G, typename F = util::internal::id2element<G,util::edge<G> > >
   class p_edges
     : public internal::site_set_base_< mln_result(F), p_edges<G, F> >

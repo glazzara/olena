@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -66,7 +66,9 @@ namespace mln
 
 
 
-  /// FIXME
+  /// \brief Site set in which sites are grouped by their associated value.
+  ///
+  /// \ingroup modsitesetsparse
   template <typename V, typename S>
   class p_vaccess : public internal::site_set_base_< mln_site(S),
 						     p_vaccess<V,S> >,

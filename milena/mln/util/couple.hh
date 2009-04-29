@@ -44,6 +44,9 @@ namespace mln
   namespace util
   {
 
+    /// \brief Definition of a couple.
+    ///
+    /// \ingroup modutil
     template <typename T, typename U>
     class couple : public mln::Object< couple<T,U> >
     {

@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +31,7 @@
 
 /// \file mln/core/image/slice_image.hh
 ///
-/// Definition of an image FIXME: Doc!
+/// Definition of a 2D image extracted from a slice of a 3D image.
 ///
 /// \todo Write init_.
 
@@ -89,7 +90,10 @@ namespace mln
 
 
 
-  /// FIXME: Doc!
+  /// \brief 2D image extracted from a slice of a 3D image.
+  ///
+  /// \ingroup modimagedomainmorpher
+  //
   template <typename I>
   struct slice_image : public internal::image_domain_morpher< I,
 							      box2d,

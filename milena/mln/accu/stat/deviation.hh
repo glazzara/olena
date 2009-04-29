@@ -49,13 +49,15 @@ namespace mln
     namespace stat
     {
 
-    /// Generic standard deviation accumulator class.
+    /// \brief Generic standard deviation accumulator class.
     /*!
      * Parameter \c T is the type of values that we sum.  Parameter \c
      * S is the type to store the standard deviation; the default type of
      * \c S is the summation type (property) of \c T.  Parameter \c M
      * is the type of the mean value; the default type of \c M is \c
      * S.
+     *
+     * \ingroup modaccuvalues
      */
     template <typename T,
 	      typename S = mln_sum(T),

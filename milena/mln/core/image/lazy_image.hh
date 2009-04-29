@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,10 @@
 #ifndef MLN_CORE_IMAGE_LAZY_IMAGE_HH
 # define MLN_CORE_IMAGE_LAZY_IMAGE_HH
 
-/*! \file mln/core/image/lazy_image.hh
- *
- * \brief Definition of a lazy image. Values are computed on the fly
- */
+/// \file mln/core/image/lazy_image.hh
+///
+/// Definition of a lazy image. Values are computed on the fly.
+
 
 # include <cmath>
 
@@ -79,7 +80,7 @@ namespace mln
 
 
 
-  /*! \brief Lazy image class.
+  /*! \brief Image values are computed on the fly.
    *
    * The parameter \c I is the type of image.
    * The parameter \c F is the type of function.
@@ -88,6 +89,7 @@ namespace mln
    * This image class tage a functor \p fun and a box \p box.
    * Access to ima(p) where \p p include \p box return fun(b) lazily.
    *
+   * \ingroup modimageidmorpher
    */
   template <typename I, typename F, typename B>
   struct lazy_image :

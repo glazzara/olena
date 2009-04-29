@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +29,15 @@
 #ifndef MLN_CORE_IMAGE_SUB_IMAGE_HH
 # define MLN_CORE_IMAGE_SUB_IMAGE_HH
 
-/*!
- * \file mln/core/image/sub_image.hh
- *
- * \brief Definition of morpher that makes an image become restricted
- * given by a point set.
- *
- * \todo Add a special case for "ima | box"; think about some other
- * special cases...
- */
+
+/// \file mln/core/image/sub_image.hh
+///
+/// Definition of morpher that makes an image become restricted
+/// given by a point set.
+///
+/// \todo Add a special case for "ima | box"; think about some other
+/// special cases...
+
 
 # include <mln/core/internal/image_domain_morpher.hh>
 
@@ -97,8 +98,10 @@ namespace mln
 
 
 
-  // FIXME: Doc!
-
+  /// \brief Image having its domain restricted by a site set.
+  ///
+  /// \ingroup modimagedomainmorpher
+  //
   template <typename I, typename S>
   struct sub_image : public internal::image_domain_morpher< I,
 							    S,

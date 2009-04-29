@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,8 +45,11 @@ namespace mln
   {
 
 
-    /// Generic max function based on histogram over a value set with
+    /// \brief Generic max function based on histogram over a value set with
     /// type \c V.
+    ///
+    /// \ingroup modaccuvalues
+    //
     template <typename V>
     struct max_h : public mln::accu::internal::base< const V&, max_h<V> >
     {

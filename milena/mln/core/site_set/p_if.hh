@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_CORE_SITE_SET_P_IF_HH
 # define MLN_CORE_SITE_SET_P_IF_HH
 
-/*! \file mln/core/site_set/p_if.hh
- *
- * \brief Definition of the restriction of a site set w.r.t. a predicate.
- *
- * \todo Change s_ attribute type to S*.  
- */
+/// \file mln/core/site_set/p_if.hh
+///
+/// Definition of the restriction of a site set w.r.t. a predicate.
+///
+/// \todo Change s_ attribute type to S*.
 
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/concept/function.hh>
@@ -42,7 +42,7 @@
 namespace mln
 {
 
-  // Fwd decls.
+  // Forward declarations.
   template <typename S, typename F> struct p_if;
   template <typename Pi, typename S, typename F> struct p_if_piter_;
 
@@ -74,8 +74,10 @@ namespace mln
 
 
 
-  /*! \brief Generic subset class.
-   *
+  /// \brief Site set restricted w.r.t. a predicate.
+  ///
+  /// \ingroup modsitesetsparse
+  /*!
    * Parameter \c S is a site set type; parameter F is a function
    * from point to Boolean.
    */

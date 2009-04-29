@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -51,19 +51,23 @@ namespace mln
      * An cube3d is centered and symmetric; so
      * its height (length) is odd.
      *
-     * For instance: \n
-     *   o o o \n
-     *  o o o \n
-     * o o o \n
+     * For instance:
+     * \verbatim
+     *   o o o
+     *  o o o
+     * o o o
 
-     *   o o o \n
-     *  o x o \n
-     * o o o \n
+     *   o o o
+     *  o x o
+     * o o o
 
-     *   o o o \n
-     *  o o o \n
-     * o o o \n
+     *   o o o
+     *  o o o
+     * o o o
+     * \endverbatim
      * is defined with length = 3.
+     *
+     * \ingroup modwin3d
      */
     struct cube3d : public internal::classical_window_base< dpoint3d, cube3d >
     {

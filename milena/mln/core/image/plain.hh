@@ -74,8 +74,12 @@ namespace mln
 
 
 
-  /// Morpher that prevents an image from sharing its data.
+  /// \brief Prevents an image from sharing its data.
+  ///
   /// While assigned to another image, its data is duplicated.
+  ///
+  /// \ingroup modimageidmorpher
+  //
   template <typename I>
   class plain
 

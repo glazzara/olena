@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+/// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,11 +34,10 @@
 # include <mln/metal/bexpr.hh>
 # include <mln/trait/fun.hh>
 
-///
 /// \file mln/core/image/thrubin_morpher.hh
 ///
-/// \brief Definition of a morpher that morph values from two images through a binary function.
-///
+/// \brief Definition of a morpher that morph values from two images
+/// through a binary function.
 
 namespace mln
 {
@@ -121,6 +120,9 @@ namespace mln
     };
   }
 
+  /// \brief Morphes values from two images through a binary function.
+  ///
+  /// \ingroup modimagevaluemorpher
   template <typename I, typename F>
   class thrubin_image : public internal::thrubin_find_impl<I, F>::ret
   {

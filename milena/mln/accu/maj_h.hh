@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -48,9 +49,12 @@ namespace mln
   {
 
 
-    /// Generic maj_h accumulator class.
+    /// \brief Compute the majority value.
     /*!
+     * It is based on a histogram.
      * The parameter \c T is the type of values.
+     *
+     * \ingroup modaccuvalues
      */
     template <typename T>
     struct maj_h : public mln::accu::internal::base< const T& , maj_h<T> >

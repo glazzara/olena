@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_CORE_SITE_SET_P_KEY_HH
 # define MLN_CORE_SITE_SET_P_KEY_HH
 
-/*! \file mln/core/site_set/p_key.hh
- *
- * \brief Definition of a FIXME
- *
- * \todo Be more verbose in run_().
- */
+/// \file mln/core/site_set/p_key.hh
+///
+/// Definition of a priority queue class.
+///
+/// \todo Be more verbose in run_().
 
 # include <map>
 # include <mln/core/concept/function.hh>
@@ -68,10 +68,9 @@ namespace mln
 
 
 
-  /*! \brief Priority queue class.
-   *
-   * FIXME
-   */
+  /// \brief Priority queue class.
+  ///
+  /// \ingroup modsitesetqueue
   template <typename K, typename P>
   class p_key : public internal::site_set_base_< P,
 						 p_key<K,P> >

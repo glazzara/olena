@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CORE_IMAGE_T_IMAGE_HH
 # define MLN_CORE_IMAGE_T_IMAGE_HH
 
-/*! \file mln/core/image/t_image.hh
- *
- * \brief Definition of the "transposed" image class mln::t_image.
- */
+/// \file mln/core/image/t_image.hh
+///
+/// Definition of the "transposed" image class mln::t_image.
 
 # include <mln/core/internal/image_morpher.hh>
 # include <mln/core/site_set/box.hh>
@@ -73,12 +73,14 @@ namespace mln
   } // end of namespace mln::internal
 
 
-  /*! \brief Transposed image class.
-   *
-   *  Swap a couple of coordinates.
-   *
-   *  \warning This class only works on images whose domain is a box.
-   */
+  /// \brief Transposed image.
+  ///
+  /// Swap a couple of coordinates.
+  ///
+  /// \warning This class only works on images whose domain is a box.
+  ///
+  /// \ingroup modimagedomainmorpher
+  //
   template <typename I>
   class t_image
     : public internal::image_morpher<I, mln_value(I), mln_domain(I), t_image<I> >

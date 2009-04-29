@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +29,12 @@
 #ifndef MLN_CORE_SITE_SET_P_QUEUE_FAST_HH
 # define MLN_CORE_SITE_SET_P_QUEUE_FAST_HH
 
-/*! \file mln/core/site_set/p_queue_fast.hh
- *
- * \brief Definition of a queue of sites that is fast but uses extra
- * memory w.r.t. a simple queue.
- *
- * \todo Add insert.
- */
+/// \file mln/core/site_set/p_queue_fast.hh
+///
+/// Definition of a queue of sites that is fast but uses extra
+/// memory w.r.t. a simple queue.
+///
+/// \todo Add insert.
 
 # include <mln/core/site_set/p_array.hh>
 
@@ -63,8 +63,10 @@ namespace mln
 
 
 
-  /*! \brief Queue of sites class (based on p_array<P>).
-   *
+  /// \brief Queue of sites class (based on p_array<P>).
+  ///
+  /// \ingroup modsitesetqueue
+  /*!
    * This container is efficient; FIXME: explain...
    *
    * The parameter \c P shall be a site or pseudo-site type.

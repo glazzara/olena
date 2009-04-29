@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -79,8 +79,10 @@ namespace mln
 
 
 
-  // FIXME: Doc!
-
+  /// \brief Makes an image accessible at undefined location.
+  ///
+  /// \ingroup modimageidmorpher
+  //
   template <typename I>
   class safe_image : public internal::image_identity< I, mln_domain(I), safe_image<I> >
   {

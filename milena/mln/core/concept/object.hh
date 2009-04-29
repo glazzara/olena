@@ -62,9 +62,6 @@
  *
  * This is the documentation of Milena.
  *
- * \section tools_subsec Tools required.
- * FIXME.
- *
  * \section mln_sec Overview of Milena.
  *
  * <UL>
@@ -84,6 +81,7 @@
  * <LI> \ref mln::extension
  * <LI> \ref mln::fun
  * <LI> \ref mln::geom
+ * <LI> \ref mln::graph
  * <LI> \ref mln::histo
  * <LI> \ref mln::io
  * <LI> \ref mln::labeling

@@ -131,6 +131,9 @@ namespace mln
     | Fibonacci Heap Class |
     `---------------------*/
 
+    /// \brief Fibonacci heap.
+    ///
+    /// \ingroup modutil
     template <typename P, typename T>
     class fibonacci_heap : public Object< fibonacci_heap<P,T> >
     {

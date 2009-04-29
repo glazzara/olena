@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,8 +43,11 @@ namespace mln
   namespace accu
   {
 
-    /// Generic counter accumulator class.
+    /// \brief Generic counter accumulator.
     /// The parameter \a T is the type to be count.
+    ///
+    /// \ingroup modaccusiteset
+    //
     template <typename T>
     struct count : public mln::accu::internal::base< unsigned , count<T> >
     {

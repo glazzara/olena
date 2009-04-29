@@ -43,9 +43,11 @@ namespace mln
 
   namespace win
   {
- 
-    /// 2D disk window; precisely, ball-shaped window defined on the
+
+    /// \brief 2D disk window; precisely, ball-shaped window defined on the
     /// 2D square grid.
+    ///
+    /// \ingroup modwin2d
     //
     typedef ball<grid::square, def::coord> disk2d;
 

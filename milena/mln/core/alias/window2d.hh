@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,8 +33,6 @@
 ///
 /// Definition of the mln::window2d alias and of a construction
 /// routine.
-///
-/// \todo c8p etc.
 
 # include <mln/core/window.hh>
 # include <mln/core/alias/dpoint2d.hh>
@@ -47,26 +45,41 @@ namespace mln
 
   /// \brief Type alias for a window with arbitrary shape, defined on
   /// the 2D square grid with integer coordinates.
+  ///
+  /// \ingroup modwin2d
+  //
   typedef window<mln::dpoint2d> window2d;
 
   /// \brief 4-connectivity window on the 2D grid, including the
   /// center.
-  ///
-  ///  - o -
-  ///  o x o
-  ///  - o -
-  ///
-  /// \return A window2d.
+  /*!
+    \verbatim
+       - o -
+       o x o
+       - o -
+    \endverbatim
+
+
+    \return A window2d.
+
+    \ingroup modwin2d
+  */
   const window2d& win_c4p();
 
   /// \brief 8-connectivity window on the 2D grid, including the
   /// center.
-  ///
-  ///  o o o
-  ///  o x o
-  ///  o o o
-  ///
-  /// \return A window2d.
+  /*!
+    \verbatim
+       o o o
+       o x o
+       o o o
+    \endverbatim
+
+
+    \return A window2d.
+
+    \ingroup modwin2d
+  */
   const window2d& win_c8p();
 
 

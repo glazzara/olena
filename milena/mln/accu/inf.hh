@@ -46,10 +46,12 @@ namespace mln
   {
 
 
-    /// Generic inf accumulator class.
-    /*!
-    * The parameter \c T is the type of values.
-    */
+    /// \brief Generic inf accumulator class.
+    ///
+    /// The parameter \c T is the type of values.
+    ///
+    /// \ingroup modaccuvalues
+    //
     template <typename T>
     struct inf : public mln::accu::internal::base< const T&, inf<T> >
     {

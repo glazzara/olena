@@ -90,7 +90,9 @@ namespace mln
 
 
 
-  /// FIXME: Doc!
+  /// \brief Un-projects an image.
+  ///
+  /// \ingroup modimagedomainmorpher
   template <typename I, typename D, typename F>
   struct unproject_image : public internal::image_domain_morpher< I,
 								  D,

@@ -83,12 +83,15 @@ namespace mln
     template <typename T> class array_bkd_iter;
 
 
-    /// A dynamic array class.
+    /// \brief A dynamic array class.
     ///
     /// Elements are stored by copy.  Implementation is lazy.
     ///
     /// The parameter \c T is the element type, which shall not be
     /// const-qualified.
+    ///
+    /// \ingroup modutil
+    //
     template <typename T>
     class array : public Function_i2v< mln::util::array<T> >
     {

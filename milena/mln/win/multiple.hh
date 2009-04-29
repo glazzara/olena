@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_WIN_MULTIPLE_HH
 # define MLN_WIN_MULTIPLE_HH
 
-/*! \file mln/win/multiple.hh
- *
- * \brief Definition of a multiple window.
- *
- * \todo Implementation of the bkd_qiter (see FIXME).
- */
+/// \file mln/win/multiple.hh
+///
+/// Definition of a multiple window.
+///
+/// \todo Implementation of the bkd_qiter (see FIXME).
 
 # include <mln/core/internal/window_base.hh>
 # include <mln/core/internal/site_relative_iterator_base.hh>
@@ -71,6 +71,10 @@ namespace mln
   namespace win
   {
 
+
+    /// \brief Multiple window.
+    ///
+    /// \ingroup modwinmulti
     template <typename W, typename F>
     class multiple
 

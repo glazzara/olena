@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -74,7 +74,11 @@ namespace mln
 
 
 
-  /// 2D line point set class.
+  /// \brief 2D discrete line of points.
+  /// It is based on p_array.
+  ///
+  /// \ingroup modsitesetbasic
+  //
   class p_line2d : public internal::site_set_base_< point2d, p_line2d >
   {
     typedef p_line2d self_;

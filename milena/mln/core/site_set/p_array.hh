@@ -74,10 +74,12 @@ namespace mln
 
 
 
+  /// \brief Multi-set of sites.
+  ///
   /// Site set class based on std::vector.
   ///
-  /// This is a multi-set of sites.
-  ///
+  /// \ingroup modsitesetsparse
+  //
   template <typename P>
   class p_array : public internal::site_set_base_< P, p_array<P> >
   {

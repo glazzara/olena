@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_INTERNAL_COUPLE_HH
 # define MLN_ACCU_INTERNAL_COUPLE_HH
 
-/// \file mln/accu/couple.hh
+/// \file mln/accu/internal/couple.hh
 ///
 /// Base implementation of a couple of accumulators.
 

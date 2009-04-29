@@ -49,11 +49,14 @@ namespace mln
   {
 
 
-    /// Generic pair of accumulators.
+    /// \brief Generic pair of accumulators.
     ///
     /// The parameter \c T is the type of values.
     ///
     /// \todo Check that, when T is not provided, A1 and A2 have the same value.
+    ///
+    /// \ingroup modaccumulti
+    //
     template <typename A1, typename A2, typename T = mln_argument(A1)>
     struct pair : public mln::accu::internal::base< std::pair<mln_result(A1), mln_result(A2)>,
 						    pair<A1,A2,T> >

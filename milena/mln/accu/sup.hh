@@ -46,9 +46,11 @@ namespace mln
   {
 
 
-    /// Generic sup accumulator class.
+    /// \brief Generic sup accumulator class.
     /*!
     * The parameter \c T is the type of values.
+    *
+    * \ingroup modaccuvalues
     */
     template <typename T>
     struct sup : public mln::accu::internal::base< const T&, sup<T> >

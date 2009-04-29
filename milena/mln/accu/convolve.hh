@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,11 +45,13 @@ namespace mln
   {
 
 
-    /// Generic convolution accumulator class.
+    /// \brief Generic convolution accumulator class.
     ///
     /// Parameters \c T1 and \c T2 are the type of values to be
     /// convolved.  Parameter \c R is the result type.
     ///
+    /// \ingroup modaccuvalues
+    //
     template <typename T1, typename T2,
 	      typename R = mln_sum_product(T1, T2)>
     struct convolve : public mln::accu::internal::base< R, convolve<T1,T2,R> >,

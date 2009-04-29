@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,13 +30,13 @@
 # define MLN_CORE_SITE_SET_P_IMAGE_HH
 
 
-/*! \file mln/core/site_set/p_image.hh
- *
- * \brief Definition of a site set class based on an image of
- * Booleans.
- *
- * \todo Add an init method (deferred initialization).
- */
+/// \file mln/core/site_set/p_image.hh
+///
+/// Definition of a site set class based on an image of
+/// Booleans.
+///
+/// \todo Add an init method (deferred initialization).
+
 
 # include <mln/core/site_set/p_if.hh>
 # include <mln/fun/ops.hh>
@@ -67,7 +68,9 @@ namespace mln
   } // end of namespace trait
 
 
-
+  /// \brief Site set based on an image of Booleans.
+  ///
+  /// \ingroup modsitesetsparse
   template <typename I>
   class p_image : public internal::site_set_base_< mln_psite(I), p_image<I> >
   {

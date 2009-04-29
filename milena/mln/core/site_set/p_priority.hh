@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -65,8 +65,10 @@ namespace mln
 
 
 
-  /*! \brief Priority queue class.
-   *
+  /// \brief Priority queue.
+  ///
+  /// \ingroup modsitesetqueue
+  /*!
    * The parameter \p P is the type of the priorities (for instance
    * unsigned).
    *
@@ -76,7 +78,7 @@ namespace mln
   template <typename P, typename Q>
   class p_priority : public internal::site_set_base_< mln_site(Q),
 						      p_priority<P,Q> >,
- 	             private mlc_is_a(Q, Site_Set)::check_t
+		     private mlc_is_a(Q, Site_Set)::check_t
   {
     typedef p_priority<P,Q> self_;
   public:

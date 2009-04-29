@@ -86,8 +86,10 @@ namespace mln
 
 
 
-  // FIXME: Doc!
-
+  /// \brief Makes an image become restricted by a point set.
+  ///
+  /// \ingroup modimagedomainmorpher
+  //
   template <typename I>
   struct extended : public internal::image_domain_morpher< I,
 							   box<mln_site(I)>,

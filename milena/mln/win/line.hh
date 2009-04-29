@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -58,7 +58,7 @@ namespace mln
 
   namespace win
   {
- 
+
     /*! \brief Generic line window defined on a given grid in the
      *  given dimension.
      *
@@ -69,6 +69,8 @@ namespace mln
      * coordinates.
      *
      * \see mln::win::hline2d for an exemple of his use.
+     *
+     * \ingroup modwinnd
      */
     template <typename M, unsigned i, typename C>
     struct line : public internal::classical_window_base< dpoint<M, C>, line<M,i,C> >

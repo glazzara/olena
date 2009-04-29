@@ -29,15 +29,13 @@
 #ifndef MLN_CORE_IMAGE_EXTENSION_FUN_HH
 # define MLN_CORE_IMAGE_EXTENSION_FUN_HH
 
-/*!
- * \file mln/core/image/extension_fun.hh
- *
- * \brief Definition of a morpher that extends the domain of an image
- * with a function.
- *
- * \todo Deal with two-ways functions...
- * \todo Use an envelop as lvalue to test extension writing.
- */
+/// \file mln/core/image/extension_fun.hh
+///
+/// definition of a morpher that extends the domain of an image
+/// with a function.
+///
+/// \todo Deal with two-ways functions...
+/// \todo Use an envelop as lvalue to test extension writing.
 
 # include <mln/core/internal/image_identity.hh>
 
@@ -96,12 +94,13 @@ namespace mln
 
 
 
-  // FIXME: Doc!
-
+  /// \brief Extends the domain of an image with a function.
+  ///
+  /// \ingroup modimagedomainmorpher
+  //
   template <typename I, typename F>
-  class extension_fun :
-    
-    public internal::image_identity< I, mln_domain(I), extension_fun<I, F> >,
+  class extension_fun
+  : public internal::image_identity< I, mln_domain(I), extension_fun<I, F> >,
     private mlc_converts_to(mln_result(F), mln_value(I))::check_t
   {
   public:

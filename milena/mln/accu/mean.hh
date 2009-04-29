@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -47,13 +47,15 @@ namespace mln
   {
 
 
-    /// Generic mean accumulator class.
+    /// \brief Generic mean accumulator class.
     /*!
      * Parameter \c T is the type of values that we sum.  Parameter \c
      * S is the type to store the sum of values; the default type of
      * \c S is the summation type (property) of \c T.  Parameter \c M
      * is the type of the mean value; the default type of \c M is \c
      * S.
+     *
+     * \ingroup modaccuvalues
      */
     template <typename T,
 	      typename S = mln_sum(T),

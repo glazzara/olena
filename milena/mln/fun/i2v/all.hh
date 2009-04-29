@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_FUN_I2V_ALL_HH
 # define MLN_FUN_I2V_ALL_HH
 
-/*! \file mln/fun/i2v/all.hh
- *
- * \brief File that includes all functions from index to value.
- */
+/// \file mln/fun/i2v/all.hh
+///
+/// File that includes all functions from index to value.
 
 
 namespace mln
@@ -40,10 +40,12 @@ namespace mln
   namespace fun
   {
 
-    /// Namespace of functions from index to value.
-    namespace i2v
-    {
-    }
+    /// \brief Functions from index to value.
+    ///
+    /// \ingroup modfun
+    //
+    namespace i2v {}
+
   }
 
 }

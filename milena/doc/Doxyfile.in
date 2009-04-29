@@ -285,7 +285,8 @@ PREDEFINED             = "mlc_unqualif(T)=typename mln::metal::unqualif<T>::ret"
 			 "mln_gradient_component(I)=typename mln::trait::ch_value< I, mln::value::props< typename I::value >::sum >::ret" \
 			 "mln_gradient(I)=mln::value::stack_image< I::point::dim, mln::trait::ch_value< I, mln::value::props< typename I::value >::sum >::ret >" \
 			 "mln_trait_value_sum_product(T, U)=typename mln::trait::value_< mln_trait_op_times(T,U) >::sum" \
-			 "mln_sum_product(T, U)=typename mln::trait::value_< mln_trait_op_times(T,U) >::sum" 
+			 "mln_sum_product(T, U)=typename mln::trait::value_< mln_trait_op_times(T,U) >::sum" \
+			 "mln_deduce(T, A1, A2)=typename T::A1::A2"
 
 
 

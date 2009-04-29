@@ -28,7 +28,7 @@
 #ifndef MLN_CANVAS_MORPHO_INTERNAL_FIND_ROOT_HH
 # define MLN_CANVAS_MORPHO_INTERNAL_FIND_ROOT_HH
 
-/// \file mln/canvas/morpho/internal/find_root.hh.hh
+/// \file mln/canvas/morpho/internal/find_root.hh
 ///
 /// Routines to handle parent image.
 ///

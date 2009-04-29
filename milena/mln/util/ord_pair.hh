@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,9 +43,12 @@ namespace mln
   namespace util
   {
 
-    ///  Ordered pair structure s.a. this->first <= this->second;
+    /// \brief Ordered pair structure s.a. this->first <= this->second;
     /// ordered pairs are partially ordered using lexicographical
     /// ordering.
+    ///
+    /// \ingroup modutil
+    //
     template <typename T>
     struct ord_pair : public mln::Object< ord_pair<T> >
     {

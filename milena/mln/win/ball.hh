@@ -59,13 +59,15 @@ namespace mln
 
   namespace win
   {
- 
+
     /*! \brief Generic ball window defined on a given grid.
      *
      * A ball is centered and symmetric; so its diameter is odd.
      *
      * G is the given grid on which the ball is defined and C is the
      * type of coordinates.
+     *
+     * \ingroup modwinnd
      */
     template <typename G, typename C>
     struct ball : public internal::classical_window_base< dpoint<G,C>, ball<G,C> >
@@ -75,7 +77,7 @@ namespace mln
       /// \param[in] diameter Diameter of the ball.
       /// \pre \p diameter is odd.
       ball(unsigned diameter);
-	
+
       /// Give the ball diameter.
       unsigned diameter() const;
 

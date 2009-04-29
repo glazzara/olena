@@ -45,11 +45,14 @@ namespace mln
   {
 
 
-    /// Generic center accumulator class.
+    /// \brief Mass center accumulator.
     ///
     /// \tparam P the type of site.
     /// \tparam V the type of vector to be used as result.
     ///		  The default vector type is the one provided by P.
+    ///
+    /// \ingroup modaccusiteset
+    //
     template <typename P, typename V = typename P::vec>
     struct center
       : public mln::accu::internal::base<V, center<P,V> >

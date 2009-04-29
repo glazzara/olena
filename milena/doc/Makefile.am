@@ -99,6 +99,7 @@ include $(srcdir)/outputs/outputs.mk
 
 EXTRA_DIST += 			\
 Doxyfile.in 			\
+groups 				\
 user 				\
 tools/sample_utils.hh 		\
 tools/split_sample.sh 		\

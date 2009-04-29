@@ -170,8 +170,12 @@ namespace mln
 
 
 
+    /// \brief Soft heap.
     /// T key, the data to store in the heap. For instance a point 2d.
     /// R rank, for instance int_u8
+    ///
+    /// \ingroup modutil
+    //
     template <typename T, typename R>
     class soft_heap : public Object< soft_heap<T,R> >
     {

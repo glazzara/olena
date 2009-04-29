@@ -84,9 +84,12 @@ namespace mln
   namespace pw
   {
 
-    /// A generic point-wise image implementation.
+    /// \brief A generic point-wise image implementation.
     /// Parameter \p F is a function restricting the domain.
     /// Parameter \p S is the domain type.
+    ///
+    /// \ingroup modimageconcrete
+    //
     template <typename F, typename S>
     class image :
       public pw::internal::image_base< F, S, image<F,S> >

@@ -31,7 +31,7 @@
 
 /// \file mln/core/site_set/p_vertices.hh
 ///
-/// Definition of a point set based on a graph.
+/// Definition of a point set based on graph vertices.
 
 # include <mln/core/concept/function.hh>
 # include <mln/core/internal/site_set_base.hh>
@@ -65,6 +65,10 @@ namespace mln
   } // end of namespace mln::trait
 
 
+  /// \brief Site set based mapping graph vertices to sites.
+  ///
+  /// \ingroup modsitesetgraph
+  //
   template <typename G, typename F = util::internal::id2element<G,util::vertex<G> > >
   class p_vertices
     : public internal::site_set_base_< mln_result(F), p_vertices<G,F> >

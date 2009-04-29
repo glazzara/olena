@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -48,6 +49,7 @@ namespace mln
   /// Type alias for a neighborhood defined on the 2D square
   /// grid with integer coordinates.
   ///
+  /// \ingroup modneighb2d
   typedef neighb<window2d> neighb2d;
 
 }
@@ -56,47 +58,66 @@ namespace mln
 namespace mln
 {
 
-  /// 4-connectivity neighborhood on the 2D grid.
-  ///
-  ///  - o -
-  ///  o x o
-  ///  - o -
-  ///
-  /// \return A neighb2d.
-  ///
+  /// \brief 4-connectivity neighborhood on the 2D grid.
+  /*!
+    \verbatim
+       - o -
+       o x o
+       - o -
+    \endverbatim
+
+
+    \return A neighb2d.
+
+    \ingroup modneighb2d
+  */
   const neighb2d& c4();
 
 
-  /// 8-connectivity neighborhood on the 2D grid.
-  ///
-  /// o o o
-  /// o x o
-  /// o o o
-  ///
-  /// \return A neighb2d.
-  ///
+  /// \brief 8-connectivity neighborhood on the 2D grid.
+  /*!
+    \verbatim
+       o o o
+       o x o
+       o o o
+    \endverbatim
+
+
+   \return A neighb2d.
+
+   \ingroup modneighb2d
+  */
   const neighb2d& c8();
 
 
-  /// Horizontal 2-connectivity neighborhood on the 2D grid.
-  ///
-  /// - - -
-  /// o x o
-  /// - - -
-  ///
-  /// \return A neighb2d.
-  ///
+  /// \brief Horizontal 2-connectivity neighborhood on the 2D grid.
+  /*!
+    \verbatim
+       - - -
+       o x o
+       - - -
+    \endverbatim
+
+    \return A neighb2d.
+
+    \ingroup modneighb2d
+  */
   const neighb2d& c2_row();
 
 
-  /// Vertical 2-connectivity neighborhood on the 2D grid.
-  ///
-  /// - o -
-  /// - x -
-  /// - o -
-  ///
-  /// \return A neighb2d.
-  ///
+  /// \brief Vertical 2-connectivity neighborhood on the 2D grid.
+  /*!
+    \verbatim
+       - o -
+       - x -
+       - o -
+    \endverbatim
+
+
+    \return A neighb2d.
+
+    \ingroup modneighb2d
+  */
   const neighb2d& c2_col();
 
 

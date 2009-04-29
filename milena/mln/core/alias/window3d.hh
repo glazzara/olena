@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,45 +43,60 @@
 namespace mln
 {
 
-  /// Type alias for a window with arbitrary shape, defined on
+  /// \brief Type alias for a window with arbitrary shape, defined on
   /// the 3D square grid with integer coordinates.
+  ///
+  /// \ingroup modwin3d
+  //
   typedef window<mln::dpoint3d> window3d;
 
   /// \brief 4-connectivity window on the 3D grid, including the
   /// center.
-  ///
-  ///    - - -
-  ///   - - -
-  ///  - - -
-  ///
-  ///    - o -
-  ///   o x o
-  ///  - o -
-  ///
-  ///    - - -
-  ///   - - -
-  ///  - - -
-  ///
-  ///
-  /// \return A window3d.
+  /*!
+    \verbatim
+
+       - - -
+      - - -
+     - - -
+
+       - o -
+      o x o
+     - o -
+
+       - - -
+      - - -
+     - - -
+    \endverbatim
+
+
+    \return A window3d.
+
+    \ingroup modwin3d
+  */
   const window3d& win_c4p_3d();
 
   /// \brief 8-connectivity window on the 3D grid, including the
   /// center.
-  ///
-  ///    - - -
-  ///   - - -
-  ///  - - -
-  ///
-  ///    o o o
-  ///   o x o
-  ///  o o o
-  ///
-  ///    - - -
-  ///   - - -
-  ///  - - -
-  ///
-  /// \return A window3d.
+  /*!
+    \verbatim
+       - - -
+      - - -
+     - - -
+
+       o o o
+      o x o
+     o o o
+
+       - - -
+      - - -
+     - - -
+    \endverbatim
+
+
+    \return A window3d.
+
+    \ingroup modwin3d
+  */
   const window3d& win_c8p_3d();
 
 

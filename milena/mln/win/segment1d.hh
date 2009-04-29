@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,13 +44,17 @@ namespace mln
   {
 
     /*! \brief Segment window defined on the 1D grid.
-     *
-     * An segment1d is centered and symmetric; so
-     * its height (length) is odd.
-     *
-     * For instance: \n
-     *  o x o \n
-     * is defined with length = 3.
+
+       An segment1d is centered and symmetric; so
+       its height (length) is odd.
+
+       For instance:
+       \verbatim
+        o x o
+       \endverbatim
+       is defined with length = 3.
+
+       \ingroup modwin1d
      */
     typedef line<grid::tick, 0, def::coord> segment1d;
 

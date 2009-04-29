@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_CORE_ALIAS_NEIGHB1D_HH
 # define MLN_CORE_ALIAS_NEIGHB1D_HH
 
-/*! \file mln/core/alias/neighb1d.hh
- *
- * \brief Definition of the mln::neighb1d alias and of some classical
- * 1D neighborhoods.
- */
+/// \file mln/core/alias/neighb1d.hh
+///
+/// Definition of the mln::neighb1d alias and of some classical
+/// 1D neighborhoods.
 
 # include <cmath>
 # include <mln/core/neighb.hh>
@@ -42,18 +42,25 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a neighborhood defined on the 1D square
-   * grid with integer coordinates.
-   */
+  /// \brief Type alias for a neighborhood defined on the 1D square
+  /// grid with integer coordinates.
+  ///
+  /// \ingroup modneighb1d
+  //
   typedef neighb<window1d> neighb1d;
 
 
-  /*! \brief 2-connectivity neighborhood on the 1D grid.
-   *
-   *  o x o
-   *
-   * \return A neighb1d.
-   */
+  /// \brief 2-connectivity neighborhood on the 1D grid.
+  /*!
+    \verbatim
+      o x o
+    \endverbatim
+
+
+    \return A neighb1d.
+
+    \ingroup modneighb1d
+  */
   const neighb1d& c2();
 
 

@@ -42,10 +42,11 @@ namespace mln
 
   namespace win
   {
- 
-    /// 3D sphere window; precisely, ball-shaped window defined on the
+
+    /// \brief 3D sphere window; precisely, ball-shaped window defined on the
     /// 3D cubic grid.
-    //
+    ///
+    /// \ingroup modwin3d
     typedef ball<grid::cube, def::coord> sphere3d;
 
 

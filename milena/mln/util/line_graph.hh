@@ -77,7 +77,10 @@ namespace mln
   namespace util
   {
 
-    /// Undirected line graph of a graph of type \tparam G.
+    /// \brief Undirected line graph of a graph of type \tparam G.
+    ///
+    /// \ingroup modgraph
+    //
     template <typename G>
     class line_graph : public internal::graph_base< line_graph<G> >
     {

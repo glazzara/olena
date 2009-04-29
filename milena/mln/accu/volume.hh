@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -55,10 +55,12 @@ namespace mln
   namespace accu
   {
 
-    /// Volume accumulator class.
+    /// \brief Volume accumulator class.
     ///
     /// The parameter \p I is the image type on which the accumulator
     /// of pixels is built.
+    ///
+    /// \ingroup modaccuimages
     template <typename I>
     struct volume
       : public mln::accu::internal::base< unsigned , volume<I> >

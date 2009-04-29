@@ -92,8 +92,10 @@ namespace mln
 
 
 
-  // FIXME: Doc!
-
+  /// \brief Extends the domain of an image with a value.
+  ///
+  /// \ingroup modimagedomainmorpher
+  //
   template <typename I>
   class extension_val :
     public internal::image_identity< I, mln_domain(I), extension_val<I> >

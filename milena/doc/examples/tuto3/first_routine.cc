@@ -1,3 +1,5 @@
+/// \file doc/examples/first_routine.cc
+
 #include <mln/essential/2d.hh>
 #include <tests/data.hh>
 #include <doc/tools/sample_utils.hh>

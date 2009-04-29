@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -111,6 +112,9 @@ namespace mln
       \arg \p G A function object type, associating localization
                 information (geometry) to each face of the complex.
                 \see mln::geom::complex_geometry.  */
+  /// \brief A complex psite set based on the N-faces of a complex.
+  ///
+  /// \ingroup modsitesetcomplex
   template <unsigned D, typename G>
   class p_complex
     : public internal::site_set_base_< complex_psite<D, G>, p_complex<D, G> >

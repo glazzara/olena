@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -51,8 +51,6 @@ namespace mln
   template <typename E> struct Function_p2b;
   template <typename E> struct Function_p2p;
   template <typename E> struct Function_x2x;
-  template <typename E> struct Function_l2b;
-  template <typename E> struct Function_l2l;
 
   template <typename E> struct Function_vv2v;
   template <typename E> struct Function_vv2b;
@@ -92,11 +90,13 @@ namespace mln
   template <>
   struct Function_v2v<void> { typedef Function<void> super; };
 
-  /// Base class for implementation of function-objects from
+  /// \brief Base class for implementation of function-objects from
   /// value to value.
   ///
   /// The parameter \a E is the exact type.
   ///
+  /// \ingroup modfun
+  //
   template <typename E>
   struct Function_v2v : public Function<E>
   {
@@ -122,8 +122,9 @@ namespace mln
    * value V to value W and vice versa.
    *
    * The parameter \a E is the exact type.
+   *
+   * \ingroup modfun
    */
-
   template <typename E>
   struct Function_v2w2v : public Function<E>
   {
@@ -158,8 +159,9 @@ namespace mln
    *
    * eg: f  :  x     -> norm(x)
    *     f_1: (x, n) -> x' := x / norm(x) * n
+   *
+   * \ingroup modfun
    */
-
   template <typename E>
   struct Function_v2w_w2v : public Function<E>
   {
@@ -188,6 +190,8 @@ namespace mln
   ///
   /// The parameter \a E is the exact type.
   ///
+  /// \ingroup modfun
+  //
   template <typename E>
   struct Function_i2b : public Function_v2b<E>
   {
@@ -211,6 +215,8 @@ namespace mln
   ///
   /// The parameter \a E is the exact type.
   ///
+  /// \ingroup modfun
+  //
   template <typename E>
   struct Function_i2v : public Function_v2v<E>
   {
@@ -233,6 +239,8 @@ namespace mln
   ///
   /// The parameter \a E is the exact type.
   ///
+  /// \ingroup modfun
+  //
   template <typename E>
   struct Function_p2v : public virtual Function_v2v<E>
   {
@@ -255,6 +263,8 @@ namespace mln
   ///
   /// The parameter \a E is the exact type.
   ///
+  /// \ingroup modfun
+  //
   template <typename E>
   struct Function_v2b : public virtual Function_v2v<E>
   {
@@ -278,6 +288,8 @@ namespace mln
   ///
   /// The parameter \a E is the exact type.
   ///
+  /// \ingroup modfun
+  //
   template <typename E>
   struct Function_p2b : public Function_p2v<E>,
 			public Function_v2b<E>
@@ -302,6 +314,8 @@ namespace mln
   ///
   /// The parameter \a E is the exact type.
   ///
+  /// \ingroup modfun
+  //
   template <typename E>
   struct Function_p2p : public Function_p2v<E>
   {
@@ -324,6 +338,8 @@ namespace mln
   ///
   /// The parameter \a E is the exact type.
   ///
+  /// \ingroup modfun
+  //
   template <typename E>
   struct Function_x2x : public Function_v2v<E>
   {
@@ -343,6 +359,8 @@ namespace mln
   ///
   /// The parameter \a E is the exact type.
   ///
+  /// \ingroup modfun
+  //
   template <typename E>
   struct Bijection_x2x : public Function_x2x< E >
   {
@@ -352,50 +370,6 @@ namespace mln
     */
   protected:
     Bijection_x2x();
-  };
-
-
-  /*-----------------.
-  | Label -> Value.  |
-  `-----------------*/
-
-  template <>
-  struct Function_l2b<void> { typedef Function_v2b<void> super; };
-
-  /// Base class for implementation of function-objects from
-  /// label to value.
-  ///
-  /// The parameter \a E is the exact type.
-  ///
-  template <typename E>
-  struct Function_l2b : public Function_v2b<E>
-  {
-    typedef Function_l2b<void> category;
-  protected:
-    Function_l2b();
-    Function_l2b(const Function_l2b&);
-  };
-
-
-  /*-----------------.
-  | Label -> Label.  |
-  `-----------------*/
-
-  template <>
-  struct Function_l2l<void> { typedef Function_v2v<void> super; };
-
-  /// Base class for implementation of function-objects from
-  /// label to value.
-  ///
-  /// The parameter \a E is the exact type.
-  ///
-  template <typename E>
-  struct Function_l2l : public Function_v2v<E>
-  {
-    typedef Function_l2l<void> category;
-  protected:
-    Function_l2l();
-    Function_l2l(const Function_l2l&);
   };
 
 
@@ -411,6 +385,8 @@ namespace mln
   ///
   /// The parameter \a E is the exact type.
   ///
+  /// \ingroup modfun
+  //
   template <typename E>
   struct Function_vv2v : public Function<E>
   {
@@ -432,6 +408,8 @@ namespace mln
   ///
   /// The parameter \a E is the exact type.
   ///
+  /// \ingroup modfun
+  //
   template <typename E>
   struct Function_vv2b : public Function<E>
   {
@@ -601,33 +579,6 @@ namespace mln
     typedef typename E::invert invert;
     invert (E::*m)() const = & E::inv;
     m = 0;
-  }
-
-  template <typename E>
-  inline
-  Function_l2b<E>::Function_l2b()
-  {
-  }
-
-  template <typename E>
-  inline
-  Function_l2b<E>::Function_l2b(const Function_l2b<E>& rhs)
-    : Function_v2v<E>(rhs),
-      Function_v2b<E>(rhs)
-  {
-  }
-
-  template <typename E>
-  inline
-  Function_l2l<E>::Function_l2l()
-  {
-  }
-
-  template <typename E>
-  inline
-  Function_l2l<E>::Function_l2l(const Function_l2l<E>& rhs)
-    : Function_v2v<E>(rhs)
-  {
   }
 
   template <typename E>

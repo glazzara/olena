@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,100 +45,137 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a neighborhood defined on the 3D square
-   * grid with integer coordinates.
-   */
+  /// \brief Type alias for a neighborhood defined on the 3D square
+  /// grid with integer coordinates.
+  ///
+  /// \ingroup modneighb3d
+  //
   typedef neighb<window3d> neighb3d;
 
-  /// 4-connectivity neighborhood on the 3D grid.
-  ///
-  ///     . . .
-  ///    . . .
-  ///   . . .
-  ///
-  ///     . o .
-  ///    o x o
-  ///   . o .
-  ///
-  ///     . . .
-  ///    . . .
-  ///   . . .
-  ///
-  /// \return A neighb3d.
-  ///
+  /// \brief 4-connectivity neighborhood on the 3D grid.
+  /*!
+    \verbatim
+
+     . . .
+    . . .
+   . . .
+
+     . o .
+    o x o
+   . o .
+
+     . . .
+    . . .
+   . . .
+
+    \endverbatim
+
+
+    \return A neighb3d.
+
+    \ingroup modneighb3d
+  */
   const neighb3d& c4_3d();
 
-  /// 8-connectivity neighborhood on the 3D grid.
-  ///
-  ///     . . .
-  ///    . . .
-  ///   . . .
-  ///
-  ///     o o o
-  ///    o x o
-  ///   o o o
-  ///
-  ///     . . .
-  ///    . . .
-  ///   . . .
-  ///
-  /// \return A neighb3d.
-  ///
+  /// \brief 8-connectivity neighborhood on the 3D grid.
+  /*!
+    \verbatim
+
+       . . .
+      . . .
+     . . .
+
+       o o o
+      o x o
+     o o o
+
+       . . .
+      . . .
+     . . .
+
+    \endverbatim
+
+
+    \return A neighb3d.
+
+    \ingroup modneighb3d
+  */
   const neighb3d& c8_3d();
 
 
-  /*! \brief 6-connectivity neighborhood on the 3D grid.
-   *
-   *     . . .
-   *    . o .
-   *   . . .
-   *
-   *     . o .
-   *    o x o
-   *   . o .
-   *
-   *     . . .
-   *    . o .
-   *   . . .
-   *
-   * \return A neighb3d.
-   */
+  /// \brief 6-connectivity neighborhood on the 3D grid.
+  /*!
+    \verbatim
+
+       . . .
+      . o .
+     . . .
+
+       . o .
+      o x o
+     . o .
+
+       . . .
+      . o .
+     . . .
+
+    \endverbatim
+
+
+    \return A neighb3d.
+
+    \ingroup modneighb3d
+  */
   const neighb3d& c6();
 
-  /*! \brief 18-connectivity neighborhood on the 3D grid.
-   *
-   *     . o .
-   *    o o o
-   *   . o .
-   *
-   *     o o o
-   *    o x o
-   *   o o o
-   *
-   *     . o .
-   *    o o o
-   *   . o .
-   *
-   * \return A neighb3d.
-   */
+  /// \brief 18-connectivity neighborhood on the 3D grid.
+  /*!
+    \verbatim
+
+      . o .
+     o o o
+    . o .
+
+      o o o
+     o x o
+    o o o
+
+      . o .
+     o o o
+    . o .
+
+    \endverbatim
+
+
+    \return A neighb3d.
+
+    \ingroup modneighb3d
+  */
   const neighb3d& c18();
 
-  /*! \brief 26-connectivity neighborhood on the 3D grid.
-   *
-   *     o o o
-   *    o o o
-   *   o o o
-   *
-   *     o o o
-   *    o x o
-   *   o o o
-   *
-   *     o o o
-   *    o o o
-   *   o o o
-   *
-   * \return A neighb3d.
-   */
+  /// \brief 26-connectivity neighborhood on the 3D grid.
+  /*!
+    \verbatim
+
+      o o o
+     o o o
+    o o o
+
+      o o o
+     o x o
+    o o o
+
+      o o o
+     o o o
+    o o o
+
+    \endverbatim
+
+
+    \return A neighb3d.
+
+    \ingroup modneighb3d
+  */
   const neighb3d& c26();
 
 

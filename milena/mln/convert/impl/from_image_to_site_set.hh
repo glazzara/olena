@@ -149,7 +149,7 @@ namespace mln
         void
         from_image_to_site_set(const Image<I>& from, Site_Set<S>& to)
         {
-	  from_image_to_site_set(exact(from), mln_deduce(I, pset, element)(),
+	  from_image_to_site_set(exact(from), mln_deduce(I, domain_t, element)(),
 				 exact(to),   mln_i_element(S)());
 	}
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,8 +44,11 @@ namespace mln
   {
 
 
-    /// Generic median_alt function based on histogram over a
+    /// \brief Generic median_alt function based on histogram over a
     /// value set with type \c S.
+    ///
+    /// \ingroup modaccuvalues
+    //
     template <typename S>
     struct median_alt : public mln::accu::internal::base< const mln_value(S)&, median_alt<S> >
     {

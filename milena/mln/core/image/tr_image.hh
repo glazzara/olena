@@ -76,8 +76,11 @@ namespace mln
 
   } // end of namespace mln::trait
 
-  /// Morpher that makes an image become transformed by a given
-  /// transformation.
+
+  /// \brief Transform an image by a given transformation.
+  ///
+  /// \ingroup modimageidmorpher
+  //
   template <typename S, typename I, typename T>
   struct tr_image :
     public mln::internal::image_identity< I, mln_domain(I), tr_image<S,I,T> >

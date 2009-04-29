@@ -78,8 +78,9 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  /// Morpher that makes underlaying image being accessed with floating coordinate.
+  /// \brief Makes the underlying image being accessed with floating coordinates.
   ///
+  /// \ingroup modimageidentity
   template <typename I, template <class> class F>
   struct interpolated :
     public mln::internal::image_identity< I, mln_domain(I), interpolated<I,F> >

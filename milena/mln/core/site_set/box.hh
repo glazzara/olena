@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -72,11 +72,13 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  /*! \brief Generic box class: site set containing points of a
-   *   regular grid.
-   *
-   * Parameter \c P is the corresponding type of point.
-   */
+  /// \brief Generic box class: site set containing points of a
+  /// regular grid.
+  ///
+  /// Parameter \c P is the corresponding type of point.
+  ///
+  /// \ingroup modsitesetbasic
+  //
   template <typename P>
   struct box : public Box< box<P> >,
 	       public internal::box_impl_< P::dim, mln_coord(P), box<P> >,

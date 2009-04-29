@@ -90,8 +90,10 @@ namespace mln
 
 
 
-  // FIXME: Doc!
-
+  /// \brief  Extends the domain of an image with an image.
+  ///
+  /// \ingroup modimagedomainmorpher
+  //
   template <typename I, typename J>
   class extension_ima
 

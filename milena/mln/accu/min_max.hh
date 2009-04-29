@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -49,9 +50,11 @@ namespace mln
   namespace accu
   {
 
-    /// Generic min and max accumulator class.
+    /// \brief Generic min and max accumulator class.
     /*!
      * The parameter \c V is the type of values.
+     *
+     * \ingroup modaccuvalues
      */
     template <typename V>
     struct min_max : public pair< min<V>, max<V> >

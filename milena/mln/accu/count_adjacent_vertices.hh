@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,7 +45,7 @@ namespace mln
   namespace accu
   {
 
-    /// Accumulator class counting the number of vertices
+    /// \brief Accumulator class counting the number of vertices
     /// adjacent to a set of mln::p_edges_psite (i.e., a set of
     /// edges).
     ///
@@ -54,6 +54,9 @@ namespace mln
     ///
     /// This accumulator is used by mln::closing_area_on_vertices and
     /// mln::opening_area_on_vertices.
+    ///
+    /// \ingroup modaccuimages
+    //
     template <typename F, typename S>
     struct count_adjacent_vertices
       : public mln::accu::internal::base< unsigned,

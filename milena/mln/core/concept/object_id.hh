@@ -30,7 +30,7 @@
 #ifndef MLN_CORE_CONCEPT_OBJECT_ID_HH
 # define MLN_CORE_CONCEPT_OBJECT_ID_HH
 
-/// \file mln/util/internal/element_id.hh
+/// \file mln/core/concept/object_id.hh
 ///
 /// Base class of an object id.
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -47,10 +47,13 @@ namespace mln
   namespace accu
   {
 
-    // Fwd declaration.
+    // Forward declaration.
     template <typename T> struct rank;
 
-    /// rank accumulator class for Boolean.
+    /// \brief rank accumulator class for Boolean.
+    ///
+    /// \ingroup modaccuvalues
+    //
     template <>
     struct rank<bool> : public mln::accu::internal::base< bool, rank<bool> >
     {

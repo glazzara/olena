@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +29,14 @@
 #ifndef MLN_CORE_SITE_SET_P_CENTERED_HH
 # define MLN_CORE_SITE_SET_P_CENTERED_HH
 
-/*! \file mln/core/site_set/p_centered.hh
- *
- * \brief This file defines the site set corresponding to a window
- * centered on a site.
- *
- * \todo Add the bkd iter.
- * \todo Code is_valid() and change_target() for the site set.
- */
+/// \file mln/core/site_set/p_centered.hh
+///
+/// This file defines the site set corresponding to a window
+/// centered on a site.
+///
+/// \todo Add the bkd iter.
+/// \todo Code is_valid() and change_target() for the site set.
+
 
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/internal/site_set_iterator_base.hh>
@@ -71,6 +72,10 @@ namespace mln
   } // end of namespace mln::trait
 
 
+  /// \brief Site set corresponding to a window centered on a site.
+  ///
+  /// \ingroup modsitesetsparse
+  //
   template <typename W>
   class p_centered : public internal::site_set_base_< mln_psite(W), p_centered<W> >,
 		     private mlc_is_a(W, Window)::check_t
@@ -120,7 +125,7 @@ namespace mln
 
     /// Give the window this site set is defined upon.
     const W& window() const;
-    
+
   protected:
 
     W win_;

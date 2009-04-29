@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008,2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,7 +30,8 @@
 # define MLN_CORE_SITE_SET_P_FACES_HH
 
 /// \file mln/core/site_set/p_faces.hh
-/// \brief Definition of a point set based on the set of n-faces of a
+///
+/// definition of a point set based on the set of n-faces of a
 /// complex.
 
 # include <mln/core/internal/site_set_base.hh>
@@ -70,8 +72,10 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  /// A complex psite set based on a the \tparam N -faces of a complex of
-  /// dimension \tparam D (a \p D-complex).
+  /// \brief A complex psite set based on a the N-faces of a complex of
+  /// dimension D (a D-complex).
+  ///
+  /// \ingroup modsitesetgraph
   template <unsigned N, unsigned D, typename P>
   struct p_faces
     : public internal::site_set_base_< faces_psite<N, D, P>,

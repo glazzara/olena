@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -61,8 +61,10 @@ namespace mln
 
 
 
-  /*! \brief Point set class based on util::set.
-   *
+  /// \brief Mathematical set of sites (based on util::set).
+  ///
+  /// \ingroup modsitesetsparse
+  /*!
    * This is a mathematical set of sites (not a multi-set).
    *
    * The parameter \c P shall be a site or pseudo-site type.

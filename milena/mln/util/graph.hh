@@ -82,7 +82,10 @@ namespace mln
   namespace util
   {
 
-    /// Undirected graph.
+    /// \brief Undirected graph.
+    ///
+    /// \ingroup modgraph
+    //
     class graph : public internal::graph_base<graph>
     {
       /// The super class.

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,6 +30,7 @@
 # define MLN_ACCU_HEIGHT_HH
 
 /// \file mln/accu/height.hh
+///
 /// Define an accumulator that computes the height of a
 /// component through one of its pixels.
 /*
@@ -55,10 +56,13 @@ namespace mln
   namespace accu
   {
 
-    /// Height accumulator class.
+    /// \brief Height accumulator.
     ///
     /// The parameter \p I is the image type on which the accumulator
     /// of pixels is built.
+    ///
+    /// \ingroup modaccuimages
+    //
     template <typename I>
     struct height
       : public mln::accu::internal::base< unsigned , height<I> >

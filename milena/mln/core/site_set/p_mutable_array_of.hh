@@ -69,10 +69,11 @@ namespace mln
 
 
 
-  /*! \brief p_mutable_array_of is a mutable array of site sets.
-   *
-   * Parameter \c S is the type of the contained site sets.
-   */
+  /// \brief p_mutable_array_of is a mutable array of site sets.
+  ///
+  /// Parameter \c S is the type of the contained site sets.
+  ///
+  /// \ingroup modsitesetbasic
   template <typename S>
   class p_mutable_array_of : public internal::site_set_base_< mln_site(S),
 							      p_mutable_array_of<S> >,

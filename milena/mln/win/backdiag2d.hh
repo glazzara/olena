@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,19 +45,23 @@ namespace mln
 
   namespace win
   {
- 
+
     /*! \brief Diagonal line window defined on the 2D square grid.
      *
      * An backdiag2d is centered and symmetric.
      * its width (length) is odd.
      *
-     * For instance: \n
-     *  o         \n
-     *    o       \n
-     *      x     \n
-     *        o   \n
-     *          o \n
+     * For instance:
+     * \verbatim
+     *  o
+     *    o
+     *      x
+     *        o
+     *          o
+     * \endverbatim
      * is defined with length = 5.
+     *
+     * \ingroup modwin2d
      */
     struct backdiag2d : public internal::classical_window_base< dpoint2d, backdiag2d >
     {

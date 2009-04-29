@@ -92,7 +92,10 @@ namespace mln
 
 
 
-  /// Class of image morpher which takes allow to view an image throught a morpher
+  /// \brief Image read through a function.
+  ///
+  /// \ingroup modimagevaluemorpher
+  //
   template <typename F, typename I>
   struct fun_image :
     public internal::image_value_morpher< I, mln_result(F), fun_image<F,I> >

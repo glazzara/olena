@@ -28,13 +28,13 @@
 #ifndef MLN_CORE_IMAGE_SUB_IMAGE_IF_HH
 # define MLN_CORE_IMAGE_SUB_IMAGE_IF_HH
 
-/*!
- * \file mln/core/image/sub_image_if.hh
- *
- * \brief FIXME DOC!
- *
- * \todo Activate preconditions.
- */
+
+/// \file mln/core/image/sub_image_if.hh
+///
+/// Image having its domain restricted by a site set and a function.
+///
+/// \todo Activate preconditions.
+
 
 # include <mln/core/internal/image_domain_morpher.hh>
 # include <mln/core/site_set/p_if.hh>
@@ -95,8 +95,9 @@ namespace mln
 
 
 
-  // FIXME: Doc!
-
+  /// \brief Image having its domain restricted by a site set and a function.
+  ///
+  /// \ingroup modimagedomainmorpher
   template <typename I, typename S>
   struct sub_image_if : public internal::image_domain_morpher< I,
 							       p_if< S, fun::p2b::has<I> >,

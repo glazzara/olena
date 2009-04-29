@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,10 @@
 #ifndef MLN_CORE_SITE_SET_P_QUEUE_HH
 # define MLN_CORE_SITE_SET_P_QUEUE_HH
 
-/*! \file mln/core/site_set/p_queue.hh
- *
- * \brief Definition of a site set based on std::deque.
- *
+/// \file mln/core/site_set/p_queue.hh
+///
+/// Definition of a site set based on std::deque.
+/*!
  * \todo Rename 'front' because it is ambiguous for C++ users; we
  * have:
  * - 'p_queue::pop' means 'deque::pop_front'
@@ -66,8 +67,10 @@ namespace mln
 
 
 
-  /*! \brief Queue of sites (based on std::deque).
-   *
+  /// \brief Queue of sites (based on std::deque).
+  ///
+  /// \ingroup modsitesetqueue
+  /*!
    * The parameter \c P shall be a site or pseudo-site type.
    */
   template <typename P>

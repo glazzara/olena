@@ -47,7 +47,10 @@ namespace mln
     namespace site_set
     {
 
-      /// Compute the rectangularity of a site set.
+      /// \brief Compute the rectangularity of a site set.
+      ///
+      /// \ingroup modaccusiteset
+      //
       template <typename P>
       class rectangularity
 	: public accu::internal::couple<accu::bbox<P>,

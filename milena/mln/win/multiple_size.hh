@@ -72,6 +72,10 @@ namespace mln
   namespace win
   {
 
+    /// \brief Definition of a multiple-size window.
+    ///
+    /// \ingroup modwinmulti
+    //
     template <unsigned n, typename W, typename F>
     class multiple_size
 

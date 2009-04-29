@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_CORE_SITE_SET_P_RUN_HH
 # define MLN_CORE_SITE_SET_P_RUN_HH
 
-/*! \file mln/core/site_set/p_run.hh
- *
- * \brief Definition of a run of points.
- *
- * \todo Use a lazy approach (in subj) like in p_array psite.
- */
+/// \file mln/core/site_set/p_run.hh
+///
+/// Definition of a run of points.
+///
+/// \todo Use a lazy approach (in subj) like in p_array psite.
 
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/site_set/box.hh>
@@ -76,8 +76,10 @@ namespace mln
 
 
 
-  /*! \brief Point set class in run.
-   *
+  /// \brief Point set class in run.
+  ///
+  /// \ingroup modsitesetbasic
+  /*!
    * This is a mathematical set of points (not a multi-set).  The
    * parameter \p P shall be a Point type.
    *

@@ -44,10 +44,12 @@ namespace mln
   {
 
 
-    /// Generic rms accumulator class.
+    /// \brief Generic root mean square accumulator class.
     ///
     /// The parameter \c T is the type of the root mean square value.
     ///
+    /// \ingroup modaccuvalues
+    //
     template <typename T, typename V>
     struct rms : public mln::accu::internal::base<V, rms<T,V> >
     {
