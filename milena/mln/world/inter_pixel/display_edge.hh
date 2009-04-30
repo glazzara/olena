@@ -48,12 +48,12 @@ namespace mln
     {
 
       template <typename I>
+      inline
       I display_edge(const I& ima, mln_value(I) bg, unsigned zoom)
       {
-	unsigned nrows = ima.nrows() / 2 + 1;
-	unsigned ncols = ima.ncols() / 2 + 1;
-	I output(nrows * (zoom + 1) - 1,
-	    ncols * (zoom + 1) - 1);
+	box2d b = ima.bbox();
+	I output(make::box2d((b.pmin()[0] / 2) * (zoom + 1) + 1, (b.pmin()[1] / 2) * (zoom + 1) + 1,
+			     (b.pmax()[0] / 2) * (zoom + 1) - 1, (b.pmax()[1] / 2) * (zoom + 1) - 1));
 	data::fill(output, bg);
 	typedef image_if<const I, dim2::is_edge> edge_t;
 	edge_t edge = ima | dim2::is_edge();
