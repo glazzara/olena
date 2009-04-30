@@ -50,6 +50,7 @@ namespace mln
 # include <mln/accu/image/set_value.hh>
 # include <mln/accu/image/take_as_init.hh>
 # include <mln/accu/image/take.hh>
+# include <mln/accu/image/take_n_times.hh>
 # include <mln/accu/image/to_result.hh>
 
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_BORDER_ALL_HH
 # define MLN_BORDER_ALL_HH
 
-/*! \file mln/border/all.hh
- *
- * \brief File that includes all border-related routines.
- */
+/// \file mln/border/all.hh
+///
+/// File that includes all border-related routines.
 
 
 namespace mln
@@ -60,6 +60,7 @@ namespace mln
 # include <mln/border/get.hh>
 # include <mln/border/mirror.hh>
 # include <mln/border/resize.hh>
+# include <mln/border/resize_equal.hh>
 # include <mln/border/thickness.hh>
 
 

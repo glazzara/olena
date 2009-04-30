@@ -32,9 +32,12 @@
 ///
 /// Update an image of accumulators by taking the contents of another
 /// image.
+///
+/// \todo Add "take(input, arg_value)".
 
 # include <mln/core/concept/accumulator.hh>
 # include <mln/core/concept/image.hh>
+# include <mln/border/resize_equal.hh>
 
 
 namespace mln
@@ -54,6 +57,34 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+      // Tests.
+
+      namespace internal
+      {
+
+	template <typename I, typename J>
+	void
+	take_tests(Image<I>& input_, const Image<J>& arg_)
+	{
+	  I& input = exact(input_);
+	  const J& arg = exact(arg_);
+
+	  mln_precondition(input.is_valid());
+	  mln_precondition(arg.is_valid());
+
+	  mln_precondition(arg.domain() <= input.domain());
+
+	  (void) input;
+	  (void) arg;
+	}
+
+      } // end of namespace mln::accu::image::internal
+
+
+
+      // Implementations.
+
       namespace impl
       {
 
@@ -68,12 +99,13 @@ namespace mln
 	  {
 	    trace::entering("accu::impl::image::generic::take");
 
+	    mlc_is_a(mln_value(I), Accumulator)::check();
+	    mlc_converts_to(mln_value(J), mln_deduce(I, value, argument))::check();
+
 	    I& input = exact(input_);
 	    const J& arg = exact(arg_);
 
-	    mln_precondition(input.is_valid());
-	    mln_precondition(arg.is_valid());
-	    mln_precondition(arg.domain() <= input.domain());
+	    internal::take_tests(input, arg);
 
 	    mln_piter(J) p(arg.domain());
 	    for_all(p)
@@ -92,13 +124,18 @@ namespace mln
 	take_fastest(Image<I>& input_, const Image<J>& arg_)
 	{
 	  trace::entering("accu::impl::image::take_fastest");
+
+	  mlc_is_a(mln_value(I), Accumulator)::check();
+	  mlc_converts_to(mln_value(J), mln_deduce(I, value, argument))::check();
 	  
 	  I& input = exact(input_);
 	  const J& arg = exact(arg_);
 
-	  mln_precondition(input.is_valid());
-	  mln_precondition(arg.is_valid());
+	  internal::take_tests(input, arg);
+	  // Extra (stronger) test.
 	  mln_precondition(arg.domain() == input.domain());
+
+	  border::resize_equal(input, arg);
 	  
 	  mln_pixter(I)       p_in(input);
 	  mln_pixter(const J) p_arg(arg);
@@ -159,16 +196,12 @@ namespace mln
 	trace::entering("accu::image::take");
 
 	mlc_is_a(mln_value(I), Accumulator)::check();
-	mlc_converts_to(mln_value(J),
-			mln_deduce(I, value, argument))::check();
+	mlc_converts_to(mln_value(J), mln_deduce(I, value, argument))::check();
 
 	I& input = exact(input_);
 	const J& arg = exact(arg_);
 
-	mln_precondition(input.is_valid());
-	mln_precondition(arg.is_valid());
-	mln_precondition(arg.domain() <= input.domain());
-
+	internal::take_tests(input, arg);
 	internal::take_dispatch(input, arg);
 
 	trace::exiting("accu::image::take");

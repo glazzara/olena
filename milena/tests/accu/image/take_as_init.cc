@@ -30,22 +30,24 @@
 /// Tests on mln::accu::image::take_as_init.
 
 #include <mln/core/image/image2d.hh>
+#include <mln/level/compare.hh>
+#include <mln/pw/cst.hh>
+#include <mln/pw/image.hh>
+
 #include <mln/accu/sum.hh>
 #include <mln/accu/image/take_as_init.hh>
-
-#include <mln/debug/println.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  typedef accu::sum<int> A;
+  typedef accu::sum<int,int> A;
   image2d<A> ima(2, 2);
 
   accu::image::take_as_init(ima, 3);
-  debug::println(ima);
+  mln_assertion(ima == (pw::cst(3) | ima.domain()));
 
   accu::image::take_as_init(ima, ima);
-  debug::println(ima);
+  mln_assertion(ima == (pw::cst(3) | ima.domain()));
 }

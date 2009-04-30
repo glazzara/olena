@@ -31,6 +31,8 @@
 /// \file mln/accu/image/set_value.hh
 ///
 /// Set the values of an image of accumulators.
+///
+/// \todo Add "set_value(Image<I>& input, const Image<J>& values)".
 
 # include <mln/core/concept/accumulator.hh>
 # include <mln/core/concept/image.hh>
@@ -51,7 +53,6 @@ namespace mln
 		const mln_deduce(I, value, result)& res);
 
 
-
 # ifndef MLN_INCLUDE_ONLY
 
       namespace impl
@@ -68,6 +69,8 @@ namespace mln
 		    const mln_deduce(I, value, result)& res)
 	  {
 	    trace::entering("accu::impl::image::generic::set_value");
+
+	    mlc_is_a(mln_value(I), Accumulator)::check();
 
 	    I& input = exact(input_);
 	    mln_precondition(input.is_valid());
@@ -90,6 +93,8 @@ namespace mln
 			  const mln_deduce(I, value, result)& res)
 	{
 	  trace::entering("accu::impl::image::set_value_fastest");
+
+	  mlc_is_a(mln_value(I), Accumulator)::check();
 	  
 	  I& input = exact(input_);
 	  mln_precondition(input.is_valid());

@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/accu/image/take.cc
+/// \file tests/accu/image/take_n_times.cc
 ///
-/// Tests on mln::accu::image::take.
+/// Tests on mln::accu::image::take_n_times.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/data/fill.hh>
@@ -37,7 +37,7 @@
 
 #include <mln/accu/sum.hh>
 #include <mln/accu/image/init.hh>
-#include <mln/accu/image/take.hh>
+#include <mln/accu/image/take_n_times.hh>
 
 
 int main()
@@ -51,9 +51,6 @@ int main()
   image2d<int> dta(2, 2);
   data::fill(dta, 7);
 
-  accu::image::take(ima, dta);
-  mln_assertion(ima == (pw::cst(7) | ima.domain()));
-
-  accu::image::take(ima, ima);
-  mln_assertion(ima == (pw::cst(14) | ima.domain()));
+  accu::image::take_n_times(ima, dta, dta);
+  mln_assertion(ima == (pw::cst(49) | ima.domain()));
 }

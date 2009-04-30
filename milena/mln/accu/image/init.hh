@@ -67,6 +67,8 @@ namespace mln
 	  {
 	    trace::entering("accu::impl::image::generic::init");
 
+	    mlc_is_a(mln_value(I), Accumulator)::check();
+
 	    I& input = exact(input_);
 	    mln_precondition(input.is_valid());
 
@@ -87,6 +89,8 @@ namespace mln
 	init_fastest(Image<I>& input_)
 	{
 	  trace::entering("accu::impl::image::init_fastest");
+
+	  mlc_is_a(mln_value(I), Accumulator)::check();
 	  
 	  I& input = exact(input_);
 	  mln_precondition(input.is_valid());

@@ -33,7 +33,10 @@
 #include <mln/accu/count.hh>
 #include <mln/accu/image/init.hh>
 #include <mln/accu/image/to_result.hh>
-#include <mln/debug/println.hh>
+
+#include <mln/level/compare.hh>
+#include <mln/pw/cst.hh>
+#include <mln/pw/image.hh>
 
 
 int main()
@@ -45,5 +48,5 @@ int main()
 
   accu::image::init(ima);
   image2d<unsigned> res = accu::image::to_result(ima);
-  debug::println(res);
+  mln_assertion(res == (pw::cst(0u) | res.domain()));
 }

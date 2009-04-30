@@ -30,6 +30,10 @@
 /// Tests on mln::accu::image::init.
 
 #include <mln/core/image/image2d.hh>
+#include <mln/level/compare.hh>
+#include <mln/pw/cst.hh>
+#include <mln/pw/image.hh>
+
 #include <mln/accu/count.hh>
 #include <mln/accu/image/init.hh>
 
@@ -42,4 +46,5 @@ int main()
   image2d<A> ima(2, 2);
 
   accu::image::init(ima);
+  mln_assertion(ima == (pw::cst(0u) | ima.domain()));
 }

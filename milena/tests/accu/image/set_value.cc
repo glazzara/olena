@@ -33,7 +33,9 @@
 #include <mln/accu/count.hh>
 #include <mln/accu/image/set_value.hh>
 
-#include <mln/debug/println.hh>
+#include <mln/level/compare.hh>
+#include <mln/pw/cst.hh>
+#include <mln/pw/image.hh>
 
 
 int main()
@@ -44,5 +46,5 @@ int main()
   image2d<A> ima(2, 2);
 
   accu::image::set_value(ima, 3);
-  debug::println(ima);
+  mln_assertion(ima == (pw::cst(3u) | ima.domain()));
 }

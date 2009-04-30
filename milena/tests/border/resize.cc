@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,29 +26,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border/resize.cc
- *
- * \brief Tests on mln::border::resize.
- */
-
+/// \file tests/border/resize.cc
+///
+/// Tests on mln::border::resize.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/value/int_u8.hh>
 #include <mln/border/resize.hh>
-#include <mln/border/get.hh>
 
-using namespace mln;
 
-int
-main (void)
+int main()
 {
-  unsigned border = 1;
-  unsigned new_border = 3;
+  using namespace mln;
 
-  image2d<value::int_u8> ima(3, 2, border);
-  mln_assertion(border::get(ima) == border);
-  border::resize (ima, new_border);
-  mln_assertion(border::get(ima) == new_border);
-  border::resize (ima, border);
-  mln_assertion(border::get(ima) == border);
+  const unsigned
+    border = 1,
+    new_border = 3;
+
+  image2d<int> ima(3, 2, border);
+  mln_assertion(ima.border() == border);
+
+  border::resize(ima, new_border);
+  mln_assertion(ima.border() == new_border);
+
+  border::resize(ima, border);
+  mln_assertion(ima.border() == border);
 }

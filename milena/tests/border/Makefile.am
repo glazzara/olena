@@ -11,6 +11,7 @@ check_PROGRAMS =				\
   find						\
   get						\
   mirror					\
+  resize_equal					\
   resize_image1d_1				\
   resize_image1d_2				\
   resize_image1d_3				\
@@ -32,6 +33,7 @@ fill_SOURCES = fill.cc
 find_SOURCES = find.cc
 get_SOURCES = get.cc
 mirror_SOURCES = mirror.cc
+resize_equal_SOURCES = resize_equal.cc
 resize_image1d_1_SOURCES = resize_image1d_1.cc
 resize_image1d_2_SOURCES = resize_image1d_2.cc
 resize_image1d_3_SOURCES = resize_image1d_3.cc

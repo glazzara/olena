@@ -25,35 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/accu/image/take.cc
+/// \file tests/border/resize_equal.cc
 ///
-/// Tests on mln::accu::image::take.
+/// Tests on mln::border::resize_equal.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/data/fill.hh>
-#include <mln/level/compare.hh>
-#include <mln/pw/cst.hh>
-#include <mln/pw/image.hh>
-
-#include <mln/accu/sum.hh>
-#include <mln/accu/image/init.hh>
-#include <mln/accu/image/take.hh>
+#include <mln/border/resize_equal.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  typedef accu::sum<int,int> A;
-  image2d<A> ima(2, 2);
-  accu::image::init(ima);
-
-  image2d<int> dta(2, 2);
-  data::fill(dta, 7);
-
-  accu::image::take(ima, dta);
-  mln_assertion(ima == (pw::cst(7) | ima.domain()));
-
-  accu::image::take(ima, ima);
-  mln_assertion(ima == (pw::cst(14) | ima.domain()));
+  image2d<int> ima1(1,1, 1), ima2(1,1, 2);
+  border::resize_equal(ima1, ima2);
+  mln_assertion(ima1.border() == 2);
 }

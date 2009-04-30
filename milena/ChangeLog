@@ -1,5 +1,36 @@
 2009-04-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Cleanup accu::image and add take_n_times.
+
+	* mln/accu/image/take.hh: Copy to...
+	* mln/accu/image/take_n_times.hh: ...this new file.
+	Update.
+	* mln/accu/image/all.hh: Update.
+	* mln/accu/image/init.hh,
+	* mln/accu/image/set_value.hh,
+	* mln/accu/image/to_result.hh: Fix missing static checks.
+	* mln/accu/image/take.hh (todo): New.
+	(take_tests): New.
+	(generic::take, take_fastest): Update.
+	Fix missing static checks.
+
+	* tests/accu/image/to_result.cc,
+	* tests/accu/image/init.cc,
+	* tests/accu/image/take.cc,
+	* tests/accu/image/set_value.cc,
+	* tests/accu/image/take_as_init.cc:
+	Change debug log into quiet test.
+	* tests/accu/image/take_n_times.cc: New.
+	* tests/accu/image/Makefile.am: Update.
+
+	* mln/border/resize_equal.hh: New.
+	* mln/border/all.hh: Update.
+	* tests/border/resize_equal.cc: New.
+	* tests/border/resize.cc: Cleanup.
+	* tests/border/Makefile.am: Update.
+
+2009-04-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix wrong update in morpho attribute card.
 
 	* mln/morpho/attribute/card.hh: Fix wrong update.
