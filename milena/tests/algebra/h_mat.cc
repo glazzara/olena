@@ -26,12 +26,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/algebra/mat.cc
+/// \file tests/algebra/h_mat.cc
 ///
-/// Tests on mln::algebra::mat.
+/// Tests on mln::algebra::h_mat.
 
 #include <mln/fun/i2v/all_to.hh>
 #include <mln/algebra/mat.hh>
+#include <mln/algebra/h_mat.hh>
 
 
 
@@ -39,26 +40,27 @@ int main()
 {
   using namespace mln;
 
-  {
-    using namespace algebra;
-    mat<3,3,int>
-      m   = algebra::make(1, 2, 3,
-			  0, 1, 4,
-			  5, 6, 0),
-      m_1 = algebra::make(-24, +18, +05,
-			  +20, -15, -04,
-			  -05, +04, +01);
-    mln_assertion(m._1() == m_1);
-    mln_assertion(m * m._1() == literal::identity);
-  }
+  algebra::mat<1,3,float> m1;
+  m1.set_all(4);
+  algebra::mat<2,2,float> m2 = literal::identity;
+
+  algebra::h_mat<1,float> hm1(m2);
+  algebra::h_mat<2,float> hm2;
+  algebra::h_mat<3,float> hm3(all_to(1.5));
+
+  algebra::mat<4,4,float> m4 = hm3;
+
+  std::cout << "m1 = " << m1 << ";" << std::endl;
+  std::cout << "m2 = " << m2 << ";" << std::endl;
+  std::cout << "m4 = " << m4 << ";" << std::endl;
+  std::cout << "hm1 = " << hm1 << ";" << std::endl;
+  std::cout << "hm2 = " << hm2 << ";" << std::endl;
+  std::cout << "hm3 = " << hm3 << ";" << std::endl;
 
   {
-    using namespace algebra;
-    mat<2,2,int> m = algebra::make(1, 0,
-				   0, 1);
-    mln_assertion(tr(m) == 2);
-    mln_assertion(det(m) == 1);
-    mln_assertion(m._1() == m);
+    algebra::h_mat<2,float> m, m2;
+    m = m2;
+    // FIXME: Test *many* => runs ok...
   }
 
 }

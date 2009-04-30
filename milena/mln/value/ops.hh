@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,9 +43,11 @@
 # include <mln/literal/ops.hh>
 # include <mln/metal/ret.hh>
 
+
 /// Type trait for value sum.
 # define mln_trait_value_sum_product(T, U)			\
    typename mln::trait::value_< mln_trait_op_times(T,U) >::sum
+
 
 /// Shortcut for type trait for value sum.
 # define mln_sum_product(T, U)  mln_trait_value_sum_product(T, U)

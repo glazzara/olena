@@ -266,10 +266,12 @@ namespace mln
   } // end of namespace mln::algebra
 
 
+
   namespace trait
   {
 
     // For unary traits.
+
 
     template < template <class> class Name,
 	       unsigned n, typename T >
@@ -279,17 +281,43 @@ namespace mln
       typedef algebra::vec<n, V> ret;
     };
 
+
     // For binary traits.
 
-    template < template <class, class> class Name,
-	       unsigned n, typename T,
+
+    // vec + vec
+
+    template < unsigned n, typename T,
 	       typename U >
-    struct set_precise_binary_< Name,
+    struct set_precise_binary_< op::plus,
 				algebra::vec<n, T>, algebra::vec<n, U> >
     {
-      typedef mln_trait_binary(Name, T, U) V;
+      typedef mln_trait_op_plus(T, U) V;
       typedef algebra::vec<n, V> ret;
     };
+
+    // - vec
+
+    template < unsigned n, typename T >
+    struct set_precise_unary_< op::uminus,
+			       algebra::vec<n, T> >
+    {
+      typedef mln_trait_op_uminus(T) V;
+      typedef algebra::vec<n, V> ret;
+    };
+
+    // vec - vec
+
+    template < unsigned n, typename T,
+	       typename U >
+    struct set_precise_binary_< op::minus,
+				algebra::vec<n, T>, algebra::vec<n, U> >
+    {
+      typedef mln_trait_op_minus(T, U) V;
+      typedef algebra::vec<n, V> ret;
+    };
+
+    // vec * vec
 
     template < unsigned n, typename T,
 	       typename U >
@@ -299,26 +327,38 @@ namespace mln
       typedef mln_sum_product(T,U) ret;
     };
 
-    template < template <class, class> class Name,
-	       unsigned n, typename T,
+    // vec * s
+
+    template < unsigned n, typename T,
 	       typename S >
-    struct set_precise_binary_< Name,
+    struct set_precise_binary_< op::times,
 				algebra::vec<n, T>, mln::value::scalar_<S> >
     {
-      typedef mln_trait_binary(Name, T, S) V;
+      typedef mln_trait_op_times(T, S) V;
       typedef algebra::vec<n, V> ret;
     };
 
-    template < template<class, class> class Name,
-	       unsigned n, typename T,
+    // vec / s
+
+    template < unsigned n, typename T,
 	       typename S >
-    struct set_binary_< Name,
-			mln::Object, algebra::vec<n, T>,
-			mln::value::Scalar, S >
+    struct set_precise_binary_< op::div,
+				algebra::vec<n, T>, mln::value::scalar_<S> >
     {
-      typedef mln_trait_binary(Name, T, S) V;
+      typedef mln_trait_op_div(T, S) V;
       typedef algebra::vec<n, V> ret;
     };
+
+//     template < template<class, class> class Name,
+// 	       unsigned n, typename T,
+// 	       typename S >
+//     struct set_binary_< Name,
+// 			mln::Object, algebra::vec<n, T>,
+// 			mln::value::Scalar, S >
+//     {
+//       typedef mln_trait_binary(Name, T, S) V;
+//       typedef algebra::vec<n, V> ret;
+//     };
 
   } // end of namespace mln::trait
 
@@ -327,18 +367,25 @@ namespace mln
   namespace algebra
   {
 
-    // eq
+    // vec == vec
 
     template <unsigned n, typename T, typename U>
-    bool operator==(const vec<n,T>& lhs, const vec<n,U>& rhs);
+    bool
+    operator==(const vec<n,T>& lhs, const vec<n,U>& rhs);
 
-    // +
+    // vec + vec
 
     template <unsigned n, typename T, typename U>
     vec<n, mln_trait_op_plus(T,U)>
     operator+(const vec<n,T>& lhs, const vec<n,U>& rhs);
 
-    // -
+    // - vec
+
+    template <unsigned n, typename T>
+    vec<n, mln_trait_op_uminus(T)>
+    operator-(const vec<n,T>& rhs);
+
+    // vec - vec
 
     template <unsigned n, typename T, typename U>
     vec<n, mln_trait_op_minus(T,U)>
@@ -522,8 +569,11 @@ namespace mln
     const vec<n, T> vec<n, T>::origin = all_to(0);
 
 
+
     // Operators.
 
+
+    // vec == vec
 
     template <unsigned n, typename T, typename U>
     inline
@@ -535,6 +585,7 @@ namespace mln
       return true;
     }
 
+    // vec + vec
 
     template <unsigned n, typename T, typename U>
     inline
@@ -548,6 +599,22 @@ namespace mln
       return tmp;
     }
 
+    // - vec
+
+    template <unsigned n, typename T>
+    inline
+    vec<n, mln_trait_op_uminus(T)>
+    operator-(const vec<n,T>& rhs)
+    {
+      typedef mln_trait_op_uminus(T) R;
+      vec<n, R> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	tmp[i] = - rhs[i];
+      return tmp;
+    }
+
+    // vec - vec
+
     template <unsigned n, typename T, typename U>
     inline
     vec<n, mln_trait_op_minus(T,U)>
@@ -560,6 +627,8 @@ namespace mln
       return tmp;
     }
 
+    // vec * vec
+
     template <unsigned n, typename T, typename U>
     inline
     mln_sum_product(T,U)
@@ -571,6 +640,8 @@ namespace mln
 	tmp += lhs[i] * rhs[i];
       return tmp;
     }
+
+    // vec * s
 
     template <unsigned n, typename T, typename S>
     inline
@@ -594,6 +665,8 @@ namespace mln
       return tmp;
     }
 
+    // vec / s
+
     template <unsigned n, typename T, typename S>
     inline
     vec<n, mln_trait_op_div(T, S)>
@@ -608,6 +681,8 @@ namespace mln
     }
 
 
+    // << v
+
     template <unsigned n, typename T>
     inline
     std::ostream&
@@ -619,6 +694,9 @@ namespace mln
       return ostr;
     }
 
+
+    // >> v
+
     template <unsigned n, typename T>
     inline
     std::istream&
@@ -628,6 +706,7 @@ namespace mln
 	istr >> v[i];
       return istr;
     }
+
 
     // vprod
 

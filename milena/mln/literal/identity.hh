@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,39 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/algebra/mat.cc
+#ifndef MLN_LITERAL_IDENTITY_HH
+# define MLN_LITERAL_IDENTITY_HH
+
+/// \file mln/literal/identity.hh
 ///
-/// Tests on mln::algebra::mat.
+/// Definition of the literal of mln::identity.
 
-#include <mln/fun/i2v/all_to.hh>
-#include <mln/algebra/mat.hh>
-
+# include <mln/core/concept/literal.hh>
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
 
+  namespace literal
   {
-    using namespace algebra;
-    mat<3,3,int>
-      m   = algebra::make(1, 2, 3,
-			  0, 1, 4,
-			  5, 6, 0),
-      m_1 = algebra::make(-24, +18, +05,
-			  +20, -15, -04,
-			  -05, +04, +01);
-    mln_assertion(m._1() == m_1);
-    mln_assertion(m * m._1() == literal::identity);
-  }
 
-  {
-    using namespace algebra;
-    mat<2,2,int> m = algebra::make(1, 0,
-				   0, 1);
-    mln_assertion(tr(m) == 2);
-    mln_assertion(det(m) == 1);
-    mln_assertion(m._1() == m);
-  }
+    /// Type of literal identity.
+    struct identity_t : public Literal<identity_t>
+    {
+    };
 
-}
+    /// Literal identity.
+    extern const identity_t& identity;
+
+# ifndef MLN_INCLUDE_ONLY
+
+    const identity_t& identity = identity_t();
+
+# endif
+
+  } // end of namespace mln::literal
+
+} // end of namespace mln
+
+
+#endif // ! MLN_LITERAL_IDENTITY_HH

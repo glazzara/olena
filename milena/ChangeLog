@@ -1,3 +1,32 @@
+2009-04-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix missing definitions and bugs in algebra vec and mat.
+
+	* mln/literal/identity.hh: New.
+	* mln/accu/stat/variance.hh: Copy to...
+	* mln/accu/stat/var.hh: ...this new file.
+	Update to compute the variance matrix.
+	* mln/value/ops.hh: Layout.
+	* mln/algebra/mat.hh (mat): New overloaded ctor for identity.
+	(_1, set_id_): New methods.
+	(make): New couple of procedures.
+	(trait): Fix missing definitions.
+	(set_precise_binary_): Duplicate explicitly for op::times
+	and op::div.
+	(operator==): Fix missing const in signature.
+	(tr): Fix return type.
+	Use literal instead of 0.
+	(det): New procedures.
+	(internal::inverse): New.
+	* mln/algebra/vec.hh (trait): Fix missing definitions.
+	(set_precise_binary_): Duplicate explicitly for op::times
+	and op::div.
+	(operator-): New unary operator. 
+	* tests/algebra/mat.cc: Copy to...
+	* tests/algebra/h_mat.cc: ...this new file.
+	* tests/algebra/mat.cc: Revamp so that there is no h_mat.
+	* tests/algebra/Makefile.am: Update.
+
 2009-04-29  Frederic Bour  <bour@lrde.epita.fr>
 
 	Modification to parametrized functions, functions tutorial WIP.

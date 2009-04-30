@@ -1,5 +1,5 @@
-// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2006, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,6 +41,7 @@
 # include <mln/trait/all.hh>
 # include <mln/trait/value_.hh>
 # include <mln/algebra/vec.hh>
+# include <mln/literal/identity.hh>
 
 
 // FIXME: Document.
@@ -51,7 +52,7 @@ namespace mln
 {
 
 
-  // Fwd decl.
+  // Forward declaration.
   namespace algebra {
     template <unsigned n, unsigned m, typename T> class mat;
   }
@@ -98,6 +99,8 @@ namespace mln
       mat();
 
       mat(const literal::zero_t&);
+      mat(const literal::one_t&);
+      mat(const literal::identity_t&);
 
       template <typename U>
       mat(const mat<n,m,U>& rhs);
@@ -122,76 +125,138 @@ namespace mln
       /// Return the transpose of the matrix.
       mat<m,n,T> t() const;
 
+      /// Return the inverse of the matrix.
+      /// Only compile on square matrix. 
+      mat<n,m,T> _1() const;
+
     private:
+
       T data_[n][m];
+
+      void set_id_();
     };
 
-  }
+
+    template <typename T>
+    mat<2,2,T>
+    make(const T& t00, const T& t01,
+	 const T& t10, const T& t11);
+
+    template <typename T>
+    mat<3,3,T>
+    make(const T& t00, const T& t01, const T& t02,
+	 const T& t10, const T& t11, const T& t12,
+	 const T& t20, const T& t21, const T& t22);
+
+
+  } // end of namespace algebra
+
 
 
   namespace trait
   {
 
-    // Unarys.
+    // - mat
 
-    template < template<class> class Name,
-	       unsigned n, unsigned m, typename T >
-    struct set_precise_unary_< Name, algebra::mat<n,m,T> >
+    template < unsigned n, unsigned m, typename T >
+    struct set_precise_unary_< op::uminus,
+			       algebra::mat<n,m,T> >
     {
-      typedef algebra::mat<n, m, mln_trait_unary(Name, T)> ret;
+      typedef algebra::mat<n, m, mln_trait_op_uminus(T)> ret;
     };
 
-    // Default for binarys; works for (+), (-), comparisons, and promote.
+    // mat + mat
 
-    template < template<class, class> class Name,
-	       unsigned n, unsigned m, typename T, typename U>
-    struct set_precise_binary_< Name, algebra::mat<n,m,T>, algebra::mat<n,m,U> >
+    template < unsigned n, unsigned m, typename T, typename U >
+    struct set_precise_binary_< op::plus,
+				algebra::mat<n,m,T>, algebra::mat<n,m,U> >
     {
-      typedef algebra::mat<n, m, mln_trait_binary(Name, T, U)> ret;
+      typedef algebra::mat<n, m, mln_trait_op_plus(T, U)> ret;
+    };
+
+    // mat - mat
+
+    template < unsigned n, unsigned m, typename T, typename U >
+    struct set_precise_binary_< op::minus,
+				algebra::mat<n,m,T>, algebra::mat<n,m,U> >
+    {
+      typedef algebra::mat<n, m, mln_trait_op_minus(T, U)> ret;
     };
 
     // mat * mat
 
     template < unsigned n, unsigned o, typename T,
 	       unsigned m, typename U >
-    struct set_precise_binary_< op::times, algebra::mat<n,o,T>, algebra::mat<o,m,U> >
+    struct set_precise_binary_< op::times,
+				algebra::mat<n,o,T>, algebra::mat<o,m,U> >
     {
       typedef algebra::mat<n, m, mln_sum_product(T, U)> ret;
     };
 
-    template < unsigned n, typename T, typename U >
-    struct set_precise_binary_< op::times, algebra::mat<n,n,T>, algebra::mat<n,n,U> >
-    { // Disambiguate between both previous defs.
-      typedef algebra::mat<n, n, mln_sum_product(T, U)> ret;
+    template < unsigned o, typename T,
+	       typename U >
+    struct set_precise_binary_< op::times,
+				algebra::mat<1,o,T>, algebra::mat<o,1,U> >
+    {
+      typedef mln_sum_product(T, U) ret;
     };
 
     // mat * vec
 
     template < unsigned n, unsigned m, typename T,
 	       typename U >
-    struct set_precise_binary_< op::times, algebra::mat<n,m,T>, algebra::vec<m,U> >
+    struct set_precise_binary_< op::times,
+				algebra::mat<n,m,T>, algebra::vec<m,U> >
     {
       typedef algebra::vec<n, mln_sum_product(T, U)> ret;
     };
 
-    // mat * s
-
-    template < template<class, class> class Name,
-	       unsigned n, unsigned m, typename T,
-	       typename S >
-    struct set_precise_binary_< Name, algebra::mat<n,m,T>, mln::value::scalar_<S> >
+    template < unsigned m, typename T,
+	       typename U >
+    struct set_precise_binary_< op::times,
+				algebra::mat<1,m,T>, algebra::vec<m,U> >
     {
-      typedef algebra::mat<n, m, mln_trait_binary(Name, T, S)> ret;
+      typedef mln_sum_product(T, U) ret; // a scalar
     };
 
-    template < template<class, class> class Name,
-	       unsigned n, unsigned m, typename T,
-	       typename S >
-    struct set_binary_< Name,
-			mln::Object, algebra::mat<n,m,T>,
-			mln::value::Scalar, S >
+    // vec * mat
+
+    template < unsigned m, typename T,
+	       typename U >
+    struct set_precise_binary_< op::times,
+				algebra::vec<m,T>, algebra::mat<1,m,U> >
     {
-      typedef algebra::mat<n, m, mln_trait_binary(Name, T, S)> ret;
+      typedef algebra::mat<m, m, mln_trait_op_times(T, U)> ret;
+    };
+    
+    // mat * s
+
+    template < unsigned n, unsigned m, typename T,
+	       typename S >
+    struct set_precise_binary_< op::times,
+				algebra::mat<n,m,T>, mln::value::scalar_<S> >
+    {
+      typedef algebra::mat<n, m, mln_trait_op_times(T, S)> ret;
+    };
+
+//     template < template<class, class> class Name,
+// 	       unsigned n, unsigned m, typename T,
+// 	       typename S >
+//     struct set_binary_< Name,
+// 			mln::Object, algebra::mat<n,m,T>,
+// 			mln::value::Scalar, S >
+//     {
+//       typedef algebra::mat<n, m, mln_trait_binary(Name, T, S)> ret;
+//     };
+    
+    // mat / s
+
+    template < unsigned n, unsigned m, typename T,
+	       typename S >
+    struct set_precise_binary_< op::div,
+				algebra::mat<n,m,T>, mln::value::scalar_<S> >
+    {
+      typedef algebra::mat<n, m, mln_trait_op_div(T, S)> ret;
     };
 
   } // end of namespace mln::trait
@@ -205,26 +270,25 @@ namespace mln
 
     template <unsigned n, unsigned m, typename T, typename U>
     bool
-    operator==(mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
+    operator==(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
 
-    // +
-
-    template <unsigned n, unsigned m, typename T, typename U>
-    inline
-    mat<n, m, mln_trait_op_plus(T,U)>
-    operator+(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
-
-    // -
-
-    template <unsigned n, unsigned m, typename T, typename U>
-    mat<n, m, mln_trait_op_minus(T,U)>
-    operator-(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
-
-    // - (unary)
+    // - mat
 
     template <unsigned n, unsigned m, typename T>
     mat<n, m, mln_trait_op_uminus(T)>
     operator-(const mat<n,m,T>& lhs);
+
+    // mat + mat
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n, m, mln_trait_op_plus(T,U)>
+    operator+(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
+
+    // mat - mat
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n, m, mln_trait_op_minus(T,U)>
+    operator-(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
 
     // mat * mat
 
@@ -276,10 +340,23 @@ namespace mln
     operator<<(std::ostream& ostr, const mat<n,m,T>& v);
 
 
-    // trace
 
-    template<unsigned n, typename T> inline
-    float tr(const mat<n,n,T>& m);
+    // Trace.
+
+    template<unsigned n, typename T>
+    mln_sum(T)
+    tr(const mat<n,n,T>& m);
+
+
+    // Determinant.
+
+    template<typename T>
+    mln_sum_product(T,T)
+    det(const mat<2,2,T>& m);
+
+    template<typename T>
+    mln_sum_product(T,T)
+    det(const mat<3,3,T>& m);
 
 
 
@@ -364,6 +441,33 @@ namespace mln
     }
 
     template <unsigned n, unsigned m, typename T>
+    inline
+    void
+    mat<n,m,T>::set_id_()
+    {
+      for (unsigned i = 0; i < n; ++i)
+	for (unsigned j = 0; j < m; ++j)
+	  if (i == j)
+	    data_[i][j] = literal::one;
+	  else
+	    data_[i][j] = literal::zero;
+    }
+
+    template <unsigned n, unsigned m, typename T>
+    inline
+    mat<n,m,T>::mat(const literal::one_t&)
+    {
+      this->set_id_();
+    }
+
+    template <unsigned n, unsigned m, typename T>
+    inline
+    mat<n,m,T>::mat(const literal::identity_t&)
+    {
+      this->set_id_();
+    }
+
+    template <unsigned n, unsigned m, typename T>
     template <typename U>
     inline
     mat<n,m,T>::mat(const mat<n,m,U>& rhs)
@@ -443,9 +547,100 @@ namespace mln
       return tmp;
     }
 
+    namespace internal
+    {
+
+      template <typename T>
+      inline
+      mat<2,2,T>
+      inverse(const mat<2,2,T>& m)
+      {
+	T d = det(m);
+	mln_precondition(d != 0);
+	return make<T>( + m(1,1) / d,  - m(0,1) / d,
+			- m(1,0) / d,  + m(0,0) / d );
+      }
+
+      template <typename T>
+      inline
+      mat<3,3,T>
+      inverse(const mat<3,3,T>& m)
+      {
+	T d = det(m);
+	mln_precondition(d != 0);
+	return make<T>( det(make(m(1,1), m(1,2),
+				 m(2,1), m(2,2))),
+			
+			det(make(m(0,2), m(0,1),
+				 m(2,2), m(2,1))),
+			
+			det(make(m(0,1), m(0,2),
+				 m(1,1), m(1,2))),
+
+			
+			det(make(m(1,2), m(1,0),
+				 m(2,2), m(2,0))),
+			
+			det(make(m(0,0), m(0,2),
+				 m(2,0), m(2,2))),
+			
+			det(make(m(0,2), m(0,0),
+				 m(1,2), m(1,0))),
+
+			det(make(m(1,0), m(1,1),
+				 m(2,0), m(2,1))),
+			
+			det(make(m(0,1), m(0,0),
+				 m(2,1), m(2,0))),
+			
+			det(make(m(0,0), m(0,1),
+				 m(1,0), m(1,1)))
+			) / d;
+      }
+
+    } // end of namespace algebra::inverse
+
+    template <unsigned n, unsigned m, typename T>
+    inline
+    mat<n,m,T>
+    mat<n,m,T>::_1() const
+    {
+      mlc_bool(m == n)::check();
+      return internal::inverse(*this);
+    }
+
+
+    // "Make" routines.
+
+    template <typename T>
+    inline
+    mat<2,2,T>
+    make(const T& t00, const T& t01,
+	 const T& t10, const T& t11)
+    {
+      mat<2,2,T> tmp;
+      tmp(0, 0) = t00;  tmp(0, 1) = t01;
+      tmp(1, 0) = t10;  tmp(1, 1) = t11;
+      return tmp;
+    }
+
+    template <typename T>
+    inline
+    mat<3,3,T>
+    make(const T& t00, const T& t01, const T& t02,
+	 const T& t10, const T& t11, const T& t12,
+	 const T& t20, const T& t21, const T& t22)
+    {
+      mat<3,3,T> tmp;
+      tmp(0, 0) = t00;  tmp(0, 1) = t01;  tmp(0, 2) = t02;
+      tmp(1, 0) = t10;  tmp(1, 1) = t11;  tmp(1, 2) = t12;
+      tmp(2, 0) = t20;  tmp(2, 1) = t21;  tmp(2, 2) = t22;
+      return tmp;
+    }
+
+
 
     // Operators.
-
 
     template <unsigned n, unsigned m, typename T, typename U>
     inline
@@ -620,13 +815,40 @@ namespace mln
 
     // Trace.
 
-    template<unsigned n, typename T> inline
-    float tr(const mat<n,n,T>& m)
+    template<unsigned n, typename T>
+    inline
+    mln_sum(T)
+    tr(const mat<n,n,T>& m)
     {
-      float f = 0.f;
+      mln_sum(T) tr_ = literal::zero;
       for (unsigned i = 0; i < n; ++i)
-        f += m(i,i);
-      return f;
+        tr_ += m(i,i);
+      return tr_;
+    }
+
+
+    // Determinant.
+
+    template<typename T>
+    inline
+    mln_sum_product(T,T)
+    det(const mat<2,2,T>& m)
+    {
+      return m(0,0) * m(1,1) - m(0,1) * m(1,0);
+    }
+
+    template<typename T>
+    inline
+    mln_sum_product(T,T)
+    det(const mat<3,3,T>& m)
+    {
+      return
+	+ m(0,0) * m(1,1) * m(2,2)
+	- m(0,0) * m(1,2) * m(2,1)
+	- m(0,1) * m(1,0) * m(2,2)
+	+ m(0,1) * m(1,2) * m(2,0)
+	+ m(0,2) * m(1,0) * m(2,1)
+	- m(0,2) * m(1,1) * m(2,0);
     }
 
 
