@@ -1,3 +1,9 @@
+2009-04-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Remove a bug file.
+
+	* bugs/algebra_vec_ne_op.cc: Remove.  Bug fixed.
+
 2009-04-29  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Debugging fixed segmentation.
