@@ -1,3 +1,9 @@
+2009-04-30  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Update fixed segmentation, edges seems ok.
+	* fabien/igr/Makefile.rules: Update CXX to g++.
+	* fabien/igr/seg_fixed.cc: Update, edges appear to work.
+
 2009-04-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Remove a bug file.

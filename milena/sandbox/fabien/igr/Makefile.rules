@@ -1,5 +1,5 @@
-CXX = llvm-g++
-CXXFLAGS = -Wall -Wextra -DNDEBUG -O4
+CXX = g++
+CXXFLAGS = -Wall -Wextra -DNDEBUG -O3
 
 DICOM_INC = -I/usr/local/include/gdcm-2.0
 DICOM_LIBS = -lgdcmCommon -lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib \
