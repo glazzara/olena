@@ -32,6 +32,9 @@
 ///
 /// Define an accumulator that computes the cardinality of a
 /// component.
+///
+/// \todo Add a static check in the accumulator concept so that
+/// when_pix::use_none => take_as_init() is provided.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/util/pix.hh>
@@ -94,9 +97,9 @@ namespace mln
 	void take(const util::pix<I>& px);
 	void take(const card<I>& other);
 
-	void take_as_init_();
-	void take_as_init_(const util::pix<I>& px);
-	using super_::take_as_init_;
+	using super_::take_as_init;
+	void take_as_init(); // Extra version.
+	void take_as_init_(const util::pix<I>& px); // Overload.
 	/// \}
 
 	/// Get the value of the accumulator.
@@ -164,12 +167,12 @@ namespace mln
 	c_ += other.c_;
       }
 
-      // take_as_init_.
+      // take_as_init.
 
       template <typename I>
       inline
       void
-      card<I>::take_as_init_()
+      card<I>::take_as_init()
       {
 	init();
 	take();
@@ -180,7 +183,7 @@ namespace mln
       void
       card<I>::take_as_init_(const util::pix<I>&)
       {
-	take_as_init_();
+	take_as_init();
       }
 
       template <typename I>

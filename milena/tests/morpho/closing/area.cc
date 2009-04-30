@@ -31,11 +31,16 @@
 /// Test on mln::morpho::closing::area.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/value/int_u8.hh>
 #include <mln/core/alias/neighb2d.hh>
 
+#include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
+
+#include <mln/accu/max.hh>
+#include <mln/level/compute.hh>
+#include <mln/level/compare.hh>
+#include <mln/pw/cst.hh>
+#include <mln/pw/image.hh>
 
 #include <mln/morpho/closing/area.hh>
 
@@ -48,7 +53,10 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8> lena;
+  image2d<int_u8> lena, clo;
   io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
-  io::pgm::save(morpho::closing::area(lena, c4(), 510), "out.pgm");
+  clo = morpho::closing::area(lena, c4(), lena.nrows() * lena.ncols());
+
+  int_u8 m = level::compute(accu::max<int_u8>(), lena);
+  mln_assertion(clo == (pw::cst(m) | lena.domain()));
 }

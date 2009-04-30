@@ -73,63 +73,63 @@ namespace mln
       {
 
 	template <typename A, typename I>
-	void take_as_init_fastest (trait::accumulator::when_pix::use_none, A& accu,
-				   const I& input, const unsigned p)
+	void take_as_init_fastest(trait::accumulator::when_pix::use_none, A& accu,
+				  const I& input, const unsigned p)
 	{
 	  (void)input;
 	  (void)p;
-	  accu.take_as_init ();
+	  accu.take_as_init();
 	}
 
 	template <typename A, typename I, typename P>
-	void take_as_init (trait::accumulator::when_pix::use_p, A& accu,
-			   const I& input, const P& p)
+	void take_as_init(trait::accumulator::when_pix::use_p, A& accu,
+			  const I& input, const P& p)
 	{
 	  (void)input;
-	  accu.take_as_init (p);
+	  accu.take_as_init(p);
 	}
 
 	template <typename A, typename I, typename P>
-	void take_as_init (trait::accumulator::when_pix::use_none, A& accu,
-			   const I& input, const P& p)
+	void take_as_init(trait::accumulator::when_pix::use_none, A& accu,
+			  const I& input, const P& p)
 	{
 	  (void)input;
 	  (void)p;
-	  accu.take_as_init ();
+	  accu.take_as_init();
 	}
 
 	template <typename A, typename I, typename P>
-	void take_as_init (trait::accumulator::when_pix::use_pix, A& accu,
-			   const I& input, const P& p)
+	void take_as_init(trait::accumulator::when_pix::use_pix, A& accu,
+			  const I& input, const P& p)
 	{
-	  accu.take_as_init (make::pix(input, p));
+	  accu.take_as_init(make::pix(input, p));
 	}
 
 	template <typename A, typename I, typename P>
-	void take_as_init (trait::accumulator::when_pix::use_v, A& accu,
-			   const I& input, const P& p)
+	void take_as_init(trait::accumulator::when_pix::use_v, A& accu,
+			  const I& input, const P& p)
 	{
-	  accu.take_as_init (input(p));
+	  accu.take_as_init(input(p));
 	}
 
 	template <typename A, typename I>
-	void take_as_init_fastest (trait::accumulator::when_pix::use_v, A& accu,
-				   const I& input, const unsigned p)
+	void take_as_init_fastest(trait::accumulator::when_pix::use_v, A& accu,
+				  const I& input, const unsigned p)
 	{
-	  accu.take_as_init (input.element (p));
+	  accu.take_as_init(input.element(p));
 	}
 
 
 	template <typename A, typename I, typename P>
-	void take_as_init (A& accu, const I& input, const P& p)
+	void take_as_init(A& accu, const I& input, const P& p)
 	{
-	  take_as_init (mln_trait_accumulator_when_pix(A)(), accu, input, p);
+	  take_as_init(mln_trait_accumulator_when_pix(A)(), accu, input, p);
 	}
 
 	template <typename A, typename I, typename P>
-	void take_as_init_fastest (A& accu, const I& input, const P& p)
+	void take_as_init_fastest(A& accu, const I& input, const P& p)
 	{
-	  take_as_init_fastest (mln_trait_accumulator_when_pix(A)(), accu, input, p);
+	  take_as_init_fastest(mln_trait_accumulator_when_pix(A)(), accu, input, p);
 	}
 
 
@@ -155,11 +155,11 @@ namespace mln
 
 	  template <typename I, typename N, typename S, typename A>
 	  mln_concrete(I)
-	  attribute_filter (const Image<I>& input_,
-			    const Neighborhood<N>& nbh_,
-			    const Site_Set<S>& s_,
-			    const Accumulator<A>& a_,
-			    const mln_result(A)& lambda)
+	  attribute_filter(const Image<I>& input_,
+			   const Neighborhood<N>& nbh_,
+			   const Site_Set<S>& s_,
+			   const Accumulator<A>& a_,
+			   const mln_result(A)& lambda)
 	  {
 	    trace::entering("canvas::morpho::impl::generic::attribute_filter");
 	    // FIXME: Test?!
@@ -205,7 +205,7 @@ namespace mln
 		  parent(p) = p;
 
 		  // Check accumulator trait to handle argument type (Pix or Site).
-		  take_as_init (data(p), input, p);
+		  take_as_init(data(p), input, p);
 		}
 
 		for_all(n)
