@@ -1,10 +1,13 @@
 include makefile.rules
-TARGET=sharp
+TARGET=propagation
 sharp_SRC=sharp.cc
 sharp_OBJS=${sharp_SRC:.cc=.o}
 
 test_SRC=test.cc
 test_OBJS=${test_SRC:.cc=.o}
+
+propagation_SRC=propagation.cc
+propagation_OBJS=${propagation_SRC:.cc=.o}
 
 OLENADIR=$(MLN_DIR)/..
 MILENADIR=$(OLENADIR)/milena

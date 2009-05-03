@@ -40,6 +40,9 @@
 # include <mln/morpho/tree/data.hh>
 # include "propagate_node.hh"
 
+# include <mln/data/fill.hh>
+# include <mln/pw/all.hh>
+
 namespace mln {
   namespace morpho {
     namespace tree {
@@ -58,25 +61,25 @@ namespace mln {
       ** @param way_of_propagation Propagate node in acsendant or
       ** descendant way.
       ** @param pred Predicate that node must check to be propagated.
-      ** @param v Value to be propagated. (By default \v is the value
+      ** @param v Value to be propagated. (By default \p v is the value
       ** at the node being propagated).
       */
-      template <typename T, typename A, class P, typename WP>
+      template <typename T, typename A, typename P2B, typename WP>
       inline
       void
       propagate_if(const T& tree,
 		   Image<A>& a_,
 		   const way_of_propagation<WP>&,
-		   const P& pred,
+		   const Function_p2b<P2B>& pred,
 		   const mln_value(A)& v);
 
-      template <typename T, typename A, class P, typename WP>
+      template <typename T, typename A, typename P2B>
       inline
       void
       propagate_if(const T& tree,
 		   Image<A>& a_,
-		   const way_of_propagation<WP>&,
-		   const P& pred);
+		   const desc_propagation&,
+		   const Function_p2b<P2B>& pred);
 
       /**
       ** Propagate nodes having the value v in the way
@@ -90,7 +93,7 @@ namespace mln {
       ** @param v_prop Value to propagate (By default it is the value
       ** at the node being propagated).
       */
-      template <typename T, typename A, class P, typename WP>
+      template <typename T, typename A, typename WP>
       inline
       void
       propagate_if_value(const T& tree,
@@ -99,152 +102,154 @@ namespace mln {
 			 const mln_value(A)& v,
 			 const mln_value(A)& v_prop);
 
+      template <typename T, typename A, typename WP>
+      inline
+      void
+      propagate_if_value(const T& tree,
+			 Image<A>& a_,
+			 const way_of_propagation<WP>&,
+			 const mln_value(A)& v);
+
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
       namespace internal
       {
-
-	template <typename I>
-	struct pred_value_eq : public mln::Function_p2b< pred_value_eq<I> >
-	{
-	  typedef bool result;
-
-	  pred_value_eq(const I& a, const mln_value(I)& v)
-	    : a_ (a),
-	      v_ (v)
-	  {
-	    mln_invariant(a_.is_valid());
-	  }
-
-	  bool operator() (const mln_psite(I)& p) const
-	  {
-	    mln_invariant(a_.domain().has(p));
-	    return (v_ == a_(p));
-	  }
-
-	private:
-	  const I& a_;
-	  const mln_value(I) v_;
-	};
-
-
-	template <typename T, typename A>
-	bool check_propagate_value(const T& t,
-				   const A& a,
-				   const asc_propagation& prop,
-				   const mln_value(A)& v)
+	template <typename T, typename A, typename P2B>
+	bool check_propagate_if(const T& t,
+				const A& a,
+				const asc_propagation& prop,
+				const P2B& pred,
+				const mln_value(A)& v)
 	{
 	  (void) prop;
-	  mln_up_node_piter(T) n(t);
+	  mln_node_piter(T) n(t);
 	  for_all(n)
-	    if (a(n) == v && a(t.parent(n)) != v)
+	    if (pred(n) && a(t.parent(n)) != v)
 	      return false;
 	  return true;
 	}
 
-	template <typename T, typename A>
-	bool check_propagate_value(const T& t,
-				   const A& a,
-				   const desc_propagation& prop,
-				   const mln_value(A)& v)
+	template <typename T, typename A, typename P2B>
+	bool check_propagate_if(const T& t,
+				const A& a,
+				const desc_propagation& prop,
+				const P2B& pred,
+				const mln_value(A)& v)
 	{
 	  (void) prop;
-	  mln_up_node_piter(T) n(t);
+	  mln_node_piter(T) n(t);
 	  for_all(n)
-	    if (a(n) != v && a(t.parent(n)) == v)
+	    if (a(n) != v && pred(t.parent(n)))
 	      return false;
 	  return true;
 	}
 
+	template <typename T, typename A, typename P2B>
+	bool check_propagate_if(const T& t,
+				const A& a,
+				const desc_propagation& prop,
+				const P2B& pred)
+	{
+	  (void) prop;
+	  mln_node_piter(T) n(t);
+	  for_all(n)
+	    if (a(n) != a(t.parent(n)) && pred(t.parent(n)))
+	      return false;
+	  return true;
+	}
 
-	template <typename T, typename A, class P>
+	template <typename T, typename A, typename P2B>
 	inline
 	void
 	propagate_if(const T& tree,
-		     Image<A>& a_,
+		     A& a,
 		     const desc_propagation& prop,
-		     const P& pred,
+		     const P2B& pred,
 		     const mln_value(A)& v)
 	{
-	  const A& a = exact(a_);
 	  (void) prop;
 
 	  mln_precondition(a.is_valid());
 	  mln_precondition(tree.f().domain() == a.domain());
 
-	  mln_preorder_piter(T) n(tree);
+	  mln_ch_value(typename T::function, bool) mark;
+	  initialize(mark, tree.f());
+	  mln::data::fill(mark, false);
+
+	  mln_dn_node_piter(T) n(tree);
 	  for_all(n)
-	    if (pred(n))
+	    if (mark(tree.parent(n)))
 	      {
-		propagate_node_to_descendants(n, tree, a_, v);
-		n.skip_children();
+		a(n) = v;
+		mark(n) = true;
 	      }
+	    else if (pred(n))
+	      mark(n) = true;
+	  mln_postcondition(check_propagate_if(tree, a, prop, pred, v));
 	}
 
-	template <typename T, typename A, class P>
+	template <typename T, typename A, typename P2B>
 	inline
 	void
 	propagate_if(const T& tree,
-		     Image<A>& a_,
+		     A& a,
 		     const desc_propagation& prop,
-		     const P& pred)
+		     const P2B& pred)
 	{
-	  const A& a = exact(a_);
 	  (void) prop;
 
 	  mln_precondition(a.is_valid());
 	  mln_precondition(tree.f().domain() == a.domain());
 
-	  mln_preorder_piter(T) n(tree);
+	  mln_ch_value(typename T::function, bool) mark;
+	  initialize(mark, tree.f());
+	  mln::data::fill(mark, false);
+
+	  mln_dn_node_piter(T) n(tree);
 	  for_all(n)
-	    if (pred(n))
+	    if (mark(tree.parent(n)))
 	      {
-		propagate_node_to_descendants(n, tree, a_);
-		n.skip_children();
+		a(n) = a(tree.parent(n));
+		mark(n) = true;
 	      }
+	    else if (pred(n))
+	      mark(n) = true;
+	  mln_postcondition(check_propagate_if(tree, a, prop, pred));
 	}
 
-	template <typename T, typename A, class P>
+
+	template <typename T, typename A, typename P2B>
 	inline
 	void
 	propagate_if(const T& tree,
-		     Image<A>& a_,
+		     A& a,
 		     const asc_propagation& prop,
-		     const P& pred,
+		     const P2B& pred,
 		     const mln_value(A)& v)
 	{
-	  const A& a = exact(a_);
 	  (void) prop;
 
 	  mln_precondition(a.is_valid());
 	  mln_precondition(tree.f().domain() == a.domain());
+
+	  mln_ch_value(typename T::function, bool) mark;
+	  initialize(mark, tree.f());
+	  mln::data::fill(mark, false);
 
 	  mln_up_node_piter(T) n(tree);
 	  for_all(n)
-	    if (pred(n))
-	      propagate_node_to_ancestors(n, tree, a_, v);
-	}
+	    if (mark(n))
+	      {
+		a(n) = v;
+		mark(tree.parent(n)) = true;
+	      }
+	    else if (pred(n))
+	      mark(tree.parent(n)) = true;
 
-	template <typename T, typename A, class P>
-	inline
-	void
-	propagate_if(const T& tree,
-		     Image<A>& a_,
-		     const asc_propagation& prop,
-		     const P& pred)
-	{
-	  const A& a = exact(a_);
-	  (void) prop;
-
-	  mln_precondition(a.is_valid());
-	  mln_precondition(tree.f().domain() == a.domain());
-
-	  mln_up_node_piter(T) n(tree);
-	  for_all(n)
-	    if (pred(n))
-	      propagate_node_to_ancestors(n, tree, a_, a(n));
+	  mln_postcondition(check_propagate_if(tree, a, prop, pred, v));
 	}
 
       } // end of namespace mln::morpho::tree::internal
@@ -263,9 +268,8 @@ namespace mln {
       {
 	A& a = exact(a_);
 	const WP& prop = exact(prop_);
-	internal::pred_value_eq<A> pred(a, v);
 
-	internal::propagate_if(tree, a_, prop, pred, v_prop);
+	internal::propagate_if(tree, a, prop, pw::value(a) == pw::cst(v), v_prop);
       }
 
 
@@ -277,37 +281,40 @@ namespace mln {
 			 const way_of_propagation<WP>& prop_,
 			 const mln_value(A)& v)
       {
-	const A& a = exact(a_);
+	A& a = exact(a_);
 	const WP& prop = exact(prop_);
-	internal::pred_value_eq<A> pred(a, v);
 
-	internal::propagate_if(tree, a_, prop, pred);
-	mln_postcondition(internal::check_propagate_value(tree, a, prop, v));
+	internal::propagate_if(tree, a, prop, pw::value(a) == pw::cst(v), v);
       }
 
-      template <typename T, typename A, class P, typename WP>
+      template <typename T, typename A, typename P2B, typename WP>
       inline
       void
       propagate_if(const T& tree,
 		   Image<A>& a_,
 		   const way_of_propagation<WP>& prop_,
-		   const P& pred,
+		   const Function_p2b<P2B>& pred_,
 		   const mln_value(A)& v)
       {
+	A& a = exact(a_);
 	const WP& prop = exact(prop_);
-	internal::propagate_if(tree, a_, prop, pred, v);
+	const P2B& pred = exact(pred_);
+
+	internal::propagate_if(tree, a, prop, pred, v);
       }
 
-      template <typename T, typename A, class P, typename WP>
+      template <typename T, typename A, typename P2B>
       inline
       void
       propagate_if(const T& tree,
 		   Image<A>& a_,
-		   const way_of_propagation<WP>& prop_,
-		   const P& pred)
+		   const desc_propagation& prop,
+		   const Function_p2b<P2B>& pred_)
       {
-	const WP& prop = exact(prop_);
-	internal::propagate_if(tree, a_, prop, pred);
+	A& a = exact(a_);
+	const P2B& pred = exact(pred_);
+
+	internal::propagate_if(tree, a, prop, pred);
       }
 
 #endif /* !MLN_INCLUDE_ONLY */

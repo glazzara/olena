@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
   display_tree_attributes(tree, dup);
 
   dup = duplicate(input);
-  morpho::tree::propagate_node_to_descendants(point2d(0, 2), tree, dup, 0);
+  morpho::tree::propagate_node_to_descendants(point2d(0, 2), tree, dup, 0, 0);
   dsp("Propagate node to descendants  : (point2d(0, 2), tree, dup, 0)");
   display_tree_attributes(tree, dup);
 
@@ -87,11 +87,6 @@ int main(int argc, char* argv[])
   dup = duplicate(input);
   morpho::tree::propagate_if_value(tree, dup, morpho::tree::asc_propagation (), 117, 0);
   dsp("Propagate value to ancestors  : (117, tree, dup, 0)");
-  display_tree_attributes(tree, dup);
-
-  dup = duplicate(input);
-  morpho::tree::propagate_if_value(tree, dup, morpho::tree::asc_propagation (), 117);
-  dsp("Propagate value to ancestors  : (117, tree, dup)");
   display_tree_attributes(tree, dup);
 
   dup = duplicate(input);

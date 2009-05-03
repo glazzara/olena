@@ -1,3 +1,10 @@
+2009-05-03  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Rewrite propagation using predicate.
+	* edwin/tree/propagate_if.hh: Rewrite propagation using predicate
+	 and add postcondition.
+	* edwin/tree/propagation.cc: Test file update.
+
 2009-04-30  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Update fixed segmentation, edges seems ok.
