@@ -158,6 +158,7 @@ int main(int argc, char** argv)
   typedef image2d<int_u8> I;
 
   I input = color_internal_gradient(input_);
+  io::pgm::save(input, "gradient.pgm");
 
   /***************************/
   /* Component tree creation */

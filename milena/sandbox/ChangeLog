@@ -1,3 +1,8 @@
+2009-05-04  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Update include component tree files.
+	* edwin/inim/inim.cc: Fix includes and function calls.
+
 2009-05-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add watershed in fixed segmentation.
