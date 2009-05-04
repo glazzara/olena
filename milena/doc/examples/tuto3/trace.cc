@@ -14,7 +14,9 @@ int main()
   // \{
   // ...
   trace::quiet = false;
-
+  // \}
+  trace::quiet = true;
+  // \{
   labeling::blobs(ima, c4(), nlabels);
 
   trace::quiet = true;

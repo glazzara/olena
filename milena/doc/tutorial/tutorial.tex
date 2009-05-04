@@ -754,7 +754,8 @@ In the installed path prefix, Milena's files are located in:
 %====================================
 \doxychapter{tuto3}{Getting started with Milena}
 
-\doxysection{getfamiliargen}{Getting familiar with genericity}
+%**************************
+\doxysection{tuto3getfamiliargen}{Getting familiar with genericity}
 
 One of Milena's main features is its genericity. In order to understand how to
 take benefit of it, let's see what genericity really means for us and how it is
@@ -811,7 +812,8 @@ As a result, with this algorithm we can fill an image,...
 
 
 
-\doxysection{firstgenalgo}{First generic algorithm}
+%**************************
+\doxysection{tuto3firstgenalgo}{First generic algorithm}
 In this section, we will introduce several routines/tools which are useful while
 writing generic algorithms. It is more important to focus on these
 routines/tools than what this program actually does.
@@ -837,7 +839,7 @@ The important point to remember is that a generic function should not return
 
 \doxycode[3]{first_routine}
 Like any Milena's routine, note that we use \code{trace}. This debugging tool
-will be detailled in section \ref{debughints}.
+will be detailled in section \ref{tuto3debughints}.
 
 
 \doxycode[4]{first_routine}
@@ -888,9 +890,10 @@ result.
 %       => cf. des images etendues ou non et un parcours de voisinage.
 
 
-\doxysection{compilhints}{Compilation}
+%**************************
+\doxysection{tuto3compilhints}{Compilation}
 
-\doxysubsection{howtocompile}{Include path}
+\doxysubsection{tuto3howtocompile}{Include path}
 
 If Milena has been installed in a custom directory, e.g. not /usr/include or
 /usr/local/include, the path to the library headers must be passed to the
@@ -905,7 +908,7 @@ For other compilers, please look at the documentation and search for ``include
 path''. 
 
 
-\doxysubsection{liblink}{Library linking}
+\doxysubsection{tuto3liblink}{Library linking}
 As it is usually expected when using a library, no library linking is needed for
 the library itself.
 Milena is a ``header only'' library and is compiled ``on demand'' with your
@@ -916,7 +919,7 @@ right graphic library. For more information, please refer to section
 \doxyref{inputoutput} in the Quick Reference Guide.
 
 
-\doxysubsection{compildndebug}{Disable Debug}
+\doxysubsection{tuto3compildndebug}{Disable Debug}
 By default, Olena enables a lot of internal pre and post conditions. Usually,
 this is a useful feature and it should be enabled. It can heavily slow down a
 program though and these tests can be disabled by compiling using -DNDEBUG:
@@ -925,13 +928,13 @@ program though and these tests can be disabled by compiling using -DNDEBUG:
 $ g++ -DNDEBUG -Ipath/to/mln my_program.cc 
 \end{verbatim}
 
-\doxysubsection{compoptimflags}{Compiler optimization flags}
+\doxysubsection{tuto3compoptimflags}{Compiler optimization flags}
 
 In this section you will find remarks about the compiler optimization flags and
 their impact on the compilation and execution time.
 
 
-\doxysubsubsection{compoptimgcc}{GCC}
+\doxysubsubsection{tuto3compoptimgcc}{GCC}
 
 \begin{itemize}
   \item \B{-O0}, combined with -DNDEBUG, it leads to the fastest compilation
@@ -943,16 +946,17 @@ their impact on the compilation and execution time.
   requires much more memory at compile time.
 \end{itemize}
 
-\doxysubsubsection{compoptimother}{Other compilers}
+\doxysubsubsection{tuto3compoptimother}{Other compilers}
 
 Currently, have not tested different optimization flags with other compilers. If
 you did, please report us your results.
 
 
 
-\doxysection{debughints}{Debug hints}
+%**************************
+\doxysection{tuto3debughints}{Debug hints}
 
-\doxysubsection{gdbhints}{Using assertions and GDB}
+\doxysubsection{tuto3gdbhints}{Using assertions and GDB}
 As said above, Milena already includes a lot of post and pre conditions.
 Thus, if you made a mistake in your code there is a high probability that it
 will be detected at run time. If an assertion fail, we advice you to compile
@@ -998,7 +1002,7 @@ are printed out in the backtrace as you can see in the following example:
 
 
 
-\doxysubsection{traces}{Traces}
+\doxysubsection{tuto3traces}{Traces}
 Sometimes, compiling for GDB without optimization flags and with debug
 assertions enabled could lead to execution time dramaticaly high. 
 If the function parameter values are not necessary for debbuging,
@@ -1017,9 +1021,12 @@ trace::quiet = true;
 \end{verbatim}
 
 Since it's a global variable, at anytime in the source code, the trace can be
-disabled.
+enabled/disabled.
 
+Traces are enabled:
 \doxycode[1]{trace}
+\code{labeleling::blobs} is run and the debug is then disabled.
+\doxycode[2]{trace}
 
 The previous code will produce the following trace:
 
@@ -1044,7 +1051,7 @@ As you can see, \code{labeling::blobs} is located just after having set
 been disabled just before it is called.
 
 
-\doxysubsection{debugroutines}{Debug routines}
+\doxysubsection{tuto3debugroutines}{Debug routines}
 Milena also provides a lot of debug tools. Here is a small list of the tools:
 \begin{itemize}
   \item mln::debug::println, print an image in the console.
@@ -1077,6 +1084,68 @@ this chain plus a sample tiny generic algorithm
 /!\ step by step...
 compilation time w.r.t compilation options (O1, DNDEBUG).
 
+
+%====================================
+\doxychapter{tuto4}{Data representation}
+
+This chapter aims at explaining how images are stored and which objects compose
+an image in Milena. We will start to talk about the localization of a pixel and
+then the image itself which includes the values.
+
+
+%**************************
+\doxysection{tuto4images}{Sites}
+
+A pixel is an element having both information, localization and
+pixels. In Milena, we make a difference between a pixel, a pixel value and a pixel
+location. Thus, in order to refer to a pixel location, we have the site concept.
+A site can be any kind of localization element. 
+For instance, in an image defined on a 2D regular grid, it is a 2D point with
+\var{row} and \var{col} coordinates.
+
+The site type in an image is defined by its underlying site set.
+
+
+%**************************
+\doxysection{tuto4images}{Site sets}
+
+Site sets are mainly used to define image domains. They hold all the available
+sites in an image, consequently they do not store any values.
+
+Site sets can used as standalone containers.
+
+A list of available site sets is available in section \ref{siteset}.
+
+
+%--------------------------
+\doxysubsection{Creating a site set}
+
+In this section, we will detail how to create common site sets.
+
+This is actually simple.
+
+
+%--------------------------
+\doxysubsection{Getting access to sites}
+
+
+
+%**************************
+\doxysection{tuto4images}{Images}
+
+In milena, an image is seen as a composition of both a site set and a function
+mapping a site to a value.
+
+%--------------------------
+\doxysubsection{Creating an image}
+
+In this section, we will detail how to create common images.
+
+%--------------------------
+\doxysubsection{Reading an image from a file}
+
+%--------------------------
+\doxysubsection{Accessing data}
 
 
 

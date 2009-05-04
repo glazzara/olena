@@ -1,3 +1,22 @@
+2009-05-04 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Small doc update.
+
+	* examples/Makefile.am
+	* examples/tuto3/trace.cc
+	* examples/tuto4/image.cc
+	* examples/tuto4/site_set_create.cc: new compiled samples.
+
+	* figures/accu_image_morpher_big_picture.pdf: figure illustrating how
+	accu::image could be used.
+
+	* groups/functions.hh: is not necessary anymore.
+
+	* outputs/trace.txt: cannot be generated since it depends on the
+	execution time and it may change.
+
+	* tutorial/tutorial.tex: first draft of a new chapter.
+
 2009-04-30 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Remove l2l concept.

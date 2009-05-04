@@ -57,6 +57,9 @@ colorize 			\
 println 			\
 trace 				 
 
+# Tuto4
+noinst_PROGRAMS +=	 	\
+site_set_create
 
 accu_right_instanciation_SOURCES = accu-right-instanciation.cc
 borderthickness_SOURCES = borderthickness.cc
@@ -108,6 +111,9 @@ tuto4_genericity_and_algorithms_SOURCES = tuto4_genericity_and_algorithms.cc
 colorize_SOURCES = tuto3/colorize.cc
 println_SOURCES = tuto3/println.cc
 trace_SOURCES = tuto3/trace.cc
+
+# Tuto 4
+site_set_create_SOURCES = tuto4/site_set_create.cc
 
 all: clean-figures 
 	mkdir -p $(OUTPUTS_BUILDDIR) 
