@@ -34,6 +34,7 @@
 
 # include <mln/core/concept/accumulator.hh>
 # include <mln/core/concept/image.hh>
+# include <mln/border/resize_equal.hh>
 
 
 namespace mln
@@ -123,7 +124,7 @@ namespace mln
 
 	    internal::take_as_init_tests(input, values);
 
-	    mln_piter(I) p(values.domain());
+	    mln_piter(J) p(values.domain());
 	    for_all(p)
 	      input(p).take_as_init(values(p));
 
@@ -169,6 +170,8 @@ namespace mln
 	  internal::take_as_init_tests(input, values);
 	  // Extra test:
 	  mln_precondition(values.domain() == input.domain());
+
+	  border::resize_equal(input, values);
 	  
 	  mln_pixter(I) p_in(input);
 	  mln_pixter(const J) p_v(values);

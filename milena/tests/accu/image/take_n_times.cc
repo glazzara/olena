@@ -53,4 +53,7 @@ int main()
 
   accu::image::take_n_times(ima, dta, dta);
   mln_assertion(ima == (pw::cst(49) | ima.domain()));
+
+  accu::image::take_n_times(ima, (pw::cst(2) | ima.domain()), 1);
+  mln_assertion(ima == (pw::cst(51) | ima.domain()));
 }

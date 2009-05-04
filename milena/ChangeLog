@@ -1,5 +1,27 @@
 2009-05-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add overloads in accu image and fix bugs.
+
+	* mln/accu/image/take_n_times.hh
+	(take_n_times_tests, take_n_times_dispatch)
+	(take_n_times, take_n_times_fastest): New overload for
+	argument as a value.
+	* mln/accu/image/take.hh (take): Likewise.
+	(todo): Remove; done.
+	* mln/accu/image/set_value.hh (set_value): Fix iterator.
+	(set_value_fastest): Fix missing border handling.
+	* mln/accu/image/take_as_init.hh: Likewise.
+	* mln/accu/image/take.hh: Copy to...
+	* mln/accu/image/untake.hh: ...this new file.
+	* mln/accu/image/all.hh: Update.
+	* mln/accu/sum.hh (trait): New.
+	(untake, set_value): New.
+	* tests/accu/image/take_n_times.cc: Augment.
+	* tests/accu/image/untake.cc: New.
+	* tests/accu/image/Makefile.am: Update.
+
+2009-05-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Overload accu image set_value and clean up a bit.
 
 	* mln/accu/image/set_value.hh (set_value_tests): New.

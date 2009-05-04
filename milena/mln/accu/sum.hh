@@ -46,18 +46,38 @@
 namespace mln
 {
 
+  // Forward declaration.
+  namespace accu { template <typename T, typename S> struct sum; }
+
+
+  // Traits.
+
+  namespace trait
+  {
+
+    template <typename T, typename S>
+    struct accumulator_< accu::sum<T,S> >
+    {
+      typedef accumulator::has_untake::yes    has_untake;
+      typedef accumulator::has_set_value::yes has_set_value;
+      typedef accumulator::has_stop::no       has_stop;
+      typedef accumulator::when_pix::not_ok   when_pix;
+    };
+
+  } // end of namespace mln::trait
+
+
   namespace accu
   {
 
-
     /// \brief Generic sum accumulator class.
-    /*!
-     * Parameter \c T is the type of values that we sum.  Parameter \c
-     * S is the type to store the value sum; the default type of
-     * \c S is the summation type (property) of \c T.
-     *
-     * \ingroup modaccuvalues
-     */
+    ///
+    /// Parameter \c T is the type of values that we sum.  Parameter \c
+    /// S is the type to store the value sum; the default type of
+    /// \c S is the summation type (property) of \c T.
+    ///
+    /// \ingroup modaccuvalues
+    //
     template <typename T, typename S = mln_sum(T)>
     struct sum : public mln::accu::internal::base< const S&, sum<T,S> >
     {
@@ -71,6 +91,9 @@ namespace mln
       void take(const argument& t);
       void take_as_init_(const argument& t);
       void take(const sum<T,S>& other);
+
+      void untake(const argument& t);
+      void set_value(const S& s);
       /// \}
 
       /// Get the value of the accumulator.
@@ -105,6 +128,7 @@ namespace mln
     } // end of namespace mln::accu::meta
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T, typename S>
@@ -131,6 +155,13 @@ namespace mln
 
     template <typename T, typename S>
     inline
+    void sum<T,S>::untake(const argument& t)
+    {
+      s_ -= static_cast<S>(t);
+    }
+
+    template <typename T, typename S>
+    inline
     void sum<T,S>::take_as_init_(const argument& t)
     {
       s_ = static_cast<S>(t);
@@ -150,6 +181,14 @@ namespace mln
     sum<T,S>::to_result() const
     {
       return s_;
+    }
+
+    template <typename T, typename S>
+    inline
+    void
+    sum<T,S>::set_value(const S& s)
+    {
+      s_ = s;
     }
 
     template <typename T, typename S>

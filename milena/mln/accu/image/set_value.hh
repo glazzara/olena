@@ -31,11 +31,10 @@
 /// \file mln/accu/image/set_value.hh
 ///
 /// Set the values of an image of accumulators.
-///
-/// \todo Add "set_value(Image<I>& input, const Image<J>& values)".
 
 # include <mln/core/concept/accumulator.hh>
 # include <mln/core/concept/image.hh>
+# include <mln/border/resize_equal.hh>
 
 
 namespace mln
@@ -133,7 +132,7 @@ namespace mln
 
 	    internal::set_value_tests(input, res);
 
-	    mln_piter(I) p(res.domain());
+	    mln_piter(J) p(res.domain());
 	    for_all(p)
 	      input(p).set_value(res(p));
 
@@ -185,7 +184,9 @@ namespace mln
 	  
 	  internal::set_value_tests(input, res);
 	  mln_precondition(res.domain() == input.domain());
-	  
+
+	  border::resize_equal(input, res);
+
 	  mln_pixter(I) p_in(input);
 	  mln_pixter(const J) p_res(res);
 	  for_all_2(p_in, p_res)

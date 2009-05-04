@@ -8,7 +8,8 @@ check_PROGRAMS =				\
   take						\
   take_as_init					\
   take_n_times					\
-  to_result
+  to_result					\
+  untake
 
 init_SOURCES = init.cc
 set_value_SOURCES = set_value.cc
@@ -16,5 +17,6 @@ take_SOURCES = take.cc
 take_as_init_SOURCES = take_as_init.cc
 take_n_times_SOURCES = take_n_times.cc
 to_result_SOURCES = to_result.cc
+untake_SOURCES = untake.cc
 
 TESTS = $(check_PROGRAMS)

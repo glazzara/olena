@@ -25,34 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_IMAGE_ALL_HH
-# define MLN_ACCU_IMAGE_ALL_HH
-
-/// \file mln/accu/image/all.hh
+/// \file tests/accu/image/untake.cc
 ///
-/// File that includes all accumulator image routines.
+/// Tests on mln::accu::image::untake.
+
+#include <mln/core/image/image2d.hh>
+#include <mln/data/fill.hh>
+#include <mln/level/compare.hh>
+#include <mln/pw/cst.hh>
+#include <mln/pw/image.hh>
+
+#include <mln/accu/sum.hh>
+#include <mln/accu/image/take_as_init.hh>
+#include <mln/accu/image/untake.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of accumulators.
-  namespace accu
-  {
-    /// Namespace of accumulator image routines.
-    namespace image {}
+  typedef accu::sum<int,int> A;
+  image2d<A> ima(2, 2);
+  accu::image::take_as_init(ima, 60);
 
-  }
+  accu::image::untake(ima, 9);
+  mln_assertion(ima == (pw::cst(51) | ima.domain()));
 }
-
-
-# include <mln/accu/image/init.hh>
-# include <mln/accu/image/set_value.hh>
-# include <mln/accu/image/take_as_init.hh>
-# include <mln/accu/image/take.hh>
-# include <mln/accu/image/take_n_times.hh>
-# include <mln/accu/image/to_result.hh>
-# include <mln/accu/image/untake.hh>
-
-
-#endif // ! MLN_ACCU_IMAGE_ALL_HH

@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_IMAGE_TAKE_HH
-# define MLN_ACCU_IMAGE_TAKE_HH
+#ifndef MLN_ACCU_IMAGE_UNTAKE_HH
+# define MLN_ACCU_IMAGE_UNTAKE_HH
 
-/// \file mln/accu/image/take.hh
+/// \file mln/accu/image/untake.hh
 ///
-/// Update an image of accumulators by taking a value or the contents
-/// of another image.
+/// Update an image of accumulators by untaking a value or the
+/// contents of another image.
 
 # include <mln/core/concept/accumulator.hh>
 # include <mln/core/concept/image.hh>
@@ -49,11 +49,11 @@ namespace mln
 
       template <typename I>
       void
-      take(Image<I>& input, const mln_deduce(I, value, argument)& arg);
+      untake(Image<I>& input, const mln_deduce(I, value, argument)& arg);
 
       template <typename I, typename J>
       void
-      take(Image<I>& input, const Image<J>& arg);
+      untake(Image<I>& input, const Image<J>& arg);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -67,7 +67,7 @@ namespace mln
 	template <typename I, typename J>
 	inline
 	void
-	take_tests(Image<I>& input_, const Image<J>& arg_)
+	untake_tests(Image<I>& input_, const Image<J>& arg_)
 	{
 	  I& input = exact(input_);
 	  const J& arg = exact(arg_);
@@ -98,9 +98,9 @@ namespace mln
 	  template <typename I>
 	  inline
 	  void
-	  take(Image<I>& input_, const mln_deduce(I, value, argument)& arg)
+	  untake(Image<I>& input_, const mln_deduce(I, value, argument)& arg)
 	  {
-	    trace::entering("accu::impl::image::generic::take");
+	    trace::entering("accu::impl::image::generic::untake");
 
 	    mlc_is_a(mln_value(I), Accumulator)::check();
 
@@ -109,17 +109,17 @@ namespace mln
 
 	    mln_piter(I) p(input.domain());
 	    for_all(p)
-	      input(p).take(arg);
+	      input(p).untake(arg);
 
-	    trace::exiting("accu::impl::image::generic::take");
+	    trace::exiting("accu::impl::image::generic::untake");
 	  }
 
 	  template <typename I, typename J>
 	  inline
 	  void
-	  take(Image<I>& input_, const Image<J>& arg_)
+	  untake(Image<I>& input_, const Image<J>& arg_)
 	  {
-	    trace::entering("accu::impl::image::generic::take");
+	    trace::entering("accu::impl::image::generic::untake");
 
 	    mlc_is_a(mln_value(I), Accumulator)::check();
 	    mlc_converts_to(mln_value(J), mln_deduce(I, value, argument))::check();
@@ -127,13 +127,13 @@ namespace mln
 	    I& input = exact(input_);
 	    const J& arg = exact(arg_);
 
-	    internal::take_tests(input, arg);
+	    internal::untake_tests(input, arg);
 
 	    mln_piter(J) p(arg.domain());
 	    for_all(p)
-	      input(p).take(arg(p));
+	      input(p).untake(arg(p));
 
-	    trace::exiting("accu::impl::image::generic::take");
+	    trace::exiting("accu::impl::image::generic::untake");
 	  }
 
 	} // end of namespace mln::accu::image::impl::generic
@@ -144,9 +144,9 @@ namespace mln
 	template <typename I>
 	inline
 	void
-	take_fastest(Image<I>& input_, const mln_deduce(I, value, argument)& arg)
+	untake_fastest(Image<I>& input_, const mln_deduce(I, value, argument)& arg)
 	{
-	  trace::entering("accu::impl::image::take_fastest");
+	  trace::entering("accu::impl::image::untake_fastest");
 
 	  mlc_is_a(mln_value(I), Accumulator)::check();
 	  
@@ -155,17 +155,17 @@ namespace mln
 	  
 	  mln_pixter(I) px(input);
 	  for_all(px)
-	    px.val().take(arg);
+	    px.val().untake(arg);
 
-	  trace::exiting("accu::impl::image::take_fastest");
+	  trace::exiting("accu::impl::image::untake_fastest");
 	}
 
 	template <typename I, typename J>
 	inline
 	void
-	take_fastest(Image<I>& input_, const Image<J>& arg_)
+	untake_fastest(Image<I>& input_, const Image<J>& arg_)
 	{
-	  trace::entering("accu::impl::image::take_fastest");
+	  trace::entering("accu::impl::image::untake_fastest");
 
 	  mlc_is_a(mln_value(I), Accumulator)::check();
 	  mlc_converts_to(mln_value(J), mln_deduce(I, value, argument))::check();
@@ -173,7 +173,7 @@ namespace mln
 	  I& input = exact(input_);
 	  const J& arg = exact(arg_);
 
-	  internal::take_tests(input, arg);
+	  internal::untake_tests(input, arg);
 	  // Extra (stronger) test.
 	  mln_precondition(arg.domain() == input.domain());
 
@@ -182,9 +182,9 @@ namespace mln
 	  mln_pixter(I)       p_in(input);
 	  mln_pixter(const J) p_arg(arg);
 	  for_all_2(p_in, p_arg)
-	    p_in.val().take( p_arg.val() );
+	    p_in.val().untake( p_arg.val() );
 
-	  trace::exiting("accu::impl::image::take_fastest");
+	  trace::exiting("accu::impl::image::untake_fastest");
 	}
 
       } // end of namespace mln::accu::image::impl
@@ -201,28 +201,28 @@ namespace mln
 	template <typename I>
 	inline
 	void
-	take_dispatch(trait::image::speed::any,
-		      Image<I>& input, const mln_deduce(I, value, argument)& arg)
+	untake_dispatch(trait::image::speed::any,
+			Image<I>& input, const mln_deduce(I, value, argument)& arg)
 	{
-	  impl::generic::take(input, arg);
+	  impl::generic::untake(input, arg);
 	}
 
 	template <typename I>
 	inline
 	void
-	take_dispatch(trait::image::speed::fastest,
-		      Image<I>& input, const mln_deduce(I, value, argument)& arg)
+	untake_dispatch(trait::image::speed::fastest,
+			Image<I>& input, const mln_deduce(I, value, argument)& arg)
 	{
-	  impl::take_fastest(input, arg);
+	  impl::untake_fastest(input, arg);
 	}
 
 	template <typename I>
 	inline
 	void
-	take_dispatch(Image<I>& input, const mln_deduce(I, value, argument)& arg)
+	untake_dispatch(Image<I>& input, const mln_deduce(I, value, argument)& arg)
 	{
-	  take_dispatch(mln_trait_image_speed(I)(),
-			input, arg);
+	  untake_dispatch(mln_trait_image_speed(I)(),
+			  input, arg);
 	}
 
 	// 'arg' as image.
@@ -230,34 +230,34 @@ namespace mln
 	template <typename I, typename J>
 	inline
 	void
-	take_dispatch(trait::image::speed::any,
-		      trait::image::speed::any,
-		      Image<I>& input, const Image<J>& arg)
+	untake_dispatch(trait::image::speed::any,
+			trait::image::speed::any,
+			Image<I>& input, const Image<J>& arg)
 	{
-	  impl::generic::take(input, arg);
+	  impl::generic::untake(input, arg);
 	}
 
 	template <typename I, typename J>
 	inline
 	void
-	take_dispatch(trait::image::speed::fastest,
-		      trait::image::speed::fastest,
-		      Image<I>& input, const Image<J>& arg)
+	untake_dispatch(trait::image::speed::fastest,
+			trait::image::speed::fastest,
+			Image<I>& input, const Image<J>& arg)
 	{
 	  if (exact(arg).domain() == exact(input).domain())
-	    impl::take_fastest(input, arg);
+	    impl::untake_fastest(input, arg);
 	  else
-	    impl::generic::take(input, arg);
+	    impl::generic::untake(input, arg);
 	}
 
 	template <typename I, typename J>
 	inline
 	void
-	take_dispatch(Image<I>& input, const Image<J>& arg)
+	untake_dispatch(Image<I>& input, const Image<J>& arg)
 	{
-	  take_dispatch(mln_trait_image_speed(I)(),
-			mln_trait_image_speed(J)(),
-			input, arg);
+	  untake_dispatch(mln_trait_image_speed(I)(),
+			  mln_trait_image_speed(J)(),
+			  input, arg);
 	}
 
       } // end of namespace mln::accu::image::internal
@@ -268,32 +268,38 @@ namespace mln
       template <typename I>
       inline
       void
-      take(Image<I>& input, const mln_deduce(I, value, argument)& arg)
+      untake(Image<I>& input, const mln_deduce(I, value, argument)& arg)
       {
-	trace::entering("accu::image::take");
+	trace::entering("accu::image::untake");
 
-	mlc_is_a(mln_value(I), Accumulator)::check();
+	typedef mln_value(I) A;
+	mlc_is_a(A, Accumulator)::check();
+	mlc_equal(mln_trait_accumulator_has_untake(A),
+		  trait::accumulator::has_untake::yes)::check();
 
 	mln_precondition(exact(input).is_valid());
-	internal::take_dispatch(input, arg);
+	internal::untake_dispatch(input, arg);
 
-	trace::exiting("accu::image::take");
+	trace::exiting("accu::image::untake");
       }
 
       template <typename I, typename J>
       inline
       void
-      take(Image<I>& input, const Image<J>& arg)
+      untake(Image<I>& input, const Image<J>& arg)
       {
-	trace::entering("accu::image::take");
+	trace::entering("accu::image::untake");
 
-	mlc_is_a(mln_value(I), Accumulator)::check();
+	typedef mln_value(I) A;
+	mlc_is_a(A, Accumulator)::check();
+	mlc_equal(mln_trait_accumulator_has_untake(A),
+		  trait::accumulator::has_untake::yes)::check();
 	mlc_converts_to(mln_value(J), mln_deduce(I, value, argument))::check();
 
-	internal::take_tests(input, arg);
-	internal::take_dispatch(input, arg);
+	internal::untake_tests(input, arg);
+	internal::untake_dispatch(input, arg);
 
-	trace::exiting("accu::image::take");
+	trace::exiting("accu::image::untake");
       }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -305,4 +311,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_IMAGE_TAKE_HH
+#endif // ! MLN_ACCU_IMAGE_UNTAKE_HH
