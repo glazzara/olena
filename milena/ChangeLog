@@ -1,5 +1,21 @@
 2009-05-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Overload accu image set_value and clean up a bit.
+
+	* mln/accu/image/set_value.hh (set_value_tests): New.
+	(set_value, set_value_fastest, set_value_dispatch):
+	Overload for 'res' as image.
+	(set_value): Add static checks.
+	Use set_value_tests.
+	* mln/accu/image/take_as_init.hh (take_as_init_tests): New.
+	(take_as_init): Update.
+	(take_as_init_dispatch): Fix missing test over domains.
+	* mln/accu/count.hh (trait): New overload.
+	* tests/accu/image/set_value.cc: Augment.
+	* tests/accu/image/take_as_init.cc: Augment.
+
+2009-05-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	A couple of bug fix.
 
 	* mln/morpho/thinning.hh (thinning_tests): Fix.

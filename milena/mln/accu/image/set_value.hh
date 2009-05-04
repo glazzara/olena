@@ -49,28 +49,61 @@ namespace mln
 
       template <typename I>
       void
-      set_value(Image<I>& input,
-		const mln_deduce(I, value, result)& res);
+      set_value(Image<I>& input, const mln_deduce(I, value, result)& res);
+
+      template <typename I, typename J>
+      void
+      set_value(Image<I>& input, const Image<J>& res);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+      // Tests.
+
+      namespace internal
+      {
+
+	template <typename I, typename J>
+	inline
+	void
+	set_value_tests(Image<I>& input_, const Image<J>& res_)
+	{
+	  I& input = exact(input_);
+	  const J& res = exact(res_);
+
+	  mln_precondition(input.is_valid());
+	  mln_precondition(res.is_valid());
+
+	  mln_precondition(res.domain() <= input.domain());
+
+	  (void) input;
+	  (void) res;
+	}
+
+      } // end of namespace mln::accu::image::internal
+
+
+
       namespace impl
       {
 
-	// Generic version.
+	// Generic versions.
 
 	namespace generic
 	{
 
 	  template <typename I>
+	  inline
 	  void
-	  set_value(Image<I>& input_,
-		    const mln_deduce(I, value, result)& res)
+	  set_value(Image<I>& input_, const mln_deduce(I, value, result)& res)
 	  {
 	    trace::entering("accu::impl::image::generic::set_value");
 
-	    mlc_is_a(mln_value(I), Accumulator)::check();
+	    typedef mln_value(I) A;
+	    mlc_is_a(A, Accumulator)::check();
+	    mlc_equal(mln_trait_accumulator_has_set_value(A),
+		      trait::accumulator::has_set_value::yes)::check();
 
 	    I& input = exact(input_);
 	    mln_precondition(input.is_valid());
@@ -82,19 +115,47 @@ namespace mln
 	    trace::exiting("accu::impl::image::generic::set_value");
 	  }
 
+	  template <typename I, typename J>
+	  inline
+	  void
+	  set_value(Image<I>& input_, const Image<J>& res_)
+	  {
+	    trace::entering("accu::impl::image::generic::set_value");
+
+	    typedef mln_value(I) A;
+	    mlc_is_a(A, Accumulator)::check();
+	    mlc_equal(mln_trait_accumulator_has_set_value(A),
+		      trait::accumulator::has_set_value::yes)::check();
+	    mlc_converts_to(mln_value(J), mln_deduce(I, value, result))::check();
+
+	    I& input = exact(input_);
+	    const J& res = exact(res_);
+
+	    internal::set_value_tests(input, res);
+
+	    mln_piter(I) p(res.domain());
+	    for_all(p)
+	      input(p).set_value(res(p));
+
+	    trace::exiting("accu::impl::image::generic::set_value");
+	  }
+
 	} // end of namespace mln::accu::image::impl::generic
 
 
-	// Fastest version.
+	// Fastest versions.
 
 	template <typename I>
+	inline
 	void
-	set_value_fastest(Image<I>& input_,
-			  const mln_deduce(I, value, result)& res)
+	set_value_fastest(Image<I>& input_, const mln_deduce(I, value, result)& res)
 	{
 	  trace::entering("accu::impl::image::set_value_fastest");
 
-	  mlc_is_a(mln_value(I), Accumulator)::check();
+	  typedef mln_value(I) A;
+	  mlc_is_a(A, Accumulator)::check();
+	  mlc_equal(mln_trait_accumulator_has_set_value(A),
+		    trait::accumulator::has_set_value::yes)::check();
 	  
 	  I& input = exact(input_);
 	  mln_precondition(input.is_valid());
@@ -102,6 +163,33 @@ namespace mln
 	  mln_pixter(I) px(input);
 	  for_all(px)
 	    px.val().set_value(res);
+
+	  trace::exiting("accu::impl::image::set_value_fastest");
+	}
+
+	template <typename I, typename J>
+	inline
+	void
+	set_value_fastest(Image<I>& input_, const Image<J>& res_)
+	{
+	  trace::entering("accu::impl::image::set_value_fastest");
+
+	  typedef mln_value(I) A;
+	  mlc_is_a(A, Accumulator)::check();
+	  mlc_equal(mln_trait_accumulator_has_set_value(A),
+		    trait::accumulator::has_set_value::yes)::check();
+	  mlc_converts_to(mln_value(J), mln_deduce(I, value, result))::check();
+	  
+	  I& input = exact(input_);
+	  const J& res = exact(res_);
+	  
+	  internal::set_value_tests(input, res);
+	  mln_precondition(res.domain() == input.domain());
+	  
+	  mln_pixter(I) p_in(input);
+	  mln_pixter(const J) p_res(res);
+	  for_all_2(p_in, p_res)
+	    p_in.val().set_value(p_res.val());
 
 	  trace::exiting("accu::impl::image::set_value_fastest");
 	}
@@ -115,45 +203,106 @@ namespace mln
       namespace internal
       {
 
-	template <typename I, typename V>
+	// 'res' as value.
+
+	template <typename I>
+	inline
 	void
 	set_value_dispatch(trait::image::speed::any,
-			   Image<I>& input, const V& res)
+			   Image<I>& input, const mln_deduce(I, value, result)& res)
 	{
 	  impl::generic::set_value(input, res);
 	}
 
-	template <typename I, typename V>
+	template <typename I>
 	void
 	set_value_dispatch(trait::image::speed::fastest,
-			   Image<I>& input, const V& res)
+			   Image<I>& input, const mln_deduce(I, value, result)& res)
 	{
 	  impl::set_value_fastest(input, res);
 	}
 
-	template <typename I, typename V>
+	template <typename I>
+	inline
 	void
-	set_value_dispatch(Image<I>& input, const V& res)
+	set_value_dispatch(Image<I>& input, const mln_deduce(I, value, result)& res)
 	{
 	  set_value_dispatch(mln_trait_image_speed(I)(),
+			     input, res);
+	}
+
+	// 'res' as image.
+
+	template <typename I, typename J>
+	inline
+	void
+	set_value_dispatch(trait::image::speed::any,
+			   trait::image::speed::any,
+			   Image<I>& input, const Image<J>& res)
+	{
+	  impl::generic::set_value(input, res);
+	}
+
+	template <typename I, typename J>
+	inline
+	void
+	set_value_dispatch(trait::image::speed::fastest,
+			   trait::image::speed::fastest,
+			   Image<I>& input, const Image<J>& res)
+	{
+	  if (exact(res).domain() == exact(input).domain())
+	    impl::set_value_fastest(input, res);
+	  else
+	    impl::generic::set_value(input, res);
+	}
+
+	template <typename I, typename J>
+	inline
+	void
+	set_value_dispatch(Image<I>& input, const Image<J>& res)
+	{
+	  set_value_dispatch(mln_trait_image_speed(I)(),
+			     mln_trait_image_speed(J)(),
 			     input, res);
 	}
 
       } // end of namespace mln::accu::image::internal
 
 
-      // Facade.
+      // Facades.
 
       template <typename I>
+      inline
       void
-      set_value(Image<I>& input,
-		const mln_deduce(I, value, result)& res)
+      set_value(Image<I>& input, const mln_deduce(I, value, result)& res)
       {
 	trace::entering("accu::image::set_value");
 
-	mlc_is_a(mln_value(I), Accumulator)::check();
+	typedef mln_value(I) A;
+	mlc_is_a(A, Accumulator)::check();
+	mlc_equal(mln_trait_accumulator_has_set_value(A),
+		  trait::accumulator::has_set_value::yes)::check();
 
 	mln_precondition(exact(input).is_valid());
+	internal::set_value_dispatch(input, res);
+
+	trace::exiting("accu::image::set_value");
+      }
+
+      template <typename I, typename J>
+      inline
+      void
+      set_value(Image<I>& input, const Image<J>& res)
+      {
+	trace::entering("accu::image::set_value");
+
+	typedef mln_value(I) A;
+	mlc_is_a(A, Accumulator)::check();
+	mlc_equal(mln_trait_accumulator_has_set_value(A),
+		  trait::accumulator::has_set_value::yes)::check();
+	mlc_converts_to(mln_value(J), mln_deduce(I, value, result))::check();
+
+	internal::set_value_tests(input, res);
 	internal::set_value_dispatch(input, res);
 
 	trace::exiting("accu::image::set_value");

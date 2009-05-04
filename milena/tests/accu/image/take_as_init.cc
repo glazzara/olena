@@ -50,4 +50,7 @@ int main()
 
   accu::image::take_as_init(ima, ima);
   mln_assertion(ima == (pw::cst(3) | ima.domain()));
+
+  accu::image::take_as_init(ima, pw::cst(3) | ima.domain());
+  mln_assertion(ima == (pw::cst(3) | ima.domain()));
 }

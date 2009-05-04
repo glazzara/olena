@@ -47,4 +47,10 @@ int main()
 
   accu::image::set_value(ima, 3);
   mln_assertion(ima == (pw::cst(3u) | ima.domain()));
+
+
+  image2d<unsigned> res(1, 1);
+  res.at_(0, 0) = 51;
+  accu::image::set_value(ima, res);
+  mln_assertion(ima.at_(0, 0) == 51);
 }

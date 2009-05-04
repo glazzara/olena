@@ -40,6 +40,27 @@
 namespace mln
 {
 
+  // Forward declaration.
+  namespace accu { template <typename T> struct count; }
+
+
+  // Traits.
+
+  namespace trait
+  {
+
+    template <typename T>
+    struct accumulator_< accu::count<T> >
+    {
+      typedef accumulator::has_untake::yes    has_untake;
+      typedef accumulator::has_set_value::yes has_set_value;
+      typedef accumulator::has_stop::no       has_stop;
+      typedef accumulator::when_pix::use_pix  when_pix;
+    };
+
+  } // end of namespace mln::trait
+
+
   namespace accu
   {
 

@@ -47,17 +47,40 @@ namespace mln
 
       template <typename I>
       void
-      take_as_init(Image<I>& input,
-		   const mln_deduce(I, value, argument)& v);
+      take_as_init(Image<I>& input, const mln_deduce(I, value, argument)& v);
 
       template <typename I, typename J>
       void
-      take_as_init(Image<I>& input,
-		   const Image<J>& values);
+      take_as_init(Image<I>& input, const Image<J>& values);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+      // Tests.
+
+      namespace internal
+      {
+
+	template <typename I, typename J>
+	inline
+	void
+	take_as_init_tests(Image<I>& input_, const Image<J>& values_)
+	{
+	  I& input = exact(input_);
+	  const J& values = exact(values_);
+
+	  mln_precondition(input.is_valid());
+	  mln_precondition(values.is_valid());
+
+	  mln_precondition(values.domain() <= input.domain());
+
+	  (void) input;
+	  (void) values;
+	}
+
+      } // end of namespace mln::accu::image::internal
+
 
       namespace impl
       {
@@ -69,10 +92,11 @@ namespace mln
 
 	  template <typename I>
 	  void
-	  take_as_init(Image<I>& input_,
-		       const mln_deduce(I, value, argument)& v)
+	  take_as_init(Image<I>& input_, const mln_deduce(I, value, argument)& v)
 	  {
 	    trace::entering("accu::impl::image::generic::take_as_init");
+
+	    mlc_is_a(mln_value(I), Accumulator)::check();
 
 	    I& input = exact(input_);
 	    mln_precondition(input.is_valid());
@@ -86,17 +110,20 @@ namespace mln
 
 	  template <typename I, typename J>
 	  void
-	  take_as_init(Image<I>& input_,
-		       const Image<J>& values_)
+	  take_as_init(Image<I>& input_, const Image<J>& values_)
 	  {
 	    trace::entering("accu::impl::image::generic::take_as_init");
 
-	    I& input = exact(input_);
-	    const I& values = exact(values_);
-	    mln_precondition(input.is_valid());
-	    mln_precondition(values.is_valid());
+	    typedef mln_value(I) A;
+	    mlc_is_a(A, Accumulator)::check();
+	    mlc_converts_to(mln_value(J), mln_argument(A))::check();
 
-	    mln_piter(I) p(input.domain());
+	    I& input = exact(input_);
+	    const J& values = exact(values_);
+
+	    internal::take_as_init_tests(input, values);
+
+	    mln_piter(I) p(values.domain());
 	    for_all(p)
 	      input(p).take_as_init(values(p));
 
@@ -110,11 +137,12 @@ namespace mln
 
 	template <typename I>
 	void
-	take_as_init_fastest(Image<I>& input_,
-			     const mln_deduce(I, value, argument)& v)
+	take_as_init_fastest(Image<I>& input_, const mln_deduce(I, value, argument)& v)
 	{
 	  trace::entering("accu::impl::image::take_as_init_fastest");
 	  
+	  mlc_is_a(mln_value(I), Accumulator)::check();
+
 	  I& input = exact(input_);
 	  mln_precondition(input.is_valid());
 	  
@@ -127,15 +155,20 @@ namespace mln
 
 	template <typename I, typename J>
 	void
-	take_as_init_fastest(Image<I>& input_,
-			     const Image<J>& values_)
+	take_as_init_fastest(Image<I>& input_, const Image<J>& values_)
 	{
 	  trace::entering("accu::impl::image::take_as_init_fastest");
+
+	  typedef mln_value(I) A;
+	  mlc_is_a(A, Accumulator)::check();
+	  mlc_converts_to(mln_value(J), mln_argument(A))::check();
 	  
 	  I& input = exact(input_);
-	  const I& values = exact(values_);
-	  mln_precondition(input.is_valid());
-	  mln_precondition(values.is_valid());
+	  const J& values = exact(values_);
+
+	  internal::take_as_init_tests(input, values);
+	  // Extra test:
+	  mln_precondition(values.domain() == input.domain());
 	  
 	  mln_pixter(I) p_in(input);
 	  mln_pixter(const J) p_v(values);
@@ -202,7 +235,10 @@ namespace mln
 			      trait::image::speed::fastest,
 			      Image<I>& input, const Image<J>& values)
 	{
-	  impl::take_as_init_fastest(input, values);
+	  if (exact(values).domain() == exact(input).domain())
+	    impl::take_as_init_fastest(input, values);
+	  else
+	    impl::generic::take_as_init(input, values);
 	}
 
 	template <typename I, typename J>
@@ -224,8 +260,7 @@ namespace mln
       template <typename I>
       inline
       void
-      take_as_init(Image<I>& input,
-		   const mln_deduce(I, value, argument)& v)
+      take_as_init(Image<I>& input, const mln_deduce(I, value, argument)& v)
       {
 	trace::entering("accu::image::take_as_init");
 
@@ -240,8 +275,7 @@ namespace mln
       template <typename I, typename J>
       inline
       void
-      take_as_init(Image<I>& input,
-		   const Image<J>& values)
+      take_as_init(Image<I>& input, const Image<J>& values)
       {
 	trace::entering("accu::image::take_as_init");
 
@@ -249,10 +283,7 @@ namespace mln
 	mlc_is_a(A, Accumulator)::check();
 	mlc_converts_to(mln_value(J), mln_argument(A))::check();
 
-	mln_precondition(exact(input).is_valid());
-	mln_precondition(exact(values).is_valid());
-	// mln_precondition(exact(values).domain() == exact(input).domain());
-
+	internal::take_as_init_tests(input, values);
 	internal::take_as_init_dispatch(input, values);
 
 	trace::exiting("accu::image::take_as_init");
