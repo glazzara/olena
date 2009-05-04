@@ -52,6 +52,11 @@ namespace mln
 		    bool const (&when_true) [St],
 		    bool const (&when_false)[Sf]);
 
+    template <typename F, unsigned St, unsigned Sf>
+    neighb< win::multiple<window2d, F> >
+    double_neighb2d(F test,
+		    bool const (&when_true) [St],
+		    bool const (&when_false)[Sf]);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -64,6 +69,21 @@ namespace mln
 		    bool const (&when_false)[Sf])
     {
       typedef win::multiple<window2d, bool(*)(A)> W;
+      W wm(test);
+      wm.set_window(false, convert::to<window2d>(when_false)); // 0
+      wm.set_window(true,  convert::to<window2d>(when_true) ); // 1
+      neighb<W> tmp(wm);
+      return tmp;
+    }
+
+    template <typename F, unsigned St, unsigned Sf>
+    inline
+    neighb< win::multiple<window2d, F> >
+    double_neighb2d(F test,
+		    bool const (&when_true) [St],
+		    bool const (&when_false)[Sf])
+    {
+      typedef win::multiple<window2d, F> W;
       W wm(test);
       wm.set_window(false, convert::to<window2d>(when_false)); // 0
       wm.set_window(true,  convert::to<window2d>(when_true) ); // 1

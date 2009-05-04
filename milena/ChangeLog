@@ -1,3 +1,10 @@
+2009-05-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add overload for creating 2D neighborhood with a functor.
+	* mln/make/double_neighb2d.hh: Add overload with a functor.
+	* mln/world/inter_pixel/neighb2d.hh: Fix types, now passing
+	  a functor instead of a C function.
+
 2009-05-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add overloads in accu image and fix bugs.

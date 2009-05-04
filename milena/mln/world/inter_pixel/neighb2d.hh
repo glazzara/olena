@@ -34,6 +34,7 @@
 
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/make/double_neighb2d.hh>
+# include <mln/world/inter_pixel/dim2/is_row_odd.hh>
 
 namespace mln
 {
@@ -44,7 +45,7 @@ namespace mln
     namespace inter_pixel
     {
 
-      typedef neighb< win::multiple<window2d, bool(*)(const point2d&)> > dbl_neighb2d;
+      typedef neighb< win::multiple<window2d, dim2::is_row_odd> > dbl_neighb2d;
 
       const dbl_neighb2d& e2c()
       {
@@ -54,7 +55,7 @@ namespace mln
 	static bool e2c_v[] = { 0, 0, 0,
 	  1, 0, 1,
 	  0, 0, 0 };
-	static dbl_neighb2d nbh = make::double_neighb2d(is_row_odd, e2c_h, e2c_v);
+	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2c_h, e2c_v);
 	return nbh;
       }
 
@@ -70,7 +71,7 @@ namespace mln
 	  1, 0, 0, 0, 1,
 	  0, 1, 0, 1, 0,
 	  0, 0, 0, 0, 0 };
-	static dbl_neighb2d nbh = make::double_neighb2d(is_row_odd, e2e_h, e2e_v);
+	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2e_h, e2e_v);
 	return nbh;
       }
 
