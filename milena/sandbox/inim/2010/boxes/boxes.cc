@@ -46,7 +46,7 @@
 #include <mln/io/dump/save.hh>
 
 #include <mln/io/pgm/save.hh>
-#include <mln/fun/l2l/wrap.hh>
+#include <mln/fun/v2v/wrap.hh>
 
 #include <mln/math/abs.hh>
 
@@ -138,7 +138,7 @@ int main(int argc, char* argv[])
   io::dump::save(grouped_text.label_image(), argv[2]);
 
   io::pgm::save(level::transform(grouped_text.label_image(),
-				 fun::l2l::wrap<value::int_u8>()),
+				 fun::v2v::wrap<value::int_u8>()),
 		"tmp.pgm");
 
   std::cout << "Debug 8" << std::endl;

@@ -17,7 +17,7 @@
 
 #include <mln/transform/influence_zone_geodesic.hh>
 #include <mln/level/transform.hh>
-#include <mln/fun/l2l/wrap.hh>
+#include <mln/fun/v2v/wrap.hh>
 
 
 namespace mln
@@ -191,7 +191,7 @@ namespace mln
 
     {
       io::pgm::save(level::transform(line_lab,
-				     fun::l2l::wrap<value::int_u8>()),
+				     fun::v2v::wrap<value::int_u8>()),
 		    "tmp_lines.pgm");
     }
 

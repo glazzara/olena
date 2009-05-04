@@ -25,7 +25,7 @@
 #include <mln/morpho/closing/area.hh>
 #include <mln/morpho/meyer_wst.hh>
 
-#include <mln/fun/l2l/wrap.hh>
+#include <mln/fun/v2v/wrap.hh>
 
 #include <mln/core/var.hh>
 #include <mln/morpho/elementary/dilation.hh>
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
   image2d<label_16> wshed = morpho::meyer_wst(clo, c4(), nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
 
-  io::pgm::save(level::transform(wshed, fun::l2l::wrap<int_u8>()),
+  io::pgm::save(level::transform(wshed, fun::v2v::wrap<int_u8>()),
 		"tmp_wshed.pgm");
 
 

@@ -1,3 +1,15 @@
+2009-04-30 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Change references to l2l:: to v2v::.
+	
+	* icdar/2009/hsc/first_attempts/boxes.cc,
+	* icdar/2009/hsc/first_attempts/exec/iz_lines.cc,
+	* icdar/2009/hsc/first_attempts/exec/relabel_lines.cc,
+	* inim/2010/boxes/boxes.cc,
+	* lazzara/igr/irm/grad_clo_and_wshd.cc,
+	* lazzara/igr/irm/hsl_grad_and_wst.cc: use v2v::wrap instead of
+	l2l::wrap.
+
 2009-05-03  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Rewrite propagation using predicate.

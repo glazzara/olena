@@ -14,7 +14,7 @@
 #include <mln/transform/influence_zone_geodesic.hh>
 
 // #include <mln/level/transform.hh>
-// #include <mln/fun/l2l/wrap.hh>
+// #include <mln/fun/v2v/wrap.hh>
 
 
 using mln::value::int_u8;
