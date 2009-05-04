@@ -210,7 +210,6 @@ AC_CONFIG_FILES([
     milena/tests/extract/Makefile
     milena/tests/fun/Makefile
       milena/tests/fun/i2v/Makefile
-      milena/tests/fun/l2l/Makefile
       milena/tests/fun/p2b/Makefile
       milena/tests/fun/p2p/Makefile
       milena/tests/fun/p2v/Makefile
