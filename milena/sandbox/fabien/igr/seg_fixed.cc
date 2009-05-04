@@ -12,6 +12,7 @@
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u12.hh>
+#include <mln/value/label_16.hh>
 
 #include <mln/accu/sum.hh>
 #include <mln/data/fill.hh>
@@ -19,14 +20,19 @@
 #include <mln/convert/from_to.hh>
 #include <mln/level/compute.hh>
 #include <mln/level/stretch.hh>
+#include <mln/morpho/closing/volume.hh>
+#include <mln/morpho/watershed/flooding.hh>
 #include <mln/util/array.hh>
 
 #include <mln/world/inter_pixel/display_edge.hh>
+#include <mln/world/inter_pixel/neighb2d.hh>
+#include <mln/world/inter_pixel/dim2/is_edge.hh>
 
 
 using namespace mln;
 using value::int_u8;
 using value::int_u12;
+using value::label_16;
 
 
 
@@ -73,7 +79,7 @@ compute_dist(image2d<util::array<I> >& ima_arr,
 
   //std::cout << "dist: " << res << std::endl;
 
-  return res;
+  return 1 - res;
 }
 
 template <typename I>
@@ -131,13 +137,13 @@ dist_on_edges(image2d<util::array<I> >& ima_arr)
 
 int usage(const char* bin)
 {
-  std::cout << "Usage: " << bin << " input.dump" << std::endl;
+  std::cout << "Usage: " << bin << " input.dump closing" << std::endl;
   return 1;
 }
 
 int main(int argc, char* argv[])
 {
-  if (argc != 2)
+  if (argc != 3)
     return usage(argv[0]);
 
   // Initialization.
@@ -156,19 +162,20 @@ int main(int argc, char* argv[])
   // Edges computation.
   image2d<float> edges = dist_on_edges(ima_arr);
 
-  /*mln_piter_(image2d<float>) p_iter(edges.domain());
-  for_all(p_iter)
-  {
-    std::cout << "<main> " << edges(p_iter);
-    if (p_iter.row() % 2 + p_iter.col() % 2 == 1)
-      std::cout << " OK";
-    std::cout << std::endl;
-  }*/
-
   // Display.
   image2d<float> display_ima = world::inter_pixel::display_edge(edges, 0.0, 3);
-  //std::cout << "display_ima box: " << display_ima.bbox() << std::endl;
   io::pgm::save(level::stretch(int_u8(), display_ima), "edges.pgm");
+
+  // Closing.
+  image2d<float> clo = morpho::closing::volume(edges, world::inter_pixel::e2e(), atoi(argv[2]));
+
+  // Watershed.
+  label_16 nbasins;
+  image2d<label_16> wst = morpho::watershed::flooding(clo, world::inter_pixel::e2e(), nbasins);
+
+  // Save labels map.
+  std::cout << "nbasins: " << nbasins << std::endl;
+  io::dump::save(wst, "watershed_fixed.dump");
 
   return 0;
 }

@@ -1,3 +1,9 @@
+2009-05-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add watershed in fixed segmentation.
+	* fabien/igr/seg_fixed.cc: Add closing::volume() and 
+	  watershed::flooding() in fixed segmentation.
+
 2009-04-30 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Change references to l2l:: to v2v::.
