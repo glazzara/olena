@@ -1,3 +1,27 @@
+2009-04-30 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Remove l2l concept.
+
+	* tests/fun/l2l/Makefile.am,
+	* mln/fun/l2l/all.hh,
+	* mln/fun/l2l/essential.hh: remove.
+
+	* mln/fun/v2v/all.hh,
+	* mln/fun/v2v/essential.hh: update includes.
+
+	* tests/fun/l2l/wrap.cc,
+	* mln/fun/l2l/wrap.hh: move...
+	* tests/fun/v2v/wrap.cc,
+	* mln/fun/v2v/wrap.hh: ... here.
+
+	* mln/make/relabelfun.hh,
+	* tests/labeling/relabel.cc,
+	* mln/labeling/wrap.hh: use i2v/v2v instead of l2l.
+
+	* tests/fun/Makefile.am: remove l2l subdir.
+
+	* tests/fun/v2v/Makefile.am: add labeling::wrap test.
+
 2009-04-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Cleanup accu::image and add take_n_times.

@@ -56,6 +56,14 @@ mln_literal_white \
 mln_literal_essential \
 mln_world_binary_2d_subsample \
 mln_world_binary_2d_projected_histo \
+mln_world_inter_pixel_neighb2d \
+mln_world_inter_pixel_full \
+mln_world_inter_pixel_display_edge \
+mln_world_inter_pixel_dim2_is_pixel \
+mln_world_inter_pixel_dim2_all \
+mln_world_inter_pixel_dim2_is_edge \
+mln_world_inter_pixel_dim2_is_dot \
+mln_world_inter_pixel_dim2_is_row_odd \
 mln_registration_get_rtransf \
 mln_registration_internal_rms \
 mln_registration_get_rot \
@@ -201,6 +209,7 @@ mln_fun_p2p_all \
 mln_fun_p2p_translation \
 mln_fun_p2p_mirror \
 mln_fun_accu_result \
+mln_fun_binary_param \
 mln_fun_x2p_closest_point \
 mln_fun_x2p_all \
 mln_fun_x2p_essential \
@@ -224,6 +233,7 @@ mln_fun_internal_resolve \
 mln_fun_internal_selector \
 mln_fun_spe_binary \
 mln_fun_spe_unary \
+mln_fun_unary_param \
 mln_fun_v2w_w2v_norm \
 mln_fun_p2v_ternary \
 mln_fun_p2v_iota \
@@ -237,6 +247,9 @@ mln_fun_math_abs \
 mln_fun_math_sup \
 mln_fun_math_cos \
 mln_fun_math_inf \
+mln_fun_point_row \
+mln_fun_point_sli \
+mln_fun_point_col \
 mln_fun_v2b_lnot \
 mln_fun_v2b_all \
 mln_fun_v2b_threshold \
@@ -253,6 +266,7 @@ mln_fun_v2v_rgb_to_hsl \
 mln_fun_v2v_cast \
 mln_fun_v2v_ch_function_value \
 mln_fun_v2v_rgb_to_hsi \
+mln_fun_v2v_wrap \
 mln_fun_v2v_enc \
 mln_fun_v2v_projection \
 mln_fun_v2v_convert \
@@ -271,9 +285,6 @@ mln_fun_i2v_all \
 mln_fun_i2v_array \
 mln_fun_i2v_all_to \
 mln_fun_i2v_essential \
-mln_fun_l2l_all \
-mln_fun_l2l_wrap \
-mln_fun_l2l_essential \
 mln_fun_x2x_composed \
 mln_fun_x2x_all \
 mln_fun_x2x_translation \
@@ -650,6 +661,9 @@ mln_algebra_h_mat \
 mln_algebra_quat \
 mln_algebra_essential \
 mln_linear_gaussian_directional_2d \
+mln_linear_gaussian_internal_coefficients \
+mln_linear_gaussian_filter \
+mln_linear_gaussian_impl \
 mln_linear_convolve_2x1d \
 mln_linear_all \
 mln_linear_ch_convolve \
@@ -994,6 +1008,7 @@ mln_core_image_obased_rle_image \
 mln_core_image_mono_obased_rle_image \
 mln_core_image_interpolated \
 mln_core_image_lazy_image \
+mln_core_image_graph_window_if_piter \
 mln_core_image_t_image \
 mln_core_image_hexa_piter \
 mln_core_image_edge_image \
@@ -1009,6 +1024,7 @@ mln_core_image_rle_encode \
 mln_core_image_complex_window_piter \
 mln_core_image_tr_image \
 mln_core_image_thrubin_morpher \
+mln_core_image_graph_elt_window_if \
 mln_core_image_sub_image \
 mln_core_image_rle_image \
 mln_core_image_thru_morpher \
@@ -1079,6 +1095,7 @@ mln_arith_all \
 mln_arith_times \
 mln_arith_diff_abs \
 mln_arith_minus \
+mln_arith_div \
 mln_arith_min \
 mln_arith_revert \
 mln_arith_essential \
@@ -1156,9 +1173,11 @@ mln_estim_all \
 mln_estim_sum \
 mln_estim_mean \
 mln_estim_essential \
+mln_graph_all \
 mln_graph_attribute_representative \
 mln_graph_attribute_card \
 mln_graph_compute \
+mln_graph_essential \
 mln_set_uni \
 mln_set_unique \
 mln_set_inter \
@@ -1241,6 +1260,14 @@ mln_literal_white_SOURCES = mln_literal_white.cc
 mln_literal_essential_SOURCES = mln_literal_essential.cc
 mln_world_binary_2d_subsample_SOURCES = mln_world_binary_2d_subsample.cc
 mln_world_binary_2d_projected_histo_SOURCES = mln_world_binary_2d_projected_histo.cc
+mln_world_inter_pixel_neighb2d_SOURCES = mln_world_inter_pixel_neighb2d.cc
+mln_world_inter_pixel_full_SOURCES = mln_world_inter_pixel_full.cc
+mln_world_inter_pixel_display_edge_SOURCES = mln_world_inter_pixel_display_edge.cc
+mln_world_inter_pixel_dim2_is_pixel_SOURCES = mln_world_inter_pixel_dim2_is_pixel.cc
+mln_world_inter_pixel_dim2_all_SOURCES = mln_world_inter_pixel_dim2_all.cc
+mln_world_inter_pixel_dim2_is_edge_SOURCES = mln_world_inter_pixel_dim2_is_edge.cc
+mln_world_inter_pixel_dim2_is_dot_SOURCES = mln_world_inter_pixel_dim2_is_dot.cc
+mln_world_inter_pixel_dim2_is_row_odd_SOURCES = mln_world_inter_pixel_dim2_is_row_odd.cc
 mln_registration_get_rtransf_SOURCES = mln_registration_get_rtransf.cc
 mln_registration_internal_rms_SOURCES = mln_registration_internal_rms.cc
 mln_registration_get_rot_SOURCES = mln_registration_get_rot.cc
@@ -1386,6 +1413,7 @@ mln_fun_p2p_all_SOURCES = mln_fun_p2p_all.cc
 mln_fun_p2p_translation_SOURCES = mln_fun_p2p_translation.cc
 mln_fun_p2p_mirror_SOURCES = mln_fun_p2p_mirror.cc
 mln_fun_accu_result_SOURCES = mln_fun_accu_result.cc
+mln_fun_binary_param_SOURCES = mln_fun_binary_param.cc
 mln_fun_x2p_closest_point_SOURCES = mln_fun_x2p_closest_point.cc
 mln_fun_x2p_all_SOURCES = mln_fun_x2p_all.cc
 mln_fun_x2p_essential_SOURCES = mln_fun_x2p_essential.cc
@@ -1409,6 +1437,7 @@ mln_fun_internal_resolve_SOURCES = mln_fun_internal_resolve.cc
 mln_fun_internal_selector_SOURCES = mln_fun_internal_selector.cc
 mln_fun_spe_binary_SOURCES = mln_fun_spe_binary.cc
 mln_fun_spe_unary_SOURCES = mln_fun_spe_unary.cc
+mln_fun_unary_param_SOURCES = mln_fun_unary_param.cc
 mln_fun_v2w_w2v_norm_SOURCES = mln_fun_v2w_w2v_norm.cc
 mln_fun_p2v_ternary_SOURCES = mln_fun_p2v_ternary.cc
 mln_fun_p2v_iota_SOURCES = mln_fun_p2v_iota.cc
@@ -1422,6 +1451,9 @@ mln_fun_math_abs_SOURCES = mln_fun_math_abs.cc
 mln_fun_math_sup_SOURCES = mln_fun_math_sup.cc
 mln_fun_math_cos_SOURCES = mln_fun_math_cos.cc
 mln_fun_math_inf_SOURCES = mln_fun_math_inf.cc
+mln_fun_point_row_SOURCES = mln_fun_point_row.cc
+mln_fun_point_sli_SOURCES = mln_fun_point_sli.cc
+mln_fun_point_col_SOURCES = mln_fun_point_col.cc
 mln_fun_v2b_lnot_SOURCES = mln_fun_v2b_lnot.cc
 mln_fun_v2b_all_SOURCES = mln_fun_v2b_all.cc
 mln_fun_v2b_threshold_SOURCES = mln_fun_v2b_threshold.cc
@@ -1438,6 +1470,7 @@ mln_fun_v2v_rgb_to_hsl_SOURCES = mln_fun_v2v_rgb_to_hsl.cc
 mln_fun_v2v_cast_SOURCES = mln_fun_v2v_cast.cc
 mln_fun_v2v_ch_function_value_SOURCES = mln_fun_v2v_ch_function_value.cc
 mln_fun_v2v_rgb_to_hsi_SOURCES = mln_fun_v2v_rgb_to_hsi.cc
+mln_fun_v2v_wrap_SOURCES = mln_fun_v2v_wrap.cc
 mln_fun_v2v_enc_SOURCES = mln_fun_v2v_enc.cc
 mln_fun_v2v_projection_SOURCES = mln_fun_v2v_projection.cc
 mln_fun_v2v_convert_SOURCES = mln_fun_v2v_convert.cc
@@ -1456,9 +1489,6 @@ mln_fun_i2v_all_SOURCES = mln_fun_i2v_all.cc
 mln_fun_i2v_array_SOURCES = mln_fun_i2v_array.cc
 mln_fun_i2v_all_to_SOURCES = mln_fun_i2v_all_to.cc
 mln_fun_i2v_essential_SOURCES = mln_fun_i2v_essential.cc
-mln_fun_l2l_all_SOURCES = mln_fun_l2l_all.cc
-mln_fun_l2l_wrap_SOURCES = mln_fun_l2l_wrap.cc
-mln_fun_l2l_essential_SOURCES = mln_fun_l2l_essential.cc
 mln_fun_x2x_composed_SOURCES = mln_fun_x2x_composed.cc
 mln_fun_x2x_all_SOURCES = mln_fun_x2x_all.cc
 mln_fun_x2x_translation_SOURCES = mln_fun_x2x_translation.cc
@@ -1835,6 +1865,9 @@ mln_algebra_h_mat_SOURCES = mln_algebra_h_mat.cc
 mln_algebra_quat_SOURCES = mln_algebra_quat.cc
 mln_algebra_essential_SOURCES = mln_algebra_essential.cc
 mln_linear_gaussian_directional_2d_SOURCES = mln_linear_gaussian_directional_2d.cc
+mln_linear_gaussian_internal_coefficients_SOURCES = mln_linear_gaussian_internal_coefficients.cc
+mln_linear_gaussian_filter_SOURCES = mln_linear_gaussian_filter.cc
+mln_linear_gaussian_impl_SOURCES = mln_linear_gaussian_impl.cc
 mln_linear_convolve_2x1d_SOURCES = mln_linear_convolve_2x1d.cc
 mln_linear_all_SOURCES = mln_linear_all.cc
 mln_linear_ch_convolve_SOURCES = mln_linear_ch_convolve.cc
@@ -2179,6 +2212,7 @@ mln_core_image_obased_rle_image_SOURCES = mln_core_image_obased_rle_image.cc
 mln_core_image_mono_obased_rle_image_SOURCES = mln_core_image_mono_obased_rle_image.cc
 mln_core_image_interpolated_SOURCES = mln_core_image_interpolated.cc
 mln_core_image_lazy_image_SOURCES = mln_core_image_lazy_image.cc
+mln_core_image_graph_window_if_piter_SOURCES = mln_core_image_graph_window_if_piter.cc
 mln_core_image_t_image_SOURCES = mln_core_image_t_image.cc
 mln_core_image_hexa_piter_SOURCES = mln_core_image_hexa_piter.cc
 mln_core_image_edge_image_SOURCES = mln_core_image_edge_image.cc
@@ -2194,6 +2228,7 @@ mln_core_image_rle_encode_SOURCES = mln_core_image_rle_encode.cc
 mln_core_image_complex_window_piter_SOURCES = mln_core_image_complex_window_piter.cc
 mln_core_image_tr_image_SOURCES = mln_core_image_tr_image.cc
 mln_core_image_thrubin_morpher_SOURCES = mln_core_image_thrubin_morpher.cc
+mln_core_image_graph_elt_window_if_SOURCES = mln_core_image_graph_elt_window_if.cc
 mln_core_image_sub_image_SOURCES = mln_core_image_sub_image.cc
 mln_core_image_rle_image_SOURCES = mln_core_image_rle_image.cc
 mln_core_image_thru_morpher_SOURCES = mln_core_image_thru_morpher.cc
@@ -2264,6 +2299,7 @@ mln_arith_all_SOURCES = mln_arith_all.cc
 mln_arith_times_SOURCES = mln_arith_times.cc
 mln_arith_diff_abs_SOURCES = mln_arith_diff_abs.cc
 mln_arith_minus_SOURCES = mln_arith_minus.cc
+mln_arith_div_SOURCES = mln_arith_div.cc
 mln_arith_min_SOURCES = mln_arith_min.cc
 mln_arith_revert_SOURCES = mln_arith_revert.cc
 mln_arith_essential_SOURCES = mln_arith_essential.cc
@@ -2341,9 +2377,11 @@ mln_estim_all_SOURCES = mln_estim_all.cc
 mln_estim_sum_SOURCES = mln_estim_sum.cc
 mln_estim_mean_SOURCES = mln_estim_mean.cc
 mln_estim_essential_SOURCES = mln_estim_essential.cc
+mln_graph_all_SOURCES = mln_graph_all.cc
 mln_graph_attribute_representative_SOURCES = mln_graph_attribute_representative.cc
 mln_graph_attribute_card_SOURCES = mln_graph_attribute_card.cc
 mln_graph_compute_SOURCES = mln_graph_compute.cc
+mln_graph_essential_SOURCES = mln_graph_essential.cc
 mln_set_uni_SOURCES = mln_set_uni.cc
 mln_set_unique_SOURCES = mln_set_unique.cc
 mln_set_inter_SOURCES = mln_set_inter.cc

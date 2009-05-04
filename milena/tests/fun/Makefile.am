@@ -2,4 +2,4 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-SUBDIRS = i2v p2b l2l p2p p2v v2v vv2v x2x
+SUBDIRS = i2v p2b p2p p2v v2v vv2v x2x

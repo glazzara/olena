@@ -42,12 +42,12 @@ namespace mln
   namespace make
   {
 
-    /// Create a l2l function from a v2b function.
+    /// Create a i2v function from a v2b function.
     /// This function can be used to relabel a labeled image.
     ///
     /// \param[in] f a v2b function.
     ///
-    /// \return a l2l function.
+    /// \return a i2v function.
     ///
     /// \sa mln::labeling::relabel
     template <unsigned n, typename F>
@@ -56,12 +56,12 @@ namespace mln
 	       const value::label<n>& nlabels,
 	       value::label<n>&	      new_nlabels);
 
-    /// Create a l2l function from a v2v function.
+    /// Create a i2v function from a v2v function.
     /// This function can be used to relabel a labeled image.
     ///
     /// \param[in] f a v2v function.
     ///
-    /// \return a l2l function.
+    /// \return a i2v function.
     ///
     /// \sa mln::labeling::relabel
     template <unsigned n, typename F>
@@ -86,15 +86,15 @@ namespace mln
 
       value::label<n> tmp_nlabels = literal::zero;
       typedef value::label<n> label_t;
-      fun::i2v::array<label_t> fl2l(nlabels.next(), literal::zero);
+      fun::i2v::array<label_t> fi2v(nlabels.next(), literal::zero);
       for (label_t i = 1; i <= nlabels; ++i)
 	if (fv2b(i))
 	{
-	  fl2l(i) = ++tmp_nlabels;
+	  fi2v(i) = ++tmp_nlabels;
 	}
       new_nlabels = tmp_nlabels;
       trace::exiting("make::relabelfun");
-      return fl2l;
+      return fi2v;
     }
 
 
@@ -111,18 +111,18 @@ namespace mln
 
       value::label<n> tmp_nlabels = literal::zero;
       typedef value::label<n> label_t;
-      fun::i2v::array<label_t> fl2l(nlabels.next(), literal::zero);
+      fun::i2v::array<label_t> fi2v(nlabels.next(), literal::zero);
       for (label_t i = 1; i < nlabels.next(); ++i)
-	if (fl2l(fv2v(i)) == literal::zero)
+	if (fi2v(fv2v(i)) == literal::zero)
 	{
-	  fl2l(fv2v(i)) = ++tmp_nlabels;
-	  fl2l(i) = tmp_nlabels;
+	  fi2v(fv2v(i)) = ++tmp_nlabels;
+	  fi2v(i) = tmp_nlabels;
 	}
 	else
-	  fl2l(i) = fl2l(fv2v(i));
+	  fi2v(i) = fi2v(fv2v(i));
       new_nlabels = tmp_nlabels;
       trace::exiting("make::relabelfun");
-      return fl2l;
+      return fi2v;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

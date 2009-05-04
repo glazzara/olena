@@ -37,7 +37,7 @@
 #include <mln/debug/println.hh>
 
 
-struct not_to_remove : public mln::Function_l2b< not_to_remove >
+struct not_to_remove : public mln::Function_v2b< not_to_remove >
 {
   bool operator()(const mln::value::label_16& l) const
   {

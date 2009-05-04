@@ -40,7 +40,9 @@ namespace mln
   namespace fun
   {
 
-    /// Namespace of functions from value to value.
+    /// \brief Namespace of functions from value to value.
+    ///
+    /// \ingroup modfun
     namespace v2v {}
 
   }
@@ -58,7 +60,7 @@ namespace mln
 # include <mln/fun/v2v/projection.hh>
 # include <mln/fun/v2v/rgb_to_hsi.hh>
 # include <mln/fun/v2v/saturate.hh>
-
+# include <mln/fun/v2v/wrap.hh>
 
 
 #endif // ! MLN_FUN_V2V_ALL_HH

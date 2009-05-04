@@ -58,6 +58,14 @@ mln/literal/white.hh \
 mln/literal/essential.hh \
 mln/world/binary_2d/subsample.hh \
 mln/world/binary_2d/projected_histo.hh \
+mln/world/inter_pixel/neighb2d.hh \
+mln/world/inter_pixel/full.hh \
+mln/world/inter_pixel/display_edge.hh \
+mln/world/inter_pixel/dim2/is_pixel.hh \
+mln/world/inter_pixel/dim2/all.hh \
+mln/world/inter_pixel/dim2/is_edge.hh \
+mln/world/inter_pixel/dim2/is_dot.hh \
+mln/world/inter_pixel/dim2/is_row_odd.hh \
 mln/registration/get_rtransf.hh \
 mln/registration/internal/rms.hh \
 mln/registration/get_rot.hh \
@@ -206,6 +214,7 @@ mln/fun/p2p/all.hh \
 mln/fun/p2p/translation.hh \
 mln/fun/p2p/mirror.hh \
 mln/fun/accu_result.hh \
+mln/fun/binary_param.hh \
 mln/fun/x2p/closest_point.hh \
 mln/fun/x2p/all.hh \
 mln/fun/x2p/essential.hh \
@@ -229,6 +238,7 @@ mln/fun/internal/resolve.hh \
 mln/fun/internal/selector.hh \
 mln/fun/spe/binary.hh \
 mln/fun/spe/unary.hh \
+mln/fun/unary_param.hh \
 mln/fun/v2w_w2v/norm.hh \
 mln/fun/p2v/ternary.hh \
 mln/fun/p2v/iota.hh \
@@ -242,6 +252,9 @@ mln/fun/math/abs.hh \
 mln/fun/math/sup.hh \
 mln/fun/math/cos.hh \
 mln/fun/math/inf.hh \
+mln/fun/point/row.hh \
+mln/fun/point/sli.hh \
+mln/fun/point/col.hh \
 mln/fun/v2b/lnot.hh \
 mln/fun/v2b/all.hh \
 mln/fun/v2b/threshold.hh \
@@ -258,6 +271,7 @@ mln/fun/v2v/rgb_to_hsl.hh \
 mln/fun/v2v/cast.hh \
 mln/fun/v2v/ch_function_value.hh \
 mln/fun/v2v/rgb_to_hsi.hh \
+mln/fun/v2v/wrap.hh \
 mln/fun/v2v/enc.hh \
 mln/fun/v2v/projection.hh \
 mln/fun/v2v/convert.hh \
@@ -276,9 +290,6 @@ mln/fun/i2v/all.hh \
 mln/fun/i2v/array.hh \
 mln/fun/i2v/all_to.hh \
 mln/fun/i2v/essential.hh \
-mln/fun/l2l/all.hh \
-mln/fun/l2l/wrap.hh \
-mln/fun/l2l/essential.hh \
 mln/fun/x2x/composed.hh \
 mln/fun/x2x/all.hh \
 mln/fun/x2x/translation.hh \
@@ -657,6 +668,9 @@ mln/algebra/h_mat.hh \
 mln/algebra/quat.hh \
 mln/algebra/essential.hh \
 mln/linear/gaussian_directional_2d.hh \
+mln/linear/gaussian/internal/coefficients.hh \
+mln/linear/gaussian/filter.hh \
+mln/linear/gaussian/impl.hh \
 mln/linear/convolve_2x1d.hh \
 mln/linear/all.hh \
 mln/linear/ch_convolve.hh \
@@ -1019,6 +1033,7 @@ mln/core/image/obased_rle_image.hh \
 mln/core/image/mono_obased_rle_image.hh \
 mln/core/image/interpolated.hh \
 mln/core/image/lazy_image.hh \
+mln/core/image/graph_window_if_piter.hh \
 mln/core/image/t_image.hh \
 mln/core/image/hexa_piter.hh \
 mln/core/image/edge_image.hh \
@@ -1034,6 +1049,7 @@ mln/core/image/rle_encode.hh \
 mln/core/image/complex_window_piter.hh \
 mln/core/image/tr_image.hh \
 mln/core/image/thrubin_morpher.hh \
+mln/core/image/graph_elt_window_if.hh \
 mln/core/image/sub_image.hh \
 mln/core/image/rle_image.hh \
 mln/core/image/thru_morpher.hh \
@@ -1105,9 +1121,11 @@ mln/arith/plus.hh \
 mln/arith/revert.spe.hh \
 mln/arith/times.spe.hh \
 mln/arith/all.hh \
+mln/arith/div.spe.hh \
 mln/arith/times.hh \
 mln/arith/diff_abs.hh \
 mln/arith/minus.hh \
+mln/arith/div.hh \
 mln/arith/min.hh \
 mln/arith/revert.hh \
 mln/arith/essential.hh \
@@ -1189,9 +1207,11 @@ mln/estim/all.hh \
 mln/estim/sum.hh \
 mln/estim/mean.hh \
 mln/estim/essential.hh \
+mln/graph/all.hh \
 mln/graph/attribute/representative.hh \
 mln/graph/attribute/card.hh \
 mln/graph/compute.hh \
+mln/graph/essential.hh \
 mln/set/uni.hh \
 mln/set/unique.hh \
 mln/set/inter.hh \
