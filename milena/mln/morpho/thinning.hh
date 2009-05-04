@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_MORPHO_THINNING_HH
 # define MLN_MORPHO_THINNING_HH
 
-/*! \file mln/morpho/thinning.hh
- *
- * \brief Morphological thinning.
- */
+/// \file mln/morpho/thinning.hh
+///
+/// Morphological thinning.
 
 # include <mln/morpho/hit_or_miss.hh>
 # include <mln/morpho/thickening.hh>
@@ -46,10 +46,10 @@ namespace mln
   {
 
 
-    /*! Morphological thinning.
-     *
-     * This operator is THIN_B = Id - HMT_B, where B = (Bfg, Bbg).
-     */
+    /// Morphological thinning.
+    ///
+    /// This operator is THIN_B = Id - HMT_B, where B = (Bfg, Bbg).
+    //
     template <typename I, typename Wfg, typename Wbg>
     mln_concrete(I)
       thinning(const Image<I>& input,
@@ -74,7 +74,7 @@ namespace mln
 
 	// Tests.
 	mln_precondition(input.is_valid());
-	mln_precondition(win_bg.is_centered());
+	mln_precondition(win_fg.is_centered());
 	mln_precondition(! win_bg.is_empty());
 	mln_precondition((win_fg && win_bg).is_empty());
 

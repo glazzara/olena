@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,75 +27,22 @@
 // Public License.
 
 /// \file  tests/morpho/combined.cc
-/// \brief Test on several mln::morpho entities.
-
-#include <cmath>
+///
+/// Test on mln::morpho::Rd.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/data/fill.hh>
-#include <mln/debug/println.hh>
-
-#include <mln/core/alias/window2d.hh>
-#include <mln/win/rectangle2d.hh>
-
 #include <mln/core/alias/neighb2d.hh>
-
-#include <mln/morpho/erosion.hh>
-#include <mln/morpho/Rd.hh>
-
 #include <mln/value/int_u8.hh>
 
+#include <mln/morpho/Rd.hh>
 
-// static value::int_u8 cos_sin(const mln::point2d& p)
-// {
-//   return (value::int_u8)(255 * std::cos(float(p.row())) * std::sin(float(p.col())));
-// }
 
 
 int main()
 {
   using namespace mln;
 
-  const unsigned size = 1000;
+  const unsigned size = 100;
   image2d<value::int_u8> f(size, size);
   morpho::Rd(f, f, c8());
 }
-
-
-
-//   box2d b = make::box2d(/* row = */ 1, 3,
-// 		     /* col = */ 4, 6);
-//   std::cout << b << std::endl;
-
-//   bool w[] =
-//     { 0, 1, 0,
-//       0, 1, 0,
-//       1, 0, 0 };
-//   window2d win = convert::to<window2d>(w);
-//   std::cout << win << std::endl;
-//   std::cout << c8() << std::endl;
-
-//     {
-//   image2d<int> ima(b);
-//   data::fill(ima, 51);
-//   debug::println(ima);
-
-//   std::cout << win << std::endl;
-
-//   morpho::erosion(ima, win);
-
-//   rectangle2d rec(1, 2);
-//   std::cout << rec << std::endl;
-//   }
-
-
-//   {
-//     image2d<int> ima(b);
-//     data::fill(ima, cos_sin);
-//     debug::println(ima);
-
-//     std::cout << std::endl;
-
-//     image2d<int> ima2 = morpho::erosion(ima, win);
-//     debug::println(ima2);
-//   }

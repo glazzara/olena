@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,23 +32,18 @@
 // FIXME: This file, as well its functions and classes, shall not
 // contain capital letters.
 
-/*!
- * \file  mln/morpho/Rd.hh
- *
- * \brief FIXME.
- */
+/// \file  mln/morpho/Rd.hh
+///
+/// \todo Reform code!  Also go and see sandbox/theo/Rd.
 
 # include <vector>
-
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-
 # include <mln/trait/value_.hh>
-
 # include <mln/data/fill.hh>
 # include <mln/level/compare.hh>
+# include <mln/util/ord.hh>
 
-# include <mln/util/greater_point.hh>
 
 namespace mln
 {
@@ -56,7 +52,8 @@ namespace mln
   {
 
     template <typename I, typename N>
-    I Rd(const Image<I>& f, const Image<I>& g, const Neighborhood<N>& nbh);
+    I
+    Rd(const Image<I>& f, const Image<I>& g, const Neighborhood<N>& nbh);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -134,7 +131,7 @@ namespace mln
 	      mln_niter(N) n(nbh, p);
 	      for_all(n)
 		{
-		  if (f.has(n))
+		  if (f.domain().has(n))
 		    assert(is_proc(n) == is_proc__(n, p));
 		  if (f.has(n) && is_proc(n))
 		    do_union(n, p);
@@ -153,7 +150,6 @@ namespace mln
 		  else
 		    o(p) = o(parent(p));
 		}
-	      is_proc(p) = true;
 	    }
 
 	}
@@ -161,8 +157,7 @@ namespace mln
 	inline
 	bool is_proc__(const point& n, const point& p) const
 	{
-	  util::greater_point<I> greater_than(g);
-	  return g(n) > g(p) || (g(n) == g(p) && greater_than(p,n));
+	  return g(n) > g(p) || (g(n) == g(p) && util::ord_strict(point(n), p));
 	}
 
 	inline
@@ -212,7 +207,8 @@ namespace mln
 
     template <typename I, typename N>
     inline
-    I Rd(const Image<I>& f, const Image<I>& g, const Neighborhood<N>& nbh)
+    I
+    Rd(const Image<I>& f, const Image<I>& g, const Neighborhood<N>& nbh)
     {
       assert(f <= g);
       impl::Rd<I,N> run(exact(f), exact(g), exact(nbh));
