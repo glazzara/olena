@@ -4,3 +4,9 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS = attribute
 
+check_PROGRAMS = 				\
+  labeling
+
+labeling_SOURCES = labeling.cc
+
+TESTS = $(check_PROGRAMS)

@@ -36,12 +36,16 @@
 # include <mln/core/internal/site_set_iterator_base.hh>
 
 
-
 namespace mln
 {
 
   // Forward declaration.
   template <typename S, typename I> class graph_psite;
+  namespace util
+  {
+    template <typename G> class edge;
+    template <typename G> class vertex;
+  }
 
 
 
@@ -115,8 +119,11 @@ namespace mln
     template <typename S, typename I, typename E>
     struct subject_impl< const p_graph_piter<S,I>&, E >
     {
-      const typename S::graph_t& graph() const;
+      typedef typename S::graph_t graph_t;
+
+      const graph_t& graph() const;
       unsigned id() const;
+      util::edge<graph_t> edge_with(const util::vertex<graph_t>& v) const;
 
       private:
       const E& exact_() const;
@@ -265,6 +272,14 @@ namespace mln
     subject_impl< const p_graph_piter<S,I>&, E >::id() const
     {
       return exact_().get_subject().id();
+    };
+
+    template <typename S, typename I, typename E>
+    inline
+    util::edge<typename S::graph_t>
+    subject_impl< const p_graph_piter<S,I>&, E >::edge_with(const util::vertex<graph_t>& v) const
+    {
+      return exact_().get_subject().element().edge_with(v);
     };
 
     template <typename S, typename I, typename E>

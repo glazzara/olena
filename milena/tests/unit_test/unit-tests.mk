@@ -865,6 +865,7 @@ mln_core_internal_graph_psite_base \
 mln_core_internal_run_image \
 mln_core_internal_pixel_impl \
 mln_core_internal_site_set_base \
+mln_core_internal_is_masked_impl_selector \
 mln_core_internal_image_value_morpher \
 mln_core_internal_site_iterator_base \
 mln_core_internal_complex_neighborhood_base \
@@ -1050,6 +1051,7 @@ mln_core_image_image2d \
 mln_core_image_ch_piter \
 mln_core_image_complex_windows \
 mln_core_image_violent_cast_image \
+mln_core_image_graph_elt_neighborhood_if \
 mln_core_image_mono_obased_rle_encode \
 mln_core_image_value_encode \
 mln_core_image_essential \
@@ -1173,6 +1175,9 @@ mln_estim_all \
 mln_estim_sum \
 mln_estim_mean \
 mln_estim_essential \
+mln_graph_labeling \
+mln_graph_to_win \
+mln_graph_to_neighb \
 mln_graph_all \
 mln_graph_attribute_representative \
 mln_graph_attribute_card \
@@ -2069,6 +2074,7 @@ mln_core_internal_graph_psite_base_SOURCES = mln_core_internal_graph_psite_base.
 mln_core_internal_run_image_SOURCES = mln_core_internal_run_image.cc
 mln_core_internal_pixel_impl_SOURCES = mln_core_internal_pixel_impl.cc
 mln_core_internal_site_set_base_SOURCES = mln_core_internal_site_set_base.cc
+mln_core_internal_is_masked_impl_selector_SOURCES = mln_core_internal_is_masked_impl_selector.cc
 mln_core_internal_image_value_morpher_SOURCES = mln_core_internal_image_value_morpher.cc
 mln_core_internal_site_iterator_base_SOURCES = mln_core_internal_site_iterator_base.cc
 mln_core_internal_complex_neighborhood_base_SOURCES = mln_core_internal_complex_neighborhood_base.cc
@@ -2254,6 +2260,7 @@ mln_core_image_image2d_SOURCES = mln_core_image_image2d.cc
 mln_core_image_ch_piter_SOURCES = mln_core_image_ch_piter.cc
 mln_core_image_complex_windows_SOURCES = mln_core_image_complex_windows.cc
 mln_core_image_violent_cast_image_SOURCES = mln_core_image_violent_cast_image.cc
+mln_core_image_graph_elt_neighborhood_if_SOURCES = mln_core_image_graph_elt_neighborhood_if.cc
 mln_core_image_mono_obased_rle_encode_SOURCES = mln_core_image_mono_obased_rle_encode.cc
 mln_core_image_value_encode_SOURCES = mln_core_image_value_encode.cc
 mln_core_image_essential_SOURCES = mln_core_image_essential.cc
@@ -2377,6 +2384,9 @@ mln_estim_all_SOURCES = mln_estim_all.cc
 mln_estim_sum_SOURCES = mln_estim_sum.cc
 mln_estim_mean_SOURCES = mln_estim_mean.cc
 mln_estim_essential_SOURCES = mln_estim_essential.cc
+mln_graph_labeling_SOURCES = mln_graph_labeling.cc
+mln_graph_to_win_SOURCES = mln_graph_to_win.cc
+mln_graph_to_neighb_SOURCES = mln_graph_to_neighb.cc
 mln_graph_all_SOURCES = mln_graph_all.cc
 mln_graph_attribute_representative_SOURCES = mln_graph_attribute_representative.cc
 mln_graph_attribute_card_SOURCES = mln_graph_attribute_card.cc

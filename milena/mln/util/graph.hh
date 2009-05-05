@@ -211,8 +211,13 @@ namespace mln
       size_t e_nmax() const;
 
       /// Return whether \p id_e is in the graph.
+      /// \@{
       bool has_e(const edge_id_t& id_e) const;
+      /// \@}
 
+      /// Return the corresponding edge id if exists. If it is not, returns
+      /// an invalid edge.
+      edge_t edge(const vertex_t& v1, const vertex_t& v2) const;
 
       /// Return the first vertex associated to the edge \p id_e.
       vertex_id_t v1(const edge_id_t& id_e) const;
@@ -440,6 +445,28 @@ namespace mln
     graph::has_e(const edge_id_t& id_e) const
     {
       return id_e < data_->edges_.size();
+    }
+
+    inline
+    graph::edge_t
+    graph::edge(const vertex_t& v1, const vertex_t& v2) const
+    {
+      mln_precondition(has_v(v1));
+      mln_precondition(has_v(v2));
+
+      vertex_id_t
+	id_v1 = v1.id(),
+	id_v2 = v2.id();
+
+      if (id_v1 > id_v2)
+	std::swap(id_v1, id_v2);
+
+      for (unsigned i = 0; i < data_->vertices_[id_v1].size(); ++i)
+	if (data_->edges_[data_->vertices_[id_v1][i]].second() == id_v2)
+	  return edge_t(*this, data_->vertices_[id_v1][i]);
+
+      // Not edges available. Return an invalid edge.
+      return edge_t();
     }
 
     inline

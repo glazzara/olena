@@ -53,8 +53,12 @@
 # include <mln/core/image/extension_ima.hh>
 # include <mln/core/image/extension_val.hh>
 # include <mln/core/image/flat_image.hh>
+# include <mln/core/image/graph_elt_neighborhood.hh>
+# include <mln/core/image/graph_elt_neighborhood_if.hh>
 # include <mln/core/image/graph_elt_window.hh>
+# include <mln/core/image/graph_elt_window_if.hh>
 # include <mln/core/image/graph_window_piter.hh>
+# include <mln/core/image/graph_window_if_piter.hh>
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/image3d.hh>

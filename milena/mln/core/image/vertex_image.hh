@@ -138,6 +138,9 @@ namespace mln
     typedef typename super_::rvalue rvalue;
     typedef typename super_::lvalue lvalue;
 
+    /// The type of the underlying graph.
+    typedef G graph_t;
+
     /// Function mapping graph elements to sites.
     typedef typename internal::vfsite_selector<P,G>::site_function_t
 	    site_function_t;
@@ -164,12 +167,9 @@ namespace mln
 		 const Function_i2v<FV>& vertex_values);
     /// @}
 
-    using super_::operator();
-
     /// Value accessors/operators overloads.
     /// @{
-//    rvalue operator()(const util::vertex<G>& v) const;
-//    lvalue operator()(const util::vertex<G>& v);
+    using super_::operator();
     rvalue operator()(unsigned v_id) const;
     lvalue operator()(unsigned v_id);
     /// @}

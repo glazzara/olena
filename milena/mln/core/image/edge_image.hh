@@ -132,6 +132,12 @@ namespace mln
 				     edge_image<P,V,G> > super_;
 
   public:
+    typedef typename super_::rvalue rvalue;
+    typedef typename super_::lvalue lvalue;
+
+    /// The type of the underlying graph.
+    typedef G graph_t;
+
     /// Skeleton type.
     typedef edge_image< tag::psite_<P>,
 			tag::value_<V>,
@@ -165,6 +171,13 @@ namespace mln
     template <typename FV>
     edge_image(const p_edges<G,site_function_t>& pe,
 	       const Function_i2v<FV>& edge_values);
+    /// @}
+
+    /// Value accessors/operators overloads.
+    /// @{
+    using super_::operator();
+    rvalue operator()(unsigned e_id) const;
+    lvalue operator()(unsigned e_id);
     /// @}
 
   };
@@ -278,6 +291,19 @@ namespace mln
     mlc_equal(mln_result(FV),V)::check();
   }
 
+  template <typename P, typename V, typename G>
+  typename edge_image<P,V,G>::rvalue
+  edge_image<P,V,G>::operator()(unsigned e_id) const
+  {
+    return this->data_->f_(e_id);
+  }
+
+  template <typename P, typename V, typename G>
+  typename edge_image<P,V,G>::lvalue
+  edge_image<P,V,G>::operator()(unsigned e_id)
+  {
+    return this->data_->f_(e_id);
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

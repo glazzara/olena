@@ -96,7 +96,7 @@ namespace mln
     /// Default constructor.
     p_edges();
 
-    /// Construct a graph edge psite set from a graph and a function.
+    /// Construct a graph edge psite set from a graph.
     ///
     /// \param gr The graph upon which the graph edge psite set is built.
     p_edges(const Graph<G>& gr);

@@ -124,6 +124,12 @@
 # define mln_eiter_(T)              T::eiter
 /// \}
 
+/// Shortcuts to access the graph type associated to T.
+/// \{
+# define mln_graph(T)         typename T::graph_t
+# define mln_graph_(T)                 T::graph_t
+/// \}
+
 /// Shortcuts to access the element type associated to T.
 /// \{
 # define mln_element(T)        typename T::element

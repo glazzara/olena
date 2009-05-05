@@ -10,7 +10,9 @@ check_PROGRAMS =				\
 ##  clock_test					\
   dpoints_pixter				\
   graph_elt_neighborhood			\
+  graph_elt_neighborhood_if			\
   graph_elt_window				\
+  graph_elt_window_if				\
   neighb					\
   pixel						\
   pixter1d					\
@@ -29,7 +31,9 @@ category_SOURCES = category.cc
 ##clock_test_SOURCES = clock_test.cc
 dpoints_pixter_SOURCES = dpoints_pixter.cc
 graph_elt_neighborhood_SOURCES = graph_elt_neighborhood.cc
+graph_elt_neighborhood_if_SOURCES = graph_elt_neighborhood_if.cc
 graph_elt_window_SOURCES = graph_elt_window.cc
+graph_elt_window_if_SOURCES = graph_elt_window_if.cc
 neighb_SOURCES = neighb.cc
 pixel_SOURCES = pixel.cc
 pixter1d_SOURCES = pixter1d.cc

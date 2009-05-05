@@ -1,3 +1,50 @@
+2009-05-05 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Improve graph support.
+
+	* headers.mk: update distributed file list.
+
+	* mln/core/image/all.hh,
+	* mln/core/image/graph_elt_neighborhood_if.hh,
+	* mln/core/image/graph_elt_window_if.hh,
+	* mln/core/image/graph_window_if_piter.hh: add a new
+	custom window/neighborhood type for graphes.
+
+	* mln/core/image/edge_image.hh: add missing operator().
+
+	* mln/core/site_set/p_edges.hh,
+	* mln/core/image/vertex_image.hh: update doc.
+
+	* mln/core/internal/is_masked_impl_selector.hh: new implementation
+	selector for graph_elt_window_if_piter.
+
+	* mln/core/internal/neighb_niter_impl.hh: add support for
+	graph_elt_neighborhood_if.
+
+	* mln/core/macros.hh: add mln_graph.
+
+	* mln/util/vertex.hh,
+	* mln/core/site_set/p_graph_piter.hh: add edge_with member.
+
+	* mln/graph/all.hh,
+	* mln/graph/labeling.hh,
+	* mln/graph/to_neighb.hh,
+	* mln/graph/to_win.hh: new routines.
+
+	* mln/make/edge_image.hh: add a new overload to handle p_edges with
+	no sites.
+
+	* mln/util/graph.hh: add a new edge() member.
+
+	* mln/util/internal/graph_nbh_iter_base.hh: add element().
+
+	* tests/core/other/Makefile.am,
+	* tests/core/other/graph_elt_neighborhood_if.cc,
+	* tests/core/other/graph_elt_window_if.cc,
+	* tests/graph/Makefile.am,
+	* tests/graph/labeling.cc,
+	* tests/unit_test/unit-tests.mk: add new tests for new routines.
+
 2009-05-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add overload for creating 2D neighborhood with a functor.

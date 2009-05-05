@@ -873,6 +873,7 @@ mln/core/internal/graph_psite_base.hh \
 mln/core/internal/run_image.hh \
 mln/core/internal/pixel_impl.hh \
 mln/core/internal/site_set_base.hh \
+mln/core/internal/is_masked_impl_selector.hh \
 mln/core/internal/image_value_morpher.hh \
 mln/core/internal/site_iterator_base.hh \
 mln/core/internal/complex_neighborhood_base.hh \
@@ -1075,6 +1076,7 @@ mln/core/image/image2d.hh \
 mln/core/image/ch_piter.hh \
 mln/core/image/complex_windows.hh \
 mln/core/image/violent_cast_image.hh \
+mln/core/image/graph_elt_neighborhood_if.hh \
 mln/core/image/mono_obased_rle_encode.hh \
 mln/core/image/value_encode.hh \
 mln/core/image/essential.hh \
@@ -1207,6 +1209,9 @@ mln/estim/all.hh \
 mln/estim/sum.hh \
 mln/estim/mean.hh \
 mln/estim/essential.hh \
+mln/graph/labeling.hh \
+mln/graph/to_win.hh \
+mln/graph/to_neighb.hh \
 mln/graph/all.hh \
 mln/graph/attribute/representative.hh \
 mln/graph/attribute/card.hh \

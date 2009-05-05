@@ -34,6 +34,7 @@
 # include <mln/util/internal/vertex_impl.hh>
 # include <mln/core/concept/proxy.hh>
 # include <mln/core/concept/site.hh>
+# include <mln/util/graph_ids.hh>
 
 /// \file mln/util/vertex.hh
 ///
@@ -114,6 +115,9 @@ namespace mln
       /// Returns the number max of vertices adjacent to this vertex.
       unsigned nmax_nbh_vertices() const;
 
+      /// Returns true if this vertex has an edge with the given vertex.
+      edge<G> edge_with(const vertex<G>& v_id) const;
+
       /// Change the parent graph of that vertex.
       void change_graph(const G& g);
 
@@ -180,6 +184,7 @@ namespace mln
       unsigned nmax_nbh_edges() const;
       util::vertex_id_t ith_nbh_vertex(unsigned i) const;
       unsigned nmax_nbh_vertices() const;
+      util::edge<G> edge_with(const util::vertex<G>& v) const;
 
     private:
       const E& exact_() const;
@@ -250,7 +255,7 @@ namespace mln
     bool
     vertex<G>::is_valid() const
     {
-      return g_.is_valid() && g_.has_v(id_);
+      return id_ != mln_max(unsigned) && g_.is_valid() && g_.has_v(id_);
     }
 
     template<typename G>
@@ -306,6 +311,16 @@ namespace mln
     {
       mln_precondition(g_.has_v(id_));
       return g_.v_nmax_nbh_vertices(id_);
+    }
+
+    template<typename G>
+    inline
+    edge<G>
+    vertex<G>::edge_with(const vertex<G>& v) const
+    {
+      mln_precondition(g_.has_v(id_));
+      mln_precondition(g_.has_v(v));
+      return g_.edge(*this, v);
     }
 
     template<typename G>
@@ -443,6 +458,15 @@ namespace mln
     {
       return exact_().get_subject().nmax_nbh_vertices();
     }
+
+    template <typename G, typename E>
+    inline
+    util::edge<G>
+    subject_impl< const util::vertex<G>, E >::edge_with(const util::vertex<G>& v) const
+    {
+      return exact_().get_subject().edge_with(v);
+    }
+
 
     template <typename G, typename E>
     inline

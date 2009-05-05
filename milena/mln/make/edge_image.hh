@@ -57,6 +57,7 @@ namespace mln
     edge_image(const Graph<G>& g, const fun::i2v::array<V>& fv);
 
 
+
     /// Construct an edge image.
     ///
     /// \param[in] g  A graph
@@ -72,10 +73,11 @@ namespace mln
 	       const Function_i2v<FV>& fv);
 
 
+
     /// Construct an edge image.
     ///
     /// \param[in] v_ima_ A vertex image.
-    /// \param[in] fp	  A function mapping edge ids to sites.
+    /// \param[in] pe	  A p_edges mapping graph element to sites .
     /// \param[in] fv	  A function mapping two vertex ids to a value.
     ///			  The result is associated to the corresponding edge.
     ///
@@ -89,7 +91,24 @@ namespace mln
 
 
 
+    /// Construct an edge image.
+    ///
+    /// \param[in] v_ima_ A vertex image.
+    /// \param[in] pe	  A p_edges mapping graph element to themselves.
+    /// \param[in] fv	  A function mapping two vertex ids to a value.
+    ///			  The result is associated to the corresponding edge.
+    ///
+    /// \return an edge image.
+    //
+    template <typename P, typename V, typename G, typename FV>
+    mln::edge_image<void,mln_result(FV),G>
+    edge_image(const vertex_image<P,V,G>& v_ima_,
+	       const p_edges<G,util::internal::id2element<G,util::edge<G> > > pe,
+	       const Function_vv2v<FV>& fv_);
+
+
 # ifndef MLN_INCLUDE_ONLY
+
 
 
     template <typename V, typename G>
@@ -105,6 +124,7 @@ namespace mln
       trace::exiting("make::edge_image");
       return ima;
     }
+
 
 
     template <typename FP, typename FV, typename G>
@@ -125,6 +145,7 @@ namespace mln
     }
 
 
+
     template <typename P, typename V, typename G, typename FP, typename FV>
     mln::edge_image<mln_result(FP),mln_result(FV),G>
     edge_image(const vertex_image<P,V,G>& v_ima_,
@@ -137,18 +158,42 @@ namespace mln
       const vertex_image<P,V,G>& v_ima = exact(v_ima_);
       mln_precondition(v_ima.is_valid());
 
-      fun::i2v::array<mln_result(FV)> tmp_fv(v_ima.domain().graph().e_nmax());
-
       typedef mln::edge_image<mln_result(FP),mln_result(FV),G> edge_ima_t;
-      edge_ima_t ima_e(pe, tmp_fv);
+      edge_ima_t ima_e(pe);
 
       mln_piter(edge_ima_t) e(ima_e.domain());
       for_all(e)
-	ima_e(e) = fv(v_ima(e.element().v1()), v_ima(e.element().v2()));
+	ima_e(e) = fv(e.element().v1(), e.element().v2());
 
       trace::exiting("make::edge_image");
       return ima_e;
     }
+
+
+
+    template <typename P, typename V, typename G, typename FV>
+    mln::edge_image<void,mln_result(FV),G>
+    edge_image(const vertex_image<P,V,G>& v_ima_,
+	       const p_edges<G,util::internal::id2element<G,util::edge<G> > > pe,
+	       const Function_vv2v<FV>& fv_)
+    {
+      trace::entering("make::edge_image");
+
+      const FV& fv = exact(fv_);
+      const vertex_image<P,V,G>& v_ima = exact(v_ima_);
+      mln_precondition(v_ima.is_valid());
+
+      typedef mln::edge_image<void,mln_result(FV),G> edge_ima_t;
+      edge_ima_t ima_e(pe);
+
+      mln_piter(edge_ima_t) e(ima_e.domain());
+      for_all(e)
+	ima_e(e) = fv(e.element().v1(), e.element().v2());
+
+      trace::exiting("make::edge_image");
+      return ima_e;
+    }
+
 
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -90,6 +90,9 @@ namespace mln
 	/// Change the graph targeted by this iterator.
 	void change_target(const G& g);
 
+	/// Return the underlying element
+	const Elt& element() const;
+
 	/// Hook to the current location.
         const Elt& elt_hook_() const;
 
@@ -259,6 +262,14 @@ namespace mln
     nbh_iterator_base<G,C,Elt,E>::change_target(const G& g)
     {
       elt_.change_graph(g);
+    }
+
+    template <typename G, typename C, typename Elt, typename E>
+    inline
+    const Elt&
+    nbh_iterator_base<G,C,Elt,E>::element() const
+    {
+      return elt_;
     }
 
     template <typename G, typename C, typename Elt, typename E>

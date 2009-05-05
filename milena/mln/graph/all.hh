@@ -43,6 +43,9 @@ namespace mln
 
 
 # include <mln/graph/compute.hh>
+# include <mln/graph/labeling.hh>
+# include <mln/graph/to_win.hh>
+# include <mln/graph/to_neighb.hh>
 
 
 #endif // ! MLN_GRAPH_ALL_HH

@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,6 +42,7 @@ namespace mln
   // Forward declaration.
   template <typename P, typename W> class graph_window_base;
   template <typename G, typename F> class graph_elt_window;
+  template <typename G, typename F, typename I> class graph_elt_window_if;
   template <typename G, typename F> class line_graph_elt_window;
 
 
@@ -72,11 +74,6 @@ namespace mln
 	return internal::force_exact<E>(*this).compute_p_().id();
       }
 
-//      operator unsigned() const
-//      {
-//	return internal::force_exact<E>(*this).compute_p_().id();
-//      }
-
     };
 
 
@@ -101,6 +98,19 @@ namespace mln
     {
 
     };
+
+
+    /// Add more implementation for neighborhoods made from a
+    /// graph_window_if_piter.
+    template <typename G, typename S, typename I, typename E>
+    struct neighb_niter_impl<graph_elt_window_if<G,S,I>, E>
+      : public neighb_niter_impl< graph_window_base< mln_result(S::fun_t),
+						     graph_elt_window_if<G,S,I> >,
+				  E >
+    {
+
+    };
+
 
   } // end of namespace mln::internal
 
