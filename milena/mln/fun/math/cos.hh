@@ -82,10 +82,10 @@ namespace mln
 
       };
 
-    }
+    } // end of namespace mln::trait::next
 
-  }
+  } // end of namespace mln
 
-}
+} // end of namespace mln
 
 #endif /* ! MLN_FUN_MATH_COS_HH */

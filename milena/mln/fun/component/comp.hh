@@ -33,10 +33,7 @@
 ///
 /// Meta function to retrieve/modify a component.
 
-# include <mln/fun/unary.hh>
-# include <mln/fun/binary.hh>
-# include <mln/fun/param.hh>
-# include <mln/trait/next/solve.hh>
+# include <mln/fun/unary_param.hh>
 # include <mln/value/rgb.hh>
 # include <mln/value/int_u.hh>
 # include <mln/algebra/vec.hh>
@@ -47,23 +44,11 @@ namespace mln
   namespace fun
   {
 
-    struct comp : binary<comp> {};
-
-    struct pcomp;
-
-    template <>
-    struct parameter<pcomp>
+    struct comp : unary_param<comp,unsigned>
     {
-      typedef unsigned param;
+      comp() : unary_param<comp,unsigned>(0) {};
+      comp(unsigned i) : unary_param<comp,unsigned>(i) {};
     };
-
-    struct pcomp : unary<pcomp>
-    {
-      pcomp() : unary<pcomp>(0) {};
-      pcomp(unsigned i = 0) : unary<pcomp>(i) {};
-    };
-
-    struct comp_count : unary<comp_count> {};
 
   } // end of namespace mln::fun
 
@@ -75,57 +60,10 @@ namespace mln
     namespace next
     {
 
-      template <typename E, typename T>
-      struct set_binary_<mln::fun::comp, mln::value::Integer, E, mln::Object, T>
-      {
-	typedef set_binary_ ret;
-	typedef E argument1;
-	typedef T argument2;
-	typedef mln_trait_nunary(mln::fun::pcomp, T) pcomp_t;
-	typedef mln_result(pcomp_t) result;
-
-	static result read(const argument1& i, const argument2& v)
-	{
-	  pcomp_t c;
-	  return c.read(i, v);
-	}
-      };
-
       template <unsigned n>
-      struct set_precise_unary_<mln::fun::comp_count, mln::value::rgb<n> >
+      struct set_precise_unary_<mln::fun::comp, mln::value::rgb<n> >
       {
 	typedef set_precise_unary_ ret;
-
-	typedef mln::value::rgb<n> argument;
-	typedef unsigned result;
-	typedef argument& lvalue;
-
-	static result read(const argument&)
-	{
-	  return n;
-	}
-      };
-
-      template <unsigned n, typename T>
-      struct set_precise_unary_<mln::fun::comp_count, mln::algebra::vec<n,T> >
-      {
-	typedef set_precise_unary_ ret;
-
-	typedef mln::algebra::vec<n,T> argument;
-	typedef unsigned result;
-	typedef argument& lvalue;
-
-	static result read(const argument&)
-	{
-	  return n;
-	}
-      };
-
-      template <unsigned n>
-      struct set_precise_unary_<mln::fun::pcomp, mln::value::rgb<n> >
-      {
-	typedef set_precise_unary_ ret;
-// 	typedef mln::fun::pcomp flag;
 
 	typedef mln::value::rgb<n> argument;
 	typedef mln::value::int_u<n> result;
@@ -143,10 +81,9 @@ namespace mln
       };
 
       template <unsigned n, typename T>
-      struct set_precise_unary_<mln::fun::pcomp, mln::algebra::vec<n,T> >
+      struct set_precise_unary_<mln::fun::comp, mln::algebra::vec<n,T> >
       {
 	typedef set_precise_unary_ ret;
-	typedef mln::fun::pcomp flag;
 
 	typedef mln::algebra::vec<n,T> argument;
 	typedef T result;

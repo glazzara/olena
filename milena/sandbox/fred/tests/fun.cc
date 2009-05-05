@@ -4,19 +4,23 @@
 #include <mln/fun/math/norm.hh>
 #include <mln/fun/component/red.hh>
 #include <mln/fun/component/comp.hh>
+#include <mln/fun/component/ithcomp.hh>
+#include <mln/fun/component/scomp.hh>
 #include <mln/value/rgb8.hh>
 
 #include <iostream>
 
 #define dbg_print(val) std::cout << #val << "\n\t -> \t" << (val) << std::endl
+
 int main()
 {
   mln::fun::abs abs;
   mln::fun::cos cos;
 //   mln::fun::inc inc;
   mln::fun::red red;
-  mln::fun::comp comp;
-  mln::fun::pcomp comp1(1);
+  mln::fun::ithcomp ithcomp;
+  mln::fun::comp comp(1);
+  mln::fun::scomp<1> comp1;
 
   mln::fun::norm::l1 l1;
   mln::fun::norm::l2 l2;
@@ -86,10 +90,11 @@ int main()
     dbg_print(red(rgb) = 0);
     mln_invariant(red(rgb) == 0);
     dbg_print(rgb);
-    dbg_print(comp(0, rgb));
-    dbg_print(comp(1, rgb));
-    dbg_print(comp(2, rgb));
-    comp1(rgb) = 2;
+    dbg_print(ithcomp(0, rgb));
+    dbg_print(ithcomp(1, rgb));
+    dbg_print(ithcomp(2, rgb));
+    dbg_print(comp1(rgb) = 2);
+    dbg_print(comp(rgb));
   }
 
   // NORM

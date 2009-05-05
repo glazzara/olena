@@ -60,11 +60,11 @@ namespace mln
 	}
       };
 
-    }
+    } // end of namespace mln::trait::next
 
-  }
+  } // end of namespace mln::trait
 
-}
+} // end of namespace mln
 
 #endif /* ! MLN_FUN_MATH_INF_HH */
 

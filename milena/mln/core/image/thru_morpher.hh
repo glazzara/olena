@@ -32,7 +32,7 @@
 # include <mln/core/internal/image_value_morpher.hh>
 # include <mln/core/concept/meta_function.hh>
 # include <mln/metal/bexpr.hh>
-# include <mln/trait/fun.hh>
+# include <mln/trait/functions.hh>
 
 ///
 /// \file mln/core/image/thru_morpher.hh
@@ -58,7 +58,7 @@ namespace mln
     {
       typedef thru_image_write<I, F> write;
       typedef thru_image_read<I, F> read;
-      typedef mlc_if(mlc_and(typename trait::fun::is_assignable<F>::ret,
+      typedef mlc_if(mlc_and(mln_trait_fun_is_assignable(F),
 		     mlc_and(mlc_not(mlc_is_const(I)),
 			     mlc_equal(mln_trait_image_pw_io(I),
 				       trait::image::pw_io::read_write))),

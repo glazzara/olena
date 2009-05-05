@@ -31,7 +31,7 @@
 # include <mln/core/concept/meta_function.hh>
 # include <mln/fun/spe/binary.hh>
 # include <mln/trait/next/solve.hh>
-# include <mln/trait/fun.hh>
+# include <mln/trait/functions.hh>
 
 namespace mln
 {
@@ -60,7 +60,7 @@ namespace mln
       template <typename U>
       void init(const U& value)
       {
-	storage_ = mln::trait::fun::internal::introspect::has_storage_t<flag, void>::compute(value);
+	storage_ = mln::trait::function::internal::introspect::has_storage_t<flag, void>::compute(value);
       };
 
       binary()

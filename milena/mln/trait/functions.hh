@@ -25,25 +25,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_FUN_HH
-# define MLN_TRAIT_FUN_HH
+#ifndef MLN_TRAIT_FUNCTIONS_HH
+# define MLN_TRAIT_FUNCTIONS_HH
 
 # include <mln/metal/bexpr.hh>
 # include <mln/metal/if.hh>
 # include <mln/fun/param.hh>
 # include <mln/trait/next/solve.hh>
 
-# define mln_trait_fun_is_assignable(Fun) typename mln::trait::fun::is_assignable< Fun >::ret
-# define mln_trait_fun_is_assignable_(Fun) mln::trait::fun::is_assignable< Fun >::ret
-# define mln_trait_fun_is_assignable__1comma(A, B) typename mln::trait::fun::is_assignable< A, B >::ret
-# define mln_trait_fun_is_assignable__1comma_(A, B) mln::trait::fun::is_assignable< A, B >::ret
+# define mln_trait_fun_is_assignable(Fun) typename mln::trait::function::is_assignable< Fun >::ret
+# define mln_trait_fun_is_assignable_(Fun) mln::trait::function::is_assignable< Fun >::ret
+# define mln_trait_fun_is_assignable__1comma(A, B) typename mln::trait::function::is_assignable< A, B >::ret
+# define mln_trait_fun_is_assignable__1comma_(A, B) mln::trait::function::is_assignable< A, B >::ret
 
-# define mln_trait_fun_is_parametrable(Fun) typename mln::trait::fun::is_parametrable< Fun >::ret
-# define mln_trait_fun_is_parametrable_(Fun) mln::trait::fun::is_parametrable< Fun >::ret
+# define mln_trait_fun_is_parametrable(Fun) typename mln::trait::function::is_parametrable< Fun >::ret
+# define mln_trait_fun_is_parametrable_(Fun) mln::trait::function::is_parametrable< Fun >::ret
 
-# define mln_trait_fun_lvalue(Fun) typename mln::trait::fun::get_lvalue< Fun >::ret
-# define mln_trait_fun_param(Fun) typename mln::trait::fun::get_param< Fun >::ret
-# define mln_trait_fun_storage(Fun) typename mln::trait::fun::get_storage< Fun >::ret
+# define mln_trait_fun_lvalue(Fun) typename mln::trait::function::get_lvalue< Fun >::ret
+# define mln_trait_fun_param(Fun) typename mln::trait::function::get_param< Fun >::ret
+# define mln_trait_fun_storage(Fun) typename mln::trait::function::get_storage< Fun >::ret
 
 namespace mln
 {
@@ -51,7 +51,7 @@ namespace mln
   namespace trait
   {
 
-    namespace fun
+    namespace function
     {
 
       namespace internal

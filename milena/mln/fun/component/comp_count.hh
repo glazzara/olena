@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -7,7 +8,7 @@
 //
 // This library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR F PARTICULAR PURPOSE.  See the GNU
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -25,20 +26,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_MATH_SUP_HH
-# define MLN_FUN_MATH_SUP_HH
+#ifndef MLN_FUN_COMPONENT_COMP_COUNT_HH
+# define MLN_FUN_COMPONENT_COMP_COUNT_HH
 
-# include <mln/fun/binary.hh>
-# include <mln/math/max.hh>
+/// \file mln/fun/component/comp_count.hh
+///
+/// Meta function to retrieve the number of components a vector has.
+
+# include <mln/fun/unary.hh>
+# include <mln/value/rgb.hh>
+# include <mln/value/int_u.hh>
+# include <mln/algebra/vec.hh>
 
 namespace mln
 {
 
-  // Cosinus, bijective
   namespace fun
   {
-    struct sup : binary<sup> {};
-  }
+
+    struct comp_count : unary<comp_count>
+    {
+    };
+
+  } // end of namespace mln::fun
+
+# ifndef MLN_INCLUDE_ONLY
 
   namespace trait
   {
@@ -46,17 +58,33 @@ namespace mln
     namespace next
     {
 
-      template <typename T>
-      struct set_binary_<mln::fun::sup, mln::Object, T, mln::Object, T>
+      template <unsigned n>
+      struct set_precise_unary_<mln::fun::comp_count, mln::value::rgb<n> >
       {
-	typedef set_binary_ ret;
-	typedef T result;
-	typedef T argument1;
-	typedef T argument2;
+	typedef set_precise_unary_ ret;
 
-	static result read(const argument1& a, const argument1& b)
+	typedef mln::value::rgb<n> argument;
+	typedef unsigned result;
+	typedef argument& lvalue;
+
+	static result read(const argument&)
 	{
-	  return math::max(a, b);
+	  return 3;
+	}
+      };
+
+      template <unsigned n, typename T>
+      struct set_precise_unary_<mln::fun::comp_count, mln::algebra::vec<n,T> >
+      {
+	typedef set_precise_unary_ ret;
+
+	typedef mln::algebra::vec<n,T> argument;
+	typedef unsigned result;
+	typedef argument& lvalue;
+
+	static result read(const argument&)
+	{
+	  return n;
 	}
       };
 
@@ -64,7 +92,8 @@ namespace mln
 
   } // end of namespace mln::trait
 
+# endif // ! MLN_INCLUDE_ONLY
+
 } // end of namespace mln
 
-#endif /* ! MLN_FUN_MATH_SUP_HH */
-
+#endif // MLN_FUN_COMPONENT_COMP_COUNT_HH

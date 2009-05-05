@@ -32,7 +32,7 @@
 # include <mln/core/internal/image_value_morpher.hh>
 # include <mln/core/concept/meta_function.hh>
 # include <mln/metal/bexpr.hh>
-# include <mln/trait/fun.hh>
+# include <mln/trait/functions.hh>
 
 /// \file mln/core/image/thrubin_morpher.hh
 ///

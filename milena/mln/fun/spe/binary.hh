@@ -30,7 +30,7 @@
 
 # include <mln/core/concept/function.hh>
 # include <mln/trait/next/solve.hh>
-# include <mln/trait/fun.hh>
+# include <mln/trait/functions.hh>
 
 /// \todo Implements parameter support
 
@@ -99,7 +99,7 @@ namespace mln
 	  template <typename U>
 	  void init(const U& value)
 	  {
-	    storage_ = mln::trait::fun::internal::introspect::has_storage_t<def, void>::compute(value);
+	    storage_ = mln::trait::function::internal::introspect::has_storage_t<def, void>::compute(value);
 	  }
 
 	  protected:

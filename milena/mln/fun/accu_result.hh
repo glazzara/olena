@@ -30,8 +30,6 @@
 
 # include <mln/fun/unary.hh>
 # include <mln/core/concept/accumulator.hh>
-# include <mln/math/acos.hh>
-# include <mln/math/cos.hh>
 
 namespace mln
 {
@@ -39,8 +37,12 @@ namespace mln
   // accu_result: return result of given accumulator.
   namespace fun
   {
-    struct accu_result : unary<accu_result> {};
-  }
+
+    struct accu_result : unary<accu_result>
+    {
+    };
+
+  } // end of namespace mln::fun
 
   namespace trait
   {
@@ -48,7 +50,7 @@ namespace mln
     namespace next
     {
       template <typename E>
-      struct set_unary_<mln::fun::accu_result, mln::Accumulator, E>
+      struct set_unary_<fun::accu_result, Accumulator, E>
       {
 	typedef set_unary_           ret;
 	typedef typename E::result   result;
@@ -60,10 +62,10 @@ namespace mln
 	}
       };
 
-    }
+    } // end of namespace mln::trait::next
 
-  }
+  } // end of namespace mln::trait
 
-}
+} // end of namespace mln
 
 #endif /* ! MLN_FUN_ACCU_RESULT_HH */

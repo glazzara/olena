@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -7,7 +8,7 @@
 //
 // This library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR F PARTICULAR PURPOSE.  See the GNU
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -25,20 +26,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_MATH_SUP_HH
-# define MLN_FUN_MATH_SUP_HH
+#ifndef MLN_FUN_COMPONENT_ITHCOMP_HH
+# define MLN_FUN_COMPONENT_ITHCOMP_HH
+
+/// \file mln/fun/component/ithcomp.hh
+///
+/// Meta function to retrieve/modify the i'th component with a binary
+/// function f(i, vec).
 
 # include <mln/fun/binary.hh>
-# include <mln/math/max.hh>
+# include <mln/fun/component/comp.hh>
 
 namespace mln
 {
 
-  // Cosinus, bijective
   namespace fun
   {
-    struct sup : binary<sup> {};
-  }
+
+    struct ithcomp : binary<ithcomp>
+    {
+    };
+
+  } // end of namespace mln::fun
+
+# ifndef MLN_INCLUDE_ONLY
 
   namespace trait
   {
@@ -46,17 +57,18 @@ namespace mln
     namespace next
     {
 
-      template <typename T>
-      struct set_binary_<mln::fun::sup, mln::Object, T, mln::Object, T>
+      template <typename I, typename T>
+      struct set_binary_<mln::fun::ithcomp, mln::value::Integer, I, mln::Object, T>
       {
 	typedef set_binary_ ret;
-	typedef T result;
-	typedef T argument1;
+	typedef I argument1;
 	typedef T argument2;
+	typedef mln_trait_nunary(mln::fun::comp, T) comp_t;
+	typedef mln_result(comp_t) result;
 
-	static result read(const argument1& a, const argument1& b)
+	static result read(const argument1& i, const argument2& v)
 	{
-	  return math::max(a, b);
+	  return comp_t::read(i, v);
 	}
       };
 
@@ -64,7 +76,8 @@ namespace mln
 
   } // end of namespace mln::trait
 
+# endif // ! MLN_INCLUDE_ONLY
+
 } // end of namespace mln
 
-#endif /* ! MLN_FUN_MATH_SUP_HH */
-
+#endif // MLN_FUN_COMPONENT_ITHCOMP_HH

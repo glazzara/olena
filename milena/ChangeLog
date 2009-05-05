@@ -1,3 +1,27 @@
+2009-05-05  Frederic Bour  <bour@lrde.epita.fr>
+
+	Tidy source code of new functions, renamed trait::fun to trait::function.
+	*  mln/core/image/thru_morpher.hh,
+	*  mln/core/image/thrubin_morpher.hh,
+	*  mln/fun/accu_result.hh,
+	*  mln/fun/binary.hh: tidied.
+	*  mln/fun/component/comp.hh: Splitted into multiples files:
+	*  mln/fun/component/comp_count.hh: New,
+	*  mln/fun/component/ithcomp.hh: New,
+	*  mln/fun/component/scomp.hh: New. Static i'th component extraction.
+	*  mln/fun/math/cos.hh,
+	*  mln/fun/math/inf.hh,
+	*  mln/fun/math/sup.hh,
+	*  mln/fun/point/col.hh,
+	*  mln/fun/point/row.hh,
+	*  mln/fun/point/sli.hh,
+	*  mln/fun/spe/binary.hh,
+	*  mln/fun/spe/unary.hh,
+	*  mln/fun/unary.hh: tidied.
+	*  mln/trait/fun.hh: Removed. Renamed to:
+	*  mln/trait/functions.hh: New.
+	*  sandbox/fred/tests/fun.cc: Small update.
+
 2009-05-05 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Small fixes.

@@ -83,7 +83,7 @@ namespace mln
       template <typename U>
       void init(const U& value)
       {
-	storage_ = mln::trait::fun::internal::introspect::has_storage_t<flag, void>::compute(value);
+	storage_ = mln::trait::function::internal::introspect::has_storage_t<flag, void>::compute(value);
       };
 
       unary()
