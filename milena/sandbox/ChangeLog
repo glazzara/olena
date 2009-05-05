@@ -1,5 +1,11 @@
 2009-05-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add a file to test exprs like ''pw::value(ima) < 3''.
+
+	* theo/experimental/op_pw_value_pw_cst.cc: New.
+
+2009-05-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Make room for INIM 2011 and store 2009 stuff.
 
 	* inim/2011: New directory.
