@@ -177,8 +177,12 @@ namespace mln
       double
       sharpness<I>::to_result() const
       {
-	double d = (double) volume_.to_result() /
-	  (double)(volume_.area() * (height_.to_result() + 1));
+	double d = 0;
+	if (height_.to_result() != 0)
+	  {
+	    d = (double) volume_.to_result()  /
+	      (double)((volume_.area()  -  1) * (height_.to_result() + 1) + 1);
+	  }
 	mln_postcondition(d >= 0 && d <= 1);
 	return d;
       }

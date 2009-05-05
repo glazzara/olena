@@ -1,3 +1,9 @@
+2009-05-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Fixes about aharpness attribute.
+	* morpho/attribute/sharpness.hh: Sharpness attribute fixes.
+	* morpho/tree/data.hh: Add leaves precondition.
+
 2009-05-05  Frederic Bour  <bour@lrde.epita.fr>
 
 	Tidy source code of new functions, renamed trait::fun to trait::function.

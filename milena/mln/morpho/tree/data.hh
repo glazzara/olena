@@ -415,6 +415,7 @@ namespace mln
 	      ++nroots_;
 	    }
 	}
+	mln_assertion(leaves_.nsites() > 0);
       }
 
       template <typename I, typename S>
