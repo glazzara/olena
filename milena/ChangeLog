@@ -1,3 +1,20 @@
+2009-05-05 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+  
+	Add make_edge_image in world::inter_pixel and few missing tests.
+
+	* mln/world/inter_pixel/dim2/make_edge_image.hh: new routine.
+
+	* mln/world/inter_pixel/full2image.hh,
+	* mln/world/inter_pixel/image2full.hh,
+	* mln/world/inter_pixel/neighb2d.hh: update doc.
+
+	* tests/Makefile.am,
+	* tests/world/Makefile.am,
+	* tests/world/inter_pixel/Makefile.am,
+	* tests/world/inter_pixel/dim2/Makefile.am,
+	* tests/world/inter_pixel/dim2/make_edge_image.cc,
+	* tests/world/inter_pixel/image2full.cc: new tests.
+
 2009-05-05  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Update inter_pixel files to match coding style.

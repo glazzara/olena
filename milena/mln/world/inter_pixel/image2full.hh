@@ -30,9 +30,16 @@
 
 /// \file mln/world/inter_pixel/full.hh
 ///
-/// FIXME: insert comment.
+/// Convert a classical 2D image to an inter-pixel image.
+///
+/// FIXME: will NOT work if the image has an origin different from (0,0).
 
 # include <mln/core/image/image2d.hh>
+# include <mln/geom/max_col.hh>
+# include <mln/geom/max_row.hh>
+# include <mln/geom/min_col.hh>
+# include <mln/geom/min_row.hh>
+
 
 namespace mln
 {
@@ -43,6 +50,12 @@ namespace mln
     namespace inter_pixel
     {
 
+      /// Convert a classical 2D image to an inter-pixel image.
+      ///
+      /// \param[in] input A 2d image.
+      ///
+      /// \return An inter-pixel image.
+      //
       template <typename T>
       image2d<T>
       image2full(const image2d<T>& input);
@@ -50,17 +63,23 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
       template <typename T>
       image2d<T>
       image2full(const image2d<T>& input)
       {
-	image2d<T> output(2 * input.nrows() - 1,
-	    2 * input.ncols() - 1);
-	for (int row = 0; row < input.nrows(); ++row)
-	  for (int col = 0; col < input.ncols(); ++col)
+	trace::entering("world::inter_pixel::image2full");
+	mln_precondition(input.is_valid());
+
+	image2d<T> output(2 * input.nrows() - 1, 2 * input.ncols() - 1);
+	for (int row = geom::min_row(input); row <= geom::max_row(input); ++row)
+	  for (int col = geom::min_col(input); col <= geom::max_col(input); ++col)
 	    opt::at(output, 2 * row, 2 * col) = opt::at(input, row, col);
+
+	trace::exiting("world::inter_pixel::image2full");
 	return output;
       }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

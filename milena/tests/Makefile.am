@@ -46,7 +46,8 @@ SUBDIRS =					\
   unit_test					\
   util						\
   value						\
-  win
+  win 						\
+  world
 
 
 check_PROGRAMS =				\
