@@ -275,6 +275,9 @@ AC_CONFIG_FILES([
       milena/tests/value/builtin/Makefile
       milena/tests/value/concept/Makefile
     milena/tests/win/Makefile
+    milena/tests/world/Makefile
+      milena/tests/world/inter_pixel/Makefile
+	milena/tests/world/inter_pixel/dim2/Makefile
 ])
 
 
