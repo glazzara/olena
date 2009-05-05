@@ -235,6 +235,7 @@ AC_CONFIG_FILES([
       milena/tests/level/approx/Makefile
       milena/tests/level/naive/Makefile
     milena/tests/linear/Makefile
+      milena/tests/linear/gaussian/Makefile
       milena/tests/linear/local/Makefile
     milena/tests/literal/Makefile
     milena/tests/logical/Makefile
