@@ -51,6 +51,7 @@ mln/literal/origin.hh \
 mln/literal/grays.hh \
 mln/literal/all.hh \
 mln/literal/colors.hh \
+mln/literal/identity.hh \
 mln/literal/black.hh \
 mln/literal/one.hh \
 mln/literal/min.hh \
@@ -240,6 +241,7 @@ mln/fun/spe/binary.hh \
 mln/fun/spe/unary.hh \
 mln/fun/unary_param.hh \
 mln/fun/v2w_w2v/norm.hh \
+mln/fun/v2w_w2v/all.hh \
 mln/fun/p2v/ternary.hh \
 mln/fun/p2v/iota.hh \
 mln/fun/p2v/elifs.hh \
@@ -275,10 +277,14 @@ mln/fun/v2v/wrap.hh \
 mln/fun/v2v/enc.hh \
 mln/fun/v2v/projection.hh \
 mln/fun/v2v/convert.hh \
+mln/fun/v2v/hsl_to_rgb.hh \
+mln/fun/v2v/hsi_to_rgb.hh \
 mln/fun/v2v/essential.hh \
+mln/fun/v2w2v/all.hh \
 mln/fun/v2w2v/cos.hh \
 mln/fun/unary.hh \
 mln/fun/vv2b/implies.hh \
+mln/fun/vv2b/all.hh \
 mln/fun/vv2b/le.hh \
 mln/fun/vv2b/gt.hh \
 mln/fun/vv2b/ge.hh \
@@ -423,6 +429,7 @@ mln/accu/site_set/all.hh \
 mln/accu/site_set/essential.hh \
 mln/accu/stat/variance.hh \
 mln/accu/stat/deviation.hh \
+mln/accu/stat/var.hh \
 mln/accu/max.hh \
 mln/accu/lor.hh \
 mln/accu/rank.hh \
@@ -471,6 +478,7 @@ mln/accu/image/all.hh \
 mln/accu/image/set_value.hh \
 mln/accu/image/take.hh \
 mln/accu/image/take_as_init.hh \
+mln/accu/image/take_n_times.hh \
 mln/accu/image/essential.hh \
 mln/accu/center.hh \
 mln/accu/line.hh \
@@ -1233,6 +1241,7 @@ mln/border/duplicate.hh \
 mln/border/find.hh \
 mln/border/thickness.hh \
 mln/border/all.hh \
+mln/border/resize_equal.hh \
 mln/border/mirror.hh \
 mln/border/get.hh \
 mln/border/equalize.hh \

@@ -49,6 +49,7 @@ mln_literal_origin \
 mln_literal_grays \
 mln_literal_all \
 mln_literal_colors \
+mln_literal_identity \
 mln_literal_black \
 mln_literal_one \
 mln_literal_min \
@@ -235,6 +236,7 @@ mln_fun_spe_binary \
 mln_fun_spe_unary \
 mln_fun_unary_param \
 mln_fun_v2w_w2v_norm \
+mln_fun_v2w_w2v_all \
 mln_fun_p2v_ternary \
 mln_fun_p2v_iota \
 mln_fun_p2v_elifs \
@@ -270,10 +272,14 @@ mln_fun_v2v_wrap \
 mln_fun_v2v_enc \
 mln_fun_v2v_projection \
 mln_fun_v2v_convert \
+mln_fun_v2v_hsl_to_rgb \
+mln_fun_v2v_hsi_to_rgb \
 mln_fun_v2v_essential \
+mln_fun_v2w2v_all \
 mln_fun_v2w2v_cos \
 mln_fun_unary \
 mln_fun_vv2b_implies \
+mln_fun_vv2b_all \
 mln_fun_vv2b_le \
 mln_fun_vv2b_gt \
 mln_fun_vv2b_ge \
@@ -418,6 +424,7 @@ mln_accu_site_set_all \
 mln_accu_site_set_essential \
 mln_accu_stat_variance \
 mln_accu_stat_deviation \
+mln_accu_stat_var \
 mln_accu_max \
 mln_accu_lor \
 mln_accu_rank \
@@ -466,6 +473,7 @@ mln_accu_image_all \
 mln_accu_image_set_value \
 mln_accu_image_take \
 mln_accu_image_take_as_init \
+mln_accu_image_take_n_times \
 mln_accu_image_essential \
 mln_accu_center \
 mln_accu_line \
@@ -1199,6 +1207,7 @@ mln_border_duplicate \
 mln_border_find \
 mln_border_thickness \
 mln_border_all \
+mln_border_resize_equal \
 mln_border_mirror \
 mln_border_get \
 mln_border_equalize \
@@ -1258,6 +1267,7 @@ mln_literal_origin_SOURCES = mln_literal_origin.cc
 mln_literal_grays_SOURCES = mln_literal_grays.cc
 mln_literal_all_SOURCES = mln_literal_all.cc
 mln_literal_colors_SOURCES = mln_literal_colors.cc
+mln_literal_identity_SOURCES = mln_literal_identity.cc
 mln_literal_black_SOURCES = mln_literal_black.cc
 mln_literal_one_SOURCES = mln_literal_one.cc
 mln_literal_min_SOURCES = mln_literal_min.cc
@@ -1444,6 +1454,7 @@ mln_fun_spe_binary_SOURCES = mln_fun_spe_binary.cc
 mln_fun_spe_unary_SOURCES = mln_fun_spe_unary.cc
 mln_fun_unary_param_SOURCES = mln_fun_unary_param.cc
 mln_fun_v2w_w2v_norm_SOURCES = mln_fun_v2w_w2v_norm.cc
+mln_fun_v2w_w2v_all_SOURCES = mln_fun_v2w_w2v_all.cc
 mln_fun_p2v_ternary_SOURCES = mln_fun_p2v_ternary.cc
 mln_fun_p2v_iota_SOURCES = mln_fun_p2v_iota.cc
 mln_fun_p2v_elifs_SOURCES = mln_fun_p2v_elifs.cc
@@ -1479,10 +1490,14 @@ mln_fun_v2v_wrap_SOURCES = mln_fun_v2v_wrap.cc
 mln_fun_v2v_enc_SOURCES = mln_fun_v2v_enc.cc
 mln_fun_v2v_projection_SOURCES = mln_fun_v2v_projection.cc
 mln_fun_v2v_convert_SOURCES = mln_fun_v2v_convert.cc
+mln_fun_v2v_hsl_to_rgb_SOURCES = mln_fun_v2v_hsl_to_rgb.cc
+mln_fun_v2v_hsi_to_rgb_SOURCES = mln_fun_v2v_hsi_to_rgb.cc
 mln_fun_v2v_essential_SOURCES = mln_fun_v2v_essential.cc
+mln_fun_v2w2v_all_SOURCES = mln_fun_v2w2v_all.cc
 mln_fun_v2w2v_cos_SOURCES = mln_fun_v2w2v_cos.cc
 mln_fun_unary_SOURCES = mln_fun_unary.cc
 mln_fun_vv2b_implies_SOURCES = mln_fun_vv2b_implies.cc
+mln_fun_vv2b_all_SOURCES = mln_fun_vv2b_all.cc
 mln_fun_vv2b_le_SOURCES = mln_fun_vv2b_le.cc
 mln_fun_vv2b_gt_SOURCES = mln_fun_vv2b_gt.cc
 mln_fun_vv2b_ge_SOURCES = mln_fun_vv2b_ge.cc
@@ -1627,6 +1642,7 @@ mln_accu_site_set_all_SOURCES = mln_accu_site_set_all.cc
 mln_accu_site_set_essential_SOURCES = mln_accu_site_set_essential.cc
 mln_accu_stat_variance_SOURCES = mln_accu_stat_variance.cc
 mln_accu_stat_deviation_SOURCES = mln_accu_stat_deviation.cc
+mln_accu_stat_var_SOURCES = mln_accu_stat_var.cc
 mln_accu_max_SOURCES = mln_accu_max.cc
 mln_accu_lor_SOURCES = mln_accu_lor.cc
 mln_accu_rank_SOURCES = mln_accu_rank.cc
@@ -1675,6 +1691,7 @@ mln_accu_image_all_SOURCES = mln_accu_image_all.cc
 mln_accu_image_set_value_SOURCES = mln_accu_image_set_value.cc
 mln_accu_image_take_SOURCES = mln_accu_image_take.cc
 mln_accu_image_take_as_init_SOURCES = mln_accu_image_take_as_init.cc
+mln_accu_image_take_n_times_SOURCES = mln_accu_image_take_n_times.cc
 mln_accu_image_essential_SOURCES = mln_accu_image_essential.cc
 mln_accu_center_SOURCES = mln_accu_center.cc
 mln_accu_line_SOURCES = mln_accu_line.cc
@@ -2408,6 +2425,7 @@ mln_border_duplicate_SOURCES = mln_border_duplicate.cc
 mln_border_find_SOURCES = mln_border_find.cc
 mln_border_thickness_SOURCES = mln_border_thickness.cc
 mln_border_all_SOURCES = mln_border_all.cc
+mln_border_resize_equal_SOURCES = mln_border_resize_equal.cc
 mln_border_mirror_SOURCES = mln_border_mirror.cc
 mln_border_get_SOURCES = mln_border_get.cc
 mln_border_equalize_SOURCES = mln_border_equalize.cc

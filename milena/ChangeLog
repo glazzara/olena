@@ -1,5 +1,36 @@
 2009-05-05 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Small fixes.
+
+	* headers.mk: update distributed file list.
+
+	* mln/core/clock_neighb.hh: fix ambiguity between window type and
+	window typedef.
+
+	* mln/trait/next/solve.hh,
+	* mln/fun/i2v/all_to.hh: update doc.
+
+	* mln/fun/point/sli.hh: fix invalid trait specialization.
+
+	* mln/fun/v2v/hsi_to_rgb.hh: move parts of rgb_to_hsi.hh here.
+
+	* mln/fun/v2v/hsl_to_rgb.hh: move parts of rgb_to_hsl.hh here.
+
+	* mln/fun/v2w2v/all.hh,
+	* mln/fun/v2w_w2v/all.hh,
+	* mln/fun/vv2b/all.hh: update includes.
+
+	* mln/trait/next/solve_proxy.hh: add missing forward declaration.
+
+	* tests/fun/v2v/wrap.cc: change l2l to v2v.
+
+	* tests/unit_test/unit-tests.mk: update test list.
+
+	* doc/outputs/site_set_create.txt: add reference file for doc
+	generation.
+
+2009-05-05 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Improve graph support.
 
 	* headers.mk: update distributed file list.

@@ -55,7 +55,7 @@ namespace mln
     {
 
       template <typename G, typename C>
-      struct set_precise_unary_<mln::fun::col, mln::point<G, C> >
+      struct set_precise_unary_<mln::fun::sli, mln::point<G, C> >
       {
 	typedef set_precise_unary_ ret;
 	typedef mln::point<G,C> argument;

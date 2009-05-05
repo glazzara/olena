@@ -25,34 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/fun/v2v/wrap.cc
+#ifndef MLN_FUN_V2W_W2V_ALL_HH
+# define MLN_FUN_V2W_W2V_ALL_HH
+
+/// \file mln/fun/v2w_w2v/all.hh
 ///
-/// Test on mln::fun::v2v::wrap.
+/// File that includes all bijective functions.
 
-#include <mln/fun/v2v/wrap.hh>
-
-#include <mln/value/int_u8.hh>
-#include <mln/value/label_16.hh>
-
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  fun::v2v::wrap<value::int_u8> f;
+  namespace fun
+  {
 
-  value::label_16
-    l0   = 0,
-    l1   = 1,
-    l255 = 255,
-    l256 = 256,
-    l510 = 510,
-    l511 = 511;
+    /*! \defgroup modfunv2w_w2v v2w_w2v functions
+     *
+     * \brief All bijective function.
+     *
+     * \ingroup modfun
+     */
 
-  mln_assertion(f(l0)	== 0u);
-  mln_assertion(f(l1)	== 1u);
-  mln_assertion(f(l255) == 255u);
-  mln_assertion(f(l256) == 1u);
-  mln_assertion(f(l510) == 255u);
-  mln_assertion(f(l511) == 1u);
+    /// Namespace of functions from value to value.
+    namespace v2w_w2v {}
+
+  }
 }
+
+
+# include <mln/fun/v2w_w2v/norm.hh>
+
+#endif // ! MLN_FUN_V2W_W2V_ALL_HH
+

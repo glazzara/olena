@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +29,10 @@
 #ifndef MLN_TRAIT_NEXT_SOLVE_HH
 # define MLN_TRAIT_NEXT_SOLVE_HH
 
-/*!
- * \file   mln/trait/next/solve.hh
- *
- * \brief  FIXME
- *
- *
- */
-
+/// \file   mln/trait/next/solve.hh
+///
+/// FIXME
+ 
 # include <mln/core/category.hh>
 # include <mln/metal/equal.hh>
 # include <mln/metal/if.hh>

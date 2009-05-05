@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,34 +26,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/fun/v2v/wrap.cc
-///
-/// Test on mln::fun::v2v::wrap.
+#ifndef MLN_FUN_V2W2V_ALL_HH
+# define MLN_FUN_V2W2V_ALL_HH
 
-#include <mln/fun/v2v/wrap.hh>
-
-#include <mln/value/int_u8.hh>
-#include <mln/value/label_16.hh>
-
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  fun::v2v::wrap<value::int_u8> f;
+  namespace fun
+  {
 
-  value::label_16
-    l0   = 0,
-    l1   = 1,
-    l255 = 255,
-    l256 = 256,
-    l510 = 510,
-    l511 = 511;
+    /*! \defgroup modfunv2w2v v2w2v functions
+     *
+     * \brief All bijective functions.
+     *
+     * \ingroup modfun
+     */
 
-  mln_assertion(f(l0)	== 0u);
-  mln_assertion(f(l1)	== 1u);
-  mln_assertion(f(l255) == 255u);
-  mln_assertion(f(l256) == 1u);
-  mln_assertion(f(l510) == 255u);
-  mln_assertion(f(l511) == 1u);
-}
+    /// Namespace of bijective functions.
+    namespace v2w2v
+    {
+
+    } // end of namespace mln::fun::v2w2v
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
+
+
+# include <mln/fun/v2w2v/cos.hh>
+
+#endif // ! MLN_FUN_V2W2V_ALL_HH

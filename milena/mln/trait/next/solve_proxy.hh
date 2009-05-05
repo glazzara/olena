@@ -28,10 +28,10 @@
 #ifndef MLN_TRAIT_NEXT_SOLVE_PROXY_HH
 # define MLN_TRAIT_NEXT_SOLVE_PROXY_HH
 
-/*! \file mln/trait/next/solve_proxy.hh
- *
- * \brief Proxy support for "next" trait solver.
- */
+/// \file mln/trait/next/solve_proxy.hh
+///
+/// Proxy support for "next" trait solver.
+
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/proxy.hh>
@@ -50,6 +50,7 @@ namespace mln
       // Needed by mln_trait_nbinary.
       template < typename Name, typename L_, typename R_ >
       struct solve_binary;
+      template < typename Name, typename T_ > struct solve_unary;
 
 
 

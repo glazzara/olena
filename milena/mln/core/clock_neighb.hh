@@ -62,7 +62,7 @@ namespace mln
     typedef mln_psite(D) site;
 
     /// Window associated type.
-    typedef window<dpsite> window;
+    typedef mln::window<dpsite> window;
 
     /// Site_Iterator type to browse the psites of a generic
     /// neighborhood w.r.t. the ordering of delta-psites.

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_FUN_I2V_ALL_TO_HH
 # define MLN_FUN_I2V_ALL_TO_HH
 
-/*! \file mln/fun/i2v/all_to.hh
- *
- * \brief FIXME.
- */
+/// \file mln/fun/i2v/all_to.hh
+///
+/// FIXME.
 
 # include <mln/core/concept/function.hh>
 
