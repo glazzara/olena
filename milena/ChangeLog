@@ -1,3 +1,11 @@
+2009-05-05  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Update inter_pixel files to match coding style.
+	* mln/world/inter_pixel/full.hh: Move this...
+	* mln/world/inter_pixel/full2image.hh: ...here...
+	* mln/world/inter_pixel/image2full.hh: ...and here.
+	* mln/world/inter_pixel/neighb2d.hh: Update to match coding style.
+
 2009-05-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Fixes about aharpness attribute.

@@ -25,16 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
-# define MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
+#ifndef MLN_WORLD_INTER_PIXEL_FULL_HH
+# define MLN_WORLD_INTER_PIXEL_FULL_HH
 
-/// \file mln/world/inter_pixel/neighb2d.hh
+/// \file mln/world/inter_pixel/full.hh
 ///
 /// FIXME: insert comment.
 
-# include <mln/core/alias/neighb2d.hh>
-# include <mln/make/double_neighb2d.hh>
-# include <mln/world/inter_pixel/dim2/is_row_odd.hh>
+# include <mln/core/image/image2d.hh>
 
 namespace mln
 {
@@ -45,40 +43,24 @@ namespace mln
     namespace inter_pixel
     {
 
-      typedef neighb< win::multiple<window2d, dim2::is_row_odd> > dbl_neighb2d;
-
-      const dbl_neighb2d& e2c();
-      const dbl_neighb2d& e2e();
+      template <typename T>
+      image2d<T>
+      full2image(const image2d<T>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      const dbl_neighb2d& e2c()
+      template <typename T>
+      image2d<T>
+      full2image(const image2d<T>& input)
       {
-	static bool e2c_h[] = { 0, 1, 0,
-	  0, 0, 0,
-	  0, 1, 0 };
-	static bool e2c_v[] = { 0, 0, 0,
-	  1, 0, 1,
-	  0, 0, 0 };
-	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2c_h, e2c_v);
-	return nbh;
-      }
-
-      const dbl_neighb2d& e2e()
-      {
-	static bool e2e_h[] = { 0, 0, 1, 0, 0,
-	  0, 1, 0, 1, 0,
-	  0, 0, 0, 0, 0,
-	  0, 1, 0, 1, 0,
-	  0, 0, 1, 0, 0 };
-	static bool e2e_v[] = { 0, 0, 0, 0, 0,
-	  0, 1, 0, 1, 0,
-	  1, 0, 0, 0, 1,
-	  0, 1, 0, 1, 0,
-	  0, 0, 0, 0, 0 };
-	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2e_h, e2e_v);
-	return nbh;
+	image2d<T> output((input.nrows() + 1) / 2,
+	    (input.ncols() + 1) / 2);
+	for (int row = 0; row < input.nrows(); row += 2)
+	  for (int col = 0; col < input.ncols(); col += 2)
+	    opt::at(output, row / 2, col / 2) =
+	      opt::at(input, row, col);
+	return output;
       }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -90,4 +72,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_INTER_PIXEL_NEIGHB2D
+#endif // ! MLN_WORLD_INTER_PIXEL_FULL

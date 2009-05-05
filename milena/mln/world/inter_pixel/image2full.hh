@@ -45,6 +45,13 @@ namespace mln
 
       template <typename T>
       image2d<T>
+      image2full(const image2d<T>& input);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename T>
+      image2d<T>
       image2full(const image2d<T>& input)
       {
 	image2d<T> output(2 * input.nrows() - 1,
@@ -55,18 +62,8 @@ namespace mln
 	return output;
       }
 
-      template <typename T>
-      image2d<T>
-      full2image(const image2d<T>& input)
-      {
-	image2d<T> output((input.nrows() + 1) / 2,
-	    (input.ncols() + 1) / 2);
-	for (int row = 0; row < input.nrows(); row += 2)
-	  for (int col = 0; col < input.ncols(); col += 2)
-	    opt::at(output, row / 2, col / 2) =
-	      opt::at(input, row, col);
-	return output;
-      }
+# endif // ! MLN_INCLUDE_ONLY
+
 
     } // end of namespace mln::world::inter_pixel
 
