@@ -1,3 +1,13 @@
+2009-05-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	New ESIEE stuff.
+
+	* theo/esiee/slides_2009_may: New.
+	* theo/esiee/slides_2009_may/dilation.hh: New.
+	* theo/esiee/slides_2009_may/main.cc: New.
+	* theo/esiee/laurent/ismm09/extinct_attributes.hh: New.
+	* theo/esiee/laurent/ismm09/main.ext.cc: New.
+
 2009-05-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a file to test exprs like ''pw::value(ima) < 3''.
