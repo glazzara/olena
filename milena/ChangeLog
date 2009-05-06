@@ -1,5 +1,17 @@
 2009-05-06 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add adjacency matrix.
+
+	* mln/make/influence_zone_adjacency_graph.hh,
+	* mln/make/region_adjacency_graph.hh: make use of this new structure.
+
+	* mln/util/adjacency_matrix.hh: new structure.
+
+	* tests/util/Makefile.am,
+	* tests/util/adjacency_matrix.cc: associated test.
+
+2009-05-06 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Small fixes.
 
 	* doc/tutorial/tutorial.tex: fix compilation.

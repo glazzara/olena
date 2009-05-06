@@ -33,6 +33,8 @@
 /// Create a region_adjacency_graph from a watershed image.
 ///
 /// \sa morpho::meyer_wst.
+///
+/// \todo add dispatch.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -40,6 +42,8 @@
 # include <mln/core/alias/box2d.hh>
 # include <mln/extension/adjust_fill.hh>
 # include <mln/util/graph.hh>
+# include <mln/util/adjacency_matrix.hh>
+
 
 namespace mln
 {
@@ -100,8 +104,7 @@ namespace mln
 	  const I& wshd = exact(wshd_);
 	  const N& nbh = exact(nbh_);
 
-	  mln::image2d<bool> adj(mln::box2d(nbasins.next(), nbasins.next()));
-	  data::fill(adj, false);
+	  util::adjacency_matrix<> adj(nbasins.next());
 	  extension::adjust_fill(wshd, nbh, 0u);
 
 	  typedef mln_value(I) L;
@@ -129,19 +132,17 @@ namespace mln
 	      }
 	    if (l2 == 0u || l1 == 0u)
 	      continue;
-	    if (l2 < l1)
-	      std::swap(l1, l2);
 
 	    // adjacency l1 l2
-	    adj(point2d(l2,l1)) = true;
+	    adj.add(l2, l1);
 	  }
 
 	  // Construct graph.
 	  util::graph g;
 	  g.add_vertices(nbasins.next());
-	  for (unsigned i = 1; i < geom::nrows(adj); ++i)
+	  for (unsigned i = 1; i < nbasins.next(); ++i)
 	    for (unsigned j = 1; j < i; ++j)
-	      if (adj(point2d(i,j)))
+	      if (adj.are_adjacent(i, j))
 		g.add_edge(i, j);
 
 

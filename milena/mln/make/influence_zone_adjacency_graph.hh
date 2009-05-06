@@ -44,6 +44,8 @@
 # include <mln/core/alias/box2d.hh>
 # include <mln/extension/adjust_fill.hh>
 # include <mln/util/graph.hh>
+# include <mln/util/adjacency_matrix.hh>
+
 
 namespace mln
 {
@@ -104,8 +106,7 @@ namespace mln
 	  const I& iz = exact(iz_);
 	  const N& nbh = exact(nbh_);
 
-	  mln::image2d<bool> adj(mln::box2d(nlabels.next(), nlabels.next()));
-          data::fill(adj, false);
+	  util::adjacency_matrix<> adj(nlabels.next());
 	  extension::adjust_fill(iz, nbh, 0u);
 
 	  typedef mln_value(I) L;
@@ -120,13 +121,7 @@ namespace mln
 	      {
 		L l2 = iz(n);
 		if (iz(n) != iz((p)))
-		{
-		  // l2 is adjacent to l1
-		  if (l2 < l1)
-		    adj(point2d(l1,l2)) = true;
-		  else
-		    adj(point2d(l2,l1)) = true;
-		}
+		  adj.add(l1, l2);
 	      }
 	    }
 	  }
@@ -134,9 +129,9 @@ namespace mln
 	  // Construct graph.
 	  util::graph g;
 	  g.add_vertices(nlabels.next());
-	  for (unsigned i = 0; i < geom::nrows(adj); ++i)
+	  for (unsigned i = 0; i < nlabels.next(); ++i)
 	    for (unsigned j = 0; j < i; ++j)
-	      if (adj(point2d(i,j)))
+	      if (adj.are_adjacent(i, j))
 		g.add_edge(i, j);
 
 	  trace::exiting("make::impl::generic::influence_zone_adjacency_graph");
