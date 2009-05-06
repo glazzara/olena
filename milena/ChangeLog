@@ -1,3 +1,12 @@
+2009-05-06  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add I/O tests.
+	* tests/io/Makefile.am: Update for dicom and IM.
+	* tests/io/dicom/Makefile.am: New Makefile for dicom.
+	* tests/io/dicom/dicom.cc: New test.
+	* tests/io/magick/Makefile.am: New Makefile for IM.
+	* tests/io/magick/magick.cc: New test.
+
 2009-05-06 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Add adjacency matrix.
