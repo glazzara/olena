@@ -35,6 +35,7 @@
 # include <mln/core/concept/proxy.hh>
 # include <mln/core/concept/site.hh>
 # include <mln/util/graph_ids.hh>
+# include <mln/util/edge.hh>
 
 /// \file mln/util/vertex.hh
 ///
@@ -47,6 +48,7 @@ namespace mln
 
   // Forward declaration.
   namespace util { template<typename G> class vertex; }
+  namespace util { template<typename G> class edge; }
 
   /// Vertex category flag type.
   template <typename E>

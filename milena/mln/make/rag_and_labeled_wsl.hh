@@ -140,8 +140,6 @@ namespace mln
 	  const N& nbh = exact(nbh_);
 	  typedef mln_value(I) L;
 
-	  mln::image2d<bool> adj(mln::box2d(nbasins.next(), nbasins.next()));
-	  data::fill(adj, false);
 	  extension::adjust_fill(wshd, nbh, 0u);
 
 	  mln_concrete(I) output(wshd.domain());

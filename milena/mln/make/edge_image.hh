@@ -94,16 +94,15 @@ namespace mln
     /// Construct an edge image.
     ///
     /// \param[in] v_ima_ A vertex image.
-    /// \param[in] pe	  A p_edges mapping graph element to themselves.
     /// \param[in] fv	  A function mapping two vertex ids to a value.
     ///			  The result is associated to the corresponding edge.
     ///
-    /// \return an edge image.
+    /// \return an edge image without localization information mapped to
+    /// graph elements.
     //
     template <typename P, typename V, typename G, typename FV>
     mln::edge_image<void,mln_result(FV),G>
     edge_image(const vertex_image<P,V,G>& v_ima_,
-	       const p_edges<G,util::internal::id2element<G,util::edge<G> > > pe,
 	       const Function_vv2v<FV>& fv_);
 
 
@@ -174,7 +173,6 @@ namespace mln
     template <typename P, typename V, typename G, typename FV>
     mln::edge_image<void,mln_result(FV),G>
     edge_image(const vertex_image<P,V,G>& v_ima_,
-	       const p_edges<G,util::internal::id2element<G,util::edge<G> > > pe,
 	       const Function_vv2v<FV>& fv_)
     {
       trace::entering("make::edge_image");
@@ -183,12 +181,13 @@ namespace mln
       const vertex_image<P,V,G>& v_ima = exact(v_ima_);
       mln_precondition(v_ima.is_valid());
 
+      p_edges<G> pe(v_ima.graph());
       typedef mln::edge_image<void,mln_result(FV),G> edge_ima_t;
       edge_ima_t ima_e(pe);
 
       mln_piter(edge_ima_t) e(ima_e.domain());
       for_all(e)
-	ima_e(e) = fv(e.element().v1(), e.element().v2());
+	ima_e(e) = fv(v_ima(e.element().v1()), v_ima(e.element().v2()));
 
       trace::exiting("make::edge_image");
       return ima_e;

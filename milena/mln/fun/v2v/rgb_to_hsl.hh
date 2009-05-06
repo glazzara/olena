@@ -69,31 +69,11 @@ namespace mln
       extern f_rgb_to_hsl_f_t f_rgb_to_hsl_f;
 
 
-      template <typename T_rgb>
-      struct f_hsl_to_rgb_ : public Function_v2v< f_hsl_to_rgb_<T_rgb> >
-      {
-	typedef T_rgb result;
-
-	template <typename T_hsl>
-        T_rgb operator()(const T_hsl& hsl) const;
-
-      };
-
-      typedef f_hsl_to_rgb_< value::rgb<8> > f_hsl_to_rgb_3x8_t;
-      typedef f_hsl_to_rgb_< value::rgb<16> > f_hsl_to_rgb_3x16_t;
-
-      extern f_hsl_to_rgb_3x8_t f_hsl_to_rgb_3x8;
-      extern f_hsl_to_rgb_3x16_t f_hsl_to_rgb_3x16;
-
-
 # ifndef MLN_INCLUDE_ONLY
 
       /// Global variables.
       /// \{
       f_rgb_to_hsl_f_t f_rgb_to_hsl_f;
-
-      f_hsl_to_rgb_3x8_t f_hsl_to_rgb_3x8;
-      f_hsl_to_rgb_3x16_t f_hsl_to_rgb_3x16;
       /// \}
 
 
@@ -143,42 +123,6 @@ namespace mln
 	return hsl;
       }
 
-
-      template <typename T_rgb>
-      template <typename T_hsl>
-      inline
-      T_rgb
-      f_hsl_to_rgb_<T_rgb>::operator()(const T_hsl& hsl) const
-      {
-	typedef typename T_rgb::red_t   red_t;
-	typedef typename T_rgb::green_t green_t;
-	typedef typename T_rgb::blue_t  blue_t;
-
-	static math::round<red_t>   to_r;
-	static math::round<green_t> to_g;
-	static math::round<blue_t>  to_b;
-
-	static const float
-	  sqrt3_3 = std::sqrt(3) / 3,
-		  inv_sqrt6 = 1 / std::sqrt(6),
-		  inv_sqrt2 = 1 / std::sqrt(2);
-
-	float
-	  h = hsl.hue() / 180.0 * 3.1415,
-	    alpha = hsl.sat() * std::cos(h),
-	    beta = hsl.sat() * std::sin(h);
-
-
-	red_t   r = to_r(sqrt3_3 * hsl.lum() + 2 * inv_sqrt6 * beta);
-	green_t g =
-	  to_g(sqrt3_3 * hsl.lum() + inv_sqrt2 * alpha - inv_sqrt6 * beta);
-	blue_t  b =
-	  to_b(sqrt3_3 * hsl.lum() - inv_sqrt2 * alpha - inv_sqrt6 * beta);
-
-	T_rgb rgb(r, g, b);
-
-	return rgb;
-      }
 
 # endif // !MLN_INCLUDE_ONLY
 

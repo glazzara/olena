@@ -1118,7 +1118,7 @@ A list of available site sets is available in section \ref{siteset}.
 
 
 %--------------------------
-\doxysubsection{Creating a site set}
+\doxysubsection{tuto4createsiteset}{Creating a site set}
 
 In this section, we will detail how to create common site sets.
 
@@ -1126,7 +1126,7 @@ This is actually simple.
 
 
 %--------------------------
-\doxysubsection{Getting access to sites}
+\doxysubsection{tuto4accesstosites}{Getting access to sites}
 
 
 
@@ -1137,15 +1137,15 @@ In milena, an image is seen as a composition of both a site set and a function
 mapping a site to a value.
 
 %--------------------------
-\doxysubsection{Creating an image}
+\doxysubsection{tuto4createimate}{Creating an image}
 
 In this section, we will detail how to create common images.
 
 %--------------------------
-\doxysubsection{Reading an image from a file}
+\doxysubsection{tuto4readimage}{Reading an image from a file}
 
 %--------------------------
-\doxysubsection{Accessing data}
+\doxysubsection{tuto4accessdata}{Accessing data}
 
 
 
@@ -1224,7 +1224,8 @@ Finally, you may want to save the image. Since we use bool as image value, the
 PBM format is the best choice. Therefore, we use io::pbm::save.
 \doxycode[4]{tuto2_first_image}
 
-The output image looks like the following:
+The output image looks like the following: \\
+
 \doxyfigure{tuto2_first_image}{3cm}
 
 In this first step we used a boolean image. Many other value types are available
@@ -1262,25 +1263,29 @@ Updating a site value is also possible using \code{operator()} or the
 \doxycode[3]{tuto3_rw_image}
 \doxycode[4]{tuto3_rw_image}
 
-The corresponding image:
+The corresponding image: \\
+
 \doxyfigure[1]{tuto3_rw_image}{3cm}
 
 An image can also be initialized/modified thanks to another image.
 Let's load a new image.
 \doxycode[5]{tuto3_rw_image}
-\var{lena} looks like:
+\var{lena} looks like: \\
+
 \doxyimg{small-enlarged}{3cm}
 
 If we want to initialize \var{ima} with \var{lena}, we can use \code{data::fill}:
 \doxycode[6]{tuto3_rw_image}
-Output:
+Output: \\
+
 \doxyfigure[2]{tuto3_rw_image}{3cm}
 Note that to fill an image with some data, the image domain \must be smaller
 or equal to the data.
 
 Likewise, it is possible to paste data from an image to another:
 \doxycode[7]{tuto3_rw_image}
-Output:
+Output: \\
+
 \doxyfigure[3]{tuto3_rw_image}{3cm}
 
 More details can be found in sections \doxyref{imaaccessmodval}, \doxyref{fillop} and \doxyref{pasteop} in

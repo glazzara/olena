@@ -33,6 +33,7 @@
 /// Definition of the common base class for all point-wise images.
 
 # include <mln/core/internal/image_primary.hh>
+# include <mln/core/routine/init.hh>
 # include <mln/metal/unqualif.hh>
 # include <mln/metal/not_equal.hh>
 # include <mln/value/set.hh>

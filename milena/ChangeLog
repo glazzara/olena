@@ -1,3 +1,28 @@
+2009-05-06 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Small fixes.
+
+	* doc/tutorial/tutorial.tex: fix compilation.
+
+	* mln/core/internal/neighb_niter_impl.hh: fix ambiguities and add more
+	doc.
+
+	* mln/fun/v2v/rgb_to_hsl.hh: remove duplicate declarations.
+
+	* mln/literal/one.hh,
+	* mln/literal/zero.hh: add 'const' qualification to conversion
+	operator.
+
+	* mln/make/edge_image.hh: update prototype.
+
+	* mln/make/rag_and_labeled_wsl.hh: remove useless local variable.
+
+	* mln/pw/internal/image_base.hh: add missing include.
+
+	* mln/util/vertex.hh: add missing include and forward declaration.
+
+	* tests/util/set.cc: update header.
+
 2009-05-06  Frederic Bour  <bour@lrde.epita.fr>
 
 	Correct typo errors, rename storage_ to state, update thrubin morpher.

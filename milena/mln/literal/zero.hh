@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -51,7 +51,7 @@ namespace mln
       // FIXME: (for the record) Add "friend class Literal<zero_t>;" and a protected ctor.
 
       template <typename T>
-      operator T () const;
+      operator const T () const;
     };
 
     /// Literal zero.
@@ -61,7 +61,7 @@ namespace mln
 
     template <typename T>
     inline
-    zero_t::operator T () const
+    zero_t::operator const T () const
     {
       mlc_converts_to(int, T)::check();
       return 0;

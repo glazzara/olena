@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_LITERAL_ONE_HH
 # define MLN_LITERAL_ONE_HH
 
-/*! \file mln/literal/one.hh
- *
- * \brief Definition of the literal of mln::one.
- */
+/// \file mln/literal/one.hh
+///
+/// Definition of the literal of mln::one.
 
 # include <mln/core/concept/literal.hh>
 # include <mln/metal/converts_to.hh>
@@ -49,7 +49,7 @@ namespace mln
       // FIXME: Cf. comments in literal/zero.hh.
 
       template <typename T>
-      operator T () const;
+      operator const T () const;
     };
 
 
@@ -61,7 +61,7 @@ namespace mln
 
     template <typename T>
     inline
-    one_t::operator T () const
+    one_t::operator const T () const
     {
       mlc_converts_to(int, T)::check();
       return 1;

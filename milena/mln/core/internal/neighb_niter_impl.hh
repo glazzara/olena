@@ -44,6 +44,11 @@ namespace mln
   template <typename G, typename F> class graph_elt_window;
   template <typename G, typename F, typename I> class graph_elt_window_if;
   template <typename G, typename F> class line_graph_elt_window;
+  namespace util
+  {
+    template <typename G> class vertex;
+    template <typename G> class edge;
+  }
 
 
   namespace internal
@@ -56,11 +61,54 @@ namespace mln
 
     };
 
+    /// Add more implementation for neighborhoods made from
+    /// graph_window_base windows.
+    ///
+    /// FIXME: we need to redeclare the graph element interface.
+    /// Here, a neighb niter iterator encapsulates a window qiter iterator.
+    /// A window qiter iterator is a Proxy on a site P and can convert towards
+    /// a graph element through its member element().
+    ///
+    /// The window qiter iterator cannot have an automatic conversion towards
+    /// a graph element since there would be an ambiguity between this
+    /// conversion and the conversion to a psite P, if P is also a graph
+    /// element.
+    template <typename P, typename E>
+    struct neighb_niter_impl_graph_window
+    {
+      unsigned id() const
+      {
+	return internal::force_exact<E>(*this).compute_p_().id();
+      }
+
+    };
+
+    /// In this case, The site P is a util::vertex which means this iterator
+    /// can automatically converts towards this type.
+    /// There would be an ambiguity between util::vertex members and the one
+    /// declared in neighb_niter_impl_graph_window<P,E> if this
+    /// specialization did not exist.
+    template <typename G, typename E>
+    struct neighb_niter_impl_graph_window< util::vertex<G>, E >
+    {
+    };
+
+    /// In this case, The site P is a util::vertex which means this iterator
+    /// can automatically converts towards this type.
+    /// There would be an ambiguity between util::edge members and the one
+    /// declared in neighb_niter_impl_graph_window<P,E> if this
+    /// specialization did not exist.
+    template <typename G, typename E>
+    struct neighb_niter_impl_graph_window< util::edge<G>, E >
+    {
+    };
+
 
     /// Add more implementation for neighborhoods made from
     /// graph_window_base windows.
     template <typename P, typename T, typename E>
-    struct neighb_niter_impl<graph_window_base<P,T>, E>
+    struct neighb_niter_impl< graph_window_base<P, T>, E >
+      : neighb_niter_impl_graph_window<P,E>
     {
       typedef typename T::target S;
 
@@ -69,12 +117,8 @@ namespace mln
 	return internal::force_exact<E>(*this).compute_p_().element();
       }
 
-      unsigned id() const
-      {
-	return internal::force_exact<E>(*this).compute_p_().id();
-      }
-
     };
+
 
 
     /// Add more implementation for neighborhoods made from a
