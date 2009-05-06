@@ -42,6 +42,8 @@ namespace mln
     struct binary_param: binary<binary_param<F,Param,Storage>, E>
     {
       typedef F flag;
+      typedef Param param;
+      typedef Storage storage;
 
       binary_param()
       {

@@ -1,3 +1,24 @@
+2009-05-06  Frederic Bour  <bour@lrde.epita.fr>
+
+	Correct typo errors, rename storage_ to state, update thrubin morpher.
+	*  mln/core/concept/meta_function.hh: Add mln_fun_withbin for binary
+	   metafunction.
+	*  mln/core/image/thrubin_morpher.hh: Correct implementation of
+	   thrubin_morpher.hh.
+	*  mln/core/image/thru_morpher.hh: Typos correction.
+	*  mln/fun/binary.hh,
+	*  mln/fun/binary_param.hh: Renamed storage_get to state.
+	*  mln/fun/math/inf.hh,
+	*  mln/fun/math/sup.hh: Correct bug when working on two different
+           types.
+	*  mln/fun/spe/binary.hh,
+	*  mln/fun/spe/unary.hh,
+	*  mln/fun/unary.hh,
+	*  mln/fun/unary_param.hh: Renamed storage_get to state.
+	*  mln/trait/next/solve_proxy.hh: Added one inclusion to prevent
+	   errors.
+	*  sandbox/fred/tests/thru.cc: Added test for thrubin.
+
 2009-05-05 Guillaume Lazzara  <lazzara@lrde.epita.fr>
   
 	Add make_edge_image in world::inter_pixel and few missing tests.

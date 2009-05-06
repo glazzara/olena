@@ -233,17 +233,27 @@ namespace mln
 
 	  result operator () (const argument& value) const
 	  {
-	    return def::read(this->storage_, value);
+	    return def::read(this->state_, value);
 	  }
 
 	  template <typename U>
 	  void init(const U& value)
 	  {
-	    storage_ = mln::trait::function::internal::introspect::has_storage_t<def, void>::compute(value);
+	    state_ = mln::trait::function::internal::introspect::has_storage_t<def, void>::compute(value);
 	  };
 
+	  stored<storage>& state()
+	  {
+	    return state_;
+	  }
+
+	  const stored<storage>& state() const
+	  {
+	    return state_;
+	  }
+
 	protected:
-	  storage storage_;
+	  stored<storage> state_;
 	};
 
 	template <typename Fun, typename T>
@@ -262,7 +272,7 @@ namespace mln
 
 	  void set(lvalue l, const typename super::result& r) const
 	  {
-	    super::def::write(this->storage_, l, r);
+	    super::def::write(this->state(), l, r);
 	  }
 
 	  using super::operator ();

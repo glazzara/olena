@@ -41,6 +41,10 @@ namespace mln
     template <typename F, typename Param, typename Storage = void, typename E = F>
     struct unary_param: unary< unary_param<F,Param,Storage,E>, E>
     {
+      typedef F flag;
+      typedef Param param;
+      typedef Storage storage;
+
       unary_param()
       {
       }

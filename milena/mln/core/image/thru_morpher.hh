@@ -123,12 +123,14 @@ namespace mln
       typedef mln_psite(I) psite;
 
       /// Value associated type.
-      typedef typename F::result value;
+      typedef mln_result(F) value;
 
       /// Return type of read-only access.
-      typedef typename F::result rvalue;
+      typedef value rvalue;
+      typedef value lvalue; // Workaround for write operator()
 
       rvalue operator()(const mln_psite(I)& p) const;
+      rvalue operator()(const mln_psite(I)& p);
 
     };
 
@@ -221,7 +223,7 @@ namespace mln
   thru_image<I, F>::thru_image(I& ima)
   {
     mln_precondition(ima.is_valid());
-    init_(ima, mln_value(I)());
+    init_(ima, F());
   }
 
   template <typename I, typename F>
@@ -249,6 +251,15 @@ namespace mln
     inline
     typename thru_image_read<I, F>::rvalue
     thru_image_read<I, F>::operator()(const mln_psite(I)& p) const
+    {
+      mln_precondition(this->is_valid());
+      return this->data_->f_(this->data_->ima_(p));
+    }
+
+    template <typename I, typename F>
+    inline
+    typename thru_image_read<I, F>::rvalue
+    thru_image_read<I, F>::operator()(const mln_psite(I)& p)
     {
       mln_precondition(this->is_valid());
       return this->data_->f_(this->data_->ima_(p));
@@ -287,7 +298,7 @@ namespace mln
   thru(const mln::Meta_Function<M>& f, Image<I>& ima)
   {
     typedef mln_fun_with(M, mln_value(I)) F;
-    thru_image<I, F> tmp(exact(ima), F());
+    thru_image<I, F> tmp(exact(ima), F(exact(f).state()));
 
     return tmp;
   }
@@ -297,7 +308,7 @@ namespace mln
   thru(const mln::Meta_Function<M>& f, const Image<I>& ima)
   {
     typedef mln_fun_with(M, mln_value(I)) F;
-    thru_image<const I, F> tmp(exact(ima), F());
+    thru_image<const I, F> tmp(exact(ima), F(exact(f).state()));
 
     return tmp;
   }

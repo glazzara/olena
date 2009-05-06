@@ -35,22 +35,23 @@
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/function.hh>
 
-
 # define mln_fun_with(F, T) \
 typename F::template with< T >::ret
 
 # define mln_fun_with_(F, T) \
 F::with< T >::ret
 
+# define mln_fun_withbin(F, T1, T2) \
+typename F::template with< T1, T2 >::ret
+
+# define mln_fun_withbin_(F, T1, T2) \
+F::with< T1, T2 >::ret
 
 # define mln_fun_result(F, T) \
 typename F::template with< T >::ret::result
 
-
 # define mln_fun_result_(F, T) \
 F::with< T >::ret::result
-
-
 
 namespace mln
 {

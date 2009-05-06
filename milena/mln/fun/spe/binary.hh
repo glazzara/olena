@@ -93,17 +93,27 @@ namespace mln
 
 	  result operator () (const argument1& a, const argument2& b) const
 	  {
-	    return def::read(storage_, a, b);
+	    return def::read(state_, a, b);
 	  }
 
 	  template <typename U>
 	  void init(const U& value)
 	  {
-	    storage_ = mln::trait::function::internal::introspect::has_storage_t<def, void>::compute(value);
+	    state_ = mln::trait::function::internal::introspect::has_storage_t<def, void>::compute(value);
+	  }
+
+	  stored<storage>& state()
+	  {
+	    return state_;
+	  }
+
+	  const stored<storage>& state() const
+	  {
+	    return state_;
 	  }
 
 	  protected:
-	    mln::fun::stored<storage> storage_;
+	    mln::fun::stored<storage> state_;
 	};
 
       } // end of namespace mln::fun::spe::impl

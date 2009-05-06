@@ -37,6 +37,8 @@
 # include <mln/core/concept/proxy.hh>
 # include <mln/core/concept/proxy.hxx>
 
+# include <mln/trait/next/solve.hh>
+
 namespace mln
 {
 

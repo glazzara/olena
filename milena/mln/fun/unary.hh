@@ -71,19 +71,19 @@ namespace mln
       template <typename T>
       typename with<T>::ret::template lresult_with<T>::ret operator()(T& v) const
       {
-	return typename with<T>::ret(storage_get()).apply_rw(v);
+	return typename with<T>::ret(state()).apply_rw(v);
       }
 
       template <typename T, typename R>
       void set(T& v, const R& r) const
       {
-	typename with<T>::ret(storage_).set(v, r);
+	typename with<T>::ret(state()).set(v, r);
       }
 
       template <typename U>
       void init(const U& value)
       {
-	storage_ = mln::trait::function::internal::introspect::has_storage_t<flag, void>::compute(value);
+	state_ = mln::trait::function::internal::introspect::has_storage_t<flag, void>::compute(value);
       };
 
       unary()
@@ -96,18 +96,18 @@ namespace mln
 	this->init(param);
       }
 
-      stored<storage>& storage_get()
+      stored<storage>& state()
       {
-	return storage_;
+	return state_;
       }
 
-      const stored<storage>& storage_get() const
+      const stored<storage>& state() const
       {
-	return storage_;
+	return state_;
       }
 
     protected:
-      stored<storage> storage_;
+      stored<storage> state_;
     };
 
   } // end of namespace mln::fun
@@ -128,7 +128,7 @@ namespace mln
 
 	  static typename ret::result call(const F& f, const T& v)
 	  {
-	    return ret(f.storage_get())(v);
+	    return ret(f.state())(v);
 	  }
 	};
 

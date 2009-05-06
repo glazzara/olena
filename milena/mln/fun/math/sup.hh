@@ -47,12 +47,12 @@ namespace mln
     {
 
       template <typename T>
-      struct set_binary_<mln::fun::sup, mln::Object, T, mln::Object, T>
+      struct set_binary_<mln::fun::sup, mln::Object, T1, mln::Object, T2>
       {
 	typedef set_binary_ ret;
-	typedef T result;
-	typedef T argument1;
-	typedef T argument2;
+	typedef mln_trait_promote(T1, T2) result;
+	typedef T1 argument1;
+	typedef T2 argument2;
 
 	static result read(const argument1& a, const argument1& b)
 	{

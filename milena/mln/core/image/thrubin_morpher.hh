@@ -43,7 +43,7 @@ namespace mln
 {
 
   // Forward declaration.
-  template <typename I, typename F> struct thrubin_image;
+  template <typename I1, typename I2, typename F> struct thrubin_image;
 
   namespace internal
   {
@@ -53,7 +53,7 @@ namespace mln
     {
       data(I1& ima1, I2& ima2, const F& f);
 
-      I1 ima1_;
+      I1 ima_;
       I2 ima2_;
       F f_;
     };
@@ -65,94 +65,68 @@ namespace mln
   {
 
     template <typename I1, typename I2, typename F>
-    struct image_< thrubin_image<I1, I2, F> > : image_< typename mln::internal::thrubin_find_impl<I1, , F>::ret > // Same as I except...
+    struct image_< thrubin_image<I1, I2, F> > : image_< I1 > // Same as I except...
     {
       // ...these changes.
       typedef trait::image::category::value_morpher category;
-      typedef mln_internal_trait_image_speed_from(I) speed; // Un-fastest.
+      typedef mln_internal_trait_image_speed_from(I1) speed; // Un-fastest.
       typedef trait::image::value_access::computed value_access;
       typedef trait::image::vw_io::read vw_io;
     };
 
   } // end of namespace mln::trait
 
-
-
-  // FIXME: Doc!
-
-  namespace internal
-  {
-
-    template <typename I, typename F>
-    class thrubin_image_read : public internal::image_value_morpher< I, typename F::result, thrubin_image<I,F> >
-    {
-    public:
-
-      /// Skeleton.
-      typedef thrubin_image<tag::image_<I>, F> skeleton;
-
-      /// Point_Site associated type.
-      typedef mln_psite(I) psite;
-
-      /// Value associated type.
-      typedef typename F::result value;
-
-      /// Return type of read-only access.
-      typedef typename F::result rvalue;
-
-      rvalue operator()(const mln_psite(I)& p) const;
-
-    };
-
-    // Inheritance from read ?!
-    template <typename I, typename F>
-    class thrubin_image_write : public thrubin_image_read<I,F>
-    {
-      public:
-
-	/// Type returned by the read-write pixel value operator.
-// 	typedef typename F::template lresult<typename F::argument>::ret lvalue;
-	typedef typename F::lresult lvalue;
-
-	using thrubin_image_read<I,F>::operator();
-	lvalue operator()(const mln_psite(I)& p);
-
-    };
-  }
-
   /// \brief Morphes values from two images through a binary function.
   ///
   /// \ingroup modimagevaluemorpher
-  template <typename I, typename F>
-  class thrubin_image : public internal::thrubin_find_impl<I, F>::ret
+  template <typename I1, typename I2, typename F>
+  class thrubin_image : public internal::image_value_morpher< I1, typename F::result, thrubin_image<I1,I2,F> >
   {
   public:
 
     thrubin_image();
-    thrubin_image(I& ima);
-    thrubin_image(I& ima, const F& f);
+    thrubin_image(I1& ima1, I2& ima2);
+    thrubin_image(I1& ima1, I2& ima2, const F& f);
 
-    void init_(I& ima, const F& f);
+    /// Skeleton.
+    typedef thrubin_image<tag::image_<I1>, tag::image_<I2>, F> skeleton;
+
+    /// Point_Site associated type.
+    typedef mln_psite(I1) psite;
+
+    /// Value associated type.
+    typedef mln_result(F) value;
+
+    /// Return type of read-only access.
+    typedef value rvalue;
+    typedef value lvalue; // Workaround for write operator()
+
+    rvalue operator()(const mln_psite(I1)& p) const;
+    rvalue operator()(const mln_psite(I1)& p);
+
+    void init_(I1& ima1, I2& ima2, const F& f);
 
     /// Const promotion via conversion.
-    operator thrubin_image<const I, F>() const;
+    operator thrubin_image<const I1, const I2, F>() const;
   };
 
-  template <typename I, typename F>
-  thrubin_image<I, F> thrubin(const mln::Function<F>& f,
-			Image<I>& ima);
+  template <typename I1, typename I2, typename F>
+  thrubin_image<I1, I2, F>
+  thru(const mln::Function<F>& f,
+       Image<I1>& ima1, Image<I2>& ima2);
 
-  template <typename I, typename F>
-  const thrubin_image<const I, F> thrubin(const mln::Function<F>& f,
-				    const Image<I>& ima);
+  template <typename I1, typename I2, typename F>
+  const thrubin_image<const I1, const I2, F>
+  thru(const mln::Function<F>& f,
+       const Image<I1>& ima1, const Image<I2>& ima2);
 
-  template <typename I, typename M>
-  thrubin_image<I, mln_fun_with(M, mln_value(I))>
-  thrubin(const mln::Meta_Function<M>& f, Image<I>& ima);
+  template <typename I1, typename I2, typename M>
+  thrubin_image<I1, I2, mln_fun_withbin(M, mln_value(I1), mln_value(I2))>
+  thru(const mln::Meta_Function<M>& f, Image<I1>& ima1, Image<I1>& ima2);
 
-  template <typename I, typename M>
-  const thrubin_image<const I, mln_fun_with(M, mln_value(I))>
-  thrubin(const mln::Meta_Function<M>& f, const Image<I>& ima);
+  template <typename I1, typename I2, typename M>
+  const thrubin_image<const I1, const I2, mln_fun_withbin(M, mln_value(I1), mln_value(I2))>
+  thru(const mln::Meta_Function<M>& f, const Image<I1>& ima1, const Image<I2>& ima2);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -161,10 +135,10 @@ namespace mln
   namespace internal
   {
 
-    template <typename I, typename F>
+    template <typename I1, typename I2, typename F>
     inline
-    data< thrubin_image<I, F> >::data(I& ima, const F& f)
-      : ima_(ima),
+    data< thrubin_image<I1, I2, F> >::data(I1& ima1, I2& ima2, const F& f)
+      : ima_(ima1), ima2_(ima2),
 	f_(f)
     {
     }
@@ -173,102 +147,102 @@ namespace mln
 
   // thrubin_image<I>
 
-  template <typename I, typename F>
+  template <typename I1, typename I2, typename F>
   inline
-  thrubin_image<I, F>::thrubin_image()
+  thrubin_image<I1, I2, F>::thrubin_image()
   {
   }
 
-  template <typename I, typename F>
+  template <typename I1, typename I2, typename F>
   inline
-  thrubin_image<I, F>::thrubin_image(I& ima, const F& f)
+  thrubin_image<I1, I2, F>::thrubin_image(I1& ima1, I2& ima2, const F& f)
   {
-    mln_precondition(ima.is_valid());
-    init_(ima, f);
+    mln_precondition(ima1.is_valid());
+    mln_precondition(ima2.is_valid());
+    init_(ima1, ima2, f);
   }
 
-  template <typename I, typename F>
+  template <typename I1, typename I2, typename F>
   inline
-  thrubin_image<I, F>::thrubin_image(I& ima)
+  thrubin_image<I1, I2, F>::thrubin_image(I1& ima1, I2& ima2)
   {
-    mln_precondition(ima.is_valid());
-    init_(ima, mln_value(I)());
+    mln_precondition(ima1.is_valid());
+    mln_precondition(ima2.is_valid());
+    init_(ima1, ima2, F());
   }
 
-  template <typename I, typename F>
+  template <typename I1, typename I2, typename F>
   inline
   void
-  thrubin_image<I, F>::init_(I& ima, const F& f)
+  thrubin_image<I1, I2, F>::init_(I1& ima1, I2& ima2, const F& f)
   {
     mln_precondition(! this->is_valid());
-    mln_precondition(ima.is_valid());
-    this->data_ = new internal::data< thrubin_image<I, F> >(ima, f);
+    mln_precondition(ima1.is_valid());
+    mln_precondition(ima2.is_valid());
+    this->data_ = new internal::data< thrubin_image<I1, I2, F> >(ima1, ima2, f);
   }
 
-  template <typename I, typename F>
+  template <typename I1, typename I2, typename F>
   inline
-  thrubin_image<I, F>::operator thrubin_image<const I, F>() const
+  thrubin_image<I1, I2, F>::operator thrubin_image<const I1, const I2, F>() const
   {
-    thrubin_image<const I, F> tmp(this->data_->ima_, this->data_->f_);
+    thrubin_image<const I1, const I2, F> tmp(this->data_->ima_, this->data_->ima2_, this->data_->f_);
     return tmp;
   }
 
-  namespace internal
+  template <typename I1, typename I2, typename F>
+  inline
+  typename thrubin_image<I1, I2, F>::rvalue
+  thrubin_image<I1, I2, F>::operator()(const mln_psite(I1)& p) const
   {
+    mln_precondition(this->is_valid());
+    return this->data_->f_(this->data_->ima_(p), this->data_->ima2_(p));
+  }
 
-    template <typename I, typename F>
-    inline
-    typename thrubin_image_read<I, F>::rvalue
-    thrubin_image_read<I, F>::operator()(const mln_psite(I)& p) const
-    {
-      mln_precondition(this->is_valid());
-      return this->data_->f_(this->data_->ima_(p));
-    }
-
-    template <typename I, typename F>
-    inline
-    typename thrubin_image_write<I, F>::lvalue
-    thrubin_image_write<I, F>::operator()(const mln_psite(I)& p)
-    {
-      mln_precondition(this->is_valid());
-      return this->data_->f_(this->data_->ima_(p));
-    }
-
+  template <typename I1, typename I2, typename F>
+  inline
+  typename thrubin_image<I1, I2, F>::rvalue
+  thrubin_image<I1, I2, F>::operator()(const mln_psite(I1)& p)
+  {
+    mln_precondition(this->is_valid());
+    return this->data_->f_(this->data_->ima_(p), this->data_->ima2_(p));
   }
 
   // thrubin
-  template <typename I, typename F>
-  thrubin_image<I, F> thrubin(const mln::Function<F>& f,
-			Image<I>& ima)
+  template <typename I1, typename I2, typename F>
+  thrubin_image<I1, I2, F>
+  thru(const mln::Function<F>& f,
+       Image<I1>& ima1, Image<I2>& ima2)
   {
-    thrubin_image<I, F> tmp(exact(ima), exact(f));
+    thrubin_image<I1, I2, F> tmp(exact(ima1), exact(ima2), exact(f).state());
     return tmp;
   }
 
-  template <typename I, typename F>
-  thrubin_image<const I, F> thrubin(const mln::Function<F>& f,
-			      const Image<I>& ima)
+  template <typename I1, typename I2, typename F>
+  const thrubin_image<const I1, const I2, F>
+  thru(const mln::Function<F>& f,
+       const Image<I1>& ima1, const Image<I2>& ima2)
   {
-    thrubin_image<const I, F> tmp(exact(ima), exact(f));
+    thrubin_image<const I1, const I2, F> tmp(exact(ima1), exact(ima2), exact(f).state());
     return tmp;
   }
 
-  template <typename I, typename M>
-  thrubin_image<I, mln_fun_with(M, mln_value(I))>
-  thrubin(const mln::Meta_Function<M>& f, Image<I>& ima)
+  template <typename I1, typename I2, typename M>
+  thrubin_image<I1, I2, mln_fun_withbin(M, mln_value(I1), mln_value(I2))>
+  thru(const mln::Meta_Function<M>& f, Image<I1>& ima1, Image<I2>& ima2)
   {
-    typedef mln_fun_with(M, mln_value(I)) F;
-    thrubin_image<I, F> tmp(exact(ima), F());
+    typedef mln_fun_withbin(M, mln_value(I1), mln_value(I2)) F;
+    thrubin_image<I1, I2, F> tmp(exact(ima1), exact(ima2), F(exact(f).state()));
 
     return tmp;
   }
 
-  template <typename I, typename M>
-  thrubin_image<const I, mln_fun_with(M, mln_value(I))>
-  thrubin(const mln::Meta_Function<M>& f, const Image<I>& ima)
+  template <typename I1, typename I2, typename M>
+  const thrubin_image<const I1, const I2, mln_fun_withbin(M, mln_value(I1), mln_value(I2))>
+  thru(const mln::Meta_Function<M>& f, const Image<I1>& ima1, const Image<I2>& ima2)
   {
-    typedef mln_fun_with(M, mln_value(I)) F;
-    thrubin_image<const I, F> tmp(exact(ima), F());
+    typedef mln_fun_withbin(M, mln_value(I1), mln_value(I2)) F;
+    thrubin_image<const I1, const I2, F> tmp(exact(ima1), exact(ima2), F(exact(f).state()));
 
     return tmp;
   }
