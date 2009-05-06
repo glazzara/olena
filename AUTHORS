@@ -1,0 +1,241 @@
+The Olena Group consists of
+
+===============
+Permanent staff
+===============
+
+* Thierry Geraud	  thierry.geraud@lrde.epita.fr
+  - Management of the project in the first place
+  - Type system
+  - Revamp of Metalic (Olena 1.0)
+  - SCOOP, SCOOP 2, Static (Olena proto-1.0, Olena 1.0)
+  - Extended (Olena 1.0)
+  - Numerous hours spent thinking about Olena
+
+* Roland Levillain	  roland.levillain@lrde.epita.fr
+  - Project manager,
+  - Theoritical mentor
+  - Renovation of Swilena (Olena 0.10a),
+  - G++ 4.0 and 4.1 compatibility (Olena 0.10a),
+  - Integration of GNU Libtool (Olena 0.10a),
+  - SCOOP 2 and Static (Olena 1.0).
+
+
+
+===============
+Temporary staff
+===============
+
+* Yann Régis-Gianas
+  - type system.
+
+* Yoann Fabre
+  - type system.
+
+* Vincent Berruchon
+
+* Simon Odou
+  - contributions to document the code,
+  - deconvolution,
+  - generic morphers,
+  - SCOOP 2 (Olena proto-1.0).
+
+* Sylvain Berlemont
+  - combinatorial maps,
+  - cleanup the sources.
+
+*  Alexandre Duret-Lutz
+  - maintenance of the source tree for several years,
+  - type system,
+  - test system,
+  - first documentation system,
+  - numerous hours spent on Olena to make it better.
+
+* Réda Dehak
+  - management of the project,
+  - color conversions,
+  - cleanup the sources.
+
+* Akim Demaille
+  - configuration system.
+  - maintenance of code's clearness.
+
+* Anthony Pinagot
+  - Olena I/O,
+  - statistical operators,
+  - FFT algorithm.
+
+* Astrid Wang
+  - new documentation system,
+  - static arrays implementation.
+
+* David Lesage
+  - type system,
+  - new paradigm,
+  - cleanup the sources.
+
+* Dimitri Papadopoulos-Orfanos
+  - type system
+
+* Emmanuel Turquin
+  - implementation of transforms,
+  - integre.
+
+* Giovanni Palma
+  - color conversion,
+  - attribute opening and closing algorithms,
+  - new documentation system,
+  - document the code,
+  - cleanup the sources.
+
+* Heru Xue
+  - color system.
+
+* Ignacy Gawedzki
+  - color system.
+
+* Jean Chalard
+  - colors,
+  - vectors and matrices implementation,
+  - Olena iterators implementation,
+  - wavelets.
+
+* Jean-Sébastien Mouret
+  - image I/O,
+  - source tree and configuration system,
+  - fast morphological operators.
+
+* Jérôme Darbon
+  - image morphology and Olena morpho.
+
+* Ludovic Perrine
+  - fuzzy types.
+
+* Michaël Strauss
+  - image morphology,
+  - watershed algorithms,
+  - Olena I/O.
+
+* Niels Van Vliet
+  - color conversion,
+  - attribute opening and closing algorithms,
+  - contributions to document the code,
+  - histograms.
+
+* Pierre-Yves Strub
+  - Olena morpho,
+  - source tree and configuration system,
+  - type system.
+
+* Quôc Peyrot
+  - watershed algorithm.
+
+* Rémi Coupet
+  - Olena morpho,
+  - data types (pre-0.6),
+  - Olena core,
+  - bibliographical research.
+
+* Renaud François
+  - bibliographical research.
+
+* Fabien Freling	  fabien.freling@lrde.epita.fr
+  - Work on Melimage with IGR.
+  - Library improvements.
+
+* Guillaume Lazzara
+  - Work on Scribo
+  - Library improvements.
+
+
+==================
+Year 2003 students
+==================
+
+* Raphaël Poss
+  - source tree and configuration system,
+  - documentation.
+
+
+==================
+Year 2004 students
+==================
+
+* Nicolas Burrus
+  - integre,
+  - Olena I/O,
+  - source tree.
+
+
+==================
+Year 2006 students
+==================
+
+* Nicolas Pouillard
+  - Dynamic? (Dyn) (Olena proto-1.0).
+
+* Damien Thivolle
+  - contributions to document the code,
+  - generic morphers,
+  - configuration system,
+  - shapelets transform,
+  - G++ 4.0 compatibility (Olena 0.10a),
+  - canvas for algorithms (Olena proto-1.0),
+  - SCOOP 2 (Olena proto-1.0),
+  - Dynamic? (Dyn) (Olena proto-1.0).
+
+
+==================
+Year 2007 students
+==================
+
+* Christophe Berger
+  - connected filters (Olena proto-1.0, Olena 1.0),
+  - SCOOP 2 (Olena proto-1.0).
+
+* Nicolas Widynski
+  - connected filters (Olena proto-1.0),
+  - inpainting (Olena proto-1.0),
+  - segmentation (watershed transform, watersnake, snakes) (Olena proto-1.0)
+
+
+==================
+Year 2008 students
+==================
+
+* Tristan Croiset
+  - Dynamic (Dyn) (Olena proto-1.0)
+
+* Quentin Hocquet
+  - SCOOL? (Olena 1.0).
+
+* Thomas Moulard
+  - Scool (Olena 1.0)
+
+==================
+Year 2009 students
+==================
+
+* Alexandre Abraham	  alexandre.abraham@lrde.epita.fr
+
+* Nicolas Ballas	  nicolas.ballas@lrde.epita.fr
+
+* Matthieu Garrigues	  matthieu.garrigues@lrde.epita.fr
+
+* Ugo Jardonnet		  ugo.jardonnet@lrde.epita.fr
+
+
+==================
+Year 2010 students
+==================
+
+* Etienne Folio		  etienne.folio@lrde.epita.fr
+
+
+==================
+Year 2011 students
+==================
+
+* Frederic Bour		  frederic.bour@lrde.epita.fr
+* Edwin Carlinet	  edwin.carlinet@lrde.epita.fr
+
