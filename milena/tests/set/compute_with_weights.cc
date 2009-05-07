@@ -26,20 +26,54 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/set/compute.cc
+/// \file tests/set/compute_with_weights.cc
 ///
-/// Tests on mln::set::compute.
+/// Tests on mln::set::compute_with_weights.
 
 #include <mln/core/site_set/p_set.hh>
-#include <mln/core/alias/point2d.hh>
-#include <mln/accu/count.hh>
-#include <mln/set/compute.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/accu/center.hh>
+#include <mln/set/compute_with_weights.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  p_set<point2d> s;
-  mln_assertion(set::compute(accu::meta::count(), s) == 0);
+  {
+    bool vals[] = { 1, 1, 0,
+		    1, 1, 1,
+		    0, 1, 1 };
+    image2d<bool> msk = make::image2d(vals);
+    accu::center<point2d,point2d> a;
+    mln_assertion(set::compute_with_weights(a, msk) == point2d(1,1));
+  }
+
+  {
+    unsigned vals[] = { 3, 1, 0,
+			1, 5, 1,
+			0, 1, 3 };
+    image2d<unsigned> w = make::image2d(vals);
+    accu::center<point2d,point2d> a;
+    mln_assertion(set::compute_with_weights(a, w) == point2d(1,1));
+  }
+
+  {
+    unsigned ws[] = { 1, 5, 0,
+		      0, 5, 0,
+		      0, 5, 1 };
+    image2d<unsigned> w = make::image2d(ws);
+
+    unsigned ls[] = { 0, 1, 2,
+		      0, 1, 2,
+		      0, 1, 2 };
+    image2d<unsigned> l = make::image2d(ls);
+
+    accu::center<point2d,point2d> a;
+    util::array<point2d> p = set::compute_with_weights(a, w, l, 2);
+
+    for (unsigned l = 0; l <= 2; ++l)
+      mln_assertion(p[l] == point2d(l, l));
+  }
+
 }

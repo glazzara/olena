@@ -1,3 +1,17 @@
+2009-05-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add 'set compute accumulator with weights'.
+
+	* mln/core/internal/site_iterator_base.hh
+	(operator): Remove conversion; already present (inherited).
+	Add a commentary about that.
+	* mln/set/compute.hh: Copy to...
+	* mln/set/compute_with_weights.hh: ...this new file.
+	Modify.
+	* mln/labeling/compute.hh: .
+	* tests/set/compute.cc: Fix copyright.
+	* tests/set/compute_with_weights.cc: New.
+
 2009-05-07  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix display_edge() and float01_ constructors.

@@ -68,14 +68,15 @@ namespace mln
       /// Return the site it points to (as a Site_Proxy).
       const mln_site(S)& to_site() const;
 
-      /// Conversion towards the site it designates (as a Site_Proxy).
-      ///
-      /// \warning This is a final method; iterator classes should not
-      /// re-defined this method.
-      ///
-      /// \pre The iterator is valid.
-      ///
-      operator mln_site(S)() const;
+
+      // Technical note:
+      //
+      //   A conversion operator towards the site it designates is
+      //   not required since it is inherited from 'proxy_impl'.
+      //   Defining '::operator mln_site(S)() const' here can lead to
+      //   ambiguities in very special cases since we inherit a couple
+      //   of conversions (const and non-const)
+
 
       /// Give the subject (required by the Proxy interface).
       const mln_psite(S)& subj_();
@@ -103,13 +104,6 @@ namespace mln
     site_iterator_base<S, E>::site_iterator_base()
       : s_(0)
     {
-    }
-
-    template <typename S, typename E>
-    inline
-    site_iterator_base<S, E>::operator mln_site(S)() const
-    {
-      return this->to_site();
     }
 
     template <typename S, typename E>

@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,9 +31,7 @@
 
 /// \file mln/set/compute.hh
 ///
-/// Compute an accumulator on a site set or a binary image.
-///
-/// \todo Add a version with a binary image as input.
+/// Compute an accumulator on a site set.
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/core/concept/image.hh>
@@ -45,23 +44,23 @@ namespace mln
   namespace set
   {
 
-    /// Compute an accumulator onto the sites of a site set.
+    /// Compute an accumulator onto a site set.
     ///
     /// \param[in] a An accumulator.
     /// \param[in] s A site set.
     /// \return The accumulator result.
-    ///
+    //
     template <typename A, typename S>
     mln_result(A)
     compute(const Accumulator<A>& a, const Site_Set<S>& s);
 
 
-    /// Compute an accumulator onto the sites of a site set.
+    /// Compute an accumulator onto a site set.
     ///
     /// \param[in] a A meta-accumulator.
     /// \param[in] s A site set.
     // \return The accumulator result.
-    ///
+    //
     template <typename A, typename S>
     mln_accu_with(A, mln_site(S))::result
     compute(const Meta_Accumulator<A>& a, const Site_Set<S>& s);
@@ -70,39 +69,75 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+    // Implementation.
+
+
+    namespace impl
+    {
+
+      namespace generic
+      {
+
+	template <typename A, typename S>
+	inline
+	mln_result(A)
+	compute(const Accumulator<A>& a_, const Site_Set<S>& s_)
+	{
+	  trace::entering("set::impl::generic::compute");
+
+	  mlc_converts_to(mln_site(S), mln_argument(A))::check();
+
+	  A a = exact(a_);
+	  const S& s = exact(s_);
+
+	  a.init();
+	  mln_piter(S) p(s);
+	  for_all(p)
+	    a.take(p);
+
+	  trace::exiting("set::impl::generic::compute");
+	  return a.to_result();
+	}
+
+      } // end of namespace mln::set::impl::generic
+
+    } // end of namespace mln::set::impl
+
+
+
+    // Facades.
+
+
     template <typename A, typename S>
     inline
     mln_result(A)
-    compute(const Accumulator<A>& a_, const Site_Set<S>& s_)
+    compute(const Accumulator<A>& a, const Site_Set<S>& s)
     {
       trace::entering("set::compute");
 
-      A a = exact(a_);
-      const S& s = exact(s_);
+      mlc_converts_to(mln_site(S), mln_argument(A))::check();
 
-      mln_piter(S) p(s);
-      for_all(p)
-	a.take(p);
+      mln_result(A) r = impl::generic::compute(a, s);
 
       trace::exiting("set::compute");
-      return a.to_result();
+      return r;
     }
+
 
     template <typename A, typename S>
     mln_accu_with(A, mln_site(S))::result
-    compute(const Meta_Accumulator<A>& a_, const Site_Set<S>& s_)
+    compute(const Meta_Accumulator<A>& a, const Site_Set<S>& s)
     {
       trace::entering("set::compute");
 
-      mln_accu_with(A, mln_site(S)) a = accu::unmeta(exact(a_), mln_site(S)());
-      const S& s = exact(s_);
+      typedef mln_accu_with(A, mln_site(S)) A_;
+      A_ a_ = accu::unmeta(exact(a), mln_site(S)());
 
-      mln_piter(S) p(s);
-      for_all(p)
-	a.take(p);
+      mln_result(A_) r = impl::generic::compute(a_, s);
       
       trace::exiting("set::compute");
-      return a.to_result();
+      return r;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
