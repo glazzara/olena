@@ -60,15 +60,14 @@ int main()
   for (int i = 0; i < n; ++i)
     a.take(v[i]);
 
-//   vec3f m = a.mean();
-//   mln_assertion(m[0] > 0.4 && m[0] < 0.6);
-//   mln_assertion(m[1] > 0.9 && m[1] < 1.1);
-//   mln_assertion(m[2] > 1.4 && m[2] < 1.6);
-
   fun::stat::mahalanobis<vec3f> f(a.variance(), a.mean());
+  mln_assertion(f(a.mean()) == 0.f);
 
-//   algebra::mat<3,3,float> s_1 = a.variance()._1();
-//   mln_assertion(s_1(0,0) > 11  && s_1(0,0) < 13);
-//   mln_assertion(s_1(1,1) >  2  && s_1(1,1) <  4);
-//   mln_assertion(s_1(2,2) > 1.1 && s_1(2,2) < 1.5);
+  float sum = 0.f;
+  for (int i = 0; i < n; ++i)
+    {
+      float f_ = f(v[i]);
+      sum += f_ * f_;
+    }
+  mln_assertion(std::abs(sum / n - 3.f) < 0.00002f);
 }

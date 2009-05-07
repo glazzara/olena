@@ -32,6 +32,7 @@
 ///
 /// Define the FIXME
 
+# include <cmath>
 # include <mln/core/concept/function.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/algebra/mat.hh>
@@ -59,8 +60,13 @@ namespace mln
 
 	float operator()(const V& v) const;
 
-	algebra::mat<n,n,float> var_1;
-	algebra::vec<n,float>   mean;
+	typedef algebra::vec<n,float> mean_t;
+
+	mean_t mean() const;
+
+      protected:
+	algebra::mat<n,n,float> var_1_;
+	algebra::vec<n,float>   mean_;
       };
 
 
@@ -71,8 +77,8 @@ namespace mln
       mahalanobis<V>::mahalanobis(const algebra::mat<V::dim,V::dim,float>& var,
 				  const algebra::vec<V::dim,float>& mean)
       {
-	var_1 = var._1();
-	mean  = mean;
+	var_1_ = var._1();
+	mean_  = mean;
       }
 
       template <typename V>
@@ -80,7 +86,15 @@ namespace mln
       float
       mahalanobis<V>::operator()(const V& v) const
       {
-	return (v - mean).t() * var_1 * (v - mean);
+	return std::sqrt((v - mean_).t() * var_1_ * (v - mean_));
+      }
+
+      template <typename V>
+      inline
+      typename mahalanobis<V>::mean_t
+      mahalanobis<V>::mean() const
+      {
+	return mean_;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

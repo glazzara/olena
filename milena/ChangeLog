@@ -1,5 +1,16 @@
 2009-05-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix fun stat mahalanobis.
+
+	* mln/fun/stat/mahalanobis.hh (var_1, mean): Rename as...
+	(var_1_, mean_): ...these.
+	Protect them.
+	(mean_t, mean): New typedef and method.
+	(operator()): Fix missing sqrt.
+	* tests/fun/stat/mahalanobis.cc: Augment.
+
+2009-05-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix missing files and tests in world inter-pixel.
 
 	* mln/world/inter_pixel/all.hh: New.
