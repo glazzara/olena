@@ -33,7 +33,7 @@
 ///
 /// Definition of graph element ids.
 
-# include <mln/core/concept/object_id.hh>
+# include <mln/util/object_id.hh>
 
 
 namespace mln

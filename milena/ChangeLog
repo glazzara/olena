@@ -1,4 +1,13 @@
 2009-05-07 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+    
+	Move object_id.hh to mln/util and add a missing operator<
+
+	* mln/core/concept/object_id.hh: move...
+	* mln/util/object_id.hh: ... here. Add a missing operator<.
+
+	* mln/util/graph_ids.hh: update include path.
+
+2009-05-07 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Move debug::colorize to labeling::colorize.
 
