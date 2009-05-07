@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,14 +40,14 @@ namespace mln
   /// Namespace of routines that help to debug.
   namespace debug
   {
+
     /// Implementation namespace of debug namespace.
     namespace impl {}
-  }
 
+  }
 }
 
 
-# include <mln/debug/colorize.hh>
 # include <mln/debug/format.hh>
 # include <mln/debug/draw_graph.hh>
 # include <mln/debug/histo.hh>

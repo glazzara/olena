@@ -62,7 +62,6 @@
 # include <mln/io/ppm/save.hh>
 # include <mln/io/pbm/save.hh>
 
-# include <mln/debug/colorize.hh>
 # include <mln/debug/histo.hh>
 
 # include <mln/accu/histo.hh>

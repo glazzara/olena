@@ -1,5 +1,14 @@
 2009-05-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix missing updates about debug colorize.
+
+	* mln/debug/all.hh,
+	* tests/morpho/meyer_wst_long.cc:
+	Fix missing updates about debug colorize.
+	* mln/registration/icp.hh: Likewise; unused so remove.
+
+2009-05-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Mix missing updates in mln::set.
 
 	* mln/set/all.hh: Update.

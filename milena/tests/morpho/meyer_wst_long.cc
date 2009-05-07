@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -50,7 +51,7 @@
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/ppm/save.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 
 #include "tests/data.hh"
 
@@ -73,5 +74,5 @@ int main()
   image2d<L> ws = morpho::meyer_wst(clo, c4(), nbasins);
 
   // Save the image in color.
-  io::ppm::save(debug::colorize(value::rgb8(), ws, nbasins), "out.ppm");
+  io::ppm::save(labeling::colorize(value::rgb8(), ws, nbasins), "out.ppm");
 }
