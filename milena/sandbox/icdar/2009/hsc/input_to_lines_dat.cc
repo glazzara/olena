@@ -2,7 +2,7 @@
 #include <sandbox/icdar/2009/hsc/io/icdar/save.hh>
 
 #include <mln/value/rgb8.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
 
   if (argc == 4)
     {
-      io::ppm::save(debug::colorize(value::rgb8(),
+      io::ppm::save(labeling::colorize(value::rgb8(),
 				    output,
 				    n_lines),
 		    argv[3]);

@@ -6,7 +6,7 @@
 # include <mln/value/rgb8.hh>
 # include <mln/level/compute.hh>
 # include <mln/accu/count_labels.hh>
-# include <mln/debug/colorize.hh>
+# include <mln/labeling/colorize.hh>
 # include <mln/io/ppm/save.hh>
 # include <mln/io/pbm/load.hh>
 
@@ -27,7 +27,7 @@ namespace mln
 
     value::label_8 nlines = level::compute(accu::meta::count_labels(), ima);
 
-    io::ppm::save(debug::colorize(value::rgb8(), ima, nlines), ppmfile);
+    io::ppm::save(labeling::colorize(value::rgb8(), ima, nlines), ppmfile);
   }
 
 }

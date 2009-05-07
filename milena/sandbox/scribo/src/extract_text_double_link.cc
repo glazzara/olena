@@ -28,7 +28,7 @@
 #include <iostream>
 
 #include <mln/essential/2d.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 #include <mln/debug/println.hh>
 
 #include <scribo/text/extract_bboxes.hh>
@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
 					      literal::green,
 					      scribo::make::debug_filename("links.ppm"));
 
-//  io::ppm::save(mln::debug::colorize(value::rgb8(),
+//  io::ppm::save(mln::labeling::colorize(value::rgb8(),
 //				     text.label_image(),
 //				     text.nbboxes()),
 //		scribo::make::debug_filename("lbl_before.ppm"));
@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
   scribo::util::text<image2d<value::label_16> > grouped_text
 	= text::grouping::group_from_double_link(text, left_link, right_link);
 
-  io::ppm::save(mln::debug::colorize(value::rgb8(),
+  io::ppm::save(mln::labeling::colorize(value::rgb8(),
 				     grouped_text.label_image(),
 				     grouped_text.nbboxes()),
 		scribo::make::debug_filename("label_color.ppm"));

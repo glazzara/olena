@@ -20,7 +20,7 @@
 
 # include <mln/io/ppm/save.hh>
 # include <mln/io/pbm/save.hh>
-# include <mln/debug/colorize.hh>
+# include <mln/labeling/colorize.hh>
 
 # include <mln/literal/black.hh>
 # include <mln/literal/white.hh>

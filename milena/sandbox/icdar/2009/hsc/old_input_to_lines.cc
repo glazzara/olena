@@ -14,7 +14,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/literal/colors.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
@@ -348,7 +348,7 @@ int main(int argc, char* argv[])
 # ifdef LOG
 
   {
-    io::ppm::save(debug::colorize(rgb8(), spc, n_basins),
+    io::ppm::save(labeling::colorize(rgb8(), spc, n_basins),
 		  "tmp_spc.ppm");
 
     io::pgm::save(ws, "tmp_ws.pgm");

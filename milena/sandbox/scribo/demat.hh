@@ -182,7 +182,7 @@ namespace scribo
     void save_lbl_image(const image2d<V>& lbl, unsigned nlabels,
 		        const char *filename)
     {
-      image2d<rgb8> output = debug::colorize(rgb8(), lbl, nlabels);
+      image2d<rgb8> output = labeling::colorize(rgb8(), lbl, nlabels);
       io::ppm::save(output, output_file(filename));
     }
 
@@ -1375,7 +1375,7 @@ namespace scribo
       std::cout << "map text to cells" << std::endl;
       label_16 nlabels;
       image2d<label_16> tblelbl = labeling::background(table, c8(), nlabels);
-      image2d<rgb8> color = debug::colorize(rgb8(), tblelbl, nlabels);
+      image2d<rgb8> color = labeling::colorize(rgb8(), tblelbl, nlabels);
 # ifndef NOUT
       io::ppm::save(color, output_file("cells-labels.ppm"));
 
@@ -1395,7 +1395,7 @@ namespace scribo
     {
       std::cout << "Merging aligned text boxes" << std::endl;
 
-      io::ppm::save(debug::colorize(rgb8(), lbl, nlabels),
+      io::ppm::save(labeling::colorize(rgb8(), lbl, nlabels),
 		    output_file("tboxes-lbl.ppm"));
 
       typedef util::couple<image2d<unsigned>, image2d<label_16> > cpl_t;
@@ -1406,7 +1406,7 @@ namespace scribo
 #ifndef NOUT
       io::pgm::save(level::transform(diz.first(), fun::l2l::wrap<label_8>()),
 		    output_file("tboxes-dmap.pgm"));
-      io::ppm::save(debug::colorize(rgb8(), diz.second(), nlabels),
+      io::ppm::save(labeling::colorize(rgb8(), diz.second(), nlabels),
 		    output_file("tboxes-iz.ppm"));
 #endif
 

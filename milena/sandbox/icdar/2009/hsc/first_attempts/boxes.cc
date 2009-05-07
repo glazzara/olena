@@ -28,7 +28,7 @@
 #include <iostream>
 
 #include <mln/essential/2d.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 #include <mln/debug/println.hh>
 
 #include <scribo/text/extract_bboxes.hh>

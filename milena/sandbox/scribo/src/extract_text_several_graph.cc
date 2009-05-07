@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
   scribo::debug::save_textbboxes_image(input, grouped_text.bboxes(),
 				       literal::red,
 				       scribo::make::debug_filename("grouped_text.ppm"));
-  io::ppm::save(mln::debug::colorize(value::rgb8(),
+  io::ppm::save(mln::labeling::colorize(value::rgb8(),
 				     grouped_text.label_image(),
 				     grouped_text.nbboxes()),
 		scribo::make::debug_filename("label_color.ppm"));

@@ -45,7 +45,7 @@
 # include <mln/win/line.hh>
 # include <mln/pw/all.hh>
 
-# include <mln/debug/colorize.hh>
+# include <mln/labeling/colorize.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/value/label_16.hh>
 # include <scribo/make/debug_filename.hh>

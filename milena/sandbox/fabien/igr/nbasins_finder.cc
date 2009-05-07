@@ -27,7 +27,7 @@
 
 #include <mln/fun/l2l/wrap.hh>
 
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 
 
 
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
   std::cout << "    nbasins = " << nbasins << std::endl;
   //io::dump::save(level::transform(wshed, fun::l2l::wrap<int_u8>()), "result_nbasins.dump");
   //io::dump::save(level::stretch(int_u8(), wshed), "result_nbasins.dump");
-  io::dump::save(debug::colorize(rgb8(), wshed, nbasins), "result_nbasins.dump");
+  io::dump::save(labeling::colorize(rgb8(), wshed, nbasins), "result_nbasins.dump");
 
   return 0;
 }

@@ -37,7 +37,7 @@
 
 #include <mln/fun/i2v/array.hh>
 #include <mln/level/transform.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 
 
 
@@ -407,7 +407,7 @@ namespace mln
 	f_relab(l) = parent[l];
 
       image2d<L> ws_ = level::transform(ws, f_relab);
-      image2d<rgb8> cool = debug::colorize(rgb8(), ws_, n_basins);
+      image2d<rgb8> cool = labeling::colorize(rgb8(), ws_, n_basins);
       data::fill((cool | (pw::value(ws) == pw::cst(0))).rw(),
 		 literal::white);
       mln_piter(box2d) p(small.domain());

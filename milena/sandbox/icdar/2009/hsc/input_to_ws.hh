@@ -16,7 +16,7 @@
 #include <mln/io/pgm/save.hh>
 #include <mln/io/ppm/save.hh>
 #include <mln/literal/colors.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 #include <mln/level/convert.hh>
 #include <mln/labeling/wrap.hh>
 #include <mln/pw/all.hh>
@@ -92,7 +92,7 @@ namespace mln
     }
     {
       // Watershed basins colorize the small image.
-      image2d<value::rgb8> cool = debug::colorize(value::rgb8(), ws, n_lines);
+      image2d<value::rgb8> cool = labeling::colorize(value::rgb8(), ws, n_lines);
       data::fill((cool | (pw::value(ws) == pw::cst(0))).rw(),
 		 literal::white);
       mln_piter(box2d) p(small.domain());

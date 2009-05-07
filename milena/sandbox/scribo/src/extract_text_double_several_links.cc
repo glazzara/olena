@@ -28,7 +28,7 @@
 #include <iostream>
 
 #include <mln/essential/2d.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 #include <mln/util/timer.hh>
 
 #include <scribo/text/extract_bboxes.hh>
@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
   std::cout << "Full process: " << t2 << std::endl;
   std::cout << "Cleanup and grouping process: " << t3 << std::endl;
 
-  io::ppm::save(mln::debug::colorize(value::rgb8(),
+  io::ppm::save(mln::labeling::colorize(value::rgb8(),
 				     grouped_text.label_image(),
 				     grouped_text.nbboxes()),
 		scribo::make::debug_filename("label_color.ppm"));

@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
 
 
   std::cout << "ncells (including background) = " << ncells << std::endl;
-  image2d<value::rgb8> table_color = mln::debug::colorize(value::rgb8(), tables, ncells);
+  image2d<value::rgb8> table_color = mln::labeling::colorize(value::rgb8(), tables, ncells);
 
   value::label_8 bg = level::compute(accu::maj_h<value::label_8>(), tables);
 

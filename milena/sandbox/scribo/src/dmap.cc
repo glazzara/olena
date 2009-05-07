@@ -21,6 +21,6 @@ int main(int, char *argv[])
   mln_VAR(res, transform::distance_and_influence_zone_geodesic(lbl, c8(), mln_max(unsigned)));
 
   io::pgm::save(level::transform(res.first(), fun::l2l::wrap<label_8>()), "dmap.pgm");
-  io::ppm::save(debug::colorize(value::rgb8(), res.second(), nlabels), "iz.ppm");
+  io::ppm::save(labeling::colorize(value::rgb8(), res.second(), nlabels), "iz.ppm");
 
 }

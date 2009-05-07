@@ -1,7 +1,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/make/image3d.hh>
 #include <mln/debug/slices_2d.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u12.hh>
@@ -44,14 +44,14 @@ int main(int argc, char* argv[])
   {
     image2d<label_32> ima2d;
     io::dump::load(ima2d, argv[1]);
-    image2d<rgb8> ima_rgb = debug::colorize(rgb8(), ima2d, nbasins);
+    image2d<rgb8> ima_rgb = labeling::colorize(rgb8(), ima2d, nbasins);
     io::ppm::save(ima_rgb, argv[4]);
   }
   else
   {
     image3d<label_32> ima3d;
     io::dump::load(ima3d, argv[1]);
-    image3d<rgb8> ima_rgb = debug::colorize(rgb8(), ima3d, nbasins);
+    image3d<rgb8> ima_rgb = labeling::colorize(rgb8(), ima3d, nbasins);
 
     image2d<rgb8> ima_result = debug::slices_2d(ima_rgb, 1.f, literal::black);
     io::ppm::save(ima_result, argv[4]);

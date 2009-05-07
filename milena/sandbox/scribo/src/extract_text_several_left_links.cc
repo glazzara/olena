@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
 	  = text::grouping::group_from_single_link(text, left_link);
 
     std::cout << "AFTER - nbboxes = " << grouped_text.bboxes().nelements() << std::endl;
-    io::ppm::save(mln::debug::colorize(value::rgb8(),
+    io::ppm::save(mln::labeling::colorize(value::rgb8(),
 				       grouped_text.label_image(),
 				       grouped_text.nbboxes()),
 				       scribo::make::debug_filename("left_label_color.ppm"));

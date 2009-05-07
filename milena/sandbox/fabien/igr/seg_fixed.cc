@@ -43,7 +43,7 @@
 #include <mln/world/inter_pixel/neighb2d.hh>
 #include <mln/world/inter_pixel/is_pixel.hh>
 
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 #include <mln/debug/println.hh>
 
 
@@ -284,7 +284,7 @@ int main(int argc, char* argv[])
 
   mln_VAR(w, wst.unmorph_());
   data::fill((w | (!world::inter_pixel::is_separator())).rw(), nbasins.next());
-  io::ppm::save(debug::colorize(value::rgb8(), w, nbasins.next()), "result.ppm");
+  io::ppm::save(labeling::colorize(value::rgb8(), w, nbasins.next()), "result.ppm");
 
 
 

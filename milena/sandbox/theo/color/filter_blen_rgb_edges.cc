@@ -18,7 +18,7 @@
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
 
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 
 #include <mln/morpho/dilation.hh>
 #include <mln/morpho/erosion.hh>
@@ -333,7 +333,7 @@ int main(int argc, char* argv[])
 	      w_all);
 
 
-  io::ppm::save(debug::colorize(rgb8(),
+  io::ppm::save(labeling::colorize(rgb8(),
 				w_all,
 				nbasins),
 		"temp_w_all.ppm");
@@ -344,7 +344,7 @@ int main(int argc, char* argv[])
 
   image2d<L> out_w = full2image(w_all);
 
-//   io::ppm::save(debug::colorize(rgb8(),
+//   io::ppm::save(labeling::colorize(rgb8(),
 // 				out_w,
 // 				nbasins),
 // 		argv[4]);

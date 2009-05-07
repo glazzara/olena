@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
   image2d<value::label_16> tables = scribo::table::extract(input, ncells).first();
 
   std::cout << "ncells (including background) = " << ncells << std::endl;
-  io::ppm::save(mln::debug::colorize(value::rgb8(), tables, ncells),
+  io::ppm::save(mln::labeling::colorize(value::rgb8(), tables, ncells),
 		scribo::make::debug_filename("table_cells.ppm"));
 
   io::dump::save(tables, scribo::make::debug_filename("table_cells.dump"));

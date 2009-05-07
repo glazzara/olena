@@ -59,7 +59,7 @@ namespace scribo
       mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
       mln_precondition(exact(lbl).is_valid());
 
-      io::ppm::save(debug::colorize(rgb8(), lbl, nlabels), filename);
+      io::ppm::save(labeling::colorize(rgb8(), lbl, nlabels), filename);
 
       trace::exiting("scribo::debug::save_label_image");
     }

@@ -1,3 +1,51 @@
+2009-05-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix missing updates about debug colorize.
+
+	* scribo/debug/save_label_image.hh,
+	* scribo/src/extract_text_single_link.cc,
+	* scribo/src/extract_text_graph.cc,
+	* scribo/src/morpho.cc,
+	* scribo/src/table_rebuild_rank.cc,
+	* scribo/src/extract_text_several_left_links.cc,
+	* scribo/src/table_rebuild_opening.cc,
+	* scribo/src/extract_text_several_graph.cc,
+	* scribo/src/dmap.cc,
+	* scribo/src/table_extract.cc,
+	* scribo/src/extract_text_double_link.cc,
+	* scribo/src/extract_text_double_several_links.cc,
+	* scribo/src/photo_basic.cc,
+	* scribo/table/internal/repair_lines.hh,
+	* scribo/demat.hh,
+	* icdar/2009/dibco/quasi.cc,
+	* icdar/2009/dibco/svg.1.binarization.cc,
+	* icdar/2009/dibco/svg.2.binarization.cc,
+	* icdar/2009/dibco/svg.3.binarization.cc,
+	* icdar/2009/dibco/binarization.cc,
+	* icdar/2009/hsc/icdar2ppm.hh,
+	* icdar/2009/hsc/input_to_words_dat.cc,
+	* icdar/2009/hsc/dummy_input_to_words_dat.cc,
+	* icdar/2009/hsc/input_to_lines_dat.cc,
+	* icdar/2009/hsc/input_to_ws.hh,
+	* icdar/2009/hsc/first_attempts/boxes.cc,
+	* icdar/2009/hsc/first_attempts/exec/iz_lines.cc,
+	* icdar/2009/hsc/first_attempts/exec/relabel_lines.cc,
+	* icdar/2009/hsc/first_attempts/main.cc,
+	* icdar/2009/hsc/input_to_wsl.cc,
+	* icdar/2009/hsc/old_input_to_lines.cc,
+	* icdar/2009/hsc/ws_to_wsl.hh,
+	* fabien/igr/seg_fixed.cc,
+	* fabien/igr/graph.cc,
+	* fabien/igr/nbasins_finder.cc,
+	* fabien/bin/dumpl32_to_colorize.cc,
+	* inim/2010/boxes/boxes.cc,
+	* theo/color/filter_blen_rgb_edges.cc,
+	* lazzara/igr/igr-biggest-comp.cc,
+	* lazzara/igr/igr.cc,
+	* lazzara/igr/igr-cloud.cc,
+	* edwin/inim/inim.cc:
+	Fix missing updates about debug colorize.
+
 2009-05-07  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fixed watershed, now works on edges.

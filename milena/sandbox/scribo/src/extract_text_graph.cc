@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
 					      text, g,
 					      literal::red, literal::cyan,
 					      scribo::make::debug_filename("left_linked.ppm"));
-//  io::ppm::save(mln::debug::colorize(value::rgb8(),
+//  io::ppm::save(mln::labeling::colorize(value::rgb8(),
 //				     text.label_image(),
 //				     text.nbboxes()),
 //		scribo::make::debug_filename("lbl_before.ppm"));
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
   scribo::debug::save_textbboxes_image(input, grouped_text.bboxes(),
 				       literal::red,
 				       scribo::make::debug_filename("grouped_text.ppm"));
-  io::ppm::save(mln::debug::colorize(value::rgb8(),
+  io::ppm::save(mln::labeling::colorize(value::rgb8(),
 				     grouped_text.label_image(),
 				     grouped_text.nbboxes()),
 		scribo::make::debug_filename("label_color.ppm"));

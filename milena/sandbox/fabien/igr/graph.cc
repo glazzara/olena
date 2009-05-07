@@ -55,7 +55,7 @@
 #include <mln/extract/all.hh>
 #include <mln/make/region_adjacency_graph.hh>
 
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 
 
 
@@ -324,8 +324,8 @@ int main(int argc, char *argv[])
     mln_VAR(mean, level::stretch(int_u8(), labeling::mean_values(dcm, wsd2, nbasins2)));
     io::pgm::save(original, "wsd_original.pgm");
     io::pgm::save(mean, "wsd_mean_colors.pgm");
-    io::ppm::save(debug::colorize(rgb8(), wshed, nbasins), "wsd_colorize_01.ppm");
-    io::ppm::save(debug::colorize(rgb8(), wsd2, nbasins2), "wsd_colorize_02.ppm");
+    io::ppm::save(labeling::colorize(rgb8(), wshed, nbasins), "wsd_colorize_01.ppm");
+    io::ppm::save(labeling::colorize(rgb8(), wsd2, nbasins2), "wsd_colorize_02.ppm");
   }
   else
   {

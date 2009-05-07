@@ -13,7 +13,7 @@
 #include <mln/accu/maj_h.hh>
 
 #include <mln/morpho/elementary/dilation.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 
 #include <mln/transform/influence_zone_geodesic.hh>
 #include <mln/level/transform.hh>
@@ -289,7 +289,7 @@ int main(int argc, char* argv[])
 
   image2d<L> out = doit_cut(ws_txt, ws_spc);
 
-  io::ppm::save(debug::colorize(value::rgb8(), out, 254),
+  io::ppm::save(labeling::colorize(value::rgb8(), out, 254),
 		argv[3]);
 
   trace::exiting("main");

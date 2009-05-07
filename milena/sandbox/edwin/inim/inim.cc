@@ -43,7 +43,7 @@
 #include <mln/level/stretch.hh>
 #include <mln/value/label_8.hh>
 #include <mln/labeling/blobs.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 
 /* Draw debug */
 #include <mln/draw/box.hh>
@@ -241,7 +241,7 @@ int main(int argc, char* argv[])
   typedef mln_ch_value_(I, value::rgb<8>) O;
   value::label_8 nlabel;
   L label = labeling::blobs(mask, c4(), nlabel);
-  O output = debug::colorize(value::rgb8(), label, nlabel);
+  O output = labeling::colorize(value::rgb8(), label, nlabel);
   io::ppm::save(output, "label.pgm");
 
   /* Now store output image image */

@@ -9,7 +9,7 @@
 #include <mln/data/paste.hh>
 #include <mln/pw/all.hh>
 
-// #include <mln/debug/colorize.hh>
+// #include <mln/labeling/colorize.hh>
 
 #include <mln/transform/influence_zone_geodesic.hh>
 
@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
 
   io::pgm::save(out, argv[3]);
 
-//   io::ppm::save(debug::colorize(value::rgb8(), out, 254),
+//   io::ppm::save(labeling::colorize(value::rgb8(), out, 254),
 // 		argv[3]);
 
   trace::exiting("main");

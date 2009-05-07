@@ -14,7 +14,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/io/pbm/save.hh>
 
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 #include <mln/fun/i2v/array.hh>
 
 #include <mln/labeling/regional_minima.hh>

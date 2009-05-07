@@ -4,7 +4,7 @@
 #include <mln/binarization/binarization.hh>
 #include <mln/labeling/background.hh>
 
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 
 //#include <mln/registration/registration.hh>
 //#include <mln/registration/multiscale.hh>

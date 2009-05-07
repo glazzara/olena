@@ -39,7 +39,7 @@
 #include <mln/make/rag_and_labeled_wsl.hh>
 #include <mln/util/graph.hh>
 #include <mln/util/couple.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 #include <mln/fun/i2v/array.hh>
 
 #include <mln/labeling/compute.hh>
@@ -554,7 +554,7 @@ int main(int argc, char *argv[])
 
   if (echo)
     {
-      io::ppm::save(display_edge(debug::colorize(rgb8(),
+      io::ppm::save(display_edge(labeling::colorize(rgb8(),
 						 wst,
 						 nbasins).unmorph_(),
 				 literal::black,
@@ -580,7 +580,7 @@ int main(int argc, char *argv[])
 
   if (echo)
     {
-      io::ppm::save(debug::colorize(rgb8(), ws, nbasins),
+      io::ppm::save(labeling::colorize(rgb8(), ws, nbasins),
 		    "temp_ws.ppm");
     }
 
@@ -607,7 +607,7 @@ int main(int argc, char *argv[])
 
 
   if (echo)
-    io::ppm::save(debug::colorize(rgb8(), w_all, nbasins),
+    io::ppm::save(labeling::colorize(rgb8(), w_all, nbasins),
 		  "temp_w_all.ppm");
 
 

@@ -5,7 +5,7 @@
 #include <mln/labeling/flat_zones.hh>
 #include <mln/labeling/background.hh>
 
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 
 
 #include <mln/essential/3d.hh>

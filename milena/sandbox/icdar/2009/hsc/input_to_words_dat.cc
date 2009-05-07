@@ -3,7 +3,7 @@
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/ppm/save.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 #include <mln/estim/min_max.hh>
 
 #include <sandbox/icdar/2009/hsc/input_to_lines.hh>
@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
 
   if (argc == 4)
     {
-      io::ppm::save(debug::colorize(value::rgb8(),
+      io::ppm::save(labeling::colorize(value::rgb8(),
 				    output,
 				    n_words),
 		    argv[3]);

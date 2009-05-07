@@ -33,7 +33,7 @@
 #include <mln/make/rag_and_labeled_wsl.hh>
 #include <mln/util/graph.hh>
 #include <mln/util/couple.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 #include <mln/fun/i2v/array.hh>
 
 #include <mln/labeling/compute.hh>
@@ -335,7 +335,7 @@ int main(int argc, char *argv[])
 
   label_16 nbasins;
   image2d<label_16> wst = morpho::watershed::flooding(clo_vol, c4(), nbasins);
-//   io::ppm::save(debug::colorize(rgb8(), wst, nbasins), "binarization_wst.ppm");
+//   io::ppm::save(labeling::colorize(rgb8(), wst, nbasins), "binarization_wst.ppm");
 
 
   util::couple<util::graph, image2d<label_16> >

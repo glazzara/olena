@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
 
 
   std::cout << "ncells (including background) = " << ncells << std::endl;
-  io::ppm::save(mln::debug::colorize(value::rgb8(), tables, ncells),
+  io::ppm::save(mln::labeling::colorize(value::rgb8(), tables, ncells),
 		scribo::make::debug_filename("table_cells.ppm"));
   io::pgm::save(tables, scribo::make::debug_filename("table_cells.pgm"));
 
