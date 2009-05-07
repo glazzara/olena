@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,8 +32,6 @@
 /// \file mln/set/all.hh
 ///
 /// File that includes all set-related routines.
-///
-/// \todo Move geom::sites here (set::nsites).
 
 namespace mln
 {
@@ -46,6 +44,7 @@ namespace mln
 
 # include <mln/set/card.hh>
 # include <mln/set/compute.hh>
+# include <mln/set/compute_with_weights.hh>
 # include <mln/set/diff.hh>
 # include <mln/set/inter.hh>
 # include <mln/set/get.hh>
