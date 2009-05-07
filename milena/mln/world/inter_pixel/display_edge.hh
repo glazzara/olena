@@ -82,4 +82,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_INTER_PIXEL_DISPLAY_EDGE
+#endif // ! MLN_WORLD_INTER_PIXEL_DISPLAY_EDGE_HH

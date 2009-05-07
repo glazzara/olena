@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -128,6 +128,8 @@ namespace mln
     void paste(const Image<I>& input, Image<J>& output)
     {
       trace::entering("data::paste");
+
+      mlc_converts_to(mln_value(I), mln_value(J))::check();
 
       internal::paste_tests(input, output);
       internal::paste_dispatch(input, output);

@@ -99,6 +99,7 @@ namespace mln
 
 # include <mln/accu/image/all.hh>
 # include <mln/accu/site_set/all.hh>
+# include <mln/accu/stat/all.hh>
 
 
 #endif // ! MLN_ACCU_ALL_HH

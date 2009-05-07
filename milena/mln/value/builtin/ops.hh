@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_VALUE_BUILTIN_OPS_HH
 # define MLN_VALUE_BUILTIN_OPS_HH
 
-/*! \file mln/value/builtin/ops.hh
- *
- * \brief Definitions of binary operators when lhs is a built-in and
- * rhs is an mln object.
- */
+/// \file mln/value/builtin/ops.hh
+///
+/// Definitions of binary operators when lhs is a built-in and
+/// rhs is an mln object.
 
 # include <mln/value/scalar.hh>
 # include <mln/trait/op/all.hh>
@@ -143,6 +143,7 @@
   }								\
 								\
   struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
+
 
 
 
@@ -317,6 +318,55 @@
 
 
 
+
+// Operator less (<) is a special case.
+
+# define mln_internal_decl_op_less_(Symb, Name, Builtin)	\
+								\
+  template <typename O>						\
+  mln_trait_op_##Name (O, value::scalar_< Builtin >)		\
+  operator Symb (const Object<O>& lhs, const Builtin & rhs);	\
+								\
+  template <typename O>						\
+  mln_trait_op_##Name (value::scalar_< Builtin >, O)		\
+  operator Symb (const Builtin & lhs, const Object<O>& rhs);	\
+								\
+  struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
+
+# define mln_internal_def_op_less_(Symb, Name, Builtin)		\
+								\
+  template <typename O>						\
+  mln_trait_op_##Name (O, value::scalar_< Builtin >)		\
+  operator Symb (const Object<O>& lhs, const Builtin & rhs)	\
+  {								\
+    return exact(lhs) Symb value::scalar(rhs);			\
+  }								\
+								\
+  template <typename O>						\
+  mln_trait_op_##Name (value::scalar_< Builtin >, O)		\
+  operator Symb (const Builtin & lhs, const Object<O>& rhs)	\
+  {								\
+    return value::scalar(lhs) Symb exact(rhs);			\
+  }								\
+								\
+  struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
+
+# define mln_internal_builtins_op_less_(De, Symb, Name)		\
+								\
+  mln_internal_##De##_op_less_(Symb, Name,   signed char);	\
+  mln_internal_##De##_op_less_(Symb, Name, unsigned char);	\
+  mln_internal_##De##_op_less_(Symb, Name,   signed short);	\
+  mln_internal_##De##_op_less_(Symb, Name, unsigned short);	\
+  mln_internal_##De##_op_less_(Symb, Name,   signed int);	\
+  mln_internal_##De##_op_less_(Symb, Name, unsigned int);	\
+  mln_internal_##De##_op_less_(Symb, Name,   signed long);	\
+  mln_internal_##De##_op_less_(Symb, Name, unsigned long);	\
+  mln_internal_##De##_op_less_(Symb, Name, float);		\
+  mln_internal_##De##_op_less_(Symb, Name, double);		\
+								\
+  struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
+
+
 // FIXME: What about pointers, arrays, bool, etc.
 
 // FIXME: Mod is not defined for float and double...
@@ -468,6 +518,12 @@ namespace mln
       typedef mln_trait_op_less(O, mln::value::scalar_<B>) ret;
     };
 
+    template <typename B, typename O>
+    struct set_binary_< op::less,  mln::value::Built_In, B,  mln::Object, O >
+    {
+      typedef mln_trait_op_less(mln::value::scalar_<B>, O) ret;
+    };
+
 
     // 'Op+' is commutative so "o + b" => "o + scalar(b)".
 
@@ -548,6 +604,10 @@ namespace mln
   mln_internal_builtins_opeq_obj_(decl, %);
 
 
+  // Ops "bi < obj" and "obj < bi"
+  mln_internal_builtins_op_less_(decl, <, less);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -581,6 +641,10 @@ namespace mln
   mln_internal_builtins_opeq_obj_(def, *);
   mln_internal_builtins_opeq_obj_(def, /);
   mln_internal_builtins_opeq_obj_(def, %);
+
+
+  // Ops "bi < obj" and "obj < bi"
+  mln_internal_builtins_op_less_(def, <, less);
 
 
 # endif // ! MLN_INCLUDE_ONLY

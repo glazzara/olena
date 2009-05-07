@@ -4,7 +4,8 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS =					\
   image 					\
-  site_set
+  site_set 					\
+  stat
 
 check_PROGRAMS =				\
   all_accus					\

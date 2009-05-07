@@ -40,6 +40,7 @@
 # include <mln/fun/i2v/all_to.hh>
 # include <mln/util/pix.hh>
 
+
 namespace mln
 {
 
@@ -84,8 +85,13 @@ namespace mln
 	/// Get the number of items.
 	unsigned n_items() const;
 
+
+	/// Type equipment.
+	typedef algebra::vec<dim,float> mean_t;
+	// ...
+
 	/// Get the mean vector.
-	algebra::vec<dim,float> mean() const;
+	mean_t mean() const;
 
 	/// Check whether this accu returns a valid result.
 	bool is_valid() const;
@@ -115,7 +121,7 @@ namespace mln
     {
       n_ = 0;
       sum_.set_all(0);
-      cov_ .set_all(0);
+      cov_.set_all(0);
     }
 
     template <typename T>
@@ -163,7 +169,7 @@ namespace mln
     mln_result(var<T>)
     var<T>::to_result() const
     {
-      static result null_(fun::i2v::all_to(0));
+      static result null_ = literal::zero;
 
       if (n_ == 0u)
 	return null_; // Safety.
@@ -192,10 +198,10 @@ namespace mln
 
     template <typename T>
     inline
-    algebra::vec<dim,float>
+    typename var<T>::mean_t
     var<T>::mean() const
     {
-      static algebra::vec<dim,float> null_(fun::i2v::all_to(0));
+      static algebra::vec<dim,float> null_ = literal::zero;
 
       if (n_ == 0u)
 	return null_; // Safety.

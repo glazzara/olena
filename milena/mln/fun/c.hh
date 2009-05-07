@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_FUN_C_HH
 # define MLN_FUN_C_HH
 
-/*! \file mln/fun/c.hh
- *
- *  \brief Encapsulate a plain (C language-like) pointer to function
- *  into a functor.
- */
+/// \file mln/fun/c.hh
+///
+/// Encapsulate a plain (C language-like) pointer to function
+/// into a functor.
 
 # include <mln/fun/internal/selector.hh>
 # include <mln/metal/unqualif.hh>
@@ -137,4 +137,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_P2B_C_HH
+#endif // ! MLN_FUN_C_HH

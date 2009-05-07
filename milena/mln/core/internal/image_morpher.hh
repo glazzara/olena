@@ -64,6 +64,10 @@ namespace mln
       I* delegatee_();
 
 
+
+      /// Unmorph image associated type.
+      typedef I unmorph;
+
       /// Give the morphed image (mutable version).
       I& unmorph_();
 

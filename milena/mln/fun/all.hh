@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_FUN_ALL_HH
 # define MLN_FUN_ALL_HH
 
-/*! \file mln/fun/all.hh
- *
- * \brief File that includes all fun-related routines.
- */
+/// \file mln/fun/all.hh
+///
+/// File that includes all fun-related routines.
 
 
 namespace mln
@@ -43,25 +43,25 @@ namespace mln
 
     /// Internal namespace of functions.
     namespace internal
-    {
-    }
-  }
+    {}
 
+  }
 }
 
 
 # include <mln/fun/c.hh>
 # include <mln/fun/ops.hh>
 # include <mln/fun/i2v/all.hh>
+# include <mln/fun/meta/all.hh>
 # include <mln/fun/p2b/all.hh>
 # include <mln/fun/p2v/all.hh>
+# include <mln/fun/stat/all.hh>
 # include <mln/fun/v2b/all.hh>
 # include <mln/fun/v2v/all.hh>
 # include <mln/fun/vv2v/all.hh>
 # include <mln/fun/x2p/all.hh>
 # include <mln/fun/x2v/all.hh>
 # include <mln/fun/x2x/all.hh>
-# include <mln/fun/meta/all.hh>
 
 
 #endif // ! MLN_FUN_ALL_HH

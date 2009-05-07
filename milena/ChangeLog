@@ -1,3 +1,73 @@
+2009-05-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Several fixes and new stuff.
+
+	Starting revamping world inter-pixel.
+
+	* mln/world/inter_pixel/image2full.hh: Rename as...
+	* mln/world/inter_pixel/immerse.hh: ...this new file.
+	(image2full): Rename as...
+	(immerse): ...this.
+	Revamp.
+	* mln/world/inter_pixel/separator_to_pixels.hh: New.
+	* mln/world/inter_pixel/is_separator.hh: New.
+	* mln/world/inter_pixel/is_pixel.hh: New.
+	* mln/world/inter_pixel/compute.hh: New.
+	* mln/world/inter_pixel/make: New directory.
+	* mln/world/inter_pixel/neighb2d.hh: Fix ending guard.
+	* mln/world/inter_pixel/display_edge.hh: Likewise.
+	* mln/core/macros.hh (mln_unmorph, mln_unmorph_): New.
+	* mln/core/point.hh (point): Fix warning.
+	Add static check.
+	* mln/core/internal/image_morpher.hh (unmorph): New typedef.
+	* mln/core/internal/pixel_impl.hh
+	(pixel_impl_): Fix compile errors with g++-3.4.
+	* mln/core/concept/gpoint.hh (operator*): New overload with scalar.
+	(trait): New corresponding trait.
+	* tests/world/inter_pixel/compute.cc: New.
+	* tests/world/inter_pixel/immerse.cc: New.
+	* tests/world/inter_pixel/Makefile.am: Update.
+
+	Fix missing code for operator less with builtins.
+
+	* mln/value/builtin/ops.hh:
+	(mln_internal_decl_op_less_): New.
+	(mln_internal_def_op_less_): New.
+	(mln_internal_builtins_op_less_): New.
+
+	Misc.
+
+	* mln/accu/stat/all.hh: New.
+	* mln/accu/all.hh: Update.
+	* mln/convert/to_fun.hh: Upgrade doc style.
+	* mln/data/paste_without_localization.hh: New.
+	* mln/data/paste.hh: New static check.
+	* mln/fun/c.hh: Likewise.
+	Fix ending guard.
+
+	Augmenting accumulators.
+
+	* mln/accu/stat/var.hh (mean_t): New typedef.
+	(to_result, mean): Fix null_ construction.
+	* tests/accu/stat: New directory.
+	* tests/accu/stat/Makefile.am: New.
+	* tests/accu/stat/var.cc: New.
+	* tests/accu/Makefile.am: Update.
+
+	Augmenting fun :-)
+
+	* mln/fun/access: New directory.
+	* mln/fun/access/all.hh: New.
+	* mln/fun/access/mean.hh: New.
+	* mln/fun/all.hh: Update.
+	* mln/fun/stat: New.
+	* mln/fun/stat/all.hh: New.
+	* mln/fun/stat/mahalanobis.hh: New.
+	* tests/fun/stat: New.
+	* tests/fun/stat/mahalanobis.cc: New.
+	* tests/fun/stat/Makefile.am: New.
+	* tests/fun/Makefile.am: Update.
+
 2009-05-07  Guillaume Sadegh  <sadegh@lrde.epita.fr>
 
 	Add couple to couple conversion.

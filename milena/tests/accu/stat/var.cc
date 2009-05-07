@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,54 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_FUN_HH
-# define MLN_CONVERT_TO_FUN_HH
-
-/// \file mln/convert/to_fun.hh
+/// \file tests/accu/stat/var.cc
 ///
-/// Conversions towards some mln::Function.
+/// Tests on mln::accu::stat::var.
 
-# include <mln/pw/value.hh>
-# include <mln/fun/c.hh>
+#include <cstdlib>
+#include <mln/accu/stat/var.hh>
 
 
-namespace mln
+float my_rand(int c)
 {
-
-  namespace convert
-  {
-
-    /// Convert a C unary function into an mln::fun::C.
-    template <typename R, typename A>
-    fun::C<R(*)(A)> to_fun(R (*f)(A));
-
-    /// Convert an image into a function.
-    template <typename I>
-    pw::value_<I> to_fun(const Image<I>& ima);
+  return (1 + c) * float(std::rand()) / RAND_MAX;
+}
 
 
-# ifndef MLN_INCLUDE_ONLY
+int main()
+{
+  using namespace mln;
 
-    template <typename R, typename A>
-    inline
-    fun::C<R(*)(A)> to_fun(R (*f_)(A))
+  typedef algebra::vec<3,float> vec3f;
+
+  enum { n = 1000 };
+  vec3f v[n];
+
+  for (int i = 0; i < n; ++i)
     {
-      fun::C<R(*)(A)> f(f_);
-      return f;
+      v[i][0] = my_rand(0);
+      v[i][1] = my_rand(1);
+      v[i][2] = my_rand(2);
     }
+  
+  accu::stat::var<vec3f> a;
+  for (int i = 0; i < n; ++i)
+    a.take(v[i]);
 
-    template <typename I>
-    inline
-    pw::value_<I> to_fun(const Image<I>& ima)
-    {
-      return pw::value(ima);
-    }
+  mln_assertion(a.n_items() == n);
 
-# endif // ! MLN_INCLUDE_ONLY
+  vec3f m = a.mean();
+  mln_assertion(m[0] > 0.4 && m[0] < 0.6);
+  mln_assertion(m[1] > 0.9 && m[1] < 1.1);
+  mln_assertion(m[2] > 1.4 && m[2] < 1.6);
 
-  } // end of namespace mln::convert
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CONVERT_TO_FUN_HH
+  algebra::mat<3,3,float> s_1 = a.variance()._1();
+  mln_assertion(s_1(0,0) > 11  && s_1(0,0) < 13);
+  mln_assertion(s_1(1,1) >  2  && s_1(1,1) <  4);
+  mln_assertion(s_1(2,2) > 1.1 && s_1(2,2) < 1.5);
+}

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -294,16 +294,17 @@ namespace mln
   inline
   point<G,C>::point(const algebra::vec<dim,C2>& v)
   {
+    mlc_converts_to(C2, C)::check();
     unsigned j = 0;
-    //FIXME: to be improved.
+    //FIXME: to be improved while adding a conversion routine.
     if (dim < 3)
       coord_ = v;
     else
     {
       for (unsigned i = dim - 2; i < dim; ++i)
-	coord_[i] = v[j++];
+	coord_[i]   = static_cast<C>(v[j++]);
       for (unsigned i = 2; i < dim; ++i, ++j)
-	coord_[i-j] = v[j];
+	coord_[i-j] = static_cast<C>(v[j]);
     }
   }
 

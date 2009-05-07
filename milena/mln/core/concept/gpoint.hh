@@ -36,7 +36,7 @@
 
 # include <mln/core/concept/site.hh>
 # include <mln/core/concept/gdpoint.hh>
-# include <mln/value/concept/scalar.hh>
+# include <mln/value/scalar.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/util/ord.hh>
 # include <mln/debug/format.hh>
@@ -72,6 +72,14 @@ namespace mln
 			mln::Gpoint, L, mln::Gpoint, R >
     {
       typedef mln_delta(L) ret;
+    };
+
+    template < typename L, typename R >
+    struct set_binary_< op::times,
+			mln::Gpoint, L,
+			mln::Object, mln::value::scalar_<R> >
+    {
+      typedef L ret;
     };
 
 
@@ -200,7 +208,7 @@ namespace mln
 
 
 
-  /// Substract a delta-point \p rhs to a grid point \p lhs.
+  /// Substract a delta-point \p dp to a grid point \p p.
   ///
   /*! \param[in] p A grid point.
    * \param[in] dp A delta-point.
@@ -215,6 +223,13 @@ namespace mln
   template <typename P, typename D>
   P
   operator-(const Gpoint<P>& p, const Gdpoint<D>& dp);
+
+
+  /// Multiply a point \p p by a scalar \p s.
+  //
+  template <typename P, typename S>
+  P
+  operator*(const Gpoint<P>& p, const value::scalar_<S>& s);
 
 
   /// Print a grid point \p p into the output stream \p ostr.
@@ -377,6 +392,19 @@ namespace mln
   {
     mlc_equal(mln_grid(P), mln_grid(D))::check();
     P tmp = exact(p).to_vec() - exact(dp).to_vec();
+    return tmp;
+  }
+
+  template <typename P, typename S>
+  inline
+  P
+  operator*(const Gpoint<P>& p, const value::scalar_<S>& s)
+  {
+    int s_ = s.to_equiv();
+    const unsigned n = P::dim;
+    P tmp = exact(p);
+    for (unsigned i = 0; i < n; ++i)
+      tmp[i] *= s_;
     return tmp;
   }
 

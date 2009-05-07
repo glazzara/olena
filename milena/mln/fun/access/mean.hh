@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -8,7 +7,7 @@
 //
 // This library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// MERCHANTABILITY or FITNESS FOR F PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -26,54 +25,67 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_FUN_HH
-# define MLN_CONVERT_TO_FUN_HH
+#ifndef MLN_FUN_ACCESS_MEAN_HH
+# define MLN_FUN_ACCESS_MEAN_HH
 
-/// \file mln/convert/to_fun.hh
-///
-/// Conversions towards some mln::Function.
-
-# include <mln/pw/value.hh>
-# include <mln/fun/c.hh>
+# include <mln/fun/unary.hh>
+# include <mln/core/concept/accumulator.hh>
 
 
 namespace mln
 {
 
-  namespace convert
+  namespace fun
   {
 
-    /// Convert a C unary function into an mln::fun::C.
-    template <typename R, typename A>
-    fun::C<R(*)(A)> to_fun(R (*f)(A));
-
-    /// Convert an image into a function.
-    template <typename I>
-    pw::value_<I> to_fun(const Image<I>& ima);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename R, typename A>
-    inline
-    fun::C<R(*)(A)> to_fun(R (*f_)(A))
+    namespace access
     {
-      fun::C<R(*)(A)> f(f_);
-      return f;
-    }
 
-    template <typename I>
-    inline
-    pw::value_<I> to_fun(const Image<I>& ima)
+      struct mean : unary<mean>
+      {
+      };
+
+      namespace internal
+      {
+
+	template <typename T>
+	struct method_mean
+	{
+	  typedef  method_mean ret;
+
+	  typedef typename T::mean_t result;
+	  typedef T argument;
+	  
+	  static result read(const argument& x)
+	  {
+	    return x.mean();
+	  }
+	};
+
+      }
+
+    } // end of namespace mln::access
+
+  } // end of namespace mln
+
+
+  namespace trait
+  {
+
+    namespace next
     {
-      return pw::value(ima);
-    }
 
-# endif // ! MLN_INCLUDE_ONLY
+      template <typename A>
+      struct set_unary_< fun::access::mean,
+			 Accumulator, A > : fun::access::internal::method_mean<A>
+      {
+      };
 
-  } // end of namespace mln::convert
+    } // end of namespace mln::trait::next
+
+  } // end of namespace mln::trait
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CONVERT_TO_FUN_HH
+#endif // ! MLN_FUN_ACCESS_MEAN_HH

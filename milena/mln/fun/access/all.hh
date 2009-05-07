@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,54 +25,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_FUN_HH
-# define MLN_CONVERT_TO_FUN_HH
+#ifndef MLN_FUN_ACCESS_ALL_HH
+# define MLN_FUN_ACCESS_ALL_HH
 
-/// \file mln/convert/to_fun.hh
+/// \file mln/fun/access/all.hh
 ///
-/// Conversions towards some mln::Function.
-
-# include <mln/pw/value.hh>
-# include <mln/fun/c.hh>
+/// File that includes all access functions.
 
 
 namespace mln
 {
-
-  namespace convert
+  namespace fun
   {
 
-    /// Convert a C unary function into an mln::fun::C.
-    template <typename R, typename A>
-    fun::C<R(*)(A)> to_fun(R (*f)(A));
+    /// Namespace for access functions.
+    namespace access
+    {}
 
-    /// Convert an image into a function.
-    template <typename I>
-    pw::value_<I> to_fun(const Image<I>& ima);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename R, typename A>
-    inline
-    fun::C<R(*)(A)> to_fun(R (*f_)(A))
-    {
-      fun::C<R(*)(A)> f(f_);
-      return f;
-    }
-
-    template <typename I>
-    inline
-    pw::value_<I> to_fun(const Image<I>& ima)
-    {
-      return pw::value(ima);
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::convert
-
-} // end of namespace mln
+  }
+}
 
 
-#endif // ! MLN_CONVERT_TO_FUN_HH
+# include <mln/fun/access/mean.hh>
+
+
+#endif // ! MLN_FUN_ACCESS_ALL_HH

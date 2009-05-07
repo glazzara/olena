@@ -25,17 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
-# define MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
+#ifndef MLN_WORLD_INTER_PIXEL_COMPUTE_HH
+# define MLN_WORLD_INTER_PIXEL_COMPUTE_HH
 
-/// \file mln/world/inter_pixel/neighb2d.hh
+/// \file mln/world/inter_pixel/compute.hh
 ///
-/// Common neighborhood on inter-pixel images.
+/// FIXME: insert comment.
 
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/world/inter_pixel/is_separator.hh>
+# include <mln/world/inter_pixel/separator_to_pixels.hh>
 
-# include <mln/core/alias/neighb2d.hh>
-# include <mln/make/double_neighb2d.hh>
-# include <mln/world/inter_pixel/dim2/is_row_odd.hh>
 
 namespace mln
 {
@@ -46,54 +47,48 @@ namespace mln
     namespace inter_pixel
     {
 
-      /// Double neighborhood used for inter-pixel images.
-      typedef neighb< win::multiple<window2d, dim2::is_row_odd> > dbl_neighb2d;
 
-      /// C4 neighborhood on pixels centered on an edge.
-      const dbl_neighb2d& e2c();
+      template <typename I, typename F>
+      image_if<mln_ch_value(mln_unmorph(I), mln_result(F)), is_separator>
+      compute(const Image<I>& input, const Function_vv2v<F>& f);
 
-      /// C8 neighborhood on edges centered on an edge.
-      const dbl_neighb2d& e2e();
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      const dbl_neighb2d& e2c()
+      template <typename I, typename F>
+      inline
+      image_if<mln_ch_value(mln_unmorph(I), mln_result(F)), is_separator>
+      compute(const Image<I>& input_, const Function_vv2v<F>& f_)
       {
-	static bool e2c_h[] = { 0, 1, 0,
-				0, 0, 0,
-				0, 1, 0 };
+	trace::entering("world::inter_pixel::compute");
+	
+	const I& input = exact(input_);
+	const F& f     = exact(f_);
 
-	static bool e2c_v[] = { 0, 0, 0,
-				1, 0, 1,
-				0, 0, 0 };
+	mln_precondition(input.is_valid());
 
-	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2c_h, e2c_v);
-	return nbh;
-      }
+	typedef mln_unmorph(I) I_;
+	typedef mln_ch_value(I_, mln_result(F)) O_;
+	O_ output_;
+	initialize(output_, input.unmorph_());
 
+	typedef image_if<O_, is_separator> O;
+	O output(output_, is_separator());
+	
+	mln_piter(O) e(output.domain());
+	for_all(e)
+	{
+	  mln_site(I) p1, p2;
+ 	  separator_to_pixels(e, p1, p2);
+	  output(e) = f(input(p1), input(p2));
+	}
 
-
-      const dbl_neighb2d& e2e()
-      {
-	static bool e2e_h[] = { 0, 0, 1, 0, 0,
-				0, 1, 0, 1, 0,
-				0, 0, 0, 0, 0,
-				0, 1, 0, 1, 0,
-				0, 0, 1, 0, 0 };
-
-	static bool e2e_v[] = { 0, 0, 0, 0, 0,
-				0, 1, 0, 1, 0,
-				1, 0, 0, 0, 1,
-				0, 1, 0, 1, 0,
-				0, 0, 0, 0, 0 };
-
-	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2e_h, e2e_v);
-	return nbh;
+	trace::exiting("world::inter_pixel::compute");
+	return output;
       }
 
 # endif // ! MLN_INCLUDE_ONLY
-
 
     } // end of namespace mln::world::inter_pixel
 
@@ -101,4 +96,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
+#endif // ! MLN_WORLD_INTER_PIXEL_COMPUTE_HH

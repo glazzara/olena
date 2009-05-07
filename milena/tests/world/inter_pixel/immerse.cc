@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,54 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_FUN_HH
-# define MLN_CONVERT_TO_FUN_HH
-
-/// \file mln/convert/to_fun.hh
+/// \file tests/world/inter_pixel/immerse.cc
 ///
-/// Conversions towards some mln::Function.
+/// Tests on mln::world::inter_pixel::immerse.
 
-# include <mln/pw/value.hh>
-# include <mln/fun/c.hh>
+#include <mln/core/var.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/level/compare.hh>
+#include <mln/world/inter_pixel/immerse.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace convert
-  {
+  int vals[] = { 3, 4, 5,
+		 1, 3, 6 ,
+		 8, 7, 3 } ;
 
-    /// Convert a C unary function into an mln::fun::C.
-    template <typename R, typename A>
-    fun::C<R(*)(A)> to_fun(R (*f)(A));
+  typedef image2d<int> I;
+  I ima = make::image2d(vals);
 
-    /// Convert an image into a function.
-    template <typename I>
-    pw::value_<I> to_fun(const Image<I>& ima);
+  using namespace world::inter_pixel;
 
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename R, typename A>
-    inline
-    fun::C<R(*)(A)> to_fun(R (*f_)(A))
-    {
-      fun::C<R(*)(A)> f(f_);
-      return f;
-    }
-
-    template <typename I>
-    inline
-    pw::value_<I> to_fun(const Image<I>& ima)
-    {
-      return pw::value(ima);
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::convert
-
-} // end of namespace mln
+  typedef image_if<I, is_pixel> Ix;
+  Ix imax = immerse(ima);
 
 
-#endif // ! MLN_CONVERT_TO_FUN_HH
+  int refs[] = { 3, 0, 4, 0, 5,
+		 0, 0, 0, 0, 0,
+		 1, 0, 3, 0, 6,
+		 0, 0, 0, 0, 0,
+		 8, 0, 7, 0, 3 };
+
+  mln_assertion(imax == (make::image2d(refs) | is_pixel()));
+
+  mln_piter_(Ix) p(imax.domain());
+  for_all(p)
+    mln_assertion(is_pixel()(p));
+}

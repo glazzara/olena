@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,54 +25,63 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_FUN_HH
-# define MLN_CONVERT_TO_FUN_HH
-
-/// \file mln/convert/to_fun.hh
+/// \file tests/world/inter_pixel/compute.cc
 ///
-/// Conversions towards some mln::Function.
+/// Tests on mln::world::inter_pixel::compute.
 
-# include <mln/pw/value.hh>
-# include <mln/fun/c.hh>
+#include <cmath>
+
+#include <mln/core/var.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/level/compare.hh>
+#include <mln/world/inter_pixel/immerse.hh>
+#include <mln/world/inter_pixel/compute.hh>
+
+#include <mln/world/inter_pixel/neighb2d.hh>
+#include <mln/morpho/watershed/flooding.hh>
+#include <mln/debug/println.hh>
 
 
-namespace mln
+
+struct d_t : mln::Function_vv2v<d_t>
 {
+  typedef int result;
 
-  namespace convert
+  int operator()(int i1, int i2) const
   {
-
-    /// Convert a C unary function into an mln::fun::C.
-    template <typename R, typename A>
-    fun::C<R(*)(A)> to_fun(R (*f)(A));
-
-    /// Convert an image into a function.
-    template <typename I>
-    pw::value_<I> to_fun(const Image<I>& ima);
+    return std::abs(i2 - i1);
+  }
+}
+  d;
 
 
-# ifndef MLN_INCLUDE_ONLY
 
-    template <typename R, typename A>
-    inline
-    fun::C<R(*)(A)> to_fun(R (*f_)(A))
-    {
-      fun::C<R(*)(A)> f(f_);
-      return f;
-    }
+int main()
+{
+  using namespace mln;
 
-    template <typename I>
-    inline
-    pw::value_<I> to_fun(const Image<I>& ima)
-    {
-      return pw::value(ima);
-    }
+  int vals[] = { 3, 4, 5,
+		 1, 3, 6 ,
+		 8, 7, 3 } ;
 
-# endif // ! MLN_INCLUDE_ONLY
+  typedef image2d<int> I;
+  I ima = make::image2d(vals);
 
-  } // end of namespace mln::convert
-
-} // end of namespace mln
+  using namespace world::inter_pixel;
+  typedef image_if<I, is_pixel> Ix;
+  Ix imax = immerse(ima);
 
 
-#endif // ! MLN_CONVERT_TO_FUN_HH
+  int refs[] = { 0, 1, 0, 1, 0,
+		 2, 0, 1, 0, 1,
+		 0, 2, 0, 3, 0,
+		 7, 0, 4, 0, 3,
+		 0, 1, 0, 4, 0 };
+
+  mln_assertion(compute(imax, d) == (make::image2d(refs) | is_separator()));
+
+  mln_VAR(g, compute(imax, d));
+
+  unsigned n_basins;
+  debug::println(morpho::watershed::flooding(g, e2e(), n_basins));
+}

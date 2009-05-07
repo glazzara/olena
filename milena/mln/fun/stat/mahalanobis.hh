@@ -25,80 +25,71 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
-# define MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
+#ifndef MLN_FUN_STAT_MAHALANOBIS_HH
+# define MLN_FUN_STAT_MAHALANOBIS_HH
 
-/// \file mln/world/inter_pixel/neighb2d.hh
+/// \file mln/fun/stat/mahalanobis.hh
 ///
-/// Common neighborhood on inter-pixel images.
+/// Define the FIXME
 
+# include <mln/core/concept/function.hh>
+# include <mln/algebra/vec.hh>
+# include <mln/algebra/mat.hh>
 
-# include <mln/core/alias/neighb2d.hh>
-# include <mln/make/double_neighb2d.hh>
-# include <mln/world/inter_pixel/dim2/is_row_odd.hh>
 
 namespace mln
 {
 
-  namespace world
+  namespace fun
   {
 
-    namespace inter_pixel
+    namespace stat
     {
 
-      /// Double neighborhood used for inter-pixel images.
-      typedef neighb< win::multiple<window2d, dim2::is_row_odd> > dbl_neighb2d;
+      template <typename V>
+      struct mahalanobis
+	: public Function_v2v< mahalanobis<V> >,
+	  private metal::equal< V, algebra::vec<V::dim,float> >::check_t
+      {
+	enum { n = V::dim };
+	typedef float result;
 
-      /// C4 neighborhood on pixels centered on an edge.
-      const dbl_neighb2d& e2c();
+	mahalanobis(const algebra::mat<V::dim,V::dim,float>& var,
+		    const algebra::vec<V::dim,float>&        mean);
 
-      /// C8 neighborhood on edges centered on an edge.
-      const dbl_neighb2d& e2e();
+	float operator()(const V& v) const;
+
+	algebra::mat<n,n,float> var_1;
+	algebra::vec<n,float>   mean;
+      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      const dbl_neighb2d& e2c()
+      template <typename V>
+      inline
+      mahalanobis<V>::mahalanobis(const algebra::mat<V::dim,V::dim,float>& var,
+				  const algebra::vec<V::dim,float>& mean)
       {
-	static bool e2c_h[] = { 0, 1, 0,
-				0, 0, 0,
-				0, 1, 0 };
-
-	static bool e2c_v[] = { 0, 0, 0,
-				1, 0, 1,
-				0, 0, 0 };
-
-	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2c_h, e2c_v);
-	return nbh;
+	var_1 = var._1();
+	mean  = mean;
       }
 
-
-
-      const dbl_neighb2d& e2e()
+      template <typename V>
+      inline
+      float
+      mahalanobis<V>::operator()(const V& v) const
       {
-	static bool e2e_h[] = { 0, 0, 1, 0, 0,
-				0, 1, 0, 1, 0,
-				0, 0, 0, 0, 0,
-				0, 1, 0, 1, 0,
-				0, 0, 1, 0, 0 };
-
-	static bool e2e_v[] = { 0, 0, 0, 0, 0,
-				0, 1, 0, 1, 0,
-				1, 0, 0, 0, 1,
-				0, 1, 0, 1, 0,
-				0, 0, 0, 0, 0 };
-
-	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2e_h, e2e_v);
-	return nbh;
+	return (v - mean).t() * var_1 * (v - mean);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
 
+    } // end of namespace mln::fun::stat
 
-    } // end of namespace mln::world::inter_pixel
-
-  } // end of namespace mln::world
+  } // end of namespace mln::fun
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
+
+#endif // ! MLN_FUN_X2V_NORM_MAHALANOBIS_HH

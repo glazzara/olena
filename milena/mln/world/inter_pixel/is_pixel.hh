@@ -25,17 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
-# define MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
+#ifndef MLN_WORLD_INTER_PIXEL_IS_PIXEL_HH
+# define MLN_WORLD_INTER_PIXEL_IS_PIXEL_HH
 
-/// \file mln/world/inter_pixel/neighb2d.hh
+/// \file mln/world/inter_pixel/is_pixel.hh
 ///
-/// Common neighborhood on inter-pixel images.
+/// FIXME: doc.
 
+# include <mln/core/concept/function.hh>
+# include <mln/core/image/image_if.hh>
+# include <mln/core/point.hh>
 
-# include <mln/core/alias/neighb2d.hh>
-# include <mln/make/double_neighb2d.hh>
-# include <mln/world/inter_pixel/dim2/is_row_odd.hh>
 
 namespace mln
 {
@@ -46,54 +46,43 @@ namespace mln
     namespace inter_pixel
     {
 
-      /// Double neighborhood used for inter-pixel images.
-      typedef neighb< win::multiple<window2d, dim2::is_row_odd> > dbl_neighb2d;
+      struct is_pixel : public Function_p2b< is_pixel >
+      {
+	typedef bool result;
 
-      /// C4 neighborhood on pixels centered on an edge.
-      const dbl_neighb2d& e2c();
+	template <typename P>
+	bool operator()(const Gpoint<P>& p) const;
 
-      /// C8 neighborhood on edges centered on an edge.
-      const dbl_neighb2d& e2e();
+	template <typename P>
+	bool operator()(const Site_Proxy<P>& p) const;
+      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      const dbl_neighb2d& e2c()
-      {
-	static bool e2c_h[] = { 0, 1, 0,
-				0, 0, 0,
-				0, 1, 0 };
+	template <typename P>
+	inline
+	bool
+	is_pixel::operator()(const Gpoint<P>& p_) const
+	{
+	  const P& p = exact(p_);
+	  const unsigned n = P::dim;
+	  for (unsigned i = 0; i < n; ++i)
+	    if (p[i] % 2 == 1)
+	      return false;
+	  return true;
+	}
 
-	static bool e2c_v[] = { 0, 0, 0,
-				1, 0, 1,
-				0, 0, 0 };
-
-	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2c_h, e2c_v);
-	return nbh;
-      }
-
-
-
-      const dbl_neighb2d& e2e()
-      {
-	static bool e2e_h[] = { 0, 0, 1, 0, 0,
-				0, 1, 0, 1, 0,
-				0, 0, 0, 0, 0,
-				0, 1, 0, 1, 0,
-				0, 0, 1, 0, 0 };
-
-	static bool e2e_v[] = { 0, 0, 0, 0, 0,
-				0, 1, 0, 1, 0,
-				1, 0, 0, 0, 1,
-				0, 1, 0, 1, 0,
-				0, 0, 0, 0, 0 };
-
-	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2e_h, e2e_v);
-	return nbh;
-      }
+	template <typename P>
+	inline
+	bool
+	is_pixel::operator()(const Site_Proxy<P>& p) const
+	{
+	  mlc_is_a(mln_site(P), Gpoint)::check();
+	  return this->operator()(exact(p).to_site());
+	}
 
 # endif // ! MLN_INCLUDE_ONLY
-
 
     } // end of namespace mln::world::inter_pixel
 
@@ -101,4 +90,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
+#endif // ! MLN_WORLD_INTER_PIXEL_IS_PIXEL_HH

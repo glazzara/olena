@@ -25,20 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WORLD_INTER_PIXEL_FULL_HH
-# define MLN_WORLD_INTER_PIXEL_FULL_HH
+#ifndef MLN_WORLD_INTER_PIXEL_IS_SEPARATOR_HH
+# define MLN_WORLD_INTER_PIXEL_IS_SEPARATOR_HH
 
-/// \file mln/world/inter_pixel/full.hh
+/// \file mln/world/inter_pixel/is_separator.hh
 ///
-/// Convert a classical 2D image to an inter-pixel image.
+/// FIXME: doc.
 ///
-/// FIXME: will NOT work if the image has an origin different from (0,0).
+/// \todo Make it work in n-D.
 
-# include <mln/core/image/image2d.hh>
-# include <mln/geom/max_col.hh>
-# include <mln/geom/max_row.hh>
-# include <mln/geom/min_col.hh>
-# include <mln/geom/min_row.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/core/image/image_if.hh>
+# include <mln/core/point.hh>
 
 
 namespace mln
@@ -50,39 +48,39 @@ namespace mln
     namespace inter_pixel
     {
 
-      /// Convert a classical 2D image to an inter-pixel image.
-      ///
-      /// \param[in] input A 2d image.
-      ///
-      /// \return An inter-pixel image.
-      //
-      template <typename T>
-      image2d<T>
-      image2full(const image2d<T>& input);
+      struct is_separator : public Function_p2b< is_separator >
+      {
+	typedef bool result;
+
+	template <typename P>
+	bool operator()(const Gpoint<P>& p) const;
+
+	template <typename P>
+	bool operator()(const Site_Proxy<P>& p) const;
+      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+	template <typename P>
+	inline
+	bool
+	is_separator::operator()(const Gpoint<P>& p_) const
+	{
+	  const P& p = exact(p_);
+	  return p.row() % 2 + p.col() % 2 == 1;
+	}
 
-      template <typename T>
-      image2d<T>
-      image2full(const image2d<T>& input)
-      {
-	trace::entering("world::inter_pixel::image2full");
-	mln_precondition(input.is_valid());
-
-	image2d<T> output(2 * input.nrows() - 1, 2 * input.ncols() - 1);
-	for (int row = geom::min_row(input); row <= geom::max_row(input); ++row)
-	  for (int col = geom::min_col(input); col <= geom::max_col(input); ++col)
-	    opt::at(output, 2 * row, 2 * col) = opt::at(input, row, col);
-
-	trace::exiting("world::inter_pixel::image2full");
-	return output;
-      }
-
+	template <typename P>
+	inline
+	bool
+	is_separator::operator()(const Site_Proxy<P>& p) const
+	{
+	  mlc_is_a(mln_site(P), Gpoint)::check();
+	  return this->operator()(exact(p).to_site());
+	}
 
 # endif // ! MLN_INCLUDE_ONLY
-
 
     } // end of namespace mln::world::inter_pixel
 
@@ -90,4 +88,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_INTER_PIXEL_FULL
+#endif // ! MLN_WORLD_INTER_PIXEL_IS_SEPARATOR_HH

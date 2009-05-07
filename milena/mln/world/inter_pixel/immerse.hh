@@ -25,17 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
-# define MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
+#ifndef MLN_WORLD_INTER_PIXEL_IMMERSE_HH
+# define MLN_WORLD_INTER_PIXEL_IMMERSE_HH
 
-/// \file mln/world/inter_pixel/neighb2d.hh
+/// \file mln/world/inter_pixel/immerse.hh
 ///
-/// Common neighborhood on inter-pixel images.
+/// Convert a classical image to an inter-pixel image.
 
+# include <mln/core/concept/image.hh>
+# include <mln/data/paste_without_localization.hh>
+# include <mln/geom/nsites.hh>
+# include <mln/world/inter_pixel/is_pixel.hh>
 
-# include <mln/core/alias/neighb2d.hh>
-# include <mln/make/double_neighb2d.hh>
-# include <mln/world/inter_pixel/dim2/is_row_odd.hh>
 
 namespace mln
 {
@@ -46,54 +47,43 @@ namespace mln
     namespace inter_pixel
     {
 
-      /// Double neighborhood used for inter-pixel images.
-      typedef neighb< win::multiple<window2d, dim2::is_row_odd> > dbl_neighb2d;
+      /// Convert an image to an inter-pixel image.
+      ///
+      /// \param[in] input An image.
+      /// \return An inter-pixel image.
+      //
+      template <typename I>
+      image_if<mln_concrete(I), is_pixel>
+      immerse(const Image<I>& input);
 
-      /// C4 neighborhood on pixels centered on an edge.
-      const dbl_neighb2d& e2c();
-
-      /// C8 neighborhood on edges centered on an edge.
-      const dbl_neighb2d& e2e();
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      const dbl_neighb2d& e2c()
+      template <typename I>
+      inline
+      image_if<mln_concrete(I), is_pixel>
+      immerse(const Image<I>& input_)
       {
-	static bool e2c_h[] = { 0, 1, 0,
-				0, 0, 0,
-				0, 1, 0 };
+	trace::entering("world::inter_pixel::immerse");
 
-	static bool e2c_v[] = { 0, 0, 0,
-				1, 0, 1,
-				0, 0, 0 };
+	mlc_is_a(mln_domain(I), Box)::check();
 
-	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2c_h, e2c_v);
-	return nbh;
-      }
+	const I& input = exact(input_);
+	mln_precondition(input.is_valid());
 
+	mln_domain(I) b(2 * input.domain().pmin(),
+			2 * input.domain().pmax());
+	mln_concrete(I) output(b);
+	mln_assertion(geom::nsites(output | is_pixel()) == input.domain().nsites());
 
+	data::paste_without_localization(input, (output | is_pixel()).rw());
 
-      const dbl_neighb2d& e2e()
-      {
-	static bool e2e_h[] = { 0, 0, 1, 0, 0,
-				0, 1, 0, 1, 0,
-				0, 0, 0, 0, 0,
-				0, 1, 0, 1, 0,
-				0, 0, 1, 0, 0 };
-
-	static bool e2e_v[] = { 0, 0, 0, 0, 0,
-				0, 1, 0, 1, 0,
-				1, 0, 0, 0, 1,
-				0, 1, 0, 1, 0,
-				0, 0, 0, 0, 0 };
-
-	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2e_h, e2e_v);
-	return nbh;
+	trace::exiting("world::inter_pixel::immerse");
+	return output | is_pixel();
       }
 
 # endif // ! MLN_INCLUDE_ONLY
-
 
     } // end of namespace mln::world::inter_pixel
 
@@ -101,4 +91,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
+#endif // ! MLN_WORLD_INTER_PIXEL_IMMERSE_HH

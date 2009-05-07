@@ -372,6 +372,16 @@
 
 
 
+// u
+
+/// Shortcuts to access the unmorph type associated to T.
+/// \{
+# define mln_unmorph(T)      typename T::unmorph
+# define mln_unmorph_(T)              T::unmorph
+/// \}
+
+
+
 // v
 
 /// Shortcuts to access the value type associated to T.

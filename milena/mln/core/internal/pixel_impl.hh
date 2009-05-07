@@ -233,7 +233,7 @@ namespace mln
     bool
     pixel_impl_<I, E>::is_valid_() const
     {
-      return value_ptr_ != 0 && internal::force_exact<E>(*this).is_valid();
+      return this->value_ptr_ != 0 && internal::force_exact<E>(*this).is_valid();
     }
 
     template <typename I, typename E>
@@ -249,7 +249,7 @@ namespace mln
     pixel_impl_<I, E>::val()
     {
       mln_precondition(is_valid_());
-      return *value_ptr_;
+      return *this->value_ptr_;
     }
 
     template <typename I, typename E>
@@ -258,7 +258,7 @@ namespace mln
     pixel_impl_<I, E>::val() const
     {
       mln_precondition(is_valid_());
-      return *value_ptr_;
+      return *this->value_ptr_;
     }
 
     template <typename I, typename E>
@@ -267,7 +267,7 @@ namespace mln
     pixel_impl_<I, E>::ima() const
     {
       // a const pixel, yet a mutable image
-      return const_cast<I&>(image_);
+      return const_cast<I&>(this->image_);
     }
 
     template <typename I, typename E>
@@ -286,7 +286,7 @@ namespace mln
     bool
     pixel_impl_<const I, E>::is_valid_() const
     {
-      return value_ptr_ != 0 && internal::force_exact<E>(*this).is_valid();
+      return this->value_ptr_ != 0 && internal::force_exact<E>(*this).is_valid();
     }
 
     template <typename I, typename E>
@@ -302,7 +302,7 @@ namespace mln
     pixel_impl_<const I, E>::val() const
     {
       mln_precondition(is_valid_());
-      return *value_ptr_;
+      return *this->value_ptr_;
     }
 
     template <typename I, typename E>
@@ -310,7 +310,7 @@ namespace mln
     const I&
     pixel_impl_<const I, E>::ima() const
     {
-      return image_;
+      return this->image_;
     }
 
     template <typename I, typename E>
