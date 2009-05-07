@@ -29,7 +29,7 @@
 #ifndef MLN_DEBUG_COLORIZE_HH
 # define MLN_DEBUG_COLORIZE_HH
 
-/// \file mln/debug/colorize.hh
+/// \file mln/labeling/colorize.hh
 ///
 /// Fill an image with successive values.
 
@@ -38,12 +38,14 @@
 # include <mln/value/rgb8.hh>
 # include <mln/literal/black.hh>
 # include <mln/level/transform.hh>
+# include <mln/level/compute.hh>
+# include <mln/accu/max.hh>
 
 
 namespace mln
 {
 
-  namespace debug
+  namespace labeling
   {
 
     namespace colorize_
@@ -58,8 +60,8 @@ namespace mln
     /*!
      * litera::black is used for component 0, e.g. the background.
      * Min and max values for RGB values can be set through the global
-     * variables mln::debug::colorize_::min_value and
-     * mln::debug::colorize_::max_value.
+     * variables mln::labeling::colorize_::min_value and
+     * mln::labeling::colorize_::max_value.
      *
      * \param[in] value value type used in the returned image.
      * \param[in] labeled_image A labeled image (\sa labeling::blobs).
@@ -70,6 +72,12 @@ namespace mln
     colorize(const V& value,
 	     const Image<L>& labeled_image,
 	     const mln_value(L)& nlabels);
+
+
+    template <typename V, typename L>
+    mln_ch_value(L, V)
+    colorize(const V& value,
+	     const Image<L>& labeled_image);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -105,7 +113,7 @@ namespace mln
 	     const Image<L>& input,
 	     const mln_value(L)& nlabels)
     {
-      trace::entering("debug::colorize");
+      trace::entering("labeling::colorize");
       mln_precondition(exact(input).is_valid());
       // FIXME: check that V is a color type.
       // FIXME: we want to be sure that this is a label.
@@ -132,13 +140,31 @@ namespace mln
       mln_assertion(f.size() >= (label_count));
       mln_ch_value(L, V) output = level::transform(input, f);
 
-      trace::exiting("debug::colorize");
+      trace::exiting("labeling::colorize");
+      return output;
+    }
+
+    template <typename V, typename L>
+    inline
+    mln_ch_value(L, V)
+    colorize(const V& value,
+	     const Image<L>& input)
+    {
+      trace::entering("labeling::colorize");
+      mln_precondition(exact(input).is_valid());
+
+      accu::max<mln_value(L)> accu;
+      mln_value(L) nlabels = level::compute(accu, input);
+
+      mln_ch_value(L,V) output = colorize(value, input, nlabels);
+
+      trace::exiting("labeling::colorize");
       return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::debug
+  } // end of namespace mln::labeling
 
 } // end of namespace mln
 

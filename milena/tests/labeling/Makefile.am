@@ -5,6 +5,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
   background					\
   blobs						\
+  colorize 					\
   compute 					\
   fill_holes					\
   flat_zones					\
@@ -20,6 +21,7 @@ check_PROGRAMS =				\
 
 background_SOURCES = background.cc
 blobs_SOURCES = blobs.cc
+colorize_SOURCES = colorize.cc
 compute_SOURCES = compute.cc
 fill_holes_SOURCES = fill_holes.cc
 flat_zones_SOURCES = flat_zones.cc

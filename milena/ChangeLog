@@ -1,3 +1,13 @@
+2009-05-07 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Move debug::colorize to labeling::colorize.
+
+	* mln/debug/colorize.hh: move...
+	* mln/labeling/colorize.hh: ... here.
+
+	* tests/labeling/Makefile.am,
+	* tests/labeling/colorize.cc: add a new test.
+
 2009-05-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Several fixes and new stuff.
