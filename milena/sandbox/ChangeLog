@@ -1,3 +1,9 @@
+2009-05-07  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Fixed watershed, now works on edges.
+	* fabien/igr/Makefile.rules: Optimization flag is now -O1.
+	* fabien/igr/seg_fixed.cc: Fixed 'float' bug on edges.
+
 2009-05-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	New ESIEE stuff.

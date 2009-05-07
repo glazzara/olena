@@ -7,5 +7,8 @@
                 ||----w |
                 ||     ||
 
-[ ] Create values between pixels
-[ ] Watershed between pixels
+[X] Create values between pixels
+[X] Watershed between pixels
+[ ] Sum of watershed slices
+[X] Fix display_edge
+[ ] Save edges image
