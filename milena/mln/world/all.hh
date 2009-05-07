@@ -25,36 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/world/inter_pixel/image2full.cc
+#ifndef MLN_WORLD_ALL_HH
+# define MLN_WORLD_ALL_HH
+
+/// \file mln/world/all.hh
 ///
-/// Tests on mln::world::inter_pixel::image2full
+/// File that includes all the world routines.
 
-#include <mln/core/image/image2d.hh>
-#include <mln/make/image.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/level/compare.hh>
-#include <mln/world/inter_pixel/image2full.hh>
 
-int main()
-{
-  using namespace mln;
+// Sub-directories.
+# include <mln/world/binary_2d/all.hh>
+# include <mln/world/inter_pixel/all.hh>
 
-  value::int_u8 vals[][3] = { { 3, 4, 5 },
-			      { 1, 3, 6 },
-			      { 8, 7, 3 } } ;
 
-  value::int_u8 refs[][5] = { { 3, 0, 4, 0, 5 },
-			      { 0, 0, 0, 0, 0 },
-			      { 1, 0, 3, 0, 6 },
-			      { 0, 0, 0, 0, 0 },
-			      { 8, 0, 7, 0, 3 } };
-
-  typedef image2d<value::int_u8> ima_t;
-  ima_t ima = make::image(vals);
-  ima_t ref = make::image(refs);
-
-  ima_t ima_l = world::inter_pixel::image2full(ima);
-
-  mln_assertion(ima_l == ref);
-
-}
+#endif // ! MLN_WORLD_ALL_HH

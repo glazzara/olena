@@ -72,6 +72,7 @@
 #include <mln/util/all.hh>
 #include <mln/value/all.hh>
 #include <mln/win/all.hh>
+#include <mln/world/all.hh>
 
 #include <mln/essential/1d.hh>
 #include <mln/essential/2d.hh>

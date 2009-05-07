@@ -1,3 +1,20 @@
+2009-05-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix missing files and tests in world inter-pixel.
+
+	* mln/world/inter_pixel/all.hh: New.
+	* mln/world/inter_pixel/dim2/all.hh: Fix copyright.
+	* mln/world/all.hh: New.
+	* mln/all.hh: Update.
+	* tests/world/inter_pixel/is_separator.cc: New.
+	* tests/world/inter_pixel/is_pixel.cc: New.
+	* tests/world/inter_pixel/Makefile.am: Update.
+	* tests/world/inter_pixel/separator_to_pixels.cc: New.
+	* mln/world/inter_pixel/make: Remove; useless.
+	* tests/world/inter_pixel/image2full.cc: Remove;
+	new stuff is...
+	* tests/world/inter_pixel/immerse.hh: ...this.
+
 2009-05-07 Guillaume Lazzara  <lazzara@lrde.epita.fr>
     
 	Move object_id.hh to mln/util and add a missing operator<

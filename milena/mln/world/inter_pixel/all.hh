@@ -1,5 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,18 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WORLD_INTER_PIXEL_DIM2_ALL_HH
-# define MLN_WORLD_INTER_PIXEL_DIM2_ALL_HH
+#ifndef MLN_WORLD_INTER_PIXEL_ALL_HH
+# define MLN_WORLD_INTER_PIXEL_ALL_HH
 
-/// \file mln/world/inter_pixel/dim2/all.hh
+/// \file mln/world/inter_pixel/all.hh
 ///
-/// File that includes all the inter-pixel 2D routines.
+/// File that includes all the inter-pixel routines.
 
 
-# include <mln/world/inter_pixel/dim2/is_dot.hh>
-# include <mln/world/inter_pixel/dim2/is_edge.hh>
-# include <mln/world/inter_pixel/dim2/is_pixel.hh>
-# include <mln/world/inter_pixel/dim2/is_row_odd.hh>
+// Sub-directories.
+# include <mln/world/inter_pixel/dim2/all.hh>
 
 
-#endif // ! MLN_WORLD_INTER_PIXEL_DIM2_ALL_HH
+# include <mln/world/inter_pixel/compute.hh>
+# include <mln/world/inter_pixel/immerse.hh>
+# include <mln/world/inter_pixel/is_separator.hh>
+# include <mln/world/inter_pixel/is_pixel.hh>
+# include <mln/world/inter_pixel/separator_to_pixels.hh>
+
+
+#endif // ! MLN_WORLD_INTER_PIXEL_ALL_HH
