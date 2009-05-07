@@ -105,6 +105,13 @@ namespace mln
       /// Constructor from a float.
       float01_(float val);
 
+      /// \{ Constructors/assignments with literals.
+      float01_(const mln::literal::zero_t&);
+      float01_& operator=(const mln::literal::zero_t&);
+      float01_(const mln::literal::one_t&);
+      float01_& operator=(const mln::literal::one_t&);
+      /// \}
+
       /// Assigment from a float.
       float01_<n>& operator=(float val);
 
@@ -189,6 +196,38 @@ namespace mln
     float01_<n>::set_ind(unsigned long val)
     {
       this->v_ = static_cast<enc_>(val);
+    }
+
+    template <unsigned n>
+    inline
+    float01_<n>::float01_(const mln::literal::zero_t&)
+    {
+      this->v_ = 0;
+    }
+
+    template <unsigned n>
+    inline
+    float01_<n>&
+    float01_<n>::operator=(const mln::literal::zero_t&)
+    {
+      this->v_ = 0;
+      return *this;
+    }
+
+    template <unsigned n>
+    inline
+    float01_<n>::float01_(const mln::literal::one_t&)
+    {
+      this->v_ = 1;
+    }
+
+    template <unsigned n>
+    inline
+    float01_<n>&
+    float01_<n>::operator=(const mln::literal::one_t&)
+    {
+      this->v_ = 1;
+      return *this;
     }
 
     template <unsigned n>

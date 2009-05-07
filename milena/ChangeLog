@@ -1,3 +1,11 @@
+2009-05-07  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Fix display_edge() and float01_ constructors.
+	* doc/ref_guide/ref_guide.tex: I/O update.
+	* mln/value/float01_.hh: Add constructors with literals.
+	* mln/world/inter_pixel/display_edge.hh: Fix image bbox.
+	* tests/world/inter_pixel/display_edge.cc: New test for display_edge().
+
 2009-05-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix fun stat mahalanobis.
