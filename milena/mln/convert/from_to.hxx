@@ -36,6 +36,7 @@
 
 # include <mln/core/def/all.hh>
 # include <mln/core/grids.hh>
+# include <mln/util/couple.hh>
 
 //FIXME: have a forward declaration.
 # include <vector>
@@ -408,6 +409,15 @@ namespace mln
       template <typename V, typename T>
       void
       from_to_(const util::array<V>& from, image1d<T>& to);
+
+      // util::couple<T, U> -> util::couple<V, W>
+      template <typename T, typename U, typename V, typename W>
+      void
+      from_to_(const util::couple<T, U>& from, util::couple<V, W>& to)
+      {
+        from_to(from.first(), to.first());
+        from_to(from.second(), to.second());
+      }
 
     } // end of namespace mln::convert::over_load
 

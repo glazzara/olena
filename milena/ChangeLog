@@ -1,3 +1,9 @@
+2009-05-07  Guillaume Sadegh  <sadegh@lrde.epita.fr>
+
+	Add couple to couple conversion.
+	* mln/fun/i2v/array.hh (from_to_): Remove static check.
+	* milena/mln/convert/from_to.hxx: New overload for couple->couple.
+
 2009-05-06  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add I/O tests.
@@ -66,7 +72,7 @@
 	*  sandbox/fred/tests/thru.cc: Added test for thrubin.
 
 2009-05-05 Guillaume Lazzara  <lazzara@lrde.epita.fr>
-  
+
 	Add make_edge_image in world::inter_pixel and few missing tests.
 
 	* mln/world/inter_pixel/dim2/make_edge_image.hh: new routine.
@@ -368,7 +374,7 @@
 	* mln/algebra/vec.hh (trait): Fix missing definitions.
 	(set_precise_binary_): Duplicate explicitly for op::times
 	and op::div.
-	(operator-): New unary operator. 
+	(operator-): New unary operator.
 	* tests/algebra/mat.cc: Copy to...
 	* tests/algebra/h_mat.cc: ...this new file.
 	* tests/algebra/mat.cc: Revamp so that there is no h_mat.
@@ -540,7 +546,7 @@
 	* mln/algebra/all.hh: fix comments.
 
 	* mln/algebra/vec.hh: add operator>>.
-	
+
 	* mln/core/internal/graph_psite_base.hh: convert to the correct id
 	type.
 
@@ -701,7 +707,7 @@
 
 	Fix ambiguities while loading PGM images into label values.
 
-	* mln/io/pnm/load.hh: Use the value equivalent type to read 
+	* mln/io/pnm/load.hh: Use the value equivalent type to read
 	data correctly.
 
 2009-04-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
@@ -760,7 +766,7 @@
 2009-04-27 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Revamp graph images.
-	
+
 	* headers.mk: update distributed file list.
 
 	* mln/make/dummy_p_edges.hh,
@@ -799,7 +805,7 @@
 
 	* mln/util/internal/id2element.hh: function mapping ids to graph
 	elements.
-	
+
 	* mln/make/p_edges_with_mass_centers.hh: fix guards.
 
 	* tests/make/dummy_p_vertices.cc,
@@ -822,7 +828,7 @@
 	* doc/outputs/outputs.mk,
 	* doc/generate_dist_files.sh: do not add distributed files in
 	EXTRA_DIST.
-	
+
 	* doc/examples/samples.mk: remove since useless now.
 
 2009-04-27 Guillaume Lazzara  <lazzara@lrde.epita.fr>
@@ -847,7 +853,7 @@
 	* mln/registration/get_rot.hh: Update.
 	* mln/registration/icp.hh: Update.
 	* mln/algebra/vec.hh (mat<n, 1, U>): New conversion op, ctor,
-	and assignment; declarations only, definitions are... 
+	and assignment; declarations only, definitions are...
 	* mln/algebra/mat.hh (mat<n, 1, U>): ...new.
 	* tests/algebra/op_times.cc: New.
 
@@ -905,9 +911,9 @@
 
 	* mln/make/influence_zone_adjacency_graph.hh: rename the routine in
 	order to have the same name as the file name.
-	
+
 	* mln/make/rag_and_labeled_wsl.hh: Add more doc.
-	
+
 	* mln/value/lut_vec.hh: add a constructor overload for util::array
 	which is now considered as a function.
 
@@ -1057,7 +1063,7 @@
 	* mln/labeling/pack.hh: ... in this new routine.
 
 	* tests/labeling/Makefile.am,
-	* tests/labeling/pack.cc: add a new test.	
+	* tests/labeling/pack.cc: add a new test.
 
 2009-04-09 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -1099,7 +1105,7 @@
 	* mln/core/site_set/p_graph_piter.hh,
 	* mln/core/internal/image_base.hh,
 	* mln/core/image/essential.hh: update doc.
-	
+
 	* mln/core/image/all.hh: include new headers.
 
 	* mln/core/image/vertex_image.hh,
@@ -1183,7 +1189,7 @@
 	fun::l2l::relabel as lut.
 
 2009-04-08  Guillaume Lazzara  <lazzara@lrde.epita.fr>
-  
+
 	Remove debug in io::tiff::load.
 
 	* mln/io/tiff/load.hh: Remove debug.
@@ -1308,7 +1314,7 @@
 	Add new accumulators related to labels.
 
 	* mln/accu/all.hh: include new accumulators.
-	
+
 	* mln/accu/count_labels.hh: count how many different labels are in an
 	image.
 
@@ -1382,8 +1388,8 @@
 
 	Add some simple triangle meshes.
 
-	* mesh/one-triangle.off: 
-	* mesh/two-triangles.off: 
+	* mesh/one-triangle.off:
+	* mesh/two-triangles.off:
 	* mesh/three-triangles.off:
 	New.
 
@@ -1595,7 +1601,7 @@
 	Small fixes.
 
 	* headers.mk: update distributed header list.
-	
+
 	* doc/Doxyfile.in: Do not use mln:: prefix in class name lists.
 
 	* doc/ref_guide/ref_guide.tex: update reference to clone().
@@ -2714,7 +2720,7 @@
 	* mln/transform/distance_and_closest_point_geodesic.hh: ... this.
 	  Now returns both dmap and closest point images.
 	  Add a version returning a closest point image containing indexes.
-	
+
 	* mln/transform/all.hh: update includes.
 
 	* mln/transform/internal/closest_point_functor.hh: add a new functor
@@ -3397,7 +3403,7 @@
 
 	* tests/registration/multiscale.cc,
 	* mln/registration/multiscale.hh: remove.
-	
+
 	* tests/registration/Makefile.am: remove multiscale.cc from test list.
 
 	* mln/value/rgb.hh: fix a recursive inclusion.
@@ -3488,7 +3494,7 @@
 	* mln/fun/x2x/rotation.hh:
 	    (get_rot_h_mat 3d): fix matrix construction.
 	    (rotation(algebra::quat)): update attributes in order to produce a
-				       valid inverted rotation. 
+				       valid inverted rotation.
 
 	* tests/fun/x2x/rotation.cc: improve test.
 
@@ -3544,7 +3550,7 @@
 
 	Revamp icp2.hh.
 
-	* registration/icp2.hh: move registration*... 
+	* registration/icp2.hh: move registration*...
 	* registration/registration.hh: ... here.
 
 2009-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
@@ -3660,9 +3666,9 @@
 	Update apps/statues/ to catch up with recent changes of interface.
 
 	* apps/statues/mesh-complex-max-curv-segm.cc,
-	* apps/statues/mesh-complex-max-curv.cc, 
-	* apps/statues/mesh-complex-segm.cc, 
-	* apps/statues/trimesh/misc.hh: 
+	* apps/statues/mesh-complex-max-curv.cc,
+	* apps/statues/mesh-complex-segm.cc,
+	* apps/statues/trimesh/misc.hh:
 	Adjust to the new interface of mln::morpho::closing_area and the
 	renaming of mln::level as mln::data.
 	* apps/statues/Makefile.am: Adjust comments.
@@ -3671,7 +3677,7 @@
 
 	Add a shortcut for planar 1-complex-based images.
 
-	* mln/core/alias/complex_image.hh (mln::int_u8_1complex_image2d): 
+	* mln/core/alias/complex_image.hh (mln::int_u8_1complex_image2d):
 	New typedef.
 
 2009-02-11  Roland Levillain  <roland@lrde.epita.fr>

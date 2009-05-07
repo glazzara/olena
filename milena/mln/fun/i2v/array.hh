@@ -211,8 +211,6 @@ namespace mln
       void
       from_to_(const util::array<T>& from, fun::i2v::array<U>& to)
       {
-	mlc_converts_to(T,U)::check();
-
 	to.reserve(from.nelements());
 	for (unsigned i = 0; i < from.nelements(); ++i)
 	  to.append(convert::to<U>(from[i]));
@@ -231,8 +229,6 @@ namespace mln
       void
       from_to_(const std::vector<T>& from, fun::i2v::array<U>& to)
       {
-	mlc_converts_to(T,U)::check();
-
 	to.reserve(from.nelements());
 	for (unsigned i = 0; i < from.size(); ++i)
 	  to.append(convert::to<U>(from[i]));
