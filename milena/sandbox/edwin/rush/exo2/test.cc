@@ -18,6 +18,7 @@
 #include <mln/fun/p2v/ternary.hh>
 #include <mln/pw/all.hh>
 
+
 namespace mln
 {
   // Sharpness Attribute -> Height Attribute

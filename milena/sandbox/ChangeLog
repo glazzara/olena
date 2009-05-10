@@ -1,3 +1,28 @@
+2009-05-10  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Make clean in tree files and procedures.
+	* edwin/mln/morpho/tree/filter.hh:
+	  group strategies for non-increasing attribute filtering.
+
+	* edwin/attributes/bbox.hh,
+	* edwin/attributes/occupation.hh,
+	* edwin/attributes,
+	* edwin/mln/morpho/attribute,
+	* edwin/mln/morpho/tree/components.hh,
+	* edwin/mln/morpho/tree/propagate.hh,
+	* edwin/mln/morpho/tree/propagate_if.hh,
+	* edwin/mln/morpho/tree/propagate_node.hh,
+	* edwin/mln/morpho/tree,
+	* edwin/mln/morpho,
+	* edwin/mln,
+	* edwin/rush/exo2/test.cc,
+	* edwin/tests,
+	* edwin/tree/components.hh,
+	* edwin/tree/propagate.hh,
+	* edwin/tree/propagate_if.hh,
+	* edwin/tree/propagate_node.hh,
+	  move all tree materials in edwin/mln/morpho/tree.
+
 2009-05-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix missing updates about debug colorize.

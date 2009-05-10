@@ -33,7 +33,7 @@
 /// Functions to propagate a node value in the tree.
 
 # include <mln/morpho/tree/data.hh>
-# include "propagate_node.hh"
+# include <mln/morpho/tree/propagate_node.hh>
 
 namespace mln {
   namespace morpho {
@@ -41,10 +41,10 @@ namespace mln {
 
 
       /// Propagate the representative point's value to
-      /// non-representative points of the same node.
+      /// non-representative node points.
       template <typename T, typename A>
       void
-      propagate_representant(const T& t, Image<A>& a_)
+      propagate_representative(const T& t, Image<A>& a_)
       {
 	A a = exact(a_);
 	mln_up_site_piter(T) p(t);
@@ -80,7 +80,7 @@ namespace mln {
 	const A& a = exact(attr_image);
 	A out;
 	initialize(out, a);
-	data::fill(out, null);
+	mln::data::fill(out, null);
 
 	mln_piter(p_array<mln_psite(A)>) p(component_list);
 	for_all(p)
@@ -88,7 +88,7 @@ namespace mln {
 	  out(p) = a(p);
 	  morpho::tree::propagate_node_to_descendants(p, tree, out, a(p));
 	}
-	morpho::tree::propagate_representant(tree, out);
+	morpho::tree::propagate_representative(tree, out);
 	return out;
       }
 
@@ -103,7 +103,7 @@ namespace mln {
       {
 	mln_ch_value(typename T::function, V) out;
 	initialize(out, tree.f());
-	data::fill(out, null);
+	mln::data::fill(out, null);
 
 	mln_piter(p_array< mln_psite(T) >) p(component_list);
 	for_all(p)
@@ -111,7 +111,7 @@ namespace mln {
 	  out(p) = value;
 	  morpho::tree::propagate_node_to_descendants(p, tree, out);
 	}
-	morpho::tree::propagate_representant(tree, out);
+	morpho::tree::propagate_representative(tree, out);
 	return out;
       }
 

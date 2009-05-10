@@ -227,7 +227,7 @@ namespace mln {
 	  unsigned* nb_leaves = uses_leaves ? new unsigned(0) : 0;
 
 	  initialize(activity, a);
-	  data::fill(activity, true);
+	  mln::data::fill(activity, true);
 	  internal::sort(max_arr, a);
 
 	  do
