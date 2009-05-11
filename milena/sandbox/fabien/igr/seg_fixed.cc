@@ -25,7 +25,9 @@
 #include <mln/data/paste.hh>
 #include <mln/debug/quiet.hh>
 #include <mln/convert/from_to.hh>
+#include <mln/labeling/wrap.hh>
 #include <mln/level/compute.hh>
+#include <mln/level/convert.hh>
 #include <mln/level/stretch.hh>
 #include <mln/make/image2d.hh>
 #include <mln/math/diff_abs.hh>
@@ -41,11 +43,13 @@
 #include <mln/world/inter_pixel/compute.hh>
 #include <mln/world/inter_pixel/immerse.hh>
 #include <mln/world/inter_pixel/neighb2d.hh>
-#include <mln/world/inter_pixel/is_pixel.hh>
+#include <mln/world/inter_pixel/all.hh>
 
 #include <mln/labeling/colorize.hh>
 #include <mln/debug/println.hh>
+#include <mln/trace/quiet.hh>
 
+#include "plot_label.hh"
 
 using namespace mln;
 using value::int_u8;
@@ -152,7 +156,7 @@ dist_on_edges(image2d<util::array<I> >& ima_arr)
 
 
 // Dummy.
-///////////////////////////////////////////////////////////////////////////////
+//-------
 template <typename I, typename N>
 inline
 image2d<int>
@@ -194,13 +198,14 @@ struct dist_t : Function_vv2v<dist_t>
       res += std::min(v1[i], v2[i]);
 
     image1d<V> tmp_ima;
+    image1d<V> tmp_ima2;
     accu::sum<V> accu_sum;
 
     convert::from_to(v1, tmp_ima);
     float sum_v1 = level::compute(accu_sum, tmp_ima);
 
-    convert::from_to(v2, tmp_ima);
-    float sum_v2 = level::compute(accu_sum, tmp_ima);
+    convert::from_to(v2, tmp_ima2);
+    float sum_v2 = level::compute(accu_sum, tmp_ima2);
 
     res /= std::max(sum_v1, sum_v2);
 
@@ -282,10 +287,34 @@ int main(int argc, char* argv[])
   L nbasins;
   mln_VAR(wst, morpho::watershed::flooding(clo, world::inter_pixel::e2e(), nbasins));
 
-  mln_VAR(w, wst.unmorph_());
-  data::fill((w | (!world::inter_pixel::is_separator())).rw(), nbasins.next());
-  io::ppm::save(labeling::colorize(value::rgb8(), w, nbasins.next()), "result.ppm");
+  std::cout << "nbasins: " << nbasins << std::endl;
 
+
+  mln_VAR(w_all, wst.unmorph_());
+  //data::fill((w | (!world::inter_pixel::is_separator())).rw(), nbasins.next());
+  mln_VAR(w_pixels, w_all | world::inter_pixel::is_pixel());
+  data::paste(morpho::dilation(extend(w_pixels, pw::value(w_all)), c4().win()), w_all);
+  // edges -> dots
+  mln_VAR(w_dots, w_all | world::inter_pixel::dim2::is_dot());
+  data::paste(morpho::erosion(extend(w_dots, pw::value(w_all)), c4().win()), w_all);
+
+  //io::ppm::save(labeling::colorize(value::rgb8(), w, nbasins.next()), "result.ppm");
+  io::pgm::save(labeling::wrap(int_u8(), w_all), "result_labels.pgm");
+
+
+  // Plots.
+  image2d<L> w_simple = world::inter_pixel::full2image(w_all);
+  plot_label(input, w_simple, 166u);
+  plot_label(input, w_simple, 182u);
+  plot_label(input, w_simple, 188u);
+  plot_label(input, w_simple, 189u);
+  plot_label(input, w_simple, 193u);
+  plot_label(input, w_simple, 195u);
+  plot_label(input, w_simple, 196u);
+  plot_label(input, w_simple, 198u);
+  plot_label(input, w_simple, 199u);
+  plot_label(input, w_simple, 200u);
+  plot_label(input, w_simple, 201u);
 
 
 

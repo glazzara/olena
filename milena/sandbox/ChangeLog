@@ -1,3 +1,10 @@
+2009-05-11  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Plot labels in fixed watershed.
+	* fabien/igr/plot_label.hh: Implement plot_label() for
+	  fixed segmentation.
+	* fabien/igr/seg_fixed.cc: Add plot_label() calls.
+
 2009-05-10  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Make clean in tree files and procedures.
