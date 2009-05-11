@@ -186,6 +186,7 @@ AC_CONFIG_FILES([
     milena/tests/accu/Makefile
     milena/tests/accu/image/Makefile
     milena/tests/accu/site_set/Makefile
+    milena/tests/accu/stat/Makefile
     milena/tests/algebra/Makefile
     milena/tests/arith/Makefile
     milena/tests/binarization/Makefile
@@ -213,6 +214,7 @@ AC_CONFIG_FILES([
       milena/tests/fun/p2b/Makefile
       milena/tests/fun/p2p/Makefile
       milena/tests/fun/p2v/Makefile
+      milena/tests/fun/stat/Makefile
       milena/tests/fun/v2v/Makefile
       milena/tests/fun/vv2v/Makefile
       milena/tests/fun/x2x/Makefile
@@ -221,8 +223,10 @@ AC_CONFIG_FILES([
       milena/tests/graph/attribute/Makefile
     milena/tests/histo/Makefile
     milena/tests/io/Makefile
+      milena/tests/io/dicom/Makefile
       milena/tests/io/dump/Makefile
       milena/tests/io/fits/Makefile
+      milena/tests/io/magick/Makefile
       milena/tests/io/off/Makefile
       milena/tests/io/pbm/Makefile
       milena/tests/io/pfm/Makefile
