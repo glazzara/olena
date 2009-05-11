@@ -1,3 +1,10 @@
+2009-05-11  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Fix full2image() domain for cropped images.
+	* mln/core/concept/gpoint.hh: Add operator /.
+	* mln/world/inter_pixel/all.hh: Add ful2image.hh inclusion.
+	* mln/world/inter_pixel/full2image.hh: Fix domain.
+
 2009-05-11 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Small fixes.

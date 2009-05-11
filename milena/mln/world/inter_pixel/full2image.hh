@@ -31,14 +31,11 @@
 /// \file mln/world/inter_pixel/full2image.hh
 ///
 /// Convert an inter-pixel image to a classical image.
-///
-/// FIXME: will NOT work if the image has an origin different from (0,0).
 
-# include <mln/core/image/image2d.hh>
-# include <mln/geom/max_col.hh>
-# include <mln/geom/max_row.hh>
-# include <mln/geom/min_col.hh>
-# include <mln/geom/min_row.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/data/paste_without_localization.hh>
+# include <mln/geom/nsites.hh>
+# include <mln/world/inter_pixel/is_pixel.hh>
 
 
 namespace mln
@@ -56,27 +53,31 @@ namespace mln
       ///
       /// \return A classical image without inter-pixel data.
       //
-      template <typename T>
-      image2d<T>
-      full2image(const image2d<T>& input);
+      template <typename I>
+      I
+      full2image(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-      template <typename T>
-      image2d<T>
-      full2image(const image2d<T>& input)
+      template <typename I>
+      I
+      full2image(const Image<I>& input_)
       {
 	trace::entering("world::inter_pixel::full2image");
+
+	mlc_is_a(mln_domain(I), Box)::check();
+
+	const I& input = exact(input_);
 	mln_precondition(input.is_valid());
 
-	image2d<T> output((input.nrows() + 1) / 2, (input.ncols() + 1) / 2);
+	mln_domain(I) b(input.domain().pmin() / 2,
+			input.domain().pmax() / 2);
+	mln_concrete(I) output(b);
+	mln_assertion(geom::nsites(output) == geom::nsites(input | is_pixel()));
 
-	for (int row = geom::min_row(input); row <= geom::max_row(input); row += 2)
-	  for (int col = geom::min_col(input); col <= geom::max_col(input); col += 2)
-	    opt::at(output, row / 2, col / 2) =
-	      opt::at(input, row, col);
+	data::paste_without_localization(input | is_pixel(), output);
 
 	trace::exiting("world::inter_pixel::full2image");
 	return output;

@@ -38,6 +38,7 @@
 
 
 # include <mln/world/inter_pixel/compute.hh>
+# include <mln/world/inter_pixel/full2image.hh>
 # include <mln/world/inter_pixel/immerse.hh>
 # include <mln/world/inter_pixel/is_separator.hh>
 # include <mln/world/inter_pixel/is_pixel.hh>

@@ -82,6 +82,13 @@ namespace mln
       typedef L ret;
     };
 
+    template < typename L, typename R >
+    struct set_binary_< op::div,
+			mln::Gpoint, L,
+			mln::Object, mln::value::scalar_<R> >
+    {
+      typedef L ret;
+    };
 
     template <typename P>
     struct set_unary_< op::ord, mln::Gpoint, P >
@@ -279,7 +286,7 @@ namespace mln
    * \relates mln::Gpoint
    */
   template <typename P, typename D>
-  P operator/(Gpoint<P>& p, const value::Scalar<D>& dp);
+  P operator/(const Gpoint<P>& p, const value::scalar_<D>& dp);
 
   // FIXME : add operators and traits?
 
@@ -400,7 +407,7 @@ namespace mln
   P
   operator*(const Gpoint<P>& p, const value::scalar_<S>& s)
   {
-    int s_ = s.to_equiv();
+    S s_ = s.to_equiv();
     const unsigned n = P::dim;
     P tmp = exact(p);
     for (unsigned i = 0; i < n; ++i)
@@ -439,9 +446,14 @@ namespace mln
   template <typename P, typename S>
   inline
   P
-  operator/(Gpoint<P>& p, const value::Scalar<S>& s_)
+  operator/(const Gpoint<P>& p, const value::scalar_<S>& s_)
   {
-    return p.to_vec() / s_;
+    S s = s_.to_equiv();
+    const unsigned n = P::dim;
+    P tmp = exact(p);
+    for (unsigned i = 0; i < n; ++i)
+      tmp[i] /= s;
+    return tmp;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
