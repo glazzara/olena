@@ -57,7 +57,8 @@ namespace mln
      *
      * \param[in] v       A value to set the output value type.
      * \param[in] input   The input image.
-     * \param[out] output The result image.
+     *
+     * \return A stretch image with values of the same type as \p v.
      *
      * \pre input.is_valid
      */
@@ -71,6 +72,13 @@ namespace mln
     namespace impl
     {
 
+      /// Generic implementation of level::stretch.
+      ///
+      /// \param[in] v       A value to set the output value type.
+      /// \param[in] input   The input image.
+      ///
+      /// \return A stretch image with values of the same type as \p v.
+      //
       template <typename V, typename I>
       inline
       mln_ch_value(I, V)
@@ -111,6 +119,9 @@ namespace mln
 
     } // end of namespace mln::level::impl
 
+
+
+    // Facade
 
     template <typename V, typename I>
     inline

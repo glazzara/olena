@@ -90,6 +90,7 @@ namespace mln
       namespace generic
       {
 
+	/// Generic implementation of level::update.
 	template <typename A, typename I>
 	inline
 	mln_result(A)
@@ -112,21 +113,22 @@ namespace mln
       } // end of namespace mln::level::impl::generic
 
 
+      /// Fastest implementation of level::update.
       template <typename A, typename I>
       inline
       mln_result(A)
       update_fastest(Accumulator<A>& a_, const Image<I>& input_)
       {
 	trace::entering("level::impl::update_fastest");
-	
+
 	A& a = exact(a_);
 	const I& input = exact(input_);
 	level::internal::update_tests(a, input);
-	
+
 	mln_pixter(const I) pxl(input);
 	for_all(pxl)
 	  a.take(pxl.val());
-	
+
 	trace::exiting("level::impl::update_fastest");
 	return a.to_result();
       }
@@ -134,7 +136,7 @@ namespace mln
 
     } // end of namespace mln::level::impl
 
-    
+
 
     // Dispatch.
 

@@ -62,7 +62,7 @@ namespace mln
     /// Create a p_vertices which associate a graph element to a constant site.
     /// \c 0 (int) is used as dummy site.
     ///
-    /// \param[in] g_ A graph.
+    /// \param[in] g A graph.
     ///
     /// \return A p_vertices.
     //

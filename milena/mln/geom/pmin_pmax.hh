@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_GEOM_PMIN_PMAX_HH
 # define MLN_GEOM_PMIN_PMAX_HH
 
-/*! \file mln/geom/pmin_pmax.hh
- *
- * \brief Several routines to compute the minimum point and/or maximum
- * point.
- */
+/// \file mln/geom/pmin_pmax.hh
+///
+/// Several routines to compute the minimum point and/or maximum
+/// point.
 
 # include <utility>
 

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/make/graph.cc
+/// \file tests/make/region_adjacency_graph.cc
 ///
 /// Tests on mln::make::region_adjacency_graph.
 

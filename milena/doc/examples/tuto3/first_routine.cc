@@ -1,4 +1,4 @@
-/// \file doc/examples/first_routine.cc
+/// \file doc/examples/tuto3/first_routine.cc
 
 #include <mln/essential/2d.hh>
 #include <tests/data.hh>

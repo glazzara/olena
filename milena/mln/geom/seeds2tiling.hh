@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,10 +29,9 @@
 #ifndef MLN_GEOM_SEEDS2TILING_HH
 # define MLN_GEOM_SEEDS2TILING_HH
 
-/*! \file mln/geom/seeds2tiling.hh
- *
- *  \brief Convert a binary image with seeds into a labeled image.
- */
+/// \file mln/geom/seeds2tiling.hh
+///
+/// Convert a binary image with seeds into a labeled image.
 
 # include <map>
 
@@ -46,27 +45,34 @@
 
 namespace mln
 {
+
   namespace geom
   {
 
-    /// \brief Take a labeled image \p ima_ with seeds and extend them
+    /// Take a labeled image \p ima_ with seeds and extend them
     /// until creating tiles.
     ///
     /// \param[in,out] ima_ The labeled image with seed.
     /// \param[in] nbh The neighborhood to use on this algorithm.
     ///
-    /// \pre \p ima_ has to be initialized.
+    /// \return A tiled image.
     ///
-    /// \{
+    /// \pre \p ima_ has to be initialized.
+    //
     template <typename I, typename N>
     I seeds2tiling (Image<I>& ima_, const Neighborhood<N>& nbh);
-    /// \}
+
 
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
     {
 
+      /// Generic implementation of geom::seed2tiling.
+      ///
+      /// \param[in,out] ima_ The labeled image with seed.
+      /// \param[in] nbh The neighborhood to use on this algorithm.
+      //
       template <typename I, typename N>
       inline
       I

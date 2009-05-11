@@ -215,7 +215,7 @@ PREDEFINED             = "mlc_unqualif(T)=typename mln::metal::unqualif<T>::ret"
                          "mln_enc(T)=typename T::enc" \
                          "mln_value(T)=typename T::value" \
                          "mln_qlf_value(T)=typename T::qlf_value" \
-                         "mln_pset(T)=typename T::pset" \
+                         "mln_domain(T)=typename T::domain_t" \
                          "mln_sum(T)=typename mln::value::props<T>::sum" \
                          "mln_vset(T)=typename T::vset" \
                          "mln_rvalue(T)=typename T::rvalue" \
@@ -250,7 +250,7 @@ PREDEFINED             = "mlc_unqualif(T)=typename mln::metal::unqualif<T>::ret"
                          "mln_enc_(T)=T::enc" \
                          "mln_value_(T)=T::value" \
                          "mln_qlf_value_(T)=T::qlf_value" \
-                         "mln_pset_(T)=T::pset" \
+                         "mln_domain_(T)=T::domain_t" \
                          "mln_sum_(T)=mln::value::props<T>::sum" \
                          "mln_vset_(T)=T::vset" \
                          "mln_rvalue_(T)=T::rvalue" \
@@ -286,7 +286,12 @@ PREDEFINED             = "mlc_unqualif(T)=typename mln::metal::unqualif<T>::ret"
 			 "mln_gradient(I)=mln::value::stack_image< I::point::dim, mln::trait::ch_value< I, mln::value::props< typename I::value >::sum >::ret >" \
 			 "mln_trait_value_sum_product(T, U)=typename mln::trait::value_< mln_trait_op_times(T,U) >::sum" \
 			 "mln_sum_product(T, U)=typename mln::trait::value_< mln_trait_op_times(T,U) >::sum" \
-			 "mln_deduce(T, A1, A2)=typename T::A1::A2"
+			 "mln_deduce(T, A1, A2)=typename T::A1::A2" \
+			 "mln_graph_element(T)=typename T::graph_element" \
+			 "mln_graph_element_(T)=T::graph_element"
+			 "mln_fun_vv2v(F, L, R)=mln::fun::vv2v::F< mln_value(L), mln_value(R) >" \
+			 "mln_fun_vv2v_result(F, L, R)=typename mln_fun_vv2v(F, L, R)::result" \
+			 "mln_ch_fun_vv2v(F, L, R)=typename mln::trait::ch_value< L, typename mln_fun_vv2v(F, L, R)::result >::ret"
 
 
 

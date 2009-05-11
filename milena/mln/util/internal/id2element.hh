@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_INTERNAL_ID2VERTEX_HH
 # define MLN_UTIL_INTERNAL_ID2VERTEX_HH
 
-/// \file mln/util/id2element.hh
+/// \file mln/util/internal/id2element.hh
 ///
 /// Function constructing a element from an id.
 

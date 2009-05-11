@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WORLD_INTER_PIXEL_FULL_HH
-# define MLN_WORLD_INTER_PIXEL_FULL_HH
+#ifndef MLN_WORLD_INTER_PIXEL_FULL2IMAGE_HH
+# define MLN_WORLD_INTER_PIXEL_FULL2IMAGE_HH
 
-/// \file mln/world/inter_pixel/full.hh
+/// \file mln/world/inter_pixel/full2image.hh
 ///
 /// Convert an inter-pixel image to a classical image.
 ///
@@ -92,4 +92,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_INTER_PIXEL_FULL
+#endif // ! MLN_WORLD_INTER_PIXEL_FULL2IMAGE

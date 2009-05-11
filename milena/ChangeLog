@@ -1,3 +1,51 @@
+2009-05-11 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Fix documentation.
+
+	* doc/Doxyfile.in: add macro definitions.
+
+	* doc/outputs/outputs.mk: update output reference files list.
+
+	* headers.mk: update distributed files list.
+
+	* apps/statues/trimesh/misc.hh,
+	* doc/examples/tuto3/first_routine.cc,
+	* mln/accu/compute.hh,
+	* mln/accu/line.hh,
+	* mln/core/image/graph_elt_window_if.hh,
+	* mln/data/fill_with_image.hh,
+	* mln/data/paste.hh,
+	* mln/fun/x2x/composed.hh,
+	* mln/geom/pmin_pmax.hh,
+	* mln/geom/seeds2tiling.hh,
+	* mln/io/dump/save.hh,
+	* mln/io/txt/save.hh,
+	* mln/labeling/compute.hh,
+	* mln/labeling/pack.hh,
+	* mln/labeling/relabel.hh,
+	* mln/util/internal/id2element.hh,
+	* mln/world/inter_pixel/dim2/is_dot.hh,
+	* mln/world/inter_pixel/dim2/is_edge.hh,
+	* mln/world/inter_pixel/dim2/is_pixel.hh,
+	* mln/world/inter_pixel/dim2/is_row_odd.hh,
+	* mln/world/inter_pixel/full2image.hh,
+	* tests/accu/site_set/rectangularity.cc,
+	* tests/make/region_adjacency_graph.cc,
+	* mln/level/median.hh,
+	* mln/level/stretch.hh,
+	* mln/level/transform.hh,
+	* mln/level/transform_inplace.hh,
+	* mln/level/update.hh,
+	* mln/make/dummy_p_edges.hh,
+	* mln/make/dummy_p_vertices.hh,
+	* mln/make/edge_image.hh,
+	* mln/make/rag_and_labeled_wsl.hh,
+	* mln/make/region_adjacency_graph.hh,
+	* mln/make/relabelfun.hh,
+	* mln/morpho/closing/area_on_vertices.hh,
+	* mln/registration/icp.hh,
+	* tests/morpho/Rd.cc: Fix documentation issues/missing documentation.
+
 2009-05-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix missing updates about debug colorize.

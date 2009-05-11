@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/accu/site_set/rectangularity.hh
+/// \file tests/accu/site_set/rectangularity.cc
 ///
 /// Tests on mln::accu::site_set::rectangularity.
 

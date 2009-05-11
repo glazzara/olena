@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -31,7 +31,7 @@
 
 /// \file   mln/io/txt/save.hh
 ///
-/// \brief Save an image as txt file.
+/// Save an image as txt file.
 
 # include <iostream>
 # include <fstream>
@@ -52,8 +52,9 @@ namespace mln
 
       /// Save an image as txt file.
       ///
-      /// \param[in] ima_ The image to save. Must be an image of char.
+      /// \param[in] ima The image to save. Must be an image of char.
       /// \param[in] filename the destination.
+      //
       void
       save(const image2d<char>& ima, const std::string& filename);
 

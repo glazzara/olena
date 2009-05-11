@@ -34,7 +34,6 @@
 /// Morphological area closing on a line graph image computing
 /// the area in terms of adjacent vertices.
 
-# include <mln/pw/image.hh>
 # include <mln/core/image/edge_image.hh>
 # include <mln/morpho/closing/algebraic.hh>
 # include <mln/morpho/attribute/count_adjacent_vertices.hh>
@@ -51,6 +50,13 @@ namespace mln
 
       /// Morphological area closing on a mln::line_graph_image computing
       /// the area in terms of adjacent vertices.
+      ///
+      /// \param[in] input An edge image.
+      /// \param[in] nbh A graph neighborhood.
+      /// \param[in] lambda Closing parameter.
+      ///
+      /// \return An edge image.
+      //
       template <typename P, typename V, typename G, typename N>
       edge_image<P,V,G>
       area_on_vertices(const edge_image<P,V,G>& input,

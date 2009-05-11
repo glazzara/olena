@@ -95,6 +95,11 @@ namespace mln
       namespace generic
       {
 
+	/// Generic implementation.
+	///
+	/// \param[in,out] ima The image to be filled.
+	/// \param[in] data The image.
+	//
 	template <typename I, typename J>
 	void fill_with_image(Image<I>& ima_, const Image<J>& data_)
 	{

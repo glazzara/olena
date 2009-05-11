@@ -60,13 +60,15 @@ mln/literal/essential.hh \
 mln/world/binary_2d/subsample.hh \
 mln/world/binary_2d/projected_histo.hh \
 mln/world/inter_pixel/neighb2d.hh \
-mln/world/inter_pixel/full.hh \
+mln/world/inter_pixel/image2full.hh \
 mln/world/inter_pixel/display_edge.hh \
 mln/world/inter_pixel/dim2/is_pixel.hh \
 mln/world/inter_pixel/dim2/all.hh \
 mln/world/inter_pixel/dim2/is_edge.hh \
+mln/world/inter_pixel/dim2/make_edge_image.hh \
 mln/world/inter_pixel/dim2/is_dot.hh \
 mln/world/inter_pixel/dim2/is_row_odd.hh \
+mln/world/inter_pixel/full2image.hh \
 mln/registration/get_rtransf.hh \
 mln/registration/internal/rms.hh \
 mln/registration/get_rot.hh \
@@ -106,6 +108,7 @@ mln/util/timer.hh \
 mln/util/yes.hh \
 mln/util/line_graph.hh \
 mln/util/ord.hh \
+mln/util/adjacency_matrix.hh \
 mln/util/tree_fast_to_image.hh \
 mln/util/tree.hh \
 mln/util/couple.hh \
@@ -302,10 +305,13 @@ mln/fun/x2x/translation.hh \
 mln/fun/x2x/rotation.hh \
 mln/fun/x2x/essential.hh \
 mln/fun/component/red.hh \
+mln/fun/component/comp_count.hh \
+mln/fun/component/scomp.hh \
 mln/fun/component/green.hh \
 mln/fun/component/comp.hh \
 mln/fun/component/blue.hh \
 mln/fun/component/rgb.hh \
+mln/fun/component/ithcomp.hh \
 mln/fun/compose.hh \
 mln/fun/meta/red.hh \
 mln/fun/meta/hue.hh \
@@ -476,6 +482,7 @@ mln/accu/image/init.hh \
 mln/accu/image/to_result.hh \
 mln/accu/image/all.hh \
 mln/accu/image/set_value.hh \
+mln/accu/image/untake.hh \
 mln/accu/image/take.hh \
 mln/accu/image/take_as_init.hh \
 mln/accu/image/take_n_times.hh \
@@ -566,7 +573,6 @@ mln/trait/ch_function_value.hh \
 mln/trait/ch_value.hh \
 mln/trait/solve.hh \
 mln/trait/solve_unary.hh \
-mln/trait/fun.hh \
 mln/trait/op/postdec.hh \
 mln/trait/op/mod.hh \
 mln/trait/op/lor.hh \
@@ -594,6 +600,7 @@ mln/trait/op/uplus.hh \
 mln/trait/op/essential.hh \
 mln/trait/op/eq.hh \
 mln/trait/concrete.hh \
+mln/trait/functions.hh \
 mln/trait/windows.hh \
 mln/trait/site_sets.hh \
 mln/trait/image_from_grid.hh \

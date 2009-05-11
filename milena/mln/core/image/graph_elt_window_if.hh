@@ -125,7 +125,7 @@ namespace mln
     /// Default. Construct an invalid window.
     graph_elt_window_if();
 
-    /// \param[in] graph_image A graph image.
+    /// \param[in] mask A graph image of bool.
     ///
     /// \sa vertex_image, edge_image.
     graph_elt_window_if(const Image<I>& mask);

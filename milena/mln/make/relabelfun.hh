@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,7 +46,9 @@ namespace mln
     /// Create a i2v function from a v2b function.
     /// This function can be used to relabel a labeled image.
     ///
-    /// \param[in] f a v2b function.
+    /// \param[in] fv2b A v2b function.
+    /// \param[in] nlabels The number of labels.
+    /// \param[in] new_nlabels The number of labels after relabeling.
     ///
     /// \return a i2v function.
     ///
@@ -59,7 +62,9 @@ namespace mln
     /// Create a i2v function from a v2v function.
     /// This function can be used to relabel a labeled image.
     ///
-    /// \param[in] f a v2v function.
+    /// \param[in] fv2v A v2v function.
+    /// \param[in] nlabels The number of labels.
+    /// \param[in] new_nlabels The number of labels after relabeling.
     ///
     /// \return a i2v function.
     ///

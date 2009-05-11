@@ -28,7 +28,7 @@
 #ifndef MLN_WORLD_INTER_PIXEL_DIM2_IS_ROW_ODD_HH
 # define MLN_WORLD_INTER_PIXEL_DIM2_IS_ROW_ODD_HH
 
-/// \file mln/world/inter_pixel/dim2d/is_row_odd.hh
+/// \file mln/world/inter_pixel/dim2/is_row_odd.hh
 ///
 /// FIXME: insert comment.
 

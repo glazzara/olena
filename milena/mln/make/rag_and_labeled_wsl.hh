@@ -57,8 +57,8 @@ namespace mln
     /// Create a region adjacency graph and a label image of the watershed line
     /// from a watershed image.
     ///
-    /// \param[in] wshd Watershed image.
-    /// \param[in] nbh Neighborhood
+    /// \param[in] wshd_ Watershed image.
+    /// \param[in] nbh_ Neighborhood
     /// \param[in] nbasins Number of influence zone in \p wshd.
     ///
     /// \return A couple. First element is the graph, second element is an

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -50,6 +50,7 @@ namespace mln
     /// Make an accumulator compute the pixels of the image \p input.
     ///
     /// \param[in] input The input image.
+    /// \param[in] a An accumulator.
     ///
     /// This routine runs: \n
     ///   a.take(make::pix(input, p));
@@ -65,6 +66,7 @@ namespace mln
     /// Make an accumulator compute the pixels of the image \p input.
     ///
     /// \param[in] input The input image.
+    /// \param[in] a A meta accumulator.
     ///
     /// This routine runs: \n
     ///   a.take(make::pix(input, p));

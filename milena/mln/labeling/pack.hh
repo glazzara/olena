@@ -52,8 +52,9 @@ namespace mln
   {
 
     /// Relabel a labeled image in order to have a contiguous labeling.
-    /// \input[in]  label	The labeled image.
-    /// \input[out] new_nlabels The number of labels after relabeling.
+    ///
+    /// \param[in]  label	The labeled image.
+    /// \param[out] new_nlabels The number of labels after relabeling.
     ///
     /// \return The relabeled image.
     //
@@ -65,8 +66,9 @@ namespace mln
 
     /// Relabel inplace a labeled image in order to have a contiguous
     /// labeling.
-    /// \input[in]  label	The labeled image.
-    /// \input[out] new_nlabels The number of labels after relabeling.
+    ///
+    /// \param[in]  label	The labeled image.
+    /// \param[out] new_nlabels The number of labels after relabeling.
     //
     template <typename I>
     void

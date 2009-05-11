@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -8,7 +9,7 @@
 // This library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- // General Public License for more details.
+// General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
 // along with this library; see the file COPYING.  If not, write to
@@ -64,7 +65,7 @@ namespace mln
     /*! Transform inplace the image \p ima with the image \p aux
         through a function \p f.
      *
-     * \param[in] ima1 The image to be transformed.
+     * \param[in] ima The image to be transformed.
      * \param[in] aux The auxiliary image.
      * \param[in] f The function.
      *

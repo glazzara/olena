@@ -72,6 +72,12 @@ namespace mln
     namespace internal
     {
 
+      /// Internal tests for data::paste.
+      ///
+      /// \param[in] input The input image providing pixels values.
+      /// \param[in,out] output The image in which values are
+      /// assigned.
+      //
       template <typename I, typename J>
       inline
       void paste_tests(const Image<I>& input, Image<J>& output)
@@ -97,6 +103,12 @@ namespace mln
       namespace generic
       {
 
+	/// Generic implementation of data::paste.
+	///
+	/// \param[in] input The input image providing pixels values.
+	/// \param[in,out] output The image in which values are
+	/// assigned.
+	//
 	template <typename I, typename J>
 	inline
 	void paste(const Image<I>& input_, Image<J>& output_)

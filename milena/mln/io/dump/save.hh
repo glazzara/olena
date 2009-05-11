@@ -31,6 +31,7 @@
 /// \file mln/io/dump/save.hh
 ///
 /// Save a Milena image by dumping its data to a file.
+///
 /// \todo handle endianness.
 
 # include <iostream>
@@ -41,6 +42,7 @@
 # include <mln/core/pixel.hh>
 # include <mln/data/memcpy_.hh>
 # include <mln/trait/value_.hh>
+
 
 namespace mln
 {
@@ -55,11 +57,14 @@ namespace mln
       ///
       /// \param[in] ima_ The image to save.
       /// \param[in] filename the destination.
+      //
       template <typename I>
       void save(const Image<I>& ima_, const std::string& filename);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
+
 
       namespace internal
       {
@@ -120,6 +125,9 @@ namespace mln
 
       } // end of namespace mln::io::dump::internal
 
+
+
+      // Facade
 
       template <typename I>
       void save(const Image<I>& ima_, const std::string& filename)

@@ -52,10 +52,10 @@ namespace mln
   {
 
     /// Remove components and relabel a labeled image.
-    /// \input[in]  label the labeled image.
-    /// \input[in]  nlabels the number of labels in \p label.
-    /// \input[out] new_nlabels the number of labels after relabeling.
-    /// \input[in]  f function returning whether a label must be replaced
+    /// \param[in]  label the labeled image.
+    /// \param[in]  nlabels the number of labels in \p label.
+    /// \param[out] new_nlabels the number of labels after relabeling.
+    /// \param[in]  fv2b function returning whether a label must be replaced
     ///		      by the background.
     ///
     /// \return the relabeled image.
@@ -69,9 +69,9 @@ namespace mln
 
 
     /// Remove components and relabel a labeled image.
-    /// \input[in]  label the labeled image.
-    /// \input[in]  nlabels the number of labels in \p label.
-    /// \input[in]  f function returning the new component id for each pixel
+    /// \param[in]  label the labeled image.
+    /// \param[in]  nlabels the number of labels in \p label.
+    /// \param[in]  fv2v function returning the new component id for each pixel
     /// value.
     ///
     /// \return the relabeled image.
@@ -84,9 +84,9 @@ namespace mln
 
 
     /// Remove components and relabel a labeled image inplace.
-    /// \input[in, out] label the labeled image.
-    /// \input[in, out] nlabels the number of labels in \p label.
-    /// \input[in]  f function returning whether a label must be replaced
+    /// \param[in, out] label the labeled image.
+    /// \param[in, out] nlabels the number of labels in \p label.
+    /// \param[in]  fv2b function returning whether a label must be replaced
     ///		      by the background.
     //
     template <typename I, typename F>
@@ -97,9 +97,9 @@ namespace mln
 
 
     /// Remove components and relabel a labeled image inplace.
-    /// \input[in, out] label the labeled image.
-    /// \input[in, out] nlabels the number of labels in \p label.
-    /// \input[in]	f function returning the new component id for each
+    /// \param[in, out] label the labeled image.
+    /// \param[in, out] nlabels the number of labels in \p label.
+    /// \param[in]	fv2v function returning the new component id for each
     /// pixel value.
     //
     template <typename I, typename F>

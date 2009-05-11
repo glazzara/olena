@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -474,7 +475,7 @@ namespace mln
 	  Jean Cousty.  Artwork 3D Model Database Indexing and
 	  Classification.
 
-	\param[in] ima The surface (triangle mesh) on which the
+	\param[in] mesh The surface (triangle mesh) on which the
 	curvature is to be computed.  */
     /* FIXME: We should restrict attached data to vertices in return
        value.  */

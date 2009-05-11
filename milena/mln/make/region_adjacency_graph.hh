@@ -53,7 +53,8 @@ namespace mln
 
     /// Create a region adjacency graph from a watershed image.
     ///
-    /// \param[in] wshd watershed image.
+    /// \param[in] wshd_ watershed image.
+    /// \param[in] nbh A neighborhood.
     /// \param[in] nbasins number of influence zone in \p wshd.
     ///
     /// \return util::graph Graph based on the adjacency of the influence zones.
@@ -61,7 +62,7 @@ namespace mln
     util::graph
     region_adjacency_graph(const Image<I>& wshd_,
 			   const Neighborhood<N>& nbh,
-			   mln_value(I) nbasins);
+			   const mln_value(I)& nbasins);
 
 
 
@@ -75,7 +76,7 @@ namespace mln
       void
       region_adjacency_graph_tests(const Image<I>& wshd,
 				   const Neighborhood<N>& nbh,
-				   mln_value(I))
+				   const mln_value(I)&)
       {
 	mln_precondition(exact(wshd).is_valid());
 	mln_precondition(exact(nbh).is_valid());
@@ -96,7 +97,7 @@ namespace mln
 	util::graph
 	region_adjacency_graph(const Image<I>& wshd_,
 			       const Neighborhood<N>& nbh_,
-			       mln_value(I) nbasins)
+			       const mln_value(I)& nbasins)
 	{
 	  trace::entering("make::impl::generic::region_adjacency_graph");
 
@@ -163,7 +164,7 @@ namespace mln
       util::graph
       region_adjacency_graph_dispatch(const Image<I>& wshd,
 				      const Neighborhood<N>& nbh,
-				      mln_value(I) nbasins)
+				      const mln_value(I)& nbasins)
       {
 	return make::impl::generic::region_adjacency_graph(wshd, nbh, nbasins);
       }
@@ -179,7 +180,7 @@ namespace mln
     util::graph
     region_adjacency_graph(const Image<I>& wshd,
 			   const Neighborhood<N>& nbh,
-			   mln_value(I) nbasins)
+			   const mln_value(I)& nbasins)
     {
       trace::entering("make::region_adjacency_graph");
 

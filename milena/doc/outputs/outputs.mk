@@ -21,6 +21,7 @@ outputs/box2d-bbox.txt \
 outputs/graph-iter.txt \
 outputs/graph-output-1.txt \
 outputs/fill-call-1.txt \
+outputs/site_set_create.txt \
 outputs/ima2d-rot.txt \
 outputs/paste-call-1.txt \
 outputs/fun-p2v-1.txt \

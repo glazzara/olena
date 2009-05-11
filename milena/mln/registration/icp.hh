@@ -90,11 +90,13 @@ namespace mln
 
     /*! Register point in \p c using a function of closest points
      * \p closest_point.
+     * This overload allows to specify initial transformations.
      *
      * \param[in] P_ The cloud of points.
      * \param[in] X the reference surface.
      * \param[in] closest_point The function of closest points.
-     * \param[out] qk The rigid transformation obtained.
+     * \param[in] initial_rot An initial rotation.
+     * \param[in] initial_translation An initial translation.
      *
      * \return the rigid transformation which may be use later to create
      * a registered image.
@@ -118,6 +120,16 @@ namespace mln
 	const mln_vec(P)& initial_translation);
 
 
+    /*! Register point in \p c using a function of closest points
+     * \p closest_point.
+     *
+     * \param[in] P_ The cloud of points.
+     * \param[in] X the reference surface.
+     * \param[in] closest_point The function of closest points.
+     *
+     * \return the rigid transformation which may be use later to create
+     * a registered image.
+     */
     template <typename P, typename F>
     composed< translation<P::dim,float>,rotation<P::dim,float> >
     icp(const p_array<P>& P_,

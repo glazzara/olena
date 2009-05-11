@@ -153,9 +153,9 @@ namespace mln
                                        mlc_is(T2, Bijection_x2x<T2>)::value &&
                                        mlc_is(T1, Bijection_x2x<T1>)::value>(f, g)
         {}
-};
+      };
 
-} // end of namespace mln::fun::x2x
+    } // end of namespace mln::fun::x2x
 
   } // end of namespace mln::fun
 

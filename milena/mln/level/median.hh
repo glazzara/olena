@@ -59,9 +59,8 @@ namespace mln
      *
      * \param[in] input The image to be filtered.
      * \param[in] win The window.
-     * \param[out] output The output image.
      *
-     * \pre \p input and \p output have to be initialized.
+     * \pre \p input have to be initialized.
      */
     template <typename I, typename W>
     mln_concrete(I)

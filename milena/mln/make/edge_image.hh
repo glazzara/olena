@@ -60,7 +60,7 @@ namespace mln
 
     /// Construct an edge image.
     ///
-    /// \param[in] g  A graph
+    /// \param[in] g_  A graph
     /// \param[in] fp A function mapping edge ids to sites.
     /// \param[in] fv A function mapping edge ids to values.
     ///
@@ -78,7 +78,7 @@ namespace mln
     ///
     /// \param[in] v_ima_ A vertex image.
     /// \param[in] pe	  A p_edges mapping graph element to sites .
-    /// \param[in] fv	  A function mapping two vertex ids to a value.
+    /// \param[in] fv_	  A function mapping two vertex ids to a value.
     ///			  The result is associated to the corresponding edge.
     ///
     /// \return an edge image.
@@ -94,7 +94,7 @@ namespace mln
     /// Construct an edge image.
     ///
     /// \param[in] v_ima_ A vertex image.
-    /// \param[in] fv	  A function mapping two vertex ids to a value.
+    /// \param[in] fv_	  A function mapping two vertex ids to a value.
     ///			  The result is associated to the corresponding edge.
     ///
     /// \return an edge image without localization information mapped to

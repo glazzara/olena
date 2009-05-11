@@ -51,8 +51,10 @@ namespace mln
     /*! Line an accumulator onto the pixel values of the image \p input.
      *
      * \param[in] input The input image.
-     * \param[in] a The accumulator.
-     * \return The accumulator result.
+     * \param[in] p_start The starting site of the line.
+     * \param[in] len The line length.
+     * \param[in] half_length The half length of the line.
+     * \param[in,out] output The resulting image.
      *
      * This routine runs: \n
      *   tmp = \p a \n
