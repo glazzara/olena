@@ -48,8 +48,8 @@ namespace mln
 }
 
 
-# include <mln/debug/format.hh>
 # include <mln/debug/draw_graph.hh>
+# include <mln/debug/format.hh>
 # include <mln/debug/histo.hh>
 # include <mln/debug/iota.hh>
 # include <mln/debug/println.hh>
@@ -57,6 +57,5 @@ namespace mln
 # include <mln/debug/put_word.hh>
 # include <mln/debug/quiet.hh>
 # include <mln/debug/slices_2d.hh>
-
 
 #endif // ! MLN_DEBUG_ALL_HH

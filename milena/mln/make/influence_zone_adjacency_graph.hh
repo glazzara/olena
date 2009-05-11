@@ -56,14 +56,16 @@ namespace mln
     /// Create a graph from an influence zone image.
     ///
     /// \param[in] iz influence zone image.
+    /// \param[in] nbh A neighborhood.
     /// \param[in] nlabels number of influence zone in \p iz.
     ///
     /// \return util::graph Graph based on the adjacency of the influence zones.
+    //
     template <typename I, typename N>
     util::graph
     influence_zone_adjacency_graph(const Image<I>& iz_,
 				   const Neighborhood<N>& nbh,
-				   mln_value(I) nlabels);
+				   const mln_value(I)& nlabels);
 
 
 
@@ -77,7 +79,7 @@ namespace mln
       void
       influence_zone_adjacency_graph_tests(const Image<I>& iz,
 					   const Neighborhood<N>& nbh,
-					   mln_value(I))
+					   const mln_value(I)&)
       {
 	mln_precondition(exact(iz).is_valid());
 	mln_precondition(exact(nbh).is_valid());
@@ -94,11 +96,12 @@ namespace mln
       namespace generic
       {
 
+	/// Generic implementation of make::influence_zone_adjacency_graph.
 	template <typename I, typename N>
 	util::graph
 	influence_zone_adjacency_graph(const Image<I>& iz_,
 				       const Neighborhood<N>& nbh_,
-				       mln_value(I) nlabels)
+				       const mln_value(I)& nlabels)
 	{
 	  trace::entering("make::impl::generic::influence_zone_adjacency_graph");
 
@@ -151,7 +154,7 @@ namespace mln
       util::graph
       influence_zone_adjacency_graph_dispatch(const Image<I>& iz,
 					      const Neighborhood<N>& nbh,
-					      mln_value(I) nlabels)
+					      const mln_value(I)& nlabels)
       {
 	return make::impl::generic::influence_zone_adjacency_graph(iz, nbh, nlabels);
       }
@@ -167,7 +170,7 @@ namespace mln
     util::graph
     influence_zone_adjacency_graph(const Image<I>& iz,
 				   const Neighborhood<N>& nbh,
-				   mln_value(I) nlabels)
+				   const mln_value(I)& nlabels)
     {
       trace::entering("make::influence_zone_adjacency_graph");
 

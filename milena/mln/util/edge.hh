@@ -359,15 +359,17 @@ namespace mln
     bool
     operator==(const edge<G>& lhs, const edge<G>& rhs)
     {
-      return lhs.pair_vertex_ == rhs.pair_vertex_;
+      return lhs.id() == rhs.id()
+	      && (lhs.graph().is_subgraph_of(rhs.graph())
+		  || rhs.graph().is_subgraph_of(lhs.graph()));
     }
 
     template <typename G>
     inline
     bool
-    operator< (const edge<G>& lhs, const edge<G>& rhs)
+    operator<(const edge<G>& lhs, const edge<G>& rhs)
     {
-      return lhs.pair_vertex_ < rhs.pair_vertex_;
+      return lhs.id() < rhs.id();
     }
 
   } // end of namespace mln::util

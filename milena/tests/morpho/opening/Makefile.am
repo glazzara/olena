@@ -6,6 +6,7 @@ SUBDIRS =					\
   approx
 
 check_PROGRAMS =			\
+	area_on_vertices 		\
 	leveling			\
 	algebraic			\
 	height				\
@@ -14,6 +15,7 @@ check_PROGRAMS =			\
 	structural			\
 	sum
 
+area_on_vertices_SOURCES = area_on_vertices.cc
 leveling_SOURCES = leveling.cc
 algebraic_SOURCES = algebraic.cc
 height_SOURCES = height.cc

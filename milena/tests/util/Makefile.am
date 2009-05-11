@@ -19,9 +19,7 @@ check_PROGRAMS =				\
   tree						\
   tree_fast					\
   tree_fast_to_image				\
-  tree_to_fast 					\
-  tree_to_image
-
+  tree_to_fast
 
 adjacency_matrix_SOURCES = adjacency_matrix.cc
 branch_iter_SOURCES = branch_iter.cc
@@ -37,9 +35,7 @@ set_SOURCES = set.cc
 soft_heap_SOURCES = soft_heap.cc
 tree_SOURCES = tree.cc
 tree_fast_SOURCES = tree_fast.cc
-tree_fast_to_image_SOURCES = tree_to_image.cc
 tree_to_fast_SOURCES = tree_to_fast.cc
-tree_to_image_SOURCES = tree_to_image.cc
 
 TESTS = $(check_PROGRAMS)
 

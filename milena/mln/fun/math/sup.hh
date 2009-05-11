@@ -46,7 +46,7 @@ namespace mln
     namespace next
     {
 
-      template <typename T>
+      template <typename T1, typename T2>
       struct set_binary_<mln::fun::sup, mln::Object, T1, mln::Object, T2>
       {
 	typedef set_binary_ ret;
@@ -66,5 +66,5 @@ namespace mln
 
 } // end of namespace mln
 
-#endif /* ! MLN_FUN_MATH_SUP_HH */
+#endif // ! MLN_FUN_MATH_SUP_HH
 

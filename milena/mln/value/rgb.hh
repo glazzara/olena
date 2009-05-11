@@ -42,6 +42,7 @@
 
 # include <mln/value/ops.hh>
 
+# include <mln/fun/v2v/hsl_to_rgb.hh>
 # include <mln/value/concept/vectorial.hh>
 # include <mln/value/int_u.hh>
 # include <mln/algebra/vec.hh>

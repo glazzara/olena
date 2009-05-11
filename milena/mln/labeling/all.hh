@@ -55,6 +55,7 @@ namespace mln
 
 # include <mln/labeling/background.hh>
 # include <mln/labeling/blobs.hh>
+# include <mln/labeling/colorize.hh>
 # include <mln/labeling/compute.hh>
 # include <mln/labeling/fill_holes.hh>
 # include <mln/labeling/flat_zones.hh>

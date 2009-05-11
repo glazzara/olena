@@ -378,7 +378,9 @@ namespace mln
     bool
     operator==(const vertex<G>& v1, const vertex<G>& v2)
     {
-      return v1.id() == v2.id();
+      return v1.id() == v2.id()
+	      && (v1.graph().is_subgraph_of(v2.graph())
+		  || v2.graph().is_subgraph_of(v1.graph()));
     }
 
     template<typename G>

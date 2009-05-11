@@ -57,11 +57,18 @@ mln/literal/one.hh \
 mln/literal/min.hh \
 mln/literal/white.hh \
 mln/literal/essential.hh \
+mln/world/all.hh \
 mln/world/binary_2d/subsample.hh \
+mln/world/binary_2d/all.hh \
 mln/world/binary_2d/projected_histo.hh \
+mln/world/inter_pixel/is_pixel.hh \
+mln/world/inter_pixel/all.hh \
 mln/world/inter_pixel/neighb2d.hh \
-mln/world/inter_pixel/image2full.hh \
+mln/world/inter_pixel/is_separator.hh \
+mln/world/inter_pixel/immerse.hh \
+mln/world/inter_pixel/separator_to_pixels.hh \
 mln/world/inter_pixel/display_edge.hh \
+mln/world/inter_pixel/compute.hh \
 mln/world/inter_pixel/dim2/is_pixel.hh \
 mln/world/inter_pixel/dim2/all.hh \
 mln/world/inter_pixel/dim2/is_edge.hh \
@@ -82,7 +89,6 @@ mln/util/max.hh \
 mln/util/lazy_set.hh \
 mln/util/soft_heap.hh \
 mln/util/set.hh \
-mln/util/tree_to_image.hh \
 mln/util/lemmings.hh \
 mln/util/greater_point.hh \
 mln/util/internal/graph_iter_base.hh \
@@ -109,18 +115,13 @@ mln/util/yes.hh \
 mln/util/line_graph.hh \
 mln/util/ord.hh \
 mln/util/adjacency_matrix.hh \
-mln/util/tree_fast_to_image.hh \
-mln/util/tree.hh \
 mln/util/couple.hh \
 mln/util/index.hh \
 mln/util/multi_site.hh \
-mln/util/branch_iter.hh \
-mln/util/branch_iter_ind.hh \
-mln/util/tree_to_fast.hh \
 mln/util/array.hh \
 mln/util/vertex.hh \
 mln/util/pix.hh \
-mln/util/tree_fast.hh \
+mln/util/object_id.hh \
 mln/util/site_pair.hh \
 mln/util/nil.hh \
 mln/util/graph_ids.hh \
@@ -128,6 +129,7 @@ mln/util/eat.hh \
 mln/util/essential.hh \
 mln/data/memset_.hh \
 mln/data/paste.spe.hh \
+mln/data/paste_without_localization.hh \
 mln/data/memcpy_.hh \
 mln/data/all.hh \
 mln/data/paste.hh \
@@ -218,6 +220,8 @@ mln/fun/p2p/all.hh \
 mln/fun/p2p/translation.hh \
 mln/fun/p2p/mirror.hh \
 mln/fun/accu_result.hh \
+mln/fun/stat/mahalanobis.hh \
+mln/fun/stat/all.hh \
 mln/fun/binary_param.hh \
 mln/fun/x2p/closest_point.hh \
 mln/fun/x2p/all.hh \
@@ -295,6 +299,8 @@ mln/fun/vv2b/lt.hh \
 mln/fun/vv2b/eq.hh \
 mln/fun/cast.hh \
 mln/fun/composition.hh \
+mln/fun/access/all.hh \
+mln/fun/access/mean.hh \
 mln/fun/i2v/all.hh \
 mln/fun/i2v/array.hh \
 mln/fun/i2v/all_to.hh \
@@ -435,6 +441,7 @@ mln/accu/site_set/all.hh \
 mln/accu/site_set/essential.hh \
 mln/accu/stat/variance.hh \
 mln/accu/stat/deviation.hh \
+mln/accu/stat/all.hh \
 mln/accu/stat/var.hh \
 mln/accu/max.hh \
 mln/accu/lor.hh \
@@ -1026,7 +1033,6 @@ mln/core/concept/window.hh \
 mln/core/concept/value.hh \
 mln/core/concept/accumulator.hh \
 mln/core/concept/site_set.hh \
-mln/core/concept/object_id.hh \
 mln/core/concept/object.hh \
 mln/core/concept/meta_fun.hh \
 mln/core/concept/delta_point_site.hh \
@@ -1109,6 +1115,7 @@ mln/labeling/all.hh \
 mln/labeling/level.hh \
 mln/labeling/flat_zones.hh \
 mln/labeling/foreground.hh \
+mln/labeling/colorize.hh \
 mln/labeling/regional_maxima.hh \
 mln/labeling/wrap.hh \
 mln/labeling/compute.hh \
@@ -1207,7 +1214,6 @@ mln/debug/iota.hh \
 mln/debug/all.hh \
 mln/debug/println_with_border.hh \
 mln/debug/println.spe.hh \
-mln/debug/colorize.hh \
 mln/debug/slices_2d.hh \
 mln/debug/draw_graph.hh \
 mln/debug/filename.hh \
@@ -1233,6 +1239,7 @@ mln/graph/attribute/card.hh \
 mln/graph/compute.hh \
 mln/graph/essential.hh \
 mln/set/uni.hh \
+mln/set/compute_with_weights.hh \
 mln/set/unique.hh \
 mln/set/inter.hh \
 mln/set/all.hh \

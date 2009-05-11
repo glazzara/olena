@@ -62,6 +62,7 @@
 # include <mln/io/ppm/save.hh>
 # include <mln/io/pbm/save.hh>
 
+# include <mln/labeling/colorize.hh>
 # include <mln/debug/histo.hh>
 
 # include <mln/accu/histo.hh>
@@ -200,7 +201,7 @@ namespace mln
 	mln_piter(p_array<P>) p(X);
 	for_all(p)
 	{
-	  debug(p) = debug::internal::random_color(value::rgb8());
+	  debug(p) = labeling::internal::random_color(value::rgb8());
 	  debug2(p) = true;
 	}
 	io::pbm::save(slice(debug2,0), "debug2-a.ppm");

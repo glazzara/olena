@@ -1,5 +1,54 @@
 2009-05-11 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Small fixes.
+
+	* milena/headers.mk: update distributed files list.
+
+	* milena/mln/core/image/edge_image.hh,
+	* milena/mln/core/image/vertex_image.hh: fix a wrong image type.
+
+	* milena/mln/fun/math/sup.hh: fix wrong template parameters.
+
+	* milena/mln/value/rgb.hh,
+	* milena/mln/util/essential.hh,
+	* milena/mln/util/all.hh,
+	* milena/mln/labeling/all.hh,
+	* milena/mln/debug/all.hh,
+	* milena/mln/fun/v2v/all.hh: fix includes.
+
+	* milena/mln/fun/v2v/rgb_to_hsi.hh: fix duplicate declarations.
+
+	* milena/mln/make/influence_zone_adjacency_graph.hh: add missing const
+	references.
+
+	* milena/mln/morpho/opening/area_on_vertices.hh: update according new
+	graph image types.
+
+	* milena/mln/registration/icp.hh: fix use of random_color.
+
+	* milena/mln/util/adjacency_matrix.hh: fix wrong ifndef.
+
+	* milena/mln/util/object_id.hh,
+	* milena/mln/util/vertex.hh,
+	* milena/mln/util/edge.hh: fix operator< and operator==.
+
+	* milena/mln/util/graph.hh: add preconditions.
+
+	* milena/mln/world/binary_2d/all.hh: new.
+
+	* milena/tests/morpho/closing/Makefile.am,
+	* milena/tests/morpho/closing/area_on_vertices.cc,
+	* milena/tests/morpho/opening/Makefile.am,
+	* milena/tests/morpho/opening/area_on_vertices.cc: new tests.
+
+	* milena/tests/unit_test/unit-tests.mk: update unit test list.
+
+	* milena/tests/util/Makefile.am,
+	* milena/tests/util/tree_fast_to_image.cc,
+	* milena/tests/util/tree_to_image.cc: remove tests.
+
+2009-05-11 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Fix documentation.
 
 	* doc/Doxyfile.in: add macro definitions.

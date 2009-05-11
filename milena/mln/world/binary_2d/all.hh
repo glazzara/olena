@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,44 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_V2V_ALL_HH
-# define MLN_FUN_V2V_ALL_HH
+#ifndef MLN_WORLD_BINARY_2D_ALL_HH
+# define MLN_WORLD_BINARY_2D_ALL_HH
 
-/// \file mln/fun/v2v/all.hh
+/// \file mln/world/all.hh
 ///
-/// File that includes all functions from value to value.
+/// File that includes all the world routines.
 
 
-namespace mln
-{
-
-  namespace fun
-  {
-
-    /// \brief Namespace of functions from value to value.
-    ///
-    /// \ingroup modfun
-    namespace v2v {}
-
-  }
-}
+// Sub-directories.
+# include <mln/world/binary_2d/projected_histo.hh>
+# include <mln/world/binary_2d/subsample.hh>
 
 
-# include <mln/fun/v2v/abs.hh>
-# include <mln/fun/v2v/cast.hh>
-# include <mln/fun/v2v/convert.hh>
-# include <mln/fun/v2v/dec.hh>
-# include <mln/fun/v2v/enc.hh>
-# include <mln/fun/v2v/hsi_to_rgb.hh>
-# include <mln/fun/v2v/hsl_to_rgb.hh>
-# include <mln/fun/v2v/id.hh>
-# include <mln/fun/v2v/linear.hh>
-# include <mln/fun/v2v/norm.hh>
-# include <mln/fun/v2v/projection.hh>
-# include <mln/fun/v2v/rgb_to_hsi.hh>
-# include <mln/fun/v2v/rgb_to_hsl.hh>
-# include <mln/fun/v2v/saturate.hh>
-# include <mln/fun/v2v/wrap.hh>
-
-
-#endif // ! MLN_FUN_V2V_ALL_HH
+#endif // ! MLN_WORLD_BINARY_2D_ALL_HH

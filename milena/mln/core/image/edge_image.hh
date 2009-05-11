@@ -146,6 +146,7 @@ namespace mln
     /// Function mapping graph elements to sites.
     typedef typename internal::efsite_selector<P,G>::site_function_t
 	    site_function_t;
+    typedef mln_result(site_function_t) function_result_t;
 
     /// Window type
     typedef graph_elt_window<G,p_edges<G,site_function_t> > win_t;
@@ -193,7 +194,7 @@ namespace mln
   {
     fun::i2v::array<V> f;
     init_(tag::function, f, exact(model));
-    p_edges<G,fun::i2v::array<P> > s;
+    p_edges<G, typename edge_image<P,V,G>::site_function_t> s;
     init_(tag::domain, s, exact(model));
     target.init_(f, s);
   }

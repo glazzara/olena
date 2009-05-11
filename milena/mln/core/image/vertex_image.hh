@@ -144,6 +144,7 @@ namespace mln
     /// Function mapping graph elements to sites.
     typedef typename internal::vfsite_selector<P,G>::site_function_t
 	    site_function_t;
+    typedef mln_result(site_function_t) function_result_t;
 
 
     /// Skeleton type.
@@ -187,7 +188,7 @@ namespace mln
   {
     fun::i2v::array<V> f;
     init_(tag::function, f, exact(model));
-    p_vertices<G,fun::i2v::array<P> > s;
+    p_vertices<G,typename edge_image<P,V,G>::site_function_t> s;
     init_(tag::domain, s, exact(model));
     target.init_(f, s);
   }

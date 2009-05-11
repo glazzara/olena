@@ -385,7 +385,10 @@ namespace mln
     edge_id_t
     graph::add_edge(const vertex_id_t& id_v1, const vertex_id_t& id_v2)
     {
-      //FIXME: to be removed! We should not check that, except in without NDEBUG.
+      mln_precondition(id_v1 != id_v2);
+      mln_precondition(has_v(id_v1));
+      mln_precondition(has_v(id_v2));
+
       // Does this edge already exist in the graph?
       edge_data_t edge(id_v1, id_v2);
 # ifndef NDEBUG

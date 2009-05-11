@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,44 +25,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_V2V_ALL_HH
-# define MLN_FUN_V2V_ALL_HH
-
-/// \file mln/fun/v2v/all.hh
+/// \file tests/morpho/closing/area_on_vertices.cc
 ///
-/// File that includes all functions from value to value.
+/// Test on mln::morpho::closing::area_on_vertices.
+
+#include <mln/core/image/edge_image.hh>
+#include <mln/morpho/closing/area_on_vertices.hh>
+#include <mln/util/graph.hh>
+#include <mln/fun/i2v/array.hh>
+
+#include "tests/data.hh"
 
 
-namespace mln
+const unsigned result[] = { 101, 101, 102 };
+
+int main()
 {
+  using namespace mln;
 
-  namespace fun
-  {
+  util::graph gr;
+  gr.add_vertices(5);
+  gr.add_edge(1, 3);
+  gr.add_edge(1, 2);
+  gr.add_edge(2 ,4);
 
-    /// \brief Namespace of functions from value to value.
-    ///
-    /// \ingroup modfun
-    namespace v2v {}
+  fun::i2v::array<unsigned> f(5);
+  for (unsigned i = 0; i < 5; ++i)
+    f(i) = 100 + i;
+  typedef edge_image<void,unsigned> e_ima_t;
+  e_ima_t e_ima(gr, f);
+  typedef e_ima_t::nbh_t nbh_t;
+  nbh_t nbh;
 
-  }
+  e_ima_t clo = morpho::closing::area_on_vertices(e_ima, nbh, 3);
+
+  unsigned i = 0;
+  mln_piter_(e_ima_t) p(clo.domain());
+  for_all(p)
+    mln_assertion(result[i++] == clo(p));
 }
 
-
-# include <mln/fun/v2v/abs.hh>
-# include <mln/fun/v2v/cast.hh>
-# include <mln/fun/v2v/convert.hh>
-# include <mln/fun/v2v/dec.hh>
-# include <mln/fun/v2v/enc.hh>
-# include <mln/fun/v2v/hsi_to_rgb.hh>
-# include <mln/fun/v2v/hsl_to_rgb.hh>
-# include <mln/fun/v2v/id.hh>
-# include <mln/fun/v2v/linear.hh>
-# include <mln/fun/v2v/norm.hh>
-# include <mln/fun/v2v/projection.hh>
-# include <mln/fun/v2v/rgb_to_hsi.hh>
-# include <mln/fun/v2v/rgb_to_hsl.hh>
-# include <mln/fun/v2v/saturate.hh>
-# include <mln/fun/v2v/wrap.hh>
-
-
-#endif // ! MLN_FUN_V2V_ALL_HH

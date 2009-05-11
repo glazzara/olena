@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,8 +34,7 @@
 /// Morphological area opening on a line graph image computing
 /// the area in terms of adjacent vertices.
 
-# include <mln/pw/image.hh>
-# include <mln/core/site_set/p_edges.hh>
+# include <mln/core/image/edge_image.hh>
 # include <mln/morpho/opening/algebraic.hh>
 # include <mln/morpho/attribute/count_adjacent_vertices.hh>
 
@@ -49,32 +48,38 @@ namespace mln
     namespace opening
     {
 
-    /// Morphological area opening on a mln::line_graph_image computing
-    /// the area in terms of adjacent vertices.
-      template <typename P2V, typename G, typename V2P, typename N>
-      pw::image<P2V, p_edges<G, V2P> >
-      area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
+      /// Morphological area opening on a mln::line_graph_image computing
+      /// the area in terms of adjacent vertices.
+      ///
+      /// \param[in] input An edge image.
+      /// \param[in] nbh A graph neighborhood.
+      /// \param[in] lambda Closing parameter.
+      ///
+      /// \return An edge image.
+      //
+      template <typename P, typename V, typename G, typename N>
+      edge_image<P,V,G>
+      area_on_vertices(const edge_image<P,V,G>& input,
 		       const Neighborhood<N>& nbh,
 		       unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename P2V, typename G, typename V2P, typename N>
+    template <typename P, typename V, typename G, typename N>
     inline
-    pw::image<P2V, p_edges<G, V2P> >
-    area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
+    edge_image<P,V,G>
+    area_on_vertices(const edge_image<P,V,G>& input,
 		     const Neighborhood<N>& nbh,
 		     unsigned lambda)
     {
       trace::entering("morpho::opening::area_on_vertices");
       mln_precondition(exact(input).is_valid());
 
-      typedef p_edges<G, V2P> pe_t;
-      typedef attribute::count_adjacent_vertices< pw::image<P2V, pe_t> > attribute_t;
+      typedef attribute::count_adjacent_vertices< edge_image<P,V,G> > attribute_t;
 
-      pw::image<P2V, p_edges<G, V2P> > output;
-      output = opening::algebraic(input, nbh, attribute_t(), lambda);
+      edge_image<P,V,G>
+	output = opening::algebraic(input, nbh, attribute_t(), lambda);
 
       trace::exiting("morpho::opening::area_on_vertices");
       return output;

@@ -72,9 +72,7 @@ namespace mln
 # include <mln/util/tracked_ptr.hh>
 # include <mln/util/tree.hh>
 # include <mln/util/tree_fast.hh>
-# include <mln/util/tree_fast_to_image.hh>
 # include <mln/util/tree_to_fast.hh>
-//# include <mln/util/tree_to_image.hh>
 # include <mln/util/vertex.hh>
 # include <mln/util/yes.hh>
 

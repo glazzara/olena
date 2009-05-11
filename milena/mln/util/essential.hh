@@ -1,4 +1,5 @@
 // Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,6 +41,5 @@
 # include <mln/util/ord_pair.hh>
 # include <mln/util/set.hh>
 # include <mln/util/site_pair.hh>
-# include <mln/util/tree.hh>
 
 #endif // ! MLN_UTIL_ESSENTIAL_HH

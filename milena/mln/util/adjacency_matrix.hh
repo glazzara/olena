@@ -250,9 +250,9 @@ namespace mln
 	::adjacency_matrix_impl_selector(const V& nelements)
       {
 	(void) nelements;
-# ifndef DNDEBUG
+# ifndef NDEBUG
 	nelements_ = nelements;
-# endif // ! DNDEBUG
+# endif // ! NDEBUG
       }
 
       template <typename V>
