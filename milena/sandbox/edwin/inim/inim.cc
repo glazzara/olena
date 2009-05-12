@@ -18,12 +18,12 @@
 /* Component trees */
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
-#include "../tree/propagate.hh"
-#include "../tree/components.hh"
+#include <mln/morpho/tree/propagate.hh>
+#include <mln/morpho/tree/components.hh>
 
 /* Attributes */
 #include <mln/transform/distance_front.hh>
-#include "../attributes/bbox.hh"
+#include <mln/morpho/attribute/bbox.hh>
 #include <mln/morpho/attribute/card.hh>
 #include <mln/make/w_window2d_int.hh>
 

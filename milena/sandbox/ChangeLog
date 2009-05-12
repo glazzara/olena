@@ -1,3 +1,10 @@
+2009-05-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Inim project review.
+	* edwin/inim/inim.cc: Fix include.
+	* edwin/tests/sharp.cc: New.
+	* edwin/tree/sharp.cc: Remove.
+
 2009-05-11  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Plot labels in fixed watershed.

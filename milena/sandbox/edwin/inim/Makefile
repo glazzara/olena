@@ -7,7 +7,7 @@ inim_OBJS=${inim_SRC:.cc=.o}
 OLENADIR=$(MLN_DIR)/..
 MILENADIR=$(OLENADIR)/milena
 
-CXXFLAGS=-I$(MILENADIR) -I./ -W -Wall
+CXXFLAGS=-I$(MILENADIR) -I$(MILENADIR)/sandbox/edwin -W -Wall
 
 
 CXXFLAGS += $(if $(DEBUG), -g -ggdb, -DNDEBUG\
@@ -26,8 +26,6 @@ $(TARGET): $($(TARGET)_OBJS) $($(TARGET)_SRC)
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $<
 
-%.o: %.hh
-	$(CXX) $(CXXFLAGS) -c $<
 
 depend:
 	makedepend -- $(CXXFLAGS) -- -v $($(TARGET)_SRC)

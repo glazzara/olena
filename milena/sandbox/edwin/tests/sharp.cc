@@ -12,8 +12,9 @@
 /* Component trees */
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
-#include "components.hh"
-#include "propagate.hh"
+#include <mln/morpho/tree/components.hh>
+#include <mln/morpho/tree/filter.hh>
+#include <mln/morpho/tree/propagate.hh>
 
 /* Attributes */
 #include <mln/morpho/attribute/sharpness.hh>
@@ -327,12 +328,13 @@ int main(int argc, char* argv[])
 
   // labeling
   typedef mln_ch_value_(I, bool) M;
-  typedef mln_ch_value_(I, value::label<16>) L;
 
   M mask = morpho::tree::set_value_to_components(tree, obj_array, true, false);
-  value::label<16> nlabel;
-  L label = labeling::blobs(mask, c4(), nlabel);
-  io::pgm::save(label, "label.pgm");
+
+  //typedef mln_ch_value_(I, value::label<16>) L;
+  //value::label<16> nlabel;
+  //L label = labeling::blobs(mask, c4(), nlabel);
+  //io::pgm::save(label, "label.pgm");
 
 
   if (mydebug) {
@@ -342,11 +344,11 @@ int main(int argc, char* argv[])
 
 
 //   /* Now store output image */
-//     I out;
-//     initialize(out, input);
-//     data::fill(out, 0);
-//     data::paste(input | pw::value(mask), out);
-//     io::pgm::save(out, "output.pgm");
+     I out;
+     initialize(out, input);
+     data::fill(out, 0);
+     data::paste(input | pw::value(mask), out);
+     io::pgm::save(out, "output.pgm");
 
 
 }
