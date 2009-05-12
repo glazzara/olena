@@ -53,11 +53,12 @@
 # define mln_trait_value_quant_(V)          mln::trait::value_< V >::quant
 
 
-# define mln_nbits(V)    mln::trait::value_< V >::nbits
 # define mln_card(V)     mln::trait::value_< V >::card
-# define mln_min(V)      mln::trait::value_< V >::min()
-# define mln_max(V)      mln::trait::value_< V >::max()
+# define mln_dim(V)      mln::trait::value_< V >::dim
 # define mln_epsilon(V)  mln::trait::value_< V >::epsilon()
+# define mln_max(V)      mln::trait::value_< V >::max()
+# define mln_min(V)      mln::trait::value_< V >::min()
+# define mln_nbits(V)    mln::trait::value_< V >::nbits
 
 
 /// Give the summation type for values of type \c T.

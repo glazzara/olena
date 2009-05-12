@@ -33,6 +33,9 @@
 ///
 /// Encapsulate a plain (C language-like) pointer to function
 /// into a functor.
+///
+/// \todo Fix category: super is not defined!
+/// See mln/value/builtin/integers.hh for an example.
 
 # include <mln/fun/internal/selector.hh>
 # include <mln/metal/unqualif.hh>
