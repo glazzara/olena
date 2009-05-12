@@ -1,3 +1,9 @@
+2009-05-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add some code to extend the work of Etienne and Fred.
+
+	* theo/experimental/histo_image.cc: New.
+
 2009-05-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Inim project review.
