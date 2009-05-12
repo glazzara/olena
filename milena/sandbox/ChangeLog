@@ -1,3 +1,9 @@
+2009-05-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add a morpho transformation before edges computation.
+	* fabien/igr/smooth_fixed_seg/main.cc: New edge computation, using
+	  morpho transformations.
+
 2009-05-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Inim project fixes.
