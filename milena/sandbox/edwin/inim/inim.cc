@@ -25,6 +25,7 @@
 #include <mln/transform/distance_front.hh>
 #include <mln/morpho/attribute/bbox.hh>
 #include <mln/morpho/attribute/card.hh>
+#include <mln/morpho/attribute/volume.hh>
 #include <mln/make/w_window2d_int.hh>
 
 /* io */
@@ -47,6 +48,8 @@
 
 /* Draw debug */
 #include <mln/draw/box.hh>
+#include <mln/literal/colors.hh>
+#include <mln/level/convert.hh>
 
 /* std */
 #include <string>
@@ -154,7 +157,7 @@ int main(int argc, char* argv[])
 
   if (mydebug) {
     dsp("Distance geodesic");
-    io::pgm::save(input, "distance.pgm");
+  
   }
 
   /* Component tree creation */
@@ -166,7 +169,7 @@ int main(int argc, char* argv[])
 
   /* Compute Attribute On Image */
   typedef morpho::attribute::bbox<I> bbox_t;
-  typedef morpho::attribute::card<I> card_t;
+  typedef morpho::attribute::volume<I> card_t;
   typedef mln_ch_value_(I, double) A;
 
   mln_VAR(attr_image, morpho::tree::compute_attribute_image(bbox_t (), tree));
@@ -245,14 +248,28 @@ int main(int argc, char* argv[])
   io::ppm::save(output, "label.pgm");
 
   /* Now store output image image */
-  O out;
+  O out, distance;
   initialize(out, input);
+  distance = level::convert(value::rgb8 (), input);
   data::fill(out, literal::black_t());
   data::paste(output | pw::value(input_), out);
+
+  {
+    mln_piter_(p_array<mln_psite_(I)>) it(obj_array);
+    for_all(it)
+    {
+      std::cout << it << " :: " << attr_image(it).pmin() << " -> " << a(it)
+		<< std::endl;
+
+      draw::box(out, attr_image(it), literal::red_t ());
+      draw::box(distance, attr_image(it), literal::red_t ());
+    }
+  }
 
   if (mydebug) {
     dsp("Mask input");
   }
 
+  io::ppm::save(distance, "distance.pgm");
   io::ppm::save(out, "output.pgm");
 }
