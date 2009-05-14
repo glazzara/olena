@@ -1,3 +1,24 @@
+2009-05-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add morpho reconstruction by_dilation union_find algorithm.
+
+	* mln/morpho/reconstruction,
+	* mln/morpho/reconstruction/by_dilation,
+	* tests/morpho/reconstruction,
+	* tests/morpho/reconstruction/by_dilation: New directories.
+
+	* sandbox/theo/Rd/union_find.hh: Copy to...
+	* mln/morpho/reconstruction/by_dilation/union_find.hh: ...this new file.
+	Update.
+
+	* mln/morpho/all.hh: Fix comments.
+	* mln/morpho/reconstruction/all.hh: New.
+	* mln/morpho/reconstruction/by_dilation/all.hh: New.
+	* tests/morpho/reconstruction/Makefile.am: New.
+	* tests/morpho/reconstruction/by_dilation/Makefile.am: New.
+	* tests/morpho/reconstruction/by_dilation/union_find.cc: New.
+	* tests/morpho/Makefile.am: Update.
+
 2009-05-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	De-activate hsl stuff in value rgb.

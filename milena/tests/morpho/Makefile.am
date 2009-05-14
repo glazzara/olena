@@ -8,6 +8,7 @@ SUBDIRS =					\
   closing 					\
   elementary					\
   opening 					\
+  reconstruction				\
   tree						\
   watershed
 

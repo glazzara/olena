@@ -31,22 +31,22 @@
 
 /// \file mln/morpho/all.hh
 ///
-/// File that includes all morpho-related routines.
+/// File that includes all mathematical morphology routines.
 
 
 namespace mln
 {
 
-  /// Namespace of morphological image processing routines.
+  /// Namespace of mathematical morphology routines.
   namespace morpho
   {
 
-    /// Namespace of morphological image processing routines
+    /// Namespace of mathematical morphology routines
     /// implementations.
     namespace impl
     {
 
-      /// Namespace of morphological image processing routines
+      /// Namespace of mathematical morphology routines
       /// generic implementations.
       namespace generic
       {}
@@ -85,6 +85,7 @@ namespace mln
 # include <mln/morpho/closing/all.hh>
 # include <mln/morpho/elementary/all.hh>
 # include <mln/morpho/opening/all.hh>
+# include <mln/morpho/reconstruction/all.hh>
 # include <mln/morpho/tree/all.hh>
 # include <mln/morpho/watershed/all.hh>
 
