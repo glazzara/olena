@@ -1,3 +1,11 @@
+2009-05-14  Guillaume Sadegh  <sadegh@lrde.epita.fr>
+
+	INIM: Region Adjacency Graph.
+	* inim/2010/rag/rag.cc, inim/2010/rag/center_weight.hh,
+	inim/2010/rag/dijkstra.hh, inim/2010/rag/p_vertices_with_accu.hh,
+	inim/2010/rag/rag.hh, inim/2010/rag/Makefile: New, INIM1 project
+	to detect lines from a picture with a Region Adjacency Graph.
+
 2009-05-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add a morpho transformation before edges computation.
@@ -232,13 +240,13 @@
 2009-05-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add watershed in fixed segmentation.
-	* fabien/igr/seg_fixed.cc: Add closing::volume() and 
+	* fabien/igr/seg_fixed.cc: Add closing::volume() and
 	  watershed::flooding() in fixed segmentation.
 
 2009-04-30 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Change references to l2l:: to v2v::.
-	
+
 	* icdar/2009/hsc/first_attempts/boxes.cc,
 	* icdar/2009/hsc/first_attempts/exec/iz_lines.cc,
 	* icdar/2009/hsc/first_attempts/exec/relabel_lines.cc,
@@ -422,7 +430,7 @@
 	Finder for entry point in an watersheded image.
 	* Makefile: Compile directly from the directory.
 	* cuttor.hh: Add needed include for point2d.
-	* cuttor.hxx: Add function to retrieve an entry for 
+	* cuttor.hxx: Add function to retrieve an entry for
           main algorithm.
 
 2009-04-21  Fabien Freling  <fabien.freling@lrde.epita.fr>
@@ -1154,7 +1162,7 @@
 	* scribo/src/extract_text_double_several_links.cc,
 	* scribo/src/extract_text_multiple_links.cc,
 	* scribo/src/extract_text_single_link.cc: cleanup small components.
-	
+
 	* scribo/src/extract_text_several_left_links.cc,
 	* scribo/src/extract_text_several_multiple_links,
 	* scribo/src/rectangularity.cc,
@@ -1303,7 +1311,7 @@
 	* scribo/table/align_lines_verticaly.hh,
 	* scribo/table/connect_horizontal_lines.hh,
 	* scribo/table/connect_vertical_lines.hh: add more parameters.
-	
+
 	* scribo/table/extract.hh: new routine to extract document tables.
 
 	* scribo/table/extract_lines_with_opening.hh: new routine to extract
@@ -1649,7 +1657,7 @@
 	* scribo/+out.txt: remove.
 
 	* scribo/Makefile: add new rules.
-	
+
 	* scribo/demat.hh: cleanup and comment.
 
 2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
