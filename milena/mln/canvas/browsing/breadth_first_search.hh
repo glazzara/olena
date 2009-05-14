@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_BROWSING_DEPTH_FIRST_SEARCH_HH
-# define MLN_CANVAS_BROWSING_DEPTH_FIRST_SEARCH_HH
+#ifndef MLN_CANVAS_BROWSING_BREADTH_FIRST_SEARCH_HH
+# define MLN_CANVAS_BROWSING_BREADTH_FIRST_SEARCH_HH
 
-/// \file mln/canvas/browsing/depth_first_search.hh
+/// \file mln/canvas/browsing/breadth_first_search.hh
 ///
-/// Depth-limited search algorithm for graph.
+/// Breadth first search algorithm for graph.
 /// Browse over all vertices for each component.
 
 /*!
@@ -65,7 +65,7 @@
 **
 */
 
-# include <stack>
+# include <queue>
 # include <mln/canvas/browsing/internal/graph_first_search.hh>
 
 namespace mln
@@ -78,17 +78,17 @@ namespace mln
     {
 
       /// Breadth-first search algorithm for graph, on vertices.
-      struct depth_first_search_t :
-        public internal::graph_first_search_t<depth_first_search_t, std::stack>
+      struct breadth_first_search_t :
+        public internal::graph_first_search_t<breadth_first_search_t, std::queue>
       {};
 
-      extern const depth_first_search_t depth_first_search;
+      extern const breadth_first_search_t breadth_first_search;
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      const depth_first_search_t depth_first_search;
+      const breadth_first_search_t breadth_first_search;
 
 # endif // ! MLN_INCLUDE_ONLY
 
@@ -99,4 +99,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CANVAS_BROWSING_DEPTH_FIRST_SEARCH_HH
+#endif // ! MLN_CANVAS_BROWSING_BREADTH_FIRST_SEARCH_HH

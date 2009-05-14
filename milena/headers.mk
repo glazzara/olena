@@ -626,7 +626,9 @@ mln/canvas/browsing/all.hh \
 mln/canvas/browsing/diagonal2d.hh \
 mln/canvas/browsing/fwd.hh \
 mln/canvas/browsing/dir_struct_elt_incr_update.hh \
+mln/canvas/browsing/internal/graph_first_search.hh \
 mln/canvas/browsing/depth_first_search.hh \
+mln/canvas/browsing/breadth_first_search.hh \
 mln/canvas/browsing/directional.hh \
 mln/canvas/browsing/essential.hh \
 mln/canvas/chamfer.hh \
