@@ -2,7 +2,7 @@
 
 # OLN_WITH_CFITSIO
 # ----------------------
-# Checks whether the Cfitsio library is available from C++
+# Checks whether the CFITSIO library is available from C++
 # programs.
 #
 # This macro sets CFITSIO_CXXFLAGS and CFITSIO_LDFLAGS if
@@ -14,7 +14,7 @@ AC_DEFUN([OLN_WITH_CFITSIO],
 
  AC_ARG_WITH([cfitsio],
    [AC_HELP_STRING([--with-cfitsio@<:@=DIR@:>@],
-     [using FreeImage (DIR = prefix for FreeImage installation)])])
+     [using CFITSIO (DIR = prefix for CFITSIO installation)])])
  CFITSIO_CXXFLAGS=''
  CFITSIO_LDFLAGS=''
  if test "x$with_cfitsio" != xno; then
@@ -33,7 +33,7 @@ AC_DEFUN([OLN_WITH_CFITSIO],
        [oln_have_cfitsio=yes
          CFITSIO_LDFLAGS="$CFITSIO_LDFLAGS -lcfitsio"
          AC_DEFINE([HAVE_CFITSIO], 1,
-                   [Define to 1 if we can use FreeImage])
+                   [Define to 1 if we can use CFITSIO])
        ]
      )]
    )
