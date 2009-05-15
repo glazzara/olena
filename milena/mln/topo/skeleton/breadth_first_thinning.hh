@@ -92,16 +92,14 @@ namespace mln
 	F& is_simple = exact(is_simple_);
 	const H& constraint = exact(constraint_);
 
-	typedef mln_psite(I) psite;
-
 	I output = duplicate(input);
 	// Attach the work image to IS_SIMPLE.
 	is_simple.set_image(output);
 
+	typedef mln_psite(I) psite;
 	typedef p_set<psite> set_t;
 	set_t set;
-
-	// Populate the set with candiate simple points.
+	// Populate SET with candidate simple points.
 	mln_piter(I) p_(output.domain());
 	for_all(p_)
 	{

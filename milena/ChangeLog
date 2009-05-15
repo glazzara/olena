@@ -1,5 +1,9 @@
 2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/topo/skeleton/breadth_first_thinning.hh: Aesthetic changes.
+
+2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove useless #include's.
 
 	* mln/morpho/line_gradient.hh:
