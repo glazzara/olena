@@ -1,3 +1,11 @@
+2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Adjust .gitignore files.
+
+	* .gitignore: Ignore patterns *.pyc and *.stamp globally.
+	* build-aux/.gitignore: Remove local pattern *.pyc.
+	* milena/doc/.gitignore: Remove local pattern headers.stamp.
+
 2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use more canonical names to handle the configuration of Swilena.

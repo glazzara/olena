@@ -13,7 +13,6 @@
 /missing
 /*.patch
 /patches*
-/*.pyc
 /py-compile
 /*.rej
 /*TAGS

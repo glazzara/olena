@@ -1,6 +1,8 @@
 # Global.
 *~
 *.dSYM
+*.pyc
+*.stamp
 .deps
 Makefile.in
 Makefile
@@ -8,8 +10,6 @@ Makefile
 # Local.
 /*-stamp
 /*.patch
-/*.pyc
-/*.stamp
 /*TAGS
 /*aclocal.m4
 /*stamp-*
