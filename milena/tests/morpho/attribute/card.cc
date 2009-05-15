@@ -46,5 +46,5 @@ int main()
   c.take();
   c.take(p);
   c.take(px);
-  mln_assertion(c == 3);
+  mln_assertion(c == 3u);
 }

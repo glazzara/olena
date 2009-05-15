@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,24 +26,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/attribute/volume.cc
+/// \file tests/fun/v2v/rgb_to_hsl.cc
 ///
-/// Test on mln::morpho::attribute::volume.
+/// Test RGB-to-HSL conversion.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/morpho/attribute/volume.hh>
 
+#include <mln/value/hsl.hh>
+#include <mln/value/rgb8.hh>
+
+#include <mln/fun/v2v/rgb_to_hsl.hh>
+
+#include <mln/level/compare.hh>
+#include <mln/level/transform.hh>
+
+#include <mln/make/image.hh>
+
+#include <mln/debug/println.hh>
+
+using mln::value::rgb8;
+using mln::value::hsl_f;
+
+rgb8 dat[][2] = { { rgb8(0,0,0), rgb8(255,255,255) },
+		  { rgb8(128,128,128), rgb8(90,90, 90) } };
+
+hsl_f ref[][2] = { { hsl_f(0,0,0), hsl_f(0,0,255) },
+		   { hsl_f(0,0,128), hsl_f(0,0,90) } };
 
 int main()
 {
   using namespace mln;
 
-  typedef image2d<int> I;
-  I ima(3, 3);
+  image2d<value::rgb8> ima = make::image(dat);
+  image2d<hsl_f> ref_ima = make::image(ref);
+  image2d<hsl_f> ima_hsl = level::transform(ima,
+					    fun::v2v::f_rgb_to_hsl_f);
 
-  util::pix<I> px(ima, point2d(0,0));
-
-  morpho::attribute::volume<I> v;
-  v.take(px);
-  mln_assertion(v == 1u);
+  mln_assertion(ima_hsl == ref_ima);
 }
+

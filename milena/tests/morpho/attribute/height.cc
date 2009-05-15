@@ -44,7 +44,7 @@ int main()
   for (int i = 0; i < 5; i++)
       accu.take(t[i]);
 
-  mln_assertion(accu.to_result() == 7);
+  mln_assertion(accu.to_result() == 7u);
 
 
   A accu2;
@@ -54,9 +54,9 @@ int main()
       accu.take(t[i] + 2);
       accu2.take(t[i] - 2);
     }
-  mln_assertion(accu.to_result() == 7);
-  mln_assertion(accu2.to_result() == 7);
+  mln_assertion(accu.to_result() == 7u);
+  mln_assertion(accu2.to_result() == 7u);
   accu.take(accu2);
-  mln_assertion(accu.to_result() == 11);
+  mln_assertion(accu.to_result() == 11u);
 }
 
