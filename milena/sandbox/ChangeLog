@@ -34,7 +34,7 @@
 
 	Create mean and deviation images.
 	* fabien/igr/fixed_seg/Makefile: New target for building
-	  fixed segmentation.
+	fixed segmentation.
 	* fabien/igr/fixed_seg/main.cc: Create mean image.
 	* fabien/igr/smooth_fixed_seg/main.cc: Small update, on hold.
 
@@ -50,7 +50,7 @@
 
 	Add a morpho transformation before edges computation.
 	* fabien/igr/smooth_fixed_seg/main.cc: New edge computation, using
-	  morpho transformations.
+	morpho transformations.
 
 2009-05-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
@@ -74,14 +74,14 @@
 
 	Plot labels in fixed watershed.
 	* fabien/igr/plot_label.hh: Implement plot_label() for
-	  fixed segmentation.
+	fixed segmentation.
 	* fabien/igr/seg_fixed.cc: Add plot_label() calls.
 
 2009-05-10  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Make clean in tree files and procedures.
 	* edwin/mln/morpho/tree/filter.hh:
-	  group strategies for non-increasing attribute filtering.
+	Group strategies for non-increasing attribute filtering.
 
 	* edwin/attributes/bbox.hh,
 	* edwin/attributes/occupation.hh,
@@ -100,7 +100,7 @@
 	* edwin/tree/propagate.hh,
 	* edwin/tree/propagate_if.hh,
 	* edwin/tree/propagate_node.hh,
-	  move all tree materials in edwin/mln/morpho/tree.
+	Move all tree materials in edwin/mln/morpho/tree.
 
 2009-05-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -281,7 +281,7 @@
 
 	Add watershed in fixed segmentation.
 	* fabien/igr/seg_fixed.cc: Add closing::volume() and
-	  watershed::flooding() in fixed segmentation.
+	watershed::flooding() in fixed segmentation.
 
 2009-04-30 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -292,14 +292,14 @@
 	* icdar/2009/hsc/first_attempts/exec/relabel_lines.cc,
 	* inim/2010/boxes/boxes.cc,
 	* lazzara/igr/irm/grad_clo_and_wshd.cc,
-	* lazzara/igr/irm/hsl_grad_and_wst.cc: use v2v::wrap instead of
+	* lazzara/igr/irm/hsl_grad_and_wst.cc: Use v2v::wrap instead of
 	l2l::wrap.
 
 2009-05-03  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Rewrite propagation using predicate.
 	* edwin/tree/propagate_if.hh: Rewrite propagation using predicate
-	 and add postcondition.
+	and add postcondition.
 	* edwin/tree/propagation.cc: Test file update.
 
 2009-04-30  Fabien Freling  <fabien.freling@lrde.epita.fr>
@@ -323,7 +323,8 @@
 
 	Histograms update.
 	* folio/mln/histo/compute_histo.hh: Some brainstorming.
-	* folio/mln/histo/compute_histo_3d.hh: Some corrections from compute_histo.
+	* folio/mln/histo/compute_histo_3d.hh: Some corrections from
+	compute_histo.
 
 2009-04-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -353,26 +354,26 @@
 
 	Convert Matlab images to Milena images.
 	* fabien/igr/mat2mln/mat2mln.cc: Convert matlab ascii format
-	  to mln format.
+	to mln format.
 	* fabien/igr/mat2mln/raw2mlndata.cc: Deprecated.
 	* fabien/igr/seg_fixed.cc: Update.
 
 2009-04-27  Frederic Bour  <bour@lrde.epita.fr>
 
 	Add functions working on components, add proxy support for new.
-	*  fred/mln/core/image/thrubin_morpher.hh: New.
-	*  fred/mln/fun/component/blue.hh: New.
-	*  fred/mln/fun/component/comp.hh: New.
-	*  fred/mln/fun/component/green.hh: New.
-	*  fred/mln/fun/component/red.hh: New.
-	*  fred/mln/fun/component/rgb.hh: New.
-	*  fred/mln/fun/component: New.
-	*  fred/mln/fun/spe/unary.hh: Debug parameter handling.
-	*  fred/mln/trait/fun.hh: Debug parameter handling.
-	*  fred/mln/trait/next/solve.hh: Add proxy support.
-	*  fred/mln/trait/next/solve_proxy.hh: New.
-	*  fred/tests/cos.cc: Add/remove tests.
-	*  fred/tests/fun.cc: Add/remove tests.
+	* fred/mln/core/image/thrubin_morpher.hh: New.
+	* fred/mln/fun/component/blue.hh: New.
+	* fred/mln/fun/component/comp.hh: New.
+	* fred/mln/fun/component/green.hh: New.
+	* fred/mln/fun/component/red.hh: New.
+	* fred/mln/fun/component/rgb.hh: New.
+	* fred/mln/fun/component: New.
+	* fred/mln/fun/spe/unary.hh: Debug parameter handling.
+	* fred/mln/trait/fun.hh: Debug parameter handling.
+	* fred/mln/trait/next/solve.hh: Add proxy support.
+	* fred/mln/trait/next/solve_proxy.hh: New.
+	* fred/tests/cos.cc: Add/remove tests.
+	* fred/tests/fun.cc: Add/remove tests.
 
 2009-04-27 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -388,63 +389,65 @@
 2009-04-25  Alex Hamelin  <hamelin@lrde.epita.fr>
 
 	End of vector method, proved to be useless.
-	* Makefile: g++ path changed.
-	* cuttor.hh,
-	* cuttor.hxx: Debug ended and finished.
-	* vect_it.hh
-	* vect_it.hxx: Adding primitives, changing loading behavior.
-	* vect_it_OLD.hxx: New.
-	* vector.hh,
-	* vector.hxx: Modify the way some values are computed.
+	* inim/2010/blur/Makefile: g++ path changed.
+	* inim/2010/blur/cuttor.hh,
+	* inim/2010/blur/cuttor.hxx: Debug ended and finished.
+	* inim/2010/blur/vect_it.hh
+	* inim/2010/blur/vect_it.hxx: Adding primitives, changing loading
+	behavior.
+	* inim/2010/blur/vect_it_OLD.hxx: New.
+	* inim/2010/blur/vector.hh,
+	* inim/2010/blur/vector.hxx: Modify the way some values are computed.
 
 2009-04-25  Alex Hamelin  <hamelin@lrde.epita.fr>
 
 	First version of vector cutting.
-	* cuttor.hh,
-	* cuttor.hxx: First version without debug.
-	* vect_it.hh,
-	* vect_it.hxx,
-	* vector.hh,
-	* vector.hxx: Fixes needed by the algorithm.
+	* inim/2010/blur/cuttor.hh,
+	* inim/2010/blur/cuttor.hxx: First version without debug.
+	* inim/2010/blur/vect_it.hh,
+	* inim/2010/blur/vect_it.hxx,
+	* inim/2010/blur/vector.hh,
+	* inim/2010/blur/vector.hxx: Fixes needed by the algorithm.
 
 2009-04-24  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Change data type, conversion to mln dump not yet effective.
 	* fabien/igr/mat2mln/raw2mlndata.cc: Change data type
-	  (double -> int).
+	(double -> int).
 
 2009-04-24  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add binary tools for parsing of .mat files.
 	* fabien/igr/mat2mln/mat2raw.cc: Uncompress .mat data.
 	* fabien/igr/mat2mln/raw2mlndata.cc: Convert uncompressed .mat data
-	  to Milena dump format.
+	to Milena dump format.
 	* fabien/igr/seg_fixed.cc: Creation of edges between pixels.
 
 2009-04-24  Alex Hamelin  <hamelin@lrde.epita.fr>
 
 	Add possibilities to Vector class.
-	* Makefile: Add dependancies.
-	* cuttor.hh,
-	* cuttor.hxx: Reordering and addind a function for vector search method.
-	* vect_it.hh: Fix typo.
-	* vect_it.hxx: Add comments.
-	* vector.hh,
-	* vector.hxx: Add norm, scalar and angle methods.
+	* inim/2010/blur/Makefile: Add dependancies.
+	* inim/2010/blur/cuttor.hh,
+	* inim/2010/blur/cuttor.hxx: Reordering and addind a function for
+	vector search method.
+	* inim/2010/blur/vect_it.hh: Fix typo.
+	* inim/2010/blur/vect_it.hxx: Add comments.
+	* inim/2010/blur/vector.hh,
+	* inim/2010/blur/vector.hxx: Add norm, scalar and angle methods.
 
 2009-04-23  Alex Hamelin  <hamelin@lrde.epita.fr>
 
 	Added meta code for vector search.
-	* Makefile: Small fixes.
-	* advance_iterator.cc: Remove.
-	* advance_iterator.hh: Small fixes.
-	* advance_iterator.hxx: New.
-	* cuttor.hh: Small fixes.
-	* cuttor.hxx: Small fixes.
-	* vect_it.hh: New.
-	* vect_it.hxx: New.
-	* vector.hh: New.
-	* vector.hxx: New.
+	* inim/2010/blur/Makefile: Small fixes.
+	* inim/2010/blur/advance_iterator.cc: Remove.
+	* inim/2010/blur/advance_iterator.hh: Small fixes.
+	* inim/2010/blur/advance_iterator.hxx: New.
+	* inim/2010/blur/cuttor.hh: Small fixes.
+	* inim/2010/blur/cuttor.hxx: Small fixes.
+	* inim/2010/blur/vect_it.hh: New.
+	* inim/2010/blur/vect_it.hxx: New.
+	* inim/2010/blur/vector.hh: New.
+	* inim/2010/blur/vector.hxx: New.
 
 2009-04-22  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
@@ -462,16 +465,16 @@
 2009-04-21  Warren Seine  <soow@lrde.epita.fr>
 
 	inim: Implement line detection with boxes.
-        Does not actually output the image.
-	* boxes.cc: Add debug code and ugly implementation.
+	Does not actually output the image.
+	* inim/2010/boxes/boxes.cc: Add debug code and ugly implementation.
 
 2009-04-21  Alex Hamelin  <hamelin@lrde.epita.fr>
 
 	Finder for entry point in an watersheded image.
-	* Makefile: Compile directly from the directory.
-	* cuttor.hh: Add needed include for point2d.
-	* cuttor.hxx: Add function to retrieve an entry for
-          main algorithm.
+	* inim/2010/blur/Makefile: Compile directly from the directory.
+	* inim/2010/blur/cuttor.hh: Add needed include for point2d.
+	* inim/2010/blur/cuttor.hxx: Add function to retrieve an entry for
+	main algorithm.
 
 2009-04-21  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
@@ -500,13 +503,12 @@
 2009-04-21  Alex Hamelin  <hamelin@lrde.epita.fr>
 
 	Start of Blur method for INIM.
-	* .: New.
-	* AUTHORS: New.
-	* Makefile: New.
-	* README: New.
-	* cuttor.hh: New.
-	* cuttor.hxx: New.
-	* main.cc: New.
+	* inim/2010/blur/AUTHORS: New.
+	* inim/2010/blur/Makefile: New.
+	* inim/2010/blur/README: New.
+	* inim/2010/blur/cuttor.hh: New.
+	* inim/2010/blur/cuttor.hxx: New.
+	* inim/2010/blur/main.cc: New.
 
 2009-04-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -522,14 +524,14 @@
 2009-04-20  Vincent Ordy  <ordy@lrde.epita.fr>
 
 	Fix configure.
-	* configure:
+	* inim/2010/boxes/configure:
 	Add rules to Makefile.rules without erasing the old file.
 
 2009-04-20  Warren Seine  <soow@lrde.epita.fr>
 
 	inim: Fix configure.
-	* boxes/Makefile: Fix bad include.
-	* boxes/configure: Add test.
+	* inim/2010/boxes/Makefile: Fix bad include.
+	* inim/2010/boxes/configure: Add test.
 
 2009-04-19  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
@@ -547,9 +549,9 @@
 
 	* edwin/rush/exo2: New.
 	* edwin/rush/exo2/color_internal_gradient.hh: Routine that
-	  computes internal gradient from color image.
+	computes internal gradient from color image.
 	* edwin/rush/exo2/color_labeling_mean.hh: Routine that
-	  replaces a basin label by its mean color.
+	replaces a basin label by its mean color.
 	* edwin/rush/exo2/wst_from_closing.cc: Process line.
 
 2009-04-19  Edwin Carlinet  <carlinet@lrde.epita.fr>
@@ -695,7 +697,6 @@
 2009-04-15  Warren Seine  <soow@lrde.epita.fr>
 
 	inim: Initial commit for "boxes".
-	* .: New.
 	* Makefile: New. Stolen from Edwin.
 	* boxes.cc: New. Stolen from Theo.
 	* configure: New. Stolen from Edwin.
@@ -703,8 +704,8 @@
 2009-04-15  Warren Seine  <soow@lrde.epita.fr>
 
 	inim: Add "2010" directory.
-        Please add your INIM projects in subdirectories of 2010.
-	* inim/2010: New.
+	Please add your INIM projects in subdirectories of 2010.
+	* inim/2010/: New.
 
 2009-04-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -722,11 +723,11 @@
 
 	Compute histograms on 3d and generic images. Still not fully working.
 	* folio/mln/histo/compute_histo.hh: New algorithm that
-          computes an histogram on a generic image
+	computes an histogram on a generic image
 	* folio/mln/histo/compute_histo_3d.hh: New algorithm that
-          computes an histogram on a 3d image.
+	computes an histogram on a 3d image.
 	* folio/test/histo/compute_histo_3d.cc: New test file for the
-          compute_histo_3d.hh algorithm.
+	compute_histo_3d.hh algorithm.
 
 2009-04-14  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
@@ -933,7 +934,7 @@
 2009-04-05  Frederic Bour  <bour@lrde.epita.fr>
 
 	Update to our line recognition using component trees..
-	*  edwin/tree/test.cc: Now use weighted distance front.
+	* edwin/tree/test.cc: Now use weighted distance front.
 
 2009-04-03  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
@@ -1188,57 +1189,57 @@
 
 	Update Scribo's code.
 
-	* scribo/Makefile: add new targets.
+	* scribo/Makefile: Add new targets.
 
 	* scribo/debug/save_linked_textbboxes_image.hh,
 	* scribo/debug/save_table_image.hh,
-	* scribo/debug/save_textbboxes_image.hh: improve outputs.
+	* scribo/debug/save_textbboxes_image.hh: Improve outputs.
 
-	* scribo/draw/bounding_box_links.hh: draw mass centers.
+	* scribo/draw/bounding_box_links.hh: Draw mass centers.
 
-	* scribo/filter/small_components.hh: add an assertion.
+	* scribo/filter/small_components.hh: Add an assertion.
 
 	* scribo/src/extract_text_double_link.cc,
 	* scribo/src/extract_text_double_several_links.cc,
 	* scribo/src/extract_text_multiple_links.cc,
-	* scribo/src/extract_text_single_link.cc: cleanup small components.
+	* scribo/src/extract_text_single_link.cc: Cleanup small components.
 
 	* scribo/src/extract_text_several_left_links.cc,
 	* scribo/src/extract_text_several_multiple_links,
 	* scribo/src/rectangularity.cc,
 	* scribo/src/table_erase.cc,
 	* scribo/src/table_rebuild_opening.cc,
-	* scribo/src/table_rebuild_rank.cc: new sample code.
+	* scribo/src/table_rebuild_rank.cc: New sample code.
 
 	* scribo/table/align_lines_horizontaly.hh,
-	* scribo/table/align_lines_verticaly.hh: fix compilation issues.
+	* scribo/table/align_lines_verticaly.hh: Fix compilation issues.
 
-	* scribo/table/erase.hh: fix traces.
+	* scribo/table/erase.hh: Fix traces.
 
 	* scribo/table/extract.hh,
 	* scribo/table/extract_lines_with_opening.hh,
-	* scribo/table/extract_lines_with_rank.hh: update prototypes.
+	* scribo/table/extract_lines_with_rank.hh: Update prototypes.
 
-	* scribo/table/rebuild.hh: use for_all_elements instead of
+	* scribo/table/rebuild.hh: Use for_all_elements instead of
 	for_all_components.
 
-	* scribo/text/grouping/group_from_double_link.hh: fix wrong
+	* scribo/text/grouping/group_from_double_link.hh: Fix wrong
 	link validation.
 
 	* scribo/text/grouping/group_with_multiple_links.hh,
 	* scribo/text/grouping/group_with_single_left_link.hh,
-	* scribo/text/grouping/group_with_single_right_link.hh: refactor code...
+	* scribo/text/grouping/group_with_single_right_link.hh: Refactor code...
 
 	* scribo/text/grouping/internal/find_left_graph_link.hh,
 	* scribo/text/grouping/internal/find_left_link.hh,
-	* scribo/text/grouping/internal/find_right_link.hh: ... here.
+	* scribo/text/grouping/internal/find_right_link.hh: ...here.
 
-	* scribo/text/grouping/internal/update_link_array.hh: fix wrong
+	* scribo/text/grouping/internal/update_link_array.hh: Fix wrong
 	conditions.
 
 	* scribo/text/grouping/group_with_several_left_links.hh,
 	* scribo/text/grouping/group_with_several_multiple_links.hh,
-	* scribo/text/grouping/group_with_several_right_links.hh: new variants
+	* scribo/text/grouping/group_with_several_right_links.hh: New variants
 	using three anchors instead of one to find the left/right neighbors.
 
 2009-03-24  Frederic Bour  <bour@lrde.epita.fr>
@@ -1342,49 +1343,49 @@
 	* scribo/src/morpho.cc,
 	* scribo/src/table_extract.cc,
 	* scribo/src/table_rebuild.cc,
-	* scribo/src/thin_bboxes.cc: new sample code.
+	* scribo/src/thin_bboxes.cc: New sample code.
 
-	* scribo/src/table.cc: fix include.
+	* scribo/src/table.cc: Fix include.
 
 	* scribo/table/internal/align_lines.hh,
 	* scribo/table/align_lines_horizontaly.hh,
 	* scribo/table/align_lines_verticaly.hh,
 	* scribo/table/connect_horizontal_lines.hh,
-	* scribo/table/connect_vertical_lines.hh: add more parameters.
+	* scribo/table/connect_vertical_lines.hh: Add more parameters.
 
-	* scribo/table/extract.hh: new routine to extract document tables.
+	* scribo/table/extract.hh: New routine to extract document tables.
 
-	* scribo/table/extract_lines_with_opening.hh: new routine to extract
+	* scribo/table/extract_lines_with_opening.hh: New routine to extract
 	document tables.
 
-	* scribo/table/extract_lines_with_rank.hh: fix missing bbox.enlarge.
+	* scribo/table/extract_lines_with_rank.hh: Fix missing bbox.enlarge.
 
-	* scribo/table/internal/connect_lines.hh: make it compile.
+	* scribo/table/internal/connect_lines.hh: Make it compile.
 
-	* scribo/table/internal/repair_lines.hh: make it work.
+	* scribo/table/internal/repair_lines.hh: Make it work.
 
-	* scribo/table/rebuild.hh: new routine to rebuild document tables.
+	* scribo/table/rebuild.hh: New routine to rebuild document tables.
 
 	* scribo/core/erase_bboxes.hh,
-	* scribo/table/repair_horizontal_lines.hh: revamp.
+	* scribo/table/repair_horizontal_lines.hh: Revamp.
 
 	* scribo/tests/filter/small_and_large_bboxes.cc,
 	* scribo/tests/table/extract_lines_with_rank.cc,
-	* scribo/tests/table/repair_lines.cc: new tests.
+	* scribo/tests/table/repair_lines.cc: New tests.
 
-	* scribo/text/extract_lines.hh: new routine to extract text
+	* scribo/text/extract_lines.hh: New routine to extract text
 	automatically.
 
 	* scribo/text/grouping/internal/update_link_array.hh,
-	* scribo/text/grouping/internal/update_link_graph.hh: fix conditions.
+	* scribo/text/grouping/internal/update_link_graph.hh: Fix conditions.
 
-	* scribo/util/text.hh: new object to represent text components.
+	* scribo/util/text.hh: New object to represent text components.
 
 2009-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a buggy sample case.
 
-	* bugs/concept_and_assignment.cc: sample code of what should not
+	* bugs/concept_and_assignment.cc: Sample code of what should not
 	be done while assigning an image to another.
 
 2009-03-19  Fabien Freling  <fabien.freling@lrde.epita.fr>
@@ -1419,15 +1420,15 @@
 2009-03-13  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Classification of 2D images with their respective RGB histograms.
-	* sandbox/folio/mln/histo/classify_with_histo_rgb.hh: New
+	* folio/mln/histo/classify_with_histo_rgb.hh: New
 	algorithm that classifies an image 2d with its rgb histogram.
-	* sandbox/folio/mln/histo/compute_histo_rgb.hh: Use component of
+	* folio/mln/histo/compute_histo_rgb.hh: Use component of
 	value's trait.
-	* sandbox/folio/test/histo/classify_with_histo_rgb.cc: New test
+	* folio/test/histo/classify_with_histo_rgb.cc: New test
 	for the classification of 2d images with their respective RGB
 	histograms.
-	* sandbox/folio/test/histo/compute_histo_rgb.cc: Correct an include.
-	* sandbox/folio/test/histo/compute_histo_rgb_from_ppm.cc: New test
+	* folio/test/histo/compute_histo_rgb.cc: Correct an include.
+	* folio/test/histo/compute_histo_rgb_from_ppm.cc: New test
 	for building an histogram with a ppm image.
 
 2009-03-13  Fabien Freling  <fabien.freling@lrde.epita.fr>
@@ -1535,6 +1536,32 @@
 	HistoRGB out image size correction.
 	* folio/histo/compute_histo_rgb.hh: Computes now the right
 	dimensions of the histogram.
+
+2009-03-13  Frederic Bour  <bour@lrde.epita.fr>
+
+	fun update: add unary & binary composition.
+
+	* fred/fun/cos.hh,
+	* fred/fun/abs.hh:
+	WIP, switching from solve to nsolve.
+	* fred/fun/assignability.hh: New.
+	Traits to check function properties using sfinae (should be renamed).
+	* fred/fun/binary.hh: New. Binary function
+	* fred/fun/compose.hh: New. Compose function.
+	* fred/fun/composition.hh: New.
+	Composition result objects definition.
+	* fred/fun/cos.cc: New. Test for composition.
+	* fred/fun/fun.cc: WIP.
+	* fred/fun/meta_function.hh:
+	Added Meta_Function_v2v and Meta_Function_vv2v categories.
+	* fred/fun/nsolve.hh,
+	* fred/fun/nsolve_binary.hh,
+	* fred/fun/nsolve_unary.hh: New.
+	Original trait solver modification now based
+	on typename flag instead of template <class> class
+	* fred/fun/thru_morpher.hh: WIP.
+	* fred/fun/unary.hh: Update & redesign,
+	especially for composition.
 
 2009-03-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
@@ -1664,6 +1691,12 @@
 	* fabien/igr/watershed2d.cc: Implement 2D watershed.
 	* fabien/igr/watershed3d.cc: Implement 3D watershed.
 
+2009-03-09  Frederic Bour  <bour@lrde.epita.fr>
+
+	Add missing trait for thru_morpher.
+	* fred/fun/unary.hh: Add is_assignable trait, just
+	a workaround.
+
 2009-03-09  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix dicom_mask binary.
@@ -1741,14 +1774,14 @@
 	* fabien/bin/Makefile: Makefile to compile dicom binaries.
 	* fabien/bin/dicom2dump.cc: Binary to convert dicom to dump.
 	* fabien/bin/dicom_mask.cc: Binary to extract simple mask
-	  from dicom images.
+	from dicom images.
 	* fabien/igr/Makefile: Update.
 	* fabien/igr/launch2d.sh: Update.
 	* fabien/igr/launch3d.sh: Update.
 	* fabien/igr/seg2d.cc: Update.
 	* fabien/igr/seg3d.cc: Update.
 	* fabien/igr/seg_vol_irm.hh: Implement different threshold
-	  techniques: double and deviation.
+	techniques: double and deviation.
 
 2009-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -1994,14 +2027,14 @@
 	Update DICOM support to n dimensions.
 	* fabien/gdcm/gdcm.cc: Update.
 	* fabien/gdcm/load.hh: Update load support for
-	  multidimensional DICOM.
+	multidimensional DICOM.
 
 2009-02-20  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Update DICOM loader.
 	* fabien/gdcm/Makefile: Update.
 	* fabien/gdcm/dump2pgm.cc: New tool to convert dump volume
-	  to a pgm flat image.
+	to a pgm flat image.
 	* fabien/gdcm/gdcm.cc: Update.
 	* fabien/gdcm/load.hh: Update.
 
@@ -2097,7 +2130,7 @@
 
 	Call the n_max() function..
 	* fabien/igr/igr.cc: Call the n_max() function
-	  instead of doing the computation.
+	instead of doing the computation.
 
 2009-02-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -2116,7 +2149,7 @@
 
 	Call the fill_holes() function.
 	* fabien/igr/igr.cc: Call the fill_holes() function
-	  instead of doing the computation.
+	instead of doing the computation.
 
 2009-02-12  Frederic Bour  <bour@lrde.epita.fr>
 
@@ -2147,6 +2180,14 @@
 	* lazzara/irm/wst_rag_hsl.cc: new. Similar code to wst_rag.cc but
 	the graph values are computed thanks to the HSL image.
 
+2009-02-12  Frederic Bour  <bour@lrde.epita.fr>
+
+	Add connected filters dispatcher (not tested)..
+	* fred/Makefile: .
+	* fred/connected_filter.hh: New.
+	* fred/leveling_filter.hh: .
+	* fred/mean.hh: .
+
 2009-02-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Cleanup pseudo-tree computation.
@@ -2160,6 +2201,13 @@
 
 	Fix IGR test file for segmentation (2D & 3D).
 	* fabien/igr/igr.cc: Fix segmentation bugs.
+
+2009-02-11  Frederic Bour  <bour@lrde.epita.fr>
+
+	Wip of mean attribute set_value.
+	* fred/Makefile: .
+	* fred/mean.hh: set_value WIP.
+	* fred/meantest.cc: New.
 
 2009-02-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -2206,12 +2254,12 @@
 2009-02-10  Frederic Bour  <bour@lrde.epita.fr>
 
 	Working algebraic, wip leveling.
-	* milena/sandbox/fred/Makefile: .
-	* milena/sandbox/fred/accu_trait.hh: New.
-	* milena/sandbox/fred/algebraic.cc: .
-	* milena/sandbox/fred/closing_area.cc: New.
-	* milena/sandbox/fred/leveling.cc: New.
-	* milena/sandbox/fred/mean.hh: New.
+	* fred/Makefile: .
+	* fred/accu_trait.hh: New.
+	* fred/algebraic.cc: .
+	* fred/closing_area.cc: New.
+	* fred/leveling.cc: New.
+	* fred/mean.hh: New.
 
 2009-02-09  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
@@ -2235,8 +2283,8 @@
 2009-02-09  Frederic Bour  <bour@epita.lrde.epita.fr>
 
 	Added Makefile to sandbox/edwin for algebraic/lvl.
-	* milena/sandbox/edwin/Makefile: New.
-	* milena/sandbox/edwin/leveling.hh: .
+	* edwin/Makefile: New.
+	* edwin/leveling.hh: .
 
 2009-02-09  Frederic Bour  <bour@epita.lrde.epita.fr>
 
@@ -2405,7 +2453,7 @@
 
 	* theo/esiee/laurent/ismm09/main.cc: Copy to...
 	* theo/esiee/laurent/ismm09/topo_wst.cc: ...this new file.
-	  Update.
+	Update.
 	* theo/esiee/laurent/ismm09/main.cc (T, E): Remove useless
 	typedefs.
 
@@ -2752,7 +2800,7 @@
 	Work on reconstruction.
 
 	* garrigues/union_find/canvas/reconstruction_on_function.hh: Remove
-	  useless escape value.
+	useless escape value.
 	* garrigues/union_find/canvas/reconstruction_on_set.hh: Optimizations.
 	* garrigues/union_find/canvas/self_dual_reconstruction.hh: .
 	* garrigues/union_find/images/marker_to_dilate.pbm: Fix it.
@@ -2822,7 +2870,7 @@
 	* abraham/tests/fun/meta/red.cc: Updated.
 	* abraham/mln/morpho/vector_median.hh: Add 2009 year.
 	* abraham/mln/morpho/topo_wst.hh: Extract watershed method
-	    from the big structure.
+	from the big structure.
 
 2009-01-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -3279,7 +3327,7 @@
 
 	* abraham/mln/morpho/autarkical_leveling.hh: Update.
 	* abraham/mln/morpho/vmt.hh: New
-	    For test purpose.
+	For test purpose.
 	* abraham/mln/morpho/vector_median.hh: Update.
 	* abraham/mln/core/concept/meta_fun.hh: Move to trunk.
 	* abraham/mln/math/cos.hh: Move to trunk.
@@ -3312,11 +3360,11 @@
 	Add Autarkical Leveling, move files ot trunk.
 
 	* abraham/tests/morpho/levelings.cc: New
-	    Test for autorkical leveling.
+	Test for autorkical leveling.
 	* abraham/tests/morpho/red_erosion.cc: New
-	    Make red erosion with fun_image (not working yet).
+	Make red erosion with fun_image (not working yet).
 	* abraham/tests/morpho/red_erosion3.cc: New
-	    Make red erosion with mixin.
+	Make red erosion with mixin.
 	* abraham/tests/fun/meta/red.cc: Update.
 	* abraham/tests/core/image/fun_image_const.cc: New.
 	* abraham/tests/core/image/fun_image_norm.cc: New.
@@ -3324,12 +3372,12 @@
 	* abraham/tests/core/image/fun_image_v2w2v.cc: New.
 	* abraham/tests/value/mixin.cc: Update.
 	* abraham/mln/morpho/autarkical_leveling.hh: New
-	    Autarkical leveling (see Golima).
+	Autarkical leveling (see Golima).
 	* abraham/mln/morpho/topo_wst.hh: Update.
 	* abraham/mln/morpho/vector_median.hh: New
-	    Morphological operator needed for autarkical leveliing.
+	Morphological operator needed for autarkical leveliing.
 	* abraham/mln/core/image/thru.hh: Move to trunk under the
-	    name fun_image.hh.
+	name fun_image.hh.
 	* abraham/mln/core/image/violent_cast_image.hh: Move to trunk.
 	* abraham/mln/core/concept/function.hh: Move to trunk.
 	* abraham/mln/fun/v2w2v: Move to trunk.
@@ -3493,10 +3541,10 @@
 
 	[Scribo] Make use of depth first search canvas.
 
-	* sandbox/scribo/demat.hh: use depth first search canvas.
+	* scribo/demat.hh: use depth first search canvas.
 
-	* sandbox/scribo/photo.cc,
-	* sandbox/scribo/table.cc: Use a dedicated routine.
+	* scribo/photo.cc,
+	* scribo/table.cc: Use a dedicated routine.
 
 2008-12-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
@@ -3690,9 +3738,9 @@
 	[Scribo] Cleanup and improve removal of unwanted components.
 
 	* scribo/demat.hh:
-	  - cleanup and refactor.
-	  - Remove too large/small components.
-	  - use a graph to store the text bboxes relationship.
+	Cleanup and refactor.
+	Remove too large/small components.
+	Use a graph to store the text bboxes relationship.
 
 2008-11-24  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
@@ -3852,11 +3900,11 @@
 	Make topological watershed work.
 
 	* abraham/tests/core/image/thru_v2w2v.cc:
-	    make::image2d -> make::image.
+	make::image2d -> make::image.
 	* abraham/mln/morpho/topo_wst.hh:
-	    fix reversion of tree .
+	fix reversion of tree .
 	* abraham/mln/value/shell.hh:
-	    add traits.
+	add traits.
 
 2008-11-11  Alexandre Abraham  <abraham@lrde.epita.fr>
 
@@ -3951,19 +3999,19 @@
 	Update some files and add test suite for nature.
 
 	* abraham/tests/core/image/thru_v2v.cc,
-	  abraham/tests/core/image/thru_const.cc:
-	    make::image2d to make::image .
+	* abraham/tests/core/image/thru_const.cc:
+	make::image2d to make::image .
 	* abraham/mln/level/transform.hh: Remove.
 	* abraham/mln/core/image/shell.hh: Remove.
 	* abraham/mln/fun/meta/to_enc.hh: New
-	    Make this functor meta.
+	Make this functor meta.
 	* abraham/mln/fun/v2v/rgb_to_hsi.hh:
-	    Corrected version of rgb to hsi conversion.
+	Corrected version of rgb to hsi conversion.
 	* abraham/mln/binarization/binarization.hh: Remove.
 	* abraham/mln/transform: New.
 	* abraham/mln/transform/fft.hh: New.
 	* abraham/mln/value/shell.hh:
-	    Support Function_v2v.
+	Support Function_v2v.
 	* nature/histo_hsi.cc: .
 	* nature/hom.cc: .
 	* nature/mco.cc: .
@@ -3991,7 +4039,7 @@
 	* garrigues/ocr/ocr_with_preprocess.cc: Cleanup.
 
 	* garrigues/ocr/skeleton.hh,
-	  garrigues/ocr/tesseract_wrap.hh: Fix typos.
+	garrigues/ocr/tesseract_wrap.hh: Fix typos.
 
 2008-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -4015,10 +4063,12 @@
 2008-11-03  Antoine Leblanc  <leblanc@lrde.epita.fr>
 
 	INIM binarization proof-of-concept update
-	* inim/binarization/proof-of-concept/configure.in: -I directive updated.
-	* inim/binarization/proof-of-concept/src/gradient.cc: binarization added.
-	* inim/binarization/proof-of-concept/src/util.hxx: colors inverted in
-	  order to respect object/background usual values.
+	* inim/binarization/proof-of-concept/configure.in: -I directive
+	updated.
+	* inim/binarization/proof-of-concept/src/gradient.cc: binarization
+	added.
+	* inim/binarization/proof-of-concept/src/util.hxx: colors inverted
+	in order to respect object/background usual values.
 
 2008-11-03  Nicolas Ballas  <ballas@lrde.epita.fr>
 
@@ -4095,13 +4145,13 @@
 
 	Cleanup OCR preprocessing.
 	* garrigues/ocr/ocr_with_preprocess.cc,
-	  garrigues/ocr/ocr_without_preprocess.cc: Cleanup the call to
-	  tesseract.
+	* garrigues/ocr/ocr_without_preprocess.cc: Cleanup the call to
+	tesseract.
 
 	* garrigues/ocr/tesseract_wrap.hh: New.
-	  Provide a Tesseract wrapper which is also able to compute an
-	  approximate confidence value of the recognition based on tesseract
-	  internal data.
+	Provide a Tesseract wrapper which is also able to compute an
+	approximate confidence value of the recognition based on tesseract
+	internal data.
 
 2008-11-01  Maxime van Noppen  <yabo@lrde.epita.fr>
 
@@ -4175,8 +4225,8 @@
 
 	Add snake_2d.
 	* inim/binarization/snake_2d.hh: New, The snake_2d function takes an
-	  accumulator, an image and a window and return the ouput image of
-	  the accumulator applies on the input image.
+	accumulator, an image and a window and return the ouput image of
+	the accumulator applies on the input image.
 	* inim/binarization: New.
 	* inim: New.
 
@@ -4192,9 +4242,9 @@
 	Add co-occurence matrix computing.
 
 	* nature/co_occurence.hh: New
-	    (mln::co_occurence) : compute co-occurence matrix.
+	(mln::co_occurence) : compute co-occurence matrix.
 	* nature/mco.cc: New
-	    Dummy test.
+	Dummy test.
 
 2008-10-30  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
 
@@ -4222,7 +4272,7 @@
 	Make shell a value.
 
 	* abraham/mln/value/shell.hh: New
-	    mln::value::shell is now a value.
+	mln::value::shell is now a value.
 	* abraham/mln/core/image/thru.hh: change namespace of shell.
 
 2008-10-30  Guillaume Lazzara  <z@lrde.epita.fr>
@@ -4285,43 +4335,43 @@
 
 	* abraham/mln/trait: New.
 	* abraham/mln/trait/images.hh: New
-	    (mln::trait::default_image_morpher) : Adjust quant according
-	      to new value quant..
+	(mln::trait::default_image_morpher) : Adjust quant according
+	to new value quant..
 	* abraham/mln/morpho/hit_or_miss.hh: New
-	    (mln::morpho::hit_or_miss) : First implementation of hit or
-	      miss algorithm.
+	(mln::morpho::hit_or_miss) : First implementation of hit or
+	miss algorithm.
 	* abraham/mln/level/transform.hh: New
-	    (mln::level::transform) : Add procedure.
+	(mln::level::transform) : Add procedure.
 	* abraham/mln/core/image/thru.hh:
-	    Temporary trait modification.
+	Temporary trait modification.
 	* abraham/mln/core/image/shell.hh:
-	    Add include of function.hh.
+	Add include of function.hh.
 	* abraham/mln/fun/meta/hue.hh: New
-	    Allow direct access to hue.
+	Allow direct access to hue.
 	* abraham/mln/fun/meta/inty.hh: New
-	    Allow direct access to intensity..
+	Allow direct access to intensity..
 	* abraham/mln/fun/meta/sat.hh: New
-	    Allow direct access to saturation..
+	Allow direct access to saturation..
 	* abraham/mln/fun/v2v: New.
 	* abraham/mln/fun/v2v/rgb_to_hsi.hh: New
-	    Fix wrong conversion formula.
+	Fix wrong conversion formula.
 	* abraham/mln/binarization: New.
 	* abraham/mln/binarization/binarization.hh: New
-	    Fix call to level::transform procedure (output must be empty).
+	Fix call to level::transform procedure (output must be empty).
 	* abraham/mln/value: New.
 	* abraham/mln/value/builtin: New.
 	* abraham/mln/value/builtin/symbolics.hh: New
-	    Add min and max for bool traits.
+	Add min and max for bool traits.
 	* nature/erosion.cc: New
-	    Test of erosion filter.
+	Test of erosion filter.
 	* nature/gradient.cc: New
-	    Test of gradient filter.
+	Test of gradient filter.
 	* nature/histo_hsi.cc: New
-	    Decompose image in hsi format.
+	Decompose image in hsi format.
 	* nature/hom.cc: New
-	    First hit or miss test.
+	First hit or miss test.
 	* nature/opening.cc: New
-	    Test of opening filter.
+	Test of opening filter.
 	* nature/Makefile: New.
 
 2008-10-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
@@ -4334,7 +4384,7 @@
 
 	Update OCR preprocessing.
 	* garrigues/ocr/ocr_with_preprocess.cc: Apply gaussian blur and
-	  naive thresholding.
+	naive thresholding.
 
 2008-10-28  Maxime van Noppen  <yabo@lrde.epita.fr>
 
@@ -4391,9 +4441,9 @@
 	Use more routines provided by Olena.
 
 	* scribo/demat.hh: Use more routines provided by Olena:
-	  - not_inplace
-	  - level::convert
-	  - box::center()
+	- not_inplace
+	- level::convert
+	- box::center()
 
 	* scribo/main.cc: Update usage.
 
@@ -4402,7 +4452,7 @@
 	Update classification.
 
 	* classif/iccvg04.cc: Swap filtering and reverting so that
-	  lambda is more intuitive.
+	lambda is more intuitive.
 
 2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
@@ -4419,8 +4469,8 @@
 	* abraham/mln/core/image/thru.hh: .
 	* abraham/mln/core/image/shell.hh: Fix result value.
 	* abraham/mln/core/concept/meta_fun.hh:
-	    (mln::meta::impl) : now templated by return type
-				(necessary to typedef result).
+	(mln::meta::impl) : now templated by return type (necessary to
+	typedef result).
 	* abraham/mln/fun/meta/red.hh: .
 
 2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
@@ -4473,44 +4523,44 @@
 	Add bijective functors, 2-way functors and meta-fun.
 
 	* abraham/tests/morpho/test_component_tree.cc: Remove
-	    This test was outdated.
+	This test was outdated.
 	* abraham/tests/morpho/test_watershed.cc:
-	    Clean.
+	Clean.
 	* abraham/tests/morpho/test_watershed_topo.cc:
-	    Clean.
+	Clean.
 	* abraham/tests/fun/meta: New.
 	* abraham/tests/fun/meta/red.cc: New
-	    (mln::meta::red) : meta function to access red in rgb.
+	(mln::meta::red) : meta function to access red in rgb.
 	* abraham/tests/core/image/thru_norm.cc: New
-	    test for norm functor.
+	test for norm functor.
 	* abraham/tests/core/image/thru_v2v.cc: New
-	    test for abs functor.
+	test for abs functor.
 	* abraham/tests/core/image/thru.cc: Remove.
 	* abraham/tests/core/image/thru_const.cc: New
-	    test of writing in a const image.
+	test of writing in a const image.
 	* abraham/tests/core/image/thru_v2w2v.cc: New
-	    test for cosinus functor.
+	test for cosinus functor.
 	* abraham/tests/core/concept: New.
 	* abraham/tests/core/concept/test.cc: New.
 	* abraham/mln/morpho/najman_wst.hh: New
-	    M-W watershed.
+	M-W watershed.
 	* abraham/mln/morpho/basic_najman.hh:
-	    Obsolete, will eventually be removed.
+	Obsolete, will eventually be removed.
 	* abraham/mln/morpho/topo_wst.hh: New
-	    1 pass topological watershed.
+	1 pass topological watershed.
 	* abraham/mln/core/image/thru.hh:
-	    (mln::thru): see an image throught a function.
+	(mln::thru): see an image throught a function.
 	* abraham/mln/core/image/shell.hh: New
-	    (mln::shell): value shell.
+	(mln::shell): value shell.
 	* abraham/mln/core/concept/function.hh:
-	    Add bijective and 2-way function.
+	Add bijective and 2-way function.
 	* abraham/mln/core/concept/meta_fun.hh: New
-	    Add concept for meta function.
+	Add concept for meta function.
 	* abraham/mln/fun/meta: New.
 	* abraham/mln/fun/meta/red.hh: New
-	    red fun object.
+	red fun object.
 	* abraham/mln/fun/v2w_w2v/norm.hh:
-	    2-way functor.
+	2-way functor.
 	* vigouroux/tests.cc: Rename image_if_value > image_if.
 	* vigouroux/color/rgb_to_cmy.hh: Rename image_if_value > image_if.
 	* vigouroux/color/rgb_to_xyz.hh: Rename image_if_value > image_if.
@@ -4527,18 +4577,18 @@
 
 	Fix the skeleton algorithm introduced by aroumougame.
 	* garrigues/ocr/skeleton.cc,
-	  garrigues/ocr/skeleton.hh: New.
-	  The code has been updated to work with the current version of
-	  milena. However, the code itself has to be cleaned and improved.
+	* garrigues/ocr/skeleton.hh: New.
+	The code has been updated to work with the current version of
+	milena. However, the code itself has to be cleaned and improved.
 
 2008-10-24  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
 
 	Update OCR using tesseract.
 	* garrigues/ocr/enlarge.hh: New.
-	  New enlargement algorithm better than the naive resize.
+	New enlargement algorithm better than the naive resize.
 
 	* garrigues/ocr/ocr.cc: Provide sample code to link milena against
-	  tesseract.
+	tesseract.
 
 2008-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -4603,8 +4653,8 @@
 	Fix bad deletion of small components.
 
 	* scribo/demat.hh:
-	  - Correctly relabel.
-	  - Correctly erase components.
+	Correctly relabel.
+	Correctly erase components.
 
 2008-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -4613,9 +4663,9 @@
 	* scribo/main.cc: Change usage message.
 
 	* scribo/demat.hh:
-	  - Cleanup.
-	  - Remove too small components using level::transform.
-	  - Support text bboxes extraction.
+	Cleanup.
+	Remove too small components using level::transform.
+	Support text bboxes extraction.
 
 2008-10-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
@@ -4646,14 +4696,14 @@
 
 	Get and display character bboxes.
 
-	* sandbox/scribo/demat.hh: update.
+	* scribo/demat.hh: update.
 	Does not create text bboxes yet.
 
 2008-10-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update the prototype of labeling::compute().
 
-	* sandbox/scribo/demat.hh: update according the new
+	* scribo/demat.hh: update according the new
 	prototype.
 
 2008-10-15  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
@@ -4704,33 +4754,33 @@
 
 	Add different types of function and tests.
 
-	+ abraham/tests/fun: New.
-	+ abraham/tests/fun/v2w2v: New
-	    Bijective function.
-	+ abraham/tests/fun/v2w2v/cos.cc: New
-	    Bijective functor cosinus.
-	+ abraham/tests/fun/v2w_w2v: New
-	    Two way function.
-	+ abraham/tests/fun/v2w_w2v/norm.cc: New
-	    Two way functor norm.
-	+ abraham/tests/core: New.
-	+ abraham/tests/core/image: New.
-	+ abraham/tests/core/image/violent_cast_image.cc: New
-	    Dummy test.
-	+ abraham/tests/core/image/thru.cc: New
-	    Dummy test.
-	+ abraham/mln/level: New.
-	+ abraham/mln/level/thru.hh: New.
-	+ abraham/mln/core/site_set: New.
-	+ abraham/mln/core/site_set/p_priority_queue.hh: New
-	    Useful for Watershed.
-	+ abraham/mln/core/image: New.
-	+ abraham/mln/core/image/violent_cast_image.hh: New
-	    Allow to cast an image violently.
+	* abraham/tests/fun: New.
+	* abraham/tests/fun/v2w2v: New
+	Bijective function.
+	* abraham/tests/fun/v2w2v/cos.cc: New
+	Bijective functor cosinus.
+	* abraham/tests/fun/v2w_w2v: New
+	Two way function.
+	* abraham/tests/fun/v2w_w2v/norm.cc: New
+	Two way functor norm.
+	* abraham/tests/core: New.
+	* abraham/tests/core/image: New.
+	* abraham/tests/core/image/violent_cast_image.cc: New
+	Dummy test.
+	* abraham/tests/core/image/thru.cc: New
+	Dummy test.
+	* abraham/mln/level: New.
+	* abraham/mln/level/thru.hh: New.
+	* abraham/mln/core/site_set: New.
+	* abraham/mln/core/site_set/p_priority_queue.hh: New
+	Useful for Watershed.
+	* abraham/mln/core/image: New.
+	* abraham/mln/core/image/violent_cast_image.hh: New
+	Allow to cast an image violently.
 	* abraham/mln/core/concept/function.hh:
-	    Add bijective and two ways function concepts.
+	Add bijective and two ways function concepts.
 	* abraham/mln/fun/v2w_w2v/norm.hh:
-	    Add invert functions.
+	Add invert functions.
 
 2008-10-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -4762,29 +4812,29 @@
 	* abraham/mln/fun: New.
 	* abraham/mln/fun/v2w2v: New.
 	* abraham/mln/fun/v2w2v/cos.hh: New
-	    Example of bijective function using cosinus.
+	Example of bijective function using cosinus.
 	* abraham/mln/fun/v2w_w2v: New.
 	* abraham/mln/fun/v2w_w2v/norm.hh: New
-	    Example of 2 way function using norm.
+	Example of 2 way function using norm.
 	* abraham/mln/core: New.
 	* abraham/mln/core/concept: New.
 	* abraham/mln/core/concept/function.hh: New
-	    Definition of bijective and 2 way function concepts
-	    (Function_v2w2v and Function_v2w_w2v).
+	Definition of bijective and 2 way function concepts
+	(Function_v2w2v and Function_v2w_w2v).
 	* abraham/mln/math: New.
 	* abraham/mln/math/cos.hh: New
-	    templated mln::math::cos function.
+	templated mln::math::cos function.
 	* abraham/mln/math/acos.hh: New
-	    templated mln::math::acos function.
+	templated mln::math::acos function.
 
 2008-10-06  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Huge cleanup, remove useless code and improve genericity.
 
 	* abraham/mln/morpho/basic_najman.hh:
-	  Remove useless code,
-	  Remove useless incrementations,
-	  Introduce sites.
+	Remove useless code,
+	Remove useless incrementations,
+	Introduce sites.
 
 2008-10-01  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
@@ -5744,7 +5794,7 @@
 	* jardonnet/test/icp.cc: clean up.
 	* jardonnet/test/Makefile: Update.
 	* jardonnet/registration/final_qk.hh: Put final_qk functions in a
-	  dedicated file.
+	dedicated file.
 	* jardonnet/registration/tools.hh: Add buffer and shuffle.
 	* jardonnet/registration/icp.hh: Minor fix.
 
@@ -5860,10 +5910,10 @@
 
 	Add values of literals.
 	* literal/brown.hh, literal/lime.hh,
-	  literal/magenta.hh, literal/orange.hh,
-	  literal/pink.hh, literal/purple.hh,
-	  literal/teal.hh, literal/violet.hh,
-	  literal/yellow.hh: Add values.
+	literal/magenta.hh, literal/orange.hh,
+	literal/pink.hh, literal/purple.hh,
+	literal/teal.hh, literal/violet.hh,
+	literal/yellow.hh: Add values.
 
 2008-05-07  Caroline Vigouroux  <vigour_c@epita.fr>
 
@@ -6226,7 +6276,7 @@
 	* jardonnet/test/Makefile: Add rules.
 	* jardonnet/TODO: Update.
 	* jardonnet/registration/interpolation.hh: give coef of the
-	  interpolated polynome.
+	interpolated polynome.
 	* jardonnet/registration/quat7.hh: Update interface */-+.
 	* jardonnet/registration/cloud.hh: Update center.
 	* jardonnet/registration/icp.hh: Add Optimization on qk.
@@ -6300,14 +6350,14 @@
 	Sandbox: ICP: Add multi-scale registration.
 
 	* jardonnet/test/icp.cc: Add nb_it as argument for a
-	  registration.
+	registration.
 
 	* jardonnet/test/Makefile: Remove icp_lazy test.
 
 	Add parameter for multi-scale icp:
 	* jardonnet/registration/tools.hh: Update.
 	* jardonnet/registration/quat7.hh: Use virtual length (c_length)
-	  for p_array.
+	for p_array.
 	* jardonnet/registration/cloud.hh: Use virtual length.
 	* jardonnet/registration/icp.hh: Use virtual length.
 
@@ -6338,19 +6388,19 @@
 	* jardonnet/test/icp.cc: Fix regression (output registred.pbm).
 
 	* jardonnet/registration/tools.hh:
-	 Add multiple 2d to 3d and 3d to 2d conversion .
+	Add multiple 2d to 3d and 3d to 2d conversion .
 
 	* jardonnet/registration/quat7.hh:
 	Rewrite Covariance matrix computation.
 
 	* jardonnet/registration/frankel_young.hh:
-	 New, resolve linear equation Ax = b. Useless for icp.
+	New, resolve linear equation Ax = b. Useless for icp.
 
 	* jardonnet/registration/power_it.hh:
 	Find greatest eigen value, should be more efficient than jacobi ?.
 
 	* jardonnet/registration/icp.hh:
-	 Add intermediate image outputs.
+	Add intermediate image outputs.
 
 2008-04-07  Etienne FOLIO  <folio@lrde.epita.fr>
 
@@ -6381,14 +6431,14 @@
 
 	* jardonnet/test/Makefile: Add rules for the lazy version.
 	* jardonnet/registration/icp_map.hh:
-	  New dedicated version to map.
+	New dedicated version to map.
 
 	* jardonnet/registration/icp_lazy.hh:
-	  Rename lazy_map as lazy_image. Improve implementation.
+	Rename lazy_map as lazy_image. Improve implementation.
 
 	* jardonnet/registration/icp.hh (icp_): Refactoring.
 	* jardonnet/registration/projection.hh (memo):
-	   Make a projection using the new lazy_image interface.
+	Make a projection using the new lazy_image interface.
 
 	* jardonnet/registration/tools.hh (c_point): Add functor.
 
@@ -6636,7 +6686,7 @@
 	* pellegrin/set/core/p_runs.hh,
 	* pellegrin/set/core/p_set.hh,
 	* pellegrin/set/core/pset_if.hh: Modify an #include and add a
-	  semi-colon after the trait struct.
+	semi-colon after the trait struct.
 	* pellegrin/set/multi_set.hh: Remove.
 	* pellegrin/set/test: New folder containing tests.
 	* pellegrin/set/test/Makefile,
@@ -6692,7 +6742,7 @@
 	* pellegrin/set/core/p_queue_fast.hh,
 	* pellegrin/set/core/p_set.hh,
 	* pellegrin/set/core/pset_if.hh: traits are up-to-date
-	 (or not, i have to check it with theo) and add the fwd decls.
+	(or not, i have to check it with theo) and add the fwd decls.
 	* pellegrin/set/core/p_run.hh: New.
 	* pellegrin/set/core/p_runs.hh: New.
 	* pellegrin/set/core/runs_psite.hh: Remove (not a point_set).
@@ -7083,7 +7133,7 @@
 	* pellegrin/cond_inheritance/internal/point_set_base.hh: New.
 	* pellegrin/cond_inheritance/internal/uni_set.hh: New.
 	* pellegrin/cond_inheritance/p_array.hh: Definition of a
-	  p_array.
+	p_array.
 	* pellegrin/cond_inheritance/p_set.hh: Definition of a p_set.
 	* pellegrin/cond_inheritance/test_cond_inherit.cc: Test file.
 
@@ -7334,11 +7384,11 @@
 	* garrigues/fllt_optimized.hh: Update.
 	* garrigues/fllt_types.hh: New, types used in FLLT.
 	* garrigues/level_set.hh: New, compute lower/upper level set
-	  algorithm
+	algorithm
 	* garrigues/lower.hh: New, informations about how to compute
-	  the lower level set.
+	the lower level set.
 	* garrigues/upper.hh: New, informations about how to compute
-	  the lower level set.
+	the lower level set.
 
 	* garrigues/test_fllt12.cc: Cleaning, (fllt2.hh) replaced by...
 	(fllt_optimized.hh) ...this.
@@ -7465,12 +7515,12 @@
 	Choice a good root of the merged tree in FLLT.
 
 	* garrigues/fllt2.hh: (merge_trees) Choose a good root between
-	  the upper tree's one and the lower tree's one in order to keep the
-	  good values of the input image.
-	  (fllt) add a second call to merge_trees to test the contrast
-	  invariant of the algorithm. FIXME : In some test, we get a segv when
-	  calling merge_trees swapping the upper_tree and lower_tree
-	  arguments. Add some debug too.
+	the upper tree's one and the lower tree's one in order to keep the
+	good values of the input image.
+	(fllt) add a second call to merge_trees to test the contrast
+	invariant of the algorithm. FIXME : In some test, we get a segv when
+	calling merge_trees swapping the upper_tree and lower_tree
+	arguments. Add some debug too.
 
 	Update include of test_fllt4
 
@@ -7485,14 +7535,14 @@
 	* garrigues/test_fllt2.cc,
 	* garrigues/test_fllt3.cc,
 	* garrigues/test_fllt_tiny.cc: likewise, Update include to
-	  test fllt2.hh.
+	test fllt2.hh.
 
 2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Start a second version of merging trees in FLLT.
 
 	* garrigues/fllt2.hh: New, looks like fllt.hh but differs in
-	  merge trees. We keep the old file fllt.hh to avoid regression.
+	merge trees. We keep the old file fllt.hh to avoid regression.
 
 2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
@@ -7504,7 +7554,7 @@
 	* garrigues/test_fllt9.cc: New,
 	* garrigues/test_fllt_lena.cc: New,
 	* garrigues/test_fllt_lena_tiles.cc: New, test FLLT with
-	  differents 2d images.
+	differents 2d images.
 
 2007-11-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
@@ -7608,7 +7658,7 @@
 	* garrigues/test_fllt4.cc,
 	* garrigues/test_fllt5.cc,
 	* garrigues/test_fllt_tiny.cc: New, differents cases of tests
-	  for fllt.
+	for fllt.
 
 2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
@@ -7636,8 +7686,8 @@
 	Update fllt.
 
 	* garrigues/fllt.hh: (border_neighb and region_neighb) Rename
-	  as...
-	  (border_neighb and region_neighb) ...this.
+	as...
+	(border_neighb and region_neighb) ...this.
 
 2007-10-24  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 

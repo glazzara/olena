@@ -251,15 +251,15 @@
 
 	Revive Swilena.
 
-	* swilena/image2d.i: New SWIG wrapper.
-	* swilena/run.in: New helper, imported from TC.
-	* swilena/Makefile.am: New.
-	* swilena/run.mk: New, imported from TC and adjusted.
+	* image2d.i: New SWIG wrapper.
+	* run.in: New helper, imported from TC.
+	* Makefile.am: New.
+	* run.mk: New, imported from TC and adjusted.
 
-	* swilena/python/: New directory.
-	* swilena/python/ltihooks.py: New, imported.
-	* swilena/python/test.py: New test.
-	* swilena/python/Makefile.am: New.
+	* python/: New directory.
+	* python/ltihooks.py: New, imported.
+	* python/test.py: New test.
+	* python/Makefile.am: New.
 
 
 $Rev$

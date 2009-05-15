@@ -18,85 +18,6 @@
 
 	* configure.ac: Do not configure tests/fun/l2l anymore.
 
-2009-04-28  Frederic Bour  <bour@lrde.epita.fr>
-
-	Correct bugs, point functions.
-	*  milena/mln/fun/point/col.hh: New.
-	*  milena/mln/fun/point/row.hh: New.
-	*  milena/mln/fun/point/sli.hh: New.
-	*  milena/mln/fun/point: New.
-	*  milena/mln/fun/spe/unary.hh: Improved proxy support.
-	*  milena/mln/fun/unary.hh: Improved proxy support.
-	*  milena/mln/trait/next/solve_proxy.hh: Typo errors correction.
-	*  milena/sandbox/fred/tests/fun.cc,
-	*  milena/sandbox/fred/tests/thru.cc: Add some tests for proxy.
-
-2009-04-27  Frederic Bour  <bour@lrde.epita.fr>
-
-	Merge new fun implementation to main milena directory.
-	*  milena/mln/accu/inf.hh: New.
-	*  milena/mln/accu/sup.hh: New.
-	*  milena/mln/core/concept/meta_function.hh: New.
-	*  milena/mln/core/image/thru_morpher.hh: New.
-	*  milena/mln/core/image/thrubin_morpher.hh: New.
-	*  milena/mln/fun/accu_result.hh: New.
-	*  milena/mln/fun/binary.hh: New.
-	*  milena/mln/fun/component/blue.hh: New.
-	*  milena/mln/fun/component/comp.hh: New.
-	*  milena/mln/fun/component/green.hh: New.
-	*  milena/mln/fun/component/red.hh: New.
-	*  milena/mln/fun/component/rgb.hh: New.
-	*  milena/mln/fun/component: New.
-	*  milena/mln/fun/compose.hh: New.
-	*  milena/mln/fun/composition.hh: New.
-	*  milena/mln/fun/from_accu.hh: New.
-	*  milena/mln/fun/math/abs.hh: New.
-	*  milena/mln/fun/math/cos.hh: New.
-	*  milena/mln/fun/math/inf.hh: New.
-	*  milena/mln/fun/math/norm.hh: New.
-	*  milena/mln/fun/math/sup.hh: New.
-	*  milena/mln/fun/math: New.
-	*  milena/mln/fun/param.hh: New.
-	*  milena/mln/fun/spe/binary.hh: New.
-	*  milena/mln/fun/spe/unary.hh: New.
-	*  milena/mln/fun/spe: New.
-	*  milena/mln/fun/unary.hh: New.
-	*  milena/mln/trait/fun.hh: New.
-	*  milena/mln/trait/next/solve.hh: New.
-	*  milena/mln/trait/next/solve_binary.hh: New.
-	*  milena/mln/trait/next/solve_proxy.hh: New.
-	*  milena/mln/trait/next/solve_unary.hh: New.
-	*  milena/mln/trait/next: New.
-	*  milena/sandbox/fred/mln/accu/inf.hh: Remove.
-	*  milena/sandbox/fred/mln/accu/sup.hh: Remove.
-	*  milena/sandbox/fred/mln/core/concept/meta_function.hh: Remove.
-	*  milena/sandbox/fred/mln/core/image/thru_morpher.hh: Remove.
-	*  milena/sandbox/fred/mln/core/image/thrubin_morpher.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/accu_result.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/binary.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/component/blue.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/component/comp.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/component/green.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/component/red.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/component/rgb.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/compose.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/composition.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/from_accu.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/math/abs.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/math/cos.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/math/inf.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/math/norm.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/math/sup.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/param.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/spe/binary.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/spe/unary.hh: Remove.
-	*  milena/sandbox/fred/mln/fun/unary.hh: Remove.
-	*  milena/sandbox/fred/mln/trait/fun.hh: Remove.
-	*  milena/sandbox/fred/mln/trait/next/solve.hh: Remove.
-	*  milena/sandbox/fred/mln/trait/next/solve_binary.hh: Remove.
-	*  milena/sandbox/fred/mln/trait/next/solve_proxy.hh: Remove.
-	*  milena/sandbox/fred/mln/trait/next/solve_unary.hh: Remove.
-
 2009-04-15  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* configure.ac: configure milena/tests/graph/.
@@ -121,60 +42,14 @@
 
 	* configure.ac: Always configure directory external/trimesh/.
 
-2009-03-13  Frederic Bour  <bour@lrde.epita.fr>
-
-	fun update: add unary & binary composition.
-	
-	* milena/sandbox/fred/fun/cos.hh,
-	* milena/sandbox/fred/fun/abs.hh:
-	  WIP, switching from solve to nsolve.
-	* milena/sandbox/fred/fun/assignability.hh: New.
-	  Traits to check function properties using sfinae (should be renamed).
-	* milena/sandbox/fred/fun/binary.hh: New. Binary function
-	* milena/sandbox/fred/fun/compose.hh: New. Compose function.
-	* milena/sandbox/fred/fun/composition.hh: New.
-	  Composition result objects definition.
-	* milena/sandbox/fred/fun/cos.cc: New. Test for composition.
-	* milena/sandbox/fred/fun/fun.cc: WIP.
-	* milena/sandbox/fred/fun/meta_function.hh:
-          Added Meta_Function_v2v and Meta_Function_vv2v categories.
-	* milena/sandbox/fred/fun/nsolve.hh,
-	* milena/sandbox/fred/fun/nsolve_binary.hh,
-	* milena/sandbox/fred/fun/nsolve_unary.hh: New.
-	  Original trait solver modification now based
-	  on typename flag instead of template <class> class
-	* milena/sandbox/fred/fun/thru_morpher.hh: WIP.
-	* milena/sandbox/fred/fun/unary.hh: Update & redesign,
-	  especially for composition.
-
 2009-03-10  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
-	configure.ac: configure approx/ and closing/approx in
+	* configure.ac: configure approx/ and closing/approx in
 	milena/tests/morpho/.
 
 2009-03-10 Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* configure.ac: configure tests/morpho/opening/approx.
-
-2009-03-09  Frederic Bour  <bour@lrde.epita.fr>
-
-	Add missing trait for thru_morpher.
-	* milena/sandbox/fred/fun/unary.hh: Add is_assignable trait, just
-	a workaround.
-
-2009-03-09  Frederic Bour  <bour@lrde.epita.fr>
-
-	Verify constness of "thru" image morpher.
-	* milena/mln/trait/image/props.hh: Correct small typos errors.
-	* milena/sandbox/fred/fun/abs.hh,
-	* milena/sandbox/fred/fun/cos.hh,
-	* milena/sandbox/fred/fun/inc.hh,
-	* milena/sandbox/fred/fun/norm.hh,
-	* milena/sandbox/fred/fun/red.hh:
-	  Namespace name desambiguation.
-	* milena/sandbox/fred/fun/thru.cc,
-	* milena/sandbox/fred/fun/thru_morpher.hh:
-	  Verify constness (WIP).
 
 2009-03-05 Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -183,30 +58,6 @@
 	* bootstrap: update path to generate_dist_files.sh
 
 	* configure.ac: configure new directories milena/doc.
-
-2009-03-01  Frederic Bour  <bour@lrde.epita.fr>
-
-	Add rush/exo3.
-	* milena/mln/canvas/morpho/attribute_filter.hh: Add one missing include.
-	* milena/sandbox/theo/rush/exo3/Makefile: New.
-	* milena/sandbox/theo/rush/exo3/exo3_1.cc: New.
-	* milena/sandbox/theo/rush/exo3/exo3_2.cc: New.
-	* milena/sandbox/theo/rush/exo3/inverse.cc: New.
-	* milena/sandbox/theo/rush/exo3: New.
-
-2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
-
-	Correct bugs in tests.
-	* milena/mln/morpho/closing/algebraic.hh,
-	* milena/mln/morpho/closing/leveling.hh: Correct some bugs.
-
-	* milena/tests/morpho/closing/Makefile.am,
-	* milena/tests/morpho/closing/algebraic.cc,
-	* milena/tests/morpho/closing/leveling.cc,
-	* milena/tests/morpho/opening/Makefile.am,
-	* milena/tests/morpho/opening/algebraic.cc,
-	* milena/tests/morpho/opening/leveling.cc:
-	Correct some bugs and comment reference code using generic accumulators.
 
 2009-02-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
@@ -236,21 +87,6 @@
 	* configure.ac: configure tests/morpho/watershed and
 	tests/morpho/attribute.
 
-2009-02-12  Frederic Bour  <bour@lrde.epita.fr>
-
-	Add connected filters dispatcher (not tested)..
-	* milena/sandbox/fred/Makefile: .
-	* milena/sandbox/fred/connected_filter.hh: New.
-	* milena/sandbox/fred/leveling_filter.hh: .
-	* milena/sandbox/fred/mean.hh: .
-
-2009-02-11  Frederic Bour  <bour@lrde.epita.fr>
-
-	Wip of mean attribute set_value.
-	* milena/sandbox/fred/Makefile: .
-	* milena/sandbox/fred/mean.hh: set_value WIP.
-	* milena/sandbox/fred/meantest.cc: New.
-
 2009-02-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	* .gitignore: Ignore pattern `*.dSYM'.
@@ -278,15 +114,6 @@
 	...here.
 	* m4/.gitignore: New.
 	* build-aux/.gitignore: Adjust.
-
-2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
-
-	Typo: s/splitted/split/.
-
-	* milena/doc/Doxyfile.in,
-	* milena/doc/doc.mk,
-	* milena/doc/tutorial/tools/split_sample.sh,
-	* milena/doc/tutorial/tutorial.tex: Here.
 
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -480,292 +307,11 @@
 
 	* configure.ac: Add tutorial/samples Makefiles.
 
-2008-11-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
-
-	Put Licence to 70 cols.
-
-	* milena/doc/benchmark/morpho/erosion.cc: .
-	* milena/mln/accu/count_adjacent_vertices.hh: .
-	* milena/mln/accu/height.hh: .
-	* milena/mln/border/fill.hh: .
-	* milena/mln/border/get.hh: .
-	* milena/mln/canvas/morpho/algebraic_union_find.hh: .
-	* milena/mln/convert/to_p_array.hh: .
-	* milena/mln/convert/to_upper_window.hh: .
-	* milena/mln/convert/to_window.hh: .
-	* milena/mln/core/alias/dpoint1d.hh: .
-	* milena/mln/core/alias/dpoint2d.hh: .
-	* milena/mln/core/alias/dpoint2d_h.hh: .
-	* milena/mln/core/alias/dpoint3d.hh: .
-	* milena/mln/core/alias/point1d.hh: .
-	* milena/mln/core/alias/point2d.hh: .
-	* milena/mln/core/alias/point2d_h.hh: .
-	* milena/mln/core/alias/point3d.hh: .
-	* milena/mln/core/alias/point3df.hh: .
-	* milena/mln/core/alias/window1d.hh: .
-	* milena/mln/core/alias/window3d.hh: .
-	* milena/mln/core/dpoints_pixter.hh: .
-	* milena/mln/core/image/bgraph_image.hh: .
-	* milena/mln/core/image/bgraph_psite.hh: .
-	* milena/mln/core/image/decorated_image.hh: .
-	* milena/mln/core/image/fi_adaptor.hh: .
-	* milena/mln/core/image/graph_elt_neighborhood.hh: .
-	* milena/mln/core/image/graph_elt_window.hh: .
-	* milena/mln/core/image/graph_image.hh: .
-	* milena/mln/core/image/graph_neighborhood_piter.hh: .
-	* milena/mln/core/image/graph_window_piter.hh: .
-	* milena/mln/core/image/line_graph_elt_neighborhood.hh: .
-	* milena/mln/core/image/line_graph_elt_window.hh: .
-	* milena/mln/core/image/line_graph_image.hh: .
-	* milena/mln/core/image/line_graph_neighborhood_piter.hh: .
-	* milena/mln/core/image/line_graph_psite.hh: .
-	* milena/mln/core/image/line_graph_window_piter.hh: .
-	* milena/mln/core/internal/force_exact.hh: .
-	* milena/mln/core/internal/image_value_morpher.hh: .
-	* milena/mln/core/internal/line_graph_vicinity_piter.hh: .
-	* milena/mln/core/internal/pixel_iterator_base.hh: .
-	* milena/mln/core/pixter1d.hh: .
-	* milena/mln/core/pixter2d.hh: .
-	* milena/mln/core/pixter3d.hh: .
-	* milena/mln/core/site_set/p_bgraph.hh: .
-	* milena/mln/core/site_set/p_bgraph_piter.hh: .
-	* milena/mln/core/site_set/p_edges.hh: .
-	* milena/mln/core/site_set/p_graph.hh: .
-	* milena/mln/core/site_set/p_graph_piter.hh: .
-	* milena/mln/core/site_set/p_line_graph.hh: .
-	* milena/mln/core/site_set/p_line_graph_piter.hh: .
-	* milena/mln/core/site_set/p_vertices.hh: .
-	* milena/mln/core/trait/qlf_value.hh: .
-	* milena/mln/debug/graph.hh: .
-	* milena/mln/geom/seeds2tiling.hh: .
-	* milena/mln/geom/seeds2tiling_roundness.hh: .
-	* milena/mln/labeling/background.hh: .
-	* milena/mln/labeling/flat_zones.hh: .
-	* milena/mln/labeling/foreground.hh: .
-	* milena/mln/labeling/regional_maxima.hh: .
-	* milena/mln/labeling/regional_minima.hh: .
-	* milena/mln/level/memset_.hh: .
-	* milena/mln/linear/gaussian.hh: .
-	* milena/mln/make/voronoi.hh: .
-	* milena/mln/math/abs.hh: .
-	* milena/mln/metal/abort.hh: .
-	* milena/mln/morpho/closing_area.hh: .
-	* milena/mln/morpho/closing_area_on_vertices.hh: .
-	* milena/mln/morpho/closing_attribute.hh: .
-	* milena/mln/morpho/closing_height.hh: .
-	* milena/mln/morpho/closing_volume.hh: .
-	* milena/mln/morpho/opening_area.hh: .
-	* milena/mln/morpho/opening_area_on_vertices.hh: .
-	* milena/mln/morpho/opening_attribute.hh: .
-	* milena/mln/morpho/opening_height.hh: .
-	* milena/mln/morpho/opening_volume.hh: .
-	* milena/mln/set/inter.hh: .
-	* milena/mln/tag/skeleton.hh: .
-	* milena/mln/trait/ch_value.hh: .
-	* milena/mln/util/graph.hh: .
-	* milena/mln/util/greater_point.hh: .
-	* milena/mln/util/greater_psite.hh: .
-	* milena/mln/util/internal/boost_graph.hh: .
-	* milena/mln/util/internal/boost_graph_access.hh: .
-	* milena/mln/util/internal/boost_graph_property.hh: .
-	* milena/mln/util/internal/boost_graph_structure.hh: .
-	* milena/mln/util/internal/graph_base.hh: .
-	* milena/mln/util/ord_pair.hh: .
-	* milena/mln/value/int_u_sat.hh: .
-	* milena/mln/value/proxy.hh: .
-	* milena/mln/value/stack.hh: .
-	* milena/mln/win/line.hh: .
-	* milena/sandbox/garrigues/ocr/check.sh: .
-	* milena/sandbox/garrigues/ocr/ocr_with_preprocess.cc: .
-	* milena/sandbox/garrigues/ocr/skeleton.hh: .
-	* milena/sandbox/jardonnet/array/old/1d.hh: .
-	* milena/sandbox/jardonnet/array/old/2d.hh: .
-	* milena/sandbox/jardonnet/array/old/3d.hh: .
-	* milena/sandbox/jardonnet/array/old/all.hh: .
-	* milena/sandbox/jardonnet/array/old/nd.hh: .
-	* milena/sandbox/jardonnet/array/old/objs.hh: .
-	* milena/sandbox/levillain/morpho/lower_completion.hh: .
-	* milena/sandbox/levillain/morpho/shortest_path_watershed.hh: .
-	* milena/sandbox/nivault/dmap.hh: .
-	* milena/sandbox/pellegrin/set/core/p_bgraph.hh: .
-	* milena/sandbox/pellegrin/set/core/p_graph.hh: .
-	* milena/sandbox/pellegrin/set/core/p_line_graph.hh: .
-	* milena/sandbox/vigouroux/color.hh: .
-	* milena/sandbox/vigouroux/color/color.hh: .
-	* milena/sandbox/vigouroux/color/hsi.hh: .
-	* milena/sandbox/vigouroux/color/hsl.hh: .
-	* milena/sandbox/vigouroux/color/hsv.hh: .
-	* milena/sandbox/vigouroux/color/nrgb.hh: .
-	* milena/sandbox/vigouroux/color/rgb.hh: .
-	* milena/sandbox/vigouroux/color/xyz.hh: .
-	* milena/sandbox/vigouroux/color/yiq.hh: .
-	* milena/sandbox/vigouroux/color/yuv.hh: .
-	* milena/sandbox/vigouroux/convert/abstract/colorconv.hh: .
-	* milena/sandbox/vigouroux/convert/abstract/conversion.hh: .
-	* milena/sandbox/vigouroux/convert/basics.hh: .
-	* milena/sandbox/vigouroux/convert/bound.hh: .
-	* milena/sandbox/vigouroux/convert/cast.hh: .
-	* milena/sandbox/vigouroux/convert/conversion.hh: .
-	* milena/sandbox/vigouroux/convert/conversion_ng_se.hh: .
-	* milena/sandbox/vigouroux/convert/force.hh: .
-	* milena/sandbox/vigouroux/convert/nrgbxyz.hh: .
-	* milena/sandbox/vigouroux/convert/rgbhsi.hh: .
-	* milena/sandbox/vigouroux/convert/rgbhsl.hh: .
-	* milena/sandbox/vigouroux/convert/rgbhsv.hh: .
-	* milena/sandbox/vigouroux/convert/rgbnrgb.hh: .
-	* milena/sandbox/vigouroux/convert/rgbxyz.hh: .
-	* milena/sandbox/vigouroux/convert/rgbyiq.hh: .
-	* milena/sandbox/vigouroux/convert/rgbyuv.hh: .
-	* milena/sandbox/vigouroux/convert/stretch.hh: .
-	* milena/tests/timer.hh: .
-
 2008-11-04  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Update configure.ac for unit_test.
 
 	* configure.ac: Add unit_test Makefile.
-
-2008-11-03  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
-
-	Remove a std::size_t.
-
-	In my opinion nelements must not return size_t.
-	* milena/mln/core/site_set/p_image.hh,
-	* milena/mln/core/image/image3d.hh: Here.
-
-2008-10-31  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	Clean-up from_to, add some new overloads, and fix (c).
-
-	* milena/tests/core/other/w_window.cc: New.
-	* milena/tests/core/other/Makefile.am: Update.
-	* milena/tests/core/alias/window2d.cc: Remove echos.
-	* milena/mln/make/image2d.hh: New.
-	* milena/tests/make/image2d.cc: New.
-	* milena/tests/make/Makefile.am: Update.
-	* milena/tests/convert/to_image.cc: Fix copyright.
-	(include): Remove; useless.
-	* milena/mln/core/alias/window2d.hh: Fix include.
-	* milena/mln/core/w_window.hh (from_to): New overload.
-	* milena/mln/core/dpoint.hh: Fix (c).
-	* milena/mln/core/concept/weighted_window.hh: Fix (c).
-	* milena/mln/core/concept/object.hh: Include all metal math.
-	Include metal converts_to.
-	* milena/mln/core/concept/window.hh (from_to): New overload.
-	(todo): New.
-	* milena/mln/core/concept/image.hh (from_to): New overload.
-	* milena/mln/core/concept/gpoint.hh: Fix doc.
-	* milena/mln/core/concept/gdpoint.hh (from_to): New overload.
-	* milena/mln/core/def/all.hh: New.
-	* milena/mln/core/window.hh: Fix copyright.
-	* milena/mln/linear/convolve.hh: Fix warning + copyright.
-	* milena/mln/make/image.hh (image): New overload for 3D.
-	* milena/mln/make/w_window2d.hh: Fix copyright.
-	Remove useless include.
-	* milena/mln/convert/to_image.hh
-	(mln_image_from, helper_dim_, helper_image_from_): Remove.
-	Redundant with image_from_grid.
-	(to_image): Update and use convert::from_to.
-	* milena/mln/convert/from_to.hxx: Layout and update.
-
-2008-10-31  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	Introduce make::image.
-
-	When there is no ambiguity, the user can call make::image.
-
-	* milena/mln/make/image2d.hh: Rename as...
-	* milena/mln/make/image.hh: ...this.
-	Import code from...
-	* milena/mln/make/image1d.hh: ...this removed file.
-	* milena/mln/make/all.hh: Update.
-	* milena/tests/debug/iota.cc,
-	* milena/tests/draw/graph.cc,
-	* milena/tests/level/abs.cc,
-	* milena/tests/level/replace.cc,
-	* milena/tests/level/stretch.cc,
-	* milena/tests/level/apply.cc,
-	* milena/tests/level/compare.cc,
-	* milena/tests/level/saturate.cc,
-	* milena/tests/arith/minus.cc,
-	* milena/tests/arith/times.cc,
-	* milena/tests/arith/plus.cc,
-	* milena/tests/arith/revert.cc,
-	* milena/tests/accu/compute.cc,
-	* milena/tests/geom/resize.cc,
-	* milena/tests/geom/seed2tiling_roundness.cc,
-	* milena/tests/geom/seed2tiling.cc,
-	* milena/tests/display/color_pretty.cc,
-	* milena/tests/logical/or.cc,
-	* milena/tests/logical/not.cc,
-	* milena/tests/logical/and_not.cc,
-	* milena/tests/logical/and.cc,
-	* milena/tests/canvas/chamfer.cc,
-	* milena/tests/util/tree_to_image.cc,
-	* milena/tests/util/lemmings.cc,
-	* milena/tests/util/tree_fast_to_image.cc,
-	* milena/tests/labeling/compute.cc,
-	* milena/mln/core/image/image1d.hh: Update.
-	* milena/mln/core/image/image2d.hh: Update.
-	(todo): New.
-	* milena/mln/core/w_window.hh (from_to): New overload.
-	* milena/mln/make/w_window2d.hh: Change tests into checks.
-	* milena/mln/convert/from_to.hxx: Update.
-	* milena/mln/canvas/browsing/directional.hh: .
-	* milena/tests/core/alias/w_window2d_int.cc: Add alt code.
-
-2008-10-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	Add a generic discrete distance transform.
-
-	* milena/mln/transform: New.
-	* milena/mln/transform/distance.hh: New.
-	* milena/tests/transform: New directory.
-	* milena/tests/transform/Makefile.am: New.
-	* milena/tests/transform/distance.cc: New.
-	* milena/sandbox/geraud/skel.cc: Layout.
-	* milena/sandbox/geraud/dmap.cc: Update.
-
-	Slight change in w_window.
-
-	* milena/mln/core/w_window.hh (from_to): Prepare new overload.
-	For that, add some new meta-code:
-	* milena/mln/metal/math/root.hh: New.
-	* milena/mln/metal/math/all.hh: Update.
-	* milena/mln/metal/math/sqrt.hh (todo): New.
-	* milena/tests/metal/math/root.cc: New.
-	* milena/tests/metal/math/pow.cc: Remove echo.
-	* milena/tests/metal/math/Makefile.am: Update.
-	* milena/tests/morpho/Makefile.am (SUBDIRS): Fix missing.
-
-2008-10-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	Few updates.
-
-	* milena/tests/draw/line.cc: Fix missing update.
-	* milena/mln/draw/line.hh: Make it safe.
-	* milena/mln/morpho/closing_volume.hh (closing_volume): New
-	overload with output as return.
-	* milena/mln/morpho/all.hh: Better doc.
-	(include): Update.
-	* milena/sandbox/geraud/wst_edge.cc: Prefer volume closing over
-	area closing.
-
-2008-10-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	Add fun::v2v::convert and level::convert.
-
-	* milena/mln/fun/v2v/convert.hh: New.
-	* milena/mln/fun/v2v/cast.hh (todo): New.
-	* milena/mln/level/convert.hh: New.
-	* milena/tests/level/convert.cc: New.
-	* milena/tests/level/Makefile.am: Update.
-	* milena/mln/value/rgb.hh (todo): New.
-	(from_to): New overload for bool->rgbn.
-	* milena/mln/convert/from_to.hxx
-	(from_to): New decl for bool->rgbn.
-	* milena/sandbox/scribo/demat.hh
-	(include): Remove obsolete dependency.
 
 2008-10-15  Roland Levillain  <roland@lrde.epita.fr>
 
