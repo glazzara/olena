@@ -1,5 +1,11 @@
 2009-05-15  Etienne FOLIO  <folio@lrde.epita.fr>
 
+	Move a script.
+	* run.sh: New moved file.
+	* treat.sh: Remove moved file.
+
+2009-05-15  Etienne FOLIO  <folio@lrde.epita.fr>
+
 	Big cleanup.
 	* Makefile: Remove. Not needed.
 	* README: New explainations.
