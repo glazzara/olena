@@ -43,6 +43,7 @@ SUBDIRS =					\
   trace						\
   trait						\
   transform 					\
+  transformation				\
   unit_test					\
   util						\
   value						\

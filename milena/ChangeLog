@@ -1,5 +1,17 @@
 2009-05-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add transformation::rotation.
+
+	* mln/transformation/all.hh,
+	* mln/transformation/essential.hh: new headers.
+
+	* mln/transformation/rotate.hh: new routine.
+
+	* tests/transformation/Makefile.am,
+	* tests/transformation/rotate.cc: new associated test.
+
+2009-05-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Improve io::magick tests.
 
 	* tests/io/magick/Makefile.am,
