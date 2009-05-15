@@ -1,3 +1,10 @@
+2009-05-16  Vincent Ordy  <ordy@lrde.epita.fr>
+
+	inim: Improve boxes algorithm.
+	Because of recent changes in scribo, the current work won't compile
+	with the last SVN revision. However, it used to compile with r3697.
+	* boxes.cc: Fix a couple of bugs.
+
 2009-05-15  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Small cleanup.

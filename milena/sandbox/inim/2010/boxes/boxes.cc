@@ -38,16 +38,13 @@
 #include <scribo/debug/save_linked_textbboxes_image.hh>
 #include <scribo/text/grouping/group_from_double_link.hh>
 #include <scribo/filter/small_components.hh>
-
 #include <scribo/debug/save_textbboxes_image.hh>
 #include <scribo/make/debug_filename.hh>
 
 #include <mln/logical/not.hh>
 #include <mln/io/dump/save.hh>
-
 #include <mln/io/pgm/save.hh>
 #include <mln/fun/v2v/wrap.hh>
-
 #include <mln/math/abs.hh>
 
 int usage(const char *name)
@@ -61,103 +58,127 @@ using namespace mln;
 
 typedef image2d<value::label_16> scribo_image;
 
-template< typename T >
-double vec_y_norm(const T& t)
-{
-  return mln::math::abs(t[1] / t[0]);
-}
 
 template< typename T >
-double bboxes_y_mean(const T& bboxes)
+double
+bboxes_height_mean(const T& bboxes)
 {
   double mean = 0.;
+  unsigned count = 0;
 
   for (unsigned i = 1; i < bboxes.nelements(); i++)
   {
     mln_VAR(s, bboxes[i].pmax() - bboxes[i].pmin());
-    mean += (s[1] / s[0]);
+    if (s[1] < 10 || s[1] > 300)
+      continue;
+
+    mean += s[1];
+    count++;
   }
 
-  mean /= static_cast<double>(bboxes.nelements());
+  mean /= static_cast<double>(count);
 
   return mean;
 }
+
+
+template <typename I>
+scribo::util::text<I>
+group_from_line_array(const scribo::util::text<I>& text,
+		      mln::util::array<unsigned>& array)
+{
+  /// Accumulator array
+  mln::util::array< accu::bbox<mln_site(I)> > tboxes;
+  tboxes.resize(text.bboxes().nelements());
+
+  /// Adding bounding boxes to accumulator
+  for (unsigned label = 0; label < array.size(); ++label)
+    for (unsigned i = label; i < array.size(); i++)
+    {
+      if (label != array[i])
+	continue;
+
+      tboxes[label].take(text.bbox(i));
+    }
+
+  fun::i2v::array<unsigned> f;
+  convert::from_to(array, f);
+
+  /// Finding valid bounding boxes
+  mln::util::array< box<mln_site(I)> > bresult;
+  bresult.append(box<mln_site(I)>());
+  for_all_components(i, tboxes)
+    if (tboxes[i].is_valid())
+      bresult.append(tboxes[i]);
+
+  /// Labelizing (FIXME)
+  mln_value(I) new_nbboxes;
+  I new_lbl = labeling::relabel(text.label_image(),
+                                text.nbboxes(),
+                                mln::make::relabelfun(f, text.nbboxes(),
+                                                      new_nbboxes));
+
+  scribo::util::text<I> result(bresult, new_lbl, new_nbboxes);
+  return result;
+}
+
 
 int main(int argc, char* argv[])
 {
   if (argc != 3)
     return usage(argv[0]);
 
+  std::cout << "# Line detection algorithm (boxes)" << std::endl << std::endl;
+
   scribo::make::internal::debug_filename_prefix = "extract_text_double_link";
 
-  std::cout << "Debug 1" << std::endl;
-
+  /// Loading image
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
-
-  std::cout << "Debug 2" << std::endl;
-
   logical::not_inplace(input);
 
-  std::cout << "Debug 3" << std::endl;
-
+  /// Extract boxes
   value::label_16 nbboxes;
   scribo::util::text<image2d<value::label_16> >
-    text = text::extract_bboxes(input, c8(), nbboxes);
-
-  std::cout << "Debug 4" << std::endl;
-
+    text = text::extract_bboxes(input, c8(), nbboxes);  
   text = filter::small_components(text,4);
 
-  std::cout << "Debug 5" << std::endl;
-
+  /// Grouping components
   mln::util::array<unsigned>
     left_link  = text::grouping::group_with_single_left_link(text, 30),
     right_link = text::grouping::group_with_single_right_link(text, 30);
 
-  std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
+  std::cout << "* Before validation: " << nbboxes << " boxes" << std::endl;
 
-
-  std::cout << "Debug 6" << std::endl;
 
   scribo::debug::save_linked_textbboxes_image(input,
 					      text, left_link, right_link,
-					      literal::red, literal::cyan, literal::yellow,
+					      literal::red,
+					      literal::cyan,
+					      literal::yellow,
 					      literal::green,
 					      scribo::make::debug_filename("links.ppm"));
 
-  std::cout << "Debug 7" << std::endl;
 
-  // Validation.
-
+  // Validation
   scribo::util::text< scribo_image > grouped_text
-	= text::grouping::group_from_double_link(text, left_link, right_link);
+    = text::grouping::group_from_double_link(text, left_link, right_link);
 
-  std::cout << "AFTER double grouping - nbboxes = " << grouped_text.bboxes().nelements() << std::endl;
+  std::cout << "* After validation: " << grouped_text.bboxes().nelements()
+	    << " boxes" << std::endl;
 
-  io::dump::save(grouped_text.label_image(), argv[2]);
-
+  /// Save grouped text image
   io::pgm::save(level::transform(grouped_text.label_image(),
 				 fun::v2v::wrap<value::int_u8>()),
-		"tmp.pgm");
-
-  std::cout << "Debug 8" << std::endl;
-
-
-
-
-
-
+		"words.pgm");
 
   mln_VAR(b, grouped_text.bboxes());
-  std::cout << "Bounding boxes: " << std::endl << b << std::endl;
-
   mln_VAR(m, grouped_text.mass_centers());
-  std::cout << "Mass centers: " << std::endl << m << std::endl;
 
-  // Mean of the y components of the bounding boxes
-  double mean = bboxes_y_mean(b);
-  std::cout << "Mean: " << mean << std::endl;
+  // Word height mean
+  double word_height_mean = bboxes_height_mean(b);
+  std::cout << "* Word height mean: " << word_height_mean << std::endl;
+
 
   mln::util::array< unsigned > lines(m.size());
 
@@ -170,38 +191,31 @@ int main(int argc, char* argv[])
     for (unsigned j = i + 1; j < m.size(); j++)
     {
       if (i == j)
-        continue;
+	continue;
 
-      double y_norm_diff = vec_y_norm(m[j] - m[i]);
-//       std::cout << "y_norm_diff: " << y_norm_diff << std::endl;
-      if (y_norm_diff > 1000)
-      {
-        std::cout << "(" << i << "," << j << ")" << std::endl;
-        continue;
-      }
-      if (y_norm_diff < mean * 2)
-      {
-        lines[j] = lines[i];
-//         std::cout << "Associating " << i << " to " << j << std::endl;
-      }
+      double component_y_diff = mln::math::abs(m[j][0] - m[i][0]);
+
+      if (component_y_diff < 0.3 * word_height_mean)
+	lines[j] = lines[i];
     }
 
-  std::cout << "Lines: " << std::endl << lines << std::endl;
+  scribo::util::text< scribo_image > grouped_lines
+    = group_from_line_array(grouped_text, lines);
 
-//   scribo::util::text< scribo_image > grouped_lines
-// 	= text::grouping::group_from_single_link(text, lines);
-
-
-
-
-
-
-
+  std::cout << "* Line number: " << grouped_lines.bboxes().nelements()
+	    << std::endl;
 
   scribo::debug::save_textbboxes_image(input, grouped_text.bboxes(),
 				       literal::red,
 				       scribo::make::debug_filename("boxes.ppm"));
 
-  std::cout << "Debug 9" << std::endl;
-}
+  /// Does not seem to work (FIXME)
+  io::pgm::save(level::transform(grouped_lines.label_image(),
+				 fun::l2l::wrap<value::int_u8>()),
+		"fixme.ppm");
 
+  /// Alternative save
+  scribo::debug::save_textbboxes_image(input, grouped_lines.bboxes(),
+				       literal::red,
+				       argv[2]);
+}
