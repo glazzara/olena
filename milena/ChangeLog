@@ -1,3 +1,12 @@
+2009-05-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the manual regeneration of headers.mk.
+
+	* Makefile.am ($(srcdir)/headers.mk): Move action...
+	(regen-dist): ...here.
+	Remove any dependency.
+	($(srcdir)/headers.mk): Delegate action to rule regen-dist.
+
 2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve the portability of mesh/Makefile.

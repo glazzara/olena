@@ -25,14 +25,15 @@ tools:
 	$(MAKE) -C tools all
 
 .PHONY: regen-dist
-regen-dist: $(srcdir)/headers.mk
+regen-dist:
+	cd $(srcdir) && ./generate_dist_headers.sh && chmod -w headers.mk
 # FIXME: Change generate_dist_headers.sh so that the action looks like this:
 #
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
 #
 EXTRA_DIST = generate_dist_headers.sh
 $(srcdir)/headers.mk: $(srcdir)/generate_dist_headers.sh
-	cd $(srcdir) && ./generate_dist_headers.sh && chmod -w headers.mk
+	$(MAKE) $(AM_MAKEFLAGS) regen-dist
 
 include $(srcdir)/headers.mk
 
