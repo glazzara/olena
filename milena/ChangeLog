@@ -1,5 +1,12 @@
 2009-05-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Fix a bug in util::pix.
+
+	* mln/util/pix.hh: Do not store a const reference of a psite, but a
+	const psite instead. More information is available in this file.
+
+2009-05-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add accu::max_site.
 
 	* mln/accu/max_site.hh: new accu.

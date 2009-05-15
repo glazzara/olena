@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -105,7 +105,15 @@ namespace mln
       const I& ima_;
 
       /// The psite associate to pix.
-      const mln_psite(I)& p_;
+      //
+      // FIXME: Do we want a reference here?
+      // I (Z) guess we don't since I got invalid values
+      // when converting a pixter to a util::pix.
+      // The automatic conversion creates a temporary psite which invalided
+      // this reference once it was destroyed. see 'operator util::pix()' in
+      // core/pixter2d.hh.
+      //
+      const mln_psite(I) p_;
     };
 
 
@@ -117,6 +125,7 @@ namespace mln
       : ima_(exact(ima)),
 	p_(p)
     {
+      mln_postcondition(exact(ima).is_valid());
     }
 
     template <typename I>
@@ -124,6 +133,7 @@ namespace mln
     const I&
     pix<I>::ima() const
     {
+      mln_precondition(ima_.is_valid());
       return ima_;
     }
 
@@ -132,6 +142,8 @@ namespace mln
     const mln_psite(I)&
     pix<I>::p() const
     {
+      mln_precondition(ima_.is_valid());
+      mln_precondition(ima_.has(p_));
       return p_;
     }
 
@@ -140,6 +152,8 @@ namespace mln
     mln_rvalue(I)
     pix<I>::v() const
     {
+      mln_precondition(ima_.is_valid());
+      mln_precondition(ima_.has(p_));
       return ima_(p_);
     }
 
