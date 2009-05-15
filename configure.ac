@@ -130,11 +130,9 @@ AC_CONFIG_SUBDIRS([external/trimesh])
 ## Swilena.  ##
 ## --------- ##
 
-OLN_WITH_SWILENA([with_swilena=yes], [with_swilena=no])
-AM_CONDITIONAL([ENABLE_SWILENA], [test x$with_swilena = xyes])
+OLN_WITH_SWILENA([enable_swilena=yes], [])
+AM_CONDITIONAL([ENABLE_SWILENA], [test x$enable_swilena = xyes])
 
-# FIXME: Should we still configure these files if ENABLE_SWILENA is
-# false?
 AC_CONFIG_FILES([swilena/Makefile
 		 swilena/python/Makefile])
 

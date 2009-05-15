@@ -1,5 +1,12 @@
 2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use more canonical names to handle the configuration of Swilena.
+
+	* configure.ac: s/with_swilena/enable_swilena/.
+	(ENABLE_SWILENA): Adjust conditional.
+
+2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make Milena tools (milena/tools/) optional.
 
 	* configure.ac: Add option `--enable-tools'.
