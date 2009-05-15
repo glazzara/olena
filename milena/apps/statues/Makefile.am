@@ -8,8 +8,8 @@ include $(top_srcdir)/external/trimesh/gluit/gluit.mk
 AM_CPPFLAGS = -I$(top_srcdir)/milena
 CPPFLAGS_trimesh = -I$(top_srcdir)/external/trimesh/include
 # Produce fast code.
-# FIXME: This is GCC-dependent; use a variable computed by configure instead.
-AM_CXXFLAGS = -Wall -Wextra -ggdb -O3 -DNDEBUG
+APPS_CXXFLAGS = @APPS_CXXFLAGS@
+AM_CXXFLAGS = $(APPS_CXXFLAGS)
 # Find the trimesh library and its dependencies.
 #
 # Don't use TRIMESH_LDFLAGS, since it looks like the LDFLAGS of the

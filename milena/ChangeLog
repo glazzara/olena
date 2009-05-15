@@ -1,5 +1,13 @@
 2009-05-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Get compilation flags for applications from configure.
+
+	* apps/statues/Makefile.am (APPS_CXXFLAGS): New.
+	Use it...
+	(AM_CXXFLAGS): ...here.
+
+2009-05-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix tests/io/magick/Makefile.
 
 	* tests/io/magick/Makefile.am (magick_LDFLAGS): Rename as...
