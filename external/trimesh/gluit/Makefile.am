@@ -1,4 +1,4 @@
-## Process this file through Automake to produce Makefile.in -*- Makefile -*-
+## Process this file through Automake to produce Makefile.in.
 
 # Find config.h.
 AM_CPPFLAGS = -I$(top_builddir)

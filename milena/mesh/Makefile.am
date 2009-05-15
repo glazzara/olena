@@ -1,4 +1,4 @@
-## Process this file through Automake to create Makefile.in -*- Makefile -*-
+## Process this file through Automake to create Makefile.in.
 
 ## This Makefile makes use of GNU Make extensions (%-patterns,
 ## patsubst).  We might want to turn it into something more portable

@@ -1,4 +1,4 @@
-## Process this file through Automake to produce Makefile.in -*- Makefile -*-
+## Process this file through Automake to produce Makefile.in.
 
 # Linking with gluit and GLUT/OpenGL.
 gluit_builddir = $(top_builddir)/gluit

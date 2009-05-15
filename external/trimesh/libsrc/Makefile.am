@@ -1,4 +1,4 @@
-## Process this file through Automake to produce Makefile.in -*- Makefile -*-
+## Process this file through Automake to produce Makefile.in.
 
 AM_CPPFLAGS = -I$(top_srcdir)/include
 
