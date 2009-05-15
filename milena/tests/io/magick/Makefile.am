@@ -2,7 +2,9 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-magick_LDFLAGS = -lMagick++ 
+# FIXME: We should not use a hard-coded value.  Rely on a variable set
+# by configure instead.
+AM_LDFLAGS = -lMagick++ 
 
 check_PROGRAMS =				\
    load

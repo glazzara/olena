@@ -1,5 +1,12 @@
 2009-05-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix tests/io/magick/Makefile.
+
+	* tests/io/magick/Makefile.am (magick_LDFLAGS): Rename as...
+	(AM_LDFLAGS): ...this.
+
+2009-05-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the manual regeneration of headers.mk.
 
 	* Makefile.am ($(srcdir)/headers.mk): Move action...
