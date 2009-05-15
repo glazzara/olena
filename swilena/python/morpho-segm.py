@@ -42,17 +42,10 @@ ima = image.load(data.lena)
 gradient = image.gradient(ima, win_c4p())
 image.save(gradient, "gradient.pgm")
 # Area closing of the gradient.
-closed_gradient = image.image2d_int_u8(gradient.domain())
-image.closing_area(ima, c4(), 50, closed_gradient)
+closed_gradient = image.closing_area(ima, c4(), 50)
 # Watershed transform.
 nbasins = int_u8();
 ws = image.meyer_wst (closed_gradient, c4(), nbasins)
-# FIXME: Actualy print the number of basins; for the moment, this
-# statement outputs something like
-#
-#   <int_u32.int_u32; proxy of <Swig Object of type 'mln::value::int_u< 32 > *'
-#    at 0x816e160> >
-#
 print nbasins
 image.save(ws, "segm.pgm")
 

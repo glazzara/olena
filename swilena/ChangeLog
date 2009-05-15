@@ -1,3 +1,27 @@
+2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revive Swilena (again).
+
+	* box2d.i, dpoint2d.i, dynamic_image2d.i, fill.ixx, image2d.ixx,
+	* image2d_int.i, image2d_int_u8, morpho.ixx, neighb2d.i,
+	* point2d.i, window2d.i: Catch up with current path, names and
+	definitions from Milena.
+	* python/morpho-fun.py, python/morpho-segm.py: Likewise.
+	* morpho.ixx: Use inlined signatures of functions
+	mln::morpho::dilation and mln::morpho::erosion to be wrapped,
+	instead of inclusions of mln/morpho/dilation.hh and
+	mln/morpho/erosion.hh.
+	* neighb2d.i: Instantiate base classes of mln::neighb2d.
+	* window2d.i: Instantiate bases classes of mln::window2d.
+	(insert(int, int)): New method (extension).
+	* point2d.i (row, col): Restrict this method (extension) to
+	mln::point2d.
+	(point<grid::square, def::coord>(int, int)): New ctor (extension).
+	* ch_value.ixx (mln): Aesthetic change.
+	* python/dynamic-image2d-misc.py (simple_image.is_valid):
+	New method.
+	* Makefile.am: Remove dead code.
+
 2009-05-15  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	window2d.i: restore the previous version of this file.

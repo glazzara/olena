@@ -32,27 +32,29 @@
 %module box2d
 
 %{
-#include "mln/core/box.hh"
-#include "mln/core/box2d.hh"
+#include "mln/core/site_set/box.hh"
+#include "mln/core/alias/box2d.hh"
 %}
 
 %include "mln/core/macros.hh";
+%include "mln/metal/is_unqualif.hh";
 
-%include "mln/core/box.hh";
-%include "mln/core/box2d.hh";
+%include "mln/core/site_set/box.hh";
+%include "mln/core/alias/box2d.hh";
 
 // Swig tries to wrap everything by default; prevent it from wrapping
 // invalid methods (1D and 3D ctors for a box2d).
-/* FIXME: Can't we simplify these directives, i.e. use `point2d' and
-   `int' directly?  */
-%ignore mln::box_< mln::point_<mln::grid::square, int> >::
-box_(typename mln::point_<mln::grid::square, int>::coord);
-%ignore mln::box_< mln::point_<mln::grid::square, int> >::
-box_(typename mln::point_<mln::grid::square, int>::coord,
-     typename mln::point_<mln::grid::square, int>::coord,
-     typename mln::point_<mln::grid::square, int>::coord);
+/* FIXME: Can't we simplify these directives, i.e. use `point2d'
+   directly?  Maybe we could use mln_coord()?  */
+%ignore mln::box< mln::point<mln::grid::square, mln::def::coord> >
+::box(typename mln::point<mln::grid::square, mln::def::coord>::coord);
 
-%extend mln::box_
+%ignore mln::box< mln::point<mln::grid::square, mln::def::coord> >
+::box(typename mln::point<mln::grid::square, mln::def::coord>::coord,
+      typename mln::point<mln::grid::square, mln::def::coord>::coord,
+      typename mln::point<mln::grid::square, mln::def::coord>::coord);
+
+%extend mln::box
 {
   unsigned nrows() const
   {
@@ -68,4 +70,4 @@ box_(typename mln::point_<mln::grid::square, int>::coord,
 }
 
 
-%template(box2d) mln::box_< mln::point_<mln::grid::square, int> >;
+%template(box2d) mln::box< mln::point<mln::grid::square, mln::def::coord> >;

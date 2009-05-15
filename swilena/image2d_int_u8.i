@@ -46,7 +46,7 @@ instantiate_image2d(image2d_int_u8, mln::value::int_u<8>)
 %template(save) mln::io::pgm::save< mln::image2d< mln::value::int_u<8> > >;
 
 %include "fill.ixx"
-%template(fill) mln::level::fill< mln::image2d< mln::value::int_u<8> > >;
+%template(fill) mln::data::fill< mln::image2d< mln::value::int_u<8> > >;
 
 %include "println.ixx"
 %template(println) mln::debug::println< mln::image2d< mln::value::int_u<8> > >;
@@ -54,13 +54,13 @@ instantiate_image2d(image2d_int_u8, mln::value::int_u<8>)
 %import "window2d.i"
 // FIXME: The import directive does not include the `%{ ... %}' clauses.
 %{
-#include "mln/core/window2d.hh"
+#include "mln/core/alias/window2d.hh"
 %}
 
 %import "neighb2d.i"
 // FIXME: The import directive does not include the `%{ ... %}' clauses.
 %{
-#include "mln/core/neighb2d.hh"
+#include "mln/core/alias/neighb2d.hh"
 %}
 
 %include "morpho.ixx"

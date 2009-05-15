@@ -36,7 +36,7 @@
 %import "box2d.i"
 
 %{
-#include "mln/core/image2d.hh"
+#include "mln/core/image/image2d.hh"
 %}
 
 // Shortcuts macros.
@@ -61,14 +61,14 @@
 %include "mln/core/internal/image_primary.hh"
 
 // mln::image2d definition.
-%include "mln/core/image2d.hh"
+%include "mln/core/image/image2d.hh"
 
 // FIXME: Doc.
 %define instantiate_image2d(I, T)
-  // Instantiate base classes of mln::image2d<T> so that swig knows it
+  // Instantiate base classes of mln::image2d<T> so that Swig knows it
   // derives from mln::Image.
-  %template() mln::internal::image_primary_< mln::box2d, mln::image2d< T > >;
-  %template() mln::internal::image_base_< mln::box2d, mln::image2d< T > >;
+  %template() mln::internal::image_primary< T, mln::box2d, mln::image2d< T > >;
+  %template() mln::internal::image_base< T, mln::box2d, mln::image2d< T > >;
   %template() mln::internal::image_checked_< mln::image2d< T > >;
   // Instantiate mln::image2d<T>
   %template(I) mln::image2d< T >;

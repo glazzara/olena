@@ -46,7 +46,7 @@ namespace mln
   namespace trait
   {
 
-    template <typename I, typename L>
+    template <typename I, typename V>
     struct ch_value
     {
       // Nothing by default.

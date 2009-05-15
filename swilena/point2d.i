@@ -32,14 +32,15 @@
 %module point2d
 
 %{
+#include "mln/core/def/coord.hh"
 #include "mln/core/point.hh"
-#include "mln/core/point2d.hh"
+#include "mln/core/alias/point2d.hh"
 %}
 
 %include "mln/core/point.hh";
-%include "mln/core/point2d.hh";
+%include "mln/core/alias/point2d.hh";
 
-/* FIXME: Ignore `mln::point_<M,C>::origin' to circumvent a swig bug.
+/* FIXME: Ignore `mln::point<M,C>::origin' to circumvent a swig bug.
    Without this ignore clause, the generated code would trigger this
    error :
 
@@ -51,23 +52,42 @@
 
    Check whether this bug has been fixed in a recent release of SWIG
    or if it has been reported.  */
-%ignore mln::point_<mln::grid::square,int>::origin;
+%ignore mln::point<mln::grid::square,mln::def::coord>::origin;
 // Ignoring to_h_vec saves us the wrapping of h_vec.
-%ignore mln::point_<mln::grid::square,int>::to_h_vec;
+%ignore mln::point<mln::grid::square,mln::def::coord>::to_h_vec;
 // Swig tries to wrap everything by default; prevent it from wrapping
 // invalid methods (1D and 3D ctors for a point2d).
-%ignore mln::point_<mln::grid::square,int>::point_(const literal::zero_t&);
-%ignore mln::point_<mln::grid::square,int>::point_(const literal::one_t&);
-%ignore mln::point_<mln::grid::square,int>::point_(int);
-%ignore mln::point_<mln::grid::square,int>::point_(int, int, int);
+%ignore mln::point<mln::grid::square,mln::def::coord>::point(const literal::zero_t&);
+%ignore mln::point<mln::grid::square,mln::def::coord>::point(const literal::one_t&);
+%ignore mln::point<mln::grid::square,mln::def::coord>::point(mln::def::coord);
+%ignore mln::point<mln::grid::square,mln::def::coord>::point(mln::def::coord,
+							     mln::def::coord,
+							     mln::def::coord);
 
-/* FIXME: Swig doesn't wrap operator[]...  Provide row() and col()
-   accessors instead (we should wrap internal::mutable_coord_impl_
-   instead). */
-%extend mln::point_
+/* Milena's `mln::def::coord' is a typedef on `short'.  However, this
+   is unconvenient when using Python's `range()', since this function
+   produces `int' values, and Python will not implicitly convert them
+   to `short'.  Therefore, we provide an extra ctor to allow the
+   construction of an mln::point2d from two `int's.  */
+%extend mln::point< mln::grid::square, mln::def::coord >
+{
+  point< mln::grid::square, mln::def::coord >(int row, int col)
+  {
+    // ROW and COL are implicitly converted to `short'
+    return new mln::point2d(row, col);
+  }
+}
+
+/* Swig doesn't wrap operator[]...  Provide row() and col() accessors
+   instead (we should wrap internal::mutable_coord_impl_ instead).
+   Note that these methods return `int' values instead of
+   `mln::def::coord' (i.e., `short') values, to facilitate the
+   communication with Python (as above).   There might be a work
+   around based on typemaps.  */
+%extend mln::point< mln::grid::square, mln::def::coord >
 {
   int row() const { return $self->operator[](0); }
   int col() const { return $self->operator[](1); }
 }
 
-%template(point2d) mln::point_<mln::grid::square, int>;
+%template(point2d) mln::point<mln::grid::square, mln::def::coord>;

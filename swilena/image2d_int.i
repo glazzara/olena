@@ -42,7 +42,7 @@
 instantiate_image2d(image2d_int, int)
 
 %include "fill.ixx"
-%template(fill) mln::level::fill< mln::image2d<int> >;
+%template(fill) mln::data::fill< mln::image2d<int> >;
 
 %include "println.ixx"
 %template(println) mln::debug::println< mln::image2d<int> >;
@@ -50,7 +50,7 @@ instantiate_image2d(image2d_int, int)
 %import "window2d.i"
 // FIXME: The import directive does not include the `%{ ... %}' clauses.
 %{
-#include "mln/core/window2d.hh"
+#include "mln/core/alias/window2d.hh"
 %}
 
 %include "morpho.ixx"

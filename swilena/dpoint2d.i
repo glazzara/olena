@@ -33,17 +33,19 @@
 
 %{
 #include "mln/core/dpoint.hh"
-#include "mln/core/dpoint2d.hh"
+#include "mln/core/alias/dpoint2d.hh"
 %}
 
 %include "mln/core/dpoint.hh";
-%include "mln/core/dpoint2d.hh";
+%include "mln/core/alias/dpoint2d.hh";
 
 // Swig tries to wrap everything by default; prevent it from wrapping
 // invalid methods (1D and 3D ctors for a point2d).
-%ignore mln::dpoint_<mln::grid::square,int>::dpoint_(const literal::one_t&);
-%ignore mln::dpoint_<mln::grid::square,int>::operator=(const literal::one_t&);
-%ignore mln::dpoint_<mln::grid::square,int>::dpoint_(int);
-%ignore mln::dpoint_<mln::grid::square,int>::dpoint_(int, int, int);
+%ignore mln::dpoint<mln::grid::square,mln::def::coord>::dpoint(const literal::one_t&);
+%ignore mln::dpoint<mln::grid::square,mln::def::coord>::operator=(const literal::one_t&);
+%ignore mln::dpoint<mln::grid::square,mln::def::coord>::dpoint(mln::def::coord);
+%ignore mln::dpoint<mln::grid::square,mln::def::coord>::dpoint(mln::def::coord,
+							       mln::def::coord,
+							       mln::def::coord);
 
-%template(dpoint2d) mln::dpoint_<mln::grid::square, int>;
+%template(dpoint2d) mln::dpoint<mln::grid::square, mln::def::coord>;

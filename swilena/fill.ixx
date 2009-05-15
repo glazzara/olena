@@ -27,27 +27,24 @@
 // Public License.
 
 /// \file fill.ixx
-/// \brief A wrapper of mln::level::fill.
+/// \brief A wrapper of mln::data::fill.
 
 %module fill
 
 %{
-#include "mln/level/fill.hh"
+#include "mln/data/fill.hh"
 %}
 
 %include "mln/core/macros.hh"
 
-/* FIXME: Wrap mln::level::fill by hand to help swig choose the right
-   overload of the algorithm.  We might just try to use %ignore
-   statements instead.  */
+/* Wrap mln::data::fill by hand to help swig choose the right overload
+   of the algorithm.  We might just try to use %ignore statements
+   instead in a future version.  */
 namespace mln
 {
-  namespace level
+  namespace data
   {
-
     template <typename I>
     void fill(mln::Image<I>& ima, const mln_value(I)& v);
-
-  } // end of namespace mln::level
-
-} // end of namespace mln
+  }
+}

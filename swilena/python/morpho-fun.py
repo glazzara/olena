@@ -44,19 +44,12 @@ image.save(dilated, "dilation.pgm")
 eroded = image.erosion(ima, win_c4p())
 image.save(eroded, "erosion.pgm")
 
-image.save(image.opening(ima, win_c4p()), "opening.pgm")
-image.save(image.closing(ima, win_c4p()), "closing.pgm")
+image.save(image.opening(ima, c4()), "opening.pgm")
+image.save(image.closing(ima, c4()), "closing.pgm")
 
 image.save(image.gradient(ima, win_c4p()), "gradient.pgm")
 image.save(image.gradient_internal(ima, win_c4p()), "gradient_internal.pgm")
 image.save(image.gradient_external(ima, win_c4p()), "gradient_external.pgm")
 
-# FIXME: The interface of closing_area/opening_area is a pain: the
-# output should be returned, not taken as argument.
-closed_ima = image.image2d_int_u8(ima.domain())
-image.closing_area(ima, c4(), 50, closed_ima)
-image.save(closed_ima, "closing_area.pgm")
-
-opened_ima = image.image2d_int_u8(ima.domain())
-image.closing_area(ima, c4(), 50, opened_ima)
-image.save(opened_ima, "opening_area.pgm")
+image.save(image.closing_area(ima, c4(), 50), "closing_area.pgm")
+image.save(image.closing_area(ima, c4(), 50), "opening_area.pgm")

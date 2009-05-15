@@ -43,8 +43,8 @@
 
 %{
 # include <mln/core/concept/image.hh>
-# include <mln/core/box2d.hh>
-# include <mln/core/init.hh>
+# include <mln/core/alias/box2d.hh>
+# include <mln/core/routine/init.hh>
 
 # include <mln/value/set.hh>
 %}
@@ -71,28 +71,44 @@ namespace mln
   namespace trait
   {
 
+    // These traits actually depend on the exact (here dynamic) type
+    // of the image, therefore we should provide several entry points
+    // (dynamic_image_ implementations.
     template <typename T>
     struct image_< dynamic_image2d<T> >
       : default_image_< T, dynamic_image2d<T> >
     {
+      // misc
       typedef trait::image::category::primary category;
+      typedef trait::image::speed::slow       speed;
+      typedef trait::image::size::regular     size;
 
-      typedef trait::image::access::random   access;
-      typedef trait::image::space::two_d     space;
-      typedef trait::image::size::regular    size;
-      typedef trait::image::support::aligned support;
+      // value
+      typedef trait::image::vw_io::none                    vw_io;
+      typedef trait::image::vw_set::none                   vw_set;
+      typedef trait::image::value_access::indirect         value_access;
+      typedef trait::image::value_storage::disrupted       value_storage;
+      typedef trait::image::value_browsing::site_wise_only value_browsing;
+      typedef trait::image::value_alignment::with_grid     value_alignment;
+      typedef trait::image::value_io::read_write           value_io;
 
-      typedef trait::image::border::none     border;
-      typedef trait::image::data::raw        data;
-      typedef trait::image::io::read_write   io;
-      typedef trait::image::speed::fast      speed;
+      // site / domain
+      typedef trait::image::pw_io::read_write        pw_io;
+      typedef trait::image::localization::basic_grid localization;
+      typedef trait::image::dimension::two_d         dimension;
+
+      // extended domain
+      typedef trait::image::ext_domain::none      ext_domain;
+      typedef trait::image::ext_value::irrelevant ext_value;
+      typedef trait::image::ext_io::irrelevant    ext_io;
     };
 
   } // end of namespace mln::trait
 
 
   /* FIXME: Inherit from internal::image_base to factor methods (see
-     below)?  */
+     below)?  Probably not, as internal::image_base contains data
+     (through a tracked_ptr).  */
   // \brief A semi-abstract class that serves as an entry point
   // (called « director » by SWIG) for Python code.
   //
@@ -101,14 +117,13 @@ namespace mln
   template <typename T>
   struct dynamic_image2d : Image< dynamic_image2d<T> >
   {
-    typedef box2d   pset;
+    typedef box2d domain_t;
+    typedef point2d site;
     typedef point2d psite;
-    typedef point2d point;
     typedef dpoint2d dpoint;
     typedef mln_fwd_piter(box2d) fwd_piter;
     typedef mln_bkd_piter(box2d) bkd_piter;
-    // End of warning.
-
+    typedef fwd_piter piter;
 
     /// Value associated type.
     typedef T         value;
@@ -139,13 +154,11 @@ namespace mln
     /// 3).
     dynamic_image2d(const box2d& b);
 
+    // FIXME: Add a virtual dtor?
 
     /// Initialize an empty image.
     virtual void init_(const box2d& b);
 
-
-    /// Test if \p p is valid.
-    virtual bool owns_(const point2d& p) const;
 
     /// Give the set of values of the image.
     virtual const vset& values() const;
@@ -160,25 +173,30 @@ namespace mln
     virtual T& operator()(const point2d& p);
 
 
-    // From internal::image_base.
-    
-    /// Mesh associated type.
-    typedef mln_mesh(pset) mesh;
-    /// Coordinate associated type.
-    typedef mln_coord(point) coord;
-
     /// Test if \p p belongs to the image domain.
     virtual bool has(const psite& p) const;
     /// Give a bounding box of the image domain.
     virtual const box2d& bbox() const;
-    /// Give the number of points of the image domain.
-    virtual std::size_t npoints() const;
-    /// Test if this image has been initialized; default impl.
-    virtual bool has_data() const;
+
+    /// Is this image valid?  (dummy method).
+    virtual bool is_valid() const;
+
+    /// Eligible-value-set associated type.
+    typedef mln::value::set<T> t_eligible_values_set;
+
+    // Return the set of the image eligigle values
+    const t_eligible_values_set& values_eligible() const;
+
+    /// Value space associated type.
+    typedef mln::value::set<
+      typename mln::value::super_value<T>::ret > t_values_space;
+
+    /// Return the value space of the image.
+    const t_values_space& values_space() const;
 
     // We can set domain_ to protected, otherwise Python subclasses
     // won't see it.
-    pset domain_;
+    domain_t domain_;
   };
 
 
@@ -222,15 +240,6 @@ namespace mln
 
   template <typename T>
   inline
-  bool
-  dynamic_image2d<T>::owns_(const point2d& p) const
-  {
-    mln_precondition(exact(this)->has_data());
-    return exact(this)->has(p);
-  }
-
-  template <typename T>
-  inline
   const typename dynamic_image2d<T>::vset&
   dynamic_image2d<T>::values() const
   {
@@ -242,7 +251,7 @@ namespace mln
   const box2d&
   dynamic_image2d<T>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return domain_;
   }
 
@@ -253,7 +262,7 @@ namespace mln
   const T&
   dynamic_image2d<T>::operator()(const point2d& p) const
   {
-    // Nothing.
+    // Dummy.
     assert(false);
   }
 
@@ -264,7 +273,7 @@ namespace mln
   T&
   dynamic_image2d<T>::operator()(const point2d& p)
   {
-    // Nothing.
+    // Dummy.
     assert(false);
   }
 
@@ -273,7 +282,7 @@ namespace mln
   bool
   dynamic_image2d<T>::has(const psite& p) const
   {
-    mln_precondition(exact(this)->has_data());
+    mln_precondition(this->is_valid());
     return exact(this)->domain().has(p);
   }
 
@@ -282,25 +291,33 @@ namespace mln
   const box2d&
   dynamic_image2d<T>::bbox() const
   {
-    mln_precondition(exact(this)->has_data());
+    mln_precondition(this->is_valid());
     return exact(this)->domain().bbox();
   }
 
   template <typename T>
   inline
-  std::size_t
-  dynamic_image2d<T>::npoints() const
+  bool
+  dynamic_image2d<T>::is_valid() const
   {
-    mln_precondition(exact(this)->has_data());
-    return exact(this)->domain().npoints();
+    // Dummy.
+    return false;
   }
 
   template <typename T>
   inline
-  bool
-  dynamic_image2d<T>::has_data() const
+  const typename dynamic_image2d<T>::t_eligible_values_set&
+  dynamic_image2d<T>::values_eligible() const
   {
-    return true;
+    return t_eligible_values_set::the();
+  }
+
+  template <typename T>
+  inline
+  const typename dynamic_image2d<T>::t_values_space&
+  dynamic_image2d<T>::values_space() const
+  {
+    return t_values_space::the();
   }
 
 } // end of namespace mln
@@ -311,7 +328,7 @@ namespace mln
 
 
 %include "fill.ixx"
-%template(fill) mln::level::fill< mln::dynamic_image2d< mln::value::int_u<8> > >;
+%template(fill) mln::data::fill< mln::dynamic_image2d< mln::value::int_u<8> > >;
 
 %include "println.ixx"
 %template(println) mln::debug::println< mln::dynamic_image2d< mln::value::int_u<8> > >;

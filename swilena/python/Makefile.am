@@ -13,8 +13,6 @@ AM_CXXFLAGS = $(TOOLS_CXXFLAGS)
 AM_SWIGFLAGS = -Wall -c++ -python -I$(top_srcdir)/milena
 ## We build modules, not plain libs.
 AM_LDFLAGS = -avoid-version -module -shared
-#### All the modules depend on libhw.
-##AM_LIBADD = $(top_builddir)/libhw.la
 
 ## Run Swig to create the C++ wrapper files, the Python interface
 ## files, and the dependency Makefile snippets.
@@ -40,6 +38,11 @@ python_PYTHON += data.py
 
 ## FIXME: All of this should be generated.
 ## Don't forget to add a `deps-reset' target as in TC.
+
+## FIXME: Dependencies do not work as expected, e.g., touching
+## mln/core/point.hh will not void point-wrap.cc, and Swig will not
+## regen it (it will merely recompile _point2d.la).  See how other
+## projects people handle this.
 
 nodist_python_PYTHON =
 pyexec_LTLIBRARIES =
@@ -154,7 +157,7 @@ python_PYTHON += sps.py
 
 # The script to be used in installed distributions.
 bin_SCRIPTS = sps
-# The script to be used in non-installed distributions.
+# The script to be used in non-installed build trees.
 noinst_SCRIPTS = sps-local
 
 CLEANFILES += $(bin_SCRIPTS) $(noinst_SCRIPTS)

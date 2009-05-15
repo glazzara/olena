@@ -32,25 +32,57 @@
 %module neighb2d
 
 %import "dpoint2d.i"
+%import "window2d.i"
 
 %{
-#include "mln/core/neighb2d.hh"
+#include "mln/core/alias/neighb2d.hh"
 %}
+
+%include "mln/metal/is_a.hh"
 
 %include "mln/core/macros.hh"
 
 %include "mln/core/concept/neighborhood.hh"
+%include "mln/core/internal/neighborhood_base.hh"
 %include "mln/core/neighb.hh"
 
-%include "mln/core/neighb2d.hh"
+%include "mln/core/alias/neighb2d.hh"
 
 // Swig tries to wrap everything by default; prevent it from wrapping
 // invalid methods (1D and 3D insertions for a neighb2d).
-%ignore mln::neighb_< mln::dpoint_<mln::grid::square, int > >::
-insert(const typename mln::dpoint_<mln::grid::square, int>::coord&);
-%ignore mln::neighb_< mln::dpoint_<mln::grid::square, int > >::
-insert(const typename mln::dpoint_<mln::grid::square, int>::coord&,
-       const typename mln::dpoint_<mln::grid::square, int>::coord&,
-       const typename mln::dpoint_<mln::grid::square, int>::coord&);
+%ignore mln::neighb< mln::window < mln::dpoint<mln::grid::square,mln::def::coord > > >
+::insert(const typename mln::dpoint<mln::grid::square,mln::def::coord>::coord&);
 
-%template(neighb2d) mln::neighb_< mln::dpoint_<mln::grid::square, int > >;
+%ignore mln::neighb< mln::window < mln::dpoint<mln::grid::square, mln::def::coord > > >
+::insert(const typename mln::dpoint<mln::grid::square,mln::def::coord>::coord&,
+	 const typename mln::dpoint<mln::grid::square,mln::def::coord>::coord&,
+	 const typename mln::dpoint<mln::grid::square,mln::def::coord>::coord&);
+
+// Instantiate base classes of mln::neighb2d so that Swig knows it
+// derives from mln::Neighborhood.
+%template() mln::Neighborhood<
+  mln::neighb<
+    mln::window< mln::dpoint< mln::grid::square,mln::def::coord > >
+    >
+  >;
+%template() mln::internal::neighborhood_extra_impl<
+  mln::window < mln::dpoint<mln::grid::square, mln::def::coord > >,
+  mln::neighb<
+    mln::window < mln::dpoint<mln::grid::square, mln::def::coord > >
+    >
+  >;
+%template() mln::internal::neighborhood_impl<
+  mln::window < mln::dpoint<mln::grid::square, mln::def::coord > >,
+  mln::neighb<
+    mln::window < mln::dpoint<mln::grid::square, mln::def::coord > >
+    >
+  >;
+%template() mln::internal::neighborhood_base<
+  mln::window < mln::dpoint<mln::grid::square, mln::def::coord > >,
+  mln::neighb<
+    mln::window < mln::dpoint<mln::grid::square, mln::def::coord > >
+    >
+  >;
+// Instantiate mln::neighb2d.
+%template(neighb2d)
+mln::neighb< mln::window < mln::dpoint<mln::grid::square, mln::def::coord > > >;

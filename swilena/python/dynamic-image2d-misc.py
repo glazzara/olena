@@ -56,6 +56,9 @@ class simple_image(dyn_ima2d):
     off = p.row() * self.domain_.ncols() + p.col()
     return self.values_[off]
 
+  def is_valid(self):
+    return True
+
 
 # FIXME: Why can't I use
 #

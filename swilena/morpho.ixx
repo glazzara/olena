@@ -43,8 +43,29 @@
 #include "mln/morpho/erosion.hh"
 %}
 
-%include "mln/morpho/dilation.hh"
-%include "mln/morpho/erosion.hh"
+
+/* Files mln/morpho/dilation.hh and mln/morpho/erosion.hh contains too
+   much implementation details.  Using just
+   
+     %include "mln/morpho/dilation.hh"
+     %include "mln/morpho/erosion.hh"
+
+   would require a lot of efforts.  Use an explicit prototypes
+   instead.  */
+namespace mln
+{
+  namespace morpho
+  {
+    template <typename I, typename W>
+    mln_concrete(I)
+    dilation(const Image<I>& input, const Window<W>& win);
+
+    template <typename I, typename W>
+    mln_concrete(I)
+    erosion(const Image<I>& input, const Window<W>& win);
+  }
+}
+
 
 %define instantiate_dilation(Name, I, W)
   // Explicit instantiation of this trait for the return type.
@@ -58,28 +79,28 @@
   %template(Name) mln::morpho::erosion< I, W >;
 %enddef
 
-/*----------------------------------.
-| Morphological closing & opening.  |
-`----------------------------------*/
+/*-----------------------------------------------.
+| Morphological (elementary) closing & opening.  |
+`-----------------------------------------------*/
 
 %{
-#include "mln/morpho/closing.hh"
-#include "mln/morpho/opening.hh"
+#include "mln/morpho/elementary/closing.hh"
+#include "mln/morpho/elementary/opening.hh"
 %}
 
-%include "mln/morpho/closing.hh"
-%include "mln/morpho/opening.hh"
+%include "mln/morpho/elementary/closing.hh"
+%include "mln/morpho/elementary/opening.hh"
 
-%define instantiate_closing(Name, I, W)
+%define instantiate_closing(Name, I, N)
   // Explicit instantiation of this trait for the return type.
   %template() mln::trait::concrete< I >;
-  %template(Name) mln::morpho::closing< I, W >;
+  %template(Name) mln::morpho::elementary::closing< I, N >;
 %enddef
 
-%define instantiate_opening(Name, I, W)
+%define instantiate_opening(Name, I, N)
   // Explicit instantiation of this trait for the return type.
   %template() mln::trait::concrete< I >;
-  %template(Name) mln::morpho::opening< I, W >;
+  %template(Name) mln::morpho::elementary::opening< I, N >;
 %enddef
 
 /*------------.
@@ -115,19 +136,19 @@
 `-------------------------*/
 
 %{
-#include "mln/morpho/closing_area.hh"
-#include "mln/morpho/opening_area.hh"
+#include "mln/morpho/closing/area.hh"
+#include "mln/morpho/opening/area.hh"
 %}
 
-%include "mln/morpho/closing_area.hh"
-%include "mln/morpho/opening_area.hh"
+%include "mln/morpho/closing/area.hh"
+%include "mln/morpho/opening/area.hh"
 
 %define instantiate_closing_area(Name, I, N)
-  %template(Name) mln::morpho::closing_area< I, N, I >;
+  %template(Name) mln::morpho::closing::area< I, N >;
 %enddef
 
 %define instantiate_opening_area(Name, I, N)
-  %template(Name) mln::morpho::opening_area< I, N, I >;
+  %template(Name) mln::morpho::opening::area< I, N >;
 %enddef
 
 /*------------------------------------.
@@ -140,6 +161,7 @@
 
 %include "mln/morpho/meyer_wst.hh"
 
+// FIXME: Wrap mln::morpho::watershed::flooding instead.
 %define instantiate_meyer_wst(Name, L, I, N)
   // Explicit instantiation of this trait for the return type.
   %template() mln::trait::ch_value< I, L >;
@@ -154,8 +176,8 @@
   instantiate_dilation(dilation, I, W)
   instantiate_erosion(erosion, I, W)
 
-  instantiate_closing(closing, I, W)
-  instantiate_opening(opening, I, W)
+  instantiate_closing(closing, I, N)
+  instantiate_opening(opening, I, N)
 
   instantiate_gradient(gradient, I, W)
   instantiate_gradient_internal(gradient_internal, I, W)
