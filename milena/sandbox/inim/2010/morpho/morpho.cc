@@ -20,8 +20,7 @@ using namespace mln::value;
 void
 load_img(image2d<int_u8>& ima, const char* filename)
 {
-  std::cout << "  => loadimag " << filename << "...";
-  std::cout.flush();
+  std::cout << "  => loadimag " << filename << "..." << std::endl;
 
   // load.
   image2d<bool> in;
@@ -31,30 +30,24 @@ load_img(image2d<int_u8>& ima, const char* filename)
   int_u8 k = 1;
   ima = level::convert(k, in);
   ima = level::stretch(k, ima);
-
-  std::cout << "................[DONE]" << std::endl;
 }
 
 void
 revert_img(image2d<int_u8>& ima)
 {
-  std::cout << "  => revert image...";
-  std::cout.flush();
+  std::cout << "  => revert image..." << std::endl;
 
   // revert.
   ima = arith::revert(ima);
-  std::cout << "...................[DONE]" << std::endl;
 }
 
 void
 gaussian_filter(image2d<int_u8>& ima, float gaussian_force)
 {
-  std::cout << "  => applying gaussian filter...";
-  std::cout.flush();
+  std::cout << "  => applying gaussian filter..." << std::endl;
 
   // gaussian filter.
   ima = linear::gaussian(ima, gaussian_force, 1);
-  std::cout << ".......[DONE]" << std::endl;
 }
 
 void
@@ -63,8 +56,7 @@ rank_filter(image2d<int_u8>& ima,
 	    const unsigned k,
 	    const unsigned lambda)
 {
-  std::cout << "  => applying rank k filter...";
-  std::cout.flush();
+  std::cout << "  => applying rank k filter..." << std::endl;
 
   // rank filter.
   ima = morpho::rank_filter(ima, it, k);
@@ -75,8 +67,6 @@ rank_filter(image2d<int_u8>& ima,
       ima(p) = mln_min(int_u8);
     else
       ima(p) = mln_max(int_u8);
-
-  std::cout << ".........[DONE]" << std::endl;
 }
 
 void
@@ -113,12 +103,9 @@ main(int argc, char** argv)
   image2d<int_u8> ima;
   load_img(ima, input_filename);
   image2d<int_u8> in(ima);
-  //revert_img(ima);
-  io::pgm::save(ima, "1.pgm");
 
   // apply gaussian filter.
   gaussian_filter(ima, gaussian_force);
-  io::pgm::save(ima, "2.pgm");
 
   // create window.
   window2d window;
@@ -131,12 +118,10 @@ main(int argc, char** argv)
 
   // apply k-rank filter.
   rank_filter(ima, window, k, lambda);
-  io::pgm::save(ima, "3.pgm");
 
   // labelize.
   label_8 nlabels = 0;
   image2d<label_8> labels = labeling::regional_maxima(ima, c4(), nlabels);
-  io::pgm::save(labels, "4.pgm");
 
   // compute output image.
   replace_with_labels(labels, in);

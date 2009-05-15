@@ -31,7 +31,7 @@ echo '' >> Makefile
 echo 'all: morpho' >> Makefile
 echo '' >> Makefile
 echo 'clean:' >> Makefile
-echo '	rm -f *~ \#*\# *.o morpho' >> Makefile
+echo '	rm -f *~ \#*\# *.o morpho a.out' >> Makefile
 echo '' >> Makefile
 echo '' >> Makefile
 echo '' >> Makefile

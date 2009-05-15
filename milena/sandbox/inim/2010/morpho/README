@@ -13,4 +13,7 @@ The code is located in morpho.cc. You can run it by following those steps:
 - then make
 - then ./run.sh <input_image.pbm> <output_image.pgm>
 
+The input image has to be reverted, meaning that the background has to
+be black and the foreground white.
+
 You can customize the input variables by editing the run.sh script.
