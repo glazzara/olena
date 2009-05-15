@@ -1,5 +1,16 @@
 2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve the portability of mesh/Makefile.
+
+	* mesh/Makefile.am (meshes): Add `$(srcdir)/' prefixes in front of
+	all file names.
+	(pinv_curv, max_curv): Use substitutions references on $(meshes)
+	instead of (non portable) string substitution (GNU Make's
+	`patsubst' function).
+	Remove dead code.
+	
+2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Prevent the regeneration of computed meshes.
 
 	* mesh/Makefile.am ($(srcdir)/%-pinv-curv.off)

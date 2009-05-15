@@ -11,13 +11,17 @@ dist_mesh_DATA =
 ## Meshes.  ##
 ## -------- ##
 
+# The `$(srcdir)/' prefixes are mandatory, to force `$(pinv_curv)' and
+# `$(max_curv)' to reference files living in the *source* directory,
+# instead of the current (build) directory.  See their definitions
+# below, using substitution references on `$(meshes)'.
 meshes =					\
-  bunny-holefilled.off				\
-  cone.off					\
-  cube.off					\
-  socket.off					\
-  teapot.off					\
-  tetrahedron.off
+  $(srcdir)/bunny-holefilled.off		\
+  $(srcdir)/cone.off				\
+  $(srcdir)/cube.off				\
+  $(srcdir)/socket.off				\
+  $(srcdir)/teapot.off				\
+  $(srcdir)/tetrahedron.off
 dist_mesh_DATA += $(meshes)
 
 ## ------------------------------------ ##
@@ -35,8 +39,7 @@ mesh_pinv_curv: $(top_srcdir)/milena/apps/statues/mesh-pinv-curv.cc
 ## $(srcdir)/%-pinv-curv.off: %.off $(mesh_pinv_curv)
 ##	$(mesh_pinv_curv) $< $@
 
-# pinv_curv = $(meshes:.off=-pinv-curv.off)
-pinv_curv = $(patsubst %.off,$(srcdir)/%-pinv-curv.off,$(meshes))
+pinv_curv = $(meshes:.off=-pinv-curv.off)
 dist_mesh_DATA += $(pinv_curv)
 
 ## ----------------------------- ##
@@ -54,8 +57,7 @@ mesh_max_curv: $(top_srcdir)/milena/apps/statues/mesh-max-curv.cc
 ## $(srcdir)/%-max-curv.off: %.off $(mesh_max_curv)
 ## 	$(mesh_max_curv) $< $@
 
-#max_curv = $(meshes:.off=-max-curv.off)
-max_curv = $(patsubst %.off,$(srcdir)/%-max-curv.off,$(meshes))
+max_curv = $(meshes:.off=-max-curv.off)
 dist_mesh_DATA += $(max_curv)
 
 .PHONY: debug
