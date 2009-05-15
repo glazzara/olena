@@ -1,3 +1,15 @@
+2009-05-15  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Big cleanup.
+	* Makefile: Remove. Not needed.
+	* README: New explainations.
+	* configure: To build the Makefile.
+	* dilation-n.hh: New algorithm.
+	* erosion-n.hh: New algorithm.
+	* main_dilation-n.cc: New test file.
+	* morpho.cc: Cleanup in here.
+	* treat.sh: Adaptation.
+
 2009-05-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update segmentation code.
