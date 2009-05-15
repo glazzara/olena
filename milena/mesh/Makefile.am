@@ -29,8 +29,11 @@ mesh_pinv_curv: $(top_srcdir)/milena/apps/statues/mesh-pinv-curv.cc
 	cd $(top_builddir)/milena/apps/statues/mesh-pinv-curv && \
 	  $(MAKE) $(AM_MAKEFLAGS) mesh_pinv_curv
 
-$(srcdir)/%-pinv-curv.off: %.off $(mesh_pinv_curv)
-	$(mesh_pinv_curv) $< $@
+# FIXME: *-pinv-curv.off files should not be regenerated
+# automatically, because it really takes time.  Find a way to prevent
+# Make to regen them without disabling this rule.
+## $(srcdir)/%-pinv-curv.off: %.off $(mesh_pinv_curv)
+##	$(mesh_pinv_curv) $< $@
 
 # pinv_curv = $(meshes:.off=-pinv-curv.off)
 pinv_curv = $(patsubst %.off,$(srcdir)/%-pinv-curv.off,$(meshes))
@@ -45,8 +48,11 @@ mesh_max_curv: $(top_srcdir)/milena/apps/statues/mesh-max-curv.cc
 	cd $(top_builddir)/milena/apps/statues/mesh-max-curv && \
 	  $(MAKE) $(AM_MAKEFLAGS) mesh_max_curv
 
-$(srcdir)/%-max-curv.off: %.off $(mesh_max_curv)
-	$(mesh_max_curv) $< $@
+# FIXME: *-max-curv.off files should not be regenerated
+# automatically, because it really takes time.  Find a way to prevent
+# Make to regen them without disabling this rule.
+## $(srcdir)/%-max-curv.off: %.off $(mesh_max_curv)
+## 	$(mesh_max_curv) $< $@
 
 #max_curv = $(meshes:.off=-max-curv.off)
 max_curv = $(patsubst %.off,$(srcdir)/%-max-curv.off,$(meshes))

@@ -1,5 +1,13 @@
 2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Prevent the regeneration of computed meshes.
+
+	* mesh/Makefile.am ($(srcdir)/%-pinv-curv.off)
+	($(srcdir)/%-max-curv.off):
+	Disable these rules.
+
+2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Small adaptations of Milena to fix Swilena.
 
 	* mln/core/concept/image.hh (mln::Image<E>::Image): Add concept
