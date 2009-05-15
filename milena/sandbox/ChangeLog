@@ -1,3 +1,10 @@
+2009-05-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update segmentation code.
+
+	* theo/igr/segment_2d_t.cc: Replace area by height.
+	* theo/igr/dump_to_dist.cc: New.
+
 2009-05-15  Alex Hamelin  <hamelin@lrde.epita.fr>
 
 	Fix Gaussian call.

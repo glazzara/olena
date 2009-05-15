@@ -16,7 +16,7 @@
 #include <mln/value/label.hh>
 #include <mln/level/transform.hh>
 
-#include <mln/morpho/closing/area.hh>
+#include <mln/morpho/closing/height.hh>
 #include <mln/morpho/watershed/flooding.hh>
 #include <mln/accu/mean.hh>
 #include <mln/labeling/compute.hh>
@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
   // debug_println("d", d);
   io_save_edges_int_u12(d, 0, "d.pgm");
 
-  mln_VAR(d_clo, morpho::closing::area(d, e2e(), lambda));
+  mln_VAR(d_clo, morpho::closing::height(d, e2e(), lambda));
   // debug_println("d_clo", d_clo);
   io_save_edges_int_u12(d_clo, 0, "d_clo.pgm");
 
