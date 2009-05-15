@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -69,10 +70,17 @@ namespace mln
 			 const Neighborhood<N>& nbh_, const F& is_simple,
 			 const Image<K>& constraint_, const Image<R>& priority_)
     {
+      trace::entering("morpho::skeleton_constrained");
+
       const I& input      = exact(input_);
       const N& nbh        = exact(nbh_);
       const K& constraint = exact(constraint_);
       const R& priority   = exact(priority_);
+
+      mln_precondition(input.is_valid());
+      mln_precondition(nbh.is_valid());
+      mln_precondition(constraint.is_valid());
+      mln_precondition(priority.is_valid());
 
       extension::adjust_duplicate(input, nbh);
 
@@ -92,17 +100,13 @@ namespace mln
 
 	mln_piter(I) p(input.domain());
 	for_all(p)
-	  if ( input(p) == false &&
-	       is_simple(input, nbh, p) ) // p is a simple point of the background.
+	  if (input(p) == false &&
+	      is_simple(input, nbh, p)) // p is a simple point of the background.
 	    {
 	      q.push(priority(p), p);
-	      // std::cout << p << "  ";
 	    }
-	std::cout << std::endl;
       }
 
-      // std::cout << std::endl << "propagation..." << std::endl;
-      
       // Propagation.
       {
 	P p;
@@ -111,19 +115,18 @@ namespace mln
 	  {
 	    p = q.pop_front();
 	    for_all(n)
-	      if ( output.has(n) &&
-		   output(n) == true &&
-		   constraint(n) == false &&
-		   is_simple(output, nbh, n) )
+	      if (output.has(n) &&
+		  output(n) == true &&
+		  constraint(n) == false &&
+		  is_simple(output, nbh, n))
 		{
 		  output(n) = false; // Remove n from object.
 		  q.push(priority(n), n);
-		  // std::cout << n << "  ";
 		}
 	  }
-	std::cout << std::endl;
       }
 
+      trace::exiting("morpho::skeleton_constrained");
       return output;
     }
 

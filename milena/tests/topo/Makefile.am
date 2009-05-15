@@ -2,6 +2,8 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+SUBDIRS = skeleton
+
 check_PROGRAMS =				\
   complex
 
