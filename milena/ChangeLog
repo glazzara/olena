@@ -1,5 +1,16 @@
 2009-05-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Regen Makefile helpers.
+
+	* doc/examples/examples.mk,
+	* doc/figures/figures.mk,
+	* doc/outputs/outputs.mk,
+	* headers.mk,
+	* tests/unit_tests/unit-tests.mk:
+	Regen.
+
+2009-05-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Get compilation flags for applications from configure.
 
 	* apps/statues/Makefile.am (APPS_CXXFLAGS): New.
