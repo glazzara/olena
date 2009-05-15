@@ -9,7 +9,6 @@ if CFITSIO
   fits_SOURCES = fits.cc
   fits_CPPFLAGS = $(AM_CPPFLAGS) $(CFITSIO_CPPFLAGS)
   fits_LDFLAGS = $(AM_LDFLAGS) $(CFITSIO_LDFLAGS)
-
-endif
+endif CFITSIO
 
 TESTS = $(check_PROGRAMS)
