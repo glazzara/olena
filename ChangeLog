@@ -1,5 +1,11 @@
 2009-04-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have Makefile.am be more portable.
+
+	* Makefile.am (doc): Do not use make's `-C' option.
+
+2009-04-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix messages in m4/freeimageplus.m4.
 
 	* m4/freeimageplus.m4: s/FreeImage/FreeImagePlus/g.

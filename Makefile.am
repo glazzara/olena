@@ -4,10 +4,11 @@ ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = build-aux external milena
 
-.PHONY: doc
-doc:
-	$(MAKE) -C milena doc
-
 if ENABLE_SWILENA
   SUBDIRS += swilena
 endif ENABLE_SWILENA
+
+# Shortcut to generate the documentation from the top level.
+.PHONY: doc
+doc:
+	cd milena && $(MAKE) $(AM_MAKEFLAGS) $@
