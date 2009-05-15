@@ -25,24 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef SCRIBO_DESKEW_ALL_HH
-# define SCRIBO_DESKEW_ALL_HH
+#ifndef SCRIBO_PREPROCESSING_ALL_HH
+# define SCRIBO_PREPROCESSING_ALL_HH
 
-/// \file scribo/deskew/all.hh
+/// \file scribo/preprocessing/all.hh
 ///
-/// Include all headers located in scribo/deskew.
+/// Include all headers located in scribo/preprocessing.
 
 namespace scribo
 {
 
-  /// Namespace of deskew routines.
-  namespace deskew
+  /// Namespace of preprocessing routines.
+  namespace preprocessing
   {
 
-  } // end of namespace scribo::deskew
+  } // end of namespace scribo::preprocessing
 
 } // end of namespace scribo
 
-# include <scribo/deskew/hough.hh>
+# include <scribo/preprocessing/hough.hh>
 
-#endif // ! SCRIBO_DESKEW_ALL_HH
+#endif // ! SCRIBO_PREPROCESSING_ALL_HH
