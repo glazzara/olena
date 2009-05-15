@@ -1,5 +1,13 @@
 2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Clean up Milena's top-level Makefile.am.
+
+	* Makefile.am (EXTRA_DIST): Remove tools, tools/area_flooding.cc and
+	tools/seed2tiling.cc.
+	Reindent.
+
+2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use conditional ENABLE_TRIMESH.
 
 	* apps/statues/Makefile.am [ENABLE_TRIMESH]: Compile
