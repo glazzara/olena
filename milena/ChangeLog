@@ -1,5 +1,19 @@
 2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Small adaptations of Milena to fix Swilena.
+
+	* mln/core/concept/image.hh (mln::Image<E>::Image): Add concept
+	checks for typedef piter.
+	Update documentation.
+	Aesthetic changes.
+	* mln/core/alias/point2d.hh (mln::point2d, mln::point2df)
+	* mln/core/alias/dpoint2d.hh (mln::dpoint2d)
+	* mln/core/image/image2d.hh (mln::image2d<T>::at_)
+	* mln/core/window.hh (mln::window<D>::dps_hook_):
+	Use fully qualified type names.
+
+2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have uniform signatures for watershed transforms.
 
 	* mln/morpho/meyer_wst.hh

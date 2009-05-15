@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -176,7 +176,7 @@ namespace mln
     const std::vector<D>& std_vector() const;
 
     /// Hook to the set of D.
-    const util::set<D>& dps_hook_() const;
+    const mln::util::set<D>& dps_hook_() const;
 
     /// Print the window definition into \p ostr.
     void print(std::ostream& ostr) const;

@@ -45,8 +45,8 @@ namespace mln
   /// Type alias for a point defined on the 2D square grid with
   /// integer coordinates.
   ///
-  typedef point<grid::square, def::coord> point2d;
-  typedef point<grid::square, def::coordf> point2df;
+  typedef point<mln::grid::square, mln::def::coord> point2d;
+  typedef point<mln::grid::square, mln::def::coordf> point2df;
 
 
   namespace internal

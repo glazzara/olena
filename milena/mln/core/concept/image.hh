@@ -84,6 +84,7 @@ namespace mln
       typedef site;
       typedef psite;
 
+      typedef piter;
       typedef fwd_piter;
       typedef bkd_piter;
 
@@ -92,9 +93,15 @@ namespace mln
 
       bool is_valid() const;
 
-      // to be provided in concrete image classes:
+      typedef t_eligible_values_set;
+      const t_eligible_values_set& values_eligible() const;
+
+      typedef t_values_space;
+      const t_values_space& values_space() const;
 
       typedef value;
+
+      // to be provided in concrete image classes:
 
       typedef vset;
       const vset& values() const;
@@ -200,10 +207,11 @@ namespace mln
   {
     // provided by internal::image_base:
 
-    typedef mln_domain(E)  domain_t;
-    typedef mln_site(E)  site;
-    typedef mln_psite(E) psite;
+    typedef mln_domain(E) domain_t;
+    typedef mln_site(E)   site;
+    typedef mln_psite(E)  psite;
 
+    typedef mln_piter(E)     piter;
     typedef mln_fwd_piter(E) fwd_piter;
     typedef mln_bkd_piter(E) bkd_piter;
 
@@ -217,14 +225,21 @@ namespace mln
     bool (E::*m3)() const = & E::is_valid;
     m3 = 0;
 
+    typedef typename E::t_eligible_values_set t_eligible_values_set;
+
+    const t_eligible_values_set& (E::*m4)() const = & E::values_eligible;
+    m4 = 0;
+
+    typedef typename E::t_values_space t_values_space;
+
+    const t_values_space& (E::*m5)() const = & E::values_space;
+    m5 = 0;
+
     // to be provided in concrete image classes:
 
     typedef mln_value(E)  value;
     typedef mln_rvalue(E) rvalue;
     typedef mln_lvalue(E) lvalue;
-    typedef typename E::t_eligible_values_set t_eligible_values_set;
-    typedef typename E::t_values_space t_values_space;
-
 
     // FIXME Doc
     //typedef mln_vset(E) vset;
@@ -238,12 +253,6 @@ namespace mln
 
     const domain_t& (E::*m8)() const = & E::domain;
     m8 = 0;
-
-    const t_eligible_values_set& (E::*m9)() const = & E::values_eligible;
-    m9 = 0;
-
-    const t_values_space& (E::*m10)() const = & E::values_space;
-    m10 = 0;
 
     typedef typename E::skeleton skeleton;
 

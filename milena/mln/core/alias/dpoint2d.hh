@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -43,7 +43,7 @@ namespace mln
 
   /// Type alias for a delta-point defined on the 2D square
   /// grid with integer coordinates.
-  typedef dpoint<mln::grid::square, def::coord> dpoint2d;
+  typedef dpoint<mln::grid::square, mln::def::coord> dpoint2d;
 
 
 } // end of namespace mln

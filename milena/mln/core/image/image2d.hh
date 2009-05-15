@@ -209,10 +209,10 @@ namespace mln
     // -----------------
 
     /// Read-only access to the image value located at (\p row, \p col).
-    const T& at_(def::coord row, def::coord col) const;
+    const T& at_(mln::def::coord row, mln::def::coord col) const;
 
     /// Read-write access to the image value located at (\p row, \p col).
-    T& at_(def::coord row, def::coord col);
+    T& at_(mln::def::coord row, mln::def::coord col);
 
     /// Give the number of rows.
     unsigned nrows() const;
@@ -467,7 +467,7 @@ namespace mln
   template <typename T>
   inline
   const T&
-  image2d<T>::at_(def::coord row, def::coord col) const
+  image2d<T>::at_(mln::def::coord row, mln::def::coord col) const
   {
     mln_precondition(this->has(point2d(row, col)));
     return this->data_->array_[row][col];
@@ -476,7 +476,7 @@ namespace mln
   template <typename T>
   inline
   T&
-  image2d<T>::at_(def::coord row, def::coord col)
+  image2d<T>::at_(mln::def::coord row, mln::def::coord col)
   {
     mln_precondition(this->has(point2d(row, col)));
     return this->data_->array_[row][col];
