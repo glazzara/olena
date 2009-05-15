@@ -1,3 +1,15 @@
+2009-05-15  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Inim fix bugs related to word croping.
+	* edwin/inim/inim.cc: Add height closing to avoid word to be cropped.
+	* edwin/mln/morpho/tree/filter.hh: Add generic filter to
+	  replace filtered components by a user value instead of
+	  predefined values.
+	* edwin/rush/exo2/test.cc: Minor fixes.
+	* edwin/rush/exo2/wst_from_tree.cc: Test corrected sharpness
+	  with wst.
+	* inim/2011/fredwin: New.
+
 2009-05-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update Laurent's stuff and new code for Fabien.

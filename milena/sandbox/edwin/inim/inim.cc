@@ -20,12 +20,13 @@
 #include <mln/morpho/tree/compute_attribute_image.hh>
 #include <mln/morpho/tree/propagate.hh>
 #include <mln/morpho/tree/components.hh>
+#include <mln/morpho/tree/filter.hh>
 
 /* Attributes */
 #include <mln/transform/distance_front.hh>
 #include <mln/morpho/attribute/bbox.hh>
 #include <mln/morpho/attribute/card.hh>
-#include <mln/morpho/attribute/volume.hh>
+#include <mln/morpho/attribute/height.hh>
 #include <mln/make/w_window2d_int.hh>
 
 /* io */
@@ -60,7 +61,7 @@ bool mydebug = false;
 
 void usage(char** argv)
 {
-  std::cerr << "usage: " << argv[0] << " input [--debug] [-n nbr_components | -t treshold] [-c card]" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input [--debug] [-n nbr_components | -t treshold] [-h height]" << std::endl;
   abort();
 }
 
@@ -112,7 +113,7 @@ int main(int argc, char* argv[])
 
   std::string arg;
   unsigned nb_components = 0;
-  unsigned card = 0;
+  unsigned height = 15;
   double treshold = 0;
 
   if (argc < 2)
@@ -127,8 +128,8 @@ int main(int argc, char* argv[])
 	nb_components = atoi(argv[++i]);
       else if (arg == "-t" && i != argc)
 	treshold = atof(argv[++i]);
-      else if (arg == "-c" && i != argc)
-	card = atoi(argv[++i]);
+      else if (arg == "-h" && i != argc)
+	height = atoi(argv[++i]);
       else if (arg == "--trace")
 	trace::quiet = false;
       else
@@ -141,6 +142,10 @@ int main(int argc, char* argv[])
 
   image2d<bool> input_;
   io::pbm::load(input_, argv[1]);
+
+  if (mydebug) {
+    dsp("Distance geodesic");
+  }
 
   /* Work on geodesic distance image */
   I input;
@@ -156,8 +161,7 @@ int main(int argc, char* argv[])
   }
 
   if (mydebug) {
-    dsp("Distance geodesic");
-  
+    dsp("Component tree computation");
   }
 
   /* Component tree creation */
@@ -167,36 +171,32 @@ int main(int argc, char* argv[])
   S sorted_sites = level::sort_psites_decreasing(input);
   tree_t tree(input, sorted_sites, c4());
 
+
+  if (mydebug) {
+    dsp("Attribute image computation");
+  }
+
   /* Compute Attribute On Image */
   typedef morpho::attribute::bbox<I> bbox_t;
-  typedef morpho::attribute::volume<I> card_t;
+  typedef morpho::attribute::card<I> card_t;
+  typedef morpho::attribute::height<I> height_t;
   typedef mln_ch_value_(I, double) A;
 
   mln_VAR(attr_image, morpho::tree::compute_attribute_image(bbox_t (), tree));
   mln_VAR(card_image, morpho::tree::compute_attribute_image(card_t (), tree));
+  mln_VAR(height_image, morpho::tree::compute_attribute_image(height_t (), tree));
+
   A a = duplicate(ratio(pw::value(attr_image), pw::value(card_image)) | attr_image.domain());
 
-  if (card)
-    {
-      if (mydebug)
-	dsp("Image card attribute");
-
-      a = duplicate((fun::p2v::ternary(pw::value(card_image) > pw::cst(card),
-				       pw::value(a),
-				       pw::cst(0.0))) | a.domain());
-    }
-
-  if (mydebug) {
-    dsp("Image sharp attribute");
-  }
-
-
+  if (height)
+    morpho::tree::filter::filter(tree, a, pw::value(height_image) > pw::cst(height), 0.0);
 
   /* Run max accumulator */
   p_array< mln_psite_(A) > obj_array; // Array of object components.
 
   if (mydebug) {
-    std::stringstream s("Run max accumulator, look for ", std::stringstream::out|std::stringstream::in|
+    std::stringstream s("Run max accumulator, look for ",
+			std::stringstream::out|std::stringstream::in|
 			std::stringstream::ate);
     if (nb_components)
       s << nb_components << " components.";
@@ -224,20 +224,16 @@ int main(int argc, char* argv[])
       std::cout << c;
   }
 
-  /* Now Back Propagate to component */
-  typedef mln_ch_value_(I, bool) M;
-  M mask = morpho::tree::set_value_to_components(tree, obj_array, true, false);
-
-  // mask now contains all nodes related to objects
 
   if (mydebug) {
     dsp("Create mask and propagate");
   }
 
-  a = morpho::tree::propagate_components(a, tree, obj_array, 0);
-  mln_VAR(output_, level::stretch(int_u8(), a)); //adapt to 0-255
-  io::pgm::save(output_, "components.pgm");
+  /* Now Back Propagate to component */
+  typedef mln_ch_value_(I, bool) M;
+  M mask = morpho::tree::set_value_to_components(tree, obj_array, true, false);
 
+  a = morpho::tree::propagate_components(a, tree, obj_array, 0);
 
   /* Labeling */
   typedef mln_ch_value_(I, value::label<8>) L;
@@ -245,7 +241,8 @@ int main(int argc, char* argv[])
   value::label_8 nlabel;
   L label = labeling::blobs(mask, c4(), nlabel);
   O output = labeling::colorize(value::rgb8(), label, nlabel);
-  io::ppm::save(output, "label.pgm");
+  if (mydebug)
+    io::ppm::save(output, "label.pgm");
 
   /* Now store output image image */
   O out, distance;
@@ -259,6 +256,7 @@ int main(int argc, char* argv[])
     for_all(it)
     {
       std::cout << it << " :: " << attr_image(it).pmin() << " -> " << a(it)
+		<< " (h: " << height_image(it) << ")"
 		<< std::endl;
 
       draw::box(out, attr_image(it), literal::red_t ());

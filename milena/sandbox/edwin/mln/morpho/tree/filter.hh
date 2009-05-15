@@ -37,7 +37,7 @@
 ** predicate as well. In this case, all strategies have the same
 ** result but min filter or direct filter should be used in term
 ** of performance. If a predicate test is not enough fast, then
-** prefer the min filter that minimizes call to predicate.
+** prefer the min filter that minimizes calls to predicate.
 */
 
 # include <mln/core/concept/function.hh>
@@ -49,10 +49,18 @@ namespace mln {
     namespace tree {
       namespace filter {
 
+
+	template <typename T, typename F, typename P2B>
+	inline
+	void
+	filter(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_, const mln_value(F)& v);
+
+
 	template <typename T, typename F, typename P2B>
 	inline
 	void
 	min(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_);
+
 
 	template <typename T, typename F, typename P2B>
 	inline
@@ -100,6 +108,29 @@ namespace mln {
 	    return not_pred_<P2B>(f);
 	  }
 
+	}
+
+	template <typename T, typename F, typename P2B>
+	inline
+	void
+	filter(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_, const mln_value(F)& v)
+	{
+	  F& f = exact(f_);
+	  const P2B& pred = exact(pred_);
+
+	  //FIXME precondition
+	  mln_ch_value(F, bool) mark;
+	  initialize(mark, f);
+	  mln::data::fill(mark, false);
+
+	  mln_dn_node_piter(T) n(tree);
+	  for_all(n)
+	    if (mark(tree.parent(n)) || !pred(n))
+	      {
+		f(n) = v;
+		mark(n) = true;
+	      }
+	  //FIXME postcondition
 	}
 
 

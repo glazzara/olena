@@ -53,11 +53,12 @@
 /* Tree computation */
 #include <mln/level/sort_psites.hh>
 #include <mln/morpho/tree/data.hh>
-#include "../../tree/propagate.hh"
-#include "../../tree/components.hh"
+#include <mln/morpho/tree/propagate.hh>
+#include <mln/morpho/tree/propagate_if.hh>
+#include <mln/morpho/tree/components.hh>
 
 #include <mln/morpho/tree/compute_attribute_image.hh>
-#include <mln/morpho/attribute/sharpness.hh>
+#include <mln/morpho/attribute/mysharpness.hh>
 
 /* pw */
 #include <mln/core/concept/function.hh>
@@ -102,6 +103,27 @@ namespace mln
   height_wrapper(const Function_p2v<P2V>& f)
   {
     return height_wrapper_<P2V>(f);
+  }
+
+  template <typename T, typename F, typename P2B>
+  inline
+  void
+  mymin(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_)
+  {
+    F& f = exact(f_);
+    const P2B& pred = exact(pred_);
+
+    mln_ch_value(F, bool) mark;
+    initialize(mark, f);
+    mln::data::fill(mark, false);
+
+    mln_dn_node_piter(T) n(tree);
+    for_all(n)
+      if (mark(tree.parent(n)) || !pred(tree.parent(n)))
+	{
+	  f(n) = 0.0;
+	  mark(n) = true;
+	}
   }
 }
 
@@ -176,17 +198,17 @@ int main(int argc, char** argv)
   typedef mln_ch_value_(I, double) A;
   A a;
   {
-    typedef morpho::attribute::sharpness<I> sharp_t;
-    typedef mln_ch_value_(I, sharp_t) B;
+    typedef mln_ch_value_(I, unsigned) H;
 
     // Attribute Pruning
-    B a_img;
-    a = morpho::tree::compute_attribute_image(sharp_t (), t, &a_img);
+    H h_img;
+    a = morpho::attribute::mysharpness(t, &h_img);
 
     // Component filtering
-    a = duplicate((fun::p2v::ternary(height_wrapper(pw::value(a_img)) > pw::cst(lambda_h),
-				   pw::value(a),
-				   pw::cst(0.0))) | a.domain());
+
+    // this should use a filter from morpho/tree/filter with the predicate on the height of the parent
+    // so use function composition but ...
+    mymin(t, a, pw::value(h_img) > pw::cst(lambda_h));
   }
 
   /************************************************/

@@ -1,6 +1,7 @@
 #include <mln/morpho/attribute/volume.hh>
 #include <mln/morpho/attribute/height.hh>
-#include <mln/morpho/attribute/sharpness.hh>
+#include <mln/morpho/attribute/mysharpness.hh>
+
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
 #include <mln/level/sort_psites.hh>
@@ -12,8 +13,8 @@
 #include <mln/core/alias/neighb1d.hh>
 #include <mln/value/int_u8.hh>
 
-#include "../../tree/components.hh"
-#include "../../tree/propagate.hh"
+#include <mln/morpho/tree/components.hh>
+#include <mln/morpho/tree/propagate.hh>
 
 #include <mln/fun/p2v/ternary.hh>
 #include <mln/pw/all.hh>
@@ -104,28 +105,28 @@ int main()
 
   {
     typedef mln_ch_value_(I, double) A;
-    typedef morpho::attribute::sharpness<I> attribute_t;
     A a, component_img;
 
     // Attribute Pruning
-    a = morpho::tree::compute_attribute_image(attribute_t (), t);
+    a = morpho::attribute::mysharpness(t);
+    morpho::tree::propagate_representative(t, a);
     debug::println("sharpness", a);
 
     // Component filtering
-    a = duplicate((fun::p2v::ternary(pw::value(height) > pw::cst(2),
-				   pw::value(a),
-				   pw::cst(0.0))) | a.domain());
+    // a = duplicate((fun::p2v::ternary(pw::value(height) > pw::cst(2),
+// 				   pw::value(a),
+// 				   pw::cst(0.0))) | a.domain());
 
-    debug::println("sharpness", a);
+    //debug::println("sharpness", a);
 
 
-    p_array< mln_psite_(A) > obj_array;
-    obj_array = morpho::tree::get_components(t, a);
-    std::cout << obj_array.nsites() << std::endl;
+//     p_array< mln_psite_(A) > obj_array;
+//     obj_array = morpho::tree::get_components(t, a);
+//     std::cout << obj_array.nsites() << std::endl;
 
-    component_img = morpho::tree::propagate_components(a, t, obj_array, 0);
+//     component_img = morpho::tree::propagate_components(a, t, obj_array, 0);
 
-    debug::println("sharpness", component_img);
+//     debug::println("sharpness", component_img);
   }
 
 
