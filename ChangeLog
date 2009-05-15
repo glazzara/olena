@@ -1,5 +1,13 @@
 2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Populate configure.ac with missing Makefiles.
+
+	* configure.ac: Configure
+	milena/tests/morpho/reconstruction/Makefile and
+	milena/tests/morpho/reconstruction/by_dilation/Makefile.
+
+2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Adjust .gitignore files.
 
 	* .gitignore: Ignore patterns *.pyc and *.stamp globally.
