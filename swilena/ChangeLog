@@ -1,5 +1,12 @@
 2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve Swilena.
+
+	* int_u.ixx (__int__, __str__): New methods (extensions).
+	* python/dynamic-image2d-misc.py: Revive dead code.
+
+2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Revive Swilena (again).
 
 	* box2d.i, dpoint2d.i, dynamic_image2d.i, fill.ixx, image2d.ixx,

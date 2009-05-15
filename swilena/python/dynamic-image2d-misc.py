@@ -79,6 +79,6 @@ image.println(ima)
 
 # FIXME: Doesn't really work yet, since int_u8 is not convertible
 # to int.
-# for r in range(0, 10):
-#   for c in range(0, 10):
-#     print ima(point2d(r, c))
+for r in range(0, 10):
+  for c in range(0, 10):
+    print ima(point2d(r, c))

@@ -111,3 +111,28 @@ namespace mln
   } // end of namespace mln::value
 
 } // end of namespace mln
+
+// Helper for the conversion to int.
+%extend mln::value::int_u
+{
+  int __int__() const { return *$self; }
+}
+
+// Helper for the conversion to string.
+%{
+#include <cstring>
+#include <string>
+#include <sstream>
+%}
+
+%extend mln::value::int_u
+{
+  char* __str__() const
+  {
+    std::ostringstream s;
+    s << *$self;
+    // FIXME: This is admittedly ugly; can't we use std::string as
+    // return type?  See Swig's manual.
+    return strdup(s.str().c_str());
+  }
+}
