@@ -60,18 +60,18 @@ VectorIterator<Value>::reinit (mln::point2d p, int orient)
     points_.push_back (pair_type_t(p + dpoints[mod(orient - 1, 8)],
                                    mod(orient - 1, 8)));
   }
-//   if (0u == from_ (p + dpoints[mod(orient + 2, 8)]))
-//   {
-// //    std::cout << "**** 3 PUSH " << p + dpoints[mod(orient + 2, 8)] << mod(orient + 2, 8)<< std::endl;
-//     points_.push_back (pair_type_t(p + dpoints[mod(orient + 2, 8)],
-//                                    mod(orient + 2, 8)));
-//   }
-//   if (0u == from_ (p + dpoints[mod(orient - 2, 8)]))
-//   {
-// //    std::cout << "**** 4 PUSH " << p + dpoints[mod(orient - 2, 8)] << mod(orient - 2, 8)<< std::endl;
-//     points_.push_back (pair_type_t(p + dpoints[mod(orient - 2, 8)],
-//                                    mod(orient - 2, 8)));
-//   }
+  if (0u == from_ (p + dpoints[mod(orient + 2, 8)]))
+  {
+//    std::cout << "**** 3 PUSH " << p + dpoints[mod(orient + 2, 8)] << mod(orient + 2, 8)<< std::endl;
+    points_.push_back (pair_type_t(p + dpoints[mod(orient + 2, 8)],
+                                   mod(orient + 2, 8)));
+  }
+  if (0u == from_ (p + dpoints[mod(orient - 2, 8)]))
+  {
+//    std::cout << "**** 4 PUSH " << p + dpoints[mod(orient - 2, 8)] << mod(orient - 2, 8)<< std::endl;
+    points_.push_back (pair_type_t(p + dpoints[mod(orient - 2, 8)],
+                                   mod(orient - 2, 8)));
+  }
 
   start();
 }
@@ -131,8 +131,6 @@ VectorIterator<Value>::orient ()
 {
   return current_->second;
 }
-
-
 
 int
 mod(int x, int y)

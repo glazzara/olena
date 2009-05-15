@@ -4,7 +4,8 @@
 # include <mln/io/pgm/load.hh>
 # include <mln/io/pgm/save.hh>
 # include <mln/io/ppm/save.hh>
-# include <mln/linear/gaussian.hh>
+# include <mln/linear/gaussian_directional_2d.hh>
+# include <mln/literal/black.hh>
 # include <mln/arith/revert.hh>
 # include <mln/morpho/watershed/flooding.hh>
 # include <mln/morpho/watershed/superpose.hh>
@@ -48,7 +49,8 @@ Cuttor<Value>::start (bool use_vect)
 {
   // Blur the image to loose useless information
   mln::image2d<Value> blur =
-    mln::linear::gaussian(mln::linear::gaussian (img_, 20, 1), 5, 0);
+//    mln::linear::gaussian(mln::linear::gaussian (img_, 20, 1), 5, 0);
+    mln::linear::gaussian_directional_2d(mln::linear::gaussian_directional_2d (img_, 1, 20, 0), 0, 5, 0);
   save (blur, filename_, "_blur");
 
   // Math Morph to fill the holes who still exists in the blured image
@@ -97,6 +99,7 @@ Cuttor<Value>::start (bool use_vect)
       final(p) = 0;
     else
       final(p) = line_components(p);
+
   save (final, filename_, "_final");
 }
 
@@ -191,7 +194,7 @@ Cuttor<Value>::find_vector_line (mln::image2d<Value>& from,
       it.reinit (*it, it.orient());
     }
 
-//    current.print();
+    current.print();
 
     if (!it.has_point() || !from.domain().has(*it))
     {
@@ -202,7 +205,7 @@ Cuttor<Value>::find_vector_line (mln::image2d<Value>& from,
     }
     else
     {
-//      std::cout << "### LOOK FOR ORIENTATION" << std::endl;
+      std::cout << "### LOOK FOR ORIENTATION" << std::endl;
 
       double min_angle = 360;
       mln::point2d new_start (0,0);
@@ -214,10 +217,8 @@ Cuttor<Value>::find_vector_line (mln::image2d<Value>& from,
 
         Vector<mln::point2d>* vect_tmp = retrive_vect_from(from, *it, it.orient());
 
-//        vect_tmp->print ();
+        vect_tmp->print ();
 
-
-//        std::cout << "%%%% Scalar " << current.scalar(*vect_tmp) << std::endl;
         double angle_tmp;
 
         if (current.norm() != 0)
@@ -225,7 +226,7 @@ Cuttor<Value>::find_vector_line (mln::image2d<Value>& from,
         else
           angle_tmp = previous.angle(*vect_tmp);
 
-//        std::cout << "### Angle " << angle_tmp << std::endl;
+        std::cout << "### Angle " << angle_tmp << std::endl;
 
         if (angle_tmp < min_angle)
         {
@@ -239,7 +240,7 @@ Cuttor<Value>::find_vector_line (mln::image2d<Value>& from,
         it.next();
       }
 
-//      std::cout << "### Chosen new start: " << new_start << std::endl;
+      std::cout << "### Chosen new start: " << new_start << std::endl;
       lined_(new_start) = 0;
       previous = current;
       current.restart_from(new_start, new_orient);

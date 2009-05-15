@@ -38,6 +38,6 @@ class VectorIterator
     static mln::dpoint2d dpoints[8];
 };
 
-# include "vect_it.hxx"
+# include "vect_it_OLD.hxx"
 
 #endif /* !VECT_IT_HH */

@@ -1,6 +1,6 @@
 INCLUDES=-I "../../../../"
 CXX=g++
-CXX_FLAGS=-W -Wall -O3 -ffast-math
+CXX_FLAGS=-W -Wall -DNDEBUG -O3 -ffast-math
 
 OBJS= main.o
 TARGET=cutthem
@@ -23,6 +23,7 @@ distclean: clean
 main.o: cuttor.hh cuttor.hxx				\
 	advance_iterator.hh advance_iterator.hxx	\
 	vector.hh vector.hxx				\
-	vect_it.hh vect_it.hxx
+	vect_it.hh vect_it.hxx				\
+	vect_it_OLD.hxx
 
 #

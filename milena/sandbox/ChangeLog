@@ -1,3 +1,15 @@
+2009-05-15  Alex Hamelin  <hamelin@lrde.epita.fr>
+
+	Fix Gaussian call.
+	* inim/2010/blur/Makefile: Add -DNDEBUG.
+	* inim/2010/blur/README: Add information about results.
+	* inim/2010/blur/cuttor.hxx: Call to gaussian_directional_2d.
+        Add compile time errors.
+	* inim/2010/blur/vect_it.hh: Change file included from 
+        vect_it to vect_it_OLD.
+	* inim/2010/blur/vect_it_OLD.hxx: Try fixing the problem of 
+        backward search.
+
 2009-05-15  Florent DHalluin  <d-halluin@lrde.epita.fr>
 
 	INIM: CAG (Jerome, Florent)
