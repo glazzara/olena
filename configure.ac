@@ -111,19 +111,28 @@ AC_CANONICAL_HOST
 AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 
 
-# (Bundled) trimesh2 library.
-OLN_WITH_TRIMESH
-AC_CONFIG_SUBDIRS([external/trimesh])
-AM_CONDITIONAL([WITH_TRIMESH], [test x$with_trimesh = xyes])
+## -------------------- ##
+## External libraries.  ##
+## -------------------- ##
 
 # FreeImage library.
 OLN_WITH_FREEIMAGEPLUS
 AM_CONDITIONAL([FREEIMAGEPLUS], [test x$oln_have_freeimageplus = xyes])
 
-# Cfitsio library.
+# CFITSIO library.
 OLN_WITH_CFITSIO
 AM_CONDITIONAL([CFITSIO], [test x$oln_have_cfitsio = xyes])
 
+
+## ---------------------------- ##
+## (Bundled) trimesh2 library.  ##
+## ---------------------------- ##
+
+AC_ARG_ENABLE([trimesh],
+              [AS_HELP_STRING([--with-trimesh],
+                              [build the (bundled) trimesh2 library])])
+AM_CONDITIONAL([ENABLE_TRIMESH], [test x$enable_trimesh = xyes])
+AC_CONFIG_SUBDIRS([external/trimesh])
 
 ## --------- ##
 ## Swilena.  ##

@@ -1,3 +1,12 @@
+2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve configure.ac w.r.t. Trimesh.
+
+	* m4/trimesh.m4: Remove, and move relevant lines...
+	* configure.ac: ...here.
+	Adjust.
+	* external/Makefile.am: Adjust.
+
 2009-04-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have Makefile.am be more portable.
