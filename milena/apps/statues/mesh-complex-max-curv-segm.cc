@@ -39,7 +39,7 @@
 #include <mln/core/image/complex_image.hh>
 #include <mln/core/image/complex_neighborhoods.hh>
 
-#include <mln/morpho/closing_area.hh>
+#include <mln/morpho/closing/area.hh>
 #include <mln/morpho/meyer_wst.hh>
 
 #include <mln/math/max.hh>
@@ -131,7 +131,7 @@ int main(int argc, char* argv[])
     adj_edges_nbh_t;
   adj_edges_nbh_t adj_edges_nbh;
 
-  ima_t closed_input = mln::morpho::closing_area(input, adj_edges_nbh, lambda);
+  ima_t closed_input = mln::morpho::closing::area(input, adj_edges_nbh, lambda);
 
   /*------.
   | WST.  |

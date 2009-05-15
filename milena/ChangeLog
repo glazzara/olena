@@ -1,5 +1,15 @@
 2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have apps/statues/ catch up with Milena's current interface.
+
+	* apps/statues/mesh-complex-max-curv-segm.cc,
+	* apps/statues/mesh-complex-segm.cc,
+	* apps/statues/mesh-segm.cc,
+	* apps/statues/mesh-skel.cc:
+	Adjust to the current interface of mln::morpho::closing::area.
+
+2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	* doc/.gitignore: Add headers.stamp.
 
 2009-04-16  Roland Levillain  <roland@lrde.epita.fr>

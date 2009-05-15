@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -46,7 +46,7 @@
 #include <mln/core/image/graph_image.hh>
 #include <mln/core/image/graph_elt_neighborhood.hh>
 
-#include <mln/morpho/closing_area.hh>
+#include <mln/morpho/closing/area.hh>
 #include <mln/labeling/regional_minima.hh>
 
 #include "io.hh"
@@ -155,8 +155,7 @@ int main(int argc, char* argv[])
   typedef mln::graph_elt_neighborhood<mln::point3d> nbh_t;
   nbh_t nbh;
 
-  ima_t closed_g_ima (g_ima.domain());
-  mln::morpho::closing_area(g_ima, nbh, lambda, closed_g_ima);
+  ima_t closed_g_ima = mln::morpho::closing::area(g_ima, nbh, lambda);
 
   /*------------------.
   | Regional minima.  |
