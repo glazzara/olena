@@ -276,7 +276,7 @@ AC_CONFIG_FILES([
       milena/tests/morpho/opening/Makefile
       milena/tests/morpho/opening/approx/Makefile
       milena/tests/morpho/reconstruction/Makefile
-      milena/tests/morpho/reconstruction/by_dilation/Makefile
+        milena/tests/morpho/reconstruction/by_dilation/Makefile
       milena/tests/morpho/tree/Makefile
       milena/tests/morpho/watershed/Makefile
     milena/tests/norm/Makefile
@@ -288,12 +288,14 @@ AC_CONFIG_FILES([
     milena/tests/tag/Makefile
     milena/tests/test/Makefile
     milena/tests/topo/Makefile
+      milena/tests/topo/skeleton/Makefile
     milena/tests/trace/Makefile
     milena/tests/trait/Makefile
       milena/tests/trait/image/Makefile
       milena/tests/trait/op/Makefile
       milena/tests/trait/value/Makefile
     milena/tests/transform/Makefile
+    milena/tests/transformation/Makefile
     milena/tests/unit_test/Makefile
     milena/tests/util/Makefile
     milena/tests/value/Makefile
