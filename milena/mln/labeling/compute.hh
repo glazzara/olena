@@ -36,8 +36,16 @@
 ///
 /// \todo write fastest version.
 ///
-/// \todo Move versions without 'input' as arg into mln::set
+///
+/// TODO: Move versions without 'input' as arg into mln::set
 /// and change 'input' from Image to Site_Set!
+/// ==> NO, see below. (Z)
+///
+/// The overload not taking 'input' as argument works on sites and would be a good
+/// candidate for set::compute. However, the fact that this version of compute
+/// is in the namespace 'labeling' means that it produces several results at the
+/// same time for each labels which is not the case of other implementations of
+/// compute.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/accumulator.hh>

@@ -821,11 +821,11 @@ routines/tools than what this program actually does.
 
 Here is the full example:
 
-\doxycode[1]{first_routine}
+\doxycode[1]{tuto3_first_routine}
 Let's see the different parts of the algorithm.
 
 
-\doxycode[2]{first_routine}
+\doxycode[2]{tuto3_first_routine}
 The prototype is restrictive enough, readable and still generic.
 We use concepts to statically check that the generic type passed as
 parameter is what the routine expects. The ``exact'' image type is \type{I}. For
@@ -837,12 +837,12 @@ The important point to remember is that a generic function should not return
 \type{I} directly but \code{mln\_concrete(I)} instead.
 
 
-\doxycode[3]{first_routine}
+\doxycode[3]{tuto3_first_routine}
 Like any Milena's routine, note that we use \code{trace}. This debugging tool
 will be detailled in section \ref{tuto3debughints}.
 
 
-\doxycode[4]{first_routine}
+\doxycode[4]{tuto3_first_routine}
 Since the function take some arguments thanks their concept, these object cannot
 be used as such. Indeed, concepts are empty shells only used for dispatching and
 concept checking, that's the reason why they are parameterized with their exact
@@ -852,7 +852,7 @@ Of course, it is always a good idea to add few preconditions to help during
 debug.
 
 
-\doxycode[5]{first_routine}
+\doxycode[5]{tuto3_first_routine}
 In this portion of code, the image is labeled and the number of site per label
 is computed. This code does not depend on the image type at all. Again, a macro
 \code{mln\_ch\_value} (``mln change value'') helps us. \code{labeling::blobs} is a routine returning an
@@ -862,7 +862,7 @@ image of the same kind as the input image but with a different value.
 different value type.
 
 
-\doxycode[6]{first_routine}
+\doxycode[6]{tuto3_first_routine}
 The output image is declared here. Like any variable, it must be initialized at
 some point. To do so, \code{initialize()} is provided. It is a generic routine
 which can initialize the geometry any kind of image with another image of the
@@ -873,14 +873,14 @@ Note that the value passed to \code{data::fill} is also generic. The library
 includes few generic common values from which any value type can convert to.
 
 
-\doxycode[7]{first_routine}
+\doxycode[7]{tuto3_first_routine}
 In this part, every region from the labeled image, of which cardinality is lower
 than 10 sites, is set to \val{literal::zero} in \var{output}.
 Once again, a generic value is used in order to avoid a constraints on the image
 value type.
 
 
-\doxycode[8]{first_routine}
+\doxycode[8]{tuto3_first_routine}
 Don't forget to close the trace before exiting the function. Then return the
 result.
 
@@ -1024,9 +1024,9 @@ Since it's a global variable, at anytime in the source code, the trace can be
 enabled/disabled.
 
 Traces are enabled:
-\doxycode[1]{trace}
+\doxycode[1]{tuto3_trace}
 \code{labeleling::blobs} is run and the debug is then disabled.
-\doxycode[2]{trace}
+\doxycode[2]{tuto3_trace}
 
 The previous code will produce the following trace:
 
@@ -1055,21 +1055,21 @@ been disabled just before it is called.
 Milena also provides a lot of debug tools. Here is a small list of the tools:
 \begin{itemize}
   \item mln::debug::println, print an image in the console.
-  \doxycode[1]{println}
-  \doxymoutput[1]{println}
+  \doxycode[1]{tuto3_println}
+  \doxymoutput[1]{tuto3_println}
 
   \item mln::debug::println\_with\_border, print an image in the console withs
   its border.
-  \doxycode[2]{println}
-  \doxymoutput[2]{println}
+  \doxycode[2]{tuto3_println}
+  \doxymoutput[2]{tuto3_println}
 
-  \item mln::debug::colorize, colorize a label image with random colors.
-  \doxycode[1]{colorize}
+  \item mln::labeling::colorize, colorize a label image with random colors.
+  \doxycode[1]{tuto3_colorize}
 
   \begin{center}
     \begin{tabular}{c c c}
-      \doxyfigure[1]{colorize}{3cm} & ~\huge{$\rightarrow$}~ &
-      \doxyfigure[2]{colorize}{3cm} \\
+      \doxyfigure[1]{tuto3_colorize}{3cm} & ~\huge{$\rightarrow$}~ &
+      \doxyfigure[2]{tuto3_colorize}{3cm} \\
     \end{tabular}
   \end{center}
 \end{itemize}
@@ -1090,7 +1090,7 @@ compilation time w.r.t compilation options (O1, DNDEBUG).
 
 This chapter aims at explaining how images are stored and which objects compose
 an image in Milena. We will start to talk about the localization of a pixel and
-then the image itself which includes the values.
+then the image itself which stores the values.
 
 
 %**************************
@@ -1103,7 +1103,10 @@ A site can be any kind of localization element.
 For instance, in an image defined on a 2D regular grid, it is a 2D point with
 \var{row} and \var{col} coordinates.
 
+\doxycode{tuto4_point2d}
+
 The site type in an image is defined by its underlying site set.
+
 
 
 %**************************

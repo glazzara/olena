@@ -12,7 +12,12 @@ split=false
 i=1
 for begin in $begins; do
   partend=$((`echo $ends | cut -d ' ' -f $i` - 1))
-  head -n $partend $1 | tail -n $(($partend - $begin)) > $3/"`basename $1 .$2`-$i.$2"
+  subdir=`basename \`dirname $1\``
+  out_name="`basename $1 .$2`-$i.$2"
+  if [ "$subdir" != "examples" ] && [ "$subdir" != "outputs" ]; then
+    out_name="${subdir}_$out_name"
+  fi
+  head -n $partend $1 | tail -n $(($partend - $begin)) > "$3/$out_name"
   i=$((i+1))
   split=true
 done

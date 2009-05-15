@@ -202,7 +202,7 @@ namespace mln
     const box<P>&
     bbox<P>::to_result() const
     {
-      mln_precondition(is_valid_);
+//      mln_precondition(is_valid_);
       return b_;
     }
 

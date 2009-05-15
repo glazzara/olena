@@ -53,7 +53,7 @@ namespace mln
     template <typename S, typename I, typename T>
     struct data< tr_image<S,I,T> >
     {
-      data(const S& s, I& ima, const T& tr);
+      data(const S& s, const I& ima, const T& tr);
 
       I ima_;
       T tr_;
@@ -107,7 +107,7 @@ namespace mln
 
 
     /// Constructors.
-    tr_image(const S& s, I& ima, const T& tr);
+    tr_image(const S& s, const I& ima, const T& tr);
     /* FIXME: What's the purpose of this ctor?  AFAIK, morphers
        objects (and images in general) cannot have their structure /
        core data altered after they're built.  Here, there's a
@@ -117,7 +117,7 @@ namespace mln
     tr_image();
 
     /// Initialize an empty image.
-    void init_(const S& s, I& ima, const T& tr);
+    void init_(const S& s, const I& ima, const T& tr);
 
     /// Test if this image has been initialized.
     bool is_valid() const;
@@ -149,7 +149,7 @@ namespace mln
 
     template <typename S, typename I, typename T>
     inline
-    data< tr_image<S,I,T> >::data(const S& s, I& ima, const T& tr)
+    data< tr_image<S,I,T> >::data(const S& s, const I& ima, const T& tr)
       : ima_(ima),
 	tr_(tr),
         s_(s)
@@ -160,7 +160,7 @@ namespace mln
 
   template <typename S, typename I, typename T>
   inline
-  tr_image<S,I,T>::tr_image(const S& s, I& ima, const T& tr)
+  tr_image<S,I,T>::tr_image(const S& s, const I& ima, const T& tr)
   {
     init_(s, ima, tr);
   }
@@ -168,7 +168,7 @@ namespace mln
   template <typename S, typename I, typename T>
   inline
   void
-  tr_image<S,I,T>::init_(const S& s, I& ima, const T& tr)
+  tr_image<S,I,T>::init_(const S& s, const I& ima, const T& tr)
   {
     mln_precondition(ima.is_valid());
     this->data_ = new internal::data< tr_image<S,I,T> >(s, ima, tr);
@@ -225,7 +225,8 @@ namespace mln
   template <typename S, typename I, typename T>
   inline
   tr_image<S,I,T>
-  transposed_image(const Site_Set<S>& s, Image<I>& ima, const Function_x2x<T>& t)
+  transposed_image(const Site_Set<S>& s, const Image<I>& ima,
+		   const Function_x2x<T>& t)
   {
     tr_image<S,I,T> tmp(exact(s), exact(ima), exact(t));
     return tmp;

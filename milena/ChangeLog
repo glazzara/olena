@@ -1,3 +1,44 @@
+2009-05-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Small fixes (again)
+
+	* doc/examples/Makefile.am,
+	* doc/examples/fill-subdomain.cc,
+	* doc/examples/labeling-compute.cc,
+	* doc/examples/tuto3/colorize.cc,
+	* doc/examples/tuto4/point2d.cc,
+	* doc/examples/tuto4_genericity_and_algorithms.cc: update examples.
+
+	* doc/outputs/site_set_create.txt,
+	* doc/outputs/colorize.txt,
+	* doc/outputs/println.txt,
+	* doc/outputs/trace.txt: rename as...
+
+	* doc/outputs/tuto4_site_set_create.txt,
+	* doc/outputs/tuto3_println.txt,
+	* doc/outputs/tuto3_colorize.txt,
+	* doc/outputs/tuto3_trace.txt: ... this.
+
+	* doc/outputs/tuto4_point2d.txt: new reference output file.
+
+	* doc/tools/split_sample.sh: add subdir names to example binary names.
+
+	* doc/tutorial/tutorial.tex: include correct code samples.
+
+	* mln/accu/bbox.hh: temporary disable a precondition.
+
+	* mln/accu/compute.hh: add a fixme.
+
+	* mln/core/image/tr_image.hh: require an image to be const in the constructor.
+
+	* mln/core/site_set/p_array.hh: fix invalid static_cast.
+
+	* mln/labeling/compute.hh: add more comments.
+	
+	* mln/labeling/essential.hh: add missing include.
+	
+	* mln/morpho/hit_or_miss.hh: avoid warnings.
+
 2009-05-12 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Small fixes.

@@ -1,7 +1,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/make/image2d.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 #include <doc/tools/sample_utils.hh>
 
 int main()
@@ -17,7 +17,7 @@ int main()
 		       65,  65, 65, 127, 127 };
 
   image2d<int_u8> ima = make::image2d(vals);
-  image2d<rgb8> ima_color = debug::colorize(rgb8(), ima, 230);
+  image2d<rgb8> ima_color = labeling::colorize(rgb8(), ima, 230);
   // \}
 
   doc::pgmsave(ima, "colorize");

@@ -150,6 +150,7 @@ namespace mln
 
       mln_precondition(exact(input).is_valid());
 
+      //FIXME: why adding util::pix here?
       typedef mln_accu_with(A, util::pix<I>) A_;
       util::pix<I>* pix_; // So we can pass a pixel below (pixel has
 			  // no ctor without arg).

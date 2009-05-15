@@ -27,7 +27,7 @@ int main()
   image2d<label_8> lbl = labeling::blobs(ima, c4(), nlabels);
   // \}
 
-  doc::ppmsave(debug::colorize(rgb8(), lbl, nlabels), "fill-subdomain");
+  doc::ppmsave(labeling::colorize(rgb8(), lbl, nlabels), "fill-subdomain");
 
   // Create a new image from lbl's sites being part of component 2.
   // \{
@@ -38,7 +38,7 @@ int main()
   initialize(tmp, lbl);
   data::fill(tmp, 0);
   data::fill((tmp | lbl_2.domain()).rw(), 1);
-  doc::ppmsave(debug::colorize(rgb8(), tmp, 1), "fill-subdomain");
+  doc::ppmsave(labeling::colorize(rgb8(), tmp, 1), "fill-subdomain");
 
   // Create a black image from ima.
   // Fill sites being part of component 2 with red.

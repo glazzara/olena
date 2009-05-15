@@ -1,6 +1,6 @@
 #include <mln/essential/2d.hh>
 #include <mln/binarization/threshold.hh>
-#include <mln/debug/colorize.hh>
+#include <mln/labeling/colorize.hh>
 #include <tests/data.hh>
 #include <doc/tools/sample_utils.hh>
 
@@ -80,7 +80,7 @@ int main()
   value::label_8 nlabels;
   image2d<value::label_8> label = labeling::blobs(lena_bw, c8(), nlabels);
   // \}
-  doc::ppmsave(debug::colorize(value::rgb8(), label, nlabels), "tuto4_genericity_and_algorithms");
+  doc::ppmsave(labeling::colorize(value::rgb8(), label, nlabels), "tuto4_genericity_and_algorithms");
 
   // \{
   data::fill((lena | (pw::value(label) == pw::cst(0u))).rw(), literal::blue);

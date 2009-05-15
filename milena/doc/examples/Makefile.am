@@ -53,13 +53,14 @@ tuto4_genericity_and_algorithms
 
 # Tuto3
 noinst_PROGRAMS +=	 	\
-colorize 			\
-println 			\
-trace 				 
+tuto3_colorize 			\
+tuto3_println 			\
+tuto3_trace 				 
 
 # Tuto4
 noinst_PROGRAMS +=	 	\
-site_set_create
+tuto4_point2d			\
+tuto4_site_set_create
 
 accu_right_instanciation_SOURCES = accu-right-instanciation.cc
 borderthickness_SOURCES = borderthickness.cc
@@ -108,12 +109,13 @@ tuto3_rw_image_SOURCES = tuto3_rw_image.cc
 tuto4_genericity_and_algorithms_SOURCES = tuto4_genericity_and_algorithms.cc
 
 # Tuto 3
-colorize_SOURCES = tuto3/colorize.cc
-println_SOURCES = tuto3/println.cc
-trace_SOURCES = tuto3/trace.cc
+tuto3_colorize_SOURCES = tuto3/colorize.cc
+tuto3_println_SOURCES = tuto3/println.cc
+tuto3_trace_SOURCES = tuto3/trace.cc
 
 # Tuto 4
-site_set_create_SOURCES = tuto4/site_set_create.cc
+tuto4_site_set_create_SOURCES = tuto4/site_set_create.cc
+tuto4_point2d_SOURCES = tuto4/point2d.cc
 
 all: clean-figures 
 	mkdir -p $(OUTPUTS_BUILDDIR) 

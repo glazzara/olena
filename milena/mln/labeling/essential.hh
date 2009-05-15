@@ -33,6 +33,7 @@
 /// File that includes essential labeling routines.
 
 # include <mln/labeling/blobs.hh>
+# include <mln/labeling/colorize.hh>
 # include <mln/labeling/compute.hh>
 # include <mln/labeling/relabel.hh>
 
