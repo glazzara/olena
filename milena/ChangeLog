@@ -1,5 +1,12 @@
 2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use conditional ENABLE_TRIMESH.
+
+	* apps/statues/Makefile.am [ENABLE_TRIMESH]: Compile
+	mesh-pinv-curv and mesh-max-curv.
+
+2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Address comparisons of signed vs unsigned in apps/statues/.
 
 	* apps/statues/io.hh: Use unsigned loop indices.

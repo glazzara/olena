@@ -19,18 +19,21 @@ AM_CXXFLAGS = -Wall -Wextra -ggdb -O3 -DNDEBUG
 LDFLAGS_trimesh = $(GLFLAGS)
 LDADD_trimesh = -L$(top_builddir)/external/trimesh/libsrc -ltrimesh $(GLLIBS)
 
-# FIXME: Have program names embed the type of structure used (either
-# graph or complex).
 
 bin_PROGRAMS =
 TESTS = 
 
-## FIXME: Programs' names should reflect a dependency on Trimesh, if any.
+# FIXME: Have program names embed the type of structure used (either
+# graph or complex).
+
+## FIXME: Likewise, programs' names should reflect a dependency on
+## Trimesh, if any.
 
 ## ------------------------------------------------ ##
 ## Graph-based applications, depending on Trimesh.  ##
 ## ------------------------------------------------ ##
 
+if ENABLE_TRIMESH
 # bin_PROGRAMS += mesh-segm mesh-skel
 # 
 # mesh_segm_SOURCES = mesh-segm.cc io.hh
@@ -47,28 +50,34 @@ TESTS =
 # mesh_skel_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
 # mesh_skel_LDFLAGS = $(LDFLAGS_trimesh)
 # mesh_skel_LDADD = $(LDADD_trimesh)
+endif ENABLE_TRIMESH
 
 ## -------------------------------------------------- ##
 ## Complex-based applications, depending on Trimesh.  ##
 ## -------------------------------------------------- ##
 
-bin_PROGRAMS += mesh-pinv-curv mesh-max-curv
+if ENABLE_TRIMESH
+  bin_PROGRAMS += mesh-pinv-curv mesh-max-curv
 
-mesh_pinv_curv_SOURCES = mesh-pinv-curv.cc io.hh
-mesh_pinv_curv_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
-mesh_pinv_curv_LDFLAGS = $(LDFLAGS_trimesh)
-mesh_pinv_curv_LDADD = $(LDADD_trimesh)
+  mesh_pinv_curv_SOURCES = mesh-pinv-curv.cc io.hh
+  mesh_pinv_curv_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
+  mesh_pinv_curv_LDFLAGS = $(LDFLAGS_trimesh)
+  mesh_pinv_curv_LDADD = $(LDADD_trimesh)
 
-mesh_max_curv_SOURCES = mesh-max-curv.cc io.hh
-mesh_max_curv_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
-mesh_max_curv_LDFLAGS = $(LDFLAGS_trimesh)
-mesh_max_curv_LDADD = $(LDADD_trimesh)
-TESTS += test-mesh-max-curv
+  mesh_max_curv_SOURCES = mesh-max-curv.cc io.hh
+  mesh_max_curv_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
+  mesh_max_curv_LDFLAGS = $(LDFLAGS_trimesh)
+  mesh_max_curv_LDADD = $(LDADD_trimesh)
+  TESTS += test-mesh-max-curv
+endif ENABLE_TRIMESH
 
 ## ---------------------------------------------------- ##
 ## Complex-based applications, independent of Trimesh.  ##
 ## ---------------------------------------------------- ##
 
+# A Milena re-implementation of some features from Trimesh.  This code
+# is completely independent from the Trimesh library.
+# FIXME: Change the name of this directory, as it is confusing.
 noinst_HEADERS = trimesh/misc.hh
 EXTRA_DIST = trimesh/README
 
