@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,6 +39,15 @@
       eaux. In: Actes du 8ème Congrès AFCET, Lyon-Villeurbanne, France
       (1991), pages 847--859.  */
 
+
+/* FIXME: This file is outdated.  Compare this file with
+   mln/morpho/watershed/flooding.hh, and remove the former when
+
+   1. it is entirely covered by the latter;
+   2. clients (including tests and Milena) are updated to use 
+      mln::morpho::watershed::flooding.  */
+
+
 # include <mln/trait/ch_value.hh>
 
 // FIXME: See below.
@@ -56,14 +65,6 @@ namespace mln
 
   namespace morpho
   {
-    /* FIXME: Provide also a version of the algorithm taking an image
-       of minima as input.  */
-
-    /* FIXME: See also the interface of the Shortest-Path Watershed
-       Transform, which proposes to lower-complete the image before
-       processing it.  Then, add a reference to
-       mln/morpho/lower_completion.hh.  */
-
     /** \brief Meyer's Watershed Transform (WST) algorithm.
 
 	\param[in]  input   The input image.
@@ -75,7 +76,7 @@ namespace mln
 	\li \p I is the exact type of the input image.
 	\li \p N is the exact type of the neighborhood used to express
 	\a input's connexity.  */
-    template <typename I, typename N, typename L>
+    template <typename L, typename I, typename N>
     mln_ch_value(I, L)
     meyer_wst(const Image<I>& input, const Neighborhood<N>& nbh,
 	      L& nbasins);
@@ -101,9 +102,10 @@ namespace mln
     meyer_wst(const Image<I>& input, const Neighborhood<N>& nbh);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename L>
+    template <typename L, typename I, typename N>
     mln_ch_value(I, L)
     meyer_wst(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	      L& nbasins)

@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,8 +42,6 @@
 
 # include <mln/trait/ch_value.hh>
 
-// FIXME: See below.
-# include <mln/util/greater_psite.hh>
 # include <mln/morpho/includes.hh>
 # include <mln/literal/zero.hh>
 # include <mln/labeling/regional_minima.hh>
@@ -63,18 +61,6 @@ namespace mln
     namespace watershed
     {
 
-      /*
-	FIXME:
-	Provide also a version of the algorithm taking an image
-	of minima as input.
-
-	FIXME:
-	See also the interface of the Shortest-Path Watershed
-	Transform, which proposes to lower-complete the image before
-	processing it.  Then, add a reference to
-	mln/morpho/lower_completion.hh.
-      */
-
       /// Meyer's Watershed Transform (WST) algorithm.
       ///
       /// \param[in]  input    The input image.
@@ -87,10 +73,30 @@ namespace mln
       /// \li \p N is the exact type of the neighborhood used to express
       /// \a input's connexity.
 
-      template <typename I, typename N, typename L>
+      template <typename L, typename I, typename N>
       mln_ch_value(I, L)
-	flooding(const Image<I>& input, const Neighborhood<N>& nbh,
-		 L& n_basins);
+      flooding(const Image<I>& input, const Neighborhood<N>& nbh,
+	       L& n_basins);
+
+      /// \brief Meyer's Watershed Transform (WST) algorithm, with no
+      /// count of basins.
+      /// 
+      /// \param[in]  input   The input image.
+      /// \param[in]  nbh     The connexity of markers.
+      /// 
+      /// \li \p L is the type of labels, used to number the watershed
+      /// itself (with the minimal value), and the basins.
+      /// \li \p I is the exact type of the input image.
+      /// \li \p N is the exact type of the neighborhood used to express
+      /// \a input's connexity.
+      /// 
+      /// Note that the first parameter, \p L, is not automatically
+      /// valued from the type of the actual argument during implicit
+      /// instantiation: you have to explicitly pass this parameter at
+      /// call sites.
+    template <typename L, typename I, typename N>
+    mln_ch_value(I, L)
+    flooding(const Image<I>& input, const Neighborhood<N>& nbh);
 
 
 
@@ -105,10 +111,10 @@ namespace mln
 	namespace generic
 	{
 
-	  template <typename I, typename N, typename L>
+	  template <typename L, typename I, typename N>
 	  mln_ch_value(I, L)
-	    flooding(const Image<I>& input_, const Neighborhood<N>& nbh_,
-		     L& n_basins)
+	  flooding(const Image<I>& input_, const Neighborhood<N>& nbh_,
+		   L& n_basins)
 	  {
 	    trace::entering("morpho::watershed::impl::generic::flooding");
 	    /* FIXME: Ensure the input image has scalar values.  */
@@ -209,8 +215,8 @@ namespace mln
 
 	template <typename I, typename N, typename L>
 	mln_ch_value(I, L)
-	  flooding_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_,
-			   L& n_basins)
+	flooding_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_,
+			 L& n_basins)
 	{
 	  trace::entering("morpho::watershed::impl::flooding_fastest");
 	  /* FIXME: Ensure the input image has scalar values.  */
@@ -278,7 +284,8 @@ namespace mln
 	      for (unsigned i = 0; i < n_nbhs; ++i)
 		{
 		  unsigned n = p + dp[i];
-		  if (output.element(n) != unmarked) // In the border, output is unmarked so n is ignored.
+		  // In the border, output is unmarked so N is ignored.
+		  if (output.element(n) != unmarked)
 		    {
 		      if (adjacent_marker == unmarked)
 			{
@@ -304,7 +311,8 @@ namespace mln
 		    {
 		      unsigned n = p + dp[i];
 		      if (output.element(n) == unmarked
-			  && ! in_queue.element(n)) // In the border, in_queue is true so n is ignored.
+			  // In the border, in_queue is true so N is ignored.
+			  && ! in_queue.element(n))
 			{
 			  queue.push(max - input.element(n), n);
 			  in_queue.element(n) = true;
@@ -330,8 +338,9 @@ namespace mln
 	template <typename I, typename N, typename L>
 	inline
 	mln_ch_value(I, L)
-	  flooding_dispatch(metal::false_,
-			    const Image<I>& input, const Neighborhood<N>& nbh, L& n_basins)
+	flooding_dispatch(metal::false_,
+			  const Image<I>& input, const Neighborhood<N>& nbh,
+			  L& n_basins)
 	{
 	  return impl::generic::flooding(input, nbh, n_basins);
 	}
@@ -340,8 +349,9 @@ namespace mln
 	template <typename I, typename N, typename L>
 	inline
 	mln_ch_value(I, L)
-	  flooding_dispatch(metal::true_,
-			    const Image<I>& input, const Neighborhood<N>& nbh, L& n_basins)
+	flooding_dispatch(metal::true_,
+			  const Image<I>& input, const Neighborhood<N>& nbh,
+			  L& n_basins)
 	{
  	  return impl::flooding_fastest(input, nbh, n_basins);
 	}
@@ -349,7 +359,8 @@ namespace mln
 	template <typename I, typename N, typename L>
 	inline
 	mln_ch_value(I, L)
-	  flooding_dispatch(const Image<I>& input, const Neighborhood<N>& nbh, L& n_basins)
+	flooding_dispatch(const Image<I>& input, const Neighborhood<N>& nbh,
+			  L& n_basins)
 	{
 	  enum {
 	    test = mlc_equal(mln_trait_image_speed(I),
@@ -364,22 +375,31 @@ namespace mln
       } // end of namespace mln::morpho::watershed::internal
 
 
-      // Facade.
+      // Facades.
 
-      template <typename I, typename N, typename L>
+      template <typename L, typename I, typename N>
       inline
       mln_ch_value(I, L)
-	flooding(const Image<I>& input, const Neighborhood<N>& nbh, L& n_basins)
+      flooding(const Image<I>& input, const Neighborhood<N>& nbh, L& n_basins)
       {
 	trace::entering("morpho::watershed::flooding");
 
 	// FIXME: internal::flooding_tests(input, nbh, n_basins);
 
-	mln_ch_value(I, L) output = internal::flooding_dispatch(input, nbh, n_basins);
+	mln_ch_value(I, L) output =
+	  internal::flooding_dispatch(input, nbh, n_basins);
 
 	trace::exiting("morpho::watershed::flooding");
 	return output;
       }
+
+    template <typename L, typename I, typename N>
+    mln_ch_value(I, L)
+    flooding(const Image<I>& input, const Neighborhood<N>& nbh)
+    {
+      L nbasins;
+      return flooding<L>(input, nbh, nbasins);
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

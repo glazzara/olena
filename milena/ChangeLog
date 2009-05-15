@@ -1,3 +1,19 @@
+2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have uniform signatures for watershed transforms.
+
+	* mln/morpho/meyer_wst.hh
+	(meyer_wst<I, N, L>(const Image<I>&, const Neighborhood<N>&, L&))
+	Reorder the template parameters...
+	(meyer_wst<L, I, N>(const Image<I>&, const Neighborhood<N>&, L&)):
+	...so that the type of labels (L) comes first.
+	* mln/morpho/watershed/flooding.hh:
+	Remove useless #include.
+	(watershed::flooding(const Image<I>&, const Neighborhood<N>&, L&)):
+	Likewise.
+	(watershed::flooding(const Image<I>&, const Neighborhood<N>&)):
+	New facade.
+
 2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Clean up Milena's top-level Makefile.am.
