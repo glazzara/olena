@@ -25,18 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/io/magick/load.cc
+/// \file tests/io/magick/save.cc
 ///
-/// Test on mln::io::magick::load.
+/// Test on mln::io::magick::save.
 
 #include <mln/core/image/image2d.hh>
+#include <mln/io/magick/load.hh>
+#include <mln/io/magick/save.hh>
+#include <mln/io/ppm/load.hh>
 
 #include <mln/level/compare.hh>
 
 #include <mln/io/magick/load.hh>
-#include <mln/io/ppm/load.hh>
-
-#include <mln/value/rgb8.hh>
 
 #include "tests/data.hh"
 
@@ -44,12 +44,16 @@ int main()
 {
   using namespace mln;
 
-  image2d<value::rgb8> lena_ppm;
-  io::ppm::load(lena_ppm, MLN_IMG_DIR "/tiny.ppm");
+  image2d<value::rgb8> lena_mln;
+  io::ppm::load(lena_mln, MLN_IMG_DIR "/tiny.ppm");
 
-  image2d<value::rgb8> lena_png;
-  io::magick::load(lena_png, MLN_TESTS_IMG_DIR "/tiny.png");
+  io::magick::save(lena_mln, "tiny.png");
 
-  mln_assertion(lena_png == lena_ppm);
+  image2d<value::rgb8> lena_im;
+  io::magick::load(lena_im, "tiny.png");
+
+  mln_assertion(lena_im.domain() == lena_mln.domain());
+  mln_assertion(lena_im == lena_mln);
+
 }
 
