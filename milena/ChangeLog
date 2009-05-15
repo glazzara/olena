@@ -1,3 +1,7 @@
+2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	* doc/.gitignore: Add headers.stamp.
+
 2009-04-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	Canonicalize tests/io/fits/Makefile.am.
