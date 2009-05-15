@@ -298,14 +298,16 @@ AC_CONFIG_FILES([
 ## Applications.  ##
 ## -------------- ##
 
-# FIXME: Don't build applications depending on Trimesh if Trimesh is not built.
+AC_ARG_ENABLE([apps],
+              [AS_HELP_STRING([--enable-apps],
+                              [enable application])])
+AM_CONDITIONAL([ENABLE_APPS], [test "x$enable_apps" = "xyes"])
+
 # Ask for the creation of applications' Makefiles.
-# FIXME: Should it be achieved through oln.m4 macros, as we did in Olena 0.11?
-# FIXME: ENABLE IT
-#AC_CONFIG_FILES([
-#  milena/apps/Makefile
-#    milena/apps/statues/Makefile
-#])
+AC_CONFIG_FILES([
+  milena/apps/Makefile
+    milena/apps/statues/Makefile
+])
 
 # Configure tests.
 # FIXME: Consider using `sed' instead of `configure' to create these
@@ -323,5 +325,12 @@ AC_CONFIG_FILES([milena/apps/statues/test-mesh-complex-max-curv-segm],
 
 AC_CONFIG_FILES([milena/apps/statues/test-mesh-complex-skel],
 		[chmod +x milena/apps/statues/test-mesh-complex-skel])
+
+# Flags for apps.
+AC_ARG_VAR([APPS_CXXFLAGS])
+# We want fast binaries for apps.
+if test "$GXX" = yes && test -z "$APPS_CXXFLAGS"; then
+  APPS_CXXFLAGS="-O3 -DNDEBUG -ggdb -Wall -W"
+fi
 
 AC_OUTPUT

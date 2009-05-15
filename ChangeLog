@@ -1,5 +1,16 @@
 2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make Milena applications (milena/apps/) optional.
+
+	* configure.ac: Add option `--enable-apps'.
+	(ENABLE_APPS): New conditional.
+	Always configure milena/apps/Makefile and
+	milena/apps/statues/Makefile.
+	Populate APPS_CXXFLAGS with default flags.
+	* milena/Makefile.am (SUBDIRS) [ENABLE_APPS]: Add apps.
+
+2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve configure.ac w.r.t. Trimesh.
 
 	* m4/trimesh.m4: Remove, and move relevant lines...

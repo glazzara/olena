@@ -1,11 +1,13 @@
 ## Process this file through Automake to create Makefile.in.
 
-##FIXME
 SUBDIRS = 	\
   doc 		\
   mesh 	 	\
   tests
-#  apps
+
+if ENABLE_APPS
+  SUBDIRS += apps
+endif ENABLE_APPS
 
 .PHONY: doc tutorial tools
 
