@@ -1,3 +1,43 @@
+2009-05-12 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Small fixes.
+
+	* milena/doc/examples/tuto3/fill_non_generic.cc.raw: fix.
+
+	* milena/tests/unit_test/build_unit_test.sh,
+	* milena/generate_dist_headers.sh: use 'sort' to be sure of the output
+	lines order.
+
+	* milena/headers.mk,
+	* milena/tests/unit_test/unit-tests.mk: regenerate with the previous
+	modified scripts.
+
+	* milena/mln/core/image/vertex_image.hh: fix a wrong type declaration.
+
+	* milena/mln/core/internal/graph_psite_base.hh: Remove comparison
+	operators.
+
+	* milena/mln/core/site_set/p_array.hh: Enforce the comparison on the
+	site type.
+
+	* milena/mln/core/site_set/p_edges_psite.hh,
+	* milena/mln/core/site_set/p_vertices_psite.hh: add operator ==, !=
+	and <.
+
+	* milena/mln/fun/v2v/hsi_to_rgb.hh: reindent.
+
+	* milena/mln/fun/v2v/hsl_to_rgb.hh: add a missing forward declaration.
+
+	* milena/mln/io/magick/load.hh: move fixme.
+
+	* milena/mln/io/magick/save.hh: cleanup.
+
+	* milena/mln/value/hsl.hh: add operator==.
+
+	* milena/tests/io/magick/Makefile.am: add ldflags to magick test.
+
+	* milena/tests/io/magick/magick.cc: write a new test.
+
 2009-05-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Bug fixes.

@@ -2,6 +2,8 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+magick_LDFLAGS = -lMagick++ 
+
 check_PROGRAMS =				\
    load
 

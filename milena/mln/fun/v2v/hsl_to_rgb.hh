@@ -54,6 +54,7 @@ namespace mln
   {
     template <typename H, typename S, typename L> class hsl_;
     typedef hsl_<float, float, float> hsl_f;
+    template <unsigned n> struct rgb;
   }
 
   namespace fun

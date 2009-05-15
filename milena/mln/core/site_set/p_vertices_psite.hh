@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -62,6 +63,19 @@ namespace mln
   };
 
 
+  template <typename G, typename F>
+  bool
+  operator==(const p_vertices_psite<G,F>& lhs, const p_vertices_psite<G,F>& rhs);
+
+  template <typename G, typename F>
+  bool
+  operator!=(const p_vertices_psite<G,F>& lhs, const p_vertices_psite<G,F>& rhs);
+
+  template <typename G, typename F>
+  bool
+  operator<(const p_vertices_psite<G,F>& lhs, const p_vertices_psite<G,F>& rhs);
+
+
   namespace internal
   {
 
@@ -87,6 +101,8 @@ namespace mln
     };
 
   } // end of namespace mln::internal
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -117,6 +133,36 @@ namespace mln
   {
     return this->elt_;
   }
+
+    /*--------------.
+    | Comparisons.  |
+    `--------------*/
+
+  template <typename G, typename F>
+  bool
+  operator==(const p_vertices_psite<G,F>& lhs, const p_vertices_psite<G,F>& rhs)
+  {
+    mln_assertion(lhs.target_() == rhs.target_());
+    return lhs.id() == rhs.id();
+  }
+
+  template <typename G, typename F>
+  bool
+  operator!=(const p_vertices_psite<G,F>& lhs, const p_vertices_psite<G,F>& rhs)
+  {
+    mln_assertion(lhs.target_() == rhs.target_());
+    return lhs.id() != rhs.id();
+  }
+
+  template <typename G, typename F>
+  bool
+  operator<(const p_vertices_psite<G,F>& lhs, const p_vertices_psite<G,F>& rhs)
+  {
+    mln_assertion(lhs.target_() == rhs.target_());
+    return lhs.id() < rhs.id();
+  }
+
+
 
 
   namespace internal

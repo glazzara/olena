@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -341,34 +342,6 @@ namespace mln
   graph_psite_base<S,E>::p_hook_() const
   {
     return elt_;
-  }
-
-    /*--------------.
-    | Comparisons.  |
-    `--------------*/
-
-  template <typename S, typename E>
-  bool
-  operator==(const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs)
-  {
-    mln_assertion(lhs.target_() == rhs.target_());
-    return lhs.id() == rhs.id();
-  }
-
-  template <typename S, typename E>
-  bool
-  operator!=(const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs)
-  {
-    mln_assertion(lhs.target_() == rhs.target_());
-    return lhs.id() != rhs.id();
-  }
-
-  template <typename S, typename E>
-  bool
-  operator< (const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs)
-  {
-    mln_assertion(lhs.target_() == rhs.target_());
-    return lhs.id() < rhs.id();
   }
 
 

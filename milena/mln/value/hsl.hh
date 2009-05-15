@@ -247,6 +247,13 @@ namespace mln
     operator/(const hsl_<H,S,L>& lhs, const mln::value::scalar_<S2>& s);
     /// \}
 
+    /// Comparison.
+    /// \{
+    template <typename H, typename S, typename L>
+    bool
+    operator==(const hsl_<H,S,L>& lhs, const hsl_<H,S,L>& rhs);
+    /// \}
+
   } // end of namespace mln::value
 
 
@@ -365,6 +372,15 @@ namespace mln
       return hsl_<H,S,L>(lhs.hue() / s,
 			 lhs.sat() / s,
 			 lhs.lum() / s);
+    }
+
+    template <typename H, typename S, typename L>
+    bool
+    operator==(const hsl_<H,S,L>& lhs, const hsl_<H,S,L>& rhs)
+    {
+      return lhs.hue() == rhs.hue()
+	  && lhs.sat() == rhs.sat()
+	  && lhs.lum() == rhs.lum();
     }
 
   } // end of namespace mln::value

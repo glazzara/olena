@@ -92,14 +92,14 @@ namespace mln
 	static math::round<blue_t>  to_b;
 
 	static const float
-	  sqrt3_3 = std::sqrt(3) / 3,
-		  inv_sqrt6 = 1 / std::sqrt(6),
-		  inv_sqrt2 = 1 / std::sqrt(2);
+	  sqrt3_3   = std::sqrt(3) / 3,
+	  inv_sqrt6 = 1 / std::sqrt(6),
+	  inv_sqrt2 = 1 / std::sqrt(2);
 
 	float
-	  h = hsi.hue() / 180.0 * 3.1415,
-	    alpha = hsi.sat() * std::cos(h),
-	    beta = hsi.sat() * std::sin(h);
+	  h	= hsi.hue() / 180.0 * 3.1415,
+	  alpha = hsi.sat() * std::cos(h),
+	  beta	= hsi.sat() * std::sin(h);
 
 
 	red_t   r = to_r(sqrt3_3 * hsi.inty() + 2 * inv_sqrt6 * beta);

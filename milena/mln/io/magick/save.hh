@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +28,12 @@
 #ifndef MLN_IO_MAGICK_SAVE_HH
 # define MLN_IO_MAGICK_SAVE_HH
 
-///
 /// \file   mln/io/magick/save.hh
 ///
 /// Define a function which saves an image of kind magick with
 /// given path.
+///
+/// FIXME: there seems to be roundness errors while computing rgb values.
 
 # include <mln/core/image/image2d.hh>
 # include <mln/metal/equal.hh>
@@ -56,7 +57,7 @@ namespace mln
        * \param[in] filename The output.
        */
       template <typename I>
-      void save(Image<I>& ima,
+      void save(const Image<I>& ima,
 		const std::string& filename);
 
 
@@ -65,38 +66,32 @@ namespace mln
       inline
       Magick::Color get_color(bool value)
       {
-	if (value)
-	  return Magick::Color("white");
-	else
-	  return Magick::Color("black");
+	std::cout << "bool color!" << std::endl;
+	return Magick::ColorMono(value);
       }
 
       inline
-      Magick::Color get_color(value::int_u8 value)
+      Magick::Color get_color(const value::int_u8& value)
       {
-	return Magick::Color((unsigned) value * MaxRGB / 256,
-			     (unsigned) value * MaxRGB / 256,
-			     (unsigned) value * MaxRGB / 256,
-			     0);
+	return Magick::ColorGray(value / (double)256.0f);
       }
 
       inline
-      Magick::Color get_color(value::rgb8 value)
+      Magick::Color get_color(const value::rgb8& value)
       {
-	return Magick::Color((unsigned) value.red() * MaxRGB / 256,
-			     (unsigned) value.green() * MaxRGB / 256,
-			     (unsigned) value.blue() * MaxRGB / 256,
-			     0);
+	return Magick::ColorRGB(value.red()   / (double)256.0f,
+				value.green() / (double)256.0f,
+				value.blue()  / (double)256.0f);
       }
 
       template <typename I>
       inline
-      void save(Image<I>& ima_, const std::string& filename)
+      void save(const Image<I>& ima_, const std::string& filename)
       {
 	trace::entering("mln::io::magick::save");
 
 	mln_precondition(mln_site_(I)::dim == 2);
-	I& ima = exact(ima_);
+	const I& ima = exact(ima_);
 	if (!(mln::metal::equal<mln_value(I), bool>::value ||
 	    mln::metal::equal<mln_value(I), value::int_u8>::value ||
 	    mln::metal::equal<mln_value(I), value::rgb8>::value))
@@ -106,15 +101,15 @@ namespace mln
 	  abort();
 	}
 
-	Magick::Image im_file(Magick::Geometry(ima.nrows(), ima.ncols()),
-			      Magick::Color(0, 0, 0, 0));
+	Magick::Image im_file;
+	im_file.size(Magick::Geometry(ima.nrows(), ima.ncols()));
+
 	Magick::PixelPacket* pixel_cache = im_file.getPixels(0, 0, ima.nrows(), ima.ncols());
 	Magick::PixelPacket* pixel;
 	mln_piter(I) p(ima.domain());
-	unsigned columns = ima.ncols();
 	for_all(p)
 	{
-	  pixel = pixel_cache + (int) p.to_site().to_vec()[0] * columns
+	  pixel = pixel_cache + (int) p.to_site().to_vec()[0] * ima.ncols()
 			      + (int) p.to_site().to_vec()[1];
 	  *pixel = get_color(ima(p));
 	}

@@ -208,6 +208,7 @@ namespace mln
 
     bool is_valid() const;
 
+    operator mln_element(S)() const; // Does it cause ambiguities with "operator int" ?
     operator util::index() const;
     operator int() const;      // To interoperate, e.g., with fun::i2v expecting an int. 
     operator unsigned() const; // To avoid ambiguity when an unsigned is expected.
@@ -359,7 +360,7 @@ namespace mln
     if (! has(p.index()))
       return false;
     // The type of rhs below is mln_site(p_array<P>).
-    mln_invariant(p.to_site() == (*this)[p.index()]);
+    mln_invariant(static_cast<P>(p) == static_cast<P>((*this)[p.index()]));
     return true;
   }
 
@@ -582,6 +583,13 @@ namespace mln
   {
     if (is_valid())
       p_ = (*s_)[i_];
+  }
+
+  template <typename S>
+  inline
+  p_indexed_psite<S>::operator mln_element(S)() const
+  {
+    return p_;
   }
 
   template <typename S>

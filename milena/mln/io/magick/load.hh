@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,7 +28,6 @@
 #ifndef MLN_IO_MAGICK_LOAD_HH
 # define MLN_IO_MAGICK_LOAD_HH
 
-///
 /// \file mln/io/magick/load.hh
 ///
 /// Define a function which loads an image of kind magick with
@@ -147,7 +146,8 @@ namespace mln
 	{
 	  const Magick::PixelPacket *pixel = pixel_cache + (int) p.to_site().to_vec()[0] * columns
 					     + (int) p.to_site().to_vec()[1];
-	  value::rgb8 pix(pixel->red % 256, pixel->green % 256, pixel->blue % 256); // FIXME: Quantum = 16bits but rgb is 8bits
+	  // FIXME: Quantum = 16bits but rgb is 8bits
+	  value::rgb8 pix(pixel->red % 256, pixel->green % 256, pixel->blue % 256);
 	  mln_value(I) res;
 	  if (!do_it(pix, res, filename))
 	    abort();

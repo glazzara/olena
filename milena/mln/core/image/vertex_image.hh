@@ -188,7 +188,7 @@ namespace mln
   {
     fun::i2v::array<V> f;
     init_(tag::function, f, exact(model));
-    p_vertices<G,typename edge_image<P,V,G>::site_function_t> s;
+    p_vertices<G,typename vertex_image<P,V,G>::site_function_t> s;
     init_(tag::domain, s, exact(model));
     target.init_(f, s);
   }

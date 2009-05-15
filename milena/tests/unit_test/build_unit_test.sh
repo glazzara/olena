@@ -13,7 +13,7 @@ test $# -eq 1 || { echo "Usage: $0 <mln path>" && exit 1; }
 
 ## FIXME: Ouch!  Using `find' properly can probably save us some pipes,
 ## forks and characters here.
-HEADERS=`find $1 -name "*.hh" | grep -vE "*.spe.hh" | grep -v "mln/core/concept/doc" | sed -e 's/.*\/mln\/\(.*\)/mln\/\1/g' | sed 's/\.\.\/\.\.\///g'`
+HEADERS=`find $1 -name "*.hh" | grep -vE "*.spe.hh" | grep -v "mln/core/concept/doc" | sort | sed -e 's/.*\/mln\/\(.*\)/mln\/\1/g' | sed 's/\.\.\/\.\.\///g'`
 
 output=unit-tests.mk
 
