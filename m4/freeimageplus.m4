@@ -14,7 +14,7 @@ AC_DEFUN([OLN_WITH_FREEIMAGEPLUS],
 
  AC_ARG_WITH([freeimageplus],
    [AC_HELP_STRING([--with-freeimageplus@<:@=DIR@:>@],
-     [using FreeImage (DIR = prefix for FreeImage installation)])])
+     [using FreeImagePlus (DIR = prefix for FreeImagePlus installation)])])
  FREEIMAGEPLUS_CXXFLAGS=''
  FREEIMAGEPLUS_LDFLAGS=''
  if test "x$with_freeimageplus" != xno; then

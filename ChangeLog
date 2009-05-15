@@ -1,5 +1,11 @@
 2009-04-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix messages in m4/freeimageplus.m4.
+
+	* m4/freeimageplus.m4: s/FreeImage/FreeImagePlus/g.
+
+2009-04-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix messages in m4/cfitsio.m4.
 
 	* m4/cfitsio.m4: s/FreeImage/CFITSIO/g.
