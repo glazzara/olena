@@ -9,6 +9,10 @@ if ENABLE_APPS
   SUBDIRS += apps
 endif ENABLE_APPS
 
+if ENABLE_TOOLS
+  SUBDIRS += tools
+endif ENABLE_TOOLS
+
 .PHONY: doc tutorial tools
 
 doc:

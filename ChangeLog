@@ -1,5 +1,14 @@
 2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make Milena tools (milena/tools/) optional.
+
+	* configure.ac: Add option `--enable-tools'.
+	(ENABLE_TOOLS): New conditional.
+	Gather lines related to tools.
+	* milena/Makefile.am (SUBDIRS) [ENABLE_TOOLS]: Add tools.
+
+2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make Milena applications (milena/apps/) optional.
 
 	* configure.ac: Add option `--enable-apps'.

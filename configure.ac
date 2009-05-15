@@ -87,15 +87,7 @@ if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS_DEBUG"; then
   TESTS_CXXFLAGS_DEBUG="-O0 -ggdb -Wall -W -D_GLIBCXX_DEBUG -D_GLIBCXX_CONCEPT_CHECKS"
 fi
 
-# ----------------- #
-# Flags for tools.  #
-# ----------------- #
 
-AC_ARG_VAR([TOOLS_CXXFLAGS])
-# We want fast binaries for tools.
-if test "$GXX" = yes && test -z "$TOOLS_CXXFLAGS"; then
-  TOOLS_CXXFLAGS="-O3 -DNDEBUG -ggdb -Wall -W"
-fi
 
 
 ## ------------------ ##
@@ -176,9 +168,7 @@ AC_CONFIG_FILES([
       milena/doc/tutorial/Makefile
       milena/doc/white_paper/Makefile
       milena/mesh/Makefile
-      milena/tools/Makefile
 ])
-
 
 ## ------- ##
 ## Tests.  ##
@@ -332,5 +322,25 @@ AC_ARG_VAR([APPS_CXXFLAGS])
 if test "$GXX" = yes && test -z "$APPS_CXXFLAGS"; then
   APPS_CXXFLAGS="-O3 -DNDEBUG -ggdb -Wall -W"
 fi
+
+## ------- ##
+## Tools.  ##
+## ------- ##
+
+AC_ARG_ENABLE([tools],
+              [AS_HELP_STRING([--enable-tools],
+                              [enable tools])])
+AM_CONDITIONAL([ENABLE_TOOLS], [test "x$enable_tools" = "xyes"])
+
+# Ask for the creation of tools' Makefiles.
+AC_CONFIG_FILES([milena/tools/Makefile])
+
+# Flags for tools.
+AC_ARG_VAR([TOOLS_CXXFLAGS])
+# We want fast binaries for tools.
+if test "$GXX" = yes && test -z "$TOOLS_CXXFLAGS"; then
+  TOOLS_CXXFLAGS="-O3 -DNDEBUG -ggdb -Wall -W"
+fi
+
 
 AC_OUTPUT
