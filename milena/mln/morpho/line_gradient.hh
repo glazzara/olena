@@ -40,8 +40,6 @@
 
 # include <mln/math/abs.hh>
 
-# include <mln/util/ord.hh>
-
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/edge_image.hh>
 # include <mln/core/alias/window2d.hh>

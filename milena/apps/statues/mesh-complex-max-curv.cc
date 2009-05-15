@@ -39,9 +39,6 @@
 #include <mln/core/image/complex_image.hh>
 #include <mln/core/image/complex_neighborhoods.hh>
 
-#include <mln/morpho/closing_area.hh>
-#include <mln/morpho/meyer_wst.hh>
-
 #include <mln/data/fill.hh>
 #include <mln/literal/zero.hh>
 

@@ -1,5 +1,13 @@
 2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove useless #include's.
+
+	* mln/morpho/line_gradient.hh:
+	* apps/statues/mesh-complex-max-curv.cc:
+	Here.
+
+2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have apps/statues/ catch up with Milena's current interface.
 
 	* apps/statues/mesh-complex-max-curv-segm.cc,
