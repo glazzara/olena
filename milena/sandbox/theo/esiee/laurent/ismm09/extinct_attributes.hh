@@ -36,8 +36,30 @@ namespace mln
   }
 
 
-  // Attribute Extinction.
-  // ---------------------
+  // Back Propagation.
+  // -----------------
+
+  template <typename T, typename I>
+  void
+  back_propagate_attributes(const T& t, // Tree.
+			    I& a)       // Attribute image.
+  {
+    // Back-propagate attribute from a node to sites of its
+    // component.  Below, p is a non-node component site and
+    // parent(p) is a node, that is, the site representative of
+    // the component p belongs to.
+    mln_up_site_piter(T) p(t);
+    for_all(p)
+      if (! t.is_a_node(p))
+	{
+	  mln_assertion(t.is_a_node(t.parent(p)));
+	  a(p) = a(t.parent(p));
+	}
+  }
+
+
+  // Attribute Extinction (Vachier's version).
+  // -----------------------------------------
 
   namespace internal
   {
@@ -55,9 +77,6 @@ namespace mln
       
       const T* t;
     };
-
-
-    // Vachier's version.
 
     template <typename T, typename I, typename M>
     inline
@@ -78,17 +97,17 @@ namespace mln
   } // end of internal
 
 
-  // Vachier's version.
-
-  template <typename T, typename I>
+  template <typename T, typename I, typename J>
   void
   extinct_attributes(const T& t, // Tree.
 		     I& a,       // Attribute image.
+		     const J& f, // Original image to sort pixels.
 		     bool echo = false)
   {
     if (echo)
       {
-	std::cout << "before:" << std::endl;
+	std::cout << "extinction input:" << std::endl;
+	debug::println(a);
 	display_tree_attributes(t, a);
       }
 
@@ -103,15 +122,15 @@ namespace mln
     node_only.t = &t;
 
     typedef p_array<P> S;
-    S s = level::sort_psites_increasing(a | node_only);
+    S s = level::sort_psites_increasing(f | node_only);
 
-//     {
-//       mln_fwd_piter(S) p(s);
-//       for_all(p)
-// 	std::cout << p << ' ' << a(p) << " - ";
-//       std::cout << std::endl
-// 		<< std::endl;
-//     }
+    if (echo)
+    {
+      mln_fwd_piter(S) p(s);
+      for_all(p)
+	std::cout << f(p) << ":a" << p << '=' << a(p) << "  ";
+      std::cout << std::endl << std::endl;
+    }
 
     mln_invariant(geom::nsites(a | t.nodes()) == s.nsites());
 
@@ -127,10 +146,22 @@ namespace mln
 
     if (echo)
       {
-	std::cout << "after:" << std::endl;
+	std::cout << "after extinction on nodes and before back-propagation:"
+		  << std::endl;
+	debug::println(a);
+	display_tree_attributes(t, a);
+      }
+
+    back_propagate_attributes(t, a);
+
+    if (echo)
+      {
+	std::cout << "extinction output:" << std::endl;
+	debug::println(a);
 	display_tree_attributes(t, a);
       }
   }
+
 
 
 } // mln

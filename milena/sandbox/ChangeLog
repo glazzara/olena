@@ -1,3 +1,14 @@
+2009-05-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update Laurent's stuff and new code for Fabien.
+
+	* theo/igr/segment_2d_t.cc: New.
+	* theo/esiee/laurent/ismm09/extinct_attributes.hh
+	(back_propagate_attributes): New.
+	(extinct_attributes): New argument 'f'.
+	augment echo.
+	* theo/esiee/laurent/ismm09/main.cc: Update.
+
 2009-05-15  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Create mean and deviation images.
