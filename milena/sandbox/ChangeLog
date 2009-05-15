@@ -1,3 +1,15 @@
+2009-05-15  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add routines for primitive extraction.
+
+	* scribo/extract/primitive/canvas.hh,
+	* scribo/extract/primitive/cells.hh,
+	* scribo/extract/primitive/lines_discontinued.hh,
+	* scribo/extract/primitive/lines_h_discontinued.hh,
+	* scribo/extract/primitive/lines_thick.hh,
+	* scribo/extract/primitive/lines_v_discontinued.hh,
+	* scribo/extract/primitive/objects.hh: new routines.
+
 2009-05-15  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Move inim project to sandbox/inim.
