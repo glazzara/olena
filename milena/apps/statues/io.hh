@@ -55,7 +55,7 @@ inline void write_verts_asc(TriMesh *mesh, FILE *f,
 			    const char *before_conf,
 			    const char *after_line)
 {
-    for (int i = 0; i < mesh->vertices.size(); i++) {
+    for (unsigned i = 0; i < mesh->vertices.size(); i++) {
 		fprintf(f, "%s%.7g %.7g %.7g", before_vert,
 				mesh->vertices[i][0],
 				mesh->vertices[i][1],
@@ -98,7 +98,7 @@ inline void write_faces_asc_colored(TriMesh *mesh,
 				    const char *after_line)
 {
   mesh->need_faces();
-  for (int i = 0; i < mesh->faces.size(); i++)
+  for (unsigned i = 0; i < mesh->faces.size(); i++)
     {
       fprintf(f, "%s%d %d %d %d %d %d%s\n",
 	      before_face,
@@ -135,7 +135,7 @@ inline void write_faces_asc_float(TriMesh *mesh,
 				  const char *after_line)
 {
   mesh->need_faces();
-  for (int i = 0; i < mesh->faces.size(); i++)
+  for (unsigned i = 0; i < mesh->faces.size(); i++)
     {
       //            Vertices    Color
       //            -------- ------------
@@ -177,7 +177,7 @@ inline void write_faces_asc_binary(TriMesh *mesh,
 				   const char *after_line)
 {
   mesh->need_faces();
-  for (int i = 0; i < mesh->faces.size(); i++)
+  for (unsigned i = 0; i < mesh->faces.size(); i++)
     if (face_value[i])
     {
       fprintf(f, "%s%d %d %d%s\n",

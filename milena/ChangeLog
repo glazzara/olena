@@ -1,5 +1,11 @@
 2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Address comparisons of signed vs unsigned in apps/statues/.
+
+	* apps/statues/io.hh: Use unsigned loop indices.
+
+2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/topo/skeleton/breadth_first_thinning.hh: Aesthetic changes.
 
 2009-05-11  Roland Levillain  <roland@lrde.epita.fr>
