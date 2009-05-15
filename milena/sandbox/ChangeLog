@@ -1,5 +1,14 @@
 2009-05-15  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Move inim project to sandbox/inim.
+	* edwin/inim/Makefile: Remove.
+	* edwin/inim/inim.cc: Remove.
+	* inim/2011/fredwin/Makefile: New.
+	* inim/2011/fredwin/configure: New.
+	* inim/2011/fredwin/inim.cc: New.
+
+2009-05-15  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Inim fix bugs related to word croping.
 	* edwin/inim/inim.cc: Add height closing to avoid word to be cropped.
 	* edwin/mln/morpho/tree/filter.hh: Add generic filter to
