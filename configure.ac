@@ -246,17 +246,17 @@ AC_CONFIG_FILES([
       milena/tests/metal/make/Makefile
       milena/tests/metal/math/Makefile
     milena/tests/morpho/Makefile
-      milena/tests/morpho/attribute/Makefile
       milena/tests/morpho/approx/Makefile
-      milena/tests/morpho/elementary/Makefile
-      milena/tests/morpho/tree/Makefile
-      milena/tests/morpho/watershed/Makefile
+      milena/tests/morpho/attribute/Makefile
       milena/tests/morpho/closing/Makefile
       milena/tests/morpho/closing/approx/Makefile
+      milena/tests/morpho/elementary/Makefile
       milena/tests/morpho/opening/Makefile
       milena/tests/morpho/opening/approx/Makefile
       milena/tests/morpho/reconstruction/Makefile
       milena/tests/morpho/reconstruction/by_dilation/Makefile
+      milena/tests/morpho/tree/Makefile
+      milena/tests/morpho/watershed/Makefile
     milena/tests/norm/Makefile
     milena/tests/opt/Makefile
     milena/tests/pw/Makefile
@@ -272,8 +272,8 @@ AC_CONFIG_FILES([
       milena/tests/trait/op/Makefile
       milena/tests/trait/value/Makefile
     milena/tests/transform/Makefile
-    milena/tests/util/Makefile
     milena/tests/unit_test/Makefile
+    milena/tests/util/Makefile
     milena/tests/value/Makefile
       milena/tests/value/builtin/Makefile
       milena/tests/value/concept/Makefile
