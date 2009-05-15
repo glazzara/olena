@@ -1,3 +1,14 @@
+2009-05-15  Florent DHalluin  <d-halluin@lrde.epita.fr>
+
+	INIM: CAG (Jerome, Florent)
+	* inim/2010/cag/Makefile: New.
+	* inim/2010/cag/README: New. Read me.
+	* inim/2010/cag/get_lines.hh: New. Line detection.
+	* inim/2010/cag/graph.hh: New. CAG building.
+	* inim/2010/cag/main.cc: New. Demo program.
+	* inim/2010/cag/superpose.hh: New. Display function.
+	* inim/2010/cag: New.
+
 2009-05-15  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Add the unskew routine.
