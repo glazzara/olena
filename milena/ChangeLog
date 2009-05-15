@@ -1,5 +1,14 @@
 2009-05-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add accu::max_site.
+
+	* mln/accu/max_site.hh: new accu.
+
+	* tests/accu/Makefile.am,
+	* tests/accu/max_site.cc: new associated test.
+
+2009-05-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add new routines related to constrained skeletons.
 
 	* mln/morpho/skeleton_constrained.hh: cleanup.

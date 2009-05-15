@@ -16,6 +16,7 @@ check_PROGRAMS =				\
   line						\
   max						\
   max_h						\
+  max_site 					\
   mean						\
   median_h					\
   min						\
@@ -39,6 +40,7 @@ histo_SOURCES = histo.cc
 line_SOURCES = line.cc
 max_SOURCES = max.cc
 max_h_SOURCES = max_h.cc
+max_site_SOURCES = max_site.cc
 mean_SOURCES = mean.cc
 median_h_SOURCES = median_h.cc
 min_SOURCES = min.cc
