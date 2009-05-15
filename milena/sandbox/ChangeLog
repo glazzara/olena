@@ -1,3 +1,11 @@
+2009-05-15  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Create mean and deviation images.
+	* fabien/igr/fixed_seg/Makefile: New target for building
+	  fixed segmentation.
+	* fabien/igr/fixed_seg/main.cc: Create mean image.
+	* fabien/igr/smooth_fixed_seg/main.cc: Small update, on hold.
+
 2009-05-14  Guillaume Sadegh  <sadegh@lrde.epita.fr>
 
 	INIM: Region Adjacency Graph.

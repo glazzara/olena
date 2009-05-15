@@ -34,8 +34,8 @@
 #include <mln/morpho/dilation.hh>
 #include <mln/morpho/erosion.hh>
 #include <mln/morpho/closing/structural.hh>
+#include <mln/morpho/closing/volume.hh>
 #include <mln/morpho/opening/structural.hh>
-#include <mln/morpho/elementary/gradient.hh>
 #include <mln/morpho/watershed/flooding.hh>
 #include <mln/pw/all.hh>
 #include <mln/util/array.hh>
@@ -46,9 +46,7 @@
 #include <mln/world/inter_pixel/neighb2d.hh>
 #include <mln/world/inter_pixel/all.hh>
 
-#include <mln/labeling/colorize.hh>
-#include <mln/debug/println.hh>
-#include <mln/trace/quiet.hh>
+#include "../plot_label.hh"
 
 
 using namespace mln;
@@ -133,13 +131,13 @@ struct dist_t : Function_vv2v<dist_t>
 
 int usage(const char* bin)
 {
-  std::cout << "Usage: " << bin << " input.dump" << std::endl;
+  std::cout << "Usage: " << bin << " input.dump closing_lambda" << std::endl;
   return 1;
 }
 
 int main(int argc, char* argv[])
 {
-  if (argc != 2)
+  if (argc != 3)
     return usage(argv[0]);
 
 
@@ -159,7 +157,6 @@ int main(int argc, char* argv[])
 
 
   // Edges image creation.
-  //image2d<float> edges = dist_on_edges(ima_arr);
   typedef image_if<I, world::inter_pixel::is_pixel> Ix;
   Ix imax = world::inter_pixel::immerse(ima_arr);
 
@@ -171,6 +168,54 @@ int main(int argc, char* argv[])
     mln_VAR(display_ima, world::inter_pixel::display_edge(edges.unmorph_(), 0.0, 3));
     io::pgm::save(level::stretch(int_u8(), display_ima), "edges.pgm");
   }
+
+  // Type change.
+  mln_VAR(e, level::stretch(int_u8(), edges));
+
+
+  // Closing.
+  mln_VAR(clo, morpho::closing::volume(e, world::inter_pixel::e2e(), atoi(argv[2])));
+
+  {
+    // Display.
+    mln_VAR(display_clo, world::inter_pixel::display_edge(clo.unmorph_(), 0.0, 3));
+    io::pgm::save(level::stretch(int_u8(), display_clo), "closing.pgm");
+  }
+
+
+  // Watershed.
+  typedef label_16 L;
+  L nbasins;
+  mln_VAR(wst, morpho::watershed::flooding(clo, world::inter_pixel::e2e(), nbasins));
+
+  std::cout << "nbasins: " << nbasins << std::endl;
+
+  mln_VAR(w_all, wst.unmorph_());
+  //data::fill((w | (!world::inter_pixel::is_separator())).rw(), nbasins.next());
+  mln_VAR(w_pixels, w_all | world::inter_pixel::is_pixel());
+  data::paste(morpho::dilation(extend(w_pixels, pw::value(w_all)), c4().win()), w_all);
+  // edges -> dots
+  mln_VAR(w_dots, w_all | world::inter_pixel::dim2::is_dot());
+  data::paste(morpho::erosion(extend(w_dots, pw::value(w_all)), c4().win()), w_all);
+
+  //io::ppm::save(labeling::colorize(value::rgb8(), w, nbasins.next()), "result.ppm");
+  io::pgm::save(labeling::wrap(int_u8(), w_all), "watershed.pgm");
+
+
+  // Plots.
+  image2d<L> w_simple = world::inter_pixel::full2image(w_all);
+  plot_label(input, w_simple, 248u);
+  plot_label(input, w_simple, 241u);
+  plot_label(input, w_simple, 238u);
+  plot_label(input, w_simple, 251u);
+  plot_label(input, w_simple, 250u);
+  plot_label(input, w_simple, 249u);
+  plot_label(input, w_simple, 247u);
+  plot_label(input, w_simple, 232u);
+  plot_label(input, w_simple, 252u);
+  plot_label(input, w_simple, 246u);
+  plot_label(input, w_simple, 240u);
+  plot_label(input, w_simple, 237u);
 
 
   return 0;
