@@ -3,8 +3,8 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-   magick
+   load
 
-magick_SOURCES = magick.cc
+load_SOURCES = load.cc
 
 TESTS = $(check_PROGRAMS)

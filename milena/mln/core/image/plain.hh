@@ -66,8 +66,9 @@ namespace mln
     template <typename I>
     struct image_< plain<I> > : image_< I > // Same as I except...
     {
-      // ...this change.
+      // ...these changes:
       typedef trait::image::category::identity_morpher category;
+      typedef mln_internal_trait_image_speed_from(I) speed; // Un-fastest.
     };
 
   } // end of namespace mln::trait

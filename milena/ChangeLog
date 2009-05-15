@@ -1,3 +1,17 @@
+2009-05-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Bug fixes.
+
+	* mln/core/image/plain.hh (trait): Fix speed.
+	* mln/morpho/reconstruction/by_dilation/union_find.hh:
+	Fix missing include.
+	(is_proc): Move into code.
+	* tests/io/magick/magick.cc: Rename as...
+	* tests/io/magick/load.cc: ...this since it tests 'load'.
+	(include): Fix missing.
+	Cleanup code.
+	* tests/io/magick/Makefile.am: Update.
+
 2009-05-14  Guillaume Sadegh  <sadegh@lrde.epita.fr>
 
 	Add breadth first search canvas for graphs.

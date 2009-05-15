@@ -32,6 +32,7 @@
 # include <vector>
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
+# include <mln/data/fill.hh>
 # include <mln/level/compare.hh>
 # include <mln/level/sort_psites.hh>
 
@@ -89,14 +90,6 @@ namespace mln
 	  }
 
 
- 
-// 	  template <typename P>
-// 	  inline
-// 	  bool is_proc(const P& n, const P& p) const
-// 	  {
-// 	    return g(n) > g(p) or (g(n) == g(p) &&
-// 				   util::ord_strict(n, p));
-// 	  }
 	  
 	  template <typename Par>
 	  inline
@@ -147,7 +140,7 @@ namespace mln
 	      // Initialization.
 	      {
 		initialize(output, f);
-		data::paste(f, output);
+		data::fill(output, f);
 		initialize(parent, f);
 		initialize(deja_vu, f);
 		data::fill(deja_vu, false);
@@ -164,8 +157,11 @@ namespace mln
 		    mln_niter(N) n(nbh, p);
 		    for_all(n)
 		    {
-		      // 		      if (f.domain().has(n))
-		      // 			mln_invariant(deja_vu(n) == is_proc(n, p));
+// 		      if (f.domain().has(n))
+// 			mln_invariant(deja_vu(n)
+// 				      ==
+// 				      (g(n) > g(p) || (g(n) == g(p)
+// 						       && util::ord_strict(n, p))));
 		      if (f.domain().has(n) && deja_vu(n))
 			{
 			  // Do-Union.
