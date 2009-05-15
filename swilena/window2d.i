@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+//                                                              -*- C++ -*-
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -21,40 +22,36 @@
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
 // resulting executable to be covered by the GNU General Public
-// License.  This exception does not however invalidate any other
+// License.
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/io/magick/magick.cc
-///
-/// Test on mln::io::magick::*.
+/// \file window2d.i
+/// \brief A wrapper of mln::window2d.
 
-#include <mln/core/image/image2d.hh>
-#include <mln/io/magick/load.hh>
-#include <mln/io/ppm/save.hh>
+%module window2d
 
-#include <mln/level/compare.hh>
+%import "dpoint2d.i"
 
-#include <mln/value/int_u8.hh>
-#include <mln/value/rgb8.hh>
+%{
+#include "mln/core/window2d.hh"
+%}
 
-#include "tests/data.hh"
+%include "mln/core/macros.hh"
 
-#include <mln/debug/println.hh>
+%include "mln/core/concept/window.hh"
+%include "mln/core/window.hh"
 
-int main()
-{
-  using namespace mln;
+%include "mln/core/window2d.hh"
 
-  {
-    image2d<value::rgb8> lena_im;
-    io::magick::load(lena_im, "lena.png");
+// Swig tries to wrap everything by default; prevent it from wrapping
+// invalid methods (1D and 3D insertions for a window2d).
+%ignore mln::window< mln::dpoint_<mln::grid::square, int > >::
+insert(const typename mln::dpoint_<mln::grid::square, int>::coord&);
+%ignore mln::window< mln::dpoint_<mln::grid::square, int > >::
+insert(const typename mln::dpoint_<mln::grid::square, int>::coord&,
+       const typename mln::dpoint_<mln::grid::square, int>::coord&,
+       const typename mln::dpoint_<mln::grid::square, int>::coord&);
 
-    image2d<value::rgb8> lena_mln;
-    io::ppm::load(lena_mln, "lena.ppm");
-
-    mln_assertion(lena_im.domain() == lena_mln.domain());
-    mln_assertion(lena_im == lena_mln);
-  }
-}
+%template(window2d) mln::window< mln::dpoint_<mln::grid::square, int > >;
 
