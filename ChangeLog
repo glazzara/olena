@@ -1,5 +1,11 @@
 2009-05-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add an ``Enable Everything'' switch to configure.
+
+	* configure.ac: Add option `--enable-all'.
+
+2009-05-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	* configure.ac: Reorder the list of Makefiles.
 
 2009-05-14  Roland Levillain  <roland@lrde.epita.fr>

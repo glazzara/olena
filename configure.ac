@@ -33,7 +33,6 @@ AC_DEFINE_UNQUOTED([OLN_PACKAGE_STRING], ["$PACKAGE_STRING"],
 AC_DEFINE_UNQUOTED([OLN_PACKAGE_VERSION], ["$PACKAGE_VERSION"],
 		   [Package Version.])
 
-
 ## --------------------- ##
 ## C++ compiler set up.  ##
 ## --------------------- ##
@@ -88,6 +87,29 @@ if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS_DEBUG"; then
 fi
 
 
+## ------------------------------ ##
+## ``Enable Everything'' Switch.  ##
+## ------------------------------ ##
+
+# Enable all bundled features (trimesh2, Swilena, apps, tools).  This
+# option is useful to maintainers to ensure they do not break optional
+# parts while modifying the core of the project. If both
+# ``--enable-all'' is set and a given feature is disabled (say,
+# ``--disable-apps''), then the disable flag has priority.
+
+# FIXME: Due to with-swilena.m4's limitations, we have to explicitly
+# enable SWIG.  Will be repaired when OLN_WITH_SWILENA is revamped.
+
+AC_ARG_ENABLE([all],
+              [AS_HELP_STRING([--enable-all],
+                              [enable maintainer mode])],
+              [
+               enable_trimesh=yes
+               with_swig=yes
+               enable_swilena=yes
+               enable_apps=yes
+               enable_tools=yes
+              ])
 
 
 ## ------------------ ##
