@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,8 +31,8 @@
 
 /// \file mln/core/alias/point3d.hh
 ///
-/// Definition of the mln::point3d alias and of its construction
-/// routine.
+/// Definition of the mln::point3d and mln::point3df aliases and of
+/// their construction routines.
 
 # include <mln/core/point.hh>
 // For site_const_impl and site_mutable_impl:

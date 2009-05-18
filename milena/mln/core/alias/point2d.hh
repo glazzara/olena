@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,11 +31,12 @@
 
 /// \file mln/core/alias/point2d.hh
 ///
-/// Definition of the mln::point2d alias and of its construction
-/// routine.
+/// Definition of the mln::point2d and mln::point2df aliases and of
+/// their construction routines.
 
 # include <mln/core/point.hh>
-# include <mln/core/concept/site_proxy.hh> // For site_const_impl and site_mutable_impl.
+// For site_const_impl and site_mutable_impl.
+# include <mln/core/concept/site_proxy.hh>
 # include <mln/core/internal/force_exact.hh>
 
 
@@ -44,8 +45,10 @@ namespace mln
 
   /// Type alias for a point defined on the 2D square grid with
   /// integer coordinates.
-  ///
   typedef point<mln::grid::square, mln::def::coord> point2d;
+
+  /// Type alias for a point defined on the 2D square grid with
+  /// floating-point coordinates.
   typedef point<mln::grid::square, mln::def::coordf> point2df;
 
 

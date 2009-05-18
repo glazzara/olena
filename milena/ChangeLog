@@ -1,5 +1,11 @@
 2009-05-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Adjust the documentation of 2- and 3-dimensional point types.
+
+	* mln/core/alias/point2d.hh, mln/core/alias/point3d.hh: Here.
+
+2009-05-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a floating-point 1-dimensional point type.
 
 	* mln/core/alias/point1d.hh (mln::point1df): New.
