@@ -66,6 +66,8 @@
 */
 
 # include <deque>
+# include <queue>
+# include <stack>
 # include <mln/core/concept/iterator.hh>
 # include <mln/core/concept/browsing.hh>
 # include <mln/core/concept/graph.hh>
@@ -90,7 +92,7 @@ namespace mln
                   class C>
         class graph_first_search_t : public Browsing< E >
         {
-          typedef C<unsigned> container_t;
+          typedef C<util::vertex_id_t> container_t;
         public:
           template <typename G, typename F>
           void operator()(const Graph<G>&, F& f) const;
@@ -99,6 +101,38 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+
+	/// Call the correct member on the container.
+
+	template <typename T>
+	inline
+	util::vertex_id_t
+	next(const std::queue<T>& queue)
+	{
+	  return queue.front();
+	}
+
+	template <typename T>
+	inline
+	util::vertex_id_t
+	next(const std::stack<T>& stack)
+	{
+	  return stack.top();
+	}
+
+	template <typename S>
+	inline
+	util::vertex_id_t
+	next(const S& stack)
+	{
+	  /// Not defined yet!
+	  mlc_abort(S)::check();
+	  return 0;
+	}
+
+
+
 
         template <typename E,
                   template <typename T, typename Sequence = std::deque<T> >
@@ -124,7 +158,7 @@ namespace mln
               f.new_component_from_vertex(v.id()); // <--- new_component_from_vertex
               while (!queue.empty())
               {
-                util::vertex<G> current_v = g.vertex(queue.front());
+                util::vertex<G> current_v = g.vertex(next(queue));
                 f.process_vertex(current_v.id()); // <--- process_vertex
                 queue.pop();
                 for (unsigned nv = 0; nv < current_v.nmax_nbh_vertices(); ++nv)
