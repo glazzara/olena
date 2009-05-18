@@ -1,3 +1,10 @@
+2009-05-18  Guillaume Sadegh  <sadegh@lrde.epita.fr>
+
+	New tests for browsing on graphs.
+
+	* tests/canvas/browsing/breadth_first_search.cc: New.
+	* tests/canvas/browsing/depth_first_search.cc: New.
+
 2009-05-18 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Fix compilation issues in graph first search.
@@ -10,7 +17,7 @@
 	Fix tests.
 
 	* tests/accu/bbox.cc: update doc.
-	
+
 	* tests/fun/v2v/Makefile.am,
 	* tests/fun/v2v/hsl_to_rgb.cc,
 	* tests/fun/v2v/rgb_to_hsl.cc: new tests.
@@ -79,7 +86,7 @@
 	* mln/transform/hough.hh: new routine.
 
 	* tests/transform/Makefile.am,
-	* tests/transform/hough.cc: new associated test.	
+	* tests/transform/hough.cc: new associated test.
 
 2009-05-15  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -126,7 +133,7 @@
 	instead of (non portable) string substitution (GNU Make's
 	`patsubst' function).
 	Remove dead code.
-	
+
 2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Prevent the regeneration of computed meshes.
