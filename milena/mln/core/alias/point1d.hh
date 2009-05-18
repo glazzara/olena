@@ -31,8 +31,8 @@
 
 /// \file mln/core/alias/point1d.hh
 ///
-/// Definition of the mln::point1d alias and of its construction
-/// routine.
+/// Definition of the mln::point1d and mln::point1df aliases and of
+/// their construction routines.
 
 # include <mln/core/point.hh>
 // For site_const_impl and site_mutable_impl.
@@ -43,10 +43,13 @@
 namespace mln
 {
 
-  /// Type alias for a point defined on the 1D square grid with
-  /// integer coordinates.
-  //
+  /// Type alias for a point defined on the 1D ruler with integer
+  /// coordinates.
   typedef point<grid::tick, def::coord> point1d;
+
+  /// Type alias for a point defined on the 1D ruler with
+  /// floating-point coordinates.
+  typedef point<grid::tick, def::coordf> point1df;
 
 
   namespace internal

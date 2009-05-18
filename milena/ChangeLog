@@ -1,3 +1,10 @@
+2009-05-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a floating-point 1-dimensional point type.
+
+	* mln/core/alias/point1d.hh (mln::point1df): New.
+	Adjust documentation.
+
 2009-05-18  Guillaume Sadegh  <sadegh@lrde.epita.fr>
 
 	New tests for browsing on graphs.
