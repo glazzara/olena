@@ -25,16 +25,20 @@
 #include <mln/data/fill.hh>
 #include <mln/data/paste.hh>
 #include <mln/convert/from_to.hh>
+#include <mln/fun/v2v/fit.hh>
+#include <mln/labeling/compute.hh>
 #include <mln/labeling/wrap.hh>
 #include <mln/level/compute.hh>
 #include <mln/level/convert.hh>
 #include <mln/level/stretch.hh>
+#include <mln/linear/convolve.hh>
 #include <mln/make/image2d.hh>
+#include <mln/make/w_window1d.hh>
 #include <mln/math/diff_abs.hh>
 #include <mln/morpho/dilation.hh>
 #include <mln/morpho/erosion.hh>
 #include <mln/morpho/closing/structural.hh>
-#include <mln/morpho/closing/volume.hh>
+#include <mln/morpho/closing/area.hh>
 #include <mln/morpho/opening/structural.hh>
 #include <mln/morpho/watershed/flooding.hh>
 #include <mln/pw/all.hh>
@@ -53,6 +57,8 @@ using namespace mln;
 using value::int_u8;
 using value::int_u12;
 using value::label_16;
+
+#define SATURATION 0.5
 
 
 
@@ -162,24 +168,25 @@ int main(int argc, char* argv[])
 
   // Edges distance computation.
   mln_VAR(edges, world::inter_pixel::compute(imax, dist));
+  mln_VAR(e, level::transform(edges, fun::v2v::fit<float>(SATURATION)));
+  io::dump::save(e.unmorph_(), "edges_int_u12.dump");
+  typedef int_u12 E_TYPE;
 
   {
     // Display.
-    mln_VAR(display_ima, world::inter_pixel::display_edge(edges.unmorph_(), 0.0, 3));
-    io::pgm::save(level::stretch(int_u8(), display_ima), "edges.pgm");
+    mln_VAR(display_ima, world::inter_pixel::display_edge(e.unmorph_(), 0.0, 3));
+    io::pgm::save(level::stretch(int_u8(), display_ima), "01_edges.pgm");
   }
 
-  // Type change.
-  mln_VAR(e, level::stretch(int_u8(), edges));
 
 
   // Closing.
-  mln_VAR(clo, morpho::closing::volume(e, world::inter_pixel::e2e(), atoi(argv[2])));
+  mln_VAR(clo, morpho::closing::area(e, world::inter_pixel::e2e(), atoi(argv[2])));
 
   {
     // Display.
     mln_VAR(display_clo, world::inter_pixel::display_edge(clo.unmorph_(), 0.0, 3));
-    io::pgm::save(level::stretch(int_u8(), display_clo), "closing.pgm");
+    io::pgm::save(level::stretch(int_u8(), display_clo), "03_closing.pgm");
   }
 
 
@@ -190,7 +197,9 @@ int main(int argc, char* argv[])
 
   std::cout << "nbasins: " << nbasins << std::endl;
 
+
   mln_VAR(w_all, wst.unmorph_());
+  io::dump::save(w_all, "watershed_edges.dump");
   //data::fill((w | (!world::inter_pixel::is_separator())).rw(), nbasins.next());
   mln_VAR(w_pixels, w_all | world::inter_pixel::is_pixel());
   data::paste(morpho::dilation(extend(w_pixels, pw::value(w_all)), c4().win()), w_all);
@@ -202,20 +211,32 @@ int main(int argc, char* argv[])
   io::pgm::save(labeling::wrap(int_u8(), w_all), "watershed.pgm");
 
 
-  // Plots.
-  image2d<L> w_simple = world::inter_pixel::full2image(w_all);
-  plot_label(input, w_simple, 248u);
-  plot_label(input, w_simple, 241u);
-  plot_label(input, w_simple, 238u);
-  plot_label(input, w_simple, 251u);
-  plot_label(input, w_simple, 250u);
-  plot_label(input, w_simple, 249u);
-  plot_label(input, w_simple, 247u);
-  plot_label(input, w_simple, 232u);
-  plot_label(input, w_simple, 252u);
-  plot_label(input, w_simple, 246u);
-  plot_label(input, w_simple, 240u);
-  plot_label(input, w_simple, 237u);
+
+  // Mean distance.
+
+  // Old code.
+  //accu::mean<E_TYPE> accu_mean;
+  //util::array<float> means = labeling::compute(accu_mean, e, wst, nbasins);
+
+  // Theo version.
+  typedef accu::mean<int_u12,float,int_u12> A;
+  util::array<int_u12> means = labeling::compute(A(), e, wst, nbasins);
+
+
+
+  // Display.
+  {
+    typedef image_if<image2d<float>, world::inter_pixel::is_separator> Fsx;
+    Fsx ima_means;
+    initialize(ima_means, wst);
+    data::paste(wst, ima_means);
+    for (unsigned i = 1; i < means.nelements(); ++i)
+      data::fill((ima_means | pw::value(ima_means) == pw::cst(i)).rw(), means[i]);
+    mln_VAR(display_means, world::inter_pixel::display_edge(ima_means.unmorph_(), 0.0, 3));
+    io::pgm::save(level::stretch(int_u8(), display_means), "04_means.pgm");
+  }
+
+
 
 
   return 0;

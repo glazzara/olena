@@ -20,6 +20,9 @@
 // DEBUG
 #include <mln/core/var.hh>
 #include <mln/estim/min_max.hh>
+#include <mln/io/pgm/save.hh>
+#include <mln/level/stretch.hh>
+#include <mln/value/int_u8.hh>
 /*#include <mln/accu/min.hh>
 #include <mln/accu/max.hh>
 #include <mln/level/compute.hh>*/
@@ -61,6 +64,9 @@ image3d<float> normalize(Image<I>& ima, int first, int last)
 
   image2d<float> ima_ini = mean_slices(ima_f, first, last);
 
+  // Debug.
+  //io::pgm::save(level::stretch(value::int_u8(), ima_ini), "mean_slices.pgm");
+
   image3d<float> ima_result;
   initialize(ima_result, ima);
 
@@ -80,17 +86,17 @@ image3d<float> normalize(Image<I>& ima, int first, int last)
 
 int main(int argc, char *argv[])
 {
-  if (argc != 3)
+  if (argc != 5)
   {
-    std::cout << "Usage: " << argv[0] << " ima.dump output.dump"
+    std::cout << "Usage: " << argv[0] << " ima.dump first_slice last_slice output.dump"
 	      << std::endl;
     return 1;
   }
 
   image3d<int_u12> ima;
   io::dump::load(ima, argv[1]);
-  image3d<float> norm = normalize(ima, 1, 8);
-  io::dump::save(norm, argv[2]);
+  image3d<float> norm = normalize(ima, atoi(argv[2]), atoi(argv[3]));
+  io::dump::save(norm, argv[4]);
 
   return 0;
 }

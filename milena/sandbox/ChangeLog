@@ -1,3 +1,10 @@
+2009-05-19  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add quantification after normalization.
+	* fabien/igr/fixed_seg/main.cc: Handle normalized data.
+	* fabien/igr/norm.cc: Normalize.
+	* fabien/igr/smooth_fixed_seg/main.cc: Test different filters.
+
 2009-05-16  Vincent Ordy  <ordy@lrde.epita.fr>
 
 	inim: Improve boxes algorithm.
