@@ -31,24 +31,22 @@ namespace mln
     image3d<unsigned>
     operator()(const image2d<T>& ima) const
     {
-      typedef mln_trait_value_comp(T, 0)::enc enc_0;
-      typedef mln_trait_value_comp(T, 1)::enc enc_1;
-      typedef mln_trait_value_comp(T, 2)::enc enc_2;
+      typedef mln_trait_value_comp(T, 0)::enc enc_0; // R -> int_u8
+      typedef mln_trait_value_comp(T, 1)::enc enc_1; // G -> int_u8
+      typedef mln_trait_value_comp(T, 2)::enc enc_2; // B -> int_u8
 
-      // FIXME: wrong for negative sites!
-      image3d<unsigned> out(mln_max(enc_0) + abs(mln_min(enc_0)) + 1,
-			    mln_max(enc_1) + abs(mln_min(enc_1)) + 1,
-			    mln_max(enc_2) + abs(mln_min(enc_2)) + 1);
+      image3d<unsigned> out(box3d(point1d(mln_min(enc_0)),  // -> 0
+				  point1d(mln_min(enc_1)),  // -> 0
+				  point1d(mln_min(enc_2)),  // -> 0
+				  point1d(mln_max(enc_0)),  // -> 255
+				  point1d(mln_max(enc_1)),  // -> 255
+				  point1d(mln_max(enc_2)))) // -> 255
+	data::fill(out, 0);
 
-      // Count occurences.
-      data::fill(out, 0);
-
-      mln_fwd_piter(box2d) p(ima.domain());
+      mln_fwd_piter(image2d<T>) p(ima.domain());
       for_all(p)
-	// comp() not implemented everywhere!
 	++out(point3d(ima(p).comp(0), ima(p).comp(1), ima(p).comp(2)));
 
-      // return
       return out;
     }
 

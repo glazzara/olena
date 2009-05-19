@@ -43,6 +43,7 @@
 # include <mln/math/min.hh>
 
 # include <mln/value/rgb.hh>
+# include "../../value/hsv.hh"
 
 namespace mln
 {
@@ -62,6 +63,9 @@ namespace mln
 	T_hsv operator()(const T_rgb& rgb) const;
       };
 
+      extern f_rgb_to_hsv_<value::hsv_16f> f_rgb_to_hsv_16f;
+      extern f_rgb_to_hsv_<value::hsv_8f> f_rgb_to_hsv_8f;
+
       template <typename T_rgb>
       struct f_hsv_to_rgb_ : public Function_v2v< f_hsv_to_rgb_<T_rgb> >
       {
@@ -71,9 +75,17 @@ namespace mln
         T_rgb operator()(const T_hsv& hsv) const;
       };
 
+      extern f_hsv_to_rgb_<value::rgb8> f_hsv_to_rgb_8f;
+
 
 # ifndef MLN_INCLUDE_ONLY
 
+      /// Global variables.
+      /// \{
+      f_rgb_to_hsv_<value::hsv_16f> f_rgb_to_hsv_16f;
+      f_rgb_to_hsv_<value::hsv_8f> f_rgb_to_hsv_8f;
+      f_hsv_to_rgb_<value::rgb8> f_hsv_to_rgb_8f;
+      /// \}
 
       template <typename T_hsv>
       template <typename T_rgb>
@@ -116,7 +128,7 @@ namespace mln
       {
 	// take hsv [[0..360], [0..1], [0..1]]
 
-	float i = floor(hsv.hue() / 60);
+	unsigned i = floor(hsv.hue() / 60);
 	float f = hsv.hue() / 60 - i;
 	float p = hsv.val() * (1 - hsv.sat());
 	float q = hsv.val() * (1 - f * hsv.sat());

@@ -1,3 +1,18 @@
+2009-05-19  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	HSV type, HSL <-> HSV conversions, and tests.
+	* sandbox/folio/mln/fun/v2v/hsl_to_hsv.hh: New algorithms.
+	* sandbox/folio/mln/fun/v2v/rgb_to_hsv.hh: float -> float01_<n>.
+	* sandbox/folio/mln/histo/compute_histo_3d.hh: Some corrections.
+	* sandbox/folio/mln/value/hsv.hh: HSV value type.
+	* sandbox/folio/test/histo/plot_lena.cc: New test.
+	* sandbox/folio/test/histo/plot_lena_3d.cc: New test.
+	* sandbox/folio/test/histo/plot_lena_rgb.cc: New test.
+	* sandbox/folio/test/histo/projected.cc: New test.
+	* sandbox/folio/test/histo/projected3d.cc: New test.
+	* sandbox/folio/test/value/circular.cc: test.
+	* sandbox/folio/test/value/hsv.cc: test.
+
 2009-05-19  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Extend plot I/O with load() function.

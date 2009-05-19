@@ -59,6 +59,9 @@ namespace mln
     template <typename H, typename S, typename V>
     class hsv_;
 
+    typedef hsv_< circular<8, 0, 360>, float01_<8>, float01_<8> > hsv_8f;
+    typedef hsv_< circular<16, 0, 360>, float01_<16>, float01_<16> > hsv_16f;
+
   }
 
 
@@ -69,11 +72,10 @@ namespace mln
     namespace over_load
     {
 
-      // ?
       template <int n>
       void
       from_to_(const value::rgb<n>& from,
-	       value::hsv_<value::circular<n, 0, 360>, float, float>& to);
+	       value::hsv_<value::circular<n, 0, 360>, float01_<n>, float01_<n> >& to)
 
     } // end of namespace mln::convert::over_load
 
@@ -83,8 +85,6 @@ namespace mln
 
   namespace trait
   {
-
-    // ?
 
     template <typename H, typename S, typename V>
     struct set_precise_binary_< op::plus,
@@ -151,7 +151,7 @@ namespace mln
     {
       enum {
 	dim = 3,
-	nbits = (sizeof (H) + sizeof (S) + sizeof (V)) * 8, // ?
+	nbits = (sizeof (H) + sizeof (S) + sizeof (V)) * 8,
 	card  = mln_value_card_from_(nbits)
       };
 
@@ -199,10 +199,8 @@ namespace mln
       /// Constructor from component values.
       hsv_(const H& hue, const S& sat, const V& lum)
       {
-	mln_precondition(hue >= 0);
 	mln_precondition(sat >= 0);
 	mln_precondition(val >= 0);
-	mln_precondition(hue <= 1.); // ?
 	mln_precondition(sat <= 1.);
 	mln_precondition(val <= 1.);
 	hue_ = hue;
@@ -214,9 +212,6 @@ namespace mln
       const H& hue() const;
       const S& sat() const;
       const V& val() const;
-
-      // ?
-      // hue(float), hue(H) instead?
 
       /// Read-write access to the hue component.
       H& hue();
@@ -395,15 +390,14 @@ namespace mln
     namespace over_load
     {
 
-      // ?
       template <int n>
       inline
       void
       from_to_(const value::rgb<n>& from,
-	       value::hsv_<value::circular<n, 0, 360>, float, float>& to)
+	       value::hsv_<value::circular<n, 0, 360>, float01_<n>, float01_<n> >& to)
       {
 	to = fun::v2v::f_rgb_to_hsv_<
-	value::hsv_<value::circular<n, 0, 360>, float, float> >(from);
+	value::hsv_<value::circular<n, 0, 360>, float01_<n>, float01_<n> > >(from);
       }
 
     } // end of namespace mln::convert::over_load
