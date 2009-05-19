@@ -1,3 +1,10 @@
+2009-05-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make Etienne's code compile.
+
+	* folio/test/histo/projected3d.cc: Make it compile.
+	Comment some parts of code.
+
 2009-05-19  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add quantification after normalization.
