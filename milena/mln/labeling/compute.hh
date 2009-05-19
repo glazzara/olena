@@ -63,6 +63,23 @@ namespace mln
     /// Compute an accumulator onto the pixel values of the image \p input.
     /// for each component of the image \p label.
     ///
+    /// \param[in] a An array of accumulator.
+    /// \param[in] input The input image.
+    /// \param[in] label The labeled image.
+    /// \param[in] nlabels The number of labels in \p label.
+    /// \return A mln::p_array of accumulator result (one result per label).
+    //
+    template <typename A, typename I, typename L>
+    util::array<mln_result(A)>
+    compute(util::array<A>& a,
+	    const Image<I>& input,
+	    const Image<L>& label,
+	    const mln_value(L)& nlabels);
+
+
+    /// Compute an accumulator onto the pixel values of the image \p input.
+    /// for each component of the image \p label.
+    ///
     /// \param[in] a An accumulator.
     /// \param[in] input The input image.
     /// \param[in] label The labeled image.
@@ -227,6 +244,35 @@ namespace mln
 	  return res;
 	}
 
+	template <typename A, typename I, typename L>
+	inline
+	util::array<mln_result(A)>
+	compute(util::array<A>& accus,
+		const Image<I>& input_,
+		const Image<L>& label_,
+		const mln_value(L)& nlabels)
+	{
+	  trace::entering("labeling::impl::generic::compute");
+	  //internal::compute_tests(a_, input_, label_, nlabels);
+
+	  //const A& a = exact(a_);
+	  const I& input = exact(input_);
+	  const L& label = exact(label_);
+
+	  // FIXME: Check accus size with nlabels.
+	  //util::array<A> accus(static_cast<unsigned>(nlabels) + 1, a);
+
+	  mln_piter(I) p(input.domain());
+	  for_all(p)
+	    accus[label(p)].take(input(p));
+
+	  util::array<mln_result(A)> res;
+	  convert::from_to(accus, res);
+
+	  trace::exiting("labeling::impl::generic::compute");
+	  return res;
+	}
+
       } // end of namespace mln::labeling::impl::generic
 
     } // end of namespace mln::labeling::impl
@@ -235,6 +281,7 @@ namespace mln
 
     namespace internal
     {
+
 
       template <typename A, typename L>
       inline
@@ -258,11 +305,43 @@ namespace mln
 	return impl::generic::compute(a, input, label, nlabels);
       }
 
+
+      template <typename A, typename I, typename L>
+      inline
+      util::array<mln_result(A)>
+      compute_dispatch(util::array<A>& a,
+		       const Image<I>& input,
+		       const Image<L>& label,
+		       const mln_value(L)& nlabels)
+      {
+	return impl::generic::compute(a, input, label, nlabels);
+      }
+
+
     } // end of namespace mln::labeling::internal
 
 
 
     /// Facades.
+
+    template <typename A, typename I, typename L>
+    inline
+    util::array<mln_result(A)>
+    compute(util::array<A>& a,
+	    const Image<I>& input,
+	    const Image<L>& label,
+	    const mln_value(L)& nlabels)
+    {
+      trace::entering("labeling::compute");
+
+      //internal::compute_tests(a, input, label, nlabels);
+
+      typedef util::array<mln_result(A)> R;
+      R res = internal::compute_dispatch(a, input, label, nlabels);
+
+      trace::exiting("labeling::compute");
+      return res;
+    }
 
     template <typename A, typename I, typename L>
     inline

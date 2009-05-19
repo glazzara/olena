@@ -25,40 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_ALL_HH
-# define MLN_IO_ALL_HH
+#ifndef MLN_IO_PLOT_ALL_HH
+# define MLN_IO_PLOT_ALL_HH
 
-/// \file mln/io/all.hh
+/// \file mln/io/plot/all.hh
 ///
-/// File that includes all io materials.
-
+/// File that includes all plot io materials.
 
 
 namespace mln
 {
 
-  /// Namespace of input/output handling.
   namespace io
   {
-    /// Internal namespace of io namespace.
-    namespace internal {}
+    /// Namespace of plot input/output handling.
+    namespace plot {}
   }
 
 }
 
-# include <mln/io/cloud/all.hh>
-# include <mln/io/dump/all.hh>
-# include <mln/io/dicom/load.hh>
-# include <mln/io/magick/all.hh>
-# include <mln/io/pbm/all.hh>
-# include <mln/io/pfm/all.hh>
-# include <mln/io/pgm/all.hh>
-# include <mln/io/plot/all.hh>
-# include <mln/io/pnm/all.hh>
-# include <mln/io/ppm/all.hh>
-# include <mln/io/tiff/all.hh>
-# include <mln/io/txt/all.hh>
-//# include <mln/io/fits/all.hh>
-//# include <mln/io/off/all.hh>
+# include <mln/io/plot/load.hh>
+# include <mln/io/plot/save.hh>
 
-#endif // ! MLN_IO_ALL_HH
+#endif // ! MLN_IO_PLOT_ALL_HH

@@ -1,3 +1,13 @@
+2009-05-19  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Extend plot I/O with load() function.
+	* mln/io/all.hh: Update plot/ entries.
+	* mln/io/plot/all.hh: New file including plot/ files.
+	* mln/io/plot/load.hh: New draft for plot loading, nonfunctional.
+	* mln/io/plot/save.hh: Update delimiter to simple whitespace.
+	* mln/labeling/compute.hh: Allow accumulator array to be 
+	passed as an argument.
+
 2009-05-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	Adjust the documentation of 2- and 3-dimensional point types.

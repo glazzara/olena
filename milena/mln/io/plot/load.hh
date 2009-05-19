@@ -25,18 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_PLOT_SAVE_HH
-# define MLN_IO_PLOT_SAVE_HH
+#ifndef MLN_IO_PLOT_LOAD_HH
+# define MLN_IO_PLOT_LOAD_HH
 
 ///
-/// \file   mln/io/plot/save.hh
+/// \file   mln/io/plot/load.hh
 ///
-/// Define a routine which saves in a plot format.
+/// Define a routine which loads in a plot format.
 
 # include <iostream>
 # include <fstream>
 # include <mln/core/image/image1d.hh>
+# include <mln/metal/equal.hh>
 # include <mln/util/array.hh>
+# include <mln/value/int_u8.hh>
+# include <mln/value/rgb8.hh>
 
 
 namespace mln
@@ -48,29 +51,27 @@ namespace mln
     namespace plot
     {
 
-      /*! Save a Milena 1D image in a plot file.
+      /*! Load a Milena 1D image from a plot file.
        *
-       * \param[in] ima A reference to the image to save.
+       * \param[in] ima A reference to the image to load.
        * \param[out] filename The output file.
        * \param[in] start_value The start index value of the plot
        *	    (optional).
        */
       template <typename I>
-      void save(image1d<I>& ima,
-		const std::string& filename,
-		int start_value = 0);
+      void load(image1d<I>& ima,
+		const std::string& filename);
 
-      /*! Save a Milena array in a plot file.
+      /*! Load a Milena array from a plot file.
        *
-       * \param[in] arr A reference to the array to save.
+       * \param[in] arr A reference to the array to load.
        * \param[out] filename The output file.
        * \param[in] start_value The start index value of the plot
        *	    (optional).
        */
       template <typename I>
-      void save(util::array<I>& arr,
-		const std::string& filename,
-		int start_value = 0);
+      void load(util::array<I>& arr,
+		const std::string& filename);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -78,30 +79,31 @@ namespace mln
 
       template <typename I>
       inline
-      void save(image1d<I>& ima, const std::string& filename,
-		int start_value = 0)
+      void load(image1d<I>& ima, const std::string& filename)
       {
-	trace::entering("mln::io::plot::save");
+	trace::entering("mln::io::plot::load");
 
-	std::ofstream file_out(filename.c_str());
+	std::ifstream file_out(filename.c_str());
 	for (unsigned i = 0; i < ima.ninds(); ++i)
-	  file_out << start_value + i << " " << ima.at_(i) << std::endl;
+	  file_out << start_value + i << ", " << ima.at_(i) << std::endl;
 
-	trace::exiting("mln::io::plot::save");
+	trace::exiting("mln::io::plot::load");
       }
 
       template <typename I>
       inline
-      void save(util::array<I>& arr, const std::string& filename,
-		int start_value = 0)
+      void load(util::array<I>& arr, const std::string& filename)
       {
-	trace::entering("mln::io::plot::save");
+	trace::entering("mln::io::plot::load");
 
-	std::ofstream file_out(filename.c_str());
-	for (unsigned i = 0; i < arr.nelements(); ++i)
-	  file_out << start_value + i << " " << arr[i] << std::endl;
+	std::ifstream file_out(filename.c_str());
+	while (!oef)
+	{
+	  if (line is comment)
+	    continue;
+	}
 
-	trace::exiting("mln::io::plot::save");
+	trace::exiting("mln::io::plot::load");
       }
 
 
@@ -114,4 +116,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_IO_PLOT_SAVE_HH
+#endif // ! MLN_IO_PLOT_LOAD_HH
