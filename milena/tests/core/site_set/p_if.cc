@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,32 +26,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/p2p_image.cc
+/// \file tests/core/site_set/p_if.cc
 ///
-/// Tests on mln::p2p_image.
+/// Tests on mln::p_if.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/p2p_image.hh>
-#include <mln/fun/p2p/translation.hh>
-
-
-
-# define ima_  apply_p2p(ima, fun::p2p::translation(dp))
-
+#include <mln/core/site_set/p_set.hh>
+#include <mln/core/site_set/p_if.hh>
+#include <mln/fun/p2b/chess.hh>
+#include <mln/convert/to_image.hh>
+#include <mln/convert/to_p_set.hh>
+#include <mln/set/card.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  box2d b = make::box2d(0,0, 2,2);
-  image2d<int> ima(b, 0); // No border.
+  box2d box_8x8 = make::box2d(8, 8);
+  mln_assertion(set::card((box_8x8 | fun::p2b::chess())) == 32);
 
-  dpoint2d dp(-1,+1);
-  box2d b_ = make::box2d(-1,+1, 1,3);
-
-  mln_assertion( ima_.domain() == b_ );
-
-  mln_assertion( ima_(point2d(-1,+1)) == 1 );
-  mln_assertion( ima_(point2d( 1, 3)) == 9 );
+  {
+    p_set<point2d> s = convert::to_p_set(box_8x8 | fun::p2b::chess());
+    mln_precondition(s == (box_8x8 | fun::p2b::chess()));
+  }
 }

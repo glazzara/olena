@@ -1,3 +1,32 @@
+2009-05-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	New domain morpher, though a function from site to site.
+
+	* mln/core/site_set/p_transformed.hh: New.
+	* mln/core/site_set/p_transformed_piter.hh: New.
+	* mln/core/site_set/all.hh: Update.
+	* mln/core/image/all.hh: Update.
+	* mln/core/image/dmorph: New directory.
+	* mln/core/image/dmorph/transformed_image.hh: New.
+	* mln/core/image/dmorph/all.hh: New.
+	* tests/core/site_set/p_transformed.cc: New.
+	* tests/core/site_set/pset_if.cc: Rename as...
+	* tests/core/site_set/p_if.cc: ...this.
+	* tests/core/site_set/Makefile.am: Update.
+	* tests/core/image/dmorph: New directory.
+	* tests/core/image/dmorph/Makefile.am: New.
+	* tests/core/image/dmorph/transformed_image.cc: New.
+	* tests/core/image/Makefile.am: Update.
+
+	Misc.
+
+	* mln/core/image/image_if.hh: Layout.
+	* mln/core/image/sub_image.hh: Layout.
+	* mln/core/internal/image_base.hh: Layout.
+	* mln/core/internal/image_morpher.hh: Layout.
+	* mln/core/internal/image_domain_morpher.hh: Upgrade doc style.
+	* tests/core/image/p2p_image.cc: Move echo.
+
 2009-05-19  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	HSV type, HSL <-> HSV conversions, and tests.

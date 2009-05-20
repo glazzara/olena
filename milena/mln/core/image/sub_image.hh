@@ -29,7 +29,6 @@
 #ifndef MLN_CORE_IMAGE_SUB_IMAGE_HH
 # define MLN_CORE_IMAGE_SUB_IMAGE_HH
 
-
 /// \file mln/core/image/sub_image.hh
 ///
 /// Definition of morpher that makes an image become restricted
@@ -37,7 +36,6 @@
 ///
 /// \todo Add a special case for "ima | box"; think about some other
 /// special cases...
-
 
 # include <mln/core/internal/image_domain_morpher.hh>
 

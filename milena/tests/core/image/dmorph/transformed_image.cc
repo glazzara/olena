@@ -1,5 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,17 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/p2p_image.cc
+/// \file tests/core/image/dmorph/transformed_image.cc
 ///
-/// Tests on mln::p2p_image.
+/// Tests on mln::transformed_image.
 
+#include <mln/core/var.hh>
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/p2p_image.hh>
 #include <mln/fun/p2p/translation.hh>
+#include <mln/debug/iota.hh>
+#include <mln/geom/bbox.hh>
 
-
-
-# define ima_  apply_p2p(ima, fun::p2p::translation(dp))
+#include <mln/core/image/dmorph/transformed_image.hh>
 
 
 
@@ -44,14 +43,16 @@ int main()
 {
   using namespace mln;
 
-  box2d b = make::box2d(0,0, 2,2);
-  image2d<int> ima(b, 0); // No border.
+  box2d b(2, 3);
+  image2d<int> ima(b);
+  debug::iota(ima);
 
   dpoint2d dp(-1,+1);
-  box2d b_ = make::box2d(-1,+1, 1,3);
+  mln_VAR( ima_, transform_domain( ima,
+				   fun::p2p::translation_t<point2d>(dp) ) );
 
-  mln_assertion( ima_.domain() == b_ );
+  box2d b_ = geom::bbox(ima_.domain());
 
-  mln_assertion( ima_(point2d(-1,+1)) == 1 );
-  mln_assertion( ima_(point2d( 1, 3)) == 9 );
+  mln_assertion( b_.pmin() == b.pmin() + dp &&
+		 b_.pmax() == b.pmax() + dp );
 }

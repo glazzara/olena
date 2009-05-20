@@ -34,6 +34,13 @@
 /// File that includes all image types.
 
 
+// Sub-directories.
+
+# include <mln/core/image/dmorph/all.hh>
+
+
+// Files.
+
 # include <mln/core/image/cast_image.hh>
 # include <mln/core/image/ch_piter.hh>
 # include <mln/core/image/complex_image.hh>

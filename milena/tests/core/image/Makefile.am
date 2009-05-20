@@ -2,6 +2,9 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+SUBDIRS =					\
+  dmorph
+
 ##FIXME: re-enable tests
 check_PROGRAMS =				\
   cast_image					\

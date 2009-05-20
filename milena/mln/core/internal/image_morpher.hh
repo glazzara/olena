@@ -48,7 +48,9 @@ namespace mln
   {
 
     /// A base class for images that are morphers. Parameter
+    ///
     /// \c I is the underlying-morphed image type.
+    //
     template <typename I, typename T, typename S, typename E>
     class image_morpher : public image_base<T, S, E>
     {

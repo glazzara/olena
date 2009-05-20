@@ -92,6 +92,7 @@ namespace mln
   /// \brief Image which domain is restricted by a function.
   ///
   /// \ingroup modimagedomainmorpher
+  //
   template <typename I, typename F>
   struct image_if : public internal::image_domain_morpher< I,
 							   p_if<mln_domain(I), F>,
@@ -115,18 +116,23 @@ namespace mln
     operator image_if<const I, F>() const;
   };
 
+
+
   // Operators.
+
 
   // Image | Function_p2b.
 
   /// ima | f creates an image_if with the image ima and the function
   /// f.
+  //
   template <typename I, typename F>
   image_if<I,F>
   operator | (Image<I>& ima, const Function_p2b<F>& f);
 
   /// ima | f creates an image_if with the image ima and the function
   /// f.
+  //
   template <typename I, typename F>
   image_if<const I,F>
   operator | (const Image<I>& ima, const Function_p2b<F>& f);

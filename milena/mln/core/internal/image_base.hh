@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -75,8 +76,10 @@ namespace mln
 
 
     /// A base class for images.
+    ///
     /// Parameter \p T is the image value type.
     /// Parameter \p S is the image site set type.
+    //
     template <typename T, typename S, typename E>
     struct image_base
       :

@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -51,6 +52,7 @@
 # include <mln/core/site_set/p_run.hh>
 # include <mln/core/site_set/p_set.hh>
 # include <mln/core/site_set/p_set_of.hh>
+# include <mln/core/site_set/p_transformed.hh>
 # include <mln/core/site_set/p_vaccess.hh>
 # include <mln/core/site_set/p_vertices.hh>
 
