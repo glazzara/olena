@@ -242,6 +242,7 @@ AC_CONFIG_FILES([
     milena/tests/core/Makefile
       milena/tests/core/alias/Makefile
       milena/tests/core/image/Makefile
+	milena/tests/core/image/dmorph/Makefile
       milena/tests/core/other/Makefile
       milena/tests/core/routine/Makefile
       milena/tests/core/site_set/Makefile
