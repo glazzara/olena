@@ -1,0 +1,10 @@
+## Process this file through Automake to create Makefile.in.
+
+include $(top_srcdir)/scribo/scribo.mk
+
+check_PROGRAMS =				\
+  small_and_large_bboxes
+
+small_and_large_bboxes_SOURCES = small_and_large_bboxes.cc
+
+TESTS = $(check_PROGRAMS)

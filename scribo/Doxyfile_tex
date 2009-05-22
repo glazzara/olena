@@ -1,0 +1,346 @@
+# Doxyfile 1.5.6
+
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+DOXYFILE_ENCODING      = UTF-8
+PROJECT_NAME           = Scribo
+PROJECT_NUMBER         = "User documentation"
+OUTPUT_DIRECTORY       = ./user/
+CREATE_SUBDIRS         = YES
+OUTPUT_LANGUAGE        = English
+BRIEF_MEMBER_DESC      = YES
+REPEAT_BRIEF           = YES
+ABBREVIATE_BRIEF       = 
+ALWAYS_DETAILED_SEC    = YES
+INLINE_INHERITED_MEMB  = YES
+FULL_PATH_NAMES        = YES
+STRIP_FROM_PATH        = ../../../milena \
+                         ../../milena \
+                         ../../milena/sandbox/scribo \
+                         ../../../milena/sandbox/scribo
+STRIP_FROM_INC_PATH    = 
+SHORT_NAMES            = NO
+JAVADOC_AUTOBRIEF      = NO
+QT_AUTOBRIEF           = NO
+MULTILINE_CPP_IS_BRIEF = NO
+DETAILS_AT_TOP         = NO
+INHERIT_DOCS           = YES
+SEPARATE_MEMBER_PAGES  = NO
+TAB_SIZE               = 2
+ALIASES                = 
+OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_JAVA   = NO
+OPTIMIZE_FOR_FORTRAN   = NO
+OPTIMIZE_OUTPUT_VHDL   = NO
+BUILTIN_STL_SUPPORT    = YES
+CPP_CLI_SUPPORT        = NO
+SIP_SUPPORT            = NO
+IDL_PROPERTY_SUPPORT   = YES
+DISTRIBUTE_GROUP_DOC   = NO
+SUBGROUPING            = YES
+TYPEDEF_HIDES_STRUCT   = NO
+#---------------------------------------------------------------------------
+# Build related configuration options
+#---------------------------------------------------------------------------
+EXTRACT_ALL            = NO
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = NO
+EXTRACT_LOCAL_CLASSES  = NO
+EXTRACT_LOCAL_METHODS  = NO
+EXTRACT_ANON_NSPACES   = NO
+HIDE_UNDOC_MEMBERS     = NO
+HIDE_UNDOC_CLASSES     = NO
+HIDE_FRIEND_COMPOUNDS  = YES
+HIDE_IN_BODY_DOCS      = YES
+INTERNAL_DOCS          = NO
+CASE_SENSE_NAMES       = YES
+HIDE_SCOPE_NAMES       = YES
+SHOW_INCLUDE_FILES     = YES
+INLINE_INFO            = YES
+SORT_MEMBER_DOCS       = YES
+SORT_BRIEF_DOCS        = YES
+SORT_GROUP_NAMES       = YES
+SORT_BY_SCOPE_NAME     = NO
+GENERATE_TODOLIST      = NO
+GENERATE_TESTLIST      = NO
+GENERATE_BUGLIST       = NO
+GENERATE_DEPRECATEDLIST= NO
+ENABLED_SECTIONS       = 
+MAX_INITIALIZER_LINES  = 30
+SHOW_USED_FILES        = NO
+SHOW_DIRECTORIES       = NO
+SHOW_FILES             = NO
+SHOW_NAMESPACES        = YES
+FILE_VERSION_FILTER    = 
+#---------------------------------------------------------------------------
+# configuration options related to warning and progress messages
+#---------------------------------------------------------------------------
+QUIET                  = YES
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = NO
+WARN_FORMAT            = "$file:$line: $text"
+WARN_LOGFILE           = 
+#---------------------------------------------------------------------------
+# configuration options related to the input files
+#---------------------------------------------------------------------------
+INPUT                  = .
+INPUT_ENCODING         = UTF-8
+FILE_PATTERNS          = *.cc \
+                         *.hh \
+                         *.hxx \
+                         *.hcc
+RECURSIVE              = YES
+EXCLUDE                = user
+EXCLUDE_SYMLINKS       = YES
+EXCLUDE_PATTERNS       = *spe.hh \
+                         demat.hh \
+                         demat.old.hh
+EXCLUDE_SYMBOLS        = 
+EXAMPLE_PATH           = /lrde/stockholm/lazzara/svn/olena/git/oln/milena/doc/tutorial/samples \
+                         /lrde/stockholm/lazzara/svn/olena/git/oln/milena/doc/tutorial/outputs \
+                         /lrde/stockholm/lazzara/svn/olena/git/oln/milena/doc/tutorial/examples \
+                         /lrde/stockholm/lazzara/svn/olena/git/oln/milena/doc/examples \
+                         /lrde/stockholm/lazzara/svn/olena/git/build/milena/doc/tutorial/samples \
+                         /lrde/stockholm/lazzara/svn/olena/git/build/milena/doc/tutorial/outputs
+EXAMPLE_PATTERNS       = 
+EXAMPLE_RECURSIVE      = NO
+IMAGE_PATH             = /lrde/stockholm/lazzara/svn/olena/git/oln/milena/doc/tutorial/figures \
+                         /lrde/stockholm/lazzara/svn/olena/git/build/milena/doc/tutorial/figures \
+                         /lrde/stockholm/lazzara/svn/olena/git/oln/milena/img
+INPUT_FILTER           = 
+FILTER_PATTERNS        = 
+FILTER_SOURCE_FILES    = NO
+#---------------------------------------------------------------------------
+# configuration options related to source browsing
+#---------------------------------------------------------------------------
+SOURCE_BROWSER         = NO
+INLINE_SOURCES         = NO
+STRIP_CODE_COMMENTS    = YES
+REFERENCED_BY_RELATION = NO
+REFERENCES_RELATION    = NO
+REFERENCES_LINK_SOURCE = NO
+USE_HTAGS              = NO
+VERBATIM_HEADERS       = YES
+#---------------------------------------------------------------------------
+# configuration options related to the alphabetical class index
+#---------------------------------------------------------------------------
+ALPHABETICAL_INDEX     = YES
+COLS_IN_ALPHA_INDEX    = 5
+IGNORE_PREFIX          = 
+#---------------------------------------------------------------------------
+# configuration options related to the HTML output
+#---------------------------------------------------------------------------
+GENERATE_HTML          = NO
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+HTML_HEADER            = 
+HTML_FOOTER            = 
+HTML_STYLESHEET        = 
+HTML_ALIGN_MEMBERS     = YES
+GENERATE_HTMLHELP      = NO
+GENERATE_DOCSET        = NO
+DOCSET_FEEDNAME        = "Doxygen generated docs"
+DOCSET_BUNDLE_ID       = org.doxygen.Project
+HTML_DYNAMIC_SECTIONS  = YES
+CHM_FILE               = 
+HHC_LOCATION           = 
+GENERATE_CHI           = NO
+CHM_INDEX_ENCODING     = 
+BINARY_TOC             = NO
+TOC_EXPAND             = NO
+DISABLE_INDEX          = NO
+ENUM_VALUES_PER_LINE   = 4
+GENERATE_TREEVIEW      = FRAME
+TREEVIEW_WIDTH         = 250
+FORMULA_FONTSIZE       = 10
+#---------------------------------------------------------------------------
+# configuration options related to the LaTeX output
+#---------------------------------------------------------------------------
+GENERATE_LATEX         = YES
+LATEX_OUTPUT           = latex
+LATEX_CMD_NAME         = latex
+MAKEINDEX_CMD_NAME     = makeindex
+COMPACT_LATEX          = NO
+PAPER_TYPE             = a4
+EXTRA_PACKAGES         = 
+LATEX_HEADER           = 
+PDF_HYPERLINKS         = YES
+USE_PDFLATEX           = YES
+LATEX_BATCHMODE        = YES
+LATEX_HIDE_INDICES     = YES
+#---------------------------------------------------------------------------
+# configuration options related to the RTF output
+#---------------------------------------------------------------------------
+GENERATE_RTF           = NO
+RTF_OUTPUT             = rtf
+COMPACT_RTF            = NO
+RTF_HYPERLINKS         = NO
+RTF_STYLESHEET_FILE    = 
+RTF_EXTENSIONS_FILE    = 
+#---------------------------------------------------------------------------
+# configuration options related to the man page output
+#---------------------------------------------------------------------------
+GENERATE_MAN           = NO
+MAN_OUTPUT             = man
+MAN_EXTENSION          = .3
+MAN_LINKS              = NO
+#---------------------------------------------------------------------------
+# configuration options related to the XML output
+#---------------------------------------------------------------------------
+GENERATE_XML           = NO
+XML_OUTPUT             = xml
+XML_SCHEMA             = 
+XML_DTD                = 
+XML_PROGRAMLISTING     = YES
+#---------------------------------------------------------------------------
+# configuration options for the AutoGen Definitions output
+#---------------------------------------------------------------------------
+GENERATE_AUTOGEN_DEF   = NO
+#---------------------------------------------------------------------------
+# configuration options related to the Perl module output
+#---------------------------------------------------------------------------
+GENERATE_PERLMOD       = NO
+PERLMOD_LATEX          = NO
+PERLMOD_PRETTY         = YES
+PERLMOD_MAKEVAR_PREFIX = 
+#---------------------------------------------------------------------------
+# Configuration options related to the preprocessor   
+#---------------------------------------------------------------------------
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = YES
+SEARCH_INCLUDES        = YES
+INCLUDE_PATH           = 
+INCLUDE_FILE_PATTERNS  = 
+PREDEFINED             = "mlc_unqualif(T)=typename mln::metal::unqualif<T>::ret" \
+                         "mln_piter(T)=typename T::piter" \
+                         "mln_fwd_piter(T)=typename T::fwd_piter" \
+                         "mln_bkd_piter(T)=typename T::bkd_piter" \
+                         "mln_qiter(T)=typename T::qiter" \
+                         "mln_fwd_qiter(T)=typename T::fwd_qiter" \
+                         "mln_bkd_qiter(T)=typename T::bkd_qiter" \
+                         "mln_niter(T)=typename T::niter" \
+                         "mln_fwd_niter(T)=typename T::fwd_niter" \
+                         "mln_bkd_niter(T)=typename T::bkd_niter" \
+                         "mln_viter(T)=typename T::viter" \
+                         "mln_fwd_viter(T)=typename T::fwd_viter" \
+                         "mln_bkd_viter(T)=typename T::bkd_viter" \
+                         "mln_result(T)=typename T::result" \
+                         "mln_enc(T)=typename T::enc" \
+                         "mln_value(T)=typename T::value" \
+                         "mln_qlf_value(T)=typename T::qlf_value" \
+                         "mln_pset(T)=typename T::pset" \
+                         "mln_sum(T)=typename mln::value::props<T>::sum" \
+                         "mln_vset(T)=typename T::vset" \
+                         "mln_rvalue(T)=typename T::rvalue" \
+                         "mln_lvalue(T)=typename T::lvalue" \
+                         "mln_mesh(T)=typename T::mesh" \
+                         "mln_coord(T)=typename T::coord" \
+                         "mln_site(T)=typename T::site" \
+                         "mln_psite(T)=typename T::psite" \
+                         "mln_dpsite(T)=typename T::dpsite" \
+                         "mln_accu_with(A, T)=typename A::template with< T >::ret" \
+                         "mln_trait_op_plus(L, R)=typename mln::trait::op::plus< L , R >::ret" \
+                         "mln_trait_op_minus(L, R)=typename mln::trait::op::minus< L , R >::ret" \
+                         "mln_trait_op_times(L, R)=typename mln::trait::op::times< L , R >::ret" \
+                         "mln_trait_op_div(L, R)=typename mln::trait::op::div< L , R >::ret" \
+                         "mln_trait_op_mod(L, R)=typename mln::trait::op::mod< L , R >::ret" \
+                         "mln_trait_op_uminus(T)=typename mln::trait::op::uminus< T >::ret" \
+                         "mln_ch_value(I, V)=typename mln::trait::ch_value< I, V >::ret" \
+                         "mlc_unqualif_(T)=mln::metal::unqualif<T>::ret" \
+                         "mln_piter_(T)=T::piter" \
+                         "mln_fwd_piter_(T)=T::fwd_piter" \
+                         "mln_bkd_piter_(T)=T::bkd_piter" \
+                         "mln_qiter_(T)=T::qiter" \
+                         "mln_fwd_qiter_(T)=T::fwd_qiter" \
+                         "mln_bkd_qiter_(T)=T::bkd_qiter" \
+                         "mln_niter_(T)=T::niter" \
+                         "mln_fwd_niter_(T)=T::fwd_niter" \
+                         "mln_bkd_niter_(T)=T::bkd_niter" \
+                         "mln_viter_(T)=T::viter" \
+                         "mln_fwd_viter_(T)=T::fwd_viter" \
+                         "mln_bkd_viter_(T)=T::bkd_viter" \
+                         "mln_result_(T)=T::result" \
+                         "mln_enc_(T)=T::enc" \
+                         "mln_value_(T)=T::value" \
+                         "mln_qlf_value_(T)=T::qlf_value" \
+                         "mln_pset_(T)=T::pset" \
+                         "mln_sum_(T)=mln::value::props<T>::sum" \
+                         "mln_vset_(T)=T::vset" \
+                         "mln_rvalue_(T)=T::rvalue" \
+                         "mln_lvalue_(T)=T::lvalue" \
+                         "mln_mesh_(T)=T::mesh" \
+                         "mln_coord_(T)=T::coord" \
+                         "mln_site_(T)=T::site" \
+                         "mln_psite_(T)=T::psite" \
+                         "mln_dpsite_(T)=T::dpsite" \
+                         "mln_accu_with_(A, T)=A::template with< T >::ret" \
+                         "mln_trait_op_plus_(L, R)=mln::trait::op::plus< L , R >::ret" \
+                         "mln_trait_op_minus_(L, R)=mln::trait::op::minus< L , R >::ret" \
+                         "mln_trait_op_times_(L, R)=mln::trait::op::times< L , R >::ret" \
+                         "mln_trait_op_div_(L, R)=mln::trait::op::div< L , R >::ret" \
+                         "mln_trait_op_mod_(L, R)=mln::trait::op::mod< L , R >::ret" \
+                         "mln_trait_op_uminus_(T)=mln::trait::op::uminus< T >::ret" \
+                         "mln_ch_value_(I, V)=typename mln::trait::ch_value< I, V >::ret" \
+                         "mln_ch_value(I, V)_=mln::trait::ch_value< I, V >::ret" \
+                         "mln_morpher_lvalue(I)=typename internal::morpher_lvalue_<I>::ret" \
+                         "mln_concrete(I)=typename mln::trait::concrete< I >::ret" \
+                         "mln_concrete_ch_value(I, V)=typename mln::trait::ch_value< typename mln::trait::concrete< I >::ret, V >::ret" \
+                         "mlc_const(T)=typename mln::metal::const_< T >::ret" \
+                         "mlc_const_return(T)=typename mln::metal::const_return_< T >::ret" \
+                         "mln_element(T)=typename T::element" \
+                         "mln_element_(T)=T::element" \
+                         "mln_delta(T)=typename T::delta" \
+                         "mln_delta_(T)=T::delta" \
+                         "mln_dpoint(T)=typename T::dpoint" \
+                         "mln_dpoint_(T)=T::dpoint" \
+                         "mln_point(T)=typename T::point" \
+                         "mln_point_(T)=T::point" \
+                         "mln_gradient_component(I)=typename mln::trait::ch_value< I, mln::value::props< typename I::value >::sum >::ret" \
+                         "mln_gradient(I)=mln::value::stack_image< I::point::dim, mln::trait::ch_value< I, mln::value::props< typename I::value >::sum >::ret >"
+EXPAND_AS_DEFINED      = 
+SKIP_FUNCTION_MACROS   = YES
+#---------------------------------------------------------------------------
+# Configuration::additions related to external references   
+#---------------------------------------------------------------------------
+TAGFILES               = 
+GENERATE_TAGFILE       = 
+ALLEXTERNALS           = NO
+EXTERNAL_GROUPS        = YES
+PERL_PATH              = /usr/bin/perl
+#---------------------------------------------------------------------------
+# Configuration options related to the dot tool   
+#---------------------------------------------------------------------------
+CLASS_DIAGRAMS         = NO
+MSCGEN_PATH            = 
+HIDE_UNDOC_RELATIONS   = NO
+HAVE_DOT               = NO
+DOT_FONTNAME           = FreeSans
+DOT_FONTPATH           = 
+CLASS_GRAPH            = NO
+COLLABORATION_GRAPH    = NO
+GROUP_GRAPHS           = NO
+UML_LOOK               = NO
+TEMPLATE_RELATIONS     = NO
+INCLUDE_GRAPH          = NO
+INCLUDED_BY_GRAPH      = NO
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
+GRAPHICAL_HIERARCHY    = NO
+DIRECTORY_GRAPH        = NO
+DOT_IMAGE_FORMAT       = png
+DOT_PATH               = 
+DOTFILE_DIRS           = 
+DOT_GRAPH_MAX_NODES    = 50
+MAX_DOT_GRAPH_DEPTH    = 1000
+DOT_TRANSPARENT        = NO
+DOT_MULTI_TARGETS      = NO
+GENERATE_LEGEND        = NO
+DOT_CLEANUP            = YES
+#---------------------------------------------------------------------------
+# Configuration::additions related to the search engine   
+#---------------------------------------------------------------------------
+SEARCHENGINE           = NO
