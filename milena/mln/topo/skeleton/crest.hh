@@ -32,6 +32,11 @@
 ///
 /// Compute skeletization constraints.
 
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/neighborhood.hh>
+
+# include <mln/data/fill.hh>
+
 
 namespace mln
 {
@@ -52,6 +57,35 @@ namespace mln
       ///
       /// \result A binary image.
       //
+      /*!
+       *
+       *  This implementation is based on the following article:
+       *    K. W. Kang, J. W. Suh, and J. H. Kim. Skeletonization of grayscale
+       *    character images using pixel superiority index. In Proc. 3rd IAPR
+       *    Workshop on Document Analysis Systems, pages 326-335, Nagano,
+       *    Japan, 1998.
+       *
+       *  Abstract:
+       *    "In this paper, we present pixel superiority index as a tool for
+       *    designing a skeletonization algorithm which utilizes topographic
+       *    features efficiently. We clarify a relationship between pixel
+       *    superiority index and topographic features. Then, using the
+       *    relationship, we transform a problem of skeletonization into a
+       *    problem of skeleton growing. [...]"
+       *
+       *
+       *  In Milena, the Pixel Superiority index is defined as follow:
+       *  Let v = p.val(), the Pixel superiority index of p is the number of
+       *  neighbor pixels having their value/level inferior or equal to
+       *  p.val().
+       *
+       *  This algorithm keeps sites having their pixel superiority index
+       *  greater than 5.
+       *
+       *  For good results with 2D images, we advice you to use c8() as
+       *  neighborhood.
+       *
+       */
       template <typename I, typename D, typename N>
       mln_concrete(I)
       crest(const Image<I>& input_, const Image<D>& dist_map_,

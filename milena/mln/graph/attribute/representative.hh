@@ -86,7 +86,7 @@ namespace mln
 	  deja_vu_[id] = true;
 	}
 
-	void process_vertex(unsigned id)
+	void process_vertex(unsigned)
 	{}
 
 	bool to_be_queued(unsigned id)

@@ -34,14 +34,13 @@
 # include <mln/make/image.hh>
 # include <mln/level/compare.hh>
 
-# include <mln/debug/println.hh>
 
 int main()
 {
   using namespace mln;
 
   bool ref_values[][5] = { { 0, 1, 0, 0, 0 },
-                           { 0, 1, 1, 0, 0 },
+                           { 0, 0, 1, 0, 0 },
                            { 0, 0, 1, 1, 0 },
                            { 0, 0, 0, 1, 1 },
                            { 0, 0, 0, 0, 1 } };
@@ -56,5 +55,6 @@ int main()
   image2d<bool> ref = make::image(ref_values);
 
   image2d<bool> ima_rot = transformation::rotate(ima, 45);
+
   mln_assertion(ima_rot == ref);
 }

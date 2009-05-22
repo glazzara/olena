@@ -35,6 +35,7 @@
 ///
 /// \todo Use accu::pair just like in accu::min_max.
 
+# include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
 # include <mln/util/pix.hh>
 

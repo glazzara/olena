@@ -62,14 +62,14 @@ namespace mln
       {
         template < unsigned n, typename C >
         algebra::h_mat<n, C>
-        get_rot_h_mat(const float alpha_, const algebra::vec<n,C>& axis_)
+        get_rot_h_mat(const C alpha_, const algebra::vec<n,C>& axis_)
         {
           mln_assertion(!"get_h_mat : n not implemented");
         }
 
         template <typename C >
         algebra::h_mat<3, C>
-        get_rot_h_mat(const float alpha_, const algebra::vec<3,C>& axis_)
+        get_rot_h_mat(const C alpha_, const algebra::vec<3,C>& axis_)
         {
 	  //test axis is valid
 	  typedef algebra::vec<3,C> vec_t;
@@ -80,14 +80,14 @@ namespace mln
 	  algebra::vec<3,C> axis = axis_;
 	  axis.normalize();
 
-          const float cos_a = cos(alpha_);
-          const float sin_a = sin(alpha_);
-          const float u = axis_[0];
-          const float v = axis_[1];
-          const float w = axis_[2];
-          const float u2 = u * u;
-          const float v2 = v * v;
-          const float w2 = w * w;
+          const C cos_a = cos(alpha_);
+          const C sin_a = sin(alpha_);
+          const C u = axis_[0];
+          const C v = axis_[1];
+          const C w = axis_[2];
+          const C u2 = u * u;
+          const C v2 = v * v;
+          const C w2 = w * w;
 
           algebra::h_mat<3, C> m_;
 
@@ -116,10 +116,10 @@ namespace mln
 
         template <typename C >
         algebra::h_mat<2, C>
-        get_rot_h_mat(const float alpha_, const algebra::vec<2,C>&)
+        get_rot_h_mat(const C alpha_, const algebra::vec<2,C>&)
         {
-          const float cos_a = cos(alpha_);
-          const float sin_a = sin(alpha_);
+          const C cos_a = cos(alpha_);
+          const C sin_a = sin(alpha_);
 
           algebra::h_mat<2, C> m_;
 
@@ -149,7 +149,7 @@ namespace mln
 	/// Constructor without argument.
         rotation();
 	/// Constructor with radian alpha and a facultative direction (rotation axis).
-        rotation(float alpha, const algebra::vec<n,float>& axis);
+        rotation(C alpha, const algebra::vec<n,C>& axis);
         /// Constructor with quaternion
         rotation(const algebra::quat& q);
 	/// Constructor with h_mat.
@@ -160,9 +160,9 @@ namespace mln
         algebra::vec<n,C> operator()(const algebra::vec<n,C>& v) const;
 
 	/// Set a new grade alpha.
-        void set_alpha(float alpha);
+        void set_alpha(C alpha);
 	/// Set a new rotation axis.
-        void set_axis(const algebra::vec<n,float>& axis);
+        void set_axis(const algebra::vec<n,C>& axis);
 
       protected:
         void update();
@@ -170,8 +170,8 @@ namespace mln
 
 
 	/// FIXME: Is it useful?
-        float alpha_;
-        algebra::vec <n,float> axis_;
+        C alpha_;
+        algebra::vec <n,C> axis_;
       };
 
 
@@ -185,7 +185,7 @@ namespace mln
 
       template <unsigned n, typename C>
       inline
-      rotation<n,C>::rotation(float alpha, const algebra::vec<n,float>& axis)
+      rotation<n,C>::rotation(C alpha, const algebra::vec<n,C>& axis)
 	:alpha_(alpha),
 	 axis_(axis)
       {
@@ -201,13 +201,13 @@ namespace mln
         mlc_bool(n == 3)::check();
         mln_precondition(q.is_unit());
 
-        float
+        C
           w = q.to_vec()[0],
           x = q.to_vec()[1],  x2 = 2*x*x,  xw = 2*x*w,
           y = q.to_vec()[2],  y2 = 2*y*y,  xy = 2*x*y,  yw = 2*y*w,
           z = q.to_vec()[3],  z2 = 2*z*z,  xz = 2*x*z,  yz = 2*y*z,  zw = 2*z*w;
 
-        float t[9] = {1.f - y2 - z2,  xy - zw,  xz + yw,
+        C t[9] = {1.f - y2 - z2,  xy - zw,  xz + yw,
                       xy + zw,  1.f - x2 - z2,  yz - xw,
                       xz - yw,  yz + xw,  1.f - x2 - y2};
 
@@ -262,7 +262,7 @@ namespace mln
       template <unsigned n, typename C>
       inline
       void
-      rotation<n,C>::set_alpha(float alpha)
+      rotation<n,C>::set_alpha(C alpha)
       {
 	alpha_ = alpha;
 	update();
@@ -271,7 +271,7 @@ namespace mln
       template <unsigned n, typename C>
       inline
       void
-      rotation<n,C>::set_axis(const algebra::vec<n,float>& axis)
+      rotation<n,C>::set_axis(const algebra::vec<n,C>& axis)
       {
         axis_ = axis;
 	update();
@@ -300,7 +300,7 @@ namespace mln
 	      p = tmp / norm::l2(tmp),
 	      p_rot_1 = q.rotate(p),
 	      p_rot_2 = (*this)(p);
-	return norm::l2(p_rot_1 - p_rot_2) < mln_epsilon(float);
+	return norm::l2(p_rot_1 - p_rot_2) < mln_epsilon(C);
       }
 
 # endif // ! MLN_INCLUDE_ONLY

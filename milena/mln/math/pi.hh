@@ -39,7 +39,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    const double pi = 3.1415926535;
+    const double pi = 3.1415926535897932385;
 
 # endif // ! MLN_INCLUDE_ONLY
 

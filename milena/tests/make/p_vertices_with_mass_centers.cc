@@ -66,7 +66,7 @@ int main()
 
   L nbasins = 4;
   typedef p_vertices<G,fun::i2v::array<point2d> > pv_t;
-  pv_t pv = make::p_vertices_with_mass_centers(wst, nbasins, g);
+  pv_t pv = make::p_vertices_with_mass_centers(wst, g);
 
   typedef p_array<point2d> arr_t;
   arr_t arr;

@@ -68,7 +68,7 @@ int main()
 
   L nbasins = 4;
   typedef p_edges<G,fun::i2v::array<util::site_pair<point2d> > > pe_t;
-  pe_t pe = make::p_edges_with_mass_centers(wst, nbasins, g);
+  pe_t pe = make::p_edges_with_mass_centers(wst, g);
 
   typedef util::site_pair<point2d> P;
   typedef p_array<P> arr_t;

@@ -61,7 +61,6 @@ namespace mln
     /// adjacent regions.
     ///
     /// \param wst_    A watershed image.
-    /// \param nbasins The number of basins.
     /// \param g_      A region adjacency graph.
     ///
     /// \return A p_edges.
@@ -72,7 +71,6 @@ namespace mln
     inline
     p_edges<G, fun::i2v::array<util::site_pair<mln_site(W)> > >
     p_edges_with_mass_centers(const Image<W>& wst_,
-			      const mln_value(W)& nbasins,
 			      const Graph<G>& g_);
 
 
@@ -83,7 +81,6 @@ namespace mln
     inline
     p_edges<G, fun::i2v::array<util::site_pair<mln_site(W)> > >
     p_edges_with_mass_centers(const Image<W>& wst_,
-			      const mln_value(W)& nbasins,
 			      const Graph<G>& g_)
     {
       trace::entering("make::p_edges_with_mass_centers");
@@ -95,6 +92,8 @@ namespace mln
 
       typedef mln_site(W) P;
 
+      // nbasins does not include the background label.
+      mln_value(W) nbasins = g.v_nmax() - 1;
       util::array<mln_vec(P)>
 	mass_centers = labeling::compute(accu::center<P>(), wst, nbasins);
 

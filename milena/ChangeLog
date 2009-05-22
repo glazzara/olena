@@ -1,5 +1,35 @@
 2009-05-18 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Small fixes.
+
+	* mln/accu/max_site.hh: add a missing include.
+
+	* mln/fun/x2x/rotation.hh: Replace 'float' by 'C', the template
+	parameter.
+
+	* mln/fun/x2x/translation.hh: fix header.
+
+	* mln/graph/attribute/representative.hh: avoid a warning.
+
+	* mln/make/p_edges_with_mass_centers.hh,
+	* mln/make/p_vertices_with_mass_centers.hh: improve interface.
+
+	* mln/math/pi.hh: use a more precise value.
+
+	* mln/topo/skeleton/crest.hh: add more documentation.
+
+	* mln/transformation/all.hh: fix wrong include.
+
+	* tests/make/p_edges_with_mass_centers.cc,
+	* tests/make/p_vertices_with_mass_centers.cc: update the call of the
+	routine.
+
+	* tests/transformation/rotate.cc: fix wrong reference result.
+	
+	* tests/util/Makefile.am: remove a non existing test.
+
+2009-05-18 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Fix nondeterminism in generators.
 
 	* doc/generate_dist_files.sh,

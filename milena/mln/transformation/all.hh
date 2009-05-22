@@ -40,6 +40,6 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/transformation/rotation.hh>
+# include <mln/transformation/rotate.hh>
 
 # endif // ! MLN_TRANSFORMATION_ALL_HH_

@@ -18,7 +18,6 @@ check_PROGRAMS =				\
   soft_heap 					\
   tree						\
   tree_fast					\
-  tree_fast_to_image				\
   tree_to_fast
 
 adjacency_matrix_SOURCES = adjacency_matrix.cc
