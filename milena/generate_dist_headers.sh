@@ -10,8 +10,8 @@ echo "nobase_include_HEADERS = \\" >> headers.mk
 echo "mln/version.hh \\" >> headers.mk
 echo "generating headers.mk"
 
-find mln -type f -name '*.hh'| grep -v "\.svn" | sed -e 's/$/ \\/g' | sort >> headers.mk
-find mln -type f -name '*.hxx'| grep -v "\.svn" | sed -e 's/$/ \\/g'| sort >> headers.mk
+find mln -type f -name '*.hh'| grep -v "\.svn" | sed -e 's/$/ \\/g' | sort -d >> headers.mk
+find mln -type f -name '*.hxx'| grep -v "\.svn" | sed -e 's/$/ \\/g'| sort -d >> headers.mk
 
 last_line=`tail -n 1 headers.mk | sed -e 's/\\\//g'` # remove '\' in last line
 sed '$d' < headers.mk > headers.mk.tmp # remove last line

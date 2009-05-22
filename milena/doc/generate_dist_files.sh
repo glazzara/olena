@@ -14,7 +14,7 @@ for dir in figures outputs examples; do
   echo >>$OUT
   $ECHO_N "EXTRA_DIST += " >> $OUT
   for ftype in cc.raw p*m txt; do
-    for file in `find $dir -mindepth 1 -name *.$ftype`; do
+    for file in `find $dir -mindepth 1 -name *.$ftype | sort -d `; do
       echo " \\" >> $OUT
       $ECHO_N $file >> $OUT
     done
