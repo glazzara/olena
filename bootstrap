@@ -135,6 +135,9 @@ run milena ./generate_dist_headers.sh
 # for the tutorial.
 run milena/doc ./generate_dist_files.sh
 
+# Generate unit test files for Scribo.
+run scribo/tests/unit_test ./build_unit_test.sh `pwd`/scribo
+
 # Tell what's going on.
 set -x
 
