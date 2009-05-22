@@ -35,6 +35,7 @@
 
 # include <iostream>
 # include <fstream>
+# include <cstring>
 # include <mln/core/image/image1d.hh>
 # include <mln/metal/equal.hh>
 # include <mln/util/array.hh>
@@ -58,9 +59,9 @@ namespace mln
        * \param[in] start_value The start index value of the plot
        *	    (optional).
        */
-      template <typename I>
+      /*template <typename I>
       void load(image1d<I>& ima,
-		const std::string& filename);
+		const std::string& filename);*/
 
       /*! Load a Milena array from a plot file.
        *
@@ -77,7 +78,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
-      template <typename I>
+      /*template <typename I>
       inline
       void load(image1d<I>& ima, const std::string& filename)
       {
@@ -88,7 +89,7 @@ namespace mln
 	  file_out << start_value + i << ", " << ima.at_(i) << std::endl;
 
 	trace::exiting("mln::io::plot::load");
-      }
+      }*/
 
       template <typename I>
       inline
@@ -96,11 +97,27 @@ namespace mln
       {
 	trace::entering("mln::io::plot::load");
 
-	std::ifstream file_out(filename.c_str());
-	while (!oef)
+	arr.clear();
+	std::ifstream file_in(filename.c_str());
+
+	int MAX_LENGTH = 100;
+	char line[MAX_LENGTH];
+	char delims[] = " ";
+	char *result = NULL;
+	char *tmp_str = NULL;
+
+	while (file_in.getline(line, MAX_LENGTH))
 	{
-	  if (line is comment)
-	    continue;
+	  if (strlen(line) > 0 && line[0] != '#')
+	  {
+	    tmp_str = strtok(line, delims);
+	    while (tmp_str != NULL)
+	    {
+	      result = tmp_str;
+	      tmp_str = strtok(NULL, delims);
+	    }
+	    arr.append(atof(result)); // FIXME: type
+	  }
 	}
 
 	trace::exiting("mln::io::plot::load");

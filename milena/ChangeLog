@@ -1,3 +1,9 @@
+2009-05-22  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Implement load() for filling an array from a plot.
+	* mln/io/plot/load.hh: Load a plot into an float array.
+	* tests/io/plot/load.cc: New test file for plot loading.
+
 2009-05-18 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Small fixes.
