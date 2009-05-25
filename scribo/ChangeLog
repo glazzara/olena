@@ -1,0 +1,15 @@
+2009-05-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	  Add a script to generate unit tests for scribo.
+
+	  * tests/unit_test/build_unit_test.sh: new.
+
+
+$Rev$
+$Id$
+$Date$
+
+Local Variables:
+ispell-local-dictionary: "american"
+coding: iso-latin-1
+End:
