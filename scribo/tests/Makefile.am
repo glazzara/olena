@@ -2,6 +2,8 @@
 
 SUBDIRS = 		\
   filter 		\
+  preprocessing 	\
   table 		\
-  text
+  text 			\
+  unit_test
 

@@ -1,4 +1,4 @@
-SUBDIRS = tests
+SUBDIRS = tests src
 
 .PHONY: bin
 

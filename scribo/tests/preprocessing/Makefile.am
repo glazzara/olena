@@ -2,8 +2,9 @@
 
 include $(top_srcdir)/scribo/scribo.mk
 
-bin_PROGRAMS = 				\
-  simple
+check_PROGRAMS =				\
+  unskew
 
-simple_SOURCES = simple.cc                               
+unskew_SOURCES = unskew.cc
 
+TESTS = $(check_PROGRAMS)
