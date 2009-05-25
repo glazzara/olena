@@ -67,6 +67,11 @@ seg_fixed: seg_fixed.cc
 	
 #####################
 
+filter: filter.cc
+	${CXX} -I../../../ ${CXXFLAGS} $^ -o filter
+
+#####################
+
 clean:
 	rm -rf *.dump *.p?m *.plot *.log *.csv *.dSYM
 	rm seg2d seg3d wsd2d wsd3d nbasins_finder grad clo_vol wst graph med thres matlab time_max first_slice_dicom

@@ -1,3 +1,12 @@
+2009-05-25  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Change processing chain, now filter before normalization.
+	* fabien/igr/Makefile: Add filter target.
+	* fabien/igr/filter.cc: New tool for filtering input.
+	* fabien/igr/fixed_seg/main.cc: Update closing to 
+	closing::sum
+	* fabien/igr/point_filtering/main.cc: Minor update.
+
 2009-05-22  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add tool for point manipulation through plot.

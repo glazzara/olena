@@ -59,36 +59,12 @@
 #include <mln/debug/println.hh>
 #include <mln/trace/quiet.hh>
 
-#include "../plot_label.hh"
 
 using namespace mln;
 using value::int_u8;
 using value::int_u12;
 using value::label_16;
 
-const float saturation = 1.0;
-
-
-
-namespace mln
-{
-
-  template <typename I>
-  void io_save_edges_int_u12(const I& input,
-		     value::int_u8 bg,
-		     const std::string& filename)
-  {
-    mlc_equal(mln_value(I), value::int_u12)::check();
-    mln_ch_value(I, value::int_u8) output;
-    initialize(output, input);
-    arith::div_cst(input, 16, output);
-    io::pgm::save(world::inter_pixel::display_edge(output.unmorph_(),
-						   bg,
-						   3),
-		  filename);
-  }
-
-} // end of namespace mln
 
 
 
@@ -148,7 +124,7 @@ struct dist_t : Function_vv2v<dist_t>
 
     res /= std::max(sum_v1, sum_v2);
     res = 1 - res;
-    res = res * (4095 / saturation);
+    res = res * 4095;
     if (res > 4095)
       return 4095;
 
@@ -191,7 +167,7 @@ struct dist_morpho_t : Function_vv2v<dist_morpho_t>
 
     res /= std::max(sum_v1, sum_v2);
     res = 1 - res;
-    res = res * (4095 / saturation);
+    res = res * 4095;
     if (res > 4095)
       return 4095;
 
@@ -206,22 +182,17 @@ struct dist_morpho_t : Function_vv2v<dist_morpho_t>
 
 int usage(const char* bin)
 {
-  std::cout << "Usage: " << bin << " input.dump min smooth lambda" << std::endl;
+  std::cout << "Usage: " << bin << " input.dump output.dump" << std::endl;
   return 1;
 }
 
 int main(int argc, char* argv[])
 {
-  if (argc != 5)
+  if (argc != 3)
     return usage(argv[0]);
 
-  float min = atof(argv[2]);
-  unsigned is_smooth = atoi(argv[3]);
-  unsigned lambda = atoi(argv[4]);
-
-
   // Initialization.
-  typedef float input_type;
+  typedef int_u12 input_type;
   image3d<input_type> input;
   io::dump::load(input, argv[1]);
   int min_slice = input.bbox().pmin().sli();
@@ -234,88 +205,28 @@ int main(int argc, char* argv[])
     image2d<input_type> tmp_slice = duplicate(slice(input, i));
     mln_piter_(image2d<input_type>) p(tmp_slice.domain());
     for_all(p)
-      ima_arr(p).append(tmp_slice(p) - min); // We set the minimum value to 0.
+      ima_arr(p).append(tmp_slice(p));
   }
 
 
-  // Edges image creation.
-  typedef image_if<I, world::inter_pixel::is_pixel> Ix;
-  Ix imax = world::inter_pixel::immerse(ima_arr);
+  image3d<float> output;
+  initialize(output, input);
 
-  // Edges distance computation.
-  image_if<image2d<int_u12>, world::inter_pixel::is_separator> edges;
-  if (!is_smooth)
-    edges = world::inter_pixel::compute(imax, dist);
-  else
-    edges = world::inter_pixel::compute(imax, dist_morpho);
-  io_save_edges_int_u12(edges, 0, "dist.pgm");
-
-
-  // Closing.
-  mln_VAR(d_clo, morpho::closing::sum(edges, world::inter_pixel::e2e(), lambda));
-  io_save_edges_int_u12(d_clo, 0, "d_clo.pgm");
-
-
-  // Watershed.
-  typedef label_16 L;
-  L nbasins;
-  mln_VAR(wst, morpho::watershed::flooding(d_clo, world::inter_pixel::e2e(), nbasins));
-
-  std::cout << "nbasins: " << nbasins << std::endl;
-
-
-  mln_VAR(w_all, wst.unmorph_());
-  //io::dump::save(w_all, "watershed_edges.dump");
-  //data::fill((w | (!world::inter_pixel::is_separator())).rw(), nbasins.next());
-  mln_VAR(w_pixels, w_all | world::inter_pixel::is_pixel());
-  data::paste(morpho::dilation(extend(w_pixels, pw::value(w_all)), c4().win()), w_all);
-  // edges -> dots
-  mln_VAR(w_dots, w_all | world::inter_pixel::dim2::is_dot());
-  data::paste(morpho::erosion(extend(w_dots, pw::value(w_all)), c4().win()), w_all);
-
-  //io::ppm::save(labeling::colorize(value::rgb8(), w, nbasins.next()), "result.ppm");
-  io::pgm::save(labeling::wrap(int_u8(), w_all), "watershed.pgm");
-
-
-
-  // Mean distance.
-
-  /*accu::mean<E_TYPE> accu_mean;
-  util::array<float> means = labeling::compute(accu_mean, e, wst, nbasins);
-
-  // Display.
+  mln_piter_(I) p(ima_arr.domain());
+  for_all(p)
   {
-    typedef image_if<image2d<float>, world::inter_pixel::is_separator> Fsx;
-    Fsx ima_means;
-    initialize(ima_means, wst);
-    data::paste(wst, ima_means);
-    for (unsigned i = 1; i < means.nelements(); ++i)
-      data::fill((ima_means | pw::value(ima_means) == pw::cst(i)).rw(), means[i]);
-    mln_VAR(display_means, world::inter_pixel::display_edge(ima_means.unmorph_(), 0.0, 3));
-    io::pgm::save(level::stretch(int_u8(), display_means), "04_means.pgm");
-  }*/
+    image1d<input_type> tmp_ima;
+    convert::from_to(ima_arr(p), tmp_ima);
+    image1d<float> morpho_ima = mean_image(tmp_ima, 15);
+    morpho_ima = mean_image(morpho_ima, 11);
+    morpho_ima = mean_image(morpho_ima, 7);
 
-  /*typedef accu::mean<int_u12,float,int_u12> A;
-  util::array<int_u12> m = labeling::compute(A(), d, wst, nbasins);
-
-  {
-    util::array<int_u8> m_(nbasins.next());
-    m_[0] = 1; // watershed line <=> 1
-    for (unsigned l = 1; l <= nbasins; ++l)
-    {
-      m_[l] = m[l] / 16;
-      if (m_[l] < 2) m_[l] == 2;
-      // basin <=> 2..255
-    }
-    mln_VAR(d_m, level::transform(wst, m_));
-    mln_VAR(out, world::inter_pixel::display_edge(d_m.unmorph_(),
-	  0, // background <=> 0
-	  3));
-    io::pgm::save(out, "dist_mean.pgm");
-  }*/
+    for (int i = min_slice; i <= max_slice; ++i)
+      output.at_(i, p.row(), p.col()) = morpho_ima.at_(i - min_slice);
+  }
 
 
-
+  io::dump::save(output, argv[2]);
 
   return 0;
 }
