@@ -239,6 +239,8 @@ mln_core_image_complex_neighborhoods \
 mln_core_image_complex_window_piter \
 mln_core_image_complex_windows \
 mln_core_image_decorated_image \
+mln_core_image_dmorph_all \
+mln_core_image_dmorph_transformed_image \
 mln_core_image_edge_image \
 mln_core_image_essential \
 mln_core_image_extended \
@@ -376,6 +378,8 @@ mln_core_site_set_p_run \
 mln_core_site_set_p_run_piter \
 mln_core_site_set_p_set \
 mln_core_site_set_p_set_of \
+mln_core_site_set_p_transformed \
+mln_core_site_set_p_transformed_piter \
 mln_core_site_set_p_vaccess \
 mln_core_site_set_p_vertices \
 mln_core_site_set_p_vertices_psite \
@@ -635,6 +639,8 @@ mln_io_pfm_save \
 mln_io_pgm_all \
 mln_io_pgm_load \
 mln_io_pgm_save \
+mln_io_plot_all \
+mln_io_plot_load \
 mln_io_plot_save \
 mln_io_pnm_all \
 mln_io_pnm_load_header \
@@ -648,7 +654,6 @@ mln_io_ppm_load \
 mln_io_ppm_save \
 mln_io_tiff_all \
 mln_io_tiff_load \
-mln_io_tiff_save \
 mln_io_txt_all \
 mln_io_txt_save \
 mln_labeling_all \
@@ -900,6 +905,8 @@ mln_morpho_Rd \
 mln_morpho_reconstruction_all \
 mln_morpho_reconstruction_by_dilation_all \
 mln_morpho_reconstruction_by_dilation_union_find \
+mln_morpho_reconstruction_by_erosion_all \
+mln_morpho_reconstruction_by_erosion_union_find \
 mln_morpho_skeleton_constrained \
 mln_morpho_thickening \
 mln_morpho_thick_miss \
@@ -1211,6 +1218,7 @@ mln_value_sign \
 mln_value_stack \
 mln_value_super_value \
 mln_value_viter \
+mln_version \
 mln_win_all \
 mln_win_backdiag2d \
 mln_win_ball \
@@ -1490,6 +1498,8 @@ mln_core_image_complex_neighborhoods_SOURCES = mln_core_image_complex_neighborho
 mln_core_image_complex_window_piter_SOURCES = mln_core_image_complex_window_piter.cc
 mln_core_image_complex_windows_SOURCES = mln_core_image_complex_windows.cc
 mln_core_image_decorated_image_SOURCES = mln_core_image_decorated_image.cc
+mln_core_image_dmorph_all_SOURCES = mln_core_image_dmorph_all.cc
+mln_core_image_dmorph_transformed_image_SOURCES = mln_core_image_dmorph_transformed_image.cc
 mln_core_image_edge_image_SOURCES = mln_core_image_edge_image.cc
 mln_core_image_essential_SOURCES = mln_core_image_essential.cc
 mln_core_image_extended_SOURCES = mln_core_image_extended.cc
@@ -1627,6 +1637,8 @@ mln_core_site_set_p_run_SOURCES = mln_core_site_set_p_run.cc
 mln_core_site_set_p_run_piter_SOURCES = mln_core_site_set_p_run_piter.cc
 mln_core_site_set_p_set_SOURCES = mln_core_site_set_p_set.cc
 mln_core_site_set_p_set_of_SOURCES = mln_core_site_set_p_set_of.cc
+mln_core_site_set_p_transformed_SOURCES = mln_core_site_set_p_transformed.cc
+mln_core_site_set_p_transformed_piter_SOURCES = mln_core_site_set_p_transformed_piter.cc
 mln_core_site_set_p_vaccess_SOURCES = mln_core_site_set_p_vaccess.cc
 mln_core_site_set_p_vertices_SOURCES = mln_core_site_set_p_vertices.cc
 mln_core_site_set_p_vertices_psite_SOURCES = mln_core_site_set_p_vertices_psite.cc
@@ -1886,6 +1898,8 @@ mln_io_pfm_save_SOURCES = mln_io_pfm_save.cc
 mln_io_pgm_all_SOURCES = mln_io_pgm_all.cc
 mln_io_pgm_load_SOURCES = mln_io_pgm_load.cc
 mln_io_pgm_save_SOURCES = mln_io_pgm_save.cc
+mln_io_plot_all_SOURCES = mln_io_plot_all.cc
+mln_io_plot_load_SOURCES = mln_io_plot_load.cc
 mln_io_plot_save_SOURCES = mln_io_plot_save.cc
 mln_io_pnm_all_SOURCES = mln_io_pnm_all.cc
 mln_io_pnm_load_header_SOURCES = mln_io_pnm_load_header.cc
@@ -1899,7 +1913,6 @@ mln_io_ppm_load_SOURCES = mln_io_ppm_load.cc
 mln_io_ppm_save_SOURCES = mln_io_ppm_save.cc
 mln_io_tiff_all_SOURCES = mln_io_tiff_all.cc
 mln_io_tiff_load_SOURCES = mln_io_tiff_load.cc
-mln_io_tiff_save_SOURCES = mln_io_tiff_save.cc
 mln_io_txt_all_SOURCES = mln_io_txt_all.cc
 mln_io_txt_save_SOURCES = mln_io_txt_save.cc
 mln_labeling_all_SOURCES = mln_labeling_all.cc
@@ -2151,6 +2164,8 @@ mln_morpho_Rd_SOURCES = mln_morpho_Rd.cc
 mln_morpho_reconstruction_all_SOURCES = mln_morpho_reconstruction_all.cc
 mln_morpho_reconstruction_by_dilation_all_SOURCES = mln_morpho_reconstruction_by_dilation_all.cc
 mln_morpho_reconstruction_by_dilation_union_find_SOURCES = mln_morpho_reconstruction_by_dilation_union_find.cc
+mln_morpho_reconstruction_by_erosion_all_SOURCES = mln_morpho_reconstruction_by_erosion_all.cc
+mln_morpho_reconstruction_by_erosion_union_find_SOURCES = mln_morpho_reconstruction_by_erosion_union_find.cc
 mln_morpho_skeleton_constrained_SOURCES = mln_morpho_skeleton_constrained.cc
 mln_morpho_thickening_SOURCES = mln_morpho_thickening.cc
 mln_morpho_thick_miss_SOURCES = mln_morpho_thick_miss.cc
@@ -2462,6 +2477,7 @@ mln_value_sign_SOURCES = mln_value_sign.cc
 mln_value_stack_SOURCES = mln_value_stack.cc
 mln_value_super_value_SOURCES = mln_value_super_value.cc
 mln_value_viter_SOURCES = mln_value_viter.cc
+mln_version_SOURCES = mln_version.cc
 mln_win_all_SOURCES = mln_win_all.cc
 mln_win_backdiag2d_SOURCES = mln_win_backdiag2d.cc
 mln_win_ball_SOURCES = mln_win_ball.cc

@@ -1,5 +1,19 @@
 2009-05-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Reconstruction by erosion.
+	* mln/morpho/reconstruction/by_erosion/all.hh,
+	* mln/morpho/reconstruction/by_erosion/union_find.hh,
+	* mln/morpho/reconstruction/by_erosion:
+	Reconstruction by erosion.
+
+	* tests/morpho/reconstruction/Makefile.am,
+	* tests/morpho/reconstruction/by_erosion/union_find.cc,
+	* tests/morpho/reconstruction/by_erosion,
+	* tests/unit_test/unit-tests.mk:
+	Reconstruction by erosion test files.
+
+2009-05-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Improve tests about tree interface.
 	* tests/morpho/tree/data.cc: Add tests about tree traversal.
 

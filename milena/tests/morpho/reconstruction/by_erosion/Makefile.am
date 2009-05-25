@@ -2,9 +2,12 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-SUBDIRS =					\
-  by_dilation \
-  by_erosion
+
+check_PROGRAMS =				\
+  union_find
+
+
+union_find_SOURCES = union_find.cc
 
 
 TESTS = $(check_PROGRAMS)
