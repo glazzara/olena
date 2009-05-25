@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,23 +26,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_CLOSING_ALL_HH
-# define MLN_MORPHO_CLOSING_ALL_HH
+#ifndef MLN_MORPHO_CLOSING_SUM_HH
+# define MLN_MORPHO_CLOSING_SUM_HH
 
-/// \file mln/morpho/closing/all.hh
+/// \file mln/morpho/closing/sum.hh
 ///
-/// File that includes all closing operators.
+/// Morphological sum closing.
+
+# include <mln/morpho/closing/leveling.hh>
+# include <mln/morpho/attribute/sum.hh>
 
 
-#include <mln/morpho/closing/algebraic.hh>
-#include <mln/morpho/closing/area.hh>
-#include <mln/morpho/closing/area_on_vertices.hh>
-#include <mln/morpho/closing/height.hh>
-#include <mln/morpho/closing/leveling.hh>
-#include <mln/morpho/closing/structural.hh>
-#include <mln/morpho/closing/sum.hh>
-#include <mln/morpho/closing/volume.hh>
+namespace mln
+{
+
+  namespace morpho
+  {
+
+    namespace closing
+    {
+
+      /// Morphological sum closing.
+      template <typename I, typename N>
+      mln_concrete(I)
+      sum(const Image<I>& input, const Neighborhood<N>& nbh,
+	  unsigned lambda);
 
 
-#endif // ! MLN_MORPHO_CLOSING_ALL_HH
+# ifndef MLN_INCLUDE_ONLY
 
+      template <typename I, typename N>
+      inline
+      mln_concrete(I)
+      sum(const Image<I>& input, const Neighborhood<N>& nbh,
+	  unsigned lambda)
+      {
+	trace::entering("morpho::closing::sum");
+
+	mln_precondition(exact(input).is_valid());
+
+	mln_concrete(I) output;
+	output = closing::leveling(input, nbh, attribute::sum<I, float>(), lambda);
+
+	trace::exiting("morpho::closing::sum");
+	return output;
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::morpho::closing
+
+  } // end of namespace mln::morpho
+
+} // end of namespace mln
+
+
+#endif // ! MLN_MORPHO_CLOSING_SUM_HH
