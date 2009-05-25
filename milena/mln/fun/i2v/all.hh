@@ -31,7 +31,7 @@
 
 /// \file mln/fun/i2v/all.hh
 ///
-/// File that includes all functions from index to value.
+/// \brief File that includes all integer-to-value functions.
 
 
 namespace mln
@@ -40,19 +40,19 @@ namespace mln
   namespace fun
   {
 
-    /// \brief Functions from index to value.
+    /// \brief Namespace of integer-to-value functions.
     ///
     /// \ingroup modfun
     //
     namespace i2v {}
 
   }
-
 }
 
 
 # include <mln/fun/i2v/all_to.hh>
 # include <mln/fun/i2v/array.hh>
+# include <mln/fun/i2v/value_at_index.hh>
 
 
 

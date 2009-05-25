@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,43 +25,66 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_ALL_HH
-# define MLN_FUN_ALL_HH
+#ifndef MLN_FUN_I2V_VALUE_AT_INDEX_HH
+# define MLN_FUN_I2V_VALUE_AT_INDEX_HH
 
-/// \file mln/fun/all.hh
+/// \file mln/fun/i2v/value_at_index.hh
 ///
-/// File that includes all functions.
+/// \brief File that define a function that gives an index per value.
+
+#include <mln/core/concept/function.hh>
+#include <mln/trait/value_.hh>
 
 
 namespace mln
 {
 
-  /// Namespace of functions.
   namespace fun
   {
 
-    /// Internal namespace of functions.
-    namespace internal
-    {}
+    namespace i2v
+    {
 
-  }
-}
+      template <typename T>
+      struct value_at_index : Function_v2v< value_at_index<T> >,
+			      private metal::bool_<(mln_dim(T) == 1)>::check_t
+      {
+	typedef T result;
+	T operator()(unsigned i) const;
+      };
 
-
-# include <mln/fun/c.hh>
-# include <mln/fun/ops.hh>
-# include <mln/fun/i2v/all.hh>
-# include <mln/fun/meta/all.hh>
-# include <mln/fun/p2b/all.hh>
-# include <mln/fun/p2v/all.hh>
-# include <mln/fun/stat/all.hh>
-# include <mln/fun/v2b/all.hh>
-# include <mln/fun/v2i/all.hh>
-# include <mln/fun/v2v/all.hh>
-# include <mln/fun/vv2v/all.hh>
-# include <mln/fun/x2p/all.hh>
-# include <mln/fun/x2v/all.hh>
-# include <mln/fun/x2x/all.hh>
+      template <>
+      struct value_at_index<bool> : Function_v2v< value_at_index<bool> >
+      {
+	typedef bool result;
+	bool operator()(unsigned i) const;
+      };
 
 
-#endif // ! MLN_FUN_ALL_HH
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename T>
+      inline
+      T
+      value_at_index<T>::operator()(unsigned i) const
+      {
+	return T( int(mln_min(T)) + int(i) );
+      }
+
+      inline
+      bool
+      value_at_index<bool>::operator()(unsigned i) const
+      {
+	mln_precondition(i < 2);
+	return i == 1u ? true : false;
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::i2v
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
+
+#endif // ! MLN_FUN_I2V_VALUE_AT_INDEX_HH

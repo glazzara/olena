@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_ALL_HH
-# define MLN_FUN_ALL_HH
+#ifndef MLN_FUN_V2I_ALL_HH
+# define MLN_FUN_V2I_ALL_HH
 
-/// \file mln/fun/all.hh
+/// \file mln/fun/v2i/all.hh
 ///
-/// File that includes all functions.
+/// \brief File that includes all value-to-integer functions.
 
 
 namespace mln
@@ -41,28 +40,18 @@ namespace mln
   namespace fun
   {
 
-    /// Internal namespace of functions.
-    namespace internal
+    /// \brief Namespace of value-to-integer functions.
+    ///
+    /// \ingroup modfun
+    //
+    namespace v2i
     {}
 
   }
 }
 
 
-# include <mln/fun/c.hh>
-# include <mln/fun/ops.hh>
-# include <mln/fun/i2v/all.hh>
-# include <mln/fun/meta/all.hh>
-# include <mln/fun/p2b/all.hh>
-# include <mln/fun/p2v/all.hh>
-# include <mln/fun/stat/all.hh>
-# include <mln/fun/v2b/all.hh>
-# include <mln/fun/v2i/all.hh>
-# include <mln/fun/v2v/all.hh>
-# include <mln/fun/vv2v/all.hh>
-# include <mln/fun/x2p/all.hh>
-# include <mln/fun/x2v/all.hh>
-# include <mln/fun/x2x/all.hh>
+# include <mln/fun/v2i/index_of_value.hh>
 
 
-#endif // ! MLN_FUN_ALL_HH
+#endif // ! MLN_FUN_V2I_ALL_HH

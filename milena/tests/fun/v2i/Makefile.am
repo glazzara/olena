@@ -3,12 +3,8 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  all_to					\
-  array						\
-  value_at_index
+  index_of_value
 
-all_to_SOURCES = all_to.cc
-array_SOURCES = array.cc
-value_at_index_SOURCES = value_at_index.cc
+index_of_value_SOURCES = index_of_value.cc
 
 TESTS = $(check_PROGRAMS)

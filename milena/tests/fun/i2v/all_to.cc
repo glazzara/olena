@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,43 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_ALL_HH
-# define MLN_FUN_ALL_HH
-
-/// \file mln/fun/all.hh
+/// \file tests/fun/i2v/all_to.cc
 ///
-/// File that includes all functions.
+/// Test on mln::fun::i2v::all_to.
+
+#include <mln/fun/i2v/all_to.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of functions.
-  namespace fun
-  {
+  fun::i2v::all_to<int> f(51);
 
-    /// Internal namespace of functions.
-    namespace internal
-    {}
-
-  }
+  mln_assertion(f( 0) == 51);
+  mln_assertion(f( 1) == 51);
+  mln_assertion(f(51) == 51);
 }
-
-
-# include <mln/fun/c.hh>
-# include <mln/fun/ops.hh>
-# include <mln/fun/i2v/all.hh>
-# include <mln/fun/meta/all.hh>
-# include <mln/fun/p2b/all.hh>
-# include <mln/fun/p2v/all.hh>
-# include <mln/fun/stat/all.hh>
-# include <mln/fun/v2b/all.hh>
-# include <mln/fun/v2i/all.hh>
-# include <mln/fun/v2v/all.hh>
-# include <mln/fun/vv2v/all.hh>
-# include <mln/fun/x2p/all.hh>
-# include <mln/fun/x2v/all.hh>
-# include <mln/fun/x2x/all.hh>
-
-
-#endif // ! MLN_FUN_ALL_HH

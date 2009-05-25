@@ -1,3 +1,26 @@
+2009-05-25  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Import functions value<->index from sandbox.
+
+	* sandbox/theo/experimental/histo_image.cc: Copy as...
+	* mln/fun/i2v/value_at_index.hh: ...this new file.
+	(value_at_index): Keep only this, layout, and cleanup.
+	* mln/fun/i2v/all.hh: Update.
+	* tests/fun/i2v/array.cc: New.
+	* tests/fun/i2v/value_at_index.cc: New.
+	* tests/fun/i2v/all_to.cc: New.
+	* tests/fun/i2v/Makefile.am: Update.
+
+	* mln/fun/v2i: New directory.
+	* sandbox/theo/experimental/histo_image.cc: Copy as...
+	* mln/fun/v2i/index_of_value.hh: ...this new file.
+	(index_of_value): Keep only this, layout, and cleanup.
+	* mln/fun/v2i/all.hh: New.
+	* mln/fun/all.hh: Update.
+	* tests/fun/v2i: New directory.
+	* tests/fun/v2i/Makefile.am: New.
+	* tests/fun/v2i/index_of_value.cc: New.
+
 2009-05-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Reconstruction by erosion.
