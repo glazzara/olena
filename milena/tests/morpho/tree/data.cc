@@ -45,21 +45,27 @@ int main()
   using namespace mln;
 
   typedef image2d<unsigned char> I;
-  unsigned char vals[] = { 3, 2, 1,
-			   3, 2, 3,
-			   3, 4, 1 };
+//   unsigned char vals[] = { 3, 2, 1,
+// 			   3, 2, 3,
+// 			   3, 4, 1 };
+
+  unsigned char vals[] = { 3, 3, 3,
+			   3, 4, 4,
+			   3, 4, 4 };
+
   I ima = make::image2d(vals);
 
   debug::println("ima = ", ima);
 
   typedef p_array<point2d> S;
-  S s = level::sort_psites_increasing(ima);
+  S s = level::sort_psites_decreasing(ima);
 
   typedef morpho::tree::data<I,S> tree_t;
   tree_t t(ima, s, c4());
 
   debug::println( "parent  = ", t.parent_image() | t.domain() );
   debug::println( "on node = ", t.parent_image() | t.nodes()  );
+  debug::println( "on leaves = ", t.parent_image() | t.leaves()  );
 
   {
     /* Check site and node up order */
@@ -79,7 +85,7 @@ int main()
 	    }
 	  n.next();
 	}
-    mln_assertion(!n.is_valid());
+    mln_assertion(!n.is_valid() && !s.is_valid() && !l.is_valid());
   }
 
   {
@@ -100,7 +106,7 @@ int main()
 	    }
 	  n.next();
 	}
-    mln_assertion(!n.is_valid());
+    mln_assertion(!n.is_valid() && !s.is_valid() && !l.is_valid());
   }
 
 

@@ -1,3 +1,8 @@
+2009-05-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Improve tests about tree interface.
+	* tests/morpho/tree/data.cc: Add tests about tree traversal.
+
 2009-05-22  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Implement load() for filling an array from a plot.
