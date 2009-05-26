@@ -1,3 +1,9 @@
+2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add conversion to string to point2d.
+
+	* point2d.i (__str__): New method (extension).
+
 2009-05-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Wrap iterators on mln::box2d.

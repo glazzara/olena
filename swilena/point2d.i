@@ -1,5 +1,5 @@
 //						       		-*- C++ -*-
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -88,6 +88,18 @@
 {
   int row() const { return $self->operator[](0); }
   int col() const { return $self->operator[](1); }
+}
+
+%extend mln::point< mln::grid::square, mln::def::coord >
+{
+  char* __str__() const
+  {
+    std::ostringstream s;
+    s << *$self;
+    // FIXME: This is admittedly ugly; can't we use std::string as
+    // return type?  See Swig's manual.
+    return strdup(s.str().c_str());
+  }
 }
 
 %template(point2d) mln::point<mln::grid::square, mln::def::coord>;
