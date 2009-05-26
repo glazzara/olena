@@ -1,5 +1,9 @@
 2009-05-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	* box2d.i: Add a ctor taking two `int's as argument.
+
+2009-05-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	* python/sps-local.in (PYTHONPATH): Fix paths.
 
 2009-05-14  Roland Levillain  <roland@lrde.epita.fr>

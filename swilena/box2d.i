@@ -1,5 +1,5 @@
 //								-*- C++ -*-
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,8 +42,11 @@
 %include "mln/core/site_set/box.hh";
 %include "mln/core/alias/box2d.hh";
 
-// Swig tries to wrap everything by default; prevent it from wrapping
-// invalid methods (1D and 3D ctors for a box2d).
+/* Swig tries to wrap everything by default; prevent it from wrapping
+   invalid methods (1D and 3D ctors for an mln::box2d).  Moreover, as
+   Python does not automatically convert `int's to `short's, we cannot
+   use the ctor taking two `mln::def::coord's (i.e. `short's)
+   either.  */
 /* FIXME: Can't we simplify these directives, i.e. use `point2d'
    directly?  Maybe we could use mln_coord()?  */
 %ignore mln::box< mln::point<mln::grid::square, mln::def::coord> >
@@ -51,11 +54,22 @@
 
 %ignore mln::box< mln::point<mln::grid::square, mln::def::coord> >
 ::box(typename mln::point<mln::grid::square, mln::def::coord>::coord,
+      typename mln::point<mln::grid::square, mln::def::coord>::coord);
+
+%ignore mln::box< mln::point<mln::grid::square, mln::def::coord> >
+::box(typename mln::point<mln::grid::square, mln::def::coord>::coord,
       typename mln::point<mln::grid::square, mln::def::coord>::coord,
       typename mln::point<mln::grid::square, mln::def::coord>::coord);
 
-%extend mln::box
+%extend mln::box< mln::point<mln::grid::square, mln::def::coord> >
 {
+  // Provide a ctor creating an `mln::box2d' from two `int's.
+  mln::box< mln::point< mln::grid::square, mln::def::coord> > (int nrows,
+							       int ncols)
+  {
+    return new mln::box<mln::point2d>(nrows, ncols);
+  }
+
   unsigned nrows() const
   {
     // FIXME: This is the exact content of box_impl_<2, C, E>::nrows.
@@ -68,6 +82,5 @@
     return mln::internal::force_exact<mln::box2d>(*$self).bbox().len(1);
   }
 }
-
 
 %template(box2d) mln::box< mln::point<mln::grid::square, mln::def::coord> >;
