@@ -31,6 +31,12 @@
 
 2009-05-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor some Swilena code using Python conversion helper generators.
+
+	* int_u.ixx, point2d.i: Here.
+
+2009-05-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add Python conversion helper generators to Swilena.
 
 	* python-utils.ixx: New file.

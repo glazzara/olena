@@ -90,16 +90,11 @@
   int col() const { return $self->operator[](1); }
 }
 
-%extend mln::point< mln::grid::square, mln::def::coord >
-{
-  char* __str__() const
-  {
-    std::ostringstream s;
-    s << *$self;
-    // FIXME: This is admittedly ugly; can't we use std::string as
-    // return type?  See Swig's manual.
-    return strdup(s.str().c_str());
-  }
-}
+// Conversion helper for Python.
+#if SWIGPYTHON
+%include concat.ixx
+%include python-utils.ixx
+generate__str__(concat2(mln::point< mln::grid::square,mln::def::coord >))
+#endif // !SWIGPYTHON
 
 %template(point2d) mln::point<mln::grid::square, mln::def::coord>;
