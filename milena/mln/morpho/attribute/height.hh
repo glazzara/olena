@@ -104,6 +104,10 @@ namespace mln
 	/// Get the value of the accumulator.
 	unsigned to_result() const;
 
+	/// Get base & current level of the accumulator.
+	unsigned base_level() const;
+	unsigned current_level() const;
+
 
       protected:
 	/// The reference level in the component.
@@ -206,6 +210,23 @@ namespace mln
 
 	return math::diff_abs(ref_, cur_);
       }
+
+      template <typename I>
+      inline
+      unsigned
+      height<I>::base_level() const
+      {
+	return ref_;
+      }
+
+      template <typename I>
+      inline
+      unsigned
+      height<I>::current_level() const
+      {
+	return cur_;
+      }
+
 
       template <typename I>
       inline

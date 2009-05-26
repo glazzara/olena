@@ -1,3 +1,8 @@
+2009-05-26  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add getters to base and current level to height attribute.
+	* mln/morpho/attribute/height.hh: Add base and current level getters.
+
 2009-05-25  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add mln::morpho::closing::sum().
