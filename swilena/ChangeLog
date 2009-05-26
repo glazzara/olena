@@ -1,3 +1,7 @@
+2009-05-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	* python/sps-local.in (PYTHONPATH): Fix paths.
+
 2009-05-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve Swilena.
