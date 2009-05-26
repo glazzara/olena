@@ -1,14 +1,14 @@
 2009-05-22  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
-	* configure.ac: configure milena/tests/core/image/dmorph.
+	* configure.ac: Configure milena/tests/core/image/dmorph.
 
 2009-05-22  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Configure scribo directory and generate unit tests.
 
-	* configure.ac: configure scribo directory.
+	* configure.ac: Configure scribo directory.
 
-	* bootstrap: generate unit tests for scribo.
+	* bootstrap: Generate unit tests for scribo.
 
 2009-05-15  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 

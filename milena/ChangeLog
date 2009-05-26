@@ -101,7 +101,7 @@
 	routine.
 
 	* tests/transformation/rotate.cc: fix wrong reference result.
-	
+
 	* tests/util/Makefile.am: remove a non existing test.
 
 2009-05-18 Guillaume Lazzara  <lazzara@lrde.epita.fr>
@@ -144,21 +144,6 @@
 	* mln/core/internal/image_domain_morpher.hh: Upgrade doc style.
 	* tests/core/image/p2p_image.cc: Move echo.
 
-2009-05-19  Etienne FOLIO  <folio@lrde.epita.fr>
-
-	HSV type, HSL <-> HSV conversions, and tests.
-	* sandbox/folio/mln/fun/v2v/hsl_to_hsv.hh: New algorithms.
-	* sandbox/folio/mln/fun/v2v/rgb_to_hsv.hh: float -> float01_<n>.
-	* sandbox/folio/mln/histo/compute_histo_3d.hh: Some corrections.
-	* sandbox/folio/mln/value/hsv.hh: HSV value type.
-	* sandbox/folio/test/histo/plot_lena.cc: New test.
-	* sandbox/folio/test/histo/plot_lena_3d.cc: New test.
-	* sandbox/folio/test/histo/plot_lena_rgb.cc: New test.
-	* sandbox/folio/test/histo/projected.cc: New test.
-	* sandbox/folio/test/histo/projected3d.cc: New test.
-	* sandbox/folio/test/value/circular.cc: test.
-	* sandbox/folio/test/value/hsv.cc: test.
-
 2009-05-19  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Extend plot I/O with load() function.
@@ -166,7 +151,7 @@
 	* mln/io/plot/all.hh: New file including plot/ files.
 	* mln/io/plot/load.hh: New draft for plot loading, nonfunctional.
 	* mln/io/plot/save.hh: Update delimiter to simple whitespace.
-	* mln/labeling/compute.hh: Allow accumulator array to be 
+	* mln/labeling/compute.hh: Allow accumulator array to be
 	passed as an argument.
 
 2009-05-18  Roland Levillain  <roland@lrde.epita.fr>
@@ -862,23 +847,23 @@
 2009-05-06  Frederic Bour  <bour@lrde.epita.fr>
 
 	Correct typo errors, rename storage_ to state, update thrubin morpher.
-	*  mln/core/concept/meta_function.hh: Add mln_fun_withbin for binary
+	* mln/core/concept/meta_function.hh: Add mln_fun_withbin for binary
 	metafunction.
-	*  mln/core/image/thrubin_morpher.hh: Correct implementation of
+	* mln/core/image/thrubin_morpher.hh: Correct implementation of
 	thrubin_morpher.hh.
-	*  mln/core/image/thru_morpher.hh: Typos correction.
-	*  mln/fun/binary.hh,
-	*  mln/fun/binary_param.hh: Renamed storage_get to state.
-	*  mln/fun/math/inf.hh,
-	*  mln/fun/math/sup.hh: Correct bug when working on two different
+	* mln/core/image/thru_morpher.hh: Typos correction.
+	* mln/fun/binary.hh,
+	* mln/fun/binary_param.hh: Renamed storage_get to state.
+	* mln/fun/math/inf.hh,
+	* mln/fun/math/sup.hh: Correct bug when working on two different
 	types.
-	*  mln/fun/spe/binary.hh,
-	*  mln/fun/spe/unary.hh,
-	*  mln/fun/unary.hh,
-	*  mln/fun/unary_param.hh: Renamed storage_get to state.
-	*  mln/trait/next/solve_proxy.hh: Added one inclusion to prevent
+	* mln/fun/spe/binary.hh,
+	* mln/fun/spe/unary.hh,
+	* mln/fun/unary.hh,
+	* mln/fun/unary_param.hh: Renamed storage_get to state.
+	* mln/trait/next/solve_proxy.hh: Added one inclusion to prevent
 	errors.
-	*  sandbox/fred/tests/thru.cc: Added test for thrubin.
+	* sandbox/fred/tests/thru.cc: Added test for thrubin.
 
 2009-05-05 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -913,27 +898,29 @@
 
 2009-05-05  Frederic Bour  <bour@lrde.epita.fr>
 
-	Tidy source code of new functions, renamed trait::fun to trait::function.
-	*  mln/core/image/thru_morpher.hh,
-	*  mln/core/image/thrubin_morpher.hh,
-	*  mln/fun/accu_result.hh,
-	*  mln/fun/binary.hh: tidied.
-	*  mln/fun/component/comp.hh: Splitted into multiples files:
-	*  mln/fun/component/comp_count.hh: New,
-	*  mln/fun/component/ithcomp.hh: New,
-	*  mln/fun/component/scomp.hh: New. Static i'th component extraction.
-	*  mln/fun/math/cos.hh,
-	*  mln/fun/math/inf.hh,
-	*  mln/fun/math/sup.hh,
-	*  mln/fun/point/col.hh,
-	*  mln/fun/point/row.hh,
-	*  mln/fun/point/sli.hh,
-	*  mln/fun/spe/binary.hh,
-	*  mln/fun/spe/unary.hh,
-	*  mln/fun/unary.hh: tidied.
-	*  mln/trait/fun.hh: Removed. Renamed to:
-	*  mln/trait/functions.hh: New.
-	*  sandbox/fred/tests/fun.cc: Small update.
+	Tidy source code of new functions, renamed trait::fun to
+	trait::function.
+
+	* mln/core/image/thru_morpher.hh,
+	* mln/core/image/thrubin_morpher.hh,
+	* mln/fun/accu_result.hh,
+	* mln/fun/binary.hh: tidied.
+	* mln/fun/component/comp.hh: Splitted into multiples files:
+	* mln/fun/component/comp_count.hh: New,
+	* mln/fun/component/ithcomp.hh: New,
+	* mln/fun/component/scomp.hh: New. Static i'th component extraction.
+	* mln/fun/math/cos.hh,
+	* mln/fun/math/inf.hh,
+	* mln/fun/math/sup.hh,
+	* mln/fun/point/col.hh,
+	* mln/fun/point/row.hh,
+	* mln/fun/point/sli.hh,
+	* mln/fun/spe/binary.hh,
+	* mln/fun/spe/unary.hh,
+	* mln/fun/unary.hh: tidied.
+	* mln/trait/fun.hh: Removed. Renamed to:
+	* mln/trait/functions.hh: New.
+	* sandbox/fred/tests/fun.cc: Small update.
 
 2009-05-05 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -1192,17 +1179,17 @@
 2009-04-29  Frederic Bour  <bour@lrde.epita.fr>
 
 	Modification to parametrized functions, functions tutorial WIP.
-	*  mln/fun/binary.hh,
-	*  mln/fun/unary.hh: Modified parameters system. Now distinguish
+	* mln/fun/binary.hh,
+	* mln/fun/unary.hh: Modified parameters system. Now distinguish
 	Exact type from Flag type.
-	*  mln/fun/binary_param.hh: New.
-	*  mln/fun/from_accu.hh: Updated to latest functions syntax.
-	*  mln/fun/unary.hh: Modified parameters system.
-	*  mln/fun/unary_param.hh: New.
-	*  sandbox/fred/functions.html,
-	*  sandbox/fred/functions.mkdown: New. Tutorial
-	*  sandbox/fred/tests/Makefile: Added one test.
-	*  sandbox/fred/tests/wip.cc: New.
+	* mln/fun/binary_param.hh: New.
+	* mln/fun/from_accu.hh: Updated to latest functions syntax.
+	* mln/fun/unary.hh: Modified parameters system.
+	* mln/fun/unary_param.hh: New.
+	* sandbox/fred/functions.html,
+	* sandbox/fred/functions.mkdown: New. Tutorial
+	* sandbox/fred/tests/Makefile: Added one test.
+	* sandbox/fred/tests/wip.cc: New.
 
 2009-04-29 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -2211,15 +2198,15 @@
 2009-04-06  Frederic Bour  <bour@lrde.epita.fr>
 
 	Clean new fun implementation.
-	*  sandbox/fred/mln/fun/binary.hh,
-	*  sandbox/fred/mln/fun/compose.hh,
-	*  sandbox/fred/mln/fun/composition.hh,
-	*  sandbox/fred/mln/fun/spe/binary.hh,
-	*  sandbox/fred/mln/fun/spe/unary.hh,
-	*  sandbox/fred/mln/fun/unary.hh: Clean and update to make use of
+	* sandbox/fred/mln/fun/binary.hh,
+	* sandbox/fred/mln/fun/compose.hh,
+	* sandbox/fred/mln/fun/composition.hh,
+	* sandbox/fred/mln/fun/spe/binary.hh,
+	* sandbox/fred/mln/fun/spe/unary.hh,
+	* sandbox/fred/mln/fun/unary.hh: Clean and update to make use of
 	param.hh.
-	*  sandbox/fred/mln/fun/param.hh: New.
-	*  sandbox/fred/mln/trait/fun.hh: Add support for parameter storage.
+	* sandbox/fred/mln/fun/param.hh: New.
+	* sandbox/fred/mln/trait/fun.hh: Add support for parameter storage.
 
 2009-04-06  Edwin Carlinet  <carlinet@lrde.epita.fr>
 

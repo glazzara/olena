@@ -24,7 +24,7 @@
 	Change processing chain, now filter before normalization.
 	* fabien/igr/Makefile: Add filter target.
 	* fabien/igr/filter.cc: New tool for filtering input.
-	* fabien/igr/fixed_seg/main.cc: Update closing to 
+	* fabien/igr/fixed_seg/main.cc: Update closing to
 	closing::sum
 	* fabien/igr/point_filtering/main.cc: Minor update.
 
@@ -33,6 +33,21 @@
 	Add tool for point manipulation through plot.
 	* fabien/igr/point_filtering/Makefile: New target all.
 	* fabien/igr/point_filtering/main.cc: Load plots and compute filtering.
+
+2009-05-19  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	HSV type, HSL <-> HSV conversions, and tests.
+	* folio/mln/fun/v2v/hsl_to_hsv.hh: New algorithms.
+	* folio/mln/fun/v2v/rgb_to_hsv.hh: float -> float01_<n>.
+	* folio/mln/histo/compute_histo_3d.hh: Some corrections.
+	* folio/mln/value/hsv.hh: HSV value type.
+	* folio/test/histo/plot_lena.cc: New test.
+	* folio/test/histo/plot_lena_3d.cc: New test.
+	* folio/test/histo/plot_lena_rgb.cc: New test.
+	* folio/test/histo/projected.cc: New test.
+	* folio/test/histo/projected3d.cc: New test.
+	* folio/test/value/circular.cc: test.
+	* folio/test/value/hsv.cc: test.
 
 2009-05-18  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -143,7 +158,7 @@
 	* milena/sandbox/scribo/text/grouping/internal/update_link_array.hh,
 	* milena/sandbox/scribo/text/recognition.hh,
 	* milena/sandbox/scribo/util/all.hh,
-	* milena/sandbox/scribo/util/text.hh: move ...
+	* milena/sandbox/scribo/util/text.hh: Move ...
 
 	* scribo/Doxyfile,
 	* scribo/Doxyfile_tex,
@@ -306,32 +321,32 @@
 	inim: Improve boxes algorithm.
 	Because of recent changes in scribo, the current work won't compile
 	with the last SVN revision. However, it used to compile with r3697.
-	* boxes.cc: Fix a couple of bugs.
+	* inim/2010/boxes/boxes.cc: Fix a couple of bugs.
 
 2009-05-15  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Small cleanup.
-	* README: Howto.
-	* configure: Cleaned.
-	* morpho.cc: Cleaned.
+	* inim/2010/morpho/README: Howto.
+	* inim/2010/morpho/configure: Cleaned.
+	* inim/2010/morpho/morpho.cc: Cleaned.
 
 2009-05-15  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Move a script.
-	* run.sh: New moved file.
-	* treat.sh: Remove moved file.
+	* inim/2010/morpho/run.sh: New moved file.
+	* inim/2010/morpho/treat.sh: Remove moved file.
 
 2009-05-15  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Big cleanup.
-	* Makefile: Remove. Not needed.
-	* README: New explainations.
-	* configure: To build the Makefile.
-	* dilation-n.hh: New algorithm.
-	* erosion-n.hh: New algorithm.
-	* main_dilation-n.cc: New test file.
-	* morpho.cc: Cleanup in here.
-	* treat.sh: Adaptation.
+	* inim/2010/morpho/Makefile: Remove. Not needed.
+	* inim/2010/morpho/README: New explainations.
+	* inim/2010/morpho/configure: To build the Makefile.
+	* inim/2010/morpho/dilation-n.hh: New algorithm.
+	* inim/2010/morpho/erosion-n.hh: New algorithm.
+	* inim/2010/morpho/main_dilation-n.cc: New test file.
+	* inim/2010/morpho/morpho.cc: Cleanup in here.
+	* inim/2010/morpho/treat.sh: Adaptation.
 
 2009-05-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -346,11 +361,11 @@
 	* inim/2010/blur/Makefile: Add -DNDEBUG.
 	* inim/2010/blur/README: Add information about results.
 	* inim/2010/blur/cuttor.hxx: Call to gaussian_directional_2d.
-        Add compile time errors.
-	* inim/2010/blur/vect_it.hh: Change file included from 
-        vect_it to vect_it_OLD.
-	* inim/2010/blur/vect_it_OLD.hxx: Try fixing the problem of 
-        backward search.
+	Add compile time errors.
+	* inim/2010/blur/vect_it.hh: Change file included from
+	vect_it to vect_it_OLD.
+	* inim/2010/blur/vect_it_OLD.hxx: Try fixing the problem of
+	backward search.
 
 2009-05-15  Florent DHalluin  <d-halluin@lrde.epita.fr>
 
@@ -398,11 +413,11 @@
 	Inim fix bugs related to word croping.
 	* edwin/inim/inim.cc: Add height closing to avoid word to be cropped.
 	* edwin/mln/morpho/tree/filter.hh: Add generic filter to
-	  replace filtered components by a user value instead of
-	  predefined values.
+	replace filtered components by a user value instead of
+	predefined values.
 	* edwin/rush/exo2/test.cc: Minor fixes.
 	* edwin/rush/exo2/wst_from_tree.cc: Test corrected sharpness
-	  with wst.
+	with wst.
 	* inim/2011/fredwin: New.
 
 2009-05-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
