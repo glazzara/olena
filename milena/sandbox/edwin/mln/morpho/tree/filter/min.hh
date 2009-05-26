@@ -26,23 +26,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_TREE_FILTER_HH_
-# define MLN_MORPHO_TREE_FILTER_HH_
-
-/**
-** @file   mln/morpho/tree/filter.hh
-**
-** @brief Methods to handle component tree filtering strategies with
-** non-increasing attribute. Nevertheless, it works on increasing
-** predicate as well. In this case, all strategies have the same
-** result but min filter or direct filter should be used in term
-** of performance. If a predicate test is not enough fast, then
-** prefer the min filter that minimizes calls to predicate.
-*/
+#ifndef MLN_MORPHO_TREE_FILTER_MIN_HH_
+# define MLN_MORPHO_TREE_FILTER_MIN_HH_
 
 # include <mln/core/concept/function.hh>
 # include <mln/morpho/tree/data.hh>
-# include <mln/morpho/tree/propagate_if.hh>
+
+
+/**
+** @file   mln/morpho/tree/filter/min.hh
+**
+** @brief  Filtering with min strategy.
+**
+**
+*/
 
 namespace mln {
   namespace morpho {
@@ -50,23 +47,33 @@ namespace mln {
       namespace filter {
 
 
+	/**
+	** Min pruning strategy. A node is removed iif its parent is
+	** removed or if it does not verify the predicate \p pred_.
+	**
+	** @param[in] tree Component tree.
+	** @param[out] f_ Image to filter.
+	** @param[in] pred_ Filtering criterion.
+	*/
 	template <typename T, typename F, typename P2B>
 	inline
 	void
-	filter(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_, const mln_value(F)& v);
+	min(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_);
+
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-	template <typename T, typename F, typename P2B>
+		template <typename T, typename F, typename P2B>
 	inline
 	void
-	filter(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_, const mln_value(F)& v)
+	min(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_)
 	{
 	  F& f = exact(f_);
 	  const P2B& pred = exact(pred_);
 
-	  trace::entering("mln::morpho::tree::filter::filter");
+	  trace::entering("mln::morpho::tree::filter::min");
 
 	  mln_ch_value(F, bool) mark;
 	  initialize(mark, f);
@@ -76,11 +83,11 @@ namespace mln {
 	  for_all(n)
 	    if (mark(tree.parent(n)) || !pred(n))
 	      {
-		f(n) = v;
+		f(n) = f(tree.parent(n));
 		mark(n) = true;
 	      }
 
-	  trace::exiting("mln::morpho::tree::filter::filter");
+	  trace::exiting("mln::morpho::tree::filter::min");
 	}
 
 # endif /* !MLN_INCLUDE_ONLY */
@@ -90,5 +97,4 @@ namespace mln {
   } // end of namespace mln::morpho
 } // end of namespace mln
 
-
-#endif /* !MLN_MORPHO_TREE_FILTER_HH_ */
+#endif /* !MLN_MORPHO_TREE_FILTER_MIN_HH_ */

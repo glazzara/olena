@@ -26,64 +26,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_TREE_FILTER_HH_
-# define MLN_MORPHO_TREE_FILTER_HH_
+#ifndef MLN_MORPHO_TREE_FILTER_ALL_HH_
+# define MLN_MORPHO_TREE_FILTER_ALL_HH_
 
 /**
 ** @file   mln/morpho/tree/filter.hh
 **
-** @brief Methods to handle component tree filtering strategies with
+** Methods to handle component tree filtering strategies with
 ** non-increasing attribute. Nevertheless, it works on increasing
 ** predicate as well. In this case, all strategies have the same
 ** result but min filter or direct filter should be used in term
-** of performance. If a predicate test is not enough fast, then
-** prefer the min filter that minimizes calls to predicate.
+** of performance. If a predicate test is too slow, then consider
+** the min filter that minimizes calls to predicate function.
 */
-
-# include <mln/core/concept/function.hh>
-# include <mln/morpho/tree/data.hh>
-# include <mln/morpho/tree/propagate_if.hh>
 
 namespace mln {
   namespace morpho {
     namespace tree {
+
+      /// Namespace for attribute filtering.
       namespace filter {
-
-
-	template <typename T, typename F, typename P2B>
-	inline
-	void
-	filter(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_, const mln_value(F)& v);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-	template <typename T, typename F, typename P2B>
-	inline
-	void
-	filter(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_, const mln_value(F)& v)
-	{
-	  F& f = exact(f_);
-	  const P2B& pred = exact(pred_);
-
-	  trace::entering("mln::morpho::tree::filter::filter");
-
-	  mln_ch_value(F, bool) mark;
-	  initialize(mark, f);
-	  mln::data::fill(mark, false);
-
-	  mln_dn_node_piter(T) n(tree);
-	  for_all(n)
-	    if (mark(tree.parent(n)) || !pred(n))
-	      {
-		f(n) = v;
-		mark(n) = true;
-	      }
-
-	  trace::exiting("mln::morpho::tree::filter::filter");
-	}
-
-# endif /* !MLN_INCLUDE_ONLY */
 
       } // end of namespace mln::morpho::tree::filter
     } // end of namespace mln::morpho::tree
@@ -91,4 +53,14 @@ namespace mln {
 } // end of namespace mln
 
 
-#endif /* !MLN_MORPHO_TREE_FILTER_HH_ */
+// Pruning strategies.
+# include <mln/morpho/tree/filter/min.hh>
+# include <mln/morpho/tree/filter/max.hh>
+
+// Non-pruning stategies.
+# include <mln/morpho/tree/filter/direct.hh>
+# include <mln/morpho/tree/filter/subtractive.hh>
+
+
+
+#endif /* !MLN_MORPHO_TREE_FILTER_ALL_HH_ */

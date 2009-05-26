@@ -33,6 +33,7 @@
 /// Functions to propagate a node value in the tree.
 
 # include <mln/morpho/tree/data.hh>
+# include <mln/morpho/tree/propagate_representative.hh>
 # include <mln/morpho/tree/propagate_node.hh>
 
 namespace mln {
@@ -40,21 +41,6 @@ namespace mln {
     namespace tree {
 
 
-      /// Propagate the representative point's value to
-      /// non-representative node points.
-      template <typename T, typename A>
-      void
-      propagate_representative(const T& t, Image<A>& a_)
-      {
-	A a = exact(a_);
-	mln_up_site_piter(T) p(t);
-	for_all(p)
-	  if (! t.is_a_node(p))
-	    {
-	      mln_assertion(t.is_a_node(t.parent(p)));
-	      a(p) = a(t.parent(p));
-	    }
-      }
 
       /**
       ** For each component in the list \p component_list, it
@@ -105,14 +91,53 @@ namespace mln {
 	initialize(out, tree.f());
 	mln::data::fill(out, null);
 
-	mln_piter(p_array< mln_psite(T) >) p(component_list);
-	for_all(p)
 	{
-	  out(p) = value;
-	  morpho::tree::propagate_node_to_descendants(p, tree, out);
+	  mln_piter(p_array< mln_psite(T) >) n(component_list);
+	  for_all(n)
+	    out(n) = value;
 	}
-	morpho::tree::propagate_representative(tree, out);
+
+	{
+	  mln_dn_site_piter(T) p(tree);
+	  for_all(p)
+	    if (out(tree.parent(p)) == value)
+	      out(p) = value;
+	}
 	return out;
+      }
+
+      template <typename T, typename F>
+      inline
+      void
+      set_value_to_components(const T& tree,
+			      Image<F>& f_,
+			      const p_array< mln_psite(T) >& component_list,
+			      const mln_value(F)& value)
+      {
+	F& f = exact(f_);
+
+	mln_ch_value(typename T::function, bool) mark;
+	initialize(mark, tree.f());
+	mln::data::fill(mark, false);
+
+	{
+	  mln_piter(p_array< mln_psite(T) >) n(component_list);
+	  for_all(n)
+	  {
+	    mark(n) = true;
+	    f(n) = value;
+	  }
+	}
+
+	{
+	  mln_dn_site_piter(T) p(tree);
+	  for_all(p)
+	    if (mark(tree.parent(p)))
+	      {
+		mark(p) = true;
+		f(p) = value;
+	      }
+	}
       }
 
     } // end of namespace mln::morpho::tree

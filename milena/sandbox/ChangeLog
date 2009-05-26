@@ -1,3 +1,24 @@
+2009-05-26  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Check guard and separate attribute filters into their own file.
+	* edwin/mln/morpho/tree/filter.hh,
+	* edwin/mln/morpho/tree/filter/all.hh,
+	* edwin/mln/morpho/tree/filter/direct.hh,
+	* edwin/mln/morpho/tree/filter/max.hh,
+	* edwin/mln/morpho/tree/filter/min.hh,
+	* edwin/mln/morpho/tree/filter/subtractive.hh,
+	* edwin/mln/morpho/tree/filter:
+	Attribute filtering routines.
+
+	* edwin/mln/morpho/tree/propagate_representative.hh,
+	* edwin/mln/morpho/tree/propagate_if.hh,
+	* edwin/mln/morpho/tree/propagate_node.hh:
+	Basic propagation routines.
+
+	* edwin/rush/exo2/wst_from_tree.cc,
+	* edwin/tests/sharp.cc:
+	Fix WST on the reconstructed by erosion image.
+
 2009-05-25  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Change processing chain, now filter before normalization.

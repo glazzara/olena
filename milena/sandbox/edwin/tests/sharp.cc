@@ -17,11 +17,12 @@
 #include <mln/morpho/tree/propagate.hh>
 
 /* Attributes */
-#include <mln/morpho/attribute/sharpness.hh>
+#include <mln/morpho/attribute/mysharpness.hh>
 
 /* io */
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
+#include <mln/io/ppm/save.hh>
 
 /* data & pw */
 #include <mln/core/concept/function.hh>
@@ -36,6 +37,7 @@
 /* label */
 #include <mln/labeling/blobs.hh>
 #include <mln/value/label_16.hh>
+#include <mln/labeling/colorize.hh>
 
 /* trace */
 #include <mln/trace/quiet.hh>
@@ -67,41 +69,6 @@ void dsp(const std::string& str, mln::util::timer& timer)
 
 namespace mln
 {
-  // Distance, stored on pixels, of neighboring colors.
-
-  value::int_u8 dist_mean(const value::rgb8& c1, const value::rgb8& c2)
-  {
-    unsigned d = 0;
-    d += (math::diff_abs(c1.red(), c2.red()) + 2) / 3;
-    d += (math::diff_abs(c1.green(), c2.green()) + 2) / 3;
-    d += (math::diff_abs(c1.blue(), c2.blue()) + 2) / 3;
-    if (d > 255)
-      d = 255;
-    return d;
-  }
-
-  template <typename N>
-  image2d<value::int_u8>
-  dist_on_pixels(const image2d<value::rgb8>& input, const N& nbh)
-  {
-    using value::int_u8;
-    image2d<int_u8> output(input.domain());
-
-    mln_piter(box2d) p(input.domain());
-    mln_niter(N) n(nbh, p);
-    for_all(p)
-    {
-      int_u8 d = 0u;
-      for_all(n) if (input.domain().has(n))
-	{
-	  int_u8 d_ = dist_mean(input(p), input(n));
-	  if (d_ > d)
-	    d = d_;
-	}
-      output(p) = 255 - d;
-    }
-    return output;
-  }
 
   template <typename P2V>
   struct height_wrapper_ : Function_p2v< height_wrapper_<P2V> >
@@ -159,6 +126,27 @@ namespace mln
   card_wrapper(const Function_p2v<P2V>& f)
   {
     return card_wrapper_<P2V>(f);
+  }
+
+  template <typename T, typename F, typename P2B>
+  inline
+  void
+  mymin(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_)
+  {
+    F& f = exact(f_);
+    const P2B& pred = exact(pred_);
+
+    mln_ch_value(F, bool) mark;
+    initialize(mark, f);
+    mln::data::fill(mark, false);
+
+    mln_dn_node_piter(T) n(tree);
+    for_all(n)
+      if (mark(tree.parent(n)) || !pred(tree.parent(n)))
+	{
+	  f(n) = 0.0;
+	  mark(n) = true;
+	}
   }
 
 }
@@ -231,49 +219,25 @@ int main(int argc, char* argv[])
   if (mydebug)
     dsp("Image sharp attribute", timer);
 
-  // TODO: l'attribut devrait favoriser les composantes plus larges
-  // dans son calcul. Ainsi au lieu de faire un sharpness, on aurait
-  // un ratio sharpness / hauteur de composante (reprendre l'idee du
-  // log utilise pour INIM).
 
-  typedef morpho::attribute::sharpness<I> sharp_t;
   typedef mln_ch_value_(I, double) A;
-  typedef mln_ch_value_(I, sharp_t) B;
+  A a;
+  {
+    typedef morpho::attribute::volume<I> v_attr;
+    typedef mln_ch_value_(I, unsigned) H;
+    typedef mln_ch_value_(I, v_attr) V;
+    H h_img;
+    V v_img;
 
-  B a_img;
-  A a = morpho::tree::compute_attribute_image(sharp_t (), tree, &a_img);
-  // Note: then we work on nodes (component representant so we don't
-  // need to propagate the representant value to the component sites.
+    a = morpho::attribute::mysharpness(tree, &h_img, &v_img);
 
+    // Component filtering
+    if (height)
+      mymin(tree, a, pw::value(h_img) > pw::cst(height));
 
-  /***********************************/
-  /* Components Filtering            */
-  /***********************************/
-
-  // So we compute card attribute and we filter big components
-  // FIXME: some attributes are compositions of attributes, here
-  // sharpness can give area so, it would be fine if we could give an
-  // optional extra argument to compute_attribute where the
-  // accumulators image will be stored.
-
-  if (card)
-    {
-      if (mydebug)
-	dsp("Image card attribute", timer);
-
-      a = duplicate((fun::p2v::ternary(card_wrapper(pw::value(a_img)) > pw::cst(card),
-				       pw::value(a),
-				       pw::cst(0.0))) | a.domain());
-    }
-
-  if (height)
-    {
-      if (mydebug)
-	dsp("Image height attribute", timer);
-      a = duplicate((fun::p2v::ternary(height_wrapper(pw::value(a_img)) > pw::cst(height),
-				       pw::value(a),
-				       pw::cst(0.0))) | a.domain());
-    }
+    if (card)
+      morpho::tree::filter::filter(tree, a, card_wrapper(pw::value(v_img)) > pw::cst(card), 0.0);
+  }
 
   /************************************************/
   /* Retrieve Components (Maximising the criteria)  */
@@ -302,14 +266,6 @@ int main(int argc, char* argv[])
     obj_array = morpho::tree::get_components(tree, a);
   }
 
-
-  /* Print them */
-//   if (mydebug) {
-//     mln_fwd_piter_(p_array< mln_psite_(I) >) c(obj_array);
-//     for_all(c)
-//       std::cout << c;
-//   }
-
   /***********************************/
   /* Use components in output image  */
   /***********************************/
@@ -328,27 +284,28 @@ int main(int argc, char* argv[])
 
   // labeling
   typedef mln_ch_value_(I, bool) M;
-
   M mask = morpho::tree::set_value_to_components(tree, obj_array, true, false);
 
-  //typedef mln_ch_value_(I, value::label<16>) L;
-  //value::label<16> nlabel;
-  //L label = labeling::blobs(mask, c4(), nlabel);
-  //io::pgm::save(label, "label.pgm");
-
+  {
+    typedef mln_ch_value_(I, value::label<16>) L;
+    typedef mln_ch_value_(I, value::rgb<8>) O;
+    value::label<16> nlabel;
+    L label = labeling::blobs(mask, c4(), nlabel);
+    O output = labeling::colorize(value::rgb8(), label, nlabel);
+    io::ppm::save(output, "label.pgm");
+  }
 
   if (mydebug) {
     dsp("Finish", timer);
   }
 
-
-
-//   /* Now store output image */
-     I out;
-     initialize(out, input);
-     data::fill(out, 0);
-     data::paste(input | pw::value(mask), out);
-     io::pgm::save(out, "output.pgm");
-
+  /* Now store output image */
+//   {
+//    I out;
+//    initialize(out, input);
+//    data::fill(out, 255);
+//    data::paste(input | pw::value(mask), out);
+//    io::pgm::save(out, "output.pgm");
+//   }
 
 }

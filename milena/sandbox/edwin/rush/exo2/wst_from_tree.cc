@@ -47,6 +47,7 @@
 #include "color_labeling_mean.hh"
 
 /* WST */
+#include <mln/morpho/reconstruction/by_erosion/union_find.hh>
 #include <mln/morpho/watershed/all.hh>
 #include <mln/morpho/elementary/dilation.hh>
 
@@ -181,7 +182,6 @@ int main(int argc, char** argv)
 
   I input = color_internal_gradient(input_);
   io::pgm::save(input, "gradient.pgm");
-
   /***************************/
   /* Component tree creation */
   /***************************/
@@ -206,30 +206,38 @@ int main(int argc, char** argv)
 
     // Component filtering
 
-    // this should use a filter from morpho/tree/filter with the predicate on the height of the parent
-    // so use function composition but ...
+    // this should use a filter from morpho/tree/filter with the
+    // predicate on the height of the parent so use function
+    // composition but ...
+    // fixme : wrong height value !
     mymin(t, a, pw::value(h_img) > pw::cst(lambda_h));
   }
 
   /************************************************/
   /* Retrieve Components (Maximising the criteria)*/
   /************************************************/
-  A component_img;
+  p_array< mln_psite_(A) > obj_array;
   {
-    p_array< mln_psite_(A) > obj_array;
-    I output = level::stretch(int_u8(), a); //adapt to 0-255
-    io::pgm::save(output, "components.pgm");
+    //I output = level::stretch(int_u8(), a); //adapt to 0-255
+    //io::pgm::save(output, "components.pgm");
 
     obj_array = morpho::tree::get_components(t, a);
     std::cout << obj_array.nsites() << std::endl;
 
-    component_img = morpho::tree::propagate_components(a, t, obj_array, 1.1);
+  }
 
-    // debug
-    //I output = level::stretch(int_u8(),  component_img); //adapt to 0-255
-    //io::pgm::save(output, "components.pgm");
+  I reconstructed;
+  {
+    I marker = set_value_to_components(t, obj_array, (int_u8) 0, (int_u8) 255);
+    set_value_to_components(t, input, obj_array, (int_u8) 0);
 
- }
+    io::pgm::save(marker, "marker.pgm");
+
+    // input is the mask.
+    reconstructed = morpho::reconstruction::by_erosion::union_find(marker, input, c4());
+
+    io::pgm::save(reconstructed, "reconstructed.pgm");
+  }
 
 
   /************************************************/
@@ -237,7 +245,7 @@ int main(int argc, char** argv)
   /************************************************/
   typedef image2d<int_u16> WST;
   int_u16 n_basins = 0;
-  WST wst = morpho::watershed::flooding(component_img, c4(), n_basins);
+  WST wst = morpho::watershed::flooding(reconstructed, c4(), n_basins);
 
   if (!output_ || output_ == 1)
     {

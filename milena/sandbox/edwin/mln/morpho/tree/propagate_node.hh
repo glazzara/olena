@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -78,7 +78,7 @@ namespace mln {
 
 
       /**
-      ** Propagate a value \v from a node \n to its ancestors.
+      ** Propagate a value \p v from a node \p n to its ancestors.
       **
       ** @param n Node to propagate.
       ** @param t Component tree used for propagation.

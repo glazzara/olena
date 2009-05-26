@@ -26,34 +26,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_TREE_FILTER_HH_
-# define MLN_MORPHO_TREE_FILTER_HH_
-
-/**
-** @file   mln/morpho/tree/filter.hh
-**
-** @brief Methods to handle component tree filtering strategies with
-** non-increasing attribute. Nevertheless, it works on increasing
-** predicate as well. In this case, all strategies have the same
-** result but min filter or direct filter should be used in term
-** of performance. If a predicate test is not enough fast, then
-** prefer the min filter that minimizes calls to predicate.
-*/
+#ifndef MLN_MORPHO_TREE_FILTER_DIRECT_HH_
+# define MLN_MORPHO_TREE_FILTER_DIRECT_HH_
 
 # include <mln/core/concept/function.hh>
 # include <mln/morpho/tree/data.hh>
-# include <mln/morpho/tree/propagate_if.hh>
+
+/**
+** @file   mln/morpho/tree/filter/direct.hh
+**
+** @brief  Filtering with direct strategy.
+**
+**
+*/
 
 namespace mln {
   namespace morpho {
     namespace tree {
       namespace filter {
 
-
+	/**
+	** Direct non-pruning strategy. A node is removed if it does
+	** not verify the predicate. The sub-components remain intact.
+	**
+	** @param[in] tree Component tree.
+	** @param[out] f_ Image to filter.
+	** @param[in] pred_ Filtering criterion.
+	*/
 	template <typename T, typename F, typename P2B>
 	inline
 	void
-	filter(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_, const mln_value(F)& v);
+	direct(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_);
+
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -61,26 +66,19 @@ namespace mln {
 	template <typename T, typename F, typename P2B>
 	inline
 	void
-	filter(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_, const mln_value(F)& v)
+	direct(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_)
 	{
 	  F& f = exact(f_);
 	  const P2B& pred = exact(pred_);
 
-	  trace::entering("mln::morpho::tree::filter::filter");
-
-	  mln_ch_value(F, bool) mark;
-	  initialize(mark, f);
-	  mln::data::fill(mark, false);
+	  trace::entering("mln::morpho::tree::filter::direct");
 
 	  mln_dn_node_piter(T) n(tree);
 	  for_all(n)
-	    if (mark(tree.parent(n)) || !pred(n))
-	      {
-		f(n) = v;
-		mark(n) = true;
-	      }
+	    if (!pred(n))
+	      f(n) = f(tree.parent(n));
 
-	  trace::exiting("mln::morpho::tree::filter::filter");
+	  trace::exiting("mln::morpho::tree::filter::direct");
 	}
 
 # endif /* !MLN_INCLUDE_ONLY */
@@ -90,5 +88,4 @@ namespace mln {
   } // end of namespace mln::morpho
 } // end of namespace mln
 
-
-#endif /* !MLN_MORPHO_TREE_FILTER_HH_ */
+#endif /* !MLN_MORPHO_TREE_FILTER_DIRECT_HH_ */

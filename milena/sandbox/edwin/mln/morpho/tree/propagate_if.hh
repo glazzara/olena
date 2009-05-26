@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -32,8 +32,7 @@
 /**
 ** @file   mln/morpho/tree/propagate_if.hh
 **
-** @brief Methods to handle propagation startegies
-** in component trees.
+** @brief Routines to handle propagation with predicate.
 **
 */
 

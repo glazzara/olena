@@ -26,34 +26,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_TREE_FILTER_HH_
-# define MLN_MORPHO_TREE_FILTER_HH_
-
-/**
-** @file   mln/morpho/tree/filter.hh
-**
-** @brief Methods to handle component tree filtering strategies with
-** non-increasing attribute. Nevertheless, it works on increasing
-** predicate as well. In this case, all strategies have the same
-** result but min filter or direct filter should be used in term
-** of performance. If a predicate test is not enough fast, then
-** prefer the min filter that minimizes calls to predicate.
-*/
+#ifndef MLN_MORPHO_TREE_FILTER_MAX_HH_
+# define MLN_MORPHO_TREE_FILTER_MAX_HH_
 
 # include <mln/core/concept/function.hh>
 # include <mln/morpho/tree/data.hh>
-# include <mln/morpho/tree/propagate_if.hh>
+
+/**
+** @file   mln/morpho/tree/filter/max.hh
+**
+** @brief  Filtering with max strategy.
+**
+**
+*/
 
 namespace mln {
   namespace morpho {
     namespace tree {
       namespace filter {
 
-
+	/**
+	** Max pruning strategy. A node is removed iif all of its
+	** children are removed or if it does not verify the predicate
+	** \p pred_.
+	**
+	** @param[in] tree Component tree.
+	** @param[out] f_ Image to filter.
+	** @param[in] pred_ Filtering criterion.
+	*/
 	template <typename T, typename F, typename P2B>
 	inline
 	void
-	filter(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_, const mln_value(F)& v);
+	max(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_);
+
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -61,26 +67,37 @@ namespace mln {
 	template <typename T, typename F, typename P2B>
 	inline
 	void
-	filter(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_, const mln_value(F)& v)
+	max(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_)
 	{
 	  F& f = exact(f_);
 	  const P2B& pred = exact(pred_);
 
-	  trace::entering("mln::morpho::tree::filter::filter");
+	  trace::entering("mln::morpho::tree::filter::max");
 
 	  mln_ch_value(F, bool) mark;
 	  initialize(mark, f);
-	  mln::data::fill(mark, false);
+	  mln::data::fill(mark, true);
 
-	  mln_dn_node_piter(T) n(tree);
-	  for_all(n)
-	    if (mark(tree.parent(n)) || !pred(n))
-	      {
-		f(n) = v;
-		mark(n) = true;
-	      }
+	  {
+	    mln_up_node_piter(T) n(tree);
+	    for_all(n)
+	      if (!mark(n))
+      		mark(tree.parent(n)) = false;
+	      else if (pred(n))
+		{
+		  mark(tree.parent(n)) = false;
+		  mark(n) = false;
+		}
+	  }
 
-	  trace::exiting("mln::morpho::tree::filter::filter");
+	  {
+	    mln_dn_node_piter(T) n(tree);
+	    for_all(n)
+	      if (mark(n))
+		f(n) = f(tree.parent(n));
+	  }
+
+	  trace::exiting("mln::morpho::tree::filter::max");
 	}
 
 # endif /* !MLN_INCLUDE_ONLY */
@@ -90,5 +107,4 @@ namespace mln {
   } // end of namespace mln::morpho
 } // end of namespace mln
 
-
-#endif /* !MLN_MORPHO_TREE_FILTER_HH_ */
+#endif /* !MLN_MORPHO_TREE_FILTER_MAX_HH_ */
