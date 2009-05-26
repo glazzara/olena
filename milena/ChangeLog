@@ -1,3 +1,10 @@
+2009-05-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use fully qualified type names to help Swig.
+
+	* mln/core/site_set/box_piter.hh
+	(mln::box_fwd_piter_(const mln::box<P>& b)): Here.
+
 2009-05-26  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Move propagation and filtering attributes routines from sandbox.

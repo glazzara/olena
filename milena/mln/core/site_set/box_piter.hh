@@ -66,7 +66,7 @@ namespace mln
     ///
     /// \param[in] b A box.
     ///
-    box_fwd_piter_(const box<P>& b);
+    box_fwd_piter_(const mln::box<P>& b);
 
     /// Test the iterator validity.
     bool is_valid_() const;
@@ -147,7 +147,7 @@ namespace mln
 
   template <typename P>
   inline
-  box_fwd_piter_<P>::box_fwd_piter_(const box<P>& b)
+  box_fwd_piter_<P>::box_fwd_piter_(const mln::box<P>& b)
   {
     this->change_target(b);
   }
