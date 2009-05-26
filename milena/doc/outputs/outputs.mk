@@ -21,6 +21,9 @@ outputs/fun-p2v-1.txt \
 outputs/graph-data.txt \
 outputs/graph-iter.txt \
 outputs/graph-output-1.txt \
+outputs/ima-has.txt \
+outputs/ima-save.txt \
+outputs/ima-size.txt \
 outputs/ima2d-1.txt \
 outputs/ima2d-2.txt \
 outputs/ima2d-3.txt \
@@ -34,9 +37,6 @@ outputs/ima2d-display-2.txt \
 outputs/ima2d-display-output-1.txt \
 outputs/ima2d-display-output-2.txt \
 outputs/ima2d-rot.txt \
-outputs/ima-has.txt \
-outputs/ima-save.txt \
-outputs/ima-size.txt \
 outputs/labeling-compute.txt \
 outputs/logical-not.txt \
 outputs/mln_var.txt \

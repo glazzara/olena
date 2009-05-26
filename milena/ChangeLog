@@ -1,3 +1,12 @@
+2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Regen Makefile helpers.
+
+	* headers.mk,
+	* doc/outputs/outputs.mk,
+	* tests/unit_test/unit-tests.mk:
+	Regen.
+
 2009-05-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Get rid of an infinite recursion in Milena's Makefile.
