@@ -28,13 +28,32 @@ tools:
 .PHONY: regen-dist
 regen-dist:
 	cd $(srcdir) && ./generate_dist_headers.sh
+EXTRA_DIST = generate_dist_headers.sh
+# We do not delegate the action of regenerating `headers.mk' to
+# `regen-dist' like this:
+#
+#   $(MAKE) $(AM_MAKEFLAGS) regen-dist
+#
+# to avoid an infinite recursion, since
+#
+# - the generation of `headers.mk' would trigger the update
+#   (regeneration) of `Makefile' (due to the behavior of Automade
+#   Makefiles);
+#
+# and because
+#
+# - `Makefile' depends on `headers.mk' (because of the `include'
+#    statement); and
+# - `headers.mk' depends on `generate_dist_headers.sh'.
+#
+# Hence the redundant action.  There may be a better solution.
+
 # FIXME: Change generate_dist_headers.sh so that the action looks like this:
 #
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
 #
-EXTRA_DIST = generate_dist_headers.sh
 $(srcdir)/headers.mk: $(srcdir)/generate_dist_headers.sh
-	$(MAKE) $(AM_MAKEFLAGS) regen-dist
+	cd $(srcdir) && ./generate_dist_headers.sh
 
 include $(srcdir)/headers.mk
 
