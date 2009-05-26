@@ -8,6 +8,8 @@
 ## would be to only emit lines ended with newlines.
 ECHO_N=printf
 
+# Use the C locale to have a deterministic sort.
+export LC_ALL=C
 
 test $# -eq 1 || { echo "Usage: $0 <scribo path>" && exit 1; }
 
