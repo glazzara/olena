@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of the Olena Library.  This library is free
 # software; you can redistribute it and/or modify it under the terms
@@ -32,26 +32,19 @@ from swilena import *
 ima = image2d_int.image2d_int(3, 3)
 image2d_int.fill(ima, 42)
 
-# FIXME: For the moment, we can't write
-#
-#   ima(point2d(i, j))
-#
-# but I don't know why.  Anyway, eventually we'd like to be able to
-# write this:
+# FIXME: Eventually we'd like to be able to write this:
 #
 #   for p in ima.domain():
-#     print "ima(" + str(i) + ", " + str(j) + ") = " + ima(p)
+#     print "ima(" + str(p) + ") = " + ima(p)
 #
 # as it is generic and way closer to what we do in C++.
-for i in range(0, 3):
-  for j in range(0, 3):
-    p = point2d(i, j)
-    # FIXME: Handling POD types (like int) as value types is not
-    # transparent: ima(p) returns a pointer to int wrapped in a SWIG
-    # object, and cannot be easily converted to a Python integer
-    # value.  Hence this explicit conversion using `intp_value'.
-    v = image2d_int.intp_value(ima(p))
-    print "ima(" + str(i) + ", " + str(j) + ") = " + str(v)
+for p in ima.domain():
+  # FIXME: Handling POD types (like int) as value types is not
+  # transparent: ima(p) returns a pointer to int wrapped in a SWIG
+  # object, and cannot be easily converted to a Python integer
+  # value.  Hence this explicit conversion using `intp_value'.
+  v = image2d_int.intp_value(ima(p))
+  print "ima" + str(p) + " = " + str(v)
 
 # FIXME: This is too complicated.  We should be able to write
 # 

@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of the Olena Library.  This library is free
 # software; you can redistribute it and/or modify it under the terms
@@ -60,25 +60,11 @@ class simple_image(dyn_ima2d):
     return True
 
 
-# FIXME: Why can't I use
-#
-#   b = box2d(10, 10)
-#
-# directly?
-#
-# I think this is probably because SWIG's way to handle overloading in
-# Python depends just on the *number* of arguments, not their types --
-# and we already have a wrapped ctor with 2 arguments, the one taking
-# two mln::point2d's, so the second one (with two int's) is probably
-# hidden).  Pay more attention to swig's warnings!
-b = box2d(point2d(0,0), point2d(9,9))
+b = box2d(10, 10)
 ima = simple_image(b)
 
 image.fill(ima, int_u8(42))
 image.println(ima)
 
-# FIXME: Doesn't really work yet, since int_u8 is not convertible
-# to int.
-for r in range(0, 10):
-  for c in range(0, 10):
-    print ima(point2d(r, c))
+for p in ima.domain():
+    print ima(p)

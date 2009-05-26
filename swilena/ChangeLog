@@ -1,5 +1,13 @@
 2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have Swilena/Python make use of iterators.
+
+	* python/dynamic-image2d-misc.py, python/image2d-misc.py:
+	Simplify constructions.
+	Use iterators on domain instead of ad hoc iterations.
+
+2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add conversion to string to point2d.
 
 	* point2d.i (__str__): New method (extension).
