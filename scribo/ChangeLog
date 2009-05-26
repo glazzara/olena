@@ -1,3 +1,9 @@
+2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add the list of SCRIBO's unit tests.
+
+	* tests/unit_test/unit-tests.mk: New.
+
 2009-05-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Add missing Makefile.am in Scribo.
