@@ -1,5 +1,22 @@
 2009-05-26  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Move propagation and filtering attributes routines from sandbox.
+	* mln/morpho/tree/filter: New.
+	* mln/morpho/tree/propagate_if.hh: New.
+	* mln/morpho/tree/propagate_node.hh: New.
+	* mln/morpho/tree/propagate_representative.hh: New.
+	* sandbox/edwin/mln/morpho/tree/filter/all.hh: Remove.
+	* sandbox/edwin/mln/morpho/tree/filter/direct.hh: Remove.
+	* sandbox/edwin/mln/morpho/tree/filter/max.hh: Remove.
+	* sandbox/edwin/mln/morpho/tree/filter/min.hh: Remove.
+	* sandbox/edwin/mln/morpho/tree/filter/subtractive.hh: Remove.
+	* sandbox/edwin/mln/morpho/tree/filter: Remove.
+	* sandbox/edwin/mln/morpho/tree/propagate_if.hh: Remove.
+	* sandbox/edwin/mln/morpho/tree/propagate_node.hh: Remove.
+	* sandbox/edwin/mln/morpho/tree/propagate_representative.hh: Remove.
+
+2009-05-26  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Add getters to base and current level to height attribute.
 	* mln/morpho/attribute/height.hh: Add base and current level getters.
 

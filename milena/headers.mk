@@ -261,6 +261,8 @@ mln/core/image/complex_neighborhoods.hh \
 mln/core/image/complex_window_piter.hh \
 mln/core/image/complex_windows.hh \
 mln/core/image/decorated_image.hh \
+mln/core/image/dmorph/all.hh \
+mln/core/image/dmorph/transformed_image.hh \
 mln/core/image/edge_image.hh \
 mln/core/image/essential.hh \
 mln/core/image/extended.hh \
@@ -398,6 +400,8 @@ mln/core/site_set/p_run.hh \
 mln/core/site_set/p_run_piter.hh \
 mln/core/site_set/p_set.hh \
 mln/core/site_set/p_set_of.hh \
+mln/core/site_set/p_transformed.hh \
+mln/core/site_set/p_transformed_piter.hh \
 mln/core/site_set/p_vaccess.hh \
 mln/core/site_set/p_vertices.hh \
 mln/core/site_set/p_vertices_psite.hh \
@@ -664,6 +668,8 @@ mln/io/pfm/save.hh \
 mln/io/pgm/all.hh \
 mln/io/pgm/load.hh \
 mln/io/pgm/save.hh \
+mln/io/plot/all.hh \
+mln/io/plot/load.hh \
 mln/io/plot/save.hh \
 mln/io/pnm/all.hh \
 mln/io/pnm/load_header.hh \
@@ -677,7 +683,6 @@ mln/io/ppm/load.hh \
 mln/io/ppm/save.hh \
 mln/io/tiff/all.hh \
 mln/io/tiff/load.hh \
-mln/io/tiff/save.hh \
 mln/io/txt/all.hh \
 mln/io/txt/save.hh \
 mln/labeling/all.hh \
@@ -934,6 +939,8 @@ mln/morpho/Rd.hh \
 mln/morpho/reconstruction/all.hh \
 mln/morpho/reconstruction/by_dilation/all.hh \
 mln/morpho/reconstruction/by_dilation/union_find.hh \
+mln/morpho/reconstruction/by_erosion/all.hh \
+mln/morpho/reconstruction/by_erosion/union_find.hh \
 mln/morpho/skeleton_constrained.hh \
 mln/morpho/thickening.hh \
 mln/morpho/thick_miss.hh \
@@ -1245,6 +1252,7 @@ mln/value/sign.hh \
 mln/value/stack.hh \
 mln/value/super_value.hh \
 mln/value/viter.hh \
+mln/version.hh \
 mln/win/all.hh \
 mln/win/backdiag2d.hh \
 mln/win/ball.hh \
