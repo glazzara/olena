@@ -1,5 +1,5 @@
 //						       		-*- C++ -*-
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,8 +32,13 @@
 %module intp
 
 %include "cpointer.i"
-// Wrap a class interface around an "int *" (see
-// // http://www.swig.org/Doc1.3/Library.html#Library_nn4).
-// %pointer_class(int, intp);
+
+/* FIXME: Wrapping a class interface around an "int *" using
+
+     %pointer_class(int, intp);
+
+   would be better (see http://www.swig.org/Doc1.3/Library.html#Library_nn4).
+   We might be able to add extra methods (like __str__) this way.  */
+
 /* Create some functions for working with "int *" */
 %pointer_functions(int, intp);

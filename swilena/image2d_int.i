@@ -1,5 +1,5 @@
 //						       		-*- C++ -*-
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,11 +32,6 @@
 
 %module image2d_int
 
-/* FIXME: Shouldn't it be
-
-     %include "intp.i"
-
-   instead?  After all, module `intp' generates wrappers too.  */
 %include "intp.ixx"
 %include "image2d.ixx"
 instantiate_image2d(image2d_int, int)

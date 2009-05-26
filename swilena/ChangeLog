@@ -1,5 +1,15 @@
 2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update dates in Swilena's copyright headers.
+
+	* ch_value.ixx, dpoint2d.i, dynamic_image2d.i, fill.ixx,
+	* image2d.ixx, image2d_int.i, image2d_int_u8.i, int_u.ixx,
+	* intp.ixx, morpho.ixx, neighb2d.i, window2d.i,
+	* python/morpho-fun.py, python/morpho-segm.py:
+	Here.
+
+2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Exercise Swilena/Python iterators.
 
 	* python/box2d-misc.py: New test.
