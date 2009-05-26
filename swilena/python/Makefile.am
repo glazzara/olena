@@ -195,5 +195,12 @@ $(srcdir)/run.stamp: $(RUN_IN)
 	$(MAKE) $(AM_MAKEFLAGS) $(RUN)
 	@mv -f $@.tmp $@
 
-TESTS = image2d-misc.py morpho-fun.py morpho-segm.py dynamic-image2d-misc.py
+# FIXME: We should not use the `.py' extension: it is not needed, and
+# it prevents us from using the same name for both a module (wrapper)
+# and a test.  Alas, the script `run' expects a file name with an
+# extension as argument.  We could improve this by adding options such
+# as `--python' to `run'.
+TESTS =									\
+  box2d-misc.py								\
+  image2d-misc.py morpho-fun.py morpho-segm.py dynamic-image2d-misc.py
 EXTRA_DIST += $(TESTS)

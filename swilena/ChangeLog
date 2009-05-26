@@ -1,5 +1,12 @@
 2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise Swilena/Python iterators.
+
+	* python/box2d-misc.py: New test.
+	* python/Makefile.am (TESTS): Add box2d-misc.py.
+
+2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have Swilena/Python make use of iterators.
 
 	* python/dynamic-image2d-misc.py, python/image2d-misc.py:
