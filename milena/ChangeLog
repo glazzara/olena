@@ -1,5 +1,12 @@
 2009-05-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the regeneration of headers.mk from Makefile.
+
+	* Makefile.am (regen-dist): Do not make headers.mk read-only,
+	since other clients expect it to be writable.
+
+2009-05-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use fully qualified type names to help Swig.
 
 	* mln/core/site_set/box_piter.hh

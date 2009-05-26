@@ -24,9 +24,10 @@ tutorial:
 tools:
 	$(MAKE) -C tools all
 
+# Force the regeneration of `headers.mk'.
 .PHONY: regen-dist
 regen-dist:
-	cd $(srcdir) && ./generate_dist_headers.sh && chmod -w headers.mk
+	cd $(srcdir) && ./generate_dist_headers.sh
 # FIXME: Change generate_dist_headers.sh so that the action looks like this:
 #
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
