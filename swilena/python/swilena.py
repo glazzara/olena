@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of the Olena Library.  This library is free
 # software; you can redistribute it and/or modify it under the terms
@@ -32,9 +32,9 @@
 
 import ltihooks
 
+from box2d import *
 from point2d import *
 from dpoint2d import *
-from box2d import *
 from neighb2d import *
 from window2d import *
 

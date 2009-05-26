@@ -1,5 +1,19 @@
 2009-05-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Wrap iterators on mln::box2d.
+
+	* box_piter.ixx, box2d_piter.i: New.
+	* box2d.i (__iter__): New method (extension).
+	* Makefile.am (meta_wrappers): Add box_piter.i
+	(wrappers): Add box2d_piter.i.
+	* python/swilena.py: Import module `box2d' before `point2d'.
+	* python/Makefile.am (pyexec_LTLIBRARIES): Add _box2d.la.
+	(nodist__box2d_la_SOURCES, _box2d_la_LIBADD): New variables.
+	(CLEANFILES): Add $(nodist__box2d_la_SOURCES) box2d.py box2d.py[co]
+	(nodist_python_PYTHON): Add box2d.py.
+
+2009-05-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	* box2d.i: Add a ctor taking two `int's as argument.
 
 2009-05-26  Roland Levillain  <roland@lrde.epita.fr>

@@ -77,6 +77,16 @@ CLEANFILES += $(nodist__box2d_la_SOURCES) box2d.py box2d.py[co]
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_box2d-wrap.Pcc@am__quote@
 nodist_python_PYTHON += box2d.py
 
+## box2d_piter.
+pyexec_LTLIBRARIES += _box2d_piter.la
+nodist__box2d_piter_la_SOURCES = box2d_piter-wrap.cc
+_box2d_piter_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__box2d_piter_la_SOURCES) box2d_piter.py box2d_piter.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_box2d_piter-wrap.Pcc@am__quote@
+nodist_python_PYTHON += box2d_piter.py
+
 ## int_u8.
 pyexec_LTLIBRARIES += _int_u8.la
 nodist__int_u8_la_SOURCES = int_u8-wrap.cc

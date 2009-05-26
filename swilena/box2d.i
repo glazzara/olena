@@ -31,6 +31,8 @@
 
 %module box2d
 
+%import box2d_piter.i
+
 %{
 #include "mln/core/site_set/box.hh"
 #include "mln/core/alias/box2d.hh"
@@ -68,6 +70,15 @@
 							       int ncols)
   {
     return new mln::box<mln::point2d>(nrows, ncols);
+  }
+
+  // FIXME: Shorten using macros...
+  mln::box_fwd_piter_< mln::point<mln::grid::square, mln::def::coord> >
+  __iter__() const
+  {
+    mln::box_fwd_piter_<mln::point2d> p(*$self);
+    p.start();
+    return p;
   }
 
   unsigned nrows() const
