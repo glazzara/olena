@@ -31,6 +31,13 @@
 
 2009-05-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add concatenating macros to Swilena.
+
+	* concat.ixx: New file.
+	* Makefile.am (meta_wrappers): Add concat.ixx
+
+2009-05-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Wrap iterators on mln::box2d.
 
 	* box_piter.ixx, box2d_piter.i: New.
