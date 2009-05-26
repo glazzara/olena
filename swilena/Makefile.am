@@ -6,7 +6,8 @@ SUBDIRS = python
 # common parts.
 meta_wrappers =							\
   box_piter.i ch_value.ixx concat.ixx concrete.ixx fill.ixx	\
-  image2d.ixx intp.ixx int_u.ixx morpho.ixx pgm.ixx println.ixx
+  image2d.ixx intp.ixx int_u.ixx morpho.ixx pgm.ixx println.ixx	\
+  python-utils.ixx
 
 # Wrappers (generating actual modules).
 wrappers =							\
