@@ -1,5 +1,12 @@
 2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Complete the list of configured Makefiles.
+
+	* configure.ac: Configure
+	milena/tests/morpho/reconstruction/by_erosion/Makefile.
+
+2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve determinism of Makefile helpers generators.
 
 	* milena/tests/unit_test/build_unit_test.sh,

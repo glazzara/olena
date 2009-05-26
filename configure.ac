@@ -302,6 +302,7 @@ AC_CONFIG_FILES([
       milena/tests/morpho/opening/approx/Makefile
       milena/tests/morpho/reconstruction/Makefile
         milena/tests/morpho/reconstruction/by_dilation/Makefile
+        milena/tests/morpho/reconstruction/by_erosion/Makefile
       milena/tests/morpho/tree/Makefile
       milena/tests/morpho/watershed/Makefile
     milena/tests/norm/Makefile
