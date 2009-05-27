@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CORE_GRIDS_HH
 # define MLN_CORE_GRIDS_HH
 
-/*! \file mln/core/grids.hh
- *
- * \brief Definition of some grid classes.
- */
+/// \file mln/core/grids.hh
+///
+/// \brief Definition of some grid classes.
 
 # include <mln/core/concept/regular_grid.hh>
 # include <mln/core/def/coord.hh>

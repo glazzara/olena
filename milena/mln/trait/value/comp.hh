@@ -30,7 +30,7 @@
 
 /// \file mln/trait/value/comp.hh
 ///
-/// Access to the i-th component type of a given type.
+/// \brief Access to the i-th component type of a given type.
 
 # include <mln/trait/value/internal/comp.hh>
 

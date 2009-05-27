@@ -1,3 +1,33 @@
+2009-05-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add histo 'point from value' fun v2v 'component' functions.
+
+	* mln/trait/value/internal/comp.hh (on): New method.
+	(mln_trait_value_comp): Remove; already define outside internal.
+	(todo): New.
+	* mln/trait/value/comp.hh: Upgrade doc style.
+	* tests/trait/value/comp.cc: Fix doc.
+
+	* mln/value/hsl.hh (trait): Update.
+	* mln/value/rgb.hh (trait): Update.
+	* mln/fun/i2v/value_at_index.hh: Layout.
+	* mln/fun/v2i/index_of_value.hh: Layout.
+	* mln/fun/v2v/component.hh: New.
+	* tests/fun/v2v/component.cc: New.
+	* tests/fun/ops.cc: New.
+	* tests/fun/Makefile.am: Update.
+
+	* mln/core/grids.hh: Upgrade doc style.
+	* sandbox/theo/experimental/histo_image.cc: Copy as...
+	* mln/histo/point_from_value.hh: ...this new file.
+	Keep only point_from_value.
+	Revamp.
+	* mln/histo/all.hh: Layout.
+	Update.
+	* tests/histo/compute.cc (todo): New.
+	* tests/histo/point_from_value.cc: New.
+	* tests/histo/Makefile.am: Update.
+
 2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Regen Makefile helpers.

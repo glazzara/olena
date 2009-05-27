@@ -30,14 +30,14 @@
 
 /// \file mln/trait/value/internal/comp.hh
 ///
-/// Include all internals for value traits.
+/// Include all internals for comp value trait.
+///
+/// \todo Revamp to directly access to the most internal helper
+/// instead of bumping from one helper to another.
 
 # include <mln/metal/bool.hh>
 # include <mln/metal/if.hh>
 
-
-
-# define mln_trait_value_comp(T, i)  typename mln::trait::value::internal::comp< T, i >::ret
 
 
 
@@ -60,33 +60,131 @@ namespace mln
 
 	// bind_comp< T, i >
 
-	template <typename Tr, unsigned i>
+	template <typename T, typename Tr, unsigned i>
 	struct bind_comp;
 
-	template <typename Tr> struct bind_comp< Tr, 0 > { typedef typename Tr::comp_0 ret; };
-	template <typename Tr> struct bind_comp< Tr, 1 > { typedef typename Tr::comp_1 ret; };
-	template <typename Tr> struct bind_comp< Tr, 2 > { typedef typename Tr::comp_2 ret; };
-	template <typename Tr> struct bind_comp< Tr, 3 > { typedef typename Tr::comp_3 ret; };
-	template <typename Tr> struct bind_comp< Tr, 4 > { typedef typename Tr::comp_4 ret; };
-	template <typename Tr> struct bind_comp< Tr, 5 > { typedef typename Tr::comp_5 ret; };
-	template <typename Tr> struct bind_comp< Tr, 6 > { typedef typename Tr::comp_6 ret; };
-	template <typename Tr> struct bind_comp< Tr, 7 > { typedef typename Tr::comp_7 ret; };
-	template <typename Tr> struct bind_comp< Tr, 8 > { typedef typename Tr::comp_8 ret; };
-	template <typename Tr> struct bind_comp< Tr, 9 > { typedef typename Tr::comp_9 ret; };
+	template <typename T, typename Tr>
+	struct bind_comp< T, Tr, 0 >
+	{
+	  typedef typename Tr::comp_0 ret;
+	  static ret on(const T& v)
+	  {
+	    return Tr::get_comp_0(v);
+	  }
+	};
+
+	template <typename T, typename Tr>
+	struct bind_comp< T, Tr, 1 >
+	{
+	  typedef typename Tr::comp_1 ret;
+	  static ret on(const T& v)
+	  {
+	    return Tr::get_comp_1(v);
+	  }
+	};
+
+	template <typename T, typename Tr>
+	struct bind_comp< T, Tr, 2 >
+	{
+	  typedef typename Tr::comp_2 ret;
+	  static ret on(const T& v)
+	  {
+	    return Tr::get_comp_2(v);
+	  }
+	};
+
+	template <typename T, typename Tr>
+	struct bind_comp< T, Tr, 3 >
+	{
+	  typedef typename Tr::comp_3 ret;
+	  static ret on(const T& v)
+	  {
+	    return Tr::get_comp_3(v);
+	  }
+	};
+
+	template <typename T, typename Tr>
+	struct bind_comp< T, Tr, 4 >
+	{
+	  typedef typename Tr::comp_4 ret;
+	  static ret on(const T& v)
+	  {
+	    return Tr::get_comp_4(v);
+	  }
+	};
+
+	template <typename T, typename Tr>
+	struct bind_comp< T, Tr, 5 >
+	{
+	  typedef typename Tr::comp_5 ret;
+	  static ret on(const T& v)
+	  {
+	    return Tr::get_comp_5(v);
+	  }
+	};
+
+	template <typename T, typename Tr>
+	struct bind_comp< T, Tr, 6 >
+	{
+	  typedef typename Tr::comp_6 ret;
+	  static ret on(const T& v)
+	  {
+	    return Tr::get_comp_6(v);
+	  }
+	};
+
+	template <typename T, typename Tr>
+	struct bind_comp< T, Tr, 7 >
+	{
+	  typedef typename Tr::comp_7 ret;
+	  static ret on(const T& v)
+	  {
+	    return Tr::get_comp_7(v);
+	  }
+	};
+
+	template <typename T, typename Tr>
+	struct bind_comp< T, Tr, 8 >
+	{
+	  typedef typename Tr::comp_8 ret;
+	  static ret on(const T& v)
+	  {
+	    return Tr::get_comp_8(v);
+	  }
+	};
+
+	template <typename T, typename Tr>
+	struct bind_comp< T, Tr, 9 >
+	{
+	  typedef typename Tr::comp_9 ret;
+	  static ret on(const T& v)
+	  {
+	    return Tr::get_comp_9(v);
+	  }
+	};
 
 
 	// get_comp< T, i, dim >
 
-	template <typename C, typename Tr, unsigned i>
+	template <typename T, typename C, typename Tr, unsigned i>
 	struct get_comp_helper
 	{
 	  typedef C ret;
+	  static ret on(const T& v)
+	  {
+	    return v[i];
+	  }
 	};
 
-	template <typename Tr, unsigned i>
-	struct get_comp_helper< void, Tr, i >
+	template <typename T, typename Tr, unsigned i>
+	struct get_comp_helper< T, void, Tr, i >
 	{
-	  typedef typename bind_comp<Tr, i>::ret ret;
+	  typedef bind_comp<T, Tr, i> helper;
+	  typedef typename helper::ret ret;
+	  static ret on(const T& v)
+	  {
+	    return helper::on(v);
+	  }
 	};
 
 	template <typename T, unsigned i, unsigned dim>
@@ -94,15 +192,46 @@ namespace mln
 	{
 	  typedef mln::trait::value_<T> Tr;
 	  typedef typename Tr::comp C;
-	  typedef typename get_comp_helper<C, Tr, i>::ret ret;
+	  typedef get_comp_helper<T, C, Tr, i> helper;
+	  typedef typename helper::ret ret;
+
+	  static ret on(const T& v)
+	  {
+	    return helper::on(v);
+	  }
+	};
+
+
+	template <typename T, unsigned i, unsigned dim>
+	struct get_comp< T[dim], i, dim >
+	{
+	  typedef T ret;
+
+	  static ret on(const T (&v)[dim])
+	  {
+	    return v[i];
+	  }
 	};
 
 	template <typename T>
 	struct get_comp< T, 0, 1 >
 	{
 	  typedef T ret;
+
+	  static ret on(const T& v)
+	  {
+	    return v;
+	  }
 	};
 	
+	template <typename T>
+	struct get_comp< T[1], 0, 1 > // Disambiguate between both
+				      // previous specialization.
+	{
+	  typedef T ret;
+	  static ret on(const T (&v)[1]) { return v[0]; }
+	};
+
 
 	// comp< T, i >
 
@@ -111,7 +240,13 @@ namespace mln
 	  : private metal::bool_< (i < mln::trait::value_<T>::dim) >::check_t
 	{
 	  enum { dim = mln::trait::value_<T>::dim };
-	  typedef typename get_comp<T, i, dim>::ret ret;
+	  typedef get_comp<T, i, dim> helper;
+	  typedef typename helper::ret ret;
+
+	  static ret on(const T& v)
+	  {
+	    return helper::on(v);
+	  }
 	};
 
       } // end of namespace mln::trait::value::internal

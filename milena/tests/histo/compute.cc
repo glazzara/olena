@@ -29,6 +29,11 @@
 /// \file tests/histo/compute.cc
 ///
 /// Tests on mln::accu::histo and mln::histo::array.
+///
+/// \todo Just test *one* file (here: compute.hh); other features
+/// should also be tested but in a dedicated test file!
+///
+/// \todo Remove echos.
 
 #include <iterator>
 #include <sstream>

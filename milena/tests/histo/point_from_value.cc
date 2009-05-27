@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,34 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_HISTO_ALL_HH
-# define MLN_HISTO_ALL_HH
-
-/// \file mln/histo/all.hh
+/// \file tests/histo/point_from_value.cc
 ///
-/// File that includes histogram files.
+/// \brief Tests on mln::histo::point_from_value.
+
+#include <mln/histo/point_from_value.hh>
+
+#include <mln/core/alias/point1d.hh>
+#include <mln/core/alias/point3d.hh>
+
+#include <mln/value/int_u8.hh>
+#include <mln/value/rgb8.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of histograms.
-  namespace histo
-  {
-    /// Implementation namespace of histo namespace.
-    namespace impl {
+  int i = 51;
+  mln_assertion(histo::meta_point_from_value(i) == point1d(51));
 
-      /// Generic implementation namespace of histo namespace.
-      namespace generic {}
+  value::int_u8 v = 51;
+  mln_assertion(histo::meta_point_from_value(v) == point1d(51));
 
-    }
-  }
+  value::rgb8 c(0,5,1);
+  mln_assertion(histo::meta_point_from_value(c) == point3d(0,5,1));
 }
-
-
-# include <mln/histo/compute.hh>
-# include <mln/histo/array.hh>
-# include <mln/histo/point_from_value.hh>
-
-
-#endif // ! MLN_HISTO_ALL_HH

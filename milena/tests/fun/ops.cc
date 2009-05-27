@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,34 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_HISTO_ALL_HH
-# define MLN_HISTO_ALL_HH
-
-/// \file mln/histo/all.hh
+/// \file tests/fun/ops.cc
 ///
-/// File that includes histogram files.
+/// Test on mln::fun::ops.hh.
+
+#include <mln/fun/p2b/chess.hh>
+#include <mln/fun/ops.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of histograms.
-  namespace histo
-  {
-    /// Implementation namespace of histo namespace.
-    namespace impl {
-
-      /// Generic implementation namespace of histo namespace.
-      namespace generic {}
-
-    }
-  }
+  fun::p2b::chess f;
+  point2d p(0,0);
+  mln_assertion(f(p) != (! f)(p));
 }
-
-
-# include <mln/histo/compute.hh>
-# include <mln/histo/array.hh>
-# include <mln/histo/point_from_value.hh>
-
-
-#endif // ! MLN_HISTO_ALL_HH

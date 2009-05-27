@@ -27,7 +27,7 @@
 
 /// \file tests/trait/value/comp.cc
 ///
-/// Tests on mln_trait_value_comp.
+/// \brief Tests on mln_trait_value_comp.
 ///
 /// \todo Add tests on some actual heterogeneous types.
 

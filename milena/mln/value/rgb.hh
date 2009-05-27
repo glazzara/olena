@@ -220,7 +220,14 @@ namespace mln
       typedef trait::value::kind::color       kind;
       typedef mln_value_quant_from_(card)     quant;
 
-      typedef mln::value::int_u<n>	      comp;
+      typedef void comp;
+      typedef mln::value::int_u<n> comp_0;
+      typedef mln::value::int_u<n> comp_1;
+      typedef mln::value::int_u<n> comp_2;
+
+      template <typename V> static comp_0 get_comp_0(const V& v) { return v.red(); }
+      template <typename V> static comp_1 get_comp_1(const V& v) { return v.green(); }
+      template <typename V> static comp_2 get_comp_2(const V& v) { return v.blue(); }
 
       typedef algebra::vec<dim, float> sum;
 

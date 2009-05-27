@@ -11,3 +11,9 @@ SUBDIRS =					\
   v2v						\
   vv2v						\
   x2x
+
+
+check_PROGRAMS =				\
+  ops
+
+ops_SOURCES = ops.cc

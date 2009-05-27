@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,34 +25,51 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_HISTO_ALL_HH
-# define MLN_HISTO_ALL_HH
-
-/// \file mln/histo/all.hh
+/// \file tests/fun/v2v/component.cc
 ///
-/// File that includes histogram files.
+/// \brief Test fun::v2v::component.
+
+#include <mln/fun/v2v/component.hh>
+#include <mln/algebra/vec.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/value/hsl.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of histograms.
-  namespace histo
   {
-    /// Implementation namespace of histo namespace.
-    namespace impl {
-
-      /// Generic implementation namespace of histo namespace.
-      namespace generic {}
-
-    }
+    fun::v2v::component<int, 0> f;
+    int i = 51;
+    mln_assertion(f(i) == 51);
+  }
+  {
+    typedef int V[1];
+    V v;
+    v[0] = 51;
+    fun::v2v::component<V, 0> f;
+    mln_assertion(f(v) == 51);
+  }
+  {
+    typedef algebra::vec<2,int> V;
+    V v;
+    v[0] = 51;
+    fun::v2v::component<V, 0> f;
+    mln_assertion(f(v) == 51);
+  }
+  {
+    typedef value::rgb8 V;
+    V v;
+    v.red() = 51;
+    fun::v2v::component<V, 0> f;
+    mln_assertion(f(v) == 51);
+  }
+  {
+    typedef value::hsl_<int,int,int> V;
+    V v;
+    v.hue() = 51;
+    fun::v2v::component<V, 0> f;
+    mln_assertion(f(v) == 51);
   }
 }
-
-
-# include <mln/histo/compute.hh>
-# include <mln/histo/array.hh>
-# include <mln/histo/point_from_value.hh>
-
-
-#endif // ! MLN_HISTO_ALL_HH

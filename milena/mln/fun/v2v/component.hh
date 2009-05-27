@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,34 +25,56 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_HISTO_ALL_HH
-# define MLN_HISTO_ALL_HH
+#ifndef MLN_FUN_V2V_COMPONENT_HH
+# define MLN_FUN_V2V_COMPONENT_HH
 
-/// \file mln/histo/all.hh
+/// \file mln/fun/v2v/component.hh
 ///
-/// File that includes histogram files.
+/// Functor that accesses the i-th component of a value.
+
+# include <mln/core/concept/function.hh>
+# include <mln/trait/value_.hh>
+# include <mln/trait/value/comp.hh>
+# include <mln/value/builtin/all.hh>
 
 
 namespace mln
 {
 
-  /// Namespace of histograms.
-  namespace histo
+  namespace fun
   {
-    /// Implementation namespace of histo namespace.
-    namespace impl {
 
-      /// Generic implementation namespace of histo namespace.
-      namespace generic {}
+    namespace v2v
+    {
 
-    }
-  }
-}
+      /// \brief Functor that accesses the i-th component of a value.
+      //
+      template <typename T, unsigned i>
+      struct component : public Function_v2v< component<T,i> >,
+ 			 private metal::bool_<(i <= trait::value_<T>::dim)>::check_t
+      {
+	typedef mln_trait_value_comp(T, i) result;
+	result operator()(const T& v) const;
+      };
 
 
-# include <mln/histo/compute.hh>
-# include <mln/histo/array.hh>
-# include <mln/histo/point_from_value.hh>
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename T, unsigned i>
+      inline
+      typename component<T,i>::result
+      component<T,i>::operator()(const T& v) const
+      {
+	return trait::value::internal::comp<T,i>::on(v);
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::v2v
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
 
 
-#endif // ! MLN_HISTO_ALL_HH
+#endif // ! MLN_FUN_V2V_COMPONENT_HH

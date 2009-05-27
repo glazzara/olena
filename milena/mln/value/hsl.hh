@@ -28,10 +28,12 @@
 
 /// \file mln/value/hsl.hh
 ///
-/// Color class.
+/// \brief HSL color class.
 ///
-/// \todo write a better doc.
+/// \todo Write a better doc.
+///
 /// \todo Cleanup/Revamp!
+/// \todo Factor comp_i and get_comp_i in a base class.
 
 #ifndef MLN_VALUE_HSL_HH
 # define MLN_VALUE_HSL_HH
@@ -139,9 +141,14 @@ namespace mln
       typedef trait::value::kind::color       kind;
       typedef mln_value_quant_from_(card)     quant;
 
+      typedef void comp;
       typedef H comp_0;
       typedef S comp_1;
       typedef L comp_2;
+
+      template <typename V> static comp_0 get_comp_0(const V& v) { return v.hue(); }
+      template <typename V> static comp_1 get_comp_1(const V& v) { return v.sat(); }
+      template <typename V> static comp_2 get_comp_2(const V& v) { return v.lum(); }
 
 //      typedef algebra::vec<3, float> sum;
       typedef mln::value::hsl_<H,S,L> sum;

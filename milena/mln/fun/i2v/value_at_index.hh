@@ -32,8 +32,8 @@
 ///
 /// \brief File that define a function that gives an index per value.
 
-#include <mln/core/concept/function.hh>
-#include <mln/trait/value_.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/trait/value_.hh>
 
 
 namespace mln
