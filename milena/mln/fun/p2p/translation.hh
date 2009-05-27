@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -113,5 +113,3 @@ namespace mln
 
 
 #endif // ! MLN_FUN_P2P_TRANSLATION_HH
-
-

@@ -1,5 +1,18 @@
 2009-05-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add fun p2p fold functions.
+
+	* sandbox/theo/experimental/histo_image.cc: Copy as...
+	* mln/fun/p2p/fold.hh: ...this new file.
+	Keep only fold stuff.
+	Revamp.
+	* mln/fun/p2p/all.hh: Update.
+	* tests/fun/p2p/fold.cc: New.
+	* tests/fun/p2p/Makefile.am: Update.
+	* mln/fun/p2p/translation.hh: Layout.
+
+2009-05-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add histo 'point from value' fun v2v 'component' functions.
 
 	* mln/trait/value/internal/comp.hh (on): New method.

@@ -1,5 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,31 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_P2P_ALL_HH
-# define MLN_FUN_P2P_ALL_HH
-
-/// \file mln/fun/p2p/all.hh
+/// \file tests/fun/p2p/fold.cc
 ///
-/// \brief File that includes all functions from grid point to grid
-/// point.
+/// Tests on mln::fun::p2p::fold.
+
+#include <mln/core/alias/box1d.hh>
+#include <mln/core/alias/box2d.hh>
+#include <mln/core/alias/box3d.hh>
+#include <mln/fun/p2p/fold.hh>
 
 
-namespace mln
+int main()
 {
-  namespace fun
+  using namespace mln;
+
   {
+    box1d b(2);
+    fun::p2p::fold<point1d> f(b);
+    point1d p(2);
+    mln_assertion( f(p) == point1d(0) );
+  }
+  {
+    box2d b(2, 3);
+    point2d p(2,3);
 
-    /// Namespace of functions from grid point to grid point.
-    namespace p2p
-    {}
+    fun::p2p::fold<point2d,1,1> f_11(b);
+    mln_assertion( f_11(p) == point2d(0,0) );
 
+    fun::p2p::fold<point2d,0,1> f_01(b);
+    mln_assertion( f_01(p) == point2d(2,0) );
+
+    fun::p2p::fold<point2d,1,0> f_10(b);
+    mln_assertion( f_10(p) == point2d(0,3) );
+  }
+  {
+    box3d b(2, 3, 4);
+    point3d p(2, 3, 4);
+
+    fun::p2p::fold<point3d,1,1,1> f_111(b);
+    mln_assertion( f_111(p) == point3d(0,0,0) );
+
+    fun::p2p::fold<point3d,0,0,1> f_001(b);
+    mln_assertion( f_001(p) == point3d(2,3,0) );
+
+    fun::p2p::fold<point3d,0,1,0> f_010(b);
+    mln_assertion( f_010(p) == point3d(2,0,4) );
+
+    fun::p2p::fold<point3d,1,0,0> f_100(b);
+    mln_assertion( f_100(p) == point3d(0,3,4) );
   }
 }
-
-
-# include <mln/fun/p2p/fold.hh>
-# include <mln/fun/p2p/mirror.hh>
-# include <mln/fun/p2p/translation.hh>
-
-
-#endif // ! MLN_FUN_P2P_ALL_HH
