@@ -57,18 +57,19 @@ crop: crop.cc
 label2gif: label2gif.cc
 	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o label2gif
 
-norm: norm.cc
-	${CXX} -I../../../ ${CXXFLAGS} $^ -o norm
-
-#####################
-
-seg_fixed: seg_fixed.cc
-	${CXX} -I../../../ ${CXXFLAGS} $^ -o seg_fixed
-	
 #####################
 
 filter: filter.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o filter
+
+norm: norm.cc
+	${CXX} -I../../../ ${CXXFLAGS} $^ -o norm
+
+dist_edges: dist_edges.cc
+	${CXX} -I../../../ ${CXXFLAGS} $^ -o dist_edges
+	
+wst_edges: wst_edges.cc
+	${CXX} -I../../../ ${CXXFLAGS} $^ -o wst_edges
 
 #####################
 

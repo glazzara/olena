@@ -1,3 +1,14 @@
+2009-05-27  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Create tools for processing chain on edge images.
+	* fabien/igr/Makefile: Add targets for edges processing chain.
+	* fabien/igr/clo_vol.cc: Small update.
+	* fabien/igr/dist_edges.cc: Compute distance on edges, now with
+	3 distances.
+	* fabien/igr/norm.cc: Small update.
+	* fabien/igr/seg_fixed.cc: Remove.
+	* fabien/igr/wst_edges.cc: Compute a volume closing and a watershed.
+
 2009-05-26  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Check guard and separate attribute filters into their own file.

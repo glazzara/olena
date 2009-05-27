@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  image3d<int_u12> ima;
+  image3d<float> ima;
   io::dump::load(ima, argv[1]);
   image3d<float> norm = normalize(ima, atoi(argv[2]), atoi(argv[3]));
   io::dump::save(norm, argv[4]);

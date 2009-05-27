@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
   if (argc != 4)
   {
-    std::cout << "Usage: " << argv[0] << " <input.dump> <dimensions> <closure_lambda>"
+    std::cout << "Usage: " << argv[0] << " input.dump dim lambda output.dump"
 	      << std::endl;
     return 1;
   }
