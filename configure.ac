@@ -242,7 +242,10 @@ AC_CONFIG_FILES([
     milena/tests/core/Makefile
       milena/tests/core/alias/Makefile
       milena/tests/core/image/Makefile
+	milena/tests/core/image/morph/Makefile
 	milena/tests/core/image/dmorph/Makefile
+	milena/tests/core/image/imorph/Makefile
+	milena/tests/core/image/vmorph/Makefile
       milena/tests/core/other/Makefile
       milena/tests/core/routine/Makefile
       milena/tests/core/site_set/Makefile
@@ -330,6 +333,7 @@ AC_CONFIG_FILES([
       milena/tests/value/concept/Makefile
     milena/tests/win/Makefile
     milena/tests/world/Makefile
+      milena/tests/world/binary_2d/Makefile
       milena/tests/world/inter_pixel/Makefile
 	milena/tests/world/inter_pixel/dim2/Makefile
 ])
