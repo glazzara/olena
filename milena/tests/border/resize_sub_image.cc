@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,14 +26,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border/resize_sub_image.cc
- *
- * \brief Tests on mln::border::resize.
- */
+/// \file tests/border/resize_sub_image.cc
+///
+/// Tests on mln::border::resize.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/sub_image.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 #include <mln/fun/p2b/chess.hh>
 
 #include <mln/border/get.hh>

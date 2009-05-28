@@ -36,7 +36,7 @@
 # include <mln/labeling/background.hh>
 # include <mln/labeling/compute.hh>
 
-# include <mln/core/image/image_if.hh>
+# include <mln/core/image/dmorph/image_if.hh>
 # include <mln/accu/count.hh>
 
 

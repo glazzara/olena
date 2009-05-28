@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,7 +33,7 @@
 
 
 # include <mln/core/image/image2d.hh>
-# include <mln/core/image/sub_image.hh>
+# include <mln/core/image/dmorph/sub_image.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/level/stretch.hh>
@@ -47,8 +47,8 @@
 # include <mln/make/voronoi.hh>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/sub_image.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 
 
 #include <mln/core/alias/w_window2d_int.hh>

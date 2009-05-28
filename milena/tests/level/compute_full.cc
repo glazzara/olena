@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,8 +39,8 @@
 #include <mln/value/int_s8.hh>
 #include <mln/value/int_s16.hh>
 
-#include <mln/core/image/sub_image.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 #include <mln/fun/p2b/chess.hh>
 
 #include <mln/accu/min.hh>

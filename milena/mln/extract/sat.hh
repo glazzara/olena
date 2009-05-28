@@ -33,7 +33,7 @@
 /// Extract the sat component of an image.
 
 
-# include <mln/core/image/fun_image.hh>
+# include <mln/core/image/vmorph/fun_image.hh>
 # include <mln/fun/meta/sat.hh>
 
 namespace mln

@@ -34,7 +34,7 @@
 /// Convert an image to a rgb8 image and draw the watershed lines.
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/image/image_if.hh>
+# include <mln/core/image/dmorph/image_if.hh>
 # include <mln/level/convert.hh>
 # include <mln/data/fill.hh>
 # include <mln/value/rgb8.hh>

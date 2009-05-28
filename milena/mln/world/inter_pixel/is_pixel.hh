@@ -33,7 +33,7 @@
 /// FIXME: doc.
 
 # include <mln/core/concept/function.hh>
-# include <mln/core/image/image_if.hh>
+# include <mln/core/image/dmorph/image_if.hh>
 # include <mln/core/point.hh>
 
 

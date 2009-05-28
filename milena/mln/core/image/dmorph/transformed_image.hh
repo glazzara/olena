@@ -89,7 +89,7 @@ namespace mln
 
 
 
-  /// \brief Image having its domain restricted by a site set.
+  /// Image having its domain restricted by a site set.
   ///
   /// \ingroup modimagedomainmorpher
   //

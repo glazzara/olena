@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -31,15 +31,15 @@
 /// Tests on mln::opt::at.
 
 #include <mln/core/image/image1d.hh>
-#include <mln/core/image/sub_image.hh>
-#include <mln/core/image/cast_image.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
+#include <mln/core/image/vmorph/cast_image.hh>
 
 /*#include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
 #include <mln/pw/image.hh>
 #include <mln/core/image/flat_image.hh>
-#include <mln/core/image/image_if.hh>
-#include <mln/core/image/extension_val.hh>*/
+#include <mln/core/image/dmorph/image_if.hh>
+#include <mln/core/image/dmorph/extension_val.hh>*/
 
 #include <mln/data/fill.hh>
 #include <mln/data/paste.hh>

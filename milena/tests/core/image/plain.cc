@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,13 +26,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/image/plain.cc
- *
- * \brief Test on mln::plain.
- */
+/// \file tests/core/image/plain.cc
+///
+/// Test on mln::plain.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/plain.hh>
+#include <mln/core/image/imorph/plain.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/level/compare.hh>

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,10 +39,10 @@
 #include <mln/core/image/image3d.hh>
 #include <mln/pw/image.hh>
 #include <mln/core/image/flat_image.hh>
-#include <mln/core/image/cast_image.hh>
-#include <mln/core/image/image_if.hh>
-#include <mln/core/image/sub_image.hh>
-#include <mln/core/image/extension_val.hh>
+#include <mln/core/image/vmorph/cast_image.hh>
+#include <mln/core/image/dmorph/image_if.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
+#include <mln/core/image/dmorph/extension_val.hh>
 
 #include <mln/fun/p2b/chess.hh>
 #include <mln/fun/p2v/iota.hh>

@@ -49,9 +49,9 @@
 # include <mln/set/compute.hh>
 
 //Should be removed when closest_point functors are moved.
-# include <mln/core/image/slice_image.hh>
-# include <mln/core/image/tr_image.hh>
-# include <mln/core/image/extension_fun.hh>
+# include <mln/core/image/dmorph/slice_image.hh>
+# include <mln/core/image/imorph/tr_image.hh>
+# include <mln/core/image/dmorph/extension_fun.hh>
 
 # include <mln/core/alias/neighb3d.hh>
 

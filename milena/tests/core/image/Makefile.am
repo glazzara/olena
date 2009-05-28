@@ -3,32 +3,21 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS =					\
-  dmorph
+  morph 					\
+  dmorph 					\
+  imorph 					\
+  vmorph
 
 ##FIXME: re-enable tests
 check_PROGRAMS =				\
-  cast_image					\
   complex_image					\
-  decorated_image				\
   edge_image 					\
   flat_image					\
-  hexa						\
   graph_image					\
   image1d					\
   image2d					\
-  image2d_h					\
   image3d					\
-  image_if					\
-  interpolated					\
   line_graph_image				\
-  p2p_image					\
-  plain						\
-  safe_image					\
-  slice_image					\
-  sub_image					\
-  t_image					\
-  tr_image					\
-  unproject_image 				\
   vertex_image
 
 ##  bgraph_image					\
@@ -44,32 +33,18 @@ check_PROGRAMS =				\
 noinst_HEADERS = complex_image.hh
 
 ##bgraph_image_SOURCES = bgraph_image.cc
-cast_image_SOURCES = cast_image.cc
 complex_image_SOURCES = complex_image.cc
-decorated_image_SOURCES = decorated_image.cc
 graph_image_SOURCES = graph_image.cc
 flat_image_SOURCES = flat_image.cc
-hexa_SOURCES = hexa.cc
 image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc
-image2d_h_SOURCES = image2d_h.cc
 image3d_SOURCES = image3d.cc
-image_if_SOURCES = image_if.cc
-interpolated_SOURCES = interpolated.cc
 line_graph_image_SOURCES = line_graph_image.cc
 ##mono_obased_rle_image_SOURCES = mono_obased_rle_image.cc
 ##mono_rle_image_SOURCES = mono_rle_image.cc
 ##obased_rle_image_SOURCES = obased_rle_image.cc
-p2p_image_SOURCES = p2p_image.cc
-plain_SOURCES = plain.cc
 ##rle_image_SOURCES = rle_image.cc
-safe_image_SOURCES = safe_image.cc
-slice_image_SOURCES = slice_image.cc
 ##sparse_image_SOURCES = sparse_image.cc
-sub_image_SOURCES = sub_image.cc
-t_image_SOURCES = t_image.cc
-tr_image_SOURCES = tr_image.cc
-unproject_image_SOURCES = unproject_image.cc
 ##value_enc_image_SOURCES = value_enc_image.cc
 vertex_image_SOURCES = vertex_image.cc
 edge_image_SOURCES = edge_image.cc

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,13 +26,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/canvas/chamfer.cc
- *
- * \brief Tests on mln::geom::chamfer.
- */
+/// \file tests/canvas/chamfer.cc
+///
+/// Tests on mln::geom::chamfer.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
 
 
 #include <mln/data/fill.hh>

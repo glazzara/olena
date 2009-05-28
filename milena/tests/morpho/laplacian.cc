@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho/laplacian.cc
- *
- * \brief Test on mln::morpho::laplacian.
- */
+/// \file tests/morpho/laplacian.cc
+///
+/// Test on mln::morpho::laplacian.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
@@ -37,7 +37,7 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u_sat.hh>
-#include <mln/core/image/cast_image.hh>
+#include <mln/core/image/vmorph/cast_image.hh>
 #include <mln/pw/image.hh>
 #include <mln/arith/plus.hh>
 

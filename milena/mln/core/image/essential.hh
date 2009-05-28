@@ -1,4 +1,5 @@
 // Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,16 +33,5 @@
 ///
 /// File that includes essential image types.
 
-# include <mln/core/image/cast_image.hh>
-# include <mln/core/image/image2d.hh>
-# include <mln/core/image/image_if.hh>
-# include <mln/core/image/sub_image.hh>
-# include <mln/core/image/image1d.hh>
-# include <mln/core/image/extended.hh>
-# include <mln/core/image/extension_fun.hh>
-# include <mln/core/image/extension_ima.hh>
-# include <mln/core/image/extension_val.hh>
-# include <mln/core/image/image3d.hh>
-# include <mln/core/image/sub_image_if.hh>
 
 #endif // ! MLN_CORE_IMAGE_ESSENTIAL_HH

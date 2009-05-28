@@ -30,7 +30,7 @@
 
 # include <mln/core/routine/extend.hh>
 
-# include <mln/core/image/tr_image.hh>
+# include <mln/core/image/imorph/tr_image.hh>
 
 # include <mln/data/paste.hh>
 

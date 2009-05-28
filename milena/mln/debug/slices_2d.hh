@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,9 +38,9 @@
 # include <mln/core/image/image2d.hh>
 
 # include <mln/core/image/image3d.hh>
-# include <mln/core/image/slice_image.hh>
+# include <mln/core/image/dmorph/slice_image.hh>
 
-# include <mln/core/image/p2p_image.hh>
+# include <mln/core/image/dmorph/p2p_image.hh>
 # include <mln/fun/p2p/translation.hh>
 
 # include <mln/data/paste.hh>

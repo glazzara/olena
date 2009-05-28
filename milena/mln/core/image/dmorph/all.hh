@@ -34,6 +34,18 @@
 
 
 # include <mln/core/image/dmorph/transformed_image.hh>
+# include <mln/core/image/dmorph/extended.hh>
+# include <mln/core/image/dmorph/extension_fun.hh>
+# include <mln/core/image/dmorph/extension_ima.hh>
+# include <mln/core/image/dmorph/extension_val.hh>
+# include <mln/core/image/dmorph/hexa.hh>
+# include <mln/core/image/dmorph/image_if.hh>
+# include <mln/core/image/dmorph/image2d_h.hh>
+# include <mln/core/image/dmorph/p2p_image.hh>
+# include <mln/core/image/dmorph/slice_image.hh>
+# include <mln/core/image/dmorph/sub_image.hh>
+# include <mln/core/image/dmorph/sub_image_if.hh>
+# include <mln/core/image/dmorph/unproject_image.hh>
 
 
 #endif // ! MLN_CORE_IMAGE_DMORPH_ALL_HH

@@ -32,8 +32,8 @@
 ///
 /// Construct a valued image of edges.
 
-# include <mln/core/image/extension_ima.hh>
-# include <mln/core/image/image_if.hh>
+# include <mln/core/image/dmorph/extension_ima.hh>
+# include <mln/core/image/dmorph/image_if.hh>
 
 # include <mln/core/routine/extend.hh>
 

@@ -36,12 +36,14 @@
 
 // Sub-directories.
 
+# include <mln/core/image/morph/all.hh>
 # include <mln/core/image/dmorph/all.hh>
+# include <mln/core/image/imorph/all.hh>
+# include <mln/core/image/vmorph/all.hh>
 
 
 // Files.
 
-# include <mln/core/image/cast_image.hh>
 # include <mln/core/image/ch_piter.hh>
 # include <mln/core/image/complex_image.hh>
 # include <mln/core/image/complex_neighborhood_piter.hh>
@@ -49,60 +51,21 @@
 # include <mln/core/image/complex_window_piter.hh>
 # include <mln/core/image/complex_windows.hh>
 # include <mln/core/image/edge_image.hh>
-# include <mln/core/image/image2d.hh>
-# include <mln/core/image/flat_image.hh>
-# include <mln/core/image/image_if.hh>
-# include <mln/core/image/sub_image.hh>
-# include <mln/core/image/image1d.hh>
-# include <mln/core/image/decorated_image.hh>
-# include <mln/core/image/extended.hh>
-# include <mln/core/image/extension_fun.hh>
-# include <mln/core/image/extension_ima.hh>
-# include <mln/core/image/extension_val.hh>
 # include <mln/core/image/flat_image.hh>
 # include <mln/core/image/graph_elt_neighborhood.hh>
 # include <mln/core/image/graph_elt_neighborhood_if.hh>
 # include <mln/core/image/graph_elt_window.hh>
 # include <mln/core/image/graph_elt_window_if.hh>
-# include <mln/core/image/graph_window_piter.hh>
 # include <mln/core/image/graph_window_if_piter.hh>
+# include <mln/core/image/graph_window_piter.hh>
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/image3d.hh>
-# include <mln/core/image/image_if.hh>
-# include <mln/core/image/interpolated.hh>
-# include <mln/core/image/lazy_image.hh>
-# include <mln/core/image/p2p_image.hh>
-# include <mln/core/image/plain.hh>
-# include <mln/core/image/safe.hh>
-# include <mln/core/image/slice_image.hh>
 # include <mln/core/image/sparse_encode.hh>
 # include <mln/core/image/sparse_image.hh>
-# include <mln/core/image/sub_image.hh>
-# include <mln/core/image/sub_image_if.hh>
 # include <mln/core/image/t_image.hh>
-# include <mln/core/image/tr_image.hh>
 # include <mln/core/image/tr_mesh.hh>
-# include <mln/core/image/unproject_image.hh>
 # include <mln/core/image/vertex_image.hh>
-
-//# include <mln/core/image/bgraph_image.hh>
-//# include <mln/core/image/bgraph_psite.hh>
-//# include <mln/core/image/fi_adaptor.hh>
-//# include <mln/core/image/graph_image.hh>
-//# include <mln/core/image/hexa.hh>
-//# include <mln/core/image/hexa_piter.hh>
-//# include <mln/core/image/image2d_h.hh>
-//# include <mln/core/image/mono_obased_rle_encode.hh>
-//# include <mln/core/image/mono_obased_rle_image.hh>
-//# include <mln/core/image/mono_rle_encode.hh>
-//# include <mln/core/image/mono_rle_image.hh>
-//# include <mln/core/image/obased_rle_encode.hh>
-//# include <mln/core/image/obased_rle_image.hh>
-//# include <mln/core/image/rle_encode.hh>
-//# include <mln/core/image/rle_image.hh>
-//# include <mln/core/image/value_enc_image.hh>
-//# include <mln/core/image/value_encode.hh>
 
 
 #endif // ! MLN_CORE_IMAGE_ALL_HH

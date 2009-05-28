@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/compare_full.cc
- *
- * \brief Tests on mln::level::compare.
- */
+/// \file tests/level/compare_full.cc
+///
+/// Tests on mln::level::compare.
 
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
@@ -42,7 +42,6 @@
 #include <mln/level/compare.hh>
 
 #include <mln/debug/iota.hh>
-
 #include <mln/arith/plus.hh>
 #include <mln/arith/minus.hh>
 

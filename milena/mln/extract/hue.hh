@@ -33,7 +33,7 @@
 /// Extract the hue component of an image.
 
 
-# include <mln/core/image/fun_image.hh>
+# include <mln/core/image/vmorph/fun_image.hh>
 # include <mln/fun/meta/hue.hh>
 
 namespace mln

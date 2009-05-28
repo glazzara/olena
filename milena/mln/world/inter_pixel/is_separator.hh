@@ -35,7 +35,7 @@
 /// \todo Make it work in n-D.
 
 # include <mln/core/concept/function.hh>
-# include <mln/core/image/image_if.hh>
+# include <mln/core/image/dmorph/image_if.hh>
 # include <mln/core/point.hh>
 
 

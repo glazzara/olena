@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/arith/times_full.cc
- *
- * \brief Tests on mln::arith::times.
- */
+/// \file tests/arith/times_full.cc
+///
+/// Tests on mln::arith::times.
 
 
 
@@ -36,9 +36,9 @@
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
-#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
 
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 #include <mln/fun/p2b/chess.hh>
 
 #include <mln/literal/origin.hh>

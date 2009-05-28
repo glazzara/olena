@@ -32,7 +32,7 @@
 ///
 /// General conversion procedure from a site_set to an image.
 
-# include <mln/core/image/sub_image.hh>
+# include <mln/core/image/dmorph/sub_image.hh>
 # include <mln/geom/bbox.hh>
 # include <mln/trait/image_from_grid.hh>
 # include <mln/data/fill.hh>

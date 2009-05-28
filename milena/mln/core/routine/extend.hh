@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,9 +37,9 @@
 /// \todo Deal with ambiguities.
 /// \todo Check that there is no extension yet (except "extendable").
 
-# include <mln/core/image/extension_ima.hh>
-# include <mln/core/image/extension_fun.hh>
-# include <mln/core/image/extension_val.hh>
+# include <mln/core/image/dmorph/extension_ima.hh>
+# include <mln/core/image/dmorph/extension_fun.hh>
+# include <mln/core/image/dmorph/extension_val.hh>
 
 
 
