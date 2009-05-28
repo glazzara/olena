@@ -1,5 +1,20 @@
 2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Cleanup object filters in Scribo.
+
+	* filter/large_components.hh,
+	* filter/small_components.hh,
+	* filter/thick_bboxes.hh,
+	* filter/thin_bboxes.hh: Move...
+
+	* filter/large_objects.hh,
+	* filter/small_objects.hh,
+	* filter/thick_objects.hh,
+	* filter/thin_objects.hh: ... here. Make use of labeled_image type and
+	cleanup comments.
+
+2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Make use of labeled_image type in Scribo.
   
 	* text/extract_bboxes.hh,
