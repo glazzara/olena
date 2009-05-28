@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -62,7 +63,7 @@ namespace mln
       mln_concrete(image2d<T>)
       subsampling_(const image2d<T>& input,
                    const mln_deduce(image2d<T>, site, delta)& first_p,
-                   const mln_coord(image2d<T>)& gap)
+                   const mln_deduce(image2d<T>, site, coord)& gap)
       {
 	trace::entering("subsampling::impl::subsampling_");
         mln_concrete(image2d<T>) output(geom::nrows(input) / gap,

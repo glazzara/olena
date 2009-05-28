@@ -18,7 +18,7 @@ STRIP_FROM_PATH        = @top_srcdir@/milena \
                          @top_builddir@/milena
 STRIP_FROM_INC_PATH    = 
 SHORT_NAMES            = YES
-JAVADOC_AUTOBRIEF      = NO
+JAVADOC_AUTOBRIEF      = YES
 MULTILINE_CPP_IS_BRIEF = NO
 DETAILS_AT_TOP         = NO
 INHERIT_DOCS           = YES

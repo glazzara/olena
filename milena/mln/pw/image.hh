@@ -84,7 +84,8 @@ namespace mln
   namespace pw
   {
 
-    /// \brief A generic point-wise image implementation.
+    /// A generic point-wise image implementation.
+    ///
     /// Parameter \p F is a function restricting the domain.
     /// Parameter \p S is the domain type.
     ///

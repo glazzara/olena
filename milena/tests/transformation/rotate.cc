@@ -34,13 +34,12 @@
 # include <mln/make/image.hh>
 # include <mln/level/compare.hh>
 
-
 int main()
 {
   using namespace mln;
 
   bool ref_values[][5] = { { 0, 1, 0, 0, 0 },
-                           { 0, 0, 1, 0, 0 },
+                           { 0, 1, 1, 0, 0 },
                            { 0, 0, 1, 1, 0 },
                            { 0, 0, 0, 1, 1 },
                            { 0, 0, 0, 0, 1 } };

@@ -507,7 +507,7 @@ namespace mln
     typename array<T>::mutable_result
     array<T>::operator()(unsigned i)
     {
-      return (*this)(i);
+      return (*this)[i];
     }
 
     template <typename T>

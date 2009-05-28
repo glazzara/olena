@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,10 @@
 #ifndef MLN_UTIL_YES_HH
 # define MLN_UTIL_YES_HH
 
-/*! \file mln/util/yes.hh
- *
- * \brief Definition of an object that always says "yes".
- */
+/// \file mln/util/yes.hh
+///
+/// Definition of an object that always says "yes".
+
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/routine/ops.hh>
@@ -40,7 +41,7 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   namespace util { struct yes; }
 
 
@@ -64,16 +65,17 @@ namespace mln
     {
       typedef util::yes ret;
     };
-    
+
   } // end of namespace mln::trait
 
 
   namespace util
   {
 
-    /*! \brief Yes structure.
-     *
-     */
+    /// Object that always says "yes".
+    ///
+    /// \ingroup modutil
+    //
     struct yes : public Object< yes >
     {
       yes();

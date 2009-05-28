@@ -108,6 +108,11 @@ namespace mln
       void
       from_to_(const value::int_u<n>& from, value::label<m>& to_);
 
+      // label -> bool.
+      template <unsigned n>
+      void
+      from_to_(const value::label<n>& from, bool& to_);
+
     } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
@@ -211,6 +216,14 @@ namespace mln
 	enum { valid = n < m };
 	metal::bool_<valid>::check();
 	to_ = from;
+      }
+
+      template <unsigned n>
+      inline
+      void
+      from_to_(const value::label<n>& from, bool& to_)
+      {
+	to_ = (from != literal::zero);
       }
 
     } // end of namespace mln::convert::over_load

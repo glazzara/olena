@@ -73,7 +73,7 @@ namespace mln
     /** \brief Perform LDL^T decomposition of a symmetric positive
 	definite matrix.  Like Cholesky, but no square roots.
 	Overwrites lower triangle of matrix.
-      
+
 	From Trimesh's ldltdc routine.  */
     template <unsigned N, typename T>
     inline
@@ -81,14 +81,14 @@ namespace mln
     ldlt_decomp(mat<N, N, T>& A, vec<N, T>& rdiag)
     {
       vec<N - 1, T> v;
-      for (int i = 0; i < N; ++i)
+      for (unsigned i = 0; i < N; ++i)
 	{
-	  for (int k = 0; k < i; ++k)
+	  for (unsigned k = 0; k < i; ++k)
 	    v[k] = A(i, k) * rdiag[k];
-	  for (int j = i; j < N; ++j)
+	  for (unsigned j = i; j < N; ++j)
 	    {
 	      T sum = A(i, j);
-	      for (int k = 0; k < i; k++)
+	      for (unsigned k = 0; k < i; k++)
 		sum -= v[k] * A(j, k);
 	      if (i == j)
 		{
@@ -117,14 +117,14 @@ namespace mln
       for (unsigned i = 0; i < N; ++i)
 	{
 	  T sum = B[i];
-	  for (int k = 0; k < i; ++k)
+	  for (unsigned k = 0; k < i; ++k)
 	    sum -= A(i, k) * x[k];
 	  x[i] = sum * rdiag[i];
 	}
       for (int i = N - 1; i >= 0; --i)
 	{
 	  T sum = 0;
-	  for (int k = i + 1; k < N; ++k)
+	  for (unsigned k = i + 1; k < N; ++k)
 	    sum += A(k, i) * x[k];
 	  x[i] -= sum * rdiag[i];
 	}
@@ -623,7 +623,9 @@ namespace mln
 
 	  // Least squares solution.
 	  vec3f diag;
+#ifndef NDEBUG
 	  bool ldlt_decomp_sucess_p = algebra::ldlt_decomp(w, diag);
+#endif // ! NDEBUG
 	  mln_assertion(ldlt_decomp_sucess_p);
 	  algebra::ldlt_solve(w, diag, m, m);
 
@@ -639,7 +641,7 @@ namespace mln
 	      curv2(p[j])  += wt * c2;
 	    }
       }
-		    
+
       /*-------------------------------------------------------------.
       | Compute principal directions and curvatures at each vertex.  |
       `-------------------------------------------------------------*/

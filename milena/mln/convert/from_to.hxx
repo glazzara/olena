@@ -173,6 +173,9 @@ namespace mln
       template <unsigned n>
       void from_to_(const value::int_u<n>& from, value::label<n>& to_);
 
+      template <unsigned n>
+      void from_to_(const value::label<n>& from, bool& to_);
+
       // int_u<n> -> label<m> with n < m
       template <unsigned n, unsigned m>
       void

@@ -81,8 +81,8 @@
 
 /// Shortcuts to access the box type associated to T.
 /// \{
-# define mln_box(T)        typename T::box
-# define mln_box_(T)                T::box
+# define mln_box(T)        typename mln::box<mln_psite(T)>
+# define mln_box_(T)                mln::box<mln_psite(T)>
 /// \}
 
 

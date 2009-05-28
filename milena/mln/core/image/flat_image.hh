@@ -100,7 +100,7 @@ namespace mln
 
 
 
-  /// \brief Image with a single value.
+  /// Image with a single value.
   ///
   /// \ingroup modimageconcrete
   //

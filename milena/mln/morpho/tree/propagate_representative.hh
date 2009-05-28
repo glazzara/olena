@@ -26,24 +26,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_TREE_PROPAGATE_REPRESENTATIVE_HH_
-# define MLN_MORPHO_TREE_PROPAGATE_REPRESENTATIVE_HH_
+#ifndef MLN_MORPHO_TREE_PROPAGATE_REPRESENTATIVE_HH
+# define MLN_MORPHO_TREE_PROPAGATE_REPRESENTATIVE_HH
 
 /// \file mln/morpho/tree/propagate_representative.hh
 ///
 /// Component tree routines.
 
-namespace mln{
-   namespace morpho {
-     namespace tree {
 
-       /**
-       ** Propagate the representative node's value to
-       ** non-representative points of the component.
-       **
-       ** @param t Component tree.
-       ** @param f_ Value image.
-       */
+# include <mln/core/concept/image.hh>
+# include <mln/morpho/tree/data.hh>
+
+
+namespace mln
+{
+
+   namespace morpho
+   {
+
+     namespace tree
+     {
+
+       /// Propagate the representative node's value to
+       /// non-representative points of the component.
+       ///
+       /// \param t   Component tree.
+       /// \param f_  Value image.
+       //
        template <typename T, typename F>
        void
        propagate_representative(const T& t, Image<F>& f_);
@@ -52,25 +61,32 @@ namespace mln{
 
 # ifndef MLN_INCLUDE_ONLY
 
+
        template <typename T, typename F>
        inline
        void
        propagate_representative(const T& t, Image<F>& f_)
        {
 	 F a = exact(f_);
+	 mln_precondition(a.is_valid());
+
 	 mln_up_site_piter(T) p(t);
 	 for_all(p)
 	   if (! t.is_a_node(p))
-	     {
-	       mln_assertion(t.is_a_node(t.parent(p)));
-	       a(p) = a(t.parent(p));
-	     }
+	   {
+	     mln_assertion(t.is_a_node(t.parent(p)));
+	     a(p) = a(t.parent(p));
+	   }
        }
 
-# endif /* !MLN_INCLUDE_ONLY */
 
-     }
-   }
-}
+# endif // ! MLN_INCLUDE_ONLY
 
-#endif /* !MLN_MORPHO_TREE_PROPAGATE_REPRESENTATIVE_HH_ */
+
+     } // end of namespace mln::morpho::tree
+
+   } // end of namespace mln::morpho
+
+} // end of namespace mln
+
+#endif // ! MLN_MORPHO_TREE_PROPAGATE_REPRESENTATIVE_HH

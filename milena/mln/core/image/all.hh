@@ -63,7 +63,6 @@
 # include <mln/core/image/image3d.hh>
 # include <mln/core/image/sparse_encode.hh>
 # include <mln/core/image/sparse_image.hh>
-# include <mln/core/image/t_image.hh>
 # include <mln/core/image/tr_mesh.hh>
 # include <mln/core/image/vertex_image.hh>
 

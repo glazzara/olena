@@ -1,5 +1,60 @@
 2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Small fixes.
+
+	* doc/Doxyfile.in: Enable JAVADOC_AUTOBRIEF.
+
+	* doc/groups/images.hh: create a new modules for morphers.
+
+	* tests/unit_test/unit-tests.mk,
+	* headers.mk: update auto-generated lists.
+
+	* mln/convert/from_to.hxx,
+	* mln/value/label.hh: add from_to overload for conversion from
+	label<n> to bool.
+
+	* mln/core/image/bgraph_image.hh,
+	* mln/core/image/complex_image.hh,
+	* mln/core/image/edge_image.hh,
+	* mln/core/image/flat_image.hh,
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image3d.hh,
+	* mln/io/pbm/all.hh,
+	* mln/pw/image.hh: update doc.
+
+	* mln/core/macros.hh: fix mln_box macro.
+
+	* mln/labeling/colorize.hh: do not call next() member on label type.
+
+	* mln/make/relabelfun.hh: image value type does not need to be a
+	label type anymore.
+
+	* mln/subsampling/subsampling.hh: fix invalid use of mln_coord.
+
+	* mln/tag/init.hh: cleanup.
+
+	* mln/util/array.hh: fix infinite recursion.
+
+	* mln/util/eat.hh,
+	* mln/util/ignore.hh,
+	* mln/util/nil.hh,
+	* mln/util/tracked_ptr.hh,
+	* mln/util/yes.hh: Add these objects in util module.
+
+	* apps/statues/trimesh/misc.hh: avoid warnings.
+
+	* mln/core/image/all.hh: fix includes.
+
+	* mln/core/site_set/p_transformed.hh: rename transform routine to
+	ptransform (name conflict with a namespace).
+
+	* mln/morpho/tree/propagate_representative.hh: add missing includes.
+
+	* tests/transformation/rotate.cc: fix reference image.
+
+2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add world::binary_2d::enlarge.
 
 	* mln/world/binary_2d/enlarge.hh: new routine.

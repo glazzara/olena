@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_TAG_INIT_HH
 # define MLN_TAG_INIT_HH
 
-/*! \file mln/tag/init.hh
- *
- * \brief Definition of tags used in the mln::init mechanism.
- */
+/// \file mln/tag/init.hh
+///
+/// Definition of tags used in the mln::init mechanism.
 
 
 namespace mln
@@ -40,28 +40,29 @@ namespace mln
   namespace tag
   {
 
-    struct image_t     {};
-    struct domain_t    {};
+
     struct bbox_t      {};
     struct border_t    {};
+    struct domain_t    {};
     struct extension_t {};
     struct function_t  {};
+    struct image_t     {};
 
-    extern const image_t&     image;
-    extern const domain_t&    domain;
-    extern const bbox_t&      bbox;
-    extern const border_t&    border;
-    extern const extension_t& extension;
-    extern const function_t&  function;
+    extern bbox_t      bbox;
+    extern border_t    border;
+    extern domain_t    domain;
+    extern extension_t extension;
+    extern function_t  function;
+    extern image_t     image;
 
 # ifndef MLN_INCLUDE_ONLY
 
-    const image_t&     image     = image_t();
-    const domain_t&    domain    = domain_t();
-    const bbox_t&      bbox      = bbox_t();
-    const border_t&    border    = border_t();
-    const extension_t& extension = extension_t();
-    const function_t&  function  = function_t();
+    bbox_t      bbox;
+    border_t    border;
+    domain_t    domain;
+    extension_t extension;
+    function_t  function;
+    image_t     image;
 
 # endif // !MLN_INCLUDE_ONLY
 

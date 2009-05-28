@@ -32,8 +32,6 @@
 /// \file mln/util/tracked_ptr.hh
 ///
 /// Definition of a smart pointer for shared data with tracking.
-///
-/// \todo Split defs from decls.
 
 # include <set>
 # include <iostream>
@@ -48,6 +46,10 @@ namespace mln
   namespace util
   {
 
+    /// Smart pointer for shared data with tracking.
+    ///
+    /// \ingroup modutil
+    //
     template <typename T>
     struct tracked_ptr
     {
@@ -73,14 +75,13 @@ namespace mln
       /// \invariant Pointer proxy exists.
       T* operator->();
 
-      /// Ctor.
+      /// Constructors.
+      /// @{
       tracked_ptr();
-
-      /// Ctor.
       tracked_ptr(T* ptr);
-
-      /// Cpy ctor.
+      /// Copy constructor.
       tracked_ptr(const tracked_ptr<T>& rhs);
+      /// @}
 
       /// Assignment.
       tracked_ptr<T>& operator=(const tracked_ptr<T>& rhs);
@@ -88,7 +89,7 @@ namespace mln
       /// Assignment.
       tracked_ptr<T>& operator=(T* ptr);
 
-      /// Dtor.
+      /// Destructor.
       ~tracked_ptr();
 
       bool run_() const;
@@ -111,7 +112,6 @@ namespace mln
     }
 
     template <typename T>
-    /// Negation (for arithmetical tests).
     inline
     bool tracked_ptr<T>::operator !() const
     {
@@ -120,9 +120,6 @@ namespace mln
     }
 
     template <typename T>
-    /// Mimics the behavior of op-> for a pointer in the const case.
-    ///
-    /// \invariant Pointer proxy exists.
     inline
     const T* tracked_ptr<T>::operator->() const
     {
@@ -132,9 +129,6 @@ namespace mln
     }
 
     template <typename T>
-    /// \brief Mimics the behavior of op-> for a pointer in the mutable case.
-    ///
-    /// \invariant Pointer proxy exists.
     inline
     T* tracked_ptr<T>::operator->()
     {
@@ -144,7 +138,6 @@ namespace mln
     }
 
     template <typename T>
-    /// Ctor.
     inline
     tracked_ptr<T>::tracked_ptr() :
       ptr_(0),
@@ -154,7 +147,6 @@ namespace mln
     }
 
     template <typename T>
-    /// Ctor.
     inline
     tracked_ptr<T>::tracked_ptr(T* ptr) :
       ptr_(ptr)
@@ -172,7 +164,6 @@ namespace mln
     }
 
     template <typename T>
-    /// Cpy ctor.
     inline
     tracked_ptr<T>::tracked_ptr(const tracked_ptr<T>& rhs) :
       ptr_(rhs.ptr_),
@@ -185,7 +176,6 @@ namespace mln
     }
 
     template <typename T>
-    /// Assignment.
     inline
     tracked_ptr<T>& tracked_ptr<T>::operator=(const tracked_ptr<T>& rhs)
     {
@@ -204,7 +194,6 @@ namespace mln
     }
 
     template <typename T>
-    /// Assignment.
     inline
     tracked_ptr<T>& tracked_ptr<T>::operator=(T* ptr)
     {
@@ -226,7 +215,6 @@ namespace mln
       return *this;
     }
 
-    /// Dtor.
     template <typename T>
     inline
     tracked_ptr<T>::~tracked_ptr()

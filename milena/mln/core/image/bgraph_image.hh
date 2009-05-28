@@ -93,6 +93,9 @@ namespace mln
   } // end of namespace mln::trait
 
   /// Kind of image based on a boost graph structure.
+  ///
+  /// \ingroup modimageconcrete
+  //
   template <typename P, typename V>
   struct bgraph_image :
     public internal::image_primary< V, p_bgraph<P>, bgraph_image<P, V> >

@@ -120,13 +120,14 @@ namespace mln
 
 
 
-  /// \brief Basic 3D image class.
+  /// Basic 3D image class.
   ///
   /// The parameter \c T is the type of pixel values.  This image class
   /// stores data in memory and has a virtual border with constant
   /// thickness around data.
   ///
   /// \ingroup modimageconcrete
+  //
   template <typename T>
   struct image3d : public internal::image_primary< T, box3d, image3d<T> >
   {

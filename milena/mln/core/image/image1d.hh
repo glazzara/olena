@@ -145,13 +145,14 @@ namespace mln
 
 
 
-  /// \brief Basic 1D image class.
+  /// Basic 1D image class.
   ///
   /// The parameter \c T is the type of pixel values.  This image class
   /// stores data in memory and has a virtual border with constant
   /// thickness before and after data.
   ///
   /// \ingroup modimageconcrete
+  //
   template <typename T>
   struct image1d :
     public internal::image_primary< T, box1d, image1d<T> >

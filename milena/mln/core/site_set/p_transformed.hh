@@ -64,10 +64,12 @@ namespace mln
   ///
   /// \param[in] s A site set.
   /// \param[in] f A function from site to site.
+  ///
   /// \return The transformed site set.
+  //
   template <typename S, typename F>
   p_transformed<S, F>
-  transform(const Site_Set<S>& s, const Function_v2v<F>& f);
+  ptransform(const Site_Set<S>& s, const Function_v2v<F>& f);
 
 
 
@@ -77,6 +79,7 @@ namespace mln
   ///
   /// Parameter \c S is a site set type; parameter F is a function
   /// from site to site.
+  //
   template <typename S, typename F>
   class p_transformed
     : public internal::site_set_base_< mln_psite(S), p_transformed<S,F> >,
@@ -114,7 +117,7 @@ namespace mln
     bool is_valid() const;
 
 
-    /// Test if \p p belongs to the subset. 
+    /// Test if \p p belongs to the subset.
     bool has(const psite& p) const;
 
 
@@ -141,7 +144,7 @@ namespace mln
   template <typename S, typename F>
   inline
   p_transformed<S, F>
-  transform(const Site_Set<S>& s, const Function_v2v<F>& f)
+  ptransform(const Site_Set<S>& s, const Function_v2v<F>& f)
   {
     mlc_equal(mln_result(F), mln_psite(S))::check();
     p_transformed<S, F> tmp(exact(s), exact(f));
@@ -156,7 +159,7 @@ namespace mln
   p_transformed<S,F>::p_transformed()
   {
   }
-  
+
   template <typename S, typename F>
   inline
   p_transformed<S,F>::p_transformed(const S& s, const F& f)

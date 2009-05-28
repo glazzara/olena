@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_UTIL_NIL_HH
 # define MLN_UTIL_NIL_HH
 
-/*! \file mln/util/nil.hh
- *
- * \brief Definition of an "niler" object.
- */
+/// \file mln/util/nil.hh
+///
+/// Definition of an "niler" object.
 
 # include <mln/core/concept/object.hh>
 
@@ -42,9 +42,10 @@ namespace mln
   namespace util
   {
 
-    /*! \brief Nil structure.
-     *
-     */
+    /// \brief Nil structure.
+    ///
+    /// \ingroup modutil
+    //
     struct nil : public Object< nil >
     {
       nil();

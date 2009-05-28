@@ -12,6 +12,13 @@
  * \ingroup modimage
  */
 
+/*! \defgroup modimagemorpher Image morphers
+ *
+ * \brief Morpher on both image values and domain.
+ *
+ * \ingroup modimage
+ */
+
 /*! \defgroup modimagevaluemorpher Values morphers
  *
  * \brief Morpher on image values.

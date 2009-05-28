@@ -121,6 +121,7 @@ namespace mln
   /// \brief Image based on graph edges.
   ///
   /// \ingroup modimageconcrete
+  //
   template <typename P, typename V, typename G = util::graph>
   class edge_image
     : public pw::internal::image_base<fun::i2v::array<V>,

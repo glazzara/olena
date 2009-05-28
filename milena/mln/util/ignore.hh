@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_UTIL_IGNORE_HH
 # define MLN_UTIL_IGNORE_HH
 
-/*! \file mln/util/ignore.hh
- *
- * \brief Definition of an "ignorer" object.
- */
+/// \file mln/util/ignore.hh
+///
+/// Definition of an "ignorer" object.
 
 # include <mln/core/concept/object.hh>
 
@@ -42,9 +42,10 @@ namespace mln
   namespace util
   {
 
-    /*! \brief Ignore structure.
-     *
-     */
+    /// Ignore structure.
+    ///
+    /// \ingroup modutil
+    //
     struct ignore : public Object< ignore >
     {
       ignore();
@@ -52,6 +53,7 @@ namespace mln
       template <typename T>
       operator T() const;
     };
+
 
 # ifndef MLN_INCLUDE_ONLY
 
