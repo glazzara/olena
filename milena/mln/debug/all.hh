@@ -57,5 +57,6 @@ namespace mln
 # include <mln/debug/put_word.hh>
 # include <mln/debug/quiet.hh>
 # include <mln/debug/slices_2d.hh>
+# include <mln/debug/superpose.hh>
 
 #endif // ! MLN_DEBUG_ALL_HH
