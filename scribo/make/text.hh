@@ -79,6 +79,20 @@ namespace scribo
 	 V& nbboxes);
 
 
+    /// Construct a new util::text from another one.
+    ///
+    /// \param[in] text	A text structure.
+    /// \param[in] f_ A function v2v or v2b. It will be used to regroup text
+    ///		      components.
+    ///
+    /// \return a new util::text.
+    //
+    template <typename L, typename F>
+    scribo::util::text<L>
+    text(const scribo::util::text<L>& text,
+	 const Function<F>& f_);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename L>
@@ -123,9 +137,7 @@ namespace scribo
       return make::text(cboxes, lbl, nbboxes);
     }
 
-    //FIXME: we want the following routine to construct a new util::text
-    // from another one and a relabeling function. It avoids recomputing
-    // the whole underlying data (mass centers, bboxes...)
+
     template <typename L, typename F>
     scribo::util::text<L>
     text(const scribo::util::text<L>& text,
@@ -139,6 +151,7 @@ namespace scribo
       mln_value(L) new_nbboxes;
       mln::fun::i2v::array<mln_value(L)> fv2v
 	= mln::make::relabelfun(f, text.nbboxes(), new_nbboxes);
+
       L lbl = labeling::relabel(text.label_image(), text.nbboxes(), fv2v);
 
       mln::util::array< accu::bbox<mln_site(L)> > tboxes(new_nbboxes.next());

@@ -1,5 +1,26 @@
 2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Small fixes in Scribo.
+
+	* preprocessing/all.hh,
+	* all.hh: fix includes.
+
+	* binarization/simple.hh: fix documentation and warnings.
+
+	* make/text.hh: add routine signature.
+
+	* preprocessing/unskew.hh: remove useless debug.
+
+	* scribo.mk: update path to milena directory.
+
+	* tests/preprocessing/unskew.cc: new test for unskew routine.
+
+	* tests/unit_test/unit-tests.mk: update unit test list.
+
+	* text/clean.hh: enlarge the image before cleaning it up.
+
+2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Update samples in Scribo.
 
 	* src/Makefile.am,

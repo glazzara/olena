@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,14 +39,14 @@ namespace scribo
 
 } // end of namespace scribo
 
-# include <scribo/draw/all.hh>
-# include <scribo/table/all.hh>
-# include <scribo/util/all.hh>
-# include <scribo/filter/all.hh>
-# include <scribo/make/all.hh>
-# include <scribo/text/all.hh>
 # include <scribo/core/all.hh>
 # include <scribo/debug/all.hh>
-# include <scribo/deskew/all.hh>
+# include <scribo/draw/all.hh>
+# include <scribo/filter/all.hh>
+# include <scribo/make/all.hh>
+# include <scribo/preprocessing/all.hh>
+# include <scribo/table/all.hh>
+# include <scribo/text/all.hh>
+# include <scribo/util/all.hh>
 
 #endif // ! SCRIBO_ALL_HH

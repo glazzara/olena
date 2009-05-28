@@ -34,14 +34,28 @@
 /// Improve the quality of a text area.
 
 # include <mln/core/concept/weighted_window.hh>
+# include <mln/core/routine/extend.hh>
+
 # include <mln/morpho/skeleton_constrained.hh>
+
 # include <mln/topo/skeleton/is_simple_point.hh>
 # include <mln/topo/skeleton/crest.hh>
 
 # include <mln/logical/not.hh>
 
-//# include <mln/debug/filename.hh>
-//# include <mln/io/pbm/save.hh>
+# include <mln/world/binary_2d/enlarge.hh>
+
+# include <mln/debug/filename.hh>
+# include <mln/io/pbm/save.hh>
+
+#include <mln/labeling/wrap.hh>
+#include <mln/win/octagon2d.hh>
+
+#include <mln/arith/revert.hh>
+
+
+#include <mln/linear/gaussian.hh>
+#include <mln/value/int_u8.hh>
 
 namespace scribo
 {
@@ -57,7 +71,7 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-//    static int plop = 0;
+    static int plop = 0;
 
     template <typename I, typename W>
     mln_concrete(I)
@@ -72,30 +86,41 @@ namespace scribo
       mln_precondition(input.is_valid());
       mln_precondition(dmap_win.is_valid());
 
+      I input_large = world::binary_2d::enlarge(input, 2);
+
+//     image2d<bool> blur = linear::gaussian(input_large, 2);
+//     image2d<value::int_u8> blur = linear::gaussian(level::convert(value::int_u8(), input_large), 2);
+//     image2d<bool> blur = level::transform(linear::gaussian(level::convert(value::int_u8(), input_large), 2), fun::v2b::threshold<value::int_u8>(100));
+
       mln_ch_value(I,unsigned)
-        dmap = transform::distance_front(logical::not_(input), c8(),
+        dmap = transform::distance_front(logical::not_(input_large), c8(),
                                          dmap_win,
                                          mln_max(unsigned));
+//      io::pgm::save(labeling::wrap(dmap), mln::debug::filename("dmap.pgm"));
 
-      I constraint = topo::skeleton::crest(input, dmap, c8());
+//      I skeleton = topo::skeleton::crest(input_large, dmap, c8());
+      I constraint = topo::skeleton::crest(input_large, dmap, c8());
       mln_postcondition(constraint.is_valid());
 
-      I skeleton =
-        morpho::skeleton_constrained(input, c8(),
-                                     topo::skeleton::is_simple_point<I,neighb2d>,
-                                     extend(constraint, false), dmap);
+//      io::pgm::save(labeling::wrap(constraint), mln::debug::filename("constraint.pgm"));
 
-      win::rectangle2d disk(3,3);
+      I skeleton =
+        morpho::skeleton_constrained(input_large, c8(),
+                                     topo::skeleton::is_simple_point<I,neighb2d>,
+                                     extend(constraint, false), arith::revert(dmap));
+
+      win::octagon2d disk(7);
       I output = morpho::dilation(skeleton, disk);
 
-//      if (plop < 10)
-//      {
+//      if (plop > 20 && plop < 50)
+      {
 //        io::pbm::save(input, mln::debug::filename("input.pbm"));
+//        io::pbm::save(input_large, mln::debug::filename("input_large_4x.pbm"));
 //        io::pbm::save(skeleton, mln::debug::filename("skeleton.pbm"));
 //        io::pbm::save(output, mln::debug::filename("dil_skel.pbm"));
-//        ++plop;
-//      }
+      }
 
+      ++plop;
       trace::exiting("scribo::text::clean");
       return output;
     }

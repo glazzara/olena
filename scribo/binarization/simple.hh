@@ -72,21 +72,13 @@ namespace scribo
     /// Simple binarization of a gray-level document.
     /*!
      *
-     * \param[in] input_ A binary image.
-     * \param[in] nbh_ The neighborhood used for labeling image components.
-     * \param[out] nlines The number of lines found.
-     * \param[in] vwin Window used to extract the vertical lines in a morphological
-     *		       opening
-     * \param[in] hwin Window used to extract the horizontal lines in a morphological
-     *		       opening
+     * \param[in] input_ A gray-level image.
      *
-     * \return pair of array of bounding boxes. The first array holds the
-     *		vertical lines bounding boxes and the second one the
-     *		horizontal lines bounding boxes.
+     * \result A Boolean image.
      */
     template <typename I>
     mln_ch_value(I, bool)
-    simple(const Image<I>& input);
+    simple(const Image<I>& input_);
 
 
 
@@ -114,7 +106,7 @@ namespace scribo
 
 	unsigned nbasins;
 	mln_ch_value(I, unsigned) w = morpho::watershed::flooding(g, c4(), nbasins);
-	h = histo::compute(input | (pw::value(w) == pw::cst(0)));
+	h = histo::compute(input | (pw::value(w) == pw::cst(0u)));
       }
 
 
@@ -128,13 +120,13 @@ namespace scribo
 	convert::from_to(h, h_);
 	hs_ = linear::gaussian_1d(h_, sigma, 0);
 	l = labeling::regional_minima(hs_, c2(), n);
-	
-	if (n < 3)
+
+	if (n < 3u)
 	  {
 	    std::cerr << "This method has not worked properly!" << std::endl;
 
 	    debug::histo(h, "tmp_h.txt");
-	    
+
 	    std::ofstream file("tmp_hs.txt");
 	    mln_piter(box1d) p(h_.domain());
 	    for_all(p)
@@ -149,7 +141,7 @@ namespace scribo
 	c[0] = point1d(0); // Force a neutral value for the non-label value (0).
       }
 
-      int threshold;
+      unsigned threshold;
 
       {
 	std::vector<int> v;

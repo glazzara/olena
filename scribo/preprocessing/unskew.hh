@@ -80,7 +80,6 @@ namespace scribo
 
       point2d max_p = accu::compute(accu::max_site<image2d<float> >(), hough_ima);
 
-      std::cout << max_p.col() << std::endl;
       double angle = 0;
       int max_angle = max_p.col();
 
