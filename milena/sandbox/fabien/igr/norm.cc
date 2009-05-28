@@ -1,7 +1,7 @@
 #include <iostream>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
-#include <mln/core/image/slice_image.hh>
+#include <mln/core/image/dmorph/slice_image.hh>
 
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/alias/window2d.hh>

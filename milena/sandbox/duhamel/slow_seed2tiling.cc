@@ -32,7 +32,7 @@
 
 
 # include <mln/core/image/image2d.hh>
-# include <mln/core/image/sub_image.hh>
+# include <mln/core/image/dmorph/sub_image.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/data/fill.hh>
@@ -48,7 +48,7 @@
 # include <mln/make/voronoi.hh>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
 #include <mln/core/image_if_value.hh>
 
 

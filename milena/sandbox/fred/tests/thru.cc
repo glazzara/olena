@@ -1,8 +1,8 @@
 // Meta functions test
 #include <mln/fun/v2v/convert.hh>
 #include <mln/fun/math/cos.hh>
-#include <mln/core/image/thru_morpher.hh>
-#include <mln/core/image/thrubin_morpher.hh>
+#include <mln/core/image/vmorph/thru_image.hh>
+#include <mln/core/image/vmorph/thrubin_image.hh>
 #include <mln/fun/compose.hh>
 
 #include <mln/core/var.hh>

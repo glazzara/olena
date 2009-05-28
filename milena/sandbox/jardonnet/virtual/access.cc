@@ -10,8 +10,8 @@
 #include <mln/border/adjust.hh>
 #include <mln/border/fill.hh>
 #include <mln/literal/all.hh>
-#include <mln/core/image/interpolated.hh>
-#include <mln/core/image/tr_image.hh>
+#include <mln/core/image/imorph/interpolated.hh>
+#include <mln/core/image/imorph/tr_image.hh>
 #include <mln/core/var.hh>
 #include <mln/data/fill.hh>
 

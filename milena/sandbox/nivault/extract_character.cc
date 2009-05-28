@@ -64,7 +64,7 @@
 # include <mln/level/stretch.hh>
 
 # include <mln/core/image_if_value.hh>
-# include <mln/core/image/sub_image.hh>
+# include <mln/core/image/dmorph/sub_image.hh>
 # include <mln/data/paste.hh>
 # include <mln/literal/all.hh>
 # include <mln/value/rgb8.hh>

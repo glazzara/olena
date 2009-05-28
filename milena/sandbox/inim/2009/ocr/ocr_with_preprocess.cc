@@ -31,7 +31,7 @@
 #include <mln/core/alias/window2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 
-#include <mln/core/image/cast_image.hh>
+#include <mln/core/image/vmorph/cast_image.hh>
 
 #include <mln/value/int_u8.hh>
 
@@ -142,6 +142,9 @@ int main(int argc, char** argv)
   image2d<bool> K = crest(big, blur, c8());
   OCR_TEST(K);
   io::pbm::save(K, std::string(argv[2]) + "_6_K.pbm");
+
+  io::pgm::save(blur, std::string(argv[2]) + "_6_blur_revert.pgm");
+  io::pgm::save(arith::revert(blur), std::string(argv[2]) + "_6_blur_revert.pgm");
 
   image2d<bool> skel_on_gaussian = skeleton_with_constraint(big, 8, K, arith::revert(blur));
   OCR_TEST(skel_on_gaussian);

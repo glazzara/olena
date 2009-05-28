@@ -1,4 +1,4 @@
-CXXFLAGS=-I../../.. -I${HOME}/local/include
+CXXFLAGS=-I../../../.. -I${HOME}/local/include
 LFLAGS=-L${HOME}/local/lib -ltesseract_full -lpthread
 
 all: ocr_without_preprocess ocr_with_preprocess

@@ -26,11 +26,11 @@
 # include <mln/literal/white.hh>
 # include <mln/literal/colors.hh>
 
-# include <mln/core/image/slice_image.hh>
+# include <mln/core/image/dmorph/slice_image.hh>
 # include <mln/util/timer.hh>
 
-#include <mln/core/image/tr_image.hh>
-#include <mln/core/image/extension_fun.hh>
+#include <mln/core/image/imorph/tr_image.hh>
+#include <mln/core/image/dmorph/extension_fun.hh>
 
 #include <mln/accu/histo.hh>
 #include <mln/accu/sum.hh>

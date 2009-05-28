@@ -32,7 +32,7 @@
 
 #include "tiled_image2d.hh"
 
-#include <mln/core/image/cast_image.hh>
+#include <mln/core/image/vmorph/cast_image.hh>
 
 #include <mln/data/fill.hh>
 #include <mln/value/int_u8.hh>

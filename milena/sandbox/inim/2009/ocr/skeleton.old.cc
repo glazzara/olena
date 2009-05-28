@@ -3,7 +3,7 @@
 #include "skeleton.hh"
 #include <mln/data/paste.hh>
 #include <mln/data/fill.hh>
-#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/pbm/save.hh>
 #include <mln/io/pbm/load.hh>

@@ -5,8 +5,8 @@
 #include <sstream>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
-#include <mln/core/image/image_if.hh>
-#include <mln/core/image/slice_image.hh>
+#include <mln/core/image/dmorph/image_if.hh>
+#include <mln/core/image/dmorph/slice_image.hh>
 #include <mln/core/routine/duplicate.hh>
 
 #include <mln/geom/bbox.hh>

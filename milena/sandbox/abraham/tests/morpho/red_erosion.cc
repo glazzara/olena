@@ -5,7 +5,7 @@
 #include <mln/morpho/erosion.hh>
 #include <mln/fun/meta/red.hh>
 #include <mln/value/rgb8.hh>
-#include <mln/core/image/fun_image.hh>
+#include <mln/core/image/dmorph/fun_image.hh>
 
 int main (int argc, const char * argv[])
 {

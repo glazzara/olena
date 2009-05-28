@@ -5,7 +5,7 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/convert/to_p_array.hh>
 #include <mln/norm/l2.hh>
-#include <mln/core/image/lazy_image.hh>
+#include <mln/core/image/imorph/lazy_image.hh>
 
 #include <sandbox/jardonnet/registration/registration.hh>
 #include <sandbox/jardonnet/registration/tools.hh>

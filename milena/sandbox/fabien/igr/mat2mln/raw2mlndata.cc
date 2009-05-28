@@ -7,7 +7,7 @@
 #include <mln/io/pgm/save.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/level/stretch.hh>
-#include <mln/core/image/slice_image.hh>
+#include <mln/core/image/dmorph/slice_image.hh>
 #include <mln/core/routine/duplicate.hh>
 #include <mln/core/image/image2d.hh>
 

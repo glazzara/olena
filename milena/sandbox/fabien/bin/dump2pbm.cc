@@ -1,6 +1,6 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
-#include <mln/core/image/slice_image.hh>
+#include <mln/core/image/dmorph/slice_image.hh>
 #include <mln/make/image3d.hh>
 #include <mln/debug/slices_2d.hh>
 

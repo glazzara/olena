@@ -7,9 +7,9 @@
 
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/alias/window2d.hh>
-#include <mln/core/image/image_if.hh>
-#include <mln/core/image/extension_fun.hh>
-#include <mln/core/image/tr_image.hh>
+#include <mln/core/image/dmorph/image_if.hh>
+#include <mln/core/image/dmorph/extension_fun.hh>
+#include <mln/core/image/imorph/tr_image.hh>
 #include <mln/core/var.hh>
 #include <mln/win/rectangle2d.hh>
 

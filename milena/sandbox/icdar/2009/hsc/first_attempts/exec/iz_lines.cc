@@ -3,7 +3,7 @@
 #include <mln/core/alias/point2d.hh>
 #include <mln/core/alias/dpoint2d.hh>
 
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 
 #include <mln/data/fill.hh>
 #include <mln/data/paste.hh>

@@ -1,6 +1,6 @@
 #include <mln/essential/2d.hh>
 
-#include <mln/core/image/violent_cast_image.hh>
+#include <mln/core/image/vmorph/violent_cast_image.hh>
 
 #include <mln/extract/all.hh>
 

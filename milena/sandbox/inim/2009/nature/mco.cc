@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/cast_image.hh>
+#include <mln/core/image/vmorph/cast_image.hh>
 #include <mln/value/int_u16.hh>
 #include "co_occurence.hh"
 #include <mln/core/alias/dpoint2d.hh>

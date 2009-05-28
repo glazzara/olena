@@ -44,7 +44,7 @@
 # include <tests/timer.hh>
 
 # include <mln/pw/value.hh>
-# include <mln/core/image/image_if.hh>
+# include <mln/core/image/dmorph/image_if.hh>
 
 # include "canvas/self_dual_reconstruction.hh"
 # include "reconstructions_on_function.hh"

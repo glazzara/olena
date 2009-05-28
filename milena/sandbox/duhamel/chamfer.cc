@@ -1,5 +1,5 @@
 #include <mln/core/image2d_b.hh>
-#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
 #include <mln/core/image_if_value.hh>
 
 

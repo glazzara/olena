@@ -31,7 +31,7 @@
 #include <mln/core/alias/window2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 
-#include <mln/core/image/cast_image.hh>
+#include <mln/core/image/vmorph/cast_image.hh>
 
 #include <mln/value/int_u8.hh>
 

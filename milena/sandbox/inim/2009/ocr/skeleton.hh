@@ -35,14 +35,14 @@
 # include <mln/core/var.hh>
 
 # include <mln/core/image/image2d.hh>
-# include <mln/core/image/cast_image.hh>
+# include <mln/core/image/vmorph/cast_image.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/site_set/p_queue_fast.hh>
 # include <mln/core/site_set/p_priority.hh>
 
 # include <mln/value/int_u8.hh>
 # include <mln/arith/revert.hh>
-# include <mln/transform/distance.hh>
+# include <mln/transform/distance_front.hh>
 
 # include <mln/make/w_window2d_int.hh>
 
@@ -182,7 +182,7 @@ namespace mln
 		   9, 6, 4, 6, 9,
 		   0, 9, 0, 9, 0 };
 
-    image2d<value::int_u8> dist_map_n = transform::distance(value::int_u8(), logical::not_(input), nbh, make::w_window2d_int(vals));
+    image2d<value::int_u8> dist_map_n = transform::distance_front(logical::not_(input), nbh, make::w_window2d_int(vals), mln_max(value::int_u8));
     image2d<value::int_u8> dist_map = arith::revert(dist_map_n);
 
     io::pgm::save(dist_map, "distance.pgm");

@@ -33,7 +33,7 @@
 #include <mln/literal/colors.hh>
 #include <mln/level/convert.hh>
 #include <mln/pw/all.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 
 #include <mln/fun/i2v/array.hh>
 #include <mln/level/transform.hh>

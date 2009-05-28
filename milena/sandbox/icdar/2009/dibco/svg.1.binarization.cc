@@ -8,7 +8,7 @@
 #include <mln/core/site_set/p_queue.hh>
 
 #include <mln/pw/all.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 
 #include <mln/data/fill.hh>
 

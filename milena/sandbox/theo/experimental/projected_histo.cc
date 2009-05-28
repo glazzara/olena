@@ -2,10 +2,10 @@
 
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/unproject_image.hh>
+#include <mln/core/image/dmorph/unproject_image.hh>
 #include <mln/fun/v2v/projection.hh>
 
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 #include <mln/pw/value.hh>
 
 #include <mln/accu/count.hh>

@@ -31,7 +31,7 @@
  */
 
 # include <mln/core/image2d_b.hh>
-# include <mln/core/image/sub_image.hh>
+# include <mln/core/image/dmorph/sub_image.hh>
 
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
@@ -41,7 +41,7 @@
 # include <mln/debug/println.hh>
 # include <mln/io/ppm/save.hh>
 # include <mln/core/image_if_value.hh>
-# include <mln/core/image/sub_image.hh>
+# include <mln/core/image/dmorph/sub_image.hh>
 # include <mln/core/image_if_value.hh>
 
 

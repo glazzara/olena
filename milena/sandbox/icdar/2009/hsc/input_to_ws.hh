@@ -20,7 +20,7 @@
 #include <mln/level/convert.hh>
 #include <mln/labeling/wrap.hh>
 #include <mln/pw/all.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 
 
 namespace mln

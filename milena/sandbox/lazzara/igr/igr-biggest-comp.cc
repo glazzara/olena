@@ -9,9 +9,9 @@
 
 
 #include <mln/essential/3d.hh>
-#include <mln/core/image/slice_image.hh>
-#include <mln/core/image/tr_image.hh>
-#include <mln/core/image/interpolated.hh>
+#include <mln/core/image/dmorph/slice_image.hh>
+#include <mln/core/image/imorph/tr_image.hh>
+#include <mln/core/image/imorph/interpolated.hh>
 
 #include <mln/io/cloud/load.hh>
 #include <mln/util/timer.hh>

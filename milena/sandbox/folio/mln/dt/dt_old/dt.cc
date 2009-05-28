@@ -15,8 +15,8 @@
 #include <mln/level/stretch.hh>
 #include <mln/value/int_u8.hh>
 
-#include <mln/core/image/sub_image.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 #include <mln/pw/value.hh>
 
 #include "dt.hh"

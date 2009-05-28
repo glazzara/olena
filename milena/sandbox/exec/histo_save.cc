@@ -3,7 +3,7 @@
 #include <mln/histo/compute.hh>
 #include <mln/debug/histo.hh>
 
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 #include <mln/pw/all.hh>
 
 

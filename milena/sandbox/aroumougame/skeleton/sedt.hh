@@ -5,7 +5,7 @@
 #include <mln/math/min.hh>
 #include <mln/math/sqr.hh>
 # include <mln/value/int_u.hh>
-#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/pbm/save.hh>
 #include <mln/io/pbm/load.hh>

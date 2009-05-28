@@ -3,7 +3,7 @@
 # include <mln/core/alias/window2d.hh>
 # include <mln/convert/to_window.hh>
 
-# include <mln/core/image/image_if.hh>
+# include <mln/core/image/dmorph/image_if.hh>
 # include <mln/debug/println.hh>
 
 

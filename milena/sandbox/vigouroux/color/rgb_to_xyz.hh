@@ -1,7 +1,7 @@
 #ifndef OLENA_CONVERT_RGBXYZ_HH
 # define OLENA_CONVERT_RGBXYZ_HH
 
-# include <mln/core/image/image_if.hh>
+# include <mln/core/image/dmorph/image_if.hh>
 
 # include <mln/core/alias/w_window2d_int.hh>
 # include <mln/display/show.hh>

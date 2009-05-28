@@ -19,7 +19,7 @@
 #include <mln/debug/iota.hh>
 
 #include <mln/pw/all.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 
 #include <mln/opt/at.hh>
 

@@ -3,7 +3,7 @@
 
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/alias/window2d.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 
 #include <mln/io/ppm/save.hh>
 #include <mln/io/ppm/load.hh>

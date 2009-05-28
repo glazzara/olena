@@ -3,7 +3,7 @@
 
 #include <mln/core/concept/image.hh>
 #include <mln/core/site_set/box.hh>
-#include <mln/core/image/extended.hh>
+#include <mln/core/image/dmorph/extended.hh>
 #include <mln/core/routine/duplicate.hh>
 #include <mln/core/routine/extend.hh>
 #include <mln/core/var.hh>
@@ -19,7 +19,7 @@
 #include <mln/util/array.hh>
 
 #include <mln/pw/all.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 
 
 namespace mln

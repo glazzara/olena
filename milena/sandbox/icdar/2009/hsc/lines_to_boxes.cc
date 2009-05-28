@@ -8,7 +8,7 @@
 
 #include <mln/value/label_8.hh>
 #include <mln/estim/min_max.hh>
-#include <mln/core/image/violent_cast_image.hh>
+#include <mln/core/image/vmorph/violent_cast_image.hh>
 #include <mln/core/var.hh>
 
 #include <scribo/draw/bounding_boxes.hh>

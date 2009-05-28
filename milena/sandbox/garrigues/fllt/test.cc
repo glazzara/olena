@@ -4,7 +4,7 @@
 # include "compute_level_set_fast2.hh"
 
 # include <mln/core/image/image2d.hh>
-# include <mln/core/image/cast_image.hh>
+# include <mln/core/image/vmorph/cast_image.hh>
 # include <mln/core/routine/duplicate.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/debug/println.hh>

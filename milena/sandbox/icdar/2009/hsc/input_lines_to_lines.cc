@@ -8,7 +8,7 @@
 #include <mln/io/pgm/all.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/pw/all.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 #include <mln/data/fill.hh>
 #include "label_maj.hh"
 #include "clean_lines.hh"

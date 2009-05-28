@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +31,7 @@
 # include <mln/fun/v2w_w2v/norm.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/data/fill.hh>
-# include <mln/core/image/violent_cast_image.hh>
+# include <mln/core/image/vmorph/violent_cast_image.hh>
 
 
 int main ()

@@ -46,7 +46,7 @@
 #include <mln/io/pgm/save.hh>
 
 
-#include <mln/core/image/cast_image.hh>
+#include <mln/core/image/vmorph/cast_image.hh>
 
 namespace mln
 {

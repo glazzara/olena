@@ -1,6 +1,6 @@
 #include <mln/fun/meta/red.hh>
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/fun_image.hh>
+#include <mln/core/image/dmorph/fun_image.hh>
 
 namespace mln
 {

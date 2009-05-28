@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -161,8 +162,8 @@ namespace mln
 #include <mln/level/stretch.hh>
 #include <mln/value/int_u8.hh>
 
-#include <mln/core/image/sub_image.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 #include <mln/pw/value.hh>
 
 int main()

@@ -1,6 +1,6 @@
 #include "filetype.hh"
 
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 #include <mln/data/fill.hh>
 #include <mln/pw/all.hh>
 

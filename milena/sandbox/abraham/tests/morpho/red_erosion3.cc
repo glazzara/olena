@@ -6,8 +6,8 @@
 #include <mln/fun/meta/red.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/value/mixin.hh>
-#include <mln/core/image/fun_image.hh>
-#include <mln/core/image/violent_cast_image.hh>
+#include <mln/core/image/dmorph/fun_image.hh>
+#include <mln/core/image/vmorph/violent_cast_image.hh>
 
 namespace mln
 {

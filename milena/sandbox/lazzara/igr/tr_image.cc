@@ -3,10 +3,10 @@
 #include <mln/fun/x2x/composed.hh>
 #include <mln/fun/x2x/rotation.hh>
 #include <mln/fun/x2x/translation.hh>
-#include <mln/core/image/interpolated.hh>
+#include <mln/core/image/imorph/interpolated.hh>
 #include <mln/fun/x2v/trilinear.hh>
 #include <mln/fun/x2v/bilinear.hh>
-#include <mln/core/image/tr_image.hh>
+#include <mln/core/image/imorph/tr_image.hh>
 
 #include <mln/io/cloud/save.hh>
 #include <mln/debug/slices_2d.hh>

@@ -40,7 +40,7 @@
 # include "center_weight.hh"
 # include "p_vertices_with_accu.hh"
 
-# include <mln/core/image/extended.hh>
+# include <mln/core/image/dmorph/extended.hh>
 
 # include <mln/canvas/browsing/depth_first_search.hh>
 

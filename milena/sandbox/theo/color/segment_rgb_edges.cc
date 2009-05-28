@@ -7,7 +7,7 @@
 
 #include <mln/value/label_8.hh>
 
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 #include <mln/core/routine/extend.hh>
 #include <mln/core/routine/duplicate.hh>
 #include <mln/data/paste.hh>

@@ -30,7 +30,7 @@
 #include <sstream>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/dmorph/sub_image.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
 #include <mln/core/routine/duplicate.hh>
@@ -47,7 +47,7 @@
 #include <mln/io/pgm/save.hh>
 
 
-#include <mln/core/image/cast_image.hh>
+#include <mln/core/image/vmorph/cast_image.hh>
 
 namespace mln
 {

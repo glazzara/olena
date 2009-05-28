@@ -7,7 +7,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/label.hh>
 #include <mln/labeling/pack.hh>
-#include <mln/core/image/violent_cast_image.hh>
+#include <mln/core/image/vmorph/violent_cast_image.hh>
 
 #include <mln/io/pgm/save.hh>
 
