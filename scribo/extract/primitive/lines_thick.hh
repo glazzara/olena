@@ -38,17 +38,12 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/core/site_set/box.hh>
 
-# include <mln/morpho/erosion.hh>
+# include <mln/morpho/opening/structural.hh>
 
-# include <mln/accu/bbox.hh>
-
-# include <mln/util/array.hh>
-# include <mln/util/couple.hh>
-
+# include <scribo/core/object_image.hh>
 # include <scribo/core/macros.hh>
-# include <scribo/core/component_bboxes.hh>
+# include <scribo/extract/primitive/objects.hh>
 
 namespace scribo
 {
@@ -71,20 +66,11 @@ namespace scribo
        *				  components.
        * \param[in,out] nlines	  Type used for labeling.
        * \param[in]     win_	  Window used to extract the lines
-       * \param[in,out] line_bboxes Line bounding boxes.
        *
        * \return An image in which lines are labeled.
        */
       template <typename I, typename N, typename V, typename W>
-      mln_ch_value(I,V)
-      lines_thick(const Image<I>& input_,
-		  const Neighborhood<N>& nbh_, V& nlines,
-		  const Window<W>& win_,
-		  util::array<box<mln_site(I)>& line_bboxes);
-
-      /// \overload
-      template <typename I, typename N, typename V, typename W>
-      mln_ch_value(I,V)
+      object_image(mln_ch_value(I,V))
       lines_thick(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_, V& nlines,
 		  const Window<W>& win_);
@@ -104,7 +90,7 @@ namespace scribo
 			  const Window<W>& win_)
 	{
 	  mlc_equal(mln_value(I),bool)::check();
-	  mlc_equal(mln_site(I)::dim, 2)::check();
+	  mlc_bool(mln_site_(I)::dim == 2)::check();
 	  mlc_is_a(V, mln::value::Symbolic)::check();
 
 	  mln_precondition(exact(input).is_valid());
@@ -120,7 +106,7 @@ namespace scribo
 
       template <typename I, typename N, typename V, typename W>
       inline
-      mln_ch_value(I,V)
+      object_image(mln_ch_value(I,V))
       lines_thick(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_, V& nlines,
 		  const Window<W>& win_)
@@ -134,38 +120,13 @@ namespace scribo
 	const W& win = exact(win_);
 
 	mln_ch_value(I,bool) filter = morpho::opening::structural(input, win);
-	mln_ch_value(I,V) output = labeling::blobs(filter, nbh, nlines);
+	object_image(mln_ch_value(I,V)) output
+	  = extract::primitive::objects(filter, nbh, nlines);
 
 	trace::exiting("scribo::primitive::lines_thick");
 	return output;
       }
 
-
-
-      template <typename I, typename N, typename V, typename W>
-      inline
-      mln_ch_value(I,V)
-      lines_thick(const Image<I>& input_,
-		  const Neighborhood<N>& nbh_, V& nlines,
-		  const Window<W>& win_,
-		  util::array<box<mln_site(I)>& line_bboxes)
-      {
-	trace::entering("scribo::primitive::lines_thick");
-
-	internal::lines_thick_tests(input_, nbh_, nlines, win_);
-
-	const I& input = exact(input_);
-	const N& nbh = exact(nbh_);
-	const W& win = exact(win_);
-
-	mln_ch_value(I,V) output = lines_thick(input, nbh, nlines, win);
-
-	line_bboxes = labeling::compute(accu::meta::bbox(), output, nlines);
-	mln_postcondition(line_bboxes.nelements() == nlines.next());
-
-	trace::exiting("scribo::primitive::lines_thick");
-	return output;
-      }
 
 # endif // !MLN_INCLUDE_ONLY
 

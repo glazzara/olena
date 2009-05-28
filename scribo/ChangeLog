@@ -1,3 +1,35 @@
+2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Make use of labeled_image type in Scribo.
+  
+	* text/extract_bboxes.hh,
+	* core/component_bboxes.hh: useless so removed.
+
+	* core/object_image.hh: new. Define a macro wrapping labeled_image
+	type.
+
+	* table/extract_lines_with_opening.hh: removed. Replaced by
+	lines_*_thick.
+
+	* table/extract_lines_with_rank.hh: removed. Replaced by
+	lines_*_discontinued.
+
+	* extract/primitive/lines_discontinued.hh,
+	* extract/primitive/lines_h_discontinued.hh,
+	* extract/primitive/lines_h_thick.hh,
+	* extract/primitive/lines_thick.hh,
+	* extract/primitive/lines_v_discontinued.hh,
+	* extract/primitive/lines_v_thick.hh,
+	* extract/primitive/objects.hh,
+	* table/extract.hh,
+	* text/grouping/group_from_double_link.hh,
+	* text/grouping/group_from_graph.hh,
+	* text/grouping/group_with_several_left_links.hh,
+	* text/grouping/group_with_several_right_links.hh,
+	* text/grouping/internal/find_left_link.hh,
+	* text/grouping/internal/find_right_link.hh,
+	* text/recognition.hh: make use of labeled_image type.
+
 2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add the list of SCRIBO's unit tests.

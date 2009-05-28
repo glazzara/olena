@@ -59,14 +59,14 @@ namespace scribo
 
 	/// Find the left neighbor of a line of text if exists.
 	///
-	/// \param text The lines of text.
+	/// \param objects An image of objects.
 	/// \param left_link The left neighbors.
 	/// \param current_comp A text line id.
 	/// \param dmax The maximum lookup distance.
 	/// \param c The lookup start point.
 	template <typename L>
 	void
-	find_left_link(const scribo::util::text<L>& text,
+	find_left_link(const object_image(L)& objects,
 		       mln::util::array<unsigned>& left_link,
 		       unsigned current_comp,
 		       int dmax,
@@ -76,7 +76,7 @@ namespace scribo
 
 	template <typename L>
 	void
-	find_left_link(const scribo::util::text<L>& text,
+	find_left_link(const object_image(L)& objects,
 		       mln::util::array<unsigned>& left_link,
 		       unsigned current_comp,
 		       int dmax,
@@ -86,16 +86,14 @@ namespace scribo
 	  /// First site on the right of the central site
 	  mln_site(L) p = c + left;
 
-	  const L& lbl = text.label_image();
-
-	  while (lbl.domain().has(p) // Not outside image domain
-		&& (lbl(p) == literal::zero // Is the background
-		  || lbl(p) == current_comp // Is the current component
-		  || left_link[lbl(p)] == current_comp) // Creates a loop
+	  while (objects.domain().has(p) // Not outside image domain
+		&& (objects(p) == literal::zero // Is the background
+		  || objects(p) == current_comp // Is the current component
+		  || left_link[objects(p)] == current_comp) // Creates a loop
 	      && math::abs(p.col() - c.col()) < dmax) // Not to far
 	    --p.col();
 
-	  update_link_array(lbl, left_link, p, c, current_comp, dmax);
+	  update_link_array(objects, left_link, p, c, current_comp, dmax);
 	}
 
 # endif // MLN_INCLUDE_ONLY

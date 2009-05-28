@@ -86,7 +86,7 @@ namespace scribo
     /// \return An image of characters.
     template <typename L>
     mln_ch_value(L,char)
-    recognition(const scribo::util::text<L>& text,
+    recognition(const object_image(L)& objects,
 		const char *language);
 
 
@@ -96,17 +96,17 @@ namespace scribo
 
     template <typename L>
     mln_ch_value(L,char)
-    recognition(const scribo::util::text<L>& text,
+    recognition(const object_image(L)& objects,
 		const char *language)
     {
       trace::entering("scribo::text::recognition");
 
-      mln_precondition(text.is_valid());
+      mln_precondition(objects.is_valid());
 
       // Initialize Tesseract.
       TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
 
-      mln_ch_value(L,char) txt(text.label_image().domain());
+      mln_ch_value(L,char) txt(objects.domain());
       data::fill(txt, ' ');
 
       typedef mln_ch_value(L,bool) I;
@@ -118,35 +118,40 @@ namespace scribo
       w_window2d_int dmap_win = mln::make::w_window2d_int(vals);
 
       /// Use text bboxes with Tesseract
-      for_all_components(i, text.bboxes())
+      for_all_ncomponents(i, objects.nlabels())
       {
-	I text_ima(text.bbox(i));
+	I text_ima(objects.bbox(i));
 	data::fill(text_ima, false);
-	data::fill((text_ima | (pw::value(text.label_image()) == pw::cst(i))).rw(),
+	data::fill((text_ima | (pw::value(objects) == pw::cst(i))).rw(),
 		   true);
 
 
 	/// Improve text quality.
+
+	/// text_ima_cleand domain is larger than text_ima's.
 	I text_ima_cleaned = text::clean(text_ima, dmap_win);
 	border::resize(text_ima_cleaned, 0); // Make sure there is no border.
 
 	// Recognize characters.
 	char* s = TessBaseAPI::TesseractRect(
 	    (unsigned char*) text_ima_cleaned.buffer(),
-	    sizeof (bool),		      // Pixel size.
-	    text_ima.ncols() * sizeof (bool), // Row_offset
-	    0,				      // Left
-	    0,				      // Top
-	    text_ima.ncols(),		      // n cols
-	    text_ima.nrows());		      // n rows
+	    sizeof (bool),			      // Pixel size.
+	    text_ima_cleaned.ncols() * sizeof (bool), // Row_offset
+	    0,					      // Left
+	    0,					      // Top
+	    text_ima_cleaned.ncols(),		      // n cols
+	    text_ima_cleaned.nrows());		      // n rows
 
 
 
-	mln_site(L) p = text.bbox(i).center();
-	p.col() -= (text.bbox(i).pmax().col()
-		      - text.bbox(i).pmin().col()) / 2;
+	mln_site(L) p = objects.bbox(i).center();
+	p.col() -= (objects.bbox(i).pmax().col()
+		      - objects.bbox(i).pmin().col()) / 2;
 	if (s != 0)
+	{
+	  std::cout << s << std::endl;
 	  mln::debug::put_word(txt, p, s);
+	}
 
 	// The string has been allocated by Tesseract. We must free it.
 	free(s);

@@ -30,7 +30,7 @@
 #ifndef SCRIBO_EXTRACT_PRIMITIVE_LINES_DISCONTINUED_HH
 # define SCRIBO_EXTRACT_PRIMITIVE_LINES_DISCONTINUED_HH
 
-/// \file scribo/primitive/lines/discontinued.hh
+/// \file scribo/primitive/lines/lines_discontinued.hh
 ///
 /// Extract discontinued lines in a binary image.
 
@@ -38,19 +38,15 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/core/site_set/box.hh>
 
 # include <mln/labeling/blobs.hh>
 
 # include <mln/morpho/rank_filter.hh>
-
-# include <mln/accu/bbox.hh>
-
-# include <mln/util/array.hh>
-# include <mln/util/couple.hh>
+# include <mln/morpho/dilation.hh>
 
 # include <scribo/core/macros.hh>
-# include <scribo/core/component_bboxes.hh>
+# include <scribo/core/object_image.hh>
+# include <scribo/extract/primitive/objects.hh>
 
 namespace scribo
 {
@@ -70,28 +66,18 @@ namespace scribo
        *
        * \param[in]     input_	  A binary image.
        * \param[in]     nbh_	  The neighborhood used for labeling image
-       *				  components.
+       *			  the lines.
        * \param[in,out] nlines	  The label type used for labeling.
        * \param[in]     win_	  A Window used to extract lines.
        * \param[in]     rank_k	  Rank used for filtering.
-       * \param[in,out] line_bboxes line bounding boxes.
        *
        * \return An image in which lines are labeled.
        */
       template <typename I, typename N, typename V, typename W>
-      mln_ch_value(I,V)
-      discontinued(const Image<I>& input_,
-		   const Neighborhood<N>& nbh_, V& nlines,
-		   const Window<W>& win_, unsigned rank_k,
-		   util::array<box<mln_site(I)> >& line_bboxes);
-
-
-      /// \overload
-      template <typename I, typename N, typename V, typename W>
-      mln_ch_value(I,V)
-      discontinued(const Image<I>& input_,
-		   const Neighborhood<N>& nbh_, V& nlines,
-		   const Window<W>& win_, unsigned rank_k);
+      object_image(mln_ch_value(I,V))
+      lines_discontinued(const Image<I>& input_,
+			 const Neighborhood<N>& nbh_, V& nlines,
+			 const Window<W>& win_, unsigned rank_k);
 
 
 
@@ -104,12 +90,12 @@ namespace scribo
 
 	template <typename I, typename N, typename V, typename W>
 	void
-	discontinued_tests(const Image<I>& input_,
-			   const Neighborhood<N>& nbh_, V& nlines,
-			   const Window<W>& win_, unsigned rank_k)
+	lines_discontinued_tests(const Image<I>& input,
+				 const Neighborhood<N>& nbh, V& nlines,
+				 const Window<W>& win, unsigned rank_k)
 	{
 	  mlc_equal(mln_value(I),bool)::check();
-	  mlc_equal(mln_site(I)::dim, 2)::check();
+	  mlc_bool(mln_site_(I)::dim == 2)::check();
 	  mlc_is_a(V, mln::value::Symbolic)::check();
 
 	  mln_precondition(exact(input).is_valid());
@@ -126,61 +112,33 @@ namespace scribo
 
       template <typename I, typename N, typename V, typename W>
       inline
-      mln_ch_value(I,V)
-      discontinued(const Image<I>& input_,
-		   const Neighborhood<N>& nbh_, V& nlines,
-		   const Window<W>& win_, unsigned rank_k)
+      object_image(mln_ch_value(I,V))
+      lines_discontinued(const Image<I>& input_,
+			 const Neighborhood<N>& nbh_, V& nlines,
+			 const Window<W>& win_, unsigned rank_k)
       {
-	trace::entering("scribo::primitive::discontinued");
+	trace::entering("scribo::primitive::lines_discontinued");
 
-	internal::discontinued_tests(input_, nbh_, nlines, win_, rank_k);
+	internal::lines_discontinued_tests(input_, nbh_, nlines, win_, rank_k);
 
 	const I& input = exact(input_);
 	const N& nbh = exact(nbh_);
 	const W& win = exact(win_);
 
-	mln_ch_value(I,bool) filter = morpho::rank_filter(input, win, vrank_k);
-	mln_ch_value(I,V) output = labeling::blobs(filter, nbh, nlines);
+	mln_ch_value(I,bool) filter
+	  = morpho::dilation(morpho::rank_filter(input, win, rank_k), W(win.length() / 2));
+	object_image(mln_ch_value(I,V)) output
+	  = extract::primitive::objects(filter, nbh, nlines);
 
-	trace::exiting("scribo::primitive::discontinued");
+	//FIXME: we would like to enlarge the component in the right direction,
+	// in order to avoid rank filter side effects (smaller components).
+
+	trace::exiting("scribo::primitive::lines_discontinued");
 	return output;
       }
 
 
-
-
-      template <typename I, typename N, typename V, typename W>
-      inline
-      mln_ch_value(I,V)
-      discontinued(const Image<I>& input_,
-		   const Neighborhood<N>& nbh_, V& nlines,
-		   const Window<W>& win_, unsigned rank_k,
-		   util::array<box<mln_site(I)> >& line_bboxes)
-      {
-	trace::entering("scribo::primitive::discontinued");
-
-	internal::discontinued_tests(input_, nbh_, nlines, win_, rank_k);
-
-	const I& input = exact(input_);
-	const N& nbh = exact(nbh_);
-	const W& win = exact(win_);
-
-	mln_ch_value(I,V)
-	  output = discontinued(input, nbh, nlines, win, rank_k);
-
-	line_bboxes = labeling::compute(accu::meta::bbox(), output, nlines);
-	mln_postcondition(line_bboxes.nelements() == nlines.next());
-	//      for_all_components(i, line_bboxes)
-	//      {
-	//	line_bboxes[i].enlarge(0, win.length() / 2);
-	//	line_bboxes[i].crop_wrt(input.domain());
-	//      }
-
-	trace::exiting("scribo::primitive::discontinued");
-	return output;
-      }
-
-# endif // !MLN_INCLUDE_ONLY
+# endif // ! MLN_INCLUDE_ONLY
 
 
     } // end of namespace scribo::extract::primitive

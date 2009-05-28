@@ -64,29 +64,34 @@ namespace scribo
       template <typename L>
       inline
       mln::util::array<unsigned>
-      group_with_several_right_links(const scribo::util::text<L>& text,
-				    unsigned neighb_max_distance);
+      group_with_several_right_links(const object_image(L)& objects,
+				     unsigned neighb_max_distance);
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename L>
       inline
       mln::util::array<unsigned>
-      group_with_several_right_links(const scribo::util::text<L>& text,
-				    unsigned neighb_max_distance)
+      group_with_several_right_links(const object_image(L)& objects,
+				     unsigned neighb_max_distance)
       {
 	trace::entering("scribo::text::grouping::group_with_several_right_links");
 
-	mln_precondition(text.is_valid());
+	mln_precondition(objects.is_valid());
 
 	mln::util::array<unsigned>
-	  link_1(text.nbboxes().next()), link_2(text.nbboxes().next()),
-	  link_3(text.nbboxes().next()), final_link(text.nbboxes().next());
+	  link_1(objects.nlabels().next()), link_2(objects.nlabels().next()),
+	  link_3(objects.nlabels().next()), final_link(objects.nlabels().next());
 	internal::init_link_array(link_1);
 	internal::init_link_array(link_2);
 	internal::init_link_array(link_3);
 
-	for_all_ncomponents(i, text.nbboxes())
+	mln::util::array<mln_result(accu::center<mln_psite(L)>)>
+	    mass_centers = labeling::compute(accu::meta::center(),
+					     objects, objects.nlabels());
+
+
+	for_all_ncomponents(i, objects.nlabels())
 	{
 	  //  -------
 	  //  |	 X------->
@@ -97,27 +102,27 @@ namespace scribo
 	  //  |	    |
 	  //  |	 X------->
 	  //  -------
-	  unsigned midcol = (text.bbox(i).pmax().col()
-				- text.bbox(i).pmin().col()) / 2;
+	  unsigned midcol = (objects.bbox(i).pmax().col()
+				- objects.bbox(i).pmin().col()) / 2;
 	  int dmax = midcol + neighb_max_distance;
 
-	  mln_site(L) c = text.bbox(i).center();
+	  mln_site(L) c = objects.bbox(i).center();
 
 	  /// Right link from the top anchor.
 	  mln_site(L) a1 = c;
-	  a1.row() = text.bbox(i).pmin().row() + (c.row() - text.bbox(i).pmin().row()) / 4;
-	  internal::find_right_link(text, link_1, i, dmax, a1);
+	  a1.row() = objects.bbox(i).pmin().row() + (c.row() - objects.bbox(i).pmin().row()) / 4;
+	  internal::find_right_link(objects, link_1, i, dmax, a1);
 
 	  /// Right link from the central site
-	  internal::find_right_link(text, link_2, i, dmax, text.mass_center(i));
+	  internal::find_right_link(objects, link_2, i, dmax, mass_centers[i]);
 
 	  /// Right link from the bottom anchor.
 	  mln_site(L) a2 = c;
-	  a2.row() = text.bbox(i).pmax().row() - (c.row() - text.bbox(i).pmin().row()) / 4;
-	  internal::find_right_link(text, link_3, i, dmax, a2);
+	  a2.row() = objects.bbox(i).pmax().row() - (c.row() - objects.bbox(i).pmin().row()) / 4;
+	  internal::find_right_link(objects, link_3, i, dmax, a2);
 	}
 
-	for_all_ncomponents(i, text.nbboxes())
+	for_all_ncomponents(i, objects.nlabels())
 	{
 	  if (link_2[i] != i)
 	    final_link[i] = link_2[i];

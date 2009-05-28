@@ -46,6 +46,7 @@
 # include <mln/fun/i2v/array.hh>
 
 # include <mln/util/array.hh>
+# include <mln/util/graph_ids.hh>
 
 # include <scribo/core/macros.hh>
 # include <scribo/util/text.hh>
@@ -83,15 +84,14 @@ namespace scribo
 	/// Functor to be passed to depth_first_search.
 	/// Map each component vertex with its representative vertex id.
 	template <typename V>
-	struct map_vertex_to_component_id_functor
+	struct map_vertex_to_representative_id_functor
 	{
 
 	  /// Initialize the functor.
 	  template <typename G>
 	  void init(const Graph<G>& g)
 	  {
-	    vertextocomp.resize(exact(g).v_nmax(), mln_max(V));
-	    ncomp = 0;
+	    vertextorep.resize(exact(g).v_nmax(), mln_max(V));
 	  }
 
 	  /// All components have been processed.
@@ -100,35 +100,40 @@ namespace scribo
 
 	  /// Starting to treat a new component.
 	  void next_component()
-	  { ++ncomp; }
+	  {}
 
 	  /// A vertex with id \p id has been found in the current
 	  /// component.
-	  void new_component_from_vertex(unsigned id)
-	  { vertextocomp(id) = ncomp; }
+	  void new_component_from_vertex(const mln::util::vertex_id_t& id)
+	  {
+	    current_ = id;
+	    vertextorep(id) = id;
+	  }
 
 	  /// A new neighbor with id \p id have been found for the
 	  /// current vertex.
-	  void added_to_queue(unsigned id)
-	  { new_component_from_vertex(id); }
-
-	  /// Starting to process a new vertex.
-	  void process_vertex(unsigned)
+	  void added_to_queue(const mln::util::vertex_id_t&)
 	  {}
 
+	  /// Starting to process a new vertex.
+	  void process_vertex(const mln::util::vertex_id_t& id)
+	  {
+	    vertextorep(id) = current_;
+	  }
+
 	  /// Does the vertex with id \p id have been already treated?
-	  bool to_be_treated(unsigned id)
-	  { return vertextocomp(id) == mln_max(V); }
+	  bool to_be_treated(const mln::util::vertex_id_t& id)
+	  { return vertextorep(id) == mln_max(V); }
 
 	  /// Does the neighbor vertex \p id have been already treated?
-	  bool to_be_queued(unsigned id)
+	  bool to_be_queued(const mln::util::vertex_id_t& id)
 	  { return to_be_treated(id); }
 
 	  /// The number of components found.
-	  unsigned ncomp;
+	  mln::util::vertex_id_t current_;
 
 	  /// Map a verted id to its component id.
-	  fun::i2v::array<V> vertextocomp;
+	  fun::i2v::array<V> vertextorep;
 	};
 
       } // end of namespace scribo::text::grouping::internal
@@ -147,36 +152,13 @@ namespace scribo
 
 	mln_assertion(g.is_valid());
 
-	internal::map_vertex_to_component_id_functor<mln_value(I)> f;
+	internal::map_vertex_to_representative_id_functor<mln_value(I)> f;
 	canvas::browsing::depth_first_search(g, f);
 
-//	mln::util::array< accu::bbox<mln_site(I)> > tboxes;
-//	tboxes.resize(text.nbboxes().next());
-//	for_all_components(i, text.bboxes())
-//	  tboxes[f.vertextocomp(i)].take(text.bbox(i));
-//
-//	// Update bounding boxes.
-//	mln::util::array<box<mln_site(I)> > bresult;
-//	// Component 0 - the background has not valid bboxes.
-//	bresult.append(box<mln_site(I)>());
-//	for_all_components(i, text.bboxes())
-//	  if (tboxes[i].is_valid())
-//	    bresult.append(tboxes[i].to_result());
-//
-//	mln_assertion(bresult.nelements() == f.ncomp);
-//
-//	// Update label image.
-//	mln_value(I) new_nbboxes;
-//	I new_lbl = labeling::relabel(text.label_image(),
-//				      text.nbboxes(),
-//				      f.vertextocomp);
-//
-//	mln_assertion(new_nbboxes.next() == bresult.nelements());
+	scribo::util::text<I> output = scribo::make::text(text, f.vertextorep);
 
 	trace::exiting("scribo::text::grouping::group_from_graph");
-	/// FIXME: construct a new util::text from the old one.
-//	return scribo::make::text(bresult, new_lbl, new_nbboxes);
-	return scribo::make::text(text, f.vertextocomp);
+	return output;
       }
 
 

@@ -26,20 +26,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef SCRIBO_EXTRACT_PRIMITIVE_LINES_V_DISCONTINUED_HH
-# define SCRIBO_EXTRACT_PRIMITIVE_LINES_V_DISCONTINUED_HH
+#ifndef SCRIBO_EXTRACT_PRIMITIVE_LINES_V_THICK_HH
+# define SCRIBO_EXTRACT_PRIMITIVE_LINES_V_THICK_HH
 
-/// \file scribo/primitive/lines_v_discontinued.hh
+/// \file scribo/primitive/lines_v_thick.hh
 ///
-/// Extract vertical discontinued lines.
+/// Extract vertical thick lines.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
+# include <mln/win/vline2d.hh>
 
 # include <scribo/core/object_image.hh>
-# include <scribo/extract/primitive/lines_discontinued.hh>
-
-
+# include <scribo/extract/primitive/lines_thick.hh>
 
 namespace scribo
 {
@@ -50,24 +49,26 @@ namespace scribo
     namespace primitive
     {
 
+      using namespace mln;
 
-      /// Extract vertical discontinued lines.
+      /// Extract thick lines in a binary image.
       /*!
-       * \param[in]     input	    A binary image.
-       * \param[in]     nbh	    A neighborhood used to label lines.
-       * \param[in,out] nlines	    The number of lines found.
-       * \param[in]     line_length The minimum line length expected. (must be
-       *			    odd).
-       * \param[in]     rank_k	    Rank filter parameter.
+       * Only non discontinued lines are correctly extracted with this routine.
        *
-       * \result An image in which lines are labeled with a value different
-       * from 0.
+       * \param[in]     input_	    A binary image.
+       * \param[in]     nbh_	    The neighborhood used for labeling image
+       *			    components.
+       * \param[in,out] nlines	    Type used for labeling.
+       * \param[in]     line_length The minimum line length.
+       *
+       * \return An image in which lines are labeled.
        */
-      template <typename I, typename N, typename V>
+      template <typename I, typename N, typename V, typename W>
       object_image(mln_ch_value(I,V))
-      lines_v_discontinued(const Image<I>& input,
-			   const Neighborhood<N>& nbh, V& nlines,
-			   unsigned line_length, unsigned rank_k);
+      lines_thick(const Image<I>& input_,
+		  const Neighborhood<N>& nbh_, V& nlines,
+		  unsigned line_length);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -77,10 +78,10 @@ namespace scribo
       {
 
         template <typename I, typename N, typename V>
-        void
-        lines_v_discontinued_tests(const Image<I>& input,
-				   const Neighborhood<N>& nbh, V& nlines,
-				   unsigned line_length, unsigned rank_k)
+	void
+        lines_v_thick_tests(const Image<I>& input,
+			    const Neighborhood<N>& nbh, V& nlines,
+			    unsigned line_length)
 	{
 	  mlc_equal(mln_value(I),bool)::check();
 	  mlc_bool(mln_site_(I)::dim == 2)::check();
@@ -90,8 +91,10 @@ namespace scribo
 	  mln_precondition(exact(nbh).is_valid());
 	  mln_precondition(line_length % 2);
 
+	  (void) input;
+	  (void) nbh;
 	  (void) nlines;
-	  (void) rank_k;
+	  (void) line_length;
 	}
 
       } // end of namespace scribo::primitive::internal
@@ -100,24 +103,23 @@ namespace scribo
 
       template <typename I, typename N, typename V>
       object_image(mln_ch_value(I,V))
-      lines_v_discontinued(const Image<I>& input,
+      lines_v_thick(const Image<I>& input,
 			   const Neighborhood<N>& nbh, V& nlines,
-			   unsigned line_length, unsigned rank_k)
+			   unsigned line_length)
       {
-	trace::entering("scribo::primitive::lines_v_discontinued");
+	trace::entering("scribo::primitive::lines_v_thick");
 
-	internal::lines_v_discontinued_tests(input, nbh, nlines,
-	    line_length, rank_k);
+	internal::lines_v_thick_tests(input, nbh, nlines,
+	    line_length);
 
 	win::vline2d win(line_length);
 
 	object_image(mln_ch_value(I,V))
-	  output = lines_discontinued(input, nbh, nlines, win, rank_k);
+	  output = lines_thick(input, nbh, nlines, win);
 
-	trace::exiting("scribo::primitive::lines_v_discontinued");
+	trace::exiting("scribo::primitive::lines_v_thick");
 	return output;
       }
-
 
 # endif // ! MLN_INCLUDE_ONLY
 
@@ -127,5 +129,5 @@ namespace scribo
 
 } // end of namespace scribo
 
+#endif // ! SCRIBO_EXTRACT_PRIMITIVE_LINES_V_THICK_HH
 
-#endif // ! SCRIBO_EXTRACT_PRIMITIVE_LINES_V_DISCONTINUED_HH

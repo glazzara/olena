@@ -35,7 +35,6 @@
 /// Extract objects in a binary image.
 
 
-# include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/box.hh>
 
@@ -45,6 +44,12 @@
 # include <mln/util/array.hh>
 
 # include <mln/debug/println.hh>
+
+# include <scribo/core/object_image.hh>
+
+#include <mln/accu/bbox.hh>
+#include <mln/accu/center.hh>
+
 
 namespace scribo
 {
@@ -63,24 +68,12 @@ namespace scribo
       ///			  and background to 'false'.
       /// \param[in]	 nbh	  A neighborhood to be used for labeling.
       /// \param[in,out] nobjects Will store the numbers of objects found.
-      /// \param[in,out] bboxes	  Will store the objects bounding boxes.
       ///
       /// \return An image of labeled objects.
       //
       template <typename I, typename N, typename V>
       inline
-      mln_ch_value(I,V)
-      objects(const Image<I>& input,
-	      const Neighborhood<N>& nbh, V& nobjects,
-	      util::array< box<mln_site(I)> >& bboxes);
-
-
-      /// Extract objects in a binary image.
-      /// \overload
-      //
-      template <typename I, typename N, typename V>
-      inline
-      mln_ch_value(I,V)
+      object_image(mln_ch_value(I,V))
       objects(const Image<I>& input,
 	      const Neighborhood<N>& nbh, V& nobjects);
 
@@ -112,27 +105,7 @@ namespace scribo
 
       template <typename I, typename N, typename V>
       inline
-      mln_ch_value(I,V)
-      objects(const Image<I>& input,
-	      const Neighborhood<N>& nbh, V& nobjects,
-	      util::array< box<mln_site(I)> >& bboxes)
-      {
-	trace::entering("scribo::objects");
-
-	internal::objects_tests(input, nbh, nobjects);
-
-	mln_ch_value(I,V) object = objects(input, nbh, nobjects);
-
-	bboxes = labeling::compute(accu::meta::bbox(), lbl, nobjects);
-
-	trace::exiting("scribo::objects");
-	return output;
-      }
-
-
-      template <typename I, typename N, typename V>
-      inline
-      mln_ch_value(I,V)
+      object_image(mln_ch_value(I,V))
       objects(const Image<I>& input,
 	      const Neighborhood<N>& nbh, V& nobjects)
       {
@@ -140,7 +113,9 @@ namespace scribo
 
 	internal::objects_tests(input, nbh, nobjects);
 
-	mln_ch_value(I,V) object = labeling::blobs(input, nbh, nobjects);
+	mln_ch_value(I,V) objects = labeling::blobs(input, nbh, nobjects);
+
+	object_image(mln_ch_value(I,V)) output(objects, nobjects);
 
 	trace::exiting("scribo::objects");
 	return output;

@@ -37,6 +37,11 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/win/hline2d.hh>
 
+# include <scribo/core/object_image.hh>
+# include <scribo/extract/primitive/lines_discontinued.hh>
+
+
+
 namespace scribo
 {
 
@@ -46,6 +51,7 @@ namespace scribo
     namespace primitive
     {
 
+      using namespace mln;
 
       /// Extract horizontal discontinued lines.
       /*!
@@ -60,19 +66,10 @@ namespace scribo
        * from 0.
        */
       template <typename I, typename N, typename V>
-      mln_ch_value(I,V)
+      object_image(mln_ch_value(I,V))
       lines_h_discontinued(const Image<I>& input,
 			   const Neighborhood<N>& nbh, V& nlines,
 			   unsigned line_length, unsigned rank_k);
-
-
-      /// \overload
-      template <typename I, typename N, typename V>
-      mln_ch_value(I,V)
-      lines_h_discontinued(const Image<I>& input,
-			   const Neighborhood<N>& nbh, V& nlines,
-			   unsigned line_length, unsigned rank_k,
-			   util::array<box<mln_site(I)> >& line_bboxes);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -81,22 +78,24 @@ namespace scribo
       namespace internal
       {
 
-        template <typename I, typename N, typename V, typename W>
+        template <typename I, typename N, typename V>
 	void
-        lines_h_discontinued_tests(const Image<I>& input_,
-				   const Neighborhood<N>& nbh_, V& nlines,
+        lines_h_discontinued_tests(const Image<I>& input,
+				   const Neighborhood<N>& nbh, V& nlines,
 				   unsigned line_length, unsigned rank_k)
 	{
 	  mlc_equal(mln_value(I),bool)::check();
-	  mlc_equal(mln_site(I)::dim, 2)::check();
+	  mlc_bool(mln_site_(I)::dim == 2)::check();
 	  mlc_is_a(V, mln::value::Symbolic)::check();
 
 	  mln_precondition(exact(input).is_valid());
 	  mln_precondition(exact(nbh).is_valid());
-	  mln_precondition(exact(win).is_valid());
-	  mln_precondition(!(line_length % 2));
+	  mln_precondition(line_length % 2);
 
+	  (void) input;
+	  (void) nbh;
 	  (void) nlines;
+	  (void) line_length;
 	  (void) rank_k;
 	}
 
@@ -105,48 +104,25 @@ namespace scribo
 
 
       template <typename I, typename N, typename V>
-      mln_ch_value(I,V)
+      object_image(mln_ch_value(I,V))
       lines_h_discontinued(const Image<I>& input,
 			   const Neighborhood<N>& nbh, V& nlines,
 			   unsigned line_length, unsigned rank_k)
       {
 	trace::entering("scribo::primitive::lines_h_discontinued");
 
-	internal::line_h_discontinued_tests(input, nbh, nlines,
+	internal::lines_h_discontinued_tests(input, nbh, nlines,
 	    line_length, rank_k);
 
 	win::hline2d win(line_length);
 
-	mln_ch_value(I,V)
-	  output = lines_discontinued(input, nh, nlines, win, rank_k);
+	object_image(mln_ch_value(I,V))
+	  output = lines_discontinued(input, nbh, nlines, win, rank_k);
 
 	trace::exiting("scribo::primitive::lines_h_discontinued");
 	return output;
       }
 
-
-
-      template <typename I, typename N, typename V>
-      mln_ch_value(I,V)
-      lines_h_discontinued(const Image<I>& input,
-			   const Neighborhood<N>& nbh, V& nlines,
-			   unsigned line_length, unsigned rank_k,
-			   util::array<box<mln_site(I)> >& line_bboxes)
-      {
-	trace::entering("scribo::primitive::lines_h_discontinued");
-
-	internal::line_h_discontinued_tests(input, nbh, nlines,
-	    line_length, rank_k);
-
-	win::hline2d win(line_length);
-	mln_ch_value(I,V)
-	  output = internal::line_h_discontinued_tests(input, nbh, nlines,
-	      line_length, rank_k,
-	      line_bboxes);
-
-	trace::exiting("scribo::primitive::lines_h_discontinued");
-	return output;
-      }
 
 
 # endif // ! MLN_INCLUDE_ONLY

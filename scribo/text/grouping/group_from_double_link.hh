@@ -66,16 +66,16 @@ namespace scribo
       /// Group text bounding boxes from left and right links and validate
       /// These links. A link must exist in both ways to be validated.
       /*!
-      ** \param[in] text The   Lines of text.
+      ** \param[in] objects    The Lines of text.
       ** \param[in] left_link  The left neighbor of each line of text.
       ** \param[in] right_link The right neighbor of each line of text.
       **
       ** \return New lines of text. Some of the lines of \p text may have
       **	 been grouped.
       */
-      template <typename I>
-      scribo::util::text<I>
-      group_from_double_link(const scribo::util::text<I>& text,
+      template <typename L>
+      object_image(L)
+      group_from_double_link(const object_image(L)& objects,
 			     const mln::util::array<unsigned>& left_link,
 			     const mln::util::array<unsigned>& right_link);
 
@@ -84,10 +84,10 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-      template <typename I>
+      template <typename L>
       inline
-      scribo::util::text<I>
-      group_from_double_link(const scribo::util::text<I>& text,
+      object_image(L)
+      group_from_double_link(const object_image(L)& objects,
 			     const mln::util::array<unsigned>& left_link,
 			     const mln::util::array<unsigned>& right_link)
       {
@@ -95,12 +95,9 @@ namespace scribo
 
 	mln_precondition(left_link.nelements() == right_link.nelements());
 
-	mln::util::array< accu::bbox<mln_site(I)> > tboxes;
-	tboxes.resize(text.bboxes().nelements());
-
 	mln::util::array<unsigned> parent(left_link.nelements());
 	internal::init_link_array(parent);
-	for_all_components(i, text.bboxes())
+	for_all_ncomponents(i, objects.nlabels())
 	{
 	  mln::util::couple<bool, unsigned>
 	    nbh = internal::is_link_valid(left_link, right_link, i);
@@ -114,19 +111,15 @@ namespace scribo
 	  }
 	}
 
-	for_all_elements(i, parent)
 	for (unsigned i = parent.nelements() - 1; i < parent.nelements(); --i)
-	{
 	  parent[i] = parent[parent[i]];
-	  tboxes[parent[i]].take(text.bbox(i));
-	}
 
-	fun::i2v::array<unsigned> f;
-	convert::from_to(parent, f);
+	object_image(L) output;
+	output.init_from_(objects);
+	output.relabel(parent);
 
-	scribo::util::text<I> result = make::text(text, f);
 	trace::exiting("scribo::text::grouping::group_from_double_link");
-	return result;
+	return output;
       }
 
 
