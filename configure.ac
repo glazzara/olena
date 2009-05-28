@@ -180,6 +180,11 @@ AC_CONFIG_FILES([
   scribo/Makefile
     scribo/src/Makefile
       scribo/src/binarization/Makefile
+      scribo/src/extract/Makefile
+	scribo/src/extract/primitive/Makefile
+      scribo/src/filter/Makefile
+      scribo/src/preprocessing/Makefile
+      scribo/src/table/Makefile
 ])
 
 AC_CONFIG_FILES([scribo/tests/data.hh])
