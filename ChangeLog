@@ -1,3 +1,8 @@
+2009-05-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Update configure.ac.
+	* configure.ac: Update configure.ac.
+
 2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Complete the list of configured Makefiles.
