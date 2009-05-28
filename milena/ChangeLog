@@ -1,5 +1,15 @@
 2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add labeled_image type.
+
+	* mln/core/image/imorph/labeled_image.hh: new image type.
+	
+	* mln/trait/ch_value.hh: Specialize ch_value trait for this type.
+
+	* tests/core/image/imorph/labeled_image.cc: new associated test.
+
+2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Move morphers in core/image subdirectories.
 
 
