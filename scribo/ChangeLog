@@ -1,5 +1,15 @@
 2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add new test images for Scribo.
+
+	* tests/img/table_to_be_repaired.pbm,
+	* tests/img/table_to_be_repaired2.pbm,
+	* tests/img/table_to_be_repaired3.pbm,
+	* tests/img/text_to_group.pbm,
+	* tests/img/text_to_group_and_clean.pbm: new.
+
+2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Improve and fix tests in Scribo.
 
 	* tests/filter/small_and_large_bboxes.cc: add real tests.
