@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,43 +25,44 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <iostream>
+/// \file scribo/src/superpose.cc
+///
+/// Superpose two binary images.
 
-#include <mln/essential/2d.hh>
-#include <mln/io/dump/save.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/debug/superpose.hh>
+#include <mln/logical/not.hh>
+#include <mln/io/pbm/all.hh>
+#include <mln/io/ppm/save.hh>
 
-#include <scribo/table/extract.hh>
+#include <scribo/debug/usage.hh>
 
 
-int usage(const char *name)
+const char *args_desc[][2] =
 {
-  std::cout << "Usage: " << name << " <input.pbm> " << std::endl;
-  return 1;
-}
+  { "input.pbm", "A binary image." },
+  { "data.pbm",  "A binary image." },
+  {0, 0}
+};
 
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-  using namespace scribo;
+  mln::trace::entering("main");
   using namespace mln;
 
-  if (argc < 1)
-    return usage(argv[0]);
-
-  scribo::make::internal::debug_filename_prefix = argv[0];
+  if (argc != 4)
+    return usage(argv, "Superpose two binary images", "input.pbm data.pbm output.ppm",
+		 args_desc, "A color image. Data from 'data.pbm' is colored in red.");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
-  logical::not_inplace(input);
 
-  trace::quiet = false;
+  image2d<bool> data;
+  io::pbm::load(data, argv[2]);
 
-  value::label_16 ncells;
-  image2d<value::label_16> tables = scribo::table::extract(input, ncells).first();
+  io::ppm::save(debug::superpose(input, data), argv[3]);
 
-  std::cout << "ncells (including background) = " << ncells << std::endl;
-  io::ppm::save(mln::labeling::colorize(value::rgb8(), tables, ncells),
-		scribo::make::debug_filename("table_cells.ppm"));
-
-  io::dump::save(tables, scribo::make::debug_filename("table_cells.dump"));
+  mln::trace::exiting("main");
 }
+

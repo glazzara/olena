@@ -1,5 +1,46 @@
 2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Update samples in Scribo.
+
+	* src/Makefile.am,
+	* src/extract/Makefile.am,
+	* src/extract/primitive/Makefile.am,
+	* src/filter/Makefile.am,
+	* src/preprocessing/Makefile.am,
+	* src/table/Makefile.am: update build system.
+
+	* src/binarization/simple.cc,
+	* src/dmap.cc,
+	* src/extract_text_single_link.cc,
+	* src/recognition.cc:
+	  Make them standalone programs
+	  - Improve 'usage' output,
+	  - cleanup includes
+	  - add a header.
+
+	* src/extract/primitive/extract_discontinued_hlines.cc,
+	* src/extract/primitive/extract_discontinued_vlines.cc,
+	* src/extract/primitive/extract_thick_hlines.cc,
+	* src/extract/primitive/extract_thick_vlines.cc,
+	* src/filter/large_objects.cc,
+	* src/filter/small_objects.cc,
+	* src/filter/thick_objects.cc,
+	* src/filter/thin_objects.cc,
+	* src/negate.cc,
+	* src/preprocessing/unskew.cc,
+	* src/superpose.cc: new samples.
+
+	* src/table_erase.cc,
+	* src/table_extract.cc: move...
+
+	* src/table/erase.cc,
+	* src/table/extract.cc: ... here.
+	  Make them standalone programs:
+	  - Improve 'usage' output,
+	  - cleanup includes
+
+2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add new test images for Scribo.
 
 	* tests/img/table_to_be_repaired.pbm,

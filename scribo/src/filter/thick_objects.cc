@@ -26,60 +26,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file scribo/src/dmap.cc
+/// \file scribo/src/filter/thick_objects.cc
 ///
-/// Compute a distance map and an influence zone image.
+/// Filter too thick objects.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/core/var.hh>
-
-#include <mln/labeling/blobs.hh>
-#include <mln/labeling/colorize.hh>
-#include <mln/labeling/wrap.hh>
-
-#include <mln/transform/distance_and_influence_zone_geodesic.hh>
-
+#include <mln/level/convert.hh>
+#include <mln/io/pbm/all.hh>
 #include <mln/value/label_16.hh>
-#include <mln/value/rgb8.hh>
 
-#include <mln/io/pbm/load.hh>
-#include <mln/io/ppm/save.hh>
-#include <mln/io/pgm/save.hh>
+#include <scribo/filter/thick_objects.hh>
+#include <scribo/debug/usage.hh>
 
-int usage(char* argv[])
+const char *args_desc[][2] =
 {
-  std::cerr << "usage: " << argv[0] << " input.pgm dmap.pgm iz.ppm"
-	    << std::endl
-	    << "  Compute a distance map and an influence zone image."
-	    << std::endl;
-  return 1;
-}
-
+  { "input.pbm", "A binary image. 'True' for objects, 'False'\
+for the background." },
+  { "max_thick", "The maximum object thickness value. Objects with bounding\
+box hight or width higher than this value are removed." },
+  {0, 0}
+};
 
 int main(int argc, char *argv[])
 {
   using namespace mln;
 
-  using value::label_16;
-  using value::rgb8;
-
   if (argc != 4)
-    return usage(argv);
+    return usage(argv, "Filter too thick objects", "input.pbm max_thick output.pbm",
+		 args_desc, "A binary image.");
 
-  image2d<bool> ima;
-  io::pbm::load(ima, argv[1]);
+  trace::entering("main");
 
-  label_16 nlabels;
-  image2d<label_16> lbl = labeling::blobs(ima, c8(), nlabels);
+  typedef image2d<bool> I;
+  I input;
+  io::pbm::load(input, argv[1]);
 
-  mln_VAR(res,
-	  transform::distance_and_influence_zone_geodesic(lbl,
-							  c8(),
-							  mln_max(unsigned)));
+  value::label_16 nobjects;
+  typedef object_image(mln_ch_value_(I,value::label_16)) obj_ima_t;
+  obj_ima_t objects
+    = scribo::extract::primitive::objects(input, c8(), nobjects);
 
-  io::pgm::save(labeling::wrap(res.first()), argv[2]);
-  io::ppm::save(labeling::colorize(value::rgb8(), res.second(), nlabels),
-		argv[3]);
+  obj_ima_t filtered = scribo::filter::thick_objects(objects, atoi(argv[2]));
+  io::pbm::save(level::convert(bool(), filtered), argv[3]);
+
+  trace::exiting("main");
 
 }

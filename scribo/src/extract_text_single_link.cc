@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,9 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+/// \file scribo/src/extract_text_single_link.cc
+///
+/// Extract text lines objects using a single left link grouping method.
+
 #include <iostream>
 
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+
+#include <mln/labeling/colorize.hh>
+
+#include <mln/util/array.hh>
+
+#include <mln/value/label_16.hh>
+#include <mln/literal/colors.hh>
+
+#include <mln/io/pbm/load.hh>
 
 #include <scribo/text/extract_bboxes.hh>
 #include <scribo/text/grouping/group_with_single_left_link.hh>
@@ -38,19 +52,21 @@
 #include <scribo/debug/save_linked_textbboxes_image.hh>
 #include <scribo/make/debug_filename.hh>
 
-int usage(const char *name)
+
+int usage(char *argv[])
 {
-  std::cout << "Usage: " << name << " <input.pbm> " << std::endl;
+  std::cout << "Usage: " << argv[0] << " <input.pbm> " << std::endl;
   return 1;
 }
+
 
 int main(int argc, char* argv[])
 {
   using namespace scribo;
   using namespace mln;
 
-  if (argc < 1)
-    return usage(argv[0]);
+  if (argc != 2)
+    return usage(argv);
 
   scribo::make::internal::debug_filename_prefix = "extract_text_single_link";
 

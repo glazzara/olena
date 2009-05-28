@@ -1,5 +1,4 @@
 // Copyright (C) 2009 EPITA Research and Development Laboratory
-// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,60 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file scribo/src/dmap.cc
-///
-/// Compute a distance map and an influence zone image.
+#include <iostream>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/alias/neighb2d.hh>
-#include <mln/core/var.hh>
-
-#include <mln/labeling/blobs.hh>
-#include <mln/labeling/colorize.hh>
-#include <mln/labeling/wrap.hh>
-
-#include <mln/transform/distance_and_influence_zone_geodesic.hh>
-
-#include <mln/value/label_16.hh>
-#include <mln/value/rgb8.hh>
-
 #include <mln/io/pbm/load.hh>
-#include <mln/io/ppm/save.hh>
-#include <mln/io/pgm/save.hh>
+#include <mln/io/pbm/save.hh>
+#include <mln/io/dump/save.hh>
+#include <mln/value/label_16.hh>
+#include <mln/core/alias/neighb2d.hh>
 
-int usage(char* argv[])
+#include <scribo/table/extract.hh>
+
+#include <scribo/extract/primitive/lines_h_discontinued.hh>
+#include <scribo/extract/primitive/lines_v_discontinued.hh>
+
+#include <scribo/debug/usage.hh>
+
+const char *args_desc[][2] =
 {
-  std::cerr << "usage: " << argv[0] << " input.pgm dmap.pgm iz.ppm"
-	    << std::endl
-	    << "  Compute a distance map and an influence zone image."
-	    << std::endl;
-  return 1;
-}
+  { "input.pbm", "A binary image. 'True' for objects, 'False'\
+for the background." },
+  {0, 0}
+};
 
 
-int main(int argc, char *argv[])
+
+int main(int argc, char* argv[])
 {
+  using namespace scribo;
   using namespace mln;
+  using mln::value::label_16;
 
-  using value::label_16;
-  using value::rgb8;
+  if (argc != 3)
+    return usage(argv, "Remove tables from a binary image.",
+		 "input.pbm output.pbm",
+		 args_desc, "A binary image without tables.");
 
-  if (argc != 4)
-    return usage(argv);
+  trace::entering("main");
 
-  image2d<bool> ima;
-  io::pbm::load(ima, argv[1]);
+  image2d<bool> input;
+  io::pbm::load(input, argv[1]);
 
-  label_16 nlabels;
-  image2d<label_16> lbl = labeling::blobs(ima, c8(), nlabels);
+  typedef image2d<label_16> lbl_t;
 
-  mln_VAR(res,
-	  transform::distance_and_influence_zone_geodesic(lbl,
-							  c8(),
-							  mln_max(unsigned)));
+  label_16 nhlines, nvlines;
+  object_image(lbl_t)
+    lbl_v = extract::primitive::lines_v_discontinued(input, c8(),
+						     nvlines, 51, 8);
+  object_image(lbl_t)
+    lbl_h = extract::primitive::lines_h_discontinued(input, c8(),
+						     nhlines, 51, 6);
 
-  io::pgm::save(labeling::wrap(res.first()), argv[2]);
-  io::ppm::save(labeling::colorize(value::rgb8(), res.second(), nlabels),
-		argv[3]);
+  image2d<bool> input_notables
+    = scribo::table::erase(input,
+			   mln::make::couple(lbl_v.bboxes(),lbl_h.bboxes()));
+  io::pbm::save(input_notables, argv[2]);
 
+  trace::exiting("main");
 }

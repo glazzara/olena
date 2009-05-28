@@ -25,45 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+/// \file scribo/src/recognition.cc
+///
+/// Text extraction and recognition.
+
 #include <iostream>
 
 #include <mln/core/image/image2d.hh>
 
-#include <mln/labeling/colorize.hh>
-#include <mln/labeling/wrap.hh>
-
-#include <mln/util/timer.hh>
 #include <mln/util/array.hh>
 
 #include <mln/io/txt/save.hh>
 #include <mln/io/pbm/load.hh>
-#include <mln/io/ppm/save.hh>
-#include <mln/io/pgm/save.hh>
 
 #include <mln/value/label_16.hh>
 
 #include <mln/core/alias/neighb2d.hh>
 
-#include <scribo/text/extract_bboxes.hh>
+#include <scribo/extract/primitive/objects.hh>
+
 #include <scribo/text/grouping/group_with_several_left_links.hh>
 #include <scribo/text/grouping/group_with_several_right_links.hh>
-#include <scribo/debug/save_linked_textbboxes_image.hh>
 #include <scribo/text/grouping/group_from_double_link.hh>
-#include <scribo/filter/small_components.hh>
-#include <scribo/filter/thin_bboxes.hh>
+#include <scribo/filter/small_objects.hh>
+#include <scribo/filter/thin_objects.hh>
 #include <scribo/text/recognition.hh>
 
-#include <scribo/debug/save_textbboxes_image.hh>
-#include <scribo/make/debug_filename.hh>
+#include <scribo/debug/usage.hh>
 
-#include <scribo/preprocessing/unskew.hh>
-
-
-int usage(const char *name)
+const char *args_desc[][2] =
 {
-  std::cout << "Usage: " << name << " <input.pbm> <output.txt>" << std::endl;
-  return 1;
-}
+  { "input.pbm", "A binary image. 'True' for objects, 'False'\
+for the background." },
+  {0, 0}
+};
+
 
 
 int main(int argc, char* argv[])
@@ -71,36 +67,35 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  if (argc < 3)
-    return usage(argv[0]);
+  if (argc != 2)
+    return usage(argv, "Text extraction and recognition", "input.pbm",
+		 args_desc, "The text is printed on the standard output.");
 
-  scribo::make::internal::debug_filename_prefix = argv[2];
+  trace::entering("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
-  input = preprocessing::unskew(input);
-
   /// Extract text.
+  typedef mln_ch_value_(image2d<bool>,value::label_16) lbl_t;
   value::label_16 nbboxes;
-  scribo::util::text<image2d<value::label_16> > text
-      = text::extract_bboxes(input, c8(), nbboxes);
-  text = filter::small_components(text,4);
-  text = filter::thin_bboxes(text,2);
+  object_image(lbl_t)
+    objects = scribo::extract::primitive::objects(input, c8(), nbboxes);
+
+  /// Filter non interesting objects
+  objects = filter::small_objects(objects, 4);
+  objects = filter::thin_objects<lbl_t>(objects, 2);
+
+  /// Group objects.
   mln::util::array<unsigned> left_link
-	= text::grouping::group_with_several_left_links(text, 30);
+	= text::grouping::group_with_several_left_links<lbl_t>(objects, 30);
   mln::util::array<unsigned> right_link
-	= text::grouping::group_with_several_right_links(text, 30);
-  text = text::grouping::group_from_double_link(text, left_link, right_link);
+	= text::grouping::group_with_several_right_links(objects, 30);
+  objects = text::grouping::group_from_double_link(objects, left_link, right_link);
 
-  io::ppm::save(mln::labeling::colorize(value::rgb8(),
-			labeling::wrap(text.label_image())),
-		scribo::make::debug_filename("lbl_color.ppm"));
-  io::pgm::save(labeling::wrap(text.label_image()),
-      scribo::make::debug_filename("lbl.pgm"));
+  /// Try to recognize text in grouped objects.
+  scribo::text::recognition(objects, "fra");
 
-  image2d<char> ima_txt = scribo::text::recognition(text, "fra");
-
-  io::txt::save(ima_txt, argv[2]);
+  trace::exiting("main");
 }
 

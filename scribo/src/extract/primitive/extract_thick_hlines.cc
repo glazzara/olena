@@ -26,60 +26,48 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file scribo/src/dmap.cc
+/// \file scribo/src/extract/primitive/extract_thick_hlines.cc
 ///
-/// Compute a distance map and an influence zone image.
+/// Extract thick horizontal lines.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/alias/neighb2d.hh>
-#include <mln/core/var.hh>
-
-#include <mln/labeling/blobs.hh>
-#include <mln/labeling/colorize.hh>
-#include <mln/labeling/wrap.hh>
-
-#include <mln/transform/distance_and_influence_zone_geodesic.hh>
-
 #include <mln/value/label_16.hh>
-#include <mln/value/rgb8.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/io/pbm/all.hh>
+#include <mln/level/convert.hh>
 
-#include <mln/io/pbm/load.hh>
-#include <mln/io/ppm/save.hh>
-#include <mln/io/pgm/save.hh>
+#include <scribo/extract/primitive/lines_h_thick.hh>
+#include <scribo/debug/usage.hh>
 
-int usage(char* argv[])
+const char *args_desc[][2] =
 {
-  std::cerr << "usage: " << argv[0] << " input.pgm dmap.pgm iz.ppm"
-	    << std::endl
-	    << "  Compute a distance map and an influence zone image."
-	    << std::endl;
-  return 1;
-}
+  { "input.pbm", "A binary image." },
+  { "length", "   Minimum line length." },
+  {0, 0}
+};
 
 
 int main(int argc, char *argv[])
 {
   using namespace mln;
 
-  using value::label_16;
-  using value::rgb8;
-
   if (argc != 4)
-    return usage(argv);
+    return usage(argv, "Extract thick horizontal lines", "input.pbm length output.pbm",
+	args_desc, "A binary image of horizontal lines.");
 
-  image2d<bool> ima;
-  io::pbm::load(ima, argv[1]);
+  trace::entering("main");
 
-  label_16 nlabels;
-  image2d<label_16> lbl = labeling::blobs(ima, c8(), nlabels);
+  image2d<bool> input;
+  io::pbm::load(input, argv[1]);
 
-  mln_VAR(res,
-	  transform::distance_and_influence_zone_geodesic(lbl,
-							  c8(),
-							  mln_max(unsigned)));
+  value::label_16 nlines;
+  image2d<bool> lines
+    = level::convert(bool(),
+		     scribo::extract::primitive::lines_h_thick(input,
+							       c8(),
+							       nlines,
+							       atoi(argv[2])));
+  io::pbm::save(lines, argv[3]);
 
-  io::pgm::save(labeling::wrap(res.first()), argv[2]);
-  io::ppm::save(labeling::colorize(value::rgb8(), res.second(), nlabels),
-		argv[3]);
-
+  trace::exiting("main");
 }

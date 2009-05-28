@@ -1,4 +1,5 @@
 // Copyright (C) 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,52 +26,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <iostream>
+/// \file scribo/src/filter/thin_objects.cc
+///
+/// Filter too thin objects.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/io/pbm/load.hh>
-#include <mln/io/pbm/save.hh>
-#include <mln/io/dump/save.hh>
-#include <mln/value/label_16.hh>
 #include <mln/core/alias/neighb2d.hh>
+#include <mln/level/convert.hh>
+#include <mln/io/pbm/all.hh>
+#include <mln/value/label_16.hh>
 
-#include <scribo/table/extract.hh>
+#include <scribo/filter/thin_objects.hh>
+#include <scribo/debug/usage.hh>
 
-#include <scribo/primitive/lines_h_discontinued.hh>
-#include <scribo/primitive/lines_v_discontinued.hh>
-
-int usage(const char *name)
+const char *args_desc[][2] =
 {
-  std::cout << "Usage: " << name << " <input.pbm> " << std::endl;
-  return 1;
-}
+  { "input.pbm", "A binary image. 'True' for objects, 'False'\
+for the background." },
+  { "min_thin", "The minimum object thinness value. Objects with bounding\
+box hight or width less than or equal to this value are removed." },
+  {0, 0}
+};
 
-
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-  using namespace scribo;
   using namespace mln;
-  using mln::value::label_16;
 
-  if (argc < 1)
-    return usage(argv[0]);
+  if (argc != 4)
+    return usage(argv, "Filter too thin objects", "input.pbm min_thin output.pbm",
+		 args_desc, "A binary image.");
 
-  scribo::make::internal::debug_filename_prefix = "table_erase";
+  trace::entering("main");
 
-  image2d<bool> input;
+  typedef image2d<bool> I;
+  I input;
   io::pbm::load(input, argv[1]);
-  logical::not_inplace(input);
 
-  typedef util::couple<util::array<box2d>,
-		       util::array<box2d> > tables_t;
+  value::label_16 nobjects;
+  typedef object_image(mln_ch_value_(I,value::label_16)) obj_ima_t;
+  obj_ima_t objects
+    = scribo::extract::primitive::objects(input, c8(), nobjects);
 
-  label_16 nhlines, nvlines;
-  util::array<box2d> vlines, hlines;
-  image2d<label_16> lbl_v = primitive::lines_v_discontinued(input, c8(),
-							    nvlines, 51, 8);
-  image2d<label_16> lbl_h = primitive::lines_h_discontinued(input, c8(),
-							    nhlines, 51, 6);
+  obj_ima_t filtered = scribo::filter::thin_objects(objects, atoi(argv[2]));
+  io::pbm::save(level::convert(bool(), filtered), argv[3]);
 
-  image2d<bool> input_notables = scribo::table::erase(input, tables);
-  io::pbm::save(input_notables, scribo::make::debug_filename("input_notables.pbm"));
+  trace::exiting("main");
+
 }

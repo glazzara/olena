@@ -1,5 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,60 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file scribo/src/dmap.cc
+/// \file scribo/src/negate.cc
 ///
-/// Compute a distance map and an influence zone image.
+/// Negate a binary image.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/alias/neighb2d.hh>
-#include <mln/core/var.hh>
+#include <mln/logical/not.hh>
+#include <mln/io/pbm/all.hh>
 
-#include <mln/labeling/blobs.hh>
-#include <mln/labeling/colorize.hh>
-#include <mln/labeling/wrap.hh>
+#include <scribo/debug/usage.hh>
 
-#include <mln/transform/distance_and_influence_zone_geodesic.hh>
 
-#include <mln/value/label_16.hh>
-#include <mln/value/rgb8.hh>
-
-#include <mln/io/pbm/load.hh>
-#include <mln/io/ppm/save.hh>
-#include <mln/io/pgm/save.hh>
-
-int usage(char* argv[])
+const char *args_desc[][2] =
 {
-  std::cerr << "usage: " << argv[0] << " input.pgm dmap.pgm iz.ppm"
-	    << std::endl
-	    << "  Compute a distance map and an influence zone image."
-	    << std::endl;
-  return 1;
-}
+  { "input.pbm", "A binary image." },
+  {0, 0}
+};
 
 
 int main(int argc, char *argv[])
 {
+  mln::trace::entering("main");
   using namespace mln;
 
-  using value::label_16;
-  using value::rgb8;
+  if (argc != 3)
+    return usage(argv, "Negate a binary image", "input.pbm output.pbm",
+		 args_desc, "A binary image.");
 
-  if (argc != 4)
-    return usage(argv);
+  image2d<bool> input;
+  io::pbm::load(input, argv[1]);
 
-  image2d<bool> ima;
-  io::pbm::load(ima, argv[1]);
+  io::pbm::save(logical::not_(input), argv[2]);
 
-  label_16 nlabels;
-  image2d<label_16> lbl = labeling::blobs(ima, c8(), nlabels);
-
-  mln_VAR(res,
-	  transform::distance_and_influence_zone_geodesic(lbl,
-							  c8(),
-							  mln_max(unsigned)));
-
-  io::pgm::save(labeling::wrap(res.first()), argv[2]);
-  io::ppm::save(labeling::colorize(value::rgb8(), res.second(), nlabels),
-		argv[3]);
+  mln::trace::exiting("main");
 
 }
+
