@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -27,7 +27,12 @@
 
 #include <iostream>
 
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/util/graph.hh>
+#include <mln/value/label_16.hh>
+#include <mln/io/pbm/load.hh>
+#include <mln/literal/colors.hh>
 
 #include <scribo/text/extract_bboxes.hh>
 #include <scribo/text/grouping/group_with_graph.hh>
@@ -56,7 +61,7 @@ int main(int argc, char* argv[])
   if (argc < 2)
   {
     usage(argv[0]);
-    img = SCRIBO_IMG_DIR "/text_to_group.pbm";
+    img = SCRIBO_IMG_DIR "/text_to_group_and_clean.pbm";
   }
   else
     img = argv[1];
@@ -72,27 +77,33 @@ int main(int argc, char* argv[])
 
   mln::util::graph g = text::grouping::group_with_graph(textbboxes, 30);
 
-  std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
-  scribo::debug::save_linked_textbboxes_image(input,
-					      textbboxes, g,
-					      literal::red, literal::cyan,
-					      "test_graph_left_linked.ppm");
+
+  mln_assertion(nbboxes == 12u);
+//  std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
+//  scribo::debug::save_linked_textbboxes_image(input,
+//					      textbboxes, g,
+//					      literal::red, literal::cyan,
+//					      "test_graph_left_linked.ppm");
 
   text_t grouped_textbboxes
     = text::grouping::group_from_graph(textbboxes, g);
 
-  std::cout << "AFTER - nbboxes = " << grouped_textbboxes.nbboxes().next() << std::endl;
+//  std::cout << "AFTER - nbboxes = " << grouped_textbboxes.nbboxes().next() << std::endl;
+//
+//  scribo::debug::save_textbboxes_image(input, grouped_textbboxes.bboxes(),
+//				       literal::red,
+//				       "test_graph_grouped_text.ppm");
 
-  scribo::debug::save_textbboxes_image(input, grouped_textbboxes.bboxes(),
-				       literal::red,
-				       "test_graph_grouped_text.ppm");
+  mln_assertion(grouped_textbboxes.nbboxes() == 6u);
 
-  text_t filtered_textbboxes
-    = scribo::filter::small_components(grouped_textbboxes, 6);
+  text_t
+    filtered_textbboxes = scribo::filter::small_components(grouped_textbboxes, 20);
 
-  scribo::debug::save_textbboxes_image(input, filtered_textbboxes.bboxes(),
-				       literal::red,
-				       "test_graph_filtered_text.ppm");
+  mln_assertion(filtered_textbboxes.nbboxes() == 2u);
+
+//  scribo::debug::save_textbboxes_image(input, filtered_textbboxes.bboxes(),
+//				       literal::red,
+//				       "test_graph_filtered_text.ppm");
 
 }
 

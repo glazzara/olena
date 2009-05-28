@@ -26,10 +26,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/essential/2d.hh>
-#include <mln/util/couple.hh>
 
-#include <scribo/primitive/discontinued_lines.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/box2d.hh>
+#include <mln/make/box2d.hh>
+#include <mln/util/array.hh>
+#include <mln/util/couple.hh>
+#include <mln/io/pbm/load.hh>
+#include <mln/value/label_8.hh>
+#include <mln/win/vline2d.hh>
+#include <mln/win/hline2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+
+#include <mln/literal/colors.hh>
+
+#include <mln/io/pgm/save.hh>
+
+#include <scribo/extract/primitive/lines_h_discontinued.hh>
+#include <scribo/extract/primitive/lines_v_discontinued.hh>
+
 #include <scribo/debug/save_table_image.hh>
 
 #include <scribo/tests/data.hh>
@@ -53,18 +68,25 @@ int main(int argc, char *argv[])
     vboxes,
     hboxes;
   vboxes.append(make::box2d(0,0, 59,59));
-  vboxes.append(make::box2d(0,28, 27, 32));
-  vboxes.append(make::box2d(31,28, 59,32));
+  vboxes.append(make::box2d(0,28, 25, 32));
+  vboxes.append(make::box2d(33,28, 59,32));
   hboxes.append(make::box2d(0,0, 59,59));
-  hboxes.append(make::box2d(27,0, 31, 26));
-  hboxes.append(make::box2d(27,34, 31,59));
+  hboxes.append(make::box2d(27,0, 31, 24));
+  hboxes.append(make::box2d(27,36, 31,59));
 
-  value::label_16 nbboxes;
+  value::label_8 nbboxes;
 
-  lineboxes_t hboxes_ = scribo::primitive::discontinued_lines(input, c8(),
-				  nbboxes, win::hline2d(11), 2);
-  lineboxes_t vboxes_ = scribo::primitive::discontinued_lines(input, c8(),
-				  nbboxes, win::vline2d(11), 2);
+  lineboxes_t hboxes_, vboxes_;
+
+  typedef image2d<value::label_8> lbl_t;
+  lbl_t
+    hlbl = scribo::extract::primitive::lines_h_discontinued(input, c8(),
+							    nbboxes, 11, 2,
+							    hboxes_);
+  lbl_t
+    vlbl = scribo::extract::primitive::lines_v_discontinued(input, c8(),
+							    nbboxes, 11, 2,
+							    vboxes_);
   mln_assertion(hboxes_ == hboxes);
   mln_assertion(vboxes_ == vboxes);
 }

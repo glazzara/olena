@@ -26,8 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/box2d.hh>
+#include <mln/make/box2d.hh>
+#include <mln/util/array.hh>
 #include <mln/util/couple.hh>
+#include <mln/io/pbm/load.hh>
+#include <mln/value/label_16.hh>
+#include <mln/win/vline2d.hh>
+#include <mln/win/hline2d.hh>
 
 #include <scribo/table/repair_vertical_lines.hh>
 #include <scribo/table/repair_horizontal_lines.hh>
