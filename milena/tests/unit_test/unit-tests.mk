@@ -921,7 +921,16 @@ mln_morpho_tree_all \
 mln_morpho_tree_compute_attribute_image \
 mln_morpho_tree_compute_parent \
 mln_morpho_tree_data \
+mln_morpho_tree_filter_all \
+mln_morpho_tree_filter_direct \
+mln_morpho_tree_filter_filter \
+mln_morpho_tree_filter_max \
+mln_morpho_tree_filter_min \
+mln_morpho_tree_filter_subtractive \
 mln_morpho_tree_max \
+mln_morpho_tree_propagate_if \
+mln_morpho_tree_propagate_node \
+mln_morpho_tree_propagate_representative \
 mln_morpho_tree_utils \
 mln_morpho_watershed_all \
 mln_morpho_watershed_flooding \
@@ -1222,6 +1231,7 @@ mln_value_sign \
 mln_value_stack \
 mln_value_super_value \
 mln_value_viter \
+mln_version \
 mln_win_all \
 mln_win_backdiag2d \
 mln_win_ball \
@@ -2183,7 +2193,16 @@ mln_morpho_tree_all_SOURCES = mln_morpho_tree_all.cc
 mln_morpho_tree_compute_attribute_image_SOURCES = mln_morpho_tree_compute_attribute_image.cc
 mln_morpho_tree_compute_parent_SOURCES = mln_morpho_tree_compute_parent.cc
 mln_morpho_tree_data_SOURCES = mln_morpho_tree_data.cc
+mln_morpho_tree_filter_all_SOURCES = mln_morpho_tree_filter_all.cc
+mln_morpho_tree_filter_direct_SOURCES = mln_morpho_tree_filter_direct.cc
+mln_morpho_tree_filter_filter_SOURCES = mln_morpho_tree_filter_filter.cc
+mln_morpho_tree_filter_max_SOURCES = mln_morpho_tree_filter_max.cc
+mln_morpho_tree_filter_min_SOURCES = mln_morpho_tree_filter_min.cc
+mln_morpho_tree_filter_subtractive_SOURCES = mln_morpho_tree_filter_subtractive.cc
 mln_morpho_tree_max_SOURCES = mln_morpho_tree_max.cc
+mln_morpho_tree_propagate_if_SOURCES = mln_morpho_tree_propagate_if.cc
+mln_morpho_tree_propagate_node_SOURCES = mln_morpho_tree_propagate_node.cc
+mln_morpho_tree_propagate_representative_SOURCES = mln_morpho_tree_propagate_representative.cc
 mln_morpho_tree_utils_SOURCES = mln_morpho_tree_utils.cc
 mln_morpho_watershed_all_SOURCES = mln_morpho_watershed_all.cc
 mln_morpho_watershed_flooding_SOURCES = mln_morpho_watershed_flooding.cc
@@ -2484,6 +2503,7 @@ mln_value_sign_SOURCES = mln_value_sign.cc
 mln_value_stack_SOURCES = mln_value_stack.cc
 mln_value_super_value_SOURCES = mln_value_super_value.cc
 mln_value_viter_SOURCES = mln_value_viter.cc
+mln_version_SOURCES = mln_version.cc
 mln_win_all_SOURCES = mln_win_all.cc
 mln_win_backdiag2d_SOURCES = mln_win_backdiag2d.cc
 mln_win_ball_SOURCES = mln_win_ball.cc

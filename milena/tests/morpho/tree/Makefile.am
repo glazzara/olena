@@ -14,3 +14,6 @@ data_SOURCES = data.cc
 max_SOURCES = max.cc
 
 TESTS = $(check_PROGRAMS)
+
+SUBDIRS = \
+  filter

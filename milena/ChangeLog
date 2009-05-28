@@ -1,3 +1,16 @@
+2009-05-28  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Move tests for component tree filtering.
+	* mln/morpho/tree/filter/filter.hh:
+	Special increasing attribute filtering routine.
+
+	* tests/morpho/tree/Makefile.am,
+	* tests/morpho/tree/filter/Makefile.am,
+	* tests/morpho/tree/filter/filter.cc,
+	* tests/morpho/tree/filter,
+	* tests/unit_test/unit-tests.mk,
+	Tests for tree filtering.
+
 2009-05-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add fun p2p fold functions.
