@@ -406,7 +406,7 @@ main()
   
   # Cleanup temporary files.
   cleanup_tmp_files
-#  cleanup_gcc_wrapper
+  cleanup_gcc_wrapper
 }
 
 main

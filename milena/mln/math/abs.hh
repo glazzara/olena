@@ -101,3 +101,4 @@ namespace mln
 
 
 #endif // ! MLN_MATH_ABS_HH
+

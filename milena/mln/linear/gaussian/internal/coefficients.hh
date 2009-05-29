@@ -284,6 +284,7 @@ namespace mln
 			  +0.7480, +2.166,
 			  sigma,
 			  norm_2nd_derivative);
+	  return tmp;
 	}
 
 # endif // ! MLN_INCLUDE_ONLY

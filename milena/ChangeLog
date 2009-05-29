@@ -1,5 +1,17 @@
 2009-05-29 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Last small fixes of the day.
+
+	* mln/linear/gaussian/internal/coefficients.hh: fix missing return
+	statement.
+
+	* mln/math/abs.hh,
+	* mln/math/cos.hh: add missing end line.
+
+	* tests/tools/pretty_check.sh: enable a commented line.
+
+2009-05-29 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Fix pbm::load and pgm::load with ASCII encoded images.
 
 	* mln/io/pbm/load.hh,
