@@ -1,3 +1,9 @@
+2009-05-29  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Fix swilena distributed file list.
+
+	* Makefile.am: change box_piter.i to box_piter.ixx.
+
 2009-05-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update dates in Swilena's copyright headers.

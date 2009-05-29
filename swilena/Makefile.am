@@ -5,7 +5,7 @@ SUBDIRS = python
 # Meta-wrappers (templates), not generating a module, but factoring
 # common parts.
 meta_wrappers =							\
-  box_piter.i ch_value.ixx concat.ixx concrete.ixx fill.ixx	\
+  box_piter.ixx ch_value.ixx concat.ixx concrete.ixx fill.ixx	\
   image2d.ixx intp.ixx int_u.ixx morpho.ixx pgm.ixx println.ixx	\
   python-utils.ixx
 
