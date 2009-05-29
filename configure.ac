@@ -255,6 +255,8 @@ AC_CONFIG_FILES([
       milena/tests/core/routine/Makefile
       milena/tests/core/site_set/Makefile
     milena/tests/data/Makefile
+      milena/tests/data/approx/Makefile
+      milena/tests/data/naive/Makefile
     milena/tests/debug/Makefile
     milena/tests/display/Makefile
     milena/tests/draw/Makefile
@@ -287,9 +289,6 @@ AC_CONFIG_FILES([
       milena/tests/io/ppm/Makefile
       milena/tests/io/tiff/Makefile
     milena/tests/labeling/Makefile
-    milena/tests/level/Makefile
-      milena/tests/level/approx/Makefile
-      milena/tests/level/naive/Makefile
     milena/tests/linear/Makefile
       milena/tests/linear/gaussian/Makefile
       milena/tests/linear/local/Makefile
