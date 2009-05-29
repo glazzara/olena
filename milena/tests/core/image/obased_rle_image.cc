@@ -37,9 +37,9 @@
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/labeling/blobs.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/data/paste.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/io/pgm/save.hh>
 
 #include <mln/core/image/obased_rle_encode.hh>
@@ -69,12 +69,12 @@ int main()
 		    c4(), n);
 
   obased_rle_image<point2d, int_u8> rle =
-    obased_rle_encode(level::transform(labels, fold_t()));
+    obased_rle_encode(data::transform(labels, fold_t()));
 
   std::cout << n << ", compression ratio: " << rle.compression() << std::endl;
 
   data::fill(cmp, literal::zero);
   data::paste(rle, cmp);
 
-  mln_assertion(cmp == level::transform(labels, fold_t()));
+  mln_assertion(cmp == data::transform(labels, fold_t()));
 }

@@ -31,13 +31,13 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/value/int_u8.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/core/site_set/p_set.hh>
 # include <mln/core/image/sub_image.hh>
 
 # include <mln/value/rgb8.hh>
 # include <mln/display/color_pretty.hh>
-# include <mln/level/compare.hh>
+# include <mln/data/compare.hh>
 
 
 int main()
@@ -48,7 +48,7 @@ int main()
   /// Test on color_pretty.
   {
     image2d<int_u8> ima (2, 2);
-    level::fill (ima, 51);
+    data::fill (ima, 51);
 
     p_set<point2d > s;
     s.insert(point2d(0, 0));

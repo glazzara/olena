@@ -34,7 +34,7 @@
 /// Compute the mean pixel value.
 
 # include <mln/accu/mean.hh>
-# include <mln/level/compute.hh>
+# include <mln/data/compute.hh>
 
 
 namespace mln
@@ -71,7 +71,7 @@ namespace mln
     mln_sum(mln_value(I)) mean(const Image<I>& input)
     {
       mln_precondition(exact(input).is_valid());
-      return level::compute(accu::meta::mean(), input);
+      return data::compute(accu::meta::mean(), input);
     }
 
     template <typename S, typename I, typename M>
@@ -80,7 +80,7 @@ namespace mln
     {
       mln_precondition(exact(input).is_valid());
       accu::mean<mln_value(I), S, M> a;
-      result = level::compute(a, input);
+      result = data::compute(a, input);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

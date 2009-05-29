@@ -152,7 +152,7 @@ int main ()
 
     data::fill(ima, t);
 
-    image2d<unsigned> out = labeling::level(ima, false, c8(), n);
+    image2d<unsigned> out = labeling::value(ima, false, c8(), n);
     tmp = testc4(ima, p);
     if (tmp != n)
       {
@@ -172,11 +172,11 @@ int main ()
 
     ///  0 before
     data::fill(ima, u);
-    out = labeling::level(ima, false, c4(), m);
+    out = labeling::value(ima, false, c4(), m);
 
     ///  1 after
     data::fill(ima, t);
-    image2d<unsigned> out2 = labeling::level(ima, false, c4(), n);
+    image2d<unsigned> out2 = labeling::value(ima, false, c4(), n);
 
     int diff = n - m;
     if (diff < 0)

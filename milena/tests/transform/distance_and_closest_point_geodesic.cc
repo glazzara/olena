@@ -36,7 +36,7 @@
 #include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/opt/at.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/transform/distance_and_closest_point_geodesic.hh>
 

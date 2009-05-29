@@ -35,7 +35,7 @@
 #include <mln/value/int_u8.hh>
 
 #include <mln/debug/iota.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 int main()
 {

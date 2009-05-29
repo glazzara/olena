@@ -83,7 +83,7 @@ namespace mln
       internal::tests(lhs, rhs);
 
       mln_fun_vv2v(land_not, L, R) f;
-      mln_ch_fun_vv2v(land_not, L, R) output = level::transform(lhs, rhs, f);
+      mln_ch_fun_vv2v(land_not, L, R) output = data::transform(lhs, rhs, f);
 
       trace::exiting("logical::and_not");
       return output;
@@ -101,7 +101,7 @@ namespace mln
       internal::tests(lhs, rhs);
 
       mln_fun_vv2v(land_not, L, R) f;
-      level::transform_inplace(lhs, rhs, f);
+      data::transform_inplace(lhs, rhs, f);
 
       trace::exiting("logical::and_not_inplace");
     }

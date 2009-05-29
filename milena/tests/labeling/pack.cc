@@ -33,7 +33,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/labeling/pack.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/value/label_16.hh>
 #include <mln/debug/println.hh>
 

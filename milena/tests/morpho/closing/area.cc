@@ -37,8 +37,8 @@
 #include <mln/io/pgm/load.hh>
 
 #include <mln/accu/max.hh>
-#include <mln/level/compute.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compute.hh>
+#include <mln/data/compare.hh>
 #include <mln/pw/cst.hh>
 #include <mln/pw/image.hh>
 
@@ -57,6 +57,6 @@ int main()
   io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
   clo = morpho::closing::area(lena, c4(), lena.nrows() * lena.ncols());
 
-  int_u8 m = level::compute(accu::max<int_u8>(), lena);
+  int_u8 m = data::compute(accu::max<int_u8>(), lena);
   mln_assertion(clo == (pw::cst(m) | lena.domain()));
 }

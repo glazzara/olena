@@ -34,7 +34,7 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
 
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include "tests/data.hh"
 

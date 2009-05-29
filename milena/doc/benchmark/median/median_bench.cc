@@ -38,9 +38,9 @@
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
 
-#include <mln/level/approx/median.hh>
-#include <mln/level/fast_median.hh>
-#include <mln/level/median.hh>
+#include <mln/data/approx/median.hh>
+#include <mln/data/fast_median.hh>
+#include <mln/data/median.hh>
 
 #include <mln/core/dpoints_pixter.hh>
 #include <mln/core/pixel.hh>
@@ -88,17 +88,17 @@ void tests(const Image<I>& input, const Window<W>& win,
   timer chrono;
 
   chrono.start();
-  level::fast_median(input, win, output);
+  data::fast_median(input, win, output);
   chrono.stop();
   std::cout << "Fast median : " << chrono << std::endl;
 
   chrono.start();
-  level::median(input, win, output);
+  data::median(input, win, output);
   chrono.stop();
   std::cout << "Median : " << chrono << std::endl;
 
   chrono.start();
-  level::approx::median(input, exact(win), output);
+  data::approx::median(input, exact(win), output);
   chrono.stop();
   std::cout << "Approx median : " << chrono << std::endl;
 

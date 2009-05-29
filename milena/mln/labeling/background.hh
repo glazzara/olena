@@ -34,7 +34,7 @@
 /// Connected component labeling of the background in a binary
 /// image.
 
-# include <mln/labeling/level.hh>
+# include <mln/labeling/value.hh>
 
 
 namespace mln
@@ -53,10 +53,10 @@ namespace mln
      *
      * \pre The input image has to be binary (checked at compile-time).
      *
-     * This routine actually calls mln::labeling::level with the level
+     * This routine actually calls mln::labeling::value with the
      * value set to \c false.
      *
-     * \see mln::labeling::level
+     * \see mln::labeling::value
      */
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
@@ -79,7 +79,7 @@ namespace mln
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(nbh).is_valid());
 
-      mln_ch_value(I, L) output = labeling::level(input, false, nbh, nlabels);
+      mln_ch_value(I, L) output = labeling::value(input, false, nbh, nlabels);
 
       trace::exiting("labeling::background");
       return output;

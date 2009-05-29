@@ -32,7 +32,7 @@
 
 #include <mln/core/image/image2d.hh>
 
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/debug/println.hh>
 
 #include <mln/io/fits/load.hh>

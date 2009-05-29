@@ -73,7 +73,7 @@ namespace mln
 	if (n == 0)
 	{
 	  image2d<value::int_u8>
-	    output = level::convert(int_u8(), input);
+	    output = data::convert(int_u8(), input);
 
 	  trace::exiting("world::binary_2d::subsample");
 	  return output;

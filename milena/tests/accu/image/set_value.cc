@@ -33,7 +33,7 @@
 #include <mln/accu/count.hh>
 #include <mln/accu/image/set_value.hh>
 
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/pw/cst.hh>
 #include <mln/pw/image.hh>
 

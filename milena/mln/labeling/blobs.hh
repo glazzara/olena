@@ -36,7 +36,7 @@
 ///
 /// \todo Handle abort in a nice way...
 ///
-/// \todo Add a 2nd version precising the 'level' to label.
+/// \todo Add a 2nd version precising the 'value' to label.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>

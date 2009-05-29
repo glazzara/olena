@@ -39,9 +39,9 @@
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/labeling/blobs.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/data/paste.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/core/alias/p_runs2d.hh>
 
@@ -144,14 +144,14 @@ int main()
 		      c4(), n);
 
     value_enc_image<point2d, int_u8> val_enc =
-      value_encode(level::transform(labels, fold_t()));
+      value_encode(data::transform(labels, fold_t()));
 
     data::fill(cmp, literal::zero);
     data::paste(val_enc, cmp);
     std::cout << val_enc.values().size() << std::endl;
 
-    mln_assertion(cmp == level::transform(labels, fold_t()));
+    mln_assertion(cmp == data::transform(labels, fold_t()));
     //io::pgm::save(cmp, "output.pgm");
-    //io::pgm::save(level::transform(labels, fold_t()), "output2.pgm");
+    //io::pgm::save(data::transform(labels, fold_t()), "output2.pgm");
   }
 }

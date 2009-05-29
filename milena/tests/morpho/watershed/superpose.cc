@@ -39,7 +39,7 @@
 #include <mln/value/int_u8.hh>
 
 #include <mln/morpho/watershed/superpose.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include "tests/data.hh"
 

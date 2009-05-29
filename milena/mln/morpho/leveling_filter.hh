@@ -39,8 +39,8 @@
 
 # include <mln/trait/accumulators.hh>
 
-# include <mln/level/sort_psites.hh>
-# include <mln/level/sort_offsets.hh>
+# include <mln/data/sort_psites.hh>
+# include <mln/data/sort_offsets.hh>
 
 # include <mln/canvas/morpho/attribute_filter.hh>
 

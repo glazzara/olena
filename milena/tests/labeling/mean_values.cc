@@ -31,7 +31,7 @@
 
 #include <mln/core/image/image2d.hh>
 
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/labeling/mean_values.hh>
 

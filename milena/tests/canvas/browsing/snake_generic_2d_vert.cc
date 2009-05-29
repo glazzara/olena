@@ -101,6 +101,6 @@ int main()
   image2d<unsigned> ima2(3, 3);
 
   std::cout << ima2.bbox() << std::endl;
-  my_test(ima2, fun::p2v::iota, canvas::browsing::snake_generic);
+  my_test(ima2, fun::p2v::iota(), canvas::browsing::snake_generic);
   debug::println(ima2);
 }

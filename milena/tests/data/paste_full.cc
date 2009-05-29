@@ -51,7 +51,7 @@
 
 #include <mln/debug/iota.hh>
 
-#include <mln/level/saturate.hh>
+#include <mln/data/saturate.hh>
 #include <mln/data/paste.hh>
 
 
@@ -111,7 +111,7 @@ namespace mln
     J& output = exact(output_);
 
     if (max_i > max_j)
-      level::saturate_inplace(input, 0, (T)max_j);
+      data::saturate_inplace(input, 0, (T)max_j);
 
     data::paste(input, output);
 

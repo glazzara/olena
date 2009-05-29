@@ -42,7 +42,7 @@
 
 #include <mln/data/fill.hh>
 #include <mln/data/paste.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/fun/p2b/chess.hh>
 #include <mln/fun/p2v/iota.hh>

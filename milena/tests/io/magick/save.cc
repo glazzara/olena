@@ -34,7 +34,7 @@
 #include <mln/io/magick/save.hh>
 #include <mln/io/ppm/load.hh>
 
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/io/magick/load.hh>
 

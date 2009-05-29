@@ -35,7 +35,7 @@
 # include <mln/core/concept/image.hh>
 
 # include <mln/core/routine/duplicate.hh>
-# include <mln/level/compare.hh>
+# include <mln/data/compare.hh>
 
 # include <mln/transform/distance_front.hh>
 # include <mln/pw/all.hh>

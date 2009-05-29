@@ -35,7 +35,7 @@
 #include <mln/core/image/dmorph/slice_image.hh>
 
 #include <mln/debug/iota.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 
 int main()

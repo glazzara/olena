@@ -50,7 +50,7 @@
 # include <mln/histo/essential.hh>
 # include <mln/io/essential.hh>
 # include <mln/labeling/essential.hh>
-# include <mln/level/essential.hh>
+# include <mln/data/essential.hh>
 # include <mln/linear/essential.hh>
 # include <mln/literal/essential.hh>
 # include <mln/logical/essential.hh>

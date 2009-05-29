@@ -37,7 +37,7 @@
 
 # include <mln/arith/includes.hh>
 # include <mln/fun/vv2v/diff_abs.hh>
-# include <mln/level/transform.hh>
+# include <mln/data/transform.hh>
 
 namespace mln
 {
@@ -70,7 +70,7 @@ namespace mln
       mln_precondition(exact(rhs).is_valid());
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
-      mln_concrete(I) output = level::transform(lhs, rhs, fun::vv2v::diff_abs<mln_value(I)>());
+      mln_concrete(I) output = data::transform(lhs, rhs, fun::vv2v::diff_abs<mln_value(I)>());
 
       trace::exiting("arith::diff_abs");
       return output;

@@ -52,7 +52,7 @@
 #include <mln/arith/revert.hh>
 #include <mln/transform/distance_geodesic.hh>
 
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include "tests/data.hh"
 

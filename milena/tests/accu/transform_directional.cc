@@ -34,7 +34,7 @@
 #include <mln/accu/count.hh>
 #include <mln/win/rectangle2d.hh>
 #include <mln/pw/all.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 
 int main()

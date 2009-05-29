@@ -40,7 +40,7 @@
 #include <mln/linear/log.hh>
 
 #include <mln/estim/min_max.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 
 #include "tests/data.hh"
 
@@ -62,7 +62,7 @@ int main()
     mln_assertion(min == -929 && max == 1260);
   }
 
-  out = level::stretch(int_u8(), tmp);
+  out = data::stretch(int_u8(), tmp);
   io::pgm::save(out, "out.pgm");
   {
     int_u8 min, max;

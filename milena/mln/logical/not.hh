@@ -80,7 +80,7 @@ namespace mln
       mln_precondition(exact(input).is_valid());
 
       fun::v2b::lnot<mln_value(I)> f;
-      mln_concrete(I) output = level::transform(input, f);
+      mln_concrete(I) output = data::transform(input, f);
 
       trace::exiting("logical::not_");
       return output;
@@ -95,7 +95,7 @@ namespace mln
       mln_precondition(exact(input).is_valid());
 
       fun::v2b::lnot<mln_value(I)> f;
-      level::transform_inplace(input, f);
+      data::transform_inplace(input, f);
 
       trace::exiting("logical::not_inplace");
     }

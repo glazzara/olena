@@ -35,9 +35,9 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/site_set/p_set.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/data/fill.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/io/pgm/save.hh>
 #include <vector>
 #include <mln/util/tree_fast_to_image.hh>

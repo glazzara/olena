@@ -35,7 +35,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/image/dmorph/image_if.hh>
-# include <mln/level/convert.hh>
+# include <mln/data/convert.hh>
 # include <mln/data/fill.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/literal/colors.hh>
@@ -96,7 +96,7 @@ namespace mln
 	mln_precondition(input.is_valid());
 	mln_precondition(ws_ima.is_valid());
 
-	mln_ch_value(I,value::rgb8) output = level::convert(value::rgb8(), input);
+	mln_ch_value(I,value::rgb8) output = data::convert(value::rgb8(), input);
 
 	data::fill((output | (pw::value(ws_ima) == pw::cst(literal::zero))).rw(),
 		   wsl_color);

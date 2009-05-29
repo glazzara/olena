@@ -68,6 +68,6 @@ int main()
 //       std::cout << ". ";
 //   std::cout << std::endl;
 
-  p_array<point2d> s = level::sort_psites_increasing(ima);
+  p_array<point2d> s = data::sort_psites_increasing(ima);
   std::cout << morpho::tree::nodes(par, ima, s) << std::endl;
 }

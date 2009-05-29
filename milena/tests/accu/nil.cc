@@ -34,7 +34,7 @@
 #include <mln/value/int_u8.hh>
 
 #include <mln/accu/nil.hh>
-#include <mln/level/compute.hh>
+#include <mln/data/compute.hh>
 
 
 int main()
@@ -43,7 +43,7 @@ int main()
   image2d<value::int_u8> ima(3, 3);
 
   accu::nil<value::int_u8> a;
-  level::compute(a, ima);
+  data::compute(a, ima);
 
-  level::compute(accu::meta::nil(), ima);
+  data::compute(accu::meta::nil(), ima);
 }

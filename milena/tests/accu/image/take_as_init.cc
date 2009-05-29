@@ -30,7 +30,7 @@
 /// Tests on mln::accu::image::take_as_init.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/pw/cst.hh>
 #include <mln/pw/image.hh>
 

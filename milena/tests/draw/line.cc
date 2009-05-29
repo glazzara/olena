@@ -37,7 +37,7 @@
 
 
 #include <mln/data/fill.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/draw/line.hh>
 #include <mln/debug/println.hh>
 

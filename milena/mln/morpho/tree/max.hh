@@ -33,7 +33,7 @@
 /// Compute a canonized (parenthood) max-tree from an image.
 
 # include <mln/morpho/tree/compute_parent.hh>
-# include <mln/level/sort_psites.hh>
+# include <mln/data/sort_psites.hh>
 
 
 namespace mln
@@ -72,7 +72,7 @@ namespace mln
 	mln_precondition(nbh.is_valid());
 
 	// For the max-tree, childhood maps "increasing level":
-	p_array<mln_psite(I)> s = level::sort_psites_increasing(f);
+	p_array<mln_psite(I)> s = data::sort_psites_increasing(f);
 	mln_ch_value(I, mln_psite(I)) output = compute_parent(f, nbh, s);
 
 	trace::exiting("morpho::tree::max");

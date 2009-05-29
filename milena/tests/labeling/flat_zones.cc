@@ -40,7 +40,7 @@
 
 #include <mln/labeling/blobs.hh>
 #include <mln/pw/all.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include "tests/data.hh"
 

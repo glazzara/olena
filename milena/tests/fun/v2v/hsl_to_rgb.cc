@@ -33,8 +33,8 @@
 
 #include <mln/fun/v2v/hsl_to_rgb.hh>
 
-#include <mln/level/compare.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/compare.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/value/hsl.hh>
 #include <mln/value/rgb8.hh>
@@ -57,7 +57,7 @@ int main()
   image2d<rgb8> ref_ima = make::image(ref);
   image2d<hsl_f> ima = make::image(dat);
 
-  image2d<value::rgb8> ima_rgb = level::transform(ima,
+  image2d<value::rgb8> ima_rgb = data::transform(ima,
 						  fun::v2v::f_hsl_to_rgb_3x8);
 
   mln_assertion(ima_rgb == ref_ima);

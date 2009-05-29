@@ -42,7 +42,7 @@
 #include <mln/core/site_set/p_vertices.hh>
 #include <mln/core/site_set/p_vertices_psite.hh>
 #include <mln/debug/draw_graph.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 
 /// Set of 2-D points.

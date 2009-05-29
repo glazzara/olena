@@ -23,7 +23,6 @@ SUBDIRS =					\
   histo						\
   io						\
   labeling					\
-  level						\
   linear					\
   literal					\
   logical					\

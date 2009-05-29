@@ -2,7 +2,7 @@
 
 #include <mln/value/int_u8.hh>
 
-#include <mln/level/compute.hh>
+#include <mln/data/compute.hh>
 
 #include <mln/accu/max.hh>
 
@@ -13,6 +13,6 @@ int main()
   image2d<value::int_u8> ima(2, 3);
 
   // \{
-  level::compute(accu::meta::max(), ima);
+  data::compute(accu::meta::max(), ima);
   // \}
 }

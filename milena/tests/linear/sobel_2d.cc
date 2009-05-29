@@ -34,7 +34,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/var.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -56,5 +56,5 @@ int main()
   io::pgm::load(input, MLN_IMG_DIR "/tiny.pgm");
 
   image2d<float> output = linear::sobel_2d_l1_norm(input);
-  io::pgm::save(level::stretch(int_u8(), output), "out.pgm");
+  io::pgm::save(data::stretch(int_u8(), output), "out.pgm");
 }

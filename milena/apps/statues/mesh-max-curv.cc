@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
      OFF file format.  */
   std::vector<float> normalized_face_m(face_m.size(), 0.0f);
   std::pair<float, float> min_max(acc);
-  // FIXME: Taken from mln/level/stretch.hh (this should be factored).
+  // FIXME: Taken from mln/data/stretch.hh (this should be factored).
   float min = min_max.first;
   float max = min_max.second;
   // Don't normalize actually if the curvature is constant (i.e.,

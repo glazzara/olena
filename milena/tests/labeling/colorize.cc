@@ -33,7 +33,7 @@
 # include <mln/value/rgb8.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/labeling/colorize.hh>
-# include <mln/level/compare.hh>
+# include <mln/data/compare.hh>
 
 
 int main()

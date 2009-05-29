@@ -109,6 +109,6 @@ int main()
 
   ima(point3d(0,0,0)) = 42;
   std::cout << ima.bbox() << std::endl;
-  my_test(ima, fun::p2v::iota, canvas::browsing::snake_generic);
+  my_test(ima, fun::p2v::iota(), canvas::browsing::snake_generic);
   debug::println(ima);
 }

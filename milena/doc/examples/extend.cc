@@ -3,7 +3,7 @@
 #include <mln/core/routine/extend.hh>
 #include <mln/core/var.hh>
 
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/fun/p2b/big_chess.hh>
 
@@ -97,7 +97,7 @@ int main()
   initialize(mask, lena);
   data::fill(mask, true);
   data::fill((mask | ima_roi.domain()).rw(), false);
-  mln_VAR(ima_ext, level::transform(lena | (pw::value(mask) != false), saturate_rgb8()));
+  mln_VAR(ima_ext, data::transform(lena | (pw::value(mask) != false), saturate_rgb8()));
   data::paste(ima_ext, lena);
   data::paste(ima_roi, lena);
   doc::ppmsave(lena, "extend");

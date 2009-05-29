@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -52,8 +52,26 @@ namespace mln
 }
 
 
+# include <mln/data/abs.hh>
+# include <mln/data/apply.hh>
+# include <mln/data/approx/all.hh>
+# include <mln/data/compare.hh>
+# include <mln/data/compute.hh>
+# include <mln/data/convert.hh>
+# include <mln/data/fast_median.hh>
 # include <mln/data/fill.hh>
+# include <mln/data/median.hh>
+# include <mln/data/naive/all.hh>
 # include <mln/data/paste.hh>
+# include <mln/data/replace.hh>
+# include <mln/data/saturate.hh>
+# include <mln/data/sort_offsets.hh>
+# include <mln/data/sort_psites.hh>
+# include <mln/data/stretch.hh>
+# include <mln/data/to_enc.hh>
+# include <mln/data/transform.hh>
+# include <mln/data/update.hh>
+//<< # include <mln/data/was.median.hh> >>
 
 
 

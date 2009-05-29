@@ -34,7 +34,7 @@
 #include <mln/core/var.hh>
 #include <mln/io/pbm/load.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/labeling/foreground.hh>
 
 #include "tests/data.hh"
@@ -56,11 +56,11 @@ int main()
   mln_assertion(n == 33);
 
   {
-    // Note that  labeling::foreground  actually is  labeling::level
+    // Note that  labeling::foreground  actually is  labeling::value
     // which calls  canvas::labeling_video  and its generic dispatch
     // leads to  canvas::impl::generic::labeling.
 
-    labeling::impl::level_functor<I> f(pic, true);
+    labeling::impl::value_functor<I> f(pic, true);
 
     unsigned n_;
     ref = canvas::impl::generic::labeling(pic, nbh, n_,

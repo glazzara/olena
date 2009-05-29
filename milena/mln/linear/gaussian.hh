@@ -49,7 +49,7 @@
 # include <mln/geom/ninds.hh>
 # include <mln/geom/nslis.hh>
 # include <mln/data/paste.hh>
-# include <mln/level/stretch.hh>
+# include <mln/data/stretch.hh>
 # include <mln/algebra/vec.hh>
 
 
@@ -557,7 +557,7 @@ namespace mln
                             work_img, coef, i);
 
         // Convert work_img into result type
-	data::paste(level::stretch(mln_value(I)(), work_img), out);
+	data::paste(data::stretch(mln_value(I)(), work_img), out);
       }
 
       template <class I, class F, class O>
@@ -581,7 +581,7 @@ namespace mln
                           work_img, coef, dir);
 
         // Convert work_img into result type
-	data::paste(level::stretch(mln_value(I)(), work_img), out);
+	data::paste(data::stretch(mln_value(I)(), work_img), out);
       }
 
 

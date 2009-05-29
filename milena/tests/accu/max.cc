@@ -39,7 +39,7 @@
 #include <mln/accu/v.hh>
 #include <mln/accu/compute.hh>
 
-#include <mln/level/compute.hh>
+#include <mln/data/compute.hh>
 
 
 int main()
@@ -47,9 +47,9 @@ int main()
   using namespace mln;
   image2d<int> ima(3, 3);
   debug::iota(ima);
-  mln_assertion(level::compute(accu::meta::max(), ima) == 9);
+  mln_assertion(data::compute(accu::meta::max(), ima) == 9);
   accu::max<int> M;
-  mln_assertion(level::compute(M, ima) == 9);
+  mln_assertion(data::compute(M, ima) == 9);
 
   // mln::trait::accumulator::print(M);
 }

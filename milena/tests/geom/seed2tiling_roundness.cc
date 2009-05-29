@@ -35,7 +35,7 @@
 # include <mln/core/alias/w_window2d_int.hh>
 # include <mln/make/win_chamfer.hh>
 # include <mln/geom/seeds2tiling_roundness.hh>
-# include <mln/level/compare.hh>
+# include <mln/data/compare.hh>
 # include <mln/debug/println.hh>
 
 int main()

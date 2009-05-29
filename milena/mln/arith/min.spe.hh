@@ -73,7 +73,7 @@ namespace mln
       void min_(trait::image::speed::fastest, const L& lhs,
 		trait::image::speed::fastest, const R& rhs, O& output)
       {
-	trace::entering("level::arith::min_");
+	trace::entering("data::arith::min_");
 
 	mln_pixter(const L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
@@ -81,7 +81,7 @@ namespace mln
 	for_all_3(lp, rp, op)
 	  op.val() = lp.val() < rp.val() ? lp.val() : rp.val();
 
-	trace::exiting("level::arith::min_");
+	trace::exiting("data::arith::min_");
       }
 
       template <typename L, typename R>
@@ -97,7 +97,7 @@ namespace mln
       void min_inplace_(trait::image::speed::fastest, L& lhs,
 			trait::image::speed::fastest, const R& rhs)
       {
-	trace::entering("level::arith::min_inplace_");
+	trace::entering("data::arith::min_inplace_");
 
 	mln_pixter(L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
@@ -105,7 +105,7 @@ namespace mln
 	  if (rp.val() < lp.val())
 	    lp.val() = rp.val();
 
-	trace::exiting("level::arith::min_inplace_");
+	trace::exiting("data::arith::min_inplace_");
       }
 
     } // end of namespace mln::arith::impl

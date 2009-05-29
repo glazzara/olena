@@ -37,7 +37,7 @@
 ///
 /// \todo Augment and improve documentation.
 ///
-/// \todo Change level::sort so that the explanations below are valid
+/// \todo Change data::sort so that the explanations below are valid
 /// whatever the choice 'increasing or decreasing'.
  
 # include <mln/core/concept/image.hh>

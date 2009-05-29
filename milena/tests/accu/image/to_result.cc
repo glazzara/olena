@@ -34,7 +34,7 @@
 #include <mln/accu/image/init.hh>
 #include <mln/accu/image/to_result.hh>
 
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/pw/cst.hh>
 #include <mln/pw/image.hh>
 

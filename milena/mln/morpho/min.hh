@@ -35,7 +35,7 @@
  * (logical and or arithmetical min) of an image.
  */
 
-# include <mln/level/compare.hh>
+# include <mln/data/compare.hh>
 # include <mln/logical/and.hh>
 # include <mln/arith/min.hh>
 

@@ -34,7 +34,7 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
 
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/debug/println.hh>
 
 #include <mln/morpho/tree/data.hh>
@@ -58,7 +58,7 @@ int main()
   debug::println("ima = ", ima);
 
   typedef p_array<point2d> S;
-  S s = level::sort_psites_decreasing(ima);
+  S s = data::sort_psites_decreasing(ima);
 
   typedef morpho::tree::data<I,S> tree_t;
   tree_t t(ima, s, c4());

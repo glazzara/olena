@@ -33,8 +33,8 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/debug/iota.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/fill.hh>
+#include <mln/data/paste.hh>
 #include <mln/border/fill.hh>
 #include <mln/debug/println_with_border.hh>
 #include <mln/debug/println.hh>
@@ -67,8 +67,8 @@ int main ()
 
   std::cout << std::endl;
   I out (4,4);
-  level::paste(ima, out);
-  level::paste(tmp, out);
+  data::paste(ima, out);
+  data::paste(tmp, out);
   std::cout << "pasted image :"
 	    << std::endl;
   debug::println (out);

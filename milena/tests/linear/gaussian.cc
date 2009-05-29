@@ -37,7 +37,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/data/paste.hh>
 #include <mln/math/round.hh>
 

@@ -30,7 +30,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/binarization/threshold.hh>
-#include <mln/level/all.hh>
+#include <mln/data/all.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/ppm/load.hh>

@@ -36,7 +36,7 @@
 #include <mln/value/int_u16.hh>
 #include <mln/make/image2d.hh>
 #include <mln/labeling/wrap.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/debug/println.hh>
 

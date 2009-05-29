@@ -42,7 +42,7 @@
 #include <mln/display/show.hh>
 #include <mln/io/ppm/save.hh>
 #include <mln/display/save_and_show.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 #include "tests/data.hh"
 
@@ -74,7 +74,7 @@ int main()
   /// Test with color image.
   {
     image2d<value::rgb8> ima (100, 100);
-    level::fill(ima, value::rgb8 (0, 0, 255));
+    data::fill(ima, value::rgb8 (0, 0, 255));
     display::save_and_show (ima, "display", 1);
   }
 

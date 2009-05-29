@@ -36,7 +36,7 @@
 # include <mln/core/image/dmorph/sub_image.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/value/int_u8.hh>
-# include <mln/level/stretch.hh>
+# include <mln/data/stretch.hh>
 # include <mln/border/fill.hh>
 # include <mln/io/pbm/load.hh>
 # include <mln/io/pgm/save.hh>
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
     image2d<unsigned> inte = geom::seeds2tiling(lab, c4());
     border::fill(inte, 0);
 
-    image2d<int_u8> inte2 = level::stretch(int_u8(), inte);
+    image2d<int_u8> inte2 = data::stretch(int_u8(), inte);
     io::pgm::save(inte2, "ima1.pgm");
 
     std::cout << "ima1 generate with seeds2tiling"
@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
     inte = geom::seeds2tiling_roundness(lab, w_win, max, c4());
     border::fill(inte, 0);
 
-    inte2 = level::stretch(int_u8(), inte);
+    inte2 = data::stretch(int_u8(), inte);
 
     io::pgm::save(inte2, "ima2.pgm");
     std::cout << "ima2 generate with seeds2tiling_roundness"

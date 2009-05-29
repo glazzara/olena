@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/image/translate_image.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/paste.hh>
 # include <mln/geom/nrows.hh>
 # include <mln/geom/ncols.hh>
 
@@ -84,7 +84,7 @@ namespace mln
 	  translate_image<I> tr_ima(v_ima[i], dp);
 
 	  /// Paste translated image into output.
-	  level::paste(tr_ima, output);
+	  data::paste(tr_ima, output);
 	}
 
       return output;

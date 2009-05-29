@@ -1,7 +1,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/io/tiff/load.hh>
 #include <mln/io/pbm/save.hh>
-// #include <mln/level/convert.hh>
+// #include <mln/data/convert.hh>
 
 
 int main(int argc, char *argv[])
@@ -19,5 +19,5 @@ int main(int argc, char *argv[])
   io::pbm::save(ima, argv[2]);
 
 //  io::ppm::save(ima, argv[2]);
-//  io::pbm::save(level::convert(bool(), ima), argv[2]);
+//  io::pbm::save(data::convert(bool(), ima), argv[2]);
 }

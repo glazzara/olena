@@ -42,7 +42,7 @@
 
 # include <mln/accu/mean.hh>
 
-# include <mln/level/transform.hh>
+# include <mln/data/transform.hh>
 
 # include <mln/labeling/compute.hh>
 
@@ -119,7 +119,7 @@ namespace mln
 	  convert::from_to(m_3f, m);
 	  m[0] = 150u; //FIXME: handle label 0 correctly.
 
-	  mln_concrete(I) output = level::transform(lbl, m);
+	  mln_concrete(I) output = data::transform(lbl, m);
 
 	  trace::exiting("mln::labeling::impl::generic::mean_values");
 	  return output;
@@ -149,7 +149,7 @@ namespace mln
 	convert::from_to(m_3f, m);
 	m[0] = literal::yellow; //FIXME: handle label 0 correctly.
 
-	mln_concrete(I) output = level::transform(lbl,
+	mln_concrete(I) output = data::transform(lbl,
 	    convert::to< fun::i2v::array<mln_value(I)> >(m));
 
 

@@ -35,7 +35,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/make/image.hh>
 #include <mln/math/abs.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 
 namespace mln

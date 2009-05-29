@@ -32,7 +32,7 @@
 
 #include <mln/data/fill_with_value.hh>
 #include <mln/data/fill_with_image.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>

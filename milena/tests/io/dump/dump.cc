@@ -33,7 +33,7 @@
 #include <mln/io/dump/load.hh>
 #include <mln/io/dump/save.hh>
 
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/rgb8.hh>

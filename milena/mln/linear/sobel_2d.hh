@@ -41,7 +41,7 @@
 # include <mln/metal/int.hh>
 
 # include <mln/arith/plus.hh>
-# include <mln/level/abs.hh>
+# include <mln/data/abs.hh>
 # include <mln/fun/x2v/l1_norm.hh>
 # include <mln/fun/vv2v/vec.hh>
 # include <mln/linear/convolve_2x1d.hh>
@@ -134,7 +134,7 @@ namespace mln
       J h = sobel_2d_h(input),
 	v = sobel_2d_v(input);
       fun::vv2v::vec<mln_value(J)> f;
-      mln_ch_convolve_grad(I, int) output = level::transform(h, v, f);
+      mln_ch_convolve_grad(I, int) output = data::transform(h, v, f);
 
       trace::exiting("linear::sobel_2d");
       return output;
@@ -151,7 +151,7 @@ namespace mln
       typedef mln_ch_convolve_grad(I, int) G;
       G grad = sobel_2d(input);
       fun::x2v::l1_norm<mln_value(G)> f;
-      mln_ch_convolve(I, int) output = level::transform(grad, f);
+      mln_ch_convolve(I, int) output = data::transform(grad, f);
 
       trace::exiting("linear::sobel_2d");
       return output;

@@ -33,7 +33,7 @@
 
 #include <mln/core/var.hh>
 #include <mln/core/image/image2d.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/world/inter_pixel/immerse.hh>
 #include <mln/world/inter_pixel/compute.hh>
 

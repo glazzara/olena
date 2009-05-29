@@ -10,7 +10,7 @@
 #include <mln/labeling/compute.hh>
 #include <mln/labeling/blobs.hh>
 
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/util/array.hh>
 

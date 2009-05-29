@@ -53,7 +53,7 @@
 
 
 //FIXME: to be removed. For debug purpose.
-//#include <mln/level/convert.hh>
+//#include <mln/data/convert.hh>
 //#include <mln/value/rgb8.hh>
 //#include <mln/draw/line.hh>
 //#include <mln/literal/colors.hh>
@@ -189,7 +189,7 @@ namespace mln
 //
 //      std::cout << b << " - " << e << std::endl;
 //
-//      image2d<value::rgb8> toto = level::convert(value::rgb8(), input);
+//      image2d<value::rgb8> toto = data::convert(value::rgb8(), input);
 //      draw::line(toto, b, e, literal::red);
 //      io::ppm::save(toto, "tmp_input.ppm");
 //      }

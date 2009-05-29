@@ -32,7 +32,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/logical/xor.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 
 int main()

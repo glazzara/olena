@@ -37,9 +37,9 @@
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/labeling/blobs.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/data/paste.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/io/pgm/save.hh>
 
 #include <mln/core/image/sparse_encode.hh>
@@ -69,7 +69,7 @@ int main()
 		    c4(), n);
 
   sparse_image<point2d, int_u8> sparse =
-    sparse_encode(level::transform(labels, fold_t()));
+    sparse_encode(data::transform(labels, fold_t()));
 
   std::cout << n << ", compression ratio: " << sparse.compression()
 	    << std::endl;
@@ -77,5 +77,5 @@ int main()
   data::fill(cmp, literal::zero);
   data::paste(sparse, cmp);
 
-  mln_assertion(cmp == level::transform(labels, fold_t()));
+  mln_assertion(cmp == data::transform(labels, fold_t()));
 }

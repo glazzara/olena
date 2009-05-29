@@ -34,7 +34,7 @@
 #include <mln/core/image/imorph/plain.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/data/fill.hh>
 
 

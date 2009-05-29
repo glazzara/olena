@@ -32,8 +32,8 @@
 
 
 # include <mln/core/concept/image.hh>
-# include <mln/level/transform.hh>
-# include <mln/level/transform_inplace.hh>
+# include <mln/data/transform.hh>
+# include <mln/data/transform_inplace.hh>
 # include <mln/fun/vv2v/macros.hh>
 
 

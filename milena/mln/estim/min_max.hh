@@ -36,7 +36,7 @@
 /// \todo Overload while returning an std::pair.
 
 # include <mln/accu/min_max.hh>
-# include <mln/level/compute.hh>
+# include <mln/data/compute.hh>
 
 
 namespace mln
@@ -65,7 +65,7 @@ namespace mln
     {
       mln_precondition(exact(input).is_valid());
       typedef mln_value(I) V;
-      std::pair<V, V> mm = level::compute(accu::meta::min_max(), input);
+      std::pair<V, V> mm = data::compute(accu::meta::min_max(), input);
       min = mm.first;
       max = mm.second;
     }

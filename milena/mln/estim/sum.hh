@@ -36,7 +36,7 @@
 /// \todo Sum works on level so move into mln/level; otherwise on pix then ambiguous.
 
 # include <mln/accu/sum.hh>
-# include <mln/level/compute.hh>
+# include <mln/data/compute.hh>
 
 
 namespace mln
@@ -70,7 +70,7 @@ namespace mln
     mln_sum(mln_value(I)) sum(const Image<I>& input)
     {
       mln_precondition(exact(input).is_valid());
-      return level::compute(accu::meta::sum(), input);
+      return data::compute(accu::meta::sum(), input);
     }
 
     template <typename I, typename S>
@@ -79,7 +79,7 @@ namespace mln
     {
       mln_precondition(exact(input).is_valid());
       accu::sum<mln_value(I), S> a;
-      result = level::compute(a, input);
+      result = data::compute(a, input);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

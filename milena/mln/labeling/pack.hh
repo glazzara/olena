@@ -38,8 +38,8 @@
 
 # include <mln/make/relabelfun.hh>
 
-# include <mln/level/compute.hh>
-# include <mln/level/transform.hh>
+# include <mln/data/compute.hh>
+# include <mln/data/transform.hh>
 
 # include <mln/accu/label_used.hh>
 
@@ -106,11 +106,11 @@ namespace mln
       internal::pack_tests(label, new_nlabels);
 
       fun::i2v::array<bool>
-	fv2b = level::compute(accu::meta::label_used(), label);
+	fv2b = data::compute(accu::meta::label_used(), label);
 
       mln_value(I) tmp_nlabels = fv2b.size() - 1;
       mln_concrete(I)
-	output = level::transform(label,
+	output = data::transform(label,
 				  make::relabelfun(fv2b,
 						   tmp_nlabels,
 						   new_nlabels));
@@ -130,10 +130,10 @@ namespace mln
       internal::pack_tests(label, new_nlabels);
 
       fun::i2v::array<bool>
-	fv2b = level::compute(accu::meta::label_used(), label);
+	fv2b = data::compute(accu::meta::label_used(), label);
 
       mln_value(I) tmp_nlabels = fv2b.size() - 1;
-      exact(label) = level::transform(label,
+      exact(label) = data::transform(label,
 				      make::relabelfun(fv2b,
 						       tmp_nlabels,
 						       new_nlabels));

@@ -33,8 +33,8 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/data/fill.hh>
-# include <mln/level/compare.hh>
-# include <mln/level/sort_psites.hh>
+# include <mln/data/compare.hh>
+# include <mln/data/sort_psites.hh>
 
 
 namespace mln
@@ -144,7 +144,7 @@ namespace mln
 		initialize(deja_vu, f);
 		data::fill(deja_vu, false);
 
-		s = level::sort_psites_increasing(g);
+		s = data::sort_psites_increasing(g);
 	      }
 
 	      // First pass.

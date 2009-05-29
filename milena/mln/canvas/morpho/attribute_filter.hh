@@ -38,14 +38,14 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/concept/accumulator.hh>
 
-# include <mln/level/sort_offsets.hh>
+# include <mln/data/sort_offsets.hh>
 # include <mln/trait/accumulators.hh>
 # include <mln/util/pix.hh>
 
 # include <mln/border/get.hh>
 # include <mln/data/fill.hh>
 # include <mln/extension/adjust_fill.hh>
-# include <mln/level/sort_psites.hh>
+# include <mln/data/sort_psites.hh>
 
 
 namespace mln
@@ -406,8 +406,8 @@ namespace mln
 				  bool increasing)
 	{
 	  p_array<mln_psite(I)> s = increasing ?
-	    level::sort_psites_increasing(input) :
-	    level::sort_psites_decreasing(input);
+	    data::sort_psites_increasing(input) :
+	    data::sort_psites_decreasing(input);
 
 	  return impl::generic::attribute_filter(input, nbh, s, a, lambda);
 	}
@@ -429,8 +429,8 @@ namespace mln
 
 	  util::array<unsigned> s =
 	    increasing ?
-	    level::sort_offsets_increasing(input) :
-	    level::sort_offsets_decreasing(input);
+	    data::sort_offsets_increasing(input) :
+	    data::sort_offsets_decreasing(input);
 
 	  return impl::attribute_filter_fastest(input, nbh, s, a, lambda);
 	}

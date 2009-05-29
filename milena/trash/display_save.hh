@@ -38,8 +38,8 @@
 # include <mln/core/image/image_if.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
-# include <mln/level/fill.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/fill.hh>
+# include <mln/data/paste.hh>
 # include <mln/display/color_pretty.hh>
 # include <mln/io/ppm/save.hh>
 

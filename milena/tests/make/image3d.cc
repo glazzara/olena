@@ -32,7 +32,7 @@
 #include <mln/make/image3d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/core/routine/duplicate.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 
 int main()

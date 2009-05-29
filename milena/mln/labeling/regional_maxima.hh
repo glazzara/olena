@@ -37,7 +37,7 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/canvas/labeling.hh>
 # include <mln/data/fill.hh>
-# include <mln/level/sort_psites.hh>
+# include <mln/data/sort_psites.hh>
 
 
 namespace mln

@@ -36,7 +36,7 @@
 #include <mln/value/rgb8.hh>
 
 #include <mln/data/paste.hh>
-#include <mln/level/median.hh>
+#include <mln/data/median.hh>
 
 #include <mln/display/show.hh>
 #include <mln/display/save.hh>
@@ -73,7 +73,7 @@ int main()
 
     image2d<int_u8> ima(adaptor.domain());
 
-    level::median(adaptor, rect, ima);
+    data::median(adaptor, rect, ima);
 
     data::paste(ima, adaptor);
 

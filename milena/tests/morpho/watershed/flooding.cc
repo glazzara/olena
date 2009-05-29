@@ -39,7 +39,7 @@
 #include <mln/value/int_u16.hh>
 
 #include <mln/morpho/watershed/flooding.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -76,7 +76,7 @@ int main()
     t.start();
     image2d<L> output = morpho::watershed::impl::generic::flooding(input, c4(), n_basins);
     std::cout << "gen:  " << t << std::endl;
-    io::pgm::save(level::transform(output, f_16_to_8()),
+    io::pgm::save(data::transform(output, f_16_to_8()),
 		  "tmp_ref.pgm");
   }
   {
@@ -84,7 +84,7 @@ int main()
     t.start();
     image2d<L> output = morpho::watershed::impl::flooding_fastest(input, c4(), n_basins);
     std::cout << "fast: " << t << std::endl;
-    io::pgm::save(level::transform(output, f_16_to_8()),
+    io::pgm::save(data::transform(output, f_16_to_8()),
 		  "tmp_out.pgm");
   }
 }

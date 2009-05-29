@@ -37,8 +37,8 @@
 # include <mln/trait/image_from_grid.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
-# include <mln/level/fill.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/fill.hh>
+# include <mln/data/paste.hh>
 # include <mln/core/site_set/p_set.hh>
 # include <mln/metal/is_not.hh>
 
@@ -124,7 +124,7 @@ namespace mln
 	const I& input = exact (input_);
 
 	image2d<value::rgb8> output(input.domain().bbox());
-	level::fill(output, value::rgb8(255, 0, 0));
+	data::fill(output, value::rgb8(255, 0, 0));
 
 	{
 	  mln_piter(I) p(input.domain());
@@ -150,7 +150,7 @@ namespace mln
 	const I& input = exact (input_);
 
 	image2d<value::rgb8> output(input.domain().bbox());
-	level::fill(output, value::rgb8(0, 0, 0));
+	data::fill(output, value::rgb8(0, 0, 0));
 
 	{
 	  mln_piter(p_set<mln_psite(I) >) p(s1_);

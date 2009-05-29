@@ -35,7 +35,7 @@
 /// Lmax] (using modulus).
 
 # include <mln/core/concept/image.hh>
-# include <mln/level/transform.hh>
+# include <mln/data/transform.hh>
 # include <mln/fun/v2v/wrap.hh>
 # include <mln/metal/converts_to.hh>
 # include <mln/metal/is_a.hh>
@@ -82,7 +82,7 @@ namespace mln
       mln_precondition(exact(input).is_valid());
       (void) value_type;
 
-      mln_ch_value(I,V) output = level::transform(input, fun::v2v::wrap<V>());
+      mln_ch_value(I,V) output = data::transform(input, fun::v2v::wrap<V>());
 
       trace::exiting("labeling::wrap");
       return output;

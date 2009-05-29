@@ -32,7 +32,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 
 #include <mln/debug/println.hh>
 #include <mln/core/var.hh>
@@ -58,7 +58,7 @@ int main()
     debug::println(f);
 
     typedef p_array<point2d> S;
-    S s = level::sort_psites_increasing(f);
+    S s = data::sort_psites_increasing(f);
 
     morpho::tree::data<I,S> t(f, s, c4());
     debug::println(t.parent_image());

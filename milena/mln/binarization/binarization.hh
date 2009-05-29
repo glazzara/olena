@@ -34,7 +34,7 @@
 /// Threshold the contents of an image into another binary one.
 
 # include <mln/core/concept/function.hh>
-# include <mln/level/transform.hh>
+# include <mln/data/transform.hh>
 
 
 namespace mln
@@ -69,7 +69,7 @@ namespace mln
 	trace::entering("binarization::impl::binarization_");
 	mln_concrete_ch_value(I, bool) output(input.domain());
 
-	output = level::transform(input, fun);
+	output = data::transform(input, fun);
 
 	trace::exiting("binarization::impl::binarization_");
 	return output;

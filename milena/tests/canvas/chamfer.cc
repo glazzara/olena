@@ -41,7 +41,7 @@
 
 #include <mln/make/win_chamfer.hh>
 #include <mln/geom/chamfer.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/opt/at.hh>
 

@@ -37,8 +37,8 @@
 # include <mln/fun/i2v/array.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/literal/black.hh>
-# include <mln/level/transform.hh>
-# include <mln/level/compute.hh>
+# include <mln/data/transform.hh>
+# include <mln/data/compute.hh>
 # include <mln/accu/max.hh>
 
 
@@ -138,7 +138,7 @@ namespace mln
 	  f(i) = internal::random_color(value);
       }
       mln_assertion(f.size() >= (label_count));
-      mln_ch_value(L, V) output = level::transform(input, f);
+      mln_ch_value(L, V) output = data::transform(input, f);
 
       trace::exiting("labeling::colorize");
       return output;
@@ -154,7 +154,7 @@ namespace mln
       mln_precondition(exact(input).is_valid());
 
       accu::max<mln_value(L)> accu;
-      mln_value(L) nlabels = level::compute(accu, input);
+      mln_value(L) nlabels = data::compute(accu, input);
 
       mln_ch_value(L,V) output = colorize(value, input, nlabels);
 

@@ -1,5 +1,5 @@
 #include <mln/core/image/image2d.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/world/binary_2d/enlarge.hh>
 #include <mln/make/image.hh>
 #include <mln/value/int_u8.hh>

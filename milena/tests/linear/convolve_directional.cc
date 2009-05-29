@@ -36,7 +36,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/math/round.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/core/alias/w_window2d_float.hh>
 #include <mln/border/thickness.hh>
@@ -59,6 +59,6 @@ int main()
   float ws[] = { w, w, w, w, w, w, w, w, w };
   image2d<float> tmp = linear::convolve_directional(lena, 1, ws);
   
-  io::pgm::save(level::transform(tmp, math::round<int_u8>()),
+  io::pgm::save(data::transform(tmp, math::round<int_u8>()),
 		"out.pgm");
 }

@@ -44,7 +44,7 @@
 # include <mln/fun/p2v/ternary.hh>
 # include <mln/fun/v2b/threshold.hh>
 
-# include <mln/level/transform.hh>
+# include <mln/data/transform.hh>
 
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>
@@ -294,7 +294,7 @@ namespace mln
 	{
 	  mln_ch_value(I,value::int_u8) tmp = do_enlarge_gl(input, n);
 	  I output
-	    = level::transform(tmp, fun::v2b::threshold<value::int_u8>(150));
+	    = data::transform(tmp, fun::v2b::threshold<value::int_u8>(150));
 	  return output;
 	}
 

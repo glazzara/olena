@@ -33,7 +33,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/arith/diff_abs.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 int main()
 {

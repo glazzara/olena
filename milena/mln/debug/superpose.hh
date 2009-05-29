@@ -37,7 +37,7 @@
 # include <mln/core/image/dmorph/image_if.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/data/fill.hh>
-# include <mln/level/convert.hh>
+# include <mln/data/convert.hh>
 # include <mln/pw/all.hh>
 # include <mln/literal/colors.hh>
 
@@ -91,7 +91,7 @@ namespace mln
       mln_precondition(object.is_valid());
       mln_precondition(input.domain() == object.domain());
 
-      mln_ch_value(I,value::rgb8) output = level::convert(value::rgb8(), input);
+      mln_ch_value(I,value::rgb8) output = data::convert(value::rgb8(), input);
       data::fill((output | pw::value(object)).rw(), object_color);
 
       trace::exiting("debug::superpose");

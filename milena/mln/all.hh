@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ALL_HH_
-# define MLN_ALL_HH_
+#ifndef MLN_ALL_HH
+# define MLN_ALL_HH
 
 /// \file mln/all.hh
 ///
@@ -53,7 +53,6 @@
 #include <mln/histo/all.hh>
 #include <mln/io/all.hh>
 #include <mln/labeling/all.hh>
-#include <mln/level/all.hh>
 #include <mln/linear/all.hh>
 #include <mln/literal/all.hh>
 #include <mln/logical/all.hh>
@@ -78,5 +77,4 @@
 #include <mln/essential/2d.hh>
 #include <mln/essential/3d.hh>
 
-#endif // ! MLN_ALL_HH_
-
+#endif // ! MLN_ALL_HH

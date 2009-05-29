@@ -60,11 +60,11 @@ namespace mln
 # include <mln/labeling/fill_holes.hh>
 # include <mln/labeling/flat_zones.hh>
 # include <mln/labeling/foreground.hh>
-# include <mln/labeling/level.hh>
 # include <mln/labeling/n_max.hh>
 # include <mln/labeling/pack.hh>
 # include <mln/labeling/regional_maxima.hh>
 # include <mln/labeling/regional_minima.hh>
+# include <mln/labeling/value.hh>
 
 
 #endif // ! MLN_LABELING_ALL_HH

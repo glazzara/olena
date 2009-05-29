@@ -35,7 +35,7 @@
  * (logical or or arithmetical plus) of an image.
  */
 
-# include <mln/level/compare.hh>
+# include <mln/data/compare.hh>
 # include <mln/logical/or.hh>
 # include <mln/arith/plus.hh>
 

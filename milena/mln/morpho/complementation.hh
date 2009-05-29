@@ -35,7 +35,7 @@
  * (logical or arithmetical) of an image.
  */
 
-# include <mln/level/compare.hh>
+# include <mln/data/compare.hh>
 # include <mln/logical/not.hh>
 # include <mln/arith/revert.hh>
 

@@ -31,7 +31,7 @@
 
 #include <mln/core/image/image2d.hh>
 
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/io/magick/load.hh>
 #include <mln/io/ppm/load.hh>

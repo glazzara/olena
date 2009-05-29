@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,8 +34,14 @@
 /// File that includes essential data-related routines.
 
 
+# include <mln/data/apply.hh>
+# include <mln/data/compare.hh>
+# include <mln/data/convert.hh>
 # include <mln/data/fill.hh>
 # include <mln/data/paste.hh>
+# include <mln/data/saturate.hh>
+# include <mln/data/stretch.hh>
+# include <mln/data/transform.hh>
 
 
 #endif // ! MLN_DATA_ESSENTIAL_HH

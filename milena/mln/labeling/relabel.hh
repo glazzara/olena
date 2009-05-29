@@ -38,8 +38,8 @@
 
 # include <mln/make/relabelfun.hh>
 
-# include <mln/level/transform.hh>
-# include <mln/level/transform_inplace.hh>
+# include <mln/data/transform.hh>
+# include <mln/data/transform_inplace.hh>
 
 # include <mln/value/label.hh>
 
@@ -188,7 +188,7 @@ namespace mln
 
       internal::relabel_tests(label, nlabels, fv2v);
 
-      mln_concrete(I) output = level::transform(label, fv2v);
+      mln_concrete(I) output = data::transform(label, fv2v);
 
       trace::exiting("labeling::relabel");
       return output;
@@ -228,7 +228,7 @@ namespace mln
 
       internal::relabel_inplace_tests(label, nlabels, fv2v);
 
-      level::transform_inplace(label, fv2v);
+      data::transform_inplace(label, fv2v);
 
       trace::exiting("labeling::relabel_inplace");
     }

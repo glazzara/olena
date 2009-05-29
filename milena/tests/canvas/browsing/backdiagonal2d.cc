@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/canvas/browsing/backdiagonal2d.cc
- *
- * \brief Tests on mln::canvas::browsing::backdiagonal2d.
- */
+/// \file tests/canvas/browsing/backdiagonal2d.cc
+///
+/// \brief Tests on mln::canvas::browsing::backdiagonal2d.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/canvas/browsing/backdiagonal2d.hh>
@@ -92,6 +92,6 @@ int main()
   image2d<unsigned> ima2(10, 10);
 
   std::cout << ima2.bbox() << std::endl;
-  my_test(ima2, fun::p2v::iota, canvas::browsing::backdiagonal2d);
+  my_test(ima2, fun::p2v::iota(), canvas::browsing::backdiagonal2d);
   debug::println(ima2);
 }

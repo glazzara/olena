@@ -43,7 +43,7 @@
 namespace mln
 {
 
-  namespace level
+  namespace data
   {
     template <typename I, typename D>
     void fill(Image<I>& ima, const D& data);

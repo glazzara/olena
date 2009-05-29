@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
   p_vertices<G, fv2p_t> pv(g, fv2p);
 
 #ifndef NOUT
-  image2d<rgb8> gima = level::convert(rgb8(), ima);
+  image2d<rgb8> gima = data::convert(rgb8(), ima);
   debug::draw_graph(gima,
 		    pv,
 		    pw::cst(literal::cyan),
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
   pvlg_t pvlg(lg, convert::to<i2e_t>(lines));
 
 #ifndef NOUT
-  image2d<rgb8> lgima = level::convert(rgb8(), ima);
+  image2d<rgb8> lgima = data::convert(rgb8(), ima);
   debug::draw_graph(lgima,
 		    pvlg,
 		    pw::cst(literal::cyan),
@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
 
 
 #ifndef NOUT
-  image2d<rgb8> lgima2 = level::convert(rgb8(), ima);
+  image2d<rgb8> lgima2 = data::convert(rgb8(), ima);
   debug::draw_graph(lgima2, pvlg, pw::cst(literal::cyan), ecolor);
   io::ppm::save(lgima2, "05-line-graph-cleanup.ppm");
 #endif

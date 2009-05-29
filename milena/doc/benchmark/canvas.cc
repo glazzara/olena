@@ -27,7 +27,7 @@
 
 /// \file doc/benchmark/canvas.cc
 ///
-/// Test on mln::labeling::level.
+/// Test on mln::labeling::value.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
@@ -253,7 +253,7 @@ namespace mln
     level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
 	  L& nlabels)
     {
-      trace::entering("labeling::level");
+      trace::entering("labeling::value");
 
       typedef level_functor<I,N,L> F;
       F f(exact(input), val, exact(nbh));
@@ -261,7 +261,7 @@ namespace mln
 	  
       nlabels = run.nlabels;
       
-      trace::exiting("labeling::level");
+      trace::exiting("labeling::value");
       return run.output;
     }
 
@@ -285,7 +285,7 @@ int main()
     t.start();
     unsigned n;
     for (unsigned l = 0; l <= 255; ++l)
-      old_labeling::level(lena, l, c4(), n);
+      old_labeling::value(lena, l, c4(), n);
     std::cout << "canvas as class: " << t.read() << std::endl;
   }
 
@@ -294,7 +294,7 @@ int main()
     t.start();
     unsigned n;
     for (unsigned l = 0; l <= 255; ++l)
-      labeling::impl::generic::level(lena, l, c4(), n);
+      labeling::impl::generic::data(lena, l, c4(), n);
     std::cout << "canvas as proc.: " << t.read() << std::endl;
   }
 

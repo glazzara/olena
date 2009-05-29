@@ -20,7 +20,7 @@
 
 # include <mln/data/paste.hh>
 # include <mln/data/fill.hh>
-# include <mln/level/transform.hh>
+# include <mln/data/transform.hh>
 # include <mln/extension/fill.hh>
 
 # include <mln/morpho/meyer_wst.hh>
@@ -263,7 +263,7 @@ int main()
   for (unsigned i = 1; i <= nbasins; ++i)
     std::cout << "mean value of basin #" << i << " is " << m(i) << std::endl; 
 
-//   data::fill(cell, level::transform(lab, m));
+//   data::fill(cell, data::transform(lab, m));
 //   debug::println(cell);
 //   // 2   2   2 
 //   //

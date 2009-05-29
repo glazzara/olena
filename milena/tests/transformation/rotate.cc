@@ -32,7 +32,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/transformation/rotate.hh>
 # include <mln/make/image.hh>
-# include <mln/level/compare.hh>
+# include <mln/data/compare.hh>
 
 int main()
 {

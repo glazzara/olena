@@ -41,7 +41,7 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/trait/value_.hh>
 # include <mln/data/fill.hh>
-# include <mln/level/compare.hh>
+# include <mln/data/compare.hh>
 # include <mln/util/ord.hh>
 
 

@@ -34,7 +34,7 @@
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/data/fill.hh>
-# include <mln/level/stretch.hh>
+# include <mln/data/stretch.hh>
 # include <mln/border/fill.hh>
 # include <mln/io/pbm/load.hh>
 # include <mln/io/pgm/save.hh>
@@ -68,7 +68,7 @@ int main()
 
   image2d<int_u8> inte2(inte.domain());
 
-  level::stretch(inte, inte2);
+  data::stretch(inte, inte2);
 
   io::pgm::save(inte2, "inte.pgm");
 

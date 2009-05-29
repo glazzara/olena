@@ -46,7 +46,7 @@
 #include <mln/math/sqr.hh>
 #include <mln/accu/min_max.hh>
 #include <mln/fun/v2v/linear.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/literal/white.hh>
 
@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
   ima_t output(max_curv.domain());
   mln::data::fill(output, mln::literal::zero);
   std::pair<float, float> min_max(acc);
-  // FIXME: Taken from mln/level/stretch.hh (this should be factored).
+  // FIXME: Taken from mln/data/stretch.hh (this should be factored).
   float min = min_max.first;
   float max = min_max.second;
   std::cout << min << std::endl;
@@ -154,7 +154,7 @@ int main(int argc, char* argv[])
       float a = (M - m) / (max - min);
       float b = (m * max - M * min) / (max - min);
       mln::fun::v2v::linear<float, float, float> f(a, b);
-      output = mln::level::transform(max_curv, f);
+      output = mln::data::transform(max_curv, f);
     }
 
   // Output.

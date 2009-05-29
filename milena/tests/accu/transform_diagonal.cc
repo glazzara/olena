@@ -33,7 +33,7 @@
 #include <mln/accu/transform_diagonal.hh>
 #include <mln/accu/count.hh>
 #include <mln/pw/all.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 
 int main()

@@ -85,7 +85,7 @@
  * <LI> \ref mln::histo
  * <LI> \ref mln::io
  * <LI> \ref mln::labeling
- * <LI> \ref mln::level
+ * <LI> \ref mln::data
  * <LI> \ref mln::linear
  * <LI> \ref mln::literal
  * <LI> \ref mln::logical

@@ -34,7 +34,7 @@
 #include <mln/core/alias/window2d.hh>
 #include <mln/core/site_set/p_if.hh>
 #include <mln/fun/p2b/chess.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/convert/to_image.hh>
 #include <mln/convert/to.hh>

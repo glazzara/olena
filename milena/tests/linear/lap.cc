@@ -37,7 +37,7 @@
 
 #include <mln/border/thickness.hh>
 #include <mln/linear/lap.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 
 #include "tests/data.hh"
 
@@ -52,6 +52,6 @@ int main()
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
-  io::pgm::save(level::stretch(int_u8(), linear::lap_4(lena)),
+  io::pgm::save(data::stretch(int_u8(), linear::lap_4(lena)),
 		"out.pgm");
 }

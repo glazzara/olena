@@ -32,7 +32,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/io/tiff/load.hh>
 
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/rgb8.hh>

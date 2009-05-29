@@ -54,7 +54,7 @@
 
 # include <mln/fun/v2v/saturate.hh>
 
-# include <mln/level/compare.hh>
+# include <mln/data/compare.hh>
 # include <mln/data/fill.hh>
 
 # include <mln/test/positive.hh>

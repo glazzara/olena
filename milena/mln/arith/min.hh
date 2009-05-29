@@ -80,27 +80,27 @@ namespace mln
 	inline
 	void min_(const L& lhs, const R& rhs, O& output)
 	{
-	  trace::entering("level::arith::generic::min_");
+	  trace::entering("data::arith::generic::min_");
 
 	  mln_piter(L) p(lhs.domain());
 	  for_all(p)
 	    output(p) = lhs(p) < rhs(p) ? lhs(p) : rhs(p);
 
-	  trace::entering("level::arith::generic::min_");
+	  trace::entering("data::arith::generic::min_");
 	}
 
 	template <typename L, typename R>
 	inline
 	void min_inplace_(L& lhs, const R& rhs)
 	{
-	  trace::entering("level::arith::generic::min_inplace_");
+	  trace::entering("data::arith::generic::min_inplace_");
 
 	  mln_piter(L) p(lhs.domain());
 	  for_all(p)
 	  if (rhs(p) < lhs(p))
 	    lhs(p) = rhs(p);
 
-	  trace::exiting("level::arith::generic::min_inplace_");
+	  trace::exiting("data::arith::generic::min_inplace_");
 	}
 
       } // end of namespace mln::arith::impl::generic

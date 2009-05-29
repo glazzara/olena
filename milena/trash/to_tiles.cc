@@ -33,8 +33,8 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/debug/iota.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/fill.hh>
+#include <mln/data/paste.hh>
 #include <mln/border/fill.hh>
 #include <mln/debug/println_with_border.hh>
 #include <mln/debug/println.hh>
@@ -49,39 +49,39 @@ int main ()
   std::vector<I> vec;
 
   I ima1 (4, 2, 1);
-  level::fill(ima1, 1);
+  data::fill(ima1, 1);
   vec.push_back(ima1);
 
   I ima2 (4, 2, 1);
-  level::fill(ima2, 2);
+  data::fill(ima2, 2);
   vec.push_back(ima2);
 
   I ima3 (4, 2, 1);
-  level::fill(ima3, 3);
+  data::fill(ima3, 3);
   vec.push_back(ima3);
 
   I ima4 (4, 2, 1);
-  level::fill(ima4, 4);
+  data::fill(ima4, 4);
   vec.push_back(ima4);
 
   I ima5 (4, 2, 1);
-  level::fill(ima5, 5);
+  data::fill(ima5, 5);
   vec.push_back(ima5);
 
   I ima6 (4, 2, 1);
-  level::fill(ima6, 6);
+  data::fill(ima6, 6);
   vec.push_back(ima6);
 
   I ima7 (4, 2, 1);
-  level::fill(ima7, 7);
+  data::fill(ima7, 7);
   vec.push_back(ima7);
 
   I ima8 (4, 2, 1);
-  level::fill(ima8, 8);
+  data::fill(ima8, 8);
   vec.push_back(ima8);
 
   I ima9 (4, 2, 1);
-  level::fill(ima9, 9);
+  data::fill(ima9, 9);
   vec.push_back(ima9);
 
   I output = convert::to_tiles(vec, 1.33333f);

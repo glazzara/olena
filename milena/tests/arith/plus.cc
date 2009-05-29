@@ -33,7 +33,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/arith/plus.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 int main()
 {
@@ -67,7 +67,7 @@ int main()
 
 // #include <mln/arith/plus.hh>
 // #include <mln/arith/times.hh>
-// #include <mln/level/compare.hh>
+// #include <mln/data/compare.hh>
 // #include <mln/fun/v2v/cast.hh>
 
 // #include <mln/debug/iota.hh>

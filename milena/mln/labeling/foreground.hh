@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,7 +34,7 @@
 /// Connected component labeling of the object part in a binary
 /// image.
 
-# include <mln/labeling/level.hh>
+# include <mln/labeling/value.hh>
 
 
 namespace mln
@@ -53,10 +53,10 @@ namespace mln
      *
      * \pre The input image has to be binary (checked at compile-time).
      *
-     * This routine actually calls mln::labeling::level with the level
+     * This routine actually calls mln::labeling::value with the
      * value set to \c true.
      *
-     * \see mln::labeling::level
+     * \see mln::labeling::value
      */
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
@@ -79,7 +79,7 @@ namespace mln
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(nbh).is_valid());
 
-      mln_ch_value(I, L) output = labeling::level(input, true, nbh, nlabels);
+      mln_ch_value(I, L) output = labeling::value(input, true, nbh, nlabels);
 
       trace::exiting("labeling::foreground");
       return output;

@@ -35,7 +35,7 @@
  * not" or arithmetical min) of an image.
  */
 
-# include <mln/level/compare.hh>
+# include <mln/data/compare.hh>
 # include <mln/logical/and_not.hh>
 # include <mln/arith/minus.hh>
 

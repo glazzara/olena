@@ -39,7 +39,7 @@
 #include <mln/accu/v.hh>
 #include <mln/accu/compute.hh>
 
-#include <mln/level/compute.hh>
+#include <mln/data/compute.hh>
 
 
 int main()
@@ -47,8 +47,8 @@ int main()
   using namespace mln;
   image2d<int> ima(3, 3);
   debug::iota(ima);
-  mln_assertion(level::compute(accu::meta::min(), ima) == 1);
+  mln_assertion(data::compute(accu::meta::min(), ima) == 1);
 
   accu::min<int> m;
-  mln_assertion(level::compute(m, ima) == 1);
+  mln_assertion(data::compute(m, ima) == 1);
 }
