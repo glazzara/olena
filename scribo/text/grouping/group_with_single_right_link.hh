@@ -32,23 +32,25 @@
 
 /// \file scribo/text/grouping/group_with_single_right_link.hh
 ///
-/// Link text bounding boxes with their right neighbor.
+/// Link text objects with their right neighbor.
 ///
 /// \todo Merge code with text::grouping::group_with_single_right_link.hh
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 
+# include <mln/accu/center.hh>
+
+# include <mln/labeling/compute.hh>
+
 # include <mln/math/abs.hh>
 
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
+# include <scribo/core/object_image.hh>
 # include <scribo/text/grouping/internal/init_link_array.hh>
-# include <scribo/text/grouping/internal/update_link_array.hh>
-# include <scribo/text/grouping/internal/find_root.hh>
 # include <scribo/text/grouping/internal/find_right_link.hh>
-# include <scribo/util/text.hh>
 
 //FIXME: not generic.
 # include <mln/core/alias/dpoint2d.hh>
@@ -62,15 +64,18 @@ namespace scribo
     namespace grouping
     {
 
-      /// Map each character bounding box to its right bounding box neighbor
+      /// Map each text object to its right bounding box neighbor
       /// if possible.
       /// Iterate to the right but link boxes to the right.
+      ///
+      /// \param[in] objects An object image.
+      /// \param[in] The maximum distance allowed to seach a neighbor object.
       ///
       /// \return an mln::util::array. Map a bounding box to its right neighbor.
       template <typename L>
       inline
       mln::util::array<unsigned>
-      group_with_single_right_link(const scribo::util::text<L>& text,
+      group_with_single_right_link(const object_image(L)& objects,
 				   unsigned neighb_max_distance);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -78,27 +83,29 @@ namespace scribo
       template <typename L>
       inline
       mln::util::array<unsigned>
-      group_with_single_right_link(const scribo::util::text<L>& text,
+      group_with_single_right_link(const object_image(L)& objects,
 				   unsigned neighb_max_distance)
       {
 	trace::entering("scribo::text::grouping::group_with_single_right_link");
 
-	mln_precondition(text.is_valid());
+	mln_precondition(objects.is_valid());
 
-	mln::util::array<unsigned> right_link(text.nbboxes().next());
+	mln::util::array<unsigned> right_link(objects.nlabels().next());
 	internal::init_link_array(right_link);
 
-	for_all_ncomponents(i, text.nbboxes())
-	{
-	  unsigned midcol = (text.bbox(i).pmax().col()
-				- text.bbox(i).pmin().col()) / 2;
-	  int dmax = midcol + neighb_max_distance;
-	  mln_site(L) c = text.mass_center(i);
+	mln::util::array<mln_result(accu::center<mln_psite(L)>)>
+	    mass_centers = labeling::compute(accu::meta::center(),
+					     objects, objects.nlabels());
 
-	  ///
+	for_all_ncomponents(i, objects.nlabels())
+	{
+	  unsigned midcol = (objects.bbox(i).pmax().col()
+				- objects.bbox(i).pmin().col()) / 2;
+	  int dmax = midcol + neighb_max_distance;
+	  mln_site(L) c = mass_centers(i);
+
 	  /// Find a neighbor on the right
-	  ///
-	  internal::find_right_link(text, right_link, i, dmax, c);
+	  internal::find_right_link(objects, right_link, i, dmax, c);
 	}
 
 	trace::exiting("scribo::text::grouping::group_with_single_right_link");

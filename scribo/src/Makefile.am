@@ -24,6 +24,7 @@ bin_PROGRAMS = 				\
   superpose 				\
   table_rebuild_opening 		\
   table_rebuild_rank 			\
+  text_in_photo 			\
   thin_bboxes
 
 dmap_SOURCES = dmap.cc                               
@@ -39,5 +40,6 @@ recognition_SOURCES = recognition.cc
 superpose_SOURCES = superpose.cc
 table_rebuild_opening_SOURCES = table_rebuild_opening.cc
 table_rebuild_rank_SOURCES = table_rebuild_rank.cc
+text_in_photo_SOURCES = text_in_photo.cc
 thin_bboxes_SOURCES = thin_bboxes.cc
 

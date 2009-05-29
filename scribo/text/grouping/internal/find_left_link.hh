@@ -39,7 +39,7 @@
 
 # include <mln/util/array.hh>
 
-# include <scribo/util/text.hh>
+# include <scribo/core/object_image.hh>
 # include <scribo/text/grouping/internal/update_link_array.hh>
 
 //FIXME: not generic.
