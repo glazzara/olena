@@ -21,3 +21,5 @@ to_rgb_SOURCES = to_rgb.cc
 to_window_SOURCES = to_window.cc
 
 TESTS = $(check_PROGRAMS)
+
+XFAIL_TESTS = to_hsl
