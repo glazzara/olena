@@ -5,8 +5,8 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/image/image3d.hh>
-#include <mln/core/image/slice_image.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/slice_image.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 #include <mln/core/routine/duplicate.hh>
 #include <mln/core/routine/extend.hh>
 #include <mln/core/var.hh>
@@ -55,6 +55,8 @@
 #include <mln/labeling/colorize.hh>
 #include <mln/debug/println.hh>
 #include <mln/trace/quiet.hh>
+
+#include "plot_points/int2rgb.hh"
 
 
 using namespace mln;
@@ -126,7 +128,6 @@ int main(int argc, char* argv[])
 
 
   mln_VAR(w_all, wst.unmorph_());
-  //io::dump::save(w_all, "watershed_edges.dump");
   //data::fill((w | (!world::inter_pixel::is_separator())).rw(), nbasins.next());
   mln_VAR(w_pixels, w_all | world::inter_pixel::is_pixel());
   data::paste(morpho::dilation(extend(w_pixels, pw::value(w_all)), c4().win()), w_all);
@@ -134,8 +135,8 @@ int main(int argc, char* argv[])
   mln_VAR(w_dots, w_all | world::inter_pixel::dim2::is_dot());
   data::paste(morpho::erosion(extend(w_dots, pw::value(w_all)), c4().win()), w_all);
 
-  //io::ppm::save(labeling::colorize(value::rgb8(), w, nbasins.next()), "result.ppm");
-  io::pgm::save(labeling::wrap(int_u8(), w_all), "watershed.pgm");
+  io::dump::save(w_all, "watershed.dump");
+  io::ppm::save(debug::int2rgb(w_all), "watershed.ppm");
 
 
   return 0;

@@ -1,3 +1,11 @@
+2009-05-29  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Plot all points of a specific label.
+	* fabien/igr/plot_points/int2rgb.hh: Convert a unsigned value
+	to a rgb8 value, used for visualization.
+	* fabien/igr/plot_points/plot_points_of_label.cc: Small update.
+	* fabien/igr/wst_edges.cc: Output watershed dump.
+
 2009-05-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Updating level/ to data/ and labeling::level to ::value.

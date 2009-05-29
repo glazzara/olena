@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 
 
   // Initialization.
-  typedef int_u12 V;
+  typedef float V;
   image3d<V> input;
   io::dump::load(input, argv[1]);
   typedef image2d<util::array<V> > I;
@@ -55,8 +55,15 @@ int main(int argc, char* argv[])
       ima_arr(p).append(tmp_slice(p));
   }
 
+  image2d<label_16> wst;
+  io::dump::load(wst, argv[2]);
   image2d<label_16> ima_labels;
-  io::dump::load(ima_labels, argv[2]);
+  initialize(ima_labels, ima_arr);
+  mln_piter_(image2d<label_16>) q(ima_labels.domain());
+  for_all(q)
+  {
+    ima_labels(q) = wst.at_(q.row() * 2, q.col() * 2);
+  }
 
   // Plot points.
   int origin_x = ima_arr.bbox().pmin()[1];
@@ -69,7 +76,7 @@ int main(int argc, char* argv[])
     int x = p[1] - origin_x;
     int y = p[0] - origin_y;
     std::ostringstream slabel;
-    slabel << "x";
+    slabel << "l" << label << "_x";
     if (x < 100)
       slabel << "0";
     if (x < 10)
