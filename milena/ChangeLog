@@ -1,5 +1,61 @@
 2009-05-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Move to trash non-up-to-date image types.
+
+	* mln/core/image/bgraph_image.hh,
+	* mln/core/image/bgraph_psite.hh,
+	* mln/core/image/mono_obased_rle_encode.hh,
+	* mln/core/image/mono_obased_rle_image.hh,
+	* mln/core/image/mono_rle_encode.hh,
+	* mln/core/image/mono_rle_image.hh,
+	* mln/core/image/obased_rle_encode.hh,
+	* mln/core/image/obased_rle_image.hh,
+	* mln/core/image/rle_encode.hh,
+	* mln/core/image/rle_image.hh,
+	* mln/core/image/sparse_encode.hh,
+	* mln/core/image/sparse_image.hh,
+	* mln/core/image/value_enc_image.hh,
+	* mln/core/image/value_encode.hh,
+	* tests/core/image/bgraph_image.cc,
+	* tests/core/image/fi_adaptor.cc,
+	* tests/core/image/mono_obased_rle_image.cc,
+	* tests/core/image/mono_rle_image.cc,
+	* tests/core/image/obased_rle_image.cc,
+	* tests/core/image/rle_image.cc,
+	* tests/core/image/sparse_image.cc,
+	* tests/core/image/value_enc_image.cc: Move...
+
+	* trash/bgraph_image.cc,
+	* trash/bgraph_image.hh,
+	* trash/bgraph_psite.hh,
+	* trash/fi_adaptor.cc,
+	* trash/mono_obased_rle_encode.hh,
+	* trash/mono_obased_rle_image.cc,
+	* trash/mono_obased_rle_image.hh,
+	* trash/mono_rle_encode.hh,
+	* trash/mono_rle_image.cc,
+	* trash/mono_rle_image.hh,
+	* trash/obased_rle_encode.hh,
+	* trash/obased_rle_image.cc,
+	* trash/obased_rle_image.hh,
+	* trash/rle_encode.hh,
+	* trash/rle_image.cc,
+	* trash/rle_image.hh,
+	* trash/sparse_encode.hh,
+	* trash/sparse_image.cc,
+	* trash/sparse_image.hh,
+	* trash/value_enc_image.cc,
+	* trash/value_enc_image.hh,
+	* trash/value_encode.hh: ...here.
+
+	* tests/core/image/Makefile.am: Remove dead lines.
+	De-activate code for freeimage since fi_adaptor was trashed.
+
+	* mln/core/site_set/status.txt,
+	* mln/core/image/status.txt: Remove; obsolete.
+
+2009-05-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix missing remove.
 
 	* tests/level/Makefile.am: Remove.
