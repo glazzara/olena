@@ -93,12 +93,11 @@ namespace mln
 	  mln_fwd_piter(I) p(ima.domain());
 	  for_all(p)
 	    {
-	      unsigned value;
+	      unsigned char value;
 	      file >> value;
-	      mln_assertion(value == 0 || value == 1);
-	      ima(p) = (value == 0); // In pbm, '0' means 'white' so 'object', thus 'true'!
-	      // FIXME: Test alt code below.
-	      // file >> ima(p);
+
+	      mln_assertion(value == '0' || value == '1');
+	      ima(p) = (value == '0'); // In pbm, '0' means 'white' so 'object', thus 'true'!
 	    }
 	}
 

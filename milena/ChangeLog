@@ -1,5 +1,19 @@
 2009-05-29 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Fix pbm::load and pgm::load with ASCII encoded images.
+
+	* mln/io/pbm/load.hh,
+	* mln/value/builtin/integers.hh: make them work with ASCII encoded
+	images.
+
+	* tests/io/pbm/Makefile.am,
+	* tests/io/pgm/Makefile.am: add new tests.
+
+	* tests/io/pbm/pbm_ascii.cc,
+	* tests/io/pgm/pgm_ascii.cc: new tests.
+
+2009-05-29 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	* tests/linear/Makefile.am: fix conflict name between gaussian
 	directory and gaussian test.
 

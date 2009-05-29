@@ -77,7 +77,7 @@ namespace mln
 	  nbits = n,
 	  card  = mln_value_card_from_(n)
 	};
-	
+
 	typedef trait::value::nature::integer nature;
 	typedef trait::value::kind::data      kind;
 	typedef mln_value_quant_from_(card) quant;
@@ -103,6 +103,13 @@ namespace mln
     {
       static const char* name()
       { return "signed char"; }
+    };
+
+    template <> struct value_<   char  >
+      : internal::value_integer_<  signed char  >
+    {
+      static const char* name()
+      { return "char"; }
     };
 
     template <> struct value_< unsigned short >
