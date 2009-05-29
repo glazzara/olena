@@ -7,8 +7,8 @@
 
 #include <mln/core/image/dmorph/image_if.hh>
 #include <mln/pw/value.hh>
-#include <mln/level/transform.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/transform.hh>
+#include <mln/data/stretch.hh>
 
 #include <mln/arith/revert.hh>
 #include <mln/core/alias/neighb3d.hh>
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
   std::cout << "  => loading " << argv[1] << "..." << std::endl;
   image2d<value::rgb8> ima;
   io::ppm::load(ima, argv[1]);
-//   image2d<rgb6> ima6 = level::transform(ima, rgb8to6());
+//   image2d<rgb6> ima6 = data::transform(ima, rgb8to6());
 
   std::cout << "  => computing histogram..." << std::endl;
   image3d<unsigned> histo = histo::compute_histo_rgb<unsigned>(ima); // 6);
@@ -99,8 +99,8 @@ int main(int argc, char* argv[])
 		       h );
 
     image2d<float> h_2d = accu::image::to_result(h_2d_a);
-    io::pgm::save( level::stretch( int_u8(),
-				   level::transform( h_2d,
+    io::pgm::save( data::stretch( int_u8(),
+				   data::transform( h_2d,
 						     take_log() ) ),
 		   "h_2d.pgm" );
   }

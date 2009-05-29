@@ -4,7 +4,7 @@
 #include <mln/core/site_set/p_set.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>

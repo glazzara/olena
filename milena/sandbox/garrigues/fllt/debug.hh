@@ -151,7 +151,7 @@ namespace mln
       //       image2d<value::int_u8> viz2(ima.domain());
 
       //       visualize_deepness(viz, lower_tree);
-      //       level::stretch(viz, viz2);
+      //       data::stretch(viz, viz2);
       //       debug::println(viz);
       //       debug::println(viz2);
       //       io::pgm::save(viz2, "fllt.pgm");

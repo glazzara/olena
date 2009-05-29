@@ -39,12 +39,12 @@
 #include <mln/value/hsi.hh>
 
 #include <mln/fun/v2v/rgb_to_hsi.hh>
-#include <mln/level/to_enc.hh>
+#include <mln/data/to_enc.hh>
 #include <mln/fun/meta/hue.hh>
 #include <mln/fun/meta/sat.hh>
 #include <mln/fun/meta/inty.hh>
 
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/io/ppm/load.hh>
 #include <mln/io/pbm/save.hh>
@@ -52,7 +52,7 @@
 
 #include <mln/accu/histo.hh>
 #include <mln/histo/compute.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/data/fill.hh>
 
 using namespace mln;
@@ -106,14 +106,14 @@ int main (int argc, const char* argv [])
       image2d<rgb8> input;
       io::ppm::load(input, argv[i]);
 
-      image2d<hsi_f> hsi = level::transform(input, fun::v2v::f_rgb_to_hsi_f);
+      image2d<hsi_f> hsi = data::transform(input, fun::v2v::f_rgb_to_hsi_f);
       thru<mln::meta::hue<hsi_f>, image2d<hsi_f> > h(hsi);
       cast_image_<float01_8, thru<mln::meta::hue<hsi_f>, image2d<hsi_f> > > hue(h);
 
       std::string n(argv[i]);
       n.erase(n.length() - 4);
       image2d<int_u8> henc;
-      level::transform(hue, fun::v2v::enc< float01_8 >(), henc);
+      data::transform(hue, fun::v2v::enc< float01_8 >(), henc);
       io::pgm::save(henc, n.append("_hue.pgm"));
 
       image2d<hsi_f>::piter p(hsi.domain());
@@ -138,7 +138,7 @@ int main (int argc, const char* argv [])
       n = argv[i];
       n.erase(n.length() - 4);
       image2d<int_u8> senc;
-      level::transform(sat, fun::v2v::enc< float01_8 >(), senc);
+      data::transform(sat, fun::v2v::enc< float01_8 >(), senc);
       io::pgm::save(senc, n.append("_sat.pgm"));
 
       m = 0;
@@ -160,7 +160,7 @@ int main (int argc, const char* argv [])
       n = argv[i];
       n.erase(n.length() - 4);
       image2d<int_u8> ienc;
-      level::transform(inty, fun::v2v::enc< float01_8 >(), ienc);
+      data::transform(inty, fun::v2v::enc< float01_8 >(), ienc);
       io::pgm::save(ienc, n.append("_inty.pgm"));
 
 

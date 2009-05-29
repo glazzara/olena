@@ -20,7 +20,7 @@
 
 #include <mln/labeling/mean_values.hh>
 
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 
 #include <mln/morpho/elementary/dilation.hh>
 
@@ -234,8 +234,8 @@ int main(int argc, char *argv[])
 
   K input;
   io::ppm::load(input, argv[1]);
-  I input_ = level::convert(hsl_f(), input);
-  input = level::transform(input_, hsl2rgb());
+  I input_ = data::convert(hsl_f(), input);
+  input = data::transform(input_, hsl2rgb());
 
   J vol;
   io::dump::load(vol, argv[2]);
@@ -287,7 +287,7 @@ int main(int argc, char *argv[])
     std::cout << "nbasins2 = " << nbasins2 << std::endl;
   }
   //  debug::println(vol);
-  vol2 = level::transform(vol, f);
+  vol2 = data::transform(vol, f);
   //  debug::println(vol2);
   util::graph g2 = make::region_adjacency_graph(vol2, c4(), nbasins2);
 

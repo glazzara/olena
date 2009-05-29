@@ -2,7 +2,7 @@
 #include <mln/core/concept/function.hh>
 #include <mln/core/site_set/p_array.hh>
 
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
@@ -58,7 +58,7 @@ namespace mln
     node_only.t = &t;
 
     typedef p_array<mln_site(A)> S;
-    S s = level::sort_psites_increasing(a | node_only);
+    S s = data::sort_psites_increasing(a | node_only);
 
     mln_fwd_piter(S) p(s);
     for_all(p)

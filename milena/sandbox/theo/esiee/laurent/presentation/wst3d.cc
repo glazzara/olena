@@ -3,7 +3,7 @@
 
 # include <mln/value/int_u16.hh>
 # include <mln/value/int_u8.hh>
-# include <mln/level/stretch.hh>
+# include <mln/data/stretch.hh>
 
 # include <mln/io/pgm/load.hh>
 # include <mln/io/ppm/save.hh>
@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
   abort();
 
   image3d<int_u8> ima(ima16.domain());
-  level::stretch(ima16, ima);
+  data::stretch(ima16, ima);
   ima16.destroy();
 
   int lambda = atoi(argv[2]);

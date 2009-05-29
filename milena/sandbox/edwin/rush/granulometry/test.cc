@@ -34,7 +34,7 @@
 
 #include <mln/io/pgm/load.hh>
 
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
 #include <mln/morpho/attribute/card.hh>
@@ -66,7 +66,7 @@ int main(int argc, char** argv)
   typedef p_array<point2d> S;
   typedef morpho::tree::data<I,S> tree_t;
 
-  S s = level::sort_psites_decreasing(input);
+  S s = data::sort_psites_decreasing(input);
   tree_t tree(input, s, c4());
 
   typedef mln_ch_value_(I, unsigned) A;

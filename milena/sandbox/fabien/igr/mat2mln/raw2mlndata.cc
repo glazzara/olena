@@ -6,7 +6,7 @@
 
 #include <mln/io/pgm/save.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/core/image/dmorph/slice_image.hh>
 #include <mln/core/routine/duplicate.hh>
 #include <mln/core/image/image2d.hh>
@@ -123,7 +123,7 @@ int main(int argc, char* argv[])
   // Debug.
   image2d<V> ima_debug;
   ima_debug = duplicate(slice(ima, 50));
-  //io::pgm::save(level::stretch(value::int_u8(), ima_debug), "debug.pgm");
+  //io::pgm::save(data::stretch(value::int_u8(), ima_debug), "debug.pgm");
   io::pgm::save(ima_debug, "debug.pgm");
 
   return 0;

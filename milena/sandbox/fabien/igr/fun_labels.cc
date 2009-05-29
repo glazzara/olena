@@ -28,8 +28,8 @@
 #include <mln/accu/mean.hh>
 #include <mln/accu/median_h.hh>
 #include <mln/data/fill.hh>
-#include <mln/level/compute.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/compute.hh>
+#include <mln/data/stretch.hh>
 #include <mln/make/box3d.hh>
 #include <mln/morpho/elementary/dilation.hh>
 #include <mln/pw/all.hh>
@@ -72,7 +72,7 @@ void plot_label(Image<I>& ima, Image<L>& ima_labels, V lbl)
 			      sli, max_row, max_col);
     mln_VAR(slice_label, vol_label | slice);
     accu::mean<mln_value(I)> accu_mean;
-    float mean = level::compute(accu_mean, slice_label);
+    float mean = data::compute(accu_mean, slice_label);
     arr.append(mean);
   }
 
@@ -105,7 +105,7 @@ void plot_all_labels(Image<I>& ima, Image<L>& ima_labels, unsigned nlabels)
     {
       image2d<int_u12> ima_slice = duplicate(slice(ima, sli));
       image2d<label_16> lbl_slice = duplicate(slice(ima_labels, sli));
-      float mean = level::compute(accu_mean, ima_slice | pw::value(lbl_slice) == pw::cst(l));
+      float mean = data::compute(accu_mean, ima_slice | pw::value(lbl_slice) == pw::cst(l));
       arrays[l].append(mean);
     }
   }
@@ -168,7 +168,7 @@ void plot_point(Image<I>& ima, Image<L>& ima_labels, point2d point, const char* 
     }
     // Taking the median value of the region.
     accu::mean<mln_value(I)> accu_mean;
-    mln_value(I) mean = level::compute(accu_mean, ima_slice | pw::value(lbl_slice) == pw::cst(lbl_slice(point)));
+    mln_value(I) mean = data::compute(accu_mean, ima_slice | pw::value(lbl_slice) == pw::cst(lbl_slice(point)));
     arr.append(mean);
     prev_lbl = lbl_slice(point);
 
@@ -181,7 +181,7 @@ void plot_point(Image<I>& ima, Image<L>& ima_labels, point2d point, const char* 
     if (sli < 10)
       str_ima << "0";
     str_ima << sli << ".pgm";
-    io::pgm::save(level::stretch(int_u8(), ima_slice), str_ima.str());*/
+    io::pgm::save(data::stretch(int_u8(), ima_slice), str_ima.str());*/
   }
 
   if (!arr.is_empty())

@@ -58,11 +58,11 @@ int main(int argc, char *argv[])
 
   I input_;
   io::ppm::load(input_, argv[1]);
-  J input = level::convert(hsl_f(), input_);
-  io::ppm::save(level::transform(input, hsl2rgb()), "input-hsl.ppm");
+  J input = data::convert(hsl_f(), input_);
+  io::ppm::save(data::transform(input, hsl2rgb()), "input-hsl.ppm");
 
   {
-    I tmp = level::transform(input, hsl2rgb());
+    I tmp = data::transform(input, hsl2rgb());
 
     image2d<int_u8> grad_hue;
     initialize(grad_hue, input);
@@ -130,13 +130,13 @@ int main(int argc, char *argv[])
   io::dump::save(wshed, "hsl2rgb_wshed.dump");
   std::cout << "nbasins = " << nbasins << std::endl;
 
-  io::pgm::save(level::transform(wshed, fun::v2v::wrap<int_u8>()),
+  io::pgm::save(data::transform(wshed, fun::v2v::wrap<int_u8>()),
 		"hsl2rgb_wshed.pgm");
-  io::ppm::save(labeling::mean_values(level::transform(input, hsl2rgb()), wshed, nbasins),
+  io::ppm::save(labeling::mean_values(data::transform(input, hsl2rgb()), wshed, nbasins),
 		"hsl2rgb_wshed_mean_colors.ppm");
 
 
-  I out = level::transform(input, hsl2rgb());
+  I out = data::transform(input, hsl2rgb());
   io::ppm::save(out, "hsl2rgb_out.ppm");
 
 }

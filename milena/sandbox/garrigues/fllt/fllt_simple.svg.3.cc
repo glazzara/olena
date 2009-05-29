@@ -41,7 +41,7 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/data/fill.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
 #include <mln/accu/bbox.hh>

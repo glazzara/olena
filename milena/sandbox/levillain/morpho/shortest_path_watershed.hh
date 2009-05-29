@@ -44,7 +44,7 @@
 # include <queue>
 
 # include <mln/data/fill.hh>
-# include <mln/level/extrema_components.hh>
+# include <mln/data/extrema_components.hh>
 # include <mln/morpho/lower_completion.hh>
 # include <mln/trait/value_.hh>
 
@@ -101,7 +101,7 @@ namespace mln {
 
 	// Initialize output with the minima components.
 	typename ch_value_type<I, DestValue>::ret output =
-	  level::minima_components<DestValue>(input);
+	  data::minima_components<DestValue>(input);
 
 	// Distance.
 	typedef ntg_cumul_type(DestValue) cumul_type;

@@ -51,7 +51,7 @@
 
 # include <mln/border/fill.hh>
 
-# include <mln/level/compute.hh>
+# include <mln/data/compute.hh>
 # include <mln/data/fill.hh>
 # include <mln/accu/min.hh>
 # include <mln/accu/max.hh>
@@ -74,8 +74,8 @@
 
 # include <mln/util/tree_to_image.hh>
 # include <mln/value/int_u8.hh>
-# include <mln/level/stretch.hh>
-# include <mln/level/compare.hh>
+# include <mln/data/stretch.hh>
+# include <mln/data/compare.hh>
 # include <mln/io/pgm/save.hh>
 
 # include "types.hh"

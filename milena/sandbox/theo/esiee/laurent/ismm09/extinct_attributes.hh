@@ -122,7 +122,7 @@ namespace mln
     node_only.t = &t;
 
     typedef p_array<P> S;
-    S s = level::sort_psites_increasing(f | node_only);
+    S s = data::sort_psites_increasing(f | node_only);
 
     if (echo)
     {

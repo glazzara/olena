@@ -279,7 +279,7 @@ int main(int argc, char* argv[])
 
 
   typedef p_array<mln_psite_(I)> S;
-  S s = level::sort_psites_decreasing(f);
+  S s = data::sort_psites_decreasing(f);
   
   typedef morpho::tree::data<I,S> tree_t;
   tree_t t(f, s, e2e());
@@ -364,12 +364,12 @@ int main(int argc, char* argv[])
     m[i] = rgb8(m_3f[i][0], m_3f[i][1], m_3f[i][2]); 
 
 
-  io::ppm::save( level::transform(out_w,
+  io::ppm::save( data::transform(out_w,
 				  convert::to< fun::i2v::array<rgb8> >(m) ),
 		 argv[4] );
 
 
-//   io::ppm::save( level::transform(w_all,
+//   io::ppm::save( data::transform(w_all,
 // 				  convert::to< fun::i2v::array<rgb8> >(m) ),
 // 		 argv[4] );
 

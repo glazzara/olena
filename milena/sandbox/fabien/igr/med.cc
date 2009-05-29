@@ -23,7 +23,7 @@
 #include <mln/histo/compute.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/labeling/mean_values.hh>
-#include <mln/level/compute.hh>
+#include <mln/data/compute.hh>
 #include <mln/morpho/elementary/dilation.hh>
 #include <mln/pw/all.hh>
 #include <mln/util/array.hh>
@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
     image1d<unsigned> ima_histo;
     convert::from_to(histogram, ima_histo);
     accu::median_h<int_u12> accu_med;
-    median = level::compute(accu_med, ima_histo | pw::value(ima_histo) != pw::cst(0));
+    median = data::compute(accu_med, ima_histo | pw::value(ima_histo) != pw::cst(0));
 
     for (int i = 0; i < histogram.nvalues(); ++i)
     {
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
     image1d<unsigned> ima_histo;
     convert::from_to(histogram, ima_histo);
     accu::median_h<int_u12> accu_med;
-    median = level::compute(accu_med, ima_histo | pw::value(ima_histo) != pw::cst(0));
+    median = data::compute(accu_med, ima_histo | pw::value(ima_histo) != pw::cst(0));
 
     for (int i = 0; i < histogram.nvalues(); ++i)
     {

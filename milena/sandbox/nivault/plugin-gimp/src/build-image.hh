@@ -38,7 +38,7 @@
 # include <mln/value/rgb8.hh>
 # include <mln/literal/all.hh>
 # include <mln/core/concept/function.hh>
-# include <mln/level/transform.hh>
+# include <mln/data/transform.hh>
 # include <mln/border/resize.hh>
 
 # include <mln/io/ppm/save.hh>

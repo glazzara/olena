@@ -10,7 +10,7 @@
 
 #include <mln/histo/array.hh>
 #include <mln/histo/compute.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 
 namespace mln
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
   std::cout << "min: " << min << std::endl;
   std::cout << "max: " << max << std::endl;
 
-  /*image3d<value::int_u12> quantified = level::transform(input, int_u12_from_float(min, max));
+  /*image3d<value::int_u12> quantified = data::transform(input, int_u12_from_float(min, max));
 
   histo::array<value::int_u12> histogram = histo::compute(quantified);
   image1d<value::int_u12> hist_ima;

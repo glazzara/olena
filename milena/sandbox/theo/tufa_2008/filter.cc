@@ -39,7 +39,7 @@
 
 #include <mln/core/site_set/p_array.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/data/fill.hh>
 
 #include <mln/morpho/tree/data.hh>
@@ -66,7 +66,7 @@ namespace mln
   mln_concrete(I) filtering(const I& f, const A& a, const N& nbh, mln_value(A) lambda)
   {
     typedef p_array<mln_psite(I)> S;
-    S s = level::sort_psites_increasing(a);
+    S s = data::sort_psites_increasing(a);
 
     // s maps increasing attributes.
 
@@ -144,7 +144,7 @@ int main(int argc, char* argv[])
   unsigned lambda = std::atoi(argv[2]);
 
   typedef p_array<point2d> S;
-  S s = level::sort_psites_decreasing(f);
+  S s = data::sort_psites_decreasing(f);
 
   // Children go towards lower levels so leafs are regional minima.
   // We get a min-tree so that we can perform morphological closings. 

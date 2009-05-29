@@ -17,7 +17,7 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/data/paste.hh>
-#include <mln/level/apply.hh>
+#include <mln/data/apply.hh>
 
 #include <mln/fun/v2v/rgb_to_hsi.hh>
 #include <mln/fun/v2v/abs.hh>

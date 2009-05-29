@@ -350,7 +350,7 @@ int main(int argc, char* argv[])
   util::array<rgb8> m;
   convert::from_to(m_3f, m);
   
-  io::ppm::save( level::transform(w_all,
+  io::ppm::save( data::transform(w_all,
 				  convert::to< fun::i2v::array<rgb8> >(m) ),
 		 argv[6] );
 

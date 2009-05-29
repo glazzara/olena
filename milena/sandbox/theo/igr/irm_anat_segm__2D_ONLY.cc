@@ -12,7 +12,7 @@
 #include <mln/accu/mean.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/fun/i2v/array.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 
 
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 
   fun::i2v::array<int_u8> f;
   convert::from_to(a, f);
-  image2d<int_u8> out = level::transform(wst, f);
+  image2d<int_u8> out = data::transform(wst, f);
 
   io::pgm::save(out, argv[2]);
 }

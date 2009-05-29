@@ -39,8 +39,8 @@
 
 #include <mln/pw/all.hh>
 
-#include <mln/level/stretch.hh>
-#include <mln/level/median.hh>
+#include <mln/data/stretch.hh>
+#include <mln/data/median.hh>
 #include <mln/morpho/gradient.hh>
 
 #include <mln/labeling/level.hh>
@@ -63,7 +63,7 @@ filter_arrays(image2d<bool> in)
 {
   // Labeling.
   unsigned nlabels;
-  image2d<unsigned> labels = labeling::level(in, true, c4(), nlabels);
+  image2d<unsigned> labels = labeling::value(in, true, c4(), nlabels);
 
   // Get the caracteristics of the connected components.
   std::vector< accu::pair_< accu::bbox<point2d>, accu::count_<point2d> > > caracteristics(nlabels + 1);

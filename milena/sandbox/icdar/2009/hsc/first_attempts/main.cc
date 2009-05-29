@@ -7,8 +7,8 @@
 
 #include <mln/pw/all.hh>
 #include <mln/data/fill.hh>
-#include <mln/level/saturate.hh>
-#include <mln/level/convert.hh>
+#include <mln/data/saturate.hh>
+#include <mln/data/convert.hh>
 #include <mln/arith/revert.hh>
 
 #include <mln/value/int_u8.hh>
@@ -321,7 +321,7 @@ int main(int argc, char* argv[])
     out = linear::gaussian_directional_2d(temp, 1, h_sigma, 0);
     out = linear::gaussian_directional_2d(out,  0, v_sigma, 0);
 
-    fuzzy = level::saturate(int_u8(), out);
+    fuzzy = data::saturate(int_u8(), out);
 
 # ifdef LOG
     io::pgm::save(fuzzy, "tmp_fuzzy.pgm");
@@ -350,7 +350,7 @@ int main(int argc, char* argv[])
 
     io::pgm::save(ws, "tmp_ws.pgm");
 
-    image2d<rgb8> cool = level::convert(rgb8(), small);
+    image2d<rgb8> cool = data::convert(rgb8(), small);
     data::fill((cool | (pw::value(ws) == pw::cst(0))).rw(),
     	       literal::red);
     io::ppm::save(cool, "tmp_ws.ppm");

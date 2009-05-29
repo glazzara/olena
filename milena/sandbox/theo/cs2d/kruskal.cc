@@ -17,7 +17,7 @@
 # include <mln/morpho/gradient.hh>
 # include <mln/morpho/meyer_wst.hh>
 
-# include <mln/level/sort_points.hh>
+# include <mln/data/sort_points.hh>
 
 # include <mln/io/pgm/load.hh>
 # include <mln/io/ppm/save.hh>
@@ -280,7 +280,7 @@ int main()
   typedef typeof(edge) edge_t;
 
   typedef p_array<point2d> Arr;
-  Arr E = level::sort_points_increasing(edge);
+  Arr E = data::sort_points_increasing(edge);
 
   // Aux data.
   mln_ch_value_(edge_t, bool) T;

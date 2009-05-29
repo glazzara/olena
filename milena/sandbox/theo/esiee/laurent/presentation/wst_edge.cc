@@ -29,7 +29,7 @@
 
 # include <mln/data/paste.hh>
 # include <mln/data/fill.hh>
-# include <mln/level/transform.hh>
+# include <mln/data/transform.hh>
 # include <mln/extension/fill.hh>
 
 # include <mln/morpho/meyer_wst.hh>
@@ -344,7 +344,7 @@ do_it(I& ima, int lambda, const std::string& filename, unsigned& nbasins)
     image2d<value::rgb8> temp(label.domain());
     data::fill(temp, literal::white);
 
-    data::paste( level::transform(label | is_edge,
+    data::paste( data::transform(label | is_edge,
 				   colors),
 		  temp );
     
@@ -367,7 +367,7 @@ do_it(I& ima, int lambda, const std::string& filename, unsigned& nbasins)
   //        
   // 1   1   1 
 
-  io::ppm::save(level::transform(cells2image(label),
+  io::ppm::save(data::transform(cells2image(label),
 				 colors),
 		filename);
 }

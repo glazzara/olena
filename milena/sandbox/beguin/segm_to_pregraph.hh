@@ -59,7 +59,7 @@ namespace mln
       }
     }
     //io::pgm::save(retour, "tmp_pregraphe.pgm");
-    io::pgm::save( level::transform(retour, convert::to_fun(foo)),
+    io::pgm::save( data::transform(retour, convert::to_fun(foo)),
 		 "tmp_pregraph.pgm" );
     //return retour;
   }

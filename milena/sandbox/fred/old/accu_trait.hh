@@ -14,7 +14,7 @@
 # define mln_trait_accu_has_stop(A) typename mln::trait::accu_< A >::has_stop
 
 /// Shortcut to the accumulator property about behavior when pixel is given as take() value
-/// Used for instance in mln::canvas::morpho::leveling
+/// Used for instance in mln::canvas::morpho::dataing
 # define mln_trait_accu_when_pix(A) typename mln::trait::accu_< A >::when_pix
 
 namespace mln {

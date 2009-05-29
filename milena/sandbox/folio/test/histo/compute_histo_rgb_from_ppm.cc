@@ -8,7 +8,7 @@
 
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 
 #include "../../mln/histo/compute_histo_rgb.hh"
 

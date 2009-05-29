@@ -32,9 +32,9 @@
 #include <mln/fun/v2v/fit.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/labeling/wrap.hh>
-#include <mln/level/compute.hh>
-#include <mln/level/convert.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/compute.hh>
+#include <mln/data/convert.hh>
+#include <mln/data/stretch.hh>
 #include <mln/make/image2d.hh>
 #include <mln/make/w_window1d.hh>
 #include <mln/math/diff_abs.hh>

@@ -361,7 +361,7 @@ int main(int argc, char *argv[])
     fun::i2v::array<int_u8> f_med;
     convert::from_to(basin_med, f_med);
 
-    // io::pgm::save(level::transform(wst, f_med), "basin_med.pgm");
+    // io::pgm::save(data::transform(wst, f_med), "basin_med.pgm");
 
     p_vertices<util::graph, fun::i2v::array<point2d> >
       pv = make::common_pvertices(wst, nbasins, rag_data.first());
@@ -406,7 +406,7 @@ int main(int argc, char *argv[])
 	  }
       }
     
-    io::pgm::save(level::transform(wst, out.function()),
+    io::pgm::save(data::transform(wst, out.function()),
 		  "temp_out.pgm");
 
     // Enqueuing.
@@ -458,7 +458,7 @@ int main(int argc, char *argv[])
 	out(p_) = id; // object or background.
       }
 
-    io::pgm::save(level::transform(wst, out.function()),
+    io::pgm::save(data::transform(wst, out.function()),
 		  "temp_out_2.pgm");
 
   }

@@ -1,7 +1,7 @@
 #include "filetype.hh"
 
 #include <mln/value/int_u12.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 
 
 
@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
   io::dump::load(vol, argv[1]);
 
   using value::int_u8;
-  image3d<int_u8> out = level::stretch(int_u8(), vol);
+  image3d<int_u8> out = data::stretch(int_u8(), vol);
   io::dump::save(out, argv[2]);
 
   trace::exiting("main");

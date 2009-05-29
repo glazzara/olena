@@ -8,8 +8,8 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/labeling/regional_maxima.hh>
-#include <mln/level/convert.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/convert.hh>
+#include <mln/data/stretch.hh>
 #include <mln/linear/gaussian.hh>
 #include <mln/morpho/rank_filter.hh>
 #include <mln/value/label_8.hh>
@@ -28,8 +28,8 @@ load_img(image2d<int_u8>& ima, const char* filename)
 
   // convert and stretch.
   int_u8 k = 1;
-  ima = level::convert(k, in);
-  ima = level::stretch(k, ima);
+  ima = data::convert(k, in);
+  ima = data::stretch(k, ima);
 }
 
 void

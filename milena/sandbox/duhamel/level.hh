@@ -73,7 +73,7 @@ namespace mln
       bool level_(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
 		  Image<O>& output, unsigned& nlabels)
       {
-	typedef impl::level_t<I,N,O> F;
+	typedef impl::data_t<I,N,O> F;
 	F f(exact(input), val, exact(nbh), exact(output));
 	canvas::labeling<F> run(f);
 	nlabels = f.nlabels;
@@ -86,7 +86,7 @@ namespace mln
       bool level_(const Fast_Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
 		  Fast_Image<O>& output, unsigned& nlabels)
       {
-	typedef impl::level_t<I,N,O> F;
+	typedef impl::data_t<I,N,O> F;
 	F f(exact(input), val, exact(nbh), exact(output));
 	canvas::labeling_fast<F> run(f);
 	nlabels = f.nlabels;
@@ -104,7 +104,7 @@ namespace mln
 	       Image<O>& output, unsigned& nlabels)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      return impl::level_(exact(input), val, nbh, output, nlabels);
+      return impl::data_(exact(input), val, nbh, output, nlabels);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -345,14 +345,14 @@ namespace mln
   } // mln::accu
 
 
-  namespace level
+  namespace data
   {
 
     template<typename I, typename R>
     mln_ch_value(I, R)
       transform(const Image<I>& input_, const std::vector<R>& v)
     {
-      trace::entering("level::transform");
+      trace::entering("data::transform");
       const I& input = exact(input_);
 
       mln_ch_value(I, R) output;
@@ -362,11 +362,11 @@ namespace mln
       for_all(p)
 	output(p) = v[input(p)];
 
-      trace::exiting("level::transform");
+      trace::exiting("data::transform");
       return output;
     }
 
-  } // mln::level
+  } // mln::data
 
 
 } // mln

@@ -29,7 +29,7 @@
 
 # include <mln/data/paste.hh>
 # include <mln/data/fill.hh>
-# include <mln/level/transform.hh>
+# include <mln/data/transform.hh>
 # include <mln/extension/fill.hh>
 
 # include <mln/morpho/closing_area.hh>
@@ -92,7 +92,7 @@ namespace mln
 	mln::data::fill(deja_vu, false);
         mln::data::fill(color, value::rgb8(255, 255, 255));
 
-	s = level::sort_psites_increasing(f);
+	s = data::sort_psites_increasing(f);
       }
 
       // first pass

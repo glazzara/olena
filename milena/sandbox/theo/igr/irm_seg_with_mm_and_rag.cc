@@ -14,7 +14,7 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/convert/to_window.hh>
 #include <mln/convert/to_image.hh>
@@ -25,7 +25,7 @@
 #include <mln/morpho/meyer_wst.hh>
 
 #include <mln/accu/mean.hh>
-#include <mln/level/take.hh>
+#include <mln/data/take.hh>
 
 #include <mln/util/graph.hh>
 
@@ -56,7 +56,7 @@ namespace mln
 //       if (lbl(p) == 82)
 // 	m.take(irm(p));
 
-//     level::take(irm | (pw::value(lbl) == pw::cst(82)), m);
+//     data::take(irm | (pw::value(lbl) == pw::cst(82)), m);
 
 //     std::cout << "reg 82 has mean = " << m << std::endl;
     }
@@ -167,7 +167,7 @@ int main()
   unsigned nbasins;
   image2d<unsigned> wshed = morpho::meyer_wst(clo, c4(), nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
-  io::pgm::save( level::transform(wshed, convert::to_fun(foo)),
+  io::pgm::save( data::transform(wshed, convert::to_fun(foo)),
 		 "tmp_wshed.pgm" );
 
 //   doit(irm, wshed, nbasins);

@@ -33,7 +33,7 @@
 #include <mln/value/int_u16.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/value/label_16.hh>
-#include <mln/level/convert.hh>
+#include <mln/data/convert.hh>
 
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
@@ -118,7 +118,7 @@ int main(int argc, char** argv)
   if (!output_ || output_ == 3)
     {
       typedef image2d<value::label_16> L;
-      L lab = level::convert(value::label_16(),
+      L lab = data::convert(value::label_16(),
 			     morpho::elementary::dilation(wst, c8()));
       I_ out = color_labeling_mean(input_, lab, n_basins);
       io::ppm::save(out, "mean.pgm");

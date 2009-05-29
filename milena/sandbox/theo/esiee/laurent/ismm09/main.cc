@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 
   {
     typedef p_array<point2d> s_t;
-    s_t s = level::sort_psites_decreasing(g); // min-tree
+    s_t s = data::sort_psites_decreasing(g); // min-tree
 
     typedef morpho::tree::data<g_t,s_t> tree_t;
     tree_t t(g, s, cplx2d::e2e());

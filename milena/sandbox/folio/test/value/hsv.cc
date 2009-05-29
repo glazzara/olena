@@ -2,7 +2,7 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/debug/println.hh>
 
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/core/image/image2d.hh>
 #include "../../mln/fun/v2v/rgb_to_hsv.hh"
 #include "../../mln/value/circular.hh"
@@ -23,9 +23,9 @@ int main(int argc, char* argv[])
   image2d<value::rgb8> ima;
   io::ppm::load(ima, argv[1]);
 
-  image2d<hsv_16f> hsv = level::transform(ima,
+  image2d<hsv_16f> hsv = data::transform(ima,
 					  fun::v2v::f_rgb_to_hsv_16f);
-  ima = level::transform(hsv,
+  ima = data::transform(hsv,
 			 fun::v2v::f_hsv_to_rgb_8f);
 
   std::cout << "  => saving " << argv[2] << "..." << std::endl;

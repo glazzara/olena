@@ -44,8 +44,8 @@
 
 # include <mln/util/tree_to_image.hh>
 # include <mln/value/int_u8.hh>
-# include <mln/level/stretch.hh>
-# include <mln/level/compare.hh>
+# include <mln/data/stretch.hh>
+# include <mln/data/compare.hh>
 # include <mln/io/pgm/save.hh>
 
 namespace mln
@@ -143,7 +143,7 @@ namespace mln
       image2d<value::int_u8> out(ima.domain());
       image2d<value::int_u8> out2(ima.domain());
       visualize_deepness(out, tree);
-      level::stretch(out, out2);
+      data::stretch(out, out2);
       io::pgm::save(out2, "fllt_deepnees.pgm");
 
       visualize_bounds(out, tree, 800);

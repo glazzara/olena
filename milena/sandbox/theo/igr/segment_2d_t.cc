@@ -14,7 +14,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u12.hh>
 #include <mln/value/label.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/morpho/closing/height.hh>
 #include <mln/morpho/watershed/flooding.hh>
@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
     std::cout << "min = " << min << "  max = " << max << std::endl;
   }  
 
-  mln_VAR(d, level::transform(df, int_u12_from_float()));
+  mln_VAR(d, data::transform(df, int_u12_from_float()));
   // debug_println("d", d);
   io_save_edges_int_u12(d, 0, "d.pgm");
 
@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
 	if (m_[l] < 2) m_[l] == 2;
 	// basin <=> 2..255
       }
-    mln_VAR(d_m, level::transform(w, m_));
+    mln_VAR(d_m, data::transform(w, m_));
     mln_VAR(out, world::inter_pixel::display_edge(d_m.unmorph_(),
 						  0, // background <=> 0
 						  3));

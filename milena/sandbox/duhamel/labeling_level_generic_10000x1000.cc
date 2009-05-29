@@ -57,7 +57,7 @@ int main()
 
   unsigned n;
   image2d_b<value::int_u8> out(i1.domain(), border);
-  labeling::level(i1, 2, c4(), out, n);
+  labeling::value(i1, 2, c4(), out, n);
 
   mln_assertion (n == 1);
 }

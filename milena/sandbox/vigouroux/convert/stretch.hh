@@ -134,7 +134,7 @@ namespace oln {
     ** \code
     ** #include <oln/basics2d.hh>
     ** #include <oln/convert/stretch.hh>
-    ** #include <oln/level/cc.hh>
+    ** #include <oln/data/cc.hh>
     ** #include <ntg/all.hh>
     ** #include <iostream>
     **
@@ -145,7 +145,7 @@ namespace oln {
     **   //Extraction of the connected components:
     **   unsigned card;
     **   oln::image2d<ntg::int_u8> cc
-    **    = oln::level::frontp_connected_component<ntg::int_u8>(light,
+    **    = oln::data::frontp_connected_component<ntg::int_u8>(light,
     ** 							  oln::neighb_c8(),
     ** 							  card);
     **   oln::io::save(cc, IMG_OUT "oln_convert_stretch_dark.pgm");

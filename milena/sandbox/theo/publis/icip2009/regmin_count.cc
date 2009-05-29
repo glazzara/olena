@@ -33,7 +33,7 @@
 #include <mln/debug/println.hh>
 
 #include <mln/core/site_set/p_array.hh>
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/labeling/regional_minima.hh>
@@ -76,7 +76,7 @@ namespace mln
   unsigned regmin_count(const I& f, const N& nbh)
   {
     typedef p_array<mln_psite(I)> S;
-    S s = level::sort_psites_increasing(f);
+    S s = data::sort_psites_increasing(f);
     // s maps increasing attributes.
 
     mln_ch_value(I, mln_site(I)) par;

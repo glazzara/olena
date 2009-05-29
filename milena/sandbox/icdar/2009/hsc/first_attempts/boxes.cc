@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
 
   io::dump::save(grouped_text.label_image(), argv[2]);
   
-  io::pgm::save(level::transform(grouped_text.label_image(),
+  io::pgm::save(data::transform(grouped_text.label_image(),
 				 fun::v2v::wrap<value::int_u8>()),
 		"tmp.pgm");
 

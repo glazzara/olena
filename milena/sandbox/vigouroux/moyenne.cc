@@ -9,7 +9,7 @@
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
 #include <mln/math/round.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 
 
@@ -51,10 +51,10 @@ int main()
   image2d<value::rgb8> lena;
   io::ppm::load(lena, "../../img/lena.ppm");
 
-  image2d<value::hsi_f> lena_hsi = level::transform(lena,
+  image2d<value::hsi_f> lena_hsi = data::transform(lena,
 						    fun::v2v::f_rgb_to_hsi_f);
 
-  image2d<value::rgb8> lena_rgb = level::transform(lena_hsi,
+  image2d<value::rgb8> lena_rgb = data::transform(lena_hsi,
 						   fun::v2v::f_hsi_to_rgb_3x8);
 
   double err = rms(lena, lena_rgb);

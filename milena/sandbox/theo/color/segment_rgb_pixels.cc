@@ -12,7 +12,7 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/pbm/save.hh>
-#include <mln/level/convert.hh>
+#include <mln/data/convert.hh>
 
 #include <mln/morpho/watershed/flooding.hh>
 #include <mln/morpho/attribute/card.hh>
@@ -143,7 +143,7 @@ int main(int argc, char* argv[])
 
 
   typedef p_array<mln_psite_(F)> S;
-  S s = level::sort_psites_decreasing(f);
+  S s = data::sort_psites_decreasing(f);
   
   typedef morpho::tree::data<F,S> tree_t;
   tree_t t(f, s, c4());

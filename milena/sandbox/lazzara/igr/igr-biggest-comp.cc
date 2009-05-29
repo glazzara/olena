@@ -222,12 +222,12 @@ int main(int, char* argv[])
 // Load ppm images and apply a threshold.
 //    I in;
 //    io::ppm::load(in, argv[1]);
-//    image2d<bool> in_bw = level::transform(in, threshold());
+//    image2d<bool> in_bw = data::transform(in, threshold());
 //    J in_obj = get_main_object_shape(in_bw);
 //
 //    I ref;
 //    io::ppm::load(ref, argv[2]);
-//    image2d<bool> ref_bw = level::transform(ref, threshold());
+//    image2d<bool> ref_bw = data::transform(ref, threshold());
 //    J ref_obj = get_main_object_shape(ref_bw);
 
 

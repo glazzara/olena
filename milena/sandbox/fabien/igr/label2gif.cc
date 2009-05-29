@@ -27,8 +27,8 @@
 #include <mln/accu/mean.hh>
 #include <mln/accu/median_h.hh>
 #include <mln/data/fill.hh>
-#include <mln/level/compute.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/compute.hh>
+#include <mln/data/stretch.hh>
 #include <mln/make/box3d.hh>
 #include <mln/morpho/elementary/dilation.hh>
 #include <mln/pw/all.hh>
@@ -64,7 +64,7 @@ void label2gif(I ima, L ima_labels, label_16 label)
       str_ima << "0";
 
     str_ima << sli << ".pgm";
-    io::pgm::save(level::stretch(int_u8(), ima_slice), str_ima.str());
+    io::pgm::save(data::stretch(int_u8(), ima_slice), str_ima.str());
   }
 }
 

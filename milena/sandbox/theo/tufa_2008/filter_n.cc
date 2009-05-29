@@ -35,7 +35,7 @@
 #include <mln/debug/println.hh>
 
 #include <mln/core/site_set/p_array.hh>
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/morpho/tree/data.hh>
 
@@ -327,7 +327,7 @@ int main(int argc, char* argv[])
   neighb2d nbh = c4();
 
   typedef p_array<point2d> S;
-  S s = level::sort_psites_decreasing(f);
+  S s = data::sort_psites_decreasing(f);
 
   // Children go towards lower levels so leafs are regional minima.
   // We get a min-tree so that we can perform morphological closings.

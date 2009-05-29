@@ -56,7 +56,7 @@ int main()
 
   unsigned n;
   image2d_b<value::int_u8> out(i1.domain(), border);
-  labeling::level_fast(i1, 2, c4(), out, n);
+  labeling::value_fast(i1, 2, c4(), out, n);
 
   std::cout << "n = " << n << std::endl;
   debug::println(out);

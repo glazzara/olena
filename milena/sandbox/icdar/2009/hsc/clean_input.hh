@@ -8,7 +8,7 @@
 #include <mln/accu/bbox.hh>
 
 #include <mln/fun/i2v/array.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 
 namespace mln
@@ -39,7 +39,7 @@ namespace mln
 	    center_col <= 3)
 	  ok(l) = true;
       }
-    return level::transform(lab, ok);
+    return data::transform(lab, ok);
   }
 
 } // mln

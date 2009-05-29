@@ -15,7 +15,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/label_16.hh>
 
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/labeling/mean_values.hh>
 
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
   image2d<label_16> wshed = morpho::meyer_wst(clo, c4(), nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
 
-  io::pgm::save(level::transform(wshed, fun::v2v::wrap<int_u8>()),
+  io::pgm::save(data::transform(wshed, fun::v2v::wrap<int_u8>()),
 		"tmp_wshed.pgm");
 
 

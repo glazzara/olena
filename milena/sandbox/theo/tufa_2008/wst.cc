@@ -36,7 +36,7 @@
 #include <mln/value/int_u8.hh>
 
 #include <mln/data/fill.hh>
-#include <mln/level/replace.hh>
+#include <mln/data/replace.hh>
 #include <mln/morpho/meyer_wst.hh>
 
 #include <mln/io/pgm/load.hh>

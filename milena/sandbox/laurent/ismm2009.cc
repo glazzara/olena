@@ -16,7 +16,7 @@
 # include <mln/core/site_set/p_queue.hh>
 # include <mln/core/site_set/p_priority.hh>
 
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/labeling/compute.hh>
 
 #include <mln/accu/count.hh>
@@ -1099,7 +1099,7 @@ int main(int argc, char* argv[])
 	image2d<A> output(f_.domain());
 	data::fill(output, 0);
 	data::paste(aa_line, output);
- 	io::pgm::save(level::stretch(int_u8(), output),
+ 	io::pgm::save(data::stretch(int_u8(), output),
  		      argv[3]);
 
 // 	image2d<int_u8> output(f_.domain());

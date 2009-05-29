@@ -1,6 +1,6 @@
 #include <oln/core/2d/image2d.hh>
 #include <oln/io/load_pgm.hh>
-#include <oln/level/compare.hh>
+#include <oln/data/compare.hh>
 
 
 void usage(char* argv[])

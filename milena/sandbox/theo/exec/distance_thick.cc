@@ -2,7 +2,7 @@
 
 #include <mln/transform/distance_front.hh>
 #include <mln/make/w_window2d_int.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 
 
 
@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
 						    c4(), make::w_window2d_int(ws),
 						    mln_max(int_u12));
 
-  io::pgm::save(level::stretch(int_u8(), dmap),
+  io::pgm::save(data::stretch(int_u8(), dmap),
 		argv[2]);
 
   trace::exiting("main");

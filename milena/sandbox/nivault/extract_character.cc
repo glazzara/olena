@@ -61,7 +61,7 @@
 # include <mln/core/mesh_p.hh>
 # include <mln/draw/mesh.hh>
 
-# include <mln/level/stretch.hh>
+# include <mln/data/stretch.hh>
 
 # include <mln/core/image_if_value.hh>
 # include <mln/core/image/dmorph/sub_image.hh>
@@ -335,17 +335,17 @@ main(int argc, char** argv)
   image2d<int_u8> out (label_image.domain ());
 
 //   // Save the influence area of the node of the graphe (seed2tiling result).
-//   level::stretch (zi_image, out);
+//   data::stretch (zi_image, out);
 //   io::pgm::save(out, path_output + ".text_area.approx.pgm");
 //   std::cout << path_output + ".text_area.approx.pgm" << " generated" << std::endl;
 
 //   // Save the graph of the text.
-//   level::stretch (gr_image, out);
+//   data::stretch (gr_image, out);
 //   io::pgm::save(out, path_output + ".text_graph.pgm");
 //   std::cout << path_output + ".text_graph.pgm" << " generated" << std::endl;
 
   // Save the the text image.
-  level::stretch (text_image, out);
+  data::stretch (text_image, out);
   io::pgm::save(out, path_output + ".text.pgm");
   std::cout << path_output + ".text.pgm" << " generated" << std::endl;
 
@@ -354,7 +354,7 @@ main(int argc, char** argv)
   std::cout << path_output + ".ppm" << " generated" << std::endl;
 
 //   image2d<int_u8> process (input.domain ());
-//   level::stretch (output_2, process);
+//   data::stretch (output_2, process);
 //   io::pgm::save(process, "process.pgm");
 }
 

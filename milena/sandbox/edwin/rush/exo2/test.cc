@@ -4,7 +4,7 @@
 
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/debug/println.hh>
 
 #include <mln/convert/all.hh>
@@ -76,7 +76,7 @@ int main()
   typedef p_array<point1d> S;
   typedef morpho::tree::data<I,S> tree_t;
 
-  S s = level::sort_psites_decreasing(input);
+  S s = data::sort_psites_decreasing(input);
   tree_t t(input, s, c2());
 
 

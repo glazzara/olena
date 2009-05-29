@@ -19,9 +19,9 @@
 #include <mln/accu/sum.hh>
 #include <mln/arith/div.hh>
 #include <mln/convert/from_to.hh>
-#include <mln/level/compute.hh>
-#include <mln/level/convert.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/compute.hh>
+#include <mln/data/convert.hh>
+#include <mln/data/stretch.hh>
 #include <mln/make/image2d.hh>
 #include <mln/math/diff_abs.hh>
 #include <mln/morpho/dilation.hh>
@@ -85,10 +85,10 @@ struct dist_t : Function_vv2v<dist_t>
     accu::sum<V> accu_sum;
 
     convert::from_to(v1, tmp_ima);
-    float sum_v1 = level::compute(accu_sum, tmp_ima);
+    float sum_v1 = data::compute(accu_sum, tmp_ima);
 
     convert::from_to(v2, tmp_ima2);
-    float sum_v2 = level::compute(accu_sum, tmp_ima2);
+    float sum_v2 = data::compute(accu_sum, tmp_ima2);
 
     if (sum_v1 == 0 && sum_v2 == 0)
       return 1;

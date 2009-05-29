@@ -47,8 +47,8 @@
 
 #include <mln/data/fill.hh>
 #include <mln/data/paste.hh>
-#include <mln/level/stretch.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/stretch.hh>
+#include <mln/data/compare.hh>
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
 #include <mln/labeling/regional_maxima.hh>
@@ -222,7 +222,7 @@ namespace mln
 
     //save is
     image2d<value::int_u8> is_out(is.domain());
-    level::stretch(cast_image<value::int_u8>(is), is_out);
+    data::stretch(cast_image<value::int_u8>(is), is_out);
     io::pgm::save(is_out, is_filename.str());
     //io::pgm::save(out, filename.str());
   }

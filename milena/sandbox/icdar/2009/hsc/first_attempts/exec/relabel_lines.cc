@@ -16,7 +16,7 @@
 #include <mln/labeling/colorize.hh>
 
 #include <mln/transform/influence_zone_geodesic.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/fun/v2v/wrap.hh>
 
 
@@ -190,7 +190,7 @@ namespace mln
     image2d<L2> line_lab = labeling::blobs(lines, c8(), n_lines);
 
     {
-      io::pgm::save(level::transform(line_lab,
+      io::pgm::save(data::transform(line_lab,
 				     fun::v2v::wrap<value::int_u8>()),
 		    "tmp_lines.pgm");
     }

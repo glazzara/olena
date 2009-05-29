@@ -10,7 +10,7 @@
 #include <mln/fun/internal/resolve.hh>
 #include <mln/morpho/attribute/card.hh>
 #include <mln/morpho/attribute/sharpness.hh>
-#include <mln/level/sort_offsets.hh>
+#include <mln/data/sort_offsets.hh>
 #include <mln/canvas/morpho/attribute_filter.hh>
 #include <mln/canvas/morpho/internal/find_root.hh>
 
@@ -303,7 +303,7 @@ int main(int argc, char **argv)
   l_maxarea = atoi(argv[4]);
 
   mln_VAR(sharp, exo3_filter::attribute_filter(input, c4(),
-					       level::sort_psites_decreasing(input),
+					       data::sort_psites_decreasing(input),
 					       morpho::attribute::sharpness<I>(), l_sharpness));
 
   mln_VAR(s, pw::value(sharp));

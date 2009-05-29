@@ -10,7 +10,7 @@
 #include <mln/pw/all.hh>
 
 #include <mln/data/fill.hh>
-#include <mln/level/saturate.hh>
+#include <mln/data/saturate.hh>
 
 
 
@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
 
 	out = linear::gaussian_directional_2d(temp, dir, sigma, bdr);
 
-	io::pgm::save(level::saturate(int_u8(),
+	io::pgm::save(data::saturate(int_u8(),
 				      (pw::value(out) * pw::cst(255.f)) | out.domain()),
 		      argv[5]);
       }
@@ -86,7 +86,7 @@ int main(int argc, char* argv[])
 
 	out = linear::gaussian_directional_2d(temp, dir, sigma, bdr);
 
-	io::pgm::save(level::saturate(int_u8(), out), argv[5]);
+	io::pgm::save(data::saturate(int_u8(), out), argv[5]);
       }
       break;
 

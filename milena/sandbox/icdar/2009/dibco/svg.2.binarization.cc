@@ -46,8 +46,8 @@
 #include <mln/labeling/regional_minima.hh>
 #include <mln/labeling/wrap.hh>
 
-#include <mln/level/transform.hh>
-#include <mln/level/convert.hh>
+#include <mln/data/transform.hh>
+#include <mln/data/convert.hh>
 
 #include <mln/linear/gaussian_1d.hh>
 
@@ -622,9 +622,9 @@ int main(int argc, char *argv[])
 
   if (echo)
     {
-      io::pgm::save(level::transform(w_all, f_med),
+      io::pgm::save(data::transform(w_all, f_med),
 		    "temp_w_all.pgm");
-      io::pgm::save(level::transform(ws, f_med), "temp_basin_med.pgm");
+      io::pgm::save(data::transform(ws, f_med), "temp_basin_med.pgm");
     }
 
   p_vertices<util::graph, fun::i2v::array<point2d> >
@@ -672,7 +672,7 @@ int main(int argc, char *argv[])
     
   if (echo)
     {
-      io::pgm::save(level::transform(ws, out.function()),
+      io::pgm::save(data::transform(ws, out.function()),
 		    "temp_out.pgm");
     }
 
@@ -727,11 +727,11 @@ int main(int argc, char *argv[])
 
   if (echo)
     {
-      io::pgm::save(level::transform(ws, out.function()),
+      io::pgm::save(data::transform(ws, out.function()),
 		    "temp_out_2.pgm");
     }
 
-  io::pbm::save((pw::value(level::transform(ws,
+  io::pbm::save((pw::value(data::transform(ws,
 					    out.function())) == pw::cst(255))
 		| input.domain(),
 		argv[4]);

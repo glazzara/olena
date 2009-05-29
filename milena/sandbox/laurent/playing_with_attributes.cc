@@ -14,7 +14,7 @@
 #include <mln/labeling/regional_minima.hh>
 
 #include <mln/core/site_set/p_array.hh>
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/geom/nsites.hh>
 
 #include <mln/accu/count.hh>
@@ -127,7 +127,7 @@ namespace mln
     node_only.t = &t;
 
     typedef p_array<P> S;
-    S s = level::sort_psites_increasing(a | node_only);
+    S s = data::sort_psites_increasing(a | node_only);
     mln_invariant(geom::nsites(a | t.nodes()) == s.nsites());
 
 
@@ -280,7 +280,7 @@ namespace mln
     node_only.t = &t;
 
     typedef p_array<P> S;
-    S s = level::sort_psites_increasing(a | node_only);
+    S s = data::sort_psites_increasing(a | node_only);
     mln_invariant(geom::nsites(a | t.nodes()) == s.nsites());
 
     mln_fwd_piter(S) p(s);
@@ -320,7 +320,7 @@ void do_it(const I& g, const N& nbh, L& n_labels)
 
   {
     typedef p_array<mln_site(I)> S;
-    S s = level::sort_psites_decreasing(g);
+    S s = data::sort_psites_decreasing(g);
     
     typedef morpho::tree::data<I,S> tree_t;
     tree_t t(g, s, nbh);

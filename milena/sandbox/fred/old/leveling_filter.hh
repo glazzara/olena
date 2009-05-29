@@ -41,8 +41,8 @@
 # include <mln/data/fill.hh>
 # include <mln/extension/adjust_fill.hh>
 
-# include <mln/level/sort_psites.hh>
-# include <mln/level/sort_offsets.hh>
+# include <mln/data/sort_psites.hh>
+# include <mln/data/sort_offsets.hh>
 
 
 
@@ -93,7 +93,7 @@ namespace mln {
 			   const Site_Set<S>& s_,
 			   const Accumulator<A>& a_, const typename A::result& lambda)
 	  {
-	    trace::entering("canvas::morpho::impl::generic::leveling_filter");
+	    trace::entering("canvas::morpho::impl::generic::dataing_filter");
           // FIXME: Test?!
 
 	    const I& input = exact(input_);
@@ -185,7 +185,7 @@ namespace mln {
 		  output(p) = output(parent(p));
 	    }
 
-	    trace::exiting("canvas::morpho::impl::generic::leveling_filter");
+	    trace::exiting("canvas::morpho::impl::generic::dataing_filter");
 	    return output;
 	  }
 
@@ -212,7 +212,7 @@ namespace mln {
 				 const util::array<unsigned>& s,
 				 const Accumulator<A>& a_, const typename A::result& lambda)
 	{
-	  trace::entering("canvas::morpho::impl::leveling_fastest");
+	  trace::entering("canvas::morpho::impl::dataing_fastest");
 
 	  // FIXME: Tests?
 
@@ -297,7 +297,7 @@ namespace mln {
 	      }
 	  }
 
-	  trace::exiting("canvas::morpho::impl::leveling_fastest");
+	  trace::exiting("canvas::morpho::impl::dataing_fastest");
 	  return output;
 	}
 
@@ -317,9 +317,9 @@ namespace mln {
 	{
 	  p_array < mln_psite(I) > s =
 	    increasing ?
-	    level::sort_psites_increasing(input) :
-	    level::sort_psites_decreasing(input);
-	  return impl::generic::leveling_filter(input, nbh, s, a, lambda);
+	    data::sort_psites_increasing(input) :
+	    data::sort_psites_decreasing(input);
+	  return impl::generic::dataing_filter(input, nbh, s, a, lambda);
 	}
 
 	template <typename I, typename N, typename A>
@@ -331,9 +331,9 @@ namespace mln {
 	{
 	  util::array<unsigned> s =
 	    increasing ?
-	    level::sort_offsets_increasing(input) :
-	    level::sort_offsets_decreasing(input);
-	  return impl::leveling_filter_fastest(input, nbh, s, a, lambda);
+	    data::sort_offsets_increasing(input) :
+	    data::sort_offsets_decreasing(input);
+	  return impl::dataing_filter_fastest(input, nbh, s, a, lambda);
 	}
 
 	template <typename I, typename N, typename A>
@@ -370,7 +370,7 @@ namespace mln {
 		       bool increasing)
       {
 	//FIXME: Do we need to check input validity ?
-	return internal::leveling_filter_dispatch(input, nbh, a, lambda, increasing);
+	return internal::dataing_filter_dispatch(input, nbh, a, lambda, increasing);
       }
 
     } // end of namespace mln::canvas::morpho

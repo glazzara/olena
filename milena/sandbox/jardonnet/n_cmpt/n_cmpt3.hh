@@ -81,10 +81,10 @@ namespace mln
       typedef mln_ch_value(I,unsigned) V;
       typedef accu::volume<I> A;
 
-      S sp = level::sort_psites_decreasing(ima);
+      S sp = data::sort_psites_decreasing(ima);
       morpho::tree::data<I,S> t(ima, sp, nbh);
       V volume = morpho::tree::compute_attribute_image(A(), t);
-      sp = level::sort_psites_increasing(volume);
+      sp = data::sort_psites_increasing(volume);
       std::cout << "/volume/" << std::endl;
       debug::println(volume);
 

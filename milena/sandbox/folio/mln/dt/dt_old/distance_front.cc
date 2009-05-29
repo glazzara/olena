@@ -38,7 +38,7 @@
 #include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/opt/at.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/transform/internal/distance_functor.hh>
 #include "distance_front_new.hh"

@@ -10,5 +10,5 @@ mln_ch_value(I, rgb8) segmentation(const I& ima,
   unsigned nbasins;
   mln_ch_value(I, unsigned) wst = morpho::wst_meyer(filtered, nbh, nbasins);
 
-  return level::transform(wst, colorize(nbasins));
+  return data::transform(wst, colorize(nbasins));
 }

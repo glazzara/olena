@@ -4,7 +4,7 @@
 #include <mln/core/alias/w_window2d_int.hh>
 #include <mln/debug/println.hh>
 #include <mln/data/fill.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/accu/max.hh>
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -126,6 +126,6 @@ int main()
   debug::println(d);
 
 //   image2d<int_u8> out;
-//   level::stretch(d, out);
+//   data::stretch(d, out);
 //   io::pgm::save(out, "out.pgm");
 }

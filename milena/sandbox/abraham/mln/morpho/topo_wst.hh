@@ -30,7 +30,7 @@
 
 
 
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/data/fill.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/site_set/p_set.hh>
@@ -260,7 +260,7 @@ namespace mln
 
       // Sort the sites in increasing order
       p_array<mln_site(I)> S;
-      S = level::sort_psites_increasing(ima);
+      S = data::sort_psites_increasing(ima);
 
       // Clear the marker map
       data::fill(isproc, false);

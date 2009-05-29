@@ -21,11 +21,11 @@
 #include <mln/core/var.hh>
 #include <mln/estim/min_max.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/value/int_u8.hh>
 /*#include <mln/accu/min.hh>
 #include <mln/accu/max.hh>
-#include <mln/level/compute.hh>*/
+#include <mln/data/compute.hh>*/
 
 using namespace mln;
 using value::int_u12;
@@ -65,7 +65,7 @@ image3d<float> normalize(Image<I>& ima, int first, int last)
   image2d<float> ima_ini = mean_slices(ima_f, first, last);
 
   // Debug.
-  //io::pgm::save(level::stretch(value::int_u8(), ima_ini), "mean_slices.pgm");
+  //io::pgm::save(data::stretch(value::int_u8(), ima_ini), "mean_slices.pgm");
 
   image3d<float> ima_result;
   initialize(ima_result, ima);

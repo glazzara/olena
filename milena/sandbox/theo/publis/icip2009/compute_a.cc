@@ -39,10 +39,10 @@
 #include <mln/core/routine/duplicate.hh>
 
 #include <mln/core/site_set/p_array.hh>
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/data/fill.hh>
 #include <mln/data/paste.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
@@ -131,7 +131,7 @@ namespace mln
   {
     typedef mln_site(I) P;
     typedef p_array<P> S;
-    S s = level::sort_psites_increasing(f);
+    S s = data::sort_psites_increasing(f);
     // s maps increasing attributes.
 
     mln_ch_value(I, P) par;
@@ -448,7 +448,7 @@ namespace mln
 
     // NOW attributes are sorted increasingly!
 
-    S s_a = level::sort_psites_increasing(a);
+    S s_a = data::sort_psites_increasing(a);
 
 
     mln_fwd_piter(S) p(s_a);

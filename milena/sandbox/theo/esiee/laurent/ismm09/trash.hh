@@ -13,7 +13,7 @@ namespace mln
     mln_ch_value(F,L) regmins = labeling::regional_minima(f, nbh, n_basins);
     
     typedef p_array<mln_psite(F)> S;
-    S s = level::sort_psites_decreasing(f);
+    S s = data::sort_psites_decreasing(f);
     
     typedef morpho::tree::data<F,S> tree_t;
     tree_t t(f, s, nbh);

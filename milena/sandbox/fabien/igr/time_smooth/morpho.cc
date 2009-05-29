@@ -20,8 +20,8 @@
 
 /*#include <mln/draw/line.hh>
 #include <mln/io/magick/save.hh>
-#include <mln/level/convert.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/convert.hh>
+#include <mln/data/stretch.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/literal/all.hh>
@@ -82,7 +82,7 @@ int main(int argc, char* argv[])
   // Outputs //
   //	     //
   /////////////
-  /*image2d<rgb8> ima_color = level::convert(rgb8(), level::stretch(int_u8(), slice(input, 0)));
+  /*image2d<rgb8> ima_color = data::convert(rgb8(), level::stretch(int_u8(), slice(input, 0)));
   algebra::vec<2, unsigned int> vmin;
   algebra::vec<2, unsigned int> vmax;
   vmin[0] = 160;

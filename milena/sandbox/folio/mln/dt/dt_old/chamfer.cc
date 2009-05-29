@@ -163,7 +163,7 @@ namespace mln
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/value/int_u8.hh>
 
 int main()
@@ -198,7 +198,7 @@ int main()
   out = dt::chamfer(ima, chamfer);
 
   image2d<value::int_u8> out2(out.first.domain());
-  level::stretch(out.first, out2);
+  data::stretch(out.first, out2);
 
   io::pgm::save(out2, "out.pgm");
 

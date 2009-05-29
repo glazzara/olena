@@ -159,7 +159,7 @@ namespace mln
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/core/image/dmorph/sub_image.hh>
@@ -198,7 +198,7 @@ int main()
 //  image2d<bool> ima = io::pbm::load("../../img/c01.pbm");
 
 //  image2d<value::int_u8> out2(out.domain());
-//  level::stretch(out, out2);
+//  data::stretch(out, out2);
 
 //  io::pgm::save(out2, "out.pgm");
 }

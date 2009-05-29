@@ -32,7 +32,7 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/data/fill.hh>
 # include <mln/util/pix.hh>
-# include <mln/level/sort_psites.hh>
+# include <mln/data/sort_psites.hh>
 # include <mln/accu/count.hh>
 # include <mln/accu/volume.hh>
 
@@ -80,7 +80,7 @@ namespace mln
       typedef mln_psite(I) P;
       typedef p_array<P> S;
 
-      const S s(level::sort_psites_increasing(input));
+      const S s(data::sort_psites_increasing(input));
 
       // Auxiliary data.
       mln_ch_value(O, bool)  deja_vu;

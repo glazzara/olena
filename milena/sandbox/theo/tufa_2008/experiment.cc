@@ -38,7 +38,7 @@
 #include <mln/debug/println.hh>
 
 #include <mln/core/site_set/p_array.hh>
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/morpho/tree/data.hh>
 
@@ -52,8 +52,8 @@
 
 #include <mln/data/fill.hh>
 
-#include <mln/level/transform.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/transform.hh>
+#include <mln/data/stretch.hh>
 
 
 
@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
   io::pgm::load(f, argv[1]);
 
   typedef p_array<point2d> S;
-  S s = level::sort_psites_decreasing(f);
+  S s = data::sort_psites_decreasing(f);
 
   // Children go towards lower levels so leafs are regional minima.
   // We get a min-tree so that we can perform morphological closings. 
@@ -115,12 +115,12 @@ int main(int argc, char* argv[])
   accu::volume<I> attr;
   
   image2d<unsigned> a = morpho::tree::compute_attribute_image(attr, t);
-  io::pgm::save(level::stretch(int_u8(), a),
+  io::pgm::save(data::stretch(int_u8(), a),
 		"a.pgm");
 
   unsigned n;
   image2d<unsigned> wst_a = morpho::meyer_wst(a, c4(), n);
-  io::ppm::save(level::transform(wst_a, colorize(n)),
+  io::ppm::save(data::transform(wst_a, colorize(n)),
 		"wst_a.ppm");
   std::cout << "n(a) = " << n << std::endl;
 
@@ -128,11 +128,11 @@ int main(int argc, char* argv[])
 
   
   image2d<unsigned> aa = morpho::closing_area(a, c4(), 100);
-  io::pgm::save(level::stretch(int_u8(), aa),
+  io::pgm::save(data::stretch(int_u8(), aa),
 		"aa.pgm");
 
   image2d<unsigned> wst_aa = morpho::meyer_wst(aa, c4(), n);
-  io::ppm::save(level::transform(wst_aa, colorize(n)),
+  io::ppm::save(data::transform(wst_aa, colorize(n)),
 		"wst_aa.ppm");
   std::cout << "n(aa) = " << n << std::endl;
 }

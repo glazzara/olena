@@ -6,7 +6,7 @@
 # include <mln/data/fill.hh>
 # include <mln/util/pix.hh>
 # include <mln/morpho/includes.hh>
-# include <mln/level/sort_psites.hh>
+# include <mln/data/sort_psites.hh>
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/image3d.hh>
@@ -57,7 +57,7 @@ struct max_tree_
       mln::data::fill(deja_vu, false);
       initialize(parent, f);
       initialize(zpar, f);
-      s = level::sort_psites_decreasing(f);
+      s = data::sort_psites_decreasing(f);
     }
 
     // first pass

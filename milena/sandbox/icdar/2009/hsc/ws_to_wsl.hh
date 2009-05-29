@@ -10,7 +10,7 @@
 #include <mln/value/int_u8.hh>
 
 #include <mln/util/array.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/accu/internal/base.hh>
 
@@ -31,12 +31,12 @@
 #include <mln/io/ppm/save.hh>
 
 #include <mln/literal/colors.hh>
-#include <mln/level/convert.hh>
+#include <mln/data/convert.hh>
 #include <mln/pw/all.hh>
 #include <mln/core/image/dmorph/image_if.hh>
 
 #include <mln/fun/i2v/array.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/labeling/colorize.hh>
 
 
@@ -406,7 +406,7 @@ namespace mln
       for (L l = 1; l <= n_basins; ++l)
 	f_relab(l) = parent[l];
 
-      image2d<L> ws_ = level::transform(ws, f_relab);
+      image2d<L> ws_ = data::transform(ws, f_relab);
       image2d<rgb8> cool = labeling::colorize(rgb8(), ws_, n_basins);
       data::fill((cool | (pw::value(ws) == pw::cst(0))).rw(),
 		 literal::white);

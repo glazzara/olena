@@ -26,20 +26,20 @@ int main(int argc, char** argv)
   I out;
 
   chrono.start();
-  out = mln::canvas::morpho::leveling_filter(lena, c4(), c, lambda, true);
+  out = mln::canvas::morpho::dataing_filter(lena, c4(), c, lambda, true);
   elapsed = chrono.stop();
   std::cout << "(auto) " << elapsed << "s" << std::endl;
   mln::io::pgm::save(out, "auto.pgm");
 
   chrono.start();
-  out = mln::canvas::morpho::internal::leveling_filter_dispatch(mln::metal::true_(), lena, c4(), c, lambda, true);
+  out = mln::canvas::morpho::internal::dataing_filter_dispatch(mln::metal::true_(), lena, c4(), c, lambda, true);
   elapsed = chrono.stop();
   std::cout << "(fast) " << elapsed << "s" << std::endl;
 
   mln::io::pgm::save(out, "fast.pgm");
 
   chrono.start();
-  out = mln::canvas::morpho::internal::leveling_filter_dispatch(mln::metal::false_(), lena, c4(), c, lambda, true);
+  out = mln::canvas::morpho::internal::dataing_filter_dispatch(mln::metal::false_(), lena, c4(), c, lambda, true);
   elapsed = chrono.stop();
   std::cout << "(slow) " << elapsed << "s" << std::endl;
 

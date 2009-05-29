@@ -9,7 +9,7 @@
 
 # include <mln/data/fill.hh>
 # include "fill.hh"
-# include <mln/level/sort_points.hh>
+# include <mln/data/sort_points.hh>
 
 
 namespace mln

@@ -43,7 +43,7 @@
 #include "color_internal_gradient.hh"
 
 /* Labeling */
-#include <mln/level/convert.hh>
+#include <mln/data/convert.hh>
 #include "color_labeling_mean.hh"
 
 /* WST */
@@ -52,7 +52,7 @@
 #include <mln/morpho/elementary/dilation.hh>
 
 /* Tree computation */
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/propagate.hh>
 #include <mln/morpho/tree/propagate_if.hh>
@@ -70,7 +70,7 @@
 #include <iostream>
 #include <string>
 
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/io/pgm/save.hh>
 
 namespace mln
@@ -188,7 +188,7 @@ int main(int argc, char** argv)
   typedef p_array<point2d> S;
   typedef morpho::tree::data<I,S> tree_t;
 
-  S s = level::sort_psites_decreasing(input);
+  S s = data::sort_psites_decreasing(input);
   tree_t t(input, s, c4());
 
 
@@ -218,7 +218,7 @@ int main(int argc, char** argv)
   /************************************************/
   p_array< mln_psite_(A) > obj_array;
   {
-    //I output = level::stretch(int_u8(), a); //adapt to 0-255
+    //I output = data::stretch(int_u8(), a); //adapt to 0-255
     //io::pgm::save(output, "components.pgm");
 
     obj_array = morpho::tree::get_components(t, a);
@@ -258,7 +258,7 @@ int main(int argc, char** argv)
   if (!output_ || output_ == 3)
     {
       typedef image2d<value::label_16> L;
-      L lab = level::convert(value::label_16(),
+      L lab = data::convert(value::label_16(),
 			     morpho::elementary::dilation(wst, c8()));
       I_ out = color_labeling_mean(input_, lab, n_basins);
       io::ppm::save(out, "mean.pgm");

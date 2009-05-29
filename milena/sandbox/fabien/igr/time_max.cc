@@ -22,8 +22,8 @@
 #include <mln/data/fill.hh>
 #include <mln/data/paste.hh>
 
-#include <mln/level/compute.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/compute.hh>
+#include <mln/data/stretch.hh>
 
 #include <mln/math/abs.hh>
 #include <mln/pw/all.hh>
@@ -108,8 +108,8 @@ int main(int argc, char* argv[])
 	ima_t(p) = k;
       }
 
-  image2d<int_u8> result_c = level::stretch(int_u8(), ima_c);
-  image2d<int_u8> result_t = level::stretch(int_u8(), ima_t);
+  image2d<int_u8> result_c = data::stretch(int_u8(), ima_c);
+  image2d<int_u8> result_t = data::stretch(int_u8(), ima_t);
   io::magick::save(result_c, "result_max.png");
   io::magick::save(result_t, "result_time.png");
 

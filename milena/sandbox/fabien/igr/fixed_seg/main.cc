@@ -32,9 +32,9 @@
 #include <mln/fun/v2v/fit.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/labeling/wrap.hh>
-#include <mln/level/compute.hh>
-#include <mln/level/convert.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/compute.hh>
+#include <mln/data/convert.hh>
+#include <mln/data/stretch.hh>
 #include <mln/make/image2d.hh>
 #include <mln/make/w_window1d.hh>
 #include <mln/math/diff_abs.hh>
@@ -138,10 +138,10 @@ struct dist_t : Function_vv2v<dist_t>
     accu::sum<V> accu_sum;
 
     convert::from_to(v1, tmp_ima);
-    float sum_v1 = level::compute(accu_sum, tmp_ima);
+    float sum_v1 = data::compute(accu_sum, tmp_ima);
 
     convert::from_to(v2, tmp_ima2);
-    float sum_v2 = level::compute(accu_sum, tmp_ima2);
+    float sum_v2 = data::compute(accu_sum, tmp_ima2);
 
     if (sum_v1 == 0 && sum_v2 == 0)
       return 1;
@@ -173,14 +173,14 @@ struct dist_morpho_t : Function_vv2v<dist_morpho_t>
     image1d<float> morpho_ima = mean_image(tmp_ima, 15);
     morpho_ima = mean_image(morpho_ima, 11);
     morpho_ima = mean_image(morpho_ima, 7);
-    float sum_v1 = level::compute(accu_sum, morpho_ima);
+    float sum_v1 = data::compute(accu_sum, morpho_ima);
 
     image1d<V> tmp_ima2;
     convert::from_to(v2, tmp_ima2);
     image1d<float> morpho_ima2 = mean_image(tmp_ima2, 15);
     morpho_ima2 = mean_image(tmp_ima2, 11);
     morpho_ima2 = mean_image(tmp_ima2, 7);
-    float sum_v2 = level::compute(accu_sum, morpho_ima2);
+    float sum_v2 = data::compute(accu_sum, morpho_ima2);
 
     mln_piter(image1d<float>) p(morpho_ima.domain());
     for_all(p)
@@ -292,7 +292,7 @@ int main(int argc, char* argv[])
     for (unsigned i = 1; i < means.nelements(); ++i)
       data::fill((ima_means | pw::value(ima_means) == pw::cst(i)).rw(), means[i]);
     mln_VAR(display_means, world::inter_pixel::display_edge(ima_means.unmorph_(), 0.0, 3));
-    io::pgm::save(level::stretch(int_u8(), display_means), "04_means.pgm");
+    io::pgm::save(data::stretch(int_u8(), display_means), "04_means.pgm");
   }*/
 
   /*typedef accu::mean<int_u12,float,int_u12> A;
@@ -307,7 +307,7 @@ int main(int argc, char* argv[])
       if (m_[l] < 2) m_[l] == 2;
       // basin <=> 2..255
     }
-    mln_VAR(d_m, level::transform(wst, m_));
+    mln_VAR(d_m, data::transform(wst, m_));
     mln_VAR(out, world::inter_pixel::display_edge(d_m.unmorph_(),
 	  0, // background <=> 0
 	  3));

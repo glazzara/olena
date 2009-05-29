@@ -36,7 +36,7 @@
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/data/fill.hh>
-# include <mln/level/stretch.hh>
+# include <mln/data/stretch.hh>
 # include <mln/border/fill.hh>
 # include <mln/io/pbm/load.hh>
 # include <mln/io/pgm/save.hh>
@@ -129,14 +129,14 @@ int main(int argc, char** argv)
 
     inte = geom::slow_seeds2tiling(lab, max);
     border::fill (inte, 0);
-    level::stretch (inte, inte2);
+    data::stretch (inte, inte2);
     io::pgm::save(inte2, "ima_slow.pgm");
     std::cout << "ima_slow generate with seeds2tiling"
 	      << std::endl;
 
     inte = geom::seeds2tiling(lab, c4 ());
     border::fill (inte, 0);
-    level::stretch (inte, inte2);
+    data::stretch (inte, inte2);
     io::pgm::save(inte2, "ima1.pgm");
     std::cout << "ima1 generate with seeds2tiling"
 	      << std::endl;
@@ -146,7 +146,7 @@ int main(int argc, char** argv)
 // 	     << std::endl;
 //     inte = geom::seeds2tiling_with_chamfer(lab, w_win, max, c4 ());
 //     border::fill (inte, 0);
-//     level::stretch (inte, inte2);
+//     data::stretch (inte, inte2);
 
 //     io::pgm::save(inte2, "ima2.pgm");
 //     std::cout << "ima2 generate with seeds2tiling_with_chamfer"

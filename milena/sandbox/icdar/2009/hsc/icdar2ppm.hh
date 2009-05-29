@@ -4,7 +4,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/value/label_8.hh>
 # include <mln/value/rgb8.hh>
-# include <mln/level/compute.hh>
+# include <mln/data/compute.hh>
 # include <mln/accu/count_labels.hh>
 # include <mln/labeling/colorize.hh>
 # include <mln/io/ppm/save.hh>
@@ -25,7 +25,7 @@ namespace mln
     image2d<value::label_8> ima;
     io::icdar::load(ima, icdarfile, ref.nrows(), ref.ncols());
 
-    value::label_8 nlines = level::compute(accu::meta::count_labels(), ima);
+    value::label_8 nlines = data::compute(accu::meta::count_labels(), ima);
 
     io::ppm::save(labeling::colorize(value::rgb8(), ima, nlines), ppmfile);
   }

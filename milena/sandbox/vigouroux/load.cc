@@ -9,7 +9,7 @@
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
 #include <mln/math/round.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/core/alias/w_window2d_float.hh>
 #include <mln/border/thickness.hh>

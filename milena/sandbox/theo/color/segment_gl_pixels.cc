@@ -12,7 +12,7 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/level/convert.hh>
+#include <mln/data/convert.hh>
 
 #include <mln/morpho/elementary/gradient.hh>
 #include <mln/morpho/meyer_wst.hh>
@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
   L nbasins;
   mln_ch_value_(I, L) w = morpho::meyer_wst(g, c4(), nbasins);
 
-  image2d<rgb8> output = level::convert(rgb8(), input);
+  image2d<rgb8> output = data::convert(rgb8(), input);
   data::fill((output | (pw::value(w) == 0)).rw(), literal::red);
 
   io::ppm::save(output, argv[6]);

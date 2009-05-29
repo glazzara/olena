@@ -4,7 +4,7 @@
 #include <mln/debug/println.hh>
 
 #include <mln/core/site_set/p_array.hh>
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/morpho/tree/data.hh>
 
@@ -62,7 +62,7 @@ namespace mln
       debug::println("f =", f);
 
     typedef p_array<mln_psite(I)> S;
-    S s = level::sort_psites_increasing(a);
+    S s = data::sort_psites_increasing(a);
     // s maps increasing attributes.
 
     mln_ch_value(I, mln_site(I)) par;
@@ -237,7 +237,7 @@ int main(int argc, char* argv[])
     usage(argv);
 
   typedef p_array<point2d> S;
-  S s = level::sort_psites_decreasing(f);
+  S s = data::sort_psites_decreasing(f);
 
   // Children go towards lower levels so leafs are regional minima.
   // We get a min-tree so that we can perform morphological closings.

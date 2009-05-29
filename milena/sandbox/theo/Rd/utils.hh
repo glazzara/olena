@@ -37,7 +37,7 @@
 
 # include <mln/data/fill_with_value.hh>
 # include <mln/data/paste.hh>
-# include <mln/level/compare.hh>
+# include <mln/data/compare.hh>
 
 
 

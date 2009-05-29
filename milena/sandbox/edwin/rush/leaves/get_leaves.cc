@@ -2,7 +2,7 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
 
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
   // Tree Creation
   typedef p_array<point2d> S;
   typedef morpho::tree::data<I,S> tree_t;
-  S s = level::sort_psites_decreasing(input);
+  S s = data::sort_psites_decreasing(input);
   tree_t t(input, s, c4());
 
   // Attribute pruning.

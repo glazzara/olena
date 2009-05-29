@@ -15,7 +15,7 @@
 #include <mln/io/pgm/load.hh>
 
 
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/morpho/tree/data.hh>
 
 #include <../../theo/color/change_attributes.hh>
@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 
   typedef p_array< mln_site_(I) > S;
   typedef morpho::tree::data<I,S> tree_t;
-  S sorted_sites = level::sort_psites_decreasing(input);
+  S sorted_sites = data::sort_psites_decreasing(input);
   tree_t tree(input, sorted_sites, c4());
 
   dsp("Input:");

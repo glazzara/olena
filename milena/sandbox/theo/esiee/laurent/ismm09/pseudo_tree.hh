@@ -17,8 +17,8 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/level/stretch.hh>
-#include <mln/level/compute.hh>
+#include <mln/data/stretch.hh>
+#include <mln/data/compute.hh>
 #include <mln/accu/max.hh>
 
 
@@ -554,7 +554,7 @@ namespace mln
     // Outputing.
 
     {
-      A aa_max = level::compute(accu::max<A>(), aa);
+      A aa_max = data::compute(accu::max<A>(), aa);
       using value::int_u8;
       if (aa_max < 256)
 	{
@@ -570,7 +570,7 @@ namespace mln
 	  image2d<int_u8> output(aa_ext.domain());
 	  data::fill(output, 0);
 	  data::paste(aa_ext, output);
-	  io::pgm::save(level::stretch(int_u8(), output),
+	  io::pgm::save(data::stretch(int_u8(), output),
 			"aa_line.pgm");
 	}
     }

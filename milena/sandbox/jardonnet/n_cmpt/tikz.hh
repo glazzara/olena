@@ -44,7 +44,7 @@
 # include <mln/morpho/tree/compute_attribute_image.hh>
 
 # include <mln/data/paste.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 namespace mln
 {
@@ -111,14 +111,14 @@ namespace mln
       typedef mln_ch_value(I, value::int_u<16>) V;
       typedef accu::volume<I> A;
 
-      S sp = level::sort_psites_decreasing(ima);
+      S sp = data::sort_psites_decreasing(ima);
       morpho::tree::data<I,S> t(ima, sp, nbh);
 
       V volume(ima.domain());
       data::paste(morpho::tree::compute_attribute_image(A(), t),
                    volume);
 
-      sp = level::sort_psites_increasing(volume);
+      sp = data::sort_psites_increasing(volume);
       std::cout << "/volume/" << std::endl;
       debug::println(volume);
       io::tikz::save(volume, "volume.tex");
@@ -271,7 +271,7 @@ namespace mln
             tik(d) = tik(parent(d));
         }
 
-        //mln_ch_value(I, value::rgb8) tik_rgb = level::transform(tik, col);
+        //mln_ch_value(I, value::rgb8) tik_rgb = data::transform(tik, col);
 
         //tik_rgb(p) = literal::red;
         tik(p) = 255;

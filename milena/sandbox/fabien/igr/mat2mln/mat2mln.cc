@@ -8,7 +8,7 @@
 #include <mln/debug/slices_2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 
 using namespace mln;
 using value::int_u8;
@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 
   io::dump::save(ima, argv[2]);
 
-  image2d<int_u8> ima_flat = debug::slices_2d(level::stretch(int_u8(), ima), 1.f, 0);
+  image2d<int_u8> ima_flat = debug::slices_2d(data::stretch(int_u8(), ima), 1.f, 0);
   io::pgm::save(ima_flat, "debug.pgm");
 
   return 0;

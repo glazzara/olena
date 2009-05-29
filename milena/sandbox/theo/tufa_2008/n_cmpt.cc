@@ -69,10 +69,10 @@ namespace mln
     typedef p_array<mln_psite(I)> S;
     typedef mln_ch_value(I, mln_result(A)) Attr;
 
-    S s = level::sort_psites_decreasing(f);
+    S s = data::sort_psites_decreasing(f);
     morpho::tree::data<I,S> t(f, s, nbh);
     Attr attr = morpho::tree::compute_attribute_image(a, t);
-    s = level::sort_psites_increasing(attr);
+    s = data::sort_psites_increasing(attr);
     debug::println("attr =", attr);
 
 

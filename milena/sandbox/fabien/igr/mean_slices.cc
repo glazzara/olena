@@ -27,7 +27,7 @@
 #include <mln/accu/median_h.hh>
 #include <mln/labeling/relabel.hh>
 #include <mln/labeling/mean_values.hh>
-#include <mln/level/compute.hh>
+#include <mln/data/compute.hh>
 #include <mln/make/image3d.hh>
 #include <mln/morpho/elementary/dilation.hh>
 #include <mln/pw/all.hh>

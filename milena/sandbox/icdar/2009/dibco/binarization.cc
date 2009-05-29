@@ -48,8 +48,8 @@
 #include <mln/labeling/regional_minima.hh>
 #include <mln/labeling/wrap.hh>
 
-#include <mln/level/transform.hh>
-#include <mln/level/convert.hh>
+#include <mln/data/transform.hh>
+#include <mln/data/convert.hh>
 
 #include <mln/linear/gaussian_1d.hh>
 
@@ -509,7 +509,7 @@ namespace mln
     mln_precondition(input.is_valid());
 
     typedef mln_psite(I) P;
-    p_array<P> s = level::sort_psites_increasing(input);
+    p_array<P> s = data::sort_psites_increasing(input);
 
     std::vector<bool> valid;
     valid.push_back(false); // For valid[0] where 0 is the non-label value.
@@ -564,7 +564,7 @@ namespace mln
     fun::i2v::array<bool> f_valid;
     convert::from_to(valid, f_valid);
 
-    mln_ch_value(I, bool) out = level::transform(lab, f_valid);
+    mln_ch_value(I, bool) out = data::transform(lab, f_valid);
 
     trace::exiting("labeling__quasi_regional_minima");
     return out;
@@ -702,9 +702,9 @@ int main(int argc, char *argv[])
 
   if (echo)
     {
-      io::pgm::save(level::transform(w_all, f_med),
+      io::pgm::save(data::transform(w_all, f_med),
 		    "temp_w_all.pgm");
-      io::pgm::save(level::transform(ws, f_med), "temp_basin_med.pgm");
+      io::pgm::save(data::transform(ws, f_med), "temp_basin_med.pgm");
     }
 
   p_vertices<util::graph, fun::i2v::array<point2d> >
@@ -722,11 +722,11 @@ int main(int argc, char *argv[])
   mln_VAR( lab, labeling__quasi_regional_minima(med, nbh, threshold, n_objects) );
 
 
-  io::pbm::save(pw::value(level::transform(ws, lab.function()))
+  io::pbm::save(pw::value(data::transform(ws, lab.function()))
 		| input.domain(),
 		argv[4]);
 
-//   io::pbm::save((pw::value(level::transform(ws,
+//   io::pbm::save((pw::value(data::transform(ws,
 // 					    lab.function())) != pw::cst(0))
 // 		| input.domain(),
 // 		argv[4]);
@@ -770,7 +770,7 @@ int main(int argc, char *argv[])
     
   if (echo)
     {
-      io::pgm::save(level::transform(ws, out.function()),
+      io::pgm::save(data::transform(ws, out.function()),
 		    "temp_out.pgm");
     }
 
@@ -826,11 +826,11 @@ int main(int argc, char *argv[])
 
   if (echo)
     {
-      io::pgm::save(level::transform(ws, out.function()),
+      io::pgm::save(data::transform(ws, out.function()),
 		    "temp_out_2.pgm");
     }
 
-  io::pbm::save((pw::value(level::transform(ws,
+  io::pbm::save((pw::value(data::transform(ws,
 					    out.function())) == pw::cst(255))
 		| input.domain(),
 		argv[4]);

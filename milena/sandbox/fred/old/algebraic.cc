@@ -41,8 +41,8 @@
 # include <mln/convert/to_upper_window.hh>
 # include <mln/extension/adjust_fill.hh>
 
-# include <mln/level/sort_psites.hh>
-# include <mln/level/sort_offsets.hh>
+# include <mln/data/sort_psites.hh>
+# include <mln/data/sort_offsets.hh>
 # include <mln/core/alias/neighb2d.hh>
 
 # include "../edwin/accu_trait.hh"
@@ -304,8 +304,8 @@ namespace mln
       {
         p_array < mln_psite(I) > s =
           increasing ?
-          level::sort_psites_increasing(input) :
-          level::sort_psites_decreasing(input);
+          data::sort_psites_increasing(input) :
+          data::sort_psites_decreasing(input);
         return impl::generic::algebraic(input, nbh, s, a, lambda);
       }
 
@@ -317,8 +317,8 @@ namespace mln
       {
         util::array<unsigned> s =
           increasing ?
-          level::sort_offsets_increasing(input) :
-          level::sort_offsets_decreasing(input);
+          data::sort_offsets_increasing(input) :
+          data::sort_offsets_decreasing(input);
         return impl::algebraic_fastest(input, nbh, s, a, lambda);
       }
 

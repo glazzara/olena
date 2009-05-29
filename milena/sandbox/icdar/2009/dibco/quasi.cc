@@ -20,8 +20,8 @@
 #include <mln/labeling/regional_minima.hh>
 #include <mln/labeling/wrap.hh>
 
-#include <mln/level/transform.hh>
-#include <mln/level/convert.hh>
+#include <mln/data/transform.hh>
+#include <mln/data/convert.hh>
 
 #include <mln/math/diff_abs.hh>
 
@@ -54,7 +54,7 @@ namespace mln
     mln_precondition(input.is_valid());
     
     typedef mln_psite(I) P;
-    p_array<P> s = level::sort_psites_increasing(input);
+    p_array<P> s = data::sort_psites_increasing(input);
 
     std::vector<bool> valid;
     valid.push_back(false); // For valid[0] where 0 is the non-label value.
@@ -135,7 +135,7 @@ namespace mln
     fun::i2v::array<bool> f_valid;
     convert::from_to(valid, f_valid);
 
-    mln_ch_value(I, bool) out = level::transform(lab, f_valid);
+    mln_ch_value(I, bool) out = data::transform(lab, f_valid);
 
     io::pgm::save(labeling::wrap(value::int_u8(), lab),
 		  "tmp_lab.pgm");

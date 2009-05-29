@@ -168,7 +168,7 @@ int main(int argc, char* argv[])
 	    << " boxes" << std::endl;
 
   /// Save grouped text image
-  io::pgm::save(level::transform(grouped_text.label_image(),
+  io::pgm::save(data::transform(grouped_text.label_image(),
 				 fun::v2v::wrap<value::int_u8>()),
 		"words.pgm");
 
@@ -210,7 +210,7 @@ int main(int argc, char* argv[])
 				       scribo::make::debug_filename("boxes.ppm"));
 
   /// Does not seem to work (FIXME)
-  io::pgm::save(level::transform(grouped_lines.label_image(),
+  io::pgm::save(data::transform(grouped_lines.label_image(),
 				 fun::l2l::wrap<value::int_u8>()),
 		"fixme.ppm");
 

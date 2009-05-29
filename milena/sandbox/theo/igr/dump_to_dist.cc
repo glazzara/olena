@@ -14,7 +14,7 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/util/array.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/data/paste.hh>
 
 #include <mln/morpho/elementary/closing.hh>
@@ -152,7 +152,7 @@ int main(int argc, char* argv[])
 
   io::dump::save(d_, argv[2]);
 
-//   mln_VAR(d_8, level::transform(d, int_u8_from_float()));
+//   mln_VAR(d_8, data::transform(d, int_u8_from_float()));
 
 //   io::pgm::save(display_edge(d_8.unmorph_(), 0, 3),
 // 		argv[2]);

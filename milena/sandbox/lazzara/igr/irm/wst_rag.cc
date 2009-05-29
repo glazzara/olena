@@ -11,7 +11,7 @@
 #include <mln/accu/compute.hh>
 #include <mln/core/alias/dpoint2d.hh>
 #include <mln/draw/box.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/fun/v2v/id.hh>
 #include <mln/core/image/line_graph_elt_neighborhood.hh>
 #include <mln/morpho/elementary/dilation.hh>
@@ -92,7 +92,7 @@ namespace mln
     convert::from_to(m_3f, m);
     m[0] = literal::yellow;
 
-    io::ppm::save(level::transform(w,
+    io::ppm::save(data::transform(w,
 	  convert::to< fun::i2v::array<mln_value(I)> >(m)),
 	"wst_rag_wshd_color.ppm");
 
@@ -273,7 +273,7 @@ int main(int argc, char *argv[])
   mln_invariant(f(0) == 0u);
   --nbasins2; //nbasins2 does not count the basin with label 0.
   std::cout << "nbasins2 = " << nbasins2 << std::endl;
-  J wsd2 = level::transform(wsd, f);
+  J wsd2 = data::transform(wsd, f);
 
 
   /// Reconstruct a graph from the simplified image.

@@ -11,7 +11,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pbm/save.hh>
 
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/morpho/elementary/gradient.hh>
 
 #include <mln/morpho/tree/data.hh>
@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
 
 
   typedef p_array<point2d> S;
-  S s = level::sort_psites_decreasing(f);
+  S s = data::sort_psites_decreasing(f);
 
   typedef morpho::tree::data<I,S> tree_t;
   tree_t t(f, s, nbh);

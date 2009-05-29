@@ -3,7 +3,7 @@
 #include <mln/morpho/watershed/flooding.hh>
 #include <mln/value/label_16.hh>
 
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/convert/to_fun.hh>
 
 
@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
 	  }
 	else if (get_filetype(argv[2]) == filetype::pgm)
 	  {
-	    io::pgm::save( level::transform(wst, convert::to_fun(L_to_int_u8)),
+	    io::pgm::save( data::transform(wst, convert::to_fun(L_to_int_u8)),
 			   argv[2] );
 	  }
 	else if (get_filetype(argv[2]) == filetype::pbm)

@@ -4,7 +4,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/ppm/save.hh>
 #include <mln/literal/colors.hh>
-#include <mln/level/convert.hh>
+#include <mln/data/convert.hh>
 
 #include <mln/value/label_8.hh>
 #include <mln/estim/min_max.hh>
@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 					       input_,
 					       n);
  
-  image2d<rgb8> out = level::convert(rgb8(), input);
+  image2d<rgb8> out = data::convert(rgb8(), input);
   scribo::draw::bounding_boxes(out, boxes, literal::red);
   io::ppm::save(out, argv[2]);
 }

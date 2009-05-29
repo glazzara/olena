@@ -16,7 +16,7 @@
 #include <mln/value/hsi.hh>
 #include <mln/fun/v2v/rgb_to_hsi.hh>
 
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include <iostream>
 
@@ -39,7 +39,7 @@ int main()
 
   image2d<value::hsi_f> reshsi(tmp.domain());
   gradation2(tmp, reshsi);
-  image2d<value::rgb8> resrgb = level::transform(reshsi,
+  image2d<value::rgb8> resrgb = data::transform(reshsi,
 						   fun::v2v::f_hsi_to_rgb_3x8);
 
 

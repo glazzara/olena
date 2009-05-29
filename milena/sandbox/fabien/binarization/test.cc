@@ -15,8 +15,8 @@
 
 #include <mln/io/magick/all.hh>
 
-#include <mln/level/convert.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/convert.hh>
+#include <mln/data/stretch.hh>
 
 #include <mln/literal/colors.hh>
 
@@ -88,7 +88,7 @@ int draw_lines(image2d<bool>& ima, int col_min, int col_max)
   image1d<int> ima_lines;
   convert::from_to(inter_lines, ima_lines);
   accu::median_h<int_u12> accu_med;
-  median = level::compute(accu_med, ima_lines);
+  median = data::compute(accu_med, ima_lines);
 
   // Gnuplot files creation
   /*std::ofstream fout_row("row.plot");
@@ -113,7 +113,7 @@ int main(int argc, char* argv[])
 
   image2d<bool> ima;
   io::magick::load(ima, argv[1]);
-  image2d<rgb8> ima_color = level::convert(rgb8(), ima);
+  image2d<rgb8> ima_color = data::convert(rgb8(), ima);
 
   //image2d<int_u8> ima_sampled = world::binary_2d::subsample(ima, 3);
   //io::pgm::save(ima_sampled, argv[2]);

@@ -24,8 +24,8 @@
 #include <mln/data/fill.hh>
 #include <mln/data/paste.hh>
 
-#include <mln/level/compute.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/compute.hh>
+#include <mln/data/stretch.hh>
 
 #include <mln/math/abs.hh>
 #include <mln/pw/all.hh>
@@ -66,8 +66,8 @@ save_tmax_map(util::array<image2d<I> >& arr_ima, unsigned dim3, const char* desc
   std::ostringstream stime;
   stime << desc << "_time.pgm";
 
-  image2d<int_u8> result_c = level::stretch(int_u8(), ima_c);
-  image2d<int_u8> result_t = level::stretch(int_u8(), ima_t);
+  image2d<int_u8> result_c = data::stretch(int_u8(), ima_c);
+  image2d<int_u8> result_t = data::stretch(int_u8(), ima_t);
   io::pgm::save(result_c, smax.str());
   io::pgm::save(result_t, stime.str());
 }

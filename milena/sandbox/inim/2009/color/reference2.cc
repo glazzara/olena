@@ -30,7 +30,7 @@
 
 # include <mln/data/paste.hh>
 # include <mln/data/fill.hh>
-# include <mln/level/transform.hh>
+# include <mln/data/transform.hh>
 # include <mln/extension/fill.hh>
 
 # include <mln/morpho/meyer_wst.hh>
@@ -371,7 +371,7 @@ do_it(I& input, int lambda, unsigned& nbasins)
 
   image2d<value::rgb8> cells(ima.domain());
   data::fill(cells, literal::white);
-  data::paste(level::transform(edge, colors), cells);
+  data::paste(data::transform(edge, colors), cells);
   io::ppm::save(display_edge(cells, literal::white, 3), "tmp_edge.ppm");
 
   // Move the color of an edge which is non black in the cell

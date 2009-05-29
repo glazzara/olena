@@ -15,7 +15,7 @@
 
 #include <mln/accu/mean.hh>
 #include <mln/accu/median_h.hh>
-#include <mln/level/compute.hh>
+#include <mln/data/compute.hh>
 #include <mln/pw/all.hh>
 #include <mln/util/array.hh>
 
@@ -38,7 +38,7 @@ void plot_label(image3d<I>& ima, image2d<L>& ima_labels, V lbl)
   {
     image2d<I> slice_ima = duplicate(slice(ima, sli));
     accu::mean<I> accu_mean;
-    float mean = level::compute(accu_mean, slice_ima | ima_label.domain());
+    float mean = data::compute(accu_mean, slice_ima | ima_label.domain());
     arr.append(mean);
   }
 

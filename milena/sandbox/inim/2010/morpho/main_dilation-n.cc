@@ -7,8 +7,8 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/level/convert.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/convert.hh>
+#include <mln/data/stretch.hh>
 
 #include <mln/core/alias/window2d.hh>
 
@@ -33,8 +33,8 @@ int main(int argc, char** argv)
   io::pbm::load(in, argv[1]);
 
   value::int_u8 k = 1;
-  image2d<value::int_u8> ima = level::convert(k, in);
-  ima = level::stretch(k, ima);
+  image2d<value::int_u8> ima = data::convert(k, in);
+  ima = data::stretch(k, ima);
 
   std::cout << "  => create window..." << std::endl;
   window2d it;

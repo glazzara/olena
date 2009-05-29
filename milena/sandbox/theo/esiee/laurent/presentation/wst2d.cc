@@ -12,7 +12,7 @@
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/make/double_neighb2d.hh>
 
-# include <mln/level/transform.hh>
+# include <mln/data/transform.hh>
 # include <mln/literal/black.hh>
 # include <mln/debug/println.hh>
 
@@ -113,7 +113,7 @@ void do_it(const I& ima,
 //   debug::println(labeling::regional_minima(clo, nbh, l));
 //   debug::println(wst);
 
-  io::ppm::save(level::transform(wst, colorize(l)), filename);
+  io::ppm::save(data::transform(wst, colorize(l)), filename);
 }
 
 

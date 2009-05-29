@@ -60,7 +60,7 @@
 #include <mln/morpho/line_gradient.hh>
 #include <mln/morpho/closing_area_on_vertices.hh>
 #include <mln/morpho/meyer_wst.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u16.hh>

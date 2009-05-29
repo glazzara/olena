@@ -23,7 +23,7 @@
 namespace mln
 {
 
-  namespace level
+  namespace data
   {
 
     template <typename I>

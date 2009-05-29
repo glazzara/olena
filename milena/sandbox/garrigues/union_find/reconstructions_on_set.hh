@@ -33,7 +33,7 @@
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/data/fill.hh>
 # include <mln/data/paste.hh>
-# include <mln/level/compare.hh>
+# include <mln/data/compare.hh>
 
 # include "canvas/reconstruction_on_set.hh"
 

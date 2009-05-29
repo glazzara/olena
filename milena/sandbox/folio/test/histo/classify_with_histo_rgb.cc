@@ -24,7 +24,7 @@
 #include "../../mln/histo/compute_histo_rgb.hh"
 #include "../../mln/histo/classify_with_histo_rgb.hh"
 
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 namespace mln
 {
@@ -60,7 +60,7 @@ int main(int argc, char** argv)
   std::cout << "  => loading " << argv[1] << "..." << std::endl;
   image2d<value::rgb8> lena;
   io::ppm::load(lena, argv[1]);
-  image2d<rgb6> ima = level::transform(lena, rgb8to6());
+  image2d<rgb6> ima = data::transform(lena, rgb8to6());
 
   // let's run !
   std::cout << "  => computing histogram..." << std::endl;

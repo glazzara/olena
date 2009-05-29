@@ -17,7 +17,7 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/data/paste.hh>
-#include <mln/level/apply.hh>
+#include <mln/data/apply.hh>
 
 #include <mln/fun/v2v/rgb_to_hsi.hh>
 #include <mln/fun/v2v/abs.hh>
@@ -51,7 +51,7 @@ int main(int argc, char ** argv)
   //  RGB -> GS
   ////////////////////
 
-  image2d<hsi_f> hsi = level::transform(ima, fun::v2v::f_rgb_to_hsi_f);
+  image2d<hsi_f> hsi = data::transform(ima, fun::v2v::f_rgb_to_hsi_f);
 
   //FIXME: fix and use alexandre stuff
   /*  thru<to_hsi, image2d<hsi_f> > tmp(hsi_f);
@@ -74,7 +74,7 @@ int main(int argc, char ** argv)
   image2d<int_u8> mg_ima(g_ima.domain());
   mg_ima = morpho::elementary::gradient(g_ima, c4());
 
-  //level::apply(mg_ima, fun::v2v::abs<int_u8>());
+  //data::apply(mg_ima, fun::v2v::abs<int_u8>());
 
   io::pgm::save(mg_ima, "mg_ima.ppm");
 

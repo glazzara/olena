@@ -39,7 +39,7 @@
 
 # include <mln/core/alias/window2d.hh>
 
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/binarization/threshold.hh>
 #include <mln/estim/mean.hh>
 #include <mln/morpho/hit_or_miss.hh>

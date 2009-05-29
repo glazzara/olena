@@ -46,7 +46,7 @@
 #include <mln/accu/compute.hh>
 #include <mln/core/alias/dpoint2d.hh>
 #include <mln/draw/box.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/fun/v2v/id.hh>
 #include <mln/fun/l2l/wrap.hh>
 #include <mln/core/image/line_graph_elt_neighborhood.hh>
@@ -130,7 +130,7 @@ namespace mln
     convert::from_to(m_3f, m);
     m[0] = 150u;
 
-    /*io::ppm::save(level::transform(w,
+    /*io::ppm::save(data::transform(w,
 	  convert::to< fun::i2v::array<mln_value(I)> >(m)),
 	"wst_rag_wshd_color.ppm");*/
 
@@ -305,7 +305,7 @@ int main(int argc, char *argv[])
     }
     mln_invariant(f(0) == 0u);
     --nbasins2; // nbasins2 does not count the basin with label 0.
-    image2d<label_16> wsd2 = level::transform(wshed, f);
+    image2d<label_16> wsd2 = data::transform(wshed, f);
 
     /// Reconstruct a graph from the simplified image.
     util::graph g2 = make::graph(wsd2, c4(), nbasins2);
@@ -320,8 +320,8 @@ int main(int argc, char *argv[])
     mln_VAR(wsd2_, morpho::elementary::dilation(extend(wsd2 | (pw::value(wsd2) == 0u), wsd2), c8()));
     data::fill((wsd2 | (pw::value(wsd2) == 0u)).rw(), wsd2_);
 
-    mln_VAR(original, level::stretch(int_u8(), labeling::mean_values(dcm, wshed, nbasins)));
-    mln_VAR(mean, level::stretch(int_u8(), labeling::mean_values(dcm, wsd2, nbasins2)));
+    mln_VAR(original, data::stretch(int_u8(), labeling::mean_values(dcm, wshed, nbasins)));
+    mln_VAR(mean, data::stretch(int_u8(), labeling::mean_values(dcm, wsd2, nbasins2)));
     io::pgm::save(original, "wsd_original.pgm");
     io::pgm::save(mean, "wsd_mean_colors.pgm");
     io::ppm::save(labeling::colorize(rgb8(), wshed, nbasins), "wsd_colorize_01.ppm");

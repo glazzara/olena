@@ -13,7 +13,7 @@
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
 #include <mln/io/pbm/save.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/data/paste.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/rgb8.hh>

@@ -3,7 +3,7 @@
 #include <mln/make/image2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/io/pgm/load.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include "io/icdar/save.hh"
 #include "io/icdar/load.hh"

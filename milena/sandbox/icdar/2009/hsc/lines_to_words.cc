@@ -7,7 +7,7 @@
 #include <mln/io/pbm/all.hh>
 #include <mln/io/ppm/all.hh>
 
-#include <mln/level/convert.hh>
+#include <mln/data/convert.hh>
 #include <mln/labeling/relabel.hh>
 
 #include "get_line_images.hh"
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 
   image2d<int_u8> lines_;
   io::pgm::load(lines_, argv[2]);
-  image2d<label_16> lines = level::convert(label_16(), lines_);
+  image2d<label_16> lines = data::convert(label_16(), lines_);
 
   label_16 nlines;
   labeling::relabel_inplace(lines, nlines);

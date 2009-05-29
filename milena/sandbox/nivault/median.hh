@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_MEDIAN_HH
 # define MLN_LEVEL_MEDIAN_HH
 
-/*! \file mln/level/median.hh
+/*! \file mln/data/median.hh
  *
  * \brief Median filtering of an image.
  */
@@ -56,7 +56,7 @@
 namespace mln
 {
 
-  namespace level
+  namespace data
   {
 
     /*! Compute in \p output the median filter of image \p input by
@@ -223,7 +223,7 @@ namespace mln
 
 #  endif
 
-    } // end of namespace mln::level::impl
+    } // end of namespace mln::data::impl
 
 
     // Facades.
@@ -249,7 +249,7 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::level
+  } // end of namespace mln::data
 
 } // end of namespace mln
 

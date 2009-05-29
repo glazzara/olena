@@ -49,7 +49,7 @@ int main(int argc, char ** argv)
   typedef mln_ch_value_(I,unsigned) V;
   typedef accu::volume<I> A;
 
-  S sp = level::sort_psites_decreasing(ima);
+  S sp = data::sort_psites_decreasing(ima);
   morpho::tree::data<I,S> t(ima, sp, c4());
   V volume = morpho::tree::compute_attribute_image(A(), t);
 

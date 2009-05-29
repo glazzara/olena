@@ -33,9 +33,9 @@
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/routine/duplicate.hh>
 # include <mln/data/fill.hh>
-# include <mln/level/compare.hh>
+# include <mln/data/compare.hh>
 # include <mln/data/paste.hh>
-# include <mln/level/sort_psites.hh>
+# include <mln/data/sort_psites.hh>
 # include <mln/literal/zero.hh>
 # include <mln/math/max.hh>
 # include <mln/math/min.hh>
@@ -71,8 +71,8 @@ namespace mln
 	: marker(marker),
 	  mask(mask),
 	  output(output),
-	  d1_s(level::sort_psites_decreasing(mask | (pw::value(marker) <= pw::value(mask)))),
-	  d2_s(level::sort_psites_increasing(mask | (pw::value(marker) > pw::value(mask))))
+	  d1_s(data::sort_psites_decreasing(mask | (pw::value(marker) <= pw::value(mask)))),
+	  d2_s(data::sort_psites_increasing(mask | (pw::value(marker) > pw::value(mask))))
       {
       }
 

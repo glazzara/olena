@@ -32,8 +32,8 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
-#include <mln/level/sort_psites.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/sort_psites.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/debug/println.hh>
 #include <mln/core/var.hh>
@@ -82,25 +82,25 @@ int main()
 
   image2d<unsigned> area_inc, area_dec;
   {
-    S s = level::sort_psites_increasing(f);
+    S s = data::sort_psites_increasing(f);
     morpho::tree::data<I,S> t(f, s, c4());
     accu::count<Px> a;
     area_inc = morpho::tree::compute_attribute_image(a, t);
     debug::println("area_inc =", area_inc);
   }
   {
-    S s = level::sort_psites_decreasing(f);
+    S s = data::sort_psites_decreasing(f);
     morpho::tree::data<I,S> t(f, s, c4());
     accu::count<Px> a;
     area_dec = morpho::tree::compute_attribute_image(a, t);
     debug::println("area_dec =", area_dec);
   }
 
-  io::pgm::save(level::transform(area_inc, sat), "inc.pgm");
-  io::pgm::save(level::transform(area_dec, sat), "dec.pgm");
+  io::pgm::save(data::transform(area_inc, sat), "inc.pgm");
+  io::pgm::save(data::transform(area_dec, sat), "dec.pgm");
 
   image2d<unsigned> area = arith::min(area_inc, area_dec);
-  io::pgm::save(level::transform(area, sat), "min.pgm");
+  io::pgm::save(data::transform(area, sat), "min.pgm");
 
   unsigned lambda = 20;
 

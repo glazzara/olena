@@ -24,7 +24,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/label_16.hh>
 
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/convert/to_window.hh>
 #include <mln/convert/to_image.hh>
@@ -33,7 +33,7 @@
 #include <mln/labeling/compute.hh>
 #include <mln/labeling/background.hh>
 
-#include <mln/level/convert.hh>
+#include <mln/data/convert.hh>
 
 #include <mln/make/image3d.hh>
 
@@ -42,7 +42,7 @@
 #include <mln/morpho/meyer_wst.hh>
 
 #include <mln/accu/mean.hh>
-//#include <mln/level/take.hh>
+//#include <mln/data/take.hh>
 
 #include <mln/util/graph.hh>
 
@@ -262,7 +262,7 @@ namespace mln
     label_16 nbasins;
     image2d<label_16> wshed = morpho::meyer_wst(clo, c4(), nbasins);
     std::cout << "nbasins = " << nbasins << std::endl;
-    io::pgm::save( level::transform(wshed, convert::to_fun(foo)),
+    io::pgm::save( data::transform(wshed, convert::to_fun(foo)),
 	"tmp_wshed.pgm" );
 
     mln_VAR(mean_values, labeling::compute(accu::meta::mean(), irm, wshed, nbasins));
@@ -272,11 +272,11 @@ namespace mln
       if (f(mean_values[i]))
 	to_keep(i) = i;
 
-    wshed = level::transform(wshed, to_keep);
-    io::pgm::save( level::transform(wshed, convert::to_fun(foo)),
+    wshed = data::transform(wshed, to_keep);
+    io::pgm::save( data::transform(wshed, convert::to_fun(foo)),
 	"tmp_wshed_2.pgm" );
 
-    image2d<bool> wshed_bw = level::transform(wshed, to_bool());
+    image2d<bool> wshed_bw = data::transform(wshed, to_bool());
     image2d<bool> main_obj = get_main_object_shape(wshed_bw);
     io::pbm::save(main_obj, "tmp_main_obj");
 

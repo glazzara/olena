@@ -42,5 +42,5 @@ int main(int argc, char *argv[])
   io::ppm::load(input, argv[1]);
 
   bw_negate_in_color f;
-  io::ppm::save(level::transform(input, f), argv[2]);
+  io::ppm::save(data::transform(input, f), argv[2]);
 }

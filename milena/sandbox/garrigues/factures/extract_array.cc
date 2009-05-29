@@ -36,7 +36,7 @@
 
 #include <mln/pw/all.hh>
 
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/labeling/level.hh>
 #include <mln/literal/all.hh>
 
@@ -67,7 +67,7 @@ int main()
 
   // Labeling.
   unsigned nlabels;
-  image2d<unsigned> labels = labeling::level(bin, true, c4(), nlabels);
+  image2d<unsigned> labels = labeling::value(bin, true, c4(), nlabels);
 
   // Get the caracteristics of the connected components.
   std::vector< accu::pair_< accu::bbox<point2d>, accu::count_<point2d> > > caracteristics(nlabels);

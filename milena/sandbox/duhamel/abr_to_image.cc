@@ -37,7 +37,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/set_p.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/io/pgm/save.hh>
 #include <vector>
 
@@ -135,7 +135,7 @@ int main (void)
 
   image2d<int_u8> out(output.domain());
 
-  level::stretch (output, out);
+  data::stretch (output, out);
 
   io::pgm::save(out, "out.pgm");
 

@@ -160,12 +160,12 @@ main (int argc, char** argv)
   io::pgm::load (in, file_in);
 
   image2d<float> g;
-  g = level::transform(morpho::gradient(in, win_c4p()), g_functor(0));
+  g = data::transform(morpho::gradient(in, win_c4p()), g_functor(0));
 
   image2d<value::int_u8> fseeds;
   io::pgm::load (fseeds, file_seeds);
 
-  image2d<bool> seeds = level::transform(in, fseeds, seeds_functor());
+  image2d<bool> seeds = data::transform(in, fseeds, seeds_functor());
   //image2d<point2d> closest = transform::closest_point_geodesic(seeds, c4(),
   //							       value:: int_u8(std::max(in.nrows(),
   //										       in.ncols())));

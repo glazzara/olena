@@ -3,11 +3,11 @@
 #include <mln/estim/min_max.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/accu/mean.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/value/label_8.hh>
 #include <mln/value/int_u16.hh>
-#include <mln/level/convert.hh>
+#include <mln/data/convert.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/ppm/load.hh>
@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
   image2d<int_u8> lab;
   io::pgm::load(lab, argv[2]);
 
-  image2d<int_u16> lab_ = level::convert(int_u16(), lab);
+  image2d<int_u16> lab_ = data::convert(int_u16(), lab);
 
   int_u16 min, nlabels;
   estim::min_max(lab_, min, nlabels);
@@ -63,5 +63,5 @@ int main(int argc, char* argv[])
       c[l].blue() = m[l][2];
     }
 
-  io::ppm::save(level::transform(lab, c), argv[3]);
+  io::ppm::save(data::transform(lab, c), argv[3]);
 }

@@ -81,7 +81,7 @@ namespace mln
       // sort ima psites
       typedef mln_psite(I) P;
       typedef p_array<P> S;
-      S sp = level::sort_psites_increasing(ima);
+      S sp = data::sort_psites_increasing(ima);
 
       // init watershed image
       mln_ch_value(I, value::rgb8) wst(ima.domain());

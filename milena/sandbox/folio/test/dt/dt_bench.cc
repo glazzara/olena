@@ -12,7 +12,7 @@
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/data/paste.hh>
 #include <mln/value/int_u8.hh>
 
@@ -46,7 +46,7 @@ int main()
   out = dt::raw_dmap_fast(ima, make::w_window2d(ws), 666666);
 
   image2d<value::int_u8> out2(out.domain());
-  level::stretch(out, out2);
+  data::stretch(out, out2);
 
   io::pgm::save(out2, "out.pgm");
 }

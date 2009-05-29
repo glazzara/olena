@@ -16,7 +16,7 @@
 #include <mln/literal/colors.hh>
 #include <mln/morpho/elementary/gradient_internal.hh>
 
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/fun/v2b/threshold.hh>
 
 #include <mln/data/fill.hh>
@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
   image3d<int_u8> input;
   io::dump::load(input, argv[1]);
 
-  image3d<bool> ima = level::transform(input, fun::v2b::threshold<int_u8>(1));
+  image3d<bool> ima = data::transform(input, fun::v2b::threshold<int_u8>(1));
   mln_VAR(grad_int, morpho::elementary::gradient_internal(ima, c6()));
 
   util::array<unsigned> xproj(ima.nrows(), 0);

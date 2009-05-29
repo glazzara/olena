@@ -26,7 +26,7 @@
 // Public License.
 
 
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/data/fill.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/site_set/p_set.hh>
@@ -158,7 +158,7 @@ namespace mln
       void init()
       {
 	// Sort the sites in increasing order
-	S = level::sort_psites_increasing(pima);
+	S = data::sort_psites_increasing(pima);
 
 	// Clear the marker map
 	data::fill(isproc, false);
@@ -526,7 +526,7 @@ namespace mln
       {
 	mln::p_priority< mln_value(I), p_queue_fast<site> > L;
 
-	mln_value(I) max = level::compute(accu::meta::max(), pima);
+	mln_value(I) max = data::compute(accu::meta::max(), pima);
 
 	// I K(pima.domain(), pima.border());
 	mln_ch_value(I, unsigned) K(pima.domain(), pima.border());

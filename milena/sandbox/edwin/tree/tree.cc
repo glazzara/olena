@@ -11,7 +11,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pbm/save.hh>
 
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
@@ -72,7 +72,7 @@ namespace mln
 			    Accumulator<A> a_,
 			    double lambda1,
 			    double lambda2)
-    : sorted_sites_(level::sort_psites_decreasing(exact(f_))),
+    : sorted_sites_(data::sort_psites_decreasing(exact(f_))),
       tree_(exact(f_), sorted_sites_, c4())
   {
     mln_VAR(a, morpho::tree::compute_attribute_image(a_, tree_));
@@ -109,14 +109,14 @@ namespace mln
     //debug::println(img | tree.nodes());
 
 
-    N nodes = level::sort_psites_increasing(img);
+    N nodes = data::sort_psites_increasing(img);
     mln_fwd_piter(N) n(nodes);
     mln_fwd_piter(PS) p(pset), p_rm(ps_rm);
     old = 0;
 
     // FIXME: hack because we want iterate on nodes and we would
     // have wanted to write:
-    //     N nodes = level::sort_psites_increasing(img | tree.nodes)
+    //     N nodes = data::sort_psites_increasing(img | tree.nodes)
     //
     // but it doesn't work, so we iterate on domain regarding if n is
     // a node.

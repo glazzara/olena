@@ -60,7 +60,7 @@
 
 # include <mln/border/fill.hh>
 
-# include <mln/level/compute.hh>
+# include <mln/data/compute.hh>
 # include <mln/data/fill.hh>
 # include <mln/accu/min.hh>
 # include <mln/accu/max.hh>
@@ -83,8 +83,8 @@
 
 # include <mln/util/tree_to_image.hh>
 # include <mln/value/int_u8.hh>
-# include <mln/level/stretch.hh>
-# include <mln/level/compare.hh>
+# include <mln/data/stretch.hh>
+# include <mln/data/compare.hh>
 # include <mln/io/pgm/save.hh>
 
 namespace mln
@@ -290,7 +290,7 @@ namespace mln
 
       // gn <- min u(x) x belongs to N.
       if ((env.u | set::inter(env.N, env.u.domain())).nsites() > 0)
-	env.gn = level::compute< typename F::accu_for_gn >(env.u | set::inter(env.N, env.u.domain()));
+	env.gn = data::compute< typename F::accu_for_gn >(env.u | set::inter(env.N, env.u.domain()));
       else
       {
 	finished = true;
@@ -351,7 +351,7 @@ namespace mln
 	    border_ima(z) = true;
 	  }
 	unsigned n;
-	labeling::level(border_ima, true, F::bdr_nbh(), tmp, n);
+	labeling::value(border_ima, true, F::bdr_nbh(), tmp, n);
 
 // 	std::cout << "labeling : " << n << std::endl;
 // 	std::cout << "nous : " << env.n_cc << std::endl;
@@ -367,7 +367,7 @@ namespace mln
 	    //       follow each border to find which is the exterior border
 	    //       and which are the holes. Keep one pixel of each holes.
 
-	    // WARNING : We trust labeling::level to label the exterior border with 1.
+	    // WARNING : We trust labeling::value to label the exterior border with 1.
 	    env.current_region->elt().holes.insert(a_point_of(tmp | pw::value(tmp) == pw::cst(i)));
 
 	    //       FIXME : [optimisation] Remove from N border of holes???.

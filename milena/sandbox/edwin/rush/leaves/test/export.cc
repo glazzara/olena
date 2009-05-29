@@ -30,7 +30,7 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
 
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 
 #include <mln/morpho/tree/data.hh>
 #include "../export_leaves.hh"
@@ -51,7 +51,7 @@ int main()
 		4, 4, 4 };
 
   I ima = make::image2d(vals);
-  S s = level::sort_psites_decreasing(ima);
+  S s = data::sort_psites_decreasing(ima);
   tree_t t(ima, s, c4());
 
   export_leaves_to_file(t, ima);

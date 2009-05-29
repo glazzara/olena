@@ -55,13 +55,13 @@
 #include <mln/labeling/fill_holes.hh>
 #include <mln/labeling/n_max.hh>
 
-#include <mln/level/compare.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/compare.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/fun/internal/selector.hh>
 
 #include <mln/fun/v2b/threshold.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/accu/count.hh>
 #include <mln/accu/center.hh>
 #include <mln/set/compute.hh>
@@ -106,7 +106,7 @@ igr(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_, L& nlabels)
 
   // Threshold.
 
-  mln_ch_value(I, bool) threshold = level::transform(input, fun::v2b::threshold<int_u8>(25));
+  mln_ch_value(I, bool) threshold = data::transform(input, fun::v2b::threshold<int_u8>(25));
 
   // Labeling.
 
@@ -133,7 +133,7 @@ igr(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_, L& nlabels)
   mln_ch_value(I, bool) gradient = morpho::elementary::gradient_internal(big_second, nbh);
   mln_VAR(gradient_map, gradient | pw::value(gradient) == true);
 
-  mln_ch_value(I, rgb8) result = level::convert(rgb8(), input);
+  mln_ch_value(I, rgb8) result = data::convert(rgb8(), input);
   data::fill((result | gradient_map.domain()).rw(), literal::red);
 
   // Center.

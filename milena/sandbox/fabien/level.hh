@@ -148,15 +148,15 @@ namespace mln
     level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
 	  L& nlabels)
     {
-      trace::entering("labeling::level");
+      trace::entering("labeling::value");
 
-      internal::level_tests(input, val, nbh, nlabels);
+      internal::data_tests(input, val, nbh, nlabels);
 
       mln_ch_value(I, L) output;
-      impl::level_functor<I> f(input, val);
+      impl::data_functor<I> f(input, val);
       output = canvas::labeling_video(input, nbh, nlabels, f);
 
-      trace::exiting("labeling::level");
+      trace::exiting("labeling::value");
       return output;
     }
 

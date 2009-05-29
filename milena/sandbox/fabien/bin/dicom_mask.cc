@@ -13,7 +13,7 @@
 #include <mln/literal/colors.hh>
 #include <mln/morpho/elementary/gradient_internal.hh>
 
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/fun/v2b/threshold.hh>
 
 #include <mln/data/fill.hh>
@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
     fout_ysrc << i << " " << ysrcproj[i] << std::endl;
   }
 
-  image2d<bool> ima = level::transform(input, fun::v2b::threshold<int_u8>(1));
+  image2d<bool> ima = data::transform(input, fun::v2b::threshold<int_u8>(1));
   io::pbm::save(ima, argv[2]);
   mln_VAR(grad_int, morpho::elementary::gradient_internal(ima, c4()));
 

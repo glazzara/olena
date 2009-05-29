@@ -13,7 +13,7 @@
 
 /* Site set */
 #include <mln/core/site_set/p_array.hh>
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 
 /* Component trees */
 #include <mln/morpho/tree/data.hh>
@@ -42,7 +42,7 @@
 #include <mln/pw/all.hh>
 
 /* labeling */
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/value/label_8.hh>
 #include <mln/labeling/blobs.hh>
 #include <mln/labeling/colorize.hh>
@@ -50,7 +50,7 @@
 /* Draw debug */
 #include <mln/draw/box.hh>
 #include <mln/literal/colors.hh>
-#include <mln/level/convert.hh>
+#include <mln/data/convert.hh>
 
 /* std */
 #include <string>
@@ -168,7 +168,7 @@ int main(int argc, char* argv[])
   typedef p_array< mln_site_(I) > S;
   typedef morpho::tree::data<I,S> tree_t;
 
-  S sorted_sites = level::sort_psites_decreasing(input);
+  S sorted_sites = data::sort_psites_decreasing(input);
   tree_t tree(input, sorted_sites, c4());
 
 
@@ -247,7 +247,7 @@ int main(int argc, char* argv[])
   /* Now store output image image */
   O out, distance;
   initialize(out, input);
-  distance = level::convert(value::rgb8 (), input);
+  distance = data::convert(value::rgb8 (), input);
   data::fill(out, literal::black_t());
   data::paste(output | pw::value(input_), out);
 

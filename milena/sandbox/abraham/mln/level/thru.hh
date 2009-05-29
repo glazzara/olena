@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_APPLY_HH
 # define MLN_LEVEL_APPLY_HH
 
-/*! \file mln/level/apply.hh
+/*! \file mln/data/apply.hh
  *
  * \brief Apply a function-object onto image pixel values.
  */
@@ -37,13 +37,13 @@
 # include <mln/core/concept/function.hh>
 
 // Specializations are in:
-# include <mln/level/apply.spe.hh>
+# include <mln/data/apply.spe.hh>
 
 
 namespace mln
 {
 
-  namespace level
+  namespace data
   {
 
     /*! Apply a function-object to the image \p input.
@@ -54,7 +54,7 @@ namespace mln
      * This routine runs: \n
      *   for all p of \p input, \p input(p) = \p f( \p input(p) ) \n
      *
-     * This routine is equivalent to level::tranform(input, f, input)
+     * This routine is equivalent to data::tranform(input, f, input)
      * but it is faster since a single iterator is required.
      *
      * \todo Add versions for lowq images.
@@ -76,18 +76,18 @@ namespace mln
 	inline
 	void apply_(I& input, const F& f)
 	{
-	  trace::entering("level::impl::generic::apply_");
+	  trace::entering("data::impl::generic::apply_");
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
 	    input(p) = f(input(p));
 
-	  trace::exiting("level::impl::generic::apply_");
+	  trace::exiting("data::impl::generic::apply_");
 	}
 
-      } // end of namespace mln::level::impl::generic
+      } // end of namespace mln::data::impl::generic
 
-    } // end of namespace mln::level::impl
+    } // end of namespace mln::data::impl
 
 
     // Facade.
@@ -96,18 +96,18 @@ namespace mln
     inline
     void apply(Image<I>& input, const Function_v2v<F>& f)
     {
-      trace::entering("level::apply");
+      trace::entering("data::apply");
 
       mln_precondition(exact(input).is_valid());
       impl::apply_(mln_trait_image_speed(I)(), exact(input),
 		   exact(f));
 
-      trace::exiting("level::apply");
+      trace::exiting("data::apply");
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::level
+  } // end of namespace mln::data
 
 } // end of namespace mln
 

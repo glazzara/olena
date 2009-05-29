@@ -28,7 +28,7 @@
 
 /// \file tests/labeling/level.cc
 ///
-/// Test on mln::labeling::level.
+/// Test on mln::labeling::value.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
@@ -59,7 +59,7 @@ int main()
   unsigned n, npixels = 0;
   for (unsigned l = 0; l <= 255; ++l)
     {
-      image2d<unsigned> labels = labeling::level(lena, l, c4(), n);
+      image2d<unsigned> labels = labeling::value(lena, l, c4(), n);
       unsigned npix =
 	accu::compute(accu::meta::count(),
 		      labels | (pw::value(labels) != pw::cst(0u)));

@@ -36,11 +36,11 @@ int main()
 
 
     int x, y;
-    labeling::level(ima, false, c8(), x);
+    labeling::value(ima, false, c8(), x);
 
 
     ima(p) = true;
-    labeling::level(ima, false, c8(), y);
+    labeling::value(ima, false, c8(), y);
 
 //     std::cout << "----- conf no " << i << "------" << std::endl;
 //     debug::println(ima);

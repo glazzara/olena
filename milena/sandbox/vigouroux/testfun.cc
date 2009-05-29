@@ -9,7 +9,7 @@
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
 #include <mln/math/round.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include "function.hh"
 #include "yuv/my_yuv.hh"
@@ -24,9 +24,9 @@ int main()
    mln::image2d<mln::value::rgb8> lena;
    mln::io::ppm::load(lena, "../../img/lena.ppm");
 
-  mln::image2d<mln::value::yuv_f> lena_hsi = mln::level::transform(lena,
+  mln::image2d<mln::value::yuv_f> lena_hsi = mln::data::transform(lena,
 								   mln::fun::v2v::f_rgb_to_yuv_f());
 
-  mln::image2d<mln::value::rgb8> lena_rgb = mln::level::transform(lena_hsi,
+  mln::image2d<mln::value::rgb8> lena_rgb = mln::data::transform(lena_hsi,
 						  f_get_red_<mln::value::rgb8>());
 }

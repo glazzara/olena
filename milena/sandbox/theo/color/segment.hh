@@ -11,7 +11,7 @@
 #include <mln/value/rgb8.hh>
 #include <mln/math/diff_abs.hh>
 
-#include <mln/level/sort_psites.hh>
+#include <mln/data/sort_psites.hh>
 #include <mln/labeling/regional_minima.hh>
 #include <mln/pw/all.hh>
 
@@ -367,7 +367,7 @@ namespace mln
 	      unsigned n_objects, unsigned less,
 	      bool echo = false)
   {
-    mln_concrete(I) g_ref = morpho::closing::leveling(f, nbh, A(), lambda);
+    mln_concrete(I) g_ref = morpho::closing::dataing(f, nbh, A(), lambda);
 
     unsigned n_regmins_g_ref;
     mln_ch_value(I, unsigned) regmin_g_ref = labeling::regional_minima(g_ref, nbh, n_regmins_g_ref);
@@ -462,7 +462,7 @@ namespace mln
 	 bool echo = false)
   {
     typedef p_array<mln_psite(F)> S;
-    S s = level::sort_psites_decreasing(f);
+    S s = data::sort_psites_decreasing(f);
 
     typedef morpho::tree::data<F,S> tree_t;
     tree_t t(f, s, nbh);
@@ -527,7 +527,7 @@ namespace mln
   gran_filter(const F& f, const N& nbh, const A& a_)
   {
     typedef p_array<mln_psite(F)> S;
-    S s = level::sort_psites_decreasing(f);
+    S s = data::sort_psites_decreasing(f);
 
     typedef morpho::tree::data<F,S> T;
     T t(f, s, nbh);

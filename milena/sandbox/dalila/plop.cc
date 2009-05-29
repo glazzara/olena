@@ -7,8 +7,8 @@ int main()
 	image2d<bool> ima1(2, 3);
 	image2d<bool> ima2(2, 3);
 
-	level::fill(ima1, 2);
-	level::fill(ima2, 3);
+	data::fill(ima1, 2);
+	data::fill(ima2, 3);
 
 //	debug::println(ima1);
 //	debug::println(ima2);

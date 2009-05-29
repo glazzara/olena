@@ -61,16 +61,16 @@
 #include <mln/labeling/fill_holes.hh>
 #include <mln/labeling/n_max.hh>
 
-#include <mln/level/compare.hh>
-#include <mln/level/compute.hh>
-#include <mln/level/convert.hh>
-#include <mln/level/stretch.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/compare.hh>
+#include <mln/data/compute.hh>
+#include <mln/data/convert.hh>
+#include <mln/data/stretch.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/fun/internal/selector.hh>
 
 #include <mln/fun/v2b/threshold.hh>
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/accu/count.hh>
 #include <mln/accu/center.hh>
@@ -198,7 +198,7 @@ find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
     ima_histo(point1d(i)) += ima_histo(point1d(i - 1));
   }
   accu::max<unsigned> max_accu;
-  unsigned max = level::compute(max_accu, ima_histo);
+  unsigned max = data::compute(max_accu, ima_histo);
   bool low_done = false;
   bool high_done = false;
   for (unsigned int i = 0; i < ima_histo.nelements(); ++i)
@@ -246,7 +246,7 @@ find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
   data::fill((ima_obj | (pw::value(obj_labels) != pw::cst(arr_o_big[1]))).rw(), false);*/
 
   // Debug output images
-  mln_ch_value(I, rgb8) out = level::convert(rgb8(), level::stretch(int_u8(), input));
+  mln_ch_value(I, rgb8) out = data::convert(rgb8(), level::stretch(int_u8(), input));
   data::fill((out | pw::value(morpho::elementary::gradient_internal(ima_bg, nbh)) == true).rw(), literal::red);
   data::fill((out | pw::value(morpho::elementary::gradient_internal(ima_obj, nbh)) == true).rw(), literal::green);
   save_regions_color(out, metal::int_<I::site::dim>());
@@ -269,7 +269,7 @@ find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
   image1d<unsigned> ima_bg_histo;
   convert::from_to(bg_histo, ima_bg_histo);
   ima_bg_histo(point1d(0)) = 0;
-  unsigned bg_sum = level::compute(sum_accu, ima_bg_histo);
+  unsigned bg_sum = data::compute(sum_accu, ima_bg_histo);
   std::ofstream fout_bg("bg_histo.plot");
   std::ofstream fout_p_bg("bg_histo_norm.plot");
   for (unsigned int i = 0; i < ima_bg_histo.nelements(); ++i)
@@ -282,7 +282,7 @@ find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
 
   image1d<unsigned> ima_obj_histo;
   convert::from_to(obj_histo, ima_obj_histo);
-  unsigned obj_sum = level::compute(sum_accu, ima_obj_histo);
+  unsigned obj_sum = data::compute(sum_accu, ima_obj_histo);
   std::ofstream fout_obj("obj_histo.plot");
   std::ofstream fout_p_obj("obj_histo_norm.plot");
   for (unsigned int i = 0; i < ima_obj_histo.nelements(); ++i)
@@ -316,10 +316,10 @@ find_threshold_mean(const Image<I>& input, const Neighborhood<N>& nbh)
   unsigned coef = 1;
 
   accu::mean<unsigned> mean_accu;
-  unsigned mean = level::compute(mean_accu, (input | (pw::value(input) != 0)));
+  unsigned mean = data::compute(mean_accu, (input | (pw::value(input) != 0)));
 
   accu::stat::deviation<unsigned, unsigned, float> dev_accu(mean);
-  float deviation = level::compute(dev_accu, (input | pw::value(input) != 0));
+  float deviation = data::compute(dev_accu, (input | pw::value(input) != 0));
 
   std::cout << "[mean = " << mean  << " | deviation = " << deviation << "]";
   return floor(mean + coef * deviation);

@@ -28,9 +28,9 @@
 #include <mln/fun/v2v/fit.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/labeling/wrap.hh>
-#include <mln/level/compute.hh>
-#include <mln/level/convert.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/compute.hh>
+#include <mln/data/convert.hh>
+#include <mln/data/stretch.hh>
 #include <mln/linear/convolve.hh>
 #include <mln/make/image2d.hh>
 #include <mln/make/w_window1d.hh>
@@ -111,12 +111,12 @@ struct dist_t : Function_vv2v<dist_t>
     image1d<V> tmp_ima;
     convert::from_to(v1, tmp_ima);
     image1d<float> morpho_ima = mean_image(tmp_ima);
-    float sum_v1 = level::compute(accu_sum, morpho_ima);
+    float sum_v1 = data::compute(accu_sum, morpho_ima);
 
     image1d<V> tmp_ima2;
     convert::from_to(v2, tmp_ima2);
     image1d<float> morpho_ima2 = mean_image(tmp_ima2);
-    float sum_v2 = level::compute(accu_sum, morpho_ima2);
+    float sum_v2 = data::compute(accu_sum, morpho_ima2);
 
     mln_piter(image1d<float>) p(morpho_ima.domain());
     for_all(p)
@@ -168,14 +168,14 @@ int main(int argc, char* argv[])
 
   // Edges distance computation.
   mln_VAR(edges, world::inter_pixel::compute(imax, dist));
-  mln_VAR(e, level::transform(edges, fun::v2v::fit<float>(SATURATION)));
+  mln_VAR(e, data::transform(edges, fun::v2v::fit<float>(SATURATION)));
   io::dump::save(e.unmorph_(), "edges_int_u12.dump");
   typedef int_u12 E_TYPE;
 
   {
     // Display.
     mln_VAR(display_ima, world::inter_pixel::display_edge(e.unmorph_(), 0.0, 3));
-    io::pgm::save(level::stretch(int_u8(), display_ima), "01_edges.pgm");
+    io::pgm::save(data::stretch(int_u8(), display_ima), "01_edges.pgm");
   }
 
 
@@ -186,7 +186,7 @@ int main(int argc, char* argv[])
   {
     // Display.
     mln_VAR(display_clo, world::inter_pixel::display_edge(clo.unmorph_(), 0.0, 3));
-    io::pgm::save(level::stretch(int_u8(), display_clo), "03_closing.pgm");
+    io::pgm::save(data::stretch(int_u8(), display_clo), "03_closing.pgm");
   }
 
 
@@ -233,7 +233,7 @@ int main(int argc, char* argv[])
     for (unsigned i = 1; i < means.nelements(); ++i)
       data::fill((ima_means | pw::value(ima_means) == pw::cst(i)).rw(), means[i]);
     mln_VAR(display_means, world::inter_pixel::display_edge(ima_means.unmorph_(), 0.0, 3));
-    io::pgm::save(level::stretch(int_u8(), display_means), "04_means.pgm");
+    io::pgm::save(data::stretch(int_u8(), display_means), "04_means.pgm");
   }
 
 

@@ -25,7 +25,7 @@
 # define mln_trait_accu_has_stop(A) typename mln::trait::accu_< A >::has_stop
 
 /// Shortcut to the accumulator property about behavior when pixel is given as take() value
-/// Used for instance in mln::canvas::morpho::leveling
+/// Used for instance in mln::canvas::morpho::dataing
 # define mln_trait_accu_when_pix(A) typename mln::trait::accu_< A >::when_pix
 
 namespace mln {
@@ -151,7 +151,7 @@ namespace mln {
             const Image<I>& input,
             Accumulator<A>& acc)
         {
-          impl::generic::leveling(input, acc);
+          impl::generic::dataing(input, acc);
         }
 
         template <typename I, typename A>
@@ -161,7 +161,7 @@ namespace mln {
             const Image<I>& input,
             Accumulator<A>& acc)
         {
-          impl::leveling_fastest(input, acc);
+          impl::dataing_fastest(input, acc);
         }
 
         template <typename I, typename A>
@@ -177,7 +177,7 @@ namespace mln {
                 mlc_equal(mln_trait_accu_when_pix(A),
                     trait::accu::when_pix::use_v)::value
           };
-          internal::leveling_dispatch(metal::bool_<test>(),
+          internal::dataing_dispatch(metal::bool_<test>(),
               input, acc);
         }
 
@@ -190,7 +190,7 @@ namespace mln {
       leveling(const Image<I>& input,
           Accumulator< A< util::pix<I> > >& acc)
       {
-        internal::leveling_dispatch(input, acc);
+        internal::dataing_dispatch(input, acc);
       }
 
     }  // end of namespace mln::canvas::morpho
@@ -357,7 +357,7 @@ int main()
   acc.init();
   chrono.start();
   for (int i = 0; i < 50; i++)
-    mln::canvas::morpho::leveling(ima, acc);
+    mln::canvas::morpho::dataing(ima, acc);
   elapsed = chrono.stop();
 
   std::cout << "(auto) " << elapsed << "s : " << acc.to_result() << std::endl;
@@ -365,7 +365,7 @@ int main()
   acc.init();
   chrono.start();
   for (int i = 0; i < 50; i++)
-    mln::canvas::morpho::impl::generic::leveling(ima, acc);
+    mln::canvas::morpho::impl::generic::dataing(ima, acc);
   elapsed = chrono.stop();
 
   std::cout << "(generic) " << elapsed << "s : " << acc.to_result() << std::endl;
@@ -373,7 +373,7 @@ int main()
   acc.init();
   chrono.start();
   for (int i = 0; i < 50; i++)
-    mln::canvas::morpho::impl::leveling_fastest(ima, acc);
+    mln::canvas::morpho::impl::dataing_fastest(ima, acc);
   elapsed = chrono.stop();
 
   std::cout << "(fast) " << elapsed << "s : " << acc.to_result() << std::endl;

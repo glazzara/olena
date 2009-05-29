@@ -21,8 +21,8 @@
 #include <mln/value/label_16.hh>
 #include <mln/value/label_32.hh>
 
-#include <mln/level/transform.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/transform.hh>
+#include <mln/data/stretch.hh>
 
 #include <mln/labeling/mean_values.hh>
 
@@ -54,7 +54,7 @@
 #include <mln/accu/compute.hh>
 #include <mln/core/alias/dpoint2d.hh>
 #include <mln/draw/box.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 #include <mln/fun/v2v/id.hh>
 #include <mln/fun/l2l/wrap.hh>
 #include <mln/core/image/line_graph_elt_neighborhood.hh>
@@ -136,7 +136,7 @@ namespace mln
     convert::from_to(m_3f, m);
     m[0] = 150u;
 
-    /*io::ppm::save(level::transform(w,
+    /*io::ppm::save(data::transform(w,
 	  convert::to< fun::i2v::array<mln_value(I)> >(m)),
 	"wst_rag_wshd_color.ppm");*/
 
@@ -266,7 +266,7 @@ int main(int argc, char *argv[])
 
   // Debug
   assert(mln_max(label_32) == 4294967295);
-  io::dump::save(level::stretch(int_u8(), dcm), "wsd_01_src.dump");
+  io::dump::save(data::stretch(int_u8(), dcm), "wsd_01_src.dump");
 
   // Gradient
   image3d<int_u12> grad = morpho::elementary::gradient(dcm, c6());
@@ -280,13 +280,13 @@ int main(int argc, char *argv[])
   std::cout << "nbasins = " << nbasins << std::endl;
 
   // Debug
-  io::dump::save(level::stretch(int_u8(), clo), "wsd_02.dump");
-  io::dump::save(level::transform(wshed, fun::l2l::wrap<int_u8>()), "wsd_03.dump");
+  io::dump::save(data::stretch(int_u8(), clo), "wsd_02.dump");
+  io::dump::save(data::transform(wshed, fun::l2l::wrap<int_u8>()), "wsd_03.dump");
 
   //mln_VAR(vol2_, morpho::elementary::dilation(extend(wshed | (pw::value(wshed) == 0u), wshed), c26()));
   //data::fill((wshed | (pw::value(wshed) == 0u)).rw(), vol2_);
 
-  io::dump::save(level::transform(wshed, fun::l2l::wrap<int_u8>()), "wsd_04.dump");
+  io::dump::save(data::transform(wshed, fun::l2l::wrap<int_u8>()), "wsd_04.dump");
 
   /// Graph
   trace::quiet = false;
@@ -322,9 +322,9 @@ int main(int argc, char *argv[])
   }
   mln_invariant(f(0) == 0u);
   --nbasins2; // nbasins2 does not count the basin with label 0.
-  image3d<label_32> wsd2 = level::transform(wshed, f);
+  image3d<label_32> wsd2 = data::transform(wshed, f);
 
-  io::dump::save(level::transform(wsd2, fun::l2l::wrap<int_u8>()), "wsd_05.dump");
+  io::dump::save(data::transform(wsd2, fun::l2l::wrap<int_u8>()), "wsd_05.dump");
 
   /// Reconstruct a graph from the simplified image.
   util::graph g2 = make::graph(wsd2, c6(), nbasins2);
@@ -337,8 +337,8 @@ int main(int argc, char *argv[])
 
   data::fill((wsd2 | (pw::value(wsd2) == 0u)).rw(), wsd2_);
 
-  io::dump::save(level::transform(labeling::mean_values(dcm, wsd2, nbasins2), fun::l2l::wrap<int_u8>()), "wsd_06_mean_colors.dump");
-  //io::dump::save(level::stretch(int_u8(), make_debug_graph_image(dcm, ima_v2, ima_e2, box_size, 4095)), "wsd_07_graph_image2_white.dump");
-  //io::dump::save(level::stretch(int_u8(), make_debug_graph_image(dcm, ima_v2, ima_e2, box_size, 0)), "wsd_08_graph_image2_black.dump");
-  io::dump::save(level::transform(wsd2, fun::l2l::wrap<int_u8>()), "wsd_99_result.dump");*/
+  io::dump::save(data::transform(labeling::mean_values(dcm, wsd2, nbasins2), fun::l2l::wrap<int_u8>()), "wsd_06_mean_colors.dump");
+  //io::dump::save(data::stretch(int_u8(), make_debug_graph_image(dcm, ima_v2, ima_e2, box_size, 4095)), "wsd_07_graph_image2_white.dump");
+  //io::dump::save(data::stretch(int_u8(), make_debug_graph_image(dcm, ima_v2, ima_e2, box_size, 0)), "wsd_08_graph_image2_black.dump");
+  io::dump::save(data::transform(wsd2, fun::l2l::wrap<int_u8>()), "wsd_99_result.dump");*/
 }

@@ -30,7 +30,7 @@
 
 # include <mln/data/fill.hh>
 # include <mln/core/site_set/p_vaccess.hh>
-# include <mln/level/sort_psites.hh>
+# include <mln/data/sort_psites.hh>
 # include <mln/accu/volume.hh>
 # include <mln/morpho/tree/data.hh>
 # include <mln/morpho/tree/compute_attribute_image.hh>
@@ -74,7 +74,7 @@ namespace mln
     // compute volume image
     typedef p_array<mln_psite(I)> S;
     typedef accu::volume<I> A;
-    S sp = level::sort_psites_increasing(input);
+    S sp = data::sort_psites_increasing(input);
     morpho::tree::data<I,S> t(input, sp, c4());
     image2d<unsigned> volume = morpho::tree::compute_attribute_image(A(), t);
 

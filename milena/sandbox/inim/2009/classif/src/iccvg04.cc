@@ -31,7 +31,7 @@
 
 #include <mln/literal/all.hh>
 
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 
 #include <sys/stat.h>
 #include <sstream>

@@ -37,9 +37,9 @@
 
 #include <mln/histo/compute.hh>
 
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 #include <mln/data/paste.hh>
-#include <mln/level/to_enc.hh>
+#include <mln/data/to_enc.hh>
 
 #include <mln/value/rgb8.hh>
 #include <mln/value/hsi.hh>
@@ -125,7 +125,7 @@ int main (int argc, const char * argv [])
 
   // First, we get the HSI histograms and corresponding greyscale versions of the picture
 
-  image2d<hsi_f> hsi = level::transform(input, fun::v2v::f_rgb_to_hsi_f);
+  image2d<hsi_f> hsi = data::transform(input, fun::v2v::f_rgb_to_hsi_f);
 
   thru<mln::meta::hue<hsi_f>, image2d<hsi_f> > hue(hsi);
   thru<mln::meta::sat<hsi_f>, image2d<hsi_f> > sat(hsi);
@@ -164,7 +164,7 @@ int main (int argc, const char * argv [])
   dpoint2d d(0, 1);
   image2d<int_u8> uinty (qinty.domain());
   {
-    image2d<unsigned char> tmp = level::transform(qinty, fun::v2v::enc< float01_8 >());
+    image2d<unsigned char> tmp = data::transform(qinty, fun::v2v::enc< float01_8 >());
     data::paste(tmp, uinty);
     /*    mln_piter_(image2d<unsigned char>) p(tmp.domain());
     for_all(p)

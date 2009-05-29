@@ -23,7 +23,7 @@
 #include <mln/value/rgb8.hh>
 #include <mln/literal/colors.hh>
 
-#include <mln/level/transform.hh>
+#include <mln/data/transform.hh>
 
 #include <mln/convert/to_window.hh>
 #include <mln/convert/to_image.hh>
@@ -34,7 +34,7 @@
 #include <mln/morpho/meyer_wst.hh>
 
 #include <mln/accu/mean.hh>
-#include <mln/level/take.hh>
+#include <mln/data/take.hh>
 
 #include <mln/util/graph.hh>
 
@@ -76,7 +76,7 @@ namespace my_mln
       }
     }
 
-    io::pgm::save(level::transform(carte, convert::to_fun(foo)),
+    io::pgm::save(data::transform(carte, convert::to_fun(foo)),
                   "tmp_region_10.pgm");
 
   }
@@ -94,7 +94,7 @@ namespace my_mln
 //       if (lbl(p) == 82)
 // 	m.take(irm(p));
 
-//     level::take(irm | (pw::value(lbl) == pw::cst(82)), m);
+//     data::take(irm | (pw::value(lbl) == pw::cst(82)), m);
 
 //     std::cout << "reg 82 has mean = " << m << std::endl;
 //  }
@@ -177,7 +177,7 @@ namespace my_mln
 //     for (unsigned i = 0; i <= nlabels; ++i)
 //     {
 //       accu::mean_<unsigned> m;
-//       level::take(irm | (pw::value(lbl) == pw::cst(i)), m);
+//       data::take(irm | (pw::value(lbl) == pw::cst(i)), m);
 //       g.add_vertex(m.to_result());
 //     }
 //     // Edges.
@@ -246,7 +246,7 @@ namespace my_mln
     for (unsigned i = 0; i <= nlabels; ++i)
       {
 	accu::mean_<mln_value(J)> m;
-	level::take(input | (pw::value(label) == pw::cst(i)), m);
+	data::take(input | (pw::value(label) == pw::cst(i)), m);
 	g.add_vertex(m);
       }
     // Edges.
@@ -478,7 +478,7 @@ int main()
   unsigned nbasins;
   image2d<unsigned> wshed = morpho::meyer_wst(clo, c4(), nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
-  io::pgm::save( level::transform(wshed, convert::to_fun(foo)),
+  io::pgm::save( data::transform(wshed, convert::to_fun(foo)),
                   "tmp_wshed.pgm" );
 
   //typedef fusion_graph<unsigned int, void> _fg;

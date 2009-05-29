@@ -103,7 +103,7 @@ int main(int argc, char* argv[])
   std::vector<int_u8> v(l + 1);
   accu::compute<accu::mean>(cs_.cell, label, v);
 
-  data::fill(cs_.cell, level::transform(label, v));
+  data::fill(cs_.cell, data::transform(label, v));
   io::pgm::save(cell_image(cs_), argv[3]);
 
 //   io::ppm::save(pack(cs_, colorize, 7), "log.ppm");

@@ -63,8 +63,8 @@
 # include <mln/core/mesh_p.hh>
 # include <mln/draw/mesh.hh>
 
-# include <mln/level/stretch.hh>
-# include <mln/level/threshold.hh>
+# include <mln/data/stretch.hh>
+# include <mln/data/threshold.hh>
 # include <mln/linear/gaussian.hh>
 
 # include <mln/core/image_if_value.hh>
@@ -160,7 +160,7 @@ IU8 projection(IB ima, int coord)
     pt2[coord] = 0;
     projected(pt2) += ima(p);
   }
-  level::stretch(projected, projected_stretched);
+  data::stretch(projected, projected_stretched);
   return projected_stretched;
 }
 
@@ -190,10 +190,10 @@ main(int argc, char** argv)
 //     linear::gaussian(histo_col, 5, histo_col_blur);
 //     io::pgm::save(histo_col_blur, "histo_col_blur.pgm");
 
-//     level::stretch(histo_col, histo_col);
+//     data::stretch(histo_col, histo_col);
 //     io::pgm::save(histo_col, "histo_col.pgm");
 //     IB histo_col_b(histo_col.domain());
-//     histo_col_b = level::threshold(histo_col, mln_value_(IU8)(175));
+//     histo_col_b = data::threshold(histo_col, mln_value_(IU8)(175));
 
 //     io::pbm::save(histo_col_b, "histo_col_b.pbm");
 //   }
@@ -205,7 +205,7 @@ main(int argc, char** argv)
 //     unsigned nlabels;
 //     IU inter_labeled = labeling::blobs(only_big, c4(), nlabels);  // labelling blobs don't use algo(input, output) formalism
 //     IU8 labeled(inter_labeled.domain());                         // and it should return int_u8 ?
-//     level::stretch(inter_labeled, labeled);
+//     data::stretch(inter_labeled, labeled);
 //     io::pgm::save(labeled, "labeled.pgm");
 //   }
 

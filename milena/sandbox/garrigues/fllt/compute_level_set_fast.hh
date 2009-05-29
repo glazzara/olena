@@ -123,7 +123,7 @@ namespace mln
       finished = N.nsites() == 0;
 
       if (!finished)
- 	gn = level::compute< typename F::accu_for_gn >(u | N);
+ 	gn = data::compute< typename F::accu_for_gn >(u | N);
       else
  	gn += F::inc;
 
@@ -248,7 +248,7 @@ namespace mln
 // 	    border_ima(z) = true;
 // 	  }
 // 	unsigned n;
-// 	tmp = labeling::level(border_ima, true, F::bdr_nbh(), n);
+// 	tmp = labeling::value(border_ima, true, F::bdr_nbh(), n);
 
 // 	//     debug::println(border_ima);
 // 	//std::cout << "nb composantes :" << n << std::endl;
@@ -262,7 +262,7 @@ namespace mln
 // 	    //       follow each border to find which is the exterior border
 // 	    //       and which are the holes. Keep one pixel of each holes.
 
-// 	    // WARNING : We trust labeling::level to label the exterior border with 1.
+// 	    // WARNING : We trust labeling::value to label the exterior border with 1.
 // 	    current_region->elt().holes.insert(a_point_of(tmp | pw::value(tmp) == pw::cst(i)));
 
 // 	    //       FIXME : [optimisation] Remove from N border of holes???.

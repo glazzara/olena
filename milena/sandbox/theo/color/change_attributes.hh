@@ -174,7 +174,7 @@ namespace mln
     node_only.t = &t;
 
     typedef p_array<P> S;
-    S s = level::sort_psites_increasing(a | node_only);
+    S s = data::sort_psites_increasing(a | node_only);
     mln_invariant(geom::nsites(a | t.nodes()) == s.nsites());
 
     mln_fwd_piter(S) p(s);
@@ -242,7 +242,7 @@ namespace mln
     node_only.t = &t;
 
     typedef p_array<P> S;
-    S s = level::sort_psites_increasing(a | node_only);
+    S s = data::sort_psites_increasing(a | node_only);
     mln_invariant(geom::nsites(a | t.nodes()) == s.nsites());
 
     mln_fwd_piter(S) p(s);

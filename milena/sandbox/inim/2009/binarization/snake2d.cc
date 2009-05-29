@@ -1,7 +1,7 @@
 #include <mln/win/rectangle2d.hh>
 #include <mln/accu/maj_h.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 #include <mln/make/image2d.hh>
 #include <mln/border/thickness.hh>
 #include "snake2d.hh"

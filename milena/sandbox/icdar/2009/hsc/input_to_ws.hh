@@ -2,7 +2,7 @@
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/data/fill.hh>
-#include <mln/level/saturate.hh>
+#include <mln/data/saturate.hh>
 
 #include <mln/value/int_u8.hh>
 
@@ -17,7 +17,7 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/literal/colors.hh>
 #include <mln/labeling/colorize.hh>
-#include <mln/level/convert.hh>
+#include <mln/data/convert.hh>
 #include <mln/labeling/wrap.hh>
 #include <mln/pw/all.hh>
 #include <mln/core/image/dmorph/image_if.hh>
@@ -59,7 +59,7 @@ namespace mln
       out = linear::gaussian_directional_2d(temp, 1, h_sigma, 0);
       out = linear::gaussian_directional_2d(out,  0, v_sigma, 0);
 
-      fuzzy = level::saturate(value::int_u8(), out);
+      fuzzy = data::saturate(value::int_u8(), out);
 
 #ifdef LOG
     io::pgm::save(small, "temp_small.pgm");
@@ -78,14 +78,14 @@ namespace mln
 # ifdef LOG
     {
       // Watershed line (red) over small image.
-      image2d<value::rgb8> cool = level::convert(value::rgb8(), small);
+      image2d<value::rgb8> cool = data::convert(value::rgb8(), small);
       data::fill((cool | (pw::value(ws) == pw::cst(0))).rw(),
 		 literal::red);
       io::ppm::save(cool, "temp_small_ws.ppm");
     }
     {
       // Watershed line (red) over fuzzy image.
-      image2d<value::rgb8> cool = level::convert(value::rgb8(), fuzzy);
+      image2d<value::rgb8> cool = data::convert(value::rgb8(), fuzzy);
       data::fill((cool | (pw::value(ws) == pw::cst(0))).rw(),
 		 literal::red);
       io::ppm::save(cool, "temp_fuzzy_ws.ppm");

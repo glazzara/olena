@@ -18,7 +18,7 @@
 # include <mln/morpho/closing/area.hh>
 # include <mln/morpho/opening/area.hh>
 # include <mln/morpho/elementary/gradient.hh>
-# include <mln/level/transform.hh>
+# include <mln/data/transform.hh>
 
 # include <mln/make/region_adjacency_graph.hh>
 # include <mln/util/graph.hh>

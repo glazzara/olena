@@ -17,7 +17,7 @@
 #include <mln/arith/all.hh>
 #include <mln/data/fill.hh>
 #include <mln/data/paste.hh>
-#include <mln/level/compute.hh>
+#include <mln/data/compute.hh>
 #include <mln/math/abs.hh>
 #include <mln/pw/all.hh>
 #include <mln/trait/concrete.hh>
@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
   // calculé sur la première image
   image2d<bool> roi_noise; // FIXME: init this ROI, should be a domain
   accu::count<bool> accu_nbrpix1;
-  unsigned nbrpix1 = level::compute(accu_nbrpix1, roi_noise);
+  unsigned nbrpix1 = data::compute(accu_nbrpix1, roi_noise);
   image2d<float> datasli = arr_ima[0];
 
   image2d<float> prodsignal1;
@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
   //	     //
   /////////////
   accu::mean<float> accu_mean;
-  float moysignal1 = level::compute(accu_mean, prodsignal1 | pw::value(roi_noise) == pw::cst(true));
+  float moysignal1 = data::compute(accu_mean, prodsignal1 | pw::value(roi_noise) == pw::cst(true));
 
   ////////////////
   //		//

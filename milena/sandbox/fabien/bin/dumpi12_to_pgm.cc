@@ -8,7 +8,7 @@
 #include <mln/io/dump/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/level/stretch.hh>
+#include <mln/data/stretch.hh>
 
 
 int usage(char* argv[])
@@ -41,14 +41,14 @@ int main(int argc, char* argv[])
   {
     image2d<int_u12> ima2d;
     io::dump::load(ima2d, argv[1]);
-    image2d<int_u8> ima_pgm = level::stretch(int_u8(), ima2d);
+    image2d<int_u8> ima_pgm = data::stretch(int_u8(), ima2d);
     io::pgm::save(ima_pgm, argv[3]);
   }
   else
   {
     image3d<int_u12> ima3d;
     io::dump::load(ima3d, argv[1]);
-    image3d<int_u8> ima_pgm = level::stretch(int_u8(), ima3d);
+    image3d<int_u8> ima_pgm = data::stretch(int_u8(), ima3d);
 
     image2d<int_u8> ima_result = debug::slices_2d(ima_pgm, 1.f, 0);
     io::pgm::save(ima_result, argv[3]);

@@ -18,8 +18,8 @@
 
 #include <mln/labeling/regional_minima.hh>
 
-#include <mln/level/transform.hh>
-#include <mln/level/stretch.hh>
+#include <mln/data/transform.hh>
+#include <mln/data/stretch.hh>
 
 #include <mln/morpho/elementary/gradient.hh>
 #include <mln/morpho/closing/volume.hh>
@@ -72,8 +72,8 @@ int main(int argc, char *argv[])
 
   // Visualization
   std::cout << "    nbasins = " << nbasins << std::endl;
-  //io::dump::save(level::transform(wshed, fun::l2l::wrap<int_u8>()), "result_nbasins.dump");
-  //io::dump::save(level::stretch(int_u8(), wshed), "result_nbasins.dump");
+  //io::dump::save(data::transform(wshed, fun::l2l::wrap<int_u8>()), "result_nbasins.dump");
+  //io::dump::save(data::stretch(int_u8(), wshed), "result_nbasins.dump");
   io::dump::save(labeling::colorize(rgb8(), wshed, nbasins), "result_nbasins.dump");
 
   return 0;
