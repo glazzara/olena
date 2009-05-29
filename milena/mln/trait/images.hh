@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,6 +36,8 @@
 /// \todo Split this file into many.
 ///
 /// \todo the 'nature' prop is not set yet in image types.
+///
+/// \todo The image list is not up-to-date (and move it elsewhere !)
 
 # include <iostream>
 # include <string>
@@ -114,14 +116,11 @@ namespace mln
   template <typename T> struct image2d;
   template <typename T> struct image3d;
   namespace pw { template <typename F, typename S> class image; }
-  template <typename P, typename T> class rle_image;
-  template <typename P, typename T> class sparse_image;
 
   // Morphers.
   template <typename I, typename F> struct image_if_base;
   template <typename I, typename D> class decorated_image;
   template <typename I, typename S> class sub_image;
-  template <typename I> struct t_image;
   template <typename I> class safe_image;
   template <typename T, typename I> class cast_image_;
   namespace value { template <unsigned n, typename I> struct stack_image; }

@@ -2,12 +2,9 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-##FIXME: re-enable tests
 check_PROGRAMS =				\
   box_runstart_piter				\
   category					\
-##  clock_neighb2d				\
-##  clock_test					\
   dpoints_pixter				\
   graph_elt_neighborhood			\
   graph_elt_neighborhood_if			\
@@ -27,8 +24,6 @@ check_PROGRAMS =				\
 
 box_runstart_piter_SOURCES = box_runstart_piter.cc
 category_SOURCES = category.cc
-##clock_neighb2d_SOURCES = clock_neighb2d.cc
-##clock_test_SOURCES = clock_test.cc
 dpoints_pixter_SOURCES = dpoints_pixter.cc
 graph_elt_neighborhood_SOURCES = graph_elt_neighborhood.cc
 graph_elt_neighborhood_if_SOURCES = graph_elt_neighborhood_if.cc

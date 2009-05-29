@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,8 +46,6 @@
 // Local directory.
 # include <mln/core/a_point_of.hh>
 # include <mln/core/category.hh>
-# include <mln/core/clock_neighb.hh>
-# include <mln/core/clock_neighb2d.hh>
 # include <mln/core/dpoints_pixter.hh>
 # include <mln/core/contract.hh>
 # include <mln/core/dpoint.hh>

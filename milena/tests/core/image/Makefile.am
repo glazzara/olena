@@ -3,7 +3,6 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS =					\
-  morph 					\
   dmorph 					\
   imorph 					\
   vmorph

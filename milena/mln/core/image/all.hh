@@ -36,7 +36,6 @@
 
 // Sub-directories.
 
-# include <mln/core/image/morph/all.hh>
 # include <mln/core/image/dmorph/all.hh>
 # include <mln/core/image/imorph/all.hh>
 # include <mln/core/image/vmorph/all.hh>
@@ -61,9 +60,6 @@
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/image3d.hh>
-# include <mln/core/image/sparse_encode.hh>
-# include <mln/core/image/sparse_image.hh>
-# include <mln/core/image/tr_mesh.hh>
 # include <mln/core/image/vertex_image.hh>
 
 

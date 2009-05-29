@@ -1,3 +1,34 @@
+2009-05-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Move obsolete image types and clock_nbh2d into trash.
+
+	* mln/core/image/morph/t_image.hh,
+	* tests/core/image/morph/t_image.cc: Move to...
+	* trash/t_image.hh,
+	* trash/t_image.cc: ...these new trash files.
+
+	* mln/core/clock_neighb.hh,
+	* mln/core/clock_neighb2d.hh,
+	* tests/core/other/clock_neighb2d.cc: Move to...
+	* trash/clock_neighb.hh,
+	* trash/clock_neighb2d.hh,
+	* trash/clock_neighb2d.cc: ...trash.
+	* tests/core/other/clock_test.cc: Rename and move to...
+	* trash/clock_neighb2d_bis.cc: ...trash.
+
+	* mln/core/image/tr_mesh.hh: Remove; empty class.
+
+	* mln/core/image/morph/all.hh: Remove.
+	* mln/core/image/morph: Remove directory.
+	* tests/core/image/morph/Makefile.am: Remove.
+	* tests/core/image/morph: Remove.
+
+	* mln/core/image/all.hh: Update.
+	* mln/trait/images.hh: Update.
+	* mln/core/all.hh: Update.
+	* tests/core/other/Makefile.am: Update.
+	* tests/core/image/Makefile.am: Update.
+
 2009-05-29 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Last small fixes of the day.
