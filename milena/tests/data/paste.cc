@@ -35,7 +35,7 @@
 #include <mln/core/image/image3d.hh>
 #include <mln/pw/image.hh>
 #include <mln/core/image/flat_image.hh>
-#include <mln/core/image/vmorphcast_image.hh>
+#include <mln/core/image/vmorph/cast_image.hh>
 #include <mln/core/image/dmorph/image_if.hh>
 #include <mln/core/image/dmorph/sub_image.hh>
 #include <mln/core/image/dmorph/extension_val.hh>

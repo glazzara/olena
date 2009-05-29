@@ -223,7 +223,7 @@ namespace mln
       void
       from_to_(const value::label<n>& from, bool& to_)
       {
-	to_ = (from != literal::zero);
+	to_ = (from != 0u);
       }
 
     } // end of namespace mln::convert::over_load

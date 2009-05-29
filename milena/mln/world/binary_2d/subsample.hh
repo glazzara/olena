@@ -30,7 +30,10 @@
 
 /// \file mln/world/binary_2d/subsample.hh
 ///
-/// FIXME: insert comment.
+/// Subsample a Boolean image.
+///
+/// FIXME: not enough generic. Does not work on image having
+///	   the top left corner different from (0,0).
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/dpoint2d.hh>
@@ -45,9 +48,36 @@ namespace mln
     namespace binary_2d
     {
 
-      image2d<value::int_u8> subsample(image2d<bool>& input, unsigned n)
+      /// Subsample a Boolean image.
+      ///
+      /// \param[in] input A binary image.
+      /// \param[in] n	   Linear subsampling coefficient.
+      ///
+      /// \return A gray level image.
+      //
+      image2d<value::int_u8>
+      subsample(image2d<bool>& input, unsigned n);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+      image2d<value::int_u8>
+      subsample(image2d<bool>& input, unsigned n)
       {
+	trace::entering("world::binary_2d::subsample");
+
+	mln_precondition(input.is_valid());
+
 	using value::int_u8;
+
+	if (n == 0)
+	{
+	  image2d<value::int_u8>
+	    output = level::convert(int_u8(), input);
+
+	  trace::exiting("world::binary_2d::subsample");
+	  return output;
+	}
 
 	const bool** ptr = new const bool*[n];
 	const unsigned nrows = input.nrows() / n;
@@ -86,8 +116,11 @@ namespace mln
 	  }
 	}
 
+	trace::exiting("world::binary_2d::subsample");
 	return output;
       }
+
+# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::world::binary_2d
 
