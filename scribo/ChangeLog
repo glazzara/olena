@@ -1,4 +1,13 @@
-2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+2009-05-29 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Remove unused files in Scribo.
+
+	* demat.hh,
+	* src/photo.cc,
+	* src/photo_basic.cc,
+	* src/table.cc: removed.
+
+2009-05-29 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Make a sample extracting text in a photo.
 
