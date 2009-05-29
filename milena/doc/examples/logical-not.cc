@@ -1,4 +1,9 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+
+#include <mln/make/image.hh>
+
+#include <mln/logical/not.hh>
+
 #include <doc/tools/sample_utils.hh>
 int main()
 {

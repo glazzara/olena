@@ -1,4 +1,4 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/alias/point2d.hh>
 // \{
 unsigned my_values(const mln::point2d& p)
 {

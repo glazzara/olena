@@ -1,4 +1,10 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/dmorph/image_if.hh>
+
+#include <mln/value/rgb8.hh>
+#include <mln/io/ppm/load.hh>
+#include <mln/literal/colors.hh>
+
 #include <tests/data.hh>
 #include <doc/tools/sample_utils.hh>
 

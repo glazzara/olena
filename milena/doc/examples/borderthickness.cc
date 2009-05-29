@@ -1,4 +1,9 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/border/fill.hh>
+#include <mln/make/image.hh>
+#include <mln/debug/println_with_border.hh>
+#include <mln/border/thickness.hh>
+
 int main()
 {
   using namespace mln;

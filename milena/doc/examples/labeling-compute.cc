@@ -1,5 +1,20 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+
+#include <mln/make/image.hh>
+
+#include <mln/labeling/blobs.hh>
+#include <mln/labeling/colorize.hh>
+#include <mln/labeling/compute.hh>
+
+#include <mln/util/array.hh>
+
+#include <mln/accu/bbox.hh>
+
+#include <mln/value/label_8.hh>
+
 #include <doc/tools/sample_utils.hh>
+
 int main()
 {
   using namespace mln;

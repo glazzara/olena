@@ -1,6 +1,25 @@
 /// \file doc/examples/tuto3/first_routine.cc
 
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/dmorph/image_if.hh>
+#include <mln/core/alias/neighb2d.hh>
+
+#include <mln/data/fill.hh>
+
+#include <mln/labeling/blobs.hh>
+#include <mln/labeling/compute.hh>
+#include <mln/labeling/blobs.hh>
+
+#include <mln/level/compare.hh>
+
+#include <mln/util/array.hh>
+
+#include <mln/value/label_8.hh>
+
+#include <mln/accu/count.hh>
+
+#include <mln/pw/all.hh>
+
 #include <tests/data.hh>
 #include <doc/tools/sample_utils.hh>
 
@@ -32,7 +51,7 @@ namespace mln
 
     for (unsigned i = 1; i <= nlabels; ++i)
       if (count[i] < 10u)
-	data::fill((output | pw::value(lbl) == pw::cst(i)).rw(), literal::zero);
+	data::fill((output | (pw::value(lbl) == pw::cst(i))).rw(), literal::zero);
 
     trace::exiting("my_algorithm");
     return output;
@@ -81,7 +100,7 @@ namespace sandbox
     // \{
     for (unsigned i = 1; i <= nlabels; ++i)
       if (count[i] < 10u)
-	data::fill((output | pw::value(lbl) == pw::cst(i)).rw(), literal::zero);
+	data::fill((output | (pw::value(lbl) == pw::cst(i))).rw(), literal::zero);
     // \}
 
     // \{

@@ -1,6 +1,14 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/data/fill.hh>
+#include <mln/data/paste.hh>
+#include <mln/core/routine/duplicate.hh>
+#include <mln/literal/colors.hh>
+#include <mln/opt/at.hh>
+
 #include <tests/data.hh>
 #include <doc/tools/sample_utils.hh>
+
 int main()
 {
   using namespace mln;

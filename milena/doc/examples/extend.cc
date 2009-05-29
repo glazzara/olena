@@ -1,6 +1,17 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/image/dmorph/extended.hh>
+#include <mln/core/image/dmorph/image_if.hh>
+#include <mln/core/routine/extend.hh>
+#include <mln/core/var.hh>
+
+#include <mln/level/transform.hh>
+
 #include <mln/fun/p2b/big_chess.hh>
+
+#include <mln/value/rgb8.hh>
+#include <mln/literal/colors.hh>
+
 #include <tests/data.hh>
+
 #include <doc/tools/sample_utils.hh>
 
 namespace mln

@@ -1,4 +1,5 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/alias/box2d.hh>
+
 int main()
 {
   using namespace mln;

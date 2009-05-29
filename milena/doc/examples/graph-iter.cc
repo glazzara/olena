@@ -1,5 +1,8 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/concept/function.hh>
 #include <mln/util/graph.hh>
+
+#include <vector>
+
 #include <doc/tools/sample_utils.hh>
 
 struct viota_t : public mln::Function_p2v< viota_t >

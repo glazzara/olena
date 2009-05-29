@@ -1,4 +1,15 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/dmorph/image_if.hh>
+#include <mln/core/var.hh>
+
+#include <mln/make/image.hh>
+
+#include <mln/value/rgb8.hh>
+#include <mln/value/label_8.hh>
+#include <mln/literal/colors.hh>
+
+#include <mln/data/fill.hh>
+
 #include <doc/tools/sample_utils.hh>
 // \{
 bool row_oddity(mln::point2d p)

@@ -1,4 +1,16 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/var.hh>
+#include <mln/core/site_set/p_array.hh>
+
+#include <mln/value/int_u8.hh>
+#include <mln/value/label_8.hh>
+
+#include <mln/make/image.hh>
+
+#include <mln/data/fill.hh>
+
+#include <mln/debug/println.hh>
+
 int main()
 {
   using namespace mln;

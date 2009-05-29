@@ -1,5 +1,55 @@
 2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Do not use essential/2d.hh in doc samples anymore.
+
+	* doc/examples/accu-right-instanciation.cc,
+	* doc/examples/borderthickness.cc,
+	* doc/examples/box2d-bbox.cc,
+	* doc/examples/domain-display.cc,
+	* doc/examples/dpoint-1.cc,
+	* doc/examples/estim-sites.cc,
+	* doc/examples/extend.cc,
+	* doc/examples/extension-ignore.cc,
+	* doc/examples/fill-call-1.cc,
+	* doc/examples/fill-part-image.cc,
+	* doc/examples/fill-subdomain-shorter.cc,
+	* doc/examples/fill-subdomain.cc,
+	* doc/examples/fill-subimage-cfun.cc,
+	* doc/examples/fill.cc,
+	* doc/examples/forall-piter.cc,
+	* doc/examples/fun-p2v-1.cc,
+	* doc/examples/graph-data.cc,
+	* doc/examples/graph-iter.cc,
+	* doc/examples/ima-has.cc,
+	* doc/examples/ima-load.cc,
+	* doc/examples/ima-save.cc,
+	* doc/examples/ima-size.cc,
+	* doc/examples/ima2d-1.cc,
+	* doc/examples/ima2d-2.cc,
+	* doc/examples/ima2d-4.cc,
+	* doc/examples/ima2d-5.cc,
+	* doc/examples/ima2d-6-clone.cc,
+	* doc/examples/ima2d-7.cc,
+	* doc/examples/ima2d-rot.cc,
+	* doc/examples/labeling-compute.cc,
+	* doc/examples/logical-not.cc,
+	* doc/examples/mln_var.cc,
+	* doc/examples/parray-append.cc,
+	* doc/examples/parray-bbox.cc,
+	* doc/examples/paste-call-1.cc,
+	* doc/examples/paste.cc,
+	* doc/examples/point-1.cc,
+	* doc/examples/predicate-1.cc,
+	* doc/examples/tuto2_first_image.cc,
+	* doc/examples/tuto3/first_routine.cc,
+	* doc/examples/tuto3_rw_image.cc,
+	* doc/examples/tuto4_genericity_and_algorithms.cc,
+	* doc/examples/win-create-1.cc,
+	* doc/examples/win-create-2.cc: replace essential/2d.hh by the proper
+	includes.
+
+2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Improve global_vars test.
 
 	* tests/global_vars1.cc,

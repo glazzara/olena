@@ -1,4 +1,4 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
 
 // \{
 template <typename I, typename J>

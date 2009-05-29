@@ -1,4 +1,6 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/alias/window2d.hh>
+#include <mln/convert/to.hh>
+
 int main()
 {
   using namespace mln;

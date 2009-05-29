@@ -1,4 +1,4 @@
-# include <mln/essential/2d.hh>
+#include <mln/core/alias/point2d.hh>
 
 // \{
 //function_p2b

@@ -1,5 +1,14 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/site_set/p_vertices.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/concept/function.hh>
+#include <mln/core/var.hh>
+
+#include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
+#include <mln/pw/all.hh>
+
+#include <vector>
+
 
 // \{
 template <typename S>

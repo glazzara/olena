@@ -1,6 +1,36 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/dmorph/image_if.hh>
+#include <mln/core/routine/duplicate.hh>
+#include <mln/core/site_set/p_array.hh>
+#include <mln/core/var.hh>
+#include <mln/core/alias/neighb2d.hh>
+
+#include <mln/fun/p2b/chess.hh>
+
+#include <mln/extract/green.hh>
+
+#include <mln/accu/max.hh>
+
+#include <mln/geom/all.hh>
+
+#include <mln/value/rgb8.hh>
+#include <mln/value/label_8.hh>
+
+#include <mln/opt/at.hh>
+
+#include <mln/data/fill.hh>
+
+#include <mln/pw/all.hh>
+
 #include <mln/binarization/threshold.hh>
+
 #include <mln/labeling/colorize.hh>
+#include <mln/labeling/blobs.hh>
+
+#include <mln/literal/colors.hh>
+#include <mln/literal/max.hh>
+
+
 #include <tests/data.hh>
 #include <doc/tools/sample_utils.hh>
 
@@ -8,7 +38,7 @@ struct keep_specific_colors : public mln::Function_v2b<keep_specific_colors>
 {
   bool operator()(const mln::value::rgb8& v) const
   {
-    return v.green() < 200 && v.blue() > 100;
+    return v.green() < 200u && v.blue() > 100u;
   }
 };
 

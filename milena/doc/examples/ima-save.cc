@@ -1,4 +1,6 @@
-# include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/io/pbm/save.hh>
+#include <mln/make/image.hh>
 int main()
 {
   using namespace mln;

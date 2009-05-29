@@ -1,4 +1,7 @@
-#include<mln/essential/2d.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/alias/box2d.hh>
+#include <mln/geom/bbox.hh>
+#include <mln/core/site_set/p_array.hh>
 int main()
 {
   using namespace mln;

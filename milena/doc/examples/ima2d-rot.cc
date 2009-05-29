@@ -1,5 +1,24 @@
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/dmorph/extended.hh>
+#include <mln/core/var.hh>
+#include <mln/core/routine/extend.hh>
+
+#include <mln/value/rgb8.hh>
+
+#include <mln/border/fill.hh>
+
+#include <mln/literal/colors.hh>
+
+#include <mln/data/fill.hh>
+
+#include <mln/draw/box.hh>
+
+#include <mln/fun/x2x/rotation.hh>
+
+#include <mln/algebra/vec.hh>
+
 #include <doc/tools/sample_utils.hh>
+
 int main()
 {
   using namespace mln;
