@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value/graylevel_f.cc
- *
- * \brief Tests on mln::value::graylevel_f.
- */
+/// \file tests/value/graylevel_f.cc
+///
+/// \brief Tests on mln::value::graylevel_f.
 
 #include <mln/value/graylevel.hh>
 #include <mln/value/glf.hh>
@@ -55,7 +54,7 @@ int main()
     mln_assertion(b == a);
 
     a *= 2;
-    mln_assertion(a == white);
+    mln_assertion(a == glf(white));
     mln_assertion(a.to_enc() == 1.f);
   }
 }

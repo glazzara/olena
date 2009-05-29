@@ -108,7 +108,7 @@ int main()
 	? mln_min(input_val_t)
 	: mln_max(input_val_t);
   mln_assertion((nrows * ncols) == 10000);
-  mln_assertion((2 * nrows * ncols - (rows + ncols)) == 19800);
+  mln_assertion((2 * nrows * ncols - (nrows + ncols)) == 19800);
 
   /*----------------.
   | Line gradient.  |

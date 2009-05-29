@@ -40,6 +40,7 @@
 
 #include <mln/fun/p2b/chess.hh>
 #include <mln/literal/origin.hh>
+#include <mln/value/int_u8.hh>
 #include <mln/value/int_s8.hh>
 #include <mln/value/int_s16.hh>
 

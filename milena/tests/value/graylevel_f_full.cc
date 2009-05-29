@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007, 2009 EPITA Research and Development
+// Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value/graylevel_f_full.cc
- *
- * \brief Full tests on mln::value::graylevel_f.
- */
+/// \file tests/value/graylevel_f_full.cc
+///
+/// \brief Full tests on mln::value::graylevel_f.
 
 #include <mln/value/graylevel.hh>
 #include <mln/value/glf.hh>
@@ -77,24 +77,24 @@ int main()
   // Literals
   {
     glf a(white);
-    mln_assertion(a == white);
+    mln_assertion(a == glf(white));
     mln_assertion(a.value() == 1.f);
     glf d = white;
-    mln_assertion(d == white);
+    mln_assertion(d == glf(white));
     mln_assertion(d.value() == 1.f);
 
     glf b(black);
-    mln_assertion(b == black);
+    mln_assertion(b == glf(black));
     mln_assertion(b.value() == 0.f);
     glf e = black;
-    mln_assertion(e == black);
+    mln_assertion(e == glf(black));
     mln_assertion(e.value() == 0.f);
 
     glf c(medium_gray);
-    mln_assertion(c == medium_gray);
+    mln_assertion(c == glf(medium_gray));
     mln_assertion(c.value() == 0.5f);
     glf f = medium_gray;
-    mln_assertion(f == medium_gray);
+    mln_assertion(f == glf(medium_gray));
     mln_assertion(f.value() == 0.5f);
   }
 

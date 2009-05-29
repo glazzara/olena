@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,12 +26,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value/graylevel_full.cc
- *
- * \brief Tests on mln::value::graylevel. Tests operations between
- * graylevel of different encodings.
- *
- */
+/// \file tests/value/graylevel_full.cc
+///
+/// \brief Tests on mln::value::graylevel. Tests operations between
+/// graylevel of different encodings.
 
 #include <mln/value/gl8.hh>
 #include <mln/value/gl16.hh>
@@ -71,7 +70,7 @@ int main()
 
     gl8 e = white;
 
-    mln_assertion(e == white);
+    mln_assertion(e == gl8(white));
 
     gl8 f = 12;
     gl8 g = f;

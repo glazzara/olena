@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_VALUE_SCALAR_HH
 # define MLN_VALUE_SCALAR_HH
  
-/*! \file mln/value/scalar.hh
- *
- * \brief Definition of the basic mln::value::scalar_ class.
- */
+/// \file mln/value/scalar.hh
+///
+/// \brief Definition of the basic mln::value::scalar_ class.
 
 # include <mln/value/concept/scalar.hh>
 # include <mln/metal/is_a.hh>

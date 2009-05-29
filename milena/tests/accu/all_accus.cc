@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,7 +27,8 @@
 // Public License.
 
 /// \file tests/accu/all_accus.cc
-/// \brief Tests on all_accus files in mln/accu.
+///
+/// \brief Tests on all_accus files in mln/accu/.
 
 #include <mln/accu/all.hh>
 #include <mln/core/alias/point2d.hh>

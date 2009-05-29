@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -193,7 +193,7 @@ namespace mln
     inline
     int_s<n>::int_s(int i)
     {
-      static const int max = metal::math::pow_int<2, n-1>::value - 1;
+      static const int max = int(metal::math::pow_int<2, n-1>::value) - 1;
       static const int min = - max;
       mln_precondition(i >= min);
       mln_precondition(i <= max);
@@ -205,7 +205,7 @@ namespace mln
     int_s<n>&
     int_s<n>::operator=(int i)
     {
-      static const int max = metal::math::pow_int<2, n-1>::value - 1;
+      static const int max = int(metal::math::pow_int<2, n-1>::value) - 1;
       static const int min = - max;
       mln_precondition(i >= min);
       mln_precondition(i <= max);

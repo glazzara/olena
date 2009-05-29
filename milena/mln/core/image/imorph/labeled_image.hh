@@ -112,17 +112,12 @@ namespace mln
   /// Morpher providing an improved interface for labeled image.
   ///
   /// \tparam I The label image type.
-  /// \tparam A An accumulator type.
   ///
-  /// This image type allows to pre-compute components attributes. These
-  /// attributes can be set through the template parameter \p A. This
-  /// accumulator type can be a simple accumulator, a pair of accumulators or
-  /// a tuple.
+  /// This image type allows to access every site set at a given
+  /// label.
   ///
-  /// This image type guaranties that the labeling is always contiguous.
-  ///
-  /// \sa accu::pair, accu::tuple, mln::accu
-  ///
+  /// This image type guaranties that labels are contiguous (from 1 to
+  /// n).
   ///
   /// \ingroup modimageidmorpher
   //

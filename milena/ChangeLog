@@ -1,3 +1,43 @@
+2009-05-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix many warnings and errors in test files.
+
+	* mln/core/image/imorph/labeled_image.hh: Fix doc.
+	* mln/accu/all.hh
+	(count_adjacent_vertices): Use de-activation notation.
+	(tuple): De-activate.
+	* mln/value/ops.hh
+	(operator==): New overloads for a couple of scalars, resp.
+	int and unsigned; fix warnings.
+	(operator): Fix missing declarations.
+	* mln/value/scalar.hh: Upgrade doc style.
+	* mln/value/int_s.hh: Fix warnings.
+	* mln/value/internal/gray_.hh: Fix warning.
+	* mln/value/internal/gray_f.hh: Fix warnings.
+	Fix ending guard.
+	* mln/set/compute_with_weights.hh: Fix warnings.
+	* mln/util/adjacency_matrix.hh: Fix warnings.
+	* tests/arith/times_full.cc: Fix missing includes; layout.
+	* tests/arith/plus_full.cc: Fix missing includes; layout.
+	* tests/arith/revert_full.cc: Fix missing include.
+	* tests/data/paste.cc (include): Fix typo.
+	* tests/accu/all_accus.cc: Upgrade doc style.
+	* tests/accu/count.cc: Fix warnings.
+	* tests/value/rgb_full.cc: Upgrade doc style.
+	* tests/value/int_u8.cc: Fix warnings.
+	* tests/value/float01.cc: Remove useless dependencies.
+	Revamp.
+	Fix warnings.
+	* tests/value/graylevel_f.cc,
+	* tests/value/graylevel_full.cc,
+	* tests/value/graylevel_f_full.cc: Fix ambiguities with g++-4.2.
+	Upgrade doc style.
+	* tests/value/graylevel.cc: Upgrade doc style.
+	* tests/convert/to_hsl.cc: De-activate code since it relies
+	on de-activated code.
+	* tests/morpho/artificial_line_graph_image_wst.cc: Fix typo.
+	* tests/morpho/lena_line_graph_image_wst1.cc: Fix warning.
+
 2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Fix tests.

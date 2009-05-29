@@ -30,9 +30,6 @@
 ///
 /// Tests on mln::arith::times.
 
-
-
-
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
@@ -45,15 +42,11 @@
 
 #include <mln/value/int_s8.hh>
 #include <mln/value/int_s16.hh>
-
-
+#include <mln/value/int_u8.hh>
+#include <mln/value/int_u16.hh>
 #include <mln/debug/iota.hh>
 
 #include <mln/arith/times.hh>
-
-
-
-
 
 
 

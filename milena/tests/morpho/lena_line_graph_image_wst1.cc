@@ -158,7 +158,7 @@ int main()
   int_u8 nbasins;
   typedef edge_image<util::site_pair<point2d>,int_u8,util::graph> wshed_t;
   wshed_t wshed = morpho::meyer_wst(lg_ima, nbh, nbasins);
-  mln_assertion(nbasins == 5);
+  mln_assertion(nbasins == 5u);
 
   /*---------.
   | Output.  |

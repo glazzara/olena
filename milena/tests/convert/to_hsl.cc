@@ -40,12 +40,12 @@ int main()
 {
   using namespace mln;
 
-  value::rgb8 c1(3,3,3);
-  value::hsl_f c2 = convert::to<value::hsl_f>(c1);
-//  mln_assertion(c2 == hsl_f(0,0,3)); //FIXME: wrong result.
+//   value::rgb8 c1(3,3,3);
+//   value::hsl_f c2 = convert::to<value::hsl_f>(c1);
+// //  mln_assertion(c2 == hsl_f(0,0,3)); //FIXME: wrong result.
 
-  value::hsl_f c3(3,3,3);
-  c1 = convert::to<value::rgb8>(c3);
-//  mln_assertion(c1 == rgb8(2,4,0)); //FIXME: wrong result.
+//   value::hsl_f c3(3,3,3);
+//   c1 = convert::to<value::rgb8>(c3);
+// //  mln_assertion(c1 == rgb8(2,4,0)); //FIXME: wrong result.
 
 }

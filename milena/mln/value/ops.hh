@@ -210,6 +210,42 @@ namespace mln
     operator % (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs);
 
 
+  // Operator ==.
+
+  template <typename Sl, typename Sr>
+  mln_trait_op_eq(Sl, Sr)
+  operator == (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs);
+
+  bool
+  operator == (const value::scalar_<int>& lhs, const value::scalar_<unsigned>& rhs);
+
+  bool
+  operator == (const value::scalar_<unsigned>& lhs, const value::scalar_<int>& rhs);
+
+  template <typename O, typename L>
+  mln_trait_op_eq(O, O)
+  operator==(const value::scalar_<O>& lhs, const Literal<L>& rhs);
+
+  template <typename L, typename O>
+  mln_trait_op_eq(O, O)
+  operator==(const Literal<L>& lhs, const value::scalar_<O>& rhs);
+
+
+  // Operator <.
+
+  template <typename Sl, typename Sr>
+  mln_trait_op_less(Sl, Sr)
+  operator < (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs);
+
+  template <typename O, typename L>
+  mln_trait_op_less(O, O)
+  operator < (const value::scalar_<O>& lhs, const Literal<L>& rhs);
+
+  template <typename L, typename O>
+  mln_trait_op_less(O, O)
+  operator < (const Literal<L>& lhs, const value::scalar_<O>& rhs);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -336,6 +372,20 @@ namespace mln
   operator == (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
   {
     return value::equiv(lhs) == value::equiv(rhs);
+  }
+
+  inline
+  bool
+  operator == (const value::scalar_<int>& lhs, const value::scalar_<unsigned>& rhs)
+  {
+    return lhs.to_equiv() == int(rhs.to_equiv());
+  }
+
+  inline
+  bool
+  operator == (const value::scalar_<unsigned>& lhs, const value::scalar_<int>& rhs)
+  {
+    return int(lhs.to_equiv()) == rhs.to_equiv();
   }
 
   template <typename O, typename L>

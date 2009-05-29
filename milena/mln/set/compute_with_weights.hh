@@ -102,9 +102,9 @@ namespace mln
 	mln_precondition(label.is_valid());
 	mln_precondition(w.domain() <= label.domain());
 	
-	(void) a_;
-	(void) w_;
-	(void) label_;
+	(void) a;
+	(void) w;
+	(void) label;
       }
 
     } // end of namespace mln::internal

@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -57,11 +58,11 @@ int main()
   {
     accu::count<int> a, a_;
     a.take_as_init(1);
-    mln_assertion(a == 1);
+    mln_assertion(a == 1u);
     a.take(2);
-    mln_assertion(a == 2);
+    mln_assertion(a == 2u);
 
     a_.take_as_init(a);
-    mln_assertion(a_ == 2);
+    mln_assertion(a_ == 2u);
   }
 }

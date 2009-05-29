@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007, 2008 EPITA Research and Development
+// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -474,7 +474,7 @@ namespace mln
     mln_trait_op_times(graylevel_f, S)
       operator*(const graylevel_f& lhs, const scalar_<S>& rhs)
     {
-      return lhs.value() * rhs;
+      return lhs.value() * rhs.to_equiv();
     }
 
     // Op / scalar
@@ -483,12 +483,12 @@ namespace mln
     mln_trait_op_div(graylevel_f, S)
       operator/(const graylevel_f& lhs, const scalar_<S>& rhs)
     {
-      mln_precondition(rhs.to_equiv() != 0);
-      return lhs.value() / rhs;
+      mln_precondition(rhs.to_equiv() != S(0));
+      return lhs.value() / rhs.to_equiv();
     }
 
   } // end of namespace mln::value
 
 } // end of namespace mln
 
-#endif // ! MLN_VALUE_GRAY_F_HH
+#endif // ! MLN_VALUE_INTERNAL_GRAY_F_HH

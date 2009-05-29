@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007, 2008 EPITA Research and Development
+// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -682,7 +682,7 @@ namespace mln
     mln_trait_op_div(graylevel<n>, scalar_<S>)
       operator/(const graylevel<n>& lhs, const scalar_<S>& rhs)
     {
-      mln_precondition(rhs.to_equiv() != 0);
+      mln_precondition(rhs.to_equiv() != S(0));
       typedef mln_trait_op_div(graylevel<n>, scalar_<S>) ret;
       return internal::helper_gray__op_<ret>::div(lhs, rhs);
     }

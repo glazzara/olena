@@ -26,13 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-
 /// \file tests/arith/plus_full.cc
 ///
 /// Tests on mln::arith::plus.
-
-
-
 
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
@@ -41,20 +37,15 @@
 
 #include <mln/core/image/dmorph/image_if.hh>
 #include <mln/fun/p2b/chess.hh>
-
 #include <mln/literal/origin.hh>
 
+#include <mln/value/int_u8.hh>
 #include <mln/value/int_s8.hh>
+#include <mln/value/int_u16.hh>
 #include <mln/value/int_s16.hh>
-
-
 #include <mln/debug/iota.hh>
 
 #include <mln/arith/plus.hh>
-
-
-
-
 
 
 

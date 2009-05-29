@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value/int_u8.cc
- *
- * \brief Tests on mln::value::int_u8.
- */
+/// \file tests/value/int_u8.cc
+///
+/// \brief Tests on mln::value::int_u8.
 
 #include <mln/value/int_u8.hh>
 #include <tests/value/macros.hh>
@@ -49,18 +49,18 @@ int main()
   // Assignment.
   {
     i = 51;
-    // FIXME: Triggers a warning about signed vs unsigned comparison.
-    sym_compare_assert(i, ==, 51);
+    mln_assertion(i == 51u);
+    mln_assertion(-i == -51);
 
     i = 51u;
-    sym_compare_assert(i, ==, 51);
+    mln_assertion(i == 51u);
 
     signed char c = 51;
     i = c;
-    sym_compare_assert(i, ==, 51);
+    mln_assertion(i == 51u);
 
     j = i;
-    sym_compare_assert(j, ==, 51);
+    mln_assertion(j == 51u);
 
     i = 3;
     sym_compare_assert(3.0f, ==, i);
