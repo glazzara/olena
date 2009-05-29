@@ -1,5 +1,11 @@
 2009-05-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Update makefile list.
+
+	* configure.ac: Update makefile list.
+
+2009-05-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Propagate update from level to data.
 
 	* configure.ac: Propagate update from level to data.
