@@ -40,6 +40,10 @@
 #   - tests.html,   the formated test suite results.
 #
 #
+# Useful Global variables to know:
+#   - TEST_DIR	  Run the tests only in this directory.
+#   - TEST_CXX	  Use a specific compiler.
+#
 #
 #
 # _WARNING_: be aware of the fact this script run a make clean in the
@@ -66,6 +70,9 @@ if [ -z "$base_make_path" ]; then
   fi
 fi
 
+if [ -z "$TEST_CXX" ]; then
+  TEST_CXX="$CXX"
+fi
   
 gcc_wrapper="$PWD/$output_directory/gcc-wrapper.sh"
 
@@ -320,7 +327,7 @@ done
 name=\`basename \$file .o\`
 
 # Compile and log the compilation output.
-g++ 2>\$name.comp.log \$@
+$TEST_CXX 2>\$name.comp.log \$@
 EOF
 
   chmod +x "$gcc_wrapper"
@@ -399,7 +406,7 @@ main()
   
   # Cleanup temporary files.
   cleanup_tmp_files
-  cleanup_gcc_wrapper
+#  cleanup_gcc_wrapper
 }
 
 main
