@@ -20,6 +20,6 @@ int main()
   image2d<rgb8> ima_color = labeling::colorize(rgb8(), ima, 230);
   // \}
 
-  doc::pgmsave(ima, "colorize");
-  doc::ppmsave(ima_color, "colorize");
+  doc::pgmsave(ima, "tuto3_colorize");
+  doc::ppmsave(ima_color, "tuto3_colorize");
 }

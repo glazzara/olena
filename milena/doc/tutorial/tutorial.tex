@@ -127,13 +127,13 @@ out and commented by the documentation.
 
 Taking a look at the test suite is also a good idea. The tests usually focus on
 a single functionality and handle several use cases which may overlap your needs.
-The test suite is located at \hpath{milena/tests} (FIXME: ref?).
+The test suite is located in \hpath{milena/tests} (FIXME: ref?).
 
-Still not enough information? More information about all the functions is
+Still not enough information? More information about all the routines is
 available in the User HTML documentation (FIXME:ref).
 It mainly targets \textit{designers} and \textit{providers}.
 The latter may also be interested by the Developer HTML documentation
-(FIXME:ref).
+(not available yet).
 
 
 
@@ -178,7 +178,7 @@ First, be sure that SVN is already installed on your system.
 Open a terminal and type:
 
 \begin{verbatim}
-\$ svn --version --quiet
+$ svn --version --quiet
 1.4.6
 \end{verbatim}
 
@@ -187,34 +187,42 @@ then you need to install SVN.
 
 Usually, systems providing packages reference SVN's package as 'subversion'.
 
-Once you have SVN installed, go to the directory where you woudl like to 
+To install SVN on Debian or Ubuntu, run:
+
+\begin{verbatim}
+$ sudo apt-get install subversion
+\end{verbatim}
+
+For other distributions, please refer to the user documentation of your system.
+
+Once you have SVN installed, go to the directory where you would like to 
 download Olena and create a new directory.
 
 \begin{verbatim}
-\$ cd $HOME
-\$ mkdir olena
-\$ cd olena
+$ cd $HOME
+$ mkdir olena
+$ cd olena
 \end{verbatim}
      
 Then 'checkout' (download) the repository with the following command.
 
 \begin{verbatim}
-\$ svn co https://svn.lrde.epita.fr/svn/oln/trunk
+$ svn co https://svn.lrde.epita.fr/svn/oln/trunk
 \end{verbatim}
 
 Enter the 'trunk' directory.
 
 \begin{verbatim}
-\$ cd trunk
+$ cd trunk
 \end{verbatim}
 
 You are now ready to configure the directory and install Milena as described 
 in section \ref{tuto2}.
 We invite you to take a look at the description of the directory structure
-(\ref{tuto1dirstruct}.
+(section \ref{tuto1dirstruct}).
 If you encounter any issues in the installation process or if you have any
-question, do not forget to join the mailing lists (\ref{tuto1mailinglists}
-and/or use the other documentations ressources (\ref{tuto1documentation}).
+question, do not forget to join the mailing lists (section \ref{tuto1mailinglists})
+and/or use the other documentations ressources (section ref{tuto1documentation}).
 
 
 
@@ -232,7 +240,7 @@ Milena's packages can be downloaded from:
 On this page you will find the latest and past releases.
 Currently, we provide only '.tar.gz' and 'tar.bz2' archives.
 
-Once download, you just need to uncompress the archive.
+Once downloaded, you just need to uncompress the archive.
 
 For the '.tar.gz' archive:
 \begin{verbatim}
@@ -253,10 +261,11 @@ $ cd olena-1.0
 You are now ready to configure the directory and install Milena as described 
 in section \ref{tuto2}.
 We invite you to take a look at the description of the directory structure
-(\ref{tuto1dirstruct}.
+(section \ref{tuto1dirstruct}).
 If you encounter any issues in the installation process or if you have any
-question, do not forget to join the mailing lists (\ref{tuto1mailinglists}
-and/or use the other documentations ressources (\ref{tuto1documentation}).
+question, do not forget to join the mailing lists (section
+\ref{tuto1mailinglists}) and/or use the other documentations ressources
+(section \ref{tuto1documentation})).
 
 
 
@@ -299,6 +308,7 @@ you finding what you need, you will find a description of all these
 subdirectories.
 
 
+\vspace{0.5cm}
 List of \hpath{milena}'s subdirectories:
 \begin{itemize}
 
@@ -324,7 +334,7 @@ List of \hpath{milena}'s subdirectories:
 \end{itemize}
 
 
-
+\vspace{0.5cm}
 List of \hpath{mln}'s subdirectories:
 \begin{itemize}
   \item \dir{accu} --- Set of Accumulators.
@@ -337,21 +347,21 @@ List of \hpath{mln}'s subdirectories:
   \item \dir{convert} --- Automatic conversion mechanism.
   \item \dir{core} --- Core of the library. Here you can find the image types,
   the site set types and basic concepts.
-  \item \dir{data} --- Routine that modify image data.
+  \item \dir{data} --- Routines that modify image data.
   \item \dir{debug} --- Debug related routines.
   \item \dir{display} --- Display images on the screen.
   \item \dir{draw} --- Draw geometric objects in an image.
   \item \dir{essential} --- Set of essential headers for 1,2,3-D manipulations.
   \item \dir{estim} --- Compute data on image values.
   \item \dir{extension} --- Image extension manipulation.
-  \item \dir{extract} --- FIXME: extract will be removed and replaced by thru().
+%  \item \dir{extract} --- FIXME: extract will be removed and replaced by thru().
   \item \dir{fun} --- Set of functions applying on sites, values, \ldots
   \item \dir{geom} --- Functions related to image geometry.
   \item \dir{graph} --- Graph related routines.
   \item \dir{histo} --- Histogram related functions.
   \item \dir{io} --- I/O related routines.
   \item \dir{labeling} --- Labeling related routines.
-  \item \dir{level} --- Point-wise operators on levels.
+%  \item \dir{level} --- Point-wise operators on levels.
   \item \dir{linear} --- Linear operators.
   \item \dir{literal} --- Generic image values such as zero, black, white \ldots
   \item \dir{logical} --- Logical operators.
@@ -360,7 +370,7 @@ List of \hpath{mln}'s subdirectories:
   \item \dir{metal} --- Metalic macros/structures. Static library helping
   developing doing static tests.
   \item \dir{morpho} --- Mathematical morphology.
-  \item \dir{norm} --- Norm computation
+  \item \dir{norm} --- Norm computation.
   \item \dir{opt} --- Optional routines. Routines which may work on a
   specific image type only.
   \item \dir{pw} --- Point-wise image related routines.
@@ -390,7 +400,7 @@ List of \hpath{doc}'s subdirectories:
 
 \item \dir{tutorial} --- Tutorial sources.
 \item \dir{white\_paper} --- White paper sources.
-\item \dir{technical} --- Technical documentation. (DEPRECATED)
+%\item \dir{technical} --- Technical documentation. (DEPRECATED)
 \item \dir{ref\_guide} --- Reference guide sources.
 \item \dir{figures} --- Reference figures for documentation generation.
 \item \dir{outputs} --- Reference outputs for documentation examples.
@@ -406,14 +416,14 @@ List of \hpath{doc}'s subdirectories:
 This tutorial is not the only documentation of Milena. Other documents are available:
 
 \begin{itemize}
-  \item \dir{White paper} --- a small document of few pages presenting the key
+  \item \dir{White paper} --- A small document of few pages presenting the key
   features of the library. It intents to give a big picture of the library.
 
-  \item \dir{Quick tour} --- it aims giving an overview of Milena's possibilities.
+  \item \dir{Quick tour} --- It aims at giving an overview of Milena's possibilities.
   It does not only give the concepts but illustrate them with small sample
   codes.
 
-  \item \dir{Quick reference guide} --- Present in details all the main
+  \item \dir{Quick reference guide} --- Presents in details all the main
   functionalities of Milena.
   Hints and full examples are also provided. The sample codes are commented
   and each concept in the library is detailed. This is the reference document for any 
@@ -440,8 +450,8 @@ for new contributors.
   \item If you are a user, please send us feedback about the library.
   Did you find what you wanted? Do you miss something?
 
-  \item Please report bugs and defect in the API. Mailing lists are the best
-  way for reporting that.
+  \item Please report bugs and defects in the API. Mailing lists are the best
+  way for reporting that (section \ref{tuto1mailinglists}).
 
   \item Developers, if you write cool open source programs or algorithms with Milena,
   send them to us. We may ship your code with Olena and/or add it to
@@ -460,7 +470,7 @@ for new contributors.
 \doxysection{tuto1projectstatus}{Project status}
 
 If you want to stay tuned to Milena's development, the best way is probably
-the mailing-lists (\ref{tuto1mailinglists}).
+the mailing-lists (section \ref{tuto1mailinglists}).
 
 There are other ways to get to know what is the status of the project.
 
@@ -476,7 +486,7 @@ There are other ways to get to know what is the status of the project.
       are compiled and run. The buildfarm can show you whether it is safe
       to update your svn copy of Milena or not\ldots
 
-\item Test failures
+\item Test failures \\
       \href{http://www.lrde.epita.fr/dload/olena/test-failures-daily.html}{http://www.lrde.epita.fr/dload/olena/test-failures-daily.html} \\
       Through this page, you can see exactly which tests do not compile or pass.
       This page is updated every night.
@@ -523,6 +533,10 @@ If you want to reach us directly, you can contact one of the following people:
 
 
 
+\vspace{2cm}
+\begin{center}
+  \tutotocnext{tuto2}
+\end{center}
 
 
 
@@ -606,9 +620,9 @@ We are now about to configure the build directory. This process will create
 the necessary files to compile documentation, examples and tools and prepare the
 installation.
 
-\textbf{Important Note}: the Install path prefix must be chosen at this step.
+\textbf{Important Note}: the installation path prefix must be chosen at this step.
 By default, Milena will be installed in /usr/local but you may like to install
-it elsewhere. To do so, pass the option \textit{--prefix=/installation/path/prefix}
+it elsewhere. To do so, pass the option \textit{-{}-prefix=/installation/path/prefix}
 to the configure script (see below). Replace '/installation/path/prefix' with the
 wanted installation path prefix.
   
@@ -627,6 +641,13 @@ issues, the last lines shown before the prompt are:
 \begin{verbatim}
 config.status: creating config.h
 config.status: executing depfiles commands
+$
+\end{verbatim}
+
+And if you type the following command, a '0' is printed out.
+\begin{verbatim}
+$ echo $?
+0
 $
 \end{verbatim}
 
@@ -650,6 +671,7 @@ perform the installation. Then, you may type:
 \begin{verbatim}
 $ sudo make install
 \end{verbatim}
+You will be prompted for the administrator password.
 
 Otherwise, if you set the install path prefix to a directory own by your
 user, simply type:
@@ -659,7 +681,7 @@ $ make install
 
 When the installation is finished, you are done. Milena is installed on your
 system. But maybe you would like to build the examples? This is described
-in the next section \ref{tuto2optionalcomp}.
+in section \ref{tuto2optionalcomp}.
 
 A description of the installation content is also available in section
 \ref{tuto2installcontent}.
@@ -725,6 +747,8 @@ $ make
 \doxysubsection{tuto2tests}{Tests}
 
 The test suite used for Milena's development is shipped with the library.
+It is usually useless for simple users and tends to be used by developers
+extending the library.
 
 In order to build and run it, just do the following:
 \begin{verbatim}
@@ -741,7 +765,7 @@ Running the test suite is memory and CPU consumming and will take a while.
 Once installed, Milena's files are located in the installed path prefix
 you passed to the configure script or in the default path /usr/local.
 
-In the installed path prefix, Milena's files are located in:
+In the installation path prefix, Milena's files are located in:
 
 \begin{itemize}
   \item include/mln/ --- The library. All the headers are located here.
@@ -749,6 +773,10 @@ In the installed path prefix, Milena's files are located in:
   example programs.
 \end{itemize}
 
+\vspace{2cm}
+\begin{center}
+  \tutotoc{tuto1}{tuto3}
+\end{center}
 
 
 %====================================
@@ -762,7 +790,7 @@ take benefit of it, let's see what genericity really means for us and how it is
 illustrated in the library.
 
 A \B{Generic algorithm} is written once, without duplicates, and works on
-different kind of input.
+different kinds of input.
 
 Let's have a look to a small example. In any image processing library, we may be
 interested in a small routine to fill an image with data. A common
@@ -781,7 +809,7 @@ So, what would happen if we would like to use it for 3D images, use rgb8 as
 value or even work on a region of interest?
 
 This implementation would require to be reimplemented and the user would have to
-deal with the various version of the fill routine. For the developer, it is error
+deal with the various versions of the fill routine. For the developer, it is error
 prone, redundant and hard to maintain. For the user, it is confusing and forces
 to always think about what he is manipulating.
 According to our definition, this algorithm is clearly \B{not} generic.
@@ -794,7 +822,7 @@ With Milena, the previous example would be written as follow:
 \doxycode{fill}
 
 In this version, the routine can take any kind of image types as arguments. So
-it is for the values: The expected type depends on the value used in the
+it is for the values: the expected type depends on the value used in the
 given image.
 The \code{for\_all} loop is also significantly generic to support any kind of
 images since the iterator guarantees it will pass through every sites.
@@ -803,12 +831,12 @@ This code is more generic and remains really close to the common description of
 the generic algorithm.
 
 As a result, with this algorithm we can fill an image,...
-\doxycode[2]{fill}
-\doxyfigure[1]{fill}{3cm}
-
-... Or fill only a region of interest (a set of points).
 \doxycode[3]{fill}
 \doxyfigure[2]{fill}{3cm}
+
+... Or fill only a region of interest (a set of points).
+\doxycode[2]{fill}
+\doxyfigure[1]{fill}{3cm}
 
 
 
@@ -829,8 +857,8 @@ Let's see the different parts of the algorithm.
 The prototype is restrictive enough, readable and still generic.
 We use concepts to statically check that the generic type passed as
 parameter is what the routine expects. The ``exact'' image type is \type{I}. For
-instance an image of type \type{image2d} inherits from \type{Image<image2d>}. So
-an \type{image2d} is an \type{Image<I>}.
+instance an image of type \type{image2d} inherits from \type{Image$<$image2d$>$}. So
+an \type{image2d} is an \type{Image$<$I$>$}.
 Note that the return type of this function is defined by a macro.
 \code{mln\_concrete} is a macro hidding tricky mechanisms (traits) used in Milena.
 The important point to remember is that a generic function should not return
@@ -843,7 +871,7 @@ will be detailled in section \ref{tuto3debughints}.
 
 
 \doxycode[4]{tuto3_first_routine}
-Since the function take some arguments thanks their concept, these object cannot
+Since the function take some arguments as concept objects, these object cannot
 be used as such. Indeed, concepts are empty shells only used for dispatching and
 concept checking, that's the reason why they are parameterized with their exact
 type. The exact type let us know what is the real type of the object. To get an
@@ -853,30 +881,32 @@ debug.
 
 
 \doxycode[5]{tuto3_first_routine}
-In this portion of code, the image is labeled and the number of site per label
+In this portion of code, the image is labeled and the number of sites per label
 is computed. This code does not depend on the image type at all. Again, a macro
-\code{mln\_ch\_value} (``mln change value'') helps us. \code{labeling::blobs} is a routine returning an
-image of the same kind as the input image but with a different value.
-\code{mln\_ch\_value} enables the possibility of doing that, whatever the image type
-\type{I} and whatever its value type, it returns the same image type with a
-different value type.
+\code{mln\_ch\_value} (``mln change value'') helps us. \code{labeling::blobs} is
+a routine returning an image of the same kind as the input image but with a
+different value. \code{mln\_ch\_value} enables the possibility of doing that,
+whatever the image type \type{I} and whatever its value type, it returns the
+same image type with a different value type.
 
 
 \doxycode[6]{tuto3_first_routine}
 The output image is declared here. Like any variable, it must be initialized at
 some point. To do so, \code{initialize()} is provided. It is a generic routine
-which can initialize the geometry any kind of image with another image of the
+which can initialize the geometry of any image kind with another image of the
 same kind.
 After this call, \var{output} has a valid domain and is valid. It can be used in
 an algorithm, here \code{data::fill}, to have its values modified.
 Note that the value passed to \code{data::fill} is also generic. The library
 includes few generic common values from which any value type can convert to.
+\code{literal::one} is one of them. It is a generic one value which can convert
+to every value type in the library.
 
 
 \doxycode[7]{tuto3_first_routine}
 In this part, every region from the labeled image, of which cardinality is lower
 than 10 sites, is set to \val{literal::zero} in \var{output}.
-Once again, a generic value is used in order to avoid a constraints on the image
+Once again, a generic value is used in order to avoid constraints on the image
 value type.
 
 
@@ -899,7 +929,7 @@ If Milena has been installed in a custom directory, e.g. not /usr/include or
 /usr/local/include, the path to the library headers must be passed to the
 compiler.
 
-With g++ and MinGW, the option  is \B{-I<path>}.
+With g++ and MinGW, the option  is \B{-I$<$path$>$}.
 \begin{verbatim}
 $ g++ -Ipath/to/mln my_program.cc 
 \end{verbatim}
@@ -948,8 +978,8 @@ their impact on the compilation and execution time.
 
 \doxysubsubsection{tuto3compoptimother}{Other compilers}
 
-Currently, have not tested different optimization flags with other compilers. If
-you did, please report us your results.
+Currently, we have not tested different optimization flags with other
+compilers. If you did, please report us your results.
 
 
 
@@ -959,15 +989,15 @@ you did, please report us your results.
 \doxysubsection{tuto3gdbhints}{Using assertions and GDB}
 As said above, Milena already includes a lot of post and pre conditions.
 Thus, if you made a mistake in your code there is a high probability that it
-will be detected at run time. If an assertion fail, we advice you to compile
+will be detected at run time. If an assertion fails, we advice you to compile
 with the following options:
 
 \begin{verbatim}
 $ g++ -ggdb -Ipath/to/mln my_program.cc 
 \end{verbatim}
 
-Note that you \B{MUST NOT} compile \var{-DNDEBUG} other the assertions will be
-deactivated.
+Note that you \B{MUST NOT} compile with \var{-DNDEBUG} since assertions will be
+disabled.
 Once compiled, restart the program with GDB.
 
 \begin{verbatim}
@@ -1005,7 +1035,7 @@ are printed out in the backtrace as you can see in the following example:
 \doxysubsection{tuto3traces}{Traces}
 Sometimes, compiling for GDB without optimization flags and with debug
 assertions enabled could lead to execution time dramaticaly high. 
-If the function parameter values are not necessary for debbuging,
+If the function parameter values are not necessary for debugging,
 a good alternative is the trace system provided in Milena.
 Each time a routine is called, a trace log is written.
 
@@ -1072,17 +1102,28 @@ Milena also provides a lot of debug tools. Here is a small list of the tools:
       \doxyfigure[2]{tuto3_colorize}{3cm} \\
     \end{tabular}
   \end{center}
+
+
+  \item mln::labeling::superpose, Superpose two images.
+
+  \item mln::labeling::filename, easily format debug file names.
+
 \end{itemize}
 
 
-A very simple processing chain; the target is the end-user!
+%A very simple processing chain; the target is the end-user!
+%
+%OR (?)
+%this chain plus a sample tiny generic algorithm
+%
+%** misc
+%/!\ step by step...
+%compilation time w.r.t compilation options (O1, DNDEBUG).
 
-OR (?)
-this chain plus a sample tiny generic algorithm
-
-** misc
-/!\ step by step...
-compilation time w.r.t compilation options (O1, DNDEBUG).
+\vspace{2cm}
+\begin{center}
+  \tutotoc{tuto2}{tuto4}
+\end{center}
 
 
 %====================================
@@ -1097,7 +1138,7 @@ then the image itself which stores the values.
 \doxysection{tuto4images}{Sites}
 
 A pixel is an element having both information, localization and
-pixels. In Milena, we make a difference between a pixel, a pixel value and a pixel
+value. In Milena, we make a difference between a pixel, a pixel value and a pixel
 location. Thus, in order to refer to a pixel location, we have the site concept.
 A site can be any kind of localization element. 
 For instance, in an image defined on a 2D regular grid, it is a 2D point with
@@ -1105,7 +1146,7 @@ For instance, in an image defined on a 2D regular grid, it is a 2D point with
 
 \doxycode{tuto4_point2d}
 
-The site type in an image is defined by its underlying site set.
+The image site type is defined by its underlying site set.
 
 
 
@@ -1119,6 +1160,9 @@ Site sets can used as standalone containers.
 
 A list of available site sets is available in section \ref{siteset}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MOVE PARTS OF THE NEXT CHAPTERS RIGHT HERE. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %--------------------------
 \doxysubsection{tuto4createsiteset}{Creating a site set}
@@ -1154,7 +1198,7 @@ In this section, we will detail how to create common images.
 
 
 %====================================
-\doxychapter{tuto4}{Step 4: Load and save images}
+\doxychapter{tuto5}{Load and save images}
 
 After this step you shoud know how to:
 \begin{itemize}
@@ -1188,12 +1232,12 @@ The supported file formats and their associated image value types are listed
 in section \doxyref{imaio}.
 
 \vspace{2cm}
-\tutotoc{tuto3}{tuto5}
+\tutotoc{tuto4}{tuto6}
 
 
 
 %====================================
-\doxychapter{tuto5}{Step 5: Create your first image}
+\doxychapter{tuto6}{Create your first image}
 
 After this step you should know how to:
   \begin{itemize}
@@ -1237,12 +1281,12 @@ though. A more detailed description can be found in section
 
 \vspace{2cm}
 \begin{center}
-  \tutotoc{tuto4}{tuto6}
+  \tutotoc{tuto5}{tuto7}
 \end{center}
 
 
 %====================================
-\doxychapter{tuto6}{Step 6: Read and write images}
+\doxychapter{tuto7}{Read and write images}
 
 After this step you should know how to:
   \begin{itemize}
@@ -1281,7 +1325,7 @@ If we want to initialize \var{ima} with \var{lena}, we can use \code{data::fill}
 \doxycode[6]{tuto3_rw_image}
 Output: \\
 
-\doxyfigure[2]{tuto3_rw_image}{3cm}
+\doxyfigure[2]{tuto3_rw_image}{3cm} \\
 Note that to fill an image with some data, the image domain \must be smaller
 or equal to the data.
 
@@ -1296,12 +1340,12 @@ the reference guide.
 
 \vspace{2cm}
 \begin{center}
-  \tutotoc{tuto5}{tuto7}
+  \tutotoc{tuto6}{tuto8}
 \end{center}
 
 
 %====================================
-\doxychapter{tuto7}{Step 7: Regions of interest}
+\doxychapter{tuto8}{Regions of interest}
 
 After this step you should know how to:
   \begin{itemize}
@@ -1314,7 +1358,7 @@ After this step you should know how to:
 
 In the previous step, we used the routine \code{data::fill} in order to change
 the values of an image. It was convenient since we did not need to write any
-loop by hand. The problem was that we could not specificy which region to fill
+loop by hand. The problem was that we could not specify which region to fill
 with data. This point leads us to talk about the genericity in Olena.
 All along this example we will use the routine \code{data::fill} to illustrate
 the possibilities in Olena but note that every image types passed to the
@@ -1351,12 +1395,12 @@ First, we just need to declare this square which is actually a site set, a
 Then, we just need to tell \code{data::fill} that we would like to fill the
 image \var{lena} but only in this restricted part of the image domain. 
 \doxycode[3]{tuto4_genericity_and_algorithms}
-Operator '|' can be read 'restricted to'. So below, we wrote 'image \var{lena}
+Operator '$|$' can be read 'restricted to'. So below, we wrote 'image \var{lena}
 restricted to the region of interest \var{roi}'. Actually this is not directly
 \var{lena} which is restricted but its domain.
 
 Note the use of \code{rw()} which is mandatory due to C++ limitations. In C++,
-the image created by \code{lena | roi} is \code{const}, e.g. read-only, though
+the image created by \code{lena $|$ roi} is \code{const}, e.g. read-only, though
 \code{data::fill} expect a \code{non-const} image, e.g. read-write. \code{rw()}
 is a workaround to make it read-write.
 
@@ -1379,9 +1423,13 @@ image, we \textbf{do not want} to write anyloop or construct any site set by han
 \doxycode[5]{tuto4_genericity_and_algorithms}
 
 A shorter way to get exactly the same result, is to define that behavior by a
-function. In Milena, a function \code{fun::p2v::chess} is available and does
+function. In Milena, a function \code{fun::p2b::chess} is available and does
 exactly what we want. Like if it was a site set, simply restrict the image with
 the function.
+
+%
+%Paste code of p2b::chess?
+%
 
 \doxycode[6]{tuto4_genericity_and_algorithms}
 \begin{center}
@@ -1394,10 +1442,10 @@ the function.
 
 Note that the functions provided by default in Olena are actually functors.
 Thus, they must be constructed like any object which why it is written
-\code{lena | fun::p2v::chess()} and not \code{lena | fun::p2v::chess}.
+\code{lena $|$ fun::p2v::chess()} and not \code{lena $|$ fun::p2v::chess}.
 
 
-FIXME: Talk about C functions once it is possible in Milena.
+%FIXME: Talk about C functions once it is possible in Milena.
 
 
 %**************************
@@ -1414,7 +1462,7 @@ We construct a mask, \var{mask}. It is initialized with the same geometry proper
 \doxycode[7]{tuto4_genericity_and_algorithms}
 
 Then, we cannot restrict directly \var{lena} with \var{mask}. These two images
-have the same domain, so \code{lena | mask.domain()} would not do anything.
+have the same domain, so \code{lena $|$ mask.domain()} would not do anything.
 \var{mask} is a classical image, there is not specific type for mask images.
 Therefore, we need to express that we want that binary image to be considered as
 a mask.
@@ -1456,7 +1504,7 @@ The two routines are :
 
 Let's see a common use case. 
 First, we binarize lena according to specific criterions, only site values with
-specific colors are set to true in \var{lena_bw}. Others are set to false. This
+specific colors are set to true in \var{lena\_bw}. Others are set to false. This
 image will be used in order to label the components.
 Let's consider a labeled image \var{label}. Each component of \var{lena} is labeled with a unique index.
 Now, we consider that that our region of interest is a component with id 16.
@@ -1482,6 +1530,13 @@ value in \var{label} is equal to 16'.
 %**************************
 \doxysection{tuto4component}{Image component restricted to a domain}
 
+%FIXME: be more verbose?
+
+It is also possible to restrict an image to one of its component and apply
+various operators upon it. In the following code, the green component of
+this color image is extracted and filled with the maximum value allowed.
+Other components such as red and blue are left unchanged.
+
 \doxycode[11]{tuto4_genericity_and_algorithms}
 
 \begin{center}
@@ -1490,12 +1545,14 @@ value in \var{label} is equal to 16'.
 %   \doxyfigure[7]{tuto4_genericity_and_algorithms}{3cm} &
     ~\huge{$\rightarrow$}~ &
     \doxyfigure[8]{tuto4_genericity_and_algorithms}{3cm}  \\
-    \multicolumn{4}{c}{Fill with green a region of interest defined by its
-      label.} \\
+    \multicolumn{4}{c}{Set the image green component to its maximum value.} \\
   \end{tabular}
 \end{center}
 
 
+Thanks to Milena's genericity, it is also possible to combine this operator
+with others. Here the green component is extracted from a region of interest
+and only that part is modified.
 
 \doxycode[12]{tuto4_genericity_and_algorithms}
 
@@ -1504,15 +1561,15 @@ value in \var{label} is equal to 16'.
     \doxyimg{small-enlarged}{3cm}  &
     ~\huge{$\rightarrow$}~ &
     \doxyfigure[9]{tuto4_genericity_and_algorithms}{3cm}  \\
-    \multicolumn{4}{c}{Fill with green a region of interest defined by its
-      label.} \\
+    \multicolumn{4}{c}{Set the green component of a region of interest
+ to its maximum value.} \\
   \end{tabular}
 \end{center}
 
 
 \vspace{2cm}
 \begin{center}
-  \tutotoc{tuto6}{tuto8}
+  \tutotocprev{tuto7}
 \end{center}
 
 

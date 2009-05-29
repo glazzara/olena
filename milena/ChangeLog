@@ -1,5 +1,21 @@
 2009-05-29 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Fix tutorial typos and issues.
+
+	* doc/doxyfuns.sty: add new functions.
+
+	* doc/examples/tuto3/colorize.cc: change saved file names.
+
+	* doc/figures/colorize-1.pgm,
+	* doc/figures/colorize-2.ppm: move...
+
+	* doc/figures/tuto3_colorize-1.pgm,
+	* doc/figures/tuto3_colorize-2.ppm:... here.
+
+	* doc/tutorial/tutorial.tex: fix typos and invalid figure includes.
+
+2009-05-29 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Improve pretty check.
 
 	* tests/tools/pretty_check.sh: make the C++ compiler depend on
