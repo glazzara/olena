@@ -10,13 +10,13 @@ check_PROGRAMS =				\
   convolve					\
   convolve_directional				\
   convolve_2x1d					\
-  gaussian					\
+  gaussian_					\
   lap						\
   log						\
   sobel_2d
 
 convolve_SOURCES = convolve.cc
-gaussian_SOURCES = gaussian.cc
+gaussian__SOURCES = gaussian.cc
 lap_SOURCES = lap.cc
 convolve_directional_SOURCES = convolve_directional.cc
 convolve_2x1d_SOURCES = convolve_2x1d.cc
