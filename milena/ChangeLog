@@ -1,5 +1,12 @@
 2009-05-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix missing remove.
+
+	* tests/level/Makefile.am: Remove.
+	* tests/level: Remove directory.
+
+2009-05-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Rename level/ stuff to data/ and labeling/level to /value.
 
 	* mln/labeling/level.hh,
