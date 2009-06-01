@@ -48,7 +48,7 @@ namespace mln
     namespace inter_pixel
     {
 
-      struct is_separator : public Function_p2b< is_separator >
+      struct is_separator : public Function_v2b< is_separator >
       {
 	typedef bool result;
 

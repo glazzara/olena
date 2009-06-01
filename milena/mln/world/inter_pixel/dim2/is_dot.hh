@@ -46,7 +46,7 @@ namespace mln
       namespace dim2
       {
 
-	struct is_dot : public Function_p2b< is_dot >
+	struct is_dot : public Function_v2b< is_dot >
 	{
 	  typedef bool result;
 	  bool operator()(const point2d& p) const;

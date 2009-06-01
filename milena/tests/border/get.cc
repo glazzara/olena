@@ -39,7 +39,7 @@
 #include <mln/literal/origin.hh>
 
 
-struct f_box2d_t : mln::Function_p2b< f_box2d_t >
+struct f_box2d_t : mln::Function_v2b< f_box2d_t >
 {
   f_box2d_t(const mln::box2d& b)
     : b_(b)

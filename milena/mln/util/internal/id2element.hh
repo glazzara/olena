@@ -46,7 +46,7 @@ namespace mln
     {
 
       template <typename G, typename Elt>
-      struct id2element : Function_i2v< id2element<G,Elt> >
+      struct id2element : Function_v2v< id2element<G,Elt> >
       {
 	typedef Elt result;
 

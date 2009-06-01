@@ -45,7 +45,7 @@ namespace mln
   {
 
     template <typename V>
-    struct var_ : public Function_p2v< var_<V> >
+    struct var_ : public Function_v2v< var_<V> >
     {
       typedef V result;
 

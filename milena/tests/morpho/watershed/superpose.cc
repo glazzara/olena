@@ -49,7 +49,7 @@
 namespace mln
 {
 
-  struct ref_data : Function_p2v<ref_data>
+  struct ref_data : Function_v2v<ref_data>
   {
     typedef value::rgb8 result;
 

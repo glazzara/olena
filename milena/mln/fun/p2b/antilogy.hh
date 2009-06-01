@@ -49,7 +49,7 @@ namespace mln
       ///
       /// A simpler name would be `false', but this is not a valid C++
       /// identifier, as \c false is a keyword of the language.
-      struct antilogy : public Function_p2b< antilogy >
+      struct antilogy : public Function_v2b< antilogy >
       {
 	typedef bool result;
 

@@ -46,7 +46,7 @@ namespace mln
     {
 
       template <typename T>
-      struct all_to : public Function_i2v< all_to<T> >
+      struct all_to : public Function_v2v< all_to<T> >
       {
 	typedef T result;
 	all_to(T t);

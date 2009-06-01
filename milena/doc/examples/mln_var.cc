@@ -4,7 +4,7 @@
 #include <mln/pw/all.hh>
 #include <mln/core/var.hh>
 
-struct my_values_t : mln::Function_p2v<my_values_t>
+struct my_values_t : mln::Function_v2v<my_values_t>
 {
   typedef int result;
 

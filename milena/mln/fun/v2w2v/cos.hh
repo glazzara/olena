@@ -58,7 +58,7 @@ namespace mln
        *  \see mln::math::cos.
        */
       template <typename V>
-      struct cos : public Function_v2w2v< cos<V> >
+      struct cos : public Function_v2v< cos<V> >
       {
 	typedef V result;
 	V operator()(const V& v) const;

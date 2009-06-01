@@ -53,7 +53,7 @@ namespace mln
 
   template <typename T, typename U>
   struct function< meta::first< util::couple<T,U> > >
-    : public Function_v2w_w2v<function< meta::first < util::couple<T,U> > > >
+    : public Function_v2v<function< meta::first < util::couple<T,U> > > >
   {
     typedef util::couple<T,U> value;
 

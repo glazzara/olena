@@ -46,8 +46,8 @@ namespace mln {
   namespace morpho {
     namespace tree {
 
-      template <typename WP>
-      struct way_of_propagation : Object< WP > { protected: way_of_propagation() {}; };
+      template <typename W>
+      struct way_of_propagation : Object< W > { protected: way_of_propagation() {}; };
       struct desc_propagation : way_of_propagation <desc_propagation> {};
       struct asc_propagation : way_of_propagation <asc_propagation> {};
 
@@ -63,22 +63,22 @@ namespace mln {
       ** @param v Value to be propagated. (By default \p v is the value
       ** at the node being propagated).
       */
-      template <typename T, typename A, typename P2B, typename WP>
+      template <typename T, typename A, typename P, typename W>
       inline
       void
       propagate_if(const T& tree,
 		   Image<A>& a_,
-		   const way_of_propagation<WP>&,
-		   const Function_p2b<P2B>& pred,
+		   const way_of_propagation<W>&,
+		   const Function_v2b<P>& pred,
 		   const mln_value(A)& v);
 
-      template <typename T, typename A, typename P2B>
+      template <typename T, typename A, typename P>
       inline
       void
       propagate_if(const T& tree,
 		   Image<A>& a_,
 		   const desc_propagation&,
-		   const Function_p2b<P2B>& pred);
+		   const Function_v2b<P>& pred);
 
       /**
       ** Propagate nodes having the value v in the way
@@ -92,21 +92,21 @@ namespace mln {
       ** @param v_prop Value to propagate (By default it is the value
       ** at the node being propagated).
       */
-      template <typename T, typename A, typename WP>
+      template <typename T, typename A, typename W>
       inline
       void
       propagate_if_value(const T& tree,
 			 Image<A>& a_,
-			 const way_of_propagation<WP>&,
+			 const way_of_propagation<W>&,
 			 const mln_value(A)& v,
 			 const mln_value(A)& v_prop);
 
-      template <typename T, typename A, typename WP>
+      template <typename T, typename A, typename W>
       inline
       void
       propagate_if_value(const T& tree,
 			 Image<A>& a_,
-			 const way_of_propagation<WP>&,
+			 const way_of_propagation<W>&,
 			 const mln_value(A)& v);
 
 
@@ -116,11 +116,11 @@ namespace mln {
 
       namespace internal
       {
-	template <typename T, typename A, typename P2B>
+	template <typename T, typename A, typename P>
 	bool check_propagate_if(const T& t,
 				const A& a,
 				const asc_propagation& prop,
-				const P2B& pred,
+				const P& pred,
 				const mln_value(A)& v)
 	{
 	  (void) prop;
@@ -131,11 +131,11 @@ namespace mln {
 	  return true;
 	}
 
-	template <typename T, typename A, typename P2B>
+	template <typename T, typename A, typename P>
 	bool check_propagate_if(const T& t,
 				const A& a,
 				const desc_propagation& prop,
-				const P2B& pred,
+				const P& pred,
 				const mln_value(A)& v)
 	{
 	  (void) prop;
@@ -146,11 +146,11 @@ namespace mln {
 	  return true;
 	}
 
-	template <typename T, typename A, typename P2B>
+	template <typename T, typename A, typename P>
 	bool check_propagate_if(const T& t,
 				const A& a,
 				const desc_propagation& prop,
-				const P2B& pred)
+				const P& pred)
 	{
 	  (void) prop;
 	  mln_node_piter(T) n(t);
@@ -160,13 +160,13 @@ namespace mln {
 	  return true;
 	}
 
-	template <typename T, typename A, typename P2B>
+	template <typename T, typename A, typename P>
 	inline
 	void
 	propagate_if(const T& tree,
 		     A& a,
 		     const desc_propagation& prop,
-		     const P2B& pred,
+		     const P& pred,
 		     const mln_value(A)& v)
 	{
 	  (void) prop;
@@ -190,13 +190,13 @@ namespace mln {
 	  mln_postcondition(check_propagate_if(tree, a, prop, pred, v));
 	}
 
-	template <typename T, typename A, typename P2B>
+	template <typename T, typename A, typename P>
 	inline
 	void
 	propagate_if(const T& tree,
 		     A& a,
 		     const desc_propagation& prop,
-		     const P2B& pred)
+		     const P& pred)
 	{
 	  (void) prop;
 
@@ -220,13 +220,13 @@ namespace mln {
 	}
 
 
-	template <typename T, typename A, typename P2B>
+	template <typename T, typename A, typename P>
 	inline
 	void
 	propagate_if(const T& tree,
 		     A& a,
 		     const asc_propagation& prop,
-		     const P2B& pred,
+		     const P& pred,
 		     const mln_value(A)& v)
 	{
 	  (void) prop;
@@ -256,62 +256,62 @@ namespace mln {
 
       /* Facades */
 
-      template <typename T, typename A, typename WP>
+      template <typename T, typename A, typename W>
       inline
       void
       propagate_if_value(const T& tree,
 			 Image<A>& a_,
-			 const way_of_propagation<WP>& prop_,
+			 const way_of_propagation<W>& prop_,
 			 const mln_value(A)& v,
 			 const mln_value(A)& v_prop)
       {
 	A& a = exact(a_);
-	const WP& prop = exact(prop_);
+	const W& prop = exact(prop_);
 
 	internal::propagate_if(tree, a, prop, pw::value(a) == pw::cst(v), v_prop);
       }
 
 
-      template <typename T, typename A, typename WP>
+      template <typename T, typename A, typename W>
       inline
       void
       propagate_if_value(const T& tree,
 			 Image<A>& a_,
-			 const way_of_propagation<WP>& prop_,
+			 const way_of_propagation<W>& prop_,
 			 const mln_value(A)& v)
       {
 	A& a = exact(a_);
-	const WP& prop = exact(prop_);
+	const W& prop = exact(prop_);
 
 	internal::propagate_if(tree, a, prop, pw::value(a) == pw::cst(v), v);
       }
 
-      template <typename T, typename A, typename P2B, typename WP>
+      template <typename T, typename A, typename P, typename W>
       inline
       void
       propagate_if(const T& tree,
 		   Image<A>& a_,
-		   const way_of_propagation<WP>& prop_,
-		   const Function_p2b<P2B>& pred_,
+		   const way_of_propagation<W>& prop_,
+		   const Function_v2b<P>& pred_,
 		   const mln_value(A)& v)
       {
 	A& a = exact(a_);
-	const WP& prop = exact(prop_);
-	const P2B& pred = exact(pred_);
+	const W& prop = exact(prop_);
+	const P& pred = exact(pred_);
 
 	internal::propagate_if(tree, a, prop, pred, v);
       }
 
-      template <typename T, typename A, typename P2B>
+      template <typename T, typename A, typename P>
       inline
       void
       propagate_if(const T& tree,
 		   Image<A>& a_,
 		   const desc_propagation& prop,
-		   const Function_p2b<P2B>& pred_)
+		   const Function_v2b<P>& pred_)
       {
 	A& a = exact(a_);
-	const P2B& pred = exact(pred_);
+	const P& pred = exact(pred_);
 
 	internal::propagate_if(tree, a, prop, pred);
       }

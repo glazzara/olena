@@ -156,7 +156,7 @@ namespace mln
 
     /// Constructor; coordinates are set by function \p f.
     template <typename F>
-    point(const Function_i2v<F>& f);
+    point(const Function_v2v<F>& f);
 
     /// Set all coordinates to the value \p c.
     void set_all(C c);
@@ -338,7 +338,7 @@ namespace mln
   template <typename G, typename C>
   template <typename F>
   inline
-  point<G,C>::point(const Function_i2v<F>& f_)
+  point<G,C>::point(const Function_v2v<F>& f_)
   {
     mlc_converts_to(mln_result(F), C)::check();
     const F& f = exact(f_);

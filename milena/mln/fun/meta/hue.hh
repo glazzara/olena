@@ -53,7 +53,7 @@ namespace mln
 
   template <class H, class S, class I>
   struct function< meta::hue< value::hsi_<H, S, I> > >
-    : public Function_v2w_w2v<function< meta::hue < value::hsi_<H, S, I> > > >
+    : public Function_v2v<function< meta::hue < value::hsi_<H, S, I> > > >
   {
     typedef value::hsi_<H, S, I> value;
 
@@ -66,7 +66,7 @@ namespace mln
 
   template <class H, class S, class L>
   struct function< meta::hue< value::hsl_<H, S, L> > >
-    : public Function_v2w_w2v<function< meta::hue < value::hsl_<H, S, L> > > >
+    : public Function_v2v<function< meta::hue < value::hsl_<H, S, L> > > >
   {
     typedef value::hsl_<H, S, L> value;
 

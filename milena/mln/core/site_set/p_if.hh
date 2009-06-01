@@ -31,7 +31,8 @@
 
 /// \file mln/core/site_set/p_if.hh
 ///
-/// Definition of the restriction of a site set w.r.t. a predicate.
+/// \brief Definition of the restriction of a site set w.r.t. a
+/// predicate.
 ///
 /// \todo Change s_ attribute type to S*.
 
@@ -70,7 +71,7 @@ namespace mln
    */
   template <typename S, typename F>
   p_if<S, F>
-  operator | (const Site_Set<S>& s, const Function_p2b<F>& f);
+  operator | (const Site_Set<S>& s, const Function_v2b<F>& f);
 
 
 
@@ -146,7 +147,7 @@ namespace mln
   template <typename S, typename F>
   inline
   p_if<S, F>
-  operator | (const Site_Set<S>& s, const Function_p2b<F>& f)
+  operator | (const Site_Set<S>& s, const Function_v2b<F>& f)
   {
     p_if<S, F> tmp(exact(s), exact(f));
     return tmp;

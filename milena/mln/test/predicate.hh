@@ -71,7 +71,7 @@ namespace mln
     /// \param[in] f The predicate.
     //
     template <typename S, typename F>
-    bool predicate(const Site_Set<S>& pset, const Function_p2b<F>& f);
+    bool predicate(const Site_Set<S>& pset, const Function_v2b<F>& f);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -112,7 +112,7 @@ namespace mln
       template <typename S, typename F>
       inline
       void predicate_tests(const Site_Set<S>& pset,
-			   const Function_p2b<F>& f)
+			   const Function_v2b<F>& f)
       {
 	mln_precondition(exact(pset).is_valid());
 	(void) pset;
@@ -241,7 +241,7 @@ namespace mln
 
     template <typename S, typename F>
     inline
-    bool predicate(const Site_Set<S>& pset, const Function_p2b<F>& f)
+    bool predicate(const Site_Set<S>& pset, const Function_v2b<F>& f)
     {
       trace::entering("test::predicate");
 

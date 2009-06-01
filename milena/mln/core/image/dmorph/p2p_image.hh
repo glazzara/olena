@@ -122,12 +122,12 @@ namespace mln
   /// FIXME: Doc!
   template <typename I, typename F>
   p2p_image<I,F>
-  apply_p2p(Image<I>& ima, const Function_p2p<F>& f);
+  apply_p2p(Image<I>& ima, const Function_v2v<F>& f);
 
   /// FIXME: Doc!
   template <typename I, typename F>
   p2p_image<const I,F>
-  apply_p2p(const Image<I>& ima, const Function_p2p<F>& f);
+  apply_p2p(const Image<I>& ima, const Function_v2v<F>& f);
 
 
 
@@ -241,7 +241,7 @@ namespace mln
   template <typename I, typename F>
   inline
   p2p_image<I,F>
-  apply_p2p(Image<I>& ima_, const Function_p2p<F>& f)
+  apply_p2p(Image<I>& ima_, const Function_v2v<F>& f)
   {
     mlc_is_a(mln_domain(I), Box)::check();
 
@@ -255,7 +255,7 @@ namespace mln
   template <typename I, typename F>
   inline
   p2p_image<const I, F>
-  apply_p2p(const Image<I>& ima_, const Function_p2p<F>& f)
+  apply_p2p(const Image<I>& ima_, const Function_v2v<F>& f)
   {
     mlc_is_a(mln_domain(I), Box)::check();
 

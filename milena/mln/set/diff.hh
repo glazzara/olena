@@ -34,7 +34,7 @@
 /// Set theoretic difference (non-symmetrical) of a couple of
 /// sets.
 ///
-/// \todo Add a diff(Site_Set& in_place, Function_p2b).
+/// \todo Add a diff(Site_Set& in_place, Function_v2b).
 
 # include <algorithm>
 # include <iterator>

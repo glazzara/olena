@@ -46,7 +46,7 @@ namespace mln
     namespace inter_pixel
     {
 
-      struct is_pixel : public Function_p2b< is_pixel >
+      struct is_pixel : public Function_v2b< is_pixel >
       {
 	typedef bool result;
 

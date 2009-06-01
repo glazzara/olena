@@ -51,9 +51,9 @@ namespace mln
       {
 	typedef mln_result(T) result;
 
-	ternary_(const Function_p2b<P>& f_pred,
-		 const Function_p2v<T>& f_true,
-		 const Function_p2v<F>& f_false);
+	ternary_(const Function_v2b<P>& f_pred,
+		 const Function_v2v<T>& f_true,
+		 const Function_v2v<F>& f_false);
 
 	template <typename Pt>
 	result operator()(const Pt& p) const;
@@ -67,18 +67,18 @@ namespace mln
     
       template <typename P, typename T, typename F>
       ternary_<P, T, F>
-      ternary(const Function_p2b<P>& f_pred,
-	      const Function_p2v<T>& f_true,
-	      const Function_p2v<F>& f_false);
+      ternary(const Function_v2b<P>& f_pred,
+	      const Function_v2v<T>& f_true,
+	      const Function_v2v<F>& f_false);
     
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename P, typename T, typename F>
       inline
-      ternary_<P,T,F>::ternary_(const Function_p2b<P>& f_pred,
-				const Function_p2v<T>& f_true,
-				const Function_p2v<F>& f_false)
+      ternary_<P,T,F>::ternary_(const Function_v2b<P>& f_pred,
+				const Function_v2v<T>& f_true,
+				const Function_v2v<F>& f_false)
 	: f_pred_(exact(f_pred)),
 	  f_true_(exact(f_true)),
 	  f_false_(exact(f_false))
@@ -98,9 +98,9 @@ namespace mln
       template <typename P, typename T, typename F>
       inline
       ternary_<P, T, F>
-      ternary(const Function_p2b<P>& f_pred,
-	      const Function_p2v<T>& f_true,
-	      const Function_p2v<F>& f_false)
+      ternary(const Function_v2b<P>& f_pred,
+	      const Function_v2v<T>& f_true,
+	      const Function_v2v<F>& f_false)
       {
 	ternary_<P, T, F> tmp(exact(f_pred),
 			      exact(f_true),

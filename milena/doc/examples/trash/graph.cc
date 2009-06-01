@@ -36,7 +36,7 @@
 
 
 template <typename P>
-struct lg_vertex_values : public mln::Function_p2v< lg_vertex_values<P> >
+struct lg_vertex_values : public mln::Function_v2v< lg_vertex_values<P> >
 {
   typedef float result;
 

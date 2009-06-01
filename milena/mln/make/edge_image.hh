@@ -69,8 +69,8 @@ namespace mln
     template <typename FP, typename FV, typename G>
     mln::edge_image<mln_result(FP),mln_result(FV),G>
     edge_image(const Graph<G>& g_,
-	       const Function_i2v<FP>& fp,
-	       const Function_i2v<FV>& fv);
+	       const Function_v2v<FP>& fp,
+	       const Function_v2v<FV>& fv);
 
 
 
@@ -129,8 +129,8 @@ namespace mln
     template <typename FP, typename FV, typename G>
     mln::edge_image<mln_result(FP),mln_result(FV),G>
     edge_image(const Graph<G>& g_,
-	       const Function_i2v<FP>& fp,
-	       const Function_i2v<FV>& fv)
+	       const Function_v2v<FP>& fp,
+	       const Function_v2v<FV>& fv)
     {
       trace::entering("make::edge_image");
       const G& g = exact(g_);

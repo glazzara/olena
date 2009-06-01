@@ -74,7 +74,7 @@ namespace mln
 
   template <typename I, typename F, typename B>
   void my_test(Image<I>& ima_,
-	       const Function_p2v<F>& f_,
+	       const Function_v2v<F>& f_,
 	       const Browsing<B>& browse_,
 	       int dir = 0)
   {

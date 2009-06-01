@@ -54,7 +54,7 @@ namespace mln
 
 
       template <typename F, typename I>
-      struct shell_<F, I, Function_v2w2v<void> >
+      struct shell_<F, I, Function_v2v<void> >
       {
 	const mln_value(I)&
 	set_(I& ima, const mln_site(I)& s, mln_result(F) v);
@@ -62,7 +62,7 @@ namespace mln
 
 
       template <typename F, typename I>
-      struct shell_<F, I, Function_v2w_w2v<void> >
+      struct shell_<F, I, Function_v2v<void> >
       {
 	const mln_value(I)&
 	set_(I& ima, const mln_site(I)& s, mln_result(F) v);
@@ -150,7 +150,7 @@ namespace mln
 
       template <typename F, typename I>
       const mln_value(I)&
-      shell_<F, I, Function_v2w2v<void> >::set_(I& ima,
+      shell_<F, I, Function_v2v<void> >::set_(I& ima,
 						const mln_site(I)& s,
 						mln_result(F) v)
       {
@@ -161,7 +161,7 @@ namespace mln
 
       template <typename F, typename I>
       const mln_value(I)&
-      shell_<F, I, Function_v2w_w2v<void> >::set_(I& ima,
+      shell_<F, I, Function_v2v<void> >::set_(I& ima,
 						  const mln_site(I)& s,
 						  mln_result(F) v)
       {

@@ -53,7 +53,7 @@ namespace mln
     //
     template <typename G, typename FV>
     mln::vertex_image<void,mln_result(FV),G>
-    vertex_image(const Graph<G>& g, const Function_i2v<FV>& fv);
+    vertex_image(const Graph<G>& g, const Function_v2v<FV>& fv);
 
 
     /// Construct a vertex image
@@ -67,8 +67,8 @@ namespace mln
     template <typename FP, typename FV, typename G>
     mln::vertex_image<mln_result(FP),mln_result(FV),G>
     vertex_image(const Graph<G>& g_,
-		 const Function_i2v<FP>& fp,
-		 const Function_i2v<FV>& fv);
+		 const Function_v2v<FP>& fp,
+		 const Function_v2v<FV>& fv);
 
 
 
@@ -76,7 +76,7 @@ namespace mln
 
     template <typename G, typename FV>
     mln::vertex_image<void,mln_result(FV),G>
-    vertex_image(const Graph<G>& g, const Function_i2v<FV>& fv)
+    vertex_image(const Graph<G>& g, const Function_v2v<FV>& fv)
     {
       trace::entering("make::vertex_image");
       mln_precondition(exact(g).is_valid());
@@ -93,8 +93,8 @@ namespace mln
     template <typename FP, typename FV, typename G>
     mln::vertex_image<mln_result(FP),mln_result(FV),G>
     vertex_image(const Graph<G>& g_,
-		 const Function_i2v<FP>& fp,
-		 const Function_i2v<FV>& fv)
+		 const Function_v2v<FP>& fp,
+		 const Function_v2v<FV>& fv)
     {
       trace::entering("make::vertex_image");
       const G& g = exact(g_);

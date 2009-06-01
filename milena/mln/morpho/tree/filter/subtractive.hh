@@ -57,23 +57,23 @@ namespace mln {
 	** @param[out] f_ Image to filter.
 	** @param[in] pred_ Filtering criterion.
 	*/
-	template <typename T, typename F, typename P2B>
+	template <typename T, typename F, typename P>
 	inline
 	void
-	subtractive(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_);
+	subtractive(const T& tree, Image<F>& f_, const Function_v2b<P>& pred_);
 
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-	template <typename T, typename F, typename P2B>
+	template <typename T, typename F, typename P>
 	inline
 	void
-	subtractive(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_)
+	subtractive(const T& tree, Image<F>& f_, const Function_v2b<P>& pred_)
 	{
 	  F& f = exact(f_);
-	  const P2B& pred = exact(pred_);
+	  const P& pred = exact(pred_);
 
 	  trace::entering("mln::morpho::tree::filter::subtractive");
 

@@ -46,7 +46,7 @@
 #include <mln/arith/minus.hh>
 
 
-struct f_box1d_t : mln::Function_p2b< f_box1d_t >
+struct f_box1d_t : mln::Function_v2b< f_box1d_t >
 {
   f_box1d_t(const mln::box1d& b)
     : b_(b)
@@ -59,7 +59,7 @@ struct f_box1d_t : mln::Function_p2b< f_box1d_t >
   }
 };
 
-struct f_box2d_t : mln::Function_p2b< f_box2d_t >
+struct f_box2d_t : mln::Function_v2b< f_box2d_t >
 {
   f_box2d_t(const mln::box2d& b)
     : b_(b)
@@ -72,7 +72,7 @@ struct f_box2d_t : mln::Function_p2b< f_box2d_t >
   }
 };
 
-struct f_box3d_t : mln::Function_p2b< f_box3d_t >
+struct f_box3d_t : mln::Function_v2b< f_box3d_t >
 {
   f_box3d_t(const mln::box3d& b)
     : b_(b)

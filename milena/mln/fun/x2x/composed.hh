@@ -64,7 +64,7 @@ namespace mln
         template <typename T2, typename T1, typename E>
         struct helper_composed_<T2,T1,E,true>
           : public fun::internal::x2x_linear_impl_<mln_result(T2), E >,
-            public Bijection_x2x<E>
+            public Function_v2v<E>
         {
           typedef fun::internal::x2x_linear_impl_<typename T2::result, E > super_;
 
@@ -102,7 +102,7 @@ namespace mln
         template <typename T2, typename T1, typename E>
         struct helper_composed_<T2,T1,E,false>
           : public fun::internal::x2x_linear_impl_<mln_result(T2), E >,
-            public Function_x2x<E>
+            public Function_v2v<E>
         {
           typedef fun::internal::x2x_linear_impl_<typename T2::result, E > super_;
 
@@ -138,8 +138,8 @@ namespace mln
       template <typename T2, typename T1>
       struct composed
         : public internal::helper_composed_<T2,T1,composed<T2,T1>,
-                                            mlc_is(T2, Bijection_x2x<T2>)::value &&
-                                            mlc_is(T1, Bijection_x2x<T1>)::value>,
+                                            mlc_is(T2, Function_v2v<T2>)::value &&
+                                            mlc_is(T1, Function_v2v<T1>)::value>,
           private metal::and_< metal::bool_<(T2::dim == T1::dim)>,
                                metal::is<mln_argument(T2), mln_result(T1)>
                                >::check_t
@@ -150,8 +150,8 @@ namespace mln
         /// Constructor with the two transformation to be composed.
         composed(const T2& f, const T1& g)
           : internal::helper_composed_<T2,T1,composed<T2,T1>,
-                                       mlc_is(T2, Bijection_x2x<T2>)::value &&
-                                       mlc_is(T1, Bijection_x2x<T1>)::value>(f, g)
+                                       mlc_is(T2, Function_v2v<T2>)::value &&
+                                       mlc_is(T1, Function_v2v<T1>)::value>(f, g)
         {}
       };
 

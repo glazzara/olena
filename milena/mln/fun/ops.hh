@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_FUN_OPS_HH
 # define MLN_FUN_OPS_HH
 
-/*! \file mln/fun/ops.hh
- *
- * \brief FIXME.
- */
+/// \file mln/fun/ops.hh
+///
+/// \brief FIXME.
 
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/selector.hh>
@@ -152,38 +152,12 @@
 
 namespace mln
 {
-  // -> p2v
 
-  mln_decl_binary_expr_(p2v, p2b,  eq, ==);
-  mln_decl_binary_expr_(p2v, p2b, neq, !=);
-
-  mln_decl_binary_expr_(p2v, p2b, less, <);
-  mln_decl_binary_expr_(p2v, p2b, leq , <=);
-  mln_decl_binary_expr_(p2v, p2b, geq,  >=);
-  mln_decl_binary_expr_(p2v, p2b, greater, >);
-
-  mln_decl_binary_expr_(p2b, p2b, and_, &&);
-  mln_decl_binary_expr_(p2b, p2b, or_, ||);
-  mln_decl_binary_expr_(p2b, p2b, xor_, ^);
-
-  mln_decl_unary_expr_(p2b, p2b, not_, !);
-
-  mln_decl_binary_expr_(p2v, p2v, plus, +);
-  mln_decl_binary_expr_(p2v, p2v, minus, -);
-  mln_decl_binary_expr_(p2v, p2v, times, *);
-  mln_decl_binary_expr_(p2v, p2v, div, /);
-  mln_decl_binary_expr_(p2v, p2v, mod, %);
-
-  mln_decl_unary_expr_(p2v, p2v, uplus, +);
-  mln_decl_unary_expr_(p2v, p2v, uminus, -);
-
-  // -> v2b
-
-  mln_decl_binary_expr_(v2v, v2b, eq,  ==);
+  mln_decl_binary_expr_(v2v, v2b,  eq, ==);
   mln_decl_binary_expr_(v2v, v2b, neq, !=);
 
   mln_decl_binary_expr_(v2v, v2b, less, <);
-  mln_decl_binary_expr_(v2v, v2b, leq,  <=);
+  mln_decl_binary_expr_(v2v, v2b, leq , <=);
   mln_decl_binary_expr_(v2v, v2b, geq,  >=);
   mln_decl_binary_expr_(v2v, v2b, greater, >);
 
@@ -192,6 +166,15 @@ namespace mln
   mln_decl_binary_expr_(v2b, v2b, xor_, ^);
 
   mln_decl_unary_expr_(v2b, v2b, not_, !);
+
+  mln_decl_binary_expr_(v2v, v2v, plus, +);
+  mln_decl_binary_expr_(v2v, v2v, minus, -);
+  mln_decl_binary_expr_(v2v, v2v, times, *);
+  mln_decl_binary_expr_(v2v, v2v, div, /);
+  mln_decl_binary_expr_(v2v, v2v, mod, %);
+
+  mln_decl_unary_expr_(v2v, v2v, uplus, +);
+  mln_decl_unary_expr_(v2v, v2v, uminus, -);
 
 } // end of namespace mln
 

@@ -226,7 +226,7 @@ namespace mln
   inline
   tr_image<S,I,T>
   transposed_image(const Site_Set<S>& s, const Image<I>& ima,
-		   const Function_x2x<T>& t)
+		   const Function_v2v<T>& t)
   {
     tr_image<S,I,T> tmp(exact(s), exact(ima), exact(t));
     return tmp;

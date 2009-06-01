@@ -38,7 +38,7 @@
 // both test routines can be called with a p2b function
 
 template <typename F>
-void test_p2v(const mln::Function_p2v<F>&)
+void test_p2v(const mln::Function_v2v<F>&)
 {
 }
 

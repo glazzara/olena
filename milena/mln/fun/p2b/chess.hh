@@ -48,7 +48,7 @@ namespace mln
 
       // FIXME: Doc!
 
-      struct chess : public Function_p2b< chess >
+      struct chess : public Function_v2b< chess >
       {
 	typedef bool result;
 	bool operator()(const point2d& p) const;

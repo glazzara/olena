@@ -162,10 +162,10 @@ namespace mln
     vertex_image();
     vertex_image(const p_vertices<G, site_function_t>& pv);
     vertex_image(const p_vertices<G, site_function_t>& pv,
-		 const Function_i2v< fun::i2v::array<V> >& vertex_values);
+		 const Function_v2v< fun::i2v::array<V> >& vertex_values);
     template <typename FV>
     vertex_image(const p_vertices<G, site_function_t>& pv,
-		 const Function_i2v<FV>& vertex_values);
+		 const Function_v2v<FV>& vertex_values);
     /// @}
 
     /// Value accessors/operators overloads.
@@ -246,7 +246,7 @@ namespace mln
   template <typename P, typename V, typename G>
   inline
   vertex_image<P,V,G>::vertex_image(const p_vertices<G,site_function_t>& pv,
-				    const Function_i2v< fun::i2v::array<V> >& vertex_values)
+				    const Function_v2v< fun::i2v::array<V> >& vertex_values)
     : super_(exact(vertex_values), pv)
   {
   }
@@ -256,7 +256,7 @@ namespace mln
   template <typename FV>
   inline
   vertex_image<P,V,G>::vertex_image(const p_vertices<G,site_function_t>& pv,
-				    const Function_i2v<FV>& vertex_values)
+				    const Function_v2v<FV>& vertex_values)
     : super_(convert::to<fun::i2v::array<V> >(exact(vertex_values)), pv)
   {
     mlc_equal(mln_result(FV),V)::check();

@@ -53,7 +53,7 @@ namespace mln
 
   template <class H, class S, class I>
   struct function< meta::inty< value::hsi_<H, S, I> > >
-    : public Function_v2w_w2v<function< meta::inty < value::hsi_<H, S, I> > > >
+    : public Function_v2v<function< meta::inty < value::hsi_<H, S, I> > > >
   {
     typedef value::hsi_<H, S, I> value;
 

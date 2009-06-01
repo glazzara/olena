@@ -47,7 +47,7 @@ namespace mln
 
     /// A functor testing wheter a mln::complex_psite is an \p N -face.
     template <unsigned N>
-    struct is_n_face : public mln::Function_p2b< is_n_face<N> >
+    struct is_n_face : public mln::Function_v2b< is_n_face<N> >
     {
       typedef bool result;
 

@@ -54,7 +54,7 @@ namespace mln
       template <typename I>
       struct has
 
-	: public Function_p2b< has<I> >,
+	: public Function_v2b< has<I> >,
 	  private mlc_is_a(I, Image)::check_t
       {
 	/// Result associated type.
@@ -79,7 +79,7 @@ namespace mln
 
       private:
 	mlc_const(I) ima_;
-	typedef Function_p2b< has<I> > super_;
+	typedef Function_v2b< has<I> > super_;
       };
 
 

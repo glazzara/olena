@@ -104,7 +104,7 @@ namespace mln
 
       /// Constructor; coordinates are set by function \p f.
       template <typename F>
-      mat(const Function_i2v<F>& f);
+      mat(const Function_v2v<F>& f);
 
       template <typename U>
       mat& operator=(const mat<n,m,U>& rhs);
@@ -291,7 +291,7 @@ namespace mln
     template <unsigned n, unsigned m, typename T>
     template <typename F>
     inline
-    mat<n,m,T>::mat(const Function_i2v<F>& f_)
+    mat<n,m,T>::mat(const Function_v2v<F>& f_)
     {
       mlc_converts_to(mln_result(F), T)::check();
       const F& f = exact(f_);

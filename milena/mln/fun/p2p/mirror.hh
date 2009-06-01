@@ -45,7 +45,7 @@ namespace mln
     {
 
       template <typename B>
-      struct mirror : public Function_p2p< mirror<B> >
+      struct mirror : public Function_v2v< mirror<B> >
       {
         typedef mln_psite(B) result;
 

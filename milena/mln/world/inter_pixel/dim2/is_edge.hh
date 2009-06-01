@@ -46,7 +46,7 @@ namespace mln
       namespace dim2
       {
 
-	struct is_edge : public Function_p2b< is_edge >
+	struct is_edge : public Function_v2b< is_edge >
 	{
 	  typedef bool result;
 	  bool operator()(const point2d& p) const;

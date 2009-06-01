@@ -44,7 +44,7 @@ namespace mln
 
     // FIXME: Doc!
     template <typename V, typename F>
-    struct cast_p2v_expr_ : public Function_p2v< cast_p2v_expr_<V,F> >
+    struct cast_p2v_expr_ : public Function_v2v< cast_p2v_expr_<V,F> >
     {
       typedef V result;
       
@@ -69,7 +69,7 @@ namespace mln
     template <typename V, typename F>
     inline
     cast_p2v_expr_<V, F>
-    cast(const Function_p2v<F>& f)
+    cast(const Function_v2v<F>& f)
     {
       cast_p2v_expr_<V, F> tmp(exact(f));
       return tmp;

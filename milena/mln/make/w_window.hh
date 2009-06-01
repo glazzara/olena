@@ -54,7 +54,7 @@ namespace mln
      */
     template <typename W, typename F>
     mln::w_window<mln_dpsite(W), mln_result(F)>
-    w_window(const Window<W>& win, const Function_p2v<F>& wei);
+    w_window(const Window<W>& win, const Function_v2v<F>& wei);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -62,7 +62,7 @@ namespace mln
     template <typename W, typename F>
     inline
     mln::w_window<mln_dpsite(W), mln_result(F)>
-    w_window(const Window<W>& win_, const Function_p2v<F>& wei_)
+    w_window(const Window<W>& win_, const Function_v2v<F>& wei_)
     {
       trace::entering("make::w_window");
 

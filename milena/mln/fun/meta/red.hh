@@ -53,7 +53,7 @@ namespace mln
 
   template <unsigned n>
   struct function< meta::red< value::rgb<n> > >
-    : public Function_v2w_w2v<function< meta::red < value::rgb<n> > > >
+    : public Function_v2v<function< meta::red < value::rgb<n> > > >
   {
     typedef value::rgb<n> value;
 

@@ -46,7 +46,7 @@ namespace mln
       namespace dim2
       {
 
-	struct is_row_odd : public Function_p2b< is_row_odd >
+	struct is_row_odd : public Function_v2b< is_row_odd >
 	{
 	  typedef bool result;
 	  bool operator()(const point2d& p) const;

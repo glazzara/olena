@@ -39,7 +39,7 @@
 #include <mln/literal/origin.hh>
 #include <mln/border/resize.hh>
 
-struct my_box2d : mln::Function_p2b< my_box2d >
+struct my_box2d : mln::Function_v2b< my_box2d >
 {
   my_box2d(const mln::box2d& b)
     : b_(b)

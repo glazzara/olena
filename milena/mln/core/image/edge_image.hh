@@ -159,20 +159,20 @@ namespace mln
     edge_image();
     edge_image(const p_edges<G, site_function_t>& pe);
     edge_image(const Graph<G>& g,
-	       const Function_i2v< site_function_t >& edge_sites,
-	       const Function_i2v< fun::i2v::array<V> >& edge_values);
+	       const Function_v2v< site_function_t >& edge_sites,
+	       const Function_v2v< fun::i2v::array<V> >& edge_values);
 
     edge_image(const p_edges<G, site_function_t >& pe,
-	       const Function_i2v< fun::i2v::array<V> >& edge_values);
+	       const Function_v2v< fun::i2v::array<V> >& edge_values);
 
     template <typename FP, typename FV>
     edge_image(const Graph<G>& g,
-	       const Function_i2v<FP>& edge_sites,
-	       const Function_i2v<FV>& edge_values);
+	       const Function_v2v<FP>& edge_sites,
+	       const Function_v2v<FV>& edge_values);
 
     template <typename FV>
     edge_image(const p_edges<G,site_function_t>& pe,
-	       const Function_i2v<FV>& edge_values);
+	       const Function_v2v<FV>& edge_values);
     /// @}
 
     /// Value accessors/operators overloads.
@@ -251,8 +251,8 @@ namespace mln
   template <typename P, typename V, typename G>
   inline
   edge_image<P,V,G>::edge_image(const Graph<G>& g,
-				const Function_i2v< site_function_t >& edge_sites,
-				const Function_i2v< fun::i2v::array<V> >& edge_values)
+				const Function_v2v< site_function_t >& edge_sites,
+				const Function_v2v< fun::i2v::array<V> >& edge_values)
     : super_(exact(edge_values),
 	     p_edges<G,site_function_t>(g, exact(edge_sites)))
   {
@@ -262,7 +262,7 @@ namespace mln
   template <typename P, typename V, typename G>
   inline
   edge_image<P,V,G>::edge_image(const p_edges<G,site_function_t>& pe,
-				const Function_i2v< fun::i2v::array<V> >& edge_values)
+				const Function_v2v< fun::i2v::array<V> >& edge_values)
     : super_(exact(edge_values), pe)
   {
   }
@@ -272,8 +272,8 @@ namespace mln
   template <typename FP, typename FV>
   inline
   edge_image<P,V,G>::edge_image(const Graph<G>& g,
-				const Function_i2v<FP>& edge_sites,
-				const Function_i2v<FV>& edge_values)
+				const Function_v2v<FP>& edge_sites,
+				const Function_v2v<FV>& edge_values)
     : super_(convert::to<fun::i2v::array<V> >(exact(edge_values)),
 	     p_edges<G,site_function_t>(g, exact(edge_sites)))
   {
@@ -287,7 +287,7 @@ namespace mln
   template <typename FV>
   inline
   edge_image<P,V,G>::edge_image(const p_edges<G,site_function_t>& pe,
-				const Function_i2v<FV>& edge_values)
+				const Function_v2v<FV>& edge_values)
     : super_(convert::to<fun::i2v::array<V> >(exact(edge_values)), pe)
   {
     mlc_equal(mln_result(FV),V)::check();

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,10 +31,8 @@
 
 /// \file mln/core/image/dmorph/image_if.hh
 ///
-/// Definition of a image which domain is restricted by a
-/// function.
-///
-/// \todo Relax Function_p2b into Function_v2b.
+/// \brief Definition of a image which domain is restricted by a
+/// function 'site -> Boolean'.
 
 # include <mln/core/internal/image_domain_morpher.hh>
 # include <mln/core/site_set/p_if.hh>
@@ -89,7 +87,8 @@ namespace mln
 
 
 
-  /// Image which domain is restricted by a function.
+  /// Image which domain is restricted by a function 'site ->
+  /// Boolean'.
   ///
   /// \ingroup modimagedomainmorpher
   //
@@ -121,21 +120,21 @@ namespace mln
   // Operators.
 
 
-  // Image | Function_p2b.
+  // Image | Function_v2b.
 
   /// ima | f creates an image_if with the image ima and the function
   /// f.
   //
   template <typename I, typename F>
   image_if<I,F>
-  operator | (Image<I>& ima, const Function_p2b<F>& f);
+  operator | (Image<I>& ima, const Function_v2b<F>& f);
 
   /// ima | f creates an image_if with the image ima and the function
   /// f.
   //
   template <typename I, typename F>
   image_if<const I,F>
-  operator | (const Image<I>& ima, const Function_p2b<F>& f);
+  operator | (const Image<I>& ima, const Function_v2b<F>& f);
 
 
 
@@ -234,7 +233,7 @@ namespace mln
   template <typename I, typename F>
   inline
   image_if<I,F>
-  operator | (Image<I>& ima, const Function_p2b<F>& f)
+  operator | (Image<I>& ima, const Function_v2b<F>& f)
   {
     image_if<I,F> tmp(exact(ima), exact(f));
     return tmp;
@@ -243,7 +242,7 @@ namespace mln
   template <typename I, typename F>
   inline
   image_if<const I, F>
-  operator | (const Image<I>& ima, const Function_p2b<F>& f)
+  operator | (const Image<I>& ima, const Function_v2b<F>& f)
   {
     image_if<const I, F> tmp(exact(ima), exact(f));
     return tmp;

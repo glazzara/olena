@@ -93,7 +93,7 @@ namespace mln
     /// \ingroup modutil
     //
     template <typename T>
-    class array : public Function_i2v< mln::util::array<T> >
+    class array : public Function_v2v< mln::util::array<T> >
     {
     public:
 
@@ -101,7 +101,7 @@ namespace mln
       typedef T element;
 
       /// Returned value types.
-      /// Related to the Function_i2v concept.
+      /// Related to the Function_v2v concept.
       /// @{
       typedef T result;
       typedef typename std::vector<T>::reference mutable_result;

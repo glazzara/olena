@@ -46,7 +46,7 @@ namespace mln
       namespace dim2
       {
 
-	struct is_pixel : public Function_p2b< is_pixel >
+	struct is_pixel : public Function_v2b< is_pixel >
 	{
 	  typedef bool result;
 	  bool operator()(const point2d& p) const;

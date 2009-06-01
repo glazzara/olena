@@ -39,7 +39,7 @@ namespace mln
 namespace mln
 {
 
-  struct my_ext : public Function_p2v<my_ext>
+  struct my_ext : public Function_v2v<my_ext>
   {
 
     typedef value::rgb8 result;

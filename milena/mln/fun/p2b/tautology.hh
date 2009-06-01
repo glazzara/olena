@@ -49,7 +49,7 @@ namespace mln
       ///
       /// A simpler name would be `true', but this is not a valid C++
       /// identifier, as \c true is a keyword of the language.
-      struct tautology : public Function_p2b< tautology >
+      struct tautology : public Function_v2b< tautology >
       {
 	typedef bool result;
 

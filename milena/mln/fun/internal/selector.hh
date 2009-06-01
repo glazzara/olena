@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,18 +29,13 @@
 #ifndef MLN_FUN_INTERNAL_SELECTOR_HH
 # define MLN_FUN_INTERNAL_SELECTOR_HH
 
-/*! \file mln/fun/internal/selector.hh
- *
- * \brief FIXME.
- */
+/// \file mln/fun/internal/selector.hh
+///
+/// \brief Select a concept (either Function_v2v or Function_v2b)
+/// depending on the result type.
 
 # include <mln/core/concept/function.hh>
-# include <mln/core/concept/site.hh>
-# include <mln/core/concept/pseudo_site.hh>
 # include <mln/metal/unqualif.hh>
-# include <mln/metal/if.hh>
-# include <mln/metal/is_a.hh>
-# include <mln/algebra/vec.hh>
 
 
 namespace mln
@@ -51,119 +47,17 @@ namespace mln
     namespace internal
     {
 
-      //       Function_v2v
-      //         |
-      //         + ---------------------- Function_v2b
-      //         |                           |
-      //         + -- Function_i2v           |
-      //         |                           |
-      //         + -- Function_x2x           |
-      //         |                           |
-      //         + -- Function_p2v           |
-      //                |                    |
-      //                + -- Function_p2b -- +
-      //                |
-      //                + -- Function_p2p
 
-      enum
-	{
-	  b_,
-	  i_,
-	  p_,
-	  v_,
-	  x_
-	};
-
-      template <int arg, int res, typename E> struct helper_selector_;
-
-      // b2* => v2v type, except for v2b
-      template <typename E>
-      struct helper_selector_< b_, b_, E > { typedef Function_v2b<E> ret; };
-      template <typename E>
-      struct helper_selector_< b_, i_, E > { typedef Function_v2v<E> ret; };
-      template <typename E>
-      struct helper_selector_< b_, p_, E > { typedef Function_v2v<E> ret; };
-      template <typename E>
-      struct helper_selector_< b_, v_, E > { typedef Function_v2v<E> ret; };
-      template <typename E>
-      struct helper_selector_< b_, x_, E > { typedef Function_v2v<E> ret; };
-
-      // i2* => i2v type
-      template <typename E>
-      struct helper_selector_< i_, b_, E > { typedef Function_i2v<E> ret; };
-      template <typename E>
-      struct helper_selector_< i_, i_, E > { typedef Function_i2v<E> ret; };
-      template <typename E>
-      struct helper_selector_< i_, p_, E > { typedef Function_i2v<E> ret; };
-      template <typename E>
-      struct helper_selector_< i_, v_, E > { typedef Function_i2v<E> ret; };
-      template <typename E>
-      struct helper_selector_< i_, x_, E > { typedef Function_i2v<E> ret; };
-
-      // p2*
-      template <typename E>
-      struct helper_selector_< p_, b_, E > { typedef Function_p2b<E> ret; };
-      template <typename E>
-      struct helper_selector_< p_, i_, E > { typedef Function_p2v<E> ret; }; // no p2i type => p2v
-      template <typename E>
-      struct helper_selector_< p_, p_, E > { typedef Function_p2p<E> ret; };
-      template <typename E>
-      struct helper_selector_< p_, v_, E > { typedef Function_p2v<E> ret; };
-      template <typename E>
-      struct helper_selector_< p_, x_, E > { typedef Function_p2v<E> ret; };
-
-      // v2* => v2v type, except for v2b
-      template <typename E>
-      struct helper_selector_< v_, b_, E > { typedef Function_v2b<E> ret; };
-      template <typename E>
-      struct helper_selector_< v_, i_, E > { typedef Function_v2v<E> ret; };
-      template <typename E>
-      struct helper_selector_< v_, p_, E > { typedef Function_v2v<E> ret; };
-      template <typename E>
-      struct helper_selector_< v_, v_, E > { typedef Function_v2v<E> ret; };
-      template <typename E>
-      struct helper_selector_< v_, x_, E > { typedef Function_v2v<E> ret; };
-
-      // x2* => v2v type
-      template <typename E>
-      struct helper_selector_< x_, b_, E > { typedef Function_v2b<E> ret; };
-      template <typename E>
-      struct helper_selector_< x_, i_, E > { typedef Function_v2v<E> ret; };
-      template <typename E>
-      struct helper_selector_< x_, p_, E > { typedef Function_v2v<E> ret; };
-      template <typename E>
-      struct helper_selector_< x_, v_, E > { typedef Function_v2v<E> ret; };
-      template <typename E>
-      struct helper_selector_< x_, x_, E > { typedef Function_v2v<E> ret; };
-
-      // tag_
-
-      template <typename T> struct tag_;
-
-      template <>
-      struct tag_< bool >
+      template <typename A, typename R, typename E>
+      struct helper_selector_
       {
-	enum { value = b_ };
+	typedef Function_v2v<E> ret;
       };
 
-      template <>
-      struct tag_< unsigned >
+      template <typename A, typename E>
+      struct helper_selector_< A, bool, E >
       {
-	enum { value = i_ };
-      };
-
-      template <unsigned n, typename T>
-      struct tag_< algebra::vec<n,T> >
-      {
-	enum { value = x_ };
-      };
-
-      template <typename T>
-      struct tag_
-      {
-	enum { value = (mlc_is_a(T, Site)::value || mlc_is_a(T, Pseudo_Site)::value)
-	       ? p_
-	       : v_ };
+	typedef Function_v2b<E> ret;
       };
 
 
@@ -172,20 +66,15 @@ namespace mln
       {
 	typedef mlc_unqualif(R_) R;
 	typedef mlc_unqualif(A_) A;
-	enum { arg = tag_<A>::value,
-	       res = tag_<R>::value };
-	typedef typename helper_selector_<arg, res, E>::ret ret;
+	typedef typename helper_selector_<R, A, E>::ret ret;
       private:
 	selector_();
       };
 
 
       template <typename R_, typename E>
-      struct selector_p2_
+      struct selector_p2_ : selector_< R_, void, E >
       {
-	typedef mlc_unqualif(R_) R;
-	enum { res = tag_<R>::value };
-	typedef typename helper_selector_<p_, res, E>::ret ret;
       private:
 	selector_p2_();
       };

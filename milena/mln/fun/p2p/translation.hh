@@ -47,7 +47,7 @@ namespace mln
     {
 
       template <typename P>
-      struct translation_t : public Function_p2p< translation_t<P> >
+      struct translation_t : public Function_v2v< translation_t<P> >
       {
         typedef P result;
 

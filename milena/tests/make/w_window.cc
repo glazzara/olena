@@ -37,7 +37,7 @@
 #include <mln/core/alias/w_window2d_int.hh>
 
 
-struct test : mln::Function_p2v<test>
+struct test : mln::Function_v2v<test>
 {
   typedef int result;
   int operator()(const mln::point2d& p) const

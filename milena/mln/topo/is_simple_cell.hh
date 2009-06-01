@@ -54,7 +54,7 @@ namespace mln
 	The functor does not actually take a cell as input, but a face
 	that is expected to be a D-facet.  */
     template <typename I>
-    class is_simple_cell : public mln::Function_p2b< is_simple_cell<I> >
+    class is_simple_cell : public mln::Function_v2b< is_simple_cell<I> >
     {
     public:
       /// Dimension of the image (and therefore of the complex).

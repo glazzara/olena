@@ -50,9 +50,9 @@ namespace mln
 		typename O>
       ternary_<T1, N1,
 	       ternary_<T2, N2, O> >
-      elifs(const Function_p2b<T1>& f_if_1, const Function_p2v<N1>& f_then_1,
-	    const Function_p2b<T2>& f_if_2, const Function_p2v<N2>& f_then_2,
-	    const Function_p2v<O>&  f_otherwise);
+      elifs(const Function_v2b<T1>& f_if_1, const Function_v2v<N1>& f_then_1,
+	    const Function_v2b<T2>& f_if_2, const Function_v2v<N2>& f_then_2,
+	    const Function_v2v<O>&  f_otherwise);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -63,9 +63,9 @@ namespace mln
       inline
       ternary_<T1, N1,
 	       ternary_<T2, N2, O> >
-      elifs(const Function_p2b<T1>& f_if_1, const Function_p2v<N1>& f_then_1,
-	    const Function_p2b<T2>& f_if_2, const Function_p2v<N2>& f_then_2,
-	    const Function_p2v<O>&  f_otherwise)
+      elifs(const Function_v2b<T1>& f_if_1, const Function_v2v<N1>& f_then_1,
+	    const Function_v2b<T2>& f_if_2, const Function_v2v<N2>& f_then_2,
+	    const Function_v2v<O>&  f_otherwise)
       {
 	typedef ternary_<T2, N2, O> T2_N2_O;
 	T2_N2_O f_otherwise_1(f_if_2, f_then_2, f_otherwise);

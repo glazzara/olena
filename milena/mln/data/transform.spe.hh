@@ -31,7 +31,13 @@
 
 /// \file mln/data/transform.spe.hh
 ///
-/// Specializations for mln::data::transform.
+/// \brief Specializations for mln::data::transform.
+///
+/// \todo The implementation (and thus the dispatch) involving a lut
+/// has been de-activated; the patch of Z does not work anymore since
+/// we do not make the difference between i2v and v2v functions.
+/// Actually the patch was no acceptable solution to the lut problem
+/// (for some values, we cannot compute f(v) to put into the lut...)
 
 # ifndef MLN_LEVEL_TRANSFORM_HH
 #  error "Forbidden inclusion of *.spe.hh"
@@ -96,37 +102,37 @@ namespace mln
       }
 
 
+//       template <typename I, typename F>
+//       mln_ch_value(I, mln_result(F))
+// 	transform_lowq_v2v(const Image<I>& input_, const Function_v2v<F>& f_)
+//       {
+// 	trace::entering("data::impl::transform_lowq_v2v");
+
+//         mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
+//                trait::image::pw_io::read_write)::check();
+
+// 	const I& input  = exact(input_);
+// 	const F& f      = exact(f_);
+//         data::internal::transform_tests(input, f);
+
+//         mln_ch_value(I, mln_result(F)) output;
+//         initialize(output, input);
+
+//         value::lut_vec<mln_vset(I), mln_result(F)>
+//           lut(input.values_eligible(), f);
+
+// 	mln_piter(I) p(input.domain());
+// 	for_all(p)
+// 	  output(p) = lut(input(p));
+
+// 	trace::exiting("data::impl::transform_lowq_v2v");
+//         return output;
+//       }
+
+
       template <typename I, typename F>
       mln_ch_value(I, mln_result(F))
-	transform_lowq_v2v(const Image<I>& input_, const Function_v2v<F>& f_)
-      {
-	trace::entering("data::impl::transform_lowq_v2v");
-
-        mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
-               trait::image::pw_io::read_write)::check();
-
-	const I& input  = exact(input_);
-	const F& f      = exact(f_);
-        data::internal::transform_tests(input, f);
-
-        mln_ch_value(I, mln_result(F)) output;
-        initialize(output, input);
-
-        value::lut_vec<mln_vset(I), mln_result(F)>
-          lut(input.values_eligible(), f);
-
-	mln_piter(I) p(input.domain());
-	for_all(p)
-	  output(p) = lut(input(p));
-
-	trace::exiting("data::impl::transform_lowq_v2v");
-        return output;
-      }
-
-
-      template <typename I, typename F>
-      mln_ch_value(I, mln_result(F))
-	transform_lowq_i2v(const Image<I>& input_, const Function_i2v<F>& f_)
+	transform_lowq_i2v(const Image<I>& input_, const Function_v2v<F>& f_)
       {
 	trace::entering("data::impl::transform_lowq");
 
@@ -149,37 +155,37 @@ namespace mln
       }
 
 
+//       template <typename I, typename F>
+//       mln_ch_value(I, mln_result(F))
+// 	transform_taken_v2v(const Image<I>& input_, const Function_v2v<F>& f_)
+//       {
+//         trace::entering("data::impl::transform_taken_v2v");
+
+//         mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
+//                trait::image::pw_io::read_write)::check();
+
+// 	const I& input  = exact(input_);
+// 	const F& f      = exact(f_);
+//         data::internal::transform_tests(input, f);
+
+//         mln_ch_value(I, mln_result(F)) output;
+//         initialize(output, input);
+
+//         value::lut_vec<mln_vset(I), mln_result(F)>
+//           lut(input.taken_values(), f);
+
+// 	mln_piter(I) p(input.domain());
+// 	for_all(p)
+// 	  output(p) = lut(input(p));
+
+// 	trace::exiting("data::impl::transform_taken_v2v");
+//         return output;
+//       }
+
+
       template <typename I, typename F>
       mln_ch_value(I, mln_result(F))
-	transform_taken_v2v(const Image<I>& input_, const Function_v2v<F>& f_)
-      {
-        trace::entering("data::impl::transform_taken_v2v");
-
-        mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
-               trait::image::pw_io::read_write)::check();
-
-	const I& input  = exact(input_);
-	const F& f      = exact(f_);
-        data::internal::transform_tests(input, f);
-
-        mln_ch_value(I, mln_result(F)) output;
-        initialize(output, input);
-
-        value::lut_vec<mln_vset(I), mln_result(F)>
-          lut(input.taken_values(), f);
-
-	mln_piter(I) p(input.domain());
-	for_all(p)
-	  output(p) = lut(input(p));
-
-	trace::exiting("data::impl::transform_taken_v2v");
-        return output;
-      }
-
-
-      template <typename I, typename F>
-      mln_ch_value(I, mln_result(F))
-	transform_taken_i2v(const Image<I>& input_, const Function_i2v<F>& f_)
+	transform_taken_i2v(const Image<I>& input_, const Function_v2v<F>& f_)
       {
         trace::entering("data::impl::transform_taken_i2v");
 
@@ -333,42 +339,42 @@ namespace mln
 	return data::impl::generic::transform(input, f);
       }
 
-      template <typename I, typename F>
-      inline
-      mln_ch_value(I, mln_result(F))
-	transform_dispatch(trait::image::vw_set::uni,
-			   trait::image::quant::low,
-			   const Image<I>& input, const Function_v2v<F>& f)
-      {
-	return data::impl::transform_taken_v2v(input, f);
-      }
+//       template <typename I, typename F>
+//       inline
+//       mln_ch_value(I, mln_result(F))
+// 	transform_dispatch(trait::image::vw_set::uni,
+// 			   trait::image::quant::low,
+// 			   const Image<I>& input, const Function_v2v<F>& f)
+//       {
+// 	return data::impl::transform_taken_v2v(input, f);
+//       }
 
       template <typename I, typename F>
       inline
       mln_ch_value(I, mln_result(F))
 	transform_dispatch(trait::image::vw_set::uni,
 			   trait::image::quant::low,
-			   const Image<I>& input, const Function_i2v<F>& f)
+			   const Image<I>& input, const Function_v2v<F>& f)
       {
 	return data::impl::transform_taken_i2v(input, f);
       }
 
-      template <typename I, typename F>
-      inline
-      mln_ch_value(I, mln_result(F))
-	transform_dispatch(trait::image::vw_set::any,
-			   trait::image::quant::low,
-			   const Image<I>& input, const Function_v2v<F>& f)
-      {
-	return data::impl::transform_lowq_v2v(input, f);
-      }
+//       template <typename I, typename F>
+//       inline
+//       mln_ch_value(I, mln_result(F))
+// 	transform_dispatch(trait::image::vw_set::any,
+// 			   trait::image::quant::low,
+// 			   const Image<I>& input, const Function_v2v<F>& f)
+//       {
+// 	return data::impl::transform_lowq_v2v(input, f);
+//       }
 
       template <typename I, typename F>
       inline
       mln_ch_value(I, mln_result(F))
 	transform_dispatch(trait::image::vw_set::any,
 			   trait::image::quant::low,
-			   const Image<I>& input, const Function_i2v<F>& f)
+			   const Image<I>& input, const Function_v2v<F>& f)
       {
 	return data::impl::transform_lowq_i2v(input, f);
       }
@@ -393,15 +399,15 @@ namespace mln
 	return data::impl::transform_fast_lowq(input, f);
       }
 
-      template <typename I, typename F>
-      inline
-      mln_ch_value(I, mln_result(F))
-	transform_dispatch(trait::image::quant::low,
-			   trait::image::value_access::direct,
-			   const Image<I>& input, const Function_i2v<F>& f)
-      {
-	return data::impl::transform_fast(input, f);
-      }
+//       template <typename I, typename F>
+//       inline
+//       mln_ch_value(I, mln_result(F))
+// 	transform_dispatch(trait::image::quant::low,
+// 			   trait::image::value_access::direct,
+// 			   const Image<I>& input, const Function_v2v<F>& f)
+//       {
+// 	return data::impl::transform_fast(input, f);
+//       }
 
       template <typename I, typename F>
       inline

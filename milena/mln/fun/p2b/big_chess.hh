@@ -48,7 +48,7 @@ namespace mln
 
       // FIXME: Doc!
       template <typename B>
-      struct big_chess : public Function_p2b< big_chess<B> >
+      struct big_chess : public Function_v2b< big_chess<B> >
       {
         typedef bool result;
         typedef mln_psite(B) P;

@@ -55,21 +55,21 @@ namespace mln {
 	** @param pred_ Predicate.
 	** @param v Value to propagate.
 	*/
-	template <typename T, typename F, typename P2B>
+	template <typename T, typename F, typename P>
 	inline
 	void
-	filter(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_, const mln_value(F)& v);
+	filter(const T& tree, Image<F>& f_, const Function_v2b<P>& pred_, const mln_value(F)& v);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-	template <typename T, typename F, typename P2B>
+	template <typename T, typename F, typename P>
 	inline
 	void
-	filter(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_, const mln_value(F)& v)
+	filter(const T& tree, Image<F>& f_, const Function_v2b<P>& pred_, const mln_value(F)& v)
 	{
 	  F& f = exact(f_);
-	  const P2B& pred = exact(pred_);
+	  const P& pred = exact(pred_);
 
 	  trace::entering("mln::morpho::tree::filter::filter");
 

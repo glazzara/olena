@@ -5,7 +5,7 @@
 
 #include <doc/tools/sample_utils.hh>
 
-struct viota_t : public mln::Function_p2v< viota_t >
+struct viota_t : public mln::Function_v2v< viota_t >
 {
   typedef unsigned result;
 

@@ -57,7 +57,7 @@ namespace mln
 		 int dir_0 = -1,
 		 int dir_1 = -1,
 		 int dir_2 = -1 >
-      struct fold : Function_p2p< fold<P,dir_0,dir_1,dir_2> >
+      struct fold : Function_v2v< fold<P,dir_0,dir_1,dir_2> >
       {
 	fold();
 	fold(const box<P>& b);

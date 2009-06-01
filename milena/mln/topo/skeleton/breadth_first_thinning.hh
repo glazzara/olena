@@ -70,9 +70,9 @@ namespace mln
       mln_concrete(I)
       breadth_first_thinning(const Image<I>& input,
 			     const Neighborhood<N>& nbh,
-			     Function_p2b<F>& is_simple,
+			     Function_v2b<F>& is_simple,
 			     G detach,
-			     const Function_p2b<H>& constraint =
+			     const Function_v2b<H>& constraint =
 			       fun::p2b::tautology());
 
 
@@ -83,9 +83,9 @@ namespace mln
       mln_concrete(I)
       breadth_first_thinning(const Image<I>& input_,
 			     const Neighborhood<N>& nbh_,
-			     Function_p2b<F>& is_simple_,
+			     Function_v2b<F>& is_simple_,
 			     G detach,
-			     const Function_p2b<H>& constraint_)
+			     const Function_v2b<H>& constraint_)
       {
 	const I& input = exact(input_);
 	const N& nbh = exact(nbh_);

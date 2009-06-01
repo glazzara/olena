@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,10 @@
 #ifndef MLN_FUN_INTERNAL_X2X_LINEAR_IMPL_HH
 # define MLN_FUN_INTERNAL_X2X_LINEAR_IMPL_HH
 
-/*! \file mln/fun/internal/x2x_linear_impl.hh
- *
- * \brief Implementation class for every linear Function_x2x.
- */
+/// \file mln/fun/internal/x2x_linear_impl.hh
+///
+/// \brief Implementation class for every linear function from vector
+/// to vector in an homogeneous coordinates system.
 
 # include <mln/core/concept/function.hh>
 # include <mln/algebra/h_mat.hh>

@@ -97,13 +97,13 @@ namespace mln
 
         template <typename T, bool B = false >
         struct array_selector_
-	 : public Function_i2v< i2v::array<T> >
+	 : public Function_v2v< i2v::array<T> >
 	{
 	};
 
 	template <typename T>
 	struct array_selector_<T,true>
-	  : public Function_i2b< i2v::array<T> >
+	  : public Function_v2b< i2v::array<T> >
 	{
 	};
 
