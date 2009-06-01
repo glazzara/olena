@@ -2,9 +2,9 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-check_PROGRAMS =				\
-  registration
+check_PROGRAMS =
+#  registration
 
-registration_SOURCES = registration.cc
+#registration_SOURCES = registration.cc
 
 TESTS = $(check_PROGRAMS)

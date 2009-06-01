@@ -1,5 +1,11 @@
 2009-06-01 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Disable registration test.
+
+	* tests/registration/Makefile.am: comment related entries.
+
+2009-06-01 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Fix tests.
 
 	* mln/core/site_set/p_bgraph.hh,
