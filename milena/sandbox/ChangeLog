@@ -1,3 +1,9 @@
+2009-06-01  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Projected histograms for unsigned values.
+	* folio/mln/histo/compute_histo_rgb.hh: Update algorithm.
+	* folio/test/histo/projected3d.cc: Test file.
+
 2009-05-29  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Plot all points of a specific label.

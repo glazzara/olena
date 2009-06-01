@@ -54,13 +54,25 @@ namespace mln
     {
       mln_precondition(f > 0);
       return std::log(f + 1);
-//       return std::log(std::log(f + 1) + 1);
     }
   };
 
+  template <typename A, unsigned direction, typename V>
+  image2d<float>
+  project_histo(const image3d<V>& h)
+  {
+    image2d<A> h_2d_a(h.nrows(), h.ncols());
+    accu::image::init(h_2d_a);
+
+    accu::image::take( unproject( h_2d_a,
+				  h.domain(),
+				  fun::v2v::projection<point3d, direction>() ).rw(),
+		       h );
+
+    return accu::image::to_result(h_2d_a);
+  }
+
 }
-
-
 
 
 int main(int argc, char* argv[])
@@ -80,30 +92,16 @@ int main(int argc, char* argv[])
   std::cout << "  => loading " << argv[1] << "..." << std::endl;
   image2d<value::rgb8> ima;
   io::ppm::load(ima, argv[1]);
-//   image2d<rgb6> ima6 = data::transform(ima, rgb8to6());
+//  image2d<rgb6> ima6 = data::transform(ima, rgb8to6());
 
   std::cout << "  => computing histogram..." << std::endl;
-  image3d<unsigned> histo = histo::compute_histo_rgb<unsigned>(ima); // 6);
+  image3d<unsigned> histo = histo::compute_histo_rgb<unsigned>(ima);
 
-  {
-    mln_VAR(h, histo);
-
-    typedef accu::sum<unsigned> A;
-
-    image2d<A> h_2d_a(h.nrows(), h.ncols());
-    accu::image::init(h_2d_a);
-
-    accu::image::take( unproject( h_2d_a,
-				  h.domain(),
-				  fun::v2v::projection<point3d, 2>() ).rw(),
-		       h );
-
-    image2d<float> h_2d = accu::image::to_result(h_2d_a);
-    io::pgm::save( data::stretch( int_u8(),
-				   data::transform( h_2d,
-						     take_log() ) ),
-		   "h_2d.pgm" );
-  }
+  image2d<float> proj = project_histo<accu::sum<unsigned>, 2>(histo);
+  image2d<value::int_u8> proj_int = data::stretch( value::int_u8(),
+						   data::transform( proj,
+								    take_log() ) );
+  io::pgm::save(proj_int, argv[2]);
 
 //   std::cout << "  => computing reverted histogram..." << std::endl;
 //   image3d<unsigned> reverted = arith::revert(histo);
