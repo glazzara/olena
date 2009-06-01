@@ -71,6 +71,9 @@ dist_edges: dist_edges.cc
 wst_edges: wst_edges.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o wst_edges
 
+mean_median_label: mean_median_label.cc
+	${CXX} -I../../../ ${CXXFLAGS} $^ -o mean_median_label
+
 #####################
 
 clean:

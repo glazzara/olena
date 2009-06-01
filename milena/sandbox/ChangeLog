@@ -1,3 +1,10 @@
+2009-06-01  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add a new distance for edges.
+	* fabien/igr/Makefile: Update targets.
+	* fabien/igr/dist_edges.cc: Add new distance.
+	* fabien/igr/mean_median_label.cc: Generate mean image (draft).
+
 2009-06-01  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Projected histograms for unsigned values.

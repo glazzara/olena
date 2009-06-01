@@ -4,8 +4,8 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/image/image3d.hh>
-#include <mln/core/image/slice_image.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/slice_image.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 #include <mln/core/routine/duplicate.hh>
 #include <mln/core/routine/extend.hh>
 
@@ -75,7 +75,7 @@ struct dist_t : Function_vv2v<dist_t>
   int_u12 operator()(const util::array<V>& v1,
 		     const util::array<V>& v2) const
   {
-    float res = 0.f;
+    double res = 0.f;
 
     for (unsigned i = 0; i < v1.nelements(); ++i)
       res += std::min(v1[i], v2[i]);
@@ -85,10 +85,10 @@ struct dist_t : Function_vv2v<dist_t>
     accu::sum<V> accu_sum;
 
     convert::from_to(v1, tmp_ima);
-    float sum_v1 = data::compute(accu_sum, tmp_ima);
+    double sum_v1 = data::compute(accu_sum, tmp_ima);
 
     convert::from_to(v2, tmp_ima2);
-    float sum_v2 = data::compute(accu_sum, tmp_ima2);
+    double sum_v2 = data::compute(accu_sum, tmp_ima2);
 
     if (sum_v1 == 0 && sum_v2 == 0)
       return 1;
@@ -110,13 +110,13 @@ struct dist2_t : Function_vv2v<dist2_t>
   int_u12 operator()(const util::array<V>& v1,
 		     const util::array<V>& v2) const
   {
-    float res = 0.f;
+    double res = 0.f;
 
     for (unsigned i = 0; i < v1.nelements(); ++i)
     {
       unsigned maxi = std::max(v1[i], v2[i]);
       if (maxi != 0u)
-	res += float(std::min(v1[i], v2[i])) / float(std::max(v1[i], v2[i]));
+	res += double(std::min(v1[i], v2[i])) / double(std::max(v1[i], v2[i]));
       else
 	res += 1;
     }
@@ -138,9 +138,9 @@ struct dist3_t : Function_vv2v<dist3_t>
   int_u12 operator()(const util::array<V>& v1,
 		     const util::array<V>& v2) const
   {
-    float res = 0.f;
-    float min = 0;
-    float max = 0;
+    double res = 0.f;
+    double min = 0;
+    double max = 0;
 
     for (unsigned i = 0; i < v1.nelements(); ++i)
     {
@@ -157,6 +157,35 @@ struct dist3_t : Function_vv2v<dist3_t>
     return (int) res;
   }
 } dist3;
+
+
+struct dist4_t : Function_vv2v<dist4_t>
+{
+  typedef int_u12 result;
+
+  template <typename V>
+  int_u12 operator()(const util::array<V>& v1,
+		     const util::array<V>& v2) const
+  {
+    double res = 0.f;
+    double maxi;
+
+    for (unsigned i = 0; i < v1.nelements(); ++i)
+    {
+      maxi = std::max(v1[i], v2[i]);
+      if (maxi)
+	res += (double) math::diff_abs(v1[i], v2[i]) / maxi;
+      else
+	res += 1;
+    }
+
+    res = res / v1.nelements();
+    //res = 1 - res;
+    res = res * 4095;
+
+    return (int) res;
+  }
+} dist4;
 
 
 
@@ -205,6 +234,8 @@ int main(int argc, char* argv[])
     edges = world::inter_pixel::compute(imax, dist2);
   else if (dist_type == 3)
     edges = world::inter_pixel::compute(imax, dist3);
+  else if (dist_type == 4)
+    edges = world::inter_pixel::compute(imax, dist4);
 
   io_save_edges_int_u12(edges, 0, "dist.pgm");
 
