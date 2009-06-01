@@ -165,7 +165,7 @@ namespace mln
            const T& trans, const F& interp)
     {
       mlc_is(typename T::invert,
-             Bijection_x2x<typename T::invert>)::check();
+             Function_v2v<typename T::invert>)::check();
       mlc_is(F, Function<F>)::check();
 
       return interp(img, (trans.inv())(p));

@@ -89,14 +89,14 @@ namespace internal
     //
     template <typename F, typename X, typename V>
     void
-    compute_inv(const mln::Function_v2w_w2v<F>& f, X& x, const V& v)
+    compute_inv(const mln::Function_v2v<F>& f, X& x, const V& v)
     {
       x = mln::exact(f).f_1(v, x);
     };
 
     template <typename F, typename X, typename V>
     void
-    compute_inv(const mln::Function_v2w2v<F>& f, X& x, const V& v)
+    compute_inv(const mln::Function_v2v<F>& f, X& x, const V& v)
     {
       x = mln::exact(f).f_1(v);
     };
@@ -206,13 +206,13 @@ namespace mln
   {
 
     template <typename F>
-    struct set_unary_< ::assignable, Function_v2w2v, F >
+    struct set_unary_< ::assignable, Function_v2v, F >
     {
       typedef ::internal::assignable::function_assign<F> ret;
     };
 
     template <typename F>
-    struct set_unary_< ::assignable, Function_v2w_w2v, F >
+    struct set_unary_< ::assignable, Function_v2v, F >
     {
       typedef ::internal::assignable::function_assign<F> ret;
     };

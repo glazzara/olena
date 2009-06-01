@@ -82,7 +82,7 @@ namespace mln {
       run_while(const T& tree,
 		Image<A>& a,
 		Accumulator<ACC>& accu_,
-		Function_p2b<P2B>& pred);
+		Function_v2b<P2B>& pred);
 
 
       /**
@@ -146,7 +146,7 @@ namespace mln {
 	  return arr_sites;
 	}
 
-	struct ncard : Function_p2b< ncard >
+	struct ncard : Function_v2b< ncard >
 	{
 	  typedef bool result;
 
@@ -174,7 +174,7 @@ namespace mln {
       run_while(const T& tree,
 		Image<A>& a_,
 		Accumulator<ACC>& acc,
-		Function_p2b<P2B>& pred)
+		Function_v2b<P2B>& pred)
       {
 	trace::entering("mln::morpho::tree::run_while");
 	A& a = exact(a_);

@@ -30,7 +30,7 @@
 
 /*! \file mln/fun/internal/x2x_linear_impl.hh
  *
- * \brief Implementation class for every linear Function_x2x.
+ * \brief Implementation class for every linear Function_v2v.
  */
 
 # include <mln/core/concept/function.hh>

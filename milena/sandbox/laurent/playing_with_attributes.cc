@@ -35,7 +35,7 @@ namespace mln
 
 
   template <typename T>
-  struct node_pred : Function_p2b< node_pred<T> >
+  struct node_pred : Function_v2b< node_pred<T> >
   {
     typedef bool result;
 

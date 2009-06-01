@@ -125,7 +125,7 @@ namespace mln
       template <unsigned n, typename C>
       struct rotation
 	: fun::internal::x2x_linear_impl_< algebra::vec<n,C>, rotation<n,C> >
-	, public Bijection_x2x< rotation<n,C> >
+	, public Function_v2v< rotation<n,C> >
       {
 	typedef fun::internal::x2x_linear_impl_< algebra::vec<n,C>, rotation<n,C> > super_;
 

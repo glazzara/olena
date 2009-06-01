@@ -80,7 +80,7 @@ namespace mln
 
 
   template <typename I, typename V>
-  class edge_to_color : public Function_p2v< edge_to_color<I,V> >
+  class edge_to_color : public Function_v2v< edge_to_color<I,V> >
   {
   public:
     typedef V result;

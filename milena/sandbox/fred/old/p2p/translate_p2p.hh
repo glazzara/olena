@@ -8,7 +8,7 @@ namespace mln
 {
 
   template <typename P>
-  class translate_t : public Function_p2p< translate_t<P> >
+  class translate_t : public Function_v2v< translate_t<P> >
   {
   public:
     typedef P result;

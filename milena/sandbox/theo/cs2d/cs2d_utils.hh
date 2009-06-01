@@ -20,7 +20,7 @@ namespace mln
   // 2 c e c e c
 
 
-  struct is_cell_t :  Function_p2b<is_cell_t>
+  struct is_cell_t :  Function_v2b<is_cell_t>
   {
     typedef bool result;
     bool operator()(const point2d& p) const
@@ -31,7 +31,7 @@ namespace mln
   is_cell;
 
 
-  struct is_edge_t :  Function_p2b<is_edge_t>
+  struct is_edge_t :  Function_v2b<is_edge_t>
   {
     typedef bool result;
     bool operator()(const point2d& p) const
@@ -42,7 +42,7 @@ namespace mln
   is_edge;
 
 
-  struct is_vertex_t :  Function_p2b<is_vertex_t>
+  struct is_vertex_t :  Function_v2b<is_vertex_t>
   {
     typedef bool result;
     bool operator()(const point2d& p) const

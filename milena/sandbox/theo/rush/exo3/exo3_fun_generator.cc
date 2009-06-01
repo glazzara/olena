@@ -152,7 +152,7 @@ namespace exo3
 {
   template <typename F, typename G>
   struct functors_compose_
-    : mln::Function_p2v< functors_compose_<F, G> >
+    : mln::Function_v2v< functors_compose_<F, G> >
   {
     typedef typename F::result result;
 
@@ -183,9 +183,9 @@ namespace mln
   {
 
     template <typename TG, typename TA>
-    struct set_unary_<fun::v2v::from_accu_t, mln::Function_p2v, exo3::couple<TG, TA> >
+    struct set_unary_<fun::v2v::from_accu_t, mln::Function_v2v, exo3::couple<TG, TA> >
     {
-      typedef set_unary_<fun::v2v::from_accu_t, mln::Function_p2v, exo3::couple<TG, TA> > ret;
+      typedef set_unary_<fun::v2v::from_accu_t, mln::Function_v2v, exo3::couple<TG, TA> > ret;
       typedef exo3::functors_compose_<fun::v2v::from_accu_t< exo3::couple<typename TG::result, TA> >, TG> result;
 
       static
@@ -300,7 +300,7 @@ namespace exo3_filter
     F,									\
     templatize(typename exo3_filter::ret_builtin< typename mln::category< C >::ret, mln::pw::cst_<C> >::ret) \
     )									\
-  operator op (const mln::Function_p2v<F>& f, const C& c)		\
+  operator op (const mln::Function_v2v<F>& f, const C& c)		\
   {									\
     return exact(f) op mln::pw::cst(c);					\
   }									\
@@ -310,7 +310,7 @@ namespace exo3_filter
     templatize(typename exo3_filter::ret_builtin< typename mln::category< C >::ret, mln::pw::cst_<C> >::ret), \
     F									\
     )									\
-  operator op (const C& c, const mln::Function_p2v<F>& f)		\
+  operator op (const C& c, const mln::Function_v2v<F>& f)		\
   {									\
     return mln::pw::cst(c) or exact(f);					\
   }

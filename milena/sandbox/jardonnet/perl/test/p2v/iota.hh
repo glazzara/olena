@@ -45,7 +45,7 @@ namespace mln
     namespace p2v
     {
 
-      struct iota_t : public Function_p2v< iota_t >
+      struct iota_t : public Function_v2v< iota_t >
       {
 	typedef unsigned result;
 

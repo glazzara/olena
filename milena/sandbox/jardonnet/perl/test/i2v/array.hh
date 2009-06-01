@@ -48,7 +48,7 @@ namespace mln
     {
 
       template <typename T>
-      class array : public Function_i2v< array<T> >
+      class array : public Function_v2v< array<T> >
       {
       public:
 

@@ -13,7 +13,7 @@
 
 
 
-  struct is_cell_t :  mln::Function_p2b<is_cell_t>
+  struct is_cell_t :  mln::Function_v2b<is_cell_t>
   {
     typedef bool result;
     bool operator()(const mln::point2d& p) const
@@ -23,7 +23,7 @@
   }
   is_cell;
 
-  struct is_edge_t :  mln::Function_p2b<is_edge_t>
+  struct is_edge_t :  mln::Function_v2b<is_edge_t>
   {
     typedef bool result;
     bool operator()(const mln::point2d& p) const
@@ -33,7 +33,7 @@
   }
   is_edge;
 
-  struct is_point_t :  mln::Function_p2b<is_point_t>
+  struct is_point_t :  mln::Function_v2b<is_point_t>
   {
     typedef bool result;
     bool operator()(const mln::point2d& p) const

@@ -67,7 +67,7 @@ namespace mln
           template <typename F, typename G, typename E>
           struct helper_composed_< F, G, E, true>
             : public fun::internal::x2x_linear_impl_<mln_result(F), E >,
-              public Bijection_x2x<E>
+              public Function_v2v<E>
           {
             typedef fun::internal::x2x_linear_impl_<typename F::result, E > super_;
 
@@ -100,7 +100,7 @@ namespace mln
           template <typename F, typename G, typename E>
           struct helper_composed_< F, G, E, false>
             : public fun::internal::x2x_linear_impl_<mln_result(F), E >,
-              public Function_x2x<E>
+              public Function_v2v<E>
           {
             typedef fun::internal::x2x_linear_impl_<typename F::result, E > super_;
 
@@ -133,8 +133,8 @@ namespace mln
         template <typename F, typename G>
         struct composed
           : public internal::helper_composed_<F, G, composed<F,G>,
-                                              mlc_is(F, Bijection_x2x<F>)::value &&
-                                              mlc_is(G, Bijection_x2x<G>)::value>,
+                                              mlc_is(F, Function_v2v<F>)::value &&
+                                              mlc_is(G, Function_v2v<G>)::value>,
             private metal::and_< metal::bool_<(F::dim == G::dim)>,
                                  metal::is<mln_argument(F), mln_result(G)>
                                  >::check_t
@@ -145,8 +145,8 @@ namespace mln
           /// Constructor with the two transformation to be composed.
           composed(const F& f, const G& g)
             : internal::helper_composed_<F, G, composed<F,G>,
-                                         mlc_is(F, Bijection_x2x<F>)::value &&
-                                         mlc_is(G, Bijection_x2x<G>)::value>(f, g)
+                                         mlc_is(F, Function_v2v<F>)::value &&
+                                         mlc_is(G, Function_v2v<G>)::value>(f, g)
           {
           }
         };

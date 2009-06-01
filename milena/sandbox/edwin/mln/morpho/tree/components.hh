@@ -92,7 +92,7 @@ namespace mln {
       */
       template <typename T, typename A, typename P2B>
       p_array< mln_psite(A) >
-      get_components(const T& tree, const Image<A>& attr_image, const Function_p2b<P2B>& pred);
+      get_components(const T& tree, const Image<A>& attr_image, const Function_v2b<P2B>& pred);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -294,7 +294,7 @@ namespace mln {
 
       template <typename T, typename A, typename P2B>
       p_array< mln_psite(A) >
-      get_components(const T& tree, const Image<A>& attr_image, const Function_p2b<P2B>& pred)
+      get_components(const T& tree, const Image<A>& attr_image, const Function_v2b<P2B>& pred)
       {
 	trace::entering("mln::morpho::tree::get_components");
 

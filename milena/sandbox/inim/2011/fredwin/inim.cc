@@ -74,7 +74,7 @@ void dsp(const std::string& str)
 }
 
 template <typename P2V, typename G>
-struct ratio_ : public mln::Function_p2v< ratio_<P2V, G> >
+struct ratio_ : public mln::Function_v2v< ratio_<P2V, G> >
 {
   typedef double result;
 
@@ -97,7 +97,7 @@ protected:
 };
 
 template <typename P2V, typename G>
-ratio_<P2V, G> ratio(const mln::Function_p2v<P2V>& f, const mln::Function_p2v<G>& g)
+ratio_<P2V, G> ratio(const mln::Function_v2v<P2V>& f, const mln::Function_v2v<G>& g)
 {
   return ratio_<P2V, G>(exact(f), exact(g));
 }

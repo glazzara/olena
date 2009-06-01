@@ -53,7 +53,7 @@ namespace mln {
 	template <typename T, typename F, typename P2B>
 	inline
 	void
-	filter(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_, const mln_value(F)& v);
+	filter(const T& tree, Image<F>& f_, const Function_v2b<P2B>& pred_, const mln_value(F)& v);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -61,7 +61,7 @@ namespace mln {
 	template <typename T, typename F, typename P2B>
 	inline
 	void
-	filter(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_, const mln_value(F)& v)
+	filter(const T& tree, Image<F>& f_, const Function_v2b<P2B>& pred_, const mln_value(F)& v)
 	{
 	  F& f = exact(f_);
 	  const P2B& pred = exact(pred_);

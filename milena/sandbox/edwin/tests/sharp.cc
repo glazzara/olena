@@ -71,11 +71,11 @@ namespace mln
 {
 
   template <typename P2V>
-  struct height_wrapper_ : Function_p2v< height_wrapper_<P2V> >
+  struct height_wrapper_ : Function_v2v< height_wrapper_<P2V> >
   {
     typedef unsigned result;
 
-    height_wrapper_(const Function_p2v<P2V>& f) :
+    height_wrapper_(const Function_v2v<P2V>& f) :
       f_ (exact(f))
     {
       mlc_is_a(mln_result(P2V), Accumulator)::check();
@@ -94,17 +94,17 @@ namespace mln
   template <typename P2V>
   inline
   height_wrapper_<P2V>
-  height_wrapper(const Function_p2v<P2V>& f)
+  height_wrapper(const Function_v2v<P2V>& f)
   {
     return height_wrapper_<P2V>(f);
   }
 
   template <typename P2V>
-  struct card_wrapper_ : Function_p2v< card_wrapper_<P2V> >
+  struct card_wrapper_ : Function_v2v< card_wrapper_<P2V> >
   {
     typedef unsigned result;
 
-    card_wrapper_(const Function_p2v<P2V>& f) :
+    card_wrapper_(const Function_v2v<P2V>& f) :
       f_ (exact(f))
     {
       mlc_is_a(mln_result(P2V), Accumulator)::check();
@@ -123,7 +123,7 @@ namespace mln
   template <typename P2V>
   inline
   card_wrapper_<P2V>
-  card_wrapper(const Function_p2v<P2V>& f)
+  card_wrapper(const Function_v2v<P2V>& f)
   {
     return card_wrapper_<P2V>(f);
   }
@@ -131,7 +131,7 @@ namespace mln
   template <typename T, typename F, typename P2B>
   inline
   void
-  mymin(const T& tree, Image<F>& f_, const Function_p2b<P2B>& pred_)
+  mymin(const T& tree, Image<F>& f_, const Function_v2b<P2B>& pred_)
   {
     F& f = exact(f_);
     const P2B& pred = exact(pred_);

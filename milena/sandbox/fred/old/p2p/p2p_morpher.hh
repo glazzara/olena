@@ -261,7 +261,7 @@ namespace mln
   template <typename I, typename F>
   inline
   trans_image<I, F>
-  transform_image(Image<I>& ima, const Function_p2p<F>& fun)
+  transform_image(Image<I>& ima, const Function_v2v<F>& fun)
   {
     trans_image<I, F> tmp(exact(ima), exact(fun));
     return tmp;
@@ -270,7 +270,7 @@ namespace mln
   template <typename I, typename F>
   inline
   trans_image<const I, F>
-  transform_image(const Image<I>& ima, const Function_p2p<F>& fun)
+  transform_image(const Image<I>& ima, const Function_v2v<F>& fun)
   {
     trans_image<const I, F> tmp(exact(ima), exact(fun));
     return tmp;

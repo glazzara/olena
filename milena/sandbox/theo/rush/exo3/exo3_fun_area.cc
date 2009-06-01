@@ -65,12 +65,12 @@ namespace mln
 
     } // end of namespace mln::fun::v2v
 
-    /// Function_p2v composition
+    /// Function_v2v composition
     namespace p2v
     {
       template <typename F, typename G>
       struct composition_t
-	: mln::Function_p2v< composition_t<F, G> >
+	: mln::Function_v2v< composition_t<F, G> >
       {
 	typedef typename F::result result;
 
@@ -128,9 +128,9 @@ namespace mln
     };
 
     template <typename G>
-    struct set_unary_<fun::v2v::area, mln::Function_p2v, G>
+    struct set_unary_<fun::v2v::area, mln::Function_v2v, G>
     {
-      typedef set_unary_<fun::v2v::area, mln::Function_p2v, G> ret;
+      typedef set_unary_<fun::v2v::area, mln::Function_v2v, G> ret;
       typedef fun::p2v::composition_t<fun::v2v::area<typename G::result>, G> result;
 
       static
@@ -250,7 +250,7 @@ namespace exo3_filter
     F,									\
     templatize(typename exo3_filter::ret_builtin< typename mln::category< C >::ret, mln::pw::cst_<C> >::ret) \
     )									\
-  operator op (const mln::Function_p2v<F>& f, const C& c)		\
+  operator op (const mln::Function_v2v<F>& f, const C& c)		\
   {									\
     return exact(f) op mln::pw::cst(c);					\
   }									\
@@ -260,7 +260,7 @@ namespace exo3_filter
     templatize(typename exo3_filter::ret_builtin< typename mln::category< C >::ret, mln::pw::cst_<C> >::ret), \
     F									\
     )									\
-  operator op (const C& c, const mln::Function_p2v<F>& f)		\
+  operator op (const C& c, const mln::Function_v2v<F>& f)		\
   {									\
     return mln::pw::cst(c) or exact(f);					\
   }

@@ -140,7 +140,7 @@ namespace mln
 
 
   template <typename I, typename V>
-  struct edge_to_color : Function_p2v< edge_to_color<I,V> >
+  struct edge_to_color : Function_v2v< edge_to_color<I,V> >
   {
     typedef V result;
 

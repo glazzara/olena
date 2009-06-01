@@ -169,7 +169,7 @@ namespace mln
     namespace p2p
     {
 
-      struct fold1d : Function_p2p< fold1d >
+      struct fold1d : Function_v2v< fold1d >
       {
 	typedef point1d result;
 	result operator()(const point1d& p) const
@@ -181,7 +181,7 @@ namespace mln
       };
 
       template <bool along_0, bool along_1>
-      struct fold2d : Function_p2p< fold2d<along_0,along_1> >
+      struct fold2d : Function_v2v< fold2d<along_0,along_1> >
       {
 	typedef point2d result;
 	result operator()(const point2d& p) const
@@ -194,7 +194,7 @@ namespace mln
       };
 
       template <bool along_0, bool along_1, bool along_2>
-      struct fold3d : Function_p2p< fold3d<along_0,along_1,along_2> >
+      struct fold3d : Function_v2v< fold3d<along_0,along_1,along_2> >
       {
 	typedef point3d result;
 	result operator()(const point3d& p) const

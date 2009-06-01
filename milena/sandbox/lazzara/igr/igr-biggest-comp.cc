@@ -25,7 +25,7 @@
 namespace mln
 {
 
-  struct threshold : mln::Function_p2b<threshold>
+  struct threshold : mln::Function_v2b<threshold>
   {
     bool operator()(const mln::value::rgb8& val) const
     {

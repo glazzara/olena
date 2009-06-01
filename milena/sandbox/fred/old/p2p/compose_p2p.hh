@@ -8,7 +8,7 @@ namespace mln
 {
 
   template <typename P, typename F, typename G>
-  class compose_t : public Function_p2p< compose_t<P, F, G> >
+  class compose_t : public Function_v2v< compose_t<P, F, G> >
   {
   public:
     typedef P result;
@@ -34,8 +34,8 @@ namespace mln
   };
 
   template <typename F, typename G>
-  compose_t<typename F::result, F, G> operator* (const Function_p2p< F >& f,
-				       const Function_p2p< G >& g)
+  compose_t<typename F::result, F, G> operator* (const Function_v2v< F >& f,
+				       const Function_v2v< G >& g)
   {
     compose_t<typename F::result, F, G> comp (exact (f), exact (g));
     return comp;

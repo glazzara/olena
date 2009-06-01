@@ -149,7 +149,7 @@ namespace mln
   }
 
 
-  struct threshold : Function_p2b<threshold>
+  struct threshold : Function_v2b<threshold>
   {
     bool operator()(const value::rgb8& val) const
     {

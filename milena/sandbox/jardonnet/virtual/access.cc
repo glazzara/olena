@@ -19,7 +19,7 @@ template < template <class> class N,
            typename I, typename T>
 void
 test1(const I& input, I& output,
-      const mln::Function_x2x<T>& t_)
+      const mln::Function_v2v<T>& t_)
 {
   N<I> interp(input);
   T t = exact(t_);
@@ -37,7 +37,7 @@ test1(const I& input, I& output,
 template <typename I, typename O, typename T>
 void
 test2(const I& interp, O& output,
-      const mln::Function_x2x<T>& t_)
+      const mln::Function_v2v<T>& t_)
 {
   T t = exact(t_);
 

@@ -9,7 +9,7 @@ namespace mln
 {
 
   template <typename P>
-  class symmetry_t : public Function_p2p< symmetry_t<P> >
+  class symmetry_t : public Function_v2v< symmetry_t<P> >
   {
   public:
     typedef P result;

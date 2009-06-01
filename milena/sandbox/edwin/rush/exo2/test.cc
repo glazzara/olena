@@ -24,11 +24,11 @@ namespace mln
 {
   // Sharpness Attribute -> Height Attribute
   template <typename P2V>
-  struct height_wrapper_ : Function_p2v< height_wrapper_<P2V> >
+  struct height_wrapper_ : Function_v2v< height_wrapper_<P2V> >
   {
     typedef unsigned result;
 
-    height_wrapper_(const Function_p2v<P2V>& f) :
+    height_wrapper_(const Function_v2v<P2V>& f) :
       f_ (exact(f))
     {
       mlc_is_a(mln_result(P2V), Accumulator)::check();
@@ -48,7 +48,7 @@ namespace mln
   template <typename P2V>
   inline
   height_wrapper_<P2V>
-  height_wrapper(const Function_p2v<P2V>& f)
+  height_wrapper(const Function_v2v<P2V>& f)
   {
     return height_wrapper_<P2V>(f);
   }

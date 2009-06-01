@@ -55,15 +55,15 @@ namespace mln
       //         |
       //         + ---------------------- Function_v2b
       //         |                           |
-      //         + -- Function_i2v           |
+      //         + -- Function_v2v           |
       //         |                           |
-      //         + -- Function_x2x           |
+      //         + -- Function_v2v           |
       //         |                           |
-      //         + -- Function_p2v           |
+      //         + -- Function_v2v           |
       //                |                    |
-      //                + -- Function_p2b -- +
+      //                + -- Function_v2b -- +
       //                |
-      //                + -- Function_p2p
+      //                + -- Function_v2v
 
       enum
 	{
@@ -90,27 +90,27 @@ namespace mln
 
       // i2* => i2v type
       template <typename E>
-      struct helper_selector_< i_, b_, E > { typedef Function_i2v<E> ret; };
+      struct helper_selector_< i_, b_, E > { typedef Function_v2v<E> ret; };
       template <typename E>
-      struct helper_selector_< i_, i_, E > { typedef Function_i2v<E> ret; };
+      struct helper_selector_< i_, i_, E > { typedef Function_v2v<E> ret; };
       template <typename E>
-      struct helper_selector_< i_, p_, E > { typedef Function_i2v<E> ret; };
+      struct helper_selector_< i_, p_, E > { typedef Function_v2v<E> ret; };
       template <typename E>
-      struct helper_selector_< i_, v_, E > { typedef Function_i2v<E> ret; };
+      struct helper_selector_< i_, v_, E > { typedef Function_v2v<E> ret; };
       template <typename E>
-      struct helper_selector_< i_, x_, E > { typedef Function_i2v<E> ret; };
+      struct helper_selector_< i_, x_, E > { typedef Function_v2v<E> ret; };
 
       // p2*
       template <typename E>
-      struct helper_selector_< p_, b_, E > { typedef Function_p2b<E> ret; };
+      struct helper_selector_< p_, b_, E > { typedef Function_v2b<E> ret; };
       template <typename E>
-      struct helper_selector_< p_, i_, E > { typedef Function_p2v<E> ret; }; // no p2i type => p2v
+      struct helper_selector_< p_, i_, E > { typedef Function_v2v<E> ret; }; // no p2i type => p2v
       template <typename E>
-      struct helper_selector_< p_, p_, E > { typedef Function_p2p<E> ret; };
+      struct helper_selector_< p_, p_, E > { typedef Function_v2v<E> ret; };
       template <typename E>
-      struct helper_selector_< p_, v_, E > { typedef Function_p2v<E> ret; };
+      struct helper_selector_< p_, v_, E > { typedef Function_v2v<E> ret; };
       template <typename E>
-      struct helper_selector_< p_, x_, E > { typedef Function_p2v<E> ret; };
+      struct helper_selector_< p_, x_, E > { typedef Function_v2v<E> ret; };
 
       // v2* => v2v type, except for v2b
       template <typename E>

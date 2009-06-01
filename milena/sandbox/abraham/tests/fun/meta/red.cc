@@ -14,7 +14,7 @@ namespace mln
   };
 
   template <class T>
-  struct function< meta::red< rgb<T> > > : public Function_v2w_w2v<function< meta::red < rgb<T> > > >
+  struct function< meta::red< rgb<T> > > : public Function_v2v<function< meta::red < rgb<T> > > >
   {
     typedef rgb<T> value;
 

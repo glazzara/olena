@@ -21,7 +21,7 @@
 
 #include <mln/fun/p2b/big_chess.hh>
 
-struct threshold : mln::Function_p2b<threshold>
+struct threshold : mln::Function_v2b<threshold>
 {
   bool operator()(const mln::value::rgb8& val) const
   {

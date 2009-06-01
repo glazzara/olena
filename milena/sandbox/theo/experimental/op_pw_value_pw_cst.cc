@@ -15,7 +15,7 @@ namespace mln
 
 //     template <typename L, typename R>
 //     struct set_binary_< op::less,
-// 			mln::Function_p2v,  L,
+// 			mln::Function_v2v,  L,
 // 			mln::value::Scalar, R >
 //     {
 //       typedef fun::less_p2b_expr_< L, pw::cst_<mln_result(L)> > ret;
@@ -24,7 +24,7 @@ namespace mln
 
     template <typename L, typename R>
     struct set_binary_< op::less,
-			mln::Function_p2v,  L,
+			mln::Function_v2v,  L,
 			mln::Object,        R >
     {
       typedef fun::less_p2b_expr_< L, pw::cst_<mln_result(L)> > ret;
@@ -35,7 +35,7 @@ namespace mln
 
 //   template <typename L, typename R>
 //   fun::less_p2b_expr_< L, pw::cst_<mln_result(L)> >
-//   operator < (const Function_p2v<L>& lhs, const value::Scalar<R>& rhs)
+//   operator < (const Function_v2v<L>& lhs, const value::Scalar<R>& rhs)
 //   {
 //     mlc_converts_to(mln_equiv(R), mln_result(L))::check();
 //     mln_equiv(R) rhs_ = exact(rhs).to_equiv();
@@ -47,7 +47,7 @@ namespace mln
 
   template <typename L, typename R>
   fun::less_p2b_expr_< L, pw::cst_<mln_result(L)> >
-  operator < (const Function_p2v<L>& lhs, const Object<R>& rhs)
+  operator < (const Function_v2v<L>& lhs, const Object<R>& rhs)
   {
     // mln_trait_op_less(L, mln_result(L)) b = lhs;
 
@@ -59,7 +59,7 @@ namespace mln
 
 //   template <typename L>
 //   fun::less_p2b_expr_< L, pw::cst_<mln_result(L)> >
-//   operator < (const Function_p2v<L>& lhs, const mln_result(L)& rhs)
+//   operator < (const Function_v2v<L>& lhs, const mln_result(L)& rhs)
 //   {
 //     mln_trait_op_less(L, mln_result(L)) b = lhs;
 

@@ -32,7 +32,7 @@ bool usage(int argc, char ** argv)
 
 
 template <typename B>
-struct is_ima2_t :  Function_p2b< is_ima2_t<B> >
+struct is_ima2_t :  Function_v2b< is_ima2_t<B> >
 {
   is_ima2_t(const B& box, const unsigned div)
     : box(box), div(div)
