@@ -179,8 +179,6 @@ mln_core_alias_window3d \
 mln_core_all \
 mln_core_box_runstart_piter \
 mln_core_category \
-mln_core_clock_neighb \
-mln_core_clock_neighb2d \
 mln_core_concept_accumulator \
 mln_core_concept_all \
 mln_core_concept_box \
@@ -229,8 +227,6 @@ mln_core_essential \
 mln_core_faces_psite \
 mln_core_grids \
 mln_core_image_all \
-mln_core_image_bgraph_image \
-mln_core_image_bgraph_psite \
 mln_core_image_ch_piter \
 mln_core_image_complex_image \
 mln_core_image_complex_neighborhood_piter \
@@ -272,21 +268,6 @@ mln_core_image_imorph_lazy_image \
 mln_core_image_imorph_plain \
 mln_core_image_imorph_safe \
 mln_core_image_imorph_tr_image \
-mln_core_image_mono_obased_rle_encode \
-mln_core_image_mono_obased_rle_image \
-mln_core_image_mono_rle_encode \
-mln_core_image_mono_rle_image \
-mln_core_image_morph_all \
-mln_core_image_morph_t_image \
-mln_core_image_obased_rle_encode \
-mln_core_image_obased_rle_image \
-mln_core_image_rle_encode \
-mln_core_image_rle_image \
-mln_core_image_sparse_encode \
-mln_core_image_sparse_image \
-mln_core_image_tr_mesh \
-mln_core_image_value_enc_image \
-mln_core_image_value_encode \
 mln_core_image_vertex_image \
 mln_core_image_vmorph_all \
 mln_core_image_vmorph_cast_image \
@@ -358,8 +339,6 @@ mln_core_site_set_complex_psite \
 mln_core_site_set_essential \
 mln_core_site_set_operators \
 mln_core_site_set_p_array \
-mln_core_site_set_p_bgraph \
-mln_core_site_set_p_bgraph_piter \
 mln_core_site_set_p_centered \
 mln_core_site_set_p_complex \
 mln_core_site_set_p_complex_piter \
@@ -396,15 +375,38 @@ mln_core_trait_qlf_value \
 mln_core_var \
 mln_core_w_window \
 mln_core_window \
+mln_data_abs \
 mln_data_all \
+mln_data_apply \
+mln_data_approx_all \
+mln_data_approx_essential \
+mln_data_approx_median \
+mln_data_compare \
+mln_data_compute \
+mln_data_convert \
 mln_data_essential \
+mln_data_fast_median \
 mln_data_fill \
 mln_data_fill_with_image \
 mln_data_fill_with_value \
+mln_data_median \
 mln_data_memcpy_ \
 mln_data_memset_ \
+mln_data_naive_all \
+mln_data_naive_essential \
+mln_data_naive_median \
 mln_data_paste \
 mln_data_paste_without_localization \
+mln_data_replace \
+mln_data_saturate \
+mln_data_sort_offsets \
+mln_data_sort_psites \
+mln_data_stretch \
+mln_data_to_enc \
+mln_data_transform \
+mln_data_transform_inplace \
+mln_data_update \
+mln_data_was_median \
 mln_debug_all \
 mln_debug_draw_graph \
 mln_debug_essential \
@@ -489,6 +491,7 @@ mln_fun_meta_essential \
 mln_fun_meta_first \
 mln_fun_meta_green \
 mln_fun_meta_hue \
+mln_fun_meta_inty \
 mln_fun_meta_lum \
 mln_fun_meta_red \
 mln_fun_meta_sat \
@@ -536,12 +539,14 @@ mln_fun_v2v_convert \
 mln_fun_v2v_dec \
 mln_fun_v2v_enc \
 mln_fun_v2v_essential \
+mln_fun_v2v_hsi_to_rgb \
 mln_fun_v2v_hsl_to_rgb \
 mln_fun_v2v_id \
 mln_fun_v2v_inc \
 mln_fun_v2v_linear \
 mln_fun_v2v_norm \
 mln_fun_v2v_projection \
+mln_fun_v2v_rgb_to_hsi \
 mln_fun_v2v_rgb_to_hsl \
 mln_fun_v2v_saturate \
 mln_fun_v2v_wrap \
@@ -674,39 +679,14 @@ mln_labeling_essential \
 mln_labeling_fill_holes \
 mln_labeling_flat_zones \
 mln_labeling_foreground \
-mln_labeling_level \
 mln_labeling_mean_values \
 mln_labeling_n_max \
 mln_labeling_pack \
 mln_labeling_regional_maxima \
 mln_labeling_regional_minima \
 mln_labeling_relabel \
+mln_labeling_value \
 mln_labeling_wrap \
-mln_level_abs \
-mln_level_all \
-mln_level_apply \
-mln_level_approx_all \
-mln_level_approx_essential \
-mln_level_approx_median \
-mln_level_compare \
-mln_level_compute \
-mln_level_convert \
-mln_level_essential \
-mln_level_fast_median \
-mln_level_median \
-mln_level_naive_all \
-mln_level_naive_essential \
-mln_level_naive_median \
-mln_level_replace \
-mln_level_saturate \
-mln_level_sort_offsets \
-mln_level_sort_psites \
-mln_level_stretch \
-mln_level_to_enc \
-mln_level_transform \
-mln_level_transform_inplace \
-mln_level_update \
-mln_level_was_median \
 mln_linear_all \
 mln_linear_ch_convolve \
 mln_linear_convolve \
@@ -1196,6 +1176,7 @@ mln_value_gl8 \
 mln_value_glf \
 mln_value_graylevel \
 mln_value_graylevel_f \
+mln_value_hsi \
 mln_value_hsl \
 mln_value_int_s \
 mln_value_int_s16 \
@@ -1457,8 +1438,6 @@ mln_core_alias_window3d_SOURCES = mln_core_alias_window3d.cc
 mln_core_all_SOURCES = mln_core_all.cc
 mln_core_box_runstart_piter_SOURCES = mln_core_box_runstart_piter.cc
 mln_core_category_SOURCES = mln_core_category.cc
-mln_core_clock_neighb_SOURCES = mln_core_clock_neighb.cc
-mln_core_clock_neighb2d_SOURCES = mln_core_clock_neighb2d.cc
 mln_core_concept_accumulator_SOURCES = mln_core_concept_accumulator.cc
 mln_core_concept_all_SOURCES = mln_core_concept_all.cc
 mln_core_concept_box_SOURCES = mln_core_concept_box.cc
@@ -1507,8 +1486,6 @@ mln_core_essential_SOURCES = mln_core_essential.cc
 mln_core_faces_psite_SOURCES = mln_core_faces_psite.cc
 mln_core_grids_SOURCES = mln_core_grids.cc
 mln_core_image_all_SOURCES = mln_core_image_all.cc
-mln_core_image_bgraph_image_SOURCES = mln_core_image_bgraph_image.cc
-mln_core_image_bgraph_psite_SOURCES = mln_core_image_bgraph_psite.cc
 mln_core_image_ch_piter_SOURCES = mln_core_image_ch_piter.cc
 mln_core_image_complex_image_SOURCES = mln_core_image_complex_image.cc
 mln_core_image_complex_neighborhood_piter_SOURCES = mln_core_image_complex_neighborhood_piter.cc
@@ -1550,21 +1527,6 @@ mln_core_image_imorph_lazy_image_SOURCES = mln_core_image_imorph_lazy_image.cc
 mln_core_image_imorph_plain_SOURCES = mln_core_image_imorph_plain.cc
 mln_core_image_imorph_safe_SOURCES = mln_core_image_imorph_safe.cc
 mln_core_image_imorph_tr_image_SOURCES = mln_core_image_imorph_tr_image.cc
-mln_core_image_mono_obased_rle_encode_SOURCES = mln_core_image_mono_obased_rle_encode.cc
-mln_core_image_mono_obased_rle_image_SOURCES = mln_core_image_mono_obased_rle_image.cc
-mln_core_image_mono_rle_encode_SOURCES = mln_core_image_mono_rle_encode.cc
-mln_core_image_mono_rle_image_SOURCES = mln_core_image_mono_rle_image.cc
-mln_core_image_morph_all_SOURCES = mln_core_image_morph_all.cc
-mln_core_image_morph_t_image_SOURCES = mln_core_image_morph_t_image.cc
-mln_core_image_obased_rle_encode_SOURCES = mln_core_image_obased_rle_encode.cc
-mln_core_image_obased_rle_image_SOURCES = mln_core_image_obased_rle_image.cc
-mln_core_image_rle_encode_SOURCES = mln_core_image_rle_encode.cc
-mln_core_image_rle_image_SOURCES = mln_core_image_rle_image.cc
-mln_core_image_sparse_encode_SOURCES = mln_core_image_sparse_encode.cc
-mln_core_image_sparse_image_SOURCES = mln_core_image_sparse_image.cc
-mln_core_image_tr_mesh_SOURCES = mln_core_image_tr_mesh.cc
-mln_core_image_value_enc_image_SOURCES = mln_core_image_value_enc_image.cc
-mln_core_image_value_encode_SOURCES = mln_core_image_value_encode.cc
 mln_core_image_vertex_image_SOURCES = mln_core_image_vertex_image.cc
 mln_core_image_vmorph_all_SOURCES = mln_core_image_vmorph_all.cc
 mln_core_image_vmorph_cast_image_SOURCES = mln_core_image_vmorph_cast_image.cc
@@ -1636,8 +1598,6 @@ mln_core_site_set_complex_psite_SOURCES = mln_core_site_set_complex_psite.cc
 mln_core_site_set_essential_SOURCES = mln_core_site_set_essential.cc
 mln_core_site_set_operators_SOURCES = mln_core_site_set_operators.cc
 mln_core_site_set_p_array_SOURCES = mln_core_site_set_p_array.cc
-mln_core_site_set_p_bgraph_SOURCES = mln_core_site_set_p_bgraph.cc
-mln_core_site_set_p_bgraph_piter_SOURCES = mln_core_site_set_p_bgraph_piter.cc
 mln_core_site_set_p_centered_SOURCES = mln_core_site_set_p_centered.cc
 mln_core_site_set_p_complex_SOURCES = mln_core_site_set_p_complex.cc
 mln_core_site_set_p_complex_piter_SOURCES = mln_core_site_set_p_complex_piter.cc
@@ -1674,15 +1634,38 @@ mln_core_trait_qlf_value_SOURCES = mln_core_trait_qlf_value.cc
 mln_core_var_SOURCES = mln_core_var.cc
 mln_core_w_window_SOURCES = mln_core_w_window.cc
 mln_core_window_SOURCES = mln_core_window.cc
+mln_data_abs_SOURCES = mln_data_abs.cc
 mln_data_all_SOURCES = mln_data_all.cc
+mln_data_apply_SOURCES = mln_data_apply.cc
+mln_data_approx_all_SOURCES = mln_data_approx_all.cc
+mln_data_approx_essential_SOURCES = mln_data_approx_essential.cc
+mln_data_approx_median_SOURCES = mln_data_approx_median.cc
+mln_data_compare_SOURCES = mln_data_compare.cc
+mln_data_compute_SOURCES = mln_data_compute.cc
+mln_data_convert_SOURCES = mln_data_convert.cc
 mln_data_essential_SOURCES = mln_data_essential.cc
+mln_data_fast_median_SOURCES = mln_data_fast_median.cc
 mln_data_fill_SOURCES = mln_data_fill.cc
 mln_data_fill_with_image_SOURCES = mln_data_fill_with_image.cc
 mln_data_fill_with_value_SOURCES = mln_data_fill_with_value.cc
+mln_data_median_SOURCES = mln_data_median.cc
 mln_data_memcpy__SOURCES = mln_data_memcpy_.cc
 mln_data_memset__SOURCES = mln_data_memset_.cc
+mln_data_naive_all_SOURCES = mln_data_naive_all.cc
+mln_data_naive_essential_SOURCES = mln_data_naive_essential.cc
+mln_data_naive_median_SOURCES = mln_data_naive_median.cc
 mln_data_paste_SOURCES = mln_data_paste.cc
 mln_data_paste_without_localization_SOURCES = mln_data_paste_without_localization.cc
+mln_data_replace_SOURCES = mln_data_replace.cc
+mln_data_saturate_SOURCES = mln_data_saturate.cc
+mln_data_sort_offsets_SOURCES = mln_data_sort_offsets.cc
+mln_data_sort_psites_SOURCES = mln_data_sort_psites.cc
+mln_data_stretch_SOURCES = mln_data_stretch.cc
+mln_data_to_enc_SOURCES = mln_data_to_enc.cc
+mln_data_transform_SOURCES = mln_data_transform.cc
+mln_data_transform_inplace_SOURCES = mln_data_transform_inplace.cc
+mln_data_update_SOURCES = mln_data_update.cc
+mln_data_was_median_SOURCES = mln_data_was_median.cc
 mln_debug_all_SOURCES = mln_debug_all.cc
 mln_debug_draw_graph_SOURCES = mln_debug_draw_graph.cc
 mln_debug_essential_SOURCES = mln_debug_essential.cc
@@ -1767,6 +1750,7 @@ mln_fun_meta_essential_SOURCES = mln_fun_meta_essential.cc
 mln_fun_meta_first_SOURCES = mln_fun_meta_first.cc
 mln_fun_meta_green_SOURCES = mln_fun_meta_green.cc
 mln_fun_meta_hue_SOURCES = mln_fun_meta_hue.cc
+mln_fun_meta_inty_SOURCES = mln_fun_meta_inty.cc
 mln_fun_meta_lum_SOURCES = mln_fun_meta_lum.cc
 mln_fun_meta_red_SOURCES = mln_fun_meta_red.cc
 mln_fun_meta_sat_SOURCES = mln_fun_meta_sat.cc
@@ -1814,12 +1798,14 @@ mln_fun_v2v_convert_SOURCES = mln_fun_v2v_convert.cc
 mln_fun_v2v_dec_SOURCES = mln_fun_v2v_dec.cc
 mln_fun_v2v_enc_SOURCES = mln_fun_v2v_enc.cc
 mln_fun_v2v_essential_SOURCES = mln_fun_v2v_essential.cc
+mln_fun_v2v_hsi_to_rgb_SOURCES = mln_fun_v2v_hsi_to_rgb.cc
 mln_fun_v2v_hsl_to_rgb_SOURCES = mln_fun_v2v_hsl_to_rgb.cc
 mln_fun_v2v_id_SOURCES = mln_fun_v2v_id.cc
 mln_fun_v2v_inc_SOURCES = mln_fun_v2v_inc.cc
 mln_fun_v2v_linear_SOURCES = mln_fun_v2v_linear.cc
 mln_fun_v2v_norm_SOURCES = mln_fun_v2v_norm.cc
 mln_fun_v2v_projection_SOURCES = mln_fun_v2v_projection.cc
+mln_fun_v2v_rgb_to_hsi_SOURCES = mln_fun_v2v_rgb_to_hsi.cc
 mln_fun_v2v_rgb_to_hsl_SOURCES = mln_fun_v2v_rgb_to_hsl.cc
 mln_fun_v2v_saturate_SOURCES = mln_fun_v2v_saturate.cc
 mln_fun_v2v_wrap_SOURCES = mln_fun_v2v_wrap.cc
@@ -1952,39 +1938,14 @@ mln_labeling_essential_SOURCES = mln_labeling_essential.cc
 mln_labeling_fill_holes_SOURCES = mln_labeling_fill_holes.cc
 mln_labeling_flat_zones_SOURCES = mln_labeling_flat_zones.cc
 mln_labeling_foreground_SOURCES = mln_labeling_foreground.cc
-mln_labeling_level_SOURCES = mln_labeling_level.cc
 mln_labeling_mean_values_SOURCES = mln_labeling_mean_values.cc
 mln_labeling_n_max_SOURCES = mln_labeling_n_max.cc
 mln_labeling_pack_SOURCES = mln_labeling_pack.cc
 mln_labeling_regional_maxima_SOURCES = mln_labeling_regional_maxima.cc
 mln_labeling_regional_minima_SOURCES = mln_labeling_regional_minima.cc
 mln_labeling_relabel_SOURCES = mln_labeling_relabel.cc
+mln_labeling_value_SOURCES = mln_labeling_value.cc
 mln_labeling_wrap_SOURCES = mln_labeling_wrap.cc
-mln_level_abs_SOURCES = mln_level_abs.cc
-mln_level_all_SOURCES = mln_level_all.cc
-mln_level_apply_SOURCES = mln_level_apply.cc
-mln_level_approx_all_SOURCES = mln_level_approx_all.cc
-mln_level_approx_essential_SOURCES = mln_level_approx_essential.cc
-mln_level_approx_median_SOURCES = mln_level_approx_median.cc
-mln_level_compare_SOURCES = mln_level_compare.cc
-mln_level_compute_SOURCES = mln_level_compute.cc
-mln_level_convert_SOURCES = mln_level_convert.cc
-mln_level_essential_SOURCES = mln_level_essential.cc
-mln_level_fast_median_SOURCES = mln_level_fast_median.cc
-mln_level_median_SOURCES = mln_level_median.cc
-mln_level_naive_all_SOURCES = mln_level_naive_all.cc
-mln_level_naive_essential_SOURCES = mln_level_naive_essential.cc
-mln_level_naive_median_SOURCES = mln_level_naive_median.cc
-mln_level_replace_SOURCES = mln_level_replace.cc
-mln_level_saturate_SOURCES = mln_level_saturate.cc
-mln_level_sort_offsets_SOURCES = mln_level_sort_offsets.cc
-mln_level_sort_psites_SOURCES = mln_level_sort_psites.cc
-mln_level_stretch_SOURCES = mln_level_stretch.cc
-mln_level_to_enc_SOURCES = mln_level_to_enc.cc
-mln_level_transform_SOURCES = mln_level_transform.cc
-mln_level_transform_inplace_SOURCES = mln_level_transform_inplace.cc
-mln_level_update_SOURCES = mln_level_update.cc
-mln_level_was_median_SOURCES = mln_level_was_median.cc
 mln_linear_all_SOURCES = mln_linear_all.cc
 mln_linear_ch_convolve_SOURCES = mln_linear_ch_convolve.cc
 mln_linear_convolve_SOURCES = mln_linear_convolve.cc
@@ -2474,6 +2435,7 @@ mln_value_gl8_SOURCES = mln_value_gl8.cc
 mln_value_glf_SOURCES = mln_value_glf.cc
 mln_value_graylevel_SOURCES = mln_value_graylevel.cc
 mln_value_graylevel_f_SOURCES = mln_value_graylevel_f.cc
+mln_value_hsi_SOURCES = mln_value_hsi.cc
 mln_value_hsl_SOURCES = mln_value_hsl.cc
 mln_value_int_s_SOURCES = mln_value_int_s.cc
 mln_value_int_s16_SOURCES = mln_value_int_s16.cc

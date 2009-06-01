@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -72,7 +73,7 @@ namespace mln
 	mln_precondition(nbh.is_valid());
 
 	// For the max-tree, childhood maps "increasing level":
-	p_array<mln_psite(I)> s = data::sort_psites_increasing(f);
+	p_array<mln_psite(I)> s = mln::data::sort_psites_increasing(f);
 	mln_ch_value(I, mln_psite(I)) output = compute_parent(f, nbh, s);
 
 	trace::exiting("morpho::tree::max");

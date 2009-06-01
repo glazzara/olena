@@ -1,3 +1,37 @@
+2009-06-01 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Fix tests.
+
+	* mln/core/site_set/p_bgraph.hh,
+	* mln/core/site_set/p_bgraph_piter.hh: move...
+	* trash/p_bgraph.hh,
+	* trash/p_bgraph_piter.hh: ... here.
+
+	* mln/core/site_set/essential.hh: remove bgraph related includes.
+
+	* mln/morpho/tree/max.hh,
+	* mln/world/binary_2d/subsample.hh: disambiguate reference to data
+	namespace.
+
+	* tests/img/lena_ascii.pbm,
+	* tests/img/lena_ascii.pgm,
+	* tests/img/lena_raw.pbm,
+	* tests/img/lena_raw.pgm: new test images.
+
+	* tests/io/pbm/pbm_ascii.cc,
+	* tests/io/pgm/pgm_ascii.cc: fix wrong includes.
+
+	* tests/world/binary_2d/Makefile.am: comment non existing
+	test.
+
+	* doc/figures/figures.mk,
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: update generated file lists.
+
+	* tests/Makefile.am: add test images as extra dist files.
+
+	* tests/convert/Makefile.am: remove to_hsl from xfail tests list.
+
 2009-05-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Move obsolete image types and clock_nbh2d into trash.

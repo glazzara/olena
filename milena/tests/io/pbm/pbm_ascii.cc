@@ -41,17 +41,15 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
 
-#include <mln/level/compare.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/literal/colors.hh>
-
-#include "tests/data.hh"
-
-#include <mln/level/convert.hh>
 
 #include <mln/core/image/dmorph/image_if.hh>
 
 #include <mln/make/box2d.hh>
+
+#include "tests/data.hh"
 
 int main()
 {

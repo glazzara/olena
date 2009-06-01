@@ -63,3 +63,15 @@ TESTS = $(check_PROGRAMS)
 
 pretty_check:
 	$(top_srcdir)/milena/tests/tools/pretty_check.sh
+
+
+EXTRA_DIST = 					\
+  img/lena_ascii.pbm 				\
+  img/lena_ascii.pgm				\
+  img/lena_raw.pbm				\
+  img/lena_raw.pgm				\
+  img/test_bw.tif				\
+  img/test_gl.tif				\
+  img/test_rgb8.tif				\
+  img/tiny.png
+
