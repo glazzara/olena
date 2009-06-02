@@ -181,13 +181,13 @@ namespace mln
 
 
       template <typename R_, typename E>
-      struct selector_p2_
+      struct selector_from_result_
       {
 	typedef mlc_unqualif(R_) R;
 	enum { res = tag_<R>::value };
 	typedef typename helper_selector_<p_, res, E>::ret ret;
       private:
-	selector_p2_();
+	selector_from_result_();
       };
 
     } // end of namespace mln::fun::internal

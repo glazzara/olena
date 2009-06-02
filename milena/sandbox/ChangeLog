@@ -1,3 +1,12 @@
+2009-06-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Propagate fun selector renaming.
+
+	* jardonnet/perl/test/p2v/ternary.hh,
+	* jardonnet/perl/test/internal/selector.hh
+	(selector_p2_): Rename as...
+	(selector_from_result_): ...this.
+
 2009-06-01  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Propagate suppression of intermediate function concepts.
