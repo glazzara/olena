@@ -124,7 +124,8 @@ int main(int argc, char* argv[])
   L nbasins;
   mln_VAR(wst, morpho::watershed::flooding(d_clo, world::inter_pixel::e2e(), nbasins));
 
-  std::cout << "nbasins: " << nbasins << std::endl;
+
+  std::cout << nbasins << std::endl;
 
 
   mln_VAR(w_all, wst.unmorph_());

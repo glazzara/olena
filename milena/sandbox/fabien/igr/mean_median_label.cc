@@ -86,6 +86,18 @@ namespace mln
 		  filename);
   }
 
+  template <typename I>
+  void io_save_edges_float(const I& input,
+			   value::int_u8 bg,
+			   const std::string& filename)
+  {
+    mln_ch_value(I, value::int_u8) output = data::stretch(int_u8(), input);
+    io::pgm::save(world::inter_pixel::display_edge(output.unmorph_(),
+						   bg,
+						   3),
+		  filename);
+  }
+
 } // end of namespace mln
 
 
@@ -96,29 +108,34 @@ namespace mln
 
 int usage(const char* bin)
 {
-  std::cout << "Usage: " << bin << " input.dump wst.dump" << std::endl;
+  std::cout << "Usage: " << bin << " dist.dump wst.dump nbasins" << std::endl;
   return 1;
 }
 
 int main(int argc, char* argv[])
 {
-  if (argc != 3)
+  if (argc != 4)
     return usage(argv[0]);
 
+  label_16 nbasins = atoi(argv[3]);
 
   // Initialization.
   typedef float input_type;
-  image2d<input_type> input;
-  io::dump::load(input, argv[1]);
 
-  image2d<label_16> wst;
-  io::dump::load(input`, argv[1]);
+  image2d<int_u12> dist_input;
+  io::dump::load(dist_input, argv[1]);
+  mln_VAR(dist, dist_input | world::inter_pixel::is_separator());
+
+  image2d<label_16> wst_input;
+  io::dump::load(wst_input, argv[2]);
+  mln_VAR(wst, wst_input | world::inter_pixel::is_separator());
+
 
 
   // Mean distance.
 
-  accu::mean<E_TYPE> accu_mean;
-  util::array<float> means = labeling::compute(accu_mean, e, wst, nbasins);
+  accu::mean<input_type> accu_mean;
+  util::array<float> means = labeling::compute(accu_mean, dist, wst, nbasins);
 
   // Display.
   {
@@ -127,13 +144,12 @@ int main(int argc, char* argv[])
     initialize(ima_means, wst);
     data::paste(wst, ima_means);
     for (unsigned i = 1; i < means.nelements(); ++i)
-      data::fill((ima_means | pw::value(ima_means) == pw::cst(i)).rw(), means[i]);
-    mln_VAR(display_means, world::inter_pixel::display_edge(ima_means.unmorph_(), 0.0, 3));
-    io::pgm::save(level::stretch(int_u8(), display_means), "means.pgm");
+      data::fill((ima_means | pw::value(ima_means) == pw::cst(i)).rw(), (unsigned) means[i]);
+    io_save_edges_float(ima_means, 0u, "means.pgm");
   }
 
-  typedef accu::mean<int_u12,float,int_u12> A;
-  util::array<int_u12> m = labeling::compute(A(), d, wst, nbasins);
+  typedef accu::mean<input_type> A;
+  util::array<input_type> m = labeling::compute(A(), dist, wst, nbasins);
 
   {
     util::array<int_u8> m_(nbasins.next());
@@ -141,14 +157,12 @@ int main(int argc, char* argv[])
     for (unsigned l = 1; l <= nbasins; ++l)
     {
       m_[l] = m[l] / 16;
-      if (m_[l] < 2) m_[l] == 2;
+      if (m_[l] < 2u)
+	m_[l] = 2u;
       // basin <=> 2..255
     }
-    mln_VAR(d_m, level::transform(wst, m_));
-    mln_VAR(out, world::inter_pixel::display_edge(d_m.unmorph_(),
-	  0, // background <=> 0
-	  3));
-    io::pgm::save(out, "dist_mean.pgm");
+    mln_VAR(d_m, data::transform(wst, m_));
+    io_save_edges_float(d_m, 0u, "dist_mean.pgm");
   }
 
 
@@ -157,7 +171,7 @@ int main(int argc, char* argv[])
   util::array<accu::stat::deviation<float> > arr_dev;
   for (unsigned i = 0; i < means.nelements(); ++i)
     arr_dev.append(accu::stat::deviation<float> (means[i]));
-  util::array<float> deviations = labeling::compute(arr_dev, e, wst, nbasins);
+  util::array<float> deviations = labeling::compute(arr_dev, dist, wst, nbasins);
 
   // Display.
   {
@@ -167,8 +181,7 @@ int main(int argc, char* argv[])
     data::paste(wst, ima_dev);
     for (unsigned i = 1; i < deviations.nelements(); ++i)
       data::fill((ima_dev | pw::value(ima_dev) == pw::cst(i)).rw(), deviations[i]);
-    mln_VAR(display_dev, world::inter_pixel::display_edge(ima_dev.unmorph_(), 0.0, 3));
-    io::pgm::save(level::stretch(int_u8(), display_dev), "dev.pgm");
+    io_save_edges_float(ima_dev, 0u, "dev.pgm");
   }
 
 

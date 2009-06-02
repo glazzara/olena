@@ -1,3 +1,14 @@
+2009-06-02  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add mean images output.
+	* fabien/igr/check_dist.sh: New script for testing dist_edges.
+	* fabien/igr/check_edges.sh: New script for testing
+	distance and watershed computation.
+	* fabien/igr/dist_edges.cc: Small update.
+	* fabien/igr/mean_median_label.cc: Output images.
+	* fabien/igr/tmax.sh: New script for testing.
+	* fabien/igr/wst_edges.cc: Small update.
+
 2009-06-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Propagate fun selector renaming.

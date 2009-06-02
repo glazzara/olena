@@ -95,7 +95,7 @@ struct dist_t : Function_vv2v<dist_t>
 
     res /= std::max(sum_v1, sum_v2);
     res = 1 - res;
-    res = res * 4095;
+    res = (res * 4095) + 0.49;
 
     return (int) res;
   }
@@ -123,7 +123,7 @@ struct dist2_t : Function_vv2v<dist2_t>
 
     res = res / v1.nelements();
     res = 1 - res;
-    res = res * 4095;
+    res = (res * 4095) + 0.49;
 
     return (int) res;
   }
@@ -152,7 +152,7 @@ struct dist3_t : Function_vv2v<dist3_t>
       res = min / max;
 
     res = 1 - res;
-    res = res * 4095;
+    res = (res * 4095) + 0.49;
 
     return (int) res;
   }
@@ -181,7 +181,7 @@ struct dist4_t : Function_vv2v<dist4_t>
 
     res = res / v1.nelements();
     //res = 1 - res;
-    res = res * 4095;
+    res = (res * 4095) + 0.49;
 
     return (int) res;
   }
