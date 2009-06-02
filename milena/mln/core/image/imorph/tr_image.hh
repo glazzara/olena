@@ -31,7 +31,7 @@
 
 /// \file mln/core/image/imorph/tr_image.hh
 ///
-/// Definition of the morpher mln::tr_image presenting an image
+/// \brief Definition of the morpher mln::tr_image presenting an image
 /// through a (bijective) transformation.
 
 # include <cmath>
@@ -39,6 +39,7 @@
 # include <mln/core/internal/image_identity.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/value/set.hh>
+
 
 namespace mln
 {
@@ -126,7 +127,7 @@ namespace mln
     using super_::has;
 
     /// Test if a pixel value is accessible at \p v.
-    bool has(const mln::algebra::vec<I::psite::dim, float>& v) const;
+    bool has(const mln::algebra::vec<site::dim, float>& v) const;
 
     /// Read-only access of pixel value at point site \p p.
     /// Mutable access is only OK for reading (not writing).
@@ -186,12 +187,12 @@ namespace mln
   template <typename S, typename I, typename T>
   inline
   bool
-  tr_image<S,I,T>::has(const algebra::vec<I::psite::dim, float>& v) const
+  tr_image<S,I,T>::has(const algebra::vec<site::dim, float>& v) const
   {
     mln_psite(I) p;
-    algebra::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
-    for (unsigned i = 0; i < I::point::dim; ++i)
-      p[i] = static_cast<int>(round(v2[i]));
+    algebra::vec<I::site::dim, float> v2 = this->data_->tr_.inv()(v);
+    for (unsigned i = 0; i < I::site::dim; ++i)
+      p[i] = static_cast<int>(v2[i]);
     return this->delegatee_().has(p);
   }
 
@@ -201,7 +202,7 @@ namespace mln
   mln_value(I)
   tr_image<S,I,T>::operator()(const psite& p) const
   {
-    algebra::vec<I::psite::dim, float> v = p.to_vec();
+    algebra::vec<site::dim, float> v = p.to_vec();
     return this->data_->ima_(this->data_->tr_.inv()(v));
   }
 
@@ -210,7 +211,7 @@ namespace mln
   mln_value(I)
   tr_image<S,I,T>::operator()(const psite& p)
   {
-    algebra::vec<I::psite::dim, float> v = p.to_vec();
+    algebra::vec<site::dim, float> v = p.to_vec();
     return this->data_->ima_(this->data_->tr_.inv()(v));
   }
 

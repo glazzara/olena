@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,17 +31,17 @@
 
 /// \file mln/core/internal/check/image_fastest.hh
 ///
-/// Class that statically checks the interface of fastest
+/// \brief Class that statically checks the interface of fastest
 /// images.
 ///
 /// \todo Check and convert p in index_of_point towards E::psite.
-
 
 # include <mln/metal/bool.hh>
 # include <mln/core/macros.hh>
 # include <mln/core/trait/pixter.hh>
 # include <mln/core/trait/qlf_value.hh>
 # include <mln/core/internal/force_exact.hh>
+
 
 namespace mln
 {
@@ -121,8 +121,10 @@ namespace mln
 	unsigned (E::*m8)() const = & E::nelements;
 	m8 = 0;
 
+#  if defined(__GNUC__) && __GNUC__ >= 3
 	unsigned (E::*m9)(const psite& p) const = & E::index_of_point;
 	m9 = 0;
+#  endif
 
 	// FIXME: how to check that qixter are defined when W is unknown!
       }

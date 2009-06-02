@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,13 @@
 #ifndef MLN_CORE_CONCEPT_PSEUDO_SITE_HH
 # define MLN_CORE_CONCEPT_PSEUDO_SITE_HH
 
-/*! \file mln/core/concept/pseudo_site.hh
- *
- * \brief Definition of the concept of mln::Pseudo_Site.
- */
+/// \file mln/core/concept/pseudo_site.hh
+///
+/// \brief Definition of the concept of mln::Pseudo_Site.
+///
+/// \todo Inconsistency: "if_possible::change_target" expects
+/// "::target_t" from a pseudo-site, whereas the concept checks for
+/// "::target".
 
 # include <mln/core/concept/site_proxy.hh>
 # include <mln/metal/is_a.hh>

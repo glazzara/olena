@@ -32,6 +32,9 @@
 /// \file mln/core/internal/graph_psite_base.hh
 ///
 /// Base implementation for graph based psites.
+///
+/// \todo Do not compile when id_t is unsigned (so the conversion
+/// operator is defined twice!)
 
 # include <mln/core/internal/pseudo_site_base.hh>
 
@@ -309,7 +312,7 @@ namespace mln
 
   template <typename S, typename E>
   inline
-  graph_psite_base<S,E>::operator unsigned() const
+  graph_psite_base<S,E>::operator unsigned() const // HERE
   {
     mln_precondition(is_valid());
     return elt_.id();

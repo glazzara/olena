@@ -31,7 +31,9 @@
 
 /// \file mln/binarization/threshold.hh
 ///
-/// Threshold the contents of an image into another binary one.
+/// \brief Threshold an image.
+///
+/// \todo Rename and/or remove (that is this?)
 
 # include <mln/core/concept/function.hh>
 # include <mln/data/transform.hh>
@@ -52,7 +54,7 @@ namespace mln
     /// for_all(p), output(p) = fun(p)
     template <typename I, typename F>
     inline
-    mln_concrete_ch_value(I, bool)
+    mln_ch_value(I, bool)
     binarization(const Image<I>& input, const Function_v2b<F>& fun);
 
 
@@ -63,11 +65,11 @@ namespace mln
 
       template <typename I, typename F>
       inline
-      mln_concrete_ch_value(I, bool)
+      mln_ch_value(I, bool)
       binarization_(const I& input, const Function_v2b<F>& fun)
       {
 	trace::entering("binarization::impl::binarization_");
-	mln_concrete_ch_value(I, bool) output(input.domain());
+	mln_ch_value(I, bool) output(input.domain());
 
 	output = data::transform(input, fun);
 
@@ -83,13 +85,13 @@ namespace mln
 
     template <typename I, typename F>
     inline
-    mln_concrete_ch_value(I, bool)
+    mln_ch_value(I, bool)
     binarization(const Image<I>& input, const Function_v2b<F>& fun)
     {
       trace::entering("binarization::binarization");
       mln_precondition(exact(input).is_valid());
 
-      mln_concrete_ch_value(I, bool) output(exact(input).domain());
+      mln_ch_value(I, bool) output(exact(input).domain());
       output = impl::binarization_(exact(input), fun);
 
       trace::exiting("binarization::binarization");

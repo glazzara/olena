@@ -30,8 +30,10 @@
 
 /// \file mln/canvas/browsing/internal/graph_first_search.hh
 ///
-/// Depth-limited search algorithm for graph.
-/// Browse over all vertices for each component.
+/// \brief Depth-limited search algorithm for graph.  Browse over all
+/// vertices for each component.
+///
+/// \todo Code "next(const S& stack)".
 
 /*!
 ** The functor should provide the following methods:
@@ -126,8 +128,9 @@ namespace mln
 	util::vertex_id_t
 	next(const S& stack)
 	{
+	  mln_assertion(0);
 	  /// Not defined yet!
-	  mlc_abort(S)::check();
+	  // mlc_abort(S)::check();
 	  return 0;
 	}
 

@@ -67,21 +67,36 @@ namespace mln
   } // end of namespace trait
 
 
+  namespace internal
+  {
+
+    template <typename I>
+    struct p_image_site_set // Hack to help g++-2.95.
+    {
+    private:
+      typedef mln_domain(I) S_;
+      typedef fun::eq_v2b_expr_< pw::value_<I>, pw::cst_<bool> > F_;
+    public:
+     typedef p_if<S_, F_> ret;
+    };
+    
+
+  } // end of namespace internal
+
+
   /// \brief Site set based on an image of Booleans.
   ///
   /// \ingroup modsitesetsparse
   template <typename I>
   class p_image : public internal::site_set_base_< mln_psite(I), p_image<I> >
   {
-    typedef mln_domain(I) S_;
-    typedef fun::eq_v2b_expr_< pw::value_<I>, pw::cst_<bool> > F_;
   public:
 
     /// Equivalent site_set type.
-    typedef p_if<S_, F_> S;
+    typedef typename internal::p_image_site_set<I>::ret S;
 
     /// Conversion towards the equivalent site set.
-    operator S() const;
+    operator typename internal::p_image_site_set<I>::ret () const;
 
 
     /// Element associated type.
@@ -159,7 +174,7 @@ namespace mln
 
   template <typename I>
   inline
-  p_image<I>::operator S() const
+  p_image<I>::operator typename internal::p_image_site_set<I>::ret () const
   {
     S tmp(ima_.domain(), pw::value(ima_) == pw::cst(true));
     return tmp;

@@ -31,7 +31,7 @@
 
 /// \file mln/accu/transform_diagonal.hh
 ///
-/// Run an accumulator over a diagonal.
+/// \brief Run an accumulator over a diagonal.
 ///
 /// \todo Split dispatch and impl.
 ///
@@ -114,7 +114,8 @@ namespace mln
 	A accu;
 
 	mln_psite(I) p;
-	enum { dim = I::site::dim };
+	typedef mln_site(I) S; // Help g++-2.95.
+	enum { dim = S::dim };
 
 	window2d win_left, win_right;
 

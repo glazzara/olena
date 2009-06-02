@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CORE_CATEGORY_HH
 # define MLN_CORE_CATEGORY_HH
 
-/*! \file mln/core/category.hh
- *
- * \brief Definition of the category holder type.
- */
+/// \file mln/core/category.hh
+///
+/// \brief Definition of the category holder type.
 
 # include <mln/metal/equal.hh>
 
@@ -80,23 +80,34 @@ namespace mln
   namespace internal
   {
 
-    template < typename Category, typename T >
-    struct helper_super_category_;
-
-    template < template <class> class Category, typename T >
-    struct helper_super_category_< Category<void>, T >
-    {
-      typedef typename Category<void>::super ret; // One super category: keep it.
-    };
+    // The code above could be merged into a couple of structures.
+    // Yet g++-2.95 needs help so we first decompose Category<S>
+    // into (Category, S) then we solve.
 
     template < template <class> class Category, typename S, typename T >
-    struct helper_super_category_< Category<S>, T >
+    struct helper_super_category_solve_
       :
       private metal::equal< typename Category<void>::super, void* >::check_t
     {
       // New case.
       typedef S ret;
     };
+
+    template < template <class> class Category, typename T >
+    struct helper_super_category_solve_< Category, void, T >
+    {
+      typedef typename Category<void>::super ret; // One super category: keep it.
+    };
+
+    template < typename Category, typename T >
+    struct helper_super_category_;
+
+    template < template <class> class Category, typename S, typename T >
+    struct helper_super_category_< Category<S>, T > : helper_super_category_solve_< Category, S, T >
+    {
+    };
+
+
 
     // For bwd in-compatibility.
     template < template <class> class Category, typename T >

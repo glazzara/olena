@@ -31,7 +31,12 @@
 
 /// \file mln/core/point.hh
 ///
-/// Definition of the generic point class mln::point.
+/// \brief Definition of the generic point class mln::point.
+///
+/// \todo the structure subject_point_impl is useless: first it is
+/// only used for 3D points (and it can be usefull for other points);
+/// second there is a room for the couple of methods (in the
+/// subject_impl specializations defined in core/alias/point*d.hh).
 
 # include <mln/core/def/coord.hh>
 # include <mln/core/concept/proxy.hh>
@@ -75,6 +80,17 @@ namespace mln
   } // end of namespace mln::convert
 
 
+
+  namespace internal
+  {
+    // This is a hack so that g++-2.95 can compile the method
+    // "point<G,C>::operator vec() const".
+    template <typename G, typename C>
+    struct vec_of_point
+    {
+      typedef algebra::vec<G::dim, float> ret;
+    };
+  }
 
   /// Generic point class.
   ///
@@ -176,7 +192,7 @@ namespace mln
      https://trac.lrde.org/olena/changeset/1224#file2
      https://www.lrde.epita.fr/pipermail/olena-patches/2007-October/001592.html
   */
-    operator algebra::vec<G::dim, float> () const;
+    operator typename internal::vec_of_point<G,C>::ret () const; // Hack to help g++-2.95.
 
     /// Explicit conversion towards mln::algebra::vec.
     vec to_vec() const;
@@ -207,7 +223,7 @@ namespace mln
     struct subject_point_impl< point<G,C>, E >
     {
       typename point<G,C>::vec to_vec() const;
-      operator algebra::vec<G::dim, float>() const;
+      operator typename point<G,C>::vec () const; // Hack to help g++-2.95.
 
     private:
       const E& exact_() const;
@@ -224,6 +240,7 @@ namespace mln
 
   template <typename C>
   const util::yes& cut_(const point<grid::tick,C>& p);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -430,7 +447,7 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  point<G,C>::operator algebra::vec<G::dim, float> () const
+  point<G,C>::operator typename internal::vec_of_point<G,C>::ret () const // Hack to help g++-2.95.
   {
     return to_vec();
   }
@@ -521,7 +538,7 @@ namespace mln
 
     template <typename G, typename C, typename E>
     inline
-    subject_point_impl< point<G,C>, E >::operator algebra::vec<G::dim, float>() const
+    subject_point_impl< point<G,C>, E >::operator typename point<G,C>::vec () const // Hack to help g++-2.95.
     {
       return exact_().get_subject();
     }
@@ -530,7 +547,7 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  algebra::vec<point<G,C>::dim - 1, C>
+  const algebra::vec<point<G,C>::dim - 1, C>&
   cut_(const point<G,C>& p)
   {
     return *(algebra::vec<point<G,C>::dim - 1, C>*)(& p.to_vec());

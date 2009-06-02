@@ -40,7 +40,8 @@ template <typename I_, typename F>
 struct assign_browsing_functor
 {
   typedef I_ I;
-  enum { dim = I::site::dim };
+  typedef mln_site(I) S;
+  enum { dim = S::dim };
 
   typedef assign_browsing_functor<I, F> self;
   typedef mln_deduce(I, psite, delta) dpsite;

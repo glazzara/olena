@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,12 +31,14 @@
 
 /// \file mln/core/site_set/p_array.hh
 ///
-/// Definition of a point set class based on std::vector.
+/// \brief Definition of a point set class based on std::vector.
 ///
 /// \todo Add a facade to index_of_in so that it dispatches when
 /// calling it with Object<p_array_site>.
 ///
 /// \todo Use util::index (instead of int) as many times as possible.
+///
+/// \todo See also the 'todo' entry in mln/core/concept/pseudo_site.hh.
 
 # include <vector>
 
@@ -187,6 +189,9 @@ namespace mln
     // This associated type is important to know that this particular
     // pseudo site knows the site set it refers to.
     typedef S target;
+
+    typedef S target_t; // To please g++-2.95.
+    // Also read the 'todo' in mln/core/concept/pseudo_site.hh.
 
     // As a Proxy:
     const element& subj_();

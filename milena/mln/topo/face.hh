@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,7 +30,8 @@
 # define MLN_TOPO_FACE_HH
 
 /// \file mln/topo/face.hh
-/// Face of a complex.
+///
+/// \brief Face of a complex.
 
 # include <iostream>
 # include <vector>
@@ -357,7 +359,7 @@ namespace mln
     face<D>::lower_dim_adj_faces() const
     {
       // FIXME: Warning: might prevent any attempt to build a complex<0>.
-      metal::bool_< D != 0 >::check();
+      metal::bool_<( D != 0 )>::check();
 
       return n_ > 0 ?
 	internal::lower_dim_adj_faces_if_dim_matches_<D, D>()(*this) :
@@ -370,7 +372,7 @@ namespace mln
     face<D>::higher_dim_adj_faces() const
     {
       // FIXME: Warning: might prevent any attempt to build a complex<0>.
-      metal::bool_< D != 0 >::check();
+      metal::bool_<( D != 0 )>::check();
 
       return n_ < D ?
 	internal::higher_dim_adj_faces_if_dim_matches_<D - 1, D>()(*this) :

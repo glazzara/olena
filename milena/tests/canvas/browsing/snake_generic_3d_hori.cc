@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,20 +26,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/canvas/browsing/snake_generic_3d_hori.cc
- *
- * \brief Tests on mln::canvas::browsing::snake_generic.
- */
+/// \file tests/canvas/browsing/snake_generic_3d_hori.cc
+///
+/// \brief Tests on mln::canvas::browsing::snake_generic.
 
 #include <mln/core/image/image3d.hh>
 #include <mln/canvas/browsing/snake_generic.hh>
 #include <mln/fun/p2v/iota.hh>
 #include <mln/debug/println.hh>
 
+
 template <typename I, typename F>
 struct assign_browsing_functor
 {
-  enum { dim = I::site::dim };
+  typedef mln_site(I) S;
+  enum { dim = S::dim };
 
   typedef assign_browsing_functor<I, F> self;
   typedef mln_deduce(I, psite, delta) dpsite;

@@ -28,17 +28,19 @@
 
 /// \file tests/core/image/imorph/tr_image.cc
 ///
-/// Tests on mln::tr_image.
-/// FIXME: write a real test!
-
+/// \brief Tests on mln::tr_image.
+///
+/// \todo Write an effective test!
 
 #include <iostream>
+
 #include <mln/fun/x2x/rotation.hh>
 #include <mln/core/image/image3d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/core/image/imorph/tr_image.hh>
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
+
 
 int main()
 {

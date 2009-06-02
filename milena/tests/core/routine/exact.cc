@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,13 +26,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/routine/exact.cc
- *
- *  \brief Tests on mln::exact.
- */
+/// \file tests/core/routine/exact.cc
+///
+/// \brief Tests on mln::exact.
 
 #include <typeinfo>
 #include <mln/core/routine/exact.hh>
+
 
 
 struct test : mln::Object< test >
@@ -39,11 +40,164 @@ struct test : mln::Object< test >
 };
 
 
+namespace mln
+{
+
+  template <typename E>
+  struct Base : Object<E>
+  {
+    void m()
+    {
+      int** i = exact(this)->m_impl();
+    }
+    void m() const
+    {
+      int* i = exact(this)->m_impl();
+    }
+  };
+
+  struct concrete : Base< concrete >
+  {
+    int** m_impl() { return 0; }
+    int* m_impl() const { return 0; }
+  };
+
+}
+
+
 int main()
 {
   using namespace mln;
 
-  test t;
-  Object<test>& t_ = t;
-  mln_assertion(typeid(exact(t_)).name() == typeid(exact(t)).name());
+  {
+
+    concrete c;
+    Base<concrete>& b = c;
+    b.m();
+    const Base<concrete>& bb = c;
+    bb.m();
+
+  }
+
+
+// -----------------------------------
+
+//   test t;
+//   Object<test>& t_ = t;
+//   mln_assertion(typeid(exact(t_)).name() == typeid(exact(t)).name());
+
+//   {
+//     int i;
+//     exact(i);  // `int' from `float'
+//     exact(&i); // `int *' from `const double'
+//   }
+//   {
+//     const int j = 0;
+//     exact(j);  // `int' from `const double'
+//     exact(&j); // `const int *' from `const double
+//   }
+
+//   {
+//     int i;
+//     int& j = i;
+//     exact(j);  // `int' from `float'
+//     exact(&j); // `int *' from `const double'
+//   }
+//   {
+//     int i;
+//     const int& j = i;
+//     exact(j);  // `int' from `const double'
+//     exact(&j); // `const int *' from `const double'
+//   }
+
+//   {
+//     int* i;
+//     exact(i);  // `int *' from `float'
+//     exact(*i);  // `int' from `float'
+//      int *const j = 0;
+//     exact(j); // `int *' from `const double'
+//      exact(*j); `int' from `float'
+//   }
+
+//   {
+//     const int* i;
+//     exact(i);  // `const int *' from `float'
+//     exact(*i);  // `int' from `const double'
+//     const int *const j = 0;
+//     exact(j); // `const int *' from `const double'
+//     exact(*j); `int' from `const double'
+//   }
+
+
+// -----------------------------------
+
+
+//   {
+//     int i;
+//     exact(&i); // `int *' from `const double'
+//   }
+//   {
+//     const int j = 0;
+//     exact(j);  // `int' from `const double'
+//     exact(&j); // `const int *' from `const double
+//   }
+
+//   {
+//     int i;
+//     int& j = i;
+//     exact(&j); // `int *' from `const double'
+//   }
+//   {
+//     int i;
+//     const int& j = i;
+//     exact(j);  // `int' from `const double'
+//     exact(&j); // `const int *' from `const double'
+//   }
+
+//   {
+//     int *const j = 0;
+//     exact(j); // `int *' from `const double'
+//   }
+
+//   {
+//     const int* i;
+//     exact(*i);  // `int' from `const double'
+//     const int *const j = 0;
+//     exact(j); // `const int *' from `const double'
+//     exact(*j); // `int' from `const double'
+//   }
+
+
+// -----------------------------------
+
+
+//   {
+//     int* i;
+//     exact(i);
+//   }
+
+//   {
+//     int i;
+//     exact(i);  // `int' from `float'
+//   }
+
+//   {
+//     int i;
+//     int& j = i;
+//     exact(j);  // `int' from `float'
+//   }
+
+//   {
+//     int* i;
+//     exact(i);  // `int *' from `float'
+//     exact(*i);  // `int' from `float'
+//      int *const j = 0;
+//      exact(*j); // `int' from `float'
+//   }
+
+//   {
+//     const int* i;
+//     exact(i);  // `const int *' from `float'
+//   }
+
 }

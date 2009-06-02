@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,6 +36,7 @@
 #include <mln/accu/site_set/rectangularity.hh>
 #include <mln/set/compute.hh>
 
+
 int main()
 {
   using namespace mln;
@@ -59,7 +60,7 @@ int main()
 
   {
     box2d b(2,2);
-    float r = set::compute(accu::site_set::rectangularity<point2d>(), b);
+    float r = mln::set::compute(accu::site_set::rectangularity<point2d>(), b);
     mln_assertion(r == 1.0f);
   }
 

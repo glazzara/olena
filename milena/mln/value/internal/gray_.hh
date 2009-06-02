@@ -232,7 +232,7 @@ namespace mln
       inline
       long convert(int val)
       {
-	using typename mln::metal::int_;
+	using mln::metal::int_;
  	typedef mlc_max(int_<n_dest - n_src> , int_<n_src - n_dest>) m;
 
 	if (n_dest == n_src)

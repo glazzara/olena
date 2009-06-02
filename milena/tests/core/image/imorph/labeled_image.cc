@@ -28,22 +28,18 @@
 
 /// \file tests/core/image/imorph/labeled_image.cc
 ///
-/// Tests on mln::labeled_image.
-
+/// \brief Tests on mln::labeled_image.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/imorph/labeled_image.hh>
 #include <mln/core/routine/duplicate.hh>
-
 #include <mln/make/image.hh>
-
 #include <mln/make/box2d.hh>
-
 #include <mln/value/label_8.hh>
-
 #include <mln/accu/pair.hh>
 #include <mln/accu/center.hh>
 #include <mln/accu/bbox.hh>
+
 
 
 static const unsigned bboxes_1[][4] = { { 1,1, 1,1 },
@@ -56,7 +52,6 @@ static const unsigned bboxes_2[][4] = { { 1,1, 1,1 },
 					{ 2,2, 2,2 },
 					{ 2,0, 2,1 },
 					{ 0,0, 0,1 } };
-
 
 
 
@@ -88,7 +83,7 @@ int main()
 			      { 0, 1, 0 },
 			      { 2, 2, 4 } };
 
-  typedef  image2d<label_8> lbl_t;
+  typedef image2d<label_8> lbl_t;
   lbl_t lbl = make::image(lbl_values);
 
   labeled_image<lbl_t> lbl_i(lbl, 4);
@@ -106,5 +101,4 @@ int main()
   lbl_i.relabel(f);
 
   test_image(lbl_i, bboxes_2);
-
 }

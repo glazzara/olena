@@ -50,8 +50,8 @@ using namespace mln::value;
 
 int main()
 {
-  using typename value::int_u8;
-  using typename value::rgb8;
+  using value::int_u8;
+  using value::rgb8;
 
   {
     /* FIXME: Under GNU/Linux or under any *nix OS (i.e. under Unix or

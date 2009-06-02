@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,9 +29,9 @@
 #ifndef MLN_CORE_INTERNAL_EXACT_HH
 # define MLN_CORE_INTERNAL_EXACT_HH
 
-/*! \file mln/core/internal/exact.hh
- * \brief Meta-code for the mln::exact downcast routines.
- */
+/// \file mln/core/internal/exact.hh
+///
+/// \brief Meta-code for the mln::exact downcast routines.
 
 
 /// Forward declaration.
@@ -88,7 +89,8 @@ namespace mln
     struct exact_
     {
       enum { id = sizeof(exact_selector_(make_<T>::ptr())) };
-      typedef typename exact_ret_<id, T>::ret ret;
+      typedef exact_ret_<id, T> helper;
+      typedef typename helper::ret ret;
       static ret* run(T* t)
       {
 	return exact_run_(t, t);
@@ -99,7 +101,8 @@ namespace mln
     struct exact_<const T>
     {
       enum { id = sizeof(exact_selector_(make_<T>::ptr())) };
-      typedef const typename exact_ret_<id, T>::ret ret;
+      typedef exact_ret_<id, T> helper;
+      typedef const typename helper::ret ret;
       static ret* run(const T* t)
       {
 	return exact_run_((T*)t, (T*)t);
@@ -108,6 +111,15 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+    template <typename T>
+    inline
+    T*
+    make_<T>::ptr() // This piece of code is defined to prevent an ICE from g++-2.95.
+    {
+      T* tmp;
+      return tmp;
+    }
 
     template <typename E, typename T>
     inline

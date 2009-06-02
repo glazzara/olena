@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -27,7 +28,7 @@
 
 /// \file tests/canvas/browsing/snake_fwd.cc
 ///
-/// Tests on mln::canvas::browsing::snake_fwd.
+/// \brief Tests on mln::canvas::browsing::snake_fwd.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/canvas/browsing/snake_fwd.hh>
@@ -38,8 +39,8 @@
 template <typename I, typename F>
 struct assign_browsing_functor
 {
-  enum { dim = I::site::dim };
-
+  typedef mln_site(I) S;
+  enum { dim = S::dim };
 
   I input;
   F f;

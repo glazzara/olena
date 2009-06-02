@@ -31,8 +31,8 @@
 
 /// \file mln/labeling/compute.hh
 ///
-/// Compute accumulators onto sites/values of each labeled component
-/// of an image.
+/// \brief Compute accumulators onto sites/values of each labeled
+/// component of an image.
 ///
 /// \todo write fastest version.
 ///

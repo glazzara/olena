@@ -31,7 +31,7 @@
 
 /// \file mln/convert/to_p_array.hh
 ///
-/// Conversions to mln::p_array.
+/// \brief Conversions to mln::p_array.
 ///
 /// \todo Move these conversion in from_to related mechanisms.
 
@@ -59,7 +59,7 @@ namespace mln
 
     /// Convert an image \p img into a p_array.
     template <typename I>
-    p_array<mln_point(I)>
+    p_array<mln_psite(I)>
     to_p_array(const Image<I>& img);
 
 

@@ -31,7 +31,7 @@
 
 /// \file mln/accu/transform_directional.hh
 ///
-/// Run an accumulator over a particular direction.
+/// \brief Run an accumulator over a particular direction.
 ///
 /// \todo Split dispatch and impl.
 ///
@@ -123,7 +123,9 @@ namespace mln
 	const W& win;
 	mln_ch_value(I, mln_result(A)) output;
 	A accu;
-	enum { dim = I::site::dim };
+
+	typedef mln_site(I) S; // Help g++-2.95.
+	enum { dim = S::dim };
 
 	mln_psite(I) p;
 	unsigned dir;

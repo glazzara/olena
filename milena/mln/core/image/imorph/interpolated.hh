@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,7 +31,7 @@
 
 /// \file mln/core/image/imorph/interpolated.hh
 ///
-/// Definition of a morpher that makes an image become readable
+/// \brief Definition of a morpher that makes an image become readable
 /// with floating coordinates.
 ///
 /// \todo think having has(algebra::vec v) as a method
@@ -86,7 +86,7 @@ namespace mln
   struct interpolated :
     public mln::internal::image_identity< I, mln_domain(I), interpolated<I,F> >
   {
-
+    
     typedef mln::internal::image_identity< I, mln_domain(I),
 					   interpolated<I,F> > super_;
 
@@ -128,8 +128,8 @@ namespace mln
     /// Mutable access is only OK for reading (not writing).
     using super_::operator();
 
-    mln_value(I) operator()(const mln::algebra::vec<I::psite::dim, float>& v) const;
-    mln_value(I) operator()(const mln::algebra::vec<I::psite::dim, float>& v);
+    mln_value(I) operator()(const mln::algebra::vec<psite::dim, float>& v) const;
+    mln_value(I) operator()(const mln::algebra::vec<psite::dim, float>& v);
 
     const F<I> fun_;
   };
@@ -197,7 +197,7 @@ namespace mln
   template <typename I, template <class> class F>
   inline
   mln_value(I)
-  interpolated<I,F>::operator()(const mln::algebra::vec<I::psite::dim, float>& v) const
+  interpolated<I,F>::operator()(const mln::algebra::vec<psite::dim, float>& v) const
   {
     return fun_(v);
   }
@@ -205,7 +205,7 @@ namespace mln
   template <typename I, template <class> class F>
   inline
   mln_value(I)
-  interpolated<I,F>::operator()(const mln::algebra::vec<I::psite::dim, float>& v)
+  interpolated<I,F>::operator()(const mln::algebra::vec<psite::dim, float>& v)
   {
     return fun_(v);
   }

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,10 +31,11 @@
 
 /// \file mln/canvas/browsing/backdiagonal2d.hh
 ///
-/// Backdiagonal2d browsing of an image.
+/// \brief Backdiagonal2d browsing of an image.
 
 # include <mln/core/concept/browsing.hh>
 # include <mln/core/concept/image.hh>
+
 
 namespace mln
 {
@@ -88,6 +89,8 @@ namespace mln
       };
 
       extern const backdiagonal2d_t backdiagonal2d;
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 

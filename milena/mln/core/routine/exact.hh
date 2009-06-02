@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,9 +29,9 @@
 #ifndef MLN_CORE_ROUTINE_EXACT_HH
 # define MLN_CORE_ROUTINE_EXACT_HH
 
-/*! \file mln/core/routine/exact.hh
- * \brief Definition of the mln::exact downcast routines.
- */
+/// \file mln/core/routine/exact.hh
+///
+/// \brief Definition of the mln::exact downcast routines.
 
 /// FIXME: Doc!
 #define mln_exact(T)  typename mln::internal::exact_<T>::ret
@@ -38,8 +39,16 @@
 
 #include <mln/core/internal/exact.hh>
 
+
+
+# if defined(__GNUC__) && __GNUC__ < 3
+#  include <mln/core/internal/exact_gcc_2_95.hh>
+# else
+
+
 namespace mln
 {
+
 
   /*! \brief Exact cast routine for mln objects.
    *
@@ -63,9 +72,9 @@ namespace mln
   /// \}
 
 
-# ifndef MLN_INCLUDE_ONLY
+#  ifndef MLN_INCLUDE_ONLY
 
-  // exact
+  // Exact.
 
   template <typename T>
   inline
@@ -81,8 +90,12 @@ namespace mln
     return *exact(&ref);
   }
 
-# endif // ! MLN_INCLUDE_ONLY
+#  endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
+
+
+# endif // ! (defined(__GNUC__) && __GNUC__ < 3)
+
 
 #endif // ! MLN_CORE_ROUTINE_EXACT_HH

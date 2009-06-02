@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,7 +28,7 @@
 
 /// \file tests/accu/compute.cc
 ///
-/// Tests on mln::accu::compute.
+/// \brief Tests on mln::accu::compute.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -40,7 +40,7 @@
 int main()
 {
   using namespace mln;
-  using typename value::int_u8;
+  using value::int_u8;
 
   unsigned n = 3;
   image2d<int_u8> ima(n, n);

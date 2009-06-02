@@ -1,5 +1,59 @@
 2009-06-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Improve compatibility with g++-2.95.
+
+	* mln/core/internal/exact_gcc_2_95.hh: New.
+	* mln/core/routine/exact.hh: Calls the previous version if
+	g++ version is less than 3.
+	* mln/core/internal/exact.hh (make_): Add code so that
+	it passes g++-2.95.
+	* tests/core/routine/exact.cc: Augment.
+
+	* trash/fi_adaptor.cc,
+	* mln/topo/face.hh,
+	* mln/topo/internal/complex_iterator_base.hh,
+	* mln/core/site_set/p_array.hh,
+	* mln/core/site_set/p_image.hh,
+	* mln/core/image/imorph/tr_image.hh,
+	* mln/core/image/imorph/interpolated.hh,
+	* mln/core/image/imorph/labeled_image.hh,
+	* mln/core/point.hh,
+	* mln/core/concept/pseudo_site.hh,
+	* mln/core/category.hh,
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/internal/graph_psite_base.hh,
+	* mln/accu/transform_directional.hh,
+	* mln/accu/transform_diagonal.hh,
+	* mln/accu/transform_snake.hh,
+	* mln/value/internal/gray_.hh,
+	* mln/convert/to_p_array.hh,
+	* mln/binarization/binarization.hh,
+	* mln/binarization/threshold.hh,
+	* mln/canvas/browsing/backdiagonal2d.hh,
+	* mln/canvas/browsing/internal/graph_first_search.hh,
+	* mln/labeling/compute.hh,
+	* tests/core/image/imorph/tr_image.cc,
+	* tests/core/image/imorph/labeled_image.cc,
+	* tests/accu/site_set/rectangularity.cc,
+	* tests/accu/compute.cc,
+	* tests/canvas/browsing/fwd.cc,
+	* tests/canvas/browsing/snake_fwd.cc,
+	* tests/canvas/browsing/snake_vert.cc,
+	* tests/canvas/browsing/snake_generic_2d_vert.cc,
+	* tests/canvas/browsing/snake_generic_2d_hori.cc,
+	* tests/canvas/browsing/snake_generic_3d_vert.cc,
+	* tests/canvas/browsing/snake_generic_3d_hori.cc,
+	* tests/canvas/browsing/hyper_directional.cc,
+	* tests/canvas/browsing/diagonal2d.cc,
+	* tests/canvas/browsing/backdiagonal2d.cc: Better pass g++-2.95.
+
+	Misc.
+
+	* mln/trait/concrete.hh (mln_concrete_ch_value): Remove.
+	We have mln_ch_value.
+
+2009-06-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix g++-3.4 warnings.
 
 	* mln/world/binary_2d/enlarge.hh (do_threshold): Fix.

@@ -31,7 +31,7 @@
 
 /// \file mln/accu/transform_snake.hh
 ///
-/// Run an accumulator in a snake-like browsing.
+/// \brief Run an accumulator in a snake-like browsing.
 ///
 /// \todo Make it n-D.
 ///

@@ -31,14 +31,11 @@
 
 /// \file mln/core/image/imorph/labeled_image.hh
 ///
-/// Definition of a morpher on a labeled image.
+/// \brief Definition of a morpher on a labeled image.
 
 # include <mln/core/image/dmorph/image_if.hh>
-
 # include <mln/core/concept/function.hh>
-
 # include <mln/core/internal/image_identity.hh>
-
 # include <mln/core/site_set/box.hh>
 
 # include <mln/accu/pair.hh>
@@ -256,7 +253,7 @@ namespace mln
     mln_precondition(data::compute(accu::meta::max(), ima) == nlabels);
     this->data_ = new internal::data< labeled_image<I> >(ima, nlabels);
     this->update_();
-  }
+ }
 
   template <typename I>
   inline
@@ -340,9 +337,9 @@ namespace mln
   void
   labeled_image<I>::update_()
   {
-    this->data_->bboxes_
-      = labeling::compute(accu::meta::bbox(), this->data_->ima_,
-	  this->data_->nlabels_);
+    this->data_->bboxes_ = labeling::compute(accu::meta::bbox(),
+					     this->data_->ima_,
+					     this->data_->nlabels_);
   }
 
 

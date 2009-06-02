@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,7 +30,8 @@
 # define MLN_TOPO_INTERNAL_COMPLEX_ITERATOR_BASE_HH
 
 /** \file mln/topo/internal/complex_iterator_base.hh
-    Definition of an implementation (factoring) class for
+
+    \brief Definition of an implementation (factoring) class for
     iterators on complexes.
 
     Concrete iterators should inherit either from
@@ -56,6 +58,7 @@
 */
 
 # include <iosfwd>
+# include <iostream>
 
 # include <mln/core/concept/iterator.hh>
 # include <mln/topo/complex.hh>
