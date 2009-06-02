@@ -17,7 +17,7 @@ int main()
 {
 
   using namespace mln;
-  using typename value::int_u8;
+  using value::int_u8;
 
   int vs[5][10] = { {3, 3, 3, 3, 3,  4, 4, 4, 4, 4},
 		    {3, 4, 4, 4, 3,  4, 3, 3, 3, 4},

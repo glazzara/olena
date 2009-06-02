@@ -1,3 +1,22 @@
+2009-06-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Improve g++-2.95 compatibility.
+
+	* garrigues/fllt/test_fllt10.cc,
+	* garrigues/fllt/test_fllt12.cc,
+	* garrigues/fllt/test_fllt10_inv.cc,
+	* garrigues/fllt/test_fllt7.cc,
+	* garrigues/fllt/test_fllt9.cc,
+	* garrigues/fllt/test_flltb.cc,
+	* garrigues/fllt/test_fllt7_inv.cc,
+	* garrigues/fllt/test_fllt13.cc,
+	* garrigues/fllt/test_fllt15.cc,
+	* garrigues/fllt/test_fllt8.cc (using): Remove useless typename.
+	That makes files compile with g++-2.95.	
+	* inim/2009/binarization/binarization.hh
+	(mln_concrete_ch_value): Replace by...
+	(mln_ch_value): ...this.
+
 2009-06-02  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add mean images output.

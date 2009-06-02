@@ -17,7 +17,7 @@ int main()
 {
 
   using namespace mln;
-  using typename value::int_u8;
+  using value::int_u8;
 
   int ws[49] = {101, 101, 101, 191, 204, 255, 191,
                 101, 101, 191, 204, 204, 204, 204,

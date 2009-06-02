@@ -16,18 +16,18 @@ namespace mln
   namespace binarization
   {
     template<typename I, typename W>
-    mln_concrete_ch_value(I, bool)
+    mln_ch_value(I, bool)
     binarization(const Image<I>& input, const Window<W>& win, int strength);
 
 # ifndef MLN_INCLUDE_ONLY
     namespace impl
     {
       template<typename I, typename W>
-      mln_concrete_ch_value(I, bool)
+      mln_ch_value(I, bool)
       binarization_(const I& input, const W& win, int strength)
       {
 	trace::entering("binarisation_");
-	mln_concrete_ch_value(I, bool) output(input.domain());
+	mln_ch_value(I, bool) output(input.domain());
 
 	histo::data<mln_value(I)> hist = histo::compute (input);
 	image1d<std::size_t> hist_img = convert::to_image(hist);
@@ -58,13 +58,13 @@ namespace mln
     }
 
     template<typename I, typename W>
-    mln_concrete_ch_value(I, bool)
+    mln_ch_value(I, bool)
     binarization(const Image<I>& input, const Window<W>& win, int strength)
     {
       trace::entering("binarisation");
       mln_precondition(exact(input).is_valid());
 
-      mln_concrete_ch_value(I, bool) output(exact(input).domain());
+      mln_ch_value(I, bool) output(exact(input).domain());
       output = impl::binarization_(exact(input), exact(win), strength);
 
       trace::exiting("binarisation");
