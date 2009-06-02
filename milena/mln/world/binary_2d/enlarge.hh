@@ -30,7 +30,7 @@
 
 /// \file mln/world/binary_2d/enlarge.hh
 ///
-/// Enlarge 2^n times a binary image.
+/// \brief Enlarge 2^n times a binary image.
 ///
 /// \todo Make it much more generic.
 
@@ -97,7 +97,7 @@ namespace mln
 	int
 	do_threshold(float value)
 	{
-	  return 255.f * value;
+	  return static_cast<int>(255.f * value);
 	}
 
       } // end of namespace mln::world::binary_2d

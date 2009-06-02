@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,20 +30,18 @@
 # define MLN_IO_OFF_LOAD_HH
 
 /// \file mln/io/off/load.hh
-/// Input loading function for OFF files.
+///
+/// \brief Input loading function for OFF files.
 ///
 /// \see http://shape.cs.princeton.edu/benchmark/documentation/off_format.html
 /// \see https://people.scs.fsu.edu/~burkardt/html/off_format.html
 
 # include <cstdlib>
-
 # include <iostream>
 # include <fstream>
-
 # include <string>
 
 # include <mln/literal/black.hh>
-
 # include <mln/core/concept/object.hh>
 # include <mln/core/alias/complex_image.hh>
 
@@ -546,7 +545,9 @@ namespace mln
 	  mln_assertion(0.0f <= g);  mln_assertion(g <= 1.0f);
 	  mln_assertion(0.0f <= b);  mln_assertion(b <= 1.0f);
 	  mln_assertion(0.0f <= a);  mln_assertion(a <= 1.0f);
-	  face_value.push_back(value::rgb8(r, g, b));
+	  face_value.push_back(value::rgb8(int(255 * r),
+					   int(255 * g),
+					   int(255 * b)));
 	}
 	/* \} */
 

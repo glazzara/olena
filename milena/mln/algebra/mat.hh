@@ -31,7 +31,7 @@
 
 /// \file mln/algebra/mat.hh
 ///
-/// Definition of a generic matrix class.
+/// \brief Definition of a generic matrix class.
 
 # include <iostream>
 
@@ -239,15 +239,15 @@ namespace mln
       typedef algebra::mat<n, m, mln_trait_op_times(T, S)> ret;
     };
 
-//     template < template<class, class> class Name,
-// 	       unsigned n, unsigned m, typename T,
-// 	       typename S >
-//     struct set_binary_< Name,
-// 			mln::Object, algebra::mat<n,m,T>,
-// 			mln::value::Scalar, S >
-//     {
-//       typedef algebra::mat<n, m, mln_trait_binary(Name, T, S)> ret;
-//     };
+    //     template < template<class, class> class Name,
+    // 	       unsigned n, unsigned m, typename T,
+    // 	       typename S >
+    //     struct set_binary_< Name,
+    // 			mln::Object, algebra::mat<n,m,T>,
+    // 			mln::value::Scalar, S >
+    //     {
+    //       typedef algebra::mat<n, m, mln_trait_binary(Name, T, S)> ret;
+    //     };
     
     // mat / s
 
@@ -300,7 +300,7 @@ namespace mln
     template <unsigned o, typename T,
 	      typename U>
     mln_sum_product(T,U)
-    operator*(const mat<1,o,T>& lhs, const mat<o,1,U>& rhs);
+      operator*(const mat<1,o,T>& lhs, const mat<o,1,U>& rhs);
 
     // mat * vec
 
@@ -312,7 +312,7 @@ namespace mln
     template <unsigned m, typename T,
 	      typename U>
     mln_sum_product(T,U) // scalar
-    operator*(const mat<1,m,T>& lhs, const vec<m,U>& rhs);
+      operator*(const mat<1,m,T>& lhs, const vec<m,U>& rhs);
 
     // vec * mat
 
@@ -352,11 +352,11 @@ namespace mln
 
     template<typename T>
     mln_sum_product(T,T)
-    det(const mat<2,2,T>& m);
+      det(const mat<2,2,T>& m);
 
     template<typename T>
     mln_sum_product(T,T)
-    det(const mat<3,3,T>& m);
+      det(const mat<3,3,T>& m);
 
 
 
@@ -547,55 +547,56 @@ namespace mln
       return tmp;
     }
 
+
     namespace internal
     {
 
       template <typename T>
       inline
-      mat<2,2,T>
+      mat<2,2,float>
       inverse(const mat<2,2,T>& m)
       {
-	T d = det(m);
+	float d = det(m);
 	mln_precondition(d != 0);
-	return make<T>( + m(1,1) / d,  - m(0,1) / d,
-			- m(1,0) / d,  + m(0,0) / d );
+	return make<float>( + m(1,1) / d,  - m(0,1) / d,
+			    - m(1,0) / d,  + m(0,0) / d );
       }
 
       template <typename T>
       inline
-      mat<3,3,T>
+      mat<3,3,float>
       inverse(const mat<3,3,T>& m)
       {
-	T d = det(m);
+	float d = det(m);
 	mln_precondition(d != 0);
-	return make<T>( det(make(m(1,1), m(1,2),
-				 m(2,1), m(2,2))),
+	return make<float>( det(make(m(1,1), m(1,2),
+				     m(2,1), m(2,2))),
 			
-			det(make(m(0,2), m(0,1),
-				 m(2,2), m(2,1))),
+			    det(make(m(0,2), m(0,1),
+				     m(2,2), m(2,1))),
 			
-			det(make(m(0,1), m(0,2),
-				 m(1,1), m(1,2))),
+			    det(make(m(0,1), m(0,2),
+				     m(1,1), m(1,2))),
 
 			
-			det(make(m(1,2), m(1,0),
-				 m(2,2), m(2,0))),
+			    det(make(m(1,2), m(1,0),
+				     m(2,2), m(2,0))),
 			
-			det(make(m(0,0), m(0,2),
-				 m(2,0), m(2,2))),
+			    det(make(m(0,0), m(0,2),
+				     m(2,0), m(2,2))),
 			
-			det(make(m(0,2), m(0,0),
-				 m(1,2), m(1,0))),
+			    det(make(m(0,2), m(0,0),
+				     m(1,2), m(1,0))),
 
-			det(make(m(1,0), m(1,1),
-				 m(2,0), m(2,1))),
+			    det(make(m(1,0), m(1,1),
+				     m(2,0), m(2,1))),
 			
-			det(make(m(0,1), m(0,0),
-				 m(2,1), m(2,0))),
+			    det(make(m(0,1), m(0,0),
+				     m(2,1), m(2,0))),
 			
-			det(make(m(0,0), m(0,1),
-				 m(1,0), m(1,1)))
-			) / d;
+			    det(make(m(0,0), m(0,1),
+				     m(1,0), m(1,1)))
+			    ) / d;
       }
 
     } // end of namespace algebra::inverse
@@ -713,7 +714,7 @@ namespace mln
 	      typename U>
     inline
     mln_sum_product(T,U)
-    operator*(const mat<1,o,T>& lhs, const mat<o,1,U>& rhs)
+      operator*(const mat<1,o,T>& lhs, const mat<o,1,U>& rhs)
     {
       mln_sum_product(T,U) tmp(literal::zero);
       for (unsigned k = 0; k < o; ++k)
@@ -744,7 +745,7 @@ namespace mln
 	      typename U>
     inline
     mln_sum_product(T,U) // scalar
-    operator*(const mat<1,m,T>& lhs, const vec<m,U>& rhs)
+      operator*(const mat<1,m,T>& lhs, const vec<m,U>& rhs)
     {
       mln_sum_product(T,U) tmp(literal::zero);
       for (unsigned j = 0; j < m; ++j)
@@ -832,7 +833,7 @@ namespace mln
     template<typename T>
     inline
     mln_sum_product(T,T)
-    det(const mat<2,2,T>& m)
+      det(const mat<2,2,T>& m)
     {
       return m(0,0) * m(1,1) - m(0,1) * m(1,0);
     }
@@ -840,7 +841,7 @@ namespace mln
     template<typename T>
     inline
     mln_sum_product(T,T)
-    det(const mat<3,3,T>& m)
+      det(const mat<3,3,T>& m)
     {
       return
 	+ m(0,0) * m(1,1) * m(2,2)

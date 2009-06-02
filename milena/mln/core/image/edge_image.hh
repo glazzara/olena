@@ -31,7 +31,7 @@
 
 /// \file mln/core/image/edge_image.hh
 ///
-/// Image based on graph edges.
+/// \brief Image based on graph edges.
 
 # include <mln/core/concept/graph.hh>
 # include <mln/core/site_set/p_edges.hh>

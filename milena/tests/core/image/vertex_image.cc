@@ -1,4 +1,4 @@
-// Copyright(C) 2009 EPITA Research and Development Laboratory(LRDE)
+// Copyright(C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -27,21 +27,19 @@
 
 /// \file tests/core/image/vertex_image.cc
 ///
-/// Tests on mln::vertex_image.
+/// \brief Tests on mln::vertex_image.
 
 #include <vector>
 
 #include <mln/core/image/vertex_image.hh>
 #include <mln/make/vertex_image.hh>
 #include <mln/core/image/image2d.hh>
-
 #include <mln/accu/bbox.hh>
-
 #include <mln/fun/i2v/array.hh>
-
 #include <mln/util/graph.hh>
-
 #include <mln/debug/draw_graph.hh>
+
+
 
 /* The graph is as follows:
 
@@ -57,19 +55,22 @@
 */
 
 
-// Expected neighbors for forward and backward iteration.
-// -1 is an invalid id.
-static unsigned expected_fwd_nb[5][3] = { { 1, -1, -1 },
-					  { 0,  2,  3 },
-					  { 1,  4, -1 },
-					  { 1,  4, -1 },
-					  { 3,  2, -1 } };
+static const unsigned X = mln_max(unsigned); // Invalid id.
 
-static unsigned expected_bkd_nb[5][3] = { { 1, -1, -1 },
-					  { 3,  2,  0 },
-					  { 4,  1, -1 },
-					  { 4,  1, -1 },
-					  { 2,  3, -1 } };
+
+// Expected neighbors for forward and backward iteration.
+// X is an invalid id.
+static unsigned expected_fwd_nb[5][3] = { { 1, X, X },
+					  { 0, 2, 3 },
+					  { 1, 4, X },
+					  { 1, 4, X },
+					  { 3, 2, X } };
+
+static unsigned expected_bkd_nb[5][3] = { { 1, X, X },
+					  { 3, 2, 0 },
+					  { 4, 1, X },
+					  { 4, 1, X },
+					  { 2, 3, X } };
 
 
 int main()

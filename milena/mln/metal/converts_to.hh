@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009a EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,10 +31,11 @@
 
 /// \file mln/metal/converts_to.hh
 ///
-/// Definition of a type that means "converts to".
+/// \brief Definition of a type that means "converts to".
 
 # include <mln/metal/is_a.hh>
 # include <mln/metal/const.hh>
+# include <mln/core/def/coord.hh>
 
 
 # define mlc_converts_to(T, U) mln::metal::converts_to< T, U >
@@ -43,6 +44,13 @@
 
 namespace mln
 {
+
+  // Forward declarations.
+  namespace value {
+    template <unsigned n> struct int_u;
+    template <unsigned n> struct int_s;
+  }
+
 
   namespace metal
   {
@@ -61,15 +69,13 @@ namespace mln
 
 
 
-    /*! \brief "converts-to" check.
-     *
-     * FIXME: Doc!
-     */
+    /// \brief "converts-to" check.
     template <typename T, typename U>
     struct converts_to : bool_<( sizeof(internal::helper_converts_to_<T, U>::selector(*internal::make_<mlc_const(T)>::ptr()) )
 				 ==
 				 sizeof(internal::yes_) )>
     {};
+
 
     template <typename T, typename U>
     struct converts_to<T*, U*> : converts_to<T, U>
@@ -79,7 +85,25 @@ namespace mln
     struct converts_to<T**, U**> : false_
     {};
 
+
+
+    // Below, a few hacks to quiet g++-3.4 warnings:
+
+    template <> struct converts_to< float, int        > : true_ {};
+    template <> struct converts_to< float, def::coord > : true_ {};
+    template <unsigned n> struct converts_to< float, value::int_u<n> > : true_ {};
+    template <unsigned n> struct converts_to< float, value::int_s<n> > : true_ {};
+
+    template <> struct converts_to< double, int        > : true_ {};
+    template <> struct converts_to< double, def::coord > : true_ {};
+    template <unsigned n> struct converts_to< double, value::int_u<n> > : true_ {};
+    template <unsigned n> struct converts_to< double, value::int_s<n> > : true_ {};
+
+    // End of hacks.
+
   } // end of namespace mln::metal
+
+
 
 } // end of namespace mln
 

@@ -1,5 +1,5 @@
 // Copyright(C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory(LRDE)
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,7 +28,7 @@
 
 /// \file tests/core/image/line_graph_image.cc
 ///
-/// Tests on mln::line_graph_image.
+/// \brief Tests on mln::line_graph_image.
 
 #include <mln/core/alias/point2d.hh>
 
@@ -59,18 +59,21 @@
 */
 
 
-// Expected neighbors for forward and backward iteration.
-static unsigned expected_fwd_nbh[5][3] = { { 1, -1, -1 },
-					   { 0,  2,  3 },
-					   { 1,  4, -1 },
-					   { 1,  4, -1 },
-					   { 3,  2, -1 } };
+static const unsigned X = mln_max(unsigned); // Invalid id.
 
-static unsigned expected_bkd_nbh[5][3] = { { 1,  0, -1 },
-					   { 3,  2,  0 },
-					   { 4,  1, -1 },
-					   { 4,  1, -1 },
-					   { 2,  3, -1 } };
+
+// Expected neighbors for forward and backward iteration.
+static unsigned expected_fwd_nbh[5][3] = { { 1, X, X },
+					   { 0, 2, 3 },
+					   { 1, 4, X },
+					   { 1, 4, X },
+					   { 3, 2, X } };
+
+static unsigned expected_bkd_nbh[5][3] = { { 1, 0, X },
+					   { 3, 2, 0 },
+					   { 4, 1, X },
+					   { 4, 1, X },
+					   { 2, 3, X } };
 
 
 int main()

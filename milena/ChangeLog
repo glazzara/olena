@@ -1,5 +1,30 @@
 2009-06-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix g++-3.4 warnings.
+
+	* mln/world/binary_2d/enlarge.hh (do_threshold): Fix.
+	Upgrade doc.
+	* mln/core/image/edge_image.hh: Likewise.
+	* mln/core/dpoint.hh: Likewise.
+	(dpoint): Fix implicit cast.
+	* mln/metal/converts_to.hh: Upgrade doc.
+	(converts_to): Add overloads to quiet g++-3.4.
+	* mln/level: Remove directory.
+	* mln/algebra/mat.hh: Upgrade doc.
+	(inverse): Fix; use float instead of T.
+	* mln/io/off/load.hh: Upgrade doc.
+	(read_face_data): Fix missing scaling to 255.
+	Add explicit conversion.
+	* tests/core/image/graph_image.cc,
+	* tests/core/image/edge_image.cc,
+	* tests/core/image/line_graph_image.cc,
+	* tests/core/image/vertex_image.cc: Upgrade doc.
+	(X): New.
+	(expected_fwd_nb, expected_bkd_nb): Update.
+	Fix negative value stored as unsigned.
+
+2009-06-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Several fixes.
 
 	* mln/fun/internal/selector.hh

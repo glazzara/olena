@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,7 +31,7 @@
 
 /// \file mln/core/dpoint.hh
 ///
-/// Definition of the generic delta-point class mln::dpoint.
+/// \brief Definition of the generic delta-point class mln::dpoint.
 
 # include <mln/core/def/coord.hh>
 # include <mln/core/concept/gdpoint.hh>
@@ -53,7 +53,7 @@ namespace mln
   /// \}
 
 
-  /// Generic delta-point class.
+  /// \brief Generic delta-point class.
   ///
   /// Parameters are \c G the dimension of the space and \c C the
   /// coordinate type in this space.
@@ -168,9 +168,9 @@ namespace mln
     {
       unsigned j = 0;
       for (unsigned i = dim - 2; i < dim; ++i)
-	coord_[i] = v[j++];
+	coord_[i] = static_cast<C>(v[j++]);
       for (unsigned i = 2; i < dim; ++i, ++j)
-	coord_[i-j] = v[j];
+	coord_[i-j] = static_cast<C>(v[j]);
     }
   }
 
