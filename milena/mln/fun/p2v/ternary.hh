@@ -47,7 +47,7 @@ namespace mln
 
       template <typename P, typename T, typename F>
       struct ternary_
-	: fun::internal::selector_p2_<mln_result(T), ternary_<P,T,F> >::ret
+	: fun::internal::selector_from_result_<mln_result(T), ternary_<P,T,F> >::ret
       {
 	typedef mln_result(T) result;
 

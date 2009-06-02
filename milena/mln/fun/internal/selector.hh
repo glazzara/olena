@@ -48,14 +48,14 @@ namespace mln
     {
 
 
-      template <typename A, typename R, typename E>
+      template <typename R, typename A, typename E>
       struct helper_selector_
       {
 	typedef Function_v2v<E> ret;
       };
 
       template <typename A, typename E>
-      struct helper_selector_< A, bool, E >
+      struct helper_selector_< bool, A, E >
       {
 	typedef Function_v2b<E> ret;
       };
@@ -71,12 +71,11 @@ namespace mln
 	selector_();
       };
 
-
       template <typename R_, typename E>
-      struct selector_p2_ : selector_< R_, void, E >
+      struct selector_from_result_ : selector_< R_, void, E >
       {
       private:
-	selector_p2_();
+	selector_from_result_();
       };
 
     } // end of namespace mln::fun::internal

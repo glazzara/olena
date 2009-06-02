@@ -1,3 +1,26 @@
+2009-06-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Several fixes.
+
+	* mln/fun/internal/selector.hh
+	(helper_selector_): Fix parameters order.
+	* mln/fun/internal/selector.hh (selector_p2_): Rename as...
+	(selector_from_result_): ...this.
+	* mln/pw/cst.hh,
+	* mln/pw/value.hh,
+	* mln/fun/p2v/ternary.hh: Update.
+	* tests/morpho/tree/compute_parent.cc: Layout.
+
+	* mln/value/shell.hh (set_): Fix double definition.
+	This is due to function concepts simplification. The fix
+	is to de-activate one version of set_; this is a hack
+	and the shell_ is now downgraded.
+
+	* tests/core/site_set/p_bgraph.cc: Move...
+	* trash/p_bgraph.cc: ...here.
+	Fix missing trashing.
+	* tests/core/site_set/Makefile.am: Update.
+
 2009-06-01  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Simplifying function concepts.

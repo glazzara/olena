@@ -33,15 +33,14 @@
 # include <mln/core/concept/function.hh>
 # include <mln/core/concept/image.hh>
 
+
 namespace mln
 {
 
   // Forward declaration.
-  namespace value
-  {
-    template <typename F, typename I>
-    struct shell;
-  } // end of namespace mln::value
+  namespace value {
+    template <typename F, typename I> struct shell;
+  }
 
   namespace value
   {
@@ -51,14 +50,6 @@ namespace mln
 
       template <typename F, typename I, class C>
       struct shell_ { };
-
-
-      template <typename F, typename I>
-      struct shell_<F, I, Function_v2v<void> >
-      {
-	const mln_value(I)&
-	set_(I& ima, const mln_site(I)& s, mln_result(F) v);
-      };
 
 
       template <typename F, typename I>
@@ -112,11 +103,13 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    // Ctor
-
+    // Constructor.
     template <typename F, typename I>
     shell<F,I>::shell(Image<I>& ima, const mln_site(I)& s)
-      : ima_(exact(ima)), s_(s), v_(F()(exact(ima)(s)))
+      :
+      ima_(exact(ima)),
+      s_(s),
+      v_(F()(exact(ima)(s)))
     {
     }
 
@@ -158,16 +151,15 @@ namespace mln
 	return ima(s);
       }
 
-
-      template <typename F, typename I>
-      const mln_value(I)&
-      shell_<F, I, Function_v2v<void> >::set_(I& ima,
-						  const mln_site(I)& s,
-						  mln_result(F) v)
-      {
-	ima(s) = F().f_1(v, ima(s));
-	return ima(s);
-      }
+//       template <typename F, typename I>
+//       const mln_value(I)&
+//       shell_<F, I, Function_v2v<void> >::set_(I& ima,
+// 						  const mln_site(I)& s,
+// 						  mln_result(F) v)
+//       {
+// 	ima(s) = F().f_1(v, ima(s));
+// 	return ima(s);
+//       }
 
     } // end of namespace mln::value::impl
 

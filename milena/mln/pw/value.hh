@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -49,7 +49,7 @@ namespace mln
 
     template <typename I>
     struct value_
-      : fun::internal::selector_p2_< mln_value(I), value_<I> >::ret
+      : fun::internal::selector_from_result_< mln_value(I), value_<I> >::ret
     {
       typedef mln_value(I) result;
 

@@ -80,7 +80,7 @@ namespace mln
 
     template <typename T>
     struct cst_
-      : fun::internal::selector_p2_<T, cst_<T> >::ret
+      : fun::internal::selector_from_result_<T, cst_<T> >::ret
     {
       typedef T result;
 

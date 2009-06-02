@@ -28,8 +28,9 @@
 
 /// \file tests/morpho/tree/compute_parent.cc
 ///
-/// Tests on mln::morpho::tree::compute_parent.
+/// \brief Tests on mln::morpho::tree::compute_parent.
 
+#include <mln/core/var.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/image/dmorph/image_if.hh>
@@ -41,6 +42,7 @@
 #include <mln/debug/println.hh>
 
 #include <mln/morpho/tree/compute_parent.hh>
+
 
 static mln::image2d<mln::point2d> ref1()
 {
