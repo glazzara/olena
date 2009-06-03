@@ -1,5 +1,12 @@
 2009-06-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Wrap mln::box as box.ixx to factor dependent types.
+
+	* box.ixx: New.
+	* Makefile.am (meta_wrappers): Add box.ixx.
+
+2009-06-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Introduce a variadic version of mln_coord in Swilena.
 
 	* coord.ixx: New.
