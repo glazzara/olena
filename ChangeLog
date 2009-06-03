@@ -1,3 +1,9 @@
+2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Do not require Ruby for Swilena.
+
+	* m4/with-swilena.m4 (_OLN_WITH_SWIG): Disable tests on Ruby.
+
 2009-05-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update makefile list.

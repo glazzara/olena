@@ -50,28 +50,33 @@ if test x$with_swig != xno; then
 
   CPPFLAGS=$save_CPPFLAGS
 
-  # Check for Ruby.
-  AC_CHECK_PROGS([RUBY], [ruby], [$am_aux_dir/missing ruby])
-  if test "x$RUBY" = "x$am_aux_dir/missing ruby"; then
-    AC_MSG_ERROR([no suitable Ruby interpreter found])
-  fi
-
-  AC_ARG_VAR([RUBY_CPPFLAGS], [Path to ruby.h])
-  AC_ARG_WITH([ruby-includedir], [Include path for ruby.h],
-	      [RUBY_CPPFLAGS="-I$withval"],
-	      [RUBY_CPPFLAGS="-I`$RUBY -e 'puts $:.join("\n")' | \
-		 while read line
-		   do
-		   if [[ -f ${line}/ruby.h ]]; then
-		     echo $line
-		   fi
-		 done`"])
-  save_CPPFLAGS=$CPPFLAGS
-  CPPFLAGS="$CPPFLAGS $RUBY_CPPFLAGS"
-  AC_CHECK_HEADERS([ruby.h], [],
-    [AC_MSG_ERROR(
-	    [You need Ruby development files to compile the Ruby interface.])])
-  CPPFLAGS=$save_CPPFLAGS
+# FIXME: Disabled.  Swilena does not support Ruby again (as it used to
+# in Olena 0.11).  Moreover, the user should be given the choice
+# between the front ends (Python, Ruby, etc.); enabling Swilena shall
+# not systematically imply compiling the *whole* back ends!
+#
+#   # Check for Ruby.
+#   AC_CHECK_PROGS([RUBY], [ruby], [$am_aux_dir/missing ruby])
+#   if test "x$RUBY" = "x$am_aux_dir/missing ruby"; then
+#     AC_MSG_ERROR([no suitable Ruby interpreter found])
+#   fi
+# 
+#   AC_ARG_VAR([RUBY_CPPFLAGS], [Path to ruby.h])
+#   AC_ARG_WITH([ruby-includedir], [Include path for ruby.h],
+# 	      [RUBY_CPPFLAGS="-I$withval"],
+# 	      [RUBY_CPPFLAGS="-I`$RUBY -e 'puts $:.join("\n")' | \
+# 		 while read line
+# 		   do
+# 		   if [[ -f ${line}/ruby.h ]]; then
+# 		     echo $line
+# 		   fi
+# 		 done`"])
+#   save_CPPFLAGS=$CPPFLAGS
+#   CPPFLAGS="$CPPFLAGS $RUBY_CPPFLAGS"
+#   AC_CHECK_HEADERS([ruby.h], [],
+#     [AC_MSG_ERROR(
+# 	    [You need Ruby development files to compile the Ruby interface.])])
+#   CPPFLAGS=$save_CPPFLAGS
 
   AC_PROG_SWIG([1.3.31])
   if (eval "$SWIG -version") >/dev/null 2>&1; then :; else
