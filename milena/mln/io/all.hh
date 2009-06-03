@@ -46,6 +46,10 @@ namespace mln
 
 }
 
+/*-----------------------.
+| Built-in I/O support.  |
+`-----------------------*/
+
 # include <mln/io/cloud/all.hh>
 # include <mln/io/dump/all.hh>
 # include <mln/io/dicom/load.hh>
@@ -58,7 +62,7 @@ namespace mln
 # include <mln/io/ppm/all.hh>
 # include <mln/io/tiff/all.hh>
 # include <mln/io/txt/all.hh>
+# include <mln/io/off/all.hh>
 //# include <mln/io/fits/all.hh>
-//# include <mln/io/off/all.hh>
 
 #endif // ! MLN_IO_ALL_HH

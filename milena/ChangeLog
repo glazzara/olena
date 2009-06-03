@@ -1,3 +1,7 @@
+2009-06-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	* mln/io/all.hh: Reenable support for OFF I/O routines.
+
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix some copyright headers.
