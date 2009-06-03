@@ -136,6 +136,12 @@ AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 # CFITSIO library.
 OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 
+# Magick++.
+# FIXME: We should handle Magick++ using pkgconfig (and/or
+# Magick++-config?) instead of OLN_WITH_LIB.  See how other projects
+# handle this.
+OLN_WITH_LIB([Magick++], [Magick++.h], [Magick++], [magickxx], [MAGICKXX])
+
 # TIFF library.
 OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
 
