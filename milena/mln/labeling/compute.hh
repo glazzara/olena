@@ -258,6 +258,7 @@ namespace mln
 	  //const A& a = exact(a_);
 	  const I& input = exact(input_);
 	  const L& label = exact(label_);
+	  (void) nlabels;
 
 	  // FIXME: Check accus size with nlabels.
 	  //util::array<A> accus(static_cast<unsigned>(nlabels) + 1, a);

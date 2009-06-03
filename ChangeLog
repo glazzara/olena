@@ -1,3 +1,10 @@
+2009-06-03  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add script shell for tests/ hierarchy checking.
+	* build-aux/check_test_hierarchy.sh: New test for checking tests/
+	hierarchy.
+	* milena/mln/labeling/compute.hh: Remove warning of unused variable.
+
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Do not require Ruby for Swilena.
