@@ -1,5 +1,9 @@
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	* headers.mk: Regen.
+
+2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Normalize Makefiles' (short) headers.
 
 	* tests/accu/stat/Makefile.am,

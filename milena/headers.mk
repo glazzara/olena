@@ -306,6 +306,7 @@ mln/core/internal/complex_window_p_base.hh \
 mln/core/internal/coord_impl.hh \
 mln/core/internal/data.hh \
 mln/core/internal/exact.hh \
+mln/core/internal/exact_gcc_2_95.hh \
 mln/core/internal/fixme.hh \
 mln/core/internal/force_exact.hh \
 mln/core/internal/geom_bbox.hh \
@@ -661,6 +662,7 @@ mln/io/all.hh \
 mln/io/cloud/all.hh \
 mln/io/cloud/load.hh \
 mln/io/cloud/save.hh \
+mln/io/dicom/all.hh \
 mln/io/dicom/load.hh \
 mln/io/dump/all.hh \
 mln/io/dump/load.hh \
@@ -698,7 +700,6 @@ mln/io/ppm/load.hh \
 mln/io/ppm/save.hh \
 mln/io/tiff/all.hh \
 mln/io/tiff/load.hh \
-mln/io/tiff/save.hh \
 mln/io/txt/all.hh \
 mln/io/txt/save.hh \
 mln/labeling/all.hh \
@@ -1143,10 +1144,6 @@ mln/util/greater_point.hh \
 mln/util/greater_psite.hh \
 mln/util/ignore.hh \
 mln/util/index.hh \
-mln/util/internal/boost_graph.hh \
-mln/util/internal/boost_graph_access.hh \
-mln/util/internal/boost_graph_property.hh \
-mln/util/internal/boost_graph_structure.hh \
 mln/util/internal/edge_impl.hh \
 mln/util/internal/graph_base.hh \
 mln/util/internal/graph_iter.hh \
@@ -1275,7 +1272,6 @@ mln/win/vline2d.hh \
 mln/world/all.hh \
 mln/world/binary_2d/all.hh \
 mln/world/binary_2d/enlarge.hh \
-mln/world/binary_2d/enlarge_hq2x.hh \
 mln/world/binary_2d/projected_histo.hh \
 mln/world/binary_2d/subsample.hh \
 mln/world/inter_pixel/all.hh \
