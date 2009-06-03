@@ -40,8 +40,6 @@ namespace mln {
   namespace morpho {
     namespace tree {
 
-
-
       /**
       ** For each component in the list \p component_list, it
       ** propagates the representant value to the remaining nodes of the

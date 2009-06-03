@@ -1,3 +1,26 @@
+2009-06-03  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Make clean, and cut some processes into sub-modules.
+	* edwin/mln/morpho/attribute/mysharpness.hh: New.
+	* edwin/mln/morpho/tree/components.hh,
+	* edwin/mln/morpho/tree/propagate.hh: minor fixes.
+	* edwin/mln/morpho/tree/filter.hh: Remove.
+
+	* edwin/rush/exo2/color_internal_gradient.hh: Remove.
+	* edwin/rush/exo2/color_labeling_mean.hh: Remove.
+	* edwin/rush/exo2/wst_from_tree.cc: Remove.
+	* edwin/exec/color_internal_gradient.hh: New.
+	* edwin/exec/color_labeling_mean.hh: New.
+	* edwin/exec/internal_gradient.cc: New.
+	* edwin/exec/sharpest_obj_reconstruction.cc: New.
+	* edwin/exec/wst_from_reconstructed.cc: New.
+	* edwin/exec: New.
+
+	* edwin/tests/morpho/tree/filter: New.
+	* edwin/tests/morpho/tree: New.
+	* edwin/tests/morpho: New.
+	* edwin/tests/sharpness_attribute.cc: New.
+
 2009-06-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Improve g++-2.95 compatibility.

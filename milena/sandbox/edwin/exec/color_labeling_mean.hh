@@ -33,7 +33,7 @@
 
 # include <mln/labeling/compute.hh>
 # include <mln/accu/mean.hh>
-# include <mln/data/transform.hh>
+# include <mln/level/transform.hh>
 
 # include <mln/value/label_8.hh>
 # include <mln/value/int_u16.hh>
@@ -62,7 +62,7 @@ namespace mln {
 	c[l].blue() = m[l][2];
       }
 
-    return data::transform(label, c);
+    return level::transform(label, c);
   }
 
 } // mln

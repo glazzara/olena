@@ -34,7 +34,7 @@
 # include <mln/data/fill.hh>
 
 # include <mln/morpho/tree/data.hh>
-# include "propagate_node.hh"
+# include <mln/morpho/tree/propagate_node.hh>
 
 # include <mln/trace/entering.hh>
 # include <mln/trace/exiting.hh>
