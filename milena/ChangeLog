@@ -1,5 +1,12 @@
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix a static precondition in mln::make::image3d.
+
+	* mln/make/image3d.hh (mln::make::image3d(const util::array<I>&)):
+	Here.
+
+2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	* headers.mk: Regen.
 
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
