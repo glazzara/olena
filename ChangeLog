@@ -1,4 +1,10 @@
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
+ 
+	Add tentative support for GDCM in the configuration system.
+
+	* configure.ac: Find GDCM using OLN_WITH_LIB.
+
+2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add support for Magick++ in the configuration system.
 

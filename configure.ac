@@ -145,6 +145,13 @@ OLN_WITH_LIB([Magick++], [Magick++.h], [Magick++], [magickxx], [MAGICKXX])
 # TIFF library.
 OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
 
+# Grassroots DiCoM (GDCM).
+# FIXME: Linking against the sole libgdcmCommon.{a,so,dylib} is
+# probably not enough in many cases (there are other libraries in the
+# GDCM package).  Write a decent test first (in
+# milena/tests/io/dicom/), and improve the configuration.
+OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm], [GDCM])
+
 
 ## ---------------------------- ##
 ## (Bundled) trimesh2 library.  ##
