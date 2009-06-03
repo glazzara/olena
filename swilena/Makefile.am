@@ -9,6 +9,7 @@ meta_wrappers =					\
   ch_value.ixx					\
   concat.ixx					\
   concrete.ixx					\
+  coord.ixx					\
   fill.ixx					\
   image2d.ixx					\
   int_u.ixx					\

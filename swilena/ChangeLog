@@ -1,5 +1,12 @@
 2009-06-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Introduce a variadic version of mln_coord in Swilena.
+
+	* coord.ixx: New.
+	* Makefile.am (meta_wrappers): Add coord.ixx.
+
+2009-06-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	* Makefile.am (meta_wrappers, wrappers): Unwrap.
 
 2009-05-29  Guillaume Lazzara  <lazzara@lrde.epita.fr>
