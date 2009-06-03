@@ -1,5 +1,13 @@
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Disable support for FreeImagePlus in Olena.
+
+	* configure.ac: Here.
+	(FREEIMAGEPLUS): Disable conditional and rename it as...
+	(HAVE_FREEIMAGEPLUS): ...this.
+
+2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename CFITSIO conditional.
 
 	* configure.ac (CFITSIO): Rename conditional as...
