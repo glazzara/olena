@@ -1,3 +1,21 @@
+2009-06-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix tr_image and trash boost_graph stuff.
+
+	* mln/core/image/imorph/tr_image.hh (site): New typedef.
+	So that we can use site::dim.
+
+	* mln/util/internal/boost_graph.hh,
+	* mln/util/internal/boost_graph_access.hh,
+	* mln/util/internal/boost_graph_property.hh,
+	* mln/util/internal/boost_graph_structure.hh,
+	* tests/util/boost_graph.cc: Move to...
+	* trash/boost_graph.hh,
+	* trash/boost_graph_access.hh,
+	* trash/boost_graph_property.hh,
+	* trash/boost_graph_structure.hh,
+	* trash/boost_graph.cc: ...trash.
+
 2009-06-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Improve compatibility with g++-2.95.
