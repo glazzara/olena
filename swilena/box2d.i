@@ -34,34 +34,12 @@
 %import box2d_piter.i
 
 %{
-#include "mln/core/site_set/box.hh"
 #include "mln/core/alias/box2d.hh"
 %}
 
-%include "mln/core/macros.hh";
-%include "mln/metal/is_unqualif.hh";
+%include "mln/core/alias/box2d.hh"
 
-%include "mln/core/site_set/box.hh";
-%include "mln/core/alias/box2d.hh";
-
-/* Swig tries to wrap everything by default; prevent it from wrapping
-   invalid methods (1D and 3D ctors for an mln::box2d).  Moreover, as
-   Python does not automatically convert `int's to `short's, we cannot
-   use the ctor taking two `mln::def::coord's (i.e. `short's)
-   either.  */
-/* FIXME: Can't we simplify these directives, i.e. use `point2d'
-   directly?  Maybe we could use mln_coord()?  */
-%ignore mln::box< mln::point<mln::grid::square, mln::def::coord> >
-::box(typename mln::point<mln::grid::square, mln::def::coord>::coord);
-
-%ignore mln::box< mln::point<mln::grid::square, mln::def::coord> >
-::box(typename mln::point<mln::grid::square, mln::def::coord>::coord,
-      typename mln::point<mln::grid::square, mln::def::coord>::coord);
-
-%ignore mln::box< mln::point<mln::grid::square, mln::def::coord> >
-::box(typename mln::point<mln::grid::square, mln::def::coord>::coord,
-      typename mln::point<mln::grid::square, mln::def::coord>::coord,
-      typename mln::point<mln::grid::square, mln::def::coord>::coord);
+%include "box.ixx"
 
 %extend mln::box< mln::point<mln::grid::square, mln::def::coord> >
 {
@@ -72,26 +50,19 @@
     return new mln::box<mln::point2d>(nrows, ncols);
   }
 
-  // FIXME: Shorten using macros...
-  mln::box_fwd_piter_< mln::point<mln::grid::square, mln::def::coord> >
-  __iter__() const
-  {
-    mln::box_fwd_piter_<mln::point2d> p(*$self);
-    p.start();
-    return p;
-  }
-
   unsigned nrows() const
   {
-    // FIXME: This is the exact content of box_impl_<2, C, E>::nrows.
+    /* FIXME: This is the exact content of box_impl_<2, C, E>::nrows.
+       Wrapping box_impl_<2, C, E> might save us this extension.  */
     return mln::internal::force_exact<mln::box2d>(*$self).bbox().len(0);
   }
 
   unsigned ncols() const
   {
-    // FIXME: This is the exact content of box_impl_<2, C, E>::ncols.
+    /* FIXME: This is the exact content of box_impl_<2, C, E>::ncols.
+       Wrapping box_impl_<2, C, E> might save us this extension.  */
     return mln::internal::force_exact<mln::box2d>(*$self).bbox().len(1);
   }
 }
 
-%template(box2d) mln::box< mln::point<mln::grid::square, mln::def::coord> >;
+instantiate_box(box2d, mln::point<mln::grid::square, mln::def::coord>)

@@ -1,3 +1,10 @@
+2009-06-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Factor box2d.i using box.ixx.
+
+	* box2d.i: Include box.ixx.
+	Use macro instantiate_box and remove redundant Swig directives.
+
 2009-06-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	Wrap mln::box as box.ixx to factor dependent types.
