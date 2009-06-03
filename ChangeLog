@@ -1,5 +1,12 @@
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename CFITSIO conditional.
+
+	* configure.ac (CFITSIO): Rename conditional as...
+	(HAVE_CFITSIO): ...this.
+
+2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	* configure.ac: Fix help string for option `--enable-trimesh'.
 
 2009-06-03  Fabien Freling  <fabien.freling@lrde.epita.fr>

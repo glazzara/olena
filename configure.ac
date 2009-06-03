@@ -136,7 +136,7 @@ AM_CONDITIONAL([FREEIMAGEPLUS], [test x$oln_have_freeimageplus = xyes])
 
 # CFITSIO library.
 OLN_WITH_CFITSIO
-AM_CONDITIONAL([CFITSIO], [test x$oln_have_cfitsio = xyes])
+AM_CONDITIONAL([HAVE_CFITSIO], [test x$oln_have_cfitsio = xyes])
 
 
 ## ---------------------------- ##
