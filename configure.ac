@@ -144,7 +144,7 @@ AM_CONDITIONAL([CFITSIO], [test x$oln_have_cfitsio = xyes])
 ## ---------------------------- ##
 
 AC_ARG_ENABLE([trimesh],
-              [AS_HELP_STRING([--with-trimesh],
+              [AS_HELP_STRING([--enable-trimesh],
                               [build the (bundled) trimesh2 library])])
 AM_CONDITIONAL([ENABLE_TRIMESH], [test x$enable_trimesh = xyes])
 AC_CONFIG_SUBDIRS([external/trimesh])
