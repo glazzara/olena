@@ -1,5 +1,22 @@
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Normalize Makefiles' (short) headers.
+
+	* tests/accu/stat/Makefile.am,
+	* tests/fun/stat/Makefile.am,
+	* tests/linear/gaussian/Makefile.am,
+	* tests/morpho/reconstruction/Makefile.am,
+	* tests/morpho/reconstruction/by_dilation/Makefile.am,
+	* tests/morpho/reconstruction/by_erosion/Makefile.am,
+	* tests/topo/skeleton/Makefile.am,
+	* tests/transformation/Makefile.am,
+	* tests/world/binary_2d/Makefile.am,
+	* tests/world/inter_pixel/Makefile.am:
+	Do not impose Emacs' Makefile major mode.
+	* tests/tests-recursive.mk: Typo in comment.
+
+2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove dead code in mln/io/.
 
 	* mln/io/tiff/all.hh: Remove spurious (disabled) header inclusion.
