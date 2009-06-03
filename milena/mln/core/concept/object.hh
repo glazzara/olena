@@ -1,7 +1,7 @@
 // Copyright (C) 2007, 2008, 2009 EPITA Research and Development
 // Laboratory (LRDE)
 //
-// This file is part of the Olena Library.  This library is free
+// This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
 // of the GNU General Public License version 2 as published by the
 // Free Software Foundation.
@@ -111,7 +111,7 @@
  * \section copyright Copyright and License.
  *  Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
  *
- *  This file is part of the Olena Library.  This library is free
+ *  This file is part of the Milena Library.  This library is free
  *  software; you can redistribute it and/or modify it under the terms
  *  of the GNU General Public License version 2 as published by the
  *  Free Software Foundation.
