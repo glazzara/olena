@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_ESSENTIAL_HH_
-# define MLN_IO_ESSENTIAL_HH_
+#ifndef MLN_IO_ESSENTIAL_HH
+# define MLN_IO_ESSENTIAL_HH
 
 /// \file mln/io/essential.hh
 /// \brief Inclusion of the most useful I/O routines.
@@ -36,5 +36,4 @@
 # include <mln/io/pgm/all.hh>
 # include <mln/io/ppm/all.hh>
 
-#endif // !MLN_IO_ESSENTIAL_HH_
-
+#endif // ! MLN_IO_ESSENTIAL_HH
