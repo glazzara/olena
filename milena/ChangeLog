@@ -2,6 +2,16 @@
 
 	Fix the library name in the copyright text.
 
+	* tests/data.hh.in,
+	* doc/milena.sty,
+	* doc/ref_guide/ref_guide.tex,
+	* doc/doxyfuns.sty,
+	* doc/tutorial/tutorial.tex (copyright): Fix the library name.
+
+2009-06-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix the library name in the copyright text.
+
 	* trash/clock_neighb2d.cc,
 	* trash/neighb_image.cc,
 	* trash/sparse_image.cc,
