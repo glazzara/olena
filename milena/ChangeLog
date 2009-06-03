@@ -1,5 +1,9 @@
 2009-06-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/io/dicom/all.hh: New file.
+
+2009-06-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add support for Magick++ in the build system.
 
 	* mln/io/all.hh [HAVE_MAGICKXX]: Include mln/io/magick/all.hh.
