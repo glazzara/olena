@@ -30,8 +30,7 @@
 # define MLN_IO_ESSENTIAL_HH_
 
 /// \file mln/io/essential.hh
-///
-/// File that includes the most useful io routines.
+/// \brief Inclusion of the most useful I/O routines.
 
 # include <mln/io/pbm/all.hh>
 # include <mln/io/pgm/all.hh>

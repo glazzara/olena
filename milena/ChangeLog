@@ -1,3 +1,26 @@
+2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix some Doxygen comments in mln/io/.
+
+	* mln/io/all.hh,
+	* mln/io/cloud/all.hh,
+	* mln/io/dump/all.hh,
+	* mln/io/essential.hh,
+	* mln/io/fits/all.hh,
+	* mln/io/magick/all.hh,
+	* mln/io/off/all.hh,
+	* mln/io/pbm/all.hh,
+	* mln/io/pfm/all.hh,
+	* mln/io/pgm/all.hh,
+	* mln/io/plot/all.hh,
+	* mln/io/plot/load.hh,
+	* mln/io/plot/save.hh,
+	* mln/io/pnm/all.hh,
+	* mln/io/ppm/all.hh,
+	* mln/io/tiff/all.hh,
+	* mln/io/txt/all.hh:
+	Here.
+
 2009-06-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add tentative support for GDCM in the build system.

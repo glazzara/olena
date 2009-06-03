@@ -28,10 +28,8 @@
 #ifndef MLN_IO_TXT_ALL_HH
 # define MLN_IO_TXT_ALL_HH
 
-/*! \file mln/io/txt/all.hh
- *
- * \brief File that includes all txt io materials.
- */
+/// \file mln/io/txt/all.hh
+/// \brief Inclusion of all TXT I/O routines.
 
 
 namespace mln

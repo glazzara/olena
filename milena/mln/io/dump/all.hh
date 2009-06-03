@@ -29,8 +29,7 @@
 # define MLN_IO_DUMP_ALL_HH
 
 /// \file mln/io/dump/all.hh
-///
-/// File that includes all dump io materials.
+/// \brief Inclusion of all dump I/O routines.
 
 
 namespace mln

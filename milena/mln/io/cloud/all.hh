@@ -29,8 +29,7 @@
 # define MLN_IO_CLOUD_ALL_HH
 
 /// \file mln/io/cloud/all.hh
-///
-/// File that includes all cloud io materials.
+/// \brief Inclusion of all cloud I/O routines.
 
 
 namespace mln

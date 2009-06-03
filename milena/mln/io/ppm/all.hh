@@ -28,10 +28,8 @@
 #ifndef MLN_IO_PPM_ALL_HH
 # define MLN_IO_PPM_ALL_HH
 
-/*! \file mln/io/ppm/all.hh
- *
- * \brief File that includes all ppm io materials.
- */
+/// \file mln/io/ppm/all.hh
+/// \brief Inclusion of all PPM I/O routines.
 
 
 namespace mln

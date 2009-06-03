@@ -30,8 +30,7 @@
 # define MLN_IO_PBM_ALL_HH
 
 /// \file mln/io/pbm/all.hh
-///
-/// File that includes all pbm io materials.
+/// \brief Inclusion of all PBM I/O routines.
 
 
 namespace mln
@@ -42,7 +41,7 @@ namespace mln
     /// Namespace of pbm input/output handling.
     namespace pbm
     {
-      /// Namespace of pbm's implementation details.
+      /// Namespace of pbm implementation details.
       namespace impl {}
 
       /// Internal namespace of pbm namespace.

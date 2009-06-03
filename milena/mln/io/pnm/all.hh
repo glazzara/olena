@@ -28,10 +28,8 @@
 #ifndef MLN_IO_PNM_ALL_HH
 # define MLN_IO_PNM_ALL_HH
 
-/*! \file mln/io/pnm/all.hh
- *
- * \brief File that includes all pnm io materials.
- */
+/// \file mln/io/pnm/all.hh
+/// \brief Inclusion of all PNM I/O routines.
 
 
 namespace mln

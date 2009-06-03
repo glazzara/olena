@@ -29,9 +29,7 @@
 # define MLN_IO_ALL_HH
 
 /// \file mln/io/all.hh
-///
-/// File that includes all io materials.
-
+/// \brief Inclusion of all I/O routines.
 
 
 namespace mln
@@ -45,6 +43,7 @@ namespace mln
   }
 
 }
+
 
 /*-----------------------.
 | Built-in I/O support.  |
@@ -60,6 +59,7 @@ namespace mln
 # include <mln/io/ppm/all.hh>
 # include <mln/io/txt/all.hh>
 # include <mln/io/off/all.hh>
+
 
 /*--------------------------------------------------.
 | I/O routines depending on a third-party library.  |

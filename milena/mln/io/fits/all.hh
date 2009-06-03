@@ -28,10 +28,8 @@
 #ifndef MLN_IO_FITS_ALL_HH
 # define MLN_IO_FITS_ALL_HH
 
-/*! \file mln/io/fits/all.hh
- *
- * \brief File that includes all fits io materials.
- */
+/// \file mln/io/fits/all.hh
+/// \brief Inclusion of all FITS I/O routines.
 
 
 namespace mln

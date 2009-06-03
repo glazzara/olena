@@ -29,8 +29,7 @@
 # define MLN_IO_PLOT_ALL_HH
 
 /// \file mln/io/plot/all.hh
-///
-/// File that includes all plot io materials.
+/// \brief Inclusion of all plot I/O routines.
 
 
 namespace mln

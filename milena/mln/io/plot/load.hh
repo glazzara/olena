@@ -28,7 +28,6 @@
 #ifndef MLN_IO_PLOT_LOAD_HH
 # define MLN_IO_PLOT_LOAD_HH
 
-///
 /// \file   mln/io/plot/load.hh
 ///
 /// Define a routine which loads in a plot format.

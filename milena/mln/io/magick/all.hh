@@ -28,10 +28,8 @@
 #ifndef MLN_IO_MAGICK_ALL_HH
 # define MLN_IO_MAGICK_ALL_HH
 
-/*! \file mln/io/magick/all.hh
- *
- * \brief File that includes all magick io materials.
- */
+/// \file mln/io/magick/all.hh
+/// \brief Inclusion of all Magick++ I/O routines.
 
 
 namespace mln

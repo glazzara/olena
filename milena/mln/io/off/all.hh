@@ -28,10 +28,8 @@
 #ifndef MLN_IO_OFF_ALL_HH
 # define MLN_IO_OFF_ALL_HH
 
-/*! \file mln/io/off/all.hh
- *
- * \brief File that includes all off io materials.
- */
+/// \file mln/io/off/all.hh
+/// \brief Inclusion of all OFF I/O routines.
 
 
 namespace mln

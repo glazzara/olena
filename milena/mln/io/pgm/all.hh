@@ -28,10 +28,8 @@
 #ifndef MLN_IO_PGM_ALL_HH
 # define MLN_IO_PGM_ALL_HH
 
-/*! \file mln/io/pgm/all.hh
- *
- * \brief File that includes all pgm io materials.
- */
+/// \file mln/io/pgm/all.hh
+/// \brief Inclusion of all PGM I/O routines.
 
 
 namespace mln
