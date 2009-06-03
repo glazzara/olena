@@ -63,6 +63,13 @@ namespace mln
 # include <mln/io/tiff/all.hh>
 # include <mln/io/txt/all.hh>
 # include <mln/io/off/all.hh>
-//# include <mln/io/fits/all.hh>
+
+/*--------------------------------------------------.
+| I/O routines depending on a third-party library.  |
+`--------------------------------------------------*/
+
+# ifdef HAVE_CFITSIO
+#  include <mln/io/fits/all.hh>
+# endif // ! HAVE_CFITSIO
 
 #endif // ! MLN_IO_ALL_HH

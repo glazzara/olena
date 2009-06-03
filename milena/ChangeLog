@@ -1,5 +1,16 @@
 2009-06-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve conditional support for CFITSIO.
+
+	* mln/io/all.hh [HAVE_CFITSIO]: Include mln/io/fits/all.hh.
+	* tests/io/Makefile.am (SUBDIRS) [HAVE_CFITSIO]: Add fits.
+	* tests/io/fits/Makefile.am: Remove CFITSIO conditional.
+	(fits_CPPFLAGS, fits_LDFLAGS): Remove.
+	(AM_CPPFLAGS): Add $(CFITSIO_CPPFLAGS).
+	(AM_LDFLAGS): New.  Add $(CFITSIO_LDFLAGS).
+
+2009-06-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/io/all.hh: Reenable support for OFF I/O routines.
 
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>

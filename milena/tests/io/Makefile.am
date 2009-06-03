@@ -2,10 +2,13 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+## ---------------------- ##
+## Built-in I/O support.  ##
+## ---------------------- ##
+
 SUBDIRS =					\
   dicom						\
   dump						\
-  fits						\
   magick 					\
   off						\
   pbm						\
@@ -14,3 +17,11 @@ SUBDIRS =					\
   pnm						\
   ppm 						\
   tiff
+
+## ------------------------------------------------- ##
+## I/O routines depending on a third-party library.  ##
+## ------------------------------------------------- ##
+
+if HAVE_CFITSIO
+  SUBDIRS += fits
+endif HAVE_CFITSIO
