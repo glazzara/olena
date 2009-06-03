@@ -136,6 +136,9 @@ AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 # CFITSIO library.
 OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 
+# TIFF library.
+OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
+
 
 ## ---------------------------- ##
 ## (Bundled) trimesh2 library.  ##

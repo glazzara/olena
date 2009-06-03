@@ -1,5 +1,11 @@
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add support for TIFF in the configuration system.
+
+	* configure.ac: Find libtiff using OLN_WITH_LIB.
+
+2009-06-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor M4 code using OLN_WITH_LIB.
 
 	* m4/cfitsio.m4, m4/freeimageplus.m4: Remove.
