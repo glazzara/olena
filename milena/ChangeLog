@@ -1,3 +1,31 @@
+2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix some copyright headers.
+
+	* mln/io/abort.hh,
+	* mln/io/fits/load.hh,
+	* tests/core/image/edge_image.cc,
+	* tests/core/image/vertex_image.cc:
+	Restore wiped out years.
+	* mln/io/pbm/all.hh,
+	* mln/io/pfm/load.hh,
+	* mln/io/pfm/save.hh:
+	Fix years.
+	* mln/metal/converts_to.hh,
+	* tests/util/line_graph.cc:
+	Missing whitespace.
+	* mln/io/fits/all.hh,
+	* mln/io/magick/all.hh,
+	* mln/io/off/all.hh,
+	* mln/io/pfm/all.hh,
+	* mln/io/pgm/all.hh,
+	* mln/io/pnm/all.hh,
+	* mln/io/ppm/all.hh,
+	* mln/io/tiff/all.hh,
+	* mln/io/txt/all.hh,
+	Add ``(LRDE)''.
+	* mln/io/txt/save.hh: Aesthetic change.
+
 2009-06-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Help g++-2.95.
