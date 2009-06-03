@@ -44,6 +44,5 @@ namespace mln
 }
 
 # include <mln/io/tiff/load.hh>
-//# include <mln/io/tiff/save.hh>
 
 #endif // ! MLN_IO_TIFF_ALL_HH

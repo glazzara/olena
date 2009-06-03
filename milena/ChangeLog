@@ -1,5 +1,12 @@
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove dead code in mln/io/.
+
+	* mln/io/tiff/all.hh: Remove spurious (disabled) header inclusion.
+	* mln/io/fits/load.hh: Remove outdated comment.
+
+2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/io/fits/all.hh: Include all headers from mln/io/fits/.
 
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
