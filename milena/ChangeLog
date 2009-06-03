@@ -1,3 +1,13 @@
+2009-06-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add support for TIFF in the build system.
+
+	* mln/io/all.hh [HAVE_TIFF]: Include mln/io/tiff/all.hh.
+	* tests/io/Makefile.am (SUBDIRS) [HAVE_TIFF]: Add tiff.
+	* tests/io/tiff/Makefile.am (load_LDFLAGS): Remove.
+	(AM_CPPFLAGS): Add $(TIFF_CPPFLAGS).
+	(AM_LDFLAGS): New.  Add $(TIFF_LDFLAGS).
+
 2009-06-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	Disable support for FreeImagePlus in Milena.

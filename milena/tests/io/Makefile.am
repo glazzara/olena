@@ -15,8 +15,7 @@ SUBDIRS =					\
   pfm						\
   pgm						\
   pnm						\
-  ppm 						\
-  tiff
+  ppm
 
 ## ------------------------------------------------- ##
 ## I/O routines depending on a third-party library.  ##
@@ -25,3 +24,7 @@ SUBDIRS =					\
 if HAVE_CFITSIO
   SUBDIRS += fits
 endif HAVE_CFITSIO
+
+if HAVE_TIFF
+  SUBDIRS += tiff
+endif HAVE_TIFF

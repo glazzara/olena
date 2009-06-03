@@ -60,7 +60,6 @@ namespace mln
 # include <mln/io/plot/all.hh>
 # include <mln/io/pnm/all.hh>
 # include <mln/io/ppm/all.hh>
-# include <mln/io/tiff/all.hh>
 # include <mln/io/txt/all.hh>
 # include <mln/io/off/all.hh>
 
@@ -71,5 +70,9 @@ namespace mln
 # ifdef HAVE_CFITSIO
 #  include <mln/io/fits/all.hh>
 # endif // ! HAVE_CFITSIO
+
+# ifdef HAVE_TIFF
+#  include <mln/io/tiff/all.hh>
+# endif // ! HAVE_LIBTIFF
 
 #endif // ! MLN_IO_ALL_HH
