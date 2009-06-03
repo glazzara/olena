@@ -1,5 +1,13 @@
 2009-06-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Disable support for FreeImagePlus in Milena.
+
+	* tests/core/image/Makefile.am: Move FreeImagePlus-related
+	content...
+	* trash/freeimageplus.mk: ...here.
+
+2009-06-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve conditional support for CFITSIO.
 
 	* mln/io/all.hh [HAVE_CFITSIO]: Include mln/io/fits/all.hh.

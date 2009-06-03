@@ -31,12 +31,4 @@ line_graph_image_SOURCES = line_graph_image.cc
 vertex_image_SOURCES = vertex_image.cc
 edge_image_SOURCES = edge_image.cc
 
-# Tests depending on the FreeImagePlus library.
-#if FREEIMAGEPLUS
-#  check_PROGRAMS += fi_adaptor
-#  fi_adaptor_SOURCES = fi_adaptor.cc
-#  fi_adaptor_CPPFLAGS = $(AM_CPPFLAGS) $(FREEIMAGEPLUS_CPPFLAGS)
-#  fi_adaptor_LDFLAGS = $(AM_LDFLAGS) $(FREEIMAGEPLUS_LDFLAGS)
-#endif
-
 TESTS = $(check_PROGRAMS)
