@@ -30,11 +30,10 @@
 
 /// \file mln/topo/skeleton/crest.hh
 ///
-/// Compute skeletization constraints.
+/// \brief Compute skeletization constraints.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-
 # include <mln/data/fill.hh>
 
 

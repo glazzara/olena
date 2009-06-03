@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +31,8 @@
 
 /// \file mln/make/image3d.hh
 ///
-/// Routine to create a 3D image from an array of 2D images.
+/// \brief Routine to create a 3D image from an array of 2D images or
+/// from one 2D image.
 ///
 /// \todo Think about removing make::image3d since it is redundant
 /// with convert::to and convert::from_to.
@@ -55,11 +57,11 @@ namespace mln
     mln::image3d<mln_value(I)>
     image3d(const util::array<I>& ima);
 
-    /// Create an image3d from a 2D images.
+    /// Create an image3d from a 2D image.
     ///
     template <typename I>
     mln::image3d<mln_value(I)>
-    image3d(const I& ima);
+    image3d(const Image<I>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -69,7 +71,7 @@ namespace mln
     mln::image3d<mln_value(I)>
     image3d(const util::array<I>& ima)
     {
-      mlc_is_a(mln_domain(I), Box)::check();
+      mlc_is_a(mln_domain(I), mln::box2d)::check();
       mln_precondition(! ima.is_empty());
 
       def::coord n_slices = ima.nelements();
@@ -89,9 +91,11 @@ namespace mln
     template <typename I>
     inline
     mln::image3d<mln_value(I)>
-    image3d(const I& ima)
+    image3d(const Image<I>& ima_)
     {
-      mlc_is_a(mln_domain(I), Box)::check();
+      const I& ima = exact(ima_);
+
+      mlc_equal(mln_domain(I), mln::box2d)::check();
       mln_precondition(ima.is_valid());
 
       mln::box2d b = ima.domain();

@@ -1,5 +1,20 @@
 2009-06-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Help g++-2.95.
+
+	* mln/topo/skeleton/crest.hh: Layout. Upgrade doc style.
+	* mln/world/binary_2d/enlarge.hh: Help g++-2.95.
+	* mln/metal/converts_to.hh: Layout.
+	* mln/make/image3d.hh (image3d): Disambiguate overloading.
+	Help g++-2.95.
+	Explicitly use mln::box2d in static check.
+	* mln/convert/from_to.hh (todo): New.
+	Layout.
+	* tests/topo/skeleton/crest.cc: Upgrade doc style.
+	Disambiguate transform call (mln v. std) for g++-2.95.
+
+2009-06-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix tr_image and trash boost_graph stuff.
 
 	* mln/core/image/imorph/tr_image.hh (site): New typedef.

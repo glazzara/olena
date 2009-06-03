@@ -27,22 +27,16 @@
 
 /// \file tests/topo/skeleton/crest.cc
 ///
-/// Test of mln::topo::skeleton::crest.
+/// \brief Test of mln::topo::skeleton::crest.
 
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/image/image2d.hh>
-
 # include <mln/data/compare.hh>
-
 # include <mln/logical/not.hh>
-
 # include <mln/make/image.hh>
 # include <mln/make/w_window2d_int.hh>
-
 # include <mln/topo/skeleton/crest.hh>
-
 # include <mln/transform/distance_front.hh>
-
 # include <mln/value/int_u8.hh>
 
 
@@ -76,9 +70,9 @@ int main()
   image2d<bool> crest_ref = make::image(ref_dat);
 
   image2d<value::int_u8>
-    dist_map = transform::distance_front(logical::not_(input), c8(),
-					 make::w_window2d_int(vals),
-					 mln_max(value::int_u8));
+    dist_map = mln::transform::distance_front(logical::not_(input), c8(),
+					      make::w_window2d_int(vals),
+					      mln_max(value::int_u8));
   image2d<bool> crest_ima = topo::skeleton::crest(input, dist_map, c8());
 
   mln_assertion(crest_ima == crest_ref);

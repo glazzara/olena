@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,11 +31,13 @@
 
 /// \file mln/convert/from_to.hh
 ///
-/// General conversion procedure between two objects.
+/// \brief General conversion procedure between two objects.
 ///
 /// \todo Test the effectiveness of guards.
+///
 /// \todo Dispatch code in appropriate files.
-
+///
+/// \todo Find a solution for g++-2.95 and '...'; see FIXME below.
 
 # include <mln/convert/impl/all.hh>
 # include <mln/convert/from_to.hxx>
@@ -112,7 +115,8 @@ namespace mln
       template <typename F, typename T>
       inline
       void
-      from_to_dispatch(const metal::true_&, const Object<F>& from, Object<T>& to)
+      from_to_dispatch(metal::true_,
+		       const Object<F>& from, Object<T>& to)
       {
 	exact(to) = exact(from);
       }
@@ -122,7 +126,8 @@ namespace mln
       template <typename F, typename T>
       inline
       void
-      from_to_dispatch(const metal::false_&, const Object<F>& from, Object<T>& to)
+      from_to_dispatch(metal::false_,
+		       const Object<F>& from, Object<T>& to)
       {
 	over_load::from_to_(exact(from), exact(to));
       }
@@ -137,7 +142,7 @@ namespace mln
       void
       from_to_dispatch(const Object<F>& from, Object<T>& to)
       {
-	typedef mlc_converts_to(F, T) F_converts_to_T;
+	typedef mlc_converts_to(F, T) F_converts_to_T; // FIXME: HERE we've got a problem with g++-2.95.
 	internal::from_to_dispatch(F_converts_to_T(),
 				   exact(from), exact(to));
       }

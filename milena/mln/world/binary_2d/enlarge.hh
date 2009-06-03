@@ -356,7 +356,8 @@ namespace mln
 	trace::entering("mln::world::binary_2d::enlarge");
 
 	mln_precondition(exact(input).is_valid());
-	mlc_bool(mln_site_(I)::dim == 2)::check();
+	typedef mln_site(I) S;
+	mlc_bool(S::dim == 2)::check();
 
 	mln_concrete(I) output;
 	if (n == 0)
