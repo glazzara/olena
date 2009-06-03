@@ -52,7 +52,6 @@ namespace mln
 
 # include <mln/io/cloud/all.hh>
 # include <mln/io/dump/all.hh>
-# include <mln/io/dicom/load.hh>
 # include <mln/io/pbm/all.hh>
 # include <mln/io/pfm/all.hh>
 # include <mln/io/pgm/all.hh>
@@ -65,6 +64,10 @@ namespace mln
 /*--------------------------------------------------.
 | I/O routines depending on a third-party library.  |
 `--------------------------------------------------*/
+
+# ifdef HAVE_GDCM
+#  include <mln/io/dicom/all.hh>
+# endif // ! HAVE_GDCM
 
 # ifdef HAVE_CFITSIO
 #  include <mln/io/fits/all.hh>

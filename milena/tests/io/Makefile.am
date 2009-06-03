@@ -7,7 +7,6 @@ include $(top_srcdir)/milena/tests/tests.mk
 ## ---------------------- ##
 
 SUBDIRS =					\
-  dicom						\
   dump						\
   off						\
   pbm						\
@@ -19,6 +18,10 @@ SUBDIRS =					\
 ## ------------------------------------------------- ##
 ## I/O routines depending on a third-party library.  ##
 ## ------------------------------------------------- ##
+
+if HAVE_GDCM
+  SUBDIRS += dicom
+endif HAVE_GDCM
 
 if HAVE_CFITSIO
   SUBDIRS += fits

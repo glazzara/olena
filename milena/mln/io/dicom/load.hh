@@ -28,21 +28,19 @@
 #ifndef MLN_IO_DICOM_LOAD_HH
 # define MLN_IO_DICOM_LOAD_HH
 
-/// \file   mln/io/magick/load.hh
-///
-/// \brief Define a function which loads an image of kind magick with
-/// given path.
+/// \file mln/io/magick/load.hh
+/// \brief Define a function which loads a GDCM image.
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/image3d.hh>
 
 # include <mln/algebra/vec.hh>
 
-# include <gdcmReader.h>
-# include <gdcmImageReader.h>
-# include <gdcmWriter.h>
-# include <gdcmDataSet.h>
-# include <gdcmAttribute.h>
+# include <gdcm-2.0/gdcmReader.h>
+# include <gdcm-2.0/gdcmImageReader.h>
+# include <gdcm-2.0/gdcmWriter.h>
+# include <gdcm-2.0/gdcmDataSet.h>
+# include <gdcm-2.0/gdcmAttribute.h>
 
 
 namespace mln
@@ -54,7 +52,7 @@ namespace mln
     namespace dicom
     {
 
-      /// Load a dicom image in a Milena image.
+      /// Load a DICOM file in a Milena image.
       ///
       /// \param[out] ima A reference to the image which will receive
       /// data.
@@ -62,6 +60,7 @@ namespace mln
       template <typename I>
       void load(Image<I>& ima,
 		const std::string& filename);
+
 
 # ifndef MLN_INCLUDE_ONLY
 

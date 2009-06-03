@@ -31,20 +31,19 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/io/dicom/load.hh>
-#include <mln/io/dump/save.hh>
 
 #include <mln/data/compare.hh>
 
 #include <mln/value/int_u12.hh>
 
-#include "tests/data.hh"
-
 #include <mln/debug/println.hh>
+
+#include "tests/data.hh"
 
 int main()
 {
   using namespace mln;
 
-  return 0;
+  // FIXME: This test is empty!
 }
 

@@ -1,5 +1,16 @@
 2009-06-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add tentative support for GDCM in the build system.
+
+	* mln/io/all.hh [HAVE_GDCM]: Include mln/io/dicom/all.hh.
+	* mln/io/dicom/load.hh: Fix paths of included GDCM headers.
+	Aesthetic changes.
+	* tests/io/Makefile.am (SUBDIRS) [HAVE_GDCM]: Add dicom.
+	* tests/io/dicom/Makefile.am: Aesthetic changes.
+	* tests/io/dicom/dicom.cc: Remove useless header inclusions.
+
+2009-06-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/io/dicom/all.hh: New file.
 
 2009-06-02  Roland Levillain  <roland@lrde.epita.fr>
