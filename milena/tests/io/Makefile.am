@@ -9,7 +9,6 @@ include $(top_srcdir)/milena/tests/tests.mk
 SUBDIRS =					\
   dicom						\
   dump						\
-  magick 					\
   off						\
   pbm						\
   pfm						\
@@ -24,6 +23,10 @@ SUBDIRS =					\
 if HAVE_CFITSIO
   SUBDIRS += fits
 endif HAVE_CFITSIO
+
+if HAVE_MAGICKXX
+  SUBDIRS += magick
+endif HAVE_MAGICKXX
 
 if HAVE_TIFF
   SUBDIRS += tiff

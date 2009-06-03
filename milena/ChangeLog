@@ -1,5 +1,16 @@
 2009-06-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add support for Magick++ in the build system.
+
+	* mln/io/all.hh [HAVE_MAGICKXX]: Include mln/io/magick/all.hh.
+	* tests/io/Makefile.am (SUBDIRS) [HAVE_MAGICKXX]: Add magick.
+	* tests/io/magick/Makefile.am
+	(AM_CPPFLAGS): Add $(MAGICKXX_CPPFLAGS)
+	(AM_LDFLAGS): Remove -lMagick++.
+	Add $(MAGICKXX_LDFLAGS).
+
+2009-06-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add support for TIFF in the build system.
 
 	* mln/io/all.hh [HAVE_TIFF]: Include mln/io/tiff/all.hh.

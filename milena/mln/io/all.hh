@@ -53,7 +53,6 @@ namespace mln
 # include <mln/io/cloud/all.hh>
 # include <mln/io/dump/all.hh>
 # include <mln/io/dicom/load.hh>
-# include <mln/io/magick/all.hh>
 # include <mln/io/pbm/all.hh>
 # include <mln/io/pfm/all.hh>
 # include <mln/io/pgm/all.hh>
@@ -70,6 +69,10 @@ namespace mln
 # ifdef HAVE_CFITSIO
 #  include <mln/io/fits/all.hh>
 # endif // ! HAVE_CFITSIO
+
+# ifdef HAVE_MAGICKXX
+#  include <mln/io/magick/all.hh>
+# endif // ! HAVE_MAGICKXX
 
 # ifdef HAVE_TIFF
 #  include <mln/io/tiff/all.hh>

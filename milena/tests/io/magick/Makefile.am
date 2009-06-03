@@ -1,10 +1,9 @@
-## Process this file through Automake to create Makefile.in -*- Makefile -*-
+## Process this file through Automake to create Makefile.in.
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-# FIXME: We should not use a hard-coded value.  Rely on a variable set
-# by configure instead.
-AM_LDFLAGS = -lMagick++ 
+AM_CPPFLAGS += $(MAGICKXX_CPPFLAGS)
+AM_LDFLAGS = $(MAGICKXX_LDFLAGS)
 
 check_PROGRAMS =				\
    load 					\
@@ -14,5 +13,4 @@ load_SOURCES = load.cc
 save_SOURCES = save.cc
 
 TESTS = $(check_PROGRAMS)
-
 XFAIL_TESTS = save
