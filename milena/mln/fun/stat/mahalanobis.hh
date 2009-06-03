@@ -30,7 +30,7 @@
 
 /// \file mln/fun/stat/mahalanobis.hh
 ///
-/// Define the FIXME
+/// \brief Define the FIXME
 
 # include <cmath>
 # include <mln/core/concept/function.hh>
@@ -55,8 +55,9 @@ namespace mln
 	enum { n = V::dim };
 	typedef float result;
 
-	mahalanobis(const algebra::mat<V::dim,V::dim,float>& var,
-		    const algebra::vec<V::dim,float>&        mean);
+	mahalanobis(const algebra::mat<n,n,float>& var,
+		    const algebra::vec<n,float>&   mean);
+	// Tech. note: using n (instead of V::dim) above helps g++-2.95.
 
 	float operator()(const V& v) const;
 
@@ -74,8 +75,8 @@ namespace mln
 
       template <typename V>
       inline
-      mahalanobis<V>::mahalanobis(const algebra::mat<V::dim,V::dim,float>& var,
-				  const algebra::vec<V::dim,float>& mean)
+      mahalanobis<V>::mahalanobis(const algebra::mat<n,n,float>& var,
+				  const algebra::vec<n,float>&   mean)
       {
 	var_1_ = var._1();
 	mean_  = mean;

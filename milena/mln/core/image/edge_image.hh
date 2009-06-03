@@ -133,6 +133,7 @@ namespace mln
 				     edge_image<P,V,G> > super_;
 
   public:
+    typedef typename super_::psite  psite;
     typedef typename super_::rvalue rvalue;
     typedef typename super_::lvalue lvalue;
 
@@ -177,10 +178,14 @@ namespace mln
 
     /// Value accessors/operators overloads.
     /// @{
-    using super_::operator();
     rvalue operator()(unsigned e_id) const;
     lvalue operator()(unsigned e_id);
     /// @}
+
+    // Just to help g++-2.95...
+    rvalue operator()(const psite& p) const;
+    lvalue operator()(const psite& p);
+    // ...because "using super_::operator()" does not properly work.
 
   };
 
@@ -232,13 +237,13 @@ namespace mln
 
 
 
-  // vertex_image<P,V,G>
+  // edge_image<P,V,G>
+
   template <typename P, typename V, typename G>
   inline
   edge_image<P,V,G>::edge_image()
   {
   }
-
 
   template <typename P, typename V, typename G>
   inline
@@ -246,7 +251,6 @@ namespace mln
     : super_(fun::i2v::array<V>(pe.nsites()), pe)
   {
   }
-
 
   template <typename P, typename V, typename G>
   inline
@@ -258,7 +262,6 @@ namespace mln
   {
   }
 
-
   template <typename P, typename V, typename G>
   inline
   edge_image<P,V,G>::edge_image(const p_edges<G,site_function_t>& pe,
@@ -266,7 +269,6 @@ namespace mln
     : super_(exact(edge_values), pe)
   {
   }
-
 
   template <typename P, typename V, typename G>
   template <typename FP, typename FV>
@@ -280,8 +282,6 @@ namespace mln
     mlc_equal(mln_result(FP),P)::check();
     mlc_equal(mln_result(FV),V)::check();
   }
-
-
 
   template <typename P, typename V, typename G>
   template <typename FV>
@@ -307,9 +307,23 @@ namespace mln
     return this->data_->f_(e_id);
   }
 
+  template <typename P, typename V, typename G>
+  typename edge_image<P,V,G>::rvalue
+  edge_image<P,V,G>::operator()(const typename edge_image<P,V,G>::psite& p) const
+  {
+    return this->super_::operator()(p);
+  }
+
+  template <typename P, typename V, typename G>
+  typename edge_image<P,V,G>::lvalue
+  edge_image<P,V,G>::operator()(const typename edge_image<P,V,G>::psite& p)
+  {
+    return this->super_::operator()(p);
+  }
+
 # endif // ! MLN_INCLUDE_ONLY
 
-
 } // end of namespace mln
+
 
 #endif // ! MLN_CORE_IMAGE_EDGE_IMAGE_HH

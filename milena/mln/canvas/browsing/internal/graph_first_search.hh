@@ -70,10 +70,12 @@
 # include <deque>
 # include <queue>
 # include <stack>
+
 # include <mln/core/concept/iterator.hh>
 # include <mln/core/concept/browsing.hh>
 # include <mln/core/concept/graph.hh>
 # include <mln/util/vertex.hh>
+
 
 namespace mln
 {
@@ -89,12 +91,12 @@ namespace mln
 
         /// Search algorithm for graph.
         /// Browse over all vertices for each component.
-        template <typename E,
-                  template <typename T, typename Sequence = std::deque<T> >
-                  class C>
+        template < typename E,
+		   template <typename T, typename Seq> class C >
         class graph_first_search_t : public Browsing< E >
         {
-          typedef C<util::vertex_id_t> container_t;
+	  typedef util::vertex_id_t T_;
+          typedef C< T_, std::deque<T_> > container_t;
         public:
           template <typename G, typename F>
           void operator()(const Graph<G>&, F& f) const;
@@ -138,8 +140,7 @@ namespace mln
 
 
         template <typename E,
-                  template <typename T, typename Sequence = std::deque<T> >
-                  class C>
+                  template <typename T, typename Seq> class C>
         template <typename G, typename F>
         inline
         void
@@ -156,19 +157,19 @@ namespace mln
           for_all(v)
             if (f.to_be_treated(v.id())) // <--- to_be_treated
             {
-              container_t queue;
-              queue.push(v.id());
+              container_t q;
+              q.push(v.id());
               f.new_component_from_vertex(v.id()); // <--- new_component_from_vertex
-              while (!queue.empty())
+              while (! q.empty())
               {
-                util::vertex<G> current_v = g.vertex(next(queue));
+                util::vertex<G> current_v = g.vertex(next(q));
                 f.process_vertex(current_v.id()); // <--- process_vertex
-                queue.pop();
+                q.pop();
                 for (unsigned nv = 0; nv < current_v.nmax_nbh_vertices(); ++nv)
                   if (f.to_be_queued(current_v.ith_nbh_vertex(nv))) // <--- to_be_queued
                   {
                     f.added_to_queue(current_v.ith_nbh_vertex(nv)); // <--- added_to_queue
-                    queue.push(current_v.ith_nbh_vertex(nv));
+                    q.push(current_v.ith_nbh_vertex(nv));
                   }
               }
               f.next_component(); // <-- next_component

@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,6 +27,7 @@
 // Public License.
 
 /// \file tests/topo/complex.cc
+///
 /// \brief Test of mln::complex.
 
 #include <algorithm>
@@ -99,9 +101,9 @@ int main()
 
   std::cout
     << "Using ``static'' manipulators." << std::endl
-    << "  number of 0-faces: c.nfaces<0>() = " << c.nfaces<0>() << std::endl
-    << "  number of 1-faces: c.nfaces<1>() = " << c.nfaces<1>() << std::endl
-    << "  number of 2-faces: c.nfaces<2>() = " << c.nfaces<2>() << std::endl
+    << "  number of 0-faces: c.nfaces_with_dim<0>() = " << c.nfaces_with_dim<0>() << std::endl
+    << "  number of 1-faces: c.nfaces_with_dim<1>() = " << c.nfaces_with_dim<1>() << std::endl
+    << "  number of 2-faces: c.nfaces_with_dim<2>() = " << c.nfaces_with_dim<2>() << std::endl
     << "  total number of faces: c.nfaces() = " << c.nfaces() << std::endl
     << std::endl;
 

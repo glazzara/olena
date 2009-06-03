@@ -30,7 +30,7 @@
 
 /// \file mln/morpho/attribute/card.hh
 ///
-/// Define an accumulator that computes the cardinality of a
+/// \brief Define an accumulator that computes the cardinality of a
 /// component.
 ///
 /// \todo Add a static check in the accumulator concept so that
@@ -97,7 +97,6 @@ namespace mln
 	void take(const util::pix<I>& px);
 	void take(const card<I>& other);
 
-	using super_::take_as_init;
 	void take_as_init(); // Extra version.
 	void take_as_init_(const util::pix<I>& px); // Overload.
 	/// \}
@@ -183,7 +182,7 @@ namespace mln
       void
       card<I>::take_as_init_(const util::pix<I>&)
       {
-	take_as_init();
+	this->take_as_init();
       }
 
       template <typename I>

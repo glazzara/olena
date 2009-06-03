@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,10 +30,17 @@
 # define MLN_TOPO_COMPLEX_HH
 
 /// \file mln/topo/complex.hh
-/// Structures for general complexes.
+///
+/// \brief Structures for general complexes.
 ///
 /// A complex defines a topological space which can be used as a
 /// support for an image (i.e., as site sets).
+///
+/// \todo Roland: Check that the top of the inheritance diagram
+/// is correct;  you wrote:
+///    faces_set_mixin<0, D>  --->  lower_dim_faces_set_mixin<D, D>
+/// I (theo) think it's:
+///    faces_set_mixin<0, D>  --->  lower_dim_faces_set_mixin<0, D>
 
 # include <cstddef>
 
@@ -81,7 +89,8 @@ namespace mln
     | Complex.  |
     `----------*/
 
-    /// General complex of dimension \p D.
+    /// \brief General complex of dimension \p D.
+    //
     template <unsigned D>
     class complex
     {
@@ -127,7 +136,7 @@ namespace mln
 
       /// Return the number of \p N-faces.
       template <unsigned N>
-      unsigned nfaces() const;
+      unsigned nfaces_with_dim() const;
       /// \}
 
       /// Dynamic manipulators.
@@ -283,22 +292,6 @@ namespace mln
 	Classes mln::topo::internal::lower_dim_faces_set_mixin<N, D>
 	are implementation classes factoring services related to
 	complex data.  */
-    /// \{
-    namespace internal
-    {
-      // Forward declarations.
-      template <unsigned N, unsigned D>
-      struct faces_set_mixin;
-
-      /// Complex data.
-      template <unsigned D>
-      struct complex_data : faces_set_mixin<D, D>
-      {
-	// Data is contained in super classes.
-      };
-
-    } // end of namespace mln::topo::internal
-    /// \}
 
 
     /*---------------------.
@@ -320,35 +313,9 @@ namespace mln
 
       /// Recursive mixins of set of faces.
       /// \{
+
       template <unsigned N, unsigned D> struct faces_set_mixin;
 
-      /// Faces of highest dimension (\p D).
-      template <unsigned D>
-      struct faces_set_mixin<D, D> : public faces_set_mixin<D - 1, D>,
-				     public lower_dim_faces_set_mixin<D, D>
-      {
-	std::vector< face_data<D, D> > faces_;
-
-	/// Pretty-printing.
-	/// \{
-	/// Print the faces of dimension \p D.
-	void print(std::ostream& ostr) const;
-	void print_rec_asc(std::ostream& ostr) const;
-	/// \}
-
-	/// Functional meta-manipulators.
-	/// \{
-	/// Fold left.
-	/// \see mln::complex<D>::fold_left_.
-	template <typename BinaryFunction, typename T>
-	T fold_left_(const BinaryFunction& f, const T& accu) const;
-	/// Apply a functor \a f to the list of faces if \a n == \p D.
-	/// \see mln::complex<D>::apply_if_dim_matches_.
-	template <typename UnaryFunction>
-	typename UnaryFunction::result_type
-	apply_if_dim_matches_(unsigned n, const UnaryFunction& f) const;
-	/// \}
-      };
 
       /// Faces of intermediate dimension (greater than 0, lower than \p D).
       template <unsigned N, unsigned D>
@@ -374,6 +341,34 @@ namespace mln
 	template <typename BinaryFunction, typename T>
 	T fold_left_(const BinaryFunction& f, const T& accu) const;
 	/// Apply a functor \a f to the list of faces if \a n == \p N.
+	/// \see mln::complex<D>::apply_if_dim_matches_.
+	template <typename UnaryFunction>
+	typename UnaryFunction::result_type
+	apply_if_dim_matches_(unsigned n, const UnaryFunction& f) const;
+	/// \}
+      };
+
+      /// Faces of highest dimension (\p D).
+      template <unsigned D>
+      struct faces_set_mixin<D, D> : public faces_set_mixin<D - 1, D>,
+				     public lower_dim_faces_set_mixin<D, D>
+      {
+	std::vector< face_data<D, D> > faces_;
+
+	/// Pretty-printing.
+	/// \{
+	/// Print the faces of dimension \p D.
+	void print(std::ostream& ostr) const;
+	void print_rec_asc(std::ostream& ostr) const;
+	/// \}
+
+	/// Functional meta-manipulators.
+	/// \{
+	/// Fold left.
+	/// \see mln::complex<D>::fold_left_.
+	template <typename BinaryFunction, typename T>
+	T fold_left_(const BinaryFunction& f, const T& accu) const;
+	/// Apply a functor \a f to the list of faces if \a n == \p D.
 	/// \see mln::complex<D>::apply_if_dim_matches_.
 	template <typename UnaryFunction>
 	typename UnaryFunction::result_type
@@ -437,6 +432,18 @@ namespace mln
       /// \}
 
 
+      // Tech note: g++-2.95 highly prefers to have the complex_data
+      // class to be defined after the specializations of
+      // 'faces_set_mixin'.
+
+      /// Complex data.
+      template <unsigned D>
+      struct complex_data : public faces_set_mixin<D, D>
+      {
+	// Data is contained in super classes.
+      };
+
+
       // ------------------------------------------------- //
       // mln::topo::internal::lower_dim_faces_set_mixin.   //
       // mln::topo::internal::higher_dim_faces_set_mixin.  //
@@ -483,8 +490,7 @@ namespace mln
       /* FIXME: This is not thread-proof (these two lines should
 	 form an atomic section).  */
       data_->internal::faces_set_mixin<0u, D>::faces_.push_back(face_data<0u, D>());
-      unsigned id = nfaces<0u>() - 1;
-
+      unsigned id = nfaces_with_dim<0u>() - 1;
       return n_face<0u, D>(*this, id);
     }
 
@@ -510,7 +516,7 @@ namespace mln
       /* FIXME: This is not thread-proof (these two lines should
 	 form an atomic section).  */
       data_->internal::faces_set_mixin<N + 1, D>::faces_.push_back(f);
-      unsigned id = nfaces<N + 1>() - 1;
+      unsigned id = nfaces_with_dim<N + 1>() - 1;
 
       n_face<N + 1, D> fh(*this, id);
       // Connect F and its ADJACENT_FACES.
@@ -587,7 +593,7 @@ namespace mln
     template <unsigned N>
     inline
     unsigned
-    complex<D>::nfaces() const
+    complex<D>::nfaces_with_dim() const
     {
       return data_->internal::faces_set_mixin<N, D>::faces_.size();
     }

@@ -72,6 +72,7 @@ namespace mln
 
     namespace internal
     {
+
       /// Factoring class for iterators on mln::complex.
       ///
       /// \arg \p F The type of the face handle.
@@ -92,7 +93,7 @@ namespace mln
 	/// Explicit conversion (accessor).
 	const face& subject() const;
 	/// Implicit conversion (conversion operator).
-	operator const face&() const;
+	operator const F&() const;
 	/// \}
 
       protected:
@@ -121,7 +122,7 @@ namespace mln
 
       template <typename F, typename E>
       inline
-      complex_iterator_base<F, E>::operator const face&() const
+      complex_iterator_base<F, E>::operator const F& () const
       {
 	return f_;
       }

@@ -31,7 +31,7 @@
 
 /// \file mln/core/image/vertex_image.hh
 ///
-/// Image based on graph vertices.
+/// \brief Image based on graph vertices.
 
 # include <mln/core/concept/graph.hh>
 # include <mln/core/image/graph_elt_window.hh>
@@ -135,6 +135,7 @@ namespace mln
 				     vertex_image<P,V,G> > super_;
 
   public:
+    typedef typename super_::psite  psite;
     typedef typename super_::rvalue rvalue;
     typedef typename super_::lvalue lvalue;
 
@@ -170,10 +171,15 @@ namespace mln
 
     /// Value accessors/operators overloads.
     /// @{
-    using super_::operator();
     rvalue operator()(unsigned v_id) const;
     lvalue operator()(unsigned v_id);
     /// @}
+
+
+    // Just to help g++-2.95...
+    rvalue operator()(const psite& p) const;
+    lvalue operator()(const psite& p);
+    // ...because "using super_::operator()" does not properly work.
 
   };
 
@@ -234,14 +240,12 @@ namespace mln
   {
   }
 
-
   template <typename P, typename V, typename G>
   inline
   vertex_image<P,V,G>::vertex_image(const p_vertices<G,site_function_t>& pv)
     : super_(fun::i2v::array<V>(pv.nsites()), pv)
   {
   }
-
 
   template <typename P, typename V, typename G>
   inline
@@ -250,7 +254,6 @@ namespace mln
     : super_(exact(vertex_values), pv)
   {
   }
-
 
   template <typename P, typename V, typename G>
   template <typename FV>
@@ -262,14 +265,13 @@ namespace mln
     mlc_equal(mln_result(FV),V)::check();
   }
 
-
 //  template <typename P, typename V, typename G>
 //  typename vertex_image<P,V,G>::rvalue
 //  vertex_image<P,V,G>::operator()(const util::vertex<G>& v) const
 //  {
 //    return this->data_->f_(v.id());
 //  }
-//
+
 //  template <typename P, typename V, typename G>
 //  typename vertex_image<P,V,G>::lvalue
 //  vertex_image<P,V,G>::operator()(const util::vertex<G>& v)
@@ -291,9 +293,23 @@ namespace mln
     return this->data_->f_(v_id);
   }
 
+  template <typename P, typename V, typename G>
+  typename vertex_image<P,V,G>::rvalue
+  vertex_image<P,V,G>::operator()(const typename vertex_image<P,V,G>::psite& p) const
+  {
+    return this->super_::operator()(p);
+  }
+
+  template <typename P, typename V, typename G>
+  typename vertex_image<P,V,G>::lvalue
+  vertex_image<P,V,G>::operator()(const typename vertex_image<P,V,G>::psite& p)
+  {
+    return this->super_::operator()(p);
+  }
+
 # endif // ! MLN_INCLUDE_ONLY
 
-
 } // end of namespace mln
+
 
 #endif // ! MLN_CORE_IMAGE_VERTEX_IMAGE_HH

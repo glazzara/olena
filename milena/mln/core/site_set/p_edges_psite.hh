@@ -31,7 +31,7 @@
 
 /// \file mln/core/site_set/p_edges_psite.hh
 ///
-/// Implementation of p_edges psite.
+/// \brief Implementation of p_edges psite.
 
 # include <mln/core/internal/graph_psite_base.hh>
 # include <mln/util/edge.hh>
@@ -54,6 +54,8 @@ namespace mln
     typedef internal::graph_psite_base<p_edges<G,F>, self_> super_;
 
   public:
+
+    typedef p_edges<G,F> target_t;
 
     /// Constructors
     /// \{

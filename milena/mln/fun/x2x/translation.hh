@@ -30,13 +30,14 @@
 
 /// \file mln/fun/x2x/translation.hh
 ///
-/// Define a translation function.
+/// \brief Define a translation function.
 
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/x2x_linear_impl.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/algebra/h_mat.hh>
 # include <mln/fun/i2v/all.hh>
+
 
 namespace mln
 {
@@ -47,14 +48,14 @@ namespace mln
     namespace x2x
     {
 
-      /// Represent a translation function.
+      /// Translation function-object.
+      //
       template <unsigned n, typename C>
       struct translation
-        : fun::internal::x2x_linear_impl_< algebra::vec<n,C>, translation<n,C> >
-        , public Function_v2v< translation<n,C> >
+        :
+	fun::internal::x2x_linear_impl_< algebra::vec<n,C>, translation<n,C> >,
+        public Function_v2v< translation<n,C> >
       {
-        typedef fun::internal::x2x_linear_impl_< algebra::vec<n,C>, translation<n,C> > super_;
-
         /// Type of the inverse function.
         typedef translation<n,C> invert;
         /// Return the inverse function.
@@ -65,7 +66,6 @@ namespace mln
         /// Constructor with the translation vector.
         translation(const algebra::vec<n,C>& t);
 
-        using super_::operator();
         /// Perform the translation of the given vector
         algebra::vec<n,C> operator()(const algebra::vec<n,C>& v) const;
 

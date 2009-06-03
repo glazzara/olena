@@ -29,13 +29,12 @@
 #ifndef MLN_IO_PGM_LOAD_HH
 # define MLN_IO_PGM_LOAD_HH
 
-/*!
- * \file   mln/io/pgm/load.hh
- *
- * \brief Define a function which loads an image of kind pgm with
- * given path.
- *
- */
+/// \file mln/io/pgm/load.hh
+///
+/// \brief Define a function which loads an image of kind pgm with
+///
+/// \todo Fabien: Move image3d loading elsewhere!  for instance in
+/// io/pgms/load (note the 's')...
 
 # include <iostream>
 # include <fstream>
@@ -43,12 +42,10 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/image3d.hh>
-
 # include <mln/value/int_u8.hh>
-
 # include <mln/io/pnm/load.hh>
-
 # include <mln/make/image3d.hh>
+
 
 namespace mln
 {
@@ -106,7 +103,7 @@ namespace mln
       template <typename I>
       inline
       void load(Image<I>& ima,
-	    const std::string& filename)
+		const std::string& filename)
       {
 	trace::entering("mln::io::pgm::load");
 	io::pnm::load<I>(PGM, ima, filename);

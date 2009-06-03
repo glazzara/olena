@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +31,7 @@
 
 /// \file mln/topo/adj_lower_face_iter.hh
 ///
-/// Definition of forward and backward iterators on the
+/// \brief Definition of forward and backward iterators on the
 /// adjacent (n-1)-faces of a (reference) n-face in a complex.
 
 # include <mln/topo/internal/complex_relative_iterator_base.hh>
@@ -65,19 +66,21 @@ namespace mln
     | topo::adj_lower_face_fwd_iter<D>.  |
     `-----------------------------------*/
 
-    /// Forward iterator on all the adjacent (n-1)-faces of the
+    /// \brief Forward iterator on all the adjacent (n-1)-faces of the
     /// n-face of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
+    //
     template <unsigned D>
     class adj_lower_face_fwd_iter
-      : public internal::forward_complex_relative_iterator_base< face<D>,
+      : public internal::forward_complex_relative_iterator_base< topo::face<D>,
 								 algebraic_face<D>,
 								 adj_lower_face_fwd_iter<D> >
     {
+      // Tech note: we use topo::face to help g++-2.95.
     private:
       typedef adj_lower_face_fwd_iter<D> self_;
-      typedef internal::forward_complex_relative_iterator_base< face<D>,
+      typedef internal::forward_complex_relative_iterator_base< topo::face<D>,
 								algebraic_face<D>,
 								self_ > super_;
 
@@ -98,22 +101,23 @@ namespace mln
     | topo::adj_lower_face_bkd_iter<D>.  |
     `-----------------------------------*/
 
-    /// Backward iterator on all the adjacent (n-1)-faces of the
-    /// n-face of an mln::complex<D>.
+    /// \brief Backward iterator on all the adjacent (n-1)-faces of
+    /// the n-face of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
+    //
     template <unsigned D>
     class adj_lower_face_bkd_iter
-      : public internal::backward_complex_relative_iterator_base< face<D>,
+      : public internal::backward_complex_relative_iterator_base< topo::face<D>,
 								  algebraic_face<D>,
 								  adj_lower_face_bkd_iter<D> >
     {
+      // Tech note: we use topo::face to help g++-2.95.
     private:
       typedef adj_lower_face_bkd_iter<D> self_;
-      typedef internal::backward_complex_relative_iterator_base< face<D>,
+      typedef internal::backward_complex_relative_iterator_base< topo::face<D>,
 								 algebraic_face<D>,
 								 self_ > super_;
-
     public:
       /// Construction.
       /// \{

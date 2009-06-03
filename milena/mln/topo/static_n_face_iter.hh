@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,6 +30,7 @@
 # define MLN_TOPO_STATIC_N_FACE_ITER_HH
 
 /// \file mln/topo/static_n_face_iter.hh
+///
 /// \brief Definition of forward and backward iterators on all the
 /// \p N-faces of a complex, \p N being a static value.
 
@@ -51,14 +53,16 @@ namespace mln
     ///
     /// \arg \p N The dimension of the face associated to this iterator.
     /// \arg \p D The dimension of the complex this iterator belongs to.
+    //
     template <unsigned N, unsigned D>
     class static_n_face_fwd_iter
-      : public internal::complex_set_iterator_base< face<D>,
+      : public internal::complex_set_iterator_base< topo::face<D>,
 						    static_n_face_fwd_iter<N, D> >
     {
+      // Tech note: we use topo::face to help g++-2.95.
     private:
       typedef static_n_face_fwd_iter<N, D> self_;
-      typedef internal::complex_set_iterator_base< face<D>, self_ > super_;
+      typedef internal::complex_set_iterator_base< topo::face<D>, self_ > super_;
 
     public:
       using super_::is_valid;
@@ -95,14 +99,16 @@ namespace mln
     ///
     /// \arg \p N The dimension of the face associated to this iterator.
     /// \arg \p D The dimension of the complex this iterator belongs to.
+    //
     template <unsigned N, unsigned D>
     class static_n_face_bkd_iter
-      : public internal::complex_set_iterator_base< face<D>,
+      : public internal::complex_set_iterator_base< topo::face<D>,
 						    static_n_face_bkd_iter<N, D> >
     {
+      // Tech note: we use topo::face to help g++-2.95.
     private:
       typedef static_n_face_bkd_iter<N, D> self_;
-      typedef internal::complex_set_iterator_base< face<D>, self_ > super_;
+      typedef internal::complex_set_iterator_base< topo::face<D>, self_ > super_;
 
     public:
       using super_::is_valid;
@@ -174,7 +180,7 @@ namespace mln
     {
       if (is_valid())
 	{
-	  if (f_.face_id() + 1 < f_.cplx().template nfaces<N>())
+	  if (f_.face_id() + 1 < f_.cplx().template nfaces_with_dim<N>())
 	    f_.inc_face_id();
 	  else
 	    invalidate();
@@ -213,7 +219,7 @@ namespace mln
     void
     static_n_face_bkd_iter<N, D>::start()
     {
-      f_.set_face_id(f_.cplx().template nfaces<N>() - 1);
+      f_.set_face_id(f_.cplx().template nfaces_with_dim<N>() - 1);
     }
 
     template <unsigned N, unsigned D>

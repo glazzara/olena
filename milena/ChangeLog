@@ -1,3 +1,78 @@
+2009-06-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Have extra tests pass g++-2.95.
+
+	* mln/topo/face_iter.hh,
+	* mln/topo/adj_higher_face_iter.hh,
+	* mln/topo/face_data.hh,
+	* mln/topo/n_face_iter.hh,
+	* mln/topo/adj_lower_dim_connected_n_face_iter.hh,
+	* mln/topo/center_only_iter.hh,
+	* mln/topo/static_n_face_iter.hh,
+	* mln/topo/attic/faces_iter.hh,
+	* mln/topo/complex.hh,
+	* mln/topo/adj_lower_face_iter.hh,
+	* mln/topo/adj_m_face_iter.hh,
+	* mln/topo/n_face.hh,
+	* mln/topo/adj_higher_dim_connected_n_face_iter.hh,
+	* mln/topo/internal/complex_relative_iterator_sequence.hh,
+	* mln/topo/internal/complex_iterator_base.hh,
+	* mln/core/site_set/p_faces.hh,
+	* mln/core/site_set/p_complex.hh,
+	* mln/io/off/save.hh,
+	* tests/topo/complex.cc,
+	* tests/morpho/complex_image_wst.cc,
+	* apps/statues/save_bin_alt.hh
+	(face): Explicit use as topo::face to fix the ambiguity.
+	(nfaces): Rename the templated overload as...
+	(nfaces_with_dim): ...this.
+	(complex_data): Move definition after the specializations
+	of faces_set_mixin.
+	Update.
+	Aestetic change.
+	Upgrade doc style.
+	* mln/topo/internal/complex_relative_iterator_sequence.hh
+	(const_face_type_): New.
+	(operator): Use it.
+	* mln/topo/internal/complex_iterator_base.hh
+	(operator): Simplify signature.
+
+	Dispatch!
+
+	* mln/topo/complex.hh (todo): New; for Roland.
+	* mln/io/pgm/load.hh (todo): New; for Fabien.
+
+	Misc.
+
+	* mln/world/inter_pixel/neighb2d.hh: Fix missing const.
+	* mln/core/site_set/p_vertices_psite.hh,
+	* mln/core/site_set/p_edges_psite.hh,
+	* mln/core/site_set/complex_psite.hh
+	(target_t): New; was missing.
+	* mln/core/image/edge_image.hh,
+	* mln/core/image/vertex_image.hh (using): Remove.
+	(operator()): Explicit write them, instead of inherit them.
+	* mln/core/image/graph_window_if_piter.hh
+	(s_): Fix accessibility.
+	(is_masked_impl_selector): Fix typedef deduction.
+	* mln/core/internal/is_masked_impl_selector.hh: Update.
+	* mln/core/internal/graph_psite_base.hh
+	(operator): Do not use id_t.
+	* mln/make/image.hh (todo): New.
+	* mln/metal/converts_to.hh: Have it work with g++-2.95.
+	* mln/linear/gaussian/impl.hh,
+	* mln/accu/transform_directional.hh,
+	* mln/accu/transform_diagonal.hh: Ease constant deduction.
+	* mln/fun/x2x/composed.hh: Fix Boolean expr as parameter.
+	* mln/fun/x2x/translation.hh,
+	* mln/fun/x2x/rotation.hh (using): Remove; useless.
+	* mln/morpho/attribute/card.hh: Likewise.
+	* mln/fun/stat/mahalanobis.hh (V::dim): Replace by n.
+	* mln/canvas/browsing/internal/graph_first_search.hh
+	(graph_first_search_t): Revamp weird params resolution.
+	(queue): Rename as...
+	(q): ...this.
+
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix a static precondition in mln::make::image3d.

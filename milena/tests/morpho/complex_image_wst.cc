@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -27,7 +28,8 @@
 
 /// \file tests/morpho/complex_image_wst.cc
 ///
-/// Testing Meyer's Watershed Transform on mln::complex_image.
+/// \brief Testing the Watershed transform by flooding on
+/// mln::complex_image.
 
 #include <iostream>
 #include <fstream>
@@ -52,7 +54,7 @@
 #include <mln/norm/l2.hh>
 
 #include <mln/morpho/closing/area.hh>
-#include <mln/morpho/meyer_wst.hh>
+#include <mln/morpho/watershed/flooding.hh>
 
 #include <mln/convert/to.hh>
 
@@ -207,7 +209,7 @@ int main()
   typedef unsigned wst_val_t;
   wst_val_t nbasins;
   typedef complex_image<D, G, wst_val_t> wst_ima_t;
-  wst_ima_t wshed = morpho::meyer_wst(closed_dist_ima, nbh, nbasins);
+  wst_ima_t wshed = morpho::watershed::flooding(closed_dist_ima, nbh, nbasins);
   /* Note that since the image is based not only on the 1-faces but
      also on the 0-faces of the complex, and given the above
      neighborhood, the domain seen by the WST is not connected!  It is
@@ -234,7 +236,7 @@ int main()
 
      We definitely need a complex_image that can accept a subset of a
      complex as domain (or at least a p_face<N, D, P>.  */
-  wst_val_t actual_nbasins = nbasins - c.nfaces<0>();
+  wst_val_t actual_nbasins = nbasins - c.nfaces_with_dim<0>();
   std::cout << "nbasins = " << actual_nbasins << std::endl;
 
 

@@ -29,10 +29,9 @@
 #ifndef MLN_CORE_IMAGE_GRAPH_WINDOW_IF_PITER_HH
 # define MLN_CORE_IMAGE_GRAPH_WINDOW_IF_PITER_HH
 
-/// \file   mln/core/image/graph_window_if_piter.hh
+/// \file mln/core/image/graph_window_if_piter.hh
 ///
-/// Definition of a site iterator on a custom graph window.
-
+/// \brief Definition of a site iterator on a custom graph window.
 
 # include <mln/core/internal/is_masked_impl_selector.hh>
 # include <mln/core/internal/site_relative_iterator_base.hh>
@@ -50,10 +49,10 @@ namespace mln
   template <typename S, typename W, typename I>
   class graph_window_if_piter
     : public internal::site_relative_iterator_base< W,
-					  graph_window_if_piter<S,W,I> >,
-      public internal::is_masked_impl_selector<S,
-					       mln_domain(W::mask_t),
-					       graph_window_if_piter<S,W,I> >
+						    graph_window_if_piter<S,W,I> >,
+      public internal::is_masked_impl_selector< S,
+						typename W::mask_t::domain_t,
+						graph_window_if_piter<S,W,I> >
   {
     typedef graph_window_if_piter<S,W,I> self_;
     typedef internal::site_relative_iterator_base<W,self_> super_;
@@ -107,13 +106,15 @@ namespace mln
 
   private:
     I iter_;
+
+  protected:
     /// The underlying window.
     using super_::s_;
   };
 
 
-# ifndef MLN_INCLUDE_ONLY
 
+# ifndef MLN_INCLUDE_ONLY
 
   template <typename S, typename W, typename I>
   inline

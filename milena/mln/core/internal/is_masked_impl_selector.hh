@@ -26,15 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-
 #ifndef MLN_CORE_INTERNAL_IS_MASKED_IMPL_SELECTOR
 # define MLN_CORE_INTERNAL_IS_MASKED_IMPL_SELECTOR
 
 /// \file mln/core/internal/is_masked_impl_selector.hh
 ///
-/// Add a specific member to graph windows/neighborhoods.
+/// \brief Add a specific member to graph windows/neighborhoods.
 
 # include <mln/util/edge.hh>
+
 
 namespace mln
 {
@@ -92,7 +92,7 @@ namespace mln
     {
       (void) center;
       E& iter = internal::force_exact<E>(*this);
-      return !iter.s_->mask()(element.id());
+      return ! iter.target_()->mask()(element.id());
     }
 
 
@@ -108,7 +108,7 @@ namespace mln
       util::edge<G1> e = center.edge_with(element);
       mln_postcondition(e.is_valid());
 
-      return !iter.s_->mask()(e.id());
+      return ! iter.target_()->mask()(e.id());
     }
 
 
@@ -128,18 +128,17 @@ namespace mln
       E& iter = internal::force_exact<E>(*this);
 
       if (center.v1() == element.v2() || center.v2() == element.v2())
-	return !iter.s_->mask()(element.v1());
+	return ! iter.target_()->mask()(element.v1());
 
       //else if (center.v2() == element.v1() || center.v1() == element.v1())
-      return !iter.s_->mask()(element.v2());
+      return ! iter.target_()->mask()(element.v2());
     }
 
-
 # endif // ! MLN_INCLUDE_ONLY
-
 
   } // end of namespace mln::internal
 
 } // end of namespace mln
+
 
 #endif // ! MLN_CORE_INTERNAL_IS_MASKED_IMPL_SELECTOR

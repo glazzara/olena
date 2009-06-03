@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,7 +30,7 @@
 # define MLN_TOPO_ADJ_LOWER_DIM_CONNECTED_N_FACE_ITER_HH
 
 /// \file mln/topo/adj_lower_dim_connected_n_face_iter.hh
-
+///
 /// \brief Definition of forward and backward iterators on all the
 /// n-faces sharing an adjacent (n-1)-face with a (reference) n-face
 /// in a complex.
@@ -62,16 +63,18 @@ namespace mln
     /// (n-1)-face with a (reference) n-face of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
+    //
     template <unsigned D>
     class adj_lower_dim_connected_n_face_fwd_iter
-      : public internal::forward_complex_relative_iterator_base< face<D>,
+      : public internal::forward_complex_relative_iterator_base< topo::face<D>,
 								 algebraic_face<D>,
 								 adj_lower_dim_connected_n_face_fwd_iter<D> >,
         private internal::adj_lower_dim_connected_n_face_iterator<D>
     {
+      // Tech note: we use topo::face to help g++-2.95.
     private:
       typedef adj_lower_dim_connected_n_face_fwd_iter<D> self_;
-      typedef internal::forward_complex_relative_iterator_base< face<D>,
+      typedef internal::forward_complex_relative_iterator_base< topo::face<D>,
 								algebraic_face<D>,
 								self_ > super_;
 
@@ -99,16 +102,18 @@ namespace mln
     /// (n-1)-face with a (reference) n-face of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
+    //
     template <unsigned D>
     class adj_lower_dim_connected_n_face_bkd_iter
-      : public internal::backward_complex_relative_iterator_base< face<D>,
+      : public internal::backward_complex_relative_iterator_base< topo::face<D>,
 								  algebraic_face<D>,
 								  adj_lower_dim_connected_n_face_bkd_iter<D> >,
         private internal::adj_lower_dim_connected_n_face_iterator<D>
     {
+      // Tech note: we use topo::face to help g++-2.95.
     private:
       typedef adj_lower_dim_connected_n_face_bkd_iter<D> self_;
-      typedef internal::backward_complex_relative_iterator_base< face<D>,
+      typedef internal::backward_complex_relative_iterator_base< topo::face<D>,
 								 algebraic_face<D>,
 								 self_ > super_;
 
@@ -141,7 +146,7 @@ namespace mln
       protected:
 	/// The actual implementation of the computation of the set of
 	/// faces adjacent to the reference face.
-	void update_adj_faces__(const face<D>& center,
+	void update_adj_faces__(const topo::face<D>& center,
 				std::vector< algebraic_face<D> >& adj_faces);
       };
 
@@ -228,7 +233,7 @@ namespace mln
       template <unsigned D>
       inline
       void
-      adj_lower_dim_connected_n_face_iterator<D>::update_adj_faces__(const face<D>& center,
+      adj_lower_dim_connected_n_face_iterator<D>::update_adj_faces__(const topo::face<D>& center,
 								     std::vector< algebraic_face<D> >& adj_faces)
       {
 	// Reset the result container.

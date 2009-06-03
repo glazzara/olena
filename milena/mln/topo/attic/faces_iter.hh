@@ -178,7 +178,7 @@ namespace mln
       if (is_valid())
 	{
 	  unsigned face_id = face_.face_id();
-	  if (face_id + 1 < face_.cplx().template nfaces<N>())
+	  if (face_id + 1 < face_.cplx().template nfaces_with_dim<N>())
 	    /* FIXME: Provide accessor n_face::n() returning
 	       a mutable reference?  This way, we could just write
 
@@ -221,7 +221,7 @@ namespace mln
     void
     faces_bkd_iter_<N, D>::start()
     {
-      face_.set_face_id(face_.cplx().template nfaces<N>() - 1);
+      face_.set_face_id(face_.cplx().template nfaces_with_dim<N>() - 1);
     }
 
     template <unsigned N, unsigned D>

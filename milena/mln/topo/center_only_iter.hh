@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -73,13 +74,14 @@ namespace mln
         \see mln::complex_lower_higher_window  */
     template <unsigned D>
     class center_only_iter
-      : public internal::forward_complex_relative_iterator_base< face<D>,
+      : public internal::forward_complex_relative_iterator_base< topo::face<D>,
 								 algebraic_face<D>,
 								 center_only_iter<D> >
     {
+      // Tech note: we use topo::face to help g++-2.95.
     private:
       typedef center_only_iter<D> self_;
-      typedef internal::forward_complex_relative_iterator_base< face<D>,
+      typedef internal::forward_complex_relative_iterator_base< topo::face<D>,
 								algebraic_face<D>,
 								self_ > super_;
 

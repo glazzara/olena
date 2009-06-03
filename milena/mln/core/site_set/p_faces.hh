@@ -225,7 +225,7 @@ namespace mln
   unsigned
   p_faces<N, D, P>::nfaces() const
   {
-    return cplx_.template nfaces<N>();
+    return cplx_.template nfaces_with_dim<N>();
   }
 
   template <unsigned N, unsigned D, typename P>

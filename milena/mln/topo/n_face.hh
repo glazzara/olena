@@ -180,7 +180,7 @@ namespace mln
     bool
     n_face<N, D>::is_valid() const
     {
-      return face_id_ < cplx_.template nfaces<N>();
+      return face_id_ < cplx_.template nfaces_with_dim<N>();
     }
 
     template <unsigned N, unsigned D>

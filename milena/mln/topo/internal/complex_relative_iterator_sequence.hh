@@ -49,6 +49,15 @@ namespace mln
 
     namespace internal
     {
+
+      template <typename I1>
+      struct const_face_type_
+      {
+	typedef typename I1::face_type F_;
+	typedef const F_& ret;
+      };
+
+
       /// A meta relative iterator on the faces of a complex
       /// using two complex relative iterators sequentially.
       ///
@@ -95,7 +104,8 @@ namespace mln
 	/// Conversion.
 	/// \{
 	/// Return a reference to the corresponding face handle.
-	operator const face_type&() const;
+	operator typename const_face_type_<I1>::ret () const;
+	//      that is:  const face_type&
 	/// \}
 
       protected:
@@ -212,7 +222,7 @@ namespace mln
 
       template <typename I1, typename I2, typename E>
       inline
-      complex_relative_iterator_sequence<I1, I2, E>::operator const face_type&() const
+      complex_relative_iterator_sequence<I1, I2, E>::operator typename const_face_type_<I1>::ret () const
       {
 	return f_;
       }

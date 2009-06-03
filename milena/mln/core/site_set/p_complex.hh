@@ -31,7 +31,7 @@
 
 /// \file mln/core/site_set/p_complex.hh
 ///
-/// Definition of a point set based on a complex.
+/// \brief Definition of a point set based on a complex.
 
 # include <mln/core/internal/site_set_base.hh>
 

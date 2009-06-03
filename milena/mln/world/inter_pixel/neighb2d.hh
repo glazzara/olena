@@ -30,12 +30,12 @@
 
 /// \file mln/world/inter_pixel/neighb2d.hh
 ///
-/// Common neighborhood on inter-pixel images.
-
+/// \brief Common neighborhood on inter-pixel images.
 
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/make/double_neighb2d.hh>
 # include <mln/world/inter_pixel/dim2/is_row_odd.hh>
+
 
 namespace mln
 {
@@ -60,13 +60,13 @@ namespace mln
 
       const dbl_neighb2d& e2c()
       {
-	static bool e2c_h[] = { 0, 1, 0,
-				0, 0, 0,
-				0, 1, 0 };
+	static const bool e2c_h[] = { 0, 1, 0,
+				      0, 0, 0,
+				      0, 1, 0 };
 
-	static bool e2c_v[] = { 0, 0, 0,
-				1, 0, 1,
-				0, 0, 0 };
+	static const bool e2c_v[] = { 0, 0, 0,
+				      1, 0, 1,
+				      0, 0, 0 };
 
 	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2c_h, e2c_v);
 	return nbh;
@@ -76,17 +76,17 @@ namespace mln
 
       const dbl_neighb2d& e2e()
       {
-	static bool e2e_h[] = { 0, 0, 1, 0, 0,
-				0, 1, 0, 1, 0,
-				0, 0, 0, 0, 0,
-				0, 1, 0, 1, 0,
-				0, 0, 1, 0, 0 };
+	static const bool e2e_h[] = { 0, 0, 1, 0, 0,
+				      0, 1, 0, 1, 0,
+				      0, 0, 0, 0, 0,
+				      0, 1, 0, 1, 0,
+				      0, 0, 1, 0, 0 };
 
-	static bool e2e_v[] = { 0, 0, 0, 0, 0,
-				0, 1, 0, 1, 0,
-				1, 0, 0, 0, 1,
-				0, 1, 0, 1, 0,
-				0, 0, 0, 0, 0 };
+	static const bool e2e_v[] = { 0, 0, 0, 0, 0,
+				      0, 1, 0, 1, 0,
+				      1, 0, 0, 0, 1,
+				      0, 1, 0, 1, 0,
+				      0, 0, 0, 0, 0 };
 
 	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2e_h, e2e_v);
 	return nbh;

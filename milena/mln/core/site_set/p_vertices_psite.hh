@@ -31,7 +31,7 @@
 
 /// \file mln/core/site_set/p_vertices_psite.hh
 ///
-/// Implementation of p_vertices psite.
+/// \brief Implementation of p_vertices psite.
 
 # include <mln/core/concept/pseudo_site.hh>
 # include <mln/core/internal/graph_psite_base.hh>
@@ -54,6 +54,8 @@ namespace mln
     typedef internal::graph_psite_base<p_vertices<G,F>, self_> super_;
 
   public:
+
+    typedef p_vertices<G,F> target_t;
 
     p_vertices_psite();
     p_vertices_psite(const p_vertices<G,F>& s);

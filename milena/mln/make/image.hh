@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,7 +31,10 @@
 
 /// \file mln/make/image.hh
 ///
-/// Routine to create an image from values given as a C-array.
+/// \brief Routine to create an image from values given as a C-array.
+///
+/// \todo I guess that we should modify V into mln_unconst(V); test
+/// with C arrays being "const int[]" and run g++-2.95...
 
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>

@@ -31,7 +31,7 @@
 
 /// \file mln/fun/x2x/composed.hh
 ///
-/// Definition of a composed transformation.
+/// \brief Definition of a composed transformation.
 
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/x2x_linear_impl.hh>
@@ -137,9 +137,9 @@ namespace mln
       /// Represent a composition of two transformations.
       template <typename T2, typename T1>
       struct composed
-        : public internal::helper_composed_<T2,T1,composed<T2,T1>,
-                                            mlc_is(T2, Function_v2v<T2>)::value &&
-                                            mlc_is(T1, Function_v2v<T1>)::value>,
+        : public internal::helper_composed_< T2, T1, composed<T2,T1>,
+                                             (mlc_is(T2, Function_v2v<T2>)::value &&
+					      mlc_is(T1, Function_v2v<T1>)::value) >,
           private metal::and_< metal::bool_<(T2::dim == T1::dim)>,
                                metal::is<mln_argument(T2), mln_result(T1)>
                                >::check_t
@@ -149,9 +149,9 @@ namespace mln
 
         /// Constructor with the two transformation to be composed.
         composed(const T2& f, const T1& g)
-          : internal::helper_composed_<T2,T1,composed<T2,T1>,
-                                       mlc_is(T2, Function_v2v<T2>)::value &&
-                                       mlc_is(T1, Function_v2v<T1>)::value>(f, g)
+          : internal::helper_composed_< T2, T1, composed<T2,T1>,
+                                        (mlc_is(T2, Function_v2v<T2>)::value &&
+					 mlc_is(T1, Function_v2v<T1>)::value) >(f, g)
         {}
       };
 

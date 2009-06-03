@@ -31,7 +31,7 @@
 
 /// \file mln/linear/gaussian/impl.hh
 ///
-/// Gaussian filter implementation.
+/// \brief Gaussian filter implementation.
 ///
 /// \todo Add a clean reference Rachid Deriche
 ///	 Recursively implementing the gaussian and its derivatives (1993)
@@ -176,8 +176,9 @@ namespace mln
 			Image<I>& img_, const F& coef, int dir)
 	{
 	  I& img = exact(img_);
-	  mln_precondition(dir < I::site::dim);
+	  typedef mln_site(I) S; // Help g++-2.95.
 
+	  mln_precondition(dir < S::dim);
 
 	  recursivefilter_<mln_value(I)>(img, coef,
 					 point1d(static_cast<def::coord>(-img.border())),
@@ -194,9 +195,9 @@ namespace mln
 			Image<I>& img_, const F& coef, int dir)
 	{
 	  I& img = exact(img_);
+	  typedef mln_site(I) S; // Help g++-2.95.
 
-	  mln_precondition(dir < I::site::dim);
-
+	  mln_precondition(dir < S::dim);
 
 	  if (dir == 0)
 	    {
@@ -234,7 +235,9 @@ namespace mln
 			Image<I>& img_, const F& coef, int dir)
 	{
 	  I& img = exact(img_);
-	  mln_precondition(dir < I::site::dim);
+	  typedef mln_site(I) S; // Help g++-2.95.
+
+	  mln_precondition(dir < S::dim);
 
 	  if (dir == 0)
 	    {
@@ -303,6 +306,8 @@ namespace mln
 			       double sigma,
 			       Image<O>& out)
 	{
+	  typedef mln_site(I) S; // Help g++-2.95.
+
 	  mln_ch_value(O, double) work_img(exact(in).domain());
 	  data::paste(in, work_img);
 	  extension::adjust_fill(work_img, 4, 0);
@@ -310,7 +315,7 @@ namespace mln
 	  // On tiny sigma, Derich algorithm doesn't work.
 	  // It is the same thing that to convolve with a Dirac.
 	  if (sigma > 0.006)
-	    for (int i = 0; i < I::site::dim; ++i)
+	    for (int i = 0; i < S::dim; ++i)
 	      generic_filter_(mln_trait_image_dimension(I)(),
 			      work_img, coef, i);
 
@@ -352,6 +357,8 @@ namespace mln
 			       double sigma,
 			       Image<O>& out)
 	{
+	  typedef mln_site(I) S; // Help g++-2.95.
+
 	  mln_ch_value(O, double) work_img(exact(in).domain());
 	  data::paste(in, work_img);
 	  extension::adjust_fill(work_img, 4, 0);
@@ -359,7 +366,7 @@ namespace mln
 	  // On tiny sigma, Derich algorithm doesn't work.
 	  // It is the same thing that to convolve with a Dirac.
 	  if (sigma > 0.006)
-	    for (int i = 0; i < I::site::dim; ++i)
+	    for (int i = 0; i < S::dim; ++i)
 	      generic_filter_(mln_trait_image_dimension(I)(),
 			      work_img, coef, i);
 
@@ -402,6 +409,8 @@ namespace mln
 			       double sigma,
 			       Image<O>& out)
 	{
+	  typedef mln_site(I) S; // Help g++-2.95.
+
 	  // typedef algebra::vec<3, double> vec3f;
 	  // mln_ch_value(O, vec3f) work_img(exact(in).domain());
 	  // FIXME : paste does not work (rgb8 -> vec3f).
@@ -410,7 +419,7 @@ namespace mln
 	  // On tiny sigma, Derich algorithm doesn't work.
 	  // It is the same thing that to convolve with a Dirac.
 	  if (sigma > 0.006)
-	    for (int i = 0; i < I::site::dim; ++i)
+	    for (int i = 0; i < S::dim; ++i)
 	      generic_filter_(mln_trait_image_dimension(I)(),
 			      out, coef, i);
 	}

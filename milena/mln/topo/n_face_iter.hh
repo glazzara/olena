@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,8 +31,8 @@
 
 /// \file mln/topo/n_face_iter.hh
 ///
-/// Definition of forward and backward iterators on all the
-/// \a n-faces of a complex, \a n being a dynamic value.
+/// \brief Definition of forward and backward iterators on all the \a
+/// n-faces of a complex, \a n being a dynamic value.
 
 # include <mln/topo/internal/complex_set_iterator_base.hh>
 # include <mln/topo/face.hh>
@@ -65,17 +66,20 @@ namespace mln
     | topo::n_face_fwd_iter<D>.  |
     `---------------------------*/
 
-    /// Forward iterator on all the faces of an mln::complex<D>.
+    /// \brief Forward iterator on all the faces of an
+    /// mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
+    //
     template <unsigned D>
     class n_face_fwd_iter
-      : public internal::complex_set_iterator_base< face<D>,
+      : public internal::complex_set_iterator_base< topo::face<D>,
 						    n_face_fwd_iter<D> >
     {
+      // Tech note: we use topo::face to help g++-2.95.
     private:
       typedef n_face_fwd_iter<D> self_;
-      typedef internal::complex_set_iterator_base< face<D>, self_ > super_;
+      typedef internal::complex_set_iterator_base< topo::face<D>, self_ > super_;
 
     public:
       using super_::is_valid;
@@ -124,12 +128,13 @@ namespace mln
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>
     class n_face_bkd_iter
-      : public internal::complex_set_iterator_base< face<D>,
+      : public internal::complex_set_iterator_base< topo::face<D>,
 						    n_face_bkd_iter<D> >
     {
+      // Tech note: we use topo::face to help g++-2.95.
     private:
       typedef n_face_bkd_iter<D> self_;
-      typedef internal::complex_set_iterator_base< face<D>, self_ > super_;
+      typedef internal::complex_set_iterator_base< topo::face<D>, self_ > super_;
 
     public:
       using super_::is_valid;

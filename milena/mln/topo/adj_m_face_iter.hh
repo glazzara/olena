@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,7 +30,7 @@
 # define MLN_TOPO_ADJ_M_FACE_ITER_HH
 
 /// \file mln/topo/adj_m_face_iter.hh
-
+///
 /// Definition of forward and backward iterators on all the
 /// m-faces transitively adjacent to a (reference) n-face in a
 /// complex.
@@ -70,14 +71,15 @@ namespace mln
 	the iterated set is empty.  */
     template <unsigned D>
     class adj_m_face_fwd_iter
-      : public internal::forward_complex_relative_iterator_base< face<D>,
+      : public internal::forward_complex_relative_iterator_base< topo::face<D>,
 								 algebraic_face<D>,
 								 adj_m_face_fwd_iter<D> >,
         public internal::adj_m_face_iterator<D>
     {
+      // Tech note: we use topo::face to help g++-2.95.
     private:
       typedef adj_m_face_fwd_iter<D> self_;
-      typedef internal::forward_complex_relative_iterator_base< face<D>,
+      typedef internal::forward_complex_relative_iterator_base< topo::face<D>,
 								algebraic_face<D>,
 								self_ > super_;
       typedef internal::adj_m_face_iterator<D> impl_;
@@ -117,14 +119,15 @@ namespace mln
 	the iterated set is empty.  */
     template <unsigned D>
     class adj_m_face_bkd_iter
-      : public internal::backward_complex_relative_iterator_base< face<D>,
+      : public internal::backward_complex_relative_iterator_base< topo::face<D>,
 								  algebraic_face<D>,
 								  adj_m_face_bkd_iter<D> >,
         public internal::adj_m_face_iterator<D>
     {
+      // Tech note: we use topo::face to help g++-2.95.
     private:
       typedef adj_m_face_bkd_iter<D> self_;
-      typedef internal::backward_complex_relative_iterator_base< face<D>,
+      typedef internal::backward_complex_relative_iterator_base< topo::face<D>,
 								 algebraic_face<D>,
 								 self_ > super_;
       typedef internal::adj_m_face_iterator<D> impl_;
@@ -172,7 +175,7 @@ namespace mln
       protected:
 	/// The actual implementation of the computation of the set of
 	/// faces adjacent to the reference face.
-	void update_adj_faces__(const face<D>& center,
+	void update_adj_faces__(const topo::face<D>& center,
 				std::vector< algebraic_face<D> >& adj_faces);
 
 	/// The dimension of the iterated faces.
@@ -282,7 +285,7 @@ namespace mln
       template <unsigned D>
       inline
       void
-      adj_m_face_iterator<D>::update_adj_faces__(const face<D>& center,
+      adj_m_face_iterator<D>::update_adj_faces__(const topo::face<D>& center,
 						 std::vector< algebraic_face<D> >& adj_faces)
       {
 	adj_faces.clear();

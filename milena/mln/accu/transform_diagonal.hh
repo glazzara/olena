@@ -177,7 +177,8 @@ namespace mln
 	A accu;
 
 	mln_psite(I) p;
-	enum { dim = I::site::dim };
+	typedef mln_site(I) S;
+	enum { dim = S::dim };
 
 	window2d win_left, win_right;
 
@@ -242,7 +243,8 @@ namespace mln
 	A accu;
 
 	mln_psite(I) p;
-	enum { dim = I::site::dim };
+	typedef mln_site(I) S;
+	enum { dim = S::dim };
 
 	window2d win_left, win_right;
 
@@ -303,7 +305,8 @@ namespace mln
 	A accu;
 
 	mln_psite(I) p;
-	enum { dim = I::site::dim };
+	typedef mln_site(I) S;
+	enum { dim = S::dim };
 
 	window2d win_left, win_right;
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,6 +30,7 @@
 # define MLN_CORE_SITE_SET_COMPLEX_PSITE_HH
 
 /// \file mln/core/site_set/complex_psite.hh
+///
 /// \brief Definition of a complex-based point site.
 
 # include <mln/core/internal/pseudo_site_base.hh>
@@ -65,6 +67,8 @@ namespace mln
     // This associated type is important to know that this particular
     // pseudo site knows the site set it refers to.
     typedef p_complex<D, G> target;
+
+    typedef p_complex<D, G> target_t; // To please g++-2.95.
 
     // FIXME: Document.
     /// Construction and assignment.

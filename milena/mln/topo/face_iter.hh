@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,7 +30,8 @@
 # define MLN_TOPO_FACE_ITER_HH
 
 /// \file mln/topo/face_iter.hh
-/// Definition of forward and backward iterators on all the
+///
+/// \brief Definition of forward and backward iterators on all the
 /// faces of a complex.
 
 # include <mln/topo/internal/complex_set_iterator_base.hh>
@@ -61,16 +63,19 @@ namespace mln
     | topo::face_fwd_iter<D>.  |
     `-------------------------*/
 
-    /// Forward iterator on all the faces of an mln::complex<D>.
+    /// \brief Forward iterator on all the faces of an
+    /// mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
+    //
     template <unsigned D>
     class face_fwd_iter
-      : public internal::complex_set_iterator_base< face<D>, face_fwd_iter<D> >
+      : public internal::complex_set_iterator_base< topo::face<D>, face_fwd_iter<D> >
     {
+      // Tech note: we use topo::face to help g++-2.95.
     private:
       typedef face_fwd_iter<D> self_;
-      typedef internal::complex_set_iterator_base< face<D>, self_ > super_;
+      typedef internal::complex_set_iterator_base< topo::face<D>, self_ > super_;
 
     public:
       using super_::is_valid;
@@ -102,16 +107,18 @@ namespace mln
     | topo::face_bkd_iter<D>.  |
     `-------------------------*/
 
-    /// Backward iterator on all the faces of an mln::complex<D>.
+    /// \brief Backward iterator on all the faces of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
+    //
     template <unsigned D>
     class face_bkd_iter
-    : public internal::complex_set_iterator_base< face<D>, face_bkd_iter<D> >
+    : public internal::complex_set_iterator_base< topo::face<D>, face_bkd_iter<D> >
     {
+      // Tech note: we use topo::face to help g++-2.95.
     private:
       typedef face_bkd_iter<D> self_;
-      typedef internal::complex_set_iterator_base< face<D>, self_ > super_;
+      typedef internal::complex_set_iterator_base< topo::face<D>, self_ > super_;
 
     public:
       using super_::is_valid;
@@ -220,7 +227,7 @@ namespace mln
     face_bkd_iter<D>::start()
     {
       f_.set_n(D);
-      f_.set_face_id(f_.cplx().template nfaces<D>() - 1);
+      f_.set_face_id(f_.cplx().template nfaces_with_dim<D>() - 1);
     }
 
     template <unsigned D>

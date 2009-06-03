@@ -31,7 +31,8 @@
 
 /// \file mln/metal/converts_to.hh
 ///
-/// \brief Definition of a type that means "converts to".
+/// \brief Definition of a type that checks if a type "converts to"
+/// another one.
 
 # include <mln/metal/is_a.hh>
 # include <mln/metal/const.hh>
@@ -58,11 +59,17 @@ namespace mln
     namespace internal
     {
 
+      struct eat // Required by g++-2.95 for selector to work.
+      {
+	template <typename T> eat(const volatile T&);
+	template <typename T> eat(T&);
+      };
+
       template <typename T, typename U>
       struct helper_converts_to_
       {
-	static yes_ selector(U);
- 	static no_  selector(...);
+	static yes_ selector(U, int);
+ 	static no_  selector(eat, ...);
       };
 
     } // end of namespace mln::metal::internal
@@ -71,7 +78,9 @@ namespace mln
 
     /// \brief "converts-to" check.
     template <typename T, typename U>
-    struct converts_to : bool_<( sizeof(internal::helper_converts_to_<T, U>::selector(*internal::make_<mlc_const(T)>::ptr()) )
+    struct converts_to : bool_<( sizeof(internal::helper_converts_to_<T, U>
+					::selector(*internal::make_<mlc_const(T)>::ptr(),
+						   0) )
 				 ==
 				 sizeof(internal::yes_) )>
     {};

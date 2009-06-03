@@ -31,7 +31,7 @@
 
 /// \file mln/fun/x2x/rotation.hh
 ///
-/// Define a rotation function.
+/// \brief Define a rotation function.
 ///
 /// \todo store the quaternion instead of (axis, alpha)
 ///	  => better precision while composing two rotation matrices.
@@ -40,6 +40,7 @@
 ///   http://jeux.developpez.com/faq/matquat/?page=quaternions#Q56
 
 # include <cmath>
+
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/x2x_linear_impl.hh>
 # include <mln/algebra/vec.hh>
@@ -48,6 +49,7 @@
 # include <mln/make/h_mat.hh>
 
 # include <mln/norm/l2.hh>
+
 
 namespace mln
 {
@@ -136,11 +138,11 @@ namespace mln
       /// Represent a rotation function.
       template <unsigned n, typename C>
       struct rotation
-	: fun::internal::x2x_linear_impl_< algebra::vec<n,C>, rotation<n,C> >
-	, public Function_v2v< rotation<n,C> >
+	:
+	fun::internal::x2x_linear_impl_< algebra::vec<n,C>, rotation<n,C> >
+	,
+	public Function_v2v< rotation<n,C> >
       {
-	typedef fun::internal::x2x_linear_impl_< algebra::vec<n,C>, rotation<n,C> > super_;
-
 	/// Type of the inverse function.
 	typedef rotation<n,C> invert;
 	/// Return the invere function.
@@ -155,7 +157,6 @@ namespace mln
 	/// Constructor with h_mat.
         rotation(const algebra::h_mat<n,C>& m);
 
-        using super_::operator();
 	/// Perform the rotation of the given vector.
         algebra::vec<n,C> operator()(const algebra::vec<n,C>& v) const;
 
@@ -171,7 +172,7 @@ namespace mln
 
 	/// FIXME: Is it useful?
         C alpha_;
-        algebra::vec <n,C> axis_;
+        algebra::vec<n,C> axis_;
       };
 
 
