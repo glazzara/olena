@@ -131,12 +131,10 @@ AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 ## -------------------- ##
 
 ### Support for FreeImagePlus has been disabled for Olena 1.0.
-## OLN_WITH_FREEIMAGEPLUS
-## AM_CONDITIONAL([HAVE_FREEIMAGEPLUS], [test x$oln_have_freeimageplus = xyes])
+## OLN_WITH_LIB([FreeImagePlus], [FreeImagePlus.h], [freeimageplus])
 
 # CFITSIO library.
-OLN_WITH_CFITSIO
-AM_CONDITIONAL([HAVE_CFITSIO], [test x$oln_have_cfitsio = xyes])
+OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 
 
 ## ---------------------------- ##

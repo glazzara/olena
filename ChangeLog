@@ -1,5 +1,13 @@
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor M4 code using OLN_WITH_LIB.
+
+	* m4/cfitsio.m4, m4/freeimageplus.m4: Remove.
+	* configure: Use OLN_WITH_LIB instead of OLN_WITH_FREEIMAGEPLUS
+	and OLN_WITH_CFITSIO.
+
+2009-06-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add an Automake macro OLN_WITH_LIB to factor common code.
 
 	* m4/oln-with-lib.m4: New.
