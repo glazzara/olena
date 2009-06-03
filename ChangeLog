@@ -1,5 +1,11 @@
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add an Automake macro OLN_WITH_LIB to factor common code.
+
+	* m4/oln-with-lib.m4: New.
+
+2009-06-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Disable support for FreeImagePlus in Olena.
 
 	* configure.ac: Here.
