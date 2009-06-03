@@ -1,5 +1,9 @@
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/io/fits/all.hh: Include all headers from mln/io/fits/.
+
+2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/io/essential.hh: Normalize header guards.
 
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
