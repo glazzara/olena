@@ -1,4 +1,11 @@
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update the shipped GNU General Public License (GPL) text.
+
+	* COPYING: Update from
+	http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
+
+2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
  
 	Add tentative support for GDCM in the configuration system.
 
