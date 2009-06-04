@@ -8,15 +8,16 @@ check_directory ()
   echo "Current directories: $1 $2"
   for file in `ls $1`; do
 
-    source_file=${file%.cc}.hh
+    test_file=${file%.hh}.cc
     if [ -f ${1}/$file ]; then
       all_tests=$(($all_tests + 1))
-      if [ -f ${2}/$source_file ]; then
-	echo "\t\e[0;32mOK\e[m $file <-> $source_file" > /dev/null
+      if [ -f ${2}/$test_file ]; then
+	echo "\t\e[0;32mOK\e[m $file <-> $test_file"
       else
 # FIXME: Manage exceptions.
-	if [ "$file" != "Makefile.am" ]; then
-	  echo "\t\e[0;31mFAIL\e[m $source_file source does not exist."
+	if [ "$file" != "all.hh"  -a \
+	     "$file" != "essential.hh" ]; then
+	  echo "\t\e[0;31mFAIL\e[m Test \"$test_file\" does not exist."
 	  failed_tests=$(($failed_tests + 1))
 	fi
       fi
@@ -28,7 +29,9 @@ check_directory ()
 	check_directory ${1}/$file ${2}/$file
       else
 # FIXME: Manage exceptions.
-	echo "\e[0;31mFAIL\e[m ${2}/$file source directory does not exist."
+	if [ "$file" != "internal" ]; then
+	  echo "\e[0;31mFAIL\e[m Test directory \"${2}/$file\" does not exist."
+	fi
       fi
     fi
 
@@ -36,20 +39,22 @@ check_directory ()
 }
 
 if [ $# -ne 2 ]; then
-  echo "Usage: ./check_test_hierarchy tests/ mln/"
+  echo "Usage: ./check_test_hierarchy mln/ tests/"
   exit 1
 fi
 
-echo "Test directory: $1"
-echo "Source directory: $2"
+echo "Source directory: $1"
+echo "Test directory: $2"
 echo "---"
 
 if [ -d ${1} ]; then
   if [ -d ${2} ]; then
     check_directory ${1} ${2}
   else
-    echo "\e[0;31mFAIL\e[m ${1} source directory does not exist."
+    echo "\e[0;31mFAIL\e[m Test directory $2 does not exist."
   fi
+else
+  echo "\e[0;31mFAIL\e[m Source directory $1 does not exist."
 fi
 
 echo "\n====="
