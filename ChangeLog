@@ -1,3 +1,7 @@
+2009-06-04 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	* Makefile.am: add pretty_check rule.
+
 2009-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update the shipped GNU General Public License (GPL) text.

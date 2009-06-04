@@ -12,3 +12,7 @@ endif ENABLE_SWILENA
 .PHONY: doc
 doc:
 	cd milena && $(MAKE) $(AM_MAKEFLAGS) $@
+
+pretty_check:
+	$(MAKE) -C milena/tests pretty_check
+
