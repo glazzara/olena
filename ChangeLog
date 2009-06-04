@@ -1,5 +1,10 @@
 2009-06-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
+	Exclude some files during checking.
+	* build-aux/check_source_has_test.sh: Exclude some files.
+
+2009-06-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
 	Add scrip shell for checking that each source has a test file.
 	* build-aux/check_source_has_test.sh: Check tests according to sources.
 	* build-aux/check_test_hierarchy.sh: Small update.

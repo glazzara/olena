@@ -6,21 +6,30 @@ all_tests=0
 check_directory ()
 {
   echo "Current directories: $1 $2"
+
   for file in `ls $1`; do
 
-    test_file=${file%.hh}.cc
     if [ -f ${1}/$file ]; then
-      all_tests=$(($all_tests + 1))
-      if [ -f ${2}/$test_file ]; then
-	echo "\t\e[0;32mOK\e[m $file <-> $test_file"
-      else
-# FIXME: Manage exceptions.
-	if [ "$file" != "all.hh"  -a \
-	     "$file" != "essential.hh" ]; then
-	  echo "\t\e[0;31mFAIL\e[m Test \"$test_file\" does not exist."
-	  failed_tests=$(($failed_tests + 1))
+      ext=${file##*.}
+      base=${file%.*}
+
+      if [ "$ext" = "hh" -a \
+	   "${base##*.}" != "spe" ]; then
+	test_file=${file%.hh}.cc
+	all_tests=$(($all_tests + 1))
+
+	if [ -f ${2}/$test_file ]; then
+	  echo "\t\e[0;32mOK\e[m $file <-> $test_file" > /dev/null
+	else
+	  if [ "$file" != "all.hh"  -a \
+	    "$file" != "essential.hh" ]; then
+	    echo "\tFAIL Test \"$test_file\" does not exist."
+	    failed_tests=$(($failed_tests + 1))
+	  fi
 	fi
+
       fi
+
     fi
 
     if [ -d ${1}/$file ]; then
@@ -28,9 +37,8 @@ check_directory ()
 	echo ""
 	check_directory ${1}/$file ${2}/$file
       else
-# FIXME: Manage exceptions.
 	if [ "$file" != "internal" ]; then
-	  echo "\e[0;31mFAIL\e[m Test directory \"${2}/$file\" does not exist."
+	  echo "FAIL Test directory \"${2}/$file\" does not exist."
 	fi
       fi
     fi
@@ -58,5 +66,5 @@ else
 fi
 
 echo "\n====="
-echo "Uncorrect tests: $failed_tests"
+echo "Missing tests: $failed_tests"
 
