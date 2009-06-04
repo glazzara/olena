@@ -43,7 +43,6 @@
 # include <mln/core/image/image3d.hh>
 # include <mln/io/pnm/load_header.hh>
 
-# include <mln/make/image3d.hh>
 
 namespace mln
 {
@@ -72,13 +71,6 @@ namespace mln
       ///
       image2d<bool> load(const std::string& filename);
 
-      /// Load ppm images as slices of a 3D Milena image.
-      ///
-      /// \param[out] ima A reference to the 3D image which will receive
-      /// data.
-      /// \param[in] filenames The list of 2D images to load..
-      void load(image3d<bool>& ima,
-		const util::array<std::string>& filenames);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -168,28 +160,6 @@ namespace mln
 		const std::string& filename)
       {
 	ima = load(filename);
-      }
-
-
-      inline
-      void load(image3d<bool>& ima,
-		const util::array<std::string>& filenames)
-      {
-	trace::entering("mln::io::pbm::load");
-	mln_precondition(!filenames.is_empty());
-
-	util::array<image2d<bool> > slices;
-
-	for (unsigned i = 0; i < filenames.nelements(); ++i)
-	{
-	  image2d<bool> tmp;
-	  io::pbm::load(tmp, filenames[i]);
-	  slices.append(tmp);
-	}
-
-	ima = make::image3d(slices);
-
-	trace::exiting("mln::io::pbm::load");
       }
 
 

@@ -1,3 +1,19 @@
+2009-06-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Move 3D pnm image loading routines.
+	* mln/io/pnms/all.hh: Include load.hh
+	* mln/io/pnms/load.hh: Implement generic pnm 3D loading
+	routine.
+	* mln/io/pbm/load.hh: Move 3D loading routine...
+	* mln/io/pbms/load.hh: ...here.
+	* mln/io/pbms/all.hh: Include load.hh
+	* mln/io/pgm/load.hh: Move 3D loading routine...
+	* mln/io/pgms/load.hh: ...here.
+	* mln/io/pgms/all.hh: Include load.hh
+	* mln/io/ppm/load.hh: Move 3D loading routine...
+	* mln/io/ppms/load.hh: ...here.
+	* mln/io/ppms/all.hh: Include load.hh
+
 2009-06-04  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Rename predorder iterator by depth1st iterator.

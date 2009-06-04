@@ -32,9 +32,6 @@
 /// \file mln/io/pgm/load.hh
 ///
 /// \brief Define a function which loads an image of kind pgm with
-///
-/// \todo Fabien: Move image3d loading elsewhere!  for instance in
-/// io/pgms/load (note the 's')...
 
 # include <iostream>
 # include <fstream>
@@ -44,7 +41,6 @@
 # include <mln/core/image/image3d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/io/pnm/load.hh>
-# include <mln/make/image3d.hh>
 
 
 namespace mln
@@ -77,17 +73,6 @@ namespace mln
       image2d<V> load(const std::string& filename);
 
 
-      /// Load ppm images as slices of a 3D Milena image.
-      ///
-      /// \param[out] ima A reference to the 3D image which will receive
-      /// data.
-      /// \param[in] filenames The list of 2D images to load..
-      ///
-      template <typename V>
-      void load(image3d<V>& ima,
-		const util::array<std::string>& filenames);
-
-
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename V>
@@ -110,28 +95,6 @@ namespace mln
 	trace::exiting("mln::io::pgm::load");
       }
 
-
-      template <typename V>
-      inline
-      void load(image3d<V>& ima,
-		const util::array<std::string>& filenames)
-      {
-	trace::entering("mln::io::pgm::load");
-	mln_precondition(!filenames.is_empty());
-
-	util::array<image2d<V> > slices;
-
-	for (unsigned i = 0; i < filenames.nelements(); ++i)
-	{
-	  image2d<V> tmp;
-	  io::pnm::load<image2d<V> >(PGM, tmp, filenames[i]);
-	  slices.append(tmp);
-	}
-
-	ima = make::image3d(slices);
-
-	trace::exiting("mln::io::pgm::load");
-      }
 
 # endif // ! MLN_INCLUDE_ONLY
 
