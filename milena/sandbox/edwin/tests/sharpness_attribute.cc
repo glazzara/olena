@@ -105,7 +105,7 @@ int main(int argc, char** argv)
   std::cout << "| " << std::setw(w) << "delta(n)";
   std::cout << '|' << std::endl;
 
-  mln_preorder_piter_(T) n(tree);
+  mln_depth1st_piter_(T) n(tree);
   std::stack<mln_psite_(T)> s;
   for_all(n)
   {

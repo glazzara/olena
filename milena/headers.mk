@@ -1248,6 +1248,7 @@ mln/value/sign.hh \
 mln/value/stack.hh \
 mln/value/super_value.hh \
 mln/value/viter.hh \
+mln/version.hh \
 mln/win/all.hh \
 mln/win/backdiag2d.hh \
 mln/win/ball.hh \

@@ -49,7 +49,7 @@
 # define mln_site_piter(T)	typename T::site_piter
 # define mln_node_piter(T)	typename T::node_piter
 # define mln_leaf_piter(T)	typename T::leaf_piter
-# define mln_preorder_piter(T)	typename T::preorder_piter
+# define mln_depth1st_piter(T)	typename T::depth1st_piter
 
 # define mln_up_site_piter_(T)	T::up_site_piter
 # define mln_dn_site_piter_(T)  T::dn_site_piter
@@ -60,7 +60,7 @@
 # define mln_site_piter_(T)	T::site_piter
 # define mln_node_piter_(T)	T::node_piter
 # define mln_leaf_piter_(T)	T::leaf_piter
-# define mln_preorder_piter_(T) T::preorder_piter
+# define mln_depth1st_piter_(T) T::depth1st_piter
 
 
 namespace mln
@@ -92,8 +92,8 @@ namespace mln
       /// Iterate on tree's leaves in the same way of dn_node_piter.
       template <typename T> struct dn_leaf_piter;
 
-      /// Preorder tree traversal iterator.
-      template <typename T> struct preorder_piter;
+      /// Depth1st tree traversal iterator.
+      template <typename T> struct depth1st_piter;
 
 
       template <typename I, typename S>
@@ -132,7 +132,7 @@ namespace mln
 	typedef mln::morpho::tree::dn_leaf_piter<self_> dn_leaf_piter;
 	typedef up_leaf_piter leaf_piter;
 
-	typedef mln::morpho::tree::preorder_piter<self_> preorder_piter;
+	typedef mln::morpho::tree::depth1st_piter<self_> depth1st_piter;
 
 
 	/// Constructor.
@@ -337,22 +337,22 @@ namespace mln
       };
 
       template <typename T>
-      class preorder_piter
-	: public mln::internal::site_set_iterator_base< T, preorder_piter<T> >
+      class depth1st_piter
+	: public mln::internal::site_set_iterator_base< T, depth1st_piter<T> >
       {
-	typedef preorder_piter<T> self_;
+	typedef depth1st_piter<T> self_;
 	typedef mln::internal::site_set_iterator_base<T, self_> super_;
 
       public:
 
 	/// Constructor with no argument.
-	preorder_piter();
+	depth1st_piter();
 
 	/// Constructor.
-	preorder_piter(const T& t);
+	depth1st_piter(const T& t);
 
 
-	preorder_piter(const T& t,
+	depth1st_piter(const T& t,
 		       const mln_psite(T::function)& p);
 
 	/// Test if the iterator is valid.
@@ -369,6 +369,10 @@ namespace mln
 
 	/// Skip current point children. Next call to next() goes to the brother point.
 	void skip_children();
+
+	unsigned get_depth() {
+	  return stack_.size() - 1;
+	}
 
       protected:
 	using super_::p_;
@@ -560,14 +564,14 @@ namespace mln
 
       template <typename T>
       inline
-      preorder_piter<T>::preorder_piter()
+      depth1st_piter<T>::depth1st_piter()
 	: root_ (0)
       {
       }
 
       template <typename T>
       inline
-      preorder_piter<T>::preorder_piter(const T& t)
+      depth1st_piter<T>::depth1st_piter(const T& t)
 	: root_ (0)
       {
 	this->change_target(t);
@@ -575,7 +579,7 @@ namespace mln
 
       template <typename T>
       inline
-      preorder_piter<T>::preorder_piter(const T& t,
+      depth1st_piter<T>::depth1st_piter(const T& t,
 					const mln_psite(T::function)& p)
 	: root_ (&p)
       {
@@ -586,7 +590,7 @@ namespace mln
       template <typename T>
       inline
       bool
-      preorder_piter<T>::is_valid_() const
+      depth1st_piter<T>::is_valid_() const
       {
 	return !stack_.empty();
       }
@@ -594,7 +598,7 @@ namespace mln
       template <typename T>
       inline
       void
-      preorder_piter<T>::invalidate_()
+      depth1st_piter<T>::invalidate_()
       {
 	stack_.clear();
       }
@@ -602,7 +606,7 @@ namespace mln
       template <typename T>
       inline
       void
-      preorder_piter<T>::start_()
+      depth1st_piter<T>::start_()
       {
 	this->invalidate();
 	stack_.push_back(mln_psite(T::function)()); // needed for last element.
@@ -627,7 +631,7 @@ namespace mln
       template <typename T>
       inline
       void
-      preorder_piter<T>::next_()
+      depth1st_piter<T>::next_()
       {
 	p_ = stack_.back();
 	stack_.pop_back();
@@ -641,7 +645,7 @@ namespace mln
       template <typename T>
       inline
       void
-      preorder_piter<T>::skip_children()
+      depth1st_piter<T>::skip_children()
       {
 	while (stack_.size() != 1 && s_->parent(stack_.back()) == p_)
 	  stack_.pop_back();

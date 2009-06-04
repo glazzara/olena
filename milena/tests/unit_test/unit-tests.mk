@@ -284,6 +284,7 @@ mln_core_internal_complex_window_p_base \
 mln_core_internal_coord_impl \
 mln_core_internal_data \
 mln_core_internal_exact \
+mln_core_internal_exact_gcc_2_95 \
 mln_core_internal_fixme \
 mln_core_internal_force_exact \
 mln_core_internal_geom_bbox \
@@ -630,6 +631,7 @@ mln_io_all \
 mln_io_cloud_all \
 mln_io_cloud_load \
 mln_io_cloud_save \
+mln_io_dicom_all \
 mln_io_dicom_load \
 mln_io_dump_all \
 mln_io_dump_load \
@@ -667,7 +669,6 @@ mln_io_ppm_load \
 mln_io_ppm_save \
 mln_io_tiff_all \
 mln_io_tiff_load \
-mln_io_tiff_save \
 mln_io_txt_all \
 mln_io_txt_save \
 mln_labeling_all \
@@ -1109,10 +1110,6 @@ mln_util_greater_point \
 mln_util_greater_psite \
 mln_util_ignore \
 mln_util_index \
-mln_util_internal_boost_graph \
-mln_util_internal_boost_graph_access \
-mln_util_internal_boost_graph_property \
-mln_util_internal_boost_graph_structure \
 mln_util_internal_edge_impl \
 mln_util_internal_graph_base \
 mln_util_internal_graph_iter \
@@ -1217,6 +1214,7 @@ mln_value_sign \
 mln_value_stack \
 mln_value_super_value \
 mln_value_viter \
+mln_version \
 mln_win_all \
 mln_win_backdiag2d \
 mln_win_ball \
@@ -1241,7 +1239,6 @@ mln_win_vline2d \
 mln_world_all \
 mln_world_binary_2d_all \
 mln_world_binary_2d_enlarge \
-mln_world_binary_2d_enlarge_hq2x \
 mln_world_binary_2d_projected_histo \
 mln_world_binary_2d_subsample \
 mln_world_inter_pixel_all \
@@ -1543,6 +1540,7 @@ mln_core_internal_complex_window_p_base_SOURCES = mln_core_internal_complex_wind
 mln_core_internal_coord_impl_SOURCES = mln_core_internal_coord_impl.cc
 mln_core_internal_data_SOURCES = mln_core_internal_data.cc
 mln_core_internal_exact_SOURCES = mln_core_internal_exact.cc
+mln_core_internal_exact_gcc_2_95_SOURCES = mln_core_internal_exact_gcc_2_95.cc
 mln_core_internal_fixme_SOURCES = mln_core_internal_fixme.cc
 mln_core_internal_force_exact_SOURCES = mln_core_internal_force_exact.cc
 mln_core_internal_geom_bbox_SOURCES = mln_core_internal_geom_bbox.cc
@@ -1889,6 +1887,7 @@ mln_io_all_SOURCES = mln_io_all.cc
 mln_io_cloud_all_SOURCES = mln_io_cloud_all.cc
 mln_io_cloud_load_SOURCES = mln_io_cloud_load.cc
 mln_io_cloud_save_SOURCES = mln_io_cloud_save.cc
+mln_io_dicom_all_SOURCES = mln_io_dicom_all.cc
 mln_io_dicom_load_SOURCES = mln_io_dicom_load.cc
 mln_io_dump_all_SOURCES = mln_io_dump_all.cc
 mln_io_dump_load_SOURCES = mln_io_dump_load.cc
@@ -1926,7 +1925,6 @@ mln_io_ppm_load_SOURCES = mln_io_ppm_load.cc
 mln_io_ppm_save_SOURCES = mln_io_ppm_save.cc
 mln_io_tiff_all_SOURCES = mln_io_tiff_all.cc
 mln_io_tiff_load_SOURCES = mln_io_tiff_load.cc
-mln_io_tiff_save_SOURCES = mln_io_tiff_save.cc
 mln_io_txt_all_SOURCES = mln_io_txt_all.cc
 mln_io_txt_save_SOURCES = mln_io_txt_save.cc
 mln_labeling_all_SOURCES = mln_labeling_all.cc
@@ -2368,10 +2366,6 @@ mln_util_greater_point_SOURCES = mln_util_greater_point.cc
 mln_util_greater_psite_SOURCES = mln_util_greater_psite.cc
 mln_util_ignore_SOURCES = mln_util_ignore.cc
 mln_util_index_SOURCES = mln_util_index.cc
-mln_util_internal_boost_graph_SOURCES = mln_util_internal_boost_graph.cc
-mln_util_internal_boost_graph_access_SOURCES = mln_util_internal_boost_graph_access.cc
-mln_util_internal_boost_graph_property_SOURCES = mln_util_internal_boost_graph_property.cc
-mln_util_internal_boost_graph_structure_SOURCES = mln_util_internal_boost_graph_structure.cc
 mln_util_internal_edge_impl_SOURCES = mln_util_internal_edge_impl.cc
 mln_util_internal_graph_base_SOURCES = mln_util_internal_graph_base.cc
 mln_util_internal_graph_iter_SOURCES = mln_util_internal_graph_iter.cc
@@ -2476,6 +2470,7 @@ mln_value_sign_SOURCES = mln_value_sign.cc
 mln_value_stack_SOURCES = mln_value_stack.cc
 mln_value_super_value_SOURCES = mln_value_super_value.cc
 mln_value_viter_SOURCES = mln_value_viter.cc
+mln_version_SOURCES = mln_version.cc
 mln_win_all_SOURCES = mln_win_all.cc
 mln_win_backdiag2d_SOURCES = mln_win_backdiag2d.cc
 mln_win_ball_SOURCES = mln_win_ball.cc
@@ -2500,7 +2495,6 @@ mln_win_vline2d_SOURCES = mln_win_vline2d.cc
 mln_world_all_SOURCES = mln_world_all.cc
 mln_world_binary_2d_all_SOURCES = mln_world_binary_2d_all.cc
 mln_world_binary_2d_enlarge_SOURCES = mln_world_binary_2d_enlarge.cc
-mln_world_binary_2d_enlarge_hq2x_SOURCES = mln_world_binary_2d_enlarge_hq2x.cc
 mln_world_binary_2d_projected_histo_SOURCES = mln_world_binary_2d_projected_histo.cc
 mln_world_binary_2d_subsample_SOURCES = mln_world_binary_2d_subsample.cc
 mln_world_inter_pixel_all_SOURCES = mln_world_inter_pixel_all.cc

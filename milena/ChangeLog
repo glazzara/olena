@@ -1,3 +1,11 @@
+2009-06-04  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Rename predorder iterator by depth1st iterator.
+	* mln/morpho/tree/data.hh,
+	* mln/morpho/tree/propagate_node.hh,
+	* sandbox/edwin/tests/sharpness_attribute.cc:
+	Rename predorder iterator by depth1st iterator.
+
 2009-06-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix the library name in the copyright text.

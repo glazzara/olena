@@ -131,7 +131,7 @@ namespace mln {
 	  n = t.parent(n);
 	mln_assertion(t.is_a_node(n));
 
-	typename T::preorder_piter pp(t, n);
+	typename T::depth1st_piter pp(t, n);
 
 	pp.start(); // We don't set n to v.
 
