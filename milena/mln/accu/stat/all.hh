@@ -37,6 +37,11 @@ namespace mln
 {
   namespace accu
   {
+    namespace meta
+    {
+      /// Namespace of statistical meta-accumulators.
+      namespace stat {}
+    }
 
     /// Namespace of statistical accumulators.
     namespace stat {}
@@ -48,6 +53,10 @@ namespace mln
 # include <mln/accu/stat/deviation.hh>
 # include <mln/accu/stat/var.hh>
 # include <mln/accu/stat/variance.hh>
+# include <mln/accu/stat/max.hh>
+# include <mln/accu/stat/min.hh>
+# include <mln/accu/stat/min_max.hh>
+
 
 
 #endif // ! MLN_ACCU_STAT_ALL_HH

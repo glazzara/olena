@@ -62,8 +62,8 @@
 
 # include <mln/data/compute.hh>
 # include <mln/data/fill.hh>
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
+# include <mln/accu/stat/min.hh>
+# include <mln/accu/stat/max.hh>
 
 # include <mln/set/uni.hh>
 # include <mln/set/diff.hh>

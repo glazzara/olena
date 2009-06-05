@@ -31,7 +31,7 @@
  */
 
 #include <mln/accu/line.hh>
-#include <mln/accu/min_h.hh>
+#include <mln/accu/stat/min_h.hh>
 
 #include <mln/core/image/image2d.hh>
 #include <mln/data/compare.hh>
@@ -50,7 +50,7 @@ int main()
 
   I out(ima.domain());
   point2d p_start(0, 0);
-  accu::line< accu::meta::min_h, 1 >(ima,
+  accu::line< accu::meta::stat::min_h, 1 >(ima,
 				     p_start, ima.ncols(),
 				     0, // half_length
 				     out);

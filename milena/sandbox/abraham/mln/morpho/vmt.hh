@@ -39,8 +39,8 @@
 # include <mln/morpho/general.hh>
 # include <mln/accu/land.hh>
 # include <mln/accu/land_basic.hh>
-# include <mln/accu/min.hh>
-# include <mln/accu/min_h.hh>
+# include <mln/accu/stat/min.hh>
+# include <mln/accu/stat/min_h.hh>
 # include <mln/norm/l2.hh>
 
 namespace mln

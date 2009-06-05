@@ -74,7 +74,7 @@
 
 #include <mln/accu/count.hh>
 #include <mln/accu/center.hh>
-#include <mln/accu/max.hh>
+#include <mln/accu/stat/max.hh>
 #include <mln/accu/sum.hh>
 #include <mln/accu/mean.hh>
 #include <mln/accu/stat/deviation.hh>
@@ -197,7 +197,7 @@ find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
     fout << i << " " << ima_histo(point1d(i)) << std::endl;
     ima_histo(point1d(i)) += ima_histo(point1d(i - 1));
   }
-  accu::max<unsigned> max_accu;
+  accu::stat::max<unsigned> max_accu;
   unsigned max = data::compute(max_accu, ima_histo);
   bool low_done = false;
   bool high_done = false;

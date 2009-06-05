@@ -73,7 +73,7 @@ namespace mln
 	gradient_internal_dispatch(trait::image::kind::any,
 			 const Image<I>& input, const Neighborhood<N>& nbh)
 	{
-	  return like_ero_fun(accu::meta::min(), f_grad_int(), input, nbh);
+	  return like_ero_fun(accu::meta::stat::min(), f_grad_int(), input, nbh);
 	}
 
 	template <typename I, typename N>

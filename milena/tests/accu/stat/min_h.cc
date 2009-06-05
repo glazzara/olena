@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,30 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/min.cc
+/*! \file tests/accu/min_h.cc
  *
- * \brief Tests on mln::accu::min.
+ * \brief Tests on mln::accu::min_h.
  */
 
-#include <mln/core/image/image2d.hh>
-#include <mln/debug/iota.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/accu/stat/min_h.hh>
 
-#include <mln/accu/nil.hh>
-#include <mln/accu/min.hh>
-#include <mln/accu/p.hh>
-#include <mln/accu/v.hh>
-#include <mln/accu/compute.hh>
 
-#include <mln/data/compute.hh>
 
 
 int main()
 {
   using namespace mln;
-  image2d<int> ima(3, 3);
-  debug::iota(ima);
-  mln_assertion(data::compute(accu::meta::min(), ima) == 1);
+  using namespace mln::value;
 
-  accu::min<int> m;
-  mln_assertion(data::compute(m, ima) == 1);
+  accu::stat::min_h<int_u8> a;
+
+  a.take(42);
+  a.take(42);
+  a.take(42);
+
+  a.take(200);
+  a.take(200);
+  a.take(200);
+  a.take(200);
+  a.take(200);
+  a.take(200);
+
+  a.take(234);
+  a.take(234);
+  a.take(234);
+  a.take(234);
+  a.take(234);
+  a.take(234);
+  mln_assertion(a.to_result() == 42u);
 }

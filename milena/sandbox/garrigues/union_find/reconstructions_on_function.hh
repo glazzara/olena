@@ -39,7 +39,7 @@
 # include <mln/literal/zero.hh>
 # include <mln/math/max.hh>
 # include <mln/math/min.hh>
-# include <mln/accu/max.hh>
+# include <mln/accu/stat/max.hh>
 
 # include "canvas/reconstruction_on_function.hh"
 
@@ -202,7 +202,7 @@ namespace mln
     O* cur = &output;
     O* prev = &output1;
 
-    accu::max<mln_value(O)> max;
+    accu::stat::max<mln_value(O)> max;
 
     mln_piter(I) p(output.domain());
     mln_niter(N) n(nbh, p);

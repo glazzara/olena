@@ -5,7 +5,7 @@
 #include <mln/debug/println.hh>
 #include <mln/data/fill.hh>
 #include <mln/data/stretch.hh>
-#include <mln/accu/max.hh>
+#include <mln/accu/stat/max.hh>
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/opt/at.hh>
@@ -29,7 +29,7 @@ namespace mln
     initialize(distance, input);
 
     // Mod determination.
-    accu::max<unsigned> max;
+    accu::stat::max<unsigned> max;
     for (unsigned i = 0; i < win.size(); ++i)
       max.take(win.w(i));
     unsigned mod = unsigned(max) + 1;

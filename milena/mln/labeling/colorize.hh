@@ -39,7 +39,7 @@
 # include <mln/literal/black.hh>
 # include <mln/data/transform.hh>
 # include <mln/data/compute.hh>
-# include <mln/accu/max.hh>
+# include <mln/accu/stat/max.hh>
 
 
 namespace mln
@@ -153,7 +153,7 @@ namespace mln
       trace::entering("labeling::colorize");
       mln_precondition(exact(input).is_valid());
 
-      accu::max<mln_value(L)> accu;
+      accu::stat::max<mln_value(L)> accu;
       mln_value(L) nlabels = data::compute(accu, input);
 
       mln_ch_value(L,V) output = colorize(value, input, nlabels);

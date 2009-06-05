@@ -39,8 +39,8 @@
 # include <mln/morpho/general.hh>
 # include <mln/accu/lor.hh>
 # include <mln/accu/lor_basic.hh>
-# include <mln/accu/max.hh>
-# include <mln/accu/max_h.hh>
+# include <mln/accu/stat/max.hh>
+# include <mln/accu/stat/max_h.hh>
 
 
 namespace mln
@@ -62,18 +62,18 @@ namespace mln
     {
 
       template <typename I>
-      mln_morpho_select_accu(I, lor_basic, max)
+      mln_morpho_select_accu(I, lor_basic, stat::max)
       accu(const Image<I>&) const
       {
-	mln_morpho_select_accu(I, lor_basic, max) tmp;
+	mln_morpho_select_accu(I, lor_basic, stat::max) tmp;
 	return tmp;
       }
 
       template <typename I>
-      mln_morpho_select_accu(I, lor, max_h)
+      mln_morpho_select_accu(I, lor, stat::max_h)
       accu_incr(const Image<I>&) const
       {
-	mln_morpho_select_accu(I, lor, max_h) tmp;
+	mln_morpho_select_accu(I, lor, stat::max_h) tmp;
 	return tmp;
       }
 

@@ -1,5 +1,113 @@
 2009-06-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Move min, max, min_h, max_h, min_max accus in accu/stat.
+	* mln/accu/max.hh,
+	* mln/accu/max_h.hh,
+	* mln/accu/min.hh,
+	* mln/accu/min_h.hh,
+	* mln/accu/min_max.hh: Moved to...
+	* mln/accu/stat/max.hh,
+	* mln/accu/stat/max_h.hh,
+	* mln/accu/stat/min.hh,
+	* mln/accu/stat/min_h.hh,
+	* mln/accu/stat/min_max.hh: New.
+
+	* tests/accu/max.cc,
+	* tests/accu/max_h.cc,
+	* tests/accu/min.cc,
+	* tests/accu/min_h.cc,
+	* tests/accu/min_max.cc: Moved to...
+	* tests/accu/stat/max.cc,
+	* tests/accu/stat/max_h.cc,
+	* tests/accu/stat/min.cc,
+	* tests/accu/stat/min_h.cc,
+	* tests/accu/stat/min_max.cc: New.
+
+	* tests/accu/Makefile.am,
+	* tests/accu/stat/Makefile.am:
+	  Update makefiles respecting stat accus directory.
+
+	* apps/statues/mesh-complex-max-curv.cc,
+	* apps/statues/mesh-max-curv.cc,
+	* doc/examples/accu-right-instanciation.cc,
+	* doc/examples/trash/tuto_bis.cc,
+	* doc/examples/tuto4_genericity_and_algorithms.cc,
+	* mln/accu/all.hh,
+	* mln/accu/essential.hh,
+	* mln/accu/max_site.hh,
+	* mln/accu/mean.hh,
+	* mln/accu/stat/all.hh,
+	* mln/canvas/distance_front.hh,
+	* mln/core/image/imorph/labeled_image.hh,
+	* mln/debug/println.spe.hh,
+	* mln/estim/min_max.hh,
+	* mln/labeling/colorize.hh,
+	* mln/morpho/elementary/dilation.hh,
+	* mln/morpho/elementary/erosion.hh,
+	* mln/morpho/elementary/gradient.hh,
+	* mln/morpho/elementary/gradient_external.hh,
+	* mln/morpho/elementary/gradient_internal.hh,
+	* mln/morpho/general.spe.hh,
+	* sandbox/abraham/mln/morpho/basic_najman.hh,
+	* sandbox/abraham/mln/morpho/najman_wst.hh,
+	* sandbox/abraham/mln/morpho/vector_median.hh,
+	* sandbox/abraham/mln/morpho/vmt.hh,
+	* sandbox/edwin/exec/color_internal_gradient.hh,
+	* sandbox/edwin/tree/propagation.cc,
+	* sandbox/fabien/igr/norm.cc,
+	* sandbox/fabien/igr/seg_vol_irm.hh,
+	* sandbox/folio/mln/dt/canvas_dt.hh,
+	* sandbox/folio/mln/dt/dt_old/distance_front_new.hh,
+	* sandbox/folio/mln/dt/dt_old/naive.cc,
+	* sandbox/folio/mln/dt/raw_cp_fast.hh,
+	* sandbox/folio/mln/dt/raw_path_fast.hh,
+	* sandbox/folio/test/dt/naive.cc,
+	* sandbox/fred/old/overload.cc,
+	* sandbox/fred/tests/wip.cc,
+	* sandbox/garrigues/fllt/fllt.hh,
+	* sandbox/garrigues/fllt/lower.hh,
+	* sandbox/garrigues/fllt/upper.hh,
+	* sandbox/garrigues/level_set.hh,
+	* sandbox/garrigues/lower.hh,
+	* sandbox/garrigues/union_find/reconstructions_on_function.hh,
+	* sandbox/garrigues/union_find/self_dual_reconstruction.hh,
+	* sandbox/garrigues/upper.hh,
+	* sandbox/inim/2009/color/min_tree_area_filter.cc,
+	* sandbox/inim/2009/color/min_tree_color.cc,
+	* sandbox/inim/2009/color/min_tree_color_v2.cc,
+	* sandbox/inim/2009/color/min_tree_height_filter.cc,
+	* sandbox/inim/2009/color/min_tree_volume_filter.cc,
+	* sandbox/inim/2009/color/reference.cc,
+	* sandbox/inim/2009/color/reference2.cc,
+	* sandbox/theo/browsing/fwd.cc,
+	* sandbox/theo/cs2d/cs2d_morpho.hh,
+	* sandbox/theo/csi/fred.cc,
+	* sandbox/theo/dmap.cc,
+	* sandbox/theo/esiee/laurent/ismm09/pseudo_tree.hh,
+	* sandbox/theo/esiee/laurent/presentation/classif.cc,
+	* sandbox/theo/esiee/laurent/presentation/wst2d.cc,
+	* sandbox/theo/esiee/laurent/presentation/wst_edge.cc,
+	* sandbox/theo/esiee/slides_2009_may/dilation.hh,
+	* sandbox/theo/exec/color_internal_gradient.cc,
+	* tests/accu/all_accus.cc,
+	* tests/accu/line.cc,
+	* tests/accu/pair.cc,
+	* tests/accu/tuple.cc,
+	* tests/data/compute.cc,
+	* tests/data/compute_full.cc,
+	* tests/data/update.cc,
+	* tests/estim/min_max.cc,
+	* tests/morpho/closing/area.cc:
+	Replace accu::accu_name by accu::stat::accu_name,
+		accu::meta::accu_name by accu::meta::stat::accu_name.
+
+	* mln/morpho/dilation.hh,
+	* mln/morpho/erosion.hh:
+	Idem + replace mln_morpho_select_accu(..., accu_name) by
+	       	       mln_morpho_select_accu(..., stat::accu_name).
+
+2009-06-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Remove old method get_depth from depth1st iterator structure.
 	* morpho/tree/data.hh: Remove get_depth method which was
 	commited by error.

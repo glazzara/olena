@@ -526,7 +526,7 @@ namespace mln
       {
 	mln::p_priority< mln_value(I), p_queue_fast<site> > L;
 
-	mln_value(I) max = data::compute(accu::meta::max(), pima);
+	mln_value(I) max = data::compute(accu::meta::stat::max(), pima);
 
 	// I K(pima.domain(), pima.border());
 	mln_ch_value(I, unsigned) K(pima.domain(), pima.border());

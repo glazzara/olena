@@ -39,7 +39,7 @@
 # include <mln/literal/zero.hh>
 # include <mln/math/max.hh>
 # include <mln/math/min.hh>
-# include <mln/accu/max.hh>
+# include <mln/accu/stat/max.hh>
 
 # include <tests/timer.hh>
 

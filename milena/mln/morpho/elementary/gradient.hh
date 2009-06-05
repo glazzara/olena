@@ -34,7 +34,7 @@
 /// \todo Add fastest version for sets.
 
 # include <mln/morpho/includes.hh>
-# include <mln/accu/min_max.hh>
+# include <mln/accu/stat/min_max.hh>
 
 
 namespace mln
@@ -83,7 +83,7 @@ namespace mln
 	  const N& nbh   = exact(nbh_);
 	  internal::gradient_tests(input, nbh);
 
-	  accu::min_max<mln_value(I)> a;
+	  accu::stat::min_max<mln_value(I)> a;
 
  	  extension::adjust_duplicate(input, nbh);
 
@@ -157,7 +157,7 @@ namespace mln
 	  const N& nbh   = exact(nbh_);
 	  internal::gradient_tests(input, nbh);
 
-	  accu::min_max<mln_value(I)> a;
+	  accu::stat::min_max<mln_value(I)> a;
  	  extension::adjust_duplicate(input, nbh);
 
 	  typedef mln_concrete(I) O;

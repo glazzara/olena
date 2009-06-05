@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,57 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_MIN_MAX_HH
-# define MLN_ACCU_MIN_MAX_HH
+/*! \file tests/accu/min_max.cc
+ *
+ * \brief Tests on mln::accu::stat::min_max.
+ */
 
-/// \file mln/accu/min_max.hh
-///
-/// Define an accumulator that computes a min and a max.
-///
-/// \todo A macro to create such accumulators.
+// FIXME : This test doesn't compile without this include.
+#include <mln/value/builtin/integers.hh>
 
-# include <utility>
+#include <mln/accu/stat/min_max.hh>
 
-# include <mln/accu/pair.hh>
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-# include <mln/trait/value_.hh>
-# include <mln/util/pix.hh>
-
-
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace accu
   {
+    mln_accu_with_(accu::meta::stat::min_max, int) accu;
 
-    /// \brief Generic min and max accumulator class.
-    /*!
-     * The parameter \c V is the type of values.
-     *
-     * \ingroup modaccuvalues
-     */
-    template <typename V>
-    struct min_max : public pair< min<V>, max<V> >
-    {
-    };
+    accu.take(7);
 
+    mln_assertion(accu.to_result().first == 7);
+    mln_assertion(accu.to_result().second == 7);
+  }
 
-    template <typename I> struct min_max< util::pix<I> >;
+  {
+    mln_accu_with_(accu::meta::stat::min_max, int) accu;
 
+    accu.take(2);
+    accu.take(1);
+    accu.take(0);
 
-    namespace meta
-    {
+    accu.take(6);
+    accu.take(5);
+    accu.take(4);
+    accu.take(3);
 
-      // FIXME: Doc!
-      typedef meta::pair<meta::min,meta::max> min_max;
+    accu.take(10);
+    accu.take(9);
+    accu.take(8);
+    accu.take(7);
 
-    } // end of namespace mln::accu::meta
-
-
-  } // end of namespace mln::accu
-
-} // end of namespace mln
-
-
-#endif // ! MLN_ACCU_MIN_MAX_HH
+    mln_assertion(accu.first()  ==  0);
+    mln_assertion(accu.second() == 10);
+  }
+}

@@ -294,7 +294,7 @@ int main(int argc, char* argv[])
   | Complex-based image iterators.  |
   `--------------------------------*/
 
-  accu::max<unsigned> dist_max;
+  accu::stat::max<unsigned> dist_max;
 
   // For each edge (1-face), compute the distance between the two
   // adjacent vertices (0-faces).

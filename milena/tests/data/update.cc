@@ -34,8 +34,8 @@
 #include <mln/data/update.hh>
 #include <mln/data/compare.hh>
 #include <mln/debug/iota.hh>
-#include <mln/accu/min.hh>
-#include <mln/accu/max.hh>
+#include <mln/accu/stat/min.hh>
+#include <mln/accu/stat/max.hh>
 
 
 int main()
@@ -44,8 +44,8 @@ int main()
 
   const unsigned size = 200;
   image2d<int> ima(size, size);
-  accu::min<int> m;
-  accu::max<int> M;
+  accu::stat::min<int> m;
+  accu::stat::max<int> M;
 
   debug::iota(ima);
   data::update(m, ima);

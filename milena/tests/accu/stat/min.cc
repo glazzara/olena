@@ -25,47 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/min_max.cc
+/*! \file tests/accu/min.cc
  *
- * \brief Tests on mln::accu::min_max.
+ * \brief Tests on mln::accu::min.
  */
 
-// FIXME : This test doesn't compile without this include.
-#include <mln/value/builtin/integers.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/debug/iota.hh>
 
-#include <mln/accu/min_max.hh>
+#include <mln/accu/nil.hh>
+#include <mln/accu/stat/min.hh>
+#include <mln/accu/p.hh>
+#include <mln/accu/v.hh>
+#include <mln/accu/compute.hh>
+
+#include <mln/data/compute.hh>
+
 
 int main()
 {
   using namespace mln;
+  image2d<int> ima(3, 3);
+  debug::iota(ima);
+  mln_assertion(data::compute(accu::meta::stat::min(), ima) == 1);
 
-  {
-    mln_accu_with_(accu::meta::min_max, int) accu;
-
-    accu.take(7);
-
-    mln_assertion(accu.to_result().first == 7);
-    mln_assertion(accu.to_result().second == 7);
-  }
-
-  {
-    mln_accu_with_(accu::meta::min_max, int) accu;
-
-    accu.take(2);
-    accu.take(1);
-    accu.take(0);
-
-    accu.take(6);
-    accu.take(5);
-    accu.take(4);
-    accu.take(3);
-
-    accu.take(10);
-    accu.take(9);
-    accu.take(8);
-    accu.take(7);
-
-    mln_assertion(accu.first()  ==  0);
-    mln_assertion(accu.second() == 10);
-  }
+  accu::stat::min<int> m;
+  mln_assertion(data::compute(m, ima) == 1);
 }

@@ -40,7 +40,7 @@
 
 #include <mln/math/max.hh>
 #include <mln/math/sqr.hh>
-#include <mln/accu/min_max.hh>
+#include <mln/accu/stat/min_max.hh>
 #include <mln/fun/v2v/linear.hh>
 
 #include "io.hh"
@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
   // For each face of the mesh, computean an average curvature value
   // from the mean curvature at its vertices.
   std::vector<float> face_m(mesh.faces.size(), 0.f);
-  mln::accu::min_max<float> acc;
+  mln::accu::stat::min_max<float> acc;
   for (unsigned f = 0; f < mesh.faces.size(); ++f)
     {
       float m = (vertex_m[mesh.faces[f][0]] +

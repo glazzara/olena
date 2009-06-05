@@ -34,7 +34,7 @@
 #include <mln/value/int_u8.hh>
 
 #include <mln/accu/pair.hh>
-#include <mln/accu/max.hh>
+#include <mln/accu/stat/max.hh>
 #include <mln/accu/mean.hh>
 
 int main()
@@ -42,7 +42,7 @@ int main()
   using namespace mln;
 
   {
-    accu::pair<accu::mean<int>, accu::max<int> > mean;
+    accu::pair<accu::mean<int>, accu::stat::max<int> > mean;
 
     mean.take(10);
     mean.take(9);

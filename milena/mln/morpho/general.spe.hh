@@ -45,7 +45,7 @@
 # include <mln/accu/transform_stop.hh>
 # include <mln/accu/transform_diagonal.hh>
 
-# include <mln/accu/min_h.hh>
+# include <mln/accu/stat/min_h.hh>
 # include <mln/accu/line.hh>
 
 
@@ -145,7 +145,7 @@ namespace mln
 
 	do
 	  {
-	    accu::line< accu::meta::min_h, Dir >(input,
+	    accu::line< accu::meta::stat::min_h, Dir >(input,
 						 p, len,
 						 win_half_length,
 						 output);

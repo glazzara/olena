@@ -38,7 +38,7 @@
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/clock_neighb2d.hh>
 # include <mln/labeling/regional_minima.hh>
-# include <mln/accu/min.hh>
+# include <mln/accu/stat/min.hh>
 
 # include "upper.hh"
 

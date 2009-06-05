@@ -1,7 +1,7 @@
 #include <iostream>
 
 
-#include <mln/accu/max.hh>
+#include <mln/accu/stat/max.hh>
 #include <mln/util/pix.hh>
 
 #include <mln/core/image/image2d.hh>

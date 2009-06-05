@@ -33,8 +33,8 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/data/compute.hh>
 #include <mln/debug/iota.hh>
-#include <mln/accu/min.hh>
-#include <mln/accu/max.hh>
+#include <mln/accu/stat/min.hh>
+#include <mln/accu/stat/max.hh>
 
 
 int main()
@@ -45,11 +45,11 @@ int main()
   image2d<int> ima(size, size);
   debug::iota(ima);
 
-  accu::min<int> m;
+  accu::stat::min<int> m;
   int min = data::compute(m, ima);
   mln_assertion(min == 1);
 
-  accu::max<int> M;
+  accu::stat::max<int> M;
   int max = data::compute(M, ima);
   mln_assertion(max == 40000);
 }

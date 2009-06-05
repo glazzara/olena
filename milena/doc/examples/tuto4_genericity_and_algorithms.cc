@@ -9,7 +9,7 @@
 
 #include <mln/extract/green.hh>
 
-#include <mln/accu/max.hh>
+#include <mln/accu/stat/max.hh>
 
 #include <mln/geom/all.hh>
 

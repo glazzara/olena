@@ -31,7 +31,7 @@
  */
 
 #include <mln/value/int_u8.hh>
-#include <mln/accu/max_h.hh>
+#include <mln/accu/stat/max_h.hh>
 
 
 int main()
@@ -39,7 +39,7 @@ int main()
   using namespace mln;
   using namespace mln::value;
 
-  accu::max_h<int_u8> a;
+  accu::stat::max_h<int_u8> a;
 
   a.take(1);
   a.take(1);

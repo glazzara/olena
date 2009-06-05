@@ -12,7 +12,7 @@
 # include <mln/core/site_set/p_centered.hh>
 # include <mln/literal/origin.hh>
 
-# include <mln/accu/min_max.hh>
+# include <mln/accu/stat/min_max.hh>
 # include <mln/accu/mean.hh>
 
 # include <mln/fun/i2v/array.hh>

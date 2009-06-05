@@ -33,8 +33,8 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/estim/min_max.hh>
 #include <mln/debug/iota.hh>
-#include <mln/accu/min.hh>
-#include <mln/accu/max.hh>
+#include <mln/accu/stat/min.hh>
+#include <mln/accu/stat/max.hh>
 
 
 int main()

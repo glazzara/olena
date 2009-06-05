@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,65 +26,65 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef MLN_ACCU_STAT_MIN_MAX_HH
+# define MLN_ACCU_STAT_MIN_MAX_HH
 
-#ifndef MLN_FIXME_FLLT_LOWER_HH
-# define MLN_FIXME_FLLT_LOWER_HH
+/// \file mln/accu/stat/min_max.hh
+///
+/// Define an accumulator that computes a min and a max.
+///
+/// \todo A macro to create such accumulators.
 
-/*! \file fllt.hh
- *
- * \brief Informations about how to compute the lower level set.
- *
- */
+# include <utility>
 
-# include <mln/core/alias/neighb2d.hh>
-
+# include <mln/accu/pair.hh>
 # include <mln/accu/stat/min.hh>
-# include <mln/labeling/regional_minima.hh>
+# include <mln/accu/stat/max.hh>
+# include <mln/trait/value_.hh>
+# include <mln/util/pix.hh>
 
-# include "fllt_types.hh"
 
 namespace mln
 {
-  namespace fllt
+  namespace accu
   {
-
-    //Fwd declaration.
-    template <typename V> struct upper;
-
-    //   LOWER LEVEL SET : region = c4, border = c8
-    template <typename V>
-    struct lower
+    namespace stat
     {
-      typedef upper<V> opposite;
-      typedef lower_t tag;
-      static bool
-      compare(const V& u, const V& v)
+      // Forward declaration.
+      template <typename V>
+      struct min_max;
+    }
+
+    namespace meta
+    {
+      namespace stat
       {
-	return u < v;
-      }
+	// FIXME: Doc!
+	typedef meta::pair<meta::stat::min,meta::stat::max> min_max;
 
-      template <typename I, typename N, typename O>
-      static bool
-      regional_extremum(const Image<I>& input, const Neighborhood<N>& nbh,
-			Image<O>& output, unsigned& nlabels)
+      } // end of namespace mln::accu::meta::stat
+    } // end of namespace mln::accu::meta
+
+    namespace stat
+    {
+
+      /// \brief Generic min and max accumulator class.
+      /*!
+      * The parameter \c V is the type of values.
+      *
+      * \ingroup modaccuvalues
+      */
+      template <typename V>
+      struct min_max : public pair< min<V>, max<V> >
       {
-	return labeling::regional_minima(input, nbh,
-					 output, nlabels);
-      }
+      };
 
-      static const int inc = 1;
-      static const bool parent_is_brighter = true;
-      typedef accu::min accu_for_gn;
+      template <typename I> struct min_max< util::pix<I> >;
 
-      static const neighb2d& bdr_nbh() { return c8(); }
-      static const neighb2d& reg_nbh() { return c4(); }
-
-    };
-
-  } // end of namespace mln::fllt
+    } // end of namespace mln::accu::stat
+  } // end of namespace mln::accu
 
 } // end of namespace mln
 
 
-
-#endif // ! MLN_FIXME_FLLT_LOWER_HH
+#endif // ! MLN_ACCU_STAT_MIN_MAX_HH

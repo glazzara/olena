@@ -45,7 +45,7 @@
 # include <mln/debug/format.hh>
 # include <mln/debug/put_word.hh>
 # include <mln/data/fill.hh>
-# include <mln/accu/max.hh>
+# include <mln/accu/stat/max.hh>
 # include <mln/opt/at.hh>
 
 //FIXME: do not include all these headers
@@ -99,7 +99,7 @@ namespace mln
       void
       println(const box2d& b, const I& input)
       {
-	accu::max<unsigned> len_;
+	accu::stat::max<unsigned> len_;
 	mln_piter(I) p(input.domain());
 	for_all(p)
 	  {

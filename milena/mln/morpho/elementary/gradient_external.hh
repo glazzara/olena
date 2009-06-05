@@ -73,7 +73,7 @@ namespace mln
 	gradient_external_dispatch(trait::image::kind::any,
 			 const Image<I>& input, const Neighborhood<N>& nbh)
 	{
-	  return like_ero_fun(accu::meta::max(), f_grad_ext(), input, nbh);
+	  return like_ero_fun(accu::meta::stat::max(), f_grad_ext(), input, nbh);
 	}
 
 	template <typename I, typename N>

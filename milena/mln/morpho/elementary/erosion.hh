@@ -61,7 +61,7 @@ namespace mln
 	erosion_dispatch(trait::image::kind::any,
 			 const Image<I>& input, const Neighborhood<N>& nbh)
 	{
-	  return like_ero_fun(accu::meta::min(), f_accu(), input, nbh);
+	  return like_ero_fun(accu::meta::stat::min(), f_accu(), input, nbh);
 	}
 
 	template <typename I, typename N>

@@ -37,8 +37,8 @@
 #include <mln/accu/tuple.hh>
 
 #include <mln/accu/count.hh>
-#include <mln/accu/max.hh>
-#include <mln/accu/min.hh>
+#include <mln/accu/stat/max.hh>
+#include <mln/accu/stat/min.hh>
 #include <mln/accu/mean.hh>
 
 
@@ -46,7 +46,7 @@ int main()
 {
   using namespace mln;
 
-  typedef accu::tuple<int, 4, accu::count<int>, accu::max<int>, accu::min<int>, accu::mean<int> > teratuple;
+  typedef accu::tuple<int, 4, accu::count<int>, accu::stat::max<int>, accu::stat::min<int>, accu::mean<int> > teratuple;
 
   teratuple tuple1;
   teratuple tuple2;

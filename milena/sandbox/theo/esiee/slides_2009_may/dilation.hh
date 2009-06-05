@@ -1,7 +1,7 @@
 
 #include <mln/pw/image.hh>
 #include <mln/convert/to_fun.hh>
-#include <mln/accu/max.hh>
+#include <mln/accu/stat/max.hh>
 
 
 namespace mln

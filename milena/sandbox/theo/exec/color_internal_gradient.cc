@@ -8,7 +8,7 @@
 #include <mln/accu/image/take.hh>
 #include <mln/accu/image/to_result.hh>
 
-#include <mln/accu/max.hh>
+#include <mln/accu/stat/max.hh>
 
 
 
@@ -124,7 +124,7 @@ int main(int argc, char* argv[])
   image2d<rgb8> ima;
   io::ppm::load(ima, argv[1]);
 
-  typedef accu::max<int_u8> A;
+  typedef accu::stat::max<int_u8> A;
   image2d<A> grad(ima.domain());
 
   using morpho::elementary::gradient_internal;

@@ -4,7 +4,7 @@
 
 #include <mln/data/compute.hh>
 
-#include <mln/accu/max.hh>
+#include <mln/accu/stat/max.hh>
 
 int main()
 {
@@ -13,6 +13,6 @@ int main()
   image2d<value::int_u8> ima(2, 3);
 
   // \{
-  data::compute(accu::meta::max(), ima);
+  data::compute(accu::meta::stat::max(), ima);
   // \}
 }

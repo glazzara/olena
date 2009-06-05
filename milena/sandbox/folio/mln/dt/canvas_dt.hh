@@ -97,7 +97,7 @@ namespace mln
       initialize(distance, f.input);
 
       // Mod determination.
-      mln::accu::max<unsigned> accu;
+      mln::accu::stat::max<unsigned> accu;
       mln_fwd_piter(I) p(f.input.domain());
       mln_qiter(N) n(f.nbh, p);
       for_all(n)

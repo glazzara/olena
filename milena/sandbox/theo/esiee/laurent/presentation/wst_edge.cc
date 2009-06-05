@@ -21,7 +21,7 @@
 # include <mln/value/rgb8.hh>
 # include <mln/io/ppm/save.hh>
 
-# include <mln/accu/min_max.hh>
+# include <mln/accu/stat/min_max.hh>
 # include <mln/accu/mean.hh>
 
 # include <mln/fun/i2v/array.hh>
@@ -142,7 +142,7 @@ namespace mln
     {
       mln_concrete(I) output;
       initialize(output, input);
-      accu::min_max<mln_value(I)> mm;
+      accu::stat::min_max<mln_value(I)> mm;
 
       mln_piter(I) p(input.domain());
       mln_niter(N) n(nbh, p);
@@ -165,7 +165,7 @@ namespace mln
 
       mln_concrete(I) output;
       initialize(output, input);
-      accu::max<V> m;
+      accu::stat::max<V> m;
 
       mln_piter(I) p(input.domain());
       mln_niter(N) n(nbh, p);

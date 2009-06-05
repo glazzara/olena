@@ -37,7 +37,7 @@
 #include <mln/accu/image/take.hh>
 #include <mln/accu/image/to_result.hh>
 
-#include <mln/accu/max.hh>
+#include <mln/accu/stat/max.hh>
 
 namespace mln
 {
@@ -127,7 +127,7 @@ namespace mln
   image2d<value::int_u8>
   color_internal_gradient(const image2d<value::rgb8>& input)
   {
-    typedef accu::max< value::int_u8 > A;
+    typedef accu::stat::max< value::int_u8 > A;
     image2d<A> grad(input.domain());
 
     using morpho::elementary::gradient_internal;

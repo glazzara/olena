@@ -36,7 +36,7 @@
 # include <mln/make/w_window.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/literal/zero.hh>
-# include <mln/accu/max.hh>
+# include <mln/accu/stat/max.hh>
 
 # include <iostream>
 

@@ -19,7 +19,7 @@
 #include <mln/io/pgm/save.hh>
 #include <mln/data/stretch.hh>
 #include <mln/data/compute.hh>
-#include <mln/accu/max.hh>
+#include <mln/accu/stat/max.hh>
 
 
 
@@ -554,7 +554,7 @@ namespace mln
     // Outputing.
 
     {
-      A aa_max = data::compute(accu::max<A>(), aa);
+      A aa_max = data::compute(accu::stat::max<A>(), aa);
       using value::int_u8;
       if (aa_max < 256)
 	{

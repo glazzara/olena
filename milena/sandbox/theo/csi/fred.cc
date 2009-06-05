@@ -81,7 +81,7 @@ namespace mln
 	  }
 
 	  // The "meta-fun -> fun" code is similar to the one in
-	  // mln/accu/min.hh
+	  // mln/accu/stat/min.hh
 	  template <typename T>
 	  struct with
 	  {

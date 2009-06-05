@@ -23,8 +23,8 @@
 #include <mln/io/pgm/save.hh>
 #include <mln/data/stretch.hh>
 #include <mln/value/int_u8.hh>
-/*#include <mln/accu/min.hh>
-#include <mln/accu/max.hh>
+/*#include <mln/accu/stat/min.hh>
+#include <mln/accu/stat/max.hh>
 #include <mln/data/compute.hh>*/
 
 using namespace mln;

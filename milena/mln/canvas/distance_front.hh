@@ -38,7 +38,7 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/concept/weighted_window.hh>
 # include <mln/data/fill.hh>
-# include <mln/accu/max.hh>
+# include <mln/accu/stat/max.hh>
 # include <mln/extension/adjust_fill.hh>
 
 
@@ -134,7 +134,7 @@ namespace mln
 	  // Mod determination.
 	  unsigned mod;
 	  {
-	    accu::max<unsigned> m;
+	    accu::stat::max<unsigned> m;
 	    for (unsigned i = 0; i < w_win.size(); ++i)
 	      m.take(w_win.w(i));
 	    mod = unsigned(m) + 1;
@@ -246,7 +246,7 @@ namespace mln
 	// Mod determination.
 	unsigned mod;
 	{
-	  accu::max<unsigned> m;
+	  accu::stat::max<unsigned> m;
 	  for (unsigned i = 0; i < w_win.size(); ++i)
 	    m.take(w_win.w(i));
 	  mod = unsigned(m) + 1;

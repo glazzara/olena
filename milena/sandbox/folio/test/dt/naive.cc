@@ -37,7 +37,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
 # include <mln/literal/zero.hh>
-# include <mln/accu/min.hh>
+# include <mln/accu/stat/min.hh>
 
 namespace mln
 {

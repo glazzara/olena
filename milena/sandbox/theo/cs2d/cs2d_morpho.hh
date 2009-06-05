@@ -1,5 +1,5 @@
-# include <mln/accu/max.hh>
-# include <mln/accu/min_max.hh>
+# include <mln/accu/stat/max.hh>
+# include <mln/accu/stat/min_max.hh>
 # include <mln/labeling/regional_minima.hh>
 
 # include <mln/core/site_set/p_queue_fast.hh>
@@ -45,7 +45,7 @@ namespace mln
       mln_concrete(I) output;
       initialize(output, input);
 
-      accu::min_max<mln_value(I)> m;
+      accu::stat::min_max<mln_value(I)> m;
 	
       mln_piter(I) p(input.domain());
       mln_niter(N) n(nbh, p);

@@ -33,7 +33,7 @@
 /// Define an accumulator that computes the first site with the maximum value
 /// in an image.
 ///
-/// \todo Use accu::pair just like in accu::min_max.
+/// \todo Use accu::pair just like in accu::stat::min_max.
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>

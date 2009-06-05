@@ -44,7 +44,7 @@
 
 #include <mln/math/max.hh>
 #include <mln/math/sqr.hh>
-#include <mln/accu/min_max.hh>
+#include <mln/accu/stat/min_max.hh>
 #include <mln/fun/v2v/linear.hh>
 #include <mln/data/transform.hh>
 
@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
   /* FIXME: Not really user friendly!  The `m' value should pass at
      the construction of ADJ_V.  */
   adj_v.iter().set_m(0);
-  mln::accu::min_max<float> acc;
+  mln::accu::stat::min_max<float> acc;
   // Iterate on triangles (2-faces).
   for_all(t)
   {

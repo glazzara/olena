@@ -20,7 +20,7 @@
 
 # include <mln/morpho/closing_area.hh>
 # include <mln/morpho/gradient.hh>
-# include <mln/accu/min_max.hh>
+# include <mln/accu/stat/min_max.hh>
 # include <mln/morpho/meyer_wst.hh>
 
 
@@ -40,7 +40,7 @@ morpho_gradient(const Image<I>& input_, const Neighborhood<N>& nbh_)
 
   mln_concrete(I) output;
   initialize(output, input);
-  accu::min_max<mln_value(I)> mm;
+  accu::stat::min_max<mln_value(I)> mm;
 
   mln_piter(I) p(input.domain());
   mln_niter(N) n(nbh, p);

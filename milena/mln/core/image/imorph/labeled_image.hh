@@ -49,7 +49,7 @@
 # include <mln/util/array.hh>
 
 # ifndef NDEBUG
-#  include <mln/accu/max.hh>
+#  include <mln/accu/stat/max.hh>
 #  include <mln/data/compute.hh>
 # endif // ! NDEBUG
 
@@ -250,7 +250,7 @@ namespace mln
   void
   labeled_image<I>::init_(const I& ima, const mln_value(I)& nlabels)
   {
-    mln_precondition(data::compute(accu::meta::max(), ima) == nlabels);
+    mln_precondition(data::compute(accu::meta::stat::max(), ima) == nlabels);
     this->data_ = new internal::data< labeled_image<I> >(ima, nlabels);
     this->update_();
  }

@@ -34,7 +34,7 @@
 #include <mln/debug/iota.hh>
 
 #include <mln/accu/nil.hh>
-#include <mln/accu/max.hh>
+#include <mln/accu/stat/max.hh>
 #include <mln/accu/p.hh>
 #include <mln/accu/v.hh>
 #include <mln/accu/compute.hh>
@@ -47,8 +47,8 @@ int main()
   using namespace mln;
   image2d<int> ima(3, 3);
   debug::iota(ima);
-  mln_assertion(data::compute(accu::meta::max(), ima) == 9);
-  accu::max<int> M;
+  mln_assertion(data::compute(accu::meta::stat::max(), ima) == 9);
+  accu::stat::max<int> M;
   mln_assertion(data::compute(M, ima) == 9);
 
   // mln::trait::accumulator::print(M);

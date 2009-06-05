@@ -1,8 +1,8 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/window2d.hh>
 # include <mln/value/int_u8.hh>
-# include <mln/accu/min_h.hh>
-# include <mln/accu/max_h.hh>
+# include <mln/accu/stat/min_h.hh>
+# include <mln/accu/stat/max_h.hh>
 # include <mln/opt/at.hh>
 
 # include <mln/debug/println.hh>
@@ -490,7 +490,7 @@ int main()
   point2d p_start(0, 0);
   line_inc(0, // dir
 	   ima, p_start, ima.ncols(),
-	   accu::min_h<int_u8>(), 4, // half
+	   accu::stat::min_h<int_u8>(), 4, // half
 	   out);
 
   debug::println(out);
