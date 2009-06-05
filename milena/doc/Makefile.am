@@ -2,45 +2,80 @@
 
 include $(top_srcdir)/milena/doc/doc.mk
 
-SUBDIRS = tutorial white_paper
+SUBDIRS =		\
+  tutorial 		\
+  white_paper
+
 
 DOXYGEN = doxygen
 
-.PHONY: doc user-doc complete-doc html-complete html-user tutorial white-paper regen-dist examples
 
-doc: user-doc tutorial white_paper ref-guide
 
-complete-doc: html-complete
+.PHONY: doc-all doc doc-html doc-dev doc-dev-html ref-doc-dev ref-doc-dev-html\
+	ref-doc ref-doc-html tutorial tutorial-html white-paper \
+	white-paper-html ref-guide ref-guide-html examples fix-refdata \
+	fig-convert regen-dist
 
-user-doc: html-user
 
-html-complete: Doxyfile tuto-html ref-guide-html
+# Doxygen documentation output directory.
+user: user-doc-html user-doc
+
+
+doc-all: doc doc-html doc-dev doc-dev-html
+
+
+doc: tutorial white-paper ref-guide ref-doc
+
+doc-html: tutorial-html white-paper-html ref-guide-html ref-doc-html 
+
+doc-dev: tutorial ref-guide white-paper ref-doc-dev 
+
+doc-dev-html: tutorial-html ref-guide-html white-paper-html ref-doc-dev-html 
+
+
+
+ref-doc-dev: Doxyfile examples
+	$(DOXYGEN) Doxyfile_complete_pdf
+
+ref-doc-dev-html: Doxyfile examples
 	$(DOXYGEN) Doxyfile_complete
 
-html-user: Doxyfile tuto-html ref-guide-html
+
+ref-doc: Doxyfile examples
+	$(DOXYGEN) Doxyfile_user_pdf
+
+ref-doc-html: Doxyfile examples
 	$(DOXYGEN) Doxyfile_user
 
-tuto-html: examples fig-convert
-	$(MAKE) -C tutorial tuto-html
+
 
 tutorial: examples fig-convert
-	$(MAKE) -C tutorial tutorial
+	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
+
+tutorial-html: examples fig-convert
+	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
+
 
 white-paper:
-	$(MAKE) -C white_paper white-paper
+	cd white_paper && $(MAKE) $(AM_MAKEFLAGS) $@
 
-ref-guide:
-	$(MAKE) -C ref_guide ref-guide
+white-paper-html:
+	cd white_paper && $(MAKE) $(AM_MAKEFLAGS) $@
 
-ref-guide-html:
-	$(MAKE) -C ref_guide ref-guide-html
+
+ref-guide: examples
+	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) $@
+
+ref-guide-html: examples
+	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) $@
 
 
 examples:
-	make -C examples examples
+	cd examples && $(MAKE) $(AM_MAKEFLAGS) $@
+
 
 fix-refdata:
-	make -C examples fix-refdata
+	cd examples && $(MAKE) $(AM_MAKEFLAGS) $@
 
 fig-convert:
 	@failcom='exit 1'; 							\
@@ -58,11 +93,14 @@ edit = sed -e "s|@ID@|$$Id|" 					\
 	   -e 's,@top_builddir\@,$(top_builddir),g' 		\
 	   -e 's,@top_srcdir\@,$(top_srcdir),g'
 
+edit_pdf = sed -e 's,GENERATE_LATEX         = NO,GENERATE_LATEX = YES,g' \
+	       -e 's,GENERATE_HTML          = YES,GENERATE_HTML = NO,g'
+
 # FIXME: This is not good.  We should set these parameters for both
 # documentation (complete and user) using @VARIABLES@.  Don't generate
 # Doxyfile_user from Doxyfile_complete!  Both should be a product
 # derived from a single source, Doxyfile.in.
-edit_user = sed -e 's,OUTPUT_DIRECTORY       = ./complete/,OUTPUT_DIRECTORY       = ./user/,g' 		\
+edit_user = sed -e 's,OUTPUT_DIRECTORY 	     = ./complete/,OUTPUT_DIRECTORY       = ./user/,g' 		\
 		-e 's,EXTRACT_ALL            = YES,EXTRACT_ALL            = NO,g'			\
 		-e 's,EXTRACT_PRIVATE        = YES,EXTRACT_PRIVATE        = NO,g'			\
 		-e 's,EXTRACT_STATIC         = YES,EXTRACT_STATIC         = NO,g'			\
@@ -98,12 +136,13 @@ include $(srcdir)/outputs/outputs.mk
 
 
 EXTRA_DIST += 			\
-Doxyfile.in 			\
-groups 				\
-user 				\
-tools/sample_utils.hh 		\
-tools/split_sample.sh 		\
-tools/todoxygen.sh
+  Doxyfile.in 			\
+  groups 			\
+  user 				\
+  tools/clearbanner.sh 		\
+  tools/sample_utils.hh 	\
+  tools/split_sample.sh 	\
+  tools/todoxygen.sh
 
 CLEANFILES = 		\
 Doxyfile_complete 	\
@@ -114,9 +153,11 @@ Doxyfile_user
 # Moreover, this file is updated whenever ChangeLog is touched: using
 # sed instead of configure saves us a lot of time.
 Doxyfile: $(top_srcdir)/milena/ChangeLog $(srcdir)/Doxyfile.in
-	   Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog`;	\
-	   $(edit) $(srcdir)/Doxyfile.in >Doxyfile_complete &&	\
-	   $(edit_user) Doxyfile_complete >Doxyfile_user
+	   Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog`;		\
+	   $(edit) $(srcdir)/Doxyfile.in >Doxyfile_complete &&		\
+	   $(edit_pdf) Doxyfile_complete > Doxyfile_complete_pdf && 	\
+	   $(edit_user) Doxyfile_complete >Doxyfile_user && 		\
+	   $(edit_pdf) Doxyfile_user > Doxyfile_user_pdf
 
 clean-local:
 	rm -rf complete user
