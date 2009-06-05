@@ -8,11 +8,13 @@ if ENABLE_SWILENA
   SUBDIRS += swilena
 endif ENABLE_SWILENA
 
+.PHONY: doc pretty-check
+
 # Shortcut to generate the documentation from the top level.
-.PHONY: doc
 doc:
 	cd milena && $(MAKE) $(AM_MAKEFLAGS) $@
 
-pretty_check:
-	$(MAKE) -C milena/tests pretty_check
+# Shortcut to launch the pretty check from the top level.
+pretty-check:
+	cd milena/tests && $(MAKE) $(AM_MAKEFLAGS) $@
 
