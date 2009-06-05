@@ -1,3 +1,13 @@
+2009-06-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a directory for demos and a 1st demo.
+
+	* mln/core/alias/neighb2d.hh (c6_2d): New.
+	* mln/make/double_neighb2d.hh: Fix sig.
+	* demos: New directory.
+	* demos/genericity: New directory.
+	* demos/genericity/neighborhood.cc: New.
+
 2009-06-05  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	* tests/tools/pretty_check.sh: Fix syntax error.

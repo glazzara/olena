@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +31,7 @@
 
 /// \file mln/make/double_neighb2d.hh
 ///
-/// Routine to create a double neighborhood.
+/// \brief Routine to create a double neighborhood.
 ///
 /// \todo Add overload with 'when_*' being Neighborhood<N>...
 
@@ -54,7 +55,7 @@ namespace mln
 
     template <typename F, unsigned St, unsigned Sf>
     neighb< win::multiple<window2d, F> >
-    double_neighb2d(F test,
+    double_neighb2d(const F& test,
 		    bool const (&when_true) [St],
 		    bool const (&when_false)[Sf]);
 
@@ -79,7 +80,7 @@ namespace mln
     template <typename F, unsigned St, unsigned Sf>
     inline
     neighb< win::multiple<window2d, F> >
-    double_neighb2d(F test,
+    double_neighb2d(const F& test,
 		    bool const (&when_true) [St],
 		    bool const (&when_false)[Sf])
     {

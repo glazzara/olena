@@ -31,16 +31,17 @@
 
 /// \file mln/core/alias/neighb2d.hh
 ///
-/// Definition of the mln::neighb2d alias and of some classical
+/// \brief Definition of the mln::neighb2d alias and of some classical
 /// 2D neighborhoods.
 ///
 /// \todo Add symmetry and non-centering tests in conversion.
-
 
 # include <cmath>
 # include <mln/core/alias/window2d.hh>
 # include <mln/core/neighb.hh>
 # include <mln/convert/from_to.hh>
+# include <mln/make/double_neighb2d.hh>
+# include <mln/fun/p2b/chess.hh>
 
 
 namespace mln
@@ -122,6 +123,8 @@ namespace mln
 
 
 
+
+
   namespace convert
   {
 
@@ -196,6 +199,24 @@ namespace mln
 	convert::from_to(vals, it);
       }
     return it;
+  }
+
+
+  inline
+  neighb< win::multiple<window2d, fun::p2b::chess> >
+  c6_2d()
+  {
+    bool vert[] = { 1, 1, 0,
+		    1, 0, 1,
+		    0, 1, 1 };
+    
+    bool hori[] = { 0, 1, 1,
+		    1, 0, 1,
+		    1, 1, 0 };
+    
+    return make::double_neighb2d(fun::p2b::chess(),
+				 vert,
+				 hori);
   }
 
 
