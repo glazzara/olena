@@ -296,10 +296,13 @@ AC_CONFIG_FILES([
       milena/tests/io/magick/Makefile
       milena/tests/io/off/Makefile
       milena/tests/io/pbm/Makefile
+      milena/tests/io/pbms/Makefile
       milena/tests/io/pfm/Makefile
       milena/tests/io/pgm/Makefile
+      milena/tests/io/pgms/Makefile
       milena/tests/io/pnm/Makefile
       milena/tests/io/ppm/Makefile
+      milena/tests/io/ppms/Makefile
       milena/tests/io/tiff/Makefile
     milena/tests/labeling/Makefile
     milena/tests/linear/Makefile
