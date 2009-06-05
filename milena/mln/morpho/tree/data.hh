@@ -370,10 +370,6 @@ namespace mln
 	/// Skip current point children. Next call to next() goes to the brother point.
 	void skip_children();
 
-	unsigned get_depth() {
-	  return stack_.size() - 1;
-	}
-
       protected:
 	using super_::p_;
 	using super_::s_;

@@ -1,3 +1,9 @@
+2009-06-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Remove old method get_depth from depth1st iterator structure.
+	* morpho/tree/data.hh: Remove get_depth method which was
+	commited by error.
+
 2009-06-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a directory for demos and a 1st demo.
