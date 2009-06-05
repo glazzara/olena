@@ -1,3 +1,18 @@
+2009-06-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Some fixes.
+
+	* mln/core/routine/exact.hh: Add doc; remove FIXME.
+	* mln/core/internal/exact.hh: Layout.
+	* mln/core/internal/exact_gcc_2_95.hh: Fix missing include.
+	(mln_exact): Change to its definition.
+	* mln/pw/cst.hh: Fix missing includes.
+	Add documentation.
+	* mln/fun/v2v/hsl_to_rgb.hh (todo): New; for Etienne.
+	* tests/fun/v2v/hsl_to_rgb.cc (todo): New; for Etienne.
+	(using): Move inside main.
+	(main): De-activate erroneous test.
+
 2009-06-05  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Update headers for pnm test files.

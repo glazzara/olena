@@ -33,6 +33,9 @@
 /// \brief Definition of the mln::exact downcast routines
 /// for g++-2.95.
 
+# include <mln/core/internal/exact.hh>
+
+
 
 namespace mln
 {
@@ -45,7 +48,7 @@ namespace mln
     template <typename T>
     struct exact_gcc_2_95
     {
-      typedef mln_exact(T) E;
+      typedef typename mln::internal::exact_<T>::ret E;
       typedef E& ret;
       static ret run(T& t)
       {
@@ -56,7 +59,7 @@ namespace mln
     template <typename T>
     struct exact_gcc_2_95< const T >
     {
-      typedef mln_exact(T) E;
+      typedef typename mln::internal::exact_<T>::ret E;
       typedef const E& ret;
       static ret run(T& t)
       {
@@ -67,7 +70,7 @@ namespace mln
     template <typename T>
     struct exact_gcc_2_95< T* >
     {
-      typedef mln_exact(T) E;
+      typedef typename mln::internal::exact_<T>::ret E;
       typedef E* ret;
       static ret run(T* t)
       {
@@ -78,7 +81,7 @@ namespace mln
     template <typename T>
     struct exact_gcc_2_95< const T* >
     {
-      typedef mln_exact(T) E;
+      typedef typename mln::internal::exact_<T>::ret E;
       typedef const E* ret;
       static ret run(const T* t)
       {
@@ -93,7 +96,7 @@ namespace mln
     template <typename T>
     struct exact_const_gcc_2_95
     {
-      typedef mln_exact(T) E;
+      typedef typename mln::internal::exact_<T>::ret E;
       typedef const E& ret;
       static ret run(T& t)
       {
@@ -104,7 +107,7 @@ namespace mln
     template <typename T>
     struct exact_const_gcc_2_95< const T >
     {
-      typedef mln_exact(T) E;
+      typedef typename mln::internal::exact_<T>::ret E;
       typedef const E& ret;
       static ret run(T& t)
       {
@@ -115,7 +118,7 @@ namespace mln
     template <typename T>
     struct exact_const_gcc_2_95< T* >
     {
-      typedef mln_exact(T) E;
+      typedef typename mln::internal::exact_<T>::ret E;
       typedef E* ret;
       static ret run(T* t)
       {
@@ -126,7 +129,7 @@ namespace mln
     template <typename T>
     struct exact_const_gcc_2_95< const T*const >
     {
-      typedef mln_exact(T) E;
+      typedef typename mln::internal::exact_<T>::ret E;
       typedef const E* ret;
       static ret run(T* t)
       {
@@ -137,7 +140,7 @@ namespace mln
     template <typename T>
     struct exact_const_gcc_2_95< const T* >
     {
-      typedef mln_exact(T) E;
+      typedef typename mln::internal::exact_<T>::ret E;
       typedef const E* ret;
       static ret run(const T* t)
       {

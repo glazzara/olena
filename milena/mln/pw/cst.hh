@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,15 +31,17 @@
 
 /// \file mln/pw/cst.hh
 ///
-/// FIXME.
+/// \brief Definition of a constant function.
 
 # include <mln/fun/internal/selector.hh>
+# include <mln/value/equiv.hh>
+# include <mln/value/concept/scalar.hh>
 
 
 namespace mln
 {
 
-  // Forward declaration
+  // Forward declarations
   namespace pw
   {
 

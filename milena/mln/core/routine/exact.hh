@@ -33,17 +33,23 @@
 ///
 /// \brief Definition of the mln::exact downcast routines.
 
-/// FIXME: Doc!
+
+/// \brief Access to the exact type of type \a T.
+//
+// Tech note: These macros have to be defined just here!  Do not
+// move them elsewhere.
+//
 #define mln_exact(T)  typename mln::internal::exact_<T>::ret
 #define mln_exact_(T)          mln::internal::exact_<T>::ret
 
-#include <mln/core/internal/exact.hh>
 
+#include <mln/core/internal/exact.hh>
 
 
 # if defined(__GNUC__) && __GNUC__ < 3
 #  include <mln/core/internal/exact_gcc_2_95.hh>
 # else
+
 
 
 namespace mln

@@ -31,8 +31,9 @@
 
 /// \file mln/fun/v2v/hsl_to_rgb.hh
 ///
-/// Convert hsl values to rgb.
-
+/// \brief Convert HSL values to RGB.
+///
+/// \todo Etienne: Remove the global variables!
 
 # include <cmath>
 
@@ -136,5 +137,6 @@ namespace mln
   } // end of namespace fun
 
 } // end of namespace mln
+
 
 #endif // ! MLN_FUN_V2V_HSL_TO_RGB_HH
