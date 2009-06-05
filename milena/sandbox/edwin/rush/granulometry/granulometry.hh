@@ -73,25 +73,40 @@ namespace mln {
 	private:
 	  const A& f_;
 	};
-
-
       }
 
-      template <typename T, typename A>
+      template <typename T, typename F>
       inline
-      std::map<mln_value(A), unsigned>
-      compute_attribute_curve(const T& tree, const Image<A>& attr_img)
+      std::map<mln_value(F), unsigned>
+      compute_attribute_curve(const T& tree, const Image<F>& f_)
       {
-	const A& a = exact(attr_img);
+	const F& f = exact(f_);
 
-	std::map< mln_value(A), unsigned > f;
+	std::map< mln_value(F), unsigned > g;
 	mln_node_piter(T) n(tree);
 
 	for_all(n)
-	  f[a(n)]++;
+	  g[f(n)]++;
 
+	return g;
+      }
 
-	return f;
+      template <typename F>
+      inline
+      F get_delta(const std::map<F, unsigned>& f)
+      {
+	typedef typename std::map<F, unsigned>::const_iterator IT;
+	// pre: f pseudo-decreasing
+
+	IT current, it;
+	double d = -1;
+	current = it = f.begin();
+	while (++it != f.end() && d < -0.5)
+	  {
+	    d = (current->second - it->second) / (it->first - current->first);
+	    current = it;
+	  }
+	return (current->first);
       }
 
 
@@ -103,7 +118,6 @@ namespace mln {
 	const A& a = exact(attr_img);
 
 	// TODO: precondition attribut croissant
-
 
 	typedef std::priority_queue< mln_psite(A), std::vector< mln_psite(A) >, internal::attr_less<A> > q_type;
 	std::map< mln_value(A), unsigned > f;

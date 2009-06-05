@@ -1,3 +1,11 @@
+2009-06-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Some experiments about treshold auto-detection for attribute filtering.
+	* edwin/rush/granulometry/Makefile: Remove.
+	* edwin/rush/granulometry/granulometry.hh: Add function to
+	retrieve treshold.
+	* edwin/rush/granulometry/test.cc: Test file.
+
 2009-06-05  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Tests around projected histograms for the report.

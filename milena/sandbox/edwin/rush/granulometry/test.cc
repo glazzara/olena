@@ -40,7 +40,7 @@
 #include <mln/morpho/attribute/card.hh>
 
 #include <mln/data/fill.hh>
-#include "../../tree/propagate_node.hh"
+#include <mln/morpho/tree/propagate_node.hh>
 
 #include <iostream>
 #include <map>
@@ -73,8 +73,6 @@ int main(int argc, char** argv)
   typedef morpho::attribute::card<I> card_t;
   A a = morpho::tree::compute_attribute_image(card_t (), tree);
 
-
-
   {
     typedef std::map<mln_value_(A), unsigned> F;
     F f = morpho::tree::compute_attribute_curve_beta(tree, a);
@@ -97,11 +95,21 @@ int main(int argc, char** argv)
 
 	std::cout << it->first << " -> " << it->second << " = " << count
 		  << std::endl;
-	mln_assertion(count == it->second);
-    }
+	//mln_assertion(count == it->second);
+      }
   }
 
-  
+  std::cout << "part 2" << std::endl;
+  {
+    typedef std::map<mln_value_(A), unsigned> F;
+    F f = morpho::tree::compute_attribute_curve(tree, a);
+
+    F::iterator it;
+    for (it = f.begin(); it != f.end(); ++it)
+      std::cout << it->first << " -> " << it->second << std::endl;
+    unsigned lambda = morpho::tree::get_delta(f);
+    std::cout << "lambda: " << lambda << " : " << f[lambda] << std::endl;
+  }
 }
 
 
