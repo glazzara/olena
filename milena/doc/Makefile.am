@@ -18,7 +18,9 @@ DOXYGEN = doxygen
 
 
 # Doxygen documentation output directory.
-user: user-doc-html user-doc
+user/html: ref-doc-html
+
+user/latex/refman.pdf: ref-doc
 
 
 doc-all: doc doc-html doc-dev doc-dev-html
@@ -36,6 +38,7 @@ doc-dev-html: tutorial-html ref-guide-html white-paper-html ref-doc-dev-html
 
 ref-doc-dev: Doxyfile examples
 	$(DOXYGEN) Doxyfile_complete_pdf
+	cd complete/latex && make $(AM_MAKEFLAGS)
 
 ref-doc-dev-html: Doxyfile examples
 	$(DOXYGEN) Doxyfile_complete
@@ -43,6 +46,7 @@ ref-doc-dev-html: Doxyfile examples
 
 ref-doc: Doxyfile examples
 	$(DOXYGEN) Doxyfile_user_pdf
+	cd user/latex && make $(AM_MAKEFLAGS)
 
 ref-doc-html: Doxyfile examples
 	$(DOXYGEN) Doxyfile_user
@@ -100,7 +104,7 @@ edit_pdf = sed -e 's,GENERATE_LATEX         = NO,GENERATE_LATEX = YES,g' \
 # documentation (complete and user) using @VARIABLES@.  Don't generate
 # Doxyfile_user from Doxyfile_complete!  Both should be a product
 # derived from a single source, Doxyfile.in.
-edit_user = sed -e 's,OUTPUT_DIRECTORY 	     = ./complete/,OUTPUT_DIRECTORY       = ./user/,g' 		\
+edit_user = sed -e 's,OUTPUT_DIRECTORY       = ./complete/,OUTPUT_DIRECTORY       = ./user/,g' 		\
 		-e 's,EXTRACT_ALL            = YES,EXTRACT_ALL            = NO,g'			\
 		-e 's,EXTRACT_PRIVATE        = YES,EXTRACT_PRIVATE        = NO,g'			\
 		-e 's,EXTRACT_STATIC         = YES,EXTRACT_STATIC         = NO,g'			\
@@ -138,7 +142,8 @@ include $(srcdir)/outputs/outputs.mk
 EXTRA_DIST += 			\
   Doxyfile.in 			\
   groups 			\
-  user 				\
+  user/html 			\
+  user/latex/refman.pdf 	\
   tools/clearbanner.sh 		\
   tools/sample_utils.hh 	\
   tools/split_sample.sh 	\

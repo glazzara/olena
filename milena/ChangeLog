@@ -1,5 +1,16 @@
 2009-06-05  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	More fixes for documentation build system.
+
+	* doc/Makefile.am:
+	  - Fix invalid replacement in doxyfile.
+	  - Fix invalid rule names.
+	  - Fix invalid dist files.
+
+	* tests/tools/pretty_check.sh: return the make check return value.
+
+2009-06-05  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Small fixes.
 
 	* milena/doc/Doxyfile.in: fix missing backspace.

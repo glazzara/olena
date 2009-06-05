@@ -346,6 +346,7 @@ main()
   make_gcc_wrapper
 
   make CXX="$gcc_wrapper" -C $base_make_path check -k 1>$check_log 2>&1
+  rvalue=$?
 
   cd $output_directory
   begin_tmp_files
@@ -407,6 +408,8 @@ main()
   # Cleanup temporary files.
   cleanup_tmp_files
   cleanup_gcc_wrapper
+
+  return rvalue
 }
 
-main
+return main
