@@ -648,12 +648,16 @@ mln_io_off_save \
 mln_io_pbm_all \
 mln_io_pbm_load \
 mln_io_pbm_save \
+mln_io_pbms_all \
+mln_io_pbms_load \
 mln_io_pfm_all \
 mln_io_pfm_load \
 mln_io_pfm_save \
 mln_io_pgm_all \
 mln_io_pgm_load \
 mln_io_pgm_save \
+mln_io_pgms_all \
+mln_io_pgms_load \
 mln_io_plot_all \
 mln_io_plot_load \
 mln_io_plot_save \
@@ -664,11 +668,16 @@ mln_io_pnm_macros \
 mln_io_pnm_max_component \
 mln_io_pnm_save \
 mln_io_pnm_save_header \
+mln_io_pnms_all \
+mln_io_pnms_load \
 mln_io_ppm_all \
 mln_io_ppm_load \
 mln_io_ppm_save \
+mln_io_ppms_all \
+mln_io_ppms_load \
 mln_io_tiff_all \
 mln_io_tiff_load \
+mln_io_tiff_save \
 mln_io_txt_all \
 mln_io_txt_save \
 mln_labeling_all \
@@ -1214,7 +1223,6 @@ mln_value_sign \
 mln_value_stack \
 mln_value_super_value \
 mln_value_viter \
-mln_version \
 mln_win_all \
 mln_win_backdiag2d \
 mln_win_ball \
@@ -1239,6 +1247,7 @@ mln_win_vline2d \
 mln_world_all \
 mln_world_binary_2d_all \
 mln_world_binary_2d_enlarge \
+mln_world_binary_2d_enlarge_hq2x \
 mln_world_binary_2d_projected_histo \
 mln_world_binary_2d_subsample \
 mln_world_inter_pixel_all \
@@ -1904,12 +1913,16 @@ mln_io_off_save_SOURCES = mln_io_off_save.cc
 mln_io_pbm_all_SOURCES = mln_io_pbm_all.cc
 mln_io_pbm_load_SOURCES = mln_io_pbm_load.cc
 mln_io_pbm_save_SOURCES = mln_io_pbm_save.cc
+mln_io_pbms_all_SOURCES = mln_io_pbms_all.cc
+mln_io_pbms_load_SOURCES = mln_io_pbms_load.cc
 mln_io_pfm_all_SOURCES = mln_io_pfm_all.cc
 mln_io_pfm_load_SOURCES = mln_io_pfm_load.cc
 mln_io_pfm_save_SOURCES = mln_io_pfm_save.cc
 mln_io_pgm_all_SOURCES = mln_io_pgm_all.cc
 mln_io_pgm_load_SOURCES = mln_io_pgm_load.cc
 mln_io_pgm_save_SOURCES = mln_io_pgm_save.cc
+mln_io_pgms_all_SOURCES = mln_io_pgms_all.cc
+mln_io_pgms_load_SOURCES = mln_io_pgms_load.cc
 mln_io_plot_all_SOURCES = mln_io_plot_all.cc
 mln_io_plot_load_SOURCES = mln_io_plot_load.cc
 mln_io_plot_save_SOURCES = mln_io_plot_save.cc
@@ -1920,11 +1933,16 @@ mln_io_pnm_macros_SOURCES = mln_io_pnm_macros.cc
 mln_io_pnm_max_component_SOURCES = mln_io_pnm_max_component.cc
 mln_io_pnm_save_SOURCES = mln_io_pnm_save.cc
 mln_io_pnm_save_header_SOURCES = mln_io_pnm_save_header.cc
+mln_io_pnms_all_SOURCES = mln_io_pnms_all.cc
+mln_io_pnms_load_SOURCES = mln_io_pnms_load.cc
 mln_io_ppm_all_SOURCES = mln_io_ppm_all.cc
 mln_io_ppm_load_SOURCES = mln_io_ppm_load.cc
 mln_io_ppm_save_SOURCES = mln_io_ppm_save.cc
+mln_io_ppms_all_SOURCES = mln_io_ppms_all.cc
+mln_io_ppms_load_SOURCES = mln_io_ppms_load.cc
 mln_io_tiff_all_SOURCES = mln_io_tiff_all.cc
 mln_io_tiff_load_SOURCES = mln_io_tiff_load.cc
+mln_io_tiff_save_SOURCES = mln_io_tiff_save.cc
 mln_io_txt_all_SOURCES = mln_io_txt_all.cc
 mln_io_txt_save_SOURCES = mln_io_txt_save.cc
 mln_labeling_all_SOURCES = mln_labeling_all.cc
@@ -2470,7 +2488,6 @@ mln_value_sign_SOURCES = mln_value_sign.cc
 mln_value_stack_SOURCES = mln_value_stack.cc
 mln_value_super_value_SOURCES = mln_value_super_value.cc
 mln_value_viter_SOURCES = mln_value_viter.cc
-mln_version_SOURCES = mln_version.cc
 mln_win_all_SOURCES = mln_win_all.cc
 mln_win_backdiag2d_SOURCES = mln_win_backdiag2d.cc
 mln_win_ball_SOURCES = mln_win_ball.cc
@@ -2495,6 +2512,7 @@ mln_win_vline2d_SOURCES = mln_win_vline2d.cc
 mln_world_all_SOURCES = mln_world_all.cc
 mln_world_binary_2d_all_SOURCES = mln_world_binary_2d_all.cc
 mln_world_binary_2d_enlarge_SOURCES = mln_world_binary_2d_enlarge.cc
+mln_world_binary_2d_enlarge_hq2x_SOURCES = mln_world_binary_2d_enlarge_hq2x.cc
 mln_world_binary_2d_projected_histo_SOURCES = mln_world_binary_2d_projected_histo.cc
 mln_world_binary_2d_subsample_SOURCES = mln_world_binary_2d_subsample.cc
 mln_world_inter_pixel_all_SOURCES = mln_world_inter_pixel_all.cc

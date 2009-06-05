@@ -43,5 +43,9 @@ int main()
   fun_image<meta::red<rgb8>,I> ima_red = extract::red(ima);
 
   mln_assertion(ima(p).red() == ima_red(p));
+
+  ima_red(p) = 0;
+
+  mln_assertion(ima_red(p) == 0u);
 }
 

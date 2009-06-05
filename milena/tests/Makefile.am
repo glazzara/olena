@@ -2,6 +2,8 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+.PHONY: pretty-check
+
 SUBDIRS =					\
   accu						\
   algebra					\
@@ -61,7 +63,7 @@ global_vars_SOURCES = global_vars1.cc global_vars2.cc
 
 TESTS = $(check_PROGRAMS)
 
-pretty_check:
+pretty-check:
 	$(top_srcdir)/milena/tests/tools/pretty_check.sh
 
 

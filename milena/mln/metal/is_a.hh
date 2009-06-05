@@ -90,10 +90,10 @@ namespace mln
 
 
 
-    /*! \brief "is_a" check.
-     *
-     * FIXME: Doc!
-     */
+    /// \brief "is_a" check.
+    ///
+    /// Check whether T inherits from _CONCEPT_ M.
+    //
     template <typename T, template <class> class M>
     struct is_a : bool_<( sizeof( internal::helper_is_a_< T, M >::selector(internal::make_< T >::ptr()) )
 			  ==

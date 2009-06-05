@@ -3,12 +3,18 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  red 						\
+  blue 						\
   green 					\
-  blue
+  hue 						\
+  lum 						\
+  red 						\
+  sat
 
-red_SOURCES = red.cc
-green_SOURCES = green.cc
 blue_SOURCES = blue.cc
+green_SOURCES = green.cc
+hue_SOURCES = hue.cc
+lum_SOURCES = lum.cc
+red_SOURCES = red.cc
+sat_SOURCES = sat.cc
 
 TESTS = $(check_PROGRAMS)

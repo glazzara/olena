@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,40 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_METAL_EQUAL_HH
-# define MLN_METAL_EQUAL_HH
+# include <mln/core/image/image2d.hh>
+# include <mln/extract/sat.hh>
+# include <mln/value/hsl.hh>
+# include <mln/core/var.hh>
 
-/// \file  mln/metal/equal.hh
-///
-/// Definition of a static 'equal' test.
-
-# include <mln/metal/bool.hh>
-
-
-# define mlc_equal(T1, T2) mln::metal::equal< T1, T2 >
-
-
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::hsl_f;
 
-  namespace metal
-  {
+  typedef image2d<hsl_f> I;
+  I ima(2,2);
+  point2d p(1,1);
+  ima(p) = value::hsl_f(200, 230, 240);
 
-    /// Definition of a static 'equal' test.
-    /// Check whether type T1 is exactly type T2.
-    //
-    template <typename T1, typename T2>
-    struct equal : false_
-    {};
+  fun_image< meta::sat<hsl_f>, I > ima_sat = extract::sat(ima);
 
-    template <typename T>
-    struct equal< T, T > : true_
-    {};
+  mln_assertion(ima(p).sat() == ima_sat(p));
 
+  ima_sat(p) = 0;
 
-  } // end of namespace mln::metal
+  mln_assertion(ima_sat(p) == 0u);
+}
 
-} // end of namespace mln
-
-
-#endif // ! MLN_METAL_EQUAL_HH

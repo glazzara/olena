@@ -43,13 +43,29 @@ namespace mln
   {
 
     /// Geodesic influence zone transform.
+    ///
+    /// \param[in] input	    An image.
+    /// \param[in] nbh		    A neighborhood.
+    /// \param[in] max		    The maximum influence zone distance.
+    /// \param[in] background_value The value used as background (i.e.
+    ///				    not propagated).
+    ///
+    /// \return An image of influence zone.
+    //
     template <typename I, typename N, typename D>
     mln_concrete(I)
     influence_zone_geodesic(const Image<I>& input,
-			    const Neighborhood<N>& nbh, D max);
+			    const Neighborhood<N>& nbh,
+			    const D& max, const mln_value(I)& background_value);
+
+    /// \overload
+    template <typename I, typename N, typename D>
+    mln_concrete(I)
+    influence_zone_geodesic(const Image<I>& input,
+			    const Neighborhood<N>& nbh, const D& max);
 
 
-    /// Geodesic influence zone transform.
+    /// \overload
     template <typename I, typename N>
     mln_concrete(I)
     influence_zone_geodesic(const Image<I>& input, const Neighborhood<N>& nbh);
@@ -58,22 +74,33 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
     template <typename I, typename N, typename D>
     mln_concrete(I)
     influence_zone_geodesic(const Image<I>& input, const Neighborhood<N>& nbh,
-			    D max)
+			    const D& max, const mln_value(I)& background_value)
     {
       trace::entering("transform::influence_zone_geodesic");
 
       mln_precondition(exact(input).is_valid());
       mln_precondition(exact(nbh).is_valid());
 
-      internal::influence_zone_functor<I> f;
+      internal::influence_zone_functor<I> f(background_value);
       (void) mln::canvas::distance_geodesic(input, nbh, max, f);
 
       trace::exiting("transform::influence_zone_geodesic");
       return f.output;
     }
+
+
+    template <typename I, typename N, typename D>
+    mln_concrete(I)
+    influence_zone_geodesic(const Image<I>& input, const Neighborhood<N>& nbh,
+			    const D& max)
+    {
+      return influence_zone_geodesic(input, nbh, max, literal::zero);
+    }
+
 
     template <typename I, typename N>
     mln_concrete(I)

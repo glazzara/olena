@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_METAL_IS_HH
 # define MLN_METAL_IS_HH
 
-/*! \file mln/metal/is.hh
- *
- * \brief Definition of a type that means "is".
- */
+/// \file mln/metal/is.hh
+///
+/// \brief Definition of a type that means "is".
 
 # include <mln/metal/is_a.hh>
 
@@ -60,10 +60,9 @@ namespace mln
 
 
 
-    /*! \brief "is" check.
-     *
-     * FIXME: Doc!
-     */
+    /// \brief "is" check.
+    /// Check whether T inherits from U.
+    //
     template <typename T, typename U>
     struct is : bool_<( sizeof(internal::helper_is_<T, U>::selector(internal::make_<T>::ptr()))
 			==
@@ -74,15 +73,15 @@ namespace mln
     template <typename T, typename U>
     struct is< const T, const U > : is<T, U>::eval
     {};
-    
+
     template <typename T, typename U>
     struct is< T*, U* > : is<T, U>::eval
     {};
-    
+
     template <typename T, typename U>
     struct is< T&, U& > : is<T, U>::eval
     {};
-    
+
     template <typename T, typename U>
     struct is< T**, U** > : false_
     {};

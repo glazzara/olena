@@ -141,25 +141,25 @@ namespace mln
     namespace impl
     {
 
+//      template <typename F, typename I>
+//      const mln_value(I)&
+//      shell_<F, I, Function_v2v<void> >::set_(I& ima,
+//						const mln_site(I)& s,
+//						mln_result(F) v)
+//      {
+//	ima(s) = F().f_1(v);
+//	return ima(s);
+//      }
+
       template <typename F, typename I>
       const mln_value(I)&
       shell_<F, I, Function_v2v<void> >::set_(I& ima,
-						const mln_site(I)& s,
-						mln_result(F) v)
+						  const mln_site(I)& s,
+						  mln_result(F) v)
       {
-	ima(s) = F().f_1(v);
+	ima(s) = F().f_1(v, ima(s));
 	return ima(s);
       }
-
-//       template <typename F, typename I>
-//       const mln_value(I)&
-//       shell_<F, I, Function_v2v<void> >::set_(I& ima,
-// 						  const mln_site(I)& s,
-// 						  mln_result(F) v)
-//       {
-// 	ima(s) = F().f_1(v, ima(s));
-// 	return ima(s);
-//       }
 
     } // end of namespace mln::value::impl
 

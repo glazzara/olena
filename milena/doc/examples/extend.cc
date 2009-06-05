@@ -4,6 +4,7 @@
 #include <mln/core/var.hh>
 
 #include <mln/data/transform.hh>
+#include <mln/data/paste.hh>
 
 #include <mln/fun/p2b/big_chess.hh>
 

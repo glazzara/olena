@@ -1,5 +1,46 @@
 2009-06-05  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Small fixes.
+
+	* milena/doc/Doxyfile.in: fix missing backspace.
+	
+	* milena/doc/examples/extend.cc: add missing include.
+
+	* milena/doc/ref_guide/ref_guide.tex: fix typo.
+	
+	* milena/doc/tools/clearbanner.sh: new tool to remove hevea banner.
+	
+	* milena/doc/tutorial/tutorial.tex: add navigation links.
+
+	* milena/doc/white_paper/white_paper.tex: do not use pgf.
+
+	* milena/tests/unit_test/unit-tests.mk,
+	* milena/headers.mk: update.
+
+	* milena/mln/metal/equal.hh,
+	* milena/mln/metal/is.hh,
+	* milena/mln/metal/is_a.hh: add comments.
+
+	* milena/mln/transform/influence_zone_geodesic.hh,
+	* milena/mln/transform/internal/influence_zone_functor.hh: allow to
+	set a different value for the background.
+
+	* milena/mln/value/shell.hh: temporary re-enable the commented
+	overload of set_ and comment the other one.
+
+	* milena/tests/Makefile.am: fix pretty-check rule.
+
+	* milena/tests/extract/blue.cc,
+	* milena/tests/extract/green.cc,
+	* milena/tests/extract/red.cc: improve tests.
+
+	* milena/tests/extract/Makefile.am,
+	* milena/tests/extract/hue.cc,
+	* milena/tests/extract/lum.cc,
+	* milena/tests/extract/sat.cc: new tests.
+
+2009-06-05  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Cleanup tests io::p*m tests and add new tests for io::p*ms.
   
 	* mln/io/pgms/load.hh,

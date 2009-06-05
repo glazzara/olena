@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +31,7 @@
 
 /// \file mln/transform/internal/influence_zone_functor.hh
 ///
-/// Influence zone functor.
+/// \brief Influence zone functor.
 
 # include <mln/core/routine/duplicate.hh>
 
@@ -41,7 +42,7 @@ namespace mln
 
   namespace transform
   {
-    
+
     namespace internal
     {
 
@@ -51,23 +52,47 @@ namespace mln
 	typedef mln_value(I) V;
 	typedef mln_psite(I)  P;
 
+	influence_zone_functor();
+	influence_zone_functor(const V& background_value);
+
 	mln_concrete(I) output;
 
 	void init(const I& input);
 	bool inqueue_p_wrt_input_p(const V& input_p);
 	bool inqueue_p_wrt_input_n(const V& input_n);
-	void init_p(const P&) {} // FIXME: move def below.
+	void init_p(const P&);
 	void process(const P& p, const P& n);
 
-	void init_(const I& input) { output = duplicate(input); }
-	bool inqueue_p_wrt_input_p_(const V& input_p) { return input_p != 0u; }
-	bool inqueue_p_wrt_input_n_(const V& input_n) { return input_n == 0u; }
-	void init_p_(unsigned) {}
-	void process_(unsigned p, unsigned n) { output.element(n) = output.element(p); }
+	void init_(const I& input);
+	bool inqueue_p_wrt_input_p_(const V& input_p);
+	bool inqueue_p_wrt_input_n_(const V& input_n);
+	void init_p_(unsigned);
+	void process_(unsigned p, unsigned n);
+
+	V background_value_;
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+
+      template <typename I>
+      inline
+      influence_zone_functor<I>::influence_zone_functor()
+      {
+	background_value_ = literal::zero;
+      }
+
+
+      template <typename I>
+      inline
+      influence_zone_functor<I>::influence_zone_functor(const V& background_value)
+      {
+	background_value_ = background_value;
+      }
+
+
+      // Generic implementation.
 
       template <typename I>
       inline
@@ -82,7 +107,7 @@ namespace mln
       bool
       influence_zone_functor<I>::inqueue_p_wrt_input_p(const V& input_p)
       {
-	return input_p != 0u;
+	return input_p != background_value_;
       }
 
       template <typename I>
@@ -90,7 +115,14 @@ namespace mln
       bool
       influence_zone_functor<I>::inqueue_p_wrt_input_n(const V& input_n)
       {
-	return input_n == 0u;
+	return input_n == background_value_;
+      }
+
+      template <typename I>
+      inline
+      void
+      influence_zone_functor<I>::init_p(const P&)
+      {
       }
 
       template <typename I>
@@ -99,6 +131,49 @@ namespace mln
       {
 	output(n) = output(p);
       }
+
+
+
+      // Fastest implementation.
+
+      template <typename I>
+      inline
+      void
+      influence_zone_functor<I>::init_(const I& input)
+      {
+	output = duplicate(input);
+      }
+
+      template <typename I>
+      inline
+      bool
+      influence_zone_functor<I>::inqueue_p_wrt_input_p_(const V& input_p)
+      {
+	return input_p != background_value_;
+      }
+
+      template <typename I>
+      inline
+      bool
+      influence_zone_functor<I>::inqueue_p_wrt_input_n_(const V& input_n)
+      {
+	return input_n == background_value_;
+      }
+
+      template <typename I>
+      inline
+      void
+      influence_zone_functor<I>::init_p_(unsigned)
+      {
+      }
+
+      template <typename I>
+      inline
+      void influence_zone_functor<I>::process_(unsigned p, unsigned n)
+      {
+	output.element(n) = output.element(p);
+      }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

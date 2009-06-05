@@ -288,7 +288,7 @@ PREDEFINED             = "mlc_unqualif(T)=typename mln::metal::unqualif<T>::ret"
 			 "mln_sum_product(T, U)=typename mln::trait::value_< mln_trait_op_times(T,U) >::sum" \
 			 "mln_deduce(T, A1, A2)=typename T::A1::A2" \
 			 "mln_graph_element(T)=typename T::graph_element" \
-			 "mln_graph_element_(T)=T::graph_element"
+			 "mln_graph_element_(T)=T::graph_element" \
 			 "mln_fun_vv2v(F, L, R)=mln::fun::vv2v::F< mln_value(L), mln_value(R) >" \
 			 "mln_fun_vv2v_result(F, L, R)=typename mln_fun_vv2v(F, L, R)::result" \
 			 "mln_ch_fun_vv2v(F, L, R)=typename mln::trait::ch_value< L, typename mln_fun_vv2v(F, L, R)::result >::ret"
