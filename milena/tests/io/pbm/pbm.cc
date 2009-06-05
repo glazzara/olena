@@ -36,7 +36,6 @@
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
-#include <mln/io/pbms/load.hh>
 
 #include <mln/data/compare.hh>
 
@@ -52,21 +51,6 @@ int main()
   image2d<bool> pic2 = io::pbm::load("out.pbm");
 
   mln_assertion(pic == pic2);
-
-
-  pic2(point2d(0,0)) = true;
-  io::pbm::save(pic2, "out.pbm");
-
-  util::array<std::string> files(2);
-  files[0] = MLN_IMG_DIR "/picasso.pbm";
-  files[1] = "out.pbm";
-
-  image3d<bool> ima3d;
-  io::pbms::load(ima3d, files);
-
-  mln_assertion(ima3d.nslices() == 2);
-  mln_assertion(slice(ima3d, 0) == pic);
-  mln_assertion(slice(ima3d, 1) == pic2);
 
 }
 

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,25 +26,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/io/pgm/pgm.cc
+/// \file tests/io/pbms/load.cc
 ///
-/// Test on mln::io::pgm::load and mln::io::pgm::save.
-
-
+/// Test on mln::io::pbms::load.cc
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
 #include <mln/core/image/dmorph/slice_image.hh>
 #include <mln/core/routine/duplicate.hh>
 
-#include <mln/value/int_u8.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
+#include <mln/io/pbm/load.hh>
+#include <mln/io/pbm/save.hh>
+#include <mln/io/pbms/load.hh>
 
 #include <mln/data/compare.hh>
-
-#include <mln/literal/colors.hh>
 
 #include "tests/data.hh"
 
@@ -52,24 +47,24 @@
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
-  {
-    image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/lena.pgm");
-    io::pgm::save(lena, "out.pgm");
+  image2d<bool> pic = io::pbm::load(MLN_IMG_DIR "/tiny.pbm");
+  image2d<bool> pic2 = duplicate(pic);
 
-    image2d<int_u8> lena2 = io::pgm::load<int_u8>("out.pgm");
-    mln_assertion(lena2 == lena);
-  }
+  pic2(point2d(0,0)) = true;
+  io::pbm::save(pic2, "out.pbm");
 
-  {
-    image2d< value::int_u<8> > lena, lena2;
-    io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+  util::array<std::string> files(2);
+  files[0] = MLN_IMG_DIR "/tiny.pbm";
+  files[1] = "out.pbm";
 
-    io::pgm::save(lena, "out.pgm");
+  image3d<bool> ima3d;
+  io::pbms::load(ima3d, files);
 
-    io::pgm::load(lena2, "out.pgm");
-    mln_assertion(lena2 == lena);
-  }
+  mln_assertion(ima3d.nslices() == 2);
+  mln_assertion(slice(ima3d, 0) == pic);
+  mln_assertion(slice(ima3d, 1) == pic2);
 
 }
+
+

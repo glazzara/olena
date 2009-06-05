@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,23 +26,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/io/pgm/pgm.cc
+/// \file tests/io/ppms/load.cc
 ///
-/// Test on mln::io::pgm::load and mln::io::pgm::save.
-
-
+/// Test on mln::io::ppms::load.cc
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
 #include <mln/core/image/dmorph/slice_image.hh>
 #include <mln/core/routine/duplicate.hh>
 
-#include <mln/value/int_u8.hh>
+#include <mln/value/rgb8.hh>
 
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
+#include <mln/io/ppm/load.hh>
+#include <mln/io/ppm/save.hh>
+#include <mln/io/ppms/load.hh>
 
 #include <mln/data/compare.hh>
+
+#include <mln/util/array.hh>
 
 #include <mln/literal/colors.hh>
 
@@ -52,24 +53,25 @@
 int main()
 {
   using namespace mln;
-  using value::int_u8;
+  using value::rgb8;
 
-  {
-    image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/lena.pgm");
-    io::pgm::save(lena, "out.pgm");
+  image2d<rgb8> ima = io::ppm::load<rgb8>(MLN_IMG_DIR "/fly.ppm");
+  io::ppm::save(ima, "out.ppm");
+  image2d<rgb8> ima2 = duplicate(ima);
 
-    image2d<int_u8> lena2 = io::pgm::load<int_u8>("out.pgm");
-    mln_assertion(lena2 == lena);
-  }
 
-  {
-    image2d< value::int_u<8> > lena, lena2;
-    io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+  ima2(point2d(0,0)) = literal::green;
+  io::ppm::save(ima2, "out.ppm");
 
-    io::pgm::save(lena, "out.pgm");
+  util::array<std::string> files(2);
+  files[0] = MLN_IMG_DIR "/fly.ppm";
+  files[1] = "out.ppm";
 
-    io::pgm::load(lena2, "out.pgm");
-    mln_assertion(lena2 == lena);
-  }
+  image3d<rgb8> ima3d;
+  io::ppms::load(ima3d, files);
 
+  mln_assertion(ima3d.nslices() == 2);
+  mln_assertion(slice(ima3d, 0) == ima);
+  mln_assertion(slice(ima3d, 1) == ima2);
 }
+

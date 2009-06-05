@@ -10,10 +10,13 @@ SUBDIRS =					\
   dump						\
   off						\
   pbm						\
+  pbms						\
   pfm						\
   pgm						\
+  pgms						\
   pnm						\
-  ppm
+  ppm 						\
+  ppms
 
 ## ------------------------------------------------- ##
 ## I/O routines depending on a third-party library.  ##

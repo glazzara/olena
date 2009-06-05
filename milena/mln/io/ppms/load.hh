@@ -72,7 +72,7 @@ namespace mln
       {
 	trace::entering("mln::io::ppms::load");
 
-	io::pnms::load<image2d<V> >(PPM, ima, filenames);
+	io::pnms::load<V>(PPM, ima, filenames);
 
 	trace::exiting("mln::io::ppms::load");
       }

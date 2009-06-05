@@ -42,6 +42,7 @@
 # include <mln/core/image/image3d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/io/pnm/load.hh>
+# include <mln/io/pbm/load.hh>
 # include <mln/make/image3d.hh>
 
 
@@ -60,11 +61,18 @@ namespace mln
       /// \param[out] ima A reference to the 3D image which will receive
       /// data.
       /// \param[in] filenames The list of 2D images to load..
-      ///
+      //
       template <typename V>
       void load(char type,
 		image3d<V>& ima,
 		const util::array<std::string>& filenames);
+
+      /// \overload
+      //
+      void load(char type,
+		image3d<bool>& ima,
+		const util::array<std::string>& filenames);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -91,6 +99,31 @@ namespace mln
 
 	trace::exiting("mln::io::pnms::load");
       }
+
+
+      inline
+      void load(char type,
+		image3d<bool>& ima,
+		const util::array<std::string>& filenames)
+      {
+	trace::entering("mln::io::pnms::load");
+	mln_precondition(!filenames.is_empty());
+	(void) type;
+
+	util::array< image2d<bool> > slices;
+
+	for (unsigned i = 0; i < filenames.nelements(); ++i)
+	{
+	  image2d<bool> tmp;
+	  io::pbm::load(tmp, filenames[i]);
+	  slices.append(tmp);
+	}
+
+	ima = make::image3d(slices);
+
+	trace::exiting("mln::io::pnms::load");
+      }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

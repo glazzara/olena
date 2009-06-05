@@ -1,5 +1,27 @@
 2009-06-05  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Cleanup tests io::p*m tests and add new tests for io::p*ms.
+  
+	* mln/io/pgms/load.hh,
+	* mln/io/pnms/load.hh,
+	* mln/io/ppms/load.hh: fix invalid calls to pnm::load.
+
+
+	* tests/io/pbm/pbm.cc,
+	* tests/io/pgm/pgm.cc,
+	* tests/io/ppm/ppm.cc: remove tests related to routines located in
+	namespace p*ms.
+
+	* tests/io/Makefile.am,
+	* tests/io/pbms/Makefile.am,
+	* tests/io/pgms/Makefile.am,
+	* tests/io/ppms/Makefile.am,
+	* tests/io/pbms/load.cc,
+	* tests/io/pgms/load.cc,
+	* tests/io/ppms/load.cc: new tests.
+
+2009-06-05  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Improve documentation build system.
 
 	* doc/Makefile.am,
