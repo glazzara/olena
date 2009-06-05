@@ -1,5 +1,9 @@
 2009-06-05  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	* tests/tools/pretty_check.sh: Fix syntax error.
+
+2009-06-05  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	More fixes for documentation build system.
 
 	* doc/Makefile.am:

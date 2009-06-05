@@ -409,7 +409,7 @@ main()
   cleanup_tmp_files
   cleanup_gcc_wrapper
 
-  return rvalue
+  exit $rvalue
 }
 
-return main
+main
