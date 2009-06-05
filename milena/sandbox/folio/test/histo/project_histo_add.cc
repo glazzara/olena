@@ -97,42 +97,42 @@ int main(int argc, char* argv[])
   std::cout << "  => computing histogram..." << std::endl;
   image3d<unsigned> histo = histo::compute_histo_rgb<unsigned>(ima);
 
-  // image2d<unsigned> proj = project_histo<accu::sum<unsigned, unsigned>, 2>(histo);
-  // image2d<value::int_u8> proj_int = data::stretch( value::int_u8(),
-  // 						   data::transform( proj,
-  // 								    take_log() ) );
-  // io::pgm::save(proj_int, argv[2]);
+  image2d<unsigned> proj = project_histo<accu::sum<unsigned, unsigned>, 2>(histo);
+  image2d<value::int_u8> proj_int = data::stretch( value::int_u8(),
+						   data::transform( proj,
+								    take_log() ) );
+  io::pgm::save(proj_int, argv[2]);
 
-  std::cout << "  => computing reverted histogram..." << std::endl;
-  image3d<unsigned> reverted = arith::revert(histo);
+//   std::cout << "  => computing reverted histogram..." << std::endl;
+//   image3d<unsigned> reverted = arith::revert(histo);
 
-  std::cout << "  => computing closure..." << std::endl;
-  image3d<unsigned> closed =
-    morpho::closing::volume(reverted, c6(), atoi(argv[2]));
+//   std::cout << "  => computing closure..." << std::endl;
+//   image3d<unsigned> closed =
+//     morpho::closing::volume(reverted, c6(), atoi(argv[2]));
 
-  std::cout << "  => computing watershed..." << std::endl;
-  value::label_8 nbasin;
-  image3d<value::label_8> labels =
-    morpho::watershed::flooding(closed, c6(), nbasin);
-  std::cout << "found " << nbasin << " labels" << std::endl;
+//   std::cout << "  => computing watershed..." << std::endl;
+//   value::label_8 nbasin;
+//   image3d<value::label_8> labels =
+//     morpho::watershed::flooding(closed, c6(), nbasin);
+//   std::cout << "found " << nbasin << " labels" << std::endl;
 
-  labels = morpho::elementary::dilation(labels, c18());
+//   labels = morpho::elementary::dilation(labels, c18());
 
-  std::cout << "  => computing output labelized image..." << std::endl;
-  image2d<value::label_8> lab = histo::classify_with_histo_rgb(ima, labels);
+//   std::cout << "  => computing output labelized image..." << std::endl;
+//   image2d<value::label_8> lab = histo::classify_with_histo_rgb(ima, labels);
 
-  std::cout << "  => computing projection..." << std::endl;
+//   std::cout << "  => computing projection..." << std::endl;
 
-  // typedef accu::mean<int_u8, unsigned, int_u8> A;
-  // image2d<A> vmean(lab.nrows(), lab.ncols());
-  // accu::image::init(vmean);
-  // {
-  //   fun::v2v::projection<point3d, 0> vproj;
-  //   mln_VAR( vmean_, unproject(vmean, lab.domain(), vproj) );
-  //   accu::image::take(vmean_, lab);
-  // }
+//   typedef accu::mean<int_u8, unsigned, int_u8> A;
+//   image2d<A> vmean(lab.nrows(), lab.ncols());
+//   accu::image::init(vmean);
+//   {
+//     fun::v2v::projection<point3d, 0> vproj;
+//     mln_VAR( vmean_, unproject(vmean, lab.domain(), vproj) );
+//     accu::image::take(vmean_, lab);
+//   }
 
-  std::cout << "  => saving " << argv[2] << "..." << std::endl;
-  io::ppm::save(vmean, argv[2]);
+//   std::cout << "  => saving " << argv[2] << "..." << std::endl;
+//   io::ppm::save(vmean, argv[2]);
 
 }

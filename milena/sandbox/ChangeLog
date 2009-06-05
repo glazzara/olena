@@ -1,3 +1,12 @@
+2009-06-05  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Tests around projected histograms for the report.
+	* folio/test/histo/classify_with_histo_rgb.cc: .
+	* folio/test/histo/project_histo_add.cc: New.
+	* folio/test/histo/project_screen.cc: New.
+	* folio/test/histo/projected3d.cc: .
+	* folio/test/value/comp.cc: New.
+
 2009-06-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix the library name in the copyright text.

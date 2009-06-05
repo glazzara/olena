@@ -81,6 +81,19 @@ int main(int argc, char** argv)
   image3d<value::label_8> labels = morpho::watershed::flooding(closed, c6(), nbasin);
   std::cout << "found " << nbasin << " labels" << std::endl;
 
+  // // Create output image
+  // image2d<value::label_8> out;
+  // initialize(out, ima);
+
+  // // Fill output image
+  // mln_fwd_piter_(image2d<rgb6>) p(ima.domain());
+  // for_all(p)
+  // {
+  //   // get 3d point in regions image.
+  //   point3d p3 = point3d(ima(p).red(), ima(p).green(), ima(p).blue());
+  //   out(p) = labels(p3);
+  // }
+
   labels = morpho::elementary::dilation(labels, c18());
 
   std::cout << "  => computing output labelized image..." << std::endl;

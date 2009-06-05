@@ -72,6 +72,17 @@ namespace mln
     return accu::image::to_result(h_2d_a);
   }
 
+void
+save_proj_histo(image3d<unsigned> histo, char* name)
+{
+  std::cout << "  => save..." << std::endl;
+  image2d<unsigned> proj = project_histo<accu::sum<unsigned, unsigned>, 2>(histo);
+  image2d<value::int_u8> proj_int = data::stretch( value::int_u8(),
+						   data::transform( proj,
+								    take_log() ) );
+  io::pgm::save(proj_int, name);
+}
+
 }
 
 
@@ -92,23 +103,22 @@ int main(int argc, char* argv[])
   std::cout << "  => loading " << argv[1] << "..." << std::endl;
   image2d<value::rgb8> ima;
   io::ppm::load(ima, argv[1]);
-//  image2d<rgb6> ima6 = data::transform(ima, rgb8to6());
+  image2d<rgb6> ima6 = data::transform(ima, rgb8to6());
 
   std::cout << "  => computing histogram..." << std::endl;
-  image3d<unsigned> histo = histo::compute_histo_rgb<unsigned>(ima);
-
-  // image2d<unsigned> proj = project_histo<accu::sum<unsigned, unsigned>, 2>(histo);
-  // image2d<value::int_u8> proj_int = data::stretch( value::int_u8(),
-  // 						   data::transform( proj,
-  // 								    take_log() ) );
-  // io::pgm::save(proj_int, argv[2]);
+  image3d<unsigned> histo = histo::compute_histo_rgb<unsigned>(ima6);
+//  save_proj_histo(histo, argv[2]);
 
   std::cout << "  => computing reverted histogram..." << std::endl;
   image3d<unsigned> reverted = arith::revert(histo);
 
   std::cout << "  => computing closure..." << std::endl;
   image3d<unsigned> closed =
-    morpho::closing::volume(reverted, c6(), atoi(argv[2]));
+    morpho::closing::volume(reverted, c6(), atoi(argv[3]));
+
+  // std::cout << "  => computing rereverted histo..." << std::endl;
+  // image3d<unsigned> reverted2 = arith::revert(closed);
+//  save_proj_histo(reverted2, argv[4]);
 
   std::cout << "  => computing watershed..." << std::endl;
   value::label_8 nbasin;
@@ -120,19 +130,20 @@ int main(int argc, char* argv[])
 
   std::cout << "  => computing output labelized image..." << std::endl;
   image2d<value::label_8> lab = histo::classify_with_histo_rgb(ima, labels);
+  io::pgm::save(lab, "labelized.pgm");
 
-  std::cout << "  => computing projection..." << std::endl;
+//   std::cout << "  => computing projection..." << std::endl;
 
-  // typedef accu::mean<int_u8, unsigned, int_u8> A;
-  // image2d<A> vmean(lab.nrows(), lab.ncols());
-  // accu::image::init(vmean);
-  // {
-  //   fun::v2v::projection<point3d, 0> vproj;
-  //   mln_VAR( vmean_, unproject(vmean, lab.domain(), vproj) );
-  //   accu::image::take(vmean_, lab);
-  // }
+//   typedef accu::mean<int_u8, unsigned, int_u8> A;
+//   image2d<A> vmean(lab.nrows(), lab.ncols());
+//   accu::image::init(vmean);
+//   {
+//     fun::v2v::projection<point3d, 0> vproj;
+//     mln_VAR( vmean_, unproject(vmean, lab.domain(), vproj) );
+//     accu::image::take(vmean_, lab);
+//   }
 
-  std::cout << "  => saving " << argv[2] << "..." << std::endl;
-  io::ppm::save(vmean, argv[2]);
+//   std::cout << "  => saving " << argv[2] << "..." << std::endl;
+//   io::ppm::save(vmean, argv[2]);
 
 }
