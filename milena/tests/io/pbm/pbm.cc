@@ -31,8 +31,12 @@
 /// Test on mln::io::pbm::.
 
 #include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
+#include <mln/core/image/dmorph/slice_image.hh>
+
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
+#include <mln/io/pbms/load.hh>
 
 #include <mln/data/compare.hh>
 
@@ -58,7 +62,7 @@ int main()
   files[1] = "out.pbm";
 
   image3d<bool> ima3d;
-  io::pbm::load(ima3d, files);
+  io::pbms::load(ima3d, files);
 
   mln_assertion(ima3d.nslices() == 2);
   mln_assertion(slice(ima3d, 0) == pic);

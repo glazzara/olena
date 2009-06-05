@@ -1,3 +1,11 @@
+2009-06-05  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Update headers for pnm test files.
+	* mln/io/pbms/load.hh: Update load() call.
+	* tests/io/pbm/pbm.cc: Update headers.
+	* tests/io/pgm/pgm.cc: Update headers.
+	* tests/io/ppm/ppm.cc: Update headers.
+
 2009-06-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix missing trait in win diff.

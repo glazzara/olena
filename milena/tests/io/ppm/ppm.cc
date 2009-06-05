@@ -33,10 +33,12 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
+#include <mln/core/image/dmorph/slice_image.hh>
 #include <mln/value/rgb8.hh>
 
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
+#include <mln/io/ppms/load.hh>
 
 #include <mln/data/compare.hh>
 
@@ -69,7 +71,7 @@ int main()
   files[1] = "out.ppm";
 
   image3d<rgb8> ima3d;
-  io::ppm::load(ima3d, files);
+  io::ppms::load(ima3d, files);
 
   mln_assertion(ima3d.nslices() == 2);
   mln_assertion(slice(ima3d, 0) == lena);

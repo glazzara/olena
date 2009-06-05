@@ -34,12 +34,14 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
+#include <mln/core/image/dmorph/slice_image.hh>
 #include <mln/core/routine/duplicate.hh>
 
 #include <mln/value/int_u8.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
+#include <mln/io/pgms/load.hh>
 
 #include <mln/data/compare.hh>
 
@@ -84,7 +86,7 @@ int main()
     files[1] = "out.pgm";
 
     image3d<int_u8> ima3d;
-    io::pgm::load(ima3d, files);
+    io::pgms::load(ima3d, files);
 
     mln_assertion(ima3d.nslices() == 2);
     mln_assertion(slice(ima3d, 0) == lena);
