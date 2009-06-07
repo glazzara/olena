@@ -1,3 +1,8 @@
+2009-06-07  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add script to move a subset of accus to their own directory.
+	* edwin/move_accu.sh: New.
+
 2009-06-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Some experiments about treshold auto-detection for attribute filtering.
