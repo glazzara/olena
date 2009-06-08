@@ -28,7 +28,7 @@
 
 /// \file tests/data/paste.cc
 ///
-/// Tests on mln::data::paste.
+/// \brief Tests on mln::data::paste.
 
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
@@ -109,8 +109,8 @@ int main()
 
   /// pw image test
   {
-    const pw::image<fun::p2v::iota, box2d> ima(fun::p2v::iota(),
-                                                 make::box2d(2,2, 5,5));
+    fun::p2v::iota f;
+    const pw::image<fun::p2v::iota, box2d> ima(f, make::box2d(2,2, 5,5));
     image2d<short unsigned int> out(8, 8);
 
     data::fill(out, (short unsigned int)0);

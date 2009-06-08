@@ -29,6 +29,10 @@
 #ifndef MLN_CORE_VALUE_SHELL_HH
 # define MLN_CORE_VALUE_SHELL_HH
 
+/// \file mln/core/value/shell.hh
+///
+/// \brief Define a shell type that encloses a value.
+
 # include <mln/core/concept/proxy.hh>
 # include <mln/core/concept/function.hh>
 # include <mln/core/concept/image.hh>
@@ -73,9 +77,6 @@ namespace mln
       // Ctor
       shell(Image<I> &ima, const mln_site(I) &s);
 
-      // Read
-      operator value () const;
-
       // Write
       value operator=(value);
 
@@ -111,14 +112,6 @@ namespace mln
       s_(s),
       v_(F()(exact(ima)(s)))
     {
-    }
-
-
-    // Read for everyone
-    template <typename F, typename I>
-    shell<F,I>::operator value() const
-    {
-      return v_;
     }
 
     // Write for everyone

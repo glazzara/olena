@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,6 +30,7 @@
 # define MLN_LEVEL_SORT_PSITES_HH
 
 /// \file mln/data/sort_psites.hh
+///
 /// \brief Sort_Psites the contents of an image into another one.
 ///
 /// \todo Factor code + optimize.
@@ -130,7 +131,7 @@ namespace mln
       sort_psites_increasing_(trait::image::quant::any, // general case
 			      const I& input)
       {
-	p_array<mln_psite(I)> v = convert::to_p_array(input.domain());
+	p_array<mln_psite(I)> v = mln::convert::to_p_array(input.domain());
 	std::sort(v.hook_std_vector_().begin(), v.hook_std_vector_().end(),
 		  value_psite_less_<I>(input));
 	return v;
@@ -174,7 +175,7 @@ namespace mln
       sort_psites_decreasing_(trait::image::quant::any, // general case
 			      const I& input)
       {
-	p_array<mln_psite(I)> v = convert::to_p_array(input.domain());
+	p_array<mln_psite(I)> v = mln::convert::to_p_array(input.domain());
 	std::sort(v.hook_std_vector_().begin(), v.hook_std_vector_().end(),
 		  value_psite_greater_<I>(input));
 	return v;

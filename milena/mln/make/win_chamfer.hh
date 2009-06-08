@@ -1,5 +1,5 @@
-// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2006, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,7 +31,7 @@
 
 /// \file mln/make/win_chamfer.hh
 ///
-/// Routine to create chamfer mln::w_window2d_int.
+/// \brief Routine to create chamfer mln::w_window2d_int.
 ///
 /// \todo Revamp!
 
@@ -121,7 +121,7 @@ namespace mln
     mln::w_window2d_float
     mk_chamfer_exact()
     {
-      float r2 = static_cast<float>(std::sqrt(2.0f));
+      float r2 = std::sqrt(2.0f);
       float ws[] = { r2, 1, r2,
 		      1, 0,  0,
 		      0, 0,  0 };

@@ -107,11 +107,11 @@ int main()
   nbh_t nbh;
 
   unsigned nbasins;
-  mln_const_VAR(wshed, morpho::meyer_wst(ima, nbh, nbasins));
+  ima_t wshed = morpho::meyer_wst(ima, nbh, nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
 
   // Manual iteration over the domain of WSHED.
-  mln_piter_(wshed_t) pw(wshed.domain());
+  mln_piter_(ima_t) pw(wshed.domain());
   for_all (pw)
     std::cout << "wshed (" << pw << ") = " << wshed(pw) << std::endl;
 }

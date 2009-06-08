@@ -28,7 +28,7 @@
 
 /// \file tests/data/transform.cc
 ///
-/// Tests on mln::data::transform.
+/// \brief Tests on mln::data::transform.
 
 #include <cmath>
 
@@ -83,7 +83,7 @@ int main()
 
     box_fwd_piter_<point1d> p(out.domain());
     for_all(p)
-      mln_assertion((unsigned short)std::sqrt(ima(p)) == out(p));
+      mln_assertion(ima(p) == out(p) * out(p));
   }
 
 
@@ -97,7 +97,7 @@ int main()
 
      box_fwd_piter_<point2d> p(out.domain());
      for_all(p)
-       mln_assertion((unsigned short)std::sqrt(ima(p)) == out(p));
+       mln_assertion(ima(p) == out(p) * out(p));
   }
 
   /// Another image2d test
@@ -119,13 +119,13 @@ int main()
 
     box_fwd_piter_<point3d> p(out.domain());
     for_all(p)
-      mln_assertion((unsigned short)std::sqrt(ima(p)) == out(p));
+      mln_assertion(ima(p) == out(p) * out(p));
   }
 
   /// pw image test
   {
-    const pw::image<fun::p2v::iota, box2d> ima(fun::p2v::iota(),
-                                                 make::box2d(2,2, 5,5));
+    fun::p2v::iota f;
+    const pw::image<fun::p2v::iota, box2d> ima(f, make::box2d(2,2, 5,5));
     image2d<unsigned short> out(8, 8);
 
     data::fill(out, (short unsigned int)0);
@@ -142,7 +142,7 @@ int main()
 
     box2d::piter p(out.domain());
     for_all(p)
-      mln_assertion((unsigned short)std::sqrt(ima(p)) == out(p));
+      mln_assertion(ima(p) == out(p) * out(p));
   }
 
   // image if test
@@ -159,7 +159,7 @@ int main()
 
     II::piter p(ima_if.domain());
     for_all(p)
-      mln_assertion((unsigned short)std::sqrt(ima_if(p)) == out(p));
+      mln_assertion(ima_if(p) == out(p) * out(p));
   }
 
   // cast image test
@@ -179,7 +179,7 @@ int main()
 
     II::piter p(cast.domain());
     for_all(p)
-      mln_assertion((unsigned short)std::sqrt(cast(p)) == out(p));
+      mln_assertion(cast(p) == out(p) * out(p));
   }
 
   // sub_image test
@@ -196,7 +196,7 @@ int main()
 
     II::piter p(sub_ima.domain());
     for_all(p)
-      mln_assertion((unsigned short)std::sqrt(sub_ima(p)) == out(p));
+      mln_assertion(sub_ima(p) == out(p) * out(p));
   }
 
   // extended image test
@@ -213,6 +213,6 @@ int main()
 
     II::piter p(extend_ima.domain());
     for_all(p)
-      mln_assertion((unsigned short)std::sqrt(extend_ima(p)) == out(p));
+      mln_assertion(extend_ima(p) == out(p) * out(p));
   }
 }

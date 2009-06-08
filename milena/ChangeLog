@@ -1,3 +1,24 @@
+2009-06-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix some g++-3.3 compilation warnings and errors.
+
+	* mln/debug/histo.hh (h): Disambiguate type.
+	* mln/data/sort_psites.hh (to_p_array): Qualify to disambiguate.
+	* mln/value/shell.hh (operator): Remove inherited cast operator.
+	* mln/value/glf.hh: Upgrade doc style.
+	* mln/make/win_chamfer.hh (sqrt): Remove useless cast.
+	* tests/data/fill_with_image.cc,
+	* tests/data/transform.cc,
+	* tests/data/paste.cc (iota): Fix ambiguity; declare then use.
+	* tests/data/transform.cc: Avoid sqrt.
+	* tests/data/replace.cc: Layout.
+	* tests/value/graylevel.cc (test_conversion): Fix ambiguity.
+	* tests/morpho/graph_image_wst.cc,
+	* tests/morpho/graph_image_morpho.cc,
+	* tests/labeling/foreground.cc (mln_VAR): Get rid of it.
+	* tests/norm/l2.cc (sqrt): Remove useless return cast.
+	Disambiguate argument.
+
 2009-06-08  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Move logical accumulators to their own directory.

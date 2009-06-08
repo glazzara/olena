@@ -31,7 +31,7 @@
 
 /// \file mln/debug/histo.hh
 ///
-/// Save a histogram to a plot data file.
+/// \brief Save a histogram to a plot data file.
 ///
 /// \todo Move to io::histo::save.
 
@@ -53,7 +53,7 @@ namespace mln
 
     template <typename T>
     void
-    histo(const histo::array<T>& h, const std::string& filename);
+    histo(const mln::histo::array<T>& h, const std::string& filename);
 
 
 
@@ -61,7 +61,7 @@ namespace mln
 
     template <typename T>
     void
-    histo(const histo::array<T>& h, const std::string& filename)
+    histo(const mln::histo::array<T>& h, const std::string& filename)
     {
       std::ofstream file(filename.c_str());
       if (! file)

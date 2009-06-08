@@ -28,7 +28,7 @@
 
 /// \file tests/morpho/graph_image_morpho.cc
 ///
-/// Tests on mln::graph_image with morphological filters.
+/// \brief Tests on mln::graph_image with morphological filters.
 
 #include <mln/accu/bbox.hh>
 #include <mln/core/alias/box2d.hh>
@@ -39,7 +39,6 @@
 
 /// Required for graph images.
 #include <mln/core/image/vertex_image.hh>
-#include <mln/core/var.hh>
 #include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
 #include <mln/make/vertex_image.hh>
@@ -144,11 +143,11 @@ int main()
 
   ima_t::win_t win;
 
-  mln_const_VAR(ima_dil, morpho::dilation(ima, win));
+  ima_t ima_dil = morpho::dilation(ima, win);
   debug::draw_graph(ima_rep, ima_dil.domain(), pw::cst(9), pw::cst(2));
   debug::println(ima_rep);
 
-  mln_const_VAR(ima_ero, morpho::erosion(ima, win));
+  ima_t ima_ero = morpho::erosion(ima, win);
   debug::draw_graph(ima_rep, ima_ero.domain(), pw::cst(9), pw::cst(2));
   debug::println(ima_rep);
 }

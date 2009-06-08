@@ -26,9 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/data/fill_with_value.cc
+/// \file tests/data/fill_with_image.cc
 ///
-/// Tests on mln::data::fill_with_value
+/// \brief Tests on mln::data::fill_with_image.
 
 #include <mln/data/fill_with_value.hh>
 #include <mln/data/fill_with_image.hh>
@@ -145,8 +145,8 @@ int main()
 
   // pw image test
   {
-    const pw::image<fun::p2v::iota, box2d> ima(fun::p2v::iota(),
-                                                 make::box2d(-2,-2, 15,15));
+    fun::p2v::iota f;
+    const pw::image<fun::p2v::iota, mln::box2d> ima(f, make::box2d(-2,-2, 15,15));
     image2d<short unsigned int> out(8, 8);
 
     data::fill(out, (short unsigned int)0);
@@ -155,7 +155,7 @@ int main()
 
   // flat image test
   {
-    flat_image<short, box2d> ima(5, make::box2d(size, size));
+    flat_image<short, box2d> ima(5, mln::make::box2d(size, size));
     image2d<unsigned short> out(size, size);
 
     data::fill_with_value(ima, 51);
@@ -233,4 +233,5 @@ int main()
 
     mln_assertion(out == extend_ima);
   }
+
 }

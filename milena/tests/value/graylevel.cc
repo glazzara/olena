@@ -28,8 +28,7 @@
 
 /// \file tests/value/graylevel.cc
 ///
-/// \brief Tests on mln::value::graylevel. Tests operations between
-/// graylevel of different encodings.
+/// \brief Tests on mln::value::graylevel.
 
 #include <mln/value/gl8.hh>
 #include <mln/value/gl16.hh>
@@ -58,9 +57,9 @@
 
 #define test_conversion(T1, T2, VAL)		\
 {						\
-  T1(T2(VAL));					\
-  T1 test = T2(VAL);				\
-  test = T2(VAL);				\
+  (T1)(T2)(VAL);				\
+  T1 test = (T2)(VAL);				\
+  test = (T2)(VAL);				\
 }
 
 int main()
@@ -146,20 +145,22 @@ int main()
   {
     // Conversions.
 
-    test_conversion(gl8, gray_<8>, 255);
+    typedef mln::value::internal::gray_<8> i_gray_8;
+    test_conversion(gl8, i_gray_8, 255);
+
     test_conversion(gl8, gray_f, 0.4);
     test_conversion(gl8, glf, 0.4);
 
-    test_conversion(glf, gray_<8>, 255);
+    test_conversion(glf, i_gray_8, 255);
     test_conversion(glf, gray_f, 0.4);
     test_conversion(glf, gl8, 142);
 
-    test_conversion(gray_f, gray_<8>, 4);
+    test_conversion(gray_f, i_gray_8, 4);
     test_conversion(glf, gray_f, 0.4);
   }
 
-  {
-    // FIXME: comparison with literals doesn't work
+//   {
+//     // FIXME: comparison with literals doesn't work
 //     c = a;
 //     mln_assertion(c == white);
 
@@ -167,7 +168,7 @@ int main()
 //     mln_assertion(c == white);
 
 //    c = c / 6;
-   }
+//    }
 
 //   {
 //     gl8 c = white;

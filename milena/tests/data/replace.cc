@@ -59,5 +59,4 @@ int main()
   };
 
   mln_assertion(make::image(vs_ref) == rhs);
-
 }

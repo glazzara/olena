@@ -45,7 +45,7 @@ int main()
   using namespace mln;
 
   typedef image2d<bool> I;
-  mln_VAR(nbh, c4());
+  neighb2d nbh = c4();
 
   I pic = io::pbm::load(MLN_IMG_DIR "/picasso.pbm");
   image2d<unsigned> out, ref;

@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,7 +28,7 @@
 
 /// \file tests/norm/l2.cc
 ///
-///  \brief Test the L2-norm.
+/// \brief Test the L2-norm.
 
 #include <cmath>
 #include <cassert>
@@ -65,7 +65,7 @@ int main()
   typedef mln::algebra::vec<3, int> vec_t;
 
   // Reference value.
-  float d = float(std::sqrt((4 - 2) * (4 - 2) +
+  float d = std::sqrt(float((4 - 2) * (4 - 2) +
 			    (1 + 2) * (1 + 2) +
 			    (0 - 3) * (0 - 3)));
 
