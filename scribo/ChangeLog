@@ -1,3 +1,19 @@
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Install recursive regeneration rules in SCRIBO.
+
+	* Makefile.am: Include build-aux/regen-recursive.mk.
+	(REGEN_SUBDIRS): Add tests.
+	* tests/Makefile.am: Include build-aux/regen-recursive.mk.
+	(REGEN_SUBDIRS): Add unit_test.
+	* tests/unit_test/Makefile.am: Include build-aux/regen-recursive.mk.
+	(regen): Remove phony status (now handled by regen-recursive.mk).
+	Rename target as...
+	(regen-am): ...this.
+	Do not make unit-tests.mk read-only, since bootstrap expects it
+	to be writable.
+	($(srcdir)/unit-tests.mk): Likewise.
+
 2009-05-29 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Remove unused files in Scribo.
