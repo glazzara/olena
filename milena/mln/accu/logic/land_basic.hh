@@ -26,14 +26,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_LAND_HH
-# define MLN_ACCU_LAND_HH
+#ifndef MLN_ACCU_LOGIC_LAND_BASIC_HH
+# define MLN_ACCU_LOGIC_LAND_BASIC_HH
 
-/// \file mln/accu/land.hh
+/// \file mln/accu/logic/land_basic.hh
 ///
-/// Define a 'logical-and' accumulator.
+/// Define a basic 'logical-and' accumulator.
 ///
-/// \todo Have land be parameterized.
+/// \todo Have land_basic be parameterized.
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
@@ -45,15 +45,46 @@ namespace mln
   namespace accu
   {
 
+    namespace logic
+    {
+      // Forward declaration.
+      struct land_basic;
+    }
+
+    namespace meta
+    {
+
+      namespace logic
+      {
+
+	/// Meta accumulator for land_basic.
+	struct land_basic : public Meta_Accumulator< land_basic >
+	{
+	  template <typename T>
+	  struct with
+	  {
+	    typedef accu::logic::land_basic ret;
+	  };
+	};
+
+      } // end of namespace mln::accu::meta::logic
+    } // end of namespace mln::accu::meta
+
+
+    namespace logic
+    {
+
     /// \brief "Logical-and" accumulator.
+    /// Conversely to accu::logic::land, this version does not have the 'untake'
+    /// method but features the 'can_stop' method.
     ///
     /// \ingroup modaccuvalues
     //
-    struct land : public mln::accu::internal::base< bool, land >
+    struct land_basic : public mln::accu::internal::base< bool, land_basic >
     {
       typedef bool argument;
 
-      land();
+      land_basic();
 
       /// Manipulators.
       /// \{
@@ -61,10 +92,7 @@ namespace mln
       void take_as_init_(const argument& t);
 
       void take(const argument& t);
-      void take(const land& other);
-
-      void untake(const argument& t);
-      void untake(const land& other);
+      void take(const land_basic& other);
       /// \}
 
       /// Get the value of the accumulator.
@@ -74,98 +102,76 @@ namespace mln
       /// Always true here.
       bool is_valid() const;
 
+      /// Test if it is worth for this accumulator to take extra data.
+      /// If the result is already 'false' (because this accumulator
+      /// has already taken a 'false' value), can_stop returns true.
+      bool can_stop() const;
+
     protected:
-      unsigned nfalse_;
+      bool res_;
     };
-
-
-    namespace meta
-    {
-
-      /// Meta accumulator for land.
-
-      struct land : public Meta_Accumulator< land >
-      {
-	template <typename T>
-	struct with
-	{
-	  typedef accu::land ret;
-	};
-      };
-
-    } // end of namespace mln::accu::meta
-
-
 
 # ifndef MLN_INCLUDE_ONLY
 
     inline
-    land::land()
+    land_basic::land_basic()
     {
       init();
     }
 
     inline
     void
-    land::init()
+    land_basic::init()
     {
-      nfalse_ = 0;
+      res_ = true;
     }
 
     inline
-    void land::take_as_init_(const argument& t)
+    void land_basic::take_as_init_(const argument& t)
     {
-      nfalse_ = t ? 0 : 1;
+      res_ = t;
     }
 
     inline
-    void land::take(const argument& t)
+    void land_basic::take(const argument& t)
     {
-      if (t == false)
-	++nfalse_;
-    }
-
-    inline
-    void
-    land::take(const land& other)
-    {
-      nfalse_ += other.nfalse_;
-    }
-
-    inline
-    void land::untake(const argument& t)
-    {
-      if (t == false)
-	--nfalse_;
+      if (res_ == true && t == false)
+	res_ = false;
     }
 
     inline
     void
-    land::untake(const land& other)
+    land_basic::take(const land_basic& other)
     {
-      mln_precondition(other.nfalse_ <= nfalse_);
-      nfalse_ -= other.nfalse_;
+      res_ = res_ && other.res_;
     }
 
     inline
     bool
-    land::to_result() const
+    land_basic::to_result() const
     {
-      return nfalse_ == 0;
+      return res_;
     }
 
     inline
     bool
-    land::is_valid() const
+    land_basic::is_valid() const
     {
       return true;
     }
 
+    inline
+    bool
+    land_basic::can_stop() const
+    {
+      return res_ == false;
+    }
+
 # endif // ! MLN_INCLUDE_ONLY
 
+    } // end of namespace mln::accu::logic
   } // end of namespace mln::accu
-
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_LAND_HH
+#endif // ! MLN_ACCU_LOGIC_LAND_BASIC_HH

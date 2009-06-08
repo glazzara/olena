@@ -37,8 +37,8 @@
 
 # include <mln/morpho/includes.hh>
 # include <mln/morpho/general.hh>
-# include <mln/accu/land.hh>
-# include <mln/accu/land_basic.hh>
+# include <mln/accu/logic/land.hh>
+# include <mln/accu/logic/land_basic.hh>
 # include <mln/accu/stat/min.hh>
 # include <mln/accu/stat/min_h.hh>
 # include <mln/norm/l2.hh>

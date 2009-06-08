@@ -64,11 +64,7 @@ namespace mln
 # include <mln/accu/height.hh>
 # include <mln/accu/histo.hh>
 # include <mln/accu/label_used.hh>
-# include <mln/accu/land.hh>
-# include <mln/accu/land_basic.hh>
 # include <mln/accu/line.hh>
-# include <mln/accu/lor.hh>
-# include <mln/accu/lor_basic.hh>
 # include <mln/accu/nil.hh>
 # include <mln/accu/pair.hh>
 # include <mln/accu/rank.hh>
@@ -93,6 +89,7 @@ namespace mln
 # include <mln/accu/image/all.hh>
 # include <mln/accu/site_set/all.hh>
 # include <mln/accu/stat/all.hh>
+# include <mln/accu/logic/all.hh>
 
 
 #endif // ! MLN_ACCU_ALL_HH

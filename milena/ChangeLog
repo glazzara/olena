@@ -1,5 +1,34 @@
 2009-06-08  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Move logical accumulators to their own directory.
+
+
+	* mln/accu/all.hh,
+	* mln/accu/logic/all.hh:
+	Update all.hh with respect to new logical accus directory.
+
+	* mln/accu/land.hh,
+	* mln/accu/land_basic.hh,
+	* mln/accu/lor.hh,
+	* mln/accu/lor_basic.hh: Move to...
+	* mln/accu/logic,
+	* mln/accu/logic/land.hh,
+	* mln/accu/logic/land_basic.hh
+	* mln/accu/logic/lor.hh,
+	* mln/accu/logic/lor_basic.hh:
+	Move land, land_basic, lor, lor_basic accumulators to logic directory.
+
+	* mln/morpho/dilation.hh,
+	* mln/morpho/erosion.hh,
+	* sandbox/abraham/mln/morpho/vector_median.hh,
+	* sandbox/abraham/mln/morpho/vmt.hh,
+	Replace accu::accu_name by accu::logic::accu_name,
+		accu::meta::accu_name by accu::meta::logic::accu_name,
+		accu/accu_name.hh by accu/logic/accu_name.hh,
+	and update mln_morpho_select_accu call maccro.
+
+2009-06-08  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Move mean, median_h accus to stat.
 	* mln/accu/all.hh,
 	* mln/accu/essential.hh,

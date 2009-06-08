@@ -26,14 +26,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_LOR_BASIC_HH
-# define MLN_ACCU_LOR_BASIC_HH
+#ifndef MLN_ACCU_LOGIC_LOR_HH
+# define MLN_ACCU_LOGIC_LOR_HH
 
-/// \file mln/accu/lor_basic.hh
+/// \file mln/accu/logic/lor.hh
 ///
-/// Define a basic 'logical-or' accumulator.
+/// Define a 'logical-or' accumulator.
 ///
-/// \todo Have lor_basic be parameterized.
+/// \todo Have lor be parameterized.
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
@@ -45,17 +45,42 @@ namespace mln
   namespace accu
   {
 
-    /// \brief "Logical-or" accumulator class.
-    /// Conversely to accu::lor, this version does not have the 'untake'
-    /// method but features the 'can_stop' method.
+    namespace logic
+    {
+      // Forward declaration.
+      struct lor;
+    }
+
+    namespace meta
+    {
+
+      namespace logic
+      {
+	/// Meta accumulator for lor.
+	struct lor : public Meta_Accumulator< lor >
+	{
+	  template <typename T>
+	  struct with
+	  {
+	    typedef accu::logic::lor ret;
+	  };
+	};
+
+      } // end of namespace mln::accu::meta::logic
+    } // end of namespace mln::accu::meta
+
+    namespace logic
+    {
+
+    /// \brief "Logical-or" accumulator.
     ///
     /// \ingroup modaccuvalues
     //
-    struct lor_basic : public mln::accu::internal::base< bool, lor_basic >
+    struct lor : public mln::accu::internal::base< bool, lor >
     {
       typedef bool argument;
 
-      lor_basic();
+      lor();
 
       /// Manipulators.
       /// \{
@@ -63,7 +88,10 @@ namespace mln
       void take_as_init_(const argument& t);
 
       void take(const argument& t);
-      void take(const lor_basic& other);
+      void take(const lor& other);
+
+      void untake(const argument& t);
+      void untake(const lor& other);
       /// \}
 
       /// Get the value of the accumulator.
@@ -73,95 +101,79 @@ namespace mln
       /// Always true here.
       bool is_valid() const;
 
-      /// Test if it is worth for this accumulator to take extra data.
-      /// If the result is already 'true' (because this accumulator
-      /// has already taken a 'true' value), can_stop returns true.
-      bool can_stop() const;
-
     protected:
-      bool res_;
+      unsigned ntrue_;
     };
-
-
-    namespace meta
-    {
-
-      /// Meta accumulator for lor_basic.
-
-      struct lor_basic : public Meta_Accumulator< lor_basic >
-      {
-	template <typename T>
-	struct with
-	{
-	  typedef accu::lor_basic ret;
-	};
-      };
-
-    } // end of namespace mln::accu::meta
-
-
 
 # ifndef MLN_INCLUDE_ONLY
 
     inline
-    lor_basic::lor_basic()
+    lor::lor()
     {
       init();
     }
 
     inline
     void
-    lor_basic::init()
+    lor::init()
     {
-      res_ = false;
+      ntrue_ = 0;
     }
 
     inline
-    void lor_basic::take_as_init_(const argument& t)
+    void lor::take_as_init_(const argument& t)
     {
-      res_ = t;
+      ntrue_ = t ? 1 : 0;
     }
 
     inline
-    void lor_basic::take(const argument& t)
+    void lor::take(const argument& t)
     {
-      if (res_ == false && t == true)
-	res_ = true;
+      if (t == true)
+	++ntrue_;
     }
 
     inline
     void
-    lor_basic::take(const lor_basic& other)
+    lor::take(const lor& other)
     {
-      res_ = res_ || other.res_;
+      ntrue_ += other.ntrue_;
+    }
+
+    inline
+    void lor::untake(const argument& t)
+    {
+      if (t == true)
+	--ntrue_;
+    }
+
+    inline
+    void
+    lor::untake(const lor& other)
+    {
+      mln_precondition(other.ntrue_ <= ntrue_);
+      ntrue_ -= other.ntrue_;
     }
 
     inline
     bool
-    lor_basic::to_result() const
+    lor::to_result() const
     {
-      return res_;
+      return ntrue_ != 0;
     }
 
     inline
     bool
-    lor_basic::is_valid() const
+    lor::is_valid() const
     {
       return true;
     }
 
-    inline
-    bool
-    lor_basic::can_stop() const
-    {
-      return res_ == true;
-    }
-
 # endif // ! MLN_INCLUDE_ONLY
 
+    } // end of namespace mln::accu::logic
   } // end of namespace mln::accu
-
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_LOR_BASIC_HH
+#endif // ! MLN_ACCU_LOGIC_LOR_HH

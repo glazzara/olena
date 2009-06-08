@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
@@ -37,8 +37,8 @@
 
 # include <mln/morpho/includes.hh>
 # include <mln/morpho/general.hh>
-# include <mln/accu/lor.hh>
-# include <mln/accu/lor_basic.hh>
+# include <mln/accu/logic/lor.hh>
+# include <mln/accu/logic/lor_basic.hh>
 # include <mln/accu/stat/max.hh>
 # include <mln/accu/stat/max_h.hh>
 
@@ -62,18 +62,18 @@ namespace mln
     {
 
       template <typename I>
-      mln_morpho_select_accu(I, lor_basic, stat::max)
+      mln_morpho_select_accu(I, logic::lor_basic, stat::max)
       accu(const Image<I>&) const
       {
-	mln_morpho_select_accu(I, lor_basic, stat::max) tmp;
+	mln_morpho_select_accu(I, logic::lor_basic, stat::max) tmp;
 	return tmp;
       }
 
       template <typename I>
-      mln_morpho_select_accu(I, lor, stat::max_h)
+      mln_morpho_select_accu(I, logic::lor, stat::max_h)
       accu_incr(const Image<I>&) const
       {
-	mln_morpho_select_accu(I, lor, stat::max_h) tmp;
+	mln_morpho_select_accu(I, logic::lor, stat::max_h) tmp;
 	return tmp;
       }
 
