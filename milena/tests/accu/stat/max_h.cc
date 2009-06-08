@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/max_h.cc
+/*! \file tests/accu/stat/max_h.cc
  *
- * \brief Tests on mln::accu::max_h.
+ * \brief Tests on mln::accu::stat::max_h.
  */
 
 #include <mln/value/int_u8.hh>

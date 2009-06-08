@@ -69,13 +69,8 @@ namespace mln
 # include <mln/accu/line.hh>
 # include <mln/accu/lor.hh>
 # include <mln/accu/lor_basic.hh>
-# include <mln/accu/stat/max.hh>
-# include <mln/accu/stat/max_h.hh>
 # include <mln/accu/mean.hh>
 # include <mln/accu/median_h.hh>
-# include <mln/accu/stat/min.hh>
-# include <mln/accu/stat/min_h.hh>
-# include <mln/accu/stat/min_max.hh>
 # include <mln/accu/nil.hh>
 # include <mln/accu/pair.hh>
 # include <mln/accu/rank.hh>

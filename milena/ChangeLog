@@ -1,3 +1,31 @@
+2009-06-08  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add forgotten path alteration due to accu move.
+	* mln/accu/all.hh,
+	* mln/accu/essential.hh,
+	* mln/accu/stat/all.hh
+	* mln/accu/stat/essential.hh:
+	Move min, max, max_h, min_h, min_max accus from accu to
+	accu/stat.
+
+	* sandbox/folio/mln/dt/raw_cp_fast.hh,
+	* sandbox/folio/mln/dt/raw_dmap_fast.hh,
+	* sandbox/folio/mln/dt/raw_path_fast.hh,
+	* sandbox/fred/old/accuprops2.cc,
+	* sandbox/garrigues/fllt/lower.hh,
+	* sandbox/garrigues/fllt/upper.hh,
+	* sandbox/garrigues/lower.hh,
+	* sandbox/garrigues/upper.hh,
+	* sandbox/theo/browsing/fwd.cc:
+	Replace accu::accu_name by accu::stat:accu_name.
+
+	* tests/accu/stat/max.cc,
+	* tests/accu/stat/max_h.cc,
+	* tests/accu/stat/min.cc,
+	* tests/accu/stat/min_h.cc,
+	* tests/accu/stat/min_max.cc:
+	Replace "accu/accu_name.cc" by "accu/stat/accu_name.cc".
+
 2009-06-08  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	Fix few compiler specific issues.

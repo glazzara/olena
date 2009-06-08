@@ -92,7 +92,7 @@ namespace mln
       initialize(output, input);
 
       // Mod determination.
-      mln_accu_with_(accu::max, unsigned) accu;
+      mln_accu_with_(accu::stat::max, unsigned) accu;
       mln_fwd_piter(I) p(input.domain());
       mln_qiter(N) n(nbh, p);
       for_all(n)

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/min_max.cc
+/*! \file tests/accu/stat/min_max.cc
  *
  * \brief Tests on mln::accu::stat::min_max.
  */

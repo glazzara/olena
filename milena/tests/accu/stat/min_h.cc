@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/min_h.cc
+/*! \file tests/accu/stat/min_h.cc
  *
- * \brief Tests on mln::accu::min_h.
+ * \brief Tests on mln::accu::stat::min_h.
  */
 
 #include <mln/value/int_u8.hh>

@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/min.cc
+/*! \file tests/accu/stat/min.cc
  *
- * \brief Tests on mln::accu::min.
+ * \brief Tests on mln::accu::stat::min.
  */
 
 #include <mln/core/image/image2d.hh>

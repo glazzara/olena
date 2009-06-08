@@ -346,7 +346,7 @@ int main()
   typedef image2d<int> I;
 
   I ima(1000, 1000);
-  morpho::accu::from_mln_accu<accu::min>::ret<util::pix<I> > acc;
+  morpho::accu::from_mln_accu<accu::stat::min>::ret<util::pix<I> > acc;
 
   float elapsed;
   mln::util::timer chrono;

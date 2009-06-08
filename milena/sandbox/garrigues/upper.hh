@@ -74,7 +74,7 @@ namespace mln
 
       static const int inc = -1;
       static const bool parent_is_brighter = false;
-      typedef accu::max accu_for_gn;
+      typedef accu::stat::max accu_for_gn;
 
       static const neighb2d& bdr_nbh() { return c4(); }
       static const neighb2d& reg_nbh() { return c8(); }

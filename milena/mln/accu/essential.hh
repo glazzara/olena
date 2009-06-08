@@ -36,16 +36,12 @@
 # include <mln/accu/center.hh>
 # include <mln/accu/count.hh>
 # include <mln/accu/histo.hh>
-# include <mln/accu/stat/max.hh>
-# include <mln/accu/stat/max_h.hh>
 # include <mln/accu/mean.hh>
 # include <mln/accu/median_h.hh>
-# include <mln/accu/stat/min.hh>
-# include <mln/accu/stat/min_h.hh>
-# include <mln/accu/stat/min_max.hh>
 # include <mln/accu/rank.hh>
 # include <mln/accu/sum.hh>
 
+# include <mln/accu/stat/essential.hh>
 # include <mln/accu/image/essential.hh>
 # include <mln/accu/site_set/essential.hh>
 

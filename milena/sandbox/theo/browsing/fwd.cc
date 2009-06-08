@@ -502,7 +502,7 @@ int main()
 //   win.insert(dpoint2d(0, 0));
 //   win.insert(dpoint2d(0, 1));
   
-//   accu_win<I, accu::min, W> f(ima, win);
+//   accu_win<I, accu::stat::min, W> f(ima, win);
 //   canvas::browsing::fwd(f);
 
 //   canvas::browsing::row_fwd(f);

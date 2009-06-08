@@ -26,9 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/accu/max.cc
+/// \file tests/accu/stat/max.cc
 ///
-/// Tests on mln::accu::max.
+/// Tests on mln::accu::stat::max.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>

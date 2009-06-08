@@ -25,40 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_STAT_ALL_HH
-# define MLN_ACCU_STAT_ALL_HH
+#ifndef MLN_ACCU_STAT_ESSENTIAL_HH_
+# define MLN_ACCU_STAT_ESSENTIAL_HH_
 
-/// \file mln/accu/stat/all.hh
+/// \file mln/accu/stat/essential.hh
 ///
-/// File that includes all statistical accumulator types.
+/// File that includes the most useful statistical accumulator types.
 
-
-namespace mln
-{
-  namespace accu
-  {
-    namespace meta
-    {
-      /// Namespace of statistical meta-accumulators.
-      namespace stat {}
-    }
-
-    /// Namespace of statistical accumulators.
-    namespace stat {}
-
-  }
-}
-
-
-# include <mln/accu/stat/deviation.hh>
-# include <mln/accu/stat/var.hh>
-# include <mln/accu/stat/variance.hh>
 # include <mln/accu/stat/max.hh>
-# include <mln/accu/stat/min.hh>
 # include <mln/accu/stat/max_h.hh>
+# include <mln/accu/stat/min.hh>
 # include <mln/accu/stat/min_h.hh>
 # include <mln/accu/stat/min_max.hh>
 
+#endif // !MLN_ACCU_STAT_ESSENTIAL_HH_
 
-
-#endif // ! MLN_ACCU_STAT_ALL_HH
