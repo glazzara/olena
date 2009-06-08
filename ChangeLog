@@ -1,5 +1,9 @@
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	* configure.ac: Configure scribo/tests/unit_test/Makefile.
+
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	* configure.ac (HAVE_SWIG_1_3_39): New conditional.
 
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>

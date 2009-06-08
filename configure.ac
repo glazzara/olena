@@ -214,6 +214,7 @@ AC_CONFIG_FILES([
     scribo/tests/preprocessing/Makefile
     scribo/tests/table/Makefile
     scribo/tests/text/Makefile
+    scribo/tests/unit_test/Makefile
 ])
 
 
