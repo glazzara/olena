@@ -1,3 +1,13 @@
+2009-06-08  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
+	Fix few compiler specific issues.
+
+	* mln/core/internal/check/image_fastest.hh: Fix an issue with ICC.
+
+	* mln/make/box3d.hh: Fix an invalid inline (gcc-3.3).
+
+	* mln/make/win_chamfer.hh: Fix a warning (gcc-3.3).
+
 2009-06-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Move min, max, min_h, max_h, min_max accus in accu/stat.

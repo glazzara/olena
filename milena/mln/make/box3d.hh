@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -72,9 +72,9 @@ namespace mln
      *
      * \return A 3D box.
      */
-    mln::box3d box3d(def::coord min_sli, def::coord min_row, def::coord min_col, 
+    mln::box3d box3d(def::coord min_sli, def::coord min_row, def::coord min_col,
 		     def::coord max_sli, def::coord max_row, def::coord max_col);
-    
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -89,9 +89,9 @@ namespace mln
       return tmp;
     }
 
-    mln::box3d
     inline
-    box3d(def::coord min_sli, def::coord min_row, def::coord min_col, 
+    mln::box3d
+    box3d(def::coord min_sli, def::coord min_row, def::coord min_col,
 	  def::coord max_sli, def::coord max_row, def::coord max_col)
     {
       mln_precondition(max_row >= min_row && max_sli >= min_sli && max_col >= min_col);

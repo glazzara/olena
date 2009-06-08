@@ -121,7 +121,7 @@ namespace mln
     mln::w_window2d_float
     mk_chamfer_exact()
     {
-      float r2 = static_cast<float>(std::sqrt(2));
+      float r2 = static_cast<float>(std::sqrt(2.0f));
       float ws[] = { r2, 1, r2,
 		      1, 0,  0,
 		      0, 0,  0 };
