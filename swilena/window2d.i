@@ -15,16 +15,6 @@
 // along with this library; see the file COPYING.  If not, write to
 // the Free Software Foundation, 51 Franklin Street, Fifth Floor,
 // Boston, MA 02111-1307, USA.
-//
-// As a special exception, you may use this file as part of a free
-// software library without restriction.  Specifically, if other files
-// instantiate templates or use macros or inline functions from this
-// file, or you compile this file and link it with other files to
-// produce an executable, this file does not by itself cause the
-// resulting executable to be covered by the GNU General Public
-// License.
-// reasons why the executable file might be covered by the GNU General
-// Public License.
 
 /// \file window2d.i
 /// \brief A wrapper of mln::window2d.

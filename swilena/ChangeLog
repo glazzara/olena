@@ -1,3 +1,43 @@
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix Swilena's copyright headers.
+
+	* box.ixx,
+	* box2d.i,
+	* box2d_piter.i,
+	* box_piter.ixx,
+	* ch_value.ixx,
+	* concat.ixx,
+	* concrete.ixx,
+	* coord.ixx,
+	* dpoint2d.i,
+	* dynamic_image2d.i,
+	* fill.ixx,
+	* image2d.ixx,
+	* image2d_int.i,
+	* image2d_int_u8.i,
+	* int_u.ixx,
+	* int_u32.i,
+	* int_u8.i,
+	* intp.ixx,
+	* morpho.ixx,
+	* neighb2d.i,
+	* pgm.ixx,
+	* point2d.i,
+	* println.ixx,
+	* python-utils.ixx,
+	* window2d.i,
+	* python/box2d-misc.py,
+	* python/data.py,
+	* python/dynamic-image2d-misc.py,
+	* python/image2d-misc.py,
+	* python/morpho-fun.py,
+	* python/morpho-segm.py,
+	* python/sps-common.in,
+	* python/sps.py,
+	* python/swilena.py:
+	Remove the special exception (irrelevant for Swilena).
+
 2009-06-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Factor box2d.i using box.ixx.
