@@ -1,5 +1,11 @@
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Introduce an Automake helper to factor extra recursive targets.
+
+	* build-aux/extra-recursive-targets.mk: New.
+
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	* configure.ac: Configure scribo/tests/unit_test/Makefile.
 
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
