@@ -8,15 +8,11 @@ if ENABLE_SWILENA
   SUBDIRS += swilena
 endif ENABLE_SWILENA
 
-.PHONY: doc pretty-check
-
-# Shortcut to generate the documentation from the top level.
-doc:
+# Target shortcuts delegating the actual action to milena/Makefile.
+LOCAL_RECURSIVE_TARGETS = doc pretty-check
+$(LOCAL_RECURSIVE_TARGETS):
 	cd milena && $(MAKE) $(AM_MAKEFLAGS) $@
-
-# Shortcut to launch the pretty check from the top level.
-pretty-check:
-	cd milena/tests && $(MAKE) $(AM_MAKEFLAGS) $@
+.PHONY: $(LOCAL_RECURSIVE_TARGETS)
 
 # Regen files recursively.
 include $(top_srcdir)/build-aux/regen-recursive.mk
