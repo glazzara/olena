@@ -1,3 +1,7 @@
+2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac (HAVE_SWIG_1_3_39): Remove conditional.
+
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve bootstrap.

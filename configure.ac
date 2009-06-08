@@ -169,11 +169,6 @@ AC_CONFIG_SUBDIRS([external/trimesh])
 
 OLN_WITH_SWILENA([enable_swilena=yes], [])
 AM_CONDITIONAL([ENABLE_SWILENA], [test x$enable_swilena = xyes])
-AS_VERSION_COMPARE([$swig_version], [1.3.39],
-		   [have_swig_1_3_39=false],
-		   [have_swig_1_3_39=true],
-		   [have_swig_1_3_39=true])
-AM_CONDITIONAL([HAVE_SWIG_1_3_39], [$have_swig_1_3_39])
 
 AC_CONFIG_FILES([swilena/Makefile
 		 swilena/python/Makefile])
