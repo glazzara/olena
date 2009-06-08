@@ -1,5 +1,21 @@
 2009-06-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename nfaces_with_dim<N>() as nfaces_of_static_dim<N>().
+
+	* apps/statues/save_bin_alt.hh,
+	* mln/core/site_set/p_faces.hh,
+	* mln/io/off/save.hh,
+	* mln/topo/attic/faces_iter.hh,
+	* mln/topo/complex.hh,
+	* mln/topo/face_iter.hh,
+	* mln/topo/n_face.hh,
+	* mln/topo/static_n_face_iter.hh,
+	* tests/morpho/complex_image_wst.cc,
+	* tests/topo/complex.cc:
+	Here.
+
+2009-06-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Typo in the documentation of mln::topo::complex.
 
 	* mln/topo/complex.hh: Here.

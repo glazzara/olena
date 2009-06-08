@@ -227,7 +227,7 @@ namespace mln
     face_bkd_iter<D>::start()
     {
       f_.set_n(D);
-      f_.set_face_id(f_.cplx().template nfaces_with_dim<D>() - 1);
+      f_.set_face_id(f_.cplx().template nfaces_of_static_dim<D>() - 1);
     }
 
     template <unsigned D>

@@ -236,7 +236,7 @@ int main()
 
      We definitely need a complex_image that can accept a subset of a
      complex as domain (or at least a p_face<N, D, P>.  */
-  wst_val_t actual_nbasins = nbasins - c.nfaces_with_dim<0>();
+  wst_val_t actual_nbasins = nbasins - c.nfaces_of_static_dim<0>();
   std::cout << "nbasins = " << actual_nbasins << std::endl;
 
 

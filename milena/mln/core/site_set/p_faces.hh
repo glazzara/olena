@@ -1,4 +1,4 @@
-// Copyright (C) 2008,2009 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
@@ -127,10 +127,6 @@ namespace mln
     /// Return The number of faces in the complex.
     unsigned nfaces() const;
 
-    // FIXME: Add nfaces(unsigned) routines?  Yes, if this can
-    // simplify (and lighten) the implementation of piters, psites,
-    // etc.
-
     // FIXME: This method is probably useless now.
     /// Is this site set valid?
     bool is_valid() const;
@@ -225,7 +221,7 @@ namespace mln
   unsigned
   p_faces<N, D, P>::nfaces() const
   {
-    return cplx_.template nfaces_with_dim<N>();
+    return cplx_.template nfaces_of_static_dim<N>();
   }
 
   template <unsigned N, unsigned D, typename P>

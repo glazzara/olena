@@ -130,7 +130,7 @@ namespace mln
 
       /// Return the number of \p N-faces.
       template <unsigned N>
-      unsigned nfaces_with_dim() const;
+      unsigned nfaces_of_static_dim() const;
       /// \}
 
       /// Dynamic manipulators.
@@ -484,7 +484,7 @@ namespace mln
       /* FIXME: This is not thread-proof (these two lines should
 	 form an atomic section).  */
       data_->internal::faces_set_mixin<0u, D>::faces_.push_back(face_data<0u, D>());
-      unsigned id = nfaces_with_dim<0u>() - 1;
+      unsigned id = nfaces_of_static_dim<0u>() - 1;
       return n_face<0u, D>(*this, id);
     }
 
@@ -510,7 +510,7 @@ namespace mln
       /* FIXME: This is not thread-proof (these two lines should
 	 form an atomic section).  */
       data_->internal::faces_set_mixin<N + 1, D>::faces_.push_back(f);
-      unsigned id = nfaces_with_dim<N + 1>() - 1;
+      unsigned id = nfaces_of_static_dim<N + 1>() - 1;
 
       n_face<N + 1, D> fh(*this, id);
       // Connect F and its ADJACENT_FACES.
@@ -538,7 +538,7 @@ namespace mln
       /// add_size : x, c -> x + c.size()
       /// \endcode
       ///
-      /// \see mln::complex<D>::nfaces (static version).
+      /// \see mln::complex<D>::nfaces_of_static_dim<N> (static version).
       /// \see mln::complex<D>::fold_left_.
       struct add_size
       {
@@ -587,7 +587,7 @@ namespace mln
     template <unsigned N>
     inline
     unsigned
-    complex<D>::nfaces_with_dim() const
+    complex<D>::nfaces_of_static_dim() const
     {
       return data_->internal::faces_set_mixin<N, D>::faces_.size();
     }

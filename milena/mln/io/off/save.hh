@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -258,15 +258,16 @@ namespace mln
 	     be safely ignored.'' */
 	  /* FIXME: This is too long.  We shall be able to write
 
-	     ima.domain().template nfaces_with_dim<0>()
+	     ima.domain().template nfaces_of_static_dim<0>()
 
 	     or even
 
-	     ima.template nfaces_with_dim<0>().
+	     ima.template nfaces_of_static_dim<0>().
 	  */
-	  ostr << ima.domain().cplx().template nfaces_with_dim<0>() << ' '
-	       << ima.domain().cplx().template nfaces_with_dim<2>() << ' '
-	       << ima.domain().cplx().template nfaces_with_dim<1>() << std::endl;
+	  ostr << ima.domain().cplx().template nfaces_of_static_dim<0>() << ' '
+	       << ima.domain().cplx().template nfaces_of_static_dim<2>() << ' '
+	       << ima.domain().cplx().template nfaces_of_static_dim<1>()
+	       << std::endl;
 
 	  /*-------.
 	  | Data.  |

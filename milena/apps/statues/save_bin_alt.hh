@@ -107,15 +107,16 @@ namespace mln
 	   be safely ignored.'' */
 	/* FIXME: This is too long.  We shall be able to write
 
-	   ima.domain().template nfaces_with_dim<0>()
+	   ima.domain().template nfaces_of_static_dim<0>()
 
 	   or even
 
-	   ima.template nfaces_with_dim<0>().
+	   ima.template nfaces_of_static_dim<0>().
 	*/
-	ostr << ima.domain().cplx().template nfaces_with_dim<0>() << ' '
+	ostr << ima.domain().cplx().template nfaces_of_static_dim<0>() << ' '
 	     << n2faces << ' '
-	     << ima.domain().cplx().template nfaces_with_dim<1>() << std::endl;
+	     << ima.domain().cplx().template nfaces_of_static_dim<1>()
+	     << std::endl;
 
 	/*-------.
 	| Data.  |

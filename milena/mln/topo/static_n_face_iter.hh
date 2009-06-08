@@ -180,7 +180,7 @@ namespace mln
     {
       if (is_valid())
 	{
-	  if (f_.face_id() + 1 < f_.cplx().template nfaces_with_dim<N>())
+	  if (f_.face_id() + 1 < f_.cplx().template nfaces_of_static_dim<N>())
 	    f_.inc_face_id();
 	  else
 	    invalidate();
@@ -219,7 +219,7 @@ namespace mln
     void
     static_n_face_bkd_iter<N, D>::start()
     {
-      f_.set_face_id(f_.cplx().template nfaces_with_dim<N>() - 1);
+      f_.set_face_id(f_.cplx().template nfaces_of_static_dim<N>() - 1);
     }
 
     template <unsigned N, unsigned D>

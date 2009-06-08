@@ -101,9 +101,12 @@ int main()
 
   std::cout
     << "Using ``static'' manipulators." << std::endl
-    << "  number of 0-faces: c.nfaces_with_dim<0>() = " << c.nfaces_with_dim<0>() << std::endl
-    << "  number of 1-faces: c.nfaces_with_dim<1>() = " << c.nfaces_with_dim<1>() << std::endl
-    << "  number of 2-faces: c.nfaces_with_dim<2>() = " << c.nfaces_with_dim<2>() << std::endl
+    << "  number of 0-faces: c.nfaces_of_static_dim<0>() = "
+    << c.nfaces_of_static_dim<0>() << std::endl
+    << "  number of 1-faces: c.nfaces_of_static_dim<1>() = "
+    << c.nfaces_of_static_dim<1>() << std::endl
+    << "  number of 2-faces: c.nfaces_of_static_dim<2>() = "
+    << c.nfaces_of_static_dim<2>() << std::endl
     << "  total number of faces: c.nfaces() = " << c.nfaces() << std::endl
     << std::endl;
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -178,7 +178,7 @@ namespace mln
       if (is_valid())
 	{
 	  unsigned face_id = face_.face_id();
-	  if (face_id + 1 < face_.cplx().template nfaces_with_dim<N>())
+	  if (face_id + 1 < face_.cplx().template nfaces_of_static_dim<N>())
 	    /* FIXME: Provide accessor n_face::n() returning
 	       a mutable reference?  This way, we could just write
 
@@ -221,7 +221,7 @@ namespace mln
     void
     faces_bkd_iter_<N, D>::start()
     {
-      face_.set_face_id(face_.cplx().template nfaces_with_dim<N>() - 1);
+      face_.set_face_id(face_.cplx().template nfaces_of_static_dim<N>() - 1);
     }
 
     template <unsigned N, unsigned D>
