@@ -1,5 +1,11 @@
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Adjust Milena's top-level Makefile w.r.t the pretty-check target.
+
+	* Makefile.am (pretty-check): New (phony) target.
+
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Install recursive regeneration rules in Milena.
 
 	* Makefile.am: Include build-aux/regen-recursive.mk.

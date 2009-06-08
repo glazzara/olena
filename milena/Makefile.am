@@ -13,13 +13,16 @@ if ENABLE_TOOLS
   SUBDIRS += tools
 endif ENABLE_TOOLS
 
-.PHONY: doc tutorial tools
+.PHONY: doc tutorial tools pretty-check
 
 doc:
 	$(MAKE) -C doc doc
 
 tutorial:
 	$(MAKE) -C doc tutorial
+
+pretty-check:
+	cd tests && $(MAKE) $(AM_MAKEFLAGS) $@
 
 tools:
 	$(MAKE) -C tools all
