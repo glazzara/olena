@@ -21,6 +21,8 @@
 
 %module box2d
 
+%include "box.ixx"
+
 %import box2d_piter.i
 
 %{
@@ -28,8 +30,6 @@
 %}
 
 %include "mln/core/alias/box2d.hh"
-
-%include "box.ixx"
 
 %extend mln::box< mln::point<mln::grid::square, mln::def::coord> >
 {
