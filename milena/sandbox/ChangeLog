@@ -1,3 +1,9 @@
+2009-06-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Rename nfaces(unsigned) as nfaces_of_dim(unsigned).
+
+	* theo/esiee/laurent/presentation/classif.cc: Here.
+
 2009-06-08  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Minor changes to move_accu script.

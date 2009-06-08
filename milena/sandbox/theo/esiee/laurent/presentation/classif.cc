@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -396,7 +396,7 @@ int main(int argc, char* argv[])
 
      We definitely need a complex_image that can accept a subset of a
      complex as domain (or at least a p_face<N, D, P>.  */
-  std::cout << "nbasins = " << nbasins - c.nfaces(0) << std::endl;
+  std::cout << "nbasins = " << nbasins - c.nfaces_of_dim(0) << std::endl;
 
 
   image2d<int_u8> canvas_wst(seeds.domain());
