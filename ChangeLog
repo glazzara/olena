@@ -1,5 +1,12 @@
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Install recursive regeneration rules in the top level.
+
+	* Makefile.am: Include build-aux/regen-recursive.mk.
+	(REGEN_SUBDIRS): Add milena and scribo.
+
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Introduce an Automake helper to factor regen recursive targets.
 
 	* build-aux/regen-recursive.mk: New.

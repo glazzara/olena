@@ -18,3 +18,6 @@ doc:
 pretty-check:
 	cd milena/tests && $(MAKE) $(AM_MAKEFLAGS) $@
 
+# Regen files recursively.
+include $(top_srcdir)/build-aux/regen-recursive.mk
+REGEN_SUBDIRS += milena scribo
