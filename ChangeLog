@@ -1,5 +1,11 @@
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Introduce an Automake helper to factor regen recursive targets.
+
+	* build-aux/regen-recursive.mk: New.
+
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Introduce an Automake helper to factor extra recursive targets.
 
 	* build-aux/extra-recursive-targets.mk: New.
