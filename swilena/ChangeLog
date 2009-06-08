@@ -1,5 +1,12 @@
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Disable test python/dynamic-image2d-misc.py with SWIG < 1.3.39.
+
+	* python/Makefile.am (TESTS) [!HAVE_SWIG_1_3_39]: Remove
+	dynamic-image2d-misc.py.
+
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	* python/image2d-misc.py: Have this test pass with SWIG < 1.3.39.
 
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
