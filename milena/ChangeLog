@@ -1,5 +1,13 @@
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename Make target `regen-dist' as `regen'.
+
+	* Makefile.am, doc/Makefile.am (regen-dist): Rename target as...
+	(regen): ...this.
+	(.PHONY): Adjust.
+
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Help Swilena to compile again.
 
 	* mln/core/alias/neighb2d.hh (mln::c6_2d): Declare it.

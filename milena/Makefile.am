@@ -25,14 +25,14 @@ tools:
 	$(MAKE) -C tools all
 
 # Force the regeneration of `headers.mk'.
-.PHONY: regen-dist
-regen-dist:
+.PHONY: regen
+regen:
 	cd $(srcdir) && ./generate_dist_headers.sh
 EXTRA_DIST = generate_dist_headers.sh
 # We do not delegate the action of regenerating `headers.mk' to
-# `regen-dist' like this:
+# `regen' like this:
 #
-#   $(MAKE) $(AM_MAKEFLAGS) regen-dist
+#   $(MAKE) $(AM_MAKEFLAGS) regen
 #
 # to avoid an infinite recursion, since
 #
