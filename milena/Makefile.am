@@ -24,11 +24,12 @@ tutorial:
 tools:
 	$(MAKE) -C tools all
 
+# Regen files recursively.
+include $(top_srcdir)/build-aux/regen-recursive.mk
+REGEN_SUBDIRS += doc tests
+
 # Force the regeneration of `headers.mk'.
-.PHONY: regen
-regen:
-	cd $(srcdir) && ./generate_dist_headers.sh
-EXTRA_DIST = generate_dist_headers.sh
+#
 # We do not delegate the action of regenerating `headers.mk' to
 # `regen' like this:
 #
@@ -46,8 +47,11 @@ EXTRA_DIST = generate_dist_headers.sh
 #    statement); and
 # - `headers.mk' depends on `generate_dist_headers.sh'.
 #
-# Hence the redundant action.  There may be a better solution.
+# Hence the redundant action.  There may be a better solution
+regen-am:
+	cd $(srcdir) && ./generate_dist_headers.sh
 
+EXTRA_DIST = generate_dist_headers.sh
 # FIXME: Change generate_dist_headers.sh so that the action looks like this:
 #
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@

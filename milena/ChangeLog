@@ -1,5 +1,30 @@
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Install recursive regeneration rules in Milena.
+
+	* Makefile.am: Include build-aux/regen-recursive.mk.
+	(REGEN_SUBDIRS): Add doc and tests.
+	(regen): Remove phony status (now handled by regen-recursive.mk).
+	Rename target as...
+	(regen-am): ...this.
+	* doc/Makefile.am (regen): Remove phony status (now handled by
+	regen-recursive.mk).
+	(regen): Rename target as...
+	(regen-am): ...this.
+	Actually handle the generation and remove the dependency to permit
+	forced regenerations.
+	* tests/Makefile.am: Include build-aux/regen-recursive.mk.
+	(REGEN_SUBDIRS): Add unit_test.
+	* tests/unit_test/Makefile.am: Include build-aux/regen-recursive.mk.
+	(regen): Remove phony status (now handled by regen-recursive.mk).
+	Rename target as...
+	(regen-am): ...this.
+	Do not make unit-tests.mk read-only, since bootstrap expects it
+	to be writable.
+	($(srcdir)/unit-tests.mk): Likewise.
+
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor tests/tests-recursive.mk.
 
 	* tests/tests-recursive.mk: Include

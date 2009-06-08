@@ -66,6 +66,9 @@ TESTS = $(check_PROGRAMS)
 pretty-check:
 	$(top_srcdir)/milena/tests/tools/pretty_check.sh
 
+# Regen files recursively.
+include $(top_srcdir)/build-aux/regen-recursive.mk
+REGEN_SUBDIRS += unit_test
 
 EXTRA_DIST = 					\
   img/lena_ascii.pbm 				\

@@ -2,8 +2,12 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-.PHONY: regen-tests
-regen-tests: $(srcdir)/unit-tests.mk
+# Regen files.
+include $(top_srcdir)/build-aux/regen-recursive.mk
+regen-am:
+	cd $(srcdir)						\
+	&& ./build_unit_test.sh $(abs_top_srcdir)/milena/mln
+
 # FIXME: Change build_unit_test.sh so that the action looks like this:
 #
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
@@ -12,8 +16,7 @@ regen-tests: $(srcdir)/unit-tests.mk
 # at the beginning og the action.
 $(srcdir)/unit-tests.mk: $(srcdir)/build_unit_test.sh
 	cd $(srcdir)						\
-	&& ./build_unit_test.sh $(abs_top_srcdir)/milena/mln	\
-	&& chmod a-w unit-tests.mk
+	&& ./build_unit_test.sh $(abs_top_srcdir)/milena/mln
 
 include $(srcdir)/unit-tests.mk
 

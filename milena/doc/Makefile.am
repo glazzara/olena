@@ -14,7 +14,8 @@ DOXYGEN = doxygen
 .PHONY: doc-all doc doc-html doc-dev doc-dev-html ref-doc-dev ref-doc-dev-html\
 	ref-doc ref-doc-html tutorial tutorial-html white-paper \
 	white-paper-html ref-guide ref-guide-html examples fix-refdata \
-	fig-convert regen
+	fig-convert
+
 
 
 # Doxygen documentation output directory.
@@ -119,7 +120,13 @@ edit_user = sed -e 's,OUTPUT_DIRECTORY       = ./complete/,OUTPUT_DIRECTORY     
 		-e 's,EXCLUDE_SYMBOLS	       =,EXCLUDE_SYMBOLS	  = *::internal* *_ mln::trait::*,g'	
 
 
-regen: $(srcdir)/headers.stamp
+# Regen files.
+include $(top_srcdir)/build-aux/regen-recursive.mk
+regen-am:
+	@rm -f $(srcdir)/headers.stamp.tmp
+	@touch $(srcdir)/headers.stamp.tmp
+	cd $(srcdir) && ./generate_dist_files.sh
+	@mv -f $(srcdir)/headers.stamp.tmp $(srcdir)/headers.stamp
 
 $(srcdir)/examples/examples.mk: $(srcdir)/headers.stamp
 $(srcdir)/figures/figures.mk: $(srcdir)/headers.stamp
