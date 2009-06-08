@@ -9,7 +9,7 @@
 #include <mln/morpho/closing_volume.hh>
 #include <mln/morpho/meyer_wst.hh>
 
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/fun/i2v/array.hh>
 #include <mln/data/transform.hh>
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 
   std::cout << n_basins << std::endl;
 
-  accu::mean<int_u8, float, int_u8> a_;
+  accu::stat::mean<int_u8, float, int_u8> a_;
   util::array<int_u8> a = labeling::compute(a_, vol, wst, n_basins);
   std::cout << a << std::endl;
   a[0] = 0;

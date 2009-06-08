@@ -82,7 +82,7 @@ namespace mln
   {
     // Cf. sandbox/theo/color/segment_rgb_pixels.cc
 
-    util::array<vec3d_f> m_3f = labeling::compute(accu::mean<mln_value(I)>(),
+    util::array<vec3d_f> m_3f = labeling::compute(accu::stat::mean<mln_value(I)>(),
 						  input, // input color image
 						  w, // watershed labeling
 						  nbasins);

@@ -37,7 +37,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/window2d.hh>
-# include <mln/accu/median_h.hh>
+# include <mln/accu/stat/median_h.hh>
 
 # include <mln/win/shift.hh>
 # include <mln/win/diff.hh>
@@ -95,7 +95,7 @@ namespace mln
 	  win_bot       = win - win::shift(win, up),
 	  win_top       = win::shift(win, up) - win;
 
-	accu::median_h<mln_value(I)> med;
+	accu::stat::median_h<mln_value(I)> med;
 
 	// initialization
 

@@ -54,8 +54,8 @@
 #include <mln/linear/gaussian_1d.hh>
 
 #include <mln/accu/center.hh>
-#include <mln/accu/median_h.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/median_h.hh>
+#include <mln/accu/stat/mean.hh>
 
 #include <mln/math/abs.hh>
 #include <mln/debug/draw_graph.hh>
@@ -700,7 +700,7 @@ int main(int argc, char *argv[])
   contours(input, threshold);
 
 
-  typedef accu::median_h<int_u8> A;
+  typedef accu::stat::median_h<int_u8> A;
   typedef fun::i2v::array<point2d> F;
 
 

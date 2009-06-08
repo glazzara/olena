@@ -13,7 +13,7 @@
 # include <mln/literal/origin.hh>
 
 # include <mln/accu/stat/min_max.hh>
-# include <mln/accu/mean.hh>
+# include <mln/accu/stat/mean.hh>
 
 # include <mln/fun/i2v/array.hh>
 # include <mln/fun/p2v/iota.hh>
@@ -259,7 +259,7 @@ int main()
 
 
   fun::i2v::array<int> m(nbasins + 1);
-  accu::compute<accu::meta::mean>(cell, label, m);
+  accu::compute<accu::meta::stat::mean>(cell, label, m);
   for (unsigned i = 1; i <= nbasins; ++i)
     std::cout << "mean value of basin #" << i << " is " << m(i) << std::endl; 
 

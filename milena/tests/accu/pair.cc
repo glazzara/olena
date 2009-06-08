@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/mean.cc
+/*! \file tests/accu/stat/mean.cc
  *
- * \brief Tests on mln::accu::mean.
+ * \brief Tests on mln::accu::stat::mean.
  */
 
 #include <mln/core/image/image2d.hh>
@@ -35,14 +35,14 @@
 
 #include <mln/accu/pair.hh>
 #include <mln/accu/stat/max.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 
 int main()
 {
   using namespace mln;
 
   {
-    accu::pair<accu::mean<int>, accu::stat::max<int> > mean;
+    accu::pair<accu::stat::mean<int>, accu::stat::max<int> > mean;
 
     mean.take(10);
     mean.take(9);

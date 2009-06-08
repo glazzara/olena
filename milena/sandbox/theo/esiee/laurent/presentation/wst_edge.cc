@@ -22,7 +22,7 @@
 # include <mln/io/ppm/save.hh>
 
 # include <mln/accu/stat/min_max.hh>
-# include <mln/accu/mean.hh>
+# include <mln/accu/stat/mean.hh>
 
 # include <mln/fun/i2v/array.hh>
 # include <mln/fun/p2v/iota.hh>

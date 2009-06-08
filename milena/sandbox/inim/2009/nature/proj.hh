@@ -30,7 +30,7 @@
 
 #include <mln/io/pgm/save.hh>
 #include <mln/data/paste.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/literal/white.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image1d.hh>

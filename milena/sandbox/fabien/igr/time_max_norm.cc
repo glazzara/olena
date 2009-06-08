@@ -14,7 +14,7 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/accu/count.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/accu/sum.hh>
 #include <mln/accu/image/all.hh>
 

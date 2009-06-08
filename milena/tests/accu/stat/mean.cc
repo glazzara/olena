@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,22 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/mean.cc
+/*! \file tests/accu/stat/mean.cc
  *
- * \brief Tests on mln::accu::mean.
+ * \brief Tests on mln::accu::stat::mean.
  */
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 
 int main()
 {
   using namespace mln;
 
   {
-    mln_accu_with_(accu::meta::mean, int) mean;
+    mln_accu_with_(accu::meta::stat::mean, int) mean;
 
     mean.take(10);
     mean.take(9);
@@ -58,7 +58,7 @@ int main()
   }
 
   {
-    mln_accu_with_(accu::meta::mean, int) mean;
+    mln_accu_with_(accu::meta::stat::mean, int) mean;
 
     mean.take(10);
     mean.take(8);

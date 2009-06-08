@@ -3,7 +3,7 @@
 
 #include <mln/io/plot/all.hh>
 
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/accu/image/all.hh>
 #include <mln/convert/from_to.hh>
 #include <mln/morpho/closing/structural.hh>
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
   image1d<float> opening_ima = morpho::opening::structural(ima, seg21);
   image1d<float> closing_ima = morpho::closing::structural(ima, seg21);
 
-  image1d<accu::mean<float> > result;
+  image1d<accu::stat::mean<float> > result;
 
   initialize(result, ima);
 

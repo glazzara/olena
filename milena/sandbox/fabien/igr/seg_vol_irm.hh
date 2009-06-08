@@ -76,7 +76,7 @@
 #include <mln/accu/center.hh>
 #include <mln/accu/stat/max.hh>
 #include <mln/accu/sum.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/accu/stat/deviation.hh>
 
 #include <mln/histo/compute.hh>
@@ -315,7 +315,7 @@ find_threshold_mean(const Image<I>& input, const Neighborhood<N>& nbh)
 {
   unsigned coef = 1;
 
-  accu::mean<unsigned> mean_accu;
+  accu::stat::mean<unsigned> mean_accu;
   unsigned mean = data::compute(mean_accu, (input | (pw::value(input) != 0)));
 
   accu::stat::deviation<unsigned, unsigned, float> dev_accu(mean);

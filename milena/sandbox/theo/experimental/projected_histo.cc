@@ -9,7 +9,7 @@
 #include <mln/pw/value.hh>
 
 #include <mln/accu/count.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/accu/image/init.hh>
 #include <mln/accu/image/take.hh>
 
@@ -30,7 +30,7 @@ int main()
     io::pgm::load(lena, "../../../img/fly.pgm");
     debug::println(lena);
     
-    typedef accu::mean<int_u8, unsigned, int_u8> A;
+    typedef accu::stat::mean<int_u8, unsigned, int_u8> A;
     
     image1d<A> vmean(lena.ncols());
     accu::image::init(vmean);

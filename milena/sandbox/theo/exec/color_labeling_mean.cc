@@ -2,7 +2,7 @@
 
 #include <mln/estim/min_max.hh>
 #include <mln/labeling/compute.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/data/transform.hh>
 
 #include <mln/value/label_8.hh>
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
   
   std::cout << "n labels = " << nlabels << std::endl;
 
-  accu::mean<rgb8> m_;
+  accu::stat::mean<rgb8> m_;
   typedef algebra::vec<3,float> V;
   util::array<V> m = labeling::compute(m_, ima, lab_, nlabels);
 

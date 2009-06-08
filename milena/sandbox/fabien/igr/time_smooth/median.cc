@@ -10,7 +10,7 @@
 #include <mln/io/dicom/load.hh>
 #include <mln/io/plot/save.hh>
 
-#include <mln/accu/median_h.hh>
+#include <mln/accu/stat/median_h.hh>
 #include <mln/util/array.hh>
 
 
@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
   initialize(ima_median3, ima_arr);
   initialize(ima_median5, ima_arr);
   mln_piter_(image2d<int_u12>) p(ima_median3.domain());
-  accu::median_h<int_u12> accu_med;
+  accu::stat::median_h<int_u12> accu_med;
   for_all(p)
   {
     // Median 3

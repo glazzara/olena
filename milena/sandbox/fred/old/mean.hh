@@ -36,7 +36,7 @@
 ///
 
 # include <mln/accu/internal/base.hh>
-# include <mln/accu/mean.hh>
+# include <mln/accu/stat/mean.hh>
 # include <mln/util/pix.hh>
 
 namespace mln {

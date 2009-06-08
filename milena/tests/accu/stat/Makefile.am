@@ -8,9 +8,13 @@ check_PROGRAMS =				\
   min_h						\
   min_max					\
   max						\
-  max_h
+  max_h						\
+  median_h					\
+  mean
 
 var_SOURCES = var.cc
+mean_SOURCES = min.cc
+median_h_SOURCES = min_h.cc
 min_SOURCES = min.cc
 min_h_SOURCES = min_h.cc
 max_SOURCES = max.cc

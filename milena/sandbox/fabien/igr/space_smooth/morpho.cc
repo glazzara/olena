@@ -12,7 +12,7 @@
 #include <mln/io/dicom/load.hh>
 #include <mln/io/plot/save.hh>
 
-#include <mln/accu/median_h.hh>
+#include <mln/accu/stat/median_h.hh>
 #include <mln/convert/from_to.hh>
 #include <mln/morpho/closing/area.hh>
 #include <mln/morpho/opening/area.hh>

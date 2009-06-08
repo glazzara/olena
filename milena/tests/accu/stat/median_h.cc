@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
@@ -26,14 +26,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/accu/median_h.cc
+/// \file tests/accu/stat/median_h.cc
 ///
-/// Tests on mln::accu::median_h.
+/// Tests on mln::accu::stat::median_h.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 
-#include <mln/accu/median_h.hh>
+#include <mln/accu/stat/median_h.hh>
 
 
 int main()
@@ -41,7 +41,7 @@ int main()
   using namespace mln;
 
   {
-    accu::median_h<value::int_u8> med;
+    accu::stat::median_h<value::int_u8> med;
 
     med.take(10);
     med.take(9);
@@ -59,7 +59,7 @@ int main()
   }
 
   {
-    accu::median_h<value::int_u8> med;
+    accu::stat::median_h<value::int_u8> med;
 
     med.take(10);
     med.take(7);
@@ -67,5 +67,4 @@ int main()
 
     mln_assertion(med.to_result() == 7u);
   }
-
 }

@@ -22,7 +22,7 @@
 #include "../../mln/histo/classify_with_histo_rgb.hh"
 
 #include <mln/accu/count.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/accu/sum.hh>
 #include <mln/accu/image/init.hh>
 #include <mln/accu/image/take.hh>
@@ -134,7 +134,7 @@ int main(int argc, char* argv[])
 
 //   std::cout << "  => computing projection..." << std::endl;
 
-//   typedef accu::mean<int_u8, unsigned, int_u8> A;
+//   typedef accu::stat::mean<int_u8, unsigned, int_u8> A;
 //   image2d<A> vmean(lab.nrows(), lab.ncols());
 //   accu::image::init(vmean);
 //   {

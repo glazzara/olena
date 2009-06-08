@@ -32,7 +32,7 @@
 # include <mln/core/image/image2d.hh>
 
 # include <mln/labeling/compute.hh>
-# include <mln/accu/mean.hh>
+# include <mln/accu/stat/mean.hh>
 # include <mln/level/transform.hh>
 
 # include <mln/value/label_8.hh>
@@ -49,7 +49,7 @@ namespace mln {
     using value::rgb8;
     typedef algebra::vec<3,float> V;
 
-    accu::mean<value::rgb8> m_;
+    accu::stat::mean<value::rgb8> m_;
     util::array<V> m = labeling::compute(m_, input, exact(label), nlabels);
 
     util::array<rgb8> c(unsigned(nlabels) + 1);

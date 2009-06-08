@@ -36,8 +36,6 @@
 # include <mln/accu/center.hh>
 # include <mln/accu/count.hh>
 # include <mln/accu/histo.hh>
-# include <mln/accu/mean.hh>
-# include <mln/accu/median_h.hh>
 # include <mln/accu/rank.hh>
 # include <mln/accu/sum.hh>
 

@@ -10,7 +10,7 @@
 #include <mln/io/dump/all.hh>
 #include <mln/io/plot/save.hh>
 
-#include <mln/accu/median_h.hh>
+#include <mln/accu/stat/median_h.hh>
 #include <mln/util/array.hh>
 #include <mln/linear/convolve.hh>
 #include <mln/make/w_window3d.hh>

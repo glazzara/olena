@@ -38,19 +38,18 @@
 int main()
 {
   using namespace mln;
-  using namespace mln::accu;
 
-  bbox<point2d> b;
-  count<int> c;
-  mln::accu::histo<bool> h;
-  stat::max<int> ma;
-  mean<int> me;
-  // median< value::set<bool> > med; // FIXME: bool has no min so workaround!
-  stat::min<int> mi;
-  // min_h< value::set<bool> > mh;   // OK: do not work since bool has
+  accu::bbox<point2d> b;
+  accu::count<int> c;
+  accu::histo<bool> h;
+  accu::stat::max<int> ma;
+  accu::stat::mean<int> me;
+  // accu::median< value::set<bool> > med; // FIXME: bool has no min so workaround!
+  accu::stat::min<int> mi;
+  // accu::stat::min_h< value::set<bool> > mh;   // OK: do not work since bool has
                                      // no min/max :)
-  stat::min_max<int> mm;
-  nil<int> n;
-  pair< stat::min<int>, stat::max<int> > p;
-  sum<int> s;
+  accu::stat::min_max<int> mm;
+  accu::nil<int> n;
+  accu::pair< accu::stat::min<int>, accu::stat::max<int> > p;
+  accu::sum<int> s;
 }

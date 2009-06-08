@@ -21,7 +21,7 @@
 #include <mln/value/rgb8.hh>
 
 #include <mln/accu/sum.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/accu/image/all.hh>
 #include <mln/accu/stat/deviation.hh>
 #include <mln/arith/div.hh>
@@ -134,7 +134,7 @@ int main(int argc, char* argv[])
 
   // Mean distance.
 
-  accu::mean<input_type> accu_mean;
+  accu::stat::mean<input_type> accu_mean;
   util::array<float> means = labeling::compute(accu_mean, dist, wst, nbasins);
 
   // Display.
@@ -148,7 +148,7 @@ int main(int argc, char* argv[])
     io_save_edges_float(ima_means, 0u, "means.pgm");
   }
 
-  typedef accu::mean<input_type> A;
+  typedef accu::stat::mean<input_type> A;
   util::array<input_type> m = labeling::compute(A(), dist, wst, nbasins);
 
   {

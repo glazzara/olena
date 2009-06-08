@@ -21,7 +21,7 @@
 #include <mln/value/rgb8.hh>
 
 #include <mln/accu/sum.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/accu/image/all.hh>
 #include <mln/accu/stat/deviation.hh>
 #include <mln/arith/div.hh>
@@ -105,7 +105,7 @@ mean_image(image1d<V>& input, unsigned seg_size)
   image1d<V> closing_ima = morpho::closing::structural(input, seg);
   image1d<V> opening_ima = morpho::opening::structural(input, seg);
 
-  image1d<accu::mean<float> > result;
+  image1d<accu::stat::mean<float> > result;
 
   initialize(result, input);
 
@@ -280,7 +280,7 @@ int main(int argc, char* argv[])
 
   // Mean distance.
 
-  /*accu::mean<E_TYPE> accu_mean;
+  /*accu::stat::mean<E_TYPE> accu_mean;
   util::array<float> means = labeling::compute(accu_mean, e, wst, nbasins);
 
   // Display.
@@ -295,7 +295,7 @@ int main(int argc, char* argv[])
     io::pgm::save(data::stretch(int_u8(), display_means), "04_means.pgm");
   }*/
 
-  /*typedef accu::mean<int_u12,float,int_u12> A;
+  /*typedef accu::stat::mean<int_u12,float,int_u12> A;
   util::array<int_u12> m = labeling::compute(A(), d, wst, nbasins);
 
   {

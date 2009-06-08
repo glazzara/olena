@@ -23,8 +23,8 @@
 #include <mln/value/label_16.hh>
 #include <mln/value/label_32.hh>
 
-#include <mln/accu/mean.hh>
-#include <mln/accu/median_h.hh>
+#include <mln/accu/stat/mean.hh>
+#include <mln/accu/stat/median_h.hh>
 #include <mln/labeling/relabel.hh>
 #include <mln/labeling/mean_values.hh>
 #include <mln/data/compute.hh>

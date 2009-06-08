@@ -38,7 +38,7 @@
 
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/p_vertices.hh>
-# include <mln/accu/mean.hh>
+# include <mln/accu/stat/mean.hh>
 # include <mln/estim/min_max.hh>
 # include <mln/util/graph.hh>
 
@@ -83,7 +83,7 @@ namespace mln
       estim::min_max (ima, min, max);
       unsigned nb = max - min + 1;
       fun::i2v::array<P> v(nb);
-      std::vector< accu::mean< X > > tab_mean (nb);
+      std::vector< accu::stat::mean< X > > tab_mean (nb);
       std::map<std::pair<V, V>, bool> m;
 
       /// Take original point.

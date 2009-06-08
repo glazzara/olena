@@ -15,8 +15,6 @@ check_PROGRAMS =				\
   histo						\
   line						\
   max_site 					\
-  mean						\
-  median_h					\
   nil						\
   pair						\
   rank						\
@@ -34,8 +32,6 @@ count_SOURCES = count.cc
 histo_SOURCES = histo.cc
 line_SOURCES = line.cc
 max_site_SOURCES = max_site.cc
-mean_SOURCES = mean.cc
-median_h_SOURCES = median_h.cc
 nil_SOURCES = nil.cc
 pair_SOURCES = pair.cc
 rank_SOURCES = rank.cc

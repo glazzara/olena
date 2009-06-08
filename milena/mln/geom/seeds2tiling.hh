@@ -38,7 +38,7 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/p_queue.hh>
 # include <mln/core/routine/duplicate.hh>
-# include <mln/accu/mean.hh>
+# include <mln/accu/stat/mean.hh>
 # include <mln/estim/min_max.hh>
 # include <mln/algebra/vec.hh>
 

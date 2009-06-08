@@ -13,7 +13,7 @@
 #include <mln/value/int_u12.hh>
 
 #include <mln/accu/image/all.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/arith/all.hh>
 #include <mln/data/paste.hh>
 
@@ -36,7 +36,7 @@ template <typename I>
 inline
 image2d<float> mean_slices(Image<I>& ima, int first, int last)
 {
-  image2d<accu::mean<float> > result;
+  image2d<accu::stat::mean<float> > result;
 
   initialize(result, slice(ima, first));
 

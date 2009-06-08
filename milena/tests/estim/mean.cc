@@ -49,5 +49,5 @@ int main()
   // 7 8 9
   mln_assertion(estim::mean(ima) == 5);
 
-  // FIXME: Add example on accu::mean used several times.
+  // FIXME: Add example on accu::stat::mean used several times.
 }

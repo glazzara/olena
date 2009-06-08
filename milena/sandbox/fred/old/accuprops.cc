@@ -216,10 +216,10 @@ namespace mln {
       template <typename T>
       /// Morphological (i.e. for pixel and pixel values) accumulator calculating mean.
       /// FIXME: is inclusion polyphormism really appliable ?
-      struct mean : public mln::accu::mean<T, typename internal::sum_handling_pixels<T>::ret>,
+      struct mean : public mln::accu::stat::mean<T, typename internal::sum_handling_pixels<T>::ret>,
                     public Accumulator< mean<T> >
       {
-        typedef mln::accu::mean<T, typename internal::sum_handling_pixels<T>::ret> super;
+        typedef mln::accu::stat::mean<T, typename internal::sum_handling_pixels<T>::ret> super;
 	typedef typename super::result result;
 
         using super::operator result;
@@ -275,8 +275,8 @@ namespace mln {
   namespace trait {
 
     template <typename I>
-    struct accu_< morpho::accu::mean< util::pix<I> > > :
-      public undefined_accu_ < morpho::accu::mean< util::pix<I> > >
+    struct accu_< morpho::accu::stat::mean< util::pix<I> > > :
+      public undefined_accu_ < morpho::accu::stat::mean< util::pix<I> > >
     {
       typedef accu::when_pix::use_v when_pix;
     };
@@ -297,7 +297,7 @@ int main()
   typedef mln::image2d<int> I;
 
   I ima(1000, 1000);
-  mln::morpho::accu::mean< mln::util::pix<I> > acc;
+  mln::morpho::accu::stat::mean< mln::util::pix<I> > acc;
 
   float elapsed;
   mln::util::timer chrono;

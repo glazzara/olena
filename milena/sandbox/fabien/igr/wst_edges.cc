@@ -21,7 +21,7 @@
 #include <mln/value/rgb8.hh>
 
 #include <mln/accu/sum.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/accu/image/all.hh>
 #include <mln/accu/stat/deviation.hh>
 #include <mln/arith/div.hh>

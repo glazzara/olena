@@ -41,7 +41,7 @@
 #include <mln/morpho/closing_area.hh>
 #include <mln/morpho/meyer_wst.hh>
 
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 //#include <mln/data/take.hh>
 
 #include <mln/util/graph.hh>
@@ -265,7 +265,7 @@ namespace mln
     io::pgm::save( data::transform(wshed, convert::to_fun(foo)),
 	"tmp_wshed.pgm" );
 
-    mln_VAR(mean_values, labeling::compute(accu::meta::mean(), irm, wshed, nbasins));
+    mln_VAR(mean_values, labeling::compute(accu::meta::stat::mean(), irm, wshed, nbasins));
     fun::i2v::array<label_16> to_keep(nbasins.next(), 0);
     threshold f;
     for (label_16 i = 1; i < mean_values.nelements(); ++i)

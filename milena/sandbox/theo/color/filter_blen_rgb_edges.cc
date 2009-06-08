@@ -27,7 +27,7 @@
 
 #include <mln/accu/count.hh>
 #include <mln/accu/volume.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 
 #include "sum_pix.hh"
 #include "segment.hh"
@@ -352,7 +352,7 @@ int main(int argc, char* argv[])
 
   typedef algebra::vec<3,float> vec3f;
 
-  util::array<vec3f> m_3f = labeling::compute(accu::mean<rgb8>(),
+  util::array<vec3f> m_3f = labeling::compute(accu::stat::mean<rgb8>(),
 					      input,
 					      full2image(w_all),
 					      nbasins);
@@ -379,7 +379,7 @@ int main(int argc, char* argv[])
 
 // FIXME: The code below does not work!
 
-//   util::array<vec3f> m_3f = labeling::compute(accu::mean<rgb8>(),
+//   util::array<vec3f> m_3f = labeling::compute(accu::stat::mean<rgb8>(),
 // 					      input_,
 // 					      w_squares,
 // 					      nbasins);

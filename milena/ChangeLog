@@ -1,3 +1,109 @@
+2009-06-08  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Move mean, median_h accus to stat.
+	* mln/accu/all.hh,
+	* mln/accu/essential.hh,
+	* mln/accu/stat/all.hh,
+	* mln/accu/stat/essential.hh:
+	Move median_h, and mean inclusions.
+
+	* mln/accu/mean.hh,
+	* mln/accu/median_h.hh: Move to...
+	* mln/accu/stat/mean.hh
+	* mln/accu/stat/median_h.hh: New.
+	Move median_h, and mean accus to stat directory.
+
+	* tests/accu/mean.cc
+	* tests/accu/median_h.cc: Move to...
+	* tests/accu/stat/mean.cc,
+	* tests/accu/stat/median_h.cc: New.
+	Move median_h, and mean tests to stat directory.
+
+	* tests/accu/Makefile.am,
+	* tests/accu/stat/Makefile.am:
+	Update makefiles.
+
+	* doc/examples/trash/accu.cc,
+	* doc/examples/trash/tuto_bis.cc,
+	* mln/data/fast_median.hh,
+	* mln/data/median.hh,
+	* mln/data/naive/median.hh,
+	* mln/data/was.median.hh,
+	* mln/estim/mean.hh,
+	* mln/geom/seeds2tiling.hh,
+	* mln/geom/seeds2tiling_roundness.hh,
+	* mln/labeling/mean_values.hh,
+	* mln/make/voronoi.hh,
+	* sandbox/beguin/irm.cc,
+	* sandbox/beguin/irm_g.cc,
+	* sandbox/duhamel/labeling_algo.hh,
+	* sandbox/duhamel/slow_seed2tiling.cc,
+	* sandbox/edwin/exec/color_labeling_mean.hh,
+	* sandbox/fabien/binarization/test.cc,
+	* sandbox/fabien/igr/filter.cc,
+	* sandbox/fabien/igr/fixed_seg/main.cc,
+	* sandbox/fabien/igr/fun_labels.cc,
+	* sandbox/fabien/igr/graph.cc,
+	* sandbox/fabien/igr/label2gif.cc,
+	* sandbox/fabien/igr/matlab.cc,
+	* sandbox/fabien/igr/mean_median_label.cc,
+	* sandbox/fabien/igr/mean_slices.cc,
+	* sandbox/fabien/igr/med.cc,
+	* sandbox/fabien/igr/norm.cc,
+	* sandbox/fabien/igr/plot_label.hh,
+	* sandbox/fabien/igr/point_filtering/main.cc,
+	* sandbox/fabien/igr/seg_vol_irm.hh,
+	* sandbox/fabien/igr/smooth_fixed_seg/main.cc,
+	* sandbox/fabien/igr/space_smooth/linear.cc,
+	* sandbox/fabien/igr/space_smooth/median.cc,
+	* sandbox/fabien/igr/space_smooth/morpho.cc,
+	* sandbox/fabien/igr/time_max.cc,
+	* sandbox/fabien/igr/time_max_norm.cc,
+	* sandbox/fabien/igr/time_smooth/linear.cc,
+	* sandbox/fabien/igr/time_smooth/median.cc,
+	* sandbox/fabien/igr/time_smooth/morpho.cc,
+	* sandbox/fabien/igr/watershed.hh,
+	* sandbox/fabien/igr/watershed2d.cc,
+	* sandbox/fabien/igr/watershed3d.cc,
+	* sandbox/fabien/igr/wst_edges.cc,
+	* sandbox/folio/test/histo/project_histo_add.cc,
+	* sandbox/folio/test/histo/project_screen.cc,
+	* sandbox/folio/test/histo/projected3d.cc,
+	* sandbox/fred/old/accuprops.cc,
+	* sandbox/fred/old/accuprops2.cc,
+	* sandbox/fred/old/mean.hh,
+	* sandbox/icdar/2009/dibco/binarization.cc,
+	* sandbox/icdar/2009/dibco/svg.1.binarization.cc,
+	* sandbox/icdar/2009/dibco/svg.2.binarization.cc,
+	* sandbox/icdar/2009/dibco/svg.3.binarization.cc,
+	* sandbox/inim/2009/classif/src/proj.hh,
+	* sandbox/inim/2009/color/reference.cc,
+	* sandbox/inim/2009/color/reference2.cc,
+	* sandbox/inim/2009/nature/proj.hh,
+	* sandbox/lazzara/igr/irm/wst_rag.cc,
+	* sandbox/lazzara/igr/irm/wst_rag_hsl.cc,
+	* sandbox/lazzara/igr/irm_seg_with_mm_and_rag.mine.cc,
+	* sandbox/nivault/extract_character.cc,
+	* sandbox/nivault/extract_score.cc,
+	* sandbox/theo/color/filter_blen_rgb_edges.cc,
+	* sandbox/theo/color/segment_rgb_edges.cc,
+	* sandbox/theo/cs2d/cs2d.cc,
+	* sandbox/theo/esiee/laurent/presentation/wst_edge.cc,
+	* sandbox/theo/exec/color_labeling_mean.cc,
+	* sandbox/theo/experimental/projected_histo.cc,
+	* sandbox/theo/igr/irm_anat_segm.cc,
+	* sandbox/theo/igr/irm_anat_segm__2D_ONLY.cc,
+	* sandbox/theo/igr/irm_seg_with_mm_and_rag.cc,
+	* sandbox/theo/igr/segment_2d_t.cc,
+	* tests/accu/all_accus.cc,
+	* tests/accu/pair.cc,
+	* tests/accu/tuple.cc,
+	* tests/estim/mean.cc:
+	Replace accu::accu_name by accu::stat::accu_name,
+		accu::meta::accu_name by accu::meta::stat::accu_name,
+		accu/accu_name.cc by accu/stat/accu_name.cc,
+		accu/accu_name.hh by accu/stat/accu_name.hh.
+
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve and clean up Makefile.am.

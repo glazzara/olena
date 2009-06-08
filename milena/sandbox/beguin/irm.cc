@@ -33,7 +33,7 @@
 #include <mln/morpho/closing_area.hh>
 #include <mln/morpho/meyer_wst.hh>
 
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/data/take.hh>
 
 #include <mln/util/graph.hh>

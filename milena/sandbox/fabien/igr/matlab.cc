@@ -10,7 +10,7 @@
 #include <mln/io/dicom/load.hh>
 
 #include <mln/accu/count.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/accu/sum.hh>
 #include <mln/accu/image/all.hh>
 #include <mln/arith/minus.hh>
@@ -31,7 +31,7 @@ using namespace mln;
 inline
 image2d<float> mean_slices(util::array<image2d<float> >& arr_ima, int first, int last)
 {
-  image2d<accu::mean<float> > result;
+  image2d<accu::stat::mean<float> > result;
 
   mln_precondition(first >=0 && first < arr_ima.nelements());
   mln_precondition(last >=0 && last < arr_ima.nelements());
@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
   // Moyenne //
   //	     //
   /////////////
-  accu::mean<float> accu_mean;
+  accu::stat::mean<float> accu_mean;
   float moysignal1 = data::compute(accu_mean, prodsignal1 | pw::value(roi_noise) == pw::cst(true));
 
   ////////////////

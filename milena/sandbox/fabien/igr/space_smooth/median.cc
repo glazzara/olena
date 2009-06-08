@@ -10,7 +10,7 @@
 #include <mln/io/dicom/load.hh>
 #include <mln/io/plot/save.hh>
 
-#include <mln/accu/median_h.hh>
+#include <mln/accu/stat/median_h.hh>
 #include <mln/core/alias/window2d.hh>
 #include <mln/util/array.hh>
 
@@ -64,8 +64,8 @@ int main(int argc, char* argv[])
   window2d win_c4 = win_c4p();
   util::array<image2d<int_u12> > ima_median3;
   util::array<image2d<int_u12> > ima_median5;
-  accu::median_h<int_u12> accu_med3;
-  accu::median_h<int_u12> accu_med5;
+  accu::stat::median_h<int_u12> accu_med3;
+  accu::stat::median_h<int_u12> accu_med5;
   image2d<int_u12> tmp;
   initialize(tmp, arr_ima[0]);
   mln_piter_(image2d<int_u12>) p(arr_ima[0].domain());

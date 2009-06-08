@@ -44,7 +44,7 @@
 # include <mln/win/line.hh>
 
 # include <mln/canvas/browsing/snake_fwd.hh>
-# include <mln/accu/median_h.hh>
+# include <mln/accu/stat/median_h.hh>
 # include <mln/accu/transform_line.hh>
 
 
@@ -106,7 +106,7 @@ namespace mln
 
 	// aux data
 
-	accu::median_h<mln_value(I)> med;
+	accu::stat::median_h<mln_value(I)> med;
 	P p;
 	window<D>    win_fp, win_fm, win_bp, win_bm, win_dp, win_dm;
 	mln_qiter(window<D>)   q_fp,   q_fm,   q_bp,   q_bm,   q_dp,   q_dm;
@@ -222,7 +222,7 @@ namespace mln
 		  trait::image::quant::low)::check();
 	internal::median_tests(input, win);
 
-	accu::median_h<mln_value(I)> a;
+	accu::stat::median_h<mln_value(I)> a;
 	mln_concrete(I) output = accu::transform_line(a, input, win.length(), i);
 
 	trace::exiting("data::impl::median_line");

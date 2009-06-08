@@ -12,7 +12,7 @@
 #include <mln/debug/println.hh>
 #include <mln/util/graph.hh>
 #include <mln/core/mesh_p.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/estim/min_max.hh>
 #include <algorithm> 
 #include <utility> 

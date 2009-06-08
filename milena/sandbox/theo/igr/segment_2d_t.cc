@@ -18,7 +18,7 @@
 
 #include <mln/morpho/closing/height.hh>
 #include <mln/morpho/watershed/flooding.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/arith/div.hh>
 
@@ -107,7 +107,7 @@ int main(int argc, char* argv[])
   // debug_println("w", w);
   // io_save_edges_int_u12(w, 0, "w.pgm");
 
-  typedef accu::mean<int_u12,float,int_u12> A;
+  typedef accu::stat::mean<int_u12,float,int_u12> A;
   util::array<int_u12> m = labeling::compute(A(), d, w, n_basins);
 
   {

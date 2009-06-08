@@ -21,7 +21,7 @@
 #include <mln/value/rgb8.hh>
 
 #include <mln/accu/sum.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/accu/image/all.hh>
 #include <mln/accu/stat/deviation.hh>
 #include <mln/arith/div.hh>
@@ -81,7 +81,7 @@ mean_image(image1d<V>& input, unsigned seg_size)
   image1d<V> closing_ima = morpho::closing::structural(input, seg);
   image1d<V> opening_ima = morpho::opening::structural(input, seg);
 
-  image1d<accu::mean<float> > result;
+  image1d<accu::stat::mean<float> > result;
 
   initialize(result, input);
 

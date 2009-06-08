@@ -31,7 +31,7 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/data/paste.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/accu/maj_h.hh>
 #include <mln/literal/white.hh>
 #include <mln/literal/colors.hh>
@@ -117,7 +117,7 @@ namespace mln
     }
 
     //FIXME: maj_h implies set is finite, mx set is ordered
-    accu::mean<mln::algebra::vec<3u, float> > maj_2;
+    accu::stat::mean<mln::algebra::vec<3u, float> > maj_2;
     image2d<mln::algebra::vec<3u, float> > mproj =
       proj_vec(out3d, histo, maj_2);
 

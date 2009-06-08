@@ -12,7 +12,7 @@
 #include <mln/io/dicom/load.hh>
 #include <mln/io/plot/save.hh>
 
-#include <mln/accu/median_h.hh>
+#include <mln/accu/stat/median_h.hh>
 #include <mln/convert/from_to.hh>
 #include <mln/morpho/closing/area.hh>
 #include <mln/morpho/opening/area.hh>
@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
   image2d<image1d<int_u12> > ima_morpho;
   initialize(ima_morpho, ima_arr);
   mln_piter_(image2d<int_u12>) p(ima_morpho.domain());
-  accu::median_h<int_u12> accu_med;
+  accu::stat::median_h<int_u12> accu_med;
   for_all(p)
   {
     image1d<int_u12> tmp_ima;

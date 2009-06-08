@@ -10,7 +10,7 @@
 #include <mln/morpho/closing_height.hh>
 #include <mln/morpho/watershed/flooding.hh>
 
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/fun/i2v/array.hh>
 #include <mln/data/transform.hh>
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 
   std::cout << n_basins << std::endl;
 
-  accu::mean<int_u8, float, int_u8> a_;
+  accu::stat::mean<int_u8, float, int_u8> a_;
   util::array<int_u8> a = labeling::compute(a_, vol, wst, n_basins);
   for (L l = 1; l <= n_basins; ++l)
     if (a[l] == 0)

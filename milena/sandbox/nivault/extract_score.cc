@@ -52,7 +52,7 @@
 # include <mln/labeling/blobs.hh>
 # include <mln/core/alias/neighb2d.hh>
 
-# include <mln/accu/mean.hh>
+# include <mln/accu/stat/mean.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/accu/p.hh>
 # include <mln/accu/count.hh>

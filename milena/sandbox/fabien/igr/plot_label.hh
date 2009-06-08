@@ -13,8 +13,8 @@
 
 #include <mln/io/plot/save.hh>
 
-#include <mln/accu/mean.hh>
-#include <mln/accu/median_h.hh>
+#include <mln/accu/stat/mean.hh>
+#include <mln/accu/stat/median_h.hh>
 #include <mln/data/compute.hh>
 #include <mln/pw/all.hh>
 #include <mln/util/array.hh>
@@ -37,7 +37,7 @@ void plot_label(image3d<I>& ima, image2d<L>& ima_labels, V lbl)
   for (int sli = sli_min; sli <= sli_max; ++sli)
   {
     image2d<I> slice_ima = duplicate(slice(ima, sli));
-    accu::mean<I> accu_mean;
+    accu::stat::mean<I> accu_mean;
     float mean = data::compute(accu_mean, slice_ima | ima_label.domain());
     arr.append(mean);
   }

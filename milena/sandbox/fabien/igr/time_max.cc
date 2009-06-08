@@ -12,7 +12,7 @@
 #include <mln/io/magick/save.hh>
 
 #include <mln/accu/count.hh>
-#include <mln/accu/mean.hh>
+#include <mln/accu/stat/mean.hh>
 #include <mln/accu/sum.hh>
 #include <mln/accu/image/all.hh>
 
@@ -39,7 +39,7 @@ using value::int_u8;
 inline
 image2d<float> mean_slices(util::array<image2d<float> >& arr_ima, int first, int last)
 {
-  image2d<accu::mean<float> > result;
+  image2d<accu::stat::mean<float> > result;
 
   mln_precondition(first >=0 && first < arr_ima.nelements());
   mln_precondition(last >=0 && last < arr_ima.nelements());

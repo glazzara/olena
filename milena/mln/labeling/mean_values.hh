@@ -40,7 +40,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/vec3d.hh>
 
-# include <mln/accu/mean.hh>
+# include <mln/accu/stat/mean.hh>
 
 # include <mln/data/transform.hh>
 
@@ -109,7 +109,7 @@ namespace mln
 	  typedef mln_value(I) IV;
 
 	  util::array<float> m_3f
-	      = labeling::compute(accu::mean<IV>(),
+	      = labeling::compute(accu::stat::mean<IV>(),
 				  input, // input color image
 				  lbl, // watershed labeling
 				  nlabels);
@@ -139,7 +139,7 @@ namespace mln
 	const I& input = exact(input_);
 	const L& lbl = exact(lbl_);
 
-	util::array<vec3d_f> m_3f = labeling::compute(accu::mean<mln_value(I)>(),
+	util::array<vec3d_f> m_3f = labeling::compute(accu::stat::mean<mln_value(I)>(),
 	    input, // input color image
 	    lbl, // watershed labeling
 	    nlabels);

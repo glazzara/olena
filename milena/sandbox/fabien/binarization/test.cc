@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-#include <mln/accu/median_h.hh>
+#include <mln/accu/stat/median_h.hh>
 
 #include <mln/algebra/vec.hh>
 
@@ -87,7 +87,7 @@ int draw_lines(image2d<bool>& ima, int col_min, int col_max)
 
   image1d<int> ima_lines;
   convert::from_to(inter_lines, ima_lines);
-  accu::median_h<int_u12> accu_med;
+  accu::stat::median_h<int_u12> accu_med;
   median = data::compute(accu_med, ima_lines);
 
   // Gnuplot files creation
