@@ -125,8 +125,8 @@ done
 export LIBTOOLIZE=$libtoolize
 require $libtoolize 1.5.22
 
-# Generate unit test files.
-run milena/tests/unit_test ./build_unit_test.sh `pwd`/milena/mln
+# Tell what's going on.
+set -x
 
 # Generate milena/headers.mk
 run milena ./generate_dist_headers.sh
@@ -135,11 +135,11 @@ run milena ./generate_dist_headers.sh
 # for the tutorial.
 run milena/doc ./generate_dist_files.sh
 
+# Generate unit test files.
+run milena/tests/unit_test ./build_unit_test.sh `pwd`/milena/mln
+
 # Generate unit test files for Scribo.
 run scribo/tests/unit_test ./build_unit_test.sh `pwd`/scribo
-
-# Tell what's going on.
-set -x
 
 # Install the GNU Build System.
 autoreconf -f -v -i

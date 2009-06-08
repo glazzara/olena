@@ -1,5 +1,12 @@
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve bootstrap.
+	
+	* bootstrap: Trigger option `-x' earlier.
+	Run generators following the project's directory hierarchy.
+
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor local recursive targets in top-level Makefile.
 
 	* Makefile.am (doc, pretty-check): Remove targets.
