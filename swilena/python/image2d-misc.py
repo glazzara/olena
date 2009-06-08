@@ -22,13 +22,24 @@ from swilena import *
 ima = image2d_int.image2d_int(3, 3)
 image2d_int.fill(ima, 42)
 
+# FIXME: Help version of SWIG older than 1.3.39.  For instance, SWIG
+# 1.3.36 does not generate code smart enough to detect that the output
+# of `ima.domain()' should be a wrapped `box2d'.  Help it.
+#
+# We should get rid of this when SWIG 1.3.39 (or greater) is
+# widespread.
+if config.have_swig(0x010339):
+  domain = ima.domain()
+else:
+  domain = box2d(3, 3)
+
 # FIXME: Eventually we'd like to be able to write this:
 #
 #   for p in ima.domain():
 #     print "ima(" + str(p) + ") = " + ima(p)
 #
 # as it is generic and way closer to what we do in C++.
-for p in ima.domain():
+for p in domain:
   # FIXME: Handling POD types (like int) as value types is not
   # transparent: ima(p) returns a pointer to int wrapped in a SWIG
   # object, and cannot be easily converted to a Python integer
