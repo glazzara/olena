@@ -22,6 +22,8 @@
 
 import ltihooks
 
+import config
+
 from box2d import *
 from point2d import *
 from dpoint2d import *

@@ -1,5 +1,17 @@
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	New Swilena module: config.
+
+	* config.i: New.
+	* python/Makefile.am (pyexec_LTLIBRARIES): Add _config.la.
+	(nodist__config_la_SOURCES, _config_la_LIBADD): New.
+	(CLEANFILES): Add $(nodist__config_la_SOURCES), config.py,
+	config.pyc and config.pyo.
+	(nodist_python_PYTHON): Add config.py.
+	* python/swilena.py: Import config.
+
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix Swilena's copyright headers.
 
 	* box.ixx,

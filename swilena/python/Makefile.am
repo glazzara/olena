@@ -47,6 +47,16 @@ python_PYTHON += data.py
 nodist_python_PYTHON =
 pyexec_LTLIBRARIES =
 
+## config.
+pyexec_LTLIBRARIES += _config.la
+nodist__config_la_SOURCES = config-wrap.cc
+_config_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__config_la_SOURCES) config.py config.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_config-wrap.Pcc@am__quote@
+nodist_python_PYTHON += config.py
+
 ## point2d.
 pyexec_LTLIBRARIES += _point2d.la
 nodist__point2d_la_SOURCES = point2d-wrap.cc
