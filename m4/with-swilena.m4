@@ -78,14 +78,14 @@ if test x$with_swig != xno; then
 # 	    [You need Ruby development files to compile the Ruby interface.])])
 #   CPPFLAGS=$save_CPPFLAGS
 
-  AC_PROG_SWIG([1.3.31])
+  AC_PROG_SWIG([1.3.36])
   if (eval "$SWIG -version") >/dev/null 2>&1; then :; else
     oln_has_swig=no
   fi
 
   case $with_swig:$oln_has_swig in
     yes:no)
-      AC_MSG_ERROR([SWIG 1.3.31 is required.
+      AC_MSG_ERROR([SWIG 1.3.36 is required.
 		    Use `--without-swig' to disable SWIG modules.]);;
   esac
 fi
