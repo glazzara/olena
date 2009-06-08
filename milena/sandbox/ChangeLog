@@ -1,3 +1,8 @@
+2009-06-08  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Minor changes to move_accu script.
+	* edwin/move_accu.sh: Minor changes.
+
 2009-06-07  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add script to move a subset of accus to their own directory.

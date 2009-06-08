@@ -62,8 +62,9 @@ for accu in `cat $1`; do
     ACCU="$(echo $accu | tr '[:lower:]' '[:upper:]')"
     $SED "s/MLN_ACCU_${ACCU}_HH/MLN_ACCU_${SUB}_${ACCU}_HH/$SED_OPT" "mln/accu/$sub/$accu.hh"
     $SED "s|mln/accu/$accu.hh|mln/accu/$sub/$accu.hh|$SED_OPT" $files
-    $SED "s/accu::$accu</accu::$sub::$accu</$SED_OPT" $files
-    $SED "s/accu::meta::$accu\([^a-zA-Z_]\)/accu::meta::$sub::$accu\1/$SED_OPT" $files
+    $SED "s|tests/accu/$accu.cc|tests/accu/$sub/$accu.cc|$SED_OPT" $files
+    $SED "s/accu::$accu\([^a-zA-Z0-9_]\)/accu::$sub::$accu\1/$SED_OPT" $files
+    $SED "s/accu::meta::$accu\([^a-zA-Z0-9_]\)/accu::meta::$sub::$accu\1/$SED_OPT" $files
 
     # All.hh & essential.hh update.
     $SED "\|# include <mln/accu/$accu.hh>|d" mln/accu/all.hh
