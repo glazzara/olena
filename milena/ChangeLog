@@ -1,3 +1,11 @@
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Help Swilena to compile again.
+
+	* mln/core/alias/neighb2d.hh (mln::c6_2d): Declare it.
+	Use fully qualified type name of mln::fun::p2b::chess to help
+	swig.
+
 2009-06-08  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add forgotten path alteration due to accu move.

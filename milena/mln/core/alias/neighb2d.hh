@@ -122,6 +122,8 @@ namespace mln
   const neighb2d& c2_col();
 
 
+  // FIXME: Documentation
+  neighb< win::multiple<window2d, mln::fun::p2b::chess> > c6_2d();
 
 
 
@@ -203,7 +205,7 @@ namespace mln
 
 
   inline
-  neighb< win::multiple<window2d, fun::p2b::chess> >
+  neighb< win::multiple<window2d, mln::fun::p2b::chess> >
   c6_2d()
   {
     bool vert[] = { 1, 1, 0,
