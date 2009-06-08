@@ -1,5 +1,14 @@
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor tests/tests-recursive.mk.
+
+	* tests/tests-recursive.mk: Include
+	build-aux/extra-recursive-targets.mk.
+	(EXTRA_RECURSIVE_TARGETS): Add tests-recursive.
+	Remove redundant parts.
+
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename Make target `regen-dist' as `regen'.
 
 	* Makefile.am, doc/Makefile.am (regen-dist): Rename target as...
