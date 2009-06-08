@@ -35,12 +35,6 @@
 ///
 /// A complex defines a topological space which can be used as a
 /// support for an image (i.e., as site sets).
-///
-/// \todo Roland: Check that the top of the inheritance diagram
-/// is correct;  you wrote:
-///    faces_set_mixin<0, D>  --->  lower_dim_faces_set_mixin<D, D>
-/// I (theo) think it's:
-///    faces_set_mixin<0, D>  --->  lower_dim_faces_set_mixin<0, D>
 
 # include <cstddef>
 
@@ -246,7 +240,7 @@ namespace mln
 
         \verbatim
 
-                   ,----------->  lower_dim_faces_set_mixin<D, D>
+                   ,-----------> higher_dim_faces_set_mixin<0, D>
                    |
         faces_set_mixin<0, D> 
                  ^

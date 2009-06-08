@@ -1,3 +1,10 @@
+2009-06-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Typo in the documentation of mln::topo::complex.
+
+	* mln/topo/complex.hh: Here.
+	Reported by Thierry Géraud  <thierry.geraud@lrde.epita.fr>.
+
 2009-06-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix some g++-3.3 compilation warnings and errors.
