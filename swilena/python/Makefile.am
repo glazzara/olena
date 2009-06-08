@@ -212,11 +212,6 @@ $(srcdir)/run.stamp: $(RUN_IN)
 # as `--python' to `run'.
 TESTS =									\
   box2d-misc.py								\
-  image2d-misc.py morpho-fun.py morpho-segm.py
-
-# Do no exercise tests known to fail with old versions of SWIG.
-if HAVE_SWIG_1_3_39
-TESTS += dynamic-image2d-misc.py
-endif HAVE_SWIG_1_3_39
+  image2d-misc.py morpho-fun.py morpho-segm.py dynamic-image2d-misc.py
 
 EXTRA_DIST += $(TESTS)
