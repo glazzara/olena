@@ -185,7 +185,7 @@ namespace mln
     {
       if (is_valid())
 	{
-	  if (f_.face_id() + 1 < f_.cplx().nfaces(f_.n()))
+	  if (f_.face_id() + 1 < f_.cplx().nfaces_of_dim(f_.n()))
 	    f_.inc_face_id();
 	  else
 	    // Start to iterate on the faces of the next dimension if
@@ -245,7 +245,7 @@ namespace mln
 	    if (f_.n() > 0)
 	      {
 		f_.dec_n();
-		f_.set_face_id(f_.cplx().nfaces(f_.n()) - 1);
+		f_.set_face_id(f_.cplx().nfaces_of_dim(f_.n()) - 1);
 	      }
 	    else
 	      invalidate();

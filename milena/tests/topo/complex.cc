@@ -112,9 +112,12 @@ int main()
 
   std::cout
     << "Using ``dynamic'' manipulators." << std::endl
-    << "  number of 0-faces: c.nfaces(0) = " << c.nfaces(0) << std::endl
-    << "  number of 1-faces: c.nfaces(1) = " << c.nfaces(1) << std::endl
-    << "  number of 2-faces: c.nfaces(2) = " << c.nfaces(2) << std::endl
+    << "  number of 0-faces: c.nfaces_of_dim(0) = "
+    << c.nfaces_of_dim(0) << std::endl
+    << "  number of 1-faces: c.nfaces_of_dim(1) = "
+    << c.nfaces_of_dim(1) << std::endl
+    << "  number of 2-faces: c.nfaces_of_dim(2) = "
+    << c.nfaces_of_dim(2) << std::endl
     << std::endl;
 
   /*-------------------.

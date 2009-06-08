@@ -1,5 +1,20 @@
 2009-06-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename nfaces(unsigned) as nfaces_of_dim(unsigned).
+
+	* mln/core/image/complex_image.hh,
+	* mln/core/site_set/p_complex.hh,
+	* mln/io/off/load.hh,
+	* mln/topo/complex.hh,
+	* mln/topo/face.hh,
+	* mln/topo/face_iter.hh: 
+	* mln/topo/n_face_iter.hh,
+	* tests/core/image/complex_image.cc,
+	* tests/topo/complex.cc:
+	Here.
+
+2009-06-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename nfaces_with_dim<N>() as nfaces_of_static_dim<N>().
 
 	* apps/statues/save_bin_alt.hh,

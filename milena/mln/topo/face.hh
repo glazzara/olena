@@ -208,7 +208,7 @@ namespace mln
     bool
     face<D>::is_valid() const
     {
-      return n_ <= D && face_id_ < cplx_.nfaces(n_);
+      return n_ <= D && face_id_ < cplx_.nfaces_of_dim(n_);
     }
 
     template <unsigned D>

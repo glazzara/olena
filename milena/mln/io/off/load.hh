@@ -583,7 +583,7 @@ namespace mln
 	{
 	  // Default values.
 	  for (unsigned i = 0; i <= D; ++i)
-	    vs[i].insert(vs[i].begin(), s.cplx().nfaces(i), true);
+	    vs[i].insert(vs[i].begin(), s.cplx().nfaces_of_dim(i), true);
 	}
 
 	void
@@ -591,7 +591,7 @@ namespace mln
 	{
 	  // Default values for n-face with n in [0, D[.
 	  for (unsigned i = 0; i < D; ++i)
-	    vs[i].insert(vs[i].begin(), s.cplx().nfaces(i), 0.0f);
+	    vs[i].insert(vs[i].begin(), s.cplx().nfaces_of_dim(i), 0.0f);
 	  // Values for D-faces.
 	  vs[D] = face_value;
 	}
@@ -601,7 +601,8 @@ namespace mln
 	{
 	  // Default values for n-face with n in [0, D[.
 	  for (unsigned i = 0; i < D; ++i)
-	    vs[i].insert(vs[i].begin(), s.cplx().nfaces(i), literal::black);
+	    vs[i].insert(vs[i].begin(), s.cplx().nfaces_of_dim(i),
+			 literal::black);
 	  // Values for D-faces.
 	  vs[D] = face_value;
 	}

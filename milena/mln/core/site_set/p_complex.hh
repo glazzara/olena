@@ -158,11 +158,7 @@ namespace mln
     /// Return the number of faces in the complex.
     unsigned nfaces() const;
     /// Return the number of \a n-faces in the complex.
-    unsigned nfaces(unsigned n) const;
-
-    // FIXME: Add nfaces(unsigned) routines?  Yes, if this can
-    // simplify (and lighten) the implementation of piters, psites,
-    // etc.
+    unsigned nfaces_of_dim(unsigned n) const;
 
     // FIXME: This method is probably useless now.
     /// Is this site set valid?
@@ -259,9 +255,9 @@ namespace mln
   template <unsigned D, typename G>
   inline
   unsigned
-  p_complex<D, G>::nfaces(unsigned n) const
+  p_complex<D, G>::nfaces_of_dim(unsigned n) const
   {
-    return cplx_.nfaces(n);
+    return cplx_.nfaces_of_dim(n);
   }
 
   template <unsigned D, typename G>

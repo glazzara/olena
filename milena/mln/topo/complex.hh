@@ -143,7 +143,7 @@ namespace mln
       /// since each n_faces_set is checked (the present implementation
       /// does not provide a direct access to n_faces_set through a
       /// dynamic value of the dimension).
-      unsigned nfaces(unsigned n) const;
+      unsigned nfaces_of_dim(unsigned n) const;
       /// \}
 
       /// Pretty-printing.
@@ -555,7 +555,7 @@ namespace mln
       /// add_size : c -> c.size()
       /// \endcode
       ///
-      /// \see mln::complex<D>::nfaces (dynamic version).
+      /// \see mln::complex<D>::nfaces_of_dim (dynamic version).
       /// \see mln::complex<D>::apply_if_dim_matches_.
       struct get_size
       {
@@ -600,7 +600,7 @@ namespace mln
     template <unsigned D>
     inline
     unsigned
-    complex<D>::nfaces(unsigned n) const
+    complex<D>::nfaces_of_dim(unsigned n) const
     {
       // Ensure N is compatible with D.
       mln_precondition(n <= D);

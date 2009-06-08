@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -160,7 +160,7 @@ int main()
   metal::vec<D + 1, std::vector< int_u8 > > values;
   // Assign 0 to 0-faces, 1 to 1-faces and 2 to 2-faces.
   for (unsigned d = 0; d <= D; ++d)
-    for (unsigned n = 0; n < pc.cplx().nfaces(d); ++n)
+    for (unsigned n = 0; n < pc.cplx().nfaces_of_dim(d); ++n)
       values[d].push_back(d);
 
   // Create and init an image based on PC.

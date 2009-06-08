@@ -223,7 +223,7 @@ namespace mln
 	 big blocks of preconditions like this one.  */
 # ifndef NDEBUG
       for (unsigned i = 0; i < D; ++i)
-	mln_precondition(pc.cplx().nfaces(i) == values[i].size());
+	mln_precondition(pc.cplx().nfaces_of_dim(i) == values[i].size());
 # endif // !NDEBUG
     }
 
@@ -245,7 +245,7 @@ namespace mln
   {
     metal::vec<D + 1, std::vector<V> > values;
     for (unsigned i = 0; i <= D; ++i)
-      values[i].resize(pc.cplx().nfaces(i));
+      values[i].resize(pc.cplx().nfaces_of_dim(i));
     init_(pc, values);
   }
 

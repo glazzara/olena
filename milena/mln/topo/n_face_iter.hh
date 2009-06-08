@@ -214,7 +214,7 @@ namespace mln
     {
       if (is_valid())
 	{
-	  if (f_.face_id() + 1 < f_.cplx().nfaces(n()))
+	  if (f_.face_id() + 1 < f_.cplx().nfaces_of_dim(n()))
 	    f_.inc_face_id();
 	  else
 	    /* Don't invalidate the whole face if we have reached the
@@ -229,7 +229,7 @@ namespace mln
     void
     n_face_fwd_iter<D>::invalidate_face_id_()
     {
-      f_.set_face_id(f_.cplx().nfaces(n()));
+      f_.set_face_id(f_.cplx().nfaces_of_dim(n()));
     }
 
     template <unsigned D>
@@ -277,7 +277,7 @@ namespace mln
     void
     n_face_bkd_iter<D>::start()
     {
-      f_.set_face_id(f_.cplx().nfaces(n()) - 1);
+      f_.set_face_id(f_.cplx().nfaces_of_dim(n()) - 1);
     }
 
     template <unsigned D>
@@ -302,7 +302,7 @@ namespace mln
     void
     n_face_bkd_iter<D>::invalidate_face_id_()
     {
-      f_.set_face_id(f_.cplx().nfaces(n()));
+      f_.set_face_id(f_.cplx().nfaces_of_dim(n()));
     }
 
     template <unsigned D>
