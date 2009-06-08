@@ -1,5 +1,12 @@
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve and clean up Makefile.am.
+
+	* Makefile.am (tools): Remove useless target.
+	(doc, tutorial): Do not use make's non portable `-C' option.
+
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Adjust Milena's top-level Makefile w.r.t the pretty-check target.
 
 	* Makefile.am (pretty-check): New (phony) target.

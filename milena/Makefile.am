@@ -13,19 +13,17 @@ if ENABLE_TOOLS
   SUBDIRS += tools
 endif ENABLE_TOOLS
 
-.PHONY: doc tutorial tools pretty-check
+.PHONY: doc tutorial pretty-check
 
 doc:
-	$(MAKE) -C doc doc
+	cd doc && $(MAKE) $(AM_MAKEFLAGS) $@
 
+# FIXME: This target has no trigger in the top-level.
 tutorial:
-	$(MAKE) -C doc tutorial
+	cd doc && $(MAKE) $(AM_MAKEFLAGS) $@
 
 pretty-check:
 	cd tests && $(MAKE) $(AM_MAKEFLAGS) $@
-
-tools:
-	$(MAKE) -C tools all
 
 # Regen files recursively.
 include $(top_srcdir)/build-aux/regen-recursive.mk
