@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_EXACT_GCC_2_95_HH
 # define MLN_CORE_INTERNAL_EXACT_GCC_2_95_HH
 
-/// \file mln/core/internal/exact_gcc_2_95.hh
+/// \file
 ///
 /// \brief Definition of the mln::exact downcast routines
 /// for g++-2.95.

@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_INTERNAL_ELEMENTARY_HH
 # define MLN_MORPHO_INTERNAL_ELEMENTARY_HH
 
-/// \file mln/morpho/internal/elementary.hh
+/// \file
 /// \brief Morphological elementary operator.
 ///
 /// \todo Add fastest version.

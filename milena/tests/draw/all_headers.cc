@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/draw/all_headers.cc
+/*! \file
  *
  * \brief Tests on mln::draw.
  */

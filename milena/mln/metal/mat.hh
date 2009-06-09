@@ -29,7 +29,7 @@
 # define MLN_METAL_MAT_HH
 
 /*!
- * \file  mln/metal/mat.hh
+ * \file
  *
  * \brief Definition of a generic matrix class.
  */

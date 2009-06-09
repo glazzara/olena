@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_MATH_ROOT_HH
 # define MLN_METAL_MATH_ROOT_HH
 
-/*! \file mln/metal/math/root.hh
+/*! \file
  *
  * \brief Definition of the 'nth-root' static function.
  *

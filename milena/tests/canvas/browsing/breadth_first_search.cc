@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/canvas/browsing/breadth_first_search.cc
+/// \file
 ///
 /// Tests on mln::canvas::browsing::breadth_first_search.hh.
 

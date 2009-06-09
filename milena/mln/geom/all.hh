@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_ALL_HH
 # define MLN_GEOM_ALL_HH
 
-/// \file mln/geom/all.hh
+/// \file
 ///
 /// File that includes all geometry related things.
 

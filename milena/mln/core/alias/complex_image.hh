@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_ALIAS_COMPLEX_IMAGE_HH
 # define MLN_CORE_ALIAS_COMPLEX_IMAGE_HH
 
-/// \file mln/core/alias/complex_image.hh
+/// \file
 /// \brief Definition of mln::complex_image aliases.
 ///
 /// As C++ does not allow template typedefs (yet), using shortcuts for

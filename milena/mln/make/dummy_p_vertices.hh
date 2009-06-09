@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_DUMMY_P_VERTICES_HH
 # define MLN_MAKE_DUMMY_P_VERTICES_HH
 
-/// \file mln/make/dummy_p_vertices.hh
+/// \file
 ///
 /// Create a p_vertices which associate a graph element to a constant site.
 ///

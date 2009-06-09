@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_DIFF_HH
 # define MLN_WIN_DIFF_HH
 
-/// \file mln/win/diff.hh
+/// \file
 ///
 /// \brief Set difference between a couple of windows or neighborhoods.
 

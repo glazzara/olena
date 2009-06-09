@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_MAX_SITE_HH
 # define MLN_ACCU_MAX_SITE_HH
 
-/// \file mln/accu/max_site.hh
+/// \file
 ///
 /// Define an accumulator that computes the first site with the maximum value
 /// in an image.

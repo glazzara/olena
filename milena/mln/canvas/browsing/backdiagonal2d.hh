@@ -29,7 +29,7 @@
 #ifndef MLN_CANVAS_BROWSING_BACKDIAGONAL2D_HH
 # define MLN_CANVAS_BROWSING_BACKDIAGONAL2D_HH
 
-/// \file mln/canvas/browsing/backdiagonal2d.hh
+/// \file
 ///
 /// \brief Backdiagonal2d browsing of an image.
 

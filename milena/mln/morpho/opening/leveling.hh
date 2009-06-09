@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_OPENING_LEVELING_HH
 # define MLN_MORPHO_OPENING_LEVELING_HH
 
-/// \file mln/morpho/opening/leveling.hh
+/// \file
 ///
 /// Morphological leveling opening.
 

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/data/median_fast.cc
+/*! \file
  *
  * \brief Test on mln::data::fast_median.
  */

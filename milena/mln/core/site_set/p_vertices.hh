@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_VERTICES_HH
 # define MLN_CORE_SITE_SET_P_VERTICES_HH
 
-/// \file mln/core/site_set/p_vertices.hh
+/// \file
 ///
 /// Definition of a point set based on graph vertices.
 

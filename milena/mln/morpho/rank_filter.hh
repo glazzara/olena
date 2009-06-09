@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_RANK_FILTER_HH
 # define MLN_MORPHO_RANK_FILTER_HH
 
-/// \file mln/morpho/rank_filter.hh
+/// \file
 ///
 /// Morphological rank filter.
 ///

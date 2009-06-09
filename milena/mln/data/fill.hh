@@ -29,7 +29,7 @@
 #ifndef MLN_DATA_FILL_HH
 # define MLN_DATA_FILL_HH
 
-/// \file mln/data/fill.hh
+/// \file
 ///
 /// Fill an image, that is, set pixel values.
 ///

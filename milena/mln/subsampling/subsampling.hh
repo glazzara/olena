@@ -29,7 +29,7 @@
 #ifndef MLN_SUBSAMPLING_SUBSAMPLING_HH
 # define MLN_SUBSAMPLING_SUBSAMPLING_HH
 
-/// \file mln/binarization/threshold.hh
+/// \file
 ///
 /// Produce a subsampled image
 

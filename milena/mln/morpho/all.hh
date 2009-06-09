@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_ALL_HH
 # define MLN_MORPHO_ALL_HH
 
-/// \file mln/morpho/all.hh
+/// \file
 ///
 /// File that includes all mathematical morphology routines.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_MATH_ALL_HH
 # define MLN_MATH_ALL_HH
 
-/// \file mln/math/all.hh
+/// \file
 ///
 /// File that includes all mathematical routines.
 

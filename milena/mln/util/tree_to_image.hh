@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_TREE_TO_IMAGE_HH
 # define MLN_UTIL_TREE_TO_IMAGE_HH
 
-/// \file   mln/util/tree_to_image.hh
+/// \file
 ///
 /// Definition of function which transform a tree into an
 /// image.

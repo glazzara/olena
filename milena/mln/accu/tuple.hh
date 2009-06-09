@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_TUPLE_HH
 # define MLN_ACCU_TUPLE_HH
 
-/// \file mln/accu/tuple.hh
+/// \file
 ///
 /// Define a tuple of accumulators.
 

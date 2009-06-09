@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2V_ID_HH
 # define MLN_FUN_V2V_ID_HH
 
-/*! \file mln/fun/v2v/id.hh
+/*! \file
  *
  * \brief Identity function.
  */

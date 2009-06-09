@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_ROUTINE_EXTEND_HH
 # define MLN_CORE_ROUTINE_EXTEND_HH
 
-/// \file mln/core/routine/extend.hh
+/// \file
 ///
 /// Definition of a morpher that extends the extended domain of an image.
 ///

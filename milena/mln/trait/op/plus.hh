@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_PLUS_HH
 # define MLN_TRAIT_OP_PLUS_HH
 
-/*! \file mln/trait/op/plus.hh
+/*! \file
  *
  * \brief Declaration of the "binary plus" operator trait.
  */

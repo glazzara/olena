@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_OPENING_APPROX_ALL_HH
 # define MLN_MORPHO_OPENING_APPROX_ALL_HH
 
-/// \file mln/morpho/opening/approx/all.hh
+/// \file
 ///
 /// File that includes all approximate mathematical morphology opening
 /// routines.

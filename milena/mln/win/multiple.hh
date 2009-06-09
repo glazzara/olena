@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_MULTIPLE_HH
 # define MLN_WIN_MULTIPLE_HH
 
-/// \file mln/win/multiple.hh
+/// \file
 ///
 /// Definition of a multiple window.
 ///

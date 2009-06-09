@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_P2P_MIRROR_HH
 # define MLN_FUN_P2P_MIRROR_HH
 
-/// \file mln/fun/p2p/mirror.hh
+/// \file
 ///
 /// FIXME: doc
 

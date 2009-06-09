@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_DETACH_HH
 # define MLN_TOPO_DETACH_HH
 
-/// \file mln/topo/detach.hh
+/// \file
 /// \brief Detachin a cell from a binary complex-based image.
 
 # include <mln/core/site_set/p_set.hh>

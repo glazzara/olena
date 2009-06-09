@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_NEXT_SOLVE_BINARY_HH
 # define MLN_TRAIT_NEXT_SOLVE_BINARY_HH
 
-/// \file   mln/trait/next/solve_binary.hh
+/// \file
 ///
 ///  FIXME
 

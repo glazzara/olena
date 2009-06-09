@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_CONCEPT_META_FUNCTION_HH
 # define MLN_CORE_CONCEPT_META_FUNCTION_HH
 
-/// \file mln/core/concept/meta_function.hh
+/// \file
 ///
 /// Definition of the concept of mln::Meta_Function.
 

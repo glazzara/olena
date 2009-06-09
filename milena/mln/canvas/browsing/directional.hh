@@ -29,7 +29,7 @@
 #ifndef MLN_CANVAS_BROWSING_DIRECTIONAL_HH
 # define MLN_CANVAS_BROWSING_DIRECTIONAL_HH
 
-/// \file mln/canvas/browsing/directional.hh
+/// \file
 ///
 /// Directional browsing of an image.
 

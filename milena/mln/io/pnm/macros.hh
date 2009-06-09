@@ -29,7 +29,7 @@
 #ifndef MLN_IO_PNM_MACROS_HH
 # define MLN_IO_PNM_MACROS_HH
 
-/*! \file mln/io/pnm/macros.hh
+/*! \file
  *
  * \brief Definition of pnm formats macros.
  */

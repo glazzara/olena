@@ -29,7 +29,7 @@
 # define MLN_MORPHO_MIN_HH
 
 /*!
- * \file  mln/morpho/min.hh
+ * \file
  *
  * \brief Definition of a function that make a min
  * (logical and or arithmetical min) of an image.

@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_SITE_SET_ALL_HH_
 # define MLN_ACCU_SITE_SET_ALL_HH_
 
-/// \file mln/accu/site_set/all.hh
+/// \file
 ///
 /// File that includes all accumulator types working on site sets.
 

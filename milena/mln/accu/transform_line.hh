@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_TRANSFORM_LINE_HH
 # define MLN_ACCU_TRANSFORM_LINE_HH
 
-/// \file mln/accu/transform_line.hh
+/// \file
 ///
 /// Run an accumulator over a line (in a particular direction).
 ///

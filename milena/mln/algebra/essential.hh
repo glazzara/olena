@@ -28,7 +28,7 @@
 #ifndef MLN_ALGEBRA_ESSENTIAL_HH
 # define MLN_ALGEBRA_ESSENTIAL_HH
 
-/*! \file mln/algebra/essential.hh
+/*! \file
  *
  * \brief File that includes essential "point-wise" expression tools.
  */

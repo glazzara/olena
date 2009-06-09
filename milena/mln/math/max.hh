@@ -28,7 +28,7 @@
 #ifndef MLN_MATH_MAX_HH
 # define MLN_MATH_MAX_HH
 
-/*! \file mln/math/max.hh
+/*! \file
  *
  * \brief Define max routine.
  */

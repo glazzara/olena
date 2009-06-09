@@ -29,7 +29,7 @@
 #ifndef MLN_ARITH_REVERT_SPE_HH
 # define MLN_ARITH_REVERT_SPE_HH
 
-/// \file mln/arith/revert.spe.hh
+/// \file
 ///
 /// Specializations for mln::arith::revert.
 

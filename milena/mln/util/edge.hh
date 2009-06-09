@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_EDGE_HH
 # define MLN_UTIL_EDGE_HH
 
-/// \file mln/util/edge.hh
+/// \file
 ///
 /// Definition of a graph edge.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_LABELING_VALUE_SPE_HH
 # define MLN_LABELING_VALUE_SPE_HH
 
-/// \file mln/labeling/value.spe.hh
+/// \file
 ///
 /// Specialization for mln::labeling::value.
 ///

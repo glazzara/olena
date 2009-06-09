@@ -28,7 +28,7 @@
 // GUARD NOT REQUIRED: essential included files already have guards.
 
 /*!
- * \file   mln/trait/op/essential.hh
+ * \file
  *
  * \brief  FIXME
  *

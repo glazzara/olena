@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/algebra/mat2.cc
+/*! \file
  *
  * \brief Test on mln::algebra::mat.
  */

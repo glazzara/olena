@@ -29,7 +29,7 @@
 #ifndef MLN_LITERAL_ALL_HH
 # define MLN_LITERAL_ALL_HH
 
-/// \file mln/literal/all.hh
+/// \file
 ///
 /// File that includes all literals.
 

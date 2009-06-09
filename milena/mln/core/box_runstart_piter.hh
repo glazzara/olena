@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_BOX_RUNSTART_PITER_HH
 # define MLN_CORE_BOX_RUNSTART_PITER_HH
 
-/// \file mln/core/box_runstart_piter.hh
+/// \file
 ///
 /// Definition of iterators on points by lines.
 

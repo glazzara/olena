@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_MAX_IND_HH
 # define MLN_GEOM_MAX_IND_HH
 
-/// \file mln/geom/max_ind.hh
+/// \file
 ///
 /// Give the maximum ind of an image.
 

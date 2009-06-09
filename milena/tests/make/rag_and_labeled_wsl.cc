@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/make/rag_and_labeled_wsl.cc
+/// \file
 ///
 /// Tests on mln::make::rag_and_labeled_wsl
 

@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_ALL_HH
 # define MLN_CORE_ALL_HH
 
-/// \file mln/core/all.hh
+/// \file
 ///
 /// File that includes all the core routines.
 

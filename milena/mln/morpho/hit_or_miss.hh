@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_HIT_OR_MISS_HH
 # define MLN_MORPHO_HIT_OR_MISS_HH
 
-/// \file mln/morpho/hit_or_miss.hh
+/// \file
 ///
 /// Morphological hit-or-miss.
 ///

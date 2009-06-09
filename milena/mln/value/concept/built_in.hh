@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_CONCEPT_BUILT_IN_HH
 # define MLN_VALUE_CONCEPT_BUILT_IN_HH
 
-/*! \file mln/value/concept/built_in.hh
+/*! \file
  *
  * \brief Define a generic class for built-in values.
  */

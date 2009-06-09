@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_IMAGE_TAKE_N_TIMES_HH
 # define MLN_ACCU_IMAGE_TAKE_N_TIMES_HH
 
-/// \file mln/accu/image/take_n_times.hh
+/// \file
 ///
 /// Update an image of accumulators by taking the contents of another
 /// image with a multiplicity.

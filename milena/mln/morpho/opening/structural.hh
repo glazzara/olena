@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_OPENING_STRUCTURAL_HH
 # define MLN_MORPHO_OPENING_STRUCTURAL_HH
 
-/// \file mln/morpho/opening/structural.hh
+/// \file
 ///
 /// Morphological structural opening.
 

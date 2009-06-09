@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_NEXT_SOLVE_PROXY_HH
 # define MLN_TRAIT_NEXT_SOLVE_PROXY_HH
 
-/// \file mln/trait/next/solve_proxy.hh
+/// \file
 ///
 /// Proxy support for "next" trait solver.
 

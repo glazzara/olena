@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_NEIGHB_HH
 # define MLN_CORE_NEIGHB_HH
 
-/// \file mln/core/neighb.hh
+/// \file
 ///
 /// Definition of a window-to-neighborhood adapter.
 ///

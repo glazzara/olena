@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_SET_OF_HH
 # define MLN_CORE_INTERNAL_SET_OF_HH
 
-/// \file mln/core/internal/set_of.hh
+/// \file
 ///
 /// \brief Definition of mln::set_of_ for internal use only.
 

@@ -29,7 +29,7 @@
 # define MLN_UTIL_BRANCH_ITER_HH
 
 /*!
- * \file   mln/util/branch_iter.hh
+ * \file
  *
  * \brief  Definition of a iterator on branch.
  *

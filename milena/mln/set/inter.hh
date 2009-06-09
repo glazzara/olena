@@ -29,7 +29,7 @@
 #ifndef MLN_SET_INTER_HH
 # define MLN_SET_INTER_HH
 
-/// \file mln/set/inter.hh
+/// \file
 ///
 /// Compute the intersection between a couple of site sets.
 

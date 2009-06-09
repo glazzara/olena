@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_IMAGE_ALL_HH
 # define MLN_ACCU_IMAGE_ALL_HH
 
-/// \file mln/accu/image/all.hh
+/// \file
 ///
 /// File that includes all accumulator image routines.
 

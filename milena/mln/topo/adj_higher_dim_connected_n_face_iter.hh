@@ -29,7 +29,7 @@
 #ifndef MLN_TOPO_ADJ_HIGHER_DIM_CONNECTED_N_FACE_ITER_HH
 # define MLN_TOPO_ADJ_HIGHER_DIM_CONNECTED_N_FACE_ITER_HH
 
-/// \file mln/topo/adj_higher_dim_connected_n_face_iter.hh
+/// \file
 ///
 /// \brief Definition of forward and backward iterators on all the
 /// n-faces sharing an adjacent (n+1)-face with a (reference) n-face

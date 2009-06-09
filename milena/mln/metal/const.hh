@@ -29,7 +29,7 @@
 # define MLN_METAL_CONST_HH
 
 /*!
- * \file  mln/metal/const.hh
+ * \file
  *
  * \brief FIXME.
  */

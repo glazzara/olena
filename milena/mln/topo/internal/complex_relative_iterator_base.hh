@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_INTERNAL_COMPLEX_RELATIVE_ITERATOR_BASE_HH
 # define MLN_TOPO_INTERNAL_COMPLEX_RELATIVE_ITERATOR_BASE_HH
 
-/** \file mln/topo/internal/complex_relative_iterator_base.hh
+/** \file
     Definition of an implementation (factoring) class for
     iterators on mln::complex.
 

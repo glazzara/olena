@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_STAT_MEDIAN_H_HH
 # define MLN_ACCU_STAT_MEDIAN_H_HH
 
-/// \file mln/accu/stat/median_h.hh
+/// \file
 ///
 /// Define a generic median accumulator class.
 

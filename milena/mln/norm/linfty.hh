@@ -29,7 +29,7 @@
 #ifndef MLN_NORM_LINFTY_HH
 # define MLN_NORM_LINFTY_HH
 
-/// \file mln/norm/linfty.hh
+/// \file
 ///
 /// Define some L-infinity-norm related routines.
 ///

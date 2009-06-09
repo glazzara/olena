@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_DMORPH_UNPROJECT_IMAGE_HH
 # define MLN_CORE_IMAGE_DMORPH_UNPROJECT_IMAGE_HH
 
-/// \file mln/core/image/dmorph/unproject_image.hh
+/// \file
 ///
 /// Definition of a morpher that un-projects an image.
 /// FIXME: Doc!

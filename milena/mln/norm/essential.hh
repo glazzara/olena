@@ -28,7 +28,7 @@
 #ifndef MLN_NORM_ESSENTIAL_HH
 # define MLN_NORM_ESSENTIAL_HH
 
-/*! \file mln/norm/essential.hh
+/*! \file
  *
  * \brief File that includes essential norm routines.
  */

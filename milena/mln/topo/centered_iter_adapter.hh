@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_CENTERED_ITER_ADAPTER_HH
 # define MLN_TOPO_CENTERED_ITER_ADAPTER_HH
 
-/// \file mln/topo/centered_iter_adapter.hh
+/// \file
 /// \brief Complex relative iterator adapters adding the central
 /// (reference) point to the set of iterated faces.
 

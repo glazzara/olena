@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_P2B_CHESS_HH
 # define MLN_FUN_P2B_CHESS_HH
 
-/// \file mln/fun/p2b/chess.hh
+/// \file
 ///
 /// FIXME.
 

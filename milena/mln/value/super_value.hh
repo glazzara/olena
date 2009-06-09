@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_SUPER_VALUE_HH
 # define MLN_VALUE_SUPER_VALUE_HH
 
-/*! \file mln/value/super_value.hh
+/*! \file
  *
  * \brief Definition of the mln::super_value trait.
  */

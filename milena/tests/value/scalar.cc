@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value/scalar.cc
+/*! \file
  *
  * \brief Tests on mln::value::scalar.
  */

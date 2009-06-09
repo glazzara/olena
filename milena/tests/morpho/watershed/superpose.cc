@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/watershed/superpose.cc
+/// \file
 ///
 /// Test on mln::morpho::watershed::superpose.
 

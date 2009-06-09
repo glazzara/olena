@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/other/w_window.cc
+/// \file
 /// \brief Tests on regular weighted windows.
 
 #include <mln/core/w_window.hh>

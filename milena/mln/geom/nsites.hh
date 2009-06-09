@@ -28,7 +28,7 @@
 #ifndef MLN_GEOM_NSITES_HH
 # define MLN_GEOM_NSITES_HH
 
-/// \file mln/geom/nsites.hh
+/// \file
 ///
 /// Compute the number of sites of an image or a site set.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_MORPHER_LVALUE_HH
 # define MLN_CORE_INTERNAL_MORPHER_LVALUE_HH
 
-/*! \file mln/core/internal/morpher_lvalue.hh
+/*! \file
  *
  * \brief Definition of a base class for some images.
  */

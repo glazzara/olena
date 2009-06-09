@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_SKELETON_CREST_HH
 # define MLN_TOPO_SKELETON_CREST_HH
 
-/// \file mln/topo/skeleton/crest.hh
+/// \file
 ///
 /// \brief Compute skeletization constraints.
 

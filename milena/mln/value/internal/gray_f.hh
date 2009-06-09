@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_INTERNAL_GRAY_F_HH
 # define MLN_VALUE_INTERNAL_GRAY_F_HH
 
-/// \file mln/value/internal/gray_f.hh
+/// \file
 ///
 /// Definition of the mln::value::gray_f class.
 

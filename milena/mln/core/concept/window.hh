@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_CONCEPT_WINDOW_HH
 # define MLN_CORE_CONCEPT_WINDOW_HH
 
-/// \file mln/core/concept/window.hh
+/// \file
 /// Definition of the concept of mln::Window.
 ///
 /// \todo Operator== should test if the cmp is possible.

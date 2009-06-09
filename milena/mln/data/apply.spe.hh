@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_APPLY_SPE_HH
 # define MLN_LEVEL_APPLY_SPE_HH
 
-/*! \file mln/data/apply.spe.hh
+/*! \file
  *
  * \brief Specializations for mln::data::apply.
  */

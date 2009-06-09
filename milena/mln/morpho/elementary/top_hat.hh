@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_ELEMENTARY_TOP_HAT_HH
 # define MLN_MORPHO_ELEMENTARY_TOP_HAT_HH
 
-/// \file mln/morpho/elementary/top_hat.hh
+/// \file
 ///
 /// Morphological elementary top-hats.
 ///

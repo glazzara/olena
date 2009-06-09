@@ -28,7 +28,7 @@
 #ifndef MLN_GRAPH_ESSENTIAL_HH
 # define MLN_GRAPH_ESSENTIAL_HH
 
-/// \file mln/graph/essential.hh
+/// \file
 ///
 /// File that include essential graph related routines.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_V2V_CAST_HH
 # define MLN_FUN_V2V_CAST_HH
 
-/// \file mln/fun/v2v/cast.hh
+/// \file
 ///
 /// FIXME.
 ///

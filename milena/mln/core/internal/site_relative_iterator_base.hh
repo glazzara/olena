@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_RELATIVE_ITERATOR_BASE_HH
 # define MLN_CORE_SITE_RELATIVE_ITERATOR_BASE_HH
 
-/// \file mln/core/internal/site_relative_iterator_base.hh
+/// \file
 ///
 /// Definition of forward and backward mln::dpoint_ based
 /// iterators.

@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_PIXEL_HH
 # define MLN_MAKE_PIXEL_HH
 
-/// \file mln/make/pixel.hh
+/// \file
 /// \brief Routine to construct an mln::pixel.
 
 # include <mln/core/concept/image.hh>

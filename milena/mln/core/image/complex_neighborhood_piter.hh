@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_COMPLEX_NEIGHBORHOOD_PITER_HH
 # define MLN_CORE_IMAGE_COMPLEX_NEIGHBORHOOD_PITER_HH
 
-/// \file   mln/core/image/complex_neighborhood_piter.hh
+/// \file
 ///
 /// Definition of a site iterator on a complex neighborhood.
 

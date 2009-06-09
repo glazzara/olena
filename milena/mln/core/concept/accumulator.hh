@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_CONCEPT_ACCUMULATOR_HH
 # define MLN_CORE_CONCEPT_ACCUMULATOR_HH
 
-/// \file mln/core/concept/accumulator.hh
+/// \file
 ///
 /// Definition of the concept of mln::Accumulator.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_STAT_MAX_H_HH
 # define MLN_ACCU_STAT_MAX_H_HH
 
-/// \file mln/accu/stat/max_h.hh
+/// \file
 ///
 /// Define a generic max accumulator class based on histogram.
 

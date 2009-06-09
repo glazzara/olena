@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_BUILTIN_SYMBOLICS_HH
 # define MLN_VALUE_BUILTIN_SYMBOLICS_HH
 
-/// \file mln/value/builtin/symbolics.hh
+/// \file
 ///
 /// Some definitions about built-in symbolic types.
 

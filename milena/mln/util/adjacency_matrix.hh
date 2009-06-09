@@ -28,7 +28,7 @@
 #ifndef MLN_UTIL_ADJACENCY_MATRIX_HH
 # define MLN_UTIL_ADJACENCY_MATRIX_HH
 
-/// \file mln/util/adjacency_matrix.hh
+/// \file
 ///
 /// \brief A class of adjacency matrix.
 ///

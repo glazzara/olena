@@ -28,7 +28,7 @@
 #ifndef MLN_IO_PLOT_SAVE_HH
 # define MLN_IO_PLOT_SAVE_HH
 
-/// \file   mln/io/plot/save.hh
+/// \file
 ///
 /// Define a routine which saves in a plot format.
 

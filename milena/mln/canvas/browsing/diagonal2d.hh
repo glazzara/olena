@@ -29,7 +29,7 @@
 #ifndef MLN_CANVAS_BROWSING_DIAGONAL2D_HH
 # define MLN_CANVAS_BROWSING_DIAGONAL2D_HH
 
-/// \file mln/canvas/browsing/diagonal2d.hh
+/// \file
 ///
 /// Diagonal2d browsing of an image.
 

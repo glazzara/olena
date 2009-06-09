@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_ELEMENTARY_GRADIENT_INTERNAL_HH
 # define MLN_MORPHO_ELEMENTARY_GRADIENT_INTERNAL_HH
 
-/// \file mln/morpho/elementary/gradient_internal.hh
+/// \file
 ///
 /// \todo Fix the extension issue (see todo in like_ero_fun and _set).
 

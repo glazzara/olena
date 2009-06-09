@@ -29,7 +29,7 @@
 #ifndef MLN_TRAIT_NEXT_SOLVE_HH
 # define MLN_TRAIT_NEXT_SOLVE_HH
 
-/// \file   mln/trait/next/solve.hh
+/// \file
 ///
 /// FIXME
  

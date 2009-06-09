@@ -29,7 +29,7 @@
 #ifndef MLN_MAKE_RELABELFUN_HH
 # define MLN_MAKE_RELABELFUN_HH
 
-/// \file mln/make/relabelfun.hh
+/// \file
 ///
 /// Routines to construct a function in order to relabel a labeled image.
 

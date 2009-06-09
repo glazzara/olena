@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_IMORPH_LABELED_IMAGE_HH
 # define MLN_CORE_IMAGE_IMORPH_LABELED_IMAGE_HH
 
-/// \file mln/core/image/imorph/labeled_image.hh
+/// \file
 ///
 /// \brief Definition of a morpher on a labeled image.
 

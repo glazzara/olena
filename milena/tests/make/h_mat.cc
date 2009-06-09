@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/make/h_mat.cc
+/// \file
 ///
 /// Tests on mln::make::h_mat.
 

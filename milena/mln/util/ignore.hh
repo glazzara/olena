@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_IGNORE_HH
 # define MLN_UTIL_IGNORE_HH
 
-/// \file mln/util/ignore.hh
+/// \file
 ///
 /// Definition of an "ignorer" object.
 

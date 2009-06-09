@@ -28,7 +28,7 @@
 // GUARD NOT REQUIRED: all included files already have guards.
 
 /*!
- * \file   mln/trait/op/all.hh
+ * \file
  *
  * \brief  FIXME
  *

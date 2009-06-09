@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SITE_SET_P_IF_PITER_HH
 # define MLN_CORE_SITE_SET_P_IF_PITER_HH
 
-/*! \file mln/core/site_set/p_if_piter.hh
+/*! \file
  *
  * \brief Definition of iterators on p_if<S,F>.
  */

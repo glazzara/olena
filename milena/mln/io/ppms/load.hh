@@ -29,7 +29,7 @@
 #ifndef MLN_IO_PPMS_LOAD_HH
 # define MLN_IO_PPMS_LOAD_HH
 
-/// \file   mln/io/ppms/load.hh
+/// \file
 ///
 /// Define a function which loads multiple ppm images into
 /// a 3D image.

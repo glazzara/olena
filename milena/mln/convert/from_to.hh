@@ -29,7 +29,7 @@
 #ifndef MLN_CONVERT_FROM_TO_HH
 # define MLN_CONVERT_FROM_TO_HH
 
-/// \file mln/convert/from_to.hh
+/// \file
 ///
 /// \brief General conversion procedure between two objects.
 ///

@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_ATTRIBUTE_VOLUME_HH
 # define MLN_MORPHO_ATTRIBUTE_VOLUME_HH
 
-/// \file mln/morpho/attribute/volume.hh
+/// \file
 ///
 /// Define an accumulator that computes the volume of a
 /// component.

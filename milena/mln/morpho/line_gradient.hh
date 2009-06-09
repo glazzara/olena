@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_LINE_GRADIENT_HH
 # define MLN_MORPHO_LINE_GRADIENT_HH
 
-/// \file mln/morpho/line_gradient.hh
+/// \file
 ///
 /// Conversions to mln::line_graph_image.
 

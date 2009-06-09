@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_X2X_TRANSLATION_HH
 # define MLN_FUN_X2X_TRANSLATION_HH
 
-/// \file mln/fun/x2x/translation.hh
+/// \file
 ///
 /// \brief Define a translation function.
 

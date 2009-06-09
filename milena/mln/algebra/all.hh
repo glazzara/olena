@@ -29,7 +29,7 @@
 #ifndef MLN_ALGEBRA_ALL_HH
 # define MLN_ALGEBRA_ALL_HH
 
-/// \file mln/algebra/all.hh
+/// \file
 ///
 /// File that includes all algebraic structures.
 

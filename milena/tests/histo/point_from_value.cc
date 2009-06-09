@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/histo/point_from_value.cc
+/// \file
 ///
 /// \brief Tests on mln::histo::point_from_value.
 

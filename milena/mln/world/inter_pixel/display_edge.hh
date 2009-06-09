@@ -28,7 +28,7 @@
 #ifndef MLN_WORLD_INTER_PIXEL_DISPLAY_EDGE_HH
 # define MLN_WORLD_INTER_PIXEL_DISPLAY_EDGE_HH
 
-/// \file mln/world/inter_pixel/display_edge.hh
+/// \file
 ///
 /// FIXME: insert comment.
 

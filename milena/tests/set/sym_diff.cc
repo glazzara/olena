@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/set/sym_diff.cc
+/// \file
 ///
 /// Tests on mln::set::sym_diff.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_DATA_FILL_WITH_VALUE_HH
 # define MLN_DATA_FILL_WITH_VALUE_HH
 
-/// \file mln/data/fill_with_value.hh
+/// \file
 ///
 /// Fill an image with a value, that is, set all pixel values to
 /// the given value.

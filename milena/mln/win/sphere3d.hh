@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_SPHERE3D_HH
 # define MLN_WIN_SPHERE3D_HH
 
-/// \file mln/win/sphere3d.hh
+/// \file
 ///
 /// Definition of the mln::win::sphere3d window.
 

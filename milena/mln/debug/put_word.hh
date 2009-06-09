@@ -28,7 +28,7 @@
 #ifndef MLN_DEBUG_PUT_WORD_HH
 # define MLN_DEBUG_PUT_WORD_HH
 
-/// \file mln/debug/put_word.hh
+/// \file
 ///
 /// Write a word in a 2D image of characters.
 

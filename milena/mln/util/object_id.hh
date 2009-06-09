@@ -30,7 +30,7 @@
 #ifndef MLN_UTIL_OBJECT_ID_HH
 # define MLN_UTIL_OBJECT_ID_HH
 
-/// \file mln/util/object_id.hh
+/// \file
 ///
 /// Base class of an object id.
 

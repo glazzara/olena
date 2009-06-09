@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_INTERVAL_HH
 # define MLN_VALUE_INTERVAL_HH
 
-/*! \file mln/value/interval.hh
+/*! \file
  *
  * \brief Define an interval between two values.
  *

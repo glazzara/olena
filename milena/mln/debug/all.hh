@@ -29,7 +29,7 @@
 #ifndef MLN_DEBUG_ALL_HH
 # define MLN_DEBUG_ALL_HH
 
-/// \file mln/debug/all.hh
+/// \file
 ///
 /// File that includes all debug-related routines.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_CONVERT_IMPL_FROM_VALUE_TO_VALUE_HH
 # define MLN_CONVERT_IMPL_FROM_VALUE_TO_VALUE_HH
 
-/// \file mln/convert/from_to.hh
+/// \file
 ///
 /// General conversion procedure from a value to a value.
 ///

@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_FORCE_EXACT_HH
 # define MLN_CORE_INTERNAL_FORCE_EXACT_HH
 
-/// \file mln/core/internal/force_exact.hh
+/// \file
 /// \brief Definition of a violent cast for internal use only.
 
 #include <cstddef>

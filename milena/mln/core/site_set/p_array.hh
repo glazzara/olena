@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_ARRAY_HH
 # define MLN_CORE_SITE_SET_P_ARRAY_HH
 
-/// \file mln/core/site_set/p_array.hh
+/// \file
 ///
 /// \brief Definition of a point set class based on std::vector.
 ///

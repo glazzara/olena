@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/accumulator.hh
+/*! \file
  * \brief This file documents the concept of mln::Accumulator.
  */
 

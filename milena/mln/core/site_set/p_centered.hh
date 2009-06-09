@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_CENTERED_HH
 # define MLN_CORE_SITE_SET_P_CENTERED_HH
 
-/// \file mln/core/site_set/p_centered.hh
+/// \file
 ///
 /// This file defines the site set corresponding to a window
 /// centered on a site.

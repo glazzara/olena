@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_VITER_HH
 # define MLN_VALUE_VITER_HH
 
-/*! \file mln/value/viter.hh
+/*! \file
  *
  * \brief Definition of iterators on value sets.
  *

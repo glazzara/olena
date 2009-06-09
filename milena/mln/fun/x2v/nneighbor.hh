@@ -33,7 +33,7 @@
 # include <mln/algebra/vec.hh>
 # include <mln/convert/to.hh>
 
-/*! \file mln/fun/x2v/nneighbor.hh
+/*! \file
  *
  * \brief Define a nneighbor interpolation of values from an underlying image
  */

@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_ESSENTIAL_HH
 # define MLN_MORPHO_ESSENTIAL_HH
 
-/// \file mln/morpho/essential.hh
+/// \file
 ///
 /// File that includes essential morpho-related routines.
 

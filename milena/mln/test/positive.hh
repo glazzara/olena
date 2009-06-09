@@ -29,7 +29,7 @@
 #ifndef MLN_TEST_POSITIVE_HH
 # define MLN_TEST_POSITIVE_HH
 
-/// \file mln/test/positive.hh
+/// \file
 ///
 /// Test if an image only contains positive values.
 

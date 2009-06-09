@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_ALIAS_W_WINDOW2D_FLOAT_HH
 # define MLN_CORE_ALIAS_W_WINDOW2D_FLOAT_HH
 
-/*! \file mln/core/alias/w_window2d_float.hh
+/*! \file
  *
  * \brief Definition of the mln::w_window2d_float alias.
  */

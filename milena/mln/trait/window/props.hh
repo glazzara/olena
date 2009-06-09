@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_WINDOW_PROPS_HH
 # define MLN_TRAIT_WINDOW_PROPS_HH
 
-/*! \file mln/trait/window/props.hh
+/*! \file
  *
  * \brief Properties of window classes.
  *

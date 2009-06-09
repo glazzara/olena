@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_GRAPH_PSITE_BASE_HH
 # define MLN_CORE_INTERNAL_GRAPH_PSITE_BASE_HH
 
-/// \file mln/core/internal/graph_psite_base.hh
+/// \file
 ///
 /// Base implementation for graph based psites.
 ///

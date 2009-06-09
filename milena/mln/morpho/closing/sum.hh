@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_CLOSING_SUM_HH
 # define MLN_MORPHO_CLOSING_SUM_HH
 
-/// \file mln/morpho/closing/sum.hh
+/// \file
 ///
 /// Morphological sum closing.
 

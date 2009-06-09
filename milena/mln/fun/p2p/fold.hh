@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_P2P_FOLD_HH
 # define MLN_FUN_P2P_FOLD_HH
 
-/// \file mln/fun/p2p/fold.hh
+/// \file
 ///
 /// FIXME: Doc!
 

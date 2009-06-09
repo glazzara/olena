@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_ALIAS_VEC2D_HH
 # define MLN_CORE_ALIAS_VEC2D_HH
 
-/// \file mln/core/alias/vec2d.hh
+/// \file
 ///
 /// Definition of the mln::vec2d* alias
 

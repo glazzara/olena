@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file util/ord_pair.cc
+/// \file
 ///
 /// Tests on mln::util::ord_pair.
 

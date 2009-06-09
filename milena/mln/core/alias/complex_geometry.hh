@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_ALIAS_COMPLEX_GEOMETRY_HH
 # define MLN_CORE_ALIAS_COMPLEX_GEOMETRY_HH
 
-/// \file mln/core/alias/complex_geometry.hh
+/// \file
 ///
 /// Definition of mln::geom::complex_geometry aliases.
 

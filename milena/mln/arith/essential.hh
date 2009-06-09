@@ -28,7 +28,7 @@
 #ifndef MLN_ARITH_ESSENTIAL_HH
 # define MLN_ARITH_ESSENTIAL_HH
 
-/*! \file mln/arith/essential.hh
+/*! \file
  *
  * \brief File that includes the most useful arithmetic materials.
  */

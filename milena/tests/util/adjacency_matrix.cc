@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file   tests/util/adjacency_matrix.cc
+/// \file
 ///
 /// \brief Test of mln::util::adjacency_matrix.
 

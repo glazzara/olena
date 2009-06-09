@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_X2X_COMPOSED_HH
 # define MLN_FUN_X2X_COMPOSED_HH
 
-/// \file mln/fun/x2x/composed.hh
+/// \file
 ///
 /// \brief Definition of a composed transformation.
 

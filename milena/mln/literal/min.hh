@@ -28,7 +28,7 @@
 #ifndef MLN_LITERAL_MIN_HH
 # define MLN_LITERAL_MIN_HH
 
-/// \file mln/literal/min.hh
+/// \file
 ///
 /// Definition of the literal of mln::min.
 

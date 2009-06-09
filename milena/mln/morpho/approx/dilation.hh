@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_APPROX_DILATION_HH
 # define MLN_MORPHO_APPROX_DILATION_HH
 
-/// \file mln/morpho/approx/dilation.hh
+/// \file
 ///
 /// Approximate mathematical morphology dilation.
 

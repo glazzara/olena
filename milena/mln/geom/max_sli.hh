@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_MAX_SLI_HH
 # define MLN_GEOM_MAX_SLI_HH
 
-/// \file mln/geom/max_sli.hh
+/// \file
 ///
 /// Give the maximum sli of an image.
 

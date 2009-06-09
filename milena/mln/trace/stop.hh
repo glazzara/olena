@@ -28,7 +28,7 @@
 #ifndef MLN_TRACE_STOP_HH
 # define MLN_TRACE_STOP_HH
 
-/// \file mln/trace/stop.hh
+/// \file
 /// Stop printing traces except if trace::full_trace is enabled.
 /// \sa mln::trace::resume
 

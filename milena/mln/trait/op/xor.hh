@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_XOR_HH
 # define MLN_TRAIT_OP_XOR_HH
 
-/*! \file mln/trait/op/xor.hh
+/*! \file
  *
  * \brief Declaration of the "binary xor" operator trait.
  */

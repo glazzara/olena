@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_VALUE_PRINT_HH
 # define MLN_TRAIT_VALUE_PRINT_HH
 
-/*! \file mln/trait/value/print.hh
+/*! \file
  *
  * \brief Print the collection of traits for an value type.
  */

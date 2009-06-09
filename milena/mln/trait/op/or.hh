@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_OR_HH
 # define MLN_TRAIT_OP_OR_HH
 
-/*! \file mln/trait/op/or.hh
+/*! \file
  *
  * \brief Declaration of the "binary or" operator trait.
  */

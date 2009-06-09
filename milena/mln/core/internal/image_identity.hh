@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_IMAGE_IDENTITY_HH
 # define MLN_CORE_INTERNAL_IMAGE_IDENTITY_HH
 
-/// \file mln/core/internal/image_identity.hh
+/// \file
 ///
 /// Definition of a base class for image morphers w.r.t. identity.
 ///

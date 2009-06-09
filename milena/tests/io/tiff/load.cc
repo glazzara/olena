@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/io/tiff/load.cc
+/// \file
 ///
 /// Test on mln::io::tiff::load.
 

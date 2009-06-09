@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_OPENING_AREA_HH
 # define MLN_MORPHO_OPENING_AREA_HH
 
-/// \file mln/morpho/opening/area.hh
+/// \file
 ///
 /// Morphological area opening.
 

@@ -31,7 +31,7 @@
 # define MLN_CORE_IMAGE_DMORPH_HEXA_HH
 
 
-/// \file mln/core/image/dmorph/hexa.hh
+/// \file
 ///
 /// Definition of a morpher that makes hexagonal the mesh of an
 /// image.

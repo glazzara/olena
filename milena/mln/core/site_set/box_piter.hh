@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_BOX_PITER_HH
 # define MLN_CORE_SITE_SET_BOX_PITER_HH
 
-/// \file mln/core/site_set/box_piter.hh
+/// \file
 ///
 /// Definition of iterators on points of boxes.
 

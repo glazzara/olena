@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_CONCEPT_ESSENTIAL_HH
 # define MLN_VALUE_CONCEPT_ESSENTIAL_HH
 
-/*! \file mln/value/concept/essential.hh
+/*! \file
  *
  * \brief File that includes every sub-concept of the Value concept.
  */

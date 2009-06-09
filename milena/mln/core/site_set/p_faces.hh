@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_FACES_HH
 # define MLN_CORE_SITE_SET_P_FACES_HH
 
-/// \file mln/core/site_set/p_faces.hh
+/// \file
 ///
 /// definition of a point set based on the set of n-faces of a
 /// complex.

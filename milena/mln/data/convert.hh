@@ -29,7 +29,7 @@
 #ifndef MLN_LEVEL_CONVERT_HH
 # define MLN_LEVEL_CONVERT_HH
 
-/// \file mln/data/convert.hh
+/// \file
 ///
 /// Convert the contents of an image into another one.
 ///

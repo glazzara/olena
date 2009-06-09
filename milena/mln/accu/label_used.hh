@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_LABEL_USED_HH
 # define MLN_ACCU_LABEL_USED_HH
 
-/// \file mln/accu/label_used.hh
+/// \file
 ///
 /// Define an accumulator that references all the labels used.
 

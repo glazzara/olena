@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_INTERNAL_SELECTOR_HH
 # define MLN_FUN_INTERNAL_SELECTOR_HH
 
-/// \file mln/fun/internal/selector.hh
+/// \file
 ///
 /// \brief Select a concept (either Function_v2v or Function_v2b)
 /// depending on the result type.

@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_CUBOID3D_HH
 # define MLN_WIN_CUBOID3D_HH
 
-/// \file mln/win/cuboid3d.hh
+/// \file
 ///
 /// Definition of the mln::win::cuboid3d window.
 

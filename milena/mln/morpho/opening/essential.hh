@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_OPENING_ESSENTIAL_HH
 # define MLN_MORPHO_OPENING_ESSENTIAL_HH
 
-/// \file mln/morpho/opening/all.hh
+/// \file
 ///
 /// File that includes essential opening attributes.
 

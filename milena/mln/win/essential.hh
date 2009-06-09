@@ -28,7 +28,7 @@
 #ifndef MLN_WIN_ESSENTIAL_HH
 # define MLN_WIN_ESSENTIAL_HH
 
-/// \file mln/win/essential.hh
+/// \file
 ///
 /// File that includes essential win-related routines.
 

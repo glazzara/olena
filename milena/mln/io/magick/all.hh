@@ -28,7 +28,7 @@
 #ifndef MLN_IO_MAGICK_ALL_HH
 # define MLN_IO_MAGICK_ALL_HH
 
-/// \file mln/io/magick/all.hh
+/// \file
 /// \brief Inclusion of all Magick++ I/O routines.
 
 

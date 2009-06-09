@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_IMAGE_PROPS_HH
 # define MLN_TRAIT_IMAGE_PROPS_HH
 
-/*! \file mln/trait/image/props.hh
+/*! \file
  *
  * \brief Properties of image classes.
  *

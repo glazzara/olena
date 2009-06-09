@@ -28,7 +28,7 @@
 #ifndef MLN_IO_PFM_SAVE_HH
 # define MLN_IO_PFM_SAVE_HH
 
-/// \file   mln/io/pfm/save.hh
+/// \file
 ///
 /// Define a function which saves an image of kind pfm into
 /// given path.

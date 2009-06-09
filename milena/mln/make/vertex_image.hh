@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_VERTEX_IMAGE_HH
 # define MLN_MAKE_VERTEX_IMAGE_HH
 
-/// \file mln/make/vertex_image.hh
+/// \file
 ///
 /// Routine to create a vertex image.
 

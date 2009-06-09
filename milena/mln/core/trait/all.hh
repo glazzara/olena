@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_TRAIT_ALL_HH
 # define MLN_CORE_TRAIT_ALL_HH
 
-/*! \file mln/core/trait/all.hh
+/*! \file
  *
  * \brief File that includes all traits.
  */

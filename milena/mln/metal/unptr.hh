@@ -29,7 +29,7 @@
 # define MLN_METAL_UNPTR_HH
 
 /*!
- * \file  mln/metal/unptr.hh
+ * \file
  *
  * \brief FIXME.
  */

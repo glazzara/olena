@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_VV2B_GE_HH
 # define MLN_FUN_VV2B_GE_HH
 
-/// \file mln/fun/vv2b/ge.hh
+/// \file
 ///
 /// Functor that computes "greater or equal than" between two values.
 

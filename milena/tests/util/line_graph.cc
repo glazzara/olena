@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file   tests/util/line_graph.cc
+/// \file
 /// test of mln::util::line_graph
 
 #include <mln/util/graph.hh>

@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_COUNT_LABELS_HH
 # define MLN_ACCU_COUNT_LABELS_HH
 
-/// \file mln/accu/count_labels.hh
+/// \file
 ///
 /// Define an accumulator that counts the number of different labels.
 

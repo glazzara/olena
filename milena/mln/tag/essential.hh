@@ -28,7 +28,7 @@
 #ifndef MLN_TAG_ESSENTIAL_HH
 # define MLN_TAG_ESSENTIAL_HH
 
-/*! \file mln/tag/essential.hh
+/*! \file
  *
  * \brief File that includes essential tag-related routines.
  */

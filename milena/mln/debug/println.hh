@@ -29,7 +29,7 @@
 #ifndef MLN_DEBUG_PRINTLN_HH
 # define MLN_DEBUG_PRINTLN_HH
 
-/// \file mln/debug/println.hh
+/// \file
 ///
 /// Print an image on the standard output.
 ///

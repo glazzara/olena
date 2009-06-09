@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_ALIASES_HH
 # define MLN_VALUE_ALIASES_HH
 
-/// \file mln/value/aliases.hh
+/// \file
 ///
 /// File that includes all aliases of value types.
 

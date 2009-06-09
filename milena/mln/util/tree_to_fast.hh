@@ -29,7 +29,7 @@
 # define MLN_UTIL_TREE_TO_FAST_HH
 
 /*!
- * \file   mln/util/tree_to_fast.hh
+ * \file
  *
  * \brief Definition of function which converts a tree into tree_fast.
  *

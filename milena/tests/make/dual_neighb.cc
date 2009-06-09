@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/make/dual_neighb.cc
+/// \file
 ///
 /// Tests on mln::make::dual_neighb.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_BORDER_ALL_HH
 # define MLN_BORDER_ALL_HH
 
-/// \file mln/border/all.hh
+/// \file
 ///
 /// File that includes all border-related routines.
 

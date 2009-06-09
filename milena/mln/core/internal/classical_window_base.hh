@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_CLASSICAL_WINDOW_BASE_HH
 # define MLN_CORE_INTERNAL_CLASSICAL_WINDOW_BASE_HH
 
-/*! \file mln/core/internal/classical_window_base.hh
+/*! \file
  *
  * \brief Definition of a base class for classes based on a set of dpoints.
  *

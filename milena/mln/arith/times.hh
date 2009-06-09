@@ -29,7 +29,7 @@
 #ifndef MLN_ARITH_TIMES_HH
 # define MLN_ARITH_TIMES_HH
 
-/// \file mln/arith/times.hh
+/// \file
 ///
 /// Point-wise multiplication between images.
 ///

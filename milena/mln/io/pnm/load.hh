@@ -29,7 +29,7 @@
 #ifndef MLN_IO_PNM_LOAD_HH
 # define MLN_IO_PNM_LOAD_HH
 
-/// \file mln/io/pnm/load.hh
+/// \file
 ///
 /// Define a function which loads an image of kind PNM 8/16bits with
 /// given path.

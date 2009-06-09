@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/make/w_window_directional.cc
+/// \file
 ///
 /// Tests on mln::make::w_window_directional.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_IMAGE_INIT_HH
 # define MLN_ACCU_IMAGE_INIT_HH
 
-/// \file mln/accu/image/init.hh
+/// \file
 ///
 /// Initialize an image of accumulators.
 

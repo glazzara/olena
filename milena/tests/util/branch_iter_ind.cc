@@ -26,7 +26,7 @@
 // Public License.
 
 /*!
- *  \file   tests/util/branch_iter_ind.cc
+ *  \file
  *
  *  \brief  test of mln::util::branch_iter_ind
  *

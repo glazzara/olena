@@ -28,7 +28,7 @@
 #ifndef MLN_IO_MAGICK_SAVE_HH
 # define MLN_IO_MAGICK_SAVE_HH
 
-/// \file   mln/io/magick/save.hh
+/// \file
 ///
 /// Define a function which saves an image of kind magick with
 /// given path.

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/tree/compute_attribute_image.cc
+/// \file
 ///
 /// Tests on mln::morpho::tree::compute_attribute_image.
 

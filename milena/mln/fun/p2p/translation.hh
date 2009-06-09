@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_P2P_TRANSLATION_HH
 # define MLN_FUN_P2P_TRANSLATION_HH
 
-/// \file mln/fun/p2p/translation.hh
+/// \file
 ///
 /// FIXME: doc
 

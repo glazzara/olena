@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_LINE_HH
 # define MLN_ACCU_LINE_HH
 
-/// \file mln/accu/line.hh
+/// \file
 ///
 /// Run an accumulator on a line of images.
 ///

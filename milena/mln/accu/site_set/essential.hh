@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_SITE_SET_ESSENTIAL_HH_
 # define MLN_ACCU_SITE_SET_ESSENTIAL_HH_
 
-/// \file mln/accu/site_set/essential.hh
+/// \file
 ///
 /// File that includes the most useful accumulator types working on site sets.
 

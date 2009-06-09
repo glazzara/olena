@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/data/apply_full.cc
+/*! \file
  *
  * \brief Tests on mln::data::apply.
  */

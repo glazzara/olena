@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_ALIAS_POINT1D_HH
 # define MLN_CORE_ALIAS_POINT1D_HH
 
-/// \file mln/core/alias/point1d.hh
+/// \file
 ///
 /// Definition of the mln::point1d and mln::point1df aliases and of
 /// their construction routines.

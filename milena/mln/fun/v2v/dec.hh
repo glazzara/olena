@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2V_DEC_HH
 # define MLN_FUN_V2V_DEC_HH
 
-/// \file mln/fun/v2v/dec.hh
+/// \file
 ///
 /// Decrementation function.
 

@@ -29,7 +29,7 @@
 # define MLN_METAL_UNQUALIF_HH
 
 /*!
- * \file  mln/metal/unqualif.hh
+ * \file
  *
  * \brief Suppress possible 'const' and/or '&' (reference) from a
  * qualified type.

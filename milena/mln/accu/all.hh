@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_ALL_HH
 # define MLN_ACCU_ALL_HH
 
-/// \file mln/accu/all.hh
+/// \file
 ///
 /// File that includes all accumulator types.
 ///

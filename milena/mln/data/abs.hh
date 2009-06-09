@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_ABS_HH
 # define MLN_LEVEL_ABS_HH
 
-/*! \file mln/data/abs.hh
+/*! \file
  *
  * \brief Apply the absolute value (abs) function to image pixel
  * values.

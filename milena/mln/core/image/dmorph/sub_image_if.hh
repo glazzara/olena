@@ -30,7 +30,7 @@
 # define MLN_CORE_IMAGE_DMORPH_SUB_IMAGE_IF_HH
 
 
-/// \file mln/core/image/dmorph/sub_image_if.hh
+/// \file
 ///
 /// Image having its domain restricted by a site set and a function.
 ///

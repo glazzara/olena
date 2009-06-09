@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_P2B_HAS_HH
 # define MLN_FUN_P2B_HAS_HH
 
-/// \file mln/fun/p2b/has.hh
+/// \file
 ///
 /// Function "psite-> bool" that maps the call "ima.has(p)".
 

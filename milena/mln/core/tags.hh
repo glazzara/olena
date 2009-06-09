@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_TAGS_HH
 # define MLN_CORE_TAGS_HH
 
-/*! \file mln/core/tags.hh
+/*! \file
  *
  * \brief Define a set of tags for images types.
  */

@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_THINNING_HH
 # define MLN_MORPHO_THINNING_HH
 
-/// \file mln/morpho/thinning.hh
+/// \file
 ///
 /// Morphological thinning.
 

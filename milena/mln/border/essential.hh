@@ -28,7 +28,7 @@
 #ifndef MLN_BORDER_ESSENTIAL_HH
 # define MLN_BORDER_ESSENTIAL_HH
 
-/*! \file mln/border/essential.hh
+/*! \file
  *
  * \brief File that includes the most useful border-related routines.
  */

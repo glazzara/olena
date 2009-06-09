@@ -28,7 +28,7 @@
 #ifndef MLN_CANVAS_BROWSING_DEPTH_FIRST_SEARCH_HH
 # define MLN_CANVAS_BROWSING_DEPTH_FIRST_SEARCH_HH
 
-/// \file mln/canvas/browsing/depth_first_search.hh
+/// \file
 ///
 /// Depth-limited search algorithm for graph.
 /// Browse over all vertices for each component.

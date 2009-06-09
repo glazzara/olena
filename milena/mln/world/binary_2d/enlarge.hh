@@ -28,7 +28,7 @@
 #ifndef MLN_WORLD_BINARY_2D_ENLARGE_HH
 # define MLN_WORLD_BINARY_2D_ENLARGE_HH
 
-/// \file mln/world/binary_2d/enlarge.hh
+/// \file
 ///
 /// \brief Enlarge 2^n times a binary image.
 ///

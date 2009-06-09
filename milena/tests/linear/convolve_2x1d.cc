@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/linear/convolve_2x1d.cc
+/// \file
 ///
 /// Tests on mln::linear::convolve_2x1d.
 

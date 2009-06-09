@@ -29,7 +29,7 @@
 #ifndef MLN_LEVEL_SORT_OFFSETS_HH
 # define MLN_LEVEL_SORT_OFFSETS_HH
 
-/// \file mln/data/sort_offsets.hh
+/// \file
 /// \brief Sort_Offsets the contents of an image into another one.
 ///
 /// \todo Factor code + optimize.

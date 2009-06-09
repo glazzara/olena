@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_DMORPH_SLICE_IMAGE_HH
 # define MLN_CORE_IMAGE_DMORPH_SLICE_IMAGE_HH
 
-/// \file mln/core/image/dmorph/slice_image.hh
+/// \file
 ///
 /// Definition of a 2D image extracted from a slice of a 3D image.
 ///

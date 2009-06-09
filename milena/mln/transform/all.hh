@@ -29,7 +29,7 @@
 #ifndef MLN_TRANSFORM_ALL_HH
 # define MLN_TRANSFORM_ALL_HH
 
-/// \file mln/transform/all.hh
+/// \file
 ///
 /// File that includes all transforms.
 

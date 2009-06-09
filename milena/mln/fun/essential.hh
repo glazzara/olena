@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_ESSENTIAL_HH
 # define MLN_FUN_ESSENTIAL_HH
 
-/// \file mln/fun/essential.hh
+/// \file
 ///
 /// File that includes essential fun-related routines.
 

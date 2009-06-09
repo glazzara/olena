@@ -28,7 +28,7 @@
 #ifndef MLN_SET_UNIQUE_HH
 # define MLN_SET_UNIQUE_HH
 
-/// \file mln/set/unique.hh
+/// \file
 ///
 /// Give the unique set.
 

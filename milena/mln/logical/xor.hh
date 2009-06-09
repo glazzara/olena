@@ -29,7 +29,7 @@
 #ifndef MLN_LOGICAL_XOR_HH
 # define MLN_LOGICAL_XOR_HH
 
-/// \file mln/logical/xor.hh
+/// \file
 ///
 /// Point-wise "logical xor" between binary images.
 

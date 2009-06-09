@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_PSEUDO_SITE_BASE_HH
 # define MLN_CORE_INTERNAL_PSEUDO_SITE_BASE_HH
 
-/*! \file mln/core/internal/pseudo_site_base.hh
+/*! \file
  *
  * \brief Base class to factor code for pseudo site classes.
  */

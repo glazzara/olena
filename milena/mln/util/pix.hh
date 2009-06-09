@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_PIX_HH
 # define MLN_UTIL_PIX_HH
 
-/// \file mln/util/pix.hh
+/// \file
 ///
 /// Definition of an instant pix.
 ///

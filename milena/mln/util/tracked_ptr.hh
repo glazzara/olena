@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_TRACKED_PTR_HH
 # define MLN_UTIL_TRACKED_PTR_HH
 
-/// \file mln/util/tracked_ptr.hh
+/// \file
 ///
 /// Definition of a smart pointer for shared data with tracking.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_CONCEPT_FLOATING_HH
 # define MLN_VALUE_CONCEPT_FLOATING_HH
 
-/*! \file mln/value/concept/floating.hh
+/*! \file
  *
  * \brief Define a generic class for floating values.
  */

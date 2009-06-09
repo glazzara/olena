@@ -28,7 +28,7 @@
 #ifndef MLN_LOGICAL_ESSENTIAL_HH
 # define MLN_LOGICAL_ESSENTIAL_HH
 
-/*! \file mln/logical/essential.hh
+/*! \file
  *
  * \brief File that includes essential logical operators.
  */

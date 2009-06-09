@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_V2V_HSL_TO_RGB_HH
 # define MLN_FUN_V2V_HSL_TO_RGB_HH
 
-/// \file mln/fun/v2v/hsl_to_rgb.hh
+/// \file
 ///
 /// \brief Convert HSL values to RGB.
 ///

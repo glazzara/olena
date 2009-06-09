@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_GOES_TO_HH
 # define MLN_METAL_GOES_TO_HH
 
-/*! \file mln/metal/goes_to.hh
+/*! \file
  *
  * \brief Definition of a type that means "goes to".
  */

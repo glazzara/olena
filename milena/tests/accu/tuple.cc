@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/accu/tuple.cc
+/// \file
 ///
 /// \brief Tests on mln::accu::tuple.
 

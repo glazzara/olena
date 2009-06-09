@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_EROSION_HH
 # define MLN_MORPHO_EROSION_HH
 
-/// \file mln/morpho/erosion.hh
+/// \file
 ///
 /// Morphological erosion.
 ///

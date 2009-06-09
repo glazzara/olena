@@ -29,7 +29,7 @@
 #ifndef MLN_CANVAS_MORPHO_ALL_HH
 # define MLN_CANVAS_MORPHO_ALL_HH
 
-/// \file mln/canvas/morpho/all.hh
+/// \file
 ///
 /// File that includes morphological canvas-related routines.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_CONVERT_TO_WINDOW_HH
 # define MLN_CONVERT_TO_WINDOW_HH
 
-/// \file mln/convert/to_window.hh
+/// \file
 ///
 /// Conversions to mln::window.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_APPROX_ESSENTIAL_HH
 # define MLN_LEVEL_APPROX_ESSENTIAL_HH
 
-/*! \file mln/data/approx/essential.hh
+/*! \file
  *
  * \brief File that includes essential level-related routines with
  * approximation.

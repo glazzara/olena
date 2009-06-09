@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_P2V_TERNARY_HH
 # define MLN_FUN_P2V_TERNARY_HH
 
-/*! \file mln/fun/p2v/ternary.hh
+/*! \file
  *
  * \brief FIXME.
  */

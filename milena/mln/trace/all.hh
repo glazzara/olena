@@ -28,7 +28,7 @@
 #ifndef MLN_TRACE_ALL_HH
 # define MLN_TRACE_ALL_HH
 
-/*! \file mln/trace/all.hh
+/*! \file
  *
  * \brief File that includes all trace-related routines.
  */

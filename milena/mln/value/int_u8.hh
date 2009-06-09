@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_INT_U8_HH
 # define MLN_VALUE_INT_U8_HH
 
-/// \file mln/value/int_u8.hh
+/// \file
 ///
 /// Define the alias value::int_u8.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_IMAGE_TAKE_AS_INIT_HH
 # define MLN_ACCU_IMAGE_TAKE_AS_INIT_HH
 
-/// \file mln/accu/image/take_as_init.hh
+/// \file
 ///
 /// Initialize an image of accumulators by taking a first value.
 

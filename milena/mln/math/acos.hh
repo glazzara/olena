@@ -28,7 +28,7 @@
 #ifndef MLN_MATH_ACOS_HH
 # define MLN_MATH_ACOS_HH
 
-/*! \file mln/math/acos.hh
+/*! \file
  *
  *  \brief Define the arc cosinus (acos) routine.
  */

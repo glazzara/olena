@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_CONCEPT_GPOINT_HH
 # define MLN_CORE_CONCEPT_GPOINT_HH
 
-/// \file mln/core/concept/gpoint.hh
+/// \file
 ///
 /// Definition of the concept of mln::Gpoint.
 

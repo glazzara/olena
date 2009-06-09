@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_ESSENTIAL_HH
 # define MLN_VALUE_ESSENTIAL_HH
 
-/// \file mln/value/essential.hh
+/// \file
 ///
 /// File that includes essential "value types"-related materials.
 

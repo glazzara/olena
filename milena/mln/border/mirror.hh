@@ -29,7 +29,7 @@
 #ifndef MLN_BORDER_MIRROR_HH
 # define MLN_BORDER_MIRROR_HH
 
-/// \file mln/border/mirror.hh
+/// \file
 ///
 /// Define function that fills border using nearer pixels with a
 /// mirroring effect.

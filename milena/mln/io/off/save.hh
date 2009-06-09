@@ -28,7 +28,7 @@
 #ifndef MLN_IO_OFF_SAVE_HH
 # define MLN_IO_OFF_SAVE_HH
 
-/// \file mln/io/off/save.hh
+/// \file
 /// Input saving function for OFF files.
 ///
 /// \see http://shape.cs.princeton.edu/benchmark/documentation/off_format.html

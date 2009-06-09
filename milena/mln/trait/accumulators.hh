@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_ACCUMULATORS_HH
 # define MLN_TRAIT_ACCUMULATORS_HH
 
-/// \file mln/trait/accumulators.hh
+/// \file
 ///
 /// Some base trait types for accumulators.
 

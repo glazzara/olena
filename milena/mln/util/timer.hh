@@ -28,7 +28,7 @@
 #ifndef MLN_UTIL_TIMER_HH
 # define MLN_UTIL_TIMER_HH
 
-/// \file mln/util/timer.hh
+/// \file
 ///
 /// Definition of a timer.
 

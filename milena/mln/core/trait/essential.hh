@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_TRAIT_ESSENTIAL_HH
 # define MLN_CORE_TRAIT_ESSENTIAL_HH
 
-/*! \file mln/core/trait/essential.hh
+/*! \file
  *
  * \brief File that includes essential traits.
  */

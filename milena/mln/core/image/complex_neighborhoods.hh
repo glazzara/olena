@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_COMPLEX_NEIGHBORHOODS_HH
 # define MLN_CORE_IMAGE_COMPLEX_NEIGHBORHOODS_HH
 
-/// \file mln/core/image/complex_neighborhoods.hh
+/// \file
 /// \brief Definitions of some neighborhoods of complex images.
 
 # include <mln/core/internal/complex_neighborhood_base.hh>

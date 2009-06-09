@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_LOGIC_ALL_HH
 # define MLN_ACCU_LOGIC_ALL_HH
 
-/// \file mln/accu/logic/all.hh
+/// \file
 ///
 /// File that includes all logical accumulator types.
 

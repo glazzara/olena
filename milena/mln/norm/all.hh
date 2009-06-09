@@ -28,7 +28,7 @@
 #ifndef MLN_NORM_ALL_HH
 # define MLN_NORM_ALL_HH
 
-/*! \file mln/norm/all.hh
+/*! \file
  *
  * \brief File that includes all norm routines.
  */

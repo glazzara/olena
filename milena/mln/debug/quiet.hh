@@ -28,7 +28,7 @@
 #ifndef MLN_DEBUG_QUIET_HH
 # define MLN_DEBUG_QUIET_HH
 
-/// \file mln/debug/quiet.hh
+/// \file
 ///
 /// global variable telling whether the debug should be printed or not.
 

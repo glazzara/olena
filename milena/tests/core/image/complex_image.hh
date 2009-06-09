@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/complex_image.hh
+/// \file
 /// \brief Shared code for tests on complex-based images.
 
 #ifndef TESTS_CORE_IMAGE_COMPLEX_IMAGE_HH

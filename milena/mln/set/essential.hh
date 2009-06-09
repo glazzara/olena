@@ -28,7 +28,7 @@
 #ifndef MLN_SET_ESSENTIAL_HH
 # define MLN_SET_ESSENTIAL_HH
 
-/*! \file mln/set/essential.hh
+/*! \file
  *
  * \brief File that includes essential set-related routines.
  */

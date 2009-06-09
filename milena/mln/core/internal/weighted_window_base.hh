@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_WEIGHTED_WINDOW_BASE_HH
 # define MLN_CORE_INTERNAL_WEIGHTED_WINDOW_BASE_HH
 
-/// \file mln/core/internal/weighted_window_base.hh
+/// \file
 ///
 /// Definition of a base class for weighted window classes.
 

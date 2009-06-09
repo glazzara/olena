@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_TAKE_HH
 # define MLN_ACCU_TAKE_HH
 
-/// \file mln/accu/take.hh
+/// \file
 ///
 /// Define an accumulator that takes image pixels.
 

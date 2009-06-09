@@ -29,7 +29,7 @@
 #ifndef MLN_DATA_MEMCPY__HH
 # define MLN_DATA_MEMCPY__HH
 
-/// \file mln/data/memcpy_.hh
+/// \file
 ///
 /// Same as std::memcpy but for fastest images.
 ///

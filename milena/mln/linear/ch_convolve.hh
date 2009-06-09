@@ -28,7 +28,7 @@
 #ifndef MLN_LINEAR_CH_CONVOLVE_HH
 # define MLN_LINEAR_CH_CONVOLVE_HH
 
-/// \file mln/linear/ch_convolve.hh
+/// \file
 ///
 /// Define convolution return type.
 

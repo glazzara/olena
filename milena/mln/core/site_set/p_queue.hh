@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_QUEUE_HH
 # define MLN_CORE_SITE_SET_P_QUEUE_HH
 
-/// \file mln/core/site_set/p_queue.hh
+/// \file
 ///
 /// Definition of a site set based on std::deque.
 /*!

@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_CONCEPT_STRUCTURED_HH
 # define MLN_VALUE_CONCEPT_STRUCTURED_HH
 
-/*! \file mln/value/concept/structured.hh
+/*! \file
  *
  * \brief Define a generic class for structured values.
  */

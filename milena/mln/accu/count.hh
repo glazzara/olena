@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_COUNT_HH
 # define MLN_ACCU_COUNT_HH
 
-/// \file mln/accu/count.hh
+/// \file
 ///
 /// Define an accumulator that counts.
 

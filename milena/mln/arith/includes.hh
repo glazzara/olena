@@ -28,7 +28,7 @@
 #ifndef MLN_ARITH_INCLUDES_HH
 # define MLN_ARITH_INCLUDES_HH
 
-/*! \file mln/arith/includes.hh
+/*! \file
  *
  * \brief File that includes what is required by arith files.
  */

@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_CONVOLVE_HH
 # define MLN_ACCU_CONVOLVE_HH
 
-/// \file mln/accu/convolve.hh
+/// \file
 ///
 /// Define an accumulator that computes a convolution.
 

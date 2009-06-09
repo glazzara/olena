@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_I2V_ALL_TO_HH
 # define MLN_FUN_I2V_ALL_TO_HH
 
-/// \file mln/fun/i2v/all_to.hh
+/// \file
 ///
 /// FIXME.
 

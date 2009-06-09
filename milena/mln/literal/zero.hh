@@ -29,7 +29,7 @@
 #ifndef MLN_LITERAL_ZERO_HH
 # define MLN_LITERAL_ZERO_HH
 
-/// \file mln/literal/zero.hh
+/// \file
 ///
 /// Definition of the literal of mln::zero.
 ///

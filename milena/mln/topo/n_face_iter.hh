@@ -29,7 +29,7 @@
 #ifndef MLN_TOPO_N_FACE_ITER_HH
 # define MLN_TOPO_N_FACE_ITER_HH
 
-/// \file mln/topo/n_face_iter.hh
+/// \file
 ///
 /// \brief Definition of forward and backward iterators on all the \a
 /// n-faces of a complex, \a n being a dynamic value.

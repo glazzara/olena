@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_SUM_HH
 # define MLN_ACCU_SUM_HH
 
-/// \file mln/accu/sum.hh
+/// \file
 ///
 /// Define an accumulator that computes a sum.
 

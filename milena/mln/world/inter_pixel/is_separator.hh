@@ -28,7 +28,7 @@
 #ifndef MLN_WORLD_INTER_PIXEL_IS_SEPARATOR_HH
 # define MLN_WORLD_INTER_PIXEL_IS_SEPARATOR_HH
 
-/// \file mln/world/inter_pixel/is_separator.hh
+/// \file
 ///
 /// FIXME: doc.
 ///

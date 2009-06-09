@@ -33,7 +33,7 @@
 # include <mln/util/vertex.hh>
 # include <mln/util/edge.hh>
 
-/// \file   mln/util/internal/graph_nbh_iter.hh
+/// \file
 /// \brief  Implementation for graph vertex iterators centered to a vertex.
 
 namespace mln

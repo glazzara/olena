@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_CLOSING_VOLUME_HH
 # define MLN_MORPHO_CLOSING_VOLUME_HH
 
-/// \file mln/morpho/closing/volume.hh
+/// \file
 ///
 /// Morphological volume closing.
 

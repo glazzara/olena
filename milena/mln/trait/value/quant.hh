@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_VALUE_QUANT_HH
 # define MLN_TRAIT_VALUE_QUANT_HH
 
-/*! \file mln/trait/value/quant.hh
+/*! \file
  *
  * \brief Quantification of values (for use in images).
  */

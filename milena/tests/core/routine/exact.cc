@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/routine/exact.cc
+/// \file
 ///
 /// \brief Tests on mln::exact.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_LABEL_16_HH
 # define MLN_VALUE_LABEL_16_HH
 
-/// \file mln/value/label_16.hh
+/// \file
 ///
 /// Define the alias value::label_16.
 

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/window.hh
+/*! \file
  * \brief This file documents the concept of mln::Window.
  */
 

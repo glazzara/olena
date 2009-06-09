@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_POSTINC_HH
 # define MLN_TRAIT_OP_POSTINC_HH
 
-/*! \file mln/trait/op/postinc.hh
+/*! \file
  *
  * \brief Declaration of the "unary post-incrementation" operator trait.
  */

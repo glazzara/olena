@@ -28,7 +28,7 @@
 #ifndef MLN_CANVAS_ESSENTIAL_HH
 # define MLN_CANVAS_ESSENTIAL_HH
 
-/*! \file mln/canvas/essential.hh
+/*! \file
  *
  * \brief File that includes the most useful canvas-related routines.
  */

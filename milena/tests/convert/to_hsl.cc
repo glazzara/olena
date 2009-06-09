@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/convert/to_hsl.cc
+/// \file
 ///
 /// Tests on mln::convert::from_to_ for hsl<H,S,L>.
 

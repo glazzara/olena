@@ -29,7 +29,7 @@
 #ifndef MLN_DEBUG_COLORIZE_HH
 # define MLN_DEBUG_COLORIZE_HH
 
-/// \file mln/labeling/colorize.hh
+/// \file
 ///
 /// Fill an image with successive values.
 

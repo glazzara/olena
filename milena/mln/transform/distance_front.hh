@@ -28,7 +28,7 @@
 #ifndef MLN_TRANSFORM_DISTANCE_FRONT_HH
 # define MLN_TRANSFORM_DISTANCE_FRONT_HH
 
-/// \file mln/transform/distance_front.hh
+/// \file
 ///
 /// Discrete front distance transform.
 

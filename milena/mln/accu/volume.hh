@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_VOLUME_HH
 # define MLN_ACCU_VOLUME_HH
 
-/// \file mln/accu/volume.hh
+/// \file
 /// Define an accumulator that computes the volume of a
 /// component through one of its pixels.
 /*!

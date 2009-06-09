@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file mln/value/hsl.hh
+/// \file
 ///
 /// \brief HSL color class.
 ///

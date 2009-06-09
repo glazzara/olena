@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_ATTACHMENT_HH
 # define MLN_MAKE_ATTACHMENT_HH
 
-/// \file mln/make/attachment.hh
+/// \file
 /// \brief Compute the attachment of a cell to a binary
 /// complex-based image.
 

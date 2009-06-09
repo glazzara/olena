@@ -28,7 +28,7 @@
 #ifndef MLN_DEBUG_IOTA_HH
 # define MLN_DEBUG_IOTA_HH
 
-/*! \file mln/debug/iota.hh
+/*! \file
  *
  * \brief Fill an image with successive values.
  */

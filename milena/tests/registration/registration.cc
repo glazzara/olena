@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/registration/registration.cc
+/// \file
 ///
 /// Test on mln::registration::registration.cc
 ///

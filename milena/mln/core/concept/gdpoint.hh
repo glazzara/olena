@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_CONCEPT_GDPOINT_HH
 # define MLN_CORE_CONCEPT_GDPOINT_HH
 
-/// \file mln/core/concept/delta_point_site.hh
+/// \file
 ///
 /// Definition of the concept of mln::Gdpoint.
 

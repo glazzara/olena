@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_CHECK_IMAGE_ALL_HH
 # define MLN_CORE_INTERNAL_CHECK_IMAGE_ALL_HH
 
-/// \file mln/core/internal/check/image_all.hh
+/// \file
 ///
 /// File that includes all image-related internal checks.
 

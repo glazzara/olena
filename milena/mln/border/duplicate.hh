@@ -29,7 +29,7 @@
 #ifndef MLN_BORDER_DUPLICATE_HH
 # define MLN_BORDER_DUPLICATE_HH
 
-/// \file mln/border/duplicate.hh
+/// \file
 ///
 /// Define function that fills border using nearest pixels.
 

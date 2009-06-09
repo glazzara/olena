@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_IF_HH
 # define MLN_CORE_SITE_SET_P_IF_HH
 
-/// \file mln/core/site_set/p_if.hh
+/// \file
 ///
 /// \brief Definition of the restriction of a site set w.r.t. a
 /// predicate.

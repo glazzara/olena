@@ -29,7 +29,7 @@
 #ifndef MLN_LINEAR_ALL_HH
 # define MLN_LINEAR_ALL_HH
 
-/// \file mln/linear/all.hh
+/// \file
 ///
 /// File that includes all linear image processing routines.
 

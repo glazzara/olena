@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_PIXEL_ITERATOR_BASE_HH
 # define MLN_CORE_INTERNAL_PIXEL_ITERATOR_BASE_HH
 
-/// \file mln/core/internal/pixel_iterator_base.hh
+/// \file
 ///
 /// Base classes factoring code for pixel iterator classes.
 

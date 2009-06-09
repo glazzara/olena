@@ -28,7 +28,7 @@
 #ifndef MLN_EXTRACT_RED_HH
 # define MLN_EXTRACT_RED_HH
 
-/// \file mln/extract/red.hh
+/// \file
 ///
 /// Extract the red component of an image.
 

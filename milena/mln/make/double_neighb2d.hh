@@ -29,7 +29,7 @@
 #ifndef MLN_MAKE_DOUBLE_NEIGHB2D_HH
 # define MLN_MAKE_DOUBLE_NEIGHB2D_HH
 
-/// \file mln/make/double_neighb2d.hh
+/// \file
 ///
 /// \brief Routine to create a double neighborhood.
 ///

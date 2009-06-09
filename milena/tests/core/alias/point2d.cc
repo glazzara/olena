@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/alias/point2d.cc
+/*! \file
  *
  * \brief Tests on mln::point2d.
  */

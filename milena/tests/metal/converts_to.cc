@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/metal/converts_to.cc
+/*! \file
  *
  * \brief Test on mln::metal::converts_to.
  */

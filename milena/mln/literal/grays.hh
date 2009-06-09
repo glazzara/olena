@@ -28,7 +28,7 @@
 #ifndef MLN_LITERAL_GRAYS_HH
 # define MLN_LITERAL_GRAYS_HH
 
-/*! \file mln/literal/grays.hh
+/*! \file
  * \brief Definition of the colors literal.
  *
  */

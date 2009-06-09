@@ -29,7 +29,7 @@
 #ifndef MLN_MAKE_ALL_HH
 # define MLN_MAKE_ALL_HH
 
-/// \file mln/make/all.hh
+/// \file
 ///
 /// File that includes all make routines.
 

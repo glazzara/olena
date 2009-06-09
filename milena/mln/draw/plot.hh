@@ -28,7 +28,7 @@
 #ifndef MLN_DRAW_PLOT_HH
 # define MLN_DRAW_PLOT_HH
 
-/*! \file mln/draw/plot.hh
+/*! \file
  *
  * \brief Plot a point (small cross) in an image.
  */

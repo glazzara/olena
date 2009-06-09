@@ -32,7 +32,7 @@
 # include <vector>
 # include <mln/core/contract.hh>
 
-/// \file mln/util/tree_fast.hh
+/// \file
 ///
 /// Definition of a fast generic general fast tree.
 

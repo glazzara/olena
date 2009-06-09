@@ -28,7 +28,7 @@
 #ifndef MLN_PW_VAR_HH
 # define MLN_PW_VAR_HH
 
-/*! \file mln/pw/var.hh
+/*! \file
  *
  * \brief FIXME.
  */

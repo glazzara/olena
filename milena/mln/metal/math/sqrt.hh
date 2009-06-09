@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_MATH_SQRT_HH
 # define MLN_METAL_MATH_SQRT_HH
 
-/*! \file mln/metal/math/sqrt.hh
+/*! \file
  *
  * \brief Definition of the 'sqrt' static function.
  *

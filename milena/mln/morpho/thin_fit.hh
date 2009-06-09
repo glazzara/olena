@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_THIN_FIT_HH
 # define MLN_MORPHO_THIN_FIT_HH
 
-/*! \file mln/morpho/thin_fit.hh
+/*! \file
  *
  * \brief Morphological thin-fit.
  */

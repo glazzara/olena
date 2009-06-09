@@ -26,7 +26,7 @@
 // Public License.
 
 /*!
- *  \file   tests/util/lazy_set.cc
+ *  \file
  *
  *  \brief  test of mln::util::lazy_set
  *

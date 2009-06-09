@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_DEF_LOW_QUANT_NBITS_HH
 # define MLN_CORE_DEF_LOW_QUANT_NBITS_HH
 
-/// \file mln/core/def/low_quant_nbits.hh
+/// \file
 ///
 /// Definition of the low v. high quantization threshold.
 

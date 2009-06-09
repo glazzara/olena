@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_RGB16_HH
 # define MLN_VALUE_RGB16_HH
 
-/// \file mln/value/rgb16.hh
+/// \file
 ///
 /// Color class for red-green-blue where every component is
 /// 16-bit encoded.

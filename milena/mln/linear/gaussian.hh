@@ -29,7 +29,7 @@
 #ifndef MLN_LINEAR_GAUSSIAN_HH
 # define MLN_LINEAR_GAUSSIAN_HH
 
-/// \file mln/linear/gaussian.hh
+/// \file
 ///
 /// Gaussian filter.
 ///

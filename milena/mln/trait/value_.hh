@@ -29,7 +29,7 @@
 #ifndef MLN_TRAIT_VALUE__HH
 # define MLN_TRAIT_VALUE__HH
 
-/// \file mln/trait/value_.hh
+/// \file
 ///
 /// Some base trait types for value types.
 

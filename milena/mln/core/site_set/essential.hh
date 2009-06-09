@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_ESSENTIAL_HH
 # define MLN_CORE_SITE_SET_ESSENTIAL_HH
 
-/// \file mln/core/site_set/essential.hh
+/// \file
 ///
 /// File that includes essential site_set types.
 

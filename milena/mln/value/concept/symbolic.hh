@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_CONCEPT_SYMBOLIC_HH
 # define MLN_VALUE_CONCEPT_SYMBOLIC_HH
 
-/// \file mln/value/concept/symbolic.hh
+/// \file
 ///
 /// Define a generic class for symbolic values.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_NOT_HH
 # define MLN_TRAIT_OP_NOT_HH
 
-/*! \file mln/trait/op/not.hh
+/*! \file
  *
  * \brief Declaration of the "unary negation" operator trait.
  */

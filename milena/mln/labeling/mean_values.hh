@@ -28,7 +28,7 @@
 #ifndef MLN_LABELING_MEAN_VALUES_HH
 # define MLN_LABELING_MEAN_VALUES_HH
 
-/// \file mln/labeling/mean_values.hh
+/// \file
 ///
 /// Construct from a labeled image a new image, the labels values are
 /// replaced by the components mean values.

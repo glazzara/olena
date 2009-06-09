@@ -29,7 +29,7 @@
 # define MLN_METAL_FIX_RETURN_HH
 
 /*!
- * \file  mln/metal/fix_return.hh
+ * \file
  *
  * \brief FIXME.
  */

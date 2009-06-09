@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/draw/line.cc
+/// \file
 ///
 /// Tests on mln::draw::line.
 

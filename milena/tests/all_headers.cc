@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/all_headers.cc
+/// \file
 ///
 /// Tests with all headers. (check norris tests)
 

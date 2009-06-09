@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_GRAPH_ELT_WINDOW_IF_HH
 # define MLN_CORE_IMAGE_GRAPH_ELT_WINDOW_IF_HH
 
-/// \file mln/core/image/graph_elt_window_if.hh
+/// \file
 ///
 /// Definition of a custom ``window'' on a graph.
 ///

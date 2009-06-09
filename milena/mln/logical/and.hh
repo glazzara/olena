@@ -29,7 +29,7 @@
 #ifndef MLN_LOGICAL_AND_HH
 # define MLN_LOGICAL_AND_HH
 
-/// \file mln/logical/and.hh
+/// \file
 ///
 /// Point-wise "logical and" between binary images.
 

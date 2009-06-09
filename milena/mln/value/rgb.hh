@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file mln/value/rgb.hh
+/// \file
 ///
 /// Color class for red-green-blue where every component is
 /// n-bit encoded.

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/convert/impl/from_site_set_to_image.cc
+/// \file
 ///
 /// Tests on mln::convert::impl::from_site_set_to_image.
 

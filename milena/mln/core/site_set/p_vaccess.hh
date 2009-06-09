@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_VACCESS_HH
 # define MLN_CORE_SITE_SET_P_VACCESS_HH
 
-/// \file mln/core/site_set/p_vaccess.hh
+/// \file
 ///
 /// \todo Fix the FIXMEs.
 

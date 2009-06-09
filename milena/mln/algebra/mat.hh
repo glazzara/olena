@@ -29,7 +29,7 @@
 #ifndef MLN_ALGEBRA_MAT_HH
 # define MLN_ALGEBRA_MAT_HH
 
-/// \file mln/algebra/mat.hh
+/// \file
 ///
 /// \brief Definition of a generic matrix class.
 

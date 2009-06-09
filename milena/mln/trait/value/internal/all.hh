@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_VALUE_INTERNAL_ALL_HH
 # define MLN_TRAIT_VALUE_INTERNAL_ALL_HH
 
-/// \file mln/trait/value/internal/all.hh
+/// \file
 ///
 /// Include all internals for value traits.
 

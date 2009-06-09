@@ -29,7 +29,7 @@
 #ifndef MLN_IO_OFF_LOAD_HH
 # define MLN_IO_OFF_LOAD_HH
 
-/// \file mln/io/off/load.hh
+/// \file
 ///
 /// \brief Input loading function for OFF files.
 ///

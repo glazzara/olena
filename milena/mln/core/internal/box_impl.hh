@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_BOX_IMPL_HH
 # define MLN_CORE_INTERNAL_BOX_IMPL_HH
 
-/*! \file mln/core/internal/box_impl.hh
+/*! \file
  *
  * \brief Define some implementation classes to provide methods
  * related to classes having a bounding box.

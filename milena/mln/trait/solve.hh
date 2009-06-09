@@ -29,7 +29,7 @@
 # define MLN_TRAIT_SOLVE_HH
 
 /*!
- * \file   mln/trait/solve.hh
+ * \file
  *
  * \brief  FIXME
  *

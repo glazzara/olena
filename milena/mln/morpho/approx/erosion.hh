@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_APPROX_EROSION_HH
 # define MLN_MORPHO_APPROX_EROSION_HH
 
-/// \file mln/morpho/approx/erosion.hh
+/// \file
 ///
 /// Approximate mathematical morphology erosion.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_CANVAS_BROWSING_ALL_HH
 # define MLN_CANVAS_BROWSING_ALL_HH
 
-/*! \file mln/canvas/browsing/all.hh
+/*! \file
  *
  * \brief File that includes all browsing canvas-related routines.
  */

@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_ACCESS_ALL_HH
 # define MLN_FUN_ACCESS_ALL_HH
 
-/// \file mln/fun/access/all.hh
+/// \file
 ///
 /// File that includes all access functions.
 

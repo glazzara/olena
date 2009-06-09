@@ -29,7 +29,7 @@
 #ifndef MLN_LINEAR_GAUSSIAN_INTERNAL_COEFFICIENTS_HH
 # define MLN_LINEAR_GAUSSIAN_INTERNAL_COEFFICIENTS_HH
 
-/// \file mln/linear/gaussian/internal/coefficients.hh
+/// \file
 ///
 /// Compute coefficients for recursive Gaussian filtering.
 ///

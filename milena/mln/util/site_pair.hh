@@ -32,7 +32,7 @@
 # include <mln/core/concept/proxy.hh>
 # include <mln/util/ord_pair.hh>
 
-/// \file mln/util/site_pair.hh
+/// \file
 ///
 /// Definition of a site pair type.
 

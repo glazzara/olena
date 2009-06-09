@@ -28,7 +28,7 @@
 #ifndef MLN_TEST_ALL_HH
 # define MLN_TEST_ALL_HH
 
-/*! \file mln/test/all.hh
+/*! \file
  *
  * \brief File that includes all test-related routines.
  */

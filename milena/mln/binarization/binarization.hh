@@ -29,7 +29,7 @@
 #ifndef MLN_BINARIZATION_BINARIZATION_HH
 # define MLN_BINARIZATION_BINARIZATION_HH
 
-/// \file mln/binarization/threshold.hh
+/// \file
 ///
 /// \brief Threshold an image.
 ///

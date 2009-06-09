@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_ALIAS_BOX2D_HH
 # define MLN_CORE_ALIAS_BOX2D_HH
 
-/// \file mln/core/alias/box2d.hh
+/// \file
 ///
 /// Definition of the mln::box2d alias and of construction
 /// routines.

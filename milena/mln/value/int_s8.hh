@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_INT_S8_HH
 # define MLN_VALUE_INT_S8_HH
 
-/*! \file mln/value/int_s8.hh
+/*! \file
  *
  * \brief Define the alias value::int_s8.
  */

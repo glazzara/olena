@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_GRAPH_WINDOW_PITER_HH
 # define MLN_CORE_IMAGE_GRAPH_WINDOW_PITER_HH
 
-/// \file   mln/core/image/graph_window_piter.hh
+/// \file
 ///
 /// Definition of a point iterator on a line_graph window.
 

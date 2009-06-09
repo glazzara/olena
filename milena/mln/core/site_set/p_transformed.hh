@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SITE_SET_P_TRANSFORMED_HH
 # define MLN_CORE_SITE_SET_P_TRANSFORMED_HH
 
-/// \file mln/core/site_set/p_transformed.hh
+/// \file
 ///
 /// Definition of a site set defined by the transformation of another
 /// site set.

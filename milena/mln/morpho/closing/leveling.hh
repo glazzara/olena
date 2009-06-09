@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_CLOSING_LEVELING_HH
 # define MLN_MORPHO_CLOSING_LEVELING_HH
 
-/// \file mln/morpho/closing/leveling.hh
+/// \file
 ///
 /// Morphological leveling closing.
 

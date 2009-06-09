@@ -29,7 +29,7 @@
 #ifndef MLN_HISTO_COMPUTE_HH
 # define MLN_HISTO_COMPUTE_HH
 
-/// \file mln/histo/compute.hh
+/// \file
 ///
 /// Routine to compute an histogram.
 

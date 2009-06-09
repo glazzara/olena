@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_MAX_ROW_HH
 # define MLN_GEOM_MAX_ROW_HH
 
-/// \file mln/geom/max_row.hh
+/// \file
 ///
 /// Give the maximum row of an image.
 

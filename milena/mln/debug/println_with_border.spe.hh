@@ -29,7 +29,7 @@
 #ifndef MLN_DEBUG_PRINTLN_WITH_BORDER_SPE_HH
 # define MLN_DEBUG_PRINTLN_WITH_BORDER_SPE_HH
 
-/// \file mln/debug/println_with_border_spe.hh
+/// \file
 ///
 /// Specializations for mln::debug::println_with_border.
 

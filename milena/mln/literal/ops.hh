@@ -28,7 +28,7 @@
 #ifndef MLN_LITERAL_OPS_HH
 # define MLN_LITERAL_OPS_HH
 
-/*! \file mln/literal/ops.hh
+/*! \file
  *
  * \brief Definitions of some operators where at least one literal is
  * involved.

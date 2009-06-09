@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_BACKDIAG2D_HH
 # define MLN_WIN_BACKDIAG2D_HH
 
-/// \file mln/win/backdiag2d.hh
+/// \file
 ///
 /// Definition of the mln::win::backdiag2d window.
 

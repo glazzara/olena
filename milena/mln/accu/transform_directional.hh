@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_TRANSFORM_DIRECTIONAL_HH
 # define MLN_ACCU_TRANSFORM_DIRECTIONAL_HH
 
-/// \file mln/accu/transform_directional.hh
+/// \file
 ///
 /// \brief Run an accumulator over a particular direction.
 ///

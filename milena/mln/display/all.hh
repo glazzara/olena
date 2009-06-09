@@ -29,7 +29,7 @@
 #ifndef MLN_DISPLAY_ALL_HH
 # define MLN_DISPLAY_ALL_HH
 
-/// \file mln/display/all.hh
+/// \file
 ///
 /// File that includes all display routines.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_MATH_COS_HH
 # define MLN_MATH_COS_HH
 
-/*! \file mln/math/cos.hh
+/*! \file
  *
  *  \brief Define the cosinus (cos) routine.
  */

@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_MATH_POW_HH
 # define MLN_METAL_MATH_POW_HH
 
-/*! \file mln/metal/math/pow.hh
+/*! \file
  *
  * \brief Definition of the 'power' static function.
  */

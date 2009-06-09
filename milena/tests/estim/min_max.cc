@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/estim/min_max.cc
+/*! \file
  *
  * \brief Tests on mln::estim::min_max.
  */

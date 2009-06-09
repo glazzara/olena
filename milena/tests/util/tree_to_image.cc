@@ -26,7 +26,7 @@
 // Public License.
 
 /*!
- *  \file   tests/util/tree_to_image.cc
+ *  \file
  *
  *  \brief  test of mln::util::tree_to_image
  *

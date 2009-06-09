@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/labeling/regional_maxima.cc
+/*! \file
  *
  * \brief Test on mln::labeling::regional_maxima.
  */

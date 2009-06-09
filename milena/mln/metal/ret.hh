@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_RET_HH
 # define MLN_METAL_RET_HH
 
-/*! \file mln/metal/ret.hh
+/*! \file
  *
  * \brief Definition of a macro to access 'ret'.
  */

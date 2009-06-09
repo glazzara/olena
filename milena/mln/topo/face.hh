@@ -29,7 +29,7 @@
 #ifndef MLN_TOPO_FACE_HH
 # define MLN_TOPO_FACE_HH
 
-/// \file mln/topo/face.hh
+/// \file
 ///
 /// \brief Face of a complex.
 

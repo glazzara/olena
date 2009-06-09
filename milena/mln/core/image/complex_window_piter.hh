@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_COMPLEX_WINDOW_PITER_HH
 # define MLN_CORE_IMAGE_COMPLEX_WINDOW_PITER_HH
 
-/// \file   mln/core/image/complex_window_piter.hh
+/// \file
 /// \brief  Definition of a site iterator on a complex window.
 
 # include <mln/core/internal/site_relative_iterator_base.hh>

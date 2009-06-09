@@ -30,7 +30,7 @@
 #ifndef MLN_GRAPH_ATTRIBUTE_REPRESENTATIVE_HH
 # define MLN_GRAPH_ATTRIBUTE_REPRESENTATIVE_HH
 
-/// \file mln/graph/attribute/representative.hh
+/// \file
 ///
 /// Functor that computes the representative vertex of every component in
 /// a graph.

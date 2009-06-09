@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_PIXTER1D_HH
 # define MLN_CORE_PIXTER1D_HH
 
-/// \file mln/core/pixter1d.hh
+/// \file
 /// \brief Pixel iterators on a 1-D image with border.
 
 # include <mln/core/internal/pixel_iterator_base.hh>

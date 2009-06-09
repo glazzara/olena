@@ -29,7 +29,7 @@
 #ifndef MLN_METAL_CONVERTS_TO_HH
 # define MLN_METAL_CONVERTS_TO_HH
 
-/// \file mln/metal/converts_to.hh
+/// \file
 ///
 /// \brief Definition of a type that checks if a type "converts to"
 /// another one.

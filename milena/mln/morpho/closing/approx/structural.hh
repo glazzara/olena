@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_CLOSING_APPROX_STRUCTURAL_HH
 # define MLN_MORPHO_CLOSING_APPROX_STRUCTURAL_HH
 
-/// \file mln/morpho/closing/approx/structural.hh
+/// \file
 ///
 /// Approximate of morphological structural closing.
 

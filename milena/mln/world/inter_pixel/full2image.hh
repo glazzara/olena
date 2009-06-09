@@ -28,7 +28,7 @@
 #ifndef MLN_WORLD_INTER_PIXEL_FULL2IMAGE_HH
 # define MLN_WORLD_INTER_PIXEL_FULL2IMAGE_HH
 
-/// \file mln/world/inter_pixel/full2image.hh
+/// \file
 ///
 /// Convert an inter-pixel image to a classical image.
 

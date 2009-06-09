@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_ALL_HH
 # define MLN_VALUE_ALL_HH
 
-/// \file mln/value/all.hh
+/// \file
 ///
 /// File that includes all "value types"-related materials.
 

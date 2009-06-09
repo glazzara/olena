@@ -28,7 +28,7 @@
 #ifndef MLN_ALGEBRA_H_MAT_HH
 # define MLN_ALGEBRA_H_MAT_HH
 
-/*! \file mln/algebra/h_mat.hh
+/*! \file
  *
  * \brief Definition of a matrix with homogeneous coordinates.
  *

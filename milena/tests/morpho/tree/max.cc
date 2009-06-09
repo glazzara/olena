@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/tree/max.cc
+/// \file
 ///
 /// Tests on mln::morpho::tree::max.
 

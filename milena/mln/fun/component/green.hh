@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_COMPONENT_GREEN_HH
 # define MLN_FUN_COMPONENT_GREEN_HH
 
-/// \file mln/fun/component/green.hh
+/// \file
 ///
 /// Meta function to retrieve/modify the green component.
 

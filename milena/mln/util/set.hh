@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_SET_HH
 # define MLN_UTIL_SET_HH
 
-/// \file mln/util/set.hh
+/// \file
 ///
 /// Definition of mln::util::set.
 ///

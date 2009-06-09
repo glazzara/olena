@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/fun/v2v/component.cc
+/// \file
 ///
 /// \brief Test fun::v2v::component.
 

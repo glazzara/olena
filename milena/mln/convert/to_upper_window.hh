@@ -29,7 +29,7 @@
 #ifndef MLN_CONVERT_TO_UPPER_WINDOW_HH
 # define MLN_CONVERT_TO_UPPER_WINDOW_HH
 
-/*! \file mln/convert/to_upper_window.hh
+/*! \file
  *
  * \brief Conversions to upper mln::window.
  */

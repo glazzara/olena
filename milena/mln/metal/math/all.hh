@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_MATH_ALL_HH
 # define MLN_METAL_MATH_ALL_HH
 
-/*! \file mln/metal/math/all.hh
+/*! \file
  *
  * \brief Include all static mathematical functions.
  */

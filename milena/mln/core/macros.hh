@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_MACROS_HH
 # define MLN_CORE_MACROS_HH
 
-/// \file mln/core/macros.hh
+/// \file
 ///
 /// Definition of the set of Milena macros.
 

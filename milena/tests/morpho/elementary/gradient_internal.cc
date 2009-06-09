@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/elementary/gradient_internal.cc
+/// \file
 ///
 /// Test on mln::morpho::elementary::gradient_internal.
 

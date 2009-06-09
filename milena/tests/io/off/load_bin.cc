@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/io/off/load_bin.cc
+/// \file
 ///
 /// Test mln::io::off::load with an mln::bin_2complex_image3df.
 

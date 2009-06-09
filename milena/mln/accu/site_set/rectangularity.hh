@@ -30,7 +30,7 @@
 #ifndef MLN_ACCU_SITE_SET_RECTANGULARITY_HH
 # define MLN_ACCU_SITE_SET_RECTANGULARITY_HH
 
-/// \file mln/accu/site_set/rectangularity.hh
+/// \file
 ///
 /// Compute the rectangularity of a site set.
 

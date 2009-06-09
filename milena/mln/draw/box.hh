@@ -28,7 +28,7 @@
 #ifndef MLN_DRAW_BOX_HH
 # define MLN_DRAW_BOX_HH
 
-/*! \file mln/draw/box.hh
+/*! \file
  *
  * \brief Draw a box in an image.
  */

@@ -29,7 +29,7 @@
 #ifndef MLN_TRAIT_VALUE_ALL_HH
 # define MLN_TRAIT_VALUE_ALL_HH
 
-/// \file mln/trait/value/all.hh
+/// \file
 ///
 /// Include all value traits.
 

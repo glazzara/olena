@@ -28,7 +28,7 @@
 #ifndef MLN_IO_ALL_HH
 # define MLN_IO_ALL_HH
 
-/// \file mln/io/all.hh
+/// \file
 /// \brief Inclusion of all I/O routines.
 
 

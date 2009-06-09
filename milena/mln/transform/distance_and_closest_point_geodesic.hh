@@ -28,7 +28,7 @@
 #ifndef MLN_TRANSFORM_DISTANCE_AND_CLOSEST_POINT_GEODESIC_HH
 # define MLN_TRANSFORM_DISTANCE_AND_CLOSEST_POINT_GEODESIC_HH
 
-/// \file mln/transform/distance_and_closest_point_geodesic.hh
+/// \file
 ///
 /// Distance and geodesic closest point transform.
 

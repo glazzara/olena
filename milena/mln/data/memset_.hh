@@ -29,7 +29,7 @@
 #ifndef MLN_DATA_MEMSET__HH
 # define MLN_DATA_MEMSET__HH
 
-/// \file mln/data/memset_.hh
+/// \file
 ///
 /// Same as std::memset but for fastest images.
 

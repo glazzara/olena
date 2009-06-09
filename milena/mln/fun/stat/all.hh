@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_STAT_ALL_HH
 # define MLN_FUN_STAT_ALL_HH
 
-/// \file mln/fun/stat/all.hh
+/// \file
 ///
 /// File that includes all statistical functions.
 

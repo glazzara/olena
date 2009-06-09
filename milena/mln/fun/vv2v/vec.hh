@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_VV2V_VEC_HH
 # define MLN_FUN_VV2V_VEC_HH
 
-/// \file mln/fun/vv2v/vec.hh
+/// \file
 ///
 /// computing the vecimum of two values using a functor.
 

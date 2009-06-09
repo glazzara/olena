@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_CONCEPT_REGULAR_GRID_HH
 # define MLN_CORE_CONCEPT_REGULAR_GRID_HH
 
-/*! \file mln/core/concept/regular_grid.hh
+/*! \file
  * \brief Definition of the concept of mln::Regular_Grid.
  */
 

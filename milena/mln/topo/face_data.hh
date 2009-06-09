@@ -29,7 +29,7 @@
 #ifndef MLN_TOPO_FACE_DATA_HH
 # define MLN_TOPO_FACE_DATA_HH
 
-/// \file mln/topo/face_data.hh
+/// \file
 ///
 /// \brief Data associated to the faces of a complex.
 ///

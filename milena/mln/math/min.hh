@@ -28,7 +28,7 @@
 #ifndef MLN_MATH_MIN_HH
 # define MLN_MATH_MIN_HH
 
-/*! \file mln/math/min.hh
+/*! \file
  *
  * \brief Define min routine.
  */

@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_CONCEPT_PSEUDO_SITE_HH
 # define MLN_CORE_CONCEPT_PSEUDO_SITE_HH
 
-/// \file mln/core/concept/pseudo_site.hh
+/// \file
 ///
 /// \brief Definition of the concept of mln::Pseudo_Site.
 ///

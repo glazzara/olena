@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_HLINE2D_HH
 # define MLN_WIN_HLINE2D_HH
 
-/// \file mln/win/hline2d.hh
+/// \file
 ///
 /// Definition of the mln::win::hline2d window.
 

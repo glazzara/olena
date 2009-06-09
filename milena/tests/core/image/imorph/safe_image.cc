@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/imorph/safe_image.cc
+/// \file
 ///
 /// Tests on mln::safe_image.
 

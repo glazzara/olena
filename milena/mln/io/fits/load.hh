@@ -28,7 +28,7 @@
 #ifndef MLN_IO_FITS_LOAD_HH
 # define MLN_IO_FITS_LOAD_HH
 
-/// \file mln/io/fits/load.hh
+/// \file
 ///
 /// Define a function which loads an image of kind fits with
 /// given path.

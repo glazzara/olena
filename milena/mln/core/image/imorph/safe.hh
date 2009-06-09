@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_IMORPH_SAFE_HH
 # define MLN_CORE_IMAGE_IMORPH_SAFE_HH
 
-/// \file mln/core/image/imorph/safe.hh
+/// \file
 ///
 /// \brief Definition of a morpher that makes image become accessible
 /// at undefined location.

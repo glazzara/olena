@@ -28,7 +28,7 @@
 #ifndef MLN_IO_PLOT_ALL_HH
 # define MLN_IO_PLOT_ALL_HH
 
-/// \file mln/io/plot/all.hh
+/// \file
 /// \brief Inclusion of all plot I/O routines.
 
 

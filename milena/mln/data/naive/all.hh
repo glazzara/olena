@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_NAIVE_ALL_HH
 # define MLN_LEVEL_NAIVE_ALL_HH
 
-/*! \file mln/data/naive/all.hh
+/*! \file
  *
  * \brief File that includes all level-related routines with
  * naive approach.

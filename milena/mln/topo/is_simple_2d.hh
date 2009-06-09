@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_IS_SIMPLE_2D_HH
 # define MLN_TOPO_IS_SIMPLE_2D_HH
 
-/// \file mln/topo/is_simple_2d.hh
+/// \file
 ///
 /// Define the function is_simple_2d which tests if a point is simple
 /// or not (Cf bertrand.07.chap).

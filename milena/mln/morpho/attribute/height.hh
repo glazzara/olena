@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_ATTRIBUTE_HEIGHT_HH
 # define MLN_MORPHO_ATTRIBUTE_HEIGHT_HH
 
-/// \file mln/morpho/attribute/height.hh
+/// \file
 /// Define an accumulator that computes the height of a
 /// component through one of its pixels.
 

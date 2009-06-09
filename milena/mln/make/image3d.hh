@@ -29,7 +29,7 @@
 #ifndef MLN_MAKE_IMAGE3D_HH
 # define MLN_MAKE_IMAGE3D_HH
 
-/// \file mln/make/image3d.hh
+/// \file
 ///
 /// \brief Routine to create a 3D image from an array of 2D images or
 /// from one 2D image.

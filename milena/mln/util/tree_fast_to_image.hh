@@ -29,7 +29,7 @@
 # define MLN_UTIL_TREE_FAST_TO_IMAGE_HH
 
 /*!
- *  \file   mln/util/tree_fast_to_image.hh
+ *  \file
  *
  *  \brief Definition of function which transform a tree_fast into an
  *  image.

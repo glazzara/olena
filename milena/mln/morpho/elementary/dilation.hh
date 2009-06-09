@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_ELEMENTARY_DILATION_HH
 # define MLN_MORPHO_ELEMENTARY_DILATION_HH
 
-/// \file mln/morpho/elementary/dilation.hh
+/// \file
 
 # include <mln/morpho/elementary/like_ero_fun.hh>
 # include <mln/morpho/elementary/like_ero_set.hh>

@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_AND_HH
 # define MLN_TRAIT_OP_AND_HH
 
-/*! \file mln/trait/op/and.hh
+/*! \file
  *
  * \brief Declaration of the "binary and" operator trait.
  */

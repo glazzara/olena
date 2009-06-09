@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_DMORPH_IMAGE_IF_HH
 # define MLN_CORE_IMAGE_DMORPH_IMAGE_IF_HH
 
-/// \file mln/core/image/dmorph/image_if.hh
+/// \file
 ///
 /// \brief Definition of a image which domain is restricted by a
 /// function 'site -> Boolean'.

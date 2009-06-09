@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_COMPLEX_PSITE_HH
 # define MLN_CORE_SITE_SET_COMPLEX_PSITE_HH
 
-/// \file mln/core/site_set/complex_psite.hh
+/// \file
 ///
 /// \brief Definition of a complex-based point site.
 

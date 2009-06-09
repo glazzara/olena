@@ -29,7 +29,7 @@
 #ifndef MLN_MAKE_BOX1D_HH
 # define MLN_MAKE_BOX1D_HH
 
-/// \file mln/make/box1d.hh
+/// \file
 ///
 /// Routines to construct an mln::box1d.
 

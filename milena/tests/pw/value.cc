@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/pw/value.cc
+/// \file
 ///
 /// Test on mln::pw::value_.
 

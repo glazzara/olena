@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_GENERAL_HH
 # define MLN_MORPHO_GENERAL_HH
 
-/// \file mln/morpho/general.hh
+/// \file
 ///
 /// Morphological general routine with dispatch.
 ///

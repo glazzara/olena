@@ -29,7 +29,7 @@
 #ifndef MLN_BORDER_GET_HH
 # define MLN_BORDER_GET_HH
 
-/// \file mln/border/get.hh
+/// \file
 ///
 /// Define function that returns the real border thickness of image.
 

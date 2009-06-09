@@ -29,7 +29,7 @@
 #ifndef MLN_LEVEL_COMPUTE_HH
 # define MLN_LEVEL_COMPUTE_HH
 
-/// \file mln/data/compute.hh
+/// \file
 ///
 /// Compute an accumulator onto image pixel values.
 

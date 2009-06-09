@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/topo/skeleton/is_simple_point.cc
+/// \file
 ///
 /// Test mln::topo::skeleton::is_simple_point.
 

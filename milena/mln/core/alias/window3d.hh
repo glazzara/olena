@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_ALIAS_WINDOW3D_HH
 # define MLN_CORE_ALIAS_WINDOW3D_HH
 
-/// \file mln/core/alias/window3d.hh
+/// \file
 ///
 /// Definition of the mln::window3d alias and of a construction
 /// routine.

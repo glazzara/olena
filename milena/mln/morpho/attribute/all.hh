@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_ATTRIBUTE_ALL_HH
 # define MLN_MORPHO_ATTRIBUTE_ALL_HH
 
-/// \file mln/morpho/attribute/all.hh
+/// \file
 ///
 /// File that includes all attributes used in mathematical morphology.
 

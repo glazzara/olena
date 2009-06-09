@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_ALIAS_ALL_HH
 # define MLN_CORE_ALIAS_ALL_HH
 
-/// \file mln/core/alias/all.hh
+/// \file
 ///
 /// File that includes all the aliases.
 

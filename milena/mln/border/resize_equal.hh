@@ -28,7 +28,7 @@
 #ifndef MLN_BORDER_RESIZE_EQUAL_HH
 # define MLN_BORDER_RESIZE_EQUAL_HH
 
-/// \file mln/border/resize_equal.hh
+/// \file
 ///
 /// Define a function that resizes the virtual border of a couple of
 /// images so that they eventually have the same border thickness.

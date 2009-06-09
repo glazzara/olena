@@ -29,7 +29,7 @@
 #ifndef MLN_LABELING_FILL_HOLES_HH
 # define MLN_LABELING_FILL_HOLES_HH
 
-/// \file mln/labeling/fill_holes.hh
+/// \file
 ///
 /// Filling holes of a single object in a binary image.
 

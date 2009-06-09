@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_MAX_COL_HH
 # define MLN_GEOM_MAX_COL_HH
 
-/// \file mln/geom/max_col.hh
+/// \file
 ///
 /// Give the maximum column of an image.
 

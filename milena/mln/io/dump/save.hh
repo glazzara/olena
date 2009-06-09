@@ -28,7 +28,7 @@
 #ifndef MLN_IO_DUMP_SAVE_HH
 # define MLN_IO_DUMP_SAVE_HH
 
-/// \file mln/io/dump/save.hh
+/// \file
 ///
 /// Save a Milena image by dumping its data to a file.
 ///

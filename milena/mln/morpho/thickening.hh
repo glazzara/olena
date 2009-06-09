@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_THICKENING_HH
 # define MLN_MORPHO_THICKENING_HH
 
-/*! \file mln/morpho/thickening.hh
+/*! \file
  *
  * \brief Morphological thickening.
  */

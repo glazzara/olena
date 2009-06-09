@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_LOGIC_LAND_BASIC_HH
 # define MLN_ACCU_LOGIC_LAND_BASIC_HH
 
-/// \file mln/accu/logic/land_basic.hh
+/// \file
 ///
 /// Define a basic 'logical-and' accumulator.
 ///

@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_CLOSING_APPROX_ALL_HH
 # define MLN_MORPHO_CLOSING_APPROX_ALL_HH
 
-/// \file mln/morpho/closing/approx/all.hh
+/// \file
 ///
 /// File that includes all approximate mathematical morphology closing
 /// routines.

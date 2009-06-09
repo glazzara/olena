@@ -28,7 +28,7 @@
 #ifndef MLN_LITERAL_BLACK_HH
 # define MLN_LITERAL_BLACK_HH
 
-/*! \file mln/literal/black.hh
+/*! \file
  * \brief Definition of the literal of mln::black.
  *
  */

@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_ESSENTIAL_HH_
 # define MLN_CORE_ESSENTIAL_HH_
 
-/*! \file mln/core/essential.hh
+/*! \file
  *
  * \brief File that includes essential the core routines.
  *

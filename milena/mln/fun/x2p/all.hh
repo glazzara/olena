@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_X2V_ALL_HH
 # define MLN_FUN_X2V_ALL_HH
 
-/*! \file mln/fun/x2p/all.hh
+/*! \file
  *
  * \brief File that includes all functions from point to value.
  */

@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_ESSENTIAL_HH_
 # define MLN_ACCU_ESSENTIAL_HH_
 
-/// \file mln/accu/essential.hh
+/// \file
 ///
 /// File that includes the most useful accumulator types.
 

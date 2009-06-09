@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_ORD_PAIR_HH
 # define MLN_UTIL_ORD_PAIR_HH
 
-/// \file mln/util/ord_pair.hh
+/// \file
 ///
 /// Definition of an ordered pair.
 

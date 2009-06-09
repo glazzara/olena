@@ -29,7 +29,7 @@
 #ifndef MLN_LABELING_BACKGROUND_HH
 # define MLN_LABELING_BACKGROUND_HH
 
-/// \file mln/labeling/background.hh
+/// \file
 ///
 /// Connected component labeling of the background in a binary
 /// image.

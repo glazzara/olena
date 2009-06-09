@@ -28,7 +28,7 @@
 #ifndef MLN_IO_DUMP_ALL_HH
 # define MLN_IO_DUMP_ALL_HH
 
-/// \file mln/io/dump/all.hh
+/// \file
 /// \brief Inclusion of all dump I/O routines.
 
 

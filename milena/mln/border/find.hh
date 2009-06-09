@@ -28,7 +28,7 @@
 #ifndef MLN_BORDER_FIND_HH
 # define MLN_BORDER_FIND_HH
 
-/*! \file mln/border/find.hh
+/*! \file
  *
  * \brief Define function that searches the border thickness of image.
  */

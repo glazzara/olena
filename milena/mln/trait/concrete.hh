@@ -29,7 +29,7 @@
 #ifndef MLN_TRAIT_CONCRETE_HH
 # define MLN_TRAIT_CONCRETE_HH
 
-/// \file mln/trait/concrete.hh
+/// \file
 ///
 /// \brief Definition of the concrete image trait.
 

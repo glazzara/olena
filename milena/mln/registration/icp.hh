@@ -28,7 +28,7 @@
 #ifndef MLN_REGISTRATION_ICP_HH
 # define MLN_REGISTRATION_ICP_HH
 
-/// \file mln/registration/icp.hh
+/// \file
 ///
 /// Register an image over an another using the ICP algorithm.
 ///

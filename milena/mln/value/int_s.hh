@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_INT_S_HH
 # define MLN_VALUE_INT_S_HH
 
-/// \file mln/value/int_s.hh
+/// \file
 ///
 /// Define a generic class for signed integers.
 

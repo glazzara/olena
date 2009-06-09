@@ -28,7 +28,7 @@
 #ifndef MLN_GEOM_NSLIS_HH
 # define MLN_GEOM_NSLIS_HH
 
-/// \file mln/geom/nslis.hh
+/// \file
 ///
 /// Give the number of slices of an image.
 

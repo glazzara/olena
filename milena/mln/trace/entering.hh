@@ -29,7 +29,7 @@
 #ifndef MLN_TRACE_ENTERING_HH
 # define MLN_TRACE_ENTERING_HH
 
-/// \file mln/trace/entering.hh
+/// \file
 ///
 /// Definition of the trace entering procedure.
 

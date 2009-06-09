@@ -28,7 +28,7 @@
 #ifndef MLN_GEOM_NROWS_HH
 # define MLN_GEOM_NROWS_HH
 
-/// \file mln/geom/nrows.hh
+/// \file
 ///
 /// Give the number of rows of an image.
 

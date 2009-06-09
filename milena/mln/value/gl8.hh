@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_GL8_HH
 # define MLN_VALUE_GL8_HH
 
-/*! \file mln/value/gl8.hh
+/*! \file
  *
  * \brief Define the alias value::gl8.
  */

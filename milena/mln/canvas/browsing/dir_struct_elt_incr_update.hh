@@ -29,7 +29,7 @@
 #ifndef MLN_CANVAS_BROWSING_DIR_STRUCT_ELT_INCR_UPDATE_HH
 # define MLN_CANVAS_BROWSING_DIR_STRUCT_ELT_INCR_UPDATE_HH
 
-/// \file mln/canvas/browsing/dir_struct_elt_incr_update.hh
+/// \file
 ///
 /// Directional browsing of an image with structuring element.
 

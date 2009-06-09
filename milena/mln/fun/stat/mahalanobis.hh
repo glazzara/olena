@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_STAT_MAHALANOBIS_HH
 # define MLN_FUN_STAT_MAHALANOBIS_HH
 
-/// \file mln/fun/stat/mahalanobis.hh
+/// \file
 ///
 /// \brief Define the FIXME
 

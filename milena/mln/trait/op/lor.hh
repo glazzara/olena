@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_LOR_HH
 # define MLN_TRAIT_OP_LOR_HH
 
-/*! \file mln/trait/op/lor.hh
+/*! \file
  *
  * \brief Declaration of the "binary logical or" operator trait.
  *

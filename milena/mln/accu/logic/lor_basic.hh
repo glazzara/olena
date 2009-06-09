@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_LOGIC_LOR_BASIC_HH
 # define MLN_ACCU_LOGIC_LOR_BASIC_HH
 
-/// \file mln/accu/logic/lor_basic.hh
+/// \file
 ///
 /// Define a basic 'logical-or' accumulator.
 ///

@@ -28,7 +28,7 @@
 #ifndef MLN_IO_CLOUD_SAVE_HH
 # define MLN_IO_CLOUD_SAVE_HH
 
-/// \file mln/io/cloud/save.hh
+/// \file
 ///
 /// Save an image as a cloud of points.
 

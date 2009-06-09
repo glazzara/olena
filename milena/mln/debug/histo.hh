@@ -29,7 +29,7 @@
 #ifndef MLN_DEBUG_HISTO_HH
 # define MLN_DEBUG_HISTO_HH
 
-/// \file mln/debug/histo.hh
+/// \file
 ///
 /// \brief Save a histogram to a plot data file.
 ///

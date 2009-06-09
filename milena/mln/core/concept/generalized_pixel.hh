@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_CONCEPT_GENERALIZED_PIXEL_HH
 # define MLN_CORE_CONCEPT_GENERALIZED_PIXEL_HH
 
-/// \file mln/core/concept/generalized_pixel.hh
+/// \file
 ///
 /// Definition of the concept of mln::Generalized_Pixel.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_DETACHMENT_HH
 # define MLN_MAKE_DETACHMENT_HH
 
-/// \file mln/make/detachment.hh
+/// \file
 /// \brief Compute the detachment of a cell w.r.t. from a binary
 /// complex-based image.
 

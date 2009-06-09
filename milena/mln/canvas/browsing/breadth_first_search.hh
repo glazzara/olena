@@ -28,7 +28,7 @@
 #ifndef MLN_CANVAS_BROWSING_BREADTH_FIRST_SEARCH_HH
 # define MLN_CANVAS_BROWSING_BREADTH_FIRST_SEARCH_HH
 
-/// \file mln/canvas/browsing/breadth_first_search.hh
+/// \file
 ///
 /// Breadth first search algorithm for graph.
 /// Browse over all vertices for each component.

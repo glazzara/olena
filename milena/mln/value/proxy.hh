@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_PROXY_HH
 # define MLN_VALUE_PROXY_HH
 
-/// \file mln/value/proxy.hh
+/// \file
 ///
 /// Define a generic proxy class for an image pixel value.
 

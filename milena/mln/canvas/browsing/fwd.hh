@@ -29,7 +29,7 @@
 #ifndef MLN_CANVAS_BROWSING_FWD_HH
 # define MLN_CANVAS_BROWSING_FWD_HH
 
-/// \file mln/canvas/browsing/fwd.hh
+/// \file
 ///
 /// Canvas for forward browsing.
 

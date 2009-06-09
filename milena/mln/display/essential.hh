@@ -28,7 +28,7 @@
 #ifndef MLN_DISPLAY_ESSENTIAL_HH
 # define MLN_DISPLAY_ESSENTIAL_HH
 
-/*! \file mln/display/essential.hh
+/*! \file
  *
  * \brief File that includes essential display routines.
  */

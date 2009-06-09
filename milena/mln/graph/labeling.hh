@@ -28,7 +28,7 @@
 #ifndef MLN_GRAPH_LABELING_HH
 # define MLN_GRAPH_LABELING_HH
 
-/// \file mln/graph/labeling.hh
+/// \file
 ///
 /// Label a graph image.
 

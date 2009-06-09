@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/accu/image/untake.cc
+/// \file
 ///
 /// Tests on mln::accu::image::untake.
 

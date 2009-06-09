@@ -30,7 +30,7 @@
 #ifndef MLN_GRAPH_ATTRIBUTE_CARD_HH
 # define MLN_GRAPH_ATTRIBUTE_CARD_HH
 
-/// \file mln/graph/attribute/card.hh
+/// \file
 /// Functor that computes the cardinality of every component in a graph.
 ///
 /// \sa graph::compute

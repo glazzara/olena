@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_ALL_HH
 # define MLN_WIN_ALL_HH
 
-/// \file mln/win/all.hh
+/// \file
 ///
 /// File that includes all win-related routines.
 

@@ -37,7 +37,7 @@
 # include <mln/util/graph_ids.hh>
 # include <mln/util/edge.hh>
 
-/// \file mln/util/vertex.hh
+/// \file
 ///
 /// Implementation of a graph vertex.
 

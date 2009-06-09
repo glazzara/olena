@@ -28,7 +28,7 @@
 #ifndef MLN_IO_DUMP_LOAD_HH
 # define MLN_IO_DUMP_LOAD_HH
 
-/// \file mln/io/dump/load.hh
+/// \file
 ///
 /// Load a Milena image dumped into a file.
 

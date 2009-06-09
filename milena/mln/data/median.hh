@@ -29,7 +29,7 @@
 #ifndef MLN_LEVEL_MEDIAN_HH
 # define MLN_LEVEL_MEDIAN_HH
 
-/// \file mln/data/median.hh
+/// \file
 ///
 /// Median filtering of an image.
 ///

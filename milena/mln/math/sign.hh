@@ -28,7 +28,7 @@
 #ifndef MLN_MATH_SIGN_HH
 # define MLN_MATH_SIGN_HH
 
-/*! \file mln/math/sign.hh
+/*! \file
  *
  * \brief Define sign routine.
  */

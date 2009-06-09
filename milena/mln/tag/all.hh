@@ -28,7 +28,7 @@
 #ifndef MLN_TAG_ALL_HH
 # define MLN_TAG_ALL_HH
 
-/*! \file mln/tag/all.hh
+/*! \file
  *
  * \brief File that includes all tag-related routines.
  */

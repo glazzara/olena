@@ -32,7 +32,7 @@
 // FIXME: This file, as well its functions and classes, shall not
 // contain capital letters.
 
-/// \file  mln/morpho/Rd.hh
+/// \file
 ///
 /// \todo Reform code!  Also go and see sandbox/theo/Rd.
 

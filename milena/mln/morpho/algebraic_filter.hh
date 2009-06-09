@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_ALGEBRAIC_FILTER_HH_
 # define MLN_MORPHO_ALGEBRAIC_FILTER_HH_
 
-/// \file mln/morpho/algebraic_filter.hh
+/// \file
 ///
 /// Alegebraic filter calls attribute canvas.
 

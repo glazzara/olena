@@ -30,7 +30,7 @@
 #ifndef MLN_GRAPH_COMPUTE_HH
 # define MLN_GRAPH_COMPUTE_HH
 
-/// \file mln/graph/compute.hh
+/// \file
 ///
 /// Base routine to compute attributes on a graph.
 ///

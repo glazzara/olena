@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_W_WINDOW_HH
 # define MLN_CORE_W_WINDOW_HH
 
-/// \file mln/core/w_window.hh
+/// \file
 ///
 /// Definition of the generic weighted window class mln::w_window.
 ///

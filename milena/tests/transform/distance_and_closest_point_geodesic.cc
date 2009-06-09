@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/transform/distance_and_closest_point_geodesic.cc
+/// \file
 ///
 /// Test on mln::transform::closest_point_geodesic.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_ANDS_HH
 # define MLN_METAL_ANDS_HH
 
-/// \file mln/metal/ands.hh
+/// \file
 ///
 /// Definition of a multiple-"and"s Boolean expression.
 

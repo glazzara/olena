@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_DUMMY_P_EDGES_HH
 # define MLN_MAKE_DUMMY_P_EDGES_HH
 
-/// \file mln/make/dummy_p_edges.hh
+/// \file
 ///
 /// Create a p_edges which associate a graph element to a constant site.
 ///

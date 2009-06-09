@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_DEF_COORDF_HH
 # define MLN_CORE_DEF_COORDF_HH
 
-/// \file mln/core/def/coordf.hh
+/// \file
 /// \brief Definition of the floating coordinate type.
 
 namespace mln

@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_ELEMENTARY_EROSION_HH
 # define MLN_MORPHO_ELEMENTARY_EROSION_HH
 
-/// \file mln/morpho/elementary/erosion.hh
+/// \file
 
 # include <mln/morpho/elementary/like_ero_fun.hh>
 # include <mln/morpho/elementary/like_ero_set.hh>

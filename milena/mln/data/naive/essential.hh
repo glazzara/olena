@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_NAIVE_ESSENTIAL_HH
 # define MLN_LEVEL_NAIVE_ESSENTIAL_HH
 
-/*! \file mln/data/naive/essential.hh
+/*! \file
  *
  * \brief File that includes essential level-related routines with
  * naive approach.

@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_CONCEPT_POINT_SITE_HH
 # define MLN_CORE_CONCEPT_POINT_SITE_HH
 
-/*! \file mln/core/concept/point_site.hh
+/*! \file
  *
  * \brief Definition of the concept of mln::Point_Site.
  */

@@ -28,7 +28,7 @@
 #ifndef MLN_GEOM_COMPLEX_GEOMETRY_HH
 # define MLN_GEOM_COMPLEX_GEOMETRY_HH
 
-/// \file mln/geom/complex_geometry.hh
+/// \file
 /// A functor associating geometry (location) data to the faces
 /// of a complex.
 ///

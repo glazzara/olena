@@ -29,7 +29,7 @@
 #ifndef MLN_LOGICAL_NOT_HH
 # define MLN_LOGICAL_NOT_HH
 
-/// \file mln/logical/not.hh
+/// \file
 ///
 /// Point-wise "logical not" of a binary image.
 

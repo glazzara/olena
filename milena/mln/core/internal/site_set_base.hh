@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_SITE_SET_BASE_HH
 # define MLN_CORE_INTERNAL_SITE_SET_BASE_HH
 
-/// \file mln/core/internal/site_set_base.hh
+/// \file
 ///
 /// Definition of the common base class for all site set
 /// classes.

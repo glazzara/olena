@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_EXTENSION_ADJUST_HH
 # define MLN_CORE_EXTENSION_ADJUST_HH
 
-/// \file mln/extension/adjust.hh
+/// \file
 ///
 /// Adjust the domain extension to a minimum thickness border.
 ///

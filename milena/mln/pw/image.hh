@@ -29,7 +29,7 @@
 #ifndef MLN_PW_IMAGE_HH
 # define MLN_PW_IMAGE_HH
 
-/// \file mln/pw/image.hh
+/// \file
 ///
 /// Point-wised restricted image.
 

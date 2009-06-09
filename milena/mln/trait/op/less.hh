@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_LESS_HH
 # define MLN_TRAIT_OP_LESS_HH
 
-/*! \file mln/trait/op/less.hh
+/*! \file
  *
  * \brief Declaration of the "binary less" operator trait.
  */

@@ -29,7 +29,7 @@
 #ifndef MLN_ARITH_DIV_HH
 # define MLN_ARITH_DIV_HH
 
-/// \file mln/arith/div.hh
+/// \file
 ///
 /// Point-wise division between images.
 ///

@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_FIXME_HH
 # define MLN_CORE_INTERNAL_FIXME_HH
 
-/*! \file mln/core/internal/fixme.hh
+/*! \file
  *
  * \brief Definition of mln::fixme for internal use only.
  */

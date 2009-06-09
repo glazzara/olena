@@ -29,7 +29,7 @@
 #ifndef MLN_MAKE_ESSENTIAL_HH
 # define MLN_MAKE_ESSENTIAL_HH
 
-/// \file mln/make/essential.hh
+/// \file
 ///
 /// File that includes essential make routines.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_UTIL_ORD_HH
 # define MLN_UTIL_ORD_HH
 
-/// \file mln/util/ord.hh
+/// \file
 ///
 /// Definition of an ordering type and routine.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_IMAGE_TO_RESULT_HH
 # define MLN_ACCU_IMAGE_TO_RESULT_HH
 
-/// \file mln/accu/image/to_result.hh
+/// \file
 ///
 /// Convert an image of accumulators into a result image.
 

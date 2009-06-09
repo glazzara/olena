@@ -29,7 +29,7 @@
 #ifndef MLN_DATA_FILL_WITH_IMAGE_HH
 # define MLN_DATA_FILL_WITH_IMAGE_HH
 
-/// \file mln/data/fill_with_image.hh
+/// \file
 ///
 /// Fill an image with the values from another image.
 ///

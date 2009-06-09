@@ -28,7 +28,7 @@
 #ifndef MLN_IO_DICOM_LOAD_HH
 # define MLN_IO_DICOM_LOAD_HH
 
-/// \file mln/io/magick/load.hh
+/// \file
 /// \brief Define a function which loads a GDCM image.
 
 # include <mln/core/image/image2d.hh>

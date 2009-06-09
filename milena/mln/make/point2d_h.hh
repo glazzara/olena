@@ -29,7 +29,7 @@
 #ifndef MLN_MAKE_POINT2D_H_HH
 # define MLN_MAKE_POINT2D_H_HH
 
-/// \file mln/make/point2d_h.hh
+/// \file
 ///
 /// Routine to construct an mln::point2d_h.
 

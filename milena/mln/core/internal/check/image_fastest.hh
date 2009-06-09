@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_CHECK_IMAGE_FASTEST_HH
 # define MLN_CORE_INTERNAL_CHECK_IMAGE_FASTEST_HH
 
-/// \file mln/core/internal/check/image_fastest.hh
+/// \file
 ///
 /// \brief Class that statically checks the interface of fastest
 /// images.

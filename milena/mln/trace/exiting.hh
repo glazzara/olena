@@ -29,7 +29,7 @@
 #ifndef MLN_TRACE_EXITING_HH
 # define MLN_TRACE_EXITING_HH
 
-/// \file mln/trace/exiting.hh
+/// \file
 ///
 /// Definition of the trace exiting procedure.
 

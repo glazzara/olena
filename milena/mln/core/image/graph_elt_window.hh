@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_GRAPH_ELT_WINDOW_HH
 # define MLN_CORE_IMAGE_GRAPH_ELT_WINDOW_HH
 
-/// \file mln/core/image/graph_elt_window.hh
+/// \file
 ///
 /// Definition of the elementary ``window'' on a graph.
 

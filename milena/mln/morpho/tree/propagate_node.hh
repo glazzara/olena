@@ -33,7 +33,7 @@
 # include <mln/core/macros.hh>
 # include <mln/morpho/tree/data.hh>
 
-/// \file mln/morpho/tree/propagate_node.hh
+/// \file
 ///
 /// Functions to propagate node in the tree.
 

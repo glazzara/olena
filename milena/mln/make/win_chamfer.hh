@@ -29,7 +29,7 @@
 #ifndef MLN_MAKE_WIN_CHAMFER_HH
 # define MLN_MAKE_WIN_CHAMFER_HH
 
-/// \file mln/make/win_chamfer.hh
+/// \file
 ///
 /// \brief Routine to create chamfer mln::w_window2d_int.
 ///

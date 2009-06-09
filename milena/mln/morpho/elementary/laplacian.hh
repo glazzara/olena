@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_ELEMENTARY_LAPLACIAN_HH
 # define MLN_MORPHO_ELEMENTARY_LAPLACIAN_HH
 
-/// \file mln/morpho/elementary/laplacian.hh
+/// \file
 ///
 /// Morphological elementary laplacian.
 ///

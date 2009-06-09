@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_DMORPH_ALL_HH
 # define MLN_CORE_IMAGE_DMORPH_ALL_HH
 
-/// \file mln/core/image/dmorph/all.hh
+/// \file
 ///
 /// File that includes all domain morpher image types.
 

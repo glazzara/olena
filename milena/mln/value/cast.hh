@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_CAST_HH
 # define MLN_VALUE_CAST_HH
 
-/*! \file mln/value/cast.hh
+/*! \file
  *
  * \brief Definition of the mln::value::cast routine.
  */

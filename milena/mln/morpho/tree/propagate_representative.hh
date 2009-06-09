@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_TREE_PROPAGATE_REPRESENTATIVE_HH
 # define MLN_MORPHO_TREE_PROPAGATE_REPRESENTATIVE_HH
 
-/// \file mln/morpho/tree/propagate_representative.hh
+/// \file
 ///
 /// Component tree routines.
 

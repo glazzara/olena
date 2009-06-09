@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_ALL_HH
 # define MLN_FUN_ALL_HH
 
-/// \file mln/fun/all.hh
+/// \file
 ///
 /// File that includes all functions.
 

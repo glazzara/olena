@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_COUPLE_HH
 # define MLN_UTIL_COUPLE_HH
 
-/// \file mln/util/couple.hh
+/// \file
 ///
 /// Definition of a couple.
 ///

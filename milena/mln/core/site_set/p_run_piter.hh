@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SITE_SET_P_RUN_PITER_HH
 # define MLN_CORE_SITE_SET_P_RUN_PITER_HH
 
-/*! \file mln/core/site_set/p_run_piter.hh
+/*! \file
  *
  * \brief Definition of point iterators on mln::p_run.
  */

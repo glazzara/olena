@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_FLOAT01_HH
 # define MLN_VALUE_FLOAT01_HH
 
-/// \file mln/value/float01.hh
+/// \file
 ///
 /// Define a generic class for float.
 

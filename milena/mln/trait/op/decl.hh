@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_DECL_HH
 # define MLN_TRAIT_OP_DECL_HH
 
-/*! \file mln/trait/op/decl.hh
+/*! \file
  *
  * \brief Forward declaration of the couple of trait solving
  * structures: mln::trait::solve_unary and mln::trait::solve_binary.

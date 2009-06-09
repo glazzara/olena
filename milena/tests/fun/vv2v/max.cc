@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/fun/vv2v/max.cc
+/// \file
 /// \brief Test the max functor.
 
 #include <cassert>

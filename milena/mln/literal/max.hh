@@ -28,7 +28,7 @@
 #ifndef MLN_LITERAL_MAX_HH
 # define MLN_LITERAL_MAX_HH
 
-/// \file mln/literal/max.hh
+/// \file
 ///
 /// Definition of the literal of mln::max.
 

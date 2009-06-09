@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_STAT_VAR_HH
 # define MLN_ACCU_STAT_VAR_HH
 
-/// \file mln/accu/stat/var.hh
+/// \file
 ///
 /// Define an accumulator that computes the variance matrix of a set
 /// of vectors.

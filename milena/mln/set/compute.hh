@@ -29,7 +29,7 @@
 #ifndef MLN_SET_COMPUTE_HH
 # define MLN_SET_COMPUTE_HH
 
-/// \file mln/set/compute.hh
+/// \file
 ///
 /// Compute an accumulator on a site set.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_FLOAT01_F_HH
 # define MLN_VALUE_FLOAT01_F_HH
 
-/*! \file mln/value/float01_f.hh
+/*! \file
  *
  * \brief FIXME.
  */

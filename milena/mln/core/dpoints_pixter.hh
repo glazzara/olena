@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_DPOINTS_PIXTER_HH
 # define MLN_CORE_DPOINTS_PIXTER_HH
 
-/// \file mln/core/dpoints_pixter.hh
+/// \file
 /// 
 /// \brief Definition of forward and backward mln::dpoint-based
 /// iterators for pixels iterations.

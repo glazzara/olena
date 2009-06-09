@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_GEOM_BBOX_HH
 # define MLN_CORE_INTERNAL_GEOM_BBOX_HH
 
-/// \file mln/core/internal/geom_bbox.hh
+/// \file
 ///
 /// \internal Routine that computes a bounding box from a window.
 /// This file is included in mln/core/concept/window.hh and avoid

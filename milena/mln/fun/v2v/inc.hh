@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2V_INC_HH
 # define MLN_FUN_V2V_INC_HH
 
-/// \file mln/fun/v2v/inc.hh
+/// \file
 ///
 /// Incrementation function.
 

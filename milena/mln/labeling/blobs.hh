@@ -29,7 +29,7 @@
 #ifndef MLN_LABELING_BLOBS_HH
 # define MLN_LABELING_BLOBS_HH
 
-/// \file mln/labeling/blobs.hh
+/// \file
 ///
 /// Connected component labeling of the binary objects of a binary
 /// image using a queue-based algorithm.

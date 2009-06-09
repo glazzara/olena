@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_I2V_ALL_HH
 # define MLN_FUN_I2V_ALL_HH
 
-/// \file mln/fun/i2v/all.hh
+/// \file
 ///
 /// \brief File that includes all integer-to-value functions.
 

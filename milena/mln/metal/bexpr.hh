@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_BEXPR_HH
 # define MLN_METAL_BEXPR_HH
 
-/*! \file mln/metal/bexpr.hh
+/*! \file
  *
  * \brief Definition of types for static Boolean expressions.
  */

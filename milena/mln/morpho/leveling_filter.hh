@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_LEVELING_FILTER_HH
 # define MLN_MORPHO_LEVELING_FILTER_HH
 
-/// \file mln/morpho/leveling_filter.hh
+/// \file
 ///
 /// Leveling filter calls attribute canvas.
 

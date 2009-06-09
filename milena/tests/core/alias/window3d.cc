@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/alias/window3d.cc
+/*! \file
  *
  * \brief Tests on mln::window3d.
  */

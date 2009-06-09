@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_ALIAS_P_RUN2D_HH
 # define MLN_CORE_ALIAS_P_RUN2D_HH
 
-/*! \file mln/core/alias/p_run2d.hh
+/*! \file
  *
  * \brief Definition of the mln::p_run2d alias.
  */

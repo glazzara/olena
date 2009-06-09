@@ -29,7 +29,7 @@
 #ifndef MLN_LEVEL_UPDATE_HH
 # define MLN_LEVEL_UPDATE_HH
 
-/// \file mln/data/update.hh
+/// \file
 ///
 /// \brief Update an accumulator with image pixel values.
 

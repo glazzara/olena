@@ -29,7 +29,7 @@
 #ifndef MLN_LEVEL_COMPARE_HH
 # define MLN_LEVEL_COMPARE_HH
 
-/// \file mln/data/compare.hh
+/// \file
 ///
 /// Comparison operators between the pixel values of images.
 

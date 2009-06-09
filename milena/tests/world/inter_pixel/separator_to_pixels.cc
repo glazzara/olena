@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/world/inter_pixel/separator_to_pixels.cc
+/// \file
 ///
 /// Tests on mln::world::inter_pixel::separator_to_pixels.
 

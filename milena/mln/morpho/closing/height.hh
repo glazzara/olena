@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_CLOSING_HEIGHT_HH
 # define MLN_MORPHO_CLOSING_HEIGHT_HH
 
-/// \file mln/morpho/closing/height.hh
+/// \file
 ///
 /// Morphological height closing.
 ///

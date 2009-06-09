@@ -29,7 +29,7 @@
 #ifndef MLN_IO_PNMS_LOAD_HH
 # define MLN_IO_PNMS_LOAD_HH
 
-/// \file mln/io/pnms/load.hh
+/// \file
 ///
 /// \brief Define a function which loads multiple pnm images into
 /// a 3D image.

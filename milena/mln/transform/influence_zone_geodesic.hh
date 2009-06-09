@@ -28,7 +28,7 @@
 #ifndef MLN_TRANSFORM_INFLUENCE_ZONE_GEODESIC_HH
 # define MLN_TRANSFORM_INFLUENCE_ZONE_GEODESIC_HH
 
-/// \file mln/transform/influence_zone_geodesic.hh
+/// \file
 ///
 /// Geodesic influence zone transform.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_INTERNAL_CONVERT_HH
 # define MLN_VALUE_INTERNAL_CONVERT_HH
 
-/// \file mln/value/internal/convert.hh
+/// \file
 ///
 /// Define a conversion between an index and an iterable value.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_BUILTIN_CARRAYS_HH
 # define MLN_VALUE_BUILTIN_CARRAYS_HH
 
-/// \file mln/value/builtin/carrays.hh
+/// \file
 ///
 /// Traits definition for C arrays.
 

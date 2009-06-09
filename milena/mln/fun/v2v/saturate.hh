@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2V_SATURATE_HH
 # define MLN_FUN_V2V_SATURATE_HH
 
-/*! \file mln/fun/v2v/saturate.hh
+/*! \file
  *
  * \brief FIXME.
  */

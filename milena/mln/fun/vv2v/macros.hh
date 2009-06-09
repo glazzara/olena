@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_VV2V_MACROS_HH
 # define MLN_FUN_VV2V_MACROS_HH
 
-/// \file mln/fun/vv2v/macros.hh
+/// \file
 ///
 /// Define a bunch of macros related to a binary function and a couple
 /// of images.

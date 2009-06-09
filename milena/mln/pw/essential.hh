@@ -28,7 +28,7 @@
 #ifndef MLN_PW_ESSENTIAL_HH
 # define MLN_PW_ESSENTIAL_HH
 
-/*! \file mln/pw/essential.hh
+/*! \file
  *
  * \brief File that includes essential "point-wise" expression tools.
  */

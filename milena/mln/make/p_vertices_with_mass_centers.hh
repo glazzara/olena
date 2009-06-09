@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_P_VERTICES_WITH_MASS_CENTERS_HH
 # define MLN_MAKE_P_VERTICES_WITH_MASS_CENTERS_HH
 
-/// \file mln/make/p_vertices_with_mass_centers.hh
+/// \file
 ///
 /// Create a p_vertices using region mass centers as vertex site.
 ///

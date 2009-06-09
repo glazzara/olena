@@ -30,7 +30,7 @@
 
 # include <mln/core/concept/proxy.hh>
 
-/// \file   mln/util/internal/graph_nbh_iter_base.hh
+/// \file
 ///
 /// Base implementation for graph edge and vertex neighborhood iterator.
 

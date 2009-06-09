@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_ALL_HH
 # define MLN_CORE_IMAGE_ALL_HH
 
-/// \file mln/core/image/all.hh
+/// \file
 ///
 /// File that includes all image types.
 

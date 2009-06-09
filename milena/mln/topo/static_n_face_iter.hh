@@ -29,7 +29,7 @@
 #ifndef MLN_TOPO_STATIC_N_FACE_ITER_HH
 # define MLN_TOPO_STATIC_N_FACE_ITER_HH
 
-/// \file mln/topo/static_n_face_iter.hh
+/// \file
 ///
 /// \brief Definition of forward and backward iterators on all the
 /// \p N-faces of a complex, \p N being a static value.

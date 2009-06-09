@@ -28,7 +28,7 @@
 #ifndef MLN_UTIL_MULTI_SITE_HH
 # define MLN_UTIL_MULTI_SITE_HH
 
-/// \file mln/util/multi_site.hh
+/// \file
 /// \brief Definition of a multiple-site type.
 
 # include <cstddef>

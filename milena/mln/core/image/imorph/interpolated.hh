@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_IMORPH_INTERPOLATED_HH
 # define MLN_CORE_IMAGE_IMORPH_INTERPOLATED_HH
 
-/// \file mln/core/image/imorph/interpolated.hh
+/// \file
 ///
 /// \brief Definition of a morpher that makes an image become readable
 /// with floating coordinates.

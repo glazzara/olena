@@ -29,11 +29,11 @@
 #ifndef MLN_CORE_ROUTINE_OPS_HH
 # define MLN_CORE_ROUTINE_OPS_HH
 
-/*! \file mln/core/routine/ops.hh
- *
- * \brief Definitions of some default implementations for operators.
- *
- * The set of operators defined in this file is:
+/// \file
+///
+/// \brief Definitions of some default implementations for operators.
+
+/*! The set of operators defined in this file is:
  *
  * \code
 

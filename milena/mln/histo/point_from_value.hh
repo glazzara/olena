@@ -28,7 +28,7 @@
 #ifndef MLN_HISTO_POINT_FROM_VALUE_HH
 # define MLN_HISTO_POINT_FROM_VALUE_HH
 
-/// \file mln/histo/point_from_value.hh
+/// \file
 ///
 /// Function 'point from value'.
 

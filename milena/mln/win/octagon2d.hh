@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_OCTAGON2D_HH
 # define MLN_WIN_OCTAGON2D_HH
 
-/// \file mln/win/octagon2d.hh
+/// \file
 ///
 /// Definition of the mln::win::octagon2d window.
 

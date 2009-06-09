@@ -28,7 +28,7 @@
 #ifndef MLN_BORDER_EQUALIZE_HH
 # define MLN_BORDER_EQUALIZE_HH
 
-/*! \file mln/border/equalize.hh
+/*! \file
  *
  * \brief Define a function that equalizes the thickness of an image
  * virtual border.

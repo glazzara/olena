@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_TO_ENC_HH
 # define MLN_LEVEL_TO_ENC_HH
 
-/*! \file mln/data/to_enc.hh
+/*! \file
  *
  * \brief Transform with fun::v2v::enc the contents of an image into
  * another one.

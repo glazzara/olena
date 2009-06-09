@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2V_COMPONENT_HH
 # define MLN_FUN_V2V_COMPONENT_HH
 
-/// \file mln/fun/v2v/component.hh
+/// \file
 ///
 /// Functor that accesses the i-th component of a value.
 

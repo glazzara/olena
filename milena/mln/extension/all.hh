@@ -28,7 +28,7 @@
 #ifndef MLN_EXTENSION_ALL_HH
 # define MLN_EXTENSION_ALL_HH
 
-/// \file mln/extension/all.hh
+/// \file
 ///
 /// \brief File that includes all extension materials.
 ///

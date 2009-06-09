@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_APPROX_ALL_HH
 # define MLN_LEVEL_APPROX_ALL_HH
 
-/*! \file mln/data/approx/all.hh
+/*! \file
  *
  * \brief File that includes all level-related routines with
  * approximation.

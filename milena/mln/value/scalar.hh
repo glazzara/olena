@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_SCALAR_HH
 # define MLN_VALUE_SCALAR_HH
  
-/// \file mln/value/scalar.hh
+/// \file
 ///
 /// \brief Definition of the basic mln::value::scalar_ class.
 

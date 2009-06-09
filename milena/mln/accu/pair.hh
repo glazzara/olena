@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_PAIR_HH
 # define MLN_ACCU_PAIR_HH
 
-/// \file mln/accu/pair.hh
+/// \file
 ///
 /// Define a pair of accumulators.
 

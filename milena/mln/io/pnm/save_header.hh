@@ -29,7 +29,7 @@
 #ifndef MLN_IO_PNM_SAVE_HEADER_HH
 # define MLN_IO_PNM_SAVE_HEADER_HH
 
-/// \file   mln/io/pnm/save_header.hh
+/// \file
 ///
 /// Define a function which saves header for PNM image.
 

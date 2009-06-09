@@ -28,7 +28,7 @@
 #ifndef MLN_TRANSFORM_INFLUENCE_ZONE_FRONT_HH
 # define MLN_TRANSFORM_INFLUENCE_ZONE_FRONT_HH
 
-/// \file mln/transform/influence_zone_front.hh
+/// \file
 ///
 /// Influence zone transform.
 

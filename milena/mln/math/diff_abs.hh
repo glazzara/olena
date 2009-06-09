@@ -29,7 +29,7 @@
 #ifndef MLN_MATH_DIFF_ABS_HH
 # define MLN_MATH_DIFF_ABS_HH
 
-/// \file mln/math/diff_abs.hh
+/// \file
 ///
 /// Define diff_abs routine.
 

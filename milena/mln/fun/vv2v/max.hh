@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_VV2V_MAX_HH
 # define MLN_FUN_VV2V_MAX_HH
 
-/// \file mln/fun/vv2v/max.hh
+/// \file
 /// \brief Computing the maximum of two values using a functor.
 
 # include <mln/core/concept/function.hh>

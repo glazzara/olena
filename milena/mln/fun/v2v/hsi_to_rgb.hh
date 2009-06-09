@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_V2V_HSI_TO_RGB_HH
 # define MLN_FUN_V2V_HSI_TO_RGB_HH
 
-/// \file mln/fun/v2v/hsi_to_rgb.hh
+/// \file
 ///
 /// Convert a rgb value to hsi.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_INT_HH
 # define MLN_METAL_INT_HH
 
-/*! \file mln/metal/int.hh
+/*! \file
  *
  * \brief Definition of an integer value type.
  */

@@ -29,7 +29,7 @@
 #ifndef MLN_METAL_EQUAL_HH
 # define MLN_METAL_EQUAL_HH
 
-/// \file  mln/metal/equal.hh
+/// \file
 ///
 /// Definition of a static 'equal' test.
 

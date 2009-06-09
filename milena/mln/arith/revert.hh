@@ -29,7 +29,7 @@
 #ifndef MLN_ARITH_REVERT_HH
 # define MLN_ARITH_REVERT_HH
 
-/// \file mln/arith/revert.hh
+/// \file
 ///
 /// Point-wise revert (min -> max and max -> min) of images.
 ///

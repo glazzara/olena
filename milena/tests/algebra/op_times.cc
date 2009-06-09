@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/algebra/op_times.cc
+/// \file
 ///
 /// Tests on mln::algebra::operator *.
 

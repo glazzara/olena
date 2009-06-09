@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_P_LINE2D_HH
 # define MLN_CORE_P_LINE2D_HH
 
-/// \file mln/core/site_set/p_line2d.hh
+/// \file
 ///
 /// Definition of a 2D discrete line of points (based on
 /// p_array).

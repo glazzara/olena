@@ -29,7 +29,7 @@
 #ifndef MLN_ARITH_MIN_HH
 # define MLN_ARITH_MIN_HH
 
-/// \file mln/arith/min.hh
+/// \file
 ///
 /// Point-wise min between images.
 

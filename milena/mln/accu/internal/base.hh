@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_INTERNAL_BASE_HH
 # define MLN_ACCU_INTERNAL_BASE_HH
 
-/// \file mln/accu/internal/base.hh
+/// \file
 ///
 /// Define a base class for implementation of accumulator
 /// classes.

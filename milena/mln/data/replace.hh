@@ -29,7 +29,7 @@
 #ifndef MLN_LEVEL_REPLACE_HH
 # define MLN_LEVEL_REPLACE_HH
 
-/// \file mln/data/replace.hh
+/// \file
 ///
 /// Replace the contents of an image into another one.
 

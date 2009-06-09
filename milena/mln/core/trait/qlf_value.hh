@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_TRAIT_QLF_VALUE_HH
 # define MLN_CORE_TRAIT_QLF_VALUE_HH
 
-/*! \file mln/core/trait/qlf_value.hh
+/*! \file
  *
  *  \brief Definition of the qlf_value image trait.
  *

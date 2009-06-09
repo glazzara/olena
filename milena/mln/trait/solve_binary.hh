@@ -29,7 +29,7 @@
 #ifndef MLN_TRAIT_SOLVE_BINARY_HH
 # define MLN_TRAIT_SOLVE_BINARY_HH
 
-/// \file   mln/trait/solve_binary.hh
+/// \file
 ///
 ///  FIXME
 

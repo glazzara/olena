@@ -28,7 +28,7 @@
 #ifndef MLN_UTIL_INTERNAL_GRAPH_ITER_HH
 # define MLN_UTIL_INTERNAL_GRAPH_ITER_HH
 
-/// \file mln/util/internal/graph_iter.hh
+/// \file
 ///
 /// Implementation for graph iterators.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_MAJ_H_HH
 # define MLN_ACCU_MAJ_H_HH
 
-/// \file mln/accu/maj_h.hh
+/// \file
 ///
 /// Define an accumulator that computes a maj_h.
 

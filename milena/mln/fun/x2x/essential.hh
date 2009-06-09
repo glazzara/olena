@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_X2X_ESSENTIAL_HH
 # define MLN_FUN_X2X_ESSENTIAL_HH
 
-/*! \file mln/fun/x2x/essential.hh
+/*! \file
  *
  * \brief File that includes essential functions from vector to vector.
  */

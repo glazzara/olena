@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SITE_SET_P_SET_OF_HH
 # define MLN_CORE_SITE_SET_P_SET_OF_HH
 
-/*! \file mln/core/site_set/p_set_of.hh
+/*! \file
  *
  * \brief Definition of a set of site sets.
  *

@@ -35,7 +35,7 @@
 # include <mln/convert/to.hh>
 # include <mln/algebra/vec.hh>
 
-/// \file mln/fun/x2v/trilinear.hh
+/// \file
 ///
 /// Define a trilinear interpolation of values from an underlying image
 ///

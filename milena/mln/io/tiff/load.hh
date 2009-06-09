@@ -29,7 +29,7 @@
 # define MLN_IO_TIFF_LOAD_HH
 
 
-/// \file mln/io/tiff/load.hh
+/// \file
 ///
 /// Load TIFF images to Milena images.
 ///

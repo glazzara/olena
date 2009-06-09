@@ -29,7 +29,7 @@
 #ifndef MLN_NORM_L2_HH
 # define MLN_NORM_L2_HH
 
-/// \file mln/norm/l2.hh
+/// \file
 ///
 /// Define some L2-norm related routines.
 ///

@@ -29,7 +29,7 @@
 #ifndef MLN_LEVEL_APPROX_MEDIAN_HH
 # define MLN_LEVEL_APPROX_MEDIAN_HH
 
-/// \file mln/data/approx/median.hh
+/// \file
 ///
 /// Approximates of some median filters of an image.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_HISTO_ARRAY_HH
 # define MLN_HISTO_ARRAY_HH
 
-/// \file mln/histo/array.hh
+/// \file
 ///
 /// Define a generic histogram class.
 

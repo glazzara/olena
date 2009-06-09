@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/elementary/top_hat.cc
+/// \file
 ///
 /// Test on mln::morpho::top_hat.
 

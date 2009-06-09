@@ -28,7 +28,7 @@
 #ifndef MLN_LABELING_ESSENTIAL_HH
 # define MLN_LABELING_ESSENTIAL_HH
 
-/// \file mln/labeling/essential.hh
+/// \file
 ///
 /// File that includes essential labeling routines.
 

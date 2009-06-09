@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_UPLUS_HH
 # define MLN_TRAIT_OP_UPLUS_HH
 
-/*! \file mln/trait/op/uplus.hh
+/*! \file
  *
  * \brief Declaration of the "unary plus" operator trait.
  */

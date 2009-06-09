@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/value/graylevel_f_full.cc
+/// \file
 ///
 /// \brief Full tests on mln::value::graylevel_f.
 

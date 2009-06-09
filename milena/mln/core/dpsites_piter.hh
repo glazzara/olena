@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_DPSITES_PITER_HH
 # define MLN_CORE_DPSITES_PITER_HH
 
-/// \file mln/core/dpsites_piter.hh
+/// \file
 ///
 /// Definition of forward and backward mln::dpoint_ based
 /// iterators.

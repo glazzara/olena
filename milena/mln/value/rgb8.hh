@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_RGB8_HH
 # define MLN_VALUE_RGB8_HH
 
-/// \file mln/value/rgb8.hh
+/// \file
 ///
 /// Color class for red-green-blue where every component is
 /// 8-bit encoded.

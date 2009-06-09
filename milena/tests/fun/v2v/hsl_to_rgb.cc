@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/fun/v2v/hsl_to_rgb.cc
+/// \file
 ///
 /// \brief Test HSL-to-RGB conversion.
 ///

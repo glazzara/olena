@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_SEEDS2TILING_HH
 # define MLN_GEOM_SEEDS2TILING_HH
 
-/// \file mln/geom/seeds2tiling.hh
+/// \file
 ///
 /// Convert a binary image with seeds into a labeled image.
 

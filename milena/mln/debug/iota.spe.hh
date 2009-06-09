@@ -29,7 +29,7 @@
 #ifndef MLN_DEBUG_IOTA_SPE_HH
 # define MLN_DEBUG_IOTA_SPE_HH
 
-/// \file mln/debug/iota.spe.hh
+/// \file
 ///
 /// Specializations for mln::debug::iota.
 

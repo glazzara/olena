@@ -29,7 +29,7 @@
 #ifndef MLN_TRAIT_IMAGE_FROM_MESH_HH
 # define MLN_TRAIT_IMAGE_FROM_MESH_HH
 
-/// \file mln/trait/image_from_grid.hh
+/// \file
 ///
 /// Definition of the "image from mesh" trait.
 ///

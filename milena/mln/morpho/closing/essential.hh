@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_CLOSING_ESSENTIAL_HH
 # define MLN_MORPHO_CLOSING_ESSENTIAL_HH
 
-/// \file mln/morpho/closing/all.hh
+/// \file
 ///
 /// File that includes essential closing attributes.
 

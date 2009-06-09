@@ -28,7 +28,7 @@
 #ifndef MLN_DRAW_ESSENTIAL_HH
 # define MLN_DRAW_ESSENTIAL_HH
 
-/// \file mln/draw/essential.hh
+/// \file
 ///
 /// File that includes essential draw-related routines.
 

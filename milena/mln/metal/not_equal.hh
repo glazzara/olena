@@ -29,7 +29,7 @@
 # define MLN_METAL_NOT_EQUAL_HH
 
 /*!
- * \file  mln/metal/not_equal.hh
+ * \file
  *
  * \brief FIXME.
  */

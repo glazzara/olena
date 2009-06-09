@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_OPENING_ALGEBRAIC_HH
 # define MLN_MORPHO_OPENING_ALGEBRAIC_HH
 
-/// \file mln/morpho/opening/algebraic.hh
+/// \file
 ///
 /// Morphological algebraic opening.
 

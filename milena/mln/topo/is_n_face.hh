@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_IS_N_FACE_HH
 # define MLN_TOPO_IS_N_FACE_HH
 
-/// \file mln/topo/is_facet.hh
+/// \file
 ///
 /// \brief Testing whether an mln::complex_psite is an n-face.
 

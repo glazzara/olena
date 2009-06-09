@@ -28,7 +28,7 @@
 #ifndef MLN_EXTRACT_ALL_HH
 # define MLN_EXTRACT_ALL_HH
 
-/// \file mln/extract/all.hh
+/// \file
 ///
 /// File that includes all sub-data extraction related routines.
 

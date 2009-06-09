@@ -29,7 +29,7 @@
 #ifndef MLN_ALGEBRA_QUAT_HH
 # define MLN_ALGEBRA_QUAT_HH
 
-/// \file mln/algebra/quat.hh
+/// \file
 ///
 /// Define a class for quaternion algebra values.
 ///

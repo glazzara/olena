@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2B_ESSENTIAL_HH
 # define MLN_FUN_V2B_ESSENTIAL_HH
 
-/*! \file mln/fun/v2b/essential.hh
+/*! \file
  *
  * \brief File that includes essential functions from point to value.
  */

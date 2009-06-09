@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_INTERNAL_COMPLEX_NEIGHBORHOOD_BASE_HH
 # define MLN_CORE_IMAGE_INTERNAL_COMPLEX_NEIGHBORHOOD_BASE_HH
 
-/// \file mln/core/internal/complex_neighborhood_base.hh
+/// \file
 /// \brief Definition of a generic neighborhood centered on the face
 /// of a complex, based on a pair of (forward and backward) complex
 /// iterators.

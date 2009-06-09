@@ -29,7 +29,7 @@
 #ifndef MLN_DATA_PASTE_SPE_HH
 # define MLN_DATA_PASTE_SPE_HH
 
-/// \file mln/data/paste.spe.hh
+/// \file
 ///
 /// Specializations for mln::data::paste.
 

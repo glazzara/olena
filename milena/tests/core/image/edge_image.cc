@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/edge_image.cc
+/// \file
 ///
 /// \brief Tests on mln::edge_image.
 

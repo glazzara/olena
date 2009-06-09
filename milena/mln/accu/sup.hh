@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_SUP_HH
 # define MLN_ACCU_SUP_HH
 
-/// \file mln/accu/sup.hh
+/// \file
 ///
 /// Define an accumulator that computes a sup.
 

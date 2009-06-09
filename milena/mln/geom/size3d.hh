@@ -28,7 +28,7 @@
 #ifndef MLN_GEOM_SIZE3D_HH
 # define MLN_GEOM_SIZE3D_HH
 
-/*! \file mln/geom/size3d.hh
+/*! \file
  *
  * \brief Facade to include 3D size access routines.
  */

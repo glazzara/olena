@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_INTERNAL_INTEGER_HH
 # define MLN_VALUE_INTERNAL_INTEGER_HH
 
-/*! \file mln/value/internal/integer.hh
+/*! \file
  *
  * \brief Define a generic class for integer values.
  */

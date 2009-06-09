@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_DPOINT_HH
 # define MLN_CORE_DPOINT_HH
 
-/// \file mln/core/dpoint.hh
+/// \file
 ///
 /// \brief Definition of the generic delta-point class mln::dpoint.
 

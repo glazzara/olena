@@ -29,7 +29,7 @@
 #ifndef MLN_CONVERT_TO_FUN_HH
 # define MLN_CONVERT_TO_FUN_HH
 
-/// \file mln/convert/to_fun.hh
+/// \file
 ///
 /// Conversions towards some mln::Function.
 

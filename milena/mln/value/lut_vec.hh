@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_LUT_VEC_HH
 # define MLN_VALUE_LUT_VEC_HH
 
-/// \file mln/value/lut_vec.hh
+/// \file
 ///
 /// Define some basic lut_vecs of values from value types.
 ///

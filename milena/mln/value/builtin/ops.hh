@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_BUILTIN_OPS_HH
 # define MLN_VALUE_BUILTIN_OPS_HH
 
-/// \file mln/value/builtin/ops.hh
+/// \file
 ///
 /// Definitions of binary operators when lhs is a built-in and
 /// rhs is an mln object.

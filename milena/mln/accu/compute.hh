@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_COMPUTE_HH
 # define MLN_ACCU_COMPUTE_HH
 
-/// \file mln/accu/compute.hh
+/// \file
 ///
 /// Compute an accumulator on image pixels, i.e., couples (site,
 /// value).

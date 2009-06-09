@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/imorph/labeled_image.cc
+/// \file
 ///
 /// \brief Tests on mln::labeled_image.
 

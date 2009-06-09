@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_MIN_IND_HH
 # define MLN_GEOM_MIN_IND_HH
 
-/// \file mln/geom/min_ind.hh
+/// \file
 ///
 /// Give the minimum ind of an image.
 

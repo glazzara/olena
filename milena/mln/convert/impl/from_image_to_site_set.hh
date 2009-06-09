@@ -28,7 +28,7 @@
 #ifndef MLN_CONVERT_IMPL_FROM_IMAGE_TO_SITE_SET_HH
 # define MLN_CONVERT_IMPL_FROM_IMAGE_TO_SITE_SET_HH
 
-/// \file mln/convert/impl/from_image_to_site_set.hh
+/// \file
 ///
 /// General conversion procedure from an image to a site_set.
 ///

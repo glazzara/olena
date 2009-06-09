@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_ALL_HH
 # define MLN_CORE_SITE_SET_ALL_HH
 
-/// \file mln/core/site_set/all.hh
+/// \file
 ///
 /// File that includes all site_set types.
 

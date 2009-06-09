@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_CONCEPT_META_ACCUMULATOR_HH
 # define MLN_CORE_CONCEPT_META_ACCUMULATOR_HH
 
-/// \file mln/core/concept/meta_accumulator.hh
+/// \file
 ///
 /// Definition of the concept of mln::Meta_Accumulator.
 

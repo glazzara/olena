@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_DMORPH_EXTENSION_FUN_HH
 # define MLN_CORE_IMAGE_DMORPH_EXTENSION_FUN_HH
 
-/// \file mln/core/image/dmorph/extension_fun.hh
+/// \file
 ///
 /// definition of a morpher that extends the domain of an image
 /// with a function.

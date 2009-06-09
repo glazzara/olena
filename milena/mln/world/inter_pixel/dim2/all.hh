@@ -29,7 +29,7 @@
 #ifndef MLN_WORLD_INTER_PIXEL_DIM2_ALL_HH
 # define MLN_WORLD_INTER_PIXEL_DIM2_ALL_HH
 
-/// \file mln/world/inter_pixel/dim2/all.hh
+/// \file
 ///
 /// File that includes all the inter-pixel 2D routines.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_W_WINDOW_HH
 # define MLN_MAKE_W_WINDOW_HH
 
-/*! \file mln/make/w_window.hh
+/*! \file
  *
  * \brief Routine to create a mln::w_window.
  */

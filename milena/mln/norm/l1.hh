@@ -29,7 +29,7 @@
 #ifndef MLN_NORM_L1_HH
 # define MLN_NORM_L1_HH
 
-/// \file mln/norm/l1.hh
+/// \file
 ///
 /// Define some L1-norm related routines.
 /// \see http://mathworld.wolfram.com/L1-Norm.html for more information.

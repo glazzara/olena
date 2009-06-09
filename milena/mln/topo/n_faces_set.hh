@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_N_FACES_SET_HH
 # define MLN_TOPO_N_FACES_SET_HH
 
-/// \file mln/topo/n_faces_set.hh
+/// \file
 /// \brief Set of n-face of a complex.
 
 #include <vector>

@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_BUILTIN_ESSENTIAL_HH
 # define MLN_VALUE_BUILTIN_ESSENTIAL_HH
 
-/*! \file mln/value/builtin/essential.hh
+/*! \file
  *
  * \brief File that includes essential materials related to built-in types.
  */

@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_TRANSFORM_STOP_HH
 # define MLN_ACCU_TRANSFORM_STOP_HH
 
-/// \file mln/accu/transform_stop.hh
+/// \file
 ///
 /// Transform_Stop an image by applying locally an accumulator on its
 /// values.

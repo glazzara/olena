@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_META_FIRST_HH
 # define MLN_FUN_META_FIRST_HH
 
-/// \file mln/fun/meta/first.hh
+/// \file
 ///
 /// Meta function to retrieve/modify the first component.
 

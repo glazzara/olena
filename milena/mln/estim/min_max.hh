@@ -29,7 +29,7 @@
 #ifndef MLN_ESTIM_MIN_MAX_HH
 # define MLN_ESTIM_MIN_MAX_HH
 
-/// \file mln/estim/min_max.hh
+/// \file
 ///
 /// Compute the min and max pixel values of an image.
 ///

@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_ELEMENTARY_CLOSING_HH
 # define MLN_MORPHO_ELEMENTARY_CLOSING_HH
 
-/// \file mln/morpho/elementary/closing.hh
+/// \file
 ///
 /// Morphological elementary closing.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_IS_FACET_HH
 # define MLN_TOPO_IS_FACET_HH
 
-/// \file mln/topo/is_facet.hh
+/// \file
 /// \brief Testing whether an mln::complex_psite is a facet.
 
 # include <mln/core/site_set/complex_psite.hh>

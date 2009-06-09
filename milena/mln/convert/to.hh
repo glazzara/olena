@@ -28,7 +28,7 @@
 #ifndef MLN_CONVERT_TO_HH
 # define MLN_CONVERT_TO_HH
 
-/// \file mln/convert/to.hh
+/// \file
 ///
 /// General conversion procedure given the destination type.
 ///

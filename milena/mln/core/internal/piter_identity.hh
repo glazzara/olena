@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_PITER_IDENTITY_HH
 # define MLN_CORE_INTERNAL_PITER_IDENTITY_HH
 
-/// \file mln/core/internal/piter_identity.hh
+/// \file
 ///
 /// \brief Definition of site iterator identity adaptors.
 

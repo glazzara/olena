@@ -28,7 +28,7 @@
 #ifndef MLN_OPT_ALL_HH
 # define MLN_OPT_ALL_HH
 
-/// \file mln/opt/all.hh
+/// \file
 ///
 /// File that includes the most useful optional routines.
 

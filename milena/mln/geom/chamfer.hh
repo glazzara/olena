@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_CHAMFER_HH
 # define MLN_GEOM_CHAMFER_HH
 
-/// \file mln/geom/chamfer.hh
+/// \file
 ///
 /// Connected component chamfer of the image objects.
 

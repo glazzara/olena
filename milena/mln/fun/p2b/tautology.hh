@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_P2B_TAUTOLOGY_HH
 # define MLN_FUN_P2B_TAUTOLOGY_HH
 
-/// \file mln/fun/p2b/tautology.hh
+/// \file
 /// \brief Definition of a p2b function always returning \c true.
 
 # include <mln/core/concept/function.hh>

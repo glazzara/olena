@@ -28,7 +28,7 @@
 #ifndef MLN_WORLD_BINARY_2D_PROJECTED_HISTO_HH
 # define MLN_WORLD_BINARY_2D_PROJECTED_HISTO_HH
 
-/// \file mln/world/binary_2d/projected_histo.hh
+/// \file
 ///
 /// FIXME: insert comment.
 

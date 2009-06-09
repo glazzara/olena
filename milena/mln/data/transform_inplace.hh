@@ -29,7 +29,7 @@
 #ifndef MLN_LEVEL_TRANSFORM_INPLACE_HH
 # define MLN_LEVEL_TRANSFORM_INPLACE_HH
 
-/// \file mln/data/transform_inplace.hh
+/// \file
 ///
 /// Transform inplace the contents of an image through a function.
 ///

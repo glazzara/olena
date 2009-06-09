@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_SHIFT_HH
 # define MLN_WIN_SHIFT_HH
 
-/// \file mln/win/shift.hh
+/// \file
 ///
 /// Define a function which shifts a window with a delta-point.
 

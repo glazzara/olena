@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_RECTANGLE2D_HH
 # define MLN_WIN_RECTANGLE2D_HH
 
-/// \file mln/win/rectangle2d.hh
+/// \file
 ///
 /// Definition of the mln::win::rectangle2d window.
 ///

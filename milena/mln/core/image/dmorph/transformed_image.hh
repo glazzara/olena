@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_DMORPH_TRANSFORMED_IMAGE_HH
 # define MLN_CORE_IMAGE_DMORPH_TRANSFORMED_IMAGE_HH
 
-/// \file mln/core/image/dmorph/transformed_image.hh
+/// \file
 ///
 /// Definition of an image morpher that has a site set transformed
 /// through a function.

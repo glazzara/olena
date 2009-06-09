@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_OPS_HH
 # define MLN_VALUE_OPS_HH
 
-/// \file mln/value/ops.hh
+/// \file
 ///
 /// Definitions of operators for value types.
 

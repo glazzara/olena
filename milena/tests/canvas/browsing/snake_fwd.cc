@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/canvas/browsing/snake_fwd.cc
+/// \file
 ///
 /// \brief Tests on mln::canvas::browsing::snake_fwd.
 

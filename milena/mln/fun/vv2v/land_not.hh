@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_VV2V_LAND_NOT_HH
 # define MLN_FUN_VV2V_LAND_NOT_HH
 
-/// \file mln/fun/vv2v/land_not.hh
+/// \file
 ///
 /// Functor that computes "logical and-not" between two values.
 

@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/tree/filter/filter.cc
+/// \file
 ///
 /// Test on:
 ///	mln::morpho::reconstruction::filter::min

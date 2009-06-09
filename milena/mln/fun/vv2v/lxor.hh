@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_VV2V_LXOR_HH
 # define MLN_FUN_VV2V_LXOR_HH
 
-/// \file mln/fun/vv2v/lxor.hh
+/// \file
 ///
 /// Functor that computes "logical xor" between two values.
 

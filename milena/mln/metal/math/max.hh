@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_MATH_MAX_HH
 # define MLN_METAL_MATH_MAX_HH
 
-/*! \file mln/metal/math/max.hh
+/*! \file
  *
  * \brief Definition of the 'max' static function.
  */

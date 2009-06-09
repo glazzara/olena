@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_DUAL_NEIGHB_HH
 # define MLN_MAKE_DUAL_NEIGHB_HH
 
-/// \file mln/make/dual_neighb.hh
+/// \file
 ///
 /// Routine to create a dual neighborhood.
 

@@ -29,7 +29,7 @@
 # define MLN_TRAIT_SOLVE_UNARY_HH
 
 /*!
- * \file   mln/trait/solve_unary.hh
+ * \file
  *
  * \brief  FIXME
  *

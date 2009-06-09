@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/norm/l1.cc
+/*! \file
  *
  *  \brief Test the L1-norm.
  */

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/logical/and.cc
+/*! \file
  *
  * \brief Tests on mln::logical::and.
  */

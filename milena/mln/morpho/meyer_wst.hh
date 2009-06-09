@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_MEYER_WST_HH
 # define MLN_MORPHO_MEYER_WST_HH
 
-/** \file mln/morpho/meyer_wst.hh
+/** \file
     \brief Meyer's Watershed Transform (WST) algorithm.
 
     The Watershed Transform algorithm from Meyer using a hierarchical

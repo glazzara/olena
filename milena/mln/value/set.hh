@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_SET_HH
 # define MLN_VALUE_SET_HH
 
-/// \file mln/value/set.hh
+/// \file
 ///
 /// Define some basic sets of values from value types.
 

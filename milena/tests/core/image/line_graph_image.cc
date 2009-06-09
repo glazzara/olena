@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/line_graph_image.cc
+/// \file
 ///
 /// \brief Tests on mln::line_graph_image.
 

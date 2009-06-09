@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_CLOSING_ALGEBRAIC_HH
 # define MLN_MORPHO_CLOSING_ALGEBRAIC_HH
 
-/// \file mln/morpho/closing/algebraic.hh
+/// \file
 ///
 /// Morphological algebraic closing.
 

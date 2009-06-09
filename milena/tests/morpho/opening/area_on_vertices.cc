@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/opening/area_on_vertices.cc
+/// \file
 ///
 /// Test on mln::morpho::opening::area_on_vertices.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_I2V_ARRAY_HH
 # define MLN_FUN_I2V_ARRAY_HH
 
-/// \file mln/fun/i2v/array.hh
+/// \file
 ///
 /// Function mapping an Id i to a value v.
 

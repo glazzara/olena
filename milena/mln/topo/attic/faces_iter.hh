@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_FACES_ITER_HH
 # define MLN_TOPO_FACES_ITER_HH
 
-/// \file mln/topo/attic/faces_iter.hh
+/// \file
 /// \brief Definition of forward and backward iterators on the n-faces
 /// of a complex.
 

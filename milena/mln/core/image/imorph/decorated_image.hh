@@ -33,7 +33,7 @@
 
 # include <mln/value/proxy.hh>
 
-/// \file mln/core/image/imorph/decorated_image.hh
+/// \file
 ///
 /// Definition of an image that can have additional features.
 

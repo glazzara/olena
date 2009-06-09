@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_CLOSING_AREA_ON_VERTICES_HH
 # define MLN_MORPHO_CLOSING_AREA_ON_VERTICES_HH
 
-/// \file mln/morpho/closing/area_on_vertices.hh
+/// \file
 ///
 /// Morphological area closing on a line graph image computing
 /// the area in terms of adjacent vertices.

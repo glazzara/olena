@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_EDGES_PSITE_HH
 # define MLN_CORE_SITE_SET_P_EDGES_PSITE_HH
 
-/// \file mln/core/site_set/p_edges_psite.hh
+/// \file
 ///
 /// \brief Implementation of p_edges psite.
 

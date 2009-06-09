@@ -28,7 +28,7 @@
 #ifndef MLN_WORLD_INTER_PIXEL_IS_PIXEL_HH
 # define MLN_WORLD_INTER_PIXEL_IS_PIXEL_HH
 
-/// \file mln/world/inter_pixel/is_pixel.hh
+/// \file
 ///
 /// FIXME: doc.
 

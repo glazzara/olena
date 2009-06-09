@@ -28,7 +28,7 @@
 # define MLN_TRAIT_NEXT_SOLVE_UNARY_HH
 
 /*!
- * \file   mln/trait/next/solve_unary.hh
+ * \file
  *
  * \brief  FIXME
  *

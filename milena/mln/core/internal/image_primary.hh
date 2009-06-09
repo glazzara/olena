@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_IMAGE_PRIMARY_HH
 # define MLN_CORE_INTERNAL_IMAGE_PRIMARY_HH
 
-/*! \file mln/core/internal/image_primary.hh
+/*! \file
  *
  * \brief Definition of a base class for primary images.
  */

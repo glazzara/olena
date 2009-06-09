@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_ESSENTIAL_HH
 # define MLN_METAL_ESSENTIAL_HH
 
-/*! \file mln/metal/essential.hh
+/*! \file
  *
  * \brief File that includes essential meta-programming tools.
  */

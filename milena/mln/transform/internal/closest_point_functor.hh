@@ -28,7 +28,7 @@
 #ifndef MLN_TRANSFORM_INTERNAL_CLOSEST_POINT_FUNCTOR_HH
 # define MLN_TRANSFORM_INTERNAL_CLOSEST_POINT_FUNCTOR_HH
 
-/// \file mln/transform/internal/closest_point_functor.hh
+/// \file
 ///
 /// Closest point functor.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_SITE_SETS_HH
 # define MLN_TRAIT_SITE_SETS_HH
 
-/*! \file mln/trait/site_sets.hh
+/*! \file
  *
  * \brief Some base trait types for site sets.
  */

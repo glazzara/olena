@@ -28,7 +28,7 @@
 #ifndef MLN_BORDER_THICKNESS_HH
 # define MLN_BORDER_THICKNESS_HH
 
-/*! \file mln/border/thickness.hh
+/*! \file
  *
  * \brief Define the variable which specifies border thickness for
  * image creation.

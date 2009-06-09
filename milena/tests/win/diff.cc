@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win/diff.cc
+/*! \file
  *
  * \brief Tests on mln::win::diff.
  */

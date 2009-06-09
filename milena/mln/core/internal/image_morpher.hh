@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_IMAGE_MORPHER_HH
 # define MLN_CORE_INTERNAL_IMAGE_MORPHER_HH
 
-/// \file mln/core/internal/image_morpher.hh
+/// \file
 ///
 /// Definition of a base class for image morphers.
 ///

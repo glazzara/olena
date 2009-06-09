@@ -29,7 +29,7 @@
 #ifndef MLN_MATH_ROUND_HH
 # define MLN_MATH_ROUND_HH
 
-/// \file mln/math/round.hh
+/// \file
 ///
 /// Define round routine.
 

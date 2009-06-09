@@ -28,7 +28,7 @@
 #ifndef MLN_GEOM_NCOLS_HH
 # define MLN_GEOM_NCOLS_HH
 
-/// \file mln/geom/ncols.hh
+/// \file
 ///
 /// Give the number of columns of an image.
 

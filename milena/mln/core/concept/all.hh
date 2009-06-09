@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_CONCEPT_ALL_HH
 # define MLN_CORE_CONCEPT_ALL_HH
 
-/// \file mln/core/concept/all.hh
+/// \file
 ///
 /// File that includes all the core concepts.
 

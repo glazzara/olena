@@ -28,7 +28,7 @@
 #ifndef MLN_TRANSFORM_DISTANCE_GEODESIC_HH
 # define MLN_TRANSFORM_DISTANCE_GEODESIC_HH
 
-/// \file mln/transform/distance_geodesic.hh
+/// \file
 ///
 /// Discrete geodesic distance transform.
 

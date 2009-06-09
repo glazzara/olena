@@ -28,7 +28,7 @@
 #ifndef MLN_IO_TXT_SAVE_HH
 # define MLN_IO_TXT_SAVE_HH
 
-/// \file   mln/io/txt/save.hh
+/// \file
 ///
 /// Save an image as txt file.
 

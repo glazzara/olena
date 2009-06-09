@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_BUILTIN_PROMOTIONS_HH
 # define MLN_VALUE_BUILTIN_PROMOTIONS_HH
 
-/*! \file mln/value/builtin/promotions.hh
+/*! \file
  *
  * \brief Definitions of promotions between built-in types.
  */

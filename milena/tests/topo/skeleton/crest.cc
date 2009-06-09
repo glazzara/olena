@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/topo/skeleton/crest.cc
+/// \file
 ///
 /// \brief Test of mln::topo::skeleton::crest.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_P2B_ALL_HH
 # define MLN_FUN_P2B_ALL_HH
 
-/*! \file mln/fun/p2b/all.hh
+/*! \file
  *
  * \brief File that includes all functions from point to boolean.
  */

@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_ELEMENTARY_ESSENTIAL_HH
 # define MLN_MORPHO_ELEMENTARY_ESSENTIAL_HH
 
-/// \file mln/morpho/elementary/essential.hh
+/// \file
 ///
 /// File that includes essential elementary mathematical morphology
 /// routines.

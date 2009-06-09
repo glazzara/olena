@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_OPENING_VOLUME_HH
 # define MLN_MORPHO_OPENING_VOLUME_HH
 
-/// \file mln/morpho/opening/volume.hh
+/// \file
 ///
 /// Morphological volume opening.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_DRAW_LINE_HH
 # define MLN_DRAW_LINE_HH
 
-/// \file mln/draw/line.hh
+/// \file
 ///
 /// Draw a line in an image.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_GLF_HH
 # define MLN_VALUE_GLF_HH
 
-/// \file mln/value/glf.hh
+/// \file
 ///
 /// \brief Define the alias value::glf.
 

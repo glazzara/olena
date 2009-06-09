@@ -28,7 +28,7 @@
 #ifndef MLN_IO_FITS_ALL_HH
 # define MLN_IO_FITS_ALL_HH
 
-/// \file mln/io/fits/all.hh
+/// \file
 /// \brief Inclusion of all FITS I/O routines.
 
 

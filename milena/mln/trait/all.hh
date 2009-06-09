@@ -29,7 +29,7 @@
 # define MLN_TRAIT_ALL_HH
 
 /*!
- * \file   mln/trait/all.hh
+ * \file
  *
  * \brief  Definition of all traits.
  *

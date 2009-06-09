@@ -29,7 +29,7 @@
 #ifndef MLN_LOGICAL_OR_HH
 # define MLN_LOGICAL_OR_HH
 
-/// \file mln/logical/or.hh
+/// \file
 ///
 /// Point-wise "logical or" between binary images.
 

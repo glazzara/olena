@@ -28,7 +28,7 @@
 #ifndef MLN_SUBSAMPLING_ALL_HH
 # define MLN_SUBSAMPLING_ALL_HH
 
-/*! \file mln/subsampling/all.hh
+/*! \file
  *
  * \brief File that includes all "point-wise" expression tools.
  */

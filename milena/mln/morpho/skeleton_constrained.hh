@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_SKELETON_CONSTRAINED_HH
 # define MLN_MORPHO_SKELETON_CONSTRAINED_HH
 
-/// \file mln/morpho/skeleton_constrained.hh
+/// \file
 ///
 /// Compute a skeleton under constraints.
 ///

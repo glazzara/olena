@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2B_LNOT_HH
 # define MLN_FUN_V2B_LNOT_HH
 
-/// \file mln/fun/v2b/lnot.hh
+/// \file
 ///
 /// Functor that computes "logical not" on a value.
 

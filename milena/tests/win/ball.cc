@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/win/ball.cc
+/// \file
 ///
 /// Tests on mln::win::ball.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_P2B_ANTILOGY_HH
 # define MLN_FUN_P2B_ANTILOGY_HH
 
-/// \file mln/fun/p2b/antilogy.hh
+/// \file
 /// \brief Definition of a p2b function always returning \c false.
 
 # include <mln/core/concept/function.hh>

@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_POINT_COL_HH
 # define MLN_FUN_POINT_COL_HH
 
-/// \file mln/fun/point/col.hh
+/// \file
 ///
 /// Meta function to retrieve/modify the col coord of a point.
 

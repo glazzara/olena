@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_ROUTINE_ALL_HH
 # define MLN_CORE_ROUTINE_ALL_HH
 
-/// \file mln/core/routine/all.hh
+/// \file
 ///
 /// File that includes all core routines.
 ///

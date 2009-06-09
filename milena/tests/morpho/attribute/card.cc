@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/attribute/card.cc
+/// \file
 ///
 /// Test on mln::morpho::attribute::card.
 

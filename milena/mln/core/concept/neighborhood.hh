@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_CONCEPT_NEIGHBORHOOD_HH
 # define MLN_CORE_CONCEPT_NEIGHBORHOOD_HH
 
-/// \file mln/core/concept/neighborhood.hh
+/// \file
 ///
 /// Definition of the concept of mln::Neighborhood.
 

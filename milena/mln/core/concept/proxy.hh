@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_CONCEPT_PROXY_HH
 # define MLN_CORE_CONCEPT_PROXY_HH
 
-/*! \file mln/core/concept/proxy.hh
+/*! \file
  *
  * \brief Definition of the concept of mln::Proxy.
  *

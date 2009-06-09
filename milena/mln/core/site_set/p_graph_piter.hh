@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_GRAPH_PITER_HH
 # define MLN_CORE_SITE_SET_P_GRAPH_PITER_HH
 
-/// \file mln/core/site_set/p_graph_piter.hh
+/// \file
 ///
 /// Definition of point iterator on graph-based point set.
 

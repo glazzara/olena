@@ -29,7 +29,7 @@
 #ifndef MLN_ALL_HH
 # define MLN_ALL_HH
 
-/// \file mln/all.hh
+/// \file
 ///
 /// File that includes all the headers.
 

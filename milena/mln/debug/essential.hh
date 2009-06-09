@@ -29,7 +29,7 @@
 #ifndef MLN_DEBUG_ESSENTIAL_HH
 # define MLN_DEBUG_ESSENTIAL_HH
 
-/// \file mln/debug/essential.hh
+/// \file
 ///
 /// File that includes essential debug-related routines.
 

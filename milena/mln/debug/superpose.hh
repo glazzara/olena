@@ -29,7 +29,7 @@
 #ifndef MLN_DEBUG_SUPERPOSE_HH
 # define MLN_DEBUG_SUPERPOSE_HH
 
-/// \file mln/debug/superpose.hh
+/// \file
 ///
 /// Superpose two images.
 

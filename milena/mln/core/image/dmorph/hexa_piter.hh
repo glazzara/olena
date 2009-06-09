@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_DMORPH_HEXA_PITER_HH
 # define MLN_CORE_IMAGE_DMORPH_HEXA_PITER_HH
 
-/// \file mln/core/image/dmorph/hexa_piter.hh
+/// \file
 ///
 /// Definition of iterators on hexagonal points.
 

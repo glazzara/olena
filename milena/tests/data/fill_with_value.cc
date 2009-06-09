@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/data/fill_with_value.cc
+/// \file
 ///
 /// Tests on mln::data::fill_with_value
 

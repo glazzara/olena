@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_V2V_CONVERT_HH
 # define MLN_FUN_V2V_CONVERT_HH
 
-/// \file mln/fun/v2v/convert.hh
+/// \file
 ///
 /// FIXME.
 ///

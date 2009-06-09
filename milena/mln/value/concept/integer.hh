@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_CONCEPT_INTEGER_HH
 # define MLN_VALUE_CONCEPT_INTEGER_HH
 
-/// \file mln/value/concept/integer.hh
+/// \file
 ///
 /// Define a generic class for integer values.
 ///

@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_ARRAY_HH
 # define MLN_UTIL_ARRAY_HH
 
-/// \file mln/util/array.hh
+/// \file
 ///
 /// Definition of mln::util::array.
 ///

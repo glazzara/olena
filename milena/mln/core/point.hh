@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_POINT_HH
 # define MLN_CORE_POINT_HH
 
-/// \file mln/core/point.hh
+/// \file
 ///
 /// \brief Definition of the generic point class mln::point.
 ///

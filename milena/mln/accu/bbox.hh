@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_BBOX_HH
 # define MLN_ACCU_BBOX_HH
 
-/// \file mln/accu/bbox.hh
+/// \file
 ///
 /// Define an accumulator that computes a bbox.
 

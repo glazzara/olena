@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_MIN_ROW_HH
 # define MLN_GEOM_MIN_ROW_HH
 
-/// \file mln/geom/min_row.hh
+/// \file
 ///
 /// Give the minimum row of an image.
 

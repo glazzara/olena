@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_COMPONENT_ITHCOMP_HH
 # define MLN_FUN_COMPONENT_ITHCOMP_HH
 
-/// \file mln/fun/component/ithcomp.hh
+/// \file
 ///
 /// Meta function to retrieve/modify the i'th component with a binary
 /// function f(i, vec).

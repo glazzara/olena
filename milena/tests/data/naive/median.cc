@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/data/naive/median.cc
+/// \file
 ///
 /// Test on mln::data::naive::median.
 

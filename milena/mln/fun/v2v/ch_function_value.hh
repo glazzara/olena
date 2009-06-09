@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_V2V_CH_FUNCTION_VALUE_HH
 # define MLN_FUN_V2V_CH_FUNCTION_VALUE_HH
 
-/// \file mln/fun/v2v/ch_function_value.hh
+/// \file
 ///
 /// Wrap a function v2v and convert its result to another type.
 

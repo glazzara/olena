@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_PMIN_PMAX_HH
 # define MLN_GEOM_PMIN_PMAX_HH
 
-/// \file mln/geom/pmin_pmax.hh
+/// \file
 ///
 /// Several routines to compute the minimum point and/or maximum
 /// point.

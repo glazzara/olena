@@ -28,7 +28,7 @@
 #ifndef MLN_IO_CLOUD_ALL_HH
 # define MLN_IO_CLOUD_ALL_HH
 
-/// \file mln/io/cloud/all.hh
+/// \file
 /// \brief Inclusion of all cloud I/O routines.
 
 

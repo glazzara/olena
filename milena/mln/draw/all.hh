@@ -29,7 +29,7 @@
 #ifndef MLN_DRAW_ALL_HH
 # define MLN_DRAW_ALL_HH
 
-/// \file mln/draw/all.hh
+/// \file
 ///
 /// File that includes all draw-related routines.
 

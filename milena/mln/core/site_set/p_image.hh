@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_IMAGE_HH
 # define MLN_CORE_SITE_SET_P_IMAGE_HH
 
-/// \file mln/core/site_set/p_image.hh
+/// \file
 ///
 /// \brief Definition of a site set class based on an image of
 /// Booleans.

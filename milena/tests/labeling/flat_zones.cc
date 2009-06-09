@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/labeling/flat_zones.cc
+/// \file
 ///
 /// Test on mln::labeling::flat_zones.
 ///

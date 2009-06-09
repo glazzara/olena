@@ -29,7 +29,7 @@
 #ifndef MLN_CANVAS_BROWSING_SNAKE_FWD_HH
 # define MLN_CANVAS_BROWSING_SNAKE_FWD_HH
 
-/// \file mln/canvas/browsing/snake_fwd.hh
+/// \file
 ///
 /// Browsing in a snake-way, forward.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_VV2V_DIFF_ABS_HH
 # define MLN_FUN_VV2V_DIFF_ABS_HH
 
-/// \file mln/fun/vv2v/diff_abs.hh
+/// \file
 /// \brief Computing the absolute difference between two values using
 /// a functor.
 

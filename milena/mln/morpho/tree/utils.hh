@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_TREE_UTILS_HH
 # define MLN_MORPHO_TREE_UTILS_HH
 
-/// \file mln/morpho/tree/utils.hh
+/// \file
 ///
 /// Utilities.
 ///

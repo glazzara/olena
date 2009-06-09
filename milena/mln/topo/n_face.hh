@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_N_FACE_HH
 # define MLN_TOPO_N_FACE_HH
 
-/// \file mln/topo/n_face.hh
+/// \file
 ///
 /// n-face of a complex.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_WATERSHED_SUPERPOSE_HH
 # define MLN_MORPHO_WATERSHED_SUPERPOSE_HH
 
-/// \file mln/morpho/watershed/superpose.hh
+/// \file
 ///
 /// Convert an image to a rgb8 image and draw the watershed lines.
 

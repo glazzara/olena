@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_STAT_MIN_H_HH
 # define MLN_ACCU_STAT_MIN_H_HH
 
-/// \file mln/accu/stat/min_h.hh
+/// \file
 ///
 /// Define a generic min accumulator class based on histogram.
 

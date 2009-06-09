@@ -29,7 +29,7 @@
 #ifndef MLN_LINEAR_LAP_HH
 # define MLN_LINEAR_LAP_HH
 
-/*! \file mln/linear/lap.hh
+/*! \file
  *
  * \brief Laplacian.
  */

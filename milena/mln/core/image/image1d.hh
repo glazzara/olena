@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_IMAGE1D_HH
 # define MLN_CORE_IMAGE_IMAGE1D_HH
 
-/// \file mln/core/image/image1d.hh
+/// \file
 ///
 /// Definition of the basic mln::image1d class.
 ///

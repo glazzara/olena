@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/canvas/browsing/dir_struct_elt_incr_update.cc
+/*! \file
  *
  * \brief Tests on mln::canvas::browsing::dir_struct_elt_incr_update
  */

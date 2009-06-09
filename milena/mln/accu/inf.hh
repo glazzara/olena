@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_INF_HH
 # define MLN_ACCU_INF_HH
 
-/// \file mln/accu/inf.hh
+/// \file
 ///
 /// Define an accumulator that computes a inf.
 

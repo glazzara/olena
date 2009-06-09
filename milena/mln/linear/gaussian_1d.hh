@@ -28,7 +28,7 @@
 #ifndef MLN_LINEAR_GAUSSIAN_1D_HH
 # define MLN_LINEAR_GAUSSIAN_1D_HH
 
-/// \file mln/linear/gaussian_1d.hh
+/// \file
 ///
 /// Gaussian filter for fastest 1D images.
 ///

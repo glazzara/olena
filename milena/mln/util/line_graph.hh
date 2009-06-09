@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_LINE_GRAPH_HH
 # define MLN_UTIL_LINE_GRAPH_HH
 
-/// \file mln/util/line_graph.hh
+/// \file
 ///
 /// Definitions of undirected graphs.
 

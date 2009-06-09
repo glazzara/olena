@@ -28,7 +28,7 @@
 #ifndef MLN_WORLD_INTER_PIXEL_DIM2_MAKE_EDGE_IMAGE_HH
 # define MLN_WORLD_INTER_PIXEL_DIM2_MAKE_EDGE_IMAGE_HH
 
-/// \file mln/world/inter_pixel/dim2/make_edge_image.hh
+/// \file
 ///
 /// Construct a valued image of edges.
 

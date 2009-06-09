@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_X2V_L1_NORM_HH
 # define MLN_FUN_X2V_L1_NORM_HH
 
-/// \file mln/fun/x2v/l1_norm.hh
+/// \file
 ///
 /// Define the L1-norm of an algebraic vector.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_IO_DICOM_ALL_HH
 # define MLN_IO_DICOM_ALL_HH
 
-/// \file mln/io/dicom/all.hh
+/// \file
 /// \brief Inclusion of all DICOM I/O routines.
 
 

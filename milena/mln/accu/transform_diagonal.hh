@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_TRANSFORM_DIAGONAL_HH
 # define MLN_ACCU_TRANSFORM_DIAGONAL_HH
 
-/// \file mln/accu/transform_diagonal.hh
+/// \file
 ///
 /// \brief Run an accumulator over a diagonal.
 ///

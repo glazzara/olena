@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_LEMMINGS_HH
 # define MLN_UTIL_LEMMINGS_HH
 
-/// \file mln/util/lemmings.hh
+/// \file
 ///
 /// Definition of an "lemmings" object.
 

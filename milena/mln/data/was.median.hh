@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_WAS_MEDIAN_HH
 # define MLN_LEVEL_WAS_MEDIAN_HH
 
-/*! \file mln/data/was.median.hh
+/*! \file
  *
  * \brief Obsolete routines for median filtering.
  */

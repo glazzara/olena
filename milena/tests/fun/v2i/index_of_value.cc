@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/fun/v2i/index_of_value.cc
+/// \file
 ///
 /// Test on mln::fun::v2i::index_of_value.
 

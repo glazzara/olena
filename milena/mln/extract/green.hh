@@ -28,7 +28,7 @@
 #ifndef MLN_EXTRACT_GREEN_HH
 # define MLN_EXTRACT_GREEN_HH
 
-/// \file mln/extract/green.hh
+/// \file
 ///
 /// Extract the green component of an image.
 

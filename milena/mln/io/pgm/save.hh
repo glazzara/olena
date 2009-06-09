@@ -30,7 +30,7 @@
 # define MLN_IO_PGM_SAVE_HH
 
 /*!
- * \file   mln/io/pgm/save.hh
+ * \file
  *
  * \brief Define a function which saves an image of kind pgm into
  * given path.

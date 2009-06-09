@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_ESSENTIAL_HH
 # define MLN_UTIL_ESSENTIAL_HH
 
-/// \file mln/util/essential.hh
+/// \file
 ///
 /// File that includes essential util-related routines.
 

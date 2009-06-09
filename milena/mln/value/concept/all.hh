@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_CONCEPT_ALL_HH
 # define MLN_VALUE_CONCEPT_ALL_HH
 
-/*! \file mln/value/concept/all.hh
+/*! \file
  *
  * \brief File that includes every sub-concept of the Value concept.
  */

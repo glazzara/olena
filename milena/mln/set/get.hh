@@ -28,7 +28,7 @@
 #ifndef MLN_SET_GET_HH
 # define MLN_SET_GET_HH
 
-/*! \file mln/set/has.hh
+/*! \file
  *
  * \brief Algorithm that returns the i th element in a site set.
  *

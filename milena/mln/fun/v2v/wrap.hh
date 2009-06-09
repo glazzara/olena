@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2V_WRAP_HH
 # define MLN_FUN_V2V_WRAP_HH
 
-/// \file mln/fun/v2v/wrap.hh
+/// \file
 ///
 /// Function to wrap labels such as 0 -> 0 and [1, lmax] maps to [1,
 /// Lmax] (using modulus).

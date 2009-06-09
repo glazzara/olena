@@ -29,7 +29,7 @@
 #ifndef MLN_LABELING_REGIONAL_MAXIMA_HH
 # define MLN_LABELING_REGIONAL_MAXIMA_HH
 
-/// \file mln/labeling/regional_maxima.hh
+/// \file
 ///
 /// Connected component labeling of the regional maxima of an image.
 

@@ -29,7 +29,7 @@
 # define MLN_TRAIT_PROMOTE_HH
 
 /*!
- * \file   promote.hh
+ * \file
  *
  * \brief  FIXME
  *

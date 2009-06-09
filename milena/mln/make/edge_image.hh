@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_EDGE_IMAGE_HH
 # define MLN_MAKE_EDGE_IMAGE_HH
 
-/// \file mln/make/edge_image.hh
+/// \file
 ///
 /// Routine to create a edge image.
 

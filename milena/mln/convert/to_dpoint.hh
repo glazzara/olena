@@ -28,7 +28,7 @@
 #ifndef MLN_CONVERT_TO_DPOINT_HH
 # define MLN_CONVERT_TO_DPOINT_HH
 
-/*! \file mln/convert/to_dpoint.hh
+/*! \file
  *
  * \brief Conversions to mln::Dpoint.
  */

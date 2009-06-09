@@ -28,7 +28,7 @@
 #ifndef MLN_WIN_BALL_HH
 # define MLN_WIN_BALL_HH
 
-/// \file mln/win/ball.hh
+/// \file
 ///
 /// Definition of the mln::win::ball window.
 

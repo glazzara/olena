@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_VMORPH_CAST_IMAGE_HH
 # define MLN_CORE_IMAGE_VMORPH_CAST_IMAGE_HH
 
-/// \file mln/core/image/vmorph/cast_image.hh
+/// \file
 ///
 /// Definition of an image morpher that make the user see the
 /// same image but with another data type.

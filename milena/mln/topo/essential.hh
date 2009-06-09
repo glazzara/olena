@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_ESSENTIAL_HH
 # define MLN_TOPO_ESSENTIAL_HH
 
-/*! \file mln/topo/essential.hh
+/*! \file
  *
  * \brief File that includes essential "point-wise" expression tools.
  */

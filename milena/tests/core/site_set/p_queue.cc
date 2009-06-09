@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/site_set/p_queue.cc
+/*! \file
  *
  * \brief Tests on mln::p_queue.
  */

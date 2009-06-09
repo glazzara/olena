@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_CONCEPT_BROWSING_HH
 # define MLN_CORE_CONCEPT_BROWSING_HH
 
-/*! \file mln/core/concept/browsing.hh
+/*! \file
  * \brief Definition of the concept of mln::Browsing.
  */
 

@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_META_HUE_HH
 # define MLN_FUN_META_HUE_HH
 
-/// \file mln/fun/meta/hue.hh
+/// \file
 ///
 /// Meta function to retrieve/modify the color hue.
 

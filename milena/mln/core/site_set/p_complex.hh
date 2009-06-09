@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_COMPLEX_HH
 # define MLN_CORE_SITE_SET_P_COMPLEX_HH
 
-/// \file mln/core/site_set/p_complex.hh
+/// \file
 ///
 /// \brief Definition of a point set based on a complex.
 

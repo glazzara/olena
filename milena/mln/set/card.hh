@@ -28,7 +28,7 @@
 #ifndef MLN_SET_CARD_HH
 # define MLN_SET_CARD_HH
 
-/// \file mln/set/card.hh
+/// \file
 ///
 /// Compute the cardinality of a site set.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_DIV_HH
 # define MLN_TRAIT_OP_DIV_HH
 
-/*! \file mln/trait/op/div.hh
+/*! \file
  *
  * \brief Declaration of the "binary division" operator trait.
  */

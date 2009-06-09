@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_GREATER_HH
 # define MLN_TRAIT_OP_GREATER_HH
 
-/*! \file mln/trait/op/greater.hh
+/*! \file
  *
  * \brief Declaration of the "binary greater" operator trait.
  */

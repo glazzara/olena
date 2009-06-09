@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/linear/sobel_2d.cc
+/// \file
 ///
 /// Tests on mln::linear::sobel_2d.
 

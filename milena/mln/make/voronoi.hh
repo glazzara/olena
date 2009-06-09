@@ -29,7 +29,7 @@
 #ifndef MLN_MAKE_VORONOI_HH
 # define MLN_MAKE_VORONOI_HH
 
-/// \file mln/make/voronoi.hh
+/// \file
 ///
 /// Routine to construct a Voronoi mln::p_graph.
 

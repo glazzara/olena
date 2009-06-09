@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_FACES_PSITE_HH
 # define MLN_CORE_FACES_PSITE_HH
 
-/// \file mln/core/faces_psite.hh
+/// \file
 /// \brief Definition of a point site based on the n-faces of a
 /// complex.
 

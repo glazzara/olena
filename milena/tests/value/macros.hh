@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value/macros.hh
+/*! \file
  *
  * \brief Utilities to tests value types.
  */

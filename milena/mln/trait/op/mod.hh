@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_MOD_HH
 # define MLN_TRAIT_OP_MOD_HH
 
-/*! \file mln/trait/op/mod.hh
+/*! \file
  *
  * \brief Declaration of the "binary modulus" operator trait.
  */

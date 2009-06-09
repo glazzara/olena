@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_INTERNAL_LIMITS_HH
 # define MLN_VALUE_INTERNAL_LIMITS_HH
 
-/// \file mln/value/internal/limits.hh
+/// \file
 ///
 /// Define built-in type limits.
 

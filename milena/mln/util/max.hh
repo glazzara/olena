@@ -28,7 +28,7 @@
 #ifndef MLN_UTIL_MAX_HH
 # define MLN_UTIL_MAX_HH
 
-/// \file mln/util/max.hh
+/// \file
 ///
 /// Definition of a binary max based on the ordering relationship.
 

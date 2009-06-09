@@ -29,7 +29,7 @@
 #ifndef MLN_BORDER_FILL_HH
 # define MLN_BORDER_FILL_HH
 
-/*! \file mln/border/fill.hh
+/*! \file
  *
  * \brief Define function that fills border using a given value.
  */

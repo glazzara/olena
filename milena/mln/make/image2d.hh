@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_IMAGE2D_HH
 # define MLN_MAKE_IMAGE2D_HH
 
-/// \file mln/make/image2d.hh
+/// \file
 ///
 /// Routine to create a 2D image from a 1D array.
 ///

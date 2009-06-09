@@ -28,10 +28,9 @@
 #ifndef MLN_SUBSAMPLING_ESSENTIAL_HH
 # define MLN_SUBSAMPLING_ESSENTIAL_HH
 
-/*! \file mln/subsampling/essential.hh
- *
- * \brief File that includes essential "point-wise" expression tools.
- */
+/// \file
+/// \brief File that includes essential "point-wise" expression tools.
+
 
 // NOTHING YET
 

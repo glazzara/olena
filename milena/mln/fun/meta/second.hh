@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_META_SECOND_HH
 # define MLN_FUN_META_SECOND_HH
 
-/// \file mln/fun/meta/second.hh
+/// \file
 ///
 /// Meta function to retrieve/modify the second component.
 

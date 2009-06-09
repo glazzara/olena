@@ -29,7 +29,7 @@
 #ifndef MLN_TRAIT_IMAGES_HH
 # define MLN_TRAIT_IMAGES_HH
 
-/// \file mln/trait/images.hh
+/// \file
 ///
 /// Some base trait types for images.
 ///

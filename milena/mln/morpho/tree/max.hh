@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_TREE_MAX_HH
 # define MLN_MORPHO_TREE_MAX_HH
 
-/// \file mln/morpho/tree/max.hh
+/// \file
 ///
 /// Compute a canonized (parenthood) max-tree from an image.
 

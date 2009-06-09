@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_IMAGE_SET_VALUE_HH
 # define MLN_ACCU_IMAGE_SET_VALUE_HH
 
-/// \file mln/accu/image/set_value.hh
+/// \file
 ///
 /// Set the values of an image of accumulators.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_IO_PBM_ALL_HH
 # define MLN_IO_PBM_ALL_HH
 
-/// \file mln/io/pbm/all.hh
+/// \file
 /// \brief Inclusion of all PBM I/O routines.
 
 

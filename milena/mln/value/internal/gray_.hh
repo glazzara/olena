@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_INTERNAL_GRAY__HH
 # define MLN_VALUE_INTERNAL_GRAY__HH
 
-/// \file mln/value/internal/gray_.hh
+/// \file
 ///
 /// FIXME.
 

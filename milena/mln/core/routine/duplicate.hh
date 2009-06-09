@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_ROUTINE_DUPLICATE_HH
 # define MLN_CORE_ROUTINE_DUPLICATE_HH
 
-/// \file mln/core/routine/duplicate.hh
+/// \file
 ///
 /// Clone an image, that is, get an effective copy.
 

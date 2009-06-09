@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_IS_MASKED_IMPL_SELECTOR
 # define MLN_CORE_INTERNAL_IS_MASKED_IMPL_SELECTOR
 
-/// \file mln/core/internal/is_masked_impl_selector.hh
+/// \file
 ///
 /// \brief Add a specific member to graph windows/neighborhoods.
 

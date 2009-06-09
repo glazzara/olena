@@ -35,7 +35,7 @@
 # include <mln/core/contract.hh>
 
 /*!
- * \file   mln/util/tree.hh
+ * \file
  *
  * \brief  Definition of a generic general tree.
  *

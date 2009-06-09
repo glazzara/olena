@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_TREE_COMPUTE_ATTRIBUTE_IMAGE_HH
 # define MLN_MORPHO_TREE_COMPUTE_ATTRIBUTE_IMAGE_HH
 
-/// \file mln/morpho/tree/compute_attribute_image.hh
+/// \file
 ///
 /// Compute a canonized tree from an image.
 ///

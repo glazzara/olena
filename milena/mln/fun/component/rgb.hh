@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_COMPONENT_RGB_HH
 # define MLN_FUN_COMPONENT_RGB_HH
 
-/// \file mln/fun/component/red.hh
+/// \file
 ///
 /// Meta functions to retrieve/modify rgb components.
 

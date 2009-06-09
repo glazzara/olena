@@ -29,7 +29,7 @@
 #ifndef MLN_TRAIT_VALUE_NATURE_HH
 # define MLN_TRAIT_VALUE_NATURE_HH
 
-/// \file mln/trait/value/nature.hh
+/// \file
 ///
 /// Nature of values (for use in images).
 

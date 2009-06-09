@@ -29,7 +29,7 @@
 #ifndef MLN_DEBUG_FILENAME_HH
 # define MLN_DEBUG_FILENAME_HH
 
-/// \file mln/debug/filename.hh
+/// \file
 ///
 /// Constructs and returns a formatted output file name.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_ATTRIBUTE_COUNT_ADJACENT_VERTICES_HH_
 # define MLN_MORPHO_ATTRIBUTE_COUNT_ADJACENT_VERTICES_HH_
 
-/// \file mln/accu/count_adjacent_vertices.hh
+/// \file
 ///
 /// Define an accumulator that counts the vertices adjacent to a
 /// set of p_edges psites.

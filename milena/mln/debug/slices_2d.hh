@@ -29,7 +29,7 @@
 #ifndef MLN_DEBUG_SLICES_2D_HH
 # define MLN_DEBUG_SLICES_2D_HH
 
-/// \file mln/debug/slices_2d.hh
+/// \file
 ///
 /// Create a 2D image of the slices of the 3D image \p input.
 

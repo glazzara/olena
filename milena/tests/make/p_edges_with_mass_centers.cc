@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/make/p_edges_with_mass_centers.cc
+/// \file
 ///
 /// Tests on mln::make::p_edges_with_mass_centers.
 

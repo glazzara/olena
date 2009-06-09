@@ -28,7 +28,7 @@
 #ifndef MLN_UTIL_DINDEX_HH
 # define MLN_UTIL_DINDEX_HH
 
-/*! \file mln/util/dindex.hh
+/*! \file
  *
  * \brief Definition of a "delta-index" type.
  *

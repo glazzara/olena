@@ -28,7 +28,7 @@
 #ifndef MLN_EXTRACT_LUM_HH
 # define MLN_EXTRACT_LUM_HH
 
-/// \file mln/extract/lum.hh
+/// \file
 ///
 /// Extract the lum component of an image.
 

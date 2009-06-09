@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_RMS_HH
 # define MLN_ACCU_RMS_HH
 
-/// \file mln/accu/rms.hh
+/// \file
 ///
 /// Define an accumulator that computes the Root Mean Square.
 

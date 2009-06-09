@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_STAT_ALL_HH
 # define MLN_ACCU_STAT_ALL_HH
 
-/// \file mln/accu/stat/all.hh
+/// \file
 ///
 /// File that includes all statistical accumulator types.
 

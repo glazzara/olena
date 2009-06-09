@@ -28,7 +28,7 @@
 #ifndef MLN_GRAPH_TO_NEIGHB_HH
 # define MLN_GRAPH_TO_NEIGHB_HH
 
-/// \file mln/graph/to_neighb.hh
+/// \file
 ///
 /// Make a custom graph neighborhood from a mask image.
 

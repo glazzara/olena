@@ -29,7 +29,7 @@
 #ifndef MLN_SET_COMPUTE_WITH_WEIGHTS_HH
 # define MLN_SET_COMPUTE_WITH_WEIGHTS_HH
 
-/// \file mln/set/compute_with_weights.hh
+/// \file
 ///
 /// Compute an accumulator on a site set described by an image.
 ///

@@ -29,7 +29,7 @@
 #ifndef MLN_TAG_SKELETON_HH
 # define MLN_TAG_SKELETON_HH
 
-/// \file mln/tag/skeleton.hh
+/// \file
 ///
 /// Definition of tags used in the skeleton types associated to
 /// image types.

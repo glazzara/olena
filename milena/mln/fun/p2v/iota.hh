@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_P2V_IOTA_HH
 # define MLN_FUN_P2V_IOTA_HH
 
-/// \file mln/fun/p2v/iota.hh
+/// \file
 ///
 /// Iota function.
 

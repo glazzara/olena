@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_H_MAT_HH
 # define MLN_MAKE_H_MAT_HH
 
-/// \file mln/make/h_mat.hh
+/// \file
 ///
 /// Routine to construct an mln::algebra::h_mat.
 

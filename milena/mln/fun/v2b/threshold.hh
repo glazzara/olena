@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_V2B_THRESHOLD_HH
 # define MLN_FUN_V2B_THRESHOLD_HH
 
-/// \file mln/fun/v2b/threshold.hh
+/// \file
 ///
 /// FIXME.
 

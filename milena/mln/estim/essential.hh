@@ -28,7 +28,7 @@
 #ifndef MLN_ESTIM_ESSENTIAL_HH
 # define MLN_ESTIM_ESSENTIAL_HH
 
-/// \file mln/estim/essential.hh
+/// \file
 ///
 /// File that includes essential estimation materials.
 

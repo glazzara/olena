@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_V2V_LINEAR_HH
 # define MLN_FUN_V2V_LINEAR_HH
 
-/// \file mln/fun/v2v/linear.hh
+/// \file
 ///
 /// FIXME.
 

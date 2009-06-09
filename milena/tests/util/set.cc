@@ -27,7 +27,7 @@
 // Public License.
 
 ///
-/// \file   tests/util/set.cc
+/// \file
 ///
 /// test of mln::util::set
 

@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_CATEGORY_HH
 # define MLN_CORE_CATEGORY_HH
 
-/// \file mln/core/category.hh
+/// \file
 ///
 /// \brief Definition of the category holder type.
 

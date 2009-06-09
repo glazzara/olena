@@ -29,7 +29,7 @@
 #ifndef MLN_CONVERT_TO_P_ARRAY_HH
 # define MLN_CONVERT_TO_P_ARRAY_HH
 
-/// \file mln/convert/to_p_array.hh
+/// \file
 ///
 /// \brief Conversions to mln::p_array.
 ///

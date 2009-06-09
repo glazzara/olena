@@ -29,7 +29,7 @@
 #ifndef MLN_DATA_ESSENTIAL_HH
 # define MLN_DATA_ESSENTIAL_HH
 
-/// \file mln/data/essential.hh
+/// \file
 ///
 /// File that includes essential data-related routines.
 

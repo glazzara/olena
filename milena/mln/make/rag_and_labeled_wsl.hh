@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_RAG_AND_ALBL_HH
 # define MLN_MAKE_RAG_AND_ALBL_HH
 
-/// \file mln/make/rag_and_labeled_wsl.hh
+/// \file
 ///
 /// Create a region adjacency graph and a label image of the watershed line
 /// from a watershed image.

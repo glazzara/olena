@@ -29,7 +29,7 @@
 #ifndef MLN_LEVEL_NAIVE_MEDIAN_HH
 # define MLN_LEVEL_NAIVE_MEDIAN_HH
 
-/// \file mln/data/naive/median.hh
+/// \file
 ///
 /// Naive version of median filtering.
 

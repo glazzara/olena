@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_META_SAT_HH
 # define MLN_FUN_META_SAT_HH
 
-/// \file mln/fun/meta/sat.hh
+/// \file
 ///
 /// Meta function to retrieve/modify the color saturation.
 

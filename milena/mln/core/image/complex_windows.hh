@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_COMPLEX_WINDOWS_P_HH
 # define MLN_CORE_IMAGE_COMPLEX_WINDOWS_P_HH
 
-/// \file mln/core/image/complex_windows.hh
+/// \file
 /// \brief Definitions of some windows of complex images.
 
 # include <mln/core/internal/complex_window_p_base.hh>

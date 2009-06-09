@@ -28,7 +28,7 @@
 #ifndef MLN_WORLD_ALL_HH
 # define MLN_WORLD_ALL_HH
 
-/// \file mln/world/all.hh
+/// \file
 ///
 /// File that includes all the world routines.
 

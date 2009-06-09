@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_W_WINDOW3D_HH
 # define MLN_MAKE_W_WINDOW3D_HH
 
-/*! \file mln/make/w_window3d.hh
+/*! \file
  *
  * \brief Routine to create an mln::w_window in the 3D case.
  */

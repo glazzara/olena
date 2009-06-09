@@ -29,7 +29,7 @@
 # define MLN_CORE_IMAGE_CH_PITER_HH
 
 /*!
- * \file mln/core/image/ch_piter.hh
+ * \file
  *
  * \brief Definition of a morpher that changes the iterators.
  */

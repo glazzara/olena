@@ -34,7 +34,7 @@
 # include <mln/metal/bexpr.hh>
 # include <mln/trait/functions.hh>
 
-/// \file mln/core/image/vmorph/thrubin_image.hh
+/// \file
 ///
 /// \brief Definition of a morpher that morph values from two images
 /// through a binary function.

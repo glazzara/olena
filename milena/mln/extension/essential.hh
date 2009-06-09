@@ -28,7 +28,7 @@
 #ifndef MLN_EXTENSION_ESSENTIAL_HH
 # define MLN_EXTENSION_ESSENTIAL_HH
 
-/*! \file mln/extension/essential.hh
+/*! \file
  *
  * \brief File that includes essential extension materials.
  *

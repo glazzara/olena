@@ -29,7 +29,7 @@
 #ifndef MLN_HISTO_ALL_HH
 # define MLN_HISTO_ALL_HH
 
-/// \file mln/histo/all.hh
+/// \file
 ///
 /// File that includes histogram files.
 

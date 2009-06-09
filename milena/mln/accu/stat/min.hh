@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_STAT_MIN_HH
 # define MLN_ACCU_STAT_MIN_HH
 
-/// \file mln/accu/stat/min.hh
+/// \file
 ///
 /// Define an accumulator that computes a min.
 

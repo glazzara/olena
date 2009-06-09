@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_ELEMENTARY_GRADIENT_HH
 # define MLN_MORPHO_ELEMENTARY_GRADIENT_HH
 
-/// \file mln/morpho/elementary/gradient.hh
+/// \file
 ///
 /// \todo Add fastest version for sets.
 

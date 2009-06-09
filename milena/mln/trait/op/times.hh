@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_TIMES_HH
 # define MLN_TRAIT_OP_TIMES_HH
 
-/*! \file mln/trait/op/times.hh
+/*! \file
  *
  * \brief Declaration of the "binary multiplication" operator trait.
  */

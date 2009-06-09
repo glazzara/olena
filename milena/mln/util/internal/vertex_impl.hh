@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_VERTEX_IMPL_HH
 # define MLN_CORE_INTERNAL_VERTEX_IMPL_HH
 
-/// \file mln/util/internal/vertex_impl.hh
+/// \file
 ///
 /// Define a couple of implementation classes to provide methods
 /// to classes of generalized vertexs.

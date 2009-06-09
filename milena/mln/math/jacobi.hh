@@ -28,7 +28,7 @@
 #ifndef MLN_MATH_JACOBI_HH
 # define MLN_MATH_JACOBI_HH
 
-/// \file mln/math/jacobi.hh
+/// \file
 
 # include <cmath>
 

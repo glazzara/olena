@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_ALL_HH
 # define MLN_UTIL_ALL_HH
 
-/// \file mln/util/all.hh
+/// \file
 ///
 /// File that includes all util-related routines.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_SITE_SET_PROPS_HH
 # define MLN_TRAIT_SITE_SET_PROPS_HH
 
-/*! \file mln/trait/site_set/props.hh
+/*! \file
  *
  * \brief Properties of site set classes.
  *

@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SITE_SET_P_DOUBLE_HH
 # define MLN_CORE_SITE_SET_P_DOUBLE_HH
 
-/*! \file mln/core/site_set/p_double.hh
+/*! \file
  *
  * FIXME
  *

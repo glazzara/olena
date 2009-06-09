@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_MIN_COL_HH
 # define MLN_GEOM_MIN_COL_HH
 
-/// \file mln/geom/min_col.hh
+/// \file
 ///
 /// Give the minimum column of an image.
 

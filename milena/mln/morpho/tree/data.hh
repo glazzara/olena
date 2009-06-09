@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_TREE_DATA_HH
 # define MLN_MORPHO_TREE_DATA_HH
 
-/// \file mln/morpho/tree/data.hh
+/// \file
 ///
 /// \todo Think about site iterator (using image site iterator instead
 /// of S container iterator) to go faster.

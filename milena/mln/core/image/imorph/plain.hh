@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_IMORPH_PLAIN_HH
 # define MLN_CORE_IMAGE_IMORPH_PLAIN_HH
 
-/// \file mln/core/image/imorph/plain.hh
+/// \file
 ///
 /// Definition of a morpher that prevents an image from sharing
 /// his data.

@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_CONTRAST_HH
 # define MLN_MORPHO_CONTRAST_HH
 
-/*! \file mln/morpho/contrast.hh
+/*! \file
  *
  * \brief Morphological contrast operator (based on top-hats).
  *

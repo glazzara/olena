@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_IMAGE_UNTAKE_HH
 # define MLN_ACCU_IMAGE_UNTAKE_HH
 
-/// \file mln/accu/image/untake.hh
+/// \file
 ///
 /// Update an image of accumulators by untaking a value or the
 /// contents of another image.

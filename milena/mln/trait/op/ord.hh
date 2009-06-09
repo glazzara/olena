@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_ORD_HH
 # define MLN_TRAIT_OP_ORD_HH
 
-/// \file mln/trait/op/ord.hh
+/// \file
 ///
 /// Declaration of an ordering operator trait.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_GRAPH_WINDOW_IF_PITER_HH
 # define MLN_CORE_IMAGE_GRAPH_WINDOW_IF_PITER_HH
 
-/// \file mln/core/image/graph_window_if_piter.hh
+/// \file
 ///
 /// \brief Definition of a site iterator on a custom graph window.
 

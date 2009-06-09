@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_CLOSING_STRUCTURAL_HH
 # define MLN_MORPHO_CLOSING_STRUCTURAL_HH
 
-/// \file mln/morpho/closing/structural.hh
+/// \file
 ///
 /// Morphological structural closing.
 

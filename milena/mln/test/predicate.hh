@@ -29,7 +29,7 @@
 #ifndef MLN_TEST_PREDICATE_HH
 # define MLN_TEST_PREDICATE_HH
 
-/// \file mln/test/predicate.hh
+/// \file
 ///
 /// Test a predicate on the pixel values of an image.
 

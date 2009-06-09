@@ -29,7 +29,7 @@
 #ifndef MLN_IO_ESSENTIAL_HH
 # define MLN_IO_ESSENTIAL_HH
 
-/// \file mln/io/essential.hh
+/// \file
 /// \brief Inclusion of the most useful I/O routines.
 
 # include <mln/io/pbm/all.hh>

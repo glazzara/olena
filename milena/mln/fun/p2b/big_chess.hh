@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_P2B_BIG_CHESS_HH
 # define MLN_FUN_P2B_BIG_CHESS_HH
 
-/*! \file mln/fun/p2b/big_chess.hh
+/*! \file
  *
  * \brief FIXME.
  */

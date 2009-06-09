@@ -29,7 +29,7 @@
 #ifndef MLN_CANVAS_ALL_HH
 # define MLN_CANVAS_ALL_HH
 
-/// \file mln/canvas/all.hh
+/// \file
 ///
 /// File that includes all canvas-related routines.
 

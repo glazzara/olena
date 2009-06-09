@@ -29,7 +29,7 @@
 #ifndef MLN_TRANSFORM_INTERNAL_INFLUENCE_ZONE_FUNCTOR_HH
 # define MLN_TRANSFORM_INTERNAL_INFLUENCE_ZONE_FUNCTOR_HH
 
-/// \file mln/transform/internal/influence_zone_functor.hh
+/// \file
 ///
 /// \brief Influence zone functor.
 

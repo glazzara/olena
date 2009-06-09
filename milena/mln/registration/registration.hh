@@ -28,7 +28,7 @@
 #ifndef MLN_REGISTRATION_REGISTRATION_HH
 # define MLN_REGISTRATION_REGISTRATION_HH
 
-/// \file mln/registration/registration.hh
+/// \file
 ///
 /// Image registration
 /// \sa registration::icp

@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_COMPONENT_COMP_HH
 # define MLN_FUN_COMPONENT_COMP_HH
 
-/// \file mln/fun/component/comp.hh
+/// \file
 ///
 /// Meta function to retrieve/modify a component.
 

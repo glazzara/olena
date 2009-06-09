@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_WINDOWS_HH
 # define MLN_TRAIT_WINDOWS_HH
 
-/*! \file mln/trait/windows.hh
+/*! \file
  *
  * \brief Some base trait types for windows.
  */

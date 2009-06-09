@@ -29,7 +29,7 @@
 #ifndef MLN_OPT_VALUE_HH
 # define MLN_OPT_VALUE_HH
 
-/// \file mln/opt/value.hh
+/// \file
 ///
 /// Define the opt::value routine.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_POSTDEC_HH
 # define MLN_TRAIT_OP_POSTDEC_HH
 
-/*! \file mln/trait/op/postdec.hh
+/*! \file
  *
  * \brief Declaration of the "unary post-decrementation" operator trait.
  */

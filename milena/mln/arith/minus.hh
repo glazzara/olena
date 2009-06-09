@@ -29,7 +29,7 @@
 #ifndef MLN_ARITH_MINUS_HH
 # define MLN_ARITH_MINUS_HH
 
-/// \file mln/arith/minus.hh
+/// \file
 ///
 /// Point-wise substraction between images.
 ///

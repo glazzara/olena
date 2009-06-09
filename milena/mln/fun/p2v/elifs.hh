@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_P2V_ELIFS_HH
 # define MLN_FUN_P2V_ELIFS_HH
 
-/*! \file mln/fun/p2v/elifs.hh
+/*! \file
  *
  * \brief FIXME.
  */

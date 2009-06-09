@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_SYM_HH
 # define MLN_WIN_SYM_HH
 
-/// \file mln/win/sym.hh
+/// \file
 ///
 /// Give the symmetrical object.
 

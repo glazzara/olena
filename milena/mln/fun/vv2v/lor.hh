@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_VV2V_LOR_HH
 # define MLN_FUN_VV2V_LOR_HH
 
-/// \file mln/fun/vv2v/lor.hh
+/// \file
 ///
 /// Functor that computes "logical or" between two values.
 

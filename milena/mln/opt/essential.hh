@@ -28,7 +28,7 @@
 #ifndef MLN_OPT_ESSENTIAL_HH
 # define MLN_OPT_ESSENTIAL_HH
 
-/// \file mln/opt/essential.hh
+/// \file
 ///
 /// File that includes the most useful optional routines.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_EQUIV_HH
 # define MLN_VALUE_EQUIV_HH
 
-/*! \file mln/value/equiv.hh
+/*! \file
  *
  * \brief The mln::equiv routine.
  */

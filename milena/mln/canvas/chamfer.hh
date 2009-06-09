@@ -28,7 +28,7 @@
 #ifndef MLN_CANVAS_CHAMFER_HH
 # define MLN_CANVAS_CHAMFER_HH
 
-/*! \file mln/canvas/chamfer.hh
+/*! \file
  *
  * \brief Apply chamfer algorithm to a binary image.
  */

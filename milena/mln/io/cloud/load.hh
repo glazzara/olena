@@ -28,7 +28,7 @@
 #ifndef MLN_IO_CLOUD_LOAD_HH
 # define MLN_IO_CLOUD_LOAD_HH
 
-/// \file mln/io/cloud/load.hh
+/// \file
 ///
 /// Load a cloud of points.
 /// A cloud file must contain one point per line.

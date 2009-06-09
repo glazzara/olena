@@ -29,7 +29,7 @@
 #ifndef MLN_TRAIT_IMAGE_PRINT_HH
 # define MLN_TRAIT_IMAGE_PRINT_HH
 
-/// \file mln/trait/image/print.hh
+/// \file
 ///
 /// Print the collection of traits for an image type.
 

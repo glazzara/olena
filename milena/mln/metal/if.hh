@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_IF_HH
 # define MLN_METAL_IF_HH
 
-/*! \file mln/metal/if.hh
+/*! \file
  *
  * \brief Definition of an "if-then-else" expression type.
  */

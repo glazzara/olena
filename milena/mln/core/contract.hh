@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_CONTRACT_HH
 # define MLN_CORE_CONTRACT_HH
 
-/// \file mln/core/contract.hh
+/// \file
 ///
 /// Definition of the set of contracts.
 

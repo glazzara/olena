@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_ELEMENTARY_ALL_HH
 # define MLN_MORPHO_ELEMENTARY_ALL_HH
 
-/// \file mln/morpho/elementary/all.hh
+/// \file
 ///
 /// File that includes all elementary mathematical morphology
 /// routines.

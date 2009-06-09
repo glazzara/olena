@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_ROUTINE_PRIMARY_HH
 # define MLN_CORE_ROUTINE_PRIMARY_HH
 
-/// \file mln/core/routine/primary.hh
+/// \file
 ///
 /// Get the primary image behind any image.
 ///

@@ -28,7 +28,7 @@
 #ifndef MLN_MATH_ROUND_SAT_HH
 # define MLN_MATH_ROUND_SAT_HH
 
-/*! \file mln/math/round_sat.hh
+/*! \file
  *
  * \brief Define round_sat routine.
  */

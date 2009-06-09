@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_TRANSFORM_SNAKE_HH
 # define MLN_ACCU_TRANSFORM_SNAKE_HH
 
-/// \file mln/accu/transform_snake.hh
+/// \file
 ///
 /// \brief Run an accumulator in a snake-like browsing.
 ///

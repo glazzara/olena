@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_INTERNAL_RESOLVE_HH
 # define MLN_FUN_INTERNAL_RESOLVE_HH
 
-/// \file mln/fun/internal/resolve.hh
+/// \file
 ///
 /// \brief FIXME.
 

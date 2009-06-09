@@ -49,7 +49,7 @@
 # include <mln/accu/line.hh>
 
 
-/// \file mln/morpho/general.spe.hh
+/// \file
 ///
 /// Specialization for mln::morpho::general.
 ///

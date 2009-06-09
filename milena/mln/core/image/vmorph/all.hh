@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_VMORPH_ALL_HH
 # define MLN_CORE_IMAGE_VMORPH_ALL_HH
 
-/// \file mln/core/image/vmorph/all.hh
+/// \file
 ///
 /// File that includes all value morpher image types.
 

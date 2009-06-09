@@ -29,7 +29,7 @@
 #ifndef MLN_CANVAS_MORPHO_ATTRIBUTE_FILTER_HH
 # define MLN_CANVAS_MORPHO_ATTRIBUTE_FILTER_HH
 
-/// \file mln/canvas/morpho/attribute_filter.hh
+/// \file
 ///
 /// Connected filters dispatch (algebraic & leveling filters).
 

@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_MULTIPLE_SIZE_HH
 # define MLN_WIN_MULTIPLE_SIZE_HH
 
-/// \file mln/win/multiple_size.hh
+/// \file
 ///
 /// Definition of a multiple-size window.
 ///

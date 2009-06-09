@@ -27,7 +27,7 @@
 // Public License.
 
 ///
-/// \file tests/util/lemmings.cc
+/// \file
 ///
 /// test of mln::util::lemmings
 

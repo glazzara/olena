@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2V_ABS_HH
 # define MLN_FUN_V2V_ABS_HH
 
-/*! \file mln/fun/v2v/abs.hh
+/*! \file
  *
  * \brief FIXME.
  */

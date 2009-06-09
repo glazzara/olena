@@ -28,7 +28,7 @@
 #ifndef MLN_LITERAL_IDENTITY_HH
 # define MLN_LITERAL_IDENTITY_HH
 
-/// \file mln/literal/identity.hh
+/// \file
 ///
 /// Definition of the literal of mln::identity.
 

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/reconstruction/by_erosion/union_find.cc
+/// \file
 ///
 /// Test on mln::morpho::reconstruction::by_erosion::union_find
 

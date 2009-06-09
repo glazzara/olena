@@ -29,7 +29,7 @@
 #ifndef MLN_LINEAR_CONVOLVE_HH
 # define MLN_LINEAR_CONVOLVE_HH
 
-/// \file mln/linear/convolve.hh
+/// \file
 ///
 /// Convolution.
 

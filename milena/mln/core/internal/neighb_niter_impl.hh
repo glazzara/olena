@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_NEIGHB_NITER_IMPL_HH
 # define MLN_CORE_INTERNAL_NEIGHB_NITER_IMPL_HH
 
-/// \file mln/core/internal/neighb_niter_impl.hh
+/// \file
 ///
 /// Optional implementation for neigbh_niter.
 

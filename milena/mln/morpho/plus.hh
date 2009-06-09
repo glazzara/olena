@@ -29,7 +29,7 @@
 # define MLN_MORPHO_PLUS_HH
 
 /*!
- * \file  mln/morpho/plus.hh
+ * \file
  *
  * \brief Definition of a function that make a plus
  * (logical or or arithmetical plus) of an image.

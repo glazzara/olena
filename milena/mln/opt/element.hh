@@ -29,7 +29,7 @@
 #ifndef MLN_OPT_ELEMENT_HH
 # define MLN_OPT_ELEMENT_HH
 
-/// \file mln/opt/element.hh
+/// \file
 ///
 /// Define the opt::element and opt::nelements routines.
 

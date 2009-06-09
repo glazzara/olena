@@ -29,7 +29,7 @@
 #ifndef MLN_LABELING_VALUE_HH
 # define MLN_LABELING_VALUE_HH
 
-/// \file mln/labeling/value.hh
+/// \file
 ///
 /// Connected component labeling of image sites at a given value.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_TRACE_ESSENTIAL_HH
 # define MLN_TRACE_ESSENTIAL_HH
 
-/*! \file mln/trace/essential.hh
+/*! \file
  *
  * \brief File that includes essential trace-related routines.
  */

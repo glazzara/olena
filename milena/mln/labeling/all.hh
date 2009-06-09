@@ -29,7 +29,7 @@
 #ifndef MLN_LABELING_ALL_HH
 # define MLN_LABELING_ALL_HH
 
-/// \file mln/labeling/all.hh
+/// \file
 ///
 /// File that includes all labeling routines.
 ///

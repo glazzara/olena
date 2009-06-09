@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_WINDOW_HH
 # define MLN_CORE_WINDOW_HH
 
-/*! \file mln/core/window.hh
+/*! \file
  *
  * \brief Definition of the generic window class mln::window.
  *

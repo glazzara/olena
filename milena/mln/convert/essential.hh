@@ -28,7 +28,7 @@
 #ifndef MLN_CONVERT_ESSENTIAL_HH
 # define MLN_CONVERT_ESSENTIAL_HH
 
-/*! \file mln/convert/essential.hh
+/*! \file
  *
  * \brief File that includes the most useful conversion-related routines.
  */

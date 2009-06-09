@@ -29,7 +29,7 @@
 #ifndef MLN_TAG_INIT_HH
 # define MLN_TAG_INIT_HH
 
-/// \file mln/tag/init.hh
+/// \file
 ///
 /// Definition of tags used in the mln::init mechanism.
 

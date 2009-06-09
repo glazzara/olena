@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_P_PRIORITY_HH
 # define MLN_CORE_P_PRIORITY_HH
 
-/// \file mln/core/site_set/p_priority.hh
+/// \file
 ///
 /// Definition of a priority queue of sites.
 

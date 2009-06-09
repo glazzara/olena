@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file  tests/util/fibonacci_heap.cc
+/// \file
 ///
 /// Definition of a generic vector class.
 

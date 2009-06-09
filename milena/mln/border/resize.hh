@@ -29,7 +29,7 @@
 #ifndef MLN_BORDER_RESIZE_HH
 # define MLN_BORDER_RESIZE_HH
 
-/// \file mln/border/resize.hh
+/// \file
 ///
 /// Define a function that resizes the virtual border of an
 /// image.

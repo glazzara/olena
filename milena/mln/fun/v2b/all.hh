@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2B_ALL_HH
 # define MLN_FUN_V2B_ALL_HH
 
-/// \file mln/fun/v2b/all.hh
+/// \file
 ///
 /// File that includes all functions from value to logic value.
 

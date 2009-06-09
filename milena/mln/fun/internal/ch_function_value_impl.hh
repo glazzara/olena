@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_INTERNAL_CH_FUNCTION_VALUE_IMPL_HH
 # define MLN_FUN_INTERNAL_CH_FUNCTION_VALUE_IMPL_HH
 
-/// \file mln/fun/internal/ch_function_value_impl.hh
+/// \file
 ///
 /// Enable the possibility of adding methods to fun::v2v::ch_function_value.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_BUILTIN_INTEGERS_HH
 # define MLN_VALUE_BUILTIN_INTEGERS_HH
 
-/// \file mln/value/builtin/integers.hh
+/// \file
 ///
 /// Some definitions about built-in integer types.
 

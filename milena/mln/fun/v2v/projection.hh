@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2V_PROJECTION_HH
 # define MLN_FUN_V2V_PROJECTION_HH
 
-/// \file mln/fun/v2v/projection.hh
+/// \file
 ///
 /// FIXME.
 

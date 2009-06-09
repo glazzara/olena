@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_REGION_ADJACENCY_GRAPH_HH
 # define MLN_MAKE_REGION_ADJACENCY_GRAPH_HH
 
-/// \file mln/make/region_adjacency_graph.hh
+/// \file
 ///
 /// Create a region_adjacency_graph from a watershed image.
 ///

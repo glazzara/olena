@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_YES_HH
 # define MLN_UTIL_YES_HH
 
-/// \file mln/util/yes.hh
+/// \file
 ///
 /// Definition of an object that always says "yes".
 

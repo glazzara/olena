@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_VV2V_MIN_HH
 # define MLN_FUN_VV2V_MIN_HH
 
-/// \file mln/fun/vv2v/min.hh
+/// \file
 ///
 /// Functor that computes the minimum of two values.
 

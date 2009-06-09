@@ -29,7 +29,7 @@
 #ifndef MLN_LINEAR_SOBEL_2D_HH
 # define MLN_LINEAR_SOBEL_2D_HH
 
-/// \file mln/linear/sobel_2d.hh
+/// \file
 ///
 /// Sobel_2d filter.
 /// \todo Extends to the case of other dimensions (only the 2-d case

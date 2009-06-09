@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_NIL_HH
 # define MLN_ACCU_NIL_HH
 
-/// \file mln/accu/nil.hh
+/// \file
 ///
 /// Define an accumulator that does nothing.
 ///

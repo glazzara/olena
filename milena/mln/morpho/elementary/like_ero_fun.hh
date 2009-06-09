@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_ELEMENTARY_LIKE_ERO_FUN_HH
 # define MLN_MORPHO_ELEMENTARY_LIKE_ERO_FUN_HH
 
-/// \file mln/morpho/elementary/like_ero_fun.hh
+/// \file
 ///
 /// \todo Add a choice between adjust_fill and adjust_duplicate.
 

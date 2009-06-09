@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_P_HH
 # define MLN_ACCU_P_HH
 
-/// \file mln/accu/p.hh
+/// \file
 ///
 /// Define an accumulator that computes a min and a max.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_IO_PGMS_LOAD_HH
 # define MLN_IO_PGMS_LOAD_HH
 
-/// \file mln/io/pgms/load.hh
+/// \file
 ///
 /// \brief Define a function which loads multiple pgm images into
 /// a 3D image.

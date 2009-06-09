@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_IMAGE_DOMAIN_MORPHER_HH
 # define MLN_CORE_INTERNAL_IMAGE_DOMAIN_MORPHER_HH
 
-/// \file mln/core/internal/image_domain_morpher.hh
+/// \file
 ///
 /// Definition of a base class for image morphers w.r.t. domain.
 

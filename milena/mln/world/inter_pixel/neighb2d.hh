@@ -28,7 +28,7 @@
 #ifndef MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
 # define MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
 
-/// \file mln/world/inter_pixel/neighb2d.hh
+/// \file
 ///
 /// \brief Common neighborhood on inter-pixel images.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_LEQ_HH
 # define MLN_TRAIT_OP_LEQ_HH
 
-/*! \file mln/trait/op/leq.hh
+/*! \file
  *
  * \brief Declaration of the "binary less-or-equal" operator trait.
  */

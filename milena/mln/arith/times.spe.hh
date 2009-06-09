@@ -29,7 +29,7 @@
 #ifndef MLN_ARITH_TIMES_SPE_HH
 # define MLN_ARITH_TIMES_SPE_HH
 
-/// \file mln/arith/times.spe.hh
+/// \file
 ///
 /// Specializations for mln::arith::times.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_CONCEPT_VECTORIAL_HH
 # define MLN_VALUE_CONCEPT_VECTORIAL_HH
 
-/*! \file mln/value/concept/vectorial.hh
+/*! \file
  *
  * \brief Define a generic class for vectorial values.
  */

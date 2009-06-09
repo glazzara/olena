@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_GEQ_HH
 # define MLN_TRAIT_OP_GEQ_HH
 
-/*! \file mln/trait/op/geq.hh
+/*! \file
  *
  * \brief Declaration of the "binary greater-or-equal" operator trait.
  */

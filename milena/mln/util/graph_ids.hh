@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_GRAPH_IDS_HH
 # define MLN_UTIL_GRAPH_IDS_HH
 
-/// \file mln/util/graph_ids.hh
+/// \file
 ///
 /// Definition of graph element ids.
 

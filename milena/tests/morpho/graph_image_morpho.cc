@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/graph_image_morpho.cc
+/// \file
 ///
 /// \brief Tests on mln::graph_image with morphological filters.
 

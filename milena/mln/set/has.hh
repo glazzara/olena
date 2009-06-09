@@ -28,7 +28,7 @@
 #ifndef MLN_SET_HAS_HH
 # define MLN_SET_HAS_HH
 
-/*! \file mln/set/has.hh
+/*! \file
  *
  * \brief Algorithm that tests if a site set has a given site.
  *

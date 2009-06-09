@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_ELEMENTARY_OPENING_HH
 # define MLN_MORPHO_ELEMENTARY_OPENING_HH
 
-/// \file mln/morpho/elementary/opening.hh
+/// \file
 ///
 /// Morphological elementary opening.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_METAL_ALL_HH
 # define MLN_METAL_ALL_HH
 
-/// \file mln/metal/all.hh
+/// \file
 ///
 /// File that includes all meta-programming tools.
 

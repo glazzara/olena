@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_DILATION_HH
 # define MLN_MORPHO_DILATION_HH
 
-/// \file mln/morpho/dilation.hh
+/// \file
 ///
 /// Morphological dilation.
 ///

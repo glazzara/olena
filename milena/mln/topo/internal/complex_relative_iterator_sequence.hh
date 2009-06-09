@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_INTERNAL_COMPLEX_RELATIVE_ITERATOR_SEQUENCE_HH
 # define MLN_TOPO_INTERNAL_COMPLEX_RELATIVE_ITERATOR_SEQUENCE_HH
 
-/// \file mln/topo/internal/complex_relative_iterator_sequence.hh
+/// \file
 ///
 /// Definition of a meta complex relative iterator using two
 /// complex relative iterators sequentially.

@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_CENTER_HH
 # define MLN_ACCU_CENTER_HH
 
-/// \file mln/accu/center.hh
+/// \file
 ///
 /// Define an accumulator that computes the mass center of a site set.
 ///

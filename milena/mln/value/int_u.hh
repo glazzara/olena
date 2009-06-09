@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_INT_U_HH
 # define MLN_VALUE_INT_U_HH
 
-/// \file mln/value/int_u.hh
+/// \file
 ///
 /// Define a generic class for unsigned integers.
 

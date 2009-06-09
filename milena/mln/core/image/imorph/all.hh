@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_IMORPH_ALL_HH
 # define MLN_CORE_IMAGE_IMORPH_ALL_HH
 
-/// \file mln/core/image/imorph/all.hh
+/// \file
 ///
 /// File that includes all identity morpher image types.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_TRACE_QUIET_HH
 # define MLN_TRACE_QUIET_HH
 
-/*! \file mln/trace/quiet.hh
+/*! \file
  *
  * \brief Definition of the trace quiet Boolean value.
  */

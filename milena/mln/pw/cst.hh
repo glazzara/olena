@@ -29,7 +29,7 @@
 #ifndef MLN_PW_CST_HH
 # define MLN_PW_CST_HH
 
-/// \file mln/pw/cst.hh
+/// \file
 ///
 /// \brief Definition of a constant function.
 

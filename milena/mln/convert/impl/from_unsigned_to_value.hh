@@ -28,7 +28,7 @@
 #ifndef MLN_CONVERT_IMPL_FROM_UNSIGNED_TO_VALUE_HH
 # define MLN_CONVERT_IMPL_FROM_UNSIGNED_TO_VALUE_HH
 
-/// \file mln/convert/impl/from_unsigned_to_value.hh
+/// \file
 ///
 /// General conversion procedure from an unsigned to a value.
 ///

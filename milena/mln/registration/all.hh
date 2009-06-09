@@ -29,7 +29,7 @@
 #ifndef MLN_REGISTRATION_ALL_HH
 # define MLN_REGISTRATION_ALL_HH
 
-/// \file mln/registration/all.hh
+/// \file
 ///
 /// File that includes all "point-wise" expression tools.
 

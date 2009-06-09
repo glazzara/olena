@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_NIL_HH
 # define MLN_UTIL_NIL_HH
 
-/// \file mln/util/nil.hh
+/// \file
 ///
 /// Definition of an "niler" object.
 

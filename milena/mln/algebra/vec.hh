@@ -29,7 +29,7 @@
 #ifndef MLN_ALGEBRA_VEC_HH
 # define MLN_ALGEBRA_VEC_HH
 
-/// \file  mln/algebra/vec.hh
+/// \file
 ///
 /// Definition of a generic vector class.
 

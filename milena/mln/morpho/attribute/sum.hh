@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_ATTRIBUTE_SUM_HH
 # define MLN_MORPHO_ATTRIBUTE_SUM_HH
 
-/// \file mln/morpho/attribute/sum.hh
+/// \file
 ///
 /// Define an accumulator that computes the sum of component values.
 

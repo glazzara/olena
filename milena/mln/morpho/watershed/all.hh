@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_WATERSHED_ALL_HH
 # define MLN_MORPHO_WATERSHED_ALL_HH
 
-/// \file mln/morpho/watershed/all.hh
+/// \file
 ///
 /// File that includes all morphological watershed routines.
 

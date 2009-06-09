@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_VEC_HH
 # define MLN_MAKE_VEC_HH
 
-/*! \file mln/make/vec.hh
+/*! \file
  *
  * \brief Routine to construct an mln::algebra::vec.
  */

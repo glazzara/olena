@@ -28,7 +28,7 @@
 #ifndef MLN_CONVERT_IMPL_FROM_FLOAT_TO_VALUE_HH
 # define MLN_CONVERT_IMPL_FROM_FLOAT_TO_VALUE_HH
 
-/// \file mln/convert/impl/from_float_to_value.hh
+/// \file
 ///
 /// General conversion procedure from a float to a value.
 ///

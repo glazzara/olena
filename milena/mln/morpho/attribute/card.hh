@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_ATTRIBUTE_CARD_HH
 # define MLN_MORPHO_ATTRIBUTE_CARD_HH
 
-/// \file mln/morpho/attribute/card.hh
+/// \file
 ///
 /// \brief Define an accumulator that computes the cardinality of a
 /// component.

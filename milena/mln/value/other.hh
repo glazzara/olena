@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_OTHER_HH
 # define MLN_VALUE_OTHER_HH
 
-/*! \file mln/value/other.hh
+/*! \file
  *
  * \brief Definition of the mln::value::other routine.
  */

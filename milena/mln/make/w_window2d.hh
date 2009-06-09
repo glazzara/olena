@@ -29,7 +29,7 @@
 #ifndef MLN_MAKE_W_WINDOW2D_HH
 # define MLN_MAKE_W_WINDOW2D_HH
 
-/*! \file mln/make/w_window2d.hh
+/*! \file
  *
  * \brief Routine to create an mln::w_window in the 2D case.
  */

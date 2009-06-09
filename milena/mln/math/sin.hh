@@ -28,7 +28,7 @@
 #ifndef MLN_MATH_SIN_HH
 # define MLN_MATH_SIN_HH
 
-/// \file mln/math/sin.hh
+/// \file
 ///
 /// Define the sininus (sin) routine.
 

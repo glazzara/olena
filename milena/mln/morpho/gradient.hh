@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_GRADIENT_HH
 # define MLN_MORPHO_GRADIENT_HH
 
-/// \file mln/morpho/gradient.hh
+/// \file
 ///
 /// Morphological gradient.
 ///

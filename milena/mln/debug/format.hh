@@ -28,7 +28,7 @@
 #ifndef MLN_DEBUG_FORMAT_HH
 # define MLN_DEBUG_FORMAT_HH
 
-/*! \file mln/debug/format.hh
+/*! \file
  *
  * \brief Routines that format a value to print it properly.
  */

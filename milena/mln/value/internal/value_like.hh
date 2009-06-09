@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_INTERNAL_VALUE_LIKE_HH
 # define MLN_VALUE_INTERNAL_VALUE_LIKE_HH
 
-/// \file mln/value/internal/value_like.hh
+/// \file
 ///
 /// Factor code for value classes defined over another type.
 

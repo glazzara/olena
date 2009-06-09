@@ -29,7 +29,7 @@
 #ifndef MLN_LABELING_WRAP_HH
 # define MLN_LABELING_WRAP_HH
 
-/// \file mln/labeling/wrap.hh
+/// \file
 ///
 /// Wrap labels such as 0 -> 0 and [1, lmax] maps to [1,
 /// Lmax] (using modulus).

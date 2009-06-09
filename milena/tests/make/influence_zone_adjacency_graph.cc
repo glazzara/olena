@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/make/influence_zone_adjacency_graph.cc
+/// \file
 ///
 /// Tests on mln::make::influence_zone_adjacency_graph.
 

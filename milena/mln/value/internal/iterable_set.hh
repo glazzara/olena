@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_INTERNAL_ITERABLE_SET_HH
 # define MLN_VALUE_INTERNAL_ITERABLE_SET_HH
 
-/*! \file mln/value/internal/iterable_set.hh
+/*! \file
  *
  * \brief Define the iterable value set derived from a type.
  */

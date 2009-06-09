@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/fun/p2p/translation.cc
+/// \file
 ///
 /// Tests on mln::fun::p2p::translation.
 

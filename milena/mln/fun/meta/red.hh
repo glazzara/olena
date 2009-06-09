@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_META_RED_HH
 # define MLN_FUN_META_RED_HH
 
-/// \file mln/fun/meta/red.hh
+/// \file
 ///
 /// Meta function to retrieve/modify the red component.
 

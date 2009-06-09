@@ -29,7 +29,7 @@
 #ifndef MLN_LINEAR_LOCAL_CONVOLVE_HH
 # define MLN_LINEAR_LOCAL_CONVOLVE_HH
 
-/// \file mln/linear/local/convolve.hh
+/// \file
 ///
 /// Local convolution at a point.
 

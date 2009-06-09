@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/geom/nsites.cc
+/// \file
 ///
 /// Tests on mln::geom::nsites.
 

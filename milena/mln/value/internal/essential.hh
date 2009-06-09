@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_INTERNAL_ESSENTIAL_HH
 # define MLN_VALUE_INTERNAL_ESSENTIAL_HH
 
-/*! \file mln/value/internal/essential.hh
+/*! \file
  *
  * \brief FIXME
  */

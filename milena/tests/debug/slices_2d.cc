@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/debug/slices_2d.cc
+/// \file
 ///
 /// Tests on mln::debug::slices_2d.
 ///

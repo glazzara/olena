@@ -28,7 +28,7 @@
 #ifndef MLN_UTIL_LAZY_SET_HH
 # define MLN_UTIL_LAZY_SET_HH
 
-/*! \file mln/util/lazy_set.hh
+/*! \file
  *
  * \brief Definition of mln::lazy_set_ for internal use only.
  */

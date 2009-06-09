@@ -28,7 +28,7 @@
 #ifndef MLN_EXTRACT_HUE_HH
 # define MLN_EXTRACT_HUE_HH
 
-/// \file mln/extract/hue.hh
+/// \file
 ///
 /// Extract the hue component of an image.
 

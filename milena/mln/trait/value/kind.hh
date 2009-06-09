@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_VALUE_KIND_HH
 # define MLN_TRAIT_VALUE_KIND_HH
 
-/*! \file mln/trait/value/kind.hh
+/*! \file
  *
  * \brief Kind of values (for use in images).
  */

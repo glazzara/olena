@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_STAT_DEVIATION_HH
 # define MLN_ACCU_STAT_DEVIATION_HH
 
-/// \file mln/accu/stat/deviation.hh
+/// \file
 ///
 /// Define an accumulator that computes a standard deviation.
 

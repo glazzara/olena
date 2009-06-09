@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/labeling/n_max.cc
+/// \file
 ///
 /// Test on mln::labeling::n_max.
 

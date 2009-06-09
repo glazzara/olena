@@ -26,7 +26,7 @@
 // Public License.
 
 /*!
- *  \file   tests/util/eat.cc
+ *  \file
  *
  *  \brief  test of mln::util::eat
  *

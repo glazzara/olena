@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_INTERNAL_ALL_HH
 # define MLN_VALUE_INTERNAL_ALL_HH
 
-/*! \file mln/value/internal/all.hh
+/*! \file
  *
  * \brief FIXME
  */

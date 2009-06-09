@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_VALUE_SHELL_HH
 # define MLN_CORE_VALUE_SHELL_HH
 
-/// \file mln/core/value/shell.hh
+/// \file
 ///
 /// \brief Define a shell type that encloses a value.
 

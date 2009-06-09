@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_UMINUS_HH
 # define MLN_TRAIT_OP_UMINUS_HH
 
-/*! \file mln/trait/op/uminus.hh
+/*! \file
  *
  * \brief Declaration of the "unary minus" operator trait.
  */

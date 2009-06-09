@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_INTER_HH
 # define MLN_WIN_INTER_HH
 
-/// \file mln/win/inter.hh
+/// \file
 ///
 /// \brief Define a function which inters a window with a delta-point.
 

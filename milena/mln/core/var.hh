@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_VAR_HH
 # define MLN_CORE_VAR_HH
 
-/// \file mln/core/var.hh
+/// \file
 ///
 /// This file contains various macros to declare variables.
 ///

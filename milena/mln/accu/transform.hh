@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_TRANSFORM_HH
 # define MLN_ACCU_TRANSFORM_HH
 
-/// \file mln/accu/transform.hh
+/// \file
 ///
 /// Transform an image by applying locally an accumulator on its
 /// values.

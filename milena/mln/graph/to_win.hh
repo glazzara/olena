@@ -28,7 +28,7 @@
 #ifndef MLN_GRAPH_TO_WIN_HH
 # define MLN_GRAPH_TO_WIN_HH
 
-/// \file mln/graph/to_win.hh
+/// \file
 ///
 /// Make a custom graph window from a mask image.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_COMPONENT_SCOMP_HH
 # define MLN_FUN_COMPONENT_SCOMP_HH
 
-/// \file mln/fun/component/scomp.hh
+/// \file
 ///
 /// Meta function to retrieve/modify the i'th component, where i is
 /// statically defined.

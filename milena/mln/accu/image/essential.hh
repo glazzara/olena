@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_IMAGE_ESSENTIAL_HH_
 # define MLN_ACCU_IMAGE_ESSENTIAL_HH_
 
-/// \file mln/accu/image/essential.hh
+/// \file
 ///
 /// File that includes the most useful accumulator types working on images.
 

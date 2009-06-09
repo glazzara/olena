@@ -28,7 +28,7 @@
 #ifndef MLN_EXTRACT_SAT_HH
 # define MLN_EXTRACT_SAT_HH
 
-/// \file mln/extract/sat.hh
+/// \file
 ///
 /// Extract the sat component of an image.
 

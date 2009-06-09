@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/other/neighb.cc
+/// \file
 /// \brief Tests on regular neighborhoods.
 
 #include <mln/core/alias/neighb1d.hh>

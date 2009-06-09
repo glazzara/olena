@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_CLOSING_AREA_HH
 # define MLN_MORPHO_CLOSING_AREA_HH
 
-/// \file mln/morpho/closing/area.hh
+/// \file
 ///
 /// Morphological area closing.
 

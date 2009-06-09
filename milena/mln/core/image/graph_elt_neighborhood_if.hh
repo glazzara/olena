@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_GRAPH_ELT_NEIGHBORHOOD_IF_HH
 # define MLN_CORE_IMAGE_GRAPH_ELT_NEIGHBORHOOD_IF_HH
 
-/// \file mln/core/image/graph_elt_neighborhood_if.hh
+/// \file
 ///
 /// Definition of the elementary ``neighborhood_if'' on a graph.
 

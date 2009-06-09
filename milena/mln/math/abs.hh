@@ -29,7 +29,7 @@
 #ifndef MLN_MATH_ABS_HH
 # define MLN_MATH_ABS_HH
 
-/// \file mln/math/abs.hh
+/// \file
 ///
 /// Define the absolute value (abs) routine.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_INTERNAL_COMPLEX_SET_ITERATOR_BASE_HH
 # define MLN_TOPO_INTERNAL_COMPLEX_SET_ITERATOR_BASE_HH
 
-/// \file mln/topo/internal/complex_set_iterator_base.hh
+/// \file
 ///
 /// Definition of an implementation (factoring) class for
 /// (set) iterators on faces of a complex.

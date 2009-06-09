@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_VMORPH_FUN_IMAGE_HH
 # define MLN_CORE_IMAGE_VMORPH_FUN_IMAGE_HH
 
-/// \file mln/core/image/vmorph/fun_image.hh
+/// \file
 ///
 /// Definition of an image morpher that make the user see the
 /// image through a function

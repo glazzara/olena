@@ -29,7 +29,7 @@
 #ifndef MLN_MAKE_W_WINDOW_DIRECTIONAL_HH
 # define MLN_MAKE_W_WINDOW_DIRECTIONAL_HH
 
-/// \file mln/make/w_window_directional.hh
+/// \file
 ///
 /// Routine to create a directional mln::w_window.
 

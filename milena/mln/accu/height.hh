@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_HEIGHT_HH
 # define MLN_ACCU_HEIGHT_HH
 
-/// \file mln/accu/height.hh
+/// \file
 ///
 /// Define an accumulator that computes the height of a
 /// component through one of its pixels.

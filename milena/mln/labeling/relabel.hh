@@ -29,7 +29,7 @@
 #ifndef MLN_LABELING_RELABEL_HH
 # define MLN_LABELING_RELABEL_HH
 
-/// \file mln/labeling/relabel.hh
+/// \file
 ///
 /// Remove components and relabel a labeled image.
 

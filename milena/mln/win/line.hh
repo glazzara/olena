@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_LINE_HH
 # define MLN_WIN_LINE_HH
 
-/// \file mln/win/line.hh
+/// \file
 ///
 /// Definition of the mln::win::line window.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_GEOM_ESSENTIAL_HH
 # define MLN_GEOM_ESSENTIAL_HH
 
-/// \file mln/geom/essential.hh
+/// \file
 ///
 /// File that includes essential geometry related things.
 

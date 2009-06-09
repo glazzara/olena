@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_FLAT_IMAGE_HH
 # define MLN_CORE_FLAT_IMAGE_HH
 
-/// \file mln/core/image/flat_image.hh
+/// \file
 ///
 /// \brief Definition of a image with a signle value.
 ///

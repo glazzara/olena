@@ -29,7 +29,7 @@
 # define MLN_MORPHO_MINUS_HH
 
 /*!
- * \file  mln/morpho/minus.hh
+ * \file
  *
  * \brief Definition of a function that make a minus (logical "and
  * not" or arithmetical min) of an image.

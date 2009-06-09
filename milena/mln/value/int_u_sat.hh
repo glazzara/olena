@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_INT_U_SAT_HH
 # define MLN_VALUE_INT_U_SAT_HH
 
-/// \file mln/value/int_u_sat.hh
+/// \file
 ///
 /// Define a generic class for unsigned integers with saturation
 /// behavior.

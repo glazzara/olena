@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_LABEL_HH
 # define MLN_VALUE_LABEL_HH
 
-/// \file mln/value/label.hh
+/// \file
 ///
 /// Define a generic class for labels.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_ALIAS_VEC3D_HH
 # define MLN_CORE_ALIAS_VEC3D_HH
 
-/// \file mln/core/alias/vec3d.hh
+/// \file
 ///
 /// Definition of the mln::vec3d* alias
 

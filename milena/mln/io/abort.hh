@@ -28,7 +28,7 @@
 #ifndef MLN_IO_ABORT_HH
 # define MLN_IO_ABORT_HH
 
-/// \file mln/io/abort.hh
+/// \file
 ///
 /// Define a function which aborts a process in io module.
 

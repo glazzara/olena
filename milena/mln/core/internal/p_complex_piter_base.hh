@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_P_COMPLEX_PITER_BASE_HH
 # define MLN_CORE_INTERNAL_P_COMPLEX_PITER_BASE_HH
 
-/// \file mln/core/internal/p_complex_piter_base.hh
+/// \file
 /// \brief Definition of an implementation (factoring) class for
 /// iterators on mln::p_complex.
 

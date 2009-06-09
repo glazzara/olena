@@ -29,7 +29,7 @@
 # define MLN_CORE_TRAIT_OP_MULT_HH
 
 /*!
- * \file   mln/core/trait/op_mult.hh
+ * \file
  *
  * \brief  FIXME.
  *

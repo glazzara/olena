@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_ACCUMULATOR_PRINT_HH
 # define MLN_TRAIT_ACCUMULATOR_PRINT_HH
 
-/// \file mln/trait/accumulator/print.hh
+/// \file
 ///
 /// Print the collection of traits for an accumulator type.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_TOPO_INTERNAL_COMPLEX_ITERATOR_BASE_HH
 # define MLN_TOPO_INTERNAL_COMPLEX_ITERATOR_BASE_HH
 
-/** \file mln/topo/internal/complex_iterator_base.hh
+/** \file
 
     \brief Definition of an implementation (factoring) class for
     iterators on complexes.

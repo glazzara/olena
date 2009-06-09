@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_VV2B_IMPLIES_HH
 # define MLN_FUN_VV2B_IMPLIES_HH
 
-/// \file mln/fun/vv2b/implies.hh
+/// \file
 ///
 /// Functor that computes "logical implies" between two values.
 

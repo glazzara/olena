@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_BUILTIN_ALL_HH
 # define MLN_VALUE_BUILTIN_ALL_HH
 
-/// \file mln/value/builtin/all.hh
+/// \file
 ///
 /// File that includes all materials related to built-in types.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_ALGEBRA_H_VEC_HH
 # define MLN_ALGEBRA_H_VEC_HH
 
-/// \file mln/algebra/h_vec.hh
+/// \file
 ///
 /// Definition of a vector with homogeneous coordinates.
 

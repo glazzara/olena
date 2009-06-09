@@ -28,7 +28,7 @@
 #ifndef MLN_PW_ALL_HH
 # define MLN_PW_ALL_HH
 
-/*! \file mln/pw/all.hh
+/*! \file
  *
  * \brief File that includes all "point-wise" expression tools.
  */

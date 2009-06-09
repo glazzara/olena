@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/convert/to_rgb.cc
+/// \file
 ///
 /// Tests on mln::convert::from_to_ for rgb<n>.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_VV2B_LE_HH
 # define MLN_FUN_VV2B_LE_HH
 
-/// \file mln/fun/vv2b/le.hh
+/// \file
 ///
 /// Functor that computes "lower or equal than" between two values.
 

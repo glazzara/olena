@@ -29,7 +29,7 @@
 #ifndef MLN_ARITH_DIV_SPE_HH
 # define MLN_ARITH_DIV_SPE_HH
 
-/// \file mln/arith/div.spe.hh
+/// \file
 ///
 /// Specializations for mln::arith::div.
 

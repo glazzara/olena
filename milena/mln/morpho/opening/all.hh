@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_OPENING_ALL_HH
 # define MLN_MORPHO_OPENING_ALL_HH
 
-/// \file mln/morpho/opening/all.hh
+/// \file
 ///
 /// File that includes all opening operators.
 

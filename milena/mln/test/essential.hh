@@ -28,7 +28,7 @@
 #ifndef MLN_TEST_ESSENTIAL_HH
 # define MLN_TEST_ESSENTIAL_HH
 
-/*! \file mln/test/essential.hh
+/*! \file
  *
  * \brief File that includes essential test-related routines.
  */

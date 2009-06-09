@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/other/pixel.cc
+/*! \file
  *
  * \brief Tests on mln::pixel.
  */

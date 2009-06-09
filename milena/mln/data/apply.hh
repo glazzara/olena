@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_APPLY_HH
 # define MLN_LEVEL_APPLY_HH
 
-/*! \file mln/data/apply.hh
+/*! \file
  *
  * \brief Apply a function-object onto image pixel values.
  */

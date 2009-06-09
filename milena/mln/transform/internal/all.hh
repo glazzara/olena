@@ -28,7 +28,7 @@
 #ifndef MLN_TRANSFORM_INTERNAL_ALL_HH
 # define MLN_TRANSFORM_INTERNAL_ALL_HH
 
-/// \file mln/transform/internal/all.hh
+/// \file
 ///
 /// File that includes all internals of mln/transform.
 

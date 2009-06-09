@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_PIX_HH
 # define MLN_MAKE_PIX_HH
 
-/*! \file mln/make/pix.hh
+/*! \file
  *
  * \brief Routine to construct an mln::util::pix.
  */

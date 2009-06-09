@@ -28,7 +28,7 @@
 #ifndef MLN_UTIL_INDEX_HH
 # define MLN_UTIL_INDEX_HH
 
-/*! \file mln/util/index.hh
+/*! \file
  *
  * \brief Definition of an "index" type.
  *

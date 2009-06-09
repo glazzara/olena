@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_BUILTIN_FLOATINGS_HH
 # define MLN_VALUE_BUILTIN_FLOATINGS_HH
 
-/// \file mln/value/builtin/floatings.hh
+/// \file
 ///
 /// Some definitions about built-in floating types.
 

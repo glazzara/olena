@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_IS_NOT_HH
 # define MLN_METAL_IS_NOT_HH
 
-/*! \file mln/metal/is_not.hh
+/*! \file
  *
  * \brief Definition of a type that means "is not".
  */

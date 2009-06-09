@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_INTERNAL_ENCODING_HH
 # define MLN_VALUE_INTERNAL_ENCODING_HH
 
-/*! \file mln/value/internal/encoding.hh
+/*! \file
  *
  * \brief Define some information about how to encode some value types.
  */

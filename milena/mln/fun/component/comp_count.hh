@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_COMPONENT_COMP_COUNT_HH
 # define MLN_FUN_COMPONENT_COMP_COUNT_HH
 
-/// \file mln/fun/component/comp_count.hh
+/// \file
 ///
 /// Meta function to retrieve the number of components a vector has.
 

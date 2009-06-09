@@ -28,7 +28,7 @@
 #ifndef MLN_IO_PFM_ALL_HH
 # define MLN_IO_PFM_ALL_HH
 
-/// \file mln/io/pfm/all.hh
+/// \file
 /// \brief Inclusion of all PFM I/O routines.
 
 

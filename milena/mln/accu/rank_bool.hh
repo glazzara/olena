@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_RANK_BOOL_HH
 # define MLN_ACCU_RANK_BOOL_HH
 
-/// \file mln/accu/rank_bool.hh
+/// \file
 ///
 /// Define an rank accumulator.
 ///

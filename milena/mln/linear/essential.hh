@@ -28,7 +28,7 @@
 #ifndef MLN_LINEAR_ESSENTIAL_HH
 # define MLN_LINEAR_ESSENTIAL_HH
 
-/*! \file mln/linear/essential.hh
+/*! \file
  *
  * \brief File that includes essential linear image processing routines.
  */

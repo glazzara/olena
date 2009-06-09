@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_EXTENSION_ADJUST_FILL_HH
 # define MLN_CORE_EXTENSION_ADJUST_FILL_HH
 
-/// \file mln/extension/adjust_fill.hh
+/// \file
 ///
 /// Adjust then fill the domain extension.
 ///

@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_EXTENSION_DUPLICATE_HH
 # define MLN_CORE_EXTENSION_DUPLICATE_HH
 
-/// \file mln/extension/duplicate.hh
+/// \file
 ///
 /// Duplicate the values of the image inner boundary in the domain
 /// extension.

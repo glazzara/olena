@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_VERTEX_IMAGE_HH
 # define MLN_CORE_IMAGE_VERTEX_IMAGE_HH
 
-/// \file mln/core/image/vertex_image.hh
+/// \file
 ///
 /// \brief Image based on graph vertices.
 

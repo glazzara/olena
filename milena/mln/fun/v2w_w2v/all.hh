@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2W_W2V_ALL_HH
 # define MLN_FUN_V2W_W2V_ALL_HH
 
-/// \file mln/fun/v2w_w2v/all.hh
+/// \file
 ///
 /// File that includes all bijective functions.
 

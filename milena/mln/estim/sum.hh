@@ -29,7 +29,7 @@
 #ifndef MLN_ESTIM_SUM_HH
 # define MLN_ESTIM_SUM_HH
 
-/// \file mln/estim/sum.hh
+/// \file
 ///
 /// Compute the sum pixel value.
 ///

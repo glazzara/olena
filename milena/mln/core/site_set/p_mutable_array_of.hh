@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SITE_SET_P_MUTABLE_ARRAY_OF_HH
 # define MLN_CORE_SITE_SET_P_MUTABLE_ARRAY_OF_HH
 
-/*! \file mln/core/site_set/p_mutable_array_of.hh
+/*! \file
  *
  * \brief Definition of a mutable array of site sets.
  *

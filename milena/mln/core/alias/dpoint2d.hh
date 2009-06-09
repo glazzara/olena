@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_ALIAS_DPOINT2D_HH
 # define MLN_CORE_ALIAS_DPOINT2D_HH
 
-/// \file mln/core/alias/dpoint2d.hh
+/// \file
 ///
 /// Definition of the mln::dpoint2d alias and of its
 /// construction routine.

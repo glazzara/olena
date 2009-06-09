@@ -28,7 +28,7 @@
 #ifndef MLN_PW_INTERNAL_IMAGE_BASE_HH
 # define MLN_PW_INTERNAL_IMAGE_BASE_HH
 
-/// \file mln/pw/internal/image_base.hh
+/// \file
 ///
 /// Definition of the common base class for all point-wise images.
 

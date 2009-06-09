@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/dmorph/image_if.cc
+/// \file
 ///
 /// Tests on mln::image_if.
 

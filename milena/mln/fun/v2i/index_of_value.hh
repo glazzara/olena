@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2I_INDEX_OF_VALUE_HH
 # define MLN_FUN_V2I_INDEX_OF_VALUE_HH
 
-/// \file mln/fun/v2i/index_of_value.hh
+/// \file
 ///
 /// \brief File that define a function that gives an index per value.
 

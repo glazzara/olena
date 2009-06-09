@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_ALIAS_W_WINDOW3D_INT_HH
 # define MLN_CORE_ALIAS_W_WINDOW3D_INT_HH
 
-/*! \file mln/core/alias/w_window3d_int.hh
+/*! \file
  *
  * \brief Definition of the mln::w_window3d_int alias.
  */

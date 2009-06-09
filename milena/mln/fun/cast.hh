@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_CAST_HH
 # define MLN_FUN_CAST_HH
 
-/*! \file mln/fun/cast.hh
+/*! \file
  *
  * \brief FIXME.
  */

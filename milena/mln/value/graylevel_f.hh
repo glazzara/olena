@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_GRAYLEVEL_F_HH
 # define MLN_VALUE_GRAYLEVEL_F_HH
 
-/// \file mln/value/graylevel_f.hh
+/// \file
 ///
 /// Definition of the mln::value::graylevel_f class.
 

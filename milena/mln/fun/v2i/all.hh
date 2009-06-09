@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2I_ALL_HH
 # define MLN_FUN_V2I_ALL_HH
 
-/// \file mln/fun/v2i/all.hh
+/// \file
 ///
 /// \brief File that includes all value-to-integer functions.
 

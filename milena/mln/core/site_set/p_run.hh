@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_RUN_HH
 # define MLN_CORE_SITE_SET_P_RUN_HH
 
-/// \file mln/core/site_set/p_run.hh
+/// \file
 ///
 /// Definition of a run of points.
 ///

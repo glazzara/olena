@@ -29,7 +29,7 @@
 #ifndef MLN_IO_PBMS_LOAD_HH
 # define MLN_IO_PBMS_LOAD_HH
 
-/// \file mln/io/pbms/load.hh
+/// \file
 ///
 /// Define a function which loads multiple pbm images into
 /// a 3D image.

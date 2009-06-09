@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_DEF_COORD_HH
 # define MLN_CORE_DEF_COORD_HH
 
-/*! \file mln/core/def/coord.hh
+/*! \file
  *
  * \brief Definition of the default coordinate type.
  */

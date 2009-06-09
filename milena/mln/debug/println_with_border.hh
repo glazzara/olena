@@ -29,7 +29,7 @@
 #ifndef MLN_DEBUG_PRINTLN_WITH_BORDER_HH
 # define MLN_DEBUG_PRINTLN_WITH_BORDER_HH
 
-/// \file mln/debug/println_with_border.hh
+/// \file
 ///
 /// Print an image on the standard output with its border.
 

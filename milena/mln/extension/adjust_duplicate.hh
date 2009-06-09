@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_EXTENSION_ADJUST_DUPLICATE_HH
 # define MLN_CORE_EXTENSION_ADJUST_DUPLICATE_HH
 
-/// \file mln/extension/adjust_duplicate.hh
+/// \file
 ///
 /// Adjust the size of the domain extension then duplicate the image
 /// inner boundary.

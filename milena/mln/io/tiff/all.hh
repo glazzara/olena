@@ -28,7 +28,7 @@
 #ifndef MLN_IO_TIFF_ALL_HH
 # define MLN_IO_TIFF_ALL_HH
 
-/// \file mln/io/tiff/all.hh
+/// \file
 /// \brief Inclusion of all TIFF I/O routines.
 
 

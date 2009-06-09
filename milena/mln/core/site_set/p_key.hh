@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_KEY_HH
 # define MLN_CORE_SITE_SET_P_KEY_HH
 
-/// \file mln/core/site_set/p_key.hh
+/// \file
 ///
 /// Definition of a priority queue class.
 ///

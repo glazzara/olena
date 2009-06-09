@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2V_ENC_HH
 # define MLN_FUN_V2V_ENC_HH
 
-/*! \file mln/fun/v2v/enc.hh
+/*! \file
  *
  * \brief FIXME.
  */

@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_QUEUE_FAST_HH
 # define MLN_CORE_SITE_SET_P_QUEUE_FAST_HH
 
-/// \file mln/core/site_set/p_queue_fast.hh
+/// \file
 ///
 /// Definition of a queue of sites that is fast but uses extra
 /// memory w.r.t. a simple queue.

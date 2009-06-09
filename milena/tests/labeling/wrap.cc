@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/labeling/wrap.cc
+/// \file
 ///
 /// Test on mln::labeling::wrap.
 

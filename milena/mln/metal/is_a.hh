@@ -29,7 +29,7 @@
 #ifndef MLN_METAL_IS_A_HH
 # define MLN_METAL_IS_A_HH
 
-/// \file mln/metal/is_a.hh
+/// \file
 ///
 /// \brief Definition of a type that means "is_a".
 

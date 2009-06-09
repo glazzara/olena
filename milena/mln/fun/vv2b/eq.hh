@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_VV2B_EQ_HH
 # define MLN_FUN_VV2B_EQ_HH
 
-/// \file mln/fun/vv2b/eq.hh
+/// \file
 ///
 /// Functor that computes equal between two values.
 

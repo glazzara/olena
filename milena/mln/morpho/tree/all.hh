@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_TREE_ALL_HH
 # define MLN_MORPHO_TREE_ALL_HH
 
-/// \file mln/morpho/tree/all.hh
+/// \file
 ///
 /// File that includes all morphological tree-related routines.
 

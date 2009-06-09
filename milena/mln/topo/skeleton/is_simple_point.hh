@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_SKELETON_IS_SIMPLE_POINT_HH
 # define MLN_TOPO_SKELETON_IS_SIMPLE_POINT_HH
 
-/// \file mln/topo/skeleton/is_simple_point.hh
+/// \file
 ///
 /// is_simple_point tells if a point is simple or not.
 /// For more information refer to bertrand.07.chap.

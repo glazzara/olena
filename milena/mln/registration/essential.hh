@@ -28,7 +28,7 @@
 #ifndef MLN_REGISTRATION_ESSENTIAL_HH
 # define MLN_REGISTRATION_ESSENTIAL_HH
 
-/*! \file mln/registration/all.hh
+/*! \file
  *
  * \brief File that includes all "point-wise" expression tools.
  */

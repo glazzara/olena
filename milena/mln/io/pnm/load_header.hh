@@ -29,7 +29,7 @@
 #ifndef MLN_IO_PNM_LOAD_HEADER_HH
 # define MLN_IO_PNM_LOAD_HEADER_HH
 
-/// \file  mln/io/pnm/load_header.hh
+/// \file
 ///
 /// Define a function which loads header for PNM image.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_LINEAR_GAUSSIAN_DIRECTIONAL_2D_HH
 # define MLN_LINEAR_GAUSSIAN_DIRECTIONAL_2D_HH
 
-/// \file mln/linear/gaussian_directional_2d.hh
+/// \file
 ///
 /// Directional Gaussian filter for 2D images.
 ///

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/world/inter_pixel/dim2/make_edge_image.cc
+/// \file
 ///
 /// Tests on mln::world::inter_pixel::dim2::make_edge_image
 

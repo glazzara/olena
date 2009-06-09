@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_SEEDS2TILING_ROUNDNESS_HH
 # define MLN_GEOM_SEEDS2TILING_ROUNDNESS_HH
 
-/// \file mln/geom/seeds2tiling_roundness.hh
+/// \file
 ///
 /// seeds2tiling with a method which makes tiles more roundness.
 

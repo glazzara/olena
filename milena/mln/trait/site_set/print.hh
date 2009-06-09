@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_SITE_SET_PRINT_HH
 # define MLN_TRAIT_SITE_SET_PRINT_HH
 
-/*! \file mln/trait/site_set/print.hh
+/*! \file
  *
  * \brief Print the collection of traits for a site set type.
  */

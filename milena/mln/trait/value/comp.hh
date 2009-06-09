@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_VALUE_COMP_HH
 # define MLN_TRAIT_VALUE_COMP_HH
 
-/// \file mln/trait/value/comp.hh
+/// \file
 ///
 /// \brief Access to the i-th component type of a given type.
 

@@ -29,7 +29,7 @@
 # define MLN_METAL_IS_REF_HH
 
 /*!
- * \file  mln/metal/is_ref.hh
+ * \file
  *
  * \brief FIXME.
  */

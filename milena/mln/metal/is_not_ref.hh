@@ -29,7 +29,7 @@
 # define MLN_METAL_IS_NOT_REF_HH
 
 /*!
- * \file  mln/metal/is_not_ref.hh
+ * \file
  *
  * \brief FIXME.
  */

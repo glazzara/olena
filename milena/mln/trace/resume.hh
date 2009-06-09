@@ -28,7 +28,7 @@
 #ifndef MLN_TRACE_RESUME_HH
 # define MLN_TRACE_RESUME_HH
 
-/// \file mln/trace/resume.hh
+/// \file
 ///
 /// Resume traces.
 /// \sa mln::trace::stop

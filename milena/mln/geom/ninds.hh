@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_NINDS_HH
 # define MLN_GEOM_NINDS_HH
 
-/// \file mln/geom/ninds.hh
+/// \file
 ///
 /// Give the number of inds of an image.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_STAT_ESSENTIAL_HH_
 # define MLN_ACCU_STAT_ESSENTIAL_HH_
 
-/// \file mln/accu/stat/essential.hh
+/// \file
 ///
 /// File that includes the most useful statistical accumulator types.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_FLOAT01_8_HH
 # define MLN_VALUE_FLOAT01_8_HH
 
-/*! \file mln/value/float01_8.hh
+/*! \file
  *
  * \brief Define the alias value::float01_8.
  */

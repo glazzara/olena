@@ -28,7 +28,7 @@
 #ifndef MLN_GEOM_SIZE2D_HH
 # define MLN_GEOM_SIZE2D_HH
 
-/*! \file mln/geom/size2d.hh
+/*! \file
  *
  * \brief Facade to include 2D size access routines.
  */

@@ -29,7 +29,7 @@
 #ifndef MLN_DATA_PASTE_HH
 # define MLN_DATA_PASTE_HH
 
-/// \file mln/data/paste.hh
+/// \file
 ///
 /// Paste the contents of an image into another one.
 

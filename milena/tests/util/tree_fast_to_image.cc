@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/util/tree_fast_to_image.cc
+/// \file
 ///
 /// Test of mln::util::tree_fast_to_image.
 

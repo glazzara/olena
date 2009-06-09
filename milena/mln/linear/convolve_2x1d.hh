@@ -29,7 +29,7 @@
 #ifndef MLN_LINEAR_CONVOLVE_2X1D_HH
 # define MLN_LINEAR_CONVOLVE_2X1D_HH
 
-/// \file mln/linear/convolve_2x1d.hh
+/// \file
 ///
 /// 2D convolution by a couple of line kernels.
 

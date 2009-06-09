@@ -29,7 +29,7 @@
 #ifndef MLN_METAL_BOOL_HH
 # define MLN_METAL_BOOL_HH
 
-/// \file mln/metal/bool.hh
+/// \file
 ///
 /// Definition of a Boolean value type.
 

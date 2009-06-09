@@ -29,7 +29,7 @@
 #ifndef MLN_TOPO_ADJ_M_FACE_ITER_HH
 # define MLN_TOPO_ADJ_M_FACE_ITER_HH
 
-/// \file mln/topo/adj_m_face_iter.hh
+/// \file
 ///
 /// Definition of forward and backward iterators on all the
 /// m-faces transitively adjacent to a (reference) n-face in a

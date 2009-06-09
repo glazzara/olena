@@ -29,7 +29,7 @@
 #ifndef MLN_MAKE_IMAGE_HH
 # define MLN_MAKE_IMAGE_HH
 
-/// \file mln/make/image.hh
+/// \file
 ///
 /// \brief Routine to create an image from values given as a C-array.
 ///

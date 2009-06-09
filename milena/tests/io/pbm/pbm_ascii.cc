@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/io/pbm/pbm_ascii.cc
+/// \file
 ///
 /// Test on mln::io::pbm::load and mln::io::pbm::save.
 

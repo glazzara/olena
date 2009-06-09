@@ -29,7 +29,7 @@
 #ifndef MLN_LOGICAL_ALL_HH
 # define MLN_LOGICAL_ALL_HH
 
-/// \file mln/logical/all.hh
+/// \file
 ///
 /// File that includes all logical operators.
 

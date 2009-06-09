@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/io/pgm/pgm19.cc
+/*! \file
  *
  * \brief Test on mln::io::pgm::load and mln::io::pgm::save.
  */

@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_DATA_HH
 # define MLN_CORE_INTERNAL_DATA_HH
 
-/*! \file mln/core/internal/data.hh
+/*! \file
  *
  * \brief Declaration of the type of image data.
  *

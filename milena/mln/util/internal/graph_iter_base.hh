@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_INTERNAL_GRAPH_ITER_BASE_HH
 # define MLN_UTIL_INTERNAL_GRAPH_ITER_BASE_HH
 
-/// \file mln/util/internal/graph_iter_base.hh
+/// \file
 ///
 /// Base implementation for graph iterators.
 ///

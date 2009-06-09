@@ -29,7 +29,7 @@
 # define MLN_MORPHO_COMPLEMENTATION_HH
 
 /*!
- * \file  mln/morpho/complementation.hh
+ * \file
  *
  * \brief Definition of a function that make a complementation
  * (logical or arithmetical) of an image.

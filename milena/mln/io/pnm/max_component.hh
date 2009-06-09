@@ -30,7 +30,7 @@
 # define MLN_IO_PNM_MAX_COMPONENT_HH
 
 /*!
- * \file mln/io/pnm/max_component.hh
+ * \file
  *
  * \brief Define a function which give the max of the component of a
  * value type.

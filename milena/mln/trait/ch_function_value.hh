@@ -29,7 +29,7 @@
 #ifndef MLN_TRAIT_CH_FUNCTION_VALUE_HH
 # define MLN_TRAIT_CH_FUNCTION_VALUE_HH
 
-/// \file mln/trait/ch_function_value.hh
+/// \file
 ///
 /// Definition of the "change value" function trait.
 

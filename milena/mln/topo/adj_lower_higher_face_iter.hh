@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_ADJ_LOWER_HIGHER_FACE_ITER_HH
 # define MLN_TOPO_ADJ_LOWER_HIGHER_FACE_ITER_HH
 
-/// \file mln/topo/adj_lower_higher_face_iter.hh
+/// \file
 ///
 /// Definition of forward and backward iterators on all the
 /// adjacent (n-1)-faces and (n+1)-faces of a (reference) n-face in a

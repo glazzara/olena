@@ -28,7 +28,7 @@
 #ifndef MLN_HISTO_COMPUTE_SPE_HH
 # define MLN_HISTO_COMPUTE_SPE_HH
 
-/*! \file mln/histo/compute.spe.hh
+/*! \file
  *
  * \brief Specializations of histogram computation.
  */

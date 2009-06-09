@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_P_EDGES_WITH_MASS_CENTERS_HH
 # define MLN_MAKE_P_EDGES_WITH_MASS_CENTERS_HH
 
-/// \file mln/make/p_edges_with_mass_centers.hh
+/// \file
 ///
 /// Construct a p_edges from a watershed image and a region adjacency
 /// graph (RAG). Map each graph edge to a pair of mass centers of two

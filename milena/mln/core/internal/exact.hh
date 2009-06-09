@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_EXACT_HH
 # define MLN_CORE_INTERNAL_EXACT_HH
 
-/// \file mln/core/internal/exact.hh
+/// \file
 ///
 /// \brief Meta-code for the mln::exact downcast routines.
 

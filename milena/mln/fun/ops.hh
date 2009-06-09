@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_OPS_HH
 # define MLN_FUN_OPS_HH
 
-/// \file mln/fun/ops.hh
+/// \file
 ///
 /// \brief FIXME.
 

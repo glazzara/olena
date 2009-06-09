@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_IS_SIMPLE_CELL_HH
 # define MLN_TOPO_IS_SIMPLE_CELL_HH
 
-/// \file mln/topo/is_simple_cell.hh
+/// \file
 /// \brief Testing whether a facet is a simple cell.
 
 # include <mln/core/concept/function.hh>

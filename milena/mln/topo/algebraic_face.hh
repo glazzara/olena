@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_ALGEBRAIC_FACE_HH
 # define MLN_TOPO_ALGEBRAIC_FACE_HH
 
-/// \file mln/topo/algebraic_face.hh
+/// \file
 ///
 /// Algebraic face of a complex.
 

@@ -26,7 +26,7 @@
 // Public License.
 
 /*!
- *  \file   tests/util/tree.cc
+ *  \file
  *
  *  \brief  test of mln::util::tree
  *

@@ -29,7 +29,7 @@
 #ifndef MLN_BINARIZATION_INCLUDES_HH
 # define MLN_BINARIZATION_INCLUDES_HH
 
-/// \file mln/binarization/includes.hh
+/// \file
 ///
 /// Basic list of includes for all files in mln/binarization/.
 

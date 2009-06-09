@@ -29,7 +29,7 @@
 #ifndef MLN_CANVAS_DISTANCE_FRONT_HH
 # define MLN_CANVAS_DISTANCE_FRONT_HH
 
-/// \file mln/canvas/distance_front.hh
+/// \file
 ///
 /// Canvas of discrete distance computation by thick front propagation.
 

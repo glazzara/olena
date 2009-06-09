@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_DMORPH_P2P_IMAGE_HH
 # define MLN_CORE_IMAGE_DMORPH_P2P_IMAGE_HH
 
-/// \file mln/core/image/dmorph/p2p_image.hh
+/// \file
 ///
 /// Definition of a image FIXME: Doc!
 

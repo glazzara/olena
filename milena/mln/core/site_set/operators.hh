@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_OPERATORS_HH
 # define MLN_CORE_SITE_SET_OPERATORS_HH
 
-/// \file mln/core/site_set/operators.hh
+/// \file
 ///
 /// Definition of operators on mln::Site_Set.
 ///

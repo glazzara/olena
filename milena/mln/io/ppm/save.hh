@@ -30,7 +30,7 @@
 # define MLN_IO_PPM_SAVE_HH
 
 /*!
- * \file   mln/io/ppm/save.hh
+ * \file
  *
  * \brief Define a function which saves an image of kind ppm into
  * given path.

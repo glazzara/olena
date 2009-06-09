@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_EXTENSION_FILL_HH
 # define MLN_CORE_EXTENSION_FILL_HH
 
-/// \file mln/extension/fill.hh
+/// \file
 ///
 /// Define function that fills domain extension.
 ///

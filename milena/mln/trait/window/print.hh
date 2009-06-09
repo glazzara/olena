@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_WINDOW_PRINT_HH
 # define MLN_TRAIT_WINDOW_PRINT_HH
 
-/*! \file mln/trait/window/print.hh
+/*! \file
  *
  * \brief Print the collection of traits for a window type.
  */

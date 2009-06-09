@@ -29,7 +29,7 @@
 # define MLN_TRAIT_ESSENTIAL_HH
 
 /*!
- * \file   mln/trait/essential.hh
+ * \file
  *
  * \brief  Definition of essential traits.
  *

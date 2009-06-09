@@ -29,7 +29,7 @@
 #ifndef MLN_DEBUG_PRINTLN_SPE_HH
 # define MLN_DEBUG_PRINTLN_SPE_HH
 
-/// \file mln/debug/println.spe.hh
+/// \file
 ///
 /// Specializations for mln::debug::println.
 ///

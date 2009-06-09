@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/vmorph/cast_image.cc
+/// \file
 ///
 /// Tests on mln::cast_image.
 

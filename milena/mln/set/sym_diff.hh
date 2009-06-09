@@ -29,7 +29,7 @@
 #ifndef MLN_SET_SYM_DIFF_HH
 # define MLN_SET_SYM_DIFF_HH
 
-/// \file mln/set/sym_diff.hh
+/// \file
 ///
 /// Set theoretic symmetrical difference of a couple of sets.
 

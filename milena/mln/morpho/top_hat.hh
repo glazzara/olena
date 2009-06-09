@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_TOP_HAT_HH
 # define MLN_MORPHO_TOP_HAT_HH
 
-/// \file mln/morpho/top_hat.hh
+/// \file
 ///
 /// Morphological top-hats.
 ///

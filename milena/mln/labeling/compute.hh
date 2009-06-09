@@ -29,7 +29,7 @@
 #ifndef MLN_LABELING_COMPUTE_HH
 # define MLN_LABELING_COMPUTE_HH
 
-/// \file mln/labeling/compute.hh
+/// \file
 ///
 /// \brief Compute accumulators onto sites/values of each labeled
 /// component of an image.

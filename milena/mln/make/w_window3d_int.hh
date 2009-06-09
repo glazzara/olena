@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_W_WINDOW3D_INT_HH
 # define MLN_MAKE_W_WINDOW3D_INT_HH
 
-/*! \file mln/make/w_window3d_int.hh
+/*! \file
  *
  * \brief Routine to create a mln::w_window3d_int.
  */

@@ -28,7 +28,7 @@
 #ifndef MLN_CANVAS_MORPHO_ESSENTIAL_HH
 # define MLN_CANVAS_MORPHO_ESSENTIAL_HH
 
-/*! \file mln/canvas/morpho/essential.hh
+/*! \file
  *
  * \brief File that includes  morphological canvas-related routines.
  */

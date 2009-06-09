@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_CONCEPT_VALUE_ITERATOR_HH
 # define MLN_CORE_CONCEPT_VALUE_ITERATOR_HH
 
-/*! \file mln/core/concept/value_iterator.hh
+/*! \file
  *
  * \brief Definition of the concept of mln::Value_Iterator.
  */

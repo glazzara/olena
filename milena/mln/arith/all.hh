@@ -28,7 +28,7 @@
 #ifndef MLN_ARITH_ALL_HH
 # define MLN_ARITH_ALL_HH
 
-/*! \file mln/arith/all.hh
+/*! \file
  *
  * \brief File that includes all arithmetic materials.
  */

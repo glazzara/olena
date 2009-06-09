@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_VALUE_ESSENTIAL_HH
 # define MLN_TRAIT_VALUE_ESSENTIAL_HH
 
-/*! \file mln/trait/value/all.hh
+/*! \file
  *
  * \brief FIXME
  */

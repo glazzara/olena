@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_DISK2D_HH
 # define MLN_WIN_DISK2D_HH
 
-/// \file mln/win/disk2d.hh
+/// \file
 ///
 /// Definition of the mln::win::disk2d window.
 

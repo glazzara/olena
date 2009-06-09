@@ -28,7 +28,7 @@
 #ifndef MLN_MATH_SQRT_HH
 # define MLN_MATH_SQRT_HH
 
-/*! \file mln/math/sqrt.hh
+/*! \file
  *
  *  \brief Define the (non-negative) square root (sqrt) routine.
  */

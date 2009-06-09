@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_INT_U32_HH
 # define MLN_VALUE_INT_U32_HH
 
-/*! \file mln/value/int_u32.hh
+/*! \file
  *
  * \brief Define the alias value::int_u32.
  */

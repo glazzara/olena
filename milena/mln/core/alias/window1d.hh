@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_ALIAS_WINDOW1D_HH
 # define MLN_CORE_ALIAS_WINDOW1D_HH
 
-/// \file mln/core/alias/window1d.hh
+/// \file
 ///
 /// Definition of the mln::window1d alias and of a construction
 /// routine.

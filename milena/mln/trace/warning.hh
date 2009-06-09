@@ -29,7 +29,7 @@
 #ifndef MLN_TRACE_WARNING_HH
 # define MLN_TRACE_WARNING_HH
 
-/// \file mln/trace/warning.hh
+/// \file
 ///
 /// Display warning message in trace output.
 

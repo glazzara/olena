@@ -29,7 +29,7 @@
 #ifndef MLN_CANVAS_BROWSING_SNAKE_GENERIC_HH
 # define MLN_CANVAS_BROWSING_SNAKE_GENERIC_HH
 
-/// \file mln/canvas/browsing/snake_generic.hh
+/// \file
 ///
 /// Browsing in a snake-way, forward.
 

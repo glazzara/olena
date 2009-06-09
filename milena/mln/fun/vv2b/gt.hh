@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_VV2B_GT_HH
 # define MLN_FUN_VV2B_GT_HH
 
-/// \file mln/fun/vv2b/gt.hh
+/// \file
 ///
 /// Functor that computes "greater than" between two values.
 

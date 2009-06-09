@@ -28,7 +28,7 @@
 #ifndef MLN_LITERAL_COLORS_HH
 # define MLN_LITERAL_COLORS_HH
 
-/// \file mln/literal/colors.hh
+/// \file
 ///
 /// Definition of the colors literal.
 

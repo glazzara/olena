@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/global_vars1.cc
+/// \file
 ///
 /// Tests proper global variable declarations
 

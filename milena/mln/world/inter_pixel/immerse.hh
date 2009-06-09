@@ -28,7 +28,7 @@
 #ifndef MLN_WORLD_INTER_PIXEL_IMMERSE_HH
 # define MLN_WORLD_INTER_PIXEL_IMMERSE_HH
 
-/// \file mln/world/inter_pixel/immerse.hh
+/// \file
 ///
 /// Convert a classical image to an inter-pixel image.
 

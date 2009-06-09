@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_CONCEPT_FUNCTION_HH
 # define MLN_CORE_CONCEPT_FUNCTION_HH
 
-/// \file mln/core/concept/function.hh
+/// \file
 ///
 /// \brief Definition of several concepts of functions.
 

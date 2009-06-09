@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_DMORPH_EXTENDED_HH
 # define MLN_CORE_IMAGE_DMORPH_EXTENDED_HH
 
-/// \file mln/core/image/dmorph/extended.hh
+/// \file
 ///
 /// Definition of morpher that makes an image become restricted
 /// given by a point set.

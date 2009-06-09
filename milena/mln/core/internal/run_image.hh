@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_RUN_IMAGE_HH
 # define MLN_CORE_INTERNAL_RUN_IMAGE_HH
 
-/*! \file mln/core/internal/run_image.hh
+/*! \file
  *
  * \brief Definition of mln::internal::run_image_ class for internal use only
  */

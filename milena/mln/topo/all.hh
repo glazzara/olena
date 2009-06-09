@@ -29,7 +29,7 @@
 #ifndef MLN_TOPO_ALL_HH
 # define MLN_TOPO_ALL_HH
 
-/// \file mln/topo/all.hh
+/// \file
 ///
 /// File that includes all topology related algorithms.
 

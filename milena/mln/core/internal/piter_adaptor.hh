@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_PITER_ADAPTOR_HH
 # define MLN_CORE_INTERNAL_PITER_ADAPTOR_HH
 
-/// \file mln/core/internal/piter_adaptor.hh
+/// \file
 ///
 /// \brief Definition of iterators on points of boxes.
 ///

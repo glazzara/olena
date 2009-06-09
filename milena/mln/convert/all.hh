@@ -29,7 +29,7 @@
 #ifndef MLN_CONVERT_ALL_HH
 # define MLN_CONVERT_ALL_HH
 
-/// \file mln/convert/all.hh
+/// \file
 ///
 /// File that includes all conversion-related routines.
 

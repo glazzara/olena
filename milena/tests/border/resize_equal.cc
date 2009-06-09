@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/border/resize_equal.cc
+/// \file
 ///
 /// Tests on mln::border::resize_equal.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_NEIGHBORHOOD_HH
 # define MLN_TRAIT_NEIGHBORHOOD_HH
 
-/// \file mln/trait/neighborhood.hh
+/// \file
 ///
 /// Some base trait types for neighborhood types.
 

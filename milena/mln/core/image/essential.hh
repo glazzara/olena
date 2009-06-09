@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_ESSENTIAL_HH
 # define MLN_CORE_IMAGE_ESSENTIAL_HH
 
-/// \file mln/core/image/essential.hh
+/// \file
 ///
 /// File that includes essential image types.
 

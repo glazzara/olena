@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_ACCUMULATOR_PROPS_HH
 # define MLN_TRAIT_ACCUMULATOR_PROPS_HH
 
-/// \file mln/trait/accumulator/props.hh
+/// \file
 ///
 /// Properties of accumulator classes.
 

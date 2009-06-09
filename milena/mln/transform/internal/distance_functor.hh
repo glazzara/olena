@@ -28,7 +28,7 @@
 #ifndef MLN_TRANSFORM_INTERNAL_DISTANCE_FUNCTOR_HH
 # define MLN_TRANSFORM_INTERNAL_DISTANCE_FUNCTOR_HH
 
-/// \file mln/transform/internal/distance_functor.hh
+/// \file
 ///
 /// Distance functor.
 ///

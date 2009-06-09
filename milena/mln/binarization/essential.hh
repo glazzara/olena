@@ -28,7 +28,7 @@
 #ifndef MLN_BINARIZATION_ESSENTIAL_HH
 # define MLN_BINARIZATION_ESSENTIAL_HH
 
-/*! \file mln/binarization/essential.hh
+/*! \file
  *
  * \brief File that includes essential "point-wise" expression tools.
  */

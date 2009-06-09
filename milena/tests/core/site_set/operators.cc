@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/site_set/operators.cc
+/// \file
 ///
 /// Tests of operators on mln::Site_Set.
 

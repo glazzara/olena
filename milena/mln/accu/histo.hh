@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_HISTO_HH
 # define MLN_ACCU_HISTO_HH
 
-/// \file mln/accu/histo.hh
+/// \file
 ///
 /// Define a generic histogram accumulator class.
 ///

@@ -29,7 +29,7 @@
 #ifndef MLN_LABELING_PACK_HH
 # define MLN_LABELING_PACK_HH
 
-/// \file mln/labeling/pack.hh
+/// \file
 ///
 /// Remove components and relabel a labeled image in order to have a
 /// contiguous labeling.

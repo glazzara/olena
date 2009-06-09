@@ -29,7 +29,7 @@
 #ifndef MLN_IO_PPM_LOAD_HH
 # define MLN_IO_PPM_LOAD_HH
 
-/// \file   mln/io/ppm/load.hh
+/// \file
 ///
 /// Define a function which loads an image of kind ppm with
 /// given path.

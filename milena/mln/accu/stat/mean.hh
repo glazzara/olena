@@ -29,7 +29,7 @@
 #ifndef MLN_ACCU_STAT_MEAN_HH
 # define MLN_ACCU_STAT_MEAN_HH
 
-/// \file mln/accu/stat/mean.hh
+/// \file
 ///
 /// Define an accumulator that computes a mean.
 ///

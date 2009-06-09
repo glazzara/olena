@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_ATTRIBUTE_SHARPNESS_HH
 # define MLN_MORPHO_ATTRIBUTE_SHARPNESS_HH
 
-/// \file mln/morpho/attribute/sharpness.hh
+/// \file
 ///
 /// Define an accumulator that computes the sharpness of a
 /// component. (sharpness = volume of the component / volume of box bounding the component.

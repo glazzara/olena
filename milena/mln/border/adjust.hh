@@ -29,7 +29,7 @@
 #ifndef MLN_BORDER_ADJUST_HH
 # define MLN_BORDER_ADJUST_HH
 
-/// \file mln/border/adjust.hh
+/// \file
 ///
 /// Define a function that adjusts the thickness of an image
 /// virtual border.

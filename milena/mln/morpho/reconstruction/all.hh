@@ -29,7 +29,7 @@
 # define MLN_MORPHO_RECONSTRUCTION_ALL_HH
 
 
-/// \file mln/morpho/reconstruction/all.hh
+/// \file
 ///
 /// File that includes all morphological reconstruction routines.
 

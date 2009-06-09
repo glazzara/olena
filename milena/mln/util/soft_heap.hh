@@ -28,10 +28,10 @@
 #ifndef MLN_UTIL_SOFT_HEAP_HH
 # define MLN_UTIL_SOFT_HEAP_HH
 
-/// \file mln/util/soft_heap.hh
+/// \file
 ///
 /// Define a generic soft heap.
-/*
+/**
     This implementation is not an usual heap, it allows to set an error
     rate so that some nodes may be "corrupted". A "corrupted node" means
     that its correct order is not totally preserved for performance reasons.

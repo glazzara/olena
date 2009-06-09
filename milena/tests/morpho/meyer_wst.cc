@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/meyer_wst.cc
+/// \file
 ///
 /// Test on mln::morpho::meyer_wst.
 

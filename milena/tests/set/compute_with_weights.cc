@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/set/compute_with_weights.cc
+/// \file
 ///
 /// Tests on mln::set::compute_with_weights.
 

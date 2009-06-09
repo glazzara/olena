@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_INTERNAL_X2X_LINEAR_IMPL_HH
 # define MLN_FUN_INTERNAL_X2X_LINEAR_IMPL_HH
 
-/// \file mln/fun/internal/x2x_linear_impl.hh
+/// \file
 ///
 /// \brief Implementation class for every linear function from vector
 /// to vector in an homogeneous coordinates system.

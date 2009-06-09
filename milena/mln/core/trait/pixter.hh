@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_TRAIT_PIXTER_HH
 # define MLN_CORE_TRAIT_PIXTER_HH
 
-/*! \file mln/core/trait/pixter.hh
+/*! \file
  *
  * \brief Definition of some traits over image types.
  */

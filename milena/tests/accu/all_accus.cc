@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/accu/all_accus.cc
+/// \file
 ///
 /// \brief Tests on all_accus files in mln/accu/.
 

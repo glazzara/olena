@@ -30,7 +30,7 @@
 # define MLN_MORPHO_TREE_FILTER_FILTER_HH
 
 /**
-** \file   mln/morpho/tree/filter/filter.hh
+** \file
 **
 **
 */

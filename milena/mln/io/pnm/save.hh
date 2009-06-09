@@ -29,7 +29,7 @@
 #ifndef MLN_IO_PNM_SAVE_HH
 # define MLN_IO_PNM_SAVE_HH
 
-/// \file mln/io/pnm/save.hh
+/// \file
 ///
 /// Define a function which saves an image of kind PNM into
 /// given path.

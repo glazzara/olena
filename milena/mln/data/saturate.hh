@@ -29,7 +29,7 @@
 #ifndef MLN_LEVEL_SATURATE_HH
 # define MLN_LEVEL_SATURATE_HH
 
-/// \file mln/data/saturate.hh
+/// \file
 ///
 /// Apply a saturation function to image pixel values.
 

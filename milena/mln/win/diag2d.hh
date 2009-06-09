@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_DIAG2D_HH
 # define MLN_WIN_DIAG2D_HH
 
-/// \file mln/win/diag2d.hh
+/// \file
 ///
 /// Definition of the mln::win::diag2d window.
 

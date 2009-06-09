@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_VALUE_INTERNAL_COMP_HH
 # define MLN_TRAIT_VALUE_INTERNAL_COMP_HH
 
-/// \file mln/trait/value/internal/comp.hh
+/// \file
 ///
 /// Include all internals for comp value trait.
 ///

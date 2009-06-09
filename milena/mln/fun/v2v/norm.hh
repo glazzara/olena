@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_V2V_NORM_HH
 # define MLN_FUN_V2V_NORM_HH
 
-/// \file mln/fun/v2v/norm.hh
+/// \file
 ///
 /// Norm functors.
 ///

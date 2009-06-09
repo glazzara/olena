@@ -28,7 +28,7 @@
 #ifndef MLN_CONVERT_IMPL_ALL_HH
 # define MLN_CONVERT_IMPL_ALL_HH
 
-/// \file mln/convert/impl/all.hh
+/// \file
 ///
 /// File that includes all from-to conversion routines.
 

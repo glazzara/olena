@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_PIXEL_HH
 # define MLN_CORE_PIXEL_HH
 
-/// \file mln/core/pixel.hh
+/// \file
 ///
 /// Definition of the generic pixel class mln::pixel.
 ///

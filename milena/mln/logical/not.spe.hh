@@ -28,7 +28,7 @@
 #ifndef MLN_LOGICAL_NOT_SPE_HH
 # define MLN_LOGICAL_NOT_SPE_HH
 
-/*! \file mln/logical/not.spe.hh
+/*! \file
  *
  * \brief Specializations for mln::logical::not.
  *

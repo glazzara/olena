@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_LAPLACIAN_HH
 # define MLN_MORPHO_LAPLACIAN_HH
 
-/*! \file mln/morpho/laplacian.hh
+/*! \file
  *
  * \brief Morphological laplacian.
  *

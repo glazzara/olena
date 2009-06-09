@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_CONCEPT_DATA_HH
 # define MLN_VALUE_CONCEPT_DATA_HH
 
-/*! \file mln/value/concept/data.hh
+/*! \file
  *
  * \brief Define a generic class for data values.
  */

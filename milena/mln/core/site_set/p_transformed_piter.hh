@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SITE_SET_P_TRANSFORMED_PITER_HH
 # define MLN_CORE_SITE_SET_P_TRANSFORMED_PITER_HH
 
-/// \file mln/core/site_set/p_transformed_piter.hh
+/// \file
 ///
 /// Definition of iterators on p_transformed<S,F>.
 

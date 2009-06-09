@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/io/magick/save.cc
+/// \file
 ///
 /// Test on mln::io::magick::save.
 

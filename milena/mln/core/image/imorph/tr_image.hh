@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_IMORPH_TR_IMAGE_HH
 # define MLN_CORE_IMAGE_IMORPH_TR_IMAGE_HH
 
-/// \file mln/core/image/imorph/tr_image.hh
+/// \file
 ///
 /// \brief Definition of the morpher mln::tr_image presenting an image
 /// through a (bijective) transformation.

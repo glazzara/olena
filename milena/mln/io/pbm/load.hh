@@ -29,7 +29,7 @@
 #ifndef MLN_IO_PBM_LOAD_HH
 # define MLN_IO_PBM_LOAD_HH
 
-/// \file mln/io/pbm/load.hh
+/// \file
 ///
 /// Define a function which loads an image of kind pbm with
 /// given path.

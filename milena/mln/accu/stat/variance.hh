@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_STAT_VARIANCE_HH
 # define MLN_ACCU_STAT_VARIANCE_HH
 
-/// \file mln/accu/stat/variance.hh
+/// \file
 ///
 /// Define an accumulator that computes the variance of a set of values.
 

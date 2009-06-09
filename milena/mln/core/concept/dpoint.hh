@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_CONCEPT_DPOINT_HH
 # define MLN_CORE_CONCEPT_DPOINT_HH
 
-/*! \file mln/core/concept/dpoint.hh
+/*! \file
  * \brief Definition of the concept of mln::Dpoint.
  */
 

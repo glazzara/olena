@@ -28,7 +28,7 @@
 #ifndef MLN_WORLD_INTER_PIXEL_COMPUTE_HH
 # define MLN_WORLD_INTER_PIXEL_COMPUTE_HH
 
-/// \file mln/world/inter_pixel/compute.hh
+/// \file
 ///
 /// FIXME: insert comment.
 

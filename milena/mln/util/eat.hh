@@ -29,7 +29,7 @@
 #ifndef MLN_UTIL_EAT_HH
 # define MLN_UTIL_EAT_HH
 
-/// \file mln/util/eat.hh
+/// \file
 ///
 /// Definition of an "eater" object.
 

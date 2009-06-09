@@ -28,7 +28,7 @@
 #ifndef MLN_HISTO_ESSENTIAL_HH
 # define MLN_HISTO_ESSENTIAL_HH
 
-/*! \file mln/histo/essential.hh
+/*! \file
  *
  * \brief File that includes histogram files.
  */

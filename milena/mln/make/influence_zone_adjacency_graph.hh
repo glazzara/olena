@@ -29,7 +29,7 @@
 #ifndef MLN_MAKE_INFLUENCE_ZONE_ADJACENCY_GRAPH_HH
 # define MLN_MAKE_INFLUENCE_ZONE_ADJACENCY_GRAPH_HH
 
-/// \file mln/make/influence_zone_adjacency_graph.hh
+/// \file
 ///
 /// Create a graph from an influence zone image.
 ///

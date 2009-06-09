@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/transform/influence_zone_geodesic.cc
+/// \file
 ///
 /// Test on mln::transform::influence_zone_geodesic.
 

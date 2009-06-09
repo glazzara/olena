@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_STACK_HH
 # define MLN_VALUE_STACK_HH
 
-/// \file mln/value/stack.hh
+/// \file
 ///
 /// Definition of the stack image type.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2W2V_COS_HH
 # define MLN_FUN_V2W2V_COS_HH
 
-/*! \file mln/fun/v2w2v/cos.hh
+/*! \file
  *
  *  \brief Cos functor.
  *

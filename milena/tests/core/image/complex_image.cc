@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/complex_image.cc
+/// \file
 /// \brief Test of mln::complex_image.
 
 #include <iostream>

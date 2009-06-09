@@ -29,7 +29,7 @@
 #ifndef MLN_ARITH_DIFF_ABS_HH
 # define MLN_ARITH_DIFF_ABS_HH
 
-/// \file mln/arith/diff_abs.hh
+/// \file
 ///
 /// Point-wise addition between images.
 ///

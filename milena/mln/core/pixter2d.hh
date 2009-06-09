@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_PIXTER2D_HH
 # define MLN_CORE_PIXTER2D_HH
 
-/// \file mln/core/pixter2d.hh
+/// \file
 ///
 /// Pixel iterators on a 2D image with border.
 

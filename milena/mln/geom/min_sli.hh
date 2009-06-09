@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_MIN_SLI_HH
 # define MLN_GEOM_MIN_SLI_HH
 
-/// \file mln/geom/min_sli.hh
+/// \file
 ///
 /// Give the minimum sli of an image.
 

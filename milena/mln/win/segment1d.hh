@@ -29,7 +29,7 @@
 #ifndef MLN_WIN_SEGMENT1D_HH
 # define MLN_WIN_SEGMENT1D_HH
 
-/// \file mln/win/segment1d.hh
+/// \file
 ///
 /// Definition of the mln::win::segment1d window.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_SET_ALL_HH
 # define MLN_SET_ALL_HH
 
-/// \file mln/set/all.hh
+/// \file
 ///
 /// File that includes all set-related routines.
 

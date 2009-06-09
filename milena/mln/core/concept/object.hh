@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_CONCEPT_OBJECT_HH
 # define MLN_CORE_CONCEPT_OBJECT_HH
 
-/// \file mln/core/concept/object.hh
+/// \file
 ///
 /// Definition of the top Milena class mln::Object.
 

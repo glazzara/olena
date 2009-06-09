@@ -29,7 +29,7 @@
 #ifndef MLN_ESTIM_ALL_HH
 # define MLN_ESTIM_ALL_HH
 
-/// \file mln/estim/all.hh
+/// \file
 ///
 /// File that includes all estimation materials.
 

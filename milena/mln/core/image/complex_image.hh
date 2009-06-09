@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_COMPLEX_IMAGE_HH
 # define MLN_CORE_IMAGE_COMPLEX_IMAGE_HH
 
-/// \file mln/core/image/complex_image.hh
+/// \file
 ///
 /// Definition of a line complex-based image.
 

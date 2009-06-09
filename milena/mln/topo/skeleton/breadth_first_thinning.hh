@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_SKELETON_BREADTH_FIRST_THINNING_HH
 # define MLN_TOPO_SKELETON_BREADTH_FIRST_THINNING_HH
 
-/// \file mln/topo/skeleton/breadth_first_thinning.hh
+/// \file
 /// \brief Computing a skeleton by using breadth-first thinning on a
 /// binary image.
 

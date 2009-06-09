@@ -28,7 +28,7 @@
 #ifndef MLN_MAKE_CELL_HH
 # define MLN_MAKE_CELL_HH
 
-/// \file mln/topo/is_facet.hh
+/// \file
 /// \brief Computing the set of faces of the cell.
 
 # include <mln/core/site_set/p_set.hh>

@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/site_set/p_edges.cc
+/// \file
 ///
 /// Tests on mln::p_edges.
 

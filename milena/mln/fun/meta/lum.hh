@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_META_LUM_HH
 # define MLN_FUN_META_LUM_HH
 
-/// \file mln/fun/meta/lum.hh
+/// \file
 ///
 /// Meta function to retrieve/modify the color luminosity.
 

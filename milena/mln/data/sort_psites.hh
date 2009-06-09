@@ -29,7 +29,7 @@
 #ifndef MLN_LEVEL_SORT_PSITES_HH
 # define MLN_LEVEL_SORT_PSITES_HH
 
-/// \file mln/data/sort_psites.hh
+/// \file
 ///
 /// \brief Sort_Psites the contents of an image into another one.
 ///

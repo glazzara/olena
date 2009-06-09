@@ -29,7 +29,7 @@
 #ifndef MLN_LEVEL_STRETCH_HH
 # define MLN_LEVEL_STRETCH_HH
 
-/// \file mln/data/stretch.hh
+/// \file
 ///
 /// Transform linearly the contents of an image into another one in a
 /// stretching way.

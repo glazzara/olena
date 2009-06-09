@@ -29,7 +29,7 @@
 #ifndef MLN_DATA_ALL_HH
 # define MLN_DATA_ALL_HH
 
-/// \file mln/data/all.hh
+/// \file
 ///
 /// File that includes all data-related routines.
 

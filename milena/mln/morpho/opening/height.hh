@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_OPENING_HEIGHT_HH
 # define MLN_MORPHO_OPENING_HEIGHT_HH
 
-/// \file mln/morpho/opening/height.hh
+/// \file
 ///
 /// Morphological height opening.
 

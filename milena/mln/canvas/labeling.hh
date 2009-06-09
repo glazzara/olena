@@ -29,7 +29,7 @@
 #ifndef MLN_CANVAS_LABELING_HH
 # define MLN_CANVAS_LABELING_HH
 
-/// \file mln/canvas/labeling.hh
+/// \file
 ///
 /// Connected component labeling of the object part in a binary image.
 ///

@@ -29,7 +29,7 @@
 #ifndef MLN_TOPO_COMPLEX_HH
 # define MLN_TOPO_COMPLEX_HH
 
-/// \file mln/topo/complex.hh
+/// \file
 ///
 /// \brief Structures for general complexes.
 ///

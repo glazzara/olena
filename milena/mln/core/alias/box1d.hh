@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SITE_SET_BOX1D_HH
 # define MLN_CORE_SITE_SET_BOX1D_HH
 
-/*! \file mln/core/alias/box1d.hh
+/*! \file
  *
  * \brief Definition of the mln::box1d alias and of construction
  * routines.

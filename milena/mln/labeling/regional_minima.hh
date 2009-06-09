@@ -29,7 +29,7 @@
 #ifndef MLN_LABELING_REGIONAL_MINIMA_HH
 # define MLN_LABELING_REGIONAL_MINIMA_HH
 
-/// \file mln/labeling/regional_minima.hh
+/// \file
 ///
 /// Connected component labeling of the regional minima of an image.
 

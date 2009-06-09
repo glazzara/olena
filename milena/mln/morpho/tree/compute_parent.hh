@@ -29,7 +29,7 @@
 #ifndef MLN_MORPHO_TREE_COMPUTE_PARENT_HH
 # define MLN_MORPHO_TREE_COMPUTE_PARENT_HH
 
-/// \file mln/morpho/tree/compute_parent.hh
+/// \file
 ///
 /// Compute a canonized tree from an image.
 ///

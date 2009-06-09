@@ -29,7 +29,7 @@
 #ifndef MLN_LABELING_FLAT_ZONES_HH
 # define MLN_LABELING_FLAT_ZONES_HH
 
-/// \file mln/labeling/flat_zones.hh
+/// \file
 ///
 /// Connected component labeling of the flat zones of an image.
 

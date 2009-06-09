@@ -29,7 +29,7 @@
 #ifndef MLN_METAL_VEC_HH
 # define MLN_METAL_VEC_HH
 
-/// \file  mln/metal/vec.hh
+/// \file
 ///
 /// Definition of a generic vector class.
 

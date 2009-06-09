@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/debug/println.cc
+/*! \file
  *
  * \brief Test on mln::debug::println.
  */

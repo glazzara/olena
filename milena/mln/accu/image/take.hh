@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_IMAGE_TAKE_HH
 # define MLN_ACCU_IMAGE_TAKE_HH
 
-/// \file mln/accu/image/take.hh
+/// \file
 ///
 /// Update an image of accumulators by taking a value or the contents
 /// of another image.

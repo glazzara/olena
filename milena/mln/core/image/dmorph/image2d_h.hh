@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_IMAGE_DMORPH_IMAGE2D_H_HH
 # define MLN_CORE_IMAGE_DMORPH_IMAGE2D_H_HH
 
-/// \file mln/core/image/dmorph/image2d_h.hh
+/// \file
 ///
 /// Definition of an alias for a 2d image based on an hexagonal
 /// mesh.

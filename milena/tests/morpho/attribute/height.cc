@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/attribute/height.cc
+/// \file
 ///
 /// Test on mln::morpho::attribute::height.
 #include <mln/core/image/image1d.hh>

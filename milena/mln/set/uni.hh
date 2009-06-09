@@ -28,7 +28,7 @@
 #ifndef MLN_SET_UNI_HH
 # define MLN_SET_UNI_HH
 
-/// \file mln/set/uni.hh
+/// \file
 ///
 /// Compute the union of a couple of sets.
 

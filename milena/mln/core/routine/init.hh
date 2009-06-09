@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_ROUTINE_INIT_HH
 # define MLN_CORE_ROUTINE_INIT_HH
 
-/// \file mln/core/routine/init.hh
+/// \file
 ///
 /// Definition of function that initialize an image from another
 /// one.

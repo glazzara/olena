@@ -28,7 +28,7 @@
 #ifndef MLN_GEOM_BBOX_HH
 # define MLN_GEOM_BBOX_HH
 
-/*! \file mln/geom/bbox.hh
+/*! \file
  *
  * \brief Several routines to compute the precise bounding box of some
  * objects.

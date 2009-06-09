@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_PIXTER3D_HH
 # define MLN_CORE_PIXTER3D_HH
 
-/// \file mln/core/pixter3d.hh
+/// \file
 ///
 /// Pixel iterators on a 3D image with border.
 

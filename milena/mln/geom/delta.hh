@@ -29,7 +29,7 @@
 #ifndef MLN_GEOM_DELTA_HH
 # define MLN_GEOM_DELTA_HH
 
-/// \file mln/geom/delta.hh
+/// \file
 ///
 /// \todo Add doc.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_LITERAL_ONE_HH
 # define MLN_LITERAL_ONE_HH
 
-/// \file mln/literal/one.hh
+/// \file
 ///
 /// Definition of the literal of mln::one.
 

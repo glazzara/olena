@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_WINDOW_BASE_HH
 # define MLN_CORE_INTERNAL_WINDOW_BASE_HH
 
-/// \file mln/core/internal/window_base.hh
+/// \file
 ///
 /// Definition of a base class for window classes.
 

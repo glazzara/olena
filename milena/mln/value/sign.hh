@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_SIGN_HH
 # define MLN_VALUE_SIGN_HH
 
-/*! \file mln/value/sign.hh
+/*! \file
  *
  * \brief Definition of the mln::value::sign class.
  */

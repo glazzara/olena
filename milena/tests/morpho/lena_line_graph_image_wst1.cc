@@ -31,7 +31,7 @@
    tests/morpho/lena_line_graph_image_wst2.cc, starting from conversion
    routines.  */
 
-/** \file tests/morpho/lena_line_graph_image_wst1.cc
+/** \file
     \brief Tests on the Watershed Transform (WST) on a mln::line_graph_image.
    
     The scenario is as follows:

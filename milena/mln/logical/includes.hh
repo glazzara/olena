@@ -28,7 +28,7 @@
 #ifndef MLN_LOGICAL_INCLUDES_HH
 # define MLN_LOGICAL_INCLUDES_HH
 
-/// \file mln/logical/includes.hh
+/// \file
 
 
 # include <mln/core/concept/image.hh>

@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_UNDEF_HH
 # define MLN_TRAIT_UNDEF_HH
 
-/*! \file mln/trait/undef.hh
+/*! \file
  *
  * \brief Undefined flag type for a trait.
  */

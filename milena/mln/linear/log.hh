@@ -29,7 +29,7 @@
 #ifndef MLN_LINEAR_LOG_HH
 # define MLN_LINEAR_LOG_HH
 
-/// \file mln/linear/log.hh
+/// \file
 ///
 /// Laplacian of Gaussian.
 

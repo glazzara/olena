@@ -29,7 +29,7 @@
 #ifndef MLN_OPT_AT_HH
 # define MLN_OPT_AT_HH
 
-/// \file mln/opt/at.hh
+/// \file
 ///
 /// Define the optional routine at.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_LABELING_FOREGROUND_HH
 # define MLN_LABELING_FOREGROUND_HH
 
-/// \file mln/labeling/foreground.hh
+/// \file
 ///
 /// Connected component labeling of the object part in a binary
 /// image.

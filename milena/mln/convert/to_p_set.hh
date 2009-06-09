@@ -29,7 +29,7 @@
 #ifndef MLN_CONVERT_TO_P_SET_HH
 # define MLN_CONVERT_TO_P_SET_HH
 
-/// \file mln/convert/to_p_set.hh
+/// \file
 ///
 /// Conversions to mln::p_set.
 

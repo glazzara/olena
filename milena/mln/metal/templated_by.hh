@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_TEMPLATED_BY_HH
 # define MLN_METAL_TEMPLATED_BY_HH
 
-/*! \file mln/metal/templated_by.hh
+/*! \file
  *
  * \brief check if a type is templated by a given template.
  *

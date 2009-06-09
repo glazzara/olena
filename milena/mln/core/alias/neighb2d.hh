@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_ALIAS_NEIGHB2D_HH
 # define MLN_CORE_ALIAS_NEIGHB2D_HH
 
-/// \file mln/core/alias/neighb2d.hh
+/// \file
 ///
 /// \brief Definition of the mln::neighb2d alias and of some classical
 /// 2D neighborhoods.

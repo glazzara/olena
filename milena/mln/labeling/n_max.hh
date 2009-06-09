@@ -31,7 +31,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/util/array.hh>
 
-/// \file mln/labeling/mean_values.hh
+/// \file
 ///
 /// Construct from a count accumulator of a labeled image an array with
 /// the ordered n biggest labels

@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_CONCEPT_WEIGHTED_WINDOW_HH
 # define MLN_CORE_CONCEPT_WEIGHTED_WINDOW_HH
 
-/// \file mln/core/concept/weighted_window.hh
+/// \file
 ///
 /// Definition of the concept of mln::Weighted_Window.
 ///

@@ -29,7 +29,7 @@
 #ifndef MLN_FUN_POINT_SLI_HH
 # define MLN_FUN_POINT_SLI_HH
 
-/// \file mln/fun/point/sli.hh
+/// \file
 ///
 /// Meta function to retrieve/modify the sli coord of a point.
 

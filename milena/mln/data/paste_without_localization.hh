@@ -28,7 +28,7 @@
 #ifndef MLN_DATA_PASTE_WITHOUT_LOCALIZATION_HH
 # define MLN_DATA_PASTE_WITHOUT_LOCALIZATION_HH
 
-/// \file mln/data/paste_without_localization.hh
+/// \file
 ///
 /// Paste the contents of an image into another one without taking
 /// into account the localization of sites.

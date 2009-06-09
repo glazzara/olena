@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_CONCEPT_DOC_GENPIXEL_HH
 # define MLN_CORE_CONCEPT_DOC_GENPIXEL_HH
 
-/*! \file mln/core/concept/doc/generalized_pixel.hh
+/*! \file
  * \brief This file documents the concept of mln::Generalized_Pixel.
  */
 

@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_INT_U16_HH
 # define MLN_VALUE_INT_U16_HH
 
-/*! \file mln/value/int_u16.hh
+/*! \file
  *
  * \brief Define the alias value::int_u16.
  */

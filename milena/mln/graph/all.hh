@@ -28,7 +28,7 @@
 #ifndef MLN_GRAPH_ALL_HH
 # define MLN_GRAPH_ALL_HH
 
-/// \file mln/graph/all.hh
+/// \file
 ///
 /// File that include all graph related routines.
 

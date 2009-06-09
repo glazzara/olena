@@ -29,7 +29,7 @@
 # define MLN_METAL_UNCONST_HH
 
 /*!
- * \file  mln/metal/unconst.hh
+ * \file
  *
  * \brief FIXME.
  */

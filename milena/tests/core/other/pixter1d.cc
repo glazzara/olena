@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/other/pixter1d.cc
+/// \file
 /// \brief Tests on 1-D image pixters.
 
 #include <mln/core/image/image1d.hh>

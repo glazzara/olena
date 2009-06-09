@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_PIXEL_IMPL_HH
 # define MLN_CORE_INTERNAL_PIXEL_IMPL_HH
 
-/// \file mln/core/internal/pixel_impl.hh
+/// \file
 ///
 /// Define a couple of implementation classes to provide methods
 /// to classes of generalized pixels.

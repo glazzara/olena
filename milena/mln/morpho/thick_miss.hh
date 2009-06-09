@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_THICK_MISS_HH
 # define MLN_MORPHO_THICK_MISS_HH
 
-/*! \file mln/morpho/thick_miss.hh
+/*! \file
  *
  * \brief Morphological thick-miss.
  */

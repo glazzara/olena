@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_INTERNAL_SITE_ITERATOR_BASE_HH
 # define MLN_CORE_INTERNAL_SITE_ITERATOR_BASE_HH
 
-/// \file mln/core/internal/site_iterator_base.hh
+/// \file
 ///
 /// Base class to factor code for site iterator classes.
 

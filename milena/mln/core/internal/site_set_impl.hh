@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_SITE_SET_IMPL_HH
 # define MLN_CORE_INTERNAL_SITE_SET_IMPL_HH
 
-/// \file mln/core/internal/site_set_impl.hh
+/// \file
 /// Provide implementation for optional site set methods.
 
 # include <mln/core/concept/site_set.hh>

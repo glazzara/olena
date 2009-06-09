@@ -29,7 +29,7 @@
 #ifndef MLN_ARITH_MIN_SPE_HH
 # define MLN_ARITH_MIN_SPE_HH
 
-/// \file mln/arith/min.spe.hh
+/// \file
 ///
 /// Specializations for mln::arith::min.
 

@@ -29,7 +29,7 @@
 #ifndef MLN_ESTIM_MEAN_HH
 # define MLN_ESTIM_MEAN_HH
 
-/// \file mln/estim/mean.hh
+/// \file
 ///
 /// Compute the mean pixel value.
 

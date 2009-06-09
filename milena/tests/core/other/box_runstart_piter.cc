@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/other/box_runstart_piter.cc
+/*! \file
  *
  * \brief Tests on mln::box_runstart_piter.
  */

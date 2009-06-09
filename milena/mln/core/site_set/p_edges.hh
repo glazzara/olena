@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_SITE_SET_P_EDGES_HH
 # define MLN_CORE_SITE_SET_P_EDGES_HH
 
-/// \file mln/core/site_set/p_edges.hh
+/// \file
 ///
 /// Definition of a site set based on graph edges.
 

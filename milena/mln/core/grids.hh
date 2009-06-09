@@ -29,7 +29,7 @@
 #ifndef MLN_CORE_GRIDS_HH
 # define MLN_CORE_GRIDS_HH
 
-/// \file mln/core/grids.hh
+/// \file
 ///
 /// \brief Definition of some grid classes.
 

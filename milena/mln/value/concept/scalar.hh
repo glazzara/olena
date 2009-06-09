@@ -29,7 +29,7 @@
 #ifndef MLN_VALUE_CONCEPT_SCALAR_HH
 # define MLN_VALUE_CONCEPT_SCALAR_HH
 
-/// \file mln/value/concept/scalar.hh
+/// \file
 ///
 /// Define a generic class for scalar values.
 

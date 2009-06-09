@@ -28,7 +28,7 @@
 #ifndef MLN_DATA_FILL_WITH_VALUE_SPE_HH
 # define MLN_DATA_FILL_WITH_VALUE_SPE_HH
 
-/// \file mln/data/fill_with_value.spe.hh
+/// \file
 ///
 /// Specializations for mln::data::fill_with_value.
 

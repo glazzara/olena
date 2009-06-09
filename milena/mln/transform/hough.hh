@@ -29,7 +29,7 @@
 #ifndef MLN_TRANSFORM_HOUGH_HH
 # define MLN_TRANSFORM_HOUGH_HH
 
-/// \file mln/transform/hough.hh
+/// \file
 ///
 /// Compute the hough transform.
 

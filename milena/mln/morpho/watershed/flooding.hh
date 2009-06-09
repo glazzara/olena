@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_WATERSHED_FLOODING_HH
 # define MLN_MORPHO_WATERSHED_FLOODING_HH
 
-/// \file mln/morpho/watershed/flooding.hh
+/// \file
 ///
 /// Meyer's Watershed Transform (WST) algorithm.
 ///

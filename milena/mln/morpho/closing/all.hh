@@ -28,7 +28,7 @@
 #ifndef MLN_MORPHO_CLOSING_ALL_HH
 # define MLN_MORPHO_CLOSING_ALL_HH
 
-/// \file mln/morpho/closing/all.hh
+/// \file
 ///
 /// File that includes all closing operators.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_EXTRACT_BLUE_HH
 # define MLN_EXTRACT_BLUE_HH
 
-/// \file mln/extract/blue.hh
+/// \file
 ///
 /// Extract the blue component of an image.
 

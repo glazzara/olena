@@ -28,7 +28,7 @@
 #ifndef MLN_CANVAS_DISTANCE_GEODESIC_HH
 # define MLN_CANVAS_DISTANCE_GEODESIC_HH
 
-/// \file mln/canvas/distance_geodesic.hh
+/// \file
 ///
 /// Discrete geodesic distance canvas.
 

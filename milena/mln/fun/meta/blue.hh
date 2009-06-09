@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_META_BLUE_HH
 # define MLN_FUN_META_BLUE_HH
 
-/// \file mln/fun/meta/blue.hh
+/// \file
 ///
 /// Meta function to retrieve/modify the blue component.
 

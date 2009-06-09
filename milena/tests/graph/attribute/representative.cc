@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/graph/attribute/representative.cc
+/// \file
 ///
 /// Tests on mln::graph::attribute::representative.
 

@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SITE_SET_P_COMPLEX_PITER_HH
 # define MLN_CORE_SITE_SET_P_COMPLEX_PITER_HH
 
-/// \file mln/core/site_set/p_complex_piter.hh
+/// \file
 /// \brief Definition of point iterator on complex-based pset.
 ///
 /// Types defined here are akin to parametrized typedefs: the code is

@@ -28,7 +28,7 @@
 #ifndef MLN_WORLD_BINARY_2D_SUBSAMPLE_HH
 # define MLN_WORLD_BINARY_2D_SUBSAMPLE_HH
 
-/// \file mln/world/binary_2d/subsample.hh
+/// \file
 ///
 /// Subsample a Boolean image.
 ///

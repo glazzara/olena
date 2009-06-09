@@ -29,7 +29,7 @@
 # define MLN_METAL_SAME_COORD_HH
 
 /*!
- * \file  mln/metal/same_coord.hh
+ * \file
  *
  * \brief FIXME.
  */

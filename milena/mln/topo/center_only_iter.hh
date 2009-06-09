@@ -29,7 +29,7 @@
 #ifndef MLN_TOPO_CENTER_ONLY_ITER_HH
 # define MLN_TOPO_CENTER_ONLY_ITER_HH
 
-/// \file mln/topo/center_only_iter.hh
+/// \file
 ///
 /// \brief Definition of a complex relative iterator iterating on its
 /// center (reference face) only.

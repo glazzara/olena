@@ -28,7 +28,7 @@
 #ifndef MLN_MATH_SQR_HH
 # define MLN_MATH_SQR_HH
 
-/*! \file mln/math/sqr.hh
+/*! \file
  *
  *  \brief Define the square (sqr) routine.
  */

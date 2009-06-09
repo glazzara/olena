@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/other/point_set_compatibility.cc
+/// \file
 /// \brief Tests on the compatibility of some point sites with some
 /// point sets (and their iterators).
 
