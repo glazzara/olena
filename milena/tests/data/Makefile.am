@@ -52,3 +52,5 @@ update_SOURCES = update.cc
 #fill_full_SOURCES = fill_full.cc
 
 TESTS = $(check_PROGRAMS)
+
+XFAIL_TESTS = transform

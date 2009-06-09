@@ -1,3 +1,10 @@
+2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Tag tests/data/transform as expected to fail.
+
+	* tests/data/Makefile.am (XFAIL_TESTS): New.
+	Add transform.
+
 2009-06-09  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Fix coding style.
