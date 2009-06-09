@@ -1,14 +1,25 @@
-Olena 1.0beta
+* Olena 1.0
 
-	* Rewritten from scratch.
-	* First release of the Olena Platform with Milena as the
-	  central library.
-	* Milena uses a simplified version of the SCOOP 2 paradigm, to
-	  improve the speed of compilation and the ease of development
-	  while still providing very good run-time performances.
+	* The core C++ library, renamed to Milena, has been rewritten
+          from scratch and feature numerous additions over the past
+          releases.
+
+	* Milena uses a simplified version of the SCOOP 2 paradigm
+	  (informally called SCOOP 1.5), to improve the speed of
+	  compilation and the ease of development while still
+	  providing very good run-time performances.
+
+	* A first reimplementation of Swilena featuring Python
+          wrappers for a very small subset of Milena is available.
+          The Swilena Python Shell (sps) allows interactive Olena
+          sessions.
+
+	* Olena contains tools for Document Image Analysis developed
+          in the context of the SCRIBO project
+          (http://www.scribo.ws/).
 
 
-Olena 0.11	February 21, 2007
+* Olena 0.11	February 21, 2007
 
 	* The whole Olena distribution compiles with the GNU C++
 	  Compiler (G++) 4.0 and 4.1.  The compatibility with previous
@@ -31,7 +42,7 @@ Olena 0.11	February 21, 2007
 	  their test suites.
 
 
-Olena 0.10	April 15, 2004
+* Olena 0.10	April 15, 2004
 
 	* New documentation system.
 	  Now any comment should use doxygen style (i.e. /*! ... */).
@@ -72,7 +83,7 @@ Olena 0.10	April 15, 2004
 	  - These morphers can be manipulated as if they were normal images.
 
 
-Olena 0.9	August 8, 2003
+* Olena 0.9	August 8, 2003
 
         * New static hierarchy paradigm
 	  - Complete rewrite of the image hierarchy.
@@ -94,7 +105,7 @@ Olena 0.9	August 8, 2003
         * Improved test-suite.
 
 
-Olena 0.8	April 10, 2003
+* Olena 0.8	April 10, 2003
 
 	IMPORTANT NOTE: This version is not compatible with older
 	versions of Olena. The project has been split into three part,
@@ -110,7 +121,7 @@ Olena 0.8	April 10, 2003
 	* Many bug fixes.
 
 
-Olena 0.7	February 10, 2003
+* Olena 0.7	February 10, 2003
 
 	* Manual pages for the command-line utilities.
 	* New, saner, source tree layout.
@@ -122,7 +133,7 @@ Olena 0.7	February 10, 2003
 	* Olena now works on MacOS X, NetBSD, FreeBSD and cygwin.
 
 
-Olena 0.6       January 15, 2003
+* Olena 0.6       January 15, 2003
 
         * Complete rewriting of data types.
         * Command line utilities.
@@ -132,7 +143,7 @@ Olena 0.6       January 15, 2003
         * Many bug fixes.
 
 
-Olena 0.5       July 25, 2002
+* Olena 0.5       July 25, 2002
 
         * Documentation in LaTeX (instead of Texinfo).
         * Support reading/writing gziped images
@@ -147,12 +158,12 @@ Olena 0.5       July 25, 2002
         * Many bug fixes.
 
 
-Olena 0.4.1	April 25, 2002
+* Olena 0.4.1	April 25, 2002
 
 	* Buglet in the 0.4 Makefiles.
 
 
-Olena 0.4	April 24, 2002
+* Olena 0.4	April 24, 2002
 
 	* New morpho:: operators:
 	  - thinning
@@ -164,14 +175,14 @@ Olena 0.4	April 24, 2002
 	* Many bug fixes.
 
 
-Olena 0.3	January 14, 2002
+* Olena 0.3	January 14, 2002
 
 	* fast_morpho() speeded-up.
 	* Minor bug fixes.
 	* "Documentation" updates.
 
 
-Olena 0.2b	December 13, 2001
+* Olena 0.2b	December 13, 2001
 
 	* Value:
 	  - Support for HSL and HSV color systems.
@@ -184,7 +195,7 @@ Olena 0.2b	December 13, 2001
 	* Various #include fixes.
 
 
-Olena 0.2	November 28, 2001
+* Olena 0.2	November 28, 2001
 
 	* Color:
 	  - nrgb_8, nrgb_16, nrgb_32: new types for NTSC RGB.  The
@@ -209,7 +220,7 @@ Olena 0.2	November 28, 2001
 	  - pnm/P1, pnm/P3, and pnm/P6 support for image_3d.
 
 
-Olena 0.1f	November 22, 2001
+* Olena 0.1f	November 22, 2001
 
 	* Core:
 	  - Several bug fixes in memory handling.
@@ -246,7 +257,7 @@ Olena 0.1f	November 22, 2001
 	  - `level::lut', `level::hlut': Lookup tables.
 
 
-Olena 0.1d	November 15, 2001
+* Olena 0.1d	November 15, 2001
 
 	* Core:
 	  - `point's, `dpoint's, and `image_size's feature a `nth()' method,
@@ -281,7 +292,7 @@ Olena 0.1d	November 15, 2001
 	    whose color has 3 components on 8 bits.
 
 
-Olena 0.1b	November 8, 2001
+* Olena 0.1b	November 8, 2001
 
 	* New type: rgb<T>
 
@@ -322,6 +333,31 @@ Olena 0.1b	November 8, 2001
 	    perform additions.
 
 
-Olena 0.1	November 1, 2001
+* Olena 0.1	November 1, 2001
 
         * Initial public release.
+
+
+Local Variables:
+mode: outline
+ispell-local-dictionary: "american"
+End:
+
+----
+
+Copyright (C) 2001, 2002, 2003, 2004, 2007, 2009 EPITA Research and
+Development Laboratory (LRDE)
+
+This file is part of Olena.
+
+Olena is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation, version 2 of the License.
+
+Olena is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Olena.  If not, see <http://www.gnu.org/licenses/>.

@@ -1,5 +1,13 @@
 2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update NEWS.
+
+	* NEWS: Add a copyright footer.
+	Update the entry on Olena 1.0.
+	Aesthetic changes.
+
+2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update AUTHORS.
 
 	* AUTHORS: Dispatch contributors from the ``temporary staff'' to
