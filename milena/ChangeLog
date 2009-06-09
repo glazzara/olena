@@ -1,3 +1,35 @@
+2009-06-08  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
+	Fix several doxygen warnings.
+
+	* doc/Doxyfile.in: add more macro definitions.
+
+	* mln/data/compute.hh,
+	* mln/data/convert.hh,
+	* mln/data/fill_with_image.hh,
+	* mln/data/fill_with_value.hh,
+	* mln/data/paste.hh,
+	* mln/data/stretch.hh,
+	* mln/data/transform,
+	* mln/data/transform.hh,
+	* mln/data/transform_inplace.hh,
+	* mln/data/update.hh,
+	* mln/geom/seeds2tiling.hh,
+	* mln/io/plot/load.hh,
+	* mln/labeling/compute.hh,
+	* mln/make/influence_zone_adjacency_graph.hh,
+	* mln/morpho/reconstruction/by_dilation/all.hh,
+	* mln/morpho/reconstruction/by_erosion/all.hh,
+	* mln/morpho/tree/propagate_if.hh,
+	* mln/morpho/tree/propagate_node.hh,
+	* mln/set/compute_with_weights.hh,
+	* mln/util/object_id.hh,
+	* tests/accu/tuple.cc,
+	* tests/core/image/dmorph/sub_image.cc,
+	* tests/io/pbm/pbm_ascii.cc,
+	* tests/io/pgm/pgm_ascii.cc,
+	* tests/morpho/Rd.cc: Fix documentation.
+
 2009-06-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix the last couple of warnings with g++-3.3.

@@ -29,7 +29,7 @@
 # define MLN_MORPHO_RECONSTRUCTION_BY_DILATION_ALL_HH
 
 
-/// \file mln/morpho/reconstruction by dilation/all.hh
+/// \file mln/morpho/reconstruction/by_dilation/all.hh
 ///
 /// File that includes all morphological reconstruction by dilation routines.
 

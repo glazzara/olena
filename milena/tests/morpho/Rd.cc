@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file  tests/morpho/rd.cc
+/// \file  tests/morpho/Rd.cc
 ///
 /// Test on mln::morpho::Rd.
 

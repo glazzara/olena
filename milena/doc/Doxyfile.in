@@ -198,7 +198,12 @@ EXPAND_ONLY_PREDEF     = YES
 SEARCH_INCLUDES        = YES
 INCLUDE_PATH           = 
 INCLUDE_FILE_PATTERNS  = 
-PREDEFINED             = "mlc_unqualif(T)=typename mln::metal::unqualif<T>::ret" \
+PREDEFINED             = "for_all(x)=for(x.start(); x.is_valid(); x.next())" \
+			 "for_all_2(x1, x2)=for(x1.start(), x2.start();	x1.is_valid(); x1.next(), x2.next())" \
+			 "for_all_3(x1, x2, x3)=for(x1.start(), x2.start(), x3.start();	x1.is_valid(); x1.next(), x2.next(), x3.next())" \
+			 "for_all_remaining(x)=if (! x.is_valid()) {} else while (x.next(), x.is_valid())" \
+			 "mlc_unqualif(T)=typename mln::metal::unqualif<T>::ret" \
+			 "mlc_equal(T1,T2)=mln::metal::equal<T1,T2>" \
                          "mln_piter(T)=typename T::piter" \
                          "mln_fwd_piter(T)=typename T::fwd_piter" \
                          "mln_bkd_piter(T)=typename T::bkd_piter" \
@@ -226,11 +231,12 @@ PREDEFINED             = "mlc_unqualif(T)=typename mln::metal::unqualif<T>::ret"
                          "mln_psite(T)=typename T::psite" \
                          "mln_dpsite(T)=typename T::dpsite" \
                          "mln_accu_with(A, T)=typename A::template with< T >::ret" \
-                         "mln_trait_op_plus(L, R)=typename mln::trait::op::plus< L , R >::ret" \
-                         "mln_trait_op_minus(L, R)=typename mln::trait::op::minus< L , R >::ret" \
-                         "mln_trait_op_times(L, R)=typename mln::trait::op::times< L , R >::ret" \
                          "mln_trait_op_div(L, R)=typename mln::trait::op::div< L , R >::ret" \
+                         "mln_trait_op_less(L, R)=typename mln::trait::op::less< L , R >::ret" \
+                         "mln_trait_op_minus(L, R)=typename mln::trait::op::minus< L , R >::ret" \
                          "mln_trait_op_mod(L, R)=typename mln::trait::op::mod< L , R >::ret" \
+                         "mln_trait_op_plus(L, R)=typename mln::trait::op::plus< L , R >::ret" \
+                         "mln_trait_op_times(L, R)=typename mln::trait::op::times< L , R >::ret" \
                          "mln_trait_op_uminus(T)=typename mln::trait::op::uminus< T >::ret" \
 			 "mln_ch_value(I, V)=typename mln::trait::ch_value< I, V >::ret" \
 			 "mlc_unqualif_(T)=mln::metal::unqualif<T>::ret" \

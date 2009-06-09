@@ -131,6 +131,10 @@ namespace mln
       {
 
 	/// Generic implementation of data::transform.
+	///
+        /// \param[in] input_ The input image.
+	/// \param[in] f_     The function.
+	//
 	template <typename I, typename F>
         mln_ch_value(I, mln_result(F))
         transform(const Image<I>& input_, const Function_v2v<F>& f_)
@@ -154,11 +158,17 @@ namespace mln
 	}
 
 
+	/// Generic implementation of data::transform.
+	///
+	/// \param[in] input1_ The 1st input image.
+	/// \param[in] input2_ The 2nd input image.
+	/// \param[in] f_      The function.
+	//
 	template <typename I1, typename I2, typename F>
         mln_ch_value(I1, mln_result(F))
-	  transform(const Image<I1>& input1_,
-		    const Image<I2>& input2_,
-		    const Function_vv2v<F>& f_)
+	transform(const Image<I1>& input1_,
+		  const Image<I2>& input2_,
+		  const Function_vv2v<F>& f_)
 	{
           trace::entering("data::impl::generic::transform");
 

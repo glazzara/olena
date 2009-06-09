@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_LEVEL_UPDATE_HH
 # define MLN_LEVEL_UPDATE_HH
 
-/*! \file mln/data/update.hh
- *
- * \brief Update an accumulator with image pixel values.
- */
+/// \file mln/data/update.hh
+///
+/// \brief Update an accumulator with image pixel values.
 
 # include <mln/core/concept/accumulator.hh>
 # include <mln/core/concept/image.hh>
@@ -91,6 +91,12 @@ namespace mln
       {
 
 	/// Generic implementation of data::update.
+	///
+        /// \param[in] a_     The accumulator.
+	/// \param[in] input_ The input image.
+	///
+	/// \return The accumulator result.
+	//
 	template <typename A, typename I>
 	inline
 	mln_result(A)
@@ -114,6 +120,12 @@ namespace mln
 
 
       /// Fastest implementation of data::update.
+      ///
+      /// \param[in] a_     The accumulator.
+      /// \param[in] input_ The input image.
+      ///
+      /// \return The accumulator result.
+      //
       template <typename A, typename I>
       inline
       mln_result(A)

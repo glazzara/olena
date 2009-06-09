@@ -189,6 +189,15 @@ namespace mln
       namespace generic
       {
 
+
+	/// Generic implementation of labeling::compute.
+	///
+	/// \param[in] a_      An accumulator.
+	/// \param[in] label_  The labeled image.
+	/// \param[in] nlabels The number of labels in \p label.
+	///
+	/// \return A mln::p_array of accumulator result (one result per label).
+	//
 	template <typename A, typename L>
 	inline
 	util::array<mln_result(A)>
@@ -216,6 +225,15 @@ namespace mln
 	}
 
 
+	/// Generic implementation of labeling::compute.
+	///
+	/// \param[in] a_      An accumulator.
+	/// \param[in] input_  The input image.
+	/// \param[in] label_  The labeled image.
+	/// \param[in] nlabels The number of labels in \p label.
+	///
+	/// \return A mln::p_array of accumulator result (one result per label).
+	//
 	template <typename A, typename I, typename L>
 	inline
 	util::array<mln_result(A)>
@@ -244,6 +262,16 @@ namespace mln
 	  return res;
 	}
 
+
+	/// Generic implementation of labeling::compute.
+	///
+	/// \param[in] accus   An array of accumulators.
+	/// \param[in] input_  The input image.
+	/// \param[in] label_  The labeled image.
+	/// \param[in] nlabels The number of labels in \p label.
+	///
+	/// \return A mln::p_array of accumulator result (one result per label).
+	//
 	template <typename A, typename I, typename L>
 	inline
 	util::array<mln_result(A)>
@@ -323,7 +351,7 @@ namespace mln
 
 
 
-    /// Facades.
+    // Facades.
 
     template <typename A, typename I, typename L>
     inline

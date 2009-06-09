@@ -46,15 +46,15 @@ namespace mln
 
     /// Compute an accumulator onto the pixel values of the image \p input.
     ///
-    /// \param[in] a An accumulator.
+    /// \param[in] a_ An accumulator.
     /// \param[in] input The input image.
     /// \return The accumulator result.
     ///
     /// It fully relies on data::update.
-    ///
+    //
     template <typename A, typename I>
     mln_result(A)
-    compute(const Accumulator<A>& a, const Image<I>& input);
+    compute(const Accumulator<A>& a_, const Image<I>& input);
 
 
     /// Compute an accumulator onto the pixel values of the image \p input.

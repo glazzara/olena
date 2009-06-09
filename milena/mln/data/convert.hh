@@ -50,10 +50,10 @@ namespace mln
     ///
     /// \param[in] v A value of the destination type.
     /// \param[in] input The input image.
-    /// \param[out] output The result image.
+    //
     template <typename V, typename I>
     mln_ch_value(I, V)
-    convert(const V&, const Image<I>& input);
+    convert(const V& v, const Image<I>& input);
 
 
 

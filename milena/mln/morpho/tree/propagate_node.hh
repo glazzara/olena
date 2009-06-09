@@ -37,6 +37,7 @@
 ///
 /// Functions to propagate node in the tree.
 
+
 namespace mln
 {
 
@@ -46,14 +47,14 @@ namespace mln
     namespace tree
     {
 
-      /**
+      /*!
       ** Propagate a value \p v from a node \p n to its descendants.
       **
-      ** \param n[in] Node to propagate.
-      ** \param t[in] Component tree used for propagation.
-      ** \param a_[in] Attribute image where values are propagated.
-      ** \param v[in] Value to propagate.
-      ** \param nb_leaves[out] Optional. Store the number of leaves in
+      ** \param[in] n	       Node to propagate.
+      ** \param[in] t	       Component tree used for propagation.
+      ** \param[in] a_	       Attribute image where values are propagated.
+      ** \param[in] v	       Value to propagate.
+      ** \param[out] nb_leaves Optional. Store the number of leaves in
       ** the component.
       */
       template <typename T, typename A>
@@ -64,13 +65,13 @@ namespace mln
 				    const mln_value(A)& v,
 				    unsigned* nb_leaves = 0);
 
-      /**
+      /*!
       ** Propagate the node's value to its descendants.
       **
-      ** \param n[in] Node to propagate.
-      ** \param t[in] Component tree used for propagation.
-      ** \param a_[in] Attribute image where values are propagated.
-      ** \param nb_leaves[out] Optional. Store the number of leaves in
+      ** \param[in] n	       Node to propagate.
+      ** \param[in] t	       Component tree used for propagation.
+      ** \param[in] a_	       Attribute image where values are propagated.
+      ** \param[out] nb_leaves Optional. Store the number of leaves in
       ** the component.
       */
       template <typename T, typename A>
@@ -82,13 +83,13 @@ namespace mln
 				    unsigned* nb_leaves = 0);
 
 
-      /**
+      /*!
       ** Propagate a value \p v from a node \p n to its ancestors.
       **
-      ** \param n Node to propagate.
-      ** \param t Component tree used for propagation.
-      ** \param a_ Attribute image where values are propagated.
-      ** \param v Value to propagate.
+      ** \param[in] n Node to propagate.
+      ** \param[in] t Component tree used for propagation.
+      ** \param[in] a_ Attribute image where values are propagated.
+      ** \param[in] v Value to propagate.
       */
       template <typename T, typename A>
       void
@@ -97,12 +98,12 @@ namespace mln
 				  Image<A>& a_,
 				  const mln_value(A)& v);
 
-      /**
+      /*!
       ** Propagate the node's value to its ancestors.
       **
-      ** \param n Node to propagate.
-      ** \param t Component tree used for propagation.
-      ** \param a_ Attribute image where values are propagated.
+      ** \param[in] n Node to propagate.
+      ** \param[in] t Component tree used for propagation.
+      ** \param[in,out] a_ Attribute image where values are propagated.
       */
       template <typename T, typename A>
       inline
@@ -112,7 +113,7 @@ namespace mln
 				  Image<A>& a_);
 
 
-      # ifndef MLN_INCLUDE_ONLY
+# ifndef MLN_INCLUDE_ONLY
 
       /* Descendants propagation */
 
@@ -204,7 +205,7 @@ namespace mln
 	propagate_node_to_ancestors(n, t, a, a(n));
       }
 
-      # endif // ! MLN_INCLUDE_ONLY
+# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::morpho::tree
 

@@ -29,7 +29,7 @@
 # define MLN_MORPHO_RECONSTRUCTION_BY_EROSION_ALL_HH
 
 
-/// \file mln/morpho/reconstruction by erosion/all.hh
+/// \file mln/morpho/reconstruction/by_erosion/all.hh
 ///
 /// File that includes all morphological reconstruction by erosion routines.
 

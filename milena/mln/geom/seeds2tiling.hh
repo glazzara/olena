@@ -60,7 +60,8 @@ namespace mln
     /// \pre \p ima_ has to be initialized.
     //
     template <typename I, typename N>
-    I seeds2tiling (Image<I>& ima_, const Neighborhood<N>& nbh);
+    mln_concrete(I) seeds2tiling (const Image<I>& ima_,
+				  const Neighborhood<N>& nbh);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -71,18 +72,21 @@ namespace mln
       /// Generic implementation of geom::seed2tiling.
       ///
       /// \param[in,out] ima_ The labeled image with seed.
-      /// \param[in] nbh The neighborhood to use on this algorithm.
+      /// \param[in] nbh_ The neighborhood to use on this algorithm.
       //
       template <typename I, typename N>
       inline
-      I
-      seeds2tiling (Image<I>& ima_,
+      mln_concrete(I)
+      seeds2tiling (const Image<I>& ima_,
 		    const Neighborhood<N>& nbh_)
       {
 	trace::entering("geom::impl::seed2tiling");
 
+	mln_precondition(exact(ima_).is_valid());
+	mln_precondition(exact(nbh_).is_valid());
+
 	I& ima = exact(ima_);
-	I out = duplicate(ima_);
+	mln_concrete(I) out = duplicate(ima_);
 	const N& nbh = exact(nbh_);
 	p_queue<mln_psite(I)> q;
 
@@ -127,15 +131,19 @@ namespace mln
     } // end of namespace mln::geom::impl
 
 
+
     // Facade
+
     template <typename I, typename N>
     inline
-    I seeds2tiling(Image<I>& ima_, const Neighborhood<N>& nbh)
+    mln_concrete(I) seeds2tiling(const Image<I>& ima_, const Neighborhood<N>& nbh)
     {
       trace::entering("geom::seed2tiling");
 
       mln_precondition(exact(ima_).is_valid());
-      I output = impl::seeds2tiling(ima_, nbh);
+      mln_precondition(exact(nbh).is_valid());
+
+      mln_concrete(I) output = impl::seeds2tiling(ima_, nbh);
 
       trace::exiting("geom::seed2tiling");
       return output;

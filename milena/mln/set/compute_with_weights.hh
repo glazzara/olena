@@ -59,6 +59,15 @@ namespace mln
     compute_with_weights(const Accumulator<A>& a, const Image<I>& w);
 
 
+    /// Compute an accumulator on every labeled sub-site-sets.
+    ///
+    /// \param[in] a	    An accumulator.
+    /// \param[in] w	    An image of weights (a site -> a weight).
+    /// \param[in] label    A label image.
+    /// \param[in] nlabels  The number of labels in \p label.
+    ///
+    /// \return An array of accumulator result. One per label.
+    //
     template <typename A, typename I, typename L>
     util::array<mln_result(A)>
     compute_with_weights(const Accumulator<A>& a,
@@ -70,9 +79,9 @@ namespace mln
     /// Compute an accumulator on a site set described by an image.
     ///
     /// \param[in] a A meta-accumulator.
-    /// \param[in] s A site set.
-    // \return The accumulator result.
-    ///
+    /// \param[in] w An image of weights (a site -> a weight).
+    /// \return The accumulator result.
+    //
     template <typename A, typename I>
     mln_accu_with(A, mln_site(I))::result
     compute_with_weights(const Meta_Accumulator<A>& a, const Image<I>& w);
@@ -97,11 +106,11 @@ namespace mln
 	const A& a = exact(a_);
 	const I& w = exact(w_);
 	const L& label = exact(label_);
-	
+
 	mln_precondition(w.is_valid());
 	mln_precondition(label.is_valid());
 	mln_precondition(w.domain() <= label.domain());
-	
+
 	(void) a;
 	(void) w;
 	(void) label;
@@ -120,6 +129,14 @@ namespace mln
       namespace generic
       {
 
+	/// Generic implementation that Computes an accumulator on a site
+	/// set described by an image.
+	///
+	/// \param[in] a_ An accumulator.
+	/// \param[in] w_ An image of weights (a site -> a weight).
+	///
+	/// \return The accumulator result.
+	//
 	template <typename A, typename I>
 	inline
 	mln_result(A)
@@ -142,6 +159,18 @@ namespace mln
 	  return a.to_result();
 	}
 
+
+
+	/// Generic implementation that computes an accumulator on every
+	/// labeled sub-site-sets.
+	///
+	/// \param[in] a_	An accumulator.
+	/// \param[in] w_	An image of weights (a site -> a weight).
+	/// \param[in] label_   A label image.
+	/// \param[in] nlabels  The number of labels in \p label.
+	///
+	/// \return An array of accumulator result. One per label.
+	//
 	template <typename A, typename I, typename L>
 	util::array<mln_result(A)>
 	compute_with_weights(const Accumulator<A>& a_,

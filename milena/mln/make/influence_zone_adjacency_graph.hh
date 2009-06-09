@@ -97,6 +97,13 @@ namespace mln
       {
 
 	/// Generic implementation of make::influence_zone_adjacency_graph.
+	///
+        /// \param[in] iz_ influence zone image.
+        /// \param[in] nbh_ A neighborhood.
+        /// \param[in] nlabels number of influence zone in \p iz.
+        ///
+        /// \return util::graph Graph based on the adjacency of the influence zones.
+	//
 	template <typename I, typename N>
 	util::graph
 	influence_zone_adjacency_graph(const Image<I>& iz_,

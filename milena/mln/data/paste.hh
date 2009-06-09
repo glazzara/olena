@@ -105,8 +105,8 @@ namespace mln
 
 	/// Generic implementation of data::paste.
 	///
-	/// \param[in] input The input image providing pixels values.
-	/// \param[in,out] output The image in which values are
+	/// \param[in] input_ The input image providing pixels values.
+	/// \param[in,out] output_ The image in which values are
 	/// assigned.
 	//
 	template <typename I, typename J>

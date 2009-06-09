@@ -64,7 +64,7 @@ namespace mln
      */
     template <typename V, typename I>
     mln_ch_value(I, V)
-    stretch(V v, const Image<I>& input);
+    stretch(const V& v, const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -82,10 +82,11 @@ namespace mln
       template <typename V, typename I>
       inline
       mln_ch_value(I, V)
-      stretch(V, const Image<I>& input)
+      stretch(const V& v, const Image<I>& input)
       {
 	trace::entering("data::impl::stretch");
 
+	(void) v;
 	mlc_converts_to(float, V)::check();
 
 	mln_ch_value(I, V) output;
@@ -126,10 +127,11 @@ namespace mln
     template <typename V, typename I>
     inline
     mln_ch_value(I, V)
-    stretch(V, const Image<I>& input)
+    stretch(const V& v, const Image<I>& input)
     {
       trace::entering("data::stretch");
 
+      (void) v;
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, V) output = impl::stretch(V(), input);

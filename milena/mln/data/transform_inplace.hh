@@ -142,6 +142,11 @@ namespace mln
       namespace generic
       {
 
+	/// Generic implementation of transform_inplace.
+	///
+	/// \param[in,out] ima_ The image to be transformed.
+	/// \param[in]	   f_	The function.
+	//
 	template <typename I, typename F>
         void
         transform_inplace(Image<I>& ima_, const Function_v2v<F>& f_)
@@ -163,6 +168,12 @@ namespace mln
 	  trace::exiting("data::impl::generic::transform_inplace");
 	}
 
+	/// Generic implementation of transform_inplace.
+	///
+	/// \param[in] ima_ The image to be transformed.
+	/// \param[in] aux_ The auxiliary image.
+	/// \param[in] f_   The function.
+	//
 	template <typename I1, typename I2, typename F>
         void
 	transform_inplace(Image<I1>& ima_, const Image<I2>& aux_,

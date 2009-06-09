@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -57,10 +58,8 @@ namespace mln
     ///
     /// \pre \p ima.domain <= \p data.domain.
     ///
-    /// \{
     template <typename I, typename J>
     void fill_with_image(Image<I>& ima, const Image<J>& data);
-    /// \}
 
 
 
@@ -97,8 +96,8 @@ namespace mln
 
 	/// Generic implementation.
 	///
-	/// \param[in,out] ima The image to be filled.
-	/// \param[in] data The image.
+	/// \param[in,out] ima_ The image to be filled.
+	/// \param[in] data_ The image.
 	//
 	template <typename I, typename J>
 	void fill_with_image(Image<I>& ima_, const Image<J>& data_)

@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
@@ -93,6 +93,14 @@ namespace mln
       namespace generic
       {
 
+	/// Fill the whole image \p ima with the single value \p v.
+	///
+	/// \param[in,out] ima_ The image to be filled.
+	/// \param[in] val The value to assign to all sites.
+	///
+	/// \pre \p ima has to be initialized.
+	///
+	//
 	template <typename I, typename V>
 	void fill_with_value(Image<I>& ima_, const V& val)
 	{

@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/io/pgm/pgm_asci.cc
+/// \file tests/io/pgm/pgm_ascii.cc
 ///
 /// Test on mln::io::pgm::load and mln::io::pgm::save.
 

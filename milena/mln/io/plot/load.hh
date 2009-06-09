@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -62,12 +62,12 @@ namespace mln
       void load(image1d<I>& ima,
 		const std::string& filename);*/
 
+
+
       /*! Load a Milena array from a plot file.
        *
        * \param[in] arr A reference to the array to load.
        * \param[out] filename The output file.
-       * \param[in] start_value The start index value of the plot
-       *	    (optional).
        */
       template <typename I>
       void load(util::array<I>& arr,

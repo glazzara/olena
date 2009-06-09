@@ -29,12 +29,10 @@
 #ifndef MLN_MORPHO_TREE_PROPAGATE_IF_HH
 # define MLN_MORPHO_TREE_PROPAGATE_IF_HH
 
-/**
-** \file   mln/morpho/tree/propagate_if.hh
-**
-** \brief Routines to handle propagation with predicate.
-**
-*/
+/// \file
+///
+/// \brief Routines to handle propagation with predicate.
+
 
 # include <mln/morpho/tree/data.hh>
 # include <mln/morpho/tree/propagate_node.hh>
@@ -56,62 +54,62 @@ namespace mln
       struct desc_propagation : way_of_propagation <desc_propagation> {};
       struct asc_propagation : way_of_propagation <asc_propagation> {};
 
-      /**
+      /*!
       ** Propagate nodes checking the predicate \p pred in the way
       ** defined by \p way_of_propagation.
       **
-      ** \param tree Component tree used for propagation.
-      ** \param a_ Attributed image where values are propagated.
-      ** \param way_of_propagation Propagate node in acsendant or
-      ** descendant way.
-      ** \param pred Predicate that node must check to be propagated.
-      ** \param v Value to be propagated. (By default \p v is the value
-      ** at the node being propagated).
+      ** \param tree	Component tree used for propagation.
+      ** \param a_	Attributed image where values are propagated.
+      ** \param prop_	Propagate node in acsendant or descendant way.
+      ** \param pred_	Predicate that node must check to be propagated.
+      ** \param v	Value to be propagated. (By default \p v is the value
+      **		at the node being propagated).
       */
       template <typename T, typename A, typename P, typename W>
       inline
       void
       propagate_if(const T& tree,
 		   Image<A>& a_,
-		   const way_of_propagation<W>&,
-		   const Function_v2b<P>& pred,
+		   const way_of_propagation<W>& prop_,
+		   const Function_v2b<P>& pred_,
 		   const mln_value(A)& v);
 
+      /// \overload
       template <typename T, typename A, typename P>
       inline
       void
       propagate_if(const T& tree,
 		   Image<A>& a_,
-		   const desc_propagation&,
-		   const Function_v2b<P>& pred);
+		   const desc_propagation& prop_,
+		   const Function_v2b<P>& pred_);
 
-      /**
+      /*!
       ** Propagate nodes having the value v in the way
       ** defined by \p way_of_propagation.
       **
-      ** \param tree Component tree used for propagation.
-      ** \param a_ Attributed image where values are propagated.
-      ** \param way_of_propagation Propagate node in acsendant or
-      ** descendant way.
-      ** \param v Value that node must have to be propagated.
-      ** \param v_prop Value to propagate (By default it is the value
-      ** at the node being propagated).
+      ** \param tree	Component tree used for propagation.
+      ** \param a_	Attributed image where values are propagated.
+      ** \param prop_	Propagate node in acsendant or descendant way.
+      ** \param v	Value that node must have to be propagated.
+      ** \param v_prop	Value to propagate (By default it is the value at the
+      **		node being propagated).
       */
       template <typename T, typename A, typename W>
       inline
       void
       propagate_if_value(const T& tree,
 			 Image<A>& a_,
-			 const way_of_propagation<W>&,
+			 const way_of_propagation<W>& prop_,
 			 const mln_value(A)& v,
 			 const mln_value(A)& v_prop);
 
+      /// \overload
       template <typename T, typename A, typename W>
       inline
       void
       propagate_if_value(const T& tree,
 			 Image<A>& a_,
-			 const way_of_propagation<W>&,
+			 const way_of_propagation<W>& prop,
 			 const mln_value(A)& v);
 
 
@@ -259,7 +257,7 @@ namespace mln
       } // end of namespace mln::morpho::tree::internal
 
 
-      /* Facades */
+      // Facades
 
       template <typename T, typename A, typename W>
       inline
@@ -291,6 +289,7 @@ namespace mln
 	internal::propagate_if(tree, a, prop, pw::value(a) == pw::cst(v), v);
       }
 
+
       template <typename T, typename A, typename P, typename W>
       inline
       void
@@ -306,6 +305,7 @@ namespace mln
 
 	internal::propagate_if(tree, a, prop, pred, v);
       }
+
 
       template <typename T, typename A, typename P>
       inline
