@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -36,9 +37,9 @@
 /// Actually the patch was no acceptable solution to the lut problem
 /// (for some values, we cannot compute f(v) to put into the lut...)
 
-# ifndef MLN_LEVEL_TRANSFORM_HH
+# ifndef MLN_DATA_TRANSFORM_HH
 #  error "Forbidden inclusion of *.spe.hh"
-# endif // ! MLN_LEVEL_TRANSFORM_HH
+# endif // ! MLN_DATA_TRANSFORM_HH
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>

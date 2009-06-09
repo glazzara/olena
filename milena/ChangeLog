@@ -1,3 +1,13 @@
+2009-06-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Several bug fixes.
+
+	* mln/topo/is_simple_cell.hh (operator): Fix g++-3.3 issue.
+	* mln/core/internal/check/image_fastest.hh: Fix Z's fix.
+	* mln/data/transform.spe.hh,
+	* mln/data/apply.spe.hh: Fix non-updated guard.
+	* tests/data/transform.cc: Have it pass.
+
 2009-06-09  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	Add missing License headers in milena/

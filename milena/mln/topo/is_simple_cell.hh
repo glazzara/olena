@@ -27,6 +27,7 @@
 # define MLN_TOPO_IS_SIMPLE_CELL_HH
 
 /// \file
+///
 /// \brief Testing whether a facet is a simple cell.
 
 # include <mln/core/concept/function.hh>
@@ -39,6 +40,7 @@
 # include <mln/core/image/complex_neighborhood_piter.hh>
 
 # include <mln/make/attachment.hh>
+
 
 namespace mln
 {
@@ -74,7 +76,8 @@ namespace mln
       void set_image(const mln::Image<I>& ima);
 
       /// Based on the algorithm A2 from couprie.08.pami.
-      bool operator()(const psite& p) const;
+      bool operator()(const mln::complex_psite<I::dim,mln_geom(I)>& p) const;
+      // Tech note: The argument type above is explicit to help g++-3.3.
 
     private:
       const I* ima_;
@@ -109,7 +112,8 @@ namespace mln
     template <typename I>
     inline
     bool
-    is_simple_cell<I>::operator()(const is_simple_cell<I>::psite& p) const
+    is_simple_cell<I>::operator()(const mln::complex_psite<I::dim,mln_geom(I)>& p) const
+    // Tech note: The argument type above is explicit to help g++-3.3.
     {
       mln_precondition(ima_);
 

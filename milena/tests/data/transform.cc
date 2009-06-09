@@ -35,44 +35,57 @@
 #include <mln/core/image/dmorph/sub_image.hh>
 #include <mln/core/image/dmorph/extension_val.hh>
 
-
 #include <mln/data/fill.hh>
 #include <mln/data/transform.hh>
 #include <mln/data/paste.hh>
-
-#include <mln/core/var.hh>
-
 #include <mln/fun/p2b/chess.hh>
 #include <mln/fun/p2v/iota.hh>
 
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
 
-
-struct mysqrt : mln::Function_v2v<mysqrt>
+namespace my
 {
-  typedef unsigned short result;
-  template <typename T>
-  result operator()(T c) const
+
+  template <typename I>
+  void iota(I& ima)
   {
-    return static_cast<result>( std::sqrt(float(c)) );
+    unsigned i = 0;
+    mln_piter(I) p(ima.domain());
+    for_all(p)
+    {
+      ima(p) = i * i;
+      i += 1;
+    }
   }
-};
+
+  struct sqrt : mln::Function_v2v<sqrt>
+  {
+    typedef unsigned short result;
+
+    template <typename T>
+    result operator()(T c) const
+    {
+      return static_cast<result>( std::sqrt(float(c)) );
+    }
+  };
+
+} // end of namespace mln
 
 
 
 int main()
 {
   using namespace mln;
-  const unsigned size = 50;
+  const unsigned size = 5;
+  box2d b = make::box2d(1,1, 3,3);
+
 
   /// image 1d test
   {
     image1d<unsigned short> ima(size);
     image1d<unsigned short> out(size);
 
-    debug::iota(ima);
-    out = data::transform(ima, mysqrt());
+    my::iota(ima);
+    out = data::transform(ima, my::sqrt());
 
     box_fwd_piter_<point1d> p(out.domain());
     for_all(p)
@@ -85,8 +98,8 @@ int main()
     image2d<unsigned short> ima(size, size);
     image2d<unsigned short> out(size, size);
 
-     debug::iota(ima);
-     out = data::transform(ima, mysqrt());
+     my::iota(ima);
+     out = data::transform(ima, my::sqrt());
 
      box_fwd_piter_<point2d> p(out.domain());
      for_all(p)
@@ -98,7 +111,7 @@ int main()
      image2d<unsigned short> ima(size, size);
 
      data::fill_with_value(ima, 51);
-     data::transform(ima, mysqrt());
+     data::transform(ima, my::sqrt());
 
   }
 
@@ -107,8 +120,8 @@ int main()
     image3d<unsigned short> ima(size, size, size);
     image3d<unsigned short> out(size, size, size);
 
-    debug::iota(ima);
-    out = data::transform(ima, mysqrt());
+    my::iota(ima);
+    out = data::transform(ima, my::sqrt());
 
     box_fwd_piter_<point3d> p(out.domain());
     for_all(p)
@@ -118,20 +131,20 @@ int main()
   /// pw image test
   {
     fun::p2v::iota f;
-    const pw::image<fun::p2v::iota, box2d> ima(f, make::box2d(2,2, 5,5));
-    image2d<unsigned short> out(8, 8);
+    const pw::image<fun::p2v::iota, box2d> ima(f, b);
+    image2d<unsigned short> out(size, size);
 
-    data::fill(out, (short unsigned int)0);
-    out = data::transform(ima, mysqrt());
+    data::fill(out, 0u);
+    out = data::transform(ima, my::sqrt());
   }
 
   // flat image test
   {
-    flat_image<short, box2d> ima(5, make::box2d(size, size));
+    flat_image<short, box2d> ima(5, b);
     image2d<unsigned short> out(size, size);
 
-    data::fill_with_value(ima, 51);
-    out = data::transform(ima, mysqrt());
+    data::fill_with_value(ima, 169);
+    out = data::transform(ima, my::sqrt());
 
     box2d::piter p(out.domain());
     for_all(p)
@@ -147,8 +160,8 @@ int main()
     II ima_if = ima | fun::p2b::chess();
 
     data::fill_with_value(ima, 0);
-    debug::iota(ima);
-    II out = data::transform(ima_if, mysqrt());
+    my::iota(ima);
+    II out = data::transform(ima_if, my::sqrt());
 
     II::piter p(ima_if.domain());
     for_all(p)
@@ -165,10 +178,10 @@ int main()
     II cast(in);
     III out(size, size);
 
-    data::fill(in, (unsigned short)51);
-    data::fill(out, (unsigned short)42);
+    data::fill(in, 169u);
+    data::fill(out, 81u);
 
-    out = data::transform(cast, mysqrt());
+    out = data::transform(cast, my::sqrt());
 
     II::piter p(cast.domain());
     for_all(p)
@@ -182,10 +195,10 @@ int main()
     typedef sub_image< image2d<unsigned short>, box2d > III;
 
     I ima(size, size);
-    II sub_ima(ima, make::box2d(4,4, 10,10));
+    II sub_ima(ima, b);
 
-    data::fill(ima, 51);
-    III out = data::transform(sub_ima, mysqrt());
+    data::fill(ima, 169);
+    III out = data::transform(sub_ima, my::sqrt());
 
     II::piter p(sub_ima.domain());
     for_all(p)
@@ -199,10 +212,10 @@ int main()
     typedef extension_val< image2d<unsigned short> > III;
 
     I ima(size, size);
-    II extend_ima(ima, 5);
+    II extend_ima(ima, 169);
 
-    data::fill(ima, 51);
-    III out = data::transform(extend_ima, mysqrt());
+    data::fill(ima, 169);
+    III out = data::transform(extend_ima, my::sqrt());
 
     II::piter p(extend_ima.domain());
     for_all(p)

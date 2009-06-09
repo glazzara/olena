@@ -118,7 +118,7 @@ namespace mln
 	unsigned (E::*m8)() const = & E::nelements;
 	m8 = 0;
 
-#  if (defined(__GNUC__) && __GNUC__ >= 3) || !defined(__INTEL_COMPILER)
+#  if (defined(__GNUC__) && __GNUC__ >= 3) && !defined(__INTEL_COMPILER)
 	unsigned (E::*m9)(const psite& p) const = & E::index_of_point;
 	m9 = 0;
 #  endif

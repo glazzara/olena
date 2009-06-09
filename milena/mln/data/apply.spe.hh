@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,14 +27,13 @@
 #ifndef MLN_DATA_APPLY_SPE_HH
 # define MLN_DATA_APPLY_SPE_HH
 
-/*! \file
- *
- * \brief Specializations for mln::data::apply.
- */
+/// \file
+///
+/// \brief Specializations for mln::data::apply.
 
-# ifndef MLN_LEVEL_APPLY_HH
+# ifndef MLN_DATA_APPLY_HH
 #  error "Forbidden inclusion of *.spe.hh"
-# endif // ! MLN_LEVEL_APPLY_HH
+# endif // ! MLN_DATA_APPLY_HH
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
