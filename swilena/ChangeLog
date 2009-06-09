@@ -1,3 +1,11 @@
+2009-06-09  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add missing license headers in Swilena.
+
+	* Makefile.am,
+	* python/Makefile.am,
+	* run.mk: add missing license headers.
+
 2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	No longer handle SWIG < 1.3.39 specifically.
