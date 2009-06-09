@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_IMAGE_FROM_MESH_HH
-# define MLN_TRAIT_IMAGE_FROM_MESH_HH
+#ifndef MLN_TRAIT_IMAGE_FROM_GRID_HH
+# define MLN_TRAIT_IMAGE_FROM_GRID_HH
 
 /// \file
 ///
@@ -88,4 +88,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_TRAIT_IMAGE_FROM_MESH_HH
+#endif // ! MLN_TRAIT_IMAGE_FROM_GRID_HH

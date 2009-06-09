@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_SITE_SET_BOX1D_HH
-# define MLN_CORE_SITE_SET_BOX1D_HH
+#ifndef MLN_CORE_ALIAS_BOX1D_HH
+# define MLN_CORE_ALIAS_BOX1D_HH
 
 /*! \file
  *
@@ -55,4 +55,4 @@ namespace mln
 # include <mln/make/box1d.hh>
 
 
-#endif // ! MLN_CORE_SITE_SET_BOX1D_HH
+#endif // ! MLN_CORE_ALIAS_BOX1D_HH

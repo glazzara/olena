@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_APPROX_ALL_HH
-# define MLN_LEVEL_APPROX_ALL_HH
+#ifndef MLN_DATA_APPROX_ALL_HH
+# define MLN_DATA_APPROX_ALL_HH
 
 /*! \file
  *
@@ -57,4 +57,4 @@ namespace mln
 # include <mln/data/approx/median.hh>
 
 
-#endif // ! MLN_LEVEL_APPROX_ALL_HH
+#endif // ! MLN_DATA_APPROX_ALL_HH

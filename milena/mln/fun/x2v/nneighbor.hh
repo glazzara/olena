@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_X2X_NNEIGHBOR_HH
-# define MLN_FUN_X2X_NNEIGHBOR_HH
+#ifndef MLN_FUN_X2V_NNEIGHBOR_HH
+# define MLN_FUN_X2V_NNEIGHBOR_HH
 
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/selector.hh>
@@ -91,4 +91,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_X2X_NNEIGHBOR_HH
+#endif // ! MLN_FUN_X2V_NNEIGHBOR_HH

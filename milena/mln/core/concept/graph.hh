@@ -174,4 +174,3 @@ namespace mln
 } // end of namespace mln
 
 #endif // ! MLN_CORE_CONCEPT_GRAPH_HH
-

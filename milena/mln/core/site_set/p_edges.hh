@@ -347,4 +347,4 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-#endif // MLN_CORE_SITE_SET_P_EDGES_HH
+#endif // ! MLN_CORE_SITE_SET_P_EDGES_HH

@@ -76,4 +76,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // MLN_CORE_CONCEPT_META_FUN_HH
+#endif // ! MLN_CORE_CONCEPT_META_FUN_HH

@@ -88,4 +88,3 @@ namespace mln
 } // end of namespace mln
 
 #endif // ! MLN_FUN_P2P_MIRROR_HH
-

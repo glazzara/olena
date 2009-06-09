@@ -44,4 +44,3 @@
 
 
 #endif // ! MLN_MORPHO_CLOSING_ALL_HH
-

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_EDGE_IMPL_HH
-# define MLN_CORE_INTERNAL_EDGE_IMPL_HH
+#ifndef MLN_UTIL_INTERNAL_EDGE_IMPL_HH
+# define MLN_UTIL_INTERNAL_EDGE_IMPL_HH
 
 /// \file
 ///
@@ -85,4 +85,4 @@ namespace mln
 #endif // ! MLN_INCLUDE_ONLY
 
 
-#endif // ! MLN_CORE_INTERNAL_EDGE_IMPL_HH
+#endif // ! MLN_UTIL_INTERNAL_EDGE_IMPL_HH

@@ -64,4 +64,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // !MLN_VALUE_SUPER_VALUE_HH
+#endif // ! MLN_VALUE_SUPER_VALUE_HH

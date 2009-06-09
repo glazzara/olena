@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_META_RED_HH
-# define MLN_FUN_META_RED_HH
+#ifndef MLN_FUN_META_TO_ENC_HH
+# define MLN_FUN_META_TO_ENC_HH
 
 /// \file
 ///
@@ -77,4 +77,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // MLN_FUN_META_RED_HH
+#endif // ! MLN_FUN_META_TO_ENC_HH

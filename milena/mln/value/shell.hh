@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_VALUE_SHELL_HH
-# define MLN_CORE_VALUE_SHELL_HH
+#ifndef MLN_VALUE_SHELL_HH
+# define MLN_VALUE_SHELL_HH
 
 /// \file
 ///
@@ -164,4 +164,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // MLN_CORE_VALUE_SHELL_HH
+#endif // ! MLN_VALUE_SHELL_HH

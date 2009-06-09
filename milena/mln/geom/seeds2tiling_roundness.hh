@@ -149,4 +149,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_GEOM_SEEDS3TILING_ROUNDNESS_HH
+#endif // ! MLN_GEOM_SEEDS2TILING_ROUNDNESS_HH

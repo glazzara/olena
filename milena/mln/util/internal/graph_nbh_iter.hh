@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_INTERNAL_GRAPH_VERTEX_NBH_VERTEX_ITER_HH
-# define MLN_UTIL_INTERNAL_GRAPH_VERTEX_NBH_VERTEX_ITER_HH
+#ifndef MLN_UTIL_INTERNAL_GRAPH_NBH_ITER_HH
+# define MLN_UTIL_INTERNAL_GRAPH_NBH_ITER_HH
 
 # include <mln/core/concept/proxy.hh>
 # include <mln/util/internal/graph_nbh_iter_base.hh>
@@ -615,5 +615,4 @@ namespace mln
 } // End of namespace mln
 
 
-#endif // !MLN_UTIL_INTERNAL_GRAPH_VERTEX_NBH_VERTEX_ITER_HH
-
+#endif // ! MLN_UTIL_INTERNAL_GRAPH_NBH_ITER_HH

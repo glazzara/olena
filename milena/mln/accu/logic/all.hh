@@ -55,4 +55,3 @@ namespace mln
 # include <mln/accu/logic/land_basic.hh>
 
 #endif // ! MLN_ACCU_LOGIC_ALL_HH
-

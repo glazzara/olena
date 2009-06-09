@@ -81,4 +81,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // MLN_GRAPH_TO_WIN_HH
+#endif // ! MLN_GRAPH_TO_WIN_HH

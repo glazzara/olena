@@ -81,4 +81,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // MLN_FUN_POINT_SLI_HH
+#endif // ! MLN_FUN_POINT_SLI_HH

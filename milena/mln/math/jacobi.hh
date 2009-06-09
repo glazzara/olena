@@ -172,4 +172,3 @@ namespace mln
 
 
 #endif // ! MLN_MATH_JACOBI_HH
-

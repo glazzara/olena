@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	MLN_MORPHO_RECONSTRUCTION_BY_DILATION_UNION_FIND_HH
+#ifndef MLN_MORPHO_RECONSTRUCTION_BY_DILATION_UNION_FIND_HH
 # define MLN_MORPHO_RECONSTRUCTION_BY_DILATION_UNION_FIND_HH
 
 # include <vector>

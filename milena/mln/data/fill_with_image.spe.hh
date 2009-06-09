@@ -286,4 +286,4 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 
-#endif // ! MLN_DATA_FILL_WITH_IMAGE_HH
+#endif // ! MLN_DATA_FILL_WITH_IMAGE_SPE_HH

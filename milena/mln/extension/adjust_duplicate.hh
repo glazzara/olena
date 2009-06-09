@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_EXTENSION_ADJUST_DUPLICATE_HH
-# define MLN_CORE_EXTENSION_ADJUST_DUPLICATE_HH
+#ifndef MLN_EXTENSION_ADJUST_DUPLICATE_HH
+# define MLN_EXTENSION_ADJUST_DUPLICATE_HH
 
 /// \file
 ///
@@ -116,4 +116,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_EXTENSION_DUPLICATE_HH
+#endif // ! MLN_EXTENSION_ADJUST_DUPLICATE_HH

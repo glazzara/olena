@@ -250,4 +250,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_TRAIT_FUN_HH
+#endif // ! MLN_TRAIT_FUNCTIONS_HH

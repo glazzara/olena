@@ -114,4 +114,4 @@ namespace mln
 
 } // end of namespace mln
 
-# endif // ! MLN_MAKE_VERTEX_IMAGE_HH
+#endif // ! MLN_MAKE_VERTEX_IMAGE_HH

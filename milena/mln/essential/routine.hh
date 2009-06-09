@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ESSENTIAL_ROUTINE_HH_
-# define MLN_ESSENTIAL_ROUTINE_HH_
+#ifndef MLN_ESSENTIAL_ROUTINE_HH
+# define MLN_ESSENTIAL_ROUTINE_HH
 
 # include <mln/topo/essential.hh>
 # include <mln/accu/essential.hh>
@@ -73,5 +73,4 @@
 # include <mln/value/essential.hh>
 # include <mln/win/essential.hh>
 
-#endif // !MLN_ESSENTIAL_ROUTINE_HH_
-
+#endif // ! MLN_ESSENTIAL_ROUTINE_HH

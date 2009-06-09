@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_SITE_SET_ALL_HH_
-# define MLN_ACCU_SITE_SET_ALL_HH_
+#ifndef MLN_ACCU_SITE_SET_ALL_HH
+# define MLN_ACCU_SITE_SET_ALL_HH
 
 /// \file
 ///
@@ -34,5 +34,4 @@
 
 # include <mln/accu/site_set/rectangularity.hh>
 
-#endif // !MLN_ACCU_SITE_SET_ALL_HH_
-
+#endif // ! MLN_ACCU_SITE_SET_ALL_HH

@@ -213,4 +213,3 @@ namespace mln
 
 
 #endif // ! MLN_TRANSFORM_HOUGH_HH
-

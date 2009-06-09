@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_RANK_HH
-# define MLN_ACCU_RANK_HH
+#ifndef MLN_ACCU_RANK_HIGH_QUANT_HH
+# define MLN_ACCU_RANK_HIGH_QUANT_HH
 
 /// \file
 ///
@@ -208,4 +208,4 @@ namespace mln
 
 #include <mln/accu/rank_bool.hh>
 
-#endif // ! MLN_ACCU_RANK_HH
+#endif // ! MLN_ACCU_RANK_HIGH_QUANT_HH

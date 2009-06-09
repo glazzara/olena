@@ -232,4 +232,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // !MLN_UTIL_TREE_TO_IMAGE_HH
+#endif // ! MLN_UTIL_TREE_TO_IMAGE_HH

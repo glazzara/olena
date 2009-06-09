@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_ESSENTIAL_HH_
-# define MLN_ACCU_ESSENTIAL_HH_
+#ifndef MLN_ACCU_ESSENTIAL_HH
+# define MLN_ACCU_ESSENTIAL_HH
 
 /// \file
 ///
@@ -43,5 +43,4 @@
 # include <mln/accu/image/essential.hh>
 # include <mln/accu/site_set/essential.hh>
 
-#endif // !MLN_ACCU_ESSENTIAL_HH_
-
+#endif // ! MLN_ACCU_ESSENTIAL_HH

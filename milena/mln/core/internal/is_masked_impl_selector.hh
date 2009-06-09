@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_IS_MASKED_IMPL_SELECTOR
-# define MLN_CORE_INTERNAL_IS_MASKED_IMPL_SELECTOR
+#ifndef MLN_CORE_INTERNAL_IS_MASKED_IMPL_SELECTOR_HH
+# define MLN_CORE_INTERNAL_IS_MASKED_IMPL_SELECTOR_HH
 
 /// \file
 ///
@@ -141,4 +141,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_INTERNAL_IS_MASKED_IMPL_SELECTOR
+#endif // ! MLN_CORE_INTERNAL_IS_MASKED_IMPL_SELECTOR_HH

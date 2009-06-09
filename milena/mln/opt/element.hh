@@ -162,4 +162,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_OPT_VALUE_HH
+#endif // ! MLN_OPT_ELEMENT_HH

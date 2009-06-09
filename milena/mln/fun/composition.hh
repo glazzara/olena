@@ -220,4 +220,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif /* ! MLN_FUN_COMPOSITION_HH */
+#endif // ! MLN_FUN_COMPOSITION_HH

@@ -94,5 +94,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif /* MLN_REGISTRATION_GET_RTRANSF_HH */
-
+#endif // ! MLN_REGISTRATION_GET_RTRANSF_HH

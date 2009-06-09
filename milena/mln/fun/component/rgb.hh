@@ -37,4 +37,4 @@
 # include <mln/fun/component/green.hh>
 # include <mln/fun/component/blue.hh>
 
-#endif // MLN_FUN_COMPONENT_RGB_HH
+#endif // ! MLN_FUN_COMPONENT_RGB_HH

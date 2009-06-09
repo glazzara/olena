@@ -55,4 +55,3 @@ namespace mln
 # include <mln/fun/v2w_w2v/norm.hh>
 
 #endif // ! MLN_FUN_V2W_W2V_ALL_HH
-

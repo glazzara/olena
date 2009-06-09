@@ -114,4 +114,4 @@ namespace mln
 
 }
 
-#endif /* MLN_METAL_ARRAY_HH */
+#endif // ! MLN_METAL_ARRAY_HH

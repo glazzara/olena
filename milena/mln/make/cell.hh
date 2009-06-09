@@ -94,4 +94,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_TOPO_IS_FACET_HH
+#endif // ! MLN_MAKE_CELL_HH

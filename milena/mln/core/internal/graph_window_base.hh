@@ -163,5 +163,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // !MLN_CORE_INTERNAL_GRAPH_WINDOW_BASE_HH
-
+#endif // ! MLN_CORE_INTERNAL_GRAPH_WINDOW_BASE_HH

@@ -386,4 +386,4 @@ namespace mln
 
 } // end of mln
 
-#endif // MLN_CORE_SITE_SET_COMPLEX_PSITE_HH
+#endif // ! MLN_CORE_SITE_SET_COMPLEX_PSITE_HH

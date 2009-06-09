@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DEBUG_COLORIZE_HH
-# define MLN_DEBUG_COLORIZE_HH
+#ifndef MLN_LABELING_COLORIZE_HH
+# define MLN_LABELING_COLORIZE_HH
 
 /// \file
 ///
@@ -169,4 +169,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_DEBUG_COLORIZE_HH
+#endif // ! MLN_LABELING_COLORIZE_HH

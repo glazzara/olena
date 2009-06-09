@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_NAIVE_ESSENTIAL_HH
-# define MLN_LEVEL_NAIVE_ESSENTIAL_HH
+#ifndef MLN_DATA_NAIVE_ESSENTIAL_HH
+# define MLN_DATA_NAIVE_ESSENTIAL_HH
 
 /*! \file
  *
@@ -36,4 +36,4 @@
 
 # include <mln/data/naive/all.hh>
 
-#endif // ! MLN_LEVEL_NAIVE_ESSENTIAL_HH
+#endif // ! MLN_DATA_NAIVE_ESSENTIAL_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ESSENTIAL_3D_HH_
-# define MLN_ESSENTIAL_3D_HH_
+#ifndef MLN_ESSENTIAL_3D_HH
+# define MLN_ESSENTIAL_3D_HH
 
 # include <mln/core/image/image3d.hh>
 # include <mln/core/pixter3d.hh>
@@ -49,5 +49,4 @@
 
 # include <mln/essential/routine.hh>
 
-#endif // ! MLN_ESSENTIAL_3D_HH_
-
+#endif // ! MLN_ESSENTIAL_3D_HH

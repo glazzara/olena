@@ -307,4 +307,3 @@ namespace mln
 
 
 #endif // ! MLN_UTIL_INTERNAL_GRAPH_ITER_HH
-

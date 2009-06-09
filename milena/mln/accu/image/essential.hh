@@ -25,13 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_IMAGE_ESSENTIAL_HH_
-# define MLN_ACCU_IMAGE_ESSENTIAL_HH_
+#ifndef MLN_ACCU_IMAGE_ESSENTIAL_HH
+# define MLN_ACCU_IMAGE_ESSENTIAL_HH
 
 /// \file
 ///
 /// File that includes the most useful accumulator types working on images.
 
 
-#endif // !MLN_ACCU_IMAGE_ESSENTIAL_HH_
-
+#endif // ! MLN_ACCU_IMAGE_ESSENTIAL_HH

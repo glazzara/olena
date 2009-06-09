@@ -511,4 +511,3 @@
 /// \}
 
 #endif // ! MLN_CORE_MACROS_HH
-

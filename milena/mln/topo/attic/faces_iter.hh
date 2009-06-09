@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TOPO_FACES_ITER_HH
-# define MLN_TOPO_FACES_ITER_HH
+#ifndef MLN_TOPO_ATTIC_FACES_ITER_HH
+# define MLN_TOPO_ATTIC_FACES_ITER_HH
 
 /// \file
 /// \brief Definition of forward and backward iterators on the n-faces
@@ -251,4 +251,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_TOPO_FACES_ITER_HH
+#endif // ! MLN_TOPO_ATTIC_FACES_ITER_HH

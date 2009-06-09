@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRANSFORMATION_ESSENTIAL_HH_
-# define MLN_TRANSFORMATION_ESSENTIAL_HH_
+#ifndef MLN_TRANSFORMATION_ESSENTIAL_HH
+# define MLN_TRANSFORMATION_ESSENTIAL_HH
 
 // None.
 
-# endif // ! MLN_TRANSFORMATION_ESSENTIAL_HH_
+#endif // ! MLN_TRANSFORMATION_ESSENTIAL_HH

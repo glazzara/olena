@@ -446,4 +446,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // MLN_CORE_DPOINTS_PIXTER_HH
+#endif // ! MLN_CORE_DPOINTS_PIXTER_HH

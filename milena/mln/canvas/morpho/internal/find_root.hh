@@ -99,4 +99,3 @@ namespace mln
 } // end of namespace mln
 
 #endif // ! MLN_CANVAS_MORPHO_INTERNAL_FIND_ROOT_HH
-

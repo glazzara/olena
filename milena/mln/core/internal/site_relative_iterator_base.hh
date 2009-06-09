@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_SITE_RELATIVE_ITERATOR_BASE_HH
-# define MLN_CORE_SITE_RELATIVE_ITERATOR_BASE_HH
+#ifndef MLN_CORE_INTERNAL_SITE_RELATIVE_ITERATOR_BASE_HH
+# define MLN_CORE_INTERNAL_SITE_RELATIVE_ITERATOR_BASE_HH
 
 /// \file
 ///
@@ -246,4 +246,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_SITE_RELATIVE_ITERATOR_BASE_HH
+#endif // ! MLN_CORE_INTERNAL_SITE_RELATIVE_ITERATOR_BASE_HH

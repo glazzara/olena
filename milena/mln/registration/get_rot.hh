@@ -144,6 +144,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif /* MLN_REGISTRATION_GET_ROT_HH */
-
-
+#endif // ! MLN_REGISTRATION_GET_ROT_HH

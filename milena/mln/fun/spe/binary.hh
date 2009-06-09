@@ -143,4 +143,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif /* ! MLN_FUN_SPE_BINARY_HH */
+#endif // ! MLN_FUN_SPE_BINARY_HH

@@ -217,4 +217,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_MAJ_H _HH
+#endif // ! MLN_ACCU_MAJ_H_HH

@@ -114,4 +114,4 @@ namespace mln
 
 }  // end of namespace mln
 
-#endif /* ! MLN_FUN_COMPOSE_HH */
+#endif // ! MLN_FUN_COMPOSE_HH

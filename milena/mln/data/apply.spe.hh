@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_APPLY_SPE_HH
-# define MLN_LEVEL_APPLY_SPE_HH
+#ifndef MLN_DATA_APPLY_SPE_HH
+# define MLN_DATA_APPLY_SPE_HH
 
 /*! \file
  *
@@ -92,4 +92,4 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 
-#endif // ! MLN_LEVEL_APPLY_HH
+#endif // ! MLN_DATA_APPLY_SPE_HH

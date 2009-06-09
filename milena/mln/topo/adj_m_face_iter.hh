@@ -373,4 +373,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_TOPO_ADJ_LOWER_DIM_CONNECTED_N_FACE_ITER_HH
+#endif // ! MLN_TOPO_ADJ_M_FACE_ITER_HH

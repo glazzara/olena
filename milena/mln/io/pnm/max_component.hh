@@ -81,4 +81,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_IO_PNM_LOAD_HH
+#endif // ! MLN_IO_PNM_MAX_COMPONENT_HH

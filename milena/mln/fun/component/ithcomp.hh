@@ -80,4 +80,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // MLN_FUN_COMPONENT_ITHCOMP_HH
+#endif // ! MLN_FUN_COMPONENT_ITHCOMP_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_APPROX_ESSENTIAL_HH
-# define MLN_LEVEL_APPROX_ESSENTIAL_HH
+#ifndef MLN_DATA_APPROX_ESSENTIAL_HH
+# define MLN_DATA_APPROX_ESSENTIAL_HH
 
 /*! \file
  *
@@ -37,4 +37,4 @@
 # include <mln/data/approx/all.hh>
 
 
-#endif // ! MLN_LEVEL_APPROX_ESSENTIAL_HH
+#endif // ! MLN_DATA_APPROX_ESSENTIAL_HH

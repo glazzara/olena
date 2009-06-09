@@ -196,4 +196,3 @@ namespace mln
 
 
 #endif // ! MLN_CORE_SITE_SET_P_VERTICES_PSITE_HH
-

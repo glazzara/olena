@@ -41,4 +41,3 @@
 #include <mln/morpho/opening/volume.hh>
 
 #endif // ! MLN_MORPHO_OPENING_ESSENTIAL_HH
-

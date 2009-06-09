@@ -79,4 +79,3 @@ namespace mln
 
 // Ordering.
 # include <mln/trait/op/ord.hh>
-

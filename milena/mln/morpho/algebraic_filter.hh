@@ -25,8 +25,8 @@
 // License.  This exception does not however invalidate any other
 // reasons why the executable file might be covered by the GNU General
 // Public License.
-#ifndef MLN_MORPHO_ALGEBRAIC_FILTER_HH_
-# define MLN_MORPHO_ALGEBRAIC_FILTER_HH_
+#ifndef MLN_MORPHO_ALGEBRAIC_FILTER_HH
+# define MLN_MORPHO_ALGEBRAIC_FILTER_HH
 
 /// \file
 ///
@@ -87,4 +87,4 @@ namespace mln {
   } // end of namespace mln::morpho
 } // end of namespace mln
 
-#endif /* !MLN_MORPHO_ALGEBRAIC_FILTER_HH_ */
+#endif // ! MLN_MORPHO_ALGEBRAIC_FILTER_HH

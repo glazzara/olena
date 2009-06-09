@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_V2B_ESSENTIAL_HH
-# define MLN_FUN_V2B_ESSENTIAL_HH
+#ifndef MLN_FUN_VV2V_ESSENTIAL_HH
+# define MLN_FUN_VV2V_ESSENTIAL_HH
 
 /*! \file
  *
@@ -36,4 +36,4 @@
 # include <mln/fun/vv2v/max.hh>
 # include <mln/fun/vv2v/min.hh>
 
-#endif // ! MLN_FUN_V2B_ESSENTIAL_HH
+#endif // ! MLN_FUN_VV2V_ESSENTIAL_HH

@@ -298,4 +298,4 @@ namespace mln
 
 } // end of mln
 
-#endif // MLN_CORE_SITE_SET_P_FACES_HH
+#endif // ! MLN_CORE_SITE_SET_P_FACES_HH

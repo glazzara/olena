@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_RAG_AND_ALBL_HH
-# define MLN_MAKE_RAG_AND_ALBL_HH
+#ifndef MLN_MAKE_RAG_AND_LABELED_WSL_HH
+# define MLN_MAKE_RAG_AND_LABELED_WSL_HH
 
 /// \file
 ///
@@ -252,4 +252,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_RAG_AND_ALBL_HH
+#endif // ! MLN_MAKE_RAG_AND_LABELED_WSL_HH

@@ -102,4 +102,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CONVERT_TO_WINDOW_HH
+#endif // ! MLN_CONVERT_TO_UPPER_WINDOW_HH

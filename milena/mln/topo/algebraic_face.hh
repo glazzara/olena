@@ -378,4 +378,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_TOPO_FACE_HH
+#endif // ! MLN_TOPO_ALGEBRAIC_FACE_HH

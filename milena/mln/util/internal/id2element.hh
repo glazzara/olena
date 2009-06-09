@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_INTERNAL_ID2VERTEX_HH
-# define MLN_UTIL_INTERNAL_ID2VERTEX_HH
+#ifndef MLN_UTIL_INTERNAL_ID2ELEMENT_HH
+# define MLN_UTIL_INTERNAL_ID2ELEMENT_HH
 
 /// \file
 ///
@@ -97,5 +97,4 @@ namespace mln
 } // end of namespace mln
 
 
-# endif // ! MLN_UTIL_INTERNAL_ID2VERTEX_HH
-
+#endif // ! MLN_UTIL_INTERNAL_ID2ELEMENT_HH

@@ -202,4 +202,4 @@ namespace mln
 
 } // end of namespace mln
 
-# endif // ! MLN_MAKE_EDGE_IMAGE_HH
+#endif // ! MLN_MAKE_EDGE_IMAGE_HH

@@ -90,4 +90,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // MLN_FUN_META_SECOND_HH
+#endif // ! MLN_FUN_META_SECOND_HH

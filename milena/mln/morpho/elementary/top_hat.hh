@@ -151,4 +151,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_TOP_HAT_HH
+#endif // ! MLN_MORPHO_ELEMENTARY_TOP_HAT_HH

@@ -189,4 +189,3 @@ namespace mln
 } // end of namespace mln
 
 #endif // ! MLN_UTIL_INTERNAL_GRAPH_ITER_BASE_HH
-

@@ -512,4 +512,3 @@ namespace mln
 
 
 #endif // ! MLN_UTIL_VERTEX_HH
-

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_ABS_HH
-# define MLN_LEVEL_ABS_HH
+#ifndef MLN_DATA_ABS_HH
+# define MLN_DATA_ABS_HH
 
 /*! \file
  *
@@ -96,4 +96,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_LEVEL_ABS_HH
+#endif // ! MLN_DATA_ABS_HH

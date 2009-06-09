@@ -52,4 +52,3 @@ namespace mln
 # include <mln/fun/meta/to_enc.hh>
 
 #endif // ! MLN_FUN_META_ALL_HH
-

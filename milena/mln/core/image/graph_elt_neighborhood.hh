@@ -64,4 +64,3 @@ graph_elt_neighborhood<G,S>::graph_elt_neighborhood()
 }
 
 #endif // ! MLN_CORE_IMAGE_GRAPH_ELT_NEIGHBORHOOD_HH
-

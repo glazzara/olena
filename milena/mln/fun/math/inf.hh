@@ -66,5 +66,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif /* ! MLN_FUN_MATH_INF_HH */
-
+#endif // ! MLN_FUN_MATH_INF_HH

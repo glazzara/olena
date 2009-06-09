@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_ATTRIBUTE_COUNT_ADJACENT_VERTICES_HH_
-# define MLN_MORPHO_ATTRIBUTE_COUNT_ADJACENT_VERTICES_HH_
+#ifndef MLN_MORPHO_ATTRIBUTE_COUNT_ADJACENT_VERTICES_HH
+# define MLN_MORPHO_ATTRIBUTE_COUNT_ADJACENT_VERTICES_HH
 
 /// \file
 ///
@@ -199,4 +199,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_MORPHO_ATTRIBUTE_COUNT_ADJACENT_VERTICES_HH_
+#endif // ! MLN_MORPHO_ATTRIBUTE_COUNT_ADJACENT_VERTICES_HH

@@ -35,4 +35,3 @@
  */
 
 # include <mln/trait/op/all.hh>
-

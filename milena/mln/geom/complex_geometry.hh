@@ -178,4 +178,4 @@ namespace mln
 
 } // end of mln
 
-#endif // MLN_GEOM_COMPLEX_GEOMETRY_HH
+#endif // ! MLN_GEOM_COMPLEX_GEOMETRY_HH

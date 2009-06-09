@@ -454,4 +454,3 @@ namespace mln
 
 
 #endif // ! MLN_CORE_INTERNAL_GRAPH_PSITE_BASE_HH
-

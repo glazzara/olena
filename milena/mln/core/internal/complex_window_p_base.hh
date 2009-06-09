@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_IMAGE_COMPLEX_WINDOW_P_BASE_HH
-# define MLN_CORE_IMAGE_COMPLEX_WINDOW_P_BASE_HH
+#ifndef MLN_CORE_INTERNAL_COMPLEX_WINDOW_P_BASE_HH
+# define MLN_CORE_INTERNAL_COMPLEX_WINDOW_P_BASE_HH
 
 /// \file
 /// \brief Definition of a generic window centered on the face
@@ -174,4 +174,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_CORE_IMAGE_COMPLEX_WINDOW_P_BASE_HH
+#endif // ! MLN_CORE_INTERNAL_COMPLEX_WINDOW_P_BASE_HH

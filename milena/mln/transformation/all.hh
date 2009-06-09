@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRANSFORMATION_ALL_HH_
-# define MLN_TRANSFORMATION_ALL_HH_
+#ifndef MLN_TRANSFORMATION_ALL_HH
+# define MLN_TRANSFORMATION_ALL_HH
 
 namespace mln
 {
@@ -42,4 +42,4 @@ namespace mln
 
 # include <mln/transformation/rotate.hh>
 
-# endif // ! MLN_TRANSFORMATION_ALL_HH_
+#endif // ! MLN_TRANSFORMATION_ALL_HH

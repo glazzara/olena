@@ -331,4 +331,4 @@ std::ostream& operator << (std::ostream& o, const mln::fun::spe::lwrapper<F, T>&
   return o << m.to_result();
 }
 
-#endif /* ! UNARY_HH */
+#endif // ! MLN_FUN_SPE_UNARY_HH

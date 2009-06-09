@@ -26,12 +26,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_BROWSING_ESSENTIAL_HH_
-# define MLN_CANVAS_BROWSING_ESSENTIAL_HH_
+#ifndef MLN_CANVAS_BROWSING_ESSENTIAL_HH
+# define MLN_CANVAS_BROWSING_ESSENTIAL_HH
 
 # include <mln/canvas/browsing/directional.hh>
 # include <mln/canvas/browsing/fwd.hh>
 # include <mln/canvas/browsing/snake_fwd.hh>
 
-#endif // !MLN_CANVAS_BROWSING_ESSENTIAL_HH_
-
+#endif // ! MLN_CANVAS_BROWSING_ESSENTIAL_HH

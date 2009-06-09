@@ -60,4 +60,3 @@ namespace mln
 # include <mln/fun/vv2b/lt.hh>
 
 #endif // ! MLN_FUN_VV2B_ALL_HH
-

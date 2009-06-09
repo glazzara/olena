@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_SITE_SET_P_COMPLEX_FACES_PITER_HH
-# define MLN_CORE_SITE_SET_P_COMPLEX_FACES_PITER_HH
+#ifndef MLN_CORE_SITE_SET_ATTIC_P_COMPLEX_FACES_PITER_HH
+# define MLN_CORE_SITE_SET_ATTIC_P_COMPLEX_FACES_PITER_HH
 
 /// \file
 /// \brief Definition of point iterator on the n-faces of a
@@ -153,4 +153,4 @@ namespace mln
 
 } // end of mln
 
-#endif // ! MLN_CORE_SITE_SET_P_COMPLEX_FACES_PITER_HH
+#endif // ! MLN_CORE_SITE_SET_ATTIC_P_COMPLEX_FACES_PITER_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_IMAGE_COMPLEX_WINDOWS_P_HH
-# define MLN_CORE_IMAGE_COMPLEX_WINDOWS_P_HH
+#ifndef MLN_CORE_IMAGE_COMPLEX_WINDOWS_HH
+# define MLN_CORE_IMAGE_COMPLEX_WINDOWS_HH
 
 /// \file
 /// \brief Definitions of some windows of complex images.
@@ -125,4 +125,4 @@ namespace mln
 
 # undef mln_gen_complex_window
 
-#endif // ! MLN_CORE_IMAGE_COMPLEX_WINDOWS_P_HH
+#endif // ! MLN_CORE_IMAGE_COMPLEX_WINDOWS_HH

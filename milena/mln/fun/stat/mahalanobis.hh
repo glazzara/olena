@@ -107,4 +107,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_X2V_NORM_MAHALANOBIS_HH
+#endif // ! MLN_FUN_STAT_MAHALANOBIS_HH

@@ -63,4 +63,3 @@ namespace mln
 
 
 #endif // ! MLN_MATH_COS_HH
-

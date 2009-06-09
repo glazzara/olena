@@ -190,4 +190,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_VAL_HH
+#endif // ! MLN_ACCU_V_HH

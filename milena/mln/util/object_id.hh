@@ -217,4 +217,3 @@ namespace mln
 } // end of namespace mln
 
 #endif // ! MLN_UTIL_OBJECT_ID_HH
-

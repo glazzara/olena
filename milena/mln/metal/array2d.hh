@@ -305,5 +305,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif /* MLN_METAL_ARRAY2D_HH */
-
+#endif // ! MLN_METAL_ARRAY2D_HH

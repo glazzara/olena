@@ -81,4 +81,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // MLN_FUN_COMPONENT_BLUE_HH
+#endif // ! MLN_FUN_COMPONENT_BLUE_HH

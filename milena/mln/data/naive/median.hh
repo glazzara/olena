@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_NAIVE_MEDIAN_HH
-# define MLN_LEVEL_NAIVE_MEDIAN_HH
+#ifndef MLN_DATA_NAIVE_MEDIAN_HH
+# define MLN_DATA_NAIVE_MEDIAN_HH
 
 /// \file
 ///
@@ -114,4 +114,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_LEVEL_MEDIAN_HH
+#endif // ! MLN_DATA_NAIVE_MEDIAN_HH

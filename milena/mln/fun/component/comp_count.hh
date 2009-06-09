@@ -96,4 +96,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // MLN_FUN_COMPONENT_COMP_COUNT_HH
+#endif // ! MLN_FUN_COMPONENT_COMP_COUNT_HH

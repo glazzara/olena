@@ -110,4 +110,4 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-#endif // ! MLN_LOGICAL_NOT_HH
+#endif // ! MLN_LOGICAL_NOT_SPE_HH

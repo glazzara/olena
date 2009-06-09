@@ -59,4 +59,3 @@ namespace mln
 } // end of namespace mln
 
 #endif // ! MLN_UTIL_GRAPH_IDS_HH
-

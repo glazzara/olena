@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_X2V_ALL_HH
-# define MLN_FUN_X2V_ALL_HH
+#ifndef MLN_FUN_X2P_ALL_HH
+# define MLN_FUN_X2P_ALL_HH
 
 /*! \file
  *
@@ -51,4 +51,4 @@ namespace mln
 
 # include <mln/fun/x2p/closest_point.hh>
 
-#endif // ! MLN_FUN_X2V_ALL_HH
+#endif // ! MLN_FUN_X2P_ALL_HH

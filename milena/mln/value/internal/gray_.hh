@@ -727,4 +727,4 @@ namespace trait
 
 } // end of namespace mln
 
-#endif // ! MLN_INTERNAL_VALUE_GRAY__HH
+#endif // ! MLN_VALUE_INTERNAL_GRAY__HH

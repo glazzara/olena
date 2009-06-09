@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ESSENTIAL_2D_HH_
-# define MLN_ESSENTIAL_2D_HH_
+#ifndef MLN_ESSENTIAL_2D_HH
+# define MLN_ESSENTIAL_2D_HH
 
 //# include <mln/core/clock_neighb2d.hh>
 # include <mln/core/image/image2d.hh>
@@ -64,4 +64,4 @@
 
 # include <mln/essential/routine.hh>
 
-#endif // ! MLN_ESSENTIAL_3D_HH_
+#endif // ! MLN_ESSENTIAL_2D_HH

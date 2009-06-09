@@ -94,4 +94,3 @@ namespace mln
 }
 
 #endif // ! MLN_CORE_IMAGE_GRAPH_ELT_NEIGHBORHOOD_IF_HH
-

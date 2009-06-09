@@ -108,4 +108,3 @@ namespace mln
 
 
 #endif // ! MLN_IO_PPM_LOAD_HH
-

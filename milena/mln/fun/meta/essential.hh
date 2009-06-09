@@ -32,4 +32,3 @@
 # include <mln/fun/meta/all.hh>
 
 #endif // ! MLN_FUN_META_ESSENTIAL_HH
-

@@ -93,4 +93,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_WORLD_INTER_PIXEL_FULL2IMAGE
+#endif // ! MLN_WORLD_INTER_PIXEL_FULL2IMAGE_HH

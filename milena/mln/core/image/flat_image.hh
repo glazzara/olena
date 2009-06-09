@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_FLAT_IMAGE_HH
-# define MLN_CORE_FLAT_IMAGE_HH
+#ifndef MLN_CORE_IMAGE_FLAT_IMAGE_HH
+# define MLN_CORE_IMAGE_FLAT_IMAGE_HH
 
 /// \file
 ///
@@ -270,4 +270,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_FLAT_IMAGE_HH
+#endif // ! MLN_CORE_IMAGE_FLAT_IMAGE_HH

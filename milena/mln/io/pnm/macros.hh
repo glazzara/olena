@@ -46,4 +46,4 @@
 # define PBM		'4'
 # define PBM_ASCII	'1'
 
-#endif // ! MLN_IO_PNM_LOAD_HH
+#endif // ! MLN_IO_PNM_MACROS_HH

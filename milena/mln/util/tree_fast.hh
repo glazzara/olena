@@ -216,4 +216,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // !MLN_UTIL_TREE_FAST_HH
+#endif // ! MLN_UTIL_TREE_FAST_HH

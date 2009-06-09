@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_ROUTINE_ESSENTIAL_HH_
-# define MLN_CORE_ROUTINE_ESSENTIAL_HH_
+#ifndef MLN_CORE_ROUTINE_ESSENTIAL_HH
+# define MLN_CORE_ROUTINE_ESSENTIAL_HH
 
 /// \file
 ///
@@ -34,5 +34,4 @@
 
 # include <mln/core/routine/all.hh>
 
-#endif // !MLN_CORE_ROUTINE_ESSENTIAL_HH_
-
+#endif // ! MLN_CORE_ROUTINE_ESSENTIAL_HH
