@@ -1,3 +1,16 @@
+2009-06-09 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add missing license headers.
+
+	* Makefile.am,
+	* build-aux/Makefile.am,
+	* external/Makefile.am,
+	* external/trimesh/Makefile.am,
+	* external/trimesh/gluit/Makefile.am,
+	* external/trimesh/include/Makefile.am,
+	* external/trimesh/libsrc/Makefile.am,
+	* external/trimesh/utilsrc/Makefile.am: Add missing licence headers.
+
 2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix Automake macro OLN_WITH_LIB.
