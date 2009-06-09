@@ -1,5 +1,14 @@
 2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix Automake macro OLN_WITH_LIB.
+
+	* m4/oln-with-lib.m4 (_OLN_WITH_LIB): Set $5_CPPFLAGS instead of
+	$5_CXXFLAGS before performing tests, but still set $5_CXXFLAGS
+	before exiting.
+	Reported by Guillaume Lazzara <lazzara@lrde.epita.fr>.
+
+2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	* configure.ac (HAVE_SWIG_1_3_39): Remove conditional.
 
 2009-06-08  Roland Levillain  <roland@lrde.epita.fr>

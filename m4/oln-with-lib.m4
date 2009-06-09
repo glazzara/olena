@@ -46,16 +46,16 @@ AC_DEFUN([_OLN_WITH_LIB],
  AC_ARG_WITH([$4],
    [AC_HELP_STRING([--with-$4@<:@=DIR@:>@],
      [use $1 (DIR = prefix for $1 installation)])])
- $5_CXXFLAGS=''
+ $5_CPPFLAGS=''
  $5_LDFLAGS=''
  if test "x$with_$4" != xno; then
    if test -n "$with_$4"; then
-     $5_CXXFLAGS="-I${with_$4}/include"
+     $5_CPPFLAGS="-I${with_$4}/include"
      $5_LDFLAGS="-L${with_$4}/lib"
    fi
-   oln_save_CXXFLAGS=$CXXFLAGS
+   oln_save_CPPFLAGS=$CPPFLAGS
    oln_save_LDFLAGS=$LDFLAGS
-   CXXFLAGS="$CXXFLAGS $$5_CXXFLAGS"
+   CPPFLAGS="$CPPFLAGS $$5_CPPFLAGS"
    LDFLAGS="$LDFLAGS $$5_LDFLAGS"
    oln_have_$4=no
    AC_CHECK_HEADER([$2],
@@ -67,11 +67,11 @@ AC_DEFUN([_OLN_WITH_LIB],
        ]
      )]
    )
-   CXXFLAGS=$oln_save_CXXFLAGS
+   CPPFLAGS=$oln_save_CPPFLAGS
    LDFLAGS=$oln_save_LDFLAGS
    TOOLS_LDFLAGS="$TOOLS_LDFLAGS $$5_LDFLAGS"
  fi
- AC_SUBST([$5_CXXFLAGS])
+ AC_SUBST([$5_CXXFLAGS], [$5_CPPFLAGS])
  AC_SUBST([$5_LDFLAGS])
  AM_CONDITIONAL([HAVE_$5], [test x$oln_have_$4 = xyes])
  AC_LANG_POP([C++])
