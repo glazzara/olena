@@ -1,3 +1,28 @@
+2009-06-09  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Fix coding style.
+	* mln/accu/stat/all.hh,
+	* mln/accu/stat/max.hh,
+	* mln/accu/stat/max_h.hh,
+	* mln/accu/stat/mean.hh,
+	* mln/accu/stat/median_h.hh,
+	* mln/accu/stat/min.hh,
+	* mln/accu/stat/min_h.hh,
+	* mln/accu/stat/min_max.hh,
+	* mln/morpho/tree/all.hh,
+	* mln/morpho/tree/compute_attribute_image.hh,
+	* mln/morpho/tree/compute_parent.hh,
+	* mln/morpho/tree/filter/all.hh,
+	* mln/morpho/tree/filter/direct.hh,
+	* mln/morpho/tree/filter/filter.hh,
+	* mln/morpho/tree/filter/max.hh,
+	* mln/morpho/tree/filter/min.hh,
+	* mln/morpho/tree/filter/subtractive.hh,
+	* mln/morpho/tree/propagate_if.hh,
+	* mln/morpho/tree/propagate_node.hh,
+	* mln/morpho/tree/propagate_representative.hh:
+	Fix coding style.
+
 2009-06-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Rename nfaces(unsigned) as nfaces_of_dim(unsigned).

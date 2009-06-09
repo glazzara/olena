@@ -72,9 +72,9 @@ namespace mln
       ** - p is root iff parent(p) == p \n
       ** - p is a node iff either p is root or f(parent(p)) != f(p).
       **
-      ** @param[in] a Attribute.
-      ** @param[in] t Component tree.
-      ** @param[out] accu_image Optional argument used to store image
+      ** \param[in] a Attribute.
+      ** \param[in] t Component tree.
+      ** \param[out] accu_image Optional argument used to store image
       ** of attribute accumulator.
       **
       ** @return The attribute image.

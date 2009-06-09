@@ -26,13 +26,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_TREE_PROPAGATE_IF_HH_
-# define MLN_MORPHO_TREE_PROPAGATE_IF_HH_
+#ifndef MLN_MORPHO_TREE_PROPAGATE_IF_HH
+# define MLN_MORPHO_TREE_PROPAGATE_IF_HH
 
 /**
-** @file   mln/morpho/tree/propagate_if.hh
+** \file   mln/morpho/tree/propagate_if.hh
 **
-** @brief Routines to handle propagation with predicate.
+** \brief Routines to handle propagation with predicate.
 **
 */
 
@@ -42,9 +42,14 @@
 # include <mln/data/fill.hh>
 # include <mln/pw/all.hh>
 
-namespace mln {
-  namespace morpho {
-    namespace tree {
+namespace mln
+{
+
+  namespace morpho
+  {
+
+    namespace tree
+    {
 
       template <typename W>
       struct way_of_propagation : Object< W > { protected: way_of_propagation() {}; };
@@ -55,12 +60,12 @@ namespace mln {
       ** Propagate nodes checking the predicate \p pred in the way
       ** defined by \p way_of_propagation.
       **
-      ** @param tree Component tree used for propagation.
-      ** @param a_ Attributed image where values are propagated.
-      ** @param way_of_propagation Propagate node in acsendant or
+      ** \param tree Component tree used for propagation.
+      ** \param a_ Attributed image where values are propagated.
+      ** \param way_of_propagation Propagate node in acsendant or
       ** descendant way.
-      ** @param pred Predicate that node must check to be propagated.
-      ** @param v Value to be propagated. (By default \p v is the value
+      ** \param pred Predicate that node must check to be propagated.
+      ** \param v Value to be propagated. (By default \p v is the value
       ** at the node being propagated).
       */
       template <typename T, typename A, typename P, typename W>
@@ -84,12 +89,12 @@ namespace mln {
       ** Propagate nodes having the value v in the way
       ** defined by \p way_of_propagation.
       **
-      ** @param tree Component tree used for propagation.
-      ** @param a_ Attributed image where values are propagated.
-      ** @param way_of_propagation Propagate node in acsendant or
+      ** \param tree Component tree used for propagation.
+      ** \param a_ Attributed image where values are propagated.
+      ** \param way_of_propagation Propagate node in acsendant or
       ** descendant way.
-      ** @param v Value that node must have to be propagated.
-      ** @param v_prop Value to propagate (By default it is the value
+      ** \param v Value that node must have to be propagated.
+      ** \param v_prop Value to propagate (By default it is the value
       ** at the node being propagated).
       */
       template <typename T, typename A, typename W>
@@ -316,11 +321,13 @@ namespace mln {
 	internal::propagate_if(tree, a, prop, pred);
       }
 
-#endif /* !MLN_INCLUDE_ONLY */
+#endif // ! MLN_INCLUDE_ONLY
 
 
     } // end of namespace mln::morpho::tree
+
   } // end of namespace mln::morpho
+
 } // end of namespace mln
 
-#endif /* !MLN_MORPHO_TREE_PROPAGATE_IF_HH_ */
+#endif // ! MLN_MORPHO_TREE_PROPAGATE_IF_HH

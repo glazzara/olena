@@ -35,6 +35,7 @@
 
 namespace mln
 {
+
   namespace morpho
   {
 
@@ -42,8 +43,9 @@ namespace mln
     namespace tree
     {}
 
-  }
-}
+  } // end of namespace mln::morpho
+
+} // end of namespace mln
 
 
 # include <mln/morpho/tree/compute_attribute_image.hh>
@@ -51,7 +53,5 @@ namespace mln
 # include <mln/morpho/tree/data.hh>
 # include <mln/morpho/tree/max.hh>
 # include <mln/morpho/tree/utils.hh>
-
-
 
 #endif // ! MLN_MORPHO_TREE_ALL_HH

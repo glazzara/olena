@@ -41,51 +41,51 @@
 namespace mln
 {
 
-   namespace morpho
-   {
+  namespace morpho
+  {
 
-     namespace tree
-     {
+    namespace tree
+    {
 
-       /// Propagate the representative node's value to
-       /// non-representative points of the component.
-       ///
-       /// \param t   Component tree.
-       /// \param f_  Value image.
-       //
-       template <typename T, typename F>
-       void
-       propagate_representative(const T& t, Image<F>& f_);
+      /// Propagate the representative node's value to
+      /// non-representative points of the component.
+      ///
+      /// \param t   Component tree.
+      /// \param f_  Value image.
+      //
+      template <typename T, typename F>
+      void
+      propagate_representative(const T& t, Image<F>& f_);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-       template <typename T, typename F>
-       inline
-       void
-       propagate_representative(const T& t, Image<F>& f_)
-       {
-	 F a = exact(f_);
-	 mln_precondition(a.is_valid());
+      template <typename T, typename F>
+      inline
+      void
+      propagate_representative(const T& t, Image<F>& f_)
+      {
+	F a = exact(f_);
+	mln_precondition(a.is_valid());
 
-	 mln_up_site_piter(T) p(t);
-	 for_all(p)
-	   if (! t.is_a_node(p))
-	   {
-	     mln_assertion(t.is_a_node(t.parent(p)));
-	     a(p) = a(t.parent(p));
-	   }
-       }
+	mln_up_site_piter(T) p(t);
+	for_all(p)
+	  if (! t.is_a_node(p))
+	    {
+	      mln_assertion(t.is_a_node(t.parent(p)));
+	      a(p) = a(t.parent(p));
+	    }
+      }
 
 
 # endif // ! MLN_INCLUDE_ONLY
 
 
-     } // end of namespace mln::morpho::tree
+    } // end of namespace mln::morpho::tree
 
-   } // end of namespace mln::morpho
+  } // end of namespace mln::morpho
 
 } // end of namespace mln
 

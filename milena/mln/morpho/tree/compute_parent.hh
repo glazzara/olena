@@ -39,7 +39,7 @@
 ///
 /// \todo Change data::sort so that the explanations below are valid
 /// whatever the choice 'increasing or decreasing'.
- 
+
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/data/fill.hh>

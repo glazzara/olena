@@ -41,22 +41,27 @@
 
 namespace mln
 {
+
   namespace accu
   {
+
     namespace stat
     {
+
       // Forward declaration.
       template <typename T>
       struct max;
-    }
+
+    } // end of namespace mln::accu::stat
 
 
     namespace meta
     {
+
       namespace stat
       {
-	/// Meta accumulator for max.
 
+	/// Meta accumulator for max.
 	struct max : public Meta_Accumulator< max >
 	{
 	  template <typename T>
@@ -67,6 +72,7 @@ namespace mln
 	};
 
       } // end of namespace mln::accu::meta::stat
+
     } // end of namespace mln::accu::meta
 
 
@@ -168,6 +174,7 @@ namespace mln
       }
 
 # endif // ! MLN_INCLUDE_ONLY
+
     } // end of namespace mln::accu::stat
 
   } // end of namespace mln::accu

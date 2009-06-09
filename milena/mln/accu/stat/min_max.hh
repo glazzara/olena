@@ -46,24 +46,9 @@
 
 namespace mln
 {
+
   namespace accu
   {
-    namespace stat
-    {
-      // Forward declaration.
-      template <typename V>
-      struct min_max;
-    }
-
-    namespace meta
-    {
-      namespace stat
-      {
-	// FIXME: Doc!
-	typedef meta::pair<meta::stat::min,meta::stat::max> min_max;
-
-      } // end of namespace mln::accu::meta::stat
-    } // end of namespace mln::accu::meta
 
     namespace stat
     {
@@ -82,6 +67,20 @@ namespace mln
       template <typename I> struct min_max< util::pix<I> >;
 
     } // end of namespace mln::accu::stat
+
+
+    namespace meta
+    {
+
+      namespace stat
+      {
+	// FIXME: Doc!
+	typedef meta::pair<meta::stat::min,meta::stat::max> min_max;
+
+      } // end of namespace mln::accu::meta::stat
+
+    } // end of namespace mln::accu::meta
+
   } // end of namespace mln::accu
 
 } // end of namespace mln

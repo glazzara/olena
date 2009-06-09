@@ -47,13 +47,16 @@ namespace mln
 
     namespace stat
     {
+
       // Forward declaration.
       template <typename V>
       struct max_h;
-    }
+
+    } // end of namespace mln::accu::stat
 
     namespace meta
     {
+
       namespace stat
       {
 
@@ -67,8 +70,9 @@ namespace mln
 	  };
 	};
 
-      } // end of namespace mln::meta::stat
-    } // end of namespace mln::meta
+      } // end of namespace mln::accu::meta::stat
+
+    } // end of namespace mln::accu::meta
 
 
     namespace stat
@@ -125,12 +129,7 @@ namespace mln
       };
 
 
-
       template <typename I> struct max_h< util::pix<I> >;
-
-
-
-
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -308,7 +307,9 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::accu::stat
+
   } // end of namespace mln::accu
+
 } // end of namespace mln
 
 

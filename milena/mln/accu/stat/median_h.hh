@@ -40,19 +40,25 @@
 
 namespace mln
 {
+
   namespace accu
   {
+
     namespace stat
     {
+
       // Forward declaration.
       template <typename V>
       struct median_h;
-    }
+
+    } // end of namespace mln::accu::stat
 
     namespace meta
     {
+
       namespace stat
       {
+
 	/// Meta accumulator for median_h.
 	struct median_h : public Meta_Accumulator< median_h >
 	{
@@ -62,7 +68,9 @@ namespace mln
 	    typedef accu::stat::median_h<V> ret;
 	  };
 	};
+
       } // end of namespace mln::accu::meta::stat
+
     } // end of namespace mln::accu::meta
 
     namespace stat
@@ -282,7 +290,9 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::accu::stat
+
   } // end of namespace mln::accu
+
 } // end of namespace mln
 
 #endif // ! MLN_ACCU_STAT_MEDIAN_H_HH

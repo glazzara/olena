@@ -26,11 +26,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_TREE_FILTER_ALL_HH_
-# define MLN_MORPHO_TREE_FILTER_ALL_HH_
+#ifndef MLN_MORPHO_TREE_FILTER_ALL_HH
+# define MLN_MORPHO_TREE_FILTER_ALL_HH
 
 /**
-** @file   mln/morpho/tree/filter.hh
+** \file   mln/morpho/tree/filter.hh
 **
 ** Methods to handle component tree filtering strategies with
 ** non-increasing attribute. Nevertheless, it works on increasing
@@ -40,16 +40,22 @@
 ** the min filter that minimizes calls to predicate function.
 */
 
-namespace mln {
-  namespace morpho {
-    namespace tree {
+namespace mln
+{
+
+  namespace morpho
+  {
+
+    namespace tree
+    {
 
       /// Namespace for attribute filtering.
-      namespace filter {
+      namespace filter {}
 
-      } // end of namespace mln::morpho::tree::filter
     } // end of namespace mln::morpho::tree
+
   } // end of namespace mln::morpho
+
 } // end of namespace mln
 
 
@@ -61,6 +67,4 @@ namespace mln {
 # include <mln/morpho/tree/filter/direct.hh>
 # include <mln/morpho/tree/filter/subtractive.hh>
 
-
-
-#endif /* !MLN_MORPHO_TREE_FILTER_ALL_HH_ */
+#endif // ! MLN_MORPHO_TREE_FILTER_ALL_HH

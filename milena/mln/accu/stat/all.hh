@@ -35,19 +35,24 @@
 
 namespace mln
 {
+
   namespace accu
   {
+
     namespace meta
     {
+
       /// Namespace of statistical meta-accumulators.
       namespace stat {}
-    }
+
+    } // end of namespace mln::accu::meta
 
     /// Namespace of statistical accumulators.
     namespace stat {}
 
-  }
-}
+  } // end of namespace mln::accu
+
+} // end of namespace mln
 
 
 # include <mln/accu/stat/deviation.hh>

@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_TREE_FILTER_SUBTRACTIVE_HH_
-# define MLN_MORPHO_TREE_FILTER_SUBTRACTIVE_HH_
+#ifndef MLN_MORPHO_TREE_FILTER_SUBTRACTIVE_HH
+# define MLN_MORPHO_TREE_FILTER_SUBTRACTIVE_HH
 
 # include <mln/core/concept/function.hh>
 # include <mln/fun/ops.hh>
@@ -36,26 +36,33 @@
 # include <mln/morpho/tree/propagate_if.hh>
 
 /**
-** @file   mln/morpho/tree/filter/subtractive.hh
+** \file   mln/morpho/tree/filter/subtractive.hh
 **
-** @brief  Filtering with subtractive strategy.
+** \brief  Filtering with subtractive strategy.
 **
 **
 */
 
-namespace mln {
-  namespace morpho {
-    namespace tree {
-      namespace filter {
+namespace mln
+{
+
+  namespace morpho
+  {
+
+    namespace tree
+    {
+
+      namespace filter
+      {
 
 	/**
 	** Subtractive pruning strategy. The node is removed if it
 	** does not verify the predicate. The sub-components values
 	** are set to the value of the removed component.
 	**
-	** @param[in] tree Component tree.
-	** @param[out] f_ Image to filter.
-	** @param[in] pred_ Filtering criterion.
+	** \param[in] tree Component tree.
+	** \param[out] f_ Image to filter.
+	** \param[in] pred_ Filtering criterion.
 	*/
 	template <typename T, typename F, typename P>
 	inline
@@ -87,11 +94,11 @@ namespace mln {
 	  trace::exiting("mln::morpho::tree::filter::subtractive");
 	}
 
-# endif /* !MLN_INCLUDE_ONLY */
+# endif // ! MLN_INCLUDE_ONLY
 
       } // end of namespace mln::morpho::tree::filter
     } // end of namespace mln::morpho::tree
   } // end of namespace mln::morpho
 } // end of namespace mln
 
-#endif /* !MLN_MORPHO_TREE_FILTER_SUBTRACTIVE_HH_ */
+#endif // ! MLN_MORPHO_TREE_FILTER_SUBTRACTIVE_HH

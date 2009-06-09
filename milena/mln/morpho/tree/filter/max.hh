@@ -26,33 +26,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_TREE_FILTER_MAX_HH_
-# define MLN_MORPHO_TREE_FILTER_MAX_HH_
+#ifndef MLN_MORPHO_TREE_FILTER_MAX_HH
+# define MLN_MORPHO_TREE_FILTER_MAX_HH
 
 # include <mln/core/concept/function.hh>
 # include <mln/morpho/tree/data.hh>
 
 /**
-** @file   mln/morpho/tree/filter/max.hh
+** \file   mln/morpho/tree/filter/max.hh
 **
-** @brief  Filtering with max strategy.
+** \brief  Filtering with max strategy.
 **
 **
 */
 
-namespace mln {
-  namespace morpho {
-    namespace tree {
-      namespace filter {
+namespace mln
+{
+
+  namespace morpho
+  {
+
+    namespace tree
+    {
+
+      namespace filter
+      {
 
 	/**
 	** Max pruning strategy. A node is removed iif all of its
 	** children are removed or if it does not verify the predicate
 	** \p pred_.
 	**
-	** @param[in] tree Component tree.
-	** @param[out] f_ Image to filter.
-	** @param[in] pred_ Filtering criterion.
+	** \param[in] tree Component tree.
+	** \param[out] f_ Image to filter.
+	** \param[in] pred_ Filtering criterion.
 	*/
 	template <typename T, typename F, typename P>
 	inline
@@ -100,11 +107,14 @@ namespace mln {
 	  trace::exiting("mln::morpho::tree::filter::max");
 	}
 
-# endif /* !MLN_INCLUDE_ONLY */
+# endif // ! MLN_INCLUDE_ONLY
 
       } // end of namespace mln::morpho::tree::filter
+
     } // end of namespace mln::morpho::tree
+
   } // end of namespace mln::morpho
+
 } // end of namespace mln
 
-#endif /* !MLN_MORPHO_TREE_FILTER_MAX_HH_ */
+#endif // ! MLN_MORPHO_TREE_FILTER_MAX_HH

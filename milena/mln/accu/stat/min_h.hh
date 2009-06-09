@@ -41,18 +41,22 @@
 
 namespace mln
 {
+
   namespace accu
   {
 
     namespace stat
     {
+
       // Forward declaration.
       template <typename V>
       struct min_h;
-    }
+
+    } // end of namespace mln::accu::stat
 
     namespace meta
     {
+
       namespace stat
       {
 
@@ -67,11 +71,13 @@ namespace mln
 	};
 
       } // end of namespace mln::meta::stat
+
     } // end of namespace mln::meta
 
 
     namespace stat
     {
+
       /// \brief Generic min function based on histogram over a value
       /// set with type \c V.
       ///
@@ -305,8 +311,9 @@ namespace mln
 
 
     } // end of namespace mln::accu::stat
-  } // end of namespace mln::accu
-} // end of namespace mln
 
+  } // end of namespace mln::accu
+
+} // end of namespace mln
 
 #endif // ! MLN_ACCU_STAT_MIN_H_HH

@@ -47,13 +47,16 @@ namespace mln
 
     namespace stat
     {
+
       // Forward declaration.
       template <typename T>
       struct min;
-    }
+
+    } // end of namespace mln::accu::stat
 
     namespace meta
     {
+
       namespace stat
       {
 	/// Meta accumulator for min.
@@ -66,12 +69,15 @@ namespace mln
 	    typedef accu::stat::min<T> ret;
 	  };
 	};
+
       } // end of namespace mln::accu::meta::stat
+
     } // end of namespace mln::accu::meta
 
 
     namespace stat
     {
+
       /// \brief Generic min accumulator class.
       /*!
       * The parameter \c T is the type of values.
@@ -169,6 +175,7 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::accu::stat
+
   } // end of namespace mln::accu
 
 } // end of namespace mln

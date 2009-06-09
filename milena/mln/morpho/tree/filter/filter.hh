@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_TREE_FILTER_FILTER_HH_
-# define MLN_MORPHO_TREE_FILTER_FILTER_HH_
+#ifndef MLN_MORPHO_TREE_FILTER_FILTER_HH
+# define MLN_MORPHO_TREE_FILTER_FILTER_HH
 
 /**
 ** \file   mln/morpho/tree/filter/filter.hh
@@ -39,10 +39,17 @@
 # include <mln/morpho/tree/data.hh>
 # include <mln/morpho/tree/propagate_if.hh>
 
-namespace mln {
-  namespace morpho {
-    namespace tree {
-      namespace filter {
+namespace mln
+{
+
+  namespace morpho
+  {
+
+    namespace tree
+    {
+
+      namespace filter
+      {
 
 
 	/**
@@ -50,10 +57,10 @@ namespace mln {
 	** sub-components of nodes that does not match the predicate
 	** \p pred_ are filled with the given value \p v.
 	**
-	** @param tree Component tree.
-	** @param f_ Image function.
-	** @param pred_ Predicate.
-	** @param v Value to propagate.
+	** \param tree Component tree.
+	** \param f_ Image function.
+	** \param pred_ Predicate.
+	** \param v Value to propagate.
 	*/
 	template <typename T, typename F, typename P>
 	inline
@@ -88,12 +95,15 @@ namespace mln {
 	  trace::exiting("mln::morpho::tree::filter::filter");
 	}
 
-# endif /* !MLN_INCLUDE_ONLY */
+# endif // ! MLN_INCLUDE_ONLY
 
       } // end of namespace mln::morpho::tree::filter
+
     } // end of namespace mln::morpho::tree
+
   } // end of namespace mln::morpho
+
 } // end of namespace mln
 
 
-#endif /* !MLN_MORPHO_TREE_FILTER_FILTER_HH_ */
+#endif // ! MLN_MORPHO_TREE_FILTER_FILTER_HH
