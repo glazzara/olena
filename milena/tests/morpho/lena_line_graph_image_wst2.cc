@@ -1,54 +1,27 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
-// This file is part of the Milena Library.  This library is free
-// software; you can redistribute it and/or modify it under the terms
-// of the GNU General Public License version 2 as published by the
-// Free Software Foundation.
+// This file is part of Olena.
 //
-// This library is distributed in the hope that it will be useful,
+// Olena is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation, version 2 of the License.
+//
+// Olena is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with this library; see the file COPYING.  If not, write to
-// the Free Software Foundation, 51 Franklin Street, Fifth Floor,
-// Boston, MA 02111-1307, USA.
+// along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 //
 // As a special exception, you may use this file as part of a free
-// software library without restriction.  Specifically, if other files
+// software project without restriction.  Specifically, if other files
 // instantiate templates or use macros or inline functions from this
-// file, or you compile this file and link it with other files to
-// produce an executable, this file does not by itself cause the
-// resulting executable to be covered by the GNU General Public
-// License.  This exception does not however invalidate any other
-// reasons why the executable file might be covered by the GNU General
-// Public License.
-
-/* FIXME: We should factor as much things as possible between
-   tests/morpho/lena_line_graph_image_wst1.cc and
-   tests/morpho/lena_line_graph_image_wst2.cc, starting from conversion
-   routines.  */
-
-/** \file
-    \brief More tests on the Watershed Transform (WST) on a
-    mln::line_graph_image.
-
-    The scenario is as follows:
-    \li load a 2-D, gray-level image from a PGM file;
-    \li convert this 2-D image into a line graph-based one, where values
-        on edges are computed as the absolute value of the difference
-        between the values on the vertices adjacent to the edge, so as to
-        create a (norm of the) gradient ``between the pixels'' of the
-        input image;
-    \li reduce the number of minima using an area opening (counting the
-        vertices to compute the area, not the edges);
-    \li perform a WST on this simplified line graph image;
-    \li create a 2-D, color output image with height and width double
-        the size the original one, and copy the data of the input image
-        in it, interpolating inter-pixel points;
-    \li print the watershed on lines into that same image, and save it.  */
+// file, or you compile this file and link it with other files to produce
+// an executable, this file does not by itself cause the resulting
+// executable to be covered by the GNU General Public License.  This
+// exception does not however invalidate any other reasons why the
+// executable file might be covered by the GNU General Public License.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/point2d.hh>

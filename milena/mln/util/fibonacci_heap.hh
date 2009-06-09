@@ -1,48 +1,27 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
-// This file is part of the Milena Library.  This library is free
-// software; you can redistribute it and/or modify it under the terms
-// of the GNU General Public License version 2 as published by the
-// Free Software Foundation.
+// This file is part of Olena.
 //
-// This library is distributed in the hope that it will be useful,
+// Olena is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation, version 2 of the License.
+//
+// Olena is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with this library; see the file COPYING.  If not, write to
-// the Free Software Foundation, 51 Franklin Street, Fifth Floor,
-// Boston, MA 02111-1307, USA.
+// along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 //
 // As a special exception, you may use this file as part of a free
-// software library without restriction.  Specifically, if other files
+// software project without restriction.  Specifically, if other files
 // instantiate templates or use macros or inline functions from this
-// file, or you compile this file and link it with other files to
-// produce an executable, this file does not by itself cause the
-// resulting executable to be covered by the GNU General Public
-// License.  This exception does not however invalidate any other
-// reasons why the executable file might be covered by the GNU General
-// Public License.
-//
-//***************************************************************************
-// The Fibonacci heap implementation is Copyright (c) 1996 by John Boyer
-//
-// Once this Fibonacci heap implementation (the software) has been published
-// by Dr. Dobb's Journal, permission to use and distribute the software is
-// granted provided that this copyright notice remains in the source and
-// and the author (John Boyer) is acknowledged in works that use this program.
-//
-// Every effort has been made to ensure that this implementation is free of
-// errors.  Nonetheless, the author (John Boyer) assumes no liability regarding
-// your use of this software.
-//
-// The author would also be very glad to hear from anyone who uses the
-// software or has any feedback about it.
-// Email: jboyer@gulf.csc.uvic.ca
-//***************************************************************************
-
+// file, or you compile this file and link it with other files to produce
+// an executable, this file does not by itself cause the resulting
+// executable to be covered by the GNU General Public License.  This
+// exception does not however invalidate any other reasons why the
+// executable file might be covered by the GNU General Public License.
 
 #ifndef MLN_UTIL_FIBONACCI_HEAP_HH
 # define MLN_UTIL_FIBONACCI_HEAP_HH
