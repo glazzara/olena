@@ -1,3 +1,13 @@
+2009-06-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix the last couple of warnings with g++-3.3.
+
+	* mln/core/routine/ops.hh (todo): New.
+	(operator/=): Add commentary.
+	* mln/util/adjacency_matrix.hh: Fix u/s warning.
+	* tests/value/int_u8.cc: De-activate warning-prone line.
+	* tests/util/adjacency_matrix.cc: Update style.
+
 2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Tag tests/data/transform as expected to fail.

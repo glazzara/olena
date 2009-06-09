@@ -27,11 +27,12 @@
 
 /// \file   tests/util/adjacency_matrix.cc
 ///
-/// test of mln::util::adjacency_matrix
+/// \brief Test of mln::util::adjacency_matrix.
 
 #include <mln/util/adjacency_matrix.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u16.hh>
+
 
 int main()
 {
@@ -48,11 +49,11 @@ int main()
     mln_assertion(adj.are_adjacent(4,3));
     mln_assertion(adj.are_adjacent(2,1));
     mln_assertion(adj.are_adjacent(1,2));
-    mln_assertion(!adj.are_adjacent(1,4));
+    mln_assertion(! adj.are_adjacent(1,4));
 
     adj.remove(2,3);
-    mln_assertion(!adj.are_adjacent(2,3));
-    mln_assertion(!adj.are_adjacent(2,2));
+    mln_assertion(! adj.are_adjacent(2,3));
+    mln_assertion(! adj.are_adjacent(2,2));
   }
 
   // The underlying data structure is a util::set
@@ -66,11 +67,11 @@ int main()
     mln_assertion(adj.are_adjacent(4,3));
     mln_assertion(adj.are_adjacent(2,1));
     mln_assertion(adj.are_adjacent(1,2));
-    mln_assertion(!adj.are_adjacent(1,4));
+    mln_assertion(! adj.are_adjacent(1,4));
 
     adj.remove(2,3);
-    mln_assertion(!adj.are_adjacent(2,3));
-    mln_assertion(!adj.are_adjacent(2,2));
+    mln_assertion(! adj.are_adjacent(2,3));
+    mln_assertion(! adj.are_adjacent(2,2));
   }
 
 }

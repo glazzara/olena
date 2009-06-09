@@ -45,6 +45,7 @@
 # include <mln/metal/converts_to.hh>
 # include <mln/debug/println.hh>
 
+
 namespace mln
 {
 
@@ -262,8 +263,8 @@ namespace mln
       adjacency_matrix_impl_selector<V, metal::bool_<false> >
 	::add(const V& e1, const V& e2)
       {
-	mln_precondition(e1 < int(nelements_));
-	mln_precondition(e2 < int(nelements_));
+	mln_precondition(int(e1) < int(nelements_));
+	mln_precondition(int(e2) < int(nelements_));
 	adj_.insert(make::ord_pair(e1, e2));
       }
 
@@ -272,8 +273,8 @@ namespace mln
       adjacency_matrix_impl_selector<V, metal::bool_<false> >
 	::remove(const V& e1, const V& e2)
       {
-	mln_precondition(e1 < int(nelements_));
-	mln_precondition(e2 < int(nelements_));
+	mln_precondition(int(e1) < int(nelements_));
+	mln_precondition(int(e2) < int(nelements_));
 	mln_precondition(adj_.has(make::ord_pair(e1, e2)));
 	adj_.remove(make::ord_pair(e1, e2));
       }
@@ -290,8 +291,8 @@ namespace mln
       adjacency_matrix_impl_selector<V, metal::bool_<false> >
 	::are_adjacent(const V& e1, const V& e2) const
       {
-	mln_precondition(e1 < int(nelements_));
-	mln_precondition(e2 < int(nelements_));
+	mln_precondition(int(e1) < int(nelements_));
+	mln_precondition(int(e2) < int(nelements_));
 	return adj_.has(make::ord_pair(e1, e2));
       }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -86,11 +87,14 @@
  * can become:
  *    static O zero =...
  *    return zero - exact(rhs);
+ *
+ * \todo Address the remark in op/=.
  */
 
 # include <mln/trait/op/all.hh>
 # include <mln/core/concept/object.hh>
 # include <mln/metal/converts_to.hh>
+
 
 namespace mln
 {
@@ -384,6 +388,7 @@ namespace mln
   operator%=(Object<L>& lhs, const Object<R>& rhs);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
   // Plus equal.
@@ -395,7 +400,7 @@ namespace mln
   {
     typedef mln_trait_op_plus(L, R) P;
     mlc_converts_to(P, L)::check();
-    return exact(lhs) = exact(lhs) + exact(rhs);
+    return exact(lhs) = static_cast<L>(exact(lhs) + exact(rhs));
   }
 
   // Minus equal.
@@ -407,7 +412,7 @@ namespace mln
   {
     typedef mln_trait_op_minus(L, R) M;
     mlc_converts_to(M, L)::check();
-    return exact(lhs) = exact(lhs) - exact(rhs);
+    return exact(lhs) = static_cast<L>(exact(lhs) - exact(rhs));
   }
 
   // Times equal.
@@ -419,7 +424,7 @@ namespace mln
   {
     typedef mln_trait_op_times(L, R) T;
     mlc_converts_to(T, L)::check();
-    return exact(lhs) = exact(lhs) * exact(rhs);
+    return exact(lhs) = static_cast<L>(exact(lhs) * exact(rhs));
   }
 
   // Div equal.
@@ -431,7 +436,12 @@ namespace mln
   {
     typedef mln_trait_op_div(L, R) D;
     mlc_converts_to(D, L)::check();
-    return exact(lhs) = exact(lhs) / exact(rhs);
+    // Remark:
+    // The code below gives a warning with g++-3.3 with the test file
+    // tests/value/int_u8.cc.  It is normal since writing "i /= f"
+    // means casting eventually float to int.  Yet what do we want in
+    // that case?  A quiet compilation or a warning?
+    return exact(lhs) = static_cast<L>(exact(lhs) / exact(rhs));
   }
 
   // Mod equal.
@@ -443,7 +453,7 @@ namespace mln
   {
     typedef mln_trait_op_mod(L, R) M;
     mlc_converts_to(M, L)::check();
-    return exact(lhs) = exact(lhs) % exact(rhs);
+    return exact(lhs) = static_cast<L>(exact(lhs) % exact(rhs));
   }
 
   // Unary plus.

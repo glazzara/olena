@@ -187,7 +187,9 @@ int main()
     sym_compare_assert(c, ==, 50.f);
 
     // FIXME: Triggers a warning about signed vs unsigned comparison.
-    d /= 2.4f;
+    // Read the todo and the remark in mln/core/routine/ops.hh.
+    //
+    // d /= 2.4f;
   }
 
 
