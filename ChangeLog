@@ -1,5 +1,11 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add scribo to SUBDIRS.
+
+	* Makefile.am (SUBDIRS) [ENABLE_SCRIBO]: Add scribo.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix Automake macro OLN_WITH_LIB (again).
 
 	* m4/oln-with-lib.m4 (_OLN_WITH_LIB): Set $5_CPPFLAGS instead of
