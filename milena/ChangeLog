@@ -1,3 +1,7 @@
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	* mln/io/pbm/load.hh: Repair the copyright header.
+
 2009-06-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Several bug fixes.
