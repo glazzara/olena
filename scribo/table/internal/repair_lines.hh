@@ -32,8 +32,8 @@
 
 # include <vector>
 
-# include <mln/core/image/image_if.hh>
-# include <mln/core/image/extension_val.hh>
+# include <mln/core/image/dmorph/image_if.hh>
+# include <mln/core/image/dmorph/extension_val.hh>
 
 # include <mln/pw/all.hh>
 

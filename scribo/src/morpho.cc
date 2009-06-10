@@ -1,5 +1,4 @@
-// Copyright (C) 2009
- EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,7 +26,7 @@
 #include <mln/essential/2d.hh>
 #include <mln/transform/distance_and_influence_zone_geodesic.hh>
 #include <mln/core/var.hh>
-#include <mln/fun/l2l/wrap.hh>
+#include <mln/fun/v2v/wrap.hh>
 #include <mln/win/hline2d.hh>
 #include <mln/morpho/watershed/flooding.hh>
 #include <mln/morpho/watershed/superpose.hh>
@@ -53,7 +52,7 @@ int main(int argc, char *argv[])
 
   mln_VAR(res, transform::distance_and_influence_zone_geodesic(lbl, c8(), mln_max(unsigned)));
 
-  io::pgm::save(level::transform(res.first(), fun::l2l::wrap<label_8>()), "dmap.pgm");
+  io::pgm::save(data::transform(res.first(), fun::v2v::wrap<label_8>()), "dmap.pgm");
   io::ppm::save(labeling::colorize(rgb8(), res.second(), nlabels), "iz.ppm");
 
   image2d<unsigned>& dmap = res.first();

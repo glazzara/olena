@@ -1,5 +1,49 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have SCRIBO compile.
+
+	* binarization/simple.hh,
+	* debug/save_linked_textbboxes_image.hh,
+	* debug/save_table_image.hh,
+	* debug/save_textbboxes_image.hh,
+	* src/morpho.cc,
+	* src/table_rebuild_rank.cc,
+	* src/thin_bboxes.cc,
+	* table/internal/align_lines.hh,
+	* table/internal/repair_lines.hh,
+	* text/extract_lines.hh,
+	* text/recognition.hh:
+	Adjust paths and names.
+	* text/grouping/group_from_single_link.hh:
+	Include scribo/make/text.hh.
+	* src/Makefile.am (bin_PROGRAMS): Move
+	extract_text_double_link,
+	extract_text_double_several_links,
+	extract_text_graph,
+	extract_text_several_graph,
+	extract_text_several_left_links,
+	extract_text_single_link,
+	recognition,
+	table_rebuild_opening,
+	table_rebuild_rank and
+	thin_bboxes...
+	(EXTRA_DIST): ...here.
+	(extract_text_double_link_SOURCES)
+	(extract_text_double_several_links_SOURCES)
+	(extract_text_graph_SOURCES)
+	(extract_text_several_graph_SOURCES)
+	(extract_text_several_left_links_SOURCES)
+	(extract_text_single_link_SOURCES)
+	(recognition_SOURCES)
+	(recognition_CXXFLAGS)
+	(recognition_LDFLAGS)
+	(table_rebuild_opening_SOURCES)
+	(table_rebuild_rank_SOURCES)
+	(thin_bboxes_SOURCES):
+	Disable.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	* tests/unit_test/unit-tests.mk: Regen.
 
 2009-06-09 Guillaume Lazzara  <lazzara@lrde.epita.fr>

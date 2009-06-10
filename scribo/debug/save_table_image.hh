@@ -35,7 +35,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/data/fill.hh>
-# include <mln/level/convert.hh>
+# include <mln/data/convert.hh>
 # include <mln/util/array.hh>
 # include <mln/util/couple.hh>
 # include <mln/value/rgb8.hh>
@@ -90,7 +90,7 @@ namespace scribo
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
 
-      mln_ch_value(I,value::rgb8) out2 = level::convert(value::rgb8(), input);
+      mln_ch_value(I, value::rgb8) out2 = data::convert(value::rgb8(), input);
       draw::bounding_boxes(out2, tableboxes.first(), bbox_color);
       draw::bounding_boxes(out2, tableboxes.second(), bbox_color);
       io::ppm::save(out2, filename);

@@ -27,7 +27,7 @@
 
 #include <mln/essential/2d.hh>
 #include <mln/pw/all.hh>
-#include <mln/level/compute.hh>
+#include <mln/data/compute.hh>
 #include <mln/accu/maj_h.hh>
 
 #include <scribo/table/rebuild.hh>
@@ -73,9 +73,9 @@ int main(int argc, char* argv[])
   std::cout << "ncells (including background) = " << ncells << std::endl;
   image2d<value::rgb8> table_color = mln::labeling::colorize(value::rgb8(), tables, ncells);
 
-  value::label_8 bg = level::compute(accu::maj_h<value::label_8>(), tables);
+  value::label_8 bg = data::compute(accu::maj_h<value::label_8>(), tables);
 
-  image2d<value::rgb8> sup = level::convert(value::rgb8(), input);
+  image2d<value::rgb8> sup = data::convert(value::rgb8(), input);
   data::paste((table_color | pw::value(tables) != pw::cst(bg))
 	  | (pw::value(sup) == pw::cst(literal::black)), sup);
   io::ppm::save(sup, scribo::make::debug_filename("table_color_sup.ppm"));
@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
 		scribo::make::debug_filename("table_cells.ppm"));
   io::pgm::save(tables, scribo::make::debug_filename("table_cells.pgm"));
 
-  image2d<value::rgb8> input_rgb = level::convert(value::rgb8(), input);
+  image2d<value::rgb8> input_rgb = data::convert(value::rgb8(), input);
   data::fill((input_rgb | pw::value(tables) == pw::cst(0u)).rw(), literal::red);
   io::ppm::save(input_rgb, scribo::make::debug_filename("table_superposed.ppm"));
 

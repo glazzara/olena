@@ -31,7 +31,7 @@
 /// Draw a list of bounding boxes and their associated mass center.
 
 # include <mln/core/concept/image.hh>
-# include <mln/level/convert.hh>
+# include <mln/data/convert.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/util/array.hh>
 # include <mln/io/ppm/save.hh>
@@ -70,7 +70,7 @@ namespace scribo
       trace::entering("scribo::debug::save_textbboxes_image");
       mln_precondition(exact(input).is_valid());
 
-      mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
+      mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
       draw::bounding_boxes(tmp, textbboxes, value);
       io::ppm::save(tmp, filename);
 

@@ -33,7 +33,7 @@
 
 # include <mln/core/site_set/box.hh>
 
-# include <mln/accu/mean.hh>
+# include <mln/accu/stat/mean.hh>
 
 # include <mln/util/array.hh>
 # include <mln/util/set.hh>
@@ -156,7 +156,7 @@ namespace scribo
 	  for_all_elements(i, lines)
 	    if (lines[i].nelements() == max_nelts)
 	    {
-	      accu::mean<unsigned> mean;
+	      accu::stat::mean<unsigned> mean;
 	      for_all_elements(j, lines[i])
 		if (box2line[lines[i][j]] == -1)
 		  mean.take(line_bboxes[lines[i][j]].center()[dim]);

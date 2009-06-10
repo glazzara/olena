@@ -50,7 +50,7 @@
 # include <scribo/text/grouping/group_with_several_left_links.hh>
 # include <scribo/text/grouping/group_with_several_right_links.hh>
 # include <scribo/text/grouping/group_from_double_link.hh>
-# include <scribo/filter/small_components.hh>
+# include <scribo/filter/small_objects.hh>
 # include <scribo/util/text.hh>
 
 # include <scribo/make/debug_filename.hh>

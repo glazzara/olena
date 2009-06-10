@@ -34,7 +34,7 @@
 # include <mln/core/concept/graph.hh>
 # include <mln/labeling/compute.hh>
 # include <mln/accu/center.hh>
-# include <mln/level/convert.hh>
+# include <mln/data/convert.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/util/array.hh>
 # include <mln/io/ppm/save.hh>
@@ -149,7 +149,7 @@ namespace scribo
       trace::entering("scribo::debug::save_linked_textbboxes_image");
       mln_precondition(exact(input).is_valid());
 
-      mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
+      mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
 
       draw::bounding_boxes(tmp, text.bboxes(), box_value);
       draw::bounding_box_links(tmp, text.mass_centers(), link_array, link_value);
@@ -174,7 +174,7 @@ namespace scribo
       trace::entering("scribo::debug::save_linked_textbboxes_image");
       mln_precondition(exact(input).is_valid());
 
-      mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
+      mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
 
       draw::bounding_boxes(tmp, text.bboxes(), box_value);
       draw::bounding_box_links(tmp, text.mass_centers(),
@@ -203,7 +203,7 @@ namespace scribo
       trace::entering("scribo::debug::save_linked_textbboxes_image");
       mln_precondition(exact(input).is_valid());
 
-      mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
+      mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
 
       draw::bounding_boxes(tmp, text.bboxes(), box_value);
       draw::bounding_box_links(tmp, text.mass_centers(),
@@ -232,7 +232,7 @@ namespace scribo
       mln_precondition(exact(g).is_valid());
       mln_precondition(exact(input).is_valid());
 
-      mln_ch_value(I,value::rgb8) tmp = level::convert(value::rgb8(), input);
+      mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
 
       draw::bounding_boxes(tmp, text.bboxes(), box_value);
       draw::bounding_box_links(tmp, text.bboxes(), g, link_value);

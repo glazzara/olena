@@ -42,6 +42,7 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/util/text.hh>
+# include <scribo/make/text.hh>
 
 
 namespace scribo

@@ -33,7 +33,7 @@
 /// \todo For each text bbox, we create a new image. We may like to avoid that.
 /// \todo Do not store the result in an image?
 
-# include <mln/core/image/image_if.hh>
+# include <mln/core/image/dmorph/image_if.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/box.hh>
 # include <mln/util/array.hh>

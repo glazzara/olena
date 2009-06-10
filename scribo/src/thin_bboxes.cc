@@ -1,5 +1,4 @@
-// Copyright (C) 2009
- EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,7 +25,7 @@
 
 #include <mln/essential/2d.hh>
 #include <scribo/text/extract_lines.hh>
-#include <scribo/filter/thin_bboxes.hh>
+#include <scribo/filter/thin_objects.hh>
 
 int usage(const char *name)
 {
@@ -50,7 +49,7 @@ int main(int argc, char *argv[])
   typedef scribo::util::text<image2d<value::label_16> > text_t;
   text_t lines = scribo::text::extract_lines(input, c8(), nlines);
 
-  text_t filtered_lines = scribo::filter::thin_bboxes(lines, 5);
+  text_t filtered_lines = scribo::filter::thin_objects(lines, 5);
 
   scribo::debug::save_textbboxes_image(input, filtered_lines.bboxes(),
 				       literal::red,
