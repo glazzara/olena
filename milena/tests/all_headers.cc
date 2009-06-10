@@ -23,9 +23,11 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file tests/all_headers.cc
+/// \brief Check all Milena's headers.
+
 #include <mln/all.hh>
 
 int main ()
 {
-
 }

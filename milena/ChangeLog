@@ -1004,6 +1004,29 @@
 
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify all_headers tests: keep a single one at the top-level.
+
+	* milena/tests/arith/all_headers.cc,
+	* milena/tests/border/all_headers.cc,
+	* milena/tests/display/all_headers.cc,
+	* milena/tests/draw/all_headers.cc,
+	* milena/tests/logical/all_headers.cc,
+	* milena/tests/util/all_headers.cc:
+	Remove.
+	* milena/tests/arith/Makefile.am,
+	* milena/tests/border/Makefile.am,
+	* milena/tests/data/Makefile.am,
+	* milena/tests/draw/Makefile.am,
+	* milena/tests/logical/Makefile.am
+	(check_PROGRAM): Remove all_headers.
+	(all_headers_SOURCES): Remove.
+	* milena/tests/all_headers.cc,
+	* milena/tests/display/Makefile.am:
+	Clean up.
+	Aesthetic changes.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/io/pbm/load.hh: Repair the copyright header.
 
 2009-06-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>

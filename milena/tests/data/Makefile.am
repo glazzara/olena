@@ -23,7 +23,6 @@ SUBDIRS = approx naive
 
 check_PROGRAMS =				\
   abs						\
-  all_headers					\
   apply						\
   compare					\
   compute					\
@@ -44,7 +43,6 @@ check_PROGRAMS =				\
   update
 
 abs_SOURCES = abs.cc
-all_headers_SOURCES = all_headers.cc
 apply_SOURCES = apply.cc
 compare_SOURCES = compare.cc
 compute_SOURCES = compute.cc

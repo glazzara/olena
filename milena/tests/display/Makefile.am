@@ -19,12 +19,10 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+# Remember not to execute display tests by default.  They require a
+# running X11 server (as well as a `pkill' binary...).  Perform the
+# necessary checks at configure time first.
+
 check_PROGRAMS =
 
-
-# FIXME: Don't execute `save' and `save_and_show' by default!  These
-# tests require a running X11 server (as well as a `pkill' binary...).
-# Perform the necessary checks at configure time first.
-#TESTS = $(check_PROGRAMS)
-
-TESTS =
+TESTS = $(check_PROGRAMS)

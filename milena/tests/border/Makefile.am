@@ -21,7 +21,6 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
   adjust					\
-  all_headers					\
   duplicate					\
   equalize					\
   fill						\
@@ -43,7 +42,6 @@ check_PROGRAMS =				\
   resize
 
 adjust_SOURCES = adjust.cc
-all_headers_SOURCES = all_headers.cc
 duplicate_SOURCES = duplicate.cc
 equalize_SOURCES = equalize.cc
 fill_SOURCES = fill.cc
