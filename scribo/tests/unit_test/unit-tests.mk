@@ -14,12 +14,9 @@ scribo_debug_save_linked_textbboxes_image \
 scribo_debug_save_table_image \
 scribo_debug_save_textbboxes_image \
 scribo_debug_usage \
-scribo_demat \
-scribo_demat_old \
 scribo_draw_all \
 scribo_draw_bounding_box_links \
 scribo_draw_bounding_boxes \
-scribo_extract_lines_discontinued \
 scribo_extract_primitive_canvas \
 scribo_extract_primitive_cells \
 scribo_extract_primitive_lines_discontinued \
@@ -40,7 +37,6 @@ scribo_make_influence_zone_graph \
 scribo_make_text \
 scribo_preprocessing_all \
 scribo_preprocessing_unskew \
-scribo_src_woot \
 scribo_table_align_lines_horizontaly \
 scribo_table_align_lines_verticaly \
 scribo_table_all \
@@ -94,12 +90,9 @@ scribo_debug_save_linked_textbboxes_image_SOURCES = scribo_debug_save_linked_tex
 scribo_debug_save_table_image_SOURCES = scribo_debug_save_table_image.cc
 scribo_debug_save_textbboxes_image_SOURCES = scribo_debug_save_textbboxes_image.cc
 scribo_debug_usage_SOURCES = scribo_debug_usage.cc
-scribo_demat_SOURCES = scribo_demat.cc
-scribo_demat_old_SOURCES = scribo_demat_old.cc
 scribo_draw_all_SOURCES = scribo_draw_all.cc
 scribo_draw_bounding_box_links_SOURCES = scribo_draw_bounding_box_links.cc
 scribo_draw_bounding_boxes_SOURCES = scribo_draw_bounding_boxes.cc
-scribo_extract_lines_discontinued_SOURCES = scribo_extract_lines_discontinued.cc
 scribo_extract_primitive_canvas_SOURCES = scribo_extract_primitive_canvas.cc
 scribo_extract_primitive_cells_SOURCES = scribo_extract_primitive_cells.cc
 scribo_extract_primitive_lines_discontinued_SOURCES = scribo_extract_primitive_lines_discontinued.cc
@@ -120,7 +113,6 @@ scribo_make_influence_zone_graph_SOURCES = scribo_make_influence_zone_graph.cc
 scribo_make_text_SOURCES = scribo_make_text.cc
 scribo_preprocessing_all_SOURCES = scribo_preprocessing_all.cc
 scribo_preprocessing_unskew_SOURCES = scribo_preprocessing_unskew.cc
-scribo_src_woot_SOURCES = scribo_src_woot.cc
 scribo_table_align_lines_horizontaly_SOURCES = scribo_table_align_lines_horizontaly.cc
 scribo_table_align_lines_verticaly_SOURCES = scribo_table_align_lines_verticaly.cc
 scribo_table_all_SOURCES = scribo_table_all.cc

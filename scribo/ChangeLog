@@ -1,3 +1,7 @@
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2009-06-09 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Update license headers in Scribo.
