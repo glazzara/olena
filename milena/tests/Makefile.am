@@ -75,6 +75,11 @@ check_PROGRAMS =				\
   global_vars
 
 all_headers_SOURCES = all_headers.cc
+all_headers_CPPFLAGS = $(AM_CPPFLAGS) \
+  $(CFITSIO_CPPFLAGS) $(GDCM_CPPFLAGS) $(MAGICKXX_CPPFLAGS) $(TIFF_CPPFLAGS)
+all_headers_LDFLAGS = \
+  $(CFITSIO_LDFLAGS) $(GDCM_LDFLAGS) $(MAGICKXX_LDFLAGS) $(TIFF_LDFLAGS)
+
 essential_headers_SOURCES = essential_headers.cc
 global_vars_SOURCES = global_vars1.cc global_vars2.cc
 

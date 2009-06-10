@@ -21,6 +21,9 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS = dicom
 
+AM_CPPFLAGS += $(GDCM_CPPFLAGS)
+AM_LDFLAGS = $(GDCM_LDFLAGS)
+
 # FIXME: Upon completion, if this test only read (not write) images,
 # rename it as load.cc
 dicom_SOURCES = dicom.cc

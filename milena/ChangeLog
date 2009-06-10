@@ -1,5 +1,13 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Set missing flags in Makefiles.
+
+	* tests/Makefile.am (all_headers_CPPFLAGS, all_headers_LDFLAGS)
+	* tests/io/dicom/Makefile.am (AM_CPPFLAGS, AM_LDFLAGS):
+	New.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Do not exercise parts depening on optional dependencies.
 
 	* tests/unit_test/build_unit_test.sh (HEADERS): Ignore files
