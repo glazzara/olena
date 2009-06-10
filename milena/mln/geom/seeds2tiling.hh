@@ -82,7 +82,7 @@ namespace mln
 	mln_precondition(exact(ima_).is_valid());
 	mln_precondition(exact(nbh_).is_valid());
 
-	I& ima = exact(ima_);
+	const I& ima = exact(ima_);
 	mln_concrete(I) out = duplicate(ima_);
 	const N& nbh = exact(nbh_);
 	p_queue<mln_psite(I)> q;

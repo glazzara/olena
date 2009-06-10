@@ -1,5 +1,9 @@
 2009-06-10  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	* mln/geom/seeds2tiling.hh: fix an invalid reference.
+
+2009-06-10  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	* tests/fun/v2v/Makefile.am: remove hsl_to_rgb from xfail_tests.
 
 2009-06-10  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
