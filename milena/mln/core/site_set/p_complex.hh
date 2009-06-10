@@ -103,7 +103,7 @@ namespace mln
   /* FIXME: Aggregate site data (location).  */
 
   /** A complex psite set based on the N-faces of a complex
-      of dimension \tparam D (a \p D-complex).
+      of dimension \p D (a \p D-complex).
 
       \arg \p D The dimension of the complex.
       \arg \p G A function object type, associating localization

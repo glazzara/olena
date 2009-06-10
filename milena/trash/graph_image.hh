@@ -116,7 +116,7 @@ namespace mln
     /// \brief Return type of read-write access.
     ///
     /// We use the associated type \c reference instead of a plain
-    /// reference on th value type (\tparam V), because it's the only way
+    /// reference on th value type (\p V), because it's the only way
     /// to safely form a reference on the element in the case of a
     /// std::vector<bool>.
     typedef typename std::vector<V>::reference lvalue;

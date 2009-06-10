@@ -1,3 +1,16 @@
+2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use \tparam properly.
+
+	* milena/mln/core/image/complex_image.hh,
+	* milena/mln/core/site_set/p_complex.hh,
+	* milena/mln/util/line_graph.hh,
+	* milena/trash/bgraph_image.hh,
+	* milena/trash/graph_image.hh,
+	* milena/trash/line_graph_image.hh:
+	Use \p instead of \tparam when highlighting a template parameter
+	within a sentence.
+
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix mln::io::abort().

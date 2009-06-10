@@ -74,7 +74,7 @@ namespace mln
   namespace util
   {
 
-    /// \brief Undirected line graph of a graph of type \tparam G.
+    /// \brief Undirected line graph of a graph of type \p G.
     ///
     /// \ingroup modgraph
     //
