@@ -26,7 +26,7 @@ if ENABLE_SWILENA
 endif ENABLE_SWILENA
 
 # Target shortcuts delegating the actual action to milena/Makefile.
-LOCAL_RECURSIVE_TARGETS = doc pretty-check
+LOCAL_RECURSIVE_TARGETS = doc pretty-check tests
 $(LOCAL_RECURSIVE_TARGETS):
 	cd milena && $(MAKE) $(AM_MAKEFLAGS) $@
 .PHONY: $(LOCAL_RECURSIVE_TARGETS)

@@ -1,3 +1,9 @@
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Complete the installation of the Make rule `tests' in Olena.
+
+	* Makefile.am (LOCAL_RECURSIVE_TARGETS): Add tests.
+
 2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update NEWS.
