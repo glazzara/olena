@@ -1,5 +1,12 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix mln::io::abort().
+
+	* mln/io/abort.hh (mln::io::abort): Delegate to std::abort instead
+	of std::exit.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Regen Makefile helpers.
 
 	* headers.mk, tests/unit_test/unit-tests.mk: Regen.

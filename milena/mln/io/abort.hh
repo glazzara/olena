@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,11 +28,11 @@
 # define MLN_IO_ABORT_HH
 
 /// \file
-///
+
 /// Define a function which aborts a process in io module.
 
-# include <iostream>
 # include <cstdlib>
+# include <iostream>
 
 
 namespace mln
@@ -52,7 +53,7 @@ namespace mln
       void abort()
       {
 	std::cerr << "I/O error, aborting." << std::endl;
-	std::exit(0);
+	std::abort();
       }
 
 # endif // ! MLN_INCLUDE_ONLY
