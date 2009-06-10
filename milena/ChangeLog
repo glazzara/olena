@@ -1,5 +1,18 @@
 2009-06-10  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Repair more copyright headers.
+
+	* tests/core/image/edge_image.cc,
+	* tests/core/image/graph_image.cc,
+	* tests/core/image/line_graph_image.cc,
+	* tests/core/image/vertex_image.cc,
+	* tests/io/plot/load.cc,
+	* tests/io/tiff/tiff2pbm.cc,
+	* tests/util/line_graph.cc,
+	* tests/world/binary_2d/enlarge.cc: repair copyright headers.
+
+2009-06-10  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	* mln/geom/seeds2tiling.hh: fix an invalid reference.
 
 2009-06-10  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
