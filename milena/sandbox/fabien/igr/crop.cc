@@ -41,6 +41,8 @@ int main(int argc, char* argv[])
   image3d<int_u12> vol;
   io::dicom::load(vol, argv[1]);
 
+  std::cout << "Input bbox: " << vol.bbox() << std::endl;
+
   int
     s_min = atoi(argv[2]),
     r_min = atoi(argv[3]),
@@ -51,6 +53,7 @@ int main(int argc, char* argv[])
     c_max = atoi(argv[7]);
 
   box3d b = make::box3d(s_min, r_min, c_min,  s_max, r_max, c_max);
+  std::cout << "Output bbox: " << b << std::endl;
 
   image3d<int_u12> ima(b);
   data::fill(ima, vol);

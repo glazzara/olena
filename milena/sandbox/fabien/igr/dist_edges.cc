@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cmath>
 
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
@@ -188,6 +189,28 @@ struct dist4_t : Function_vv2v<dist4_t>
 } dist4;
 
 
+struct dist5_t : Function_vv2v<dist5_t>
+{
+  typedef int_u12 result;
+
+  template <typename V>
+  int_u12 operator()(const util::array<V>& v1,
+		     const util::array<V>& v2) const
+  {
+    double res = 0.f;
+
+    for (unsigned i = 0; i < v1.nelements(); ++i)
+      res += (double) math::diff_abs(v1[i], v2[i]);
+
+    res = res / v1.nelements();
+    //res = 1 - res;
+    res = (res * 4095) + 0.49;
+
+    return (int) res;
+  }
+} dist5;
+
+
 
 
 
@@ -236,6 +259,8 @@ int main(int argc, char* argv[])
     edges = world::inter_pixel::compute(imax, dist3);
   else if (dist_type == 4)
     edges = world::inter_pixel::compute(imax, dist4);
+  else if (dist_type == 5)
+    edges = world::inter_pixel::compute(imax, dist5);
 
   io_save_edges_int_u12(edges, 0, "dist.pgm");
 

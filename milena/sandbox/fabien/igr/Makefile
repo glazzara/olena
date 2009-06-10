@@ -57,6 +57,9 @@ crop: crop.cc
 label2gif: label2gif.cc
 	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o label2gif
 
+min_max_float: min_max_float.cc
+	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o min_max_float
+
 #####################
 
 filter: filter.cc

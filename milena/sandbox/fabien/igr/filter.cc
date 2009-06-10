@@ -5,8 +5,8 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/image/image3d.hh>
-#include <mln/core/image/slice_image.hh>
-#include <mln/core/image/image_if.hh>
+#include <mln/core/image/dmorph/slice_image.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 #include <mln/core/routine/duplicate.hh>
 #include <mln/core/routine/extend.hh>
 #include <mln/core/var.hh>
@@ -29,7 +29,6 @@
 #include <mln/data/paste.hh>
 #include <mln/debug/quiet.hh>
 #include <mln/convert/from_to.hh>
-#include <mln/fun/v2v/fit.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/labeling/wrap.hh>
 #include <mln/data/compute.hh>

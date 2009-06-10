@@ -1,3 +1,16 @@
+2009-06-10  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add new distance and minor updates.
+	* fabien/igr/Makefile.rules: Remove Mac OS X specific framework.
+	* fabien/igr/Makefile: Small update.
+	* fabien/igr/check_dist.sh: Add new distance.
+	* fabien/igr/check_edges.sh: Add new distance.
+	* fabien/igr/crop.cc: Small update.
+	* fabien/igr/dist_edges.cc: Add new distance.
+	* fabien/igr/filter.cc: Small update.
+	* fabien/igr/mean_median_label.cc: Small update.
+	* fabien/igr/wst_edges.cc: Small update.
+
 2009-06-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Rename nfaces(unsigned) as nfaces_of_dim(unsigned).

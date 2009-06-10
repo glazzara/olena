@@ -20,16 +20,22 @@ process ()
     exit
   fi
 
-  convert dist.pgm dist${2}.png
-  convert watershed.ppm watershed${2}.png
-  convert means.pgm means${2}.png
-  convert dist_mean.pgm dist_mean${2}.png
-  convert dev.pgm dev${2}.png
+#convert dist.pgm dist${2}.png
+#convert watershed.ppm watershed${2}.png
+#convert means.pgm means${2}.png
+#convert dist_mean.pgm dist_mean${2}.png
+#convert dev.pgm dev${2}.png
   
+  mv dist.pgm dist${2}.pgm
+  mv watershed.ppm watershed${2}.pgm
+  mv means.pgm means${2}.pgm
+  mv dist_mean.pgm dist_mean${2}.pgm
+  mv dev.pgm dev${2}.pgm
+
   cp watershed.dump watershed${2}.dump
 
   # Cleanup.
-  rm *.pgm *.ppm
+#rm *.pgm *.ppm
 }
 
 batch_process ()
@@ -38,6 +44,7 @@ batch_process ()
   process $1 2 $2
   process $1 3 $2
   process $1 4 $2
+  process $1 5 $2
 }
 
 batch_process $1 $2

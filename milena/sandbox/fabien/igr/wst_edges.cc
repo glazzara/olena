@@ -29,7 +29,6 @@
 #include <mln/data/paste.hh>
 #include <mln/debug/quiet.hh>
 #include <mln/convert/from_to.hh>
-#include <mln/fun/v2v/fit.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/labeling/wrap.hh>
 #include <mln/data/compute.hh>
@@ -40,7 +39,7 @@
 #include <mln/math/diff_abs.hh>
 #include <mln/morpho/dilation.hh>
 #include <mln/morpho/erosion.hh>
-#include <mln/morpho/closing/volume.hh>
+#include <mln/morpho/closing/sum.hh>
 #include <mln/morpho/watershed/flooding.hh>
 #include <mln/pw/all.hh>
 #include <mln/util/array.hh>
@@ -115,7 +114,7 @@ int main(int argc, char* argv[])
 
 
   // Closing.
-  mln_VAR(d_clo, morpho::closing::volume(input | world::inter_pixel::is_separator(), world::inter_pixel::e2e(), lambda));
+  mln_VAR(d_clo, morpho::closing::sum(input | world::inter_pixel::is_separator(), world::inter_pixel::e2e(), lambda));
   io_save_edges_int_u12(d_clo, 0, "d_clo.pgm");
 
 

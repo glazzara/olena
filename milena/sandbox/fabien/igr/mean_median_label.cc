@@ -29,7 +29,6 @@
 #include <mln/data/paste.hh>
 #include <mln/debug/quiet.hh>
 #include <mln/convert/from_to.hh>
-#include <mln/fun/v2v/fit.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/labeling/wrap.hh>
 #include <mln/data/compute.hh>
