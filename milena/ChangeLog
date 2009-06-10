@@ -1,5 +1,12 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Distribute doc/ properly.
+
+	* doc/Makefile.am (SUBDIRS): Add ref_guide and tutorial.
+	(EXTRA_DIST): Add generate_dist_files.sh.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Distribute apps/statues properly.
 
 	* apps/statues/Makefile.am (mesh_complex_skel_SOURCES):

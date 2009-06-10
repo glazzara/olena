@@ -20,6 +20,8 @@
 include $(top_srcdir)/milena/doc/doc.mk
 
 SUBDIRS =		\
+  examples		\
+  ref_guide		\
   tutorial 		\
   white_paper
 
@@ -138,6 +140,7 @@ edit_user = sed -e 's,OUTPUT_DIRECTORY       = ./complete/,OUTPUT_DIRECTORY     
 
 
 # Regen files.
+EXTRA_DIST = generate_dist_files.sh headers.stamp
 include $(top_srcdir)/build-aux/regen-recursive.mk
 regen-am:
 	@rm -f $(srcdir)/headers.stamp.tmp
@@ -150,7 +153,6 @@ $(srcdir)/figures/figures.mk: $(srcdir)/headers.stamp
 $(srcdir)/outputs/outputs.mk: $(srcdir)/headers.stamp
 
 
-EXTRA_DIST = $(srcdir)/headers.stamp
 $(srcdir)/headers.stamp: $(srcdir)/generate_dist_files.sh
 	@rm -f $@.tmp
 	@touch $@.tmp
