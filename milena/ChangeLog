@@ -1,5 +1,12 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Distribute apps/statues properly.
+
+	* apps/statues/Makefile.am (mesh_complex_skel_SOURCES):
+	Add save_bin_alt.hh.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Regen some reference images of the documentation.
 
 	* doc/figures/fill-subdomain-2.ppm,
