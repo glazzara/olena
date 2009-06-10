@@ -1,5 +1,20 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update copyright headers in Swilena/Python.
+
+	* python/box2d-misc.py,
+	* python/data.py,
+	* python/dynamic-image2d-misc.py,
+	* python/image2d-misc.py,
+	* python/morpho-fun.py,
+	* python/morpho-segm.py,
+	* python/sps-common.in,
+	* python/sps.py,
+	* python/swilena.py:
+	Here.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update copyright headers in Swilena.
 
 	* box.ixx,
