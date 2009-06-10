@@ -1,5 +1,15 @@
 2009-06-10  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Repair copyright headers.
+
+	* mln/io/pbms/load.hh,
+	* mln/io/pgm/load.hh,
+	* mln/io/pgms/load.hh,
+	* mln/io/pnms/load.hh,
+	* mln/io/ppm/load.hh: repair copyright headers.
+
+2009-06-10  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Update copyright year.
 
 	* mln/accu/internal/base.hh,
