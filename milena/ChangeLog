@@ -1,5 +1,11 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the generation of the tutorial.
+
+	* doc/tutorial/tutorial.tex: Use \color instead of \colortext.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Disable very long tests in apps/statues.
 
 	* apps/statues/test-mesh-complex-max-curv-segm.in,
