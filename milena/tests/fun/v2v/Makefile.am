@@ -33,5 +33,3 @@ hsl_to_rgb_SOURCES = hsl_to_rgb.cc
 wrap_SOURCES = wrap.cc
 
 TESTS = $(check_PROGRAMS)
-
-XFAIL_TESTS = hsl_to_rgb
