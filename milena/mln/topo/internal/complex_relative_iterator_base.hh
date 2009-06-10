@@ -77,9 +77,9 @@ namespace mln
 
       /// Factoring class for relative iterators on mln::complex.
       ///
-      /// \arg \p C The type of the center face handle.
-      /// \arg \p F The type of the face handle.
-      /// \arg \p E The type exact type of the iterator.
+      /// \tparam C The type of the center face handle.
+      /// \tparam F The type of the face handle.
+      /// \tparam E The type exact type of the iterator.
       template <typename C, typename F, typename E>
       class complex_relative_iterator_base :
 	public complex_iterator_base<F, E>
@@ -130,9 +130,9 @@ namespace mln
       /// Factoring class for forward relative iterators on
       /// mln::complex.
       ///
-      /// \arg \p C The type of the center face handle.
-      /// \arg \p F The type of the face handle.
-      /// \arg \p E The type exact type of the iterator.
+      /// \tparam C The type of the center face handle.
+      /// \tparam F The type of the face handle.
+      /// \tparam E The type exact type of the iterator.
       template <typename C, typename F, typename E>
       class forward_complex_relative_iterator_base
 	: public complex_relative_iterator_base<C, F, E>
@@ -181,9 +181,9 @@ namespace mln
       /// Factoring class for backward relative iterators on
       /// mln::complex.
       ///
-      /// \arg \p C The type of the center face handle.
-      /// \arg \p F The type of the face handle.
-      /// \arg \p E The type exact type of the iterator.
+      /// \tparam C The type of the center face handle.
+      /// \tparam F The type of the face handle.
+      /// \tparam E The type exact type of the iterator.
       template <typename C, typename F, typename E>
       class backward_complex_relative_iterator_base
 	: public complex_relative_iterator_base<C, F, E>

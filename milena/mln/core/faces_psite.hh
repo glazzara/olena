@@ -49,9 +49,9 @@ namespace mln
 
   /// \brief Point site associated to a mln::p_faces.
   ///
-  /// \arg \p N The dimension of the face associated to this psite.
-  /// \arg \p D The dimension of the complex this psite belongs to.
-  /// \arg \p P The type of point associated to this psite.
+  /// \tparam N The dimension of the face associated to this psite.
+  /// \tparam D The dimension of the complex this psite belongs to.
+  /// \tparam P The type of point associated to this psite.
   template <unsigned N, unsigned D, typename P>
   class faces_psite
     : public internal::pseudo_site_base_< const P&,

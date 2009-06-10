@@ -54,7 +54,7 @@ namespace mln
     /** \brief Iterator on all the adjacent (n-1)-faces of the n-face
         of an mln::complex<D>.
 
-        \arg \p D The dimension of the complex this iterator belongs to.
+        \tparam D The dimension of the complex this iterator belongs to.
 
         mln::topo::center_only_iter inherits from
         mln::topo::internal::forward_complex_relative_iterator_base,

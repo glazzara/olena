@@ -63,7 +63,7 @@ namespace mln
     /// \brief Forward iterator on all the faces of an
     /// mln::complex<D>.
     ///
-    /// \arg \p D The dimension of the complex this iterator belongs to.
+    /// \tparam D The dimension of the complex this iterator belongs to.
     //
     template <unsigned D>
     class face_fwd_iter
@@ -106,7 +106,7 @@ namespace mln
 
     /// \brief Backward iterator on all the faces of an mln::complex<D>.
     ///
-    /// \arg \p D The dimension of the complex this iterator belongs to.
+    /// \tparam D The dimension of the complex this iterator belongs to.
     //
     template <unsigned D>
     class face_bkd_iter

@@ -70,8 +70,8 @@ namespace mln
         where the locations of each 0-face is stored.  Faces of higher
         dimensions are computed.
 
-        \arg \p D The dimension of the complex.
-        \arg \p P The type of the location of a 0-face.  
+        \tparam D The dimension of the complex.
+        \tparam P The type of the location of a 0-face.  
 
 	Locations of 0-face are usually points (hence the \p P above),
 	but can possibly be any (default-constructible) values.
@@ -115,7 +115,7 @@ namespace mln
     {
       /// The data stored in a complex_geometry object.
       ///
-      /// \arg \p P The type of the location of a 0-face.  
+      /// \tparam P The type of the location of a 0-face.  
       template <typename P>
       struct complex_geometry_data
       {

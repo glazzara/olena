@@ -50,8 +50,8 @@ namespace mln
 
       /// Factoring class for (set) iterators on mln::complex.
       ///
-      /// \arg \p F The type of the face handle.
-      /// \arg \p E The type exact type of the iterator.
+      /// \tparam F The type of the face handle.
+      /// \tparam E The type exact type of the iterator.
       template <typename F, typename E>
       class complex_set_iterator_base : public complex_iterator_base<F, E>
       {

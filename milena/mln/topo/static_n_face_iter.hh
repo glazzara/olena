@@ -48,8 +48,8 @@ namespace mln
     /// \brief Forward iterator on all the \p N-faces of a
     /// mln::complex<D>.
     ///
-    /// \arg \p N The dimension of the face associated to this iterator.
-    /// \arg \p D The dimension of the complex this iterator belongs to.
+    /// \tparam N The dimension of the face associated to this iterator.
+    /// \tparam D The dimension of the complex this iterator belongs to.
     //
     template <unsigned N, unsigned D>
     class static_n_face_fwd_iter
@@ -94,8 +94,8 @@ namespace mln
     /// \brief Backward iterator on all the \p N-faces of a
     /// mln::complex<D>.
     ///
-    /// \arg \p N The dimension of the face associated to this iterator.
-    /// \arg \p D The dimension of the complex this iterator belongs to.
+    /// \tparam N The dimension of the face associated to this iterator.
+    /// \tparam D The dimension of the complex this iterator belongs to.
     //
     template <unsigned N, unsigned D>
     class static_n_face_bkd_iter

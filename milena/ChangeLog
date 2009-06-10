@@ -1,5 +1,33 @@
 2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Stop using \arg instead of \param or \tparam in documentation.
+
+	* mln/core/faces_psite.hh,
+	* mln/core/image/complex_image.hh,
+	* mln/core/internal/p_complex_piter_base.hh,
+	* mln/core/internal/site_set_base.hh,
+	* mln/core/site_set/complex_psite.hh,
+	* mln/core/site_set/p_complex.hh,
+	* mln/geom/complex_geometry.hh,
+	* mln/topo/adj_higher_dim_connected_n_face_iter.hh,
+	* mln/topo/adj_higher_face_iter.hh,
+	* mln/topo/adj_lower_dim_connected_n_face_iter.hh,
+	* mln/topo/adj_lower_face_iter.hh,
+	* mln/topo/adj_lower_higher_face_iter.hh,
+	* mln/topo/attic/faces_iter.hh,
+	* mln/topo/center_only_iter.hh,
+	* mln/topo/centered_iter_adapter.hh,
+	* mln/topo/face_iter.hh,
+	* mln/topo/internal/complex_iterator_base.hh,
+	* mln/topo/internal/complex_relative_iterator_base.hh,
+	* mln/topo/internal/complex_relative_iterator_sequence.hh,
+	* mln/topo/internal/complex_set_iterator_base.hh,
+	* mln/topo/n_face_iter.hh,
+	* mln/topo/static_n_face_iter.hh:
+	Here.
+
+2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Typos in comments.
 
 	* mln/core/image/complex_image.hh (complex_image<D, G, V>::lvalue)

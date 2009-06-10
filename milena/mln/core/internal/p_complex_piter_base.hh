@@ -51,10 +51,10 @@ namespace mln
 
     /// \brief Factoring class for iterators on mln::p_complex.
     ///
-    /// \arg \p I The type of the underlying complex iterator.
-    /// \arg \p S The associated site set type.
-    /// \arg \p P The associated site type.
-    /// \arg \p E The type exact type of the iterator.
+    /// \tparam I The type of the underlying complex iterator.
+    /// \tparam S The associated site set type.
+    /// \tparam P The associated site type.
+    /// \tparam E The type exact type of the iterator.
     template <typename I, typename S, typename P, typename E>
     class p_complex_piter_base_
       : public internal::site_set_iterator_base< S, E >

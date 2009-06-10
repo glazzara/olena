@@ -105,8 +105,8 @@ namespace mln
   /** A complex psite set based on the N-faces of a complex
       of dimension \p D (a \p D-complex).
 
-      \arg \p D The dimension of the complex.
-      \arg \p G A function object type, associating localization
+      \tparam D The dimension of the complex.
+      \tparam G A function object type, associating localization
                 information (geometry) to each face of the complex.
                 \see mln::geom::complex_geometry.  */
   /// \brief A complex psite set based on the N-faces of a complex.

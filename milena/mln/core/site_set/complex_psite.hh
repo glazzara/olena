@@ -54,8 +54,8 @@ namespace mln
 
   /// \brief Point site associated to a mln::p_complex.
   ///
-  /// \arg \p D The dimension of the complex this psite belongs to.
-  /// \arg \p G The geometry of the complex.
+  /// \tparam D The dimension of the complex this psite belongs to.
+  /// \tparam G The geometry of the complex.
   template <unsigned D, typename G>
   class complex_psite
     : public internal::pseudo_site_base_< const mln_site(G)&, complex_psite<D, G> >

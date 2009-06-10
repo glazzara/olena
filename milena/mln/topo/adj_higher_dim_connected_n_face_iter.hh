@@ -59,7 +59,7 @@ namespace mln
     /// \brief Forward iterator on all the n-faces sharing an adjacent
     /// (n+1)-face with a (reference) n-face of an mln::complex<D>.
     ///
-    /// \arg \p D The dimension of the complex this iterator belongs to.
+    /// \tparam D The dimension of the complex this iterator belongs to.
     //
     template <unsigned D>
     class adj_higher_dim_connected_n_face_fwd_iter
@@ -98,7 +98,7 @@ namespace mln
     /// \brief Backward iterator on all the n-faces sharing an adjacent
     /// (n+1)-face with a (reference) n-face of an mln::complex<D>.
     ///
-    /// \arg \p D The dimension of the complex this iterator belongs to.
+    /// \tparam D The dimension of the complex this iterator belongs to.
     //
     template <unsigned D>
     class adj_higher_dim_connected_n_face_bkd_iter

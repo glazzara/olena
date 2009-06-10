@@ -116,12 +116,11 @@ namespace mln
   ///
   /// Values attached to each face of the complex.
   ///
-  /// \arg p D The dimension of the complex.
-  /// \arg p G The geometry type of the complex.
-  /// \arg p V The value type of the image.
+  /// \tparam D The dimension of the complex.
+  /// \tparam G The geometry type of the complex.
+  /// \tparam V The value type of the image.
   ///
   /// \ingroup modimageconcrete
-  //
   template <unsigned D, typename G, typename V>
   class complex_image
     : public internal::image_primary< V, p_complex<D, G>,

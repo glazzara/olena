@@ -51,8 +51,8 @@ namespace mln
     /// \brief Backward complex relative iterator adapters adding the
     /// central (reference) point to the set of iterated faces.
     ///
-    /// \arg \p D The dimension of the complex this iterator belongs to.
-    /// \arg \p I The adapated complex relative iterator.
+    /// \tparam D The dimension of the complex this iterator belongs to.
+    /// \tparam I The adapated complex relative iterator.
     template <unsigned D, typename I>
     class centered_fwd_iter_adapter
       : public internal::complex_relative_iterator_sequence< center_only_iter<D>,
@@ -85,8 +85,8 @@ namespace mln
     /// \brief Forward complex relative iterator adapters adding the
     /// central (reference) point to the set of iterated faces.
     ///
-    /// \arg \p D The dimension of the complex this iterator belongs to.
-    /// \arg \p I The adapated complex relative iterator.
+    /// \tparam D The dimension of the complex this iterator belongs to.
+    /// \tparam I The adapated complex relative iterator.
     template <unsigned D, typename I>
     class centered_bkd_iter_adapter
       : public internal::complex_relative_iterator_sequence< I,

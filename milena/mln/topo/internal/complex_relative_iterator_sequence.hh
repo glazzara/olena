@@ -62,9 +62,9 @@ namespace mln
       /// The first relative iterator is used, and when it becomes
       /// invalid, the second one is used.
       ///
-      /// \arg \p I1 The type of the first relative iterator.
-      /// \arg \p I2 The type of the second relative iterator.
-      /// \arg \p E  The type exact type of the iterator.
+      /// \tparam I1 The type of the first relative iterator.
+      /// \tparam I2 The type of the second relative iterator.
+      /// \tparam E  The type exact type of the iterator.
       template <typename I1, typename I2, typename E>
       class complex_relative_iterator_sequence : public Iterator<E>
       {
