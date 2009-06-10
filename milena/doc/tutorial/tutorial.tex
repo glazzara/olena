@@ -34,6 +34,7 @@
 
 %\usepackage{hevea}
 
+
 \usepackage{html}
 \usepackage{graphicx}
 \usepackage{makeidx}
@@ -43,6 +44,10 @@
 \usepackage{pgf}
 \usepackage{doxyfuns}
 \usepackage{milena}
+
+\newcommand{\tofix}[1]{\colortext{red}{(FIXME: #1)}}
+%\newcommand{\tofix}[1]{}
+
 
 \title{Olena -- Tutorial}
 \author{LRDE}
@@ -102,36 +107,36 @@ Welcome to Milena's tutorial.
 
 Milena is only a subpart of Olena but tends to be a large system too.
 Therefore it is not possible to present all the functionalities in a
-tutorial. 
+tutorial.
 
 
 Milena targets several audiences: \textit{end users}, \textit{designers} and
 \textit{providers}. \textit{End users} want to apply and assemble algorithms
 to solve image processing, pattern recognition or computer vision problems,
 \textit{designers} build new algorithms and \textit{providers} are interested
-in developping their own data structures and extend an existing library.
+in developing their own data structures and extend an existing library.
 
 
 Whatever the kind of user you are, the key to learning how to use Milena is to
 become familiar with its palette of objects and the way of combining them.
 
 As an \textit{end user}, you may start with this simple tutorial and the Quick
-tour (FIXME: ref). They describe and illustrate the key features of the library.
+tour \tofix{ref}. They describe and illustrate the key features of the library.
 \textit{End users} getting familiar with Milena and \textit{designers}, should
-take a look at the  Quick Reference Guide (FIXME: ref!).
+take a look at the  Quick Reference Guide \tofix{ref!}.
 It is a more detailed explanations of the library's features.
 
 \textit{end users} and \textit{designers} may be also interested by all the
 examples provided with the documentation and the tutorial. The source code is
-available in \hpath{milena/doc/examples} (FIXME: ref) and is usually pointed
+available in \hpath{milena/doc/examples} \tofix{ref} and is usually pointed
 out and commented by the documentation.
 
 Taking a look at the test suite is also a good idea. The tests usually focus on
 a single functionality and handle several use cases which may overlap your needs.
-The test suite is located in \hpath{milena/tests} (FIXME: ref?).
+The test suite is located in \hpath{milena/tests} \tofix{ref?}.
 
 Still not enough information? More information about all the routines is
-available in the User HTML documentation (FIXME:ref).
+available in the User HTML documentation \tofix{ref}.
 It mainly targets \textit{designers} and \textit{providers}.
 The latter may also be interested by the Developer HTML documentation
 (not available yet).
@@ -149,12 +154,12 @@ There are two ways of getting Milena on the web:
 
 Downloading a package or a tarball is the best choice for a new user. Except
 for nightly builds which are packages generated every night from the SVN repository, 
-packages and tarballs contain only a released version of Milena. It guaranties a 
+packages and tarballs contain only a released version of Milena. It guaranties a
 certain quality: no building issues, no bugs (ok, maybe some...), \ldots
 
 This tutorial is based on the latest released version of Milena. Therefore,
 if you decide to use the SVN version, you may notice different behaviors or results
-compared to what it is described in this document. 
+compared to what it is described in this document.
 
 Using the SVN version implies some drawbacks: the code might crash, not
 compile or produce incorrect results.
@@ -223,7 +228,7 @@ We invite you to take a look at the description of the directory structure
 (section \ref{tuto1dirstruct}).
 If you encounter any issues in the installation process or if you have any
 question, do not forget to join the mailing lists (section \ref{tuto1mailinglists})
-and/or use the other documentations ressources (section ref{tuto1documentation}).
+and/or use the other documentations resources (section ref{tuto1documentation}).
 
 
 
@@ -265,7 +270,7 @@ We invite you to take a look at the description of the directory structure
 (section \ref{tuto1dirstruct}).
 If you encounter any issues in the installation process or if you have any
 question, do not forget to join the mailing lists (section
-\ref{tuto1mailinglists}) and/or use the other documentations ressources
+\ref{tuto1mailinglists}) and/or use the other documentations resources
 (section \ref{tuto1documentation})).
 
 
@@ -282,13 +287,13 @@ Milena and what could be improved.
 Currently four mailing-lists are available:
 
 \begin{tabular}{l l}
-\textbf{Olena}		& Discussion about the project Olena  \\ 
+\textbf{Olena}		& Discussion about the project Olena  \\
 \textbf{Olena-bugs}	& Bugs from Olena projects	      \\
 \textbf{Olena-core}	& Internal list for the Olena project \\
 \textbf{Olena-patches}	& patches for the Olena project	      \\
 \end{tabular}
 
-You can subscribe to these mailing lists at the following adress:
+You can subscribe to these mailing lists at the following address:
 
 \begin{center}
 \begin{verbatim}
@@ -313,10 +318,10 @@ subdirectories.
 List of \hpath{milena}'s subdirectories:
 \begin{itemize}
 
-\item \dir{apps} --- A full example of a 3D mesh visualization tool. It
+\item \dir{apps} --- A full example of a 3D mesh visualisation tool. It
   uses milena.
 
-\item \dir{doc} --- THE directory you must know. Contains all the 
+\item \dir{doc} --- THE directory you must know. Contains all the
   documentation material.
 
 \item \dir{img} --- A set of common test images. They are used in the
@@ -325,7 +330,7 @@ List of \hpath{milena}'s subdirectories:
 \item \dir{mesh} --- A set of 3D meshes. They can be used with the full
   example located in \hpath{milena/apps}.
 
-\item \dir{mln} --- The core of the libray. Contains all the library headers.
+\item \dir{mln} --- The core of the library. Contains all the library headers.
 
 \item \dir{tests} --- The test suite. Is it subdivided in sub directories.
   The directory hierarchy respects \hpath{milena/mln}'s. 
@@ -368,7 +373,7 @@ List of \hpath{mln}'s subdirectories:
   \item \dir{logical} --- Logical operators.
   \item \dir{make} --- Small routines to construct images, windows, \ldots
   \item \dir{math} --- Mathematical functions.
-  \item \dir{metal} --- Metalic macros/structures. Static library helping
+  \item \dir{metal} --- Metallic macros/structures. Static library helping
   developing doing static tests.
   \item \dir{morpho} --- Mathematical morphology.
   \item \dir{norm} --- Norm computation.
@@ -377,7 +382,7 @@ List of \hpath{mln}'s subdirectories:
   \item \dir{pw} --- Point-wise image related routines.
   \item \dir{registration} -- Registration related routine.
   \item \dir{set} --- Set related routines.
-  \item \dir{subsampling} --- Subsampling related algorithms.
+  \item \dir{subsampling} --- Sub-sampling related algorithms.
   \item \dir{tag} --- Tag traits.
   \item \dir{test} --- Definition of predicates.
   \item \dir{topo} --- Complex related structures.
@@ -444,7 +449,7 @@ This tutorial is not the only documentation of Milena. Other documents are avail
 %**************************
 \doxysection{tuto1community}{Community and Support}
 
-Even though Milena is currently developped by the LRDE in EPITA, we are open
+Even though Milena is currently developed by the LRDE in EPITA, we are open
 for new contributors.
 
 \begin{itemize}
@@ -478,13 +483,13 @@ There are other ways to get to know what is the status of the project.
 \begin{itemize}
 \item Olena's trac\\
       \href{https://trac.lrde.org/olena}{https://trac.lrde.org/olena} \\
-      Here is the roadmap, the current open tickets/bugs/improvements which
+      Here is the road-map, the current open tickets/bugs/improvements which
       are taken in consideration. A source browser is also available.
 
 \item Olena's Buildfarm \\
       \href{https://buildfarm.lrde.org/buildfarm/oln/}{https://buildfarm.lrde.org/buildfarm/oln/} \\
-      The official buildfarm. Every night and after each commit, tests
-      are compiled and run. The buildfarm can show you whether it is safe
+      The official build-farm. Every night and after each commit, tests
+      are compiled and run. The build-farm can show you whether it is safe
       to update your svn copy of Milena or not\ldots
 
 \item Test failures \\
@@ -626,7 +631,7 @@ By default, Milena will be installed in /usr/local but you may like to install
 it elsewhere. To do so, pass the option \textit{-{}-prefix=/installation/path/prefix}
 to the configure script (see below). Replace '/installation/path/prefix' with the
 wanted installation path prefix.
-  
+
 now, you can run:
 \begin{verbatim}
 $ ../configure
@@ -729,9 +734,9 @@ examples.
 Currently two tools are available: \\
 
 \begin{tabular}{l l}
-area\_flooding.cc & FIXME:description \\
+area\_flooding.cc & \tofix{description} \\
 \hline
-seed2tiling.cc & FIXME:description \\
+seed2tiling.cc & \tofix{description} \\
 \end{tabular}
 
 %
@@ -757,7 +762,7 @@ $ cd /my/path/to/olena-1.0/build/milena/tests
 $ make check
 \end{verbatim}
 
-Running the test suite is memory and CPU consumming and will take a while.
+Running the test suite is memory and CPU consuming and will take a while.
 
 
 %**************************
@@ -809,14 +814,14 @@ In this example, there are a lot of \B{implicit} assumptions about the input:
 So, what would happen if we would like to use it for 3D images, use rgb8 as
 value or even work on a region of interest?
 
-This implementation would require to be reimplemented and the user would have to
+This implementation would require to be re-implemented and the user would have to
 deal with the various versions of the fill routine. For the developer, it is error
 prone, redundant and hard to maintain. For the user, it is confusing and forces
 to always think about what he is manipulating.
 According to our definition, this algorithm is clearly \B{not} generic.
 
-This is not acceptable and that's why Milena is developped considering
-genericity and user/developer friendlyness.
+This is not acceptable and that's why Milena is developed considering
+genericity and user/developer friendliness.
 
 With Milena, the previous example would be written as follow:
 
@@ -861,14 +866,14 @@ parameter is what the routine expects. The ``exact'' image type is \type{I}. For
 instance an image of type \type{image2d} inherits from \type{Image$<$image2d$>$}. So
 an \type{image2d} is an \type{Image$<$I$>$}.
 Note that the return type of this function is defined by a macro.
-\code{mln\_concrete} is a macro hidding tricky mechanisms (traits) used in Milena.
+\code{mln\_concrete} is a macro hiding tricky mechanisms (traits) used in Milena.
 The important point to remember is that a generic function should not return
 \type{I} directly but \code{mln\_concrete(I)} instead.
 
 
 \doxycode[3]{tuto3_first_routine}
 Like any Milena's routine, note that we use \code{trace}. This debugging tool
-will be detailled in section \ref{tuto3debughints}.
+will be detailed in section \ref{tuto3debughints}.
 
 
 \doxycode[4]{tuto3_first_routine}
@@ -876,7 +881,7 @@ Since the function take some arguments as concept objects, these object cannot
 be used as such. Indeed, concepts are empty shells only used for dispatching and
 concept checking, that's the reason why they are parameterized with their exact
 type. The exact type let us know what is the real type of the object. To get an
-objet with the exact type, simply call \code{exact()}.
+object with the exact type, simply call \code{exact()}.
 Of course, it is always a good idea to add few preconditions to help during
 debug.
 
@@ -1035,7 +1040,7 @@ are printed out in the backtrace as you can see in the following example:
 
 \doxysubsection{tuto3traces}{Traces}
 Sometimes, compiling for GDB without optimization flags and with debug
-assertions enabled could lead to execution time dramaticaly high. 
+assertions enabled could lead to execution time dramatically high. 
 If the function parameter values are not necessary for debugging,
 a good alternative is the trace system provided in Milena.
 Each time a routine is called, a trace log is written.
@@ -1205,7 +1210,7 @@ In this section, we will detail how to create common images.
 %====================================
 \doxychapter{tuto5}{Load and save images}
 
-After this step you shoud know how to:
+After this step you should know how to:
 \begin{itemize}
 \item load an image,
 \item save an image.
