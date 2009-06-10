@@ -1,5 +1,12 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix Automake macro OLN_WITH_LIB (again).
+
+	* m4/oln-with-lib.m4 (_OLN_WITH_LIB): Set $5_CPPFLAGS instead of
+	$5_CXXFLAGS.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Complete the installation of the Make rule `tests' in Olena.
 
 	* Makefile.am (LOCAL_RECURSIVE_TARGETS): Add tests.

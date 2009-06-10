@@ -15,7 +15,7 @@
 # This macro sets the shell variable oln_have_`SHELL_NAME' to `yes' if
 # the library is found and if it is working (and to `no' otherwise),
 # and defines a CPP macro and an Automake conditional both named
-# HAVE_`CPP_NAME'.  It also sets `CPP_NAME'_CXXFLAGS and
+# HAVE_`CPP_NAME'.  It also sets `CPP_NAME'_CPPFLAGS and
 # `CPP_NAME'_LDFLAGS.
 #
 # Examples of use:
@@ -71,7 +71,7 @@ AC_DEFUN([_OLN_WITH_LIB],
    LDFLAGS=$oln_save_LDFLAGS
    TOOLS_LDFLAGS="$TOOLS_LDFLAGS $$5_LDFLAGS"
  fi
- AC_SUBST([$5_CXXFLAGS], [$5_CPPFLAGS])
+ AC_SUBST([$5_CPPFLAGS])
  AC_SUBST([$5_LDFLAGS])
  AM_CONDITIONAL([HAVE_$5], [test x$oln_have_$4 = xyes])
  AC_LANG_POP([C++])
