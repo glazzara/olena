@@ -1,5 +1,16 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Regen some reference images of the documentation.
+
+	* doc/figures/fill-subdomain-2.ppm,
+	* doc/figures/fill-subdomain-3.ppm,
+	* doc/figures/labeling-compute-2.ppm,
+	* doc/figures/tuto3_colorize-2.ppm,
+	* doc/figures/tuto4_genericity_and_algorithms-5.ppm:
+	Regen.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	* doc/tutorial/tutorial.tex: Disable FIXMEs (\tofix commands).
 
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
