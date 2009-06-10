@@ -1,5 +1,9 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	* Makefile.am (wrappers): Add config.i.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update copyright headers in Swilena/Python.
 
 	* python/box2d-misc.py,
