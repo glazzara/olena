@@ -6,4 +6,5 @@ mesh_dir=@top_srcdir@/milena/mesh
 
 time ./mesh-complex-max-curv-segm $mesh_dir/socket.off 25 socket-complex-max-curv-segm.off
 time ./mesh-complex-max-curv-segm $mesh_dir/teapot.off 50 teapot-complex-max-curv-segm.off
-time ./mesh-complex-max-curv-segm $mesh_dir/bunny-holefilled.off 500 bunny-holefilled-complex-max-curv-segm.off
+# FIXME: Too long.  Should be run with (future) target `check-full'.
+#time ./mesh-complex-max-curv-segm $mesh_dir/bunny-holefilled.off 500 bunny-holefilled-complex-max-curv-segm.off

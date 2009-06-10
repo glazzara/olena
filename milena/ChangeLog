@@ -1,5 +1,15 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Disable very long tests in apps/statues.
+
+	* apps/statues/test-mesh-complex-max-curv-segm.in,
+	* apps/statues/test-mesh-complex-segm.in,
+	* apps/statues/test-mesh-complex-skel.in,
+	* apps/statues/test-mesh-segm.in:
+	Here.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	* tests/labeling/colorize.cc: Remove non-deterministic assertion.
 
 2009-06-10  Fabien Freling  <fabien.freling@lrde.epita.fr>

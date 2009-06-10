@@ -7,4 +7,5 @@ mesh_dir=@top_srcdir@/milena/mesh
 time ./mesh-complex-skel $mesh_dir/three-triangles.off 1 three-triangles-skel.off
 time ./mesh-complex-skel $mesh_dir/socket-max-curv.off 10 socket-max-curv-skel.off
 time ./mesh-complex-skel $mesh_dir/teapot-max-curv.off 20 teapot-max-curv-skel.off
-time ./mesh-complex-skel $mesh_dir/bunny-holefilled-pinv-curv.off 50 bunny-holefilled-pinv-curv-skel.off
+# FIXME: Too long.  Should be run with (future) target `check-full'.
+#time ./mesh-complex-skel $mesh_dir/bunny-holefilled-pinv-curv.off 50 bunny-holefilled-pinv-curv-skel.off
