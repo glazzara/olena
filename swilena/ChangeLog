@@ -1,3 +1,35 @@
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update copyright headers in Swilena.
+
+	* box.ixx,
+	* box2d.i,
+	* box2d_piter.i,
+	* box_piter.ixx,
+	* ch_value.ixx,
+	* concat.ixx,
+	* concrete.ixx,
+	* config.i,
+	* coord.ixx,
+	* dpoint2d.i,
+	* dynamic_image2d.i,
+	* fill.ixx,
+	* image2d.ixx,
+	* image2d_int.i,
+	* image2d_int_u8.i,
+	* int_u.ixx,
+	* int_u32.i,
+	* int_u8.i,
+	* intp.ixx,
+	* morpho.ixx,
+	* neighb2d.i,
+	* pgm.ixx,
+	* point2d.i,
+	* println.ixx,
+	* python-utils.ixx,
+	* window2d.i:
+	Here.
+
 2009-06-09  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Add missing license headers in Swilena.
