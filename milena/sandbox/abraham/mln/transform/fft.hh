@@ -103,9 +103,9 @@ namespace mln {
       ** For each point p of the transformed image T, you get
       ** |T[p]|.
       **
-      ** \param R Data type of the resulting image.
+      ** \tparam R Data type of the resulting image.
       **
-      ** \arg ordered Kind of traversal.
+      ** \param ordered Kind of traversal.
       */
       template <class R>
       image2d<R> transformed_image_magn(bool ordered = true) const
@@ -137,7 +137,7 @@ namespace mln {
       ** For each point p of the transformed image T, you get
       ** |T[p]|.
       **
-      ** \arg ordered Kind of traversal.
+      ** \param ordered Kind of traversal.
       */
       image2d<T> transformed_image_magn(bool ordered = true) const
       {
@@ -152,8 +152,8 @@ namespace mln {
       **
       ** \param R Data type of the resulting image.
       **
-      ** \arg clip Value used for clipping.
-      ** \arg ordered Kind of traversal.
+      ** \param clip Value used for clipping.
+      ** \param ordered Kind of traversal.
       */
 
       template <class R>
@@ -207,8 +207,8 @@ namespace mln {
       ** For each point p of the transformed image T, you get
       **  a clipped value of |T[p]|.\n
       **
-      ** \arg clip Value used for clipping.
-      ** \arg ordered Kind of traversal.
+      ** \param clip Value used for clipping.
+      ** \param ordered Kind of traversal.
       */
       image2d<T> transformed_image_clipped_magn(const double clip,
 						bool ordered = true) const
@@ -224,7 +224,7 @@ namespace mln {
       **
       ** \param R Data type of the resulting image.
       **
-      ** \arg ordered Kind of traversal.
+      ** \param ordered Kind of traversal.
       */
 
       image2d<T> transformed_image_clipped_magn(bool ordered = true) const
@@ -240,7 +240,7 @@ namespace mln {
       **
       ** \param R Data type of the resulting image.
       **
-      ** \arg ordered Kind of traversal.
+      ** \param ordered Kind of traversal.
       */
 
       template <class R>
@@ -256,9 +256,9 @@ namespace mln {
       ** For each point p of the transformed image T, you get
       ** a log translated value of |T[p]| on interval [a; b].\n
       **
-      ** \arg a Lower bound.
-      ** \arg b Upper bound.
-      ** \arg ordered Kind of traversal.
+      ** \param a Lower bound.
+      ** \param b Upper bound.
+      ** \param ordered Kind of traversal.
       */
 
       template <class R>
@@ -306,9 +306,9 @@ namespace mln {
       ** For each point p of the transformed image T, you get
       ** a log translated value of |T[p]| on interval [a; b].\n
       **
-      ** \arg a Lower bound.
-      ** \arg b Upper bound.
-      ** \arg ordered Kind of traversal.
+      ** \param a Lower bound.
+      ** \param b Upper bound.
+      ** \param ordered Kind of traversal.
       */
 
 	image2d<T> transformed_image_log_magn(double a,
@@ -326,7 +326,7 @@ namespace mln {
       **
       ** \param R Data type of the resulting image.
       **
-      ** \arg ordered Kind of traversal.
+      ** \param ordered Kind of traversal.
       */
 
       template <class R>
@@ -341,7 +341,7 @@ namespace mln {
       ** For each point p of the transformed image T, you get
       ** a log translated value of |T[p]| on interval [1; 100].\n
       **
-      ** \arg ordered Kind of traversal.
+      ** \param ordered Kind of traversal.
       */
 
       image2d<T> transformed_image_log_magn(bool ordered = true) const
@@ -403,7 +403,7 @@ namespace mln {
       **
       ** Initialization of data in order to compute the fft.
       **
-      ** \arg original_im Image to process.
+      ** \param original_im Image to process.
       */
       template <typename D>
       fft(const image2d<D>& original_im)
@@ -599,7 +599,7 @@ namespace mln {
       **
       ** Initialization of data in order to compute the fft.
       **
-      ** \arg original_im Image to process.
+      ** \param original_im Image to process.
       */
       fft(const image2d< std::complex<T> >& original_im)
       {

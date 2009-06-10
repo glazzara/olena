@@ -1,3 +1,11 @@
+2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Stop using \arg instead of \param or \tparam in documentation.
+
+	* sandbox/abraham/mln/transform/fft.hh,
+	* sandbox/nivault/dmap.hh:
+	Here.
+
 2009-06-10  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add new distance and minor updates.

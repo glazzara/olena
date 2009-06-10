@@ -525,8 +525,8 @@ namespace oln {
 
       /*! Constructor.
       **
-      ** \arg size Size of the image on which the dmap will be compute.
-      ** \arg ch Chamfer distance used.
+      ** \param size Size of the image on which the dmap will be compute.
+      ** \param ch Chamfer distance used.
       */
       dmap(const image2d_size& size, const chamfer<T2>& ch);
 
