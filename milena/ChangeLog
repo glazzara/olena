@@ -1,3 +1,9 @@
+2009-06-10  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Fix reference guide.
+	* doc/ref_guide/ref_guide.tex: Fix some errors and remove missing
+	parts.
+
 2009-06-10  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Correct errors in tutorial.

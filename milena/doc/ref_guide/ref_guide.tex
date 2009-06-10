@@ -71,10 +71,10 @@
 - \backslash subpage basicops
 - \backslash subpage inputoutput
 - \backslash subpage graphandima
-- \backslash subpage funs
-- \backslash subpage arithmops
-- \backslash subpage mathtools
-- \backslash subpage debugtools
+%- \backslash subpage funs
+%- \backslash subpage arithmops
+%- \backslash subpage mathtools
+%- \backslash subpage debugtools
 - \backslash subpage globalvars
 - \backslash subpage macros
 \backslash htmlonly
@@ -196,10 +196,10 @@ Here is also a list of common variable name conventions:
 \end{figure}
 
 Olena is organized in a namespace hierarchy.  Everything is declared by Olena
-within the 'oln::' namespace, and possibly a sub-namespace such as
-'\namespace{oln::arith::}' (arithmetic operations on images), '\namespace{oln::morpho::}' (morphological
+within the 'mln::' namespace, and possibly a sub-namespace such as
+'\namespace{mln::arith::}' (arithmetic operations on images), '\namespace{mln::morpho::}' (morphological
 operations), etc. Usually, the namespace hierarchy is mapped to the mln
-directory tree. For the sake of simplicity, we will neglect the '\namespace{oln::}'
+directory tree. For the sake of simplicity, we will neglect the '\namespace{mln::}'
 prefix in all the code examples.
 
 Methods provided by objects in the library are in constant time. If you need
@@ -233,12 +233,12 @@ Olena's tarball is structured as follow:
 
 \doxysection{compilehint}{Writing and compiling a program with Olena}
 
-Before writing your first program, please be ware of these hints:
+Before writing your first program, please be aware of these hints:
 
 \begin{itemize}
   \item By default, Olena enables a lot of internal pre and post conditions.
-  Usually, this is a useful feature and it \should be enabled. It can heavily
-  slow down a program though and these tests can be disabled by compiling
+  Usually, this is a useful feature and it \should be enabled. However, it can heavily
+  slow down a program though so these tests can be disabled by compiling
   using \code{-DNDEBUG}.
   \begin{verbatim}
 $ g++ -DNDEBUG -Ipath/to/mln my_program.cc
@@ -258,7 +258,7 @@ $ g++ -DNDEBUG -Ipath/to/mln my_program.cc
 Usually, when talking about images, we think about common images composed of a
 set of pixels.
 Since Olena is generic, we want to support many kind of images, even images
-which are not composed of a set of pixels, such as images having images as sites.
+which are not composed of a set of points, such as images having images as sites.
 
 In order to express this genericity, we have the ``site'' concept.
 This concept allows us to divide a pixel into two information:
@@ -268,10 +268,6 @@ This concept allows us to divide a pixel into two information:
 \end{itemize}
 
 Let's say we have a 2D grid like this:
-
-//FIXME
-[dessin de grille 2d, colonnes/lignes numerotees + repere x/y]
-Intersection == point 2d == milieu d'un pixel \\
 
 %FIXME: Find a way to get that figure in HTML output.
 \begin{latexonly}
@@ -297,7 +293,7 @@ means we have the following equivalence:
   Intersection $\equiv$ point2d (2D site) $\equiv$ center of a pixel
 \end{center}
 
-The site does not store any value but refer to an area where we will be able
+The site does not store any value but refers to an area where we will be able
 to read its value.
 
 Sites may have a different types, depending on the image type:
@@ -306,14 +302,14 @@ Sites may have a different types, depending on the image type:
 Name & Description \\
 \hline
 \type{point2d} & 2D point on a regular grid \\
-\type{point} & Generic point ($n-D$) on a regular grid \\
+\type{point} & Generic point ($n$D) on a regular grid \\
 \type{util::vec} & Algebraic vector \\
 \type{util::vertex} & Graph vertex \\
 \type{util::edge} & Graph edge \\
 \end{tabular}
 
-[Illustration : grille + intersection + pmin() + pmax() + distance entre 2
-points en x et en y = 1]\\
+%FIXME: [Illustration : grille + intersection + pmin() + pmax() + distance entre
+% 2 points en x et en y = 1]\\
 
 
 %====================================
@@ -448,7 +444,7 @@ Name & Description \\
 \type{image3d} & 3D image \\
 \type{flat\_image} & Constant value image \\
 \type{image\_if} & Image defined by a function \\
-FIXME & FIXME \\
+%FIXME & FIXME \\
 \end{tabular}
 
 %**************************
@@ -537,6 +533,10 @@ Olena provides extension mechanisms for the
 image domain. In the library, both the concept of border and of extension can be encountered.
 These concepts are useful in many algorithms and can avoid costly tests while
 working with sites located on image edges.
+
+%FIXME: We should be more precise about what is a border, what is an extension.
+% For example, we could say that an extension contains sites that are not included
+% in the domain.
 
 \doxysubsection{imabordersection}{Image border}
 
@@ -699,9 +699,6 @@ Output:
 
 \bigskip
 
-[Image+bord rotation 20degres, avant, apres]
-
-
 Sometimes taking the domain in consideration  may not be the expected behavior.
 If you do not want to use the extension/border for a specific routine, simply
 restrict the image to its domain.
@@ -716,9 +713,9 @@ Note that:
 
 
 %================================================
-\doxysection{imamorphed}{Morphed images}
-//FIXME: Write it!
-// Pas concrete, light, how to concrete
+%\doxysection{imamorphed}{Morphed images}
+%//FIXME: Write it!
+%// Pas concrete, light, how to concrete
 %
 
 
@@ -729,7 +726,7 @@ Note that:
 \hline
 Return Type & Name & Arguments & Const & Comments \\ \hline
 
-I::pvset & domain & - & X - &  \\ \hline
+I::pvset & domain & - & X &  \\ \hline
 const Value\& & operator() & const point\& p & X & Used for reading. \\ \hline
 Value\& & operator() & const point\& p & - & Used for writing. \\ \hline
 bool & has & const Point\& p & X & \\ \hline
@@ -765,6 +762,7 @@ Once the right header is included, the image can be loaded:
 \doxycode{ima-load}
 
 Note that each format is associated to specific image value types:
+
 \begin{tabular}{|l|l|}
 \\hline
 Format & Value type \\ \hline
@@ -786,12 +784,12 @@ are two possibilites to do so:
 
 \doxycode{ima2d-2}
 
-Img1a has no data and its definition domain is still unset.  We do
+\var{img1a} has no data and its definition domain is still unset.  We do
 not know yet the number of sites it contains. However, it is really useful to
 have such an "empty image" because it is a placeholder for the result of some
 processing, or another image. Trying to access the site value from an empty
 image leads to an error at run-time.
-Img1b is defined on a domain but does not have data yet.\\
+\var{img1b} is defined on a domain but does not have data yet.\\
 
 An image can also be created and initialized at the same time:
 \doxycode[1]{labeling-compute}
@@ -803,9 +801,9 @@ It constructs the following image: \\
 Sometimes, you may want to initialize an image from another one:
 \doxycode{ima2d-7}
 \var{img2b} is declared without specifying a domain. Its border size is set to
-the default one, e.g 0. By using \code{initialize} \var{img2b} is initialized
+the default one, e.g 0. By using \code{initialize()}, \var{img2b} is initialized
  with the same domain and border/extension as \var{img2a}. The data is not
- copied though. Other routines like \code{data::fill} can be called in order to
+ copied though. Other routines like \code{data::fill()} can be called in order to
  do so (See also \doxyref{fillop}).
 
 
@@ -856,11 +854,11 @@ Output:
 
 
 %================================================
-\doxysection{imaconvvals}{Conversion of image values}
+%\doxysection{imaconvvals}{Conversion of image values}
 
-parler de level::compute/level::apply.
-parler de i2v et v2v.
-Voir les vset => attendre que ca soit ameliore?
+%FIXME: Parler de level::compute/level::apply.
+% Parler de i2v et v2v.
+% Voir les vset => attendre que ca soit ameliore?
 
 %====================================
 \clearpage
@@ -872,7 +870,7 @@ Voir les vset => attendre que ca soit ameliore?
 \doxychapter{winneigh}{Structural elements: Window and neighborhood}
 
 In Olena, there are both the window and neighborhood concept. A window can be
-defined on any sites around a central site which may also be included.
+defined on any site around a central site which may also be included.
 A neighborhood is more restrictive and \must not include the central site.
 Therefore these two concepts are really similar and are detailed together in
 this section. 
@@ -939,8 +937,8 @@ cuboid3d & Cuboid & - \\
 These predefined windows can be passed directly to a function. The headers are
 located in \header{mln/core/alias/window*.hh}.
 
-\doxysubsection{wwindow}{Weighted window}
-FIXME
+%\doxysubsection{wwindow}{Weighted window}
+%FIXME
 
 \doxysubsection{neighborhood}{Neighborhood}
 
@@ -980,15 +978,15 @@ The boolean array \must always have an odd size.
 While creating a windows thanks to a bool array/matrix, the window's center is the
 central site of the array/matrix.
 
-\textbf{This way of defining a window is very powerful since it enables the possibility
-of having non-square windows such as:}
+%\textbf{This way of defining a window is very powerful since it enables the possibility
+%of having non-square windows such as:}
+%FIXME
 
 
 
-\subsubsection{Neighborhood}
 
-
-\doxysubsection{sitedepse}{Site dependent structural elements}
+%\doxysubsection{sitedepse}{Site dependent structural elements}
+%FIXME
 
 \doxysubsection{convneighwin}{Conversion between Neighborhoods and Windows}
 
@@ -1010,7 +1008,7 @@ point.
 %**************************
 \doxysection{sitessite}{Need for site}
 
-As we have seen before, an image is defined on a grid. It has associated
+As we have seen before, an image is usually defined on a grid. It has associated
 data and a site set which defines the domain of the image on that grid.
 Usually, we need to access a value by its coordinates. With default images it
 can be done easily, at no cost.
@@ -1049,7 +1047,7 @@ Then, define a \type{p\_array} with few \type{point2d}:
 Now, create a point-wise image from this function and this \type{p\_array}:
 \doxycode[1]{mln_var}
 
-Ima is actually that image:
+\var{ima} is actually that image:
 \doxyoutput{ima2d-display-2}
 
 However, in memory, since it is based on a \type{p\_array}, sites are stored in a
@@ -1092,7 +1090,7 @@ method has to appear in the \type{psite} interface. However, thanks to
 inheritance, we fetch an interface and an implementation that delegates
 to the site.
 
-For instance, in the last example, \type{I::psite} has a method \code{row(}) because
+For instance, in the last example, \type{I::psite} has a method \code{row()} because
 \type{I::site}, \type{point2d}, provides such a method.
 
 How it works: a \type{psite} inherits from \type{internal::site\_impl$<$site$>$} which is
@@ -1180,7 +1178,7 @@ passed as parameter. These macros can be used with any container like images or
 site sets.
 
 Here follow an example with the implemantions of the most basic routines which
-use the \code{for\_all} loop: \code{data::fill()} and \code{data::paste()}.
+use the \code{for\_all()} loop: \code{data::fill()} and \code{data::paste()}.
 
 \doxycode{fill}
 
@@ -1230,7 +1228,7 @@ variable behaves like some mathematical variable.  Put differently it is just a
 name to designate an image:
 \doxycode{ima2d-5}
 
-If a deep copy of the image is needed, a duplicate() routine is available:
+If a deep copy of the image is needed, a \code{duplicate()} routine is available:
 \doxycode{ima2d-6-clone}
 Output:
 \doxyoutput{ima2d-6-clone}
@@ -1241,7 +1239,7 @@ Output:
 \clearpage
 \newpage
 \doxychapter{basicops}{Basic routines}
-//FIXME : illustrer
+%FIXME : illustrer
 
 \begin{tabular}{l|p{8cm}}
 \hline
@@ -1272,14 +1270,10 @@ have not been initialized yet.  So we fill \var{imga} with the value 'a':
 
 \doxycode[2]{fill-call-1}
 
-The ``\code{fill}'' algorithm is located in the sub-namespace "\namespace{mln::data}" since this
+The \code{fill()} algorithm is located in the sub-namespace "\namespace{mln::data}" since this
 algorithm deals with the site values.
 
-Note that the term "level" refers to the fact that an image can be considered as
-a landscape where the elevation at a particular location/site is given by
-the corresponding site value.
-
-The full name of this routine is ``\namespace{mln::data::fill}''.
+The full name of this routine is \code{mln::data::fill()}.
 To access to a particular algorithm, the proper file shall be included.
 The file names of algorithms strictly map their C++ name; so
 \namespace{mln::data::fill} is defined in the file \header{mln/data/fill.hh}.
@@ -1290,8 +1284,8 @@ Most algorithms in Olena are constructed following the classical scheme: "output
 algo(input)", where the input image is only read. However some few algorithms
 take an input image in order to modify it.  To enforce this particular feature,
 the user shall explicitly state that the image is provided so that its data is
-modified "read/write". The algorithm call shall be ``\code{data::fill(ima.rw(),
-val)}''. When forgetting the ``\code{rw()}'' call it does not compile.
+modified "read/write". The algorithm call shall be \code{data::fill(ima.rw(),
+val)}. When forgetting the \code{rw()} call, it does not compile.
 
 \doxycode[3]{fill-call-1}
 
@@ -1304,13 +1298,13 @@ data for the sites (5, 5) to (14, 14) (so it has 100 sites).
 Output:
 \doxyoutput{paste-call-1}
 
-Before pasting, the couple of images looked like:
+%Before pasting, the couple of images looked like:
 
-//FIXME : ajouter des zolies zimages.
+%FIXME : ajouter des zolies zimages.
 
-so after pasting we get:
+%so after pasting we get:
 
-//FIXME : ajouter des zolies zimages again.
+%FIXME : ajouter des zolies zimages again.
 
 %----------------
 \subsection*{Note}
@@ -1326,7 +1320,7 @@ Gives:
 The notion of site sets plays an important role in Olena. Many tests are
 performed at run-time to ensure that the program is correct.
 
-For instance, the algorithm data::paste tests that the set of sites of imgb
+For instance, the algorithm \code{data::paste()} tests that the set of sites of \var{imgb}
 (whose values are to be pasted) is a subset of the destination image.
 
 
@@ -1334,7 +1328,7 @@ For instance, the algorithm data::paste tests that the set of sites of imgb
 %====================================
 \doxysection{blobs}{Blobs}
 
-\code{Labeling::blobs()} is used to label an image. It returns a new image with the
+\code{labeling::blobs()} is used to label an image. It returns a new image with the
 component id as value for each site. The background has 0 as id therefore the
 component ids start from 1.
 
@@ -1378,7 +1372,7 @@ This parameter \must be of the same type as the returned image value.
 
 This small routine only works on binary images. It performs a point-wise
 "logical not" and therefore "negates" the image. There are two versions of that
-algorithm a version which returns a new image and another which works in place.
+algorithm: a version which returns a new image and another which works in place.
 Example:
 
 Make a binary image:
@@ -1499,7 +1493,7 @@ Output:
 Then, use \code{labeling::compute()} with the bbox accumulator:
 \doxycode[3]{labeling-compute}
 
-\code{Labeling::compute()} hold an accumulator for each component, which means it
+\code{labeling::compute()} hold an accumulator for each component, which means it
 returns an array of accumulator results.
 In this case, it returns an array of \type{box2d}. 
 
@@ -1532,8 +1526,8 @@ For example, with \code{geom::nsites()} simply write:
 %====================================
 \doxysection{partima}{Working with parts of an image}
 
-Sometime it may be interesting to work only on some parts of the image or to
-extract only a sub set of that image. Olena enables that thoughout out the
+Sometimes it may be interesting to work only on some parts of the image or to
+extract only a sub set of that image. Olena enables that through the
 operator '$|$'.
 
 Three kinds of that operator exist:\\
@@ -1552,7 +1546,7 @@ Function\_p2v $|$ Sub Domain & Do not create a new image but create a morpher.\\
 A Sub Domain can be a site set, an image or any value returned by this
 operator.
 For a given site, \type{Function\_p2v} returns a value and \type{Function\_p2b} returns a
-boolean. These functions. are actually a sort of predicate. A common
+boolean. These functions are actually a sort of predicate. A common
 \type{Function\_p2v} is \code{pw::value(Image)}. It returns the
 point to value function used in the given image. C functions can also be used as
 predicate by passing the function pointer.
@@ -1569,7 +1563,7 @@ type. For instance, you would use \type{point3d} with 3D images.
 The returned value type \type{V} for \type{Function\_p2v} depends on the image value type.
 With \type{image2d$<$int$>$}, \type{V} would be \type{int}.
 
-In this section, all along the examples, the image "\var{ima}" will refer to the
+In this section, all along the examples, the image \var{ima} will refer to the
 following declaration:
 \doxycode[1]{fill-part-image}
 Output:
@@ -1656,13 +1650,14 @@ If you do not want this constraint, you may want to use an alternative
 operator:
 \doxyrawcode{ima2d-restricted-3}
 
-In that case there is no restriction on the domain at all and the following example will work.
-\doxycode[3]{mln_var}
-Output:
-\doxyoutput{mln_var}
+%FIXME
+%In that case there is no restriction on the domain at all and the following example will work.
+%\doxycode[3]{mln_var}
+%Output:
+%\doxyoutput{mln_var}
 
-With this operator, an intersection is applied on the image domain and the
-site set.
+%With this operator, an intersection is applied on the image domain and the
+%site set.
 
 
 
@@ -1682,15 +1677,15 @@ You can extend the range of supported files by installing third-parties librarie
 
 \doxysection{ioim}{ImageMagick}
   \href{http://www.imagemagick.org}{http://www.imagemagick.org}
-
+  \newline{}
   You have to install ImageMagick with Magick++ support. You will be able to
   load every file recognized as an image by ImageMagick.
-
+  \newline{}
   Olena only support binary and 8 bits images through ImageMagick.
-
+  \newline{}
   During the compilation, you will have to specify the ImageMagick flags and
   libraries.
-
+  \newline{}
   To do so, just add the following line to your compilation:
 
   \begin{verbatim}
@@ -1702,7 +1697,7 @@ You can extend the range of supported files by installing third-parties librarie
 
 \doxysection{iodcm}{GDCM}
   \href{http://apps.sourceforge.net/mediawiki/gdcm}{http://apps.sourceforge.net/mediawiki/gdcm}
-
+  \newline{}
   GDCM is a library for manipulating DICOM files. DICOM files are used in
   medical imaging.
 
@@ -1715,7 +1710,7 @@ You can extend the range of supported files by installing third-parties librarie
 %\end{htmlonly}
 \doxychapter{graphandima}{Graphes and images}
 
-FIXME: REWRITE
+%FIXME: REWRITE
 
 %**************************
 \doxysection{graphdesc}{Description}
@@ -1724,7 +1719,7 @@ Graphes can help you to handle directly parts of an image and represent their
 relationship.
 Specific data can be associated to each vertex and/or edges.
 
-//FIXME: Add more explanations?
+%FIXME: Add more explanations?
 
 %**************************
 \doxysection{graphexample}{Example}
@@ -1752,7 +1747,7 @@ Then declare a \type{p\_vertices}:
 \doxycode[5]{graph-data}
 
 Thanks to the \type{p\_vertices} there is now a mapping between vertices and sites.
-We may like to map data to it. The idea is to provide a function which returns
+We may want to map data to it. The idea is to provide a function which returns
 the associated data according to the site given as parameter. Combining this
 function and the \type{p\_vertices}, we get an image which can be used with
 algorithms and \code{for\_all} loops.
@@ -1793,28 +1788,28 @@ Iteration over the adjacent vertices of all the vertices:
 Output:
 \doxymoutput[4]{graph-iter}
 
-//FIXME talk about p\_vertices and p\_edges.
+%FIXME talk about p\_vertices and p\_edges.
 
 %====================================
-\newpage
-\clearpage
-\doxychapter{funs}{Functions}
+%\newpage
+%\clearpage
+%\doxychapter{funs}{Functions}
 
-FIXME write it
-
-%====================================
-\newpage
-\clearpage
-\doxychapter{arithmops}{Arithmetical operators}
-
-FIXME write it
+%FIXME write it
 
 %====================================
-\newpage
-\clearpage
-\doxychapter{mathtools}{Mathematical tools}
+%\newpage
+%\clearpage
+%\doxychapter{arithmops}{Arithmetical operators}
 
-FIXME write it
+%FIXME write it
+
+%====================================
+%\newpage
+%\clearpage
+%\doxychapter{mathtools}{Mathematical tools}
+
+%FIXME write it
 
 %====================================
 \newpage
@@ -1970,14 +1965,14 @@ mln\_edge\_nbh\_edge\_iter(G)	  & G : graph type & Iterator on the edges adjacen
 
 
 %====================================
-\newpage
-\clearpage
+%\newpage
+%\clearpage
 %Ugly workaround to avoid missing chapter references in doxygen.
 %\begin{htmlonly}
 %\doxychapter{2}{}
 %\end{htmlonly}
-\doxychapter{debugtools}{Debugging tools}
+%\doxychapter{debugtools}{Debugging tools}
 
-FIXME write it
+%FIXME write it
 
 \end{document}
