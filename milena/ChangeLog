@@ -1,5 +1,12 @@
 2009-06-10  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Update generated files.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: update.
+
+2009-06-10  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	* mln/io/ppms/load.hh: fix copyright header.
 
 2009-06-10  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>

@@ -25,21 +25,15 @@ mln_accu_inf \
 mln_accu_internal_base \
 mln_accu_internal_couple \
 mln_accu_label_used \
-mln_accu_land \
-mln_accu_land_basic \
 mln_accu_line \
-mln_accu_lor \
-mln_accu_lor_basic \
+mln_accu_logic_all \
+mln_accu_logic_land \
+mln_accu_logic_land_basic \
+mln_accu_logic_lor \
+mln_accu_logic_lor_basic \
 mln_accu_maj_h \
-mln_accu_max \
-mln_accu_max_h \
 mln_accu_max_site \
-mln_accu_mean \
 mln_accu_median_alt \
-mln_accu_median_h \
-mln_accu_min \
-mln_accu_min_h \
-mln_accu_min_max \
 mln_accu_nil \
 mln_accu_p \
 mln_accu_pair \
@@ -52,6 +46,14 @@ mln_accu_site_set_essential \
 mln_accu_site_set_rectangularity \
 mln_accu_stat_all \
 mln_accu_stat_deviation \
+mln_accu_stat_essential \
+mln_accu_stat_max \
+mln_accu_stat_max_h \
+mln_accu_stat_mean \
+mln_accu_stat_median_h \
+mln_accu_stat_min \
+mln_accu_stat_min_h \
+mln_accu_stat_min_max \
 mln_accu_stat_var \
 mln_accu_stat_variance \
 mln_accu_sum \
@@ -1290,21 +1292,15 @@ mln_accu_inf_SOURCES = mln_accu_inf.cc
 mln_accu_internal_base_SOURCES = mln_accu_internal_base.cc
 mln_accu_internal_couple_SOURCES = mln_accu_internal_couple.cc
 mln_accu_label_used_SOURCES = mln_accu_label_used.cc
-mln_accu_land_SOURCES = mln_accu_land.cc
-mln_accu_land_basic_SOURCES = mln_accu_land_basic.cc
 mln_accu_line_SOURCES = mln_accu_line.cc
-mln_accu_lor_SOURCES = mln_accu_lor.cc
-mln_accu_lor_basic_SOURCES = mln_accu_lor_basic.cc
+mln_accu_logic_all_SOURCES = mln_accu_logic_all.cc
+mln_accu_logic_land_SOURCES = mln_accu_logic_land.cc
+mln_accu_logic_land_basic_SOURCES = mln_accu_logic_land_basic.cc
+mln_accu_logic_lor_SOURCES = mln_accu_logic_lor.cc
+mln_accu_logic_lor_basic_SOURCES = mln_accu_logic_lor_basic.cc
 mln_accu_maj_h_SOURCES = mln_accu_maj_h.cc
-mln_accu_max_SOURCES = mln_accu_max.cc
-mln_accu_max_h_SOURCES = mln_accu_max_h.cc
 mln_accu_max_site_SOURCES = mln_accu_max_site.cc
-mln_accu_mean_SOURCES = mln_accu_mean.cc
 mln_accu_median_alt_SOURCES = mln_accu_median_alt.cc
-mln_accu_median_h_SOURCES = mln_accu_median_h.cc
-mln_accu_min_SOURCES = mln_accu_min.cc
-mln_accu_min_h_SOURCES = mln_accu_min_h.cc
-mln_accu_min_max_SOURCES = mln_accu_min_max.cc
 mln_accu_nil_SOURCES = mln_accu_nil.cc
 mln_accu_p_SOURCES = mln_accu_p.cc
 mln_accu_pair_SOURCES = mln_accu_pair.cc
@@ -1317,6 +1313,14 @@ mln_accu_site_set_essential_SOURCES = mln_accu_site_set_essential.cc
 mln_accu_site_set_rectangularity_SOURCES = mln_accu_site_set_rectangularity.cc
 mln_accu_stat_all_SOURCES = mln_accu_stat_all.cc
 mln_accu_stat_deviation_SOURCES = mln_accu_stat_deviation.cc
+mln_accu_stat_essential_SOURCES = mln_accu_stat_essential.cc
+mln_accu_stat_max_SOURCES = mln_accu_stat_max.cc
+mln_accu_stat_max_h_SOURCES = mln_accu_stat_max_h.cc
+mln_accu_stat_mean_SOURCES = mln_accu_stat_mean.cc
+mln_accu_stat_median_h_SOURCES = mln_accu_stat_median_h.cc
+mln_accu_stat_min_SOURCES = mln_accu_stat_min.cc
+mln_accu_stat_min_h_SOURCES = mln_accu_stat_min_h.cc
+mln_accu_stat_min_max_SOURCES = mln_accu_stat_min_max.cc
 mln_accu_stat_var_SOURCES = mln_accu_stat_var.cc
 mln_accu_stat_variance_SOURCES = mln_accu_stat_variance.cc
 mln_accu_sum_SOURCES = mln_accu_sum.cc
