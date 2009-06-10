@@ -70,4 +70,3 @@ update_SOURCES = update.cc
 
 TESTS = $(check_PROGRAMS)
 
-XFAIL_TESTS = transform

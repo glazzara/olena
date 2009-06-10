@@ -1,5 +1,9 @@
 2009-06-10  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	* tests/data/Makefile.am: Remove transform from xfail_tests.
+
+2009-06-10  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Repair more copyright headers.
 
 	* tests/core/image/edge_image.cc,
