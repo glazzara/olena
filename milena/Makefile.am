@@ -30,7 +30,7 @@ if ENABLE_TOOLS
   SUBDIRS += tools
 endif ENABLE_TOOLS
 
-.PHONY: doc tutorial pretty-check
+.PHONY: doc tutorial pretty-check tests
 
 doc:
 	cd doc && $(MAKE) $(AM_MAKEFLAGS) $@
@@ -40,6 +40,9 @@ tutorial:
 	cd doc && $(MAKE) $(AM_MAKEFLAGS) $@
 
 pretty-check:
+	cd tests && $(MAKE) $(AM_MAKEFLAGS) $@
+
+tests:
 	cd tests && $(MAKE) $(AM_MAKEFLAGS) $@
 
 # Regen files recursively.

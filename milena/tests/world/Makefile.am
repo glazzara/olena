@@ -15,6 +15,10 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+## Process this file through Automake to create Makefile.in.
+
+include $(top_srcdir)/milena/tests/tests.mk
+
 SUBDIRS =					\
   binary_2d 					\
   inter_pixel

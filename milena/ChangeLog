@@ -1,5 +1,12 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Complete the installation of the Make rule `tests' in Milena.
+
+	* Makefile.am (tests): New phony target.
+	* tests/world/Makefile.am: Include milena/tests/tests.mk.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Set missing flags in Makefiles.
 
 	* tests/Makefile.am (all_headers_CPPFLAGS, all_headers_LDFLAGS)
