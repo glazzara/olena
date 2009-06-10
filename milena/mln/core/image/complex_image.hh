@@ -112,7 +112,7 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  /// Image based on a complex.
+  /// \brief Image based on a complex.
   ///
   /// Values attached to each face of the complex.
   ///

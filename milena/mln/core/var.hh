@@ -27,11 +27,11 @@
 # define MLN_CORE_VAR_HH
 
 /// \file
+/// \brief Various macros (syntactic sugar) to shorten declarations of
+/// variables.
 ///
-/// This file contains various macros to declare variables.
-///
-/// Warning: that macro relies on an extention of g++ (typeof) so it is
-/// NOT standard C++.
+/// \warning Theses macro rely on an extension of g++ (\c typeof) so it
+/// is NOT standard C++.
 
 # include <mln/core/macros.hh>
 

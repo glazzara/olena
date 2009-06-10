@@ -1,5 +1,14 @@
 2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Aestetic changes and cleanup in documentation and comments.
+
+	* mln/core/image/complex_image.hh,
+	* mln/core/var.hh,
+	* mln/util/line_graph.hh:
+	Here.
+
+2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Stop using \arg instead of \param or \tparam in documentation.
 
 	* mln/core/faces_psite.hh,

@@ -77,7 +77,6 @@ namespace mln
     /// \brief Undirected line graph of a graph of type \p G.
     ///
     /// \ingroup modgraph
-    //
     template <typename G>
     class line_graph : public internal::graph_base< line_graph<G> >
     {
@@ -253,7 +252,7 @@ namespace mln
       g_ = g;
 
       // Initialize vertices and edges.
-      //FIXME: use an adjacency matrix!!
+      // FIXME: use an adjacency matrix!!
       std::set<util::ord_pair<util::vertex_id_t> > edges_set;
 
       vertices_.resize(g.e_nmax());
@@ -339,7 +338,7 @@ namespace mln
     bool
     line_graph<G>::has(const util::vertex<G2>& v) const
     {
-      //FIXME: not sure...
+      // FIXME: not sure...
       return v.graph().is_subgraph_of(*this) && has_v(v.id());
     }
 
