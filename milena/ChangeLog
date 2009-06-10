@@ -1,5 +1,15 @@
 2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Typos in comments.
+
+	* mln/core/image/complex_image.hh (complex_image<D, G, V>::lvalue)
+	* trash/bgraph_image.hh (bgraph_image<P, V>::lvalue)
+	* trash/graph_image.hh (graph_image<P, V>::lvalue)
+	* trash/line_graph_image.hh (line_graph_image<P, V>::lvalue):
+	Here.
+
+2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use \tparam properly.
 
 	* milena/mln/core/image/complex_image.hh,
