@@ -25,6 +25,7 @@ regen-am:
 	cd $(srcdir)						\
 	&& ./build_unit_test.sh $(abs_top_srcdir)/milena/mln
 
+EXTRA_DIST = build_unit_test.sh
 # FIXME: Change build_unit_test.sh so that the action looks like this:
 #
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@

@@ -1,5 +1,13 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Distribute tests/ properly.
+
+	* tests/Makefile.am (SUBDIRS): Add extract.
+	(EXTRA_DIST): Add tools/pretty_check.sh.
+	* tests/unit_test/Makefile.am (EXTRA_DIST): Add build_unit_test.sh.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Distribute doc/ properly.
 
 	* doc/Makefile.am (SUBDIRS): Add ref_guide and tutorial.

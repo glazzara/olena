@@ -19,8 +19,6 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-.PHONY: pretty-check
-
 SUBDIRS =					\
   accu						\
   algebra					\
@@ -36,6 +34,7 @@ SUBDIRS =					\
   draw						\
   estim						\
   extension					\
+  extract					\
   fun						\
   geom						\
   graph 					\
@@ -85,6 +84,8 @@ global_vars_SOURCES = global_vars1.cc global_vars2.cc
 
 TESTS = $(check_PROGRAMS)
 
+EXTRA_DIST = tools/pretty_check.sh
+.PHONY: pretty-check
 pretty-check:
 	$(top_srcdir)/milena/tests/tools/pretty_check.sh
 
@@ -92,7 +93,7 @@ pretty-check:
 include $(top_srcdir)/build-aux/regen-recursive.mk
 REGEN_SUBDIRS += unit_test
 
-EXTRA_DIST = 					\
+EXTRA_DIST += 					\
   img/lena_ascii.pbm 				\
   img/lena_ascii.pgm				\
   img/lena_raw.pbm				\
