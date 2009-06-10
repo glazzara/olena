@@ -1,5 +1,11 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Regen Makefile helpers.
+
+	* headers.mk, tests/unit_test/unit-tests.mk: Regen.
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Complete the installation of the Make rule `tests' in Milena.
 
 	* Makefile.am (tests): New phony target.

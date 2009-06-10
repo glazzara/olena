@@ -710,7 +710,6 @@ mln/io/ppms/all.hh \
 mln/io/ppms/load.hh \
 mln/io/tiff/all.hh \
 mln/io/tiff/load.hh \
-mln/io/tiff/save.hh \
 mln/io/txt/all.hh \
 mln/io/txt/save.hh \
 mln/labeling/all.hh \
@@ -1283,7 +1282,6 @@ mln/win/vline2d.hh \
 mln/world/all.hh \
 mln/world/binary_2d/all.hh \
 mln/world/binary_2d/enlarge.hh \
-mln/world/binary_2d/enlarge_hq2x.hh \
 mln/world/binary_2d/projected_histo.hh \
 mln/world/binary_2d/subsample.hh \
 mln/world/inter_pixel/all.hh \

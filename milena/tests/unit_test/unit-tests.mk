@@ -633,17 +633,10 @@ mln_io_all \
 mln_io_cloud_all \
 mln_io_cloud_load \
 mln_io_cloud_save \
-mln_io_dicom_all \
-mln_io_dicom_load \
 mln_io_dump_all \
 mln_io_dump_load \
 mln_io_dump_save \
 mln_io_essential \
-mln_io_fits_all \
-mln_io_fits_load \
-mln_io_magick_all \
-mln_io_magick_load \
-mln_io_magick_save \
 mln_io_off_all \
 mln_io_off_load \
 mln_io_off_save \
@@ -677,9 +670,6 @@ mln_io_ppm_load \
 mln_io_ppm_save \
 mln_io_ppms_all \
 mln_io_ppms_load \
-mln_io_tiff_all \
-mln_io_tiff_load \
-mln_io_tiff_save \
 mln_io_txt_all \
 mln_io_txt_save \
 mln_labeling_all \
@@ -1249,7 +1239,6 @@ mln_win_vline2d \
 mln_world_all \
 mln_world_binary_2d_all \
 mln_world_binary_2d_enlarge \
-mln_world_binary_2d_enlarge_hq2x \
 mln_world_binary_2d_projected_histo \
 mln_world_binary_2d_subsample \
 mln_world_inter_pixel_all \
@@ -1900,17 +1889,10 @@ mln_io_all_SOURCES = mln_io_all.cc
 mln_io_cloud_all_SOURCES = mln_io_cloud_all.cc
 mln_io_cloud_load_SOURCES = mln_io_cloud_load.cc
 mln_io_cloud_save_SOURCES = mln_io_cloud_save.cc
-mln_io_dicom_all_SOURCES = mln_io_dicom_all.cc
-mln_io_dicom_load_SOURCES = mln_io_dicom_load.cc
 mln_io_dump_all_SOURCES = mln_io_dump_all.cc
 mln_io_dump_load_SOURCES = mln_io_dump_load.cc
 mln_io_dump_save_SOURCES = mln_io_dump_save.cc
 mln_io_essential_SOURCES = mln_io_essential.cc
-mln_io_fits_all_SOURCES = mln_io_fits_all.cc
-mln_io_fits_load_SOURCES = mln_io_fits_load.cc
-mln_io_magick_all_SOURCES = mln_io_magick_all.cc
-mln_io_magick_load_SOURCES = mln_io_magick_load.cc
-mln_io_magick_save_SOURCES = mln_io_magick_save.cc
 mln_io_off_all_SOURCES = mln_io_off_all.cc
 mln_io_off_load_SOURCES = mln_io_off_load.cc
 mln_io_off_save_SOURCES = mln_io_off_save.cc
@@ -1944,9 +1926,6 @@ mln_io_ppm_load_SOURCES = mln_io_ppm_load.cc
 mln_io_ppm_save_SOURCES = mln_io_ppm_save.cc
 mln_io_ppms_all_SOURCES = mln_io_ppms_all.cc
 mln_io_ppms_load_SOURCES = mln_io_ppms_load.cc
-mln_io_tiff_all_SOURCES = mln_io_tiff_all.cc
-mln_io_tiff_load_SOURCES = mln_io_tiff_load.cc
-mln_io_tiff_save_SOURCES = mln_io_tiff_save.cc
 mln_io_txt_all_SOURCES = mln_io_txt_all.cc
 mln_io_txt_save_SOURCES = mln_io_txt_save.cc
 mln_labeling_all_SOURCES = mln_labeling_all.cc
@@ -2516,7 +2495,6 @@ mln_win_vline2d_SOURCES = mln_win_vline2d.cc
 mln_world_all_SOURCES = mln_world_all.cc
 mln_world_binary_2d_all_SOURCES = mln_world_binary_2d_all.cc
 mln_world_binary_2d_enlarge_SOURCES = mln_world_binary_2d_enlarge.cc
-mln_world_binary_2d_enlarge_hq2x_SOURCES = mln_world_binary_2d_enlarge_hq2x.cc
 mln_world_binary_2d_projected_histo_SOURCES = mln_world_binary_2d_projected_histo.cc
 mln_world_binary_2d_subsample_SOURCES = mln_world_binary_2d_subsample.cc
 mln_world_inter_pixel_all_SOURCES = mln_world_inter_pixel_all.cc
