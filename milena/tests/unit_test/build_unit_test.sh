@@ -32,7 +32,25 @@ test $# -eq 1 || { echo "Usage: $0 <mln path>" && exit 1; }
 
 ## FIXME: Ouch!  Using `find' properly can probably save us some pipes,
 ## forks and characters here.
-HEADERS=`find $1 -name "*.hh" | grep -vE "*.spe.hh" | grep -v "mln/core/concept/doc" | sort | sed -e 's/.*\/mln\/\(.*\)/mln\/\1/g' | sed 's/\.\.\/\.\.\///g'`
+##
+## FIXME: We do not include these directories
+##
+##   mln/io/dicom
+##   mln/io/fits
+##   mln/io/magick
+##   mln/io/tiff
+##
+## because they contain files depending on optional (external)
+## libraries.  We should test them conditionally.
+HEADERS=$(find $1 -name "*.hh" \
+  | grep -vE "*.spe.hh" \
+  | grep -v "mln/core/concept/doc" \
+  | grep -v "mln/io/dicom" \
+  | grep -v "mln/io/fits" \
+  | grep -v "mln/io/magick" \
+  | grep -v "mln/io/tiff" \
+  | sort \
+  | sed -e 's/.*\/mln\/\(.*\)/mln\/\1/g' | sed 's/\.\.\/\.\.\///g')
 
 output=unit-tests.mk
 

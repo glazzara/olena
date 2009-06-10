@@ -1,5 +1,12 @@
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Do not exercise parts depening on optional dependencies.
+
+	* tests/unit_test/build_unit_test.sh (HEADERS): Ignore files
+	depending on optional packages (GDCM, CFITSIO, Magick++, TIFF).
+
+2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/io/ppms/load.hh: Repair copyright header.
 
 2009-06-10  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
