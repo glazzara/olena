@@ -1,3 +1,8 @@
+2009-06-11  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Minor fixes.
+	* mln/accu/label_used.hh: Correct bugs linked to math namespace.
+
 2009-06-11  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	Fix tutorial, white_paper and ref_doc generation.

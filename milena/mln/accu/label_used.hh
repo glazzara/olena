@@ -127,7 +127,7 @@ namespace mln
     label_used<L>::take(const label_used<L>& other)
     {
       unsigned
-	max_size = math::max(other.to_result().size(), label_used_.size());
+	max_size = mln::math::max(other.to_result().size(), label_used_.size());
 
       label_used_.resize(max_size, false);
       for (unsigned i = 1; i < label_used_.size(); ++i)
