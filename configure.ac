@@ -192,6 +192,7 @@ AM_CONDITIONAL([ENABLE_SCRIBO], [test x$enable_scribo = xyes])
 
 AC_CONFIG_FILES([
   scribo/Makefile
+    scribo/demo/Makefile
     scribo/src/Makefile
       scribo/src/binarization/Makefile
       scribo/src/extract/Makefile

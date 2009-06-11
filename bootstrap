@@ -131,6 +131,9 @@ set -x
 # Generate milena/headers.mk
 run milena ./generate_dist_headers.sh
 
+# Generate scribo/headers.mk
+run scribo ./generate_dist_headers.sh
+
 # Generate lists of files to be part of the distribution
 # for the tutorial.
 run milena/doc ./generate_dist_files.sh

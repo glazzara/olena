@@ -1,3 +1,11 @@
+2009-06-11 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Configure and bootstrap Scribo correctly.
+
+	* bootstrap: run the generation of the distributed file list.
+
+	* configure.ac: configure scribo/demo.
+
 2009-06-11  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Update configure.ac with tests/accu/math Makefile.
