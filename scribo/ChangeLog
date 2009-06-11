@@ -1,3 +1,11 @@
+2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Do not distribute executable binaries.
+
+	* src/Makefile.am (EXTRA_DIST): Rename as...
+	(bin_PROGRAMS): ...this.
+	Disable recognition.
+
 2009-06-11 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* headers.mk: New. List of distributed files.
