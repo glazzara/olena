@@ -1,3 +1,10 @@
+2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a script stripping parts of the distribution.
+
+	* build-aux/strip-lrde: New.
+	Imported from Olena 0.11.
+
 2009-06-11 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Configure and bootstrap Scribo correctly.
