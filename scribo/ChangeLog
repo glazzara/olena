@@ -1,3 +1,27 @@
+2009-06-10 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add Scribo's demo GUI.
+
+	* demo/Makefile.am,
+	* demo/demo.pro,
+	* demo/demo.qrc: build system based on qmake-qt4.
+
+	* demo/icons/document-open.png,
+	* demo/icons/edit-find.png,
+	* demo/icons/format-indent-more.png,
+	* demo/icons/go-next.png,
+	* demo/icons/image-x-generic.png,
+	* demo/icons/list-add.png,
+	* demo/icons/ocr.png,
+	* demo/icons/text-x-generic.png,
+	* demo/icons/view-refresh.png,
+	* demo/icons/x-office-spreadsheet.png: icon set.
+
+	* demo/src/main.cc,
+	* demo/src/mainwindow.cc,
+	* demo/src/mainwindow.hh,
+	* demo/ui/mainwindow.ui: main classes.
+
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have SCRIBO compile.
