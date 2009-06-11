@@ -1,5 +1,11 @@
 2009-06-11 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Generate list of distributed headers for Scribo.
+
+	* generate_dist_headers.sh: new. Generate distributed file list.
+
+2009-06-11 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Small fixes in Scribo.
 
 	* Makefile.am: Improve generation of headers.mk.
