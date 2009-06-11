@@ -41,9 +41,9 @@ namespace scribo
 
 } // end of namespace scribo
 
-# include <scribo/filter/thin_bboxes.hh>
-# include <scribo/filter/small_components.hh>
-# include <scribo/filter/large_components.hh>
-# include <scribo/filter/thick_bboxes.hh>
+# include <scribo/filter/large_objects.hh>
+# include <scribo/filter/small_objects.hh>
+# include <scribo/filter/thick_objects.hh>
+# include <scribo/filter/thin_objects.hh>
 
 #endif // ! SCRIBO_FILTER_ALL_HH

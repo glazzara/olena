@@ -38,13 +38,16 @@
 
 # include <scribo/table/internal/connect_lines.hh>
 
-
+#include <mln/value/int_u16.hh>
+#include <mln/draw/line.hh>
+#include <mln/io/pgm/all.hh>
 namespace scribo
 {
 
   namespace table
   {
 
+    using namespace mln;
 
     /// Connect horizontal lines with the new aligned columns.
     ///
@@ -57,9 +60,9 @@ namespace scribo
     ///				      and horizontal lines.
     template <typename I>
     void
-    connect_horizontal_lines(const util::array<int>& aligned_cols,
-			     util::couple<util::array<box<mln_site(I)> >,
-					  util::array<box<mln_site(I)> > >& tablebboxes,
+    connect_horizontal_lines(const mln::util::array<int>& aligned_cols,
+			     mln::util::couple<mln::util::array<box<mln_site(I)> >,
+					  mln::util::array<box<mln_site(I)> > >& tablebboxes,
 			     const Image<I>& input,
 			     unsigned max_distance);
 
@@ -69,9 +72,9 @@ namespace scribo
 
     template <typename I>
     void
-    connect_horizontal_lines(const util::array<int>& aligned_cols,
-			     util::couple<util::array<box<mln_site(I)> >,
-					  util::array<box<mln_site(I)> > >& tablebboxes,
+    connect_horizontal_lines(const mln::util::array<int>& aligned_cols,
+			     mln::util::couple<mln::util::array<box<mln_site(I)> >,
+					  mln::util::array<box<mln_site(I)> > >& tablebboxes,
 			     const Image<I>& input,
 			     unsigned max_distance)
     {

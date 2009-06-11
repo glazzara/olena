@@ -33,6 +33,8 @@
 #include <mln/io/pbm/all.hh>
 #include <mln/io/ppm/save.hh>
 
+#include <mln/math/min.hh>
+
 #include <scribo/extract/primitive/objects.hh>
 #include <scribo/text/grouping/group_with_single_left_link.hh>
 #include <scribo/text/grouping/group_with_single_right_link.hh>
@@ -42,8 +44,8 @@
 #include <scribo/filter/thick_objects.hh>
 
 #include <scribo/make/debug_filename.hh>
-#include <scribo/debug/save_textbboxes_image.hh>
-#include <scribo/debug/save_linked_textbboxes_image.hh>
+#include <scribo/debug/save_bboxes_image.hh>
+#include <scribo/debug/save_linked_bboxes_image.hh>
 
 #include <scribo/debug/usage.hh>
 
@@ -63,8 +65,12 @@ int main(int argc, char* argv[])
   scribo::make::internal::debug_filename_prefix = "photo";
 
   if (argc != 3)
-    return usage(argv, "Find text in a binarized photo.", "input.pbm output.ppm",
-		 args_desc, "A color image where the text is highlighted.");
+    return scribo::debug::usage(argv,
+				"Find text in a binarized photo.",
+				"input.pbm output.ppm",
+				args_desc,
+				"A color image where the text is \
+highlighted.");
 
   trace::entering("main");
 
@@ -92,13 +98,13 @@ int main(int argc, char* argv[])
     = text::grouping::group_with_single_right_link(objects, 30);
 
   std::cout << "BEFORE - nobjects = " << nobjects << std::endl;
-//  scribo::debug::save_linked_textbboxes_image(input,
+//  scribo::debug::save_linked_bboxes_image(input,
 //					      filtered_textbboxes, left_link, right_link,
 //					      literal::red, literal::cyan, literal::yellow,
 //					      literal::green,
 //					      scribo::make::debug_filename("links.ppm"));
 //
-// scribo::debug::save_textbboxes_image(input, filtered_textbboxes.bboxes(),
+// scribo::debug::save_bboxes_image(input, filtered_textbboxes.bboxes(),
 //				       literal::red,
 //				       scribo::make::debug_filename("test_graph_filtered_text.ppm"));
   object_image(L) grouped_objects
@@ -107,7 +113,7 @@ int main(int argc, char* argv[])
   std::cout << "AFTER - nobjects = " << grouped_objects.nlabels() << std::endl;
 
 
-//  scribo::debug::save_textbboxes_image(input, grouped_textbboxes.bboxes(),
+//  scribo::debug::save_bboxes_image(input, grouped_textbboxes.bboxes(),
 //				       literal::red,
 //				       scribo::make::debug_filename("test_graph_grouped_text.ppm"));
 //

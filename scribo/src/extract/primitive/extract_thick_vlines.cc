@@ -27,7 +27,7 @@
 #include <mln/value/label_16.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/io/pbm/all.hh>
-#include <mln/level/convert.hh>
+#include <mln/data/convert.hh>
 
 #include <scribo/extract/primitive/lines_v_thick.hh>
 #include <scribo/debug/usage.hh>
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 
   value::label_16 nlines;
   image2d<bool> lines
-    = level::convert(bool(),
+    = data::convert(bool(),
 		     scribo::extract::primitive::lines_v_thick(input,
 							       c8(),
 							       nlines,

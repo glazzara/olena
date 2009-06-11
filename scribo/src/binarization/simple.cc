@@ -42,8 +42,10 @@ int main(int argc, char *argv[])
   using value::int_u8;
 
   if (argc != 3)
-    return usage(argv, "Simple binarization of a gray-level image.", "input.pbm output.pbm",
-		 args_desc, "A binary image.");
+    return scribo::debug::usage(argv,
+				"Simple binarization of a gray-level image.",
+				"input.pbm output.pbm",
+				args_desc, "A binary image.");
 
   trace::entering("main");
 

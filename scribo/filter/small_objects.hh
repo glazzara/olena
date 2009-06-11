@@ -170,15 +170,16 @@ namespace scribo
      mln_precondition(nbh.is_valid());
 
      V nlabels;
-     typedef object_image(mln_ch_value(I,V)) lbl_t;
-     lbl_t lbl = extract::primitive::objects(input, nbh, nlabels);
+     typedef mln_ch_value(I,V) lbl_t;
+     object_image(lbl_t) lbl = extract::primitive::objects(input, nbh, nlabels);
 
-     typedef internal::small_objects_filter<lbl_t> func_t;
+     typedef internal::small_objects_filter<mln_ch_value(I,V)> func_t;
      func_t fv2b(lbl, min_size);
-     labeling::relabel_inplace(lbl, nlabels, fv2b);
+     lbl.relabel(fv2b);
 
      mln_concrete(I) output = duplicate(input);
-     data::fill((output | pw::value(lbl) == literal::zero).rw(), false);
+     data::fill((output | pw::value(lbl) == pw::cst(literal::zero)).rw(),
+		false);
 
      trace::exiting("scribo::filter::small_objects");
      return output;

@@ -41,9 +41,9 @@ namespace scribo
 
 } // end of namespace scribo
 
-#include <scribo/core/component_bboxes.hh>
-#include <scribo/core/macros.hh>
 #include <scribo/core/central_sites.hh>
-#include <scribo/core/erase_bboxes.hh>
+#include <scribo/core/erase_objects.hh>
+#include <scribo/core/macros.hh>
+#include <scribo/core/object_image.hh>
 
 #endif // ! SCRIBO_CORE_ALL_HH

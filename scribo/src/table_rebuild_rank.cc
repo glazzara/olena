@@ -25,14 +25,20 @@
 
 #include <iostream>
 
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/dmorph/image_if.hh>
+#include <mln/value/label_8.hh>
+#include <mln/value/label_16.hh>
 #include <mln/pw/all.hh>
+#include <mln/io/pbm/all.hh>
+#include <mln/util/couple.hh>
 #include <mln/data/compute.hh>
 #include <mln/accu/maj_h.hh>
 
 #include <scribo/table/rebuild.hh>
 #include <scribo/table/erase.hh>
-#include <scribo/table/extract_lines_with_rank.hh>
+#include <scribo/extract/primitive/lines_h_discontinued.hh>
+#include <scribo/extract/primitive/lines_v_discontinued.hh>
 #include <scribo/make/debug_filename.hh>
 
 int usage(const char *name)
@@ -56,18 +62,28 @@ int main(int argc, char* argv[])
   io::pbm::load(input, argv[1]);
   logical::not_inplace(input);
 
-  typedef util::couple<util::array<box2d>,util::array<box2d> > tblboxes_t;
+  typedef object_image(image2d<value::label_16>) lines_t;
 
-  win::vline2d vline(51);
-  win::hline2d hline(51);
   value::label_16 nbboxes;
-  tblboxes_t lineboxes
-	= table::extract_lines_with_rank(input, c8(), nbboxes,
-					 vline, hline, 6, 6);
+  lines_t hlines
+	= scribo::extract::primitive::lines_h_discontinued(input,
+							   c8(),
+							   nbboxes,
+							   51,
+							   6);
+  lines_t vlines
+	= scribo::extract::primitive::lines_v_discontinued(input,
+							   c8(),
+							   nbboxes,
+							   51,
+							   6);
 
   value::label_8 ncells;
   image2d<value::label_8> tables
-    = scribo::table::rebuild(input, lineboxes, 5, ncells).first();
+    = scribo::table::rebuild(input,
+			     mln::make::couple(vlines.bboxes(), hlines.bboxes()),
+			     30,
+			     ncells).first();
 
 
   std::cout << "ncells (including background) = " << ncells << std::endl;
@@ -88,7 +104,7 @@ int main(int argc, char* argv[])
   data::fill((input_rgb | pw::value(tables) == pw::cst(0u)).rw(), literal::red);
   io::ppm::save(input_rgb, scribo::make::debug_filename("table_superposed.ppm"));
 
-  image2d<bool> in_wo_tables = table::erase(input, lineboxes);
+  image2d<bool> in_wo_tables = table::erase(input, hlines, vlines);
   io::pbm::save(in_wo_tables,
       scribo::make::debug_filename("input_wo_tables.pbm"));
 

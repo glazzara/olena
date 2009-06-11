@@ -23,53 +23,62 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <iostream>
-
 #include <mln/core/image/image2d.hh>
-#include <mln/io/pbm/load.hh>
-#include <mln/io/ppm/save.hh>
-#include <mln/io/dump/save.hh>
 #include <mln/value/label_16.hh>
-#include <mln/labeling/colorize.hh>
 #include <mln/value/rgb8.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/io/pbm/all.hh>
+#include <mln/io/ppm/save.hh>
+#include <mln/data/convert.hh>
+#include <mln/debug/superpose.hh>
 
-#include <scribo/table/extract.hh>
-
+#include <scribo/extract/primitive/lines_h_discontinued.hh>
+#include <scribo/extract/primitive/lines_v_discontinued.hh>
 #include <scribo/debug/usage.hh>
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image. 'True' for objects, 'False'\
-for the background." },
-  { "output.dump", "A label image stored as milena dump image." },
+  { "input.pbm", "A binary image." },
+  { "length", "   Minimum line length." },
+  { "rank", "     Filter rank." },
   {0, 0}
 };
 
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-  using namespace scribo;
   using namespace mln;
 
-  if (argc != 4)
-    return scribo::debug::usage(argv,
-				"Extract tables from a binary image.",
-				"input.pbm output.dump output.ppm",
-				args_desc,
-				"A color images. 'White' color means \
-the background, other colors indicates cells.");
+  if (argc != 5)
+    return usage(argv, "Extract discontinued horizontal and vertical lines",
+		 "input.pbm length rank output.pbm",
+		 args_desc, "A binary image of horizontal and vertical lines.");
 
   trace::entering("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
-  value::label_16 ncells;
-  image2d<value::label_16> tables = scribo::table::extract(input, ncells).first();
+  value::label_16 nhlines;
+  image2d<bool> hlines
+    = data::convert(bool(),
+		     scribo::extract::primitive::lines_h_discontinued(input,
+								      c8(),
+								      nhlines,
+								      atoi(argv[2]),
+								      atoi(argv[3])));
+  value::label_16 nvlines;
+  image2d<bool> vlines
+    = data::convert(bool(),
+		     scribo::extract::primitive::lines_v_discontinued(input,
+								      c8(),
+								      nvlines,
+								      atoi(argv[2]),
+								      atoi(argv[3])));
 
-  io::ppm::save(mln::labeling::colorize(value::rgb8(), tables, ncells), argv[3]);
-
-  io::dump::save(tables, argv[2]);
+  data::fill((hlines | pw::value(vlines)).rw(), true);
+  image2d<value::rgb8> out = debug::superpose(input, hlines);
+  io::ppm::save(out, argv[4]);
 
   trace::exiting("main");
 }

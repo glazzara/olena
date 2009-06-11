@@ -32,6 +32,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/graph.hh>
+# include <mln/math/abs.hh>
 
 namespace scribo
 {
@@ -45,7 +46,19 @@ namespace scribo
       namespace internal
       {
 
+	using namespace mln;
+
+
 	/// Update graph edges if a valid neighbor is found.
+	///
+	/// \param[in] lbl_ A label image.
+	/// \param[in] g_   A graph.
+	/// \param[in] p    A site of \p lbl_.
+	/// \param[in] c    A site of \p lbl_.
+	/// \param[in] i    A vertex id.
+	/// \param[in] dmax The maximum distance allowed to look for a
+	///		    neighbor.
+	//
 	template <typename I, typename G>
 	void
 	update_graph_link(const Image<I>& lbl_, Graph<G>& g_,

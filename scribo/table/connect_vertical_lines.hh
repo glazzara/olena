@@ -57,9 +57,9 @@ namespace scribo
     ///				      and horizontal lines.
     template <typename I>
     void
-    connect_vertical_lines(const util::array<int>& aligned_rows,
-			   util::couple<util::array<box<mln_site(I)> >,
-					util::array<box<mln_site(I)> > >& tablebboxes,
+    connect_vertical_lines(const mln::util::array<int>& aligned_rows,
+			   mln::util::couple<mln::util::array<box<mln_site(I)> >,
+					mln::util::array<box<mln_site(I)> > >& tablebboxes,
 			   const Image<I>& input,
 			   unsigned max_distance);
 
@@ -70,9 +70,9 @@ namespace scribo
     /// Connect vertical lines with the new aligned rows.
     template <typename I>
     void
-    connect_vertical_lines(const util::array<int>& aligned_rows,
-			   util::couple<util::array<box<mln_site(I)> >,
-					util::array<box<mln_site(I)> > >& tablebboxes,
+    connect_vertical_lines(const mln::util::array<int>& aligned_rows,
+			   mln::util::couple<mln::util::array<box<mln_site(I)> >,
+					mln::util::array<box<mln_site(I)> > >& tablebboxes,
 			   const Image<I>& input,
 			   unsigned max_distance)
     {

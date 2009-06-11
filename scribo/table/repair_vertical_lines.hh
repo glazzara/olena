@@ -64,8 +64,8 @@ namespace scribo
     template <typename I>
     void
     repair_vertical_lines(const Image<I>& input,
-			  util::couple<util::array<box<mln_site(I)> >,
-				       util::array<box<mln_site(I)> > >& tablebboxes,
+			  mln::util::couple<mln::util::array<box<mln_site(I)> >,
+				       mln::util::array<box<mln_site(I)> > >& tablebboxes,
 			  unsigned max_discontinuity);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -74,8 +74,8 @@ namespace scribo
     inline
     void
     repair_vertical_lines(const Image<I>& input,
-			  util::couple<util::array<box<mln_site(I)> >,
-				       util::array<box<mln_site(I)> > >& tablebboxes,
+			  mln::util::couple<mln::util::array<box<mln_site(I)> >,
+				       mln::util::array<box<mln_site(I)> > >& tablebboxes,
 			  unsigned max_discontinuity)
     {
       trace::entering("scribo::table::repair_vertical_lines");

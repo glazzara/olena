@@ -32,15 +32,17 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/literal/colors.hh>
 
-#include <scribo/text/extract_bboxes.hh>
+#include <scribo/core/object_image.hh>
+
+#include <scribo/extract/primitive/objects.hh>
 #include <scribo/text/grouping/group_with_graph.hh>
 #include <scribo/text/grouping/group_from_graph.hh>
-#include <scribo/filter/small_components.hh>
+#include <scribo/filter/small_objects.hh>
 #include <scribo/util/text.hh>
 
 #include <scribo/make/debug_filename.hh>
-#include <scribo/debug/save_textbboxes_image.hh>
-#include <scribo/debug/save_linked_textbboxes_image.hh>
+#include <scribo/debug/save_bboxes_image.hh>
+#include <scribo/debug/save_linked_bboxes_image.hh>
 
 #include <scribo/tests/data.hh>
 
@@ -69,37 +71,37 @@ int main(int argc, char* argv[])
   image2d<bool> input;
   io::pbm::load(input, img.c_str());
 
-  typedef scribo::util::text<image2d<value::label_16> > text_t;
   value::label_16 nbboxes;
-  text_t textbboxes = text::extract_bboxes(input, c8(), nbboxes);
+  typedef object_image(image2d<value::label_16>) text_t;
+  text_t text = extract::primitive::objects(input, c8(), nbboxes);
 
-  mln::util::graph g = text::grouping::group_with_graph(textbboxes, 30);
+  mln::util::graph g = text::grouping::group_with_graph(text, 30);
 
 
   mln_assertion(nbboxes == 12u);
 //  std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
-//  scribo::debug::save_linked_textbboxes_image(input,
-//					      textbboxes, g,
+//  scribo::debug::save_linked_bboxes_image(input,
+//					      text, g,
 //					      literal::red, literal::cyan,
 //					      "test_graph_left_linked.ppm");
 
-  text_t grouped_textbboxes
-    = text::grouping::group_from_graph(textbboxes, g);
+  text_t grouped_text
+    = text::grouping::group_from_graph(text, g);
 
-//  std::cout << "AFTER - nbboxes = " << grouped_textbboxes.nbboxes().next() << std::endl;
+//  std::cout << "AFTER - nbboxes = " << grouped_text.nbboxes().next() << std::endl;
 //
-//  scribo::debug::save_textbboxes_image(input, grouped_textbboxes.bboxes(),
+//  scribo::debug::save_bboxes_image(input, grouped_text.bboxes(),
 //				       literal::red,
 //				       "test_graph_grouped_text.ppm");
 
-  mln_assertion(grouped_textbboxes.nbboxes() == 6u);
+  mln_assertion(grouped_text.nbboxes() == 6u);
 
   text_t
-    filtered_textbboxes = scribo::filter::small_components(grouped_textbboxes, 20);
+    filtered_text = scribo::filter::small_objects(grouped_text, 20);
 
-  mln_assertion(filtered_textbboxes.nbboxes() == 2u);
+  mln_assertion(filtered_text.nbboxes() == 2u);
 
-//  scribo::debug::save_textbboxes_image(input, filtered_textbboxes.bboxes(),
+//  scribo::debug::save_bboxes_image(input, filtered_text.bboxes(),
 //				       literal::red,
 //				       "test_graph_filtered_text.ppm");
 

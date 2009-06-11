@@ -47,15 +47,17 @@
 # include <mln/util/graph.hh>
 # include <mln/value/label_16.hh>
 
+# include <scribo/extract/primitive/objects.hh>
 # include <scribo/text/grouping/group_with_several_left_links.hh>
 # include <scribo/text/grouping/group_with_several_right_links.hh>
 # include <scribo/text/grouping/group_from_double_link.hh>
-# include <scribo/filter/small_objects.hh>
-# include <scribo/util/text.hh>
 
-# include <scribo/make/debug_filename.hh>
-# include <scribo/debug/save_textbboxes_image.hh>
-# include <scribo/debug/save_linked_textbboxes_image.hh>
+# ifndef SCRIBO_NDEBUG
+#  include <mln/literal/colors.hh>
+#  include <scribo/make/debug_filename.hh>
+#  include <scribo/debug/save_bboxes_image.hh>
+#  include <scribo/debug/save_linked_bboxes_image.hh>
+# endif // SCRIBO_NDEBUG
 
 namespace scribo
 {
@@ -72,10 +74,10 @@ namespace scribo
     ** \param[in,out] nbboxes Will hold the number of bounding boxes
     **			      at the end of the routine.
     **
-    ** \return The text lines.
+    ** \return An object image with grouped potential text objects.
     */
     template <typename I, typename N, typename V>
-    scribo::util::text<mln_ch_value(I,V)>
+    object_image(mln_ch_value(I,V))
     extract_lines(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_,
 		  V& nbboxes);
@@ -85,7 +87,7 @@ namespace scribo
 
 
     template <typename I, typename N, typename V>
-    scribo::util::text<mln_ch_value(I,V)>
+    object_image(mln_ch_value(I,V))
     extract_lines(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_,
 		  V& nbboxes)
@@ -98,12 +100,12 @@ namespace scribo
       mln_precondition(input.is_valid());
       mln_precondition(nbh.is_valid());
 
-      scribo::util::text<mln_ch_value(I,V)> text
-	    = scribo::make::text(input, nbh, nbboxes);
+      typedef object_image(mln_ch_value(I,V)) text_t;
+      text_t text = scribo::extract::primitive::objects(input, nbh, nbboxes);
 
 # ifndef SCRIBO_NDEBUG
-      debug::save_textbboxes_image(input, text.bboxes(), literal::red,
-				   scribo::make::debug_filename("character-bboxes.ppm"));
+      debug::save_bboxes_image(input, text.bboxes(), literal::red,
+			       scribo::make::debug_filename("character-bboxes.ppm"));
 # endif // ! SCRIBO_NDEBUG
 
       //Link character bboxes to their left neighboor if possible.
@@ -113,21 +115,21 @@ namespace scribo
 	= text::grouping::group_with_several_right_links(text, 30);
 
 # ifndef SCRIBO_NDEBUG
-      scribo::debug::save_linked_textbboxes_image(input,
-						  text, left_link, right_link,
-						  literal::red, literal::cyan,
-						  literal::yellow, literal::green,
-						  scribo::make::debug_filename("links.ppm"));
+      scribo::debug::save_linked_bboxes_image(input,
+					      text, left_link, right_link,
+					      literal::red, literal::cyan,
+					      literal::yellow, literal::green,
+					      scribo::make::debug_filename("links.ppm"));
 # endif // ! SCRIBO_NDEBUG
 
       //Merge character bboxes through a graph.
-      scribo::util::text<mln_ch_value(I,V)> grouped_text
+      text_t grouped_text
 	  = text::grouping::group_from_double_link(text, left_link, right_link);
 
 # ifndef SCRIBO_NDEBUG
-      debug::save_textbboxes_image(input, grouped_text.bboxes(),
-				   literal::red,
-				   scribo::make::debug_filename("multiple_links_grouped_text.ppm"));
+      debug::save_bboxes_image(input, grouped_text.bboxes(),
+			       literal::red,
+			       scribo::make::debug_filename("multiple_links_grouped_text.ppm"));
 # endif // ! SCRIBO_NDEBUG
 
 

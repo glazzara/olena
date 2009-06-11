@@ -74,15 +74,13 @@ int main(int argc, char *argv[])
 
   lineboxes_t hboxes_, vboxes_;
 
-  typedef image2d<value::label_8> lbl_t;
+  typedef object_image(image2d<value::label_8>) lbl_t;
   lbl_t
     hlbl = scribo::extract::primitive::lines_h_discontinued(input, c8(),
-							    nbboxes, 11, 2,
-							    hboxes_);
+							    nbboxes, 11, 2);
   lbl_t
     vlbl = scribo::extract::primitive::lines_v_discontinued(input, c8(),
-							    nbboxes, 11, 2,
-							    vboxes_);
-  mln_assertion(hboxes_ == hboxes);
-  mln_assertion(vboxes_ == vboxes);
+							    nbboxes, 11, 2);
+  mln_assertion(hlbl.bboxes() == hboxes);
+  mln_assertion(vlbl.bboxes() == vboxes);
 }

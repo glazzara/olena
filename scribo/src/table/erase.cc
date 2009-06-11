@@ -32,7 +32,7 @@
 #include <mln/value/label_16.hh>
 #include <mln/core/alias/neighb2d.hh>
 
-#include <scribo/table/extract.hh>
+#include <scribo/table/erase.hh>
 
 #include <scribo/extract/primitive/lines_h_discontinued.hh>
 #include <scribo/extract/primitive/lines_v_discontinued.hh>
@@ -55,9 +55,11 @@ int main(int argc, char* argv[])
   using mln::value::label_16;
 
   if (argc != 3)
-    return usage(argv, "Remove tables from a binary image.",
-		 "input.pbm output.pbm",
-		 args_desc, "A binary image without tables.");
+    return scribo::debug::usage(argv,
+				"Remove tables from a binary image.",
+				"input.pbm output.pbm",
+				args_desc,
+				"A binary image without tables.");
 
   trace::entering("main");
 
@@ -75,8 +77,8 @@ int main(int argc, char* argv[])
 						     nhlines, 51, 6);
 
   image2d<bool> input_notables
-    = scribo::table::erase(input,
-			   mln::make::couple(lbl_v.bboxes(),lbl_h.bboxes()));
+    = scribo::table::erase(input, lbl_h, lbl_v);
+
   io::pbm::save(input_notables, argv[2]);
 
   trace::exiting("main");

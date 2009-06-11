@@ -46,9 +46,8 @@
 # include <mln/util/array.hh>
 # include <mln/util/graph_ids.hh>
 
+# include <scribo/core/object_image.hh>
 # include <scribo/core/macros.hh>
-# include <scribo/util/text.hh>
-# include <scribo/make/text.hh>
 
 
 namespace scribo
@@ -60,18 +59,21 @@ namespace scribo
     namespace grouping
     {
 
+      using namespace mln;
+
       /// Group lines of text according to a graph of links between
       /// the lines of text.
-      /*!
-      ** \param[in] text  The lines of text.
-      ** \param[in] g_	  The graph of links between the lines of text.
-      **
-      ** \return The grouped and non-grouped lines of text.
-      */
-      template <typename I, typename G>
-      scribo::util::text<I>
-      group_from_graph(const scribo::util::text<I>& text,
+      ///
+      /// \param[in] text  An object image.
+      /// \param[in] g_	  The graph of links between the lines of text.
+      ///
+      /// \return An image with grouped objects.
+      //
+      template <typename L, typename G>
+      object_image(L)
+      group_from_graph(const object_image(L)& text,
 		       const Graph<G>& g_);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -138,10 +140,10 @@ namespace scribo
 
 
 
-      template <typename I, typename G>
+      template <typename L, typename G>
       inline
-      scribo::util::text<I>
-      group_from_graph(const scribo::util::text<I>& text,
+      object_image(L)
+      group_from_graph(const object_image(L)& text,
 		       const Graph<G>& g_)
       {
 	trace::entering("scribo::text::grouping::group_from_graph");
@@ -150,10 +152,12 @@ namespace scribo
 
 	mln_assertion(g.is_valid());
 
-	internal::map_vertex_to_representative_id_functor<mln_value(I)> f;
+	internal::map_vertex_to_representative_id_functor<mln_value(L)> f;
 	canvas::browsing::depth_first_search(g, f);
 
-	scribo::util::text<I> output = scribo::make::text(text, f.vertextorep);
+	object_image(L) output;
+	output.init_from_(text);
+	output.relabel(f.vertextorep);
 
 	trace::exiting("scribo::text::grouping::group_from_graph");
 	return output;

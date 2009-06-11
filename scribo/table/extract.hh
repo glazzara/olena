@@ -40,8 +40,6 @@
 # include <scribo/extract/primitive/lines_h_discontinued.hh>
 # include <scribo/extract/primitive/lines_v_discontinued.hh>
 
-# include <scribo/make/debug_filename.hh>
-
 
 namespace scribo
 {
@@ -61,8 +59,8 @@ namespace scribo
     */
     template <typename I, typename V>
     mln::util::couple<mln_ch_value(I,V),
-		      util::couple<util::array<box<mln_site(I)> >,
-				   util::array<box<mln_site(I)> > > >
+		      mln::util::couple<mln::util::array<box<mln_site(I)> >,
+				   mln::util::array<box<mln_site(I)> > > >
     extract(const Image<I>& input_, V& ncells);
 
 
@@ -71,8 +69,8 @@ namespace scribo
     template <typename I, typename V>
     inline
     mln::util::couple<mln_ch_value(I,V),
-		      util::couple<util::array<box<mln_site(I)> >,
-				   util::array<box<mln_site(I)> > > >
+		      mln::util::couple<mln::util::array<box<mln_site(I)> >,
+				   mln::util::array<box<mln_site(I)> > > >
     extract(const Image<I>& input_, V& ncells)
     {
       trace::entering("scribo::table::extract");
@@ -83,12 +81,14 @@ namespace scribo
 
       V nhlines, nvlines;
       object_image(mln_ch_value(I,V))
-	hlines = extract::primitive::lines_h_discontinued(input, c8(), nhlines, 51, 6),
-	vlines = extract::primitive::lines_v_discontinued(input, c8(), nvlines, 51, 6);
+	hlines = extract::primitive::lines_h_discontinued(input, c8(),
+							  nhlines, 51, 6),
+	vlines = extract::primitive::lines_v_discontinued(input, c8(),
+							  nvlines, 51, 6);
 
       typedef mln::util::couple<mln_ch_value(I,V),
-				util::couple<util::array<box<mln_site(I)> >,
-					     util::array<box<mln_site(I)> > > >
+				mln::util::couple<mln::util::array<box<mln_site(I)> >,
+					     mln::util::array<box<mln_site(I)> > > >
 	      tables_t;
       tables_t tables
 	= scribo::table::rebuild(input,

@@ -36,7 +36,7 @@
 
 # include <mln/util/array.hh>
 
-# include <scribo/util/text.hh>
+# include <scribo/core/object_image.hh>
 # include <scribo/text/grouping/internal/update_link_array.hh>
 
 //FIXME: not generic.
@@ -54,6 +54,8 @@ namespace scribo
       namespace internal
       {
 
+	using namespace mln;
+
 	/// Find the right neighbor of a line of text if exists.
 	///
 	/// \param text The lines of text.
@@ -61,23 +63,24 @@ namespace scribo
 	/// \param current_comp A text line id.
 	/// \param dmax The maximum lookup distance.
 	/// \param c The lookup start point.
+	//
 	template <typename L>
 	void
 	find_right_link(const object_image(L)& text,
-		       mln::util::array<unsigned>& right_link,
-		       unsigned current_comp,
-		       int dmax,
-		       const mln_site(L)& c);
+		        mln::util::array<unsigned>& right_link,
+		        unsigned current_comp,
+		        int dmax,
+		        const mln_site(L)& c);
 
 # ifndef MLN_INCLUDE_ONLY
 
 	template <typename L>
 	void
 	find_right_link(const object_image(L)& objects,
-		       mln::util::array<unsigned>& right_link,
-		       unsigned current_comp,
-		       int dmax,
-		       const mln_site(L)& c)
+		        mln::util::array<unsigned>& right_link,
+		        unsigned current_comp,
+		        int dmax,
+		        const mln_site(L)& c)
 	{
 	  ///FIXME: the following code is not generic...
 	  /// First site on the right of the central site

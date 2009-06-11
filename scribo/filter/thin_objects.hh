@@ -151,7 +151,8 @@ namespace scribo
       objects.relabel(fv2b);
 
       mln_concrete(I) output = duplicate(input);
-      data::fill((output | pw::value(objects) == literal::zero).rw(), false);
+      data::fill((output | pw::value(objects) == pw::cst(literal::zero)).rw(),
+		 false);
 
       trace::exiting("scribo::filter::thin_objects");
       return output;

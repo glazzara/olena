@@ -23,53 +23,56 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <iostream>
-
 #include <mln/core/image/image2d.hh>
-#include <mln/io/pbm/load.hh>
-#include <mln/io/ppm/save.hh>
-#include <mln/io/dump/save.hh>
-#include <mln/value/label_16.hh>
-#include <mln/labeling/colorize.hh>
-#include <mln/value/rgb8.hh>
 
-#include <scribo/table/extract.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/value/label_16.hh>
+
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pbm/save.hh>
+
+#include <mln/logical/not.hh>
+
+#include <scribo/binarization/simple.hh>
+#include <scribo/preprocessing/unskew.hh>
+#include <scribo/filter/small_objects.hh>
+#include <scribo/filter/thin_objects.hh>
 
 #include <scribo/debug/usage.hh>
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image. 'True' for objects, 'False'\
-for the background." },
-  { "output.dump", "A label image stored as milena dump image." },
+  { "input.pgm", "A gray-level image." },
   {0, 0}
 };
 
-
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-  using namespace scribo;
   using namespace mln;
 
-  if (argc != 4)
+  if (argc != 3)
     return scribo::debug::usage(argv,
-				"Extract tables from a binary image.",
-				"input.pbm output.dump output.ppm",
-				args_desc,
-				"A color images. 'White' color means \
-the background, other colors indicates cells.");
+				"Generic image preprocessing",
+				"input.pgm output.pbm",
+				args_desc, "A binary image.");
 
   trace::entering("main");
 
-  image2d<bool> input;
-  io::pbm::load(input, argv[1]);
+  typedef image2d<value::int_u8> I;
+  I input;
+  io::pgm::load(input, argv[1]);
 
-  value::label_16 ncells;
-  image2d<value::label_16> tables = scribo::table::extract(input, ncells).first();
+  image2d<bool> input_bw = scribo::binarization::simple(input);
 
-  io::ppm::save(mln::labeling::colorize(value::rgb8(), tables, ncells), argv[3]);
+  logical::not_inplace(input_bw);
+  input_bw = scribo::preprocessing::unskew(input_bw);
 
-  io::dump::save(tables, argv[2]);
+  input_bw = scribo::filter::small_objects(input_bw, c8(), value::label_16(), 3);
+  input_bw = scribo::filter::thin_objects(input_bw, c8(), value::label_16(), 1);
+
+  logical::not_inplace(input_bw);
+  io::pbm::save(input_bw, argv[2]);
 
   trace::exiting("main");
+
 }

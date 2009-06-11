@@ -46,8 +46,12 @@ int main(int argc, char *argv[])
   using namespace mln;
 
   if (argc != 4)
-    return usage(argv, "Superpose two binary images", "input.pbm data.pbm output.ppm",
-		 args_desc, "A color image. Data from 'data.pbm' is colored in red.");
+    return scribo::debug::usage(argv,
+				"Superpose two binary images",
+				"input.pbm data.pbm output.ppm",
+				args_desc,
+				"A color image. Data from 'data.pbm' is \
+colored in red.");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);

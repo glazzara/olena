@@ -31,6 +31,8 @@
 /// Extract canvas cells from a binary image.
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/concept/neighborhood.hh>
+# include <mln/core/site_set/box.hh>
 
 # include <mln/accu/bbox.hh>
 
@@ -42,7 +44,7 @@
 # include <scribo/table/rebuild.hh>
 # include <scribo/table/erase.hh>
 
-# include <scribo/primitive/discontinued_lines.hh>
+# include <scribo/extract/primitive/lines_discontinued.hh>
 
 # include <scribo/make/debug_filename.hh>
 
@@ -56,16 +58,19 @@ namespace scribo
     namespace primitive
     {
 
+      using namespace mln;
+
       /// Extract canvas cells from a binary image.
       /// Use arbitrary criterions.
-      /*
-      ** \param[in] input_      A binary image.
-      ** \param[in,out] ncells  Will store the number of cells found.
-      **
-      ** \return A list of cell bounding boxes.
-      */
-      template <typename I, typename V>
-      util::couple<util::array<box<mln_site(I)> >
+      ///
+      /// \param[in] input_      A binary image.
+      /// \param[in,out] ncells  Will store the number of cells found.
+      ///
+      /// \return A list of cell bounding boxes.
+      //
+      template <typename I, typename N, typename V>
+      mln::util::couple<mln::util::array<box<mln_site(I)> >,
+			mln::util::array<box<mln_site(I)> > >
       cells(const Image<I>& input_,
 	    const Neighborhood<N>& nbh_, const V& label_type);
 
@@ -74,7 +79,8 @@ namespace scribo
 
       template <typename I, typename N, typename V>
       inline
-      util::couple<util::array<box<mln_site(I)> >
+      mln::util::couple<mln::util::array<box<mln_site(I)> >,
+			mln::util::array<box<mln_site(I)> > >
       cells(const Image<I>& input_,
 	    const Neighborhood<N>& nbh_, const V& label_type)
       {
@@ -86,21 +92,23 @@ namespace scribo
 	mln_precondition(nbh.is_valid());
 	mlc_equal(mln_value(I), bool)::check();
 
-	typedef util::array< box<mln_site(I)> > boxarray_t;
+	typedef mln::util::array< box<mln_site(I)> > boxarray_t;
 
 	V ncells;
 	win::line<mln_grid(I::site), 0, mln_coord(I::site)> vline(51);
 	win::line<mln_grid(I::site), 1, mln_coord(I::site)> hline(51);
 	boxarray_t
-	  vlines = primitive::discontinued_lines(input, nbh, ncells, vline, 6),
-	  hlines = primitive::discontinued_lines(input, nbh, ncells, hline, 6);
+	  vlines = extract::primitive::lines_discontinued(input, nbh,
+							  ncells, vline, 6),
+	  hlines = extract::primitive::lines_discontinued(input, nbh,
+							  ncells, hline, 6);
 
 	typedef mln_ch_value(I,V) cells_ima_t;
 
 	cells_ima_t
-	  cells = scribo::table::rebuild(input, make::couple(vlines,hlines),
+	  cells = scribo::table::rebuild(input, mln::make::couple(vlines,hlines),
 					 30, ncells).first();
-	util::array<box<mln_site(I)> >
+	mln::util::array<box<mln_site(I)> >
 	  cellbboxes = labeling::compute(accu::meta::bbox(), cells, ncells);
 
 	trace::exiting("scribo::primitive::cells");

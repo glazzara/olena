@@ -1,5 +1,97 @@
 2009-06-10 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Fix Scribo
+
+	* core/all.hh
+	* debug/all.hh
+	* text/all.hh
+	* filter/all.hh
+	* table/all.hh
+
+	* demo/Makefile.am
+	* src/Makefile.am
+	* src/extract/primitive/Makefile.am
+
+	* core/erase_bboxes.hh: move...
+	* core/erase_objects.hh: ...here.
+
+	* debug/save_textbboxes_image.hh: move...
+	* debug/save_bboxes_image.hh: ...here.
+
+	* debug/save_label_image.hh,
+	* debug/save_linked_bboxes_image.hh,
+	* debug/save_linked_textbboxes_image.hh,
+	* debug/usage.hh,
+	* extract/lines_discontinued.hh,
+	* extract/primitive/canvas.hh,
+	* extract/primitive/cells.hh,
+	* extract/primitive/lines_discontinued.hh,
+	* filter/small_objects.hh,
+	* filter/thin_objects.hh,
+	* make/influence_zone_graph.hh,
+	* src/binarization/simple.cc,
+	* src/extract/primitive/extract_discontinued_hlines.cc,
+	* src/extract/primitive/extract_discontinued_lines.cc,
+	* src/extract/primitive/extract_discontinued_vlines.cc,
+	* src/extract/primitive/extract_thick_hlines.cc,
+	* src/extract/primitive/extract_thick_vlines.cc,
+	* src/extract/primitive/find_discontinued_lines.cc,
+	* src/extract_text_double_link.cc,
+	* src/extract_text_double_several_links.cc,
+	* src/extract_text_graph.cc,
+	* src/extract_text_several_graph.cc,
+	* src/extract_text_several_left_links.cc,
+	* src/extract_text_single_link.cc,
+	* src/morpho.cc,
+	* src/negate.cc,
+	* src/preprocess.cc,
+	* src/preprocessing/unskew.cc,
+	* src/recognition.cc,
+	* src/superpose.cc,
+	* src/table/erase.cc,
+	* src/table/extract.cc,
+	* src/table_rebuild_opening.cc,
+	* src/table_rebuild_rank.cc,
+	* src/text_in_photo.cc,
+	* src/thin_bboxes.cc,
+	* table/align_lines_horizontaly.hh,
+	* table/align_lines_verticaly.hh,
+	* table/connect_horizontal_lines.hh,
+	* table/connect_vertical_lines.hh,
+	* table/erase.hh,
+	* table/extract.hh,
+	* table/internal/align_lines.hh,
+	* table/internal/connect_lines.hh,
+	* table/internal/repair_lines.hh,
+	* table/rebuild.hh,
+	* table/repair_horizontal_lines.hh,
+	* table/repair_vertical_lines.hh,
+	* tests/filter/small_and_large_bboxes.cc,
+	* tests/preprocessing/unskew.cc,
+	* tests/table/extract_lines_with_rank.cc,
+	* tests/table/repair_lines.cc,
+	* text/clean.hh,
+	* text/extract_lines.hh,
+	* text/grouping/group_from_double_link.hh,
+	* text/grouping/group_from_graph.hh,
+	* text/grouping/group_from_single_link.hh,
+	* text/grouping/group_with_graph.hh,
+	* text/grouping/group_with_several_graphes.hh,
+	* text/grouping/group_with_several_right_links.hh,
+	* text/grouping/internal/find_graph_link.hh,
+	* text/grouping/internal/find_right_link.hh,
+	* text/grouping/internal/update_graph_link.hh,
+	* text/grouping/internal/update_link_array.hh: fix compilation.
+	  - Add missing includes.
+	  - Use object image.
+
+	* tests/unit_test/build_unit_test.sh: do not use some files for unit
+	tests.
+
+	* tests/unit_test/unit-tests.mk: update list.
+
+2009-06-10 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add Scribo's demo GUI.
 
 	* demo/Makefile.am,

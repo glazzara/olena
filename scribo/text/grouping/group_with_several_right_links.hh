@@ -37,6 +37,7 @@
 
 # include <mln/util/array.hh>
 
+# include <scribo/core/object_image.hh>
 # include <scribo/core/macros.hh>
 # include <scribo/text/grouping/internal/init_link_array.hh>
 # include <scribo/text/grouping/internal/find_right_link.hh>
@@ -51,6 +52,8 @@ namespace scribo
 
     namespace grouping
     {
+
+      using namespace mln;
 
       /// Map each character bounding box to its right bounding box neighbor
       /// if possible.

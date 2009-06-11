@@ -63,9 +63,9 @@ namespace scribo
     /// \return A list of the resulting aligned cols. Each integer is actually
     ///		a col number.
     template <typename I>
-    util::array<int>
+    mln::util::array<int>
     align_lines_verticaly(const Image<I>& input,
-			  util::array<box<mln_site(I)> >& line_bboxes,
+			  mln::util::array<box<mln_site(I)> >& line_bboxes,
 			  unsigned max_alignment_diff);
 
 
@@ -73,15 +73,15 @@ namespace scribo
 
 
     template <typename I>
-    util::array<int>
+    mln::util::array<int>
     align_lines_verticaly(const Image<I>& input,
-			  util::array<box<mln_site(I)> >& line_bboxes,
+			  mln::util::array<box<mln_site(I)> >& line_bboxes,
 			  unsigned max_alignment_diff)
     {
       trace::entering("scribo::table::align_lines_verticaly");
 
       mln_precondition(exact(input).is_valid());
-      util::array<int> res = internal::align_lines(geom::ncols(input),
+      mln::util::array<int> res = internal::align_lines(geom::ncols(input),
 						   geom::min_col(input),
 						   geom::max_col(input),
 						   line_bboxes, 1,

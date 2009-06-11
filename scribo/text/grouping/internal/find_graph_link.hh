@@ -37,7 +37,7 @@
 
 # include <mln/util/array.hh>
 
-# include <scribo/util/text.hh>
+# include <scribo/core/object_image.hh>
 # include <scribo/text/grouping/internal/update_graph_link.hh>
 
 //FIXME: not generic.
@@ -63,10 +63,11 @@ namespace scribo
 	/// \param current_comp The current line being processed.
 	/// \param dmax The maximum lookup distance.
 	/// \param c Start point of the neighbor lookup.
+	//
 	template <typename G, typename L>
 	void
 	find_graph_link(Graph<G>& g_,
-			const scribo::util::text<L>& text,
+			const object_image(L)& text,
 			unsigned current_comp,
 			int dmax,
 			const mln_site(L)& c);
@@ -76,7 +77,7 @@ namespace scribo
 	template <typename G, typename L>
 	void
 	find_graph_link(Graph<G>& g_,
-			const scribo::util::text<L>& text,
+			const object_image(L)& text,
 			unsigned current_comp,
 			int dmax,
 			const mln_site(L)& c)
@@ -91,13 +92,12 @@ namespace scribo
 	  /// First site on the right of the central site
 	  mln_site(L) p = c + right;
 
-	  const L& lbl = text.label_image();
-	  while (lbl.domain().has(p) && (lbl(p) == literal::zero
-		  || lbl(p) == current_comp)
+	  while (text.domain().has(p) && (text(p) == literal::zero
+		  || text(p) == current_comp)
 	      && math::abs(p.col() - c.col()) < dmax)
 	    ++p.col();
 
-	  update_graph_link(lbl, g, p, c, current_comp, dmax);
+	  update_graph_link(text, g, p, c, current_comp, dmax);
 
 	  trace::exiting("scribo::text::grouping::internal::find_graph_link");
 	}

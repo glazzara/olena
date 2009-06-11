@@ -23,19 +23,56 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-int usage(char* argv[], const char *desc, const char* args,
-	  const char*args_desc[][2], const char *out_desc)
+#ifndef SCRIBO_DEBUG_USAGE_HH
+# define SCRIBO_DEBUG_USAGE_HH
+
+#include <iostream>
+
+namespace scribo
 {
-  std::cout << desc << std::endl;
-  std::cout << "-----------" << std::endl;
-  std::cout << "Usage: " << argv[0] << " " << args << std::endl;
 
-  for (unsigned i = 0; args_desc[i][0] != 0; ++i)
-    std::cout << "  " << args_desc[i][0] << ": " << args_desc[i][1]
-	      << std::endl;
+  namespace debug
+  {
 
-  std::cout << std::endl << "Output: " << out_desc << std::endl;
-  std::cout << "-----------" << std::endl;
-  std::cout << "EPITA/LRDE - Scribo 2009" << std::endl;
-  return 1;
-}
+    /// Format a standard usage output.
+    ///
+    /// \param[in] argv Arguments passed to the program.
+    /// \param[in] desc Description of the program.
+    /// \param[in] args The expected arguments.
+    /// \param[in] args_desc The description of the expected arguments.
+    /// \param[in] out_desc The description of the output.
+    ///
+    /// \return Return 1.
+    //
+    int usage(char* argv[], const char *desc, const char* args,
+	      const char*args_desc[][2], const char *out_desc);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    inline
+    int
+    usage(char* argv[], const char *desc, const char* args,
+	  const char*args_desc[][2], const char *out_desc)
+    {
+      std::cout << desc << std::endl;
+      std::cout << "-----------" << std::endl;
+      std::cout << "Usage: " << argv[0] << " " << args << std::endl;
+
+      for (unsigned i = 0; args_desc[i][0] != 0; ++i)
+	std::cout << "  " << args_desc[i][0] << ": " << args_desc[i][1]
+	  << std::endl;
+
+      std::cout << std::endl << "Output: " << out_desc << std::endl;
+      std::cout << "-----------" << std::endl;
+      std::cout << "EPITA/LRDE - Scribo 2009" << std::endl;
+      return 1;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace scribo::debug
+
+} // end of namespace scribo
+
+#endif // ! SCRIBO_DEBUG_USAGE_HH

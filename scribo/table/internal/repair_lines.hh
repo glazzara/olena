@@ -79,7 +79,7 @@ namespace scribo
       template <unsigned axis, typename I>
       void
       repair_lines(const Image<I>& input_,
-		   util::array<box<mln_site(I)> >& tableboxes,
+		   mln::util::array<box<mln_site(I)> >& tableboxes,
 		   unsigned max_discontinuity);
 
 
@@ -89,7 +89,7 @@ namespace scribo
       template <unsigned axis, typename I>
       void
       repair_lines(const Image<I>& input_,
-		   util::array<box<mln_site(I)> >& tableboxes,
+		   mln::util::array<box<mln_site(I)> >& tableboxes,
 		   unsigned max_discontinuity)
       {
 	trace::entering("scribo::table::internal::repair_lines");
@@ -105,7 +105,7 @@ namespace scribo
 	data::fill(l, literal::zero);
 	for_all_components(i, tableboxes)
 	{
-	  util::couple<P,P> cp = central_sites(tableboxes[i], axis);
+	  mln::util::couple<P,P> cp = central_sites(tableboxes[i], axis);
 	  l(cp.first()) = i;
 	  l(cp.second()) = i;
 	}
@@ -113,7 +113,7 @@ namespace scribo
 	// Repair
 	extension_val<mln_ch_value(I,value::label_16)> l_ext(l, literal::zero);
 
-	util::array<box<P> > result;
+	mln::util::array<box<P> > result;
 	std::vector<bool> to_keep(tableboxes.nelements(), true);
 
 	mln_VAR(tbb_ima, extend(l | (pw::value(l) != pw::cst(literal::zero)), l));
@@ -123,18 +123,18 @@ namespace scribo
 	mln_qiter(line_t) q(vl, p);
 	for_all(p)
 	{
-	  util::couple<P,P> cp_p = central_sites(tableboxes[l_ext(p)], axis);
+	  mln::util::couple<P,P> cp_p = central_sites(tableboxes[l_ext(p)], axis);
 	  for_all(q)
 	  if (l_ext(q) != literal::zero && l_ext(q) != l_ext(p))
 	  {
-	    if (util::ord_strict(tableboxes[l_ext(p)].pmax(),
+	    if (mln::util::ord_strict(tableboxes[l_ext(p)].pmax(),
 				 tableboxes[l_ext(q)].pmax()))
 	    {
 	      tableboxes[l_ext(p)].pmax() = tableboxes[l_ext(q)].pmax();
 	      to_keep[l_ext(q)] = false;
 	    }
 
-	    if (util::ord_strict(tableboxes[l_ext(q)].pmin(),
+	    if (mln::util::ord_strict(tableboxes[l_ext(q)].pmin(),
 				 tableboxes[l_ext(p)].pmin()))
 	    {
 	      tableboxes[l_ext(p)].pmin() = tableboxes[l_ext(q)].pmin();
@@ -143,7 +143,7 @@ namespace scribo
 
 	    if (!to_keep[l_ext(q)])
 	    {
-	      util::couple<P,P> cp_q = central_sites(tableboxes[l_ext(q)], axis);
+	      mln::util::couple<P,P> cp_q = central_sites(tableboxes[l_ext(q)], axis);
 	      l_ext(cp_q.first()) = literal::zero;
 	      l_ext(cp_q.second()) = literal::zero;
 
@@ -151,7 +151,7 @@ namespace scribo
 	      l_ext(cp_p.first()) = literal::zero;
 	      l_ext(cp_p.second()) = literal::zero;
 
-	      util::couple<P,P> new_cp_p = central_sites(tableboxes[p_i], axis);
+	      mln::util::couple<P,P> new_cp_p = central_sites(tableboxes[p_i], axis);
 	      l_ext(new_cp_p.first()) = p_i;
 	      l_ext(new_cp_p.second()) = p_i;
 	    }

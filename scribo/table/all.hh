@@ -42,16 +42,15 @@ namespace scribo
 } // end of namespace scribo
 
 # include <scribo/table/internal/all.hh>
-# include <scribo/table/repair_vertical_lines.hh>
-# include <scribo/table/rebuild.hh>
-# include <scribo/table/connect_horizontal_lines.hh>
-# include <scribo/table/erase.hh>
+
 # include <scribo/table/align_lines_horizontaly.hh>
-# include <scribo/table/extract_lines_with_opening.hh>
 # include <scribo/table/align_lines_verticaly.hh>
-# include <scribo/table/extract_lines_with_rank.hh>
-# include <scribo/table/extract.hh>
+# include <scribo/table/connect_horizontal_lines.hh>
 # include <scribo/table/connect_vertical_lines.hh>
+# include <scribo/table/erase.hh>
+# include <scribo/table/extract.hh>
+# include <scribo/table/rebuild.hh>
 # include <scribo/table/repair_horizontal_lines.hh>
+# include <scribo/table/repair_vertical_lines.hh>
 
 #endif // ! SCRIBO_TABLE_ALL_HH

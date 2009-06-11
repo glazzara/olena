@@ -5,18 +5,19 @@ scribo_all \
 scribo_binarization_simple \
 scribo_core_all \
 scribo_core_central_sites \
-scribo_core_erase_bboxes \
+scribo_core_erase_objects \
 scribo_core_macros \
 scribo_core_object_image \
 scribo_debug_all \
+scribo_debug_save_bboxes_image \
 scribo_debug_save_label_image \
-scribo_debug_save_linked_textbboxes_image \
+scribo_debug_save_linked_bboxes_image \
 scribo_debug_save_table_image \
-scribo_debug_save_textbboxes_image \
 scribo_debug_usage \
 scribo_draw_all \
 scribo_draw_bounding_box_links \
 scribo_draw_bounding_boxes \
+scribo_extract_lines_discontinued \
 scribo_extract_primitive_canvas \
 scribo_extract_primitive_cells \
 scribo_extract_primitive_lines_discontinued \
@@ -73,7 +74,6 @@ scribo_text_grouping_internal_init_link_array \
 scribo_text_grouping_internal_is_link_valid \
 scribo_text_grouping_internal_update_graph_link \
 scribo_text_grouping_internal_update_link_array \
-scribo_text_recognition \
 scribo_util_all \
 scribo_util_text
 
@@ -81,18 +81,19 @@ scribo_all_SOURCES = scribo_all.cc
 scribo_binarization_simple_SOURCES = scribo_binarization_simple.cc
 scribo_core_all_SOURCES = scribo_core_all.cc
 scribo_core_central_sites_SOURCES = scribo_core_central_sites.cc
-scribo_core_erase_bboxes_SOURCES = scribo_core_erase_bboxes.cc
+scribo_core_erase_objects_SOURCES = scribo_core_erase_objects.cc
 scribo_core_macros_SOURCES = scribo_core_macros.cc
 scribo_core_object_image_SOURCES = scribo_core_object_image.cc
 scribo_debug_all_SOURCES = scribo_debug_all.cc
+scribo_debug_save_bboxes_image_SOURCES = scribo_debug_save_bboxes_image.cc
 scribo_debug_save_label_image_SOURCES = scribo_debug_save_label_image.cc
-scribo_debug_save_linked_textbboxes_image_SOURCES = scribo_debug_save_linked_textbboxes_image.cc
+scribo_debug_save_linked_bboxes_image_SOURCES = scribo_debug_save_linked_bboxes_image.cc
 scribo_debug_save_table_image_SOURCES = scribo_debug_save_table_image.cc
-scribo_debug_save_textbboxes_image_SOURCES = scribo_debug_save_textbboxes_image.cc
 scribo_debug_usage_SOURCES = scribo_debug_usage.cc
 scribo_draw_all_SOURCES = scribo_draw_all.cc
 scribo_draw_bounding_box_links_SOURCES = scribo_draw_bounding_box_links.cc
 scribo_draw_bounding_boxes_SOURCES = scribo_draw_bounding_boxes.cc
+scribo_extract_lines_discontinued_SOURCES = scribo_extract_lines_discontinued.cc
 scribo_extract_primitive_canvas_SOURCES = scribo_extract_primitive_canvas.cc
 scribo_extract_primitive_cells_SOURCES = scribo_extract_primitive_cells.cc
 scribo_extract_primitive_lines_discontinued_SOURCES = scribo_extract_primitive_lines_discontinued.cc
@@ -149,6 +150,5 @@ scribo_text_grouping_internal_init_link_array_SOURCES = scribo_text_grouping_int
 scribo_text_grouping_internal_is_link_valid_SOURCES = scribo_text_grouping_internal_is_link_valid.cc
 scribo_text_grouping_internal_update_graph_link_SOURCES = scribo_text_grouping_internal_update_graph_link.cc
 scribo_text_grouping_internal_update_link_array_SOURCES = scribo_text_grouping_internal_update_link_array.cc
-scribo_text_recognition_SOURCES = scribo_text_recognition.cc
 scribo_util_all_SOURCES = scribo_util_all.cc
 scribo_util_text_SOURCES = scribo_util_text.cc

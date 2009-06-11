@@ -42,8 +42,8 @@ namespace scribo
 } // end of namespace scribo
 
 # include <scribo/text/extract_lines.hh>
-# include <scribo/text/recognition.hh>
-# include <scribo/text/extract_bboxes.hh>
+//# include <scribo/text/recognition.hh>
+# include <scribo/text/clean.hh>
 # include <scribo/text/grouping/all.hh>
 
 #endif // ! SCRIBO_TEXT_ALL_HH

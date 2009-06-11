@@ -34,6 +34,7 @@
 # include <mln/core/routine/extend.hh>
 
 # include <mln/morpho/skeleton_constrained.hh>
+# include <mln/morpho/dilation.hh>
 
 # include <mln/topo/skeleton/is_simple_point.hh>
 # include <mln/topo/skeleton/crest.hh>
@@ -50,9 +51,13 @@
 
 #include <mln/arith/revert.hh>
 
+#include <mln/transform/distance_front.hh>
+
 
 #include <mln/linear/gaussian.hh>
 #include <mln/value/int_u8.hh>
+
+
 
 namespace scribo
 {
@@ -60,6 +65,16 @@ namespace scribo
   namespace text
   {
 
+    using namespace mln;
+
+
+    /// Improve quality of an image with text.
+    ///
+    /// \param[in] input_ A binary image.
+    /// \param[in] dmap_win_ A weighted window.
+    ///
+    /// \return An image. The text have better quality.
+    //
     template <typename I, typename W>
     mln_concrete(I)
     clean(const Image<I>& input_, const Weighted_Window<W>& dmap_win_);
@@ -68,7 +83,7 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-    static int plop = 0;
+//    static int plop = 0;
 
     template <typename I, typename W>
     mln_concrete(I)
@@ -117,7 +132,7 @@ namespace scribo
 //        io::pbm::save(output, mln::debug::filename("dil_skel.pbm"));
       }
 
-      ++plop;
+//      ++plop;
       trace::exiting("scribo::text::clean");
       return output;
     }

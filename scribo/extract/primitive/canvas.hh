@@ -35,6 +35,7 @@
 # include <mln/util/array.hh>
 # include <mln/util/couple.hh>
 # include <mln/value/label_8.hh>
+# include <mln/util/couple.hh>
 
 # include <scribo/table/align_lines_verticaly.hh>
 # include <scribo/table/align_lines_horizontaly.hh>
@@ -84,7 +85,7 @@ namespace scribo
       canvas(const Image<I>& input_,
 	     const util::array<box<mln_site(I)> >& hlines,
 	     const util::array<box<mln_site(I)> >& vlines,
-	     unsigned max_dist_lines);
+	     unsigned max_dist_lines)
       {
 	trace::entering("scribo::primitive::canvas");
 	const I& input = exact(input_);
@@ -93,7 +94,7 @@ namespace scribo
 	mln_precondition(input.is_valid());
 
 	typedef util::array<box<mln_site(I)> > lines_t;
-	util::couple<lines_t, lines_t> lines = make::couple(hlines, vlines);
+	util::couple<lines_t, lines_t> lines = mln::make::couple(hlines, vlines);
 
 	util::array<int> rows = align_lines_horizontaly(input, hlines, 5);
 	util::array<int> cols = align_lines_verticaly(input, vlines, 5);

@@ -15,7 +15,13 @@ test $# -eq 1 || { echo "Usage: $0 <scribo path>" && exit 1; }
 
 ## FIXME: Ouch!  Using `find' properly can probably save us some pipes,
 ## forks and characters here.
-HEADERS=`find $1 -name "*.hh" | grep -vE "*.spe.hh" | sort | sed -e 's/.*\/scribo\/\(.*\)/scribo\/\1/g' | sed 's/\.\.\/\.\.\///g'`
+HEADERS=`find $1 -name "*.hh" \
+	| grep -vE "*.spe.hh" \
+	| grep -v "recognition" \
+	| grep -v "demo" \
+	| sort \
+	| sed -e 's/.*\/scribo\/\(.*\)/scribo\/\1/g' \
+	| sed 's/\.\.\/\.\.\///g'`
 
 output=unit-tests.mk
 

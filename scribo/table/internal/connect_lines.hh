@@ -35,11 +35,15 @@
 
 # include <mln/data/fill.hh>
 
+# include <mln/transform/influence_zone_geodesic.hh>
+
 # include <mln/morpho/elementary/dilation.hh>
 # include <mln/util/array.hh>
 # include <mln/util/couple.hh>
 
 # include <mln/opt/at.hh>
+
+# include <mln/transform/influence_zone_geodesic.hh>
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/central_sites.hh>
@@ -66,8 +70,8 @@ namespace scribo
       /// FIXME: doc arguments.
       template <typename P>
       void
-      connect_lines(const util::array<int>& aligned_lines,
-		    util::array< box<P> >& boxes,
+      connect_lines(const mln::util::array<int>& aligned_lines,
+		    mln::util::array< box<P> >& boxes,
 		    unsigned dim,
 		    unsigned dim_size,
 		    unsigned max_distance);
@@ -78,8 +82,8 @@ namespace scribo
 
       template <typename P>
       void
-      connect_lines(const util::array<int>& aligned_lines,
-		    util::array< box<P> >& boxes,
+      connect_lines(const mln::util::array<int>& aligned_lines,
+		    mln::util::array< box<P> >& boxes,
 		    unsigned dim,
 		    unsigned dim_size,
 		    unsigned max_distance)
@@ -90,18 +94,19 @@ namespace scribo
 	data::fill(l, -1);
 
 	for_all_elements(i, aligned_lines)
-	  opt::at(l, aligned_lines[i]) = i;
+	  opt::at(l, aligned_lines[i]) = aligned_lines[i];
 
-	for (unsigned i = 0; i < max_distance; ++i)
-	  l = morpho::elementary::dilation(l, c2());
+	l = transform::influence_zone_geodesic(l, c2(), max_distance, -1);
 
 	for_all_components(i, boxes)
 	{
-	  util::couple<P,P> cp = central_sites(boxes[i], dim);
-	  if (opt::at(l, cp.first()[dim]) != -1)
-	    boxes[i].pmin()[dim] = aligned_lines[opt::at(l, cp.first()[dim])];
-	  if (opt::at(l, cp.second()[dim]) != -1)
-	    boxes[i].pmax()[dim] = aligned_lines[opt::at(l, cp.second()[dim])];
+	  mln::util::couple<P,P> cp = central_sites(boxes[i], dim);
+	  if (opt::at(l, cp.first()[dim]) != -1
+		&& opt::at(l, cp.first()[dim]) < boxes[i].pmin()[dim])
+	    boxes[i].pmin()[dim] = opt::at(l, cp.first()[dim]);
+	  if (opt::at(l, cp.second()[dim]) != -1
+		&& opt::at(l, cp.second()[dim]) > boxes[i].pmax()[dim])
+	    boxes[i].pmax()[dim] = opt::at(l, cp.second()[dim]);
 	}
 
 	trace::exiting("scribo::table::internal::connect_lines");

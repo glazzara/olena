@@ -28,7 +28,7 @@
 
 /// \file scribo/text/grouping/group_from_single_link.hh
 ///
-/// Link lines of text with their neighbor line if they have one.
+/// Link text objects with their neighbor line if they have one.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/box.hh>
@@ -40,9 +40,8 @@
 
 # include <scribo/text/grouping/internal/find_root.hh>
 
+# include <scribo/core/object_image.hh>
 # include <scribo/core/macros.hh>
-# include <scribo/util/text.hh>
-# include <scribo/make/text.hh>
 
 
 namespace scribo
@@ -54,55 +53,44 @@ namespace scribo
     namespace grouping
     {
 
-      /// Link lines of text with their neighbor line if they have one.
+      using namespace mln;
+
+      /// Link text objects with their neighbor line if they have one.
       /*!
-      ** \param[in] text       The lines of text.
+      ** \param[in] objects    An object image.
       ** \param[in] link_array The neighbor line of each line.
       **
-      ** \return The grouped and non-grouped lines of text.
+      ** \return An object image with grouped objects.
       */
-      template <typename I>
-      scribo::util::text<I>
-      group_from_single_link(const scribo::util::text<I>& text,
+      template <typename L>
+      object_image(L)
+      group_from_single_link(const object_image(L)& objects,
 			     const mln::util::array<unsigned>& link_array);
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename I>
+      template <typename L>
       inline
-      scribo::util::text<I>
-      group_from_single_link(const scribo::util::text<I>& text,
+      object_image(L)
+      group_from_single_link(const object_image(L)& objects,
 			     const mln::util::array<unsigned>& link_array)
       {
 	trace::entering("scribo::text::grouping::group_from_single_link");
 
-	mln_precondition(text.is_valid());
-	mln_precondition(link_array.nelements() == text.nbboxes().next());
-	mln_precondition(link_array.nelements() == text.bboxes().nelements());
+	mln_precondition(objects.is_valid());
+	mln_precondition(link_array.nelements() == objects.nlabels().next());
+	mln_precondition(link_array.nelements() == objects.bboxes().nelements());
 
 	mln::util::array<unsigned> parent_array = link_array;
 	for_all_components(i, parent_array)
 	  internal::find_root(parent_array, i);
 
-	mln::util::array< accu::bbox<mln_site(I)> > tboxes;
-	tboxes.resize(text.nbboxes().next());
-	for_all_components(i, text.bboxes())
-	  tboxes[parent_array[i]].take(text.bbox(i));
-
-	mln::util::array< box<mln_site(I)> > result;
-	// component 0, the background, has an invalid box.
-	result.append(box<mln_site(I)>());
-	for_all_components(i, tboxes)
-	  if (tboxes[i].is_valid())
-	    result.append(tboxes[i]);
-
-	I lbl = labeling::relabel(text.label_image(), text.nbboxes(),
-				  convert::to<fun::i2v::array<mln_value(I)> >(parent_array));
-	mln_value(I) new_nbboxes = result.nelements() - 1;
+	object_image(L) output;
+	output.init_from_(objects);
+	output.relabel(parent_array);
 
 	trace::exiting("scribo::text::grouping::group_from_single_link");
-	/// FIXME: construct a new util::text from the old one.
-	return scribo::make::text(result, lbl, new_nbboxes);
+	return output;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

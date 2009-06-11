@@ -30,13 +30,25 @@
 ///
 /// Save a labeled image in a color image.
 
+# include <mln/core/concept/image.hh>
+# include <mln/labeling/colorize.hh>
+# include <mln/value/rgb8.hh>
+# include <mln/io/ppm/save.hh>
+
 namespace scribo
 {
 
   namespace debug
   {
 
+    using namespace mln;
+
     /// Save a labeled image in a color image.
+    ///
+    /// \param[in] lbl A label image.
+    /// \param[in] nlabels The number of labels.
+    /// \param[in] filename The output file name.
+    //
     template <typename I>
     void
     save_label_image(const Image<I>& lbl, const mln_value(I)& nlabels,
@@ -55,7 +67,7 @@ namespace scribo
       mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
       mln_precondition(exact(lbl).is_valid());
 
-      io::ppm::save(labeling::colorize(rgb8(), lbl, nlabels), filename);
+      io::ppm::save(labeling::colorize(value::rgb8(), lbl, nlabels), filename);
 
       trace::exiting("scribo::debug::save_label_image");
     }

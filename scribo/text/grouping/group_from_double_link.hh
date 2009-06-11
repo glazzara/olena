@@ -46,8 +46,10 @@
 
 # include <scribo/make/text.hh>
 
+# include <scribo/core/object_image.hh>
 # include <scribo/text/grouping/internal/find_root.hh>
 # include <scribo/text/grouping/internal/is_link_valid.hh>
+# include <scribo/text/grouping/internal/init_link_array.hh>
 
 
 namespace scribo

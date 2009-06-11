@@ -41,9 +41,9 @@ namespace scribo
 
 } // end of namespace scribo
 
+# include <scribo/debug/save_bboxes_image.hh>
 # include <scribo/debug/save_label_image.hh>
-# include <scribo/debug/save_linked_textbboxes_image.hh>
+# include <scribo/debug/save_linked_bboxes_image.hh>
 # include <scribo/debug/save_table_image.hh>
-# include <scribo/debug/save_textbboxes_image.hh>
 
 #endif // ! SCRIBO_DEBUG_ALL_HH

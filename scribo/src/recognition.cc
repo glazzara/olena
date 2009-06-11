@@ -62,8 +62,11 @@ int main(int argc, char* argv[])
   using namespace mln;
 
   if (argc != 2)
-    return usage(argv, "Text extraction and recognition", "input.pbm",
-		 args_desc, "The text is printed on the standard output.");
+    return scribo::debug::usage(argv,
+				"Text extraction and recognition",
+				"input.pbm",
+				args_desc,
+				"The text is printed on the standard output.");
 
   trace::entering("main");
 

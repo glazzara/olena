@@ -34,6 +34,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/util/array.hh>
+# include <mln/math/abs.hh>
 
 
 namespace scribo
@@ -48,11 +49,21 @@ namespace scribo
       namespace internal
       {
 
+	using namespace mln;
+
+
 	/// Update the lookup table \p link_array if a neighbor is found
 	/// on the right of the current bbox.
+	///
+	/// \param[in] lbl A label image.
+	/// \param[in] link_array Links of bounding boxes.
+	/// \param[in] p A site of \p lbl.
+	/// \param[in] c A site of \p lbl.
+	//
 	template <typename I>
 	void
-	update_link_array(const Image<I>& lbl, mln::util::array<unsigned>& link_array,
+	update_link_array(const Image<I>& lbl,
+			  mln::util::array<unsigned>& link_array,
 			  const mln_site(I)& p, const mln_site(I)& c,
 			  unsigned i, int dmax);
 

@@ -34,10 +34,15 @@
 
 # include <mln/math/abs.hh>
 
+# include <mln/labeling/compute.hh>
+
+# include <mln/accu/center.hh>
+
 # include <mln/util/array.hh>
 # include <mln/util/graph.hh>
 
 # include <scribo/core/macros.hh>
+# include <scribo/core/object_image.hh>
 # include <scribo/text/grouping/internal/init_link_array.hh>
 # include <scribo/text/grouping/internal/find_graph_link.hh>
 # include <scribo/util/text.hh>
@@ -63,7 +68,7 @@ namespace scribo
       */
       template <typename L>
       mln::util::graph
-      group_with_graph(const scribo::util::text<L>& text,
+      group_with_graph(const object_image(L)& text,
 		       unsigned neighb_max_distance);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -71,25 +76,30 @@ namespace scribo
       template <typename L>
       inline
       mln::util::graph
-      group_with_graph(const scribo::util::text<L>& text,
+      group_with_graph(const object_image(L)& text,
 		       unsigned neighb_max_distance)
       {
 	trace::entering("scribo::text::grouping::group_with_graph");
 
-	mln::util::graph g(text.nbboxes().next());
+	mln::util::graph g(text.nlabels().next());
 
-	for_all_ncomponents(i, text.nbboxes())
+	for_all_ncomponents(i, text.nlabels())
 	{
 	  unsigned midcol = (text.bbox(i).pmax().col()
 				- text.bbox(i).pmin().col()) / 2;
 	  int dmax = midcol + neighb_max_distance;
+
+	  mln::util::array<mln_result(accu::center<mln_psite(L)>)>
+	    mass_center = labeling::compute(accu::meta::center(),
+					    text,
+					    text.nlabels());
 
 	  //  -------
 	  //  |	    |
 	  //  |	 X------->
 	  //  |	    |
 	  //  -------
-	  internal::find_graph_link(g, text, i, dmax, text.mass_center(i));
+	  internal::find_graph_link(g, text, i, dmax, mass_center[i]);
 	}
 
 	trace::exiting("scribo::text::grouping::group_with_graph");

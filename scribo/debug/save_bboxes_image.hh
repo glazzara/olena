@@ -23,58 +23,65 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_CORE_ERASE_BBOXES_HH
-# define SCRIBO_CORE_ERASE_BBOXES_HH
+#ifndef SCRIBO_DEBUG_SAVE_BBOXES_IMAGE_HH
+# define SCRIBO_DEBUG_SAVE_BBOXES_IMAGE_HH
 
-/// \file scribo/core/erase_bboxes.hh
+/// \file
 ///
-/// Remove the content of bounding boxes from an image.
+/// Draw a list of bounding boxes and their associated mass center.
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/site_set/box.hh>
-# include <mln/data/paste.hh>
-# include <mln/pw/all.hh>
+# include <mln/data/convert.hh>
+# include <mln/value/rgb8.hh>
 # include <mln/util/array.hh>
+# include <mln/io/ppm/save.hh>
 
-# include <scribo/core/macros.hh>
+# include <scribo/draw/bounding_boxes.hh>
+
 
 namespace scribo
 {
 
-  using namespace mln;
+  namespace debug
+  {
 
-  /// Remove the content of bounding boxes from an image.
-  template <typename I>
-  void
-  erase_bboxes(Image<I>& input_,
-	       const util::array< box<mln_site(I)> >& bboxes);
+    using namespace mln;
+
+
+    /// Draw a list of bounding boxes and their associated mass center.
+    template <typename I>
+    void
+    save_bboxes_image(const Image<I>& input,
+		      const mln::util::array< box<mln_site(I)> >& bboxes,
+		      const value::rgb8& value,
+		      const std::string& filename);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+    template <typename I>
+    inline
+    void
+    save_bboxes_image(const Image<I>& input,
+		      const mln::util::array< box<mln_site(I)> >& bboxes,
+		      const value::rgb8& value,
+		      const std::string& filename)
+    {
+      trace::entering("scribo::debug::save_bboxes_image");
+      mln_precondition(exact(input).is_valid());
 
-  template <typename I>
-  void
-  erase_bboxes(Image<I>& input_,
-	       const util::array< box<mln_site(I)> >& bboxes)
-  {
-    trace::entering("scribo::erase_bboxes");
+      mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
+      draw::bounding_boxes(tmp, bboxes, value);
+      io::ppm::save(tmp, filename);
 
-    mlc_equal(mln_value(I),bool)::check();
-
-    I& input = exact(input_);
-    mln_precondition(input.is_valid());
-
-    for_all_components(i, bboxes)
-      data::paste((pw::cst(false) | bboxes[i] |
-		  (pw::value(input) == true)), input);
-
-    trace::exiting("scribo::erase_bboxes");
-  }
-
+      trace::exiting("scribo::debug::save_bboxes_image");
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
+  } // end of namespace scribo::debug
+
 } // end of namespace scribo
 
-#endif // ! SCRIBO_CORE_ERASE_BBOXES_HH
+
+#endif // ! SCRIBO_DEBUG_SAVE_BBOXES_IMAGE_HH

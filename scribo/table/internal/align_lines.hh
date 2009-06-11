@@ -92,11 +92,11 @@ namespace scribo
       **
       */
       template <typename P>
-      util::array<int>
+      mln::util::array<int>
       align_lines(unsigned nsites,
 		  int min_coord,
 		  int max_coord,
-		  util::array<box<P> >& line_bboxes,
+		  mln::util::array<box<P> >& line_bboxes,
 		  unsigned dim,
 		  unsigned max_alignment_diff);
 
@@ -106,11 +106,11 @@ namespace scribo
 
 
       template <typename P>
-      util::array<int>
+      mln::util::array<int>
       align_lines(unsigned nsites,
 		  int min_coord,
 		  int max_coord,
-		  util::array<box<P> >& line_bboxes,
+		  mln::util::array<box<P> >& line_bboxes,
 		  unsigned dim,
 		  unsigned max_alignment_diff)
       {
@@ -118,7 +118,7 @@ namespace scribo
 
 	mln_precondition(nsites > 0);
 
-	util::array< util::set<unsigned> > lines;
+	mln::util::array< mln::util::set<unsigned> > lines;
 	lines.resize(nsites);
 
 	// Map components with actual lines.
@@ -135,7 +135,7 @@ namespace scribo
 	}
 
 	// Init box2line
-	util::array<int> box2line;
+	mln::util::array<int> box2line;
 	box2line.resize(line_bboxes.nelements());
 	for_all_elements(i, box2line)
 	  box2line[i] = -1;
@@ -150,7 +150,7 @@ namespace scribo
 	// FIXME: not optimal... Make it faster!
 	// We may do too much iterations (while loop) and some of them may
 	// be done for nothing...
-	util::array<int> newlines;
+	mln::util::array<int> newlines;
 	while (max_nelts > 0)
 	{
 	  for_all_elements(i, lines)

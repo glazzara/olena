@@ -34,15 +34,20 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/neighborhood.hh>
+# include <mln/core/site_set/box.hh>
 
 # include <mln/labeling/blobs.hh>
+# include <mln/labeling/compute.hh>
 
 # include <mln/morpho/rank_filter.hh>
 # include <mln/morpho/dilation.hh>
 
+# include <mln/accu/bbox.hh>
+
+# include <mln/util/array.hh>
+# include <mln/util/couple.hh>
+
 # include <scribo/core/macros.hh>
-# include <scribo/core/object_image.hh>
-# include <scribo/extract/primitive/objects.hh>
 
 namespace scribo
 {
@@ -62,15 +67,25 @@ namespace scribo
        *
        * \param[in]     input_	  A binary image.
        * \param[in]     nbh_	  The neighborhood used for labeling image
-       *			  the lines.
+       *				  components.
        * \param[in,out] nlines	  The label type used for labeling.
        * \param[in]     win_	  A Window used to extract lines.
        * \param[in]     rank_k	  Rank used for filtering.
+       * \param[in,out] line_bboxes line bounding boxes.
        *
        * \return An image in which lines are labeled.
        */
       template <typename I, typename N, typename V, typename W>
-      object_image(mln_ch_value(I,V))
+      mln_ch_value(I,V)
+      lines_discontinued(const Image<I>& input_,
+			 const Neighborhood<N>& nbh_, V& nlines,
+			 const Window<W>& win_, unsigned rank_k,
+			 util::array<box<mln_site(I)> >& line_bboxes);
+
+
+      /// \overload
+      template <typename I, typename N, typename V, typename W>
+      mln_ch_value(I,V)
       lines_discontinued(const Image<I>& input_,
 			 const Neighborhood<N>& nbh_, V& nlines,
 			 const Window<W>& win_, unsigned rank_k);
@@ -108,7 +123,7 @@ namespace scribo
 
       template <typename I, typename N, typename V, typename W>
       inline
-      object_image(mln_ch_value(I,V))
+      mln_ch_value(I,V)
       lines_discontinued(const Image<I>& input_,
 			 const Neighborhood<N>& nbh_, V& nlines,
 			 const Window<W>& win_, unsigned rank_k)
@@ -121,16 +136,8 @@ namespace scribo
 	const N& nbh = exact(nbh_);
 	const W& win = exact(win_);
 
-	int dil;
-	if (!(rank_k % 2))
-	  dil = win.length() / 2 + rank_k;
-	else
-	  dil = win.length() / 2 + rank_k + 1;
-
-	mln_ch_value(I,bool) filter
-	  = morpho::dilation(morpho::rank_filter(input, win, rank_k), W(dil));
-	object_image(mln_ch_value(I,V)) output
-	  = extract::primitive::objects(filter, nbh, nlines);
+	mln_ch_value(I,bool) filter = morpho::rank_filter(input, win, rank_k);
+	mln_ch_value(I,V) output = labeling::blobs(filter, nbh, nlines);
 
 	//FIXME: we would like to enlarge the component in the right direction,
 	// in order to avoid rank filter side effects (smaller components).
@@ -139,6 +146,41 @@ namespace scribo
 	return output;
       }
 
+
+
+
+      template <typename I, typename N, typename V, typename W>
+      inline
+      mln_ch_value(I,V)
+      lines_discontinued(const Image<I>& input_,
+			 const Neighborhood<N>& nbh_, V& nlines,
+			 const Window<W>& win_, unsigned rank_k,
+			 util::array<box<mln_site(I)> >& line_bboxes)
+      {
+	trace::entering("scribo::primitive::lines_discontinued");
+
+	internal::lines_discontinued_tests(input_, nbh_, nlines, win_, rank_k);
+
+	const I& input = exact(input_);
+	const N& nbh = exact(nbh_);
+	const W& win = exact(win_);
+
+	mln_ch_value(I,V)
+	  output = lines_discontinued(input, nbh, nlines, win, rank_k);
+
+	line_bboxes = labeling::compute(accu::meta::bbox(), output, nlines);
+	mln_postcondition(line_bboxes.nelements() == nlines.next());
+
+	//FIXME: is it correct?
+	for_all_components(i, line_bboxes)
+	{
+	  line_bboxes[i].enlarge(W::dir, win.delta_() - rank_k);
+	  line_bboxes[i].crop_wrt(input.domain());
+	}
+
+	trace::exiting("scribo::primitive::lines_discontinued");
+	return output;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 

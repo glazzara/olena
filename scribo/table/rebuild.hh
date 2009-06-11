@@ -73,11 +73,11 @@ namespace scribo
     */
     template <typename I, typename V>
     mln::util::couple<mln_ch_value(I,V),
-		      util::couple<util::array<box<mln_site(I)> >,
-				   util::array<box<mln_site(I)> > > >
+		      mln::util::couple<mln::util::array<box<mln_site(I)> >,
+				   mln::util::array<box<mln_site(I)> > > >
     rebuild(const Image<I>& input_,
-	    const util::couple<util::array<box<mln_site(I)> >,
-			       util::array<box<mln_site(I)> > >& linebboxes_,
+	    const mln::util::couple<mln::util::array<box<mln_site(I)> >,
+			       mln::util::array<box<mln_site(I)> > >& linebboxes_,
 	    unsigned max_dist_lines,
 	    V& ncells);
 
@@ -87,11 +87,11 @@ namespace scribo
 
     template <typename I, typename V>
     mln::util::couple<mln_ch_value(I,V),
-		      util::couple<util::array<box<mln_site(I)> >,
-			       util::array<box<mln_site(I)> > > >
+		      mln::util::couple<mln::util::array<box<mln_site(I)> >,
+			       mln::util::array<box<mln_site(I)> > > >
     rebuild(const Image<I>& input_,
-	    const util::couple<util::array<box<mln_site(I)> >,
-			       util::array<box<mln_site(I)> > >& linebboxes_,
+	    const mln::util::couple<mln::util::array<box<mln_site(I)> >,
+			       mln::util::array<box<mln_site(I)> > >& linebboxes_,
 	    unsigned max_dist_lines,
 	    V& ncells)
     {
@@ -101,14 +101,14 @@ namespace scribo
       mlc_equal(mln_value(I), bool)::check();
       mln_precondition(input.is_valid());
 
-      util::couple<util::array<box<mln_site(I)> >,
-		   util::array<box<mln_site(I)> > > linebboxes = linebboxes_;
+      mln::util::couple<mln::util::array<box<mln_site(I)> >,
+		   mln::util::array<box<mln_site(I)> > > linebboxes = linebboxes_;
 
       scribo::debug::save_table_image(input, linebboxes,
 				      literal::red, "table-raw.ppm");
 
-      util::array<int> rows = align_lines_horizontaly(input, linebboxes.second(), 5);
-      util::array<int> cols = align_lines_verticaly(input, linebboxes.first(), 5);
+      mln::util::array<int> rows = align_lines_horizontaly(input, linebboxes.second(), 5);
+      mln::util::array<int> cols = align_lines_verticaly(input, linebboxes.first(), 5);
 
 # ifndef SCRIBO_NDEBUG
       scribo::debug::save_table_image(input, linebboxes,

@@ -43,8 +43,10 @@ int main(int argc, char *argv[])
   using namespace mln;
 
   if (argc != 3)
-    return usage(argv, "Negate a binary image", "input.pbm output.pbm",
-		 args_desc, "A binary image.");
+    return scribo::debug::usage(argv,
+				"Negate a binary image",
+				"input.pbm output.pbm",
+				args_desc, "A binary image.");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);

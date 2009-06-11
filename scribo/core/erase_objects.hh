@@ -23,77 +23,65 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_TABLE_ERASE_HH
-# define SCRIBO_TABLE_ERASE_HH
+#ifndef SCRIBO_CORE_ERASE_OBJECTS_HH
+# define SCRIBO_CORE_ERASE_OBJECTS_HH
 
-/// \file scribo/table/erase.hh
+/// \file scribo/core/erase_objects.hh
 ///
-/// \brief Erase the table lines in an image.
-
+/// Remove the content of bounding boxes from an image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/box.hh>
-# include <mln/core/routine/duplicate.hh>
-
+# include <mln/data/paste.hh>
 # include <mln/pw/all.hh>
-
 # include <mln/util/array.hh>
-# include <mln/util/couple.hh>
 
-# include <scribo/core/erase_objects.hh>
+# include <scribo/core/macros.hh>
+# include <scribo/core/object_image.hh>
 
 namespace scribo
 {
 
-  namespace table
-  {
+  using namespace mln;
 
-    using namespace mln;
-
-    /// Erase vertical and horizontal lines from an image.
-    ///
-    /// \param[in]  input	  A binary image from which the table lines
-    ///				  are extracted.
-    /// \param[in]  hlines	  An object image with horizontal lines.
-    /// \param[in]  vlines	  An object image with vertical lines.
-    ///
-    ///	\return A copy of \p in where the table lines are removed.
-    //
-    template <typename I, typename L>
-    mln_concrete(I)
-    erase(const Image<I>& input,
-	  const object_image(L)& hlines,
-	  const object_image(L)& vlines);
+  /// Remove labeled components from a binary image.
+  ///
+  /// \param[in,out] input_   A binary image.
+  /// \param[in]     objects  An object image. Objects will be set to
+  ///			      false in \p input_.
+  ///
+  //
+  template <typename I, typename L>
+  void
+  erase_objects(Image<I>& input_,
+	       const object_image(L)& objects);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-    template <typename I, typename L>
-    inline
-    mln_concrete(I)
-    erase(const Image<I>& input,
-	  const object_image(L)& hlines,
-	  const object_image(L)& vlines)
-    {
-      trace::entering("scribo::internal::erase");
-      mlc_equal(mln_value(I),bool)::check();
-      mln_precondition(exact(input).is_valid());
+  template <typename I, typename L>
+  void
+  erase_objects(Image<I>& input_,
+	       const object_image(L)& objects)
+  {
+    trace::entering("scribo::erase_objects");
 
-      I output = duplicate(input);
+    mlc_equal(mln_value(I),bool)::check();
 
-      erase_objects(output, vlines);
-      erase_objects(output, hlines);
+    I& input = exact(input_);
+    mln_precondition(input.is_valid());
+    mln_precondition(objects.is_valid());
 
-      trace::exiting("scribo::internal::erase");
-      return output;
-    }
+    data::fill((input | (pw::value(objects) != pw::cst(literal::zero))).rw(),
+	       false);
+
+    trace::exiting("scribo::erase_objects");
+  }
 
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace scribo::table
-
 } // end of namespace scribo
 
-#endif // ! SCRIBO_TABLE_ERASE_HH
+#endif // ! SCRIBO_CORE_ERASE_OBJECTS_HH

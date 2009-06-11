@@ -35,7 +35,6 @@
 
 #include <scribo/table/repair_vertical_lines.hh>
 #include <scribo/table/repair_horizontal_lines.hh>
-#include <scribo/table/extract_lines_with_rank.hh>
 #include <scribo/debug/save_table_image.hh>
 
 #include <scribo/tests/data.hh>
@@ -63,12 +62,6 @@ int main(int argc, char *argv[])
   lineboxes.second().append(make::box2d(0,0, 1,1)); // Dummy value for component 0.
   lineboxes.second().append(make::box2d(27,0, 31, 26));
   lineboxes.second().append(make::box2d(27,34, 31,59));
-
-
-//  tblboxes_t lineboxes = scribo::table::extract_lines_with_rank(input, c8(), value::label_16(), win::vline2d(11), win::hline2d(11), 2, 2);
-//
-//  std::cout << lineboxes.first() << std::endl;
-//  std::cout << lineboxes.second() << std::endl;
 
   scribo::table::repair_vertical_lines(input, lineboxes, 31);
   scribo::table::repair_horizontal_lines(input, lineboxes, 31);

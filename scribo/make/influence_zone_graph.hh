@@ -41,6 +41,9 @@
 
 # include <mln/util/graph.hh>
 
+# include <mln/make/influence_zone_adjacency_graph.hh>
+
+# include <mln/pw/all.hh>
 
 namespace scribo
 {
@@ -64,7 +67,7 @@ namespace scribo
       /// \param[in] iz_dmax	Max distance of the influence zone.
       ///
       /// \return a region adjacency graph.
-      template <typename I, typename V>
+      template <typename I, typename N, typename V>
       util::graph
       influence_zone_graph(const Image<I>& input_,
 			   const Neighborhood<N>& nbh_,
@@ -74,7 +77,7 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename I, typename V>
+      template <typename I, typename N, typename V>
       util::graph
       influence_zone_graph(const Image<I>& input_,
 			   const Neighborhood<N>& nbh_,
@@ -87,7 +90,7 @@ namespace scribo
 	I& input = exact(input_);
 	const N& nbh = exact(nbh_);
 
-	mlc_is_equal(mln_value(I), bool)::check();
+	mlc_equal(mln_value(I), bool)::check();
 	mln_assertion(input.is_valid());
 	mln_assertion(nbh.is_valid());
 
@@ -97,7 +100,9 @@ namespace scribo
 
 	lbl_t iz = transform::influence_zone_geodesic(lbl, nbh, iz_dmax);
 
-	util::graph g = make::graph(iz | (pw::value(iz) != pw::cst(literal::zero)),
+	util::graph g
+	  = mln::make::influence_zone_adjacency_graph(
+				    iz | (pw::value(iz) != pw::cst(literal::zero)),
 				    nbh, nlabels);
 
 	trace::exiting("scribo::make::influence_zone_graph");

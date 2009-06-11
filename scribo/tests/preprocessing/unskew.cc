@@ -1,5 +1,4 @@
-// Copyright (C) 2009
- EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,14 +29,16 @@
 
 #include <scribo/preprocessing/unskew.hh>
 
+#include <scribo/tests/data.hh>
 
 int main(int argc, char *argv[])
 {
   (void) argc;
+  (void) argv;
   using namespace mln;
 
   image2d<bool> ima;
-  io::pbm::load(ima, argv[1]);
+  io::pbm::load(ima, SCRIBO_IMG_DIR "/text_to_group.pbm");
 
-  io::pbm::save(scribo::preprocessing::unskew(ima), "tr.pbm");
+  io::pbm::save(scribo::preprocessing::unskew(ima), "unskew.pbm");
 }

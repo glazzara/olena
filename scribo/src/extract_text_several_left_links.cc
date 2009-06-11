@@ -27,12 +27,12 @@
 
 #include <mln/essential/2d.hh>
 
-#include <scribo/text/extract_bboxes.hh>
+#include <scribo/extract/primitive/objects.hh>
 #include <scribo/text/grouping/group_with_several_left_links.hh>
 #include <scribo/text/grouping/group_from_single_link.hh>
 
-#include <scribo/debug/save_textbboxes_image.hh>
-#include <scribo/debug/save_linked_textbboxes_image.hh>
+#include <scribo/debug/save_bboxes_image.hh>
+#include <scribo/debug/save_linked_bboxes_image.hh>
 #include <scribo/make/debug_filename.hh>
 
 int usage(const char *name)
@@ -55,8 +55,8 @@ int main(int argc, char* argv[])
   io::pbm::load(input, argv[1]);
 
   value::label_16 nbboxes;
-  scribo::util::text<image2d<value::label_16> > text
-    = text::extract_bboxes(input, c8(), nbboxes);
+  typedef object_image(image2d<value::label_16>) text_t;
+  text_t text = scribo::extract::primitive::objects(input, c8(), nbboxes);
 
   {
     std::cout << "* Left grouping" << std::endl;
@@ -64,22 +64,22 @@ int main(int argc, char* argv[])
 	= text::grouping::group_with_several_left_links(text, 30);
 
     std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
-    scribo::debug::save_linked_textbboxes_image(input,
-						text, left_link,
-						literal::red, literal::cyan,
-						scribo::make::debug_filename("left_links.ppm"));
+    scribo::debug::save_linked_bboxes_image(input,
+					    text, left_link,
+					    literal::red, literal::cyan,
+					    scribo::make::debug_filename("left_links.ppm"));
 
-  scribo::util::text<image2d<value::label_16> > grouped_text
-	  = text::grouping::group_from_single_link(text, left_link);
+    text_t grouped_text
+      = text::grouping::group_from_single_link(text, left_link);
 
     std::cout << "AFTER - nbboxes = " << grouped_text.bboxes().nelements() << std::endl;
     io::ppm::save(mln::labeling::colorize(value::rgb8(),
-				       grouped_text.label_image(),
-				       grouped_text.nbboxes()),
+				       grouped_text,
+				       grouped_text.nlabels()),
 				       scribo::make::debug_filename("left_label_color.ppm"));
-    scribo::debug::save_textbboxes_image(input, grouped_text.bboxes(),
-					 literal::red,
-					 scribo::make::debug_filename("left_bboxes.ppm"));
+    scribo::debug::save_bboxes_image(input, grouped_text.bboxes(),
+				     literal::red,
+				     scribo::make::debug_filename("left_bboxes.ppm"));
   }
 
 }
