@@ -1,3 +1,7 @@
+2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	* doc/examples/Makefile.am: Clean up whitespace.
+
 2009-06-11  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Minor fixes.
