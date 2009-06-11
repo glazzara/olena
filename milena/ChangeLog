@@ -1,5 +1,10 @@
 2009-06-11  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Minor fixes in tests/accu Makefile.
+	* tests/accu/Makefile.am: Minor fixes.
+
+2009-06-11  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Move count, sum accus to math directory.
 	* mln/accu/count.hh,
 	* mln/accu/sum.hh: Move to...

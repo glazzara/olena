@@ -45,7 +45,6 @@ check_PROGRAMS =				\
 all_accus_SOURCES = all_accus.cc
 bbox_SOURCES = bbox.cc
 compute_SOURCES = compute.cc
-count_SOURCES = count.cc
 histo_SOURCES = histo.cc
 line_SOURCES = line.cc
 max_site_SOURCES = max_site.cc
@@ -60,4 +59,3 @@ transform_snake_SOURCES = transform_snake.cc
 tuple_SOURCES = tuple.cc
 
 TESTS = $(check_PROGRAMS)
-# // ACCU_FIXME do not commit
