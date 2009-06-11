@@ -45,6 +45,7 @@ namespace scribo
     public:
       MainWindow(QWidget *parent = 0);
 
+      void set_base_img_dir(const QString& dir);
 
     private slots:
       void initToolBar();
@@ -83,6 +84,8 @@ namespace scribo
       QProcess exec_;
 
       QProgressDialog pdialog_;
+
+      QString base_img_dir_;
     };
 
 

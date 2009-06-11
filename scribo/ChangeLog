@@ -1,16 +1,32 @@
+2009-06-11 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Small fixes in Scribo.
+
+	* Makefile.am: Improve generation of headers.mk.
+
+	* demo/Makefile.am: Fix an invalid path to the .pro file.
+
+	* demo/src/main.cc: repair copyright header.
+
+	* demo/src/mainwindow.cc,
+	* demo/src/mainwindow.hh: handle a different base directory for image
+	data.
+
+	* filter/small_objects.hh: fix an accumulator.
+
 2009-06-10 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
-	Fix Scribo
+	Fix Scribo.
 
-	* core/all.hh
-	* debug/all.hh
-	* text/all.hh
-	* filter/all.hh
-	* table/all.hh
+	* core/all.hh,
+	* debug/all.hh,
+	* text/all.hh,
+	* filter/all.hh,
+	* table/all.hh: update includes.
 
-	* demo/Makefile.am
-	* src/Makefile.am
-	* src/extract/primitive/Makefile.am
+	* demo/Makefile.am,
+	* src/Makefile.am,
+	* src/extract/primitive/Makefile.am: update source list.
 
 	* core/erase_bboxes.hh: move...
 	* core/erase_objects.hh: ...here.

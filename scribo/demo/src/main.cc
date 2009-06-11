@@ -1,5 +1,4 @@
-// Copyright (C) 2009
- EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,6 +33,9 @@ int main(int argc, char *argv[])
   QApplication app(argc, argv);
 
   scribo::demo::MainWindow win;
+
+  if (argc == 2)
+    win.set_base_img_dir(argv[1]);
 
   win.show();
   return app.exec();

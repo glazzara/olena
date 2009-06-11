@@ -44,22 +44,13 @@
 
 # include <mln/pw/all.hh>
 
-# include <mln/accu/count.hh>
+# include <mln/accu/math/count.hh>
 
 # include <mln/set/compute.hh>
 
 # include <scribo/core/object_image.hh>
 # include <scribo/extract/primitive/objects.hh>
 
-
-//forward declaration.
-namespace mln
-{
-  namespace accu
-  {
-    template <typename T> struct count;
-  }
-}
 
 namespace scribo
 {
@@ -112,7 +103,7 @@ namespace scribo
       struct small_objects_filter
 	: Function_v2b< small_objects_filter<L> >
       {
-	typedef accu::count<mln_psite(L)> card_t;
+	typedef accu::math::count<mln_psite(L)> card_t;
 
 	/// Constructor
 	///

@@ -84,7 +84,9 @@ namespace scribo
       setupUi(this);
 
       mainItem_ = 0;
-      exec_prefix_ = "../";
+      exec_prefix_ = "../src/";
+      base_img_dir_ = QCoreApplication::applicationDirPath();
+
       pdialog_.setRange(0,0);
       pdialog_.setLabelText(tr("Please wait while computing..."));
       pdialog_.setWindowModality(Qt::WindowModal);
@@ -102,6 +104,12 @@ namespace scribo
 
       initToolBar();
       setup_scene();
+    }
+
+    void MainWindow::set_base_img_dir(const QString& dir)
+    {
+      QDir d(dir);
+      base_img_dir_ = d.absolutePath();
     }
 
 
@@ -140,7 +148,7 @@ namespace scribo
       QString
 	filename = QFileDialog::getOpenFileName(this,
 	  tr("Open Image."),
-	  QCoreApplication::applicationDirPath() + "/" + current_dir,
+	  base_img_dir_ + "/" + current_dir,
 	  tr("Images (*.pbm *.pgm *.ppm)"));
 
       if (!filename.isEmpty())
