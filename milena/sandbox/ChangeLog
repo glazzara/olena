@@ -1,3 +1,18 @@
+2009-06-11  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Clean up sandbox and add routine for visualization.
+	* fabien/flat_zones.hh: Move to trunk.
+	* fabien/labeling.hh: Move to trunk.
+	* fabien/level.cc: Move to trunk.
+	* fabien/level.hh: Move to trunk.
+	* fabien/regional_maxima.cc: Move to trunk.
+	* fabien/regional_maxima.hh: Move to trunk.
+	* fabien/regional_minima.cc: Move to trunk.
+	* fabien/regional_minima.hh: Move to trunk.
+	* fabien/mln/world/inter_pixel/display_region.hh: Create an image for
+	visualization of regions [Draft, not functional].
+	* fabien/mln/world/inter_pixel/is_zero_face.hh: Implement zero-face.
+
 2009-06-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Stop using \arg instead of \param or \tparam in documentation.
