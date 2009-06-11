@@ -1,5 +1,11 @@
 2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add support for Vcs and svn-wrapper.
+
+	* vcs/scribo.rb: New.
+
+2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Do not distribute executable binaries.
 
 	* src/Makefile.am (EXTRA_DIST): Rename as...
