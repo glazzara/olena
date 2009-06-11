@@ -1,5 +1,11 @@
 2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Help the compiler find mln::math::max in mln::accu::label_used.
+
+	* mln/accu/label_used.hh (take(const label_used<L>&)): Here.
+
+2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	First step toward the overhauling of the documentation generation.
 
 	* doc/Doxyfile.in (OUTPUT_DIRECTORY): Set to ./devel/
