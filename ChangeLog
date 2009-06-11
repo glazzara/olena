@@ -1,3 +1,8 @@
+2009-06-11  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Update configure.ac with tests/accu/math Makefile.
+	* configure.ac: Update.
+
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add scribo to SUBDIRS.
