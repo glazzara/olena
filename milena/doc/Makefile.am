@@ -1,4 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -30,10 +31,10 @@ DOXYGEN = doxygen
 
 
 
-.PHONY: doc-all doc doc-html doc-dev doc-dev-html ref-doc-dev ref-doc-dev-html\
-	ref-doc ref-doc-html tutorial tutorial-html white-paper \
-	white-paper-html ref-guide ref-guide-html examples fix-refdata \
-	fig-convert
+.PHONY: doc doc-pdf doc-html doc-dev-pdf doc-dev-html ref-doc-dev-pdf \
+	ref-doc-dev-html ref-doc-pdf ref-doc-html tutorial-pdf tutorial-html \
+	white-paper-pdf white-paper-html ref-guide-pdf ref-guide-html examples \
+	data-regen fix-convert
 
 
 
@@ -43,73 +44,78 @@ user/html: ref-doc-html
 user/latex/refman.pdf: ref-doc
 
 
-doc-all: doc doc-html doc-dev doc-dev-html
+doc: doc-pdf doc-html doc-dev-pdf doc-dev-html
 
 
-doc: tutorial white-paper ref-guide ref-doc
+doc-pdf: tutorial-pdf white-paper-pdf ref-guide-pdf ref-doc-pdf
 
 doc-html: tutorial-html white-paper-html ref-guide-html ref-doc-html 
 
-doc-dev: tutorial ref-guide white-paper ref-doc-dev 
+doc-dev-pdf: tutorial-pdf ref-guide-pdf white-paper-pdf ref-doc-dev-pdf
 
 doc-dev-html: tutorial-html ref-guide-html white-paper-html ref-doc-dev-html 
 
 
 
-ref-doc-dev: Doxyfile examples
+ref-doc-dev: Doxyfile fig-convert
 	$(DOXYGEN) Doxyfile_complete_pdf
 	cd complete/latex && make $(AM_MAKEFLAGS)
 
-ref-doc-dev-html: Doxyfile examples
+ref-doc-dev-html: Doxyfil fig-converte
 	$(DOXYGEN) Doxyfile_complete
 
 
-ref-doc: Doxyfile examples
+ref-doc-pdf: Doxyfile fig-convert
 	$(DOXYGEN) Doxyfile_user_pdf
-	cd user/latex && make $(AM_MAKEFLAGS)
+	cd user/latex && make ref-doc
 
-ref-doc-html: Doxyfile examples
+ref-doc-html: Doxyfile fig-convert
 	$(DOXYGEN) Doxyfile_user
 
 
 
-tutorial: examples fig-convert
+tutorial-pdf: fig-convert
 	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
 
-tutorial-html: examples fig-convert
+tutorial-html: fig-convert
 	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
 
 
-white-paper:
+white-paper-pdf:
 	cd white_paper && $(MAKE) $(AM_MAKEFLAGS) $@
 
 white-paper-html:
 	cd white_paper && $(MAKE) $(AM_MAKEFLAGS) $@
 
 
-ref-guide: examples
+ref-guide-pdf: fig-convert
 	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) $@
 
-ref-guide-html: examples
+ref-guide-html: fig-convert
 	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) $@
 
 
-examples:
+data-regen:
 	cd examples && $(MAKE) $(AM_MAKEFLAGS) $@
 
 
 fix-refdata:
 	cd examples && $(MAKE) $(AM_MAKEFLAGS) $@
 
-fig-convert:
+
+fig-convert: $(FIGURES_BUILDDIR)/*.png
+
+$(FIGURES_BUILDDIR)/*.png:
+	test -d $(FIGURES_BUILDDIR) || mkdir $(FIGURES_BUILDDIR) 		\
 	@failcom='exit 1'; 							\
-	list="$(FIGURES_BUILDDIR)/*.p*m"; for img in $$list; do 		\
+	list="$(FIGURES_SRCDIR)/*.p*m"; for img in $$list; do 			\
 	  echo "Converting $$img to png"; 					\
 	  name=`basename $$img` 						\
 	  ext=`echo $$name | cut -d '.' -f 2`; 					\
 	  convert -scale 250 $$img $(FIGURES_BUILDDIR)/`basename $$img $$ext`png\
 	    || eval $$failcom; 							\
 	done; 
+
 
 edit = sed -e "s|@ID@|$$Id|" 					\
 	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g' 		\

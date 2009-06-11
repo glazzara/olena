@@ -23,5 +23,5 @@ for begin in $begins; do
 done
 
 if [ $split ] && [ $i -gt 1 ]; then
-  echo "* $1 has been splitted in $i files."
+  echo "* $1 has been split in $i files."
 fi

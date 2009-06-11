@@ -18,16 +18,20 @@
 .PHONY: ref-guide ref-guide-html
 
 include $(top_srcdir)/milena/doc/doc.mk
-TEXINPUTS = $(DOC_SRCDIR):$(DOC_BUILDDIR):$(OUTPUTS_SRCDIR):$(IMG_SRCDIR):
+TEXINPUTS ="$(DOC_SRCDIR):$(DOC_BUILDDIR):$(OUTPUTS_SRCDIR):\
+$(SPLIT_OUTPUTS_SRCDIR):$(IMG_SRCDIR):$(SPLIT_EXAMPLES_SRCDIR):"
 
 
-ref-guide:
+ref-guide: $(FIGURES_SRCDIR)/* $(OUTPUTS_SRCDIR)/* ref-guide-pdf ref-guide-html
+
+
+ref-guide-pdf: ref_guide.pdf
+
+
+ref_guide.pdf:
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/ref_guide.tex
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/ref_guide.tex
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/ref_guide.tex
-
-
-ref_guide.pdf: ref-guide
 
 
 ref-guide-html: 

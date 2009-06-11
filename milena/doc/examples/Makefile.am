@@ -134,12 +134,16 @@ tuto3_trace_SOURCES = tuto3/trace.cc
 tuto4_site_set_create_SOURCES = tuto4/site_set_create.cc
 tuto4_point2d_SOURCES = tuto4/point2d.cc
 
-all: clean-figures 
+.PHONY : run-examples examples diff-data fix-refdata split-examples \
+	 split-outputs
+
+
+all:
 	mkdir -p $(OUTPUTS_BUILDDIR) 
 	mkdir -p $(FIGURES_BUILDDIR) 
 
 
-run-samples: all
+run-examples: all
 	@failcom='exit 1'; 						\
 	list='$(noinst_PROGRAMS)'; for bin in $$list; do 		\
 	  echo "Running $$bin"; 					\
@@ -147,10 +151,10 @@ run-samples: all
 	done
 
 
-examples: run-samples diff-data split-samples split-outputs 
+data-regen: run-examples split-examples split-outputs diff-data
 
 
-diff-data:
+diff-data: run-examples split-examples
 	@failcom='exit 1'; 						\
  	has_txt_diff="";						\
  	txtlist="$(OUTPUTS_BUILDDIR)/*.txt"; for txt in $$txtlist; do 	\
@@ -159,12 +163,25 @@ diff-data:
  		|| has_txt_diff+=" `basename $$txt`";	\
  	done;								\
  	has_fig_diff="";						\
- 	figlist="$(FIGURES_BUILDDIR)/*"; for fig in $$figlist; do 	\
+ 	figlist="$(FIGURES_BUILDDIR)/*.p*m"; for fig in $$figlist; do 	\
  	  echo "Diff `basename $$fig`";					\
  	  diff $$fig $(FIGURES_SRCDIR)/`basename $$fig` >/dev/null 2>&1 \
  		|| has_fig_diff+=" `basename $$fig`";	\
  	done; 								\
-	(test -z "$$has_txt_diff" && test -z "$$has_fig_diff")		\
+ 	has_split_out_diff="";						\
+ 	split_outlist="$(SPLIT_OUTPUTS_BUILDDIR)/*"; for split_out in $$split_outlist; do \
+ 	  echo "Diff `basename $$split_out`";				\
+ 	  diff $$split_out $(SPLIT_OUTPUTS_SRCDIR)/`basename $$split_out` >/dev/null 2>&1 \
+ 		|| has_split_out_diff+=" `basename $$split_out`";	\
+ 	done; 								\
+ 	has_split_ex_diff="";						\
+ 	split_exlist="$(SPLIT_EXAMPLES_BUILDDIR)/*"; for split_ex in $$split_exlist; do \
+ 	  echo "Diff `basename $$split_ex`";				\
+ 	  diff $$split_ex $(SPLIT_EXAMPLES_SRCDIR)/`basename $$split_ex` >/dev/null 2>&1 \
+ 		|| has_split_ex_diff+=" `basename $$split_ex`";	\
+ 	done; 								\
+	(test -z "$$has_txt_diff" && test -z "$$has_fig_diff" && 	\
+	 test -z "$$has_split_out_diff" && test -z "$$has_split_ex_diff")\
 	 || (echo "--------";						\
 	     echo "ERROR: please check if the tutorial needs an update.";\
 	     echo "       The following files differ from their \
@@ -180,11 +197,23 @@ reference or their reference file does not exist:";  			\
   	     echo "$$has_fig_diff"; 					\
   	     echo "";							\
 	     echo "--------"; 						\
+  	     echo "* Split outputs:"; 					\
+  	     echo "";							\
+  	     echo "$$has_split_out_diff"; 				\
+  	     echo "";							\
+	     echo "--------"; 						\
+  	     echo "* Split examples:"; 					\
+  	     echo "";							\
+  	     echo "$$has_split_ex_diff"; 				\
+  	     echo "";							\
+	     echo "--------"; 						\
   	     echo "* Please update manually the reference files located \
 in:";									\
   	     echo "";							\
 	     echo " $(OUTPUTS_SRCDIR)"; 				\
 	     echo " $(FIGURES_SRCDIR)"; 				\
+	     echo " $(SPLIT_EXAMPLES_SRCDIR)"; 				\
+	     echo " $(SPLIT_OUTPUTS_SRCDIR)"; 				\
   	     echo "";							\
 	     echo "* Reference files can updated automatically with \
 'make fix-refdata'"; 							\
@@ -204,25 +233,34 @@ fix-refdata:
  	  diff $$fig $(FIGURES_SRCDIR)/`basename $$fig` >/dev/null 2>&1 \
  		|| echo "Updating reference file for $$fig";		\
 		   cp $$fig $(FIGURES_SRCDIR);				\
+ 	done; 								\
+ 	split_outlist="$(SPLIT_OUTPUTS_BUILDDIR)/*.txt"; for split_out in $$split_outlist; do \
+ 	  diff $$split_out $(SPLIT_OUTPUTS_SRCDIR)/`basename $$split_out` >/dev/null 2>&1 \
+ 		|| echo "Updating reference file for $$split_out";	\
+		   cp $$split_out $(SPLIT_OUTPUTS_SRCDIR);		\
+ 	done; 								\
+ 	split_exlist="$(SPLIT_EXAMPLES_BUILDDIR)/*.cc"; for split_ex in $$split_exlist; do \
+ 	  diff $$split_ex $(SPLIT_EXAMPLES_SRCDIR)/`basename $$split_ex` >/dev/null 2>&1 \
+ 		|| echo "Updating reference file for $$split_ex";	\
+		   cp $$split_ex $(SPLIT_EXAMPLES_SRCDIR);		\
  	done; 								
 
 
-split-samples:
-	mkdir -p $(EXAMPLES_BUILDDIR)
+split-examples:
+	test -d $(SPLIT_EXAMPLES_BUILDDIR) || mkdir $(SPLIT_EXAMPLES_BUILDDIR)
 	@failcom='exit 1'; 						\
 	list=`find $(EXAMPLES_SRCDIR) -type f -name '*.cc'`; for file in $$list; do \
-	$(DOC_SRCDIR)/tools/split_sample.sh $$file cc $(EXAMPLES_BUILDDIR)\
+	$(DOC_SRCDIR)/tools/split_sample.sh $$file cc $(SPLIT_EXAMPLES_BUILDDIR)\
 					      || eval $$failcom; 	\
 	done
 
 split-outputs:
-	mkdir -p $(SPLITTED_OUTPUTS_BUILDDIR)
+	test -d $(SPLIT_OUTPUTS_BUILDDIR) || mkdir $(SPLIT_OUTPUTS_BUILDDIR)
 	@failcom='exit 1'; 						\
 	list='$(OUTPUTS_BUILDDIR)/*.txt'; for file in $$list; do 	\
-	$(DOC_SRCDIR)/tools/split_sample.sh $$file txt $(SPLITTED_OUTPUTS_BUILDDIR)\
+	$(DOC_SRCDIR)/tools/split_sample.sh $$file txt $(SPLIT_OUTPUTS_BUILDDIR)\
 					      || eval $$failcom; 	\
 	done
-
 
 clean-local: clean-figures
 	rm -Rf $(OUTPUTS_BUILDDIR)

@@ -21,18 +21,21 @@ include $(top_srcdir)/milena/doc/doc.mk
 
 TEXINPUTS = $(DOC_SRCDIR):$(DOC_BUILDDIR):$(OUTPUTS_SRCDIR):$(IMG_SRCDIR):
 
-tutorial:
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/tutorial.tex
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/tutorial.tex
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/tutorial.tex
+
+tutorial: $(FIGURES_SRCDIR)/* $(OUTPUTS_SRCDIR)/* tutorial-html tutorial-pdf
 
 
-tutorial.pdf: tutorial
-
+tutorial-pdf: tutorial.pdf
 
 tutorial-html: 
 	chmod u+x $(DOC_SRCDIR)/tools/todoxygen.sh
 	$(DOC_SRCDIR)/tools/todoxygen.sh $(srcdir)/tutorial.tex $(DOC_BUILDDIR)/tutorial $(DOC_SRCDIR)
+
+
+tutorial.pdf:
+	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/tutorial.tex
+	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/tutorial.tex
+	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/tutorial.tex
 
 
 clean-local:
@@ -40,6 +43,7 @@ clean-local:
 	rm -f *~ *blg *.lot
 	rm -f tutorial.pdf
 	rm -f *.haux *.hh *.html *.htoc
+	rm -f tutorial.haux  tutorial.hh  tutorial.html
 
 
 EXTRA_DIST = 		\
