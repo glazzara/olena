@@ -1,5 +1,13 @@
 2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the generation of headers.mk in SCRIBO.
+
+	* Makefile.am (regen-am, $(srcdir)/headers.mk): Execute
+	`./generate_dist_headers.sh' from the source dir, not the build
+	dir.
+
+2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add support for Vcs and svn-wrapper.
 
 	* vcs/scribo.rb: New.

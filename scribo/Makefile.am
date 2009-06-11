@@ -28,7 +28,7 @@ include $(top_srcdir)/build-aux/regen-recursive.mk
 REGEN_SUBDIRS += tests
 
 regen-am:
-	./generate_dist_headers.sh
+	cd $(srcdir) && ./generate_dist_headers.sh
 
 EXTRA_DIST = generate_dist_headers.sh
 # FIXME: Change generate_dist_headers.sh so that the action looks like this:
@@ -36,6 +36,6 @@ EXTRA_DIST = generate_dist_headers.sh
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
 #
 $(srcdir)/headers.mk: $(srcdir)/generate_dist_headers.sh
-	./generate_dist_headers.sh
+	cd $(srcdir) && ./generate_dist_headers.sh
 
 include $(srcdir)/headers.mk
