@@ -1,5 +1,14 @@
 2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Do not distribute scribo/ by default.
+
+	* Makefile.am (dist-hook): Strip parts related to SCRIBO by
+	default.
+	Tag parts to be stripped by default with `<<lrde' and `>>'.
+	* configure.ac: Likewise.
+
+2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a script stripping parts of the distribution.
 
 	* build-aux/strip-lrde: New.

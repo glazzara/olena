@@ -107,7 +107,9 @@ AC_ARG_ENABLE([all],
                enable_trimesh=yes
                with_swig=yes
                enable_swilena=yes
+#<<lrde
                enable_scribo=yes
+#>>
                enable_apps=yes
                enable_tools=yes
               ])
@@ -184,6 +186,7 @@ AC_CONFIG_FILES(m4_do([swilena/python/sps-local],
 		      [:swilena/python/sps-local.in]),
 		[chmod +x swilena/python/sps-local])
 
+#<<lrde
 ## -------- ##
 ## Scribo.  ##
 ## -------- ##
@@ -212,7 +215,7 @@ AC_CONFIG_FILES([
     scribo/tests/text/Makefile
     scribo/tests/unit_test/Makefile
 ])
-
+#>>
 
 ## --------------- ##
 ## Configuration.  ##

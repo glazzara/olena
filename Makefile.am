@@ -25,9 +25,11 @@ if ENABLE_SWILENA
   SUBDIRS += swilena
 endif ENABLE_SWILENA
 
+#<<lrde
 if ENABLE_SCRIBO
   SUBDIRS += scribo
 endif ENABLE_SCRIBO
+#>>
 
 # Target shortcuts delegating the actual action to milena/Makefile.
 LOCAL_RECURSIVE_TARGETS = doc pretty-check tests
@@ -38,3 +40,25 @@ $(LOCAL_RECURSIVE_TARGETS):
 # Regen files recursively.
 include $(top_srcdir)/build-aux/regen-recursive.mk
 REGEN_SUBDIRS += milena scribo
+
+
+#<<lrde
+# Unless Make variable MAINTAINER is set to `true' (e.g. by calling
+# `make dist MAINTAINER=true'), do not distribute parts tagged `lrde'
+# (see build-aux/strip-lrde).
+#
+# Remove any trace of olena/oln/lrde from the distribution and reset
+# the GNU build system for the distdir layout.
+dist-hook:
+	if test x$(MAINTAINER) != xtrue; then				\
+	  $(top_srcdir)/build-aux/strip-lrde $(distdir)/configure.ac &&	\
+	  $(top_srcdir)/build-aux/strip-lrde $(distdir)/Makefile.am &&	\
+	  rm -rf $(distdir)/scribo &&					\
+	  (								\
+	    cd $(distdir);						\
+	    set -evx;							\
+	    autoreconf -f -v -i						\
+	    find . -name autom4te.cache | xargs rm -rf			\
+	  )								\
+	fi
+#>>
