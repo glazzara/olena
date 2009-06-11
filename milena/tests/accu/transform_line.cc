@@ -25,7 +25,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/accu/transform_line.hh>
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/pw/all.hh>
 #include <mln/data/compare.hh>
 
@@ -38,7 +38,7 @@ int main()
   unsigned len = 3;
   for (unsigned dir = 0; dir < 2; ++dir)
   {
-    image2d<unsigned> out = accu::transform_line(accu::meta::count(), ima, len, dir);
+    image2d<unsigned> out = accu::transform_line(accu::meta::math::count(), ima, len, dir);
     mln_assertion(out == (pw::cst(3u) | ima.domain()));
   }
 

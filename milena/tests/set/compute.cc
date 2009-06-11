@@ -25,7 +25,7 @@
 
 #include <mln/core/site_set/p_set.hh>
 #include <mln/core/alias/point2d.hh>
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/set/compute.hh>
 
 
@@ -34,5 +34,5 @@ int main()
   using namespace mln;
 
   p_set<point2d> s;
-  mln_assertion(set::compute(accu::meta::count(), s) == 0);
+  mln_assertion(set::compute(accu::meta::math::count(), s) == 0);
 }

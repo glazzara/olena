@@ -33,7 +33,7 @@
 # include <mln/data/fill.hh>
 # include <mln/literal/zero.hh>
 # include <mln/convert/to_upper_window.hh>
-# include <mln/accu/count.hh>
+# include <mln/accu/math/count.hh>
 # include <mln/util/pix.hh>
 
 # include <mln/core/alias/neighb2d.hh>

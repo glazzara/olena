@@ -34,7 +34,7 @@
 # include <mln/labeling/compute.hh>
 
 # include <mln/core/image/dmorph/image_if.hh>
-# include <mln/accu/count.hh>
+# include <mln/accu/math/count.hh>
 
 
 namespace mln
@@ -83,7 +83,7 @@ namespace mln
 
       mln_ch_value(I, L) lbls = labeling::background(input, nbh, nlabels);
 
-      accu::count<mln_value(I)> a_;
+      accu::math::count<mln_value(I)> a_;
       util::array<unsigned> arr = labeling::compute(a_, input, lbls, nlabels);
 
       unsigned bg_count = 0;

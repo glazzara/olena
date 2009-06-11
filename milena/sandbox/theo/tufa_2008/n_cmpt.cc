@@ -42,7 +42,7 @@
 #include <mln/morpho/tree/compute_attribute_image.hh>
 
 #include <mln/accu/volume.hh>
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 
 
 namespace mln
@@ -255,7 +255,7 @@ int main(int argc, char* argv[])
 
   unsigned n = std::atoi(argv[2]);
 
-  accu::count< util::pix<I> > acc;
+  accu::math::count< util::pix<I> > acc;
   // accu::volume<I> acc;
 
   image2d<int_u8> g = n_cmpt(acc, f, c4(), n + 1);

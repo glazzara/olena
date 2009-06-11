@@ -50,7 +50,7 @@ int main()
 
 // FIXME: Can't be called with new implementation. (When_pix = not_ok).
 //   {
-//     accu::count<point2d> a;
+//     accu::math::count<point2d> a;
 //     io::pgm::save(morpho::opening::algebraic(lena, c4(), a, 10),
 // 		  "ref.pgm");
 //   }

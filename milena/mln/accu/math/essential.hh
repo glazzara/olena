@@ -23,41 +23,14 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/core/image/image2d.hh>
-#include <mln/core/alias/neighb2d.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/value/label_8.hh>
+#ifndef MLN_ACCU_MATH_ESSENTIAL_HH
+# define MLN_ACCU_MATH_ESSENTIAL_HH
 
-#include <mln/labeling/flat_zones.hh>
-#include <mln/labeling/compute.hh>
-#include <mln/labeling/n_max.hh>
+/// \file
+///
+/// File that includes the most useful mathematic accumulator types.
 
-#include <mln/fun/v2b/threshold.hh>
-#include <mln/data/transform.hh>
+# include <mln/accu/math/count.hh>
+# include <mln/accu/math/sum.hh>
 
-#include <mln/accu/math/count.hh>
-
-#include <mln/io/pgm/all.hh>
-
-#include "tests/data.hh"
-
-int main()
-{
-  using namespace mln;
-  using value::int_u8;
-  using value::label_8;
-
-  image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/tiny.pgm");
-
-  image2d<bool> threshold = data::transform(lena, fun::v2b::threshold<int_u8>(100));
-  label_8 nlabels;
-  image2d<label_8> labels = labeling::flat_zones(threshold, c4(), nlabels);
-  accu::math::count<int_u8> a_;
-
-  util::array<unsigned> a = labeling::compute(a_, threshold, labels, nlabels);
-  util::array<label_8> arr_big = labeling::n_max<label_8>(a, 3);
-
-  mln_assertion(arr_big[1] == 1u);
-  mln_assertion(arr_big[2] == 4u);
-  mln_assertion(arr_big[3] == 5u);
-}
+#endif // ! MLN_ACCU_MATH_ESSENTIAL_HH

@@ -33,7 +33,7 @@
 # include <mln/data/fill.hh>
 # include <mln/literal/zero.hh>
 # include <mln/convert/to_upper_window.hh>
-# include <mln/accu/count.hh>
+# include <mln/accu/math/count.hh>
 # include <mln/util/pix.hh>
 
 # include <mln/core/alias/neighb2d.hh>
@@ -187,7 +187,7 @@ namespace mln
 
     typedef image2d<bool> I;
     typedef util::pix<I> pix_t;
-    typedef accu::count<pix_t> A;
+    typedef accu::math::count<pix_t> A;
     typedef mln_psite_(I) P;
     typedef p_array<P> S;
 

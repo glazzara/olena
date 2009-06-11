@@ -22,7 +22,7 @@
 #include <mln/labeling/regional_minima.hh>
 #include <mln/labeling/compute.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 
 #include <mln/morpho/gradient.hh>
 #include <mln/morpho/meyer_wst.hh>
@@ -446,7 +446,7 @@ int main(int argc, char* argv[])
   // Compute an attribute per region.
 
   typedef unsigned A;
-  util::array<A> a = labeling::compute(accu::meta::count(),
+  util::array<A> a = labeling::compute(accu::meta::math::count(),
 				       g,
 				       wst_g,
 				       n_basins);

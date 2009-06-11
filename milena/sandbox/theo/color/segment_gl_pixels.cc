@@ -86,7 +86,7 @@ int main(int argc, char* argv[])
 
 
 
-  // accu::count< util::pix<I> > a_;
+  // accu::math::count< util::pix<I> > a_;
   // accu::sum_pix< util::pix<I> > a_;
   // accu::volume<I> a_;
   accu::height<I> a_;

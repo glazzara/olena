@@ -53,7 +53,7 @@
 # include <mln/accu/stat/mean.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/accu/p.hh>
-# include <mln/accu/count.hh>
+# include <mln/accu/math/count.hh>
 
 # include <mln/value/scalar.hh>
 # include <mln/make/voronoi.hh>

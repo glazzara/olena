@@ -22,7 +22,7 @@
 #include <mln/morpho/meyer_wst.hh>
 #include <mln/labeling/compute.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/accu/volume.hh>
 #include <mln/accu/stat/mean.hh>
 
@@ -283,7 +283,7 @@ int main(int argc, char* argv[])
   typedef f_t I;
 
 
-  // accu::count< util::pix<I> > a_;
+  // accu::math::count< util::pix<I> > a_;
   // accu::volume<I> a_;
   // accu::sum_pix< util::pix<I> > a_;
 

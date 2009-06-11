@@ -25,7 +25,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/accu/transform_snake.hh>
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/win/rectangle2d.hh>
 #include <mln/pw/all.hh>
 #include <mln/data/compare.hh>
@@ -38,6 +38,6 @@ int main()
   image2d<int> ima(4, 5);
   win::rectangle2d rec(3, 3);
 
-  image2d<unsigned> out = accu::transform_snake(accu::meta::count(), ima, rec);
+  image2d<unsigned> out = accu::transform_snake(accu::meta::math::count(), ima, rec);
   mln_assertion(out == (pw::cst(rec.size()) | ima.domain()));
 }

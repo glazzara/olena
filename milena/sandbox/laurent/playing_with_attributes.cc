@@ -17,7 +17,7 @@
 #include <mln/data/sort_psites.hh>
 #include <mln/geom/nsites.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 
 
 
@@ -325,7 +325,7 @@ void do_it(const I& g, const N& nbh, L& n_labels)
     typedef morpho::tree::data<I,S> tree_t;
     tree_t t(g, s, nbh);
     
-    accu::count< util::pix<I> > a_; // Kind of attribute.
+    accu::math::count< util::pix<I> > a_; // Kind of attribute.
  
     mln_ch_value(I,unsigned) a = morpho::tree::compute_attribute_image(a_, t);
     debug::println("a | nodes:", a | t.nodes());

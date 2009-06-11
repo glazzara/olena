@@ -24,7 +24,7 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/accu/image/set_value.hh>
 
 #include <mln/data/compare.hh>
@@ -36,7 +36,7 @@ int main()
 {
   using namespace mln;
 
-  typedef accu::count<int> A;
+  typedef accu::math::count<int> A;
   image2d<A> ima(2, 2);
 
   accu::image::set_value(ima, 3);

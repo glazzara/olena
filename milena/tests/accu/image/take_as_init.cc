@@ -28,7 +28,7 @@
 #include <mln/pw/cst.hh>
 #include <mln/pw/image.hh>
 
-#include <mln/accu/sum.hh>
+#include <mln/accu/math/sum.hh>
 #include <mln/accu/image/take_as_init.hh>
 
 
@@ -36,7 +36,7 @@ int main()
 {
   using namespace mln;
 
-  typedef accu::sum<int,int> A;
+  typedef accu::math::sum<int,int> A;
   image2d<A> ima(2, 2);
 
   accu::image::take_as_init(ima, 3);

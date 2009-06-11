@@ -50,7 +50,7 @@
 #include <mln/morpho/elementary/gradient.hh>
 #include <mln/labeling/regional_minima.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/opt/at.hh>
 #include <mln/set/card.hh>
 
@@ -342,7 +342,7 @@ namespace mln
 
 	mln_invariant((nchildren | t.domain()) == nc_ref);
 
-	accu::count< util::pix<I> > fixme_;
+	accu::math::count< util::pix<I> > fixme_;
 	mln_ch_value(I, mln_result(A)) a_ref;
 	a_ref = morpho::tree::compute_attribute_image(fixme_, t);
 	mln_assertion(a == a_ref);
@@ -557,7 +557,7 @@ int main(int argc, char* argv[])
     debug::println("f (gradient)", f);
 
 
-  typedef accu::count<point2d> A;
+  typedef accu::math::count<point2d> A;
   typedef mln_result_(A) L;
 
   A area;

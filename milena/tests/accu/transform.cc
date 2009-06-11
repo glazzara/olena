@@ -26,7 +26,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/accu/transform.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/win/rectangle2d.hh>
 
 #include <mln/pw/all.hh>
@@ -42,14 +42,14 @@ int main()
 
   {
     image2d<unsigned>
-      out = accu::transform(ima, accu::count<int>(), rec),
+      out = accu::transform(ima, accu::math::count<int>(), rec),
       ref(ima.domain());
     mln_assertion(out == (pw::cst(rec.size()) | ima.domain()));
   }
 
   {
     image2d<unsigned>
-      out = accu::transform(ima, accu::meta::count(), rec),
+      out = accu::transform(ima, accu::meta::math::count(), rec),
       ref(ima.domain());
     mln_assertion(out == (pw::cst(rec.size()) | ima.domain()));
   }

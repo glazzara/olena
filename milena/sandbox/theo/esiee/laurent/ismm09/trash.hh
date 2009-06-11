@@ -99,7 +99,7 @@ namespace mln
 // 	      << std::endl;
 //   }
 
-//   // accu::count< util::pix<g_t> > a_;
+//   // accu::math::count< util::pix<g_t> > a_;
 //   accu::height<g_t> a_;
 
 //   compute_attribute_extincted(g, cplx2d::e2e(), a_,

@@ -28,7 +28,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/accu/compute.hh>
 #include <mln/labeling/value.hh>
 #include <mln/data/paste.hh>
@@ -53,7 +53,7 @@ int main()
     {
       image2d<unsigned> labels = labeling::value(lena, l, c4(), n);
       unsigned npix =
-	accu::compute(accu::meta::count(),
+	accu::compute(accu::meta::math::count(),
 		      labels | (pw::value(labels) != pw::cst(0u)));
       npixels += npix;
     }

@@ -9,9 +9,9 @@
 
 #include <mln/io/dicom/load.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/accu/stat/mean.hh>
-#include <mln/accu/sum.hh>
+#include <mln/accu/math/sum.hh>
 #include <mln/accu/image/all.hh>
 #include <mln/arith/minus.hh>
 #include <mln/arith/all.hh>
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
   // Mesure bruit de fond pour seuiller
   // calculé sur la première image
   image2d<bool> roi_noise; // FIXME: init this ROI, should be a domain
-  accu::count<bool> accu_nbrpix1;
+  accu::math::count<bool> accu_nbrpix1;
   unsigned nbrpix1 = data::compute(accu_nbrpix1, roi_noise);
   image2d<float> datasli = arr_ima[0];
 
@@ -186,7 +186,7 @@ int main(int argc, char* argv[])
 
   std::cout << "kk = " << kk << std::endl;
 
-  image2d<accu::sum<float> > accu_sum;
+  image2d<accu::math::sum<float> > accu_sum;
   accu::image::init(accu_sum);
   for (int k = 0; k < dim3; ++k)
     accu::image::take(accu_sum, arr_smooth[k]);

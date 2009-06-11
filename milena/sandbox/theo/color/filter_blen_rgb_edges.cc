@@ -25,7 +25,7 @@
 #include <mln/morpho/watershed/flooding.hh>
 #include <mln/labeling/compute.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/accu/volume.hh>
 #include <mln/accu/stat/mean.hh>
 

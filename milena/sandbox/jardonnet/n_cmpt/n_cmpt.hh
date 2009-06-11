@@ -33,7 +33,7 @@
 # include <mln/data/fill.hh>
 # include <mln/util/pix.hh>
 # include <mln/data/sort_psites.hh>
-# include <mln/accu/count.hh>
+# include <mln/accu/math/count.hh>
 # include <mln/accu/volume.hh>
 
 namespace mln
@@ -76,7 +76,7 @@ namespace mln
       typedef mln_psite(I) P;
 
       typedef accu::volume<I> A;
-      //typedef accu::count<unsigned> A;
+      //typedef accu::math::count<unsigned> A;
       typedef mln_psite(I) P;
       typedef p_array<P> S;
 

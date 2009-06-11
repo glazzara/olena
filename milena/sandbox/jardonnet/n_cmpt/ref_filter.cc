@@ -8,7 +8,7 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/morpho/tree/data.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/util/set.hh>
 
 #include <mln/labeling/regional_minima.hh>
@@ -216,7 +216,7 @@ int main(int argc, char* argv[])
   // We get a min-tree so that we can perform morphological closings.
 
   morpho::tree::data<I,S> t(f, s, c4());
-  accu::count< util::pix<I> > attr;
+  accu::math::count< util::pix<I> > attr;
 
   image2d<unsigned> a = morpho::tree::compute_attribute_image(attr, t);
 

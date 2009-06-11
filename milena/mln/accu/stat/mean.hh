@@ -33,8 +33,8 @@
 /// \todo Use accu::pair just like in accu::stat::min_max.
 
 # include <mln/accu/internal/base.hh>
-# include <mln/accu/count.hh>
-# include <mln/accu/sum.hh>
+# include <mln/accu/math/count.hh>
+# include <mln/accu/math/sum.hh>
 
 
 namespace mln
@@ -114,8 +114,8 @@ namespace mln
 
       protected:
 
-	accu::count<T> count_;
-	accu::sum<T,S>   sum_;
+	accu::math::count<T> count_;
+	accu::math::sum<T,S>   sum_;
       };
 
 

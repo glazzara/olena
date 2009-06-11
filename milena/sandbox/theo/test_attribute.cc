@@ -45,7 +45,7 @@
 #include <mln/morpho/closing_area.hh>
 #include <mln/morpho/opening_area.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/pbm/save.hh>
@@ -84,14 +84,14 @@ int main()
   {
     S s = data::sort_psites_increasing(f);
     morpho::tree::data<I,S> t(f, s, c4());
-    accu::count<Px> a;
+    accu::math::count<Px> a;
     area_inc = morpho::tree::compute_attribute_image(a, t);
     debug::println("area_inc =", area_inc);
   }
   {
     S s = data::sort_psites_decreasing(f);
     morpho::tree::data<I,S> t(f, s, c4());
-    accu::count<Px> a;
+    accu::math::count<Px> a;
     area_dec = morpho::tree::compute_attribute_image(a, t);
     debug::println("area_dec =", area_dec);
   }

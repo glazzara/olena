@@ -8,7 +8,7 @@
 #include <mln/core/image/dmorph/image_if.hh>
 #include <mln/pw/value.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/accu/stat/mean.hh>
 #include <mln/accu/image/init.hh>
 #include <mln/accu/image/take.hh>
@@ -50,7 +50,7 @@ int main()
     io::pbm::load(pic, "../../../img/fly.pbm");
     debug::println(pic);
     
-    typedef accu::count<bool> A;
+    typedef accu::math::count<bool> A;
     
     image1d<A> h(pic.ncols());
     accu::image::init(h);

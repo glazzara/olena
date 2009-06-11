@@ -14,7 +14,7 @@
 # include <mln/core/site_set/p_priority.hh>
 
 #include <mln/labeling/compute.hh>
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 
 
 
@@ -323,7 +323,7 @@ int main(int argc, char* argv[])
   // --------------------------------
 
   typedef unsigned A;
-  util::array<A> a = labeling::compute(accu::meta::count(),
+  util::array<A> a = labeling::compute(accu::meta::math::count(),
 				       g,
 				       wst_g,
 				       n_basins);

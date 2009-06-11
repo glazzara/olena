@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,41 +23,39 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/core/image/image2d.hh>
-#include <mln/core/alias/neighb2d.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/value/label_8.hh>
-
-#include <mln/labeling/flat_zones.hh>
-#include <mln/labeling/compute.hh>
-#include <mln/labeling/n_max.hh>
-
-#include <mln/fun/v2b/threshold.hh>
-#include <mln/data/transform.hh>
-
 #include <mln/accu/math/count.hh>
 
-#include <mln/io/pgm/all.hh>
 
-#include "tests/data.hh"
+struct toto {};
+
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
-  using value::label_8;
 
-  image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/tiny.pgm");
+  {
+    // The code below do not compile, as expected :-)
+    //     accu::math::count<int> a;
+    //     a.take_as_init(toto());
+  }
+  {
+    accu::math::count<int> a;
+    mln_assertion(a.to_result() == 0);
+  }
+  {
+    accu::math::count<int> a;
+    for (int i = 0; i < 200; i++)
+      a.take(i);
+    mln_assertion(a.to_result() == 200);
+  }
+  {
+    accu::math::count<int> a, a_;
+    a.take_as_init(1);
+    mln_assertion(a == 1u);
+    a.take(2);
+    mln_assertion(a == 2u);
 
-  image2d<bool> threshold = data::transform(lena, fun::v2b::threshold<int_u8>(100));
-  label_8 nlabels;
-  image2d<label_8> labels = labeling::flat_zones(threshold, c4(), nlabels);
-  accu::math::count<int_u8> a_;
-
-  util::array<unsigned> a = labeling::compute(a_, threshold, labels, nlabels);
-  util::array<label_8> arr_big = labeling::n_max<label_8>(a, 3);
-
-  mln_assertion(arr_big[1] == 1u);
-  mln_assertion(arr_big[2] == 4u);
-  mln_assertion(arr_big[3] == 5u);
+    a_.take_as_init(a);
+    mln_assertion(a_ == 2u);
+  }
 }

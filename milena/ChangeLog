@@ -1,3 +1,111 @@
+2009-06-11  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Move count, sum accus to math directory.
+	* mln/accu/count.hh,
+	* mln/accu/sum.hh: Move to...
+	* mln/accu/math,
+	* mln/accu/math/count.hh,
+	* mln/accu/math/sum.hh:
+	Move accus in math directory.
+
+	* mln/accu/all.hh,
+	* mln/accu/essential.hh,
+	* mln/accu/math/all.hh,
+	* mln/accu/math/essential.hh:
+	Update all.hh, and essential.hh respecting the new location.
+
+	* tests/accu/count.cc: Move to...
+	* tests/accu/math,
+	* tests/accu/math/count.cc:
+	Move accus tests in math directory.
+
+	* tests/accu/Makefile.am,
+	* tests/accu/math/Makefile.am:
+	Update accus Makefiles.
+
+	* doc/examples/tuto3/first_routine.cc: 
+	* mln/accu/site_set/rectangularity.hh,
+	* mln/accu/stat/deviation.hh,
+	* mln/accu/stat/mean.hh,
+	* mln/estim/sum.hh,
+	* mln/labeling/fill_holes.hh,
+	* mln/registration/icp.hh,
+	* sandbox/edwin/tree/tree.cc,
+	* sandbox/fabien/igr/dist_edges.cc,
+	* sandbox/fabien/igr/filter.cc,
+	* sandbox/fabien/igr/fixed_seg/main.cc,
+	* sandbox/fabien/igr/igr.cc,
+	* sandbox/fabien/igr/matlab.cc,
+	* sandbox/fabien/igr/mean_median_label.cc,
+	* sandbox/fabien/igr/seg_vol_irm.hh,
+	* sandbox/fabien/igr/smooth_fixed_seg/main.cc,
+	* sandbox/fabien/igr/time_max.cc,
+	* sandbox/fabien/igr/time_max_norm.cc,
+	* sandbox/fabien/igr/wst_edges.cc,
+	* sandbox/fabien/level.cc,
+	* sandbox/folio/test/histo/project_histo_add.cc,
+	* sandbox/folio/test/histo/project_screen.cc,
+	* sandbox/folio/test/histo/projected3d.cc,
+	* sandbox/fred/old/mean.hh,
+	* sandbox/garrigues/area_filter_auto_dual.cc,
+	* sandbox/garrigues/union_find/canvas/reconstruction_on_function.hh,
+	* sandbox/garrigues/union_find/canvas/reconstruction_on_set.hh,
+	* sandbox/garrigues/union_find/canvas/self_dual_reconstruction.hh,
+	* sandbox/icdar/2009/hsc/clean_input.hh,
+	* sandbox/jardonnet/n_cmpt/fused_filter.cc,
+	* sandbox/jardonnet/n_cmpt/n_cmpt.hh,
+	* sandbox/jardonnet/n_cmpt/ref_filter.cc,
+	* sandbox/laurent/ismm2009.cc,
+	* sandbox/laurent/memo/ismm2009.v0.cc,
+	* sandbox/laurent/memo/ismm2009.v1.cc,
+	* sandbox/laurent/memo/ismm2009.v2.cc,
+	* sandbox/laurent/playing_with_attributes.cc,
+	* sandbox/lazzara/igr/igr-biggest-comp.cc,
+	* sandbox/lazzara/igr/igr-cloud.cc,
+	* sandbox/lazzara/igr/igr.cc,
+	* sandbox/lazzara/igr/irm_seg_with_mm_and_rag.mine.cc,
+	* sandbox/nivault/extract_character.cc,
+	* sandbox/nivault/extract_score.cc,
+	* sandbox/theo/color/filter_blen_rgb_edges.cc,
+	* sandbox/theo/color/segment_gl_pixels.cc,
+	* sandbox/theo/color/segment_rgb_edges.cc,
+	* sandbox/theo/esiee/laurent/ismm09/main.cc,
+	* sandbox/theo/esiee/laurent/ismm09/trash.hh,
+	* sandbox/theo/experimental/projected_histo.cc,
+	* sandbox/theo/publis/icip2009/compute_a.cc,
+	* sandbox/theo/test_attribute.cc,
+	* sandbox/theo/tufa_2008/filter_n.cc,
+	* sandbox/theo/tufa_2008/n_cmpt.cc,
+	* sandbox/theo/tufa_2008/steps.0.cc,
+	* sandbox/theo/tufa_2008/steps.1.cc,
+	* sandbox/theo/tufa_2008/steps.2.cc,
+	* sandbox/theo/tufa_2008/steps.2b.cc,
+	* sandbox/theo/tufa_2008/steps.3.cc,
+	* tests/accu/all_accus.cc,
+	* tests/accu/compute.cc,
+	* tests/accu/image/init.cc,
+	* tests/accu/image/set_value.cc,
+	* tests/accu/image/take.cc,
+	* tests/accu/image/take_as_init.cc,
+	* tests/accu/image/take_n_times.cc,
+	* tests/accu/image/to_result.cc,
+	* tests/accu/image/untake.cc,
+	* tests/accu/transform.cc,
+	* tests/accu/transform_diagonal.cc,
+	* tests/accu/transform_directional.cc,
+	* tests/accu/transform_line.cc,
+	* tests/accu/transform_snake.cc,
+	* tests/accu/tuple.cc,
+	* tests/labeling/compute.cc,
+	* tests/labeling/n_max.cc,
+	* tests/labeling/value.cc,
+	* tests/morpho/closing/algebraic.cc,
+	* tests/morpho/opening/algebraic.cc,
+	* tests/set/compute.cc:
+	Replace accu::accu_name by accu::math::accu_name,
+		accu::meta::accu_name by accu::meta::math::accu_name,
+		accu/accu_name.hh by accu/math/accu_name.hh.
+
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Distribute tests/ properly.

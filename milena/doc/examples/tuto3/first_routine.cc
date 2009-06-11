@@ -16,7 +16,7 @@
 
 #include <mln/value/label_8.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 
 #include <mln/pw/all.hh>
 
@@ -43,7 +43,7 @@ namespace mln
     V nlabels;
     mln_ch_value(I,V) lbl = labeling::blobs(ima, nbh, nlabels);
     util::array<unsigned>
-      count = labeling::compute(accu::meta::count(), lbl, nlabels);
+      count = labeling::compute(accu::meta::math::count(), lbl, nlabels);
 
     mln_concrete(I) output;
     initialize(output, ima);
@@ -88,7 +88,7 @@ namespace sandbox
     V nlabels;
     mln_ch_value(I,V) lbl = labeling::blobs(ima, nbh, nlabels);
     util::array<unsigned>
-      count = labeling::compute(accu::meta::count(), lbl, nlabels);
+      count = labeling::compute(accu::meta::math::count(), lbl, nlabels);
     // \}
 
     // \{

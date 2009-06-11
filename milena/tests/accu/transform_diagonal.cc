@@ -25,7 +25,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/accu/transform_diagonal.hh>
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/pw/all.hh>
 #include <mln/data/compare.hh>
 
@@ -38,13 +38,13 @@ int main()
 
   {
     win::diag2d w(3);
-    image2d<unsigned> out = accu::transform_diagonal(accu::meta::count(), ima, w);
+    image2d<unsigned> out = accu::transform_diagonal(accu::meta::math::count(), ima, w);
     mln_assertion(out == (pw::cst(w.size()) | ima.domain()));
   }
 
   {
     win::backdiag2d w(3);
-    image2d<unsigned> out = accu::transform_diagonal(accu::meta::count(), ima, w);
+    image2d<unsigned> out = accu::transform_diagonal(accu::meta::math::count(), ima, w);
     mln_assertion(out == (pw::cst(w.size()) | ima.domain()));
   }
 

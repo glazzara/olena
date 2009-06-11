@@ -86,7 +86,7 @@ fill_holes(const mln::Image<I>& ima)
   value::label_16 nlabels;
   mln_ch_value(I, value::label_16) lbl = labeling::background(ima, c4(), nlabels);
 
-  mln_VAR(lbl_count, labeling::compute(accu::meta::count(), ima, lbl, nlabels));
+  mln_VAR(lbl_count, labeling::compute(accu::meta::math::count(), ima, lbl, nlabels));
 
   unsigned max_id = 1;
   for (unsigned i = 2; i <= nlabels; ++i)

@@ -11,7 +11,7 @@
 #include <mln/morpho/tree/compute_attribute_image.hh>
 #include <mln/morpho/attribute/height.hh>
 #include <mln/labeling/compute.hh>
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 
 #include "pseudo_tree.hh"
 #include "cplx2d.hh"

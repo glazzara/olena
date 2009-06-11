@@ -27,8 +27,8 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/labeling/blobs.hh>
 #include <mln/labeling/compute.hh>
-#include <mln/accu/count.hh>
-#include <mln/accu/sum.hh>
+#include <mln/accu/math/count.hh>
+#include <mln/accu/math/sum.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/label_8.hh>
 #include <mln/util/array.hh>
@@ -60,27 +60,27 @@ int main()
   image2d<label_8> lbl = make::image(lblvals);
   label_8 nlabels = 3;
 
-  accu::sum<int_u8> sum;
+  accu::math::sum<int_u8> sum;
   util::array<float> sums = labeling::compute(sum, ima, lbl, nlabels);
   mln_assertion(sums[0] == 0);
   mln_assertion(sums[1] == 4);
   mln_assertion(sums[2] == 8);
   mln_assertion(sums[3] == 12);
 
-  sums = labeling::compute(accu::meta::sum(), ima, lbl, nlabels);
+  sums = labeling::compute(accu::meta::math::sum(), ima, lbl, nlabels);
   mln_assertion(sums[0] == 0);
   mln_assertion(sums[1] == 4);
   mln_assertion(sums[2] == 8);
   mln_assertion(sums[3] == 12);
 
-  accu::count<mln_site_(image2d<int_u8>)> count;
+  accu::math::count<mln_site_(image2d<int_u8>)> count;
   util::array<unsigned int> counts = labeling::compute(count, lbl, nlabels);
   mln_assertion(counts[0] == 18);
   mln_assertion(counts[1] == 4);
   mln_assertion(counts[2] == 4);
   mln_assertion(counts[3] == 4);
 
-  counts = labeling::compute(accu::meta::count(), lbl, nlabels);
+  counts = labeling::compute(accu::meta::math::count(), lbl, nlabels);
   mln_assertion(counts[0] == 18);
   mln_assertion(counts[1] == 4);
   mln_assertion(counts[2] == 4);

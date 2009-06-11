@@ -31,8 +31,8 @@
 /// Define an accumulator that computes a standard deviation.
 
 # include <mln/accu/internal/base.hh>
-# include <mln/accu/count.hh>
-# include <mln/accu/sum.hh>
+# include <mln/accu/math/count.hh>
+# include <mln/accu/math/sum.hh>
 # include <mln/math/sqr.hh>
 # include <mln/math/sqrt.hh>
 
@@ -83,8 +83,8 @@ namespace mln
 
     protected:
 
-      accu::count<T> count_;
-      accu::sum<T,S>   sum_;
+      accu::math::count<T> count_;
+      accu::math::sum<T,S>   sum_;
       T mean_;
     };
 
@@ -136,7 +136,7 @@ namespace mln
     void deviation<T,S,M>::take(const argument& t)
     {
       count_.take(t);
-      sum_.take(math::sqr(t - mean_));
+      sum_.take(mln::math::sqr(t - mean_));
     }
 
     template <typename T, typename S, typename M>
@@ -157,7 +157,7 @@ namespace mln
       unsigned n = count_.to_result();
       if (n == 0u)
 	return M(); // Safety.
-      return static_cast<M>(math::sqrt(sum_.to_result() / n));
+      return static_cast<M>(mln::math::sqrt(sum_.to_result() / n));
     }
 
     template <typename T, typename S, typename M>

@@ -20,7 +20,7 @@
 #include <mln/value/label_16.hh>
 #include <mln/value/rgb8.hh>
 
-#include <mln/accu/sum.hh>
+#include <mln/accu/math/sum.hh>
 #include <mln/accu/stat/mean.hh>
 #include <mln/accu/image/all.hh>
 #include <mln/accu/stat/deviation.hh>

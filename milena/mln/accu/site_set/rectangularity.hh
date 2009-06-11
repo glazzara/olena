@@ -32,7 +32,7 @@
 
 # include <mln/accu/internal/couple.hh>
 # include <mln/accu/bbox.hh>
-# include <mln/accu/count.hh>
+# include <mln/accu/math/count.hh>
 
 namespace mln
 {
@@ -50,7 +50,7 @@ namespace mln
       template <typename P>
       class rectangularity
 	: public accu::internal::couple<accu::bbox<P>,
-					accu::count<P>,
+					accu::math::count<P>,
 					float,
 					rectangularity<P> >
       {
@@ -58,12 +58,12 @@ namespace mln
       public:
 
 	typedef accu::internal::couple<accu::bbox<P>,
-				       accu::count<P>,
+				       accu::math::count<P>,
 				       float,
 				       rectangularity<P> > super_;
 
 	typedef accu::bbox<P> A1;
-	typedef accu::count<P> A2;
+	typedef accu::math::count<P> A2;
 
 	typedef float result;
 

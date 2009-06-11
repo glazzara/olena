@@ -13,9 +13,9 @@
 #include <mln/io/dump/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/accu/stat/mean.hh>
-#include <mln/accu/sum.hh>
+#include <mln/accu/math/sum.hh>
 #include <mln/accu/image/all.hh>
 
 #include <mln/arith/minus.hh>

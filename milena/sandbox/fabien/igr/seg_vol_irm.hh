@@ -72,10 +72,10 @@
 #include <mln/fun/v2b/threshold.hh>
 #include <mln/data/transform.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/accu/center.hh>
 #include <mln/accu/stat/max.hh>
-#include <mln/accu/sum.hh>
+#include <mln/accu/math/sum.hh>
 #include <mln/accu/stat/mean.hh>
 #include <mln/accu/stat/deviation.hh>
 
@@ -234,13 +234,13 @@ find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
   /*label_16 nlabels = 0;
 
   mln_ch_value(I, label_16) bg_labels = labeling::foreground(ima_bg, nbh, nlabels);
-  accu::count<int_u8> ab_;
+  accu::math::count<int_u8> ab_;
   util::array<unsigned> arr_b_label = labeling::compute(ab_, ima_bg, bg_labels, nlabels);
   util::array<label_16> arr_b_big = labeling::n_max<label_16>(arr_b_label, 1);
   data::fill((ima_bg | (pw::value(bg_labels) != pw::cst(arr_b_big[1]))).rw(), false);
 
   mln_ch_value(I, label_16) obj_labels = labeling::foreground(ima_obj, nbh, nlabels);
-  accu::count<int_u8> ao_;
+  accu::math::count<int_u8> ao_;
   util::array<unsigned> arr_o_label = labeling::compute(ao_, ima_obj, obj_labels, nlabels);
   util::array<label_16> arr_o_big = labeling::n_max<label_16>(arr_o_label, 1);
   data::fill((ima_obj | (pw::value(obj_labels) != pw::cst(arr_o_big[1]))).rw(), false);*/
@@ -265,7 +265,7 @@ find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
   histo::array<mln_value(I)> bg_histo = histo::compute(input | pw::value(ima_bg) == true);
   histo::array<mln_value(I)> obj_histo = histo::compute(input | pw::value(ima_obj) == true);
 
-  accu::sum<unsigned> sum_accu;
+  accu::math::sum<unsigned> sum_accu;
   image1d<unsigned> ima_bg_histo;
   convert::from_to(bg_histo, ima_bg_histo);
   ima_bg_histo(point1d(0)) = 0;

@@ -21,9 +21,9 @@
 #include "../../mln/histo/compute_histo_rgb.hh"
 #include "../../mln/histo/classify_with_histo_rgb.hh"
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/accu/stat/mean.hh>
-#include <mln/accu/sum.hh>
+#include <mln/accu/math/sum.hh>
 #include <mln/accu/image/init.hh>
 #include <mln/accu/image/take.hh>
 #include <mln/accu/image/to_result.hh>
@@ -76,7 +76,7 @@ void
 save_proj_histo(image3d<unsigned> histo, char* name)
 {
   std::cout << "  => save..." << std::endl;
-  image2d<unsigned> proj = project_histo<accu::sum<unsigned, unsigned>, 2>(histo);
+  image2d<unsigned> proj = project_histo<accu::math::sum<unsigned, unsigned>, 2>(histo);
   image2d<value::int_u8> proj_int = data::stretch( value::int_u8(),
 						   data::transform( proj,
 								    take_log() ) );

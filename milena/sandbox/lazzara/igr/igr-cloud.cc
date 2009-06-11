@@ -33,7 +33,7 @@
 #include <mln/core/image/dmorph/extension_fun.hh>
 
 #include <mln/accu/histo.hh>
-#include <mln/accu/sum.hh>
+#include <mln/accu/math/sum.hh>
 #include <mln/debug/histo.hh>
 #include <mln/io/cloud/load.hh>
 

@@ -39,7 +39,7 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/morpho/tree/data.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/util/set.hh>
 
 #include <mln/labeling/regional_minima.hh>
@@ -335,7 +335,7 @@ int main(int argc, char* argv[])
   typedef morpho::tree::data<I,S> tree_t;
   tree_t t(f, s, nbh);
 
-  accu::count< util::pix<I> > attr;
+  accu::math::count< util::pix<I> > attr;
   I g = get_attribute_image(attr, t, nbh, n, echo);
   io::pgm::save(g, argv[3]);
 }

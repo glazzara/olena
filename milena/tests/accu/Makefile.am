@@ -22,13 +22,13 @@ include $(top_srcdir)/milena/tests/tests.mk
 SUBDIRS =					\
   image 					\
   site_set 					\
-  stat
+  stat						\
+  math
 
 check_PROGRAMS =				\
   all_accus					\
   bbox						\
   compute					\
-  count						\
   histo						\
   line						\
   max_site 					\
@@ -60,3 +60,4 @@ transform_snake_SOURCES = transform_snake.cc
 tuple_SOURCES = tuple.cc
 
 TESTS = $(check_PROGRAMS)
+# // ACCU_FIXME do not commit

@@ -70,7 +70,7 @@ namespace mln {
       namespace internal {
 
 	template <typename T, typename S>
-	struct sum_set_value : public mln::accu::sum<T, S>
+	struct sum_set_value : public mln::accu::math::sum<T, S>
 	{
 	  void set_value(const S& s);
 	};
@@ -108,7 +108,7 @@ namespace mln {
 
       protected:
 	
-	accu::count<value> count_;
+	accu::math::count<value> count_;
 	internal::sum_set_value<value,result>   sum_;
       };
     

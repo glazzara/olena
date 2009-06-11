@@ -62,7 +62,7 @@
 
 #include <mln/fun/v2b/threshold.hh>
 #include <mln/data/transform.hh>
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/accu/center.hh>
 #include <mln/set/compute.hh>
 #include <mln/value/label_16.hh>
@@ -111,7 +111,7 @@ igr(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_, L& nlabels)
   // Labeling.
 
   mln_ch_value(I, L) labels = labeling::flat_zones(threshold, nbh, nlabels);
-  accu::count<int_u8> a_;
+  accu::math::count<int_u8> a_;
   util::array<unsigned> a = labeling::compute(a_, threshold, labels, nlabels);
 
   // We keep the third and second biggest object.

@@ -17,7 +17,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u12.hh>
 
-#include <mln/accu/sum.hh>
+#include <mln/accu/math/sum.hh>
 #include <mln/arith/div.hh>
 #include <mln/convert/from_to.hh>
 #include <mln/data/compute.hh>
@@ -83,7 +83,7 @@ struct dist_t : Function_vv2v<dist_t>
 
     image1d<V> tmp_ima;
     image1d<V> tmp_ima2;
-    accu::sum<V> accu_sum;
+    accu::math::sum<V> accu_sum;
 
     convert::from_to(v1, tmp_ima);
     double sum_v1 = data::compute(accu_sum, tmp_ima);

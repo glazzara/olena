@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,39 +23,36 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/accu/count.hh>
+#ifndef MLN_ACCU_MATH_ALL_HH
+# define MLN_ACCU_MATH_ALL_HH
+
+/// \file
+///
+/// File that includes all mathematic accumulator types.
 
 
-struct toto {};
-
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
+  namespace accu
   {
-    // The code below do not compile, as expected :-)
-    //     accu::count<int> a;
-    //     a.take_as_init(toto());
-  }
-  {
-    accu::count<int> a;
-    mln_assertion(a.to_result() == 0);
-  }
-  {
-    accu::count<int> a;
-    for (int i = 0; i < 200; i++)
-      a.take(i);
-    mln_assertion(a.to_result() == 200);
-  }
-  {
-    accu::count<int> a, a_;
-    a.take_as_init(1);
-    mln_assertion(a == 1u);
-    a.take(2);
-    mln_assertion(a == 2u);
 
-    a_.take_as_init(a);
-    mln_assertion(a_ == 2u);
-  }
-}
+    namespace meta
+    {
+
+      /// Namespace of mathematic meta-accumulators.
+      namespace math {}
+
+    } // end of namespace mln::accu::meta
+
+    /// Namespace of mathematic accumulators.
+    namespace math {}
+
+  } // end of namespace mln::accu
+
+} // end of namespace mln
+
+# include <mln/accu/math/sum.hh>
+# include <mln/accu/math/count.hh>
+
+#endif // ! MLN_ACCU_MATH_ALL_HH

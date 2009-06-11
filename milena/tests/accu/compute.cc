@@ -26,7 +26,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/accu/compute.hh>
 
 
@@ -37,6 +37,6 @@ int main()
 
   unsigned n = 3;
   image2d<int_u8> ima(n, n);
-  unsigned c = accu::compute(accu::meta::count(), ima);
+  unsigned c = accu::compute(accu::meta::math::count(), ima);
   mln_assertion(c = n * n);
 }

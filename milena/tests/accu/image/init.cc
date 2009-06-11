@@ -28,7 +28,7 @@
 #include <mln/pw/cst.hh>
 #include <mln/pw/image.hh>
 
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/accu/image/init.hh>
 
 
@@ -36,7 +36,7 @@ int main()
 {
   using namespace mln;
 
-  typedef accu::count<int> A;
+  typedef accu::math::count<int> A;
   image2d<A> ima(2, 2);
 
   accu::image::init(ima);

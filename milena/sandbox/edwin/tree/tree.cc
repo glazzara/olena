@@ -22,7 +22,7 @@
 // to check:
 #include <mln/labeling/blobs.hh>
 #include <mln/labeling/compute.hh>
-#include <mln/accu/count.hh>
+#include <mln/accu/math/count.hh>
 #include <mln/debug/println.hh>
 #include <../../theo/color/change_attributes.hh>
 //-----------------
@@ -285,7 +285,7 @@ int main(int argc, char* argv[])
 
 
 
-  //filtercheck(*f, accu::meta::count());
+  //filtercheck(*f, accu::meta::math::count());
 
 
   io::pbm::save(f->img(), "out.pbm");

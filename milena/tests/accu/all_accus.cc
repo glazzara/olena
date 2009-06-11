@@ -33,7 +33,7 @@ int main()
   using namespace mln;
 
   accu::bbox<point2d> b;
-  accu::count<int> c;
+  accu::math::count<int> c;
   accu::histo<bool> h;
   accu::stat::max<int> ma;
   accu::stat::mean<int> me;
@@ -44,5 +44,5 @@ int main()
   accu::stat::min_max<int> mm;
   accu::nil<int> n;
   accu::pair< accu::stat::min<int>, accu::stat::max<int> > p;
-  accu::sum<int> s;
+  accu::math::sum<int> s;
 }

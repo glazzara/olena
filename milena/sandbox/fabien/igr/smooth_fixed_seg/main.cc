@@ -19,7 +19,7 @@
 #include <mln/value/int_u12.hh>
 #include <mln/value/label_16.hh>
 
-#include <mln/accu/sum.hh>
+#include <mln/accu/math/sum.hh>
 #include <mln/accu/stat/mean.hh>
 #include <mln/accu/image/all.hh>
 #include <mln/data/fill.hh>
@@ -106,7 +106,7 @@ struct dist_t : Function_vv2v<dist_t>
   {
     float res = 0.f;
 
-    accu::sum<V> accu_sum;
+    accu::math::sum<V> accu_sum;
 
     image1d<V> tmp_ima;
     convert::from_to(v1, tmp_ima);
