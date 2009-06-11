@@ -5,7 +5,7 @@
 #---------------------------------------------------------------------------
 PROJECT_NAME           = "Milena (@PACKAGE_NAME@)"
 PROJECT_NUMBER         = "@PACKAGE_VERSION@ @ID@"
-OUTPUT_DIRECTORY       = ./complete/
+OUTPUT_DIRECTORY       = ./devel/
 CREATE_SUBDIRS         = YES
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
@@ -97,7 +97,8 @@ EXAMPLE_PATH           = @top_srcdir@/milena/doc/examples	    \
 EXAMPLE_PATTERNS       = 
 EXAMPLE_RECURSIVE      = NO
 IMAGE_PATH             = @top_srcdir@/milena/doc/img	    \
-			 @top_srcdir@/milena/doc/figures
+			 @top_srcdir@/milena/doc/figures    \
+			 @top_builddir@/milena/doc/figures
 INPUT_FILTER           = 
 FILTER_PATTERNS        = 
 FILTER_SOURCE_FILES    = NO

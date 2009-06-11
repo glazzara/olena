@@ -1,3 +1,4 @@
+
 # Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -22,31 +23,40 @@ include $(top_srcdir)/milena/doc/doc.mk
 TEXINPUTS = $(DOC_SRCDIR):$(DOC_BUILDDIR):$(OUTPUTS_SRCDIR):$(IMG_SRCDIR):
 
 
-tutorial: $(FIGURES_SRCDIR)/* $(OUTPUTS_SRCDIR)/* tutorial-html tutorial-pdf
+tutorial: tutorial-html tutorial-pdf
 
-
-tutorial-pdf: tutorial.pdf
-
-tutorial-html: 
-	chmod u+x $(DOC_SRCDIR)/tools/todoxygen.sh
+# Intermediate product for the various doc targets of the parent
+# directory.
+#
+# This is not a bug: TUTORIAL_HH is meant to have a `.hh' extension,
+# since it is later parsed by Doxygen, which complains about `.html'
+# files.
+TUTORIAL_HH = tutorial.hh
+tutorial-html: $(TUTORIAL_HH)
+# FIXME: Missing dependencies on images from $(FIGURES_BUILDDIR).
+$(TUTORIAL_HH):
 	$(DOC_SRCDIR)/tools/todoxygen.sh $(srcdir)/tutorial.tex $(DOC_BUILDDIR)/tutorial $(DOC_SRCDIR)
 
 
-tutorial.pdf:
+# Final product.
+TUTORIAL_PDF = tutorial.pdf
+tutorial-pdf: $(TUTORIAL_PDF)
+# FIXME: Missing dependencies on images from $(FIGURES_BUILDDIR).
+$(TUTORIAL_PDF): $(FIGURES_BUILDDIR)
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/tutorial.tex
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/tutorial.tex
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/tutorial.tex
 
+CLEANFILES =								\
+  tutorial.aux tutorial.toc tutorial.log tutorial.bbl tutorial.out	\
+  *~ *blg *.lot								\
+  $(TUTORIAL_PDF)							\
+  *.haux *.hh *.html *.htoc						\
+  tutorial.haux								\
+  tutorial.html								\
+  $(TUTORIAL_HH)
 
-clean-local:
-	rm -f tutorial.aux tutorial.toc tutorial.log tutorial.bbl tutorial.out
-	rm -f *~ *blg *.lot
-	rm -f tutorial.pdf
-	rm -f *.haux *.hh *.html *.htoc
-	rm -f tutorial.haux  tutorial.hh  tutorial.html
-
-
-EXTRA_DIST = 		\
-  tutorial.tex 		\
-  tutorial.pdf
-
+EXTRA_DIST =					\
+  tutorial.tex					\
+  $(TUTORIAL_HH)				\
+  $(TUTORIAL_PDF)

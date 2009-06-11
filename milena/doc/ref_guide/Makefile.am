@@ -18,34 +18,47 @@
 .PHONY: ref-guide ref-guide-html
 
 include $(top_srcdir)/milena/doc/doc.mk
+
 TEXINPUTS ="$(DOC_SRCDIR):$(DOC_BUILDDIR):$(OUTPUTS_SRCDIR):\
 $(SPLIT_OUTPUTS_SRCDIR):$(IMG_SRCDIR):$(SPLIT_EXAMPLES_SRCDIR):"
 
 
-ref-guide: $(FIGURES_SRCDIR)/* $(OUTPUTS_SRCDIR)/* ref-guide-pdf ref-guide-html
+ref-guide: ref-guide-html ref-guide-pdf
 
 
-ref-guide-pdf: ref_guide.pdf
-
-
-ref_guide.pdf:
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/ref_guide.tex
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/ref_guide.tex
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/ref_guide.tex
-
-
-ref-guide-html: 
-	chmod u+x $(DOC_SRCDIR)/tools/todoxygen.sh
+# Intermediate product for the various doc targets of the parent
+# directory.
+#
+# This is not a bug: REF_GUIDE_HH is meant to have a `.hh'
+# extension, since it is later parsed by Doxygen, which complains
+# about `.html' files.
+REF_GUIDE_HH = ref_guide.hh
+ref-guide-html: $(REF_GUIDE_HH)
+# FIXME: Missing dependencies on images from $(FIGURES_BUILDDIR).
+$(REF_GUIDE_HH):
 	$(DOC_SRCDIR)/tools/todoxygen.sh $(srcdir)/ref_guide.tex $(DOC_BUILDDIR)/ref_guide $(DOC_SRCDIR)
 
 
-clean-local:
-	rm -f ref_guide.aux ref_guide.toc ref_guide.log ref_guide.bbl ref_guide.out
-	rm -f *~ *blg *.lot
-	rm -f ref_guide.pdf
-	rm -f *.haux *.hh *.html *.htoc
+# Final product.
+REF_GUIDE_PDF = ref_guide.pdf
+ref-guide-pdf: $(REF_GUIDE_PDF)
+# FIXME: Missing dependencies on images from $(FIGURES_BUILDDIR).
+$(REF_GUIDE_PDF):
+	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/ref_guide.tex
+	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/ref_guide.tex
+	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/ref_guide.tex
 
-EXTRA_DIST = 		\
-  ref_guide.tex 	\
-  ref_guide.pdf
 
+CLEANFILES =								\
+  ref_guide.aux ref_guide.toc ref_guide.log ref_guide.bbl ref_guide.out	\
+  *~ *blg *.lot								\
+  $(REF_GUIDE_PDF)							\
+  *.haux *.hh *.html *.htoc						\
+  ref_guide.html							\
+  $(REF_GUIDE_HH)
+
+
+EXTRA_DIST =					\
+  ref_guide.tex					\
+  $(REF_GUIDE_HH)				\
+  $(REF_GUIDE_PDF)

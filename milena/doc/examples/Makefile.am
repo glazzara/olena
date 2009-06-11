@@ -138,11 +138,9 @@ tuto4_point2d_SOURCES = tuto4/point2d.cc
 	 split-outputs
 
 
-all:
+run-examples:
 	mkdir -p $(OUTPUTS_BUILDDIR) 
 	mkdir -p $(FIGURES_BUILDDIR) 
-
-run-examples: all
 	@failcom='exit 1'; 						\
 	list='$(noinst_PROGRAMS)'; for bin in $$list; do 		\
 	  echo "Running $$bin"; 					\

@@ -16,6 +16,7 @@
 #
 
 include $(top_srcdir)/milena/doc/doc.mk
+
 TEXINPUTS=$(DOC_SRCDIR):$(srcdir):
 
 PNGS = 					\
@@ -24,7 +25,9 @@ PNGS = 					\
   figures/house_wshed.png 		\
   figures/house_wshed_mean_colors.png
 
-#FIXME: we want to check if 'figures' exists only once!
+EPSS = $(PNGS:png=eps)
+
+# FIXME: we want to check if 'figures' exists only once!
 .png.eps:
 	test -d figures || mkdir figures
 	convert $< $@
@@ -35,16 +38,17 @@ PNGS = 					\
 white-paper: white-paper-pdf white-paper-html
 
 
-white-paper-pdf: white_paper.pdf
-
-white-paper-html: $(PNGS:png=eps)
+WHITE_PAPER_HTML = white_paper_html/index.html
+white-paper-html: $(WHITE_PAPER_HTML)
+$(WHITE_PAPER_HTML): $(srcdir)/white_paper.tex $(EPSS)
 	test -d white_paper_html || mkdir white_paper_html
-	TEXINPUTS=$(TEXINPUTS) hevea -O -fix $(srcdir)/white_paper.tex -o white_paper_html/index.html
-	chmod +x $(top_srcdir)/milena/doc/tools/clearbanner.sh
-	$(top_srcdir)/milena/doc/tools/clearbanner.sh white_paper_html/index.html
+	TEXINPUTS=$(TEXINPUTS) hevea -O -fix $< -o $@
+	$(top_srcdir)/milena/doc/tools/clearbanner.sh $@
 
 
-white_paper.pdf:
+WHITE_PAPER_PDF = white_paper.pdf
+white-paper-pdf: $(WHITE_PAPER_PDF)
+$(WHITE_PAPER_PDF):
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/white_paper.tex
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/white_paper.tex
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/white_paper.tex
@@ -56,8 +60,9 @@ clean-local:
 	rm -f *.log *.idx *.out *.aux
 	rm -Rf figures
 
-EXTRA_DIST = 		\
-  white_paper.tex 	\
-  white_paper.pdf 	\
-  $(PNGS)
-
+EXTRA_DIST =					\
+  white_paper.tex				\
+  $(WHITE_PAPER_HTML)				\
+  $(WHITE_PAPER_PDF)				\
+  $(PNGS)					\
+  $(EPSS)

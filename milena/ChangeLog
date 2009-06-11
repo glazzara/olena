@@ -1,5 +1,83 @@
 2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	First step toward the overhauling of the documentation generation.
+
+	* doc/Doxyfile.in (OUTPUT_DIRECTORY): Set to ./devel/
+	(IMAGE_PATH): Add @top_builddir@/milena/doc/figures.
+	* doc/doc.mk (DOC_SRCDIR, DOC_BUILDDIR): Strip trailing backslash.
+	* doc/Makefile.am (doc): Depend on..
+	(doc-user, doc-devel): ...these (new) phony targets.
+	Use them to factor...
+	(doc-dev-pdf, doc-dev-html): ...these rules.
+	Rename as...
+	(doc-devel-pdf, doc-devel-html): ...these rules.
+	(ref-doc-dev): Rename as...
+	(ref-doc-devel-pdf): ...this.
+	(EXTRA_DEPS, USER_REFMAN_PDF, USER_REFMAN_HTML)
+	(DEVEL_REFMAN_PDF, DEVEL_REFMAN_HTML):
+	New variables.
+	(ref-doc-pdf, ref-doc-pdf, ref-doc-devel-html, ref-doc-devel-pdf):
+	Turn targets into mere shortcuts for...
+	($(USER_REFMAN_PDF), $(USER_REFMAN_HTML))
+	($(DEVEL_REFMAN_PDF), $(DEVEL_REFMAN_HTML)):
+	...these targets.
+	(tutorial-pdf, tutorial-html, ref-guide-pdf, ref-guide-html):
+	Remove spurious dependencies.
+	($(FIGURES_BUILDDIR)/*.png): Rename target as...
+	($(srcdir)/figures.stamp): ...this.
+	Depend on $(FIGURES_SRCDIR)/*.p*m.
+	(EXTRA_DIST): Add ($(srcdir)/figures.stamp.
+	(fig-convert): Depend on $(srcdir)/figures.stamp.
+	(edit_user): s/complete/devel/.
+	(EXTRA_DIST): s,user/html,$(USER_REFMAN_HTML),
+	s/user/latex/refman.pdf,$(USER_REFMAN_PDF),.
+	(Doxyfile): Remove target.
+	(Doxyfile_user, Doxyfile_user_pdf)
+	(Doxyfile_devel, Doxyfile_devel_pdf):
+	New targets.
+	(CLEANFILES): Remove Doxyfile_complete.
+	Add Doxyfile_user_pdf, Doxyfile_devel and Doxyfile_devel_pdf,
+	devel and user.
+
+	* doc/examples/Makefile.am (all): Remove this target and merge its
+	actions with...
+	(run-examples): ...this target.
+	Do not depend on all.
+
+	* doc/ref_guide/Makefile.am (ref-guide): Do not depend on
+	$(FIGURES_SRCDIR)/* $(OUTPUTS_SRCDIR)/*.
+	(REF_GUIDE_HH, REF_GUIDE_PDF): New variables.
+	(ref-guide-html, ref_guide.pdf): Rename rules as...
+	($(REF_GUIDE_HH), (REF_GUIDE_PDF)): New variables.
+	Adjust.
+	(EXTRA_DIST): Adjust.
+	Add $(REF_GUIDE_HH).
+	(clean-local): Replace this target by...
+	(CLEANFILES): ...this variable.
+
+	* doc/tutorial/Makefile.am (tutorial): Do not depend on
+	$(FIGURES_SRCDIR)/* $(OUTPUTS_SRCDIR)/*.
+	(TUTORIAL_HH, TUTORIAL_PDF): New variables.
+	(tutorial-html, tutorial.pdf): Rename rules as...
+	($(TUTORIAL_HH), (TUTORIAL_PDF)): New variables.
+	Adjust.
+	(EXTRA_DIST): Adjust.
+	Add $(TUTORIAL_HH).
+	(clean-local): Replace this target by...
+	(CLEANFILES): ...this variable.
+
+	* doc/white_paper/Makefile.am (EPSS): New variable.
+	(WHITE_PAPER_HH, WHITE_PAPER_PDF): New variables.
+	(white-paper-html, white_paper.pdf): Rename rules as...
+	($(WHITE_PAPER_HH), (WHITE_PAPER_PDF)): New variables.
+	Adjust.
+	(EXTRA_DIST): Adjust.
+	Add $(WHITE_PAPER_HH) and $(EPSS).
+	(clean-local): Replace this target by...
+	(CLEANFILES): ...this variable.
+
+2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Regen some reference images of the documentation (on Debian GNU/Linux).
 
 	* doc/figures/fill-subdomain-2.ppm,,
