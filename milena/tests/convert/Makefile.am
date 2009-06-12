@@ -1,4 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -21,7 +22,6 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS = impl
 
-##FIXME: re-enable all tests
 check_PROGRAMS =				\
   to_image					\
   to_p_array					\
@@ -29,11 +29,16 @@ check_PROGRAMS =				\
   to_rgb 					\
   to_window
 
-# to_hsl_SOURCES = to_hsl.cc  De-activated for 1.0
 to_image_SOURCES = to_image.cc
 to_p_array_SOURCES = to_p_array.cc
 to_p_set_SOURCES = to_p_set.cc
 to_rgb_SOURCES = to_rgb.cc
 to_window_SOURCES = to_window.cc
+
+#<<lrde
+# FIXME: Not distributed (yet).
+check_PROGRAMS += to_hsl
+to_hsl_SOURCES = to_hsl.cc
+#>>
 
 TESTS = $(check_PROGRAMS)

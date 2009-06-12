@@ -21,16 +21,24 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-	norm					\
-	projection				\
-	wrap
+  norm						\
+  projection					\
+  wrap
 
 norm_SOURCES = norm.cc
 projection_SOURCES = projection.cc
 wrap_SOURCES = wrap.cc
 
-# rgb_to_hsl_SOURCES = rgb_to_hsl.cc  De-activated for 1.0
-# hsl_to_rgb_SOURCES = hsl_to_rgb.cc  De-activated for 1.0
-# component_SOURCES = component.cc    De-activated for 1.0
+#<<lrde
+# FIXME: Not distributed (yet).
+check_PROGRAMS +=				\
+  component					\
+  hsl_to_rgb					\
+  rgb_to_hsl
+
+component_SOURCES = component.cc
+hsl_to_rgb_SOURCES = hsl_to_rgb.cc
+rgb_to_hsl_SOURCES = rgb_to_hsl.cc
+#>>
 
 TESTS = $(check_PROGRAMS)

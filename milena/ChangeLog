@@ -36,6 +36,21 @@
 
 2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Tag some some tests as ``not distributed''.
+
+	* tests/convert/Makefile.am,
+	* tests/extract/Makefile.am,
+	* tests/fun/v2v/Makefile.am,
+	* tests/linear/Makefile.am,
+	* tests/linear/gaussian/Makefile.am,
+	* tests/registration/Makefile.am:
+	Here.
+	* tests/value/Makefile.am: Likewise.
+	(full-check): Remove target.
+	Aesthetic changes.
+
+2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update the list of non distributed headers.
 
 	* nodist-headers: Here.

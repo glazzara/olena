@@ -19,9 +19,12 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+#<<lrde
+# FIXME: Not distributed (yet).
 check_PROGRAMS =				\
   filter
 
 filter_SOURCES = filter.cc
+#>>
 
 TESTS = $(check_PROGRAMS)

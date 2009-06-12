@@ -23,8 +23,6 @@ include $(top_srcdir)/milena/tests/tests.mk
 SUBDIRS =					\
   local
 
-# gaussian  De-activated for 1.0
-
 check_PROGRAMS =				\
   convolve					\
   convolve_directional				\
@@ -40,7 +38,10 @@ convolve_2x1d_SOURCES = convolve_2x1d.cc
 log_SOURCES = log.cc
 sobel_2d_SOURCES = sobel_2d.cc
 
-# gaussian__SOURCES = gaussian.cc  De-activated for 1.0
-
+#<<lrde
+# FIXME: Not distributed (yet).
+check_PROGRAMS += gaussian_
+gaussian__SOURCES = gaussian.cc
+#>>
 
 TESTS = $(check_PROGRAMS)
