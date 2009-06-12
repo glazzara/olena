@@ -34,7 +34,7 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/box.hh>
 
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 
 # include <mln/util/couple.hh>
 # include <mln/util/array.hh>
@@ -109,7 +109,7 @@ namespace scribo
 	  cells = scribo::table::rebuild(input, mln::make::couple(vlines,hlines),
 					 30, ncells).first();
 	mln::util::array<box<mln_site(I)> >
-	  cellbboxes = labeling::compute(accu::meta::bbox(), cells, ncells);
+	  cellbboxes = labeling::compute(accu::meta::shape::bbox(), cells, ncells);
 
 	trace::exiting("scribo::primitive::cells");
 	return cellbboxes;

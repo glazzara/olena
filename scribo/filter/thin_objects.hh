@@ -89,7 +89,7 @@ namespace scribo
       struct thin_objects_filter
 	: Function_v2b< thin_objects_filter<L> >
       {
-	typedef accu::bbox<mln_psite(L)> box_accu_t;
+	typedef accu::shape::bbox<mln_psite(L)> box_accu_t;
 
 	/// Constructor
 	///

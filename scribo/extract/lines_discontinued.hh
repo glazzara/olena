@@ -42,7 +42,7 @@
 # include <mln/morpho/rank_filter.hh>
 # include <mln/morpho/dilation.hh>
 
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 
 # include <mln/util/array.hh>
 # include <mln/util/couple.hh>
@@ -168,7 +168,7 @@ namespace scribo
 	mln_ch_value(I,V)
 	  output = lines_discontinued(input, nbh, nlines, win, rank_k);
 
-	line_bboxes = labeling::compute(accu::meta::bbox(), output, nlines);
+	line_bboxes = labeling::compute(accu::meta::shape::bbox(), output, nlines);
 	mln_postcondition(line_bboxes.nelements() == nlines.next());
 
 	//FIXME: is it correct?

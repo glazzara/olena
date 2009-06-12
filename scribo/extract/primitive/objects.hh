@@ -43,7 +43,7 @@
 
 # include <scribo/core/object_image.hh>
 
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 #include <mln/accu/center.hh>
 
 

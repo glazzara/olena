@@ -34,7 +34,7 @@
 # include <mln/core/site_set/box.hh>
 # include <mln/fun/i2v/array.hh>
 
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 
 # include <mln/util/array.hh>
 

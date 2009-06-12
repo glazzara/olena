@@ -36,7 +36,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/box.hh>
 
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 
 # include <mln/util/array.hh>
 

@@ -37,7 +37,7 @@
 
 # include <mln/canvas/browsing/depth_first_search.hh>
 
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 
 # include <mln/pw/all.hh>
 

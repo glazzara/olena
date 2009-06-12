@@ -36,7 +36,7 @@
 
 # include <mln/data/fill.hh>
 
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 
 # include <mln/draw/box.hh>
 

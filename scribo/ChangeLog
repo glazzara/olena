@@ -1,3 +1,19 @@
+2009-06-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Fixes about accumulator includes and calls.
+	* extract/lines_discontinued.hh,
+	* extract/primitive/cells.hh,
+	* extract/primitive/objects.hh,
+	* filter/thin_objects.hh,
+	* make/text.hh,
+	* text/extract_lines.hh,
+	* text/grouping/group_from_double_link.hh,
+	* text/grouping/group_from_graph.hh,
+	* text/grouping/group_from_single_link.hh:
+	Replace accu::accu_name by accu::new_dir::accu_name,
+		accu::meta::accu_name by accu::meta::new_dir::accu_name,
+		accu/accu_name by accu/new_dir/accu_name.
+
 2009-06-12 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Clear \file command arguments in Scribo.

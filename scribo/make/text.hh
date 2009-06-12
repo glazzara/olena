@@ -129,7 +129,7 @@ namespace scribo
 
       mln_ch_value(I,V) lbl = labeling::blobs(input, nbh, nbboxes);
 
-      boxes_t cboxes = labeling::compute(accu::meta::bbox(), lbl, nbboxes);
+      boxes_t cboxes = labeling::compute(accu::meta::shape::bbox(), lbl, nbboxes);
 
       trace::exiting("scribo::make::text");
       return make::text(cboxes, lbl, nbboxes);
@@ -152,7 +152,7 @@ namespace scribo
 
       L lbl = labeling::relabel(text.label_image(), text.nbboxes(), fv2v);
 
-      mln::util::array< accu::bbox<mln_site(L)> > tboxes(new_nbboxes.next());
+      mln::util::array< accu::shape::bbox<mln_site(L)> > tboxes(new_nbboxes.next());
       mln::util::array< accu::center<mln_site(L)> > tcenters(new_nbboxes.next());
       for_all_components(i, text.bboxes())
       {
