@@ -35,7 +35,7 @@
 
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/internal/set_of.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 # include <trait/point_set.hh>
 
 
@@ -109,7 +109,7 @@ namespace mln
 
   protected:
 
-    accu::bbox<P> bb_;
+    accu::shape::bbox<P> bb_;
     // FIXME: Add invariant  bb_.is_valid() <=> nsites() != 0
 
     /// The first point of the run.

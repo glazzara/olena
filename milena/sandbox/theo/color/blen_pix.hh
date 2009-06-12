@@ -34,7 +34,7 @@
 /// Define an accumulator that computes a sum.
 
 # include <mln/core/concept/meta_accumulator.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 # include <mln/accu/internal/base.hh>
 
 # include <mln/util/pix.hh> // To prevent accu::blen_pix to work on pixels (ambiguous).
@@ -81,19 +81,19 @@ namespace mln
       /// Always true here.
       bool is_valid() const;
 
-      const accu::bbox<point3d>& b() const
+      const accu::shape::bbox<point3d>& b() const
       {
 	return b_;
       }
 
-      accu::bbox<point3d>& b()
+      accu::shape::bbox<point3d>& b()
       {
 	return b_;
       }
 
     protected:
 
-      accu::bbox<point3d> b_;
+      accu::shape::bbox<point3d> b_;
       unsigned len_;
     };
 

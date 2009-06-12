@@ -23,7 +23,7 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 #include <mln/core/alias/box2d.hh>
 #include <mln/core/alias/point2d.hh>
 
@@ -105,7 +105,7 @@ int main()
   // Compute the bounding box of IMA.
   /* FIXME: mln::graph_image should automatically feature a bbox when
      its parameter P is akin to a point.  */
-  accu::bbox<point2d> a;
+  accu::shape::bbox<point2d> a;
   for (unsigned i = 0; i < sites.size(); ++i)
     a.take(sites(i));
   box2d bbox = a.to_result();

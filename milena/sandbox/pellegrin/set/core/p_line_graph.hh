@@ -31,7 +31,7 @@
 
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/point_set_base.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 # include <mln/util/graph.hh>
 # include <mln/core/image/line_graph_psite.hh>
 # include <mln/core/site_set/p_line_graph_piter.hh>
@@ -126,7 +126,7 @@ namespace mln
     // FIXME: Dummy initialization of bb_.
 //     // FIXME: Warning: if the underlying graph is updated later, this
 //     // won't be taken into account by this p_line_graph!
-//     accu::bbox<point> a;
+//     accu::shape::bbox<point> a;
 //     for (util::edge_id e = 0; e < nlines(); ++e)
 //       a.take(point(gr_.node_data(gr_.edge(e).n1()),
 // 		   gr_.node_data(gr_.edge(e).n2())));

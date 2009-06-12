@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,51 +23,37 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_CORE_INTERNAL_GEOM_BBOX_HH
-# define MLN_CORE_INTERNAL_GEOM_BBOX_HH
+#ifndef MLN_ACCU_SHAPE_ALL_HH
+# define MLN_ACCU_SHAPE_ALL_HH
 
 /// \file
 ///
-/// \internal Routine that computes a bounding box from a window.
-/// This file is included in mln/core/concept/window.hh and avoid
-/// circular dependency since mln/geom/bbox.hh cannot be included in
-/// concept files.
-
-# include <mln/accu/shape/bbox.hh>
-# include <mln/literal/origin.hh>
+/// File that includes all shape accumulator types.
 
 
 namespace mln
 {
 
-  namespace internal
+  namespace accu
   {
 
-    template <typename W>
-    box<mln_psite(W)>
-    geom_bbox(const W& win);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename W>
-    box<mln_psite(W)>
-    geom_bbox(const W& win)
+    namespace meta
     {
-      typedef mln_psite(W) P;
-      accu::shape::bbox<P> b;
-      P O = literal::origin;
-      mln_qiter(W) q(exact(win), O);
-      for_all(q)
-	b.take(q);
-      return b;
-    }
 
-# endif // ! MLN_INCLUDE_ONLY
+      /// Namespace of shape meta-accumulators.
+      namespace shape {}
 
-  } // end of namespace mln::internal
+    } // end of namespace mln::accu::meta
+
+    /// Namespace of shape accumulators.
+    namespace shape {}
+
+  } // end of namespace mln::accu
 
 } // end of namespace mln
 
+# include <mln/accu/shape/volume.hh>
+# include <mln/accu/shape/height.hh>
+# include <mln/accu/shape/bbox.hh>
 
-#endif // ! MLN_CORE_INTERNAL_GEOM_BBOX_HH
+#endif // ! MLN_ACCU_SHAPE_ALL_HH

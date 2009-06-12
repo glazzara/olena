@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
   label_8 n = unsigned(n_boxes);
 
   mln_VAR(input_, violent_cast_image_<label_8>(input));
-  util::array<box2d> boxes = labeling::compute(accu::meta::bbox(),
+  util::array<box2d> boxes = labeling::compute(accu::meta::shape::bbox(),
 					       input_,
 					       n);
  

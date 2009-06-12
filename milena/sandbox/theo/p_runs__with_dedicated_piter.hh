@@ -33,7 +33,7 @@
  * \brief Definition of a set of point runs.
  */
 
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 # include <mln/core/site_set/p_run.hh>
 # include <mln/core/p_double.hh>
 # include <mln/core/internal/piter_adaptor.hh>
@@ -158,7 +158,7 @@ namespace mln
     unsigned nsites_;
 
     /// Bounding box accumulator.
-    accu::bbox<P> b_;
+    accu::shape::bbox<P> b_;
 
     /// Set of runs.
     util::set< p_run<P> > run_;

@@ -50,7 +50,7 @@ int main()
 
 // FIXME: Can't be called with new implementation. (When_pix = not_ok).
 //   {
-//     accu::volume<I> a;
+//     accu::shape::volume<I> a;
 //     io::pgm::save(morpho::opening::leveling(lena, c4(), a, 10),
 // 		  "ref.pgm");
 //   }

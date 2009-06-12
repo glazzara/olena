@@ -23,11 +23,11 @@ SUBDIRS =					\
   image 					\
   site_set 					\
   stat						\
-  math
+  math						\
+  shape
 
 check_PROGRAMS =				\
   all_accus					\
-  bbox						\
   compute					\
   histo						\
   line						\
@@ -43,7 +43,6 @@ check_PROGRAMS =				\
   tuple
 
 all_accus_SOURCES = all_accus.cc
-bbox_SOURCES = bbox.cc
 compute_SOURCES = compute.cc
 histo_SOURCES = histo.cc
 line_SOURCES = line.cc

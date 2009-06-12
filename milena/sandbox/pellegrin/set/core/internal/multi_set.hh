@@ -90,7 +90,7 @@ namespace mln
 
   protected:
 
-    accu::bbox<P> bb_;
+    accu::shape::bbox<P> bb_;
     // FIXME: Add invariant  bb_.is_valid() <=> nsites() != 0
   };
 

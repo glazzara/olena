@@ -41,7 +41,7 @@
 #include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 #include <mln/geom/bbox.hh>
 
 #include <mln/literal/black.hh>
@@ -163,7 +163,7 @@ namespace mln
       R.reserve(input.nsites());
       arr_t N[256];
 
-      accu::bbox<mln_point(I)> R_box;
+      accu::shape::bbox<mln_point(I)> R_box;
 
       unsigned n_step_1 = 0, n_step_3 = 0;
       

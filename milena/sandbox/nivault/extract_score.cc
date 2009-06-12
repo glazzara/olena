@@ -53,7 +53,7 @@
 # include <mln/core/alias/neighb2d.hh>
 
 # include <mln/accu/stat/mean.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 # include <mln/accu/p.hh>
 # include <mln/accu/math/count.hh>
 

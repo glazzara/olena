@@ -70,7 +70,7 @@ int main()
   image2d<unsigned> labels = labeling::value(bin, true, c4(), nlabels);
 
   // Get the caracteristics of the connected components.
-  std::vector< accu::pair_< accu::bbox<point2d>, accu::count_<point2d> > > caracteristics(nlabels);
+  std::vector< accu::pair_< accu::shape::bbox<point2d>, accu::count_<point2d> > > caracteristics(nlabels);
   mln_fwd_piter_(ima2d_unsigned) p(labels.domain());
   for_all(p)
     caracteristics[labels(p)].take(p);

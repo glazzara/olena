@@ -36,7 +36,7 @@
 
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/point_set_base.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 # include <mln/util/internal/boost_graph.hh>
 # include <mln/core/image/bgraph_psite.hh>
 # include <mln/core/site_set/p_bgraph_piter.hh>
@@ -134,7 +134,7 @@ namespace mln
     mln_precondition(gr != 0);
     // FIXME: Warning: if the underlying graph is updated later, this
     // won't be taken into account by this p_bgraph!
-    accu::bbox<P> a;
+    accu::shape::bbox<P> a;
 
     for (node_iterators iter = boost::vertices(*gr_);
 	 iter.first != iter.second;

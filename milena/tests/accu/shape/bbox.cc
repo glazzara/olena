@@ -1,4 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,51 +23,20 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_CORE_INTERNAL_GEOM_BBOX_HH
-# define MLN_CORE_INTERNAL_GEOM_BBOX_HH
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/alias/box2d.hh>
 
-/// \file
-///
-/// \internal Routine that computes a bounding box from a window.
-/// This file is included in mln/core/concept/window.hh and avoid
-/// circular dependency since mln/geom/bbox.hh cannot be included in
-/// concept files.
+#include <mln/accu/shape/bbox.hh>
 
-# include <mln/accu/shape/bbox.hh>
-# include <mln/literal/origin.hh>
-
-
-namespace mln
+int main()
 {
+  using namespace mln;
+  accu::shape::bbox<point2d> accu;
 
-  namespace internal
-  {
+  accu.take_as_init(point2d(0,0));
+  accu.take(point2d(0,5));
+  accu.take(point2d(5,0));
+  accu.take(point2d(5,5));
 
-    template <typename W>
-    box<mln_psite(W)>
-    geom_bbox(const W& win);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename W>
-    box<mln_psite(W)>
-    geom_bbox(const W& win)
-    {
-      typedef mln_psite(W) P;
-      accu::shape::bbox<P> b;
-      P O = literal::origin;
-      mln_qiter(W) q(exact(win), O);
-      for_all(q)
-	b.take(q);
-      return b;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::internal
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CORE_INTERNAL_GEOM_BBOX_HH
+  mln_assertion(accu.to_result() == make::box2d(0,0,5,5));
+}

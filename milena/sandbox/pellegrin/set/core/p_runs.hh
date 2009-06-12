@@ -40,7 +40,7 @@
 # include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/runs_psite.hh>
 # include <mln/core/site_set/p_run.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 # include <mln/util/lazy_set.hh>
 # include <trait/point_set.hh>
 
@@ -120,7 +120,7 @@ namespace mln
     util::lazy_set_<p_run<P> > con_;
 
     /// Exact bounding box.
-    accu::bbox<P> fb_;
+    accu::shape::bbox<P> fb_;
   };
 
 # ifndef MLN_INCLUDE_ONLY

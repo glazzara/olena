@@ -52,7 +52,7 @@
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
 #include <mln/labeling/regional_maxima.hh>
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 #include <mln/geom/bbox.hh>
 #include <mln/pw/all.hh>
 
@@ -400,7 +400,7 @@ namespace mln
 	      image2d< fllt_node(P, V)* >& smallest_shapes,
 	      int in_R,
 	      int in_N,
-	      accu::bbox<P>& N_box,
+	      accu::shape::bbox<P>& N_box,
 	      p_array<P>* N[257],
 	      const V& g,
 	      unsigned& n_comps)
@@ -608,7 +608,7 @@ namespace mln
     arr_t* N[257];
     for (unsigned i = 0; i < 257; ++i)
       N[i] = new arr_t();
-    accu::bbox<P> N_box;
+    accu::shape::bbox<P> N_box;
 
     unsigned n_step_1 = 0, n_step_3 = 0, n_step_4c = 0, sum4c = 0,
       n_comps = 0, n_holes = 0, n_browsed = 0, n_find_root = 0,

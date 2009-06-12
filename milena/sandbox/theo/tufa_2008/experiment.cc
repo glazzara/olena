@@ -42,7 +42,7 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/morpho/tree/data.hh>
 
-#include <mln/accu/volume.hh>
+#include <mln/accu/shape/volume.hh>
 #include <mln/win/disk2d.hh>
 
 #include <mln/morpho/tree/compute_attribute_image.hh>
@@ -112,7 +112,7 @@ int main(int argc, char* argv[])
   // We get a min-tree so that we can perform morphological closings. 
 
   morpho::tree::data<I,S> t(f, s, c4());
-  accu::volume<I> attr;
+  accu::shape::volume<I> attr;
   
   image2d<unsigned> a = morpho::tree::compute_attribute_image(attr, t);
   io::pgm::save(data::stretch(int_u8(), a),

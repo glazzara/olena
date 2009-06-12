@@ -37,7 +37,7 @@
 # include <mln/core/site_set/box.hh>
 # include <mln/value/set.hh>
 # include <mln/core/concept/function.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 
 namespace mln
 {
@@ -181,7 +181,7 @@ namespace mln
        a box.  */
 
     // Create transformed bounding box
-    accu::bbox<P> tbox;
+    accu::shape::bbox<P> tbox;
 
     tbox.take_as_init (fun (ima.domain ().pmin ()));
     tbox.take (fun (ima.domain ().pmax ()));
@@ -223,7 +223,7 @@ namespace mln
     typedef mln_psite(I) P;
 
     // Create transformed bounding box
-    accu::bbox<P> tbox;
+    accu::shape::bbox<P> tbox;
 
     tbox.take_as_init (this->data_->funinv_ (this->data_->ima_.domain ().pmin ()));
     tbox.take (this->data_->funinv_ (this->data_->ima_.domain ().pmax ()));

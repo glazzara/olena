@@ -2,7 +2,7 @@
 #include <mln/opt/at.hh>
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 #include <mln/canvas/morpho/connected_filter.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include "value_wrapper.hh"
@@ -20,5 +20,5 @@ int main()
       for (int k = 0; k < 2; k++)
 	opt::at(a, i, j)[k] = 20 + (k ? i : j);
 
-  debug::println(canvas::morpho::connected_filter(a, c4(), morpho::attribute::site_wrapper< accu::bbox<mln::point2d> >(), make::box2d(8, 8), true));
+  debug::println(canvas::morpho::connected_filter(a, c4(), morpho::attribute::site_wrapper< accu::shape::bbox<mln::point2d> >(), make::box2d(8, 8), true));
 }

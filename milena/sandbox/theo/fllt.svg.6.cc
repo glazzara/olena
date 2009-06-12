@@ -48,7 +48,7 @@
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
 #include <mln/labeling/regional_maxima.hh>
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 #include <mln/geom/bbox.hh>
 #include <mln/pw/all.hh>
 
@@ -576,7 +576,7 @@ namespace mln
       arr_t* N[256];
       for (unsigned i = 0; i < 256; ++i)
 	N[i] = new arr_t();
-      accu::bbox<P> N_box;
+      accu::shape::bbox<P> N_box;
 
       bool touch_border_of_image = false;
       unsigned n_step_1 = 0, n_step_3 = 0, n_comps = 0, n_holes = 0;

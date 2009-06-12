@@ -32,7 +32,7 @@
 
 # include <mln/core/internal/image_domain_morpher.hh>
 # include <mln/core/concept/function.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 
 
 namespace mln
@@ -160,7 +160,7 @@ namespace mln
       : ima_(ima),
 	f_(f)
     {
-      accu::bbox<mln_site(I)> a;
+      accu::shape::bbox<mln_site(I)> a;
       mln_domain(I) b = ima.domain();
       a.take(f(b.pmin()));
       a.take(f(b.pmax()));

@@ -104,7 +104,7 @@ namespace mln
     private:
       image2d<value::int_u8> ima_;
       unsigned nsites_;
-      accu::bbox<point2d> bb_;
+      accu::shape::bbox<point2d> bb_;
     };
 
 

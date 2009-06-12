@@ -17,7 +17,7 @@
 #include <mln/morpho/elementary/gradient.hh>
 #include <mln/morpho/meyer_wst.hh>
 
-#include <mln/accu/height.hh>
+#include <mln/accu/shape/height.hh>
 
 #include "segment.hh"
 
@@ -88,8 +88,8 @@ int main(int argc, char* argv[])
 
   // accu::math::count< util::pix<I> > a_;
   // accu::sum_pix< util::pix<I> > a_;
-  // accu::volume<I> a_;
-  accu::height<I> a_;
+  // accu::shape::volume<I> a_;
+  accu::shape::height<I> a_;
 
   // It seems that both extinction and changing attributes only
   // properly works for the 'height' attribute.

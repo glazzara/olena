@@ -61,7 +61,7 @@ namespace mln
       std::vector< std::vector<unsigned> > obj_;
 
       /// Bounding boxes of the objects.
-      std::vector< accu::bbox<P> > bbox_;
+      std::vector< accu::shape::bbox<P> > bbox_;
 
       /// Value of Objects.
       std::vector<T> v_obj_;

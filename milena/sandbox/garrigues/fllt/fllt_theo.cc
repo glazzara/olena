@@ -42,7 +42,7 @@
 #include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 #include <mln/io/pgm/save.hh>
 
 
@@ -110,7 +110,7 @@ namespace mln
       arr_t A;
       arr_t N[256];
 
-      accu::bbox<mln_point(I)> R_box;
+      accu::shape::bbox<mln_point(I)> R_box;
 
       data::fill(tagged, false);
       mln_piter(I) min(input.domain());

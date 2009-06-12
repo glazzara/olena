@@ -43,7 +43,7 @@
 #include <mln/data/compare.hh>
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 #include <mln/geom/bbox.hh>
 #include <mln/pw/all.hh>
 
@@ -175,7 +175,7 @@ namespace mln
       arr_t* N[256];
       for (unsigned i = 0; i < 256; ++i)
 	N[i] = new arr_t();
-      accu::bbox<mln_point(I)> N_box;
+      accu::shape::bbox<mln_point(I)> N_box;
 
       unsigned n_step_1 = 0, n_step_3 = 0;
       

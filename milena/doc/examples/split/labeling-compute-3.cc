@@ -1,4 +1,4 @@
   util::array<box2d> boxes =
-      labeling::compute(accu::meta::bbox(),
+      labeling::compute(accu::meta::shape::bbox(),
 			lbl,
 			nlabels);

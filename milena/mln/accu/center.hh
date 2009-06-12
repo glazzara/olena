@@ -33,7 +33,7 @@
 /// \todo Fix to_result() value when invalid...
 
 # include <mln/accu/internal/base.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 
 namespace mln
 {

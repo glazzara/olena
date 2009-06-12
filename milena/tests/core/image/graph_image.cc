@@ -31,7 +31,7 @@
 #include <mln/core/concept/function.hh>
 #include <mln/core/neighb.hh>
 #include <mln/core/var.hh>
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 #include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
 #include <mln/debug/draw_graph.hh>
@@ -126,7 +126,7 @@ int main()
     // FIXME: Move this part to a special test case.
 
     // Compute the bounding box of 'ima'.
-    accu::bbox<point2d> a;
+    accu::shape::bbox<point2d> a;
     mln_piter_(ima_t) p(ima.domain());
     for_all(p)
       a.take(p);

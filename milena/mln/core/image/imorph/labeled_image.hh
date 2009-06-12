@@ -128,7 +128,7 @@ namespace mln
     typedef labeled_image< tag::image_<I> > skeleton;
 
     /// Type of the bounding component bounding boxes.
-    typedef mln_result(accu::bbox<mln_psite(I)>) bbox_t;
+    typedef mln_result(accu::shape::bbox<mln_psite(I)>) bbox_t;
 
     /// Constructors
     /// @{
@@ -334,7 +334,7 @@ namespace mln
   void
   labeled_image<I>::update_()
   {
-    this->data_->bboxes_ = labeling::compute(accu::meta::bbox(),
+    this->data_->bboxes_ = labeling::compute(accu::meta::shape::bbox(),
 					     this->data_->ima_,
 					     this->data_->nlabels_);
   }
@@ -352,7 +352,7 @@ namespace mln
 ////    p_if<mln_psite(I)>
 //    unsigned
 //    extended_impl_selector<I,
-//			   accu::pair<accu::bbox<mln_psite(I)>,
+//			   accu::pair<accu::shape::bbox<mln_psite(I)>,
 //				      accu::center<mln_psite(I),V> >,
 //			   E>::domain(const mln_value(I)& label) const
 //    {

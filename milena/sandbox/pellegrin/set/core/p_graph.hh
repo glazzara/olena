@@ -31,7 +31,7 @@
 
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/point_set_base.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 # include <mln/util/graph.hh>
 # include <mln/core/image/graph_psite.hh>
 # include <mln/core/site_set/p_graph_piter.hh>
@@ -131,7 +131,7 @@ namespace mln
   {
     // FIXME: Warning: if the underlying graph is updated later, this
     // won't be taken into account by this p_graph!
-    accu::bbox<P> a;
+    accu::shape::bbox<P> a;
     for (unsigned i = 0; i < nsites(); ++i)
       a.take(gr_.node_data(i));
     bb_ = a.to_result();

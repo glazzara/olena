@@ -100,7 +100,7 @@ namespace mln
 //   }
 
 //   // accu::math::count< util::pix<g_t> > a_;
-//   accu::height<g_t> a_;
+//   accu::shape::height<g_t> a_;
 
 //   compute_attribute_extincted(g, cplx2d::e2e(), a_,
 // 			      w);

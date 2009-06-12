@@ -44,7 +44,7 @@
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/weighted_window.hh>
 # include <mln/literal/zero.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 
 
 namespace mln
@@ -149,7 +149,7 @@ namespace mln
       trace::entering("geom::bbox");
 
       typedef mln_psite(W) P;
-      accu::bbox<P> b;
+      accu::shape::bbox<P> b;
       P O = literal::origin;
       mln_qiter(W) q(exact(win), O);
       for_all(q)

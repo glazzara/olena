@@ -9,7 +9,7 @@
 
 #include <mln/morpho/meyer_wst.hh>
 
-#include <mln/accu/volume.hh>
+#include <mln/accu/shape/volume.hh>
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
 
@@ -47,7 +47,7 @@ int main(int argc, char ** argv)
   // compute volume image
   typedef p_array<mln_psite_(I)> S;
   typedef mln_ch_value_(I,unsigned) V;
-  typedef accu::volume<I> A;
+  typedef accu::shape::volume<I> A;
 
   S sp = data::sort_psites_decreasing(ima);
   morpho::tree::data<I,S> t(ima, sp, c4());

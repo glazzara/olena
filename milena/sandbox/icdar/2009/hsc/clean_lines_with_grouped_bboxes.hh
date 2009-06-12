@@ -65,12 +65,12 @@ namespace mln
 
 //    mln_ch_value(L,LV) lbl = labeling::background(input, c8(), nlabels);
 //    util::array<box<mln_site(L)> >
-//      bboxes = labeling::compute(accu::meta::bbox(), lbl, nlabels);
+//      bboxes = labeling::compute(accu::meta::shape::bbox(), lbl, nlabels);
 
     nlabels = text.nbboxes();
     const image2d<value::label_16>& lbl = text.label_image();
     util::array<box<mln_site(L)> >
-      bboxes = labeling::compute(accu::meta::bbox(), lbl, nlabels);
+      bboxes = labeling::compute(accu::meta::shape::bbox(), lbl, nlabels);
     text.bboxes() = bboxes;
     scribo::debug::save_textbboxes_image(input, text.bboxes(), literal::red, "plop.ppm");
 

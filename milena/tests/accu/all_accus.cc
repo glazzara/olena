@@ -32,7 +32,7 @@ int main()
 {
   using namespace mln;
 
-  accu::bbox<point2d> b;
+  accu::shape::bbox<point2d> b;
   accu::math::count<int> c;
   accu::histo<bool> h;
   accu::stat::max<int> ma;

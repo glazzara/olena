@@ -7,7 +7,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/accu/volume.hh>
+#include <mln/accu/shape/volume.hh>
 
 #include "n_cmpt.hh"
 

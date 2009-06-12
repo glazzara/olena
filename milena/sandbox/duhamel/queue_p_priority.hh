@@ -41,7 +41,7 @@
 
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/vec_p_piter.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 # include <mln/core/queue_p.hh>
 
 namespace mln
@@ -120,7 +120,7 @@ namespace mln
     mutable bool vect_needs_update_;
     void vect_update_() const;
 
-    mutable accu::bbox<P> bb_;
+    mutable accu::shape::bbox<P> bb_;
     mutable bool bb_needs_update_;
     void bb_update_() const;
 

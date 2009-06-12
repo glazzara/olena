@@ -31,7 +31,7 @@
 #include <mln/value/label_8.hh>
 #include <mln/accu/pair.hh>
 #include <mln/accu/center.hh>
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 
 
 

@@ -23,7 +23,7 @@
 #include <mln/labeling/compute.hh>
 
 #include <mln/accu/math/count.hh>
-#include <mln/accu/volume.hh>
+#include <mln/accu/shape/volume.hh>
 #include <mln/accu/stat/mean.hh>
 
 #include "sum_pix.hh"
@@ -284,7 +284,7 @@ int main(int argc, char* argv[])
 
 
   // accu::math::count< util::pix<I> > a_;
-  // accu::volume<I> a_;
+  // accu::shape::volume<I> a_;
   // accu::sum_pix< util::pix<I> > a_;
 
   blen_image = input_;

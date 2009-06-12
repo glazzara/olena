@@ -30,7 +30,7 @@
 /// Provide implementation for optional site set methods.
 
 # include <mln/core/concept/site_set.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 
 
 
@@ -83,7 +83,7 @@ namespace mln
       template <typename S>
       void update_bbox_(const Site_Set<S>& s);
 
-      accu::bbox<mln_site(Sc)> bb_;
+      accu::shape::bbox<mln_site(Sc)> bb_;
     };
 
     template <typename Sc>

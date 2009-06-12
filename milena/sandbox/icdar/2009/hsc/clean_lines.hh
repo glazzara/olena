@@ -40,7 +40,7 @@ namespace mln
 
     LV nlabels;
     mln_ch_value(L,LV) lbl = labeling::background(input, c8(), nlabels);
-    util::array<box<mln_site(L)> > bboxes = labeling::compute(accu::meta::bbox(), lbl, nlabels);
+    util::array<box<mln_site(L)> > bboxes = labeling::compute(accu::meta::shape::bbox(), lbl, nlabels);
 
     /// Compute the most represented label for each component.
     accu::label_maj<LV, mln_value(L)> accu(nlabels.next());

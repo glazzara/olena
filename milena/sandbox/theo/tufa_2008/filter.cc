@@ -150,7 +150,7 @@ int main(int argc, char* argv[])
   // We get a min-tree so that we can perform morphological closings. 
 
   morpho::tree::data<I,S> t(f, s, c4());
-  accu::volume<I> attr;
+  accu::shape::volume<I> attr;
   
   image2d<unsigned> a = morpho::tree::compute_attribute_image(attr, t);
 

@@ -20,7 +20,7 @@
 #include <mln/labeling/compute.hh>
 
 #include <mln/accu/math/count.hh>
-#include <mln/accu/height.hh>
+#include <mln/accu/shape/height.hh>
 
 #include <mln/util/timer.hh>
 #include <mln/util/fibonacci_heap.hh>

@@ -66,7 +66,7 @@ filter_arrays(image2d<bool> in)
   image2d<unsigned> labels = labeling::value(in, true, c4(), nlabels);
 
   // Get the caracteristics of the connected components.
-  std::vector< accu::pair_< accu::bbox<point2d>, accu::count_<point2d> > > caracteristics(nlabels + 1);
+  std::vector< accu::pair_< accu::shape::bbox<point2d>, accu::count_<point2d> > > caracteristics(nlabels + 1);
   mln_fwd_piter_(ima2d_unsigned) p(labels.domain());
   for_all(p)
       caracteristics[labels(p)].take(p);

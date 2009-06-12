@@ -41,7 +41,7 @@
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
 
-#include <mln/accu/volume.hh>
+#include <mln/accu/shape/volume.hh>
 #include <mln/accu/math/count.hh>
 
 
@@ -256,7 +256,7 @@ int main(int argc, char* argv[])
   unsigned n = std::atoi(argv[2]);
 
   accu::math::count< util::pix<I> > acc;
-  // accu::volume<I> acc;
+  // accu::shape::volume<I> acc;
 
   image2d<int_u8> g = n_cmpt(acc, f, c4(), n + 1);
   debug::println(g);

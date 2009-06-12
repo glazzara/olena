@@ -4,7 +4,7 @@
 # include <mln/core/concept/point.hh>
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/internal/site_iterator_base.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 # include <mln/util/graph.hh>
 # include "mesh_psite.hh"
 
@@ -120,7 +120,7 @@ namespace mln
     : gr_ (gr),
       loc_ (loc)
   {
-    accu::bbox<P> a;
+    accu::shape::bbox<P> a;
     for (unsigned i = 0; i < loc.size(); ++i)
       a.take(loc[i]);
     bb_ = a.to_result();

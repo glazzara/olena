@@ -38,7 +38,7 @@
 # include <mln/literal/colors.hh>
 # include <mln/io/ppm/save.hh>
 
-# include <mln/accu/volume.hh>
+# include <mln/accu/shape/volume.hh>
 # include <mln/morpho/tree/data.hh>
 # include <mln/morpho/tree/compute_attribute_image.hh>
 

@@ -42,7 +42,7 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/morpho/tree/data.hh>
 
-#include <mln/accu/volume.hh>
+#include <mln/accu/shape/volume.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
 #include <mln/morpho/meyer_wst.hh>
 
@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
   // We get a min-tree so that we can perform morphological closings. 
 
   morpho::tree::data<I,S> t(f, s, c4());
-  accu::volume<I> vol;
+  accu::shape::volume<I> vol;
   image2d<unsigned> a = morpho::tree::compute_attribute_image(vol, t);
   
   labeling::regional_minima(a, c4(), n);

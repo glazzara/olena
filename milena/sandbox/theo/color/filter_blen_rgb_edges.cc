@@ -26,7 +26,7 @@
 #include <mln/labeling/compute.hh>
 
 #include <mln/accu/math/count.hh>
-#include <mln/accu/volume.hh>
+#include <mln/accu/shape/volume.hh>
 #include <mln/accu/stat/mean.hh>
 
 #include "sum_pix.hh"

@@ -9,7 +9,7 @@
 
 #include <mln/util/array.hh>
 
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 
 #include <mln/value/label_8.hh>
 
@@ -45,7 +45,7 @@ int main()
 
   // \{
   util::array<box2d> boxes =
-      labeling::compute(accu::meta::bbox(),
+      labeling::compute(accu::meta::shape::bbox(),
 			lbl,
 			nlabels);
   // \}

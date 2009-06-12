@@ -51,7 +51,7 @@
 # include <mln/core/alias/neighb2d.hh>
 
 # include <mln/accu/stat/mean.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 # include <mln/accu/p.hh>
 # include <mln/accu/math/count.hh>
 
@@ -128,7 +128,7 @@ is_character(box2d box, unsigned cardinality)
 template <typename I, typename O>
 void
 extract_lines(I& text_image, O& output,
-	      std::vector< accu::bbox  <point2d> >& v_bbox,
+	      std::vector< accu::shape::bbox  <point2d> >& v_bbox,
 	      int limits)
 {
   typedef image2d<unsigned> I_LABEL;
@@ -143,7 +143,7 @@ extract_lines(I& text_image, O& output,
 	{
 	  bool ok = false;
 	  int i = 0;
-	  accu::bbox<point2d> accu;
+	  accu::shape::bbox<point2d> accu;
 	  {
 	    bool okk = true;
 	    while (okk)
@@ -256,7 +256,7 @@ main(int argc, char** argv)
   std::cout << "nb_labels = " << nb_labels << std::endl;
 
   // Extraction of informations in the image (BoundingBox, Cardinality, ... ).
-  std::vector< accu::bbox  <point2d> > vec_bbox (nb_labels + 1);
+  std::vector< accu::shape::bbox  <point2d> > vec_bbox (nb_labels + 1);
   std::vector< accu::count_<point2d> > vec_card (nb_labels + 1);
 
   mln_piter_(I_LABEL) p (label_image.domain ());
@@ -320,7 +320,7 @@ main(int argc, char** argv)
 //   unsigned nb_dilated_node_labels;
 //   I_LABEL label_image2 = labeling::blobs(bool_ima, c8(), nb_dilated_node_labels);
 //   std::cout << "nb_dilated_node_labels = " << nb_dilated_node_labels << std::endl;
-//   std::vector< accu::bbox  <point2d> > vec_bbox2 (nb_dilated_node_labels + 1);
+//   std::vector< accu::shape::bbox  <point2d> > vec_bbox2 (nb_dilated_node_labels + 1);
 
 //   // Extract area of text.
 //   mln_piter_(I_LABEL) pl (label_image.domain ());

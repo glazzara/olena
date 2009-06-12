@@ -63,5 +63,6 @@ namespace mln
 # include <mln/accu/stat/min_max.hh>
 # include <mln/accu/stat/mean.hh>
 # include <mln/accu/stat/median_h.hh>
+# include <mln/accu/stat/median_alt.hh>
 
 #endif // ! MLN_ACCU_STAT_ALL_HH

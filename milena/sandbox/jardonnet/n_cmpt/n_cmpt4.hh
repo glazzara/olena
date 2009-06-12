@@ -34,7 +34,7 @@
 
 # include <mln/debug/println.hh>
 
-# include <mln/accu/volume.hh>
+# include <mln/accu/shape/volume.hh>
 # include <mln/morpho/tree/data.hh>
 # include <mln/morpho/tree/compute_attribute_image.hh>
 
@@ -79,7 +79,7 @@ namespace mln
       // compute volume image
       typedef p_array<mln_psite(I)> S;
       typedef mln_ch_value(I,unsigned) V;
-      typedef accu::volume<I> A;
+      typedef accu::shape::volume<I> A;
 
       S sp = data::sort_psites_decreasing(ima);
       morpho::tree::data<I,S> t(ima, sp, nbh);
@@ -109,7 +109,7 @@ namespace mln
       // prepare union find
       typedef mln_psite(V) P;
       //data
-      mln_ch_value(V, accu::volume<V>)  data(volume.domain());
+      mln_ch_value(V, accu::shape::volume<V>)  data(volume.domain());
       //deja_vu
       mln_ch_value(V, bool)  deja_vu(volume.domain());
       mln::data::fill(deja_vu, false);

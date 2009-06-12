@@ -42,7 +42,7 @@
 
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/site_set/p_array.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 # include <mln/core/site_set/p_queue.hh>
 
 namespace mln
@@ -124,7 +124,7 @@ namespace mln
     mutable bool vect_needs_update_;
     void vect_update_() const;
 
-    mutable accu::bbox<P> bb_;
+    mutable accu::shape::bbox<P> bb_;
     mutable bool bb_needs_update_;
     void bb_update_() const;
 

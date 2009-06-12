@@ -88,7 +88,7 @@ group_from_line_array(const scribo::util::text<I>& text,
 		      mln::util::array<unsigned>& array)
 {
   /// Accumulator array
-  mln::util::array< accu::bbox<mln_site(I)> > tboxes;
+  mln::util::array< accu::shape::bbox<mln_site(I)> > tboxes;
   tboxes.resize(text.bboxes().nelements());
 
   /// Adding bounding boxes to accumulator

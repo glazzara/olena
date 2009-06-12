@@ -36,7 +36,7 @@
 # include <vector>
 
 # include <mln/core/internal/point_set_base.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 # include <trait/point_set.hh>
 
 
@@ -116,7 +116,7 @@ namespace mln
   protected:
 
     std::vector<P> vect_;
-    mutable accu::bbox<P> bb_;
+    mutable accu::shape::bbox<P> bb_;
     mutable bool bb_needs_update_;
 
     void update_bb_() const;

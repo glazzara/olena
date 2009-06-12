@@ -30,7 +30,6 @@
 ///
 /// File that includes the most useful accumulator types.
 
-# include <mln/accu/bbox.hh>
 # include <mln/accu/center.hh>
 # include <mln/accu/histo.hh>
 # include <mln/accu/rank.hh>
@@ -38,5 +37,7 @@
 # include <mln/accu/stat/essential.hh>
 # include <mln/accu/image/essential.hh>
 # include <mln/accu/site_set/essential.hh>
+# include <mln/accu/shape/essential.hh>
+# include <mln/accu/math/essential.hh>
 
 #endif // ! MLN_ACCU_ESSENTIAL_HH

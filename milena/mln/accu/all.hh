@@ -53,11 +53,9 @@ namespace mln
 }
 
 
-# include <mln/accu/bbox.hh>
 # include <mln/accu/count_labels.hh>
 # include <mln/accu/center.hh>
 // << # include <mln/accu/count_adjacent_vertices.hh> >>
-# include <mln/accu/height.hh>
 # include <mln/accu/histo.hh>
 # include <mln/accu/label_used.hh>
 # include <mln/accu/line.hh>
@@ -66,7 +64,6 @@ namespace mln
 # include <mln/accu/rank.hh>
 # include <mln/accu/rms.hh>
 // << # include <mln/accu/tuple.hh> >>
-# include <mln/accu/volume.hh>
 
 // Routines.
 
@@ -85,6 +82,7 @@ namespace mln
 # include <mln/accu/site_set/all.hh>
 # include <mln/accu/stat/all.hh>
 # include <mln/accu/logic/all.hh>
-
+# include <mln/accu/math/all.hh>
+# include <mln/accu/shape/all.hh>
 
 #endif // ! MLN_ACCU_ALL_HH

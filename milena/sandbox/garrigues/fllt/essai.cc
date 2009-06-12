@@ -4,7 +4,7 @@
 
 #include <mln/core/image_if_value.hh>
 
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 #include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 
@@ -36,7 +36,7 @@ using value::int_u8;
 //  private:
 
 //   image2d<int_u8> ima_;
-//   accu::bbox<point2d> bb_;
+//   accu::shape::bbox<point2d> bb_;
 // };
 
 # define image_if_value_sub image_if_value<const sub_image<image2d<value::int_u8>, box2d> >

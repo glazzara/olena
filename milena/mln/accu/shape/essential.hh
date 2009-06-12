@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,20 +23,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/core/alias/point2d.hh>
-#include <mln/core/alias/box2d.hh>
+#ifndef MLN_ACCU_SHAPE_ESSENTIAL_HH
+# define MLN_ACCU_SHAPE_ESSENTIAL_HH
 
-#include <mln/accu/bbox.hh>
+/// \file
+///
+/// File that includes the most useful shape accumulator types.
 
-int main()
-{
-  using namespace mln;
-  accu::bbox<point2d> accu;
+# include <mln/accu/shape/bbox.hh>
 
-  accu.take_as_init(point2d(0,0));
-  accu.take(point2d(0,5));
-  accu.take(point2d(5,0));
-  accu.take(point2d(5,5));
+#endif // ! MLN_ACCU_SHAPE_ESSENTIAL_HH
 
-  mln_assertion(accu.to_result() == make::box2d(0,0,5,5));
-}
+

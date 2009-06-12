@@ -5,7 +5,7 @@
 #include <mln/labeling/background.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/accu/math/count.hh>
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 
 #include <mln/fun/i2v/array.hh>
 #include <mln/data/transform.hh>
@@ -23,7 +23,7 @@ namespace mln
     L nlabels;
     image2d<L> lab = labeling::background(input, c8(), nlabels);
     util::array<unsigned> count = labeling::compute(accu::math::count<point2d>(), lab, nlabels);
-    util::array<box2d>    box   = labeling::compute(accu::bbox<point2d>(), lab, nlabels);
+    util::array<box2d>    box   = labeling::compute(accu::shape::bbox<point2d>(), lab, nlabels);
 
     fun::i2v::array<bool> ok(nlabels.next(), false); // default is text
     ok(0) = true; // bg is 'white'

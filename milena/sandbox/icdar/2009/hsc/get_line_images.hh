@@ -10,7 +10,7 @@
 
 #include <mln/data/fill.hh>
 
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 
 #include <mln/geom/bbox.hh>
 
@@ -37,7 +37,7 @@ namespace mln
     mln_precondition(lines.is_valid());
 
     util::array<box<mln_site(L)> >
-      bboxes = labeling::compute(accu::meta::bbox(), lines, nlines);
+      bboxes = labeling::compute(accu::meta::shape::bbox(), lines, nlines);
 
     typedef mln_ch_value(L,bool) line_t;
     util::array<line_t> result;

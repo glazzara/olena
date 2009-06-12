@@ -40,7 +40,7 @@
 #include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
-#include <mln/accu/bbox.hh>
+#include <mln/accu/shape/bbox.hh>
 
 #include <mln/literal/black.hh>
 #include <mln/literal/white.hh>
@@ -116,7 +116,7 @@ namespace mln
       arr_t A;
       arr_t N[256];
 
-      accu::bbox<mln_point(I)> R_box;
+      accu::shape::bbox<mln_point(I)> R_box;
 
       
       // Step 1.

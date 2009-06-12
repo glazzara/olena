@@ -1,3 +1,128 @@
+2009-06-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Move height, volume, bbox accus in shape directory.
+
+	* mln/accu/height.hh,
+	* mln/accu/bbox.hh,
+	* mln/accu/volume.hh: Move to...
+	* mln/accu/shape,
+	* mln/accu/shape/bbox.hh,
+	* mln/accu/shape/height.hh,
+	* mln/accu/shape/volume.hh:
+	Move accus in shape directory.
+
+	* tests/accu/bbox.cc: Move to...
+	* tests/accu/shape,
+	* tests/accu/shape/bbox.cc:
+	Move tests in shape directory.
+
+	* tests/accu/Makefile.am,
+	* tests/accu/shape/Makefile.am:
+	Update makefiles respecting new locations.
+
+	* mln/accu/median_alt.hh: Move to...
+	* mln/accu/stat/median_alt.hh:
+	Move median_alt (no more used anywhere...) in stat directory.
+
+	* mln/accu/all.hh,
+	* mln/accu/essential.hh,
+	* mln/accu/shape/all.hh,
+	* mln/accu/shape/essential.hh
+	* mln/accu/stat/all.hh:
+	Update all.hh and essential.hh respecting new locations.
+
+	* doc/examples/labeling-compute.cc,
+	* doc/examples/split/labeling-compute-3.cc,
+	* mln/accu/site_set/rectangularity.hh,
+	* mln/accu/center.hh,
+	* mln/core/image/dmorph/p2p_image.hh,
+	* mln/core/image/imorph/labeled_image.hh,
+	* mln/core/internal/geom_bbox.hh,
+	* mln/core/internal/site_set_impl.hh,
+	* mln/geom/bbox.hh,
+	* sandbox/abraham/mln/core/site_set/p_priority_queue.hh,
+	* sandbox/duhamel/mesh_p.hh,
+	* sandbox/duhamel/queue_p_fast.hh,
+	* sandbox/duhamel/queue_p_priority.hh,
+	* sandbox/fred/old/p2p/p2p_morpher.hh,
+	* sandbox/fred/old/value.cc,
+	* sandbox/garrigues/factures/extract_array.cc,
+	* sandbox/garrigues/factures/extract_array_highlight.cc,
+	* sandbox/garrigues/fllt/essai.cc,
+	* sandbox/garrigues/fllt/fllt_simple.cc,
+	* sandbox/garrigues/fllt/fllt_simple.svg.1.cc,
+	* sandbox/garrigues/fllt/fllt_simple.svg.2.cc,
+	* sandbox/garrigues/fllt/fllt_simple.svg.3.cc,
+	* sandbox/garrigues/fllt/fllt_theo.cc,
+	* sandbox/garrigues/fllt/types.hh,
+	* sandbox/icdar/2009/hsc/clean_input.hh,
+	* sandbox/icdar/2009/hsc/clean_lines.hh,
+	* sandbox/icdar/2009/hsc/clean_lines_with_grouped_bboxes.hh,
+	* sandbox/icdar/2009/hsc/get_line_images.hh,
+	* sandbox/icdar/2009/hsc/lines_to_boxes.cc,
+	* sandbox/inim/2010/boxes/boxes.cc,
+	* sandbox/inim/2010/rag/center_weight.hh,
+	* sandbox/jardonnet/n_cmpt/n_cmpt.cc,
+	* sandbox/jardonnet/n_cmpt/n_cmpt.hh,
+	* sandbox/jardonnet/n_cmpt/n_cmpt2.hh,
+	* sandbox/jardonnet/n_cmpt/n_cmpt3.hh,
+	* sandbox/jardonnet/n_cmpt/n_cmpt4.hh,
+	* sandbox/jardonnet/n_cmpt/n_cmpt5.hh,
+	* sandbox/jardonnet/n_cmpt/nwst.hh,
+	* sandbox/jardonnet/n_cmpt/test_attribute_watershed.cc,
+	* sandbox/jardonnet/n_cmpt/tikz.hh,
+	* sandbox/laurent/ismm2009.cc,
+	* sandbox/nivault/extract_character.cc,
+	* sandbox/nivault/extract_score.cc,
+	* sandbox/pellegrin/set/core/internal/multi_set.hh,
+	* sandbox/pellegrin/set/core/internal/uni_set.hh,
+	* sandbox/pellegrin/set/core/p_array.hh,
+	* sandbox/pellegrin/set/core/p_bgraph.hh,
+	* sandbox/pellegrin/set/core/p_graph.hh,
+	* sandbox/pellegrin/set/core/p_line_graph.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue_fast.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue_fast_with_array.hh,
+	* sandbox/pellegrin/set/core/p_queue.hh,
+	* sandbox/pellegrin/set/core/p_queue_fast.hh,
+	* sandbox/pellegrin/set/core/p_run.hh,
+	* sandbox/pellegrin/set/core/p_runs.hh,
+	* sandbox/pellegrin/set/core/p_set.hh,
+	* sandbox/theo/color/blen_pix.hh,
+	* sandbox/theo/color/filter_blen_rgb_edges.cc,
+	* sandbox/theo/color/segment_gl_pixels.cc,
+	* sandbox/theo/color/segment_rgb_edges.cc,
+	* sandbox/theo/esiee/laurent/ismm09/trash.hh,
+	* sandbox/theo/fllt.svg.6.cc,
+	* sandbox/theo/fllt.svg.7.hh,
+	* sandbox/theo/fllt/fllt.hh,
+	* sandbox/theo/fllt/fllt.svg.1.cc,
+	* sandbox/theo/fllt/fllt.svg.2.cc,
+	* sandbox/theo/fllt/fllt.svg.3.cc,
+	* sandbox/theo/fllt/fllt.svg.4.cc,
+	* sandbox/theo/fllt/fllt.svg.5.cc,
+	* sandbox/theo/fllt/fllt.svg.6.cc,
+	* sandbox/theo/fllt/fllt.svg.7.hh,
+	* sandbox/theo/fllt/fllt_test.hh,
+	* sandbox/theo/p_runs__with_dedicated_piter.hh,
+	* sandbox/theo/tufa_2008/experiment.cc,
+	* sandbox/theo/tufa_2008/filter.cc,
+	* sandbox/theo/tufa_2008/n_cmpt.cc,
+	* sandbox/theo/tufa_2008/wst_f_equal_wst_a.cc,
+	* tests/accu/all_accus.cc,
+	* tests/core/image/edge_image.cc,
+	* tests/core/image/graph_image.cc,
+	* tests/core/image/imorph/labeled_image.cc,
+	* tests/core/image/vertex_image.cc,
+	* tests/morpho/closing/leveling.cc,
+	* tests/morpho/graph_image_morpho.cc,
+	* tests/morpho/opening/leveling.cc,
+	* trash/obased_rle_image.hh,
+	* trash/p_bgraph.hh:
+	Replace accu::accu_name by accu::shape::accu_name,
+		accu::meta::accu_name by accu::meta::shape::accu_name,
+		accu/accu_name by accu/shape/accu_name.
+
 2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Help the compiler find mln::math::max in mln::accu::label_used.
