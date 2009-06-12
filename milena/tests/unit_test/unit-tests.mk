@@ -2,15 +2,12 @@
 
 check_PROGRAMS =  \
 mln_accu_all \
-mln_accu_bbox \
 mln_accu_center \
 mln_accu_compute \
 mln_accu_convolve \
-mln_accu_count \
 mln_accu_count_adjacent_vertices \
 mln_accu_count_labels \
 mln_accu_essential \
-mln_accu_height \
 mln_accu_histo \
 mln_accu_image_all \
 mln_accu_image_essential \
@@ -32,8 +29,11 @@ mln_accu_logic_land_basic \
 mln_accu_logic_lor \
 mln_accu_logic_lor_basic \
 mln_accu_maj_h \
+mln_accu_math_all \
+mln_accu_math_count \
+mln_accu_math_essential \
+mln_accu_math_sum \
 mln_accu_max_site \
-mln_accu_median_alt \
 mln_accu_nil \
 mln_accu_p \
 mln_accu_pair \
@@ -41,6 +41,11 @@ mln_accu_rank \
 mln_accu_rank_bool \
 mln_accu_rank_high_quant \
 mln_accu_rms \
+mln_accu_shape_all \
+mln_accu_shape_bbox \
+mln_accu_shape_essential \
+mln_accu_shape_height \
+mln_accu_shape_volume \
 mln_accu_site_set_all \
 mln_accu_site_set_essential \
 mln_accu_site_set_rectangularity \
@@ -50,13 +55,13 @@ mln_accu_stat_essential \
 mln_accu_stat_max \
 mln_accu_stat_max_h \
 mln_accu_stat_mean \
+mln_accu_stat_median_alt \
 mln_accu_stat_median_h \
 mln_accu_stat_min \
 mln_accu_stat_min_h \
 mln_accu_stat_min_max \
 mln_accu_stat_var \
 mln_accu_stat_variance \
-mln_accu_sum \
 mln_accu_sup \
 mln_accu_take \
 mln_accu_transform \
@@ -67,7 +72,6 @@ mln_accu_transform_snake \
 mln_accu_transform_stop \
 mln_accu_tuple \
 mln_accu_v \
-mln_accu_volume \
 mln_algebra_all \
 mln_algebra_essential \
 mln_algebra_h_mat \
@@ -1258,15 +1262,12 @@ mln_world_inter_pixel_neighb2d \
 mln_world_inter_pixel_separator_to_pixels
 
 mln_accu_all_SOURCES = mln_accu_all.cc
-mln_accu_bbox_SOURCES = mln_accu_bbox.cc
 mln_accu_center_SOURCES = mln_accu_center.cc
 mln_accu_compute_SOURCES = mln_accu_compute.cc
 mln_accu_convolve_SOURCES = mln_accu_convolve.cc
-mln_accu_count_SOURCES = mln_accu_count.cc
 mln_accu_count_adjacent_vertices_SOURCES = mln_accu_count_adjacent_vertices.cc
 mln_accu_count_labels_SOURCES = mln_accu_count_labels.cc
 mln_accu_essential_SOURCES = mln_accu_essential.cc
-mln_accu_height_SOURCES = mln_accu_height.cc
 mln_accu_histo_SOURCES = mln_accu_histo.cc
 mln_accu_image_all_SOURCES = mln_accu_image_all.cc
 mln_accu_image_essential_SOURCES = mln_accu_image_essential.cc
@@ -1288,8 +1289,11 @@ mln_accu_logic_land_basic_SOURCES = mln_accu_logic_land_basic.cc
 mln_accu_logic_lor_SOURCES = mln_accu_logic_lor.cc
 mln_accu_logic_lor_basic_SOURCES = mln_accu_logic_lor_basic.cc
 mln_accu_maj_h_SOURCES = mln_accu_maj_h.cc
+mln_accu_math_all_SOURCES = mln_accu_math_all.cc
+mln_accu_math_count_SOURCES = mln_accu_math_count.cc
+mln_accu_math_essential_SOURCES = mln_accu_math_essential.cc
+mln_accu_math_sum_SOURCES = mln_accu_math_sum.cc
 mln_accu_max_site_SOURCES = mln_accu_max_site.cc
-mln_accu_median_alt_SOURCES = mln_accu_median_alt.cc
 mln_accu_nil_SOURCES = mln_accu_nil.cc
 mln_accu_p_SOURCES = mln_accu_p.cc
 mln_accu_pair_SOURCES = mln_accu_pair.cc
@@ -1297,6 +1301,11 @@ mln_accu_rank_SOURCES = mln_accu_rank.cc
 mln_accu_rank_bool_SOURCES = mln_accu_rank_bool.cc
 mln_accu_rank_high_quant_SOURCES = mln_accu_rank_high_quant.cc
 mln_accu_rms_SOURCES = mln_accu_rms.cc
+mln_accu_shape_all_SOURCES = mln_accu_shape_all.cc
+mln_accu_shape_bbox_SOURCES = mln_accu_shape_bbox.cc
+mln_accu_shape_essential_SOURCES = mln_accu_shape_essential.cc
+mln_accu_shape_height_SOURCES = mln_accu_shape_height.cc
+mln_accu_shape_volume_SOURCES = mln_accu_shape_volume.cc
 mln_accu_site_set_all_SOURCES = mln_accu_site_set_all.cc
 mln_accu_site_set_essential_SOURCES = mln_accu_site_set_essential.cc
 mln_accu_site_set_rectangularity_SOURCES = mln_accu_site_set_rectangularity.cc
@@ -1306,13 +1315,13 @@ mln_accu_stat_essential_SOURCES = mln_accu_stat_essential.cc
 mln_accu_stat_max_SOURCES = mln_accu_stat_max.cc
 mln_accu_stat_max_h_SOURCES = mln_accu_stat_max_h.cc
 mln_accu_stat_mean_SOURCES = mln_accu_stat_mean.cc
+mln_accu_stat_median_alt_SOURCES = mln_accu_stat_median_alt.cc
 mln_accu_stat_median_h_SOURCES = mln_accu_stat_median_h.cc
 mln_accu_stat_min_SOURCES = mln_accu_stat_min.cc
 mln_accu_stat_min_h_SOURCES = mln_accu_stat_min_h.cc
 mln_accu_stat_min_max_SOURCES = mln_accu_stat_min_max.cc
 mln_accu_stat_var_SOURCES = mln_accu_stat_var.cc
 mln_accu_stat_variance_SOURCES = mln_accu_stat_variance.cc
-mln_accu_sum_SOURCES = mln_accu_sum.cc
 mln_accu_sup_SOURCES = mln_accu_sup.cc
 mln_accu_take_SOURCES = mln_accu_take.cc
 mln_accu_transform_SOURCES = mln_accu_transform.cc
@@ -1323,7 +1332,6 @@ mln_accu_transform_snake_SOURCES = mln_accu_transform_snake.cc
 mln_accu_transform_stop_SOURCES = mln_accu_transform_stop.cc
 mln_accu_tuple_SOURCES = mln_accu_tuple.cc
 mln_accu_v_SOURCES = mln_accu_v.cc
-mln_accu_volume_SOURCES = mln_accu_volume.cc
 mln_algebra_all_SOURCES = mln_algebra_all.cc
 mln_algebra_essential_SOURCES = mln_algebra_essential.cc
 mln_algebra_h_mat_SOURCES = mln_algebra_h_mat.cc

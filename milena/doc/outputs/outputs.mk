@@ -47,6 +47,12 @@ outputs/paste-call-1.txt \
 outputs/paste.txt \
 outputs/point-1.txt \
 outputs/predicate-1.txt \
+outputs/split/graph-iter-1.txt \
+outputs/split/graph-iter-2.txt \
+outputs/split/graph-iter-3.txt \
+outputs/split/graph-iter-4.txt \
+outputs/split/tuto3_println-1.txt \
+outputs/split/tuto3_println-2.txt \
 outputs/tuto2_first_image.txt \
 outputs/tuto3_colorize.txt \
 outputs/tuto3_println.txt \

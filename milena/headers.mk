@@ -3,15 +3,12 @@
 nobase_include_HEADERS = \
 mln/version.hh \
 mln/accu/all.hh \
-mln/accu/bbox.hh \
 mln/accu/center.hh \
 mln/accu/compute.hh \
 mln/accu/convolve.hh \
-mln/accu/count.hh \
 mln/accu/count_adjacent_vertices.hh \
 mln/accu/count_labels.hh \
 mln/accu/essential.hh \
-mln/accu/height.hh \
 mln/accu/histo.hh \
 mln/accu/image/all.hh \
 mln/accu/image/essential.hh \
@@ -33,8 +30,11 @@ mln/accu/logic/land_basic.hh \
 mln/accu/logic/lor.hh \
 mln/accu/logic/lor_basic.hh \
 mln/accu/maj_h.hh \
+mln/accu/math/all.hh \
+mln/accu/math/count.hh \
+mln/accu/math/essential.hh \
+mln/accu/math/sum.hh \
 mln/accu/max_site.hh \
-mln/accu/median_alt.hh \
 mln/accu/nil.hh \
 mln/accu/p.hh \
 mln/accu/pair.hh \
@@ -42,6 +42,11 @@ mln/accu/rank.hh \
 mln/accu/rank_bool.hh \
 mln/accu/rank_high_quant.hh \
 mln/accu/rms.hh \
+mln/accu/shape/all.hh \
+mln/accu/shape/bbox.hh \
+mln/accu/shape/essential.hh \
+mln/accu/shape/height.hh \
+mln/accu/shape/volume.hh \
 mln/accu/site_set/all.hh \
 mln/accu/site_set/essential.hh \
 mln/accu/site_set/rectangularity.hh \
@@ -51,13 +56,13 @@ mln/accu/stat/essential.hh \
 mln/accu/stat/max.hh \
 mln/accu/stat/max_h.hh \
 mln/accu/stat/mean.hh \
+mln/accu/stat/median_alt.hh \
 mln/accu/stat/median_h.hh \
 mln/accu/stat/min.hh \
 mln/accu/stat/min_h.hh \
 mln/accu/stat/min_max.hh \
 mln/accu/stat/var.hh \
 mln/accu/stat/variance.hh \
-mln/accu/sum.hh \
 mln/accu/sup.hh \
 mln/accu/take.hh \
 mln/accu/transform.hh \
@@ -68,7 +73,6 @@ mln/accu/transform_snake.hh \
 mln/accu/transform_stop.hh \
 mln/accu/tuple.hh \
 mln/accu/v.hh \
-mln/accu/volume.hh \
 mln/algebra/all.hh \
 mln/algebra/essential.hh \
 mln/algebra/h_mat.hh \
