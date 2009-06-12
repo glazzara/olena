@@ -36,6 +36,13 @@
 
 2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update the list of non distributed headers.
+
+	* nodist-headers: Here.
+	From Thierry Géraud  <thierry.geraud@lrde.epita.fr>.
+
+2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	* headers.mk: Regen.
 
 2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
