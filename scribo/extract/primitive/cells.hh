@@ -26,7 +26,7 @@
 #ifndef SCRIBO_EXTRACT_PRIMITIVE_CELLS_HH
 # define SCRIBO_EXTRACT_PRIMITIVE_CELLS_HH
 
-/// \file scribo/primitive/cells.hh
+/// \file
 ///
 /// Extract canvas cells from a binary image.
 

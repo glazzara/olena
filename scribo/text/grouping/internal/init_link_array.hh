@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_GROUPING_INTERNAL_INIT_LINK_ARRAY_HH
 # define SCRIBO_TEXT_GROUPING_INTERNAL_INIT_LINK_ARRAY_HH
 
-/// \file scribo/text/grouping/internal/init_link_array.hh
+/// \file
 ///
 /// Initialize a link array.
 

@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TABLE_EXTRACT_HH
 # define SCRIBO_TABLE_EXTRACT_HH
 
-/// \file scribo/table/extract.hh
+/// \file
 ///
 /// Extract tables from a binary image.
 /// Use arbitrary criterions.

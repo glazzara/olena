@@ -26,7 +26,7 @@
 #ifndef SCRIBO_DRAW_BOUNDING_BOX_LINKS_HH
 # define SCRIBO_DRAW_BOUNDING_BOX_LINKS_HH
 
-/// \file scribo/draw/bounding_boxes.hh
+/// \file
 ///
 /// Draw a list of bounding box links.
 

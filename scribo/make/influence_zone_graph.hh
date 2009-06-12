@@ -26,7 +26,7 @@
 #ifndef SCRIBO_MAKE_INFLUENCE_ZONE_GRAPH_HH
 # define SCRIBO_MAKE_INFLUENCE_ZONE_GRAPH_HH
 
-/// \file scribo/make/influence_zone_graph.hh
+/// \file
 ///
 /// Create a region adjacency graph from the influence zone image
 /// of binary image.

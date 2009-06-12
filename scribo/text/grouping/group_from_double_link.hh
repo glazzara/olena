@@ -27,7 +27,7 @@
 # define SCRIBO_TEXT_GROUPING_GROUP_FROM_DOUBLE_LINK_HH
 
 
-/// \file scribo/text/grouping/group_from_double_link.hh
+/// \file
 ///
 /// Group text bounding boxes from left and right links and validate
 /// These links. A link must exist in both ways to be validated.

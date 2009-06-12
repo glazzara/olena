@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_GROUPING_GROUP_WITH_GRAPH_HH
 # define SCRIBO_TEXT_GROUPING_GROUP_WITH_GRAPH_HH
 
-/// \file scribo/text/grouping/group_with_graph.hh
+/// \file
 ///
 /// Group character bounding boxes with a graph.
 

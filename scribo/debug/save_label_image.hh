@@ -26,7 +26,7 @@
 #ifndef SCRIBO_MAKE_DEBUG_SAVE_LABEL_IMAGE_HH
 # define SCRIBO_MAKE_DEBUG_SAVE_LABEL_IMAGE_HH
 
-/// \file scribo/debug/save_label_image.hh
+/// \file
 ///
 /// Save a labeled image in a color image.
 

@@ -26,7 +26,7 @@
 #ifndef SCRIBO_DEBUG_SAVE_LINKED_BBOXES_IMAGE_HH
 # define SCRIBO_DEBUG_SAVE_LINKED_BBOXES_IMAGE_HH
 
-/// \file scribo/draw/bounding_boxes.hh
+/// \file
 ///
 /// Save the bounding box links image.
 

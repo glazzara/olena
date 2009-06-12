@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TABLE_CONNECT_VERTICAL_LINES_HH
 # define SCRIBO_TABLE_CONNECT_VERTICAL_LINES_HH
 
-/// \file scribo/table/connect_vertical_lines.hh
+/// \file
 ///
 /// Connect vertical lines with aligned rows.
 ///

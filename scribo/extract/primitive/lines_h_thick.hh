@@ -26,7 +26,7 @@
 #ifndef SCRIBO_EXTRACT_PRIMITIVE_LINES_H_THICK_HH
 # define SCRIBO_EXTRACT_PRIMITIVE_LINES_H_THICK_HH
 
-/// \file scribo/primitive/lines_h_thick.hh
+/// \file
 ///
 /// Extract horizontal thick lines.
 

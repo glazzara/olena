@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_GRAPH_LINK_HH
 # define SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_GRAPH_LINK_HH
 
-/// \file scribo/text/grouping/internal/update_link_array.hh
+/// \file
 ///
 /// Update graph edges if a valid neighbor is found.
 

@@ -26,7 +26,7 @@
 #ifndef SCRIBO_MAKE_TEXT_HH
 # define SCRIBO_MAKE_TEXT_HH
 
-/// \file scribo/make/text.hh
+/// \file
 ///
 /// Construct a util::text.
 

@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_EXTRACT_LINES_HH
 # define SCRIBO_TEXT_EXTRACT_LINES_HH
 
-/// \file scribo/text/extract_lines.hh
+/// \file
 ///
 /// Extract line of text bounding boxes.
 

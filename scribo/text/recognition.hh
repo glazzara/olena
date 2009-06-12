@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_RECOGNITION_HH
 # define SCRIBO_TEXT_RECOGNITION_HH
 
-/// \file scribo/text/recognition.hh
+/// \file
 ///
 /// Passes the text bounding boxes to an OCR (Tesseract).
 ///

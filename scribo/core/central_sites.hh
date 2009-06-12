@@ -26,7 +26,7 @@
 #ifndef SCRIBO_CORE_CENTRAL_SITES_HH
 # define SCRIBO_CORE_CENTRAL_SITES_HH
 
-/// \file scribo/core/central_sites.hh
+/// \file
 ///
 /// Returns the edge central sites of a box.
 

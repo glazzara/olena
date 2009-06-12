@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TABLE_INTERNAL_REPAIR_LINES_HH
 # define SCRIBO_TABLE_INTERNAL_REPAIR_LINES_HH
 
-/// \file scribo/table/internal/repair_lines.hh
+/// \file
 ///
 /// Repair lines which have small discontinuities.
 

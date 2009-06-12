@@ -26,7 +26,7 @@
 #ifndef SCRIBO_UNSKEW_HOUGH_HH
 # define SCRIBO_UNSKEW_HOUGH_HH
 
-/// \file scribo/preprocessing/unskew.hh
+/// \file
 ///
 /// Unskew an image.
 

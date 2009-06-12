@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_GROUPING_GROUP_FROM_SINGLE_LINK_HH
 # define SCRIBO_TEXT_GROUPING_GROUP_FROM_SINGLE_LINK_HH
 
-/// \file scribo/text/grouping/group_from_single_link.hh
+/// \file
 ///
 /// Link text objects with their neighbor line if they have one.
 

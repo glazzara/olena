@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_GROUPING_INTERNAL_ALL_HH
 # define SCRIBO_TEXT_GROUPING_INTERNAL_ALL_HH
 
-/// \file scribo/text/grouping/internal/all.hh
+/// \file
 ///
 /// Include all headers located in scribo/text/grouping/internal.
 

@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_GROUPING_INTERNAL_IS_LINK_VALID_HH
 # define SCRIBO_TEXT_GROUPING_INTERNAL_IS_LINK_VALID_HH
 
-/// \file scribo/text/grouping/internal/is_link_valid.hh
+/// \file
 ///
 /// Validate a link from two different links.
 

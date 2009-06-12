@@ -26,7 +26,7 @@
 #ifndef SCRIBO_MAKE_ALL_HH
 # define SCRIBO_MAKE_ALL_HH
 
-/// \file scribo/make/all.hh
+/// \file
 ///
 /// Include all headers located in scribo/make.
 

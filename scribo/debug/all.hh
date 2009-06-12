@@ -26,7 +26,7 @@
 #ifndef SCRIBO_DEBUG_ALL_HH
 # define SCRIBO_DEBUG_ALL_HH
 
-/// \file scribo/debug/all.hh
+/// \file
 ///
 /// Include all headers located in scribo/debug.
 

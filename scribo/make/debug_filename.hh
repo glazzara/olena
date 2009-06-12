@@ -26,7 +26,7 @@
 #ifndef SCRIBO_MAKE_DEBUG_FILENAME_HH
 # define SCRIBO_MAKE_DEBUG_FILENAME_HH
 
-/// \file scribo/make/debug_filename.hh
+/// \file
 ///
 /// Construct and returns a formated output file name.
 

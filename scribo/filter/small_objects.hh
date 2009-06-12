@@ -26,7 +26,7 @@
 #ifndef SCRIBO_FILTER_SMALL_OBJECTS_HH
 # define SCRIBO_FILTER_SMALL_OBJECTS_HH
 
-/// \file scribo/filter/small_objects.hh
+/// \file
 ///
 /// Remove small objects in a binary image.
 

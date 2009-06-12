@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_GROUPING_INTERNAL_FIND_ROOT_LINK_ARRAY_HH
 # define SCRIBO_TEXT_GROUPING_INTERNAL_FIND_ROOT_LINK_ARRAY_HH
 
-/// \file scribo/text/grouping/internal/find_root.hh
+/// \file
 ///
 /// Find root in a parent array arrays.
 

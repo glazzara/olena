@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TABLE_INTERNAL_ALL_HH
 # define SCRIBO_TABLE_INTERNAL_ALL_HH
 
-/// \file scribo/table/internal/all.hh
+/// \file
 ///
 /// Include all headers located in scribo/table/internal.
 

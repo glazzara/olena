@@ -26,7 +26,7 @@
 #ifndef SCRIBO_EXTRACT_PRIMITIVE_LINES_THICK_HH
 # define SCRIBO_EXTRACT_PRIMITIVE_LINES_THICK_HH
 
-/// \file scribo/primitive/lines_thick.hh
+/// \file
 ///
 /// Extract thick lines in a binary image.
 

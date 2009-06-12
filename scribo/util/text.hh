@@ -26,7 +26,7 @@
 #ifndef SCRIBO_UTIL_TEXT_HH
 # define SCRIBO_UTIL_TEXT_HH
 
-/// \file scribo/util/text.hh
+/// \file
 ///
 /// A class representing text bounding boxes and their associated
 /// labeled image.

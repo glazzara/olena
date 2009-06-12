@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_GROUPING_INTERNAL_FIND_LEFT_LINK_HH
 # define SCRIBO_TEXT_GROUPING_INTERNAL_FIND_LEFT_LINK_HH
 
-/// \file scribo/text/grouping/internal/find_left_link.hh
+/// \file
 ///
 /// Find the left neighbor of a line of text if exists.
 

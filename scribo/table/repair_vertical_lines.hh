@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TABLE_REPAIR_VERTICAL_LINES_HH
 # define SCRIBO_TABLE_REPAIR_VERTICAL_LINES_HH
 
-/// \file scribo/table/repair_vertical_lines.hh
+/// \file
 ///
 /// Repair vertical lines which have small discontinuities.
 ///

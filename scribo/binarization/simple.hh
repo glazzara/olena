@@ -26,7 +26,7 @@
 #ifndef SCRIBO_BINARIZATION_SIMPLE_HH
 # define SCRIBO_BINARIZATION_SIMPLE_HH
 
-/// \file scribo/binarization/simple.hh
+/// \file
 ///
 /// Simple binarization of a gray-level document.
 

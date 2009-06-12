@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_LINK_ARRAY_HH
 # define SCRIBO_TEXT_GROUPING_INTERNAL_UPDATE_LINK_ARRAY_HH
 
-/// \file scribo/text/grouping/internal/update_link_array.hh
+/// \file
 ///
 /// Update a lookup table if a neighbor is found on the right of
 /// the current bbox.

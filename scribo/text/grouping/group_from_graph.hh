@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_GROUPING_GROUP_FROM_GRAPH_HH
 # define SCRIBO_TEXT_GROUPING_GROUP_FROM_GRAPH_HH
 
-/// \file scribo/text/grouping/group_from_graph.hh
+/// \file
 ///
 /// Group lines of text according to a graph of links between
 /// the lines of text.

@@ -26,7 +26,7 @@
 #ifndef SCRIBO_FILTER_THIN_OBJECTS_HH
 # define SCRIBO_FILTER_THIN_OBJECTS_HH
 
-/// \file scribo/filter/thin_objects.hh
+/// \file
 ///
 /// Remove too thin objects.
 

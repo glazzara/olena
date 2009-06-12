@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_GROUPING_GROUP_WITH_SEVERAL_LEFT_LINKS_HH
 # define SCRIBO_TEXT_GROUPING_GROUP_WITH_SEVERAL_LEFT_LINKS_HH
 
-/// \file scribo/text/grouping/group_with_several_left_links.hh
+/// \file
 ///
 /// Link text bounding boxes with their left neighbor.
 ///

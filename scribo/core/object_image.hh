@@ -26,7 +26,7 @@
 #ifndef SCRIBO_CORE_OBJECT_IMAGE_HH
 # define SCRIBO_CORE_OBJECT_IMAGE_HH
 
-/// \file scribo/core/object_image.hh
+/// \file
 ///
 /// FIXME.
 

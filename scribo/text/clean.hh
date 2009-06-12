@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_CLEAN_HH
 # define SCRIBO_TEXT_CLEAN_HH
 
-/// \file scribo/text/clean.hh
+/// \file
 ///
 /// Improve the quality of a text area.
 

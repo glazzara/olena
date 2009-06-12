@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TABLE_ERASE_HH
 # define SCRIBO_TABLE_ERASE_HH
 
-/// \file scribo/table/erase.hh
+/// \file
 ///
 /// \brief Erase the table lines in an image.
 

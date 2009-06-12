@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TABLE_INTERNAL_ALIGN_LINES_HH
 # define SCRIBO_TABLE_INTERNAL_ALIGN_LINES_HH
 
-/// \file scribo/table/internal/align_lines.hh
+/// \file
 ///
 /// Align table lines verticaly or horizontaly.
 

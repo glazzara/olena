@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TABLE_ALIGN_LINES_VERTICALY_HH
 # define SCRIBO_TABLE_ALIGN_LINES_VERTICALY_HH
 
-/// \file scribo/table/align_lines_verticaly.hh
+/// \file
 ///
 /// Align line bounding boxes verticaly.
 

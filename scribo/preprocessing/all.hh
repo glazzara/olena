@@ -26,7 +26,7 @@
 #ifndef SCRIBO_PREPROCESSING_ALL_HH
 # define SCRIBO_PREPROCESSING_ALL_HH
 
-/// \file scribo/preprocessing/all.hh
+/// \file
 ///
 /// Include all headers located in scribo/preprocessing.
 

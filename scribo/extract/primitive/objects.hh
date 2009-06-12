@@ -26,7 +26,7 @@
 #ifndef SCRIBO_EXTRACT_PRIMITIVE_OBJECTS_HH
 # define SCRIBO_EXTRACT_PRIMITIVE_OBJECTS_HH
 
-/// \file scribo/core/objects.hh
+/// \file
 ///
 /// Extract objects in a binary image.
 

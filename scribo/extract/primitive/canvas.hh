@@ -26,7 +26,7 @@
 #ifndef SCRIBO_EXTRACT_PRIMITIVE_CANVAS_HH
 # define SCRIBO_EXTRACT_PRIMITIVE_CANVAS_HH
 
-/// \file scribo/primitive/canvas.hh
+/// \file
 ///
 /// Rebuild a table from its line bounding boxes.
 

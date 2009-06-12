@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TEXT_GROUPING_GROUP_WITH_SINGLE_RIGHT_LINK_HH
 # define SCRIBO_TEXT_GROUPING_GROUP_WITH_SINGLE_RIGHT_LINK_HH
 
-/// \file scribo/text/grouping/group_with_single_right_link.hh
+/// \file
 ///
 /// Link text objects with their right neighbor.
 ///

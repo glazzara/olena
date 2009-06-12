@@ -26,7 +26,7 @@
 #ifndef SCRIBO_FILTER_LARGE_OBJECTS_HH
 # define SCRIBO_FILTER_LARGE_OBJECTS_HH
 
-/// \file scribo/filter/large_objects.hh
+/// \file
 ///
 /// Remove large objects in a binary image.
 

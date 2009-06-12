@@ -26,7 +26,7 @@
 #ifndef SCRIBO_DEBUG_SAVE_TABLE_IMAGE_HH
 # define SCRIBO_DEBUG_SAVE_TABLE_IMAGE_HH
 
-/// \file scribo/debug/save_table_image.hh
+/// \file
 ///
 /// Save table line bounding boxes in an image.
 

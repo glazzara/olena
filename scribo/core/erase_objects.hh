@@ -26,7 +26,7 @@
 #ifndef SCRIBO_CORE_ERASE_OBJECTS_HH
 # define SCRIBO_CORE_ERASE_OBJECTS_HH
 
-/// \file scribo/core/erase_objects.hh
+/// \file
 ///
 /// Remove the content of bounding boxes from an image.
 

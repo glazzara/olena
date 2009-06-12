@@ -26,7 +26,7 @@
 #ifndef SCRIBO_TABLE_REBUILD_HH
 # define SCRIBO_TABLE_REBUILD_HH
 
-/// \file scribo/table/rebuild.hh
+/// \file
 ///
 /// Rebuild a table from its line bounding boxes.
 

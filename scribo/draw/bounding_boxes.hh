@@ -26,7 +26,7 @@
 #ifndef SCRIBO_DRAW_BOUNDING_BOXES_HH
 # define SCRIBO_DRAW_BOUNDING_BOXES_HH
 
-/// \file scribo/draw/bounding_boxes.hh
+/// \file
 ///
 /// Draw a list of bounding boxes and their associated mass center.
 

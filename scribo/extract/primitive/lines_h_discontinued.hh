@@ -26,7 +26,7 @@
 #ifndef SCRIBO_EXTRACT_PRIMITIVE_LINES_H_DISCONTINUED_HH
 # define SCRIBO_EXTRACT_PRIMITIVE_LINES_H_DISCONTINUED_HH
 
-/// \file scribo/primitive/lines_h_discontinued.hh
+/// \file
 ///
 /// Extract horizontal discontinued lines.
 
