@@ -36,6 +36,13 @@
 
 2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Help doc/Makefile resolve dependencies across directories.
+
+	* doc/Makefile.am (tutorial/tutorial.hh, ref_guide/ref_guide.hh):
+	New target, bouncing to subdirectories.
+
+2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Tag some some tests as ``not distributed''.
 
 	* tests/convert/Makefile.am,

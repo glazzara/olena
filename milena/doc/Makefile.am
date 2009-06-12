@@ -55,8 +55,14 @@ doc-devel-pdf: tutorial-pdf ref-guide-pdf white-paper-pdf ref-doc-devel-pdf
 
 doc-devel-html: tutorial-html ref-guide-html white-paper-html ref-doc-devel-html 
 
+# FIXME: Maintaining dependencies across directories is too
+# complicated.  Simplify.
 # Shared dependencies on the products of tutorial/ and ref_guide/.
 EXTRA_DEPS = tutorial/tutorial.hh ref_guide/ref_guide.hh
+tutorial/tutorial.hh:
+	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) tutorial.hh
+ref_guide/ref_guide.hh:
+	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) ref_guide.hh
 
 # Doxygen PDF documentation outputs.
 USER_REFMAN_PDF = user/latex/refman.pdf
