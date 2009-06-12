@@ -1,5 +1,9 @@
 2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	* headers.mk: Regen.
+
+2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Prevent generate_dist_headers.sh from distributing certain files.
 
 	* nodist-headers: New.
