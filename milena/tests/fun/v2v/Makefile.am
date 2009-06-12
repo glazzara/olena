@@ -1,4 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -20,16 +21,16 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-	hsl_to_rgb 	 			\
 	norm					\
 	projection				\
-	rgb_to_hsl 				\
 	wrap
 
 norm_SOURCES = norm.cc
 projection_SOURCES = projection.cc
-rgb_to_hsl_SOURCES = rgb_to_hsl.cc
-hsl_to_rgb_SOURCES = hsl_to_rgb.cc
 wrap_SOURCES = wrap.cc
+
+# rgb_to_hsl_SOURCES = rgb_to_hsl.cc  De-activated for 1.0
+# hsl_to_rgb_SOURCES = hsl_to_rgb.cc  De-activated for 1.0
+# component_SOURCES = component.cc    De-activated for 1.0
 
 TESTS = $(check_PROGRAMS)

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,15 +27,16 @@
 #ifndef MLN_CORE_IMAGE_VMORPH_THRUBIN_IMAGE_HH
 # define MLN_CORE_IMAGE_VMORPH_THRUBIN_IMAGE_HH
 
+/// \file
+///
+/// \brief Definition of a morpher that morph values from two images
+/// through a binary function.
+
 # include <mln/core/internal/image_value_morpher.hh>
 # include <mln/core/concept/meta_function.hh>
 # include <mln/metal/bexpr.hh>
 # include <mln/trait/functions.hh>
 
-/// \file
-///
-/// \brief Definition of a morpher that morph values from two images
-/// through a binary function.
 
 namespace mln
 {

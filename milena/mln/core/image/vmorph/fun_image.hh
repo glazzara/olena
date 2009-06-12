@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,15 +29,16 @@
 
 /// \file
 ///
-/// Definition of an image morpher that make the user see the
-/// image through a function
+/// Definition of an image morpher that returns image data through a
+/// function.
 
 # include <mln/core/internal/image_value_morpher.hh>
 # include <mln/trait/images.hh>
 # include <mln/value/set.hh>
-# include <mln/value/shell.hh>
+// # include <mln/value/shell.hh>  De-activated for 1.0
 # include <mln/metal/if.hh>
 # include <mln/metal/equal.hh>
+
 
 namespace mln
 {
@@ -50,8 +52,9 @@ namespace mln
     template <typename F, typename I>
     struct data< fun_image<F,I> >
     {
-      data(I& ima);
-      I& ima_;
+      data(const F& f, const I& ima);
+      F f_;
+      const I ima_;
     };
 
   } // end of namespace mln::internal
@@ -66,7 +69,7 @@ namespace mln
     {
       //      typedef trait::image::category::value_morpher   category;
       typedef trait::image::category::primary   category; // does not work either
-      typedef trait::image::value_io::read_write      value_io;
+      typedef trait::image::value_io::read_only      value_io;
       typedef trait::image::value_access::computed    value_access;
       typedef trait::image::value_storage::disrupted  value_storage;
       typedef
@@ -88,7 +91,6 @@ namespace mln
 
 
 
-
   /// Image read through a function.
   ///
   /// \ingroup modimagevaluemorpher
@@ -104,7 +106,8 @@ namespace mln
     typedef mln_result(F) rvalue;
 
     /// Return type of read-write access.
-    typedef mln::value::shell<F,I> lvalue;
+    typedef mln_result(F) lvalue;
+    // typedef mln::value::shell<F,I> lvalue;  De-activated for 1.0
 
     /// Skeleton.
     typedef fun_image< tag::value_<mln_result(F)>, tag::image_<I> > skeleton;
@@ -113,21 +116,40 @@ namespace mln
     fun_image();
 
     /// Constructor.
-    fun_image(Image<I>& ima);
+    fun_image(const Function_v2v<F>& f, const Image<I>& ima);
 
     /// Initialize an empty image.
-    void init_(Image<I>& ima);
+    void init_(const Function_v2v<F>& f, const Image<I>& ima);
 
     /// Read-only access of pixel value at point site \p p.
     mln_result(F) operator()(const mln_psite(I)& p) const;
 
-    /// Mutable access is for reading and writing.
-    lvalue operator()(const mln_psite(I)& p);
+    /// Mutable access is for reading only.
+    mln_result(F) operator()(const mln_psite(I)& p);
+    // lvalue operator()(const mln_psite(I)& p);  De-activated for 1.0
 
     F f;
   };
 
+
+
+  template <typename F, typename I>
+  fun_image<F, I>
+  operator << (const Function_v2v<F>& f, const Image<I>& ima);
+
+  
+
 # ifndef MLN_INCLUDE_ONLY
+
+
+  template <typename F, typename I>
+  fun_image<F, I>
+  inline
+  operator << (const Function_v2v<F>& f, const Image<I>& ima)
+  {
+    fun_image<F, I> tmp(exact(f), exact(ima));
+    return tmp;
+  }
 
 
   // internal::data< fun_image<T,I> >
@@ -137,8 +159,9 @@ namespace mln
 
     template <typename F, typename I>
     inline
-    data< fun_image<F,I> >::data(I& ima)
-      : ima_(ima)
+    data< fun_image<F,I> >::data(const F& f, const I& ima)
+      : f_(f),
+	ima_(ima)
     {
     }
 
@@ -156,19 +179,19 @@ namespace mln
 
   template <typename F, typename I>
   inline
-  fun_image<F,I>::fun_image(Image<I>& ima)
+  fun_image<F,I>::fun_image(const Function_v2v<F>& f, const Image<I>& ima)
   {
-    init_(ima);
+    init_(f, ima);
   }
 
 
   template <typename F, typename I>
   inline
   void
-  fun_image<F,I>::init_(Image<I>& ima)
+  fun_image<F,I>::init_(const Function_v2v<F>& f, const Image<I>& ima)
   {
     mln_precondition(exact(ima).is_valid());
-    this->data_ = new internal::data<fun_image<F,I> >(exact(ima));
+    this->data_ = new internal::data<fun_image<F,I> >(exact(f), exact(ima));
   }
 
 
@@ -183,10 +206,12 @@ namespace mln
 
   template <typename F, typename I>
   inline
-  value::shell<F, I>
+  mln_result(F)
   fun_image<F,I>::operator()(const mln_psite(I)& p)
   {
-    return mln::value::shell<F, I>( this->data_->ima_, p );
+    mln_precondition(this->data_->ima_.has(p));
+    return f( this->data_->ima_(p) );
+//     return mln::value::shell<F, I>( this->data_->ima_, p );  De-activated for 1.0
   }
 
 

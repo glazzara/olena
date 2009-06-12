@@ -29,6 +29,8 @@
 /// \file
 ///
 /// File that includes all the headers.
+///
+/// \todo Do not include essentials.
 
 
 #include <mln/accu/all.hh>
@@ -43,7 +45,6 @@
 #include <mln/draw/all.hh>
 #include <mln/estim/all.hh>
 #include <mln/extension/all.hh>
-#include <mln/extract/all.hh>
 #include <mln/fun/all.hh>
 #include <mln/geom/all.hh>
 #include <mln/graph/all.hh>
@@ -73,5 +74,11 @@
 #include <mln/essential/1d.hh>
 #include <mln/essential/2d.hh>
 #include <mln/essential/3d.hh>
+
+
+// #include <mln/extract/all.hh>       De-activated in 1.0
+// #include <mln/registration/all.hh>  De-activated in 1.0
+// #include <mln/subsampling/all.hh>   De-activated in 1.0
+
 
 #endif // ! MLN_ALL_HH

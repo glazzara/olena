@@ -1,3 +1,39 @@
+2009-06-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	De-activate dependencies to files kept out of release 1.0.
+
+	* mln/trait/ch_value.hh,
+	* mln/trait/essential.hh,
+	* mln/trait/all.hh,
+	* mln/core/image/vmorph/thru_image.hh,
+	* mln/core/image/vmorph/all.hh,
+	* mln/core/image/vmorph/thrubin_image.hh,
+	* mln/all.hh,
+	* mln/data/all.hh,
+	* mln/linear/all.hh,
+	* mln/value/all.hh,
+	* mln/value/essential.hh,
+	* mln/convert/all.hh,
+	* mln/essential/routine.hh,
+	* mln/fun/all.hh,
+	* mln/fun/v2v/essential.hh,
+	* mln/fun/v2v/all.hh,
+	* mln/fun/essential.hh,
+	* tests/trait/ch_value.cc,
+	* tests/core/image/vmorph/Makefile.am,
+	* tests/linear/Makefile.am,
+	* tests/value/Makefile.am,
+	* tests/convert/Makefile.am,
+	* tests/fun/Makefile.am,
+	* tests/fun/v2v/Makefile.am,
+	* tests/Makefile.am: De-activate dependencies to files
+	kept out of release 1.0.
+
+	Misc.
+	* mln/core/image/vmorph/fun_image.hh: Re-vamp.
+	* tests/core/image/vmorph/fun_image.cc: New.
+	* mln/accu/shape/bbox.hh: Fix namespace balancing.
+
 2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	* headers.mk: Regen.

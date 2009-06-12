@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,7 +27,7 @@
 #include <mln/trait/ch_value.hh>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/value/stack.hh>
+// #include <mln/value/stack.hh>  De-activated for 1.0
 
 
 int main()
@@ -37,11 +38,13 @@ int main()
   typedef trait::ch_value<I, bool>::ret J;
   J ima1;
 
-  // Stack image.
-  typedef value::stack_image<3, I> K;
-  typedef trait::ch_value<K, float>::ret L;
-  L ima2;
-  mlc_equal(L, image2d<float>)::check();
+  // De-activated for 1.0
+  //
+//   // Stack image.
+//   typedef value::stack_image<3, I> K;
+//   typedef trait::ch_value<K, float>::ret L;
+//   L ima2;
+//   mlc_equal(L, image2d<float>)::check();
 
   // FIXME: Exercise more image types.
   // ...

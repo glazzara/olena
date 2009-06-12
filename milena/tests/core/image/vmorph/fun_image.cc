@@ -1,5 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,20 +23,25 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_V2V_ESSENTIAL_HH
-# define MLN_FUN_V2V_ESSENTIAL_HH
-
-/// \file
-///
-/// \brief File that includes essential functions from value to value.
-
-
-# include <mln/fun/v2v/abs.hh>
-# include <mln/fun/v2v/cast.hh>
-# include <mln/fun/v2v/convert.hh>
-# include <mln/fun/v2v/saturate.hh>
-
-// # include <mln/fun/v2v/rgb_to_hsi.hh>  De-activated in 1.0
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/vmorph/fun_image.hh>
+#include <mln/data/compare.hh>
+#include <mln/debug/iota.hh>
+#include <mln/fun/v2v/inc.hh>
 
 
-#endif // ! MLN_FUN_V2V_ESSENTIAL_HH
+
+int main()
+{
+  using namespace mln;
+
+
+  image2d<int> ima(2, 2);
+  debug::iota(ima);
+
+  int vals[] = { 2, 3,
+		 4, 5 };
+
+  fun::v2v::inc<int> f;
+  mln_assertion((f << ima) == make::image2d(vals));
+}

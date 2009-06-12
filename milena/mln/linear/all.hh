@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,15 +59,14 @@ namespace mln
 # include <mln/linear/convolve.hh>
 # include <mln/linear/convolve_2x1d.hh>
 # include <mln/linear/convolve_directional.hh>
-
-# include <mln/linear/gaussian.hh>
-# include <mln/linear/gaussian_directional_2d.hh>
-# include <mln/linear/gaussian_1d.hh>
-
 # include <mln/linear/lap.hh>
 # include <mln/linear/log.hh>
-//# include <mln/linear/sobel.hh>
-//# include <mln/linear/local/convolve.hh>
+
+// # include <mln/linear/sobel.hh>                    De-activated in 1.0
+// # include <mln/linear/local/convolve.hh>           De-activated in 1.0
+// # include <mln/linear/gaussian.hh>                 De-activated in 1.0
+// # include <mln/linear/gaussian_directional_2d.hh>  De-activated in 1.0
+// # include <mln/linear/gaussian_1d.hh>              De-activated in 1.0
 
 
 #endif // ! MLN_LINEAR_ALL_HH

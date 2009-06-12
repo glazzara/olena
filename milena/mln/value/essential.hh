@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,14 +31,15 @@
 ///
 /// File that includes essential "value types"-related materials.
 
+
 # include <mln/value/concept/essential.hh>
 # include <mln/value/builtin/essential.hh>
 
 # include <mln/value/float01_8.hh>
 # include <mln/value/float01_16.hh>
 
-//# include <mln/value/gl8.hh>
-//# include <mln/value/gl16.hh>
+// # include <mln/value/gl8.hh>   De-activated in 1.0
+// # include <mln/value/gl16.hh>  De-activated in 1.0
 
 # include <mln/value/int_s8.hh>
 # include <mln/value/int_s16.hh>
@@ -52,5 +54,6 @@
 
 # include <mln/value/rgb8.hh>
 # include <mln/value/rgb16.hh>
+
 
 #endif // ! MLN_VALUE_ESSENTIAL_HH

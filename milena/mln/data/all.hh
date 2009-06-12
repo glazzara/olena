@@ -68,7 +68,8 @@ namespace mln
 # include <mln/data/to_enc.hh>
 # include <mln/data/transform.hh>
 # include <mln/data/update.hh>
-//<< # include <mln/data/was.median.hh> >>
+
+// # include <mln/data/was.median.hh>  De-activated in 1.0
 
 
 

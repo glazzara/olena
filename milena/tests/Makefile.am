@@ -34,7 +34,6 @@ SUBDIRS =					\
   draw						\
   estim						\
   extension					\
-  extract					\
   fun						\
   geom						\
   graph 					\
@@ -51,9 +50,7 @@ SUBDIRS =					\
   norm						\
   opt						\
   pw						\
-  registration 					\
   set						\
-  subsampling					\
   tag						\
   test						\
   topo						\
@@ -66,6 +63,10 @@ SUBDIRS =					\
   value						\
   win 						\
   world
+
+#  extract       De-activated for 1.0
+#  registration  De-activated for 1.0
+#  subsampling   De-activated for 1.0
 
 
 check_PROGRAMS =				\

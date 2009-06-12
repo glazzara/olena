@@ -81,7 +81,7 @@ namespace mln
       };
 
 
-    } // end of mln::accu::shape
+    } // end of namespace mln::accu::shape
 
 
     namespace meta
@@ -103,6 +103,8 @@ namespace mln
       } // end of namespace mln::accu::meta::shape
 
     } // end of namespace mln::accu::meta
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -224,9 +226,9 @@ namespace mln
 	return is_valid_;
       }
 
-# endif // ! MLN_INCLUDE_ONLY
-
     } // end of namespace mln::accu::shape
+
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::accu
 

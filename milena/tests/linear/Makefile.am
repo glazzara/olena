@@ -1,4 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -20,24 +21,26 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS =					\
-  gaussian					\
   local
+
+# gaussian  De-activated for 1.0
 
 check_PROGRAMS =				\
   convolve					\
   convolve_directional				\
   convolve_2x1d					\
-  gaussian_					\
   lap						\
   log						\
   sobel_2d
 
 convolve_SOURCES = convolve.cc
-gaussian__SOURCES = gaussian.cc
 lap_SOURCES = lap.cc
 convolve_directional_SOURCES = convolve_directional.cc
 convolve_2x1d_SOURCES = convolve_2x1d.cc
 log_SOURCES = log.cc
 sobel_2d_SOURCES = sobel_2d.cc
+
+# gaussian__SOURCES = gaussian.cc  De-activated for 1.0
+
 
 TESTS = $(check_PROGRAMS)

@@ -20,8 +20,10 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  cast_image
+  cast_image					\
+  fun_image
 
 cast_image_SOURCES = cast_image.cc
+fun_image_SOURCES = fun_image.cc
 
 TESTS = $(check_PROGRAMS)

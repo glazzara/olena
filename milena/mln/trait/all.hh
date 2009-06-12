@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,12 +27,10 @@
 #ifndef MLN_TRAIT_ALL_HH
 # define MLN_TRAIT_ALL_HH
 
-/*!
- * \file
- *
- * \brief  Definition of all traits.
- *
- */
+///
+/// \file
+///
+/// \brief  Definition of all traits.
 
 
 namespace mln
@@ -55,14 +54,13 @@ namespace mln
 } // end of namespace mln
 
 
-// meta-program to solve a trait call
 # include <mln/trait/solve.hh>
-
-// promote
 # include <mln/trait/promote.hh>
-
-// ops
 # include <mln/trait/op/all.hh>
+
+// # include <mln/trait/next/all.hh>   De-activated in 1.0
+// # include <mln/trait/functions.hh>  De-activated in 1.0
+
 
 
 #endif // ! MLN_TRAIT_ALL_HH

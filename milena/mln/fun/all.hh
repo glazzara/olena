@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,6 +30,8 @@
 /// \file
 ///
 /// File that includes all functions.
+///
+/// \todo Incomplete list of files.
 
 
 namespace mln
@@ -46,10 +49,15 @@ namespace mln
 }
 
 
+// Files.
+
 # include <mln/fun/c.hh>
 # include <mln/fun/ops.hh>
+
+
+// Sub-directories.
+
 # include <mln/fun/i2v/all.hh>
-# include <mln/fun/meta/all.hh>
 # include <mln/fun/p2b/all.hh>
 # include <mln/fun/p2v/all.hh>
 # include <mln/fun/stat/all.hh>
@@ -60,6 +68,9 @@ namespace mln
 # include <mln/fun/x2p/all.hh>
 # include <mln/fun/x2v/all.hh>
 # include <mln/fun/x2x/all.hh>
+
+// # include <mln/fun/meta/all.hh>  De-activated in 1.0
+// # include <mln/fun/spe/all.hh>   De-activated in 1.0
 
 
 #endif // ! MLN_FUN_ALL_HH

@@ -33,9 +33,10 @@
 
 # include <mln/core/image/vmorph/cast_image.hh>
 # include <mln/core/image/vmorph/fun_image.hh>
-# include <mln/core/image/vmorph/thrubin_image.hh>
-# include <mln/core/image/vmorph/thru_image.hh>
 # include <mln/core/image/vmorph/violent_cast_image.hh>
+
+// # include <mln/core/image/vmorph/thrubin_image.hh>  De-activated in 1.0
+// # include <mln/core/image/vmorph/thru_image.hh>     De-activated in 1.0
 
 
 #endif // ! MLN_CORE_IMAGE_VMORPH_ALL_HH

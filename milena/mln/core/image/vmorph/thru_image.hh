@@ -26,16 +26,17 @@
 #ifndef MLN_CORE_IMAGE_VMORPH_THRU_IMAGE_HH
 # define MLN_CORE_IMAGE_VMORPH_THRU_IMAGE_HH
 
-# include <mln/core/internal/image_value_morpher.hh>
-# include <mln/core/concept/meta_function.hh>
-# include <mln/metal/bexpr.hh>
-# include <mln/trait/functions.hh>
-
 /// \file
 ///
 /// \brief Definition of a morpher that morph image values through a function.
 ///
 /// \todo Debug constness of thru_image
+
+# include <mln/core/internal/image_value_morpher.hh>
+# include <mln/core/concept/meta_function.hh>
+# include <mln/metal/bexpr.hh>
+# include <mln/trait/functions.hh>
+
 
 namespace mln
 {

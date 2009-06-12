@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,6 +30,8 @@
 /// \file
 ///
 /// File that includes all "value types"-related materials.
+///
+/// \todo Incomplete list of files.
 
 
 namespace mln
@@ -44,18 +47,19 @@ namespace mln
 }
 
 
-# include <mln/value/aliases.hh>
-# include <mln/value/label.hh>
 # include <mln/trait/value_.hh>
-# include <mln/value/proxy.hh>
 
+# include <mln/value/aliases.hh>
 # include <mln/value/interval.hh>
+# include <mln/value/label.hh>
+# include <mln/value/proxy.hh>
 
 
 // FIXME: that includes concept/image.hh!
 
-// # include <mln/value/cast.hh>
-// # include <mln/value/stack.hh>
+// # include <mln/value/cast.hh>   De-activated in 1.0
+// # include <mln/value/shell.hh>  De-activated in 1.0
+// # include <mln/value/stack.hh>  De-activated in 1.0
 
 
 

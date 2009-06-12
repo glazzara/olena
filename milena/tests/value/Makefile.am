@@ -39,8 +39,9 @@ check_PROGRAMS =				\
   rgb8						\
   scalar					\
   set						\
-  sign						\
-  stack
+  sign
+
+#  stack  De-activated for 1.0
 #  float01				
 #  float01_bis			
 #  float01_f		
@@ -69,7 +70,8 @@ rgb8_SOURCES = rgb8.cc
 scalar_SOURCES = scalar.cc
 set_SOURCES = set.cc
 sign_SOURCES = sign.cc
-stack_SOURCES = stack.cc
+
+# stack_SOURCES = stack.cc    De-activated for 1.0
 
 # FIXME: Enable when make check_full works.
 # graylevel_f_full_SOURCES = graylevel_f_full.cc

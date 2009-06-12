@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,16 +52,17 @@ namespace mln
 # include <mln/fun/v2v/convert.hh>
 # include <mln/fun/v2v/dec.hh>
 # include <mln/fun/v2v/enc.hh>
-# include <mln/fun/v2v/hsi_to_rgb.hh>
-# include <mln/fun/v2v/hsl_to_rgb.hh>
 # include <mln/fun/v2v/id.hh>
 # include <mln/fun/v2v/linear.hh>
 # include <mln/fun/v2v/norm.hh>
 # include <mln/fun/v2v/projection.hh>
-# include <mln/fun/v2v/rgb_to_hsi.hh>
-# include <mln/fun/v2v/rgb_to_hsl.hh>
 # include <mln/fun/v2v/saturate.hh>
 # include <mln/fun/v2v/wrap.hh>
+
+// # include <mln/fun/v2v/hsi_to_rgb.hh>  De-activated in 1.0
+// # include <mln/fun/v2v/hsl_to_rgb.hh>  De-activated in 1.0
+// # include <mln/fun/v2v/rgb_to_hsi.hh>  De-activated in 1.0
+// # include <mln/fun/v2v/rgb_to_hsl.hh>  De-activated in 1.0
 
 
 #endif // ! MLN_FUN_V2V_ALL_HH

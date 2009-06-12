@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2006, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,20 +27,14 @@
 #ifndef MLN_TRAIT_ESSENTIAL_HH
 # define MLN_TRAIT_ESSENTIAL_HH
 
-/*!
- * \file
- *
- * \brief  Definition of essential traits.
- *
- */
+///
+/// \file
+///
+/// \brief Definition of essential traits.
 
-// meta-program to solve a trait cessential
+
 # include <mln/trait/solve.hh>
-
-// promote
 # include <mln/trait/promote.hh>
-
-// ops
 # include <mln/trait/op/essential.hh>
 
 
