@@ -1,3 +1,10 @@
+2009-06-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	De-activate Makefiles kept out of release 1.0.
+
+	* configure.ac (AC_CONFIG_FILES): De-activate Makefiles kept out
+	of release 1.0.
+
 2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix Autoconf macro OLN_WITH_LIB.

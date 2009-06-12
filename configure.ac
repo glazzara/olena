@@ -282,6 +282,7 @@ AC_CONFIG_FILES([
     milena/tests/extract/Makefile
     milena/tests/fun/Makefile
       milena/tests/fun/i2v/Makefile
+#      milena/tests/fun/meta/Makefile  De-activated for 1.0
       milena/tests/fun/p2b/Makefile
       milena/tests/fun/p2p/Makefile
       milena/tests/fun/p2v/Makefile
@@ -310,7 +311,7 @@ AC_CONFIG_FILES([
       milena/tests/io/tiff/Makefile
     milena/tests/labeling/Makefile
     milena/tests/linear/Makefile
-      milena/tests/linear/gaussian/Makefile
+#      milena/tests/linear/gaussian/Makefile  De-activated for 1.0
       milena/tests/linear/local/Makefile
     milena/tests/literal/Makefile
     milena/tests/logical/Makefile
@@ -336,9 +337,9 @@ AC_CONFIG_FILES([
     milena/tests/norm/Makefile
     milena/tests/opt/Makefile
     milena/tests/pw/Makefile
-    milena/tests/registration/Makefile
+#    milena/tests/registration/Makefile  De-activated for 1.0
     milena/tests/set/Makefile
-    milena/tests/subsampling/Makefile
+#    milena/tests/subsampling/Makefile  De-activated for 1.0
     milena/tests/tag/Makefile
     milena/tests/test/Makefile
     milena/tests/topo/Makefile
@@ -347,6 +348,7 @@ AC_CONFIG_FILES([
     milena/tests/trait/Makefile
       milena/tests/trait/image/Makefile
       milena/tests/trait/op/Makefile
+#      milena/tests/trait/next/Makefile  De-activated for 1.0
       milena/tests/trait/value/Makefile
     milena/tests/transform/Makefile
     milena/tests/transformation/Makefile
