@@ -1,3 +1,8 @@
+2009-06-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Update configure with tests/accu/shape makefile.
+	* configure.ac: Update configure.
+
 2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Do not distribute scribo/ by default.

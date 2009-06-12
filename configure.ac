@@ -255,6 +255,7 @@ AC_CONFIG_FILES([
     milena/tests/accu/site_set/Makefile
     milena/tests/accu/stat/Makefile
     milena/tests/accu/math/Makefile
+    milena/tests/accu/shape/Makefile
     milena/tests/algebra/Makefile
     milena/tests/arith/Makefile
     milena/tests/binarization/Makefile
