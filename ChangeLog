@@ -1,3 +1,14 @@
+2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Extend Autoconf macro OLN_WITH_LIB to handle the library's dependencies.
+
+	* m4/oln-with-lib.m4 (OLN_WITH_LIB): Add a sixth (optional)
+	argument to pass other libraries that the search library depends
+	on.
+	Pass it to...
+	(_OLN_WITH_LIB): ...this macro.
+	Pass it to AC_CHECK_LIB.
+
 2009-06-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Update configure with tests/accu/shape makefile.

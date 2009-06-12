@@ -1,13 +1,17 @@
 #                                                       -*- Autoconf -*-
 
-# OLN_WITH_LIB(PACKAGE, HEADER, LIBRARY, [SHELL_NAME], [CPP_NAME])
+# OLN_WITH_LIB(PACKAGE, HEADER, LIBRARY, [SHELL_NAME], [CPP_NAME],
+#              [OTHER-LIBRARIES])
 # ----------------------------------------------------------------
 # Checks whether library PACKAGE is available from C++ programs.
 # HEADER and LIBRARY are respectively a header and the library name
 # (object) that are checked to assess the usability of the library.
 # SHELL_NAME is a name used in shell variables (preferably in lower
 # case), while CPP_NAME is used in the name of C++ preprocessor macros
-# and flags (preferably in upper case).
+# and flags (preferably in upper case).  OTHER-LIBRARIES are
+# additional libraries that LIBRARY depends upon, that should be
+# passed as a space-separated list of linker arguments (e.g.
+# `-lXt -lX11').
 #
 # If they are not given, SHELL_NAME defaults to m4_tolower([LIBRARY])
 # and CPP_NAME defaults to m4_toupper([LIBRARY]).
@@ -23,6 +27,8 @@
 #   OLN_WITH_LIB([FreeImagePlus], [FreeImagePlus.h], [freeimageplus])
 #   OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 #   OLN_WITH_LIB([Zlib], [zlib.h], [z], [zlib], [ZLIB])
+#   OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm], [GDCM],
+#                [-lgdcmzlib])
 #
 AC_DEFUN([OLN_WITH_LIB],
 [dnl Do some sanity checking of the arguments.
@@ -32,11 +38,13 @@ m4_if([$3], , [AC_FATAL([$0: missing argument 3])])dnl
 _OLN_WITH_LIB([$1], [$2], [$3],dnl
 dnl Process optional arguments.
 m4_default([$4], m4_tolower([$3])),dnl
-m4_default([$5], m4_toupper([$3])))dnl
+m4_default([$5], m4_toupper([$3])),dnl
+[$6])dnl
 ])# OLN_WITH_LIB
 
 
-# _OLN_WITH_LIB(PACKAGE, HEADER, LIBRARY, SHELL_NAME, CPP_NAME)
+# _OLN_WITH_LIB(PACKAGE, HEADER, LIBRARY, SHELL_NAME, CPP_NAME,
+#               [OTHER-LIBRARIES])
 # -------------------------------------------------------------
 # Actual implementation of OLN_WITH_LIB.
 AC_DEFUN([_OLN_WITH_LIB],
@@ -63,8 +71,8 @@ AC_DEFUN([_OLN_WITH_LIB],
        [main],
        [oln_have_$4=yes
          $5_LDFLAGS="$$5_LDFLAGS -l$3"
-         AC_DEFINE([HAVE_$5], 1, [Define to 1 if we can use $1])
-       ]
+         AC_DEFINE([HAVE_$5], 1, [Define to 1 if we can use $1])],
+       [], [$6]
      )]
    )
    CPPFLAGS=$oln_save_CPPFLAGS
