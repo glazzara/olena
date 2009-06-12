@@ -1,5 +1,19 @@
 2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify generate_dist_headers.sh in Milena.
+
+	* generate_dist_headers.sh: Use a heredoc instead of multiple
+	echoes.
+	Do not add mln/version.hh (leave it to Makefile.am).
+	Echo status messages on stderr, not stdout.
+	Use a single `find' to search `*.hh' and `*.hxx' files.
+	Remove the useless post-processing pass dropping Subversion's
+	cached copies, as they are not caught by find anyway.
+	Sort results before performing string replacement.
+	* Makefile.am (nobase_include_HEADERS): Add mln/version.hh.
+
+2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Regen Makefile helpers.
 
 	* doc/outputs/outputs.mk,
