@@ -36,6 +36,10 @@
 
 2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	* headers.mk: Regen.
+
+2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Help doc/Makefile resolve dependencies across directories.
 
 	* doc/Makefile.am (tutorial/tutorial.hh, ref_guide/ref_guide.hh):

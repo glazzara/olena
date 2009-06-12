@@ -300,8 +300,7 @@ mln/core/image/imorph/tr_image.hh \
 mln/core/image/vertex_image.hh \
 mln/core/image/vmorph/all.hh \
 mln/core/image/vmorph/cast_image.hh \
-mln/core/image/vmorph/thru_image.hh \
-mln/core/image/vmorph/thrubin_image.hh \
+mln/core/image/vmorph/fun_image.hh \
 mln/core/image/vmorph/violent_cast_image.hh \
 mln/core/internal/box_impl.hh \
 mln/core/internal/check/image_all.hh \
@@ -958,10 +957,6 @@ mln/set/inter.hh \
 mln/set/sym_diff.hh \
 mln/set/uni.hh \
 mln/set/unique.hh \
-mln/subsampling/all.hh \
-mln/subsampling/essential.hh \
-mln/subsampling/gaussian_subsampling.hh \
-mln/subsampling/subsampling.hh \
 mln/tag/all.hh \
 mln/tag/essential.hh \
 mln/tag/init.hh \
@@ -1020,7 +1015,6 @@ mln/trait/ch_function_value.hh \
 mln/trait/ch_value.hh \
 mln/trait/concrete.hh \
 mln/trait/essential.hh \
-mln/trait/functions.hh \
 mln/trait/image/print.hh \
 mln/trait/image/props.hh \
 mln/trait/image_from_grid.hh \
