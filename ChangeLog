@@ -1,5 +1,12 @@
 2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Handle libgdcmCommon's dependencies.
+
+	* configure.ac: Pass -lgdcmzlib to OLN_WITH_LIB when searching for
+	libgdcmCommon.
+
+2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Extend Autoconf macro OLN_WITH_LIB to handle the library's dependencies.
 
 	* m4/oln-with-lib.m4 (OLN_WITH_LIB): Add a sixth (optional)
