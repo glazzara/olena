@@ -36,7 +36,7 @@
 # include <mln/core/concept/function.hh>
 
 # include <mln/labeling/compute.hh>
-# include <mln/accu/count.hh>
+# include <mln/accu/math/count.hh>
 
 # include <mln/util/array.hh>
 
@@ -97,7 +97,7 @@ namespace scribo
 	: Function_v2b< large_objects_filter<L> >
       {
 
-	typedef accu::count<mln_psite(L)> card_t;
+	typedef accu::math::count<mln_psite(L)> card_t;
 
 	/// Constructor
 	///

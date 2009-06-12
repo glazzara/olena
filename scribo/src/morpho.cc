@@ -23,15 +23,34 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+
+#include <mln/literal/colors.hh>
+
+#include <mln/value/label_16.hh>
+#include <mln/value/int_u16.hh>
+
+#include <mln/labeling/wrap.hh>
+#include <mln/labeling/colorize.hh>
+#include <mln/labeling/blobs.hh>
+
+#include <mln/io/pbm/load.hh>
+#include <mln/io/pgm/save.hh>
+#include <mln/io/ppm/save.hh>
+
 #include <mln/transform/distance_and_influence_zone_geodesic.hh>
 #include <mln/core/var.hh>
-#include <mln/labeling/wrap.hh>
+
 #include <mln/win/hline2d.hh>
+#include <mln/win/disk2d.hh>
+
 #include <mln/morpho/watershed/flooding.hh>
 #include <mln/morpho/watershed/superpose.hh>
+#include <mln/morpho/closing/structural.hh>
 
 #include <scribo/make/debug_filename.hh>
+
 
 int main(int argc, char *argv[])
 {

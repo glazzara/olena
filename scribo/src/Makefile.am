@@ -21,6 +21,8 @@ include $(top_srcdir)/scribo/scribo.mk
 
 SUBDIRS =					\
   binarization 					\
+  extract 					\
+  filter 					\
   preprocessing 				\
   table
 
@@ -35,6 +37,7 @@ bin_PROGRAMS = 				\
   morpho                    		\
   negate 				\
   preprocess 				\
+  rectangularity 			\
   superpose 				\
   table_rebuild_opening 		\
   table_rebuild_rank 			\
@@ -52,6 +55,7 @@ extract_text_single_link_SOURCES = extract_text_single_link.cc
 morpho_SOURCES = morpho.cc
 negate_SOURCES = negate.cc
 preprocess_SOURCES = preprocess.cc
+rectangularity_SOURCES = rectangularity.cc
 superpose_SOURCES = superpose.cc
 table_rebuild_opening_SOURCES = table_rebuild_opening.cc
 table_rebuild_rank_SOURCES = table_rebuild_rank.cc

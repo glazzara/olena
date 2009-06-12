@@ -47,9 +47,11 @@ int main(int argc, char *argv[])
   using namespace mln;
 
   if (argc != 5)
-    return usage(argv, "Extract discontinued horizontal and vertical lines",
-		 "input.pbm length rank output.pbm",
-		 args_desc, "A binary image of horizontal and vertical lines.");
+    return scribo::debug::usage(argv,
+				"Extract discontinued horizontal and vertical lines",
+				"input.pbm length rank output.pbm",
+				args_desc,
+				"A binary image of horizontal and vertical lines.");
 
   trace::entering("main");
 

@@ -25,7 +25,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/level/convert.hh>
+#include <mln/data/convert.hh>
 #include <mln/io/pbm/all.hh>
 
 #include <mln/value/label_16.hh>
@@ -47,8 +47,11 @@ int main(int argc, char *argv[])
   using namespace mln;
 
   if (argc != 4)
-    return usage(argv, "Filter too large objects", "input.pbm max_area output.pbm",
-		 args_desc, "A binary image.");
+    return scribo::debug::usage(argv,
+				"Filter too large objects",
+				"input.pbm max_area output.pbm",
+				args_desc,
+				"A binary image.");
 
   trace::entering("main");
 
@@ -62,7 +65,7 @@ int main(int argc, char *argv[])
     = scribo::extract::primitive::objects(input, c8(), nobjects);
 
   obj_ima_t filtered = scribo::filter::large_objects(objects, atoi(argv[2]));
-  io::pbm::save(level::convert(bool(), filtered), argv[3]);
+  io::pbm::save(data::convert(bool(), filtered), argv[3]);
 
   trace::exiting("main");
 

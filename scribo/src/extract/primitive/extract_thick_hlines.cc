@@ -45,8 +45,11 @@ int main(int argc, char *argv[])
   using namespace mln;
 
   if (argc != 4)
-    return usage(argv, "Extract thick horizontal lines", "input.pbm length output.pbm",
-	args_desc, "A binary image of horizontal lines.");
+    return scribo::debug::usage(argv,
+				"Extract thick horizontal lines",
+				"input.pbm length output.pbm",
+				args_desc,
+				"A binary image of horizontal lines.");
 
   trace::entering("main");
 

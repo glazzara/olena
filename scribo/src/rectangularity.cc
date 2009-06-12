@@ -1,5 +1,4 @@
-// Copyright (C) 2009
- EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,13 +23,31 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/essential/2d.hh>
-#include <mln/transform/distance_geodesic.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/core/var.hh>
-#include <mln/fun/l2l/wrap.hh>
-#include <mln/win/hline2d.hh>
-#include <mln/morpho/watershed/flooding.hh>
-#include <mln/morpho/watershed/superpose.hh>
+
+#include <mln/literal/colors.hh>
+
+#include <mln/labeling/wrap.hh>
+
+#include <mln/value/label_16.hh>
+#include <mln/value/int_u16.hh>
+
+#include <mln/labeling/blobs.hh>
+
+#include <mln/io/pbm/load.hh>
+#include <mln/io/pgm/save.hh>
+
+#include <mln/transform/distance_geodesic.hh>
+
+#include <mln/morpho/closing/structural.hh>
+#include <mln/morpho/tree/compute_attribute_image.hh>
+#include <mln/morpho/tree/max.hh>
+
+#include <mln/accu/site_set/rectangularity.hh>
+
+#include <mln/win/disk2d.hh>
 
 #include <scribo/make/debug_filename.hh>
 
@@ -53,12 +70,12 @@ int main(int argc, char *argv[])
 
   mln_VAR(dmap, transform::distance_geodesic(lbl, c8(), mln_max(unsigned)));
 
-  io::pgm::save(level::transform(dmap, fun::l2l::wrap<label_8>()), "dmap.pgm");
+  io::pgm::save(labeling::wrap(dmap), "dmap.pgm");
 
   {
     image2d<unsigned> clo = morpho::closing::structural(dmap, win::disk2d(51));
     io::pgm::save(clo, scribo::make::debug_filename("clo_disk_51.pgm"));
-    image2d<float> r = morpho::tree:compute_attribute_image(accu::site_set::rectangularity<point2d>(),clo);
-    image2d<point2d> r = morpho::tree:max(r,c8());
+//    image2d<float> r = morpho::tree::compute_attribute_image(accu::site_set::rectangularity<point2d>(), clo);
+//    image2d<point2d> r_max = morpho::tree::max(r,c8());
   }
 }

@@ -25,7 +25,19 @@
 
 #include <iostream>
 
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+
+#include <mln/literal/colors.hh>
+#include <mln/util/graph.hh>
+
+#include <mln/labeling/colorize.hh>
+
+#include <mln/value/rgb8.hh>
+#include <mln/value/label_16.hh>
+
+#include <mln/io/pbm/load.hh>
+#include <mln/io/ppm/save.hh>
 
 #include <scribo/extract/primitive/objects.hh>
 #include <scribo/text/grouping/group_with_several_graphes.hh>
@@ -74,8 +86,8 @@ int main(int argc, char* argv[])
 				   literal::red,
 				   scribo::make::debug_filename("grouped_text.ppm"));
   io::ppm::save(mln::labeling::colorize(value::rgb8(),
-				     grouped_text,
-				     grouped_text.nlabels()),
+					grouped_text,
+					grouped_text.nlabels()),
 		scribo::make::debug_filename("label_color.ppm"));
 
 }

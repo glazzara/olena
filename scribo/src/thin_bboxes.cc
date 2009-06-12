@@ -23,7 +23,16 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/essential/2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+
+#include <mln/literal/colors.hh>
+
+#include <mln/value/label_16.hh>
+
+#include <mln/io/pbm/load.hh>
+
+
 #include <scribo/text/extract_lines.hh>
 #include <scribo/filter/thin_objects.hh>
 
