@@ -70,7 +70,7 @@ AC_DEFUN([_OLN_WITH_LIB],
      [AC_CHECK_LIB([$3],
        [main],
        [oln_have_$4=yes
-         $5_LDFLAGS="$$5_LDFLAGS -l$3"
+         $5_LDFLAGS="$$5_LDFLAGS -l$3 $6"
          AC_DEFINE([HAVE_$5], 1, [Define to 1 if we can use $1])],
        [], [$6]
      )]
