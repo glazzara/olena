@@ -72,12 +72,12 @@ REGEN_SUBDIRS += doc tests
 regen-am:
 	cd $(srcdir) && ./generate_dist_headers.sh
 
-EXTRA_DIST = generate_dist_headers.sh
+EXTRA_DIST = generate_dist_headers.sh nodist-headers
 # FIXME: Change generate_dist_headers.sh so that the action looks like this:
 #
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
 #
-$(srcdir)/headers.mk: $(srcdir)/generate_dist_headers.sh
+$(srcdir)/headers.mk: $(srcdir)/generate_dist_headers.sh nodist-headers
 	cd $(srcdir) && ./generate_dist_headers.sh
 
 include $(srcdir)/headers.mk

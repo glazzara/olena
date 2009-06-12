@@ -8,7 +8,11 @@
 export LC_ALL=C
 
 me=`basename $0`
+# FIXME: OUTPUT and NODIST_HEADERS should be arguments of the script.
 output=headers.mk
+nodist_headers=nodist-headers
+test -f "$nodist_headers" \
+  || { echo "$me: Cannot find \`$nodist_headers' in `pwd`."; exit 1; }
 
 echo "Generating $output..." >&2
 rm -f "$output"
@@ -20,6 +24,7 @@ EOF
 
 find mln -type f -a \( -name '*.hh' -o -name '*.hxx' \)	\
   | sort						\
+  | comm -23 - "$nodist_headers"			\
   | sed -e 's/$/ \\/g' >> headers.mk
 
 last_line=`tail -n 1 headers.mk | sed -e 's/\\\//g'` # remove '\' in last line

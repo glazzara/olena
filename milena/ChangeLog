@@ -1,5 +1,15 @@
 2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Prevent generate_dist_headers.sh from distributing certain files.
+
+	* nodist-headers: New.
+	* generate_dist_headers.sh: Prune the list of headers to
+	distribute using file `nodist-headers'.
+	* Makefile.am (EXTRA_DIST): Add nodist-headers.
+	($(srcdir)/headers.mk): Depend on nodist-headers.
+
+2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Simplify generate_dist_headers.sh in Milena.
 
 	* generate_dist_headers.sh: Use a heredoc instead of multiple
