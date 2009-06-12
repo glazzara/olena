@@ -31,15 +31,18 @@
 /// Create an image for visualizing the different regions of a labeled
 /// inter_pixel image.
 
+# include <mln/core/concept/image.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/dmorph/image_if.hh>
+# include <mln/core/routine/extend.hh>
+# include <mln/convert/from_to.hh>
 # include <mln/data/paste.hh>
 # include <mln/world/inter_pixel/is_pixel.hh>
 # include <mln/world/inter_pixel/is_separator.hh>
 # include <mln/opt/at.hh>
 # include <mln/value/rgb8.hh>
 
-# include "is_zero_face.hh"
+# include <mln/world/inter_pixel/is_zero_face.hh>
 
 
 namespace mln
@@ -58,71 +61,72 @@ namespace mln
       /// \param[in] edge_color The color (in rgb8) for the watershed line.
       /// \return FIXME
       ///
+      /// \pre \p input has to be an 8 bits image.
       /// \pre \p wst has to be an unmorphed image.
       /// \warning This implementation only works for 2D images.
       ///
       template <typename I, typename L>
       inline
       mln_ch_value(I, value::rgb8)
-      display_region(const I& input, const mln_ch_value(I, L)& wst, value::rbg8 edge_color);
+      display_region(const Image<I>& input, const Image<L>& wst, value::rgb8 edge_color);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename I>
+      template <typename I, typename L>
       inline
       mln_ch_value(I, value::rgb8)
-      display_region(const I& input, const mln_ch_value(I, L)& wst, value::rbg8 edge_color)
+      display_region(const Image<I>& input_, const Image<L>& wst_, value::rgb8 edge_color)
       {
-	mln_precondition((2 * input.bbox()) == wst.unmorph_().bbox());
+	// TODO: We should check that wst.bbox () == 2 * input.bbox() - 1.
+	// TODO: We must check that dim(I) == dim(L).
+	//mln_precondition((2 * input.bbox()) == wst.bbox());
 
-	mln_ch_value(I, value::rgb8) output;
+	const I& input = exact(input_);
+	const L& wst = exact(wst_);
+
+	typedef mln_ch_value(I, value::rgb8) output_t;
+	output_t output;
 	initialize(output, wst);
 
 	// Pixel.
 	mln_piter(I) p_input(input.domain());
-	for_all(p)
-	  opt::at(output, p.to_vec[0] * 2, p.to_vec[1] * 2) = input(p);
+	for_all(p_input)
+	  convert::from_to(input(p_input), opt::at(output, p_input.row() * 2, p_input.col() * 2));
 
 	// Separator.
-	typedef image_if<const mln_ch_value(I, L)&, is_separator> separator_t;
-	separator_t edge = wst | is_separator();
-	mln_piter(edge_t) p(edge.domain());
+	typedef image_if<output_t, is_separator> separator_t;
+	separator_t sep = output | is_separator();
+	mln_piter(separator_t) p(sep.domain());
 	for_all(p)
 	{
+	  unsigned row = p.row();
+	  unsigned col = p.col();
 	  if (p.row() % 2) // horizontal edge
-	  {
-	    unsigned row = (p.row() / 2 + 1) * 2 - 1;
-	    unsigned col = p.col();
-	      opt::at(output, row, col) = input(p);
-	  }
+	    output(p) = (opt::at(output, row + 1, col) +
+			 opt::at(output, row - 1, col)) / 2;
 	  else // vertical edge
-	  {
-	    unsigned row = p.row();
-	    unsigned col = (p.col() / 2 + 1) * 2 - 1;
-	      opt::at(output, row, col) = input(p);
-	  }
+	    output(p) = (opt::at(output, row, col + 1) +
+			 opt::at(output, row, col - 1)) / 2;
 	}
 
-	// Point (dimension 0).
-	typedef image_if<const mln_ch_value(I, L)&, is_zero_face> zero_face_t;
-	zero_face_t edge = wst | is_zero_face();
-	mln_piter(edge_t) p(edge.domain());
-	for_all(p)
+	// Zero-face (dimension 0).
+	typedef image_if<output_t, is_zero_face> zero_face_t;
+	zero_face_t zero = output | is_zero_face();
+	mln_piter(zero_face_t) q(zero.domain());
+	for_all(q)
 	{
-	  if (p.row() % 2) // horizontal edge
-	  {
-	    unsigned row = (p.row() / 2 + 1) * 2 - 1;
-	    unsigned col = p.col();
-	      opt::at(output, row, col) = input(p);
-	  }
-	  else // vertical edge
-	  {
-	    unsigned row = p.row();
-	    unsigned col = (p.col() / 2 + 1) * 2 - 1;
-	      opt::at(output, row, col) = input(p);
-	  }
+	  unsigned row = q.row();
+	  unsigned col = q.col();
+	  output(q) = (opt::at(output, row + 1, col) +
+		       opt::at(output, row, col + 1) +
+		       opt::at(output, row - 1, col) +
+		       opt::at(output, row, col - 1)) / 4;
 	}
+
+	// Watershed lines.
+	data::fill((output | pw::value(wst) == pw::cst(0)).rw(), edge_color);
+	//FIXME: Fill intersections.
 
 	return output;
 

@@ -1,3 +1,11 @@
+2009-06-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Implement visualization routine for regions.
+	* fabien/igr/wst_edges.cc: Add call to display_region().
+	* fabien/mln/world/inter_pixel/display_region.hh: 
+	Implement routine for visualization of regions after a watershed call
+	[Draft, non functional].
+
 2009-06-11  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Clean up sandbox and add routine for visualization.

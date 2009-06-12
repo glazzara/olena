@@ -34,6 +34,7 @@
 #include <mln/data/compute.hh>
 #include <mln/data/convert.hh>
 #include <mln/data/stretch.hh>
+#include <mln/literal/colors.hh>
 #include <mln/make/image2d.hh>
 #include <mln/make/w_window1d.hh>
 #include <mln/math/diff_abs.hh>
@@ -57,11 +58,14 @@
 
 #include "plot_points/int2rgb.hh"
 
+#include <mln/world/inter_pixel/display_region.hh>
+
 
 using namespace mln;
 using value::int_u8;
 using value::int_u12;
 using value::label_16;
+using value::rgb8;
 
 const float saturation = 1.0;
 
@@ -137,6 +141,8 @@ int main(int argc, char* argv[])
 
   io::dump::save(w_all, "watershed.dump");
   io::ppm::save(debug::int2rgb(w_all), "watershed.ppm");
+
+  io::ppm::save(world::inter_pixel::display_region(data::stretch(int_u8(), input), w_all, literal::red), "regions.ppm");
 
 
   return 0;
