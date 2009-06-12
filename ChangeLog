@@ -7,6 +7,16 @@
 
 2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Prune the distribution a bit more.
+
+	* Makefile.am (LRDE_STRIPPED_DIST_FILES): New.
+	(LRDE_NODIST_FILES): New.
+	(dist-hook): Strip distributed files listed in
+	$(LRDE_STRIPPED_DIST_FILES) using build-aux/strip-lrde, and remove
+	files in $(LRDE_NODIST_FILES) from the distribution.
+
+2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix Autoconf macro OLN_WITH_LIB.
 
 	* m4/oln-with-lib.m4: Add other libraries (dependencies) to

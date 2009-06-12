@@ -43,22 +43,48 @@ REGEN_SUBDIRS += milena scribo
 
 
 #<<lrde
-# Unless Make variable MAINTAINER is set to `true' (e.g. by calling
-# `make dist MAINTAINER=true'), do not distribute parts tagged `lrde'
-# (see build-aux/strip-lrde).
-#
-# Remove any trace of olena/oln/lrde from the distribution and reset
-# the GNU build system for the distdir layout.
+## FIXME: All of this it too much ad hoc.  Use Git branches to
+## distinguish distributed files from non distributed ones after the
+## conversion of the repository.
+
+LRDE_STRIPPED_DIST_FILES =				\
+  $(distdir)/configure.ac				\
+  $(distdir)/Makefile.am				\
+  $(distdir)/milena/tests/convert/Makefile.am		\
+  $(distdir)/milena/tests/extract/Makefile.am		\
+  $(distdir)/milena/tests/fun/v2v/Makefile.am		\
+  $(distdir)/milena/tests/linear/Makefile.am		\
+  $(distdir)/milena/tests/linear/gaussian/Makefile.am	\
+  $(distdir)/milena/tests/registration/Makefile.am	\
+  $(distdir)/milena/tests/value/Makefile.am
+
+LRDE_NODIST_FILES =					\
+  $(distdir)/milena/tests/convert/to_hsl.cc		\
+  $(distdir)/milena/tests/extract/blue.cc		\
+  $(distdir)/milena/tests/extract/green.cc		\
+  $(distdir)/milena/tests/extract/hue.cc		\
+  $(distdir)/milena/tests/extract/lum.cc		\
+  $(distdir)/milena/tests/extract/red.cc		\
+  $(distdir)/milena/tests/extract/sat.cc		\
+  $(distdir)/milena/tests/fun/v2v/component.cc		\
+  $(distdir)/milena/tests/fun/v2v/hsl_to_rgb.cc		\
+  $(distdir)/milena/tests/fun/v2v/rgb_to_hsl.cc		\
+  $(distdir)/milena/tests/linear/gaussian.cc		\
+  $(distdir)/milena/tests/linear/gaussian/filter.cc	\
+  $(distdir)/milena/tests/registration/registration.cc	\
+  $(distdir)/milena/tests/value/stack.cc		\
+  $(distdir)/scribo
+
+# Do not distribute parts tagged `lrde' (see build-aux/strip-lrde).
 dist-hook:
-	if test x$(MAINTAINER) != xtrue; then				\
-	  $(top_srcdir)/build-aux/strip-lrde $(distdir)/configure.ac &&	\
-	  $(top_srcdir)/build-aux/strip-lrde $(distdir)/Makefile.am &&	\
-	  rm -rf $(distdir)/scribo &&					\
-	  (								\
-	    cd $(distdir);						\
-	    set -evx;							\
-	    autoreconf -f -v -i						\
-	    find . -name autom4te.cache | xargs rm -rf			\
-	  )								\
-	fi
+	for f in $(LRDE_STRIPPED_DIST_FILES); do	\
+	  $(top_srcdir)/build-aux/strip-lrde $$f;	\
+	done;						\
+	rm -rf $(LRDE_NODIST_FILES) &&			\
+	(						\
+	  cd $(distdir);				\
+	  set -evx;					\
+	  autoreconf -f -v -i;				\
+	  find . -name autom4te.cache | xargs rm -rf	\
+	)
 #>>
