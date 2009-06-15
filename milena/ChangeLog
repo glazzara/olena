@@ -1,5 +1,21 @@
 2009-06-15  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Update doc reference files.
+
+	* doc/examples/Makefile.am: fix the script comparing reference files
+	and new produced files.
+
+	* doc/examples/split/tuto3_first_routine-1.cc,
+	* doc/examples/split/tuto3_first_routine-5.cc,
+	* doc/figures/fill-subdomain-2.ppm,
+	* doc/figures/fill-subdomain-3.ppm,
+	* doc/figures/labeling-compute-2.ppm,
+	* doc/figures/tuto3_colorize-2.ppm,
+	* doc/figures/tuto4_genericity_and_algorithms-5.ppm: Update reference
+	files.
+
+2009-06-15  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Make labeling::colorize deterministic.
 
 	* mln/labeling/colorize.hh: use our own random generator.

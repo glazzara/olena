@@ -17,7 +17,7 @@ namespace mln
     V nlabels;
     mln_ch_value(I,V) lbl = labeling::blobs(ima, nbh, nlabels);
     util::array<unsigned>
-      count = labeling::compute(accu::meta::count(), lbl, nlabels);
+      count = labeling::compute(accu::meta::math::count(), lbl, nlabels);
 
     mln_concrete(I) output;
     initialize(output, ima);

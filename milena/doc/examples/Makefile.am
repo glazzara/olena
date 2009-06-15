@@ -157,25 +157,25 @@ diff-data: run-examples split-examples
 	txtlist="$(OUTPUTS_BUILDDIR)/*.txt"; for txt in $$txtlist; do 	\
 	  echo "Diff `basename $$txt`";					\
 	  diff $$txt $(OUTPUTS_SRCDIR)/`basename $$txt` >/dev/null 2>&1	\
-		|| has_txt_diff+=" `basename $$txt`";	\
+		|| has_txt_diff="$$has_txt_diff `basename $$txt`";	\
 	done;								\
 	has_fig_diff="";						\
 	figlist="$(FIGURES_BUILDDIR)/*.p*m"; for fig in $$figlist; do 	\
 	  echo "Diff `basename $$fig`";					\
 	  diff $$fig $(FIGURES_SRCDIR)/`basename $$fig` >/dev/null 2>&1 \
-		|| has_fig_diff+=" `basename $$fig`";	\
+		|| has_fig_diff="$$has_fig_diff `basename $$fig`";	\
 	done; 								\
 	has_split_out_diff="";						\
 	split_outlist="$(SPLIT_OUTPUTS_BUILDDIR)/*"; for split_out in $$split_outlist; do \
 	  echo "Diff `basename $$split_out`";				\
 	  diff $$split_out $(SPLIT_OUTPUTS_SRCDIR)/`basename $$split_out` >/dev/null 2>&1 \
-		|| has_split_out_diff+=" `basename $$split_out`";	\
+		|| has_split_out_diff="$$has_split_out_diff `basename $$split_out`";	\
 	done; 								\
 	has_split_ex_diff="";						\
 	split_exlist="$(SPLIT_EXAMPLES_BUILDDIR)/*"; for split_ex in $$split_exlist; do \
 	  echo "Diff `basename $$split_ex`";				\
 	  diff $$split_ex $(SPLIT_EXAMPLES_SRCDIR)/`basename $$split_ex` >/dev/null 2>&1 \
-		|| has_split_ex_diff+=" `basename $$split_ex`";	\
+		|| has_split_ex_diff="$$has_split_ex_diff `basename $$split_ex`";	\
 	done; 								\
 	(test -z "$$has_txt_diff" && test -z "$$has_fig_diff" && 	\
 	 test -z "$$has_split_out_diff" && test -z "$$has_split_ex_diff")\
