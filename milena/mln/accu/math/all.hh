@@ -54,5 +54,7 @@ namespace mln
 
 # include <mln/accu/math/sum.hh>
 # include <mln/accu/math/count.hh>
+# include <mln/accu/math/inf.hh>
+# include <mln/accu/math/sup.hh>
 
 #endif // ! MLN_ACCU_MATH_ALL_HH

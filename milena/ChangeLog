@@ -1,3 +1,19 @@
+2009-06-15  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Move inf and sup accumulators into math directory.
+	* mln/accu/inf.hh,
+	* mln/accu/sup.hh: Move to...
+	* mln/accu/math/inf.hh,
+	* mln/accu/math/sup.hh:
+	Move inf, sup accus.
+
+	* mln/accu/math/all.hh:
+	Update all.hh with respect to new location.
+
+	* sandbox/theo/esiee/slides_2009_may/dilation.hh:
+	Replace accu::accu_name by accu::math::accu_name,
+		accu/accu_name by accu/math/accu_name.
+
 2009-06-15  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	Small fixes.

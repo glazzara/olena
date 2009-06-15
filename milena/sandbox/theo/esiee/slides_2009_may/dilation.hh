@@ -52,7 +52,7 @@ namespace mln
 
       mln_piter(I) p(ima.domain());
       mln_qiter(W) q(win, p);
-      accu::sup<mln_value(I)> sup;
+      accu::math::sup<mln_value(I)> sup;
 
       for_all(p)
 	{
