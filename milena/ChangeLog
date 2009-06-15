@@ -1,5 +1,22 @@
 2009-06-15  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Small fixes.
+
+	* mln/core/image/imorph/labeled_image.hh: add bboxes() and subdomain()
+	  members.
+
+	* mln/morpho/tree/compute_attribute_image.hh: re-indent.
+
+	* mln/registration/registration.hh: remove deprecated fixmes.
+
+	* tests/accu/stat/max.cc,
+	* tests/accu/stat/max_h.cc,
+	* tests/accu/stat/min.cc,
+	* tests/accu/stat/min_h.cc,
+	* tests/accu/stat/min_max.cc: add missing '\file' doxygen command.
+
+2009-06-15  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Fix few dependencies related to the documentation.
 
 	* doc/Makefile.am: convert reference figure to the right format before

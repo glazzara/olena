@@ -78,9 +78,9 @@ namespace mln
       */
       template <typename A, typename T>
       mln_ch_value(typename T::function, mln_result(A))
-	compute_attribute_image(const Accumulator<A>& a,
-				const T& t,
-				mln_ch_value(typename T::function, A)* accu_image = 0);
+      compute_attribute_image(const Accumulator<A>& a,
+			      const T& t,
+			      mln_ch_value(typename T::function, A)* accu_image = 0);
 
 
 

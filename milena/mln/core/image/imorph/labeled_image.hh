@@ -45,6 +45,9 @@
 
 # include <mln/util/array.hh>
 
+# include <mln/pw/cst.hh>
+# include <mln/pw/value.hh>
+
 # ifndef NDEBUG
 #  include <mln/accu/stat/max.hh>
 #  include <mln/data/compute.hh>
@@ -175,14 +178,13 @@ namespace mln
     /// Return the bounding box of the component \p label.
     const bbox_t& bbox(const mln_value(I)& label) const;
 
-    const util::array<bbox_t>& bboxes() const
-    {
-      return this->data_->bboxes_;
-    }
+    /// Return the component bounding boxes.
+    const util::array<bbox_t>& bboxes() const;
 
       /// Return the domain of the component with label \p label.
-      /// This is an optimized version.
-//      p_if<mln_psite(I)> domain(const mln_value(I)& label) const;
+      p_if<mln_box(I),
+	   fun::eq_v2b_expr_<pw::value_<I>, pw::cst_<mln_value(I)> > >
+      subdomain(const mln_value(I)& label) const;
   };
 
 
@@ -348,18 +350,22 @@ namespace mln
   }
 
 
-//    template <typename I, typename V, typename E>
-////    p_if<mln_psite(I)>
-//    unsigned
-//    extended_impl_selector<I,
-//			   accu::pair<accu::shape::bbox<mln_psite(I)>,
-//				      accu::center<mln_psite(I),V> >,
-//			   E>::domain(const mln_value(I)& label) const
-//    {
-//      const E& ima = internal::force_exact<E>(*this);
-//      return ((ima.hook_data_() | bbox(label))
-//	      | (pw::value(ima.hook_data_()) == pw::cst(label))).domain();
-//    }
+  template <typename I>
+  const util::array<typename labeled_image<I>::bbox_t>&
+  labeled_image<I>::bboxes() const
+  {
+      return this->data_->bboxes_;
+  }
+
+
+  template <typename I>
+  p_if<mln_box(I),
+       fun::eq_v2b_expr_<pw::value_<I>, pw::cst_<mln_value(I)> > >
+  labeled_image<I>::subdomain(const mln_value(I)& label) const
+  {
+    return ((this->data_->ima_ | bbox(label))
+	    | (pw::value(this->data_->ima_) == pw::cst(label))).domain();
+  }
 
 
   // Make routines.

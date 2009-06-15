@@ -50,7 +50,6 @@ namespace mln
     using namespace mln::fun::x2x;
 
 
-    //FIXME: move to registration.hh
     /// Call ICP once and return the resulting transformation.
     template <typename P>
     inline
@@ -59,7 +58,6 @@ namespace mln
 		  const p_array<P>& P_,
 		  const p_array<P>& X);
 
-    //FIXME: move to registration.hh
     /// Call ICP 10 times.
     /// Do the first call to ICP with all sites then work on a subset of
     /// which size is decreasing.
@@ -74,7 +72,6 @@ namespace mln
 		  const p_array<P>& P_,
 		  const p_array<P>& X);
 
-    //FIXME: move to registration.hh
     /// Call ICP 10 times.
     /// Do the first call to ICP with all sites then work on a subset.
     /// For each call, a distance criterion is computed on a subset.
