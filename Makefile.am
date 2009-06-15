@@ -48,14 +48,30 @@ REGEN_SUBDIRS += milena scribo
 ## conversion of the repository.
 
 LRDE_STRIPPED_DIST_FILES =				\
-  $(distdir)/configure.ac				\
   $(distdir)/Makefile.am				\
+  $(distdir)/configure.ac				\
+  $(distdir)/milena/mln/all.hh				\
+  $(distdir)/milena/mln/core/image/vmorph/all.hh	\
+  $(distdir)/milena/mln/core/image/vmorph/fun_image.hh	\
+  $(distdir)/milena/mln/data/all.hh			\
+  $(distdir)/milena/mln/essential/routine.hh		\
+  $(distdir)/milena/mln/fun/all.hh			\
+  $(distdir)/milena/mln/fun/essential.hh		\
+  $(distdir)/milena/mln/fun/v2v/all.hh			\
+  $(distdir)/milena/mln/fun/v2v/essential.hh		\
+  $(distdir)/milena/mln/linear/all.hh			\
+  $(distdir)/milena/mln/trait/all.hh			\
+  $(distdir)/milena/mln/trait/ch_value.hh		\
+  $(distdir)/milena/mln/value/all.hh			\
+  $(distdir)/milena/mln/value/essential.hh		\
+  $(distdir)/milena/tests/Makefile.am			\
   $(distdir)/milena/tests/convert/Makefile.am		\
   $(distdir)/milena/tests/extract/Makefile.am		\
   $(distdir)/milena/tests/fun/v2v/Makefile.am		\
   $(distdir)/milena/tests/linear/Makefile.am		\
   $(distdir)/milena/tests/linear/gaussian/Makefile.am	\
   $(distdir)/milena/tests/registration/Makefile.am	\
+  $(distdir)/milena/tests/trait/ch_value.cc		\
   $(distdir)/milena/tests/value/Makefile.am
 
 LRDE_NODIST_FILES =					\

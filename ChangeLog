@@ -1,5 +1,27 @@
 2009-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Strip newly files containing `<<lrde' and `>>' tags.
+
+	* Makefile.am (LRDE_STRIPPED_DIST_FILES): Add
+	$(distdir)/milena/mln/all.hh,
+	$(distdir)/milena/mln/core/image/vmorph/all.hh,
+	$(distdir)/milena/mln/core/image/vmorph/fun_image.hh,
+	$(distdir)/milena/mln/data/all.hh,
+	$(distdir)/milena/mln/essential/routine.hh,
+	$(distdir)/milena/mln/fun/all.hh,
+	$(distdir)/milena/mln/fun/essential.hh,
+	$(distdir)/milena/mln/fun/v2v/all.hh,
+	$(distdir)/milena/mln/fun/v2v/essential.hh,
+	$(distdir)/milena/mln/linear/all.hh,
+	$(distdir)/milena/mln/trait/all.hh,
+	$(distdir)/milena/mln/trait/ch_value.hh,
+	$(distdir)/milena/mln/value/all.hh,
+	$(distdir)/milena/mln/value/essential.hh,
+	$(distdir)/milena/tests/Makefile.am and
+	$(distdir)/milena/tests/trait/ch_value.cc.
+
+2009-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Handle comments starting with `//' and `dnl' in strip-lrde.
 
 	* build-aux/strip-lrde: Here.
