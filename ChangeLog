@@ -1,5 +1,13 @@
 2009-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Strip more files from the distribution of Milena.
+
+	* configure.ac: Tag parts to be prune with `dnl<<lrde' and `dnl>>'
+	instead of `#<<lrde' and `#>>'.
+	Strip more files.
+
+2009-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Strip newly files containing `<<lrde' and `>>' tags.
 
 	* Makefile.am (LRDE_STRIPPED_DIST_FILES): Add

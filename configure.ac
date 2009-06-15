@@ -107,9 +107,9 @@ AC_ARG_ENABLE([all],
                enable_trimesh=yes
                with_swig=yes
                enable_swilena=yes
-#<<lrde
+dnl<<lrde
                enable_scribo=yes
-#>>
+dnl>>
                enable_apps=yes
                enable_tools=yes
               ])
@@ -183,7 +183,7 @@ AC_CONFIG_FILES(m4_do([swilena/python/sps-local],
 		      [:swilena/python/sps-local.in]),
 		[chmod +x swilena/python/sps-local])
 
-#<<lrde
+dnl<<lrde
 ## -------- ##
 ## Scribo.  ##
 ## -------- ##
@@ -212,7 +212,7 @@ AC_CONFIG_FILES([
     scribo/tests/text/Makefile
     scribo/tests/unit_test/Makefile
 ])
-#>>
+dnl>>
 
 ## --------------- ##
 ## Configuration.  ##
@@ -244,7 +244,6 @@ AC_CONFIG_FILES([
 AC_CONFIG_FILES([milena/tests/data.hh])
 
 # Ask for the creation of tests' Makefiles.
-# FIXME: Should it be achieved through oln.m4 macros, as we did in Olena 0.11?
 AC_CONFIG_FILES([
   milena/tests/Makefile
     milena/tests/accu/Makefile
@@ -282,7 +281,6 @@ AC_CONFIG_FILES([
     milena/tests/extract/Makefile
     milena/tests/fun/Makefile
       milena/tests/fun/i2v/Makefile
-#      milena/tests/fun/meta/Makefile  De-activated for 1.0
       milena/tests/fun/p2b/Makefile
       milena/tests/fun/p2p/Makefile
       milena/tests/fun/p2v/Makefile
@@ -311,7 +309,6 @@ AC_CONFIG_FILES([
       milena/tests/io/tiff/Makefile
     milena/tests/labeling/Makefile
     milena/tests/linear/Makefile
-#      milena/tests/linear/gaussian/Makefile  De-activated for 1.0
       milena/tests/linear/local/Makefile
     milena/tests/literal/Makefile
     milena/tests/logical/Makefile
@@ -337,9 +334,7 @@ AC_CONFIG_FILES([
     milena/tests/norm/Makefile
     milena/tests/opt/Makefile
     milena/tests/pw/Makefile
-#    milena/tests/registration/Makefile  De-activated for 1.0
     milena/tests/set/Makefile
-#    milena/tests/subsampling/Makefile  De-activated for 1.0
     milena/tests/tag/Makefile
     milena/tests/test/Makefile
     milena/tests/topo/Makefile
@@ -348,7 +343,6 @@ AC_CONFIG_FILES([
     milena/tests/trait/Makefile
       milena/tests/trait/image/Makefile
       milena/tests/trait/op/Makefile
-#      milena/tests/trait/next/Makefile  De-activated for 1.0
       milena/tests/trait/value/Makefile
     milena/tests/transform/Makefile
     milena/tests/transformation/Makefile
@@ -363,6 +357,14 @@ AC_CONFIG_FILES([
       milena/tests/world/inter_pixel/Makefile
 	milena/tests/world/inter_pixel/dim2/Makefile
 ])
+
+dnl<<lrde
+AC_CONFIG_FILES([
+  milena/tests/linear/gaussian/Makefile
+  milena/tests/registration/Makefile
+  milena/tests/subsampling/Makefile
+])
+dnl>>
 
 
 ## -------------- ##
