@@ -19,7 +19,7 @@
 
 include $(top_srcdir)/milena/doc/doc.mk
 
-noinst_PROGRAMS =		\
+EXTRA_PROGRAMS =		\
   accu-right-instanciation 	\
   borderthickness 		\
   box2d-bbox 			\
@@ -63,21 +63,22 @@ noinst_PROGRAMS =		\
   win-create-1 			\
   win-create-2
 
-noinst_PROGRAMS += 		\
-tuto2_first_image 		\
-tuto3_rw_image 			\
-tuto4_genericity_and_algorithms
+EXTRA_PROGRAMS += 		\
+  tuto2_first_image 		\
+  tuto3_rw_image 		\
+  tuto4_genericity_and_algorithms
 
 # Tuto3
-noinst_PROGRAMS +=	 	\
-tuto3_colorize 			\
-tuto3_println 			\
-tuto3_trace
+EXTRA_PROGRAMS +=	 	\
+  tuto3_colorize 		\
+  tuto3_println 		\
+  tuto3_trace
 
 # Tuto4
-noinst_PROGRAMS +=	 	\
-tuto4_point2d			\
-tuto4_site_set_create
+EXTRA_PROGRAMS +=	 	\
+  tuto4_point2d			\
+  tuto4_site_set_create
+
 
 accu_right_instanciation_SOURCES = accu-right-instanciation.cc
 borderthickness_SOURCES = borderthickness.cc
@@ -134,11 +135,13 @@ tuto3_trace_SOURCES = tuto3/trace.cc
 tuto4_site_set_create_SOURCES = tuto4/site_set_create.cc
 tuto4_point2d_SOURCES = tuto4/point2d.cc
 
-.PHONY : run-examples examples diff-data fix-refdata split-examples \
-	 split-outputs
 
+.PHONY : examples run-examples diff-data fix-refdata 		\
+	 split-examples split-outputs
 
-run-examples:
+examples: $(EXTRA_PROGRAMS)
+
+run-examples: examples
 	mkdir -p $(OUTPUTS_BUILDDIR) 
 	mkdir -p $(FIGURES_BUILDDIR) 
 	@failcom='exit 1'; 						\
@@ -148,7 +151,7 @@ run-examples:
 	done
 
 
-data-regen: run-examples split-examples split-outputs diff-data
+data-regen: examples run-examples split-examples split-outputs diff-data
 
 
 diff-data: run-examples split-examples

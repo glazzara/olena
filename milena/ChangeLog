@@ -1,5 +1,15 @@
 2009-06-15  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Fix few dependencies related to the documentation.
+
+	* doc/Makefile.am: convert reference figure to the right format before
+	generating the doc.
+
+	* doc/examples/Makefile.am: compile examples only if requested. There
+	are not compile thanks to the 'all' rule.
+
+2009-06-15  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Comments parts of the documentation related to fun_image.
 
 	* doc/examples/tuto4_genericity_and_algorithms.cc,

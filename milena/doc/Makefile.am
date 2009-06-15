@@ -59,9 +59,9 @@ doc-devel-html: tutorial-html ref-guide-html white-paper-html ref-doc-devel-html
 # complicated.  Simplify.
 # Shared dependencies on the products of tutorial/ and ref_guide/.
 EXTRA_DEPS = tutorial/tutorial.hh ref_guide/ref_guide.hh
-tutorial/tutorial.hh:
+tutorial/tutorial.hh: fig-convert
 	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) tutorial.hh
-ref_guide/ref_guide.hh:
+ref_guide/ref_guide.hh: fig-convert
 	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) ref_guide.hh
 
 # Doxygen PDF documentation outputs.
@@ -89,9 +89,9 @@ $(DEVEL_REFMAN_HTML): Doxyfile_devel $(FIGURES_BUILDDIR) $(EXTRA_DEPS)
 	$(DOXYGEN) Doxyfile_devel
 
 # Tutorial.
-tutorial-pdf:
+tutorial-pdf: fig-convert
 	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
-tutorial-html:
+tutorial-html: fig-convert
 	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
 
 # White Paper.
@@ -102,10 +102,10 @@ white-paper-html:
 	cd white_paper && $(MAKE) $(AM_MAKEFLAGS) $@
 
 # Reference Guide.
-ref-guide-pdf:
+ref-guide-pdf: fig-convert
 	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) $@
 
-ref-guide-html:
+ref-guide-html: fig-convert
 	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) $@
 
 
