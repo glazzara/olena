@@ -1,3 +1,11 @@
+2009-06-15  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
+	Make labeling::colorize deterministic.
+
+	* mln/labeling/colorize.hh: use our own random generator.
+
+	* tests/labeling/colorize.cc: add an assertion.
+
 2009-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Aesthetic changes.

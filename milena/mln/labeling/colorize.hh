@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -71,10 +72,21 @@ namespace mln
 	     const mln_value(L)& nlabels);
 
 
+    /// \overload
+    //
     template <typename V, typename L>
     mln_ch_value(L, V)
     colorize(const V& value,
 	     const Image<L>& labeled_image);
+
+
+    /// \overload
+    //
+    template <typename L>
+    inline
+    mln_ch_value(L, value::rgb8)
+    colorize(const Image<L>& input,
+	     const mln_value(L)& nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -89,6 +101,15 @@ namespace mln
     namespace internal
     {
 
+      unsigned random_number()
+      {
+	static unsigned last = 1;
+
+	last = (323 * last + 6603) % 1025;
+
+	return colorize_::min_value + last % colorize_::max_value;
+      }
+
       template <typename V>
       V random_color(const V&);
 
@@ -96,9 +117,9 @@ namespace mln
       mln::value::rgb<n>
       random_color(const mln::value::rgb<n>&)
       {
-	return mln::value::rgb<n>(colorize_::min_value + (rand() % colorize_::max_value),
-				  colorize_::min_value + (rand() % colorize_::max_value),
-				  colorize_::min_value + (rand() % colorize_::max_value));
+	return mln::value::rgb<n>(random_number(),
+				  random_number(),
+				  random_number());
       }
 
     }
@@ -158,6 +179,17 @@ namespace mln
       trace::exiting("labeling::colorize");
       return output;
     }
+
+
+    template <typename L>
+    inline
+    mln_ch_value(L, value::rgb8)
+    colorize(const Image<L>& input,
+	     const mln_value(L)& nlabels)
+    {
+      return colorize(value::rgb8(), input, nlabels);
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

@@ -29,7 +29,6 @@
 # include <mln/labeling/colorize.hh>
 # include <mln/data/compare.hh>
 
-
 int main()
 {
   using namespace mln;
@@ -38,11 +37,13 @@ int main()
 				{ 0, 0 } };
 
   typedef value::rgb8 rgb_t;
-  value::rgb8 ref_data[][2] = { { rgb_t(89,92,86), rgb_t(89,92,86) },
+  value::rgb8 ref_data[][2] = { { rgb_t(231,46,171), rgb_t(231,46,171) },
 				{ rgb_t(0,0,0),	   rgb_t(0,0,0)    } };
 
   image2d<value::int_u8> ima = make::image(values);
   image2d<rgb_t> ref = make::image(ref_data);
 
   image2d<value::rgb8> ima_color = labeling::colorize(value::rgb8(), ima);
+
+  mln_assertion(ima_color == ref);
 }
