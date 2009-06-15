@@ -31,7 +31,7 @@
 /// Define a function which saves an image of kind magick with
 /// given path.
 ///
-/// FIXME: there seems to be roundness errors while computing rgb values.
+/// \todo At the moment it works; is it a miracle?
 
 # include <mln/core/image/image2d.hh>
 # include <mln/metal/equal.hh>
@@ -71,15 +71,15 @@ namespace mln
       inline
       Magick::Color get_color(const value::int_u8& value)
       {
-	return Magick::ColorGray(value / (double)256.0f);
+	return Magick::ColorGray(256 - value);
       }
 
       inline
       Magick::Color get_color(const value::rgb8& value)
       {
-	return Magick::ColorRGB(value.red()   / (double)256.0f,
-				value.green() / (double)256.0f,
-				value.blue()  / (double)256.0f);
+	return Magick::ColorRGB(256 - value.red(),
+				256 - value.green(),
+				256 - value.blue());
       }
 
       template <typename I>

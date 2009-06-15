@@ -27,24 +27,30 @@
 #include <mln/io/magick/load.hh>
 #include <mln/io/magick/save.hh>
 #include <mln/io/ppm/load.hh>
-
+#include <mln/io/ppm/save.hh>
 #include <mln/data/compare.hh>
+#include "tests/data.hh"
 
 #include <mln/io/magick/load.hh>
-
-#include "tests/data.hh"
+ 
 
 int main()
 {
   using namespace mln;
 
+  point2d p(0,0);
+
   image2d<value::rgb8> lena_mln;
   io::ppm::load(lena_mln, MLN_IMG_DIR "/tiny.ppm");
+  value::rgb8 c = lena_mln(p);
 
   io::magick::save(lena_mln, "tiny.png");
 
   image2d<value::rgb8> lena_im;
   io::magick::load(lena_im, "tiny.png");
+  mln_assertion(lena_im(p) == c);
+
+  io::ppm::save(lena_im, "tiny.ppm");
 
   mln_assertion(lena_im.domain() == lena_mln.domain());
   mln_assertion(lena_im == lena_mln);
