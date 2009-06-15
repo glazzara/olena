@@ -1538,44 +1538,47 @@ value in \var{label} is equal to 16'.
 \end{center}
 
 
-%**************************
-\doxysection{tuto4component}{Image component restricted to a domain}
+%Disabled until thru_image/fun_image provide working read/write access.
+%
+%%**************************
+%\doxysection{tuto4component}{Image component restricted to a domain}
+%
+%%FIXME: be more verbose?
+%
+%It is also possible to restrict an image to one of its component and apply
+%various operators upon it. In the following code, the green component of
+%this color image is extracted and filled with the maximum value allowed.
+%Other components such as red and blue are left unchanged.
+%
+%\doxycode[11]{tuto4_genericity_and_algorithms}
+%
+%\begin{center}
+%  \begin{tabular}{c c c c}
+%    \doxyimg{small-enlarged}{3cm}  &
+%%   \doxyfigure[7]{tuto4_genericity_and_algorithms}{3cm} &
+%    ~\huge{$\rightarrow$}~ &
+%    \doxyfigure[8]{tuto4_genericity_and_algorithms}{3cm}  \\
+%    \multicolumn{4}{c}{Set the image green component to its maximum value.} \\
+%  \end{tabular}
+%\end{center}
+%
+%
+%Thanks to Milena's genericity, it is also possible to combine this operator
+%with others. Here the green component is extracted from a region of interest
+%and only that part is modified.
+%
+%\doxycode[12]{tuto4_genericity_and_algorithms}
+%
+%\begin{center}
+%  \begin{tabular}{c c c c}
+%    \doxyimg{small-enlarged}{3cm}  &
+%    ~\huge{$\rightarrow$}~ &
+%    \doxyfigure[9]{tuto4_genericity_and_algorithms}{3cm}  \\
+%    \multicolumn{4}{c}{Set the green component of a region of interest
+% to its maximum value.} \\
+%  \end{tabular}
+%\end{center}
 
-%FIXME: be more verbose?
-
-It is also possible to restrict an image to one of its component and apply
-various operators upon it. In the following code, the green component of
-this color image is extracted and filled with the maximum value allowed.
-Other components such as red and blue are left unchanged.
-
-\doxycode[11]{tuto4_genericity_and_algorithms}
-
-\begin{center}
-  \begin{tabular}{c c c c}
-    \doxyimg{small-enlarged}{3cm}  &
-%   \doxyfigure[7]{tuto4_genericity_and_algorithms}{3cm} &
-    ~\huge{$\rightarrow$}~ &
-    \doxyfigure[8]{tuto4_genericity_and_algorithms}{3cm}  \\
-    \multicolumn{4}{c}{Set the image green component to its maximum value.} \\
-  \end{tabular}
-\end{center}
-
-
-Thanks to Milena's genericity, it is also possible to combine this operator
-with others. Here the green component is extracted from a region of interest
-and only that part is modified.
-
-\doxycode[12]{tuto4_genericity_and_algorithms}
-
-\begin{center}
-  \begin{tabular}{c c c c}
-    \doxyimg{small-enlarged}{3cm}  &
-    ~\huge{$\rightarrow$}~ &
-    \doxyfigure[9]{tuto4_genericity_and_algorithms}{3cm}  \\
-    \multicolumn{4}{c}{Set the green component of a region of interest
- to its maximum value.} \\
-  \end{tabular}
-\end{center}
 
 
 \vspace{2cm}

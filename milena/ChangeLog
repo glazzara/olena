@@ -1,5 +1,17 @@
 2009-06-15  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Comments parts of the documentation related to fun_image.
+
+	* doc/examples/tuto4_genericity_and_algorithms.cc,
+	* doc/tutorial/tutorial.tex: comment non working code and
+	documentation related to that code.
+
+	* doc/examples/split/tuto4_genericity_and_algorithms-11.cc,
+	* doc/examples/split/tuto4_genericity_and_algorithms-12.cc: fix
+	associated reference files.
+
+2009-06-15  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Update doc reference files.
 
 	* doc/examples/Makefile.am: fix the script comparing reference files

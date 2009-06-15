@@ -120,24 +120,26 @@ int main()
 
 
 
-  lena = duplicate(lena_bak);
-  // \{
-  data::fill(extract::green(lena).rw(), literal::max);
-  // \}
-  //FIXME: we would like to save the green component in rgb8.
-  doc::pgmsave(extract::green(lena), "tuto4_genericity_and_algorithms");
-  doc::ppmsave(lena, "tuto4_genericity_and_algorithms");
-
-
-
-
-  lena = duplicate(lena_bak);
-  // \{
-  mln_VAR(object, pw::value(label) == pw::cst(0u));
-  data::fill((extract::green(lena).rw() | object).rw(), literal::max);
-  // \}
-  //FIXME: how to display an image which is not defined on a box!?
-//  doc::ppmsave(lena | object, "tuto4_genericity_and_algorithms");
-  doc::ppmsave(lena, "tuto4_genericity_and_algorithms");
+// Disabled until thru_image/fun_image provide working read/write access.
+//
+//  lena = duplicate(lena_bak);
+//  // \{
+//  data::fill(extract::green(lena).rw(), literal::max);
+//  // \}
+//  //FIXME: we would like to save the green component in rgb8.
+//  doc::pgmsave(extract::green(lena), "tuto4_genericity_and_algorithms");
+//  doc::ppmsave(lena, "tuto4_genericity_and_algorithms");
+//
+//
+//
+//
+//  lena = duplicate(lena_bak);
+//  // \{
+//  mln_VAR(object, pw::value(label) == pw::cst(0u));
+//  data::fill((extract::green(lena).rw() | object).rw(), literal::max);
+//  // \}
+//  //FIXME: how to display an image which is not defined on a box!?
+////  doc::ppmsave(lena | object, "tuto4_genericity_and_algorithms");
+//  doc::ppmsave(lena, "tuto4_genericity_and_algorithms");
 
 }
