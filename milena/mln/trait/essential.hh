@@ -27,7 +27,6 @@
 #ifndef MLN_TRAIT_ESSENTIAL_HH
 # define MLN_TRAIT_ESSENTIAL_HH
 
-///
 /// \file
 ///
 /// \brief Definition of essential traits.

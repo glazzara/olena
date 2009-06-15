@@ -1,5 +1,13 @@
 2009-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Aesthetic changes.
+
+	* mln/core/image/vmorph/thru_image.hh,
+	* mln/trait/essential.hh:
+	Here.
+
+2009-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Tag some more parts as ``not distributed''.
 
 	* mln/all.hh,
