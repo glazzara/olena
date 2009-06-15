@@ -1,5 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,9 +34,10 @@
 # include <mln/fun/v2v/abs.hh>
 # include <mln/fun/v2v/cast.hh>
 # include <mln/fun/v2v/convert.hh>
+//<<lrde
+# include <mln/fun/v2v/rgb_to_hsi.hh>
+//>>
 # include <mln/fun/v2v/saturate.hh>
-
-// # include <mln/fun/v2v/rgb_to_hsi.hh>  De-activated in 1.0
 
 
 #endif // ! MLN_FUN_V2V_ESSENTIAL_HH

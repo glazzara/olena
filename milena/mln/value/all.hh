@@ -57,9 +57,11 @@ namespace mln
 
 // FIXME: that includes concept/image.hh!
 
-// # include <mln/value/cast.hh>   De-activated in 1.0
-// # include <mln/value/shell.hh>  De-activated in 1.0
-// # include <mln/value/stack.hh>  De-activated in 1.0
+//<<lrde
+# include <mln/value/cast.hh>
+# include <mln/value/shell.hh>
+# include <mln/value/stack.hh>
+//>>
 
 
 

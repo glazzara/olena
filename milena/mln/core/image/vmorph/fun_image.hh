@@ -35,7 +35,9 @@
 # include <mln/core/internal/image_value_morpher.hh>
 # include <mln/trait/images.hh>
 # include <mln/value/set.hh>
-// # include <mln/value/shell.hh>  De-activated for 1.0
+//<<lrde
+# include <mln/value/shell.hh>
+//>>
 # include <mln/metal/if.hh>
 # include <mln/metal/equal.hh>
 

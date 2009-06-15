@@ -1,5 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,7 +26,6 @@
 #ifndef MLN_ESSENTIAL_ROUTINE_HH
 # define MLN_ESSENTIAL_ROUTINE_HH
 
-
 # include <mln/topo/essential.hh>
 # include <mln/accu/essential.hh>
 # include <mln/algebra/essential.hh>
@@ -42,6 +40,9 @@
 # include <mln/draw/essential.hh>
 # include <mln/estim/essential.hh>
 # include <mln/extension/essential.hh>
+//<<lrde
+# include <mln/extract/essential.hh>
+//>>
 # include <mln/fun/essential.hh>
 # include <mln/geom/essential.hh>
 # include <mln/graph/essential.hh>
@@ -59,7 +60,13 @@
 # include <mln/norm/essential.hh>
 # include <mln/opt/essential.hh>
 # include <mln/pw/essential.hh>
+//<<lrde
+# include <mln/registration/essential.hh>
+//>>
 # include <mln/set/essential.hh>
+//<<lrde
+# include <mln/subsampling/essential.hh>
+//>>
 # include <mln/tag/essential.hh>
 # include <mln/test/essential.hh>
 # include <mln/trace/essential.hh>
@@ -68,11 +75,5 @@
 # include <mln/util/essential.hh>
 # include <mln/value/essential.hh>
 # include <mln/win/essential.hh>
-
-
-// # include <mln/extract/essential.hh>       De-activated in 1.0
-// # include <mln/registration/essential.hh>  De-activated in 1.0
-// # include <mln/subsampling/essential.hh>   De-activated in 1.0
-
 
 #endif // ! MLN_ESSENTIAL_ROUTINE_HH

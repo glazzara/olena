@@ -1,5 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,7 +34,9 @@
 # include <mln/fun/c.hh>
 # include <mln/fun/ops.hh>
 # include <mln/fun/i2v/essential.hh>
-// # include <mln/fun/meta/essential.hh>
+//<<lrde
+# include <mln/fun/meta/essential.hh>
+//>>
 # include <mln/fun/p2b/essential.hh>
 # include <mln/fun/p2v/essential.hh>
 # include <mln/fun/v2b/essential.hh>

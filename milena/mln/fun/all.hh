@@ -58,8 +58,14 @@ namespace mln
 // Sub-directories.
 
 # include <mln/fun/i2v/all.hh>
+//<<lrde
+# include <mln/fun/meta/all.hh>
+//>>
 # include <mln/fun/p2b/all.hh>
 # include <mln/fun/p2v/all.hh>
+//<<lrde
+// # include <mln/fun/spe/all.hh>
+//>>
 # include <mln/fun/stat/all.hh>
 # include <mln/fun/v2b/all.hh>
 # include <mln/fun/v2i/all.hh>
@@ -68,9 +74,6 @@ namespace mln
 # include <mln/fun/x2p/all.hh>
 # include <mln/fun/x2v/all.hh>
 # include <mln/fun/x2x/all.hh>
-
-// # include <mln/fun/meta/all.hh>  De-activated in 1.0
-// # include <mln/fun/spe/all.hh>   De-activated in 1.0
 
 
 #endif // ! MLN_FUN_ALL_HH

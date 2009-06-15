@@ -64,10 +64,12 @@ SUBDIRS =					\
   win 						\
   world
 
-#  extract       De-activated for 1.0
-#  registration  De-activated for 1.0
-#  subsampling   De-activated for 1.0
-
+#<<lrde
+SUBDIRS +=					\
+  extract					\
+  registration 					\
+  subsampling
+#>>
 
 check_PROGRAMS =				\
   all_headers 					\

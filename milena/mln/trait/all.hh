@@ -27,7 +27,6 @@
 #ifndef MLN_TRAIT_ALL_HH
 # define MLN_TRAIT_ALL_HH
 
-///
 /// \file
 ///
 /// \brief  Definition of all traits.
@@ -58,9 +57,10 @@ namespace mln
 # include <mln/trait/promote.hh>
 # include <mln/trait/op/all.hh>
 
-// # include <mln/trait/next/all.hh>   De-activated in 1.0
-// # include <mln/trait/functions.hh>  De-activated in 1.0
-
+//<<lrde
+// # include <mln/trait/next/all.hh>
+# include <mln/trait/functions.hh>
+//>>
 
 
 #endif // ! MLN_TRAIT_ALL_HH

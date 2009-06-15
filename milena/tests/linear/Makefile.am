@@ -23,6 +23,11 @@ include $(top_srcdir)/milena/tests/tests.mk
 SUBDIRS =					\
   local
 
+#<<lrde
+SUBDIRS +=					\
+  gaussian
+#>>
+
 check_PROGRAMS =				\
   convolve					\
   convolve_directional				\

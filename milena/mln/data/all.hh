@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -68,8 +69,9 @@ namespace mln
 # include <mln/data/to_enc.hh>
 # include <mln/data/transform.hh>
 # include <mln/data/update.hh>
-
-// # include <mln/data/was.median.hh>  De-activated in 1.0
+//<<lrde
+# include <mln/data/was.median.hh>
+//>>
 
 
 
