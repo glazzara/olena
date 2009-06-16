@@ -32,7 +32,7 @@
 
 # include <mln/value/hsl.hh>
 # include <mln/value/hsi.hh>
-# include <mln/core/concept/meta_fun.hh>
+# include <mln/fun/meta/impl.hh>
 
 namespace mln
 {

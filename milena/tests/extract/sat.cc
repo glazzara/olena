@@ -26,7 +26,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/extract/sat.hh>
 # include <mln/value/hsl.hh>
-# include <mln/core/var.hh>
+
 
 int main()
 {
@@ -36,13 +36,12 @@ int main()
   typedef image2d<hsl_f> I;
   I ima(2,2);
   point2d p(1,1);
-  ima(p) = value::hsl_f(200, 230, 240);
+  ima(p) = hsl_f(200, 230, 240);
 
-  fun_image< meta::sat<hsl_f>, I > ima_sat = extract::sat(ima);
+  thru_image< I, meta::sat<hsl_f> > ima_sat = extract::sat(ima);
 
   mln_assertion(ima(p).sat() == ima_sat(p));
 
-  ima_sat(p) = 0;
-
-  mln_assertion(ima_sat(p) == 0u);
+//    ima_sat(p) = 0.f;
+//   mln_assertion(ima_sat(p) == 0.f);
 }

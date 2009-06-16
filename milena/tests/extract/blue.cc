@@ -26,7 +26,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/extract/blue.hh>
 # include <mln/value/rgb8.hh>
-# include <mln/core/var.hh>
+
 
 int main()
 {
@@ -36,13 +36,12 @@ int main()
   typedef image2d<rgb8> I;
   I ima(2,2);
   point2d p(1,1);
-  ima(p) = value::rgb8(200, 230, 240);
+  ima(p) = rgb8(200, 230, 240);
 
-  fun_image<meta::blue<rgb8>,I> ima_blue = extract::blue(ima);
+  thru_image< I, meta::blue<rgb8> > ima_blue = extract::blue(ima);
 
   mln_assertion(ima(p).blue() == ima_blue(p));
 
   ima_blue(p) = 0;
-
   mln_assertion(ima_blue(p) == 0u);
 }

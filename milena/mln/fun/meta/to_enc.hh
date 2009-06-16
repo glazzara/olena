@@ -30,7 +30,7 @@
 ///
 /// FIXME: doc
 
-# include <mln/core/concept/meta_fun.hh>
+# include <mln/fun/meta/impl.hh>
 
 namespace mln
 {

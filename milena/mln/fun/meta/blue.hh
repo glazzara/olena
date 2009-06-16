@@ -30,7 +30,7 @@
 ///
 /// Meta function to retrieve/modify the blue component.
 
-# include <mln/core/concept/meta_fun.hh>
+# include <mln/fun/meta/impl.hh>
 # include <mln/value/rgb.hh>
 
 namespace mln

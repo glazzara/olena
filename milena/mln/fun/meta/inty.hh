@@ -31,7 +31,7 @@
 /// Meta function to retrieve/modify the color intensity.
 
 # include <mln/value/hsi.hh>
-# include <mln/core/concept/meta_fun.hh>
+# include <mln/fun/meta/impl.hh>
 
 namespace mln
 {

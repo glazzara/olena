@@ -31,7 +31,7 @@
 /// Meta function to retrieve/modify the color luminosity.
 
 # include <mln/value/hsl.hh>
-# include <mln/core/concept/meta_fun.hh>
+# include <mln/fun/meta/impl.hh>
 
 namespace mln
 {

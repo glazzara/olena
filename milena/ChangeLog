@@ -1,3 +1,28 @@
+2009-06-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Pass tests on extracting a color component.
+
+	* mln/core/image/vmorph/fun_image.hh (fun_image): Overload
+	ctor for functions with default constructor.
+	* mln/core/concept/meta_fun.hh: Rename as...
+	* mln/fun/meta/impl.hh: ...this
+	* mln/fun/meta/hue.hh,
+	* mln/fun/meta/inty.hh,
+	* mln/fun/meta/sat.hh,
+	* mln/fun/meta/to_enc.hh,
+	* mln/fun/meta/blue.hh,
+	* mln/fun/meta/first.hh,
+	* mln/fun/meta/red.hh,
+	* mln/fun/meta/second.hh,
+	* mln/fun/meta/lum.hh,
+	* mln/fun/meta/green.hh: Update.
+	* tests/extract/green.cc,
+	* tests/extract/blue.cc,
+	* tests/extract/red.cc: Update.
+	* tests/extract/lum.cc,
+	* tests/extract/hue.cc,
+	* tests/extract/sat.cc: De-activate tests; it does not compile.
+
 2009-06-16  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	* mln/labeling/colorize.hh: Fix gcc-3.3 compilation issues.

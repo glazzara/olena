@@ -30,7 +30,7 @@
 ///
 /// Meta function to retrieve/modify the first component.
 
-# include <mln/core/concept/meta_fun.hh>
+# include <mln/fun/meta/impl.hh>
 # include <mln/util/couple.hh>
 
 namespace mln

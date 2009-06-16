@@ -120,6 +120,9 @@ namespace mln
     /// Constructor.
     fun_image(const Function_v2v<F>& f, const Image<I>& ima);
 
+    /// Constructor.
+    fun_image(const Image<I>& ima);
+
     /// Initialize an empty image.
     void init_(const Function_v2v<F>& f, const Image<I>& ima);
 
@@ -178,7 +181,6 @@ namespace mln
     this->data_ = 0;
   }
 
-
   template <typename F, typename I>
   inline
   fun_image<F,I>::fun_image(const Function_v2v<F>& f, const Image<I>& ima)
@@ -186,6 +188,13 @@ namespace mln
     init_(f, ima);
   }
 
+  template <typename F, typename I>
+  inline
+  fun_image<F,I>::fun_image(const Image<I>& ima)
+  {
+    F f;
+    init_(f, ima);
+  }
 
   template <typename F, typename I>
   inline
@@ -195,7 +204,6 @@ namespace mln
     mln_precondition(exact(ima).is_valid());
     this->data_ = new internal::data<fun_image<F,I> >(exact(f), exact(ima));
   }
-
 
   template <typename F, typename I>
   inline

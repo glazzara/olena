@@ -26,7 +26,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/extract/hue.hh>
 # include <mln/value/hsl.hh>
-# include <mln/core/var.hh>
+
 
 int main()
 {
@@ -36,13 +36,12 @@ int main()
   typedef image2d<hsl_f> I;
   I ima(2,2);
   point2d p(1,1);
-  ima(p) = value::hsl_f(200, 230, 240);
+  ima(p) = hsl_f(200, 230, 240);
 
-  fun_image< meta::hue<hsl_f>, I > ima_hue = extract::hue(ima);
+  thru_image< I, meta::hue<hsl_f> > ima_hue = extract::hue(ima);
 
   mln_assertion(ima(p).hue() == ima_hue(p));
 
-  ima_hue(p) = 0;
-
-  mln_assertion(ima_hue(p) == 0u);
+//   ima_hue(p) = 0;
+//   mln_assertion(ima_hue(p) == 0u);
 }

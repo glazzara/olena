@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,16 +24,18 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_CORE_CONCEPT_META_FUN_HH
-# define MLN_CORE_CONCEPT_META_FUN_HH
+#ifndef MLN_FUN_META_IMPL_HH
+# define MLN_FUN_META_IMPL_HH
 
-/*! \file
- *
- * \brief Definition of concept of meta function.
- */
+/// \file
+///
+/// \brief Definition of concept of meta function.
+///
+/// \todo Remove this deprecated code and its deps.
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/function.hh>
+
 
 namespace mln
 {
@@ -74,4 +77,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_CORE_CONCEPT_META_FUN_HH
+#endif // ! MLN_FUN_META_IMPL_HH
