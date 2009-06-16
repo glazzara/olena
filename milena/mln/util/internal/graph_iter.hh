@@ -189,7 +189,7 @@ namespace mln
     util::vertex_id_t
     vertex_fwd_iterator<G>::next_id_() const
     {
-      return this->p_.id() + 1;
+      return this->p_.id().value() + 1;
     }
 
 
@@ -224,7 +224,7 @@ namespace mln
     util::vertex_id_t
     vertex_bkd_iterator<G>::next_id_() const
     {
-      return this->p_.id() - 1;
+      return this->p_.id().value() - 1;
     }
 
 
@@ -259,7 +259,7 @@ namespace mln
     util::edge_id_t
     edge_fwd_iterator<G>::next_id_() const
     {
-      return this->p_.id() + 1;
+      return this->p_.id().value() + 1;
     }
 
 
@@ -294,7 +294,7 @@ namespace mln
     util::edge_id_t
     edge_bkd_iterator<G>::next_id_() const
     {
-      return this->p_.id() - 1;
+      return this->p_.id().value() - 1;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

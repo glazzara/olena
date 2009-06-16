@@ -20,9 +20,9 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 #<<lrde
-# FIXME: Not distributed (yet).
-check_PROGRAMS = registration
-registration_SOURCES = registration.cc
+# FIXME: Not distributed (yet) and currently disabled.
+# check_PROGRAMS = registration
+# registration_SOURCES = registration.cc
 #>>
 
 TESTS = $(check_PROGRAMS)

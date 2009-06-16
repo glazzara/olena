@@ -217,9 +217,9 @@ namespace mln
 	return true;
       }
 
-# endif // ! MLN_INCLUDE_ONLY
-
     } // end of namespace mln::accu::shape
+
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::accu
 

@@ -1,3 +1,21 @@
+2009-06-16  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
+	Small fixes.
+
+	* mln/accu/math/inf.hh,
+	* mln/accu/math/sup.hh,
+	* mln/accu/shape/height.hh,
+	* mln/accu/shape/volume.hh,
+	* mln/accu/stat/median_alt.hh,
+	* mln/value/stack.hh: fix invalid namespace closing.
+
+	* mln/util/internal/graph_iter.hh,
+	* mln/fun/v2v/rgb_to_hsl.hh: fix ambiguities with operators.
+
+	* mln/value/internal/gray_f.hh: repair header.
+	
+	* tests/registration/Makefile.am: disable registration test.
+
 2009-06-15  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Move inf and sup accumulators into math directory.

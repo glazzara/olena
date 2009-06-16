@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -102,7 +103,7 @@ namespace mln
 	    else
 	      hsl.hue() = (60. * (rgb.red() - rgb.green()) / (rmax - rmin)) + 240;
 
-	hsl.lum() = ((double) rmax + rmin) / 2;
+	hsl.lum() = ((double) rmax + (double) rmin) / 2;
 
 	// We want min and max between 0 and 1
 	rmax -= mln_min(typename T_rgb::red_t);

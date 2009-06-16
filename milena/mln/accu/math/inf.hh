@@ -166,9 +166,9 @@ namespace mln
 	return true;
       }
 
-# endif // ! MLN_INCLUDE_ONLY
-
     } // end of namespace mln::accu::math
+
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::accu
 

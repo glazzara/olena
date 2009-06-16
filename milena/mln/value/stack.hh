@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -323,9 +324,9 @@ namespace mln
       return imas;
     }
 
-# endif // ! MLN_INCLUDE_ONLY
-
   } // end of namespace mln::value
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
