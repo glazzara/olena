@@ -46,6 +46,7 @@ namespace mln
   namespace labeling
   {
 
+    // Forward declaration.
     namespace colorize_
     {
       extern unsigned min_value;
@@ -83,8 +84,7 @@ namespace mln
     /// \overload
     //
     template <typename L>
-    inline
-    mln_ch_value(L, value::rgb8)
+    mln_ch_value(L, mln::value::rgb8)
     colorize(const Image<L>& input,
 	     const mln_value(L)& nlabels);
 
@@ -183,11 +183,11 @@ namespace mln
 
     template <typename L>
     inline
-    mln_ch_value(L, value::rgb8)
+    mln_ch_value(L, mln::value::rgb8)
     colorize(const Image<L>& input,
 	     const mln_value(L)& nlabels)
     {
-      return colorize(value::rgb8(), input, nlabels);
+      return colorize(mln::value::rgb8(), input, nlabels);
     }
 
 

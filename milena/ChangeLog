@@ -1,3 +1,7 @@
+2009-06-16  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
+	* mln/labeling/colorize.hh: Fix gcc-3.3 compilation issues.
+
 2009-06-16  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Move rank accus in stat directory.
