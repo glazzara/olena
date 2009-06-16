@@ -30,4 +30,3 @@ load_SOURCES = load.cc
 save_SOURCES = save.cc
 
 TESTS = $(check_PROGRAMS)
-XFAIL_TESTS = save
