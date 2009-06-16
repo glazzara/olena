@@ -42,6 +42,6 @@ int main()
 
   mln_assertion(ima(p).blue() == ima_blue(p));
 
-  ima_blue(p) = 0;
-  mln_assertion(ima_blue(p) == 0u);
+//   ima_blue(p) = 0;
+//   mln_assertion(ima_blue(p) == 0u);
 }
