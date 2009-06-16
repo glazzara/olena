@@ -1,3 +1,7 @@
+2009-06-16  Guillaume Lazzara <guillaume.lazzara@epita.fr>
+
+	* utilsrc/mesh_shade.cc: fix compilation issues with ICC 10 and 11.
+
 2008-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the compilation of tools in Trimesh.

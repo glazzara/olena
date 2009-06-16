@@ -5,18 +5,16 @@ Princeton University
 mesh_shade.cc
 Apply procedural shaders to a mesh
 */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <cmath>
 #include <float.h>
 #include <algorithm>
 #include "TriMesh.h"
 #include "TriMesh_algo.h"
 #include "KDtree.h"
 #include "lineqn.h"
-using namespace std;
+#include <cmath>
 
 #define BIGNUM 3.3e33
 
@@ -26,8 +24,11 @@ using namespace std;
 # endif
 #endif
 
-#ifdef DARWIN
-#define isfinite( x ) ( x <= FLT_MAX ) 
+// FIXME: trigger with configure
+#if defined(DARWIN) || defined(__INTEL_COMPILER)
+# define isfinite( x ) ( x <= FLT_MAX ) 
+#else
+  using namespace std;
 #endif
 
 // Quick 'n dirty portable random number generator 
