@@ -1,3 +1,37 @@
+2009-06-16  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Move rank accus in stat directory.
+
+	* mln/accu/rank.hh,
+	* mln/accu/rank_bool.hh,
+	* mln/accu/rank_high_quant.hh: Move to...
+	* mln/accu/stat/rank.hh,
+	* mln/accu/stat/rank_bool.hh,
+	* mln/accu/stat/rank_high_quant.hh:
+	Move rank accus to stat directory.
+
+	* mln/accu/all.hh,
+	* mln/accu/essential.hh,
+	* mln/accu/stat/all.hh,
+	* mln/accu/stat/essential.hh:
+	Update all and essential respecting new locations.
+
+	* tests/accu/rank.cc,
+	* tests/accu/stat/rank.cc:
+	Move tests in stat directory.
+
+	* tests/accu/Makefile.am,
+	* tests/accu/stat/Makefile.am:
+	Update makefiles.
+
+	* mln/morpho/includes.hh,
+	* mln/morpho/rank_filter.hh,
+	* mln/morpho/tree/compute_attribute_image.hh,
+	* sandbox/theo/tufa_2008/filter_n.cc:
+	Replace accu::accu_name by accu::stat::accu_name,
+		accu::meta::accu_name by accu::meta::stat::accu_name,
+		accu/accu_name by accu/stat/accu_name.
+
 2009-06-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Implement mln::extract moophers over mln::thru_image.

@@ -39,7 +39,7 @@
 
 # include <mln/value/ops.hh>
 
-# include <mln/accu/rank.hh>
+# include <mln/accu/stat/rank.hh>
 
 # include <mln/accu/transform.hh>
 # include <mln/accu/transform_stop.hh>

@@ -64,5 +64,9 @@ namespace mln
 # include <mln/accu/stat/mean.hh>
 # include <mln/accu/stat/median_h.hh>
 # include <mln/accu/stat/median_alt.hh>
+# include <mln/accu/stat/rank_bool.hh>
+# include <mln/accu/stat/rank_high_quant.hh>
+# include <mln/accu/stat/rank.hh>
 
 #endif // ! MLN_ACCU_STAT_ALL_HH
+

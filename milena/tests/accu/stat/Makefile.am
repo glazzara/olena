@@ -27,7 +27,8 @@ check_PROGRAMS =				\
   max						\
   max_h						\
   median_h					\
-  mean
+  mean						\
+  rank
 
 var_SOURCES = var.cc
 mean_SOURCES = min.cc
@@ -37,5 +38,7 @@ min_h_SOURCES = min_h.cc
 max_SOURCES = max.cc
 max_h_SOURCES = max_h.cc
 min_max_SOURCES = min_max.cc
+rank_SOURCES = rank.cc
 
 TESTS = $(check_PROGRAMS)
+

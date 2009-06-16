@@ -23,7 +23,7 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/accu/rank.hh>
+#include <mln/accu/stat/rank.hh>
 #include <mln/value/int_u8.hh>
 
 
@@ -49,55 +49,55 @@ int main()
   using value::int_u8;
 
   {
-    accu::meta::rank r(4);
-    accu::rank<int_u8> a = accu::unmeta(r, int_u8());
+    accu::meta::stat::rank r(4);
+    accu::stat::rank<int_u8> a = accu::unmeta(r, int_u8());
     mln_assertion(a.k() == 4);
-//     Meta_Accumulator<accu::meta::rank>& R = r;
+//     Meta_Accumulator<accu::meta::stat::rank>& R = r;
 //     accu::unmeta(R, int_u8());
   }
 
   {
-    accu::rank<int_u8> accu(0);
+    accu::stat::rank<int_u8> accu(0);
     fill(accu);
     mln_assertion(accu.to_result() == 1u);
   }
   {
-    accu::rank<int_u8> accu(1);
+    accu::stat::rank<int_u8> accu(1);
     fill(accu);
     mln_assertion(accu.to_result() == 2u);
   }
   {
-    accu::rank<int_u8> accu(2);
+    accu::stat::rank<int_u8> accu(2);
     fill(accu);
     mln_assertion(accu.to_result() == 2u);
   }
   {
-    accu::rank<int_u8> accu(3);
+    accu::stat::rank<int_u8> accu(3);
     fill(accu);
     mln_assertion(accu.to_result() == 3u);
   }
   {
-    accu::rank<int_u8> accu(4);
+    accu::stat::rank<int_u8> accu(4);
     fill(accu);
     mln_assertion(accu.to_result() == 4u);
   }
   {
-    accu::rank<int_u8> accu(5);
+    accu::stat::rank<int_u8> accu(5);
     fill(accu);
     mln_assertion(accu.to_result() == 5u);
   }
   {
-    accu::rank<int_u8> accu(6);
+    accu::stat::rank<int_u8> accu(6);
     fill(accu);
     mln_assertion(accu.to_result() == 5u);
   }
   {
-    accu::rank<int_u8> accu(7);
+    accu::stat::rank<int_u8> accu(7);
     fill(accu);
     mln_assertion(accu.to_result() == 5u);
   }
   {
-    accu::rank<bool> accu_bool(1);
+    accu::stat::rank<bool> accu_bool(1);
     accu_bool.take(true);
     accu_bool.take(true);
     accu_bool.take(true);

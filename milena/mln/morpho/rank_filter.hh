@@ -102,7 +102,7 @@ namespace mln
 	  mln_concrete(I) output;
 	  initialize(output, input);
 
-	  accu::rank<mln_value(I)> accu(k);
+	  accu::stat::rank<mln_value(I)> accu(k);
 	  extension::adjust_fill(input, geom::delta(win) + 1, accu);
 	  mln_piter(I) p(input.domain());
 	  mln_qiter(W) q(win, p);
@@ -133,7 +133,7 @@ namespace mln
 
 	internal::rank_filter_tests(input, win, k);
 
-	accu::rank<mln_value(I)> accu(k);
+	accu::stat::rank<mln_value(I)> accu(k);
 	extension::adjust_fill(input, geom::delta(win) + 1, accu);
 	mln_concrete(I) output = accu::transform_line(accu, input, exact(win).length(), dir);
 
@@ -151,7 +151,7 @@ namespace mln
 
 	internal::rank_filter_tests(input, win, k);
 
-	accu::rank<mln_value(I)> accu(k);
+	accu::stat::rank<mln_value(I)> accu(k);
 	extension::adjust_fill(input, geom::delta(win) + 1, accu);
 	mln_concrete(I) output = accu::transform_directional(accu, input, win, dir);
 

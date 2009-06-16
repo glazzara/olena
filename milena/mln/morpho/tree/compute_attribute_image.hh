@@ -144,7 +144,7 @@ namespace mln
 	{
 	  // Transmit "dynamic data" (state) of 'a' to every values of
 	  // 'acc'.  It is usually a no-op (so useless) except for a
-	  // few accumulators, e.g., for accu::rank which has the 'k'
+	  // few accumulators, e.g., for accu::stat::rank which has the 'k'
 	  // attribute.
 	  A a = exact(a_);
 	  mln::data::fill(acc, a);

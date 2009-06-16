@@ -32,7 +32,6 @@
 
 # include <mln/accu/center.hh>
 # include <mln/accu/histo.hh>
-# include <mln/accu/rank.hh>
 
 # include <mln/accu/stat/essential.hh>
 # include <mln/accu/image/essential.hh>

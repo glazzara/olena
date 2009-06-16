@@ -61,7 +61,6 @@ namespace mln
 # include <mln/accu/line.hh>
 # include <mln/accu/nil.hh>
 # include <mln/accu/pair.hh>
-# include <mln/accu/rank.hh>
 # include <mln/accu/rms.hh>
 // << # include <mln/accu/tuple.hh> >>
 

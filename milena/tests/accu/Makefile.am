@@ -34,7 +34,6 @@ check_PROGRAMS =				\
   max_site 					\
   nil						\
   pair						\
-  rank						\
   transform					\
   transform_diagonal				\
   transform_directional				\
@@ -49,7 +48,6 @@ line_SOURCES = line.cc
 max_site_SOURCES = max_site.cc
 nil_SOURCES = nil.cc
 pair_SOURCES = pair.cc
-rank_SOURCES = rank.cc
 transform_SOURCES = transform.cc
 transform_diagonal_SOURCES = transform_diagonal.cc
 transform_directional_SOURCES = transform_directional.cc
