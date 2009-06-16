@@ -38,6 +38,8 @@
 # include <mln/util/array.hh>
 # include <mln/util/set.hh>
 
+# include <mln/math/round.hh>
+
 # include <scribo/core/macros.hh>
 
 
@@ -151,6 +153,7 @@ namespace scribo
 	// We may do too much iterations (while loop) and some of them may
 	// be done for nothing...
 	mln::util::array<int> newlines;
+	math::round<int> round;
 	while (max_nelts > 0)
 	{
 	  for_all_elements(i, lines)
@@ -166,11 +169,11 @@ namespace scribo
 		for_all_elements(j, lines[i])
 		  if (box2line[lines[i][j]] == -1)
 		  {
-		    line_bboxes[lines[i][j]].pmin()[dim] = mean.to_result();
-		    line_bboxes[lines[i][j]].pmax()[dim] = mean.to_result();
-		    box2line[lines[i][j]] = mean.to_result();
+		    line_bboxes[lines[i][j]].pmin()[dim] = round(mean.to_result());
+		    line_bboxes[lines[i][j]].pmax()[dim] = round(mean.to_result());
+		    box2line[lines[i][j]] = round(mean.to_result());
 		  }
-		newlines.append(mean.to_result());
+		newlines.append(round(mean.to_result()));
 	      }
 	    }
 	  --max_nelts;

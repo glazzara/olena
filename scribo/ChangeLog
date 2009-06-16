@@ -1,3 +1,14 @@
+2009-06-16 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Fix compilation issues with gcc-3.3 in Scribo.
+
+	* table/extract.hh: add a missing include and specify the scribo
+	namespace.
+
+      	* table/internal/align_lines.hh: fix warnings.
+
+      	* table/internal/repair_lines.hh: do not use mln_VAR.
+
 2009-06-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Fixes about accumulator includes and calls.

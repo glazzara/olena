@@ -76,6 +76,12 @@ namespace scribo
 
       /// Repair lines which have small discontinuities.
       /// FIXME: buggy. Sometimes few lines move or shrink!
+      ///
+      /// \param[in] input		A binary image.
+      /// \param[in,out] tableboxes	Vertical or horizontal lines.
+      /// \param[in] max_discontinuity	The maximum discontinuity length which
+      ///				can be repaired.
+      //
       template <unsigned axis, typename I>
       void
       repair_lines(const Image<I>& input_,
@@ -101,7 +107,8 @@ namespace scribo
 	typedef win::line<mln_grid(P), axis, mln_coord(P)> line_t;
 
 	// Initialization
-	mln_ch_value(I,value::label_16) l(input.domain());
+	typedef mln_ch_value(I,value::label_16) L;
+	L l(input.domain());
 	data::fill(l, literal::zero);
 	for_all_components(i, tableboxes)
 	{
@@ -111,12 +118,19 @@ namespace scribo
 	}
 
 	// Repair
-	extension_val<mln_ch_value(I,value::label_16)> l_ext(l, literal::zero);
+	extension_val<L> l_ext(l, literal::zero);
 
 	mln::util::array<box<P> > result;
 	std::vector<bool> to_keep(tableboxes.nelements(), true);
 
-	mln_VAR(tbb_ima, extend(l | (pw::value(l) != pw::cst(literal::zero)), l));
+	//FIXME: use mln_VAR?
+	typedef
+	  extension_ima<
+	      const image_if<L,
+		    fun::neq_v2b_expr_<pw::value_<L>,
+				       pw::cst_<literal::zero_t> > >, const L> tbb_ima_t;
+	tbb_ima_t tbb_ima = extend(l | (pw::value(l) != pw::cst(literal::zero)), l);
+
 	//FIXME: use a half window, just the bottom of the vertical line.
 	line_t vl(max_discontinuity);
 	mln_piter(tbb_ima_t) p(tbb_ima.domain());

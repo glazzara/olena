@@ -35,6 +35,7 @@
 # include <mln/util/couple.hh>
 # include <mln/util/array.hh>
 
+# include <scribo/core/object_image.hh>
 # include <scribo/table/rebuild.hh>
 # include <scribo/table/erase.hh>
 # include <scribo/extract/primitive/lines_h_discontinued.hh>
@@ -81,10 +82,10 @@ namespace scribo
 
       V nhlines, nvlines;
       object_image(mln_ch_value(I,V))
-	hlines = extract::primitive::lines_h_discontinued(input, c8(),
-							  nhlines, 51, 6),
-	vlines = extract::primitive::lines_v_discontinued(input, c8(),
-							  nvlines, 51, 6);
+	hlines = scribo::extract::primitive::lines_h_discontinued(input, c8(),
+								   nhlines, 51, 6),
+	vlines = scribo::extract::primitive::lines_v_discontinued(input, c8(),
+								  nvlines, 51, 6);
 
       typedef mln::util::couple<mln_ch_value(I,V),
 				mln::util::couple<mln::util::array<box<mln_site(I)> >,
