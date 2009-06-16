@@ -30,8 +30,7 @@
 ///
 /// Extract the blue component of an image.
 
-
-# include <mln/core/image/vmorph/fun_image.hh>
+# include <mln/core/image/vmorph/thru_image.hh>
 # include <mln/fun/meta/blue.hh>
 
 namespace mln
@@ -41,16 +40,17 @@ namespace mln
   {
 
     template <typename I>
-    fun_image<meta::blue<mln_value(I)>,I>
+    thru_image< I, meta::blue<mln_value(I)> >
     blue(Image<I>& ima);
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    fun_image<meta::blue<mln_value(I)>,I>
+    thru_image< I, meta::blue<mln_value(I)> >
     blue(Image<I>& ima)
     {
-      fun_image<meta::blue<mln_value(I)>,I> result(ima);
+      typedef meta::blue<mln_value(I)> blue_t;
+      thru_image<I, blue_t> result(exact(ima), blue_t());
       return result;
     }
 

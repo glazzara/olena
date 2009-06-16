@@ -30,8 +30,7 @@
 ///
 /// Extract the hue component of an image.
 
-
-# include <mln/core/image/vmorph/fun_image.hh>
+# include <mln/core/image/vmorph/thru_image.hh>
 # include <mln/fun/meta/hue.hh>
 
 namespace mln
@@ -41,16 +40,17 @@ namespace mln
   {
 
     template <typename I>
-    fun_image<meta::hue<mln_value(I)>,I>
+    thru_image< I, meta::hue<mln_value(I)> >
     hue(Image<I>& ima);
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    fun_image<meta::hue<mln_value(I)>,I>
+    thru_image< I, meta::hue<mln_value(I)> >
     hue(Image<I>& ima)
     {
-      fun_image<meta::hue<mln_value(I)>,I> result(ima);
+      typedef meta::hue<mln_value(I)> hue_t;
+      thru_image<I, hue_t> result(exact(ima), hue_t());
       return result;
     }
 

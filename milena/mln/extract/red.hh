@@ -30,8 +30,7 @@
 ///
 /// Extract the red component of an image.
 
-
-# include <mln/core/image/vmorph/fun_image.hh>
+# include <mln/core/image/vmorph/thru_image.hh>
 # include <mln/fun/meta/red.hh>
 
 namespace mln
@@ -41,16 +40,17 @@ namespace mln
   {
 
     template <typename I>
-    fun_image<meta::red<mln_value(I)>,I>
+    thru_image< I, meta::red<mln_value(I)> >
     red(Image<I>& ima);
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    fun_image<meta::red<mln_value(I)>,I>
+    thru_image< I, meta::red<mln_value(I)> >
     red(Image<I>& ima)
     {
-      fun_image<meta::red<mln_value(I)>,I> result(ima);
+      typedef meta::red<mln_value(I)> red_t;
+      thru_image<I, red_t> result(exact(ima), red_t());
       return result;
     }
 

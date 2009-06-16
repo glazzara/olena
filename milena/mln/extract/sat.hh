@@ -30,8 +30,7 @@
 ///
 /// Extract the sat component of an image.
 
-
-# include <mln/core/image/vmorph/fun_image.hh>
+# include <mln/core/image/vmorph/thru_image.hh>
 # include <mln/fun/meta/sat.hh>
 
 namespace mln
@@ -41,16 +40,17 @@ namespace mln
   {
 
     template <typename I>
-    fun_image<meta::sat<mln_value(I)>,I>
+    thru_image< I, meta::sat<mln_value(I)> >
     sat(Image<I>& ima);
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    fun_image<meta::sat<mln_value(I)>,I>
+    thru_image< I, meta::sat<mln_value(I)> >
     sat(Image<I>& ima)
     {
-      fun_image<meta::sat<mln_value(I)>,I> result(ima);
+      typedef meta::sat<mln_value(I)> sat_t;
+      thru_image<I, sat_t> result(exact(ima), sat_t());
       return result;
     }
 

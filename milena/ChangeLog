@@ -1,3 +1,15 @@
+2009-06-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Implement mln::extract moophers over mln::thru_image.
+
+	* mln/extract/blue.hh,
+	* mln/extract/green.hh,
+	* mln/extract/hue.hh,
+	* mln/extract/lum.hh,
+	* mln/extract/red.hh,
+	* mln/extract/sat.hh:
+	Use mln::thru_image instead of mln::fun_image.
+
 2009-06-16  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	Small fixes.

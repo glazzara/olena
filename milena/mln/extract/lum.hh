@@ -30,8 +30,7 @@
 ///
 /// Extract the lum component of an image.
 
-
-# include <mln/core/image/vmorph/fun_image.hh>
+# include <mln/core/image/vmorph/thru_image.hh>
 # include <mln/fun/meta/lum.hh>
 
 namespace mln
@@ -41,16 +40,17 @@ namespace mln
   {
 
     template <typename I>
-    fun_image<meta::lum<mln_value(I)>,I>
+    thru_image< I, meta::lum<mln_value(I)> >
     lum(Image<I>& ima);
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    fun_image<meta::lum<mln_value(I)>,I>
+    thru_image< I, meta::lum<mln_value(I)> >
     lum(Image<I>& ima)
     {
-      fun_image<meta::lum<mln_value(I)>,I> result(ima);
+      typedef meta::lum<mln_value(I)> lum_t;
+      thru_image<I, lum_t> result(exact(ima), lum_t());
       return result;
     }
 

@@ -30,8 +30,7 @@
 ///
 /// Extract the green component of an image.
 
-
-# include <mln/core/image/vmorph/fun_image.hh>
+# include <mln/core/image/vmorph/thru_image.hh>
 # include <mln/fun/meta/green.hh>
 
 namespace mln
@@ -41,16 +40,17 @@ namespace mln
   {
 
     template <typename I>
-    fun_image<meta::green<mln_value(I)>,I>
+    thru_image< I, meta::green<mln_value(I)> >
     green(Image<I>& ima);
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    fun_image<meta::green<mln_value(I)>,I>
+    thru_image< I, meta::green<mln_value(I)> >
     green(Image<I>& ima)
     {
-      fun_image<meta::green<mln_value(I)>,I> result(ima);
+      typedef meta::green<mln_value(I)> green_t;
+      thru_image<I, green_t> result(exact(ima), green_t());
       return result;
     }
 
