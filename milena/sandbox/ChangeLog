@@ -1,3 +1,9 @@
+2009-06-17  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Compute histo 3d test.
+	* folio/mln/histo/compute_histo_3d.hh: Algorithm.
+	* folio/test/histo/compute_histo_3d.cc: Test file.
+
 2009-06-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Implement visualization routine for regions.
