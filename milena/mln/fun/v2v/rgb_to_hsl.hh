@@ -117,7 +117,7 @@ namespace mln
 	double nmax = (double) rmax / (mln_max(typename T_rgb::red_t) - mln_min(typename T_rgb::red_t));
 	double nmin = (double) rmin / (mln_max(typename T_rgb::red_t) - mln_min(typename T_rgb::red_t));
 
-	hsl.lum() = ((double) nmax + (double) nmin) / 2;
+	hsl.lum() = (nmax + nmin) / 2;
 
 	if (rmin == rmax)
 	  hsl.sat() = 0;
