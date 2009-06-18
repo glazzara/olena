@@ -215,7 +215,7 @@ CLEANFILES =					\
 # sed instead of configure saves us a lot of time.
 Doxyfile_user: Doxyfile_devel $(top_srcdir)/milena/ChangeLog 
 	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog`;	\
-	$(edit) $< >$@
+	$(edit_user) $< >$@
 
 Doxyfile_user_pdf: Doxyfile_user $(top_srcdir)/milena/ChangeLog 
 	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog`;	\

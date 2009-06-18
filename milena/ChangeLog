@@ -1,3 +1,7 @@
+2009-06-18  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
+	* doc/Makefile.am: generate user doc in the user/ directory.
+
 2009-06-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	De-activate tests on extract rgb component.
