@@ -1,3 +1,12 @@
+2009-06-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Break dependencies of the documentation on ChangeLog.
+
+	* doc/Makefile.am
+	(Doxyfile_user, Doxyfile_user_pdf)
+	(Doxyfile_devel, Doxyfile_devel_pdf):
+	Do not depend on ChangeLog.
+
 2009-06-18  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	* doc/Makefile.am: do not include '$' characters in Doxygen
