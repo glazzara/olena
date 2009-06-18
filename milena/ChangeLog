@@ -1,3 +1,7 @@
+2009-06-18  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
+	* doc/Makefile.am: fix doxyfile generation.
+
 2009-06-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	* headers.mk, tests/unit_test/unit-tests.mk: Regen.
