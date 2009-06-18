@@ -18,7 +18,6 @@ mln_accu_image_take_as_init \
 mln_accu_image_take_n_times \
 mln_accu_image_to_result \
 mln_accu_image_untake \
-mln_accu_inf \
 mln_accu_internal_base \
 mln_accu_internal_couple \
 mln_accu_label_used \
@@ -32,14 +31,13 @@ mln_accu_maj_h \
 mln_accu_math_all \
 mln_accu_math_count \
 mln_accu_math_essential \
+mln_accu_math_inf \
 mln_accu_math_sum \
+mln_accu_math_sup \
 mln_accu_max_site \
 mln_accu_nil \
 mln_accu_p \
 mln_accu_pair \
-mln_accu_rank \
-mln_accu_rank_bool \
-mln_accu_rank_high_quant \
 mln_accu_rms \
 mln_accu_shape_all \
 mln_accu_shape_bbox \
@@ -60,9 +58,11 @@ mln_accu_stat_median_h \
 mln_accu_stat_min \
 mln_accu_stat_min_h \
 mln_accu_stat_min_max \
+mln_accu_stat_rank \
+mln_accu_stat_rank_bool \
+mln_accu_stat_rank_high_quant \
 mln_accu_stat_var \
 mln_accu_stat_variance \
-mln_accu_sup \
 mln_accu_take \
 mln_accu_transform \
 mln_accu_transform_diagonal \
@@ -201,7 +201,6 @@ mln_core_concept_iterator \
 mln_core_concept_literal \
 mln_core_concept_mesh \
 mln_core_concept_meta_accumulator \
-mln_core_concept_meta_fun \
 mln_core_concept_meta_function \
 mln_core_concept_neighborhood \
 mln_core_concept_object \
@@ -498,6 +497,7 @@ mln_fun_meta_essential \
 mln_fun_meta_first \
 mln_fun_meta_green \
 mln_fun_meta_hue \
+mln_fun_meta_impl \
 mln_fun_meta_inty \
 mln_fun_meta_lum \
 mln_fun_meta_red \
@@ -1278,7 +1278,6 @@ mln_accu_image_take_as_init_SOURCES = mln_accu_image_take_as_init.cc
 mln_accu_image_take_n_times_SOURCES = mln_accu_image_take_n_times.cc
 mln_accu_image_to_result_SOURCES = mln_accu_image_to_result.cc
 mln_accu_image_untake_SOURCES = mln_accu_image_untake.cc
-mln_accu_inf_SOURCES = mln_accu_inf.cc
 mln_accu_internal_base_SOURCES = mln_accu_internal_base.cc
 mln_accu_internal_couple_SOURCES = mln_accu_internal_couple.cc
 mln_accu_label_used_SOURCES = mln_accu_label_used.cc
@@ -1292,14 +1291,13 @@ mln_accu_maj_h_SOURCES = mln_accu_maj_h.cc
 mln_accu_math_all_SOURCES = mln_accu_math_all.cc
 mln_accu_math_count_SOURCES = mln_accu_math_count.cc
 mln_accu_math_essential_SOURCES = mln_accu_math_essential.cc
+mln_accu_math_inf_SOURCES = mln_accu_math_inf.cc
 mln_accu_math_sum_SOURCES = mln_accu_math_sum.cc
+mln_accu_math_sup_SOURCES = mln_accu_math_sup.cc
 mln_accu_max_site_SOURCES = mln_accu_max_site.cc
 mln_accu_nil_SOURCES = mln_accu_nil.cc
 mln_accu_p_SOURCES = mln_accu_p.cc
 mln_accu_pair_SOURCES = mln_accu_pair.cc
-mln_accu_rank_SOURCES = mln_accu_rank.cc
-mln_accu_rank_bool_SOURCES = mln_accu_rank_bool.cc
-mln_accu_rank_high_quant_SOURCES = mln_accu_rank_high_quant.cc
 mln_accu_rms_SOURCES = mln_accu_rms.cc
 mln_accu_shape_all_SOURCES = mln_accu_shape_all.cc
 mln_accu_shape_bbox_SOURCES = mln_accu_shape_bbox.cc
@@ -1320,9 +1318,11 @@ mln_accu_stat_median_h_SOURCES = mln_accu_stat_median_h.cc
 mln_accu_stat_min_SOURCES = mln_accu_stat_min.cc
 mln_accu_stat_min_h_SOURCES = mln_accu_stat_min_h.cc
 mln_accu_stat_min_max_SOURCES = mln_accu_stat_min_max.cc
+mln_accu_stat_rank_SOURCES = mln_accu_stat_rank.cc
+mln_accu_stat_rank_bool_SOURCES = mln_accu_stat_rank_bool.cc
+mln_accu_stat_rank_high_quant_SOURCES = mln_accu_stat_rank_high_quant.cc
 mln_accu_stat_var_SOURCES = mln_accu_stat_var.cc
 mln_accu_stat_variance_SOURCES = mln_accu_stat_variance.cc
-mln_accu_sup_SOURCES = mln_accu_sup.cc
 mln_accu_take_SOURCES = mln_accu_take.cc
 mln_accu_transform_SOURCES = mln_accu_transform.cc
 mln_accu_transform_diagonal_SOURCES = mln_accu_transform_diagonal.cc
@@ -1461,7 +1461,6 @@ mln_core_concept_iterator_SOURCES = mln_core_concept_iterator.cc
 mln_core_concept_literal_SOURCES = mln_core_concept_literal.cc
 mln_core_concept_mesh_SOURCES = mln_core_concept_mesh.cc
 mln_core_concept_meta_accumulator_SOURCES = mln_core_concept_meta_accumulator.cc
-mln_core_concept_meta_fun_SOURCES = mln_core_concept_meta_fun.cc
 mln_core_concept_meta_function_SOURCES = mln_core_concept_meta_function.cc
 mln_core_concept_neighborhood_SOURCES = mln_core_concept_neighborhood.cc
 mln_core_concept_object_SOURCES = mln_core_concept_object.cc
@@ -1758,6 +1757,7 @@ mln_fun_meta_essential_SOURCES = mln_fun_meta_essential.cc
 mln_fun_meta_first_SOURCES = mln_fun_meta_first.cc
 mln_fun_meta_green_SOURCES = mln_fun_meta_green.cc
 mln_fun_meta_hue_SOURCES = mln_fun_meta_hue.cc
+mln_fun_meta_impl_SOURCES = mln_fun_meta_impl.cc
 mln_fun_meta_inty_SOURCES = mln_fun_meta_inty.cc
 mln_fun_meta_lum_SOURCES = mln_fun_meta_lum.cc
 mln_fun_meta_red_SOURCES = mln_fun_meta_red.cc

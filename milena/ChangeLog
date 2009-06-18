@@ -1,5 +1,9 @@
 2009-06-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	* headers.mk, tests/unit_test/unit-tests.mk: Regen.
+
+2009-06-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Break dependencies of the documentation on ChangeLog.
 
 	* doc/Makefile.am

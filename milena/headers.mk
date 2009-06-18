@@ -18,7 +18,6 @@ mln/accu/image/take_as_init.hh \
 mln/accu/image/take_n_times.hh \
 mln/accu/image/to_result.hh \
 mln/accu/image/untake.hh \
-mln/accu/inf.hh \
 mln/accu/internal/base.hh \
 mln/accu/internal/couple.hh \
 mln/accu/label_used.hh \
@@ -32,14 +31,13 @@ mln/accu/maj_h.hh \
 mln/accu/math/all.hh \
 mln/accu/math/count.hh \
 mln/accu/math/essential.hh \
+mln/accu/math/inf.hh \
 mln/accu/math/sum.hh \
+mln/accu/math/sup.hh \
 mln/accu/max_site.hh \
 mln/accu/nil.hh \
 mln/accu/p.hh \
 mln/accu/pair.hh \
-mln/accu/rank.hh \
-mln/accu/rank_bool.hh \
-mln/accu/rank_high_quant.hh \
 mln/accu/rms.hh \
 mln/accu/shape/all.hh \
 mln/accu/shape/bbox.hh \
@@ -60,9 +58,11 @@ mln/accu/stat/median_h.hh \
 mln/accu/stat/min.hh \
 mln/accu/stat/min_h.hh \
 mln/accu/stat/min_max.hh \
+mln/accu/stat/rank.hh \
+mln/accu/stat/rank_bool.hh \
+mln/accu/stat/rank_high_quant.hh \
 mln/accu/stat/var.hh \
 mln/accu/stat/variance.hh \
-mln/accu/sup.hh \
 mln/accu/take.hh \
 mln/accu/transform.hh \
 mln/accu/transform_diagonal.hh \
@@ -223,7 +223,6 @@ mln/core/concept/iterator.hh \
 mln/core/concept/literal.hh \
 mln/core/concept/mesh.hh \
 mln/core/concept/meta_accumulator.hh \
-mln/core/concept/meta_fun.hh \
 mln/core/concept/meta_function.hh \
 mln/core/concept/neighborhood.hh \
 mln/core/concept/object.hh \
@@ -507,6 +506,7 @@ mln/fun/math/cos.hh \
 mln/fun/math/inf.hh \
 mln/fun/math/norm.hh \
 mln/fun/math/sup.hh \
+mln/fun/meta/impl.hh \
 mln/fun/ops.hh \
 mln/fun/p2b/all.hh \
 mln/fun/p2b/antilogy.hh \
