@@ -214,17 +214,14 @@ CLEANFILES =					\
 # Moreover, this file is updated whenever ChangeLog is touched: using
 # sed instead of configure saves us a lot of time.
 Doxyfile_user: Doxyfile_devel $(top_srcdir)/milena/ChangeLog 
-	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog`;	\
 	$(edit_user) $< >$@
 
 Doxyfile_user_pdf: Doxyfile_user $(top_srcdir)/milena/ChangeLog 
-	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog`;	\
 	$(edit_pdf) $< >$@
 
 Doxyfile_devel: $(srcdir)/Doxyfile.in $(top_srcdir)/milena/ChangeLog 
-	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog`;	\
+	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog | sed -e 's/\$//g'`; \
 	$(edit) $< >$@
 
 Doxyfile_devel_pdf: $Doxyfile_devel $(top_srcdir)/milena/ChangeLog 
-	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog`;	\
 	$(edit_pdf) $< >$@
