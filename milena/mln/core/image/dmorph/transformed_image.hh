@@ -139,10 +139,6 @@ namespace mln
 
 
 
-  template <typename I, typename F, typename J>
-  void init_(tag::image_t, transformed_image<I,F>& target, const J& model);
-
-
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -153,10 +149,16 @@ namespace mln
   void init_(tag::image_t, transformed_image<I,F>& target, const J& model)
   {
     I ima;
-    init_(tag::image, ima, model);
+    init_(tag::image, ima, exact(model));
     F f;
-    init_(tag::function, f, model);
+    init_(tag::function, f, exact(model));
     target.init_(ima, f);
+  }
+
+  template <typename I, typename F>
+  void init_(tag::function_t, F& f, const transformed_image<I,F>& model)
+  {
+    f = model.domain().function();
   }
 
 
@@ -209,27 +211,27 @@ namespace mln
     return this->data_->domain_;
   }
 
-template <typename I, typename F>
-inline
-mln_rvalue(I)
-transformed_image<I,F>::operator()(const mln_psite(I)& p) const
-{
-      mln_precondition(this->delegatee_() != 0);
-      mln_precondition(exact(this)->has(p));
-      mln_precondition(this->delegatee_()->has(p));
-      return this->delegatee_()->operator()(this->data_->f_(p));
-}
-
-template <typename I, typename F>
-inline
-mln_morpher_lvalue(I)
-transformed_image<I,F>::operator()(const mln_psite(I)& p)
-{
-      mln_precondition(this->delegatee_() != 0);
-      mln_precondition(exact(this)->has(p));
-      mln_precondition(this->delegatee_()->has(p));
-      return this->delegatee_()->operator()(this->data_->f_(p));
-}
+  template <typename I, typename F>
+  inline
+  mln_rvalue(I)
+  transformed_image<I,F>::operator()(const mln_psite(I)& p) const
+  {
+    mln_precondition(this->delegatee_() != 0);
+    mln_precondition(exact(this)->has(p));
+    mln_precondition(this->delegatee_()->has(this->data_->f_(p)));
+    return this->delegatee_()->operator()(this->data_->f_(p));
+  }
+  
+  template <typename I, typename F>
+  inline
+  mln_morpher_lvalue(I)
+  transformed_image<I,F>::operator()(const mln_psite(I)& p)
+  {
+    mln_precondition(this->delegatee_() != 0);
+    mln_precondition(exact(this)->has(p));
+    mln_precondition(this->delegatee_()->has(this->data_->f_(p)));
+    return this->delegatee_()->operator()(this->data_->f_(p));
+  }
 
 
   template <typename I, typename F>

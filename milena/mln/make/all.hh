@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,6 +50,7 @@ namespace mln
 # include <mln/make/image2d.hh>
 # include <mln/make/image3d.hh>
 # include <mln/make/mat.hh>
+# include <mln/make/neighb2d.hh>
 # include <mln/make/pix.hh>
 # include <mln/make/pixel.hh>
 # include <mln/make/point2d_h.hh>
