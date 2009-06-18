@@ -1,3 +1,5 @@
+mln/accu/math/inf.hh
+mln/accu/math/sup.hh
 mln/core/image/vmorph/thru_image.hh
 mln/core/image/vmorph/thrubin_image.hh
 mln/data/was.median.hh
@@ -15,6 +17,8 @@ mln/fun/component/comp.hh
 mln/fun/compose.hh
 mln/fun/composition.hh
 mln/fun/from_accu.hh
+mln/fun/math/inf.hh
+mln/fun/math/sup.hh
 mln/fun/meta/all.hh
 mln/fun/meta/blue.hh
 mln/fun/meta/essential.hh
