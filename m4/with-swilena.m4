@@ -28,7 +28,7 @@ esac
 
 if test x$with_swig != xno; then
   oln_has_swig=yes
-  AM_PATH_PYTHON([2.3])
+  AM_PATH_PYTHON([2.5])
   adl_CHECK_PYTHON
 
   # Check for Python and SWIG.
