@@ -1,5 +1,13 @@
 2009-06-19  Etienne FOLIO  <folio@lrde.epita.fr>
 
+	Clean up sandbox.
+	* folio/test/histo/project_histo_add.cc: Move old file.
+	* folio/tools/histo/project_histo_add.cc: Moved file.
+	* folio/tools/histo: New folder for histo tools.
+	* folio/tools: New folder for tools.
+
+2009-06-19  Etienne FOLIO  <folio@lrde.epita.fr>
+
 	Update histo compute and project tests and algorithms.
 	* folio/mln/histo/compute_histo_3d.hh: Add headers.
 	* folio/mln/histo/project_histo_3d.hh: New projection algorithm.
