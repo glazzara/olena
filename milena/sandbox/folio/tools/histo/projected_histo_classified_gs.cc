@@ -25,10 +25,15 @@
 
 
 #include <mln/accu/math/sum.hh>
+#include <mln/arith/revert.hh>
+#include <mln/core/alias/neighb3d.hh>
 #include <mln/data/stretch.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/ppm/load.hh>
-#include <mln/value/rgb8.hh>
+#include <mln/morpho/closing/volume.hh>
+#include <mln/morpho/elementary/dilation.hh>
+#include <mln/morpho/watershed/flooding.hh>
+#include <mln/value/label_8.hh>
 
 #include "../../mln/histo/compute_histo_3d.hh"
 #include "../../mln/histo/project_histo_3d.hh"
@@ -75,14 +80,36 @@ main(int argc, char** argv)
   std::cout << "  => computing histogram..." << std::endl;
   image3d<unsigned> histo = histo::compute_histo_3d(ima8);
 
+  // build reverted histo
+  std::cout << "  => computing reverted histogram..." << std::endl;
+  image3d<unsigned> reverted = arith::revert(histo);
+
+  // compute morpho closure
+  std::cout << "  => computing closure..." << std::endl;
+  image3d<unsigned> closed = morpho::closing::volume(reverted, c6(), atoi(argv[2]));
+
+  // compute watershed transform
+  std::cout << "  => computing watershed..." << std::endl;
+  value::label_8 nbasin;
+  image3d<value::label_8> labels = morpho::watershed::flooding(closed, c6(), nbasin);
+  std::cout << "found " << nbasin << " labels" << std::endl;
+
+  // close maximas
+  labels = morpho::elementary::dilation(labels, c18());
+
+  // FIXME
+  // {
+
   // project it
   image2d<unsigned> proj =
-    histo::project_histo<accu::math::sum<unsigned, unsigned>, 2>(histo);
+    histo::project_histo<accu::math::sum<unsigned, unsigned>, 2>(labels);
 
   // compute output image
-  image2d<value::int_u8> out = data::stretch( value::int_u8(),
-					      data::transform( proj,
-							       take_log() ) );
+  image2d<int_u8> out = data::stretch( int_u8(),
+				       data::transform( proj,
+							take_log() ) );
+  // }
+
   // save output image
   std::cout << "  => saving " << argv[3] << "..." << std::endl;
   io::pgm::save(out, argv[3]);

@@ -1,5 +1,16 @@
 2009-06-19  Etienne FOLIO  <folio@lrde.epita.fr>
 
+	Add tools for histogram projections and visualization.
+	* folio/tools/histo/classify_with_histo.cc: Move file.
+	* folio/tools/histo/classify_with_histo_gs.cc: Moved file updated.
+	* folio/tools/histo/projected_histo_classified_color_maj.cc: New tool
+	(still buggy).
+	* folio/tools/histo/projected_histo_classified_gs.cc: New tool (still
+	buggy).
+	* folio/tools/histo/projected_histo_gs.cc: New tool.
+
+2009-06-19  Etienne FOLIO  <folio@lrde.epita.fr>
+
 	Stretch result of classification.
 	* folio/tools/histo/classify_with_histo.cc: Stretch result in
         the output image.
