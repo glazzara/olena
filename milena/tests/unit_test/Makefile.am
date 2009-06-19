@@ -22,19 +22,24 @@ include $(top_srcdir)/milena/tests/tests.mk
 # Regen files.
 include $(top_srcdir)/build-aux/regen-recursive.mk
 regen-am:
-	cd $(srcdir)						\
-	&& ./build_unit_test.sh $(abs_top_srcdir)/milena/mln
+	cd $(top_srcdir)					\
+	&& ./build-aux/build_unit_test.sh 			\
+		milena/mln 					\
+		milena/tests/unit_test 				\
+		milena/tests/unit_test/disabled_tests
 
-EXTRA_DIST = build_unit_test.sh
 # FIXME: Change build_unit_test.sh so that the action looks like this:
 #
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
 #
 # `$(abs_top_srcdir)' is required because of the change of directory
 # at the beginning og the action.
-$(srcdir)/unit-tests.mk: $(srcdir)/build_unit_test.sh
-	cd $(srcdir)						\
-	&& ./build_unit_test.sh $(abs_top_srcdir)/milena/mln
+$(srcdir)/unit-tests.mk: $(top_srcdir)/build-aux/build_unit_test.sh
+	cd $(top_srcdir)					\
+	&& ./build-aux/build_unit_test.sh 			\
+		milena/mln 					\
+		milena/tests/unit_test 				\
+		milena/tests/unit_test/disabled_tests
 
 include $(srcdir)/unit-tests.mk
 

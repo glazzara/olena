@@ -70,15 +70,15 @@ REGEN_SUBDIRS += doc tests
 #
 # Hence the redundant action.  There may be a better solution
 regen-am:
-	cd $(srcdir) && ./generate_dist_headers.sh
+	cd $(srcdir) && $(top_srcdir)/build-aux/generate_dist_headers.sh mln ./headers.mk ./nodist-headers
 
-EXTRA_DIST = generate_dist_headers.sh nodist-headers
+EXTRA_DIST = nodist-headers
 # FIXME: Change generate_dist_headers.sh so that the action looks like this:
 #
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
 #
-$(srcdir)/headers.mk: $(srcdir)/generate_dist_headers.sh nodist-headers
-	cd $(srcdir) && ./generate_dist_headers.sh
+$(srcdir)/headers.mk: $(top_srcdir)/build-aux/generate_dist_headers.sh nodist-headers
+	cd $(srcdir) && $(top_srcdir)/build-aux/generate_dist_headers.sh mln ./headers.mk ./nodist-headers
 
 include $(srcdir)/headers.mk
 

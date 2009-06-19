@@ -7,6 +7,7 @@ mln/accu/compute.hh \
 mln/accu/convolve.hh \
 mln/accu/count_adjacent_vertices.hh \
 mln/accu/count_labels.hh \
+mln/accu/count_value.hh \
 mln/accu/essential.hh \
 mln/accu/histo.hh \
 mln/accu/image/all.hh \
@@ -31,9 +32,7 @@ mln/accu/maj_h.hh \
 mln/accu/math/all.hh \
 mln/accu/math/count.hh \
 mln/accu/math/essential.hh \
-mln/accu/math/inf.hh \
 mln/accu/math/sum.hh \
-mln/accu/math/sup.hh \
 mln/accu/max_site.hh \
 mln/accu/nil.hh \
 mln/accu/p.hh \
@@ -503,9 +502,7 @@ mln/fun/internal/selector.hh \
 mln/fun/internal/x2x_linear_impl.hh \
 mln/fun/math/abs.hh \
 mln/fun/math/cos.hh \
-mln/fun/math/inf.hh \
 mln/fun/math/norm.hh \
-mln/fun/math/sup.hh \
 mln/fun/meta/impl.hh \
 mln/fun/ops.hh \
 mln/fun/p2b/all.hh \
