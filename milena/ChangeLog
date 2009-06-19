@@ -1,3 +1,10 @@
+2009-06-19  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add a demo for inter_pixel algorithms.
+	* demos/inter_pixel/Makefile: New target.
+	* demos/inter_pixel/inter_pixel.cc: New demo for inter_pixel watershed.
+	Generate a watershed image and an inter_pixel watershed image.
+
 2009-06-19  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	Use new scripts located in build-aux.
