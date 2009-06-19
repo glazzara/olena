@@ -16,3 +16,4 @@
 #
 
 ## Process this file through Automake to produce Makefile.in.
+EXTRA_DIST = generate_dist_headers.sh build_unit_test.sh

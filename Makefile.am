@@ -97,6 +97,10 @@ dist-hook:
 	  $(top_srcdir)/build-aux/strip-lrde $$f;	\
 	done;						\
 	rm -rf $(LRDE_NODIST_FILES) &&			\
+	$(top_srcdir)/build-aux/build_unit_test.sh 	\
+	    $(distdir)/milena/mln 			\
+	    $(distdir)/milena/tests/unit_test 		\
+	    $(top_srcdir)/milena/tests/unit_test/disabled_tests && \
 	(						\
 	  cd $(distdir);				\
 	  set -evx;					\

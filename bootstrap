@@ -129,20 +129,20 @@ require $libtoolize 1.5.22
 set -x
 
 # Generate milena/headers.mk
-run milena ./generate_dist_headers.sh
+run milena `pwd`/build-aux/generate_dist_headers.sh mln ./headers.mk ./nodist-headers
 
 # Generate scribo/headers.mk
-run scribo ./generate_dist_headers.sh
+run . `pwd`/build-aux/generate_dist_headers.sh scribo scribo/headers.mk scribo/nodist-headers
 
 # Generate lists of files to be part of the distribution
 # for the tutorial.
 run milena/doc ./generate_dist_files.sh
 
 # Generate unit test files.
-run milena/tests/unit_test ./build_unit_test.sh `pwd`/milena/mln
+run . ./build-aux/build_unit_test.sh `pwd`/milena/mln milena/tests/unit_test milena/tests/unit_test/disabled_tests
 
 # Generate unit test files for Scribo.
-run scribo/tests/unit_test ./build_unit_test.sh `pwd`/scribo
+run scribo/tests/unit_test ./build_unit_test.sh `pwd`/scribo .
 
 # Install the GNU Build System.
 autoreconf -f -v -i

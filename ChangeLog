@@ -1,3 +1,16 @@
+2009-06-19 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add build_unit_test.sh and generate_dist_headers.sh to build-aux.
+
+	* build-aux/build_unit_test.sh,
+	* build-aux/generate_dist_headers.sh: copy scripts from milena/ and
+	milena/tests/unit_test.
+
+	* build-aux/Makefile.am: add the previous scripts to EXTRA_DIST.
+
+	* bootstrap,
+	* Makefile.am: update the use of these scripts.
+
 2009-06-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	* m4/with-swilena.m4 (_OLN_WITH_SWIG): Require Python 2.5.
