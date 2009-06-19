@@ -24,53 +24,33 @@
 // executable file might be covered by the GNU General Public License.
 
 
-#include <mln/literal/all.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/value/rgb8.hh>
-
-#include "../../mln/histo/compute_histo_3d.hh"
-
-using namespace mln;
-using namespace value;
+#include <mln/accu/image/init.hh>
+#include <mln/accu/image/take.hh>
+#include <mln/accu/image/to_result.hh>
+#include <mln/core/image/dmorph/unproject_image.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/fun/v2v/projection.hh>
 
 
-void
-init_test_image(image2d<rgb8>& ima)
+namespace mln
 {
-  rgb8 red = literal::red;
-  rgb8 green = literal::green;
-  rgb8 black = literal::black;
+  namespace histo
+  {
 
-  for (unsigned i = 1; i < 8; ++i)
-    for (unsigned j = 0; j < 8; ++j)
+    template <typename A, unsigned Direction, typename V>
+    image2d<mln_result(A)>
+    project_histo(const image3d<V>& h)
     {
-      point2d p(j, i);
-      ima(p) = black;
+      image2d<A> h_2d_a(h.nrows(), h.ncols());
+      accu::image::init(h_2d_a);
+
+      accu::image::take( unproject( h_2d_a,
+				    h.domain(),
+				    fun::v2v::projection<point3d, Direction>() ).rw(),
+			 h );
+
+      return accu::image::to_result(h_2d_a);
     }
 
-  for (unsigned i = 0; i < 8; ++i)
-  {
-    point2d p(i, 0);
-    ima(p) = red;
   }
-
-  point2d p(4, 5);
-  ima(p) = green;
-}
-
-
-int main()
-{
-  // build test image
-  image2d<rgb8> ima(8, 8);
-  init_test_image(ima);
-
-  // build histo
-  image3d<unsigned> out = histo::compute_histo_3d(ima);
-
-  // verify...
-  mln_assertion(out(point3d(255, 0, 0)) == 8);
-  mln_assertion(out(point3d(0, 255, 0)) == 1);
-  mln_assertion(out(point3d(0, 0, 0)) == 55);
-  mln_assertion(out(point3d(1, 0, 0)) == 0);
 }

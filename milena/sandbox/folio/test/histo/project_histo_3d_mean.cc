@@ -24,16 +24,18 @@
 // executable file might be covered by the GNU General Public License.
 
 
+#include <mln/accu/stat/mean.hh>
 #include <mln/literal/all.hh>
-#include <mln/value/int_u8.hh>
 #include <mln/value/rgb8.hh>
 
 #include "../../mln/histo/compute_histo_3d.hh"
+#include "../../mln/histo/project_histo_3d.hh"
 
 using namespace mln;
 using namespace value;
 
 
+inline
 void
 init_test_image(image2d<rgb8>& ima)
 {
@@ -43,34 +45,36 @@ init_test_image(image2d<rgb8>& ima)
 
   for (unsigned i = 1; i < 8; ++i)
     for (unsigned j = 0; j < 8; ++j)
-    {
-      point2d p(j, i);
-      ima(p) = black;
-    }
+      ima(point2d(j, i)) = black;
 
   for (unsigned i = 0; i < 8; ++i)
-  {
-    point2d p(i, 0);
-    ima(p) = red;
-  }
+    ima(point2d(i, 0)) = red;
 
-  point2d p(4, 5);
-  ima(p) = green;
+  ima(point2d(4, 5)) = green;
 }
 
 
-int main()
+int
+main(int argc, char* argv[])
 {
   // build test image
   image2d<rgb8> ima(8, 8);
   init_test_image(ima);
 
   // build histo
-  image3d<unsigned> out = histo::compute_histo_3d(ima);
+  image3d<unsigned> histo = histo::compute_histo_3d(ima);
+
+  // project it
+  image2d<unsigned> proj =
+    histo::project_histo<accu::stat::mean<unsigned, unsigned>, 1>(histo);
+
+  // mln_fwd_piter_(image2d<unsigned>) p(proj.domain());
+  // for_all(p)
+  //   if (proj(p) != 0)
+  //     std::cout << p << " " << proj(p) << std::endl;
 
   // verify...
-  mln_assertion(out(point3d(255, 0, 0)) == 8);
-  mln_assertion(out(point3d(0, 255, 0)) == 1);
-  mln_assertion(out(point3d(0, 0, 0)) == 55);
-  mln_assertion(out(point3d(1, 0, 0)) == 0);
+  mln_assertion(proj(point2d(255, 0)) == 8);
+  mln_assertion(proj(point2d(0, 0)) == 56);
+  mln_assertion(proj(point2d(0, 255)) == 0);
 }
