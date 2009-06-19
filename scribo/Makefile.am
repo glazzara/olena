@@ -27,15 +27,23 @@ bin:
 include $(top_srcdir)/build-aux/regen-recursive.mk
 REGEN_SUBDIRS += tests
 
+# FIXME: the generation should be done from scribo's directory.
 regen-am:
-	cd $(srcdir) && ./generate_dist_headers.sh
+	cd $(srcdir) && 				\
+	$(top_srcdir)/build-aux/generate_dist_headers.sh\
+		    .	 				\
+		    ./headers.mk 			\
+		    ./nodist-headers
 
-EXTRA_DIST = generate_dist_headers.sh
 # FIXME: Change generate_dist_headers.sh so that the action looks like this:
 #
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
 #
-$(srcdir)/headers.mk: $(srcdir)/generate_dist_headers.sh
-	cd $(srcdir) && ./generate_dist_headers.sh
+$(srcdir)/headers.mk: $(top_srcdir)/build-aux/generate_dist_headers.sh
+	cd $(srcdir) && 				\
+	$(top_srcdir)/build-aux/generate_dist_headers.sh\
+		    . 					\
+		    ./headers.mk 			\
+		    ./nodist-headers
 
 include $(srcdir)/headers.mk

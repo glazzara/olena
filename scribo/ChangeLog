@@ -1,3 +1,19 @@
+2009-06-19 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Use scripts located in build-aux in Scribo.
+
+	* Makefile.am: make use of scripts located in build-aux.
+
+	* generate_dist_headers.sh: remove since useless.
+
+	* headers.mk: regen.
+
+	* nodist-headers: list of not distributed headers.
+	
+	* tests/unit_test/build_unit_test.sh: add output path as argument.
+	
+	* tests/unit_test/Makefile.am: update call to build_unit_test.sh.
+
 2009-06-16 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Fix compilation issues with gcc-3.3 in Scribo.

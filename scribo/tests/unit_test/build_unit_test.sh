@@ -11,7 +11,7 @@ ECHO_N=printf
 # Use the C locale to have a deterministic sort.
 export LC_ALL=C
 
-test $# -eq 1 || { echo "Usage: $0 <scribo path>" && exit 1; }
+test $# -eq 2 || { echo "Usage: $0 <scribo path> <output path>" && exit 1; }
 
 ## FIXME: Ouch!  Using `find' properly can probably save us some pipes,
 ## forks and characters here.
@@ -23,7 +23,7 @@ HEADERS=`find $1 -name "*.hh" \
 	| sed -e 's/.*\/scribo\/\(.*\)/scribo\/\1/g' \
 	| sed 's/\.\.\/\.\.\///g'`
 
-output=unit-tests.mk
+output=$2/unit-tests.mk
 
 rm -f "$output"
 rm -f scribo_*.cc

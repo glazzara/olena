@@ -23,7 +23,7 @@ include $(top_srcdir)/scribo/scribo.mk
 include $(top_srcdir)/build-aux/regen-recursive.mk
 regen-am:
 	cd $(srcdir)						\
-	&& ./build_unit_test.sh $(abs_top_srcdir)/scribo
+	&& ./build_unit_test.sh $(abs_top_srcdir)/scribo .
 
 # FIXME: Change build_unit_test.sh so that the action looks like this:
 #
@@ -33,7 +33,7 @@ regen-am:
 # at the beginning og the action.
 $(srcdir)/unit-tests.mk: $(srcdir)/build_unit_test.sh
 	cd $(srcdir)						\
-	&& ./build_unit_test.sh $(abs_top_srcdir)/scribo
+	&& ./build_unit_test.sh $(abs_top_srcdir)/scribo .
 
 include $(srcdir)/unit-tests.mk
 
