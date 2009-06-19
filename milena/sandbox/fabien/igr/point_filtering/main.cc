@@ -41,8 +41,8 @@ int main(int argc, char* argv[])
   win::segment1d seg15(15);
   win::segment1d seg21(21);
 
-  image1d<float> opening_ima = morpho::opening::structural(ima, seg21);
-  image1d<float> closing_ima = morpho::closing::structural(ima, seg21);
+  image1d<float> opening_ima = morpho::opening::structural(ima, seg15);
+  image1d<float> closing_ima = morpho::closing::structural(ima, seg15);
 
   image1d<accu::stat::mean<float> > result;
 
@@ -55,8 +55,8 @@ int main(int argc, char* argv[])
   io::plot::save(ima_morpho, "morpho.plot");
 
   // Morpho (again).
-  opening_ima = morpho::opening::structural(ima_morpho, seg13);
-  closing_ima = morpho::closing::structural(ima_morpho, seg13);
+  opening_ima = morpho::opening::structural(ima_morpho, seg11);
+  closing_ima = morpho::closing::structural(ima_morpho, seg11);
 
   initialize(result, ima_morpho);
 
@@ -67,8 +67,8 @@ int main(int argc, char* argv[])
   io::plot::save(ima_morpho2, "morpho2.plot");
 
   // Morpho (the return of the revenge).
-  opening_ima = morpho::opening::structural(ima_morpho2, seg5);
-  closing_ima = morpho::closing::structural(ima_morpho2, seg5);
+  opening_ima = morpho::opening::structural(ima_morpho2, seg7);
+  closing_ima = morpho::closing::structural(ima_morpho2, seg7);
 
   initialize(result, ima_morpho2);
 

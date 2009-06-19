@@ -35,8 +35,9 @@ int main(int argc, char *argv[])
   using namespace mln;
   using value::int_u8;
   using value::int_u12;
+  typedef int_u8 input_type;
 
-  if (argc != 4)
+  if (argc != 5)
   {
     std::cout << "Usage: " << argv[0] << " input.dump dim lambda output.dump"
 	      << std::endl;
@@ -53,20 +54,20 @@ int main(int argc, char *argv[])
 
   if (dim == 2)
   {
-    image2d<int_u12> input;
+    image2d<input_type> input;
     io::dump::load(input, argv[1]);
-    image2d<int_u12> clo = morpho::closing::volume(input, c4(), closure_lambda);
-    io::dump::save(clo, "clo_vol.dump");
+    image2d<input_type> clo = morpho::closing::volume(input, c4(), closure_lambda);
+    io::dump::save(clo, argv[4]);
   }
   else
   {
-    typedef image3d<int_u12> I;
+    typedef image3d<input_type> I;
 
     I input;
     io::dump::load(input, argv[1]);
 
     I clo = morpho::closing::volume(input, c6(), closure_lambda);
-    io::dump::save(clo, "clo_vol.dump");
+    io::dump::save(clo, argv[4]);
   }
 
   return 0;

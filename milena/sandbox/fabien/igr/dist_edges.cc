@@ -203,8 +203,10 @@ struct dist5_t : Function_vv2v<dist5_t>
       res += (double) math::diff_abs(v1[i], v2[i]);
 
     res = res / v1.nelements();
+    if (res > 0.5)
+      return 4095u;
     //res = 1 - res;
-    res = (res * 4095) + 0.49;
+    res = (1.999999 * res * 4095) + 0.49;
 
     return (int) res;
   }

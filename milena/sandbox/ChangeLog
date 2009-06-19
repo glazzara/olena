@@ -1,3 +1,32 @@
+2009-06-19  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add mln/ and tests/ directory for testing before integration into Milena.
+	* fabien/bin/pnms2dump.cc: Small update.
+	* fabien/igr/Makefile: Add targets.
+	* fabien/igr/check_edges.sh: Small update.
+	* fabien/igr/clo_vol.cc: Small update.
+	* fabien/igr/crop.cc: Small update.
+	* fabien/igr/dist_edges.cc: Small update.
+	* fabien/igr/filter.cc: Small update.
+	* fabien/igr/grad.cc: Small update.
+	* fabien/igr/maj.cc: New filter for US images.
+	* fabien/igr/point_filtering/main.cc: Small update (demo for IGR).
+	* fabien/igr/wst.cc: Small update.
+	* fabien/igr/wst_edges.cc: Small update.
+
+	* fabien/mln/debug/int2rgb.hh: Convert int value into rgb value (useful
+	for visualization of int_u12 values).
+	* fabien/mln/display/display_region.hh: New visualization routine for
+	watershed regions.
+	* fabien/mln/world/inter_pixel/display_region.hh: Fix values filling.
+
+	* fabien/tests/display/Makefile: New target.
+	* fabien/tests/display/display_region.cc: New test for display_region()
+	routine.
+	* fabien/tests/world/inter_pixel/Makefile: New target.
+	* fabien/tests/world/inter_pixel/display_region.cc: New test for
+	display_region() routine in inter_pixel world.
+
 2009-06-17  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Compute histo 3d test.

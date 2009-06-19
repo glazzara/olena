@@ -33,16 +33,18 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/image/image2d.hh>
+# include <mln/core/alias/neighb2d.hh>
 # include <mln/core/image/dmorph/image_if.hh>
 # include <mln/core/routine/extend.hh>
 # include <mln/convert/from_to.hh>
 # include <mln/data/paste.hh>
 # include <mln/world/inter_pixel/is_pixel.hh>
 # include <mln/world/inter_pixel/is_separator.hh>
+# include <mln/world/inter_pixel/is_zero_face.hh>
 # include <mln/opt/at.hh>
 # include <mln/value/rgb8.hh>
 
-# include <mln/world/inter_pixel/is_zero_face.hh>
+#include <mln/literal/colors.hh> //DEBUG
 
 
 namespace mln
@@ -54,12 +56,14 @@ namespace mln
     namespace inter_pixel
     {
 
-      /// \brief FIXME
+      /// \brief Create an image which is a copy of the input image (but
+      /// twice the size) with highlighted watershed lines.
       ///
       /// \param[in] input The input image providing pixels values.
       /// \param[in] wst The labeling image providing the watershed lines.
       /// \param[in] edge_color The color (in rgb8) for the watershed line.
-      /// \return FIXME
+      /// \return A copy of the input image (but twice the size) with
+      /// highlighted watershed lines.
       ///
       /// \pre \p input has to be an 8 bits image.
       /// \pre \p wst has to be an unmorphed image.
@@ -78,7 +82,8 @@ namespace mln
       mln_ch_value(I, value::rgb8)
       display_region(const Image<I>& input_, const Image<L>& wst_, value::rgb8 edge_color)
       {
-	// TODO: We should check that wst.bbox () == 2 * input.bbox() - 1.
+	trace::entering("world::inter_pixel::display_region");
+	// TODO: We should check that wst.bbox() == 2 * input.bbox() - 1.
 	// TODO: We must check that dim(I) == dim(L).
 	//mln_precondition((2 * input.bbox()) == wst.bbox());
 
@@ -114,25 +119,41 @@ namespace mln
 	typedef image_if<output_t, is_zero_face> zero_face_t;
 	zero_face_t zero = output | is_zero_face();
 	mln_piter(zero_face_t) q(zero.domain());
+	mln_niter(neighb2d) n(c4(), q);
 	for_all(q)
 	{
-	  unsigned row = q.row();
-	  unsigned col = q.col();
-	  output(q) = (opt::at(output, row + 1, col) +
-		       opt::at(output, row, col + 1) +
-		       opt::at(output, row - 1, col) +
-		       opt::at(output, row, col - 1)) / 4;
+	  bool has_wst = false;
+	  for_all(n)
+	  {
+	    if (!has_wst && wst(n) == 0)
+	    {
+	      has_wst = true;
+	      output(q) = edge_color;
+	    }
+	  }
+
+	  if (!has_wst)
+	  {
+	    unsigned row = q.row();
+	    unsigned col = q.col();
+	    output(q) = (opt::at(output, row + 1, col) +
+			 opt::at(output, row, col + 1) +
+			 opt::at(output, row - 1, col) +
+			 opt::at(output, row, col - 1)) / 4;
+	  }
 	}
 
 	// Watershed lines.
-	data::fill((output | pw::value(wst) == pw::cst(0)).rw(), edge_color);
-	//FIXME: Fill intersections.
+	for_all(p)
+	  if (wst(p) == 0)
+	    output(p) = edge_color;
 
+	trace::exiting("world::inter_pixel::display_region");
 	return output;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-      }
 
     } // end of namespace mln::world::inter_pixel
 

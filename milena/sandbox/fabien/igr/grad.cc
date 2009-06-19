@@ -10,7 +10,7 @@
 //#include <mln/io/dicom/load.hh>
 #include <mln/io/dump/all.hh>
 
-//#include <mln/value/int_u8.hh>
+#include <mln/value/int_u8.hh>
 #include <mln/value/int_u12.hh>
 
 #include <mln/morpho/elementary/gradient.hh>
@@ -27,12 +27,13 @@
 int main(int argc, char *argv[])
 {
   using namespace mln;
-  //using value::int_u8;
+  using value::int_u8;
   using value::int_u12;
+  typedef int_u8 input_type;
 
-  if (argc != 3)
+  if (argc != 4)
   {
-    std::cout << "Usage: " << argv[0] << " <ima.dcm> <dimensions>"
+    std::cout << "Usage: " << argv[0] << "  ima.dcm dim output.dump"
 	      << std::endl;
     return 1;
   }
@@ -46,17 +47,17 @@ int main(int argc, char *argv[])
 
   if (dim == 2)
   {
-    image2d<int_u12> dcm2;
+    image2d<input_type> dcm2;
     io::dump::load(dcm2, argv[1]);
-    image2d<int_u12> grad2 = morpho::elementary::gradient(dcm2, c4());
-    io::dump::save(grad2, "grad.dump");
+    image2d<input_type> grad2 = morpho::elementary::gradient(dcm2, c4());
+    io::dump::save(grad2, argv[3]);
   }
   else
   {
-    image3d<int_u12> dcm3;
+    image3d<input_type> dcm3;
     io::dump::load(dcm3, argv[1]);
-    image3d<int_u12> grad3 = morpho::elementary::gradient(dcm3, c6());
-    io::dump::save(grad3, "grad.dump");
+    image3d<input_type> grad3 = morpho::elementary::gradient(dcm3, c6());
+    io::dump::save(grad3, argv[3]);
   }
 
   return 0;

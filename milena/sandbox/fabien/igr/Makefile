@@ -23,6 +23,9 @@ clo_vol: clo_vol.cc
 
 wst: wst.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o wst
+
+maj: maj.cc
+	${CXX} -I../../../ ${CXXFLAGS} $^ -o maj
 	
 graph: graph.cc
 	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o graph

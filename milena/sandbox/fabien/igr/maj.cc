@@ -16,6 +16,11 @@
 
 #include <mln/morpho/watershed/flooding.hh>
 
+#include <mln/accu/transform.hh>
+#include <mln/accu/maj_h.hh>
+
+#include <mln/win/sphere3d.hh>
+
 
 
 ///////////////////
@@ -35,38 +40,21 @@ int main(int argc, char *argv[])
   typedef label_8 L;
   typedef int_u8 V;
 
-  if (argc != 4)
+  if (argc != 3)
   {
-    std::cout << "Usage: " << argv[0] << " input.dump dim output.dump"
+    std::cout << "Usage: " << argv[0] << " wst.dump output.dump"
 	      << std::endl;
-    return 1;
-  }
-
-  unsigned dim = atoi(argv[2]);
-  if (dim != 2 && dim != 3)
-  {
-    std::cout << "<dimensions> invalid" << std::endl;
     return 1;
   }
 
   L nbasins;
 
-  if (dim == 2)
-  {
-    image2d<V> input;
-    io::dump::load(input, argv[1]);
-    image2d<L> wshed = morpho::watershed::flooding(input, c4(), nbasins);
-    io::dump::save(wshed, argv[3]);
-  }
-  else
-  {
-    image3d<V> input;
-    io::dump::load(input, argv[1]);
-    image3d<L> wshed = morpho::watershed::flooding(input, c6(), nbasins);
-    io::dump::save(wshed, argv[3]);
-  }
+  image3d<L> wst;
+  io::dump::load(wst, argv[1]);
+  accu::maj_h<L> maj;
+  image3d<L> output = accu::transform(wst, maj, win::sphere3d(7));
 
-  std::cout << nbasins << std::endl;
+  io::dump::save(output, argv[2]);
 
   return 0;
 }

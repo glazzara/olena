@@ -8,8 +8,9 @@
 #include <mln/core/alias/window3d.hh>
 
 #include <mln/io/dicom/load.hh>
-#include <mln/io/dump/save.hh>
+#include <mln/io/dump/all.hh>
 
+#include <mln/value/int_u8.hh>
 #include <mln/value/int_u12.hh>
 
 
@@ -33,12 +34,15 @@ void usage(char* argv[])
 int main(int argc, char* argv[])
 {
   using namespace mln;
+  using value::int_u8;
   using value::int_u12;
+
+  typedef int_u12 input_type;
 
   if (argc != 9)
     usage(argv);
 
-  image3d<int_u12> vol;
+  image3d<input_type> vol;
   io::dicom::load(vol, argv[1]);
 
   std::cout << "Input bbox: " << vol.bbox() << std::endl;
@@ -55,7 +59,7 @@ int main(int argc, char* argv[])
   box3d b = make::box3d(s_min, r_min, c_min,  s_max, r_max, c_max);
   std::cout << "Output bbox: " << b << std::endl;
 
-  image3d<int_u12> ima(b);
+  image3d<input_type> ima(b);
   data::fill(ima, vol);
   io::dump::save(ima, argv[8]);
 }

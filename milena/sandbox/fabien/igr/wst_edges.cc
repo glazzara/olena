@@ -40,7 +40,7 @@
 #include <mln/math/diff_abs.hh>
 #include <mln/morpho/dilation.hh>
 #include <mln/morpho/erosion.hh>
-#include <mln/morpho/closing/sum.hh>
+#include <mln/morpho/closing/volume.hh>
 #include <mln/morpho/watershed/flooding.hh>
 #include <mln/pw/all.hh>
 #include <mln/util/array.hh>
@@ -110,7 +110,6 @@ int main(int argc, char* argv[])
 
   unsigned lambda = atoi(argv[2]);
 
-
   // Initialization.
   typedef int_u12 input_type;
   image2d<input_type> input;
@@ -118,7 +117,7 @@ int main(int argc, char* argv[])
 
 
   // Closing.
-  mln_VAR(d_clo, morpho::closing::sum(input | world::inter_pixel::is_separator(), world::inter_pixel::e2e(), lambda));
+  mln_VAR(d_clo, morpho::closing::volume(input | world::inter_pixel::is_separator(), world::inter_pixel::e2e(), lambda));
   io_save_edges_int_u12(d_clo, 0, "d_clo.pgm");
 
 
@@ -141,9 +140,6 @@ int main(int argc, char* argv[])
 
   io::dump::save(w_all, "watershed.dump");
   io::ppm::save(debug::int2rgb(w_all), "watershed.ppm");
-
-  io::ppm::save(world::inter_pixel::display_region(data::stretch(int_u8(), input), w_all, literal::red), "regions.ppm");
-
 
   return 0;
 }

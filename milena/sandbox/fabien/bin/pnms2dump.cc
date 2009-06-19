@@ -54,6 +54,7 @@ int main(int argc, char* argv[])
 	    io::pgm::load(ima, argv[i]);
 	    arr.append(ima);
 	  }
+	std::cout << "nbr elements: " << arr.nelements() << std::endl;
 	image3d<int_u8> vol = make::image3d(arr);
 	io::dump::save(vol, argv[1]);
       }
