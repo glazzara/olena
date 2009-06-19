@@ -26,6 +26,7 @@
 
 #include <mln/arith/revert.hh>
 #include <mln/core/alias/neighb3d.hh>
+#include <mln/data/stretch.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/ppm/load.hh>
 #include <mln/morpho/closing/volume.hh>
@@ -105,5 +106,5 @@ main(int argc, char** argv)
 
   // save output image
   std::cout << "  => saving " << argv[3] << "..." << std::endl;
-  io::pgm::save(out, argv[3]);
+  io::pgm::save(data::stretch(int_u8(), out), argv[3]);
 }

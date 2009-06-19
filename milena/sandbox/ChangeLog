@@ -1,5 +1,11 @@
 2009-06-19  Etienne FOLIO  <folio@lrde.epita.fr>
 
+	Stretch result of classification.
+	* folio/tools/histo/classify_with_histo.cc: Stretch result in
+        the output image.
+
+2009-06-19  Etienne FOLIO  <folio@lrde.epita.fr>
+
 	Clean up.
 	* folio/mln/histo/classify_with_histo_3d.hh: New algorithm
         more generalist than the rgb version.
