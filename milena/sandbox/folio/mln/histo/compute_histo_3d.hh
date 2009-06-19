@@ -23,6 +23,9 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+#ifndef COMPUTE_HISTO_3D_HH_
+# define COMPUTE_HISTO_3D_HH_
+
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
@@ -60,3 +63,5 @@ namespace mln
 
   }
 }
+
+#endif /* !COMPUTE_HISTO_3D_HH_ */

@@ -1,5 +1,19 @@
 2009-06-19  Etienne FOLIO  <folio@lrde.epita.fr>
 
+	Clean up.
+	* folio/mln/histo/classify_with_histo_3d.hh: New algorithm
+        more generalist than the rgb version.
+	* folio/mln/histo/compute_histo_3d.hh: Add macros.
+	* folio/mln/histo/project_histo_3d.hh: Add macros.
+	* folio/test/histo/classify_with_histo_rgb.cc: Move file.
+	* folio/test/histo/project_histo_3d_add.cc: Update definitions.
+	* folio/test/histo/project_histo_3d_mean.cc: Update definitions.
+	* folio/tools/histo/classify_with_histo.cc: Moved file cleaned up.
+	* folio/tools/histo/project_histo_add.cc: Move file.
+	* folio/tools/histo/projected_histo_gs.cc: Moved file.
+
+2009-06-19  Etienne FOLIO  <folio@lrde.epita.fr>
+
 	Clean up sandbox.
 	* folio/test/histo/project_histo_add.cc: Move old file.
 	* folio/tools/histo/project_histo_add.cc: Moved file.

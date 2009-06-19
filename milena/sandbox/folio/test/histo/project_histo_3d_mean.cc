@@ -32,7 +32,7 @@
 #include "../../mln/histo/project_histo_3d.hh"
 
 using namespace mln;
-using namespace value;
+using namespace mln::value;
 
 
 inline
