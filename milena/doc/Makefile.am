@@ -218,7 +218,7 @@ Doxyfile_user_pdf: Doxyfile_user
 	$(edit_pdf) $< >$@
 
 Doxyfile_devel: $(srcdir)/Doxyfile.in
-	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog | sed -e 's/\$$//g'`; \
+	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog | sed -e 's/\\\$$//g'`; \
 	$(edit) $< >$@
 
 Doxyfile_devel_pdf: $Doxyfile_devel

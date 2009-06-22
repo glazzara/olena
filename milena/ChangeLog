@@ -1,3 +1,7 @@
+2009-06-22  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
+	* doc/Makefile.am: Fix id extraction during refman compilation.
+
 2009-06-19  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add a demo for inter_pixel algorithms.
