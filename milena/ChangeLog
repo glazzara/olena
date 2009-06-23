@@ -1,5 +1,11 @@
 2009-06-23  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Add accu::count_value.
+
+	* mln/accu/count_value.hh: new.
+
+2009-06-23  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Fix compilation warnings.
 
 	* mln/core/image/vmorph/fun_image.hh: move inline keyword before
