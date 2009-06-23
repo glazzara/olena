@@ -25,6 +25,8 @@
 
 #ifndef SCRIBO_APPS_DEMO_SRC_MAINWINDOW_HH
 
+# include <QDir>
+# include <QTimer>
 # include <QStringList>
 # include <QProcess>
 # include <QtGui/QWidget>
@@ -44,6 +46,7 @@ namespace scribo
 
     public:
       MainWindow(QWidget *parent = 0);
+      ~MainWindow();
 
       void set_base_img_dir(const QString& dir);
 
@@ -51,9 +54,14 @@ namespace scribo
       void initToolBar();
 
       void on_browseBtn_clicked(bool b);
-      void on_runBtn_clicked(bool b);
+      void on_runBtn_clicked();
       void on_displayBtn_clicked(bool b);
       void on_filepath_textChanged();
+      void on_zoomIn_clicked();
+      void on_zoomOut_clicked();
+      void on_zoomFixed_clicked();
+      void on_zoomOriginal_clicked();
+      void on_autoDemo_clicked(bool checked);
 
       void exec_finished(int rvalue, QProcess::ExitStatus status);
       void exec_error(QProcess::ProcessError error);
@@ -62,9 +70,15 @@ namespace scribo
 
       void compute_canceled();
 
+      void resize_pixmaps(const QRectF& rect);
+
+      void move_vertical_sliders(int value);
+      void move_horizontal_sliders(int value);
+      void timer_timeout();
+
     private: // Members
       void setup_scene();
-      void update_pixmap(const QString& name);
+      void update_pixmap(QGraphicsView* view, const QString& name = QString());
 
       void exec_error(const QString& msg);
 
@@ -72,10 +86,22 @@ namespace scribo
 
       void update_status_message(const QString& msg);
 
-      bool is_in_ocr_mode();
+      void prepare_for_run(const QString& filename);
+
+	bool is_in_ocr_mode();
+
+      QGraphicsItem *& view_to_item(QGraphicsView *view);
+
+      void resizeEvent(QResizeEvent * event);
+      void keyPressEvent(QKeyEvent *event);
+
+      QString current_mode() const;
+
+      void update_auto_demo_dir();
 
     private: // Attributes
-      QGraphicsItem *mainItem_;
+      QGraphicsItem *mainRefItem_;
+      QGraphicsItem *mainResultItem_;
       QString exec_prefix_;
 
       QActionGroup context_;
@@ -86,6 +112,14 @@ namespace scribo
       QProgressDialog pdialog_;
 
       QString base_img_dir_;
+
+      QVector<QHash<QString, QString> > cached_result_;
+
+      /// Related to auto demo.
+      QTimer timer_;
+      QDir demoDir_;
+      unsigned demo_index_;
+      QStringList demo_files_;
     };
 
 
