@@ -1,5 +1,16 @@
 2009-06-23  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Fix compilation warnings.
+
+	* mln/core/image/vmorph/fun_image.hh: move inline keyword before
+	return type.
+
+	* mln/fun/v2v/hsl_to_rgb.hh: pass float arguments to sqrt.
+
+	* tests/core/routine/exact.cc: avoid a warning.
+
+2009-06-23  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Update list of non distributed files.
 
 	* mln/accu/math/all.hh: strip inclusion of non distributed files.

@@ -84,7 +84,7 @@ namespace mln
 		    trait::image::quant::high,
 		    // Else
 		    undef)
-	     )
+	    )
 	quant;
     };
 
@@ -142,14 +142,14 @@ namespace mln
   fun_image<F, I>
   operator << (const Function_v2v<F>& f, const Image<I>& ima);
 
-  
+
 
 # ifndef MLN_INCLUDE_ONLY
 
 
   template <typename F, typename I>
-  fun_image<F, I>
   inline
+  fun_image<F, I>
   operator << (const Function_v2v<F>& f, const Image<I>& ima)
   {
     fun_image<F, I> tmp(exact(f), exact(ima));

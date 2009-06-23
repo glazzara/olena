@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,10 +43,12 @@ namespace mln
     void m()
     {
       int** i = exact(this)->m_impl();
+      (void) i;
     }
     void m() const
     {
       int* i = exact(this)->m_impl();
+      (void) i;
     }
   };
 

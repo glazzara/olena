@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -106,9 +107,9 @@ namespace mln
 	static math::round<blue_t>  to_b;
 
 	static const float
-	  sqrt3_3 = std::sqrt(3) / 3,
-		  inv_sqrt6 = 1 / std::sqrt(6),
-		  inv_sqrt2 = 1 / std::sqrt(2);
+	  sqrt3_3 = std::sqrt(3.0f) / 3.0f,
+		  inv_sqrt6 = 1 / std::sqrt(6.0f),
+		  inv_sqrt2 = 1 / std::sqrt(2.0f);
 
 	float
 	  h = hsl.hue() / 180.0 * 3.1415,
