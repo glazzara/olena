@@ -18,7 +18,6 @@ nobase_include_HEADERS = \
 ./draw/all.hh \
 ./draw/bounding_box_links.hh \
 ./draw/bounding_boxes.hh \
-./extract/lines_discontinued.hh \
 ./extract/primitive/canvas.hh \
 ./extract/primitive/cells.hh \
 ./extract/primitive/lines_discontinued.hh \

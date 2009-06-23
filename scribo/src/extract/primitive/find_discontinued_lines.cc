@@ -32,15 +32,15 @@
 #include <mln/data/convert.hh>
 #include <mln/debug/superpose.hh>
 
-#include <scribo/extract/primitive/lines_h_discontinued.hh>
-#include <scribo/extract/primitive/lines_v_discontinued.hh>
 #include <scribo/debug/usage.hh>
+
+#include <scribo/extract/primitive/lines_h_pattern.hh>
+#include <scribo/extract/primitive/lines_v_pattern.hh>
 
 const char *args_desc[][2] =
 {
   { "input.pbm", "A binary image." },
   { "length", "   Minimum line length." },
-  { "rank", "     Filter rank." },
   {0, 0}
 };
 
@@ -49,10 +49,10 @@ int main(int argc, char *argv[])
 {
   using namespace mln;
 
-  if (argc != 5)
+  if (argc != 4)
     return scribo::debug::usage(argv,
 				"Extract discontinued horizontal and vertical lines",
-				"input.pbm length rank output.pbm",
+				"input.pbm length output.pbm",
 				args_desc,
 				"A binary image of horizontal and vertical lines.");
 
@@ -64,23 +64,15 @@ int main(int argc, char *argv[])
   value::label_16 nhlines;
   image2d<bool> hlines
     = data::convert(bool(),
-		     scribo::extract::primitive::lines_h_discontinued(input,
-								      c8(),
-								      nhlines,
-								      atoi(argv[2]),
-								      atoi(argv[3])));
+		     scribo::extract::primitive::lines_h_pattern(input, atoi(argv[2])));
   value::label_16 nvlines;
   image2d<bool> vlines
     = data::convert(bool(),
-		     scribo::extract::primitive::lines_v_discontinued(input,
-								      c8(),
-								      nvlines,
-								      atoi(argv[2]),
-								      atoi(argv[3])));
+		    scribo::extract::primitive::lines_v_pattern(input, atoi(argv[2])));
 
   data::fill((hlines | pw::value(vlines)).rw(), true);
   image2d<value::rgb8> out = debug::superpose(input, hlines);
-  io::ppm::save(out, argv[4]);
+  io::ppm::save(out, argv[3]);
 
   trace::exiting("main");
 }

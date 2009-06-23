@@ -123,17 +123,14 @@ namespace scribo
 
 	int dil;
 	if (!(rank_k % 2))
-	  dil = win.length() / 2 + rank_k;
+	  dil = win.length() / 2 + 2 * rank_k + 2;
 	else
-	  dil = win.length() / 2 + rank_k + 1;
+	  dil = win.length() / 2 + 2 * rank_k + 3;
 
 	mln_ch_value(I,bool) filter
 	  = morpho::dilation(morpho::rank_filter(input, win, rank_k), W(dil));
 	object_image(mln_ch_value(I,V)) output
 	  = extract::primitive::objects(filter, nbh, nlines);
-
-	//FIXME: we would like to enlarge the component in the right direction,
-	// in order to avoid rank filter side effects (smaller components).
 
 	trace::exiting("scribo::primitive::lines_discontinued");
 	return output;

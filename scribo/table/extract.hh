@@ -35,18 +35,24 @@
 # include <mln/util/couple.hh>
 # include <mln/util/array.hh>
 
+# include <mln/io/ppm/all.hh>
+# include <mln/labeling/colorize.hh>
+
 # include <scribo/core/object_image.hh>
 # include <scribo/table/rebuild.hh>
 # include <scribo/table/erase.hh>
-# include <scribo/extract/primitive/lines_h_discontinued.hh>
-# include <scribo/extract/primitive/lines_v_discontinued.hh>
+# include <scribo/extract/primitive/lines_h_pattern.hh>
+# include <scribo/extract/primitive/lines_v_pattern.hh>
+# include <scribo/extract/primitive/objects.hh>
 
+# include <scribo/debug/save_bboxes_image.hh>
 
 namespace scribo
 {
 
   namespace table
   {
+    using namespace mln;
 
     /// Extract tables from a binary image.
     /// Use arbitrary criterions.
@@ -80,12 +86,14 @@ namespace scribo
       mln_precondition(input.is_valid());
       mlc_equal(mln_value(I), bool)::check();
 
+      image2d<bool>
+	bhlines = scribo::extract::primitive::lines_h_pattern(input, 51),
+	bvlines = scribo::extract::primitive::lines_v_pattern(input, 51);
+
       V nhlines, nvlines;
       object_image(mln_ch_value(I,V))
-	hlines = scribo::extract::primitive::lines_h_discontinued(input, c8(),
-								   nhlines, 51, 6),
-	vlines = scribo::extract::primitive::lines_v_discontinued(input, c8(),
-								  nvlines, 51, 6);
+	hlines = scribo::extract::primitive::objects(bhlines, c8(), nhlines),
+	vlines = scribo::extract::primitive::objects(bvlines, c8(), nvlines);
 
       typedef mln::util::couple<mln_ch_value(I,V),
 				mln::util::couple<mln::util::array<box<mln_site(I)> >,

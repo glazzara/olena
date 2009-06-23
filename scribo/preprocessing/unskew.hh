@@ -80,11 +80,12 @@ namespace scribo
       double angle = 0;
       int max_angle = max_p.col();
 
+      std::cout << "max_angle = " << max_angle << std::endl;
       if (max_angle > 180)
 	max_angle = - max_angle % 180;
 
       if (max_angle < 90 && max_angle > 0)
-	angle = - max_angle;
+	angle = 90 - max_angle;
       else if (max_angle < 0 && max_angle > -90)
 	angle = max_angle;
       else if (max_angle < 180 && max_angle > 90)
@@ -92,6 +93,7 @@ namespace scribo
       else if (max_angle < -90 && max_angle > -180)
 	angle = 180 + max_angle;
 
+      std::cout << "effective angle = " << angle << std::endl;
       mln_concrete(I) output = transformation::rotate(input, angle);
 
       trace::exiting("scribo::preprocessing::unskew");

@@ -1,3 +1,25 @@
+2009-06-23 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Update Scribo.
+
+	* extract/lines_discontinued.hh: remove. Useless.
+
+	* extract/primitive/lines_discontinued.hh: enlarge the window used to
+	dilate.
+
+	* extract/primitive/lines_h_pattern.hh,
+	* extract/primitive/lines_pattern.hh,
+	* extract/primitive/lines_v_pattern.hh: new line extraction algorithm.
+
+	* headers.mk: remove lines_discontinued.hh from this list.
+
+	* preprocessing/unskew.hh: fix wrong angle computation.
+
+	* src/extract/primitive/find_discontinued_lines.cc,
+	* table/extract.hh: use the new line extraction algorithm.
+
+	* src/preprocess.cc: call scribo::preprocess.
+
 2009-06-19 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Use scripts located in build-aux in Scribo.
