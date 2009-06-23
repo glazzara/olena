@@ -50,6 +50,7 @@ REGEN_SUBDIRS += milena scribo
 LRDE_STRIPPED_DIST_FILES =				\
   $(distdir)/Makefile.am				\
   $(distdir)/configure.ac				\
+  $(distdir)/milena/mln/accu/math/all.hh		\
   $(distdir)/milena/mln/all.hh				\
   $(distdir)/milena/mln/core/image/vmorph/all.hh	\
   $(distdir)/milena/mln/core/image/vmorph/fun_image.hh	\
