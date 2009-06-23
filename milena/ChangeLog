@@ -1,3 +1,11 @@
+2009-06-23  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
+	Update list of non distributed files.
+
+	* mln/accu/math/all.hh: strip inclusion of non distributed files.
+
+	* nodist-headers: add new files.
+
 2009-06-22  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	* doc/Makefile.am: Fix id extraction during refman compilation.
