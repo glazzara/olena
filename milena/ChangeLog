@@ -1,5 +1,9 @@
 2009-06-23  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	* nodist-headers: sort using the right local.
+
+2009-06-23  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Add accu::count_value.
 
 	* mln/accu/count_value.hh: new.
