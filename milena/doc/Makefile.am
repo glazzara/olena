@@ -221,5 +221,5 @@ Doxyfile_devel: $(srcdir)/Doxyfile.in
 	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog | sed -e 's/\\\$$//g'`; \
 	$(edit) $< >$@
 
-Doxyfile_devel_pdf: $Doxyfile_devel
+Doxyfile_devel_pdf: Doxyfile_devel
 	$(edit_pdf) $< >$@
