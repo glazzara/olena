@@ -1,5 +1,12 @@
 2009-06-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Distribute Doxyfiles.
+
+	* doc/Makefile.am (EXTRA_DIST): Add Doxyfile_user,
+	Doxyfile_user_pdf, doxyfuns.sty and milena.sty.
+
+2009-06-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	* doc/Makefile.am (Doxyfile_devel_pdf): Typo in dependency name.
 
 2009-06-23  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>

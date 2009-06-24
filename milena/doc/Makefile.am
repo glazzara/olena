@@ -191,14 +191,18 @@ include $(srcdir)/figures/figures.mk
 include $(srcdir)/outputs/outputs.mk
 
 
-EXTRA_DIST += 			\
-  Doxyfile.in 			\
-  groups 			\
-  $(USER_REFMAN_HTML)		\
-  $(USER_REFMAN_PDF)		\
-  tools/clearbanner.sh 		\
-  tools/sample_utils.hh 	\
-  tools/split_sample.sh 	\
+EXTRA_DIST +=					\
+  Doxyfile.in					\
+  Doxyfile_user					\
+  Doxyfile_user_pdf				\
+  groups					\
+  doxyfuns.sty					\
+  milena.sty					\
+  tools/clearbanner.sh				\
+  tools/sample_utils.hh				\
+  tools/split_sample.sh				\
+  $(USER_REFMAN_HTML)				\
+  $(USER_REFMAN_PDF)				\
   tools/todoxygen.sh
 
 CLEANFILES =					\
