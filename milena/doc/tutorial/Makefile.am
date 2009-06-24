@@ -47,6 +47,12 @@ $(TUTORIAL_PDF): $(FIGURES_BUILDDIR)
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/tutorial.tex
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/tutorial.tex
 
+dist_doc_DATA = $(TUTORIAL_PDF)
+
+EXTRA_DIST =					\
+  tutorial.tex					\
+  $(TUTORIAL_HH)
+
 CLEANFILES =								\
   tutorial.aux tutorial.toc tutorial.log tutorial.bbl tutorial.out	\
   *~ *blg *.lot								\
@@ -55,8 +61,3 @@ CLEANFILES =								\
   tutorial.haux								\
   tutorial.html								\
   $(TUTORIAL_HH)
-
-EXTRA_DIST =					\
-  tutorial.tex					\
-  $(TUTORIAL_HH)				\
-  $(TUTORIAL_PDF)

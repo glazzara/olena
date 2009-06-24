@@ -53,16 +53,19 @@ $(WHITE_PAPER_PDF):
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/white_paper.tex
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/white_paper.tex
 
-clean-local:
-	rm -Rf white_paper_html
-	rm -f white_paper_image.*
-	rm -f white_paper.pdf
-	rm -f *.log *.idx *.out *.aux
-	rm -Rf figures
+
+dist_doc_DATA =					\
+  $(WHITE_PAPER_HTML)				\
+  $(WHITE_PAPER_PDF)
 
 EXTRA_DIST =					\
   white_paper.tex				\
-  $(WHITE_PAPER_HTML)				\
-  $(WHITE_PAPER_PDF)				\
   $(PNGS)					\
   $(EPSS)
+
+CLEANFILES =					\
+  white_paper_html				\
+  white_paper_image.*				\
+  white_paper.pdf				\
+  *.log *.idx *.out *.aux			\
+  figures

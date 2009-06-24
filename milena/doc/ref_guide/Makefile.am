@@ -49,6 +49,12 @@ $(REF_GUIDE_PDF):
 	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/ref_guide.tex
 
 
+dist_doc_DATA = $(REF_GUIDE_PDF)
+
+EXTRA_DIST =					\
+  ref_guide.tex					\
+  $(REF_GUIDE_HH)
+
 CLEANFILES =								\
   ref_guide.aux ref_guide.toc ref_guide.log ref_guide.bbl ref_guide.out	\
   *~ *blg *.lot								\
@@ -56,9 +62,3 @@ CLEANFILES =								\
   *.haux *.hh *.html *.htoc						\
   ref_guide.html							\
   $(REF_GUIDE_HH)
-
-
-EXTRA_DIST =					\
-  ref_guide.tex					\
-  $(REF_GUIDE_HH)				\
-  $(REF_GUIDE_PDF)

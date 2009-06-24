@@ -191,6 +191,10 @@ include $(srcdir)/figures/figures.mk
 include $(srcdir)/outputs/outputs.mk
 
 
+dist_doc_DATA =					\
+  $(USER_REFMAN_HTML)				\
+  $(USER_REFMAN_PDF)
+
 EXTRA_DIST +=					\
   Doxyfile.in					\
   Doxyfile_user					\
@@ -201,8 +205,6 @@ EXTRA_DIST +=					\
   tools/clearbanner.sh				\
   tools/sample_utils.hh				\
   tools/split_sample.sh				\
-  $(USER_REFMAN_HTML)				\
-  $(USER_REFMAN_PDF)				\
   tools/todoxygen.sh
 
 CLEANFILES =					\

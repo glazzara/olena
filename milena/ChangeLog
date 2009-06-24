@@ -1,5 +1,31 @@
 2009-06-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Install the documentation and the images.
+
+	* Makefile.am (imgdir): New variable.
+	(EXTRA_DIST): Move img/README, img/fly.pbm, img/fly.pgm,
+	img/fly.ppm, img/lena.pbm, img/lena.pgm, img/lena.ppm,
+	img/lena_16.ppm, img/medium.pgm, img/medium.ppm, img/picasso.pbm,
+	img/picasso.pgm, img/quite-small.pgm, img/small.pbm,
+	img/small.pgm, img/small.ppm, img/squares-lc.pgm, img/squares.pgm,
+	img/test.fits, img/tiny.pbm, img/tiny.pgm, img/tiny.ppm and
+	img/toto.pbm...
+	(dist_img_DATA): ...here (new variable).
+	* doc/Makefile.am (EXTRA_DIST): Move $(USER_REFMAN_HTML) and
+	$(USER_REFMAN_PDF)...
+	(dist_doc_DATA): ...here (new variable).
+	* doc/ref_guide/Makefile.am (EXTRA_DIST): Move $(REF_GUIDE_PDF)...
+	(dist_doc_DATA): ...here (new variable).
+	* doc/tutorial/Makefile.am (EXTRA_DIST): Move $(TUTORIAL_PDF)...
+	(dist_doc_DATA): ...here (new variable).
+	* doc/white_paper/Makefile.am (EXTRA_DIST): Move
+	$(WHITE_PAPER_HTML) and $(WHITE_PAPER_PDF)...
+	(dist_doc_DATA): ...here (new variable).
+	(clean-local): Replace target by...
+	(CLEANFILES): ...this variable.
+
+2009-06-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Distribute Doxyfiles.
 
 	* doc/Makefile.am (EXTRA_DIST): Add Doxyfile_user,
