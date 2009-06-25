@@ -1,3 +1,9 @@
+2009-06-25  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Update inter-pixel demo.
+	* demos/inter_pixel/inter_pixel.cc: Add output images for better
+	visualization.
+
 2009-06-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	* doc/Makefile.am: Wrap long lines.
