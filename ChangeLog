@@ -1,3 +1,13 @@
+2009-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Strip some Makefile.am's under milena/doc/ in the distribution.
+
+	* Makefile.am (LRDE_STRIPPED_DIST_FILES): Add
+	$(distdir)/milena/doc/Makefile.am,
+	$(distdir)/milena/doc/ref_guide/Makefile.am,
+	$(distdir)/milena/doc/tutorial/Makefile.am and
+	$(distdir)/milena/doc/white_paper/Makefile.am.
+
 2009-06-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* bootstrap: update generation of distributed file lists in milena/doc.
