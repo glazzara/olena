@@ -53,7 +53,9 @@ doc-html: tutorial-html white-paper-html ref-guide-html ref-doc-html
 
 doc-devel-pdf: tutorial-pdf ref-guide-pdf white-paper-pdf ref-doc-devel-pdf
 
-doc-devel-html: tutorial-html ref-guide-html white-paper-html ref-doc-devel-html 
+doc-devel-html: tutorial-html ref-guide-html white-paper-html \
+		ref-doc-devel-html
+
 
 # FIXME: Maintaining dependencies across directories is too
 # complicated.  Simplify.
@@ -158,19 +160,20 @@ edit_pdf = sed -e 's,GENERATE_LATEX         = NO,GENERATE_LATEX = YES,g' \
 # documentation (devel and user) using @VARIABLES@.  Don't generate
 # Doxyfile_user from Doxyfile_devel!  Both should be a product
 # derived from a single source, Doxyfile.in.
-edit_user = sed -e 's,OUTPUT_DIRECTORY       = ./devel/,OUTPUT_DIRECTORY       = ./user/,g' 		\
-		-e 's,EXTRACT_ALL            = YES,EXTRACT_ALL            = NO,g'			\
-		-e 's,EXTRACT_PRIVATE        = YES,EXTRACT_PRIVATE        = NO,g'			\
-		-e 's,EXTRACT_STATIC         = YES,EXTRACT_STATIC         = NO,g'			\
-		-e 's,EXTRACT_LOCAL_CLASSES  = YES,EXTRACT_LOCAL_CLASSES  = NO,g'			\
-		-e 's,HIDE_UNDOC_MEMBERS     = NO,HIDE_UNDOC_MEMBERS      = YES,g'			\
-		-e 's,HIDE_UNDOC_CLASSES     = NO,HIDE_UNDOC_CLASSES      = YES,g'			\
-		-e 's,HIDE_FRIEND_COMPOUNDS  = NO,HIDE_FRIEND_COMPOUNDS   = YES,g'			\
-		-e 's,HIDE_IN_BODY_DOCS      = NO,HIDE_IN_BODY_DOCS       = YES,g'			\
-		-e 's,INTERNAL_DOCS          = YES,INTERNAL_DOCS          = NO,g'			\
-		-e 's,GENERATE_TODOLIST      = YES,GENERATE_TODOLIST      = NO,g'			\
-		-e 's,PROJECT_NUMBER         = \",PROJECT_NUMBER          = \"User documentation ,g'	\
-		-e 's,EXCLUDE_SYMBOLS	       =,EXCLUDE_SYMBOLS	  = *::internal* *_ mln::trait::*,g'	
+edit_user = sed								      \
+  -e 's,OUTPUT_DIRECTORY       = ./devel/,OUTPUT_DIRECTORY       = ./user/,g' \
+  -e 's,EXTRACT_ALL            = YES,EXTRACT_ALL            = NO,g'	      \
+  -e 's,EXTRACT_PRIVATE        = YES,EXTRACT_PRIVATE        = NO,g'	      \
+  -e 's,EXTRACT_STATIC         = YES,EXTRACT_STATIC         = NO,g'	      \
+  -e 's,EXTRACT_LOCAL_CLASSES  = YES,EXTRACT_LOCAL_CLASSES  = NO,g'	      \
+  -e 's,HIDE_UNDOC_MEMBERS     = NO,HIDE_UNDOC_MEMBERS      = YES,g'	      \
+  -e 's,HIDE_UNDOC_CLASSES     = NO,HIDE_UNDOC_CLASSES      = YES,g'	      \
+  -e 's,HIDE_FRIEND_COMPOUNDS  = NO,HIDE_FRIEND_COMPOUNDS   = YES,g'	      \
+  -e 's,HIDE_IN_BODY_DOCS      = NO,HIDE_IN_BODY_DOCS       = YES,g'	      \
+  -e 's,INTERNAL_DOCS          = YES,INTERNAL_DOCS          = NO,g'	      \
+  -e 's,GENERATE_TODOLIST      = YES,GENERATE_TODOLIST      = NO,g'	      \
+  -e 's,PROJECT_NUMBER         = \",PROJECT_NUMBER          = \"User documentation ,g'	 \
+  -e 's,EXCLUDE_SYMBOLS	       =,EXCLUDE_SYMBOLS	  = *::internal* *_ mln::trait::*,g'	
 
 
 # Regen files.
@@ -248,7 +251,8 @@ Doxyfile_user_pdf: Doxyfile_user
 	$(edit_pdf) $< >$@
 
 Doxyfile_devel: $(srcdir)/Doxyfile.in
-	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog | sed -e 's/\\\$$//g'`; \
+	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
+	      | sed -e 's/\\\$$//g'`;				\
 	$(edit) $< >$@
 
 Doxyfile_devel_pdf: Doxyfile_devel

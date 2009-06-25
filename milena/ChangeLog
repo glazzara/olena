@@ -1,5 +1,9 @@
 2009-06-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	* doc/Makefile.am: Wrap long lines.
+
+2009-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a Make rule faking the regeneration of the documentation.
 
 	* doc/Makefile.am,
