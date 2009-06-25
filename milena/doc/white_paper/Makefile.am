@@ -40,7 +40,7 @@ white-paper: white-paper-pdf white-paper-html
 
 WHITE_PAPER_HTML = white_paper_html/index.html
 white-paper-html: $(WHITE_PAPER_HTML)
-$(WHITE_PAPER_HTML): $(srcdir)/white_paper.tex $(EPSS)
+$(WHITE_PAPER_HTML): white_paper.tex $(EPSS)
 	test -d white_paper_html || mkdir white_paper_html
 	TEXINPUTS=$(TEXINPUTS) hevea -O -fix $< -o $@
 	$(top_srcdir)/milena/doc/tools/clearbanner.sh $@
@@ -48,10 +48,10 @@ $(WHITE_PAPER_HTML): $(srcdir)/white_paper.tex $(EPSS)
 
 WHITE_PAPER_PDF = white_paper.pdf
 white-paper-pdf: $(WHITE_PAPER_PDF)
-$(WHITE_PAPER_PDF):
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/white_paper.tex
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/white_paper.tex
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/white_paper.tex
+$(WHITE_PAPER_PDF): white_paper.tex $(PNGS)
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<
 
 
 dist_doc_DATA =					\

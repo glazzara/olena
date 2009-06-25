@@ -32,19 +32,18 @@ tutorial: tutorial-html tutorial-pdf
 # files.
 TUTORIAL_HH = tutorial.hh
 tutorial-html: $(TUTORIAL_HH)
-# FIXME: Missing dependencies on images from $(FIGURES_BUILDDIR).
-$(TUTORIAL_HH): $(FIGURES_BUILDDIR)
-	$(DOC_SRCDIR)/tools/todoxygen.sh $(srcdir)/tutorial.tex $(DOC_BUILDDIR)/tutorial $(DOC_SRCDIR)
+$(TUTORIAL_HH): tutorial.tex $(srcdir)/../figures.stamp
+	$(DOC_SRCDIR)/tools/todoxygen.sh		\
+	  $< $(DOC_BUILDDIR)/tutorial $(DOC_SRCDIR)
 
 
 # Final product.
 TUTORIAL_PDF = tutorial.pdf
 tutorial-pdf: $(TUTORIAL_PDF)
-# FIXME: Missing dependencies on images from $(FIGURES_BUILDDIR).
-$(TUTORIAL_PDF): $(FIGURES_BUILDDIR)
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/tutorial.tex
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/tutorial.tex
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/tutorial.tex
+$(TUTORIAL_PDF): tutorial.tex $(srcdir)/../figures.stamp
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<
 
 dist_doc_DATA = $(TUTORIAL_PDF)
 

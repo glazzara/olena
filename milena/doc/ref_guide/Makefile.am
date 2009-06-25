@@ -34,19 +34,18 @@ ref-guide: ref-guide-html ref-guide-pdf
 # about `.html' files.
 REF_GUIDE_HH = ref_guide.hh
 ref-guide-html: $(REF_GUIDE_HH)
-# FIXME: Missing dependencies on images from $(FIGURES_BUILDDIR).
-$(REF_GUIDE_HH): $(FIGURES_BUILDDIR)
-	$(DOC_SRCDIR)/tools/todoxygen.sh $(srcdir)/ref_guide.tex $(DOC_BUILDDIR)/ref_guide $(DOC_SRCDIR)
+$(REF_GUIDE_HH): ref_guide.tex $(srcdir)/../figures.stamp
+	$(DOC_SRCDIR)/tools/todoxygen.sh		\
+	  $< $(DOC_BUILDDIR)/ref_guide $(DOC_SRCDIR)
 
 
 # Final product.
 REF_GUIDE_PDF = ref_guide.pdf
 ref-guide-pdf: $(REF_GUIDE_PDF)
-# FIXME: Missing dependencies on images from $(FIGURES_BUILDDIR).
-$(REF_GUIDE_PDF): $(FIGURES_BUILDDIR)
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/ref_guide.tex
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/ref_guide.tex
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(srcdir)/ref_guide.tex
+$(REF_GUIDE_PDF): ref_guide.tex $(srcdir)/../figures.stamp
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<
 
 
 dist_doc_DATA = $(REF_GUIDE_PDF)

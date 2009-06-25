@@ -67,26 +67,34 @@ ref_guide/ref_guide.hh: fig-convert
 # Doxygen PDF documentation outputs.
 USER_REFMAN_PDF = user/latex/refman.pdf
 ref-doc-pdf: $(USER_REFMAN_PDF)
-$(USER_REFMAN_PDF): Doxyfile_user_pdf $(FIGURES_BUILDDIR) $(EXTRA_DEPS)
-	$(DOXYGEN) Doxyfile_user_pdf
+# FIXME: Split in two rules: one generating the LaTeX file from the
+# Doxyfile, and another one generating the PDF from the LaTeX source.
+# Moreover, the LaTeX to PDF rule could be factored using a suffix
+# rule (as in LRDE's share/).
+$(USER_REFMAN_PDF): Doxyfile_user_pdf $(srcdir)/figures.stamp $(EXTRA_DEPS)
+	$(DOXYGEN) $<
 	cd user/latex && make pdf
 
 USER_REFMAN_HTML = user/html
 ref-doc-html: $(USER_REFMAN_HTML)
-$(USER_REFMAN_HTML): Doxyfile_user $(FIGURES_BUILDDIR) $(EXTRA_DEPS)
-	$(DOXYGEN) Doxyfile_user
+$(USER_REFMAN_HTML): Doxyfile_user $(srcdir)/figures.stamp $(EXTRA_DEPS)
+	$(DOXYGEN) $<
 
 # Doxygen HTML documentation output directories.
 DEVEL_REFMAN_PDF = devel/latex/refman.pdf
 ref-doc-devel-pdf: $(DEVEL_REFMAN_PDF)
-$(DEVEL_REFMAN_PDF): Doxyfile_devel_pdf $(FIGURES_BUILDDIR) $(EXTRA_DEPS)
-	$(DOXYGEN) Doxyfile_devel_pdf
+# FIXME: Split in two rules: one generating the LaTeX file from the
+# Doxyfile, and another one generating the PDF from the LaTeX source.
+# Moreover, the LaTeX to PDF rule could be factored using a suffix
+# rule (as in LRDE's share/).
+$(DEVEL_REFMAN_PDF): Doxyfile_devel_pdf $(srcdir)/figures.stamp $(EXTRA_DEPS)
+	$(DOXYGEN) $<
 	cd devel/latex && make $(AM_MAKEFLAGS)
 
 DEVEL_REFMAN_HTML = devel/html
 ref-doc-devel-html: $(DEVEL_REFMAN_HTML)
-$(DEVEL_REFMAN_HTML): Doxyfile_devel $(FIGURES_BUILDDIR) $(EXTRA_DEPS)
-	$(DOXYGEN) Doxyfile_devel
+$(DEVEL_REFMAN_HTML): Doxyfile_devel $(srcdir)/figures.stamp $(EXTRA_DEPS)
+	$(DOXYGEN) $<
 
 # Tutorial.
 tutorial-pdf: fig-convert

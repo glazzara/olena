@@ -1,3 +1,18 @@
+2009-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve build dependencies in doc/.
+
+	* doc/Makefile.am ($(USER_REFMAN_PDF), $(USER_REFMAN_HTML))
+	($(DEVEL_REFMAN_PDF), $(DEVEL_REFMAN_HTML))
+	* doc/ref_guide/Makefile.am ($(REF_GUIDE_HH), $(REF_GUIDE_PDF))
+	* doc/tutorial/Makefile.am ($(TUTORIAL_HH), $(TUTORIAL_PDF)):
+	Depend on $(srcdir)/figures.stamp instead of $(FIGURES_BUILDDIR).
+	Shorten actions.
+	* doc/white_paper/Makefile.am ($(WHITE_PAPER_PDF)):
+	Add missing dependencies.
+	Shorten actions.
+	($(WHITE_PAPER_HTML)): Simplify dependency name.
+
 2009-06-25  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	Various fixes in documentation.
