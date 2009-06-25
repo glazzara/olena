@@ -1,4 +1,3 @@
-
 # Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -34,7 +33,7 @@ tutorial: tutorial-html tutorial-pdf
 TUTORIAL_HH = tutorial.hh
 tutorial-html: $(TUTORIAL_HH)
 # FIXME: Missing dependencies on images from $(FIGURES_BUILDDIR).
-$(TUTORIAL_HH):
+$(TUTORIAL_HH): $(FIGURES_BUILDDIR)
 	$(DOC_SRCDIR)/tools/todoxygen.sh $(srcdir)/tutorial.tex $(DOC_BUILDDIR)/tutorial $(DOC_SRCDIR)
 
 

@@ -171,7 +171,10 @@ include $(top_srcdir)/build-aux/regen-recursive.mk
 regen-am:
 	@rm -f $(srcdir)/headers.stamp.tmp
 	@touch $(srcdir)/headers.stamp.tmp
-	cd $(srcdir) && ./generate_dist_files.sh
+	@cd $(srcdir) && 				\
+	  ./generate_dist_files.sh figures 'p*m' && 	\
+	  ./generate_dist_files.sh outputs txt &&	\
+	  ./generate_dist_files.sh examples cc.raw
 	@mv -f $(srcdir)/headers.stamp.tmp $(srcdir)/headers.stamp
 
 $(srcdir)/examples/examples.mk: $(srcdir)/headers.stamp
@@ -182,7 +185,10 @@ $(srcdir)/outputs/outputs.mk: $(srcdir)/headers.stamp
 $(srcdir)/headers.stamp: $(srcdir)/generate_dist_files.sh
 	@rm -f $@.tmp
 	@touch $@.tmp
-	cd $(srcdir) && ./generate_dist_files.sh
+	@cd $(srcdir) && 				\
+	  ./generate_dist_files.sh figures 'p*m' && 	\
+	  ./generate_dist_files.sh outputs txt &&	\
+	  ./generate_dist_files.sh examples cc.raw
 	@mv -f $@.tmp $@
 
 
@@ -195,11 +201,21 @@ dist_doc_DATA =					\
   $(USER_REFMAN_HTML)				\
   $(USER_REFMAN_PDF)
 
+
 EXTRA_DIST +=					\
   Doxyfile.in					\
   Doxyfile_user					\
   Doxyfile_user_pdf				\
-  groups					\
+  groups/accu.hh 				\
+  groups/graph.hh 				\
+  groups/images.hh 				\
+  groups/main.hh   				\
+  groups/neighb.hh  				\
+  groups/site_set.hh 				\
+  groups/util.hh 				\
+  groups/win.hh 				\
+  img/small-enlarged.png 			\
+  img/small.png 				\
   doxyfuns.sty					\
   milena.sty					\
   tools/clearbanner.sh				\

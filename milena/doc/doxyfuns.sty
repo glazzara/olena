@@ -74,7 +74,7 @@
 % #2 - sample file name.
 \newcommand{\doxycode}[2][1]{
 \backslash endhtmlonly%
-\backslash include #2-#1.cc%
+\backslash include #2-#1.cc.raw%
 \backslash htmlonly %
 }
 
@@ -178,7 +178,7 @@ $$
 \renewcommand{\doxysection}[2]{\section{#2}\label{#1}}
 \renewcommand{\doxysubsection}[2]{\subsection{#2}\label{#1}}
 \renewcommand{\doxysubsubsection}[2]{\subsubsection{#2}\label{#1}}
-\renewcommand{\doxycode}[2][1]{\lstinputlisting[frame=single]{examples/split/#2-#1.cc}}
+\renewcommand{\doxycode}[2][1]{\lstinputlisting[frame=single]{examples/split/#2-#1.cc.raw}}
 \renewcommand{\doxyrawcode}[1]{\lstinputlisting[frame=single]{examples/#1.cc.raw}}
 \renewcommand{\doxyoutput}[1]{\lstinputlisting[frame=single]{outputs/#1.txt}}
 \renewcommand{\doxymoutput}[2][1]{\lstinputlisting[frame=single]{outputs/split/#2-#1.txt}}
