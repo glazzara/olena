@@ -13,13 +13,13 @@
 
 	Stretch result of classification.
 	* folio/tools/histo/classify_with_histo.cc: Stretch result in
-        the output image.
+	the output image.
 
 2009-06-19  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Clean up.
 	* folio/mln/histo/classify_with_histo_3d.hh: New algorithm
-        more generalist than the rgb version.
+	more generalist than the rgb version.
 	* folio/mln/histo/compute_histo_3d.hh: Add macros.
 	* folio/mln/histo/project_histo_3d.hh: Add macros.
 	* folio/test/histo/classify_with_histo_rgb.cc: Move file.
@@ -48,7 +48,9 @@
 
 2009-06-19  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
-	Add mln/ and tests/ directory for testing before integration into Milena.
+	Add mln/ and tests/ directory for testing before integration into
+	Milena.
+
 	* fabien/bin/pnms2dump.cc: Small update.
 	* fabien/igr/Makefile: Add targets.
 	* fabien/igr/check_edges.sh: Small update.
@@ -85,7 +87,7 @@
 
 	Implement visualization routine for regions.
 	* fabien/igr/wst_edges.cc: Add call to display_region().
-	* fabien/mln/world/inter_pixel/display_region.hh: 
+	* fabien/mln/world/inter_pixel/display_region.hh:
 	Implement routine for visualization of regions after a watershed call
 	[Draft, non functional].
 
@@ -108,8 +110,8 @@
 
 	Stop using \arg instead of \param or \tparam in documentation.
 
-	* sandbox/abraham/mln/transform/fft.hh,
-	* sandbox/nivault/dmap.hh:
+	* abraham/mln/transform/fft.hh,
+	* nivault/dmap.hh:
 	Here.
 
 2009-06-10  Fabien Freling  <fabien.freling@lrde.epita.fr>
@@ -630,7 +632,7 @@
 	* garrigues/fllt/test_fllt13.cc,
 	* garrigues/fllt/test_fllt15.cc,
 	* garrigues/fllt/test_fllt8.cc (using): Remove useless typename.
-	That makes files compile with g++-2.95.	
+	That makes files compile with g++-2.95.
 	* inim/2009/binarization/binarization.hh
 	(mln_concrete_ch_value): Replace by...
 	(mln_ch_value): ...this.
@@ -1231,259 +1233,6 @@
 	* folio/test/histo/projected3d.cc: New test.
 	* folio/test/value/circular.cc: test.
 	* folio/test/value/hsv.cc: test.
-
-2009-05-18  Guillaume Lazzara  <lazzara@lrde.epita.fr>
-
-	Move Scribo from sandbox to the root directory.
-
-	* milena/sandbox/scribo/Makefile,
-	* milena/sandbox/scribo/Makefile.am,
-	* milena/sandbox/scribo/all.hh,
-	* milena/sandbox/scribo/binarization/simple.hh,
-	* milena/sandbox/scribo/core/all.hh,
-	* milena/sandbox/scribo/core/central_sites.hh,
-	* milena/sandbox/scribo/core/component_bboxes.hh,
-	* milena/sandbox/scribo/core/erase_bboxes.hh,
-	* milena/sandbox/scribo/core/macros.hh,
-	* milena/sandbox/scribo/debug/all.hh,
-	* milena/sandbox/scribo/debug/save_label_image.hh,
-	* milena/sandbox/scribo/debug/save_linked_textbboxes_image.hh,
-	* milena/sandbox/scribo/debug/save_table_image.hh,
-	* milena/sandbox/scribo/debug/save_textbboxes_image.hh,
-	* milena/sandbox/scribo/demat.hh,
-	* milena/sandbox/scribo/draw/all.hh,
-	* milena/sandbox/scribo/draw/bounding_box_links.hh,
-	* milena/sandbox/scribo/draw/bounding_boxes.hh,
-	* milena/sandbox/scribo/extract/primitive/canvas.hh,
-	* milena/sandbox/scribo/extract/primitive/cells.hh,
-	* milena/sandbox/scribo/extract/primitive/lines_discontinued.hh,
-	* milena/sandbox/scribo/extract/primitive/lines_h_discontinued.hh,
-	* milena/sandbox/scribo/extract/primitive/lines_thick.hh,
-	* milena/sandbox/scribo/extract/primitive/lines_v_discontinued.hh,
-	* milena/sandbox/scribo/extract/primitive/objects.hh,
-	* milena/sandbox/scribo/filter/all.hh,
-	* milena/sandbox/scribo/filter/large_components.hh,
-	* milena/sandbox/scribo/filter/small_components.hh,
-	* milena/sandbox/scribo/filter/thick_bboxes.hh,
-	* milena/sandbox/scribo/filter/thin_bboxes.hh,
-	* milena/sandbox/scribo/make/all.hh,
-	* milena/sandbox/scribo/make/debug_filename.hh,
-	* milena/sandbox/scribo/make/influence_zone_graph.hh,
-	* milena/sandbox/scribo/make/text.hh,
-	* milena/sandbox/scribo/preprocessing/all.hh,
-	* milena/sandbox/scribo/preprocessing/unskew.hh,
-	* milena/sandbox/scribo/scribo.mk,
-	* milena/sandbox/scribo/src/Makefile.am,
-	* milena/sandbox/scribo/src/binarization/Makefile.am,
-	* milena/sandbox/scribo/src/binarization/simple.cc,
-	* milena/sandbox/scribo/src/dmap.cc,
-	* milena/sandbox/scribo/src/extract_text_double_link.cc,
-	* milena/sandbox/scribo/src/extract_text_double_several_links.cc,
-	* milena/sandbox/scribo/src/extract_text_graph.cc,
-	* milena/sandbox/scribo/src/extract_text_several_graph.cc,
-	* milena/sandbox/scribo/src/extract_text_several_left_links.cc,
-	* milena/sandbox/scribo/src/extract_text_single_link.cc,
-	* milena/sandbox/scribo/src/morpho.cc,
-	* milena/sandbox/scribo/src/photo.cc,
-	* milena/sandbox/scribo/src/photo_basic.cc,
-	* milena/sandbox/scribo/src/rectangularity.cc,
-	* milena/sandbox/scribo/src/table.cc,
-	* milena/sandbox/scribo/src/table_erase.cc,
-	* milena/sandbox/scribo/src/table_extract.cc,
-	* milena/sandbox/scribo/src/table_rebuild_opening.cc,
-	* milena/sandbox/scribo/src/table_rebuild_rank.cc,
-	* milena/sandbox/scribo/src/thin_bboxes.cc,
-	* milena/sandbox/scribo/table/align_lines_horizontaly.hh,
-	* milena/sandbox/scribo/table/align_lines_verticaly.hh,
-	* milena/sandbox/scribo/table/all.hh,
-	* milena/sandbox/scribo/table/connect_horizontal_lines.hh,
-	* milena/sandbox/scribo/table/connect_vertical_lines.hh,
-	* milena/sandbox/scribo/table/erase.hh,
-	* milena/sandbox/scribo/table/extract.hh,
-	* milena/sandbox/scribo/table/extract_lines_with_opening.hh,
-	* milena/sandbox/scribo/table/extract_lines_with_rank.hh,
-	* milena/sandbox/scribo/table/internal/align_lines.hh,
-	* milena/sandbox/scribo/table/internal/all.hh,
-	* milena/sandbox/scribo/table/internal/connect_lines.hh,
-	* milena/sandbox/scribo/table/internal/repair_lines.hh,
-	* milena/sandbox/scribo/table/rebuild.hh,
-	* milena/sandbox/scribo/table/repair_horizontal_lines.hh,
-	* milena/sandbox/scribo/table/repair_vertical_lines.hh,
-	* milena/sandbox/scribo/tests/Makefile.am,
-	* milena/sandbox/scribo/tests/data.hh.in,
-	* milena/sandbox/scribo/tests/filter/Makefile.am,
-	* milena/sandbox/scribo/tests/filter/small_and_large_bboxes.cc,
-	* milena/sandbox/scribo/tests/table/Makefile.am,
-	* milena/sandbox/scribo/tests/table/extract_lines_with_rank.cc,
-	* milena/sandbox/scribo/tests/table/repair_lines.cc,
-	* milena/sandbox/scribo/tests/text/Makefile.am,
-	* milena/sandbox/scribo/text/all.hh,
-	* milena/sandbox/scribo/text/extract_bboxes.hh,
-	* milena/sandbox/scribo/text/extract_lines.hh,
-	* milena/sandbox/scribo/text/grouping/all.hh,
-	* milena/sandbox/scribo/text/grouping/group_from_double_link.hh,
-	* milena/sandbox/scribo/text/grouping/group_from_graph.hh,
-	* milena/sandbox/scribo/text/grouping/group_from_single_link.hh,
-	* milena/sandbox/scribo/text/grouping/group_with_graph.hh,
-	* milena/sandbox/scribo/text/grouping/group_with_several_graphes.hh,
-	* milena/sandbox/scribo/text/grouping/group_with_several_left_links.hh,
-	* milena/sandbox/scribo/text/grouping/group_with_several_right_links.hh,
-	* milena/sandbox/scribo/text/grouping/group_with_single_left_link.hh,
-	* milena/sandbox/scribo/text/grouping/group_with_single_right_link.hh,
-	* milena/sandbox/scribo/text/grouping/internal/all.hh,
-	* milena/sandbox/scribo/text/grouping/internal/find_graph_link.hh,
-	* milena/sandbox/scribo/text/grouping/internal/find_left_link.hh,
-	* milena/sandbox/scribo/text/grouping/internal/find_right_link.hh,
-	* milena/sandbox/scribo/text/grouping/internal/find_root.hh,
-	* milena/sandbox/scribo/text/grouping/internal/init_link_array.hh,
-	* milena/sandbox/scribo/text/grouping/internal/is_link_valid.hh,
-	* milena/sandbox/scribo/text/grouping/internal/update_graph_link.hh,
-	* milena/sandbox/scribo/text/grouping/internal/update_link_array.hh,
-	* milena/sandbox/scribo/text/recognition.hh,
-	* milena/sandbox/scribo/util/all.hh,
-	* milena/sandbox/scribo/util/text.hh: Move ...
-
-	* scribo/Doxyfile,
-	* scribo/Doxyfile_tex,
-	* scribo/Makefile.am,
-	* scribo/all.hh,
-	* scribo/binarization/simple.hh,
-	* scribo/core/all.hh,
-	* scribo/core/central_sites.hh,
-	* scribo/core/component_bboxes.hh,
-	* scribo/core/erase_bboxes.hh,
-	* scribo/core/macros.hh,
-	* scribo/debug/all.hh,
-	* scribo/debug/save_label_image.hh,
-	* scribo/debug/save_linked_textbboxes_image.hh,
-	* scribo/debug/save_table_image.hh,
-	* scribo/debug/save_textbboxes_image.hh,
-	* scribo/demat.hh,
-	* scribo/draw/all.hh,
-	* scribo/draw/bounding_box_links.hh,
-	* scribo/draw/bounding_boxes.hh,
-	* scribo/extract/primitive/canvas.hh,
-	* scribo/extract/primitive/cells.hh,
-	* scribo/extract/primitive/lines_discontinued.hh,
-	* scribo/extract/primitive/lines_h_discontinued.hh,
-	* scribo/extract/primitive/lines_thick.hh,
-	* scribo/extract/primitive/lines_v_discontinued.hh,
-	* scribo/extract/primitive/objects.hh,
-	* scribo/filter/all.hh,
-	* scribo/filter/large_components.hh,
-	* scribo/filter/small_components.hh,
-	* scribo/filter/thick_bboxes.hh,
-	* scribo/filter/thin_bboxes.hh,
-	* scribo/make/all.hh,
-	* scribo/make/debug_filename.hh,
-	* scribo/make/influence_zone_graph.hh,
-	* scribo/make/text.hh,
-	* scribo/preprocessing/all.hh,
-	* scribo/preprocessing/unskew.hh,
-	* scribo/scribo.mk,
-	* scribo/src/Makefile.am,
-	* scribo/src/binarization/Makefile.am,
-	* scribo/src/binarization/simple.cc,
-	* scribo/src/dmap.cc,
-	* scribo/src/extract_text_double_link.cc,
-	* scribo/src/extract_text_double_several_links.cc,
-	* scribo/src/extract_text_graph.cc,
-	* scribo/src/extract_text_several_graph.cc,
-	* scribo/src/extract_text_several_left_links.cc,
-	* scribo/src/extract_text_single_link.cc,
-	* scribo/src/morpho.cc,
-	* scribo/src/photo.cc,
-	* scribo/src/photo_basic.cc,
-	* scribo/src/recognition.cc,
-	* scribo/src/rectangularity.cc,
-	* scribo/src/table.cc,
-	* scribo/src/table_erase.cc,
-	* scribo/src/table_extract.cc,
-	* scribo/src/table_old.cc,
-	* scribo/src/table_rebuild_opening.cc,
-	* scribo/src/table_rebuild_rank.cc,
-	* scribo/src/thin_bboxes.cc,
-	* scribo/table/align_lines_horizontaly.hh,
-	* scribo/table/align_lines_verticaly.hh,
-	* scribo/table/all.hh,
-	* scribo/table/connect_horizontal_lines.hh,
-	* scribo/table/connect_vertical_lines.hh,
-	* scribo/table/erase.hh,
-	* scribo/table/extract.hh,
-	* scribo/table/extract_lines_with_opening.hh,
-	* scribo/table/extract_lines_with_rank.hh,
-	* scribo/table/internal/align_lines.hh,
-	* scribo/table/internal/all.hh,
-	* scribo/table/internal/connect_lines.hh,
-	* scribo/table/internal/repair_lines.hh,
-	* scribo/table/rebuild.hh,
-	* scribo/table/repair_horizontal_lines.hh,
-	* scribo/table/repair_vertical_lines.hh,
-	* scribo/test.cc,
-	* scribo/tests/Makefile.am,
-	* scribo/tests/data.hh.in,
-	* scribo/src/photo.cc,
-	* scribo/src/photo_basic.cc,
-	* scribo/src/recognition.cc,
-	* scribo/src/rectangularity.cc,
-	* scribo/src/table.cc,
-	* scribo/src/table_erase.cc,
-	* scribo/src/table_extract.cc,
-	* scribo/src/table_old.cc,
-	* scribo/src/table_rebuild_opening.cc,
-	* scribo/src/table_rebuild_rank.cc,
-	* scribo/src/thin_bboxes.cc,
-	* scribo/table/align_lines_horizontaly.hh,
-	* scribo/table/align_lines_verticaly.hh,
-	* scribo/table/all.hh,
-	* scribo/table/connect_horizontal_lines.hh,
-	* scribo/table/connect_vertical_lines.hh,
-	* scribo/table/erase.hh,
-	* scribo/table/extract.hh,
-	* scribo/table/extract_lines_with_opening.hh,
-	* scribo/table/extract_lines_with_rank.hh,
-	* scribo/table/internal/align_lines.hh,
-	* scribo/table/internal/all.hh,
-	* scribo/table/internal/connect_lines.hh,
-	* scribo/table/internal/repair_lines.hh,
-	* scribo/table/rebuild.hh,
-	* scribo/table/repair_horizontal_lines.hh,
-	* scribo/table/repair_vertical_lines.hh,
-	* scribo/test.cc,
-	* scribo/tests/Makefile.am,
-	* scribo/tests/data.hh.in,
-	* scribo/tests/filter/Makefile.am,
-	* scribo/tests/filter/small_and_large_bboxes.cc,
-	* scribo/tests/table/Makefile.am,
-	* scribo/tests/table/extract_lines_with_rank.cc,
-	* scribo/tests/table/repair_lines.cc,
-	* scribo/tests/text/Makefile.am,
-	* scribo/text/all.hh,
-	* scribo/text/clean.hh,
-	* scribo/text/extract_bboxes.hh,
-	* scribo/text/extract_lines.hh,
-	* scribo/text/grouping/all.hh,
-	* scribo/text/grouping/group_from_double_link.hh,
-	* scribo/text/grouping/group_from_graph.hh,
-	* scribo/text/grouping/group_from_single_link.hh,
-	* scribo/text/grouping/group_with_graph.hh,
-	* scribo/text/grouping/group_with_several_graphes.hh,
-	* scribo/text/grouping/group_with_several_left_links.hh,
-	* scribo/text/grouping/group_with_several_right_links.hh,
-	* scribo/text/grouping/group_with_single_left_link.hh,
-	* scribo/text/grouping/group_with_single_right_link.hh,
-	* scribo/text/grouping/internal/all.hh,
-	* scribo/text/grouping/internal/find_graph_link.hh,
-	* scribo/text/grouping/internal/find_left_link.hh,
-	* scribo/text/grouping/internal/find_right_link.hh,
-	* scribo/text/grouping/internal/find_root.hh,
-	* scribo/text/grouping/internal/init_link_array.hh,
-	* scribo/text/grouping/internal/is_link_valid.hh,
-	* scribo/text/grouping/internal/update_graph_link.hh,
-	* scribo/text/grouping/internal/update_link_array.hh,
-	* scribo/text/recognition.hh,
-	* scribo/util/all.hh,
-	* scribo/util/text.hh: ... here.
 
 2009-05-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 

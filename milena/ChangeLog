@@ -12,7 +12,7 @@
 
 	* doc/ref_guide/Makefile.am,
 	* doc/tutorial/Makefile.am: add dependency on FIGURES builddir.
-	
+
 	* doc/tutorial/tutorial.tex,
 	* doc/ref_guide/ref_guide.tex,
 	* doc/examples/accu-wrong-instanciation.cc.raw: update level::* to
@@ -131,118 +131,118 @@
 	* doc/examples/split/win-create-1-1.cc,
 	* doc/examples/split/win-create-2-1.cc: move...
 
-        * doc/examples/split/accu-right-instanciation-1.cc.raw,
-        * doc/examples/split/borderthickness-1.cc.raw,
-        * doc/examples/split/box2d-bbox-1.cc.raw,
-        * doc/examples/split/domain-display-1.cc.raw,
-        * doc/examples/split/dpoint-1-1.cc.raw,
-        * doc/examples/split/estim-sites-1.cc.raw,
-        * doc/examples/split/extend-1.cc.raw,
-        * doc/examples/split/extend-2.cc.raw,
-        * doc/examples/split/extend-3.cc.raw,
-        * doc/examples/split/extend-4.cc.raw,
-        * doc/examples/split/extend-5.cc.raw,
-        * doc/examples/split/extension-ignore-1.cc.raw,
-        * doc/examples/split/fill-1.cc.raw,
-        * doc/examples/split/fill-2.cc.raw,
-        * doc/examples/split/fill-3.cc.raw,
-        * doc/examples/split/fill-call-1-1.cc.raw,
-        * doc/examples/split/fill-call-1-2.cc.raw,
-        * doc/examples/split/fill-call-1-3.cc.raw,
-        * doc/examples/split/fill-part-image-1.cc.raw,
-        * doc/examples/split/fill-part-image-2.cc.raw,
-        * doc/examples/split/fill-subdomain-1.cc.raw,
-        * doc/examples/split/fill-subdomain-2.cc.raw,
-        * doc/examples/split/fill-subdomain-3.cc.raw,
-        * doc/examples/split/fill-subdomain-4.cc.raw,
-        * doc/examples/split/fill-subdomain-shorter-1.cc.raw,
-        * doc/examples/split/fill-subdomain-shorter-2.cc.raw,
-        * doc/examples/split/fill-subimage-cfun-1.cc.raw,
-        * doc/examples/split/fill-subimage-cfun-2.cc.raw,
-        * doc/examples/split/fill-subimage-cfun-3.cc.raw,
-        * doc/examples/split/forall-piter-1.cc.raw,
-        * doc/examples/split/fun-p2v-1-1.cc.raw,
-        * doc/examples/split/graph-data-1.cc.raw,
-        * doc/examples/split/graph-data-2.cc.raw,
-        * doc/examples/split/graph-data-3.cc.raw,
-        * doc/examples/split/graph-data-4.cc.raw,
-        * doc/examples/split/graph-data-5.cc.raw,
-        * doc/examples/split/graph-data-6.cc.raw,
-        * doc/examples/split/graph-iter-1.cc.raw,
-        * doc/examples/split/graph-iter-2.cc.raw,
-        * doc/examples/split/graph-iter-3.cc.raw,
-        * doc/examples/split/graph-iter-4.cc.raw,
-        * doc/examples/split/ima-has-1.cc.raw,
-        * doc/examples/split/ima-load-1.cc.raw,
-        * doc/examples/split/ima-save-1.cc.raw,
-        * doc/examples/split/ima-size-1.cc.raw,
-        * doc/examples/split/ima2d-1-1.cc.raw,
-        * doc/examples/split/ima2d-2-1.cc.raw,
-        * doc/examples/split/ima2d-3-1.cc.raw,
-        * doc/examples/split/ima2d-4-1.cc.raw,
-        * doc/examples/split/ima2d-5-1.cc.raw,
-        * doc/examples/split/ima2d-6-clone-1.cc.raw,
-        * doc/examples/split/ima2d-7-1.cc.raw,
-        * doc/examples/split/ima2d-rot-1.cc.raw,
-        * doc/examples/split/labeling-compute-1.cc.raw,
-        * doc/examples/split/labeling-compute-2.cc.raw,
-        * doc/examples/split/labeling-compute-3.cc.raw,
-        * doc/examples/split/labeling-compute-4.cc.raw,
-        * doc/examples/split/logical-not-1.cc.raw,
-        * doc/examples/split/logical-not-2.cc.raw,
-        * doc/examples/split/logical-not-3.cc.raw,
-        * doc/examples/split/mln_var-1.cc.raw,
-        * doc/examples/split/mln_var-2.cc.raw,
-        * doc/examples/split/mln_var-3.cc.raw,
-        * doc/examples/split/parray-append-1.cc.raw,
-        * doc/examples/split/parray-bbox-1.cc.raw,
-        * doc/examples/split/paste-1.cc.raw,
-        * doc/examples/split/paste-call-1-1.cc.raw,
-        * doc/examples/split/point-1-1.cc.raw,
-        * doc/examples/split/predicate-1-1.cc.raw,
-        * doc/examples/split/tuto2_first_image-1.cc.raw,
-        * doc/examples/split/tuto2_first_image-2.cc.raw,
-        * doc/examples/split/tuto2_first_image-3.cc.raw,
-        * doc/examples/split/tuto2_first_image-4.cc.raw,
-        * doc/examples/split/tuto3_colorize-1.cc.raw,
-        * doc/examples/split/tuto3_first_routine-1.cc.raw,
-        * doc/examples/split/tuto3_first_routine-2.cc.raw,
-        * doc/examples/split/tuto3_first_routine-3.cc.raw,
-        * doc/examples/split/tuto3_first_routine-4.cc.raw,
-        * doc/examples/split/tuto3_first_routine-5.cc.raw,
-        * doc/examples/split/tuto3_first_routine-6.cc.raw,
-        * doc/examples/split/tuto3_first_routine-7.cc.raw,
-        * doc/examples/split/tuto3_first_routine-8.cc.raw,
-        * doc/examples/split/tuto3_println-1.cc.raw,
-        * doc/examples/split/tuto3_println-2.cc.raw,
-        * doc/examples/split/tuto3_rw_image-1.cc.raw,
-        * doc/examples/split/tuto3_rw_image-2.cc.raw,
-        * doc/examples/split/tuto3_rw_image-3.cc.raw,
-        * doc/examples/split/tuto3_rw_image-4.cc.raw,
-        * doc/examples/split/tuto3_rw_image-5.cc.raw,
-        * doc/examples/split/tuto3_rw_image-6.cc.raw,
-        * doc/examples/split/tuto3_rw_image-7.cc.raw,
-        * doc/examples/split/tuto3_trace-1.cc.raw,
-        * doc/examples/split/tuto3_trace-2.cc.raw,
-        * doc/examples/split/tuto4_genericity_and_algorithms-1.cc.raw,
-        * doc/examples/split/tuto4_genericity_and_algorithms-10.cc.raw,
-        * doc/examples/split/tuto4_genericity_and_algorithms-11.cc.raw,
-        * doc/examples/split/tuto4_genericity_and_algorithms-12.cc.raw,
-        * doc/examples/split/tuto4_genericity_and_algorithms-2.cc.raw,
-        * doc/examples/split/tuto4_genericity_and_algorithms-3.cc.raw,
-        * doc/examples/split/tuto4_genericity_and_algorithms-4.cc.raw,
-        * doc/examples/split/tuto4_genericity_and_algorithms-5.cc.raw,
-        * doc/examples/split/tuto4_genericity_and_algorithms-6.cc.raw,
-        * doc/examples/split/tuto4_genericity_and_algorithms-7.cc.raw,
-        * doc/examples/split/tuto4_genericity_and_algorithms-8.cc.raw,
-        * doc/examples/split/tuto4_genericity_and_algorithms-9.cc.raw,
-        * doc/examples/split/tuto4_point2d-1.cc.raw,
-        * doc/examples/split/tuto4_site_set_create-1.cc.raw,
-        * doc/examples/split/tuto4_site_set_create-2.cc.raw,
-        * doc/examples/split/tuto4_site_set_create-3.cc.raw,
-        * doc/examples/split/tuto4_site_set_create-4.cc.raw,
-        * doc/examples/split/win-create-1-1.cc.raw,
-        * doc/examples/split/win-create-2-1.cc.raw: ... here.
+	* doc/examples/split/accu-right-instanciation-1.cc.raw,
+	* doc/examples/split/borderthickness-1.cc.raw,
+	* doc/examples/split/box2d-bbox-1.cc.raw,
+	* doc/examples/split/domain-display-1.cc.raw,
+	* doc/examples/split/dpoint-1-1.cc.raw,
+	* doc/examples/split/estim-sites-1.cc.raw,
+	* doc/examples/split/extend-1.cc.raw,
+	* doc/examples/split/extend-2.cc.raw,
+	* doc/examples/split/extend-3.cc.raw,
+	* doc/examples/split/extend-4.cc.raw,
+	* doc/examples/split/extend-5.cc.raw,
+	* doc/examples/split/extension-ignore-1.cc.raw,
+	* doc/examples/split/fill-1.cc.raw,
+	* doc/examples/split/fill-2.cc.raw,
+	* doc/examples/split/fill-3.cc.raw,
+	* doc/examples/split/fill-call-1-1.cc.raw,
+	* doc/examples/split/fill-call-1-2.cc.raw,
+	* doc/examples/split/fill-call-1-3.cc.raw,
+	* doc/examples/split/fill-part-image-1.cc.raw,
+	* doc/examples/split/fill-part-image-2.cc.raw,
+	* doc/examples/split/fill-subdomain-1.cc.raw,
+	* doc/examples/split/fill-subdomain-2.cc.raw,
+	* doc/examples/split/fill-subdomain-3.cc.raw,
+	* doc/examples/split/fill-subdomain-4.cc.raw,
+	* doc/examples/split/fill-subdomain-shorter-1.cc.raw,
+	* doc/examples/split/fill-subdomain-shorter-2.cc.raw,
+	* doc/examples/split/fill-subimage-cfun-1.cc.raw,
+	* doc/examples/split/fill-subimage-cfun-2.cc.raw,
+	* doc/examples/split/fill-subimage-cfun-3.cc.raw,
+	* doc/examples/split/forall-piter-1.cc.raw,
+	* doc/examples/split/fun-p2v-1-1.cc.raw,
+	* doc/examples/split/graph-data-1.cc.raw,
+	* doc/examples/split/graph-data-2.cc.raw,
+	* doc/examples/split/graph-data-3.cc.raw,
+	* doc/examples/split/graph-data-4.cc.raw,
+	* doc/examples/split/graph-data-5.cc.raw,
+	* doc/examples/split/graph-data-6.cc.raw,
+	* doc/examples/split/graph-iter-1.cc.raw,
+	* doc/examples/split/graph-iter-2.cc.raw,
+	* doc/examples/split/graph-iter-3.cc.raw,
+	* doc/examples/split/graph-iter-4.cc.raw,
+	* doc/examples/split/ima-has-1.cc.raw,
+	* doc/examples/split/ima-load-1.cc.raw,
+	* doc/examples/split/ima-save-1.cc.raw,
+	* doc/examples/split/ima-size-1.cc.raw,
+	* doc/examples/split/ima2d-1-1.cc.raw,
+	* doc/examples/split/ima2d-2-1.cc.raw,
+	* doc/examples/split/ima2d-3-1.cc.raw,
+	* doc/examples/split/ima2d-4-1.cc.raw,
+	* doc/examples/split/ima2d-5-1.cc.raw,
+	* doc/examples/split/ima2d-6-clone-1.cc.raw,
+	* doc/examples/split/ima2d-7-1.cc.raw,
+	* doc/examples/split/ima2d-rot-1.cc.raw,
+	* doc/examples/split/labeling-compute-1.cc.raw,
+	* doc/examples/split/labeling-compute-2.cc.raw,
+	* doc/examples/split/labeling-compute-3.cc.raw,
+	* doc/examples/split/labeling-compute-4.cc.raw,
+	* doc/examples/split/logical-not-1.cc.raw,
+	* doc/examples/split/logical-not-2.cc.raw,
+	* doc/examples/split/logical-not-3.cc.raw,
+	* doc/examples/split/mln_var-1.cc.raw,
+	* doc/examples/split/mln_var-2.cc.raw,
+	* doc/examples/split/mln_var-3.cc.raw,
+	* doc/examples/split/parray-append-1.cc.raw,
+	* doc/examples/split/parray-bbox-1.cc.raw,
+	* doc/examples/split/paste-1.cc.raw,
+	* doc/examples/split/paste-call-1-1.cc.raw,
+	* doc/examples/split/point-1-1.cc.raw,
+	* doc/examples/split/predicate-1-1.cc.raw,
+	* doc/examples/split/tuto2_first_image-1.cc.raw,
+	* doc/examples/split/tuto2_first_image-2.cc.raw,
+	* doc/examples/split/tuto2_first_image-3.cc.raw,
+	* doc/examples/split/tuto2_first_image-4.cc.raw,
+	* doc/examples/split/tuto3_colorize-1.cc.raw,
+	* doc/examples/split/tuto3_first_routine-1.cc.raw,
+	* doc/examples/split/tuto3_first_routine-2.cc.raw,
+	* doc/examples/split/tuto3_first_routine-3.cc.raw,
+	* doc/examples/split/tuto3_first_routine-4.cc.raw,
+	* doc/examples/split/tuto3_first_routine-5.cc.raw,
+	* doc/examples/split/tuto3_first_routine-6.cc.raw,
+	* doc/examples/split/tuto3_first_routine-7.cc.raw,
+	* doc/examples/split/tuto3_first_routine-8.cc.raw,
+	* doc/examples/split/tuto3_println-1.cc.raw,
+	* doc/examples/split/tuto3_println-2.cc.raw,
+	* doc/examples/split/tuto3_rw_image-1.cc.raw,
+	* doc/examples/split/tuto3_rw_image-2.cc.raw,
+	* doc/examples/split/tuto3_rw_image-3.cc.raw,
+	* doc/examples/split/tuto3_rw_image-4.cc.raw,
+	* doc/examples/split/tuto3_rw_image-5.cc.raw,
+	* doc/examples/split/tuto3_rw_image-6.cc.raw,
+	* doc/examples/split/tuto3_rw_image-7.cc.raw,
+	* doc/examples/split/tuto3_trace-1.cc.raw,
+	* doc/examples/split/tuto3_trace-2.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-1.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-10.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-11.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-12.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-2.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-3.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-4.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-5.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-6.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-7.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-8.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-9.cc.raw,
+	* doc/examples/split/tuto4_point2d-1.cc.raw,
+	* doc/examples/split/tuto4_site_set_create-1.cc.raw,
+	* doc/examples/split/tuto4_site_set_create-2.cc.raw,
+	* doc/examples/split/tuto4_site_set_create-3.cc.raw,
+	* doc/examples/split/tuto4_site_set_create-4.cc.raw,
+	* doc/examples/split/win-create-1-1.cc.raw,
+	* doc/examples/split/win-create-2-1.cc.raw: ... here.
 
 2009-06-24  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -331,7 +331,7 @@
 	* Makefile.am,
 	* tests/unit_test/Makefile.am: make use of the new scripts in
 	build-aux.
-	
+
 	* tests/unit_test/disabled_tests: add a list of disabled unit tests.
 
 	* headers.mk,
@@ -457,8 +457,8 @@
 	* mln/morpho/tree/compute_attribute_image.hh,
 	* sandbox/theo/tufa_2008/filter_n.cc:
 	Replace accu::accu_name by accu::stat::accu_name,
-		accu::meta::accu_name by accu::meta::stat::accu_name,
-		accu/accu_name by accu/stat/accu_name.
+	accu::meta::accu_name by accu::meta::stat::accu_name,
+	accu/accu_name by accu/stat/accu_name.
 
 2009-06-15  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -487,7 +487,7 @@
 	* mln/fun/v2v/rgb_to_hsl.hh: fix ambiguities with operators.
 
 	* mln/value/internal/gray_f.hh: repair header.
-	
+
 	* tests/registration/Makefile.am: disable registration test.
 
 2009-06-15  Edwin Carlinet  <carlinet@lrde.epita.fr>
@@ -504,7 +504,7 @@
 
 	* sandbox/theo/esiee/slides_2009_may/dilation.hh:
 	Replace accu::accu_name by accu::math::accu_name,
-		accu/accu_name by accu/math/accu_name.
+	accu/accu_name by accu/math/accu_name.
 
 2009-06-15  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
@@ -828,8 +828,8 @@
 	* trash/obased_rle_image.hh,
 	* trash/p_bgraph.hh:
 	Replace accu::accu_name by accu::shape::accu_name,
-		accu::meta::accu_name by accu::meta::shape::accu_name,
-		accu/accu_name by accu/shape/accu_name.
+	accu::meta::accu_name by accu::meta::shape::accu_name,
+	accu/accu_name by accu/shape/accu_name.
 
 2009-06-11  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -951,7 +951,7 @@
 	* doc/Makefile.am: improve rules dependencies.
 
 	* doc/examples/Makefile.am:
-	  - Compare split files to references. 
+	  - Compare split files to references.
 	  - Add a rule 'data-regen'. Reference data is now generated on demand
 	  only.
 
@@ -1075,7 +1075,7 @@
 	* doc/outputs/split/tuto3_println-2.txt: new reference files.
 
 	* doc/tools/split_sample.sh: fix a typo.
-	
+
 	* doc/white_paper/white_paper.tex: fix path to figures.
 
 2009-06-11  Edwin Carlinet  <carlinet@lrde.epita.fr>
@@ -1108,7 +1108,7 @@
 	* tests/accu/math/Makefile.am:
 	Update accus Makefiles.
 
-	* doc/examples/tuto3/first_routine.cc: 
+	* doc/examples/tuto3/first_routine.cc:
 	* mln/accu/site_set/rectangularity.hh,
 	* mln/accu/stat/deviation.hh,
 	* mln/accu/stat/mean.hh,
@@ -1188,8 +1188,8 @@
 	* tests/morpho/opening/algebraic.cc,
 	* tests/set/compute.cc:
 	Replace accu::accu_name by accu::math::accu_name,
-		accu::meta::accu_name by accu::meta::math::accu_name,
-		accu/accu_name.hh by accu/math/accu_name.hh.
+	accu::meta::accu_name by accu::meta::math::accu_name,
+	accu/accu_name.hh by accu/math/accu_name.hh.
 
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -1321,12 +1321,12 @@
 
 	Use \tparam properly.
 
-	* milena/mln/core/image/complex_image.hh,
-	* milena/mln/core/site_set/p_complex.hh,
-	* milena/mln/util/line_graph.hh,
-	* milena/trash/bgraph_image.hh,
-	* milena/trash/graph_image.hh,
-	* milena/trash/line_graph_image.hh:
+	* mln/core/image/complex_image.hh,
+	* mln/core/site_set/p_complex.hh,
+	* mln/util/line_graph.hh,
+	* trash/bgraph_image.hh,
+	* trash/graph_image.hh,
+	* trash/line_graph_image.hh:
 	Use \p instead of \tparam when highlighting a template parameter
 	within a sentence.
 
@@ -2377,22 +2377,22 @@
 
 	Simplify all_headers tests: keep a single one at the top-level.
 
-	* milena/tests/arith/all_headers.cc,
-	* milena/tests/border/all_headers.cc,
-	* milena/tests/display/all_headers.cc,
-	* milena/tests/draw/all_headers.cc,
-	* milena/tests/logical/all_headers.cc,
-	* milena/tests/util/all_headers.cc:
+	* tests/arith/all_headers.cc,
+	* tests/border/all_headers.cc,
+	* tests/display/all_headers.cc,
+	* tests/draw/all_headers.cc,
+	* tests/logical/all_headers.cc,
+	* tests/util/all_headers.cc:
 	Remove.
-	* milena/tests/arith/Makefile.am,
-	* milena/tests/border/Makefile.am,
-	* milena/tests/data/Makefile.am,
-	* milena/tests/draw/Makefile.am,
-	* milena/tests/logical/Makefile.am
+	* tests/arith/Makefile.am,
+	* tests/border/Makefile.am,
+	* tests/data/Makefile.am,
+	* tests/draw/Makefile.am,
+	* tests/logical/Makefile.am
 	(check_PROGRAM): Remove all_headers.
 	(all_headers_SOURCES): Remove.
-	* milena/tests/all_headers.cc,
-	* milena/tests/display/Makefile.am:
+	* tests/all_headers.cc,
+	* tests/display/Makefile.am:
 	Clean up.
 	Aesthetic changes.
 
@@ -6387,7 +6387,7 @@
 	* mln/io/off/load.hh,
 	* mln/topo/complex.hh,
 	* mln/topo/face.hh,
-	* mln/topo/face_iter.hh: 
+	* mln/topo/face_iter.hh:
 	* mln/topo/n_face_iter.hh,
 	* tests/core/image/complex_image.cc,
 	* tests/topo/complex.cc:
@@ -6816,47 +6816,47 @@
 
 	Small fixes.
 
-	* milena/doc/Doxyfile.in: fix missing backspace.
-	
-	* milena/doc/examples/extend.cc: add missing include.
+	* doc/Doxyfile.in: fix missing backspace.
 
-	* milena/doc/ref_guide/ref_guide.tex: fix typo.
-	
-	* milena/doc/tools/clearbanner.sh: new tool to remove hevea banner.
-	
-	* milena/doc/tutorial/tutorial.tex: add navigation links.
+	* doc/examples/extend.cc: add missing include.
 
-	* milena/doc/white_paper/white_paper.tex: do not use pgf.
+	* doc/ref_guide/ref_guide.tex: fix typo.
 
-	* milena/tests/unit_test/unit-tests.mk,
-	* milena/headers.mk: update.
+	* doc/tools/clearbanner.sh: new tool to remove hevea banner.
 
-	* milena/mln/metal/equal.hh,
-	* milena/mln/metal/is.hh,
-	* milena/mln/metal/is_a.hh: add comments.
+	* doc/tutorial/tutorial.tex: add navigation links.
 
-	* milena/mln/transform/influence_zone_geodesic.hh,
-	* milena/mln/transform/internal/influence_zone_functor.hh: allow to
+	* doc/white_paper/white_paper.tex: do not use pgf.
+
+	* tests/unit_test/unit-tests.mk,
+	* headers.mk: update.
+
+	* mln/metal/equal.hh,
+	* mln/metal/is.hh,
+	* mln/metal/is_a.hh: add comments.
+
+	* mln/transform/influence_zone_geodesic.hh,
+	* mln/transform/internal/influence_zone_functor.hh: allow to
 	set a different value for the background.
 
-	* milena/mln/value/shell.hh: temporary re-enable the commented
+	* mln/value/shell.hh: temporary re-enable the commented
 	overload of set_ and comment the other one.
 
-	* milena/tests/Makefile.am: fix pretty-check rule.
+	* tests/Makefile.am: fix pretty-check rule.
 
-	* milena/tests/extract/blue.cc,
-	* milena/tests/extract/green.cc,
-	* milena/tests/extract/red.cc: improve tests.
+	* tests/extract/blue.cc,
+	* tests/extract/green.cc,
+	* tests/extract/red.cc: improve tests.
 
-	* milena/tests/extract/Makefile.am,
-	* milena/tests/extract/hue.cc,
-	* milena/tests/extract/lum.cc,
-	* milena/tests/extract/sat.cc: new tests.
+	* tests/extract/Makefile.am,
+	* tests/extract/hue.cc,
+	* tests/extract/lum.cc,
+	* tests/extract/sat.cc: new tests.
 
 2009-06-05  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	Cleanup tests io::p*m tests and add new tests for io::p*ms.
-  
+
 	* mln/io/pgms/load.hh,
 	* mln/io/pnms/load.hh,
 	* mln/io/ppms/load.hh: fix invalid calls to pnm::load.
@@ -9959,7 +9959,7 @@
 	* tests/global_vars2.cc: check potential global symbols duplications.
 
 2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
-  
+
 	Add a pretty_check target for tests.
 
 	* tests/Makefile.am: new target pretty_check.
@@ -10045,7 +10045,7 @@
 	Add labeled_image type.
 
 	* mln/core/image/imorph/labeled_image.hh: new image type.
-	
+
 	* mln/trait/ch_value.hh: Specialize ch_value trait for this type.
 
 	* tests/core/image/imorph/labeled_image.cc: new associated test.
@@ -10081,7 +10081,7 @@
 	* mln/core/image/extended.hh
 	* mln/core/image/extension_fun.hh
 	* mln/core/image/extension_ima.hh
-	* mln/core/image/extension_val.hh 
+	* mln/core/image/extension_val.hh
 	* mln/core/image/hexa.hh
 	* mln/core/image/hexa_piter.hh
 	* mln/core/image/image2d_h.hh
@@ -10110,8 +10110,8 @@
 	Identity morphers:
 
 	* mln/core/image/decorated_image.hh
-	* mln/core/image/interpolated.hh 
-	* mln/core/image/lazy_image.hh 
+	* mln/core/image/interpolated.hh
+	* mln/core/image/lazy_image.hh
 	* mln/core/image/plain.hh
 	* mln/core/image/safe.hh
 	* mln/core/image/tr_image.hh: Move...
@@ -10132,9 +10132,9 @@
 
 	Value morphers:
 
-	* mln/core/image/cast_image.hh 
-	* mln/core/image/fun_image.hh 
-	* mln/core/image/thru_morpher.hh 
+	* mln/core/image/cast_image.hh
+	* mln/core/image/fun_image.hh
+	* mln/core/image/thru_morpher.hh
 	* mln/core/image/thrubin_morpher.hh
 	* mln/core/image/violent_cast_image.hh: Move...
 
@@ -10176,7 +10176,7 @@
 	* tests/core/image/morph/t_image.cc,
 	* tests/core/image/vmorph/cast_image.cc: ... here.
 
-	
+
 	Includes.
 
 	* tests/core/image/plain.cc,
@@ -10773,41 +10773,41 @@
 
 	Small fixes.
 
-	* milena/doc/examples/tuto3/fill_non_generic.cc.raw: Fix.
+	* doc/examples/tuto3/fill_non_generic.cc.raw: Fix.
 
-	* milena/tests/unit_test/build_unit_test.sh,
-	* milena/generate_dist_headers.sh: Use 'sort' to be sure of the output
+	* tests/unit_test/build_unit_test.sh,
+	* generate_dist_headers.sh: Use 'sort' to be sure of the output
 	lines order.
 
-	* milena/headers.mk,
-	* milena/tests/unit_test/unit-tests.mk: Regenerate with the previous
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regenerate with the previous
 	modified scripts.
 
-	* milena/mln/core/image/vertex_image.hh: Fix a wrong type declaration.
+	* mln/core/image/vertex_image.hh: Fix a wrong type declaration.
 
-	* milena/mln/core/internal/graph_psite_base.hh: Remove comparison
+	* mln/core/internal/graph_psite_base.hh: Remove comparison
 	operators.
 
-	* milena/mln/core/site_set/p_array.hh: Enforce the comparison on the
+	* mln/core/site_set/p_array.hh: Enforce the comparison on the
 	site type.
 
-	* milena/mln/core/site_set/p_edges_psite.hh,
-	* milena/mln/core/site_set/p_vertices_psite.hh: Add operator ==, !=
+	* mln/core/site_set/p_edges_psite.hh,
+	* mln/core/site_set/p_vertices_psite.hh: Add operator ==, !=
 	and <.
 
-	* milena/mln/fun/v2v/hsi_to_rgb.hh: Reindent.
+	* mln/fun/v2v/hsi_to_rgb.hh: Reindent.
 
-	* milena/mln/fun/v2v/hsl_to_rgb.hh: Add a missing forward declaration.
+	* mln/fun/v2v/hsl_to_rgb.hh: Add a missing forward declaration.
 
-	* milena/mln/io/magick/load.hh: Move fixme.
+	* mln/io/magick/load.hh: Move fixme.
 
-	* milena/mln/io/magick/save.hh: Cleanup.
+	* mln/io/magick/save.hh: Cleanup.
 
-	* milena/mln/value/hsl.hh: Add operator==.
+	* mln/value/hsl.hh: Add operator==.
 
-	* milena/tests/io/magick/Makefile.am: Add ldflags to magick test.
+	* tests/io/magick/Makefile.am: Add ldflags to magick test.
 
-	* milena/tests/io/magick/magick.cc: Write a new test.
+	* tests/io/magick/magick.cc: Write a new test.
 
 2009-05-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 

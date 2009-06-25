@@ -41,9 +41,9 @@
 	* headers.mk: regen.
 
 	* nodist-headers: list of not distributed headers.
-	
+
 	* tests/unit_test/build_unit_test.sh: add output path as argument.
-	
+
 	* tests/unit_test/Makefile.am: update call to build_unit_test.sh.
 
 2009-06-16 Guillaume Lazzara  <lazzara@lrde.epita.fr>
@@ -53,9 +53,9 @@
 	* table/extract.hh: add a missing include and specify the scribo
 	namespace.
 
-      	* table/internal/align_lines.hh: fix warnings.
+	* table/internal/align_lines.hh: fix warnings.
 
-      	* table/internal/repair_lines.hh: do not use mln_VAR.
+	* table/internal/repair_lines.hh: do not use mln_VAR.
 
 2009-06-12  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
@@ -70,8 +70,8 @@
 	* text/grouping/group_from_graph.hh,
 	* text/grouping/group_from_single_link.hh:
 	Replace accu::accu_name by accu::new_dir::accu_name,
-		accu::meta::accu_name by accu::meta::new_dir::accu_name,
-		accu/accu_name by accu/new_dir/accu_name.
+	accu::meta::accu_name by accu::meta::new_dir::accu_name,
+	accu/accu_name by accu/new_dir/accu_name.
 
 2009-06-12 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -156,7 +156,7 @@
 	Compile more examples in Scribo.
 
 	* src/Makefile.am: compile new examples.
-	
+
 	* filter/large_objects.hh: fix use of accu::math::count.
 
 	* src/extract/primitive/extract_discontinued_hlines.cc,
@@ -174,7 +174,7 @@
 	* src/filter/thin_objects.cc,
 	* src/morpho.cc,
 	* src/rectangularity.cc,
-	* src/thin_bboxes.cc: 
+	* src/thin_bboxes.cc:
 	  - Do not use essential/2d.hh
 	  - Specify the namespace of the usage() routine.
 
@@ -658,7 +658,7 @@
 2009-05-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Make use of labeled_image type in Scribo.
-  
+
 	* text/extract_bboxes.hh,
 	* core/component_bboxes.hh: useless so removed.
 
