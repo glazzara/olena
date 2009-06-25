@@ -136,7 +136,9 @@ run scribo `pwd`/build-aux/generate_dist_headers.sh . headers.mk nodist-headers
 
 # Generate lists of files to be part of the distribution
 # for the tutorial.
-run milena/doc ./generate_dist_files.sh
+run milena/doc/ ./generate_dist_files.sh figures 'p*m'
+run milena/doc/ ./generate_dist_files.sh outputs txt
+run milena/doc/ ./generate_dist_files.sh examples cc.raw
 
 # Generate unit test files.
 run . ./build-aux/build_unit_test.sh `pwd`/milena/mln milena/tests/unit_test milena/tests/unit_test/disabled_tests
