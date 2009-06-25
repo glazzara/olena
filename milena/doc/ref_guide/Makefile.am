@@ -61,3 +61,17 @@ CLEANFILES =								\
   *.haux *.hh *.html *.htoc						\
   ref_guide.html							\
   $(REF_GUIDE_HH)
+
+
+#<<lrde
+# Pretend the documentation is up-to-date.
+.PHONY: fake-doc
+fake-doc:
+	touch $(REF_GUIDE_HH)
+	touch $(REF_GUIDE_PDF)
+
+# The converse of the previous rule, voiding the timestamps.
+.PHONY: void-doc
+void-doc:
+	touch $(srcdir)/ref_guide.tex
+#>>

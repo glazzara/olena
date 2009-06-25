@@ -253,3 +253,53 @@ Doxyfile_devel: $(srcdir)/Doxyfile.in
 
 Doxyfile_devel_pdf: Doxyfile_devel
 	$(edit_pdf) $< >$@
+
+
+#<<lrde
+# Pretend the documentation is up-to-date.  This is really useful for
+# developers who want to check the distribution mechanism, for
+# generating the Doxygen documentation make take up to 1 hour.
+#
+# A few remarks.  Refreshing the contents of EXTRA_DIST using
+#
+#   touch $(EXTRA_DIST)
+#
+# just does not work, as EXTRA_DIST lists source and built files
+# (resp. in srcdir and buidldir).  Cheat: go to srcdir and strip the
+# srcdir prefix from path of every file listed in EXTRA_DIST.  And we
+# have to prune the built files (e.g. `Doxyfile_user_pdf').
+#
+# We also selectively refresh files by hand in a certain order (some
+# of them being already listed in EXTRA_DIST), to satisfy the
+# dependencies.
+.PHONY: fake-doc
+fake-doc:
+	cd $(srcdir)					\
+	  && touch `echo $(EXTRA_DIST)			\
+	             | sed -e 's!$(srcdir)/!!g'		\
+	                   -e 's/Doxyfile_user_pdf//g'	\
+	                   -e 's/Doxyfile_user//g' `
+	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) $@
+	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
+	cd white_paper && $(MAKE) $(AM_MAKEFLAGS) $@
+	touch $(EXTRA_DEPS)
+	touch Doxyfile_devel
+	touch Doxyfile_devel_pdf
+	touch Doxyfile_user
+	touch Doxyfile_user_pdf
+	test -d user || mkdir user
+	if test -d $(USER_REFMAN_HTML); then	\
+	  touch $(USER_REFMAN_HTML);		\
+	else					\
+	  mkdir $(USER_REFMAN_HTML);		\
+	fi
+	touch $(USER_REFMAN_PDF)
+
+# The converse of the previous rule, voiding the timestamps.
+.PHONY: void-doc
+void-doc:
+	touch $(srcdir)/Doxyfile.in
+	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) $@
+	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
+	cd white_paper && $(MAKE) $(AM_MAKEFLAGS) $@
+#>>

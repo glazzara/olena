@@ -69,3 +69,18 @@ CLEANFILES =					\
   white_paper.pdf				\
   *.log *.idx *.out *.aux			\
   figures
+
+
+#<<lrde
+# Pretend the documentation is up-to-date.
+.PHONY: fake-doc
+fake-doc:
+	touch $(EPSS)
+	touch $(WHITE_PAPER_HTML)
+	touch $(WHITE_PAPER_PDF)
+
+# The converse of the previous rule, voiding the timestamps.
+.PHONY: void-doc
+void-doc:
+	touch $(srcdir)/white_paper.tex
+#>>

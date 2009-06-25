@@ -1,5 +1,15 @@
 2009-06-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a Make rule faking the regeneration of the documentation.
+
+	* doc/Makefile.am,
+	* doc/ref_guide/Makefile.am,
+	* doc/tutorial/Makefile.am,
+	* doc/white_paper/Makefile.am (fake-doc, void-doc):
+	New (phony) targets.
+
+2009-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve build dependencies in doc/.
 
 	* doc/Makefile.am ($(USER_REFMAN_PDF), $(USER_REFMAN_HTML))
