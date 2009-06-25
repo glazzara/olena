@@ -1,3 +1,11 @@
+2009-06-25  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Update for US images.
+	* fabien/igr/check_us_morpho.sh: New script for US images.
+	* fabien/igr/wst.cc: Update label type to label_16.
+	* fabien/mln/debug/int2rgb.hh: Clean code.
+	* fabien/mln/world/inter_pixel/display_region.hh: Clean code.
+
 2009-06-19  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Add tools for histogram projections and visualization.

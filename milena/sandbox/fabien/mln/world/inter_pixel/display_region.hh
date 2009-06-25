@@ -44,8 +44,6 @@
 # include <mln/opt/at.hh>
 # include <mln/value/rgb8.hh>
 
-#include <mln/literal/colors.hh> //DEBUG
-
 
 namespace mln
 {
