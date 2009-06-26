@@ -1,5 +1,13 @@
 2009-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Help make to regen doc/figures.stamp from subdirectories of doc/.
+
+	* doc/tutorial/Makefile.am ($(srcdir)/../figures.stamp)
+	* doc/ref_guide/Makefile.am ($(srcdir)/../figures.stamp):
+	New rules.
+
+2009-06-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix path to build-aux/generate_dist_headers.sh in Makefile.
 
 	* Makefile.am (regen-am, $(srcdir)/headers.mk): Here.

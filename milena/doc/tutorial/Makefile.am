@@ -45,6 +45,16 @@ $(TUTORIAL_PDF): tutorial.tex $(srcdir)/../figures.stamp
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
 
+# FIXME: Regenerating figures.stamp requires make to go back to the
+# parent directory.  We already do the opposite (descending from
+# milena/doc/ to milena/doc/tutorial/Makefile in milena/doc/ to update
+# tutorial.hh).  This is not sound.  We probably want to put together
+# somes of these files, and maybe get rid of some directories, or at
+# least move most of the Makefile machinery into
+# milena/doc/Makefile.am.
+$(srcdir)/../figures.stamp:
+	cd .. && $(MAKE) $(AM_MAKEFLAGS) fig-convert
+
 dist_doc_DATA = $(TUTORIAL_PDF)
 
 EXTRA_DIST =					\
