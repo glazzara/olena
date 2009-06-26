@@ -1,4 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -70,7 +71,9 @@ REGEN_SUBDIRS += doc tests
 #
 # Hence the redundant action.  There may be a better solution
 regen-am:
-	cd $(srcdir) && $(top_srcdir)/build-aux/generate_dist_headers.sh mln ./headers.mk ./nodist-headers
+	cd $(srcdir)							\
+	  && $(abs_top_srcdir)/build-aux/generate_dist_headers.sh	\
+	       mln headers.mk nodist-headers
 
 EXTRA_DIST = nodist-headers
 # FIXME: Change generate_dist_headers.sh so that the action looks like this:
@@ -78,7 +81,9 @@ EXTRA_DIST = nodist-headers
 #	$< $@.tmp && mv -f $@.tmp $@ && chmod -w $@
 #
 $(srcdir)/headers.mk: $(top_srcdir)/build-aux/generate_dist_headers.sh nodist-headers
-	cd $(srcdir) && $(top_srcdir)/build-aux/generate_dist_headers.sh mln ./headers.mk ./nodist-headers
+	cd $(srcdir)							\
+	  && $(abs_top_srcdir)/build-aux/generate_dist_headers.sh	\
+	       mln headers.mk nodist-headers
 
 include $(srcdir)/headers.mk
 
