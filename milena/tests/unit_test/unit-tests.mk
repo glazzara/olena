@@ -752,6 +752,7 @@ mln_make_image2d \
 mln_make_image3d \
 mln_make_influence_zone_adjacency_graph \
 mln_make_mat \
+mln_make_neighb2d \
 mln_make_p_edges_with_mass_centers \
 mln_make_p_vertices_with_mass_centers \
 mln_make_pix \
@@ -2013,6 +2014,7 @@ mln_make_image2d_SOURCES = mln_make_image2d.cc
 mln_make_image3d_SOURCES = mln_make_image3d.cc
 mln_make_influence_zone_adjacency_graph_SOURCES = mln_make_influence_zone_adjacency_graph.cc
 mln_make_mat_SOURCES = mln_make_mat.cc
+mln_make_neighb2d_SOURCES = mln_make_neighb2d.cc
 mln_make_p_edges_with_mass_centers_SOURCES = mln_make_p_edges_with_mass_centers.cc
 mln_make_p_vertices_with_mass_centers_SOURCES = mln_make_p_vertices_with_mass_centers.cc
 mln_make_pix_SOURCES = mln_make_pix.cc

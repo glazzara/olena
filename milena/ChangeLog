@@ -1,5 +1,9 @@
 2009-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	* headers.mk, tests/unit_test/unit-tests.mk: Regen.
+
+2009-06-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Correct the list of cleaned files in doc/'s subdirectories.
 
 	* doc/tutorial/Makefile.am (CLEANFILES): Remove *~.
