@@ -62,11 +62,12 @@ EXTRA_DIST =					\
 
 CLEANFILES =								\
   tutorial.aux tutorial.toc tutorial.log tutorial.bbl tutorial.out	\
-  *~ *blg *.lot								\
+  *blg *.lot								\
   $(TUTORIAL_PDF)							\
   *.haux *.hh *.html *.htoc						\
   tutorial.haux								\
   tutorial.html								\
+  tutorial.idx								\
   $(TUTORIAL_HH)
 
 

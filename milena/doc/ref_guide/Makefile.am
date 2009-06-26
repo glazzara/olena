@@ -65,10 +65,11 @@ EXTRA_DIST =					\
 
 CLEANFILES =								\
   ref_guide.aux ref_guide.toc ref_guide.log ref_guide.bbl ref_guide.out	\
-  *~ *blg *.lot								\
+  *blg *.lot								\
   $(REF_GUIDE_PDF)							\
   *.haux *.hh *.html *.htoc						\
   ref_guide.html							\
+  ref_guide.idx								\
   $(REF_GUIDE_HH)
 
 

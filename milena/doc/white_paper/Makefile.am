@@ -64,11 +64,12 @@ EXTRA_DIST =					\
   $(EPSS)
 
 CLEANFILES =					\
-  white_paper_html				\
   white_paper_image.*				\
   white_paper.pdf				\
-  *.log *.idx *.out *.aux			\
-  figures
+  *.log *.idx *.out *.aux
+
+clean-local:
+	-rm -rf white_paper_html figures
 
 
 #<<lrde
