@@ -79,6 +79,7 @@ EXTRA_PROGRAMS +=	 	\
   tuto4_point2d			\
   tuto4_site_set_create
 
+CLEANFILES = $(EXTRA_PROGRAMS)
 
 accu_right_instanciation_SOURCES = accu-right-instanciation.cc
 borderthickness_SOURCES = borderthickness.cc
@@ -142,40 +143,39 @@ tuto4_point2d_SOURCES = tuto4/point2d.cc
 examples: $(EXTRA_PROGRAMS)
 
 run-examples: examples
-	mkdir -p $(OUTPUTS_BUILDDIR) 
-	mkdir -p $(FIGURES_BUILDDIR) 
 	@failcom='exit 1'; 						\
 	list='$(noinst_PROGRAMS)'; for bin in $$list; do 		\
 	  echo "Running $$bin"; 					\
-	  ./$$bin > $(OUTPUTS_BUILDDIR)/$$bin.txt || eval $$failcom; 	\
+	  ./$$bin > $(OUTPUTS_SRCDIR)/$$bin.txt || eval $$failcom; 	\
 	done
 
-
+## FIXME: This is wrong.  Make is not an imperative language, and this
+## rule probably does not work as expected.
 data-regen: examples run-examples split-examples split-outputs diff-data
 
 
 diff-data: run-examples split-examples
 	@failcom='exit 1'; 						\
 	has_txt_diff="";						\
-	txtlist="$(OUTPUTS_BUILDDIR)/*.txt"; for txt in $$txtlist; do 	\
+	txtlist="$(OUTPUTS_SRCDIR)/*.txt"; for txt in $$txtlist; do 	\
 	  echo "Diff `basename $$txt`";					\
 	  diff $$txt $(OUTPUTS_SRCDIR)/`basename $$txt` >/dev/null 2>&1	\
 		|| has_txt_diff="$$has_txt_diff `basename $$txt`";	\
 	done;								\
 	has_fig_diff="";						\
-	figlist="$(FIGURES_BUILDDIR)/*.p*m"; for fig in $$figlist; do 	\
+	figlist="$(FIGURES_SRCDIR)/*.p*m"; for fig in $$figlist; do 	\
 	  echo "Diff `basename $$fig`";					\
 	  diff $$fig $(FIGURES_SRCDIR)/`basename $$fig` >/dev/null 2>&1 \
 		|| has_fig_diff="$$has_fig_diff `basename $$fig`";	\
 	done; 								\
 	has_split_out_diff="";						\
-	split_outlist="$(SPLIT_OUTPUTS_BUILDDIR)/*"; for split_out in $$split_outlist; do \
+	split_outlist="$(SPLIT_OUTPUTS_SRCDIR)/*"; for split_out in $$split_outlist; do \
 	  echo "Diff `basename $$split_out`";				\
 	  diff $$split_out $(SPLIT_OUTPUTS_SRCDIR)/`basename $$split_out` >/dev/null 2>&1 \
 		|| has_split_out_diff="$$has_split_out_diff `basename $$split_out`";	\
 	done; 								\
 	has_split_ex_diff="";						\
-	split_exlist="$(SPLIT_EXAMPLES_BUILDDIR)/*"; for split_ex in $$split_exlist; do \
+	split_exlist="$(SPLIT_EXAMPLES_SRCDIR)/*"; for split_ex in $$split_exlist; do \
 	  echo "Diff `basename $$split_ex`";				\
 	  diff $$split_ex $(SPLIT_EXAMPLES_SRCDIR)/`basename $$split_ex` >/dev/null 2>&1 \
 		|| has_split_ex_diff="$$has_split_ex_diff `basename $$split_ex`";	\
@@ -222,22 +222,22 @@ reference or their reference file does not exist:";  			\
 
 fix-refdata:
 	@failcom='exit 1'; 						\
-	txtlist="$(OUTPUTS_BUILDDIR)/*.txt"; for txt in $$txtlist; do 	\
+	txtlist="$(OUTPUTS_SRCDIR)/*.txt"; for txt in $$txtlist; do 	\
 	  diff $$txt $(OUTPUTS_SRCDIR)/`basename $$txt` >/dev/null 2>&1	\
 		|| echo "Updating reference file for $$txt"; 		\
 		   cp $$txt $(OUTPUTS_SRCDIR);				\
 	done;								\
-	figlist="$(FIGURES_BUILDDIR)/*.p*m"; for fig in $$figlist; do 	\
+	figlist="$(FIGURES_SRCDIR)/*.p*m"; for fig in $$figlist; do 	\
 	  diff $$fig $(FIGURES_SRCDIR)/`basename $$fig` >/dev/null 2>&1 \
 		|| echo "Updating reference file for $$fig";		\
 		   cp $$fig $(FIGURES_SRCDIR);				\
 	done; 								\
-	split_outlist="$(SPLIT_OUTPUTS_BUILDDIR)/*.txt"; for split_out in $$split_outlist; do \
+	split_outlist="$(SPLIT_OUTPUTS_SRCDIR)/*.txt"; for split_out in $$split_outlist; do \
 	  diff $$split_out $(SPLIT_OUTPUTS_SRCDIR)/`basename $$split_out` >/dev/null 2>&1 \
 		|| echo "Updating reference file for $$split_out";	\
 		   cp $$split_out $(SPLIT_OUTPUTS_SRCDIR);		\
 	done; 								\
-	split_exlist="$(SPLIT_EXAMPLES_BUILDDIR)/*.cc"; for split_ex in $$split_exlist; do \
+	split_exlist="$(SPLIT_EXAMPLES_SRCDIR)/*.cc"; for split_ex in $$split_exlist; do \
 	  diff $$split_ex $(SPLIT_EXAMPLES_SRCDIR)/`basename $$split_ex` >/dev/null 2>&1 \
 		|| echo "Updating reference file for $$split_ex";	\
 		   cp $$split_ex $(SPLIT_EXAMPLES_SRCDIR);		\
@@ -245,24 +245,28 @@ fix-refdata:
 
 
 split-examples:
-	test -d $(SPLIT_EXAMPLES_BUILDDIR) || mkdir $(SPLIT_EXAMPLES_BUILDDIR)
+	test -d $(SPLIT_EXAMPLES_SRCDIR) || mkdir $(SPLIT_EXAMPLES_SRCDIR)
 	@failcom='exit 1'; 						\
 	list=`find $(EXAMPLES_SRCDIR) -type f -name '*.cc'`; for file in $$list; do \
-	$(DOC_SRCDIR)/tools/split_sample.sh $$file cc $(SPLIT_EXAMPLES_BUILDDIR)\
+	$(DOC_SRCDIR)/tools/split_sample.sh $$file cc $(SPLIT_EXAMPLES_SRCDIR)\
 					      || eval $$failcom; 	\
 	done
 
 split-outputs:
-	test -d $(SPLIT_OUTPUTS_BUILDDIR) || mkdir $(SPLIT_OUTPUTS_BUILDDIR)
+	test -d $(SPLIT_OUTPUTS_SRCDIR) || mkdir $(SPLIT_OUTPUTS_SRCDIR)
 	@failcom='exit 1'; 						\
-	list='$(OUTPUTS_BUILDDIR)/*.txt'; for file in $$list; do 	\
-	$(DOC_SRCDIR)/tools/split_sample.sh $$file txt $(SPLIT_OUTPUTS_BUILDDIR)\
+	list='$(OUTPUTS_SRCDIR)/*.txt'; for file in $$list; do 	\
+	$(DOC_SRCDIR)/tools/split_sample.sh $$file txt $(SPLIT_OUTPUTS_SRCDIR)\
 					      || eval $$failcom; 	\
 	done
 
+## FIXME: Generated products recored in the repository should be
+## listed in MAINTAINERCLEANFILES.
 clean-local: clean-figures
-	rm -Rf $(OUTPUTS_BUILDDIR)
-	rm -f $(EXAMPLES_BUILDDIR)/*.cc
+##	rm -Rf $(OUTPUTS_BUILDDIR)
+##	rm -f $(EXAMPLES_BUILDDIR)/*.cc
 
+## FIXME: Generated products recored in the repository should be
+## listed in MAINTAINERCLEANFILES.
 clean-figures:
-	rm -Rf $(FIGURES_BUILDDIR)
+##	rm -Rf $(FIGURES_BUILDDIR)

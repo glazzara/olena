@@ -19,7 +19,7 @@
 
 include $(top_srcdir)/milena/doc/doc.mk
 
-TEXINPUTS ="$(DOC_SRCDIR):$(DOC_BUILDDIR):$(OUTPUTS_SRCDIR):\
+TEXINPUTS ="$(DOC_SRCDIR):$(OUTPUTS_SRCDIR):\
 $(SPLIT_OUTPUTS_SRCDIR):$(IMG_SRCDIR):$(SPLIT_EXAMPLES_SRCDIR):"
 
 
@@ -36,7 +36,7 @@ REF_GUIDE_HH = ref_guide.hh
 ref-guide-html: $(REF_GUIDE_HH)
 $(REF_GUIDE_HH): ref_guide.tex $(srcdir)/../figures.stamp
 	$(DOC_SRCDIR)/tools/todoxygen.sh		\
-	  $< $(DOC_BUILDDIR)/ref_guide $(DOC_SRCDIR)
+	  $< $(DOC_SRCDIR)/ref_guide $(DOC_SRCDIR)
 
 
 # Final product.

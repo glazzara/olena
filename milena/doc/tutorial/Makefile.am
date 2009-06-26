@@ -19,7 +19,7 @@
 
 include $(top_srcdir)/milena/doc/doc.mk
 
-TEXINPUTS = $(DOC_SRCDIR):$(DOC_BUILDDIR):$(OUTPUTS_SRCDIR):$(IMG_SRCDIR):
+TEXINPUTS = $(DOC_SRCDIR):$(OUTPUTS_SRCDIR):$(IMG_SRCDIR):
 
 
 tutorial: tutorial-html tutorial-pdf
@@ -34,8 +34,7 @@ TUTORIAL_HH = tutorial.hh
 tutorial-html: $(TUTORIAL_HH)
 $(TUTORIAL_HH): tutorial.tex $(srcdir)/../figures.stamp
 	$(DOC_SRCDIR)/tools/todoxygen.sh		\
-	  $< $(DOC_BUILDDIR)/tutorial $(DOC_SRCDIR)
-
+	  $< $(DOC_SRCDIR)/tutorial $(DOC_SRCDIR)
 
 # Final product.
 TUTORIAL_PDF = tutorial.pdf

@@ -57,61 +57,82 @@ doc-devel-html: tutorial-html ref-guide-html white-paper-html \
 		ref-doc-devel-html
 
 
+## ----------------------------------------------------------------- ##
+## Shared dependencies on the products of tutorial/ and ref_guide/.  ##
+## ----------------------------------------------------------------- ##
+
 # FIXME: Maintaining dependencies across directories is too
 # complicated.  Simplify.
-# Shared dependencies on the products of tutorial/ and ref_guide/.
-EXTRA_DEPS = tutorial/tutorial.hh ref_guide/ref_guide.hh
-tutorial/tutorial.hh: fig-convert
-	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) tutorial.hh
-ref_guide/ref_guide.hh: fig-convert
-	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) ref_guide.hh
+EXTRA_DEPS = $(srcdir)/tutorial/tutorial.hh $(srcdir)/ref_guide/ref_guide.hh
+$(srcdir)/tutorial/tutorial.hh: fig-convert
+	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) tutorial-html
+$(srcdir)/ref_guide/ref_guide.hh: fig-convert
+	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) ref-guide-html
+
+## ----------------------- ##
+## Doxygen documentation.  ##
+## ----------------------- ##
+
+## FIXME: We should use a stamp file and generate the documentation in
+## a temporary directory in the _build_ tree, then copy it into a
+## directory of the _source_ tree.  See how this is implemented in
+## Vaucanson's doc build system.  (Do not forget to adjust Doxyfiles.)
 
 # Doxygen PDF documentation outputs.
-USER_REFMAN_PDF = user/latex/refman.pdf
+USER_REFMAN_PDF = $(srcdir)/user/latex/refman.pdf
 ref-doc-pdf: $(USER_REFMAN_PDF)
 # FIXME: Split in two rules: one generating the LaTeX file from the
 # Doxyfile, and another one generating the PDF from the LaTeX source.
 # Moreover, the LaTeX to PDF rule could be factored using a suffix
 # rule (as in LRDE's share/).
-$(USER_REFMAN_PDF): Doxyfile_user_pdf $(srcdir)/figures.stamp $(EXTRA_DEPS)
+$(USER_REFMAN_PDF): $(srcdir)/Doxyfile_user_pdf $(srcdir)/figures.stamp $(EXTRA_DEPS)
 	$(DOXYGEN) $<
-	cd user/latex && make pdf
+	cd $(srcdir)/user/latex && $(MAKE) pdf
 
-USER_REFMAN_HTML = user/html
+USER_REFMAN_HTML = $(srcdir)/user/html
 ref-doc-html: $(USER_REFMAN_HTML)
-$(USER_REFMAN_HTML): Doxyfile_user $(srcdir)/figures.stamp $(EXTRA_DEPS)
+$(USER_REFMAN_HTML): $(srcdir)/Doxyfile_user $(srcdir)/figures.stamp $(EXTRA_DEPS)
 	$(DOXYGEN) $<
 
 # Doxygen HTML documentation output directories.
-DEVEL_REFMAN_PDF = devel/latex/refman.pdf
+DEVEL_REFMAN_PDF = $(srcdir)/devel/latex/refman.pdf
 ref-doc-devel-pdf: $(DEVEL_REFMAN_PDF)
 # FIXME: Split in two rules: one generating the LaTeX file from the
 # Doxyfile, and another one generating the PDF from the LaTeX source.
 # Moreover, the LaTeX to PDF rule could be factored using a suffix
 # rule (as in LRDE's share/).
-$(DEVEL_REFMAN_PDF): Doxyfile_devel_pdf $(srcdir)/figures.stamp $(EXTRA_DEPS)
+$(DEVEL_REFMAN_PDF): $(srcdir)/Doxyfile_devel_pdf $(srcdir)/figures.stamp $(EXTRA_DEPS)
 	$(DOXYGEN) $<
-	cd devel/latex && make $(AM_MAKEFLAGS)
+	cd $(srcdir)/devel/latex && $(MAKE) $(AM_MAKEFLAGS)
 
-DEVEL_REFMAN_HTML = devel/html
+DEVEL_REFMAN_HTML = $(srcdir)/devel/html
 ref-doc-devel-html: $(DEVEL_REFMAN_HTML)
-$(DEVEL_REFMAN_HTML): Doxyfile_devel $(srcdir)/figures.stamp $(EXTRA_DEPS)
+$(DEVEL_REFMAN_HTML): $(srcdir)/Doxyfile_devel $(srcdir)/figures.stamp $(EXTRA_DEPS)
 	$(DOXYGEN) $<
 
-# Tutorial.
+## ---------- ##
+## Tutorial.  ##
+## ---------- ##
+
 tutorial-pdf: fig-convert
 	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
 tutorial-html: fig-convert
 	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
 
-# White Paper.
+## ------------- ##
+## White Paper.  ##
+## ------------- ##
+
 white-paper-pdf:
 	cd white_paper && $(MAKE) $(AM_MAKEFLAGS) $@
 
 white-paper-html:
 	cd white_paper && $(MAKE) $(AM_MAKEFLAGS) $@
 
-# Reference Guide.
+## ----------------- ##
+## Reference Guide.  ##
+## ----------------- ##
+
 ref-guide-pdf: fig-convert
 	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) $@
 
@@ -130,28 +151,29 @@ fix-refdata:
 
 fig-convert: $(srcdir)/figures.stamp
 
-EXTRA_DIST = $(srcdir)/figures.stamp
+EXTRA_DIST = figures.stamp
 $(srcdir)/figures.stamp: $(FIGURES_SRCDIR)/*.p*m
 	rm -f $@.tmp
 	touch $@.tmp
-	test -d $(FIGURES_BUILDDIR) || mkdir $(FIGURES_BUILDDIR) &&	\
 	failcom='exit 1';						\
 	list="$(FIGURES_SRCDIR)/*.p*m"; for img in $$list; do		\
 	  echo "Converting $$img to PNG";				\
 	  name=`basename $$img`						\
 	  ext=`echo $$name | cut -d '.' -f 2`;				\
 	  convert -scale 250 $$img					\
-	    $(FIGURES_BUILDDIR)/`basename $$img $$ext`png		\
+	    $(FIGURES_SRCDIR)/`basename $$img $$ext`png			\
 	    || eval $$failcom;						\
 	done
 	mv -f $@.tmp $@
 
 
-edit = sed -e "s|@ID@|$$Id|" 					\
-	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g' 		\
-	   -e 's,@PACKAGE_VERSION\@,$(PACKAGE_VERSION),g' 	\
-	   -e 's,@top_builddir\@,$(top_builddir),g' 		\
-	   -e 's,@top_srcdir\@,$(top_srcdir),g'
+edit = sed -e "s|@ID@|$$Id|"					\
+	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g'		\
+	   -e 's,@PACKAGE_VERSION\@,$(PACKAGE_VERSION),g'	\
+	   -e 's,@top_srcdir\@,$(top_srcdir),g'			\
+	   -e 's,@top_builddir\@,$(top_builddir),g'		\
+	   -e 's,@srcdir\@,$(srcdir),g'				\
+	   -e 's,@builddir\@,$(builddir),g'
 
 edit_pdf = sed -e 's,GENERATE_LATEX         = NO,GENERATE_LATEX = YES,g' \
 	       -e 's,GENERATE_HTML          = YES,GENERATE_HTML = NO,g'
@@ -161,7 +183,7 @@ edit_pdf = sed -e 's,GENERATE_LATEX         = NO,GENERATE_LATEX = YES,g' \
 # Doxyfile_user from Doxyfile_devel!  Both should be a product
 # derived from a single source, Doxyfile.in.
 edit_user = sed								      \
-  -e 's,OUTPUT_DIRECTORY       = ./devel/,OUTPUT_DIRECTORY       = ./user/,g' \
+  -e 's,OUTPUT_DIRECTORY       = @srcdir@/devel/,OUTPUT_DIRECTORY       = @srcdir@/user/,g' \
   -e 's,EXTRACT_ALL            = YES,EXTRACT_ALL            = NO,g'	      \
   -e 's,EXTRACT_PRIVATE        = YES,EXTRACT_PRIVATE        = NO,g'	      \
   -e 's,EXTRACT_STATIC         = YES,EXTRACT_STATIC         = NO,g'	      \
@@ -244,18 +266,18 @@ CLEANFILES =					\
 
 # Sed is used to generate Doxyfile from Doxyfile.in instead of
 # configure, because the former is way faster than the latter.
-Doxyfile_user: Doxyfile_devel
+$(srcdir)/Doxyfile_user: Doxyfile_devel
 	$(edit_user) $< >$@
 
-Doxyfile_user_pdf: Doxyfile_user
+$(srcdir)/Doxyfile_user_pdf: Doxyfile_user
 	$(edit_pdf) $< >$@
 
-Doxyfile_devel: $(srcdir)/Doxyfile.in
+$(srcdir)/Doxyfile_devel: $(srcdir)/Doxyfile.in
 	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
 	      | sed -e 's/\\\$$//g'`;				\
 	$(edit) $< >$@
 
-Doxyfile_devel_pdf: Doxyfile_devel
+$(srcdir)/Doxyfile_devel_pdf: Doxyfile_devel
 	$(edit_pdf) $< >$@
 
 
@@ -264,35 +286,22 @@ Doxyfile_devel_pdf: Doxyfile_devel
 # developers who want to check the distribution mechanism, for
 # generating the Doxygen documentation make take up to 1 hour.
 #
-# A few remarks.  Refreshing the contents of EXTRA_DIST using
-#
-#   touch $(EXTRA_DIST)
-#
-# just does not work, as EXTRA_DIST lists source and built files
-# (resp. in srcdir and buidldir).  Cheat: go to srcdir and strip the
-# srcdir prefix from path of every file listed in EXTRA_DIST.  And we
-# have to prune the built files (e.g. `Doxyfile_user_pdf').
-#
-# We also selectively refresh files by hand in a certain order (some
+# We selectively refresh files by hand in a certain order (some
 # of them being already listed in EXTRA_DIST), to satisfy the
 # dependencies.
 .PHONY: fake-doc
 fake-doc:
-	cd $(srcdir)					\
-	  && touch `echo $(EXTRA_DIST)			\
-	             | sed -e 's!$(srcdir)/!!g'		\
-	                   -e 's/Doxyfile_user_pdf//g'	\
-	                   -e 's/Doxyfile_user//g' `
+	cd $(srcdir) && touch $(EXTRA_DIST)
 	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) $@
 	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
 	cd white_paper && $(MAKE) $(AM_MAKEFLAGS) $@
 	touch $(EXTRA_DEPS)
-	touch Doxyfile_devel
-	touch Doxyfile_devel_pdf
-	touch Doxyfile_user
-	touch Doxyfile_user_pdf
-	test -d user || mkdir user
-	for d in $(USER_REFMAN_HTML) user/latex; do		\
+	touch $(srcdir)/Doxyfile_devel
+	touch $(srcdir)/Doxyfile_devel_pdf
+	touch $(srcdir)/Doxyfile_user
+	touch $(srcdir)/Doxyfile_user_pdf
+	cd $(srcdir) && test -d user || mkdir user
+	for d in $(USER_REFMAN_HTML) $(srcdir)/user/latex; do	\
 	  if test -d $$d; then touch $$d; else mkdir $$d; fi;	\
 	done
 	touch $(USER_REFMAN_PDF)

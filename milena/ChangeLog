@@ -1,5 +1,45 @@
 2009-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Generate the documentation in the source tree.
+
+	* doc/Makefile.am
+	(EXTRA_DEPS)
+	(USER_REFMAN_PDF, USER_REFMAN_HTML)
+	(DEVEL_REFMAN_PDF, DEVEL_REFMAN_HTML):
+	Prepend $(srcdir) to each path.
+	($(srcdir)/tutorial/tutorial.hh, $(srcdir)/ref_guide/ref_guide.hh)
+	($(USER_REFMAN_PDF), $(USER_REFMAN_HTML))
+	($(DEVEL_REFMAN_PDF), $(DEVEL_REFMAN_HTML))
+	($(srcdir)/figures.stamp, fake-doc)
+	Adjust actions.
+	(edit): Substitute @srcdir@ and @builddir@ as well.
+	(edit_user): Prepend $(srcdir) to each path.
+	(Doxyfile_user, Doxyfile_user_pdf)
+	(Doxyfile_devel, Doxyfile_devel_pdf):
+	Rename targets as...
+	($(srcdir)/Doxyfile_user, $(srcdir)/Doxyfile_user_pdf)
+	($(srcdir)/Doxyfile_devel, $(srcdir)/Doxyfile_devel_pdf):
+	...these.
+	* doc/doc.mk (DOC_BUILDDIR, OUTPUTS_BUILDDIR)
+	(SPLIT_OUTPUTS_BUILDDIR, FIGURES_BUILDDIR, EXAMPLES_BUILDDIR)
+	(SPLIT_EXAMPLES_BUILDDIR):
+	Remove variables.
+	Add missing copyright header.
+	* doc/Doxyfile.in (OUTPUT_DIRECTORY): Set to @srcdir@/devel/.
+	* doc/examples/Makefile.am (CLEANFILES): New.
+	Add $(EXTRA_PROGRAMS)
+	(run-examples, diff-data, split-examples, split-outputs):
+	Adjust actions to generate products in the source tree.
+	(clean-local, clean-figures): Disable actions.
+	* doc/ref_guide/Makefile.am (TEXINPUTS): Remove $(DOC_BUILDDIR).
+	($(REF_GUIDE_HH)): Adjust the action to generate the target in the
+	source tree.
+	* doc/tutorial/Makefile.am (TEXINPUTS): Remove $(DOC_BUILDDIR).
+	($(TUTORIAL_HH)): Adjust the action to generate the target in the
+	source tree.
+
+2009-06-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Help make to regen doc/figures.stamp from subdirectories of doc/.
 
 	* doc/tutorial/Makefile.am ($(srcdir)/../figures.stamp)

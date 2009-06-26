@@ -5,7 +5,7 @@
 #---------------------------------------------------------------------------
 PROJECT_NAME           = "Milena (@PACKAGE_NAME@)"
 PROJECT_NUMBER         = "@PACKAGE_VERSION@ @ID@"
-OUTPUT_DIRECTORY       = ./devel/
+OUTPUT_DIRECTORY       = @srcdir@/devel/
 CREATE_SUBDIRS         = YES
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
