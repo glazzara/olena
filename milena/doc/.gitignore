@@ -1,2 +1,13 @@
-/Doxyfile
-/html/
+/Doxyfile_devel
+/Doxyfile_devel_pdf
+/Doxyfile_user
+/Doxyfile_user_pdf
+/devel
+/user
+/ref_guide/ref_guide.haux
+/ref_guide/ref_guide.hh
+/ref_guide/ref_guide.html
+/ref_guide/ref_guide.htoc
+/tutorial/tutorial.haux
+/tutorial/tutorial.hh
+/tutorial/tutorial.html
