@@ -6,6 +6,12 @@
 
 2009-06-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix Make rule `fake-doc'.
+
+	* doc/Makefile.am (fake-doc): Create-or-touch user/latex.
+
+2009-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	* doc/Makefile.am: Wrap long lines.
 
 2009-06-25  Roland Levillain  <roland@lrde.epita.fr>

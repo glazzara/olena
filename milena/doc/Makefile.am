@@ -292,11 +292,9 @@ fake-doc:
 	touch Doxyfile_user
 	touch Doxyfile_user_pdf
 	test -d user || mkdir user
-	if test -d $(USER_REFMAN_HTML); then	\
-	  touch $(USER_REFMAN_HTML);		\
-	else					\
-	  mkdir $(USER_REFMAN_HTML);		\
-	fi
+	for d in $(USER_REFMAN_HTML) user/latex; do		\
+	  if test -d $$d; then touch $$d; else mkdir $$d; fi;	\
+	done
 	touch $(USER_REFMAN_PDF)
 
 # The converse of the previous rule, voiding the timestamps.
