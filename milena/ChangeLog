@@ -6,6 +6,12 @@
 
 2009-06-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Distribute mln/fun/binary.hh.
+
+	* nodist-headers: Remove mln/fun/binary.hh.
+
+2009-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix Make rule `fake-doc'.
 
 	* doc/Makefile.am (fake-doc): Create-or-touch user/latex.

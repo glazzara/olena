@@ -14,7 +14,6 @@ mln/extract/sat.hh
 mln/fun/access/all.hh
 mln/fun/access/mean.hh
 mln/fun/accu_result.hh
-mln/fun/binary.hh
 mln/fun/binary_param.hh
 mln/fun/component/blue.hh
 mln/fun/component/comp.hh
