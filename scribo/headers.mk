@@ -22,9 +22,12 @@ nobase_include_HEADERS = \
 ./extract/primitive/cells.hh \
 ./extract/primitive/lines_discontinued.hh \
 ./extract/primitive/lines_h_discontinued.hh \
+./extract/primitive/lines_h_pattern.hh \
 ./extract/primitive/lines_h_thick.hh \
+./extract/primitive/lines_pattern.hh \
 ./extract/primitive/lines_thick.hh \
 ./extract/primitive/lines_v_discontinued.hh \
+./extract/primitive/lines_v_pattern.hh \
 ./extract/primitive/lines_v_thick.hh \
 ./extract/primitive/objects.hh \
 ./filter/all.hh \

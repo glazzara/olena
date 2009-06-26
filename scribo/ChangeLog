@@ -1,5 +1,9 @@
 2009-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	* headers.mk, tests/unit_test/unit-tests.mk: Regen.
+
+2009-06-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix path to build-aux/generate_dist_headers.sh in Makefile.
 
 	* Makefile.am (regen-am, $(srcdir)/headers.mk): Here.
