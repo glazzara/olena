@@ -1,3 +1,11 @@
+2009-06-29  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Enable attribute computation from an external source of values.
+	* mln/morpho/tree/compute_attribute_image.hh:
+	Add compute_attribute_image_from routine.
+	* tests/morpho/tree/compute_attribute_image.cc:
+	Add some tests.
+
 2009-06-29  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	Remove trace output in few tests.

@@ -74,7 +74,7 @@ namespace mln
       ** \param[out] accu_image Optional argument used to store image
       ** of attribute accumulator.
       **
-      ** @return The attribute image.
+      ** \return The attribute image.
       */
       template <typename A, typename T>
       mln_ch_value(typename T::function, mln_result(A))
@@ -84,47 +84,128 @@ namespace mln
 
 
 
+      /** The same as compute_attribute_image but uses the values
+      ** stored by \p values image instead.
+      **
+      ** \param[in] a Attribute.
+      ** \param[in] t Component tree.
+      ** \param[in] values Value image.
+      ** \param[out] accu_image Optional argument used to store image.
+      **
+      ** \return 
+      */
+      template <typename A, typename T, typename V>
+      mln_ch_value(typename T::function, mln_result(A))
+      compute_attribute_image_from(const Accumulator<A>& a,
+				   const T& t,
+				   const Image<V>& values,
+				   mln_ch_value(typename T::function, A)* accu_image = 0);
+
+
+
 # ifndef MLN_INCLUDE_ONLY
       // Take_as_init specialization
 
-
-      template <typename A, typename I, typename P>
-      void take_as_init (trait::accumulator::when_pix::use_none, A& accu,
-			 const I& input, const P& p)
+      namespace internal
       {
-	(void)input;
-	(void)p;
-	accu.take_as_init();
+	template <typename A, typename I, typename P>
+	void take_as_init (trait::accumulator::when_pix::use_none, A& accu,
+			   const I& input, const P& p)
+	{
+	  (void)input;
+	  (void)p;
+	  accu.take_as_init();
+	}
+
+	template <typename A, typename I, typename P>
+	void take_as_init (trait::accumulator::when_pix::use_pix, A& accu,
+			   const I& input, const P& p)
+	{
+	  accu.take_as_init(make::pix(input, p));
+	}
+
+	template <typename A, typename I, typename P>
+	void take_as_init (trait::accumulator::when_pix::use_v, A& accu,
+			   const I& input, const P& p)
+	{
+	  accu.take_as_init(input(p));
+	}
+
+	template <typename A, typename I, typename P>
+	void take_as_init (trait::accumulator::when_pix::use_p, A& accu,
+			   const I& input, const P& p)
+	{
+	  accu.take_as_init(p);
+	}
+
+
+	template <typename A, typename I, typename P>
+	void take_as_init (A& accu, const I& input, const P& p)
+	{
+	  take_as_init (mln_trait_accumulator_when_pix(A)(), accu, input, p);
+	}
+
+
+	template <typename A, typename T, typename V>
+	inline
+	mln_ch_value(typename T::function, mln_result(A))
+	  compute_attribute_image(const A& a,
+				  const T& t,
+				  const V& values,
+				  mln_ch_value(typename T::function, A)* accu_image = 0)
+	{
+
+	  typedef typename T::function I;
+	  mln_ch_value(I, A) acc;
+	  initialize(acc, t.f());
+
+	  {
+	    // Transmit "dynamic data" (state) of 'a' to every values of
+	    // 'acc'.  It is usually a no-op (so useless) except for a
+	    // few accumulators, e.g., for accu::stat::rank which has the 'k'
+	    // attribute.
+	    mln::data::fill(acc, a);
+	  }
+
+	  {
+	    // Initialize every attribute with the corresponding pixel.
+	    mln_site_piter(T) p(t);
+	    for_all(p)
+	      take_as_init(acc(p), values, p);
+	  }
+
+	  {
+	    mln_up_site_piter(T) p(t);
+	    // Propagate attribute from a site to its parent.
+	    for_all(p)
+	      if (! t.is_root(p))
+		acc(t.parent(p)).take(acc(p));
+
+	    // Back-propagate attribute from a node to sites of its
+	    // component.  Below, p is a non-node component site and
+	    // parent(p) is a node, that is, the site representative of
+	    // the component p belongs to.
+	    for_all(p)
+	      if (! t.is_a_node(p))
+		{
+		  mln_assertion(t.is_a_node(t.parent(p)));
+		  acc(p) = acc(t.parent(p));
+		}
+	  }
+
+
+	  // Store accumulator image.
+	  if (accu_image)
+	    *accu_image = duplicate(acc);
+
+	  typedef typename T::function I;
+	  mln_ch_value(I, mln_result(A)) output;
+	  initialize(output, acc);
+	  mln::data::fill(output, acc);
+
+	  return output;
+	}
       }
-
-      template <typename A, typename I, typename P>
-      void take_as_init (trait::accumulator::when_pix::use_pix, A& accu,
-			 const I& input, const P& p)
-      {
-	accu.take_as_init(make::pix(input, p));
-      }
-
-      template <typename A, typename I, typename P>
-      void take_as_init (trait::accumulator::when_pix::use_v, A& accu,
-			 const I& input, const P& p)
-      {
-	accu.take_as_init(input(p));
-      }
-
-      template <typename A, typename I, typename P>
-      void take_as_init (trait::accumulator::when_pix::use_p, A& accu,
-			 const I& input, const P& p)
-      {
-	accu.take_as_init(p);
-      }
-
-
-      template <typename A, typename I, typename P>
-      void take_as_init (A& accu, const I& input, const P& p)
-      {
-	take_as_init (mln_trait_accumulator_when_pix(A)(), accu, input, p);
-      }
-
 
       // Facade.
 
@@ -137,54 +218,35 @@ namespace mln
       {
 	trace::entering("morpho::tree::compute_attribute_image");
 
-	typedef typename T::function I;
-	mln_ch_value(I, A) acc;
-	initialize(acc, t.f());
-
-	{
-	  // Transmit "dynamic data" (state) of 'a' to every values of
-	  // 'acc'.  It is usually a no-op (so useless) except for a
-	  // few accumulators, e.g., for accu::stat::rank which has the 'k'
-	  // attribute.
-	  A a = exact(a_);
-	  mln::data::fill(acc, a);
-	}
-	{
-	  // Initialize every attribute with the corresponding pixel.
-	  mln_piter(I) p(t.f().domain());
-	  for_all(p)
-	    take_as_init(acc(p), t.f(), p);
-	}
-	{
-	  mln_up_site_piter(T) p(t);
-	  // Propagate attribute from a site to its parent.
-	  for_all(p)
-	    if (! t.is_root(p))
-	      acc(t.parent(p)).take(acc(p));
-	  // Back-propagate attribute from a node to sites of its
-	  // component.  Below, p is a non-node component site and
-	  // parent(p) is a node, that is, the site representative of
-	  // the component p belongs to.
-	  for_all(p)
-	    if (! t.is_a_node(p))
-	      {
-		mln_assertion(t.is_a_node(t.parent(p)));
-		acc(p) = acc(t.parent(p));
-	      }
-	}
-
-	// Store accumulator image.
-	if (accu_image)
-	  *accu_image = duplicate(acc);
-
-	typedef typename T::function I;
-	mln_ch_value(I, mln_result(A)) output;
-	initialize(output, acc);
-	mln::data::fill(output, acc);
+	mln_ch_value(typename T::function, mln_result(A)) output;
+	output = internal::compute_attribute_image(exact(a_), t, t.f(),
+						   accu_image);
 
 	trace::exiting("morpho::tree::compute_attribute_image");
+	return (output);
+      }
+
+      template <typename A, typename T, typename V>
+      inline
+      mln_ch_value(typename T::function, mln_result(A))
+      compute_attribute_image_from(const Accumulator<A>& a_,
+				   const T& t,
+				   const Image<V>& values,
+				   mln_ch_value(typename T::function, A)* accu_image = 0)
+      {
+	trace::entering("morpho::tree::compute_attribute_image_from");
+
+
+	mln_ch_value(typename T::function, mln_result(A)) output;
+	output = internal::compute_attribute_image(exact(a_), t, exact(values),
+						   accu_image);
+
+	trace::exiting("morpho::tree::compute_attribute_image_from");
 	return output;
       }
+
+
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

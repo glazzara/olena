@@ -27,6 +27,7 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
 #include <mln/data/sort_psites.hh>
+#include <mln/data/compare.hh>
 
 #include <mln/debug/println.hh>
 #include <mln/core/var.hh>
@@ -60,13 +61,17 @@ int main()
     {
       morpho::attribute::card<I> a;
       image2d<unsigned> area = morpho::tree::compute_attribute_image(a, t);
+      image2d<unsigned> area_bis = morpho::tree::compute_attribute_image_from(a, t, f);
       debug::println(area);
+      mln_assertion(area == area_bis);
     }
 
     {
       morpho::attribute::volume<I> v;
       image2d<unsigned> volume = morpho::tree::compute_attribute_image(v, t);
+      image2d<unsigned> volume_bis = morpho::tree::compute_attribute_image_from(v, t, f);
       debug::println(volume);
+      mln_assertion(volume == volume_bis);
     }
   }
 
