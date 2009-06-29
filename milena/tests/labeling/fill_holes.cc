@@ -23,6 +23,12 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+///
+/// Test of labeling::fill_holes.
+///
+/// \fixme Write a Test!
+
 #include <mln/core/image/image2d.hh>
 #include <mln/io/pbm/load.hh>
 #include <mln/core/alias/neighb2d.hh>
@@ -40,10 +46,6 @@ int main()
   using namespace mln;
 
   image2d<bool> pic = io::pbm::load(MLN_IMG_DIR "/picasso.pbm");
-  debug::println(pic);
   value::label_8 n;
   image2d<bool> out = labeling::fill_holes(pic, c4(), n);
-  debug::println(out);
-  io::pbm::save(out, "out.pbm");
-//   mln_assertion(n == 33);
 }

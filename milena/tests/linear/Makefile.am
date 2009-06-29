@@ -50,3 +50,8 @@ gaussian__SOURCES = gaussian.cc
 #>>
 
 TESTS = $(check_PROGRAMS)
+
+
+# FIXME: each test should clean its output, temporary output should
+# not be cleaned up by make.
+CLEANFILES = out.pgm

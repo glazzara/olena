@@ -31,3 +31,9 @@ load_save_bin_SOURCES = load_save_bin.cc
 load_float_SOURCES = load_float.cc
 
 TESTS = $(check_PROGRAMS)
+
+
+# FIXME: each test should clean its output, temporary output should
+# not be cleaned up by make.
+CLEANFILES =					\
+  out.off

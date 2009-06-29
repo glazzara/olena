@@ -33,3 +33,13 @@ pgm_ascii_SOURCES = pgm_ascii.cc
 pgm_SOURCES = pgm.cc
 
 TESTS = $(check_PROGRAMS)
+
+
+# FIXME: each test should clean its output, temporary output should
+# not be cleaned up by make.
+CLEANFILES =					\
+  out8.pgm					\
+  out27.pgm					\
+  out19.pgm					\
+  out16.pgm					\
+  out.pgm

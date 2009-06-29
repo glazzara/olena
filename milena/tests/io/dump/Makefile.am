@@ -25,3 +25,8 @@ check_PROGRAMS =				\
 dump_SOURCES = dump.cc
 
 TESTS = $(check_PROGRAMS)
+
+
+# FIXME: each test should clean its output, temporary output should
+# not be cleaned up by make.
+CLEANFILES = pic.dump

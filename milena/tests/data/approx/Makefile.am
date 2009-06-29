@@ -35,3 +35,10 @@ median_SOURCES = median.cc
 median_CXXFLAGS = $(LONG_TESTS_CXXFLAGS)
 
 TESTS = $(check_PROGRAMS)
+
+
+# FIXME: each test should clean its output, temporary output should
+# not be cleaned up by make.
+CLEANFILES = 					\
+  out_oct.pgm					\
+  out_rec.pgm

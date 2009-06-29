@@ -27,3 +27,11 @@ flooding_SOURCES = flooding.cc
 superpose_SOURCES = superpose.cc
 
 TESTS = $(check_PROGRAMS)
+
+
+# FIXME: each test should clean its output, temporary output should
+# not be cleaned up by make.
+CLEANFILES =					\
+  tmp_ref.pgm					\
+  tmp_out.pgm
+

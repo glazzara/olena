@@ -25,3 +25,10 @@ check_PROGRAMS =				\
 threshold_SOURCES = threshold.cc
 
 TESTS = $(check_PROGRAMS)
+
+
+# FIXME: each test should clean its output, temporary output should
+# not be cleaned up by make.
+CLEANFILES = 					\
+out1.pgm					\
+out2.pgm

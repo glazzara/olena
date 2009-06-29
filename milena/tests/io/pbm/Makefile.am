@@ -27,3 +27,8 @@ pbm_SOURCES = pbm.cc
 pbm_ascii_SOURCES = pbm_ascii.cc
 
 TESTS = $(check_PROGRAMS)
+
+
+# FIXME: each test should clean its output, temporary output should
+# not be cleaned up by make.
+CLEANFILES = out.pbm

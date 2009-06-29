@@ -27,3 +27,11 @@ check_PROGRAMS = fits
 fits_SOURCES = fits.cc
 
 TESTS = $(check_PROGRAMS)
+
+
+
+# FIXME: each test should clean its output, temporary output should
+# not be cleaned up by make.
+CLEANFILES =					\
+  out.pfm					\
+  out2.pfm

@@ -27,3 +27,11 @@ dilation_SOURCES = dilation.cc
 erosion_SOURCES = erosion.cc
 
 TESTS = $(check_PROGRAMS)
+
+
+# FIXME: each test should clean its output, temporary output should
+# not be cleaned up by make.
+CLEANFILES =					\
+  out.pbm					\
+  ref.pbm
+

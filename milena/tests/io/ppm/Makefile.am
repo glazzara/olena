@@ -29,3 +29,13 @@ ppm23_SOURCES = ppm23.cc
 ppm_SOURCES = ppm.cc
 
 TESTS = $(check_PROGRAMS)
+
+
+
+# FIXME: each test should clean its output, temporary output should
+# not be cleaned up by make.
+CLEANFILES =					\
+  out.ppm					\
+  out16.ppm					\
+  out23.ppm					\
+  out8.ppm

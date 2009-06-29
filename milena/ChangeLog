@@ -1,5 +1,35 @@
 2009-06-29  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Cleanup test output files during distclean.
+
+	* tests/labeling/fill_holes.cc: do not save output.
+
+	* tests/Makefile.am,
+	* tests/binarization/Makefile.am,
+	* tests/data/Makefile.am,
+	* tests/data/approx/Makefile.am,
+	* tests/data/naive/Makefile.am,
+	* tests/geom/Makefile.am,
+	* tests/io/dump/Makefile.am,
+	* tests/io/fits/Makefile.am,
+	* tests/io/magick/Makefile.am,
+	* tests/io/off/Makefile.am,
+	* tests/io/pbm/Makefile.am,
+	* tests/io/pbms/Makefile.am,
+	* tests/io/pgm/Makefile.am,
+	* tests/io/pgms/Makefile.am,
+	* tests/io/ppm/Makefile.am,
+	* tests/io/ppms/Makefile.am,
+	* tests/linear/Makefile.am,
+	* tests/morpho/Makefile.am,
+	* tests/morpho/approx/Makefile.am,
+	* tests/morpho/closing/Makefile.am,
+	* tests/morpho/opening/Makefile.am,
+	* tests/morpho/watershed/Makefile.am: add generated files to
+	CLEANFILES.
+
+2009-06-29  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	* nodist-headers: Remove mln/fun/binary.hh from distribution.
 
 2009-06-29  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>

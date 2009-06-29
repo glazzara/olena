@@ -30,3 +30,11 @@ load_SOURCES = load.cc
 save_SOURCES = save.cc
 
 TESTS = $(check_PROGRAMS)
+
+
+
+# FIXME: each test should clean its output, temporary output should
+# not be cleaned up by make.
+CLEANFILES =					\
+  tiny.ppm					\
+  tiny.png

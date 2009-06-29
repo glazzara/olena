@@ -42,3 +42,12 @@ structural_SOURCES = structural.cc
 sum_SOURCES = sum.cc
 
 TESTS = $(check_PROGRAMS)
+
+
+# FIXME: each test should clean its output, temporary output should
+# not be cleaned up by make.
+CLEANFILES =					\
+  ref.pgm					\
+  out.pbm					\
+  ref.pbm					\
+  out.pgm
