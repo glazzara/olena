@@ -1,5 +1,12 @@
 2009-06-29  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Remove trace output in few tests.
+
+	* tests/morpho/closing/leveling.cc,
+	* tests/morpho/opening/leveling.cc: disable trace.
+
+2009-06-29  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Cleanup test output files during distclean.
 
 	* tests/labeling/fill_holes.cc: do not save output.

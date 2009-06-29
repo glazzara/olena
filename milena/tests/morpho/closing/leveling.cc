@@ -42,8 +42,6 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  trace::quiet = false;
-
   typedef image2d<int_u8> I;
   I lena;
   io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
