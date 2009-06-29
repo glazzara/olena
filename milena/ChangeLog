@@ -1,3 +1,7 @@
+2009-06-29  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
+	* doc/Makefile.am: distribute Doxyfile_devel and Doxyfile_devel_pdf.
+
 2009-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	* headers.mk, tests/unit_test/unit-tests.mk: Regen.

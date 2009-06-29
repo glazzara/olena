@@ -49,7 +49,7 @@ doc-devel: doc-devel-pdf doc-devel-html
 
 doc-pdf: tutorial-pdf white-paper-pdf ref-guide-pdf ref-doc-pdf
 
-doc-html: tutorial-html white-paper-html ref-guide-html ref-doc-html 
+doc-html: tutorial-html white-paper-html ref-guide-html ref-doc-html
 
 doc-devel-pdf: tutorial-pdf ref-guide-pdf white-paper-pdf ref-doc-devel-pdf
 
@@ -195,7 +195,7 @@ edit_user = sed								      \
   -e 's,INTERNAL_DOCS          = YES,INTERNAL_DOCS          = NO,g'	      \
   -e 's,GENERATE_TODOLIST      = YES,GENERATE_TODOLIST      = NO,g'	      \
   -e 's,PROJECT_NUMBER         = \",PROJECT_NUMBER          = \"User documentation ,g'	 \
-  -e 's,EXCLUDE_SYMBOLS	       =,EXCLUDE_SYMBOLS	  = *::internal* *_ mln::trait::*,g'	
+  -e 's,EXCLUDE_SYMBOLS	       =,EXCLUDE_SYMBOLS	  = *::internal* *_ mln::trait::*,g'
 
 
 # Regen files.
@@ -237,18 +237,20 @@ dist_doc_DATA =					\
 
 EXTRA_DIST +=					\
   Doxyfile.in					\
+  Doxyfile_devel				\
+  Doxyfile_devel_pdf				\
   Doxyfile_user					\
   Doxyfile_user_pdf				\
-  groups/accu.hh 				\
-  groups/graph.hh 				\
-  groups/images.hh 				\
-  groups/main.hh   				\
-  groups/neighb.hh  				\
-  groups/site_set.hh 				\
-  groups/util.hh 				\
-  groups/win.hh 				\
-  img/small-enlarged.png 			\
-  img/small.png 				\
+  groups/accu.hh				\
+  groups/graph.hh				\
+  groups/images.hh				\
+  groups/main.hh				\
+  groups/neighb.hh				\
+  groups/site_set.hh				\
+  groups/util.hh				\
+  groups/win.hh					\
+  img/small-enlarged.png			\
+  img/small.png					\
   doxyfuns.sty					\
   milena.sty					\
   tools/clearbanner.sh				\
