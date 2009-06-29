@@ -1,5 +1,14 @@
 2009-06-29  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	First draft of region adjacency graph demo.
+
+	* demos/graph/region_adjacency_graph.cc: new demo.
+
+	* demos/graph/house.pgm,
+	* demos/graph/house.ppm: new images used in the demo.
+
+2009-06-29  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	* doc/Makefile.am: distribute Doxyfile_devel and Doxyfile_devel_pdf.
 
 2009-06-26  Roland Levillain  <roland@lrde.epita.fr>
