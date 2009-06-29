@@ -1,3 +1,7 @@
+2009-06-29  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
+	* tests/geom/Makefile.am: remove rotate from test list.
+
 2009-06-29  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Enable attribute computation from an external source of values.
