@@ -278,7 +278,6 @@ AC_CONFIG_FILES([
     milena/tests/draw/Makefile
     milena/tests/estim/Makefile
     milena/tests/extension/Makefile
-    milena/tests/extract/Makefile
     milena/tests/fun/Makefile
       milena/tests/fun/i2v/Makefile
       milena/tests/fun/p2b/Makefile
@@ -360,6 +359,7 @@ AC_CONFIG_FILES([
 
 dnl<<lrde
 AC_CONFIG_FILES([
+  milena/tests/extract/Makefile
   milena/tests/linear/gaussian/Makefile
   milena/tests/registration/Makefile
   milena/tests/subsampling/Makefile
