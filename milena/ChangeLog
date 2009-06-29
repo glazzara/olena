@@ -1,5 +1,9 @@
 2009-06-29  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	* nodist-headers: Remove mln/fun/binary.hh from distribution.
+
+2009-06-29  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	First draft of region adjacency graph demo.
 
 	* demos/graph/region_adjacency_graph.cc: new demo.
