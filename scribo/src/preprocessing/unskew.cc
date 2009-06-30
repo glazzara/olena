@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
-  io::pbm::save(scribo::preprocessing::unskew(input), argv[2]);
+  io::pbm::save(scribo::preprocessing::unskew(input).first(), argv[2]);
 
   mln::trace::exiting("main");
 }

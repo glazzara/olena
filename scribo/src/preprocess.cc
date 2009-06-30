@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
   input_bw = scribo::filter::small_objects(input_bw, c8(), value::label_16(), 3);
   input_bw = scribo::filter::thin_objects(input_bw, c8(), value::label_16(), 1);
 
-  input_bw = scribo::preprocessing::unskew(input_bw);
+  input_bw = scribo::preprocessing::unskew(input_bw).first();
 
   logical::not_inplace(input_bw);
   io::pbm::save(input_bw, argv[2]);

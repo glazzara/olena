@@ -1,4 +1,11 @@
-2009-06-23 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+2009-06-39 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Update calls to geom::rotate.
+
+	* src/preprocess.cc,
+	* src/preprocessing/unskew.cc: update call to geom::rotate.
+
+2009-06-30 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* preprocessing/unskew.hh: rename transformation:: to geom::.
 
