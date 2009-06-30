@@ -1,3 +1,7 @@
+2009-06-23 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	* preprocessing/unskew.hh: rename transformation:: to geom::.
+
 2009-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	* headers.mk, tests/unit_test/unit-tests.mk: Regen.

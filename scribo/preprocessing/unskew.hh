@@ -36,7 +36,13 @@
 # include <mln/accu/max_site.hh>
 
 # include <mln/transform/hough.hh>
-# include <mln/transformation/rotate.hh>
+# include <mln/geom/rotate.hh>
+
+# include <mln/io/pgm/save.hh>
+# include <mln/core/image/vmorph/cast_image.hh>
+# include <mln/value/int_u8.hh>
+
+# include <mln/util/couple.hh>
 
 namespace scribo
 {
@@ -55,7 +61,7 @@ namespace scribo
     /// \return A binary image.
     //
     template <typename I>
-    mln_concrete(I)
+    mln::util::couple<mln_concrete(I), double>
     unskew(const Image<I>& input_);
 
 
@@ -64,7 +70,7 @@ namespace scribo
 
 
     template <typename I>
-    mln_concrete(I)
+    mln::util::couple<mln_concrete(I), double>
     unskew(const Image<I>& input_)
     {
       trace::entering("scribo::preprocessing::unskew");
@@ -78,14 +84,14 @@ namespace scribo
       point2d max_p = accu::compute(accu::max_site<image2d<float> >(), hough_ima);
 
       double angle = 0;
-      int max_angle = max_p.col();
+      int max_angle = max_p.row();
 
-      std::cout << "max_angle = " << max_angle << std::endl;
+//      std::cout << "max_angle = " << max_angle << std::endl;
       if (max_angle > 180)
 	max_angle = - max_angle % 180;
 
       if (max_angle < 90 && max_angle > 0)
-	angle = 90 - max_angle;
+	angle = - max_angle;
       else if (max_angle < 0 && max_angle > -90)
 	angle = max_angle;
       else if (max_angle < 180 && max_angle > 90)
@@ -93,11 +99,11 @@ namespace scribo
       else if (max_angle < -90 && max_angle > -180)
 	angle = 180 + max_angle;
 
-      std::cout << "effective angle = " << angle << std::endl;
-      mln_concrete(I) output = transformation::rotate(input, angle);
+//      std::cout << "effective angle = " << angle << std::endl;
+      mln_concrete(I) output = geom::rotate(input, angle);
 
       trace::exiting("scribo::preprocessing::unskew");
-      return output;
+      return make::couple(output, angle);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
