@@ -1,5 +1,10 @@
 2009-06-30  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	* tests/morpho/closing/approx/Makefile.am: add test outputs to
+	CLEANFILES.
+
+2009-06-30  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Regen headers.mk and unit-tests.mk.
 
 	* milena/headers.mk,

@@ -25,3 +25,10 @@ check_PROGRAMS =				\
 structural_SOURCES = structural.cc
 
 TESTS = $(check_PROGRAMS)
+
+
+# FIXME: each test should clean its output, temporary output should
+# not be cleaned up by make.
+CLEANFILES =					\
+  out.pbm					\
+  ref.pbm
