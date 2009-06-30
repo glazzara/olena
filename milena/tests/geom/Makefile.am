@@ -35,6 +35,7 @@ nrows						\
 nsites						\
 nslis						\
 pmin_pmax					\
+rotate	 					\
 seed2tiling					\
 seed2tiling_roundness
 
@@ -54,6 +55,7 @@ nrows_SOURCES = nrows.cc
 nsites_SOURCES = nsites.cc
 nslis_SOURCES = nslis.cc
 pmin_pmax_SOURCES = pmin_pmax.cc
+rotate_SOURCES = rotate.cc
 seed2tiling_SOURCES = seed2tiling.cc
 seed2tiling_roundness_SOURCES = seed2tiling_roundness.cc
 

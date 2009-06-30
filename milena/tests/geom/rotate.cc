@@ -23,21 +23,31 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_TRANSFORMATION_ALL_HH
-# define MLN_TRANSFORMATION_ALL_HH
+# include <mln/core/image/image2d.hh>
+# include <mln/geom/rotate.hh>
+# include <mln/make/image.hh>
+# include <mln/data/compare.hh>
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of transformation routines.
-  namespace transformation
-  {
+  bool ref_values[][5] = { { 0, 1, 0, 0, 0 },
+                           { 0, 1, 1, 0, 0 },
+                           { 0, 0, 1, 1, 0 },
+                           { 0, 0, 0, 1, 1 },
+                           { 0, 0, 0, 0, 1 } };
 
-  } // end of namespace mln::transformation
+  bool values[][5] = { { 0, 0, 1, 0, 0 },
+                       { 0, 0, 1, 0, 0 },
+                       { 0, 0, 1, 0, 0 },
+                       { 0, 0, 1, 0, 0 },
+                       { 0, 0, 1, 0, 0 } };
 
-} // end of namespace mln
+  image2d<bool> ima = make::image(values);
+  image2d<bool> ref = make::image(ref_values);
 
+  image2d<bool> ima_rot = geom::rotate(ima, 45);
 
-# include <mln/transformation/rotate.hh>
-
-#endif // ! MLN_TRANSFORMATION_ALL_HH
+  mln_assertion(ima_rot == ref);
+}

@@ -1,3 +1,20 @@
+2009-06-30  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
+	Move transformation::rotate to geom::rotate.
+
+	* mln/geom/all.hh: Include rotate.hh.
+
+	* tests/transformation/rotate.cc,
+	* mln/transformation/rotate.hh: Move...
+	* tests/geom/rotate.cc,
+	* mln/geom/rotate.hh: ... here.
+
+	* mln/transformation/all.hh,
+	* mln/transformation/essential.hh,
+	* tests/transformation/Makefile.am: Remove.
+	
+	* tests/geom/Makefile.am: add rotate.
+
 2009-06-29  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	* tests/geom/Makefile.am: remove rotate from test list.

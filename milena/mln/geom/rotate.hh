@@ -23,8 +23,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_TRANSFORMATION_ROTATE_HH
-# define MLN_TRANSFORMATION_ROTATE_HH
+/// \file
+///
+/// Rotate an image.
+
+#ifndef MLN_GEOM_ROTATE_HH
+# define MLN_GEOM_ROTATE_HH
+
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/site_set.hh>
 
 # include <mln/core/routine/extend.hh>
 
@@ -46,23 +53,31 @@
 namespace mln
 {
 
-  namespace transformation
+  namespace geom
   {
 
     /// Perform a rotation from the center of an image.
     ///
-    /// \param[in] input_     An image.
-    /// \param[in] angle      An angle in degrees.
-    /// \param[in] extension_ Function, image or value which will be used as
-    ///			      extension. This extension allows to map values
-    ///			      to sites which where not part of the domain
-    ///			      before the rotation.
+    /// \param[in] input_         An image.
+    /// \param[in] angle          An angle in degrees.
+    /// \param[in] extension_     Function, image or value which will be used
+    ///                           as extension. This extension allows to map
+    ///                           values to sites which where not part
+    ///                           of the domain before the rotation.
+    /// \param[in] output_domain_ The domain of the output image.
     ///
     /// \return An image with the same domain as \p input_.
     //
+    template <typename I, typename Ext, typename S>
+    mln_concrete(I)
+    rotate(const Image<I>& input_, double angle,
+	   const Ext& extension_, const Site_Set<S>& output_domain);
+
+
+    /// \overload
     template <typename I, typename Ext>
     mln_concrete(I)
-    rotate(const Image<I>& input_, double angle, const Ext& extension_);
+    rotate(const Image<I>& input, double angle, const Ext& extension);
 
 
     /// \overload
@@ -75,16 +90,19 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
-    template <typename I, typename Ext>
+    template <typename I, typename Ext, typename S>
     mln_concrete(I)
-    rotate(const Image<I>& input_, double angle, const Ext& extension_)
+    rotate(const Image<I>& input_, double angle,
+	   const Ext& extension_, const Site_Set<S>& output_domain_)
     {
-      trace::entering("transformation::rotate");
+      trace::entering("geom::rotate");
 
       const I& input = exact(input_);
+      const S& output_domain = exact(output_domain_);
 
       mln_precondition(input.is_valid());
       mln_precondition(angle >= -360.0f && angle <= 360.0f);
+      mlc_converts_to(Ext, mln_value(I))::check();
       /// FIXME: A precondition is probably missing for the extension value.
 
       mln_site(I) c = geom::bbox(input).center();
@@ -97,13 +115,22 @@ namespace mln
 
       mln_concrete(I) output;
       initialize(output, input);
-      data::paste(transposed_image(input.domain(),
+
+      data::paste(transposed_image(output_domain_,
 				   extend(input, extension_),
 				   compose(t_1, compose(rot, t))),
 		  output);
 
-      trace::exiting("transformation::rotate");
+      trace::exiting("geom::rotate");
       return output;
+    }
+
+
+    template <typename I, typename Ext>
+    mln_concrete(I)
+    rotate(const Image<I>& input, double angle, const Ext& extension)
+    {
+      return rotate(input, angle, extension, exact(input).domain());
     }
 
 
@@ -118,9 +145,9 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 
-  } // end of namespace mln::transformation
+  } // end of namespace mln::geom
 
 } // end of namespace mln
 
 
-#endif // ! MLN_TRANSFORMATION_ROTATE_HH
+#endif // ! MLN_GEOM_ROTATE_HH
