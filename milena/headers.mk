@@ -478,7 +478,6 @@ mln/extension/duplicate.hh \
 mln/extension/essential.hh \
 mln/extension/fill.hh \
 mln/fun/all.hh \
-mln/fun/binary.hh \
 mln/fun/c.hh \
 mln/fun/cast.hh \
 mln/fun/essential.hh \
@@ -590,6 +589,7 @@ mln/geom/nrows.hh \
 mln/geom/nsites.hh \
 mln/geom/nslis.hh \
 mln/geom/pmin_pmax.hh \
+mln/geom/rotate.hh \
 mln/geom/seeds2tiling.hh \
 mln/geom/seeds2tiling_roundness.hh \
 mln/geom/size1d.hh \
@@ -1063,9 +1063,6 @@ mln/transform/internal/all.hh \
 mln/transform/internal/closest_point_functor.hh \
 mln/transform/internal/distance_functor.hh \
 mln/transform/internal/influence_zone_functor.hh \
-mln/transformation/all.hh \
-mln/transformation/essential.hh \
-mln/transformation/rotate.hh \
 mln/util/adjacency_matrix.hh \
 mln/util/all.hh \
 mln/util/array.hh \

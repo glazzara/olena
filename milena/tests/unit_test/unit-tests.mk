@@ -615,6 +615,7 @@ mln_geom_nrows \
 mln_geom_nsites \
 mln_geom_nslis \
 mln_geom_pmin_pmax \
+mln_geom_rotate \
 mln_geom_seeds2tiling \
 mln_geom_seeds2tiling_roundness \
 mln_geom_size1d \
@@ -1097,9 +1098,6 @@ mln_transform_internal_all \
 mln_transform_internal_closest_point_functor \
 mln_transform_internal_distance_functor \
 mln_transform_internal_influence_zone_functor \
-mln_transformation_all \
-mln_transformation_essential \
-mln_transformation_rotate \
 mln_util_adjacency_matrix \
 mln_util_all \
 mln_util_array \
@@ -1877,6 +1875,7 @@ mln_geom_nrows_SOURCES = mln_geom_nrows.cc
 mln_geom_nsites_SOURCES = mln_geom_nsites.cc
 mln_geom_nslis_SOURCES = mln_geom_nslis.cc
 mln_geom_pmin_pmax_SOURCES = mln_geom_pmin_pmax.cc
+mln_geom_rotate_SOURCES = mln_geom_rotate.cc
 mln_geom_seeds2tiling_SOURCES = mln_geom_seeds2tiling.cc
 mln_geom_seeds2tiling_roundness_SOURCES = mln_geom_seeds2tiling_roundness.cc
 mln_geom_size1d_SOURCES = mln_geom_size1d.cc
@@ -2359,9 +2358,6 @@ mln_transform_internal_all_SOURCES = mln_transform_internal_all.cc
 mln_transform_internal_closest_point_functor_SOURCES = mln_transform_internal_closest_point_functor.cc
 mln_transform_internal_distance_functor_SOURCES = mln_transform_internal_distance_functor.cc
 mln_transform_internal_influence_zone_functor_SOURCES = mln_transform_internal_influence_zone_functor.cc
-mln_transformation_all_SOURCES = mln_transformation_all.cc
-mln_transformation_essential_SOURCES = mln_transformation_essential.cc
-mln_transformation_rotate_SOURCES = mln_transformation_rotate.cc
 mln_util_adjacency_matrix_SOURCES = mln_util_adjacency_matrix.cc
 mln_util_all_SOURCES = mln_util_all.cc
 mln_util_array_SOURCES = mln_util_array.cc
