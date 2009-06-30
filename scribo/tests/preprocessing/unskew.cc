@@ -40,5 +40,5 @@ int main(int argc, char *argv[])
   image2d<bool> ima;
   io::pbm::load(ima, SCRIBO_IMG_DIR "/text_to_group.pbm");
 
-  io::pbm::save(scribo::preprocessing::unskew(ima), "unskew.pbm");
+  io::pbm::save(scribo::preprocessing::unskew(ima).first(), "unskew.pbm");
 }
