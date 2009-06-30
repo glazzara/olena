@@ -1,5 +1,9 @@
 2009-06-39 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* preprocessing/unskew.hh: Fix an ambiguity.
+
+2009-06-39 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Update calls to geom::rotate.
 
 	* src/preprocess.cc,

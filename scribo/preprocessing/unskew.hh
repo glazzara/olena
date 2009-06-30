@@ -103,7 +103,7 @@ namespace scribo
       mln_concrete(I) output = geom::rotate(input, angle);
 
       trace::exiting("scribo::preprocessing::unskew");
-      return make::couple(output, angle);
+      return mln::make::couple(output, angle);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
