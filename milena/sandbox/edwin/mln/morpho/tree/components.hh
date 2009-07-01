@@ -49,7 +49,9 @@
 
 
 namespace mln {
+
   namespace morpho {
+
     namespace tree {
 
       /**
@@ -237,7 +239,6 @@ namespace mln {
 	      p = max_arr[arr_pos];
 	      if (a(p) == 0)
 		break;
-	      std::cout << p << " " << a(p) << std::endl;
 	      components.insert(p);
 	      morpho::tree::propagate_node_to_descendants(p, tree, activity, false, nb_leaves);
 	      morpho::tree::propagate_node_to_ancestors(p, tree, activity, false);
@@ -262,7 +263,7 @@ namespace mln {
 	trace::entering("mln::morpho::tree::get_components");
 
 	const A& a = exact(attr_image);
-	mln_precondition(tree.f().domain() == a.domain());
+	mln_precondition(tree.f().domain() == a.domain()); // May be to strong.
 	mln_precondition(a.is_valid());
 
 	p_array< mln_psite(A) > components =
@@ -280,7 +281,7 @@ namespace mln {
 	trace::entering("mln::morpho::tree::get_components");
 
 	const A& a = exact(attr_image);
-	mln_precondition(tree.f().domain() == a.domain());
+	mln_precondition(tree.f().domain() == a.domain()); // May be to strong.
 	mln_precondition(a.is_valid());
 
 	p_array< mln_psite(A) > components;
@@ -300,7 +301,7 @@ namespace mln {
 
 	const A& a = exact(attr_image);
 	const P2B& predicate = exact(pred);
-	mln_precondition(tree.f().domain() == a.domain());
+	mln_precondition(tree.f().domain() == a.domain()); // May be to strong.
 	mln_precondition(a.is_valid());
 
 	p_array< mln_psite(A) > components =
@@ -310,10 +311,12 @@ namespace mln {
 	return components;
       }
 
-    } // end of namespace mln::morpho::tree
-  } // end of namespace mln::morpho
-} // end of namespace mln
-
 # endif /* !MLN_INCLUDE_ONLY */
+
+    } // end of namespace mln::morpho::tree
+
+  } // end of namespace mln::morpho
+
+} // end of namespace mln
 
 #endif /* !MLN_MORPHO_TREE_COMPONENTS_HH_ */

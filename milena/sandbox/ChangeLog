@@ -1,3 +1,11 @@
+2009-07-01  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Retrieval of components whose maximize mean color difference.
+	* edwin/exec/color_distance.hh: Some routines about color distances.
+	* edwin/exec/max_delta_colormean_obj.cc: Main file for
+	components retrieval with respect to their mean color difference.
+	* edwin/mln/morpho/tree/components.hh: Minor fixes.
+
 2009-06-25  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Update for US images.
