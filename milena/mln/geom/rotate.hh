@@ -38,6 +38,8 @@
 
 # include <mln/core/image/imorph/tr_image.hh>
 
+# include <mln/accu/bbox.hh>
+
 # include <mln/data/paste.hh>
 
 # include <mln/geom/bbox.hh>
@@ -132,16 +134,13 @@ namespace mln
       // Automatically adjusting the output domain if needed.
       if (!output_domain.is_valid())
       {
+	accu::bbox<mln_site(I)> accu;
+
 	typedef mln_site(I) P;
-	P
-	  rpmin = P(comp_transf(input.domain().pmin().to_vec())),
-	  rpmax = P(comp_transf(input.domain().pmax().to_vec()));
+	accu.take(P(comp_transf(input.domain().pmin().to_vec())));
+	accu.take(P(comp_transf(input.domain().pmax().to_vec())));
 
-	for (unsigned i = 0; i < mln_site_(I)::dim; ++i)
-	  if (rpmax[i] < rpmin[i])
-	    std::swap(rpmax[i], rpmin[i]);
-
-	b = mln_box(I)(rpmin, rpmax);
+	b = accu.to_result();
       }
 
       typedef
