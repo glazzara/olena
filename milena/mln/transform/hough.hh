@@ -30,12 +30,13 @@
 ///
 /// Compute the hough transform.
 
-
 # include <mln/core/image/image2d.hh>
 # include <mln/data/fill.hh>
 
 # include <mln/geom/nrows.hh>
 # include <mln/geom/ncols.hh>
+# include <mln/geom/min_col.hh>
+# include <mln/geom/min_row.hh>
 # include <mln/geom/bbox.hh>
 
 # include <mln/opt/at.hh>
@@ -49,14 +50,6 @@
 # include <mln/value/int_u8.hh>
 
 
-//FIXME: to be removed. For debug purpose.
-//#include <mln/data/convert.hh>
-//#include <mln/value/rgb8.hh>
-//#include <mln/draw/line.hh>
-//#include <mln/literal/colors.hh>
-//#include <mln/io/ppm/save.hh>
-
-
 namespace mln
 {
 
@@ -67,8 +60,6 @@ namespace mln
     /// Objects used for computation must be set to 'true'.
     ///
     /// \param[in] input_ A binary image.
-    /// \param[in] min_angle Minimum angle which can be found.
-    /// \param[in] max_angle Maximum angle which can be found.
     ///
     /// \return A 2D image of float. Rows are used for the distance and
     /// columns are used for the angles. Angles go from 0 to 359.
@@ -79,128 +70,70 @@ namespace mln
     //
     template <typename I>
     image2d<float>
-    hough(const Image<I>& input_, int min_angle, int max_angle);
+    hough(const Image<I>& input_);
 
-
-    /// \overload
-    template <typename I>
-    image2d<float>
-    hough(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace internal
+    {
+
+
+      /// FIXME: we may prefer to have an angle value type.
+      double to_radians(double angle)
+      {
+       return angle * math::pi / 180.0f;
+      }
+
+
+    } // end of namespace mln::transform::internal
+
 
     template <typename I>
     image2d<float>
-    hough(const Image<I>& input_, int min_angle, int max_angle)
+    hough(const Image<I>& input_)
     {
       trace::entering("mln::transform::hough");
-      mln_precondition(min_angle < max_angle);
 
       const I& input = exact(input_);
       mlc_equal(mln_value(I), bool)::check();
       mln_precondition(input.is_valid());
 
-      math::round<int> rd;
-      double deg2rad = math::pi / 180.0f;
-      int range = rd(sqrt((double)(geom::ncols(input) * geom::ncols(input)
-			  + geom::nrows(input) * geom::nrows(input))));
+      def::coord
+	minrow = geom::min_row(input),
+	mincol = geom::min_col(input);
+      unsigned
+       ncols = geom::ncols(input),
+       nrows = geom::nrows(input);
+      int compt = 0;
+      int maxRho = (int)(sqrt((ncols * nrows)
+			      + (ncols * nrows))
+                         + 0.5);
 
-      long temp = min_angle;
-      min_angle = 450 - max_angle;
-      max_angle = 450 - temp;
+      image2d<float> accu(360, 2*maxRho);
+      data::fill(accu, 0.f);
 
-      // Pre-compute sin and cos values.
-      util::array<double> sin_cache(360),
-			  cos_cache(360);
-      for (int omega = 0; omega < 360; ++omega)
-      {
-	sin_cache[omega] = math::sin((double)(omega * deg2rad));
-	cos_cache[omega] = math::cos((double)(omega * deg2rad));
-      }
-
-      image2d<float> output(make::box2d(range,360));
-      data::fill(output, 0);
-
-      mln_piter(I) p(input.domain());
+      mln_piter(image2d<int>) p(input.domain());
       for_all(p)
-	if (input(p)) // Is this site part of an objet?
-	{
-
-	  long teta1 = min_angle;
-	  long teta2 = max_angle;
-	  for (int omega = teta1; omega < teta2; ++omega)
+	if (input(p))
+	  for (int angle = 0 ; angle < 360 ; ++angle)
 	  {
-	    long tetad = omega%360;
-	    long r = rd(p.col() * sin_cache[tetad]
-		        + p.row() * cos_cache[tetad]);
-	    if (r > 0 && r < range)
-	      output.at_(r, tetad) += 1;
-	  }
+           double
+             theta = internal::to_radians(angle),
+             rho = (p.row() - minrow) * math::cos(theta)
+	     + (p.col() - mincol) * math::sin(theta);
+           int
+             indexAngle = (int) (angle),
+             indexRho = (int)(rho + maxRho + 0.5);
 
-	  teta1 = min_angle + 180;
-	  teta2 = max_angle + 180;
-	  for (int omega = teta1; omega < teta2; ++omega)
-	  {
-	    long tetad = omega%360;
-	    long r = rd(p.col() * sin_cache[tetad]
-		        + p.row() * cos_cache[tetad]);
-	    if (r > 0 && r < range)
-	      output.at_(r, tetad) += 1;
-	  }
+           ++opt::at(accu, indexAngle, indexRho);
+          }
 
-	}
-
-//      {
-//      point2d max_p(0,0);
-//      mln_piter_(image2d<float>) p(output.domain());
-//      for_all(p)
-//	if (output(max_p) < output(p))
-//      max_p = p;
-//
-//      point2d b,e;
-//      b.col() = 0;
-//      b.row() = max_p.row()/cos(deg2rad*max_p.col());
-//      if (b.row() < 0)
-//      {
-//	b.row() = 0;
-//	b.col() = max_p.row()/sin(deg2rad*max_p.col());
-//      } else if (b.row() >= input.nrows())
-//      {
-//	b.row() = input.nrows() - 1;
-//	b.col() = max_p.row() - b.row() * cos(deg2rad*max_p.col())/sin(deg2rad*max_p.col());
-//      }
-//
-//      e.col() = input.ncols() - 1;
-//      e.row() = max_p.row() - e.col() * sin(deg2rad*max_p.col()) / cos(deg2rad*max_p.col());
-//      if (e.row() < 0)
-//      {
-//	e.row() = 0;
-//	e.col() = max_p.row()/sin(deg2rad*max_p.col());
-//      } else if (e.row() >= input.nrows())
-//      {
-//	e.row() = input.nrows() - 1;
-//	e.col() = max_p.row() - e.row() * cos(deg2rad*max_p.col())/sin(deg2rad*max_p.col());
-//      }
-//
-//      std::cout << b << " - " << e << std::endl;
-//
-//      image2d<value::rgb8> toto = data::convert(value::rgb8(), input);
-//      draw::line(toto, b, e, literal::red);
-//      io::ppm::save(toto, "tmp_input.ppm");
-//      }
       trace::exiting("mln::transform::hough");
-      return output;
+      return accu;
     }
 
-
-    template <typename I>
-    image2d<float>
-    hough(const Image<I>& input)
-    {
-      return hough(input, -180, 180);
-    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
