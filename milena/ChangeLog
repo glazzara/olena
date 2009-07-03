@@ -1,5 +1,9 @@
 2009-07-01  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	* mln/debug/filename.hh: Allow to force the file id.
+
+2009-07-01  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	* mln/transform/hough.hh: Improve.
 
 2009-06-30  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>

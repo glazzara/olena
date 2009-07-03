@@ -69,8 +69,9 @@ namespace mln
     } // end of namespace scribo::make::internal
 
 
+    inline
     std::string
-    filename(const std::string& filename, int postfix_id = -1)
+    filename(const std::string& filename, int id = -1)
     {
       static int file_id = 1;
 
@@ -79,17 +80,20 @@ namespace mln
       if (! internal::filename_prefix.empty())
 	os << internal::filename_prefix << "_";
 
-      if (file_id < 10)
-	os << "0";
-      if (file_id < 100)
-	os << "0";
+      if (id >= 0)
+      {
+	if (file_id < 10)
+	  os << "0";
+	if (file_id < 100)
+	  os << "0";
 
-      os << file_id++
-	 << "_"
+	os << file_id++;
+      }
+      else
+	os << "_" << id;
+
+      os << "_"
 	 << filename;
-
-      if (postfix_id >= 0)
-	os << "_" << postfix_id;
 
       return os.str();
     }
