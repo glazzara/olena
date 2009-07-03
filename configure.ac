@@ -52,6 +52,20 @@ if test "$GXX" = yes; then
   CXXFLAGS="$CXXFLAGS -pipe"
 fi
 
+
+# Adjusting warning options according to compilers.
+AC_ARG_VAR([WARNINGS_CXXFLAGS])
+case "$CXX" in
+     # Intel compiler
+     *icpc*)
+	WARNINGS_CXXFLAGS="-Wall -wd111,193,279,383,444,522,654,810,981,1418"
+	;;
+     *)
+	WARNINGS_CXXFLAGS="-Wall -W"
+	;;
+esac
+
+
 # ------------------------------ #
 # C++ compiler flags for tests.  #
 # ------------------------------ #
@@ -63,7 +77,7 @@ AC_ARG_VAR([TESTS_CXXFLAGS])
 # We want no optimization for the tests (it slows down compiling
 # times), and debugging information.
 if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS"; then
-  TESTS_CXXFLAGS="-O0 -ggdb -Wall -W"
+  TESTS_CXXFLAGS="-O0 -ggdb $WARNINGS_CXXFLAGS"
 fi
 
 # Flags for complex tests.
@@ -83,7 +97,7 @@ AC_ARG_VAR([TESTS_CXXFLAGS_DEBUG])
 # * GNU C++ Library Compile Time Checks (a.k.a. concept checking):
 #   http://gcc.gnu.org/onlinedocs/libstdc++/manual/bk01pt12ch29.html
 if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS_DEBUG"; then
-  TESTS_CXXFLAGS_DEBUG="-O0 -ggdb -Wall -W -D_GLIBCXX_DEBUG -D_GLIBCXX_CONCEPT_CHECKS"
+  TESTS_CXXFLAGS_DEBUG="-O0 -ggdb $WARNINGS_CXXFLAGS -D_GLIBCXX_DEBUG -D_GLIBCXX_CONCEPT_CHECKS"
 fi
 
 
@@ -402,7 +416,7 @@ AC_CONFIG_FILES([milena/apps/statues/test-mesh-complex-skel],
 AC_ARG_VAR([APPS_CXXFLAGS])
 # We want fast binaries for apps.
 if test "$GXX" = yes && test -z "$APPS_CXXFLAGS"; then
-  APPS_CXXFLAGS="-O3 -DNDEBUG -ggdb -Wall -W"
+  APPS_CXXFLAGS="-O3 -DNDEBUG -ggdb $WARNINGS_CXXFLAGS"
 fi
 
 ## ------- ##
@@ -421,7 +435,7 @@ AC_CONFIG_FILES([milena/tools/Makefile])
 AC_ARG_VAR([TOOLS_CXXFLAGS])
 # We want fast binaries for tools.
 if test "$GXX" = yes && test -z "$TOOLS_CXXFLAGS"; then
-  TOOLS_CXXFLAGS="-O3 -DNDEBUG -ggdb -Wall -W"
+  TOOLS_CXXFLAGS="-O3 -DNDEBUG -ggdb $WARNINGS_CXXFLAGS"
 fi
 
 
