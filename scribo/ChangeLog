@@ -1,5 +1,18 @@
 2009-06-39 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Update Scribo.
+
+	* src/extract_text_double_link.cc: Improve usage output and add new
+	parameters to be passed as arguments.
+
+	* src/recognition.cc: Add a new program argument.
+
+	* text/clean.hh: Disable cleaning for now.
+
+	* text/recognition.hh: may store the recognized text into a file.
+
+2009-06-39 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	* tests/preprocessing/unskew.cc: fix test.
 
 2009-06-39 Guillaume Lazzara  <lazzara@lrde.epita.fr>

@@ -98,31 +98,31 @@ namespace scribo
       mln_precondition(input.is_valid());
       mln_precondition(dmap_win.is_valid());
 
-      I input_large = world::binary_2d::enlarge(input, 2);
+//       I input_large = world::binary_2d::enlarge(input, 2);
 
 //     image2d<bool> blur = linear::gaussian(input_large, 2);
 //     image2d<value::int_u8> blur = linear::gaussian(level::convert(value::int_u8(), input_large), 2);
 //     image2d<bool> blur = level::transform(linear::gaussian(level::convert(value::int_u8(), input_large), 2), fun::v2b::threshold<value::int_u8>(100));
 
-      mln_ch_value(I,unsigned)
-        dmap = transform::distance_front(logical::not_(input_large), c8(),
-                                         dmap_win,
-                                         mln_max(unsigned));
+//       mln_ch_value(I,unsigned)
+//         dmap = transform::distance_front(logical::not_(input_large), c8(),
+//                                          dmap_win,
+//                                          mln_max(unsigned));
 //      io::pgm::save(labeling::wrap(dmap), mln::debug::filename("dmap.pgm"));
 
 //      I skeleton = topo::skeleton::crest(input_large, dmap, c8());
-      I constraint = topo::skeleton::crest(input_large, dmap, c8());
-      mln_postcondition(constraint.is_valid());
+//       I constraint = topo::skeleton::crest(input_large, dmap, c8());
+//       mln_postcondition(constraint.is_valid());
 
 //      io::pgm::save(labeling::wrap(constraint), mln::debug::filename("constraint.pgm"));
 
-      I skeleton =
-        morpho::skeleton_constrained(input_large, c8(),
-                                     topo::skeleton::is_simple_point<I,neighb2d>,
-                                     extend(constraint, false), arith::revert(dmap));
+//       I skeleton =
+//         morpho::skeleton_constrained(input_large, c8(),
+//                                      topo::skeleton::is_simple_point<I,neighb2d>,
+//                                      extend(constraint, false), arith::revert(dmap));
 
-      win::octagon2d disk(7);
-      I output = morpho::dilation(skeleton, disk);
+//       win::octagon2d disk(7);
+//       I output = morpho::dilation(skeleton, disk);
 
 //      if (plop > 20 && plop < 50)
       {
@@ -134,7 +134,7 @@ namespace scribo
 
 //      ++plop;
       trace::exiting("scribo::text::clean");
-      return output;
+      return input;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

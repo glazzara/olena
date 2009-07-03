@@ -45,22 +45,33 @@
 #include <scribo/debug/save_bboxes_image.hh>
 #include <scribo/make/debug_filename.hh>
 
-int usage(const char *name)
+
+#include <scribo/debug/usage.hh>
+
+const char *args_desc[][2] =
 {
-  std::cout << "Usage: " << name << " <input.pbm> " << std::endl;
-  return 1;
-}
+  { "input.pbm", "A binary image. 'True' for objects, 'False'\
+for the background." },
+  { "hlmax", "Maximum distance between two grouped objects while browsing on the left." },
+  { "hrmax", "Maximum distance between two grouped objects while browsing on the right." },
+  { "prefix", "Output names prefix" },
+  {0, 0}
+};
 
-
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
   using namespace scribo;
   using namespace mln;
 
-  if (argc < 1)
-    return usage(argv[0]);
+  if (argc != 5)
+    return scribo::debug::usage(argv,
+				"Group potential text objects using a double validation link.",
+				"input.pbm hlmax hrmax prefix",
+				args_desc,
+				"Several images showing the process.");
 
-  scribo::make::internal::debug_filename_prefix = "extract_text_double_link";
+
+  scribo::make::internal::debug_filename_prefix = argv[4];
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
@@ -72,9 +83,9 @@ int main(int argc, char* argv[])
   text = filter::small_objects(text, 4);
 
   mln::util::array<unsigned> left_link
-	= text::grouping::group_with_single_left_link(text, 30);
+    = text::grouping::group_with_single_left_link(text, atoi(argv[2]));
   mln::util::array<unsigned> right_link
-	= text::grouping::group_with_single_right_link(text, 30);
+    = text::grouping::group_with_single_right_link(text, atoi(argv[3]));
 
   std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
 

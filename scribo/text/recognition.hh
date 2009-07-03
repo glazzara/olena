@@ -33,6 +33,8 @@
 /// \todo For each text bbox, we create a new image. We may like to avoid that.
 /// \todo Do not store the result in an image?
 
+# include <ostream>
+
 # include <mln/core/image/dmorph/image_if.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/box.hh>
@@ -76,15 +78,19 @@ namespace scribo
 
     /// Passes the text bboxes to Tesseract (OCR).
     ///
-    /// \param[in] text The lines of text.
-    /// \param[in] language the language which should be recognized by Tesseract.
-    ///		   (fra, en, ...)
+    /// \param[in] text        The lines of text.
+    /// \param[in] language    The language which should be recognized by
+    ///		               Tesseract. (fra, en, ...)
+    /// \param[in] output_file If set, store the recognized text in
+    ///                        this file.
     ///
     /// \return An image of characters.
+    //
     template <typename L>
     mln_ch_value(L,char)
     recognition(const object_image(L)& objects,
-		const char *language);
+		const char *language,
+		const char *output_file);
 
 
 
@@ -94,7 +100,8 @@ namespace scribo
     template <typename L>
     mln_ch_value(L,char)
     recognition(const object_image(L)& objects,
-		const char *language)
+		const char *language,
+		const char *output_file)
     {
       trace::entering("scribo::text::recognition");
 
@@ -113,6 +120,10 @@ namespace scribo
 		     9, 6, 4, 6, 9,
 		     0, 9, 0, 9, 0 };
       w_window2d_int dmap_win = mln::make::w_window2d_int(vals);
+
+      std::ofstream file;
+      if (output_file != 0)
+	file.open(output_file);
 
       /// Use text bboxes with Tesseract
       for_all_ncomponents(i, objects.nlabels())
@@ -147,12 +158,17 @@ namespace scribo
 	if (s != 0)
 	{
 	  std::cout << s << std::endl;
+	  if (output_file != 0)
+	    file << s << std::endl;
 	  mln::debug::put_word(txt, p, s);
 	}
 
 	// The string has been allocated by Tesseract. We must free it.
 	free(s);
       }
+
+      if (output_file != 0)
+	file.close();
 
       trace::exiting("scribo::text::recognition");
       return txt;

@@ -51,6 +51,7 @@ const char *args_desc[][2] =
 {
   { "input.pbm", "A binary image. 'True' for objects, 'False'\
 for the background." },
+  { "out.txt",   "OCR's output." },
   {0, 0}
 };
 
@@ -61,12 +62,12 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  if (argc != 2)
+  if (argc != 3)
     return scribo::debug::usage(argv,
 				"Text extraction and recognition",
-				"input.pbm",
+				"input.pbm out.txt",
 				args_desc,
-				"The text is printed on the standard output.");
+				"The text is printed on the standard output and stored in 'out.txt'");
 
   trace::entering("main");
 
@@ -91,7 +92,7 @@ int main(int argc, char* argv[])
   objects = text::grouping::group_from_double_link(objects, left_link, right_link);
 
   /// Try to recognize text in grouped objects.
-  scribo::text::recognition(objects, "fra");
+  scribo::text::recognition(objects, "fra", argv[2]);
 
   trace::exiting("main");
 }
