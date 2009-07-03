@@ -116,7 +116,7 @@ namespace mln
 	mln_niter(N) n(nbh, p);
 	for_all(p)
 	{
-	  if (!input(p) || dist_map(p) < 0)
+	  if (!input(p) || dist_map(p) < static_cast<mln_value(D)>(0))
 	    continue;
 
 	  unsigned nb_eq = 0;
