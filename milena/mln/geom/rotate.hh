@@ -38,7 +38,7 @@
 
 # include <mln/core/image/imorph/tr_image.hh>
 
-# include <mln/accu/bbox.hh>
+# include <mln/accu/shape/bbox.hh>
 
 # include <mln/data/paste.hh>
 
@@ -89,7 +89,7 @@ namespace mln
     /// Use literal::zero as default value for the extension.
     template <typename I>
     mln_concrete(I)
-    rotate(const Image<I>& input_, double angle);
+    rotate(const Image<I>& input, double angle);
 
 
 
@@ -105,7 +105,7 @@ namespace mln
 
       const I& input = exact(input_);
       const S& output_domain = exact(output_domain_);
-      const mln_exact(Ext)& extension = exact(extensions_);
+      const mln_exact(Ext)& extension = exact(extension_);
 
       // Do not check that output_domain_ is valid. If it is not,
       // further in this routine, we define a default domain.
@@ -134,7 +134,7 @@ namespace mln
       // Automatically adjusting the output domain if needed.
       if (!output_domain.is_valid())
       {
-	accu::bbox<mln_site(I)> accu;
+	accu::shape::bbox<mln_site(I)> accu;
 
 	typedef mln_site(I) P;
 	accu.take(P(comp_transf(input.domain().pmin().to_vec())));
