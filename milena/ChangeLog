@@ -1,5 +1,9 @@
 2009-06-30  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	* mln/geom/rotate.hh: Fix output domain.
+
+2009-06-30  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	* tests/morpho/closing/approx/Makefile.am: add test outputs to
 	CLEANFILES.
 

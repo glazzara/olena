@@ -32,6 +32,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/site_set.hh>
+# include <mln/core/concept/box.hh>
 
 # include <mln/core/routine/extend.hh>
 
@@ -58,20 +59,22 @@ namespace mln
 
     /// Perform a rotation from the center of an image.
     ///
-    /// \param[in] input_         An image.
+    /// \param[in] input          An image.
     /// \param[in] angle          An angle in degrees.
-    /// \param[in] extension_     Function, image or value which will be used
+    /// \param[in] extension      Function, image or value which will be used
     ///                           as extension. This extension allows to map
     ///                           values to sites which where not part
     ///                           of the domain before the rotation.
-    /// \param[in] output_domain_ The domain of the output image.
+    /// \param[in] output_domain  The domain of the output image. An
+    ///                           invalid domain, causes the routine
+    ///                           to use the rotated input_ domain.
     ///
-    /// \return An image with the same domain as \p input_.
+    /// \return An image with the same domain as \p input.
     //
     template <typename I, typename Ext, typename S>
     mln_concrete(I)
-    rotate(const Image<I>& input_, double angle,
-	   const Ext& extension_, const Site_Set<S>& output_domain);
+    rotate(const Image<I>& input, double angle,
+	   const Ext& extension, const Site_Set<S>& output_domain);
 
 
     /// \overload
@@ -87,6 +90,7 @@ namespace mln
     rotate(const Image<I>& input_, double angle);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
 
@@ -99,27 +103,59 @@ namespace mln
 
       const I& input = exact(input_);
       const S& output_domain = exact(output_domain_);
+      const mln_exact(Ext)& extension = exact(extensions_);
 
+      // Do not check that output_domain_ is valid. If it is not,
+      // further in this routine, we define a default domain.
       mln_precondition(input.is_valid());
       mln_precondition(angle >= -360.0f && angle <= 360.0f);
-      mlc_converts_to(Ext, mln_value(I))::check();
-      /// FIXME: A precondition is probably missing for the extension value.
+      mlc_converts_to(mln_exact(Ext), mln_value(I))::check();
+      mlc_is_a(S,Box)::check();
+      // FIXME: A precondition is probably missing for the extension value.
 
       mln_site(I) c = geom::bbox(input).center();
-      fun::x2x::translation<2,double>
+      typedef fun::x2x::translation<2,double> trans_t;
+      trans_t
 	t(-1 * c.to_vec()),
 	t_1(c.to_vec());
 
       typedef fun::x2x::rotation<2,double> rot_t;
       rot_t rot(math::pi * angle / 180.f, literal::origin);
 
-      mln_concrete(I) output;
-      initialize(output, input);
+      typedef
+	fun::x2x::composed<trans_t, fun::x2x::composed<rot_t, trans_t> >
+	comp_transf_t;
 
-      data::paste(transposed_image(output_domain_,
-				   extend(input, extension_),
-				   compose(t_1, compose(rot, t))),
-		  output);
+      comp_transf_t comp_transf = compose(t_1, compose(rot, t));
+
+      S b = output_domain;
+      // Automatically adjusting the output domain if needed.
+      if (!output_domain.is_valid())
+      {
+	typedef mln_site(I) P;
+	P
+	  rpmin = P(comp_transf(input.domain().pmin().to_vec())),
+	  rpmax = P(comp_transf(input.domain().pmax().to_vec()));
+
+	for (unsigned i = 0; i < mln_site_(I)::dim; ++i)
+	  if (rpmax[i] < rpmin[i])
+	    std::swap(rpmax[i], rpmin[i]);
+
+	b = mln_box(I)(rpmin, rpmax);
+      }
+
+      typedef
+	tr_image<mln_box(I), extension_val<const I>, comp_transf_t> tr_t;
+
+      tr_t tr = transposed_image(b, extend(input, extension_), comp_transf);
+
+      typedef mln_site(I) P;
+      P rpmin = P(rot(input.domain().pmin().to_vec()));
+
+      mln_concrete(I) output;
+      initialize(output, tr);
+
+      data::paste(tr, output);
 
       trace::exiting("geom::rotate");
       return output;
@@ -130,7 +166,7 @@ namespace mln
     mln_concrete(I)
     rotate(const Image<I>& input, double angle, const Ext& extension)
     {
-      return rotate(input, angle, extension, exact(input).domain());
+      return rotate(input, angle, extension, mln_box(I)());
     }
 
 
