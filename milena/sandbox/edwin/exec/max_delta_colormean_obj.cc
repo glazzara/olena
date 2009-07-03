@@ -33,6 +33,7 @@
 #include <mln/morpho/tree/compute_attribute_image.hh>
 #include <mln/morpho/tree/components.hh>
 #include <mln/morpho/tree/propagate.hh>
+#include <mln/morpho/tree/propagate_representative.hh>
 
 #include <mln/accu/stat/mean.hh>
 
@@ -42,7 +43,10 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/ppm/load.hh>
 #include <mln/io/pbm/save.hh>
+#include <mln/io/pgm/save.hh>
+#include <mln/io/ppm/save.hh>
 
+#include <mln/math/diff_abs.hh>
 
 #include "color_distance.hh"
 #include <iostream>
@@ -81,13 +85,18 @@ compute_delta_mean(const value::int_u8&, const T& tree, const Image<S>& source)
   O out = morpho::tree::compute_attribute_image_from(accu::stat::mean<mln_value(S)>(),
 						     tree, source);
 
+  io::pgm::save(data::convert(value::int_u8(), out), "mean.pgm");
+
   // Compute delta image.
   mln_ch_value(typename T::function, int_u8) dist;
   initialize(dist, tree.f());
 
   mln_up_node_piter(T) n(tree);
   for_all(n)
-    dist(n) = out(tree.parent(n)) - out(n);
+  {
+    mln_assertion(tree.f(tree.parent(n)) > tree.f(n));
+    dist(n) = math::diff_abs(out(tree.parent(n)), out(n));
+  }
 
   return dist;
 }
@@ -101,6 +110,8 @@ compute_delta_mean(const value::rgb8&, const T& tree, const Image<S>& source)
   typedef mln_ch_value(typename T::function, mln_sum(mln_value(S))) O;
   O out = morpho::tree::compute_attribute_image_from(accu::stat::mean<mln_value(S)>(),
 						     tree, source);
+
+  io::ppm::save(data::convert(value::rgb8(), out), "mean.ppm");
 
   // Compute delta image.
   mln_ch_value(typename T::function, int_u8) dist;
@@ -147,7 +158,7 @@ int main(int argc, char** argv)
   typedef p_array<mln_psite_(I)> S;
   typedef morpho::tree::data<I, S> T;
 
-  S s = data::sort_psites_increasing(input);
+  S s = data::sort_psites_decreasing(input);
   T tree(input, s, c4());
 
   // Attribute computation.
@@ -168,6 +179,9 @@ int main(int argc, char** argv)
     }
   else
     usage(argv); // Type not handled.
+
+  morpho::tree::propagate_representative(tree, delta);
+  io::pgm::save(delta, "distance.pgm");
 
   // Get the max components of the delta image.
   p_array<mln_psite_(I)> obj = morpho::tree::get_components(tree, delta);

@@ -56,13 +56,14 @@ namespace mln {
       */
       template <typename A, typename T>
       inline
-      A propagate_components(const Image<A>& attr_image,
+      mln_concrete(A)
+      propagate_components(const Image<A>& attr_image,
 			     const T& tree,
 			     const p_array< mln_psite(A) >& component_list,
 			     const mln_value(A)& null)
       {
 	const A& a = exact(attr_image);
-	A out;
+	mln_concrete(A) out;
 	initialize(out, a);
 	mln::data::fill(out, null);
 
