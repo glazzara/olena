@@ -136,7 +136,14 @@ namespace mln
     mln_value(I) operator()(const psite& p) const;
     mln_value(I) operator()(const psite& p);
 
+    /// Set the transformation.
     void set_tr(T& tr);
+
+    /// Return the underlying transformation.
+    const T& tr() const;
+
+    /// Return the domain morpher.
+    const S& domain() const;
   };
 
 
@@ -222,6 +229,23 @@ namespace mln
   {
     this->data_->tr_ = tr;
   }
+
+  template <typename S, typename I, typename T>
+  inline
+  const T&
+  tr_image<S,I,T>::tr() const
+  {
+    return this->data_->tr_;
+  }
+
+  template <typename S, typename I, typename T>
+  inline
+  const S&
+  tr_image<S,I,T>::domain() const
+  {
+    return this->data_->s_;
+  }
+
 
   template <typename S, typename I, typename T>
   inline

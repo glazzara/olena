@@ -1,5 +1,21 @@
 2009-06-30  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Small fixes.
+
+	* mln/core/image/dmorph/sub_image.hh: add missing 'const'.
+
+	* mln/core/image/imorph/tr_image.hh: add missing members.
+
+	* mln/core/site_set/p_vertices.hh: add a more generic constructor.
+
+	* mln/labeling/blobs.hh: revamp warning output.
+
+	* mln/labeling/n_max.hh: add an overload.
+
+	* mln/make/edge_image.hh: fix namespace ambiguities.
+
+2009-06-30  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	* mln/topo/skeleton/crest.hh: Fix a warning.
 
 2009-06-30  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>

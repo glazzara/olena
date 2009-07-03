@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -102,8 +103,7 @@ namespace mln
 		if (nlabels == mln_max(L))
 		  {
 		    trace::warning("labeling aborted! Too many labels \
-				    for this label type: nlabels > \
-				    max(label_type).");
+for this label type: nlabels > max(label_type).");
 
 		    return output;
 		  }

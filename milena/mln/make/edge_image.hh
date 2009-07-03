@@ -83,7 +83,7 @@ namespace mln
     //
     template <typename P, typename V, typename G, typename FP, typename FV>
     mln::edge_image<mln_result(FP),mln_result(FV),G>
-    edge_image(const vertex_image<P,V,G>& v_ima_,
+    edge_image(const mln::vertex_image<P,V,G>& v_ima_,
 	       const p_edges<G,FP> pe,
 	       const Function_vv2v<FV>& fv_);
 
@@ -100,7 +100,7 @@ namespace mln
     //
     template <typename P, typename V, typename G, typename FV>
     mln::edge_image<void,mln_result(FV),G>
-    edge_image(const vertex_image<P,V,G>& v_ima_,
+    edge_image(const mln::vertex_image<P,V,G>& v_ima_,
 	       const Function_vv2v<FV>& fv_);
 
 
@@ -145,14 +145,14 @@ namespace mln
 
     template <typename P, typename V, typename G, typename FP, typename FV>
     mln::edge_image<mln_result(FP),mln_result(FV),G>
-    edge_image(const vertex_image<P,V,G>& v_ima_,
+    edge_image(const mln::vertex_image<P,V,G>& v_ima_,
 	       const p_edges<G,FP> pe,
 	       const Function_vv2v<FV>& fv_)
     {
       trace::entering("make::edge_image");
 
       const FV& fv = exact(fv_);
-      const vertex_image<P,V,G>& v_ima = exact(v_ima_);
+      const mln::vertex_image<P,V,G>& v_ima = exact(v_ima_);
       mln_precondition(v_ima.is_valid());
 
       typedef mln::edge_image<mln_result(FP),mln_result(FV),G> edge_ima_t;
@@ -170,16 +170,16 @@ namespace mln
 
     template <typename P, typename V, typename G, typename FV>
     mln::edge_image<void,mln_result(FV),G>
-    edge_image(const vertex_image<P,V,G>& v_ima_,
+    edge_image(const mln::vertex_image<P,V,G>& v_ima_,
 	       const Function_vv2v<FV>& fv_)
     {
       trace::entering("make::edge_image");
 
       const FV& fv = exact(fv_);
-      const vertex_image<P,V,G>& v_ima = exact(v_ima_);
+      const mln::vertex_image<P,V,G>& v_ima = exact(v_ima_);
       mln_precondition(v_ima.is_valid());
 
-      p_edges<G> pe(v_ima.graph());
+      p_edges<G> pe(v_ima.domain().graph());
       typedef mln::edge_image<void,mln_result(FV),G> edge_ima_t;
       edge_ima_t ima_e(pe);
 

@@ -53,7 +53,7 @@ namespace mln
     template <typename I, typename S>
     struct data< sub_image<I,S> >
     {
-      data(I& ima, const S& pset);
+      data(const I& ima, const S& pset);
 
       I ima_;
       S domain_;
@@ -109,10 +109,10 @@ namespace mln
     sub_image();
 
     /// Constructor.
-    sub_image(I& ima, const S& pset);
+    sub_image(const I& ima, const S& pset);
 
     /// Initialization.
-    void init_(I& ima, const S& pset);
+    void init_(const I& ima, const S& pset);
 
     /// Give the definition domain.
     const S& domain() const;
@@ -164,7 +164,7 @@ namespace mln
 
     template <typename I, typename S>
     inline
-    data< sub_image<I,S> >::data(I& ima, const S& pset)
+    data< sub_image<I,S> >::data(const I& ima, const S& pset)
       : ima_(ima),
 	domain_(pset)
     {
@@ -183,7 +183,7 @@ namespace mln
 
   template <typename I, typename S>
   inline
-  sub_image<I,S>::sub_image(I& ima, const S& pset)
+  sub_image<I,S>::sub_image(const I& ima, const S& pset)
   {
     init_(ima, pset);
   }
@@ -191,7 +191,7 @@ namespace mln
   template <typename I, typename S>
   inline
   void
-  sub_image<I,S>::init_(I& ima, const S& pset)
+  sub_image<I,S>::init_(const I& ima, const S& pset)
   {
     mln_precondition(! this->is_valid());
     this->data_ = new internal::data< sub_image<I,S> >(ima, pset);

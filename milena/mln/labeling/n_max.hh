@@ -27,6 +27,8 @@
 # define MLN_LABELING_N_MAX_HH
 
 # include <mln/core/concept/image.hh>
+# include <mln/accu/math/count.hh>
+# include <mln/labeling/compute.hh>
 # include <mln/util/array.hh>
 
 /// \file
@@ -46,6 +48,11 @@ namespace mln
     template <typename L, typename V>
     util::array<L>
     n_max(const util::array<V>& in_arr, unsigned n);
+
+
+    template <typename L>
+    util::array<mln_value(L)>
+    n_max(const Image<L>& lbl, const mln_value(L)& nlabels, unsigned n);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -78,6 +85,23 @@ namespace mln
       trace::exiting("mln::labeling::n_max");
       return output;
     }
+
+
+    template <typename L>
+    util::array<mln_value(L)>
+    n_max(const Image<L>& lbl, const mln_value(L)& nlabels, unsigned n)
+    {
+      mln_precondition(exact(lbl).is_valid());
+
+      typedef accu::math::count<mln_site(L)> accu_t;
+      accu_t accu;
+
+      util::array<mln_result(accu_t)>
+	counts = labeling::compute(accu, lbl, nlabels);
+
+      return n_max<mln_value(L)>(counts, n);
+    }
+
 
 # endif // !MLN_INCLUDE_ONLY
 

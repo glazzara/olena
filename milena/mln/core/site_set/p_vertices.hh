@@ -1,3 +1,4 @@
+
 // Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -111,6 +112,9 @@ namespace mln
     p_vertices(const Graph<G>& gr, const Function<F2>& f);
     /// \}
 
+    /// Copy constructor.
+    template <typename F2>
+    p_vertices(const p_vertices<G,F2>& other);
 
     /// Associated types.
     /// \{
@@ -249,6 +253,18 @@ namespace mln
 
     g_ = exact(g);
     convert::from_to(f, f_);
+  }
+
+  template <typename G, typename F>
+  template <typename F2>
+  inline
+  p_vertices<G,F>::p_vertices(const p_vertices<G,F2>& other)
+  {
+    mln_precondition(other.is_valid());
+    mlc_converts_to(F2,F)::check();
+
+    g_ = other.graph();
+    convert::from_to(other.function(), f_);
   }
 
   template <typename G, typename F>
