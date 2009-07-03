@@ -126,8 +126,11 @@ namespace mln
     /// Test if a pixel value is accessible at \p p.
     using super_::has;
 
+    enum { dim_ = site::dim };
+    typedef mln::algebra::vec<dim_, float> vec_t;
+
     /// Test if a pixel value is accessible at \p v.
-    bool has(const mln::algebra::vec<site::dim, float>& v) const;
+    bool has(const vec_t& v) const;
 
     /// Read-only access of pixel value at point site \p p.
     /// Mutable access is only OK for reading (not writing).
@@ -194,11 +197,11 @@ namespace mln
   template <typename S, typename I, typename T>
   inline
   bool
-  tr_image<S,I,T>::has(const algebra::vec<site::dim, float>& v) const
+  tr_image<S,I,T>::has(const vec_t& v) const
   {
     mln_psite(I) p;
-    algebra::vec<I::site::dim, float> v2 = this->data_->tr_.inv()(v);
-    for (unsigned i = 0; i < I::site::dim; ++i)
+    algebra::vec<site::dim, float> v2 = this->data_->tr_.inv()(v);
+    for (unsigned i = 0; i < site::dim; ++i)
       p[i] = static_cast<int>(v2[i]);
     return this->delegatee_().has(p);
   }

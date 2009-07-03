@@ -54,7 +54,9 @@ int main()
 
   mln_assertion(imax == (make::image2d(refs) | is_pixel()));
 
+  is_pixel is_pixel_; // Help g++-3.3.
+
   mln_piter_(Ix) p(imax.domain());
   for_all(p)
-    mln_assertion(is_pixel()(p));
+    mln_assertion(is_pixel_(p));
 }

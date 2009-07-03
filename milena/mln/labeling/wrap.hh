@@ -38,6 +38,7 @@
 # include <mln/metal/is_a.hh>
 # include <mln/value/label_8.hh>
 
+
 namespace mln
 {
 
@@ -62,7 +63,7 @@ namespace mln
     ///
     /// \return A new image with values wrapped with type label_8.
     template <typename I>
-    mln_ch_value(I,value::label_8)
+    mln_ch_value(I, mln::value::label_8)
     wrap(const Image<I>& input);
 
 
@@ -88,10 +89,10 @@ namespace mln
 
     template <typename I>
     inline
-    mln_ch_value(I,value::label_8)
+    mln_ch_value(I, mln::value::label_8)
     wrap(const Image<I>& input)
     {
-      return wrap(value::label_8(), input);
+      return wrap(mln::value::label_8(), input);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -99,5 +100,6 @@ namespace mln
   } // end of namespace mln::labeling
 
 } // end of namespace mln
+
 
 #endif // ! MLN_LABELING_WRAP_HH

@@ -34,7 +34,9 @@ int main()
 
   point2d p00(0, 0), p01(0, 1), p11(1, 1);
 
-  mln_assertion(  is_pixel()(p00));
-  mln_assertion(! is_pixel()(p01));
-  mln_assertion(! is_pixel()(p11));
+  is_pixel is_pixel_; // Help g++-3.3.
+
+  mln_assertion(  is_pixel_(p00));
+  mln_assertion(! is_pixel_(p01));
+  mln_assertion(! is_pixel_(p11));
 }

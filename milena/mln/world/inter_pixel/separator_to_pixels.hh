@@ -69,10 +69,15 @@ namespace mln
 			  Gpoint<P>& p1_, Gpoint<P>& p2_)
       {
 	const P& s = exact(s_);
-	mln_precondition(is_separator()(s));
+	P& p1 = exact(p1_);
+	P& p2 = exact(p2_);
 
-	P &p1 = exact(p1_),
-	  &p2 = exact(p2_);
+	{
+	  // Pre-condition.
+	  is_separator is_separator_;
+	  mln_precondition(is_separator_(s));
+	  (void) is_separator_;
+	}
 
 	// FIXME: 2D only.
 	if (s.row() % 2)
@@ -88,8 +93,13 @@ namespace mln
 	    p2 = point2d(s.row(), s.col() + 1);
 	  }
 
-	mln_postcondition(is_pixel()(p1));
-	mln_postcondition(is_pixel()(p2));
+	{
+	  // Post-conditions.
+	  is_pixel is_pixel_;
+	  mln_postcondition(is_pixel_(p1));
+	  mln_postcondition(is_pixel_(p2));
+	  (void) is_pixel_;
+	}
       }
 
       template <typename Ps, typename P>
@@ -99,15 +109,25 @@ namespace mln
 			  Gpoint<P>& p1_, Gpoint<P>& p2_)
       {
 	const Ps& s = exact(s_);
-	mln_precondition(is_separator()(s));
+	P& p1 = exact(p1_);
+	P& p2 = exact(p2_);
 
-	P &p1 = exact(p1_),
-	  &p2 = exact(p2_);
+	{
+	  // Pre-condition.
+	  is_separator is_separator_;
+	  mln_precondition(is_separator_(s));
+	  (void) is_separator_;
+	}
 
 	separator_to_pixels(s.to_site(), p1, p2);
 
-	mln_postcondition(is_pixel()(p1));
-	mln_postcondition(is_pixel()(p2));
+	{
+	  // Post-conditions.
+	  is_pixel is_pixel_;
+	  mln_postcondition(is_pixel_(p1));
+	  mln_postcondition(is_pixel_(p2));
+	  (void) is_pixel_;
+	}
       }
 
 # endif // ! MLN_INCLUDE_ONLY

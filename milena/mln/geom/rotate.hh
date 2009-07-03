@@ -146,7 +146,7 @@ namespace mln
       typedef
 	tr_image<mln_box(I), extension_val<const I>, comp_transf_t> tr_t;
 
-      tr_t tr = transposed_image(b, extend(input, extension_), comp_transf);
+      tr_t tr = transposed_image(b, extend(input, extension), comp_transf);
 
       typedef mln_site(I) P;
       P rpmin = P(rot(input.domain().pmin().to_vec()));

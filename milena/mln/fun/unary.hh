@@ -30,6 +30,7 @@
 # include <mln/fun/spe/unary.hh>
 # include <mln/trait/next/solve.hh>
 
+
 namespace mln
 {
 
@@ -69,13 +70,20 @@ namespace mln
       template <typename T>
       typename with<T>::ret::template lresult_with<T>::ret operator()(T& v) const
       {
-	return typename with<T>::ret(state()).apply_rw(v);
+	// See the commentary in next method.
+	typedef typename with<T>::ret fun_t;
+	fun_t f(state());
+	return f.apply_rw(v);
       }
 
       template <typename T, typename R>
       void set(T& v, const R& r) const
       {
-	typename with<T>::ret(state()).set(v, r);
+	// Decomposing "with<T>::ret(state()).set(v, r)" into 3 lines
+	// helps g++-3.3!
+	typedef typename with<T>::ret fun_t;
+	fun_t f(state());
+	f.set(v, r);
       }
 
       template <typename U>

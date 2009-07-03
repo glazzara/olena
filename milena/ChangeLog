@@ -1,3 +1,24 @@
+2009-07-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Help g++-3.3 to compile.
+
+	* mln/trait/value/internal/comp.hh,
+	* mln/world/inter_pixel/separator_to_pixels.hh,
+	* mln/core/image/imorph/tr_image.hh,
+	* mln/geom/rotate.hh,
+	* mln/fun/unary.hh,
+	* mln/labeling/wrap.hh,
+	* tests/world/inter_pixel/is_separator.cc,
+	* tests/world/inter_pixel/is_pixel.cc,
+	* tests/world/inter_pixel/immerse.cc: Help g++-3.3 to compile.
+
+	* demos/genericity/neighborhood/input: New directory.
+	* demos/genericity/neighborhood/output: New directory.
+	* demos/genericity/neighborhood/world.pbm,
+	* demos/genericity/neighborhood/drawing.pbm: Move...
+	* demos/genericity/neighborhood/input/world.pbm,
+	* demos/genericity/neighborhood/input/drawing.pbm: ...here.
+
 2009-07-03  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	* mln/geom/rotate.hh: use accu::bbox to compute the rotated bbox.

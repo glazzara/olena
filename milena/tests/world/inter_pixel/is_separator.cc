@@ -34,8 +34,10 @@ int main()
 
   point2d p00(0, 0), p01(0, 1), p10(1, 0), p11(1, 1);
 
-  mln_assertion(! is_separator()(p00));
-  mln_assertion(  is_separator()(p01));
-  mln_assertion(! is_separator()(p11));
-  mln_assertion(  is_separator()(p10));
+  is_separator is_separator_; // Help g++-3.3.
+
+  mln_assertion(! is_separator_(p00));
+  mln_assertion(  is_separator_(p01));
+  mln_assertion(! is_separator_(p11));
+  mln_assertion(  is_separator_(p10));
 }

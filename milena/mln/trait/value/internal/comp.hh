@@ -185,8 +185,18 @@ namespace mln
 	  }
 	};
 
+
+	// Technical note:
+	//
+	// We distinguish between a type T being a C-array type (T =
+	// U[dim]) and T a "regular" type (meaning "not a C-array
+	// type").  We have two stages to help g++-3.3 which has
+	// difficulty in solving such partial specializations.
+
+	// Regular case.
+
 	template <typename T, unsigned i, unsigned dim>
-	struct get_comp
+	struct get_comp_with_regular_
 	{
 	  typedef mln::trait::value_<T> Tr;
 	  typedef typename Tr::comp C;
@@ -199,20 +209,8 @@ namespace mln
 	  }
 	};
 
-
-	template <typename T, unsigned i, unsigned dim>
-	struct get_comp< T[dim], i, dim >
-	{
-	  typedef T ret;
-
-	  static ret on(const T (&v)[dim])
-	  {
-	    return v[i];
-	  }
-	};
-
 	template <typename T>
-	struct get_comp< T, 0, 1 >
+	struct get_comp_with_regular_< T, 0, 1 >
 	{
 	  typedef T ret;
 
@@ -221,14 +219,30 @@ namespace mln
 	    return v;
 	  }
 	};
-	
-	template <typename T>
-	struct get_comp< T[1], 0, 1 > // Disambiguate between both
-				      // previous specialization.
+
+	template <typename T, unsigned i, unsigned dim>
+	struct get_comp : get_comp_with_regular_<T, i, dim>
+	{
+	};
+
+	// C-array case.
+
+	template <typename T, unsigned i, unsigned dim>
+	struct get_comp_with_C_array
 	{
 	  typedef T ret;
-	  static ret on(const T (&v)[1]) { return v[0]; }
+
+	  static ret on(const T (&v)[dim])
+	  {
+	    return v[i];
+	  }
 	};
+	
+	template <typename T, unsigned i, unsigned dim>
+	struct get_comp< T[dim], i, dim > : get_comp_with_C_array<T, i, dim>
+	{
+	};
+
 
 
 	// comp< T, i >
