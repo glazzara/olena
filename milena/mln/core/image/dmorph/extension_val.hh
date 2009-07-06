@@ -103,6 +103,8 @@ namespace mln
     /// Skeleton.
     typedef extension_val< tag::image_<I> > skeleton;
 
+    /// Image value type.
+    typedef mln_value(I) value;
 
     /// Return type of read-only access.
     typedef mln_value(I) rvalue;

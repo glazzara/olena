@@ -105,6 +105,8 @@ namespace mln
     /// Skeleton.
     typedef extension_fun< tag::image_<I>, tag::function_<F> > skeleton;
 
+    /// Image value type.
+    typedef mln_value(I) value;
 
     /// Return type of read-only access.
     typedef mln_value(I) rvalue;

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -103,10 +104,11 @@ namespace mln
     /// Skeleton.
     typedef extension_ima< tag::image_<I>, tag::ext_<J> > skeleton;
 
+    /// Image value type.
+    typedef mln_value(I) value;
 
     /// Return type of read-only access.
     typedef mln_value(I) rvalue;
-
 
     /// Constructor without argument.
     extension_ima();

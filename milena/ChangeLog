@@ -1,5 +1,15 @@
 2009-07-06  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Fix ambiguous typedef 'value'.
+
+	* mln/core/image/dmorph/extension_fun.hh,
+	* mln/core/image/dmorph/extension_ima.hh,
+	* mln/core/image/dmorph/extension_val.hh: typedef 'value' in
+	concrete classes.
+
+
+2009-07-06  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Fix compilation issues with icc and meta accumulators.
 
 	*  mln/core/concept/meta_accumulator.hh: introduce a helper to help
@@ -149,7 +159,7 @@
 	* mln/transformation/all.hh,
 	* mln/transformation/essential.hh,
 	* tests/transformation/Makefile.am: Remove.
-	
+
 	* tests/geom/Makefile.am: add rotate.
 
 2009-06-29  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
