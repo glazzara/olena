@@ -58,15 +58,18 @@ namespace mln
 	void process(const P&, const P&);
 
 
-	void init_(const I&) {}
-	bool inqueue_p_wrt_input_p_(const V& input_p) { return input_p == true; }
-	void init_p_(unsigned) {}
-	bool inqueue_p_wrt_input_n_(const V& input_n) { return input_n == false; }
-	void process_(unsigned, unsigned) {}
+	void init_(const I&);
+	bool inqueue_p_wrt_input_p_(const V& input_p);
+	void init_p_(unsigned);
+	bool inqueue_p_wrt_input_n_(const V& input_n);
+	void process_(unsigned, unsigned);
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+
+      // Generic implementation.
 
       template <typename I>
       inline
@@ -86,7 +89,7 @@ namespace mln
       template <typename I>
       inline
       void
-      distance_functor<I>::init_p(const P&)
+      distance_functor<I>::init_p(const mln_site(I)&)
       {
       }
 
@@ -101,6 +104,46 @@ namespace mln
       template <typename I>
       inline
       void distance_functor<I>::process(const P&, const P&)
+      {
+      }
+
+
+
+      // Fastest implementation.
+
+      template <typename I>
+      inline
+      void
+      distance_functor<I>::init_(const I&)
+      {
+      }
+
+      template <typename I>
+      inline
+      bool
+      distance_functor<I>::inqueue_p_wrt_input_p_(const V& input_p)
+      {
+	return input_p == true;
+      }
+
+      template <typename I>
+      inline
+      void
+      distance_functor<I>::init_p_(unsigned)
+      {
+      }
+
+      template <typename I>
+      inline
+      bool
+      distance_functor<I>::inqueue_p_wrt_input_n_(const V& input_n)
+      {
+	return input_n == false;
+      }
+
+      template <typename I>
+      inline
+      void distance_functor<I>::process_(unsigned, unsigned)
       {
       }
 
