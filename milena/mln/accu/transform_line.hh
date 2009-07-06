@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,15 +51,15 @@ namespace mln
 
     template <typename A, typename I>
     mln_ch_value(I, mln_result(A))
-      transform_line(const Accumulator<A>& a,
-		     const Image<I>& input,
-		     unsigned length, unsigned dir);
+    transform_line(const Accumulator<A>& a,
+		   const Image<I>& input,
+		   unsigned length, unsigned dir);
 
     template <typename A, typename I>
-    mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
-      transform_line(const Meta_Accumulator<A>& a,
-		     const Image<I>& input,
-		     unsigned length, unsigned dir);
+    mln_ch_value(I, mln_accu_result(A, mln_value(I)))
+    transform_line(const Meta_Accumulator<A>& a,
+		   const Image<I>& input,
+		   unsigned length, unsigned dir);
 
 
 
@@ -102,9 +103,9 @@ namespace mln
 	template <typename A, typename I>
 	inline
 	mln_ch_value(I, mln_result(A))
-	  transform_line(const Accumulator<A>& a_,
-			 const Image<I>& input_,
-			 unsigned length, unsigned dir)
+	transform_line(const Accumulator<A>& a_,
+		       const Image<I>& input_,
+		       unsigned length, unsigned dir)
 	{
 	  trace::entering("accu::impl::transform_line");
 
@@ -165,7 +166,7 @@ namespace mln
 		  qt_dir++;
 		  qu_dir++;
 		}
-	  
+
 	      p_dir = pmin_dir;
 
 
@@ -197,9 +198,9 @@ namespace mln
       template <typename A, typename I>
       inline
       mln_ch_value(I, mln_result(A))
-	transform_line_fastest(const Accumulator<A>& a_,
-			       const Image<I>& input_,
-			       unsigned length, unsigned dir)
+      transform_line_fastest(const Accumulator<A>& a_,
+			     const Image<I>& input_,
+			     unsigned length, unsigned dir)
       {
 	trace::entering("accu::impl::transform_line_fastest");
 
@@ -265,7 +266,7 @@ namespace mln
 
 		output.element(o_p) = a.to_result();
 	      }
-	  
+
  	    p_dir = pmin_dir;
 
 	    // Go to the next line.
@@ -304,10 +305,10 @@ namespace mln
       template <typename A, typename I>
       inline
       mln_ch_value(I, mln_result(A))
-	transform_line_dispatch(trait::image::speed::any,
-				const Accumulator<A>& a,
-				const Image<I>& input,
-				unsigned length, unsigned dir)
+      transform_line_dispatch(trait::image::speed::any,
+			      const Accumulator<A>& a,
+			      const Image<I>& input,
+			      unsigned length, unsigned dir)
       {
 	return impl::generic::transform_line(a,
 					     input,
@@ -339,9 +340,9 @@ namespace mln
     template <typename A, typename I>
     inline
     mln_ch_value(I, mln_result(A))
-      transform_line(const Accumulator<A>& a,
-		     const Image<I>& input,
-		     unsigned length, unsigned dir)
+    transform_line(const Accumulator<A>& a,
+		   const Image<I>& input,
+		   unsigned length, unsigned dir)
     {
       trace::entering("accu::transform_line");
 
@@ -359,10 +360,10 @@ namespace mln
 
     template <typename A, typename I>
     inline
-    mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
-      transform_line(const Meta_Accumulator<A>& a,
-		     const Image<I>& input,
-		     unsigned length, unsigned dir)
+    mln_ch_value(I, mln_accu_result(A, mln_value(I)))
+    transform_line(const Meta_Accumulator<A>& a,
+		   const Image<I>& input,
+		   unsigned length, unsigned dir)
     {
       trace::entering("accu::transform_line");
 

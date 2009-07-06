@@ -72,7 +72,7 @@ namespace mln
     /// \warning This routine does not perform a.init().
     ///
     template <typename A, typename I>
-    mln_accu_with(A, util::pix<I>)::result
+    mln_accu_result(A, util::pix<I>)
     compute(const Meta_Accumulator<A>& a, const Image<I>& input);
 
 
@@ -140,7 +140,7 @@ namespace mln
 
     template <typename A, typename I>
     inline
-    mln_accu_with(A, util::pix<I>)::result
+    mln_accu_result(A, util::pix<I>)
     compute(const Meta_Accumulator<A>& a, const Image<I>& input)
     {
       trace::entering("accu::compute");

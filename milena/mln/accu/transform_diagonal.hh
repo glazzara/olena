@@ -65,7 +65,7 @@ namespace mln
 
 
     template <typename A, typename I, typename W>
-    mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
+    mln_ch_value(I, mln_accu_result(A, mln_value(I)))
     transform_diagonal(const Meta_Accumulator<A>& a,
 		       const Image<I>& input, const Window<W>& win);
 
@@ -381,7 +381,7 @@ namespace mln
 	canvas::browsing::backdiagonal2d(f);
 	return f.output;
       }
-      
+
       template <typename A, typename I>
       inline
       mln_ch_value(I, mln_result(A))
@@ -394,7 +394,7 @@ namespace mln
 	canvas::browsing::diagonal2d(f);
 	return f.output;
       }
-      
+
       template <typename A, typename I>
       inline
       mln_ch_value(I, mln_result(A))
@@ -407,7 +407,7 @@ namespace mln
 	canvas::browsing::backdiagonal2d(f);
 	return f.output;
       }
-      
+
       template <typename A, typename I, typename W>
       inline
       mln_ch_value(I, mln_result(A))
@@ -444,7 +444,7 @@ namespace mln
 
     template <typename A, typename I, typename W>
     inline
-    mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
+    mln_ch_value(I, mln_accu_result(A, mln_value(I)))
     transform_diagonal(const Meta_Accumulator<A>& a,
 		       const Image<I>& input, const Window<W>& win)
     {

@@ -59,7 +59,7 @@ namespace mln
     // \return The accumulator result.
     //
     template <typename A, typename S>
-    mln_accu_with(A, mln_site(S))::result
+    mln_accu_result(A, mln_site(S))
     compute(const Meta_Accumulator<A>& a, const Site_Set<S>& s);
 
 
@@ -123,7 +123,7 @@ namespace mln
 
 
     template <typename A, typename S>
-    mln_accu_with(A, mln_site(S))::result
+    mln_accu_result(A, mln_site(S))
     compute(const Meta_Accumulator<A>& a, const Site_Set<S>& s)
     {
       trace::entering("set::compute");
@@ -132,7 +132,7 @@ namespace mln
       A_ a_ = accu::unmeta(exact(a), mln_site(S)());
 
       mln_result(A_) r = impl::generic::compute(a_, s);
-      
+
       trace::exiting("set::compute");
       return r;
     }

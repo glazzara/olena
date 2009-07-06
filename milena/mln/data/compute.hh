@@ -61,7 +61,7 @@ namespace mln
     /// \return The accumulator result.
     ///
     template <typename A, typename I>
-    mln_accu_with(A, mln_value(I))::result
+    mln_accu_result(A, mln_value(I))
     compute(const Meta_Accumulator<A>& a, const Image<I>& input);
 
 
@@ -90,7 +90,7 @@ namespace mln
 
     template <typename A, typename I>
     inline
-    mln_accu_with(A, mln_value(I))::result
+    mln_accu_result(A, mln_value(I))
     compute(const Meta_Accumulator<A>& a, const Image<I>& input)
     {
       typedef mln_accu_with(A, mln_value(I)) A_;

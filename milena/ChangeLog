@@ -1,5 +1,21 @@
 2009-07-06  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Use mln_accu_result() instead of mln_accu_with()::result.
+
+	* mln/accu/compute.hh,
+	* mln/accu/transform.hh,
+	* mln/accu/transform_diagonal.hh,
+	* mln/accu/transform_directional.hh,
+	* mln/accu/transform_line.hh,
+	* mln/accu/transform_snake.hh,
+	* mln/accu/transform_stop.hh,
+	* mln/data/compute.hh,
+	* mln/labeling/compute.hh,
+	* mln/set/compute.hh,
+	* mln/set/compute_with_weights.hh: update.
+
+2009-07-06  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Small fixes.
 
 	* demos/graph/region_adjacency_graph.cc: do not draw the vertex

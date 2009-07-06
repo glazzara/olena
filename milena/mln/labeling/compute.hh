@@ -101,7 +101,7 @@ namespace mln
     /// \return A mln::p_array of accumulator result (one result per label).
     //
     template <typename A, typename I, typename L>
-    util::array<mln_accu_with(A, mln_value(I))::result>
+    util::array<mln_accu_result(A, mln_value(I))>
     compute(const Meta_Accumulator<A>& a,
 	    const Image<I>& input,
 	    const Image<L>& label,
@@ -132,7 +132,7 @@ namespace mln
     /// \return A mln::p_array of accumulator result (one result per label).
     //
     template <typename A, typename L>
-    util::array<mln_accu_with(A, mln_psite(L))::result>
+    util::array<mln_accu_result(A, mln_psite(L))>
     compute(const Meta_Accumulator<A>& a,
 	    const Image<L>& label,
 	    const mln_value(L)& nlabels);
@@ -390,7 +390,7 @@ namespace mln
 
     template <typename A, typename I, typename L>
     inline
-    util::array<mln_accu_with(A, mln_value(I))::result>
+    util::array<mln_accu_result(A, mln_value(I))>
     compute(const Meta_Accumulator<A>& a,
 	    const Image<I>& input,
 	    const Image<L>& label,
@@ -426,7 +426,7 @@ namespace mln
 
     template <typename A, typename L>
     inline
-    util::array<mln_accu_with(A, mln_psite(L))::result>
+    util::array<mln_accu_result(A, mln_psite(L))>
     compute(const Meta_Accumulator<A>& a,
 	    const Image<L>& label,
 	    const mln_value(L)& nlabels)

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -62,7 +63,7 @@ namespace mln
 
 
     template <typename A, typename I, typename W>
-    mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
+    mln_ch_value(I, mln_accu_result(A, mln_value(I)))
     transform_directional(const Meta_Accumulator<A>& a,
 			  const Image<I>& input, const Window<W>& win,
 			  unsigned dir);
@@ -264,7 +265,7 @@ namespace mln
 	canvas::browsing::directional(f);
 	return f.output;
       }
-      
+
       template <typename A, typename I, typename W>
       inline
       mln_ch_value(I, mln_result(A))
@@ -278,7 +279,7 @@ namespace mln
 	canvas::browsing::directional(f);
 	return f.output;
       }
-      
+
       template <typename A, typename I, typename W>
       inline
       mln_ch_value(I, mln_result(A))
@@ -317,7 +318,7 @@ namespace mln
 
     template <typename A, typename I, typename W>
     inline
-    mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
+    mln_ch_value(I, mln_accu_result(A, mln_value(I)))
     transform_directional(const Meta_Accumulator<A>& a,
 			  const Image<I>& input, const Window<W>& win,
 			  unsigned dir)
