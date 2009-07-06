@@ -1,5 +1,32 @@
 2009-07-06  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Small fixes.
+
+	* demos/graph/region_adjacency_graph.cc: do not draw the vertex
+	associted to the background.
+
+	* doc/Makefile.am: Add borders to documentation images.
+
+	* doc/ref_guide/ref_guide.tex,
+	* doc/tutorial/tutorial.tex: Fix typos.
+
+	* mln/make/box2d.hh,
+	* mln/estim/min_max.hh.
+	* mln/accu/stat/min_max.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/routine/exact.hh: Reheader.
+
+	* mln/data/compute.hh: Update doc.
+
+	* mln/transform/hough.hh: Fix an unused variable.
+
+	* mln/world/inter_pixel/is_separator.hh: Fix indentation add doc.
+
+	* mln/world/inter_pixel/separator_to_pixels.hh: move debug code
+	between NDEBUG guards.
+
+2009-07-06  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	* mln/transform/internal/distance_functor.hh: Split declaration and
 	implementation.
 

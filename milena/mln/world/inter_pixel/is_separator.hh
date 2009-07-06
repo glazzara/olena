@@ -46,8 +46,12 @@ namespace mln
     namespace inter_pixel
     {
 
+
+      /// Functor returning whether a site is a separator in an
+      /// inter-pixel image.
       struct is_separator : public Function_v2b< is_separator >
       {
+
 	typedef bool result;
 
 	template <typename P>
@@ -55,28 +59,29 @@ namespace mln
 
 	template <typename P>
 	bool operator()(const Site_Proxy<P>& p) const;
+
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-	template <typename P>
-	inline
-	bool
-	is_separator::operator()(const Gpoint<P>& p_) const
-	{
-	  const P& p = exact(p_);
-	  return p.row() % 2 + p.col() % 2 == 1;
-	}
+      template <typename P>
+      inline
+      bool
+      is_separator::operator()(const Gpoint<P>& p_) const
+      {
+	const P& p = exact(p_);
+	return p.row() % 2 + p.col() % 2 == 1;
+      }
 
-	template <typename P>
-	inline
-	bool
-	is_separator::operator()(const Site_Proxy<P>& p) const
-	{
-	  mlc_is_a(mln_site(P), Gpoint)::check();
-	  return this->operator()(exact(p).to_site());
-	}
+      template <typename P>
+      inline
+      bool
+      is_separator::operator()(const Site_Proxy<P>& p) const
+      {
+	mlc_is_a(mln_site(P), Gpoint)::check();
+	return this->operator()(exact(p).to_site());
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 

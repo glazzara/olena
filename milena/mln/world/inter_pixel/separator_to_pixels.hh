@@ -72,12 +72,14 @@ namespace mln
 	P& p1 = exact(p1_);
 	P& p2 = exact(p2_);
 
+#  ifndef NDEBUG
 	{
 	  // Pre-condition.
 	  is_separator is_separator_;
 	  mln_precondition(is_separator_(s));
 	  (void) is_separator_;
 	}
+#  endif // ! NDEBUG
 
 	// FIXME: 2D only.
 	if (s.row() % 2)
@@ -93,6 +95,7 @@ namespace mln
 	    p2 = point2d(s.row(), s.col() + 1);
 	  }
 
+#  ifndef NDEBUG
 	{
 	  // Post-conditions.
 	  is_pixel is_pixel_;
@@ -100,6 +103,7 @@ namespace mln
 	  mln_postcondition(is_pixel_(p2));
 	  (void) is_pixel_;
 	}
+#  endif // ! NDEBUG
       }
 
       template <typename Ps, typename P>
@@ -112,15 +116,18 @@ namespace mln
 	P& p1 = exact(p1_);
 	P& p2 = exact(p2_);
 
+#  ifndef NDEBUG
 	{
 	  // Pre-condition.
 	  is_separator is_separator_;
 	  mln_precondition(is_separator_(s));
 	  (void) is_separator_;
 	}
+#  endif // ! NDEBUG
 
 	separator_to_pixels(s.to_site(), p1, p2);
 
+#  ifndef NDEBUG
 	{
 	  // Post-conditions.
 	  is_pixel is_pixel_;
@@ -128,6 +135,7 @@ namespace mln
 	  mln_postcondition(is_pixel_(p2));
 	  (void) is_pixel_;
 	}
+#  endif // ! NDEBUG
       }
 
 # endif // ! MLN_INCLUDE_ONLY

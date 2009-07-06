@@ -137,11 +137,12 @@ namespace mln
     dpoint2d br(3,3);
     mln_piter(V) p(ima_v.domain());
     for_all(p)
-    {
-      box2d b(p + tl, p + br);
-      b.crop_wrt(ima.domain());
-      data::fill((ima | b).rw(), convert::to<mln_value(I)>(ima_v(p)));
-    }
+      if (p.id() != 0)
+      {
+	box2d b(p + tl, p + br);
+	b.crop_wrt(ima.domain());
+	data::fill((ima | b).rw(), convert::to<mln_value(I)>(ima_v(p)));
+      }
 
     return ima;
   }
@@ -205,7 +206,7 @@ int main()
   /// Construct a vertex image.
   mln_VAR(ima_v, make::vertex_image(g, basin_centers, mean_values));
 
-  /// Construct a edge image.
+  /// Construct an edge image.
   mln_VAR(ima_e, make::edge_image(ima_v, dist()));
 
   io::ppm::save(make_debug_graph_image(input_ppm, ima_v, ima_e, literal::white),

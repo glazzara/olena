@@ -160,7 +160,7 @@ $(srcdir)/figures.stamp: $(FIGURES_SRCDIR)/*.p*m
 	  echo "Converting $$img to PNG";				\
 	  name=`basename $$img`						\
 	  ext=`echo $$name | cut -d '.' -f 2`;				\
-	  convert -scale 250 $$img					\
+	  convert -scale 250 -bordercolor black -border 2x2 $$img 	\
 	    $(FIGURES_SRCDIR)/`basename $$img $$ext`png			\
 	    || eval $$failcom;						\
 	done

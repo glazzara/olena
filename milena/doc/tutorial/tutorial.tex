@@ -80,16 +80,6 @@
 \begin{latexonly}
 \maketitle
 
-\section*{Copying this document}
-Copyright \copyright{} 2008, 2009 LRDE.
-
-Permission is granted to copy, distribute and/or modify this document under
-the terms of the GNU Free Documentation License, Version 1.2 or any later
-version published by the Free Software Foundation; with the Invariant Sections
-being just ``Copying this document'', no Front-Cover Texts, and no Back-Cover
-Texts.
-
-A copy of the license is provided in the file COPYING.DOC.
 
 \tableofcontents
 \end{latexonly}
@@ -154,7 +144,7 @@ There are two ways of getting Milena on the web:
 \end{itemize}
 
 Downloading a package or a tarball is the best choice for a new user. Except
-for nightly builds which are packages generated every night from the SVN repository, 
+for nightly builds which are packages generated every night from the SVN repository,
 packages and tarballs contain only a released version of Milena. It guaranties a
 certain quality: no building issues, no bugs (ok, maybe some...), \ldots
 
@@ -202,7 +192,7 @@ $ sudo apt-get install subversion
 
 For other distributions, please refer to the user documentation of your system.
 
-Once you have SVN installed, go to the directory where you would like to 
+Once you have SVN installed, go to the directory where you would like to
 download Olena and create a new directory.
 
 \begin{verbatim}
@@ -210,7 +200,7 @@ $ cd $HOME
 $ mkdir olena
 $ cd olena
 \end{verbatim}
-     
+
 Then 'checkout' (download) the repository with the following command.
 
 \begin{verbatim}
@@ -223,7 +213,7 @@ Enter the 'trunk' directory.
 $ cd trunk
 \end{verbatim}
 
-You are now ready to configure the directory and install Milena as described 
+You are now ready to configure the directory and install Milena as described
 in section \ref{tuto2}.
 We invite you to take a look at the description of the directory structure
 (section \ref{tuto1dirstruct}).
@@ -265,7 +255,7 @@ $ cd olena-1.0
 \end{verbatim}
 
 
-You are now ready to configure the directory and install Milena as described 
+You are now ready to configure the directory and install Milena as described
 in section \ref{tuto2}.
 We invite you to take a look at the description of the directory structure
 (section \ref{tuto1dirstruct}).
@@ -334,7 +324,7 @@ List of \hpath{milena}'s subdirectories:
 \item \dir{mln} --- The core of the library. Contains all the library headers.
 
 \item \dir{tests} --- The test suite. Is it subdivided in sub directories.
-  The directory hierarchy respects \hpath{milena/mln}'s. 
+  The directory hierarchy respects \hpath{milena/mln}'s.
 
 \item \dir{tools} --- Small tools written with milena. They can be used as examples.
 
@@ -433,17 +423,17 @@ This tutorial is not the only documentation of Milena. Other documents are avail
   \item \dir{Quick reference guide} --- Presents in details all the main
   functionalities of Milena.
   Hints and full examples are also provided. The sample codes are commented
-  and each concept in the library is detailed. This is the reference document for any 
+  and each concept in the library is detailed. This is the reference document for any
   \textit{end user} and \textit{algorithm designer}.
 
   \item \dir{HTML user doc} --- The full documentation of the library. The full
   API is described in details. Each part of the library is classified by
   categories and the source code is directly accessible from the documentation.
-  This is the reference document for any \textit{algorithm designer} and/or 
+  This is the reference document for any \textit{algorithm designer} and/or
   \textit{provider of data structures}.
 
   \item \dir{Header files} --- Every object or algorithm is declared in a '.hh' file.
-  The documentation is provided as comments in these file. 
+  The documentation is provided as comments in these file.
 \end{itemize}
 
 
@@ -505,10 +495,10 @@ There are other ways to get to know what is the status of the project.
 \doxysection{tuto1briefhistory}{A brief history of Milena}
 
 The Olena project aims at building a scientific computation platform oriented
-towards image processing, image recognition, and artificial vision. 
+towards image processing, image recognition, and artificial vision.
 This environment is composed of a high performance generic library (Milena),
 a set of tools for shell scripts, together with, in the more distant future,
-an interpreter (a la Octave, MatLab etc.) and a visual programming environment. 
+an interpreter (a la Octave, MatLab etc.) and a visual programming environment.
 
 The Olena project started in 2000 from a small prototype on 2-D images.
 From November 2001 to April 2004, this prototype evolved from version 0.1 to 0.10.
@@ -522,7 +512,7 @@ was too long.
 Since June 2007 up to now, The library of the Olena platform is called Milena
 and the library has been rewritten. The programming  paradigm has been
 simplified: the code is more readable and the compilation time is acceptable.
-The level of genericity still meets our objectives though. 
+The level of genericity still meets our objectives though.
 
 Milena is now getting ready for being considered as stable and distributable.
 The core of the library is getting frozen and we aim at enriching the library,
@@ -553,7 +543,7 @@ If you want to reach us directly, you can contact one of the following people:
 %pre-requis/compatibility
 This section describes the installation process of Milena.
 Do not forget that Milena is a library, not a program. Therefore, no program
-will be installed. 
+will be installed.
 
 Milena's examples and tests are compiled on the following platforms:
 \begin{itemize}
@@ -594,7 +584,7 @@ If you got the sources from a package/tarball, you can skip this section. Go
 to section \ref{tuto2configure}.
 
 If you downloaded the sources from the SVN repository, you must launch a
-script before configuring the build directory. 
+script before configuring the build directory.
 
 Run the following:
 \begin{verbatim}
@@ -666,13 +656,13 @@ The build directory is now configured, the library can be installed.
 \doxysection{tuto2install}{Install}
 
 First, be sure to be in the build directory. If you followed the previous
-steps, the build directory should be in the Milena sources root directory. 
+steps, the build directory should be in the Milena sources root directory.
 
 \begin{verbatim}
 $ cd /my/path/to/olena-1.0/build
 \end{verbatim}
 
-If you did not change the default install path prefix, set to 
+If you did not change the default install path prefix, set to
 \hpath{/usr/local}, you will need to have administrator privileges to
 perform the installation. Then, you may type:
 \begin{verbatim}
@@ -701,13 +691,13 @@ A description of the installation content is also available in section
 The library itself does not need to be compiled, therefore installing
 Milena does not require compilation.
 
-Though, some examples and tools are provided with the library and must be 
+Though, some examples and tools are provided with the library and must be
 compiled if you want to use them.
 
 \doxysubsection{tuto2examples}{Examples}
 
 Examples are part of the documentation. The sources are located in
-\hpath{milena/doc/examples}. 
+\hpath{milena/doc/examples}.
 
 To compile the examples simply run:
 \begin{verbatim}
@@ -938,11 +928,11 @@ compiler.
 
 With g++ and MinGW, the option  is \B{-I$<$path$>$}.
 \begin{verbatim}
-$ g++ -Ipath/to/mln my_program.cc 
+$ g++ -Ipath/to/mln my_program.cc
 \end{verbatim}
 
 For other compilers, please look at the documentation and search for ``include
-path''. 
+path''.
 
 
 \doxysubsection{tuto3liblink}{Library linking}
@@ -962,7 +952,7 @@ this is a useful feature and it should be enabled. It can heavily slow down a
 program though and these tests can be disabled by compiling using -DNDEBUG:
 
 \begin{verbatim}
-$ g++ -DNDEBUG -Ipath/to/mln my_program.cc 
+$ g++ -DNDEBUG -Ipath/to/mln my_program.cc
 \end{verbatim}
 
 \doxysubsection{tuto3compoptimflags}{Compiler optimization flags}
@@ -976,7 +966,7 @@ their impact on the compilation and execution time.
 \begin{itemize}
   \item \B{-O0}, combined with -DNDEBUG, it leads to the fastest compilation
   time. The execution is somewhat slow though since dispatch functions and one
-  line members are not inlined by the compiler. 
+  line members are not inlined by the compiler.
   \item \B{-O1}, best compromise between compilation time and execution time.
   \item \B{-O2}, \B{-O3}, combined with -DNDEBUG, it leads to the best execution
   time. However these optimizations dramatically slow down the compilation and
@@ -1000,7 +990,7 @@ will be detected at run time. If an assertion fails, we advice you to compile
 with the following options:
 
 \begin{verbatim}
-$ g++ -ggdb -Ipath/to/mln my_program.cc 
+$ g++ -ggdb -Ipath/to/mln my_program.cc
 \end{verbatim}
 
 Note that you \B{MUST NOT} compile with \var{-DNDEBUG} since assertions will be
@@ -1008,7 +998,7 @@ disabled.
 Once compiled, restart the program with GDB.
 
 \begin{verbatim}
-$ gdb ./my_program 
+$ gdb ./my_program
 \end{verbatim}
 
 In the GDB console, run it again.
@@ -1018,7 +1008,7 @@ In the GDB console, run it again.
 
 When an assertion fails, in the GDB console simply type:
 \begin{verbatim}
-(gdb) bt 
+(gdb) bt
 \end{verbatim}
 
 The full backtrace will be printed out and you will be able to find from where
@@ -1041,7 +1031,7 @@ are printed out in the backtrace as you can see in the following example:
 
 \doxysubsection{tuto3traces}{Traces}
 Sometimes, compiling for GDB without optimization flags and with debug
-assertions enabled could lead to execution time dramatically high. 
+assertions enabled could lead to execution time dramatically high.
 If the function parameter values are not necessary for debugging,
 a good alternative is the trace system provided in Milena.
 Each time a routine is called, a trace log is written.
@@ -1147,7 +1137,7 @@ then the image itself which stores the values.
 A pixel is an element having both information, localization and
 value. In Milena, we make a difference between a pixel, a pixel value and a pixel
 location. Thus, in order to refer to a pixel location, we have the site concept.
-A site can be any kind of localization element. 
+A site can be any kind of localization element.
 For instance, in an image defined on a 2D regular grid, it is a 2D point with
 \var{row} and \var{col} coordinates.
 
@@ -1224,7 +1214,7 @@ Currently, Olena supports the following input image formats:
   \item PFM
   \item PGM
   \item PNM
-  \item PPM 
+  \item PPM
 \end{itemize}
 
 This support is provided through two headers for each type, \header{save.hh} and
@@ -1404,7 +1394,7 @@ First, we just need to declare this square which is actually a site set, a
 \doxycode[2]{tuto4_genericity_and_algorithms}
 
 Then, we just need to tell \code{data::fill} that we would like to fill the
-image \var{lena} but only in this restricted part of the image domain. 
+image \var{lena} but only in this restricted part of the image domain.
 \doxycode[3]{tuto4_genericity_and_algorithms}
 Operator '$|$' can be read 'restricted to'. So below, we wrote 'image \var{lena}
 restricted to the region of interest \var{roi}'. Actually this is not directly
@@ -1513,7 +1503,7 @@ The two routines are :
   be compared.
 \end{itemize}
 
-Let's see a common use case. 
+Let's see a common use case.
 First, we binarize lena according to specific criterions, only site values with
 specific colors are set to true in \var{lena\_bw}. Others are set to false. This
 image will be used in order to label the components.

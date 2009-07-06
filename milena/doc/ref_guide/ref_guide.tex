@@ -83,16 +83,6 @@
 \begin{latexonly}
 \maketitle
 
-\section*{Copying this document}
-Copyright \copyright{} 2008, 2009 LRDE.
-
-Permission is granted to copy, distribute and/or modify this document under
-the terms of the GNU Free Documentation License, Version 1.2 or any later
-version published by the Free Software Foundation; with the Invariant Sections
-being just ``Copying this document'', no Front-Cover Texts, and no Back-Cover
-Texts.
-
-A copy of the license is provided in the file COPYING.DOC.
 
 \tableofcontents
 \end{latexonly}
@@ -173,7 +163,7 @@ $ sudo make install
 
 %**************************
 \doxysection{generality}{Generality}
-The following tutorial explains the basic concepts behind Olena and how to use 
+The following tutorial explains the basic concepts behind Olena and how to use
 the most common objects and routines.
 This tutorial includes many code examples and figures. In order to make this
 tutorial easier to understand, we will mainly talk about 2D images. This is
@@ -222,11 +212,11 @@ Olena's tarball is structured as follow:
 	  \item technical: technical doc.
 	  \item tutorial: code sample and tutorial.
 	\end{itemize}
-      \item img: a set of sample images. 
+      \item img: a set of sample images.
       \item mesh: a full example which uses Olena.
       \item mln: the library. Contains only headers.
       \item tests: test suite.
-%      \item tools : 
+%      \item tools :
     \end{itemize}
   \item swilena: Python bindings for Olena.
 \end{itemize}
@@ -393,7 +383,7 @@ is it's own bounding box.
 Output:
 \doxyoutput{box2d-bbox}
 
-A \type{p\_array} does not have the bbox 
+A \type{p\_array} does not have the bbox
 method since its sites do not have to be adjacent. Maintaining such information, in
 order to keep getting the bbox in constant time, would be time and memory
 consuming. Instead of providing a method directly in \type{p\_array}, an algorithm is
@@ -466,7 +456,7 @@ The value type can be one of the builtins one:
 Other data types are also available:
 
 \begin{tabular}{l|l}
-Value type & underlying data type \\ 
+Value type & underlying data type \\
 \hline
 \type{float01\_8} & \type{unsigned long} \\
 \type{float01\_16} & \type{unsigned long} \\
@@ -498,7 +488,7 @@ types is actually ``type\_name.hh". For instance, for \type{rgb8} the header wil
 %**************************
 \doxysection{imadomain}{Domain}
 The site set contains the sites which compose the image. Sites are based on a
-grid so the image depends on that grid as well. 
+grid so the image depends on that grid as well.
 It means that a 2D images can only be defined by sites based on a 2D grid.
 Likewise, an \type{image2d} will always have its bouding box defined by a \type{box2d}.
 
@@ -564,7 +554,7 @@ Some operations can be performed on the border. The functions are located in
 \bigskip
 %
 \begin{tabular}{l|p{8cm}}
-Routine & Description \\ 
+Routine & Description \\
 \hline
 adjust & Increase the border thickness if it is inferior to a minimum. \\
 duplicate & Assign the border with the duplicate of the edges of this image.\\
@@ -597,12 +587,12 @@ The extension supports the following operations. These functions are located in
 \bigskip
 %
 \begin{tabular}{l|p{10cm}}
-Routine & Description \\ 
+Routine & Description \\
 \hline
 adjust & Adjust the extension given a structural element.\\
 adjust\_duplicate & Adjust the size of the extension given a structural element and duplicate the image inner boundary.\\
 adjust\_fill & Adjust the size of the extension given a structural element and fill it with a value.\\
-duplicate & Duplicate the values of the image inner boundary in the extension.\\ 
+duplicate & Duplicate the values of the image inner boundary in the extension.\\
 fill & Fill the extension with a given value.\\
 \end{tabular} \\
 
@@ -750,7 +740,7 @@ Currently, Olena supports the following input image formats:
   \item PFM
   \item PGM
   \item PNM
-  \item PPM 
+  \item PPM
 \end{itemize}
 
 This support is provided through two headers for each type, \header{save.hh} and
@@ -817,7 +807,7 @@ There are several ways to access/modify an image ``\var{ima}'':
 \end{itemize}
 
 Most of the time, images can be modified and these two methods can be used both
-to read a value and modify it. Both methods are equivalent. 
+to read a value and modify it. Both methods are equivalent.
 \doxycode{ima2d-3}
 Output:
 \doxyoutput{ima2d-3}
@@ -873,7 +863,7 @@ In Olena, there are both the window and neighborhood concept. A window can be
 defined on any site around a central site which may also be included.
 A neighborhood is more restrictive and \must not include the central site.
 Therefore these two concepts are really similar and are detailed together in
-this section. 
+this section.
 
 By default, structural elements are centered. The central site is located at the
 origin of the grid: ``\var{literal::origin}''. With \type{image2d}, the central site is
@@ -895,7 +885,7 @@ win\_c8p & 8-connectivity & \winceight \\
 \end{tabular}
 %
 \bigskip
-% 
+%
 
 \subsubsection*{1D Predefined windows}
 
@@ -1078,7 +1068,7 @@ constant-time.
 \doxysection{sitespsitensite}{From psite to site}
 
 In the last example there was an image of type \type{I} such as \type{I::site}
-!= \type{I::psite}. 
+!= \type{I::psite}.
 In that case, an object of type \type{I::psite} is actually convertible towards an
 object of type \type{I::site}.  Furthermore, a \type{psite} shall behave as if it was a
 \type{site}.
@@ -1187,7 +1177,7 @@ use the \code{for\_all()} loop: \code{data::fill()} and \code{data::paste()}.
 Important note: macros for iterators exist in two versions:
 ``\code{mln\_*iter}'' and ``\code{mln\_*iter\_}''. The difference is that the
 first version \must be used in templated function whereas the second one \must be
-used in non templated functions. 
+used in non templated functions.
 
 If you want a list of all the macros available in Olena, please refert to
 section \doxyref{macros}.
@@ -1207,12 +1197,12 @@ In the Olena library, all image types behave like image2d:
     the user never has to use "new / delete" (the C++ equivalent for the C
     "malloc / free") so she does not have to manipulate pointers or to directly
     access memory.
-    
+
     $\rightarrow$ Olena prevents the user from making mistakes;
 
 \item Image data/values can be shared between several variables and the memory
     used for image data is handled by the library.
-    
+
     $\rightarrow$ Memory management is automatic.
 \end{itemize}
 
@@ -1245,11 +1235,11 @@ Output:
 \hline
 Routine name & Description \\ \hline
 duplicate() & creates a deep copy of an object. Any shared data is
-duplicated. \\ 
+duplicated. \\
 
-data::fill() & fill an object with a value. \\ 
+data::fill() & fill an object with a value. \\
 
-data::paste() & paste object data to another object. \\ 
+data::paste() & paste object data to another object. \\
 
 labeling::blobs() & find and label the different components of an image. \\
 
@@ -1292,7 +1282,7 @@ val)}. When forgetting the \code{rw()} call, it does not compile.
 %**************************
 \doxysection{pasteop}{Paste}
 We then define below a second image to play with.  As you can see this image has
-data for the sites (5, 5) to (14, 14) (so it has 100 sites).  
+data for the sites (5, 5) to (14, 14) (so it has 100 sites).
 
 \doxycode{paste-call-1}
 Output:
@@ -1342,7 +1332,7 @@ Output: \\
 
 Then label this image thanks to \code{labeling::blobs()}:
 \doxycode[2]{labeling-compute}
-    
+
 Output: \\
 
 \begin{center}
@@ -1362,7 +1352,7 @@ This parameter \must be of the same type as the returned image value.
 
   \textbf{Full namespace} & mln::logical \\
 
-  \textbf{Routine(s)} & not\_(), 
+  \textbf{Routine(s)} & not\_(),
 			not\_inplace() \\
   \hline
   \end{tabular}
@@ -1495,7 +1485,7 @@ Then, use \code{labeling::compute()} with the bbox accumulator:
 
 \code{labeling::compute()} hold an accumulator for each component, which means it
 returns an array of accumulator results.
-In this case, it returns an array of \type{box2d}. 
+In this case, it returns an array of \type{box2d}.
 
 \textbf{Important note:} since \code{labeling::blobs()} labels the component from 1 and
 set the background to 0, we will want to iterate from 1 to nlabels included.
@@ -1506,7 +1496,7 @@ Output:
 
 \subsection{Routines based on accumulators and *::compute()}
 In order to make the code cleaner, small routines are available for the
-most used accumulators. 
+most used accumulators.
 
 Currently there are the following routines:\\
 
@@ -1551,7 +1541,7 @@ boolean. These functions are actually a sort of predicate. A common
 point to value function used in the given image. C functions can also be used as
 predicate by passing the function pointer.
 
-You can easily get a \type{Function\_p2b} by comparing the value returned 
+You can easily get a \type{Function\_p2b} by comparing the value returned
 by a \type{Function\_p2v} to another Value.
 The following sample codes illustrate this feature.
 
@@ -1580,7 +1570,7 @@ Output:
 
 \doxysubsection{restrictpred}{Restrict an image with a predicate}
 In the following example, we aim at extracting a component from an image and
-create a new image with it. 
+create a new image with it.
 
 First, find and label the components.
 \doxycode[2]{fill-subdomain}
@@ -1672,7 +1662,7 @@ You can extend the range of supported files by installing third-parties librarie
 
 \begin{itemize}
   \item ImageMagick: support for usual images (PNG, TIFF, JPEG, ...)
-  \item GDCM: support for DICOM medical images 
+  \item GDCM: support for DICOM medical images
 \end{itemize}
 
 \doxysection{ioim}{ImageMagick}
@@ -1708,14 +1698,14 @@ You can extend the range of supported files by installing third-parties librarie
 %\begin{htmlonly}
 %\doxychapter{2}{}
 %\end{htmlonly}
-\doxychapter{graphandima}{Graphes and images}
+\doxychapter{graphandima}{Graphs and images}
 
 %FIXME: REWRITE
 
 %**************************
 \doxysection{graphdesc}{Description}
-Olena enables the possibility of using graphes with images.
-Graphes can help you to handle directly parts of an image and represent their
+Olena enables the possibility of using graphs with images.
+Graphs can help you to handle directly parts of an image and represent their
 relationship.
 Specific data can be associated to each vertex and/or edges.
 
@@ -1770,7 +1760,7 @@ Output:
 \doxymoutput[1]{graph-iter}
 
 Graphs have iterators like any other site sets and also provide
-specific iterators in order to iterate over graphes in a more intuitive way.
+specific iterators in order to iterate over graphs in a more intuitive way.
 
 Iteration over the adjacent edges of all the vertices:
 \doxycode[2]{graph-iter}

@@ -30,6 +30,7 @@
 ///
 /// Compute the hough transform.
 
+
 # include <mln/core/image/image2d.hh>
 # include <mln/data/fill.hh>
 
@@ -61,12 +62,12 @@ namespace mln
     ///
     /// \param[in] input_ A binary image.
     ///
-    /// \return A 2D image of float. Rows are used for the distance and
-    /// columns are used for the angles. Angles go from 0 to 359.
-    /// Distance goes from 0 to the maximum distance between the center and a
-    /// corner.
-    /// The site having the maximum value indicates through its column index
-    /// the document inclination.
+    /// \return A 2D image of float. Rows are used for the distance
+    /// and columns are used for the angles. Angles go from 0 to 359.
+    /// Distance goes from 0 to the maximum distance between the
+    /// center and a corner.
+    /// The site having the maximum value indicates through its column
+    /// index the document inclination.
     //
     template <typename I>
     image2d<float>
@@ -75,6 +76,7 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
 
     namespace internal
     {
@@ -88,6 +90,7 @@ namespace mln
 
 
     } // end of namespace mln::transform::internal
+
 
 
     template <typename I>
@@ -106,7 +109,6 @@ namespace mln
       unsigned
        ncols = geom::ncols(input),
        nrows = geom::nrows(input);
-      int compt = 0;
       int maxRho = (int)(sqrt((ncols * nrows)
 			      + (ncols * nrows))
                          + 0.5);
