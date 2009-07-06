@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,19 +43,36 @@ A::with< T >::ret
 
 
 # define mln_accu_result(A, T) \
-typename A::template with< T >::ret::result
+typename mln::internal::accu_ret_result_helper<A,T>::result
 
 
-# define mln_accu_result_(A, T) \
-A::with< T >::ret::result
+# define mln_accu_result_(A, T)				\
+mln::internal::accu_ret_result_helper<A,T>::result
+
 
 
 
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename E> struct Meta_Accumulator;
+
+
+  namespace internal
+  {
+
+    /// Make the type resolution easier for the compiler.
+    /// Introduced for ICC compatibility.
+    //
+    template <typename A, typename T>
+    struct accu_ret_result_helper
+    {
+	typedef typename A::template with< T >::ret::result result;
+    };
+
+  } // end of namespace mln::internal
+
 
   // Meta_Accumulator category flag type.
   template <>
@@ -62,7 +80,6 @@ namespace mln
   {
     typedef Object<void> super;
   };
-
 
   /*! \brief Base class for implementation of meta accumulators.
    *
