@@ -1,30 +1,241 @@
-Abstract
-********
+Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 
-This is a public testing version of Olena, a generic image processing
-library in C++.
+This file is part of Olena.
 
-   Please read the files INSTALL for information about building and
-installing Olena.
+Olena is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation, version 2 of the License.
 
-   Olena is a project developed by the EPITA Research and Development
-Laboratory (<http://www.lrde.epita.fr>) since 1997.  We did numerous
-prototypes and throwaway experiments before settling into the kind of
-programming paradigm which is finally here.
+The complete GNU General Public Licence Notice can be found as the
+'COPYING' file in the root directory.
 
-   The documentation does not cover the whole project yet. In the `doc/'
-directory you will find the first draft of a reference manual. It
-includes a quick reference guide and a tutorial. This is a good start.
-In `milena/tools', `milena/doc/tutorial/samples' and `milena/doc/examples'
-few sample programs are available. Most of them are already used to
-illustrate the tutorial.
-For the rest, we're afraid you will have to dig the code or e-mail us.
+=======================
+ Introduction to Olena
+=======================
+
+Olena_, a platform dedicated to image processing.
+
+.. _Olena: http:://olena.lrde.epita.fr
+
+
+Overview
+========
+
+Olena is a platform dedicated to image processing. At the moment it is
+mainly composed of a C++ library: Milena. This library features many
+tools to easily perform image processing tasks. Its main
+characteristic is its genericity: it allows to write an algorithm once
+and run it over many kinds of images (grey scale, color, 1D, 2D, 3D,
+...).
+
+Olena is a project developed by the `EPITA Research and Development
+Laboratory (LRDE)`__ since 1997.  We did numerous prototypes and
+throwaway experiments before settling into the kind of programming
+paradigm which is finally here.
+
+__ http://www.lrde.epita.fr
+
+We do our image processing research using this library, but most
+importantly we have gathered (and still do) generic programming
+expertise from the library development.
+
+Yet, Olena is an ongoing development project. Few algorithms or
+definitions may change in a near future. A list of potential changes
+is maintained here :
+https://olena.lrde.epita.fr/FeaturesSubjectToChange.
+
+Likewise, the documentation does not cover the whole project yet. In the
+`doc/' directory you will find the first draft of a reference
+manual. It includes a quick reference guide and a tutorial. This is a
+good start.  In `milena/tools' and `milena/doc/examples' few sample
+programs are available. Most of them are already used to illustrate
+the tutorial.  For the rest, we're afraid you will have to dig the
+code or e-mail us.
 
    Please direct any question or comments to <olena@lrde.epita.fr>, or
 <olena-bugs@lrde.epita.fr>.
 
    Olena also has a web page, located at
-<http://www.lrde.epita.fr/Olena>.
+<http://olena.lrde.epita.fr>.
+
+
+Installation
+============
+
+To install Olena on your system, type in the classical sequence at
+the command prompt::
+
+	./configure
+	make
+	make install (as root)
+
+Note that an installation is  specific to the compiler used to install
+it. Indeed, the call  to ``./configure`` enables some workarounds and,
+consequently,  users must  compile  with the  same  compiler to  avoid
+compatibility problems.
+
+Between ``make`` and ``make install``, you may also want to run::
+
+	make check
+
+ ``make check`` will run the test suite to check the whole library.
+Running the test suite may require up several hours.
+
+
+Please read the INSTALL file for more information about building and
+installing Olena.
+
+
+Additional features
+-------------------
+
+Python bindings are provided thanks to Swilena. It is disabled by
+default because it requires extra dependencies: Swig. To enable the
+compilation of this module use::
+
+       ./configure --enable-swilena
+
+
+Sample tools are shipped in the tarball. To enable the compilation of
+       these tools use:: ./configure --enable-tools
+
+
+Sample applications are shipped in the tarball. To Enable the
+compilation of these applications use::
+
+       ./configure --enable-apps
+
+
+To read/write TIFF images with Olena, libtiff is required. To specify
+the base directory, use::
+
+       ./configure --with-tiff=/path/to/basedir
+
+
+To read/write GDCM images with Olena, libgdcm is required. To specify
+the base directory, use::
+
+       ./configure --with-gdcm=/path/to/basedir
+
+
+
+Layout of the tarball
+---------------------
+
+The Olena project directory layout is as follows:
+
+build-aux
+   Auxialiary tools used by the GNU Build System during ``configure``
+   and ``make`` stages.
+
+external
+   Sources of Shipped dependencies.
+
+
+m4
+   Portability macros from the ``gnulib`` library.
+
+milena
+
+  apps
+     Application examples.
+
+  mln
+     Header of the Milena library.
+
+  tests
+     The test suite.
+
+  doc
+     The documentation.
+
+  tools
+     Example tools.
+
+  mesh
+     Mesh images.
+
+  img
+     Test images.
+
+  demos
+     Demos of Milena.
+
+
+swilena
+   Python binding sources.
+
+
+Requirements
+============
+
+Olena has been tested on the following configurations:
+
+System                   Compiler
+Linux                    g++ 3.3, 3.4, 4.0, 4.1, 4.2
+			 icc 10.1, 11.0
+Linux-64 		 g++ 4.1
+MacOS X                  g++ 4.0.1
+
+
+According to the wanted features, some dependencies may be required:
+
+
+To enable I/O with TIFF images, `libtiff`_ must be installed.
+
+.. _libtiff: http://www.libtiff.org/
+
+To enable I/O with GDCM images, `libgdcm`_ must be installed.
+
+.. _libgdcm: http://sourceforge.net/apps/mediawiki/gdcm/
+
+
+To support many image formats in Olena's I/O system, `libmagick++`_ must
+be installed.
+
+.. _libmagick++: Please see your distribution package manager.
+
+
+`Boost`_ may be needed if you want to support tuple accumulators.
+
+.. _Boost: http://www.boost.org/
+
+
+See Also
+========
+
+There are other sources of interest in the distribution.
+
+- Headline news about the project can be found in the file ``NEWS`` at
+  the root of the source tree.
+
+- The library reference HTML documentation, generated by Doxygen_, is
+  located in ``doc/user/html/``.
+
+.. _Doxygen: http://www.doxygen.org
+
+
+License
+=======
+
+Olena is released under the GNU General Public Licence. See the file
+``COPYING`` (at the root of the source tree) for details.
+
+
+Contacts
+========
+
+The team can be reached by mail at olena@lrde.epita.fr. Snail mail
+addresses follow.
+
+* Olena - LRDE
+
+  | Laboratoire de Recherche et Développement de l'EPITA
+  | 14-16 rue Voltaire
+  | 94276 Le Kremlin-Bicêtre CEDEX
+  | France
+
+
 
 Bibliography
 ============
@@ -32,52 +243,82 @@ Bibliography
 Further information about Olena can be found into the following related
 papers:
 
-   *   Thierry Géraud, Yoann Fabre, Dimitri Papadopoulos-Orfanos, and
-     Jean-François Mangin.  `Vers une réutilisabilité totale des
-     algorithmes de traitement d'images'.  In the Proceedings of the
-     17th Symposium GRETSI on Signal and Image Processing, vol. 2,
-     pages 331-334, Vannes, France, September 1999.  In French
-     (available in English as Technical Report 9902: `Towards a Total
-     Reusability of Image Processing Algorithms').
+   * `Vers une réutilisabilité totale des algorithmes de traitement
+     d'images`.  Thierry Géraud, Yoann Fabre, Dimitri
+     Papadopoulos-Orfanos, and Jean-François Mangin.  In the
+     Proceedings of the 17th Symposium GRETSI on Signal and Image
+     Processing, vol. 2, pages 331-334, Vannes, France,
+     September 1999.  In French (available in English as Technical
+     Report 9902: `Towards a Total Reusability of Image Processing
+     Algorithms').
 
-   *   Thierry Géraud, Yoann Fabre, Alexandre Duret-Lutz, Dimitri
-     Papadopoulos-Orfanos, and Jean-François Mangin.  `Obtaining
-     Genericity for Image Processing and Pattern Recognition
-     Algorithms'.    In the Proceedings of the 15th International
-     Conference on Pattern   Recognition (ICPR'2000), IEEE Computer
-     Society, vol. 4, pages   816-819, Barcelona, Spain, September 2000.
+   * `Obtaining Genericity for Image Processing and Pattern
+     Recognition Algorithms`.  Thierry Géraud, Yoann Fabre, Alexandre
+     Duret-Lutz, Dimitri Papadopoulos-Orfanos, and Jean-François
+     Mangin.  In the Proceedings of the 15th International Conference
+     on Pattern Recognition (ICPR'2000), IEEE Computer Society,
+     vol. 4, pages 816-819, Barcelona, Spain, September 2000.
 
-   *   Alexandre Duret-Lutz. `Olena: a Component-Based Platform for
-     Image   Processing, mixing Generic, Generative and OO
-     Programming'. In the   Proceedings of the 2nd International
-     Symposium on Generative and   Component-Based Software Engineering
-     (GCSE 2000), Young Researchers   Workshop (published in
-     "Net.ObjectDays2000"; ISBN 3-89683-932-2),   pages 653-659,
-     Erfurt, Germany, October 2000.
+   * `Olena: a Component-Based Platform for Image Processing, mixing
+     Generic, Generative and OO Programming`. Alexandre Duret-Lutz.
+     In the Proceedings of the 2nd International Symposium on
+     Generative and Component-Based Software Engineering (GCSE 2000),
+     Young Researchers Workshop (published in "Net.ObjectDays2000";
+     ISBN 3-89683-932-2), pages 653-659, Erfurt, Germany, October
+     2000.
 
-   *   Alexandre Duret-Lutz, Thierry Géraud, and Akim Demaille. `Generic
-      Design Patterns in C++'. In the Proceedings of the 6th USENIX
+   * `Generic Design Patterns in C++`. Alexandre Duret-Lutz, Thierry
+     Géraud, and Akim Demaille.  In the Proceedings of the 6th USENIX
      Conference on Object-Oriented Technologies and Systems
-     (COOTS'2001),   pages 189-202, San Antonio, Texas, USA,
+     (COOTS'2001), pages 189-202, San Antonio, Texas, USA,
      January-February 2001.
 
-   *   Thierry Géraud, Yoann Fabre, and Alexandre Duret-Lutz. `Applying
-      Generic Programming to Image Processing'. In the Proceedings of
-     the   IASTED International Conference on Applied Informatics
-     (AI'2001) -   Symposium Advances in Computer Applications, ACTA
-     Press, pages   577-581, Innsbruck, Austria, February 2001.
+   * `Applying Generic Programming to Image Processing`, Thierry
+     Géraud, Yoann Fabre, and Alexandre Duret-Lutz.  In the
+     Proceedings of the IASTED International Conference on Applied
+     Informatics (AI'2001) - Symposium Advances in Computer
+     Applications, ACTA Press, pages 577-581, Innsbruck, Austria,
+     February 2001.
 
-   *   `Generic Implementation of Morphological Image Operators',
-     Jérôme Darbon, Thierry Géraud, and Alexandre Duret-Lutz,
-     submitted to International Symposium On Mathematical Morphology VI
-      (ISMM 2002), April 3-5, 2002, Sydney, Australia.
+   * `Generic Implementation of Morphological Image Operators`, Jérôme
+     Darbon, Thierry Géraud, and Alexandre Duret-Lutz, submitted to
+     International Symposium On Mathematical Morphology VI (ISMM
+     2002), April 3-5, 2002, Sydney, Australia.
 
-   *   `Static C++ Object-Oriented Programming (SCOOP)'   Nicolas
-     Burrus, Alexandre Duret-Lutz, Thierry Géraud, David Lesage,   and
-     Raphaël Poss. In the Proceedings of the Workshop on Multiple
-     Paradigm with OO Languages (MPOOL'03) Anaheim, CA Oct. 2003.
+   * `Static C++ Object-Oriented Programming (SCOOP)`, Nicolas Burrus,
+     Alexandre Duret-Lutz, Thierry Géraud, David Lesage, and Raphaël
+     Poss. In the Proceedings of the Workshop on Multiple Paradigm
+     with OO Languages (MPOOL'03) Anaheim, CA Oct. 2003.
+
+   * `Generic Algorithmic Blocks Dedicated to Image Processing`,
+     Jérôme Darbon, Thierry Géraud, Patrick Bellot. In the proceedings
+     of ECOOP PHD Oslo, Norway June 2004.
+
+   * `Fast Color Image Segmentation Based on Levellings in Feature
+     Space`, Thierry Géraud, Giovanni Palma, Niels Van Vliet.  In the
+     proceedings of the International Conference on Computer Vision
+     and Graphics (ICCVG) Warsaw, Poland, September 2004.
+
+   * `Semantics-Driven Genericity: A Sequel to the Static C++
+     Object-Oriented Programming Paradigm (SCOOP 2)`.  Thierry Géraud,
+     Roland Levillain.  In the proceedings of the 6th International
+     Workshop on Multiparadigm Programming with Object-Oriented
+     Languages
+     http://homepages.fh-regensburg.de/~mpool/mpool08/welcome.html
+     Paphos, Cyprus July 7, 2008.
+
+   * `Milena: Write Generic Morphological Algorithms Once, Run on Many
+     Kinds of Images`. Roland Levillain, Thierry Géraud, Laurent
+     Najman.  In the proceedings of the 9th International Symposium on
+     Mathematical Morphology (ISMM) http://www.cs.rug.nl/~ISMM09/
+     Groningen, The Netherlands August 24 - 27, 2009.
+
 
    You can download these papers and related materials from
 <http://www.lrde.epita.fr/cgi-bin/twiki/view/Publications>
 
 
+
+.. Local Variables:
+.. mode: rst
+.. End:

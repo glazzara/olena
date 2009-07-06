@@ -1,3 +1,11 @@
+2009-07-06 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Update INSTALL, NEWS and README files.
+
+	* INSTALL,
+	* NEWS,
+	* README: update.
+
 2009-07-03 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* configure.ac: Adjust warning flags if CXX is set to icpc.

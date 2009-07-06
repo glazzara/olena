@@ -30,8 +30,20 @@ Optional:
 
         - the `texinfo' utilities from GNU
 
+	- latex2html
+
+   * to use various image types:
+     	- libMagick++
+
+	- libTiff
+
+	- libGdcm
+
    * to develop _in_ Olena:
         - GNU Autotools (Autoconf 2.54, Automake 1.7)
+
+   * to develop _in_ Swilena (Python Bindings):
+     	- Swig
 
 
 1.2 Configuration
@@ -213,7 +225,9 @@ programs with:
 Olena has been tested on the following configurations :
 
 System                   Compiler
-Linux                    g++ 4.0, 4.1, 4.2
+Linux                    g++ 3.3, 3.4, 4.0, 4.1, 4.2
+			 icc 10.1, 11.0
+Linux-64 		 g++ 4.1
 MacOS X                  g++ 4.0.1
 
 

@@ -14,9 +14,12 @@
           The Swilena Python Shell (sps) allows interactive Olena
           sessions.
 
-	* Olena contains tools for Document Image Analysis developed
-          in the context of the SCRIBO project
-          (http://www.scribo.ws/).
+	* A reference documentation including a tutorial and a quick
+          reference guide have been started. They do not cover the
+          whole library yet.
+
+	* Olena includes some demos which use Milena, the core C++
+          library.
 
 
 * Olena 0.11	February 21, 2007
