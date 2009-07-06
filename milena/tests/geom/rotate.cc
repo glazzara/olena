@@ -26,17 +26,15 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/geom/rotate.hh>
 # include <mln/make/image.hh>
+# include <mln/make/box1d.hh>
 # include <mln/data/compare.hh>
 
 int main()
 {
   using namespace mln;
 
-  bool ref_values[][5] = { { 0, 1, 0, 0, 0 },
-                           { 0, 1, 1, 0, 0 },
-                           { 0, 0, 1, 1, 0 },
-                           { 0, 0, 0, 1, 1 },
-                           { 0, 0, 0, 0, 1 } };
+  bool ref_values[][5] = { { 0, 1, 1, 0, 0 },
+                           { 0, 0, 1, 1, 0 } };
 
   bool values[][5] = { { 0, 0, 1, 0, 0 },
                        { 0, 0, 1, 0, 0 },
@@ -45,7 +43,12 @@ int main()
                        { 0, 0, 1, 0, 0 } };
 
   image2d<bool> ima = make::image(values);
-  image2d<bool> ref = make::image(ref_values);
+
+
+  image2d<bool> ref(make::box2d(1,0, 2,4), 0);
+  for (unsigned i = 0; i < 2; ++i)
+    for (unsigned j = 0; j < 5; ++j)
+      ref(ref.point_at_index(i + j + 4 * i)) = ref_values[i][j];
 
   image2d<bool> ima_rot = geom::rotate(ima, 45);
 

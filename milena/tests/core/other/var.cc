@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,6 +24,12 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+
+/// \file
+///
+/// Test of macros based on mln_VAR.
+
+
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/window2d.hh>
 #include <mln/core/alias/neighb2d.hh>
@@ -30,6 +37,13 @@
 #include <mln/util/array.hh>
 
 #include <mln/core/var.hh>
+
+
+
+// mln_VAR is known not to work with old gcc versions. This test does
+// nothing for these compilers.
+//
+#if (defined(__GNUC__) && __GNUC__ >= 4)
 
 template <typename T>
 void test_template()
@@ -125,8 +139,14 @@ void test()
   }
 }
 
+#endif
+
 int main()
 {
+
+#if (defined(__GNUC__) && __GNUC__ >= 4)
   test();
   test_template<int>();
+#endif
+
 }

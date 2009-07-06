@@ -23,9 +23,9 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-# include <mln/core/image/image2d.hh>
-# include <mln/transform/hough.hh>
-# include <mln/make/image.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/transform/hough.hh>
+#include <mln/make/image.hh>
 
 int main()
 {
@@ -48,5 +48,5 @@ int main()
       max_p = p;
 
   // Checking angle value.
-  mln_assertion(max_p.col() == 335);
+  mln_assertion(max_p.row() == 155);
 }
