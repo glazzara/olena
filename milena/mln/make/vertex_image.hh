@@ -80,8 +80,7 @@ namespace mln
       mln_precondition(exact(g).is_valid());
 
       p_vertices<G> pv(g);
-      mln::vertex_image<void,mln_result(FV),G>
-	ima(pv, mln::convert::to<fun::i2v::array<mln_result(FV)> >(fv));
+      mln::vertex_image<void,mln_result(FV),G> ima(pv, fv);
 
       trace::exiting("make::vertex_image");
       return ima;

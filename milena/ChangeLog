@@ -1,3 +1,9 @@
+2009-07-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	About nothing.
+
+	* mln/make/vertex_image.hh: Simplify a line.
+
 2009-07-07  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Labeling computation with direct image output.
