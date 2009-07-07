@@ -95,6 +95,9 @@ namespace mln
 		    private mlc_not_equal(mln_trait_image_ext_domain(I),
 					  trait::image::ext_domain::none)::check_t
   {
+    /// Value type.
+    typedef mln_value(I) value;
+
     /// Skeleton.
     typedef tag::image_<I> skeleton; // This property is lost!
 
@@ -124,7 +127,7 @@ namespace mln
   template <typename I, typename B>
   extended<I>
   extended_to(Image<I>& ima, const Box<B>& b);
-  
+
 
 
 # ifndef MLN_INCLUDE_ONLY

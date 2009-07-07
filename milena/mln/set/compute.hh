@@ -59,7 +59,7 @@ namespace mln
     // \return The accumulator result.
     //
     template <typename A, typename S>
-    mln_accu_result(A, mln_site(S))
+    mln_meta_accu_result(A, mln_site(S))
     compute(const Meta_Accumulator<A>& a, const Site_Set<S>& s);
 
 
@@ -123,7 +123,7 @@ namespace mln
 
 
     template <typename A, typename S>
-    mln_accu_result(A, mln_site(S))
+    mln_meta_accu_result(A, mln_site(S))
     compute(const Meta_Accumulator<A>& a, const Site_Set<S>& s)
     {
       trace::entering("set::compute");

@@ -50,7 +50,7 @@ namespace mln
 		const Window<W>& win);
 
     template <typename I, typename A, typename W>
-    mln_ch_value(I, mln_accu_result(A, mln_value(I)))
+    mln_ch_value(I, mln_meta_accu_result(A, mln_value(I)))
       transform(const Image<I>& input,
 		const Meta_Accumulator<A>& a,
 		const Window<W>& win);
@@ -197,7 +197,7 @@ namespace mln
     }
 
     template <typename I, typename A, typename W>
-    mln_ch_value(I, mln_accu_result(A, mln_value(I)))
+    mln_ch_value(I, mln_meta_accu_result(A, mln_value(I)))
     transform(const Image<I>& input, const Meta_Accumulator<A>& a, const Window<W>& win)
     {
       trace::entering("accu::transform");

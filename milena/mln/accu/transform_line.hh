@@ -56,7 +56,7 @@ namespace mln
 		   unsigned length, unsigned dir);
 
     template <typename A, typename I>
-    mln_ch_value(I, mln_accu_result(A, mln_value(I)))
+    mln_ch_value(I, mln_meta_accu_result(A, mln_value(I)))
     transform_line(const Meta_Accumulator<A>& a,
 		   const Image<I>& input,
 		   unsigned length, unsigned dir);
@@ -360,7 +360,7 @@ namespace mln
 
     template <typename A, typename I>
     inline
-    mln_ch_value(I, mln_accu_result(A, mln_value(I)))
+    mln_ch_value(I, mln_meta_accu_result(A, mln_value(I)))
     transform_line(const Meta_Accumulator<A>& a,
 		   const Image<I>& input,
 		   unsigned length, unsigned dir)

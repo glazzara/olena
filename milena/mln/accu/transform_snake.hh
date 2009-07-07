@@ -62,7 +62,7 @@ namespace mln
 
 
     template <typename A, typename I, typename W>
-    mln_ch_value(I, mln_accu_result(A, mln_value(I)))
+    mln_ch_value(I, mln_meta_accu_result(A, mln_value(I)))
     transform_snake(const Meta_Accumulator<A>& a, const Image<I>& input, const Window<W>& win);
 
 
@@ -452,7 +452,7 @@ namespace mln
 
     template <typename A, typename I, typename W>
     inline
-		 mln_ch_value(I, mln_accu_result(A, mln_value(I)))
+		 mln_ch_value(I, mln_meta_accu_result(A, mln_value(I)))
     transform_snake(const Meta_Accumulator<A>& a,
 		    const Image<I>& input, const Window<W>& win)
     {

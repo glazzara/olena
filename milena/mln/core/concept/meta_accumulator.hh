@@ -36,18 +36,18 @@
 
 
 # define mln_accu_with(A, T) \
-typename A::template with< T >::ret
+typename mln::internal::accu_with_helper<A,T>::ret
 
 # define mln_accu_with_(A, T) \
-A::with< T >::ret
+mln::internal::accu_with_helper<A,T>::ret
 
 
-# define mln_accu_result(A, T) \
-typename mln::internal::accu_ret_result_helper<A,T>::result
+# define mln_meta_accu_result(A, T) \
+typename mln::internal::meta_accu_ret_result_helper<A,T>::result
 
 
-# define mln_accu_result_(A, T)				\
-mln::internal::accu_ret_result_helper<A,T>::result
+# define mln_meta_accu_result_(A, T)				\
+mln::internal::meta_accu_ret_result_helper<A,T>::result
 
 
 
@@ -66,10 +66,21 @@ namespace mln
     /// Introduced for ICC compatibility.
     //
     template <typename A, typename T>
-    struct accu_ret_result_helper
+    struct meta_accu_ret_result_helper
     {
 	typedef typename A::template with< T >::ret::result result;
     };
+
+
+    /// Make the type resolution easier for the compiler.
+    /// Introduced for ICC compatibility.
+    //
+    template <typename A, typename T>
+    struct accu_with_helper
+    {
+	typedef typename A::template with< T >::ret ret;
+    };
+
 
   } // end of namespace mln::internal
 

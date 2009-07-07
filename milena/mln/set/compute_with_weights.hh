@@ -80,7 +80,7 @@ namespace mln
     /// \return The accumulator result.
     //
     template <typename A, typename I>
-    mln_accu_result(A, mln_site(I))
+    mln_meta_accu_result(A, mln_site(I))
     compute_with_weights(const Meta_Accumulator<A>& a, const Image<I>& w);
 
 
@@ -252,7 +252,7 @@ namespace mln
 
     template <typename A, typename I>
     inline
-    mln_accu_result(A, mln_site(I))
+    mln_meta_accu_result(A, mln_site(I))
     compute_with_weights(const Meta_Accumulator<A>& a, const Image<I>& w)
     {
       trace::entering("set::compute_with_weights");
