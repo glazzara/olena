@@ -1,7 +1,7 @@
 * Olena 1.0
 
 	* The core C++ library, renamed to Milena, has been rewritten
-          from scratch and feature numerous additions over the past
+          from scratch and features numerous additions over the past
           releases.
 
 	* Milena uses a simplified version of the SCOOP 2 paradigm
