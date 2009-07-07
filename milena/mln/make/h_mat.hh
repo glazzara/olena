@@ -40,27 +40,8 @@ namespace mln
   namespace make
   {
 
-    /// Create an mln::algebra::h_mat<d,T>.
-    /*
-     * \param[in] tab Array of values.
-     *
-     * \pre The array dimension has to be d * d.
-     */
-    template <typename T, unsigned d>
-    algebra::h_mat<d,T> h_mat(const T (&tab)[(d+1)*(d+1)]);
 
-
-    /// Create an mln::algebra::h_mat<d,T>.
-    /*
-     * \param[in] tab Array of values.
-     *
-     * \pre The array dimension has to be d * d.
-     */
-    template <typename T, unsigned d>
-    algebra::h_mat<d,T> h_mat(const T (&tab)[d+1][d+1]);
-
-
-    /// reate an mln::algebra::mat<n,n,T>.
+    /// Create an mln::algebra::mat<n,n,T>.
     /*
      * \param[in] tab C-array of values.
      *
@@ -72,31 +53,6 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-    template <typename T, unsigned d>
-    inline
-    algebra::h_mat<d,T>
-    h_mat(const T (&tab)[(d)*(d)])
-    {
-      std::cout << "plap" << std::endl;
-      algebra::h_mat<d,T> tmp;
-      for (unsigned i = 0; i < d; ++i)
-	tmp(i / (d), i % (d)) = tab[i];
-      return tmp;
-    }
-
-
-    template <typename T, unsigned d>
-    algebra::h_mat<d,T>
-    h_mat(const T (&tab)[d][d])
-    {
-      algebra::h_mat<d,T> tmp;
-      for (unsigned i = 0; i < d; ++i)
-        for (unsigned j = 0; j < d; ++j)
-	  tmp(i, j) = tab[i][j];
-      return tmp;
-    }
-
 
     template <typename T, unsigned N>
     inline
@@ -116,5 +72,6 @@ namespace mln
   } // end of namespace mln::make
 
 } // end of namespace mln
+
 
 #endif // ! MLN_MAKE_H_MAT_HH

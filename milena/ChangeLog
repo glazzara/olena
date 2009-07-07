@@ -1,3 +1,12 @@
+2009-07-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix errors with icc.
+
+	* mln/core/internal/neighb_niter_impl.hh (element): Return a cpy.
+	* mln/make/h_mat.hh: Remove overloading; it is disambiguation for
+	icc.
+	* tests/make/h_mat.cc: Update.
+
 2009-07-07  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	Fix compilation issues with ICC.

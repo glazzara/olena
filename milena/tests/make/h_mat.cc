@@ -35,25 +35,12 @@ int main()
 {
   using namespace mln;
 
-  {
-    int vals[9] = { 2, 3,  4,
-      5, 6,  7,
-      8, 9, 10 };
-    algebra::h_mat<3,int> m = make::h_mat(vals);
-
-    for (unsigned i = 0; i < 4; ++i)
-      for (unsigned j = 0; j < 4; ++j)
-	mln_assertion(m(i,j) == result[i][j]);
-  }
-
-  {
-    int vals[3][3] = { { 2, 3,  4 },
-		       { 5, 6,  7 },
-		       { 8, 9, 10 } };
-    algebra::h_mat<3,int> m = make::h_mat(vals);
-
-    for (unsigned i = 0; i < 4; ++i)
-      for (unsigned j = 0; j < 4; ++j)
-	mln_assertion(m(i,j) == result[i][j]);
-  }
+  int vals[9] = { 2, 3,  4,
+		  5, 6,  7,
+		  8, 9, 10 };
+  algebra::h_mat<3,int> m = make::h_mat(vals);
+  
+  for (unsigned i = 0; i < 4; ++i)
+    for (unsigned j = 0; j < 4; ++j)
+      mln_assertion(m(i,j) == result[i][j]);
 }

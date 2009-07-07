@@ -33,6 +33,7 @@
 # include <mln/core/macros.hh>
 # include <mln/core/internal/force_exact.hh>
 
+
 namespace mln
 {
 
@@ -109,7 +110,10 @@ namespace mln
     {
       typedef typename T::target S;
 
-      const mln_graph_element(S)& element() const
+      // Tech. note: A copy is returned since it actually is a
+      // temporary object; we cannot return a "const&" here for some
+      // compilers badly kills the temporary object...
+      mln_graph_element(S) element() const
       {
 	return internal::force_exact<E>(*this).compute_p_().element();
       }
