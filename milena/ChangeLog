@@ -1,3 +1,8 @@
+2009-07-07  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add traits to mean accumulator.
+	* accu/stat/mean.hh: Add traits to mean accu.
+
 2009-07-07  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	* doc/Doxyfile.in: Set INPUT_ENCODING.

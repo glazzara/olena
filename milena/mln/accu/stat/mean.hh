@@ -52,6 +52,9 @@ namespace mln
 
     } // end of namespace mln::accu::stat
 
+
+    // Meta.
+
     namespace meta
     {
 
@@ -73,6 +76,29 @@ namespace mln
       } // end of namespace mln::accu::meta::stat
 
     } // end of namespace mln::accu::meta
+
+  } // end of namespace mln::accu
+
+
+  // Traits.
+
+  namespace trait
+  {
+
+    template <typename T, typename S, typename M>
+    struct accumulator_< accu::stat::mean<T, S, M> >
+    {
+      typedef accumulator::has_untake::no     has_untake;
+      typedef accumulator::has_set_value::no  has_set_value;
+      typedef accumulator::has_stop::no       has_stop;
+      typedef accumulator::when_pix::use_v	when_pix;
+    };
+
+  } // end of namespace mln::trait
+
+
+  namespace accu
+  {
 
     namespace stat
     {
