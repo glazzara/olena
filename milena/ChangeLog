@@ -1,5 +1,19 @@
 2009-07-08  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Make sure the documentation license is GPL v2.
+
+	* doc/Doxyfile.in,
+	* doc/doc.mk,
+	* doc/doxyfuns.sty,
+	* doc/generate_dist_files.sh,
+	* doc/milena.sty,
+	* doc/ref_guide/ref_guide.tex,
+	* doc/tutorial/tutorial.tex,
+	* doc/white_paper/white_paper.tex,
+	* mln/core/concept/object.hh: Update license headers.
+
+2009-07-08  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	Fix last issues with ICC.
 
 	* mln/labeling/colorize.hh: make it deterministic whatever the
