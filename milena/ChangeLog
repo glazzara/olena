@@ -1,3 +1,8 @@
+2009-07-08  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Minor fixes in labeling/compute_image.hh.
+	* labeling/compute_image.hh: Minor fixes.
+
 2009-07-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	About nothing.

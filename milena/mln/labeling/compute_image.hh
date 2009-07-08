@@ -99,7 +99,7 @@ namespace mln
     ///
     template <typename A, typename I, typename L>
     inline
-    mln_ch_value(L, mln_accu_result(A, mln_value(I)))
+    mln_ch_value(L, mln_meta_accu_result(A, mln_value(I)))
       compute_image(const Meta_Accumulator<A>& accu,
 		    const Image<I>& input,
 		    const Image<L>& labels,
@@ -176,7 +176,7 @@ namespace mln
 
     template <typename A, typename I, typename L>
     inline
-    mln_ch_value(L, mln_accu_result(A, mln_value(I)))
+    mln_ch_value(L, mln_meta_accu_result(A, mln_value(I)))
       compute_image(const Meta_Accumulator<A>& accu,
 		    const Image<I>& input,
 		    const Image<L>& labels,
@@ -184,10 +184,12 @@ namespace mln
     {
       trace::entering("labeling::compute_image");
 
-      util::array<mln_accu_result(A, mln_value(I))> res =
+      typedef mln_meta_accu_result(A, mln_value(I)) T;
+
+      util::array<T> res =
 	compute(accu, input, labels, nlabels);
 
-      mln_ch_value(L, mln_accu_result(A, mln_value(I))) output =
+      mln_ch_value(L, T) output =
 	labeling::internal::compute_image(res, labels, nlabels);
 
       trace::exiting("labeling::compute_image");
