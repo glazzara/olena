@@ -7,11 +7,13 @@ set -e
 set -x
 
 
-DEST=/lrde/dload/olena/snapshot/
+DEST=/lrde/dload/olena/snapshots/
 DEST_DOC=$DEST/doc/milena/
 
 # Retrieve the package version
-VERSION=`autoconf --trace='AC_INIT' | cut -d ':' -f 5`
+VERSION=`autoconf --trace='AC_INIT:$2'`
+CURRENT_DATE=`date +'%d_%m_%y'`
+REV=$VERSION-$CURRENT_DATE
 
 # Always do "cp then mv" when uploading the file, so that someone
 # cannot start a download why the destination file is incomplete.
@@ -19,15 +21,18 @@ VERSION=`autoconf --trace='AC_INIT' | cut -d ':' -f 5`
 # Upload the tarball
 mkdir -p $DEST
 
+# Delete tarballs older than 2 days..
+find $DEST -maxdepth 1 -type f -mtime +2 -exec rm -f {} \;
+
 # tar.gz
-cp -f olena-$VERSION.tar.gz $DEST/olena-$rev.tar.gz.tmp
-mv -f $DEST/olena-$rev.tar.gz.tmp $DEST/olena-$rev.tar.gz
-chmod -R a+r $DEST/olena-$rev.tar.gz
+cp -f olena-$VERSION.tar.gz $DEST/olena-$REV.tar.gz.tmp
+mv -f $DEST/olena-$REV.tar.gz.tmp $DEST/olena-$REV.tar.gz
+chmod -R a+r $DEST/olena-$REV.tar.gz
 
 # tar.bz2
-cp -f olena-$VERSION.tar.bz2 $DEST/olena-$rev.tar.bz2.tmp
-mv -f $DEST/olena-$rev.tar.bz2.tmp $DEST/olena-$rev.tar.bz2
-chmod -R a+r $DEST/olena-$rev.tar.bz2
+cp -f olena-$VERSION.tar.bz2 $DEST/olena-$REV.tar.bz2.tmp
+mv -f $DEST/olena-$REV.tar.bz2.tmp $DEST/olena-$REV.tar.bz2
+chmod -R a+r $DEST/olena-$REV.tar.bz2
 
 
 # Upload a copy of the reference manual and other documentation.
