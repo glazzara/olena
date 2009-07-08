@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,10 +27,10 @@
 #ifndef MLN_MAKE_MAT_HH
 # define MLN_MAKE_MAT_HH
 
-/*! \file
- *
- * \brief Routine to construct an mln::algebra::mat.
- */
+/// \file
+///
+/// \brief Routine to construct an mln::algebra::mat.
+
 
 # include <mln/algebra/mat.hh>
 # include <mln/metal/math/sqrt.hh>
@@ -51,33 +52,9 @@ namespace mln
     algebra::mat<n,m,T> mat(const T (&tab)[n*m]);
 
 
-    /*! \brief Create an mln::algebra::mat<n,m,T>.
-     *
-     * \param[in] tab Array of values.
-     *
-     * \pre The array dimension has to be n * m.
-     */
-    template <typename T, unsigned n, unsigned m>
-    algebra::mat<n,m,T> mat(const T (&tab)[n][m]);
-
-
-    /*! \brief Create an mln::algebra::mat<n,n,T>.
-     *
-     * \param[in] tab C-array of values.
-     *
-     * \pre The array dimension N has to be square (N = n * n).
-     */
-    template <typename T, unsigned N>
-    algebra::mat<mlc_sqrt_int(N), mlc_sqrt_int(N), T>
-    mat(const T (&tab)[N]);
-
-    
-    template <unsigned n, unsigned m, typename T>
-    algebra::mat<n,m,T> mat(algebra::vec<n,T> v);
-
-
 
 # ifndef MLN_INCLUDE_ONLY
+
 
     template <unsigned n, unsigned m, typename T>
     inline
@@ -89,37 +66,6 @@ namespace mln
       return tmp;
     }
 
-    template <typename T, unsigned n, unsigned m>
-    algebra::mat<n,m,T> mat(const T (&tab)[n][m])
-    {
-      algebra::mat<n,m,T> tmp;
-      for (unsigned i = 0; i < n; ++i)
-      for (unsigned j = 0; j < m; ++j)
-	tmp(i, j) = tab[i][j];
-      return tmp;
-    }
-
-    template <typename T, unsigned N>
-    inline
-    algebra::mat<mlc_sqrt_int(N), mlc_sqrt_int(N), T>
-    mat(const T (&tab)[N])
-    {
-      enum { n = mlc_sqrt_int(N) };
-      mlc_bool(N == n * n)::check();
-      algebra::mat<n,n,T> tmp;
-      for (unsigned i = 0; i < N; ++i)
-	tmp(i / n, i % n) = tab[i];
-      return tmp;
-    }
-
-    template <unsigned n, typename T>
-    algebra::mat<n,1,T> mat(algebra::vec<n,T> v)
-    {
-      algebra::mat<n,1,T> tmp;
-      for (unsigned i = 0; i < n; i++)
-        tmp(i,0) = v[i];
-      return tmp;
-    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

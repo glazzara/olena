@@ -110,16 +110,27 @@ namespace mln
 	return colorize_::min_value + last % colorize_::max_value;
       }
 
+
+      // No random color generator is available for the value type V.
       template <typename V>
       V random_color(const V&);
+
 
       template <unsigned n>
       mln::value::rgb<n>
       random_color(const mln::value::rgb<n>&)
       {
-	return mln::value::rgb<n>(random_number(),
-				  random_number(),
-				  random_number());
+	// Make sure the numbers are generated in the same order
+	// whatever the compiler used.
+	// For instance, ICC does not compute function arguments in
+	// the same order as GCC does.
+	unsigned
+	  red = random_number(),
+	  green = random_number(),
+	  blue = random_number();
+	return mln::value::rgb<n>(red,
+				  green,
+				  blue);
       }
 
     }

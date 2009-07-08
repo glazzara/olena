@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,32 +24,25 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/algebra/mat.hh>
 
+/// \file
+///
+/// \brief Test of make::mat.
+
+
+#include <mln/algebra/mat.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  {
-    int vals[] = { 1, 0,
-		   0, 1 };
-    algebra::mat<2,2,int> m = make::mat(vals);
-  }
+  int vals[] = { 1, 2, 3,
+		 4, 5, 6 };
 
-  {
-    int vals[] = { 1, 2, 3,
-		   4, 5, 6 };
-    algebra::mat<2,3,int> m = make::mat<2,3>(vals);
-    std::cout << m << std::endl;
-  }
+  algebra::mat<2,3,int> m = make::mat<2,3>(vals);
 
-  {
-    int vals[][3] = { { 1, 2, 3 },
-		      { 4, 5, 6 } };
-    algebra::mat<2,3,int> m = make::mat(vals);
-    std::cout << m << std::endl;
-  }
-
+  for (int i = 0; i < 2; ++i)
+    for (int j = 0; j < 3; ++j)
+      mln_assertion(m(i, j) == vals[i + j + (i * 2)]);
 }

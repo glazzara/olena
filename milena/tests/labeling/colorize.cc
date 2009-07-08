@@ -23,11 +23,18 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-# include <mln/make/image.hh>
-# include <mln/value/rgb8.hh>
-# include <mln/value/int_u8.hh>
-# include <mln/labeling/colorize.hh>
-# include <mln/data/compare.hh>
+
+/// \file
+///
+/// Test of labeling::colorize.
+
+
+#include <mln/make/image.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/labeling/colorize.hh>
+#include <mln/data/compare.hh>
+
 
 int main()
 {
@@ -37,7 +44,7 @@ int main()
 				{ 0, 0 } };
 
   typedef value::rgb8 rgb_t;
-  value::rgb8 ref_data[][2] = { { rgb_t(231,46,171), rgb_t(231,46,171) },
+  value::rgb8 ref_data[][2] = { { rgb_t(171,46,231), rgb_t(171,46,231) },
 				{ rgb_t(0,0,0),	   rgb_t(0,0,0)    } };
 
   image2d<value::int_u8> ima = make::image(values);
