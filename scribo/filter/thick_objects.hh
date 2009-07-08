@@ -166,7 +166,7 @@ namespace scribo
     {
       trace::entering("scribo::filter::thick_objects");
 
-      mln_precondition(text.is_valid());
+      mln_precondition(objects.is_valid());
 
       typedef internal::thick_object_filter<L> func_t;
       func_t is_not_too_thick(objects, max_thickness);
