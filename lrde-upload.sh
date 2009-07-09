@@ -7,8 +7,8 @@ set -e
 set -x
 
 
-DEST=/lrde/dload/olena/snapshots/
-DEST_DOC=$DEST/doc/milena/
+DEST=/lrde/dload/olena/snapshots
+DEST_DOC=$DEST/doc/milena
 
 # Retrieve the package version
 VERSION=`autoconf --trace='AC_INIT:$2'`
@@ -41,6 +41,11 @@ mkdir -p $DEST_DOC
 rm -rf $DEST_DOC/user_doc.tmp
 rm -rf $DEST_DOC/white_paper_html.tmp
 
+
+# Dist check set umask to 077. Restoring permissions for all
+chmod -R a+rx milena/doc/user
+chmod -R a+rx milena/doc/white_paper
+
 cp -pR milena/doc/user/html $DEST_DOC/user_doc.tmp
 cp -pR milena/doc/white_paper/white_paper_html $DEST_DOC/white_paper_html.tmp
 
@@ -48,7 +53,6 @@ cp milena/doc/ref_guide/ref_guide.pdf $DEST_DOC/
 cp milena/doc/tutorial/tutorial.pdf $DEST_DOC/
 cp milena/doc/user/latex/refman.pdf $DEST_DOC/user_doc.pdf
 cp milena/doc/white_paper/white_paper.pdf $DEST_DOC/
-chmod -R a+rX $DEST_DOC/
 
 mv -f $DEST_DOC/user_doc $DEST_DOC/user_doc.old || true
 mv -f $DEST_DOC/white_paper_html $DEST_DOC/white_paper_html.old || true

@@ -1,8 +1,12 @@
+2009-07-09 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	* lrde-upload.sh: Call chmod before copying files.
+
 2009-07-08 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Improve lrde-upload.sh script.
 
-	* lrde-upload.sh: 
+	* lrde-upload.sh:
 	  - Prune old tarballs.
 	  - Append the current date to the tarball name.
 
