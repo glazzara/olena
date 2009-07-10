@@ -82,6 +82,11 @@ mean_median_label: mean_median_label.cc
 
 #####################
 
+filter_morpho_us: filter_morpho_us.cc
+	${CXX} -I../../../ -I../ ${CXXFLAGS} $^ -o filter_morpho_us
+
+#####################
+
 clean:
 	rm -rf *.dump *.p?m *.plot *.log *.csv *.dSYM
 	rm seg2d seg3d wsd2d wsd3d nbasins_finder grad clo_vol wst graph med thres matlab time_max first_slice_dicom
