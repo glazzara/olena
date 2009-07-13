@@ -62,3 +62,6 @@ mv -f $DEST_DOC/white_paper_html.tmp $DEST_DOC/white_paper_html
 
 rm -rf $DEST_DOC/user_doc.old
 rm -rf $DEST_DOC/white_paper_html.old
+
+# We want to be able to modify these files with both build and doc accounts. 
+chmod -R g+w $DEST
