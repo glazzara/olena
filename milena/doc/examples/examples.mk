@@ -116,6 +116,7 @@ examples/split/tuto4_site_set_create-1.cc.raw \
 examples/split/tuto4_site_set_create-2.cc.raw \
 examples/split/tuto4_site_set_create-3.cc.raw \
 examples/split/tuto4_site_set_create-4.cc.raw \
+examples/split/tuto4_site_set_create-5.cc.raw \
 examples/split/win-create-1-1.cc.raw \
 examples/split/win-create-2-1.cc.raw \
 examples/tuto3/fill_non_generic.cc.raw

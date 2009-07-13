@@ -53,6 +53,9 @@ outputs/split/graph-iter-3.txt \
 outputs/split/graph-iter-4.txt \
 outputs/split/tuto3_println-1.txt \
 outputs/split/tuto3_println-2.txt \
+outputs/split/tuto4_site_set_create-1.txt \
+outputs/split/tuto4_site_set_create-2.txt \
+outputs/split/tuto4_site_set_create-3.txt \
 outputs/tuto2_first_image.txt \
 outputs/tuto3_colorize.txt \
 outputs/tuto3_println.txt \
