@@ -46,12 +46,12 @@ rm -rf $DEST_DOC/white_paper_html.tmp
 chmod -R a+rx milena/doc/user
 chmod -R a+rx milena/doc/white_paper
 
-cp -pR milena/doc/user/html $DEST_DOC/user_doc.tmp
+cp -pR milena/doc/user-refman-html $DEST_DOC/user_doc.tmp
 cp -pR milena/doc/white_paper/white_paper_html $DEST_DOC/white_paper_html.tmp
 
 cp milena/doc/ref_guide/ref_guide.pdf $DEST_DOC/
 cp milena/doc/tutorial/tutorial.pdf $DEST_DOC/
-cp milena/doc/user/latex/refman.pdf $DEST_DOC/user_doc.pdf
+cp milena/doc/user-refman.pdf $DEST_DOC/user_doc.pdf
 cp milena/doc/white_paper/white_paper.pdf $DEST_DOC/
 
 mv -f $DEST_DOC/user_doc $DEST_DOC/user_doc.old || true
