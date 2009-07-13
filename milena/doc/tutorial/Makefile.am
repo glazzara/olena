@@ -66,8 +66,9 @@ tutorial-pdf: $(TUTORIAL_PDF)
 $(TUTORIAL_PDF): tutorial.tex $(srcdir)/../figures.stamp
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<	\
-	  && mv -f tutorial.pdf $(srcdir)
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<		\
+	test "$(top_srcdir)" == "$(top_builddir)"	\
+		|| mv -f tutorial.pdf $(srcdir)
 
 # FIXME: Regenerating figures.stamp requires make to go back to the
 # parent directory.  We already do the opposite (descending from

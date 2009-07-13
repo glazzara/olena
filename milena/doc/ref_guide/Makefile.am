@@ -68,8 +68,9 @@ ref-guide-pdf: $(REF_GUIDE_PDF)
 $(REF_GUIDE_PDF): ref_guide.tex $(srcdir)/../figures.stamp
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<	\
-	  && mv -f ref_guide.pdf $(srcdir)
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<  			\
+	test "$(top_srcdir)" == "$(top_builddir)"		\
+		|| mv -f $(builddir)/ref_guide.pdf $(srcdir)
 
 # FIXME: Regenerating figures.stamp requires make to go back to the
 # parent directory.  We already do the opposite (descending from

@@ -75,8 +75,9 @@ white-paper-pdf: $(WHITE_PAPER_PDF)
 $(WHITE_PAPER_PDF): white_paper.tex $(PNGS)
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<	\
-	  && mv -f white_paper.pdf $(srcdir)
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<		\
+	test "$(top_srcdir)" == "$(top_builddir)" 	\
+		|| mv -f white_paper.pdf $(srcdir)
 
 
 dist_doc_DATA =					\
