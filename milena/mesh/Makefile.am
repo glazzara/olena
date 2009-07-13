@@ -41,6 +41,13 @@ meshes =					\
   $(srcdir)/tetrahedron.off
 dist_mesh_DATA += $(meshes)
 
+# These meshes does not have curvature-valued versions.
+more_meshes = 					\
+  one-triangle.off				\
+  two-triangles.off				\
+  three-triangles.off
+dist_mesh_DATA += $(more_meshes)
+
 ## ------------------------------------ ##
 ## Pseudo-inverse curvature of meshes.  ##
 ## ------------------------------------ ##
