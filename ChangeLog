@@ -1,5 +1,9 @@
 2009-07-13 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* NEWS: Add release date.
+
+2009-07-13 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add new dev tools.
 
 	* build-aux/check_source_has_test.sh,
