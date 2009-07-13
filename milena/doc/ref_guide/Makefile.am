@@ -25,6 +25,29 @@ $(SPLIT_OUTPUTS_SRCDIR):$(IMG_SRCDIR):$(SPLIT_EXAMPLES_SRCDIR):"
 
 ref-guide: ref-guide-html ref-guide-pdf
 
+# FIXME: As in milena/doc/Makefile.am, we should probably strip
+# $(srcdir) prefixes from target variables, e.g. instead of:
+#
+#   FOO = $(srcdir)/foo.pdf
+#   $(FOO): foo.tex bar.tex
+#   dist_doc_DATA = $(FOO)
+#
+# we should use:
+#
+#   FOO = foo.pdf
+#   $(srcdir)/$(FOO): foo.tex bar.tex
+#   dist_doc_DATA = $(FOO)
+#
+# since it minimizes installation issues (see milena/doc/Makefile.am
+# and Vaucanson's doc/Makefile.am).
+
+# FIXME: Distributed products should be generated in the source dir.
+# That's actually the case, *but* the current solution is not clean
+# and might break sometimes.  The clean approach is to create a
+# temporary directory, try to generate the documentation there, and
+# move its contents to the source dir in case of success.  If the
+# product is a directory, also refresh a timestamp (in the source
+# dir).
 
 # Intermediate product for the various doc targets of the parent
 # directory.
@@ -32,20 +55,22 @@ ref-guide: ref-guide-html ref-guide-pdf
 # This is not a bug: REF_GUIDE_HH is meant to have a `.hh'
 # extension, since it is later parsed by Doxygen, which complains
 # about `.html' files.
-REF_GUIDE_HH = ref_guide.hh
+REF_GUIDE_HH = $(srcdir)/ref_guide.hh
 ref-guide-html: $(REF_GUIDE_HH)
 $(REF_GUIDE_HH): ref_guide.tex $(srcdir)/../figures.stamp
 	$(DOC_SRCDIR)/tools/todoxygen.sh		\
-	  $< $(DOC_SRCDIR)/ref_guide $(DOC_SRCDIR)
+	  $< $(DOC_SRCDIR)/ref_guide $(DOC_SRCDIR)	\
+	  && mv -f ref_guide.hh $(srcdir)
 
 
 # Final product.
-REF_GUIDE_PDF = ref_guide.pdf
+REF_GUIDE_PDF = $(srcdir)/ref_guide.pdf
 ref-guide-pdf: $(REF_GUIDE_PDF)
 $(REF_GUIDE_PDF): ref_guide.tex $(srcdir)/../figures.stamp
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<	\
+	  && mv -f ref_guide.pdf $(srcdir)
 
 # FIXME: Regenerating figures.stamp requires make to go back to the
 # parent directory.  We already do the opposite (descending from

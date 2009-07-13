@@ -24,25 +24,51 @@ TEXINPUTS = $(DOC_SRCDIR):$(OUTPUTS_SRCDIR):$(IMG_SRCDIR):
 
 tutorial: tutorial-html tutorial-pdf
 
+# FIXME: As in milena/doc/Makefile.am, we should probably strip
+# $(srcdir) prefixes from target variables, e.g. instead of:
+#
+#   FOO = $(srcdir)/foo.pdf
+#   $(FOO): foo.tex bar.tex
+#   dist_doc_DATA = $(FOO)
+#
+# we should use:
+#
+#   FOO = foo.pdf
+#   $(srcdir)/$(FOO): foo.tex bar.tex
+#   dist_doc_DATA = $(FOO)
+#
+# since it minimizes installation issues (see milena/doc/Makefile.am
+# and Vaucanson's doc/Makefile.am).
+
+# FIXME: Distributed products should be generated in the source dir.
+# That's actually the case, *but* the current solution is not clean
+# and might break sometimes.  The clean approach is to create a
+# temporary directory, try to generate the documentation there, and
+# move its contents to the source dir in case of success.  If the
+# product is a directory, also refresh a timestamp (in the source
+# dir).
+
 # Intermediate product for the various doc targets of the parent
 # directory.
 #
 # This is not a bug: TUTORIAL_HH is meant to have a `.hh' extension,
 # since it is later parsed by Doxygen, which complains about `.html'
 # files.
-TUTORIAL_HH = tutorial.hh
+TUTORIAL_HH = $(srcdir)/tutorial.hh
 tutorial-html: $(TUTORIAL_HH)
 $(TUTORIAL_HH): tutorial.tex $(srcdir)/../figures.stamp
 	$(DOC_SRCDIR)/tools/todoxygen.sh		\
-	  $< $(DOC_SRCDIR)/tutorial $(DOC_SRCDIR)
+	  $< $(DOC_SRCDIR)/tutorial $(DOC_SRCDIR)	\
+	  && mv tutorial.hh $(srcdir)
 
 # Final product.
-TUTORIAL_PDF = tutorial.pdf
+TUTORIAL_PDF = $(srcdir)/tutorial.pdf
 tutorial-pdf: $(TUTORIAL_PDF)
 $(TUTORIAL_PDF): tutorial.tex $(srcdir)/../figures.stamp
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<	\
+	  && tutorial.pdf $(srcdir)
 
 # FIXME: Regenerating figures.stamp requires make to go back to the
 # parent directory.  We already do the opposite (descending from

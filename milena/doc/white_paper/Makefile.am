@@ -38,20 +38,46 @@ EPSS = $(PNGS:png=eps)
 white-paper: white-paper-pdf white-paper-html
 
 
-WHITE_PAPER_HTML = white_paper_html/index.html
+# FIXME: As in milena/doc/Makefile.am, we should probably strip
+# $(srcdir) prefixes from target variables, e.g. instead of:
+#
+#   FOO = $(srcdir)/foo.pdf
+#   $(FOO): foo.tex bar.tex
+#   dist_doc_DATA = $(FOO)
+#
+# we should use:
+#
+#   FOO = foo.pdf
+#   $(srcdir)/$(FOO): foo.tex bar.tex
+#   dist_doc_DATA = $(FOO)
+#
+# since it minimizes installation issues (see milena/doc/Makefile.am
+# and Vaucanson's doc/Makefile.am).
+
+# FIXME: Distributed products should be generated in the source dir.
+# That's actually the case, *but* the current solution is not clean
+# and might break sometimes.  The clean approach is to create a
+# temporary directory, try to generate the documentation there, and
+# move its contents to the source dir in case of success.  If the
+# product is a directory, also refresh a timestamp (in the source
+# dir).
+
+WHITE_PAPER_HTML = $(srcdir)/white_paper_html/index.html
 white-paper-html: $(WHITE_PAPER_HTML)
 $(WHITE_PAPER_HTML): white_paper.tex $(EPSS)
 	test -d white_paper_html || mkdir white_paper_html
 	TEXINPUTS=$(TEXINPUTS) hevea -O -fix $< -o $@
 	$(top_srcdir)/milena/doc/tools/clearbanner.sh $@
+	mv -f white_paper_html $(srcdir)
 
 
-WHITE_PAPER_PDF = white_paper.pdf
+WHITE_PAPER_PDF = $(srcdir)/white_paper.pdf
 white-paper-pdf: $(WHITE_PAPER_PDF)
 $(WHITE_PAPER_PDF): white_paper.tex $(PNGS)
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(TEXINPUTS) pdflatex $<	\
+	  && mv white_paper.pdf $(srcdir)
 
 
 dist_doc_DATA =					\
@@ -76,7 +102,9 @@ clean-local:
 # Pretend the documentation is up-to-date.
 .PHONY: fake-doc
 fake-doc:
+	test -d figures || mkdir figures
 	touch $(EPSS)
+	test -d $(srcdir)/white_paper_html || mkdir $(srcdir)/white_paper_html
 	touch $(WHITE_PAPER_HTML)
 	touch $(WHITE_PAPER_PDF)
 

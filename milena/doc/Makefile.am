@@ -79,35 +79,43 @@ $(srcdir)/ref_guide/ref_guide.hh: fig-convert
 ## Vaucanson's doc build system.  (Do not forget to adjust Doxyfiles.)
 
 # Doxygen PDF documentation outputs.
-USER_REFMAN_PDF = $(srcdir)/user/latex/refman.pdf
-ref-doc-pdf: $(USER_REFMAN_PDF)
+USER_REFMAN_PDF = user-refman.pdf
+ref-doc-pdf: $(srcdir)/$(USER_REFMAN_PDF)
 # FIXME: Split in two rules: one generating the LaTeX file from the
 # Doxyfile, and another one generating the PDF from the LaTeX source.
 # Moreover, the LaTeX to PDF rule could be factored using a suffix
 # rule (as in LRDE's share/).
-$(USER_REFMAN_PDF): $(srcdir)/Doxyfile_user_pdf $(srcdir)/figures.stamp $(EXTRA_DEPS)
-	$(DOXYGEN) $<
-	cd $(srcdir)/user/latex && $(MAKE) pdf
+$(srcdir)/$(USER_REFMAN_PDF): $(srcdir)/Doxyfile_user_pdf $(srcdir)/figures.stamp $(EXTRA_DEPS)
+	$(DOXYGEN) $<					\
+	  && cd $(srcdir)/user/latex			\
+	  && $(MAKE) pdf				\
+	  && cp -f refman.pdf ../../$(USER_REFMAN_PDF)
 
-USER_REFMAN_HTML = $(srcdir)/user/html
-ref-doc-html: $(USER_REFMAN_HTML)
-$(USER_REFMAN_HTML): $(srcdir)/Doxyfile_user $(srcdir)/figures.stamp $(EXTRA_DEPS)
-	$(DOXYGEN) $<
+# FIXME: Careful, `user-refman-pdf' is a directory, and this make rule
+# depends on its timestamp, which is wrong.
+USER_REFMAN_HTML = user-refman-html
+ref-doc-html: $(srcdir)/$(USER_REFMAN_HTML)
+$(srcdir)/$(USER_REFMAN_HTML): $(srcdir)/Doxyfile_user $(srcdir)/figures.stamp $(EXTRA_DEPS)
+	$(DOXYGEN) $<							\
+	  && rm -fr $(srcdir)/$(USER_REFMAN_HTML)			\
+	  && mv $(srcdir)/user/html $(srcdir)/$(USER_REFMAN_HTML)
 
 # Doxygen HTML documentation output directories.
-DEVEL_REFMAN_PDF = $(srcdir)/devel/latex/refman.pdf
-ref-doc-devel-pdf: $(DEVEL_REFMAN_PDF)
+DEVEL_REFMAN_PDF = devel/latex/refman.pdf
+ref-doc-devel-pdf: $(srcdir)/$(DEVEL_REFMAN_PDF)
 # FIXME: Split in two rules: one generating the LaTeX file from the
 # Doxyfile, and another one generating the PDF from the LaTeX source.
 # Moreover, the LaTeX to PDF rule could be factored using a suffix
 # rule (as in LRDE's share/).
-$(DEVEL_REFMAN_PDF): $(srcdir)/Doxyfile_devel_pdf $(srcdir)/figures.stamp $(EXTRA_DEPS)
+$(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/Doxyfile_devel_pdf $(srcdir)/figures.stamp $(EXTRA_DEPS)
 	$(DOXYGEN) $<
 	cd $(srcdir)/devel/latex && $(MAKE) $(AM_MAKEFLAGS)
 
-DEVEL_REFMAN_HTML = $(srcdir)/devel/html
-ref-doc-devel-html: $(DEVEL_REFMAN_HTML)
-$(DEVEL_REFMAN_HTML): $(srcdir)/Doxyfile_devel $(srcdir)/figures.stamp $(EXTRA_DEPS)
+# FIXME: Careful, `devel/html' is a directory, and this make rule
+# depends on its timestamp, which is wrong.
+DEVEL_REFMAN_HTML = devel/html
+ref-doc-devel-html: $(srcdir)/$(DEVEL_REFMAN_HTML)
+$(srcdir)/$(DEVEL_REFMAN_HTML): $(srcdir)/Doxyfile_devel $(srcdir)/figures.stamp $(EXTRA_DEPS)
 	$(DOXYGEN) $<
 
 ## ---------- ##
@@ -303,10 +311,10 @@ fake-doc:
 	touch $(srcdir)/Doxyfile_user
 	touch $(srcdir)/Doxyfile_user_pdf
 	cd $(srcdir) && test -d user || mkdir user
-	for d in $(USER_REFMAN_HTML) $(srcdir)/user/latex; do	\
+	for d in $(srcdir)/$(USER_REFMAN_HTML) $(srcdir)/user/latex; do	\
 	  if test -d $$d; then touch $$d; else mkdir $$d; fi;	\
 	done
-	touch $(USER_REFMAN_PDF)
+	touch $(srcdir)/$(USER_REFMAN_PDF)
 
 # The converse of the previous rule, voiding the timestamps.
 .PHONY: void-doc

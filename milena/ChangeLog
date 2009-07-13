@@ -1,5 +1,31 @@
 2009-07-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Build the reference documentation in the source dir.
+
+	* doc/Makefile.am (USER_REFMAN_PDF): Set to user-refman.pdf.
+	(USER_REFMAN_HTML): Set to user-refman-html.
+	(DEVEL_REFMAN_PDF): Set to devel/latex/refman.pdf.
+	(DEVEL_REFMAN_HTML): Set to devel/html.
+	(ref-doc-pdf, $(srcdir)/$(USER_REFMAN_PDF))
+	(ref-doc-html, $(srcdir)/$(USER_REFMAN_HTML))
+	(ref-doc-devel-pdf, $(srcdir)/$(DEVEL_REFMAN_PDF))
+	(ref-doc-devel-html, $(srcdir)/$(DEVEL_REFMAN_HTML))
+	(fake-doc): Adjust.
+	* doc/ref_guide/Makefile.am (REF_GUIDE_HH): Set to
+	$(srcdir)/ref_guide.hh.
+	(REF_GUIDE_PDF): Set to $(srcdir)/ref_guide.pdf
+	($(REF_GUIDE_HH), $(REF_GUIDE_PDF)): Adjust.
+	* doc/tutorial/Makefile.am (TUTORIAL_HH): Set to
+	$(srcdir)/tutorial.hh.
+	(TUTORIAL_PDF): Set to $(srcdir)/tutorial.pdf.
+	($(TUTORIAL_HH), $(TUTORIAL_PDF)): Adjust.
+	* doc/white_paper/Makefile.am (WHITE_PAPER_HTML): Set to
+	$(srcdir)/white_paper_html/index.html.
+	(WHITE_PAPER_PDF): Set to $(srcdir)/white_paper.pdf.
+	($(WHITE_PAPER_HTML), $(WHITE_PAPER_PDF), fake-doc): Adjust rules.
+
+2009-07-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Polish clean rules.
 
 	* apps/statues/Makefile.am (CLEANFILES): Add
