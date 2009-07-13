@@ -1,5 +1,14 @@
 2009-07-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the installation of the Doxygen HTML user documentation.
+
+	* doc/Makefile.am (dist_doc_DATA): Move $(USER_REFMAN_HTML)...
+	(EXTRA_DIST): ...here.
+	(install-data-local, uninstall-local): New rules.
+	Suggested by Alexandre Duret-Luz <adl@lrde.epita.fr>.
+
+2009-07-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Build the reference documentation in the source dir.
 
 	* doc/Makefile.am (USER_REFMAN_PDF): Set to user-refman.pdf.

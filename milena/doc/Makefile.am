@@ -238,9 +238,30 @@ include $(srcdir)/figures/figures.mk
 include $(srcdir)/outputs/outputs.mk
 
 
-dist_doc_DATA =					\
-  $(USER_REFMAN_HTML)				\
-  $(USER_REFMAN_PDF)
+dist_doc_DATA =	$(USER_REFMAN_PDF)
+
+# Installing a directory located in the source dir is not supported by
+# Automake by default, so we cannot add `USER_REFMAN_HTML' to
+# `dist_doc_DATA'.  The following two rules are are workaround from
+# the Vaucanson project.
+EXTRA_DIST += $(USER_REFMAN_HTML)
+
+# We install by hand, otherwise Automake produces "install .../srcdoc
+# .../srcdoc", which installs our dir into the previous one, instead
+# of replacing it.
+install-data-local:
+	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN_HTML)
+	$(mkdir_p) $(DESTDIR)$(htmldir)
+	cp -r $(srcdir)/$(USER_REFMAN_HTML) $(DESTDIR)$(htmldir)
+## Try GNU chmod's X mode before resorting to something slower but
+## more standard.
+	chmod -R a+rX $(DESTDIR)$(htmldir) || \
+	find $(DESTDIR)$(htmldir) \( -type d -a -exec chmod a+rx {} \; \) \
+             -o -exec chmod a+r {} \;
+
+uninstall-local:
+	chmod -R 700 $(DESTDIR)$(htmldir)/$(USER_REFMAN_HTML)
+	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN_HTML)
 
 
 EXTRA_DIST +=					\
