@@ -1,3 +1,14 @@
+2009-07-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Polish clean rules.
+
+	* apps/statues/Makefile.am (CLEANFILES): Add
+	teapot-max-curv-skel.off, teapot-complex-max-curv.off,
+	socket-max-curv-segm.off, teapot-max-curv-segm.off,
+	socket-complex-max-curv-segm.off,
+	teapot-complex-max-curv-segm.off, socket-max-curv-skel.off,
+	teapot-max-curv.off and three-triangles-skel.off.
+
 2009-07-08  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
 	Make sure the documentation license is GPL v2.
