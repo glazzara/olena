@@ -127,4 +127,22 @@ dist-hook:
 	  autoreconf -f -v -i;				\
 	  find . -name autom4te.cache | xargs rm -rf	\
 	)
+
+
+# Set the package version to olena-x.x-snapshot-dd-mm-yy
+#
+# Do not check NEWS file (this is not a release so there is no
+# entries in this file for this package).
+#
+snapshot:
+	current_date=`date +'%d-%m-%y'` 				\
+	&& sed -e "s/^\(AC_INIT(\[Olena\],\) \[\([\.[:alnum:]]*\)\(-snapshot-.*-[[:alnum:]]*\)*\], \(.*\)/\1 [\2-snapshot-$$current_date], \4/g" 	\
+	       -e 's/ check-news / /g'					\
+	       $(srcdir)/configure.ac > $(srcdir)/configure.ac.tmp 	\
+	&& cp -f $(srcdir)/configure.ac $(srcdir)/configure.ac.old 	\
+	&& cp -f $(srcdir)/configure.ac.tmp $(srcdir)/configure.ac 	\
+	&& $(MAKE) $(AM_MAKEFLAGS) dist 				\
+	&& mv -f $(srcdir)/configure.ac.old $(srcdir)/configure.ac
+
 #>>
+#	&& $(srcdir)/build-aux/lrde-upload.sh

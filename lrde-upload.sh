@@ -13,7 +13,7 @@ DEST_DOC=$DEST/doc/milena
 # Retrieve the package version
 VERSION=`autoconf --trace='AC_INIT:$2'`
 CURRENT_DATE=`date +'%d_%m_%y'`
-REV=$VERSION-$CURRENT_DATE
+REV=$VERSION-snapshot-$CURRENT_DATE
 
 # Always do "cp then mv" when uploading the file, so that someone
 # cannot start a download why the destination file is incomplete.
@@ -21,8 +21,8 @@ REV=$VERSION-$CURRENT_DATE
 # Upload the tarball
 mkdir -p $DEST
 
-# Delete tarballs older than 2 days..
-find $DEST -maxdepth 1 -type f -mtime +2 -exec rm -f {} \;
+# Delete tarballs older than 2 days.
+find $DEST -maxdepth 1 -type f -mtime +2 -name 'olena-*-snapshot-*' -exec rm -f {} \;
 
 # tar.gz
 cp -f olena-$VERSION.tar.gz $DEST/olena-$REV.tar.gz.tmp
