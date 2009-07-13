@@ -667,6 +667,7 @@ mln/labeling/background.hh \
 mln/labeling/blobs.hh \
 mln/labeling/colorize.hh \
 mln/labeling/compute.hh \
+mln/labeling/compute_image.hh \
 mln/labeling/essential.hh \
 mln/labeling/fill_holes.hh \
 mln/labeling/flat_zones.hh \

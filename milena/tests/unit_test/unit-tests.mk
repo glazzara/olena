@@ -683,6 +683,7 @@ mln_labeling_background \
 mln_labeling_blobs \
 mln_labeling_colorize \
 mln_labeling_compute \
+mln_labeling_compute_image \
 mln_labeling_essential \
 mln_labeling_fill_holes \
 mln_labeling_flat_zones \
@@ -1943,6 +1944,7 @@ mln_labeling_background_SOURCES = mln_labeling_background.cc
 mln_labeling_blobs_SOURCES = mln_labeling_blobs.cc
 mln_labeling_colorize_SOURCES = mln_labeling_colorize.cc
 mln_labeling_compute_SOURCES = mln_labeling_compute.cc
+mln_labeling_compute_image_SOURCES = mln_labeling_compute_image.cc
 mln_labeling_essential_SOURCES = mln_labeling_essential.cc
 mln_labeling_fill_holes_SOURCES = mln_labeling_fill_holes.cc
 mln_labeling_flat_zones_SOURCES = mln_labeling_flat_zones.cc
