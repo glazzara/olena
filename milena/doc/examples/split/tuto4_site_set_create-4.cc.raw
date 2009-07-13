@@ -1,1 +1,4 @@
-    box2d b = make::box2d(-2,-2, 2, 2);
+    mln_piter_(p_array<point2d>) p(arr);
+    for_all(p)
+      std::cout << p << ", ";
+    std::cout << std::endl;

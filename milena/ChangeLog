@@ -1,5 +1,21 @@
 2009-07-13  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
+	Update a tutorial example.
+
+	* doc/outputs/tuto4_site_set_create.txt,
+	* doc/outputs/split/tuto4_site_set_create-1.txt,
+	* doc/outputs/split/tuto4_site_set_create-2.txt,
+	* doc/outputs/split/tuto4_site_set_create-3.txt,
+	* doc/examples/split/tuto4_site_set_create-2.cc.raw,
+	* doc/examples/split/tuto4_site_set_create-3.cc.raw,
+	* doc/examples/split/tuto4_site_set_create-4.cc.raw,
+	* doc/examples/split/tuto4_site_set_create-5.cc.raw: New reference
+	files.
+
+	* doc/examples/tuto4/site_set_create.cc: Add more sample code.
+
+2009-07-13  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
+
 	* mln/geom/rotate.hh: use mln_domain instead of mln_box.
 
 2009-07-13  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
