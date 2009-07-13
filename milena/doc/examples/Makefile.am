@@ -143,8 +143,9 @@ tuto4_point2d_SOURCES = tuto4/point2d.cc
 examples: $(EXTRA_PROGRAMS)
 
 run-examples: examples
+	mkdir -p $(top_builddir)/milena/doc/figures; 			\
 	@failcom='exit 1'; 						\
-	list='$(noinst_PROGRAMS)'; for bin in $$list; do 		\
+	list='$(EXTRA_PROGRAMS)'; for bin in $$list; do 		\
 	  echo "Running $$bin"; 					\
 	  ./$$bin > $(OUTPUTS_SRCDIR)/$$bin.txt || eval $$failcom; 	\
 	done
@@ -241,14 +242,14 @@ fix-refdata:
 	  diff $$split_ex $(SPLIT_EXAMPLES_SRCDIR)/`basename $$split_ex` >/dev/null 2>&1 \
 		|| echo "Updating reference file for $$split_ex";	\
 		   cp $$split_ex $(SPLIT_EXAMPLES_SRCDIR);		\
-	done; 								
+	done;
 
 
 split-examples:
 	test -d $(SPLIT_EXAMPLES_SRCDIR) || mkdir $(SPLIT_EXAMPLES_SRCDIR)
 	@failcom='exit 1'; 						\
 	list=`find $(EXAMPLES_SRCDIR) -type f -name '*.cc'`; for file in $$list; do \
-	$(DOC_SRCDIR)/tools/split_sample.sh $$file cc $(SPLIT_EXAMPLES_SRCDIR)\
+	$(DOC_SRCDIR)/tools/split_sample.sh $$file cc raw $(SPLIT_EXAMPLES_SRCDIR)\
 					      || eval $$failcom; 	\
 	done
 
@@ -256,7 +257,7 @@ split-outputs:
 	test -d $(SPLIT_OUTPUTS_SRCDIR) || mkdir $(SPLIT_OUTPUTS_SRCDIR)
 	@failcom='exit 1'; 						\
 	list='$(OUTPUTS_SRCDIR)/*.txt'; for file in $$list; do 	\
-	$(DOC_SRCDIR)/tools/split_sample.sh $$file txt $(SPLIT_OUTPUTS_SRCDIR)\
+	$(DOC_SRCDIR)/tools/split_sample.sh $$file txt "" $(SPLIT_OUTPUTS_SRCDIR)\
 					      || eval $$failcom; 	\
 	done
 
