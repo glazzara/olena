@@ -1,18 +1,18 @@
 #!/bin/sh
 
 # Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
-# 
+#
 # This file is part of Olena.
-# 
+#
 # Olena is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free
 # Software Foundation, version 2 of the License.
-# 
+#
 # Olena is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -90,7 +90,7 @@ fi
 if [ -z "$TEST_CXX" ]; then
   TEST_CXX="$CXX"
 fi
-  
+
 gcc_wrapper="$PWD/$output_directory/gcc-wrapper.sh"
 
 cleanup_last_results()
@@ -140,7 +140,7 @@ end_tmp_files()
 {
   local ef="error_entry_html.tmp"
   local wf="warning_entry_html.tmp"
-  close_dir_entry $ef 
+  close_dir_entry $ef
   close_dir_entry $wf
   echo "</ol><br>" >> $ef
   echo "</ol><br>" >> $wf
@@ -178,7 +178,7 @@ open_dir()
     </table>
     <br>
 EOF
- 
+
 }
 
 close_dir()
@@ -384,7 +384,7 @@ main()
 	# failed during execution.
 	if [ "$status" == "FAIL" ] || [ "$status" == "XFAIL" ]; then
 
-	  grep -B 2 ": $name\$" $check_log | head -n 1 > "$dir/$name.log"
+	  grep -B 1 "X*FAIL: $name\$" $check_log | head -n 1 > "$dir/$name.log"
           error_entry $name $bdir error $status
           error_node $name $log "./$name" "$dir/$name" $bdir error $status
 	fi
@@ -417,11 +417,11 @@ main()
       fi
     done
   done
- 
+
   # Build pretty output.
   end_tmp_files
   make_output_file
-  
+
   # Cleanup temporary files.
   cleanup_tmp_files
   cleanup_gcc_wrapper
