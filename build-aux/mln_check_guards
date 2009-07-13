@@ -1,0 +1,134 @@
+#! /usr/bin/env perl
+#
+# Copyright (C) 2009 EPITA Research and Development Laboratory
+# (LRDE)
+#
+# This file is part of the Milena Library.  This library is free
+# software; you can redistribute it and/or modify it under the terms
+# of the GNU General Public License version 2 as published by the
+# Free Software Foundation.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this library; see the file COPYING.  If not, write to
+# the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+# Boston, MA 02111-1307, USA.
+#
+#
+# check_guards.pl: this file comes from the Vaucanson project.
+#
+# Usage: ./mln_check_guards <file1> <file2> ....
+#
+# Check guards and fix them if needed.
+
+use warnings;
+use strict;
+
+my $boundupper = "#ifndef %CPPNAME%
+# define %CPPNAME%";
+my $boundlower = "#endif // ! %CPPNAME%";
+
+sub check_guards ($)
+{
+  my $fname = $_[0];
+
+  # The short name, without the path from builddir to srcdir.
+  $_ = $fname;
+  s,^.*milena/mln/,,g;
+  my $shortname = $_;
+  s,.*/,,g;
+  my $basename = $_;
+
+  $_ = $shortname;
+  s,^[./]*,,g;
+  s,^,MLN_,g;
+  s,[^a-zA-Z0-9],_,g;
+  y/[a-z]./[A-Z]_/;
+  my $cppname = $_;
+
+  $_ = $boundupper;
+  s,%BASENAME%,$basename,g;
+  s,%CPPNAME%,$cppname,g;
+  my $xboundupper = $_;
+
+  $_ = $boundlower;
+  s,%BASENAME%,$basename,g;
+  s,%CPPNAME%,$cppname,g;
+  my $xboundlower = $_;
+
+
+  open(FILE, "<", $fname) or die "cannot open $fname: $!\n";
+
+  my $content;
+  while (<FILE>)
+    {
+      $content .= $_;
+    }
+  close FILE;
+
+  # Prepare the new contents.
+  $_ = $content;
+
+  # Kill trailing spaces.
+#  s/[ \t]+$//mg;
+
+#  s,([ \t\n])*$,\n,sg;
+
+  # Adjust cpp guards.
+  if (/\# *ifndef[^\n]*\n[\n\t ]*\# *define[^\n]*\n/s)
+    {
+      s,\# *ifndef[^\n]*\n[\n\t ]*\# *define[^\n]*\n,$xboundupper\n,sg;
+    }
+
+  if (/\# *endif[^\n]*\n[\n\t ]*$/s)
+    {
+      s,\# *endif[^\n]*\n[\n\t ]*$,$xboundlower\n,sg;
+    }
+
+  # Make sure we have a unique ending eol.
+  s/\n+\z/\n/;
+
+  $content = $_;
+
+  my @mv = ("mv", "-f", "$fname", "$fname.bak");
+  system(@mv) == 0 or die "system @mv failed: $?\n";
+
+  open(FILE, ">", $fname) or die "cannot open $fname for writing: $!\n";
+  print FILE $content;
+}
+
+if ($#ARGV == -1)
+{
+  print "mln_check_guards <file1> <file2> ...\n";
+  print "----\n";
+  print "Check guards in a list of files and fix them if needed.\n";
+  exit 1;
+}
+
+foreach my $file (@ARGV)
+{
+  check_guards ($file);
+}
+
+exit 0;
+
+### Setup "GNU" style for perl-mode and cperl-mode.
+## Local Variables:
+## perl-indent-level: 2
+## perl-continued-statement-offset: 2
+## perl-continued-brace-offset: 0
+## perl-brace-offset: 0
+## perl-brace-imaginary-offset: 0
+## perl-label-offset: -2
+## cperl-indent-level: 2
+## cperl-brace-offset: 0
+## cperl-continued-brace-offset: 0
+## cperl-label-offset: -2
+## cperl-extra-newline-before-brace: t
+## cperl-merge-trailing-else: nil
+## cperl-continued-statement-offset: 2
+## End:

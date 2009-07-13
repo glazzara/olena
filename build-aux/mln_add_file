@@ -1,0 +1,242 @@
+#!/bin/sh
+
+# Copyright (C) 2009 EPITA Research and Development Laboratory
+# (LRDE)
+#
+# This file is part of the Milena Library.  This library is free
+# software; you can redistribute it and/or modify it under the terms
+# of the GNU General Public License version 2 as published by the
+# Free Software Foundation.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this library; see the file COPYING.  If not, write to
+# the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+# Boston, MA 02111-1307, USA.
+
+# Usage: ./new_header.sh <mln/path/header.hh>
+#
+# Add a new header in milena and include it in all.hh if exists.
+#
+
+
+if [ $# -ne 1 ] && [ $# -ne 2 ]; then
+  echo "Usage: `basename $0` [--with-test] <mln/path/headername.hh>"
+  exit 1
+fi
+
+
+with_test=0
+if [ "$1" == "--with-test" ]; then
+  with_test=1;
+  shift
+fi
+
+output_dir=`dirname $1`
+
+
+add_license()
+{
+  cat >> $1 <<EOF
+// Copyright (C) `date +'%Y'` EPITA Research and Development Laboratory (LRDE)
+//
+// This file is part of Olena.
+//
+// Olena is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation, version 2 of the License.
+//
+// Olena is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+//
+// As a special exception, you may use this file as part of a free
+// software project without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to produce
+// an executable, this file does not by itself cause the resulting
+// executable to be covered by the GNU General Public License.  This
+// exception does not however invalidate any other reasons why the
+// executable file might be covered by the GNU General Public License.
+
+EOF
+
+}
+
+
+add_doxygen_headers()
+{
+  cat >> $1 <<EOF
+
+/// \\file
+///
+/// FIXME.
+
+
+EOF
+}
+
+prepare_file()
+{
+
+  guards=`echo "$1" | tr "[a-z]" "[A-Z]" | sed -e 's/[\/\.]/_/g'`
+
+  # Add licence and guards.
+  add_license $1
+
+  cat >> $1 <<EOF
+#ifndef $guards
+# define $guards
+EOF
+
+  add_doxygen_headers $1
+
+# opening sub namespaces
+  dir=`echo $output_dir | cut -d '/' -f 1`
+  indent=""
+  i=1
+
+  while ! [ -z "$dir" ]; do
+    cat >> $1 <<EOF
+${indent}namespace $dir
+${indent}{
+
+EOF
+
+    indent="$indent  "
+    i=$(($i + 1))
+    dir=`echo $output_dir | cut -d '/' -f $i`
+  done
+  indent=`echo "$indent" | sed -e 's/  $//'`
+
+
+
+# Adding few comments and MLN_INCLUDE_ONLY guards.
+    cat >> $1 <<EOF
+${indent}// Add facade declaration here.
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+
+${indent}// Implement the facade here.
+
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
+EOF
+
+
+
+# closing sub namespaces
+  path=`dirname $1`
+  while [ "$path" != "." ]; do
+    namespace=`echo $path | sed -e 's/\//::/g'`
+
+    cat >> $1 <<EOF
+${indent}} // end of namespace $namespace
+
+EOF
+
+    path=`dirname $path`
+    indent=`echo "$indent" | sed -e 's/  $//'`
+  done
+
+
+# End of file.
+cat >> $1 <<EOF
+#endif // ! $guards
+EOF
+
+}
+
+add_to_all_hh()
+{
+  if ! [ -f "$output_dir/all.hh" ]; then
+    echo "Warning: $output_dir/all.hh does not exist, you may want to \
+create it." 1>&2
+    return
+  fi
+
+  if ! [ -z "`grep "# include <$1>" $output_dir/all.hh`" ]; then
+    echo "File already included in $output_dir/all.hh" 1>&2
+    return
+  fi
+
+  line=`grep -nE '^#endif // ! ' $output_dir/all.hh | tail -n 1 | cut -d ':' -f 1`
+  line=$(($line - 1))
+  sed -i "${line}i\# include <$1>
+" $output_dir/all.hh
+}
+
+add_to_test_makefile()
+{
+  test_dir=`dirname $1`
+  test_name=`basename $1`
+  test_bname=`basename $test_name .cc`
+
+  if ! [ -f "$test_dir/Makefile.am" ]; then
+    echo "Warning: $test_dir/Makefile.am does not exist, you may want to \
+create it." 1>&2
+    return
+  fi
+
+  if ! [ -z "`grep "$test_name" $test_dir/Makefile.am`" ]; then
+    echo "File already added to $test_dir/Makefile.am" 1>&2
+    return
+  fi
+
+  line=`grep -nE "_SOURCES = " $test_dir/Makefile.am | tail -n 1 | cut -d ':' -f 1`
+  line=$(($line + 1))
+  sed -i "${line}i${test_bname}_SOURCES = $test_name
+" $test_dir/Makefile.am
+
+  line=`grep -nE '\\\' $test_dir/Makefile.am | grep -B 1 'CLEANFILES = ' | head -n 1 | cut -d ':' -f 1`
+  line=$(($line + 1))
+  sed -i "${line}i\\\t${test_bname} \\\\" $test_dir/Makefile.am
+
+}
+
+
+add_test()
+{
+  test_file=tests/`echo $1 | sed -e 's,mln/,,g' | sed -e 's,\.hh,.cc,g'`
+
+  add_license $test_file
+  add_doxygen_headers $test_file
+
+  cat >> $test_file <<EOF
+
+#include <$1>
+
+int main()
+{
+  using namespace mln;
+
+
+}
+EOF
+
+  add_to_test_makefile $test_file
+}
+
+
+touch $1
+prepare_file $1
+add_to_all_hh $1
+
+
+if [ $with_test -eq 1 ]; then
+  add_test $1
+fi
+
