@@ -6,26 +6,35 @@ Olena is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free
 Software Foundation, version 2 of the License.
 
-The complete GNU General Public Licence Notice can be found as the
-'COPYING' file in the root directory.
+Olena is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
 
-=======================
+You should have received a copy of the GNU General Public License
+along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+
+The complete GNU General Public License Notice can also be found in
+the 'COPYING' file in the root directory.
+
+
+======================
  Introduction to Olena
-=======================
+======================
 
 Olena_, a platform dedicated to image processing.
 
-.. _Olena: http:://olena.lrde.epita.fr
+.. _Olena: http://olena.lrde.epita.fr
 
 
 Overview
 ========
 
-Olena is a platform dedicated to image processing. At the moment it is
-mainly composed of a C++ library: Milena. This library features many
-tools to easily perform image processing tasks. Its main
+Olena is a platform dedicated to image processing.  At the moment it is
+mainly composed of a C++ library: Milena.  This library features many
+tools to easily perform image processing tasks.  Its main
 characteristic is its genericity: it allows to write an algorithm once
-and run it over many kinds of images (grey scale, color, 1D, 2D, 3D,
+and run it over many kinds of images (gray scale, color, 1D, 2D, 3D,
 ...).
 
 Olena is a project developed by the `EPITA Research and Development
@@ -39,17 +48,17 @@ We do our image processing research using this library, but most
 importantly we have gathered (and still do) generic programming
 expertise from the library development.
 
-Yet, Olena is an ongoing development project. Few algorithms or
-definitions may change in a near future. A list of potential changes
+Yet, Olena is an ongoing development project.  Few algorithms or
+definitions may change in a near future.  A list of potential changes
 is maintained here :
 https://olena.lrde.epita.fr/FeaturesSubjectToChange.
 
-Likewise, the documentation does not cover the whole project yet. In the
+Likewise, the documentation does not cover the whole project yet.  In the
 `doc/' directory you will find the first draft of a reference
-manual. It includes a quick reference guide and a tutorial. This is a
+manual.  It includes a quick reference guide and a tutorial.  This is a
 good start.  In `milena/tools' and `milena/doc/examples' few sample
-programs are available. Most of them are already used to illustrate
-the tutorial.  For the rest, we're afraid you will have to dig the
+programs are available.  Most of them are already used to illustrate
+the tutorial.   For the rest, we're afraid you will have to dig the
 code or e-mail us.
 
    Please direct any question or comments to <olena@lrde.epita.fr>, or
@@ -70,7 +79,7 @@ the command prompt::
 	make install (as root)
 
 Note that an installation is  specific to the compiler used to install
-it. Indeed, the call  to ``./configure`` enables some workarounds and,
+it.  Indeed, the call  to ``./configure`` enables some workarounds and,
 consequently,  users must  compile  with the  same  compiler to  avoid
 compatibility problems.
 
@@ -86,46 +95,63 @@ Please read the INSTALL file for more information about building and
 installing Olena.
 
 
-Additional features
+Additional Features
 -------------------
 
-Python bindings are provided thanks to Swilena. It is disabled by
-default because it requires extra dependencies: Swig. To enable the
-compilation of this module use::
+Swilena is an optional component of Olena exposing Milena to other
+languages thanks to the Simplified Wrapper and Interface Generator
+(SWIG_).
+
+.. _SWIG: http://www.swig.org
+
+For the moment, only some Python_ bindings are provided.  They are
+disabled by default because they require extra dependencies (SWIG and
+Python).
+
+.. _Python: http://www.python.org
+
+To enable the installation of this module use::
 
        ./configure --enable-swilena
 
+Sample tools are shipped with the tarball. To enable the installation of
+these tools use::
 
-Sample tools are shipped in the tarball. To enable the compilation of
-       these tools use:: ./configure --enable-tools
+       ./configure --enable-tools
 
-
-Sample applications are shipped in the tarball. To Enable the
-compilation of these applications use::
+Sample applications are shipped with the tarball.  To enable the
+installation of these applications use::
 
        ./configure --enable-apps
 
 
-To read/write TIFF images with Olena, libtiff is required. To specify
-the base directory, use::
+To read/write TIFF images with Olena, libtiff is required.  If
+``configure`` is unable to find libtiff on your system, you can help
+it by specifying the base directory of libtiff, e.g.::
 
-       ./configure --with-tiff=/path/to/basedir
-
-
-To read/write GDCM images with Olena, libgdcm is required. To specify
-the base directory, use::
-
-       ./configure --with-gdcm=/path/to/basedir
+       ./configure --with-tiff=/usr/local
 
 
+To read/write DICOM images with Olena, GDCM is required.  Likewise,
+you can tell ``configure`` where to find it by giving its install
+prefix, e.g.::
 
-Layout of the tarball
+       ./configure --with-gdcm=/usr/local
+
+Olena use Magick++ to read and write images in common formats.  As for
+other optional dependencies, you can specify where it is located (if
+needed) at configuration time::
+
+       ./configure --with-magickxx=/usr/local/
+
+
+Layout of the Tarball
 ---------------------
 
 The Olena project directory layout is as follows:
 
 build-aux
-   Auxialiary tools used by the GNU Build System during ``configure``
+   Auxiliary tools used by the GNU Build System during ``configure``
    and ``make`` stages.
 
 external
@@ -133,7 +159,7 @@ external
 
 
 m4
-   Portability macros from the ``gnulib`` library.
+   Extra Autoconf macros.
 
 milena
 
@@ -141,7 +167,7 @@ milena
      Application examples.
 
   mln
-     Header of the Milena library.
+     Headers of the Milena library.
 
   tests
      The test suite.
@@ -153,17 +179,20 @@ milena
      Example tools.
 
   mesh
-     Mesh images.
+     Some 3D meshes, mostly used for test purpose.
 
   img
-     Test images.
+     Some (2D) images, mostly used for test purpose.
 
   demos
      Demos of Milena.
 
 
 swilena
-   Python binding sources.
+   
+
+  python
+     Some Python bindings for Milena.
 
 
 Requirements
@@ -171,11 +200,14 @@ Requirements
 
 Olena has been tested on the following configurations:
 
-System                   Compiler
-Linux                    g++ 3.3, 3.4, 4.0, 4.1, 4.2
-			 icc 10.1, 11.0
-Linux-64 		 g++ 4.1
-MacOS X                  g++ 4.0.1
+===========================  =============================================
+System                       Compiler
+===========================  =============================================
+GNU/Linux on IA-32           g++ (GNU GCC) 3.3, 3.4, 4.0, 4.1, 4.2 and 4.3
+GNU/Linux on IA-32           icpc (Intel C/C++ Compiler) 10.1 and 11.0
+GNU/Linux on AMD64/Intel 64  g++ (GNU GCC) 4.1
+Mac OS X (10.5) on IA-32     g++ (GNU GCC) 4.0.1
+===========================  =============================================
 
 
 According to the wanted features, some dependencies may be required:
@@ -185,20 +217,24 @@ To enable I/O with TIFF images, `libtiff`_ must be installed.
 
 .. _libtiff: http://www.libtiff.org/
 
-To enable I/O with GDCM images, `libgdcm`_ must be installed.
+To enable I/O with GDCM images, `GDCM`_ must be installed.
 
-.. _libgdcm: http://sourceforge.net/apps/mediawiki/gdcm/
+.. _GDCM: http://sourceforge.net/apps/mediawiki/gdcm/
 
-
-To support many image formats in Olena's I/O system, `libmagick++`_ must
+To support many image formats in Olena's I/O system, `Magick++`_ must
 be installed.
 
-.. _libmagick++: Please see your distribution package manager.
+.. _Magick++: http://www.imagemagick.org/Magick++/
 
-
-`Boost`_ may be needed if you want to support tuple accumulators.
+The Boost Tuple Library from the `Boost`_ Project is needed if you
+want to support tuple accumulators.
 
 .. _Boost: http://www.boost.org/
+
+Apart from GDCM, these dependencies are commonly provided by the
+package management systems (e.g., Debian's APT, Mac OS X's Mac Ports,
+etc.).  We recommend using package managers instead of installing
+dependencies by hand.
 
 
 See Also
@@ -218,23 +254,22 @@ There are other sources of interest in the distribution.
 License
 =======
 
-Olena is released under the GNU General Public Licence. See the file
+Olena is released under the GNU General Public Licence.  See the file
 ``COPYING`` (at the root of the source tree) for details.
 
 
 Contacts
 ========
 
-The team can be reached by mail at olena@lrde.epita.fr. Snail mail
-addresses follow.
+The team can be reached by mail at olena@lrde.epita.fr.  The snail
+mail address follows.
 
 * Olena - LRDE
 
   | Laboratoire de Recherche et Développement de l'EPITA (LRDE)
   | 14-16 rue Voltaire
-  | F-94276 Le Kremlin-Bicêtre CEDEX
+  | FR-94276 Le Kremlin-Bicêtre CEDEX
   | France
-
 
 
 Bibliography
@@ -246,13 +281,13 @@ papers.
 About Image Processing Programming:
 
    * `Milena: Write Generic Morphological Algorithms Once, Run on Many
-     Kinds of Images`. Roland Levillain, Thierry Géraud, Laurent
+     Kinds of Images`.  Roland Levillain, Thierry Géraud, Laurent
      Najman.  In the proceedings of the 9th International Symposium on
      Mathematical Morphology (ISMM) http://www.cs.rug.nl/~ISMM09/
      Groningen, The Netherlands August 24 - 27, 2009.
 
    * `Generic Algorithmic Blocks Dedicated to Image Processing`,
-     Jérôme Darbon, Thierry Géraud, Patrick Bellot. In the proceedings
+     Jérôme Darbon, Thierry Géraud, Patrick Bellot.  In the proceedings
      of ECOOP PHD Oslo, Norway, June 2004.
 
    * `Generic Implementation of Morphological Image Operators`, Jérôme
@@ -286,17 +321,17 @@ About Generic Programming Paradigm:
 
    * `Static C++ Object-Oriented Programming (SCOOP)`, Nicolas Burrus,
      Alexandre Duret-Lutz, Thierry Géraud, David Lesage, and Raphaël
-     Poss. In the Proceedings of the Workshop on Multiple Paradigm
+     Poss.  In the Proceedings of the Workshop on Multiple Paradigm
      with OO Languages (MPOOL'03) Anaheim, CA, October 2003.
 
-   * `Generic Design Patterns in C++`. Alexandre Duret-Lutz, Thierry
+   * `Generic Design Patterns in C++`.  Alexandre Duret-Lutz, Thierry
      Géraud, and Akim Demaille.  In the Proceedings of the 6th USENIX
      Conference on Object-Oriented Technologies and Systems
      (COOTS'2001), pages 189-202, San Antonio, Texas, USA,
      January-February 2001.
 
    * `Olena: a Component-Based Platform for Image Processing, mixing
-     Generic, Generative and OO Programming`. Alexandre Duret-Lutz.
+     Generic, Generative and OO Programming`.  Alexandre Duret-Lutz.
      In the Proceedings of the 2nd International Symposium on
      Generative and Component-Based Software Engineering (GCSE 2000),
      Young Researchers Workshop (published in "Net.ObjectDays2000";
