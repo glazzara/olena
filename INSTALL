@@ -1,53 +1,66 @@
+==================
+Installation Notes
+==================
+
+
 This file contains information about the installation process of Olena.
 
    You can read the `README' file for general information about Olena.
 
-1.1 Required software
-=====================
+
+Required Software
+=================
 
 Here is a non-exhaustive list of required software required to build
 Olena successfully.
 
    * to compile the user examples:
+
         - a POSIX shell, like Bash
 
         - a decent C++ compiler, like GNU C++
 
-        - a `make' utility, like GNU or BSD `make'
+        - a `make' utility, like GNU `make'
 
 Optional:
 
-   * to compile the documentation:
+   * to (re)compile the documentation:
+
         - a LaTeX distribution
 
         - the `listings' TeX package
 
         - the utility `convert' from ImageMagick
 
-        - GNU Autogen
-
         - `hevea', a TeX to HTML conversion tool
 
-        - the `texinfo' utilities from GNU
-
-	- latex2html
+        - latex2html
 
    * to use various image types:
-     	- libMagick++
 
-	- libTiff
+        - Magick++
 
-	- libGdcm
+        - libtiff
 
-   * to develop _in_ Olena:
-        - GNU Autotools (Autoconf 2.54, Automake 1.7)
+        - GDCM
 
-   * to develop _in_ Swilena (Python Bindings):
-     	- Swig
+   * to develop _within_ Olena:
+
+        - GNU Autoconf 2.61
+
+        - GNU Automake 1.10
+
+        - GNU Libtool 1.5.22
+
+   * to develop _within_ Swilena:
+
+        - SWIG
+
+        - Python
 
 
-1.2 Configuration
-=================
+Configuration
+=============
 
 In order to prepare the build process, you need to configure the source
 tree.
@@ -55,24 +68,24 @@ tree.
    Assuming your Olena distribution is uncompressed in directory
 `olena-1.0', follow these steps:
 
-     $ mkdir ../build
-     $ cd ../build && ../olena-1.0/configure CXXFLAGS=''
-
-   *Note:* take care to set `CXXFLAGS' always when running `configure',
-for the default value computed by `configure' may yield to compilation
-issues (conflicts between optimization and debugging).
+     % cd olena-1.0
+     % mkdir _build
+     % cd _build
+     % ../configure
 
    The build process can be altered by a number of options you can pass
 to the `configure' script. The following sections describe them.
 
    Additionally, if you are an Olena maintainer (a person who runs
 `make distcheck'), _prefer setting `CXXFLAGS' as an environment
-variable_: the flags given on the commandline to `configure' are not
-propagated to recursive runs by `make distcheck'.
+variable_: the flags given on the command line to `configure' are not
+propagated to recursive runs by `make distcheck'.  Or better: use the
+environment CONFIG_SITE to set up a configuration environment (see
+Autoconf's manual).
 
 
-1.2.1 Installation path
------------------------
+Installation Path
+-----------------
 
 By default, Olena is installed in the standard "local" directory of
 your system. This is usually `/usr/local' under Unix.
@@ -82,8 +95,8 @@ your system. This is usually `/usr/local' under Unix.
       --prefix=<installation prefix>
 
 
-1.2.2 Compiler selection and compilation flags
-----------------------------------------------
+Compiler Selection and Compilation Flags
+----------------------------------------
 
 By default, `configure' will try to use the first C++ compiler it
 encounters on your system. If `CXX' is not set, it will look, in order,
@@ -106,151 +119,89 @@ for:
    You can override the detection system by passing your favorite
 compiler name to `configure', as follows:
 
-     $ .../configure CXX=<your-favorite-C++-compiler>
+     % ../configure CXX=<your-favorite-C++-compiler>
 
    As an alternative, you can also set the environment variable `CXX'.
 
 
+   For some compilers (GNU g++ and Intel's icpc to some extent) ,
+`configure' will use default CXXFLAGS. You can override the default
+C++ flags by giving `configure' your selection of flags:
 
-   For most compilers, `configure' will select debugging and minimal
-optimization (`-g -O2' with g++), which is wrong. You should override
-the default C++ flags by giving `configure' your selection of flags:
-
-     $ .../configure CXXFLAGS="<your-favorite-flags>"
-
-   This is especially useful to solve a number of problems, described
-in the following section.
+     % ../configure CXXFLAGS="<your-favorite-flags>"
 
 
-1.3 Using `CXXFLAGS' to solve compilation problems
-==================================================
+Additional Components
+=====================
 
-1.3.1 Olena needs C99
----------------------
+In additional to Milena, several build targets can be enabled.  These
+parts are called "components", and you can obtain a list of them by
+running:
 
-While Olena is written in C++, it uses a number of features (math
-functions) from ISO C99. However most C++ compilers do not enable these
-features by default.  If your compilation fails with (e.g.) undefined
-references to `roundf', but you know what flags can activate these
-functions, add them to `CXXFLAGS'.
+     % ../configure --help
 
-   In case your system does not provide some math functions necessary
-for Olena, you can force the use of a local, overloaded, implementation,
-by using macros of the form `-DOLN_NEED_xxx', where `xxx' stands for
-the name of the missing function, in uppercase.  For example, on Darwin
-(MacOS X), the flag `-DOLN_NEED_SQRTF' is needed (but `configure'
-should add it anyway).
+See README for more information on additional components.
 
 
-1.3.2 Olena needs deep template recursion
------------------------------------------
-
-The C++ design patterns used in Olena use deep template nesting and
-recursion. However, the C++ standard specifies that C++ compiler need
-only handle template recursion up to 19 levels, which is insufficient
-for Olena. This is a problem for GCC 2.95 and probably other compilers.
-
-   Hopefully, `configure' tries to fix this automatically by adding
-`-ftemplate-depth-NN' when necessary, but other compilers than GCC may
-need other flags. If you know these flags, add them to `CXXFLAGS'.
-
-
-1.3.3 Debugging flags
----------------------
-
-All over the code, many sanity checks are enabled by default. They are
-convenient since they make sure nothing wrong is passed to the functions.
-However, once the program is stable they may not be necessary anymore.
-Passing `-DNDEBUG' to the CXXFLAGS disable many sanity checks, while providing
-*high* performance improvement.
-
-
-
-1.3.4 Speeding up the compilation
----------------------------------
-
-When using GCC, by default separate phases of the compilation of each
-file are run sequentially (compilation then assembly). Using `-pipe' in
-`CXXFLAGS' allows GCC to fork processes and run compilation phases in
-parallel, which brings a compilation speedup on multiprocessor machines
-or machines with slow storage access (when using `-pipe', no
-intermediary data is saved).
-
-
-1.4 Speeding up the configuration process
-=========================================
-
-`configure' can manage a cache of autodetected features and values.
-This cache speeds up `configure' runs and can be activated with the
-`-C' option.
-
-   _NOTE_: the effects of many of the flags passed to `configure' are
-stored in the cache. If you decide to re-run `configure' with other
-flags, delete the `config.cache' file first.
-
-
-1.5 Elidable components
-=======================
-
-Several build targets can be disabled, in case you are only interested
-in "parts" of the full Olena distribution.
-
-   The elidable parts are so-called "components", and you can obtain a
-list of them by running:
-
-     $ .../configure --help
-
-
-1.6 Building
-============
+Building
+========
 
 Once your build directory is `configure'd, you can run
 
-     $ make
+     % make
 
-   to recursively build all selected components.
-
-
-   Additionally, you can build and run the testsuite and demonstration
-programs with:
-
-     $ make check
-
-   However, this process is very time- and memory- consuming.
+to recursively build all the selected components.
 
 
-1.7 Compiler notes
-==================
+   Additionally, you can build and run the test suite with:
 
-Olena has been tested on the following configurations :
+     % make check
 
-System                   Compiler
-Linux                    g++ 3.3, 3.4, 4.0, 4.1, 4.2
-			 icc 10.1, 11.0
-Linux-64 		 g++ 4.1
-MacOS X                  g++ 4.0.1
+However, this process is time- and memory- consuming, and you probably
+do not need it except if you are developing/debugging Olena.
 
 
-2.1 Installing
+Compiler Notes
 ==============
+
+Olena has been tested on the following configurations:
+
+System                       Compiler
+GNU/Linux on IA-32           g++ (GNU GCC) 3.3, 3.4, 4.0, 4.1, 4.2 and 4.3
+GNU/Linux on IA-32           icpc (Intel C/C++ Compiler) 10.1 and 11.0
+GNU/Linux on AMD64/Intel 64  g++ (GNU GCC) 4.1
+Mac OS X (10.5) on IA-32     g++ (GNU GCC) 4.0.1
+
+
+Installing
+==========
 
 To install the Olena headers and additional files on your system, run:
 
-      $ make install
+      % make install
 
-   from the build directory.
+from the build directory.
 
-   If not overridden with `--prefix' (see the BUILD file) , this will
-install:
+   If not overridden with `--prefix', this will install:
 
-   * the headers in `/usr/local/include/mln',
+   * the headers in `/usr/local/include/mln/',
 
-   * sample images in `/usr/local/share/milena',
+   * some applications and tools in `/usr/local/bin/',
+
+   * sample images and meshes in `/usr/local/share/olena/images/',
+
+   * the documentation in `/usr/local/share/doc/olena/`
+
+And optionally:
+
+   * Swilena's Python bindings in `/usr/local/lib/python2.x/site-packages/',
+
 
 
    You can later remove Olena from your system by running
 
-      $ make uninstall
+      % make uninstall
 
-   from the build directory.
-
+from the build directory (if you have kept it).  We recommend the use
+of GNU Stow (or any similar program) during the installation of Olena,
+to make the uninstallation of Olena easier.
