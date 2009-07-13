@@ -1,3 +1,13 @@
+2009-07-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the Swilena distribution.
+
+	* python/Makefile.am (nodist__dynamic_image2d_la_SOURCES): Add
+	dynamic_image2d-wrap.h.
+	(CLEANFILES): Add closing.pgm, closing_area.pgm, dilation.pgm,
+	erosion.pgm, gradient.pgm, gradient_external.pgm,
+	gradient_internal.pgm, opening.pgm, opening_area.pgm and segm.pgm.
+
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	* Makefile.am (wrappers): Add config.i.
