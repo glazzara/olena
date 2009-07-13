@@ -59,8 +59,7 @@ REF_GUIDE_HH = $(srcdir)/ref_guide.hh
 ref-guide-html: $(REF_GUIDE_HH)
 $(REF_GUIDE_HH): ref_guide.tex $(srcdir)/../figures.stamp
 	$(DOC_SRCDIR)/tools/todoxygen.sh		\
-	  $< $(DOC_SRCDIR)/ref_guide $(DOC_SRCDIR)	\
-	  && mv -f ref_guide.hh $(srcdir)
+	  $< $(DOC_SRCDIR)/ref_guide $(DOC_SRCDIR)
 
 
 # Final product.

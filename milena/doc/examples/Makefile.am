@@ -143,7 +143,8 @@ tuto4_point2d_SOURCES = tuto4/point2d.cc
 examples: $(EXTRA_PROGRAMS)
 
 run-examples: examples
-	mkdir -p $(top_builddir)/milena/doc/figures; 			\
+	test -d $(top_builddir)/milena/doc/figures  			\
+		|| mkdir $(top_builddir)/milena/doc/figures;		\
 	@failcom='exit 1'; 						\
 	list='$(EXTRA_PROGRAMS)'; for bin in $$list; do 		\
 	  echo "Running $$bin"; 					\

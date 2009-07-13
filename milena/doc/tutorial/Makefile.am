@@ -58,8 +58,7 @@ TUTORIAL_HH = $(srcdir)/tutorial.hh
 tutorial-html: $(TUTORIAL_HH)
 $(TUTORIAL_HH): tutorial.tex $(srcdir)/../figures.stamp
 	$(DOC_SRCDIR)/tools/todoxygen.sh		\
-	  $< $(DOC_SRCDIR)/tutorial $(DOC_SRCDIR)	\
-	  && mv tutorial.hh $(srcdir)
+	  $< $(DOC_SRCDIR)/tutorial $(DOC_SRCDIR)
 
 # Final product.
 TUTORIAL_PDF = $(srcdir)/tutorial.pdf
@@ -68,7 +67,7 @@ $(TUTORIAL_PDF): tutorial.tex $(srcdir)/../figures.stamp
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(TEXINPUTS) pdflatex $<	\
-	  && tutorial.pdf $(srcdir)
+	  && mv -f tutorial.pdf $(srcdir)
 
 # FIXME: Regenerating figures.stamp requires make to go back to the
 # parent directory.  We already do the opposite (descending from
