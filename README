@@ -124,6 +124,12 @@ installation of these applications use::
 
        ./configure --enable-apps
 
+Olena ships with Trimesh, a third-party library that we have been
+using to manipulate 3D meshes.  Eventually, we will drop Trimesh from
+the distribution.  To enable it, use::
+
+       ./configure --enable-trimesh
+
 
 To read/write TIFF images with Olena, libtiff is required.  If
 ``configure`` is unable to find libtiff on your system, you can help

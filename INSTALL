@@ -140,6 +140,10 @@ running:
 
      % ../configure --help
 
+Olena ships with Trimesh, a third-party library that we have been
+using to manipulate 3D meshes.  Eventually, we will drop Trimesh from
+the distribution.
+
 See README for more information on additional components.
 
 
@@ -196,6 +200,11 @@ And optionally:
 
    * Swilena's Python bindings in `/usr/local/lib/python2.x/site-packages/',
 
+   * Trimesh programs in `/usr/local/bin/',
+
+   * Trimesh libraries in `/usr/local/lib/',
+
+   * Trimesh headers in `/usr/local/share/trimesh/',
 
 
    You can later remove Olena from your system by running
