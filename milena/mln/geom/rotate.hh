@@ -165,8 +165,9 @@ namespace mln
     mln_concrete(I)
     rotate(const Image<I>& input, double angle, const Ext& extension)
     {
-      /// Old versions of GCC do not parse correctly `mln_box(I)()'.
-      /// Hence, we need to typedef mln_box(I) first.
+      // Old versions of GCC (including Apple GCC 4.0.1) do not parse
+      // correctly `mln_box(I)()'.  Hence, we need to typedef
+      // `mln_box(I)' first.
       typedef mln_box(I) box_t;
       return rotate(input, angle, extension, box_t());
     }
