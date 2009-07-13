@@ -96,6 +96,21 @@ LRDE_NODIST_FILES =					\
   $(distdir)/milena/tests/value/stack.cc		\
   $(distdir)/scribo
 
+## FIXME: Running `build-aux/build_unit_test.sh' just to update
+## `milena/tests/unit_test/unit-tests.mk' is overkill:
+##
+## 1. It recreates *all* the sources (more than 1200 `.cc' files!).
+##    => We should just regen `unit-tests.mk', not the `.cc' files.
+##
+## 2. It visits (almost) all the directories and files under
+##    milena/mln/ (which admittedly a smaller issue compared to the
+##    previous one)
+##    => Prune `unit-tests.mk' instead of regenerating it.  The
+##       simplest solution is probably to equip `unit-tests.mk' in the
+##       first place with `<<lrde'/`>>' tags, then prune it with
+##       dist-strip.
+##
+
 # Do not distribute parts tagged `lrde' (see build-aux/strip-lrde).
 dist-hook:
 	for f in $(LRDE_STRIPPED_DIST_FILES); do	\
