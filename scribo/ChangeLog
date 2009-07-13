@@ -1,3 +1,7 @@
+2009-07-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	* src/preprocessing/Makefile.am: Remove a trailing blank line.
+
 2009-07-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Bug fix.
