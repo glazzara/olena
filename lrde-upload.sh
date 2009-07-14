@@ -66,4 +66,5 @@ rm -rf $DEST_DOC/white_paper_html.old
 
 # We want to be able to modify these files with both the `build' and
 # `doc' accounts.
-chmod -R g+w $DEST
+chmod -R g+w $DEST/user_doc
+chmod -R g+w $DEST/white_paper_html
