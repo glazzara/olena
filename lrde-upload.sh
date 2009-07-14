@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 
 # This file is run by the LRDE autobuilder after a successful compilation.
 # It is not meant to be distributed with Olena.
@@ -15,14 +15,15 @@ VERSION=`autoconf --trace='AC_INIT:$2'`
 CURRENT_DATE=`date +'%d_%m_%y'`
 REV=$VERSION-snapshot-$CURRENT_DATE
 
-# Always do "cp then mv" when uploading the file, so that someone
-# cannot start a download why the destination file is incomplete.
+# Always do "cp then mv" when uploading the file, so that nobody
+# can start a download while the destination file is incomplete.
 
-# Upload the tarball
+# Upload the tarball.
 mkdir -p $DEST
 
 # Delete tarballs older than 2 days.
-find $DEST -maxdepth 1 -type f -mtime +2 -name 'olena-*-snapshot-*' -exec rm -f {} \;
+find $DEST -maxdepth 1 -type f -mtime +2 -name 'olena-*-snapshot-*' \
+  -exec rm -f {} \;
 
 # tar.gz
 cp -f olena-$VERSION.tar.gz $DEST/olena-$REV.tar.gz.tmp
@@ -42,7 +43,7 @@ rm -rf $DEST_DOC/user_doc.tmp
 rm -rf $DEST_DOC/white_paper_html.tmp
 
 
-# Dist check set umask to 077. Restoring permissions for all
+# `make distcheck' sets umask to 077.  Restoring permissions for all
 chmod -R a+rx milena/doc/user
 chmod -R a+rx milena/doc/white_paper
 
@@ -63,5 +64,6 @@ mv -f $DEST_DOC/white_paper_html.tmp $DEST_DOC/white_paper_html
 rm -rf $DEST_DOC/user_doc.old
 rm -rf $DEST_DOC/white_paper_html.old
 
-# We want to be able to modify these files with both build and doc accounts. 
+# We want to be able to modify these files with both the `build' and
+# `doc' accounts.
 chmod -R g+w $DEST
