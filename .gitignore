@@ -14,6 +14,7 @@ Makefile
 /*aclocal.m4
 /*stamp-*
 /_build*
+/_inst*
 /autom4te.cache*
 /autoscan.log
 /config
