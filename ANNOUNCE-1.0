@@ -1,0 +1,62 @@
+The Olena Team is proud to announce the release of Olena 1.0.
+
+Olena is a platform dedicated to image processing and pattern
+recognition.  Its core component is a generic and efficient C++
+library called Milena.  Milena provides a framework to implement
+simple, fast, safe, reusable and extensible image processing tool
+chains.  The library provides many ready-to-use image data structures
+(regular 1D, 2D, 3D images, graph-based images, etc.) and algorithms.
+Milena's algorithms are built upon classical entities from the image
+processing field (images, points/sites, domains, neighborhoods, etc.).
+This design allows image processing developers and practitioners to
+easily understand, modify, develop and extend new algorithms while
+retaining the core traits of Milena: genericity and efficiency.
+
+The package also features Swilena, an optional component exposing
+Milena to other languages thanks to the Simplified Wrapper and
+Interface Generator (SWIG).  For the moment, only some Python bindings
+are provided.
+
+The Olena platform is Free Software.  It is distributed under the
+conditions of the GNU General Public License (GPL) version 2.  See the
+file COPYING shipped with the Olena distribution.
+
+Release notes are available at:
+  http://olena.lrde.epita.fr/Olena100
+
+You can download packages of the Olena 1.0 distribution here:
+  http://www.lrde.epita.fr/dload/olena/1.0/olena-1.0.tar.gz    (25MB)
+  http://www.lrde.epita.fr/dload/olena/1.0/olena-1.0.tar.bz2   (21MB)
+
+The SHA1 digests of theses packages are:
+  33fc3a327db3f4f68c882d3b2462b83841425628  olena-1.0.tar.gz
+  2c6ba36d4a156156f7d5ea8f2e1f02bbec9c9098  olena-1.0.tar.bz2
+
+Here is a list of major changes since Olena 0.11:
+
+  * The core C++ library, renamed to Milena, has been rewritten from
+    scratch and features numerous additions over the past releases.
+    Some features have also been dropped or disabled, and some of them
+    will be reintegrated in future releases.  The programming
+    interface has changed from previous versions, but most programs
+    using Olena 0.11 can be adapted to the Olena 1.0 API.
+
+  * Milena uses a simplified version of the SCOOP 2 paradigm
+    (informally called SCOOP 1.5), to improve the speed of compilation
+    and make developing easier while still providing very good
+    run-time performances.
+
+  * A first (re)implementation of Swilena featuring Python wrappers
+    for a very small subset of Milena is available.  The bundled
+    Swilena Python Shell (sps) allows interactive Olena sessions.
+
+  * A reference documentation including a tutorial and a quick
+    reference guide have been started.  They do not cover the whole
+    Milena library yet.
+
+  * Olena includes some demos and applications using Milena.
+
+The file NEWS, included in the archive, contains a more complete list
+of user-visible changes.
+
+Please report any problem by mail to <olena-bugs@lrde.epita.fr>.
