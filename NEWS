@@ -1,25 +1,26 @@
 * Olena 1.0	July 14, 2009
 
-	* The core C++ library, renamed to Milena, has been rewritten
-          from scratch and features numerous additions over the past
-          releases.
+	* The core C++ library, renamed to Milena, has been rewritten from
+	  scratch and features numerous additions over the past releases.
+	  Some features have also been dropped or disabled, and some of them
+	  will be reintegrated in future releases.  The programming
+	  interface has changed from previous versions, but most programs
+	  using Olena 0.11 can be adapted to the Olena 1.0 API.
 
 	* Milena uses a simplified version of the SCOOP 2 paradigm
-	  (informally called SCOOP 1.5), to improve the speed of
-	  compilation and the ease of development while still
-	  providing very good run-time performances.
+	  (informally called SCOOP 1.5), to improve the speed of compilation
+	  and make developing easier while still providing very good
+	  run-time performances.
 
-	* A first reimplementation of Swilena featuring Python
-          wrappers for a very small subset of Milena is available.
-          The Swilena Python Shell (sps) allows interactive Olena
-          sessions.
+	* A first (re)implementation of Swilena featuring Python wrappers
+	  for a very small subset of Milena is available.  The bundled
+	  Swilena Python Shell (sps) allows interactive Olena sessions.
 
 	* A reference documentation including a tutorial and a quick
-          reference guide have been started. They do not cover the
-          whole library yet.
+	  reference guide have been started.  They do not cover the whole
+	  Milena library yet.
 
-	* Olena includes some demos which use Milena, the core C++
-          library.
+	* Olena includes some demos and applications using Milena.
 
 
 * Olena 0.11	February 21, 2007
@@ -48,11 +49,11 @@
 * Olena 0.10	April 15, 2004
 
 	* New documentation system.
-	  Now any comment should use doxygen style (i.e. /*! ... */).
+	  Now any comment should use Doxygen style (i.e. /*! ... */).
 	  You can also write some programs inside the comments. They are
 	  compiled at documentation generation time. It is useful to
           illustrate some algorithms with concrete input and output. To
- 	  use this feature the program has to be between \code and \endcode
+	  use this feature the program has to be between \code and \endcode
 	  tags. If you produce an image, you can include it in the comments
 	  with the \image command, using the same name you used to produce
 	  it, but with the png extension. To make sure your image will not
@@ -88,24 +89,24 @@
 
 * Olena 0.9	August 8, 2003
 
-        * New static hierarchy paradigm
+	* New static hierarchy paradigm
 	  - Complete rewrite of the image hierarchy.
-          - The new hierarchy benefits from multiple inheritance and
+	  - The new hierarchy benefits from multiple inheritance and
 	    diamond constructs.
-          - Objects' abstract interfaces made available, leading to
-            safer and easier algorithm writing.
+	  - Objects' abstract interfaces made available, leading to
+	    safer and easier algorithm writing.
 	  - Label images such as binary_image or vectorial_image added.
 
-        * Partial rewrite of images I/O
-          - Support for 1d, 3d images and windows.
-          - Better handling of built-in types.
+	* Partial rewrite of images I/O
+	  - Support for 1d, 3d images and windows.
+	  - Better handling of built-in types.
 
-        * Color conversions fixed and improved.
+	* Color conversions fixed and improved.
 
-        * Cleanup and coding style conformance.
+	* Cleanup and coding style conformance.
 
-        * Many bug fixes.
-        * Improved test-suite.
+	* Many bug fixes.
+	* Improved test-suite.
 
 
 * Olena 0.8	April 10, 2003
@@ -113,7 +114,7 @@
 	IMPORTANT NOTE: This version is not compatible with older
 	versions of Olena. The project has been split into three part,
 	so many header files have moved and new namespaces have been
-	created. Please read the UPGRADING file for more informations.
+	created. Please read the UPGRADING file for more information.
 
 	* Many source code cleanups.
 	* The source code has been split into 3 parts: image
@@ -133,32 +134,32 @@
 	* New `oln.m4' file for use by autoconf'ed user projects.
 	* Major documentation updates.
 	* New `oln-config.sh' scripts for user Makefiles.
-	* Olena now works on MacOS X, NetBSD, FreeBSD and cygwin.
+	* Olena now works on Mac OS X, NetBSD, FreeBSD and Cygwin.
 
 
-* Olena 0.6       January 15, 2003
+* Olena 0.6	January 15, 2003
 
-        * Complete rewriting of data types.
-        * Command line utilities.
-        * Fully implementation of convolutions
-        * Fast Fourier Transform (FFT)
-        * Discrete Wavelet Transform (Daubechie's wavelet) (DWT)
-        * Many bug fixes.
+	* Complete rewriting of data types.
+	* Command line utilities.
+	* Fully implementation of convolutions
+	* Fast Fourier Transform (FFT)
+	* Discrete Wavelet Transform (Daubechie's wavelet) (DWT)
+	* Many bug fixes.
 
 
-* Olena 0.5       July 25, 2002
+* Olena 0.5	July 25, 2002
 
-        * Documentation in LaTeX (instead of Texinfo).
-        * Support reading/writing gziped images
-          (include <oln/io/gz.hh> and link with libz).
-        * Complete rewrite of the static arrays
-          (meta::array1d, meta::array2d, meta::array3d).
-        * Preliminary implementation of convolutions
-          (oln::convol::convolve)
-        * All headers should now be referenced with the `oln/' prefix,
-          as in `#include <oln/basics2d.hh>'.
-        * New conversion operator: convert::stretch.
-        * Many bug fixes.
+	* Documentation in LaTeX (instead of Texinfo).
+	* Support reading/writing gziped images
+	  (include <oln/io/gz.hh> and link with libz).
+	* Complete rewrite of the static arrays
+	  (meta::array1d, meta::array2d, meta::array3d).
+	* Preliminary implementation of convolutions
+	  (oln::convol::convolve)
+	* All headers should now be referenced with the `oln/' prefix,
+	  as in `#include <oln/basics2d.hh>'.
+	* New conversion operator: convert::stretch.
+	* Many bug fixes.
 
 
 * Olena 0.4.1	April 25, 2002
@@ -209,11 +210,11 @@
 
 	  The currently available conversions are
 
-                    hsi   yuv
-                      \  /
+	            hsi   yuv
+	              \  /
 	       rgb -- nrgb
-                \     /  \
-                  xyz     yiq
+	        \     /  \
+	          xyz     yiq
 
 	* Various cleanups and bug fixes.  Especially:
 	  - border handling (mirroring, copying) simplified and fixed.
@@ -252,7 +253,7 @@
 	  - `morpho::geodesic_erosion', `morpho::simple_geodesic_erosion'.
           - `morpho::get_plus_se_only', `morpho::get_plus_se_p',
 	    `morpho::get_minus_se_only', `morpho::get_minus_se_p': Split
-	    a structural element in a `plus' (lexicaly before than the center)
+	    a structural element in a `plus' (lexically before than the center)
 	    and `minus' (after).
 
 	* Misc:
@@ -275,7 +276,7 @@
 	  - the latter six types are instances of the `color' type.
 
 	* Processings:
-	  - All basic morpholohical processings (`opening',
+	  - All basic morphological processings (`opening',
 	    `hit_or_miss', `beucher_gradient', etc.) from namespace
 	    `morpho::' have their fast equivalent in namespace
 	    `morpho::fast::'.
@@ -309,17 +310,17 @@
 
 	    conversion<Inferior>
                   ^
-		  |
+	          |
 	    conversion_to_type<To,Inferior>
                   ^
-		  |
+	          |
 	    conversion_from_type_to_type<From,To,Inferior>
 
 	  All children of conversion_from_type_to_type are models of
 	  Adaptable Unary Function.  See conversion.hh for more comments.
 
 	* The only two functions that perform file i/o are `load' and
- 	  `save'.  The other functions (`read', `write', `read_pnm',
+	  `save'.  The other functions (`read', `write', `read_pnm',
 	  `write_pnm') have been removed.
 
 	* image2d<rgb<int_u8> > can be loaded and saved as ppm.
@@ -338,7 +339,7 @@
 
 * Olena 0.1	November 1, 2001
 
-        * Initial public release.
+	* Initial public release.
 
 
 Local Variables:
