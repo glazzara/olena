@@ -4,6 +4,7 @@
 /Doxyfile_user_pdf
 /devel
 /user
+/figures/*.png
 /ref_guide/ref_guide.haux
 /ref_guide/ref_guide.hh
 /ref_guide/ref_guide.hh-e
