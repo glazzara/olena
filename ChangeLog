@@ -1,5 +1,9 @@
 2009-07-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	* configure.ac, NEWS: Version 1.0a.
+
+2009-07-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Olena 1.0.
 
 	* NEWS: Update.

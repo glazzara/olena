@@ -10,7 +10,7 @@ AC_PREREQ([2.61])
 ## Package set up.  ##
 ## ---------------- ##
 
-AC_INIT([Olena], [1.0], [olena@lrde.epita.fr], [olena])
+AC_INIT([Olena], [1.0a], [olena@lrde.epita.fr], [olena])
 
 # M4 macros.
 AC_CONFIG_MACRO_DIR([m4])
