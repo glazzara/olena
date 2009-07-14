@@ -55,8 +55,8 @@
 
 2009-07-09 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
-	* mln/geom/rotate.hh: Avoid an ICE with gcc 4.0.1 on MacOs
-	X (leopard 10.5).
+	* mln/geom/rotate.hh: Avoid an ICE with gcc 4.0.1 on Mac OS
+	X (Leopard 10.5).
 
 2009-07-09 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -67,8 +67,8 @@
 	Improve lrde-upload.sh script.
 
 	* lrde-upload.sh:
-	  - Prune old tarballs.
-	  - Append the current date to the tarball name.
+	- Prune old tarballs.
+	- Append the current date to the tarball name.
 
 2009-07-08 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -229,7 +229,8 @@
 
 2009-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
-	Extend Autoconf macro OLN_WITH_LIB to handle the library's dependencies.
+	Extend Autoconf macro OLN_WITH_LIB to handle the library's
+	dependencies.
 
 	* m4/oln-with-lib.m4 (OLN_WITH_LIB): Add a sixth (optional)
 	argument to pass other libraries that the search library depends

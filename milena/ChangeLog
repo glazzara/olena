@@ -1075,7 +1075,7 @@
 	Small fixes.
 
 	* mln/core/image/imorph/labeled_image.hh: add bboxes() and subdomain()
-	  members.
+	members.
 
 	* mln/morpho/tree/compute_attribute_image.hh: re-indent.
 
@@ -1515,8 +1515,8 @@
 	* doc/Makefile.am: improve rules dependencies.
 
 	* doc/examples/Makefile.am:
-	  - Compare split files to references.
-	  - Add a rule 'data-regen'. Reference data is now generated on demand
+	- Compare split files to references.
+	- Add a rule 'data-regen'. Reference data is now generated on demand
 	  only.
 
 	* doc/examples/split/accu-right-instanciation-1.cc,
@@ -7264,7 +7264,7 @@
 
 	* tests/accu/Makefile.am,
 	* tests/accu/stat/Makefile.am:
-	  Update makefiles respecting stat accus directory.
+	Update makefiles respecting stat accus directory.
 
 	* apps/statues/mesh-complex-max-curv.cc,
 	* apps/statues/mesh-max-curv.cc,
@@ -7343,7 +7343,7 @@
 	* mln/morpho/dilation.hh,
 	* mln/morpho/erosion.hh:
 	Idem + replace mln_morpho_select_accu(..., accu_name) by
-	       	       mln_morpho_select_accu(..., stat::accu_name).
+		       mln_morpho_select_accu(..., stat::accu_name).
 
 2009-06-05  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
@@ -7370,9 +7370,9 @@
 	More fixes for documentation build system.
 
 	* doc/Makefile.am:
-	  - Fix invalid replacement in doxyfile.
-	  - Fix invalid rule names.
-	  - Fix invalid dist files.
+	- Fix invalid replacement in doxyfile.
+	- Fix invalid rule names.
+	- Fix invalid dist files.
 
 	* tests/tools/pretty_check.sh: return the make check return value.
 
@@ -9776,12 +9776,12 @@
 	Simplifying function concepts.
 
 	* mln/core/concept/function.hh: Remove all concepts except
-	  Function, Function_v2v, Function_v2b, Function_vv2v, and
-	  Function_vv2b.
+	Function, Function_v2v, Function_v2b, Function_vv2v, and
+	Function_vv2b.
 
 	* mln/data/transform.spe.hh: De-activate some implementation
-	  routines and their related some dispatch routines.
-	  (todo): New.
+	routines and their related some dispatch routines.
+	(todo): New.
 
 	* mln/topo/is_simple_cell.hh,
 	* mln/topo/skeleton/breadth_first_thinning.hh,
@@ -18010,7 +18010,8 @@
 
 	Fix issues with GCC 2.95.
 
-	* mln/value/internal/limits.hh: add support for std::numeric_limits with gcc 2.95.
+	* mln/value/internal/limits.hh: add support for
+	std::numeric_limits with gcc 2.95.
 
 	* headers.mk: add limits.hh.
 
@@ -18025,7 +18026,8 @@
 	* mln/util/tree.hh: use <iostream> instead of <ostream>.
 
 	* mln/core/dpoint.hh,
-	* mln/core/point.hh: Help the compiler resolving 'G::dim' in method return type.
+	* mln/core/point.hh: Help the compiler resolving 'G::dim' in
+	method return type.
 
 	* mln/value/float01.hh: use '&&' operator instead of 'and'.
 
@@ -25023,7 +25025,8 @@
 
 	Fix return type of i2v::array::operator().
 
-	* mln/fun/i2v/array.hh (operator() const): Return a reference instead of a copy.
+	* mln/fun/i2v/array.hh (operator() const): Return a reference
+	instead of a copy.
 
 2008-10-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -25031,7 +25034,7 @@
 
 	* mln/core/site_set/box.hh:
 	- Add a new version of enlarge() which can be applied on a single
-	dimension passed as parameter.
+	  dimension passed as parameter.
 	- Add center() which returns an approximated central site of a box.
 
 2008-10-27  Guillaume Lazzara  <z@lrde.epita.fr>

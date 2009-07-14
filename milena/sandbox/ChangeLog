@@ -56,10 +56,10 @@
 	Util to trace attribute evolution along the branch.
 
 	* edwin/exec/mask_colorize.cc: Color labeling from a mask
-          image.
+	image.
 
 	* edwin/exec/max_delta_colormean_obj.cc: Retrieve components
-          that maximes the distance between the mean color of components.
+	that maximizes the distance between the mean color of components.
 
 	* edwin/mln/morpho/tree/propagate.hh: Minor fixes.
 
@@ -797,7 +797,7 @@
 	* edwin/mln/morpho/tree/components.hh,
 	* edwin/mln/morpho/tree/filter.hh,
 	* laurent/playing_with_attributes.cc: Propagate suppression of
-	  intermediate function concepts.
+	intermediate function concepts.
 
 2009-06-01  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
