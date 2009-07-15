@@ -16,8 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-# Usage: mln_check_guards [--report output.html] <file1> <file2> ...
-
 
 if [ -z "$MILENA_DEVTOOLS_PATH" ]; then
     echo "MILENA_DEVTOOLS_PATH is not set." >&2
@@ -29,40 +27,42 @@ source $MILENA_DEVTOOLS_PATH/make_report_utils.sh
 source $MILENA_DEVTOOLS_PATH/devtools_utils.sh
 
 
-
-
 last_path=""
 check()
 {
-    local mln_path=`mln_based_path $1`
+    f=`basename $1`
+    abs_dir=`abs_filepath $1`
+    mln_based_dir=`mln_based_path $1`
 
-    bname=`basename $1`
-    guards=`echo ${mln_path}/${bname} | sed -e 's,[/\.],_,g' | awk '{print toupper($0)}'`
+# Checking local all.hh
+    if ! [ -e "$abs_dir/all.hh" ]; then
+	echo "WARNING: no all.hh header in $mln_based_dir" >&2
+	return
+    fi
 
-    nndef=`grep "^#ifndef $guards$" $1 | wc -l`
-    ndefine=`grep "^# define $guards$" $1 | wc -l`
-    nendif=`grep "^#endif // ! $guards" $1 | wc -l`
-
-    if [ $nndef -ne 1 ] || [ $ndefine -ne 1 ] || [ $nendif -ne 1 ]; then
-	if [ -z "$2" ]; then
-	    echo "$1 has missing or invalid guards."
+    result=`grep "include <$mln_based_dir/$f>" $abs_dir/all.hh`
+    if [ -z "$result" ]; then
+	if [ -z "$report" ]; then
+	    echo "  WARNING $f is not included in $mln_based_dir/all.hh" >&2
 	else
-	    if [ "$last_path" != "$mln_path" ]; then
+	    if [ "$last_path" != "$mln_based_dir" ]; then
 		close_dir_entry $2
-		open_dir_entry "$mln_path" $2
-		last_path="$mln_path"
+		open_dir_entry "$mln_based_dir" $2
+		last_path="$mln_based_dir"
 	    fi
-	    echo "<li>$bname</li>" >> $2
+	    echo "<li>$f</li>" >> $2
 	fi
     fi
 }
 
 
+
 if [ $# -lt 1 ]; then
   echo "Usage: $0 [--report output.html] <file1> <file2> ..." >&2
   echo "-----"
-  echo "  Names of files with missing or invalid guards will be printed out."
-  echo "  A HTML report may be also generated."
+  echo " Names of files which are not included in their respective"
+  echo " all.hh file will be printed out."
+  echo " A HTML report may be also generated."
   exit 1
 fi
 
@@ -76,15 +76,18 @@ if [ "$1" == "--report" ]; then
 fi
 
 if ! [ -z "$report" ]; then
-  prepare_report $report "Files with invalid or missing guards."
+  prepare_report $report "Files not included in all.hh."
 fi
 
+
 while [ $# -ne 0 ]; do
-  check $1 "$report"
-  shift
+    if [ "`basename $1`" != "all.hh" ]; then
+	check $1 "$report"
+    fi
+    shift
 done
+
 
 if ! [ -z "$report" ]; then
   end_report $report
 fi
-

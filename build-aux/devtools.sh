@@ -1,9 +1,10 @@
-export MILENA_DEVTOOLS_PATH=`dirname $0`
-
-if [ -d "$PWD/$MILENA_DEVTOOLS_PATH" ]; then
-  export PATH=$PWD/$MILENA_DEVTOOLS_PATH:$PATH
-elif [ -d "$MILENA_DEVTOOLS_PATH" ] && [ -z "`echo $MILENA_DEVTOOLS_PATH | cut -d '/' -f 1`" ]; then
-  export PATH=$MILENA_DEVTOOLS_PATH:$PATH
+dname="`dirname $0`"
+if [ "$dname" = "." ]; then
+  export PATH="$PWD:$PATH"
+  export MILENA_DEVTOOLS_PATH="$PWD"
+elif [ -d "$PWD/$dname" ]; then
+  export PATH="$PWD/$MILENA_DEVTOOLS_PATH:$PATH"
+  export MILENA_DEVTOOLS_PATH="$PWD/$dname"
 else
   echo "Cannot guess Milena's devtools path. Please set MILENA_DEVTOOLS_PATH variable manually." 
 fi

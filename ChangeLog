@@ -1,3 +1,28 @@
+2009-07-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Improve devtools.
+
+	* build-aux/devtools.sh: Improve MILENA_DEVTOOLS_PATH value
+	detection.
+
+	* build-aux/devtools_utils.sh,
+	* build-aux/make_report_utils.sh: New. Set of functions to help
+	writing devtools.
+
+	* build-aux/mln_add_file,
+	* build-aux/mln_check_source_has_test,
+	* build-aux/mln_check_test_hierarchy: Update headers.
+
+
+	* build-aux/mln_check_all_hh_headers: split into...
+	* build-aux/mln_check_all_hh_inclusions,
+	* build-aux/mln_check_missing_all_hh_headers: ... these files.
+
+	* build-aux/mln_check_guards: move...
+	* build-aux/mln_fix_guards: ... here.
+
+	* build-aux/mln_check_guards: New.
+
 2009-07-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac, NEWS: Version 1.0a.
@@ -10,9 +35,9 @@
 	Aesthetic changes.
 
 2009-07-13 Guillaume Lazzara  <lazzara@lrde.epita.fr>
-	
+
 	* lrde-upload.sh: Set permissions on specific directories only.
-	
+
 2009-07-13 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* lrde-upload.sh: Set writing permissions for group on uploaded
