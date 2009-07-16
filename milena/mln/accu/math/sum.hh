@@ -122,6 +122,7 @@ namespace mln
 	void take(const sum<T,S>& other);
 
 	void untake(const argument& t);
+	void untake(const sum<T,S>& other);
 	void set_value(const S& s);
 	/// \}
 
@@ -188,6 +189,14 @@ namespace mln
       sum<T,S>::take(const sum<T,S>& other)
       {
 	s_ += other.s_;
+      }
+
+      template <typename T, typename S>
+      inline
+      void
+      sum<T,S>::untake(const sum<T,S>& other)
+      {
+	s_ -= other.s_;
       }
 
       template <typename T, typename S>

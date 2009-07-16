@@ -88,7 +88,7 @@ namespace mln
     template <typename T, typename S, typename M>
     struct accumulator_< accu::stat::mean<T, S, M> >
     {
-      typedef accumulator::has_untake::no     has_untake;
+      typedef accumulator::has_untake::yes     has_untake;
       typedef accumulator::has_set_value::no  has_set_value;
       typedef accumulator::has_stop::no       has_stop;
       typedef accumulator::when_pix::use_v	when_pix;
@@ -128,6 +128,8 @@ namespace mln
 	void init();
 	void take(const argument& t);
 	void take(const mean<T,S,M>& other);
+	void untake(const argument& t);
+	void untake(const mean<T,S,M>& other);
 	/// \}
 
 	/// Get the value of the accumulator.
@@ -137,6 +139,12 @@ namespace mln
 	/// Check whether this accu is able to return a result.
 	/// Always true here.
 	bool is_valid() const;
+
+	/// Get the cardinality.
+	mln_result(accu::math::count<T>) count() const;
+
+	/// Get the sum of values.
+	mln_result(accu::math::sum<T>) sum() const;
 
       protected:
 
@@ -187,6 +195,23 @@ namespace mln
 
       template <typename T, typename S, typename M>
       inline
+      void mean<T,S,M>::untake(const argument& t)
+      {
+	count_.untake(t);
+	sum_.untake(t);
+      }
+
+      template <typename T, typename S, typename M>
+      inline
+      void
+      mean<T,S,M>::untake(const mean<T,S,M>& other)
+      {
+	count_.untake(other.count_);
+	sum_.untake(other.sum_);
+      }
+
+      template <typename T, typename S, typename M>
+      inline
       M
       mean<T,S,M>::to_result() const
       {
@@ -209,6 +234,23 @@ namespace mln
       mean<T,S,M>::is_valid() const
       {
 	return count_.to_result() != 0;
+      }
+
+      template <typename T, typename S, typename M>
+      inline
+      mln_result(accu::math::count<T>)
+      mean<T,S,M>::count() const
+      {
+	return count_.to_result();
+      }
+
+
+      template <typename T, typename S, typename M>
+      inline
+      mln_result(accu::math::sum<T>)
+      mean<T,S,M>::sum() const
+      {
+	return sum_.to_result();
       }
 
 # endif // ! MLN_INCLUDE_ONLY
