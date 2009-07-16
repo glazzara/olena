@@ -1,3 +1,27 @@
+2009-07-16  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Fix bugs in segmentation method based on mean color.
+	* edwin/exec/max_delta_colormean_obj.cc:
+	The distance used to retrieve components is now based on the
+	distance to parent and the distance to brothers.
+	* edwin/exec/mask_fill_mean_color.cc: Fill the mask from
+	binarisation with the mean color of the components.
+	* edwin/exec/pgm_gradient.cc: Compute a thick gradient from the a grey
+	scale image.
+
+	Debug:
+	* edwin/mln/morpho/tree/components_debug.hh,
+	* edwin/mln/morpho/tree/debug.hh,
+	* edwin/mln/morpho/tree/propagate_node_debug.hh,
+	* edwin/exec/tree_debug.cc:
+	Code instrumentalized for debuging.
+
+	Vizualisation:
+	* edwin/tools: New.
+	* edwin/exec/give_me_the_curve.cc,
+	* edwin/tools/make_the_curves.sh:
+	Trace the plot of log files genererated by debug code.
+
 2009-07-10  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add US segmentation method.

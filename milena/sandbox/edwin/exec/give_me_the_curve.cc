@@ -72,7 +72,7 @@ int main(int argc, char** argv)
 
       while (!tree.is_root(p))
 	{
-	  data << a(p) << std::endl;
+	  data << '"' << p << "\" " << a(p) << std::endl;
 	  p = tree.parent(p);
 	}
       data.close();

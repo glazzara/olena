@@ -31,7 +31,6 @@
 
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
-#include <mln/morpho/tree/components.hh>
 #include <mln/morpho/tree/propagate.hh>
 #include <mln/morpho/tree/propagate_representative.hh>
 
@@ -46,14 +45,25 @@
 #include <mln/io/pgm/save.hh>
 #include <mln/io/ppm/save.hh>
 
+#include <mln/math/max.hh>
+
 #include <mln/math/diff_abs.hh>
 
 #include "color_distance.hh"
+
 #include <iostream>
 #include <cstring>
 
+// debug
+#include <mln/morpho/tree/debug.hh>
+#include <mln/morpho/tree/components.hh>
+
 using namespace mln;
 using value::int_u8;
+
+//template <typename T>
+//struct mymean : public mln::accu::internal
+
 
 
 void usage(char** argv)
@@ -108,10 +118,16 @@ compute_delta_mean(const value::rgb8&, const T& tree, const Image<S>& source)
 {
 
   typedef mln_ch_value(typename T::function, mln_sum(mln_value(S))) O;
-  O out = morpho::tree::compute_attribute_image_from(accu::stat::mean<mln_value(S)>(),
-						     tree, source);
+  typedef accu::stat::mean<mln_value(S)> ACC;
+  typedef mln_ch_value(typename T::function, ACC) ACC_IMG;
 
-  io::ppm::save(data::convert(value::rgb8(), out), "mean.ppm");
+  ACC_IMG accus;
+  O means = morpho::tree::compute_attribute_image_from(ACC (),
+						       tree,
+						       source,
+						       &accus);
+
+  io::ppm::save(data::convert(value::rgb8(), means), "mean.ppm");
 
   // Compute delta image.
   mln_ch_value(typename T::function, int_u8) dist;
@@ -120,8 +136,29 @@ compute_delta_mean(const value::rgb8&, const T& tree, const Image<S>& source)
   mln_up_node_piter(T) n(tree);
   for_all(n)
   {
-    // Fixme: rewrite distance routines with vector instead of convert ?
-    dist(n) = dist_mean(convert::to<value::rgb8>(out(tree.parent(n))), convert::to<value::rgb8>(out(n)));
+    int_u8 dist_dad, dist_bro;
+    value::rgb8 current, mean_bro;
+    ACC aux = accus(tree.parent(n));
+
+    aux.untake(accus(n));
+
+    // FIXME: add untake_n_times to accumlator concept
+    // Note: this is an approximation to avoid the real mean computation of bros.
+    unsigned m = accus(tree.parent(n)).count() - accus(n).count() - aux.count();
+    value::rgb8 v = exact(source)(n);
+
+    for (unsigned i = 0; i < m; i++)
+      aux.untake(v);
+
+    current = convert::to<value::rgb8>(means(n));
+    mean_bro = convert::to<value::rgb8>(aux.to_result());
+
+    dist_dad = dist_mean(convert::to<value::rgb8>(means(tree.parent(n))),
+			 current);
+    dist_bro = dist_mean(convert::to<value::rgb8>(aux.to_result()),
+			 current);
+
+    dist(n) = math::max(dist_bro, dist_dad);
   }
 
   return dist;
@@ -139,7 +176,6 @@ compute_delta_mean(const T& tree, const Image<S>& source)
 
 int main(int argc, char** argv)
 {
-
 
   if (argc < 3)
     usage(argv);
@@ -175,6 +211,9 @@ int main(int argc, char** argv)
     {
       image2d<value::rgb8> src;
       io::ppm::load(src, fsource);
+
+      // init debug
+      global::debug_img = duplicate(src);
       delta = compute_delta_mean(tree, src);
     }
   else
