@@ -1,5 +1,10 @@
 2009-07-16  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Fix dependencies errors in accu/stat Makefile.
+	* tests/accu/stat/Makefile.am: Fix dependencies.
+
+2009-07-16  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Add untake methods to sum and mean accumulators.
 	* accu/math/sum.hh: Add untake method.
 	* accu/stat/mean.hh: Add untake, sum, count methods.

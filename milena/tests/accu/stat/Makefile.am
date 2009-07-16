@@ -31,8 +31,8 @@ check_PROGRAMS =				\
   rank
 
 var_SOURCES = var.cc
-mean_SOURCES = min.cc
-median_h_SOURCES = min_h.cc
+mean_SOURCES = mean.cc
+median_h_SOURCES = median_h.cc
 min_SOURCES = min.cc
 min_h_SOURCES = min_h.cc
 max_SOURCES = max.cc
