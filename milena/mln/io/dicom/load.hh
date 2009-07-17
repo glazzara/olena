@@ -100,8 +100,8 @@ namespace mln
 	  abort();
 	}
 
-	gdcm::File &file = r.GetFile();
-	gdcm::DataSet& ds = file.GetDataSet();
+	//gdcm::File &file = r.GetFile();
+	//gdcm::DataSet& ds = file.GetDataSet();
 
 	gdcm::Image& image = r.GetImage();
 
@@ -118,7 +118,7 @@ namespace mln
 
 	unsigned int offset = 8 - (bits_allocated - bits_stored);
 	unsigned int off_pow = 1;
-	for (int i = 0; i < offset; ++i)
+	for (unsigned int i = 0; i < offset; ++i)
 	{
 	  off_pow *= 2;
 	}

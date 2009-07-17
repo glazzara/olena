@@ -45,25 +45,18 @@ namespace mln
     namespace plot
     {
 
-      /*! Save a Milena 1D image in a plot file.
-       *
-       * \param[in] ima A reference to the image to save.
-       * \param[out] filename The output file.
-       * \param[in] start_value The start index value of the plot
-       *	    (optional).
-       */
+      /*! \brief Save a Milena 1D image in a plot file.
+	  \param[in] ima A reference to the image to save.
+	  \param[out] filename The output file.  */
       template <typename I>
-      void save(image1d<I>& ima,
-		const std::string& filename,
-		int start_value = 0);
+      void save(const image1d<I>& ima,
+		const std::string& filename);
 
-      /*! Save a Milena array in a plot file.
-       *
-       * \param[in] arr A reference to the array to save.
-       * \param[out] filename The output file.
-       * \param[in] start_value The start index value of the plot
-       *	    (optional).
-       */
+      /*! \brief Save a Milena array in a plot file.
+          \param[in] arr A reference to the array to save.
+	  \param[out] filename The output file.
+	  \param[in] start_value The start index value of the plot
+	             (optional).  */
       template <typename I>
       void save(util::array<I>& arr,
 		const std::string& filename,
@@ -75,21 +68,21 @@ namespace mln
 
       template <typename I>
       inline
-      void save(image1d<I>& ima, const std::string& filename,
-		int start_value = 0)
+      void save(const image1d<I>& ima, const std::string& filename)
       {
 	trace::entering("mln::io::plot::save");
 
 	std::ofstream file_out(filename.c_str());
-	for (unsigned i = 0; i < ima.ninds(); ++i)
-	  file_out << start_value + i << " " << ima.at_(i) << std::endl;
+	unsigned end = ima.bbox().pmax().ind();
+	for (unsigned i = ima.bbox().pmin().ind(); i <= end; ++i)
+	  file_out << i << " " << ima.at_(i) << std::endl;
 
 	trace::exiting("mln::io::plot::save");
       }
 
       template <typename I>
       inline
-      void save(util::array<I>& arr, const std::string& filename,
+      void save(const util::array<I>& arr, const std::string& filename,
 		int start_value = 0)
       {
 	trace::entering("mln::io::plot::save");

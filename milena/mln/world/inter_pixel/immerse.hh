@@ -70,8 +70,8 @@ namespace mln
 	const I& input = exact(input_);
 	mln_precondition(input.is_valid());
 
-	mln_domain(I) b(2 * input.domain().pmin(),
-			2 * input.domain().pmax());
+	mln_domain(I) b((2 * input.domain().pmin()),
+			(2 * input.domain().pmax()));
 	mln_concrete(I) output(b);
 	mln_assertion(geom::nsites(output | is_pixel()) == input.domain().nsites());
 

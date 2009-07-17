@@ -293,8 +293,10 @@ namespace mln
       void
       from_to_(const bool (&values)[S], neighb3d& nbh)
       {
+# ifndef NDEBUG
 	const int h = unsigned(std::pow(float(S), float(1. / 3.))) / 2;
 	mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == S);
+# endif // ! NDEBUG
 	window3d win;
 	from_to_(values, win);
 	mln_precondition(win.is_neighbable_());

@@ -28,12 +28,13 @@
 
 /// \file
 ///
-/// FIXME: insert comment.
+/// Create an image for visualizing the values on edges of an
+/// inter_pixel image.
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/dmorph/image_if.hh>
 # include <mln/data/fill.hh>
-# include <mln/world/inter_pixel/dim2/is_edge.hh>
+# include <mln/world/inter_pixel/is_separator.hh>
 # include <mln/opt/at.hh>
 
 namespace mln
@@ -45,17 +46,36 @@ namespace mln
     namespace inter_pixel
     {
 
+      /// \brief Create an image which is a copy of the input image with
+      /// a solid background color and highlighted edges. The image is
+      /// stretched according to the zoom ratio.
+      ///
+      /// \param[in] ima The input image providing edge values.
+      /// \param[in] bg The background color.
+      /// \param[in] zoom The zoom ratio.
+      /// \return A copy of the input image with highlighted edges.
+      ///
+      /// \pre \p ima has to be an unmorphed image.
+      ///
+      template <typename I>
+      inline
+      I display_edge(const I& ima, mln_value(I) bg, unsigned zoom);
+
+# ifndef MLN_INCLUDE_ONLY
+
+
       template <typename I>
       inline
       I display_edge(const I& ima, mln_value(I) bg, unsigned zoom)
       {
 	box2d b = ima.bbox();
-	// FIXME: Create a empty box of size 'zoom*zoom' is ima is null.
-	I output(make::box2d((b.pmin()[0] / 2) * (zoom + 1), (b.pmin()[1] / 2) * (zoom + 1),
-			     (b.pmax()[0] / 2 + 1) * (zoom + 1) - 2, (b.pmax()[1] / 2 + 1) * (zoom + 1) - 2));
+	I output(make::box2d(((b.pmin()[0] + 1) / 2) * (zoom + 1),
+			     ((b.pmin()[1] + 1) / 2) * (zoom + 1),
+			     ((b.pmax()[0] + 1) / 2 + 1) * (zoom + 1) - 2,
+			     ((b.pmax()[1] + 1) / 2 + 1) * (zoom + 1) - 2));
 	data::fill(output, bg);
-	typedef image_if<const I, dim2::is_edge> edge_t;
-	edge_t edge = ima | dim2::is_edge();
+	typedef image_if<const I, is_separator> edge_t;
+	edge_t edge = ima | is_separator();
 	mln_piter(edge_t) p(edge.domain());
 	for_all(p)
 	  if (p.row() % 2) // horizontal edge
@@ -74,6 +94,9 @@ namespace mln
 	  }
 	return output;
       }
+
+
+# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::world::inter_pixel
 

@@ -34,9 +34,13 @@
 /// \file
 ///
 /// Construct from a count accumulator of a labeled image an array with
-/// the ordered n biggest labels
+/// the ordered n biggest labels.
 ///
 /// \return an array starting at index 1
+///
+/// \warning The biggest value is stocked at index 0. It generally represents
+/// the background and should be ignored. However, it is still accessible
+/// if necessary.
 
 
 namespace mln
@@ -63,22 +67,33 @@ namespace mln
     {
       trace::entering("mln::labeling::n_max");
 
-      util::array<L> output(n + 1, 0);
+      mln_precondition(n < in_arr.nelements());
 
+      util::array<L> output(n + 1, 0);
+      for (unsigned i = 0; i < n + 1; ++i)
+	output[i] = i;
       int swap = 0;
-      for (unsigned i = 0; i < in_arr.nelements(); ++i)
+      for (int j = n - 1; j > 0; --j)
       {
-	if (in_arr[i] > in_arr[output[n]])
-	{
-	  output[n] = i;
-	}
-	int j = n - 1;
-	while (j > 0 && in_arr[output[j]] < in_arr[output[j + 1]])
+	if (in_arr[output[j]] < in_arr[output[j + 1]])
 	{
 	  swap = output[j];
 	  output[j] = output[j + 1];
 	  output[j + 1] = swap;
-	  --j;
+	}
+      }
+
+      for (unsigned i = n; i < in_arr.nelements(); ++i)
+      {
+	if (in_arr[i] > in_arr[output[n]])
+	{
+	  output[n] = i;
+	  for (unsigned j = n - 1; j > 0 && in_arr[output[j]] < in_arr[output[j + 1]]; --j)
+	  {
+	    swap = output[j];
+	    output[j] = output[j + 1];
+	    output[j + 1] = swap;
+	  }
 	}
       }
 
