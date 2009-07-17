@@ -157,9 +157,16 @@ fix-refdata:
 	cd examples && $(MAKE) $(AM_MAKEFLAGS) $@
 
 
+# Make sure the figures are the first files in EXTRA_DIST.
+# Make the 'fake-doc' rule works correctly.
+EXTRA_DIST =
+$(srcdir)/figures/figures.mk: $(srcdir)/headers.stamp
+include $(srcdir)/figures/figures.mk
+
+
 fig-convert: $(srcdir)/figures.stamp
 
-EXTRA_DIST = figures.stamp
+EXTRA_DIST += figures.stamp
 $(srcdir)/figures.stamp: $(FIGURES_SRCDIR)/*.p*m
 	rm -f $@.tmp
 	touch $@.tmp
@@ -219,7 +226,6 @@ regen-am:
 	@mv -f $(srcdir)/headers.stamp.tmp $(srcdir)/headers.stamp
 
 $(srcdir)/examples/examples.mk: $(srcdir)/headers.stamp
-$(srcdir)/figures/figures.mk: $(srcdir)/headers.stamp
 $(srcdir)/outputs/outputs.mk: $(srcdir)/headers.stamp
 
 
@@ -234,7 +240,6 @@ $(srcdir)/headers.stamp: $(srcdir)/generate_dist_files.sh
 
 
 include $(srcdir)/examples/examples.mk
-include $(srcdir)/figures/figures.mk
 include $(srcdir)/outputs/outputs.mk
 
 
