@@ -22,7 +22,7 @@ REV=$VERSION-snapshot-$CURRENT_DATE
 mkdir -p $DEST
 
 # Delete tarballs older than 2 days.
-find $DEST -maxdepth 1 -type f -mtime +2 -name 'olena-*-snapshot-*' \
+find $DEST -maxdepth 1 -type f -mtime +1 -name 'olena-*-snapshot-*' \
   -exec rm -f {} \;
 
 # tar.gz
@@ -44,7 +44,7 @@ rm -rf $DEST_DOC/white_paper_html.tmp
 
 
 # `make distcheck' sets umask to 077.  Restoring permissions for all
-chmod -R a+rx milena/doc/user
+chmod -R a+rx milena/doc/user-refman-html
 chmod -R a+rx milena/doc/white_paper
 
 cp -pR milena/doc/user-refman-html $DEST_DOC/user_doc.tmp
@@ -55,8 +55,8 @@ cp milena/doc/tutorial/tutorial.pdf $DEST_DOC/
 cp milena/doc/user-refman.pdf $DEST_DOC/user_doc.pdf
 cp milena/doc/white_paper/white_paper.pdf $DEST_DOC/
 
-mv -f $DEST_DOC/user_doc $DEST_DOC/user_doc.old || true
-mv -f $DEST_DOC/white_paper_html $DEST_DOC/white_paper_html.old || true
+mv -f $DEST_DOC/user_doc $DEST_DOC/user_doc.old
+mv -f $DEST_DOC/white_paper_html $DEST_DOC/white_paper_html.old
 
 mv -f $DEST_DOC/user_doc.tmp $DEST_DOC/user_doc
 mv -f $DEST_DOC/white_paper_html.tmp $DEST_DOC/white_paper_html
@@ -66,5 +66,5 @@ rm -rf $DEST_DOC/white_paper_html.old
 
 # We want to be able to modify these files with both the `build' and
 # `doc' accounts.
-chmod -R g+w $DEST/user_doc
-chmod -R g+w $DEST/white_paper_html
+chmod -R g+w $DEST_DOC/user_doc
+chmod -R g+w $DEST_DOC/white_paper_html
