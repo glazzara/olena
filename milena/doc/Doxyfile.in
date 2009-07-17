@@ -111,7 +111,7 @@ EXAMPLE_PATH           = @top_srcdir@/milena/doc/examples	    \
 			 @top_srcdir@/milena/doc/outputs	    \
 			 @top_srcdir@/milena/doc/examples/split	    \
 			 @top_srcdir@/milena/doc/outputs/split
-EXAMPLE_PATTERNS       =
+EXAMPLE_PATTERNS       = *.cc
 EXAMPLE_RECURSIVE      = NO
 IMAGE_PATH             = @top_srcdir@/milena/doc/img	    \
 			 @top_srcdir@/milena/doc/figures    \
@@ -120,6 +120,7 @@ INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
 INPUT_ENCODING         = ISO-8859-1
+
 #---------------------------------------------------------------------------
 # configuration options related to source browsing
 #---------------------------------------------------------------------------
@@ -358,4 +359,4 @@ DOT_CLEANUP            = YES
 #---------------------------------------------------------------------------
 # Configuration::additions related to the search engine
 #---------------------------------------------------------------------------
-SEARCHENGINE           = NO
+SEARCHENGINE           = YES
