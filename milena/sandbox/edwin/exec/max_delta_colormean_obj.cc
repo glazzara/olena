@@ -56,7 +56,7 @@
 
 // debug
 #include <mln/morpho/tree/debug.hh>
-#include <mln/morpho/tree/components.hh>
+#include <mln/morpho/tree/components_debug.hh>
 
 using namespace mln;
 using value::int_u8;
@@ -130,36 +130,48 @@ compute_delta_mean(const value::rgb8&, const T& tree, const Image<S>& source)
   io::ppm::save(data::convert(value::rgb8(), means), "mean.ppm");
 
   // Compute delta image.
-  mln_ch_value(typename T::function, int_u8) dist;
+  mln_ch_value(typename T::function, int_u8) dist, idist_dad, idist_bro;
   initialize(dist, tree.f());
+  initialize(idist_dad, tree.f());
+  initialize(idist_bro, tree.f());
 
   mln_up_node_piter(T) n(tree);
   for_all(n)
   {
     int_u8 dist_dad, dist_bro;
-    value::rgb8 current, mean_bro;
-    ACC aux = accus(tree.parent(n));
-
-    aux.untake(accus(n));
+    value::rgb8 current, cur_mean, bro_mean, dad_mean;
+    ACC aux;
+    ACC aux2 = accus(tree.parent(n));
 
     // FIXME: add untake_n_times to accumlator concept
-    // Note: this is an approximation to avoid the real mean computation of bros.
-    unsigned m = accus(tree.parent(n)).count() - accus(n).count() - aux.count();
-    value::rgb8 v = exact(source)(n);
+    // FIXME: to optimize
+    {
+      mln_piter(T::nodes_t) child(tree.children(tree.parent(n)));
+      for_all(child)
+	if (child != n)
+	  aux.take(accus(child));
+    }
 
-    for (unsigned i = 0; i < m; i++)
-      aux.untake(v);
+    cur_mean = convert::to<value::rgb8>(means(n));
 
-    current = convert::to<value::rgb8>(means(n));
-    mean_bro = convert::to<value::rgb8>(aux.to_result());
+    bro_mean = convert::to<value::rgb8>(aux.to_result());
+    dist_bro = aux.is_valid() ? dist_mean(bro_mean, cur_mean) : (int_u8) 0;
+    idist_bro(n) = dist_bro;
 
-    dist_dad = dist_mean(convert::to<value::rgb8>(means(tree.parent(n))),
-			 current);
-    dist_bro = dist_mean(convert::to<value::rgb8>(aux.to_result()),
-			 current);
+    aux.take(accus(n));
+    aux2.untake(aux);
 
-    dist(n) = math::max(dist_bro, dist_dad);
+    dad_mean = convert::to<value::rgb8>(aux2.to_result());
+    dist_dad = dist_mean(dad_mean, cur_mean);
+    idist_dad(n) = dist_dad;
+
+    dist(n) = math::max(dist_bro, (int_u8) (dist_dad * 1.5));
   }
+
+  morpho::tree::propagate_representative(tree, idist_bro);
+  morpho::tree::propagate_representative(tree, idist_dad);
+  io::pgm::save(idist_dad, "distance_dad.pgm");
+  io::pgm::save(idist_bro, "distance_bro.pgm");
 
   return dist;
 }

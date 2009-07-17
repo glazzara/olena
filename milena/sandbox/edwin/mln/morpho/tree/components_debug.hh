@@ -277,7 +277,7 @@ namespace mln {
 		std::stringstream fn;
 		fn.fill('0');
 		fn << "debug/log_";
-		fn.width(3);
+		fn.width(4);
 		fn << std::right << cpt;
 
 		std::ofstream out((fn.str() + ".log").c_str());
