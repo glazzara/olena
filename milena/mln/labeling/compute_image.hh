@@ -118,6 +118,7 @@ namespace mln
 		      const mln_value(L)& nlabels)
       {
 	const L& labels = exact(labels_);
+	(void) nlabels;
 
 	typedef mln_ch_value(L, A) O;
 	O output;
@@ -126,7 +127,7 @@ namespace mln
 	mln_piter(L) p(labels.domain());
 	for_all(p)
 	{
-	  mln_assertion(labels(p) < nlabels);
+	  mln_assertion(labels(p) <= nlabels);
 	  output(p) = a[labels(p)];
 	}
 
