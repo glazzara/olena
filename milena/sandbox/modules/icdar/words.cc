@@ -222,4 +222,3 @@ int main(int argc, char *argv[])
     io::ppm::save(labeling::colorize(output, n_words), "ws_large.ppm");
 
 }
-

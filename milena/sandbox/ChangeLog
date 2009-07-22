@@ -1,5 +1,12 @@
 2009-07-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Augment ICDAR module code.
+
+	* modules/icdar/words.cc: Cosmetic change.
+	* modules/icdar/lines.cc: Augment.
+
+2009-07-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add 2010 code for page segmentation.
 
 	* inim/2010/page: New directory.

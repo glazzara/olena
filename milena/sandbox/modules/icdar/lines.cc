@@ -53,12 +53,20 @@
 #include <mln/morpho/closing/structural.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/morpho/watershed/flooding.hh>
+#include <mln/labeling/wrap.hh>
 
 #include <mln/algebra/vec.hh>
 #include <mln/accu/stat/var.hh>
 #include <mln/make/region_adjacency_graph.hh>
 #include <mln/make/vertex_image.hh>
 #include <mln/make/edge_image.hh>
+
+#include <mln/morpho/elementary/dilation.hh>
+#include <mln/data/transform.hh>
+#include <mln/core/image/imorph/tr_image.hh>
+#include <mln/core/routine/duplicate.hh>
+#include <mln/labeling/colorize.hh>
+
 
 
 void usage(char* argv[])
@@ -105,25 +113,120 @@ namespace local
   }
 
 
-  struct bloup : Function_vv2v<bloup>
+//   struct bloup : Function_vv2v<bloup>
+//   {
+//     typedef float result;
+
+//     template <typename Var, typename V>
+//     float dist(const Var& var, const V& v) const
+//     {
+//       mln_precondition(var.is_valid());
+//       V v_ = v - var.mean();
+//       return v_.t() * var.variance()._1() * v_;
+//     }
+
+//     template <typename Var>
+//     float operator()(const Var& var1, const Var& var2) const
+//     {
+//       return std::min(dist(var1, var2.mean()), dist(var2, var1.mean()));
+//     }
+//   };
+
+
+  struct pass : Function_vv2v<pass>
   {
-    typedef float result;
+    typedef bool result;
 
-    template <typename Var, typename V>
-    float dist(const Var& var, const V& v) const
+    template <typename A>
+    bool operator()(const A& a1, const A& a2) const
     {
-      mln_precondition(var.is_valid());
-      V v_ = v - var.mean();
-      return v_.t() * var.variance()._1() * v_;
-    }
+      if (! a1.is_valid() || ! a2.is_valid())
+	return false;
+      A l, r;
+      if (a1.mean()[1] < a2.mean()[1])
+	{
+	  l = a1;
+	  r = a2;
+	}
+      else
+	{
+	  l = a2;
+	  r = a1;
+	}
+      float
+	// vertical std deviations
+	vs_l = std::sqrt(l.variance()(0, 0)),
+	vs_r = std::sqrt(r.variance()(0, 0)),
+	// vertical distance
+	vd   = std::abs(l.mean()[0] - r.mean()[0]),
+	// horizontal std deviations
+	hs_l = std::sqrt(l.variance()(1, 1)),
+	hs_r = std::sqrt(r.variance()(1, 1)),
+	// horizontal means (column coordinates)
+	hm_l = l.mean()[1],
+	hm_r = r.mean()[1];
 
-    template <typename Var>
-    float operator()(const Var& var1, const Var& var2) const
-    {
-      return std::min(dist(var1, var2.mean()), dist(var2, var1.mean()));
+      bool
+	v_criterion = (vd < 5 * std::sqrt(vs_l * vs_r)),   // FIXME: say 4?
+	h_criterion = (hm_r - 1 * hs_r > hm_l + 1 * hs_l); // FIXME: say 1.5?
+      
+      return v_criterion && h_criterion;
     }
   };
 
+
+  template <typename L>
+  inline
+  L find_root_(util::array<L>& parent, L l)
+  {
+    if (parent[l] == l)
+      return l;
+    return parent[l] = find_root_(parent, parent[l]);
+  }
+
+
+  template <unsigned n>
+  struct over_;
+
+  template <unsigned n>
+  struct sub_ : Function_v2v< sub_<n> >
+  {
+    typedef point2d result;
+    point2d operator()(const point2d& p) const
+    {
+      return point2d(p.row() / n, p.col() / n);
+    }
+    over_<n> inv() const;
+  };
+
+  template <unsigned n>
+  struct over_ : Function_v2v< over_<n> >
+  {
+    typedef point2d result;
+    point2d operator()(const point2d& p) const
+    {
+      return point2d(p.row() * n, p.col() * n);
+    }
+    sub_<n> inv() const
+    {
+      return sub_<n>();
+    }
+  };
+
+  template <unsigned n>
+  over_<n> sub_<n>::inv() const
+  {
+    return over_<n>();
+  }
+
+
+  template <typename S, typename I, typename F>
+  tr_image<S,I,F>
+  transform(const Site_Set<S>& s, const Image<I>& ima, const Function_v2v<F>& t)
+  {
+    tr_image<S,I,F> tmp(exact(s), exact(ima), exact(t));
+    return tmp;
+  }
 
 } // local
 
@@ -161,7 +264,7 @@ int main(int argc, char* argv[])
 
   // Sub-sample.
   image2d<value::int_u8> small = world::binary_2d::subsample(input, 4);
-//   io::pgm::save(small, "temp_small.pgm");
+  //   io::pgm::save(small, "temp_small.pgm");
 
 
   
@@ -174,7 +277,7 @@ int main(int argc, char* argv[])
   temp = linear::gaussian_directional_2d(temp, 0, v_sigma, 255);
   
   image2d<int_u8> fuzzy = data::saturate(value::int_u8(), temp);
-//   io::pgm::save(fuzzy, "temp_fuzzy.pgm");
+  //   io::pgm::save(fuzzy, "temp_fuzzy.pgm");
 
   // Closing.
   image2d<int_u8> clo = morpho::closing::structural(fuzzy, win::rectangle2d(height, width));
@@ -183,6 +286,8 @@ int main(int argc, char* argv[])
   typedef value::label<12> L;
   L n_basins;
   image2d<L> ws = morpho::watershed::flooding(clo, c4(), n_basins);
+
+  io::pgm::save(labeling::wrap(ws), "temp_ws.pgm");
 
   std::cout << "n basins = " << n_basins << std::endl;
 
@@ -197,25 +302,57 @@ int main(int argc, char* argv[])
 					     n_basins,
 					     (pw::cst(255) - pw::value(small)) | small.domain());
 
-  for (unsigned l = 1; l <= n_basins; ++l)
-    std::cout << l << ' ' << arr[l].n_items() << ' ' << arr[l].mean() << std::endl;
+  //   for (unsigned l = 1; l <= n_basins; ++l)
+  //     std::cout << l << ' ' << arr[l].n_items() << ' ' << arr[l].mean() << std::endl;
 
   typedef util::graph G;
   G gr = make::region_adjacency_graph(ws, c8(), n_basins);
 
   vertex_image<void,A,G> v_ima = make::vertex_image(gr, arr);
 
-  edge_image<void,float,G> e_ima = make::edge_image(v_ima,
-						    local::bloup());
+  edge_image<void,bool,G> e_ima = make::edge_image(v_ima,
+						   local::pass());
 
+
+  util::array<L> parent(n_basins.next());
+  for (L l = 0; l <= n_basins; ++l)
+    parent[l] = l;
+
+  typedef edge_image<void,bool,G> I;
+  mln_piter_(I) e(e_ima.domain());
+  for_all(e)
   {
-    typedef edge_image<void,float,G> I;
-    mln_piter_(I) e(e_ima.domain());
-    for_all(e)
-    {
-      std::cout << e.element().v1() << '-' << e.element().v2() << " : " << e_ima(e) << std::endl;
-    }
+    if (! e_ima(e))
+      continue;
+
+    unsigned
+      l1 = e.element().v1(),
+      l2 = e.element().v2();
+    if (l1 > l2)
+      std::swap(l1, l2);
+    parent[l1] = l2;
+      
+    //       std::cout << e.element().v1() << '-' << e.element().v2() << " : "
+    // 		<< (e_ima(e) ? "OK" : "ko") << std::endl;
   }
 
-  trace::exiting("main");
+  //     for (L l = 1; l <= n_basins; ++l)
+  //       {
+  // 	parent[l] = local::find_root_(parent, l);
+  // 	std::cout << l << " -> " << parent[l] << std::endl;
+  //       }
+
+  io::pgm::save(labeling::wrap(data::transform(ws, parent)), "temp_relab.pgm");
+
+
+  ws = morpho::elementary::dilation(ws, c8());
+
+  image2d<L> ws_(input.domain());
+  data::fill(ws_, local::transform(input.domain(), ws, local::over_<4>()));
+
+  io::ppm::save(labeling::colorize(rgb8(), ws_), argv[2]);
+
+
+
+    trace::exiting("main");
 }
