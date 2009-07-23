@@ -32,6 +32,14 @@
 	* inim/2010/page/Makefile: New.
 	* inim/2010/page/white.hh: New.
 
+2009-07-22  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	First test with git, test c++ install with HelloWorld program
+
+	* green/HelloWorld/Makefile.am  : Bypass .gitignore, New
+	* green/HelloWorld/HelloWorld.cc: Write "HelloWorld" on CRT.
+	* green/HelloWorld/Print.cc     : Deported cout call
+	
 2009-07-17  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Fix bugs in segmentation with delta colormean method.
