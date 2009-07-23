@@ -4,6 +4,13 @@
 	* edwin/exec/zi.cc: Use distance between bbox instead of
 	distance between mass centers.
 
+2009-07-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Small Demo with milena, it produces an HelloWorld pbm image.
+
+	* green/HelloWorld/Makefile.am    : New.
+	* green/HelloWorld/HelloMilena.cc : Creating and saving image.
+
 2009-07-22  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Tries about segmentation based on distance between I.Z.
