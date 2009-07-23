@@ -1,7 +1,9 @@
 #include <iostream>
 
+void print();
+
 int main()
 {
-  std::cout << "Hello, World!\n";
+  print();
   return 0;
 }

@@ -1,45 +1,49 @@
 #
-# HelloWorld
-#
-# This C++ program write an "HelloWorld" string on the crt.
+# Generic Makefile
 #
 
-ECHO=  echo
-RM=    rm
-MKDIR= mkdir
-CP=    cp
+BIN_PATTERN= trunk/build/milena
+SRC_PATTERN= trunk/milena
 
-MAK= Makefile
-BIN= HelloWorld
-SRC= $(BIN).cc
-SAV= $(BIN).cc~
-OBJ= $(BIN).o
+CXXFLAGS=    -ggdb -O0 -Wall -W -pedantic -ansi -pipe
+ECHO=        echo
+RM=          rm
+MKDIR=       mkdir
+CP=          cp
 
-OLNDIR= $(HOME)/svn/oln/trunk
-DEVDIR= milena/sandbox/green/$(BIN)
-SRCDIR= $(OLNDIR)/$(DEVDIR)
-BINDIR= $(OLNDIR)/build/$(DEVDIR)
+ifeq ($(findstring $(BIN_PATTERN),$(PWD)), $(BIN_PATTERN))
+BIN_DIR=
+SRC_DIR= $(subst $(BIN_PATTERN),$(SRC_PATTERN), $(PWD))/
+else
+BIN_DIR= $(subst $(SRC_PATTERN),$(BIN_PATTERN), $(PWD))/
+SRC_DIR=
+endif
 
-CCFLAGS= -ggdb -O0 -Wall -W -pedantic -ansi -pipe
-
-.extension:.cc .hh .o
-
-all: $(BINDIR) $(BINDIR)/$(BIN)
-
-
-$(BINDIR):
-	$(MKDIR) $(BINDIR)
-	$(CP) $(SRCDIR)/$(MAK) $(BINDIR)
+TARGET= $(BIN_DIR)$(notdir $(PWD))
+BIN_MAKE= $(BIN_DIR)Makefile
+SRC_MAKE= $(SRC_DIR)Makefile.am
 
 
-$(BINDIR)/$(BIN): $(BINDIR)/$(OBJ)
-	$(CXX) $(BINDIR)/$(OBJ) $(CCFLAGS) -o $(BINDIR)/$(BIN)
+SRC_FILES= $(wildcard $(SRC_DIR)*.cc)
+OLD_FILES= $(addsuffix ~, $(SRC_FILES))
+OBJ_FILES= $(addprefix $(BIN_DIR), $(notdir $(SRC_FILES:%.cc=%.o)))
 
-$(BINDIR)/$(OBJ): $(SRCDIR)/$(SRC)
-	$(CXX) $(SRCDIR)/$(SRC) $(CCFLAGS) -c -o $(BINDIR)/$(OBJ)
+
+all: $(BIN_DIR) $(TARGET)
+	@$(ECHO) "Compilation terminée" 
+
+$(BIN_DIR):
+	$(MKDIR) $(BIN_DIR)
+	$(CP) $(SRC_MAKE) $(BIN_MAKE)
+
+$(TARGET):$(OBJ_FILES)
+	$(LINK.cc) $^ $(LOADLIBES) $(LDLIBS) -o $@
+
+$(BIN_DIR)%.o:$(SRC_DIR)%.cc
+	$(COMPILE.cc) $(OUTPUT_OPTION) $<
 
 clean:
-	-$(RM) $(BINDIR)/$(BIN)
-	-$(RM) $(BINDIR)/$(OBJ)
-	-$(RM) $(SRCDIR)/$(SAV)
+	-@$(RM) $(TARGET)
+	-@$(RM) $(OBJ_FILES)
+	-@$(RM) $(OLD_FILES)
 
