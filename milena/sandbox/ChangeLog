@@ -1,5 +1,12 @@
 2009-07-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Learn to compute image statistics
+
+	* green/Stats/Makefile.am    : New.
+	* green/Stats/Stats.cc       : Compute histogram, variance and max.
+
+2009-07-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Learn to reduce image domain while filling the image
 
 	* green/LearnMilena/Makefile.am    : New.
