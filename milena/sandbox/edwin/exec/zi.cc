@@ -97,9 +97,32 @@ namespace mln
   template <typename P>
   inline
   value::int_u8
-  doublelol(const P& p1, const P& p2)
+  distance(const P& p1, const P& p2)
   {
     return convert::to<value::int_u8>(norm::l1_distance(p1.to_vec(), p2.to_vec()));
+  }
+
+
+  inline
+  value::int_u8
+  distance_box(const box<point2d>& b1, const box<point2d>& b2)
+  {
+    const box<point2d> *btop, *bdown, *bleft, *bright;
+
+    btop = b1.pmin().row() < b2.pmin().row() ? &b1 : &b2;
+    bdown = b1.pmax().row() > b2.pmax().row() ? &b1 : &b2;
+    bleft = b1.pmin().col() < b2.pmin().col() ? &b1 : &b2;
+    bright = b1.pmax().col() > b2.pmax().col() ? &b1 : &b2;
+
+    int w_dist = (bright->pmax().col() - bleft->pmin().col()) -
+      (bright->pmax().col() - bright->pmin().col()) -
+      (bleft->pmax().col() - bleft->pmin().col());
+
+    int h_dist = (bdown->pmax().row() - btop->pmin().row()) -
+      (bdown->pmax().row() - bdown->pmin().row()) -
+      (btop->pmax().row() - btop->pmin().row());
+
+    return math::max(math::max(w_dist, h_dist), 0);
   }
 
 }
@@ -154,27 +177,41 @@ int main(int argc, char** argv)
   // I.Z Graph
   util::graph izg = make::influence_zone_adjacency_graph(iz, c4(), nlabel);
 
-  // -- Color distance
-  //  util::array<value::rgb8> mean_colors;
+
+  // Valuation of color distance
+  //   util::array<value::rgb8> mean_colors;
   //   convert::from_to(labeling::compute(accu::stat::mean<value::rgb8>(), source, labels, nlabel),
-  // 		   mean_colors);
+  //   		   mean_colors);
 
   //   typedef vertex_image<void, value::rgb8, util::graph> V;
   //   V v_ima = make::vertex_image(izg, mean_colors);
 
   //   typedef edge_image<void, value::int_u8, util::graph> E;
   //   E e_ima = make::edge_image(v_ima, convert::tofun(dist_mean));
-  // -- Color distance
 
-  util::array<mln_psite_(I)> mass_centers;
-  convert::from_to(labeling::compute(accu::center<mln_psite_(I)>(), labels, nlabel),
-		   mass_centers);
 
-  typedef vertex_image<void, mln_psite_(I), util::graph> V;
-  V v_ima = make::vertex_image(izg, mass_centers);
+  // Valuation of geometric distance
+  // util::array<mln_psite_(I)> mass_centers;
+//   convert::from_to(labeling::compute(accu::center<mln_psite_(I)>(), labels, nlabel),
+// 		   mass_centers);
+
+//   typedef vertex_image<void, mln_psite_(I), util::graph> V;
+//   V v_ima = make::vertex_image(izg, mass_centers);
+
+//   typedef edge_image<void, value::int_u8, util::graph> E;
+//   E e_ima = make::edge_image(v_ima, convert::tofun(distance<mln_psite_(I)>));
+
+  // Valuation of distance between bounding boxes
+  util::array< box<mln_psite_(I)> > bboxes;
+  convert::from_to(labeling::compute(accu::shape::bbox<mln_psite_(I)>(), labels, nlabel),
+		   bboxes);
+
+  typedef vertex_image<void, box<mln_psite_(I)>, util::graph> V;
+  V v_ima = make::vertex_image(izg, bboxes);
 
   typedef edge_image<void, value::int_u8, util::graph> E;
-  E e_ima = make::edge_image(v_ima, convert::tofun(doublelol<mln_psite_(I)>));
+  E e_ima = make::edge_image(v_ima, convert::tofun(distance_box));
+
 
 
   // WST.
