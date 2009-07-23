@@ -124,7 +124,7 @@ void version4()
   data::fill(mask_img, false);
   data::paste(bool_img, mask_img);
   
-  data::fill((rgb_img | pw::value(mask_img) == false).rw(), literal::green);
+  data::fill((rgb_img | (pw::value(mask_img) == false)).rw(), literal::green);
 
   io::ppm::save(rgb_img, "./small_version4.ppm");
 
@@ -140,6 +140,9 @@ int main()
 
   trace::entering("main");
 
+  version1();
+  version2();
+  version3();
   version4();
 
   trace::exiting("main");

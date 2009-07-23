@@ -1,5 +1,12 @@
 2009-07-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Correct warning on previous software
+
+	* green/LearnMilena/LearnMilena.cc : Add () around operator |.
+	* green/Otsu/Otsu.cc               : Evict mln_VAR macro.
+
+2009-07-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Learn to compute image statistics
 
 	* green/Stats/Makefile.am    : New.
