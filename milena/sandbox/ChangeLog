@@ -1,3 +1,10 @@
+2009-07-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Learn to reduce image domain while filling the image
+
+	* green/LearnMilena/Makefile.am    : New.
+	* green/LearnMilena/LearnMilena.cc : Filling operator.
+
 2009-07-23  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Minor improvments in IZ method.
@@ -8,8 +15,8 @@
 
 	Small Demo with milena, it produces an HelloWorld pbm image.
 
-	* green/HelloWorld/Makefile.am    : New.
-	* green/HelloWorld/HelloMilena.cc : Creating and saving image.
+	* green/HelloMilena/Makefile.am    : New.
+	* green/HelloMilena/HelloMilena.cc : Creating and saving image.
 
 2009-07-22  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
