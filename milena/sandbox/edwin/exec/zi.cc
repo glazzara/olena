@@ -33,6 +33,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/label_16.hh>
 #include <mln/value/label_8.hh>
+#include <mln/data/convert.hh>
 #include <mln/util/graph.hh>
 
 #include <mln/io/pbm/load.hh>
@@ -50,10 +51,13 @@
 #include <mln/make/edge_image.hh>
 #include <mln/make/vertex_image.hh>
 
+#include <mln/morpho/closing/height.hh>
+
 #include <mln/math/max.hh>
 #include <mln/norm/l1.hh>
 
 #include "color_distance.hh"
+#include "zi.hh"
 #include <iostream>
 
 namespace mln
@@ -62,7 +66,7 @@ namespace mln
   namespace convert
   {
 
-      // C-binary function to vv2v. (convert::to_fun...en binaire)
+    // C-binary function to vv2v. (convert::to_fun...en binaire)
 
     template <typename R, typename V1, typename V2>
     struct cfun_vv2v : Function_vv2v< cfun_vv2v<R, V1, V2> >
@@ -94,6 +98,7 @@ namespace mln
 
   }
 
+  // distance entre les centres de masses.
   template <typename P>
   inline
   value::int_u8
@@ -103,6 +108,7 @@ namespace mln
   }
 
 
+  // distance entre les boites englobantes.
   inline
   value::int_u8
   distance_box(const box<point2d>& b1, const box<point2d>& b2)
@@ -124,6 +130,35 @@ namespace mln
 
     return math::max(math::max(w_dist, h_dist), 0);
   }
+
+
+  // distance geodesic entre les composantes.
+  template <typename G, typename L>
+  struct distance_t : Function_v2v< distance_t<G, L> >
+  {
+    typedef unsigned result;
+    typedef util::vertex_id_t V;
+    typedef util::edge_id_t E;
+
+    distance_t(const std::map< std::pair<L, L>, unsigned >& d_,
+	       const G& graph)
+      : d(d_),
+	g(graph)
+    {
+    }
+
+    unsigned
+    operator () (const E& e_id) const
+    {
+      typename G::edge_t e = g.edge(e_id);
+      std::pair<L, L> p((value::label_8)e.v1(), (value::label_8)e.v2());
+      return d.find(p)->second;
+    }
+
+  private:
+    const std::map< std::pair<L, L>, unsigned >& d;
+    const G& g;
+  };
 
 }
 
@@ -147,12 +182,13 @@ int main(int argc, char** argv)
   using namespace mln;
   using value::int_u8;
 
-  if (argc < 3)
+  if (argc < 4)
     usage(argv);
 
   const char* finput = argv[1];
   const char* fsource = argv[2];
-  const char* foutput = argc > 3 ? argv[3] : "zi.pgm";
+  const unsigned lambda = atoi(argv[3]);
+  const char* foutput = argc > 4 ? argv[4] : "zi.pgm";
 
   // Image loadin'
   image2d<bool> input;
@@ -167,11 +203,17 @@ int main(int argc, char** argv)
 
   typedef image2d<L> I;
   I labels, iz, out;
+  image2d<unsigned> dmap;
   L nlabel;
+  typedef std::map< std::pair<L,L>, unsigned > map_t;
 
   labels = labeling::blobs(input, c4(), nlabel);
-  iz = transform::influence_zone_geodesic(labels, c4());
+  initialize(iz, input);
+  initialize(dmap, input);
 
+  map_t d = distances(labels, c4(), dmap, iz);
+
+  io::pgm::save(data::convert(int_u8(), dmap), "dmap.pgm");
   io::pgm::save(iz, foutput);
 
   // I.Z Graph
@@ -179,29 +221,33 @@ int main(int argc, char** argv)
 
 
   // Valuation of color distance
-  //   util::array<value::rgb8> mean_colors;
-  //   convert::from_to(labeling::compute(accu::stat::mean<value::rgb8>(), source, labels, nlabel),
-  //   		   mean_colors);
+  /*
+  util::array<value::rgb8> mean_colors;
+  convert::from_to(labeling::compute(accu::stat::mean<value::rgb8>(), source, labels, nlabel),
+  mean_colors);
 
-  //   typedef vertex_image<void, value::rgb8, util::graph> V;
-  //   V v_ima = make::vertex_image(izg, mean_colors);
+  typedef vertex_image<void, value::rgb8, util::graph> V;
+  V v_ima = make::vertex_image(izg, mean_colors);
 
-  //   typedef edge_image<void, value::int_u8, util::graph> E;
-  //   E e_ima = make::edge_image(v_ima, convert::tofun(dist_mean));
-
+  typedef edge_image<void, value::int_u8, util::graph> E;
+  E e_ima = make::edge_image(v_ima, convert::tofun(dist_mean));
+  */
 
   // Valuation of geometric distance
-  // util::array<mln_psite_(I)> mass_centers;
-//   convert::from_to(labeling::compute(accu::center<mln_psite_(I)>(), labels, nlabel),
-// 		   mass_centers);
+  /*
+  util::array<mln_psite_(I)> mass_centers;
+  convert::from_to(labeling::compute(accu::center<mln_psite_(I)>(), labels, nlabel),
+		   mass_centers);
 
-//   typedef vertex_image<void, mln_psite_(I), util::graph> V;
-//   V v_ima = make::vertex_image(izg, mass_centers);
+  typedef vertex_image<void, mln_psite_(I), util::graph> V;
+  V v_ima = make::vertex_image(izg, mass_centers);
 
-//   typedef edge_image<void, value::int_u8, util::graph> E;
-//   E e_ima = make::edge_image(v_ima, convert::tofun(distance<mln_psite_(I)>));
+  typedef edge_image<void, value::int_u8, util::graph> E;
+  E e_ima = make::edge_image(v_ima, convert::tofun(distance<mln_psite_(I)>));
+  */
 
   // Valuation of distance between bounding boxes
+  /*
   util::array< box<mln_psite_(I)> > bboxes;
   convert::from_to(labeling::compute(accu::shape::bbox<mln_psite_(I)>(), labels, nlabel),
 		   bboxes);
@@ -211,15 +257,23 @@ int main(int argc, char** argv)
 
   typedef edge_image<void, value::int_u8, util::graph> E;
   E e_ima = make::edge_image(v_ima, convert::tofun(distance_box));
+  */
 
+  // Valuation of components geodesic distance.
+  typedef edge_image<void, unsigned, util::graph> E;
+  E e_ima = make::edge_image(izg, distance_t<util::graph, value::label_8>(d, izg));
+
+
+  // Closing
+  e_ima = morpho::closing::height(e_ima, E::nbh_t (), lambda);
 
 
   // WST.
-  typedef mln_ch_value_(V, L) v_ima_labels_t;
-  v_ima_labels_t v_ima_labels;
-  initialize(v_ima_labels, v_ima);
+  typedef vertex_image<void, L, util::graph> V;
+  p_vertices<util::graph> pv(izg);
+  V v_ima_labels(pv);
 
-  typedef mln_ch_value_(E, L) e_ima_wst_t;
+  typedef edge_image<void, L, util::graph> e_ima_wst_t;
   L nbasins;
   e_ima_wst_t e_ima_wst =
     morpho::watershed::flooding(e_ima, E::nbh_t (), nbasins);
@@ -240,12 +294,18 @@ int main(int argc, char** argv)
 
   // Relabeling
   util::array<L> tr(nlabel);
-  mln_piter_(V) v(v_ima.domain());
+  mln_piter_(V) v(v_ima_labels.domain());
   for_all(v)
   {
     std::cout << v.id() << " : " << v_ima_labels(v) << std::endl;
     tr[v.id()] = v_ima_labels(v);
   }
+
+  //print distance
+  for (map_t::const_iterator it = d.begin(); it != d.end(); ++it)
+    std::cout << it->first.first << ", "
+	      << it->first.second << " -> "
+	      << it->second << std::endl;
 
   labeling::relabel_inplace(iz, nlabel, tr);
 

@@ -1,3 +1,9 @@
+2009-07-24  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Fixes about IZ method.
+	* edwin/exec/zi.cc: Some tries...
+	* edwin/exec/zi.hh: Real distance between components.
+
 2009-07-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Correct warning on previous software
