@@ -64,7 +64,7 @@ namespace mln
       class graph_base : public Graph<E>
       {
 
-      protected:
+      public:
 	/// The type of a vertex.
 	typedef util::vertex<E> vertex_t;
 	/// The type of an edge.

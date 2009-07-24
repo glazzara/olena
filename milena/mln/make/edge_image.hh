@@ -54,6 +54,16 @@ namespace mln
     mln::edge_image<void,V,G>
     edge_image(const Graph<G>& g, const fun::i2v::array<V>& fv);
 
+    /// Construct an edge image.
+    ///
+    /// \param[in] g  A graph
+    /// \param[in] fv A function mapping edge ids to values.
+    ///
+    /// \return an edge image.
+    //
+    template <typename FV, typename G>
+    mln::edge_image<void, mln_result(FV), G>
+    edge_image(const Graph<G>& g, const Function_v2v<FV>& fv);
 
 
     /// Construct an edge image.
@@ -122,6 +132,27 @@ namespace mln
       return ima;
     }
 
+    template <typename FV, typename G>
+    mln::edge_image<void,mln_result(FV),G>
+    edge_image(const Graph<G>& g_,
+	       const Function_v2v<FV>& fv)
+    {
+      trace::entering("make::edge_image");
+      const G& g = exact(g_);
+      const FV& f = exact(fv);
+      mln_precondition(g.is_valid());
+
+      p_edges<G> pe(g);
+      typedef mln::edge_image<void,mln_result(FV),G> ima_t;
+      ima_t ima(pe);
+
+      mln_piter(ima_t) e(ima.domain());
+      for_all(e)
+	ima(e) = f(e.id());
+
+      trace::exiting("make::edge_image");
+      return ima;
+    }
 
 
     template <typename FP, typename FV, typename G>

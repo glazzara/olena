@@ -218,7 +218,6 @@ namespace mln
   template <typename G, typename F>
   inline
   p_vertices<G,F>::p_vertices()
-    : f_(0)
   {
   }
 

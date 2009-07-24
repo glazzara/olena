@@ -1,3 +1,11 @@
+2009-07-24  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Minor fixes linked to graph.
+	* core/site_set/p_vertices.hh: Fix bug in constructor.
+	* make/edge_image.hh: Add overload to compute
+	edge_image from function v2v.
+	* util/internal/graph_base.hh: Make typedef visibility to public.
+
 2009-07-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* doc/Doxyfile.in: Add new example patterns.
