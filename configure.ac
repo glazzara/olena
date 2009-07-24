@@ -165,6 +165,10 @@ OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
 OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm], [GDCM],
 	     [-lgdcmzlib])
 
+# Tesseract
+OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full], [tesseract], [TESSERACT])
+
+
 
 ## ---------------------------- ##
 ## (Bundled) trimesh2 library.  ##
