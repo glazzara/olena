@@ -62,11 +62,9 @@ table_rebuild_rank_SOURCES = table_rebuild_rank.cc
 text_in_photo_SOURCES = text_in_photo.cc
 thin_bboxes_SOURCES = thin_bboxes.cc
 
-# FIXME: Should be enclosed in an Automake conditional like HAVE_TESSERACT.
-#bin_PROGRAMS += recognition
-
-#recognition_SOURCES = recognition.cc
-# FIXME: Do not use $(HOME).
-#recognition_CXXFLAGS =
-#  -I$(HOME)/local/include $(HOME)/local/lib/libtesseract_full.a
-#recognition_LDFLAGS = -lpthread
+if HAVE_TESSERACT
+  bin_PROGRAMS += recognition
+  recognition_SOURCES = recognition.cc
+  recognition_CPPFLAGS = $(AM_CPPFLAGS) $(TESSERACT_CPPFLAGS)
+  recognition_LDFLAGS = $(AM_LDFLAGS) $(TESSERACT_LDFLAGS) -lpthread
+endif HAVE_TESSERACT
