@@ -31,6 +31,10 @@
 
 	* build-aux/mln_check_guards: New.
 
+2009-07-14 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	* lrde-upload.sh: Set permissions on specific directories only.
+
 2009-07-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac, NEWS: Version 1.0a.
@@ -41,10 +45,6 @@
 
 	* NEWS: Update.
 	Aesthetic changes.
-
-2009-07-13 Guillaume Lazzara  <lazzara@lrde.epita.fr>
-
-	* lrde-upload.sh: Set permissions on specific directories only.
 
 2009-07-13 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
