@@ -1,3 +1,20 @@
+2009-07-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add some experimental code.
+
+	* icdar/2009/pscomp: New directory.
+	* icdar/2009/pscomp/iz.cc: New.
+	Compute an IZ image along with distances between objects. 
+	* icdar/2009/pscomp/rect_filter.cc: New.
+	Algebraic filtering with a combinaison of bounding box width
+	and height.
+
+	* theo/experimental/depeche: New directory.
+	* theo/experimental/depeche/homogen.cc: New.
+	* theo/experimental/depeche/col.cc: New.
+	* theo/experimental/depeche/row_mm.cc: New.
+	* theo/experimental/depeche/row.cc: New.
+
 2009-07-24  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Fixes about IZ method.
