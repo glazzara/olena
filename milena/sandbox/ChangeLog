@@ -1,3 +1,12 @@
+2009-07-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Clean up a bit module icdar words.
+
+	* modules/icdar/words.cc (to_larger, to_smaller): Rename as...
+	(enlarge, shrink): ...these; move into fun::p2p.
+	(LOG): Group log code.
+	(transposed_image): Get rid of this ugly call name.
+
 2009-07-28  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Learn how creating new types in milena (Fraction).

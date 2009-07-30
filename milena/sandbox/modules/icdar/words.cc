@@ -60,67 +60,104 @@
 namespace mln
 {
 
-
-  // Forward declaration.
-  template <typename P> struct to_larger;
-
-
-  template <typename P>
-  struct to_smaller
-    : Function_v2v < to_smaller<P> >
+  namespace fun
   {
-      typedef P result;
-      typedef to_larger<P> invert;
 
-      P operator()(const P& p) const
+    namespace p2p
+    {
+
+      // Forward declaration.
+      template <typename P> struct enlarge;
+
+
+      template <typename P>
+      struct shrink : Function_v2v < shrink<P> >
       {
-	P tmp(p);
+	typedef P result;
+	typedef enlarge<P> invert;
 
-	for (unsigned i = 0; i < P::dim; ++i)
-	  tmp[i] /= 2;
+	shrink(unsigned factor = 2)
+	{
+	  mln_precondition(factor != 0);
+	  this->factor = factor;
+	}
 
-	return tmp;
-      }
+	P operator()(const P& p) const
+	{
+	  mln_precondition(factor != 0);
+	  P tmp(p);
+	  for (unsigned i = 0; i < P::dim; ++i)
+	    tmp[i] /= factor;
+	  return tmp;
+	}
+
+	invert inv() const
+	{
+	  return enlarge<P>(factor);
+	}
+
+	unsigned factor;
+      };
 
 
-      invert inv() const
+      template <typename P>
+      struct enlarge : Function_v2v < enlarge<P> >
       {
-	return to_larger<P>();
-      }
-  };
+	typedef P result;
+	typedef shrink<P> invert;
+
+	enlarge(unsigned factor = 2)
+	{
+	  mln_precondition(factor != 0);
+	  this->factor = factor;
+	}
+
+	P operator()(const P& p) const
+	{
+	  mln_precondition(factor != 0);
+	  P tmp(p);
+	  for (unsigned i = 0; i < P::dim; ++i)
+	    tmp[i] *= factor;
+	  return tmp;
+	}
+
+	invert inv() const
+	{
+	  return shrink<P>(factor);
+	}
+
+	unsigned factor;
+      };
+
+    } // end of namespace mln::fun::p2p
+
+  } // end of namespace mln::fun
 
 
-  template <typename P>
-  struct to_larger
-    : Function_v2v < to_larger<P> >
+  template <typename S, typename I, typename F>
+  tr_image<S,I,F>
+  transform_p2p(const Site_Set<S>& s, const Image<I>& ima, const Function_v2v<F>& t)
   {
-      typedef P result;
-      typedef to_smaller<P> invert;
+    tr_image<S,I,F> tmp(exact(s), exact(ima), exact(t));
+    return tmp;
+  }
 
-      P operator()(const P& p) const
-      {
-	P tmp(p);
-
-	for (unsigned i = 0; i < P::dim; ++i)
-	  tmp[i] *= 2;
-
-	return tmp;
-      }
+} // end of namespace mln
 
 
-      invert inv() const
-      {
-	return to_smaller<P>();
-      }
 
-  };
-
-
+void usage(char* argv[])
+{
+  std::cerr << "usage: " << argv[0] << " input.pbm output.ppm" << std::endl;
+  std::abort();
 }
 
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
+  if (argc != 3)
+    usage(argv);
+
   using namespace mln;
 
   typedef value::int_u8 L;
@@ -129,14 +166,14 @@ int main(int argc, char *argv[])
 
   // Parameters.
 
-  // Related to the first structural closing.
-  const unsigned
-    height = 5,
-    width  = 11;
+  // Related to the down-sizing.
+  const unsigned factor = 2;
 
-  // Related to the distance map computation.
-  const unsigned
-    l_area = 500;
+  // Related to the structural closing.
+  const unsigned height = 5, width  = 11;
+
+  // Related to the distance map filtering.
+  const unsigned l_area = 500;
 
   // end of Parameters.
 
@@ -148,23 +185,15 @@ int main(int argc, char *argv[])
 
   /// Reduction and invertion.
   image2d<L>
-    small_gl = world::binary_2d::subsample(input, 2);
+    small_gl = world::binary_2d::subsample(input, factor);
   I small = data::transform(small_gl, fun::v2b::threshold<L>(191));
   logical::not_inplace(small);
-
-#ifdef LOG
-  io::pbm::save(small, "small.pbm");
-#endif // ! LOG
 
 
   /// Structural closing.
   I clo = morpho::closing::structural(small,
 				      win::rectangle2d(height,
 						       width));
-
-#ifdef LOG
-  io::pbm::save(clo, "tmp_clo.pbm");
-#endif // ! LOG
 
 
   /// Distance map computation.
@@ -182,11 +211,6 @@ int main(int argc, char *argv[])
     dmap_ = morpho::closing::area(dmap, c4(), l_area);
 
 
-#ifdef LOG
-  io::pgm::save(labeling::wrap(dmap),  "tmp_dmap.pgm");
-  io::pgm::save(labeling::wrap(dmap_), "tmp_dmap_.pgm");
-#endif // ! LOG
-
   /// Watershed.
   L n_words;
   image2d<L> ws_ = morpho::watershed::flooding(dmap_,
@@ -194,31 +218,33 @@ int main(int argc, char *argv[])
 					       n_words);
 
   /// Remove non-significant regional minima.
-  image2d<L> ws  = morpho::elementary::dilation(ws_,
-						c4());
+  image2d<L> ws  = morpho::elementary::dilation(ws_, c4());
+
+  /// Adjust the domain of the watershed image.
+  mln_VAR(ws_large, transform_p2p(input.domain(), ws,
+				  fun::p2p::enlarge<point2d>(factor)));
+
+  image2d<L> output(input.domain());
+  data::fill(output, literal::zero);
+
+  data::paste(ws_large | (pw::value(input) == pw::cst(false)), output);
+  io::ppm::save(labeling::colorize(output, n_words), argv[2]);
+
 
 #ifdef LOG
-    io::pgm::save(labeling::wrap(ws),  "tmp_ws.pgm");
-    io::pgm::save(labeling::wrap(ws_), "tmp_ws_.pgm");
+  io::pbm::save(small, "temp_small.pbm");
+  io::pbm::save(clo, "temp_clo.pbm");
+  io::pgm::save(labeling::wrap(dmap),  "temp_dmap.pgm");
+  io::pgm::save(labeling::wrap(dmap_), "temp_dmap_.pgm");
 
-    /// Adjust the domain of the watershed image.
-    mln_VAR(ws_large_, transposed_image(input.domain(), ws_,
-				       to_larger<point2d>()));
-    io::ppm::save(morpho::watershed::superpose(input, ws_large_),
-		  "tmp_ws_on_input.ppm");
+  io::pgm::save(labeling::wrap(ws),  "temp_ws.pgm");
+  io::pgm::save(labeling::wrap(ws_), "temp_ws_.pgm");
+
+  /// Adjust the domain of the watershed image.
+  mln_VAR(ws_large_, transform_p2p(input.domain(), ws_,
+				   fun::p2p::enlarge<point2d>(factor)));
+  io::ppm::save(morpho::watershed::superpose(input, ws_large_),
+		"temp_ws_on_input.ppm");
 #endif // ! LOG
-
-
-    /// Adjust the domain of the watershed image.
-    mln_VAR(ws_large, transposed_image(input.domain(), ws,
-				       to_larger<point2d>()));
-
-    image2d<L> output(input.domain());
-    data::fill(output, literal::zero);
-
-    data::paste(ws_large | (pw::value(input) == pw::cst(false)), output);
-
-    io::pgm::save(output, "ws_large.pgm");
-    io::ppm::save(labeling::colorize(output, n_words), "ws_large.ppm");
 
 }
