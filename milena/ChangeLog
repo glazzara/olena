@@ -1,3 +1,16 @@
+2009-07-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Revamp value::proxy class.
+
+	* mln/core/image/imorph/labeled_image.hh: Fix missing include.
+	* mln/value/proxy.hh (proxy<const I>): Remove; useless.
+	(proxy): Change inheritance from Value to Proxy.
+	(operator): Remove; they are obsolete thanx to Proxy.
+	(ima_): Change type from & to *; late initialization is allowed.
+	(~proxy): De-activate static checks.
+	* tests/value/proxy.cc: New.
+	* tests/value/Makefile.am: Update.
+
 2009-07-24  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Minor fixes linked to graph.

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,8 +30,17 @@
 /// \file
 ///
 /// Define a generic proxy class for an image pixel value.
-
-# include <mln/core/concept/value.hh>
+///
+/// \todo Maybe we should overload conversion operator with proxy<I>
+///  or... (we have to choose) maybe we should add cpy ctors (with
+///  proxy<I> and proxy<J>).
+///
+/// \todo Rename value::proxy as value::shell and fix the specific
+/// code from Fred (the 2nd parameter, namely F, is useless)
+///
+/// \todo Checks in ~proxy eventually should be re-activated.
+ 
+# include <mln/core/concept/proxy.hh>
 # include <mln/trait/value_.hh>
 # include <mln/metal/unconst.hh>
 
@@ -38,7 +48,7 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   namespace value {
     template <typename I> class proxy;
   }
@@ -67,12 +77,13 @@ namespace mln
   namespace value
   {
 
-    /*! \brief Generic proxy class for an image pixel value.
-     *
-     * The parameter \c I is an image type.
-     */
+    /// \brief Generic proxy class for an image pixel value.
+    ///
+    /// The parameter \c I is an image type.
+    //
     template <typename I>
-    class proxy : public Value< proxy<I> >
+    class proxy : public Proxy< proxy<I> >,
+		  public mln::internal::proxy_impl< mln_value(I), proxy<I> >
     {
     public:
 
@@ -81,6 +92,9 @@ namespace mln
 
       /// Equivalent associated type.
       typedef mln_value(I) equiv;
+
+      /// Constructor.
+      proxy();
 
       /// Constructor.
       proxy(I& ima, const mln_psite(I)& p);
@@ -88,115 +102,60 @@ namespace mln
       /// Destructor.
       ~proxy();
 
-      /// Assignment (write access); general version.
-      template <typename V>
-      proxy<I>& operator=(const V& v);
+      // Assignment (write access); "natural" version.
+      proxy<I>& operator=(const mln_value(I)& v);
 
       /// Assignment (write access); replacement for default op.
       proxy<I>& operator=(const proxy<I>& rhs);
 
       /// Assignment (write access); with other proxy.
-      template <typename II>
-      proxy<I>& operator=(const proxy<II>& rhs);
+      template <typename J>
+      proxy<I>& operator=(const proxy<J>& rhs);
 
-      /// Conversion (read access); general version.
-      template <typename V>
-      operator V() const;
+//       /// Conversion (read access); "natural" version.
+//       operator mln_value(I)() const;
 
-      /// Conversion (read access); precise version.
-      operator mln_value(I)() const;
+
+//       /// Conversion (read access); toward a proxy.
+//       template <typename J>
+//       operator proxy<J>() const;
+
+
+//       /// Conversion (read access); general version.
+//       template <typename V>
+//       operator V() const;
+
 
       /// Explicit read access.
       mln_value(I) to_value() const;
 
+
+      // As a proxy:
+
+      /// Return the proxy subject.
+      mln_value(I) subj_();
+
     protected:
-      I& ima_;
+      I* ima_;
       mln_psite(I) p_;
     };
 
 
-
-    /*! \brief Generic proxy class for an image pixel value.
-     *
-     * The parameter \c I is an image type.
-     */
-    template <typename I>
-    class proxy< const I > : public Value< proxy<const I> >
-    {
-    public:
-
-      /// Encoding associated type.
-      typedef void enc; // FIXME
-
-      /// Equivalent associated type.
-      typedef mln_value(I) equiv;
-
-      /// Constructor.
-      proxy(const I& ima, const mln_psite(I)& p);
-
-      /// Destructor.
-      ~proxy();
-
-      /// Conversion (read access); general version.
-      template <typename V>
-      operator V() const;
-
-      /// Conversion (read access); precise version.
-      operator mln_value(I)() const;
-
-      /// Explicit read access.
-      mln_value(I) to_value() const;
-
-    protected:
-      const I& ima_;
-      mln_psite(I) p_;
-    };
-
-
-
-    template <typename I>
-    bool operator==(const proxy<I>& lhs, const mln_value(I)& rhs);
-
-    template <typename I>
-    bool operator==(const mln_value(I)& lhs, const proxy<I>& rhs);
-
-    template <typename I, typename J>
-    bool operator==(const proxy<I>& lhs, const proxy<J>& rhs);
-
-
-    template <typename I>
-    bool operator<(const proxy<I>& lhs, const mln_value(I)& rhs);
-
-    template <typename I>
-    bool operator<(const mln_value(I)& lhs, const proxy<I>& rhs);
-
-    template <typename I, typename J>
-    bool operator<(const proxy<I>& lhs, const proxy<J>& rhs);
-
-
-    // FIXME: Ops such as +=, etc.
-
-
-
-    /*! \brief Print a value proxy \p x into the output stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] x A value proxy.
-     *
-     * \return The modified output stream \p ostr.
-     */
-    template <typename I>
-    std::ostream& operator<<(std::ostream& ostr, const proxy<I>& x);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    // proxy<I>
+    template <typename I>
+    inline
+    proxy<I>::proxy()
+      : ima_(0)
+    {
+    }
 
     template <typename I>
     inline
     proxy<I>::proxy(I& ima, const mln_psite(I)& p)
-      : ima_(ima),
+      : ima_(&ima),
 	p_(p)
     {
     }
@@ -205,19 +164,19 @@ namespace mln
     inline
     proxy<I>::~proxy()
     {
-      mln_rvalue(I) (I::*mr)(const mln_psite(I)&) const = & I::read_;
-      mr = 0;
-      void (I::*mw)(const mln_psite(I)&, const mln_value(I)&) = & I::write_;
-      mw = 0;
+//       mln_rvalue(I) (I::*mr)(const mln_psite(I)&) const = & I::read_;
+//       mr = 0;
+//       void (I::*mw)(const mln_psite(I)&, const mln_value(I)&) = & I::write_;
+//       mw = 0;
     }
 
     template <typename I>
-    template <typename V>
     inline
     proxy<I>&
-    proxy<I>::operator=(const V& v)
+    proxy<I>::operator=(const mln_value(I)& v)
     {
-      ima_.write_(p_, v);
+      mln_precondition(ima_ != 0);
+      ima_->write_(p_, v);
       return *this;
     }
 
@@ -226,138 +185,59 @@ namespace mln
     proxy<I>&
     proxy<I>::operator=(const proxy<I>& rhs)
     {
+      mln_precondition(ima_ != 0);
+      if (&rhs == this)
+	return *this; // No-op.
       this->operator=(rhs.to_value());
       return *this;
     }
 
     template <typename I>
-    template <typename II>
+    template <typename J>
     inline
     proxy<I>&
-    proxy<I>::operator=(const proxy<II>& rhs)
+    proxy<I>::operator=(const proxy<J>& rhs)
     {
+      mln_precondition(ima_ != 0);
       this->operator=(rhs.to_value());
       return *this;
     }
 
-    template <typename I>
-    template <typename V>
-    inline
-    proxy<I>::operator V() const
-    {
-      return ima_.read_(p_);
-    }
+//     template <typename I>
+//     template <typename V>
+//     inline
+//     proxy<I>::operator V() const
+//     {
+//       mln_precondition(ima_ != 0);
+//       return ima_->read_(p_);
+//     }
 
-    template <typename I>
-    inline
-    proxy<I>::operator mln_value(I)() const
-    {
-      return ima_.read_(p_);
-    }
+//     template <typename I>
+//     inline
+//     proxy<I>::operator mln_value(I)() const
+//     {
+//       mln_precondition(ima_ != 0);
+//       return ima_->read_(p_);
+//     }
 
     template <typename I>
     inline
     mln_value(I)
     proxy<I>::to_value() const
     {
-      return ima_.read_(p_);
-    }
-
-    // proxy<const I>
-
-    template <typename I>
-    inline
-    proxy<const I>::proxy(const I& ima, const mln_psite(I)& p)
-      : ima_(ima),
-	p_(p)
-    {
-    }
-
-    template <typename I>
-    inline
-    proxy<const I>::~proxy()
-    {
-      mln_rvalue(I) (I::*mr)(const mln_psite(I)&) const = & I::read_;
-      mr = 0;
-    }
-
-    template <typename I>
-    template <typename V>
-    inline
-    proxy<const I>::operator V() const
-    {
-      return ima_.read_(p_);
-    }
-
-    template <typename I>
-    inline
-    proxy<const I>::operator mln_value(I)() const
-    {
-      return ima_.read_(p_);
+      mln_precondition(ima_ != 0);
+      return ima_->read_(p_);
     }
 
     template <typename I>
     inline
     mln_value(I)
-    proxy<const I>::to_value() const
+    proxy<I>::subj_()
     {
-      return ima_.read_(p_);
+      mln_precondition(ima_ != 0);
+      return ima_->read_(p_);
     }
 
-    // operator <<
-
-    template <typename I>
-    inline
-    std::ostream& operator<<(std::ostream& ostr, const proxy<I>& x)
-    {
-      return ostr << x.to_value();
-    }
-
-    // operator ==
-
-    template <typename I>
-    inline
-    bool operator==(const proxy<I>& lhs, const mln_value(I)& rhs)
-    {
-      return lhs.to_value() == rhs;
-    }
-
-    template <typename I>
-    inline
-    bool operator==(const mln_value(I)& lhs, const proxy<I>& rhs)
-    {
-      return lhs == rhs.to_value();
-    }
-
-    template <typename I, typename J>
-    inline
-    bool operator==(const proxy<I>& lhs, const proxy<J>& rhs)
-    {
-      return lhs.to_value() == rhs.to_value();
-    }
-
-    // operator <
-
-    template <typename I>
-    inline
-    bool operator<(const proxy<I>& lhs, const mln_value(I)& rhs)
-    {
-      return lhs.to_value() < rhs;
-    }
-
-    template <typename I>
-    inline
-    bool operator<(const mln_value(I)& lhs, const proxy<I>& rhs)
-    {
-      return lhs < rhs.to_value();
-    }
-
-    template <typename I, typename J>
-    inline
-    bool operator<(const proxy<I>& lhs, const proxy<J>& rhs)
-    {
-      return lhs.to_value() < rhs.to_value();
-    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

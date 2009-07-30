@@ -34,6 +34,7 @@
 # include <mln/core/concept/function.hh>
 # include <mln/core/internal/image_identity.hh>
 # include <mln/core/site_set/box.hh>
+# include <mln/core/routine/duplicate.hh>
 
 # include <mln/accu/pair.hh>
 # include <mln/accu/nil.hh>

@@ -33,6 +33,7 @@ check_PROGRAMS =				\
   int_u8					\
   interop					\
   label						\
+  proxy						\
   rgb8						\
   scalar					\
   set						\
@@ -55,6 +56,7 @@ int_s16_SOURCES = int_s16.cc
 int_u8_SOURCES = int_u8.cc
 interop_SOURCES = interop.cc
 label_SOURCES = label.cc
+proxy_SOURCES = proxy.cc
 rgb8_SOURCES = rgb8.cc
 scalar_SOURCES = scalar.cc
 set_SOURCES = set.cc
