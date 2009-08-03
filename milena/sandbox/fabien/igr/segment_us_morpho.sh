@@ -4,10 +4,6 @@
 process ()
 {
   nlabels=`./filter_morpho_us $@`
-#if [ $? -gt 0 ]; then
-#   echo "error: filter_morpho_us failed"
-#   exit
-# fi
 
   ../bin/dump2pgm8b closing.dump closing.pgm
   convert closing.pgm 01_closing.png

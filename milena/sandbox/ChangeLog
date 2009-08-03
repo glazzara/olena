@@ -1,3 +1,18 @@
+2009-08-03  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Implement support for 2D tiled images and other drafts.
+	* fabien/igr/segment_us_morpho.sh: Small update.
+	* fabien/magick/Makefile: Minor fix.
+	* fabien/mln/canvas/browsing/directional.hh: Draft.
+	* fabien/mln/canvas/browsing/snake.hh: Draft.
+	* fabien/mln/core/image/magick_tiled2d.hh: Implement 2D tiled image with
+	ImageMagick.
+	* fabien/mln/core/image/tiled2d.hh: Implement 2D tiled image.
+	* fabien/mln/data/fast_median.hh: Draft.
+	* fabien/mln/io/pnm/load.hh: Add support for tiled images.
+	* fabien/tests/core/image/Makefile: New Makefile for building.
+	* fabien/tests/core/image/tiled2d.cc: New test for tiled images.
+
 2009-07-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Clean up a bit module icdar words.
