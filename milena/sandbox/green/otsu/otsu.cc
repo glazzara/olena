@@ -14,6 +14,7 @@
 #include <mln/accu/stat/mean.hh>
 #include <mln/accu/stat/variance.hh>
 #include <mln/data/compute.hh>
+#include <mln/math/sqr.hh>
 
 // Pour les chargements/sauvegardes des images
 #include <mln/io/pgm/load.hh>
@@ -41,6 +42,12 @@
 // Pour la négation du mask
 #include <mln/logical/not.hh>
 
+//
+// En float, la variance totale n'est pas constante
+// En double, cette variance ne bouge plus
+// Le calcul des moments doit se faire en double
+// voire de manière fractionnaire pour les ordres supérieurs
+//
 
 
 #define MAX_THRESHOLD 255
@@ -60,12 +67,15 @@ int main()
   io::pgm::load(input, "/usr/local/share/olena/images/small.pgm");
 
 
-// (2) Etablir les caractéristiques globales de l'image (min, max, mean, variance)
-  float         count = data::compute(accu::meta::math::count(), input);
+// (2) Etablir les caractéristiques globales de l'image 
+//(min, max, mean, variance)
+  typedef value::int_u8 gl8;
+
+  double        count = data::compute(accu::meta::math::count(), input);
   value::int_u8 min   = data::compute(accu::meta::stat::min(), input);
   value::int_u8 max   = data::compute(accu::meta::stat::max(), input);
-  float         mean  = data::compute(accu::meta::stat::mean(), input);
-  float         var   = data::compute(accu::stat::variance<value::int_u8>(), input);
+  double        mean  = data::compute(accu::meta::stat::mean(), input);
+  double        var   = data::compute(accu::stat::variance<double>(), input);
 
   cout << "CARACTERISTIQUES DE L'IMAGE" << endl;
   cout << "COUNT = " << count << endl;
@@ -82,36 +92,42 @@ int main()
   
   
 
-// (4) Calculer les caractéristiques de chacunes des 2 classes pour chacun des seuils
-  float   grp1_count[MAX_THRESHOLD];
-  float   grp1_mean[MAX_THRESHOLD];  
-  float   grp1_var[MAX_THRESHOLD];
+// (4) Calculer les caractéristiques de chacunes des 2 classes 
+// pour chacun des seuils
+  double   grp1_count[MAX_THRESHOLD];
+  double   grp1_mean[MAX_THRESHOLD];  
+  double   grp1_var[MAX_THRESHOLD];
   
-  float   grp2_count[MAX_THRESHOLD];
-  float   grp2_mean[MAX_THRESHOLD]; 
-  float   grp2_var[MAX_THRESHOLD];
+  double   grp2_count[MAX_THRESHOLD];
+  double   grp2_mean[MAX_THRESHOLD]; 
+  double   grp2_var[MAX_THRESHOLD];
 
-  typedef image_if< image2d<value::int_u8>, fun::eq_v2b_expr_< pw::value_< image2d<bool> >, pw::cst_<int> > > tmp_img_t;
+  typedef image2d<bool>   mask_t;
+  typedef image2d<gl8> img_t;
+  typedef fun::eq_v2b_expr_< pw::value_< mask_t >, pw::cst_<int> > fun_t;
+  typedef image_if< img_t, fun_t > tmp_img_t;
 
-  for (value::int_u8 threshold = min; threshold <= max; threshold++)
+  for (value::int_u8 threshold = min; threshold <= max+1; threshold++)
   {
     mask                  = binarization::threshold(input, threshold); 
     
     tmp_img_t        tmp1 = (input | (pw::value(mask) == false)).rw();
     grp1_count[threshold] = data::compute(accu::meta::math::count(), tmp1);    
     grp1_mean[threshold]  = data::compute(accu::meta::stat::mean(), tmp1);    
-    grp1_var[threshold]   = data::compute(accu::stat::variance<float>(), tmp1);
-#    grp1_var[threshold]   = data::compute(accu::stat::variance<value::int_u8>(), tmp2);
+    grp1_var[threshold]   = data::compute(accu::stat::variance<double>(), tmp1);
+    //grp1_var[threshold]   = data::compute(accu::stat::variance<gl8>(), tmp2);
     
     tmp_img_t        tmp2 = (input | (pw::value(mask) == true)).rw();
     grp2_count[threshold] = data::compute(accu::meta::math::count(), tmp2);
     grp2_mean[threshold]  = data::compute(accu::meta::stat::mean(), tmp2);
-    grp2_var[threshold]   = data::compute(accu::stat::variance<float>(), tmp2);
-#    grp2_var[threshold]   = data::compute(accu::stat::variance<value::int_u8>(), tmp2);
+    grp2_var[threshold]   = data::compute(accu::stat::variance<double>(), tmp2);
+    //grp2_var[threshold]   = data::compute(accu::stat::variance<gl8>(), tmp2);
 
     cout << "S = " << threshold << " ";
-    cout << "G1=[" << grp1_count[threshold] << ", " << grp1_mean[threshold] << ", " << grp1_var[threshold] << "] ";
-    cout << "G2=[" << grp2_count[threshold] << ", " << grp2_mean[threshold] << ", " << grp2_var[threshold] << "]" << endl;
+    cout << "G1=[" << grp1_count[threshold] << ", ";
+    cout << grp1_mean[threshold] << ", " << grp1_var[threshold] << "] ";
+    cout << "G2=[" << grp2_count[threshold] << ", ";
+    cout << grp2_mean[threshold] << ", " << grp2_var[threshold] << "]" << endl;
   }
   
   cout << "---------------------------" << endl;
@@ -124,18 +140,24 @@ int main()
 // Vintra = (1/N)(N1*V1+N2*V2)
 // Vinter = (1/N)(N1*(M-M1)² + N2*(M-M2)²)
 // V      = Vinter + Vintra
-  float         min_var       = var;
+  double        min_var       = var;
   value::int_u8 min_threshold = 0;
 
-  for (value::int_u8 threshold = min; threshold <= max; threshold++)
+  for (value::int_u8 threshold = min; threshold <= max+1; threshold++)
   {
-    float img_count = grp1_count[threshold] + grp2_count[threshold];
-    float img_mean  = (grp1_count[threshold]*grp1_mean[threshold]+grp2_count[threshold]*grp2_mean[threshold])/img_count;
-    float var_intra = (grp1_count[threshold]*grp1_var[threshold]+grp2_count[threshold]*grp2_var[threshold])/img_count;
-    float grp1_diff = img_mean-grp1_mean[threshold];
-    float grp2_diff = img_mean-grp2_mean[threshold];
-    float var_inter = (grp1_count[threshold]*grp1_diff*grp1_diff+grp2_count[threshold]*grp2_diff*grp2_diff)/img_count;
-    float img_var   = var_inter + var_intra;
+    double img_count = grp1_count[threshold] + grp2_count[threshold];
+    double grp1_mp   = grp1_count[threshold] * grp1_mean[threshold];
+    double grp2_mp   = grp2_count[threshold] * grp2_mean[threshold];
+    double img_mean  = (grp1_mp + grp2_mp)/img_count;
+    double grp1_vp   = grp1_count[threshold] * grp1_var[threshold];
+    double grp2_vp   = grp2_count[threshold] * grp2_var[threshold];
+    double var_intra = (grp1_vp + grp2_vp)/img_count;
+    double grp1_diff = math::sqr(img_mean-grp1_mean[threshold]);
+    double grp2_diff = math::sqr(img_mean-grp2_mean[threshold]);
+    double grp1_inter= grp1_count[threshold] * grp1_diff;
+    double grp2_inter= grp2_count[threshold] * grp2_diff;
+    double var_inter = (grp1_inter + grp2_inter)/img_count;
+    double img_var   = var_inter + var_intra;
 
     if (min_var > var_intra)
     {
@@ -143,7 +165,7 @@ int main()
       min_threshold = threshold;
     }
 
-    cout << "S = " << threshold << " (" << img_count << ", " << img_mean << ", ";
+    cout << "S = " << threshold << " (" << img_count << ", " << img_mean <<", ";
     cout << img_var << "[" << var_intra << "|" << var_inter << "]) " << endl;
   }
 
@@ -155,8 +177,8 @@ int main()
   initialize(output, input);
   data::paste(input, output);
   mask         = binarization::threshold(input, min_threshold);
-  data::fill((output | (pw::value(mask) == false)).rw(), grp1_mean[min_threshold]);
-  data::fill((output | (pw::value(mask) == true)).rw(),  grp2_mean[min_threshold]);
+  data::fill((output|(pw::value(mask) == false)).rw(),grp1_mean[min_threshold]);
+  data::fill((output|(pw::value(mask) == true)).rw(), grp2_mean[min_threshold]);
 
 // binarisation
   mask = binarization::threshold(input, min_threshold);
