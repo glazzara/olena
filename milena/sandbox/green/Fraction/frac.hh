@@ -113,8 +113,11 @@ namespace mln
       const T gcd_(const T& a, const T& b) const;
 
     public:
-      // Constructor without argument
+      // Constructor without argument ==> very dangerous one in this context
       frac();
+
+      // Constructor to convert scalar in fraction (transtyping)
+      frac(const T& scalar);
 
       // Constructor with literal zero
       frac(const literal::zero_t& zero);
@@ -325,6 +328,17 @@ namespace mln
 
       trace::exiting("mln::algebra::frac<T>::frac()");
     }
+
+    template <typename T>
+    frac<T>::frac(const T& scalar) : super_()
+    {
+      trace::entering("mln::algebra::frac<T>::frac(const S& scalar)");
+      
+      this->numerator(scalar);
+      this->denominator(1);
+
+      trace::exiting("mln::algebra::frac<T>::frac(const S& scalar)");
+    }
     
     template <typename T>
     inline
@@ -354,6 +368,21 @@ namespace mln
 
     template <typename T>
     inline
+    frac<T>& frac<T>::operator=(const literal::zero_t& zero)
+    {
+      trace::entering("frac<T>& mln::algebra::frac<T>::operator=(const literal::zero_t& zero)");
+
+      this->numerator(zero);
+      this->denominator(1);
+
+      trace::exiting("frac<T>& mln::algebra::frac<T>::operator=(const literal::zero_t& zero)");
+      return *this;
+    }
+
+
+
+    template <typename T>
+    inline
     frac<T>::frac(const literal::one_t& one) : super_()
     {
       trace::entering("frac<T>::frac(const literal::one_t& one)");
@@ -362,6 +391,19 @@ namespace mln
       this->denominator(1);
 
       trace::exiting("frac<T>::frac(const literal::one_t& one)");
+    }
+
+    template <typename T>
+    inline
+    frac<T>& frac<T>::operator=(const literal::one_t& one)
+    {
+      trace::entering("frac<T>& mln::algebra::frac<T>::operator=(const literal::one_t& one)");
+
+      this->numerator(one);
+      this->denominator(1);
+
+      trace::exiting("frac<T>& mln::algebra::frac<T>::operator=(const literal::one_t& one)");
+      return *this;
     }
 
     template <typename T>
@@ -376,6 +418,21 @@ namespace mln
       irreducible();
 
       trace::exiting("mln::algebra::frac<T>::frac(const frac<T>& rhs)");
+    }
+
+    template <typename T>
+    inline
+    frac<T>& frac<T>::operator=(const frac<T>& rhs)
+    {
+      trace::entering("frac<T>& mln::algebra::frac<T>::operator=(const frac<T>& rhs)");
+
+      numerator(rhs.numerator());
+      denominator(rhs.denominator());
+      
+     irreducible();
+     trace::exiting("frac<T>& mln::algebra::frac<T>::operator=(const frac<T>& rhs)");
+
+      return *this;
     }
 
     template <typename T>
