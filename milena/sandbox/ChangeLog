@@ -1,14 +1,28 @@
 2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
-	Integrate LRDE code writting rules in my learning programs.
+	Integrate LRDE code writting rules in the HelloMilena code.
 
-	* green/Otsu/Makefile.am  : Remove Makefile.
-	* green/Otsu/Otsu.cc      : Remove source.
-	* green/Otsu              : Remove directory.
+	* green/HelloMilena/Makefile.am      : Remove Makefile.
+	* green/HelloMilena/HelloMilena.cc   : Remove source.
+	* green/HelloMilena                  : Remove directory.
+	
+	* green/hello_milena                 : New directory.
+	* green/hello_milena/Makefile.am     : New Makefile.
+	* green/hello_milena/hello_milena.cc : New source.
 
-	* green/otsu              : New directory.
-	* green/otsu/Makefile.am  : New Makefile.
-	* green/otsu/otsu.cc      : New source (substituate float by double).
+2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Integrate LRDE code writting rules in the HelloWorld code.
+
+	* green/HelloWorld/Makefile.am     : Remove Makefile.
+	* green/HelloWorld/HelloWorld.cc   : Remove source.
+	* green/HelloWorld/Print.cc        : Remove source.
+	* green/HelloWorld                 : Remove directory.
+	
+	* green/hello_world                : New directory.
+	* green/hello_world/Makefile.am    : New Makefile.
+	* green/hello_world/hello_world.cc : New source.
+	* green/hello_world/print.cc       : New source.
 
 2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
