@@ -2,6 +2,18 @@
 
 	Integrate LRDE code writting rules in the HelloMilena code.
 
+	* green/LearnMilena/Makefile.am      : Remove Makefile.
+	* green/LearnMilena/LearnMilena.cc   : Remove source.
+	* green/LearnMilena                  : Remove directory.
+	
+	* green/learn_milena                 : New directory.
+	* green/learn_milena/Makefile.am     : New Makefile.
+	* green/learn_milena/learn_milena.cc : New source.
+
+2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Integrate LRDE code writting rules in the HelloMilena code.
+
 	* green/HelloMilena/Makefile.am      : Remove Makefile.
 	* green/HelloMilena/HelloMilena.cc   : Remove source.
 	* green/HelloMilena                  : Remove directory.
