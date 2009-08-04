@@ -1,3 +1,45 @@
+2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Integrate LRDE code writting rules in my learning programs.
+
+	* green/Otsu/Makefile.am  : Remove Makefile.
+	* green/Otsu/Otsu.cc      : Remove source.
+	* green/Otsu              : Remove directory.
+
+	* green/otsu              : New directory.
+	* green/otsu/Makefile.am  : New Makefile.
+	* green/otsu/otsu.cc      : New source (substituate float by double).
+
+2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Integrate LRDE code writting rules in my own otsu code.
+
+	* green/Otsu/Makefile.am  : Remove Makefile.
+	* green/Otsu/Otsu.cc      : Remove source.
+	* green/Otsu              : Remove directory.
+
+	* green/otsu              : New directory.
+	* green/otsu/Makefile.am  : New Makefile.
+	* green/otsu/otsu.cc      : New source (substituate float by double).
+
+
+2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Integrate LRDE code writting rules in the fraction c++ type.
+
+	* green/Fraction/Makefile.am  : Remove Makefile.
+	* green/Fraction/main.cc      : Remove source.
+	* green/Fraction/frac.hh      : Remove source.
+	* green/Fraction/frac.cc      : Remove source.
+	* green/Fraction              : Remove directory.
+
+	* green/fraction              : New directory.
+	* green/fraction/Makefile.am  : New Makefile.
+	* green/fraction/sign_prod.hh : New source.
+	* green/fraction/gcd.hh       : New source.
+	* green/fraction/frac.hh      : New source.
+	* green/fraction/frac.cc      : New source.
+
 2009-08-03  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Implement support for 2D tiled images and other drafts.
