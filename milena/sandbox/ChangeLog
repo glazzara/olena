@@ -1,5 +1,17 @@
 2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Integrate LRDE code writting rules in the Stats code.
+
+	* green/Stats/Makefile.am      : Remove Makefile.
+	* green/Stats/Stats.cc         : Remove source.
+	* green/Stats                  : Remove directory.
+	
+	* green/stats                  : New directory.
+	* green/stats/Makefile.am      : New Makefile.
+	* green/stats/stats.cc         : New source.
+
+2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Integrate LRDE code writting rules in the HelloMilena code.
 
 	* green/LearnMilena/Makefile.am      : Remove Makefile.
