@@ -61,6 +61,8 @@ namespace mln
 
       std::fstream* f_;
       std::streampos pos_;
+      std::string file_;
+      bool loaded_;
       T value_;
 
       box2d b_;  // theoretical box
@@ -233,16 +235,22 @@ namespace mln
     // Hooks
 
     /// Give a hook to the value buffer.
-    const std::fstream* buffer() const;
+    //const std::fstream* buffer() const;
 
     /// Give a hook to the value buffer.
-    std::fstream* buffer();
+    //std::fstream* buffer();
 
     /// Give a hook to the offset for accessing data.
-    const std::streampos pos_() const;
+    const std::streampos& pos_() const;
 
     /// Give a hook to the offset for accessing data.
-    std::streampos pos_();
+    std::streampos& pos_();
+
+    /// Give a hook to the filename.
+    const std::string& file_() const;
+
+    /// Give a hook to the filename.
+    std::string& file_();
 
 
     /// Resize image border with new_border.
@@ -348,8 +356,8 @@ namespace mln
     void
     data< tiled2d<T> >::deallocate_()
     {
-//      if (f_)
-//	delete(f_);
+      if (this->loaded_)
+	this->f_->close();
     }
 
     template <typename T>
@@ -397,6 +405,7 @@ namespace mln
   {
     mln_precondition(! this->is_valid());
     this->data_ = new internal::data< tiled2d<T> >(b, bdr);
+    this->data_->loaded_ = false;
   }
 
   /*template <typename T>
@@ -464,8 +473,18 @@ namespace mln
   const T&
   tiled2d<T>::read_(const point2d& p) const
   {
-    std::cout << "setting at point " << p << std::endl; // DELETEME
-    return this->data_->value_;
+    mln::tiled2d<T>* this_ = const_cast<mln::tiled2d<T>* >(this); // Trust me, I have to do this(_).
+    if (!this_->data_->loaded_)
+    {
+      this_->data_->f_ = new std::fstream(this->data_->file_.c_str());
+      this_->data_->loaded_ = true;
+    }
+    std::streampos offset = this_->data_->pos_;
+    offset += (this_->ncols() * p.row() + p.col()) * sizeof(T);
+    this_->data_->f_->seekg(offset);
+    this_->data_->f_->get((char*)(&this_->data_->value_), sizeof(T) + 1); // FIXME: I don't know why
+									  // I have to add +1.
+    return this_->data_->value_;
   }
 
   template <typename T>
@@ -473,11 +492,15 @@ namespace mln
   void
   tiled2d<T>::write_(const point2d& p, const T& value)
   {
-    std::cout << "setting value " << value << " at point " << p << std::endl; // DELETEME
-    /*this->data_->pixel_cache = this->data_->buffer_.getPixels(p.col(), p.row(), p.col(), p.row());
-    *(this->data_->pixel_cache) =  Magick::ColorRGB(256 - value.red(),
-						    256 - value.green(),
-						    256 - value.blue());*/
+    if (!this->data_->loaded_)
+    {
+      this->data_->f_ = new std::fstream(this->data_->file_.c_str());
+      this->data_->loaded_ = true;
+    }
+    std::streampos offset = this->data_->pos_;
+    offset += (this->ncols() * p.row() + p.col()) * sizeof(T);
+    this->data_->f_->seekp(offset);
+    this->data_->f_->write((char*)(&value), sizeof(T));
   }
 
 
@@ -532,7 +555,7 @@ namespace mln
 
   // Hooks.
 
-  template <typename T>
+  /*template <typename T>
   inline
   const std::fstream*
   tiled2d<T>::buffer() const
@@ -548,11 +571,11 @@ namespace mln
   {
     mln_precondition(this->is_valid());
     return this->data_->f_;
-  }
+  }*/
 
   template <typename T>
   inline
-  const std::streampos
+  const std::streampos&
   tiled2d<T>::pos_() const
   {
     mln_precondition(this->is_valid());
@@ -561,11 +584,29 @@ namespace mln
 
   template <typename T>
   inline
-  std::streampos
+  std::streampos&
   tiled2d<T>::pos_()
   {
     mln_precondition(this->is_valid());
     return this->data_->pos_;
+  }
+
+  template <typename T>
+  inline
+  const std::string&
+  tiled2d<T>::file_() const
+  {
+    mln_precondition(this->is_valid());
+    return this->data_->file_;
+  }
+
+  template <typename T>
+  inline
+  std::string&
+  tiled2d<T>::file_()
+  {
+    mln_precondition(this->is_valid());
+    return this->data_->file_;
   }
 
 

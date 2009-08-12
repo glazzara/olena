@@ -159,7 +159,7 @@ namespace mln
       // used in g++ > 2.95
       template <typename I>
       inline
-      void load_raw_2d_contiguous(std::ifstream& file, I& ima, std::string& filename)
+      void load_raw_2d_contiguous(std::ifstream& file, I& ima, const std::string& filename)
       {
 	(void) filename;
 	point2d p = point2d(0, ima.domain().pmin().col());
@@ -176,7 +176,7 @@ namespace mln
       // Load raw 2d for tiled images.
       template <typename T>
       inline
-      void load_raw_2d_contiguous(std::ifstream& file, tiled2d<T>& ima, std::string& filename)
+      void load_raw_2d_contiguous(std::ifstream& file, tiled2d<T>& ima, const std::string& filename)
       {
 	ima.pos_() = file.tellg();
 	ima.file_() = filename;
@@ -219,7 +219,7 @@ namespace mln
       /// for all pnm 8/16 bits formats
       template <typename I>
       inline
-      void load_raw_2d(std::ifstream& file, I& ima, std::string& filename)
+      void load_raw_2d(std::ifstream& file, I& ima, const std::string& filename)
       {
 	if (sizeof(value::int_u8) == 1)
 	  load_raw_2d_contiguous(file, ima, filename);
@@ -314,7 +314,7 @@ namespace mln
 
 	ima.init_(make::box2d(nrows, ncols));
 	if (type == type_)
-	  load_raw_2d(file, ima);
+	  load_raw_2d(file, ima, filename);
 	else
 	  if (type == (type_ - 3))
 	    pnm::internal::load_ascii_dispatch(file, ima, mlc_is_a(mln_value(I), mln::Value)());

@@ -1,5 +1,13 @@
 2009-08-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
+	Improve tiled image format.
+	* fabien/mln/core/image/tiled2d.hh: Create a tiled image based on basic
+	I/O.
+	* fabien/mln/io/pnm/load.hh: Add a method for loading a tiled image.
+	* fabien/tests/core/image/tiled2d.cc: Update test file.
+
+2009-08-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
 	Remove deprecated directories.
 	* green/Fraction: Remove.
 	* green/HelloMilena: Remove.
