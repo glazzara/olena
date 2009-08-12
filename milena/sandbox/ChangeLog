@@ -1,3 +1,13 @@
+2009-08-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Remove deprecated directories.
+	* green/Fraction: Remove.
+	* green/HelloMilena: Remove.
+	* green/HelloWorld: Remove.
+	* green/LearnMilena: Remove.
+	* green/Otsu: Remove.
+	* green/Stats: Remove.
+
 2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Integrate LRDE code writting rules in the Stats code.
