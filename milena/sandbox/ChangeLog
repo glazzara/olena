@@ -1,3 +1,13 @@
+2009-08-12  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Write an histogram accumulator which the result is an image1d.
+
+	* green/histo1d                  : New directory.
+	* green/histo1d/Makefile.am      : New Makefile.
+	* green/histo1d/histo1d.hh       : New C++ type.
+	* green/histo1d/save_sh.hh       : New gnuplot export routines.
+	* green/histo1d/histo1d.cc       : New unitary tests.
+
 2009-08-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Improve tiled image format.
@@ -15,16 +25,6 @@
 	* green/LearnMilena: Remove.
 	* green/Otsu: Remove.
 	* green/Stats: Remove.
-
-2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
-
-	Write an histogram accumulator which the result is an image1d.
-
-	* green/histo1d                  : New directory.
-	* green/histo1d/Makefile.am      : New Makefile.
-	* green/histo1d/histo1d.hh       : New C++ type.
-	* green/histo1d/save_sh.hh       : New gnuplot export routines.
-	* green/histo1d/histo1d.cc       : New unitary tests.
 	
 2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
