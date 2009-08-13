@@ -345,7 +345,7 @@ namespace mln
 				const Neighborhood<N>& nbh, const Weighted_Window<W>& w_win,
 				D max, F& functor)
       {
-	return impl::generic::distance_front(input, nbh, max, w_win, functor);
+	return impl::generic::distance_front(input, nbh, w_win, max, functor);
       }
 
       template <typename I,

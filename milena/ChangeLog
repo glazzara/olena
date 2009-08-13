@@ -1,3 +1,9 @@
+2009-08-13  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
+
+	Fix variable order in distance_front generic canvas..
+	* mln/canvas/distance_front.hh: Fix variable order in dispatch call
+	  for the generic version of canvas::distance_front.
+
 2009-07-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Revamp value::proxy class.
