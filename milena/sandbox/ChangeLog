@@ -2,7 +2,7 @@
 
 	Test more accurately the histo1d class in image processing chain.
 	Try to isolate the background color of mp000082c_50p.pgm.
-
+	* green/histo1d/Makefile.am      : Update minor settings in Makefile.
 	* green/histo1d/histo1d.hh       : New C++ type.
 	* green/histo1d/gaussian.sh      : New GNUPLOT script to calibrate 
 	gaussian filter.
