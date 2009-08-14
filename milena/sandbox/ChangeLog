@@ -1,3 +1,17 @@
+2009-08-14  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Test more accurately the histo1d class in image processing chain.
+	Try to isolate the background color of mp000082c_50p.pgm.
+
+	* green/histo1d/histo1d.hh       : New C++ type.
+	* green/histo1d/gaussian.sh      : New GNUPLOT script to calibrate 
+	gaussian filter.
+	* green/histo1d/save_sh.hh
+	(save_sh)                        : Update some GNUPLOT style.
+	* green/histo1d/histo1d.cc
+	(test_classify)                  : New function.
+	* green/histo1d/mp00082c_50p.pgm : New test scribo image.
+
 2009-08-12  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Write an histogram accumulator which the result is an image1d.

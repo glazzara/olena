@@ -91,8 +91,8 @@ namespace mln
 	trace::entering("mln::io::plot::save_sh<1d>");
 	mln_precondition(img.is_valid());
 
-	std::ofstream     out(filename.c_str());
-	mln_piter(image1d<I>)      p(img.domain());
+	std::ofstream         out(filename.c_str());
+	mln_piter(image1d<I>) p(img.domain());
 
 	out << "#!/bin/sh"                                  << std::endl;
 	out << "##########################"                 << std::endl;
@@ -101,13 +101,15 @@ namespace mln
 	out                                                 << std::endl;
 	out << "gnuplot <<EOF"                              << std::endl;
 	out << "set terminal x11 persist 1"                 << std::endl;
+	out << "plot '-' with points pointtype 20"  << std::endl;
 	//out << "plot '-' with points pointtype 0"  << std::endl;
-	out << "plot '-' with histograms"  << std::endl;	
+	//out << "plot '-' with histograms"  << std::endl;
+	//out << "plot '-' smooth unique"  << std::endl;
 
 	for_all(p)
 	{
 	  //	  for (unsigned i = 0; i < mln_dim(I); ++i)
-	  //  out << p[0] << " ";
+	  out << p[0] << " ";
 
 	  out << img(p) << std::endl;
 	}

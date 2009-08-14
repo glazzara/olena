@@ -5,7 +5,8 @@
 BIN_PATTERN= trunk/build/milena
 SRC_PATTERN= trunk/milena
 
-CXXFLAGS=    -ggdb -O0 -Wall -W -pedantic -ansi -pipe
+INCLUDES=    -I/home/green/svn/oln/trunk/milena
+CXXFLAGS=    -ggdb -O0 -Wall -W -pedantic -ansi -pipe $(INCLUDES)
 ECHO=        echo
 RM=          rm
 MKDIR=       mkdir
@@ -30,7 +31,7 @@ OBJ_FILES= $(addprefix $(BIN_DIR), $(notdir $(SRC_FILES:%.cc=%.o)))
 
 
 all: $(BIN_DIR) $(TARGET)
-	@$(ECHO) "Compilation terminée" 
+	@$(ECHO) "Compilation terminée"
 
 $(BIN_DIR):
 	$(MKDIR) $(BIN_DIR)
