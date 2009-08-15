@@ -52,8 +52,10 @@ namespace mln
 {
 
 
-  // Forward declaration.
+  // Forward declarations.
   template <typename E> struct Image;
+  template <typename E> struct Literal;
+
 
   // Image category flag type.
   template <>
@@ -238,6 +240,8 @@ namespace mln
     typedef mln_value(E)  value;
     typedef mln_rvalue(E) rvalue;
     typedef mln_lvalue(E) lvalue;
+
+    mlc_is_not_a(value, Literal)::check();
 
     // FIXME Doc
     //typedef mln_vset(E) vset;

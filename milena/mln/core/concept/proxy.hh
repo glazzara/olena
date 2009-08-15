@@ -114,6 +114,22 @@
     return exact(o) Symb exact(p).unproxy_();					\
   }										\
 										\
+  template <typename P, typename L>						\
+  inline									\
+  mln_trait_op_##Name(P, L)							\
+  operator Symb (const Proxy<P>& p, const Literal<L>& l)			\
+  {										\
+    return exact(p).unproxy_() Symb exact(l);					\
+  }										\
+  										\
+  template <typename L, typename P>						\
+  inline									\
+  mln_trait_op_##Name(L, P)							\
+  operator Symb (const Literal<L>& l, const Proxy<P>& p)			\
+  {										\
+    return exact(l) Symb exact(p).unproxy_();					\
+  }										\
+										\
   struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
 
 
@@ -124,6 +140,8 @@ namespace mln
 
   // Forward declarations.
   template <typename E> struct Proxy;
+  template <typename E> struct Literal;
+
 
   namespace convert
   {
@@ -173,6 +191,25 @@ namespace mln
     {
       typedef mlc_unqualif(mln_q_subject(P)) S;
       typedef mln_trait_binary(Op, O, S) ret;
+    };
+
+
+    // Disambiguate between (Proxy Op Object) and (Object Op Literal).
+ 
+    template < template <class, class> class Op,
+	       typename P, typename L >
+    struct set_binary_< Op, mln::Proxy, P, mln::Literal, L >
+    {
+      typedef mlc_unqualif(mln_q_subject(P)) S;
+      typedef mln_trait_binary(Op, S, L) ret;
+    };
+
+    template < template <class, class> class Op,
+	       typename L, typename P >
+    struct set_binary_< Op, mln::Literal, L, mln::Proxy, P  >
+    {
+      typedef mlc_unqualif(mln_q_subject(P)) S;
+      typedef mln_trait_binary(Op, L, S) ret;
     };
 
   } // end of namespace mln::trait

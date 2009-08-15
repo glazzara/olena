@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,12 +27,11 @@
 #ifndef MLN_LITERAL_BLACK_HH
 # define MLN_LITERAL_BLACK_HH
 
-/*! \file
- * \brief Definition of the literal of mln::black.
- *
- */
+/// \file
+/// \brief Definition of the 'black' literal.
 
 # include <mln/core/concept/literal.hh>
+
 
 namespace mln
 {
@@ -42,17 +42,36 @@ namespace mln
     /// Type of literal black.
     struct black_t : public Literal<black_t>
     {
+# ifdef MLN_NEW_VALUE_TYPES
+      operator float()  const;
+      operator double() const;
+# endif // MLN_NEW_VALUE_TYPES
     };
 
 
     /// Literal black.
     extern const black_t& black;
 
+
 # ifndef MLN_INCLUDE_ONLY
 
     const black_t& black = black_t();
 
-# endif
+#  ifdef MLN_NEW_VALUE_TYPES
+    inline
+    black_t::operator float() const
+    {
+      return 0.f;
+    }
+
+    inline
+    black_t::operator double() const
+    {
+      return 0.;
+    }
+#  endif // MLN_NEW_VALUE_TYPES
+
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::literal
 

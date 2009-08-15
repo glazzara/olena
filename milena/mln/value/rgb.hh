@@ -205,7 +205,7 @@ namespace mln
 
       typedef trait::value::nature::vectorial nature;
       typedef trait::value::kind::color       kind;
-      typedef mln_value_quant_from_(card)     quant;
+      typedef trait::value::quant::high /*mln_value_quant_from_(card)*/     quant;
 
       typedef void comp;
       typedef mln::value::int_u<n> comp_0;
@@ -275,6 +275,7 @@ namespace mln
       rgb<n>(const algebra::vec<3, int>& rhs);
       rgb<n>(const algebra::vec<3, unsigned>& rhs);
       rgb<n>(const algebra::vec<3, int_u<n> >& rhs);
+      rgb<n>(const algebra::vec<3, float>& rhs);
 
       // Conversion to the interoperation type.
       operator algebra::vec<3, int>() const   { return this->v_; }
@@ -432,6 +433,15 @@ namespace mln
     rgb<n>::rgb(const algebra::vec<3, int_u<n> >& v)
     {
       this->v_ = v;
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const algebra::vec<3, float>& v)
+    {
+      this->v_[0] = v[0];
+      this->v_[1] = v[1];
+      this->v_[2] = v[2];
     }
 
     template <unsigned n>

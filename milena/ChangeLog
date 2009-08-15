@@ -1,5 +1,23 @@
 2009-08-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Preparing a revamp of value types.
+
+	* mln/core/concept/proxy.hh (mln_def_binop_proxy): Add
+	operators to disambiguate the case of Proxy Op Literal.
+	(set_binary_): New overload for Proxy Op Literal.
+	* mln/core/concept/image.hh (~image): New check.
+	* mln/literal/black.hh,
+	* mln/literal/white.hh (operator float, operator double): New.
+	They are guarded by...
+	(MLN_NEW_VALUE_TYPES): ...this new variable.
+	* mln/value/rgb.hh (quant): Fix definition.
+	When n was low, say 3, then the quant was also set to low,
+	though there was no way to browse the set of values!
+	(rgb): New ctor overload for vec<3,float>; useful for
+	accu::mean.
+
+2009-08-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix various accumulators things.
 
 	Have transform_line fastest.

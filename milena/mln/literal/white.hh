@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,12 +27,11 @@
 #ifndef MLN_LITERAL_WHITE_HH
 # define MLN_LITERAL_WHITE_HH
 
-/*! \file
- * \brief Definition of the literal of mln::white.
- *
- */
+/// \file
+/// \brief Definition of the 'white' literal.
 
 # include <mln/core/concept/literal.hh>
+
 
 namespace mln
 {
@@ -42,17 +42,36 @@ namespace mln
     /// Type of literal white.
     struct white_t : public Literal<white_t>
     {
+# ifdef MLN_NEW_VALUE_TYPES
+      operator float()  const;
+      operator double() const;
+# endif // MLN_NEW_VALUE_TYPES
     };
 
 
     /// Literal white.
     extern const white_t& white;
 
+
 # ifndef MLN_INCLUDE_ONLY
 
     const white_t& white = white_t();
 
-# endif
+#  ifdef MLN_NEW_VALUE_TYPES
+    inline
+    white_t::operator float() const
+    {
+      return 1.f;
+    }
+
+    inline
+    white_t::operator double() const
+    {
+      return 1.;
+    }
+#  endif // MLN_NEW_VALUE_TYPES
+
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::literal
 
