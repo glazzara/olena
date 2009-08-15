@@ -26,6 +26,22 @@
 #ifndef MLN_MORPHO_GENERAL_SPE_HH
 # define MLN_MORPHO_GENERAL_SPE_HH
 
+/// \file
+///
+/// Specialization for mln::morpho::general.
+///
+/// \todo Warning: we should also have the "arbitrary" versions working
+/// on sets (not only on functions!)
+///
+/// \todo HERE Factor dispatch for lines...
+///
+/// \todo Re-activate impl::line_on_function.
+///
+/// \todo Re-activate special code for centered window on sets.
+///
+/// \todo Dispatch transform_line when there is no extension to
+/// perform a side-effect.
+
 # ifndef MLN_MORPHO_GENERAL_HH
 #  error "Forbidden inclusion of *.spe.hh"
 # endif // ! MLN_MORPHO_GENERAL_HH
@@ -41,23 +57,6 @@
 # include <mln/accu/transform_snake.hh>
 # include <mln/accu/transform_stop.hh>
 # include <mln/accu/transform_diagonal.hh>
-
-# include <mln/accu/stat/min_h.hh>
-# include <mln/accu/line.hh>
-
-
-/// \file
-///
-/// Specialization for mln::morpho::general.
-///
-/// \todo Warning: we should also have the "arbitrary" versions working
-/// on sets (not only on functions!)
-///
-/// \todo HERE Factor dispatch for lines...
-///
-/// \todo Re-activate impl::line_on_function.
-///
-/// \todo Re-activate special code for centered window on sets.
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -253,6 +252,7 @@ namespace mln
 	const W& win = exact(win_);
 
 	extension::adjust_fill(input, geom::delta(win), op.neutral(input));
+
 	mln_concrete(I) output;
 	output = accu::transform_line(op.accu_incr(input), input,
 				      win.length(), win.dir);

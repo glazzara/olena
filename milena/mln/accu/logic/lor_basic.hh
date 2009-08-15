@@ -39,14 +39,33 @@
 namespace mln
 {
 
-  namespace accu
-  {
-
-    namespace logic
-    {
-      // Forward declaration.
+  // Forward declaration.
+  namespace accu {
+    namespace logic {
       struct lor_basic;
     }
+  }
+
+
+  // Traits.
+
+  namespace trait
+  {
+
+    template <>
+    struct accumulator_< accu::logic::lor_basic >
+    {
+      typedef accumulator::has_untake::no    has_untake;
+      typedef accumulator::has_set_value::no has_set_value;
+      typedef accumulator::has_stop::yes     has_stop;
+      typedef accumulator::when_pix::use_v   when_pix;
+    };
+
+  } // end of namespace mln::trait
+
+
+  namespace accu
+  {
 
     namespace meta
     {

@@ -39,17 +39,33 @@
 namespace mln
 {
 
-  namespace accu
+  // Forward declaration.
+  namespace accu {
+    namespace stat {
+      template <typename V> struct min_h;
+    }
+  }
+
+
+  // Traits.
+
+  namespace trait
   {
 
-    namespace stat
+    template <typename V>
+    struct accumulator_< accu::stat::min_h<V> >
     {
+      typedef accumulator::has_untake::yes   has_untake;
+      typedef accumulator::has_set_value::no has_set_value;
+      typedef accumulator::has_stop::no      has_stop;
+      typedef accumulator::when_pix::use_v   when_pix;
+    };
 
-      // Forward declaration.
-      template <typename V>
-      struct min_h;
+  } // end of namespace mln::trait
 
-    } // end of namespace mln::accu::stat
+
+  namespace accu
+  {
 
     namespace meta
     {

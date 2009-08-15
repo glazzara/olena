@@ -29,6 +29,8 @@
 /// \file
 ///
 /// Define an accumulator that counts.
+///
+/// \todo Add an optional parameter to set the type of the counter.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
@@ -37,18 +39,33 @@
 namespace mln
 {
 
-  namespace accu
+  // Forward declaration.
+  namespace accu {
+    namespace math {
+      template <typename T> struct count;
+    }
+  }
+
+
+  // Traits.
+
+  namespace trait
   {
 
-    namespace math
+    template <typename T>
+    struct accumulator_< accu::math::count<T> >
     {
+      typedef accumulator::has_untake::yes    has_untake;
+      typedef accumulator::has_set_value::yes has_set_value;
+      typedef accumulator::has_stop::no       has_stop;
+      typedef accumulator::when_pix::use_none when_pix;
+    };
 
-      // Forward declaration.
-      template <typename T>
-      struct count;
+  } // end of namespace mln::trait
 
-    } // end of namespace mln::accu::math
 
+  namespace accu
+  {
 
     namespace meta
     {
@@ -70,26 +87,6 @@ namespace mln
 
     } // end of namespace mln::accu::meta
 
-  } // end of namespace mln::accu
-
-  // Traits.
-  namespace trait
-  {
-
-    template <typename T>
-    struct accumulator_< accu::math::count<T> >
-    {
-      typedef accumulator::has_untake::yes    has_untake;
-      typedef accumulator::has_set_value::yes has_set_value;
-      typedef accumulator::has_stop::no       has_stop;
-      typedef accumulator::when_pix::use_pix  when_pix;
-    };
-
-  } // end of namespace mln::trait
-
-
-  namespace accu
-  {
 
     namespace math
     {
@@ -132,9 +129,8 @@ namespace mln
       };
 
 
+
 # ifndef MLN_INCLUDE_ONLY
-
-
 
       template <typename T>
       inline

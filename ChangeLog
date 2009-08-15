@@ -1,3 +1,47 @@
+2009-08-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix various accumulators things.
+
+	Have transform_line fastest.
+
+	* milena/mln/accu/transform_line.hh: Add documentation.
+	(todo): Remove, done:
+	The specialization for fastest images is now up.
+	(todo): New.  A version that ignores extensions should
+	exist; see commented code in this present file.
+	(impl::generic::transform_line): Add extension adjust for
+	safety reason.
+	Layout.
+	(impl::generic::transform_line_fastest): Activate.
+	Fix bug.
+	(transform_line_dispatch): Revamp to take into account
+	accumulator properties.
+	(transform_line): Call properly the dispatch mechanism.
+	* milena/tests/accu/transform_line.cc: Test both generic and
+	fastest versions.
+
+	Fix missing properties for some accumulators.
+
+	* milena/mln/accu/stat/min.hh,
+	* milena/mln/accu/stat/max.hh (set_value): New method.
+	* milena/mln/accu/stat/max_h.hh (invariant_): New method.
+	(max_h): Add calls to invariant_.
+	(debug_print_): Augment.
+	* milena/mln/accu/math/count.hh,
+	* milena/mln/accu/logic/lor.hh,
+	* milena/mln/accu/logic/lor_basic.hh,
+	* milena/mln/accu/logic/land.hh,
+	* milena/mln/accu/logic/land_basic.hh,
+	* milena/mln/accu/stat/min.hh,
+	* milena/mln/accu/stat/max.hh,
+	* milena/mln/accu/stat/min_h.hh,
+	* milena/mln/accu/stat/max_h.hh (trait): Add missing traits.
+
+	Misc.
+
+	* milena/mln/morpho/general.spe.hh: Fix layout.
+	Remove useless includes.
+
 2009-07-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* configure.ac: Look for tesseract during configure.

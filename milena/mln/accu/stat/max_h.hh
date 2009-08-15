@@ -39,17 +39,33 @@
 namespace mln
 {
 
-  namespace accu
+  // Forward declaration.
+  namespace accu {
+    namespace stat {
+      template <typename V> struct max_h;
+    }
+  }
+
+
+  // Traits.
+
+  namespace trait
   {
 
-    namespace stat
+    template <typename V>
+    struct accumulator_< accu::stat::max_h<V> >
     {
+      typedef accumulator::has_untake::yes   has_untake;
+      typedef accumulator::has_set_value::no has_set_value;
+      typedef accumulator::has_stop::no      has_stop;
+      typedef accumulator::when_pix::use_v   when_pix;
+    };
 
-      // Forward declaration.
-      template <typename V>
-      struct max_h;
+  } // end of namespace mln::trait
 
-    } // end of namespace mln::accu::stat
+
+  namespace accu
+  {
 
     namespace meta
     {
@@ -114,15 +130,22 @@ namespace mln
 	mutable accu::histo<V> h_;
 	const value::set<V>& s_; // derived from h_
 
-	mutable unsigned sum_;
-	mutable bool valid_;
-	mutable unsigned i_; // the max index
-	mutable argument t_;       // the max argument
+	mutable unsigned sum_; // number of taken values > t_ 
+	mutable unsigned i_; // the current max index ('current' means 'last known')
+	mutable argument t_; // the current max argument
+
+	mutable bool valid_; // validity of the current indent / argument
+	                     // when valid_ is false, an update of i_ and t_ is required
+
+	// Dev note: we can have at the same time (sum_ == 0) and
+	// (valid_ == false) because of the 'untake' method.
 
 	// Auxiliary methods
 	void update_() const;
 	void go_minus_() const;
 	void go_plus_() const;
+
+	void invariant_() const;
       };
 
 
@@ -132,11 +155,21 @@ namespace mln
 
       template <typename V>
       inline
+      void
+      max_h<V>::invariant_() const
+      {
+	// valid_ => (sum_ == 0)
+	mln_invariant(! valid_ || (sum_ == 0));
+      }
+
+      template <typename V>
+      inline
       max_h<V>::max_h()
 	: h_(),
 	  s_(h_.vset())
       {
 	init();
+	invariant_();
       }
 
       template <typename V>
@@ -155,6 +188,7 @@ namespace mln
 	    ++sum_;
 	    valid_ = false;
 	  }
+	invariant_();
       }
 
       template <typename V>
@@ -166,8 +200,10 @@ namespace mln
 	h_.take(other.h_);
 	for (unsigned i = this->card() - 1; i > i_; --i)
 	  sum_ += other.h_[i];
-	valid_ = false;
+	if (valid_ && sum_ != 0)
+	  valid_ = false;
 	// FIXME: Optimize.
+	invariant_();
       }
 
       template <typename V>
@@ -191,6 +227,7 @@ namespace mln
 	else
 	  if (t == t_ && h_[i_] == 0)
 	    valid_ = false;
+	invariant_();
       }
 
       template <typename V>
@@ -204,6 +241,11 @@ namespace mln
 	  if (h_[i_] == 0)
 	    go_minus_();
 	valid_ = true;
+
+	mln_postcondition(sum_ == 0);
+	mln_postcondition(h_[i_] != 0);
+	for (unsigned j = i_ + 1; j < h_.nvalues(); ++j)
+	  mln_postcondition(h_[j] == 0);
       }
 
       template <typename V>
@@ -263,6 +305,7 @@ namespace mln
       {
 	if (! valid_)
 	  update_();
+	invariant_();
 	return t_;
       }
 
@@ -287,7 +330,7 @@ namespace mln
       void
       max_h<V>::debug_print_() const
       {
-	std::cout << "h={" << h_ << "} ";
+	std::cout << "h={" << h_ << "} h.sum = " << h_.sum() << ' ';
 	std::cout << "sum=" << sum_ << ' '
 		  << "valid=" << valid_ << ' '
 		  << "i=" << i_ << ' '

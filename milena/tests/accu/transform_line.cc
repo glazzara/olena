@@ -34,12 +34,15 @@ int main()
 {
   using namespace mln;
 
-  image2d<unsigned> ima(4, 5);
-  unsigned len = 3;
+  typedef unsigned T;
+  image2d<T> ima(4, 5);
+
+  typedef accu::math::count<T> A;
+  const unsigned len = 31;
   for (unsigned dir = 0; dir < 2; ++dir)
   {
-    image2d<unsigned> out = accu::transform_line(accu::meta::math::count(), ima, len, dir);
-    mln_assertion(out == (pw::cst(3u) | ima.domain()));
+    image2d<unsigned> out = accu::impl::transform_line_fastest(A(), ima, len, dir);
+    mln_assertion(out == (pw::cst(len) | ima.domain()));
+    mln_assertion(accu::impl::generic::transform_line(A(), ima, len, dir) == out);
   }
-
 }

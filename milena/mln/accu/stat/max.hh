@@ -39,18 +39,34 @@
 namespace mln
 {
 
-  namespace accu
+
+  // Forward declaration.
+  namespace accu {
+    namespace stat {
+      template <typename T> struct max;
+    }
+  }
+
+
+  // Traits.
+
+  namespace trait
   {
 
-    namespace stat
+    template <typename T>
+    struct accumulator_< accu::stat::max<T> >
     {
+      typedef accumulator::has_untake::no     has_untake;
+      typedef accumulator::has_set_value::yes has_set_value;
+      typedef accumulator::has_stop::no       has_stop;
+      typedef accumulator::when_pix::use_v    when_pix;
+    };
 
-      // Forward declaration.
-      template <typename T>
-      struct max;
+  } // end of namespace mln::trait
 
-    } // end of namespace mln::accu::stat
 
+  namespace accu
+  {
 
     namespace meta
     {
@@ -96,6 +112,9 @@ namespace mln
 	void take(const max<T>& other);
 	/// \}
 
+	/// Force the value of the min to \a t.
+	void set_value(const T& t);
+
 	/// Get the value of the accumulator.
 	const T& to_result() const;
 
@@ -110,6 +129,7 @@ namespace mln
 
 
       template <typename I> struct max< util::pix<I> >;
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -152,6 +172,14 @@ namespace mln
       {
 	if (other.t_ > t_)
 	  t_ = other.t_;
+      }
+
+      template <typename T>
+      inline
+      void
+      max<T>::set_value(const T& t)
+      {
+	t_ = t;
       }
 
       template <typename T>
