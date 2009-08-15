@@ -1,3 +1,31 @@
+2009-08-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	New candidates to replace value types.
+
+	* theo/mln: New directory.
+	* theo/mln/core,
+	* theo/mln/core/concept,
+	* theo/mln/walue,
+	* theo/mln/walue/internal: New sub-directories.
+	* theo/mln/core/concept/walue.hh: New.
+	* theo/mln/walue/gl.cc: New.
+	* theo/mln/walue/gl8.hh: New.
+	* theo/mln/walue/rgb_t.hh: New.
+	* theo/mln/walue/glf.cc: New.
+	* theo/mln/walue/approx_equal.hh: New.
+	* theo/mln/walue/set_encoding.hh: New.
+	* theo/mln/walue/gl.hh: New.
+	* theo/mln/walue/rgb_3xn.hh: New.
+	* theo/mln/walue/rgb_3x8.cc: New.
+	* theo/mln/walue/int_u.cc: New.
+	* theo/mln/walue/glf.hh: New.
+	* theo/mln/walue/gl16.hh: New.
+	* theo/mln/walue/rgb.hh: New.
+	* theo/mln/walue/rgb_3x8.hh: New.
+	* theo/mln/walue/internal/rgb_base.hh: New.
+	* theo/mln/walue/color.hh: New.
+	* theo/mln/walue/int_u.hh: New.
+
 2009-08-14  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Test more accurately the histo1d class in image processing chain.
