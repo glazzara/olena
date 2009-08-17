@@ -81,7 +81,7 @@ namespace scribo
 	{
 	  ///FIXME: the following code is not generic...
 	  /// First site on the right of the central site
-	  mln_site(L) p = c + left;
+	  mln_site(L) p = c + mln::left;
 
 	  while (objects.domain().has(p) // Not outside image domain
 		&& (objects(p) == literal::zero // Is the background
