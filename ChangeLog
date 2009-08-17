@@ -1,3 +1,10 @@
+2009-08-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Fix installation of non distributed files.
+
+	* build-aux/generate_dist_headers.sh: install non distributed
+	files if installing from a repository copy.
+
 2009-08-15  Thierry Geraud  <theo@este>
 
 	* ChangeLog: Fix.  Wrong commit directory, sorry.
