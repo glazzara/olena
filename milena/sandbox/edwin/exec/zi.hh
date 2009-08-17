@@ -53,7 +53,6 @@
 
 namespace mln
 {
-
   // Theo's code
 
   // From  mln/canvas/distance_geodesic.hh

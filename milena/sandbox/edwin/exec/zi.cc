@@ -25,7 +25,6 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/core/var.hh>
 
 #include <mln/accu/stat/mean.hh>
 #include <mln/accu/center.hh>
@@ -34,7 +33,14 @@
 #include <mln/value/label_16.hh>
 #include <mln/value/label_8.hh>
 #include <mln/data/convert.hh>
+#include <mln/data/stretch.hh>
+#include <mln/data/sort_psites.hh>
+
 #include <mln/util/graph.hh>
+#include <mln/transform/influence_zone_geodesic.hh>
+#include <mln/make/influence_zone_adjacency_graph.hh>
+#include <mln/make/edge_image.hh>
+#include <mln/make/vertex_image.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/ppm/load.hh>
@@ -44,21 +50,20 @@
 #include <mln/labeling/compute.hh>
 #include <mln/labeling/relabel.hh>
 
-#include <mln/transform/influence_zone_geodesic.hh>
-#include <mln/morpho/watershed/flooding.hh>
-
-#include <mln/make/influence_zone_adjacency_graph.hh>
-#include <mln/make/edge_image.hh>
-#include <mln/make/vertex_image.hh>
-
-#include <mln/morpho/closing/height.hh>
+#include <mln/morpho/tree/data.hh>
+#include <mln/morpho/tree/compute_attribute_image.hh>
+#include <mln/morpho/tree/components.hh>
+#include <mln/morpho/tree/propagate_representative.hh>
+#include <mln/morpho/tree/propagate.hh>
 
 #include <mln/math/max.hh>
-#include <mln/norm/l1.hh>
+#include <mln/math/diff_abs.hh>
 
+#include "score.hh"
 #include "color_distance.hh"
 #include "zi.hh"
 #include <iostream>
+#include <cmath>
 
 namespace mln
 {
@@ -99,12 +104,11 @@ namespace mln
   }
 
   // distance entre les centres de masses.
-  template <typename P>
   inline
-  value::int_u8
-  distance(const P& p1, const P& p2)
+  float
+  orientation(const point2d& p1, const point2d& p2)
   {
-    return convert::to<value::int_u8>(norm::l1_distance(p1.to_vec(), p2.to_vec()));
+    return atan((float)(p2.col() - p1.col()) / (float)(p2.row() - p1.row()));
   }
 
 
@@ -151,7 +155,7 @@ namespace mln
     operator () (const E& e_id) const
     {
       typename G::edge_t e = g.edge(e_id);
-      std::pair<L, L> p((value::label_8)e.v1(), (value::label_8)e.v2());
+      std::pair<L, L> p(static_cast<L>(e.v1()), static_cast<L>(e.v2()));
       return d.find(p)->second;
     }
 
@@ -182,13 +186,12 @@ int main(int argc, char** argv)
   using namespace mln;
   using value::int_u8;
 
-  if (argc < 4)
+  if (argc < 3)
     usage(argv);
 
   const char* finput = argv[1];
   const char* fsource = argv[2];
-  const unsigned lambda = atoi(argv[3]);
-  const char* foutput = argc > 4 ? argv[4] : "zi.pgm";
+  const char* foutput = argc > 3 ? argv[3] : "zi.pgm";
 
   // Image loadin'
   image2d<bool> input;
@@ -199,7 +202,7 @@ int main(int argc, char** argv)
 
 
   // I.Z
-  typedef value::label_8 L;
+  typedef value::label_16 L;
 
   typedef image2d<L> I;
   I labels, iz, out;
@@ -213,7 +216,7 @@ int main(int argc, char** argv)
 
   map_t d = distances(labels, c4(), dmap, iz);
 
-  io::pgm::save(data::convert(int_u8(), dmap), "dmap.pgm");
+  io::pgm::save(data::stretch(value::int_u8(), dmap), "dmap.pgm");
   io::pgm::save(iz, foutput);
 
   // I.Z Graph
@@ -221,94 +224,125 @@ int main(int argc, char** argv)
 
 
   // Valuation of color distance
-  /*
-  util::array<value::rgb8> mean_colors;
-  convert::from_to(labeling::compute(accu::stat::mean<value::rgb8>(), source, labels, nlabel),
-  mean_colors);
+  edge_image<void, value::int_u8> color_dist_ima;
+  {
+    util::array<value::rgb8> mean_colors;
+    convert::from_to(labeling::compute(accu::stat::mean<value::rgb8>(), source, labels, nlabel),
+		     mean_colors);
 
-  typedef vertex_image<void, value::rgb8, util::graph> V;
-  V v_ima = make::vertex_image(izg, mean_colors);
+    typedef vertex_image<void, value::rgb8, util::graph> V;
+    V v_ima = make::vertex_image(izg, mean_colors);
 
-  typedef edge_image<void, value::int_u8, util::graph> E;
-  E e_ima = make::edge_image(v_ima, convert::tofun(dist_mean));
-  */
+    color_dist_ima = make::edge_image(v_ima, convert::tofun(dist_mean));
+  }
 
-  // Valuation of geometric distance
-  /*
-  util::array<mln_psite_(I)> mass_centers;
-  convert::from_to(labeling::compute(accu::center<mln_psite_(I)>(), labels, nlabel),
-		   mass_centers);
+  // Valuation of orientation between mass centers.
+  edge_image<void, float> orientation_ima;
+  {
+    util::array<mln_psite_(I)> mass_centers;
+    convert::from_to(labeling::compute(accu::center<mln_psite_(I)>(), labels, nlabel),
+		     mass_centers);
 
-  typedef vertex_image<void, mln_psite_(I), util::graph> V;
-  V v_ima = make::vertex_image(izg, mass_centers);
+    typedef vertex_image<void, mln_psite_(I), util::graph> V;
+    V v_ima = make::vertex_image(izg, mass_centers);
 
-  typedef edge_image<void, value::int_u8, util::graph> E;
-  E e_ima = make::edge_image(v_ima, convert::tofun(distance<mln_psite_(I)>));
-  */
-
-  // Valuation of distance between bounding boxes
-  /*
-  util::array< box<mln_psite_(I)> > bboxes;
-  convert::from_to(labeling::compute(accu::shape::bbox<mln_psite_(I)>(), labels, nlabel),
-		   bboxes);
-
-  typedef vertex_image<void, box<mln_psite_(I)>, util::graph> V;
-  V v_ima = make::vertex_image(izg, bboxes);
-
-  typedef edge_image<void, value::int_u8, util::graph> E;
-  E e_ima = make::edge_image(v_ima, convert::tofun(distance_box));
-  */
+    orientation_ima = make::edge_image(v_ima, convert::tofun(orientation));
+  }
 
   // Valuation of components geodesic distance.
-  typedef edge_image<void, unsigned, util::graph> E;
-  E e_ima = make::edge_image(izg, distance_t<util::graph, value::label_8>(d, izg));
+  typedef edge_image<void, unsigned> E;
+  E e_ima = make::edge_image(izg, distance_t<util::graph, L>(d, izg));
 
+  // Component tree.
+  typedef morpho::tree::data< E, p_array<mln_psite_(E)> > T;
+  p_array< mln_psite_(E) > s = data::sort_psites_decreasing(e_ima);
+  mln_ch_value_(E, bool) mask;
+  T tree(e_ima, s, E::nbh_t ());
 
-  // Closing
-  e_ima = morpho::closing::height(e_ima, E::nbh_t (), lambda);
+  // debug
+  std::cout << izg;
+  //
+  {
+    mln_node_piter_(T) n(tree);
+    for_all(n)
+    {
+      (void) tree.f(n);
+      (void) tree.f(tree.parent(n));
+    }
 
-
-  // WST.
-  typedef vertex_image<void, L, util::graph> V;
-  p_vertices<util::graph> pv(izg);
-  V v_ima_labels(pv);
-
-  typedef edge_image<void, L, util::graph> e_ima_wst_t;
-  L nbasins;
-  e_ima_wst_t e_ima_wst =
-    morpho::watershed::flooding(e_ima, E::nbh_t (), nbasins);
-
-  { // Label nodes with edge wst labels.
-    mln_vertex_iter_(util::graph) v(izg);
-    mln_vertex_nbh_edge_iter_(util::graph) n(v);
-    for_all(v)
-      for_all(n)
-      {
-	if (e_ima_wst(n))
-	  {
-	    v_ima_labels(v) = e_ima_wst(n);
-	    break;
-	  }
-      }
   }
+
+  std::cout << tree;
+  {
+    typedef mln_ch_value_(E, float) A;
+    morpho::attribute::score_word<E> score(color_dist_ima, e_ima, orientation_ima);
+    A attr_img = morpho::tree::compute_attribute_image(score, tree);
+
+    // delta
+    A delta_img;
+    initialize(delta_img, attr_img);
+    mln_up_node_piter_(T) n(tree);
+    for_all(n)
+      delta_img(n) = math::diff_abs(attr_img(tree.parent(n)), attr_img(n));
+
+    // Max components retrieval.
+    p_array<mln_psite_(E)> obj = morpho::tree::get_components(tree, delta_img);
+    mask =  morpho::tree::set_value_to_components(tree, obj, true, false);
+
+    { //debug
+      std::cout << "edge:\tscore:\tdelta:" << std::endl;
+      mln_piter_(p_array<mln_psite_(E)>) it(obj);
+      for_all(it)
+	std::cout << it << "\t" << attr_img(it) << "\t" << delta_img(it) << std::endl;
+    }
+
+  }
+
+//   { // Label nodes with wst
+//     mln_vertex_iter_(util::graph) v(izg);
+//     mln_vertex_nbh_edge_iter_(util::graph) e(v);
+//     for_all(v)
+//     {
+//       bool deja_vu = false;
+//       for_all(e)
+//       {
+// 	{ // debug
+// 	  std::pair<L, L> p(static_cast<L>(e.v1()), static_cast<L>(e.v2()));
+// 	  std::cout << e.v1() << ", "
+// 		    << e.v2() << " -> "
+// 		    << e_ima(e) << std::endl;
+// 	}
+
+// 	if (e_ima_wst(e))
+// 	  {
+// 	    mln_assertion(!deja_vu || v_ima_labels(v) == e_ima_wst(e));
+// 	    v_ima_labels(v) = e_ima_wst(e);
+// 	    deja_vu = true;
+// 	  }
+//       }
+//     }
+//   }
 
   // Relabeling
-  util::array<L> tr(nlabel);
-  mln_piter_(V) v(v_ima_labels.domain());
-  for_all(v)
+
+  L nlabel_b;
+  mln_ch_value_(E, L) e_ima_labels = labeling::blobs(mask, E::nbh_t (), nlabel_b);
+  std::cout << "Labels (febore): " << nlabel << " (now): " << nlabel_b << std::endl;
+  util::array<L> tr((unsigned)nlabel + 1);
+  mln_edge_iter_(util::graph) e(izg);
+  for_all(e)
   {
-    std::cout << v.id() << " : " << v_ima_labels(v) << std::endl;
-    tr[v.id()] = v_ima_labels(v);
+    if (e_ima_labels(e))
+      {
+	std::cout << e << " : " << e_ima_labels(e) << std::endl;
+	tr[e.v1()] = e_ima_labels(e);
+	tr[e.v2()] = e_ima_labels(e);
+      }
   }
+  tr[0] = 0;
 
-  //print distance
-  for (map_t::const_iterator it = d.begin(); it != d.end(); ++it)
-    std::cout << it->first.first << ", "
-	      << it->first.second << " -> "
-	      << it->second << std::endl;
+  labeling::relabel_inplace(labels, nlabel, tr);
 
-  labeling::relabel_inplace(iz, nlabel, tr);
-
-  io::pgm::save(iz, "zi_wst.pgm");
+  io::pgm::save(iz, "zi_final.pgm");
 }
 

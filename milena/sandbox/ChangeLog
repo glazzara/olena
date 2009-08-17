@@ -1,3 +1,11 @@
+2009-08-17  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Some tries with segmentation using graph (still segfault)..
+	*  edwin/exec/score.hh: New.
+	*  edwin/exec/zi.cc,
+	*  edwin/exec/zi.hh: 
+	Use min-tree based method instead of WST to group components.
+
 2009-08-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Add missing copyright and reference in ICDAR code.
