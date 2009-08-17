@@ -202,7 +202,7 @@ namespace mln
     if (p.index() < 0 || unsigned(p.index()) >= nsites())
       return false;
     // The type of rhs below is mln_site(p_array<P>).
-    mln_invariant(p.to_site() == (*this)[p.index()]);
+//     mln_invariant(p.to_site() == (*this)[p.index()]);
     return true;
   }
 

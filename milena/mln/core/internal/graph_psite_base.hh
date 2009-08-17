@@ -167,24 +167,24 @@ namespace mln
     const typename S::graph_t& graph() const;
     unsigned id() const;
     bool is_valid() const;
-//    operator unsigned() const;
-//    operator const typename S::graph_element&() const;
+    //    operator unsigned() const;
+    //    operator const typename S::graph_element&() const;
     const typename S::graph_element& element() const;
     const typename S::graph_element& p_hook_() const;
 
-    private:
+  private:
     const E& exact_() const;
   };
 
   template <typename S, typename P, typename E>
   struct subject_impl<       graph_psite_base<S,P>&, E > :
-  subject_impl< const graph_psite_base<S,P>&, E >
+    subject_impl< const graph_psite_base<S,P>&, E >
   {
     void change_target(const S& new_target);
     void update_id(unsigned elt_id);
     void invalidate();
 
-    private:
+  private:
     E& exact_();
   };
   /// \}
@@ -216,13 +216,29 @@ namespace mln
     update_id(id);
   }
 
+    // The lines below are dedicated/local to this file.
+    template <typename E, typename S, typename G>
+    inline
+    void local_change_graph(E& elt_, S& site_, const G& g)
+    {
+      elt_.change_graph(g);
+    }
+    template <typename E, typename G>
+    inline
+    void local_change_graph(E& elt_, E& site_, const G& g)
+    {
+      elt_.change_graph(g);
+      site_.change_graph(g);
+    }
+    // End of local stuff.
+
   template <typename S, typename E>
   inline
   void
   graph_psite_base<S,E>::change_target(const S& new_target)
   {
     s_ = & new_target;
-    elt_.change_graph(new_target.graph());
+    local_change_graph(elt_, site_, new_target.graph());
   }
 
   template <typename S, typename E>

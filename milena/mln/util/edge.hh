@@ -35,6 +35,8 @@
 # include <mln/util/internal/edge_impl.hh>
 # include <mln/core/concept/proxy.hh>
 # include <mln/core/concept/site.hh>
+# include <mln/core/internal/pseudo_site_base.hh>
+
 
 namespace mln
 {
@@ -134,6 +136,7 @@ namespace mln
       edge_id_t ith_nbh_edge(unsigned i) const;
       /// \}
 
+
     private:
       G g_;
       edge_id_t id_;
@@ -154,6 +157,18 @@ namespace mln
 
   } // end of namespace mln::util
 
+
+
+  namespace if_possible
+  {
+    template <typename G>
+    void change_target(mln::util::edge<G>& e, const G& new_target)
+    {
+      std::cout << "YES: specialization change_target(edge, graph)" << std::endl;
+      e.change_graph(new_target);
+    }
+
+  } // end of namespace mln::if_possible
 
 
   namespace internal

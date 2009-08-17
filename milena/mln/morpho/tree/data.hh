@@ -434,8 +434,19 @@ namespace mln
       mln_rvalue_(mln_ch_value(I, mln_psite(I)))
       data<I,S>::parent(const mln_psite(I)& p) const
       {
-	mln_precondition(is_valid());
-	mln_precondition(parent_.domain().has(p));
+	// HERE
+
+// 	mln_precondition(is_valid());
+// 	mln_rvalue(parent_t) tmp;
+// 	if (! parent_.domain().has(p))
+// 	  {
+// 	    std::cout << "KO next" << std::endl;
+// 	    std::cout << p << std::endl;
+// 	    std::cout << parent_.domain() << std::endl;
+// 	  }
+// 	else
+// 	  std::cout << "ok next" << std::endl;
+// 	mln_precondition(parent_.domain().has(p));
 	return parent_(p);
       }
 
@@ -643,14 +654,24 @@ namespace mln
       {
 	p_ = stack_.back();
 	stack_.pop_back();
-	if (!this->is_valid())
+	if (! this->is_valid())
 	  return;
 	mln_invariant(p_.is_valid());
+
+	std::cout << "children(p).size = " << s_->children(p_).nsites() << std::endl;
+	if (s_->children(p_).nsites() != 0)
+	  {
+	    std::cout << "elt[0] = " << s_->children(p_)[0].to_site().graph().data_hook_() << std::endl;
+	    std::cout << "elt[0] = " << s_->children(p_)[0] << std::endl;
+	  }
+
+	std::cout << s_->children(p_) << std::endl;
 
 	mln_fwd_piter(T::nodes_t) child(s_->children(p_));
 	for_all(child)
 	{
-	  mln_invariant(s_->parent(child) == p_);
+	  std::cout << child.to_site().graph().data_hook_() << std::endl;
+	  // mln_invariant(s_->parent(child) == p_);
 	  stack_.push_back(child);
 	}
       }

@@ -110,7 +110,8 @@ namespace mln
 	    \param[in] ostr  The output stream.  */
 	void print_debug(std::ostream& ostr) const;
 
-
+	/// Hook to data; for debugging purpose.
+	const util::tracked_ptr< mln::internal::data<E> >& data_hook_() const;
 
       protected:
 
@@ -232,6 +233,14 @@ namespace mln
 	       << g->v1(i) << ", "
 	       << g->v2(i) << " )"
 	       << std::endl;
+      }
+
+      template<typename E>
+      inline
+      const util::tracked_ptr< mln::internal::data<E> >&
+      graph_base<E>::data_hook_() const
+      {
+	return data_;
       }
 
     } // end of namespace mln::util::internal
