@@ -227,7 +227,8 @@ int main(int argc, char** argv)
   edge_image<void, value::int_u8> color_dist_ima;
   {
     util::array<value::rgb8> mean_colors;
-    convert::from_to(labeling::compute(accu::stat::mean<value::rgb8>(), source, labels, nlabel),
+    typedef accu::stat::mean<value::rgb8, algebra::vec<3,float>, value::rgb8> A;
+    convert::from_to(labeling::compute(A(), source, labels, nlabel.next()),
 		     mean_colors);
 
     typedef vertex_image<void, value::rgb8, util::graph> V;
@@ -240,7 +241,7 @@ int main(int argc, char** argv)
   edge_image<void, float> orientation_ima;
   {
     util::array<mln_psite_(I)> mass_centers;
-    convert::from_to(labeling::compute(accu::center<mln_psite_(I)>(), labels, nlabel),
+    convert::from_to(labeling::compute(accu::center<mln_psite_(I)>(), labels, nlabel.next()),
 		     mass_centers);
 
     typedef vertex_image<void, mln_psite_(I), util::graph> V;
@@ -257,20 +258,24 @@ int main(int argc, char** argv)
   typedef morpho::tree::data< E, p_array<mln_psite_(E)> > T;
   p_array< mln_psite_(E) > s = data::sort_psites_decreasing(e_ima);
   mln_ch_value_(E, bool) mask;
-  T tree(e_ima, s, E::nbh_t ());
+  
+  E::nbh_t e_nbh;
+  T tree(e_ima, s, e_nbh);
 
   // debug
-  std::cout << izg;
+  // std::cout << izg;
   //
-  {
-    mln_node_piter_(T) n(tree);
-    for_all(n)
-    {
-      (void) tree.f(n);
-      (void) tree.f(tree.parent(n));
-    }
+//   {
+//     mln_node_piter_(T) n(tree);
+//     for_all(n)
+//     {
+//       (void) tree.f(n);
+//       (void) tree.f(tree.parent(n));
+//     }
 
-  }
+//   }
+
+  std::cout << "tree domain = " << tree.domain() << std::endl;
 
   std::cout << tree;
   {
@@ -328,7 +333,7 @@ int main(int argc, char** argv)
   L nlabel_b;
   mln_ch_value_(E, L) e_ima_labels = labeling::blobs(mask, E::nbh_t (), nlabel_b);
   std::cout << "Labels (febore): " << nlabel << " (now): " << nlabel_b << std::endl;
-  util::array<L> tr((unsigned)nlabel + 1);
+  util::array<L> tr(nlabel.next());
   mln_edge_iter_(util::graph) e(izg);
   for_all(e)
   {
