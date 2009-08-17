@@ -37,6 +37,7 @@
 # include <mln/metal/equal.hh>
 # include <mln/tag/init.hh>
 
+# include <mln/fun/internal/selector.hh>
 
 namespace mln
 {
@@ -88,27 +89,9 @@ namespace mln
     namespace i2v
     {
 
-
-      namespace internal
-      {
-
-        template <typename T, bool B = false >
-        struct array_selector_
-	 : public Function_v2v< i2v::array<T> >
-	{
-	};
-
-	template <typename T>
-	struct array_selector_<T,true>
-	  : public Function_v2b< i2v::array<T> >
-	{
-	};
-
-      } // end of namespace mln::fun::i2v::internal
-
-
       template <typename T>
-      class array : public internal::array_selector_<T,mlc_equal(T,bool)::value>
+      class array
+	: public fun::internal::selector_from_result_<T, array<T> >::ret
       {
       public:
 
