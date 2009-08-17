@@ -135,6 +135,7 @@ namespace mln
 	void take_as_init (trait::accumulator::when_pix::use_p, A& accu,
 			   const I& input, const P& p)
 	{
+	  (void) input;
 	  accu.take_as_init(p);
 	}
 

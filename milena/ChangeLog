@@ -1,3 +1,9 @@
+2009-08-17  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Fix rvalue for tree methods and other minor fixes..
+	*  morpho/tree/compute_attribute_image.hh: Supress warning.
+	*  morpho/tree/data.hh: Fix rvalue and overload operator << for tree.
+
 2009-08-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* mln/fun/i2v/array.hh: Use fun::internal::selector_from_result.

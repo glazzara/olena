@@ -35,7 +35,9 @@
 # include <mln/core/site_set/p_array.hh>
 # include <mln/core/internal/site_set_iterator_base.hh>
 # include <mln/core/internal/piter_identity.hh>
+
 # include <deque>
+# include <iostream>
 
 # define mln_up_site_piter(T)	typename T::up_site_piter
 # define mln_dn_site_piter(T)	typename T::dn_site_piter
@@ -114,6 +116,9 @@ namespace mln
 	/// Parent image associated type.
 	typedef mln_ch_value(I, mln_psite(I)) parent_t;
 
+	/// Children image associated type
+	typedef mln_ch_value(I, nodes_t) children_t;
+
 	// Iterate on all sites.
 	typedef mln::morpho::tree::up_site_piter<self_> up_site_piter;
 	typedef mln::morpho::tree::dn_site_piter<self_> dn_site_piter;
@@ -137,17 +142,23 @@ namespace mln
 	data(const Image<I>& f, const Site_Set<S>& s, const Neighborhood<N>& nbh);
 
 
+	/// \{ Base function-related materials
+
+	mln_rvalue(I) f(const mln_psite(I)& p) const;
+	const I& f() const;
+
+	/// \}
 
 	/// \{ Parent-related materials.
 
-	const mln_psite(I)& parent(const mln_psite(I)& p) const;
+	mln_rvalue(parent_t) parent(const mln_psite(I)& p) const;
 	const parent_t& parent_image() const;
 
 	/// \}
 
 	/// \{ Child-related materials.
 
-	const p_array<mln_psite(I)>& children(const mln_psite(I)& p) const;
+	mln_rvalue(children_t) children(const mln_psite(I)& p) const;
 	const mln_ch_value(I, nodes_t)& children_image() const;
 
 	/// \}
@@ -182,17 +193,7 @@ namespace mln
 
 	/// \}
 
-
-
-
 	unsigned nroots() const;
-
-
-	const I& f() const;
-
-
-	mln_rvalue(I) f(const mln_psite(I)& p) const;
-
 
       protected:
 	const function& f_;
@@ -372,12 +373,25 @@ namespace mln
 	using super_::s_;
 	std::deque<mln_psite(T::function)> stack_; // FIXME: implement p_stack.
 	const mln_psite(T::function)* root_;
-  };
+      };
 
+    } // end of namespace mln::morpho::tree
 
+  } // end of namespace mln::morpho
+
+  template <typename I, typename S>
+  inline
+  std::ostream&
+  operator<< (std::ostream& os, const morpho::tree::data<I, S>& t);
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  namespace morpho
+  {
+
+    namespace tree
+    {
 
       template <typename I, typename S>
       template <typename N>
@@ -417,7 +431,7 @@ namespace mln
 
       template <typename I, typename S>
       inline
-      const mln_psite(I)&
+      mln_rvalue_(mln_ch_value(I, mln_psite(I)))
       data<I,S>::parent(const mln_psite(I)& p) const
       {
 	mln_precondition(is_valid());
@@ -536,9 +550,10 @@ namespace mln
 
       template <typename I, typename S>
       inline
-      const p_array<mln_psite(I)>&
+      mln_rvalue_(mln_ch_value(I, p_array<mln_psite(I)>))
       data<I,S>::children(const mln_psite(I)& p) const
       {
+	mln_precondition(is_a_node(p));
 	return children_(p);
       }
 
@@ -628,11 +643,16 @@ namespace mln
       {
 	p_ = stack_.back();
 	stack_.pop_back();
-	if (!exact(this)->is_valid())
+	if (!this->is_valid())
 	  return;
+	mln_invariant(p_.is_valid());
+
 	mln_fwd_piter(T::nodes_t) child(s_->children(p_));
 	for_all(child)
+	{
+	  mln_invariant(s_->parent(child) == p_);
 	  stack_.push_back(child);
+	}
       }
 
       template <typename T>
@@ -644,12 +664,37 @@ namespace mln
 	  stack_.pop_back();
       }
 
-
-# endif // ! MLN_INCLUDE_ONLY
-
     } // end of namespace mln::morpho::tree
 
   } // end of namespace mln::morpho
+
+  template <typename I, typename S>
+  inline
+  std::ostream&
+  operator<< (std::ostream& os, const morpho::tree::data<I, S>& t)
+  {
+    typedef morpho::tree::data<I, S> self_t;
+
+    typename self_t::depth1st_piter n(t);
+    mln_psite(self_t) old;
+    //std::cout << t.parent_image();
+    for_all(n)
+    {
+      if (old.is_valid())
+	{
+	  if (old == t.parent(n))
+	    os << old << " <- ";
+	  else
+	    os << old << std::endl;
+	}
+      old = n;
+    }
+    if (old.is_valid())
+      os << old << std::endl;
+    return os;
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
