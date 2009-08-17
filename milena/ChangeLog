@@ -1,5 +1,9 @@
 2009-08-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* mln/labeling/relabel.hh: Add missing preconditions.
+
+2009-08-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	* mln/labeling/superpose.hh: New. Superpose two labeled images.
 
 2009-08-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>

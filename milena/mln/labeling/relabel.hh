@@ -183,6 +183,8 @@ namespace mln
     {
       trace::entering("labeling::relabel");
 
+
+      mlc_not_equal(mln_result(F),bool)::check();
       internal::relabel_tests(label, nlabels, fv2v);
 
       mln_concrete(I) output = data::transform(label, fv2v);
@@ -223,6 +225,7 @@ namespace mln
     {
       trace::entering("labeling::relabel_inplace");
 
+      mlc_not_equal(mln_result(F),bool)::check();
       internal::relabel_inplace_tests(label, nlabels, fv2v);
 
       data::transform_inplace(label, fv2v);
