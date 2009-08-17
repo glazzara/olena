@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,6 +43,8 @@ namespace mln
   {
 
     /// Compute an accumulator onto the pixel values of the image \p input.
+    /// Be ware that the given accumulator won't be modified and won't
+    /// store any result.
     ///
     /// \param[in] a An accumulator.
     /// \param[in] input The input image.
@@ -52,6 +55,19 @@ namespace mln
     template <typename A, typename I>
     mln_result(A)
     compute(const Accumulator<A>& a, const Image<I>& input);
+
+
+    /// Compute an accumulator onto the pixel values of the image \p input.
+    ///
+    /// \param[in, out] a An accumulator.
+    /// \param[in] input The input image.
+    /// \return The accumulator result.
+    ///
+    /// It fully relies on data::update.
+    //
+    template <typename A, typename I>
+    mln_result(A)
+    compute(Accumulator<A>& a, const Image<I>& input);
 
 
     /// Compute an accumulator onto the pixel values of the image \p input.
@@ -76,6 +92,16 @@ namespace mln
     mln_result(A)
     compute(const Accumulator<A>& a_, const Image<I>& input)
     {
+      A a;
+      return compute(a, input);
+    }
+
+
+    template <typename A, typename I>
+    inline
+    mln_result(A)
+    compute(Accumulator<A>& a_, const Image<I>& input)
+    {
       trace::entering("data::compute");
 
       A a = exact(a_);
@@ -87,6 +113,7 @@ namespace mln
       trace::exiting("data::compute");
       return a;
     }
+
 
     template <typename A, typename I>
     inline

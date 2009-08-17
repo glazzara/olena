@@ -1,5 +1,10 @@
 2009-08-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* mln/data/compute.hh: Add an overload with non const
+	accumulators.
+
+2009-08-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	* headers.mk: Regen.
 
 2009-08-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
