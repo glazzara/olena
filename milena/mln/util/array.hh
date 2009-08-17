@@ -41,6 +41,7 @@
 # include <mln/core/concept/proxy.hh>
 # include <mln/core/concept/iterator.hh>
 
+# include <mln/fun/internal/selector.hh>
 
 
 namespace mln
@@ -90,7 +91,10 @@ namespace mln
     /// \ingroup modutil
     //
     template <typename T>
-    class array : public Function_v2v< mln::util::array<T> >
+    class array
+      : public fun::internal::selector_from_result_<T, array<T> >::ret
+
+    // public Function_v2v< mln::util::array<T> >
     {
     public:
 
@@ -101,6 +105,7 @@ namespace mln
       /// Related to the Function_v2v concept.
       /// @{
       typedef T result;
+      typedef typename std::vector<T>::const_reference ro_result;
       typedef typename std::vector<T>::reference mutable_result;
       /// @}
 
@@ -163,7 +168,7 @@ namespace mln
 
       /// \brief Return the \p i-th element of the array.
       /// \pre i < nelements()
-      const T& operator()(unsigned i) const;
+      ro_result operator()(unsigned i) const;
 
       /// \brief Return the \p i-th element of the array.
       /// \pre i < nelements()
@@ -171,7 +176,7 @@ namespace mln
 
       /// \brief Return the \p i-th element of the array.
       /// \pre i < nelements()
-      const T& operator[](unsigned i) const;
+      ro_result operator[](unsigned i) const;
 
       /// \brief Return the \p i-th element of the array.
       /// \pre i < nelements()
@@ -244,10 +249,10 @@ namespace mln
       void invalidate();
 
       /// Give the element the iterator designates.
-      const T& element() const;
+      T element() const;
 
       // As a Proxy.
-      const T& subj_();
+      T subj_();
 
       /// Give the current index.
       unsigned index_() const;
@@ -293,10 +298,10 @@ namespace mln
       void invalidate();
 
       /// Give the element the iterator designates.
-      const T& element() const;
+      T element() const;
 
       // As a Proxy.
-      const T& subj_();
+      T subj_();
 
       /// Give the current index.
       unsigned index_() const;
@@ -315,11 +320,13 @@ namespace mln
     template <typename T, typename E>
     struct subject_impl<const util::array<T>&, E>
     {
+      typedef typename util::array<T>::ro_result ro_result;
+
       unsigned nelements() const;
       unsigned size() const;
       bool is_empty() const;
-      const T& operator()(unsigned i) const;
-      const T& operator[](unsigned i) const;
+      ro_result operator()(unsigned i) const;
+      ro_result operator[](unsigned i) const;
       const std::vector<T>& std_vector() const;
 
       private:
@@ -493,7 +500,7 @@ namespace mln
 
     template <typename T>
     inline
-    const T&
+    typename array<T>::ro_result
     array<T>::operator()(unsigned i) const
     {
       return (*this)[i];
@@ -509,7 +516,7 @@ namespace mln
 
     template <typename T>
     inline
-    const T&
+    typename array<T>::ro_result
     array<T>::operator[](unsigned i) const
     {
       mln_precondition(i < nelements());
@@ -623,7 +630,7 @@ namespace mln
 
     template <typename T>
     inline
-    const T&
+    T
     array_fwd_iter<T>::element() const
     {
       mln_precondition(is_valid());
@@ -632,7 +639,7 @@ namespace mln
 
     template <typename T>
     inline
-    const T&
+    T
     array_fwd_iter<T>::subj_()
     {
       mln_precondition(is_valid());
@@ -717,7 +724,7 @@ namespace mln
 
     template <typename T>
     inline
-    const T&
+    T
     array_bkd_iter<T>::element() const
     {
       mln_precondition(is_valid());
@@ -726,7 +733,7 @@ namespace mln
 
     template <typename T>
     inline
-    const T&
+    T
     array_bkd_iter<T>::subj_()
     {
       mln_precondition(is_valid());
@@ -893,7 +900,7 @@ namespace mln
 
     template <typename T, typename E>
     inline
-    const T&
+    typename util::array<T>::ro_result
     subject_impl<const util::array<T>&, E>::operator()(unsigned i) const
     {
       return exact_().get_subject()(i);
@@ -901,7 +908,7 @@ namespace mln
 
     template <typename T, typename E>
     inline
-    const T&
+    typename util::array<T>::ro_result
     subject_impl<const util::array<T>&, E>::operator[](unsigned i) const
     {
       return exact_().get_subject()[i];

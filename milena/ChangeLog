@@ -1,5 +1,9 @@
 2009-08-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* mln/util/array.hh: Fix invalid read-only return type.
+
+2009-08-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	* mln/data/compute.hh: Add an overload with non const
 	accumulators.
 
