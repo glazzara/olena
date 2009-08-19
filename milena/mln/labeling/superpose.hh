@@ -34,6 +34,8 @@
 # include <mln/core/concept/image.hh>
 # include <mln/util/array.hh>
 # include <mln/labeling/relabel.hh>
+# include <mln/data/paste.hh>
+# include <mln/pw/all.hh>
 
 namespace mln
 {

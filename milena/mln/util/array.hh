@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -223,6 +224,7 @@ namespace mln
 							     array_fwd_iter<T> >
     {
     public:
+      typedef typename array<T>::ro_result subj_t;
 
       /// Constructors
       /// @{
@@ -252,7 +254,7 @@ namespace mln
       T element() const;
 
       // As a Proxy.
-      T subj_();
+      subj_t subj_();
 
       /// Give the current index.
       unsigned index_() const;
@@ -273,6 +275,8 @@ namespace mln
 							     array_bkd_iter<T> >
     {
     public:
+      typedef typename array<T>::ro_result subj_t;
+
       /// Constructors
       /// @{
       /// Constructor without argument.
@@ -301,7 +305,7 @@ namespace mln
       T element() const;
 
       // As a Proxy.
-      T subj_();
+      subj_t subj_();
 
       /// Give the current index.
       unsigned index_() const;
@@ -639,7 +643,7 @@ namespace mln
 
     template <typename T>
     inline
-    T
+    typename array_fwd_iter<T>::subj_t
     array_fwd_iter<T>::subj_()
     {
       mln_precondition(is_valid());
@@ -733,7 +737,7 @@ namespace mln
 
     template <typename T>
     inline
-    T
+    typename array_bkd_iter<T>::subj_t
     array_bkd_iter<T>::subj_()
     {
       mln_precondition(is_valid());

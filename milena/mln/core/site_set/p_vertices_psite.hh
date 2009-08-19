@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,9 +39,14 @@
 namespace mln
 {
 
-  // Forward declaration.
+  // Forward declarations.
   template <typename G, typename F> class p_vertices;
-  namespace internal { template <typename Subject, typename E> struct subject_impl; }
+  namespace internal
+  {
+
+    template <typename Subject, typename E> struct subject_impl;
+
+  }
 
 
   template <typename G, typename F>
@@ -186,6 +192,7 @@ namespace mln
     }
 
   } // end of namespace mln::internal
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

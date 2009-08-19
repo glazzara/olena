@@ -47,6 +47,7 @@
 
 # include <mln/tag/init.hh>
 
+# include <mln/data/compare.hh>
 
 namespace mln
 {

@@ -145,6 +145,9 @@ namespace mln
     /// Clear this set.
     void clear();
 
+    /// Update the size of this array.
+    void resize(size_t size);
+
 
     /// Return the \p i-th site (constant).
     const P& operator[](unsigned i) const;
@@ -211,7 +214,7 @@ namespace mln
     bool is_valid() const;
 
     operator util::index() const;
-    operator int() const;      // To interoperate, e.g., with fun::i2v expecting an int. 
+    operator int() const;      // To interoperate, e.g., with fun::i2v expecting an int.
     operator unsigned() const; // To avoid ambiguity when an unsigned is expected.
 
     void update_() const;
@@ -433,6 +436,15 @@ namespace mln
   {
     vect_.clear();
     mln_postcondition(this->is_empty());
+  }
+
+  template <typename P>
+  inline
+  void
+  p_array<P>::resize(size_t size)
+  {
+    mln_precondition(size >= 0);
+    vect_.resize(size);
   }
 
   template <typename P>

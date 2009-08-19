@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -327,6 +328,7 @@ namespace mln
     void
     vertex<G>::change_graph(const G& g)
     {
+      mln_precondition(g.is_valid());
       g_ = g;
     }
 

@@ -95,15 +95,15 @@ namespace mln
 
       /// Constructors
       /// @{
-      /// Constructor from a Site_set and any Function_v2v.
+      /// Constructor from a value set and any Function_v2v.
       template <typename F>
       lut_vec(const S& vset, const Function_v2v<F>& f);
 
-      /// Constructor from a Site_set and any fun::i2v::array.
+      /// Constructor from a value set and any fun::i2v::array.
       template <typename V>
       lut_vec(const S& vset, const Function_v2v< fun::i2v::array<V> >& f);
 
-      /// Constructor from a Site_set and any util::array.
+      /// Constructor from a value set and any util::array.
       template <typename V>
       lut_vec(const S& vset, const Function_v2v< util::array<V> >& f);
       /// @}
