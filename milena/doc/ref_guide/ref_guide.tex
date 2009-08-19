@@ -249,12 +249,24 @@ Before writing your first program, please be aware of these hints:
   \begin{verbatim}
 $ g++ -DNDEBUG -Ipath/to/mln my_program.cc
   \end{verbatim}
+%$
 
   \item If you decide to use optimization flags to compile for debugging,
   prefer using \code{-O1}. It is much faster to compile and it gives good
   performance results.
 
 \end{itemize}
+
+
+%====================================
+\clearpage
+\newpage
+\doxychapter{concepts}{Concepts}
+
+
+
+
+
 
 %====================================
 \clearpage
@@ -309,7 +321,7 @@ Name & Description \\
 \hline
 \type{point2d} & 2D point on a regular grid \\
 \type{point} & Generic point ($n$D) on a regular grid \\
-\type{util::vec} & Algebraic vector \\
+\type{algebra::vec} & Algebraic vector \\
 \type{util::vertex} & Graph vertex \\
 \type{util::edge} & Graph edge \\
 \end{tabular}
@@ -488,8 +500,8 @@ Value type & underlying data type \\
 \type{int\_u8} & \type{unsigned char} \\
 \type{int\_u16} & \type{unsigned short} \\
 \type{int\_u32} & \type{unsigned int} \\
-\type{rgb16} & \type{mln::util::vec$<$unsigned short$>$} \\
-\type{rgb8} & \type{mln::util::vec$<$unsigned char$>$} \\
+\type{rgb16} & \type{mln::algebra::vec$<$unsigned short$>$} \\
+\type{rgb8} & \type{mln::algebra::vec$<$unsigned char$>$} \\
 \end{tabular} \\
 
 
@@ -1499,7 +1511,7 @@ Output:
 Then, use \code{labeling::compute()} with the bbox accumulator:
 \doxycode[3]{labeling-compute}
 
-\code{labeling::compute()} hold an accumulator for each component, which means it
+\code{labeling::compute()} holds an accumulator for each component, which means it
 returns an array of accumulator results.
 In this case, it returns an array of \type{box2d}.
 
@@ -1619,14 +1631,14 @@ In this example, the image is restricted to its odd lines. A new image is
 created in which odd lines are in red and others in black.
 
 Here is the simple C function used as predicate:
-\doxycode[1]{fill-subimage-cfun}
+\doxycode[1]{fill-imageif-cfun}
 
 Restrict the image with it:
-\doxycode[3]{fill-subimage-cfun}
+\doxycode[3]{fill-imageif-cfun}
 
 Output:
 \begin{center}
-\doxyfigure[1]{fill-subimage-cfun}{3cm}
+\doxyfigure[1]{fill-imageif-cfun}{3cm}
 \end{center}
 %
 \medskip
@@ -1827,10 +1839,10 @@ Output:
 Name & Description & Possible values \\
 \hline
 literal::zero & Generic zero value. Can be used with various types such as
-util::vec, dpoint\dots & n.a.\\
+algebra::vec, dpoint\dots & n.a.\\
 & & \\
 literal::one & Generic one value. Can be used with various types such as
-util::vec, dpoint\dots & n.a.\\
+algebra::vec, dpoint\dots & n.a.\\
 & & \\
 literal::origin & Generic value for the origin point on a grid.& n.a.\\
 & & \\

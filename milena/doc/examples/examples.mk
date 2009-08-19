@@ -24,6 +24,9 @@ examples/split/fill-3.cc.raw \
 examples/split/fill-call-1-1.cc.raw \
 examples/split/fill-call-1-2.cc.raw \
 examples/split/fill-call-1-3.cc.raw \
+examples/split/fill-imageif-cfun-1.cc.raw \
+examples/split/fill-imageif-cfun-2.cc.raw \
+examples/split/fill-imageif-cfun-3.cc.raw \
 examples/split/fill-part-image-1.cc.raw \
 examples/split/fill-part-image-2.cc.raw \
 examples/split/fill-subdomain-1.cc.raw \
@@ -32,9 +35,6 @@ examples/split/fill-subdomain-3.cc.raw \
 examples/split/fill-subdomain-4.cc.raw \
 examples/split/fill-subdomain-shorter-1.cc.raw \
 examples/split/fill-subdomain-shorter-2.cc.raw \
-examples/split/fill-subimage-cfun-1.cc.raw \
-examples/split/fill-subimage-cfun-2.cc.raw \
-examples/split/fill-subimage-cfun-3.cc.raw \
 examples/split/forall-piter-1.cc.raw \
 examples/split/fun-p2v-1-1.cc.raw \
 examples/split/graph-data-1.cc.raw \

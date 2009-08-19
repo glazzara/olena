@@ -116,23 +116,27 @@ Therefore it is not possible to present all the functionalities in a
 tutorial.
 
 
-Milena targets several audiences: \textit{end users}, \textit{designers} and
-\textit{providers}. \textit{End users} want to apply and assemble algorithms
-to solve image processing, pattern recognition or computer vision problems,
-\textit{designers} build new algorithms and \textit{providers} are interested
-in developing their own data structures and extend an existing library.
+Milena targets several audiences: \textit{assemblers},
+\textit{designers}, \textit{providers} and
+\textit{architects}. \textit{Assemblers} want to apply and assemble
+algorithms to solve image processing, pattern recognition or computer
+vision problems, \textit{designers} build new algorithms,
+\textit{providers} are interested in developing their own data
+structures and extend an existing library and \textit{architects} are
+basically developpers extending the core library.
 
 
-Whatever the kind of user you are, the key to learning how to use Milena is to
-become familiar with its palette of objects and the way of combining them.
+Whatever the kind of user you are, the key to learning how to use
+Milena is to become familiar with its palette of objects and the way
+of combining them.
 
-As an \textit{end user}, you may start with this simple tutorial and the Quick
+As an \textit{assemblers}, you may start with this simple tutorial and the Quick
 tour \tofix{ref}. They describe and illustrate the key features of the library.
-\textit{End users} getting familiar with Milena and \textit{designers}, should
+\textit{Assemblers} getting familiar with Milena and \textit{designers}, should
 take a look at the  Quick Reference Guide \tofix{ref!}.
 It is a more detailed explanations of the library's features.
 
-\textit{end users} and \textit{designers} may be also interested by all the
+\textit{Assemblers} and \textit{designers} may be also interested by all the
 examples provided with the documentation and the tutorial. The source code is
 available in \hpath{milena/doc/examples} \tofix{ref} and is usually pointed
 out and commented by the documentation.
@@ -256,17 +260,17 @@ Once downloaded, you just need to uncompress the archive.
 
 For the '.tar.gz' archive:
 \begin{verbatim}
-$ tar zxvf olena-1.0.tar.gz
+$ tar zxvf olena.tar.gz
 \end{verbatim}
 
 For the '.tar.bz2' archive:
 \begin{verbatim}
-$ tar jxvf olena-1.0.tar.bz2
+$ tar jxvf olena.tar.bz2
 \end{verbatim}
 
 Then, enter the new created directory:
 \begin{verbatim}
-$ cd olena-1.0
+$ cd olena
 \end{verbatim}
 
 
@@ -439,7 +443,7 @@ This tutorial is not the only documentation of Milena. Other documents are avail
   functionalities of Milena.
   Hints and full examples are also provided. The sample codes are commented
   and each concept in the library is detailed. This is the reference document for any
-  \textit{end user} and \textit{algorithm designer}.
+  \textit{assembler} and \textit{algorithm designer}.
 
   \item \dir{HTML user doc} --- The full documentation of the library. The full
   API is described in details. Each part of the library is classified by
@@ -603,7 +607,7 @@ script before configuring the build directory.
 
 Run the following:
 \begin{verbatim}
-$ cd /my/path/to/olena-1.0
+$ cd /my/path/to/olena
 $ ./bootstrap
 \end{verbatim}
 
@@ -619,7 +623,7 @@ When it's done, you are ready to configure the build directory.
 First, make sure you are at the root directory of the milena source:
 
 \begin{verbatim}
-$ cd /my/path/to/olena-1.0
+$ cd /my/path/to/olena
 \end{verbatim}
 
 First, create and enter a build directory:
@@ -631,6 +635,9 @@ $ cd build
 We are now about to configure the build directory. This process will create
 the necessary files to compile documentation, examples and tools and prepare the
 installation.
+
+Note that once the configuration ends the build directory cannot be
+moved elsewhere without following the following steps again.
 
 \textbf{Important Note}: the installation path prefix must be chosen at this step.
 By default, Milena will be installed in /usr/local but you may like to install
@@ -674,7 +681,7 @@ First, be sure to be in the build directory. If you followed the previous
 steps, the build directory should be in the Milena sources root directory.
 
 \begin{verbatim}
-$ cd /my/path/to/olena-1.0/build
+$ cd /my/path/to/olena/build
 \end{verbatim}
 
 If you did not change the default install path prefix, set to
@@ -716,14 +723,14 @@ Examples are part of the documentation. The sources are located in
 
 To compile the examples simply run:
 \begin{verbatim}
-$ cd /my/path/to/olena-1.0/build/milena/doc/examples
+$ cd /my/path/to/olena/build/milena/doc/examples
 $ make
 \end{verbatim}
 
 These examples can produce outputs and images. May be you would like
 to run all the examples and take a look at the outputs? To do so, run:
 \begin{verbatim}
-$ cd /my/path/to/olena-1.0/build/milena/doc/examples
+$ cd /my/path/to/olena/build/milena/doc/examples
 $ make examples
 \end{verbatim}
 
@@ -751,7 +758,7 @@ seed2tiling.cc & \tofix{description} \\
 
 To build these tools, run:
 \begin{verbatim}
-$ cd /my/path/to/olena-1.0/build/milena/tools
+$ cd /my/path/to/olena/build/milena/tools
 $ make
 \end{verbatim}
 
@@ -764,7 +771,7 @@ extending the library.
 
 In order to build and run it, just do the following:
 \begin{verbatim}
-$ cd /my/path/to/olena-1.0/build/milena/tests
+$ cd /my/path/to/olena/build/milena/tests
 $ make check
 \end{verbatim}
 
@@ -783,6 +790,7 @@ In the installation path prefix, Milena's files are located in:
   \item include/mln/ --- The library. All the headers are located here.
   \item share/olena/images --- Mesh sample files which may be used with
   example programs.
+  \item share/olena/doc --- HTML and PDF documentation.
 \end{itemize}
 
 \vspace{2cm}
@@ -809,6 +817,9 @@ interested in a small routine to fill an image with data. A common
 implementation would look like this one:
 
 \doxyrawcode{tuto3/fill_non_generic}
+
+See milena/doc/examples/tuto3/fill\_non\_generic.cc.
+
 
 In this example, there are a lot of \B{implicit} assumptions about the input:
 \begin{itemize}
@@ -1147,7 +1158,7 @@ then the image itself which stores the values.
 
 
 %**************************
-\doxysection{tuto4images}{Sites}
+\doxysection{tuto4sites}{Sites}
 
 A pixel is an element having both information, localization and
 value. In Milena, we make a difference between a pixel, a pixel value and a pixel
@@ -1158,12 +1169,14 @@ For instance, in an image defined on a 2D regular grid, it is a 2D point with
 
 \doxycode{tuto4_point2d}
 
+Output:
+\doxyoutput{tuto4_point2d}
+
 The image site type is defined by its underlying site set.
 
 
-
 %**************************
-\doxysection{tuto4images}{Site sets}
+\doxysection{tuto4sitesets}{Site sets}
 
 Site sets are mainly used to define image domains. They hold all the available
 sites in an image, consequently they do not store any values.
@@ -1181,7 +1194,36 @@ A list of available site sets is available in section \ref{siteset}.
 
 In this section, we will detail how to create common site sets.
 
-This is actually simple.
+The most used site set is \type{mln::box}. The main reason is that
+common images have this kind of domain. Since it is a plain set only
+two sites are needed to define a box: the top left corner, \var{pmin},
+and the bottom right corner, \var{pmax}.
+
+By default, \var{pmin} is set to \val{(0,0)} so a box can be
+constructed from given \var{pmax} coordinates:
+
+\doxycode[1]{tuto4_site_set_create}
+
+This box is defined from \val{(0,0)} to \val{(4,4)} :
+
+\doxymoutput[1]{tuto4_site_set_create}
+
+A box can also starts from a site different from \val{(0,0)}.
+
+\doxycode[4]{tuto4_site_set_create}
+
+This box is defined from \val{(0,0)} to \val{(4,4)} :
+
+\doxymoutput[3]{tuto4_site_set_create}
+
+
+Another common site set is \type{p\_array}. It contains only sites which have been added to it.
+
+\doxycode[2]{tuto4_site_set_create}
+
+This site only contains :
+
+\doxymoutput[2]{tuto4_site_set_create}
 
 
 %--------------------------
@@ -1205,6 +1247,8 @@ In this section, we will detail how to create common images.
 
 %--------------------------
 \doxysubsection{tuto4accessdata}{Accessing data}
+
+
 
 \vspace{2cm}
 \begin{center}

@@ -1,5 +1,7 @@
-/// \file doc/examples/tuto3/first_routine.cc
+/// \file
+/// \brief First generic routine.
 
+// \{
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/dmorph/image_if.hh>
 #include <mln/core/alias/neighb2d.hh>
@@ -23,7 +25,6 @@
 #include <tests/data.hh>
 #include <doc/tools/sample_utils.hh>
 
-// \{
 namespace mln
 {
 
@@ -43,7 +44,9 @@ namespace mln
     V nlabels;
     mln_ch_value(I,V) lbl = labeling::blobs(ima, nbh, nlabels);
     util::array<unsigned>
-      count = labeling::compute(accu::meta::math::count(), lbl, nlabels);
+      count = labeling::compute(accu::meta::math::count(),
+				lbl,
+				nlabels);
 
     mln_concrete(I) output;
     initialize(output, ima);
@@ -51,7 +54,8 @@ namespace mln
 
     for (unsigned i = 1; i <= nlabels; ++i)
       if (count[i] < 10u)
-	data::fill((output | (pw::value(lbl) == pw::cst(i))).rw(), literal::zero);
+	data::fill((output | (pw::value(lbl) == pw::cst(i))).rw(),
+		   literal::zero);
 
     trace::exiting("my_algorithm");
     return output;
@@ -88,7 +92,9 @@ namespace sandbox
     V nlabels;
     mln_ch_value(I,V) lbl = labeling::blobs(ima, nbh, nlabels);
     util::array<unsigned>
-      count = labeling::compute(accu::meta::math::count(), lbl, nlabels);
+      count = labeling::compute(accu::meta::math::count(),
+				lbl,
+				nlabels);
     // \}
 
     // \{
@@ -100,7 +106,8 @@ namespace sandbox
     // \{
     for (unsigned i = 1; i <= nlabels; ++i)
       if (count[i] < 10u)
-	data::fill((output | (pw::value(lbl) == pw::cst(i))).rw(), literal::zero);
+	data::fill((output | (pw::value(lbl) == pw::cst(i))).rw(),
+		   literal::zero);
     // \}
 
     // \{

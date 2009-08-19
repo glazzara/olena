@@ -1,1 +1,1 @@
-data::compute(accu::meta::max, ima);
+data::compute(accu::meta::stat::max, ima);

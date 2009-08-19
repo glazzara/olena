@@ -10,10 +10,10 @@ outputs/estim-sites.txt \
 outputs/extend.txt \
 outputs/extension-ignore.txt \
 outputs/fill-call-1.txt \
+outputs/fill-imageif-cfun.txt \
 outputs/fill-part-image.txt \
 outputs/fill-subdomain-shorter.txt \
 outputs/fill-subdomain.txt \
-outputs/fill-subimage-cfun.txt \
 outputs/fill.txt \
 outputs/first_routine.txt \
 outputs/forall-piter.txt \

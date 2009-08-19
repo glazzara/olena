@@ -8,11 +8,11 @@ figures/extend-4.ppm \
 figures/extend-5.ppm \
 figures/fill-1.ppm \
 figures/fill-2.ppm \
+figures/fill-imageif-cfun-1.ppm \
 figures/fill-subdomain-1.pbm \
 figures/fill-subdomain-2.ppm \
 figures/fill-subdomain-3.ppm \
 figures/fill-subdomain-4.ppm \
-figures/fill-subimage-cfun-1.ppm \
 figures/ima2d-rot-1.ppm \
 figures/ima2d-rot-2.ppm \
 figures/ima_save.pbm \

@@ -81,7 +81,7 @@ int main()
 
   image2d<value::rgb8> lena_bak = duplicate(lena);
   // \{
-  box2d roi = make::box2d(20, 20, 40, 40);
+  box2d roi = make::box2d(20, 20, 39, 39);
   // \}
   // \{
   data::fill((lena | roi).rw(), literal::green);

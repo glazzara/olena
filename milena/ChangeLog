@@ -1,5 +1,42 @@
 2009-08-19  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Update documentation.
+
+	* doc/examples/accu-wrong-instanciation.cc.raw: Fix an incomplete
+	namespace specification.
+
+	* doc/figures/fill-subimage-cfun-1.ppm,
+	* doc/outputs/fill-subimage-cfun.txt,
+	* doc/examples/fill-subimage-cfun.cc,
+	* doc/examples/split/fill-subimage-cfun-1.cc.raw,
+	* doc/examples/split/fill-subimage-cfun-2.cc.raw,
+	* doc/examples/split/fill-subimage-cfun-3.cc.raw: Rename as...
+
+	* doc/figures/fill-imageif-cfun-1.ppm,
+	* doc/outputs/fill-imageif-cfun.txt,
+	* doc/examples/fill-imageif-cfun.cc,
+	* doc/examples/split/fill-imageif-cfun-1.cc.raw,
+	* doc/examples/split/fill-imageif-cfun-2.cc.raw,
+	* doc/examples/split/fill-imageif-cfun-3.cc.raw: ... this.
+
+	* doc/examples/tuto3/first_routine.cc,
+	* doc/examples/tuto4_genericity_and_algorithms.cc,
+	* doc/examples/split/tuto3_first_routine-1.cc.raw,
+	* doc/examples/split/tuto3_first_routine-5.cc.raw,
+	* doc/examples/split/tuto3_first_routine-7.cc.raw,
+	* doc/examples/split/tuto4_genericity_and_algorithms-2.cc.raw:
+	Update sample code
+
+	* doc/examples/examples.mk,
+	* doc/figures/figures.mk,
+	* doc/outputs/outputs.mk: Regen.
+
+	* doc/ref_guide/ref_guide.tex,
+	* doc/tutorial/tutorial.tex: Fix typos and update according to
+	some Yann's comments.
+
+2009-08-19  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Small fixes.
 
 	* mln/core/concept/image.hh: Always include data/compare.hh.
