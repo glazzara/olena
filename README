@@ -71,16 +71,19 @@ code or e-mail us.
 Installation
 ============
 
-To install Olena on your system, type in the classical sequence at
-the command prompt::
+To install Olena on your system, create a `build' directory (even
+though it is not mandatory) and type in the classical sequence at the
+command prompt::
 
-	./configure
+        mkdir build
+	cd build
+	../configure
 	make
 	make install (as root)
 
-Note that an installation is  specific to the compiler used to install
-it.  Indeed, the call  to ``./configure`` enables some workarounds and,
-consequently,  users must  compile  with the  same  compiler to  avoid
+Note that an installation is specific to the compiler used to install
+it.  Indeed, the call to ``../configure`` enables some workarounds
+and, consequently, users must compile with the same compiler to avoid
 compatibility problems.
 
 Between ``make`` and ``make install``, you may also want to run::
@@ -195,7 +198,7 @@ milena
 
 
 swilena
-   
+
 
   python
      Some Python bindings for Milena.

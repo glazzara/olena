@@ -1,5 +1,9 @@
 2009-08-19 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* README: Be consistent with the documentation.
+
+2009-08-19 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Install scribo headers in a specific scribo include dir.
 
 	* bootstrap: Add new arguments to generate_dist_headers.sh
