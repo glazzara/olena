@@ -30,7 +30,7 @@ REGEN_SUBDIRS += tests
 regen-am:
 	cd $(srcdir)							\
 	  && $(abs_top_srcdir)/build-aux/generate_dist_headers.sh	\
-	       . headers.mk nodist-headers
+	       . headers.mk nodist-headers scribo scribo
 
 # FIXME: Change generate_dist_headers.sh so that the action looks like this:
 #
@@ -39,6 +39,6 @@ regen-am:
 $(srcdir)/headers.mk: $(top_srcdir)/build-aux/generate_dist_headers.sh
 	cd $(srcdir)							\
 	  && $(abs_top_srcdir)/build-aux/generate_dist_headers.sh	\
-	       . headers.mk nodist-headers
+	       . headers.mk nodist-headers scribo scribo
 
 include $(srcdir)/headers.mk
