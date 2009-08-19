@@ -1,3 +1,12 @@
+2009-08-19 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Install scribo headers in a specific scribo include dir.
+
+	* bootstrap: Add new arguments to generate_dist_headers.sh
+
+	* build-aux/generate_dist_headers.sh: Allow to specify a specific
+	include directory.
+
 2009-08-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Fix installation of non distributed files.

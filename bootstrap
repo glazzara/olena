@@ -132,7 +132,7 @@ set -x
 run milena `pwd`/build-aux/generate_dist_headers.sh mln ./headers.mk ./nodist-headers
 
 # Generate scribo/headers.mk
-run scribo `pwd`/build-aux/generate_dist_headers.sh . headers.mk nodist-headers
+run scribo `pwd`/build-aux/generate_dist_headers.sh . headers.mk nodist-headers scribo scribo
 
 # Generate lists of files to be part of the distribution
 # for the tutorial.
