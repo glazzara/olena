@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,23 +39,31 @@ namespace mln
 {
 
   /// Elementary neighborhood on graph class.
-  template <typename G, typename S>
+  ///
+  /// \tparam G is a graph type.
+  /// \tparam S is a site set type.
+  /// \tparam S2 is the site set type of the neighbors.
+  //
+  template <typename G, typename S, typename S2 = S>
   struct graph_elt_neighborhood
-    : public neighb< graph_elt_window<G,S> >
+    : public neighb< graph_elt_window<G,S,S2> >
   {
-    typedef neighb< graph_elt_window<G,S> > super_;
+      typedef neighb< graph_elt_window<G,S,S2> > super_;
 
-    graph_elt_neighborhood();
+      graph_elt_neighborhood();
   };
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-template <typename G, typename S>
-inline
-graph_elt_neighborhood<G,S>::graph_elt_neighborhood()
-{
-}
+
+  template <typename G, typename S, typename S2>
+  inline
+  graph_elt_neighborhood<G,S,S2>::graph_elt_neighborhood()
+  {
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

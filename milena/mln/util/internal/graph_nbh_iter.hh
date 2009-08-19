@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +33,8 @@
 # include <mln/util/edge.hh>
 
 /// \file
-/// \brief  Implementation for graph vertex iterators centered to a vertex.
+/// \brief Implementation for graph vertex iterators centered to a
+/// vertex.
 
 namespace mln
 {
@@ -51,11 +53,16 @@ namespace mln
 				 util::vertex<G>,
 				 vertex_nbh_vertex_fwd_iterator<G> >
     {
-      typedef util::vertex<G> V;
-      typedef vertex_nbh_vertex_fwd_iterator<G> self_;
-      typedef nbh_iterator_base<G, V, V, self_> super_;
+	typedef util::vertex<G> V;
+	typedef vertex_nbh_vertex_fwd_iterator<G> self_;
+	typedef nbh_iterator_base<G, V, V, self_> super_;
 
       public:
+	/// Type of the iterator center element.
+	typedef V center;
+	/// Type of the iterator targeted elements.
+	typedef V nbh;
+
 	/// Construction and assignment.
 	/// \{
 	vertex_nbh_vertex_fwd_iterator();
@@ -88,11 +95,17 @@ namespace mln
 				 util::vertex<G>,
 				 vertex_nbh_vertex_bkd_iterator<G> >
     {
-      typedef util::vertex<G> V;
-      typedef vertex_nbh_vertex_bkd_iterator<G> self_;
-      typedef nbh_iterator_base<G, V, V, self_> super_;
+	typedef util::vertex<G> V;
+
+	typedef vertex_nbh_vertex_bkd_iterator<G> self_;
+	typedef nbh_iterator_base<G, V, V, self_> super_;
 
       public:
+	/// Type of the iterator center element.
+	typedef V center;
+	/// Type of the iterator targeted elements.
+	typedef V nbh;
+
 	/// Construction and assignment.
 	/// \{
 	vertex_nbh_vertex_bkd_iterator();
@@ -130,12 +143,17 @@ namespace mln
 				 util::edge<G>,
 				 vertex_nbh_edge_fwd_iterator<G> >
     {
-      typedef util::vertex<G> V;
-      typedef util::edge<G> E;
-      typedef vertex_nbh_edge_fwd_iterator<G> self_;
-      typedef nbh_iterator_base<G, V, E, self_> super_;
+	typedef util::vertex<G> V;
+	typedef util::edge<G> E;
+	typedef vertex_nbh_edge_fwd_iterator<G> self_;
+	typedef nbh_iterator_base<G, V, E, self_> super_;
 
       public:
+	/// Type of the iterator center element.
+	typedef V center;
+	/// Type of the iterator targeted elements.
+	typedef E nbh;
+
 	/// Construction and assignment.
 	/// \{
 	vertex_nbh_edge_fwd_iterator();
@@ -169,12 +187,17 @@ namespace mln
 				 util::edge<G>,
 				 vertex_nbh_edge_bkd_iterator<G> >
     {
-      typedef util::vertex<G> V;
-      typedef util::edge<G> E;
-      typedef vertex_nbh_edge_bkd_iterator<G> self_;
-      typedef nbh_iterator_base<G, V, E, self_> super_;
+	typedef util::vertex<G> V;
+	typedef util::edge<G> E;
+	typedef vertex_nbh_edge_bkd_iterator<G> self_;
+	typedef nbh_iterator_base<G, V, E, self_> super_;
 
       public:
+	/// Type of the iterator center element.
+	typedef V center;
+	/// Type of the iterator targeted elements.
+	typedef E nbh;
+
 	/// Construction and assignment.
 	/// \{
 	vertex_nbh_edge_bkd_iterator();
@@ -212,11 +235,17 @@ namespace mln
 				 util::edge<G>,
 				 edge_nbh_edge_fwd_iterator<G> >
     {
-      typedef util::edge<G> E;
-      typedef edge_nbh_edge_fwd_iterator<G> self_;
-      typedef nbh_iterator_base<G, E, E, self_> super_;
+	typedef util::edge<G> E;
+	typedef edge_nbh_edge_fwd_iterator<G> self_;
+	typedef nbh_iterator_base<G, E, E, self_> super_;
 
       public:
+	/// Type of the iterator center element.
+	typedef E center;
+	/// Type of the iterator targeted elements.
+	typedef E nbh;
+
+
 	/// Construction and assignment.
 	/// \{
 	edge_nbh_edge_fwd_iterator();
@@ -250,11 +279,18 @@ namespace mln
 				 util::edge<G>,
 				 edge_nbh_edge_bkd_iterator<G> >
     {
-      typedef util::edge<G> E;
-      typedef edge_nbh_edge_bkd_iterator<G> self_;
-      typedef nbh_iterator_base<G, E, E, self_> super_;
+	typedef util::edge<G> E;
+
+	typedef edge_nbh_edge_bkd_iterator<G> self_;
+	typedef nbh_iterator_base<G, E, E, self_> super_;
 
       public:
+
+	/// Type of the iterator center element.
+	typedef E center;
+	/// Type of the iterator targeted elements.
+	typedef E nbh;
+
 	/// Construction and assignment.
 	/// \{
 	edge_nbh_edge_bkd_iterator();
@@ -296,7 +332,7 @@ namespace mln
     template <typename C>
     inline
     vertex_nbh_vertex_fwd_iterator<G>::vertex_nbh_vertex_fwd_iterator(const C& c)
-    : super_(c)
+      : super_(c)
     {
     }
 
@@ -332,9 +368,9 @@ namespace mln
       this->elt_.update_id(this->c_->ith_nbh_vertex(this->i_));
     }
 
-    /*-------------------------------`
-    | vertex_nbh_vertex_bkd_iterator |
-    \-------------------------------*/
+  /*-------------------------------`
+  | vertex_nbh_vertex_bkd_iterator |
+  \-------------------------------*/
 
     template <typename G>
     inline
@@ -383,9 +419,9 @@ namespace mln
     }
 
 
-    /*-----------------------------`
-    | vertex_nbh_edge_fwd_iterator |
-    \-----------------------------*/
+  /*-----------------------------`
+  | vertex_nbh_edge_fwd_iterator |
+  \-----------------------------*/
 
     template <typename G>
     inline
@@ -433,9 +469,9 @@ namespace mln
       this->elt_.update_id(this->c_->ith_nbh_edge(this->i_));
     }
 
-    /*-----------------------------`
-    | vertex_nbh_edge_bkd_iterator |
-    \-----------------------------*/
+  /*-----------------------------`
+  | vertex_nbh_edge_bkd_iterator |
+  \-----------------------------*/
 
     template <typename G>
     inline
@@ -485,9 +521,9 @@ namespace mln
 
 
 
-    /*-----------------------------`
-    | edge_nbh_edge_fwd_iterator |
-    \-----------------------------*/
+  /*-----------------------------`
+  | edge_nbh_edge_fwd_iterator |
+  \-----------------------------*/
 
     template <typename G>
     inline
@@ -546,9 +582,9 @@ namespace mln
       this->elt_.update_id(e_id);
     }
 
-    /*-----------------------------`
-    | edge_nbh_edge_bkd_iterator |
-    \-----------------------------*/
+  /*-----------------------------`
+  | edge_nbh_edge_bkd_iterator |
+  \-----------------------------*/
 
     template <typename G>
     inline

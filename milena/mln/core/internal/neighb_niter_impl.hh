@@ -39,7 +39,7 @@ namespace mln
 
   // Forward declaration.
   template <typename P, typename W> class graph_window_base;
-  template <typename G, typename F> class graph_elt_window;
+  template <typename G, typename F, typename Q> class graph_elt_window;
   template <typename G, typename F, typename I> class graph_elt_window_if;
   template <typename G, typename F> class line_graph_elt_window;
   namespace util
@@ -124,10 +124,10 @@ namespace mln
 
     /// Add more implementation for neighborhoods made from a
     /// graph_window_piter.
-    template <typename G, typename S, typename E>
-    struct neighb_niter_impl<graph_elt_window<G,S>, E>
+    template <typename G, typename S, typename Q, typename E>
+    struct neighb_niter_impl<graph_elt_window<G,S,Q>, E>
       : public neighb_niter_impl< graph_window_base< mln_result(S::fun_t),
-						     graph_elt_window<G,S> >,
+						     graph_elt_window<G,S,Q> >,
 				  E >
     {
 

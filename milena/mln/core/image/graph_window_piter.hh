@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,8 +29,10 @@
 
 /// \file
 ///
-/// Definition of a point iterator on a line_graph window.
+/// Definition of a graph element iterator on a graph window.
 
+# include <mln/core/concept/site_set.hh>
+# include <mln/core/concept/window.hh>
 # include <mln/core/internal/site_relative_iterator_base.hh>
 
 
@@ -40,25 +43,63 @@ namespace mln
   template <typename S, typename I> class p_graph_piter;
 
   /// Forward iterator on line graph window.
+  ///
+  /// \tparam S is the site set type.
+  /// \tparam W is the window type.
+  /// \tparam I is the underlying iterator type.
+  //
   template <typename S, typename W, typename I>
   class graph_window_piter
     : public internal::site_relative_iterator_base< W,
-					  graph_window_piter<S,W,I> >
+						    graph_window_piter<S,W,I>,
+						    typename W::center_t >
   {
     typedef graph_window_piter<S,W,I> self_;
-    typedef internal::site_relative_iterator_base<W,self_> super_;
+    typedef
+    internal::site_relative_iterator_base<W,self_,mln_psite(S)> super_;
 
   public:
     /// Associated types
     /// \{
+    /// Type of the window elements.
     typedef mln_result(S::fun_t) P;
+    /// Type of the window center.
+    typedef typename W::center_t center_t;
+    /// Type of the graph element pointed by this iterator.
+    typedef typename W::graph_element graph_element;
     /// \}
 
     /// Construction.
     /// \{
     graph_window_piter();
+
+
+    // ---------------------------------------------------------
+    // FIXME: probably ugly to provide constructors usable for
+    //        specific cases only...
+    // ---------------------------------------------------------
+
+    /// To be used in case the center and neighbor sites have the same
+    /// type and belong to the same site set.
+    ///
+    /// \param win             The underlying window.
+    /// \param p_ref           Window center.
+    //
     template <typename Pref>
     graph_window_piter(const Window<W>& win,
+		       const Pref& p_ref);
+
+    /// To be used in case center and neighbors sites do not have the
+    /// same type and do not belong to the same site set.
+    ///
+    /// \param win             The underlying window.
+    /// \param target_site_set Site set in which neighbor sites are
+    ///                        extracted.
+    /// \param p_ref           Window center.
+    //
+    template <typename Pref>
+    graph_window_piter(const Window<W>& win,
+		       const Site_Set<S>& target_site_set,
 		       const Pref& p_ref);
     /// \}
 
@@ -79,11 +120,11 @@ namespace mln
     void center_at_(const Pref& c);
 
     /// Do some work while setting the reference site.
-    template <typename I2>
-    void center_at_(const p_graph_piter<S, I2>& c);
+    template <typename S2, typename I2>
+    void center_at_(const p_graph_piter<S2, I2>& c);
 
     /// Return the graph element pointed by this iterator.
-    const mln_graph_element(S)& element() const;
+    const graph_element& element() const;
 
     /// Compute the current psite.
     mln_psite(W) compute_p_() const;
@@ -95,8 +136,12 @@ namespace mln
     unsigned id() const;
     /// \}
 
+    void change_target_site_set(const S& s);
+    const S& target_site_set() const;
+
   private:
     I iter_;
+    const S* s_;
   };
 
 
@@ -106,26 +151,56 @@ namespace mln
   template <typename S, typename W, typename I>
   inline
   graph_window_piter<S,W,I>::graph_window_piter()
+    : s_(0)
   {
   }
+
 
   template <typename S, typename W, typename I>
   template <typename Pref>
   inline
   graph_window_piter<S,W,I>::graph_window_piter(const Window<W>& win,
 						const Pref& p_ref)
+    : s_(0)
   {
+    // Center and neighbor sites have the same type and belong to
+    // the same site set.
+    mlc_is(center_t, mln_psite(W))::check();
+
     this->center_at(p_ref);
     this->change_target(exact(win));
+    change_target_site_set(this->center().site_set());
+
     mln_postcondition(!this->is_valid());
   }
+
+
+  template <typename S, typename W, typename I>
+  template <typename Pref>
+  inline
+  graph_window_piter<S,W,I>::graph_window_piter(const Window<W>& win,
+						const Site_Set<S>& target_site_set,
+						const Pref& p_ref)
+    : s_(0)
+  {
+    // Center and neighbors sites do not have the same type and do
+    // not belong to the same site set.
+    mlc_is_not(center_t, mln_psite(W))::check();
+
+    this->center_at(p_ref);
+    this->change_target(exact(win));
+    change_target_site_set(exact(target_site_set));
+
+    mln_postcondition(!this->is_valid());
+  }
+
 
   template <typename S, typename W, typename I>
   inline
   bool
   graph_window_piter<S,W,I>::is_valid_() const
   {
-    return iter_.is_valid();
+    return s_ != 0 && s_->is_valid() && iter_.is_valid();
   }
 
   template <typename S, typename W, typename I>
@@ -159,15 +234,17 @@ namespace mln
   graph_window_piter<S, W, I>::center_at_(const Pref& c)
   {
     iter_.center_at(c.p_hook_());
+    //FIXME: should we update target site set?
   }
 
   template <typename S, typename W, typename I>
-  template <typename I2>
+  template <typename S2, typename I2>
   inline
   void
-  graph_window_piter<S, W, I>::center_at_(const p_graph_piter<S, I2>& c)
+  graph_window_piter<S, W, I>::center_at_(const p_graph_piter<S2, I2>& c)
   {
     iter_.center_at(c.hook_elt_());
+    //FIXME: should we update target site set?
   }
 
   template <typename S, typename W, typename I>
@@ -175,24 +252,17 @@ namespace mln
   mln_psite(W)
   graph_window_piter<S,W,I>::compute_p_() const
   {
-    return mln_psite(S)(this->center().site_set(), iter_.id());
+    return mln_psite(S)(target_site_set(), iter_.id());
   }
 
   template <typename S, typename W, typename I>
   inline
-  const mln_graph_element(S)&
+  const typename graph_window_piter<S,W,I>::graph_element&
   graph_window_piter<S, W, I>::element() const
   {
     return iter_;
   }
 
-//  template <typename S, typename W, typename I>
-//  inline
-//  graph_window_piter<S, W, I>::operator unsigned() const
-//  {
-//    return iter_.id();
-//  }
-//
   template <typename S, typename W, typename I>
   inline
   unsigned
@@ -200,6 +270,26 @@ namespace mln
   {
     return iter_.id();
   }
+
+  template <typename S, typename W, typename I>
+  inline
+  void
+  graph_window_piter<S, W, I>::change_target_site_set(const S& s)
+  {
+    s_ = & s;
+    mln_assertion(s_ != 0);
+  }
+
+  template <typename S, typename W, typename I>
+  inline
+  const S&
+  graph_window_piter<S, W, I>::target_site_set() const
+  {
+    mln_precondition(s_ != 0);
+    mln_precondition(s_->is_valid());
+    return *s_;
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -114,7 +115,8 @@ namespace mln
   template <typename W>
   class neighb_fwd_niter
     : public internal::site_relative_iterator_base< neighb<W>,
-						    neighb_fwd_niter<W> >,
+						    neighb_fwd_niter<W>,
+						    mln_psite(neighb<W>) >,
       public internal::neighb_niter_impl<W, neighb_fwd_niter<W> >
   {
   public:
@@ -152,7 +154,8 @@ namespace mln
 template <typename W>
 class neighb_bkd_niter
   : public internal::site_relative_iterator_base< neighb<W>,
-						  neighb_bkd_niter<W> >,
+						  neighb_bkd_niter<W>,
+						  mln_psite(neighb<W>)>,
     public internal::neighb_niter_impl<W, neighb_fwd_niter<W> >
 {
 public:

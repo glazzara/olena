@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,38 +41,63 @@ namespace mln
 {
 
   /// Forward declaration
-  template <typename G, typename S> class graph_elt_window;
+  template <typename G, typename S, typename S2> class graph_elt_window;
   template <typename G, typename F> struct p_edges;
   template <typename G, typename F> struct p_vertices;
+  namespace util
+  {
+    template <typename G> class edge;
+    template <typename G> class vertex;
+  };
 
 
   namespace internal
   {
 
-    template <typename G, typename S, typename E>
-    struct neighborhood_impl<graph_elt_window<G,S>,E>
-      : public neighborhood_extra_impl<graph_elt_window<G,S>,E>
+    template <typename G, typename S, typename S2, typename E>
+    struct neighborhood_impl<graph_elt_window<G,S,S2>,E>
+      : public neighborhood_extra_impl<graph_elt_window<G,S,S2>,E>
     {
     };
 
 
     /// Default
     /// The given site set parameter is not supported yet!
-    template <typename G, typename S>
+    ///
+    /// \p G is the graph type.
+    /// \p S is an image site set from where the center is extracted.
+    /// \p S2 is an image site set from where the neighbors are
+    /// extracted.
+    //
+    template <typename G, typename S, typename S2>
     struct graph_window_iter_dispatch;
 
     template <typename G, typename F>
-    struct graph_window_iter_dispatch<G, p_edges<G,F> >
+    struct graph_window_iter_dispatch<G, p_edges<G,F>, p_edges<G,F> >
     {
-      typedef mln_edge_nbh_edge_fwd_iter(G) nbh_fwd_iter_;
-      typedef mln_edge_nbh_edge_bkd_iter(G) nbh_bkd_iter_;
+	typedef mln_edge_nbh_edge_fwd_iter(G) nbh_fwd_iter_;
+	typedef mln_edge_nbh_edge_bkd_iter(G) nbh_bkd_iter_;
+
+	typedef p_edges<G,F> target;
     };
 
     template <typename G, typename F>
-    struct graph_window_iter_dispatch<G, p_vertices<G,F> >
+    struct graph_window_iter_dispatch<G, p_vertices<G,F>, p_vertices<G,F> >
     {
-      typedef mln_vertex_nbh_vertex_fwd_iter(G) nbh_fwd_iter_;
-      typedef mln_vertex_nbh_vertex_bkd_iter(G) nbh_bkd_iter_;
+	typedef mln_vertex_nbh_vertex_fwd_iter(G) nbh_fwd_iter_;
+	typedef mln_vertex_nbh_vertex_bkd_iter(G) nbh_bkd_iter_;
+
+	typedef p_vertices<G,F> target;
+    };
+
+
+    template <typename G, typename F, typename F2>
+    struct graph_window_iter_dispatch<G, p_vertices<G,F>, p_edges<G,F2> >
+    {
+      typedef mln_vertex_nbh_edge_fwd_iter(G) nbh_fwd_iter_;
+      typedef mln_vertex_nbh_edge_bkd_iter(G) nbh_bkd_iter_;
+
+      typedef p_edges<G,F2> target;
     };
 
 
@@ -81,8 +107,8 @@ namespace mln
   namespace trait
   {
 
-    template <typename G, typename S>
-    struct window_< mln::graph_elt_window<G,S> >
+    template <typename G, typename S, typename S2>
+    struct window_< mln::graph_elt_window<G,S,S2> >
     {
       typedef trait::window::size::unknown       size;
       typedef trait::window::support::irregular  support;
@@ -94,15 +120,18 @@ namespace mln
 
   /// Elementary window on graph class.
   /// \p G is the graph type.
-  /// \p S is the image site set.
-  template <typename G, typename S>
+  /// \p S is an image site set from where the center is extracted.
+  /// \p S2 is an image site set from where the neighbors are
+  /// extracted.
+  //
+  template <typename G, typename S, typename S2 = S>
   class graph_elt_window
-    : public graph_window_base<mln_result(S::fun_t),
-			       graph_elt_window<G,S> >,
-      public internal::graph_window_iter_dispatch<G,S>
+    : public graph_window_base<mln_result(S2::fun_t),
+			       graph_elt_window<G,S,S2> >,
+      public internal::graph_window_iter_dispatch<G,S,S2>
   {
-    typedef graph_elt_window<G,S> self_;
-    typedef internal::graph_window_iter_dispatch<G,S> super_;
+    typedef graph_elt_window<G,S,S2> self_;
+    typedef internal::graph_window_iter_dispatch<G,S,S2> super_;
 
     typedef typename super_::nbh_fwd_iter_ nbh_fwd_iter_;
     typedef typename super_::nbh_bkd_iter_ nbh_bkd_iter_;
@@ -110,9 +139,15 @@ namespace mln
   public:
     /// Associated types.
     /// \{
-    typedef S target;
+    typedef typename super_::target target;
     /// The type of psite corresponding to the window.
     typedef mln_psite(target) psite;
+
+    /// Type of the window center element.
+    typedef mln_psite(S) center_t;
+
+    /// Type of the graph element pointed by this iterator.
+    typedef mln_graph_element(target) graph_element;
 
     /// Site_Iterator type to browse the psites of the window
     /// w.r.t. the ordering of vertices.

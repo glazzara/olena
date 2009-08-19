@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -101,6 +102,12 @@ namespace mln
 	/// \{
 	/// Returns the other adjacent vertex id of a given edge id \p id_e.
 	vertex_id_t v_other(const edge_id_t& id_e, const vertex_id_t& id_v) const;
+
+	/// Return true if this graph is valid.
+	bool is_valid() const;
+	/// Invalidate the graph.
+	void invalidate();
+
 	/// \}
 
 	// FIXME: We might want to externalize this in routine of
@@ -205,6 +212,24 @@ namespace mln
       {
 	return exact(this)->has_e(e.id());
       }
+
+
+      template <typename E>
+      inline
+      bool
+      graph_base<E>::is_valid() const
+      {
+	return data_ != 0;
+      }
+
+      template <typename E>
+      inline
+      void
+      graph_base<E>::invalidate()
+      {
+	data_.clean_();
+      }
+
 
       /*--------.
       | Debug.  |

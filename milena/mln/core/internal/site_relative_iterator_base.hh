@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,7 +59,7 @@ namespace mln
     /// is_valid_, invalidate_ and compute_p_.  They shall define
     /// NEITHER start_ NOR next_.
     ///
-    template <typename S, typename E>
+    template <typename S, typename E, typename C = mln_psite(S)>
     class site_relative_iterator_base : public site_iterator_base< S, E >
     {
     public:
@@ -80,7 +81,7 @@ namespace mln
       const S& site_set() const;
 
       /// The psite around which this iterator moves.
-      const mln_psite(S)& center() const;
+      const C& center() const;
 
       /// This overriding is very useful: it adds a test to prevent
       /// getting an invalid iterator when its center has moved.  Some
@@ -106,7 +107,7 @@ namespace mln
 
       /// A pointer to the center psite around which this iterator
       /// moves.
-      const mln_psite(S)* c_;
+      const C* c_;
 
     private:
 
@@ -123,9 +124,9 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S, typename E>
+    template <typename S, typename E, typename C>
     inline
-    site_relative_iterator_base<S,E>::site_relative_iterator_base()
+    site_relative_iterator_base<S,E,C>::site_relative_iterator_base()
       : c_(0)
     {
       void (E::*m1)() = & E::do_start_;
@@ -136,77 +137,77 @@ namespace mln
       m3 = 0;
     }
 
-    template <typename S, typename E>
+    template <typename S, typename E, typename C>
     template <typename P>
     inline
     void
-    site_relative_iterator_base<S,E>::center_at(const P& c)
+    site_relative_iterator_base<S,E,C>::center_at(const P& c)
     {
-      mlc_converts_to(P, const mln_psite(S)&)::check();
-      c_ = & static_cast< const mln_psite(S)& >(c);
+      mlc_converts_to(P, const C&)::check();
+      c_ = & static_cast< const C& >(c);
       exact(this)->center_at_(c); // May call some extra code.
       this->invalidate();
     }
 
-    template <typename S, typename E>
+    template <typename S, typename E, typename C>
     inline
     void
-    site_relative_iterator_base<S,E>::start_()
+    site_relative_iterator_base<S,E,C>::start_()
     {
       exact(this)->do_start_();
       if (this->is_valid())
 	p_ = exact(this)->compute_p_();
     }
 
-    template <typename S, typename E>
+    template <typename S, typename E, typename C>
     inline
     void
-    site_relative_iterator_base<S,E>::next_()
+    site_relative_iterator_base<S,E,C>::next_()
     {
       exact(this)->do_next_();
       if (this->is_valid())
 	p_ = exact(this)->compute_p_();
     }
 
-    template <typename S, typename E>
+    template <typename S, typename E, typename C>
     inline
-    const mln_psite(S)&
-    site_relative_iterator_base<S,E>::center() const
+    const C&
+    site_relative_iterator_base<S,E,C>::center() const
     {
       mln_precondition(c_ != 0);
       return *c_;
     }
 
-    template <typename S, typename E>
+    template <typename S, typename E, typename C>
     inline
     const S&
-    site_relative_iterator_base<S, E>::site_set() const
+    site_relative_iterator_base<S,E,C>::site_set() const
     {
       mln_precondition(this->s_ != 0);
       return *this->s_;
     }
 
-    template <typename S, typename E>
+    template <typename S, typename E, typename C>
     inline
     const mln_psite(S)&
-    site_relative_iterator_base<S,E>::subj_()
+    site_relative_iterator_base<S,E,C>::subj_()
     {
       mln_assertion(exact(this)->compute_p_() == p_);
       return p_;
     }
 
-    template <typename S, typename E>
+    template <typename S, typename E, typename C>
     inline
     const mln_psite(S)&
-    site_relative_iterator_base<S,E>::p_hook_() const
+    site_relative_iterator_base<S,E,C>::p_hook_() const
     {
       return p_;
     }
 
-    template <typename S, typename E>
+    template <typename S, typename E, typename C>
     inline
     void
-    site_relative_iterator_base<S,E>::change_target(const S& s)
+    site_relative_iterator_base<S,E,C>::change_target(const S& s)
     {
       this->s_ = & s;
       // p might be also updated since it can hold a pointer towards
@@ -216,10 +217,10 @@ namespace mln
       this->invalidate();
     }
 
-    template <typename S, typename E>
+    template <typename S, typename E, typename C>
     inline
     E&
-    site_relative_iterator_base<S,E>::update()
+    site_relative_iterator_base<S,E,C>::update()
     {
       mln_precondition(this->s_ && c_);
       p_ = exact(this)->compute_p_();
@@ -227,11 +228,11 @@ namespace mln
       return exact(*this);
     }
 
-    template <typename S, typename E>
+    template <typename S, typename E, typename C>
     template <typename P>
     inline
     void
-    site_relative_iterator_base<S,E>::center_at_(const P&)
+    site_relative_iterator_base<S,E,C>::center_at_(const P&)
     {
       // Default is no-op, meaning "no extra code".
     }

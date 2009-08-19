@@ -1,5 +1,38 @@
 2009-08-19  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Improve graph images.
+
+	* mln/core/concept/graph.hh: Move is_valid() and invalidate()...
+	* mln/util/internal/graph_base.hh: ... here.
+
+	* mln/core/image/vertex_image.hh,
+	* mln/core/image/edge_image.hh: Add new typedefs for default
+	related windows and neighborhoods.
+
+	* mln/core/internal/site_relative_iterator_base.hh: Add a new
+	template parameter in order to define the type of the central
+	element.
+
+	* mln/core/neighb.hh,
+	* mln/core/internal/neighb_niter_impl.hh,
+	* mln/core/image/graph_elt_neighborhood.hh,
+	* mln/core/image/graph_elt_window.hh,
+	* mln/core/internal/window_base.hh: Update accordingly and add a
+	new typedef center_t.
+
+	* mln/core/image/graph_window_piter.hh: Handle the case where the
+	central element have a different type from the others.
+
+	* mln/core/internal/graph_psite_base.hh: Reindent and avoid a
+	warning.
+
+	* mln/util/internal/graph_nbh_iter.hh: Add new typedefs.
+
+	* tests/core/image/Makefile.am,
+	* tests/core/image/vertex_and_edge_image.cc: Add a new test.
+
+2009-08-19  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Update documentation.
 
 	* doc/examples/accu-wrong-instanciation.cc.raw: Fix an incomplete

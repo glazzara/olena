@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -56,6 +57,9 @@ namespace mln
 
       /// Site associated type.
       typedef mln_site(D) site;
+
+      /// Type of the window center
+      typedef psite center_t;
 
       /// Test if this window can be a neighborhood.
       // This method is used in the neighborhood window-adapter.

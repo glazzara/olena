@@ -141,7 +141,7 @@ namespace mln
 
     /// Function mapping graph elements to sites.
     typedef typename internal::vfsite_selector<P,G>::site_function_t
-	    site_function_t;
+    site_function_t;
     typedef mln_result(site_function_t) function_result_t;
 
 
@@ -150,10 +150,20 @@ namespace mln
 			  tag::value_<V>,
 			  tag::graph_<G> > skeleton;
 
+    typedef p_vertices<G,site_function_t> S;
+
+    /// Vertex Window type
+    typedef graph_elt_window<G,S> vertex_win_t;
+
+    /// Vertex Neighborhood type.
+    typedef graph_elt_neighborhood<G,S> vertex_nbh_t;
+
     /// Window type
-    typedef graph_elt_window<G,p_vertices<G,site_function_t> > win_t;
+    typedef vertex_win_t win_t;
     /// Neighborhood type.
-    typedef graph_elt_neighborhood<G,p_vertices<G,site_function_t> > nbh_t;
+    typedef vertex_nbh_t nbh_t;
+
+
 
     /// Constructors.
     /// @{

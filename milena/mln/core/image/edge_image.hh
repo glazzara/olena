@@ -147,10 +147,17 @@ namespace mln
 	    site_function_t;
     typedef mln_result(site_function_t) function_result_t;
 
-    /// Window type
-    typedef graph_elt_window<G,p_edges<G,site_function_t> > win_t;
+    /// Edge Window type
+    typedef graph_elt_window<G,p_edges<G,site_function_t> > edge_win_t;
     /// Neighborhood type.
-    typedef graph_elt_neighborhood<G,p_edges<G,site_function_t> > nbh_t;
+    typedef graph_elt_neighborhood<G,p_edges<G,site_function_t> > edge_nbh_t;
+
+    /// Default Window type
+    typedef edge_win_t win_t;
+
+    /// Default Neighborhood type
+    typedef edge_nbh_t nbh_t;
+
 
     /// Constructors.
     /// @{

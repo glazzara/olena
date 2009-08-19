@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -72,12 +73,6 @@ namespace mln
       template<typename G2>
       bool is_subgraph_of(const G2& gr) const;
     */
-      /// Return true if this graph is valid.
-      /// FIXME: currently it always returns true.
-      bool is_valid() const;
-      /// Invalidate the graph.
-      /// FIXME: does nothing!
-      void invalidate();
     /*
       // Vertex and edges oriented.
       util::vertex_id_t v_other(const util::edge_id_t& id_e, const util::vertex_id_t& id_v) const;
@@ -142,27 +137,14 @@ namespace mln
     util::edge_id_t (E::*m13)(const util::edge_id_t& id_e, unsigned i) const = & E::e_ith_nbh_edge;
     m13 = 0;
 
+    bool (E::*m14)() const = & E::is_valid;
+    m14 = 0;
+    void (E::*m15)() = & E::invalidate;
+    m15 = 0;
     //FIXME: enable this test. Currently does not work because this is
     // a templated method.
     //bool (E::*m14)(...) = & E::is_subgraph_of;
     //m14 = 0;
-  }
-
-  template <typename E>
-  inline
-  bool
-  Graph<E>::is_valid() const
-  {
-    //FIXME: should not always return true!
-    return true;
-  }
-
-  template <typename E>
-  inline
-  void
-  Graph<E>::invalidate()
-  {
-    //FIXME: No op! Should do something.
   }
 
 
