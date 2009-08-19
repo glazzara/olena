@@ -1,5 +1,9 @@
 2009-08-19  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* mln/make/edge_image.hh: Add a new overload.
+
+2009-08-19  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Improve graph images.
 
 	* mln/core/concept/graph.hh: Move is_valid() and invalidate()...

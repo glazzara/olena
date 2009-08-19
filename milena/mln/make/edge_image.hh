@@ -91,7 +91,7 @@ namespace mln
     ///
     /// \return an edge image.
     //
-    template <typename P, typename V, typename G, typename FP, typename FV>
+    template <typename P, typename V, typename G, typename FP, typename
     mln::edge_image<mln_result(FP),mln_result(FV),G>
     edge_image(const mln::vertex_image<P,V,G>& v_ima_,
 	       const p_edges<G,FP> pe,
@@ -102,7 +102,7 @@ namespace mln
     /// Construct an edge image.
     ///
     /// \param[in] v_ima_ A vertex image.
-    /// \param[in] fv_	  A function mapping two vertex ids to a value.
+    /// \param[in] fv_	  A function mapping two vertices ids to a value.
     ///			  The result is associated to the corresponding edge.
     ///
     /// \return an edge image without localization information mapped to
@@ -114,11 +114,27 @@ namespace mln
 	       const Function_vv2v<FV>& fv_);
 
 
+    /// Construct an edge image.
+    ///
+    /// \param[in] v_ima_ A vertex image.
+    /// \param[in] fv_	  A function mapping a vertex ids to a value.
+    ///			  The result is associated to the corresponding edge.
+    ///
+    /// \return an edge image without localization information mapped to
+    /// graph elements.
+    //
+    template <typename P, typename V, typename G, typename F>
+    mln::edge_image<void,bool,G>
+    edge_image(const mln::vertex_image<P,V,G>& v_ima_,
+	       const Function_v2b<F>& fv_);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
 
 
     template <typename V, typename G>
+    inline
     mln::edge_image<void,V,G>
     edge_image(const Graph<G>& g, const fun::i2v::array<V>& fv)
     {
@@ -156,6 +172,7 @@ namespace mln
 
 
     template <typename FP, typename FV, typename G>
+    inline
     mln::edge_image<mln_result(FP),mln_result(FV),G>
     edge_image(const Graph<G>& g_,
 	       const Function_v2v<FP>& fp,
@@ -175,6 +192,7 @@ namespace mln
 
 
     template <typename P, typename V, typename G, typename FP, typename FV>
+    inline
     mln::edge_image<mln_result(FP),mln_result(FV),G>
     edge_image(const mln::vertex_image<P,V,G>& v_ima_,
 	       const p_edges<G,FP> pe,
@@ -200,6 +218,7 @@ namespace mln
 
 
     template <typename P, typename V, typename G, typename FV>
+    inline
     mln::edge_image<void,mln_result(FV),G>
     edge_image(const mln::vertex_image<P,V,G>& v_ima_,
 	       const Function_vv2v<FV>& fv_)
@@ -217,6 +236,41 @@ namespace mln
       mln_piter(edge_ima_t) e(ima_e.domain());
       for_all(e)
 	ima_e(e) = fv(v_ima(e.element().v1()), v_ima(e.element().v2()));
+
+      trace::exiting("make::edge_image");
+      return ima_e;
+    }
+
+
+    template <typename P, typename V, typename G, typename F>
+    inline
+    mln::edge_image<void,bool,G>
+    edge_image(const mln::vertex_image<P,V,G>& v_ima_,
+	       const Function_v2b<F>& fv_)
+    {
+      trace::entering("make::edge_image");
+
+      const F& fv = exact(fv_);
+      typedef mln::vertex_image<P,V,G> v_ima_t;
+      const v_ima_t& v_ima = exact(v_ima_);
+      mln_precondition(v_ima.is_valid());
+
+
+      p_edges<G> pe(v_ima.domain().graph());
+      typedef mln::edge_image<void,bool,G> edge_ima_t;
+      edge_ima_t ima_e(pe);
+      data::fill(ima_e, true);
+
+      mln_piter(v_ima_t) p(v_ima.domain());
+      for_all(p)
+	if (!fv(v_ima(p)))
+	{
+	  typename v_ima_t::edge_win_t win;
+	  mln_qiter(v_ima_t::edge_win_t) q(win, p);
+	  for_all(q)
+	    std::cout << q << std::endl;
+//	    ima_e(q) = false;
+	}
 
       trace::exiting("make::edge_image");
       return ima_e;
