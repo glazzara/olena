@@ -1,0 +1,169 @@
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+//
+// This file is part of Olena.
+//
+// Olena is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation, version 2 of the License.
+//
+// Olena is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+//
+// As a special exception, you may use this file as part of a free
+// software project without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to produce
+// an executable, this file does not by itself cause the resulting
+// executable to be covered by the GNU General Public License.  This
+// exception does not however invalidate any other reasons why the
+// executable file might be covered by the GNU General Public License.
+
+#ifndef MLN_LABELING_BLOBS_AND_COMPUTE_HH
+# define MLN_LABELING_BLOBS_AND_COMPUTE_HH
+
+/// \file
+///
+/// Label an image and compute given accumulators.
+
+
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/neighborhood.hh>
+
+# include <mln/labeling/blobs.hh>
+# include <mln/labeling/compute.hh>
+
+
+namespace mln
+{
+
+  namespace labeling
+  {
+
+    /*! Label an image and compute given accumulators.
+
+      \param[in]     input   A binary image.
+      \param[in]     nbh     A neighborhood used for labeling.
+      \param[in,out] nlabels The number of labels found.
+      \param[in]     accu    An accumulator to be computed while labeling.
+
+     */
+    template <typename I, typename N, typename L, typename A>
+    util::couple<mln_ch_value(I, L), util::array<mln_result(A)> >
+    blobs_and_compute(const Image<I>& input, const Neighborhood<N>& nbh,
+		      L& nlabels, const Accumulator<A>& accu);
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+    namespace internal
+    {
+
+      /// Functor not computing anything. To be passed to the labeling
+      /// blobs canvas.
+      template <typename L, typename A>
+      struct compute_functor
+      {
+	typedef mln_result(A) accu_result;
+	typedef mln_argument(A) accu_argument;
+	typedef util::array<accu_result> result;
+
+	void init()
+	{
+	  // FIXME: arbitrary value...
+	  accus_.reserve(static_cast<unsigned>(mln_max(mln_value(L))) / 2);
+	  accus_.append(A());
+	}
+
+	void new_label(const mln_value(L)& l)
+	{
+	  current_lbl_ = l;
+	  accus_.append(A());
+	}
+
+	void process_p(const util::pix<L>& pix)
+	{
+	  process_(accu_argument(), pix);
+	}
+
+	void process_n(const util::pix<L>& pix)
+	{
+	  process_(accu_argument(), pix);
+	}
+
+	void finalize()
+	{
+	  convert::from_to(accus_, result_);
+	}
+
+
+      private:
+	void process_(const mln_psite(L)&, const util::pix<L>& pix)
+	{
+	  accus_[current_lbl_].take(pix.p());
+	}
+
+	void process_(const mln_value(L)&, const util::pix<L>& pix)
+	{
+	  accus_[current_lbl_].take(pix.v());
+	}
+
+	void process_(const util::pix<L>&, const util::pix<L>& pix)
+	{
+	  accus_[current_lbl_].take(pix);
+	}
+
+      public:
+	util::array<mln_result(A)> result_;
+	util::array<A> accus_;
+	mln_value(L) current_lbl_;
+      };
+
+    } // end of namespace mln::labeling::internal
+
+
+
+    // Facade.
+
+
+    template <typename I, typename N, typename L, typename A>
+    util::couple<mln_ch_value(I,L), util::array<mln_result(A)> >
+    blobs_and_compute(const Image<I>& input, const Neighborhood<N>& nbh,
+		      L& nlabels, const Accumulator<A>& accu)
+    {
+      trace::entering("labeling::blobs_and_compute");
+
+      (void) accu;
+      mlc_equal(mln_trait_image_kind(I),
+		mln::trait::image::kind::binary)::check();
+      mln_precondition(exact(input).is_valid());
+
+      typedef mln_ch_value(I,L) out_t;
+      typedef internal::compute_functor<out_t,A> func_t;
+      func_t functor;
+      out_t
+	output = canvas::labeling::blobs(input, nbh, nlabels, functor);
+
+      util::couple<out_t, typename func_t::result>
+	result = make::couple(output, functor.result_);
+
+      trace::exiting("labeling::blobs_and_compute");
+      return result;
+    }
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
+
+  } // end of namespace mln::labeling
+
+} // end of namespace mln
+
+
+#endif // ! MLN_LABELING_BLOBS_AND_COMPUTE_HH

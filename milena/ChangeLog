@@ -1,5 +1,18 @@
 2009-08-21  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add blobs_and_compute.
+
+	* mln/canvas/labeling/blobs.hh: New. Make labeling blobs a canvas.
+
+	* mln/labeling/blobs.hh: Use the brand new canvas.
+
+	* mln/labeling/blobs_and_compute.hh: New routine.
+
+	* milena/tests/labeling/Makefile.am,
+	* milena/tests/labeling/blobs_and_compute.cc: New test.
+
+2009-08-21  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Split canvas/labeling.hh into separate files.
 
 	* mln/canvas/labeling/all.hh,

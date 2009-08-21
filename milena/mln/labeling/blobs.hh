@@ -41,6 +41,7 @@
 # include <mln/data/fill.hh>
 # include <mln/core/site_set/p_queue_fast.hh>
 
+# include <mln/canvas/labeling/blobs.hh>
 
 
 namespace mln
@@ -71,76 +72,28 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
+
+    namespace internal
     {
 
-      namespace generic
+      /// Functor not computing anything. To be passed to the labeling
+      /// blobs canvas.
+      template <typename L>
+      struct dummy_functor
       {
+	void init() {}
 
-	template <typename I, typename N, typename L>
-	mln_ch_value(I, L)
-	  blobs_(const I& input, const N& nbh, L& nlabels)
-	{
-	  typedef mln_psite(I) P;
+	void new_label(const mln_value(L)&) {}
 
-	  P cur;
-	  mln_niter(N) n(nbh, cur);
-	  p_queue_fast<P> qu;
-	  const L zero = literal::zero;
+	void process_p(const util::pix<L>&) {}
 
-	  // Initialization.
-	  nlabels = literal::zero;
-	  mln_ch_value(I, L) output;
-	  initialize(output, input);
-	  data::fill(output, zero);
+	void process_n(const util::pix<L>&) {}
 
-	  // Loop.
-	  mln_piter(I) p(input.domain());
-	  for_all(p)
-	    if (input(p) && output(p) == zero) // Object point, not labeled yet.
-	      {
-		// Label this point component.
-		if (nlabels == mln_max(L))
-		  {
-		    trace::warning("labeling aborted! Too many labels \
-for this label type: nlabels > max(label_type).");
+	void finalize() {}
+      };
 
-		    return output;
-		  }
-		++nlabels;
-		mln_invariant(qu.is_empty());
-		qu.push(p);
-		output(p) = nlabels;
-		do
-		  {
-		    cur = qu.front();
-		    qu.pop();
-		    for_all(n) if (input.has(n))
-		      if (input(n) && output(n) == zero)
-			{
-			  mln_invariant(! qu.compute_has(n));
-			  qu.push(n);
-			  output(n) = nlabels;
-			}
-		  }
-		while (! qu.is_empty());
-	      }
+    } // end of namespace mln::labeling::internal
 
-	  return output;
-	}
-
-      } // end of namespace mln::labeling::impl::generic
-
-
-      template <typename I, typename N, typename L>
-      mln_ch_value(I, L)
-	blobs_(const I& input, const N& nbh, L& nlabels)
-      {
-	// The only implementation is the generic one.
-	return generic::blobs_(input, nbh, nlabels);
-      }
-
-    } // end of namespace mln::labeling::impl
 
 
     // Facade.
@@ -158,7 +111,10 @@ for this label type: nlabels > max(label_type).");
       const N& nbh = exact(nbh_);
       mln_precondition(input.is_valid());
 
-      mln_ch_value(I, L) output = impl::blobs_(input, nbh, nlabels);
+      typedef mln_ch_value(I,L) out_t;
+      internal::dummy_functor<out_t> functor;
+      out_t
+	output = canvas::labeling::blobs(input, nbh, nlabels, functor);
 
       trace::exiting("labeling::blobs");
       return output;
