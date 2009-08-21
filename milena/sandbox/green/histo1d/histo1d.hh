@@ -32,7 +32,10 @@
 ///
 /// \brief Define an histogram as an accumulator which returns an image1d .
 ///
-/// It based on image to allow collecting statistics on it.
+/// This implementation is the very easiest. It's the discrete one. What about
+/// a continue version ? How finding the correct bin number ?? What about the
+/// subsampling process ?? Shall we estimate the density ?? In this case, which
+/// method shall we choose, kernel version or k-neareast-neighbours ??
 ///
 
 #include <iostream>
@@ -95,8 +98,7 @@ namespace mln
   {
     
     namespace stat
-    {
-      
+    {      
 
       /// \brief Define an histogram which returns an image1d .  
       ///
@@ -116,14 +118,14 @@ namespace mln
 
 	/// Constructors
 	/// \{
-	/// \brief Nothing to do
+	/// \brief Initialize the size of the resulting image1d.
 	histo1d();
 	/// \}
 
 	
 	/// Manipulators.
 	/// \{
-	/// \brief Initialize the bounding box of the resulting image.
+	/// \brief Initialize the histogram with zero value.
 	void init();
 
 	
@@ -139,11 +141,12 @@ namespace mln
 
 	/// Accessors.
 	/// \{
+	/// \brief Return the histogram as an image1d.
 	result to_result() const;
 	operator result () const;
 	/// \}
 
-	/// Check whethever this accumulator is able to return a result.
+	/// \brief Check whethever this accumulator is able to return a result.
 	/// Always in a safe state and then always return true;
 	bool is_valid() const;
 
@@ -151,6 +154,10 @@ namespace mln
 	result  count_;
       };
 
+      /// \brief Check wethever an histogram is equal to an other one.
+      /// The comparaison states that all the bins share the same value.
+      /// \param[in] histo1 the first histogram to compare with.
+      /// \param[in] histo2 the second histogram.
       template <typename V>
       bool operator==(const histo1d<V>& histo1, const histo1d<V>& histo2);
 
@@ -165,9 +172,12 @@ namespace mln
       {
 	trace::entering("mln::accu::stat::histo1d<V>::histo1d");
 	typedef mln_trait_value_comp(V,0) comp;
-
-	count_.init_(box1d(point1d(mln_min(comp)),    // -> 0
-			   point1d(mln_max(comp))));  // -> 2^n-1
+	
+	// comp keep a trace of the dimension of the theorical image.
+	// mln_min(comp) --> 0
+	// mln_max(comp) --> 2^(n-1) [127 for n=7][255 for n=8] ...
+	count_.init_(box1d(point1d(mln_min(comp)),
+			   point1d(mln_max(comp))));
 	
 	trace::exiting("mln::accu::stat::histo1d<V>::histo1d");
       }
@@ -188,6 +198,8 @@ namespace mln
       {
 	trace::entering("mln::accu::stat::histo1d<V>::take");
 
+	// Just convert a greyscale value (int_u8 like) to a position for an 
+	// iterator on the resulting image.
 	++count_(point1d(t));
 
 	trace::exiting("mln::accu::stat::histo1d<V>::take");
