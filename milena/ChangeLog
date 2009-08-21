@@ -1,5 +1,9 @@
 2009-08-21  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* mln/core/image/imorph/labeled_image.hh: Improve relabeling.
+
+2009-08-21  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	* mln/labeling/pack.hh: Add new overloads.
 
 2009-08-21  Guillaume Lazzara  <lazzara@lrde.epita.fr>

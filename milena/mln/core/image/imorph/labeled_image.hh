@@ -55,6 +55,11 @@
 # endif // ! NDEBUG
 
 
+# include <mln/accu/shape/bbox.hh>
+# include <mln/labeling/relabel.hh>
+# include <mln/make/relabelfun.hh>
+
+
 namespace mln
 {
 
@@ -75,6 +80,8 @@ namespace mln
     struct data< labeled_image<I> >
     {
       data(const I& ima, const mln_value(I)& nlabels);
+      data(const I& ima, const mln_value(I)& nlabels,
+	   const util::array<mln_box(I)>& bboxes);
 
       I ima_;
       mln_value(I) nlabels_;
@@ -141,6 +148,11 @@ namespace mln
 
     /// Constructor from an image \p ima and the number of labels \p nlabels.
     labeled_image(const I& ima, const mln_value(I)& nlabels);
+
+    /// Constructor from an image \p ima, the number of labels \p
+    /// nlabels and the object bounding boxes.
+    labeled_image(const I& ima, const mln_value(I)& nlabels,
+		  const util::array<mln_box(I)>& bboxes);
     /// @}
 
     /// Deferred initialization from a labeled image \p ima and the number
@@ -153,11 +165,11 @@ namespace mln
     /// Relabel according to a function.
     /// @{
     //
-    /// Labels may be removed and the labeling may not be contiguous
-    /// afterwards.
-    /// FIXME: currently the labels are packed after relabeling for
-    /// performance reasons. Do we want to be less restrictive?
-    /// \sa pack_().
+    /// Merge or delete labels according to the given function.
+    /// This method ensures that the labeling remains contiguous.
+    ///
+    // FIXME: currently the label is kept contiguous for
+    // performance reasons. Do we want to be less restrictive?
     template <typename F>
     void relabel(const Function_v2v<F>& f);
     //
@@ -167,14 +179,11 @@ namespace mln
     void relabel(const Function_v2b<F>& f);
     /// @}
 
-    /// Pack labeling. Relabel if the labeling is not contiguous.
-    void pack_();
-
     /// Return the number of labels;
     mln_value(I) nlabels() const;
 
     /// Update bounding boxes information.
-    void update_();
+    void update_(const fun::i2v::array<mln_value(I)>& relabel_fun);
 
     /// Return the bounding box of the component \p label.
     const bbox_t& bbox(const mln_value(I)& label) const;
@@ -229,6 +238,15 @@ namespace mln
     {
     }
 
+    template <typename I>
+    inline
+    data< labeled_image<I> >::data(const I& ima, const mln_value(I)& nlabels,
+				   const util::array<mln_box(I)>& bboxes)
+      : ima_(ima), nlabels_(nlabels), bboxes_(bboxes)
+    {
+    }
+
+
   } // end of namespace mln::internal
 
 
@@ -247,12 +265,24 @@ namespace mln
 
   template <typename I>
   inline
+  labeled_image<I>::labeled_image(const I& ima, const mln_value(I)& nlabels,
+				  const util::array<mln_box(I)>& bboxes)
+  {
+    mln_precondition(data::compute(accu::meta::stat::max(), ima) == nlabels);
+    this->data_ = new internal::data< labeled_image<I> >(ima, nlabels, bboxes);
+  }
+
+
+  template <typename I>
+  inline
   void
   labeled_image<I>::init_(const I& ima, const mln_value(I)& nlabels)
   {
     mln_precondition(data::compute(accu::meta::stat::max(), ima) == nlabels);
     this->data_ = new internal::data< labeled_image<I> >(ima, nlabels);
-    this->update_();
+    this->data_->bboxes_ = labeling::compute(accu::meta::shape::bbox(),
+					     this->data_->ima_,
+					     this->data_->nlabels_);
  }
 
   template <typename I>
@@ -273,17 +303,22 @@ namespace mln
   labeled_image<I>::relabel(const Function_v2v<F>& f_)
   {
     const F& f = exact(f_);
-    labeling::relabel_inplace(this->data_->ima_, this->data_->nlabels_, f);
+    mln_value(I) new_nlabels;
 
-    /// We MUST be sure that the labeling is contiguous in order to compute
-    /// attributes.
-    ///FIXME: do we want to be less restrictive?
-    pack_();
+    fun::i2v::array<mln_value(I)>
+      packed_relabel_fun = make::relabelfun(f,
+					    this->data_->nlabels_,
+					    new_nlabels);
+    labeling::relabel_inplace(this->data_->ima_, this->data_->nlabels_,
+			      packed_relabel_fun);
 
-    /// FIXME: could be highly improved: reorder the attributes according to
-    /// the function f.
-    this->update_();
+    this->data_->nlabels_ = new_nlabels;
+
+    /// We may have merged or deleted labels.
+    update_(packed_relabel_fun);
   }
+
+
 
   template <typename I>
   template <typename F>
@@ -292,25 +327,19 @@ namespace mln
   labeled_image<I>::relabel(const Function_v2b<F>& f_)
   {
     const F& f = exact(f_);
-    labeling::relabel_inplace(this->data_->ima_, this->data_->nlabels_, f);
 
-    /// FIXME: could be highly improved: reorder the attributes according to
-    /// the function f.
-    this->update_();
+    // Relabel the underlying image.
+    typedef fun::i2v::array<mln_value(I)> fv2v_t;
+    fv2v_t fv2v = make::relabelfun(f,
+				   this->data_->nlabels_,
+				   this->data_->nlabels_);
+
+    labeling::relabel_inplace(this->data_->ima_, this->data_->nlabels_, fv2v);
+
+
+    // Then, merge or delete bounding boxes according to this relabeling.
+    update_(fv2v);
   }
-
-  template <typename I>
-  inline
-  void
-  labeled_image<I>::pack_()
-  {
-    labeling::pack_inplace(this->data_->ima_, this->data_->nlabels_);
-
-    /// FIXME: could be highly improved: reorder the attributes according to
-    /// the way the labels are packed.
-    this->update_();
-  }
-
 
   template <typename I>
   inline
@@ -335,11 +364,18 @@ namespace mln
 
   template <typename I>
   void
-  labeled_image<I>::update_()
+  labeled_image<I>::update_(const fun::i2v::array<mln_value(I)>& relabel_fun)
   {
-    this->data_->bboxes_ = labeling::compute(accu::meta::shape::bbox(),
-					     this->data_->ima_,
-					     this->data_->nlabels_);
+    util::array<accu::shape::bbox<mln_psite(I)> >
+      new_bboxes(static_cast<unsigned>(this->data_->nlabels_) + 1);
+
+    for (unsigned i = 1; i < this->data_->bboxes_.size(); ++i)
+      if (relabel_fun(i) != 0)
+	new_bboxes[relabel_fun(i)].take(this->data_->bboxes_[i]);
+
+    convert::from_to(new_bboxes, this->data_->bboxes_);
+
+    mln_assertion(new_bboxes.size() == this->data_->bboxes_.size());
   }
 
 
