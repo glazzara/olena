@@ -204,7 +204,7 @@ namespace mln
 	    type compute(const U& p)
 	    {
 	      return def::compute(p);
-	    };
+	    }
 
 	  };
 

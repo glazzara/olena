@@ -1,3 +1,9 @@
+2009-08-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Remove extra ";" to compile.
+	
+	* mln/trait/functions.hh: Remove extra ";" l207 after "}" of compute.
+
 2009-08-19  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* mln/make/edge_image.hh: Add a new overload.
