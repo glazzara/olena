@@ -1,5 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,17 +23,14 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_CANVAS_ESSENTIAL_HH
-# define MLN_CANVAS_ESSENTIAL_HH
+#ifndef MLN_CANVAS_LABELING_ESSENTIAL_HH
+# define MLN_CANVAS_LABELING_ESSENTIAL_HH
 
-/*! \file
- *
- * \brief File that includes the most useful canvas-related routines.
- */
+/// \file
+///
+/// File that includes essential labeling canvas-related routines.
 
-# include <mln/canvas/browsing/essential.hh>
-# include <mln/canvas/morpho/essential.hh>
-# include <mln/canvas/chamfer.hh>
-# include <mln/canvas/labeling/essential.hh>
 
-#endif // ! MLN_CANVAS_ESSENTIAL_HH
+# include <mln/canvas/labeling/all.hh>
+
+#endif // ! MLN_CANVAS_LABELING_ESSENTIAL_HH

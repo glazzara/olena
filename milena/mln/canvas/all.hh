@@ -50,7 +50,7 @@ namespace mln
 # include <mln/canvas/chamfer.hh>
 # include <mln/canvas/distance_front.hh>
 # include <mln/canvas/distance_geodesic.hh>
-# include <mln/canvas/labeling.hh>
+# include <mln/canvas/labeling/all.hh>
 
 
 #endif // ! MLN_CANVAS_ALL_HH

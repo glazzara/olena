@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -67,16 +68,16 @@ int main()
     labeling::impl::flat_zones_functor<I> f(lena);
 
     unsigned nlabels_generic, nlabels_fastest;
-    mln_assertion(canvas::impl::generic::labeling(lena,
-						  c4(),
-						  nlabels_generic,
-						  lena.domain(),
-						  f)
+    mln_assertion(canvas::labeling::impl::generic::labeling(lena,
+							    c4(),
+							    nlabels_generic,
+							    lena.domain(),
+							    f)
 		  ==
-		  canvas::impl::labeling_video_fastest(lena,
-						       c4(),
-						       nlabels_fastest,
-						       f));
+		  canvas::labeling::impl::video_fastest(lena,
+							c4(),
+							nlabels_fastest,
+							f));
     mln_assertion(nlabels_generic == nlabels_fastest);
   }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +33,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/canvas/labeling.hh>
+# include <mln/canvas/labeling/sorted.hh>
 # include <mln/data/fill.hh>
 # include <mln/data/sort_psites.hh>
 
@@ -137,8 +138,8 @@ namespace mln
 
       typedef impl::regional_maxima_functor<I> F;
       F f(exact(input));
-      mln_ch_value(I, L) output = canvas::labeling_sorted(input, nbh, nlabels,
-							  f, true);
+      mln_ch_value(I, L)
+	output = canvas::labeling::sorted(input, nbh, nlabels, f, true);
 
       trace::exiting("labeling::regional_maxima");
       return output;

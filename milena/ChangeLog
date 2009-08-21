@@ -1,3 +1,27 @@
+2009-08-21  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Split canvas/labeling.hh into separate files.
+
+	* mln/canvas/labeling/all.hh,
+	* mln/canvas/labeling/essential.hh: New.
+
+	* mln/canvas/labeling.hh: Move and split into...
+
+	* mln/canvas/labeling/generic.hh,
+	* mln/canvas/labeling/internal/find_root_fastest.hh,
+	* mln/canvas/labeling/internal/tests.hh,
+	* mln/canvas/labeling/sorted.hh,
+	* mln/canvas/labeling/video.hh: ... these files.
+
+	* tests/labeling/flat_zones.cc,
+	* tests/labeling/foreground.cc,
+	* mln/canvas/all.hh,
+	* mln/canvas/essential.hh,
+	* mln/labeling/flat_zones.hh,
+	* mln/labeling/regional_maxima.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/labeling/value.hh: Update includes and function calls.
+
 2009-08-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Remove extra ";" to compile.

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +33,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/canvas/labeling.hh>
+# include <mln/canvas/labeling/sorted.hh>
 # include <mln/data/fill.hh>
 # include <mln/data/sort_psites.hh>
 
@@ -136,8 +137,8 @@ namespace mln
 
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
-      regional_minima(const Image<I>& input_, const Neighborhood<N>& nbh_,
-		      L& nlabels)
+    regional_minima(const Image<I>& input_, const Neighborhood<N>& nbh_,
+		    L& nlabels)
     {
       trace::entering("labeling::regional_minima");
 
@@ -150,8 +151,8 @@ namespace mln
 
       typedef impl::regional_minima_functor<I> F;
       F f(exact(input));
-      mln_ch_value(I, L) output = canvas::labeling_sorted(input, nbh, nlabels,
-	                                                  f, false);
+      mln_ch_value(I, L)
+	output = canvas::labeling::sorted(input, nbh, nlabels, f, false);
 
       trace::exiting("labeling::regional_minima");
       return output;

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -56,9 +57,9 @@ int main()
     labeling::impl::value_functor<I> f(pic, true);
 
     unsigned n_;
-    ref = canvas::impl::generic::labeling(pic, nbh, n_,
-					  pic.domain(),
-					  f);
+    ref = canvas::labeling::impl::generic::labeling(pic, nbh, n_,
+						    pic.domain(),
+						    f);
     mln_invariant(n_ == n);
     mln_invariant(ref == out);
   }

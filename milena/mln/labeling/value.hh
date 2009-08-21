@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +33,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/canvas/labeling.hh>
+# include <mln/canvas/labeling/video.hh>
 # include <mln/data/fill.hh>
 
 
@@ -139,8 +140,8 @@ namespace mln
 
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
-    value(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-	  L& nlabels)
+    value(const Image<I>& input, const mln_value(I)& val,
+	  const Neighborhood<N>& nbh, L& nlabels)
     {
       trace::entering("labeling::value");
 
@@ -148,7 +149,7 @@ namespace mln
 
       mln_ch_value(I, L) output;
       impl::value_functor<I> f(input, val);
-      output = canvas::labeling_video(input, nbh, nlabels, f);
+      output = canvas::labeling::video(input, nbh, nlabels, f);
 
       trace::exiting("labeling::value");
       return output;

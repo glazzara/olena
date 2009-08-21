@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +33,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/canvas/labeling.hh>
+# include <mln/canvas/labeling/video.hh>
 
 
 namespace mln
@@ -118,7 +119,8 @@ namespace mln
       // Call the labeling canvas.
       typedef impl::flat_zones_functor<I> F;
       F f(input);
-      mln_ch_value(I, L) output = canvas::labeling_video(input, nbh, nlabels, f);
+      mln_ch_value(I, L)
+	output = canvas::labeling::video(input, nbh, nlabels, f);
 
       trace::exiting("labeling::flat_zones");
       return output;
