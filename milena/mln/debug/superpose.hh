@@ -32,6 +32,8 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/image/dmorph/image_if.hh>
+# include <mln/value/concept/scalar.hh>
+# include <mln/value/concept/symbolic.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/data/fill.hh>
 # include <mln/data/convert.hh>
@@ -49,8 +51,9 @@ namespace mln
     /// \param[in] input_	An image. Its value type must be convertible
     ///				toward value::rgb8 thanks to a conversion
     ///				operator or convert::from_to.
-    /// \param[in] object_	A binary image. Objects used for superposition
-    ///				are set to 'true'.
+    /// \param[in] object_      A scalar or labeled image. Objects used for
+    ///                         superposition.
+    ///				have their pixel values different from 0.
     /// \param[in] object_color The color used to draw the objects in
     ///				\p object_.
     ///
@@ -63,12 +66,10 @@ namespace mln
     superpose(const Image<I>& input_, const Image<J>& object_,
 	      const value::rgb8& object_color);
 
-
     /// \overload
     template <typename I, typename J>
     mln_ch_value(I,value::rgb8)
     superpose(const Image<I>& input, const Image<J>& object);
-
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -83,13 +84,18 @@ namespace mln
       const I& input = exact(input_);
       const J& object = exact(object_);
 
-      mlc_equal(mln_value(J), bool)::check();
+      //FIXME: Allow symbolic values may not be correct...
+      mlc_or(mlc_or(mlc_is_a(mln_value(J), value::Scalar),
+		    mlc_is(mln_value(J), bool)),
+	     mlc_is_a(mln_value(J), value::Symbolic))::check();
+
       mln_precondition(input.is_valid());
       mln_precondition(object.is_valid());
       mln_precondition(input.domain() == object.domain());
 
       mln_ch_value(I,value::rgb8) output = data::convert(value::rgb8(), input);
-      data::fill((output | pw::value(object)).rw(), object_color);
+      data::fill((output | (pw::value(object) != pw::cst(literal::zero))).rw(),
+		  object_color);
 
       trace::exiting("debug::superpose");
       return output;
