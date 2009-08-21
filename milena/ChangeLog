@@ -1,5 +1,9 @@
 2009-08-21  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* mln/labeling/pack.hh: Add new overloads.
+
+2009-08-21  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Fix buggy from_to overloads and add a missing one.
 
 	* mln/convert/from_to.hxx: Add a new overload.

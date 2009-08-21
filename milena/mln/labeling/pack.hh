@@ -52,9 +52,17 @@ namespace mln
     ///
     /// \param[in]  label	The labeled image.
     /// \param[out] new_nlabels The number of labels after relabeling.
+    /// \param[out] repack_fun  The function used to repack the labels.
     ///
     /// \return The relabeled image.
     //
+    template <typename I>
+    mln_concrete(I)
+    pack(const Image<I>& label, mln_value(I)& new_nlabels,
+	 fun::i2v::array<mln_value(I)>& repack_fun);
+
+
+    /// \overload
     template <typename I>
     mln_concrete(I)
     pack(const Image<I>& label, mln_value(I)& new_nlabels);
@@ -66,7 +74,15 @@ namespace mln
     ///
     /// \param[in]  label	The labeled image.
     /// \param[out] new_nlabels The number of labels after relabeling.
+    /// \param[out] repack_fun  The function used to repack the labels.
     //
+    template <typename I>
+    void
+    pack_inplace(Image<I>& label, mln_value(I)& new_nlabels,
+		 fun::i2v::array<mln_value(I)>& repack_fun);
+
+
+    /// \overload
     template <typename I>
     void
     pack_inplace(Image<I>& label, mln_value(I)& new_nlabels);
@@ -98,6 +114,16 @@ namespace mln
     mln_concrete(I)
     pack(const Image<I>& label, mln_value(I)& new_nlabels)
     {
+      fun::i2v::array<mln_value(I)> repack_fun;
+      return pack(label, new_nlabels, repack_fun);
+    }
+
+
+    template <typename I>
+    mln_concrete(I)
+    pack(const Image<I>& label, mln_value(I)& new_nlabels,
+	 fun::i2v::array<mln_value(I)>& repack_fun)
+    {
       trace::entering("labeling::pack");
 
       internal::pack_tests(label, new_nlabels);
@@ -106,21 +132,30 @@ namespace mln
 	fv2b = data::compute(accu::meta::label_used(), label);
 
       mln_value(I) tmp_nlabels = fv2b.size() - 1;
+
+      repack_fun = make::relabelfun(fv2b, tmp_nlabels, new_nlabels);
+
       mln_concrete(I)
-	output = data::transform(label,
-				  make::relabelfun(fv2b,
-						   tmp_nlabels,
-						   new_nlabels));
+	output = data::transform(label, repack_fun);
 
       trace::exiting("labeling::pack");
       return output;
     }
 
 
-
     template <typename I>
     void
     pack_inplace(Image<I>& label, mln_value(I)& new_nlabels)
+    {
+      fun::i2v::array<mln_value(I)> repack_fun;
+      pack_inplace(label, new_nlabels, repack_fun);
+    }
+
+
+    template <typename I>
+    void
+    pack_inplace(Image<I>& label, mln_value(I)& new_nlabels,
+		 fun::i2v::array<mln_value(I)>& repack_fun)
     {
       trace::entering("labeling::pack_inplace");
 
@@ -130,10 +165,9 @@ namespace mln
 	fv2b = data::compute(accu::meta::label_used(), label);
 
       mln_value(I) tmp_nlabels = fv2b.size() - 1;
-      exact(label) = data::transform(label,
-				      make::relabelfun(fv2b,
-						       tmp_nlabels,
-						       new_nlabels));
+      repack_fun = make::relabelfun(fv2b, tmp_nlabels, new_nlabels);
+
+      exact(label) = data::transform(label, repack_fun);
 
       trace::exiting("labeling::pack_inplace");
     }
