@@ -68,6 +68,10 @@ namespace mln
       void
       from_to_(const util::array<T1>& from, util::array<T2>& to);
 
+      template <typename T1, typename T2>
+      void
+      from_to_(const fun::i2v::array<T1>& from, util::array<T2>& to);
+
     } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
@@ -385,11 +389,22 @@ namespace mln
       void
       from_to_(const util::array<T1>& from, util::array<T2>& to)
       {
-        to.reserve(from.nelements());
+        to.resize(from.nelements());
 
         for (unsigned i = 0; i < from.nelements(); ++i)
-	  to.append(convert::to<T2>(from[i]));
+	  to[i] = convert::to<T2>(from[i]);
       }
+
+      template <typename T1, typename T2>
+      void
+      from_to_(const fun::i2v::array<T1>& from, util::array<T2>& to)
+      {
+        to.resize(from.size());
+
+        for (unsigned i = 0; i < from.size(); ++i)
+	  to[i] = convert::to<T2>(from(i));
+      }
+
 
     } // end of namespace mln::convert::over_load
 

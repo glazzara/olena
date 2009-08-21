@@ -1,5 +1,16 @@
 2009-08-21  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Fix buggy from_to overloads and add a missing one.
+
+	* mln/convert/from_to.hxx: Add a new overload.
+
+	* mln/fun/i2v/array.hh: Fix buggy from_to overloads.
+
+	* mln/util/array.hh: Fix buggy from_to overloads and add a new
+	one.
+
+2009-08-21  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add blobs_and_compute.
 
 	* mln/canvas/labeling/blobs.hh: New. Make labeling blobs a canvas.

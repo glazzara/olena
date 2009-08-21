@@ -376,6 +376,10 @@ namespace mln
       void
       from_to_(const util::array<T1>& from, util::array<T2>& to);
 
+      // fun::i2v::array<T1> -> util::array<T2>
+      template <typename T1, typename T2>
+      void
+      from_to_(const fun::i2v::array<T1>& from, util::array<T2>& to);
 
 
       // Accumulator<A> -> mln_result(A)

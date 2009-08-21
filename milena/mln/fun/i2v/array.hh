@@ -191,9 +191,9 @@ namespace mln
       void
       from_to_(const util::array<T>& from, fun::i2v::array<U>& to)
       {
-	to.reserve(from.nelements());
+	to.resize(from.nelements());
 	for (unsigned i = 0; i < from.nelements(); ++i)
-	  to.append(convert::to<U>(from[i]));
+	  to(i) = convert::to<U>(from[i]);
       }
 
       template <typename T>
@@ -209,9 +209,9 @@ namespace mln
       void
       from_to_(const std::vector<T>& from, fun::i2v::array<U>& to)
       {
-	to.reserve(from.nelements());
+	to.resize(from.nelements());
 	for (unsigned i = 0; i < from.size(); ++i)
-	  to.append(convert::to<U>(from[i]));
+	  to(i) = convert::to<U>(from[i]);
       }
 
 
