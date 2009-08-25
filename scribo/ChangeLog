@@ -1,5 +1,9 @@
 2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* filter/small_object_groups.hh: New filter.
+
+2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Various small fixes in Scribo.
 
 	* extract/primitive/lines_h_thick.hh,
