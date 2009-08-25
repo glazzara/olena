@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
   if (argc != 2)
     return usage(argv);
 
-  scribo::make::internal::debug_filename_prefix = "extract_text_single_link";
+  scribo::make::internal::debug_filename_prefix = "group_with_single_link";
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);

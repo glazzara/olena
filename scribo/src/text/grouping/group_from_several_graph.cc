@@ -39,10 +39,9 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/ppm/save.hh>
 
-
 #include <scribo/extract/primitive/objects.hh>
-#include <scribo/text/grouping/group_with_several_left_links.hh>
-#include <scribo/text/grouping/group_from_single_link.hh>
+#include <scribo/text/grouping/group_with_several_graphes.hh>
+#include <scribo/text/grouping/group_from_graph.hh>
 
 #include <scribo/debug/save_bboxes_image.hh>
 #include <scribo/debug/save_linked_bboxes_image.hh>
@@ -62,7 +61,7 @@ int main(int argc, char* argv[])
   if (argc < 1)
     return usage(argv[0]);
 
-  scribo::make::internal::debug_filename_prefix = "extract_text_several_left_links";
+  scribo::make::internal::debug_filename_prefix = "group_with_several_graph";
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
@@ -71,28 +70,24 @@ int main(int argc, char* argv[])
   typedef object_image(image2d<value::label_16>) text_t;
   text_t text = scribo::extract::primitive::objects(input, c8(), nbboxes);
 
-  {
-    std::cout << "* Left grouping" << std::endl;
-    mln::util::array<unsigned> left_link
-	= text::grouping::group_with_several_left_links(text, 30);
+  mln::util::graph g = text::grouping::group_with_several_graphes(text, 30);
 
-    std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
-    scribo::debug::save_linked_bboxes_image(input,
-					    text, left_link,
-					    literal::red, literal::cyan,
-					    scribo::make::debug_filename("left_links.ppm"));
+  std::cout << "BEFORE - nbboxes = " << nbboxes.next() << std::endl;
+  scribo::debug::save_linked_bboxes_image(input,
+					  text, g,
+					  literal::red, literal::cyan,
+					  scribo::make::debug_filename("left_linked.ppm"));
 
-    text_t grouped_text
-      = text::grouping::group_from_single_link(text, left_link);
+  text_t grouped_text = text::grouping::group_from_graph(text, g);
 
-    std::cout << "AFTER - nbboxes = " << grouped_text.bboxes().nelements() << std::endl;
-    io::ppm::save(mln::labeling::colorize(value::rgb8(),
-				       grouped_text,
-				       grouped_text.nlabels()),
-				       scribo::make::debug_filename("left_label_color.ppm"));
-    scribo::debug::save_bboxes_image(input, grouped_text.bboxes(),
-				     literal::red,
-				     scribo::make::debug_filename("left_bboxes.ppm"));
-  }
+  std::cout << "AFTER - nbboxes = " << grouped_text.bboxes().nelements() << std::endl;
+
+  scribo::debug::save_bboxes_image(input, grouped_text.bboxes(),
+				   literal::red,
+				   scribo::make::debug_filename("grouped_text.ppm"));
+  io::ppm::save(mln::labeling::colorize(value::rgb8(),
+					grouped_text,
+					grouped_text.nlabels()),
+		scribo::make::debug_filename("label_color.ppm"));
 
 }

@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
   if (argc < 1)
     return usage(argv[0]);
 
-  scribo::make::internal::debug_filename_prefix = "extract_text_double_several_links";
+  scribo::make::internal::debug_filename_prefix = "group_with_double_several_links";
 
   mln::util::timer t, t2;
   image2d<bool> input;

@@ -1,3 +1,26 @@
+2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Move example files.
+
+	* src/Makefile.am: update.
+
+	* src/text/Makefile.am,
+	* src/text/grouping/Makefile.am: New.
+
+	* src/extract_text_double_link.cc,
+	* src/extract_text_double_several_links.cc,
+	* src/extract_text_graph.cc,
+	* src/extract_text_several_graph.cc,
+	* src/extract_text_several_left_links.cc,
+	* src/extract_text_single_link.cc: Move...
+
+	* src/text/grouping/group_from_double_link.cc,
+	* src/text/grouping/group_from_double_several_links.cc,
+	* src/text/grouping/group_from_graph.cc,
+	* src/text/grouping/group_from_several_graph.cc,
+	* src/text/grouping/group_from_several_left_links.cc,
+	* src/text/grouping/group_from_single_link.cc: ... here.
+
 2009-08-19 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* src/Makefile.am: Link 'recognition' example to libtiff.
