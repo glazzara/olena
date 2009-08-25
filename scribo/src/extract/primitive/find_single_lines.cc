@@ -34,9 +34,9 @@
 
 #include <scribo/debug/usage.hh>
 
-#include <scribo/extract/primitive/objects.hh>
-#include <scribo/extract/primitive/lines_h_single.hh>
-#include <scribo/extract/primitive/lines_v_single.hh>
+#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/lines_h_single.hh>
+#include <scribo/primitive/extract/lines_v_single.hh>
 
 const char *args_desc[][2] =
 {
@@ -71,16 +71,16 @@ int main(int argc, char *argv[])
 
   value::label_16 nhlines;
   object_image(L)
-    objects = scribo::extract::primitive::objects(input, c8(), nhlines);
+    objects = scribo::primitive::extract::objects(input, c8(), nhlines);
 
 
   object_image(L)
-    hlines = scribo::extract::primitive::lines_h_single(objects,
+    hlines = scribo::primitive::extract::lines_h_single(objects,
 							atoi(argv[2]),
 							atof(argv[3]));
 
   object_image(L)
-    vlines = scribo::extract::primitive::lines_v_single(objects,
+    vlines = scribo::primitive::extract::lines_v_single(objects,
 							atoi(argv[4]),
 							atof(argv[5]));
 

@@ -43,6 +43,7 @@ namespace scribo
 # include <scribo/filter/all.hh>
 # include <scribo/make/all.hh>
 # include <scribo/preprocessing/all.hh>
+# include <scribo/primitive/all.hh>
 # include <scribo/table/all.hh>
 # include <scribo/text/all.hh>
 # include <scribo/util/all.hh>

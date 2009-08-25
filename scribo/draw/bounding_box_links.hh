@@ -36,7 +36,7 @@
 # include <mln/canvas/browsing/depth_first_search.hh>
 
 # include <scribo/core/macros.hh>
-# include <scribo/text/grouping/internal/is_link_valid.hh>
+# include <scribo/primitive/internal/is_link_valid.hh>
 
 namespace scribo
 {
@@ -228,7 +228,7 @@ namespace scribo
 	std::vector<bool> deja_vu;
       };
 
-    } // end of namespace scribo::text::grouping::internal
+    } // end of namespace scribo::draw::internal
 
 
     template <typename I>
@@ -322,9 +322,9 @@ namespace scribo
 			right_link_value);
 
 	mln::util::couple<bool, unsigned>
-	  nbh = text::grouping::internal::is_link_valid(left_link,
-							right_link,
-							i);
+	  nbh = primitive::internal::is_link_valid(left_link,
+						   right_link,
+						   i);
 
 	if (nbh.first())
 	  mln::draw::line(input,
@@ -372,9 +372,9 @@ namespace scribo
 			right_link_value);
 
 	mln::util::couple<bool, unsigned>
-	  nbh = text::grouping::internal::is_link_valid(left_link,
-							right_link,
-							i);
+	  nbh = primitive::internal::is_link_valid(left_link,
+						   right_link,
+						   i);
 
 	if (nbh.first())
 	  mln::draw::line(input,

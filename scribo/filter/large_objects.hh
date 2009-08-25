@@ -43,7 +43,7 @@
 # include <mln/pw/all.hh>
 
 # include <scribo/core/object_image.hh>
-# include <scribo/extract/primitive/objects.hh>
+# include <scribo/primitive/extract/objects.hh>
 
 namespace scribo
 {
@@ -154,7 +154,7 @@ namespace scribo
 
       V nlabels;
       typedef object_image(mln_ch_value(I,V)) lbl_t;
-      lbl_t lbl = extract::primitive::objects(input, nbh, nlabels);
+      lbl_t lbl = primitive::extract::objects(input, nbh, nlabels);
 
       typedef internal::large_objects_filter<lbl_t> func_t;
       func_t fv2b(lbl, max_size);

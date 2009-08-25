@@ -74,6 +74,8 @@ namespace scribo
     namespace internal
     {
 
+      using namespace mln;
+
       /// Repair lines which have small discontinuities.
       /// FIXME: buggy. Sometimes few lines move or shrink!
       ///
@@ -127,7 +129,7 @@ namespace scribo
 	typedef
 	  extension_ima<
 	      const image_if<L,
-		    fun::neq_v2b_expr_<pw::value_<L>,
+	         mln::fun::neq_v2b_expr_<pw::value_<L>,
 				       pw::cst_<literal::zero_t> > >, const L> tbb_ima_t;
 	tbb_ima_t tbb_ima = extend(l | (pw::value(l) != pw::cst(literal::zero)), l);
 

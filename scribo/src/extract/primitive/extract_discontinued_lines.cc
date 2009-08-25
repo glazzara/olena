@@ -29,8 +29,8 @@
 #include <mln/io/pbm/all.hh>
 #include <mln/data/convert.hh>
 
-#include <scribo/extract/primitive/lines_h_discontinued.hh>
-#include <scribo/extract/primitive/lines_v_discontinued.hh>
+#include <scribo/primitive/extract/lines_h_discontinued.hh>
+#include <scribo/primitive/extract/lines_v_discontinued.hh>
 #include <scribo/debug/usage.hh>
 
 const char *args_desc[][2] =
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
   value::label_16 nhlines;
   image2d<bool> hlines
     = data::convert(bool(),
-		     scribo::extract::primitive::lines_h_discontinued(input,
+		     scribo::primitive::extract::lines_h_discontinued(input,
 								      c8(),
 								      nhlines,
 								      atoi(argv[2]),
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
   value::label_16 nvlines;
   image2d<bool> vlines
     = data::convert(bool(),
-		     scribo::extract::primitive::lines_v_discontinued(input,
+		     scribo::primitive::extract::lines_v_discontinued(input,
 								      c8(),
 								      nvlines,
 								      atoi(argv[2]),

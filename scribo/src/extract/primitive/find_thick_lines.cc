@@ -35,11 +35,11 @@
 #include <scribo/debug/usage.hh>
 
 #include <scribo/core/object_image.hh>
-#include <scribo/extract/primitive/lines_h_thick.hh>
-#include <scribo/extract/primitive/lines_v_thick.hh>
+#include <scribo/primitive/extract/lines_h_thick.hh>
+#include <scribo/primitive/extract/lines_v_thick.hh>
 
-#include <scribo/extract/primitive/lines_h_single.hh>
-#include <scribo/extract/primitive/lines_v_single.hh>
+#include <scribo/primitive/extract/lines_h_single.hh>
+#include <scribo/primitive/extract/lines_v_single.hh>
 
 #include <mln/util/timer.hh>
 
@@ -85,20 +85,20 @@ int main(int argc, char *argv[])
   t.start();
 
   object_image(L)
-    hlines = scribo::extract::primitive::lines_h_thick(input, c8(),
+    hlines = scribo::primitive::extract::lines_h_thick(input, c8(),
 						       nhlines, atoi(argv[2])),
-    vlines = scribo::extract::primitive::lines_v_thick(input, c8(),
+    vlines = scribo::primitive::extract::lines_v_thick(input, c8(),
 						       nvlines, atoi(argv[2]));
   std::cout << "lines thick done" << std::endl;
   std::cout << t << std::endl;
   t.restart();
 
 
-  hlines = scribo::extract::primitive::lines_h_single(hlines,
+  hlines = scribo::primitive::extract::lines_h_single(hlines,
 						      atoi(argv[2]),
 						      10);
 
-  vlines = scribo::extract::primitive::lines_v_single(vlines,
+  vlines = scribo::primitive::extract::lines_v_single(vlines,
 						      atoi(argv[2]),
 						      10);
 

@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
   value::label_16 nobjects;
   typedef object_image(mln_ch_value_(I,value::label_16)) obj_ima_t;
   obj_ima_t objects
-    = scribo::extract::primitive::objects(input, c8(), nobjects);
+    = scribo::primitive::extract::objects(input, c8(), nobjects);
 
   obj_ima_t filtered = scribo::filter::small_objects(objects, atoi(argv[2]));
   io::pbm::save(data::convert(bool(), filtered), argv[3]);

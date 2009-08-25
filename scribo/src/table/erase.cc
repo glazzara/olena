@@ -34,8 +34,8 @@
 
 #include <scribo/table/erase.hh>
 
-#include <scribo/extract/primitive/lines_h_discontinued.hh>
-#include <scribo/extract/primitive/lines_v_discontinued.hh>
+#include <scribo/primitive/extract/lines_h_discontinued.hh>
+#include <scribo/primitive/extract/lines_v_discontinued.hh>
 
 #include <scribo/debug/usage.hh>
 
@@ -70,10 +70,10 @@ int main(int argc, char* argv[])
 
   label_16 nhlines, nvlines;
   object_image(lbl_t)
-    lbl_v = extract::primitive::lines_v_discontinued(input, c8(),
+    lbl_v = primitive::extract::lines_v_discontinued(input, c8(),
 						     nvlines, 51, 8);
   object_image(lbl_t)
-    lbl_h = extract::primitive::lines_h_discontinued(input, c8(),
+    lbl_h = primitive::extract::lines_h_discontinued(input, c8(),
 						     nhlines, 51, 6);
 
   image2d<bool> input_notables

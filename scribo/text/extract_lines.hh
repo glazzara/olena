@@ -47,10 +47,11 @@
 # include <mln/util/graph.hh>
 # include <mln/value/label_16.hh>
 
-# include <scribo/extract/primitive/objects.hh>
-# include <scribo/text/grouping/group_with_several_left_links.hh>
-# include <scribo/text/grouping/group_with_several_right_links.hh>
-# include <scribo/text/grouping/group_from_double_link.hh>
+# include <scribo/primitive/extract/objects.hh>
+# include <scribo/primitive/group/apply.hh>
+# include <scribo/primitive/link/with_several_left_links.hh>
+# include <scribo/primitive/link/with_several_right_links.hh>
+# include <scribo/primitive/group/from_double_link.hh>
 
 # ifndef SCRIBO_NDEBUG
 #  include <mln/literal/colors.hh>
@@ -100,8 +101,9 @@ namespace scribo
       mln_precondition(input.is_valid());
       mln_precondition(nbh.is_valid());
 
-      typedef object_image(mln_ch_value(I,V)) text_t;
-      text_t text = scribo::extract::primitive::objects(input, nbh, nbboxes);
+      typedef mln_ch_value(I,V) L;
+      typedef object_image(L) text_t;
+      text_t text = scribo::primitive::extract::objects(input, nbh, nbboxes);
 
 # ifndef SCRIBO_NDEBUG
       debug::save_bboxes_image(input, text.bboxes(), literal::red,
@@ -109,10 +111,10 @@ namespace scribo
 # endif // ! SCRIBO_NDEBUG
 
       //Link character bboxes to their left neighboor if possible.
-      mln::util::array<unsigned> left_link
-	= text::grouping::group_with_several_left_links(text, 30);
-      mln::util::array<unsigned> right_link
-	= text::grouping::group_with_several_right_links(text, 30);
+      object_links<L> left_link
+	= primitive::link::with_several_left_links(text, 30);
+      object_links<L> right_link
+	= primitive::link::with_several_right_links(text, 30);
 
 # ifndef SCRIBO_NDEBUG
       scribo::debug::save_linked_bboxes_image(input,
@@ -123,8 +125,12 @@ namespace scribo
 # endif // ! SCRIBO_NDEBUG
 
       //Merge character bboxes through a graph.
-      text_t grouped_text
-	  = text::grouping::group_from_double_link(text, left_link, right_link);
+
+      object_groups<L>
+	groups = primitive::group::from_double_link(text,
+						    left_link, right_link);
+
+      text_t grouped_text = primitive::group::apply(text, groups);
 
 # ifndef SCRIBO_NDEBUG
       debug::save_bboxes_image(input, grouped_text.bboxes(),

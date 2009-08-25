@@ -36,7 +36,7 @@
 # include <mln/util/array.hh>
 
 # include <scribo/core/object_image.hh>
-# include <scribo/extract/primitive/objects.hh>
+# include <scribo/primitive/extract/objects.hh>
 
 namespace scribo
 {
@@ -144,7 +144,7 @@ namespace scribo
       V nlabels;
       typedef mln_ch_value(I,V) lbl_t;
       object_image(lbl_t) objects
-	  = extract::primitive::objects(input, nbh, nlabels);
+	  = primitive::extract::objects(input, nbh, nlabels);
 
       typedef internal::thin_objects_filter<lbl_t> func_t;
       func_t fv2b(objects, min_thickness);

@@ -33,6 +33,8 @@
 
 # include <mln/util/array.hh>
 
+# include <scribo/core/object_groups.hh>
+
 namespace scribo
 {
 
@@ -45,24 +47,26 @@ namespace scribo
     /*!  \brief Remove objects within a group with less than \p n
       links.
 
-      \param[in] parent_link Information about object links.
+      \param[in] groups Information about object groups.
       \param[in] n_links The minimum number of links per group.
 
       \return A function mapping an object id to a bool. It is set to
       true if an object is part of a group with more than \p n_links
       links.
     */
+    template <typename L>
     mln::util::array<bool>
-    small_object_groups(const mln::util::array<unsigned>& parent_link,
+    small_object_groups(const object_groups<L>& groups,
 			unsigned n_links);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
+    template <typename L>
     inline
     mln::util::array<bool>
-    small_object_groups(const mln::util::array<unsigned>& parent_link,
+    small_object_groups(const object_groups<L>& parent_link,
 			unsigned n_links)
     {
       // Counting the number of objects per group.

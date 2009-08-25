@@ -38,15 +38,16 @@
 
 #include <mln/literal/colors.hh>
 #include <mln/value/rgb8.hh>
+#include <mln/value/label_16.hh>
 
 #include <mln/draw/box.hh>
 
-#include <scribo/extract/primitive/objects.hh>
-#include <scribo/text/grouping/group_with_single_left_link.hh>
-#include <scribo/text/grouping/group_with_single_right_link.hh>
-#include <scribo/text/grouping/group_from_double_link.hh>
-#include <scribo/text/grouping/group_from_single_link.hh>
-#include <scribo/text/grouping/internal/have_link_valid.hh>
+#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/group/apply.hh>
+#include <scribo/primitive/link/with_single_left_link.hh>
+#include <scribo/primitive/link/with_single_right_link.hh>
+#include <scribo/primitive/group/from_double_link.hh>
+#include <scribo/primitive/group/from_single_link.hh>
 #include <scribo/filter/small_objects.hh>
 #include <scribo/filter/thin_objects.hh>
 #include <scribo/filter/thick_objects.hh>
@@ -91,7 +92,7 @@ highlighted.");
   /// Finding objects.
   value::label_16 nobjects;
   object_image(L)
-    objects = scribo::extract::primitive::objects(input, c8(), nobjects);
+    objects = scribo::primitive::extract::objects(input, c8(), nobjects);
 
 
   /// First filtering.
@@ -106,10 +107,10 @@ highlighted.");
 	  math::min(input.ncols(), input.nrows()) / 5);
 
   /// Grouping potential objects
-  mln::util::array<unsigned> left_link
-    = text::grouping::group_with_single_left_link(filtered_objects, 30);
-  mln::util::array<unsigned> right_link
-    = text::grouping::group_with_single_right_link(filtered_objects, 30);
+  object_links<L> left_link
+    = primitive::link::with_single_left_link(filtered_objects, 30);
+  object_links<L> right_link
+    = primitive::link::with_single_right_link(filtered_objects, 30);
 
 
 #ifndef NOUT
@@ -124,14 +125,13 @@ highlighted.");
 #endif
 
     // Trying to group objects
-  mln::util::array<unsigned> parent_link;
-  text::grouping::group_from_double_link(filtered_objects,
-					 left_link, right_link,
-					 parent_link);
+  object_groups<L>
+    groups = primitive::group::from_double_link(filtered_objects,
+						left_link, right_link);
 
     // Remove objects part of groups with less than 3 objects.
   mln::util::array<bool>
-    to_be_kept = filter::small_object_groups(parent_link, 3);
+    to_be_kept = filter::small_object_groups(groups, 3);
 
 
   // FOR DEBUGGING PURPOSE.
@@ -155,17 +155,19 @@ highlighted.");
   /// This time a single link is enough since non-wanted objects have
   /// been removed.
   left_link
-    = text::grouping::group_with_single_left_link(filtered_objects, 30);
+    = primitive::link::with_single_left_link(filtered_objects, 30);
 
 
 
   /// Grouping objects again.
-  object_image(L) grouped_objects
-    = text::grouping::group_from_single_link(filtered_objects, left_link);
+  groups = primitive::group::from_single_link(filtered_objects, left_link);
+
+  object_image(L)
+    grouped_objects = primitive::group::apply(filtered_objects, groups);
 
 #ifndef NOUT
   /// FOR DEBUG PURPOSE.
-  for (unsigned i = 1; i < grouped_objects.nlabels(); ++i)
+  for (unsigned i = 1; i <= grouped_objects.nlabels(); ++i)
     mln::draw::box(decision_image, grouped_objects.bbox(i), literal::blue);
   io::ppm::save(decision_image, scribo::make::debug_filename("decision_image.ppm"));
 

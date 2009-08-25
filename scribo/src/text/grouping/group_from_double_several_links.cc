@@ -34,14 +34,14 @@
 #include <mln/io/ppm/save.hh>
 
 #include <mln/literal/colors.hh>
-#include <mln/util/timer.hh>
 #include <mln/util/array.hh>
 
-#include <scribo/extract/primitive/objects.hh>
-#include <scribo/text/grouping/group_with_several_left_links.hh>
-#include <scribo/text/grouping/group_with_several_right_links.hh>
+#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/group/apply.hh>
+#include <scribo/primitive/link/with_several_left_links.hh>
+#include <scribo/primitive/link/with_several_right_links.hh>
 #include <scribo/debug/save_linked_bboxes_image.hh>
-#include <scribo/text/grouping/group_from_double_link.hh>
+#include <scribo/primitive/group/from_double_link.hh>
 #include <scribo/filter/small_objects.hh>
 
 #include <scribo/debug/save_bboxes_image.hh>
@@ -64,40 +64,27 @@ int main(int argc, char* argv[])
 
   scribo::make::internal::debug_filename_prefix = "group_with_double_several_links";
 
-  mln::util::timer t, t2;
   image2d<bool> input;
-  std::cout << "Loading" << std::endl;
-  t.start();
   io::pbm::load(input, argv[1]);
-  std::cout << t << std::endl;
 
 
   value::label_16 nbboxes;
+  typedef image2d<value::label_16> L;
   std::cout << "extract bboxes" << std::endl;
-  t.restart();
-  t2.start();
-  typedef object_image(image2d<value::label_16>) text_t;
-  text_t text = scribo::extract::primitive::objects(input, c8(), nbboxes);
-  std::cout << t << std::endl;
+  typedef object_image(L) text_t;
+  text_t text = scribo::primitive::extract::objects(input, c8(), nbboxes);
 
-  mln::util::timer t3;
+
   std::cout << "Remove small components" << std::endl;
-  t.restart();
-  t3.start();
   text = filter::small_objects(text,4);
-  std::cout << t << std::endl;
 
   std::cout << "Group with left link" << std::endl;
-  t.restart();
-  mln::util::array<unsigned> left_link
-	= text::grouping::group_with_several_left_links(text, 30);
-  std::cout << t << std::endl;
+  object_links<L> left_link
+	= primitive::link::with_several_left_links(text, 30);
 
   std::cout << "Group with right link" << std::endl;
-  t.restart();
-  mln::util::array<unsigned> right_link
-	= text::grouping::group_with_several_right_links(text, 30);
-  std::cout << t << std::endl;
+  object_links<L> right_link
+	= primitive::link::with_several_right_links(text, 30);
 
   std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
 
@@ -109,12 +96,11 @@ int main(int argc, char* argv[])
 
   // With validation.
   std::cout << "Group from double link" << std::endl;
-  t.restart();
-  text_t grouped_text
-	= text::grouping::group_from_double_link(text, left_link, right_link);
-  std::cout << t << std::endl;
-  std::cout << "Full process: " << t2 << std::endl;
-  std::cout << "Cleanup and grouping process: " << t3 << std::endl;
+
+  object_groups<L> groups
+    = primitive::group::from_double_link(text, left_link, right_link);
+
+  text_t grouped_text = primitive::group::apply(text, groups);
 
   io::ppm::save(mln::labeling::colorize(value::rgb8(),
 				     grouped_text,

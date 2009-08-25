@@ -48,8 +48,10 @@
 
 # include <mln/set/compute.hh>
 
+
 # include <scribo/core/object_image.hh>
-# include <scribo/extract/primitive/objects.hh>
+# include <scribo/fun/v2b/small_objects_filter.hh>
+# include <scribo/primitive/extract/objects.hh>
 
 
 namespace scribo
@@ -93,57 +95,6 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-    namespace internal
-    {
-
-
-      /// Filter Functor.
-      /// Return false for all objects which are too small.
-      template <typename L>
-      struct small_objects_filter
-	: Function_v2b< small_objects_filter<L> >
-      {
-	typedef accu::math::count<mln_psite(L)> card_t;
-
-	/// Constructor
-	///
-	/// \param[in] objects Component bounding boxes.
-	/// \param[in] min_size Minimum component size.
-	//
-	small_objects_filter(const object_image(L)& objects,
-			     unsigned min_size)
-	{
-	  card_ = labeling::compute(card_t(), objects, objects.nlabels());
-	  min_size_ = min_size;
-	}
-
-
-	/// Check if the component is large enough.
-	///
-	/// \param l A label.
-	///
-	/// \return false if the component area is strictly inferion to
-	/// \p min_size_.
-	//
-	bool operator()(const mln_value(L)& l) const
-	{
-	  if (l == literal::zero)
-	    return true;
-	  return card_[l] >= min_size_;
-	}
-
-	/// The component bounding boxes.
-	mln::util::array<mln_result(card_t)> card_;
-
-	/// The minimum area.
-	unsigned min_size_;
-      };
-
-
-    } //  end of namespace scribo::filter::internal
-
-
-
    template <typename I, typename N, typename V>
    inline
    mln_concrete(I)
@@ -162,9 +113,9 @@ namespace scribo
 
      V nlabels;
      typedef mln_ch_value(I,V) lbl_t;
-     object_image(lbl_t) lbl = extract::primitive::objects(input, nbh, nlabels);
+     object_image(lbl_t) lbl = primitive::extract::objects(input, nbh, nlabels);
 
-     typedef internal::small_objects_filter<mln_ch_value(I,V)> func_t;
+     typedef fun::v2b::small_objects_filter<mln_ch_value(I,V)> func_t;
      func_t fv2b(lbl, min_size);
      lbl.relabel(fv2b);
 
@@ -187,7 +138,7 @@ namespace scribo
 
       mln_precondition(objects.is_valid());
 
-      internal::small_objects_filter<L> f(objects, min_size);
+      fun::v2b::small_objects_filter<L> f(objects, min_size);
 
       object_image(L) output;
       output.init_from_(objects);

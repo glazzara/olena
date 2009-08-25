@@ -40,9 +40,10 @@
 #include <mln/io/ppm/save.hh>
 
 
-#include <scribo/extract/primitive/objects.hh>
-#include <scribo/text/grouping/group_with_several_left_links.hh>
-#include <scribo/text/grouping/group_from_single_link.hh>
+#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/group/apply.hh>
+#include <scribo/primitive/link/with_several_left_links.hh>
+#include <scribo/primitive/group/from_single_link.hh>
 
 #include <scribo/debug/save_bboxes_image.hh>
 #include <scribo/debug/save_linked_bboxes_image.hh>
@@ -68,13 +69,14 @@ int main(int argc, char* argv[])
   io::pbm::load(input, argv[1]);
 
   value::label_16 nbboxes;
-  typedef object_image(image2d<value::label_16>) text_t;
-  text_t text = scribo::extract::primitive::objects(input, c8(), nbboxes);
+  typedef image2d<value::label_16> L;
+  typedef object_image(L) text_t;
+  text_t text = scribo::primitive::extract::objects(input, c8(), nbboxes);
 
   {
     std::cout << "* Left grouping" << std::endl;
-    mln::util::array<unsigned> left_link
-	= text::grouping::group_with_several_left_links(text, 30);
+    object_links<L> left_link
+	= primitive::link::with_several_left_links(text, 30);
 
     std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
     scribo::debug::save_linked_bboxes_image(input,
@@ -82,9 +84,11 @@ int main(int argc, char* argv[])
 					    literal::red, literal::cyan,
 					    scribo::make::debug_filename("left_links.ppm"));
 
-    text_t grouped_text
-      = text::grouping::group_from_single_link(text, left_link);
 
+    object_groups<L>
+      groups = primitive::group::from_single_link(text, left_link);
+
+    text_t grouped_text = primitive::group::apply(text, groups);
     std::cout << "AFTER - nbboxes = " << grouped_text.bboxes().nelements() << std::endl;
     io::ppm::save(mln::labeling::colorize(value::rgb8(),
 				       grouped_text,

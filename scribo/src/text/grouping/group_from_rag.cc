@@ -44,9 +44,9 @@
 #include <mln/util/graph.hh>
 #include <mln/accu/center.hh>
 
-#include <scribo/extract/primitive/objects.hh>
-#include <scribo/text/grouping/group_with_rag.hh>
-//#include <scribo/text/grouping/group_from_rag.hh>
+#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/link/with_rag.hh>
+//#include <scribo/primitive/group/from_rag.hh>
 
 #include <scribo/filter/small_objects.hh>
 #include <scribo/filter/thin_objects.hh>
@@ -173,7 +173,7 @@ int main(int argc, char* argv[])
   typedef image2d<value::label_16> L;
   value::label_16 nbboxes;
   typedef object_image(L) objects_t;
-  objects_t objects = extract::primitive::objects(input, c8(), nbboxes);
+  objects_t objects = primitive::extract::objects(input, c8(), nbboxes);
 
   /// First filtering.
   objects_t filtered_objects
@@ -188,7 +188,7 @@ int main(int argc, char* argv[])
 
 
   /// Getting objects links from a Region Adjacency graph.
-  mln_VAR(rag_data, text::grouping::group_with_rag(filtered_objects, c8()));
+  mln_VAR(rag_data, primitive::link::with_rag(filtered_objects, c8()));
 
 
   mln_VAR(v_ima, scribo::graph::compute_vertex(accu::center<point2d>(),

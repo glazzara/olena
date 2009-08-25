@@ -38,10 +38,8 @@
 
 #include <mln/io/pgm/save.hh>
 
-#include <scribo/extract/primitive/lines_h_discontinued.hh>
-#include <scribo/extract/primitive/lines_v_discontinued.hh>
-
-#include <scribo/debug/save_table_image.hh>
+#include <scribo/primitive/extract/lines_h_discontinued.hh>
+#include <scribo/primitive/extract/lines_v_discontinued.hh>
 
 #include <scribo/tests/data.hh>
 
@@ -76,11 +74,16 @@ int main(int argc, char *argv[])
 
   typedef object_image(image2d<value::label_8>) lbl_t;
   lbl_t
-    hlbl = scribo::extract::primitive::lines_h_discontinued(input, c8(),
+    hlbl = scribo::primitive::extract::lines_h_discontinued(input, c8(),
 							    nbboxes, 11, 2);
   lbl_t
-    vlbl = scribo::extract::primitive::lines_v_discontinued(input, c8(),
+    vlbl = scribo::primitive::extract::lines_v_discontinued(input, c8(),
 							    nbboxes, 11, 2);
+
+  // Background values are meaningless, we set them to an arbitrary value.
+  hboxes(0) = hlbl.bbox(0);
+  vboxes(0) = vlbl.bbox(0);
+
   mln_assertion(hlbl.bboxes() == hboxes);
   mln_assertion(vlbl.bboxes() == vboxes);
 }

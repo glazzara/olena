@@ -37,8 +37,8 @@
 
 #include <scribo/table/rebuild.hh>
 #include <scribo/table/erase.hh>
-#include <scribo/extract/primitive/lines_h_discontinued.hh>
-#include <scribo/extract/primitive/lines_v_discontinued.hh>
+#include <scribo/primitive/extract/lines_h_discontinued.hh>
+#include <scribo/primitive/extract/lines_v_discontinued.hh>
 #include <scribo/make/debug_filename.hh>
 
 int usage(const char *name)
@@ -66,13 +66,13 @@ int main(int argc, char* argv[])
 
   value::label_16 nbboxes;
   lines_t hlines
-	= scribo::extract::primitive::lines_h_discontinued(input,
+	= scribo::primitive::extract::lines_h_discontinued(input,
 							   c8(),
 							   nbboxes,
 							   51,
 							   6);
   lines_t vlines
-	= scribo::extract::primitive::lines_v_discontinued(input,
+	= scribo::primitive::extract::lines_v_discontinued(input,
 							   c8(),
 							   nbboxes,
 							   51,

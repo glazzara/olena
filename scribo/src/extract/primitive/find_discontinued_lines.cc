@@ -35,8 +35,8 @@
 #include <scribo/debug/usage.hh>
 
 #include <scribo/core/object_image.hh>
-#include <scribo/extract/primitive/lines_h_pattern.hh>
-#include <scribo/extract/primitive/lines_v_pattern.hh>
+#include <scribo/primitive/extract/lines_h_pattern.hh>
+#include <scribo/primitive/extract/lines_v_pattern.hh>
 
 const char *args_desc[][2] =
 {
@@ -63,8 +63,8 @@ int main(int argc, char *argv[])
   I input;
   io::pbm::load(input, argv[1]);
 
-  I hlines = scribo::extract::primitive::lines_h_pattern(input, atoi(argv[2]));
-  I vlines = scribo::extract::primitive::lines_v_pattern(input, atoi(argv[2]));
+  I hlines = scribo::primitive::extract::lines_h_pattern(input, atoi(argv[2]));
+  I vlines = scribo::primitive::extract::lines_v_pattern(input, atoi(argv[2]));
 
   image2d<value::rgb8> out = debug::superpose(input, hlines, literal::red);
   out = debug::superpose(out, vlines, literal::green);

@@ -34,9 +34,10 @@
 
 #include <scribo/core/object_image.hh>
 
-#include <scribo/extract/primitive/objects.hh>
-#include <scribo/text/grouping/group_with_graph.hh>
-#include <scribo/text/grouping/group_from_graph.hh>
+#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/group/apply.hh>
+#include <scribo/primitive/link/with_graph.hh>
+#include <scribo/primitive/group/from_graph.hh>
 #include <scribo/filter/small_objects.hh>
 #include <scribo/util/text.hh>
 
@@ -72,10 +73,11 @@ int main(int argc, char* argv[])
   io::pbm::load(input, img.c_str());
 
   value::label_16 nbboxes;
-  typedef object_image(image2d<value::label_16>) text_t;
-  text_t text = extract::primitive::objects(input, c8(), nbboxes);
+  typedef image2d<value::label_16> L;
+  typedef object_image(L) text_t;
+  text_t text = primitive::extract::objects(input, c8(), nbboxes);
 
-  mln::util::graph g = text::grouping::group_with_graph(text, 30);
+  mln::util::graph g = primitive::link::with_graph(text, 30);
 
 
   mln_assertion(nbboxes == 12u);
@@ -85,21 +87,21 @@ int main(int argc, char* argv[])
 //					      literal::red, literal::cyan,
 //					      "test_graph_left_linked.ppm");
 
-  text_t grouped_text
-    = text::grouping::group_from_graph(text, g);
+  object_groups<L> groups = primitive::group::from_graph(text, g);
 
+  text_t grouped_text = primitive::group::apply(text, groups);
 //  std::cout << "AFTER - nbboxes = " << grouped_text.nbboxes().next() << std::endl;
 //
 //  scribo::debug::save_bboxes_image(input, grouped_text.bboxes(),
 //				       literal::red,
 //				       "test_graph_grouped_text.ppm");
 
-  mln_assertion(grouped_text.nbboxes() == 6u);
+  mln_assertion(grouped_text.nlabels() == 6u);
 
   text_t
     filtered_text = scribo::filter::small_objects(grouped_text, 20);
 
-  mln_assertion(filtered_text.nbboxes() == 2u);
+  mln_assertion(filtered_text.nlabels() == 2u);
 
 //  scribo::debug::save_bboxes_image(input, filtered_text.bboxes(),
 //				       literal::red,

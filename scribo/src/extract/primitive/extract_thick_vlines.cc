@@ -29,7 +29,7 @@
 #include <mln/io/pbm/all.hh>
 #include <mln/data/convert.hh>
 
-#include <scribo/extract/primitive/lines_v_thick.hh>
+#include <scribo/primitive/extract/lines_v_thick.hh>
 #include <scribo/debug/usage.hh>
 
 const char *args_desc[][2] =
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
   value::label_16 nlines;
   image2d<bool> lines
     = data::convert(bool(),
-		     scribo::extract::primitive::lines_v_thick(input,
+		     scribo::primitive::extract::lines_v_thick(input,
 							       c8(),
 							       nlines,
 							       atoi(argv[2])));

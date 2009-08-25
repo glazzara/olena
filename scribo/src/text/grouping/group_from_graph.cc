@@ -33,9 +33,10 @@
 #include <mln/literal/colors.hh>
 #include <mln/labeling/colorize.hh>
 
-#include <scribo/extract/primitive/objects.hh>
-#include <scribo/text/grouping/group_with_graph.hh>
-#include <scribo/text/grouping/group_from_graph.hh>
+#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/link/with_graph.hh>
+#include <scribo/primitive/group/from_graph.hh>
+#include <scribo/primitive/group/apply.hh>
 
 #include <scribo/debug/save_bboxes_image.hh>
 #include <scribo/debug/save_linked_bboxes_image.hh>
@@ -61,10 +62,11 @@ int main(int argc, char* argv[])
   io::pbm::load(input, argv[1]);
 
   value::label_16 nbboxes;
-  typedef object_image(image2d<value::label_16>) text_t;
-  text_t text = extract::primitive::objects(input, c8(), nbboxes);
+  typedef image2d<value::label_16> L;
+  typedef object_image(L) text_t;
+  text_t text = primitive::extract::objects(input, c8(), nbboxes);
 
-  mln::util::graph g = text::grouping::group_with_graph(text, 30);
+  mln::util::graph g = primitive::link::with_graph(text, 30);
 
   std::cout << "BEFORE - nbboxes = " << nbboxes.next() << std::endl;
   scribo::debug::save_linked_bboxes_image(input,
@@ -76,8 +78,10 @@ int main(int argc, char* argv[])
 //				     text.nlabels()),
 //		scribo::make::debug_filename("lbl_before.ppm"));
 
-  text_t grouped_text
-      = text::grouping::group_from_graph(text, g);
+  object_groups<L> groups
+      = primitive::group::from_graph(text, g);
+
+  text_t grouped_text = primitive::group::apply(text, groups);
 
   std::cout << "AFTER - nbboxes = " << grouped_text.bboxes().nelements() << std::endl;
 

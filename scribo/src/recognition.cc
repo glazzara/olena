@@ -36,11 +36,12 @@
 
 #include <mln/core/alias/neighb2d.hh>
 
-#include <scribo/extract/primitive/objects.hh>
+#include <scribo/primitive/extract/objects.hh>
 
-#include <scribo/text/grouping/group_with_several_left_links.hh>
-#include <scribo/text/grouping/group_with_several_right_links.hh>
-#include <scribo/text/grouping/group_from_double_link.hh>
+#include <scribo/primitive/group/apply.hh>
+#include <scribo/primitive/link/with_several_left_links.hh>
+#include <scribo/primitive/link/with_several_right_links.hh>
+#include <scribo/primitive/group/from_double_link.hh>
 #include <scribo/filter/small_objects.hh>
 #include <scribo/filter/thin_objects.hh>
 #include <scribo/text/recognition.hh>
@@ -75,22 +76,24 @@ int main(int argc, char* argv[])
   io::pbm::load(input, argv[1]);
 
   /// Extract text.
-  typedef mln_ch_value_(image2d<bool>,value::label_16) lbl_t;
+  typedef mln_ch_value_(image2d<bool>,value::label_16) L;
   value::label_16 nbboxes;
-  object_image(lbl_t)
-    objects = scribo::extract::primitive::objects(input, c8(), nbboxes);
+  object_image(L)
+    objects = scribo::primitive::extract::objects(input, c8(), nbboxes);
 
   /// Filter non interesting objects
   objects = filter::small_objects(objects, 4);
-  objects = filter::thin_objects<lbl_t>(objects, 2);
+  objects = filter::thin_objects<L>(objects, 2);
 
   /// Group objects.
-  mln::util::array<unsigned> left_link
-	= text::grouping::group_with_several_left_links<lbl_t>(objects, 30);
-  mln::util::array<unsigned> right_link
-	= text::grouping::group_with_several_right_links(objects, 30);
-  objects = text::grouping::group_from_double_link(objects, left_link, right_link);
+  object_links<L> left_link
+	= primitive::link::with_several_left_links(objects, 30);
+  object_links<L> right_link
+	= primitive::link::with_several_right_links(objects, 30);
+  object_groups<L>
+    groups = primitive::group::from_double_link(objects, left_link, right_link);
 
+  objects = primitive::group::apply(objects, groups);
   /// Try to recognize text in grouped objects.
   scribo::text::recognition(objects, "fra", argv[2]);
 

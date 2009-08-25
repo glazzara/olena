@@ -48,72 +48,66 @@
 namespace scribo
 {
 
-  namespace text
+  namespace make
   {
-
-    namespace grouping
-    {
-
-      using namespace mln;
+    using namespace mln;
 
 
-      /// Compute a labeled image of input, then compute an influence
-      /// zone image and make a graph from it.
-      ///
-      /// \param[in] input_	a binary image.
-      /// \param[in] nbh_	a neighbordhood.
-      /// \param[in] label_type The type of this argument is used
-      ///			as label type while labeling the image.
-      /// \param[in] iz_dmax	Max distance of the influence zone.
-      ///
-      /// \return a region adjacency graph.
-      template <typename I, typename N, typename V>
-      util::graph
-      influence_zone_graph(const Image<I>& input_,
-			   const Neighborhood<N>& nbh_,
-			   const V& label_type,
-			   unsigned iz_dmax);
+    /// Compute a labeled image of input, then compute an influence
+    /// zone image and make a graph from it.
+    ///
+    /// \param[in] input_	a binary image.
+    /// \param[in] nbh_	a neighbordhood.
+    /// \param[in] label_type The type of this argument is used
+    ///			as label type while labeling the image.
+    /// \param[in] iz_dmax	Max distance of the influence zone.
+    ///
+    /// \return a region adjacency graph.
+    template <typename I, typename N, typename V>
+    util::graph
+    influence_zone_graph(const Image<I>& input_,
+			 const Neighborhood<N>& nbh_,
+			 const V& label_type,
+			 unsigned iz_dmax);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename I, typename N, typename V>
-      util::graph
-      influence_zone_graph(const Image<I>& input_,
-			   const Neighborhood<N>& nbh_,
-			   const V& label_type,
-			   unsigned iz_dmax)
-      {
-	trace::entering("scribo::make::influence_zone_graph");
+    template <typename I, typename N, typename V>
+    util::graph
+    influence_zone_graph(const Image<I>& input_,
+			 const Neighborhood<N>& nbh_,
+			 const V& label_type,
+			 unsigned iz_dmax)
+    {
+      trace::entering("scribo::make::influence_zone_graph");
 
-	(void) label_type;
-	I& input = exact(input_);
-	const N& nbh = exact(nbh_);
+      (void) label_type;
+      I& input = exact(input_);
+      const N& nbh = exact(nbh_);
 
-	mlc_equal(mln_value(I), bool)::check();
-	mln_assertion(input.is_valid());
-	mln_assertion(nbh.is_valid());
+      mlc_equal(mln_value(I), bool)::check();
+      mln_assertion(input.is_valid());
+      mln_assertion(nbh.is_valid());
 
-	V nlabels;
-	typedef mln_ch_value(I,V) lbl_t;
-	lbl_t lbl = labeling::blobs(input, nbh, nlabels);
+      V nlabels;
+      typedef mln_ch_value(I,V) lbl_t;
+      lbl_t lbl = labeling::blobs(input, nbh, nlabels);
 
-	lbl_t iz = transform::influence_zone_geodesic(lbl, nbh, iz_dmax);
+      lbl_t iz = transform::influence_zone_geodesic(lbl, nbh, iz_dmax);
 
-	util::graph g
-	  = mln::make::influence_zone_adjacency_graph(
-				    iz | (pw::value(iz) != pw::cst(literal::zero)),
-				    nbh, nlabels);
+      util::graph g
+	= mln::make::influence_zone_adjacency_graph(
+	  iz | (pw::value(iz) != pw::cst(literal::zero)),
+	  nbh, nlabels);
 
-	trace::exiting("scribo::make::influence_zone_graph");
-	return g;
-      }
+      trace::exiting("scribo::make::influence_zone_graph");
+      return g;
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace scribo::text::grouping
-
-  } // end of namespace scribo::text
+  } // end of namespace scribo::make
 
 } // end of namespace scribo
 
