@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-#include $(top_srcdir)/milena/tests/tests.mk
 
 # Add path to Scribo's headers
-AM_CPPFLAGS = -I$(top_srcdir)/ -I$(top_builddir)/ -I$(top_srcdir)/milena -I$(top_builddir)/milena -DNDEBUG -O2
+AM_CPPFLAGS = -I$(top_srcdir)/ -I$(top_builddir)/ -I$(top_srcdir)/milena -I$(top_builddir)/milena
 
+AM_CXXFLAGS = -DNDEBUG -O2

@@ -17,7 +17,7 @@
 
 ## Process this file through Automake to create Makefile.in.
 
-include $(top_srcdir)/scribo/scribo.mk
+include $(top_srcdir)/scribo/tests/tests.mk
 
 # Regen files.
 include $(top_srcdir)/build-aux/regen-recursive.mk

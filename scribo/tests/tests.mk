@@ -13,17 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
 
-## Process this file through Automake to create Makefile.in.
+AM_CPPFLAGS = -I$(top_srcdir)/ -I$(top_builddir)/ -I$(top_srcdir)/milena -I$(top_builddir)/milena
 
-include $(top_srcdir)/scribo/tests/tests.mk
-
-check_PROGRAMS =				\
-  extract_lines_with_rank 			\
-  repair_lines
-
-extract_lines_with_rank_SOURCES = extract_lines_with_rank.cc
-repair_lines_SOURCES = repair_lines.cc
-
-TESTS = $(check_PROGRAMS)
+AM_CXXFLAGS = -g -O0

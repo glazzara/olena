@@ -1,5 +1,19 @@
 2009-08-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Set specific cxxflags for tests in Scribo.
+
+	* scribo.mk: Set optimization flags in AM_CXXFLAGS.
+	* tests/tests.mk: New. Set AM_CXXFLAGS with debug flags.
+
+	* tests/Makefile.am,
+	* tests/filter/Makefile.am,
+	* tests/preprocessing/Makefile.am,
+	* tests/table/Makefile.am,
+	* tests/text/Makefile.am,
+	* tests/unit_test/Makefile.am: Include tests.mk.
+
+2009-08-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Introduce new structures for objects links and groups.
 
 	* core/object_groups.hh,
