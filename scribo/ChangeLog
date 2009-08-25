@@ -1,3 +1,10 @@
+2009-08-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Introduce new structures for objects links and groups.
+
+	* core/object_groups.hh,
+	* core/object_links.hh: New.
+
 2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	New object grouping routine based on a rag.
