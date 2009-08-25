@@ -1,5 +1,9 @@
 2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* extract/primitive/objects.hh: use blobs_and_compute.
+
+2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Move example files.
 
 	* src/Makefile.am: update.

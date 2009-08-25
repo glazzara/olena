@@ -34,7 +34,9 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/box.hh>
 
-# include <mln/labeling/blobs.hh>
+# include <mln/accu/shape/bbox.hh>
+
+# include <mln/labeling/blobs_and_compute.hh>
 # include <mln/labeling/compute.hh>
 
 # include <mln/util/array.hh>
@@ -109,9 +111,15 @@ namespace scribo
 
 	internal::objects_tests(input, nbh, nobjects);
 
-	mln_ch_value(I,V) objects = labeling::blobs(input, nbh, nobjects);
+	typedef mln_ch_value(I,V) L;
+	typedef accu::shape::bbox<mln_psite(I)> accu_bbox;
 
-	object_image(mln_ch_value(I,V)) output(objects, nobjects);
+	util::couple<L, util::array<mln_box(I)> >
+	  results = labeling::blobs_and_compute(input, nbh, nobjects,
+						accu_bbox());
+
+	object_image(L)
+	  output(results.first(), nobjects, results.second());
 
 	trace::exiting("scribo::objects");
 	return output;
