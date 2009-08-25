@@ -23,6 +23,7 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+#include <libgen.h>
 #include <iostream>
 
 #include <mln/core/image/image2d.hh>
@@ -35,13 +36,21 @@
 
 #include <mln/math/min.hh>
 
+#include <mln/literal/colors.hh>
+#include <mln/value/rgb8.hh>
+
+#include <mln/draw/box.hh>
+
 #include <scribo/extract/primitive/objects.hh>
 #include <scribo/text/grouping/group_with_single_left_link.hh>
 #include <scribo/text/grouping/group_with_single_right_link.hh>
 #include <scribo/text/grouping/group_from_double_link.hh>
+#include <scribo/text/grouping/group_from_single_link.hh>
+#include <scribo/text/grouping/internal/have_link_valid.hh>
 #include <scribo/filter/small_objects.hh>
 #include <scribo/filter/thin_objects.hh>
 #include <scribo/filter/thick_objects.hh>
+#include <scribo/filter/small_object_groups.hh>
 
 #include <scribo/make/debug_filename.hh>
 #include <scribo/debug/save_bboxes_image.hh>
@@ -62,12 +71,12 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  scribo::make::internal::debug_filename_prefix = "photo";
+  scribo::make::internal::debug_filename_prefix = argv[2];
 
   if (argc != 3)
     return scribo::debug::usage(argv,
 				"Find text in a binarized photo.",
-				"input.pbm output.ppm",
+				"input.pbm output_dir",
 				args_desc,
 				"A color image where the text is \
 highlighted.");
@@ -78,46 +87,98 @@ highlighted.");
   io::pbm::load(input, argv[1]);
 
   typedef image2d<value::label_16> L;
-  value::label_16 nobjects;
-  object_image(L) objects = scribo::extract::primitive::objects(input, c8(), nobjects);
 
+  /// Finding objects.
+  value::label_16 nobjects;
+  object_image(L)
+    objects = scribo::extract::primitive::objects(input, c8(), nobjects);
+
+
+  /// First filtering.
   object_image(L) filtered_objects
     = scribo::filter::small_objects(objects, 6);
 
   filtered_objects
-    = scribo::filter::thin_objects(filtered_objects, 3);
+    = scribo::filter::thin_objects(filtered_objects, 1);
 
   filtered_objects
     = scribo::filter::thick_objects(filtered_objects,
-	  math::min(input.ncols(), input.nrows()) / 6);
+	  math::min(input.ncols(), input.nrows()) / 5);
 
-
+  /// Grouping potential objects
   mln::util::array<unsigned> left_link
-    = text::grouping::group_with_single_left_link(objects, 30);
+    = text::grouping::group_with_single_left_link(filtered_objects, 30);
   mln::util::array<unsigned> right_link
-    = text::grouping::group_with_single_right_link(objects, 30);
+    = text::grouping::group_with_single_right_link(filtered_objects, 30);
 
+
+#ifndef NOUT
   std::cout << "BEFORE - nobjects = " << nobjects << std::endl;
-//  scribo::debug::save_linked_bboxes_image(input,
-//					      filtered_textbboxes, left_link, right_link,
-//					      literal::red, literal::cyan, literal::yellow,
-//					      literal::green,
-//					      scribo::make::debug_filename("links.ppm"));
-//
-// scribo::debug::save_bboxes_image(input, filtered_textbboxes.bboxes(),
-//				       literal::red,
-//				       scribo::make::debug_filename("test_graph_filtered_text.ppm"));
+  scribo::debug::save_linked_bboxes_image(input,
+ 					  filtered_objects,
+ 					  left_link, right_link,
+ 					  literal::red, literal::cyan,
+ 					  literal::yellow,
+ 					  literal::green,
+ 					  scribo::make::debug_filename("links.ppm"));
+#endif
+
+    // Trying to group objects
+  mln::util::array<unsigned> parent_link;
+  text::grouping::group_from_double_link(filtered_objects,
+					 left_link, right_link,
+					 parent_link);
+
+    // Remove objects part of groups with less than 3 objects.
+  mln::util::array<bool>
+    to_be_kept = filter::small_object_groups(parent_link, 3);
+
+
+  // FOR DEBUGGING PURPOSE.
+  image2d<value::rgb8> decision_image = data::convert(value::rgb8(), input);
+
+
+  for (unsigned i = 1; i < to_be_kept.size(); ++i)
+  {
+    if (!to_be_kept(i))
+      mln::draw::box(decision_image, filtered_objects.bbox(i), literal::red);
+    else
+      mln::draw::box(decision_image, filtered_objects.bbox(i), literal::green);
+  }
+  // END OF DEBUG
+
+
+  filtered_objects.relabel(to_be_kept);
+
+
+  /// Objects have been removed we need to update object links again.
+  /// This time a single link is enough since non-wanted objects have
+  /// been removed.
+  left_link
+    = text::grouping::group_with_single_left_link(filtered_objects, 30);
+
+
+
+  /// Grouping objects again.
   object_image(L) grouped_objects
-    = text::grouping::group_from_double_link(filtered_objects, left_link, right_link);
+    = text::grouping::group_from_single_link(filtered_objects, left_link);
+
+#ifndef NOUT
+  /// FOR DEBUG PURPOSE.
+  for (unsigned i = 1; i < grouped_objects.nlabels(); ++i)
+    mln::draw::box(decision_image, grouped_objects.bbox(i), literal::blue);
+  io::ppm::save(decision_image, scribo::make::debug_filename("decision_image.ppm"));
+
 
   std::cout << "AFTER - nobjects = " << grouped_objects.nlabels() << std::endl;
+#endif
+
+  io::ppm::save(mln::labeling::colorize(value::rgb8(),
+					grouped_objects,
+					grouped_objects.nlabels()),
+//		"/dev/null");
+		scribo::make::debug_filename("out.ppm"));
 
 
-//  scribo::debug::save_bboxes_image(input, grouped_textbboxes.bboxes(),
-//				       literal::red,
-//				       scribo::make::debug_filename("test_graph_grouped_text.ppm"));
-//
-  io::ppm::save(mln::labeling::colorize(value::rgb8(), grouped_objects, grouped_objects.nlabels()),
-		argv[2]);
   trace::exiting("main");
 }
