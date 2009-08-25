@@ -1,5 +1,14 @@
 2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	New object grouping routine based on a rag.
+
+	* text/grouping/group_with_rag.hh,
+	* text/grouping/internal/have_link_valid.hh: New.
+
+	* src/text/grouping/group_from_rag.cc: New related example.
+
+2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	* src/text_in_photo.cc: Improve results quality.
 
 2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
