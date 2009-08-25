@@ -218,6 +218,8 @@ AC_CONFIG_FILES([
       scribo/src/filter/Makefile
       scribo/src/preprocessing/Makefile
       scribo/src/table/Makefile
+      scribo/src/text/Makefile
+        scribo/src/text/grouping/Makefile
 ])
 
 AC_CONFIG_FILES([scribo/tests/data.hh])
