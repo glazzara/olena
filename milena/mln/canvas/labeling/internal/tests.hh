@@ -30,6 +30,10 @@
 ///
 /// Shared tests for labeling canvas arguments.
 
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/neighborhood.hh>
+
+
 namespace mln
 {
 

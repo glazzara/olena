@@ -1,3 +1,28 @@
+2009-08-24  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Small fixes in Milena.
+
+	* mln/canvas/labeling/blobs.hh,
+	* mln/canvas/labeling/internal/tests.hh: Add missing includes.
+
+	* mln/morpho/closing/algebraic.hh,
+	* mln/test/predicate.hh,
+	* mln/morpho/algebraic_filter.hh,
+	* mln/labeling/relabel.hh,
+	* mln/data/compare.hh,
+	* mln/canvas/morpho/attribute_filter.hh: cosmetic changes.
+
+	* mln/core/concept/image.hh: Remove data/compare.hh include.
+
+	* mln/core/internal/site_relative_iterator_base.hh: Remove
+	deprecated todo.
+
+	* mln/data/compute.hh: Avoid a warning.
+
+	* mln/labeling/blobs.hh: Remove useless headers.
+
+	* mln/make/edge_image.hh: Fix a syntax error.
+
 2009-08-21  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* mln/debug/superpose.hh: Add support for more image types.
@@ -61,7 +86,7 @@
 2009-08-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Remove extra ";" to compile.
-	
+
 	* mln/trait/functions.hh: Remove extra ";" l207 after "}" of compute.
 
 2009-08-19  Guillaume Lazzara  <lazzara@lrde.epita.fr>

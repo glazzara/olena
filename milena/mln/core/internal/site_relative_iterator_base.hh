@@ -34,8 +34,6 @@
 ///
 /// \todo Add a method to get the site set (if the center is defined) or
 /// the site set at a given center.
-///
-/// \todo In start_ and next_, think about the commented code...
 
 
 # include <vector>

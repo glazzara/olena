@@ -34,6 +34,7 @@
 # include <mln/core/image/vertex_image.hh>
 # include <mln/core/concept/function.hh>
 # include <mln/util/internal/id2element.hh>
+# include <mln/data/fill.hh>
 
 
 namespace mln
@@ -91,7 +92,7 @@ namespace mln
     ///
     /// \return an edge image.
     //
-    template <typename P, typename V, typename G, typename FP, typename
+    template <typename P, typename V, typename G, typename FP, typename FV>
     mln::edge_image<mln_result(FP),mln_result(FV),G>
     edge_image(const mln::vertex_image<P,V,G>& v_ima_,
 	       const p_edges<G,FP> pe,

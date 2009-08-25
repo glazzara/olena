@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,8 +43,11 @@
 
 # include <mln/canvas/morpho/attribute_filter.hh>
 
-namespace mln {
-  namespace morpho {
+namespace mln
+{
+
+  namespace morpho
+  {
 
     template <typename I, typename N, typename A>
     mln_concrete(I)
@@ -74,7 +78,11 @@ namespace mln {
 		       trait::accumulator::when_pix::use_p))::check();
 
       mln_concrete(I) output;
-      output = canvas::morpho::internal::attribute_filter_dispatch(input, nbh, a, lambda, increasing);
+      output = canvas::morpho::internal::attribute_filter_dispatch(input,
+								   nbh,
+								   a,
+								   lambda,
+								   increasing);
 
       trace::exiting("morpho::opening::algebraic_filter");
 
@@ -82,7 +90,9 @@ namespace mln {
     }
 
 # endif // ! MLN_INCLUDE_ONLY
+
   } // end of namespace mln::morpho
+
 } // end of namespace mln
 
 #endif // ! MLN_MORPHO_ALGEBRAIC_FILTER_HH

@@ -38,8 +38,6 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/data/fill.hh>
-# include <mln/core/site_set/p_queue_fast.hh>
 
 # include <mln/canvas/labeling/blobs.hh>
 

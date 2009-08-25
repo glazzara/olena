@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,6 @@
 # include <mln/data/fill.hh>
 # include <mln/extension/adjust_fill.hh>
 # include <mln/data/sort_psites.hh>
-
 
 namespace mln
 {
@@ -263,7 +263,7 @@ namespace mln
 	////////////////////////
 	/// Fastest version. ///
 	////////////////////////
-	
+
 	template <typename I>
 	inline
 	unsigned
@@ -385,8 +385,8 @@ namespace mln
 
 
       // Dispatch.
-      
-      
+
+
       namespace internal
       {
 

@@ -92,6 +92,7 @@ namespace mln
     mln_result(A)
     compute(const Accumulator<A>& a_, const Image<I>& input)
     {
+      (void) a_;
       A a;
       return compute(a, input);
     }
