@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_FUN_V2B_SMALL_OBJECTS_FILTER_HH
-# define SCRIBO_FUN_V2B_SMALL_OBJECTS_FILTER_HH
+#ifndef SCRIBO_FUN_V2B_OBJECTS_SMALL_FILTER_HH
+# define SCRIBO_FUN_V2B_OBJECTS_SMALL_FILTER_HH
 
 /// \file
 ///
@@ -58,8 +58,8 @@ namespace scribo
       /// Filter Functor.
       /// Return false for all objects which are too small.
       template <typename L>
-      struct small_objects_filter
-	: Function_v2b< small_objects_filter<L> >
+      struct objects_small_filter
+	: Function_v2b< objects_small_filter<L> >
       {
 	typedef accu::math::count<mln_psite(L)> card_t;
 
@@ -68,7 +68,7 @@ namespace scribo
 	/// \param[in] objects Component bounding boxes.
 	/// \param[in] min_size Minimum component size.
 	//
-	small_objects_filter(const object_image(L)& objects,
+	objects_small_filter(const object_image(L)& objects,
 			     unsigned min_size);
 
 
@@ -96,7 +96,7 @@ namespace scribo
 
       template <typename L>
       inline
-      small_objects_filter<L>::small_objects_filter(
+      objects_small_filter<L>::objects_small_filter(
 	const object_image(L)& objects,
 	unsigned min_size)
       {
@@ -109,7 +109,7 @@ namespace scribo
       template <typename L>
       inline
       bool
-      small_objects_filter<L>::operator()(const mln_value(L)& l) const
+      objects_small_filter<L>::operator()(const mln_value(L)& l) const
       {
 	if (l == literal::zero)
 	  return true;
@@ -126,4 +126,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_FILTER_SMALL_OBJECTS_HH
+#endif // ! SCRIBO_FUN_V2B_OBJECTS_SMALL_FILTER_HH

@@ -29,7 +29,7 @@
 #include <mln/io/pbm/all.hh>
 #include <mln/value/label_16.hh>
 
-#include <scribo/filter/thin_objects.hh>
+#include <scribo/filter/objects_thin.hh>
 #include <scribo/debug/usage.hh>
 
 const char *args_desc[][2] =
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
   obj_ima_t objects
     = scribo::primitive::extract::objects(input, c8(), nobjects);
 
-  obj_ima_t filtered = scribo::filter::thin_objects(objects, atoi(argv[2]));
+  obj_ima_t filtered = scribo::filter::objects_thin(objects, atoi(argv[2]));
   io::pbm::save(data::convert(bool(), filtered), argv[3]);
 
   trace::exiting("main");

@@ -35,8 +35,8 @@
 
 #include <scribo/binarization/simple.hh>
 #include <scribo/preprocessing/unskew.hh>
-#include <scribo/filter/small_objects.hh>
-#include <scribo/filter/thin_objects.hh>
+#include <scribo/filter/objects_small.hh>
+#include <scribo/filter/objects_thin.hh>
 
 #include <scribo/debug/usage.hh>
 
@@ -65,8 +65,8 @@ int main(int argc, char *argv[])
   image2d<bool> input_bw = scribo::binarization::simple(input);
 
   logical::not_inplace(input_bw);
-  input_bw = scribo::filter::small_objects(input_bw, c8(), value::label_16(), 3);
-  input_bw = scribo::filter::thin_objects(input_bw, c8(), value::label_16(), 1);
+  input_bw = scribo::filter::objects_small(input_bw, c8(), value::label_16(), 3);
+  input_bw = scribo::filter::objects_thin(input_bw, c8(), value::label_16(), 1);
 
   input_bw = scribo::preprocessing::unskew(input_bw).first();
 

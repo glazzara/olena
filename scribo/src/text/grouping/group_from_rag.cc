@@ -48,12 +48,12 @@
 #include <scribo/primitive/link/with_rag.hh>
 //#include <scribo/primitive/group/from_rag.hh>
 
-#include <scribo/filter/small_objects.hh>
-#include <scribo/filter/thin_objects.hh>
-#include <scribo/filter/thick_objects.hh>
+#include <scribo/filter/objects_small.hh>
+#include <scribo/filter/objects_thin.hh>
+#include <scribo/filter/objects_thick.hh>
 
 
-#include <scribo/fun/v2b/small_objects_filter.hh>
+#include <scribo/fun/v2b/objects_small_filter.hh>
 #include <scribo/debug/save_bboxes_image.hh>
 #include <scribo/debug/save_linked_bboxes_image.hh>
 #include <scribo/make/debug_filename.hh>
@@ -177,13 +177,13 @@ int main(int argc, char* argv[])
 
   /// First filtering.
   objects_t filtered_objects
-    = scribo::filter::small_objects(objects, 6);
+    = scribo::filter::objects_small(objects, 6);
 
   filtered_objects
-    = scribo::filter::thin_objects(filtered_objects, 3);
+    = scribo::filter::objects_thin(filtered_objects, 3);
 
   filtered_objects
-    = scribo::filter::thick_objects(filtered_objects,
+    = scribo::filter::objects_thick(filtered_objects,
 				    math::min(input.ncols(), input.nrows()) / 6);
 
 

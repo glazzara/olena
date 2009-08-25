@@ -43,7 +43,7 @@
 #include <scribo/primitive/link/with_single_right_link.hh>
 #include <scribo/debug/save_linked_bboxes_image.hh>
 #include <scribo/primitive/group/from_double_link.hh>
-#include <scribo/filter/small_objects.hh>
+#include <scribo/filter/objects_small.hh>
 
 #include <scribo/debug/save_bboxes_image.hh>
 #include <scribo/make/debug_filename.hh>
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
   typedef object_image(L) text_t;
   text_t text = primitive::extract::objects(input, c8(), nbboxes);
 
-  text = filter::small_objects(text, 4);
+  text = filter::objects_small(text, 4);
 
   object_links<L> left_link
     = primitive::link::with_single_left_link(text, atoi(argv[2]));

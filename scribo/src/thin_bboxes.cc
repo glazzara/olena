@@ -34,7 +34,7 @@
 
 
 #include <scribo/text/extract_lines.hh>
-#include <scribo/filter/thin_objects.hh>
+#include <scribo/filter/objects_thin.hh>
 
 int usage(const char *name)
 {
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
   if (argc < 1)
     return usage(argv[0]);
 
-  scribo::make::internal::debug_filename_prefix = "thin_objects";
+  scribo::make::internal::debug_filename_prefix = "objects_thin";
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
   typedef object_image(image2d<value::label_16>) text_t;
   text_t lines = scribo::text::extract_lines(input, c8(), nlines);
 
-  text_t filtered_lines = scribo::filter::thin_objects(lines, 5);
+  text_t filtered_lines = scribo::filter::objects_thin(lines, 5);
 
   scribo::debug::save_bboxes_image(input, filtered_lines.bboxes(),
 				   literal::red,

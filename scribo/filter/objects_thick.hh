@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_FILTER_THICK_OBJECTS_HH
-# define SCRIBO_FILTER_THICK_OBJECTS_HH
+#ifndef SCRIBO_FILTER_OBJECTS_THICK_HH
+# define SCRIBO_FILTER_OBJECTS_THICK_HH
 
 /// \file
 ///
@@ -60,7 +60,7 @@ namespace scribo
     template <typename I, typename N, typename V>
     inline
     mln_concrete(I)
-    thick_objects(const Image<I>& input_,
+    objects_thick(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_,
 		  const V& label_type,
 		  unsigned max_thickness);
@@ -76,7 +76,7 @@ namespace scribo
     template <typename L>
     inline
     object_image(L)
-    thick_objects(const object_image(L)& objects,
+    objects_thick(const object_image(L)& objects,
 		  unsigned max_thickness);
 
 
@@ -130,12 +130,12 @@ namespace scribo
     template <typename I, typename N, typename V>
     inline
     mln_concrete(I)
-    thick_objects(const Image<I>& input_,
+    objects_thick(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_,
 		  const V& label_type,
 		  unsigned max_thickness)
     {
-      trace::entering("scribo::filter::thick_objects");
+      trace::entering("scribo::filter::objects_thick");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -155,7 +155,7 @@ namespace scribo
       mln_concrete(I) output = duplicate(input);
       data::fill((output | pw::value(objects) == literal::zero).rw(), false);
 
-      trace::exiting("scribo::filter::thick_objects");
+      trace::exiting("scribo::filter::objects_thick");
       return output;
     }
 
@@ -163,10 +163,10 @@ namespace scribo
     template <typename L>
     inline
     object_image(L)
-    thick_objects(const object_image(L)& objects,
+    objects_thick(const object_image(L)& objects,
 		  unsigned max_thickness)
     {
-      trace::entering("scribo::filter::thick_objects");
+      trace::entering("scribo::filter::objects_thick");
 
       mln_precondition(objects.is_valid());
 
@@ -177,7 +177,7 @@ namespace scribo
       output.init_from_(objects);
       output.relabel(is_not_too_thick);
 
-      trace::exiting("scribo::filter::thick_objects");
+      trace::exiting("scribo::filter::objects_thick");
       return output;
     }
 
@@ -188,4 +188,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_FILTER_THICK_OBJECTS_HH
+#endif // ! SCRIBO_FILTER_OBJECTS_THICK_HH

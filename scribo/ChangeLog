@@ -1,5 +1,39 @@
 2009-08-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Rename filters.
+
+	* filter/all.hh: Update includes.
+
+	* filter/large_objects.hh,
+	* filter/small_object_groups.hh,
+	* filter/small_objects.hh,
+	* filter/thick_objects.hh,
+	* filter/thin_objects.hh
+	* fun/v2b/small_objects_filter.hh: Move ...
+
+	* filter/object_groups_small.hh,
+	* filter/objects_large.hh,
+	* filter/objects_small.hh,
+	* filter/objects_thick.hh,
+	* filter/objects_thin.hh,
+	* fun/v2b/objects_small_filter.hh: ... here.
+
+	* src/filter/large_objects.cc,
+	* src/filter/small_objects.cc,
+	* src/filter/thick_objects.cc,
+	* src/filter/thin_objects.cc,
+	* src/preprocess.cc,
+	* src/recognition.cc,
+	* src/text/grouping/group_from_double_link.cc,
+	* src/text/grouping/group_from_double_several_links.cc,
+	* src/text/grouping/group_from_rag.cc,
+	* src/text_in_photo.cc,
+	* src/thin_bboxes.cc,
+	* tests/filter/small_and_large_bboxes.cc: Update function calls
+	and includes.
+
+2009-08-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Mass renaming/cleanup in Scribo.
 
 	* extract/primitive/canvas.hh,

@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_FILTER_LARGE_OBJECTS_HH
-# define SCRIBO_FILTER_LARGE_OBJECTS_HH
+#ifndef SCRIBO_FILTER_OBJECTS_LARGE_HH
+# define SCRIBO_FILTER_OBJECTS_LARGE_HH
 
 /// \file
 ///
@@ -65,7 +65,7 @@ namespace scribo
     /// \return A binary image without large objects.
     template <typename I, typename N, typename V>
     mln_concrete(I)
-    large_objects(const Image<I>& input_,
+    objects_large(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_,
 		  const V& label_type,
 		  unsigned max_size);
@@ -78,7 +78,7 @@ namespace scribo
     /// \return updated text data.
     template <typename L>
     object_image(L)
-    large_objects(const object_image(L)& objects,
+    objects_large(const object_image(L)& objects,
 		  unsigned max_size);
 
 
@@ -93,8 +93,8 @@ namespace scribo
       /// Filter Functor.
       /// Return false for all objects which are too large.
       template <typename L>
-      struct large_objects_filter
-	: Function_v2b< large_objects_filter<L> >
+      struct objects_large_filter
+	: Function_v2b< objects_large_filter<L> >
       {
 
 	typedef accu::math::count<mln_psite(L)> card_t;
@@ -103,7 +103,7 @@ namespace scribo
 	///
 	/// \param[in] compbboxes Component bounding boxes.
 	/// \param[in] max_size Maximum object size.
-	large_objects_filter(const object_image(L)& objects,
+	objects_large_filter(const object_image(L)& objects,
 			     unsigned max_size)
 	{
 	  card_ = labeling::compute(card_t(), objects, objects.nlabels());
@@ -139,12 +139,12 @@ namespace scribo
     template <typename I, typename N, typename V>
     inline
     mln_concrete(I)
-    large_objects(const Image<I>& input_,
+    objects_large(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_,
 		  const V& label_type,
 		  unsigned max_size)
     {
-      trace::entering("scribo::filter::large_objects");
+      trace::entering("scribo::filter::objects_large");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -156,14 +156,14 @@ namespace scribo
       typedef object_image(mln_ch_value(I,V)) lbl_t;
       lbl_t lbl = primitive::extract::objects(input, nbh, nlabels);
 
-      typedef internal::large_objects_filter<lbl_t> func_t;
+      typedef internal::objects_large_filter<lbl_t> func_t;
       func_t fv2b(lbl, max_size);
       labeling::relabel_inplace(lbl, nlabels, fv2b);
 
       mln_concrete(I) output = duplicate(input);
       data::fill((output | pw::value(lbl) == literal::zero).rw(), false);
 
-      trace::exiting("scribo::filter::large_objects");
+      trace::exiting("scribo::filter::objects_large");
       return output;
     }
 
@@ -171,20 +171,20 @@ namespace scribo
     template <typename L>
     inline
     object_image(L)
-    large_objects(const object_image(L)& objects,
+    objects_large(const object_image(L)& objects,
 		  unsigned max_size)
     {
-      trace::entering("scribo::filter::large_objects");
+      trace::entering("scribo::filter::objects_large");
 
       mln_precondition(objects.is_valid());
 
-      internal::large_objects_filter<L> f(objects, max_size);
+      internal::objects_large_filter<L> f(objects, max_size);
 
       object_image(L) output;
       output.init_from_(objects);
       output.relabel(f);
 
-      trace::exiting("scribo::filter::large_objects");
+      trace::exiting("scribo::filter::objects_large");
       return output;
     }
 
@@ -195,4 +195,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_FILTER_LARGE_OBJECTS_HH
+#endif // ! SCRIBO_FILTER_OBJECTS_LARGE_HH

@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_FILTER_SMALL_OBJECT_GROUPS_HH
-# define SCRIBO_FILTER_SMALL_OBJECT_GROUPS_HH
+#ifndef SCRIBO_FILTER_OBJECT_GROUPS_SMALL_HH
+# define SCRIBO_FILTER_OBJECT_GROUPS_SMALL_HH
 
 /// \file
 ///
@@ -56,7 +56,7 @@ namespace scribo
     */
     template <typename L>
     mln::util::array<bool>
-    small_object_groups(const object_groups<L>& groups,
+    object_groups_small(const object_groups<L>& groups,
 			unsigned n_links);
 
 
@@ -66,7 +66,7 @@ namespace scribo
     template <typename L>
     inline
     mln::util::array<bool>
-    small_object_groups(const object_groups<L>& parent_link,
+    object_groups_small(const object_groups<L>& parent_link,
 			unsigned n_links)
     {
       // Counting the number of objects per group.
@@ -89,5 +89,5 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_FILTER_SMALL_OBJECT_GROUPS_HH
+#endif // ! SCRIBO_FILTER_OBJECT_GROUPS_SMALL_HH
 

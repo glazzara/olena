@@ -30,7 +30,7 @@
 
 #include <mln/value/label_16.hh>
 
-#include <scribo/filter/large_objects.hh>
+#include <scribo/filter/objects_large.hh>
 #include <scribo/debug/usage.hh>
 
 const char *args_desc[][2] =
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
   obj_ima_t objects
     = scribo::primitive::extract::objects(input, c8(), nobjects);
 
-  obj_ima_t filtered = scribo::filter::large_objects(objects, atoi(argv[2]));
+  obj_ima_t filtered = scribo::filter::objects_large(objects, atoi(argv[2]));
   io::pbm::save(data::convert(bool(), filtered), argv[3]);
 
   trace::exiting("main");

@@ -42,8 +42,8 @@
 #include <scribo/primitive/link/with_several_left_links.hh>
 #include <scribo/primitive/link/with_several_right_links.hh>
 #include <scribo/primitive/group/from_double_link.hh>
-#include <scribo/filter/small_objects.hh>
-#include <scribo/filter/thin_objects.hh>
+#include <scribo/filter/objects_small.hh>
+#include <scribo/filter/objects_thin.hh>
 #include <scribo/text/recognition.hh>
 
 #include <scribo/debug/usage.hh>
@@ -82,8 +82,8 @@ int main(int argc, char* argv[])
     objects = scribo::primitive::extract::objects(input, c8(), nbboxes);
 
   /// Filter non interesting objects
-  objects = filter::small_objects(objects, 4);
-  objects = filter::thin_objects<L>(objects, 2);
+  objects = filter::objects_small(objects, 4);
+  objects = filter::objects_thin<L>(objects, 2);
 
   /// Group objects.
   object_links<L> left_link

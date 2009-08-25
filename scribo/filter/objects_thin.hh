@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_FILTER_THIN_OBJECTS_HH
-# define SCRIBO_FILTER_THIN_OBJECTS_HH
+#ifndef SCRIBO_FILTER_OBJECTS_THIN_HH
+# define SCRIBO_FILTER_OBJECTS_THIN_HH
 
 /// \file
 ///
@@ -58,7 +58,7 @@ namespace scribo
     template <typename I, typename N, typename V>
     inline
     mln_concrete(I)
-    thin_objects(const Image<I>& input_,
+    objects_thin(const Image<I>& input_,
 		 const Neighborhood<N>& nbh_,
 		 const V& label_type,
 		 unsigned min_thickness);
@@ -73,7 +73,7 @@ namespace scribo
     template <typename L>
     inline
     object_image(L)
-    thin_objects(const object_image(L)& text,
+    objects_thin(const object_image(L)& text,
 		 unsigned min_thickness);
 
 
@@ -86,8 +86,8 @@ namespace scribo
       /// Filter Functor.
       /// Return false for all objects which are too large.
       template <typename L>
-      struct thin_objects_filter
-	: Function_v2b< thin_objects_filter<L> >
+      struct objects_thin_filter
+	: Function_v2b< objects_thin_filter<L> >
       {
 	typedef accu::shape::bbox<mln_psite(L)> box_accu_t;
 
@@ -95,7 +95,7 @@ namespace scribo
 	///
 	/// \param[in] objects object bounding boxes.
 	/// \param[in] min_thickness the minimum thickness allowed.
-	thin_objects_filter(const object_image(L)& objects,
+	objects_thin_filter(const object_image(L)& objects,
 			    unsigned min_thickness)
 	  : objects_(objects), min_thickness_(min_thickness)
 	{
@@ -128,12 +128,12 @@ namespace scribo
     template <typename I, typename N, typename V>
     inline
     mln_concrete(I)
-    thin_objects(const Image<I>& input_,
+    objects_thin(const Image<I>& input_,
 		 const Neighborhood<N>& nbh_,
 		 const V& label_type,
 		 unsigned min_thickness)
     {
-      trace::entering("scribo::filter::thin_objects");
+      trace::entering("scribo::filter::objects_thin");
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -146,7 +146,7 @@ namespace scribo
       object_image(lbl_t) objects
 	  = primitive::extract::objects(input, nbh, nlabels);
 
-      typedef internal::thin_objects_filter<lbl_t> func_t;
+      typedef internal::objects_thin_filter<lbl_t> func_t;
       func_t fv2b(objects, min_thickness);
       objects.relabel(fv2b);
 
@@ -154,7 +154,7 @@ namespace scribo
       data::fill((output | pw::value(objects) == pw::cst(literal::zero)).rw(),
 		 false);
 
-      trace::exiting("scribo::filter::thin_objects");
+      trace::exiting("scribo::filter::objects_thin");
       return output;
     }
 
@@ -162,21 +162,21 @@ namespace scribo
     template <typename L>
     inline
     object_image(L)
-    thin_objects(const object_image(L)& objects,
+    objects_thin(const object_image(L)& objects,
 		 unsigned min_thickness)
     {
-      trace::entering("scribo::filter::thin_objects");
+      trace::entering("scribo::filter::objects_thin");
 
       mln_precondition(objects.is_valid());
 
-      typedef internal::thin_objects_filter<L> func_t;
+      typedef internal::objects_thin_filter<L> func_t;
       func_t is_not_too_thin(objects, min_thickness);
 
       object_image(L) output;
       output.init_from_(objects);
       output.relabel(is_not_too_thin);
 
-      trace::exiting("scribo::filter::thin_objects");
+      trace::exiting("scribo::filter::objects_thin");
       return output;
     }
 
@@ -187,4 +187,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_FILTER_THIN_OBJECTS_HH
+#endif // ! SCRIBO_FILTER_OBJECTS_THIN_HH

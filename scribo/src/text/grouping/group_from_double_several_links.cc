@@ -42,7 +42,7 @@
 #include <scribo/primitive/link/with_several_right_links.hh>
 #include <scribo/debug/save_linked_bboxes_image.hh>
 #include <scribo/primitive/group/from_double_link.hh>
-#include <scribo/filter/small_objects.hh>
+#include <scribo/filter/objects_small.hh>
 
 #include <scribo/debug/save_bboxes_image.hh>
 #include <scribo/make/debug_filename.hh>
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
 
 
   std::cout << "Remove small components" << std::endl;
-  text = filter::small_objects(text,4);
+  text = filter::objects_small(text,4);
 
   std::cout << "Group with left link" << std::endl;
   object_links<L> left_link

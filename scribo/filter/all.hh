@@ -41,9 +41,10 @@ namespace scribo
 
 } // end of namespace scribo
 
-# include <scribo/filter/large_objects.hh>
-# include <scribo/filter/small_objects.hh>
-# include <scribo/filter/thick_objects.hh>
-# include <scribo/filter/thin_objects.hh>
+# include <scribo/filter/object_groups_small.hh>
+# include <scribo/filter/objects_large.hh>
+# include <scribo/filter/objects_small.hh>
+# include <scribo/filter/objects_thick.hh>
+# include <scribo/filter/objects_thin.hh>
 
 #endif // ! SCRIBO_FILTER_ALL_HH

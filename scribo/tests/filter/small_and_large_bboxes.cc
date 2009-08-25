@@ -38,7 +38,7 @@
 #include <scribo/primitive/group/apply.hh>
 #include <scribo/primitive/link/with_graph.hh>
 #include <scribo/primitive/group/from_graph.hh>
-#include <scribo/filter/small_objects.hh>
+#include <scribo/filter/objects_small.hh>
 #include <scribo/util/text.hh>
 
 #include <scribo/make/debug_filename.hh>
@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
   mln_assertion(grouped_text.nlabels() == 6u);
 
   text_t
-    filtered_text = scribo::filter::small_objects(grouped_text, 20);
+    filtered_text = scribo::filter::objects_small(grouped_text, 20);
 
   mln_assertion(filtered_text.nlabels() == 2u);
 

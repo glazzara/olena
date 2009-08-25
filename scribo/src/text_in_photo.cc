@@ -48,10 +48,10 @@
 #include <scribo/primitive/link/with_single_right_link.hh>
 #include <scribo/primitive/group/from_double_link.hh>
 #include <scribo/primitive/group/from_single_link.hh>
-#include <scribo/filter/small_objects.hh>
-#include <scribo/filter/thin_objects.hh>
-#include <scribo/filter/thick_objects.hh>
-#include <scribo/filter/small_object_groups.hh>
+#include <scribo/filter/objects_small.hh>
+#include <scribo/filter/objects_thin.hh>
+#include <scribo/filter/objects_thick.hh>
+#include <scribo/filter/object_groups_small.hh>
 
 #include <scribo/make/debug_filename.hh>
 #include <scribo/debug/save_bboxes_image.hh>
@@ -97,13 +97,13 @@ highlighted.");
 
   /// First filtering.
   object_image(L) filtered_objects
-    = scribo::filter::small_objects(objects, 6);
+    = scribo::filter::objects_small(objects, 6);
 
   filtered_objects
-    = scribo::filter::thin_objects(filtered_objects, 1);
+    = scribo::filter::objects_thin(filtered_objects, 1);
 
   filtered_objects
-    = scribo::filter::thick_objects(filtered_objects,
+    = scribo::filter::objects_thick(filtered_objects,
 	  math::min(input.ncols(), input.nrows()) / 5);
 
   /// Grouping potential objects
@@ -131,7 +131,7 @@ highlighted.");
 
     // Remove objects part of groups with less than 3 objects.
   mln::util::array<bool>
-    to_be_kept = filter::small_object_groups(groups, 3);
+    to_be_kept = filter::object_groups_small(groups, 3);
 
 
   // FOR DEBUGGING PURPOSE.

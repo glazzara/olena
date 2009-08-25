@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_FILTER_SMALL_OBJECTS_HH
-# define SCRIBO_FILTER_SMALL_OBJECTS_HH
+#ifndef SCRIBO_FILTER_OBJECTS_SMALL_HH
+# define SCRIBO_FILTER_OBJECTS_SMALL_HH
 
 /// \file
 ///
@@ -50,7 +50,7 @@
 
 
 # include <scribo/core/object_image.hh>
-# include <scribo/fun/v2b/small_objects_filter.hh>
+# include <scribo/fun/v2b/objects_small_filter.hh>
 # include <scribo/primitive/extract/objects.hh>
 
 
@@ -74,7 +74,7 @@ namespace scribo
     /// \return A binary image without small objects.
     template <typename I, typename N, typename V>
     mln_concrete(I)
-    small_objects(const Image<I>& input_,
+    objects_small(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_,
 		  const V& label_type,
 		  unsigned min_size);
@@ -88,7 +88,7 @@ namespace scribo
     /// \return An object image without small objects.
     template <typename L>
     object_image(L)
-    small_objects(const object_image(L)& objects,
+    objects_small(const object_image(L)& objects,
 		  unsigned min_size);
 
 
@@ -98,12 +98,12 @@ namespace scribo
    template <typename I, typename N, typename V>
    inline
    mln_concrete(I)
-   small_objects(const Image<I>& input_,
+   objects_small(const Image<I>& input_,
 		 const Neighborhood<N>& nbh_,
 		 const V& label_type,
 		 unsigned min_size)
    {
-     trace::entering("scribo::filter::small_objects");
+     trace::entering("scribo::filter::objects_small");
 
      const I& input = exact(input_);
      const N& nbh = exact(nbh_);
@@ -115,7 +115,7 @@ namespace scribo
      typedef mln_ch_value(I,V) lbl_t;
      object_image(lbl_t) lbl = primitive::extract::objects(input, nbh, nlabels);
 
-     typedef fun::v2b::small_objects_filter<mln_ch_value(I,V)> func_t;
+     typedef fun::v2b::objects_small_filter<mln_ch_value(I,V)> func_t;
      func_t fv2b(lbl, min_size);
      lbl.relabel(fv2b);
 
@@ -123,7 +123,7 @@ namespace scribo
      data::fill((output | pw::value(lbl) == pw::cst(literal::zero)).rw(),
 		false);
 
-     trace::exiting("scribo::filter::small_objects");
+     trace::exiting("scribo::filter::objects_small");
      return output;
    }
 
@@ -131,20 +131,20 @@ namespace scribo
     template <typename L>
     inline
     object_image(L)
-    small_objects(const object_image(L)& objects,
+    objects_small(const object_image(L)& objects,
 		  unsigned min_size)
     {
-      trace::entering("scribo::filter::small_objects");
+      trace::entering("scribo::filter::objects_small");
 
       mln_precondition(objects.is_valid());
 
-      fun::v2b::small_objects_filter<L> f(objects, min_size);
+      fun::v2b::objects_small_filter<L> f(objects, min_size);
 
       object_image(L) output;
       output.init_from_(objects);
       output.relabel(f);
 
-      trace::exiting("scribo::filter::small_objects");
+      trace::exiting("scribo::filter::objects_small");
       return output;
     }
 
@@ -155,4 +155,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_FILTER_SMALL_OBJECTS_HH
+#endif // ! SCRIBO_FILTER_OBJECTS_SMALL_HH
