@@ -35,13 +35,21 @@
 #include <scribo/debug/usage.hh>
 
 #include <scribo/core/object_image.hh>
-#include <scribo/extract/primitive/lines_h_pattern.hh>
-#include <scribo/extract/primitive/lines_v_pattern.hh>
+#include <scribo/extract/primitive/lines_h_thick.hh>
+#include <scribo/extract/primitive/lines_v_thick.hh>
+
+#include <scribo/extract/primitive/lines_h_single.hh>
+#include <scribo/extract/primitive/lines_v_single.hh>
+
+#include <mln/util/timer.hh>
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image." },
-  { "length", "   Minimum line length." },
+  { "input.pbm", "A binary image. Objects are set to True." },
+  { "vlength  ", "Minimum vertical line length." },
+  { "vratio   "  "Minimum vertical ratio height/width." },
+  { "hlength  ", "Minimum horizontal line length." },
+  { "hratio   "  "Minimum horizontal ratio width/height." },
   {0, 0}
 };
 
@@ -50,12 +58,15 @@ int main(int argc, char *argv[])
 {
   using namespace mln;
 
-  if (argc != 4)
+  if (argc != 7)
     return scribo::debug::usage(argv,
-				"Extract discontinued horizontal and vertical lines",
-				"input.pbm length output.ppm",
+				"Extract thick horizontal and vertical lines.\
+\n Common argument values: 150 10 150 10.",
+				"<input.pbm> <vlength> <vratio> <hlength>\
+ <hration> <output.ppm>",
 				args_desc,
-				"A color image. Horizontal lines are in red and vertical lines in green.");
+				"A color image. Horizontal lines are in red\
+ and vertical lines in green.");
 
   trace::entering("main");
 
@@ -63,8 +74,36 @@ int main(int argc, char *argv[])
   I input;
   io::pbm::load(input, argv[1]);
 
-  I hlines = scribo::extract::primitive::lines_h_pattern(input, atoi(argv[2]));
-  I vlines = scribo::extract::primitive::lines_v_pattern(input, atoi(argv[2]));
+  typedef image2d<value::label_16> L;
+
+  value::label_16
+    nhlines,
+    nvlines;
+
+  util::timer t;
+
+  t.start();
+
+  object_image(L)
+    hlines = scribo::extract::primitive::lines_h_thick(input, c8(),
+						       nhlines, atoi(argv[2])),
+    vlines = scribo::extract::primitive::lines_v_thick(input, c8(),
+						       nvlines, atoi(argv[2]));
+  std::cout << "lines thick done" << std::endl;
+  std::cout << t << std::endl;
+  t.restart();
+
+
+  hlines = scribo::extract::primitive::lines_h_single(hlines,
+						      atoi(argv[2]),
+						      10);
+
+  vlines = scribo::extract::primitive::lines_v_single(vlines,
+						      atoi(argv[2]),
+						      10);
+
+  std::cout << "lines single done" << std::endl;
+  std::cout << t << std::endl;
 
   image2d<value::rgb8> out = debug::superpose(input, hlines, literal::red);
   out = debug::superpose(out, vlines, literal::green);

@@ -1,5 +1,16 @@
 2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add/improve line extraction examples.
+
+	* src/extract/primitive/Makefile.am: Add new examples.
+
+	* src/extract/primitive/find_discontinued_lines.cc: Cleanup.
+
+	* src/extract/primitive/find_single_lines.cc,
+	* src/extract/primitive/find_thick_lines.cc: New.
+
+2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	* extract/primitive/objects.hh: use blobs_and_compute.
 
 2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>

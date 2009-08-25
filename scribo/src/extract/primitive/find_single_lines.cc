@@ -34,14 +34,17 @@
 
 #include <scribo/debug/usage.hh>
 
-#include <scribo/core/object_image.hh>
-#include <scribo/extract/primitive/lines_h_pattern.hh>
-#include <scribo/extract/primitive/lines_v_pattern.hh>
+#include <scribo/extract/primitive/objects.hh>
+#include <scribo/extract/primitive/lines_h_single.hh>
+#include <scribo/extract/primitive/lines_v_single.hh>
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image." },
-  { "length", "   Minimum line length." },
+  { "input.pbm", "A binary image. Background must be set to False." },
+  { "hlength",    "Minimum horizontal line length." },
+  { "hbratio",  "Bbox size ratio for horizontal lines." },
+  { "vlength",    "Minimum vertical line length." },
+  { "vbratio",  "Bbox size ratio for vertical lines." },
   {0, 0}
 };
 
@@ -50,26 +53,40 @@ int main(int argc, char *argv[])
 {
   using namespace mln;
 
-  if (argc != 4)
+  if (argc != 7)
     return scribo::debug::usage(argv,
-				"Extract discontinued horizontal and vertical lines",
-				"input.pbm length output.ppm",
+				"Extract single horizontal and vertical lines. \
+\n Common argument values: 100 10 100 10",
+				"<input.pbm> <length> <hbratio> <vbratio>\
+ <output.pbm>",
 				args_desc,
-				"A color image. Horizontal lines are in red and vertical lines in green.");
+				"A binary image of horizontal and vertical single lines.");
 
   trace::entering("main");
 
-  typedef image2d<bool> I;
-  I input;
+  image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
-  I hlines = scribo::extract::primitive::lines_h_pattern(input, atoi(argv[2]));
-  I vlines = scribo::extract::primitive::lines_v_pattern(input, atoi(argv[2]));
+  typedef image2d<value::label_16> L;
+
+  value::label_16 nhlines;
+  object_image(L)
+    objects = scribo::extract::primitive::objects(input, c8(), nhlines);
+
+
+  object_image(L)
+    hlines = scribo::extract::primitive::lines_h_single(objects,
+							atoi(argv[2]),
+							atof(argv[3]));
+
+  object_image(L)
+    vlines = scribo::extract::primitive::lines_v_single(objects,
+							atoi(argv[4]),
+							atof(argv[5]));
 
   image2d<value::rgb8> out = debug::superpose(input, hlines, literal::red);
   out = debug::superpose(out, vlines, literal::green);
-
-  io::ppm::save(out, argv[3]);
+  io::ppm::save(out, argv[6]);
 
   trace::exiting("main");
 }
