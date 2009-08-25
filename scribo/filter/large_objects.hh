@@ -119,6 +119,8 @@ namespace scribo
 	/// \p max_size_.
 	bool operator()(const mln_value(L)& l) const
 	{
+	  if (l == literal::zero)
+	    return true;
 	  return card_[l] <= max_size_;
 	}
 

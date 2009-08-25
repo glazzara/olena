@@ -142,6 +142,17 @@ namespace scribo
     namespace internal
     {
 
+
+      template <typename I>
+      mln_site(I)
+      shift_site(const I& ima,
+		 const mln_site(I)& p, const mln_dpsite(mln_site_(I))& dp)
+      {
+	if (ima.has(p + dp))
+	  return p + dp;
+	return p;
+      }
+
       /// Draw a link graph in an image.
       /// Functor to be passed to depth_first_search.
       template <typename I>
@@ -288,24 +299,32 @@ namespace scribo
       I& input = exact(input_);
       mln_precondition(input.is_valid());
 
-      mln_site(I)::vec dleft = literal::origin;
+      typedef mln_site(I) P;
+
+      mln_dpsite(P) dleft = literal::zero;
       dleft[0] = 2;
-      mln_site(I)::vec dright = literal::origin;
+      mln_dpsite(P) dright = literal::zero;
       dright[0] = -2;
       for_all_components(i, left_link)
       {
 	mln::draw::line(input,
-			mass_centers[i] + dleft,
-			mass_centers[left_link[i]] + dleft,
+			internal::shift_site(input, mass_centers[i], dleft),
+			internal::shift_site(input,
+					     mass_centers[left_link[i]],
+					     dleft),
 			left_link_value);
 
 	mln::draw::line(input,
-			mass_centers[i] + dright,
-			mass_centers[right_link[i]] + dright,
+			internal::shift_site(input, mass_centers[i], dright),
+			internal::shift_site(input,
+					     mass_centers[right_link[i]],
+					     dright),
 			right_link_value);
 
 	mln::util::couple<bool, unsigned>
-	  nbh = text::grouping::internal::is_link_valid(left_link, right_link, i);
+	  nbh = text::grouping::internal::is_link_valid(left_link,
+							right_link,
+							i);
 
 	if (nbh.first())
 	  mln::draw::line(input,
@@ -335,6 +354,7 @@ namespace scribo
       I& input = exact(input_);
       mln_precondition(input.is_valid());
 
+      typedef mln_site(I) P;
       mln_site(I)::vec dleft = literal::origin;
       dleft[0] = 2;
       mln_site(I)::vec dright = literal::origin;
@@ -352,7 +372,9 @@ namespace scribo
 			right_link_value);
 
 	mln::util::couple<bool, unsigned>
-	  nbh = text::grouping::internal::is_link_valid(left_link, right_link, i);
+	  nbh = text::grouping::internal::is_link_valid(left_link,
+							right_link,
+							i);
 
 	if (nbh.first())
 	  mln::draw::line(input,

@@ -66,7 +66,8 @@ namespace scribo
 		      const mln::util::array<unsigned>& right_link,
 		      unsigned i)
 	{
-	  return mln::make::couple(right_link[left_link[i]] == i, left_link[i]);
+	  bool b = (right_link[left_link[i]] == i && left_link[i] != i);
+	  return mln::make::couple(b, left_link[i]);
 	}
 
 # endif // ! MLN_INCLUDE_ONLY

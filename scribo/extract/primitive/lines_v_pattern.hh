@@ -76,8 +76,10 @@ namespace scribo
 	window2d win;
 	convert::from_to(win_def, win);
 
+	//FIXME: Add reconstruction instead of this arbitrary dilation.
 	win::vline2d vwin(length/2 + 2);
 	return morpho::dilation(lines_pattern(input, length, 0, win), vwin);
+//	return lines_pattern(input, length, 0, win);
       }
 
 

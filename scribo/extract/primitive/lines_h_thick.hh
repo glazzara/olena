@@ -77,8 +77,8 @@ namespace scribo
         template <typename I, typename N, typename V>
 	void
         lines_h_thick_tests(const Image<I>& input,
-				   const Neighborhood<N>& nbh, V& nlines,
-				   unsigned line_length)
+			    const Neighborhood<N>& nbh, V& nlines,
+			    unsigned line_length)
 	{
 	  mlc_equal(mln_value(I),bool)::check();
 	  mlc_bool(mln_site_(I)::dim == 2)::check();
@@ -101,8 +101,8 @@ namespace scribo
       template <typename I, typename N, typename V>
       object_image(mln_ch_value(I,V))
       lines_h_thick(const Image<I>& input,
-			   const Neighborhood<N>& nbh, V& nlines,
-			   unsigned line_length)
+		    const Neighborhood<N>& nbh, V& nlines,
+		    unsigned line_length)
       {
 	trace::entering("scribo::primitive::lines_h_thick");
 

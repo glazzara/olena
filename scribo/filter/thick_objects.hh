@@ -109,6 +109,8 @@ namespace scribo
 	/// \param[in] l An image value.
 	bool operator()(const mln_value(L)& l) const
 	{
+	  if (l == literal::zero)
+	    return true;
 	  return objects_.bbox(l).nrows() < max_thickness_
 		&& objects_.bbox(l).ncols() < max_thickness_;
 	}

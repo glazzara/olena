@@ -29,7 +29,7 @@
 
 /// \file
 ///
-/// Group text bounding boxes from left and right links and validate
+/// Group objects from left and right links information and validate
 /// These links. A link must exist in both ways to be validated.
 
 
@@ -61,21 +61,31 @@ namespace scribo
     namespace grouping
     {
 
-      /// Group text bounding boxes from left and right links and validate
-      /// These links. A link must exist in both ways to be validated.
-      /*!
-      ** \param[in] objects    The Lines of text.
-      ** \param[in] left_link  The left neighbor of each line of text.
-      ** \param[in] right_link The right neighbor of each line of text.
-      **
-      ** \return New lines of text. Some of the lines of \p text may have
-      **	 been grouped.
+      /*! Group objects from left and right links information and
+	  validate These links. A link must exist in both ways to be
+	  validated.
+
+	  \param[in] objects     The Lines of text.
+	  \param[in] left_link   The left neighbor of each line of text.
+	  \param[in] right_link  The right neighbor of each line of text.
+	  \param[in] parent_link The function used to group components.
+
+	  \return An image of grouped objects.
       */
       template <typename L>
       object_image(L)
       group_from_double_link(const object_image(L)& objects,
 			     const mln::util::array<unsigned>& left_link,
+			     const mln::util::array<unsigned>& right_link,
+			           mln::util::array<unsigned>& parent_link);
+
+      /// \overload
+      template <typename L>
+      object_image(L)
+      group_from_double_link(const object_image(L)& objects,
+			     const mln::util::array<unsigned>& left_link,
 			     const mln::util::array<unsigned>& right_link);
+
 
 
 
@@ -87,7 +97,8 @@ namespace scribo
       object_image(L)
       group_from_double_link(const object_image(L)& objects,
 			     const mln::util::array<unsigned>& left_link,
-			     const mln::util::array<unsigned>& right_link)
+			     const mln::util::array<unsigned>& right_link,
+			           mln::util::array<unsigned>& parent_link)
       {
 	trace::entering("scribo::text::grouping::group_from_double_link");
 
@@ -116,8 +127,24 @@ namespace scribo
 	output.init_from_(objects);
 	output.relabel(parent);
 
+	parent_link = parent;
 	trace::exiting("scribo::text::grouping::group_from_double_link");
 	return output;
+      }
+
+
+      template <typename L>
+      inline
+      object_image(L)
+      group_from_double_link(const object_image(L)& objects,
+			     const mln::util::array<unsigned>& left_link,
+			     const mln::util::array<unsigned>& right_link)
+      {
+	mln::util::array<unsigned> parent_link;
+	return group_from_double_link(objects,
+				      left_link,
+				      right_link,
+				      parent_link);
       }
 
 

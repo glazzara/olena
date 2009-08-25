@@ -55,12 +55,14 @@ namespace scribo
 
       using namespace mln;
 
-      /// Link text objects with their neighbor line if they have one.
       /*!
-      ** \param[in] objects    An object image.
-      ** \param[in] link_array The neighbor line of each line.
-      **
-      ** \return An object image with grouped objects.
+	 \brief Link text objects with their neighbor line if they
+	 have one.
+
+	 \param[in] objects    An object image.
+	 \param[in] link_array The neighbor line of each line.
+
+	 \return An object image with grouped objects.
       */
       template <typename L>
       object_image(L)

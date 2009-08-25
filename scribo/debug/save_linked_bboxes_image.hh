@@ -216,9 +216,9 @@ namespace scribo
       mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
 
       mln::util::array<mln_result(accu::center<mln_psite(L)>)>
-	    mass_center = labeling::compute(accu::meta::center(),
-					    objects,
-					    objects.nlabels());
+	mass_center = labeling::compute(accu::meta::center(),
+					objects,
+					objects.nlabels());
 
       draw::bounding_boxes(tmp, objects.bboxes(), box_value);
       draw::bounding_box_links(tmp, mass_center,

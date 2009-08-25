@@ -82,8 +82,10 @@ namespace scribo
 	window2d win;
 	convert::from_to(win_def, win);
 
+	//FIXME: Add reconstruction instead of this arbitrary dilation.
 	win::hline2d hwin(length/2 + 2);
 	return morpho::dilation(lines_pattern(input, length, 1, win), hwin);
+//	return lines_pattern(input, length, 1, win);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
