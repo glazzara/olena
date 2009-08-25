@@ -1,5 +1,12 @@
 2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add new routines for line extraction.
+
+	* extract/primitive/lines_h_single.hh,
+	* extract/primitive/lines_v_single.hh: New.
+
+2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add/improve line extraction examples.
 
 	* src/extract/primitive/Makefile.am: Add new examples.
