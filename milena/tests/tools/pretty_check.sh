@@ -77,6 +77,7 @@
 output_directory=tmp
 output_file=tests.html
 check_log="$PWD/$output_directory/check.log"
+base_url_data="http://www.lrde.epita.fr/~lazzara/uttk"
 
 base_make_path=$1
 if [ -z "$base_make_path" ]; then
@@ -111,9 +112,9 @@ begin_output_file()
   cat > $output_file << EOF
 <html>
   <head>
-    <script language="javascript" src="http://api.uttk.org/javascripts/uttk.js"></script>
+    <script language="javascript" src="$base_url_data/javascripts/uttk.js"></script>
     <style type="text/css">
-      @import url('http://api.uttk.org/stylesheets/uttk.css');
+      @import url('$base_url_data/stylesheets/uttk.css');
     </style>
     </head>
   <body>
@@ -171,7 +172,7 @@ open_dir()
   <div class="node">
     <table class="title" id="FAIL">
       <tr>
-	<td width="11px" <img src="http://api.uttk.org/images/triangle.gif"/></td>
+	<td width="11px" <img src="$base_url_data/images/triangle.gif"/></td>
 	<td>$1</td>
 	<td width="20px">$3</td>
       </tr>
@@ -232,7 +233,7 @@ error_node()
   <div class="node">
   <table class="title" id="$class_id">
     <tr>
-      <td width="11px" <img src="http://api.uttk.org/images/triangle.gif"/></td>
+      <td width="11px" <img src="$base_url_data/images/triangle.gif"/></td>
       <td><a name="$name">$name</a></td>
       <td width="20px"><a href="#top">^ TOP</a></td>
     </tr>

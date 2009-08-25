@@ -1,5 +1,9 @@
 2009-08-24  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* tests/tools/pretty_check.sh: Change data base url.
+
+2009-08-24  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Introduce mixed windows and neighborhood for graph images.
 
 	* mln/core/box_runstart_piter.hh,
