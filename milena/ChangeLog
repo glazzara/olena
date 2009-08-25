@@ -1,5 +1,41 @@
 2009-08-24  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Introduce mixed windows and neighborhood for graph images.
+
+	* mln/core/box_runstart_piter.hh,
+	* mln/core/dpsites_piter.hh,
+	* mln/core/image/complex_window_piter.hh: Add new init_() member.
+
+	* mln/core/image/graph_elt_mixed_neighborhood.hh,
+	* mln/core/image/graph_elt_mixed_window.hh,
+	* mln/core/mixed_neighb.hh: New.
+
+	* mln/core/image/graph_elt_neighborhood.hh,
+	* mln/core/image/graph_elt_window.hh: Get rid of a template
+	parameter.
+
+	* mln/core/image/graph_window_piter.hh: Add a selector for
+	do_start_() implementation.
+
+	* mln/core/image/vertex_image.hh: Add a new include.
+
+	* mln/core/internal/neighb_base.hh: New neighborhood base class.
+
+	* mln/core/internal/neighb_niter_base.hh: New neiborhood iterator
+	base class.
+
+	* mln/core/internal/neighb_niter_impl.hh: Add a new specialization
+	for graph_elt_mixed_window.
+
+	* mln/core/neighb.hh: Make inherit from neighb_base.
+
+	* mln/core/window.hh: Update header.
+
+	* tests/core/image/vertex_and_edge_image.cc: Use a
+	graph_elt_mixed_window.
+
+2009-08-24  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Small fixes in Milena.
 
 	* mln/canvas/labeling/blobs.hh,

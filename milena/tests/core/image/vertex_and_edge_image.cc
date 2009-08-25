@@ -25,6 +25,7 @@
 
 #include <vector>
 
+#include <mln/core/image/graph_elt_mixed_window.hh>
 #include <mln/core/image/vertex_image.hh>
 #include <mln/core/image/edge_image.hh>
 #include <mln/fun/i2v/array.hh>
@@ -123,7 +124,7 @@ int main()
   mln_piter_(v_ima_t) v(v_ima.domain());
 
 
-  typedef graph_elt_window<util::graph,
+  typedef graph_elt_mixed_window<util::graph,
     v_ima_t::domain_t,
     e_ima_t::domain_t> edge_win_t;
   edge_win_t win;

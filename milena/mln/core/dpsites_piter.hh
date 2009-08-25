@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,6 +56,10 @@ namespace mln
     /// \param[in] c Center point to iterate around.
     template <typename P>
     dpsites_fwd_piter(const V& v, const P& c);
+
+    /// Delayed initialization.
+    template <typename P>
+    void init_(const V& v, const P& c);
 
     /// Constructor without argument.
     dpsites_fwd_piter();
@@ -139,9 +144,19 @@ namespace mln
   inline
   dpsites_fwd_piter<V>::dpsites_fwd_piter(const V& v, const P& c)
   {
+    init_(v, c);
+  }
+
+  template <typename V>
+  template <typename P>
+  inline
+  void
+  dpsites_fwd_piter<V>::init_(const V& v, const P& c)
+  {
     this->change_target(v);
     this->center_at(c);
   }
+
 
   template <typename V>
   inline

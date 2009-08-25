@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,7 +40,8 @@ namespace mln
 
   // Forward declaration.
   template <typename P, typename W> class graph_window_base;
-  template <typename G, typename F, typename Q> class graph_elt_window;
+  template <typename G, typename S> class graph_elt_window;
+  template <typename G, typename S, typename S2> class graph_elt_mixed_window;
   template <typename G, typename F, typename I> class graph_elt_window_if;
   template <typename G, typename F> class line_graph_elt_window;
   namespace util
@@ -124,10 +126,10 @@ namespace mln
 
     /// Add more implementation for neighborhoods made from a
     /// graph_window_piter.
-    template <typename G, typename S, typename Q, typename E>
-    struct neighb_niter_impl<graph_elt_window<G,S,Q>, E>
+    template <typename G, typename S, typename E>
+    struct neighb_niter_impl<graph_elt_window<G,S>, E>
       : public neighb_niter_impl< graph_window_base< mln_result(S::fun_t),
-						     graph_elt_window<G,S,Q> >,
+						     graph_elt_window<G,S> >,
 				  E >
     {
 
@@ -151,6 +153,18 @@ namespace mln
     struct neighb_niter_impl<graph_elt_window_if<G,S,I>, E>
       : public neighb_niter_impl< graph_window_base< mln_result(S::fun_t),
 						     graph_elt_window_if<G,S,I> >,
+				  E >
+    {
+
+    };
+
+
+    /// Add more implementation for neighborhoods made from a
+    /// graph_window_piter.
+    template <typename G, typename S, typename S2, typename E>
+    struct neighb_niter_impl<graph_elt_mixed_window<G,S,S2>, E>
+      : public neighb_niter_impl< graph_window_base< mln_result(S2::fun_t),
+						     graph_elt_mixed_window<G,S,S2> >,
 				  E >
     {
 

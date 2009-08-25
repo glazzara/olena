@@ -33,6 +33,7 @@
 # include <mln/core/concept/graph.hh>
 # include <mln/core/image/graph_elt_window.hh>
 # include <mln/core/image/graph_elt_neighborhood.hh>
+# include <mln/core/image/graph_elt_mixed_neighborhood.hh>
 # include <mln/core/site_set/p_vertices.hh>
 # include <mln/pw/internal/image_base.hh>
 # include <mln/fun/i2v/array.hh>

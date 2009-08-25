@@ -63,6 +63,9 @@ namespace mln
      */
     box_runstart_piter(const box<P>& b);
 
+    /// Delayed initialization.
+    void init_(const box<P>& b);
+
     box_runstart_piter();
 
     /// Test the iterator validity.
@@ -101,8 +104,17 @@ namespace mln
   inline
   box_runstart_piter<P>::box_runstart_piter(const box<P>& b)
   {
+    init_(b);
+  }
+
+  template <typename P>
+  inline
+  void
+  box_runstart_piter<P>::init_(const box<P>& b)
+  {
     this->change_target(b);
   }
+
 
   template <typename P>
   inline

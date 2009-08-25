@@ -72,6 +72,10 @@ namespace mln
     complex_window_fwd_piter(const Window<W>& win, const Pref& p_ref);
     /// \}
 
+    /// Delayed initialization.
+    template <typename Pref>
+    void init_(const Window<W>& win, const Pref& p_ref);
+
     /// Manipulation.
     /// \{
     /// Test if the iterator is valid.
@@ -138,6 +142,10 @@ namespace mln
     complex_window_bkd_piter(const Window<W>& win, const Pref& p_ref);
     /// \}
 
+    /// Delayed initialization.
+    template <typename Pref>
+    void init_(const Window<W>& win, const Pref& p_ref);
+
     /// Manipulation.
     /// \{
     /// Test if the iterator is valid.
@@ -196,10 +204,21 @@ namespace mln
   complex_window_fwd_piter<I, G, W>::complex_window_fwd_piter(const Window<W>& win,
 							      const Pref& p_ref)
   {
+    init_(win, p_ref);
+  }
+
+  template <typename I, typename G, typename W>
+  template <typename Pref>
+  inline
+  void
+  complex_window_fwd_piter<I, G, W>::init_(const Window<W>& win,
+					   const Pref& p_ref)
+  {
     this->change_target(exact(win));
     center_at(p_ref);
     mln_postcondition(!this->is_valid());
   }
+
 
   template <typename I, typename G, typename W>
   inline
@@ -293,10 +312,21 @@ namespace mln
   complex_window_bkd_piter<I, G, W>::complex_window_bkd_piter(const Window<W>& win,
 							      const Pref& p_ref)
   {
+    init_(win, p_ref);
+  }
+
+  template <typename I, typename G, typename W>
+  template <typename Pref>
+  inline
+  void
+  complex_window_bkd_piter<I, G, W>::init_(const Window<W>& win,
+					   const Pref& p_ref)
+  {
     this->change_target(exact(win));
     center_at(p_ref);
     mln_postcondition(!this->is_valid());
   }
+
 
   template <typename I, typename G, typename W>
   inline

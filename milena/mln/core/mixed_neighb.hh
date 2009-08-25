@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,12 +23,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_CORE_NEIGHB_HH
-# define MLN_CORE_NEIGHB_HH
+#ifndef MLN_CORE_MIXED_NEIGHB_HH
+# define MLN_CORE_MIXED_NEIGHB_HH
 
 /// \file
 ///
 /// Definition of a window-to-neighborhood adapter.
+///
+/// Works for windows and neighborhoods having the elements' site set
+/// different from the center's site set.
 ///
 ///
 /// \todo See if the impl of from_to is fine.  What about removing the
@@ -45,9 +47,9 @@ namespace mln
 {
 
   // Forward declarations.
-  template <typename W> class neighb_fwd_niter;
-  template <typename W> class neighb_bkd_niter;
-  template <typename W> class neighb;
+  template <typename W> class mixed_neighb_fwd_niter;
+  template <typename W> class mixed_neighb_bkd_niter;
+  template <typename W> class mixed_neighb;
 
 
   namespace convert
@@ -58,11 +60,11 @@ namespace mln
 
       template <typename W>
       void
-      from_to_(const mln::neighb<W>& from, W& to);
+      from_to_(const mln::mixed_neighb<W>& from, W& to);
 
       template <typename W>
       void
-      from_to_(const W& from, mln::neighb<W>& to);
+      from_to_(const W& from, mln::mixed_neighb<W>& to);
 
     } // end of namespace mln::convert::over_load
 
@@ -73,69 +75,70 @@ namespace mln
   /// Adapter class from window to neighborhood.
 
   template <typename W>
-  class neighb
-    : public internal::neighb_base<W,neighb<W> >
+  class mixed_neighb
+    : public internal::neighb_base<W,mixed_neighb<W> >,
+      private mlc_is_a(W, Window)::check_t
   {
-    typedef internal::neighb_base<W,neighb<W> > super_;
+    typedef internal::neighb_base<W,mixed_neighb<W> > super_;
 
   public:
 
     /// Forward site iterator associated type.
-    typedef neighb_fwd_niter<W> fwd_niter;
+    typedef mixed_neighb_fwd_niter<W> fwd_niter;
 
     /// Backward site iterator associated type.
-    typedef neighb_bkd_niter<W> bkd_niter;
+    typedef mixed_neighb_bkd_niter<W> bkd_niter;
 
     /// Site iterator associated type.
     typedef fwd_niter niter;
 
 
     /// Constructor without argument.
-    neighb();
+    mixed_neighb();
 
     /// Constructor from a window \p win.
-    neighb(const W& win);
+    mixed_neighb(const W& win);
 
   };
 
 
-  // neighb_fwd_niter<W>
+  // mixed_neighb_fwd_niter<W>
 
   template <typename W>
-  class neighb_fwd_niter
-    : public internal::neighb_niter_base<W,neighb<W>,
+  class mixed_neighb_fwd_niter
+    : public internal::neighb_niter_base<W,mixed_neighb<W>,
 					 mln_fwd_qiter(W),neighb_fwd_niter<W> >
   {
     typedef
-      internal::neighb_niter_base<W,neighb<W>,
+      internal::neighb_niter_base<W,mixed_neighb<W>,
 				  mln_fwd_qiter(W),neighb_fwd_niter<W> > super_;
 
   public:
-    neighb_fwd_niter();
+    mixed_neighb_fwd_niter();
 
     template <typename P>
-    neighb_fwd_niter(const neighb<W>& nbh, const P& c);
+    mixed_neighb_fwd_niter(const mixed_neighb<W>& nbh, const P& c);
 
   };
 
 
 
-  // neighb_bkd_niter<W,E>
+  // mixed_neighb_bkd_niter<W,E>
 
   template <typename W>
-  class neighb_bkd_niter
-    : public internal::neighb_niter_base<W,neighb<W>,
+  class mixed_neighb_bkd_niter
+    : public internal::neighb_niter_base<W,mixed_neighb<W>,
 					 mln_bkd_qiter(W),neighb_bkd_niter<W> >
   {
     typedef
-      internal::neighb_niter_base<W,neighb<W>,
+      internal::neighb_niter_base<W,mixed_neighb<W>,
 				  mln_bkd_qiter(W),neighb_bkd_niter<W> > super_;
 
   public:
-    neighb_bkd_niter();
+    mixed_neighb_bkd_niter();
 
     template <typename P>
-    neighb_bkd_niter(const neighb<W>& nbh, const P& c);
+    mixed_neighb_bkd_niter(const mixed_neighb<W>& nbh, const P& c);
 
   };
 
@@ -143,17 +146,17 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // neighb<W>
+  // mixed_neighb<W>
 
   template <typename W>
   inline
-  neighb<W>::neighb()
+  mixed_neighb<W>::mixed_neighb()
   {
   }
 
   template <typename W>
   inline
-  neighb<W>::neighb(const W& win)
+  mixed_neighb<W>::mixed_neighb(const W& win)
     : super_(win)
   {
   }
@@ -169,14 +172,14 @@ namespace mln
 
       template <typename W>
       void
-      from_to_(const mln::neighb<W>& from, W& to)
+      from_to_(const mln::mixed_neighb<W>& from, W& to)
       {
         to = from.win();
       }
 
       template <typename W>
       void
-      from_to_(const W& from, mln::neighb<W>& to)
+      from_to_(const W& from, mln::mixed_neighb<W>& to)
       {
         to.change_window(from);
       }
@@ -188,40 +191,44 @@ namespace mln
 
 
 
-  // neighb_fwd_niter<W>
+  // mixed_neighb_fwd_niter<W>
 
   template <typename W>
   inline
-  neighb_fwd_niter<W>::neighb_fwd_niter()
+  mixed_neighb_fwd_niter<W>::mixed_neighb_fwd_niter()
   {
   }
 
   template <typename W>
   template <typename P>
   inline
-  neighb_fwd_niter<W>::neighb_fwd_niter(const neighb<W>& nbh, const P& c)
+  mixed_neighb_fwd_niter<W>::mixed_neighb_fwd_niter(const mixed_neighb<W>& nbh,
+						    const mln_target(W)& nbh_site_set,
+						    const P& c)
     : super_(nbh, c)
   {
-    this->i_.init_(nbh.win(), c);
+    this->i_.init_(nbh.win(), nbh_site_set, c);
   }
 
 
 
-  // neighb_bkd_niter<W>
+  // mixed_neighb_bkd_niter<W>
 
   template <typename W>
   inline
-  neighb_bkd_niter<W>::neighb_bkd_niter()
+  mixed_neighb_bkd_niter<W>::mixed_neighb_bkd_niter()
   {
   }
 
   template <typename W>
   template <typename P>
   inline
-  neighb_bkd_niter<W>::neighb_bkd_niter(const neighb<W>& nbh, const P& c)
+  mixed_neighb_bkd_niter<W>::mixed_neighb_bkd_niter(const mixed_neighb<W>& nbh,
+						    const mln_target(W)& nbh_site_set,
+						    const P& c)
     : super_(nbh, c)
   {
-    this->i_.init_(nbh.win(), c);
+    this->i_.init_(nbh.win(), nbh_site_set, c);
   }
 
 
@@ -230,4 +237,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_NEIGHB_HH
+#endif // ! MLN_CORE_MIXED_NEIGHB_HH

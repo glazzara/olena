@@ -24,15 +24,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_CORE_IMAGE_GRAPH_ELT_NEIGHBORHOOD_HH
-# define MLN_CORE_IMAGE_GRAPH_ELT_NEIGHBORHOOD_HH
+#ifndef MLN_CORE_IMAGE_GRAPH_ELT_MIXED_NEIGHBORHOOD_HH
+# define MLN_CORE_IMAGE_GRAPH_ELT_MIXED_NEIGHBORHOOD_HH
 
 /// \file
 ///
 /// Definition of the elementary ``neighborhood'' on a graph.
 
 # include <mln/core/neighb.hh>
-# include <mln/core/image/graph_elt_window.hh>
+# include <mln/core/image/graph_elt_mixed_window.hh>
 
 
 namespace mln
@@ -42,14 +42,15 @@ namespace mln
   ///
   /// \tparam G is a graph type.
   /// \tparam S is a site set type.
+  /// \tparam S2 is the site set type of the neighbors.
   //
-  template <typename G, typename S>
-  struct graph_elt_neighborhood
-    : public neighb< graph_elt_window<G,S> >
+  template <typename G, typename S, typename S2>
+  struct graph_elt_mixed_neighborhood
+    : public neighb< graph_elt_mixed_window<G,S,S2> >
   {
-      typedef neighb< graph_elt_window<G,S> > super_;
+      typedef neighb< graph_elt_mixed_window<G,S,S2> > super_;
 
-      graph_elt_neighborhood();
+      graph_elt_mixed_neighborhood();
   };
 
 
@@ -57,9 +58,9 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
-  template <typename G, typename S>
+  template <typename G, typename S, typename S2>
   inline
-  graph_elt_neighborhood<G,S>::graph_elt_neighborhood()
+  graph_elt_mixed_neighborhood<G,S,S2>::graph_elt_mixed_neighborhood()
   {
   }
 
@@ -68,4 +69,4 @@ namespace mln
 
 }
 
-#endif // ! MLN_CORE_IMAGE_GRAPH_ELT_NEIGHBORHOOD_HH
+#endif // ! MLN_CORE_IMAGE_GRAPH_ELT_MIXED_NEIGHBORHOOD_HH
