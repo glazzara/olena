@@ -1,5 +1,12 @@
 2009-08-24  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Regen mk files.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2009-08-24  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	* tests/tools/pretty_check.sh: Change data base url.
 
 2009-08-24  Guillaume Lazzara  <lazzara@lrde.epita.fr>

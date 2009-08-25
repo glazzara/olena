@@ -129,7 +129,14 @@ mln/canvas/chamfer.hh \
 mln/canvas/distance_front.hh \
 mln/canvas/distance_geodesic.hh \
 mln/canvas/essential.hh \
-mln/canvas/labeling.hh \
+mln/canvas/labeling/all.hh \
+mln/canvas/labeling/blobs.hh \
+mln/canvas/labeling/essential.hh \
+mln/canvas/labeling/generic.hh \
+mln/canvas/labeling/internal/find_root_fastest.hh \
+mln/canvas/labeling/internal/tests.hh \
+mln/canvas/labeling/sorted.hh \
+mln/canvas/labeling/video.hh \
 mln/canvas/morpho/all.hh \
 mln/canvas/morpho/attribute_filter.hh \
 mln/canvas/morpho/essential.hh \
@@ -278,6 +285,8 @@ mln/core/image/dmorph/unproject_image.hh \
 mln/core/image/edge_image.hh \
 mln/core/image/essential.hh \
 mln/core/image/flat_image.hh \
+mln/core/image/graph_elt_mixed_neighborhood.hh \
+mln/core/image/graph_elt_mixed_window.hh \
 mln/core/image/graph_elt_neighborhood.hh \
 mln/core/image/graph_elt_neighborhood_if.hh \
 mln/core/image/graph_elt_window.hh \
@@ -323,6 +332,8 @@ mln/core/internal/image_primary.hh \
 mln/core/internal/image_value_morpher.hh \
 mln/core/internal/is_masked_impl_selector.hh \
 mln/core/internal/morpher_lvalue.hh \
+mln/core/internal/neighb_base.hh \
+mln/core/internal/neighb_niter_base.hh \
 mln/core/internal/neighb_niter_impl.hh \
 mln/core/internal/neighborhood_base.hh \
 mln/core/internal/p_complex_piter_base.hh \
@@ -341,6 +352,7 @@ mln/core/internal/site_set_iterator_base.hh \
 mln/core/internal/weighted_window_base.hh \
 mln/core/internal/window_base.hh \
 mln/core/macros.hh \
+mln/core/mixed_neighb.hh \
 mln/core/neighb.hh \
 mln/core/pixel.hh \
 mln/core/pixter1d.hh \
@@ -665,6 +677,7 @@ mln/io/txt/save.hh \
 mln/labeling/all.hh \
 mln/labeling/background.hh \
 mln/labeling/blobs.hh \
+mln/labeling/blobs_and_compute.hh \
 mln/labeling/colorize.hh \
 mln/labeling/compute.hh \
 mln/labeling/compute_image.hh \
@@ -678,6 +691,7 @@ mln/labeling/pack.hh \
 mln/labeling/regional_maxima.hh \
 mln/labeling/regional_minima.hh \
 mln/labeling/relabel.hh \
+mln/labeling/superpose.hh \
 mln/labeling/value.hh \
 mln/labeling/value.spe.hh \
 mln/labeling/wrap.hh \
@@ -1222,6 +1236,7 @@ mln/world/inter_pixel/is_pixel.hh \
 mln/world/inter_pixel/is_separator.hh \
 mln/world/inter_pixel/neighb2d.hh \
 mln/world/inter_pixel/separator_to_pixels.hh
+
 #<<lrde
 nobase_include_HEADERS += \
 mln/accu/math/inf.hh \

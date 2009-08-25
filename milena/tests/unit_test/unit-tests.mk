@@ -127,7 +127,14 @@ mln_canvas_chamfer \
 mln_canvas_distance_front \
 mln_canvas_distance_geodesic \
 mln_canvas_essential \
-mln_canvas_labeling \
+mln_canvas_labeling_all \
+mln_canvas_labeling_blobs \
+mln_canvas_labeling_essential \
+mln_canvas_labeling_generic \
+mln_canvas_labeling_internal_find_root_fastest \
+mln_canvas_labeling_internal_tests \
+mln_canvas_labeling_sorted \
+mln_canvas_labeling_video \
 mln_canvas_morpho_all \
 mln_canvas_morpho_attribute_filter \
 mln_canvas_morpho_essential \
@@ -257,6 +264,8 @@ mln_core_image_dmorph_unproject_image \
 mln_core_image_edge_image \
 mln_core_image_essential \
 mln_core_image_flat_image \
+mln_core_image_graph_elt_mixed_neighborhood \
+mln_core_image_graph_elt_mixed_window \
 mln_core_image_graph_elt_neighborhood \
 mln_core_image_graph_elt_neighborhood_if \
 mln_core_image_graph_elt_window \
@@ -304,6 +313,8 @@ mln_core_internal_image_primary \
 mln_core_internal_image_value_morpher \
 mln_core_internal_is_masked_impl_selector \
 mln_core_internal_morpher_lvalue \
+mln_core_internal_neighb_base \
+mln_core_internal_neighb_niter_base \
 mln_core_internal_neighb_niter_impl \
 mln_core_internal_neighborhood_base \
 mln_core_internal_p_complex_piter_base \
@@ -322,6 +333,7 @@ mln_core_internal_site_set_iterator_base \
 mln_core_internal_weighted_window_base \
 mln_core_internal_window_base \
 mln_core_macros \
+mln_core_mixed_neighb \
 mln_core_neighb \
 mln_core_pixel \
 mln_core_pixter1d \
@@ -681,6 +693,7 @@ mln_io_txt_save \
 mln_labeling_all \
 mln_labeling_background \
 mln_labeling_blobs \
+mln_labeling_blobs_and_compute \
 mln_labeling_colorize \
 mln_labeling_compute \
 mln_labeling_compute_image \
@@ -694,6 +707,7 @@ mln_labeling_pack \
 mln_labeling_regional_maxima \
 mln_labeling_regional_minima \
 mln_labeling_relabel \
+mln_labeling_superpose \
 mln_labeling_value \
 mln_labeling_wrap \
 mln_linear_all \
@@ -1388,7 +1402,14 @@ mln_canvas_chamfer_SOURCES = mln_canvas_chamfer.cc
 mln_canvas_distance_front_SOURCES = mln_canvas_distance_front.cc
 mln_canvas_distance_geodesic_SOURCES = mln_canvas_distance_geodesic.cc
 mln_canvas_essential_SOURCES = mln_canvas_essential.cc
-mln_canvas_labeling_SOURCES = mln_canvas_labeling.cc
+mln_canvas_labeling_all_SOURCES = mln_canvas_labeling_all.cc
+mln_canvas_labeling_blobs_SOURCES = mln_canvas_labeling_blobs.cc
+mln_canvas_labeling_essential_SOURCES = mln_canvas_labeling_essential.cc
+mln_canvas_labeling_generic_SOURCES = mln_canvas_labeling_generic.cc
+mln_canvas_labeling_internal_find_root_fastest_SOURCES = mln_canvas_labeling_internal_find_root_fastest.cc
+mln_canvas_labeling_internal_tests_SOURCES = mln_canvas_labeling_internal_tests.cc
+mln_canvas_labeling_sorted_SOURCES = mln_canvas_labeling_sorted.cc
+mln_canvas_labeling_video_SOURCES = mln_canvas_labeling_video.cc
 mln_canvas_morpho_all_SOURCES = mln_canvas_morpho_all.cc
 mln_canvas_morpho_attribute_filter_SOURCES = mln_canvas_morpho_attribute_filter.cc
 mln_canvas_morpho_essential_SOURCES = mln_canvas_morpho_essential.cc
@@ -1518,6 +1539,8 @@ mln_core_image_dmorph_unproject_image_SOURCES = mln_core_image_dmorph_unproject_
 mln_core_image_edge_image_SOURCES = mln_core_image_edge_image.cc
 mln_core_image_essential_SOURCES = mln_core_image_essential.cc
 mln_core_image_flat_image_SOURCES = mln_core_image_flat_image.cc
+mln_core_image_graph_elt_mixed_neighborhood_SOURCES = mln_core_image_graph_elt_mixed_neighborhood.cc
+mln_core_image_graph_elt_mixed_window_SOURCES = mln_core_image_graph_elt_mixed_window.cc
 mln_core_image_graph_elt_neighborhood_SOURCES = mln_core_image_graph_elt_neighborhood.cc
 mln_core_image_graph_elt_neighborhood_if_SOURCES = mln_core_image_graph_elt_neighborhood_if.cc
 mln_core_image_graph_elt_window_SOURCES = mln_core_image_graph_elt_window.cc
@@ -1565,6 +1588,8 @@ mln_core_internal_image_primary_SOURCES = mln_core_internal_image_primary.cc
 mln_core_internal_image_value_morpher_SOURCES = mln_core_internal_image_value_morpher.cc
 mln_core_internal_is_masked_impl_selector_SOURCES = mln_core_internal_is_masked_impl_selector.cc
 mln_core_internal_morpher_lvalue_SOURCES = mln_core_internal_morpher_lvalue.cc
+mln_core_internal_neighb_base_SOURCES = mln_core_internal_neighb_base.cc
+mln_core_internal_neighb_niter_base_SOURCES = mln_core_internal_neighb_niter_base.cc
 mln_core_internal_neighb_niter_impl_SOURCES = mln_core_internal_neighb_niter_impl.cc
 mln_core_internal_neighborhood_base_SOURCES = mln_core_internal_neighborhood_base.cc
 mln_core_internal_p_complex_piter_base_SOURCES = mln_core_internal_p_complex_piter_base.cc
@@ -1583,6 +1608,7 @@ mln_core_internal_site_set_iterator_base_SOURCES = mln_core_internal_site_set_it
 mln_core_internal_weighted_window_base_SOURCES = mln_core_internal_weighted_window_base.cc
 mln_core_internal_window_base_SOURCES = mln_core_internal_window_base.cc
 mln_core_macros_SOURCES = mln_core_macros.cc
+mln_core_mixed_neighb_SOURCES = mln_core_mixed_neighb.cc
 mln_core_neighb_SOURCES = mln_core_neighb.cc
 mln_core_pixel_SOURCES = mln_core_pixel.cc
 mln_core_pixter1d_SOURCES = mln_core_pixter1d.cc
@@ -1942,6 +1968,7 @@ mln_io_txt_save_SOURCES = mln_io_txt_save.cc
 mln_labeling_all_SOURCES = mln_labeling_all.cc
 mln_labeling_background_SOURCES = mln_labeling_background.cc
 mln_labeling_blobs_SOURCES = mln_labeling_blobs.cc
+mln_labeling_blobs_and_compute_SOURCES = mln_labeling_blobs_and_compute.cc
 mln_labeling_colorize_SOURCES = mln_labeling_colorize.cc
 mln_labeling_compute_SOURCES = mln_labeling_compute.cc
 mln_labeling_compute_image_SOURCES = mln_labeling_compute_image.cc
@@ -1955,6 +1982,7 @@ mln_labeling_pack_SOURCES = mln_labeling_pack.cc
 mln_labeling_regional_maxima_SOURCES = mln_labeling_regional_maxima.cc
 mln_labeling_regional_minima_SOURCES = mln_labeling_regional_minima.cc
 mln_labeling_relabel_SOURCES = mln_labeling_relabel.cc
+mln_labeling_superpose_SOURCES = mln_labeling_superpose.cc
 mln_labeling_value_SOURCES = mln_labeling_value.cc
 mln_labeling_wrap_SOURCES = mln_labeling_wrap.cc
 mln_linear_all_SOURCES = mln_linear_all.cc
