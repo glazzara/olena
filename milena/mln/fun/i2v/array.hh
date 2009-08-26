@@ -151,6 +151,13 @@ namespace mln
 
       };
 
+
+      /// Operator<<.
+      template <typename T>
+      std::ostream& operator<<(std::ostream& ostr,
+			       const array<T>& a);
+
+
     } // end of namespace mln::fun::i2v
 
   } // end of namespace mln::fun
@@ -337,6 +344,25 @@ namespace mln
       array<T>::std_vector() const
       {
 	return v_;
+      }
+
+
+      // Operator <<.
+
+      template <typename T>
+      std::ostream& operator<<(std::ostream& ostr,
+			       const array<T>& a)
+      {
+	ostr << '(';
+	const unsigned n = a.nelements();
+	for (unsigned i = 0; i < n; ++i)
+	{
+	  ostr << a[i];
+	  if (i != n - 1)
+	    ostr << ", ";
+	}
+	ostr << ')';
+	return ostr;
       }
 
 

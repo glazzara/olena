@@ -30,6 +30,9 @@
 ///
 /// Base implementation for neighborhood iterators.
 
+# include <mln/core/internal/site_relative_iterator_base.hh>
+# include <mln/core/internal/neighb_niter_impl.hh>
+
 namespace mln
 {
 

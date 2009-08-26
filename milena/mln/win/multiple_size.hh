@@ -145,6 +145,9 @@ namespace mln
       template <typename P>
       multiple_size_qiter(const multiple_size<n,W,F>& w, const P& c);
 
+      template <typename P>
+      void init_(const multiple_size<n,W,F>& w, const P& c);
+
       /// Test the iterator validity.
       bool is_valid_() const;
 
@@ -312,11 +315,21 @@ namespace mln
     inline
     multiple_size_qiter<n,W,F>::multiple_size_qiter(const multiple_size<n,W,F>& w, const P& c)
     {
+      init_(w, c);
+    }
+
+    template <unsigned n, typename W, typename F>
+    template <typename P>
+    inline
+    void
+    multiple_size_qiter<n,W,F>::init_(const multiple_size<n,W,F>& w, const P& c)
+    {
       this->center_at(c);
       // We have to first change the center so that 'invalidate' can
       // work when changing the target.
       this->change_target(w);
     }
+
 
     template <unsigned n, typename W, typename F>
     inline

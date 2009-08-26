@@ -65,8 +65,12 @@ namespace mln
     graph_window_if_piter();
     template <typename Pref>
     graph_window_if_piter(const Window<W>& win,
-		       const Pref& p_ref);
+			  const Pref& p_ref);
     /// \}
+
+    /// Delayed initialization.
+    template <typename Pref>
+    void init_(const Window<W>& win, const Pref& p_ref);
 
     /// Manipulation.
     /// \{
@@ -124,6 +128,16 @@ namespace mln
   inline
   graph_window_if_piter<S,W,I>::graph_window_if_piter(const Window<W>& win,
 						      const Pref& p_ref)
+  {
+    init_(win, p_ref);
+  }
+
+  template <typename S, typename W, typename I>
+  template <typename Pref>
+  inline
+  void
+  graph_window_if_piter<S,W,I>::init_(const Window<W>& win,
+				      const Pref& p_ref)
   {
     this->center_at(p_ref);
     this->change_target(exact(win));

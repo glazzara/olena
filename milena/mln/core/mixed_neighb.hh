@@ -37,6 +37,7 @@
 /// \todo See if the impl of from_to is fine.  What about removing the
 /// origin?  etc.
 
+# include <mln/core/neighb.hh>
 # include <mln/core/internal/neighb_base.hh>
 # include <mln/core/internal/neighb_niter_base.hh>
 # include <mln/core/internal/site_relative_iterator_base.hh>
@@ -117,7 +118,9 @@ namespace mln
     mixed_neighb_fwd_niter();
 
     template <typename P>
-    mixed_neighb_fwd_niter(const mixed_neighb<W>& nbh, const P& c);
+    mixed_neighb_fwd_niter(const mixed_neighb<W>& nbh,
+			   const mln_target(W)& nbh_site_set,
+			   const P& c);
 
   };
 
@@ -138,7 +141,9 @@ namespace mln
     mixed_neighb_bkd_niter();
 
     template <typename P>
-    mixed_neighb_bkd_niter(const mixed_neighb<W>& nbh, const P& c);
+    mixed_neighb_bkd_niter(const mixed_neighb<W>& nbh,
+			   const mln_target(W)& nbh_site_set,
+			   const P& c);
 
   };
 

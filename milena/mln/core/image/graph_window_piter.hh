@@ -207,7 +207,13 @@ namespace mln
     unsigned id() const;
     /// \}
 
+    /// Change the target site set.
+    /// Window elements different from the center come from the target
+    /// site set.
     void change_target_site_set(const S& s);
+    /// Return the target site set.
+    /// Window elements different from the center come from the target
+    /// site set.
     const S& target_site_set() const;
 
     using super_impl_::do_start_;

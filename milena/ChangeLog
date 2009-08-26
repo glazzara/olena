@@ -1,3 +1,19 @@
+2009-08-26  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Small fixes.
+
+	* mln/core/dpsites_piter.hh,
+	* mln/core/image/graph_window_if_piter.hh,
+	* mln/win/multiple_size.hh: Add missing init_ member.
+
+	* mln/core/mixed_neighb.hh: Fix invalid constructor declarations.
+
+	* mln/core/image/graph_window_piter.hh: Add comments.
+
+	* mln/core/internal/neighb_niter_base.hh: Add missing includes.
+
+	* mln/fun/i2v/array.hh: Add operator<<.
+
 2009-08-24  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Regen mk files.

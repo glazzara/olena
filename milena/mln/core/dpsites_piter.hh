@@ -106,6 +106,10 @@ namespace mln
     /// Constructor without argument.
     dpsites_bkd_piter();
 
+    /// Delayed initialization.
+    template <typename P>
+    void init_(const V& v, const P& c);
+
     /// Test the iterator validity.
     bool is_valid_() const;
 
@@ -212,9 +216,19 @@ namespace mln
   inline
   dpsites_bkd_piter<V>::dpsites_bkd_piter(const V& v, const P& c)
   {
+    init_(v, c);
+  }
+
+  template <typename V>
+  template <typename P>
+  inline
+  void
+  dpsites_bkd_piter<V>::init_(const V& v, const P& c)
+  {
     this->change_target(v);
     this->center_at(c);
   }
+
 
   template <typename V>
   inline
