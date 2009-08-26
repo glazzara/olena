@@ -1,3 +1,12 @@
+2009-08-26  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	New kmean clustering code.
+
+	* green/k_mean                 : New directory.
+	* green/k_mean/k_mean.hh       : New source.
+	* green/k_mean/k_mean.cc       : New test file.
+	* green/k_mean/Makefile.am     : New makefile.
+
 2009-08-17  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Improve documentation.
