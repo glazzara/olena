@@ -1,5 +1,9 @@
 2009-08-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* src/text_in_photo_invert.cc: New example.
+
+2009-08-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add new filters.
 
 	* filter/all.hh: Add new includes.
