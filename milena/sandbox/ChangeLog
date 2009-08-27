@@ -1,3 +1,17 @@
+2009-08-27  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Improve and test the kmean clustering code.
+
+	* green/k_mean/k_mean.hh (get_center, get_point) : New accessors.
+	* green/k_mean/k_mean.cc (rgb8_to_4colors),
+	(print_color),
+	(fill_image_with_4colors),
+	(is_equivalent),
+	(test_init_point), 
+	(is_equal),
+	(is_center_initialized),
+	(test_init_center)                               : New test functions.
+
 2009-08-26  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	New kmean clustering code.

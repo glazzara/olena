@@ -97,6 +97,9 @@ namespace mln
       void init_point(const Image<I>&);
       void init_center();
       
+      algebra::mat<n, p, T>& get_point();
+      algebra::mat<k, p, T>& get_center();
+
       k_mean();
       ~k_mean();
 
@@ -163,6 +166,28 @@ namespace mln
     };
 
 #ifndef MLN_INCLUDE_ONLY
+
+    template <unsigned n, unsigned k, unsigned p, typename T>
+    inline
+    algebra::mat<n, p, T>&
+    k_mean<n,k,p,T>::get_point()
+    {
+      trace::entering("mln::clustering::k_mean::get_point");
+      trace::exiting("mln::clustering::k_mean::get_point");
+
+      return *_point;
+    }
+
+    template <unsigned n, unsigned k, unsigned p, typename T>
+    inline
+    algebra::mat<k, p, T>&
+    k_mean<n,k,p,T>::get_center()
+    {
+      trace::entering("mln::clustering::k_mean::get_center");
+      trace::exiting("mln::clustering::k_mean::get_center");
+
+      return *_center;
+    }
 
     template <unsigned n, unsigned k, unsigned p, typename T>
     k_mean<n,k,p,T>::k_mean()
