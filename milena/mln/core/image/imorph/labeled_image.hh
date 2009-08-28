@@ -191,10 +191,10 @@ namespace mln
     /// Return the component bounding boxes.
     const util::array<bbox_t>& bboxes() const;
 
-      /// Return the domain of the component with label \p label.
-      p_if<mln_box(I),
-	   fun::eq_v2b_expr_<pw::value_<I>, pw::cst_<mln_value(I)> > >
-      subdomain(const mln_value(I)& label) const;
+    /// Return the domain of the component with label \p label.
+    p_if<mln_box(I),
+	 fun::eq_v2b_expr_<pw::value_<I>, pw::cst_<mln_value(I)> > >
+    subdomain(const mln_value(I)& label) const;
   };
 
 
@@ -309,6 +309,7 @@ namespace mln
       packed_relabel_fun = make::relabelfun(f,
 					    this->data_->nlabels_,
 					    new_nlabels);
+
     labeling::relabel_inplace(this->data_->ima_, this->data_->nlabels_,
 			      packed_relabel_fun);
 

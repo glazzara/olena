@@ -54,14 +54,9 @@ namespace mln
     template <typename C, typename P, typename E>
     struct impl_selector
     {
-      E& exact()
-      {
-	return internal::force_exact<E>(*this);
-      }
-
       void do_start_()
       {
-	exact().iter_.start();
+	internal::force_exact<E>(*this).iter_.start();
 	// Nothing else to do. A pointer to the window element's site
 	// set has been already stored in the constructor.
       }
@@ -73,14 +68,10 @@ namespace mln
     template <typename C, typename E>
     struct impl_selector<C,C,E>
     {
-      E& exact()
-      {
-	return internal::force_exact<E>(*this);
-      }
-
       void do_start_()
       {
-	exact().iter_.start();
+	E& this_ = internal::force_exact<E>(*this);
+	this_.iter_.start();
 
 	// We need to store a pointer on the site set of the window
 	// center.
@@ -90,7 +81,7 @@ namespace mln
 	// potential iterator used as center has been started just
 	// before calling this method.
 	//
-	exact().change_target_site_set(exact().center().site_set());
+	this_.change_target_site_set(this_.center().site_set());
       }
 
     };

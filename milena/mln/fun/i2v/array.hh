@@ -354,10 +354,10 @@ namespace mln
 			       const array<T>& a)
       {
 	ostr << '(';
-	const unsigned n = a.nelements();
+	const unsigned n = a.size();
 	for (unsigned i = 0; i < n; ++i)
 	{
-	  ostr << a[i];
+	  ostr << a(i);
 	  if (i != n - 1)
 	    ostr << ", ";
 	}

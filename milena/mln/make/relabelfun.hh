@@ -111,16 +111,24 @@ namespace mln
       const F& fv2v = exact(fv2v_);
 
       unsigned nlabels_i = static_cast<unsigned>(nlabels) + 1;
+
+      util::array<V> new_labels(nlabels_i, mln_max(V));
+      new_labels(0) = literal::zero;
       V tmp_nlabels = literal::zero;
-      fun::i2v::array<V> fi2v(nlabels_i, literal::zero);
+      fun::i2v::array<V> fi2v(nlabels_i, mln_max(V));
+      fi2v(0) = literal::zero;
+
       for (V i = 1; i < nlabels_i; ++i)
-	if (fi2v(fv2v(i)) == literal::zero)
+      {
+	mln_assertion(fv2v(i) <= nlabels);
+	if (new_labels(fv2v(i)) == mln_max(V))
 	{
-	  fi2v(fv2v(i)) = ++tmp_nlabels;
+	  new_labels(fv2v(i)) = ++tmp_nlabels;
 	  fi2v(i) = tmp_nlabels;
 	}
 	else
-	  fi2v(i) = fi2v(fv2v(i));
+	  fi2v(i) = new_labels(fv2v(i));
+      }
       new_nlabels = tmp_nlabels;
       trace::exiting("make::relabelfun");
       return fi2v;

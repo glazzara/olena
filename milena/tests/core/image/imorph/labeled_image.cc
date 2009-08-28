@@ -34,11 +34,17 @@
 #include <mln/accu/shape/bbox.hh>
 
 
+# include <mln/debug/println.hh>
 
-static const unsigned bboxes_1[][4] = { { 1,1, 1,1 },
-					{ 2,0, 2,1 },
-					{ 0,0, 0,1 },
-					{ 2,2, 2,2 } };
+static const unsigned bboxes_1[][9] = { { 1,1, 1,1 }, // 1
+					{ 2,2, 2,2 }, // 2
+					{ 0,0, 0,0 },
+					{ 0,0, 0,0 },
+					{ 2,0, 2,1 }, // 5
+					{ 0,0, 0,0 },
+					{ 0,0, 0,0 },
+					{ 0,0, 0,0 },
+					{ 0,0, 0,1 } };
 
 
 static const unsigned bboxes_2[][4] = { { 1,1, 1,1 },
@@ -51,14 +57,22 @@ static const unsigned bboxes_2[][4] = { { 1,1, 1,1 },
 namespace mln
 {
 
-  template <typename I>
+  template <typename I, unsigned n>
   void test_image(const labeled_image<I>& lbl_i,
-		  const unsigned bboxes[][4])
+		  const unsigned bboxes[][n])
   {
-    unsigned j = 0;
-    for (unsigned i = 1; i < 5; ++i, ++j)
-      mln_assertion(lbl_i.bbox(i) == make::box2d(bboxes[j][0], bboxes[j][1],
-	    bboxes[j][2], bboxes[j][3]));
+    unsigned
+      j = 0,
+      k = 0;
+    for (unsigned i = 1; i <= lbl_i.nlabels(); ++i, ++j)
+      if (lbl_i.bbox(i).is_valid())
+      {
+	mln_assertion(lbl_i.bbox(i) == make::box2d(bboxes[j][0], bboxes[j][1],
+						   bboxes[j][2], bboxes[j][3]));
+	++k;
+      }
+
+    mln_assertion(k == 4);
   }
 
 } // end of namespace mln
@@ -72,26 +86,26 @@ int main()
   using value::label_8;
 
 
-  label_8 lbl_values[][3] = { { 3, 3, 0 },
+  label_8 lbl_values[][3] = { { 9, 9, 0 },
 			      { 0, 1, 0 },
-			      { 2, 2, 4 } };
+			      { 5, 5, 2 } };
 
   typedef image2d<label_8> lbl_t;
   lbl_t lbl = make::image(lbl_values);
 
-  labeled_image<lbl_t> lbl_i(lbl, 4);
-
-
+  labeled_image<lbl_t> lbl_i(lbl, 9);
+  mln_assertion(lbl_i.nlabels() == 9);
   test_image(lbl_i, bboxes_1);
 
-  fun::i2v::array<label_8> f(5);
+  fun::i2v::array<label_8> f(10, 0);
   f(0) = 0;
   f(1) = 1;
-  f(2) = 5;
-  f(3) = 9;
-  f(4) = 2;
+  f(5) = 2;
+  f(9) = 5;
+  f(2) = 4;
 
   lbl_i.relabel(f);
 
+  mln_assertion(lbl_i.nlabels() == 4);
   test_image(lbl_i, bboxes_2);
 }

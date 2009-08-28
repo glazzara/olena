@@ -1,3 +1,20 @@
+2009-08-28  Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Small fixes.
+
+	* mln/core/image/graph_window_piter.hh: Remove exact() member.
+
+	* mln/core/image/imorph/labeled_image.hh: Reindent.
+
+	* mln/fun/i2v/array.hh: Fix invalid call to nelements().
+
+	* mln/make/relabelfun.hh: Fix invalid results.
+
+	* mln/trait/op/ord.hh: Revamp header.
+
+	* tests/core/image/imorph/labeled_image.cc: Fix invalid use of
+	labeled_image.
+
 2009-08-26  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Small fixes.
