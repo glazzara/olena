@@ -1,3 +1,13 @@
+2009-08-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Add Sauvola's binarization.
+
+	* binarization/sauvola.hh: New routine.
+
+	* src/binarization/Makefile.am,
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_pgm.cc: New examples.
+
 2009-08-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* src/text_in_photo_invert.cc: New example.

@@ -20,7 +20,11 @@
 include $(top_srcdir)/scribo/scribo.mk
 
 bin_PROGRAMS = 				\
+  sauvola 				\
+  sauvola_pgm 				\
   simple
 
+sauvola_SOURCES = sauvola.cc
+sauvola_pgm_SOURCES = sauvola_pgm.cc
 simple_SOURCES = simple.cc                               
 
