@@ -65,7 +65,7 @@ namespace scribo
     void
     save_linked_bboxes_image(const Image<I>& input,
 			     const object_image(L)& objects,
-			     const mln::util::array<unsigned>& link_array,
+			     const object_links<L>& array,
 			     const value::rgb8& box_value,
 			     const value::rgb8& link_value,
 			     const std::string& filename);
@@ -83,8 +83,8 @@ namespace scribo
     void
     save_linked_bboxes_image(const Image<I>& input,
 			     const object_image(L)& objects,
-			     const mln::util::array<unsigned>& left_link,
-			     const mln::util::array<unsigned>& right_link,
+			     const object_links<L>& left_link,
+			     const object_links<L>& right_link,
 			     const value::rgb8& box_value,
 			     const value::rgb8& link_value,
 			     const std::string& filename);
@@ -106,8 +106,8 @@ namespace scribo
     void
     save_linked_bboxes_image(const Image<I>& input,
 			     const object_image(L)& objects,
-			     const mln::util::array<unsigned>& left_link,
-			     const mln::util::array<unsigned>& right_link,
+			     const object_links<L>& left_link,
+			     const object_links<L>& right_link,
 			     const value::rgb8& box_value,
 			     const value::rgb8& left_link_value,
 			     const value::rgb8& right_link_value,
@@ -141,7 +141,7 @@ namespace scribo
     void
     save_linked_bboxes_image(const Image<I>& input,
 			     const object_image(L)& objects,
-			     const mln::util::array<unsigned>& link_array,
+			     const object_links<L>& array,
 			     const value::rgb8& box_value,
 			     const value::rgb8& link_value,
 			     const std::string& filename)
@@ -157,7 +157,7 @@ namespace scribo
 					    objects.nlabels());
 
       draw::bounding_boxes(tmp, objects.bboxes(), box_value);
-      draw::bounding_box_links(tmp, mass_center, link_array, link_value);
+      draw::bounding_box_links(tmp, mass_center, array, link_value);
 
       io::ppm::save(tmp, filename);
 
@@ -170,8 +170,8 @@ namespace scribo
     void
     save_linked_bboxes_image(const Image<I>& input,
 			     const object_image(L)& objects,
-			     const mln::util::array<unsigned>& left_link,
-			     const mln::util::array<unsigned>& right_link,
+			     const object_links<L>& left_link,
+			     const object_links<L>& right_link,
 			     const value::rgb8& box_value,
 			     const value::rgb8& value,
 			     const std::string& filename)
@@ -202,8 +202,8 @@ namespace scribo
     void
     save_linked_bboxes_image(const Image<I>& input,
 			     const object_image(L)& objects,
-			     const mln::util::array<unsigned>& left_link,
-			     const mln::util::array<unsigned>& right_link,
+			     const object_links<L>& left_link,
+			     const object_links<L>& right_link,
 			     const value::rgb8& box_value,
 			     const value::rgb8& left_link_value,
 			     const value::rgb8& right_link_value,

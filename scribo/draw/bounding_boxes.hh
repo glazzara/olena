@@ -35,6 +35,7 @@
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
+# include <scribo/core/object_image.hh>
 
 namespace scribo
 {
@@ -51,6 +52,13 @@ namespace scribo
 		   const mln::util::array< box<mln_site(I)> >& boxes,
 		   const mln_value(I)& value);
 
+
+    /// Draw object bounding boxes and their associated mass center.
+    template <typename I, typename L>
+    void
+    bounding_boxes(Image<I>& input_,
+		   const object_image(L)& objects,
+		   const mln_value(I)& value);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -77,6 +85,17 @@ namespace scribo
 	}
 
       trace::exiting("scribo::draw::bounding_boxes");
+    }
+
+
+    template <typename I, typename L>
+    inline
+    void
+    bounding_boxes(Image<I>& input,
+		   const object_image(L)& objects,
+		   const mln_value(I)& value)
+    {
+      bounding_boxes(input, objects.bboxes(), value);
     }
 
 

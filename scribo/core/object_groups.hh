@@ -52,6 +52,7 @@ namespace scribo
     typedef mln::util::array<unsigned> super_t;
 
   public:
+    object_groups();
     object_groups(const object_image(L)& objects);
     object_groups(const object_image(L)& objects, unsigned n);
     object_groups(const object_image(L)& objects, unsigned n, unsigned value);
@@ -61,12 +62,19 @@ namespace scribo
 
     void init_(const object_links<L>& links);
 
+    bool is_valid() const;
+
   private:
     object_image(L) objects_;
   };
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  template <typename L>
+  object_groups<L>::object_groups()
+  {
+  }
 
   template <typename L>
   object_groups<L>::object_groups(const object_image(L)& objects)
@@ -113,6 +121,13 @@ namespace scribo
   {
     objects_ = links.object_image_();
     this->hook_std_vector_() = links.std_vector();
+  }
+
+  template <typename L>
+  bool
+  object_groups<L>::is_valid() const
+  {
+    return objects_.is_valid() && objects_.nlabels() == (this->size() - 1);
   }
 
 

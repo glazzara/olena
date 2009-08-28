@@ -101,24 +101,24 @@ namespace scribo
       object_links<L> output(links);
 
       for_all_components(i, objects.bboxes())
-      {
-
-	unsigned
-	  lnbh = bboxes(links[i]).pmax()[dim] - bboxes(links[i]).pmin()[dim],
-	  lcurrent = bboxes(i).pmax()[dim] - bboxes(i).pmin()[dim],
-	  hmin = i,
-	  hmax = links[i];
-
-	if (lnbh < lcurrent)
+	if (links[i] != i)
 	{
-	  hmin = links[i];
-	  hmax = i;
-	}
+	  unsigned
+	    lnbh = bboxes(links[i]).pmax()[dim] - bboxes(links[i]).pmin()[dim],
+	    lcurrent = bboxes(i).pmax()[dim] - bboxes(i).pmin()[dim],
+	    hmin = i,
+	    hmax = links[i];
 
-	if ((bboxes[hmin].pmin()[dim] - (float)bboxes[hmax].pmin()[dim]) > max_delta
-	    || (bboxes[hmin].pmax()[dim] - (float) bboxes[hmax].pmax()[dim]) > max_delta)
-	  output[i] = i;
-      }
+	  if (lnbh < lcurrent)
+	  {
+	    hmin = links[i];
+	    hmax = i;
+	  }
+
+	  if ((bboxes[hmin].pmin()[dim] - (float)bboxes[hmax].pmin()[dim]) > max_delta
+	      || (bboxes[hmin].pmax()[dim] - (float) bboxes[hmax].pmax()[dim]) > max_delta)
+	    output[i] = i;
+	}
 
       trace::exiting("scribo::filter::object_links_non_aligned");
       return output;

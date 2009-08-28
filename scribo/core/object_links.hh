@@ -51,6 +51,7 @@ namespace scribo
     typedef mln::util::array<unsigned> super_t;
 
   public:
+    object_links();
     object_links(const object_image(L)& objects);
     object_links(const object_image(L)& objects, unsigned n);
     object_links(const object_image(L)& objects, unsigned n, unsigned value);
@@ -59,12 +60,19 @@ namespace scribo
     const void* objects_id_() const;
     const object_image(L)& object_image_() const;
 
+    bool is_valid() const;
+
   private:
     object_image(L) objects_;
   };
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  template <typename L>
+  object_links<L>::object_links()
+  {
+  }
 
   template <typename L>
   object_links<L>::object_links(const object_image(L)& objects)
@@ -102,6 +110,14 @@ namespace scribo
   object_links<L>::object_image_() const
   {
     return objects_;
+  }
+
+
+  template <typename L>
+  bool
+  object_links<L>::is_valid() const
+  {
+    return objects_.is_valid() && objects_.nlabels() == (this->size() - 1);
   }
 
 

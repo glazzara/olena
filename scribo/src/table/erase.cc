@@ -68,6 +68,7 @@ int main(int argc, char* argv[])
 
   typedef image2d<label_16> lbl_t;
 
+  /// Extracting vertical and horizontal lines.
   label_16 nhlines, nvlines;
   object_image(lbl_t)
     lbl_v = primitive::extract::lines_v_discontinued(input, c8(),
@@ -76,6 +77,7 @@ int main(int argc, char* argv[])
     lbl_h = primitive::extract::lines_h_discontinued(input, c8(),
 						     nhlines, 51, 6);
 
+  /// Reconstruct and erase tables.
   image2d<bool> input_notables
     = scribo::table::erase(input, lbl_h, lbl_v);
 

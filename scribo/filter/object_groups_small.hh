@@ -50,12 +50,11 @@ namespace scribo
       \param[in] groups Information about object groups.
       \param[in] n_links The minimum number of links per group.
 
-      \return A function mapping an object id to a bool. It is set to
-      true if an object is part of a group with more than \p n_links
-      links.
+      \return A copy of object group in which small groups have been
+      removed.
     */
     template <typename L>
-    mln::util::array<bool>
+    object_groups<L>
     object_groups_small(const object_groups<L>& groups,
 			unsigned n_links);
 
@@ -65,21 +64,24 @@ namespace scribo
 
     template <typename L>
     inline
-    mln::util::array<bool>
-    object_groups_small(const object_groups<L>& parent_link,
+    object_groups<L>
+    object_groups_small(const object_groups<L>& groups,
 			unsigned n_links)
     {
+      mln_precondition(groups.is_valid());
+
       // Counting the number of objects per group.
-      mln::util::array<unsigned> group_size(parent_link.size(), 0);
+      mln::util::array<unsigned> group_size(groups.size(), 0);
       for (unsigned i = 1; i < group_size.size(); ++i)
-	++group_size[parent_link[i]];
+	++group_size[groups[i]];
 
-      mln::util::array<bool> f(parent_link.size());
-      f(0) = true;
-      for (unsigned i = 1; i < f.size(); ++i)
-	f(i) = (group_size[parent_link[i]] >= n_links);
+      object_groups<L> output(groups);
+      output(0) = 0;
+      for (unsigned i = 1; i < output.size(); ++i)
+	if (group_size[groups[i]] < n_links)
+	  output(i) = 0;
 
-      return f;
+      return output;
     }
 
 

@@ -51,13 +51,13 @@ namespace scribo
     ///
     /// \param[in,out] input_ An image where to draw.
     /// \param[in] bboxes Bounding boxes.
-    /// \param[in] link_array Bounding box links.
+    /// \param[in] links Bounding box links.
     /// \param[in] value Value used to draw links.
-    template <typename I>
+    template <typename I, typename L>
     void
     bounding_box_links(Image<I>& input_,
 		       const mln::util::array< box<mln_site(I)> >& bboxes,
-		       const mln::util::array<unsigned>& link_array,
+		       const object_links<L>& link,
 		       const mln_value(I)& value);
 
 
@@ -65,14 +65,14 @@ namespace scribo
     ///
     /// \param[in,out] input_ An image where to draw.
     /// \param[in] mass_centers Bounding boxes mass centers.
-    /// \param[in] link_array Bounding box links.
+    /// \param[in] links Bounding box links.
     /// \param[in] value Value used to draw links.
-    template <typename I>
+    template <typename I, typename L>
     inline
     void
     bounding_box_links(Image<I>& input_,
 		       const mln::util::array<mln_site(I)::vec>& mass_centers,
-		       const mln::util::array<unsigned>& link_array,
+		       const object_links<L>& link,
 		       const mln_value(I)& value);
 
 
@@ -86,13 +86,13 @@ namespace scribo
     /// \param[in] left_link_value Value used to draw left links.
     /// \param[in] right_link_value Value used to draw right links.
     /// \param[in] validated_link_value Value used to draw validated links.
-    template <typename I>
+    template <typename I, typename L>
     inline
     void
     bounding_box_links(Image<I>& input_,
 		       const mln::util::array< box<mln_site(I)> >& bboxes,
-		       const mln::util::array<unsigned>& left_link,
-		       const mln::util::array<unsigned>& right_link,
+		       const object_links<L>& left_link,
+		       const object_links<L>& right_link,
 		       const mln_value(I)& left_link_value,
 		       const mln_value(I)& right_link_value,
 		       const mln_value(I)& validated_link_value);
@@ -108,13 +108,13 @@ namespace scribo
     /// \param[in] left_link_value Value used to draw left links.
     /// \param[in] right_link_value Value used to draw right links.
     /// \param[in] validated_link_value Value used to draw validated links.
-    template <typename I>
+    template <typename I, typename L>
     inline
     void
     bounding_box_links(Image<I>& input_,
 		       const mln::util::array<mln_site(I)::vec>& mass_centers,
-		       const mln::util::array<unsigned>& left_link,
-		       const mln::util::array<unsigned>& right_link,
+		       const object_links<L>& left_link,
+		       const object_links<L>& right_link,
 		       const mln_value(I)& left_link_value,
 		       const mln_value(I)& right_link_value,
 		       const mln_value(I)& validated_link_value);
@@ -231,12 +231,12 @@ namespace scribo
     } // end of namespace scribo::draw::internal
 
 
-    template <typename I>
+    template <typename I, typename L>
     inline
     void
     bounding_box_links(Image<I>& input_,
 		       const mln::util::array< box<mln_site(I)> >& bboxes,
-		       const mln::util::array<unsigned>& link_array,
+		       const object_links<L>& links,
 		       const mln_value(I)& value)
     {
       trace::entering("scribo::draw::bounding_box_links");
@@ -245,22 +245,22 @@ namespace scribo
 
       mln_precondition(input.is_valid());
 
-      for_all_components(i, link_array)
-	if (link_array[i] != i)
+      for_all_components(i, links)
+	if (links[i] != i)
 	  mln::draw::line(input,
 			  bboxes[i].center(),
-			  bboxes[link_array[i]].center(),
+			  bboxes[links[i]].center(),
 			  value);
 
       trace::exiting("scribo::draw::bounding_box_links");
     }
 
-    template <typename I>
+    template <typename I, typename L>
     inline
     void
     bounding_box_links(Image<I>& input_,
 		       const mln::util::array<mln_site(I)::vec>& mass_centers,
-		       const mln::util::array<unsigned>& link_array,
+		       const object_links<L>& links,
 		       const mln_value(I)& value)
     {
       trace::entering("scribo::draw::bounding_box_links");
@@ -269,12 +269,12 @@ namespace scribo
 
       mln_precondition(input.is_valid());
 
-      for_all_components(i, link_array)
+      for_all_components(i, links)
       {
-	if (link_array[i] != i)
+	if (links[i] != i)
 	  mln::draw::line(input,
 			  mass_centers[i],
-			  mass_centers[link_array[i]],
+			  mass_centers[links[i]],
 			  value);
 	input(mass_centers[i]) = value;
       }
@@ -283,13 +283,13 @@ namespace scribo
     }
 
 
-    template <typename I>
+    template <typename I, typename L>
     inline
     void
     bounding_box_links(Image<I>& input_,
 		       const mln::util::array<mln_site(I)::vec>& mass_centers,
-		       const mln::util::array<unsigned>& left_link,
-		       const mln::util::array<unsigned>& right_link,
+		       const object_links<L>& left_link,
+		       const object_links<L>& right_link,
 		       const mln_value(I)& left_link_value,
 		       const mln_value(I)& right_link_value,
 		       const mln_value(I)& validated_link_value)
@@ -338,13 +338,13 @@ namespace scribo
       trace::exiting("scribo::draw::bounding_box_links");
     }
 
-    template <typename I>
+    template <typename I, typename L>
     inline
     void
     bounding_box_links(Image<I>& input_,
 		       const mln::util::array< box<mln_site(I)> >& bboxes,
-		       const mln::util::array<unsigned>& left_link,
-		       const mln::util::array<unsigned>& right_link,
+		       const object_links<L>& left_link,
+		       const object_links<L>& right_link,
 		       const mln_value(I)& left_link_value,
 		       const mln_value(I)& right_link_value,
 		       const mln_value(I)& validated_link_value)
