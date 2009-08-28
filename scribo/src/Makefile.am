@@ -68,5 +68,15 @@ if HAVE_TIFF
 			   $(TIFF_LDFLAGS) \
 			   -lpthread
 
+    bin_PROGRAMS 	+= text_in_doc
+    text_in_doc_SOURCES = text_in_doc.cc
+    text_in_doc_CPPFLAGS = $(AM_CPPFLAGS) \
+			   $(TESSERACT_CPPFLAGS) \
+			   $(TIFF_CPPFLAGS)
+    text_in_doc_LDFLAGS  = $(AM_LDFLAGS) \
+			   $(TESSERACT_LDFLAGS) \
+			   $(TIFF_LDFLAGS) \
+			   -lpthread
+
 endif HAVE_TIFF
 endif HAVE_TESSERACT

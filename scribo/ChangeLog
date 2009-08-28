@@ -1,5 +1,10 @@
 2009-08-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* src/text_in_doc.cc: New full example extracting text in
+	documents.
+
+2009-08-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	* src/text_in_photo.cc: Improve text detection in pictures.
 
 2009-08-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
