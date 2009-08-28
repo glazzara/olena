@@ -1,5 +1,9 @@
 2009-08-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* debug/decision_image.hh: New debug routine.
+
+2009-08-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Small fixes in Scribo.
 
 	* core/object_links.hh,
