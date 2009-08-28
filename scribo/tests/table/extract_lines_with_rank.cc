@@ -43,6 +43,7 @@
 
 #include <scribo/tests/data.hh>
 
+
 int main(int argc, char *argv[])
 {
   using namespace mln;
@@ -62,11 +63,11 @@ int main(int argc, char *argv[])
     vboxes,
     hboxes;
   vboxes.append(make::box2d(0,0, 59,59));
-  vboxes.append(make::box2d(0,28, 25, 32));
-  vboxes.append(make::box2d(33,28, 59,32));
+  vboxes.append(make::box2d(0,28, 27, 32));
+  vboxes.append(make::box2d(31,28, 59,32));
   hboxes.append(make::box2d(0,0, 59,59));
-  hboxes.append(make::box2d(27,0, 31, 24));
-  hboxes.append(make::box2d(27,36, 31,59));
+  hboxes.append(make::box2d(27,0, 31, 26));
+  hboxes.append(make::box2d(27,34, 31,59));
 
   value::label_8 nbboxes;
 
@@ -79,11 +80,13 @@ int main(int argc, char *argv[])
   lbl_t
     vlbl = scribo::primitive::extract::lines_v_discontinued(input, c8(),
 							    nbboxes, 11, 2);
+  mln_assertion(hlbl.nlabels() == 2);
+  mln_assertion(vlbl.nlabels() == 2);
+  // Background values are meaningless, we skip them.
+  for (unsigned i = 1; i < 3; ++i)
+  {
+    mln_assertion(hlbl.bbox(i) == hboxes(i));
+    mln_assertion(vlbl.bbox(i) == vboxes(i));
+  }
 
-  // Background values are meaningless, we set them to an arbitrary value.
-  hboxes(0) = hlbl.bbox(0);
-  vboxes(0) = vlbl.bbox(0);
-
-  mln_assertion(hlbl.bboxes() == hboxes);
-  mln_assertion(vlbl.bboxes() == vboxes);
 }

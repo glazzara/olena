@@ -1,5 +1,9 @@
 2009-08-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* tests/table/extract_lines_with_rank.cc: Fix a test in Scribo.
+
+2009-08-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	* src/text_in_doc.cc: New full example extracting text in
 	documents.
 
