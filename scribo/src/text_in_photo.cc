@@ -42,22 +42,36 @@
 
 #include <mln/draw/box.hh>
 
+
+#include <scribo/draw/bounding_boxes.hh>
+
 #include <scribo/primitive/extract/objects.hh>
-#include <scribo/primitive/group/apply.hh>
+
+#include <scribo/primitive/link/merge_double_link.hh>
 #include <scribo/primitive/link/with_single_left_link.hh>
 #include <scribo/primitive/link/with_single_right_link.hh>
+
+#include <scribo/primitive/group/apply.hh>
 #include <scribo/primitive/group/from_double_link.hh>
 #include <scribo/primitive/group/from_single_link.hh>
+
+#include <scribo/filter/object_links_bbox_h_ratio.hh>
+#include <scribo/filter/object_links_bbox_overlap.hh>
+
 #include <scribo/filter/objects_small.hh>
 #include <scribo/filter/objects_thin.hh>
 #include <scribo/filter/objects_thick.hh>
+
 #include <scribo/filter/object_groups_small.hh>
 
-#include <scribo/make/debug_filename.hh>
+#include <scribo/debug/decision_image.hh>
+#include <scribo/debug/save_bboxes_image.hh>
 #include <scribo/debug/save_bboxes_image.hh>
 #include <scribo/debug/save_linked_bboxes_image.hh>
 
 #include <scribo/debug/usage.hh>
+
+#include <scribo/make/debug_filename.hh>
 
 const char *args_desc[][2] =
 {
@@ -72,8 +86,6 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  scribo::make::internal::debug_filename_prefix = argv[2];
-
   if (argc != 3)
     return scribo::debug::usage(argv,
 				"Find text in a binarized photo.",
@@ -81,6 +93,8 @@ int main(int argc, char* argv[])
 				args_desc,
 				"A color image where the text is \
 highlighted.");
+
+  scribo::make::internal::debug_filename_prefix = argv[2];
 
   trace::entering("main");
 
@@ -94,7 +108,6 @@ highlighted.");
   object_image(L)
     objects = scribo::primitive::extract::objects(input, c8(), nobjects);
 
-
   /// First filtering.
   object_image(L) filtered_objects
     = scribo::filter::objects_small(objects, 6);
@@ -102,15 +115,19 @@ highlighted.");
   filtered_objects
     = scribo::filter::objects_thin(filtered_objects, 1);
 
-  filtered_objects
-    = scribo::filter::objects_thick(filtered_objects,
-	  math::min(input.ncols(), input.nrows()) / 5);
+//   filtered_objects
+//     = scribo::filter::objects_thick(filtered_objects,
+// 	  math::min(input.ncols(), input.nrows()) / 5);
+
 
   /// Grouping potential objects
   object_links<L> left_link
     = primitive::link::with_single_left_link(filtered_objects, 30);
   object_links<L> right_link
     = primitive::link::with_single_right_link(filtered_objects, 30);
+
+
+
 
 
 #ifndef NOUT
@@ -124,56 +141,102 @@ highlighted.");
  					  scribo::make::debug_filename("links.ppm"));
 #endif
 
-    // Trying to group objects
+
+
+  // Validating left and right links.
+  object_links<L>
+    merged_links = primitive::link::merge_double_link(filtered_objects,
+						      left_link,
+						      right_link);
+  // Remove links if bboxes have too different sizes.
+  object_links<L>
+    hratio_filtered_links = filter::object_links_bbox_h_ratio(filtered_objects,
+							      merged_links,
+							      0.7f);
+
+
+
+
+#ifndef NOUT
+  image2d<value::rgb8>
+    hratio_decision_image = scribo::debug::decision_image(input,
+							  merged_links,
+							  hratio_filtered_links);
+  io::ppm::save(hratio_decision_image,
+		scribo::make::debug_filename("hratio_links_decision_image.ppm"));
+#endif
+
+
+
+
+  //Remove links if bboxes overlap too much.
+  object_links<L> overlap_filtered_links
+    = filter::object_links_bbox_overlap(filtered_objects,
+					hratio_filtered_links,
+					0.80f);
+
+
+
+
+#ifndef NOUT
+  image2d<value::rgb8> overlap_decision_image
+    = scribo::debug::decision_image(input,
+				    hratio_filtered_links,
+				    overlap_filtered_links);
+  io::ppm::save(overlap_decision_image,
+		scribo::make::debug_filename("overlap_links_decision_image.ppm"));
+#endif
+
+
+
+
   object_groups<L>
-    groups = primitive::group::from_double_link(filtered_objects,
-						left_link, right_link);
-
-    // Remove objects part of groups with less than 3 objects.
-  mln::util::array<bool>
-    to_be_kept = filter::object_groups_small(groups, 3);
+    groups = primitive::group::from_single_link(filtered_objects,
+						overlap_filtered_links);
 
 
-  // FOR DEBUGGING PURPOSE.
-  image2d<value::rgb8> decision_image = data::convert(value::rgb8(), input);
+  // Remove objects part of groups with strictly less than 3 objects.
+  object_groups<L> filtered_groups = filter::object_groups_small(groups, 3);
 
 
-  for (unsigned i = 1; i < to_be_kept.size(); ++i)
-  {
-    if (!to_be_kept(i))
-      mln::draw::box(decision_image, filtered_objects.bbox(i), literal::red);
-    else
-      mln::draw::box(decision_image, filtered_objects.bbox(i), literal::green);
-  }
-  // END OF DEBUG
 
 
-  filtered_objects.relabel(to_be_kept);
+#ifndef NOUT
+  image2d<value::rgb8>
+    decision_image = scribo::debug::decision_image(input,
+						   groups, filtered_groups);
+#endif
 
 
-  /// Objects have been removed we need to update object links again.
+
+  /// Apply grouping in the object image.
+  object_image(L)
+    grouped_objects = primitive::group::apply(filtered_objects,
+					      filtered_groups);
+
+
+  /// Objects have been grouped. We try to link groups together.
   /// This time a single link is enough since non-wanted objects have
   /// been removed.
   left_link
-    = primitive::link::with_single_left_link(filtered_objects, 30);
+    = primitive::link::with_single_left_link(grouped_objects, 30);
+
+  /// Grouping groups.
+  groups = primitive::group::from_single_link(grouped_objects, left_link);
+
+  grouped_objects = primitive::group::apply(grouped_objects, groups);
 
 
 
-  /// Grouping objects again.
-  groups = primitive::group::from_single_link(filtered_objects, left_link);
-
-  object_image(L)
-    grouped_objects = primitive::group::apply(filtered_objects, groups);
 
 #ifndef NOUT
-  /// FOR DEBUG PURPOSE.
-  for (unsigned i = 1; i <= grouped_objects.nlabels(); ++i)
-    mln::draw::box(decision_image, grouped_objects.bbox(i), literal::blue);
+  scribo::draw::bounding_boxes(decision_image, grouped_objects, literal::blue);
   io::ppm::save(decision_image, scribo::make::debug_filename("decision_image.ppm"));
-
 
   std::cout << "AFTER - nobjects = " << grouped_objects.nlabels() << std::endl;
 #endif
+
+
 
   io::ppm::save(mln::labeling::colorize(value::rgb8(),
 					grouped_objects,
