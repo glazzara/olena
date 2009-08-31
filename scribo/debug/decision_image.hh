@@ -33,8 +33,10 @@
 # include <mln/core/concept/image.hh>
 # include <mln/data/convert.hh>
 # include <mln/value/rgb8.hh>
+# include <mln/literal/colors.hh>
 # include <mln/util/array.hh>
 
+# include <scribo/core/object_groups.hh>
 # include <scribo/draw/bounding_boxes.hh>
 
 

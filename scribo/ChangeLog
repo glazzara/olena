@@ -1,3 +1,17 @@
+2009-08-31 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Fix compilation issues in Scribo.
+
+	* binarization/sauvola.hh,
+	* debug/decision_image.hh,
+	* debug/save_linked_bboxes_image.hh,
+	* draw/bounding_box_links.hh,
+	* filter/object_links_bbox_overlap.hh: Add missing includes.
+
+	* src/text_in_photo_invert.cc: Update use of some routines.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2009-08-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* tests/table/extract_lines_with_rank.cc: Fix a test in Scribo.

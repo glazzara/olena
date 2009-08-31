@@ -2,6 +2,7 @@
 
 check_PROGRAMS =  \
 scribo_all \
+scribo_binarization_sauvola \
 scribo_binarization_simple \
 scribo_core_all \
 scribo_core_central_sites \
@@ -11,6 +12,7 @@ scribo_core_object_groups \
 scribo_core_object_image \
 scribo_core_object_links \
 scribo_debug_all \
+scribo_debug_decision_image \
 scribo_debug_save_bboxes_image \
 scribo_debug_save_label_image \
 scribo_debug_save_linked_bboxes_image \
@@ -21,7 +23,13 @@ scribo_draw_bounding_box_links \
 scribo_draw_bounding_boxes \
 scribo_filter_all \
 scribo_filter_object_groups_small \
+scribo_filter_object_links_bbox_h_ratio \
+scribo_filter_object_links_bbox_overlap \
+scribo_filter_object_links_bbox_ratio \
+scribo_filter_object_links_bbox_w_ratio \
+scribo_filter_object_links_bottom_aligned \
 scribo_filter_object_links_non_aligned \
+scribo_filter_object_links_non_aligned_simple \
 scribo_filter_object_links_non_h_aligned \
 scribo_filter_object_links_non_v_aligned \
 scribo_filter_objects_large \
@@ -96,6 +104,7 @@ scribo_util_all \
 scribo_util_text
 
 scribo_all_SOURCES = scribo_all.cc
+scribo_binarization_sauvola_SOURCES = scribo_binarization_sauvola.cc
 scribo_binarization_simple_SOURCES = scribo_binarization_simple.cc
 scribo_core_all_SOURCES = scribo_core_all.cc
 scribo_core_central_sites_SOURCES = scribo_core_central_sites.cc
@@ -105,6 +114,7 @@ scribo_core_object_groups_SOURCES = scribo_core_object_groups.cc
 scribo_core_object_image_SOURCES = scribo_core_object_image.cc
 scribo_core_object_links_SOURCES = scribo_core_object_links.cc
 scribo_debug_all_SOURCES = scribo_debug_all.cc
+scribo_debug_decision_image_SOURCES = scribo_debug_decision_image.cc
 scribo_debug_save_bboxes_image_SOURCES = scribo_debug_save_bboxes_image.cc
 scribo_debug_save_label_image_SOURCES = scribo_debug_save_label_image.cc
 scribo_debug_save_linked_bboxes_image_SOURCES = scribo_debug_save_linked_bboxes_image.cc
@@ -115,7 +125,13 @@ scribo_draw_bounding_box_links_SOURCES = scribo_draw_bounding_box_links.cc
 scribo_draw_bounding_boxes_SOURCES = scribo_draw_bounding_boxes.cc
 scribo_filter_all_SOURCES = scribo_filter_all.cc
 scribo_filter_object_groups_small_SOURCES = scribo_filter_object_groups_small.cc
+scribo_filter_object_links_bbox_h_ratio_SOURCES = scribo_filter_object_links_bbox_h_ratio.cc
+scribo_filter_object_links_bbox_overlap_SOURCES = scribo_filter_object_links_bbox_overlap.cc
+scribo_filter_object_links_bbox_ratio_SOURCES = scribo_filter_object_links_bbox_ratio.cc
+scribo_filter_object_links_bbox_w_ratio_SOURCES = scribo_filter_object_links_bbox_w_ratio.cc
+scribo_filter_object_links_bottom_aligned_SOURCES = scribo_filter_object_links_bottom_aligned.cc
 scribo_filter_object_links_non_aligned_SOURCES = scribo_filter_object_links_non_aligned.cc
+scribo_filter_object_links_non_aligned_simple_SOURCES = scribo_filter_object_links_non_aligned_simple.cc
 scribo_filter_object_links_non_h_aligned_SOURCES = scribo_filter_object_links_non_h_aligned.cc
 scribo_filter_object_links_non_v_aligned_SOURCES = scribo_filter_object_links_non_v_aligned.cc
 scribo_filter_objects_large_SOURCES = scribo_filter_objects_large.cc

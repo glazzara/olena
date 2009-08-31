@@ -48,17 +48,22 @@
 #include <mln/labeling/superpose.hh>
 
 #include <scribo/primitive/extract/objects.hh>
-#include <scribo/primitive/group/apply.hh>
+
 #include <scribo/primitive/link/with_single_left_link.hh>
 #include <scribo/primitive/link/with_single_right_link.hh>
+
+#include <scribo/primitive/group/apply.hh>
 #include <scribo/primitive/group/from_double_link.hh>
 #include <scribo/primitive/group/from_single_link.hh>
+
 #include <scribo/filter/objects_small.hh>
 #include <scribo/filter/objects_thin.hh>
 #include <scribo/filter/objects_thick.hh>
 #include <scribo/filter/object_groups_small.hh>
 
 #include <scribo/make/debug_filename.hh>
+
+#include <scribo/debug/decision_image.hh>
 #include <scribo/debug/save_bboxes_image.hh>
 #include <scribo/debug/save_linked_bboxes_image.hh>
 
@@ -129,28 +134,20 @@ namespace mln
       groups = primitive::group::from_double_link(filtered_objects,
 						  left_link, right_link);
 
-    // Remove objects part of groups with less than 3 objects.
-    util::array<bool>
-      to_be_kept = filter::object_groups_small(groups, 3);
+    // Remove objects part of groups with strictly less than 3 objects.
+    object_groups<L> filtered_groups = filter::object_groups_small(groups, 3);
 
-
-
-    // FOR DEBUGGING PURPOSE.
 #ifndef NOUT
-    image2d<value::rgb8> decision_image = data::convert(value::rgb8(), input);
+    image2d<value::rgb8>
+      decision_image = scribo::debug::decision_image(input,
+						     groups, filtered_groups);
+#endif
 
 
-    for (unsigned i = 1; i < to_be_kept.size(); ++i)
-    {
-      if (!to_be_kept(i))
-	mln::draw::box(decision_image, filtered_objects.bbox(i), literal::red);
-      else
-	mln::draw::box(decision_image, filtered_objects.bbox(i), literal::green);
-    }
-#endif // ! NOUT
-
-
-    filtered_objects.relabel(to_be_kept);
+    /// Apply grouping in the object image.
+    object_image(L)
+      grouped_objects = primitive::group::apply(filtered_objects,
+						filtered_groups);
 
 
     // Objects have been removed we need to update object links again.
@@ -164,8 +161,7 @@ namespace mln
     // Grouping objects again.
     groups = primitive::group::from_single_link(filtered_objects, left_link);
 
-    object_image(L)
-      grouped_objects = primitive::group::apply(filtered_objects, groups);
+    grouped_objects = primitive::group::apply(filtered_objects, groups);
 
 #ifndef NOUT
     for (unsigned i = 1; i <= grouped_objects.nlabels(); ++i)

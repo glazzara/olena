@@ -36,6 +36,7 @@
 # include <mln/canvas/browsing/depth_first_search.hh>
 
 # include <scribo/core/macros.hh>
+# include <scribo/core/object_links.hh>
 # include <scribo/primitive/internal/is_link_valid.hh>
 
 namespace scribo

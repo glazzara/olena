@@ -36,6 +36,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/value/int_u.hh>
+# include <mln/value/int_u8.hh>
 
 # include <mln/data/transform.hh>
 # include <mln/pw/all.hh>

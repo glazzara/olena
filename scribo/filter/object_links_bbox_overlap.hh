@@ -32,6 +32,8 @@
 /// overlapping too much.
 
 
+# include <mln/math/min.hh>
+# include <mln/math/max.hh>
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>

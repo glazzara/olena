@@ -39,6 +39,7 @@
 # include <mln/util/array.hh>
 # include <mln/io/ppm/save.hh>
 
+# include <scribo/core/object_links.hh>
 # include <scribo/core/object_image.hh>
 # include <scribo/draw/bounding_boxes.hh>
 # include <scribo/draw/bounding_box_links.hh>
