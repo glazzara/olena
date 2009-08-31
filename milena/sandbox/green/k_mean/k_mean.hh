@@ -52,6 +52,7 @@
 #include <mln/trace/exiting.hh>
 
 #include <mln/core/contract.hh>
+#include <mln/trait/value_.hh>
 
 #include <mln/algebra/mat.hh>
 #include <mln/algebra/vec.hh>
@@ -99,6 +100,9 @@ namespace mln
       
       algebra::mat<n, p, T>& get_point();
       algebra::mat<k, p, T>& get_center();
+      algebra::mat<n, k, T>& get_distance();
+      algebra::mat<n, k, T>& get_group();
+      algebra::vec<k, T>&    get_variance();
 
       k_mean();
       ~k_mean();
@@ -106,6 +110,7 @@ namespace mln
       void update_distance();
       void update_group();
       void update_center();
+      void update_variance();
 
       template <unsigned q, typename M>
       M min(const algebra::vec<q, M>& x) const;
@@ -138,6 +143,15 @@ namespace mln
       algebra::vec<q,T> col(const algebra::mat<r, q, T>& m,
 			    const unsigned _col) const;
 
+      template <unsigned q, unsigned r>
+      void div_col(algebra::mat<r, q, T>& m,
+		   const unsigned         _col,
+		   const T                value);
+
+      template <unsigned q, unsigned r>
+      mln_sum(T) sum_row(const algebra::mat<r, q, T>& m,
+			 const unsigned _row) const;
+
     private:
       /// \brief _points contains the concatenation of every data points.
       ///
@@ -163,6 +177,8 @@ namespace mln
       /// _center is a matrix KxP where K is the number of centers and P is the
       /// number of attributes.
       algebra::mat<k, p, T>* _center;
+
+      algebra::vec<k, T>* _variance;
     };
 
 #ifndef MLN_INCLUDE_ONLY
@@ -190,6 +206,39 @@ namespace mln
     }
 
     template <unsigned n, unsigned k, unsigned p, typename T>
+    inline
+    algebra::mat<n, k, T>&
+    k_mean<n,k,p,T>::get_distance()
+    {
+      trace::entering("mln::clustering::k_mean::get_distance");
+      trace::exiting("mln::clustering::k_mean::get_distance");
+
+      return *_distance;
+    }
+
+    template <unsigned n, unsigned k, unsigned p, typename T>
+    inline
+    algebra::mat<n, k, T>&
+    k_mean<n,k,p,T>::get_group()
+    {
+      trace::entering("mln::clustering::k_mean::get_group");
+      trace::exiting("mln::clustering::k_mean::get_group");
+
+      return *_group;
+    }
+
+    template <unsigned n, unsigned k, unsigned p, typename T>
+    inline
+    algebra::vec<k, T>&
+    k_mean<n,k,p,T>::get_variance()
+    {
+      trace::entering("mln::clustering::k_mean::get_variance");
+      trace::exiting("mln::clustering::k_mean::get_variance");
+
+      return *_variance;
+    }
+
+    template <unsigned n, unsigned k, unsigned p, typename T>
     k_mean<n,k,p,T>::k_mean()
     {
       trace::entering("mln::clustering::k_mean::k_mean");
@@ -198,11 +247,13 @@ namespace mln
       _distance = new algebra::mat<n, k, mln_sum_product(T,T)>();
       _group    = new algebra::mat<n, k, T>();
       _center   = new algebra::mat<k, p, T>();
+      _variance = new algebra::vec<k,T>();
 
       mln_postcondition(_point    != 0);
       mln_postcondition(_distance != 0);
       mln_postcondition(_group    != 0);
       mln_postcondition(_center   != 0);
+      mln_postcondition(_variance != 0);
 
       trace::exiting("mln::clustering::k_mean::k_mean");
     }
@@ -216,6 +267,7 @@ namespace mln
       delete _distance;
       delete _group;
       delete _center;
+      delete _variance;
 
       trace::exiting("mln::clustering::k_mean::~k_mean");
     }
@@ -273,7 +325,7 @@ namespace mln
 	  center(i,j) = point(random, j); 
 	}
 
-	std::cout << "center(" << i << ")" << col(center, i) << std::endl;
+	//std::cout << "center(" << i << ")" << col(center, i) << std::endl;
       }
 
       trace::exiting("mln::clustering::k_mean<n,k,p,T>::init_center");
@@ -329,12 +381,33 @@ namespace mln
       algebra::mat<k, p, T>& center = *_center;
       algebra::mat<n, k, T>& group  = *_group;
 
-      center = (group.t() * point) / n;
+      center = (group.t() * point);
 
-      // mln_postcondition(sum(col(distance(i,j)) == 1) Vi
+      for (unsigned i = 0; i < k; ++i)
+	div_col(center, i, sum_row(group, i));
+
       trace::exiting("mln::clustering::k_mean<n,k,p,T>::update_center");
     }
 
+    template <unsigned n, unsigned k, unsigned p, typename T>
+    inline
+    void k_mean<n,k,p,T>::update_variance()
+    {
+      trace::entering("mln::clustering::k_mean<n,k,p,T>::update_variance");
+
+      algebra::vec<k, T>&    variance = *_variance;
+      algebra::mat<n, k, T>& distance = *_distance;
+      algebra::mat<n, k, T>& group    = *_group;
+
+      // BUG HERE
+      // separate the n group in n vectors
+      // separate the n distance in n vectors
+      // compute the n scalar product (group, distance)
+      // sum the n scalar product to obtain the within variance 
+      variance = (group.t() * distance).t();
+
+      trace::exiting("mln::clustering::k_mean<n,k,p,T>::update_variance");
+    }    
     
     
   /*
@@ -352,7 +425,40 @@ namespace mln
     }
 
   */
-    //vec<q, T> k_mean<n,k,p,T>::col(const mat<r, q, T>& m, unsigned _col) const
+    template <unsigned n, unsigned k, unsigned p, typename T>
+    template <unsigned q, unsigned r>
+    inline
+    mln_sum(T) k_mean<n,k,p,T>::sum_row(const algebra::mat<r, q, T>& m, 
+					const unsigned               _row) const
+    {
+      trace::entering("mln::clustering::k_mean::sum_row");
+      mln_precondition(q > _row);
+
+      mln_sum(T) result;
+
+      for (unsigned j = 0; j < r; ++j)
+	result += m(j, _row);
+
+      trace::exiting("mln::clustering::k_mean::sum_row");
+      return result;
+    }
+
+    template <unsigned n, unsigned k, unsigned p, typename T>
+    template <unsigned q, unsigned r>
+    inline
+    void k_mean<n,k,p,T>::div_col(algebra::mat<r, q, T>& m, 
+				  const unsigned _col,
+				  const T        value)
+    {
+      trace::entering("mln::clustering::k_mean::div_col");
+      mln_precondition(r > _col);
+
+      for (unsigned j = 0; j < q; ++j)
+	m(_col, j) /= value;
+
+      trace::exiting("mln::clustering::k_mean::div_col");
+    }
+
     template <unsigned n, unsigned k, unsigned p, typename T>
     template <unsigned q, unsigned r>
     inline
@@ -390,8 +496,9 @@ namespace mln
     inline
     void k_mean<n,k,p,T>::update_distance()
     {
-      trace::entering("mln::clustering::k_mean::distance");
-      mln::trace::quiet = true;
+      trace::entering("mln::clustering::k_mean::update_distance");
+      //mln::trace::quiet = true;
+
       // the result is stored in _distance matrix.
       algebra::mat<n, p, T>& point    = *_point;
       algebra::mat<n, k, T>& distance = *_distance;
@@ -406,8 +513,8 @@ namespace mln
 	  distance(i,j) = euclidian_distance(col(point,i),col(center,j));
 	}
       }
-      mln::trace::quiet = false;
-      trace::exiting("mln::clustering::k_mean::distance");
+      //mln::trace::quiet = false;
+      trace::exiting("mln::clustering::k_mean::update_distance");
     }
 
 #endif // ! MLN_INCLUDE_ONLY

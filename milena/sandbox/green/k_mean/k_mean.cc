@@ -29,6 +29,31 @@
 #include <mln/trait/value/print.hh>
 #include <mln/trait/image/print.hh>
 
+#define SIZE_IMAGE    512
+#define SIZE_SAMPLE1  (512*512)
+#define SIZE_SAMPLE2  4
+#define NB_CENTER     2
+#define DIM_POINT     3
+#define TYPE_POINT    double
+#define MAT_POINT1    mln::algebra::mat<SIZE_SAMPLE1, DIM_POINT, TYPE_POINT>
+#define MAT_POINT2    mln::algebra::mat<SIZE_SAMPLE2, DIM_POINT, TYPE_POINT>
+#define MAT_CENTER    mln::algebra::mat<NB_CENTER, DIM_POINT, TYPE_POINT>
+#define MAT_DISTANCE1 mln::algebra::mat<SIZE_SAMPLE1, NB_CENTER, TYPE_POINT>
+#define MAT_DISTANCE2 mln::algebra::mat<SIZE_SAMPLE2, NB_CENTER, TYPE_POINT>
+#define MAT_GROUP1    mln::algebra::mat<SIZE_SAMPLE1, NB_CENTER, TYPE_POINT>
+#define MAT_GROUP2    mln::algebra::mat<SIZE_SAMPLE2, NB_CENTER, TYPE_POINT>
+#define VEC_VAR       mln::algebra::vec<NB_CENTER, TYPE_POINT>
+
+
+void test_instantiation()
+{
+  mln::clustering::k_mean<SIZE_SAMPLE2,NB_CENTER, DIM_POINT, TYPE_POINT> kmean;
+
+  // test the compilation
+
+  std::cout << "test instantiation   : ok" << std::endl;
+}
+
 struct rgb8_to_4colors : mln::Function_v2v<rgb8_to_4colors>
 {
   typedef mln::value::rgb8 result;
@@ -67,22 +92,14 @@ void fill_image_with_4colors(mln::image2d<mln::value::rgb8>& img)
 
   img = mln::data::transform(img, rgb8_to_4colors());
 
-  print_color(lime);
-  print_color(brown);
-  print_color(teal);
-  print_color(purple);
+  //print_color(lime);
+  //print_color(brown);
+  //print_color(teal);
+  //print_color(purple);
 }
 
-#define SIZE_IMAGE  512
-#define SIZE_SAMPLE (512*512)
-#define NB_CENTER   2
-#define DIM_POINT   3
-#define TYPE_POINT  double
-#define MAT_POINT   mln::algebra::mat<SIZE_SAMPLE, DIM_POINT, TYPE_POINT>
-#define MAT_CENTER  mln::algebra::mat<NB_CENTER, DIM_POINT, TYPE_POINT>
-
 bool is_equivalent(const mln::image2d<mln::value::rgb8>& img,
-		   const MAT_POINT& point)
+		   const MAT_POINT1& point)
 {
   mln_piter_(mln::image2d<mln::value::rgb8>) pi(img.domain());
   bool                                       result = true;
@@ -123,7 +140,7 @@ void test_init_point()
   typedef mln::value::rgb8  rgb8;
   mln::image2d<rgb8>        img_ref;
 
-  mln::clustering::k_mean<SIZE_SAMPLE,NB_CENTER, DIM_POINT, TYPE_POINT> kmean;
+  mln::clustering::k_mean<SIZE_SAMPLE1,NB_CENTER, DIM_POINT, TYPE_POINT> kmean;
 
   mln::io::ppm::load(img_ref, "/usr/local/share/olena/images/lena.ppm");
   //mln::io::ppm::save(img_ref, "verif.ppm");
@@ -133,117 +150,282 @@ void test_init_point()
   
   mln_assertion(true == is_equivalent(img_ref, kmean.get_point()));
 
-  std::cout << "Test init point : ok" << std::endl;
+  std::cout << "Test init point      : ok" << std::endl;
 }
 
-bool is_equal(const mln::value::rgb8& ref, const MAT_CENTER& center, unsigned i)
+void set_point(MAT_POINT2&             point,
+	       const unsigned          index, 
+	       const mln::value::rgb8& color)
+{
+  point(index,0) = color.red();
+  point(index,1) = color.green();
+  point(index,2) = color.blue();
+}
+
+void fake_init_point(MAT_POINT2&             point,
+		     const mln::value::rgb8& point1,
+		     const mln::value::rgb8& point2,
+		     const mln::value::rgb8& point3,
+		     const mln::value::rgb8& point4)
+{
+  set_point(point, 0, point1);
+  set_point(point, 1, point2);
+  set_point(point, 2, point3);
+  set_point(point, 3, point4);
+}
+
+bool is_equal(const mln::value::rgb8& ref,
+	      const MAT_CENTER& center,
+	      const unsigned i)
 {
   bool result = true;
 
-  result = result && (ref.red() == center(i, 0));
-  result = result && (ref.green() == center(i, 1));
-  result = result && (ref.blue() == center(i, 2));
-
-  return result;
-}
-
-bool is_center_initialized(const MAT_CENTER& center)
-{
-  typedef mln::value::rgb8  rgb8;
-  const rgb8                lime   = mln::literal::lime;
-  const rgb8                brown  = mln::literal::brown;
-  const rgb8                teal   = mln::literal::teal;
-  const rgb8                purple = mln::literal::purple;
-  bool                      result = false;
-
-  for (unsigned i = 0; i < NB_CENTER; ++i)
-  {
-    result = result || is_equal(lime, center, i);
-    result = result || is_equal(brown, center, i);
-    result = result || is_equal(teal, center, i);
-    result = result || is_equal(purple, center, i);
-  }
+  result = result && (center(i, 0) - ref.red()   < 1.0);
+  result = result && (center(i, 1) - ref.green() < 1.0);
+  result = result && (center(i, 2) - ref.blue()  < 1.0);
 
   return result;
 }
 
 void test_init_center()
 {
-  typedef mln::value::rgb8  rgb8;
-  mln::image2d<rgb8>        img_ref;
+  mln::clustering::k_mean<SIZE_SAMPLE2, NB_CENTER, DIM_POINT, TYPE_POINT> kmean;
 
-  mln::clustering::k_mean<SIZE_SAMPLE,NB_CENTER, DIM_POINT, TYPE_POINT> kmean;
-
-  mln::io::ppm::load(img_ref, "/usr/local/share/olena/images/lena.ppm");
-
-  fill_image_with_4colors(img_ref);
-  kmean.init_point(img_ref);
+  const mln::value::rgb8 lime   = mln::literal::lime;
+  const mln::value::rgb8 brown  = mln::literal::brown;
+  const mln::value::rgb8 teal   = mln::literal::teal;
+  const mln::value::rgb8 purple = mln::literal::purple;
+  
+  fake_init_point(kmean.get_point(), lime, brown, teal, purple);
   kmean.init_center();
+  
+  mln_assertion(is_equal(lime,   kmean.get_center(), 0)  ||
+		is_equal(brown,  kmean.get_center(), 0)  ||
+		is_equal(teal,   kmean.get_center(), 0)  ||
+		is_equal(purple, kmean.get_center(), 0));
 
-  mln_assertion(true == is_center_initialized(kmean.get_center()));
-  std::cout << "Test init center : ok" << std::endl;
+  mln_assertion(is_equal(lime,   kmean.get_center(), 1)  ||
+		is_equal(brown,  kmean.get_center(), 1)  ||
+		is_equal(teal,   kmean.get_center(), 1)  ||
+		is_equal(purple, kmean.get_center(), 1));
+
+  std::cout << "Test init center     : ok" << std::endl;
 }
 
-void test_instantiation()
+void set_center(MAT_CENTER&             center,
+		const unsigned          index,
+		const mln::value::rgb8& color)
+{
+  center(index,0) = color.red();
+  center(index,1) = color.green();
+  center(index,2) = color.blue();
+}
+
+void fake_init_center(MAT_CENTER&            center,
+		      const mln::value::rgb8 center1,
+		      const mln::value::rgb8 center2)
 {
 
-  std::cout << "test_instantiation" << std::endl;
-  
-  mln::trace::entering("safe");
-  //  typedef mln::value::int_u8 int_u8;
-  typedef mln::value::rgb8 rgb8;
-  const   unsigned           SIZE = 512*512;
+  set_center(center, 0, center1);
+  set_center(center, 1, center2);
+}
 
-  //mln::image2d<int_u8>        img_ref;
-  mln::image2d<rgb8>        img_ref;
 
-  mln::io::ppm::load(img_ref, "/usr/local/share/olena/images/lena.ppm");
+double dist(mln::value::rgb8 color1, mln::value::rgb8 color2)
+{
+  double red   = color1.red()   - color2.red();
+  double green = color1.green() - color2.green();
+  double blue  = color1.blue()  - color2.blue();
+  double result= red * red + green * green + blue * blue;
 
-  mln::trace::exiting("safe");
-  mln::trace::entering("clustering");
-  mln::clustering::k_mean<SIZE,2,3,double> kmean;
+  return result;
+}
 
-  std::cout << img_ref.domain() << std::endl;
-  kmean.init_point(img_ref);
-  kmean.init_center();
+void test_update_distance()
+{
+  mln::clustering::k_mean<SIZE_SAMPLE2, NB_CENTER, DIM_POINT, TYPE_POINT> kmean;
+
+  const mln::value::rgb8 lime   = mln::literal::lime;
+  const mln::value::rgb8 brown  = mln::literal::brown;
+  const mln::value::rgb8 teal   = mln::literal::teal;
+  const mln::value::rgb8 purple = mln::literal::purple;
+  const mln::value::rgb8 c1     = lime;
+  const mln::value::rgb8 c2     = purple;
+  const MAT_DISTANCE2&   dist_v = kmean.get_distance();
+
+  fake_init_point(kmean.get_point(), lime, brown, teal, purple);
+  fake_init_center(kmean.get_center(), c1, c2);
   kmean.update_distance();
+
+  mln_assertion(dist(lime,   c1) == dist_v(0,0));
+  mln_assertion(dist(lime,   c2) == dist_v(0,1));
+  mln_assertion(dist(brown,  c1) == dist_v(1,0));
+  mln_assertion(dist(brown,  c2) == dist_v(1,1));
+  mln_assertion(dist(teal,   c1) == dist_v(2,0));
+  mln_assertion(dist(teal,   c2) == dist_v(2,1));
+  mln_assertion(dist(purple, c1) == dist_v(3,0));
+  mln_assertion(dist(purple, c2) == dist_v(3,1));
+
+  std::cout << "Test update distance : ok" << std::endl;
+}
+
+void set_distance(MAT_DISTANCE2& distance,
+		  const unsigned index,
+		  const double   d1,
+		  const double   d2)
+{
+  distance(index,0) = d1;
+  distance(index,1) = d2;
+}
+
+void fake_update_distance(MAT_DISTANCE2&          distance,
+			  const mln::value::rgb8& point1,
+			  const mln::value::rgb8& point2,
+			  const mln::value::rgb8& point3,
+			  const mln::value::rgb8& point4,
+			  const mln::value::rgb8& center1,
+			  const mln::value::rgb8& center2)
+{
+  set_distance(distance, 0, dist(point1, center1), dist(point1, center2));
+  set_distance(distance, 1, dist(point2, center1), dist(point2, center2));
+  set_distance(distance, 2, dist(point3, center1), dist(point3, center2));
+  set_distance(distance, 3, dist(point4, center1), dist(point4, center2));
+
+  /*
+  for (int i = 0; i < SIZE_SAMPLE2; ++i)
+    for (int j = 0; j < NB_CENTER; ++j)
+      std::cout << "d(" << i << "," << j << ") = " << distance(i,j) <<std::endl;
+  */
+}
+
+void test_update_group()
+{
+  mln::clustering::k_mean<SIZE_SAMPLE2, NB_CENTER, DIM_POINT, TYPE_POINT> kmean;
+
+  const mln::value::rgb8 lime      = mln::literal::lime;
+  const mln::value::rgb8 brown     = mln::literal::brown;
+  const mln::value::rgb8 teal      = mln::literal::teal;
+  const mln::value::rgb8 purple    = mln::literal::purple;
+  const mln::value::rgb8 c1        = lime;
+  const mln::value::rgb8 c2        = purple;
+  const unsigned         point1_min= 0; // lime   near lime   (c1)
+  const unsigned         point2_min= 1; // brown  near purple (c2)
+  const unsigned         point3_min= 1; // teal   near purple (c2)
+  const unsigned         point4_min= 1; // purple near purple (c2)
+  const MAT_GROUP2&      group     = kmean.get_group();
+
+  fake_init_point(kmean.get_point(), lime, brown, teal, purple);
+  fake_init_center(kmean.get_center(), c1, c2);
+  fake_update_distance(kmean.get_distance(), lime, brown, teal, purple, c1, c2);
   kmean.update_group();
+
+  mln_assertion(0.0 == group(0, 1 - point1_min));
+  mln_assertion(1.0 == group(0, point1_min));
+  mln_assertion(0.0 == group(1, 1 - point2_min));
+  mln_assertion(1.0 == group(1, point2_min));
+  mln_assertion(0.0 == group(2, 1 - point3_min));
+  mln_assertion(1.0 == group(2, point3_min));
+  mln_assertion(0.0 == group(3, 1 - point4_min));
+  mln_assertion(1.0 == group(3, point4_min));
+
+  std::cout << "Test update group    : ok" << std::endl;
+}
+
+void set_group(MAT_GROUP2& group,
+	       const unsigned index,
+	       const unsigned min)
+{
+  group(index, min)   = 1.0;
+  group(index, 1-min) = 0.0;
+}
+
+
+void fake_update_group(MAT_GROUP2&     group,
+		       const unsigned& point1_min,
+		       const unsigned& point2_min,
+		       const unsigned& point3_min,
+		       const unsigned& point4_min)
+{
+  set_group(group, 0, point1_min);
+  set_group(group, 1, point2_min);
+  set_group(group, 2, point3_min);
+  set_group(group, 3, point4_min);
+}
+
+void test_update_center()
+{
+  mln::clustering::k_mean<SIZE_SAMPLE2, NB_CENTER, DIM_POINT, TYPE_POINT> kmean;
+
+  const mln::value::rgb8 lime      = mln::literal::lime;
+  const mln::value::rgb8 brown     = mln::literal::brown;
+  const mln::value::rgb8 teal      = mln::literal::teal;
+  const mln::value::rgb8 purple    = mln::literal::purple;
+  const mln::value::rgb8 c1        = lime;
+  const mln::value::rgb8 c2        = purple;
+  const unsigned         pt1_min   = 0; // lime   near lime   (c1)
+  const unsigned         pt2_min   = 1; // brown  near purple (c2)
+  const unsigned         pt3_min   = 1; // teal   near purple (c2)
+  const unsigned         pt4_min   = 1; // purple near purple (c2)
+  const mln::value::rgb8 mean_c1   = lime;
+  const mln::value::rgb8 mean_c2   = (brown+teal+purple)/3;
+
+  fake_init_point(kmean.get_point(), lime, brown, teal, purple);
+  fake_init_center(kmean.get_center(), c1, c2);
+  fake_update_distance(kmean.get_distance(), lime, brown, teal, purple, c1, c2);
+  fake_update_group(kmean.get_group(), pt1_min, pt2_min, pt3_min, pt4_min);
   kmean.update_center();
-  mln::trace::exiting("clustering");
-  /*
-  int_u8 val;
-  */
-  /*
-  mln::trait::value::print<mln::value::int_u8>(std::cout);
-  mln::trait::image::print<mln::image2d<int_u8> >();
-
-  mln::image2d<int_u8>        img_out;
-
-
-  //mln::io::pgm::load(img_ref, "mp00082c_50p.pgm");
-  mln::trace::exiting("image");
   
+  mln_assertion(is_equal(mean_c1, kmean.get_center(), 0));
+  mln_assertion(is_equal(mean_c2, kmean.get_center(), 1));
 
-  mln::trace::entering("test");
-
-  mln::trace::exiting("test");
-  //  k_mean.distance();
-  */
+  std::cout << "Test update center   : ok" << std::endl;
 }
 
-void test_col()
+void test_update_var()
 {
+  mln::clustering::k_mean<SIZE_SAMPLE2, NB_CENTER, DIM_POINT, TYPE_POINT> kmean;
+
+  const mln::value::rgb8 lime      = mln::literal::lime;
+  const mln::value::rgb8 brown     = mln::literal::brown;
+  const mln::value::rgb8 teal      = mln::literal::teal;
+  const mln::value::rgb8 purple    = mln::literal::purple;
+  const mln::value::rgb8 c1        = lime;
+  const mln::value::rgb8 c2        = purple;
+  const unsigned         pt1_min   = 0; // lime   near lime   (c1)
+  const unsigned         pt2_min   = 1; // brown  near purple (c2)
+  const unsigned         pt3_min   = 1; // teal   near purple (c2)
+  const unsigned         pt4_min   = 1; // purple near purple (c2)
+  const double           v1        = 0;
+  const double           v2        = dist(purple, brown) + dist(purple, teal);
+  const mln::value::rgb8 mean_c2   = (brown+teal+purple)/3;
+  const VEC_VAR&         var       = kmean.get_variance();
+
+  fake_init_point(kmean.get_point(), lime, brown, teal, purple);
+  fake_init_center(kmean.get_center(), c1, c2);
+  fake_update_distance(kmean.get_distance(), lime, brown, teal, purple, c1, c2);
+  fake_update_group(kmean.get_group(), pt1_min, pt2_min, pt3_min, pt4_min);
+  kmean.update_variance();
+  
+  mln_assertion(v1 == var[0]);
+  mln_assertion(v2 == var[1]);
+
+  std::cout << "Test update variance: ok" << std::endl;
 }
 
-void test_row()
-{
-}
 
 int main()
 {
-  //test_instantiation();
+  test_instantiation();
   test_init_point();
   test_init_center();
+  test_update_distance();
+  test_update_group();
+  test_update_center();
+  test_update_var();
+  
+  //  mln::trace::quiet = false;
+
+  test_update_center();
 
   return 0;
 }

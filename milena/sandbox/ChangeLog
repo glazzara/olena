@@ -1,3 +1,41 @@
+2009-08-28  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Improve and continue testing the kmean clustering code.
+
+	* green/k_mean/k_mean.hh (get_distance)        : New accessor method.
+	* green/k_mean/k_mean.hh (get_group)           : New accessor method.
+	* green/k_mean/k_mean.hh (get_variance)        : New accessor method.
+	* green/k_mean/k_mean.hh (update_variance)     : New compute method.
+	* green/k_mean/k_mean.hh (div_col)             : New tool method.
+	* green/k_mean/k_mean.hh (sum_row)             : New tool method.
+	* green/k_mean/k_mean.hh (k_mean)              : Add variance code.
+	* green/k_mean/k_mean.hh (~k_mean)             : Add variance code.
+	* green/k_mean/k_mean.hh (update_center)       : Fix bugs.
+	* green/k_mean/k_mean.hh (update_distance)     : New debugging code.
+	* green/k_mean/k_mean.cc (#define)             : New macros.
+	* green/k_mean/k_mean.cc (rgb8_to_4colors)     : Comment debugging code.
+	* green/k_mean/k_mean.cc (is_equivalent)       : Adapt the signature.
+	* green/k_mean/k_mean.cc (test_init_point)     : Adapt the k_mean call.
+	* green/k_mean/k_mean.cc (is_equal)            : Remove old function.
+	* green/k_mean/k_mean.cc (set_point)	       : New assignment func.
+	* green/k_mean/k_mean.cc (fake_init_point)     : New initializat° func.
+	* green/k_mean/k_mean.cc (is_equal)            : New predicate.
+	* green/k_mean/k_mean.cc (test_init_center)    : New unitary test.
+	* green/k_mean/k_mean.cc (set_center)          : New assignment func.
+	* green/k_mean/k_mean.cc (fake_init_center)    : New initializat° func.
+	* green/k_mean/k_mean.cc (dist)                : New distance function.
+	* green/k_mean/k_mean.cc (test_update_distance): New unitary test.
+	* green/k_mean/k_mean.cc (set_distance)        : New assignment func.
+	* green/k_mean/k_mean.cc (fake_init_distance)  : New initializat° func.
+	* green/k_mean/k_mean.cc (test_update_group)   : New unitary test.
+	* green/k_mean/k_mean.cc (set_group)           : New assignment func.
+	* green/k_mean/k_mean.cc (fake_update_group)   : New initializat° func.
+	* green/k_mean/k_mean.cc (test_update_center)  : New unitary test.
+	* green/k_mean/k_mean.cc (test_row)            : Remove old function.
+	* green/k_mean/k_mean.cc (test_col)            : Remove old function.
+	* green/k_mean/k_mean.cc (test_update_var)     : New unitary test.
+	* green/k_mean/k_mean.cc (main)                : New test calls.
+
 2009-08-27  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Improve and test the kmean clustering code.
