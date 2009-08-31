@@ -1,3 +1,17 @@
+2009-08-31  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Write the kmean main loop.
+
+	* green/k_mean/k_mean.hh (update_variance)     : Fix bug.
+	* green/k_mean/k_mean.hh (update_center)       : Fix bug.
+	* green/k_mean/k_mean.hh (min_row)             : New min func.
+	* green/k_mean/k_mean.hh (min)                 : Remove old min func.
+	* green/k_mean/k_mean.hh (loop)                : New main func.
+	* green/k_mean/k_mean.hh                       : Refactoring.
+	* green/k_mean/k_mean.cc (test_loop)           : New unitary test.
+	* green/k_mean/k_mean.cc (main)                : New test calls.
+
+
 2009-08-28  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Improve and continue testing the kmean clustering code.

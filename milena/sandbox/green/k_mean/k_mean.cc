@@ -381,7 +381,7 @@ void test_update_center()
   std::cout << "Test update center   : ok" << std::endl;
 }
 
-void test_update_var()
+void test_update_variance()
 {
   mln::clustering::k_mean<SIZE_SAMPLE2, NB_CENTER, DIM_POINT, TYPE_POINT> kmean;
 
@@ -409,23 +409,42 @@ void test_update_var()
   mln_assertion(v1 == var[0]);
   mln_assertion(v2 == var[1]);
 
-  std::cout << "Test update variance: ok" << std::endl;
+  std::cout << "Test update variance : ok" << std::endl;
+}
+
+void test_loop()
+{
+  typedef mln::value::rgb8  rgb8;
+  mln::image2d<rgb8>        img_ref;
+
+  mln::clustering::k_mean<SIZE_SAMPLE1, NB_CENTER, DIM_POINT, TYPE_POINT> kmean;
+
+  mln::io::ppm::load(img_ref, "/usr/local/share/olena/images/lena.ppm");
+  //mln::io::ppm::save(img_ref, "verif.ppm");
+
+  fill_image_with_4colors(img_ref);
+  kmean.init_point(img_ref);
+
+  kmean.loop(img_ref);
+  
+
+  //  std::cout << "Test update variance: ok" << std::endl;
 }
 
 
 int main()
 {
-  test_instantiation();
-  test_init_point();
-  test_init_center();
-  test_update_distance();
-  test_update_group();
-  test_update_center();
-  test_update_var();
+  //test_instantiation();
+  //test_init_point();
+  //test_init_center();
+  //test_update_distance();
+  //test_update_group();
+  //test_update_center();
+  //test_update_variance();
   
   //  mln::trace::quiet = false;
 
-  test_update_center();
+  test_loop();
 
   return 0;
 }
