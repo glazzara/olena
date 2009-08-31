@@ -1,3 +1,10 @@
+2009-08-31  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add some examples for Laurent.
+
+	* levillain/double.cc, levillain/min-max.cc: New.
+	* levillain/Makefile: New.
+
 2009-08-31  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Write the kmean main loop.
