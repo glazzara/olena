@@ -135,8 +135,8 @@ namespace mln
       // Call the labeling canvas.
       typedef impl::flat_zones_functor<I,L> F;
       F f(input);
-      mln_ch_value(I, L)
-	output = canvas::labeling::video(input, nbh, nlabels, f);
+      mln_ch_value(I, L) output =
+	canvas::labeling::video(input, nbh, nlabels, f);
 
       return output;
     }
