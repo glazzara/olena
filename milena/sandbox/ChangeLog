@@ -1,3 +1,16 @@
+2009-09-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Finish the experiment for Laurent.
+
+	* levillain/constrained-connectivity.cc: Complete the processing
+	chain.	
+	Add a copyright header.
+	Translate the documentation into English.
+	s/ima/input/g.
+	s/ima_x2/f/g.
+	* levillain/soille.pgm: New.
+	* levillain/Makefile: New.
+
 2009-09-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Start a new experiment for Laurent.
