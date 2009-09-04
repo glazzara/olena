@@ -55,7 +55,6 @@ namespace mln
     template <typename T>
     struct data< tiled2d<T> >
     {
-//      data(const box2d& b, unsigned bdr);
       data(const box2d& b, unsigned bdr);
       ~data();
 
@@ -145,16 +144,9 @@ namespace mln
     /// Constructor without argument.
     tiled2d();
 
-    /// Constructor with the numbers of rows and columns and the
-    /// border thickness.
-    //tiled2d(int nrows, int ncols, unsigned bdr = border::thickness);
-
     /// Constructor with a box and the border thickness (default is
     /// 3).
     tiled2d(const box2d& b, unsigned bdr = border::thickness);
-
-    /// Constructor with a filename.
-    //tiled2d(const std::string& filename);
 
 
     /// Initialize an empty image.
@@ -234,12 +226,6 @@ namespace mln
 
     // Hooks
 
-    /// Give a hook to the value buffer.
-    //const std::fstream* buffer() const;
-
-    /// Give a hook to the value buffer.
-    //std::fstream* buffer();
-
     /// Give a hook to the offset for accessing data.
     const std::streampos& pos_() const;
 
@@ -305,14 +291,6 @@ namespace mln
       allocate_();
     }
 
-    /*template <typename T>
-    inline
-    data< tiled2d<T> >::data(const std::string& filename)
-    {
-      // FIXME
-      //b_ = make::box2d(buffer_.rows(), buffer_.columns());
-    }*/
-
     template <typename T>
     inline
     data< tiled2d<T> >::~data()
@@ -335,18 +313,6 @@ namespace mln
     data< tiled2d<T> >::allocate_()
     {
       update_vb_();
-//      unsigned
-//	nr = vb_.len(0),
-//	nc = vb_.len(1);
-//      buffer_ = new T[nr * nc];
-//      array_ = new T*[nr];
-//      T* buf = buffer_ - vb_.pmin().col();
-//      for (unsigned i = 0; i < nr; ++i)
-//	{
-//	  array_[i] = buf;
-//	  buf += nc;
-//	}
-//      array_ -= vb_.pmin().row();
       mln_postcondition(vb_.len(0) == b_.len(0) + 2 * bdr_);
       mln_postcondition(vb_.len(1) == b_.len(1) + 2 * bdr_);
     }
@@ -407,22 +373,6 @@ namespace mln
     this->data_ = new internal::data< tiled2d<T> >(b, bdr);
     this->data_->loaded_ = false;
   }
-
-  /*template <typename T>
-  inline
-  tiled2d<T>::tiled2d(const std::string& filename)
-  {
-    init_(filename);
-  }
-
-  template <typename T>
-  inline
-  void
-  tiled2d<T>::init_(const std::string& filename)
-  {
-    mln_precondition(! this->is_valid());
-    this->data_ = new internal::data< tiled2d<T> >(filename);
-  }*/
 
   template <typename T>
   inline
@@ -513,10 +463,6 @@ namespace mln
   {
     mln_precondition(this->has(point2d(row, col)));
     //FIXME: use the cache Luke.
-    this->data_->pixel_cache = this->data_->buffer_.getPixels(col, row, col, row);
-    this->data_->value_.red() = this->data_->pixel_cache->red % 256;
-    this->data_->value_.green() = this->data_->pixel_cache->green % 256;
-    this->data_->value_.blue() = this->data_->pixel_cache->blue % 256;
     return this->data_->value_;
   }
 
@@ -527,10 +473,6 @@ namespace mln
   {
     mln_precondition(this->has(point2d(row, col)));
     //FIXME: use the cache Luke.
-    this->data_->pixel_cache = this->data_->buffer_.getPixels(col, row, col, row);
-    this->data_->value_.red() = this->data_->pixel_cache->red % 256;
-    this->data_->value_.green() = this->data_->pixel_cache->green % 256;
-    this->data_->value_.blue() = this->data_->pixel_cache->blue % 256;
     return this->data_->value_;
   }
 
@@ -554,24 +496,6 @@ namespace mln
 
 
   // Hooks.
-
-  /*template <typename T>
-  inline
-  const std::fstream*
-  tiled2d<T>::buffer() const
-  {
-    mln_precondition(this->is_valid());
-    return this->data_->f_;
-  }
-
-  template <typename T>
-  inline
-  std::fstream*
-  tiled2d<T>::buffer()
-  {
-    mln_precondition(this->is_valid());
-    return this->data_->f_;
-  }*/
 
   template <typename T>
   inline

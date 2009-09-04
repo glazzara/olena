@@ -1,3 +1,14 @@
+2009-09-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add implementation of HQ3x algorithm.
+	*  fabien/mln/core/image/magick_tiled2d.hh: Small update.
+	*  fabien/mln/core/image/tiled2d.hh: Small update.
+	*  fabien/mln/upsampling/hq3x.hh: Implement HQ3x algorithm, not working
+	properly with colors.
+	*  fabien/tests/core/image/tiled2d.cc: Update test.
+	*  fabien/tests/upsampling/Makefile: New Makefile for target hq3x.
+	*  fabien/tests/upsampling/hq3x.cc: New test for algorithm HQ3x.
+
 2009-08-31  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add some examples for Laurent.

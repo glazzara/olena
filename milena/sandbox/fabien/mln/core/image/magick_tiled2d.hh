@@ -27,7 +27,7 @@
 # define MLN_CORE_IMAGE_TILED2D_HH
 
 /// \file
-/// Definition of the basic mln::tiled2d class.
+/// Definition of the basic mln::magick_tiled2d class.
 
 # include <Magick++.h>
 
@@ -47,17 +47,16 @@ namespace mln
 {
 
   // Forward declaration.
-  template <typename T> struct tiled2d;
+  template <typename T> struct magick_tiled2d;
 
 
   namespace internal
   {
 
-    /// Data structure for \c mln::tiled2d<T>.
+    /// Data structure for \c mln::magick_tiled2d<T>.
     template <typename T>
-    struct data< tiled2d<T> >
+    struct data< magick_tiled2d<T> >
     {
-//      data(const box2d& b, unsigned bdr);
       data(const std::string& filename);
       ~data();
 
@@ -72,7 +71,7 @@ namespace mln
       void update_vb_();
       void allocate_();
       void deallocate_();
-      void swap_(data< tiled2d<T> >& other_);
+      void swap_(data< magick_tiled2d<T> >& other_);
       void reallocate_(unsigned new_border);
     };
 
@@ -83,7 +82,7 @@ namespace mln
   {
 
     template <typename T>
-    struct image_< tiled2d<T> > : default_image_< T, tiled2d<T> >
+    struct image_< magick_tiled2d<T> > : default_image_< T, magick_tiled2d<T> >
     {
       // misc
       typedef trait::image::category::primary category;
@@ -123,9 +122,9 @@ namespace mln
   /// \ingroup modimageconcrete
   //
   template <typename T>
-  class tiled2d : public internal::image_primary< T, mln::box2d, tiled2d<T> >
+  class magick_tiled2d : public internal::image_primary< T, mln::box2d, magick_tiled2d<T> >
   {
-    typedef internal::image_primary< T, mln::box2d, tiled2d<T> > super_;
+    typedef internal::image_primary< T, mln::box2d, magick_tiled2d<T> > super_;
   public:
 
     /// Value associated type.
@@ -135,30 +134,19 @@ namespace mln
     typedef const T& rvalue;
 
     /// Return type of read-write access.
-    typedef mln::value::proxy< tiled2d<T> >       lvalue;
+    typedef mln::value::proxy< magick_tiled2d<T> >       lvalue;
 
 
     /// Skeleton.
-    typedef tiled2d< tag::value_<T> > skeleton;
+    typedef magick_tiled2d< tag::value_<T> > skeleton;
 
 
     /// Constructor without argument.
-    tiled2d();
-
-    /// Constructor with the numbers of rows and columns and the
-    /// border thickness.
-    //tiled2d(int nrows, int ncols, unsigned bdr = border::thickness);
-
-    /// Constructor with a box and the border thickness (default is
-    /// 3).
-  //  tiled2d(const box2d& b, unsigned bdr = border::thickness);
+    magick_tiled2d();
 
     /// Constructor with a filename.
-    tiled2d(const std::string& filename);
+    magick_tiled2d(const std::string& filename);
 
-
-    /// Initialize an empty image.
-    //void init_(const box2d& b, unsigned bdr = border::thickness);
 
     /// Initialize an empty image.
     void init_(const std::string& filename);
@@ -177,7 +165,7 @@ namespace mln
     const T& operator()(const point2d& p) const;
 
     /// Read-write access to the image value located at point \p p.
-    mln::value::proxy< tiled2d<T> > operator()(const point2d& p);
+    mln::value::proxy< magick_tiled2d<T> > operator()(const point2d& p);
 
     // Read access to the image value located at point \p p.
     const T& read_(const point2d& p) const;
@@ -252,10 +240,10 @@ namespace mln
   // Forward declaration
 
   template <typename T>
-  void init_(tag::border_t, unsigned& bdr, const tiled2d<T>& model);
+  void init_(tag::border_t, unsigned& bdr, const magick_tiled2d<T>& model);
 
   template <typename T, typename J>
-  void init_(tag::image_t, mln::tiled2d<T>& target, const J& model);
+  void init_(tag::image_t, mln::magick_tiled2d<T>& target, const J& model);
 
 
 
@@ -265,14 +253,14 @@ namespace mln
 
   template <typename T>
   inline
-  void init_(tag::border_t, unsigned& bdr, const tiled2d<T>& model)
+  void init_(tag::border_t, unsigned& bdr, const magick_tiled2d<T>& model)
   {
     bdr = model.border();
   }
 
   template <typename T, typename J>
   inline
-  void init_(tag::image_t, tiled2d<T>& target, const J& model)
+  void init_(tag::image_t, magick_tiled2d<T>& target, const J& model)
   {
     box2d b;
     init_(tag::bbox, b, model);
@@ -282,36 +270,22 @@ namespace mln
   }
 
 
-  // internal::data< tiled2d<T> >
+  // internal::data< magick_tiled2d<T> >
 
   namespace internal
   {
-/*    template <typename T>
-    inline
-    data< tiled2d<T> >::data(const box2d& b, unsigned bdr)
-      : buffer_(0),
-	b_     (b),
-	bdr_   (bdr)
-    {
-      allocate_();
-    }*/
 
     template <typename T>
     inline
-    data< tiled2d<T> >::data(const std::string& filename)
+    data< magick_tiled2d<T> >::data(const std::string& filename)
     {
       buffer_.read(filename);
-      // DELETEME
-      std::cout << "columns: " << buffer_.columns() << std::endl;
-      std::cout << "rows: " << buffer_.rows() << std::endl;
-      // ! DELETEME
       b_ = make::box2d(buffer_.rows(), buffer_.columns());
-      std::cout << "bbox: " << b_ << std::endl; // DELETEME
     }
 
     template <typename T>
     inline
-    data< tiled2d<T> >::~data()
+    data< magick_tiled2d<T> >::~data()
     {
       deallocate_();
     }
@@ -319,7 +293,7 @@ namespace mln
     template <typename T>
     inline
     void
-    data< tiled2d<T> >::update_vb_()
+    data< magick_tiled2d<T> >::update_vb_()
     {
       vb_.pmin() = b_.pmin() - dpoint2d(all_to(bdr_));
       vb_.pmax() = b_.pmax() + dpoint2d(all_to(bdr_));
@@ -328,21 +302,9 @@ namespace mln
     template <typename T>
     inline
     void
-    data< tiled2d<T> >::allocate_()
+    data< magick_tiled2d<T> >::allocate_()
     {
       update_vb_();
-//      unsigned
-//	nr = vb_.len(0),
-//	nc = vb_.len(1);
-//      buffer_ = new T[nr * nc];
-//      array_ = new T*[nr];
-//      T* buf = buffer_ - vb_.pmin().col();
-//      for (unsigned i = 0; i < nr; ++i)
-//	{
-//	  array_[i] = buf;
-//	  buf += nc;
-//	}
-//      array_ -= vb_.pmin().row();
       mln_postcondition(vb_.len(0) == b_.len(0) + 2 * bdr_);
       mln_postcondition(vb_.len(1) == b_.len(1) + 2 * bdr_);
     }
@@ -350,27 +312,16 @@ namespace mln
     template <typename T>
     inline
     void
-    data< tiled2d<T> >::deallocate_()
+    data< magick_tiled2d<T> >::deallocate_()
     {
-//      if (buffer_)
-//	{
-//	  delete[] buffer_;
-//	  buffer_ = 0;
-//	}
-//      if (array_)
-//	{
-//	  array_ += vb_.pmin().row();
-//	  delete[] array_;
-//	  array_ = 0;
-//	}
     }
 
     template <typename T>
     inline
     void
-    data< tiled2d<T> >::swap_(data< tiled2d<T> >& other_)
+    data< magick_tiled2d<T> >::swap_(data< magick_tiled2d<T> >& other_)
     {
-      data< tiled2d<T> > self_ = *this;
+      data< magick_tiled2d<T> > self_ = *this;
       *this = other_;
       other_ = self_;
     }
@@ -378,9 +329,9 @@ namespace mln
     template <typename T>
     inline
     void
-    data< tiled2d<T> >::reallocate_(unsigned new_border)
+    data< magick_tiled2d<T> >::reallocate_(unsigned new_border)
     {
-      data< tiled2d<T> >& tmp = *(new data< tiled2d<T> >(this->b_, new_border));
+      data< magick_tiled2d<T> >& tmp = *(new data< magick_tiled2d<T> >(this->b_, new_border));
       this->swap_(tmp);
     }
 
@@ -388,17 +339,17 @@ namespace mln
   } // end of namespace mln::internal
 
 
-  // tiled2d<T>
+  // magick_tiled2d<T>
 
   template <typename T>
   inline
-  tiled2d<T>::tiled2d()
+  magick_tiled2d<T>::magick_tiled2d()
   {
   }
 
   template <typename T>
   inline
-  tiled2d<T>::tiled2d(const std::string& filename)
+  magick_tiled2d<T>::magick_tiled2d(const std::string& filename)
   {
     init_(filename);
   }
@@ -406,16 +357,16 @@ namespace mln
   template <typename T>
   inline
   void
-  tiled2d<T>::init_(const std::string& filename)
+  magick_tiled2d<T>::init_(const std::string& filename)
   {
     mln_precondition(! this->is_valid());
-    this->data_ = new internal::data< tiled2d<T> >(filename);
+    this->data_ = new internal::data< magick_tiled2d<T> >(filename);
   }
 
   template <typename T>
   inline
   const box2d&
-  tiled2d<T>::domain() const
+  magick_tiled2d<T>::domain() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_;
@@ -424,7 +375,7 @@ namespace mln
   template <typename T>
   inline
   const box2d&
-  tiled2d<T>::bbox() const
+  magick_tiled2d<T>::bbox() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_;
@@ -433,7 +384,7 @@ namespace mln
   template <typename T>
   inline
   bool
-  tiled2d<T>::has(const point2d& p) const
+  magick_tiled2d<T>::has(const point2d& p) const
   {
     mln_precondition(this->is_valid());
     return this->data_->vb_.has(p);
@@ -442,26 +393,26 @@ namespace mln
   template <typename T>
   inline
   const T&
-  tiled2d<T>::operator()(const point2d& p) const
+  magick_tiled2d<T>::operator()(const point2d& p) const
   {
     return read_(p);
   }
 
   template <typename T>
   inline
-  mln::value::proxy< tiled2d<T> >
-  tiled2d<T>::operator()(const point2d& p)
+  mln::value::proxy< magick_tiled2d<T> >
+  magick_tiled2d<T>::operator()(const point2d& p)
   {
-    mln::value::proxy<tiled2d> prx(*this, p);
+    mln::value::proxy<magick_tiled2d> prx(*this, p);
     return prx;
   }
 
   template <typename T>
   inline
   const T&
-  tiled2d<T>::read_(const point2d& p) const
+  magick_tiled2d<T>::read_(const point2d& p) const
   {
-    mln::tiled2d<T>* this_ = const_cast<mln::tiled2d<T>* >(this); // Trust me, I have to do this(_).
+    mln::magick_tiled2d<T>* this_ = const_cast<mln::magick_tiled2d<T>* >(this); // Trust me, I have to do this(_).
     this_->data_->pixel_cache = this_->data_->buffer_.getPixels(p.col(), p.row(), p.col(), p.row());
     this->data_->value_.red() = this->data_->pixel_cache->red % 256;
     this->data_->value_.green() = this->data_->pixel_cache->green % 256;
@@ -472,7 +423,7 @@ namespace mln
   template <typename T>
   inline
   void
-  tiled2d<T>::write_(const point2d& p, const T& value)
+  magick_tiled2d<T>::write_(const point2d& p, const T& value)
   {
     std::cout << "setting value " << value << " at point " << p << std::endl; // DELETEME
     /*this->data_->pixel_cache = this->data_->buffer_.getPixels(p.col(), p.row(), p.col(), p.row());
@@ -487,7 +438,7 @@ namespace mln
   template <typename T>
   inline
   const T&
-  tiled2d<T>::at_(unsigned row, unsigned col) const
+  magick_tiled2d<T>::at_(unsigned row, unsigned col) const
   {
     mln_precondition(this->has(point2d(row, col)));
     //FIXME: use the cache Luke.
@@ -501,7 +452,7 @@ namespace mln
   template <typename T>
   inline
   T&
-  tiled2d<T>::at_(unsigned row, unsigned col)
+  magick_tiled2d<T>::at_(unsigned row, unsigned col)
   {
     mln_precondition(this->has(point2d(row, col)));
     //FIXME: use the cache Luke.
@@ -515,7 +466,7 @@ namespace mln
   template <typename T>
   inline
   unsigned
-  tiled2d<T>::nrows() const
+  magick_tiled2d<T>::nrows() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_.len(0);
@@ -524,7 +475,7 @@ namespace mln
   template <typename T>
   inline
   unsigned
-  tiled2d<T>::ncols() const
+  magick_tiled2d<T>::ncols() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_.len(1);
@@ -536,7 +487,7 @@ namespace mln
   template <typename T>
   inline
   const Magick::Image
-  tiled2d<T>::buffer() const
+  magick_tiled2d<T>::buffer() const
   {
     mln_precondition(this->is_valid());
     return this->data_->buffer_;
@@ -545,7 +496,7 @@ namespace mln
   template <typename T>
   inline
   Magick::Image
-  tiled2d<T>::buffer()
+  magick_tiled2d<T>::buffer()
   {
     mln_precondition(this->is_valid());
     return this->data_->buffer_;
@@ -573,79 +524,79 @@ namespace mln
     // pixter
 
     template <typename T>
-    struct fwd_pixter< tiled2d<T> >
+    struct fwd_pixter< magick_tiled2d<T> >
     {
-      typedef fwd_pixter2d< tiled2d<T> > ret;
+      typedef fwd_pixter2d< magick_tiled2d<T> > ret;
     };
 
     template <typename T>
-    struct fwd_pixter< const tiled2d<T> >
+    struct fwd_pixter< const magick_tiled2d<T> >
     {
-      typedef fwd_pixter2d< const tiled2d<T> > ret;
+      typedef fwd_pixter2d< const magick_tiled2d<T> > ret;
     };
 
     template <typename T>
-    struct bkd_pixter< tiled2d<T> >
+    struct bkd_pixter< magick_tiled2d<T> >
     {
-      typedef bkd_pixter2d< tiled2d<T> > ret;
+      typedef bkd_pixter2d< magick_tiled2d<T> > ret;
     };
 
     template <typename T>
-    struct bkd_pixter< const tiled2d<T> >
+    struct bkd_pixter< const magick_tiled2d<T> >
     {
-      typedef bkd_pixter2d< const tiled2d<T> > ret;
+      typedef bkd_pixter2d< const magick_tiled2d<T> > ret;
     };
 
     // qixter
 
     template <typename T, typename W>
-    struct fwd_qixter< tiled2d<T>, W >
+    struct fwd_qixter< magick_tiled2d<T>, W >
     {
-      typedef dpoints_fwd_pixter< tiled2d<T> > ret;
+      typedef dpoints_fwd_pixter< magick_tiled2d<T> > ret;
     };
 
     template <typename T, typename W>
-    struct fwd_qixter< const tiled2d<T>, W >
+    struct fwd_qixter< const magick_tiled2d<T>, W >
     {
-      typedef dpoints_fwd_pixter< const tiled2d<T> > ret;
+      typedef dpoints_fwd_pixter< const magick_tiled2d<T> > ret;
     };
 
     template <typename T, typename W>
-    struct bkd_qixter< tiled2d<T>, W >
+    struct bkd_qixter< magick_tiled2d<T>, W >
     {
-      typedef dpoints_bkd_pixter< tiled2d<T> > ret;
+      typedef dpoints_bkd_pixter< magick_tiled2d<T> > ret;
     };
 
     template <typename T, typename W>
-    struct bkd_qixter< const tiled2d<T>, W >
+    struct bkd_qixter< const magick_tiled2d<T>, W >
     {
-      typedef dpoints_bkd_pixter< const tiled2d<T> > ret;
+      typedef dpoints_bkd_pixter< const magick_tiled2d<T> > ret;
     };
 
     // nixter
 
     template <typename T, typename N>
-    struct fwd_nixter< tiled2d<T>, N >
+    struct fwd_nixter< magick_tiled2d<T>, N >
     {
-      typedef dpoints_fwd_pixter< tiled2d<T> > ret;
+      typedef dpoints_fwd_pixter< magick_tiled2d<T> > ret;
     };
 
     template <typename T, typename N>
-    struct fwd_nixter< const tiled2d<T>, N >
+    struct fwd_nixter< const magick_tiled2d<T>, N >
     {
-      typedef dpoints_fwd_pixter< const tiled2d<T> > ret;
+      typedef dpoints_fwd_pixter< const magick_tiled2d<T> > ret;
     };
 
     template <typename T, typename N>
-    struct bkd_nixter< tiled2d<T>, N >
+    struct bkd_nixter< magick_tiled2d<T>, N >
     {
-      typedef dpoints_bkd_pixter< tiled2d<T> > ret;
+      typedef dpoints_bkd_pixter< magick_tiled2d<T> > ret;
     };
 
     template <typename T, typename N>
-    struct bkd_nixter< const tiled2d<T>, N >
+    struct bkd_nixter< const magick_tiled2d<T>, N >
     {
-      typedef dpoints_bkd_pixter< const tiled2d<T> > ret;
+      typedef dpoints_bkd_pixter< const magick_tiled2d<T> > ret;
     };
 
   } // end of namespace mln::trait
