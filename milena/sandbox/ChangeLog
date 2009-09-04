@@ -1,5 +1,12 @@
 2009-09-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename Roland's sandbox.
+
+	* levillain/: Rename directory as...
+	* roland/: ...this.
+
+2009-09-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	* levillain/constrained-connectivity.cc: Aesthetic changes.
 
 2009-09-04  Roland Levillain  <roland@lrde.epita.fr>
