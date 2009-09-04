@@ -28,24 +28,19 @@
 #ifndef MLN_MORPHO_TOPO_WST_HH
 # define MLN_MORPHO_TOPO_WST_HH
 
+# include <vector>
+# include <map>
+# include <queue>
 
+# include <mln/core/site_set/p_set.hh>
+# include <mln/core/site_set/p_priority.hh>
+# include <mln/core/site_set/p_queue_fast.hh>
 
-#include <mln/data/sort_psites.hh>
-#include <mln/data/fill.hh>
-#include <mln/core/image/image2d.hh>
-#include <mln/core/site_set/p_set.hh>
-#include <mln/estim/min_max.hh>
-#include <mln/math/sqr.hh>
-#include <mln/util/greater_psite.hh>
-#include <mln/util/ord.hh>
-#include <mln/arith/revert.hh>
+# include <mln/util/ord.hh>
 
-#include <mln/core/site_set/p_priority.hh>
-#include <mln/core/site_set/p_queue_fast.hh>
+# include <mln/data/sort_psites.hh>
+# include <mln/data/fill.hh>
 
-#include <queue>
-#include <vector>
-#include <map>
 
 namespace mln
 {
@@ -87,7 +82,7 @@ namespace mln
     }
 
 
-
+    // Actually, this structure is a tree, despite its confusing name.
     template <class I, class N>
     struct topo_wst
     {
@@ -195,22 +190,23 @@ namespace mln
       void compressTree();
     }; // struct topo_wst
 
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     // Ctor
     template <class I, class N>
     topo_wst<I, N>::topo_wst(const Image<I>& i,
-			   const Neighborhood<N>& n)
-      : Par_node(exact(i).domain(), exact(i).border()),
-	Par_tree(exact(i).domain(), exact(i).border()),
-	Rnk_tree(exact(i).domain(), exact(i).border()),
-	Rnk_node(exact(i).domain(), exact(i).border()),
-	subtreeRoot(exact(i).domain(), exact(i).border()),
-	nodes(exact(i).domain(), exact(i).border()),
-	isproc(exact(i).domain(), exact(i).border()),
-	ima(exact(i)),
-	nbh(exact(n))
+			     const Neighborhood<N>& n)
+      : ima(exact(i)), nbh(exact(n))
     {
+      initialize(Par_node, i);
+      initialize(Par_tree, i);
+      initialize(Rnk_tree, i);
+      initialize(Rnk_node, i);
+      initialize(subtreeRoot, i);
+      initialize(nodes, i);
+      initialize(isproc, i);
     }
 
     template <class I, class N>
@@ -285,6 +281,7 @@ namespace mln
 	site curCanonicalElt = Find_tree(p);
 	site curNode = Find_node(subtreeRoot(curCanonicalElt));
 
+	// FIXME: Should be `n' instead of `q'.
 	mln_niter(N) q(nbh, ip);
 	for_all(q)
 	  if (ima.has(q) and isproc(q) and ima(q) <= ima(p))
@@ -319,12 +316,18 @@ namespace mln
       for_all(r)
 	Par_node(r) = Find_node(r);
 
-      Root = subtreeRoot(Find_tree(Find_node(site(0, 0))));
+      // Find the ``first'' site of ima, according to the forward
+      // traversal order.
+      mln_fwd_piter(I) rp(Par_node.domain());;
+      rp.start();
+
+      Root = subtreeRoot(Find_tree(Find_node(rp)));
     }
 
 
     template <class I, class N>
-    typename topo_wst<I, N>::site topo_wst<I, N>::MergeNode(site& node1, site& node2)
+    typename topo_wst<I, N>::site topo_wst<I, N>::MergeNode(site& node1,
+							    site& node2)
     {
       site tmpNode = Link_node(node1, node2);
       site tmpNode2;
@@ -513,7 +516,8 @@ namespace mln
 	    //Minim[j][i] = size - 1;
 	  }
 	  else {
-	    if (depth[euler[Minim[j - 1][i]]] <= depth[euler[Minim[j - 1][i + k]]])
+	    if (depth[euler[Minim[j - 1][i]]]
+		<= depth[euler[Minim[j - 1][i + k]]])
 	      Minim[j][i] = Minim[j - 1][i];
 	    else
 	      Minim[j][i] = Minim[j - 1][i + k];
@@ -553,7 +557,8 @@ namespace mln
 
 
     template <class I, class N>
-    void topo_wst<I, N>::removeOneSonNodes(site *p, mln_ch_value(I, site) &newPar_node)
+    void topo_wst<I, N>::removeOneSonNodes(site *p,
+					   mln_ch_value(I, site) &newPar_node)
     {
       node &n = nodes(*p);
 
@@ -575,7 +580,8 @@ namespace mln
     template <class I, class N>
     void topo_wst<I, N>::compressTree()
     {
-      mln_ch_value(I, site) newPar_node(Par_node.domain(), Par_node.border());
+      mln_ch_value(I, site) newPar_node;
+      initialize(newPar_node, Par_node);
 
       // Remove the nodes with one son
       removeOneSonNodes(&Root, newPar_node);
@@ -597,24 +603,27 @@ namespace mln
       const I &ima = exact(tree.ima);
       const N &nbh = exact(tree.nbh);
 
+      // FIXME: Should be `n' instead of `q'.
       mln_niter(N) q(nbh, p);
       p_set<mln_site(I)> v;
 
       for_all(q)
+	// FIXME: Shouldn't it be: `ima.has(q)' instead of
+	// `ima.domain().has(q)'?
 	if (ima.domain().has(q) && ima(q) < ima(p))
 	  v.insert(tree.Par_node(q));
 
       if (v.nsites() == 0)
 	return false;
 
-      if (v.nsites() == 1) {
-	r = v[0];
-	return true;
-      }
+      if (v.nsites() == 1)
+	{
+	  r = v[0];
+	  return true;
+	}
 
-      mln_site(I)
-	c = min(ima, v),
-	cmin = c;
+      mln_site(I) c = min(ima, v);
+      mln_site(I) cmin = c;
 
       typename p_set<mln_site(I)>::fwd_piter it(v);
       for_all(it)
@@ -655,10 +664,12 @@ namespace mln
       const N &nbh = exact(tree.nbh);
 
       // Maxima components
-      mln_ch_value(I, bool) cmax(ima.domain(), ima.border());
+      mln_ch_value(I, bool) cmax;
+      initialize(cmax, ima);
 
       // Mark enqueued sites
-      mln_ch_value(I, bool) enqueued(ima.domain(), ima.border());
+      mln_ch_value(I, bool) enqueued;
+      initialize(enqueued, ima);
 
       p_priority< mln_value(I), p_queue_fast<mln_site(I)> > l;
       // p_queue < site > m;
@@ -682,7 +693,10 @@ namespace mln
 
       while (!m.empty())
 	{
+	  // FIXME: Should be `n' instead of `q'.
 	  mln_niter(N) q(nbh, m.front());
+	  // FIXME: Shouldn't it be: `cmax.has(q)' instead of
+	  // `cmax.domain().has(q)'?
 	  for_all(q)
 	    if (cmax.domain().has(q) && !cmax(q) && !enqueued(q))
 	      {
@@ -716,15 +730,23 @@ namespace mln
 	      else
 		// if (nodes(c).children.nsites() > 1)
 		if (tree.nodes(c).children.size() == 1)
-		  std::cerr << "ERREUR COMPOSANTE BRANCHE " << tree.nodes(c).children.size() << std::endl;
+		  std::cerr << "ERREUR COMPOSANTE BRANCHE "
+			    << tree.nodes(c).children.size() << std::endl;
 
 
+	      // FIXME: Should be `n' instead of `q'.
 	      mln_niter(N) q(nbh, x);
+	      // FIXME: Shouldn't it be: `ima.has(q)' instead of
+	      // `ima.domain().has(q)'?
 	      for_all(q)
 		if (ima.domain().has(q) && !cmax(q) && !enqueued(q))
 		  {
 		    enqueued(q) = true;
-		    l.push(mln_max(mln_value(I)) - ima(q), q); // FIXME : just invert the priority
+		    l.push(mln_max(mln_value(I)) - ima(q), q); // FIXME:
+							       // Just
+							       // invert
+							       // the
+							       // priority.
 		  }
 	    } 
 	} // while(!l.empty())
@@ -736,8 +758,6 @@ namespace mln
     }
 
 
-
-
 # endif // MLN_INCLUDE_ONLY
 
 
@@ -745,4 +765,4 @@ namespace mln
 
 }; // namespace mln
 
-#endif // MLN_MORPHO_TOPO_WST_HH
+#endif // ! MLN_MORPHO_TOPO_WST_HH

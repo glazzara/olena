@@ -1,3 +1,17 @@
+2009-09-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the topological watershed transform algorithm (mostly).
+
+	* abraham/mln/morpho/topo_wst.hh
+	(topo_wst<I, N>::topo_wst(const Image<I>&, const Neighborhood<N>&)):
+	Properly initialize image new image members in this ctor.
+	(topo_watershed): Likewise.
+	(topo_wst<I, N>::BuildComponentTree): Do not assume the first site
+	of the domain is point2d(0,0).
+	Remove useless #include's.
+	Wrap long lines.
+	Some aesthetic changes.
+
 2009-09-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix red component bug.
