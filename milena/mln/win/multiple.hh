@@ -139,15 +139,15 @@ namespace mln
     public:
 
       multiple_qiter();
+      template <typename Pref>
+      multiple_qiter(const multiple<W,F>& w, const Pref& c);
 
-      template <typename P>
-      multiple_qiter(const multiple<W,F>& w, const P& c);
-
-      void change_target(const multiple<W,F>& w); // Overridden to initialize size_.
+      /// Overridden to initialize size_.
+      void change_target(const multiple<W,F>& w);
 
       /// Delegated initialization.
-      template <typename P>
-      void init_(const multiple<W,F>& w, const P& c);
+      template <typename Pref>
+      void init_(const multiple<W,F>& w, const Pref& c);
 
       /// Test the iterator validity.
       bool is_valid_() const;
@@ -316,18 +316,18 @@ namespace mln
     }
 
     template <typename W, typename F>
-    template <typename P>
+    template <typename Pref>
     inline
-    multiple_qiter<W,F>::multiple_qiter(const multiple<W,F>& w, const P& c)
+    multiple_qiter<W,F>::multiple_qiter(const multiple<W,F>& w, const Pref& c)
     {
-      this->init_(w, c);
+      init_(w, c);
     }
 
     template <typename W, typename F>
-    template <typename P>
+    template <typename Pref>
     inline
     void
-    multiple_qiter<W,F>::init_(const multiple<W,F>& w, const P& c)
+    multiple_qiter<W,F>::init_(const multiple<W,F>& w, const Pref& c)
     {
       this->center_at(c);
       // We have to first change the center so that 'invalidate' can
