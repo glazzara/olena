@@ -1,5 +1,9 @@
 2009-09-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	* theo/esiee/laurent/ismm09/cplx2d.hh: Include mln/core/var.hh.
+
+2009-09-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the topological watershed transform algorithm (mostly).
 
 	* abraham/mln/morpho/topo_wst.hh

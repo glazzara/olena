@@ -7,6 +7,8 @@
 #include <mln/core/image/dmorph/image_if.hh>
 #include <mln/core/routine/extend.hh>
 
+#include <mln/core/var.hh>
+
 #include <mln/data/paste.hh>
 
 #include <mln/morpho/gradient.hh>
