@@ -1,5 +1,9 @@
 2009-09-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	* levillain/constrained-connectivity.cc: Aesthetic changes.
+
+2009-09-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Finish the experiment for Laurent.
 
 	* levillain/constrained-connectivity.cc: Complete the processing

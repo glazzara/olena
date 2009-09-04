@@ -102,15 +102,16 @@ int main(int argc, char* argv[])
 
   // Double its resolution.
   image2d<int_u8> f(input.nrows() * 2, input.ncols() * 2);
-  mln_piter_(image2d<int_u8>) p(f.domain());
-  for_all(p)
+  mln_piter_(image2d<int_u8>) p_ima(f.domain());
+  for_all(p_ima)
   {
-    /* This conversion from ``piter'' to ``point'' is required, since
-       an iterator does not expose the interface of the underlying
-       point (among which the methods row(), col(), etc.).  */
-    point2d p_ = p;
-    point2d q(p_.row() / 2, p_.col() / 2);
-    f(p) = input(q);
+    /* This conversion from a ``piter'' type to point2d is required,
+       since an iterator does not expose the interface of the
+       underlying point (among which the methods row(), col(),
+       etc.).  */
+    point2d p_ima_ = p_ima;
+    point2d p_f(p_ima_.row() / 2, p_ima_.col() / 2);
+    f(p_ima) = input(p_f);
   }
   debug::println(f);
 
@@ -130,86 +131,81 @@ int main(int argc, char* argv[])
   std::set<int_u8> values;
   mln_piter_(w_t) p2(w.domain());
   for_all(p2)
-    values.insert (w(p2));
+    values.insert(w(p2));
 
-  // Thresholding for each value of W.
+  // Thresholding W for each value of the image.
   for (std::set<int_u8>::const_iterator alpha = values.begin();
        alpha != values.end(); ++alpha)
     {
       mln_VAR(alpha_cc, w | (pw::value(w) > pw::cst(*alpha)));
+      std::cout << *alpha << "-cc:" << std::endl;
       /* FIXME: There should be variants of debug::println allowing
 	 the user to pass an optional ``support'' larger than the
 	 actual domain of the image.  For now, use a low-level routine
 	 as a workaround.  */
-      std::cout << *alpha << "-cc:" << std::endl;
       debug::impl::println(w.unmorph_().domain(), alpha_cc);
     }
 
 
-  // Compute attributes on the components of the topological watershed (W).
+  // Compute the height (max - min) of connected components on the line
+  // graph-based watershed, but with min and max values computed on
+  // vertices.
+
+  /* FIXME: Of course, we'd like to be able to reuse the component
+     tree within TREE instead of rebuilding a morpho::tree::data...
+     This requires some changes in the topological WST implementation,
+     to make its component tree structure compatible with
+     morpho::tree::data.  */
   typedef p_array<tree_t::site> sites_t;
   sites_t sites = data::sort_psites_decreasing(w);
-
-  /* FIXME: Of course, we'd like to be able to reuse the component tree
-     within TREE instead of rebuilding a morpho::tree::data...  This
-     requires some changes in the topological WST implementation to
-     make its component tree structure compatible with
-     morpho::tree::data.  */
   morpho::tree::data<w_t, sites_t> t(w, sites, cplx2d::e2e());
 
-  // Height (max-min) on the line graph WST, but with min and max
-  // values computed on vertices.
+  // Create initial images for min and max values on sites (not components).
   mln_ch_value_(w_t, accu::stat::min<int_u8>) init_min_val;
   initialize (init_min_val, w);
   mln_ch_value_(w_t, accu::stat::max<int_u8>) init_max_val;
   initialize (init_max_val, w);
 
-  mln_fwd_piter_(w_t) e(w.domain());
-  mln_niter_(cplx2d::dbl_neighb2d) v(cplx2d::e2p(), e);
-  for_all(e)
-  {
-    // Compute the min and max values on vertices (pixels) adjacent to edge E.
-    for_all(v)
-    {
-      /* Unfortunately, the data structure G does not record any
-	 information from the image F (i.e., the values on
-	 vertices/pixels).  We have to convert the coordinates of V
-	 to its equivalent in F's domain to get the values on
-	 vertices.
+  /* Compute the min and max values on vertices (pixels) adjacent to
+     edge E.
 
-	 In addition, note that an explicit `to_site()' conversion
-	 is required here, since an iterator does not expose the
-	 interface of the underlying point (among which the methods
-	 row(), col(), etc.).  */
-      point2d v_(v.to_site().row() / 2, v.to_site().col() / 2);
-      init_min_val(e).take(f(v_));
-      init_max_val(e).take(f(v_));
+     Unfortunately, the data structure G does not record any
+     information from the image F (i.e., the values on
+     vertices/pixels).  We have to convert the coordinates of V to its
+     equivalent in F's domain to get the values on vertices.  */
+  mln_piter_(w_t) e(w.domain());
+  mln_niter_(cplx2d::dbl_neighb2d) v_g(cplx2d::e2p(), e);
+  for_all(e)
+    for_all(v_g)
+    {
+      // Same remark as above avour piter to point2d conversions.
+      point2d v_g_ = v_g;
+      point2d v_f(v_g_.row() / 2, v_g_.col() / 2);
+      init_min_val(e).take(f(v_f));
+      init_max_val(e).take(f(v_f));
     }
-  }
+  // Attribute images of min and max values on components.
   accu::stat::min<int_u8> min_accu;
   mln_ch_value_(w_t, int_u8) min_val =
     morpho::tree::compute_attribute_image_from(min_accu, t, init_min_val);
   accu::stat::max<int_u8> max_accu;
   mln_ch_value_(w_t, int_u8) max_val =
     morpho::tree::compute_attribute_image_from(max_accu, t, init_max_val);
-  
+  // Attribute image of components' height.
   mln_ch_value_(w_t, int_u8) height;
   initialize(height, w);
   for_all(e)
     height(e) = max_val(e) - min_val(e);
   debug::println(height);
 
-  // Thresholding for the first integer values with a condition on HEIGHT.
+  // Thresholding W using first integer values with a condition on HEIGHT.
   for (unsigned alpha = 0; alpha <= 6; ++alpha)
     {
       mln_VAR(alpha_alpha_cc,
 	      w | (pw::value(w) > pw::cst(alpha)
 		   || (pw::value(height) > pw::cst(alpha))));
-      /* FIXME: There should be variants of debug::println allowing
-	 the user to pass an optional ``support'' larger than the
-	 actual domain of the image.  For now, use a low-level routine
-	 as a workaround.  */
       std::cout << "(" << alpha << ", " << alpha << ")-cc:" << std::endl;
+      // FIXME: Same remark as above about println.
       debug::impl::println(w.unmorph_().domain(), alpha_alpha_cc);
     }
 }
