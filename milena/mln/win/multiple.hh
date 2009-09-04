@@ -145,6 +145,10 @@ namespace mln
 
       void change_target(const multiple<W,F>& w); // Overridden to initialize size_.
 
+      /// Delegated initialization.
+      template <typename P>
+      void init_(const multiple<W,F>& w, const P& c);
+
       /// Test the iterator validity.
       bool is_valid_() const;
 
@@ -315,6 +319,15 @@ namespace mln
     template <typename P>
     inline
     multiple_qiter<W,F>::multiple_qiter(const multiple<W,F>& w, const P& c)
+    {
+      this->init_(w, c);
+    }
+
+    template <typename W, typename F>
+    template <typename P>
+    inline
+    void
+    multiple_qiter<W,F>::init_(const multiple<W,F>& w, const P& c)
     {
       this->center_at(c);
       // We have to first change the center so that 'invalidate' can

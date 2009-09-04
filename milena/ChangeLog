@@ -1,3 +1,7 @@
+2009-08-24 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	* mln/win/multiple.hh: Add a missing init_ member.
+
 2009-08-28  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Small fixes.
