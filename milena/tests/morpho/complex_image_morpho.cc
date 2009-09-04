@@ -23,6 +23,10 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+///
+/// Test of mln::complex_image with morphological filters.
+
 #include <iostream>
 
 #include <mln/value/int_u8.hh>

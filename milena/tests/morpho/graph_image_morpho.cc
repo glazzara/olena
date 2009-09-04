@@ -23,6 +23,10 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+///
+/// \brief Tests on a graph-based image with morphological filters.
+
 #include <mln/accu/shape/bbox.hh>
 #include <mln/core/alias/box2d.hh>
 #include <mln/core/alias/point2d.hh>

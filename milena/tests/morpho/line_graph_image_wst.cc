@@ -23,6 +23,10 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file tests/morpho/line_graph_image_wst.cc
+///
+/// Tests on the Watershed Transform on a line graph-based image.
+
 #include <mln/core/alias/point2d.hh>
 
 /// Required for line graph images.

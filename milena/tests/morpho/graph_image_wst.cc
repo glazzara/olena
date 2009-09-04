@@ -23,6 +23,9 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+/// \brief Tests on the Watershed Transform on a graph-based image.
+
 #include <vector>
 
 #include <mln/core/alias/point2d.hh>

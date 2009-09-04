@@ -23,6 +23,27 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/* FIXME: We should factor as much things as possible between
+   tests/morpho/lena_line_graph_image_wst1.cc and
+   tests/morpho/lena_line_graph_image_wst2.cc, starting from conversion
+   routines.  */
+
+/** \file
+    \brief Tests on the Watershed Transform (WST) on a mln::line_graph_image.
+   
+    The scenario is as follows:
+    \li load a 2-D, gray-level image from a PGM file;
+    \li compute a morphological gradient of this image;
+    \li simplify the image to reduce the number of local minima;
+    \li convert this 2-D image into a line graph-based one, where values
+        on edges are computed as the maxmimum of the values on the vertices
+	adjacent to the edge;
+    \li perform a WST on the line graph image;
+    \li create an 2-D, color output image with height and width double
+        the size the original one, and copy the data of the input image
+	in it, interpolating inter-pixel points;
+    \li print the watershed on lines into that same image, and save it.  */
+
 #include <map>
 #include <vector>
 

@@ -23,6 +23,10 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+///
+/// Tests on line a graph-based image with morphological filters.
+
 #include <mln/core/alias/point2d.hh>
 
 /// Required for line graph images.

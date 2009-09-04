@@ -23,6 +23,11 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+///
+/// \brief Testing the Watershed Transform by flooding an
+/// mln::complex_image.
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
