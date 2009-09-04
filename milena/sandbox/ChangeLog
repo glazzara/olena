@@ -1,5 +1,14 @@
 2009-09-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Start a new experiment for Laurent.
+
+	* levillain/.gitignore: Add constrained-connectivity.
+	* levillain/alexandre: New symlink to abraham/mln/morpho.
+	* levillain/theo: New symlink to theo/esiee/laurent/ismm09.
+	* levillain/constrained-connectivity.cc: New.
+
+2009-09-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	* theo/esiee/laurent/ismm09/cplx2d.hh: Include mln/core/var.hh.
 
 2009-09-03  Roland Levillain  <roland@lrde.epita.fr>
