@@ -1,5 +1,11 @@
 2009-09-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
+	Fix red component bug.
+	*  fabien/mln/upsampling/hq3x.hh: Fix red component bug, still not
+	working properly because of blue artifacts.
+
+2009-09-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
 	Add implementation of HQ3x algorithm.
 	*  fabien/mln/core/image/magick_tiled2d.hh: Small update.
 	*  fabien/mln/core/image/tiled2d.hh: Small update.

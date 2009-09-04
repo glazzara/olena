@@ -74,7 +74,7 @@ namespace mln
 	unsigned short result = 0;
 
 	result += val.red() >> 3;
-	result = result << 11;
+	result = result << 6;
 	result += val.green() >> 2;
 	result = result << 5;
 	result += val.blue() >> 3;
@@ -91,7 +91,7 @@ namespace mln
 	result += (val.red() + val.green() + val.blue()) / 3;
 	result = result << 8;
 	result = result << 8;
-	result = result << 8;
+	//result = result << 8;
 
 	return result;
       }
@@ -126,9 +126,6 @@ namespace mln
       void
       Interp3(image2d<T>& output, int row, int col, int c1, int c2)
       {
-	//*((int*)output) = (c1*7+c2)/8;
-	//*((int*)output) = ((((c1 & 0x00FF00)*7 + (c2 & 0x00FF00)) & 0x0007F800) +
-	//    (((c1 & 0xFF00FF)*7 + (c2 & 0xFF00FF)) & 0x07F807F8)) >> 3;
 	intToRgb8((c1 * 7 + c2) / 8, output.at_(row, col));
       }
 
@@ -137,9 +134,6 @@ namespace mln
       void
       Interp4(image2d<T>& output, int row, int col, int c1, int c2, int c3)
       {
-	//*((int*)output) = (c1*2+(c2+c3)*7)/16;
-	//*((int*)output) = ((((c1 & 0x00FF00)*2 + ((c2 & 0x00FF00) + (c3 & 0x00FF00))*7) & 0x000FF000) +
-	//    (((c1 & 0xFF00FF)*2 + ((c2 & 0xFF00FF) + (c3 & 0xFF00FF))*7) & 0x0FF00FF0)) >> 4;
 	intToRgb8((c1 * 2 + (c2 + c3) * 7) / 16, output.at_(row, col));
       }
 
