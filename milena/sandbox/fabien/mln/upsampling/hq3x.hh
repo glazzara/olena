@@ -52,22 +52,6 @@ namespace mln
     namespace impl
     {
       inline
-      int
-      rgb8toInt(value::rgb8 val)
-      {
-	int result = 0;
-
-	result += val.blue();
-	result = result << 8;
-	result += val.green();
-	result = result << 8;
-	result += val.red();
-	//result = result << 8;
-
-	return result;
-      }
-
-      inline
       unsigned short
       rgb8toShort(value::rgb8 val)
       {
@@ -78,20 +62,6 @@ namespace mln
 	result += val.green() >> 2;
 	result = result << 5;
 	result += val.blue() >> 3;
-
-	return result;
-      }
-
-      inline
-      unsigned int
-      rgb8toYuv(value::rgb8 val)
-      {
-	unsigned int result = 0;
-
-	result += (val.red() + val.green() + val.blue()) / 3;
-	result = result << 8;
-	result = result << 8;
-	//result = result << 8;
 
 	return result;
       }

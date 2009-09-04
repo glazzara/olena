@@ -1,3 +1,11 @@
+2009-09-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Implement HQ2x upscaling algorithm.
+	*  fabien/mln/upsampling/hq2x.hh: Implement HQ2x algorithm.
+	*  fabien/mln/upsampling/hq3x.hh: Remove dead code.
+	*  fabien/tests/upsampling/Makefile: Add `hq2x' target.
+	*  fabien/tests/upsampling/hq2x.cc: New test file for HQ2x.
+
 2009-09-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Rename Roland's sandbox.
