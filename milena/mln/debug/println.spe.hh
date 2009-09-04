@@ -45,7 +45,7 @@
 # include <mln/accu/stat/max.hh>
 # include <mln/opt/at.hh>
 
-//FIXME: do not include all these headers
+// FIXME: do not include all these headers
 # include <mln/core/alias/box2d.hh>
 # include <mln/core/alias/box2d_h.hh>
 # include <mln/core/alias/box3d.hh>
@@ -82,11 +82,11 @@ namespace mln
       println(const box2d& b, const image2d<char>& input)
       {
 	for (def::coord row = b.min_row(); row <= b.max_row(); ++row)
-	{
-	  for (def::coord col = b.min_col(); col <= b.max_col(); ++col)
-	    std::cout << opt::at(input, row, col) << ' ';
-	  std::cout << std::endl;
-	}
+	  {
+	    for (def::coord col = b.min_col(); col <= b.max_col(); ++col)
+	      std::cout << opt::at(input, row, col) << ' ';
+	    std::cout << std::endl;
+	  }
 	std::cout << std::endl;
       }
 
@@ -99,32 +99,32 @@ namespace mln
 	accu::stat::max<unsigned> len_;
 	mln_piter(I) p(input.domain());
 	for_all(p)
-	  {
-	    std::ostringstream o;
-	    o << format(input(p));
-	    len_.take(o.str().length());
-	  }
+	{
+	  std::ostringstream o;
+	  o << format(input(p));
+	  len_.take(o.str().length());
+	}
 	unsigned len = len_ + 1;
 
 	image2d<char> output(b.nrows(), b.ncols() * len, 0);
 	data::fill(output, ' ');
 	for_all(p)
-	  {
-	    std::ostringstream oss;
-	    oss << format(input(p));
-	    def::coord
-	      row = static_cast<def::coord>(p.row() - b.min_row()),
-	      col = static_cast<def::coord>((p.col() - b.min_col()) * len);
-	    point2d w(row, col);
-	    put_word(output, w, oss.str());
-	  }
-
-      for (def::coord row = 0; row < def::coord(b.nrows()); ++row)
 	{
-	  for (def::coord col = 0; col < def::coord(b.ncols() * len); ++col)
-	    std::cout << opt::at(output, row, col);
-	  std::cout << std::endl;
+	  std::ostringstream oss;
+	  oss << format(input(p));
+	  def::coord
+	    row = static_cast<def::coord>(p.row() - b.min_row()),
+	    col = static_cast<def::coord>((p.col() - b.min_col()) * len);
+	  point2d w(row, col);
+	  put_word(output, w, oss.str());
 	}
+
+	for (def::coord row = 0; row < def::coord(b.nrows()); ++row)
+	  {
+	    for (def::coord col = 0; col < def::coord(b.ncols() * len); ++col)
+	      std::cout << opt::at(output, row, col);
+	    std::cout << std::endl;
+	  }
 	std::cout << std::endl;
       }
 
@@ -140,13 +140,13 @@ namespace mln
 	int row_len = 1 + (b.max_col() - b.min_col()) / 2;
 
 	for_all(p)
-	  {
-	    if (input.domain().has(p))
-	      std::cout << format(input(p)) << "     ";
-	    else
-	      std::cout << "      ";
+	{
+	  if (input.domain().has(p))
+	    std::cout << format(input(p)) << "     ";
+	  else
+	    std::cout << "      ";
 
-	    if (c >= row_len)
+	  if (c >= row_len)
 	    {
 	      std::cout << std::endl;
 	      if (r % 2)
@@ -154,8 +154,8 @@ namespace mln
 	      c = 0;
 	      r++;
 	    }
-	    c++;
-	  }
+	  c++;
+	}
 	std::cout << std::endl;
       }
 
@@ -174,20 +174,20 @@ namespace mln
 	  max_col = b.max_col();
 
 	for (sli = b.min_sli(); sli <= max_sli; ++sli)
-	{
-	  for (row = b.min_row(); row <= max_row; ++row)
 	  {
-	    for (int i = max_row; i >= row; --i)
-	      std::cout << ' ';
-	    for (col = b.min_col(); col <= max_col; ++col)
-	      if (input.domain().has(p))
-		std::cout << format(input(p)) << ' ';
-	      else
-		std::cout << "  ";
+	    for (row = b.min_row(); row <= max_row; ++row)
+	      {
+		for (int i = max_row; i >= row; --i)
+		  std::cout << ' ';
+		for (col = b.min_col(); col <= max_col; ++col)
+		  if (input.domain().has(p))
+		    std::cout << format(input(p)) << ' ';
+		  else
+		    std::cout << "  ";
+		std::cout << std::endl;
+	      }
 	    std::cout << std::endl;
 	  }
-	  std::cout << std::endl;
-	}
       }
 
 # endif // ! MLN_INCLUDE_ONLY

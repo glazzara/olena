@@ -1,3 +1,7 @@
+2009-09-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	* mln/debug/println.spe.hh: Reindent.
+
 2009-09-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	Aesthetic changes in mln::win::multiple_qiter<W,F>.
