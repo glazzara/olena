@@ -3,6 +3,27 @@
 	Do some refactoring for best future olena integration.
 
 	* green/mln                                : New dev directory.
+	* green/mln/accu                           : New directory.
+	* green/mln/accu/stat                      : New directory.	
+	* green/mln/accu/stat/histo1d.hh           : New histo1d location.
+	* green/mln/img_path.hh                    : New image path defines.
+	* green/mln/io                             : New directory.
+	* green/mln/io/plot                        : New directory.
+	* green/mln/io/plot/save_histo_sh          : New saving func for histo.
+	* green/tests                              : New unitary test directory.
+	* green/tests/accu                         : New directory.
+	* green/tests/accu/stat                    : New directory.
+	* green/tests/accu/stat/histo1d            : New histo1d test directory.
+	* green/tests/accu/stat/histo1d/Makefile.am: New makefle.	
+	* green/tests/accu/stat/histo1d/histo1d.cc : New unit tests location.
+	* green/tests/accu/stat/histo1d/gaussian.sh: New tools to test filter.
+
+
+2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Do some refactoring for best future olena integration.
+
+	* green/mln                                : New dev directory.
 	* green/mln/clustering                     : New directory.
 	* green/mln/clustering/k_mean.hh           : New k_mean source location.
 	* green/tests                              : New unitary test directory.
