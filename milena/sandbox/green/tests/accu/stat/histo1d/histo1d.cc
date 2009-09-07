@@ -4,6 +4,7 @@
 
 #include <mln/io/plot/save_histo_sh.hh>
 #include <mln/accu/stat/histo1d.hh>
+#include <mln/fun/v2v/int_u16_to_int_u14.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -11,10 +12,12 @@
 #include <mln/io/plot/save.hh>
 
 #include <mln/data/compute.hh>
+#include <mln/data/transform.hh>
 #include <mln/data/fill.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u16.hh>
+#include <mln/value/int_u.hh>
 #include <mln/value/label_8.hh>
 #include <mln/value/rgb8.hh>
 
@@ -220,6 +223,25 @@ double var_histo(mln::image1d<unsigned> img)
   return result;
 }
 
+double var_histo2(mln::image1d<unsigned> img)
+{
+  mln_precondition(img.is_valid());
+  
+  double                             count  = count_histo(img);
+  double                             mean   = mean_histo(img);
+  double                             result = 0.0;
+  mln_piter_(mln::image1d<unsigned>) p(img.domain());
+
+  for_all(p)
+  {
+    result += img(p) * (p[0] - mean) * (p[0] - mean);
+  }
+
+  result /= count;
+
+  return result;
+}
+
 void test_8bits_integration()
 {
   typedef mln::value::int_u8                int_u8;
@@ -393,17 +415,17 @@ void test_8bits_classifying()
 }
 
 //------------------------------------------------------------------------------
-// TEST IN 16 BITS
+// TEST IN 15 BITS
 //------------------------------------------------------------------------------
 
-void test_16bits_operator_equal()
+void test_14bits_operator_equal()
 {
   using namespace mln::accu::stat;
 
-  typedef mln::value::int_u16       int_u16;
-  mln::accu::stat::histo1d<int_u16> histo1;
-  mln::accu::stat::histo1d<int_u16> histo2;
-  int_u16                           val = 3;
+  typedef mln::value::int_u<14>     int_u14;
+  mln::accu::stat::histo1d<int_u14> histo1;
+  mln::accu::stat::histo1d<int_u14> histo2;
+  int_u14                           val = 3;
 
   histo1.init();
   histo2.init();
@@ -419,33 +441,29 @@ void test_16bits_operator_equal()
 
   mln_assertion(histo1 == histo2);
 
-  std::cout << "(16 bits) histo == histo       : ok" << std::endl;
+  std::cout << "(14 bits) histo == histo       : ok" << std::endl;
 }
 
-void test_16bits_instantiation_without_argument()
+void test_14bits_instantiation_without_argument()
 {
-  mln::trace::quiet = false;
-
-  typedef mln::value::int_u16                  int_u16;
-  typedef mln::point<mln::grid::tick, int_u16> point1d;
-  typedef mln::box<point1d>                    box1d;
-  const   mln::accu::stat::histo1d<int_u16>    histo;
-  const   mln::image1d<unsigned>&              res = histo.to_result();
-  const   point1d&                             min = point1d(mln_min(int_u16));
-  const   point1d&                             max = point1d(mln_max(int_u16));
-  const   box1d&                               ref = box1d(min, max);
+  typedef mln::value::int_u<14>             int_u14;
+  const   mln::accu::stat::histo1d<int_u14> histo;
+  const   mln::image1d<unsigned>&           res = histo.to_result();
+  const   mln::point1d&                     min =mln::point1d(mln_min(int_u14));
+  const   mln::point1d&                     max =mln::point1d(mln_max(int_u14));
+  const   mln::box1d&                       ref = mln::box1d(min, max);
 
   mln_assertion(ref == res.domain());
   mln_assertion(res.is_valid());
 
-  std::cout << "(16 bits) histo<T> histo       : ok" << std::endl;
+  std::cout << "(14 bits) histo<T> histo       : ok" << std::endl;
 }
 
 
-void test_16bits_initialization()
+void test_14bits_initialization()
 {
-  typedef mln::value::int_u16       int_u16;
-  mln::accu::stat::histo1d<int_u16> histo;
+  typedef mln::value::int_u<14>     int_u14;
+  mln::accu::stat::histo1d<int_u14> histo;
   mln::image1d<unsigned>            img_res = histo.to_result();
   mln::image1d<unsigned>            img_ref;
 
@@ -453,21 +471,21 @@ void test_16bits_initialization()
   mln::data::fill(img_ref, 0);
   histo.init();
 
-  unsigned res = mln::data::compute(mln::accu::math::sum<int_u16>(), img_res);
-  unsigned ref = mln::data::compute(mln::accu::math::sum<int_u16>(), img_ref);
+  unsigned res = mln::data::compute(mln::accu::math::sum<int_u14>(), img_res);
+  unsigned ref = mln::data::compute(mln::accu::math::sum<int_u14>(), img_ref);
   
   mln_assertion(ref == res);
 
-  std::cout << "(16 bits) histo.init()         : ok" << std::endl;
+  std::cout << "(14 bits) histo.init()         : ok" << std::endl;
 }
 
 
-void test_16bits_take_argument()
+void test_14bits_take_argument()
 {
-  typedef mln::value::int_u16       int_u16;
-  mln::accu::stat::histo1d<int_u16> histo1;
-  mln::accu::stat::histo1d<int_u16> histo2;
-  int_u16                           val = 3;
+  typedef mln::value::int_u<14>     int_u14;
+  mln::accu::stat::histo1d<int_u14> histo1;
+  mln::accu::stat::histo1d<int_u14> histo2;
+  int_u14                           val = 3;
 
   histo1.init();
   histo2.init();
@@ -476,23 +494,23 @@ void test_16bits_take_argument()
   const mln::image1d<unsigned>     img1 = histo1.to_result();
   const mln::image1d<unsigned>     img2 = histo2.to_result();
 
-  const unsigned res = mln::data::compute(mln::accu::math::sum<int_u16>(),img1);
-  const unsigned ref = mln::data::compute(mln::accu::math::sum<int_u16>(),img2);
+  const unsigned res = mln::data::compute(mln::accu::math::sum<int_u14>(),img1);
+  const unsigned ref = mln::data::compute(mln::accu::math::sum<int_u14>(),img2);
 
   mln_assertion(ref == res-1);
   mln_assertion(1 == img1(mln::point1d(val)));
 
-  std::cout << "(16 bits) histo.take(argument) : ok" << std::endl;
+  std::cout << "(14 bits) histo.take(argument) : ok" << std::endl;
 }
 
 
-void test_16bits_take_other()
+void test_14bits_take_other()
 {
-  typedef mln::value::int_u16       int_u16;
-  mln::accu::stat::histo1d<int_u16> histo1;
-  mln::accu::stat::histo1d<int_u16> histo2;
-  mln::accu::stat::histo1d<int_u16> histo3;
-  int_u16                           val = 3;
+  typedef mln::value::int_u<14>     int_u14;
+  mln::accu::stat::histo1d<int_u14> histo1;
+  mln::accu::stat::histo1d<int_u14> histo2;
+  mln::accu::stat::histo1d<int_u14> histo3;
+  int_u14                           val = 3;
 
   histo1.init();
   histo2.init();
@@ -506,37 +524,43 @@ void test_16bits_take_other()
 
   mln_assertion(histo1 == histo2);
 
-  std::cout << "(16 bits) histo.take(other)    : ok" << std::endl;
+  std::cout << "(14 bits) histo.take(other)    : ok" << std::endl;
 }
 
-void test_16bits_integration()
+void test_14bits_integration()
 {
   typedef mln::value::int_u16               int_u16;
+  typedef mln::value::int_u<14>             int_u14;
   typedef mln::accu::math::count<double>    count;
   typedef mln::accu::math::sum<double>      sum;
   typedef mln::accu::stat::mean<double>     mean;
   typedef mln::accu::stat::variance<double> variance;
 
-  mln::image2d<int_u16>      img_ref;
+  mln::image2d<int_u16>      img_fst;
+  mln::image2d<int_u14>      img_ref;
   mln::image1d<unsigned>     img_res;
 
-  mln::io::pgm::load(img_ref, OLENA_IMG_PATH"/lena_16.pgm");
+  mln::io::pgm::load(img_fst, OLENA_IMG_PATH"/lena_16.pgm");
+  img_ref = mln::data::transform(img_fst, mln::fun::v2v::int_u16_to_int_u14());
 
   const double count_ref = mln::data::compute(count(),    img_ref);
   const double mean_ref  = mln::data::compute(mean(),     img_ref);
   const double var_ref   = mln::data::compute(variance(), img_ref);
 
-  img_res = mln::data::compute(mln::accu::stat::histo1d<int_u16>(), img_ref);
+  img_res = mln::data::compute(mln::accu::stat::histo1d<int_u14>(), img_ref);
 
   const double count_res = count_histo(img_res);
   const double mean_res  = mean_histo(img_res);
-  const double var_res   = var_histo(img_res);
+  const double var_res   = var_histo2(img_res);
+
+  //std::cout << "var_res : " << var_res << std::endl;
+  //std::cout << "var_ref : " << var_ref << std::endl;
   
   mln_assertion(count_ref == count_res);
   mln_assertion( mean_ref == mean_res );
   mln_assertion(0.0001 > abs(var_ref - var_res));
 
-  std::cout << "(16 bits) test integration     : ok" << std::endl;
+  std::cout << "(14 bits) test integration     : ok" << std::endl;
 }
 
 /// The aim of this function is to rebuild an label image2d from the segmenting
@@ -544,10 +568,10 @@ void test_16bits_integration()
 /// label_image2d / for each grey tone, associate its label.
 
 mln::image2d<mln::value::label_8>
-build_16bits(const mln::image2d<mln::value::int_u16>&  input,
-	     const mln::image1d<mln::value::label_8>& label)
+build_14bits(const mln::image2d<mln::value::int_u<14> >&  input,
+	     const mln::image1d<mln::value::label_8>&     label)
 {
-  mln::trace::entering("build_16bits");
+  mln::trace::entering("build_14bits");
   mln_precondition(label.is_valid());
   mln_precondition(input.is_valid());
 
@@ -555,31 +579,33 @@ build_16bits(const mln::image2d<mln::value::int_u16>&  input,
 
   mln::initialize(output, input);
 
-  mln_piter_(mln::image2d<mln::value::int_u16>) pi(input.domain());
+  mln_piter_(mln::image2d<mln::value::int_u<14> >) pi(input.domain());
   mln_piter_(mln::image2d<mln::value::label_8>) po(output.domain());
 
   for_all_2(pi, po)
   {
-    mln::value::int_u16 val = input(pi);
-    unsigned            grp = label(mln::point1d(val));
+    mln::value::int_u<14> val = input(pi);
+    unsigned              grp = label(mln::point1d(val));
 
     output(po) = grp;
   }
 
-  mln::trace::exiting("build_16bits");
+  mln::trace::exiting("build_14bits");
   return output;
 }
 
 
-void test_16bits_classifying()
+void test_14bits_classifying()
 {
   typedef mln::value::int_u16               int_u16;
+  typedef mln::value::int_u<14>             int_u14;
   typedef mln::value::label_8               label_8;
   typedef mln::value::rgb8                  rgb8;
   typedef mln::accu::stat::mean<double>     mean;
 
-  mln::image2d<int_u16>       img_ref;
-  mln::image2d<int_u16>       img_out;
+  mln::image2d<int_u16>       img_fst;
+  mln::image2d<int_u14>       img_ref;
+  mln::image2d<int_u14>       img_out;
   mln::image2d<rgb8>          img_rgb;
   mln::image1d<unsigned>      img_res;
   mln::image1d<double>        img_smooth;
@@ -590,31 +616,32 @@ void test_16bits_classifying()
   // Loading the scribo image and computing its histogram
   //-----------------------------------------------------
 
-  std::cout << "(16 bits) LOADING HISTOGRAM" << std::endl;
+  std::cout << "(14 bits) LOADING HISTOGRAM" << std::endl;
 
-  //  mln::io::pgm::load(img_ref, OLENA_IMG_PATH"/lena.pgm");
-  mln::io::pgm::load(img_ref, SCRIBO_IMG_PATH"/mp00082c_50p_16bits.pgm");
-  img_res = mln::data::compute(mln::accu::stat::histo1d<int_u16>(), img_ref);
-  mln::io::plot::save_histo_sh(img_res, "histo0_16bits.sh");
+  //mln::io::pgm::load(img_fst, OLENA_IMG_PATH"/lena_16.pgm");
+  mln::io::pgm::load(img_fst, SCRIBO_IMG_PATH"/mp00082c_50p_16bits.pgm");
+  img_ref = mln::data::transform(img_fst, mln::fun::v2v::int_u16_to_int_u14());
+  img_res = mln::data::compute(mln::accu::stat::histo1d<int_u14>(), img_ref);
+  mln::io::plot::save_histo_sh(img_res, "histo0_14bits.sh");
 
 
   //-----------------------------------------------------
   // Smoothing the histogram with a gaussian filter
   //-----------------------------------------------------
 
-  std::cout << "(16 bits) SMOOTHING HISTOGRAM" << std::endl;
+  std::cout << "(14 bits) SMOOTHING HISTOGRAM" << std::endl;
 
   double ws[41];
   gaussian_filter(ws, 41, 6.0);
   img_smooth = mln::linear::convolve(img_res, mln::make::w_window1d(ws));
-  mln::io::plot::save_histo_sh(img_smooth, "histo1_16bits.sh");
+  mln::io::plot::save_histo_sh(img_smooth, "histo1_14bits.sh");
 
 
   //-----------------------------------------------------
   // Segmenting the histogram with the watershed method
   //-----------------------------------------------------
 
-  std::cout << "(16 bits) SEGMENTING HISTOGRAM" << std::endl;
+  std::cout << "(14 bits) SEGMENTING HISTOGRAM" << std::endl;
 
   /*
   labels = mln::labeling::regional_maxima(img_smooth, mln::c2(), nlabels);  
@@ -625,24 +652,24 @@ void test_16bits_classifying()
   
   labels = mln::morpho::watershed::flooding(img_smooth, mln::c2(), nlabels);
   std::cout  << "N labels : " << nlabels << std::endl;
-  mln::io::plot::save_histo_sh(labels, "histo2_16bits.sh");
+  mln::io::plot::save_histo_sh(labels, "histo2_14bits.sh");
   
 
   //-----------------------------------------------------
   // Rebuilding the image with the mean of each region
   //-----------------------------------------------------
 
-  std::cout << "(16 bits) BUILDING OUTPUT" << std::endl;
+  std::cout << "(14 bits) BUILDING OUTPUT" << std::endl;
 
-  mln::image2d<label_8>img_label = build_16bits(img_ref, labels);
+  mln::image2d<label_8>img_label = build_14bits(img_ref, labels);
 
-  std::cout << "(16 bits) COLORING OUTPUT" << std::endl;
+  std::cout << "(14 bits) COLORING OUTPUT" << std::endl;
 
   img_out = mln::labeling::mean_values(img_ref, img_label, nlabels);
   img_rgb = mln::labeling::colorize(rgb8(), img_label);
 
-  mln::io::pgm::save(img_out, "out_16bits.pgm");
-  mln::io::ppm::save(img_rgb, "color_16bits.pgm");
+  mln::io::pgm::save(img_out, "out_14bits.pgm");
+  mln::io::ppm::save(img_rgb, "color_14bits.pgm");
 
   //labels = mln::morpho::elementary::dilation(labels, mln::c2());  
   //mln::io::plot::save_histo_sh(labels, "histo3.sh");
@@ -663,15 +690,14 @@ int main()
   // PROBLEME AVEC LES COORDONNEES PAR DEFAUT QUI SONT EN SIGNED SHORT
   // SEE mln/core/def/coord.hh
 
-  /*
-  test_16bits_instantiation_without_argument();
-  test_16bits_initialization();
-  test_16bits_take_argument();
-  test_16bits_take_other();
-  test_16bits_operator_equal();
-  test_16bits_integration();
+  test_14bits_instantiation_without_argument();
+  test_14bits_initialization();
+  test_14bits_take_argument();
+  test_14bits_take_other();
+  test_14bits_operator_equal();
+  test_14bits_integration();
 
-  //test_16bits_classifying();
-  */
+  test_14bits_classifying();
+  
   return 0;
 }

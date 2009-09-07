@@ -1,5 +1,14 @@
 2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Improve histo1d testing with 14 bits grayscale image.
+
+	* green/mln/fun                            : New directory.
+	* green/mln/fun/v2v                        : New directory.
+	* green/mln/fun/v2v/int_u16_to_int_u14.hh  : New subsampling function.
+	* green/tests/accu/stat/histo1d/histo1d.cc : Improve unitary tests.
+
+2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Delete old k_mean source location.
 
 	* green/k_mean/Makefile.am      : Remove old makefile.
