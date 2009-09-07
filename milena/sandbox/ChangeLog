@@ -1,5 +1,17 @@
 2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Delete old histo1d source location.
+
+	* green/histo1d/Makefile.am      : Remove old makefile.
+	* green/histo1d/gaussian.sh      : Remove old tools.
+	* green/histo1d/histo1d.hh       : Remove old library code.		
+	* green/histo1d/histo1d.cc       : Remove old unitary tests.
+	* green/histo1d/mp00082c_50p.pgm : Remove old image.
+	* green/histo1d/save_sh.hh       : Remove old library code.
+	* green/histo1d                  : Remove old directory.
+
+2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Do some refactoring for best future olena integration.
 
 	* green/mln                                : New dev directory.
