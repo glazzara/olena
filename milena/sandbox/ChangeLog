@@ -1,3 +1,16 @@
+2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Do some refactoring for best future olena integration.
+
+	* green/mln                                : New dev directory.
+	* green/mln/clustering                     : New directory.
+	* green/mln/clustering/k_mean.hh           : New k_mean source location.
+	* green/tests                              : New unitary test directory.
+	* green/tests/clustering                   : New directory.
+	* green/tests/clustering/k_mean            : New k_mean test directory.
+	* green/tests/clustering/k_mean/Makefile.am: New makefle.	
+	* green/tests/clustering/k_mean/k_mean.cc  : New unit tests location.
+
 2009-09-07  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix output dimensions.
