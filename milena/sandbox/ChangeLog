@@ -1,5 +1,14 @@
 2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Delete old k_mean source location.
+
+	* green/k_mean/Makefile.am      : Remove old makefile.
+	* green/k_mean/k_mean.hh        : Remove old library code.		
+	* green/k_mean/k_mean.cc        : Remove old unitary tests.
+	* green/k_mean                  : Remove old directory.
+
+2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Delete old histo1d source location.
 
 	* green/histo1d/Makefile.am      : Remove old makefile.
