@@ -340,7 +340,7 @@ namespace mln
 
 	int nrows = geom::nrows(input);
 	int ncols = geom::ncols(input);
-        mln_concrete(image2d<T>) output(nrows * 3, ncols * 3);
+        mln_concrete(image2d<T>) output(nrows * 4, ncols * 4);
 
 	int   LUT16to32[65536];
 	int   RGBtoYUV[65536];
