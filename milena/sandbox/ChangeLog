@@ -3,7 +3,7 @@
 	Delete old k_mean source location.
 
 	* green/k_mean/Makefile.am      : Remove old makefile.
-	* green/k_mean/k_mean.hh        : Remove old library code.		
+	* green/k_mean/k_mean.hh        : Remove old library code.
 	* green/k_mean/k_mean.cc        : Remove old unitary tests.
 	* green/k_mean                  : Remove old directory.
 
@@ -13,7 +13,7 @@
 
 	* green/histo1d/Makefile.am      : Remove old makefile.
 	* green/histo1d/gaussian.sh      : Remove old tools.
-	* green/histo1d/histo1d.hh       : Remove old library code.		
+	* green/histo1d/histo1d.hh       : Remove old library code.
 	* green/histo1d/histo1d.cc       : Remove old unitary tests.
 	* green/histo1d/mp00082c_50p.pgm : Remove old image.
 	* green/histo1d/save_sh.hh       : Remove old library code.
@@ -25,7 +25,7 @@
 
 	* green/mln                                : New dev directory.
 	* green/mln/accu                           : New directory.
-	* green/mln/accu/stat                      : New directory.	
+	* green/mln/accu/stat                      : New directory.
 	* green/mln/accu/stat/histo1d.hh           : New histo1d location.
 	* green/mln/img_path.hh                    : New image path defines.
 	* green/mln/io                             : New directory.
@@ -35,7 +35,7 @@
 	* green/tests/accu                         : New directory.
 	* green/tests/accu/stat                    : New directory.
 	* green/tests/accu/stat/histo1d            : New histo1d test directory.
-	* green/tests/accu/stat/histo1d/Makefile.am: New makefle.	
+	* green/tests/accu/stat/histo1d/Makefile.am: New makefle.
 	* green/tests/accu/stat/histo1d/histo1d.cc : New unit tests location.
 	* green/tests/accu/stat/histo1d/gaussian.sh: New tools to test filter.
 
@@ -50,7 +50,7 @@
 	* green/tests                              : New unitary test directory.
 	* green/tests/clustering                   : New directory.
 	* green/tests/clustering/k_mean            : New k_mean test directory.
-	* green/tests/clustering/k_mean/Makefile.am: New makefle.	
+	* green/tests/clustering/k_mean/Makefile.am: New makefle.
 	* green/tests/clustering/k_mean/k_mean.cc  : New unit tests location.
 
 2009-09-07  Fabien Freling  <fabien.freling@lrde.epita.fr>
