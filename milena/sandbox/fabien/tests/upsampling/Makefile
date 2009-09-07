@@ -7,3 +7,6 @@ hq2x: hq2x.cc
 
 hq3x: hq3x.cc
 	${CXX} ${CXXFLAGS} ${INC} $^ -o hq3x
+
+hq4x: hq4x.cc
+	${CXX} ${CXXFLAGS} ${INC} $^ -o hq4x

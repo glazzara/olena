@@ -1,3 +1,15 @@
+2009-09-07  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add HQ4x algorithm, change license and add credit to original author.
+	*  fabien/mln/upsampling/hq2x.hh: Change license and add credit to
+	original author.
+	*  fabien/mln/upsampling/hq3x.hh: Change license and add credit to
+	original author.
+	*  fabien/mln/upsampling/hq4x.hh: Implement HQ4x algorithm, still
+	not working properly.
+	*  fabien/tests/upsampling/Makefile: Add target `hq4x'.
+	*  fabien/tests/upsampling/hq4x.cc: New test file for hq4x().
+
 2009-09-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Implement HQ2x upscaling algorithm.
