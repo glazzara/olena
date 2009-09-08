@@ -1,3 +1,7 @@
+2009-09-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure milena/apps/graph-morpho/Makefile.
+
 2009-09-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: s/statues/mesh-segm-skel/.
