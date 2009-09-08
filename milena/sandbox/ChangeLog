@@ -21,7 +21,7 @@
 	Make some test on 14 bits grayscale image.
 
 	* green/mln/accu/stat/histo1d/histo1d.hh   : Improve documentation.
-	* green/tests/accu/stat/histo1d/histo1d.cc 
+	* green/tests/accu/stat/histo1d/histo1d.cc
 	(test_14bits_classifying)                  : Test gausian filtering.
 	* green/mln/io/plot/save_histo_sh.hh       : Test new gnuplot style.
 
