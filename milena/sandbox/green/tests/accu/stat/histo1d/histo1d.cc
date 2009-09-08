@@ -631,8 +631,8 @@ void test_14bits_classifying()
 
   std::cout << "(14 bits) SMOOTHING HISTOGRAM" << std::endl;
 
-  double ws[41];
-  gaussian_filter(ws, 41, 6.0);
+  double ws[401];
+  gaussian_filter(ws, 401, 50.0);
   img_smooth = mln::linear::convolve(img_res, mln::make::w_window1d(ws));
   mln::io::plot::save_histo_sh(img_smooth, "histo1_14bits.sh");
 
@@ -678,25 +678,26 @@ void test_14bits_classifying()
 
 int main()
 {
+  /*
   test_8bits_instantiation_without_argument();
   test_8bits_initialization();
   test_8bits_take_argument();
   test_8bits_take_other();
   test_8bits_operator_equal();
   test_8bits_integration();
-
-  //test_8bits_classifying();
+  */
+  test_8bits_classifying();
 
   // PROBLEME AVEC LES COORDONNEES PAR DEFAUT QUI SONT EN SIGNED SHORT
   // SEE mln/core/def/coord.hh
-
+  /*
   test_14bits_instantiation_without_argument();
   test_14bits_initialization();
   test_14bits_take_argument();
   test_14bits_take_other();
   test_14bits_operator_equal();
   test_14bits_integration();
-
+  */
   test_14bits_classifying();
   
   return 0;

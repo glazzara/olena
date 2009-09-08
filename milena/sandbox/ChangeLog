@@ -1,5 +1,15 @@
 2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Make some test on 14 bits grayscale image.
+
+	* green/mln/accu/stat/histo1d/histo1d.hh   : Improve documentation.
+	* green/tests/accu/stat/histo1d/histo1d.cc 
+	(test_14bits_classifying)                  : Test gausian filtering.
+	* green/mln/io/plot/save_histo_sh.hh       : Test new gnuplot style.
+
+
+2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Improve histo1d testing with 14 bits grayscale image.
 
 	* green/mln/fun                            : New directory.

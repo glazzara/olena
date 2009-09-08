@@ -100,7 +100,8 @@ namespace mln
 	out                                                 << std::endl;
 	out << "gnuplot <<EOF"                              << std::endl;
 	out << "set terminal x11 persist 1"                 << std::endl;
-	out << "plot '-' with points pointtype 20"          << std::endl;
+	out << "plot '-' with impulses"                     << std::endl;
+	//out << "plot '-' with points pointtype 20"          << std::endl;
 	//out << "plot '-' with points pointtype 0"  << std::endl;
 	//out << "plot '-' with histograms"  << std::endl;
 	//out << "plot '-' smooth unique"  << std::endl;

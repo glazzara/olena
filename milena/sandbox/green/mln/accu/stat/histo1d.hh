@@ -34,7 +34,7 @@
 ///
 /// This source implements the discrete histogram version. The number of beans
 /// is infer from the number of greylevels. A typical int_u8 image has got
-/// 256 bins. An int_u16 image has got 65535 bins.
+/// 256 bins. An int_u<14> image has got 16384 bins.
 /// The following sample is a typical use of the histogram.
 ///
 /// #include <mln/value/int_u8.hh>
@@ -124,10 +124,10 @@ namespace mln
       ///
       /// Param V defines the space in which we count the values.
       /// For instance, this histogram works image2d<int_u8> or 
-      /// image1d<int_u16>. The histogram count the occurrence of each value.
+      /// image1d<int_u<14> >. The histogram count the occurrence of each value.
       /// The number of bins depends of the greyscale values, for 8 bits there
-      /// is 256 bins, for 16 bits there is 65536 bins. Note that over 
-      /// quantification works too.
+      /// is 256 bins, for 14 bits there is 16384 bins. Note that over 
+      /// quantification works too (up to 14 bits).
       ///
       /// \ingroup modaccuvalues
 
@@ -159,7 +159,7 @@ namespace mln
 	void init();
 
 	
-	/// \brief Update the histogram with the RGB pixel t.
+	/// \brief Update the histogram with the greylevel of the pixel t.
 	/// \param[in] t a greylevel pixel of type V.
 	///
 	/// The end user shouldn't call this method. In place of it, he can
@@ -216,6 +216,9 @@ namespace mln
 	// mln_min(comp) --> 0
 	// mln_max(comp) --> 2^(n-1) [127 for n=7][255 for n=8] ...
 
+	count_.init_(box1d(point1d(mln_min(comp)),
+			   point1d(mln_max(comp))));
+
 	//	std::cout << "min : " << mln_min(comp) << std::endl;
 	// std::cout << "max : " << mln_max(comp) << std::endl;
 
@@ -226,8 +229,6 @@ namespace mln
 	//		     v_point1d(mln_max(comp))));
 	// this does not work as image1d is friendly close to box1d
 	
-	count_.init_(box1d(point1d(mln_min(comp)),
-			   point1d(mln_max(comp))));
 	
 	trace::exiting("mln::accu::stat::histo1d<V>::histo1d");
       }
