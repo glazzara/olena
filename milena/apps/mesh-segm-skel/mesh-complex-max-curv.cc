@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file apps/statues/mesh-complex-max-curv.cc
+/// \file apps/mesh-segm-skel/mesh-complex-max-curv.cc
 /// \brief A program computing the max curvature at each (2-)face of
 /// the surface of the (triangle) mesh of a statue, using a
 /// complex-based image.

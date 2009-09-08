@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file apps/statues/mesh-complex-max-curv-segm.cc
+/// \file apps/mesh-segm-skel/mesh-complex-max-curv-segm.cc
 /// \brief A program computing the maximal curvature values from the
 /// surface of the (triangle) mesh of a statue, then performing a
 /// WST-based segmentation, using a complex-based image.

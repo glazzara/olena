@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef APPS_STATUES_IO_HH
-# define APPS_STATUES_IO_HH
+#ifndef APPS_MESH_SEGM_SKEL_IO_HH
+# define APPS_MESH_SEGM_SKEL_IO_HH
 
-/// \file apps/statues/io.hh
+/// \file apps/mesh-segm-skel/io.hh
 /// \brief I/O routines adapted from TriMesh's ones.
 
 #include <algorithm>
@@ -202,4 +202,4 @@ inline void write_off_binary(TriMesh *mesh,
 }
 /// \}
 
-#endif // ! APPS_STATUES_IO_HH
+#endif // ! APPS_MESH_SEGM_SKEL_IO_HH

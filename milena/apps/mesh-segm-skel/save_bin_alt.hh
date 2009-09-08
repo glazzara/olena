@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef APPS_STATUES_SAVE_BIN_ALT_HH
-# define APPS_STATUES_SAVE_BIN_ALT_HH
+#ifndef APPS_MESH_SEGM_SKEL_SAVE_BIN_ALT_HH
+# define APPS_MESH_SEGM_SKEL_SAVE_BIN_ALT_HH
 
 /*--------------------------------------------------------------------.
 | FIXME: Copied and adjusted (in a hurry) from mln/io/off/save.hh,    |
@@ -186,4 +186,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! APPS_STATUES_SAVE_BIN_ALT_HH
+#endif // ! APPS_MESH_SEGM_SKEL_SAVE_BIN_ALT_HH

@@ -52,9 +52,9 @@ dist_mesh_DATA += $(more_meshes)
 ## Pseudo-inverse curvature of meshes.  ##
 ## ------------------------------------ ##
 
-mesh_pinv_curv = $(top_builddir)/milena/apps/statues/mesh-pinv-curv
-mesh_pinv_curv: $(top_srcdir)/milena/apps/statues/mesh-pinv-curv.cc
-	cd $(top_builddir)/milena/apps/statues/mesh-pinv-curv && \
+mesh_pinv_curv = $(top_builddir)/milena/apps/mesh-segm-skel/mesh-pinv-curv
+mesh_pinv_curv: $(top_srcdir)/milena/apps/mesh-segm-skel/mesh-pinv-curv.cc
+	cd $(top_builddir)/milena/apps/mesh-segm-skel/mesh-pinv-curv && \
 	  $(MAKE) $(AM_MAKEFLAGS) mesh_pinv_curv
 
 # FIXME: *-pinv-curv.off files should not be regenerated
@@ -70,9 +70,9 @@ dist_mesh_DATA += $(pinv_curv)
 ## Maximum curvature of meshes.  ##
 ## ----------------------------- ##
 
-mesh_max_curv = $(top_builddir)/milena/apps/statues/mesh-max-curv
-mesh_max_curv: $(top_srcdir)/milena/apps/statues/mesh-max-curv.cc
-	cd $(top_builddir)/milena/apps/statues/mesh-max-curv && \
+mesh_max_curv = $(top_builddir)/milena/apps/mesh-segm-skel/mesh-max-curv
+mesh_max_curv: $(top_srcdir)/milena/apps/mesh-segm-skel/mesh-max-curv.cc
+	cd $(top_builddir)/milena/apps/mesh-segm-skel/mesh-max-curv && \
 	  $(MAKE) $(AM_MAKEFLAGS) mesh_max_curv
 
 # FIXME: *-max-curv.off files should not be regenerated

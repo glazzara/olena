@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file apps/statues/mesh-pinv-curv.cc
+/// \file apps/mesh-segm-skel/mesh-pinv-curv.cc
 /// \brief A program computing the pseudo-inverse curvature at each
 /// (2-)face of a mesh.
 

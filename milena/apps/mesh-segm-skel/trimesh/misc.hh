@@ -29,8 +29,8 @@
 // FIXME: Split this file.
 // FIXME: Address license-related issues?
 
-#ifndef MILENA_APPS_STATUES_MISC_HH
-# define MILENA_APPS_STATUES_MISC_HH
+#ifndef MILENA_APPS_MESH_SEGM_SKEL_MISC_HH
+# define MILENA_APPS_MESH_SEGM_SKEL_MISC_HH
 
 # include <algorithm>  // For std::swap.
 # include <utility>    // For std::pair.
@@ -659,4 +659,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MILENA_APPS_STATUES_MISC_HH
+#endif // ! MILENA_APPS_MESH_SEGM_SKEL_MISC_HH

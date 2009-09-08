@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file apps/statues/mesh-segm.cc
+/// \file apps/mesh-segm-skel/mesh-segm.cc
 /// \brief A program performing a WST-based segmentation of the
 /// surface of the (triangle) mesh of a statue.
 

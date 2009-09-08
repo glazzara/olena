@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file apps/statues/mesh-complex-skel.cc
+/// \file apps/mesh-segm-skel/mesh-complex-skel.cc
 /// \brief A program computing a skeleton of the surface of the
 /// (triangle) mesh of a statue (by thinning), using a complex-based
 /// image.

@@ -1,5 +1,26 @@
 2009-09-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	Adjust names w.r.t. apps/mesh-segm-skel/.
+
+	* apps/Makefile.am,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-segm.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv.cc,
+	* apps/mesh-segm-skel/mesh-complex-segm.cc,
+	* apps/mesh-segm-skel/mesh-complex-skel.cc,
+	* apps/mesh-segm-skel/mesh-max-curv.cc,
+	* apps/mesh-segm-skel/mesh-pinv-curv.cc,
+	* apps/mesh-segm-skel/mesh-segm.cc,
+	* apps/mesh-segm-skel/mesh-skel.cc,
+	* mesh/Makefile.am:
+	s/statues/mesh-segm-skel/.
+	* apps/mesh-segm-skel/io.hh,
+	* apps/mesh-segm-skel/save_bin_alt.hh,
+	* apps/mesh-segm-skel/trimesh/misc.hh:
+	Likewise.
+	Adjust header guards.
+
+2009-09-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename apps/statues/ as apps/mesh-segm-skel/.
 
 	* apps/statues/: Rename directory as...
