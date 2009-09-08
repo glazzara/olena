@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -13,8 +13,14 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
 
-## Process this file through Automake to produce Makefile.in.
+# Find Milena headers.
+AM_CPPFLAGS = -I$(top_srcdir)/milena
+# Produce fast code.
+APPS_CXXFLAGS = @APPS_CXXFLAGS@
+AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
-SUBDIRS = mesh-segm-skel graph-morpho
+bin_PROGRAMS = complex1d
+complex1d_SOURCES = complex1d.cc
+
+TESTS = complex1d

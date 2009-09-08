@@ -1,3 +1,11 @@
+2009-09-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Morphological operators on graphs (using 1-complexes).
+
+	* apps/graph-morpho/: New directory.
+	* apps/graph-morpho/complex1d.cc: New.
+	* apps/graph-morpho/Makefile.am: New.
+
 2009-09-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Adjust names w.r.t. apps/mesh-segm-skel/.
