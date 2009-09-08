@@ -1,3 +1,10 @@
+2009-09-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Rename apps/statues/ as apps/mesh-segm-skel/.
+
+	* apps/statues/: Rename directory as...
+	* apps/mesh-segm-skel/: ...this.
+
 2009-09-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	* mln/debug/println.spe.hh: Reindent.
