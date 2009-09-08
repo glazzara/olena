@@ -1,5 +1,23 @@
 2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Work with histogram as image 3d on rgb color space.
+
+	* green/tests/accu/stat/histo3d_rgb                : New directory.
+	* green/tests/accu/stat/histo3d_rgb/Makefile.am    : New makefile.
+	* green/tests/accu/stat/histo3d_rgb/histo3d_rgb.cc : New unitary tests.
+	* green/mln/accu/stat/histo3d_rgb/histo3d_rgb.hh   : New library code.
+	* green/mln/fun/v2v/rgb8_to_rgbn.hh                : New converting fun.
+
+2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Prepare unitary test with histogram 2d.
+
+	* green/tests/accu/stat/histo2d               : New directory.
+	* green/tests/accu/stat/histo2d/Makefile.am   : New makefile.
+	* green/tests/accu/stat/histo2d/gaussian2d.sh : New calibrating tool.
+
+2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Make some test on 14 bits grayscale image.
 
 	* green/mln/accu/stat/histo1d/histo1d.hh   : Improve documentation.
