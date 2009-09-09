@@ -32,6 +32,7 @@
 /// of S container iterator) to go faster.
 
 # include <mln/morpho/tree/compute_parent.hh>
+# include <mln/morpho/tree/compute_parent_dual_input.hh>
 # include <mln/core/site_set/p_array.hh>
 # include <mln/core/internal/site_set_iterator_base.hh>
 # include <mln/core/internal/piter_identity.hh>
@@ -141,6 +142,14 @@ namespace mln
 	template <typename N>
 	data(const Image<I>& f, const Site_Set<S>& s, const Neighborhood<N>& nbh);
 
+	/// Constructor.
+	template <typename N, typename M>
+	data(const Image<I>& f,
+	     const Image<M>& m,
+	     const Site_Set<S>& s_f,
+	     const Site_Set<S>& s_m,
+	     const Neighborhood<N>& nbh);
+
 
 	/// \{ Base function-related materials
 
@@ -197,7 +206,7 @@ namespace mln
 
       protected:
 	const function& f_;
-	const sites_t& s_;
+	const sites_t s_;
 	mln_ch_value(I, mln_psite(I)) parent_;	// Parent image.
 	mln_ch_value(I, nodes_t) children_;	// Children image.
 	nodes_t nodes_;
@@ -392,6 +401,48 @@ namespace mln
 
     namespace tree
     {
+
+      template <typename I, typename S>
+      template <typename N, typename M>
+      inline
+      data<I, S>::data(const Image<I>& f,
+		       const Image<M>& m,
+		       const Site_Set<S>& s_f,
+		       const Site_Set<S>& s_m,
+		       const Neighborhood<N>& nbh)
+	: f_(exact(f)),
+	  s_(exact(s_f))
+      {
+	const N& nbh_ = exact(nbh);
+
+	// Compute parent image.
+	parent_ = morpho::tree::compute_parent_dual_input(f_, m, nbh_, s_, s_m);
+	initialize(children_, f);
+
+	// Store tree nodes.
+	nroots_ = 0;
+	mln_bkd_piter(S) p(s_);
+	for_all(p)
+	{
+	  if (f_(parent_(p)) != f_(p))
+	    {
+	      nodes_.insert(p);
+	      children_(parent_(p)).insert(p);
+	      if (is_a_leaf(p))
+		leaves_.insert(p);
+	    }
+	  else if (parent_(p) == p) //it's a root.
+	    {
+	      nodes_.insert(p);
+	      if (is_a_leaf(p)) // One pixel image...
+		leaves_.insert(p);
+	      ++nroots_;
+	    }
+	}
+	mln_assertion(leaves_.nsites() > 0);
+      }
+
+
 
       template <typename I, typename S>
       template <typename N>
@@ -656,21 +707,20 @@ namespace mln
 	stack_.pop_back();
 	if (! this->is_valid())
 	  return;
-	mln_invariant(p_.is_valid());
 
-	std::cout << "children(p).size = " << s_->children(p_).nsites() << std::endl;
-	if (s_->children(p_).nsites() != 0)
-	  {
-	    std::cout << "elt[0] = " << s_->children(p_)[0].to_site().graph().data_hook_() << std::endl;
-	    std::cout << "elt[0] = " << s_->children(p_)[0] << std::endl;
-	  }
-
-	std::cout << s_->children(p_) << std::endl;
+	// mln_invariant(p_.is_valid());
+	// std::cout << "children(p).size = " << s_->children(p_).nsites() << std::endl;
+	// if (s_->children(p_).nsites() != 0)
+	//   {
+	//     std::cout << "elt[0] = " << s_->children(p_)[0].to_site().graph().data_hook_() << std::endl;
+	//     std::cout << "elt[0] = " << s_->children(p_)[0] << std::endl;
+	//   }
+	// std::cout << s_->children(p_) << std::endl;
 
 	mln_fwd_piter(T::nodes_t) child(s_->children(p_));
 	for_all(child)
 	{
-	  std::cout << child.to_site().graph().data_hook_() << std::endl;
+	  // std::cout << child.to_site().graph().data_hook_() << std::endl;
 	  // mln_invariant(s_->parent(child) == p_);
 	  stack_.push_back(child);
 	}
@@ -696,23 +746,48 @@ namespace mln
   {
     typedef morpho::tree::data<I, S> self_t;
 
-    typename self_t::depth1st_piter n(t);
-    mln_psite(self_t) old;
-    //std::cout << t.parent_image();
-    for_all(n)
     {
-      if (old.is_valid())
+      typedef p_array<mln_psite(self_t)> A;
+
+      mln_ch_value(typename self_t::function, A) content;
+      initialize(content, t.f());
+
+      os << "Nodes:\tValue:\tPoints" << std::endl;
+
+      mln_up_site_piter(self_t) p(t);
+      for_all(p)
+	if (t.is_a_node(p))
+	  {
+	    os << p << "\t" << t.f(p) << "\t" << content(p) << std::endl;
+	    content(p).clear();
+	  }
+	else
+	  content(t.parent(p)).insert(p);
+    }
+
+    {
+      typename self_t::depth1st_piter n(t);
+      mln_psite(self_t) old;
+
+      std::cout << std::endl << "Hierarchy: " << std::endl;
+      n.start();
+
+      if (!n.is_valid())
+	return os;
+
+      for (old = n, n.next(); n.is_valid(); old = n, n.next())
 	{
 	  if (old == t.parent(n))
 	    os << old << " <- ";
 	  else
-	    os << old << std::endl;
+	    os << old << std::endl
+	       << "\t" << t.parent(n) << " <- ";
 	}
-      old = n;
-    }
-    if (old.is_valid())
+
       os << old << std::endl;
-    return os;
+      return os;
+    }
+
   }
 
 # endif // ! MLN_INCLUDE_ONLY

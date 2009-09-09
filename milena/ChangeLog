@@ -1,3 +1,16 @@
+2009-09-09  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add mask-based max tree computation based on union-find algorithm.
+	*  morpho/tree/component_tree.hh: Some shortcuts to compute max
+	and min tree.
+	*  morpho/tree/compute_parent_dual_input.hh: New. Union-find based
+	algorithm for computing the dual input max tree.
+	*  morpho/tree/data.hh:
+	Comment debug instructions related to tree/graph usage.
+	Improve the tree diplay method.
+	*  morpho/tree/dual_input_tree.hh: Some shortcuts to compute
+	dual-input max and min tree.
+
 2009-09-08 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* tools/pretty_check.sh: Fix issues caused by an empty CXX variable.
