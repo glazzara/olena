@@ -89,7 +89,11 @@ if [ -z "$base_make_path" ]; then
 fi
 
 if [ -z "$TEST_CXX" ]; then
-  TEST_CXX="$CXX"
+  if [ -z "$CXX" ]; then
+    TEST_CXX="g++"
+  else
+    TEST_CXX="$CXX"
+  fi
 fi
 
 gcc_wrapper="$PWD/$output_directory/gcc-wrapper.sh"
