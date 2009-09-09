@@ -1,3 +1,10 @@
+2009-09-09  Guillaume Lazzara <guillaume.lazzara@epita.fr>
+
+	Add extra LD_FLAGS in Trimesh.
+
+	* gluit/Makefile.am,
+	* libsrc/Makefile.am: Add extra LD_FLAGS. 
+
 2009-06-16  Guillaume Lazzara <guillaume.lazzara@epita.fr>
 
 	* utilsrc/mesh_shade.cc: fix compilation issues with ICC 10 and 11.

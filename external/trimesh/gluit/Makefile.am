@@ -20,6 +20,7 @@
 # Find config.h.
 AM_CPPFLAGS = -I$(top_builddir)
 AM_CPPFLAGS += -I$(top_srcdir)/include -I$(top_srcdir)/include/GL
+AM_LDFLAGS = -lGL -lGLU -lX11
 
 lib_LTLIBRARIES = libgluit.la
 
