@@ -1,3 +1,10 @@
+2009-09-09  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Fix bugs an compilation problem on histo3d_rgb source code.
+
+	* green/tests/accu/stat/histo3d_rgb/histo3d_rgb.cc
+	(test_integration) : Manage conversion between rgb and vector.
+
 2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Work with histogram as image 3d on rgb color space.

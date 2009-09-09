@@ -37,6 +37,7 @@
 #include <mln/morpho/elementary/dilation.hh>
 #include <mln/morpho/elementary/closing.hh>
 
+#include <mln/literal/zero.hh>
 #include <mln/linear/convolve.hh>
 #include <mln/linear/gaussian.hh>
 #include <mln/labeling/regional_maxima.hh>
@@ -171,7 +172,7 @@ void test_take_other()
   std::cout << "(" << n << " bits) histo.take(other)    : ok" << std::endl;
 }
 
-double count_histo(mln::image3d<unsigned> img)
+double count_histo(const mln::image3d<unsigned>& img)
 {
   mln_precondition(img.is_valid());
   
@@ -184,42 +185,53 @@ double count_histo(mln::image3d<unsigned> img)
   return result;
 }
 
-mln::algebra::vec<3,float> mean_histo(mln::image3d<unsigned> img)
+mln::algebra::vec<3,float> conv(const mln::algebra::vec<3,float>& vec)
+{
+  mln::algebra::vec<3,float> result;
+
+  result[0] = vec[2];
+  result[1] = vec[0];
+  result[2] = vec[1];
+
+  return result;
+}
+
+mln::algebra::vec<3,float> mean_histo(const mln::image3d<unsigned>& img)
 {
   mln_precondition(img.is_valid());
-  
+  typedef mln::algebra::vec<3,float> vec3f;
   double                             count  = 0.0;
-  double                             sum0   = 0.0;
-  double                             sum1   = 0.0;
-  double                             sum2   = 0.0;
-  mln::algebra::vec<3,float>          result;
+  vec3f                              sum    = mln::literal::zero;
+  vec3f                              result;
 
   mln_piter_(mln::image3d<unsigned>) p(img.domain());
 
   for_all(p)
   {
+    /*
+    std::cout << "(1) " << p << std::endl;
+    std::cout << "(2) " << (vec3f)p << std::endl;
+    std::cout << "(3) " << conv((vec3f)p) << std::endl;
+    */
     count += img(p);
-    sum0  += p[0] * img(p);
-    sum1  += p[1] * img(p);
-    sum2  += p[2] * img(p);
+    sum   += conv((vec3f)p) * img(p);
   }
 
-  result[0] = sum0/count;
-  result[1] = sum1/count;
-  result[2] = sum2/count;
+  result = sum / count;
 
   return result;
 }
 
 
-double var_histo(mln::image3d<unsigned> img)
+double var_histo(const mln::image3d<unsigned>& img)
 {
   mln_precondition(img.is_valid());
-  
-  double                             count  = 0.0;
-  double                             sum    = 0.0;
-  double                             sum2   = 0.0;
-  double                             result = 0.0;
+  typedef mln::algebra::vec<3,float>   vec3f;
+  typedef mln::algebra::mat<3,3,float> mat3f;
+  double                               count  = 0.0;
+  double                               sum    = 0.0;
+  double                               sum2   = 0.0;
+  double                               result = 0.0;
   mln_piter_(mln::image3d<unsigned>) p(img.domain());
 
   for_all(p)
@@ -234,31 +246,32 @@ double var_histo(mln::image3d<unsigned> img)
   return result;
 }
 
-/*
-double var_histo2(mln::image3d<unsigned> img)
+mln::algebra::mat<3,3,float> var_histo2(const mln::image3d<unsigned>& img)
 {
   mln_precondition(img.is_valid());
+  typedef mln::algebra::vec<3,float>   vec3f;
+  typedef mln::algebra::mat<3,3,float> mat3f;
   
   double                             count  = count_histo(img);
-  double                             mean   = mean_histo(img);
-  double                             result = 0.0;
+  vec3f                              mean   = mean_histo(img);
+  vec3f                              point;
+  mat3f                              result = mln::literal::zero;
   mln_piter_(mln::image3d<unsigned>) p(img.domain());
 
   for_all(p)
   {
-    result += img(p) * (p[0] - mean) * (p[0] - mean);
+    point  = conv((vec3f)p) - mean;
+    result += img(p) * (point * point.t());
   }
 
   result /= count;
 
   return result;
 }
-*/
+
 template <unsigned n>
 void test_integration()
 {
-  //  mln::trace::quiet = false;
-
   typedef mln::value::rgb8                        rgb8;
   typedef mln::value::rgb<n>                      rgbn;
   typedef mln::algebra::vec<3,float>              vec3f;
@@ -266,7 +279,7 @@ void test_integration()
   typedef mln::accu::math::count<rgbn>            count;
   typedef mln::accu::math::sum<rgbn,vec3f>        sum;
   typedef mln::accu::stat::mean<rgbn,vec3f,vec3f> mean;
-  typedef mln::accu::stat::var<rgbn>              var;
+  typedef mln::accu::stat::var<vec3f>             var;
 
   mln::image2d<rgb8>         img_fst;
   mln::image2d<rgbn>         img_ref;
@@ -274,40 +287,126 @@ void test_integration()
 
   mln::io::ppm::load(img_fst, OLENA_IMG_PATH"/lena.ppm");
   img_ref = mln::data::transform(img_fst, mln::fun::v2v::rgb8_to_rgbn<n>());
-  // CF COMPATIBILITE DES ACCU AVEC LE RGB
-
 
   const double count_ref = mln::data::compute(count(), img_ref);
   const vec3f  sum_ref   = mln::data::compute(sum(),   img_ref);
   const vec3f  mean_ref  = mln::data::compute(mean(),  img_ref);
-  //  const mat3f  var_ref   = mln::data::compute(var(),   img_ref);
-
+  const mat3f  var_ref   = mln::data::compute(var(),   img_ref);
   
   img_res = mln::data::compute(mln::accu::stat::histo3d_rgb<rgbn>(), img_ref);
 
 
   const double count_res = count_histo(img_res);
   const vec3f  mean_res  = mean_histo(img_res);
-  
-  //const double var_res   = var_histo(img_res);
+  const mat3f  var_res   = var_histo2(img_res);
+ 
+  std::cout << "count_ref : " << count_ref << std::endl;
+  std::cout << "mean_ref  : " << mean_ref  << std::endl;
+  std::cout << "var_ref   : " << var_ref   << std::endl;
+
+  std::cout << "count_res : " << count_res << std::endl;
+  std::cout << "mean_res  : " << mean_res  << std::endl;
+  std::cout << "var_res   : " << var_res   << std::endl;
+
   
   mln_assertion(count_ref == count_res);
-  mln_assertion( mean_ref == mean_res );
-  //mln_assertion(0.0001 > abs(var_ref - var_res));
+ 
+  mln_assertion(0.0001 > abs(mean_ref[0] - mean_res[0]));
+  mln_assertion(0.0001 > abs(mean_ref[1] - mean_res[1]));
+  mln_assertion(0.0001 > abs(mean_ref[2] - mean_res[2]));
+
+  mln_assertion(0.0001 > abs(var_ref(0,0) - var_res(0,0)));
+  mln_assertion(0.0001 > abs(var_ref(0,1) - var_res(0,1)));
+  mln_assertion(0.0001 > abs(var_ref(1,0) - var_res(1,0)));
+
+  mln_assertion(0.0001 > abs(var_ref(1,1) - var_res(1,1)));
+  mln_assertion(0.0001 > abs(var_ref(0,2) - var_res(0,2)));
+  mln_assertion(0.0001 > abs(var_ref(2,0) - var_res(2,0)));
+
+
+  mln_assertion(0.0001 > abs(var_ref(2,2) - var_res(2,2)));
+  mln_assertion(0.0001 > abs(var_ref(2,1) - var_res(2,1)));
+  mln_assertion(0.0001 > abs(var_ref(1,2) - var_res(1,2)));
   
   std::cout << "(" << n << " bits) test integration     : ok" << std::endl;
 }
 
 int main()
 {
+  //
+  // Doesn't work with 1 bit, compilation problem
+  //
 
+  /*
+  test_operator_equal<1>();
+  test_instantiation_without_argument<1>();
+  test_initialization<1>();
+  test_take_argument<1>();
+  test_take_other<1>();
+  test_integration<1>();
+  */
 
+  test_operator_equal<2>();
+  test_instantiation_without_argument<2>();
+  test_initialization<2>();
+  test_take_argument<2>();
+  test_take_other<2>();
+  test_integration<2>();
+
+  /*
   test_operator_equal<3>();
   test_instantiation_without_argument<3>();
   test_initialization<3>();
   test_take_argument<3>();
   test_take_other<3>();
   test_integration<3>();
+  
+  
+
+  test_operator_equal<4>();
+  test_instantiation_without_argument<4>();
+  test_initialization<4>();
+  test_take_argument<4>();
+  test_take_other<4>();
+  test_integration<4>();
+  
+  
+  test_operator_equal<5>();
+  test_instantiation_without_argument<5>();
+  test_initialization<5>();
+  test_take_argument<5>();
+  test_take_other<5>();
+  test_integration<5>();
+  
+  test_operator_equal<6>();
+  test_instantiation_without_argument<6>();
+  test_initialization<6>();
+  test_take_argument<6>();
+  test_take_other<6>();
+  test_integration<6>();
+  */
+  /*
+  test_operator_equal<7>();
+  test_instantiation_without_argument<7>();
+  test_initialization<7>();
+  test_take_argument<7>();
+  test_take_other<7>();
+  test_integration<7>();
+  */
+    
+  //
+  // Do not execute it, unless you have the time :)
+  //
+
+  /*
+  test_operator_equal<8>();
+  test_instantiation_without_argument<8>();
+  test_initialization<8>();
+  test_take_argument<8>();
+  test_take_other<8>();
+  test_integration<8>();
+  */
+ 
 
   // p2p/fold+transform_domain for hcv
 
