@@ -1,5 +1,12 @@
 2009-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Alias for binary 1-complex-based images in the dicrete plane.
+
+	* mln/core/alias/complex_image.hh (mln::bin_1complex_image2d):
+	New typedef.
+
+2009-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Implement the remaining morphological operators on graphs.
 
 	* apps/graph-morpho/complex1d.cc

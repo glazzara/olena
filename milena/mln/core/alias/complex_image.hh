@@ -45,6 +45,13 @@ namespace mln
   | 2-d plane 1-complex aliases.  |
   `------------------------------*/
 
+  /// \brief Type alias for a binary image based on a
+  /// 1-complex, where 0-faces are located at discrete (integer)
+  /// 2-dimensional points.
+  typedef
+  mln::complex_image<1, mln::discrete_plane_1complex_geometry, bool>
+  bin_1complex_image2d;
+
   /// \brief Type alias for an 8-bit gray-level image based on a
   /// 1-complex, where 0-faces are located at discrete (integer)
   /// 2-dimensional points.
