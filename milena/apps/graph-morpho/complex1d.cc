@@ -42,6 +42,11 @@
 #include <mln/core/site_set/p_set.hh>
 #include <mln/util/site_pair.hh>
 
+#include <mln/math/abs.hh>
+
+#include <mln/io/pbm/load.hh>
+
+#include "apps/data.hh"
 
 using namespace mln;
 
@@ -118,6 +123,54 @@ build_regular_complex1d_image(const box2d& support)
   // Image based on this site set.
   ima_t ima(pc);
   return ima;
+}
+
+template <typename I>
+ima_t
+make_regular_complex1d_image(const Image<I>& input_)
+{
+  const I& input = exact(input_);
+  const box2d& input_box = input.domain();
+  // The input image must have an odd number of rows and columns.
+  mln_precondition(input_box.nrows() % 2 == 1);
+  mln_precondition(input_box.ncols() % 2 == 1);
+
+  // The domain of the graph image is twice as small, since we
+  // consider only vertices (edges are set ``between'' vertices).
+  box2d output_box(input_box.nrows() / 2 + 1,
+		   input_box.ncols() / 2 + 1);
+  ima_t output = build_regular_complex1d_image(output_box);
+
+  // Add values on vertices.
+  p_n_faces_fwd_piter<dim, geom_t> v(output.domain(), 0);
+  for_all(v)
+  {
+    mln_site_(geom_t) s(v);
+    // Site S is point2d multi-site and should be a singleton (since V
+    // iterates on vertices).
+    mln_invariant(s.size() == 1);
+    point2d p = s.front();
+    point2d q(p.row() * 2, p.col() * 2);
+    output(v) = input(q);
+  }
+
+  // Add values on edges.
+  p_n_faces_fwd_piter<dim, geom_t> e(output.domain(), 1);
+  for_all(e)
+  {
+    mln_site_(geom_t) s(e);
+    // Site S is point2d multi-site and should be a pair (since E
+    // iterates on vertices).
+    mln_invariant(s.size() == 2);
+    point2d p1 = s[0];
+    point2d p2 = s[1];
+    mln_invariant(math::abs(p1.row() - p2.row()) == 1
+		  || math::abs(p1.col() - p2.col()) == 1);
+    point2d q (p1.row() + p2.row(), p1.col() + p2.col());
+    output(e) = input(q);
+  }
+
+  return output;
 }
 
 
@@ -370,104 +423,51 @@ erosion_graph(const Image<I>& input)
 }
 
 
+/*-----------------------------------.
+| Applying morphological operators.  |
+`-----------------------------------*/
 
 int main()
 {
-  /*--------------.
-  | Input image.  |
-  `--------------*/
-
   /* Build a ``regular'' graph image.  Of course, it would have been
      better, simpler and faster to use a cubical 1-complex here, but
-     they are not yet available.  */
-  box2d b(9, 6);
-  ima_t ima = build_regular_complex1d_image(b);
+     they are not yet available (as of 2009-09-10).  */
 
-  /* Set the values so that IMA corresponds to the graph X of the ISMM
+  // ------------------------ //
+  // Dilations and erosions.  //
+  // ------------------------ //
+
+  /* Set the values so that X corresponds to the graph X of the ISMM
      2009 paper from Jean Cousty et al.  */
-
-  // The set of vertices of the graph.
-  p_set<point2d> vertices;
-  vertices.insert(point2d(1, 2));
-  vertices.insert(point2d(2, 1));
-  vertices.insert(point2d(2, 2));
-  vertices.insert(point2d(3, 4));
-  vertices.insert(point2d(5, 2));
-  vertices.insert(point2d(5, 3));
-  vertices.insert(point2d(5, 4));
-  vertices.insert(point2d(6, 1));
-  vertices.insert(point2d(6, 2));
-  vertices.insert(point2d(6, 3));
-  vertices.insert(point2d(6, 4));
-  vertices.insert(point2d(7, 2));
-  vertices.insert(point2d(7, 3));
-  // Add vertices.
-  p_n_faces_fwd_piter<dim, geom_t> v(ima.domain(), 0);
-  for_all(v)
-  {
-    mln_site_(geom_t) s(v);
-    // Site S is point2d multi-site and should be a singleton (since V
-    // iterates on vertices).
-    mln_invariant(s.size() == 1);
-    point2d p = s.front();
-    ima(v) = vertices.has(p);
-  }
-
-  // The set of edges of the graph.
-  typedef util::site_pair<point2d> point2d_pair;
-  p_set< util::site_pair<point2d> > edges;
-  edges.insert(point2d_pair(point2d(2, 1), point2d(2, 2)));
-  edges.insert(point2d_pair(point2d(5, 3), point2d(5, 4)));
-  edges.insert(point2d_pair(point2d(5, 2), point2d(6, 2)));
-  edges.insert(point2d_pair(point2d(5, 3), point2d(6, 3)));
-  edges.insert(point2d_pair(point2d(6, 1), point2d(6, 2)));
-  edges.insert(point2d_pair(point2d(6, 2), point2d(6, 3)));
-  edges.insert(point2d_pair(point2d(6, 3), point2d(6, 4)));
-  edges.insert(point2d_pair(point2d(6, 2), point2d(7, 2)));
-  edges.insert(point2d_pair(point2d(6, 3), point2d(7, 3)));
-  edges.insert(point2d_pair(point2d(7, 2), point2d(7, 3)));
-  // Add edges.
-  p_n_faces_fwd_piter<dim, geom_t> e(ima.domain(), 1);
-  for_all(e)
-  {
-    mln_site_(geom_t) s(e);
-    // Site S is point2d multi-site and should be a pair (since E
-    // iterates on vertices).
-    mln_invariant(s.size() == 2);
-    point2d p1 = s[0];
-    point2d p2 = s[1];
-    ima(e) =
-      edges.has(point2d_pair(p1, p2)) || edges.has(point2d_pair(p2, p1));
-  }
-  std::cout << "ima:" << std::endl;
-  println(ima, b);
-
-  /*-----------------------------------.
-  | Applying morphological operators.  |
-  `-----------------------------------*/
-
-  ima_t dil_e2v_ima = dilation_e2v(ima);
+  image2d<bool> x_pbm = io::pbm::load(MLN_APPS_DIR "/graph-morpho/x.pbm");
+  ima_t x = make_regular_complex1d_image(x_pbm);
+  box2d x_box(x_pbm.nrows() / 2 + 1, x_pbm.ncols() / 2 + 1);
+  std::cout << "x:" << std::endl;
+  println(x, x_box);
+  
+  ima_t dil_e2v_ima = dilation_e2v(x);
   std::cout << "dil_e2v_ima:" << std::endl;
-  println(dil_e2v_ima, b);
+  println(dil_e2v_ima, x_box);
 
-  ima_t ero_v2e_ima = erosion_v2e(ima);
+  ima_t ero_v2e_ima = erosion_v2e(x);
   std::cout << "ero_v2e_ima:" << std::endl;
-  println(ero_v2e_ima, b);
+  println(ero_v2e_ima, x_box);
 
-  ima_t ero_e2v_ima = erosion_e2v(ima);
+
+  ima_t ero_e2v_ima = erosion_e2v(x);
   std::cout << "ero_e2v_ima:" << std::endl;
-  println(ero_e2v_ima, b);
+  println(ero_e2v_ima, x_box);
 
-  ima_t dil_v2e_ima = dilation_v2e(ima);
+  ima_t dil_v2e_ima = dilation_v2e(x);
   std::cout << "dil_v2e_ima:" << std::endl;
-  println(dil_v2e_ima, b);
+  println(dil_v2e_ima, x_box);
 
 
-  ima_t dil_ima = dilation_graph(ima);
+  ima_t dil_ima = dilation_graph(x);
   std::cout << "dil_ima:" << std::endl;
-  println(dil_ima, b);
+  println(dil_ima, x_box);
 
-  ima_t ero_ima = erosion_graph(ima);
+  ima_t ero_ima = erosion_graph(x);
   std::cout << "ero_ima:" << std::endl;
-  println(ero_ima, b);
+  println(ero_ima, x_box);
 }

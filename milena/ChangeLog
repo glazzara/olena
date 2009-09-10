@@ -1,3 +1,21 @@
+2009-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplify graph-based image I/O in apps/graph-morpho.
+
+	* apps/graph-morpho/complex1d.cc (make_regular_complex1d_image):
+	New function.
+	Use it...
+	(main): ...here, to simplify the construction of the input image,
+	by reading it from...
+	* apps/graph-morpho/x.pbm: ...this (new) image.
+	* apps/data.hh.in: New.
+	* apps/graph-morpho/Makefile.am (AM_CPPFLAGS):
+	Add -I$(top_builddir)/milena.
+	(bin_PROGRAMS): Rename as...
+	(noinst_PROGRAMS): ...this.
+	(EXTRA_DIST): New.
+	Add x.pbm.
+
 2009-09-10  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix luminance value computation for RGB to HSL.

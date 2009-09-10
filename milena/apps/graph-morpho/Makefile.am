@@ -15,12 +15,14 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 # Find Milena headers.
-AM_CPPFLAGS = -I$(top_srcdir)/milena
+AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 # Produce fast code.
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
-bin_PROGRAMS = complex1d
+noinst_PROGRAMS = complex1d
 complex1d_SOURCES = complex1d.cc
 
 TESTS = complex1d
+
+EXTRA_DIST = x.pbm
