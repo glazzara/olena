@@ -1,5 +1,12 @@
 2009-09-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Write down the basis of the quick tour summary documentation.
+
+	* green/doc/quick_tour                : New specific directory.
+	* green/doc/quick_tour/quick_tour.tex : New documentation work.
+
+2009-09-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Write down 3d currently used formulaes.
 
 	* green/doc                       : New documentation directory.
