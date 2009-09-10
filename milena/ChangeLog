@@ -1,5 +1,13 @@
 2009-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify apps/graph-morpho/complex1d.cc.
+
+	* apps/graph-morpho/io.hh (println): Take an extra argument to
+	print a (leading) message.
+	* apps/graph-morpho/complex1d.cc: Adjust and simplify.
+
+2009-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make apps/graph-morpho/complex1d.cc more modular.
 
 	* apps/graph-morpho/complex1d.cc: Move I/O-related functions...

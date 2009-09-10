@@ -155,7 +155,8 @@ make_regular_complex1d_image(const mln::Image<I>& input_)
 
 inline
 void
-println(const mln::bin_1complex_image2d& ima, const mln::box2d& support)
+println(const std::string& message, const mln::bin_1complex_image2d& ima,
+	const mln::box2d& support)
 {
   using namespace mln;
 
@@ -205,6 +206,7 @@ println(const mln::bin_1complex_image2d& ima, const mln::box2d& support)
       }
   }
 
+  std::cout << message << std::endl;
   for (int row = vertices.domain().pmin().row();
        row <= vertices.domain().pmax().row(); ++row)
     {
