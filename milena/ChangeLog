@@ -1,5 +1,14 @@
 2009-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make apps/graph-morpho/complex1d.cc more modular.
+
+	* apps/graph-morpho/complex1d.cc: Move I/O-related functions...
+	* apps/graph-morpho/io.hh: ...here (new file).
+	* apps/graph-morpho/complex1d.cc: Move morpho-related functions...
+	* apps/graph-morpho/morpho.hh: ...here (new file).
+
+2009-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Alias for binary 1-complex-based images in the dicrete plane.
 
 	* mln/core/alias/complex_image.hh (mln::bin_1complex_image2d):
