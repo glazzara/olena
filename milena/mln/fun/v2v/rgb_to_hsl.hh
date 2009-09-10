@@ -103,13 +103,13 @@ namespace mln
 	    else
 	      hsl.hue() = (60. * (rgb.red() - rgb.green()) / (rmax - rmin)) + 240;
 
-	hsl.lum() = ((double) rmax + (double) rmin) / 2;
-
 	// We want min and max between 0 and 1
 	rmax -= mln_min(typename T_rgb::red_t);
 	rmin -= mln_min(typename T_rgb::red_t);
 	double nmax = (double) rmax / (mln_max(typename T_rgb::red_t) - mln_min(typename T_rgb::red_t));
 	double nmin = (double) rmin / (mln_max(typename T_rgb::red_t) - mln_min(typename T_rgb::red_t));
+
+	hsl.lum() = ((double) nmax + (double) nmin) / 2;
 
 	if (rmin == rmax)
 	  hsl.sat() = 0;

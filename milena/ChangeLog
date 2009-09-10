@@ -1,3 +1,11 @@
+2009-09-10  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Fix luminance value computation for RGB to HSL.
+	*  mln/fun/v2v/rgb_to_hsl.hh: Fix luminance value computation
+	to fit in [0,1].
+	*  mln/io/magick/load.hh: Minor update.
+	*  mln/io/magick/save.hh: Minor update.
+
 2009-09-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	More morphological operators on graphs.

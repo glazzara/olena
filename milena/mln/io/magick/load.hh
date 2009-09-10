@@ -53,8 +53,16 @@ namespace mln
        * \param[in] filename The source.
        */
       template <typename I>
-      void load(Image<I>& ima,
-		const std::string& filename);
+      void load(Image<I>& ima, const std::string& filename);
+
+      /*! Load a magick image in a tiled image.
+       *
+       * \param[out] ima A reference to the image which will receive
+       * data.
+       * \param[in] filename The source.
+       */
+      template <typename T>
+      void load(Image<tiled2d<T> >& ima, const std::string& filename);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -102,8 +110,7 @@ namespace mln
 
       template <typename I>
       inline
-      void load(Image<I>& ima_,
-	  const std::string& filename)
+      void load(Image<I>& ima_, const std::string& filename)
       {
 	trace::entering("mln::io::magick::load");
 
@@ -154,6 +161,22 @@ namespace mln
 
 	trace::exiting("mln::io::magick::load");
       }
+
+
+      template<typename T>
+      inline
+      void load(Image<tiled2d<T> >& ima_, const std::string& filename)
+      {
+	trace::entering("mln::io::magick::load");
+
+	tiled2d<T>& ima = exact(ima_);
+
+	tiled2d<T> result(filename);
+
+	ima = result;
+	trace::exiting("mln::io::magick::load");
+      }
+
 
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -58,6 +58,15 @@ namespace mln
       void save(const Image<I>& ima,
 		const std::string& filename);
 
+      /*! Save a Milena tiled image in a magick image.
+       *
+       * \param[out] ima A reference to the image to save.
+       * \param[in] filename The output.
+       */
+      template <typename T>
+      void save(Image< tiled2d<T> >& ima,
+		const std::string& filename);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -113,6 +122,18 @@ namespace mln
 	}
 	im_file.syncPixels();
 	im_file.write(filename);
+
+	trace::exiting("mln::io::magick::save");
+      }
+
+      template <typename T>
+      void save(Image< tiled2d<T> >& ima_, const std::string& filename)
+      {
+	trace::entering("mln::io::magick::save");
+
+	tiled2d<T>& ima = exact(ima_);
+
+	ima.buffer().write(filename);
 
 	trace::exiting("mln::io::magick::save");
       }
