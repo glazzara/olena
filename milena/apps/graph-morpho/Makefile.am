@@ -25,4 +25,4 @@ complex1d_SOURCES = complex1d.cc
 
 TESTS = complex1d
 
-EXTRA_DIST = x.pbm
+EXTRA_DIST = x.pbm y.pbm z.pbm

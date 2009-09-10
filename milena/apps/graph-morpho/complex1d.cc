@@ -42,6 +42,8 @@
 #include <mln/core/site_set/p_set.hh>
 #include <mln/util/site_pair.hh>
 
+#include <mln/core/routine/duplicate.hh>
+
 #include <mln/math/abs.hh>
 
 #include <mln/io/pbm/load.hh>
@@ -248,9 +250,14 @@ println(const complex_image<dim, geom_t, T>& ima, const box2d& support)
     }
 }
 
+
 /*------------------------------------.
 | Morphological operators on graphs.  |
 `------------------------------------*/
+
+// ------------------------ //
+// Dilations and erosions.  //
+// ------------------------ //
 
 /* FIXME: By constraining the domain of the input and passing the
    neighborhood, one should be able to use a truly generic dilation
@@ -265,6 +272,17 @@ dilation_e2v(const Image<I>& input_)
   const I& input = exact(input_);
   mln_concrete(I) output;
   initialize(output, input);
+  /* FIXME: It'd be better to write something like this:
+
+       mln_piter(...) v(output | vertices);
+
+     We can actually write this, but `vertices' has to be a predicate
+     on sites (p2b function), which is not efficient, since both
+     vertices and edges will be browsed.
+
+     It would be very nice if `vertices' could be an actual site set,
+     so that `output | vertices' creates a morpher smart enough to
+     browse /only/ vertices.  */
   p_n_faces_fwd_piter<dim, geom_t> v(input.domain(), 0);
   mln_niter_(v2e_t) e(v2e, v);
   for_all(v)
@@ -423,6 +441,224 @@ erosion_graph(const Image<I>& input)
 }
 
 
+// ------------------------ //
+// Additional adjunctions.  //
+// ------------------------ //
+
+template <typename I>
+mln_concrete(I)
+alpha1(const Image<I>& input)
+{
+  mln_concrete(I) vertices;
+  initialize(vertices, input);
+  data::fill(vertices, true);
+  return combine(vertices, input);
+}
+
+template <typename I>
+mln_concrete(I)
+beta1(const Image<I>& input)
+{
+  return combine(dilation_e2v(input), input);
+}
+
+template <typename I>
+mln_concrete(I)
+alpha2(const Image<I>& input)
+{
+  return combine(input, erosion_v2e(input));
+}
+
+template <typename I>
+mln_concrete(I)
+beta2(const Image<I>& input)
+{
+  mln_concrete(I) edges;
+  initialize(edges, input);
+  data::fill(edges, false);
+  return combine(input, edges);
+}
+
+template <typename I>
+mln_concrete(I)
+alpha3(const Image<I>& input)
+{
+  return combine(erosion_e2v(input), erosion_v2e(erosion_e2v(input)));
+}
+
+template <typename I>
+mln_concrete(I)
+beta3(const Image<I>& input)
+{
+  return combine(dilation_e2v(dilation_v2e(input)), dilation_v2e(input));
+}
+
+
+// ----------------------- //
+// Openings and closings.  //
+// ----------------------- //
+
+/// Vertex opening (\f$\gamma_1\f$).
+template <typename I>
+mln_concrete(I)
+opening_vertex(const Image<I>& input)
+{
+  return dilation_vertex(erosion_vertex(input));
+}
+
+/// Vertex closing (\f$\phi_1\f$).
+template <typename I>
+mln_concrete(I)
+closing_vertex(const Image<I>& input)
+{
+  return erosion_vertex(dilation_vertex(input));
+}
+
+
+/// Edge opening (\f$\Gamma_1\f$).
+template <typename I>
+mln_concrete(I)
+opening_edge(const Image<I>& input)
+{
+  return dilation_edge(erosion_edge(input));
+}
+
+/// Edge closing (\f$\Phi_1\f$).
+template <typename I>
+mln_concrete(I)
+closing_edge(const Image<I>& input)
+{
+  return erosion_edge(dilation_edge(input));
+}
+
+
+/// Graph opening (\f${\gamma \ovee \Gamma}_1\f$).
+template <typename I>
+mln_concrete(I)
+opening_graph(const Image<I>& input)
+{
+  return combine(opening_vertex(input), opening_edge(input));
+}
+
+/// Graph closing (\f${\phi \ovee \Phi}_1\f$).
+template <typename I>
+mln_concrete(I)
+closing_graph(const Image<I>& input)
+{
+  return combine(closing_vertex(input), closing_edge(input));
+}
+
+
+// --------------------------------- //
+// Half-openings and half-closings.  //
+// --------------------------------- //
+
+/// Vertex half-opening (\f$\gamma_{1/2}\f$).
+template <typename I>
+mln_concrete(I)
+half_opening_vertex(const Image<I>& input)
+{
+  return dilation_e2v(erosion_v2e(input));
+}
+
+/// Vertex half-closing (\f$\phi_{1/2}\f$).
+template <typename I>
+mln_concrete(I)
+half_closing_vertex(const Image<I>& input)
+{
+  return erosion_e2v(dilation_v2e(input));
+}
+
+
+/// Edge half-opening (\f$\Gamma_{1/2}\f$).
+template <typename I>
+mln_concrete(I)
+half_opening_edge(const Image<I>& input)
+{
+  return dilation_v2e(erosion_e2v(input));
+}
+
+/// Edge half-closing (\f$\Phi_{1/2}\f$).
+template <typename I>
+mln_concrete(I)
+half_closing_edge(const Image<I>& input)
+{
+  return erosion_v2e(dilation_e2v(input));
+}
+
+
+/// Graph half-opening (\f${\gamma \ovee \Gamma}_{1/2}\f$).
+template <typename I>
+mln_concrete(I)
+half_opening_graph(const Image<I>& input)
+{
+  return combine(half_opening_vertex(input), half_opening_edge(input));
+}
+
+/// Graph half-closing (\f${\phi \ovee \Phi}_{1/2}\f$).
+template <typename I>
+mln_concrete(I)
+half_closing_graph(const Image<I>& input)
+{
+  return combine(half_closing_vertex(input), half_closing_edge(input));
+}
+
+
+// ------------------------------------------------------ //
+// Parameterized openings and closings (granulometries).  //
+// ------------------------------------------------------ //
+
+/// Opening (\f${\gamma \ovee \Gamma}_{\lambda/2}\f$).
+template <typename I>
+mln_concrete(I)
+opening(const Image<I>& input, unsigned lambda)
+{
+  unsigned i = lambda / 2;
+  unsigned j = lambda % 2;
+  mln_concrete(I) output = duplicate(input);
+  for (unsigned m = 0; m < i; ++m)
+    output = erosion_graph(output);
+  for (unsigned m = 0; m < j; ++m)
+    output = half_opening_graph(output);
+  for (unsigned m = 0; m < i; ++m)
+    output = dilation_graph(output);
+  return output;
+}
+
+/// Opening (\f${\phi \ovee \Phi}_{\lambda/2}\f$).
+template <typename I>
+mln_concrete(I)
+closing(const Image<I>& input, unsigned lambda)
+{
+  unsigned i = lambda / 2;
+  unsigned j = lambda % 2;
+  mln_concrete(I) output = duplicate(input);
+  for (unsigned m = 0; m < i; ++m)
+    output = dilation_graph(output);
+  for (unsigned m = 0; m < j; ++m)
+    output = half_closing_graph(output);
+  for (unsigned m = 0; m < i; ++m)
+    output = erosion_graph(output);
+  return output;
+}
+
+// ----------------------------- //
+// Alternate Sequential Filter.  //
+// ----------------------------- //
+
+/// Alternate Sequential Filter (ASF) (\f${ASF}_{\lambda/2}\f$).
+template <typename I>
+mln_concrete(I)
+asf(const Image<I>& input, unsigned lambda)
+{
+  mln_concrete(I) output = duplicate(input);
+  for (unsigned m = 0; m < lambda; ++m)
+    output = half_opening_graph(half_closing_graph(output));
+  return output;
+}
+
+
+
 /*-----------------------------------.
 | Applying morphological operators.  |
 `-----------------------------------*/
@@ -470,4 +706,54 @@ int main()
   ima_t ero_ima = erosion_graph(x);
   std::cout << "ero_ima:" << std::endl;
   println(ero_ima, x_box);
+
+
+  ima_t alpha3_ima = alpha3(x);
+  std::cout << "alpha3_ima:" << std::endl;
+  println(alpha3_ima, x_box);
+
+  ima_t beta3_ima = beta3(x);
+  std::cout << "beta3_ima:" << std::endl;
+  println(beta3_ima, x_box);
+
+  // --------- //
+  // Filters.  //
+  // --------- //
+
+  image2d<bool> y_pbm = io::pbm::load(MLN_APPS_DIR "/graph-morpho/y.pbm");
+  ima_t y = make_regular_complex1d_image(y_pbm);
+  box2d y_box(y_pbm.nrows() / 2 + 1, y_pbm.ncols() / 2 + 1);
+  std::cout << "y:" << std::endl;
+  println(y, y_box);
+
+  ima_t ope_ima = opening_graph(y);
+  std::cout << "ope_ima:" << std::endl;
+  println(ope_ima, y_box);
+
+  ima_t half_ope_ima = half_opening_graph(y);
+  std::cout << "half_ope_ima:" << std::endl;
+  println(half_ope_ima, y_box);
+
+  ima_t beta3_o_alpha3_ima = beta3(alpha3(y));
+  std::cout << "beta3_o_alpha3_ima:" << std::endl;
+  println(beta3_o_alpha3_ima, y_box);
+
+
+  image2d<bool> z_pbm = io::pbm::load(MLN_APPS_DIR "/graph-morpho/z.pbm");
+  ima_t z = make_regular_complex1d_image(z_pbm);
+  box2d z_box(z_pbm.nrows() / 2 + 1, z_pbm.ncols() / 2 + 1);
+  std::cout << "z:" << std::endl;
+  println(z, z_box);
+
+  ima_t clo_ima = closing_graph(z);
+  std::cout << "clo_ima:" << std::endl;
+  println(clo_ima, z_box);
+
+  ima_t half_clo_ima = half_closing_graph(z);
+  std::cout << "half_clo_ima:" << std::endl;
+  println(half_clo_ima, z_box);
+
+  ima_t alpha3_o_beta3_ima = alpha3(beta3(z));
+  std::cout << "alpha3_o_beta3_ima:" << std::endl;
+  println(alpha3_o_beta3_ima, z_box);
 }

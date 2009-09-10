@@ -1,5 +1,26 @@
 2009-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Implement the remaining morphological operators on graphs.
+
+	* apps/graph-morpho/complex1d.cc
+	(alpha1, beta1, alpha2, beta2, alpha3, beta3)
+	(opening_vertex, closing_vertex)
+	(opening_edge, closing_edge)
+	(opening_graph, closing_graph)
+	(half_opening_vertex, half_closing_vertex)
+	(half_opening_edge, half_closing_edge)
+	(half_opening_graph, half_closing_graph)
+	(opening, closing, asf):
+	New functions.
+	Exercise some of them...
+	(main): ...here.
+	* apps/graph-morpho/y.pbm,
+	* apps/graph-morpho/z.pbm:
+	New images.
+	* apps/graph-morpho/Makefile.am (EXTRA_DIST): Add y.pbm and z.pbm.
+
+2009-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Simplify graph-based image I/O in apps/graph-morpho.
 
 	* apps/graph-morpho/complex1d.cc (make_regular_complex1d_image):
