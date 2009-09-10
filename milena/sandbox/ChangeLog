@@ -1,3 +1,11 @@
+2009-09-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Write down 3d currently used formulaes.
+
+	* green/doc                       : New documentation directory.
+	* green/doc/formulae              : New specific directory.
+	* green/doc/formulae/formulae.tex : New recipe of 3d formulae.
+
 2009-09-09  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Fix bugs an compilation problem on histo3d_rgb source code.
