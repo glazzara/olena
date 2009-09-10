@@ -45,12 +45,12 @@
 # include <mln/core/image/complex_neighborhood_piter.hh>
 
 
-/*--------------------------.
-| Vertex-edges combinator.  |
-`--------------------------*/
+/*----------------------------.
+| Vertices-edges combinator.  |
+`----------------------------*/
 
 /// Combine the vertices and the edges of two images to create a new
-/// graph image (operator \f$\ovee\f$).
+/// graph image (``operator'' \f$\ovee\f$).
 template <typename I>
 inline
 mln_concrete(I)

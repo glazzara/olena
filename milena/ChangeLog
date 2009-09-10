@@ -1,5 +1,14 @@
 2009-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	Misc. changes in apps/graph-morpho.
+
+	* apps/graph-morpho/Makefile.am (complex1d_SOURCES):
+	Add io.hh and morpho.hh.
+	* apps/graph-morpho/morpho.hh: Typo.
+	Aesthetic changes.
+
+2009-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Simplify apps/graph-morpho/complex1d.cc.
 
 	* apps/graph-morpho/io.hh (println): Take an extra argument to

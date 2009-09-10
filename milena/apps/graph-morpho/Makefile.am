@@ -21,7 +21,7 @@ APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
 noinst_PROGRAMS = complex1d
-complex1d_SOURCES = complex1d.cc
+complex1d_SOURCES = complex1d.cc io.hh morpho.hh
 
 TESTS = complex1d
 
