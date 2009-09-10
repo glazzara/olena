@@ -390,6 +390,10 @@ dnl>>
 ## Applications.  ##
 ## -------------- ##
 
+# Ask for the creation of a milena/apps/data.hh, used to access to
+# data (images) from apps.
+AC_CONFIG_FILES([milena/apps/data.hh])
+
 AC_ARG_ENABLE([apps],
               [AS_HELP_STRING([--enable-apps],
                               [enable application])])
