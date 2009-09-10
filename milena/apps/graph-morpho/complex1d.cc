@@ -204,7 +204,7 @@ println(const complex_image<dim, geom_t, T>& ima, const box2d& support)
    (resp. erosion), or even use Milena's standard morpho::dilation
    (resp. morpho::erosion).  */
 
-/// Dilation from edges to vertices (delta^dot).
+/// Dilation from edges to vertices (\f$\delta^\bullet\f$).
 template <typename I>
 mln_concrete(I)
 dilation_e2v(const Image<I>& input_)
@@ -227,7 +227,7 @@ dilation_e2v(const Image<I>& input_)
   return output;
 }
 
-/// Erosion from vertices to edges (erosion^cross).
+/// Erosion from vertices to edges (\f$\epsilon^\times\f$).
 template <typename I>
 mln_concrete(I)
 erosion_v2e(const Image<I>& input_)
@@ -250,7 +250,7 @@ erosion_v2e(const Image<I>& input_)
   return output;
 }
 
-/// Erosion from edges to vertices (erosion^dot).
+/// Erosion from edges to vertices (\f$\epsilon^\bullet\f$).
 template <typename I>
 mln_concrete(I)
 erosion_e2v(const Image<I>& input_)
@@ -273,7 +273,7 @@ erosion_e2v(const Image<I>& input_)
   return output;
 }
 
-/// Dilation from vertices to edges (dilation^cross).
+/// Dilation from vertices to edges (\f$\delta^\times\f$).
 template <typename I>
 mln_concrete(I)
 dilation_v2e(const Image<I>& input_)
@@ -297,6 +297,80 @@ dilation_v2e(const Image<I>& input_)
 }
 
 
+/// Vertex dilation (\f$delta\f$).
+template <typename I>
+mln_concrete(I)
+dilation_vertex(const Image<I>& input)
+{
+  return dilation_e2v(dilation_v2e(input));
+}
+
+/// Vertex erosion (\f$epsilon\f$).
+template <typename I>
+mln_concrete(I)
+erosion_vertex(const Image<I>& input)
+{
+  return erosion_e2v(erosion_v2e(input));
+}
+
+
+/// Edge dilation (\f$Delta\f$).
+template <typename I>
+mln_concrete(I)
+dilation_edge(const Image<I>& input)
+{
+  return dilation_v2e(dilation_e2v(input));
+}
+
+/// Edge erosion (\f$Epsilon\f$).
+template <typename I>
+mln_concrete(I)
+erosion_edge(const Image<I>& input)
+{
+  return erosion_v2e(erosion_e2v(input));
+}
+
+
+/// Combine the vertices and the edges of two images to create a new
+/// graph image.
+template <typename I>
+mln_concrete(I)
+combine(const Image<I>& vertices_, const Image<I>& edges_)
+{
+  const I vertices = exact(vertices_);
+  const I edges = exact(edges_);
+  mln_precondition(vertices.domain() == edges.domain());
+
+  mln_concrete(I) output;
+  initialize(output, vertices);
+  p_n_faces_fwd_piter<dim, geom_t> v(output.domain(), 0);
+  for_all(v)
+    output(v) = vertices(v);
+  p_n_faces_fwd_piter<dim, geom_t> e(output.domain(), 1);
+  for_all(e)
+    output(e) = edges(e);
+  return output;
+}
+
+
+/// Graph dilation (\f$delta \ovee Delta\f$).
+template <typename I>
+mln_concrete(I)
+dilation_graph(const Image<I>& input)
+{
+  return combine(dilation_vertex(input), dilation_edge(input));
+}
+
+/// Graph erosion (\f$epsilon \ovee Epsilon\f$).
+template <typename I>
+mln_concrete(I)
+erosion_graph(const Image<I>& input)
+{
+  return combine(erosion_vertex(input), erosion_edge(input));
+}
+
+
+
 int main()
 {
   /*--------------.
@@ -309,7 +383,7 @@ int main()
   box2d b(9, 6);
   ima_t ima = build_regular_complex1d_image(b);
 
-  /* Set the values so that IMA corresponds to the graph G of the ISMM
+  /* Set the values so that IMA corresponds to the graph X of the ISMM
      2009 paper from Jean Cousty et al.  */
 
   // The set of vertices of the graph.
@@ -387,4 +461,13 @@ int main()
   ima_t dil_v2e_ima = dilation_v2e(ima);
   std::cout << "dil_v2e_ima:" << std::endl;
   println(dil_v2e_ima, b);
+
+
+  ima_t dil_ima = dilation_graph(ima);
+  std::cout << "dil_ima:" << std::endl;
+  println(dil_ima, b);
+
+  ima_t ero_ima = erosion_graph(ima);
+  std::cout << "ero_ima:" << std::endl;
+  println(ero_ima, b);
 }

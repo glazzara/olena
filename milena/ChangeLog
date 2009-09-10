@@ -1,3 +1,13 @@
+2009-09-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	More morphological operators on graphs.
+
+	* apps/graph-morpho/complex1d.cc: Improve documentation.
+	(dilation_vertex, erosion_vertex, dilation_edge, erosion_edge)
+	(combine, dilation_graph, erosion_graph):
+	New functions.
+	(main): Exercise some of them.
+
 2009-09-09  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add mask-based max tree computation based on union-find algorithm.
