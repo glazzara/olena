@@ -1,5 +1,75 @@
 2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Do some refactoring in green's sandbox.
+
+	* green/doc/examples                              : New directory.
+
+	Move hello_world directory in doc/examples.
+	
+	* green/doc/examples/hello_world                  : New directory.
+	* green/doc/examples/hello_world/Makefile.am      : Copy makefile.
+	* green/doc/examples/hello_world/hellow_world.cc  : Copy source file.
+	* green/doc/examples/hello_world/print.cc         : Copy source file.
+	
+	* green/hello_world/hello_world.cc                : Remove source file.
+	* green/hello_world/print.cc                      : Remove source file.
+	* green/hello_world/Makefile.am                   : Remove makefile.
+	* green/hello_world                               : Remove directory.
+
+	Move hello_milena directory in doc/examples.
+
+	* green/doc/exampleshello_milena                  : New directory.
+	* green/doc/exampleshello_milena/Makefile.am      : Copy makefile.
+	* green/doc/examples/hello_milena/hello_milena.cc : Copy source file.
+	
+	* green/hello_milena/hello_milena.cc              : Remove source file.
+	* green/hello_milena/Makefile.am                  : Remove makefile.
+	* green/hello_milena                              : Remove directory.
+
+	Move learn_milena directory in doc/examples.
+
+	* green/doc/examples/learn_milena                 : New directory.
+	* green/doc/examples/learn_milena/Makefile.am     : Copy makefile.
+	* green/doc/examples/learn_milena/learn_milena.cc : Copy source file.
+	
+	* green/learn_milena/learn_milena.cc              : Remove source file.
+	* green/learn_milena/Makefile.am                  : Remove makefile.
+	* green/learn_milena                              : Remove directory.
+
+	Move otsu directory in doc/examples.
+
+	* green/doc/examples/otsu                         : New directory.
+	* green/doc/examples/otsu/Makefile.am             : Copy makefile.
+	* green/doc/examples/otsu/otsu.cc                 : Copy source file.
+	
+	* green/otsu/otsu.cc                              : Remove source file.
+	* green/otsu/Makefile.am                          : Remove makefile.
+	* green/otsu                                      : Remove directory.
+
+	Move fraction directory in doc/examples.
+
+	* green/doc/examples/fraction                     : Remove directory.
+	* green/doc/examples/fraction/Makefile.am         : Remove makefile.
+	* green/doc/examples/fraction/frac.cc             : Remove source file.
+	* green/doc/examples/fraction/frac.hh             : Remove source file.
+	* green/doc/examples/fraction/sign_prod.hh        : Remove source file.
+	* green/doc/examples/fraction/gcd.hh              : Remove source file.
+
+	* green/fraction/frac.cc                          : Remove source file.
+	* green/fraction/frac.hh                          : Remove source file.
+	* green/fraction/sign_prod.hh                     : Remove source file.
+	* green/fraction/gcd.hh                           : Remove source file.
+	* green/fraction/Makefile.am                      : Remove makefile.
+	* green/fraction                                  : Remove directory.
+
+	Add A new example in doc/examples.
+
+	* green/doc/examples/accu_color                   : New directory.
+	* green/doc/examples/accu_color/accu_color.cc     : New source file.
+
+
+2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Remove trailing spaces.
 
 	* green/doc/formulae/formulae.tex : Correct file.
