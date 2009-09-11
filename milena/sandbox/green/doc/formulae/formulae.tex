@@ -1084,7 +1084,7 @@ $
 %%=================================================================
 \subsection{MCO for eigenvalues}
 
-In 3d, it's difficult to extract the cubic roots from the characteristic 
+In 3d, it's difficult to extract the cubic roots from the characteristic
 polynomia. The difficulties disappear when we find one of the three roots.
 A planar regression allows us to reach the equation of the plane. From the
 equation, we can determine its normal vector $\bm{w}$. It satisfies the 
@@ -1096,17 +1096,17 @@ the two others eigenvalues (just solve $\lambda^2 - (trace(A) - \lambda_3)
 $\lambda_2$ let us find $\bm{u}$ and $\bm{v}$ by the equations $A\bm{u} = 
 \lambda_1\bm{u}$ and $A\bm{v} = \lambda_2\bm{v}$.
 
-Let's center the points by subtracting their center of mass. Now, we have 
+Let's center the points by subtracting their center of mass. Now, we have
 three equivalent ways to estimate the coefficients of the plane:
 \begin{itemize}
  \item if not $c = 0$, then $\frac{a}{c}x + \frac{b}{c}y + z = 0$,
  \item if not $b = 0$, then $\frac{a}{b}x + y + \frac{c}{b}z = 0$,
  \item if not $a = 0$, then $x + \frac{b}{a}y + \frac{c}{a}z = 0$.
 \end{itemize}
-As we cannot decide which way is the best, may be we have to test the three 
+As we cannot decide which way is the best, may be we have to test the three
 ones.
 
-Let's choose the linear model of the major inertia plane 
+Let's choose the linear model of the major inertia plane
 ($ax + by + cz + d = 0$). With not $c = 0$.
 
 \begin{tabular}{lcl}
