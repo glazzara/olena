@@ -1,5 +1,12 @@
 2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Save work in progress for histo and hsl (interpolation part).
+
+	* green/mln/fun/x2v            : New directory.
+	* green/mln/fun/x2v/sampler.hh : New library file.
+
+2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Save work in progress for histo and hsl.
 
 	* green/mln/accu/stat/histo3d_hsl.hh   : New library file.
