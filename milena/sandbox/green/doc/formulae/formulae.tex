@@ -41,7 +41,7 @@
 \newcommand{\fm}[1]{\mathbb{#1}}
 
 %% \df
-%% input : the set which the dim we are intering in
+%% input : the set whose dimension we are interested in
 %%
 \newcommand{\df}[1]{|{\mathbb{#1}}|}
 
@@ -65,20 +65,20 @@ in the development.
 \section{Notations}
 
 \begin{itemize}
-  \item Use lowercase and normal font for the scalar variables.
-  \item Use lowercase and bold font for the vector variables.
-  \item Use uppercase and normal font for the matrix variables.
-  \item Use uppercase and double font for the set variables.
+  \item Use lowercase and normal font for scalar variables.
+  \item Use lowercase and bold font for vector variables.
+  \item Use uppercase and normal font for matrix variables.
+  \item Use uppercase and double font for set variables.
 \end {itemize}
 
 %=================================================================
 \subsection{Sets}
 
-There is three particular sets that we use every time:
+There are three particular sets that we use every time:
 \begin{itemize}
-  \item The color space $\fm{C}$ in which the pixels take their value.
-  \item The dataset $\fm{P}$ which contains every pixel we take care.
-  \item The group set $\fm{G}$ that define any splitting of the dataset.
+  \item The color space $\fm{C}$ in which the pixels take their values.
+  \item The dataset $\fm{P}$ which contains every pixel we care about.
+  \item The group set $\fm{G}$ that defines any splitting of the dataset.
 \end{itemize}
 
 \begin{tabular}{|c|l|l|c|c|}
@@ -98,15 +98,15 @@ There is three particular sets that we use every time:
 %=================================================================
 \subsection{Color space}
 
-We use the euclidian distance.
+We use the Euclidian distance.
 
-$$
+\[
 d(a,b) =
 \sqrt{\sum_{i=0}^q (a_i - b_i)^2} =
 \sqrt{(a_x - b_x)^2 + (a_y - b_y)^2 + (a_z - b_z)^2}
-$$
+\]
 
-$$
+\[
 d(a,b)^2 = 
 \left[\begin{array}{ccc}
  a_x - b_x & a_y - b_y  & a_z - b_z
@@ -117,13 +117,13 @@ d(a,b)^2 =
  a_y - b_y \\
  a_y - b_z
 \end{array}\right]
-$$
+\]
 
 %=================================================================
 \subsection{Data points in $\mathbb{R}^3$}
 We present the four points of the dataset with their vector representation.
 
-$$
+\[
 \bm{a} = 
 \left[\begin{array}{c}
  a_x \\
@@ -143,9 +143,9 @@ $$
  p_{13}
 \end{array}\right]
 = \bm{p}_1
-$$
+\]
 
-$$
+\[
 \bm{b} = 
 \left[\begin{array}{c}
  b_x \\
@@ -187,9 +187,9 @@ $$
  p_{33}
 \end{array}\right]
 = \bm{p}_3
-$$
+\]
 
-$$
+\[
 \mbox{\boldmath$d$} = 
 \left[\begin{array}{c}
  d_x \\
@@ -209,11 +209,11 @@ $$
  p_{43}
 \end{array}\right]
 = \bm{p}_4
-$$
+\]
 
 One may group the four points in one matrix P :
 
-$$
+\[
 P =
 \left[\begin{array}{c}
  \bm{a}^t \\
@@ -249,12 +249,12 @@ P =
  \bm{p}_3^t \\
  \bm{p}_4^t
 \end{array}\right]
-$$
+\]
 
 %=================================================================
 \subsection{The group}
 
-We can define the group set $\fm{G}$ in thow context:
+We can define the group set $\fm{G}$ in this context:
 \begin{itemize}
  \item First, the group set is a partition.
  \item Second, the group set if a fuzzy set.
@@ -321,7 +321,7 @@ Let's have a look to the first three moments.
 %=================================================================
 \subsection{The mean}
 
-$$
+\[
  \mbox{\boldmath$m$} =
 \left[\begin{array}{c}
  m_x \\
@@ -353,8 +353,8 @@ $$
  \mbox{\boldmath$d$})
 =
 \frac{1}{4}\sum_{i=1}^{4}\mbox{\boldmath$p$}_i
-$$
-$$
+\]
+\[
  \mbox{\boldmath$m$} =
 \frac{1}{4}
 \left[\begin{array}{cccc}
@@ -382,10 +382,10 @@ $$
 \end{array}\right]
 =
 \frac{1}{4} P^t \mbox{\boldmath$ 1$}
-$$
+\]
 The mean matrix:
 
-$$
+\[
 M =
 \left[\begin{array}{c}
  \mbox{\boldmath$m$}^t \\
@@ -407,10 +407,10 @@ M =
  m_1 & m_2 & m_3 \\
  m_1 & m_2 & m_3
 \end{array}\right]
-$$
+\]
 
 We define the difference between a point $\mbox{\boldmath$p$}_i$ and the mean:
-$$
+\[
 (\mbox{\boldmath$p$}_i - \mbox{\boldmath$m$}) =
 \left[\begin{array}{c}
  p_{ix} - m_x \\
@@ -423,11 +423,11 @@ $$
  p_{i2} - m_2 \\
  p_{i3} - m_3
 \end{array}\right]
-$$
+\]
 
 And for all the dataset:
 
-$$
+\[
 (P - M) =
 \left[\begin{array}{ccc}
  a_x & a_y & a_z \\
@@ -449,12 +449,12 @@ $$
  c_x - m_x & c_y - m_y & c_z - m_z \\
  d_x - m_x & d_y - m_y & d_z - m_z
 \end{array}\right]
-$$
+\]
 
 %=================================================================
 \subsection{The variance}
 
-$$
+\[
 \begin{array}{lcl}
 V & = &
 \left[\begin{array}{ccc}
@@ -501,12 +501,12 @@ V & = &
 \frac{1}{4}
 (P - M)^t (P - M)
 \end{array}
-$$
+\]
 
 %#################################################################
 \section{Splitting into groups}
-When we study some mixed population, the total variance can be splitted in the
-the variance between the groups and in the variance whithin each group.
+When we study some mixed population, the total variance can be split in
+the variance between the groups and in the variance within each group.
 
 We define two groups in the population. Each group owns its moments of the 
 second order.
@@ -514,51 +514,51 @@ second order.
 %=================================================================
 \subsection{Decomposing the count}
 
-$$
+\[
 \begin{array}{lcl}
 n_t & = & n_1 + n_2 \\
     & = & \sum_{i=1}^{2} n_i
 \end{array}
-$$
+\]
 
 
 %=================================================================
 \subsection{Decomposing the mean}
 
-$$
+\[
 \begin{array}{lcl}
 \mbox{\boldmath$m_t$} & = & 
  \frac{1}{n_t}(n_1 \mbox{\boldmath$m_1$} + n_2 \mbox{\boldmath$m_2$}) \\
                       & = &
  \frac{1}{n_t}\sum_{i=1}^{2} n_i \mbox{\boldmath$m_i$}
 \end{array}
-$$
+\]
 
 
 %=================================================================
 \subsection{Decomposing the variance}
-When we study some mixed population, the total variance can be splitted in the
-the variance between the groups and in the variance whithin each group.
+When we study some mixed population, the total variance can be split in
+the variance between the groups and in the variance within each group.
 
-$$
+\[
 V_t = V_i + V_b
-$$
+\]
 
-$$
+\[
 \begin{array}{lcl}
 V_i & = & \frac{1}{n_t}(n_1 V_1 + n_2 V_2) \\
     & = & \frac{1}{n_t}\sum_{i=1}^2 n_i V_i
 \end{array}
-$$
+\]
 
-$$
+\[
 \begin{array}{lcl}
 V_b & = & \frac{1}{n_t}(n_1 (\mbox{\boldmath$m_1$} - \mbox{\boldmath$m_t$})^2 +
  n_2 (\mbox{\boldmath$m_2$} - \mbox{\boldmath$m_t$})^2 \\
     & = & \frac{1}{n_t} \sum_{i=1}^2 n_i 
  (\mbox{\boldmath$m_i$} - \mbox{\boldmath$m_t$})^2
 \end{array}
-$$
+\]
 
 %#################################################################
 \section{Basis}
@@ -566,7 +566,7 @@ $$
 %%=================================================================
 \subsection{Determinant of a square matrix 3x3}
 
-$$
+\[
 \det{V} =
 \left|\begin{array}{ccc}
  v_{11} & v_{12} & v_{13} \\
@@ -577,12 +577,12 @@ $$
 v_{11}(v_{22}v_{33} - v_{32}v_{23})
 - v_{12}(v_{21}v_{33} - v_{31}v_{23})
 + v_{13}(v_{21}v_{32} - v_{31}v_{22})
-$$
+\]
 
 %%=================================================================
 \subsection{Transpose}
 
-$
+\[
 V^t =
 \left[\begin{array}{ccc}
  v_{11} & v_{12} & v_{13} \\
@@ -595,7 +595,7 @@ V^t =
  v_{12} & v_{22} & v_{32} \\
  v_{13} & v_{23} & v_{33}
 \end{array}\right]
-$
+\]
 
 %%=================================================================
 \subsection{Inverse of a square matrix 3x3}
@@ -759,8 +759,8 @@ $$
 %%=================================================================
 \subsection{Eigenvalues and eigenvectors}
 
-We assume that we work on variance/covariance matrix which is real and symetric.
-In this case, all the three eigen values are real.
+We assume that we work on a variance/covariance matrix which is real and 
+symmetric. In this case, all the three eigenvalues are real.
 
 $$
 V \bm{x} = \lambda \bm{x}
@@ -1089,14 +1089,14 @@ polynomia. The difficulties disappear when we find one of the three roots.
 A planar regression allows us to reach the equation of the plane. From the
 equation, we can determine its normal vector $\bm{w}$. It satisfies the 
 following equation $A\bm{w} = \lambda_3\bm{w}$. Thus we know $\lambda_3$.
-By the way, as far as $trace(A) = \lambda_1 + \lambda_2 + \lambda_3$ and
-$det(A) = \lambda_1 \lambda_2 \lambda_3$, then we can access to the value of
+By the way, $trace(A) = \lambda_1 + \lambda_2 + \lambda_3$ and
+$det(A) = \lambda_1 \lambda_2 \lambda_3$, then we can determine the value of
 the two others eigenvalues (just solve $\lambda^2 - (trace(A) - \lambda_3)
 \lambda + \frac{det(A)}{\lambda_3} = 0$). The knowledge of $\lambda_1$ and
 $\lambda_2$ let us find $\bm{u}$ and $\bm{v}$ by the equations $A\bm{u} = 
 \lambda_1\bm{u}$ and $A\bm{v} = \lambda_2\bm{v}$.
 
-Let's center the points by susbtracting their center of mass. Now, we have 
+Let's center the points by subtracting their center of mass. Now, we have 
 three equivalent ways to estimate the coefficients of the plane:
 \begin{itemize}
  \item if not $c = 0$, then $\frac{a}{c}x + \frac{b}{c}y + z = 0$,

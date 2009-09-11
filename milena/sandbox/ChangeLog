@@ -1,3 +1,9 @@
+2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Correct english writing in the documentation file.
+
+	* green/doc/formulae/formulae.tex : Correct file.
+
 2009-09-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Try to fix order problem between points and vectors.
