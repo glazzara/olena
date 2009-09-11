@@ -215,6 +215,7 @@ mln::algebra::vec<3,float> mean_histo(const mln::image3d<unsigned>& img)
     */
     count += img(p);
     sum   += conv((vec3f)p) * img(p);
+    // sum   += p.to_vec() * img(p);
   }
 
   result = sum / count;
@@ -260,6 +261,7 @@ mln::algebra::mat<3,3,float> var_histo2(const mln::image3d<unsigned>& img)
 
   for_all(p)
   {
+    // point = p.to_vec() - mean;
     point  = conv((vec3f)p) - mean;
     result += img(p) * (point * point.t());
   }

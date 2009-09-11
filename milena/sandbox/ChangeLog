@@ -1,5 +1,12 @@
 2009-09-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Try to fix order problem between points and vectors.
+
+	* green/tests/accu/stat/histo3d_rgb/histo3d_rgb.cc
+	(var_histo, mean_histo) : Comment p.to_vec code.
+
+2009-09-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Write down the basis of the quick tour summary documentation.
 
 	* green/doc/quick_tour                : New specific directory.
