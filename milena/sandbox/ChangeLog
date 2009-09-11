@@ -1,5 +1,15 @@
 2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Save work in progress for histo and hsl.
+
+	* green/mln/accu/stat/histo3d_hsl.hh   : New library file.
+
+	* green/tests/accu/stat/histo3d_hsl    : New directory.
+	* green/tests/accu/stat/Makefile.am    : New makefile.
+	* green/tests/accu/stat/histo3d_hsl.cc : New source file.
+
+2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Do some refactoring in green's sandbox.
 
 	* green/doc/examples                              : New directory.
