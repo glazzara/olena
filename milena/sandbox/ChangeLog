@@ -1,5 +1,12 @@
 2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Delete obsolete sources.
+
+	* green/mln/fun/x2v/sampler.hh : Delete obsolete library file.
+	* green/mln/fun/x2v            : Delete directory.
+
+2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Save work in progress for histo and hsl (interpolation part).
 
 	* green/mln/fun/x2v            : New directory.
