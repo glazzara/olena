@@ -1,4 +1,12 @@
-2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+2009-09-13  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Save work in progress for histo and hsl. Everything is updated.
+
+	* green/mln/accu/stat/histo3d_hsl.hh              :Update library file.
+	* green/tests/accu/stat/histo3d_hsl/histo3d_hsl.cc:Update unitary test.
+
+
+2009-09-13  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Delete obsolete sources.
 
@@ -16,11 +24,11 @@
 
 	Save work in progress for histo and hsl.
 
-	* green/mln/accu/stat/histo3d_hsl.hh   : New library file.
+	* green/mln/accu/stat/histo3d_hsl.hh               : New library file.
 
-	* green/tests/accu/stat/histo3d_hsl    : New directory.
-	* green/tests/accu/stat/Makefile.am    : New makefile.
-	* green/tests/accu/stat/histo3d_hsl.cc : New source file.
+	* green/tests/accu/stat/histo3d_hsl                : New directory.
+	* green/tests/accu/stat/histo3d_hsl/Makefile.am    : New makefile.
+	* green/tests/accu/stat/histo3d_hsl/histo3d_hsl.cc : New source file.
 
 2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 

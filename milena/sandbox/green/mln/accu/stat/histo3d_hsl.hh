@@ -67,7 +67,7 @@
 #include <mln/core/alias/point3d.hh>
 #include <mln/core/alias/box3d.hh>
 
-#include <mln/core/value/int_u.hh>
+#include <mln/value/int_u.hh>
 #include <mln/trait/value/comp.hh>
 
 #include <mln/arith/plus.hh>
@@ -78,7 +78,7 @@
 #include <mln/value/ops.hh>
 
 // make hue cyclic
-#include <mln/fun/p2p/flod.hh>
+#include <mln/fun/p2p/fold.hh>
 #include <mln/core/image/dmorph/transformed_image.hh>
 
 namespace mln
@@ -91,7 +91,7 @@ namespace mln
     {
    
       // Forward declaration
-      template <typename V>
+      template <unsigned q, typename V>
       struct histo3d_hsl;
 
     } // end of namespace mln::accu::stat
@@ -102,8 +102,8 @@ namespace mln
   namespace trait
   {
     
-    template <typename V>
-    struct accumulator_< mln::accu::stat::histo3d_hsl<V> >
+    template <unsigned q, typename V>
+    struct accumulator_< mln::accu::stat::histo3d_hsl<q,V> >
     {
       typedef accumulator::has_untake::no    has_untake;
       typedef accumulator::has_set_value::no has_set_value;
@@ -111,10 +111,10 @@ namespace mln
       typedef accumulator::when_pix::use_v   when_pix;
     };
 
-    template <typename V>
+    template <unsigned q, typename V>
     struct set_precise_binary_<op::eq, 
-			       accu::stat::histo3d_hsl<V>,
-			       accu::stat::histo3d_hsl<V> >
+			       accu::stat::histo3d_hsl<q,V>,
+			       accu::stat::histo3d_hsl<q,V> >
     {
       typedef bool ret;
     };
@@ -141,9 +141,9 @@ namespace mln
       /// q is the number of bins per axe because quantification info are died.
       /// we assume that V is a kind of hsl_<float,float,float>
 
-      template <typename q, typename V>
+      template <unsigned q, typename V>
       struct histo3d_hsl : 
-	public mln::accu::internal::base<image3d<unsigned>, histo3d_hsl<V> >
+	public mln::accu::internal::base<image3d<unsigned>, histo3d_hsl<q,V> >
       {
 	typedef V                 argument;
 	typedef image3d<unsigned> result;
@@ -179,7 +179,7 @@ namespace mln
 
 	/// \brief Update the histogram with an other histogram.
 	/// \param[in] other the other histogram.
-	void take(const histo3d_hsl<V>& other);
+	void take(const histo3d_hsl<q,V>& other);
 	/// \}
 
 	/// Accessors.
@@ -199,6 +199,15 @@ namespace mln
 	bool is_valid() const;
 
       protected:
+	const float min_hue;
+	const float max_hue;
+	float       step_hue;
+	const float min_lum;
+	const float max_lum;
+	float       step_lum;
+	const float min_sat;
+	const float max_sat;
+	float       step_sat;
 	result  count_;
       };
 
@@ -208,53 +217,56 @@ namespace mln
       ///
       /// The operator compare all the bins from the two histogram.
 
-      template <typename V>
-      bool operator==(const histo3d_hsl<V>& histo1, 
-		      const histo3d_hsl<V>& histo2);
+      template <unsigned q, typename V>
+      bool operator==(const histo3d_hsl<q,V>& histo1, 
+		      const histo3d_hsl<q,V>& histo2);
 
 #ifndef MLN_INCLUDE_ONLY
 
-      template <typename V>
+      template <unsigned q, typename V>
       inline
-      histo3d_hsl<V>::histo3d_hsl()
+      histo3d_hsl<q,V>::histo3d_hsl() : min_hue(0.0), max_hue(360.0),
+				      min_lum(0.0), max_lum(1.0),
+				      min_sat(0.0), max_sat(1.0)
       {
-	trace::entering("mln::accu::stat::histo3d_hsl<V>::histo3d_hsl");
+	trace::entering("mln::accu::stat::histo3d_hsl<q,V>::histo3d_hsl");
 	
 	// As there is no info about preceding color space
 	// we ask the end user to specify the quantification he's looking for.
 
-	count_.init_(box3d(point3d(mln_min(int_u<q>),
-				   mln_min(int_u<q>),
-				   mln_min(int_u<q>)),
-			   point3d(mln_max(int_u<q>),
-				   mln_max(int_u<q>),
-				   mln_max(int_u<q>))));
+	count_.init_(box3d(point3d(mln_min(value::int_u<q>),
+				   mln_min(value::int_u<q>),
+				   mln_min(value::int_u<q>)),
+			   point3d(mln_max(value::int_u<q>),
+				   mln_max(value::int_u<q>),
+				   mln_max(value::int_u<q>))));
 
 	// Make the hue domain cyclic
 	fun::p2p::fold<point3d,1,0,0> fold_(count_.domain());
 	transform_domain(count_, fold_);
 
-	// Build the interpolate ??
-	// cf code igr
-	
-	trace::exiting("mln::accu::stat::histo3d_hsl<V>::histo3d_hsl");
+	step_hue = (max_hue - min_hue)/q;
+	step_lum = (max_lum - min_lum)/q;
+	step_sat = (max_sat - min_sat)/q;
+
+	trace::exiting("mln::accu::stat::histo3d_hsl<q,V>::histo3d_hsl");
       }
 
-      template <typename V>
+      template <unsigned q, typename V>
       inline
-      void histo3d_hsl<V>::init()
+      void histo3d_hsl<q,V>::init()
       {
-	trace::entering("mln::accu::stat::histo3d_hsl<V>::init");
+	trace::entering("mln::accu::stat::histo3d_hsl<q,V>::init");
 
 	data::fill(count_, 0);
-	trace::exiting("mln::accu::stat::histo3d_hsl<V>::init");
+	trace::exiting("mln::accu::stat::histo3d_hsl<q,V>::init");
       }
 
-      template <typename V>
+      template <unsigned q, typename V>
       inline
-      void histo3d_hsl<V>::take(const argument& t)
+      void histo3d_hsl<q,V>::take(const argument& t)
       {
-	trace::entering("mln::accu::stat::histo3d_hsl<V>::take");
+	trace::entering("mln::accu::stat::histo3d_hsl<q,V>::take");
 
 	// Just convert a greyscale value (int_u8 like) to a position for an 
 	// iterator on the resulting image.
@@ -264,57 +276,64 @@ namespace mln
 	// Technical way to access i° component without kwnowing the name
 	// mln::trait::value_<argument>::get_comp_0(t);
 	
-	++count_(point3d(t.hue(), t.sat(), t.lum()));
+	// is def::coord1d the type of x, y, z ??
+	unsigned x = (t.hue() - min_hue)/q;
+	unsigned y = (t.lum() - min_lum)/q;
+	unsigned z = (t.sat() - min_sat)/q;
 
-	trace::exiting("mln::accu::stat::histo3d_hsl<V>::take");
+	// faire attention avec les histoires de points et leurs coordonnées
+	++count_(point3d(z, x, y));
+	//++count_(point3d(t.hue(), t.sat(), t.lum()));
+
+	trace::exiting("mln::accu::stat::histo3d_hsl<q,V>::take");
       }
 
       
-      template <typename V>
+      template <unsigned q, typename V>
       inline
-      void histo3d_hsl<V>::take(const histo3d_hsl<V>& other)
+      void histo3d_hsl<q,V>::take(const histo3d_hsl<q,V>& other)
       {
-	trace::entering("mln::accu::stat::histo3d_hsl<V>::take");
+	trace::entering("mln::accu::stat::histo3d_hsl<q,V>::take");
 
 	count_ += other.count_;
 
-	trace::exiting("mln::accu::stat::histo3d_hsl<V>::take");
+	trace::exiting("mln::accu::stat::histo3d_hsl<q,V>::take");
       }
       
-      template <typename V>
+      template <unsigned q, typename V>
       inline
-      typename histo3d_hsl<V>::result histo3d_hsl<V>::to_result() const
+      typename histo3d_hsl<q,V>::result histo3d_hsl<q,V>::to_result() const
       {
-	trace::entering("mln::accu::stat::histo3d_hsl<V>::to_result");
+	trace::entering("mln::accu::stat::histo3d_hsl<q,V>::to_result");
 
-	trace::exiting("mln::accu::stat::histo3d_hsl<V>::to_result");
+	trace::exiting("mln::accu::stat::histo3d_hsl<q,V>::to_result");
 	return count_;
       }
       
-      template <typename V>
+      template <unsigned q, typename V>
       inline
-      histo3d_hsl<V>::operator result() const
+      histo3d_hsl<q,V>::operator result() const
       {
-	trace::entering("mln::accu::stat::histo3d_rgb<V>::operator result");
+	trace::entering("mln::accu::stat::histo3d_rgb<q,V>::operator result");
 
-	trace::exiting("mln::accu::stat::histo3d_rgb<V>::operator result");
+	trace::exiting("mln::accu::stat::histo3d_rgb<q,V>::operator result");
 	return count_;
       }      
 
-      template <typename V>
+      template <unsigned q, typename V>
       inline
-      bool histo3d_hsl<V>::is_valid() const
+      bool histo3d_hsl<q,V>::is_valid() const
       {
-	trace::entering("mln::accu::stat::histo3d_hsl<V>::is_valid");
+	trace::entering("mln::accu::stat::histo3d_hsl<q,V>::is_valid");
 	bool result = count_.is_valid();
 	
-	trace::exiting("mln::accu::stat::histo3d_hsl<V>::is_valid");
+	trace::exiting("mln::accu::stat::histo3d_hsl<q,V>::is_valid");
 	return result;
       }
 
-      template <typename V>
-      bool operator==(const histo3d_hsl<V>& histo1, 
-		      const histo3d_hsl<V>& histo2)
+      template <unsigned q, typename V>
+      bool operator==(const histo3d_hsl<q,V>& histo1, 
+		      const histo3d_hsl<q,V>& histo2)
       {
 	trace::entering("mln::accu::stat::operator==");
 
