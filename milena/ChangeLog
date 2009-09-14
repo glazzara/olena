@@ -1,5 +1,10 @@
 2009-09-14  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
+	Disable tiled2d image support (still experimental).
+	*  mln/io/magick/save.hh: Disable tiled2d image support.
+
+2009-09-14  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
 	Update RGB to HSL test, correct luminance values with fractions.
 	*  tests/fun/v2v/rgb_to_hsl.cc: Update luminance values with fractions.
 

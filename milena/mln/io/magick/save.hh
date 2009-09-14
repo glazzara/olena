@@ -63,9 +63,9 @@ namespace mln
        * \param[out] ima A reference to the image to save.
        * \param[in] filename The output.
        */
-      template <typename T>
+      /*template <typename T>
       void save(Image< tiled2d<T> >& ima,
-		const std::string& filename);
+		const std::string& filename);*/
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -73,7 +73,6 @@ namespace mln
       inline
       Magick::Color get_color(bool value)
       {
-	std::cout << "bool color!" << std::endl;
 	return Magick::ColorMono(value);
       }
 
@@ -126,7 +125,7 @@ namespace mln
 	trace::exiting("mln::io::magick::save");
       }
 
-      template <typename T>
+      /*template <typename T>
       void save(Image< tiled2d<T> >& ima_, const std::string& filename)
       {
 	trace::entering("mln::io::magick::save");
@@ -136,7 +135,7 @@ namespace mln
 	ima.buffer().write(filename);
 
 	trace::exiting("mln::io::magick::save");
-      }
+      }*/
 
 
 # endif // ! MLN_INCLUDE_ONLY
