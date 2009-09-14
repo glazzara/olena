@@ -41,6 +41,7 @@
 %include "mln/core/macros.hh"
 
 %include "mln/core/concept/neighborhood.hh"
+%include "mln/core/internal/neighb_base.hh"
 %include "mln/core/internal/neighborhood_base.hh"
 %include "mln/core/neighb.hh"
 
@@ -79,6 +80,12 @@
   mln::window < mln::dpoint<mln::grid::square, mln::def::coord > >,
   mln::neighb<
     mln::window < mln::dpoint<mln::grid::square, mln::def::coord > >
+    >
+  >;
+%template() mln::internal::neighb_base<
+  mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >,
+  mln::neighb<
+    mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >
     >
   >;
 // Instantiate mln::neighb2d.
