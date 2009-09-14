@@ -1,3 +1,9 @@
+2009-09-14  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Disable tiled2d image support (still experimental).
+	*  mln/io/magick/load.hh: Disable tiled2d image support.
+	*  tests/fun/v2v/rgb_to_hsl.cc: Update test for luminance value.
+
 2009-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Misc. changes in apps/graph-morpho.

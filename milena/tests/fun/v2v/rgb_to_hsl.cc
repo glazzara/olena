@@ -43,8 +43,8 @@ using mln::value::hsl_f;
 rgb8 dat[][2] = { { rgb8(0,0,0), rgb8(255,255,255) },
 		  { rgb8(128,128,128), rgb8(90,90, 90) } };
 
-hsl_f ref[][2] = { { hsl_f(0,0,0), hsl_f(0,0,255) },
-		   { hsl_f(0,0,128), hsl_f(0,0,90) } };
+hsl_f ref[][2] = { { hsl_f(0,0,0), hsl_f(0,0,1.0) },
+		   { hsl_f(0,0,0.5), hsl_f(0,0,0.35) } };
 
 int main()
 {

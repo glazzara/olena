@@ -61,8 +61,8 @@ namespace mln
        * data.
        * \param[in] filename The source.
        */
-      template <typename T>
-      void load(Image<tiled2d<T> >& ima, const std::string& filename);
+      /*template <typename T>
+      void load(Image<tiled2d<T> >& ima, const std::string& filename);*/
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -163,7 +163,7 @@ namespace mln
       }
 
 
-      template<typename T>
+      /*template<typename T>
       inline
       void load(Image<tiled2d<T> >& ima_, const std::string& filename)
       {
@@ -175,7 +175,7 @@ namespace mln
 
 	ima = result;
 	trace::exiting("mln::io::magick::load");
-      }
+      }*/
 
 
 
