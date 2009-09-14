@@ -49,10 +49,10 @@
 
 // Swig tries to wrap everything by default; prevent it from wrapping
 // invalid methods (1D and 3D insertions for a neighb2d).
-%ignore mln::neighb< mln::window < mln::dpoint<mln::grid::square,mln::def::coord > > >
+%ignore mln::neighb< mln::window< mln::dpoint< mln::grid::square,mln::def::coord > > >
 ::insert(const typename mln::dpoint<mln::grid::square,mln::def::coord>::coord&);
 
-%ignore mln::neighb< mln::window < mln::dpoint<mln::grid::square, mln::def::coord > > >
+%ignore mln::neighb< mln::window< mln::dpoint< mln::grid::square, mln::def::coord > > >
 ::insert(const typename mln::dpoint<mln::grid::square,mln::def::coord>::coord&,
 	 const typename mln::dpoint<mln::grid::square,mln::def::coord>::coord&,
 	 const typename mln::dpoint<mln::grid::square,mln::def::coord>::coord&);
@@ -65,21 +65,21 @@
     >
   >;
 %template() mln::internal::neighborhood_extra_impl<
-  mln::window < mln::dpoint<mln::grid::square, mln::def::coord > >,
+  mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >,
   mln::neighb<
-    mln::window < mln::dpoint<mln::grid::square, mln::def::coord > >
+    mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >
     >
   >;
 %template() mln::internal::neighborhood_impl<
-  mln::window < mln::dpoint<mln::grid::square, mln::def::coord > >,
+  mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >,
   mln::neighb<
-    mln::window < mln::dpoint<mln::grid::square, mln::def::coord > >
+    mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >
     >
   >;
 %template() mln::internal::neighborhood_base<
-  mln::window < mln::dpoint<mln::grid::square, mln::def::coord > >,
+  mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >,
   mln::neighb<
-    mln::window < mln::dpoint<mln::grid::square, mln::def::coord > >
+    mln::window< mln::dpoint< mln::grid::square, mln::def::coord > >
     >
   >;
 %template() mln::internal::neighb_base<
@@ -90,4 +90,4 @@
   >;
 // Instantiate mln::neighb2d.
 %template(neighb2d)
-mln::neighb< mln::window < mln::dpoint<mln::grid::square, mln::def::coord > > >;
+mln::neighb< mln::window < mln::dpoint< mln::grid::square, mln::def::coord > > >;

@@ -1,5 +1,9 @@
 2009-09-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	* neighb2d.i: Aesthetic changes.
+
+2009-09-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix Swilena w.r.t. mln::internal::neighb_base.
 
 	* neighb2d.i: Wrap base class internal::neighb_base<W, neighb<W> >.
