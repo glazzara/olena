@@ -24,6 +24,11 @@
 /// Reference can be found at:
 /// http://web.archive.org/web/20070624082212/www.hiend3d.com/hq3x.html
 
+# include <mln/extension/adjust_duplicate.hh>
+# include <mln/geom/max_col.hh>
+# include <mln/geom/max_row.hh>
+# include <mln/geom/min_col.hh>
+# include <mln/geom/min_row.hh>
 # include <mln/geom/ncols.hh>
 # include <mln/geom/nrows.hh>
 # include <mln/value/rgb8.hh>
@@ -210,7 +215,7 @@ namespace mln
       }
 
 
-      //FIXME: In Milena, nrows != row max
+
       template <typename T>
       inline
       mln_concrete(image2d<T>)
@@ -218,9 +223,9 @@ namespace mln
       {
 	trace::entering("upsampling::impl::hq3x_");
 
-	int nrows = geom::nrows(input);
-	int ncols = geom::ncols(input);
-        mln_concrete(image2d<T>) output(nrows * 3, ncols * 3);
+	mln_domain(image2d<T>) bbox(input.domain().pmin() * 3,
+				    input.domain().pmax() * 3);
+        mln_concrete(image2d<T>) output(bbox);
 
 	int   LUT16to32[65536];
 	int   RGBtoYUV[65536];
@@ -250,9 +255,9 @@ namespace mln
 	//
 	// w5 is the current point.
 
-	for (int j = 0; j < ncols; j++)
+	for (int j = geom::min_col(input); j <= geom::max_col(input); j++)
 	{
-	  for (int i = 0; i < nrows; i++)
+	  for (int i = geom::min_row(input); i <= geom::max_row(input); i++)
 	  {
 	    w[1] = rgb8toShort(input.at_(i - 1, j - 1));
 	    w[2] = rgb8toShort(input.at_(i - 1, j));
@@ -3922,6 +3927,9 @@ namespace mln
       mln_precondition(exact(input).is_valid());
 
       mln_concrete(I) output;
+
+      // Preparing extension.
+      extension::adjust_duplicate(input, 1);
 
       output = impl::hq3x_(exact(input));
 

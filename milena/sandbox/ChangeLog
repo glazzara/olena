@@ -1,3 +1,13 @@
+2009-09-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Make hq*x algorithms more generic and handle image extensions.
+
+	* fabien/mln/upsampling/hq2x.hh,
+	* fabien/mln/upsampling/hq3x.hh,
+	* fabien/mln/upsampling/hq4x.hh: Add support for image domains not
+	starting from (0,0).
+	Initialize image extension correctly.
+
 2009-09-13  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Save work in progress for histo and hsl. Everything is updated.
@@ -274,7 +284,7 @@
 	Finish the experiment for Laurent.
 
 	* levillain/constrained-connectivity.cc: Complete the processing
-	chain.	
+	chain.
 	Add a copyright header.
 	Translate the documentation into English.
 	s/ima/input/g.
@@ -394,7 +404,7 @@
 	(print_color),
 	(fill_image_with_4colors),
 	(is_equivalent),
-	(test_init_point), 
+	(test_init_point),
 	(is_equal),
 	(is_center_initialized),
 	(test_init_center)                               : New test functions.
@@ -411,7 +421,7 @@
 2009-08-17  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Improve documentation.
-	
+
 	* green/histo1d/histo1d.hh       : Improve documentation aspect.
 
 2009-08-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
@@ -425,7 +435,7 @@
 	Some tries with segmentation using graph (still segfault)..
 	*  edwin/exec/score.hh: New.
 	*  edwin/exec/zi.cc,
-	*  edwin/exec/zi.hh: 
+	*  edwin/exec/zi.hh:
 	Use min-tree based method instead of WST to group components.
 
 2009-08-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
@@ -505,7 +515,7 @@
 	* green/LearnMilena: Remove.
 	* green/Otsu: Remove.
 	* green/Stats: Remove.
-	
+
 2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Integrate LRDE code writting rules in the Stats code.
@@ -513,7 +523,7 @@
 	* green/Stats/Makefile.am      : Remove Makefile.
 	* green/Stats/Stats.cc         : Remove source.
 	* green/Stats                  : Remove directory.
-	
+
 	* green/stats                  : New directory.
 	* green/stats/Makefile.am      : New Makefile.
 	* green/stats/stats.cc         : New source.
@@ -525,7 +535,7 @@
 	* green/LearnMilena/Makefile.am      : Remove Makefile.
 	* green/LearnMilena/LearnMilena.cc   : Remove source.
 	* green/LearnMilena                  : Remove directory.
-	
+
 	* green/learn_milena                 : New directory.
 	* green/learn_milena/Makefile.am     : New Makefile.
 	* green/learn_milena/learn_milena.cc : New source.
@@ -537,7 +547,7 @@
 	* green/HelloMilena/Makefile.am      : Remove Makefile.
 	* green/HelloMilena/HelloMilena.cc   : Remove source.
 	* green/HelloMilena                  : Remove directory.
-	
+
 	* green/hello_milena                 : New directory.
 	* green/hello_milena/Makefile.am     : New Makefile.
 	* green/hello_milena/hello_milena.cc : New source.
@@ -550,7 +560,7 @@
 	* green/HelloWorld/HelloWorld.cc   : Remove source.
 	* green/HelloWorld/Print.cc        : Remove source.
 	* green/HelloWorld                 : Remove directory.
-	
+
 	* green/hello_world                : New directory.
 	* green/hello_world/Makefile.am    : New Makefile.
 	* green/hello_world/hello_world.cc : New source.
@@ -631,7 +641,7 @@
 
 	* icdar/2009/pscomp: New directory.
 	* icdar/2009/pscomp/iz.cc: New.
-	Compute an IZ image along with distances between objects. 
+	Compute an IZ image along with distances between objects.
 	* icdar/2009/pscomp/rect_filter.cc: New.
 	Algebraic filtering with a combinaison of bounding box width
 	and height.
