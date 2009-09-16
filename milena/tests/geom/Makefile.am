@@ -37,7 +37,8 @@ nslis						\
 pmin_pmax					\
 rotate	 					\
 seed2tiling					\
-seed2tiling_roundness
+seed2tiling_roundness 				\
+translate
 
 
 bbox_SOURCES = bbox.cc
@@ -58,6 +59,6 @@ pmin_pmax_SOURCES = pmin_pmax.cc
 rotate_SOURCES = rotate.cc
 seed2tiling_SOURCES = seed2tiling.cc
 seed2tiling_roundness_SOURCES = seed2tiling_roundness.cc
-
+translate_SOURCES = translate.cc
 
 TESTS = $(check_PROGRAMS)

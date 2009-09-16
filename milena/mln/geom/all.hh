@@ -68,6 +68,7 @@ namespace mln
 # include <mln/geom/size1d.hh>
 # include <mln/geom/size2d.hh>
 # include <mln/geom/size3d.hh>
+# include <mln/geom/translate.hh>
 
 
 #endif // ! MLN_GEOM_ALL_HH
