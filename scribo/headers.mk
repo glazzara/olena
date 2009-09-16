@@ -2,6 +2,7 @@
 scribodir = $(includedir)/scribo
 nobase_scribo_HEADERS = \
 ./all.hh \
+./binarization/sauvola.hh \
 ./binarization/simple.hh \
 ./core/all.hh \
 ./core/central_sites.hh \
@@ -11,6 +12,7 @@ nobase_scribo_HEADERS = \
 ./core/object_image.hh \
 ./core/object_links.hh \
 ./debug/all.hh \
+./debug/decision_image.hh \
 ./debug/save_bboxes_image.hh \
 ./debug/save_label_image.hh \
 ./debug/save_linked_bboxes_image.hh \
@@ -20,9 +22,20 @@ nobase_scribo_HEADERS = \
 ./draw/all.hh \
 ./draw/bounding_box_links.hh \
 ./draw/bounding_boxes.hh \
+./estim/object_groups_v_thickness.hh \
 ./filter/all.hh \
+./filter/common/object_groups_photo.hh \
+./filter/common/object_links_photo.hh \
+./filter/common/objects_photo.hh \
 ./filter/object_groups_small.hh \
+./filter/object_groups_v_thickness.hh \
+./filter/object_links_bbox_h_ratio.hh \
+./filter/object_links_bbox_overlap.hh \
+./filter/object_links_bbox_ratio.hh \
+./filter/object_links_bbox_w_ratio.hh \
+./filter/object_links_bottom_aligned.hh \
 ./filter/object_links_non_aligned.hh \
+./filter/object_links_non_aligned_simple.hh \
 ./filter/object_links_non_h_aligned.hh \
 ./filter/object_links_non_v_aligned.hh \
 ./filter/objects_large.hh \
@@ -35,6 +48,7 @@ nobase_scribo_HEADERS = \
 ./make/influence_zone_graph.hh \
 ./make/text.hh \
 ./preprocessing/all.hh \
+./preprocessing/split_bg_fg.hh \
 ./preprocessing/unskew.hh \
 ./primitive/all.hh \
 ./primitive/extract/all.hh \
@@ -45,12 +59,14 @@ nobase_scribo_HEADERS = \
 ./primitive/extract/lines_h_pattern.hh \
 ./primitive/extract/lines_h_single.hh \
 ./primitive/extract/lines_h_thick.hh \
+./primitive/extract/lines_h_thick_and_single.hh \
 ./primitive/extract/lines_pattern.hh \
 ./primitive/extract/lines_thick.hh \
 ./primitive/extract/lines_v_discontinued.hh \
 ./primitive/extract/lines_v_pattern.hh \
 ./primitive/extract/lines_v_single.hh \
 ./primitive/extract/lines_v_thick.hh \
+./primitive/extract/lines_v_thick_and_single.hh \
 ./primitive/extract/objects.hh \
 ./primitive/group/all.hh \
 ./primitive/group/apply.hh \

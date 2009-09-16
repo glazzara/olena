@@ -202,7 +202,8 @@ highlighted.");
 
 
 #ifndef NOUT
-  image2d<value::rgb8>
+  image2d<value::rgb8> decision_image;
+  if (argc == 4)
     decision_image = scribo::debug::decision_image(input,
 						   groups, filtered_groups);
 #endif
