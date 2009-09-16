@@ -1,3 +1,12 @@
+2009-09-16  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add experimental cache support in 2D tiled image.
+	*  fabien/mln/core/image/cache.hh: Implement cache management.
+	*  fabien/mln/core/image/page.hh: Implement page management.
+	*  fabien/mln/core/image/tiled2d.hh: Add cache management.
+	*  fabien/tests/core/image/Makefile: Minor update.
+	*  fabien/tests/core/image/tiled2d.cc: Minor update.
+
 2009-09-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Make hq*x algorithms more generic and handle image extensions.

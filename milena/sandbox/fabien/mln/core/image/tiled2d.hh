@@ -39,6 +39,8 @@
 # include <mln/fun/i2v/all_to.hh>
 # include <mln/value/proxy.hh>
 
+# include <mln/core/image/cache.hh>
+
 
 
 namespace mln
@@ -63,6 +65,7 @@ namespace mln
       std::string file_;
       bool loaded_;
       T value_;
+      cache<box2d, T>* cache_;
 
       box2d b_;  // theoretical box
       unsigned bdr_;
@@ -323,7 +326,10 @@ namespace mln
     data< tiled2d<T> >::deallocate_()
     {
       if (this->loaded_)
+      {
+	delete this->cache_;
 	this->f_->close();
+      }
     }
 
     template <typename T>
@@ -428,13 +434,18 @@ namespace mln
     {
       this_->data_->f_ = new std::fstream(this->data_->file_.c_str());
       this_->data_->loaded_ = true;
+      this_->data_->cache_ = new cache<box2d, T>(this_->data_->b_,
+						 this_->data_->pos_,
+						 this_->ncols(),
+						 this_->data_->f_);
     }
-    std::streampos offset = this_->data_->pos_;
+    /*std::streampos offset = this_->data_->pos_;
     offset += (this_->ncols() * p.row() + p.col()) * sizeof(T);
     this_->data_->f_->seekg(offset);
     this_->data_->f_->get((char*)(&this_->data_->value_), sizeof(T) + 1); // FIXME: I don't know why
 									  // I have to add +1.
-    return this_->data_->value_;
+    return this_->data_->value_;*/
+    return this_->data_->cache_->read(p);
   }
 
   template <typename T>
@@ -442,15 +453,17 @@ namespace mln
   void
   tiled2d<T>::write_(const point2d& p, const T& value)
   {
-    if (!this->data_->loaded_)
+    mln::tiled2d<T>* this_ = const_cast<mln::tiled2d<T>* >(this); // Trust me, I have to do this(_).
+    if (!this_->data_->loaded_)
     {
-      this->data_->f_ = new std::fstream(this->data_->file_.c_str());
-      this->data_->loaded_ = true;
+      this_->data_->f_ = new std::fstream(this->data_->file_.c_str());
+      this_->data_->loaded_ = true;
+      this_->data_->cache_ = new cache<box2d, T>(this_->data_->b_,
+						 this_->data_->pos_,
+						 this_->ncols(),
+						 this_->data_->f_);
     }
-    std::streampos offset = this->data_->pos_;
-    offset += (this->ncols() * p.row() + p.col()) * sizeof(T);
-    this->data_->f_->seekp(offset);
-    this->data_->f_->write((char*)(&value), sizeof(T));
+    this_->data_->cache_->write(p, value);
   }
 
 
@@ -462,8 +475,7 @@ namespace mln
   tiled2d<T>::at_(unsigned row, unsigned col) const
   {
     mln_precondition(this->has(point2d(row, col)));
-    //FIXME: use the cache Luke.
-    return this->data_->value_;
+    return this->data_->cache_(point2d(row, col));
   }
 
   template <typename T>
@@ -472,8 +484,7 @@ namespace mln
   tiled2d<T>::at_(unsigned row, unsigned col)
   {
     mln_precondition(this->has(point2d(row, col)));
-    //FIXME: use the cache Luke.
-    return this->data_->value_;
+    return this->data_->cache_(point2d(row, col));
   }
 
   template <typename T>
