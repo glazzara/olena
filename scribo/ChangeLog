@@ -1,5 +1,10 @@
 2009-09-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	* preprocessing/split_bg_fg.hh: Add a new algorithm to split
+	background and foreground.
+
+2009-09-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Improve Scribo's demo.
 
 	* demo/src/mainwindow.cc,
