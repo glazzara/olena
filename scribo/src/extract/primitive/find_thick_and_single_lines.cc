@@ -35,18 +35,17 @@
 #include <scribo/debug/usage.hh>
 
 #include <scribo/core/object_image.hh>
-#include <scribo/primitive/extract/lines_h_thick.hh>
-#include <scribo/primitive/extract/lines_v_thick.hh>
 
-#include <scribo/primitive/extract/lines_h_single.hh>
-#include <scribo/primitive/extract/lines_v_single.hh>
-
+# include <scribo/primitive/extract/lines_v_thick_and_single.hh>
+# include <scribo/primitive/extract/lines_h_thick_and_single.hh>
 
 const char *args_desc[][2] =
 {
   { "input.pbm", "A binary image. Objects are set to True." },
   { "vlength  ", "Minimum vertical line length." },
+  { "vratio   "  "Minimum vertical ratio height/width." },
   { "hlength  ", "Minimum horizontal line length." },
+  { "hratio   "  "Minimum horizontal ratio width/height." },
   {0, 0}
 };
 
@@ -54,12 +53,14 @@ const char *args_desc[][2] =
 int main(int argc, char *argv[])
 {
   using namespace mln;
+  using namespace scribo;
 
-  if (argc != 5)
+  if (argc != 7)
     return scribo::debug::usage(argv,
 				"Extract thick horizontal and vertical lines.\
-\n Common argument values: 150 150.",
-				"<input.pbm> <vlength> <hlength> <output.ppm>",
+\n Common argument values: 150 10 150 10.",
+				"<input.pbm> <vlength> <vratio> <hlength>\
+ <hratio> <output.ppm>",
 				args_desc,
 				"A color image. Horizontal lines are in red\
  and vertical lines in green.");
@@ -77,15 +78,19 @@ int main(int argc, char *argv[])
     nvlines;
 
   object_image(L)
-    hlines = scribo::primitive::extract::lines_h_thick(input, c8(),
-						       nhlines, atoi(argv[2])),
-    vlines = scribo::primitive::extract::lines_v_thick(input, c8(),
-						       nvlines, atoi(argv[3]));
+    hlines = primitive::extract::lines_h_thick_and_single(input, c8(),
+							  nhlines,
+							  atoi(argv[2]),
+							  atoi(argv[3])),
+    vlines = primitive::extract::lines_v_thick_and_single(input, c8(),
+							  nvlines,
+							  atoi(argv[4]),
+							  atoi(argv[5]));
 
-  image2d<value::rgb8> out = debug::superpose(input, hlines, literal::red);
-  out = debug::superpose(out, vlines, literal::green);
+  image2d<value::rgb8> out = mln::debug::superpose(input, hlines, literal::red);
+  out = mln::debug::superpose(out, vlines, literal::green);
 
-  io::ppm::save(out, argv[4]);
+  io::ppm::save(out, argv[6]);
 
   trace::exiting("main");
 }

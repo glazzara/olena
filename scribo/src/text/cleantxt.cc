@@ -23,69 +23,57 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+#include <iostream>
+
 #include <mln/core/image/image2d.hh>
-#include <mln/value/label_16.hh>
-#include <mln/value/rgb8.hh>
-#include <mln/core/alias/neighb2d.hh>
+
 #include <mln/io/pbm/all.hh>
-#include <mln/io/ppm/save.hh>
-#include <mln/data/convert.hh>
-#include <mln/debug/superpose.hh>
 
+#include <mln/logical/not.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/alias/w_window2d_int.hh>
+#include <mln/make/w_window2d_int.hh>
+
+
+#include <scribo/text/clean.hh>
 #include <scribo/debug/usage.hh>
-
-#include <scribo/core/object_image.hh>
-#include <scribo/primitive/extract/lines_h_thick.hh>
-#include <scribo/primitive/extract/lines_v_thick.hh>
-
-#include <scribo/primitive/extract/lines_h_single.hh>
-#include <scribo/primitive/extract/lines_v_single.hh>
 
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image. Objects are set to True." },
-  { "vlength  ", "Minimum vertical line length." },
-  { "hlength  ", "Minimum horizontal line length." },
+  { "input.pbm", "A binary image. 'True' for objects, 'False'\
+for the background." },
+  { "out.pbm",   "A cleaned up binary image." },
   {0, 0}
 };
 
 
-int main(int argc, char *argv[])
+
+int main(int argc, char* argv[])
 {
+  using namespace scribo;
   using namespace mln;
 
-  if (argc != 5)
+  if (argc != 3)
     return scribo::debug::usage(argv,
-				"Extract thick horizontal and vertical lines.\
-\n Common argument values: 150 150.",
-				"<input.pbm> <vlength> <hlength> <output.ppm>",
+				"Cleanup text areas.",
+				"input.pbm out.pbm",
 				args_desc,
-				"A color image. Horizontal lines are in red\
- and vertical lines in green.");
+				"");
 
   trace::entering("main");
 
-  typedef image2d<bool> I;
-  I input;
+  image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
-  typedef image2d<value::label_16> L;
+  int vals[] = { 0, 9, 0, 9, 0,
+		 9, 6, 4, 6, 9,
+		 0, 4, 0, 4, 0,
+		 9, 6, 4, 6, 9,
+		 0, 9, 0, 9, 0 };
+  w_window2d_int dmap_win = mln::make::w_window2d_int(vals);
 
-  value::label_16
-    nhlines,
-    nvlines;
-
-  object_image(L)
-    hlines = scribo::primitive::extract::lines_h_thick(input, c8(),
-						       nhlines, atoi(argv[2])),
-    vlines = scribo::primitive::extract::lines_v_thick(input, c8(),
-						       nvlines, atoi(argv[3]));
-
-  image2d<value::rgb8> out = debug::superpose(input, hlines, literal::red);
-  out = debug::superpose(out, vlines, literal::green);
-
-  io::ppm::save(out, argv[4]);
+  io::pbm::save(scribo::text::clean(logical::not_(input), dmap_win), argv[2]);
 
   trace::exiting("main");
 }

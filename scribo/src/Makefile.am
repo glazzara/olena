@@ -37,6 +37,7 @@ bin_PROGRAMS = 				\
   table_rebuild_opening 		\
   table_rebuild_rank 			\
   text_in_photo 			\
+  text_in_photo_ppm 			\
   text_in_photo_invert 			\
   thin_bboxes
 
@@ -50,6 +51,7 @@ superpose_SOURCES = superpose.cc
 table_rebuild_opening_SOURCES = table_rebuild_opening.cc
 table_rebuild_rank_SOURCES = table_rebuild_rank.cc
 text_in_photo_SOURCES = text_in_photo.cc
+text_in_photo_ppm_SOURCES = text_in_photo_ppm.cc
 text_in_photo_invert_SOURCES = text_in_photo_invert.cc
 thin_bboxes_SOURCES = thin_bboxes.cc
 
