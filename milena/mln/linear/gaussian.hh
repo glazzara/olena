@@ -1,4 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2001, 2002, 2003, 2004, 2007, 2008, 2009 EPITA
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,6 +44,12 @@
 # include <mln/extension/adjust_fill.hh>
 # include <mln/geom/ncols.hh>
 # include <mln/geom/nrows.hh>
+# include <mln/geom/min_col.hh>
+# include <mln/geom/max_col.hh>
+# include <mln/geom/min_row.hh>
+# include <mln/geom/max_row.hh>
+# include <mln/geom/min_sli.hh>
+# include <mln/geom/max_sli.hh>
 # include <mln/geom/ninds.hh>
 # include <mln/geom/nslis.hh>
 # include <mln/data/paste.hh>
@@ -391,11 +398,11 @@ namespace mln
         if (dir == 0)
         {
           // Apply on rows.
-          for (unsigned j = 0; j < geom::ncols(img); ++j)
+          for (unsigned j = geom::min_col(img); j <= geom::max_col(img); ++j)
             recursivefilter_<mln_value(I)>(img, coef,
-                                           point2d(static_cast<def::coord>(-img.border()),
+                                           point2d(static_cast<def::coord>(geom::min_row(img) - img.border()),
 						   static_cast<def::coord>(j)),
-                                           point2d(static_cast<def::coord>(geom::nrows(img) - 1 +
+                                           point2d(static_cast<def::coord>(geom::max_row(img) +
 									   img.border()),
 						   static_cast<def::coord>(j)),
                                            geom::nrows(img) + 2 * img.border(),
@@ -405,12 +412,12 @@ namespace mln
         if (dir == 1)
         {
           // Apply on columns.
-          for (unsigned i = 0; i < geom::nrows(img); ++i)
+          for (unsigned i = geom::min_row(img); i <= geom::max_row(img); ++i)
             recursivefilter_<mln_value(I)>(img, coef,
                                            point2d(static_cast<def::coord>(i),
-						   static_cast<def::coord>(-img.border())),
+						   static_cast<def::coord>(geom::min_col(img) - img.border())),
                                            point2d(static_cast<def::coord>(i),
-						   static_cast<def::coord>(geom::ncols(img) - 1 +
+						   static_cast<def::coord>(geom::max_col(img) +
 									   img.border())),
                                            geom::ncols(img) + 2 * img.border(),
                                            dpoint2d(0, 1));
@@ -429,8 +436,8 @@ namespace mln
         if (dir == 0)
         {
           // Apply on slices.
-          for (unsigned j = 0; j < geom::nrows(img); ++j)
-            for (unsigned k = 0; k < geom::ncols(img); ++k)
+          for (unsigned j = geom::min_row(img); j <= geom::max_row(img); ++j)
+            for (unsigned k = geom::min_col(img); k <= geom::max_col(img); ++k)
               recursivefilter_<mln_value(I)>(img, coef,
                                              point3d(static_cast<def::coord>(-img.border()),
 						     static_cast<def::coord>(j),
@@ -448,8 +455,8 @@ namespace mln
         if (dir == 1)
         {
           // Apply on rows.
-          for (unsigned i = 0; i < geom::nslis(img); ++i)
-            for (unsigned k = 0; k < geom::ncols(img); ++k)
+          for (unsigned i = geom::min_sli(img); i <= geom::max_sli(img); ++i)
+            for (unsigned k = geom::min_col(img); k <= geom::max_col(img); ++k)
               recursivefilter_<mln_value(I)>(img, coef,
                                              point3d(static_cast<def::coord>(i),
 						     static_cast<def::coord>(-img.border()),
@@ -466,8 +473,8 @@ namespace mln
         if (dir == 2)
         {
           // Apply on columns.
-          for (unsigned i = 0; i < geom::nslis(img); ++i)
-            for (unsigned j = 0; j < geom::nrows(img); ++i)
+          for (unsigned i = geom::min_sli(img); i <= geom::max_sli(img); ++i)
+            for (unsigned j = geom::min_row(img); j <= geom::max_row(img); ++j)
               recursivefilter_<mln_value(I)>(img, coef,
                                              point3d(static_cast<def::coord>(i),
 						     static_cast<def::coord>(j),
