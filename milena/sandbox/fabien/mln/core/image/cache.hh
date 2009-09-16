@@ -49,10 +49,13 @@ namespace mln
       void set_number_pages(unsigned number_pages);
       V read(mln_psite(D) p);
       void write(const mln_psite(D)& p, const V& value);
+      unsigned insert_new_page(const mln_psite(D)& p);
 
     protected:
 
       util::array<page<D, V>* > pages_;
+      util::array<unsigned> order_;
+      unsigned count_;
       unsigned number_pages_;
 
       // Image info.
@@ -70,7 +73,8 @@ namespace mln
   inline
   cache<D, V>::cache(D domain, std::streampos pos, unsigned ncols, std::fstream* f)
   {
-    this->number_pages_ = 1;
+    this->number_pages_ = 5; // Default value.
+    this->count_ = 1;
 
     this->domain_ = domain;
     this->pos_ = pos;
@@ -85,6 +89,7 @@ namespace mln
     for (unsigned i = 0; i < this->pages_.nelements(); ++i)
       delete this->pages_[i];
     this->pages_.clear();
+    this->order_.clear();
   }
 
   template <typename D, typename V>
@@ -92,6 +97,10 @@ namespace mln
   void
   cache<D, V>::set_number_pages(unsigned number_pages)
   {
+    if (number_pages == 0)
+    {
+      // FIXME: We must not allow that.
+    }
     if (number_pages < this->number_pages_)
     {
       // FIXME: Prune pages array.
@@ -110,15 +119,9 @@ namespace mln
 	return this->pages_[i]->read(p);
     }
 
-    // If we have not found a valid page, we just add one.
-    // FIXME: We should test that we have room for a new page.
-    page<D, V>* new_page = new page<D, V>(this->domain_,
-					  p,
-					  this->pos_,
-					  this->ncols_,
-					  this->f_);
-    this->pages_.append(new_page);
-    return new_page->read(p);
+    // In case we have not found a valid page, we insert a new one.
+    unsigned new_page_index = insert_new_page(p);
+    return this->pages_[new_page_index]->read(p);
   }
 
   template <typename D, typename V>
@@ -136,18 +139,56 @@ namespace mln
       }
     }
 
+    // In case we have not found a valid page, we insert a new one.
     if (!found)
     {
-      // If we have not found a valid page, we just add one.
-      // FIXME: We should test that we have room for a new page.
-      page<D, V>* new_page = new page<D, V>(this->domain_,
-	  p,
-	  this->pos_,
-	  this->ncols_,
-	  this->f_);
-      this->pages_.append(new_page);
-      new_page->write(p, value);
+      unsigned new_page_index = insert_new_page(p);
+      this->pages_[new_page_index]->write(p, value);
     }
+  }
+
+  // Basic LRU cache algorithm implementation.
+  template <typename D, typename V>
+  inline
+  unsigned
+  cache<D, V>::insert_new_page(const mln_psite(D)& p)
+  {
+    page<D, V>* new_page = new page<D, V>(this->domain_,
+					  p,
+					  this->pos_,
+					  this->ncols_,
+					  this->f_);
+
+    unsigned new_index;
+
+    // If there is still room for a new page.
+    if (this->pages_.nelements() < this->number_pages_)
+    {
+      this->pages_.append(new_page);
+      this->order_.append(this->count_++);
+      new_index = this->pages_.nelements() - 1;
+    }
+    else // We must find which page to discard.
+    {
+      unsigned min = this->order_[0];
+      unsigned new_index = 0;
+      for (unsigned i = 1; i < this->pages_.nelements(); ++i)
+      {
+	if (this->order_[i] < min)
+	{
+	  min = this->order_[i];
+	  new_index = i;
+	}
+      }
+      delete this->pages_[new_index];
+      this->pages_[new_index] = new_page;
+      for (unsigned i = 0; i < this->order_.nelements(); ++i)
+	this->order_[i] -= min;
+      this->count_ -= min;
+      this->order_[new_index] = this->count_++;
+    }
+
+    return new_index;
   }
 
 
