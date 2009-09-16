@@ -34,7 +34,8 @@
 
 
 const char * modes[][4] = {
-  { "Text in pictures", "pics", "../src/text_in_photo", "image-x-generic.png" },
+  { "Text in pictures", "pics", "../src/text_in_photo_ppm", "image-x-generic.png" },
+  { "Text in docs", "doc", "../src/text_in_doc", "edit-find.png" },
   { (const char *)(1), 0, 0, 0}, // Separator
   { "Handwritten text lines", "hsc", "../../milena/sandbox/icdar/2009/hsc/input_to_lines", "text-x-generic.png" },
   { "Handwritten text words", "hsc", "../../milena/sandbox/icdar/2009/hsc/input_to_words", "text-x-generic.png" },
@@ -59,6 +60,7 @@ const char * modes[][4] = {
 //
 const char *args_list[][3] = {
   { 0, 0, 0 }, // Text in Pictures
+  { 0, 0, 0 }, // Text in Docs
   { (const char *)(1), 0, 0}, // Separator
   { "/dev/null",  0,  0 }, // Handwritten text lines
   { "/dev/null",  0,  0 }, // Handwritten text words
@@ -97,13 +99,11 @@ namespace scribo
       pdialog_.setLabelText(tr("Please wait while computing..."));
       pdialog_.setWindowModality(Qt::WindowModal);
 
+      exec_.setReadChannel(QProcess::StandardOutput);
+
       qDebug() << "Cache located in " << QDir::tempPath();
 
       connect(&pdialog_, SIGNAL(canceled()), this, SLOT(compute_canceled()));
-      connect(&exec_, SIGNAL(finished(int, QProcess::ExitStatus)),
-	      this, SLOT(exec_finished(int, QProcess::ExitStatus)));
-      connect(&exec_, SIGNAL(error(QProcess::ProcessError)),
-	      this, SLOT(exec_error(QProcess::ProcessError)));
 
       connect(&context_, SIGNAL(triggered(QAction *)),
 	      this, SLOT(context_changed(QAction *)));
@@ -117,6 +117,8 @@ namespace scribo
       connect(imageRef->horizontalScrollBar(), SIGNAL(valueChanged(int)),
 	      this, SLOT(move_horizontal_sliders(int)));
       connect(&timer_, SIGNAL(timeout()), this, SLOT(timer_timeout()));
+
+      connect_compute_process();
 
       context_.setExclusive(true);
 
@@ -163,6 +165,7 @@ namespace scribo
 	action->setCheckable(true);
 	action->setData(i);
 	action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_0 + i));
+	action->setEnabled(QFile::exists(modes[i][2]));
 
 	if (modes[i][3] != 0)
 	  action->setIcon(QIcon(QString(":/icons/") + modes[i][3]));
@@ -203,7 +206,8 @@ namespace scribo
 
     void MainWindow::on_runBtn_clicked()
     {
-      if (useCache->isChecked() && cached_result_[mode_].contains(filepath->text()))
+      if (useCache->isChecked()
+	  && cached_result_[mode_].contains(filepath->text()))
       {
 	last_output_ = cached_result_[mode_][filepath->text()];
 	exec_finished(0, QProcess::NormalExit);
@@ -216,29 +220,19 @@ namespace scribo
 
       QString input = filepath->text();
 
-      // Loading ppm file
-      if (current_mode() == "pics")
-      {
-	QFileInfo f(input);
-	QDir dir = f.absoluteDir();
-	dir.cd("../pics_pbm");
-
-	QFileInfo pbm_file(dir.path() + "/" + f.completeBaseName() + ".pbm");
-	if (pbm_file.exists())
-	  input = pbm_file.absoluteFilePath();
-      }
-
       args << input;
       for (unsigned i = 0; args_list[mode_][i]; ++i)
 	args << args_list[mode_][i];
 
 //      if (!is_in_ocr_mode())
 //      {
-        QTemporaryFile f;
-        f.open();
-        args << f.fileName();
-        last_output_ = f.fileName();
+      QTemporaryFile f;
+      f.open();
+      args << f.fileName();
+      last_output_ = f.fileName();
 //      }
+
+//      reset_progress_dialog();
 
       exec_.start(exec_prefix_ + modes[mode_][2], args);
     }
@@ -300,7 +294,8 @@ namespace scribo
       QFileInfo finfo(name);
       if (item != mainResultItem_ && current_mode() != "hsc"
 	  && current_mode() != "pproc"
-	  && (current_mode() != "pics" || finfo.suffix() == "pbm"))
+	  && (current_mode() != "pics" || finfo.suffix() == "pbm")
+	  && ! is_in_doc_mode())
       {
 	QImage image(pixmap.toImage());
 	image.invertPixels();
@@ -338,7 +333,7 @@ namespace scribo
 	    cached_result_[mode_][filepath->text()] = last_output_;
 
 	  setEnabled(true);
-	  if (is_in_ocr_mode())
+	  if (is_in_ocr_mode() || is_in_doc_mode())
 	  {
 	    QFile f(last_output_);
 	    f.open(QIODevice::ReadOnly);
@@ -379,10 +374,12 @@ namespace scribo
 
     void MainWindow::wait_for_result()
     {
+      reset_progress_dialog();
+
       pdialog_.show();
       setEnabled(false);
 
-      if (!is_in_ocr_mode())
+      if (!is_in_ocr_mode() && !is_in_ocr_mode())
 	update_status_message("");
     }
 
@@ -409,7 +406,6 @@ namespace scribo
 
     void MainWindow::exec_error(QProcess::ProcessError error)
     {
-      pdialog_.reset();
       if (error == QProcess::FailedToStart)
         exec_error(tr("This program does not exist: ")
 		    + exec_prefix_ + modes[mode_][2]);
@@ -423,21 +419,35 @@ namespace scribo
     {
       mode_ = action->data().toInt();
       filepath->clear();
-      tabWidget->setTabEnabled(1, is_in_ocr_mode());
+      tabWidget->setTabEnabled(1, is_in_ocr_mode() || is_in_doc_mode());
     }
 
 
     void MainWindow::compute_canceled()
     {
       setEnabled(true);
+
+      exec_.disconnect();
       exec_.kill();
+      connect_compute_process();
+
       update_status_message("Computation canceled.");
     }
 
 
-    bool MainWindow::is_in_ocr_mode()
+    bool MainWindow::is_in_ocr_mode() const
     {
       return current_mode() == "ocr";
+    }
+
+    bool MainWindow::is_in_pics_mode() const
+    {
+      return current_mode() == "pics";
+    }
+
+    bool MainWindow::is_in_doc_mode() const
+    {
+      return current_mode() == "doc";
     }
 
 
@@ -527,6 +537,32 @@ namespace scribo
 	demo_files_ = demoDir_.entryList(QDir::NoDotAndDotDot | QDir::Files);
       }
     }
+
+
+    void MainWindow::update_process_status()
+    {
+      if (is_in_pics_mode() || is_in_doc_mode())
+	pdialog_.setLabelText(tr(exec_.readAllStandardOutput()));
+    }
+
+
+    void MainWindow::reset_progress_dialog()
+    {
+      pdialog_.reset();
+      pdialog_.setLabelText(tr("Please wait while computing..."));
+    }
+
+
+    void MainWindow::connect_compute_process()
+    {
+      connect(&exec_, SIGNAL(finished(int, QProcess::ExitStatus)),
+	      this, SLOT(exec_finished(int, QProcess::ExitStatus)));
+      connect(&exec_, SIGNAL(error(QProcess::ProcessError)),
+	      this, SLOT(exec_error(QProcess::ProcessError)));
+      connect(&exec_, SIGNAL(readyReadStandardOutput()),
+	      this, SLOT(update_process_status()));
+    }
+
 
   } // end of namespace scribo::demo
 

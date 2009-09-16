@@ -76,6 +76,8 @@ namespace scribo
       void move_horizontal_sliders(int value);
       void timer_timeout();
 
+      void update_process_status();
+
     private: // Members
       void setup_scene();
       void update_pixmap(QGraphicsView* view, const QString& name = QString());
@@ -88,7 +90,9 @@ namespace scribo
 
       void prepare_for_run(const QString& filename);
 
-	bool is_in_ocr_mode();
+      bool is_in_ocr_mode() const;
+      bool is_in_pics_mode() const;
+      bool is_in_doc_mode() const;
 
       QGraphicsItem *& view_to_item(QGraphicsView *view);
 
@@ -98,6 +102,10 @@ namespace scribo
       QString current_mode() const;
 
       void update_auto_demo_dir();
+
+      void reset_progress_dialog();
+
+      void connect_compute_process();
 
     private: // Attributes
       QGraphicsItem *mainRefItem_;
