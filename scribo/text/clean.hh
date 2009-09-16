@@ -41,7 +41,7 @@
 
 # include <mln/logical/not.hh>
 
-# include <mln/world/binary_2d/enlarge.hh>
+//# include <mln/world/binary_2d/enlarge.hh>
 
 # include <mln/debug/filename.hh>
 # include <mln/io/pbm/save.hh>
@@ -58,6 +58,15 @@
 #include <mln/value/int_u8.hh>
 
 
+#include <mln/fun/v2b/threshold.hh>
+#include <mln/binarization/threshold.hh>
+#include <mln/data/convert.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/io/pgm/all.hh>
+
+#include <sandbox/inim/2009/ocr/resize.hh>
+#include <sandbox/fabien/mln/upsampling/hq4x.hh>
+
 
 namespace scribo
 {
@@ -70,7 +79,8 @@ namespace scribo
 
     /// Improve quality of an image with text.
     ///
-    /// \param[in] input_ A binary image.
+    /// \param[in] input_ A binary image. Object are set to 'false'
+    ///                   and backgroud to 'true'.
     /// \param[in] dmap_win_ A weighted window.
     ///
     /// \return An image. The text have better quality.
@@ -82,8 +92,6 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
-
-//    static int plop = 0;
 
     template <typename I, typename W>
     mln_concrete(I)
@@ -98,43 +106,44 @@ namespace scribo
       mln_precondition(input.is_valid());
       mln_precondition(dmap_win.is_valid());
 
-//       I input_large = world::binary_2d::enlarge(input, 2);
 
-//     image2d<bool> blur = linear::gaussian(input_large, 2);
-//     image2d<value::int_u8> blur = linear::gaussian(level::convert(value::int_u8(), input_large), 2);
-//     image2d<bool> blur = level::transform(linear::gaussian(level::convert(value::int_u8(), input_large), 2), fun::v2b::threshold<value::int_u8>(100));
+      // Resize
+      typedef image2d<value::rgb8> J;
+      J tmp = data::convert(value::rgb8(), input);
+      J clarge = mln::upsampling::hq4x(tmp);
 
-//       mln_ch_value(I,unsigned)
-//         dmap = transform::distance_front(logical::not_(input_large), c8(),
-//                                          dmap_win,
-//                                          mln_max(unsigned));
-//      io::pgm::save(labeling::wrap(dmap), mln::debug::filename("dmap.pgm"));
+      //FIXME: not generic!
+      if (input.domain().pmax()[0] - input.domain().pmin()[0] <= 10)
+	clarge = mln::upsampling::hq4x(clarge);
 
-//      I skeleton = topo::skeleton::crest(input_large, dmap, c8());
-//       I constraint = topo::skeleton::crest(input_large, dmap, c8());
-//       mln_postcondition(constraint.is_valid());
+      I input_large = data::convert(bool(), clarge);
 
-//      io::pgm::save(labeling::wrap(constraint), mln::debug::filename("constraint.pgm"));
+      // Blur
+      image2d<value::int_u8>
+	blur = linear::gaussian(data::convert(value::int_u8(), input_large), 2);
 
-//       I skeleton =
-//         morpho::skeleton_constrained(input_large, c8(),
-//                                      topo::skeleton::is_simple_point<I,neighb2d>,
-//                                      extend(constraint, false), arith::revert(dmap));
+      // Skeleton constraint
+      I K = topo::skeleton::crest(input_large, blur, c8());
 
-//       win::octagon2d disk(7);
-//       I output = morpho::dilation(skeleton, disk);
+      // Skeleton
+      I skel_on_gaussian =
+        morpho::skeleton_constrained(input_large, c8(),
+                                     topo::skeleton::is_simple_point<I,neighb2d>,
+                                     extend(K, false), arith::revert(blur));
 
-//      if (plop > 20 && plop < 50)
-      {
-//        io::pbm::save(input, mln::debug::filename("input.pbm"));
-//        io::pbm::save(input_large, mln::debug::filename("input_large_4x.pbm"));
-//        io::pbm::save(skeleton, mln::debug::filename("skeleton.pbm"));
-//        io::pbm::save(output, mln::debug::filename("dil_skel.pbm"));
-      }
+      // Dilation
+      win::octagon2d oct(7);
+      I dilate_on_gaussian = morpho::dilation(skel_on_gaussian, oct);
 
-//      ++plop;
+// 	io::pgm::save(arith::revert(blur), "blur_revert.pgm");
+// 	io::pgm::save(blur, "gaussian.pgm");
+// 	io::pbm::save(input_large, mln::debug::filename("input_large_4x.pbm"));
+// 	io::pbm::save(K, mln::debug::filename("K.pbm"));
+// 	io::pbm::save(skel_on_gaussian, mln::debug::filename("skeleton_on_gaussian.pbm"));
+// 	io::pbm::save(dilate_on_gaussian, mln::debug::filename("dilation_on_gaussian.pbm"));
+
       trace::exiting("scribo::text::clean");
-      return input;
+      return dilate_on_gaussian;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

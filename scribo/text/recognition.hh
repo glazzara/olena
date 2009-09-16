@@ -68,6 +68,8 @@
 # include <tesseract/baseapi.h>
 
 
+#include <mln/labeling/colorize.hh>
+
 namespace scribo
 {
 
@@ -83,11 +85,9 @@ namespace scribo
     ///		               Tesseract. (fra, en, ...)
     /// \param[in] output_file If set, store the recognized text in
     ///                        this file.
-    ///
-    /// \return An image of characters.
     //
     template <typename L>
-    mln_ch_value(L,char)
+    void
     recognition(const object_image(L)& objects,
 		const char *language,
 		const char *output_file);
@@ -98,7 +98,7 @@ namespace scribo
 
 
     template <typename L>
-    mln_ch_value(L,char)
+    void
     recognition(const object_image(L)& objects,
 		const char *language,
 		const char *output_file)
@@ -109,9 +109,6 @@ namespace scribo
 
       // Initialize Tesseract.
       TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
-
-      mln_ch_value(L,char) txt(objects.domain());
-      data::fill(txt, ' ');
 
       typedef mln_ch_value(L,bool) I;
       int vals[] = { 0, 9, 0, 9, 0,
@@ -128,17 +125,31 @@ namespace scribo
       /// Use text bboxes with Tesseract
       for_all_ncomponents(i, objects.nlabels())
       {
-	I text_ima(objects.bbox(i));
-	data::fill(text_ima, false);
-	data::fill((text_ima | (pw::value(objects) == pw::cst(i))).rw(),
-		   true);
+	std::cout << "Text recognition... ("
+		  << i << "/" << objects.nlabels() << ")" << std::endl;
 
+	mln_domain(I) box = objects.bbox(i);
+	// Make sure characters are isolated from the borders.
+	// Help Tesseract.
+	box.enlarge(2);
+
+	I text_ima(box);
+	data::fill(text_ima, true);
+
+	// Careful : background is set to 'False'
+	data::fill((text_ima | (pw::value(objects) == pw::cst(i))).rw(),
+		   false);
 
 	/// Improve text quality.
 
 	/// text_ima_cleand domain is larger than text_ima's.
 	I text_ima_cleaned = text::clean(text_ima, dmap_win);
-	border::resize(text_ima_cleaned, 0); // Make sure there is no border.
+
+        // Setting objects to 'True'
+	logical::not_inplace(text_ima_cleaned);
+
+	// Make sure there is no border.
+	border::resize(text_ima_cleaned, 0);
 
 	// Recognize characters.
 	char* s = TessBaseAPI::TesseractRect(
@@ -157,10 +168,9 @@ namespace scribo
 		      - objects.bbox(i).pmin().col()) / 2;
 	if (s != 0)
 	{
-	  std::cout << s << std::endl;
+	  std::cerr << s << std::endl;
 	  if (output_file != 0)
 	    file << s << std::endl;
-	  mln::debug::put_word(txt, p, s);
 	}
 
 	// The string has been allocated by Tesseract. We must free it.
@@ -171,7 +181,6 @@ namespace scribo
 	file.close();
 
       trace::exiting("scribo::text::recognition");
-      return txt;
     }
 
 
