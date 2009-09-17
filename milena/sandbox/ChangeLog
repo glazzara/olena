@@ -1,3 +1,9 @@
+2009-09-17  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Fix index value bug.
+	*  fabien/mln/core/image/cache.hh: Fix index value bug.
+	*  fabien/tests/core/image/tiled2d.cc: Minor update.
+
 2009-09-16  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Implement basic LRU cache algorithm.

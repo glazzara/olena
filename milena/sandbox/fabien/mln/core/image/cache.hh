@@ -171,7 +171,7 @@ namespace mln
     else // We must find which page to discard.
     {
       unsigned min = this->order_[0];
-      unsigned new_index = 0;
+      new_index = 0;
       for (unsigned i = 1; i < this->pages_.nelements(); ++i)
       {
 	if (this->order_[i] < min)

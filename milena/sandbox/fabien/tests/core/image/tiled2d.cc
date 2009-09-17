@@ -43,17 +43,13 @@ int main(int argc, char* argv[])
 
   mln_piter_(tiled2d<rgb8>) p(tiled_ima.domain());
   for_all(p)
-    if (p.row() % 256 == 0)
+    if (p.row() % 16 == 0)
     {
       //std::cout << tiled_ima(p);
       tiled_ima(p) = literal::green;
       //std::cout << " -> " << tiled_ima(p) << std::endl;
       //mln_assertion(tiled_ima(p) == ima(p));
     }
-
-  /*for_all(p)
-    if (p.col() % 16 == 0)
-      tiled_ima(p) = literal::purple;*/
 
   return 0;
 }
