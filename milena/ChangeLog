@@ -1,5 +1,15 @@
 2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	New application: apps/graph-morpho/asf-image2d.
+
+	* apps/graph-morpho/asf-image2d.cc: New.
+	* apps/graph-morpho/Makefile.am
+	(noinst_PROGRAMS): Add asf-image2d.
+	(asf_image2d_SOURCES): New.
+	(TESTS): Remove asf-complex1d.
+
+2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	New application: apps/graph-morpho/samples-image2d.
 
 	* apps/graph-morpho/samples-image2d.cc: New.
