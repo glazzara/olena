@@ -126,6 +126,72 @@ combine(const mln::Image<I>& vertices, const mln::Image<I>& edges)
 | Dilations and erosions.  |
 `-------------------------*/
 
+/// A neighborhood-aware and graph-friendly version of the binary dilation.
+template <typename I, typename N>
+mln_concrete(I)
+dilation(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_)
+{
+  using namespace mln;
+
+  typedef mln_concrete(I) O;
+  const I& input = exact(input_);
+  const N& nbh = exact(nbh_);
+
+  O output;
+  initialize(output, input);
+
+  mln_piter(I) p(input.domain());
+  mln_niter(N) n(nbh, p);
+  for_all(p)
+  {
+    /* There is a slight difference with Milena's classical binary
+       dilation here: instead of initializing OUTPUT with INPUT, we
+       fill it with default (here, false) values.  */
+    output(p) = false;
+    for_all(n) if (input.has(n))
+      if (input(n) == true)
+	{
+	  output(p) = true;
+	  break;
+	}
+  }
+  return output;
+}
+
+
+/// A neighborhood-aware and graph-friendly version of the binary erosion.
+template <typename I, typename N>
+mln_concrete(I)
+erosion(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_)
+{
+  using namespace mln;
+
+  typedef mln_concrete(I) O;
+  const I& input = exact(input_);
+  const N& nbh = exact(nbh_);
+
+  O output;
+  initialize(output, input);
+
+  mln_piter(I) p(input.domain());
+  mln_niter(N) n(nbh, p);
+  for_all(p)
+  {
+    /* There is a slight difference with Milena's classical erosion
+       here: instead of initializing OUTPUT with INPUT, we fill it
+       with default (here, true) values.  */
+    output(p) = true;
+    for_all(n) if (input.has(n))
+      if (input(n) == false)
+	{
+	  output(p) = false;
+	  break;
+	}
+  }
+  return output;
+}
+
+
 namespace impl
 {
   // ------------------------------------------ //

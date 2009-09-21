@@ -1,5 +1,14 @@
 2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add neighborhood-aware and graph-friendly dilation & erosion.
+
+	* apps/graph-morpho/morpho.hh
+	(dilation(const mln::Image<I>&, const mln::Neighborhood<N>&))
+	(erosion(const mln::Image<I>&, const mln::Neighborhood<N>&)):
+	New functions.
+
+2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add implementations of dilations/erosions on bin_1complex_image2d.
 
 	* apps/graph-morpho/morpho.hh
