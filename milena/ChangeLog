@@ -1,5 +1,11 @@
 2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have combine delegate to impl::combine.
+
+	* apps/graph-morpho/morpho.hh (combine): Here.
+
+2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add impl::combine for mln::image2d<T>.
 
 	* apps/graph-morpho/cplx2d.hh: New symlink to...

@@ -107,26 +107,18 @@ namespace impl
   }
 }
 
+// -------- //
+// Facade.  //
+// -------- //
+
 /// Combine the vertices and the edges of two images to create a new
 /// graph image (``operator'' \f$\ovee\f$).
 template <typename I>
 inline
 mln_concrete(I)
-combine(const mln::Image<I>& vertices_, const mln::Image<I>& edges_)
+combine(const mln::Image<I>& vertices, const mln::Image<I>& edges)
 {
-  const I vertices = mln::exact(vertices_);
-  const I edges = mln::exact(edges_);
-  mln_precondition(vertices.domain() == edges.domain());
-
-  mln_concrete(I) output;
-  mln::initialize(output, vertices);
-  mln::p_n_faces_fwd_piter<I::dim, mln_geom(I)> v(output.domain(), 0);
-  for_all(v)
-    output(v) = vertices(v);
-  mln::p_n_faces_fwd_piter<I::dim, mln_geom(I)> e(output.domain(), 1);
-  for_all(e)
-    output(e) = edges(e);
-  return output;
+  return impl::combine(mln::exact(vertices), mln::exact(edges));
 }
 
 
