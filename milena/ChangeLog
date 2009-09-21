@@ -1,5 +1,11 @@
 2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Introduce a ``tolerant'' image_if morpher.
+
+	* apps/graph-morpho/image_if_large.hh: New.
+
+2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add neighborhood-aware and graph-friendly dilation & erosion.
 
 	* apps/graph-morpho/morpho.hh
