@@ -1,3 +1,13 @@
+2009-09-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add images to exercise ASFs on graph images.
+
+	* apps/graph-morpho/zebra.pbm,
+	* apps/graph-morpho/zebra.pbm-noisy:
+	New images.
+	* apps/graph-morpho/Makefile.am (EXTRA_DIST): Add zebra.pbm and
+	zebra-noisy.pbm.
+
 2009-09-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the definition of ASFs in apps/graph-morpho.

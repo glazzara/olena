@@ -25,4 +25,8 @@ samples_complex1d_SOURCES = samples-complex1d.cc io.hh morpho.hh
 
 TESTS = samples-complex1d
 
+# Graph images stored in 2D PBM files.
 EXTRA_DIST = x.pbm y.pbm z.pbm
+
+# Actual PBM images.
+EXTRA_DIST += zebra.pbm zebra-noisy.pbm
