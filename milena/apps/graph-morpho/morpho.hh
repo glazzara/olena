@@ -53,6 +53,10 @@
 // and might be changed.
 # include "apps/graph-morpho/cplx2d.hh"
 
+// FIXME: Instead of providing several implementation, move specific
+// parts (neighborhoods, etc.) to a graph_traits class, and write
+// generic version of combine, dilation_e2v, erosion_v2e, etc.
+
 
 /*----------------------------.
 | Vertices-edges combinator.  |
@@ -400,118 +404,51 @@ namespace impl
 
 }
 
+
+// ------------------------------------------ //
+// Facades of (core) dilations and erosions.  //
+// ------------------------------------------ //
+
 /// Dilation from edges to vertices (\f$\delta^\bullet\f$).
 template <typename I>
 inline
 mln_concrete(I)
-dilation_e2v(const mln::Image<I>& input_)
+dilation_e2v(const mln::Image<I>& input)
 {
-  const I& input = mln::exact(input_);
-  mln_concrete(I) output;
-  mln::initialize(output, input);
-  // Iterator on vertices.
-  mln::p_n_faces_fwd_piter<I::dim, mln_geom(I)> v(input.domain(), 0);
-  // Vertex-to-edges neighborhood.
-  typedef mln::complex_higher_neighborhood<I::dim, mln_geom(I)> v2e_t;
-  const v2e_t v2e;
-  mln_niter(v2e_t) e(v2e, v);
-  for_all(v)
-  {
-    output(v) = false;
-    for_all(e)
-      if (input(e))
-	{
-	  output(v) = true;
-	  break;
-	}
-  }
-  return output;
+  return impl::dilation_e2v(mln::exact(input));
 }
 
 /// Erosion from vertices to edges (\f$\epsilon^\times\f$).
 template <typename I>
 inline
 mln_concrete(I)
-erosion_v2e(const mln::Image<I>& input_)
+erosion_v2e(const mln::Image<I>& input)
 {
-  const I& input = mln::exact(input_);
-  mln_concrete(I) output;
-  mln::initialize(output, input);
-  // Iterator on edges.
-  mln::p_n_faces_fwd_piter<I::dim, mln_geom(I)> e(input.domain(), 1);
-  // Edge-to-vertices neighborhood.
-  typedef mln::complex_lower_neighborhood<I::dim, mln_geom(I)> e2v_t;
-  const e2v_t e2v;
-  mln_niter(e2v_t) v(e2v, e);
-  for_all(e)
-  {
-    output(e) = true;
-    for_all(v)
-      if (!input(v))
-	{
-	  output(e) = false;
-	  break;
-	}
-  }
-  return output;
+  return impl::erosion_v2e(mln::exact(input));
 }
 
 /// Erosion from edges to vertices (\f$\epsilon^\bullet\f$).
 template <typename I>
 inline
 mln_concrete(I)
-erosion_e2v(const mln::Image<I>& input_)
+erosion_e2v(const mln::Image<I>& input)
 {
-  const I& input = mln::exact(input_);
-  mln_concrete(I) output;
-  mln::initialize(output, input);
-  // Iterator on vertices.
-  mln::p_n_faces_fwd_piter<I::dim, mln_geom(I)> v(input.domain(), 0);
-  // Vertex-to-edges neighborhood.
-  typedef mln::complex_higher_neighborhood<I::dim, mln_geom(I)> v2e_t;
-  const v2e_t v2e;
-  mln_niter(v2e_t) e(v2e, v);
-  for_all(v)
-  {
-    output(v) = true;
-    for_all(e)
-      if (!input(e))
-	{
-	  output(v) = false;
-	  break;
-	}
-  }
-  return output;
+  return impl::erosion_e2v(mln::exact(input));
 }
 
 /// Dilation from vertices to edges (\f$\delta^\times\f$).
 template <typename I>
 inline
 mln_concrete(I)
-dilation_v2e(const mln::Image<I>& input_)
+dilation_v2e(const mln::Image<I>& input)
 {
-  const I& input = mln::exact(input_);
-  mln_concrete(I) output;
-  mln::initialize(output, input);
-  // Iterator on edges.
-  mln::p_n_faces_fwd_piter<I::dim, mln_geom(I)> e(input.domain(), 1);
-  // Edge-to-vertices neighborhood.
-  typedef mln::complex_lower_neighborhood<I::dim, mln_geom(I)> e2v_t;
-  const e2v_t e2v;
-  mln_niter(e2v_t) v(e2v, e);
-  for_all(e)
-  {
-    output(e) = false;
-    for_all(v)
-      if (input(v))
-	{
-	  output(e) = true;
-	  break;
-	}
-  }
-  return output;
+  return impl::dilation_v2e(mln::exact(input));
 }
 
+
+// ------------------------------ //
+// Other dilations and erosions.  //
+// ------------------------------ //
 
 /// Vertex dilation (\f$delta\f$).
 template <typename I>

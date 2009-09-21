@@ -1,5 +1,16 @@
 2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have dilations and erosions delegate to the right implementations.
+
+	* apps/graph-morpho/morpho.hh
+	(dilation_e2v(const mln::Image<I>&))
+	(erosion_v2e(const mln::Image<I>&))
+	(erosion_e2v(const mln::Image<I>&))
+	(dilation_v2e(const mln::Image<I>&)):
+	Here.
+
+2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add implementations of dilations/erosions on mln::image2d<T>.
 
 	* apps/graph-morpho/morpho.hh
