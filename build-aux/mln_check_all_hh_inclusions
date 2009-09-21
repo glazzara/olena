@@ -34,7 +34,14 @@ check()
     abs_dir=`abs_filepath $1`
     mln_based_dir=`mln_based_path $1`
 
-# Checking local all.hh
+
+    # Omitting internal directories.
+    # They are not supposed to contain all.hh files.
+    if [ -z "`echo $abs_dir | grep -v internal`" ]; then
+	return
+    fi
+
+    # Checking local all.hh
     if ! [ -e "$abs_dir/all.hh" ]; then
 	echo "WARNING: no all.hh header in $mln_based_dir" >&2
 	return
@@ -81,7 +88,8 @@ fi
 
 
 while [ $# -ne 0 ]; do
-    if [ "`basename $1`" != "all.hh" ]; then
+    if [ "`basename $1`" != "all.hh" ] && [ "`basename $1`" != "essential.hh" ]; then
+
 	check $1 "$report"
     fi
     shift

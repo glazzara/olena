@@ -32,7 +32,7 @@ check()
     local abs_path=`abs_filepath $1/all.hh`
 
 # Checking local all.hh
-    for dir in `find "$abs_path" -type d`; do
+    for dir in `find "$abs_path" -type d | grep -v internal`; do
 	if ! [ -e "$dir/all.hh" ]; then
 	    path=`mln_based_path $dir/all.hh`
 	    if [ -z "$2" ]; then

@@ -1,3 +1,11 @@
+2009-09-21 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Filter results in QA Scripts.
+
+	* build-aux/mln_check_all_hh_inclusions,
+	* build-aux/mln_check_missing_all_hh_headers: Filter non relevant
+	results.
+
 2009-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Configure milena/apps/data.hh.
