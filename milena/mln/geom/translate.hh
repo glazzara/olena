@@ -44,6 +44,8 @@
 
 # include <mln/literal/zero.hh>
 
+# include <mln/geom/bbox.hh>
+
 
 namespace mln
 {

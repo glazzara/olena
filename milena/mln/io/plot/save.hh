@@ -66,9 +66,11 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
-      template <typename I>
+
+      // FIXME: Make it generic.
+      template <typename T>
       inline
-      void save(const image1d<I>& ima, const std::string& filename)
+      void save(const image1d<T>& ima, const std::string& filename)
       {
 	trace::entering("mln::io::plot::save");
 

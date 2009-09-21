@@ -1,3 +1,14 @@
+2009-09-21 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Small changes.
+
+	* mln/geom/translate.hh: Add a missing header.
+
+	* mln/linear/gaussian.hh: Fix compilation warnings.
+
+	* mln/io/plot/save.hh,
+	* mln/value/hsl.hh: Add fixmes according to Yann's comments.
+
 2009-09-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* mln/linear/gaussian.hh: Make linear::gaussian more generic.

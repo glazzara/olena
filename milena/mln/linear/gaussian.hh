@@ -398,7 +398,7 @@ namespace mln
         if (dir == 0)
         {
           // Apply on rows.
-          for (unsigned j = geom::min_col(img); j <= geom::max_col(img); ++j)
+          for (def::coord j = geom::min_col(img); j <= geom::max_col(img); ++j)
             recursivefilter_<mln_value(I)>(img, coef,
                                            point2d(static_cast<def::coord>(geom::min_row(img) - img.border()),
 						   static_cast<def::coord>(j)),
@@ -412,7 +412,7 @@ namespace mln
         if (dir == 1)
         {
           // Apply on columns.
-          for (unsigned i = geom::min_row(img); i <= geom::max_row(img); ++i)
+          for (def::coord i = geom::min_row(img); i <= geom::max_row(img); ++i)
             recursivefilter_<mln_value(I)>(img, coef,
                                            point2d(static_cast<def::coord>(i),
 						   static_cast<def::coord>(geom::min_col(img) - img.border())),
@@ -436,8 +436,8 @@ namespace mln
         if (dir == 0)
         {
           // Apply on slices.
-          for (unsigned j = geom::min_row(img); j <= geom::max_row(img); ++j)
-            for (unsigned k = geom::min_col(img); k <= geom::max_col(img); ++k)
+          for (def::coord j = geom::min_row(img); j <= geom::max_row(img); ++j)
+            for (def::coord k = geom::min_col(img); k <= geom::max_col(img); ++k)
               recursivefilter_<mln_value(I)>(img, coef,
                                              point3d(static_cast<def::coord>(-img.border()),
 						     static_cast<def::coord>(j),
@@ -455,8 +455,8 @@ namespace mln
         if (dir == 1)
         {
           // Apply on rows.
-          for (unsigned i = geom::min_sli(img); i <= geom::max_sli(img); ++i)
-            for (unsigned k = geom::min_col(img); k <= geom::max_col(img); ++k)
+          for (def::coord i = geom::min_sli(img); i <= geom::max_sli(img); ++i)
+            for (def::coord k = geom::min_col(img); k <= geom::max_col(img); ++k)
               recursivefilter_<mln_value(I)>(img, coef,
                                              point3d(static_cast<def::coord>(i),
 						     static_cast<def::coord>(-img.border()),
@@ -473,8 +473,8 @@ namespace mln
         if (dir == 2)
         {
           // Apply on columns.
-          for (unsigned i = geom::min_sli(img); i <= geom::max_sli(img); ++i)
-            for (unsigned j = geom::min_row(img); j <= geom::max_row(img); ++j)
+          for (def::coord i = geom::min_sli(img); i <= geom::max_sli(img); ++i)
+            for (def::coord j = geom::min_row(img); j <= geom::max_row(img); ++j)
               recursivefilter_<mln_value(I)>(img, coef,
                                              point3d(static_cast<def::coord>(i),
 						     static_cast<def::coord>(j),

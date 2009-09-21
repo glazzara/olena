@@ -199,6 +199,8 @@ namespace mln
       L lum_;
     };
 
+
+    // FIXME: Use float01_8/float01_16 ?
     typedef hsl_<float, float, float> hsl_f;
 
     typedef hsl_<double, double, double> hsl_d;
