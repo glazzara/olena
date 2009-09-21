@@ -50,6 +50,12 @@ namespace mln
       return p.row() % 2;
     }
 
+    // Pixel to neighboring edges.
+    const neighb2d& p2e()
+    {
+      return c4();
+    }
+
     // Edge to (the couple of) pixels.
     const dbl_neighb2d& e2p()
     {

@@ -1,5 +1,12 @@
 2009-09-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Implement pixel-to-edges adjacency in mln::cplx2d.
+
+	* theo/esiee/laurent/ismm09/cplx2d.hh (mln::cplx2d::p2e):
+	New function.
+
+2009-09-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve theo/esiee/laurent/ismm09/cplx2d.hh.
 
 	* theo/esiee/laurent/ismm09/cplx2d.hh: Add header guards.
