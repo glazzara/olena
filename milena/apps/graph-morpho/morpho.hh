@@ -495,8 +495,8 @@ mln_concrete(I)
 asf(const mln::Image<I>& input, unsigned lambda)
 {
   mln_concrete(I) output = mln::duplicate(input);
-  for (unsigned m = 0; m < lambda; ++m)
-    output = half_opening_graph(half_closing_graph(output));
+  for (unsigned m = 1; m <= lambda; ++m)
+    output = opening(closing(output, m), m);
   return output;
 }
 
