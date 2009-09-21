@@ -1,5 +1,15 @@
 2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	New application: apps/graph-morpho/samples-image2d.
+
+	* apps/graph-morpho/samples-image2d.cc: New.
+	* apps/graph-morpho/Makefile.am
+	(noinst_PROGRAMS): Add samples-image2d.
+	(samples_image2d_SOURCES): New.
+	(TESTS): Add samples-image2d.
+
+2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have dilations and erosions delegate to the right implementations.
 
 	* apps/graph-morpho/morpho.hh
