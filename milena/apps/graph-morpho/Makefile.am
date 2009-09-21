@@ -20,9 +20,9 @@ AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
-noinst_PROGRAMS = complex1d
-complex1d_SOURCES = complex1d.cc io.hh morpho.hh
+noinst_PROGRAMS = samples-complex1d
+samples_complex1d_SOURCES = samples-complex1d.cc io.hh morpho.hh
 
-TESTS = complex1d
+TESTS = samples-complex1d
 
 EXTRA_DIST = x.pbm y.pbm z.pbm

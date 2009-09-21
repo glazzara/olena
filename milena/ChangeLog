@@ -1,3 +1,11 @@
+2009-09-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Rename graph morphology application complex1d to samples-complex1d.
+
+	* apps/graph-morpho/complex1d.cc: Rename as...
+	* apps/graph-morpho/samples-complex1d.cc: ...this.
+	* apps/graph-morpho/Makefile.am (noinst_PROGRAMS): Adjust.
+
 2009-09-21 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Small changes.
