@@ -1,3 +1,15 @@
+2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Reify the construction of image2d-based complex images.
+
+	* apps/graph-morpho/make_complex2d.hh: New file.
+	* apps/graph-morpho/asf-complex1d.cc: Move the construction of
+	the image2d-based complex...
+	* apps/graph-morpho/make_complex2d.hh (make_complex2d):
+	...here (new function).
+	* apps/graph-morpho/Makefile.am
+	(noinst_HEADERS): Add make_complex2d.hh.
+
 2009-09-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	New application: apps/graph-morpho/asf-complex1d.

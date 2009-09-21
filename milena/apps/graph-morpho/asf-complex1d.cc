@@ -35,7 +35,9 @@
 
 #include "apps/graph-morpho/morpho.hh"
 
+#include "apps/graph-morpho/make_complex2d.hh"
 #include "apps/graph-morpho/io.hh"
+
 #include "apps/data.hh"
 
 
@@ -47,46 +49,10 @@ int main()
   image2d<bool> input =
     io::pbm::load(MLN_APPS_DIR "/graph-morpho/zebra-noisy.pbm");
 
-  // Create a graph image by doubling the resolution of the input
-  // image to insert edges between pixels.
-  image2d<bool> input_x2(2 * input.nrows() - 1, 2 * input.ncols() - 1);
-  mln_piter_(image2d<bool>) p(input_x2.domain());
-  for_all(p)
-  {
-    point2d p_= p;
-    if (p_.row() % 2 == 0)
-      {
-	if (p_.col() % 2 == 0)
-	  // Pixel site.
-	  input_x2(p) = input.at_(p_.row() / 2, p_.col() / 2);
-	else
-	  // Horizontal edge site.
-	  input_x2(p) =
-	    input.at_(p_.row() / 2, (p_.col() - 1) / 2) &&
-	    input.at_(p_.row() / 2, (p_.col() + 1) / 2);
-      }
-    else
-      {
-	if (p_.col() % 2 == 0)
-	  // Vertical edge site.
-	  input_x2(p) =
-	    input.at_((p_.row() - 1) / 2, p_.col() / 2) &&
-	    input.at_((p_.row() + 1) / 2, p_.col() / 2);
-	else
-	  // Square site (not handled, but still set for possible
-	  // debug outputs).
-	  input_x2(p) = 
-	    input.at_((p_.row() - 1) / 2, (p_.col() - 1) / 2) &&
-	    input.at_((p_.row() - 1) / 2, (p_.col() + 1) / 2) &&
-	    input.at_((p_.row() + 1) / 2, (p_.col() - 1) / 2) &&
-	    input.at_((p_.row() + 1) / 2, (p_.col() + 1) / 2);
-      }
-  }
-
-// #if 0
-  // FIXME: Debug (remove).
-  io::pbm::save(input_x2, "output.pbm");
-// #endif
+  // Create an binary 2d image representing a 4-connexity graph image
+  // (actually, a cubical 2-complex) by doubling the resolution of the
+  // input image to insert edges (and squares) between pixels.
+  image2d<bool> input_x2 = make_complex2d(input);
 
   /* Binary graph-based image with vertices aligned on a discrete 2D grid.
 
