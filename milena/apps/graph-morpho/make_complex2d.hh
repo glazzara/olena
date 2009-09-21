@@ -37,7 +37,9 @@
    
     The values set on "edge" sites and "square" sites are a
     conjunction of the values on the face of the adjacent faces of
-    immediate lower dimension.  */
+    immediate lower dimension.
+
+    The converse operation is unmake_complex2d.  */
 template <typename I>
 inline
 mln_concrete(I)
@@ -87,5 +89,43 @@ make_complex2d(const mln::Image<I>& input_)
   }
   return output;
 }
+
+
+/** \brief Create an image of pixels from a binary 2D image
+    representing a cubical 2-complex by dividing the resolution of the
+    image \a input image by two.
+
+    Basically, this is the converse of make_complex2d.  */
+template <typename I>
+inline
+mln_concrete(I)
+unmake_complex2d(const mln::Image<I>& input_)
+{
+  using namespace mln;
+
+  const I& input = exact(input_);
+  // The input image must have an odd number of rows and columns.
+  mln_precondition(input.nrows() % 2 == 1);
+  mln_precondition(input.ncols() % 2 == 1);
+
+  // Create a (morpher) image of the pixels of INPUT.
+  typedef image_if< const I, cplx2d::predicate_t > J;
+  J input_pixels = input | cplx2d::is_pixel;
+
+  /* FIXME: The construction of OUTPUT is obvioulsy not generic, since
+     it expects I's domain to provide the interface of an mln::box2d.
+     There should be a static precondition on I at the beginning of
+     this function.  */
+  typedef mln_concrete(I) O;
+  // FIXME: This won't work if INPUT's domain does not start at (0,0).
+  O output(input.nrows() / 2 + 1, input.ncols() / 2 + 1);
+
+  mln_piter(J) p_in(input_pixels.domain());
+  mln_piter(O) p_out(output.domain());
+  for_all_2(p_in, p_out)
+    output(p_out) = input(p_in);
+  return output;
+}
+
 
 #endif // ! APPS_GRAPH_MORPHO_MAKE_COMPLEX2D_HH

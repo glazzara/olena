@@ -1,5 +1,12 @@
 2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Deconstruction of image2d-based complex images.
+
+	* apps/graph-morpho/make_complex2d.hh (unmake_complex2d):
+	New function.
+
+2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Reify the construction of image2d-based complex images.
 
 	* apps/graph-morpho/make_complex2d.hh: New file.
