@@ -1,5 +1,16 @@
 2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add implementations of dilations/erosions on mln::image2d<T>.
+
+	* apps/graph-morpho/morpho.hh
+	(impl::dilation_e2v(const mln::image2d<T>&))
+	(impl::erosion_v2e(const mln::image2d<T>&))
+	(impl::erosion_e2v(const mln::image2d<T>&))
+	(impl::dilation_v2e(const mln::image2d<T>&)):
+	New functions.
+
+2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Introduce a ``tolerant'' image_if morpher.
 
 	* apps/graph-morpho/image_if_large.hh: New.

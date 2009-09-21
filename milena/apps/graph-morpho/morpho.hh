@@ -47,6 +47,8 @@
 
 # include <mln/data/paste.hh>
 
+# include "apps/graph-morpho/image_if_large.hh"
+
 // FIXME: Careful, cplx2d.hh is a symlink to a file in Théo's sandbox,
 // and might be changed.
 # include "apps/graph-morpho/cplx2d.hh"
@@ -324,6 +326,75 @@ namespace impl
 	    break;
 	  }
     }
+    return output;
+  }
+
+  // ------------------------------------------------------------- //
+  // Implementations on (mln::image2d-based) cubical 2-complexes.  //
+  // ------------------------------------------------------------- //
+
+  /* Note the operator `||' in the following routines: we have to use
+     our own ``tolerant'' version of mln::image_if (namely
+     mln::image_if_large) for these dilations and erosions to
+     work.  */
+
+  /// Dilation from edges to vertices (\f$\delta^\bullet\f$) on
+  /// an mln::image2d<T>-based cubical complex.
+  template <typename T>
+  inline
+  mln::image2d<T>
+  dilation_e2v(const mln::image2d<T>& input)
+  {
+    mln::image2d<T> output(input.domain());
+    mln::data::fill(output, false);
+    mln::data::paste(dilation(input || mln::cplx2d::is_pixel,
+			      mln::cplx2d::p2e()),
+		     output);
+    return output;
+  }
+
+  /// Erosion from vertices to edges (\f$\epsilon^\times\f$) on an
+  /// mln::image2d<T>-based cubical complex.
+  template <typename T>
+  inline
+  mln::image2d<T>
+  erosion_v2e(const mln::image2d<T>& input)
+  {
+    mln::image2d<T> output(input.domain());
+    mln::data::fill(output, false);
+    mln::data::paste(erosion(input || mln::cplx2d::is_edge,
+			     mln::cplx2d::e2p()),
+		     output);
+    return output;
+  }
+
+  /// Erosion from edges to vertices (\f$\epsilon^\bullet\f$) on an
+  /// mln::image2d<T>-based cubical complex.
+  template <typename T>
+  inline
+  mln::image2d<T>
+  erosion_e2v(const mln::image2d<T>& input)
+  {
+    mln::image2d<T> output(input.domain());
+    mln::data::fill(output, false);
+    mln::data::paste(erosion(input || mln::cplx2d::is_pixel,
+			     mln::cplx2d::p2e()),
+		     output);
+    return output;
+  }
+
+  /// Dilation from vertices to edges (\f$\delta^\times\f$) on an
+  /// mln::image2d<T>-based cubical complex.
+  template <typename T>
+  inline
+  mln::image2d<T>
+  dilation_v2e(const mln::image2d<T>& input)
+  {
+    mln::image2d<T> output(input.domain());
+    mln::data::fill(output, false);
+    mln::data::paste(dilation(input || mln::cplx2d::is_edge,
+			      mln::cplx2d::e2p()),
+		     output);
     return output;
   }
 
