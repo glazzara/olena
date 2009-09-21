@@ -1,5 +1,16 @@
 2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add implementations of dilations/erosions on bin_1complex_image2d.
+
+	* apps/graph-morpho/morpho.hh
+	(impl::dilation_e2v(const mln::bin_1complex_image2d&))
+	(impl::erosion_v2e(const mln::bin_1complex_image2d&))
+	(impl::erosion_e2v(const mln::bin_1complex_image2d&))
+	(impl::dilation_v2e(const mln::bin_1complex_image2d&)):
+	New functions.
+
+2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have combine delegate to impl::combine.
 
 	* apps/graph-morpho/morpho.hh (combine): Here.

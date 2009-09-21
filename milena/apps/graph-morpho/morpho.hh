@@ -126,22 +126,142 @@ combine(const mln::Image<I>& vertices, const mln::Image<I>& edges)
 | Dilations and erosions.  |
 `-------------------------*/
 
-/* FIXME: By constraining the domain of the input and passing the
-   neighborhood, one should be able to use a truly generic dilation
-   (resp. erosion), or even use Milena's standard morpho::dilation
-   (resp. morpho::erosion).
+namespace impl
+{
+  // ------------------------------------------ //
+  // Implementations on (general) 2-complexes.  //
+  // ------------------------------------------ //
 
-   It'd be convenient to write something like this:
+  /* FIXME: By constraining the domain of the input and passing the
+     neighborhood, one should be able to use a truly generic dilation
+     (resp. erosion), or even use Milena's standard morpho::dilation
+     (resp. morpho::erosion).
+  
+     It'd be convenient to write something like this:
+  
+       dilation(ima | vertices);
+  
+     We can /actually/ write this, but `vertices' has to be a predicate
+     on sites (p2b function), which is not efficient, since both
+     vertices and edges will be browsed.
+  
+     It would be very nice if `vertices' could be an actual site set,
+     so that `ima | vertices' creates a morpher smart enough to
+     browse /only/ vertices.  */
 
-      dilation(ima | vertices);
+  /// Dilation from edges to vertices (\f$\delta^\bullet\f$) on
+  /// mln::bin_1complex_image2d.
+  inline
+  mln::bin_1complex_image2d
+  dilation_e2v(const mln::bin_1complex_image2d& input)
+  {
+    mln::bin_1complex_image2d output;
+    mln::initialize(output, input);
+    typedef mln_geom_(mln::bin_1complex_image2d) geom_t;
+    // Iterator on vertices.
+    mln::p_n_faces_fwd_piter<1, geom_t> v(input.domain(), 0);
+    // Vertex-to-edges neighborhood.
+    typedef mln::complex_higher_neighborhood<1, geom_t> v2e_t;
+    const v2e_t v2e;
+    mln_niter_(v2e_t) e(v2e, v);
+    for_all(v)
+    {
+      output(v) = false;
+      for_all(e)
+	if (input(e))
+	  {
+	    output(v) = true;
+	    break;
+	  }
+    }
+    return output;
+  }
 
-   We can /actually/ write this, but `vertices' has to be a predicate
-   on sites (p2b function), which is not efficient, since both
-   vertices and edges will be browsed.
+  /// Erosion from vertices to edges (\f$\epsilon^\times\f$) on
+  /// mln::bin_1complex_image2d.
+  inline
+  mln::bin_1complex_image2d
+  erosion_v2e(const mln::bin_1complex_image2d& input)
+  {
+    mln::bin_1complex_image2d output;
+    mln::initialize(output, input);
+    typedef mln_geom_(mln::bin_1complex_image2d) geom_t;
+    // Iterator on edges.
+    mln::p_n_faces_fwd_piter<1, geom_t> e(input.domain(), 1);
+    // Edge-to-vertices neighborhood.
+    typedef mln::complex_lower_neighborhood<1, geom_t> e2v_t;
+    const e2v_t e2v;
+    mln_niter_(e2v_t) v(e2v, e);
+    for_all(e)
+    {
+      output(e) = true;
+      for_all(v)
+	if (!input(v))
+	  {
+	    output(e) = false;
+	    break;
+	  }
+    }
+    return output;
+  }
 
-   It would be very nice if `vertices' could be an actual site set,
-   so that `ima | vertices' creates a morpher smart enough to
-   browse /only/ vertices.  */
+  /// Erosion from edges to vertices (\f$\epsilon^\bullet\f$) on
+  /// mln::bin_1complex_image2d.
+  inline
+  mln::bin_1complex_image2d
+  erosion_e2v(const mln::bin_1complex_image2d& input)
+  {
+    mln::bin_1complex_image2d output;
+    mln::initialize(output, input);
+    typedef mln_geom_(mln::bin_1complex_image2d) geom_t;
+    // Iterator on vertices.
+    mln::p_n_faces_fwd_piter<1, geom_t> v(input.domain(), 0);
+    // Vertex-to-edges neighborhood.
+    typedef mln::complex_higher_neighborhood<1, geom_t> v2e_t;
+    const v2e_t v2e;
+    mln_niter_(v2e_t) e(v2e, v);
+    for_all(v)
+    {
+      output(v) = true;
+      for_all(e)
+	if (!input(e))
+	  {
+	    output(v) = false;
+	    break;
+	  }
+    }
+    return output;
+  }
+
+  /// Dilation from vertices to edges (\f$\delta^\times\f$) on
+  /// mln::bin_1complex_image2d.
+  inline
+  mln::bin_1complex_image2d
+  dilation_v2e(const mln::bin_1complex_image2d& input)
+  {
+    mln::bin_1complex_image2d output;
+    mln::initialize(output, input);
+    typedef mln_geom_(mln::bin_1complex_image2d) geom_t;
+    // Iterator on edges.
+    mln::p_n_faces_fwd_piter<1, geom_t> e(input.domain(), 1);
+    // Edge-to-vertices neighborhood.
+    typedef mln::complex_lower_neighborhood<1, geom_t> e2v_t;
+    const e2v_t e2v;
+    mln_niter_(e2v_t) v(e2v, e);
+    for_all(e)
+    {
+      output(e) = false;
+      for_all(v)
+	if (input(v))
+	  {
+	    output(e) = true;
+	    break;
+	  }
+    }
+    return output;
+  }
+
+}
 
 /// Dilation from edges to vertices (\f$\delta^\bullet\f$).
 template <typename I>
