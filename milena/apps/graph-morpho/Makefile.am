@@ -20,9 +20,10 @@ AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
-noinst_PROGRAMS = samples-complex1d
-samples_complex1d_SOURCES = samples-complex1d.cc io.hh morpho.hh
+noinst_HEADERS = io.hh morpho.hh
 
+noinst_PROGRAMS = samples-complex1d
+samples_complex1d_SOURCES = samples-complex1d.cc
 TESTS = samples-complex1d
 
 # Graph images stored in 2D PBM files.

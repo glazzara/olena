@@ -1,5 +1,14 @@
 2009-09-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix apps/graph-morpho/Makefile.am.
+
+	* apps/graph-morpho/Makefile.am
+	(samples_complex1d_SOURCES): Move io.hh and morpho.hh...
+	(noinst_HEADERS): ...here (new variable).
+	* apps/graph-morpho/samples-complex1d.cc: Remove dead code.
+
+2009-09-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add images to exercise ASFs on graph images.
 
 	* apps/graph-morpho/zebra.pbm,

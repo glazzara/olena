@@ -42,9 +42,6 @@ int main()
 {
   using namespace mln;
 
-  // A graph is considered as a 1-complex here.
-  const unsigned dim = 1;
-  typedef topo::complex<dim> complex_t;
   /* Binary graph-based image with vertices aligned on a discrete 2D grid.
 
      Of course, it would have been better, simpler and faster to use a
