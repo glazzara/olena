@@ -1,5 +1,13 @@
 2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add impl::combine for mln::bin_1complex_image2d.
+
+	* apps/graph-morpho/morpho.hh
+	(combine(const bin_1complex_image2d&, const bin_1complex_image2d&)):
+	New function.
+
+2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Deconstruction of image2d-based complex images.
 
 	* apps/graph-morpho/make_complex2d.hh (unmake_complex2d):

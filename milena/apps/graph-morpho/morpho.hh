@@ -36,7 +36,7 @@
       International Symposium on Mathematical Morphology (ISMM), 2009,
       Groningen, The Netherlands.  */
 
-# include <mln/core/concept/image.hh>
+# include <mln/core/alias/complex_image.hh>
 
 # include <mln/core/routine/duplicate.hh>
 
@@ -48,6 +48,35 @@
 /*----------------------------.
 | Vertices-edges combinator.  |
 `----------------------------*/
+
+namespace impl
+{
+  // ------------------------------------------ //
+  // Implementations on (general) 2-complexes.  //
+  // ------------------------------------------ //
+
+  /// Combine the vertices and the edges of two
+  /// mln::bin_1complex_image2d images to create a new graph image
+  /// (``operator'' \f$\ovee\f$)
+  inline
+  mln::bin_1complex_image2d
+  combine(const mln::bin_1complex_image2d& vertices,
+	  const mln::bin_1complex_image2d& edges)
+  {
+    mln_precondition(vertices.domain() == edges.domain());
+
+    mln::bin_1complex_image2d output;
+    mln::initialize(output, vertices);
+    typedef mln_geom_(mln::bin_1complex_image2d) geom_t;
+    mln::p_n_faces_fwd_piter<1, geom_t> v(output.domain(), 0);
+    for_all(v)
+      output(v) = vertices(v);
+    mln::p_n_faces_fwd_piter<1, geom_t> e(output.domain(), 1);
+    for_all(e)
+      output(e) = edges(e);
+    return output;
+  }
+}
 
 /// Combine the vertices and the edges of two images to create a new
 /// graph image (``operator'' \f$\ovee\f$).
