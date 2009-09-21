@@ -37,12 +37,19 @@
       Groningen, The Netherlands.  */
 
 # include <mln/core/alias/complex_image.hh>
+# include <mln/core/image/image2d.hh>
 
 # include <mln/core/routine/duplicate.hh>
 
 # include <mln/core/site_set/p_n_faces_piter.hh>
 # include <mln/core/image/complex_neighborhoods.hh>
 # include <mln/core/image/complex_neighborhood_piter.hh>
+
+# include <mln/data/paste.hh>
+
+// FIXME: Careful, cplx2d.hh is a symlink to a file in Théo's sandbox,
+// and might be changed.
+# include "apps/graph-morpho/cplx2d.hh"
 
 
 /*----------------------------.
@@ -74,6 +81,28 @@ namespace impl
     mln::p_n_faces_fwd_piter<1, geom_t> e(output.domain(), 1);
     for_all(e)
       output(e) = edges(e);
+    return output;
+  }
+
+  // ------------------------------------------------------------- //
+  // Implementations on (mln::image2d-based) cubical 2-complexes.  //
+  // ------------------------------------------------------------- //
+
+  /// Combine the vertices and the edges of two
+  /// mln::image2d<T> images to create a new graph image
+  /// (``operator'' \f$\ovee\f$)
+  template <typename T>
+  inline
+  mln::image2d<T>
+  combine(const mln::image2d<T>& vertices,
+	  const mln::image2d<T>& edges)
+  {
+    mln_precondition(vertices.domain() == edges.domain());
+    mln::image2d<T> output;
+    mln::initialize(output, vertices);
+    mln::data::fill(output, false);
+    mln::data::paste(vertices | mln::cplx2d::is_pixel, output);
+    mln::data::paste(edges | mln::cplx2d::is_edge, output);
     return output;
   }
 }
