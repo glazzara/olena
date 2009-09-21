@@ -1,3 +1,13 @@
+2009-09-21  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add disk_ima test, improve HSL operations.
+	*  fabien/igr/color/find_color.cc: Add operations on HSL values.
+	*  fabien/mln/core/image/disk_ima.hh: Implement an image directly
+	mapped on disk.
+	*  fabien/tests/core/image/Makefile: Add `disk_ima' target.
+	*  fabien/tests/core/image/disk_ima.cc: New test file for the
+	disk_ima class.
+
 2009-09-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	Implement pixel-to-edges adjacency in mln::cplx2d.
