@@ -22,9 +22,11 @@ AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
 noinst_HEADERS = io.hh morpho.hh
 
-noinst_PROGRAMS = samples-complex1d
+noinst_PROGRAMS = samples-complex1d asf-complex1d
 samples_complex1d_SOURCES = samples-complex1d.cc
-TESTS = samples-complex1d
+asf_complex1d_SOURCES = asf-complex1d.cc
+
+TESTS = samples-complex1d asf-complex1d
 
 # Graph images stored in 2D PBM files.
 EXTRA_DIST = x.pbm y.pbm z.pbm

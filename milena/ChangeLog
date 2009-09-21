@@ -1,5 +1,14 @@
 2009-09-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	New application: apps/graph-morpho/asf-complex1d.
+
+	* apps/graph-morpho/Makefile.am (noinst_PROGRAMS, TESTS):
+	Add asf-complex1d.
+	(asf_complex1d_SOURCES): New.
+	* apps/graph-morpho/asf-complex1d.cc: New.
+
+2009-09-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix apps/graph-morpho/Makefile.am.
 
 	* apps/graph-morpho/Makefile.am
