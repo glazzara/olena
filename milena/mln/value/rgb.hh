@@ -29,7 +29,7 @@
 
 # include <mln/value/ops.hh>
 
-// # include <mln/fun/v2v/hsl_to_rgb.hh>
+# include <mln/fun/v2v/hsl_to_rgb.hh>
 # include <mln/value/concept/vectorial.hh>
 # include <mln/value/int_u.hh>
 # include <mln/algebra/vec.hh>
@@ -42,24 +42,24 @@ namespace mln
 
 
 
-//   namespace fun
-//   {
+   namespace fun
+   {
 
-//     namespace v2v
-//     {
+     namespace v2v
+     {
 
-//       template <typename T_rgb>
-//       struct f_hsl_to_rgb_;
+       template <typename T_rgb>
+       struct f_hsl_to_rgb_;
 
-//       typedef f_hsl_to_rgb_< value::rgb<8> > f_hsl_to_rgb_3x8_t;
+       typedef f_hsl_to_rgb_< value::rgb<8> > f_hsl_to_rgb_3x8_t;
 //       typedef f_hsl_to_rgb_< value::rgb<16> > f_hsl_to_rgb_3x16_t;
 
-//       extern f_hsl_to_rgb_3x8_t f_hsl_to_rgb_3x8;
+       extern f_hsl_to_rgb_3x8_t f_hsl_to_rgb_3x8;
 //       extern f_hsl_to_rgb_3x16_t f_hsl_to_rgb_3x16;
 
-//     }
+     }
 
-//   }
+   }
 
 
   namespace literal
@@ -90,11 +90,11 @@ namespace mln
   }
 
 
-//   // Forward declaration.
-//   namespace value
-//   {
-//     template <typename H, typename S, typename L> class hsl_;
-//   }
+   // Forward declaration.
+   namespace value
+   {
+     template <typename H, typename S, typename L> class hsl_;
+   }
 
 
   namespace convert
@@ -115,9 +115,9 @@ namespace mln
       template <unsigned m>
       void from_to_(const value::int_u<m>& from, value::rgb<m>& to);
 
-//       // hsl -> rgb8.
-//       template <typename H, typename S, typename L>
-//       void from_to_(const value::hsl_<H,S,L>&, value::rgb<8>& to);
+       // hsl -> rgb8.
+       template <typename H, typename S, typename L>
+       void from_to_(const value::hsl_<H,S,L>&, value::rgb<8>& to);
 
 //       // hsl -> rgb16.
 //       template <typename H, typename S, typename L>
@@ -791,12 +791,12 @@ namespace mln
 	to = value::rgb<m>(from, from, from);
       }
 
-//       template <typename H, typename S, typename L>
-//       void
-//       from_to_(const value::hsl_<H,S,L>& from, value::rgb<8>& to)
-//       {
-// 	to = fun::v2v::f_hsl_to_rgb_3x8(from);
-//       }
+       template <typename H, typename S, typename L>
+       void
+       from_to_(const value::hsl_<H,S,L>& from, value::rgb<8>& to)
+       {
+	 to = fun::v2v::f_hsl_to_rgb_3x8(from);
+       }
 
 //       template <typename H, typename S, typename L>
 //       void

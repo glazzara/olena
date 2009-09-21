@@ -1,3 +1,9 @@
+2009-09-21  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add new algorithm for conversion HSL to RGB.
+	*  mln/fun/v2v/hsl_to_rgb.hh: Add new algorithm for conversion.
+	*  mln/value/rgb.hh: Enable convertion to HSL.
+
 2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	New application: apps/graph-morpho/asf-image2d.

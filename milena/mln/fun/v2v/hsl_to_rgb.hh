@@ -92,40 +92,75 @@ namespace mln
       /// \}
 
 
+      // This method implement the conversion from HSL to RGB
+      // explained by Wikipedia.
+      // url: http://en.wikipedia.org/wiki/HSL_and_HSV
       template <typename T_rgb>
       template <typename T_hsl>
       inline
       T_rgb
       f_hsl_to_rgb_<T_rgb>::operator()(const T_hsl& hsl) const
       {
-	typedef typename T_rgb::red_t   red_t;
-	typedef typename T_rgb::green_t green_t;
-	typedef typename T_rgb::blue_t  blue_t;
+	const float q = (hsl.lum() < 0.5) ? hsl.lum() * (1.0 + hsl.sat()) :
+					    hsl.lum() + hsl.sat() - (hsl.lum() * hsl.sat());
+	const float p = 2.0 * hsl.lum() - q;
+	const float hk = hsl.hue() / 360.0; // hk = normalized hue
+	float tr = hk + (1.0 / 3.0);
+	float tg = hk;
+	float tb = hk - (1.0 / 3.0);
 
-	static math::round<red_t>   to_r;
-	static math::round<green_t> to_g;
-	static math::round<blue_t>  to_b;
+	if (tr < 0.0)
+	  tr += 1.0;
+	if (tr > 1.0)
+	  tr -= 1.0;
 
-	static const float
-	  sqrt3_3 = std::sqrt(3.0f) / 3.0f,
-		  inv_sqrt6 = 1 / std::sqrt(6.0f),
-		  inv_sqrt2 = 1 / std::sqrt(2.0f);
+	if (tg < 0.0)
+	  tg += 1.0;
+	if (tg > 1.0)
+	  tg -= 1.0;
 
-	float
-	  h = hsl.hue() / 180.0 * 3.1415,
-	    alpha = hsl.sat() * std::cos(h),
-	    beta = hsl.sat() * std::sin(h);
+	if (tb < 0.0)
+	  tb += 1.0;
+	if (tb > 1.0)
+	  tb -= 1.0;
 
+	// Red.
+	float red;
+	if (tr < (1.0 / 6.0))
+	  red = p + ((q - p) * 6 * tr);
+	else if (tr < (1.0 / 2.0))
+	  red = q;
+	else if (tr < (2.0 / 3.0))
+	  red = p + ((q - p) * 6 * ((2.0 / 3.0) - tr));
+	else
+	  red = p;
 
-	red_t   r = to_r(sqrt3_3 * hsl.lum() + 2 * inv_sqrt6 * beta);
-	green_t g =
-	  to_g(sqrt3_3 * hsl.lum() + inv_sqrt2 * alpha - inv_sqrt6 * beta);
-	blue_t  b =
-	  to_b(sqrt3_3 * hsl.lum() - inv_sqrt2 * alpha - inv_sqrt6 * beta);
+	// Green.
+	float green;
+	if (tg < (1.0 / 6.0))
+	  green = p + ((q - p) * 6 * tg);
+	else if (tg < (1.0 / 2.0))
+	  green = q;
+	else if (tg < (2.0 / 3.0))
+	  green = p + ((q - p) * 6 * ((2.0 / 3.0) - tg));
+	else
+	  green = p;
 
-	T_rgb rgb(r, g, b);
+	// Blue.
+	float blue;
+	if (tb < (1.0 / 6.0))
+	  blue = p + ((q - p) * 6 * tb);
+	else if (tb < (1.0 / 2.0))
+	  blue = q;
+	else if (tb < (2.0 / 3.0))
+	  blue = p + ((q - p) * 6 * ((2.0 / 3.0) - tb));
+	else
+	  blue = p;
 
-	return rgb;
+	// Each component is in [0, 1].
+	T_rgb rgb_result(red * 255, green * 255, blue * 255);
+
+	return rgb_result;
       }
 
 # endif // !MLN_INCLUDE_ONLY
