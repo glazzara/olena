@@ -1,3 +1,10 @@
+2009-09-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve theo/esiee/laurent/ismm09/cplx2d.hh.
+
+	* theo/esiee/laurent/ismm09/cplx2d.hh: Add header guards.
+	Include mln/value/int_u8.hh.
+
 2009-09-17  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix index value bug.

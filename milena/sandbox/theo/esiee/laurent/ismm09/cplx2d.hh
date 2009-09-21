@@ -1,7 +1,11 @@
+#ifndef CPLX2D_HH
+# define CPLX2D_HH
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/make/double_neighb2d.hh>
+
+#include <mln/value/int_u8.hh>
 
 #include <mln/pw/all.hh>
 #include <mln/core/image/dmorph/image_if.hh>
@@ -148,3 +152,5 @@ namespace mln
   } // end of namespace mln::cplx2d
 
 } // end of namespace mln
+
+#endif // ! CPLX2D_HH
