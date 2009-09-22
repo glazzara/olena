@@ -1,3 +1,7 @@
+2009-09-22 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	* mln/core/alias/dpoint2d.hh: Add new dpoint2d aliases.
+
 2009-09-22  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix HSL values in test.

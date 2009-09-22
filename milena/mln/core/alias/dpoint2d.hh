@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -59,6 +60,11 @@ namespace mln
   extern const dpoint2d left;
   extern const dpoint2d right;
 
+  extern const dpoint2d up_left;
+  extern const dpoint2d up_right;
+  extern const dpoint2d down_left;
+  extern const dpoint2d down_right;
+
   /// \}
 
 
@@ -69,6 +75,11 @@ namespace mln
   const dpoint2d down  = dpoint2d( +1,  0 );
   const dpoint2d left  = dpoint2d(  0, -1 );
   const dpoint2d right = dpoint2d(  0, +1 );
+
+  const dpoint2d up_left     = dpoint2d( -1,  -1 );
+  const dpoint2d up_right    = dpoint2d( -1,  +1 );
+  const dpoint2d down_left   = dpoint2d( +1,  -1 );
+  const dpoint2d down_right  = dpoint2d( +1,  +1 );
 
 # endif // ! MLN_INCLUDE_ONLY
 
