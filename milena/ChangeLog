@@ -189,6 +189,12 @@
 	* tests/geom/Makefile.am,
 	* tests/geom/translate.cc: New test.
 
+2009-09-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Fix ISO C++ compilation problem : L101.
+
+	* mln/io/plot/load.hh (load) : Update source file.
+	
 2009-09-14  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Disable tiled2d image support (still experimental).
