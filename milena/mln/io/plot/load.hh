@@ -97,7 +97,10 @@ namespace mln
 	arr.clear();
 	std::ifstream file_in(filename.c_str());
 
-	int MAX_LENGTH = 100;
+	// int MAX_LENGTH = 100;
+	// ISO C++ CAN'T COMPILE WITH VARIABLE LENGTH ARRAY !!
+	// THUS MAKE IT CONSTANT
+	const int MAX_LENGTH = 100;
 	char line[MAX_LENGTH];
 	char delims[] = " ";
 	char *result = NULL;
