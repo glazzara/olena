@@ -54,6 +54,18 @@
 	starting from (0,0).
 	Initialize image extension correctly.
 
+2009-09-14  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Move stats directory in doc/examples.
+	
+	* green/doc/examples/stats                  : New directory.
+	* green/doc/examples/stats/Makefile.am      : Copy makefile.
+	* green/doc/examples/stats/stats.cc         : Copy source file.
+	
+	* green/stats/stats.cc                      : Remove source file.
+	* green/stats/Makefile.am                   : Remove makefile.
+	* green/stats                               : Remove directory.
+
 2009-09-13  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Save work in progress for histo and hsl. Everything is updated.
