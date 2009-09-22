@@ -54,20 +54,6 @@
 	starting from (0,0).
 	Initialize image extension correctly.
 
-2009-09-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
-
-	Fix bug in histo3d_rgb (parameters'order in Point's constructor)
-	
-	* green/mln/accu/stat/histo3d_hsl.hh
-	(take)                                             : Fix point's call.
-	* green/tests/accu/stat/histo3d_hsl/histo3d_hsl.cc
-	(conv)                                             : Delete func.
-	* green/tests/accu/stat/histo3d_hsl/histo3d_hsl.cc
-	(mean_histo, var_histo2)                           : Update func.
-
-	* green/mln/io/plot/save_histo_sh.hh               : .
-	* green/mln/io/plot/save_image_sh.hh               : New library file.
-
 2009-09-14  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Fix bug in histo3d_rgb (parameters'order in Point's constructor)
