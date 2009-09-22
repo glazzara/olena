@@ -1,5 +1,11 @@
 2009-09-22  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Adapt styles. Need some 2d code.
 	
+	* green/mln/io/plot/save_histo_sh.hh (save_histo_sh<2d>)   : New func.
+
+2009-09-22  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Fix bug in histo3d_hsl count method.
 	
 	* green/mln/accu/stat/histo3d_hsl.hh (take)           : Fix bug.
