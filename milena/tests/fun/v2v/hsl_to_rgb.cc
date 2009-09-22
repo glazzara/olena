@@ -41,8 +41,8 @@ int main()
   rgb8 ref[][2] = { { rgb8(0,0,0), rgb8(255,255,255) },
 		    { rgb8(128,128,128), rgb8(90,90, 90) } };
 
-  hsl_f dat[][2] = { { hsl_f(0,0,0), hsl_f(0,0,255) },
-		     { hsl_f(0,0,128), hsl_f(0,0,90) } };
+  hsl_f dat[][2] = { { hsl_f(0,0,0), hsl_f(0,0,1.0) },
+		     { hsl_f(0,0,128.0 / 255.0), hsl_f(0,0,90.0 / 255.0) } };
 
   image2d<rgb8> ref_ima = make::image(ref);
   image2d<hsl_f> ima = make::image(dat);

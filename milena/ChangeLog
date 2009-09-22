@@ -1,3 +1,8 @@
+2009-09-22  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Fix HSL values in test.
+	*  tests/fun/v2v/hsl_to_rgb.cc: Fix HSL values.
+
 2009-09-21  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add new algorithm for conversion HSL to RGB.
