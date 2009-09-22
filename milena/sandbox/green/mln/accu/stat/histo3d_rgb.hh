@@ -247,7 +247,8 @@ namespace mln
 
 	// Just convert a greyscale value (int_u8 like) to a position for an 
 	// iterator on the resulting image.
-	++count_(point3d(t.red(), t.green(), t.blue()));
+	// Take care to the constructor : Point(slice, row, column)
+	++count_(point3d(t.blue(), t.red(), t.green()));
 
 	trace::exiting("mln::accu::stat::histo3d_rgb<V>::take");
       }

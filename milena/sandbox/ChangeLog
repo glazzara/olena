@@ -56,6 +56,17 @@
 
 2009-09-14  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Fix bug in histo3d_rgb (parameters'order in Point's constructor)
+	
+	* green/mln/accu/stat/histo3d_rgb.hh
+	(take)                                             : Fix point's call.
+	* green/tests/accu/stat/histo3d_rgb/histo3d_rgb.cc
+	(conv)                                             : Delete func.
+	* green/tests/accu/stat/histo3d_rgb/histo3d_rgb.cc
+	(mean_histo, var_histo2)                           : Update func.
+
+2009-09-14  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Move stats directory in doc/examples.
 	
 	* green/doc/examples/stats                  : New directory.

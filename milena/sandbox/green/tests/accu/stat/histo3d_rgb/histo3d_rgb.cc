@@ -185,17 +185,6 @@ double count_histo(const mln::image3d<unsigned>& img)
   return result;
 }
 
-mln::algebra::vec<3,float> conv(const mln::algebra::vec<3,float>& vec)
-{
-  mln::algebra::vec<3,float> result;
-
-  result[0] = vec[2];
-  result[1] = vec[0];
-  result[2] = vec[1];
-
-  return result;
-}
-
 mln::algebra::vec<3,float> mean_histo(const mln::image3d<unsigned>& img)
 {
   mln_precondition(img.is_valid());
@@ -208,14 +197,8 @@ mln::algebra::vec<3,float> mean_histo(const mln::image3d<unsigned>& img)
 
   for_all(p)
   {
-    /*
-    std::cout << "(1) " << p << std::endl;
-    std::cout << "(2) " << (vec3f)p << std::endl;
-    std::cout << "(3) " << conv((vec3f)p) << std::endl;
-    */
     count += img(p);
-    sum   += conv((vec3f)p) * img(p);
-    // sum   += p.to_vec() * img(p);
+    sum   += p.to_vec() * img(p);
   }
 
   result = sum / count;
@@ -261,8 +244,7 @@ mln::algebra::mat<3,3,float> var_histo2(const mln::image3d<unsigned>& img)
 
   for_all(p)
   {
-    // point = p.to_vec() - mean;
-    point  = conv((vec3f)p) - mean;
+    point   = p.to_vec() - mean;
     result += img(p) * (point * point.t());
   }
 
