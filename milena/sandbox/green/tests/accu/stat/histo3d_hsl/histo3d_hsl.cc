@@ -9,6 +9,7 @@
 
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
+#include <mln/io/pfm/save.hh>
 #include <mln/io/plot/save.hh>
 
 #include <mln/data/compute.hh>
@@ -196,18 +197,26 @@ double count_histo(const mln::image3d<unsigned>& img)
   return result;
 }
 
-mln::algebra::vec<3,float> conv(const mln::algebra::vec<3,float>& vec)
+mln::algebra::vec<3,float> conv(const mln::algebra::vec<3,float>& vec,
+				const unsigned                    q)
 {
   mln::algebra::vec<3,float> result;
 
-  result[0] = vec[2];
-  result[1] = vec[0];
-  result[2] = vec[1];
+  /*
+  result[0] = vec[2] * (360.0/q);
+  result[1] = vec[0] * (1.0/q);
+  result[2] = vec[1] * (1.0/q);
+  */
+
+  result[0] = (vec[0]+0.5) * (360.0/q);
+  result[1] = (vec[1]+0.5) * (1.0/q);
+  result[2] = (vec[2]+0.5) * (1.0/q);
 
   return result;
 }
 
-mln::algebra::vec<3,float> mean_histo(const mln::image3d<unsigned>& img)
+mln::algebra::vec<3,float> mean_histo(const mln::image3d<unsigned>& img,
+				      const unsigned                  q)
 {
   mln_precondition(img.is_valid());
   typedef mln::algebra::vec<3,float> vec3f;
@@ -220,7 +229,7 @@ mln::algebra::vec<3,float> mean_histo(const mln::image3d<unsigned>& img)
   for_all(p)
   {
     count += img(p);
-    sum   += conv((vec3f)p) * img(p);
+    sum   += conv((vec3f)p, q) * img(p);
   }
 
   result = sum / count;
@@ -252,21 +261,22 @@ double var_histo(const mln::image3d<unsigned>& img)
   return result;
 }
 
-mln::algebra::mat<3,3,float> var_histo2(const mln::image3d<unsigned>& img)
+mln::algebra::mat<3,3,float> var_histo2(const mln::image3d<unsigned>& img,
+					const unsigned                q)
 {
   mln_precondition(img.is_valid());
   typedef mln::algebra::vec<3,float>   vec3f;
   typedef mln::algebra::mat<3,3,float> mat3f;
   
   double                             count  = count_histo(img);
-  vec3f                              mean   = mean_histo(img);
+  vec3f                              mean   = mean_histo(img,q);
   vec3f                              point;
   mat3f                              result = mln::literal::zero;
   mln_piter_(mln::image3d<unsigned>) p(img.domain());
 
   for_all(p)
   {
-    point  = conv((vec3f)p) - mean;
+    point  = conv((vec3f)p, q) - mean;
     result += img(p) * (point * point.t());
   }
 
@@ -287,26 +297,19 @@ hslf_2_vec3f::operator()(const mln::value::hsl_f& hsl) const
   return mln::make::vec(hsl.hue(), hsl.lum(), hsl.sat());
 }
 
-
-template <typename A, typename I, typename F>
-mln_result(A)
-compute(mln::Accumulator<A>& a_, 
-	const mln::Image<I>& input_,
-	const mln::Function_v2v<F>& fn_)
+struct hslf_2_h : public mln::Function_v2v< hslf_2_h >
 {
-  A&    a        = exact(a_);
-  const I& input = exact(input_);
-  const F& fn    = exact(fn_); 
+  typedef float result;
+  result operator()(const mln::value::hsl_f& hsl) const;
+};
 
-  mln_piter(I) p(input.domain());
-  for_all(p)
-    a.take(fn(input(p)));
-
-  return a.result();
+float
+hslf_2_h::operator()(const mln::value::hsl_f& hsl) const
+{
+  return hsl.hue();
 }
 
-
-template <unsigned n>
+template <unsigned n, unsigned q>
 void test_integration()
 {
   typedef mln::value::rgb8                         rgb8;
@@ -314,31 +317,41 @@ void test_integration()
   typedef mln::value::hsl_f                        hsl_f;
   typedef mln::algebra::vec<3,float>               vec3f;
   typedef mln::algebra::mat<3,3,float>             mat3f;
-  typedef mln::accu::math::count<hsl_f>            count;
-  typedef mln::accu::math::sum<hsl_f,vec3f>        sum;
-  typedef mln::accu::stat::mean<hsl_f,vec3f,vec3f> mean;
+  typedef mln::accu::math::count<vec3f>            count;
+  typedef mln::accu::math::sum<vec3f,vec3f>        sum;
+  typedef mln::accu::stat::mean<vec3f,vec3f,vec3f> mean;
   typedef mln::accu::stat::var<vec3f>              var;
 
   mln::image2d<rgb8>         img_fst;
   mln::image2d<rgbn>         img_sec;
-  mln::image2d<hsl_f>        img_ref;
+  mln::image2d<hsl_f>        img_thd;
+  mln::image2d<vec3f>        img_ref;
   mln::image3d<unsigned>     img_res;
 
-  mln::io::ppm::load(img_fst, OLENA_IMG_PATH"/lena.ppm");
+  mln::image2d<float>        img_sav;
+
+  //mln::io::ppm::load(img_fst, OLENA_IMG_PATH"/lena.ppm")
+  mln::io::ppm::load(img_fst, OLENA_IMG_PATH"/fly.ppm");
   img_sec = mln::data::transform(img_fst, mln::fun::v2v::rgb8_to_rgbn<n>());
-  img_ref = mln::data::transform(img_sec,mln::fun::v2v::f_rgb_to_hsl_<hsl_f>());
+  img_thd = mln::data::transform(img_sec,mln::fun::v2v::f_rgb_to_hsl_<hsl_f>());
 
-  const double count_ref = compute(count(), img_ref, hslf_2_vec3f());
+  img_sav = mln::data::transform(img_thd, hslf_2_h());
+  mln::io::plot::save_histo_sh(img_sav, "fly2.sh");
+
+  img_ref = mln::data::transform(img_thd, hslf_2_vec3f());
+
+  const double count_ref = mln::data::compute(count(), img_ref);
   //  const vec3f  sum_ref   = mln::data::compute(sum(),   img_ref);
-  const vec3f  mean_ref  = compute(mean(),  img_ref, hslf_2_vec3f());
-  const mat3f  var_ref   = compute(var(),   img_ref, hslf_2_vec3f());
-  
-  img_res = mln::data::compute(mln::accu::stat::histo3d_hsl<n,hsl_f>(),img_ref);
+  const vec3f  mean_ref  = mln::data::compute(mean(),  img_ref);  
+  const mat3f  var_ref   = mln::data::compute(var(),   img_ref);
 
+  img_res = mln::data::compute(mln::accu::stat::histo3d_hsl<q,hsl_f>(),img_thd);
+  
+  mln::io::plot::save_histo_sh(img_res, "fly3.sh");
 
   const double count_res = count_histo(img_res);
-  const vec3f  mean_res  = mean_histo(img_res);
-  const mat3f  var_res   = var_histo2(img_res);
+  const vec3f  mean_res  = mean_histo(img_res, q);
+  const mat3f  var_res   = var_histo2(img_res, q);
  
   std::cout << "count_ref : " << count_ref << std::endl;
   std::cout << "mean_ref  : " << mean_ref  << std::endl;
@@ -350,6 +363,7 @@ void test_integration()
 
   
   mln_assertion(count_ref == count_res);
+
   /*
   mln_assertion(0.0001 > abs(mean_ref[0] - mean_res[0]));
   mln_assertion(0.0001 > abs(mean_ref[1] - mean_res[1]));
@@ -402,7 +416,7 @@ int main()
   test_initialization<3>();
   test_take_argument<3>(); 
   test_take_other<3>();
-  test_integration<3>();
+  test_integration<3,7>();
   
   return 0;
 }

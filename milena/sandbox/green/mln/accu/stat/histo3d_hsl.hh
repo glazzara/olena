@@ -277,9 +277,23 @@ namespace mln
 	// mln::trait::value_<argument>::get_comp_0(t);
 	
 	// is def::coord1d the type of x, y, z ??
-	unsigned x = (t.hue() - min_hue)/q;
-	unsigned y = (t.lum() - min_lum)/q;
-	unsigned z = (t.sat() - min_sat)/q;
+	unsigned x = (t.hue() - min_hue)/step_hue;
+	unsigned y = (t.lum() - min_lum)/step_lum;
+	unsigned z = (t.sat() - min_sat)/step_sat;
+
+	
+	std::cout << "H : " << t.hue() << std::endl;
+	std::cout << "L : " << t.lum() << std::endl;
+	std::cout << "S : " << t.sat() << std::endl;
+
+	std::cout << "step_hue : " << step_hue << std::endl;
+	std::cout << "step_lum : " << step_lum << std::endl;
+	std::cout << "step_sat : " << step_sat << std::endl;
+
+	std::cout << "X : " << x << std::endl;
+	std::cout << "Y : " << y << std::endl;
+	std::cout << "Z : " << z << std::endl;
+	
 
 	// faire attention avec les histoires de points et leurs coordonnées
 	++count_(point3d(z, x, y));

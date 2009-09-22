@@ -1,3 +1,20 @@
+2009-09-22  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+	
+	Fix bug in histo3d_hsl count method.
+	
+	* green/mln/accu/stat/histo3d_hsl.hh (take)           : Fix bug.
+	* green/tests/accu/stat/histo3d_hsl/histo3d_hsl.cc
+	(count_histo, mean_histo, var_histo, test_integration): Fix bug.
+
+2009-09-22  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Put the basis of a general gnuplot shell export function.
+	
+	* green/mln/io/plot/save_image_sh.hh                 : New library file.
+	* green/tests/io/plot/save_image_sh                  : New directory.
+	* green/tests/io/plot/save_image_sh/Makefile         : New Makefile.
+	* green/tests/io/plot/save_image_sh/save_image_sh.cc : New unit tests.
+
 2009-09-21  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add disk_ima test, improve HSL operations.
