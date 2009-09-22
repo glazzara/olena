@@ -1,3 +1,11 @@
+2009-09-22 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Fix invalid output domain in hq*x algorithms.
+
+	* fabien/mln/upsampling/hq2x.hh,
+	* fabien/mln/upsampling/hq3x.hh,
+	* fabien/mln/upsampling/hq4x.hh: Fix invalid output domain.
+
 2009-09-22  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Adapt styles. Need some 2d code.
@@ -139,12 +147,12 @@
 	* green/doc/examples                              : New directory.
 
 	Move hello_world directory in doc/examples.
-	
+
 	* green/doc/examples/hello_world                  : New directory.
 	* green/doc/examples/hello_world/Makefile.am      : Copy makefile.
 	* green/doc/examples/hello_world/hellow_world.cc  : Copy source file.
 	* green/doc/examples/hello_world/print.cc         : Copy source file.
-	
+
 	* green/hello_world/hello_world.cc                : Remove source file.
 	* green/hello_world/print.cc                      : Remove source file.
 	* green/hello_world/Makefile.am                   : Remove makefile.
@@ -155,7 +163,7 @@
 	* green/doc/exampleshello_milena                  : New directory.
 	* green/doc/exampleshello_milena/Makefile.am      : Copy makefile.
 	* green/doc/examples/hello_milena/hello_milena.cc : Copy source file.
-	
+
 	* green/hello_milena/hello_milena.cc              : Remove source file.
 	* green/hello_milena/Makefile.am                  : Remove makefile.
 	* green/hello_milena                              : Remove directory.
@@ -165,7 +173,7 @@
 	* green/doc/examples/learn_milena                 : New directory.
 	* green/doc/examples/learn_milena/Makefile.am     : Copy makefile.
 	* green/doc/examples/learn_milena/learn_milena.cc : Copy source file.
-	
+
 	* green/learn_milena/learn_milena.cc              : Remove source file.
 	* green/learn_milena/Makefile.am                  : Remove makefile.
 	* green/learn_milena                              : Remove directory.
@@ -175,7 +183,7 @@
 	* green/doc/examples/otsu                         : New directory.
 	* green/doc/examples/otsu/Makefile.am             : Copy makefile.
 	* green/doc/examples/otsu/otsu.cc                 : Copy source file.
-	
+
 	* green/otsu/otsu.cc                              : Remove source file.
 	* green/otsu/Makefile.am                          : Remove makefile.
 	* green/otsu                                      : Remove directory.

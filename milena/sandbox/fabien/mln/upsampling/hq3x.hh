@@ -24,6 +24,7 @@
 /// Reference can be found at:
 /// http://web.archive.org/web/20070624082212/www.hiend3d.com/hq3x.html
 
+# include <mln/core/alias/dpoint2d.hh>
 # include <mln/extension/adjust_duplicate.hh>
 # include <mln/geom/max_col.hh>
 # include <mln/geom/max_row.hh>
@@ -224,7 +225,8 @@ namespace mln
 	trace::entering("upsampling::impl::hq3x_");
 
 	mln_domain(image2d<T>) bbox(input.domain().pmin() * 3,
-				    input.domain().pmax() * 3);
+				    input.domain().pmax() * 3
+				     + 2 * mln::down_right);
         mln_concrete(image2d<T>) output(bbox);
 
 	int   LUT16to32[65536];
