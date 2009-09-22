@@ -365,6 +365,8 @@ AC_CONFIG_FILES([
       milena/tests/trait/value/Makefile
     milena/tests/transform/Makefile
     milena/tests/unit_test/Makefile
+    milena/tests/upscaling/Makefile
+      milena/tests/upscaling/art/Makefile
     milena/tests/util/Makefile
     milena/tests/value/Makefile
       milena/tests/value/builtin/Makefile
