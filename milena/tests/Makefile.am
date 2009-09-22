@@ -59,6 +59,7 @@ SUBDIRS =					\
   trait						\
   transform 					\
   unit_test					\
+  upscaling 					\
   util						\
   value						\
   win 						\

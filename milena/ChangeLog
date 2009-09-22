@@ -1,5 +1,18 @@
 2009-09-22 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add new upscaling algorithms.
+
+	* mln/upscaling/art/scale2x.hh,
+	* mln/upscaling/art/scale3x.hh: New routines.
+
+	* tests/Makefile.am,
+	* tests/upscaling/Makefile.am,
+	* tests/upscaling/art/Makefile.am,
+	* tests/upscaling/art/scale2x.cc,
+	* tests/upscaling/art/scale3x.cc: New associated tests.
+
+2009-09-22 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	* mln/core/alias/dpoint2d.hh: Add new dpoint2d aliases.
 
 2009-09-22  Fabien Freling  <fabien.freling@lrde.epita.fr>
