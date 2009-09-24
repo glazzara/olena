@@ -1,0 +1,7 @@
+#! /bin/sh
+
+set -ex
+
+srcdir="@top_srcdir@/milena/apps/constrained-connectivity"
+
+time ./constrained-connectivity "$srcdir/soille.pgm"

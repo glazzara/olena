@@ -23,5 +23,7 @@ AM_CXXFLAGS = $(APPS_CXXFLAGS)
 noinst_PROGRAMS = constrained-connectivity
 constrained_connectivity_SOURCES = constrained-connectivity.cc
 
+TESTS = test-constrained-connectivity
+
 # The sample image form Pierre Soille's PAMI 2008 article.
 EXTRA_DIST = soille.pgm
