@@ -1,5 +1,12 @@
 2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use Milena's topological WST instead of the one from the sandboxes.
+
+	* roland/constrained-connectivity.cc: Here.
+	* roland/alexandre: Remove symlink.
+
+2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Catch up with new 2D inter-pixel neighborhoods names.
 
 	* roland/constrained-connectivity.cc (main): s/e2c/e2v/.

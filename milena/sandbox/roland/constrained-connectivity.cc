@@ -76,8 +76,7 @@
 #include <mln/world/inter_pixel/compute.hh>
 #include <mln/world/inter_pixel/neighb2d.hh>
 
-// From Alexandre Abraham's sandbox.
-#include <alexandre/topo_wst.hh>
+#include <mln/morpho/watershed/topological.hh>
 
 #include <mln/morpho/tree/compute_attribute_image.hh>
 #include <mln/accu/stat/min.hh>
@@ -129,10 +128,10 @@ int main(int argc, char* argv[])
   debug::println("g:", g);
 
   // Compute a topological watershed transform on this gradient.
-  typedef morpho::topo_wst<g_t, world::inter_pixel::dbl_neighb2d> tree_t;
+  typedef morpho::watershed::topo_wst<g_t, world::inter_pixel::dbl_neighb2d> tree_t;
   tree_t tree(g, world::inter_pixel::e2e());
   tree.go();
-  mln_VAR(w, morpho::topo_watershed(tree));
+  mln_VAR(w, morpho::watershed::topological(tree));
   debug::println("w:", w);
 
   // Computing the set of values of W.
