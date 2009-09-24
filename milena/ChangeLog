@@ -1,3 +1,19 @@
+2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Rename 2D inter-pixel neighborhoods.
+
+	* mln/world/inter_pixel/neighb2d.hh
+	(mln::world::inter_pixel::c2c)
+	(mln::world::inter_pixel::c2e)
+	(mln::world::inter_pixel::e2c):
+	Rename as...
+	(mln::world::inter_pixel::v2v)
+	(mln::world::inter_pixel::v2e)
+	(mln::world::inter_pixel::e2v):
+	...this.
+	* mln/world/inter_pixel/dim2/make_edge_image.hh
+	(mln::world::inter_pixel::dim2::make_edge_image): Adjust.
+
 2009-09-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Complete mln/world/inter_pixel/neighb2d.hh.

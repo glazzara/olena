@@ -68,7 +68,7 @@ namespace mln
 	  edges_ext_t edges_ext = extend(edges, input);
 
 	  mln_piter(edges_ext_t) p(edges_ext.domain());
-	  dbl_neighb2d nbh = e2c();
+	  dbl_neighb2d nbh = e2v();
 	  mln_niter(dbl_neighb2d) n(nbh, p);
 	  mln_value(I) vs[2];
 

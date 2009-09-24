@@ -27,8 +27,7 @@
 # define MLN_WORLD_INTER_PIXEL_NEIGHB2D_HH
 
 /// \file
-///
-/// \brief Common neighborhood on inter-pixel images.
+/// \brief Common neighborhoods on inter-pixel images.
 
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/make/double_neighb2d.hh>
@@ -47,22 +46,24 @@ namespace mln
       /// Double neighborhood used for inter-pixel images.
       typedef neighb< win::multiple<window2d, dim2::is_row_odd> > dbl_neighb2d;
 
-      // Pixel to neighboring pixels.
-      const neighb2d& c2c();
 
-      // Pixel to neighboring edges.
-      const neighb2d& c2e();
+      /// Vertex (pixel) to neighboring vertices (pixels).
+      const neighb2d& v2v();
 
-      // Edge to neighborhood pixels.
-      const dbl_neighb2d& e2c();
+      /// Vertex (pixel) to neighboring edges (inter-pixels).
+      const neighb2d& v2e();
 
-      // Edge to neighboring edges.
+      /// Edge (inter-pixel) to neighborhood vertices (pixels).
+      const dbl_neighb2d& e2v();
+
+      /// Edge (inter-pixel) to neighboring edges (inter-pixels).
       const dbl_neighb2d& e2e();
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      const neighb2d& c2c()
+      const neighb2d& v2v()
       {
 	static neighb2d it;
 	if (it.size() == 0)
@@ -77,23 +78,23 @@ namespace mln
 	return it;
       }
 
-      const neighb2d& c2e()
+      const neighb2d& v2e()
       {
 	return c4();
       }
 
-      const dbl_neighb2d& e2c()
+      const dbl_neighb2d& e2v()
       {
-	static const bool e2c_h[] = { 0, 1, 0,
+	static const bool e2v_h[] = { 0, 1, 0,
 				      0, 0, 0,
 				      0, 1, 0 };
 
-	static const bool e2c_v[] = { 0, 0, 0,
+	static const bool e2v_v[] = { 0, 0, 0,
 				      1, 0, 1,
 				      0, 0, 0 };
 
 	static dbl_neighb2d nbh =
-	  make::double_neighb2d(dim2::is_row_odd(), e2c_h, e2c_v);
+	  make::double_neighb2d(dim2::is_row_odd(), e2v_h, e2v_v);
 	return nbh;
       }
 
