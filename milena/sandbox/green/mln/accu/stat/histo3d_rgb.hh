@@ -33,28 +33,27 @@
 /// \brief Define a histogram as an accumulator which returns an image1d .
 ///
 /// This source implements the discrete histogram version. The number of beans
-/// is infer from the number of greylevels. A typical int_u8 image has got
-/// 256 bins. An int_u16 image has got 65535 bins.
+/// is infer from the number of greylevels. A typical rgb8 image has got
+/// 256x3 bins. Working with a 8 bit quantification in rgb is very costly.
 /// The following sample is a typical use of the histogram.
 ///
-/// #include <mln/value/int_u8.hh>
+/// #include <mln/value/rgb.hh>
 /// #include <mln/core/image/image1d.hh>
-/// #include <mln/core/image/image2d.hh>
-/// #include <mln/io/pgm/load.hh>
-/// #include <mln/accu/stat/histo1d.hh>
+/// #include <mln/core/image/image3d.hh>
+/// #include <mln/io/ppm/load.hh>
+/// #include <mln/accu/stat/histo3d_rgb.hh>
 /// #include <mln/data/compute.hh>
-/// #include <mln/io/plot/save_histo_sh.hh>
 ///
-/// #define  OLENA_LENA ""/usr/local/share/olena/images/lena.pgm"
+/// #define  OLENA_LENA ""/usr/local/share/olena/images/lena.ppm"
 ///
 /// void test()
 /// {
-///   typedef mln::value::int_u8 int_u8;
-///   mln::image2d<int_u8>       img_ref;
-///   mln::image1d<unsigned>     img_res;
+///   typedef mln::value::rgb<7> rgb7;
+///   mln::image2d<rgb7>         img_ref;
+///   mln::image3d<unsigned>     img_res;
 ///
-///   mln::io::pgm::load(img_ref, OLENA_LENA);
-///   img_res = mln::data::compute(mln::accu::stat::histo1d<int_u8>(), img_ref);
+///   mln::io::ppm::load(img_ref, OLENA_LENA);
+///   img_res=mln::data::compute(mln::accu::meta::stat::histo3d_rgb(),img_ref);
 /// }
 
 
@@ -90,7 +89,26 @@ namespace mln
       struct histo3d_rgb;
 
     } // end of namespace mln::accu::stat
-  
+
+    namespace meta
+    {
+    
+      namespace stat
+      {
+	
+	struct histo3d_rgb : public Meta_Accumulator<histo3d_rgb>
+	{
+	  template <typename V>
+	  struct with
+	  {
+	    typedef accu::stat::histo3d_rgb<V> ret;
+	  };
+	};
+	
+      } // end of namespace mln::accu::meta::stat
+      
+    } // end of namespace mln::accu::meta
+    
   } // end of namespace mln::accu
 
 
@@ -122,13 +140,13 @@ namespace mln
     namespace stat
     {      
 
-      /// \brief Define an histogram which returns an image1d .  
+      /// \brief Define an histogram which returns an image3d .  
       ///
       /// Param V defines the space in which we count the values.
-      /// For instance, this histogram works image2d<int_u8> or 
-      /// image1d<int_u16>. The histogram count the occurrence of each value.
-      /// The number of bins depends of the greyscale values, for 8 bits there
-      /// is 256 bins, for 16 bits there is 65536 bins. Note that over 
+      /// For instance, this histogram works image2d<rgb<2>> or 
+      /// image2d<rgb<7>>. The histogram count the occurrence of each value.
+      /// The number of bins depends of the grayscale values, for 8 bits there
+      /// is 256x3 bins. Note that over 
       /// quantification works too.
       ///
       /// \ingroup modaccuvalues

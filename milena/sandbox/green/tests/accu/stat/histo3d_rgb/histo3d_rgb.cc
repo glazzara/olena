@@ -9,6 +9,7 @@
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
 #include <mln/io/plot/save.hh>
+#include <mln/io/plot/save_histo_sh.hh>
 
 #include <mln/data/compute.hh>
 #include <mln/data/transform.hh>
@@ -279,6 +280,7 @@ void test_integration()
   
   img_res = mln::data::compute(mln::accu::stat::histo3d_rgb<rgbn>(), img_ref);
 
+  mln::io::plot::save_histo_sh(img_res, "histo_rgb.sh");
 
   const double count_res = count_histo(img_res);
   const vec3f  mean_res  = mean_histo(img_res);
@@ -329,14 +331,14 @@ int main()
   test_take_other<1>();
   test_integration<1>();
   */
-
+  /*
   test_operator_equal<2>();
   test_instantiation_without_argument<2>();
   test_initialization<2>();
   test_take_argument<2>();
   test_take_other<2>();
   test_integration<2>();
-
+  */
   /*
   test_operator_equal<3>();
   test_instantiation_without_argument<3>();
@@ -361,14 +363,14 @@ int main()
   test_take_argument<5>();
   test_take_other<5>();
   test_integration<5>();
-  
+  */
   test_operator_equal<6>();
   test_instantiation_without_argument<6>();
   test_initialization<6>();
   test_take_argument<6>();
   test_take_other<6>();
   test_integration<6>();
-  */
+  
   /*
   test_operator_equal<7>();
   test_instantiation_without_argument<7>();
@@ -391,8 +393,6 @@ int main()
   test_integration<8>();
   */
  
-
-  // p2p/fold+transform_domain for hcv
 
   return 0;
 }

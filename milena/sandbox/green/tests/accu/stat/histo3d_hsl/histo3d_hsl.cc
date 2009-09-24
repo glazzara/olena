@@ -330,13 +330,13 @@ void test_integration()
 
   mln::image2d<float>        img_sav;
 
-  //mln::io::ppm::load(img_fst, OLENA_IMG_PATH"/lena.ppm")
-  mln::io::ppm::load(img_fst, OLENA_IMG_PATH"/fly.ppm");
-  img_sec = mln::data::transform(img_fst, mln::fun::v2v::rgb8_to_rgbn<n>());
-  img_thd = mln::data::transform(img_sec,mln::fun::v2v::f_rgb_to_hsl_<hsl_f>());
+  mln::io::ppm::load(img_fst, OLENA_IMG_PATH"/lena.ppm");
+    //mln::io::ppm::load(img_fst, OLENA_IMG_PATH"/fly.ppm");
+  //img_sec = mln::data::transform(img_fst, mln::fun::v2v::rgb8_to_rgbn<n>());
+  img_thd = mln::data::transform(img_fst,mln::fun::v2v::f_rgb_to_hsl_<hsl_f>());
 
-  img_sav = mln::data::transform(img_thd, hslf_2_h());
-  mln::io::plot::save_histo_sh(img_sav, "fly2.sh");
+  //img_sav = mln::data::transform(img_thd, hslf_2_h());
+  //mln::io::plot::save_histo_sh(img_sav, "lena2.sh");
 
   img_ref = mln::data::transform(img_thd, hslf_2_vec3f());
 
@@ -347,7 +347,7 @@ void test_integration()
 
   img_res = mln::data::compute(mln::accu::stat::histo3d_hsl<q,hsl_f>(),img_thd);
   
-  mln::io::plot::save_histo_sh(img_res, "fly3.sh");
+  mln::io::plot::save_histo_sh(img_res, "histo_hsl.sh");
 
   const double count_res = count_histo(img_res);
   const vec3f  mean_res  = mean_histo(img_res, q);
@@ -410,13 +410,14 @@ void test()
 
 int main()
 {
-
+  /*
   test_operator_equal<3>();
   test_instantiation_without_argument<3>();
   test_initialization<3>();
   test_take_argument<3>(); 
   test_take_other<3>();
-  test_integration<3,7>();
+  */
+  test_integration<7,6>();
   
   return 0;
 }

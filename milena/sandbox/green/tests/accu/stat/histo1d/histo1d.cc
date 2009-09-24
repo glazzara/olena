@@ -74,8 +74,7 @@ void test_8bits_operator_equal()
 
   histo1.take(val);
 
-  /// FIXME mln_assertion(histo1 != histo2); doesn't work!!
-  mln_assertion(!(histo1 == histo2));
+  mln_assertion(histo1 != histo2);
 
   histo2.take(val);
 
@@ -259,7 +258,8 @@ void test_8bits_integration()
   const double mean_ref  = mln::data::compute(mean(),     img_ref);
   const double var_ref   = mln::data::compute(variance(), img_ref);
 
-  img_res = mln::data::compute(mln::accu::stat::histo1d<int_u8>(), img_ref);
+  img_res = mln::data::compute(mln::accu::meta::stat::histo1d(), img_ref);
+  //  img_res = mln::data::compute(mln::accu::stat::histo1d<int_u8>(), img_ref);
 
   const double count_res = count_histo(img_res);
   const double mean_res  = mean_histo(img_res);
@@ -678,15 +678,17 @@ void test_14bits_classifying()
 
 int main()
 {
+  test_8bits_operator_equal();
   /*
   test_8bits_instantiation_without_argument();
   test_8bits_initialization();
   test_8bits_take_argument();
   test_8bits_take_other();
   test_8bits_operator_equal();
-  test_8bits_integration();
   */
-  test_8bits_classifying();
+  //test_8bits_integration();
+
+  //test_8bits_classifying();
 
   // PROBLEME AVEC LES COORDONNEES PAR DEFAUT QUI SONT EN SIGNED SHORT
   // SEE mln/core/def/coord.hh
@@ -698,7 +700,7 @@ int main()
   test_14bits_operator_equal();
   test_14bits_integration();
   */
-  test_14bits_classifying();
+  //test_14bits_classifying();
   
   return 0;
 }

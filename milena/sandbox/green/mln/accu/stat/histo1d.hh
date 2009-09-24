@@ -33,7 +33,7 @@
 /// \brief Define a histogram as an accumulator which returns an image1d .
 ///
 /// This source implements the discrete histogram version. The number of beans
-/// is infer from the number of greylevels. A typical int_u8 image has got
+/// is infer from the number of graylevels. A typical int_u8 image has got
 /// 256 bins. An int_u<14> image has got 16384 bins.
 /// The following sample is a typical use of the histogram.
 ///
@@ -43,9 +43,8 @@
 /// #include <mln/io/pgm/load.hh>
 /// #include <mln/accu/stat/histo1d.hh>
 /// #include <mln/data/compute.hh>
-/// #include <mln/io/plot/save_histo_sh.hh>
 ///
-/// #define  OLENA_LENA ""/usr/local/share/olena/images/lena.pgm"
+/// #define  OLENA_LENA "/usr/local/share/olena/images/lena.pgm"
 ///
 /// void test()
 /// {
@@ -54,7 +53,7 @@
 ///   mln::image1d<unsigned>     img_res;
 ///
 ///   mln::io::pgm::load(img_ref, OLENA_LENA);
-///   img_res = mln::data::compute(mln::accu::stat::histo1d<int_u8>(), img_ref);
+///   img_res = mln::data::compute(mln::accu::meta::stat::histo1d(), img_ref);
 /// }
 
 
@@ -64,6 +63,7 @@
 
 #include <mln/core/macros.hh>
 #include <mln/core/image/image1d.hh>
+#include <mln/core/concept/meta_accumulator.hh>
 
 #include <mln/trait/value/comp.hh>
 
@@ -89,8 +89,27 @@ namespace mln
 
     } // end of namespace mln::accu::stat
   
-  } // end of namespace mln::accu
 
+    namespace meta
+    {
+    
+      namespace stat
+      {
+	
+	struct histo1d : public Meta_Accumulator<histo1d>
+	{
+	  template <typename V>
+	  struct with
+	  {
+	    typedef accu::stat::histo1d<V> ret;
+	  };
+	};
+	
+      } // end of namespace mln::accu::meta::stat
+      
+    } // end of namespace mln::accu::meta
+    
+  } // end of namespace mln::accu
 
   namespace trait
   {
@@ -123,9 +142,9 @@ namespace mln
       /// \brief Define an histogram which returns an image1d .  
       ///
       /// Param V defines the space in which we count the values.
-      /// For instance, this histogram works image2d<int_u8> or 
+      /// For instance, this histogram works with image2d<int_u8> or with
       /// image1d<int_u<14> >. The histogram count the occurrence of each value.
-      /// The number of bins depends of the greyscale values, for 8 bits there
+      /// The number of bins depends of the graylevel values, for 8 bits there
       /// is 256 bins, for 14 bits there is 16384 bins. Note that over 
       /// quantification works too (up to 14 bits).
       ///
@@ -144,7 +163,7 @@ namespace mln
 	/// \brief Initialize the size of the resulting image1d.
 	///
 	/// Initialize the size the resulting image from the theorical dynamic 
-	/// of the greylevel values (Use V to manage it).
+	/// of the graylevel values (Use V to manage it).
 	histo1d();
 	/// \}
 
@@ -159,8 +178,8 @@ namespace mln
 	void init();
 
 	
-	/// \brief Update the histogram with the greylevel of the pixel t.
-	/// \param[in] t a greylevel pixel of type V.
+	/// \brief Update the histogram with the graylevel of the pixel t.
+	/// \param[in] t a graylevel pixel of type V.
 	///
 	/// The end user shouldn't call this method. In place of it, he can
 	/// go through the data compute interface.
@@ -169,6 +188,10 @@ namespace mln
 
 	/// \brief Update the histogram with an other histogram.
 	/// \param[in] other the other histogram.
+	///
+	/// The end user shouldn't call this method. This is part of 
+	/// data compute interface mechanism.
+
 	void take(const histo1d<V>& other);
 	/// \}
 
@@ -196,7 +219,7 @@ namespace mln
       /// \param[in] histo1 the first histogram to compare with.
       /// \param[in] histo2 the second histogram.
       ///
-      /// The operator compare all the bins from the two histogram.
+      /// The operator compare all the bins from the two histograms.
 
       template <typename V>
       bool operator==(const histo1d<V>& histo1, const histo1d<V>& histo2);
@@ -219,17 +242,9 @@ namespace mln
 	count_.init_(box1d(point1d(mln_min(comp)),
 			   point1d(mln_max(comp))));
 
-	//	std::cout << "min : " << mln_min(comp) << std::endl;
+	// std::cout << "min : " << mln_min(comp) << std::endl;
 	// std::cout << "max : " << mln_max(comp) << std::endl;
 
-	// std::cout << "min : " << v_point1d(mln_min(comp)) << std::endl;
-	// std::cout << "max : " << v_point1d(mln_max(comp)) << std::endl;
-
-	//count_.init_(v_box1d(v_point1d(mln_min(comp)),
-	//		     v_point1d(mln_max(comp))));
-	// this does not work as image1d is friendly close to box1d
-	
-	
 	trace::exiting("mln::accu::stat::histo1d<V>::histo1d");
       }
 
@@ -249,7 +264,7 @@ namespace mln
       {
 	trace::entering("mln::accu::stat::histo1d<V>::take");
 
-	// Just convert a greyscale value (int_u8 like) to a position for an 
+	// Just convert a graylevel value (int_u8 like) to a position for an 
 	// iterator on the resulting image.
 	++count_(point1d(t));
 

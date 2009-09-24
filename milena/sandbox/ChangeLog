@@ -8,6 +8,41 @@
 
 2009-09-22  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Prepare demo for theo and questions for guillaume.
+
+	Rename fraction directory into frac directory.
+	
+	* green/doc/examples/fraction/frac.cc        : Delete.
+	* green/doc/examples/fraction/frac.hh        : Delete.
+	* green/doc/examples/fraction/gcd.hh         : Delete
+	* green/doc/examples/fraction/sign_prod.hh   : Delete.
+
+	* green/doc/examples/frac/frac.cc            : New.
+	* green/doc/examples/frac/frac.hh            : New.
+	* green/doc/examples/frac/gcd.hh             : New.
+	* green/doc/examples/frac/sign_prod.hh       : New.
+	* green/doc/examples/frac/Makefile.am        : New.
+
+	Collect some tmp results.
+	
+	* green/mln/io/plot/save_histo_sh.hh
+	(save_histo_sh<2d>)            : Comment method.
+	* green/mln/mln/accu/stat/histo1d.hh
+	                               : Update documentation.
+	* green/mln/mln/accu/stat/histo3d_rgb.hh
+	                               : Update documentation.
+	* green/mln/mln/accu/stat/histo3d_hsl.hh
+	                               : Update documentation.
+	* green/mln/tests/accu/stat/histo1d/histo1d.cc
+	(test_8bits_integration, main) : Comment unused code, save tmp results.
+	(test_8bits_operator_equal)    : Test infer "!=" operator. 
+	* green/mln/tests/accu/stat/histo3d_rgb/histo3d_rgb.cc
+	(test_integration, main)       : Comment unused code, save tmp results.
+	* green/mln/tests/accu/stat/histo3d_hsl/histo3d_hsl.cc
+	(test_integration, main)       : Comment unused code, save tmp results.
+
+2009-09-22  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Adapt styles. Need some 2d code.
 	
 	* green/mln/io/plot/save_histo_sh.hh (save_histo_sh<2d>)   : New func.

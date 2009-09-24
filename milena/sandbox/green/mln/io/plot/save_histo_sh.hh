@@ -63,8 +63,8 @@ namespace mln
       void save_histo_sh(const image1d<I>& img, const std::string& filename);
 
 
-      template <typename I>
-      void save_histo_sh(const image2d<I>& img, const std::string& filename);
+      //template <typename I>
+      //void save_histo_sh(const image2d<I>& img, const std::string& filename);
 
       /// \brief Save an histogram image3d as a gnuplot script shell.
       /// \param[in] img      the 3d image which contains the data to save.
@@ -123,7 +123,7 @@ namespace mln
 	out.close();
 	trace::exiting("mln::io::plot::save_histo_sh<1d>");
       }
-
+      /*
       template <typename I>
       inline
       void save_histo_sh(const image2d<I>& img, const std::string& filename)
@@ -157,7 +157,7 @@ namespace mln
 	trace::exiting("mln::io::plot::save_histo_sh<2d>");
       }
 
-
+      */
       template <typename I>
       inline
       void save_histo_sh(const image3d<I>& img, const std::string& filename)
@@ -183,7 +183,7 @@ namespace mln
 	      out << p.row()   << " ";
 	      out << p.col()   << " ";
 	      out << p.sli()   << " ";
-	      out << img(p) << std::endl;
+	      out << img(p)    << std::endl;
 	    }
 	out << "e"                                         << std::endl;
 	out << "EOF"                                       << std::endl;
