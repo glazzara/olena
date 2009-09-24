@@ -47,10 +47,10 @@ namespace mln
       /// Double neighborhood used for inter-pixel images.
       typedef neighb< win::multiple<window2d, dim2::is_row_odd> > dbl_neighb2d;
 
-      /// C4 neighborhood on pixels centered on an edge.
+      // Edge to neighborhood pixels.
       const dbl_neighb2d& e2c();
 
-      /// C8 neighborhood on edges centered on an edge.
+      // Edge to neighboring edges.
       const dbl_neighb2d& e2e();
 
 
@@ -66,7 +66,8 @@ namespace mln
 				      1, 0, 1,
 				      0, 0, 0 };
 
-	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2c_h, e2c_v);
+	static dbl_neighb2d nbh =
+	  make::double_neighb2d(dim2::is_row_odd(), e2c_h, e2c_v);
 	return nbh;
       }
 
@@ -86,7 +87,8 @@ namespace mln
 				      0, 1, 0, 1, 0,
 				      0, 0, 0, 0, 0 };
 
-	static dbl_neighb2d nbh = make::double_neighb2d(dim2::is_row_odd(), e2e_h, e2e_v);
+	static dbl_neighb2d nbh =
+	  make::double_neighb2d(dim2::is_row_odd(), e2e_h, e2e_v);
 	return nbh;
       }
 

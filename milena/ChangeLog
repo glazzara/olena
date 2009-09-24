@@ -1,5 +1,14 @@
 2009-09-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix documentation in mln/world/inter_pixel/neighb2d.hh.
+
+	* mln/world/inter_pixel/neighb2d.hh
+	(mln::world::inter_pixel::e2c, mln::world::inter_pixel::e2e):
+	Here.
+	Wrap long lines.
+
+2009-09-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Include headers missing from mln/world/inter_pixel/compute.hh.
 
 	* mln/world/inter_pixel/compute.hh: Include
