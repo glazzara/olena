@@ -29,15 +29,15 @@
 
 /// \file
 ///
-/// Meyer's Watershed Transform (WST) algorithm.
+/// \brief Meyer's Watershed Transform (WST) algorithm.
 ///
-///    The Watershed Transform algorithm from Meyer using a hierarchical
-///    queue.
+/// The Watershed Transform algorithm from Meyer using a hierarchical
+/// queue.
 ///
-///    Reference:
-///      Fernand Meyer.  Un algorithme optimal de ligne de partage des
-///      eaux. In: Actes du 8ème Congrès AFCET, Lyon-Villeurbanne, France
-///      (1991), pages 847--859.
+/// Reference:
+///   Fernand Meyer.  Un algorithme optimal de ligne de partage des
+///   eaux. In: Actes du 8ème Congrès AFCET, Lyon-Villeurbanne, France
+///   (1991), pages 847--859.
 
 # include <mln/trait/ch_value.hh>
 
