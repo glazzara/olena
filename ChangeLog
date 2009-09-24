@@ -1,3 +1,8 @@
+2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure
+	milena/apps/constrained-connectivity/Makefile.
+
 2009-09-22 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	* configure.ac: Configure milena/tests/upscaling.

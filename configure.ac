@@ -406,6 +406,7 @@ AC_CONFIG_FILES([
   milena/apps/Makefile
     milena/apps/mesh-segm-skel/Makefile
     milena/apps/graph-morpho/Makefile
+    milena/apps/constrained-connectivity/Makefile
 ])
 
 # Configure tests.
