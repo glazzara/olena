@@ -1,5 +1,20 @@
 2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Move the experiment on constrained connectivity out of my sandbox.
+
+	* apps/constrained-connectivity/: New directory.
+	* sandbox/roland/constrained-connectivity.cc,
+	* sandbox/roland/soille.pgm:
+	Move files...
+	* apps/constrained-connectivity/constrained-connectivity.cc,
+	* apps/constrained-connectivity/soille.pgm:
+	...here.
+	* sandbox/roland/Makefile: Adjust.
+	* apps/constrained-connectivity/Makefile.am: New.
+	* apps/Makefile.am (SUBDIRS): Add constrained-connectivity.
+
+2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use mln::world::inter_pixel instead of cplx2d.hh.
 
 	* apps/graph-morpho/morpho.hh: Here.
