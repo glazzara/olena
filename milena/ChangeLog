@@ -1,5 +1,12 @@
 2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix usage message of apps/constrained-connectivity.
+
+	* apps/constrained-connectivity/constrained-connectivity.cc (main):
+	s/input.pbm/input.pgm/.
+
+2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Re-enable the test on constrained connectivity.
 
 	* apps/constrained-connectivity/test-constrained-connectivity.in:
