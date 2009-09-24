@@ -1,5 +1,14 @@
 2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use mln::world::inter_pixel instead of cplx2d.hh.
+
+	* apps/graph-morpho/morpho.hh: Here.
+	* apps/graph-morpho/make_complex2d.hh (unmake_complex2d):
+	Adjust as well.
+	* apps/graph-morpho/cplx2d.hh: Remove symlink.
+
+2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename 2D inter-pixel neighborhoods.
 
 	* mln/world/inter_pixel/neighb2d.hh

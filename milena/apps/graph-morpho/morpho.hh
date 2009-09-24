@@ -27,7 +27,7 @@
 # define APPS_GRAPH_MORPHO_MORPHO_HH
 
 /** \file apps/graph-morpho/morpho.hh
-    \brief Morphological operators on graphs (1-complexes).
+    \brief Morphological operators on graphs.
 
     Reference:
 
@@ -39,19 +39,21 @@
 # include <mln/core/alias/complex_image.hh>
 # include <mln/core/image/image2d.hh>
 
+# include <mln/core/image/dmorph/image_if.hh>
+
 # include <mln/core/routine/duplicate.hh>
 
 # include <mln/core/site_set/p_n_faces_piter.hh>
 # include <mln/core/image/complex_neighborhoods.hh>
 # include <mln/core/image/complex_neighborhood_piter.hh>
 
+# include <mln/world/inter_pixel/dim2/is_pixel.hh>
+# include <mln/world/inter_pixel/dim2/is_edge.hh>
+# include <mln/world/inter_pixel/neighb2d.hh>
+
 # include <mln/data/paste.hh>
 
 # include "apps/graph-morpho/image_if_large.hh"
-
-// FIXME: Careful, cplx2d.hh is a symlink to a file in Théo's sandbox,
-// and might be changed.
-# include "apps/graph-morpho/cplx2d.hh"
 
 // FIXME: Instead of providing several implementation, move specific
 // parts (neighborhoods, etc.) to a graph_traits class, and write
@@ -107,8 +109,10 @@ namespace impl
     mln::image2d<T> output;
     mln::initialize(output, vertices);
     mln::data::fill(output, false);
-    mln::data::paste(vertices | mln::cplx2d::is_pixel, output);
-    mln::data::paste(edges | mln::cplx2d::is_edge, output);
+    mln::data::paste(vertices | mln::world::inter_pixel::dim2::is_pixel(),
+		     output);
+    mln::data::paste(edges | mln::world::inter_pixel::dim2::is_edge(),
+		     output);
     return output;
   }
 }
@@ -351,8 +355,8 @@ namespace impl
   {
     mln::image2d<T> output(input.domain());
     mln::data::fill(output, false);
-    mln::data::paste(dilation(input || mln::cplx2d::is_pixel,
-			      mln::cplx2d::p2e()),
+    mln::data::paste(dilation(input || mln::world::inter_pixel::dim2::is_pixel(),
+			      mln::world::inter_pixel::v2e()),
 		     output);
     return output;
   }
@@ -366,8 +370,8 @@ namespace impl
   {
     mln::image2d<T> output(input.domain());
     mln::data::fill(output, false);
-    mln::data::paste(erosion(input || mln::cplx2d::is_edge,
-			     mln::cplx2d::e2p()),
+    mln::data::paste(erosion(input || mln::world::inter_pixel::dim2::is_edge(),
+			     mln::world::inter_pixel::e2v()),
 		     output);
     return output;
   }
@@ -381,8 +385,8 @@ namespace impl
   {
     mln::image2d<T> output(input.domain());
     mln::data::fill(output, false);
-    mln::data::paste(erosion(input || mln::cplx2d::is_pixel,
-			     mln::cplx2d::p2e()),
+    mln::data::paste(erosion(input || mln::world::inter_pixel::dim2::is_pixel(),
+			     mln::world::inter_pixel::v2e()),
 		     output);
     return output;
   }
@@ -396,8 +400,8 @@ namespace impl
   {
     mln::image2d<T> output(input.domain());
     mln::data::fill(output, false);
-    mln::data::paste(dilation(input || mln::cplx2d::is_edge,
-			      mln::cplx2d::e2p()),
+    mln::data::paste(dilation(input || mln::world::inter_pixel::dim2::is_edge(),
+			      mln::world::inter_pixel::e2v()),
 		     output);
     return output;
   }

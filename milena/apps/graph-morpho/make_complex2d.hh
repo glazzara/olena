@@ -30,6 +30,7 @@
 /// \brief Cubical 2-complex creation from a 2D image of pixels.
 
 # include <mln/core/image/image2d.hh>
+# include <mln/world/inter_pixel/dim2/is_pixel.hh>
 
 /** \brief Create an binary 2D image representing a cubical 2-complex
     by doubling the resolution of the image \a input images to insert
@@ -109,8 +110,8 @@ unmake_complex2d(const mln::Image<I>& input_)
   mln_precondition(input.ncols() % 2 == 1);
 
   // Create a (morpher) image of the pixels of INPUT.
-  typedef image_if< const I, cplx2d::predicate_t > J;
-  J input_pixels = input | cplx2d::is_pixel;
+  typedef image_if< const I, world::inter_pixel::dim2::is_pixel > J;
+  J input_pixels = input | world::inter_pixel::dim2::is_pixel();
 
   /* FIXME: The construction of OUTPUT is obvioulsy not generic, since
      it expects I's domain to provide the interface of an mln::box2d.
