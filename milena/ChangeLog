@@ -1,5 +1,23 @@
 2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve the integration of the topological watershed transform.
+
+	* mln/morpho/watershed/topo_wst.hh: Rename as...
+	* mln/morpho/watershed/topological.hh: ...this.
+	Add documentation header.
+	* mln/morpho/watershed/all.hh: Include
+	mln/morpho/watershed/topological.hh.
+	* tests/morpho/watershed/test_watershed_topo.cc: Adjust.
+	Revamp.
+	Add copyright and documentation headers.
+	Rename as...
+	* tests/morpho/watershed/topological.cc: ...this.
+	* tests/morpho/watershed/Makefile.am (check_PROGRAMS): Add
+	topological.
+	(topological_SOURCES): New.
+
+2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Import Alexandre's implementation of the topological watershed.
 
 	* mln/morpho/watershed/topo_wst.hh: New file, imported from

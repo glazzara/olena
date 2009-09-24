@@ -21,10 +21,12 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
   flooding 					\
-  superpose
+  superpose					\
+  topological
 
 flooding_SOURCES = flooding.cc
 superpose_SOURCES = superpose.cc
+topological_SOURCES = topological.cc
 
 TESTS = $(check_PROGRAMS)
 

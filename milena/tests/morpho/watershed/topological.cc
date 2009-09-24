@@ -23,44 +23,33 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_MORPHO_WATERSHED_ALL_HH
-# define MLN_MORPHO_WATERSHED_ALL_HH
-
 /// \file
 ///
-/// File that includes all morphological watershed routines.
+/// Exercise the Topological Watershed Transform (WST).
+
+#include <mln/value/int_u8.hh>
+
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/window2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+
+#include <mln/morpho/watershed/topological.hh>
+
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
+
+#include "tests/data.hh"
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  namespace morpho
-  {
-
-    /// Namespace of morphological watershed routines.
-    namespace watershed
-    {
-
-      /// Namespace of morphological watershed routines
-      /// implementations.
-      namespace watershed
-      {
-
-	/// Namespace of morphological watershed routines generic
-	/// implementations.
-	namespace generic
-	{}
-
-      }
-    }
-  }
+  typedef image2d<int_u8> ima_t;
+  ima_t ima;
+  io::pgm::load(ima, MLN_IMG_DIR "/small.pgm");
+  morpho::watershed::topo_wst< ima_t, neighb2d> n(ima, c4());
+  n.go();
+  io::pgm::save(morpho::watershed::topological(n), "topo_wst.pgm");
 }
-
-
-# include <mln/morpho/watershed/flooding.hh>
-# include <mln/morpho/watershed/topological.hh>
-
-# include <mln/morpho/watershed/superpose.hh>
-
-
-#endif // ! MLN_MORPHO_WATERSHED_ALL_HH
