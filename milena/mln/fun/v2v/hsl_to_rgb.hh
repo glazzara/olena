@@ -92,15 +92,23 @@ namespace mln
       /// \}
 
 
-      // This method implement the conversion from HSL to RGB
-      // explained by Wikipedia.
-      // url: http://en.wikipedia.org/wiki/HSL_and_HSV
+      /// This method implements the conversion from HSL to RGB as described by
+      /// Max K. Agoston in `Computer Graphics and Geometric Modeling:
+      /// Implementation and Algorithms (2005)'.
       template <typename T_rgb>
       template <typename T_hsl>
       inline
       T_rgb
       f_hsl_to_rgb_<T_rgb>::operator()(const T_hsl& hsl) const
       {
+	typedef typename T_rgb::red_t   red_t;
+	typedef typename T_rgb::green_t green_t;
+	typedef typename T_rgb::blue_t  blue_t;
+
+	static math::round<red_t>   to_r;
+	static math::round<green_t> to_g;
+	static math::round<blue_t>  to_b;
+
 	const float q = (hsl.lum() < 0.5) ? hsl.lum() * (1.0 + hsl.sat()) :
 					    hsl.lum() + hsl.sat() - (hsl.lum() * hsl.sat());
 	const float p = 2.0 * hsl.lum() - q;
@@ -158,7 +166,11 @@ namespace mln
 	  blue = p;
 
 	// Each component is in [0, 1].
-	T_rgb rgb_result(red * 255, green * 255, blue * 255);
+	red_t   r = to_r(red * 255);
+	green_t g = to_g(green * 255);
+	blue_t  b = to_b(blue * 255);
+
+	T_rgb rgb_result(r, g, b);
 
 	return rgb_result;
       }

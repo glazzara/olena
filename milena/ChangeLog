@@ -1,3 +1,9 @@
+2009-09-24  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add correct reference for HSL to RGB conversion.
+	*  mln/fun/v2v/hsl_to_rgb.hh: Add correct reference for HSL
+	to RGB conversion.
+
 2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix usage message of apps/constrained-connectivity.
