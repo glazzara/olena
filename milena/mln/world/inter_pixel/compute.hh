@@ -32,6 +32,10 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
+
+# include <mln/core/image/dmorph/image_if.hh>
+# include <mln/trait/ch_value.hh>
+
 # include <mln/world/inter_pixel/is_separator.hh>
 # include <mln/world/inter_pixel/separator_to_pixels.hh>
 

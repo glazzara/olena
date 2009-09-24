@@ -1,3 +1,10 @@
+2009-09-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Include headers missing from mln/world/inter_pixel/compute.hh.
+
+	* mln/world/inter_pixel/compute.hh: Include
+	mln/core/image/dmorph/image_if.hh and mln/trait/ch_value.hh.
+
 2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve the integration of the topological watershed transform.
