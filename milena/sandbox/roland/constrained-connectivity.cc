@@ -45,7 +45,7 @@
     \li Assign values of a gradient to the edges (e.g., |v1 - v2|).
     \li Compute a topological watershed transform on this gradient.
     \li Thresholding the values of this watershed gives
-        alpha-connected component (alpha-cc) described by Pierre Soille.
+        alpha-connected components (alpha-cc) described by Pierre Soille.
 
     Part 2.
     \li For each edge of the watershed (line graph-based) image,
@@ -58,7 +58,7 @@
         values from the image of max values.
     \li Thresholding the watershed image (using a parameter alpha)
         <em>and</em> the height image (using a parameter omega) gives
-        the (alpha, omega)-connected component (alpha-omega cc)
+        the (alpha, omega)-connected components (alpha-omega cc)
         described by Pierre Soille.  */
 
 #include <cstdio>
@@ -71,8 +71,10 @@
 
 #include <mln/pw/all.hh>
 
-// From Théo's sandbox.
-#include <theo/cplx2d.hh>
+#include <mln/fun/vv2v/diff_abs.hh>
+#include <mln/world/inter_pixel/immerse.hh>
+#include <mln/world/inter_pixel/compute.hh>
+#include <mln/world/inter_pixel/neighb2d.hh>
 
 // From Alexandre Abraham's sandbox.
 #include <alexandre/topo_wst.hh>
@@ -83,6 +85,8 @@
 
 #include <mln/io/pgm/load.hh>
 #include <mln/debug/println.hh>
+
+#include <mln/core/var.hh>
 
 
 int main(int argc, char* argv[])
@@ -101,8 +105,8 @@ int main(int argc, char* argv[])
   io::pgm::load(input, argv[1]);
 
   // Double its resolution.
-  image2d<int_u8> f(input.nrows() * 2, input.ncols() * 2);
-  mln_piter_(image2d<int_u8>) p_ima(f.domain());
+  image2d<int_u8> f_(input.nrows() * 2, input.ncols() * 2);
+  mln_piter_(image2d<int_u8>) p_ima(f_.domain());
   for_all(p_ima)
   {
     /* This conversion from a ``piter'' type to point2d is required,
@@ -111,17 +115,22 @@ int main(int argc, char* argv[])
        etc.).  */
     point2d p_ima_ = p_ima;
     point2d p_f(p_ima_.row() / 2, p_ima_.col() / 2);
-    f(p_ima) = input(p_f);
+    f_(p_ima) = input(p_f);
   }
-  debug::println(f);
+  debug::println("f_:", f_);
+
+  image_if<image2d<int_u8>, world::inter_pixel::is_pixel> f =
+    world::inter_pixel::immerse(f_);
+  debug::println("f:", f);
 
   // Compute the associated line graph gradient.
-  mln_VAR(g, cplx2d::f_to_g(f) );
+  mln_VAR(g, world::inter_pixel::compute (f, fun::vv2v::diff_abs<int_u8>()));
+
   debug::println("g:", g);
 
   // Compute a topological watershed transform on this gradient.
-  typedef morpho::topo_wst<g_t, cplx2d::dbl_neighb2d> tree_t;
-  tree_t tree(g, cplx2d::e2e());
+  typedef morpho::topo_wst<g_t, world::inter_pixel::dbl_neighb2d> tree_t;
+  tree_t tree(g, world::inter_pixel::e2e());
   tree.go();
   mln_VAR(w, morpho::topo_watershed(tree));
   debug::println("w:", w);
@@ -158,7 +167,7 @@ int main(int argc, char* argv[])
      morpho::tree::data.  */
   typedef p_array<tree_t::site> sites_t;
   sites_t sites = data::sort_psites_decreasing(w);
-  morpho::tree::data<w_t, sites_t> t(w, sites, cplx2d::e2e());
+  morpho::tree::data<w_t, sites_t> t(w, sites, world::inter_pixel::e2e());
 
   // Create initial images for min and max values on sites (not components).
   mln_ch_value_(w_t, accu::stat::min<int_u8>) init_min_val;
@@ -174,15 +183,16 @@ int main(int argc, char* argv[])
      vertices/pixels).  We have to convert the coordinates of V to its
      equivalent in F's domain to get the values on vertices.  */
   mln_piter_(w_t) e(w.domain());
-  mln_niter_(cplx2d::dbl_neighb2d) v_g(cplx2d::e2p(), e);
+  mln_niter_(world::inter_pixel::dbl_neighb2d)
+    v_g(world::inter_pixel::e2c(), e);
   for_all(e)
     for_all(v_g)
     {
       // Same remark as above avour piter to point2d conversions.
       point2d v_g_ = v_g;
       point2d v_f(v_g_.row() / 2, v_g_.col() / 2);
-      init_min_val(e).take(f(v_f));
-      init_max_val(e).take(f(v_f));
+      init_min_val(e).take(f_(v_f));
+      init_max_val(e).take(f_(v_f));
     }
   // Attribute images of min and max values on components.
   accu::stat::min<int_u8> min_accu;

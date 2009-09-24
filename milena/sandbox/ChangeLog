@@ -1,5 +1,14 @@
 2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Stop using cplx2d.hh in the constrained connectivity prototype.
+
+	* roland/constrained-connectivity.cc: Here.
+	Use Milena's mln::world::inter_pixel instead.
+	Adjust.
+	* roland/theo: Remove symlink.
+
+2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Annotate Alexandre's sandbox.
 
 	* abraham/README: New.
