@@ -1,3 +1,9 @@
+2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Annotate Alexandre's sandbox.
+
+	* abraham/README: New.
+
 2009-09-22 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Fix invalid output domain in hq*x algorithms.
