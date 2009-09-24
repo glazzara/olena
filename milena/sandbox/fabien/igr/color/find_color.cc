@@ -1,18 +1,23 @@
 #include <mln/core/image/image2d.hh>
 
+#include <mln/io/pgm/all.hh>
 #include <mln/io/ppm/all.hh>
 
 #include <mln/value/rgb8.hh>
 #include <mln/value/hsl.hh>
+#include <mln/value/int_u8.hh>
 
 #include <mln/convert/from_to.hh>
 #include <mln/data/convert.hh>
+#include <mln/math/diff_abs.hh>
 
 using namespace mln;
 using value::rgb8;
 using value::hsl_;
+using value::int_u8;
 
 
+inline
 bool
 is_green(hsl_<float, float, float> value)
 {
@@ -22,6 +27,24 @@ is_green(hsl_<float, float, float> value)
     return true;
 
   return false;
+}
+
+inline
+int_u8
+how_green(hsl_<float, float, float> value)
+{
+  float proba = 0.0;
+
+  if (value.hue() > 60 && value.hue() < 180)
+  {
+    proba += 1.f - ((math::diff_abs(120.f, value.hue()) / 100.0) / 0.6);
+    proba *= value.sat();
+    proba *= 1.f - (math::diff_abs(0.5f, value.lum()));
+  }
+
+  if (proba > 1.f)
+    proba = 1.f;
+  return (int_u8) (proba * 255);
 }
 
 int main(int argc, char* argv[])
@@ -34,21 +57,18 @@ int main(int argc, char* argv[])
 
   image2d<rgb8> input;
   io::ppm::load(input, argv[1]);
+  image2d<int_u8> output;
+  initialize(output, input);
 
   typedef image2d<hsl_<float, float, float> > H;
   H ima_hsl = data::convert(hsl_<float, float, float>(), input);
   mln_piter_(H) p(ima_hsl.domain());
   for_all(p)
   {
-    if (!is_green(ima_hsl(p)))
-    {
-      ima_hsl(p).sat() = 0.3;
-      ima_hsl(p).lum() = 0.3;
-    }
+    output(p) = how_green(ima_hsl(p));
   }
 
-  image2d<rgb8> output = data::convert(rgb8(), ima_hsl);
-  io::ppm::save(output, argv[2]);
+  io::pgm::save(output, argv[2]);
 
   return 0;
 }

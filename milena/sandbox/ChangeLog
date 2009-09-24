@@ -1,3 +1,16 @@
+2009-09-24  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Add benchmark for disk-mapped image and work for color types.
+	*  fabien/igr/color/find_color.cc: Find green color in an image.
+	*  fabien/mln/core/image/disk_ima.hh: Implement disk-mapped image.
+	*  fabien/mln/io/pnm/load_disk_ima.hh: Implement loading of disk-
+	mapped image from a PNM file.
+	*  fabien/tests/core/image/bench.sh: New script for benchmarking
+	disk-mapped image and tiled image.
+	*  fabien/mln/test/conversion.hh: Implement test for evaluation of
+	type conversion.
+	*  fabien/tests/test/conversion.cc: Test evalution of type conversion.
+
 2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use Milena's topological WST instead of the one from the sandboxes.

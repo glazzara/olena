@@ -638,6 +638,7 @@ namespace mln
 
 
 # include <mln/make/image.hh>
+# include <mln/io/pnm/load_disk_ima.hh>
 
 
 #endif // ! MLN_CORE_IMAGE_DISK_IMA_HH
