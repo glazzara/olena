@@ -47,6 +47,12 @@ namespace mln
       /// Double neighborhood used for inter-pixel images.
       typedef neighb< win::multiple<window2d, dim2::is_row_odd> > dbl_neighb2d;
 
+      // Pixel to neighboring pixels.
+      const neighb2d& c2c();
+
+      // Pixel to neighboring edges.
+      const neighb2d& c2e();
+
       // Edge to neighborhood pixels.
       const dbl_neighb2d& e2c();
 
@@ -55,6 +61,26 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+      const neighb2d& c2c()
+      {
+	static neighb2d it;
+	if (it.size() == 0)
+	  {
+	    static const bool vals[] = { 0, 0, 1, 0, 0,
+					 0, 0, 0, 0, 0,
+					 1, 0, 0, 0, 1,
+					 0, 0, 0, 0, 0,
+					 0, 0, 1, 0, 0 };
+	    convert::from_to(vals, it);
+	  }
+	return it;
+      }
+
+      const neighb2d& c2e()
+      {
+	return c4();
+      }
 
       const dbl_neighb2d& e2c()
       {

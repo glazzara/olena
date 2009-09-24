@@ -1,5 +1,13 @@
 2009-09-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Complete mln/world/inter_pixel/neighb2d.hh.
+
+	* mln/world/inter_pixel/neighb2d.hh
+	(mln::world::inter_pixel::c2c, mln::world::inter_pixel::c2e):
+	New functions.
+
+2009-09-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix documentation in mln/world/inter_pixel/neighb2d.hh.
 
 	* mln/world/inter_pixel/neighb2d.hh
