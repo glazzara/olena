@@ -1,5 +1,11 @@
 2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Catch up with new 2D inter-pixel neighborhoods names.
+
+	* roland/constrained-connectivity.cc (main): s/e2c/e2v/.
+
+2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Stop using cplx2d.hh in the constrained connectivity prototype.
 
 	* roland/constrained-connectivity.cc: Here.

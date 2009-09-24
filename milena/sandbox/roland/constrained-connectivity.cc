@@ -184,7 +184,7 @@ int main(int argc, char* argv[])
      equivalent in F's domain to get the values on vertices.  */
   mln_piter_(w_t) e(w.domain());
   mln_niter_(world::inter_pixel::dbl_neighb2d)
-    v_g(world::inter_pixel::e2c(), e);
+    v_g(world::inter_pixel::e2v(), e);
   for_all(e)
     for_all(v_g)
     {
