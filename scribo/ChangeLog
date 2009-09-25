@@ -1,5 +1,12 @@
 2009-09-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add new filters in Scribo.
+
+	* filter/object_groups_size_ratio.hh,
+	* filter/objects_size_ratio.hh: New filters.
+
+2009-09-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Small fixes in Scribo.
 
 	* demo/src/mainwindow.cc: Do not always resize pics.
