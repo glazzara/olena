@@ -66,6 +66,8 @@ namespace mln
 
         /// Perform the translation of the given vector
         algebra::vec<n,C> operator()(const algebra::vec<n,C>& v) const;
+        algebra::vec<n,C> inverse(const algebra::vec<n,C>& v) const;
+
 
         /// Set a net translation vector.
         void set_t(const algebra::vec<n,C>& t);
@@ -102,6 +104,14 @@ namespace mln
       translation<n,C>::operator()(const algebra::vec<n,C>& v) const
       {
         return v + t_;
+      }
+
+      template <unsigned n, typename C>
+      inline
+      algebra::vec<n,C>
+      translation<n,C>::inverse(const algebra::vec<n,C>& v) const
+      {
+        return v - t_;
       }
 
       template <unsigned n, typename C>

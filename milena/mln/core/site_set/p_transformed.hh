@@ -33,7 +33,7 @@
 
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/concept/function.hh>
-
+# include <mln/convert/from_to.hh>
 
 namespace mln
 {
@@ -81,7 +81,7 @@ namespace mln
   template <typename S, typename F>
   class p_transformed
     : public internal::site_set_base_< mln_psite(S), p_transformed<S,F> >,
-      private metal::equal< mln_result(F), mln_psite(S) >::check_t
+      private mlc_converts_to(mln_result(F), mln_psite(S))::check_t
   {
     typedef p_transformed<S,F> self_;
     typedef internal::site_set_base_<mln_result(F), self_> super_;
@@ -171,7 +171,9 @@ namespace mln
   bool
   p_transformed<S,F>::has(const psite& p) const
   {
-    return s_.has(f_(p));
+    mln_argument(F) arg;
+    convert::from_to(p, arg);
+    return s_.has(f_.inverse(arg));
   }
 
   template <typename S, typename F>

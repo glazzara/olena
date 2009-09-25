@@ -1,5 +1,18 @@
 2009-09-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Fix non generic stuff in translation function and fix transform morpher.
+	*  core/image/imorph/tr_image.hh,
+	*  core/site_set/p_transformed.hh,
+	*  core/site_set/p_transformed_piter.hh:
+	Make them less strict with function return type. Allow
+	functions having values that can be converted in the requested
+	site. (ex: vector<1, u> -> point1d).
+	*  fun/p2p/translation.hh: Add argument type definition.
+	*  fun/x2x/translation.hh: Add inverse function.
+	*  geom/translate.hh: Fix non generic stuff and bug.
+
+2009-09-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Add hierarchical queues for Salembier's algorithm.
 	*  core/site_set/p_queue_fast.hh: Add empty method.
 	*  util/all.hh: Update.

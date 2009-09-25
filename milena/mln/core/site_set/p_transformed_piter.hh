@@ -32,6 +32,7 @@
 
 # include <mln/core/internal/site_set_iterator_base.hh>
 # include <mln/core/site_set/p_transformed.hh>
+# include <mln/convert/to.hh>
 
 
 namespace mln
@@ -107,7 +108,7 @@ namespace mln
   {
     return pi_.is_valid();
   }
-    
+
   template <typename Pi, typename S, typename F>
   inline
   void
@@ -123,7 +124,7 @@ namespace mln
   {
     pi_.start();
     if (pi_.is_valid())
-      p_ = s_->function()(pi_);
+      p_ = s_->function()(convert::to<mln_argument(F)>(pi_));
   }
 
   template <typename Pi, typename S, typename F>
@@ -133,7 +134,7 @@ namespace mln
   {
     pi_.next();
     if (pi_.is_valid())
-      p_ = s_->function()(pi_);
+      p_ = s_->function()(convert::to<mln_argument(F)>(pi_));
   }
 
   template <typename Pi, typename S, typename F>

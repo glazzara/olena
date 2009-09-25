@@ -81,12 +81,12 @@ namespace mln
   //
   template <typename S, typename I, typename T>
   struct tr_image :
-    public mln::internal::image_identity< I, mln_domain(I), tr_image<S,I,T> >
+    public mln::internal::image_identity< I, S, tr_image<S,I,T> >
   {
 
     /// Super type.
     typedef
-    mln::internal::image_identity< I, mln_domain(I), tr_image<S,I,T> > super_;
+    mln::internal::image_identity< I, S, tr_image<S,I,T> > super_;
 
     /// Point_Site associated type.
     typedef mln_psite(I) psite;

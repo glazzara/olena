@@ -47,6 +47,7 @@ namespace mln
       struct translation_t : public Function_v2v< translation_t<P> >
       {
         typedef P result;
+	typedef P argument;
 
         translation_t(const mln_delta(P)& dp);
 

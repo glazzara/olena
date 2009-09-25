@@ -35,10 +35,10 @@
 # include <mln/core/concept/box.hh>
 
 # include <mln/core/routine/extend.hh>
-
+# include <mln/core/site_set/p_transformed.hh>
 # include <mln/core/image/imorph/tr_image.hh>
 
-# include <mln/data/paste.hh>
+# include <mln/data/fill.hh>
 
 # include <mln/fun/x2x/translation.hh>
 
@@ -105,22 +105,22 @@ namespace mln
       const I& input = exact(input_);
       const S& output_domain = exact(output_domain_);
       const mln_exact(Ext)& extension = exact(extension_);
-      mlc_converts_to(mln_exact(Ext), mln_value(I))::check();
+      //mlc_converts_to(mln_exact(Ext), mln_value(I))::check();
 
       mln_precondition(input.is_valid());
       mln_precondition(output_domain.is_valid());
 
-      point2d c = geom::bbox(input).center();
-      typedef fun::x2x::translation<2,double> trans_t;
-      trans_t
-	t(ref);
+      //mln_psite(I) c = geom::bbox(input).center();
+      typedef fun::x2x::translation<mln_site_(I)::dim, V> trans_t;
+      typedef p_transformed<mln_domain(I), trans_t> trans_domain_t;
+      typedef tr_image<trans_domain_t, I, trans_t> tr_ima_t;
 
-      tr_image<S,I,trans_t> tr_ima(output_domain, input, t);
+      trans_t t(ref);
+      trans_domain_t d(input.domain(), t);
+      tr_ima_t tr_ima(d, input, t);
 
-      mln_concrete(I) output;
-      initialize(output, tr_ima);
-
-      data::paste(extend(tr_ima, extension), output);
+      mln_concrete(I) output(output_domain);
+      data::fill(output, extend(tr_ima, extension) | output_domain);
 
       trace::exiting("geom::translate");
       return output;
