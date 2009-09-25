@@ -453,7 +453,7 @@ namespace mln
       o_current = o_start;
       for (int i = 0; i < len; ++i)
 	{
-	  ima.element(o_current) = (tmp1[i] + tmp2[i]);
+	  ima.element(o_current) = static_cast<mln_value(I)>(tmp1[i] + tmp2[i]);
 	  o_current += delta_offset;
 	}
     }

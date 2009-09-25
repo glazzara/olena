@@ -1,3 +1,15 @@
+2009-09-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
+	Small fixes.
+
+	* doc/examples/Makefile.am: Fix invalid source filename.
+
+	* mln/fun/from_accu.hh: Fix guard.
+
+	* mln/linear/gaussian_directional_2d.hh: Fix a warning.
+
+	* tests/accu/pair.cc: revamp header.
+
 2009-09-24  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add correct reference for HSL to RGB conversion.
@@ -324,7 +336,7 @@
 	Fix ISO C++ compilation problem : L101.
 
 	* mln/io/plot/load.hh (load) : Update source file.
-	
+
 2009-09-14  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Disable tiled2d image support (still experimental).

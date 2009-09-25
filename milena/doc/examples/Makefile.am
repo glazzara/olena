@@ -33,7 +33,7 @@ EXTRA_PROGRAMS =		\
   fill-part-image 		\
   fill-subdomain 		\
   fill-subdomain-shorter	\
-  fill-subimage-cfun 		\
+  fill-imageif-cfun 		\
   first_routine 		\
   forall-piter  		\
   fun-p2v-1 			\
@@ -94,7 +94,7 @@ fill_call_1_SOURCES = fill-call-1.cc
 fill_part_image_SOURCES = fill-part-image.cc
 fill_subdomain_SOURCES = fill-subdomain.cc
 fill_subdomain_shorter_SOURCES = fill-subdomain-shorter.cc
-fill_subimage_cfun_SOURCES = fill-subimage-cfun.cc
+fill_imageif_cfun_SOURCES = fill-imageif-cfun.cc
 first_routine_SOURCES = tuto3/first_routine.cc
 forall_piter_SOURCES = forall-piter.cc
 fun_p2v_1_SOURCES = fun-p2v-1.cc

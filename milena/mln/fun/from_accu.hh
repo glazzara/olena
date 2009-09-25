@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,24 +24,32 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+///
+/// Wrap an accumulator into a function.
+
+
 #ifndef MLN_FUN_FROM_ACCU_HH
 # define MLN_FUN_FROM_ACCU_HH
 
 # include <mln/fun/unary_param.hh>
 # include <mln/core/concept/accumulator.hh>
 
+
 namespace mln
 {
 
-  // from_accu: wrap an accumulator into a function
   namespace fun
   {
 
+
+    /*! \brief Wrap an accumulator into a function.
+     */
     template <typename A>
     struct from_accu : unary_param<from_accu<A>, A*>
     {
-      from_accu() : unary_param<from_accu<A>, A*>() {};
-      from_accu(A* a) : unary_param<from_accu<A>, A*>(a) {};
+      from_accu();
+      from_accu(A* a);
     };
 
   } // end of namespace mln::fun
@@ -58,20 +67,70 @@ namespace mln
 	typedef typename A::argument argument;
 	typedef A* param_t;
 
-	static inline
-	result read(const param_t& accu_, const argument& x)
-	{
-	  mln_precondition(accu_ != 0);
+	static result read(const param_t& accu_, const argument& x);
 
-	  accu_->take(x);
-	  return accu_->to_result ();
-	}
       };
 
     } // end of namespace mln::trait::next
 
   } // end of namespace mln::trait
 
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+  namespace fun
+  {
+
+    template <typename A>
+    inline
+    from_accu<A>::from_accu()
+      : unary_param<from_accu<A>, A*>()
+    {
+
+    }
+
+
+    template <typename A>
+    inline
+    from_accu<A>::from_accu(A* a)
+      : unary_param<from_accu<A>, A*>(a)
+    {
+
+    }
+
+  } // end of namespace mln::fun
+
+
+
+  namespace trait
+  {
+
+    namespace next
+    {
+
+      template <typename A, typename T>
+      inline
+      typename set_unary_<mln::fun::from_accu<A>, mln::Object, T>::result
+      set_unary_<mln::fun::from_accu<A>,
+		 mln::Object, T>::read(const param_t& accu_,
+				       const argument& x)
+      {
+	mln_precondition(accu_ != 0);
+
+	accu_->take(x);
+	  return accu_->to_result ();
+      }
+
+    } // end of namespace mln::trait::next
+
+  } // end of namespace mln::trait
+
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
 } // end of namespace mln
 
-#endif /* ! MLN_FUN_FROM_ACCU_HH */
+#endif // ! MLN_FUN_FROM_ACCU_HH
