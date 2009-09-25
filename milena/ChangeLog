@@ -1,3 +1,14 @@
+2009-09-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add hierarchical queues for Salembier's algorithm.
+	*  core/site_set/p_queue_fast.hh: Add empty method.
+	*  util/all.hh: Update.
+	*  util/hqueues.hh: New.
+	*  value/all.hh: Update.
+	*  value/value_array.hh: New. Create an array indexed by
+	a given type. (Similar to histo::array but the
+	values are not limited to unsigned type).
+
 2009-09-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Small fixes.

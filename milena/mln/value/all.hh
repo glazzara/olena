@@ -53,7 +53,7 @@ namespace mln
 # include <mln/value/interval.hh>
 # include <mln/value/label.hh>
 # include <mln/value/proxy.hh>
-
+# include <mln/value/value_array.hh>
 
 // FIXME: that includes concept/image.hh!
 

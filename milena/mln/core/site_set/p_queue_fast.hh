@@ -111,6 +111,8 @@ namespace mln
     /// Give the number of sites.
     unsigned nsites() const;
 
+    /// Test if the queue is empty.
+    bool empty() const;
 
     /// Push a site \p p in the queue.
     void push(const P& p);
@@ -240,6 +242,15 @@ namespace mln
   {
     mln_invariant(end_ >= begin_);
     return end_ - begin_;
+  }
+
+  template <typename P>
+  inline
+  bool
+  p_queue_fast<P>::empty() const
+  {
+    mln_invariant(end_ >= begin_);
+    return end_ == begin_;
   }
 
   template <typename P>

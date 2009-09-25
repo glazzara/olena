@@ -51,6 +51,7 @@ namespace mln
 # include <mln/util/dindex.hh>
 # include <mln/util/eat.hh>
 # include <mln/util/edge.hh>
+# include <mln/util/hqueues.hh>
 # include <mln/util/graph.hh>
 # include <mln/util/greater_point.hh>
 # include <mln/util/greater_psite.hh>
