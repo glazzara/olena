@@ -1,5 +1,14 @@
 2009-09-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Add test for dual input and fix p_transformed test.
+	*  core/site_set/p_transformed.cc: Add inverse and typedefs.
+	*  morpho/tree/Makefile.am,
+	*  morpho/tree/dual_input_tree.cc,
+	Add dual input tree tests.
+	*  morpho/tree/filter/filter.cc: Minor changes.
+
+2009-09-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Add fast version of dual input max tree computation and fix.
 	*  morpho/tree/all.hh: Update.
 	*  morpho/tree/compute_parent_dual_input.hh: Remove.

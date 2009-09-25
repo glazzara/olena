@@ -33,9 +33,16 @@
 struct wrap : mln::Function_v2v< wrap >
 {
   typedef mln::point2d result;
+  typedef mln::point2d argument;
+
   result operator()(const result& p) const
   {
     return result(p.row() + 5, p.col() + 1);
+  }
+
+  result inverse(const result& p) const
+  {
+    return result(p.row() - 5, p.col() - 1);
   }
 };
 

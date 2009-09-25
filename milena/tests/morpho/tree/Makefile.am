@@ -22,11 +22,13 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
   compute_attribute_image			\
   compute_parent				\
+  dual_input_tree				\
   data	 					\
   max
 
 compute_attribute_image_SOURCES = compute_attribute_image.cc
 compute_parent_SOURCES = compute_parent.cc
+dual_input_tree_SOURCES = dual_input_tree.cc
 data_SOURCES = data.cc
 max_SOURCES = max.cc
 

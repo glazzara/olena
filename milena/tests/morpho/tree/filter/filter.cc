@@ -32,8 +32,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/data/sort_psites.hh>
-#include <mln/morpho/tree/data.hh>
+#include <mln/morpho/tree/component_tree.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
 #include <mln/morpho/attribute/card.hh>
 
@@ -59,8 +58,7 @@ int main()
   typedef p_array< mln_site_(I) > S;
   typedef morpho::tree::data<I,S> tree_t;
 
-  S sorted_sites = data::sort_psites_decreasing(input);
-  tree_t tree(input, sorted_sites, c4());
+  tree_t tree = morpho::tree::min_tree(input, c4());
 
   // Test with increasing attribute -> area closing.
   {
