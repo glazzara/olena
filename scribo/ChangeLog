@@ -1,5 +1,15 @@
 2009-09-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add new examples in Scribo.
+
+	* src/extract/primitive/Makefile.am,
+	* src/preprocessing/Makefile.am: Add new examples as target.
+
+	* src/extract/primitive/find_pattern_lines.cc,
+	* src/preprocessing/split_bg_fg.cc: New examples.
+
+2009-09-25 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Add new filters in Scribo.
 
 	* filter/object_groups_size_ratio.hh,

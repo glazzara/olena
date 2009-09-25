@@ -20,6 +20,8 @@
 include $(top_srcdir)/scribo/scribo.mk
 
 bin_PROGRAMS = 				\
+  split_bg_fg 				\
   unskew
 
-unskew_SOURCES = unskew.cc                               
+split_bg_fg_SOURCES = split_bg_fg.cc
+unskew_SOURCES = unskew.cc
