@@ -25,14 +25,16 @@
 
 /// \file
 ///
-/// Compute a canonized (parenthood) component tree from a dual input.
-
+/// Compute a canonized component tree from a dual input.
 
 #ifndef MLN_MORPHO_TREE_DUAL_INPUT_TREE_HH
 # define MLN_MORPHO_TREE_DUAL_INPUT_TREE_HH
 
 # include <mln/data/sort_psites.hh>
+
 # include <mln/morpho/tree/data.hh>
+# include <mln/morpho/tree/impl/dual_union_find.hh>
+# include <mln/morpho/tree/impl/dual_hqueue.hh>
 
 namespace mln
 {
@@ -43,43 +45,94 @@ namespace mln
     namespace tree
     {
 
-      template <typename I, typename M, typename N>
+      /// Compute the dual input max tree using mask-based connectivity.
+      ///
+      /// \param[in] f The original image.
+      /// \param[in] m The connectivity mask.
+      /// \param[in] nbh The neighborhood of the mask.
+      ///
+      /// \return The computed tree.
+      ///
+      template <typename I, typename N>
       inline
-      morpho::tree::data< I, p_array<mln_psite(I)> >
-	dual_input_max_tree(const Image<I>& f,
-			    const Image<M>& m,
-			    const Neighborhood<N>& nbh);
+      data< I, p_array<mln_psite(I)> >
+      dual_input_max_tree(const Image<I>& f,
+			  const Image<I>& m,
+			  const Neighborhood<N>& nbh);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename I, typename M, typename N>
+      namespace internal
+      {
+
+	template <typename I, typename N>
+	inline
+	data< I, p_array<mln_psite(I)> >
+	dual_input_max_tree_dispatch(trait::image::quant::any,
+				     const I& f,
+				     const I& m,
+				     const N& nbh)
+	{
+	  typedef p_array<mln_psite(I)> S;
+	  typedef data<I,S> tree_t;
+
+	  S s_f = mln::data::sort_psites_increasing(f);
+	  S s_m = mln::data::sort_psites_increasing(m);
+
+	  tree_t tree = impl::generic::dual_union_find(f, m, s_f, s_m, nbh);
+	  return tree;
+	}
+
+	template <typename I, typename N>
+	inline
+	data< I, p_array<mln_psite(I)> >
+	dual_input_max_tree_dispatch(trait::image::quant::low,
+				     const I& f,
+				     const I& m,
+				     const N& nbh)
+	{
+	  typedef p_array<mln_psite(I)> S;
+	  typedef data<I,S> tree_t;
+
+	  tree_t tree = impl::dual_hqueue(f, m, nbh);
+	  return tree;
+	}
+
+      } // end of namespace mln::morpho::tree::internal
+
+
+      // Facades.
+      template <typename I, typename N>
       inline
       morpho::tree::data< I, p_array<mln_psite(I)> >
       dual_input_max_tree(const Image<I>& f_,
-			  const Image<M>& m_,
+			  const Image<I>& m_,
 			  const Neighborhood<N>& nbh_)
       {
 	trace::entering("morpho::tree::dual_input_max_tree");
 
 	const I& f = exact(f_);
-	const M& m = exact(m_);
+	const I& m = exact(m_);
 	const N& nbh = exact(nbh_);
 
 	mln_precondition(f.is_valid());
 	mln_precondition(m.is_valid());
 	mln_precondition(nbh.is_valid());
+	mln_precondition(f.domain() == m.domain());
 
 	typedef p_array<mln_psite(I)> S;
 	typedef data<I,S> tree_t;
 
-	S s_f = mln::data::sort_psites_increasing(f);
-	S s_m = mln::data::sort_psites_increasing(m);
-	tree_t tree(f, m, s_f, s_m, nbh);
+	tree_t tree = internal::dual_input_max_tree_dispatch(mln_trait_image_quant(I)(), f, m, nbh);
 
 	trace::exiting("morpho::tree::dual_input_max_tree");
 	return tree;
       }
+
+
+
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

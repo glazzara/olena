@@ -32,7 +32,6 @@
 /// of S container iterator) to go faster.
 
 # include <mln/morpho/tree/compute_parent.hh>
-# include <mln/morpho/tree/compute_parent_dual_input.hh>
 # include <mln/core/site_set/p_array.hh>
 # include <mln/core/internal/site_set_iterator_base.hh>
 # include <mln/core/internal/piter_identity.hh>
@@ -138,18 +137,18 @@ namespace mln
 	typedef mln::morpho::tree::depth1st_piter<self_> depth1st_piter;
 
 
-	/// Constructor.
+	/// Standard constructor.
 	template <typename N>
-	data(const Image<I>& f, const Site_Set<S>& s, const Neighborhood<N>& nbh);
-
-	/// Constructor.
-	template <typename N, typename M>
 	data(const Image<I>& f,
-	     const Image<M>& m,
-	     const Site_Set<S>& s_f,
-	     const Site_Set<S>& s_m,
+	     const Site_Set<S>& s,
 	     const Neighborhood<N>& nbh);
 
+	/// Special constructor where the parent computation has
+	/// delegated to an external function. (To handle special case
+	/// of connectivity for example).
+	data(const Image<I>& f,
+	     const parent_t& parent,
+	     const Site_Set<S>& s);
 
 	/// \{ Base function-related materials
 
@@ -205,13 +204,18 @@ namespace mln
 	unsigned nroots() const;
 
       protected:
-	const function& f_;
-	const sites_t s_;
-	mln_ch_value(I, mln_psite(I)) parent_;	// Parent image.
-	mln_ch_value(I, nodes_t) children_;	// Children image.
-	nodes_t nodes_;
-	leaves_t leaves_;
-	unsigned nroots_;
+	void compute_children_();
+
+      protected:
+	mln_ch_value(I, mln_psite(I))	parent_;	// Parent image.
+	mln_ch_value(I, nodes_t)	children_;	// Children image.
+
+	function	f_; // f image containing values of the tree nodes.
+	sites_t		s_; // Sorted site set of the tree sites. (domain(f_) includes s_).
+
+	nodes_t		nodes_; // Sorted node set.
+	leaves_t	leaves_; // Sorted leaf set.
+	unsigned	nroots_; // For non-contigous domain image purpose.
       };
 
 
@@ -403,43 +407,15 @@ namespace mln
     {
 
       template <typename I, typename S>
-      template <typename N, typename M>
       inline
       data<I, S>::data(const Image<I>& f,
-		       const Image<M>& m,
-		       const Site_Set<S>& s_f,
-		       const Site_Set<S>& s_m,
-		       const Neighborhood<N>& nbh)
-	: f_(exact(f)),
-	  s_(exact(s_f))
+		       const mln_ch_value(I, mln_psite(I))& parent,
+		       const Site_Set<S>& s)
+	: parent_ (parent),
+	  f_ (exact(f)),
+	  s_ (exact(s))
       {
-	const N& nbh_ = exact(nbh);
-
-	// Compute parent image.
-	parent_ = morpho::tree::compute_parent_dual_input(f_, m, nbh_, s_, s_m);
-	initialize(children_, f);
-
-	// Store tree nodes.
-	nroots_ = 0;
-	mln_bkd_piter(S) p(s_);
-	for_all(p)
-	{
-	  if (f_(parent_(p)) != f_(p))
-	    {
-	      nodes_.insert(p);
-	      children_(parent_(p)).insert(p);
-	      if (is_a_leaf(p))
-		leaves_.insert(p);
-	    }
-	  else if (parent_(p) == p) //it's a root.
-	    {
-	      nodes_.insert(p);
-	      if (is_a_leaf(p)) // One pixel image...
-		leaves_.insert(p);
-	      ++nroots_;
-	    }
-	}
-	mln_assertion(leaves_.nsites() > 0);
+	compute_children_();
       }
 
 
@@ -447,15 +423,25 @@ namespace mln
       template <typename I, typename S>
       template <typename N>
       inline
-      data<I,S>::data(const Image<I>& f, const Site_Set<S>& s, const Neighborhood<N>& nbh)
+      data<I,S>::data(const Image<I>& f,
+		      const Site_Set<S>& s,
+		      const Neighborhood<N>& nbh)
 	: f_(exact(f)),
 	  s_(exact(s))
       {
-	const N& nbh_ = exact(nbh);
-
 	// Compute parent image.
+	const N& nbh_ = exact(nbh);
 	parent_ = morpho::tree::compute_parent(f_, nbh_, s_);
-	initialize(children_, f);
+
+	compute_children_();
+      }
+
+      template <typename I, typename S>
+      inline
+      void
+      data<I, S>::compute_children_()
+      {
+	initialize(children_, f_);
 
 	// Store tree nodes.
 	nroots_ = 0;
@@ -480,24 +466,13 @@ namespace mln
 	mln_assertion(leaves_.nsites() > 0);
       }
 
+
       template <typename I, typename S>
       inline
       mln_rvalue_(mln_ch_value(I, mln_psite(I)))
       data<I,S>::parent(const mln_psite(I)& p) const
       {
-	// HERE
-
-// 	mln_precondition(is_valid());
-// 	mln_rvalue(parent_t) tmp;
-// 	if (! parent_.domain().has(p))
-// 	  {
-// 	    std::cout << "KO next" << std::endl;
-// 	    std::cout << p << std::endl;
-// 	    std::cout << parent_.domain() << std::endl;
-// 	  }
-// 	else
-// 	  std::cout << "ok next" << std::endl;
-// 	mln_precondition(parent_.domain().has(p));
+	mln_precondition(parent_.domain().has(p));
 	return parent_(p);
       }
 

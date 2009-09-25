@@ -1,5 +1,17 @@
 2009-09-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
+	Add fast version of dual input max tree computation and fix.
+	*  morpho/tree/all.hh: Update.
+	*  morpho/tree/compute_parent_dual_input.hh: Remove.
+	*  morpho/tree/data.hh: Fix constructors.
+	*  morpho/tree/dual_input_tree.hh: Add dispatches for
+	generic / low quantized algorithms.
+	*  morpho/tree/impl/dual_hqueue.hh: New.
+	*  morpho/tree/impl/dual_union_find.hh: New.
+	*  morpho/tree/impl: New.
+
+2009-09-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
 	Fix non generic stuff in translation function and fix transform morpher.
 	*  core/image/imorph/tr_image.hh,
 	*  core/site_set/p_transformed.hh,

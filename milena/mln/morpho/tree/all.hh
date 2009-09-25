@@ -48,6 +48,7 @@ namespace mln
 
 # include <mln/morpho/tree/compute_attribute_image.hh>
 # include <mln/morpho/tree/compute_parent.hh>
+# include <mln/morpho/tree/dual_input_tree.hh>
 # include <mln/morpho/tree/data.hh>
 # include <mln/morpho/tree/max.hh>
 # include <mln/morpho/tree/utils.hh>
