@@ -1,15 +1,15 @@
 2009-09-24  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add benchmark for disk-mapped image and work for color types.
-	*  fabien/igr/color/find_color.cc: Find green color in an image.
-	*  fabien/mln/core/image/disk_ima.hh: Implement disk-mapped image.
-	*  fabien/mln/io/pnm/load_disk_ima.hh: Implement loading of disk-
+	* fabien/igr/color/find_color.cc: Find green color in an image.
+	* fabien/mln/core/image/disk_ima.hh: Implement disk-mapped image.
+	* fabien/mln/io/pnm/load_disk_ima.hh: Implement loading of disk-
 	mapped image from a PNM file.
-	*  fabien/tests/core/image/bench.sh: New script for benchmarking
+	* fabien/tests/core/image/bench.sh: New script for benchmarking
 	disk-mapped image and tiled image.
-	*  fabien/mln/test/conversion.hh: Implement test for evaluation of
+	* fabien/mln/test/conversion.hh: Implement test for evaluation of
 	type conversion.
-	*  fabien/tests/test/conversion.cc: Test evalution of type conversion.
+	* fabien/tests/test/conversion.cc: Test evalution of type conversion.
 
 2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -52,67 +52,64 @@
 	Prepare demo for theo and questions for guillaume.
 
 	Rename fraction directory into frac directory.
-	
-	* green/doc/examples/fraction/frac.cc        : Delete.
-	* green/doc/examples/fraction/frac.hh        : Delete.
-	* green/doc/examples/fraction/gcd.hh         : Delete
-	* green/doc/examples/fraction/sign_prod.hh   : Delete.
 
-	* green/doc/examples/frac/frac.cc            : New.
-	* green/doc/examples/frac/frac.hh            : New.
-	* green/doc/examples/frac/gcd.hh             : New.
-	* green/doc/examples/frac/sign_prod.hh       : New.
-	* green/doc/examples/frac/Makefile.am        : New.
+	* green/doc/examples/fraction/frac.cc: Delete.
+	* green/doc/examples/fraction/frac.hh: Delete.
+	* green/doc/examples/fraction/gcd.hh: Delete
+	* green/doc/examples/fraction/sign_prod.hh: Delete.
+
+	* green/doc/examples/frac/frac.cc: New.
+	* green/doc/examples/frac/frac.hh: New.
+	* green/doc/examples/frac/gcd.hh: New.
+	* green/doc/examples/frac/sign_prod.hh: New.
+	* green/doc/examples/frac/Makefile.am: New.
 
 	Collect some tmp results.
-	
+
 	* green/mln/io/plot/save_histo_sh.hh
-	(save_histo_sh<2d>)            : Comment method.
-	* green/mln/mln/accu/stat/histo1d.hh
-	                               : Update documentation.
-	* green/mln/mln/accu/stat/histo3d_rgb.hh
-	                               : Update documentation.
-	* green/mln/mln/accu/stat/histo3d_hsl.hh
-	                               : Update documentation.
+	(save_histo_sh<2d>): Comment method.
+	* green/mln/mln/accu/stat/histo1d.hh: Update documentation.
+	* green/mln/mln/accu/stat/histo3d_rgb.hh: Update documentation.
+	* green/mln/mln/accu/stat/histo3d_hsl.hh: Update documentation.
 	* green/mln/tests/accu/stat/histo1d/histo1d.cc
-	(test_8bits_integration, main) : Comment unused code, save tmp results.
-	(test_8bits_operator_equal)    : Test infer "!=" operator. 
+	(test_8bits_integration, main): Comment unused code, save tmp results.
+	(test_8bits_operator_equal): Test infer "!=" operator.
 	* green/mln/tests/accu/stat/histo3d_rgb/histo3d_rgb.cc
-	(test_integration, main)       : Comment unused code, save tmp results.
+	(test_integration, main): Comment unused code, save tmp results.
 	* green/mln/tests/accu/stat/histo3d_hsl/histo3d_hsl.cc
-	(test_integration, main)       : Comment unused code, save tmp results.
+	(test_integration, main): Comment unused code, save tmp results.
 
 2009-09-22  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Adapt styles. Need some 2d code.
-	
-	* green/mln/io/plot/save_histo_sh.hh (save_histo_sh<2d>)   : New func.
+
+	* green/mln/io/plot/save_histo_sh.hh (save_histo_sh<2d>): New func.
 
 2009-09-22  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Fix bug in histo3d_hsl count method.
-	
-	* green/mln/accu/stat/histo3d_hsl.hh (take)           : Fix bug.
+
+	* green/mln/accu/stat/histo3d_hsl.hh (take): Fix bug.
 	* green/tests/accu/stat/histo3d_hsl/histo3d_hsl.cc
 	(count_histo, mean_histo, var_histo, test_integration): Fix bug.
 
 2009-09-22  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Put the basis of a general gnuplot shell export function.
-	
-	* green/mln/io/plot/save_image_sh.hh                 : New library file.
-	* green/tests/io/plot/save_image_sh                  : New directory.
-	* green/tests/io/plot/save_image_sh/Makefile         : New Makefile.
-	* green/tests/io/plot/save_image_sh/save_image_sh.cc : New unit tests.
+
+	* green/mln/io/plot/save_image_sh.hh: New library file.
+	* green/tests/io/plot/save_image_sh: New directory.
+	* green/tests/io/plot/save_image_sh/Makefile: New Makefile.
+	* green/tests/io/plot/save_image_sh/save_image_sh.cc: New unit tests.
 
 2009-09-21  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add disk_ima test, improve HSL operations.
-	*  fabien/igr/color/find_color.cc: Add operations on HSL values.
-	*  fabien/mln/core/image/disk_ima.hh: Implement an image directly
+	* fabien/igr/color/find_color.cc: Add operations on HSL values.
+	* fabien/mln/core/image/disk_ima.hh: Implement an image directly
 	mapped on disk.
-	*  fabien/tests/core/image/Makefile: Add `disk_ima' target.
-	*  fabien/tests/core/image/disk_ima.cc: New test file for the
+	* fabien/tests/core/image/Makefile: Add `disk_ima' target.
+	* fabien/tests/core/image/disk_ima.cc: New test file for the
 	disk_ima class.
 
 2009-09-18  Roland Levillain  <roland@lrde.epita.fr>
@@ -132,24 +129,24 @@
 2009-09-17  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix index value bug.
-	*  fabien/mln/core/image/cache.hh: Fix index value bug.
-	*  fabien/tests/core/image/tiled2d.cc: Minor update.
+	* fabien/mln/core/image/cache.hh: Fix index value bug.
+	* fabien/tests/core/image/tiled2d.cc: Minor update.
 
 2009-09-16  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Implement basic LRU cache algorithm.
-	*  fabien/mln/core/image/cache.hh: Implement basic LRU cache
+	* fabien/mln/core/image/cache.hh: Implement basic LRU cache
 	algorithm.
-	*  fabien/tests/core/image/tiled2d.cc: Minor update.
+	* fabien/tests/core/image/tiled2d.cc: Minor update.
 
 2009-09-16  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add experimental cache support in 2D tiled image.
-	*  fabien/mln/core/image/cache.hh: Implement cache management.
-	*  fabien/mln/core/image/page.hh: Implement page management.
-	*  fabien/mln/core/image/tiled2d.hh: Add cache management.
-	*  fabien/tests/core/image/Makefile: Minor update.
-	*  fabien/tests/core/image/tiled2d.cc: Minor update.
+	* fabien/mln/core/image/cache.hh: Implement cache management.
+	* fabien/mln/core/image/page.hh: Implement page management.
+	* fabien/mln/core/image/tiled2d.hh: Add cache management.
+	* fabien/tests/core/image/Makefile: Minor update.
+	* fabien/tests/core/image/tiled2d.cc: Minor update.
 
 2009-09-15 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -164,31 +161,31 @@
 2009-09-14  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Fix bug in histo3d_rgb (parameters'order in Point's constructor)
-	
+
 	* green/mln/accu/stat/histo3d_rgb.hh
-	(take)                                             : Fix point's call.
+	(take): Fix point's call.
 	* green/tests/accu/stat/histo3d_rgb/histo3d_rgb.cc
-	(conv)                                             : Delete func.
+	(conv): Delete func.
 	* green/tests/accu/stat/histo3d_rgb/histo3d_rgb.cc
-	(mean_histo, var_histo2)                           : Update func.
+	(mean_histo, var_histo2): Update func.
 
 2009-09-14  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Move stats directory in doc/examples.
-	
-	* green/doc/examples/stats                  : New directory.
-	* green/doc/examples/stats/Makefile.am      : Copy makefile.
-	* green/doc/examples/stats/stats.cc         : Copy source file.
-	
-	* green/stats/stats.cc                      : Remove source file.
-	* green/stats/Makefile.am                   : Remove makefile.
-	* green/stats                               : Remove directory.
+
+	* green/doc/examples/stats: New directory.
+	* green/doc/examples/stats/Makefile.am: Copy makefile.
+	* green/doc/examples/stats/stats.cc: Copy source file.
+
+	* green/stats/stats.cc: Remove source file.
+	* green/stats/Makefile.am: Remove makefile.
+	* green/stats: Remove directory.
 
 2009-09-13  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Save work in progress for histo and hsl. Everything is updated.
 
-	* green/mln/accu/stat/histo3d_hsl.hh              :Update library file.
+	* green/mln/accu/stat/histo3d_hsl.hh:Update library file.
 	* green/tests/accu/stat/histo3d_hsl/histo3d_hsl.cc:Update unitary test.
 
 
@@ -196,213 +193,213 @@
 
 	Delete obsolete sources.
 
-	* green/mln/fun/x2v/sampler.hh : Delete obsolete library file.
-	* green/mln/fun/x2v            : Delete directory.
+	* green/mln/fun/x2v/sampler.hh: Delete obsolete library file.
+	* green/mln/fun/x2v: Delete directory.
 
 2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Save work in progress for histo and hsl (interpolation part).
 
-	* green/mln/fun/x2v            : New directory.
-	* green/mln/fun/x2v/sampler.hh : New library file.
+	* green/mln/fun/x2v: New directory.
+	* green/mln/fun/x2v/sampler.hh: New library file.
 
 2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Save work in progress for histo and hsl.
 
-	* green/mln/accu/stat/histo3d_hsl.hh               : New library file.
+	* green/mln/accu/stat/histo3d_hsl.hh: New library file.
 
-	* green/tests/accu/stat/histo3d_hsl                : New directory.
-	* green/tests/accu/stat/histo3d_hsl/Makefile.am    : New makefile.
-	* green/tests/accu/stat/histo3d_hsl/histo3d_hsl.cc : New source file.
+	* green/tests/accu/stat/histo3d_hsl: New directory.
+	* green/tests/accu/stat/histo3d_hsl/Makefile.am: New makefile.
+	* green/tests/accu/stat/histo3d_hsl/histo3d_hsl.cc: New source file.
 
 2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Do some refactoring in green's sandbox.
 
-	* green/doc/examples                              : New directory.
+	* green/doc/examples: New directory.
 
 	Move hello_world directory in doc/examples.
 
-	* green/doc/examples/hello_world                  : New directory.
-	* green/doc/examples/hello_world/Makefile.am      : Copy makefile.
-	* green/doc/examples/hello_world/hellow_world.cc  : Copy source file.
-	* green/doc/examples/hello_world/print.cc         : Copy source file.
+	* green/doc/examples/hello_world: New directory.
+	* green/doc/examples/hello_world/Makefile.am: Copy makefile.
+	* green/doc/examples/hello_world/hellow_world.cc: Copy source file.
+	* green/doc/examples/hello_world/print.cc: Copy source file.
 
-	* green/hello_world/hello_world.cc                : Remove source file.
-	* green/hello_world/print.cc                      : Remove source file.
-	* green/hello_world/Makefile.am                   : Remove makefile.
-	* green/hello_world                               : Remove directory.
+	* green/hello_world/hello_world.cc: Remove source file.
+	* green/hello_world/print.cc: Remove source file.
+	* green/hello_world/Makefile.am: Remove makefile.
+	* green/hello_world: Remove directory.
 
 	Move hello_milena directory in doc/examples.
 
-	* green/doc/exampleshello_milena                  : New directory.
-	* green/doc/exampleshello_milena/Makefile.am      : Copy makefile.
-	* green/doc/examples/hello_milena/hello_milena.cc : Copy source file.
+	* green/doc/exampleshello_milena: New directory.
+	* green/doc/exampleshello_milena/Makefile.am: Copy makefile.
+	* green/doc/examples/hello_milena/hello_milena.cc: Copy source file.
 
-	* green/hello_milena/hello_milena.cc              : Remove source file.
-	* green/hello_milena/Makefile.am                  : Remove makefile.
-	* green/hello_milena                              : Remove directory.
+	* green/hello_milena/hello_milena.cc: Remove source file.
+	* green/hello_milena/Makefile.am: Remove makefile.
+	* green/hello_milena: Remove directory.
 
 	Move learn_milena directory in doc/examples.
 
-	* green/doc/examples/learn_milena                 : New directory.
-	* green/doc/examples/learn_milena/Makefile.am     : Copy makefile.
-	* green/doc/examples/learn_milena/learn_milena.cc : Copy source file.
+	* green/doc/examples/learn_milena: New directory.
+	* green/doc/examples/learn_milena/Makefile.am: Copy makefile.
+	* green/doc/examples/learn_milena/learn_milena.cc: Copy source file.
 
-	* green/learn_milena/learn_milena.cc              : Remove source file.
-	* green/learn_milena/Makefile.am                  : Remove makefile.
-	* green/learn_milena                              : Remove directory.
+	* green/learn_milena/learn_milena.cc: Remove source file.
+	* green/learn_milena/Makefile.am: Remove makefile.
+	* green/learn_milena: Remove directory.
 
 	Move otsu directory in doc/examples.
 
-	* green/doc/examples/otsu                         : New directory.
-	* green/doc/examples/otsu/Makefile.am             : Copy makefile.
-	* green/doc/examples/otsu/otsu.cc                 : Copy source file.
+	* green/doc/examples/otsu: New directory.
+	* green/doc/examples/otsu/Makefile.am: Copy makefile.
+	* green/doc/examples/otsu/otsu.cc: Copy source file.
 
-	* green/otsu/otsu.cc                              : Remove source file.
-	* green/otsu/Makefile.am                          : Remove makefile.
-	* green/otsu                                      : Remove directory.
+	* green/otsu/otsu.cc: Remove source file.
+	* green/otsu/Makefile.am: Remove makefile.
+	* green/otsu: Remove directory.
 
 	Move fraction directory in doc/examples.
 
-	* green/doc/examples/fraction                     : Remove directory.
-	* green/doc/examples/fraction/Makefile.am         : Remove makefile.
-	* green/doc/examples/fraction/frac.cc             : Remove source file.
-	* green/doc/examples/fraction/frac.hh             : Remove source file.
-	* green/doc/examples/fraction/sign_prod.hh        : Remove source file.
-	* green/doc/examples/fraction/gcd.hh              : Remove source file.
+	* green/doc/examples/fraction: Remove directory.
+	* green/doc/examples/fraction/Makefile.am: Remove makefile.
+	* green/doc/examples/fraction/frac.cc: Remove source file.
+	* green/doc/examples/fraction/frac.hh: Remove source file.
+	* green/doc/examples/fraction/sign_prod.hh: Remove source file.
+	* green/doc/examples/fraction/gcd.hh: Remove source file.
 
-	* green/fraction/frac.cc                          : Remove source file.
-	* green/fraction/frac.hh                          : Remove source file.
-	* green/fraction/sign_prod.hh                     : Remove source file.
-	* green/fraction/gcd.hh                           : Remove source file.
-	* green/fraction/Makefile.am                      : Remove makefile.
-	* green/fraction                                  : Remove directory.
+	* green/fraction/frac.cc: Remove source file.
+	* green/fraction/frac.hh: Remove source file.
+	* green/fraction/sign_prod.hh: Remove source file.
+	* green/fraction/gcd.hh: Remove source file.
+	* green/fraction/Makefile.am: Remove makefile.
+	* green/fraction: Remove directory.
 
 	Add A new example in doc/examples.
 
-	* green/doc/examples/accu_color                   : New directory.
-	* green/doc/examples/accu_color/accu_color.cc     : New source file.
+	* green/doc/examples/accu_color: New directory.
+	* green/doc/examples/accu_color/accu_color.cc: New source file.
 
 
 2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Remove trailing spaces.
 
-	* green/doc/formulae/formulae.tex : Correct file.
+	* green/doc/formulae/formulae.tex: Correct file.
 
 2009-09-11  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Correct english writing in the documentation file.
 
-	* green/doc/formulae/formulae.tex : Correct file.
+	* green/doc/formulae/formulae.tex: Correct file.
 
 2009-09-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Try to fix order problem between points and vectors.
 
 	* green/tests/accu/stat/histo3d_rgb/histo3d_rgb.cc
-	(var_histo, mean_histo) : Comment p.to_vec code.
+	(var_histo, mean_histo): Comment p.to_vec code.
 
 2009-09-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Write down the basis of the quick tour summary documentation.
 
-	* green/doc/quick_tour                : New specific directory.
-	* green/doc/quick_tour/quick_tour.tex : New documentation work.
+	* green/doc/quick_tour: New specific directory.
+	* green/doc/quick_tour/quick_tour.tex: New documentation work.
 
 2009-09-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Write down 3d currently used formulaes.
 
-	* green/doc                       : New documentation directory.
-	* green/doc/formulae              : New specific directory.
-	* green/doc/formulae/formulae.tex : New recipe of 3d formulae.
+	* green/doc: New documentation directory.
+	* green/doc/formulae: New specific directory.
+	* green/doc/formulae/formulae.tex: New recipe of 3d formulae.
 
 2009-09-09  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Fix bugs an compilation problem on histo3d_rgb source code.
 
 	* green/tests/accu/stat/histo3d_rgb/histo3d_rgb.cc
-	(test_integration) : Manage conversion between rgb and vector.
+	(test_integration): Manage conversion between rgb and vector.
 
 2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Work with histogram as image 3d on rgb color space.
 
-	* green/tests/accu/stat/histo3d_rgb                : New directory.
-	* green/tests/accu/stat/histo3d_rgb/Makefile.am    : New makefile.
-	* green/tests/accu/stat/histo3d_rgb/histo3d_rgb.cc : New unitary tests.
-	* green/mln/accu/stat/histo3d_rgb/histo3d_rgb.hh   : New library code.
-	* green/mln/fun/v2v/rgb8_to_rgbn.hh                : New converting fun.
+	* green/tests/accu/stat/histo3d_rgb: New directory.
+	* green/tests/accu/stat/histo3d_rgb/Makefile.am: New makefile.
+	* green/tests/accu/stat/histo3d_rgb/histo3d_rgb.cc: New unitary tests.
+	* green/mln/accu/stat/histo3d_rgb/histo3d_rgb.hh: New library code.
+	* green/mln/fun/v2v/rgb8_to_rgbn.hh: New converting fun.
 
 2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Prepare unitary test with histogram 2d.
 
-	* green/tests/accu/stat/histo2d               : New directory.
-	* green/tests/accu/stat/histo2d/Makefile.am   : New makefile.
-	* green/tests/accu/stat/histo2d/gaussian2d.sh : New calibrating tool.
+	* green/tests/accu/stat/histo2d: New directory.
+	* green/tests/accu/stat/histo2d/Makefile.am: New makefile.
+	* green/tests/accu/stat/histo2d/gaussian2d.sh: New calibrating tool.
 
 2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Make some test on 14 bits grayscale image.
 
-	* green/mln/accu/stat/histo1d/histo1d.hh   : Improve documentation.
+	* green/mln/accu/stat/histo1d/histo1d.hh: Improve documentation.
 	* green/tests/accu/stat/histo1d/histo1d.cc
-	(test_14bits_classifying)                  : Test gausian filtering.
-	* green/mln/io/plot/save_histo_sh.hh       : Test new gnuplot style.
+	(test_14bits_classifying): Test gausian filtering.
+	* green/mln/io/plot/save_histo_sh.hh: Test new gnuplot style.
 
 
 2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Improve histo1d testing with 14 bits grayscale image.
 
-	* green/mln/fun                            : New directory.
-	* green/mln/fun/v2v                        : New directory.
-	* green/mln/fun/v2v/int_u16_to_int_u14.hh  : New subsampling function.
-	* green/tests/accu/stat/histo1d/histo1d.cc : Improve unitary tests.
+	* green/mln/fun: New directory.
+	* green/mln/fun/v2v: New directory.
+	* green/mln/fun/v2v/int_u16_to_int_u14.hh: New subsampling function.
+	* green/tests/accu/stat/histo1d/histo1d.cc: Improve unitary tests.
 
 2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Delete old k_mean source location.
 
-	* green/k_mean/Makefile.am      : Remove old makefile.
-	* green/k_mean/k_mean.hh        : Remove old library code.
-	* green/k_mean/k_mean.cc        : Remove old unitary tests.
-	* green/k_mean                  : Remove old directory.
+	* green/k_mean/Makefile.am: Remove old makefile.
+	* green/k_mean/k_mean.hh: Remove old library code.
+	* green/k_mean/k_mean.cc: Remove old unitary tests.
+	* green/k_mean: Remove old directory.
 
 2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Delete old histo1d source location.
 
-	* green/histo1d/Makefile.am      : Remove old makefile.
-	* green/histo1d/gaussian.sh      : Remove old tools.
-	* green/histo1d/histo1d.hh       : Remove old library code.
-	* green/histo1d/histo1d.cc       : Remove old unitary tests.
-	* green/histo1d/mp00082c_50p.pgm : Remove old image.
-	* green/histo1d/save_sh.hh       : Remove old library code.
-	* green/histo1d                  : Remove old directory.
+	* green/histo1d/Makefile.am: Remove old makefile.
+	* green/histo1d/gaussian.sh: Remove old tools.
+	* green/histo1d/histo1d.hh: Remove old library code.
+	* green/histo1d/histo1d.cc: Remove old unitary tests.
+	* green/histo1d/mp00082c_50p.pgm: Remove old image.
+	* green/histo1d/save_sh.hh: Remove old library code.
+	* green/histo1d: Remove old directory.
 
 2009-09-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Do some refactoring for best future olena integration.
 
-	* green/mln                                : New dev directory.
-	* green/mln/accu                           : New directory.
-	* green/mln/accu/stat                      : New directory.
-	* green/mln/accu/stat/histo1d.hh           : New histo1d location.
-	* green/mln/img_path.hh                    : New image path defines.
-	* green/mln/io                             : New directory.
-	* green/mln/io/plot                        : New directory.
-	* green/mln/io/plot/save_histo_sh          : New saving func for histo.
-	* green/tests                              : New unitary test directory.
-	* green/tests/accu                         : New directory.
-	* green/tests/accu/stat                    : New directory.
-	* green/tests/accu/stat/histo1d            : New histo1d test directory.
+	* green/mln: New dev directory.
+	* green/mln/accu: New directory.
+	* green/mln/accu/stat: New directory.
+	* green/mln/accu/stat/histo1d.hh: New histo1d location.
+	* green/mln/img_path.hh: New image path defines.
+	* green/mln/io: New directory.
+	* green/mln/io/plot: New directory.
+	* green/mln/io/plot/save_histo_sh: New saving func for histo.
+	* green/tests: New unitary test directory.
+	* green/tests/accu: New directory.
+	* green/tests/accu/stat: New directory.
+	* green/tests/accu/stat/histo1d: New histo1d test directory.
 	* green/tests/accu/stat/histo1d/Makefile.am: New makefle.
-	* green/tests/accu/stat/histo1d/histo1d.cc : New unit tests location.
+	* green/tests/accu/stat/histo1d/histo1d.cc: New unit tests location.
 	* green/tests/accu/stat/histo1d/gaussian.sh: New tools to test filter.
 
 
@@ -410,39 +407,39 @@
 
 	Do some refactoring for best future olena integration.
 
-	* green/mln                                : New dev directory.
-	* green/mln/clustering                     : New directory.
-	* green/mln/clustering/k_mean.hh           : New k_mean source location.
-	* green/tests                              : New unitary test directory.
-	* green/tests/clustering                   : New directory.
-	* green/tests/clustering/k_mean            : New k_mean test directory.
+	* green/mln: New dev directory.
+	* green/mln/clustering: New directory.
+	* green/mln/clustering/k_mean.hh: New k_mean source location.
+	* green/tests: New unitary test directory.
+	* green/tests/clustering: New directory.
+	* green/tests/clustering/k_mean: New k_mean test directory.
 	* green/tests/clustering/k_mean/Makefile.am: New makefle.
-	* green/tests/clustering/k_mean/k_mean.cc  : New unit tests location.
+	* green/tests/clustering/k_mean/k_mean.cc: New unit tests location.
 
 2009-09-07  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix output dimensions.
-	*  fabien/mln/upsampling/hq4x.hh: Fix output dimensions.
+	* fabien/mln/upsampling/hq4x.hh: Fix output dimensions.
 
 2009-09-07  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add HQ4x algorithm, change license and add credit to original author.
-	*  fabien/mln/upsampling/hq2x.hh: Change license and add credit to
+	* fabien/mln/upsampling/hq2x.hh: Change license and add credit to
 	original author.
-	*  fabien/mln/upsampling/hq3x.hh: Change license and add credit to
+	* fabien/mln/upsampling/hq3x.hh: Change license and add credit to
 	original author.
-	*  fabien/mln/upsampling/hq4x.hh: Implement HQ4x algorithm, still
+	* fabien/mln/upsampling/hq4x.hh: Implement HQ4x algorithm, still
 	not working properly.
-	*  fabien/tests/upsampling/Makefile: Add target `hq4x'.
-	*  fabien/tests/upsampling/hq4x.cc: New test file for hq4x().
+	* fabien/tests/upsampling/Makefile: Add target `hq4x'.
+	* fabien/tests/upsampling/hq4x.cc: New test file for hq4x().
 
 2009-09-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Implement HQ2x upscaling algorithm.
-	*  fabien/mln/upsampling/hq2x.hh: Implement HQ2x algorithm.
-	*  fabien/mln/upsampling/hq3x.hh: Remove dead code.
-	*  fabien/tests/upsampling/Makefile: Add `hq2x' target.
-	*  fabien/tests/upsampling/hq2x.cc: New test file for HQ2x.
+	* fabien/mln/upsampling/hq2x.hh: Implement HQ2x algorithm.
+	* fabien/mln/upsampling/hq3x.hh: Remove dead code.
+	* fabien/tests/upsampling/Makefile: Add `hq2x' target.
+	* fabien/tests/upsampling/hq2x.cc: New test file for HQ2x.
 
 2009-09-04  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -498,19 +495,19 @@
 2009-09-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix red component bug.
-	*  fabien/mln/upsampling/hq3x.hh: Fix red component bug, still not
+	* fabien/mln/upsampling/hq3x.hh: Fix red component bug, still not
 	working properly because of blue artifacts.
 
 2009-09-04  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add implementation of HQ3x algorithm.
-	*  fabien/mln/core/image/magick_tiled2d.hh: Small update.
-	*  fabien/mln/core/image/tiled2d.hh: Small update.
-	*  fabien/mln/upsampling/hq3x.hh: Implement HQ3x algorithm, not working
+	* fabien/mln/core/image/magick_tiled2d.hh: Small update.
+	* fabien/mln/core/image/tiled2d.hh: Small update.
+	* fabien/mln/upsampling/hq3x.hh: Implement HQ3x algorithm, not working
 	properly with colors.
-	*  fabien/tests/core/image/tiled2d.cc: Update test.
-	*  fabien/tests/upsampling/Makefile: New Makefile for target hq3x.
-	*  fabien/tests/upsampling/hq3x.cc: New test for algorithm HQ3x.
+	* fabien/tests/core/image/tiled2d.cc: Update test.
+	* fabien/tests/upsampling/Makefile: New Makefile for target hq3x.
+	* fabien/tests/upsampling/hq3x.cc: New test for algorithm HQ3x.
 
 2009-08-31  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -523,59 +520,59 @@
 
 	Write the kmean main loop.
 
-	* green/k_mean/k_mean.hh (update_variance)     : Fix bug.
-	* green/k_mean/k_mean.hh (update_center)       : Fix bug.
-	* green/k_mean/k_mean.hh (min_row)             : New min func.
-	* green/k_mean/k_mean.hh (min)                 : Remove old min func.
-	* green/k_mean/k_mean.hh (loop)                : New main func.
-	* green/k_mean/k_mean.hh                       : Refactoring.
-	* green/k_mean/k_mean.cc (test_loop)           : New unitary test.
-	* green/k_mean/k_mean.cc (main)                : New test calls.
+	* green/k_mean/k_mean.hh (update_variance): Fix bug.
+	* green/k_mean/k_mean.hh (update_center): Fix bug.
+	* green/k_mean/k_mean.hh (min_row): New min func.
+	* green/k_mean/k_mean.hh (min): Remove old min func.
+	* green/k_mean/k_mean.hh (loop): New main func.
+	* green/k_mean/k_mean.hh: Refactoring.
+	* green/k_mean/k_mean.cc (test_loop): New unitary test.
+	* green/k_mean/k_mean.cc (main): New test calls.
 
 
 2009-08-28  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Improve and continue testing the kmean clustering code.
 
-	* green/k_mean/k_mean.hh (get_distance)        : New accessor method.
-	* green/k_mean/k_mean.hh (get_group)           : New accessor method.
-	* green/k_mean/k_mean.hh (get_variance)        : New accessor method.
-	* green/k_mean/k_mean.hh (update_variance)     : New compute method.
-	* green/k_mean/k_mean.hh (div_col)             : New tool method.
-	* green/k_mean/k_mean.hh (sum_row)             : New tool method.
-	* green/k_mean/k_mean.hh (k_mean)              : Add variance code.
-	* green/k_mean/k_mean.hh (~k_mean)             : Add variance code.
-	* green/k_mean/k_mean.hh (update_center)       : Fix bugs.
-	* green/k_mean/k_mean.hh (update_distance)     : New debugging code.
-	* green/k_mean/k_mean.cc (#define)             : New macros.
-	* green/k_mean/k_mean.cc (rgb8_to_4colors)     : Comment debugging code.
-	* green/k_mean/k_mean.cc (is_equivalent)       : Adapt the signature.
-	* green/k_mean/k_mean.cc (test_init_point)     : Adapt the k_mean call.
-	* green/k_mean/k_mean.cc (is_equal)            : Remove old function.
-	* green/k_mean/k_mean.cc (set_point)	       : New assignment func.
-	* green/k_mean/k_mean.cc (fake_init_point)     : New initializat° func.
-	* green/k_mean/k_mean.cc (is_equal)            : New predicate.
-	* green/k_mean/k_mean.cc (test_init_center)    : New unitary test.
-	* green/k_mean/k_mean.cc (set_center)          : New assignment func.
-	* green/k_mean/k_mean.cc (fake_init_center)    : New initializat° func.
-	* green/k_mean/k_mean.cc (dist)                : New distance function.
+	* green/k_mean/k_mean.hh (get_distance): New accessor method.
+	* green/k_mean/k_mean.hh (get_group): New accessor method.
+	* green/k_mean/k_mean.hh (get_variance): New accessor method.
+	* green/k_mean/k_mean.hh (update_variance): New compute method.
+	* green/k_mean/k_mean.hh (div_col): New tool method.
+	* green/k_mean/k_mean.hh (sum_row): New tool method.
+	* green/k_mean/k_mean.hh (k_mean): Add variance code.
+	* green/k_mean/k_mean.hh (~k_mean): Add variance code.
+	* green/k_mean/k_mean.hh (update_center): Fix bugs.
+	* green/k_mean/k_mean.hh (update_distance): New debugging code.
+	* green/k_mean/k_mean.cc (#define): New macros.
+	* green/k_mean/k_mean.cc (rgb8_to_4colors): Comment debugging code.
+	* green/k_mean/k_mean.cc (is_equivalent): Adapt the signature.
+	* green/k_mean/k_mean.cc (test_init_point): Adapt the k_mean call.
+	* green/k_mean/k_mean.cc (is_equal): Remove old function.
+	* green/k_mean/k_mean.cc (set_point)	: New assignment func.
+	* green/k_mean/k_mean.cc (fake_init_point): New initializat° func.
+	* green/k_mean/k_mean.cc (is_equal): New predicate.
+	* green/k_mean/k_mean.cc (test_init_center): New unitary test.
+	* green/k_mean/k_mean.cc (set_center): New assignment func.
+	* green/k_mean/k_mean.cc (fake_init_center): New initializat° func.
+	* green/k_mean/k_mean.cc (dist): New distance function.
 	* green/k_mean/k_mean.cc (test_update_distance): New unitary test.
-	* green/k_mean/k_mean.cc (set_distance)        : New assignment func.
-	* green/k_mean/k_mean.cc (fake_init_distance)  : New initializat° func.
-	* green/k_mean/k_mean.cc (test_update_group)   : New unitary test.
-	* green/k_mean/k_mean.cc (set_group)           : New assignment func.
-	* green/k_mean/k_mean.cc (fake_update_group)   : New initializat° func.
-	* green/k_mean/k_mean.cc (test_update_center)  : New unitary test.
-	* green/k_mean/k_mean.cc (test_row)            : Remove old function.
-	* green/k_mean/k_mean.cc (test_col)            : Remove old function.
-	* green/k_mean/k_mean.cc (test_update_var)     : New unitary test.
-	* green/k_mean/k_mean.cc (main)                : New test calls.
+	* green/k_mean/k_mean.cc (set_distance): New assignment func.
+	* green/k_mean/k_mean.cc (fake_init_distance): New initializat° func.
+	* green/k_mean/k_mean.cc (test_update_group): New unitary test.
+	* green/k_mean/k_mean.cc (set_group): New assignment func.
+	* green/k_mean/k_mean.cc (fake_update_group): New initializat° func.
+	* green/k_mean/k_mean.cc (test_update_center): New unitary test.
+	* green/k_mean/k_mean.cc (test_row): Remove old function.
+	* green/k_mean/k_mean.cc (test_col): Remove old function.
+	* green/k_mean/k_mean.cc (test_update_var): New unitary test.
+	* green/k_mean/k_mean.cc (main): New test calls.
 
 2009-08-27  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Improve and test the kmean clustering code.
 
-	* green/k_mean/k_mean.hh (get_center, get_point) : New accessors.
+	* green/k_mean/k_mean.hh (get_center, get_point): New accessors.
 	* green/k_mean/k_mean.cc (rgb8_to_4colors),
 	(print_color),
 	(fill_image_with_4colors),
@@ -583,22 +580,22 @@
 	(test_init_point),
 	(is_equal),
 	(is_center_initialized),
-	(test_init_center)                               : New test functions.
+	(test_init_center): New test functions.
 
 2009-08-26  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	New kmean clustering code.
 
-	* green/k_mean                 : New directory.
-	* green/k_mean/k_mean.hh       : New source.
-	* green/k_mean/k_mean.cc       : New test file.
-	* green/k_mean/Makefile.am     : New makefile.
+	* green/k_mean: New directory.
+	* green/k_mean/k_mean.hh: New source.
+	* green/k_mean/k_mean.cc: New test file.
+	* green/k_mean/Makefile.am: New makefile.
 
 2009-08-17  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Improve documentation.
 
-	* green/histo1d/histo1d.hh       : Improve documentation aspect.
+	* green/histo1d/histo1d.hh: Improve documentation aspect.
 
 2009-08-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -609,9 +606,9 @@
 2009-08-17  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Some tries with segmentation using graph (still segfault)..
-	*  edwin/exec/score.hh: New.
-	*  edwin/exec/zi.cc,
-	*  edwin/exec/zi.hh:
+	* edwin/exec/score.hh: New.
+	* edwin/exec/zi.cc,
+	* edwin/exec/zi.hh:
 	Use min-tree based method instead of WST to group components.
 
 2009-08-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
@@ -654,25 +651,25 @@
 
 	Test more accurately the histo1d class in image processing chain.
 	Try to isolate the background color of mp000082c_50p.pgm.
-	* green/histo1d/Makefile.am      : Update minor settings in Makefile.
-	* green/histo1d/histo1d.hh       : New C++ type.
-	* green/histo1d/gaussian.sh      : New GNUPLOT script to calibrate
+	* green/histo1d/Makefile.am: Update minor settings in Makefile.
+	* green/histo1d/histo1d.hh: New C++ type.
+	* green/histo1d/gaussian.sh: New GNUPLOT script to calibrate
 	gaussian filter.
 	* green/histo1d/save_sh.hh
-	(save_sh)                        : Update some GNUPLOT style.
+	(save_sh): Update some GNUPLOT style.
 	* green/histo1d/histo1d.cc
-	(test_classify)                  : New function.
-	* green/histo1d/mp00082c_50p.pgm : New test scribo image.
+	(test_classify): New function.
+	* green/histo1d/mp00082c_50p.pgm: New test scribo image.
 
 2009-08-12  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Write an histogram accumulator which the result is an image1d.
 
-	* green/histo1d                  : New directory.
-	* green/histo1d/Makefile.am      : New Makefile.
-	* green/histo1d/histo1d.hh       : New C++ type.
-	* green/histo1d/save_sh.hh       : New gnuplot export routines.
-	* green/histo1d/histo1d.cc       : New unitary tests.
+	* green/histo1d: New directory.
+	* green/histo1d/Makefile.am: New Makefile.
+	* green/histo1d/histo1d.hh: New C++ type.
+	* green/histo1d/save_sh.hh: New gnuplot export routines.
+	* green/histo1d/histo1d.cc: New unitary tests.
 
 2009-08-12  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
@@ -696,81 +693,81 @@
 
 	Integrate LRDE code writting rules in the Stats code.
 
-	* green/Stats/Makefile.am      : Remove Makefile.
-	* green/Stats/Stats.cc         : Remove source.
-	* green/Stats                  : Remove directory.
+	* green/Stats/Makefile.am: Remove Makefile.
+	* green/Stats/Stats.cc: Remove source.
+	* green/Stats: Remove directory.
 
-	* green/stats                  : New directory.
-	* green/stats/Makefile.am      : New Makefile.
-	* green/stats/stats.cc         : New source.
-
-2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
-
-	Integrate LRDE code writting rules in the HelloMilena code.
-
-	* green/LearnMilena/Makefile.am      : Remove Makefile.
-	* green/LearnMilena/LearnMilena.cc   : Remove source.
-	* green/LearnMilena                  : Remove directory.
-
-	* green/learn_milena                 : New directory.
-	* green/learn_milena/Makefile.am     : New Makefile.
-	* green/learn_milena/learn_milena.cc : New source.
+	* green/stats: New directory.
+	* green/stats/Makefile.am: New Makefile.
+	* green/stats/stats.cc: New source.
 
 2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Integrate LRDE code writting rules in the HelloMilena code.
 
-	* green/HelloMilena/Makefile.am      : Remove Makefile.
-	* green/HelloMilena/HelloMilena.cc   : Remove source.
-	* green/HelloMilena                  : Remove directory.
+	* green/LearnMilena/Makefile.am: Remove Makefile.
+	* green/LearnMilena/LearnMilena.cc: Remove source.
+	* green/LearnMilena: Remove directory.
 
-	* green/hello_milena                 : New directory.
-	* green/hello_milena/Makefile.am     : New Makefile.
-	* green/hello_milena/hello_milena.cc : New source.
+	* green/learn_milena: New directory.
+	* green/learn_milena/Makefile.am: New Makefile.
+	* green/learn_milena/learn_milena.cc: New source.
+
+2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Integrate LRDE code writting rules in the HelloMilena code.
+
+	* green/HelloMilena/Makefile.am: Remove Makefile.
+	* green/HelloMilena/HelloMilena.cc: Remove source.
+	* green/HelloMilena: Remove directory.
+
+	* green/hello_milena: New directory.
+	* green/hello_milena/Makefile.am: New Makefile.
+	* green/hello_milena/hello_milena.cc: New source.
 
 2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Integrate LRDE code writting rules in the HelloWorld code.
 
-	* green/HelloWorld/Makefile.am     : Remove Makefile.
-	* green/HelloWorld/HelloWorld.cc   : Remove source.
-	* green/HelloWorld/Print.cc        : Remove source.
-	* green/HelloWorld                 : Remove directory.
+	* green/HelloWorld/Makefile.am: Remove Makefile.
+	* green/HelloWorld/HelloWorld.cc: Remove source.
+	* green/HelloWorld/Print.cc: Remove source.
+	* green/HelloWorld: Remove directory.
 
-	* green/hello_world                : New directory.
-	* green/hello_world/Makefile.am    : New Makefile.
-	* green/hello_world/hello_world.cc : New source.
-	* green/hello_world/print.cc       : New source.
+	* green/hello_world: New directory.
+	* green/hello_world/Makefile.am: New Makefile.
+	* green/hello_world/hello_world.cc: New source.
+	* green/hello_world/print.cc: New source.
 
 2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Integrate LRDE code writting rules in my own otsu code.
 
-	* green/Otsu/Makefile.am  : Remove Makefile.
-	* green/Otsu/Otsu.cc      : Remove source.
-	* green/Otsu              : Remove directory.
+	* green/Otsu/Makefile.am: Remove Makefile.
+	* green/Otsu/Otsu.cc: Remove source.
+	* green/Otsu: Remove directory.
 
-	* green/otsu              : New directory.
-	* green/otsu/Makefile.am  : New Makefile.
-	* green/otsu/otsu.cc      : New source (substituate float by double).
+	* green/otsu: New directory.
+	* green/otsu/Makefile.am: New Makefile.
+	* green/otsu/otsu.cc: New source (substituate float by double).
 
 
 2009-08-04  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Integrate LRDE code writting rules in the fraction c++ type.
 
-	* green/Fraction/Makefile.am  : Remove Makefile.
-	* green/Fraction/main.cc      : Remove source.
-	* green/Fraction/frac.hh      : Remove source.
-	* green/Fraction/frac.cc      : Remove source.
-	* green/Fraction              : Remove directory.
+	* green/Fraction/Makefile.am: Remove Makefile.
+	* green/Fraction/main.cc: Remove source.
+	* green/Fraction/frac.hh: Remove source.
+	* green/Fraction/frac.cc: Remove source.
+	* green/Fraction: Remove directory.
 
-	* green/fraction              : New directory.
-	* green/fraction/Makefile.am  : New Makefile.
-	* green/fraction/sign_prod.hh : New source.
-	* green/fraction/gcd.hh       : New source.
-	* green/fraction/frac.hh      : New source.
-	* green/fraction/frac.cc      : New source.
+	* green/fraction: New directory.
+	* green/fraction/Makefile.am: New Makefile.
+	* green/fraction/sign_prod.hh: New source.
+	* green/fraction/gcd.hh: New source.
+	* green/fraction/frac.hh: New source.
+	* green/fraction/frac.cc: New source.
 
 2009-08-03  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
@@ -800,16 +797,16 @@
 
 	Integration of the fraction type in the accumulators.
 
-	* green/Fraction/frac.cc     : Complete unary tests.
-	* green/Fraction/frac.hh     : Complete fraction type.
+	* green/Fraction/frac.cc: Complete unary tests.
+	* green/Fraction/frac.hh: Complete fraction type.
 
 2009-07-28  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Learn how creating new types in milena (Fraction).
 
-	* green/Fraction/Makefile.am : New Makefile.
-	* green/Fraction/main.cc     : New Unitary Tests.
-	* green/Fraction/frac.hh     : New Fraction type.
+	* green/Fraction/Makefile.am: New Makefile.
+	* green/Fraction/main.cc: New Unitary Tests.
+	* green/Fraction/frac.hh: New Fraction type.
 
 2009-07-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -838,22 +835,22 @@
 
 	Correct warning on previous software
 
-	* green/LearnMilena/LearnMilena.cc : Add () around operator |.
-	* green/Otsu/Otsu.cc               : Evict mln_VAR macro.
+	* green/LearnMilena/LearnMilena.cc: Add () around operator |.
+	* green/Otsu/Otsu.cc: Evict mln_VAR macro.
 
 2009-07-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Learn to compute image statistics
 
-	* green/Stats/Makefile.am    : New.
-	* green/Stats/Stats.cc       : Compute histogram, variance and max.
+	* green/Stats/Makefile.am: New.
+	* green/Stats/Stats.cc: Compute histogram, variance and max.
 
 2009-07-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Learn to reduce image domain while filling the image
 
-	* green/LearnMilena/Makefile.am    : New.
-	* green/LearnMilena/LearnMilena.cc : Filling operator.
+	* green/LearnMilena/Makefile.am: New.
+	* green/LearnMilena/LearnMilena.cc: Filling operator.
 
 2009-07-23  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
@@ -865,8 +862,8 @@
 
 	Small Demo with milena, it produces an HelloWorld pbm image.
 
-	* green/HelloMilena/Makefile.am    : New.
-	* green/HelloMilena/HelloMilena.cc : Creating and saving image.
+	* green/HelloMilena/Makefile.am: New.
+	* green/HelloMilena/HelloMilena.cc: Creating and saving image.
 
 2009-07-22  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
@@ -912,9 +909,9 @@
 
 	First test with git, test c++ install with HelloWorld program
 
-	* green/HelloWorld/Makefile.am  : Bypass .gitignore, New
+	* green/HelloWorld/Makefile.am: Bypass .gitignore, New
 	* green/HelloWorld/HelloWorld.cc: Write "HelloWorld" on CRT.
-	* green/HelloWorld/Print.cc     : Deported cout call
+	* green/HelloWorld/Print.cc: Deported cout call
 
 2009-07-16  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
@@ -5952,7 +5949,7 @@
 
 2008-12-06  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
-	Add n_cmpt4 : version without util::set.
+	Add n_cmpt4: version without util::set.
 
 	* jardonnet/n_cmpt/n_cmpt3.hh: Minor fix for test.
 	* jardonnet/n_cmpt/n_cmpt3.cc: Add 1d test.
@@ -6598,7 +6595,7 @@
 	Add co-occurence matrix computing.
 
 	* nature/co_occurence.hh: New
-	(mln::co_occurence) : compute co-occurence matrix.
+	(mln::co_occurence): compute co-occurence matrix.
 	* nature/mco.cc: New
 	Dummy test.
 
@@ -6654,7 +6651,7 @@
 	exactly one connected component of the object, and only one connected
 	component of the background
 
-	Examples : ( | == object, - = background)
+	Examples: ( | == object, - = background)
 
 	 - - |
 	 | P | Here P is simple in the c4 and c8 case.
@@ -6687,17 +6684,17 @@
 
 2008-10-29  Alexandre Abraham  <abraham@lrde.epita.fr>
 
-	INIM : nature filters and little bug fixes.
+	INIM: nature filters and little bug fixes.
 
 	* abraham/mln/trait: New.
 	* abraham/mln/trait/images.hh: New
-	(mln::trait::default_image_morpher) : Adjust quant according
+	(mln::trait::default_image_morpher): Adjust quant according
 	to new value quant..
 	* abraham/mln/morpho/hit_or_miss.hh: New
-	(mln::morpho::hit_or_miss) : First implementation of hit or
+	(mln::morpho::hit_or_miss): First implementation of hit or
 	miss algorithm.
 	* abraham/mln/level/transform.hh: New
-	(mln::level::transform) : Add procedure.
+	(mln::level::transform): Add procedure.
 	* abraham/mln/core/image/thru.hh:
 	Temporary trait modification.
 	* abraham/mln/core/image/shell.hh:
@@ -6825,7 +6822,7 @@
 	* abraham/mln/core/image/thru.hh: .
 	* abraham/mln/core/image/shell.hh: Fix result value.
 	* abraham/mln/core/concept/meta_fun.hh:
-	(mln::meta::impl) : now templated by return type (necessary to
+	(mln::meta::impl): now templated by return type (necessary to
 	typedef result).
 	* abraham/mln/fun/meta/red.hh: .
 
@@ -6886,7 +6883,7 @@
 	Clean.
 	* abraham/tests/fun/meta: New.
 	* abraham/tests/fun/meta/red.cc: New
-	(mln::meta::red) : meta function to access red in rgb.
+	(mln::meta::red): meta function to access red in rgb.
 	* abraham/tests/core/image/thru_norm.cc: New
 	test for norm functor.
 	* abraham/tests/core/image/thru_v2v.cc: New
@@ -7325,7 +7322,7 @@
 
 2008-09-17  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
-	Sandbox : Update test on virtually transformed image.
+	Sandbox: Update test on virtually transformed image.
 
 	* jardonnet/virtual/access.hh: Update test.
 	* jardonnet/virtual/lena.pgm: Add test image.
@@ -7657,7 +7654,7 @@
 	Sandbox: ICP: Make icp stop if e_k < d_k (errors).
 
 	* jardonnet/test/icp_ref.cc: Fix p_array initialisation.
-	* jardonnet/registration/icp_ref.hh (impl::icp) : Update :
+	* jardonnet/registration/icp_ref.hh (impl::icp): Update:
 	Stop if e_k < d_k.
 
 2008-06-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
@@ -8033,9 +8030,9 @@
 	Add results about final_qk.
 
 	fun_k_cn_xn.ppm
-	fun : final_qk v1 or v2
-	k : nstddev == k * stdddev
-	cn,xn : images from img/
+	fun: final_qk v1 or v2
+	k: nstddev == k * stdddev
+	cn,xn: images from img/
 
 	* jardonnet/test/final/final_qk_1.ppm: .
 	* jardonnet/test/final/final_qk_3.ppm: New.
@@ -8045,7 +8042,7 @@
 
 2008-05-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
-	* geraud/fllt.cc: FLLT : Finalize merge.
+	* geraud/fllt.cc: FLLT: Finalize merge.
 
 2008-05-16  Etienne FOLIO  <folio@lrde.epita.fr>
 
@@ -8067,7 +8064,7 @@
 
 	Add few results about final_qk.
 
-	bunch of results : _1 and _2 means using stddev 1 or 2 times.
+	bunch of results: _1 and _2 means using stddev 1 or 2 times.
 
 	* jardonnet/test/final: New.
 	* jardonnet/test/final/final_qk_1.ppm: New.
@@ -8081,7 +8078,7 @@
 
 2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
-	Add functions on box : enlarge and bigger.
+	Add functions on box: enlarge and bigger.
 
 	* jardonnet/registration/tools.hh (enlarge,bigger): Add.
 	* jardonnet/test/icp.cc: Update: use enlarge and bigger.
@@ -8642,7 +8639,7 @@
 
 	Add red getter.
 	* vigouroux/cmy/fun.hh, vigouroux/hsi/fun.hh,
-	* vigouroux/yiq/fun.hh, vigouroux/yuv/fun.hh :
+	* vigouroux/yiq/fun.hh, vigouroux/yuv/fun.hh:
 	New red getter.
 	* vigouroux/cmy/my_cmy.hh,
 	* vigouroux/hsi/my_hsi.hh,
@@ -8655,7 +8652,7 @@
 	* vigouroux/yuv/rgb_to_yuv.hh:
 	Added inheritance from function_v2v.
 	* vigouroux/cmy/test.cc, vigouroux/yiq/test.cc,
-	* vigouroux/yuv/test.cc : New test.
+	* vigouroux/yuv/test.cc: New test.
 	* vigouroux/cmy/testfun.cc,
 	* vigouroux/yiq/testfun.cc,
 	* vigouroux/yuv/testfun.cc: New test.
@@ -8807,7 +8804,7 @@
 
 2008-04-03  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
-	Sandboc : ICP: Update check script (gprof).
+	Sandboc: ICP: Update check script (gprof).
 
 	* jardonnet/test/bench: Add info.
 	* jardonnet/test/icp_check.sh: Update testes.
@@ -8931,7 +8928,7 @@
 
 2008-03-29  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
-	Sandbox: ICP : projection::memo.
+	Sandbox: ICP: projection::memo.
 
 	* jardonnet/test/icp.cc: Update.
 	* jardonnet/test/check: Test projection techniques.
@@ -9019,7 +9016,7 @@
 	* garrigues/tiled_image2d/tiled_image2d.cc: Test the type with
 	a big image.
 	* garrigues/tiled_image2d/tiled_image2d.hh: Allocate enough
-	space for the image. Fixme : some debug will be removed later.
+	space for the image. Fixme: some debug will be removed later.
 
 2008-03-21  Michel Pellegrin  <pellegrin@lrde.epita.fr>
 
@@ -9063,7 +9060,7 @@
 
 2008-03-19  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
-	Icp : n dim, refactored, uses p_array, vec -> rounded point proc.
+	Icp: n dim, refactored, uses p_array, vec -> rounded point proc.
 
 	* jardonnet/test/icp.cc,
 	* jardonnet/registration/quat7.hh,
@@ -9874,7 +9871,7 @@
 	the upper tree's one and the lower tree's one in order to keep the
 	good values of the input image.
 	(fllt) add a second call to merge_trees to test the contrast
-	invariant of the algorithm. FIXME : In some test, we get a segv when
+	invariant of the algorithm. FIXME: In some test, we get a segv when
 	calling merge_trees swapping the upper_tree and lower_tree
 	arguments. Add some debug too.
 
@@ -10001,7 +9998,7 @@
 
 	Update fllt.
 
-	* garrigues/fllt.hh: More output. FIXME : optimize.
+	* garrigues/fllt.hh: More output. FIXME: optimize.
 
 2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
@@ -10178,13 +10175,13 @@
 	Add translate image in sandbox.
 
 	* duhamel/translate_image.cc: New test for translate image.
-	* duhamel/translate_image.hh: New image : translate image.
+	* duhamel/translate_image.hh: New image: translate image.
 
 	* duhamel/color_sub.cc: Update.
 
 2007-10-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
-	Refactoring : move mln/core/win to mln/win.
+	Refactoring: move mln/core/win to mln/win.
 
 	* nivault/dyn_line.hh,
 	* nivault/median.hh,
@@ -10248,7 +10245,7 @@
 
 
 	* duhamel/color_sub.cc: .
-	* duhamel/color_sub.hh: New : split ols version.
+	* duhamel/color_sub.hh: New: split ols version.
 	* duhamel/labeling_algo.cc: .
 	* duhamel/labeling_level_fast.cc: .
 
@@ -10308,7 +10305,7 @@
 2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add graph_labeling in sandbox.
-	* duhamel/graph_labeling.hh: New make_graph : convert a labeled image
+	* duhamel/graph_labeling.hh: New make_graph: convert a labeled image
 	into mesh_p.
 	* duhamel/graph_labeling.cc: New test for graph labeling.
 	* duhamel/graph_labeling2.cc: New test for graph labeling.

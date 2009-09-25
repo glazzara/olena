@@ -13,7 +13,7 @@
 2009-09-24  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add correct reference for HSL to RGB conversion.
-	*  mln/fun/v2v/hsl_to_rgb.hh: Add correct reference for HSL
+	* mln/fun/v2v/hsl_to_rgb.hh: Add correct reference for HSL
 	to RGB conversion.
 
 2009-09-24  Roland Levillain  <roland@lrde.epita.fr>
@@ -143,13 +143,13 @@
 2009-09-22  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix HSL values in test.
-	*  tests/fun/v2v/hsl_to_rgb.cc: Fix HSL values.
+	* tests/fun/v2v/hsl_to_rgb.cc: Fix HSL values.
 
 2009-09-21  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add new algorithm for conversion HSL to RGB.
-	*  mln/fun/v2v/hsl_to_rgb.hh: Add new algorithm for conversion.
-	*  mln/value/rgb.hh: Enable convertion to HSL.
+	* mln/fun/v2v/hsl_to_rgb.hh: Add new algorithm for conversion.
+	* mln/value/rgb.hh: Enable convertion to HSL.
 
 2009-09-21  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -333,25 +333,25 @@
 
 2009-09-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
-	Fix ISO C++ compilation problem : L101.
+	Fix ISO C++ compilation problem: L101.
 
-	* mln/io/plot/load.hh (load) : Update source file.
+	* mln/io/plot/load.hh (load): Update source file.
 
 2009-09-14  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Disable tiled2d image support (still experimental).
-	*  mln/io/magick/save.hh: Disable tiled2d image support.
+	* mln/io/magick/save.hh: Disable tiled2d image support.
 
 2009-09-14  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Update RGB to HSL test, correct luminance values with fractions.
-	*  tests/fun/v2v/rgb_to_hsl.cc: Update luminance values with fractions.
+	* tests/fun/v2v/rgb_to_hsl.cc: Update luminance values with fractions.
 
 2009-09-14  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Disable tiled2d image support (still experimental).
-	*  mln/io/magick/load.hh: Disable tiled2d image support.
-	*  tests/fun/v2v/rgb_to_hsl.cc: Update test for luminance value.
+	* mln/io/magick/load.hh: Disable tiled2d image support.
+	* tests/fun/v2v/rgb_to_hsl.cc: Update test for luminance value.
 
 2009-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -428,10 +428,10 @@
 2009-09-10  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Fix luminance value computation for RGB to HSL.
-	*  mln/fun/v2v/rgb_to_hsl.hh: Fix luminance value computation
+	* mln/fun/v2v/rgb_to_hsl.hh: Fix luminance value computation
 	to fit in [0,1].
-	*  mln/io/magick/load.hh: Minor update.
-	*  mln/io/magick/save.hh: Minor update.
+	* mln/io/magick/load.hh: Minor update.
+	* mln/io/magick/save.hh: Minor update.
 
 2009-09-09  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -446,14 +446,14 @@
 2009-09-09  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add mask-based max tree computation based on union-find algorithm.
-	*  morpho/tree/component_tree.hh: Some shortcuts to compute max
+	* morpho/tree/component_tree.hh: Some shortcuts to compute max
 	and min tree.
-	*  morpho/tree/compute_parent_dual_input.hh: New. Union-find based
+	* morpho/tree/compute_parent_dual_input.hh: New. Union-find based
 	algorithm for computing the dual input max tree.
-	*  morpho/tree/data.hh:
+	* morpho/tree/data.hh:
 	Comment debug instructions related to tree/graph usage.
 	Improve the tree diplay method.
-	*  morpho/tree/dual_input_tree.hh: Some shortcuts to compute
+	* morpho/tree/dual_input_tree.hh: Some shortcuts to compute
 	dual-input max and min tree.
 
 2009-09-08 Guillaume Lazzara  <lazzara@lrde.epita.fr>
@@ -802,8 +802,8 @@
 2009-08-17  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Fix rvalue for tree methods and other minor fixes..
-	*  morpho/tree/compute_attribute_image.hh: Supress warning.
-	*  morpho/tree/data.hh: Fix rvalue and overload operator << for tree.
+	* morpho/tree/compute_attribute_image.hh: Supress warning.
+	* morpho/tree/data.hh: Fix rvalue and overload operator << for tree.
 
 2009-08-17 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -1189,7 +1189,7 @@
 
 	Fix compilation issues with icc and meta accumulators.
 
-	*  mln/core/concept/meta_accumulator.hh: introduce a helper to help
+	* mln/core/concept/meta_accumulator.hh: introduce a helper to help
 	icc resolving routine return types.
 
 2009-07-06  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
@@ -30176,7 +30176,7 @@
 
 	* mln/canvas/browsing/snake_vert.hh: New, snake vert browsing
 	canvas. This canvas browse all the point of an image 'input' like
-	this :
+	this:
 		      1  4  5
 		      || /\ ||
 		      || || ||
@@ -32399,7 +32399,7 @@
 
 2008-09-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
-	Minor fix : Translation Rotation.
+	Minor fix: Translation Rotation.
 
 	* mln/fun/x2x/translation.hh,
 	* mln/fun/x2x/rotation.hh: Fix wrong namespaces.
@@ -37218,7 +37218,7 @@
 
 2008-04-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
-	A fast point2d set : p_image2d.
+	A fast point2d set: p_image2d.
 
 	* mln/core/p_image2d.hh: The new set.
 	* mln/core/p_image2d_piter.hh: To iter on it.
@@ -37646,7 +37646,7 @@
 
 2008-03-19  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
-	Icp : n dim, refactored, uses p_array, vec -> rounded point proc.
+	Icp: n dim, refactored, uses p_array, vec -> rounded point proc.
 
 	* mln/core/point.hh: Fix convertion to vec.
 	* mln/algebra/quat.hh: Fix namespace.
@@ -38289,7 +38289,7 @@
 	Binarization.
 
 	* mln/level/threshold.hh: Remove.
-	* mln/fun/v2b: New directory : value to bool function.
+	* mln/fun/v2b: New directory: value to bool function.
 	* mln/fun/v2b/threshold.hh: value to bool threshold.
 	* mln/fun/v2v/threshold.hh: Remove.
 	* mln/binarization: New directory.
@@ -39023,7 +39023,7 @@
 2008-01-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update graph.
-	* mln/util/graph.hh: Fix : ordpair replace unsigned for edge.
+	* mln/util/graph.hh: Fix: ordpair replace unsigned for edge.
 	* mln/draw/mesh.hh: Apply this modification.
 
 	* mln/make/voronoi.hh: Fix comment.
@@ -39899,7 +39899,7 @@
 2007-12-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add traits for rgb. Fix the test rgb_full.
-	* mln/value/rgb.hh: Add traits :
+	* mln/value/rgb.hh: Add traits:
 	rgb<n> + rgb<n>  -> rgb<n>
 	rgb<n> - rgb<n>  -> rgb<n>
 	rgb<n> * scalar_ -> rgb<n>
@@ -41078,7 +41078,7 @@
 
 	* mln/value/int_u.hh: Replace argument type by (unsigned int)
 	when it was (int).
-	(value_integer_::max()) : Replace card - 1 by mln_max(enc_) to avoid
+	(value_integer_::max()): Replace card - 1 by mln_max(enc_) to avoid
 	returning -1 for high quantized values.
 
 	* tests/io/ppm/ppm16.cc,
@@ -41091,7 +41091,7 @@
 	* mln/io/fits/load.hh: Remove debug.
 
 	* mln/io/pfm/load.hh,
-	* mln/io/pfm/save.hh: Fix a bug : the last line wasn't read/written.
+	* mln/io/pfm/save.hh: Fix a bug: the last line wasn't read/written.
 
 	* tests/io/fits/Makefile.am: Remove spaces.
 
@@ -42210,7 +42210,7 @@
 2008-01-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update graph.
-	* mln/util/graph.hh: Fix : ordpair replace unsigned for edge.
+	* mln/util/graph.hh: Fix: ordpair replace unsigned for edge.
 	* mln/draw/mesh.hh: Apply this modification.
 
 	* mln/make/voronoi.hh: Fix comment.
@@ -43086,7 +43086,7 @@
 2007-12-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add traits for rgb. Fix the test rgb_full.
-	* mln/value/rgb.hh: Add traits :
+	* mln/value/rgb.hh: Add traits:
 	rgb<n> + rgb<n>  -> rgb<n>
 	rgb<n> - rgb<n>  -> rgb<n>
 	rgb<n> * scalar_ -> rgb<n>
@@ -44265,7 +44265,7 @@
 
 	* mln/value/int_u.hh: Replace argument type by (unsigned int)
 	when it was (int).
-	(value_integer_::max()) : Replace card - 1 by mln_max(enc_) to avoid
+	(value_integer_::max()): Replace card - 1 by mln_max(enc_) to avoid
 	returning -1 for high quantized values.
 
 	* tests/io/ppm/ppm16.cc,
@@ -44278,7 +44278,7 @@
 	* mln/io/fits/load.hh: Remove debug.
 
 	* mln/io/pfm/load.hh,
-	* mln/io/pfm/save.hh: Fix a bug : the last line wasn't read/written.
+	* mln/io/pfm/save.hh: Fix a bug: the last line wasn't read/written.
 
 	* tests/io/fits/Makefile.am: Remove spaces.
 
@@ -45039,7 +45039,7 @@
 	Review the mln/geom directory.
 
 	* mln/geom/seeds2tiling.hh: Clean dead code, update doc. Fixme for
-	guillaume : Review the documentation.
+	guillaume: Review the documentation.
 	* mln/geom/seeds2tiling_with_chamfer.hh: likewise.
 
 	Add unit tests.
@@ -45374,7 +45374,7 @@
 
 2007-11-13  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
-	Fix queue : rename empty in is_empty and add method pop_front.
+	Fix queue: rename empty in is_empty and add method pop_front.
 
 	Rename empty in is_empty and add method pop_front, which
 	return the front element and pop the queue.
@@ -45540,7 +45540,7 @@
 	Desactivate set_of::operator<<.
 
 	* mln/core/internal/set_of.hh: (operator<<) Desactivate due to
-	an ambiguity with Point_set::operator<<. QUESTION for theo : Can I
+	an ambiguity with Point_set::operator<<. QUESTION for theo: Can I
 	remove it?
 
 2007-11-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
@@ -45669,7 +45669,7 @@
 	Add functon which display a binary image from a FLLT branch.
 
 	* mln/util/tree_to_image.hh:
-	(display_branch(const Image<J>& ima_, node<I>* node)) :
+	(display_branch(const Image<J>& ima_, node<I>* node)):
 	Take a node and compute its binary image from set_p of FLLT
 	and display this image.
 
@@ -45734,8 +45734,8 @@
 
 	Add debug display tools for fllt.
 
-	* mln/util/tree_to_image.hh: Add functions :
-	(display_set(const Image<J>& ima_, set_p<P>& s)) :
+	* mln/util/tree_to_image.hh: Add functions:
+	(display_set(const Image<J>& ima_, set_p<P>& s)):
 	display set_p with ima_ domain into a binary image.
 	(display_tree_rec(const Image<J>& ima_, node<T>* node, int level))
 	Recursive function of ...
@@ -46795,7 +46795,7 @@
 	* mln/core/point.hh: Fix to respect homogeneous vector handling.
 	* mln/fun/internal/x2x_impl.hh: Rename as ...
 	* mln/fun/internal/x2x_linear_impl.hh: ...this
-	(operator()) : Take vec and return vec.
+	(operator()): Take vec and return vec.
 
 2007-10-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
@@ -46891,7 +46891,7 @@
 
 	* mln/value/graylevel.hh: Re add operator=(int)
 	* tests/value_int_u8.cc: More tests.
-	* tests/value_graylevel.cc: Likewise. FIXME : to augment.
+	* tests/value_graylevel.cc: Likewise. FIXME: to augment.
 
 2007-10-11  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
@@ -47287,7 +47287,7 @@
 
 2007-10-09  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
-	Improve hexagonal images. Fixme : doesn't work properly now.
+	Improve hexagonal images. Fixme: doesn't work properly now.
 
 	* mln/debug/println.hh: Println for hexa images.
 
@@ -47310,7 +47310,7 @@
 
 2007-10-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
-	Refactoring : move mln/core/win to mln/win.
+	Refactoring: move mln/core/win to mln/win.
 	* mln/core/win/backdiag2d.hh,
 	* mln/core/win/cube3d.hh,
 	* mln/core/win/diag2d.hh,
@@ -47614,7 +47614,7 @@
 
 2007-10-08  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
-	Move color_sub from sandbox into color_pretty in a new folder : display.
+	Move color_sub from sandbox into color_pretty in a new folder: display.
 	* mln/display/color_pretty.hh: New.
 	* mln/display: New folder for display.
 
@@ -47638,7 +47638,7 @@
 	* mln/make/box2d_h.hh: New.
 	* mln/make/dpoint2d_h.hh: New.
 	* mln/make/point2d_h.hh: New.
-	* tests/hexa.cc: New, Fixme : write more tests.
+	* tests/hexa.cc: New, Fixme: write more tests.
 
 2007-10-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -48846,8 +48846,8 @@
 
 2007-09-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
-	Add plain image. FIXME : doesn't compile because of a error in init (called by
-	clone).
+	Add plain image. FIXME: doesn't compile because of a error in
+	init (called by clone).
 
 	* mln/core/plain.hh: New.
 	* tests/plain.cc: New.
@@ -49619,7 +49619,7 @@
 	loading of ppm 8/16 bits format done
 
 	* mln/value/rgb.hh:
-	To fix : we can't apply level:transform on rgb images
+	To fix: we can't apply level:transform on rgb images
 	convert_< rgb8 > could be one part of the problem.
 
 	* mln/value/rgb16.hh:
