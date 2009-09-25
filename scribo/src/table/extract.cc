@@ -65,9 +65,11 @@ the background, other colors indicates cells.");
   io::pbm::load(input, argv[1]);
 
   value::label_16 ncells;
-  image2d<value::label_16> tables = scribo::table::extract(input, ncells).first();
+  image2d<value::label_16>
+    tables = scribo::table::extract(input, ncells).first();
 
-  io::ppm::save(mln::labeling::colorize(value::rgb8(), tables, ncells), argv[3]);
+  io::ppm::save(mln::labeling::colorize(value::rgb8(), tables, ncells),
+		argv[3]);
 
   io::dump::save(tables, argv[2]);
 

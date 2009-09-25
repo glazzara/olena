@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
   // Filter non-correctly aligned grouped objects.
 
   object_links<L> filtered_links
-    = filter::object_links_non_h_aligned(text, double_link, atoi(argv[4]));
+    = filter::object_links_non_h_aligned(text, double_link, atof(argv[4]));
 
 
   text_t aligned_grouped_text

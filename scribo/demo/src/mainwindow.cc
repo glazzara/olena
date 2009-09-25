@@ -310,7 +310,8 @@ namespace scribo
       item = view->scene()->addPixmap(pixmap);
       view->scene()->setSceneRect(item->boundingRect());
       Q_ASSERT(item != 0);
-      view->fitInView(item->boundingRect(), Qt::KeepAspectRatio);
+      if (pixmap.width() > view->maximumViewportSize().width())
+	view->fitInView(item->boundingRect(), Qt::KeepAspectRatio);
       view_to_item(view) = item;
 
       bool b = (mainResultItem_ != 0 || mainRefItem_ != 0);

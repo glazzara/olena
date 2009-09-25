@@ -31,6 +31,7 @@
 ///
 /// Split the background and the foreground.
 
+# include <mln/core/macros.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/routine/duplicate.hh>
@@ -61,6 +62,8 @@
 # include <mln/labeling/compute.hh>
 # include <mln/accu/stat/mean.hh>
 
+# include <mln/util/couple.hh>
+
 
 
 
@@ -84,7 +87,7 @@ namespace scribo
               and the second is the foreground.
      */
     template <typename I>
-    util::couple<mln_concrete(I), mln_concrete(I)>
+    mln::util::couple<mln_concrete(I), mln_concrete(I)>
     split_bg_fg(const Image<I>& input_, unsigned lambda, unsigned delta);
 
 
@@ -287,7 +290,7 @@ namespace scribo
 //     }
 
 	typedef accu::stat::mean< rgb8, algebra::vec<3,float>, rgb8 > A;
-	util::array<rgb8> m = labeling::compute(A(), input, con, nblobs);
+	mln::util::array<rgb8> m = labeling::compute(A(), input, con, nblobs);
 
 	data::fill((output | pw::value(mask)).rw(),
 		   data::transform(lab, m));
@@ -305,7 +308,7 @@ namespace scribo
     // Facade
 
     template <typename I>
-    util::couple<mln_concrete(I), mln_concrete(I)>
+    mln::util::couple<mln_concrete(I), mln_concrete(I)>
     split_bg_fg(const Image<I>& input_, unsigned lambda, unsigned delta)
     {
       trace::entering("scribo::preprocessing::split_bg_fg");

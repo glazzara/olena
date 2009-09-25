@@ -68,6 +68,8 @@ namespace scribo
     object_groups_small(const object_groups<L>& groups,
 			unsigned n_links)
     {
+      trace::entering("scribo::filter::object_groups_small");
+
       mln_precondition(groups.is_valid());
 
       // Counting the number of objects per group.
@@ -81,6 +83,7 @@ namespace scribo
 	if (group_size[groups[i]] < n_links)
 	  output(i) = 0;
 
+      trace::exiting("scribo::filter::object_groups_small");
       return output;
     }
 

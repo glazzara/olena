@@ -127,8 +127,8 @@ namespace scribo
 
     bool operator()(const point2d& p1, const point2d& p2) const
     {
-      return (math::sqrt(math::sqr(p1.row() - p2.row())
-			 + math::sqr(p1.col() - p2.col()))) < 5;
+      return (math::sqrt(math::sqr(static_cast<float>(p1.row() - p2.row()))
+			 + math::sqr(static_cast<float>(p1.col() - p2.col())))) < 5;
     }
 
   };
