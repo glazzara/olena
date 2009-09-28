@@ -1,5 +1,12 @@
 2009-09-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add new filters in Scribo.
+
+	* filter/objects_h_thin.hh,
+	* filter/objects_v_thin.hh: New objects filters.
+
+2009-09-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Small fixes in Scribo.
 
 	* binarization/sauvola.hh: Fix an invalid precondition.
