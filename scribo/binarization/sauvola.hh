@@ -310,7 +310,7 @@ namespace scribo
       {
 	trace::entering("scribo::binarization::sauvola");
 
-	mln_precondition(I::dim == 2);
+	mln_precondition(mln_site_(I)::dim == 2);
 	mln_precondition(exact(input).is_valid());
 
 	typedef mln_value(I) value_t;

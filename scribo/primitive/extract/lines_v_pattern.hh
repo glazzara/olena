@@ -60,7 +60,7 @@ namespace scribo
       //
       template <typename I>
       mln_concrete(I)
-      lines_v_pattern(const Image<I>& input, unsigned length);
+      lines_v_pattern(const Image<I>& input, unsigned length, unsigned delta);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -68,17 +68,26 @@ namespace scribo
 
       template <typename I>
       mln_concrete(I)
-      lines_v_pattern(const Image<I>& input, unsigned length)
+      lines_v_pattern(const Image<I>& input, unsigned length, unsigned delta)
       {
 	mln_precondition(length % 2 == 1);
 
-	bool win_def[1][7] = { { 1, 0, 0, 0, 0, 0, 1 } };
+// 	bool win_def[1][7] = { { 1, 0, 0, 0, 0, 0, 1 } };
 
-	window2d win;
-	convert::from_to(win_def, win);
+// 	window2d win;
+// 	convert::from_to(win_def, win);
+
+	// FIXME: not generic.
+ 	window2d win;
+	mln_deduce(I, site, dpsite)
+	  dp1(0, -delta),
+	  dp2(0,  delta);
+	win.insert(dp1);
+	win.insert(dp2);
 
 	//FIXME: Add reconstruction instead of this arbitrary dilation.
-	win::vline2d vwin(length/2 + 2);
+ 	win::vline2d vwin(length/2 + 2);
+// 	win::vline2d vwin(length);
 	return morpho::dilation(lines_pattern(input, length, 0, win), vwin);
 //	return lines_pattern(input, length, 0, win);
       }

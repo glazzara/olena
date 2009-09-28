@@ -29,6 +29,8 @@
 /// \file
 ///
 /// Extract lines matching a specific pattern.
+///
+/// \todo Make a more generic canvas.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/window2d.hh>

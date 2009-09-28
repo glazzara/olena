@@ -54,37 +54,48 @@ namespace scribo
       ///
       /// \param[in] input  A binary image.
       /// \param[in] length The minimum line length.
+      /// \param[in] delta Distance between the object pixel and the
+      /// background pixel.
       ///
       /// \result An image of horizontal lines.
       //
       template <typename I>
       mln_concrete(I)
-      lines_h_pattern(const Image<I>& input, unsigned length);
+      lines_h_pattern(const Image<I>& input, unsigned length, unsigned delta);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
       mln_concrete(I)
-      lines_h_pattern(const Image<I>& input, unsigned length)
+      lines_h_pattern(const Image<I>& input, unsigned length, unsigned delta)
       {
 	mlc_is(mln_value(I), bool)::check();
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(length % 2 == 1);
 
-	bool win_def[7][1] = { {1},
-			       {0},
-			       {0},
-			       {0},
-			       {0},
-			       {0},
-			       {1} };
+// 	bool win_def[7][1] = { {1},
+// 			       {0},
+// 			       {0},
+// 			       {0},
+// 			       {0},
+// 			       {0},
+// 			       {1} };
 
-	window2d win;
-	convert::from_to(win_def, win);
+// 	window2d win;
+// 	convert::from_to(win_def, win);
+
+	// FIXME: not generic.
+ 	window2d win;
+	mln_deduce(I, site, dpsite)
+	  dp1(-delta, 0),
+	  dp2( delta, 0);
+	win.insert(dp1);
+	win.insert(dp2);
 
 	//FIXME: Add reconstruction instead of this arbitrary dilation.
-	win::hline2d hwin(length/2 + 2);
+ 	win::hline2d hwin(length/2 + 2);
+//	win::hline2d hwin(length);
 	return morpho::dilation(lines_pattern(input, length, 1, win), hwin);
 //	return lines_pattern(input, length, 1, win);
       }

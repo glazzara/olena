@@ -40,7 +40,7 @@ namespace scribo
 
   namespace filter
   {
-
+    using namespace mln;
 
     template <typename L>
     object_image(L)
