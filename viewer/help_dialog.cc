@@ -33,6 +33,8 @@ HelpDialog::HelpDialog()
 		    " - If the document layout is present\n"
 		    "   (XML file with the same name),\n"
 		    "   select regions to display their properties.\n"
+		    " - Use the mouse or keyboard to move and zoom\n"
+		    "   (Arrows, PageUp, PageDown, Home, End).\n"
 		    "\n"
 		    "Contact: d-halluin@lrde.epita.fr\n"
 		    "\n"

@@ -40,7 +40,8 @@ public slots:
   void load(QString filename);
   void help();
 
-  void setAltCache(bool b);
+  void maybeChangeCacheMode(qreal scale);
+  void useCache(bool b);
 
 signals:
   void updated(DomModel* model);
@@ -71,7 +72,7 @@ private:
   QMap<QString, int> region_ids_;
   region::KeyMap key_map_;
 
-  bool alt_cache_;
+  bool no_cache_;
 };
 
 #include "viewer.hxx"

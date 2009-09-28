@@ -34,15 +34,15 @@ Viewer::Viewer(int &argc, char** argv)
     files_(new QDirModel()),
     doc_layout_(0),
     key_map_(9),
-    alt_cache_(false)
+    no_cache_(false)
 {
   // Key map
 
   key_map_[region::Text] = qMakePair(tr("Text"), QColor(0, 200, 0));
   key_map_[region::Image] = qMakePair(tr("Image"), QColor(255, 120, 0));
-  key_map_[region::Noise] = qMakePair(tr("Noise"), QColor(114, 188, 144));
-  key_map_[region::Separator] = qMakePair(tr("Separator"), QColor(200, 222, 0));
-  key_map_[region::Table] = qMakePair(tr("Table"), QColor(0, 0, 255));
+  key_map_[region::Noise] = qMakePair(tr("Noise"), QColor(43, 39, 128));
+  key_map_[region::Separator] = qMakePair(tr("Separator"), QColor(0, 0, 255));
+  key_map_[region::Table] = qMakePair(tr("Table"), QColor(220, 246, 0));
   key_map_[region::LineDrawing] = qMakePair(tr("LineDrawing"),
 					    QColor(255, 198, 0));
   key_map_[region::Graphic] = qMakePair(tr("Graphic"), QColor(255, 0, 144));
@@ -96,14 +96,13 @@ Viewer::Viewer(int &argc, char** argv)
   connect(fill_action_, SIGNAL(toggled(bool)),
 	  this, SIGNAL(setFill(bool)));
   option_menu->addAction(fill_action_);
-  QAction* cache_action = new QAction(tr("Alternative cache mode"),
-				      option_menu);
-  cache_action->setStatusTip(tr("Much faster at low zoom, "
-				 "but unstable at high zoom."));
+  QAction* cache_action = new QAction(tr("Disable cache"), file_menu);
+  cache_action->setStatusTip(tr("Disable the image cache (useful for"
+				" large images)."));
   cache_action->setCheckable(true);
   cache_action->setChecked(false);
   connect(cache_action, SIGNAL(toggled(bool)),
-	  this, SLOT(setAltCache(bool)));
+	  this, SLOT(useCache(bool)));
   option_menu->addAction(cache_action);
 
   QMenu* help_menu = win_->menuBar()->addMenu(tr("Help"));
@@ -168,6 +167,8 @@ Viewer::Viewer(int &argc, char** argv)
 	  xml_wgt, SLOT(select(QModelIndex)));
   connect(scene_, SIGNAL(deselected(QModelIndex)),
 	  xml_wgt, SLOT(deselect(QModelIndex)));
+  connect(image_wgt, SIGNAL(scaleUpdated(qreal)),
+	  this, SLOT(maybeChangeCacheMode(qreal)));
 }
 
 void
@@ -182,7 +183,6 @@ Viewer::load(QString filename)
   // OpenGL might speed up things a bit.
   image_ = new QGraphicsPixmapItem(QPixmap(filename));
   image_->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
-  image_->setCacheMode(QGraphicsItem::ItemCoordinateCache, QSize());
   image_->setZValue(0);
   scene_->addItem(image_);
 
@@ -288,14 +288,22 @@ Viewer::help()
 }
 
 void
-Viewer::setAltCache(bool b)
+Viewer::maybeChangeCacheMode(qreal scale)
 {
-  alt_cache_ = b;
+  qDebug() << scale;
   if (image_)
   {
-    if (b)
+    if (scale >= 0.7)
+      image_->setCacheMode(QGraphicsItem::NoCache);
+    else if (!no_cache_)
       image_->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
-    else
-      image_->setCacheMode(QGraphicsItem::ItemCoordinateCache);
   }
+}
+
+void
+Viewer::useCache(bool b)
+{
+  no_cache_ = b;
+  if (b)
+    image_->setCacheMode(QGraphicsItem::NoCache);
 }

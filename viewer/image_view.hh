@@ -27,6 +27,14 @@ public:
   ~ImageView();
 
   void wheelEvent(QWheelEvent* event);
+  void keyPressEvent(QKeyEvent *event);
+
+  // Call after changing the scale.
+  void scaleUpdate();
+
+signals:
+  // Scale is approximate.
+  void scaleUpdated(qreal scale);
 };
 
 #endif	    /* !IMAGE_VIEW_HH_ */

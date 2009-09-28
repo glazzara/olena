@@ -40,7 +40,37 @@ ImageView::wheelEvent(QWheelEvent* event)
     QPointF newCenter = QPointF (mouse.x() - dx / sc,
 				 mouse.y() - dy / sc);
     scale(sc, sc);
+    scaleUpdate();
   }
+}
+
+void
+ImageView::keyPressEvent(QKeyEvent* event)
+{
+  if (event->key() == Qt::Key_PageUp)
+    scale(1.25, 1.25);
+  else if (event->key() == Qt::Key_PageDown)
+    scale(0.75, 0.75);
+  else if (event->key() == Qt::Key_Home)
+    resetMatrix();
+  else if (event->key() == Qt::Key_End)
+    fitInView(sceneRect(), Qt::KeepAspectRatio);
+  else
+  {
+    QGraphicsView::keyPressEvent(event);
+    return;
+  }
+  scaleUpdate();
+  event->accept();
+}
+
+void
+ImageView::scaleUpdate()
+{
+  // Used to determine whether to change the main image cache mode.
+  QRect orig(0, 0, 10, 1);
+  QRectF scene = mapToScene(orig).boundingRect();
+  emit scaleUpdated(10 / scene.width());
 }
 
 ImageView::~ImageView()

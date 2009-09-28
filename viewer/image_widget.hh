@@ -31,6 +31,9 @@ public:
 public slots:
   void update();
 
+signals:
+  void scaleUpdated(qreal scale);
+
 private:
   ImageView* view_;
 };

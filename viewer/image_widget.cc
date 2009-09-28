@@ -25,10 +25,13 @@ ImageWidget::ImageWidget(QGraphicsScene* scene)
   layout->addWidget(title);
   layout->addWidget(view_);
 
-  view_->setDragMode (QGraphicsView::ScrollHandDrag);
+  view_->setDragMode(QGraphicsView::ScrollHandDrag);
   view_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   view_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   view_->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+
+  connect(view_, SIGNAL(scaleUpdated(qreal)),
+	  this, SIGNAL(scaleUpdated(qreal)));
 
   setLayout(layout);
 }
@@ -37,6 +40,7 @@ void
 ImageWidget::update()
 {
   view_->fitInView(view_->sceneRect(), Qt::KeepAspectRatio);
+  view_->scaleUpdate();
 }
 
 ImageWidget::~ImageWidget()
