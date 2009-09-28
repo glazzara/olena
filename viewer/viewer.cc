@@ -290,7 +290,6 @@ Viewer::help()
 void
 Viewer::maybeChangeCacheMode(qreal scale)
 {
-  qDebug() << scale;
   if (image_)
   {
     if (scale >= 0.7)
