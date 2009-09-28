@@ -70,11 +70,10 @@ ImageRegion::paint(QPainter* painter,
     width = 1;
 
   if (outline_)
-    painter->setPen(QPen(QBrush(color_), width));
+    painter->setPen(QPen(QBrush(color_), width, Qt::SolidLine,
+			 Qt::SquareCap, Qt::MiterJoin));
   else
     painter->setPen(QColor(0, 0, 0, 0));
-  if (selected_)
-    painter->setPen(QPen(QBrush(QColor("red")), width));
 
   QColor brush = color_;
   if (fill_)
@@ -84,4 +83,40 @@ ImageRegion::paint(QPainter* painter,
   painter->setBrush(brush);
 
   painter->drawPath(shape_);
+
+  if (selected_)
+  {
+    QPolygonF sceneRect = mapFromScene(scene()->sceneRect());
+    QPainterPath path;
+    path.addPolygon(sceneRect);
+    QColor brush(255, 255, 255);
+    brush.setAlpha(120);
+    painter->setBrush(brush);
+    painter->setPen(QColor(0, 0, 0, 0));
+    painter->drawPath(path.subtracted(shape_));
+  }
+}
+
+void
+ImageRegion::select()
+{
+  if (!selected_)
+  {
+    selected_ = true;
+    setZValue(2);
+    scene()->invalidate();
+    update();
+  }
+}
+
+void
+ImageRegion::deselect()
+{
+  if (selected_)
+  {
+    selected_ = false;
+    scene()->invalidate();
+    setZValue(1);
+    update();
+  }
 }

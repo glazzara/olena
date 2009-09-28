@@ -87,28 +87,4 @@ ImageRegion::index() const
   return index_;
 }
 
-inline
-void
-ImageRegion::select()
-{
-  if (!selected_)
-  {
-    selected_ = true;
-    setZValue(2);
-    update();
-  }
-}
-
-inline
-void
-ImageRegion::deselect()
-{
-  if (selected_)
-  {
-    selected_ = false;
-    setZValue(1);
-    update();
-  }
-}
-
 #endif	    /* !IMAGE_REGION_HXX_ */
