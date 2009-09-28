@@ -1,3 +1,17 @@
+2009-09-28  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Prepare kmean demo for theo. Work in progress.
+
+	* green/mln/clustering/kmean1d.hh: New library file.
+	
+	* green/demo/clustering/kmean1d: New directory.
+	* green/demo/clustering/kmean1d/Makefile.am: New makefile.
+	* green/demo/clustering/kmean1d/kmean1d.cc: New demo.
+
+	* green/tests/clustering/kmean1d: New directory.
+	* green/tests/clustering/kmean1d/Makefile.am: New makefile.
+	* green/tests/clustering/kmean1d/kmean1d.cc: New unitary tests.
+
 2009-09-24  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Add benchmark for disk-mapped image and work for color types.
