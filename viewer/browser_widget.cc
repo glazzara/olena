@@ -14,7 +14,7 @@
 
 #include "browser_widget.hh"
 
-BrowserWidget::BrowserWidget(QDirModel* files)
+BrowserWidget::BrowserWidget(QDirModel* files, QString dir)
   : files_(files),
     view_(new QListView()),
     path_(new QLabel(""))
@@ -34,6 +34,9 @@ BrowserWidget::BrowserWidget(QDirModel* files)
 		   | QDir::Readable | QDir::Drives);
 
   view_->setRootIndex(files->index(QDir::currentPath()));
+  QDir d(dir);
+  if (d.isReadable())
+    view_->setRootIndex(files->index(d.absolutePath()));
   view_->setRowHidden(0, true);
   path_->setText(files->filePath(view_->rootIndex()));
   connect(view_, SIGNAL(activated(const QModelIndex&)),

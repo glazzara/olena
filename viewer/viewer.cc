@@ -119,7 +119,8 @@ Viewer::Viewer(int &argc, char** argv)
 
   PropertyWidget* property_wgt = new PropertyWidget();
   XmlWidget* xml_wgt = new XmlWidget();
-  BrowserWidget* browser_wgt = new BrowserWidget(files_);
+  BrowserWidget* browser_wgt =
+    new BrowserWidget(files_, argc != 2 ? QString() : argv[1]);
   ImageWidget* image_wgt = new ImageWidget(scene_);
   key_wgt_ = new KeyWidget(key_map_);
 

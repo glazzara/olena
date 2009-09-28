@@ -23,7 +23,7 @@ class BrowserWidget
   Q_OBJECT
 
 public:
-  BrowserWidget(QDirModel* files);
+  BrowserWidget(QDirModel* files, QString dir = QString());
   ~BrowserWidget();
 
 public slots:
