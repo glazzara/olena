@@ -142,7 +142,7 @@ namespace scribo
 
 	/// Improve text quality.
 
-	/// text_ima_cleand domain is larger than text_ima's.
+	/// text_ima_cleaned domain is larger than text_ima's.
 	I text_ima_cleaned = text::clean(text_ima, dmap_win);
 
         // Setting objects to 'True'
