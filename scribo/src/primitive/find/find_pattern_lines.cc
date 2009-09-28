@@ -63,8 +63,8 @@ int main(int argc, char *argv[])
   I input;
   io::pbm::load(input, argv[1]);
 
-  I hlines = scribo::primitive::extract::lines_h_pattern(input, atoi(argv[2]));
-  I vlines = scribo::primitive::extract::lines_v_pattern(input, atoi(argv[2]));
+  I hlines = scribo::primitive::extract::lines_h_pattern(input, atoi(argv[2]), 3);
+  I vlines = scribo::primitive::extract::lines_v_pattern(input, atoi(argv[2]), 3);
 
   image2d<value::rgb8> out = debug::superpose(input, hlines, literal::red);
   out = debug::superpose(out, vlines, literal::green);

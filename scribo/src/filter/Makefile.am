@@ -20,12 +20,12 @@
 include $(top_srcdir)/scribo/scribo.mk
 
 bin_PROGRAMS = 				\
-  large_objects 			\
-  small_objects 			\
-  thick_objects 			\
-  thin_objects
+  objects_large 			\
+  objects_small 			\
+  objects_thick 			\
+  objects_thin
 
-large_objects_SOURCES = large_objects.cc
-small_objects_SOURCES = small_objects.cc
-thick_objects_SOURCES = thick_objects.cc
-thin_objects_SOURCES = thin_objects.cc
+objects_large_SOURCES = objects_large.cc
+objects_small_SOURCES = objects_small.cc
+objects_thick_SOURCES = objects_thick.cc
+objects_thin_SOURCES = objects_thin.cc

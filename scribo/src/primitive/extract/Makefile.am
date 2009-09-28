@@ -25,22 +25,11 @@ bin_PROGRAMS = 			\
   extract_discontinued_vlines   \
   extract_discontinued_hlines  	\
   extract_thick_vlines  	\
-  extract_thick_hlines    	\
-  find_discontinued_lines 	\
-  find_pattern_lines 		\
-  find_single_lines 		\
-  find_thick_lines 		\
-  find_thick_and_single_lines
+  extract_thick_hlines 
 
 extract_discontinued_lines_SOURCES = extract_discontinued_lines.cc
 extract_discontinued_vlines_SOURCES = extract_discontinued_vlines.cc
 extract_discontinued_hlines_SOURCES = extract_discontinued_hlines.cc
 extract_thick_vlines_SOURCES = extract_thick_vlines.cc
 extract_thick_hlines_SOURCES = extract_thick_hlines.cc
-find_discontinued_lines_SOURCES = find_discontinued_lines.cc
-find_pattern_lines_SOURCES = find_pattern_lines.cc
-find_single_lines_SOURCES = find_single_lines.cc
-find_thick_lines_SOURCES = find_thick_lines.cc
-find_thick_and_single_lines_SOURCES = find_thick_and_single_lines.cc
-
 

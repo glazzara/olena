@@ -19,14 +19,18 @@
 
 include $(top_srcdir)/scribo/scribo.mk
 
-bin_PROGRAMS = 				\
-  erase 				\
-  extract 				\
-  rebuild_opening 			\
-  rebuild_rank
+
+bin_PROGRAMS = 			\
+  find_discontinued_lines 	\
+  find_pattern_lines 		\
+  find_single_lines 		\
+  find_thick_lines 		\
+  find_thick_and_single_lines
+
+find_discontinued_lines_SOURCES = find_discontinued_lines.cc
+find_pattern_lines_SOURCES = find_pattern_lines.cc
+find_single_lines_SOURCES = find_single_lines.cc
+find_thick_lines_SOURCES = find_thick_lines.cc
+find_thick_and_single_lines_SOURCES = find_thick_and_single_lines.cc
 
 
-erase_SOURCES = erase.cc
-extract_SOURCES = extract.cc
-rebuild_opening_SOURCES = rebuild_opening.cc
-rebuild_rank_SOURCES = rebuild_rank.cc

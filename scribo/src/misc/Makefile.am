@@ -20,13 +20,15 @@
 include $(top_srcdir)/scribo/scribo.mk
 
 bin_PROGRAMS = 				\
-  erase 				\
-  extract 				\
-  rebuild_opening 			\
-  rebuild_rank
+  dmap                               	\
+  morpho                    		\
+  negate 				\
+  rectangularity 			\
+  superpose
 
+dmap_SOURCES = dmap.cc
+morpho_SOURCES = morpho.cc
+negate_SOURCES = negate.cc
+rectangularity_SOURCES = rectangularity.cc
+superpose_SOURCES = superpose.cc
 
-erase_SOURCES = erase.cc
-extract_SOURCES = extract.cc
-rebuild_opening_SOURCES = rebuild_opening.cc
-rebuild_rank_SOURCES = rebuild_rank.cc

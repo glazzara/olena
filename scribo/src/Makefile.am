@@ -21,54 +21,28 @@ include $(top_srcdir)/scribo/scribo.mk
 
 SUBDIRS =					\
   binarization 					\
-  extract 					\
+  primitive 					\
   filter 					\
+  misc 						\
+  multi_scale 					\
   preprocessing 				\
   table 					\
   text
 
 bin_PROGRAMS = 				\
-  dmap                               	\
-  morpho                    		\
-  negate 				\
-  preprocess 				\
-  rectangularity 			\
-  superpose 				\
-  table_rebuild_opening 		\
-  table_rebuild_rank 			\
   text_in_photo 			\
   text_in_photo_ppm 			\
-  text_in_photo_invert 			\
-  thin_bboxes
+  text_in_photo_invert
 
 
-dmap_SOURCES = dmap.cc
-morpho_SOURCES = morpho.cc
-negate_SOURCES = negate.cc
-preprocess_SOURCES = preprocess.cc
-rectangularity_SOURCES = rectangularity.cc
-superpose_SOURCES = superpose.cc
-table_rebuild_opening_SOURCES = table_rebuild_opening.cc
-table_rebuild_rank_SOURCES = table_rebuild_rank.cc
 text_in_photo_SOURCES = text_in_photo.cc
 text_in_photo_ppm_SOURCES = text_in_photo_ppm.cc
 text_in_photo_invert_SOURCES = text_in_photo_invert.cc
-thin_bboxes_SOURCES = thin_bboxes.cc
 
 
 
 if HAVE_TESSERACT
 if HAVE_TIFF
-
-    bin_PROGRAMS 	+= recognition
-    recognition_SOURCES  = recognition.cc
-    recognition_CPPFLAGS = $(AM_CPPFLAGS) \
-			   $(TESSERACT_CPPFLAGS) \
-			   $(TIFF_CPPFLAGS)
-    recognition_LDFLAGS  = $(AM_LDFLAGS) \
-			   $(TESSERACT_LDFLAGS) \
-			   $(TIFF_LDFLAGS) \
-			   -lpthread
 
     bin_PROGRAMS 	+= text_in_doc
     text_in_doc_SOURCES = text_in_doc.cc
@@ -78,7 +52,17 @@ if HAVE_TIFF
     text_in_doc_LDFLAGS  = $(AM_LDFLAGS) \
 			   $(TESSERACT_LDFLAGS) \
 			   $(TIFF_LDFLAGS) \
-			   -lpthread
+			   -lpthread -lhpdf
+
+    bin_PROGRAMS 	+= text_in_doc_ppm
+    text_in_doc_ppm_SOURCES = text_in_doc_ppm.cc
+    text_in_doc_ppm_CPPFLAGS = $(AM_CPPFLAGS) \
+			   $(TESSERACT_CPPFLAGS) \
+			   $(TIFF_CPPFLAGS)
+    text_in_doc_ppm_LDFLAGS  = $(AM_LDFLAGS) \
+			   $(TESSERACT_LDFLAGS) \
+			   $(TIFF_LDFLAGS) \
+			   -lpthread -lhpdf
 
 endif HAVE_TIFF
 endif HAVE_TESSERACT

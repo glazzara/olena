@@ -24,43 +24,66 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/alias/neighb2d.hh>
-
-#include <mln/literal/colors.hh>
-
 #include <mln/value/label_16.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/io/pbm/all.hh>
+#include <mln/io/ppm/save.hh>
+#include <mln/data/convert.hh>
+#include <mln/debug/superpose.hh>
 
-#include <mln/io/pbm/load.hh>
+#include <scribo/debug/usage.hh>
 
+#include <scribo/core/object_image.hh>
+#include <scribo/primitive/extract/lines_h_discontinued.hh>
+#include <scribo/primitive/extract/lines_v_discontinued.hh>
 
-#include <scribo/text/extract_lines.hh>
-#include <scribo/filter/objects_thin.hh>
-
-int usage(const char *name)
+const char *args_desc[][2] =
 {
-  std::cout << "Usage: " << name << " <input.pbm> " << std::endl;
-  return 1;
-}
+  { "input.pbm", "A binary image." },
+  { "length", "   Minimum line length." },
+  {0, 0}
+};
+
 
 int main(int argc, char *argv[])
 {
   using namespace mln;
 
-  if (argc < 1)
-    return usage(argv[0]);
+  if (argc != 4)
+    return scribo::debug::usage(argv,
+				"Extract discontinued horizontal and vertical lines",
+				"input.pbm length output.ppm",
+				args_desc,
+				"A color image. Horizontal lines are in red and vertical lines in green.");
 
-  scribo::make::internal::debug_filename_prefix = "objects_thin";
+  trace::entering("main");
 
-  image2d<bool> input;
+  typedef image2d<bool> I;
+  I input;
   io::pbm::load(input, argv[1]);
 
-  value::label_16 nlines;
-  typedef object_image(image2d<value::label_16>) text_t;
-  text_t lines = scribo::text::extract_lines(input, c8(), nlines);
+  value::label_16
+    nhlines,
+    nvlines;
 
-  text_t filtered_lines = scribo::filter::objects_thin(lines, 5);
+  typedef image2d<value::label_16> L;
+  object_image(L)
+    hlines = scribo::primitive::extract::lines_h_discontinued(input,
+							      c8(),
+							      nhlines,
+							      atoi(argv[2]),
+							      8),
+    vlines = scribo::primitive::extract::lines_v_discontinued(input,
+							      c8(),
+							      nvlines,
+							      atoi(argv[2]),
+							      8);
 
-  scribo::debug::save_bboxes_image(input, filtered_lines.bboxes(),
-				   literal::red,
-				   scribo::make::debug_filename("thickness_filter"));
+  image2d<value::rgb8> out = debug::superpose(input, hlines, literal::red);
+  out = debug::superpose(out, vlines, literal::green);
+
+  io::ppm::save(out, argv[3]);
+
+  trace::exiting("main");
 }

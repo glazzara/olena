@@ -19,11 +19,24 @@
 
 include $(top_srcdir)/scribo/scribo.mk
 
-SUBDIRS = grouping
-
-
 bin_PROGRAMS = 					\
   cleantxt
 
 
 cleantxt_SOURCES = cleantxt.cc
+
+
+if HAVE_TESSERACT
+if HAVE_TIFF
+
+    bin_PROGRAMS 	+= recognition
+    recognition_SOURCES  = recognition.cc
+    recognition_CPPFLAGS = $(AM_CPPFLAGS) \
+			   $(TESSERACT_CPPFLAGS) \
+			   $(TIFF_CPPFLAGS)
+    recognition_LDFLAGS  = $(AM_LDFLAGS) \
+			   $(TESSERACT_LDFLAGS) \
+			   $(TIFF_LDFLAGS) \
+			   -lpthread
+endif HAVE_TIFF
+endif HAVE_TESSERACT
