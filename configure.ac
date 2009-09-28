@@ -213,13 +213,16 @@ AC_CONFIG_FILES([
     scribo/demo/Makefile
     scribo/src/Makefile
       scribo/src/binarization/Makefile
-      scribo/src/extract/Makefile
-	scribo/src/extract/primitive/Makefile
       scribo/src/filter/Makefile
+      scribo/src/misc/Makefile
+      scribo/src/multi_scale/Makefile
       scribo/src/preprocessing/Makefile
+      scribo/src/primitive/Makefile
+	scribo/src/primitive/extract/Makefile
+	scribo/src/primitive/find/Makefile
+        scribo/src/primitive/group/Makefile
       scribo/src/table/Makefile
       scribo/src/text/Makefile
-        scribo/src/text/grouping/Makefile
 ])
 
 AC_CONFIG_FILES([scribo/tests/data.hh])
