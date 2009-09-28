@@ -1,5 +1,12 @@
 2009-09-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
+	Add a first draft of a multi-scale process.
+
+	* src/multi_scale/Makefile.am,
+	* src/multi_scale/find_lines.cc: New.
+
+2009-09-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
+
 	Cleanup scribo/src directory.
 
 	* src/text/Makefile.am,
