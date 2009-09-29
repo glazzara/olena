@@ -1,5 +1,4 @@
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/disk_ima.hh>
 
 #include <mln/io/ppm/load.hh>
 #include <mln/literal/colors.hh>
@@ -22,7 +21,7 @@ int main(int argc, char* argv[])
     return 1;
   }
 
-  disk_ima<rgb8> ima;
+  image2d<rgb8> ima;
 
   io::ppm::load(ima, argv[1]);
 

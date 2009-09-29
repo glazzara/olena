@@ -33,6 +33,8 @@
 # include <mln/core/concept/image.hh>
 # include <mln/data/convert.hh>
 # include <mln/math/diff_abs.hh>
+# include <mln/math/sqr.hh>
+# include <mln/math/sqrt.hh>
 # include <mln/value/rgb8.hh>
 
 
@@ -60,6 +62,8 @@ namespace mln
     namespace impl
     {
 
+      /// Distance between two color values.
+      /// We have to specialized it for each type of color.
       template <typename V>
       inline
       float color_distance(const V& color1, const V& color2)
@@ -67,6 +71,8 @@ namespace mln
 	return -1.0; // FIXME
       }
 
+      /// Distance between two RGB values.
+      /// \return Value is normalized ([0..1]).
       template <>
       inline
       float color_distance<value::rgb8>(const value::rgb8& color1, const value::rgb8& color2)
@@ -82,8 +88,7 @@ namespace mln
 	return dist;
       }
 
-      /// \return The percentage of points which value is not preserved.
-      /// The return value is normalized ([0..1]).
+      /// \return Root mean square.
       template <typename I, typename V>
       inline
       float conversion_(const I& ima, const V& value)
@@ -97,12 +102,11 @@ namespace mln
 	mln_piter(I) p(ima.domain());
 	for_all(p)
 	{
-	  delta += color_distance(ima(p), output(p));
-	  //if (ima(p) != output(p))
-	  //  delta += 1.0;
+	  delta += math::sqr(color_distance(ima(p), output(p)));
 	}
 
 	delta /= ima.nelements();
+	delta = math::sqrt(delta);
 	return delta;
       }
 

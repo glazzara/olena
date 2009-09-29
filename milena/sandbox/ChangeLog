@@ -1,3 +1,25 @@
+2009-09-29  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Update benchmark for types of image.
+	* fabien/README: Explain hierarchy of the sandbox.
+	* fabien/TODO: Remove.
+
+	* fabien/bin/dumpl16_to_colorize.cc: New bin tool.
+	* fabien/bin/dumpl8_to_colorize.cc: New bin tool.
+
+	* fabien/igr/color/find_color.cc: Update color detection.
+	* fabien/magick/tiled_image.cc: Add draft of tiled image using
+	ImageMagick.
+	* fabien/mln/test/conversion.hh: Update conversion test.
+
+	* fabien/tests/core/image/Makefile,
+	* fabien/tests/core/image/bench.hh,
+	* fabien/tests/core/image/bench.sh,
+	* fabien/tests/core/image/disk_ima.cc,
+	* fabien/tests/core/image/ima2d.cc,
+	* fabien/tests/core/image/tiled2d.cc:
+	Update performance benchmark for different types of image.
+
 2009-09-28  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Prepare kmean demo for theo. Work in progress.
