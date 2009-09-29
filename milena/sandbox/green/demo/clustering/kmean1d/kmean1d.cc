@@ -21,20 +21,25 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/io/plot/save_image_sh.hh>
 
-void demo(const unsigned watch_dog, const unsigned n_times)
+void do_demo(const std::string& image,
+	     const unsigned     k_center,
+	     const unsigned     n_times,
+	     const unsigned     watch_dog)
 {
-  typedef mln::clustering::kmean1d<double,8,3>        t_kmean;
-  typedef mln::value::label8                          t_label8;
+  typedef mln::clustering::kmean1d<double,8>          t_kmean;
+  typedef mln::value::label_8                         t_label_8;
   typedef mln::value::rgb8                            t_rgb8;
   typedef mln::value::int_u8                          t_int_u8;
-  typedef mln::image2d<int_u8>                        t_image2d_int_u8;
-  typedef mln::image2d<rgb8>                          t_image2d_rgb8;
+  typedef mln::image2d<t_int_u8>                      t_image2d_int_u8;
+  typedef mln::image2d<t_rgb8>                        t_image2d_rgb8;
 
   t_image2d_int_u8                                    house;
 
-  mln::io::pgm::load(house, OLENA_IMG_PATH"/house.pgm");
+  mln::io::pgm::load(house, image.c_str());
 
-  t_kmean kmean(house, watch_dog, n_times);
+  t_kmean kmean(house, k_center, watch_dog, n_times);
+
+  //mln::trace::quiet = false;
 
   kmean.launch_n_times();
   
@@ -52,43 +57,100 @@ void demo(const unsigned watch_dog, const unsigned n_times)
   mln::io::plot::save_image_sh(variance_cnv, "variance_cnv.sh");
 }
 
+void demo(const std::string& image     = OLENA_IMG_PATH"/house.pgm",
+	  const unsigned     k_center  = 3,	  
+	  const unsigned     n_times   = 10,
+	  const unsigned     watch_dog = 10)
+{
+  std::cout << "----------------------------------------" << std::endl;
+  std::cout << "Launching the demo with these parameters" << std::endl;
+  std::cout << "image     : " << image                    << std::endl;
+  std::cout << "k_center  : " << k_center                 << std::endl;
+  std::cout << "n_times   : " << n_times                  << std::endl;
+  std::cout << "watch_dog : " << watch_dog                << std::endl;
+  std::cout << "----------------------------------------" << std::endl;
+
+  do_demo(image, k_center, n_times, watch_dog);
+}
+
 void usage(const int argc, const char *args[])
 {
   std::cout << "----------------------------------------" << std::endl;
   std::cout << "argc    : " << argc                       << std::endl;
 
   for (int i = 0; i < argc; ++i) 
-    std::cout << "args[i] : " << args[i] << std::endl;
+    std::cout << "args[" << i << "] : " << args[i] << std::endl;
 
   std::cout << "----------------------------------------" << std::endl;
-  std::cout << "usage: kmean1d watch_dog n_times k image" << std::endl;
-  std::cout << "unsigned watch_dog (convergence loop)"    << std::endl;
+  std::cout << "usage: kmean1d [image [k_center [n_times [watch_dog]]]]"
+	    << std::endl;
+  std::cout << "pbm image          (points to work with)" << std::endl;
+  std::cout << "unsigned k_center  (number of centers)"   << std::endl;
   std::cout << "unsigned n_times   (number of launching)" << std::endl;
-  //  std::cout << "unsigned k         (number of centers)"   << std::endl;
-  //  std::cout << "pbm image          (points to work with)"  << std::endl;
+  std::cout << "unsigned watch_dog (convergence loop)"    << std::endl;
   std::cout << "----------------------------------------" << std::endl;
+}
+
+bool char_to_unsigned(const bool status, const char *arg, unsigned& val)
+{
+  bool result = false;
+
+  if (status)
+  {
+    std::istringstream arg_stream(arg);
+
+    arg_stream >> val;
+
+    result = !arg_stream.fail();
+  }
+
+  return result;
+}
+
+bool char_to_string(const bool status, const char *arg, std::string& val)
+{
+  bool result = false;
+
+  if (status)
+  {
+    std::istringstream arg_stream(arg);
+
+    arg_stream >> val;
+    
+    return !arg_stream.fail();
+  }
+
+  return result;
 }
 
 int main(const int argc, const char *args[])
 {
-  if (3 == argc)
-  {
-    std::istringstream arg1(args[1]);
-    std::istringstream arg2(args[2]);
-    // std::istringstream arg3(args[3]);
-    // std::istringstream arg3(args[4]);
-    unsigned   watch_dog;
-    unsigned   n_times;
-    // const char *image;
-    // unsigned   k;
-    
-    arg1 >> watch_dog;
-    arg2 >> n_times;
+  std::string image("top");
+  unsigned    k_center;
+  unsigned    watch_dog;
+  unsigned    n_times;
+  bool        status = true;
 
-    if (!arg1.fail() && !arg2.fail())
-      demo(watch_dog, n_times);
-    else
-      usage(argc, args);
+  switch (argc)
+  {
+  case 5:  status = char_to_unsigned(status, args[4], watch_dog);
+  case 4:  status = char_to_unsigned(status, args[3], n_times);
+  case 3:  status = char_to_unsigned(status, args[2], k_center);
+  case 2:  status = char_to_string(status, args[1], image); break;
+  case 1:  status = true; break;
+  default: status = false;
+  }
+
+  if (status)
+  {
+    switch (argc)
+    {
+    case 1: demo(); break;
+    case 2: demo(image); break;
+    case 3: demo(image, k_center); break;
+    case 4: demo(image, k_center, n_times); break;
+    case 5: demo(image, k_center, n_times, watch_dog); break;
+    }
   }
   else
     usage(argc, args);

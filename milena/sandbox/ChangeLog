@@ -20,6 +20,25 @@
 	* fabien/tests/core/image/tiled2d.cc:
 	Update performance benchmark for different types of image.
 
+2009-09-29  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Prepare kmean demo for theo. Work in progress.
+
+	Fix bugs, add hooks for tracing convergence.
+
+	* green/mln/clustering/kmean1d.hh: Evict k parameter from template
+	and replace it by a constructor parameter. Add printing for debugging.
+	* green/mln/clustering/kmean1d.hh (update_variance): Fix bugs.
+	* green/mln/clustering/kmean1d.hh
+	(build_all_dbg, build_mean_dbg, update_cnv, finalize_cnv): New methods.
+	* green/mln/clustering/kmean1d.hh (launch_one_time): Fix bugs.
+	* green/mln/clustering/kmean1d.hh (launch_n_times): Add hooks.
+
+	Do some works for managing shell parameters while executing the binary.
+
+	* green/demo/clustering/kmean1d/kmean1d.cc
+	(main, char_to_string, char_to_unsigned, demo, do_demo): New methods.
+
 2009-09-28  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Prepare kmean demo for theo. Work in progress.

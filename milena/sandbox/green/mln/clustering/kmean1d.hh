@@ -74,7 +74,7 @@ namespace mln
   {
 
     // Forward declaration.
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     struct kmean1d;
 
   } // end of namespace mln::clustering
@@ -89,8 +89,7 @@ namespace mln
     ///
     /// T is the type used for computations (float or double).
     /// n is the quantification for the image grayscale.
-    /// k is the number of classes.
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     struct kmean1d
     {
       /// Type definitions.
@@ -115,7 +114,7 @@ namespace mln
       typedef image2d<t_rgb>     t_color_dbg;
       typedef image2d<t_value>   t_mean_dbg;
 
-      typedef image3d<t_value>   t_mean_cnv;
+      typedef image3d<t_result>  t_mean_cnv;
       typedef image2d<t_result>  t_variance_cnv;
 
       ///}
@@ -130,6 +129,7 @@ namespace mln
       /// \param[in] n_times   : the number of times that we executed it (10).
 
       kmean1d(const t_point_img& point,
+	      const unsigned     k_center,
 	      const unsigned     watch_dog = 10,
 	      const unsigned     n_times   = 10);
 
@@ -231,11 +231,24 @@ namespace mln
       bool is_descent_valid();      
 
       //------------------------------------------------------------------------
-      // Tools
+      // Debugging tools
       //------------------------------------------------------------------------
 
-      void build();
-      void to_result2();
+      /// Debugging tools
+      /// \{
+      /// \brief These methods help to interpret results.
+      ///
+      /// The methods build_label_dbg and build_all_dbg work in the input data
+      /// space. The first one build the 2d image of labels. The second call the
+      /// first one and then builds the colorize label' image  and the mean 
+      /// greylevel image. 
+      
+      void build_label_dbg();
+      void build_all_dbg();
+      void update_cnv();
+      void finalize_cnv();
+
+      /// \}
 
 
     private:
@@ -243,6 +256,7 @@ namespace mln
       /// \{
       /// \brief These parameters control the convergence of the process.
       ///
+      /// The first parameter, k_center, defines the number of center for kmean.
       /// In fact, watch_dog limit the number of iteration that a simple kmean
       /// loop can do. If the process reaches the watch_dog limit, it means
       /// that the process will not converge at all. The second parameter
@@ -251,6 +265,7 @@ namespace mln
       /// from different location will confort us in that we found a global 
       /// minima, not just a local one.
 
+      unsigned       _k_center;
       unsigned       _watch_dog;
       unsigned       _n_times;
 
@@ -266,9 +281,12 @@ namespace mln
       /// around the centers. The current_step variable allows us to remember
       /// the current iteration in the kmean loop. This information is needed
       /// by is_descent_valid routine which decide if convergence occurs or not.
+      /// The last information, current_launching, traces the progress while
+      /// iterates kmean loop again and again.
 
       t_result       _within_variance;
       unsigned       _current_step;
+      unsigned       _current_launching;
 
       /// \}
 
@@ -366,30 +384,32 @@ namespace mln
     // Constructor
     //--------------------------------------------------------------------------
 
+    /// FIXME k must be a parameter, not a static compilation paramater.
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    kmean1d<T,n,k>::kmean1d(const image2d< t_value >& point,
-			    const unsigned            watch_dog,
-			    const unsigned            n_times)
+    kmean1d<T,n>::kmean1d(const t_point_img& point,
+			  const unsigned     k_center,
+			  const unsigned     watch_dog,
+			  const unsigned     n_times)
     {
       trace::entering("mln::clustering::kmean1d::kmean1d");
       mln_precondition(point.is_valid());
 
-
+      _k_center  = k_center;
       _watch_dog = watch_dog;
       _n_times   = n_times;
 
       _point     = point;
       _histo     = data::compute(accu::meta::stat::histo1d(), _point);
 
-      _number.init_(box1d(point1d(0),point1d(k-1)));
-      _mean.init_(box1d(point1d(0),point1d(k-1)));
-      _variance.init_(box1d(point1d(0),point1d(k-1)));
+      _number.init_(box1d(point1d(0),point1d(_k_center-1)));
+      _mean.init_(box1d(point1d(0),point1d(_k_center-1)));
+      _variance.init_(box1d(point1d(0),point1d(_k_center-1)));
 
       _group.init_(box1d(point1d(mln_min(t_value)), point1d(mln_max(t_value))));
       _distance.init_(box2d(point2d(mln_min(t_value), 0),
-			    point2d(mln_max(t_value), k-1)));
+			    point2d(mln_max(t_value), _k_center-1)));
 
       // Debugging, calibrating and testing
       initialize(_label_dbg, _point);
@@ -397,12 +417,16 @@ namespace mln
       initialize(_mean_dbg,  _point);
 
       // Observing the convergence
+
       _variance_cnv.init_(box2d(point2d(0, 0),
-				point2d(_watch_dog-1, _n_times-1)));
+				point2d(_n_times-1, _watch_dog-1)));
+
+      data::fill(_variance_cnv, literal::zero);
 
       _mean_cnv.init_(box3d(point3d(0, 0, 0),
-			    point3d(k-1, _watch_dog-1, _n_times-1)));
+			    point3d(_n_times-1, _k_center-1, _watch_dog-1)));
 
+      data::fill(_mean_cnv, literal::zero);
 
       trace::exiting("mln::clustering::kmean1d::kmean1d");
     }
@@ -411,9 +435,9 @@ namespace mln
     // Mutators and accessors
     //--------------------------------------------------------------------------
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::set_point(t_point_img& point)
+    void kmean1d<T,n>::set_point(t_point_img& point)
     {
       trace::entering("mln::clustering::kmean1d::set_point");
 
@@ -422,9 +446,9 @@ namespace mln
       trace::exiting("mln::clustering::kmean1d::set_point");
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::set_histo(t_histo_img& histo)
+    void kmean1d<T,n>::set_histo(t_histo_img& histo)
     {
       trace::entering("mln::clustering::kmean1d::set_histo");
 
@@ -433,9 +457,9 @@ namespace mln
       trace::exiting("mln::clustering::kmean1d::set_histo");
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::set_number(t_number_img& number)
+    void kmean1d<T,n>::set_number(t_number_img& number)
     {
       trace::entering("mln::clustering::kmean1d::set_number");
 
@@ -444,9 +468,9 @@ namespace mln
       trace::exiting("mln::clustering::kmean1d::set_number");
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::set_mean(t_mean_img& mean)
+    void kmean1d<T,n>::set_mean(t_mean_img& mean)
     {
       trace::entering("mln::clustering::kmean1d::set_mean");
 
@@ -455,9 +479,9 @@ namespace mln
       trace::exiting("mln::clustering::kmean1d::set_mean");
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::set_variance(t_variance_img& variance)
+    void kmean1d<T,n>::set_variance(t_variance_img& variance)
     {
       trace::entering("mln::clustering::kmean1d::set_variance");
 
@@ -466,9 +490,9 @@ namespace mln
       trace::exiting("mln::clustering::kmean1d::set_variance");
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::set_group(t_group_img& group)
+    void kmean1d<T,n>::set_group(t_group_img& group)
     {
       trace::entering("mln::clustering::kmean1d::set_group");
 
@@ -477,9 +501,9 @@ namespace mln
       trace::exiting("mln::clustering::kmean1d::set_group");
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::set_distance(t_distance_img& distance)
+    void kmean1d<T,n>::set_distance(t_distance_img& distance)
     {
       trace::entering("mln::clustering::kmean1d::set_distance");
 
@@ -488,9 +512,9 @@ namespace mln
       trace::exiting("mln::clustering::kmean1d::set_distance");
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    typename kmean1d<T,n,k>::t_point_img& kmean1d<T,n,k>::get_point()
+    typename kmean1d<T,n>::t_point_img& kmean1d<T,n>::get_point()
     {
       trace::entering("mln::clustering::kmean1d::get_point");
 
@@ -498,9 +522,9 @@ namespace mln
       return _point;
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    typename kmean1d<T,n,k>::t_histo_img& kmean1d<T,n,k>::get_histo()
+    typename kmean1d<T,n>::t_histo_img& kmean1d<T,n>::get_histo()
     {
       trace::entering("mln::clustering::kmean1d::get_histo");
 
@@ -508,9 +532,9 @@ namespace mln
       return _histo;
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    typename kmean1d<T,n,k>::t_number_img& kmean1d<T,n,k>::get_number()
+    typename kmean1d<T,n>::t_number_img& kmean1d<T,n>::get_number()
     {
       trace::entering("mln::clustering::kmean1d::get_number");
 
@@ -518,9 +542,9 @@ namespace mln
       return _number;
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    typename kmean1d<T,n,k>::t_mean_img& kmean1d<T,n,k>::get_mean()
+    typename kmean1d<T,n>::t_mean_img& kmean1d<T,n>::get_mean()
     {
       trace::entering("mln::clustering::kmean1d::get_mean");
 
@@ -528,9 +552,9 @@ namespace mln
       return _mean;
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    typename kmean1d<T,n,k>::t_variance_img& kmean1d<T,n,k>::get_variance()
+    typename kmean1d<T,n>::t_variance_img& kmean1d<T,n>::get_variance()
     {
       trace::entering("mln::clustering::kmean1d::get_variance");
 
@@ -538,9 +562,9 @@ namespace mln
       return _variance;
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    typename kmean1d<T,n,k>::t_group_img& kmean1d<T,n,k>::get_group()
+    typename kmean1d<T,n>::t_group_img& kmean1d<T,n>::get_group()
     {
       trace::entering("mln::clustering::kmean1d::get_group");
 
@@ -548,9 +572,9 @@ namespace mln
       return _group;
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    typename kmean1d<T,n,k>::t_distance_img& kmean1d<T,n,k>::get_distance()
+    typename kmean1d<T,n>::t_distance_img& kmean1d<T,n>::get_distance()
     {
       trace::entering("mln::clustering::kmean1d::get_distance");
 
@@ -558,9 +582,9 @@ namespace mln
       return _distance;
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    typename kmean1d<T,n,k>::t_color_dbg& kmean1d<T,n,k>::get_color_dbg()
+    typename kmean1d<T,n>::t_color_dbg& kmean1d<T,n>::get_color_dbg()
     {
       trace::entering("mln::clustering::kmean1d::get_color_dbg");
 
@@ -568,9 +592,9 @@ namespace mln
       return _color_dbg;
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    typename kmean1d<T,n,k>::t_mean_dbg& kmean1d<T,n,k>::get_mean_dbg()
+    typename kmean1d<T,n>::t_mean_dbg& kmean1d<T,n>::get_mean_dbg()
     {
       trace::entering("mln::clustering::kmean1d::get_mean_dbg");
 
@@ -578,9 +602,9 @@ namespace mln
       return _mean_dbg;
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    typename kmean1d<T,n,k>::t_label_dbg& kmean1d<T,n,k>::get_label_dbg()
+    typename kmean1d<T,n>::t_label_dbg& kmean1d<T,n>::get_label_dbg()
     {
       trace::entering("mln::clustering::kmean1d::get_label_dbg");
 
@@ -588,9 +612,9 @@ namespace mln
       return _label_dbg;
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    typename kmean1d<T,n,k>::t_mean_cnv& kmean1d<T,n,k>::get_mean_cnv()
+    typename kmean1d<T,n>::t_mean_cnv& kmean1d<T,n>::get_mean_cnv()
     {
       trace::entering("mln::clustering::kmean1d::get_mean_cnv");
 
@@ -598,9 +622,9 @@ namespace mln
       return _mean_cnv;
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    typename kmean1d<T,n,k>::t_variance_cnv& kmean1d<T,n,k>::get_variance_cnv()
+    typename kmean1d<T,n>::t_variance_cnv& kmean1d<T,n>::get_variance_cnv()
     {
       trace::entering("mln::clustering::kmean1d::get_variance_cnv");
 
@@ -608,9 +632,9 @@ namespace mln
       return _variance_cnv;
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    typename kmean1d<T,n,k>::t_mean_img& kmean1d<T,n,k>::to_result()
+    typename kmean1d<T,n>::t_mean_img& kmean1d<T,n>::to_result()
     {
       trace::entering("mln::clustering::kmean1d::to_result");
 
@@ -623,12 +647,12 @@ namespace mln
     // Initialization of centers
     //--------------------------------------------------------------------------
    
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::init_mean_regular()
+    void kmean1d<T,n>::init_mean_regular()
     {
       trace::entering("mln::clustering::kmean1d::init_mean_regular");
-      T                    step = (mln_max(t_value) - mln_min(t_value)) / (k-1);
+      T  step = (mln_max(t_value) - mln_min(t_value)) / (_k_center-1);
       mln_piter(image1d<t_value>) l(_mean.domain());
       
       for_all(l)
@@ -640,11 +664,11 @@ namespace mln
     }
     
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::init_mean_random()
+    void kmean1d<T,n>::init_mean_random()
     {
-      trace::exiting("mln::clustering::kmean1d::init_mean_random");
+      trace::entering("mln::clustering::kmean1d::init_mean_random");
 
       t_value                     min = mln_min(t_value);
       t_value                     max = mln_max(t_value);
@@ -653,14 +677,16 @@ namespace mln
       for_all(l)
       {
 	_mean(l) = (rand() % (max-min)) + min;
+
+	std::cout << "mean" << l << " : " << _mean(l) << std::endl;
       }
 	      
       trace::exiting("mln::clustering::kmean1d::init_mean_random");
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::init_mean()
+    void kmean1d<T,n>::init_mean()
     {
       trace::entering("mln::clustering::kmean1d::init_mean");
 
@@ -673,9 +699,9 @@ namespace mln
     // Computations of distance, group, center, within variance
     //--------------------------------------------------------------------------
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::update_distance()
+    void kmean1d<T,n>::update_distance()
     {
       trace::entering("mln::clustering::kmean1d::update_distance");
 
@@ -684,22 +710,24 @@ namespace mln
       for_all(d)
       {
 	// the square distance
-	_distance(d) = math::sqr(d.row() - _mean(point1d(d.col())));
+	_distance(d) = _histo(point1d(d.row()))
+	  * math::sqr(d.row() - _mean(point1d(d.col())));
 	/*
-	std::cout << "row      : " << d.row()      << std::endl;
-	std::cout << "col      : " << d.col()      << std::endl;
-	std::cout << "center   : " << _mean(point1d(d.col()))   << std::endl;
-	std::cout << "distance : " << _distance(d) << std::endl;
-	std::cout << "--------------------------------------" << std::endl;
+	std::cout << "row      : " << d.row()                  << std::endl;
+	std::cout << "col      : " << d.col()                  << std::endl;
+	std::cout << "histo    : " << _histo(point1d(d.row())) << std::endl;
+	std::cout << "center   : " << _mean(point1d(d.col()))  << std::endl;
+	std::cout << "distance : " << _distance(d)             << std::endl;
+	std::cout << "--------------------------------------"  << std::endl;
 	*/
       }
 
       trace::exiting("mln::clustering::kmean1d::update_distance");
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::update_group()
+    void kmean1d<T,n>::update_group()
     {
       trace::entering("mln::clustering::kmean1d::update_group");
 
@@ -708,7 +736,7 @@ namespace mln
       for_all(g)
       {
 	mln_piter(t_mean_img) l(_mean.domain());
-	T                           min   = mln_max(T);
+	t_result                    min   = mln_max(t_result);
 	t_label                     label = mln_max(t_label);
 
 	//std::cout << "g = " << g << std::endl;
@@ -721,7 +749,7 @@ namespace mln
 	    label = l.ind();
 	  }
 
-	  //std::cout << "d(" << l << ") = " << 
+	  //std::cout << "d" << l << " = " << 
 	  //  _distance(point2d(g.ind(), l.ind())) << std::endl;
 	}
 
@@ -735,9 +763,9 @@ namespace mln
       trace::exiting("mln::clustering::kmean1d::update_group");
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::update_mean()
+    void kmean1d<T,n>::update_mean()
     {
       trace::entering("mln::clustering::kmean1d::update_mean");
 
@@ -774,23 +802,22 @@ namespace mln
 	std::cout << "n(" << l << ") = " << _number(l) << std::endl;
       }
       */
-
       for_all(l)
       {
 	_mean(l) /= _number(l);
-	//std::cout << "c(" << l << ") = " << _mean(l) << std::endl;
+	std::cout << "c" << l << " = " << _mean(l) << std::endl;
       }
 
       trace::exiting("mln::clustering::kmean1d::update_mean");
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::update_variance()
+    void kmean1d<T,n>::update_variance()
     {
       trace::entering("mln::clustering::kmean1d::update_variance");
 
-      T                         _within_variance = literal::zero;
+      _within_variance          = literal::zero;
       mln_piter(t_variance_img) l(_variance.domain());
 
       for_all(l)
@@ -801,11 +828,12 @@ namespace mln
 
 	for_all(g)
 	{
-	  _variance(l) += _distance(point2d(g.ind(), l.ind()));
+	  if (l.ind() == _group(g))
+	    _variance(l) += _distance(point2d(g.ind(), l.ind()));
 	}
 
 	_within_variance += _variance(l);
-	//std::cout << "v(" << l << ") = " << _variance(l) << std::endl;
+	std::cout << "v(" << l << ") = " << _variance(l) << std::endl;
       }
 
       //std::cout << "result" << result << std::endl;
@@ -814,14 +842,14 @@ namespace mln
     }
 
     //--------------------------------------------------------------------------
-    // Tools
+    // Debugging tools
     //--------------------------------------------------------------------------
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::build()
+    void kmean1d<T,n>::build_label_dbg()
     {
-      trace::entering("build");
+      trace::entering("mln::clustering::kmean1d::build_mean_dbg");
 
       mln_piter(t_point_img) pi(_point.domain());
       mln_piter(t_label_dbg) po(_label_dbg.domain());
@@ -834,26 +862,64 @@ namespace mln
 	  _label_dbg(po) = grp;
 	}
 
-      trace::exiting("build");
+      trace::exiting("mln::clustering::kmean1d::build_mean_dbg");
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::to_result2()
+    void kmean1d<T,n>::build_all_dbg()
     {
-      typedef value::rgb8 rgb8;
-      std::cout << "BUILDING OUTPUT" << std::endl;
+      trace::entering("mln::clustering::kmean1d::build_all_dbg");
+      build_label_dbg();
 
-      build();
+      _mean_dbg  = labeling::mean_values(_point, _label_dbg, _k_center);
+      _color_dbg = labeling::colorize(value::rgb8(), _label_dbg);
 
-      std::cout << "COLORING OUTPUT" << std::endl;
+      trace::exiting("mln::clustering::kmean1d::build_all_dbg");
+    }
 
-      _mean_dbg  = labeling::mean_values(_point, _label_dbg, k);
-      _color_dbg = labeling::colorize(rgb8(), _label_dbg);
+    template <typename T, unsigned n>
+    inline
+    void kmean1d<T,n>::update_cnv()
+    {
+      trace::entering("mln::clustering::kmean1d::update_cnv");
 
-      mln::io::pgm::save(_mean_dbg,  "mean.pgm");
-      mln::io::ppm::save(_color_dbg, "rgb.pgm");
-      mln::io::pgm::save(_label_dbg, "label.pgm");
+      _variance_cnv(point2d(_current_launching, 
+			    _current_step))  = _within_variance;
+
+      mln_piter(t_mean_img) l(_mean.domain());
+      
+      for_all(l)
+      {
+	_mean_cnv(point3d(_current_launching, 
+			  l.ind(),
+			  _current_step)) = _mean(l);
+      }
+
+      trace::exiting("mln::clustering::kmean1d::update_cnv");
+    }
+
+    template <typename T, unsigned n>
+    inline
+    void kmean1d<T,n>::finalize_cnv()
+    {
+      trace::entering("mln::clustering::kmean1d::finalize_cnv");
+
+      // saturate the curv with the within variance
+      for (unsigned i = _current_step; i < _watch_dog; ++i)
+	_variance_cnv(point2d(_current_launching, i))  = _within_variance;
+      
+      for (unsigned i = _current_step; i < _watch_dog; ++i)
+      {
+	mln_piter(t_mean_img) l(_mean.domain());
+
+	for_all(l)
+	{
+	  _mean_cnv(point3d(_current_launching, l.ind(), i)) = _mean(l);
+	}
+      }
+
+      trace::exiting("mln::clustering::kmean1d::finalize_cnv");
     }
 
 
@@ -861,9 +927,9 @@ namespace mln
     // Checking the validity of the results
     //--------------------------------------------------------------------------
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    bool kmean1d<T,n,k>::is_descent_valid()
+    bool kmean1d<T,n>::is_descent_valid()
     {
       trace::entering("mln::clustering::kmean1d::is_descent_valid");
       bool result = true;
@@ -881,9 +947,9 @@ namespace mln
       return result;
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    bool kmean1d<T,n,k>::is_valid()
+    bool kmean1d<T,n>::is_valid()
     {
       trace::entering("mln::clustering::kmean1d::is_valid");
       bool result = true;
@@ -905,61 +971,85 @@ namespace mln
     //--------------------------------------------------------------------------
 
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::launch_one_time()
+    void kmean1d<T,n>::launch_one_time()
     {
       trace::entering("mln::clustering::kmean1d::launch_one_time");
 
+      std::cout << "----------------------------------------" << std::endl;
+
       // Initialization to start the descent
-      _within_variance        = mln_max(t_result)/2;
       t_result old_variance   = mln_max(t_result);
 
-      // Choose random points
+      // Choose random points and compute within variance
       init_mean();
+      update_distance();
+      update_group();
+      update_variance(); // update _within_variance
+
+      std::cout << "first_variance : " << _within_variance << std::endl;
 
       // Execute the descent
-      for (unsigned i = 0; i<_watch_dog && _within_variance<old_variance; ++i)
+      for (_current_step = 0;
+	   _current_step < _watch_dog && _within_variance < old_variance;
+	   ++_current_step)
       {
-	update_distance();
-	update_group();
-	update_mean();
-
 	old_variance = _within_variance;
 
+	update_mean();
+	update_distance();
+	update_group();
 	update_variance(); // update _within_variance
+
+	// debugging code
+	update_cnv();
+
+	std::cout << "_current_step    : " << _current_step    << std::endl;
+	std::cout << "_within_variance : " << _within_variance << std::endl;
       }
+
+      std::cout << "----------------------------------------" << std::endl;
+
+      finalize_cnv();
 
       trace::exiting("mln::clustering::kmean1d::launch_one_time");
     }
 
-    template <typename T, unsigned n, unsigned k>
+    template <typename T, unsigned n>
     inline
-    void kmean1d<T,n,k>::launch_n_times()
+    void kmean1d<T,n>::launch_n_times()
     {
       trace::entering("mln::clustering::kmean1d::launch_n_times");
       
-      _variance_min  = mln_max(t_result);
+      std::cout << "watch_dog : " << _watch_dog << std::endl;
+      std::cout << "n_times   : " << _n_times   << std::endl;
+
+      _variance_min      = mln_max(t_result);
+      _current_launching = 0;
 
       // Execute the descent n times
-      for (unsigned i = 0; i < _n_times; ++i)	
+      while (_current_launching < _n_times)
       {
 	launch_one_time();
 
-	if (!is_descent_valid())
-	  --i;
-	else
+	if (is_descent_valid())
 	{
 	  if (_within_variance < _variance_min)
 	  {
 	    _variance_min  = _within_variance;
 	    _mean_min      = _mean;
-	    _launching_min = i;
+	    _launching_min = _current_launching;
 	  }
-	}
+	  
+	  std::cout << "_current_launching : " << _current_launching
+		    << std::endl;
 
-	std::cout << "within_variance[" << i << "] = " 
-		  << _within_variance << std::endl;
+	  std::cout << "within_variance[" << _current_launching << "] = " 
+		    << _within_variance << std::endl;
+
+	  ++_current_launching;
+	}
       }
 
       trace::exiting("mln::clustering::kmean1d::launch_n_times");
