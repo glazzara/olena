@@ -40,6 +40,45 @@
 # include <mln/core/site_set/complex_psite.hh>
 # include <mln/value/set.hh>
 
+// FIXME: Move this elsewhere.
+// Working around std::vector<bool>'s (forced) specialization.
+
+# define mlc_unbool(V)				\
+   typename mln::internal::unbool<V>::ret
+
+namespace mln
+{
+
+  namespace internal
+  {
+
+    /// A boolean proxy, used to fool std::vector.
+    struct bool_proxy
+    {
+    public:
+      bool_proxy() {}
+      bool_proxy(bool b) : b_(b) {}
+      bool& operator=(bool b) { b_ = b; return *this; }
+
+      operator bool&() { return b_; }
+      operator const bool&() const { return b_; }
+
+      bool operator==(const bool_proxy& rhs) { return b_ == rhs.b_; }
+      bool operator< (const bool_proxy& rhs) { return b_ <  rhs.b_; }
+
+    private:
+      /// The value.
+      bool b_;
+    };
+
+    template <typename V> struct unbool       { typedef V          ret; };
+    template <>           struct unbool<bool> { typedef bool_proxy ret; };
+
+  } // end of namespace mln::internal
+
+}
+
+
 
 /* FIXME: In the current implementation, the type of values on faces
    of different dimensions is necessarily the same (V).  We should
@@ -62,7 +101,7 @@ namespace mln
       data(const p_complex<D, G>& pc,
 	   const metal::vec< D + 1, std::vector<V> >& values);
 
-      metal::vec< D + 1, std::vector<V> > values_;
+      metal::vec< D + 1, std::vector< mlc_unbool(V) > > values_;
       const p_complex<D, G> pc_;
     };
 
@@ -135,15 +174,10 @@ namespace mln
     typedef V value;
 
     /// Return type of read-write access.
-    ///
-    /// We use the associated type \c reference instead of a plain
-    /// reference on the value type (\p V), because it's the only way
-    /// to safely form a reference on the element in the case of a
-    /// std::vector<bool>.
-    typedef typename std::vector<V>::reference lvalue;
+    typedef V& lvalue;
 
     /// Return type of read-only access.
-    typedef typename std::vector<V>::const_reference rvalue;
+    typedef const V& rvalue;
 
     /// Skeleton.
     typedef complex_image< D, tag::psite_<G>, tag::value_<V> > skeleton;
@@ -172,7 +206,7 @@ namespace mln
     const p_complex<D, G>& domain() const;
 
     /// Return the array of values associated to the faces.
-    const metal::vec<D + 1, std::vector<V> >& values() const;
+    const metal::vec<D + 1, std::vector< mlc_unbool(V) > >& values() const;
     /// \}
   };
 
@@ -197,7 +231,7 @@ namespace mln
   {
     metal::vec<D + 1, std::vector<V> > values;
     for (unsigned i = 0; i <= D; ++i)
-      values[i].resize(model.values()[i].size());
+      values[i].resize(model.domain().nfaces_of_dim(i));
     target.init_(model.domain(), values);
   }
 
@@ -211,15 +245,23 @@ namespace mln
     inline
     data< complex_image<D, G, V> >::data(const p_complex<D, G>& pc,
 					 const metal::vec< D + 1, std::vector<V> >& values)
-      : values_(values),
-	pc_(pc)
+      : pc_(pc)
     {
+      // We cannot use the initialization list for values_ (it
+      // would not work when V = bool).
+      for (unsigned i = 0; i <= D; ++i)
+	{
+	  values_[i].reserve(values[i].size());
+	  values_[i].insert(values_[i].begin(),
+			    values[i].begin(), values[i].end());
+	}
+
       // Ensure the complex is consistent with the values.
       /* FIXME: We need additional macros in mln/core/contract.hh for
 	 big blocks of preconditions like this one.  */
 # ifndef NDEBUG
       for (unsigned i = 0; i < D; ++i)
-	mln_precondition(pc.cplx().nfaces_of_dim(i) == values[i].size());
+	mln_precondition(pc.nfaces_of_dim(i) == values[i].size());
 # endif // !NDEBUG
     }
 
@@ -241,7 +283,7 @@ namespace mln
   {
     metal::vec<D + 1, std::vector<V> > values;
     for (unsigned i = 0; i <= D; ++i)
-      values[i].resize(pc.cplx().nfaces_of_dim(i));
+      values[i].resize(pc.nfaces_of_dim(i));
     init_(pc, values);
   }
 
@@ -289,7 +331,7 @@ namespace mln
 
   template <unsigned D, typename G, typename V>
   inline
-  const metal::vec< D + 1, std::vector<V> >&
+  const metal::vec< D + 1, std::vector< mlc_unbool(V) > >&
   complex_image<D, G, V>::values() const
   {
     return this->data_->values_;
@@ -308,5 +350,6 @@ namespace mln
 
 } // end of namespace mln
 
+# undef mlc_unbool
 
 #endif // ! MLN_CORE_IMAGE_COMPLEX_IMAGE_HH

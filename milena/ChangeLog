@@ -1,3 +1,28 @@
+2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Work around std::vector<bool> specialization in mln::complex_image.
+
+	* mln/core/image/complex_image.hh
+	(mln::internal::bool_proxy): New class.
+	(mln::internal::unbool<V>:): New trait class.
+	(mlc_unbool): New (local) shortcut macro.
+	(mln::internal::data< complex_image<D, G, V> >::values_):
+	Change type from metal::vec< D + 1, std::vector<V> >
+	to metal::vec< D + 1, std::vector< mlc_unbool(V) > >.
+	(mln::complex_image<D, G, V>::lvalue)
+	(mln::complex_image<D, G, V>::rvalue):
+	Adjust typedefs.
+	(mln::complex_image<D, G, V>::values() const):
+	Adjust method.
+	(data< complex_image<D, G, V> >::data):
+	Adjust ctor.
+	Simplify precondition.
+	(complex_image<D, G, V>::complex_image(const p_complex<D, G>&)):
+	Simplify.
+	(init_(image_t, complex_image<D,G,V>&, const complex_image<D,G,W>&)):
+	Depend on model's domain instead of its values to compute the
+	number of n-faces.
+
 2009-09-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	Miscellaneous corrections to complex_window_base.
