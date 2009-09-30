@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -148,8 +149,6 @@ namespace mln
     tracked_ptr<T>::tracked_ptr(T* ptr) :
       ptr_(ptr)
     {
-      typedef std::set<tracked_ptr<T>*> holders_t;
-
       if (ptr == 0)
 	holders_ = 0;
       else
@@ -187,6 +186,7 @@ namespace mln
       // If ptr == 0, holders_ == 0 so we cannot insert anything in it.
       if (holders_ != 0)
         holders_->insert(this);
+      mln_invariant(run_());
       return *this;
     }
 
@@ -194,8 +194,6 @@ namespace mln
     inline
     tracked_ptr<T>& tracked_ptr<T>::operator=(T* ptr)
     {
-      typedef std::set<tracked_ptr<T>*> holders_t;
-
       mln_invariant(run_());
       if (ptr == ptr_)
 	// no-op
@@ -209,6 +207,7 @@ namespace mln
 	  holders_ = new holders_t;
 	  holders_->insert(this);
 	}
+      mln_invariant(run_());
       return *this;
     }
 
@@ -223,8 +222,6 @@ namespace mln
     inline
     bool tracked_ptr<T>::run_() const
     {
-      typedef std::set<tracked_ptr<T>*> holders_t;
-
       mln_invariant((ptr_ && holders_) || (! ptr_ && ! holders_));
       if (ptr_ == 0)
 	return true;
@@ -264,6 +261,7 @@ namespace mln
     {
       typedef std::set<tracked_ptr<T>*> holders_t;
 
+      mln_invariant(tp.run_());
       ostr << "tracked_ptr @ " << (&tp)
 	   << " { ptr = " << tp.ptr_
 	   << " / holders = ";

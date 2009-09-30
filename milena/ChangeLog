@@ -1,5 +1,19 @@
 2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Small improvements in mln::util::tracked_ptr.
+
+	* mln/util/tracked_ptr.hh
+	(mln::util::tracked_ptr<T>::tracked_ptr(T*))
+	(mln::util::tracked_ptr<T>::operator=(T*))
+	(mln::util::tracked_ptr<T>::run_() const):
+	Remove useless typedefs.
+	(mln::util::tracked_ptr<T>::operator=(const tracked_ptr<T>&))
+	(mln::util::tracked_ptr<T>::operator=(T*))
+	(mln::util::operator<<(std::ostream& ostr, const tracked_ptr<T>&)):
+	Check invariants in more places.
+
+2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a dummy operator< to mln::util::multi_site<P>.
 
 	* mln/util/multi_site.hh
