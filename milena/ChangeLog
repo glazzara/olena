@@ -1,5 +1,11 @@
 2009-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Introduce a base class for general complex windows.
+
+	* mln/core/internal/complex_window_base.hh: New.
+
+2009-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Replace ad hoc code by Milena's in apps/graph-morpho.
 
 	* apps/graph-morpho/morpho.hh
