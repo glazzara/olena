@@ -92,6 +92,8 @@ namespace mln
     public:
       /// Associated types.
       /// \{
+      /// The geometry of the complex.
+      typedef G geom;
       /// The type of psite corresponding to the window.
       typedef complex_psite<D, G> psite;
       /// The type of site corresponding to the window.
@@ -130,7 +132,7 @@ namespace mln
       /// Is this window centered?
       bool is_centered() const;
 
-      /// Return true by default.
+      /// Is this window valid ? (Return true by default.)
       bool is_valid() const;
       /// \}
 
@@ -143,6 +145,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned D, typename G, typename F, typename B, typename E>
+    inline
     complex_window_base<D, G, F, B, E>::complex_window_base(bool is_centered)
       : is_centered_(is_centered)
     {
@@ -150,6 +153,7 @@ namespace mln
 
 
     template <unsigned D, typename G, typename F, typename B, typename E>
+    inline
     bool
     complex_window_base<D, G, F, B, E>::is_empty() const
     {
@@ -157,6 +161,7 @@ namespace mln
     }
 
     template <unsigned D, typename G, typename F, typename B, typename E>
+    inline
     bool
     complex_window_base<D, G, F, B, E>::is_centered() const
     {
@@ -164,6 +169,7 @@ namespace mln
     }
 
     template <unsigned D, typename G, typename F, typename B, typename E>
+    inline
     bool
     complex_window_base<D, G, F, B, E>::is_valid() const
     {

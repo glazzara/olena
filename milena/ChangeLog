@@ -1,3 +1,13 @@
+2009-09-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Miscellaneous corrections to complex_window_base.
+
+	* mln/core/internal/complex_window_base.hh: Add missing inline
+	keywords.
+	(complex_window_base<D, G, F, B, E>::geom): New typedef.
+	(complex_window_base<D, G, F, B, E>::is_valid): Improve
+	documentation.
+
 2009-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add non-centered complex windows.
