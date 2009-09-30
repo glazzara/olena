@@ -1,5 +1,11 @@
 2009-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename mln::complex_m_face_window as mln::complex_m_face_window_p.
+
+	* mln/core/image/complex_windows.hh: Here.
+
+2009-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Refactor complex_window_p_base using complex_window_base.
 
 	* mln/core/internal/complex_window_p_base.hh
