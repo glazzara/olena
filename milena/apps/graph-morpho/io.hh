@@ -162,7 +162,7 @@ println(const std::string& message, const mln::bin_1complex_image2d& ima,
 
   // These are admittedly loose preconditions, but we cannot check
   // much anyway.
-  mln_precondition(ima.nsites() == support.nsites());
+  mln_precondition(ima.domain().nfaces_of_dim(0) == support.nsites());
 
   image2d<bool> vertices(support);
   image2d<bool> h_edges(box2d(support.pmin(), support.pmax() - dpoint2d(0, 1)));

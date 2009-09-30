@@ -1,3 +1,9 @@
+2009-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix a precondition in apps/graph-morpho/io.hh.
+
+	* apps/graph-morpho/io.hh (println): Here.
+
 2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Small improvements in mln::util::tracked_ptr.
