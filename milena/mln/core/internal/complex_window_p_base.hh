@@ -31,22 +31,14 @@
 /// of a complex, based on a pair of (forward and backward) complex
 /// iterators.  The center (site) is part of the window.
 
-# include <mln/core/concept/window.hh>
-# include <mln/core/site_set/complex_psite.hh>
-# include <mln/core/image/complex_window_piter.hh>
+# include <mln/core/internal/complex_window_base.hh>
 
 # include <mln/topo/centered_iter_adapter.hh>
 
-// FIXME: Factor with mln::internal::complex_neighborhood_base.
 
 
 namespace mln
 {
-  // Forward declarations.
-  template <typename I, typename G, typename W>
-  class complex_window_fwd_piter;
-  template <typename I, typename G, typename W>
-  class complex_window_bkd_piter;
 
   namespace internal
   {
@@ -60,10 +52,12 @@ namespace mln
 
     template <unsigned D, typename G, typename F, typename B, typename E>
     struct window_< mln::internal::complex_window_p_base<D, G, F, B, E> >
+      : window_< mln::internal::complex_window_base
+		 < D, G,
+		   mln::topo::centered_fwd_iter_adapter<D, F>,
+		   mln::topo::centered_bkd_iter_adapter<D, B>,
+		   E > >
     {
-      typedef trait::window::size::unknown       size;
-      typedef trait::window::support::irregular  support;
-      typedef trait::window::definition::varying definition;
     };
 
   } // end of namespace mln::trait
@@ -81,64 +75,20 @@ namespace mln
 	\tparam B The underlying backward iterator type.
 	\tparam E The exact type.  */
     template <unsigned D, typename G, typename F, typename B, typename E>
-    class complex_window_p_base : public Window<E>
+    class complex_window_p_base
+      : public complex_window_base
+               < D, G,
+		 mln::topo::centered_fwd_iter_adapter<D, F>,
+		 mln::topo::centered_bkd_iter_adapter<D, B>,
+		 E >
     {
-      /// The complex iterators <em>on the adjacent faces only</em>
-      /// (without the center point).
-      /// \{
-      typedef F adj_only_fwd_iter_;
-      typedef B adj_only_bkd_iter_;
-      /// \}
+      typedef complex_window_base< D, G,
+				   topo::centered_fwd_iter_adapter<D, F>,
+				   topo::centered_bkd_iter_adapter<D, B>,
+				   E > super;
 
     public:
-      /// The associated complex iterators.
-      /// \{
-      typedef topo::centered_fwd_iter_adapter<D, adj_only_fwd_iter_>
-      complex_fwd_iter;
-
-      typedef topo::centered_bkd_iter_adapter<D, adj_only_bkd_iter_>
-      complex_bkd_iter;
-      /// \}
-
-    public:
-      /// Associated types.
-      /// \{
-      /// The type of psite corresponding to the window.
-      typedef complex_psite<D, G> psite;
-      /// The type of site corresponding to the window.
-      typedef mln_site(psite) site;
-
-      // FIXME: This is a dummy value.
-      typedef void dpsite;
-
-      /// \brief Site_Iterator type to browse the psites of the window
-      /// w.r.t. the ordering of vertices.
-      typedef
-      complex_window_fwd_piter<complex_fwd_iter, G, E> fwd_qiter;
-
-      /// \brief Site_Iterator type to browse the psites of the window
-      /// w.r.t. the reverse ordering of vertices.
-      typedef
-      complex_window_bkd_piter<complex_bkd_iter, G, E> bkd_qiter;
-
-      /// The default qiter type.
-      typedef fwd_qiter qiter;
-      /// \}
-
-    public:
-      /// Services.
-      /// \{
-      /* FIXME: mln::morpho::dilation requires these method from models
-	 of concept Window, but Window does not list them in its
-	 requirements.  Who's guilty: morpho::dilation or Window?  */
-      /// Is this window empty?  (Always returns \c false).
-      bool is_empty() const;
-      /// Is this window centered?  (Always returns \c true).
-      bool is_centered() const;
-
-      /// Return true by default.
-      bool is_valid() const;
-      /// \}
+      complex_window_p_base();
     };
 
 
@@ -146,24 +96,9 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned D, typename G, typename F, typename B, typename E>
-    bool
-    complex_window_p_base<D, G, F, B, E>::is_empty() const
+    complex_window_p_base<D, G, F, B, E>::complex_window_p_base()
+      : super(true)
     {
-      return false;
-    }
-
-    template <unsigned D, typename G, typename F, typename B, typename E>
-    bool
-    complex_window_p_base<D, G, F, B, E>::is_centered() const
-    {
-      return true;
-    }
-
-    template <unsigned D, typename G, typename F, typename B, typename E>
-    bool
-    complex_window_p_base<D, G, F, B, E>::is_valid() const
-    {
-      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

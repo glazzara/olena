@@ -1,5 +1,20 @@
 2009-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Refactor complex_window_p_base using complex_window_base.
+
+	* mln/core/internal/complex_window_p_base.hh
+	(complex_window_p_base): Inherit from complex_window_p_base.
+	(trait::window_< mln::internal::complex_window_p_base<D, G, F, B, E>)
+	Adjust traits.
+	Remove all typedefs and methods.
+	(complex_window_p_base::complex_window_p_base): New ctor.
+	* mln/core/image/complex_windows.hh (mln_gen_complex_window):
+	Rename (internal) macro as..
+	(mln_gen_complex_window_p): ...this.
+	Adjust.
+
+2009-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Introduce a base class for general complex windows.
 
 	* mln/core/internal/complex_window_base.hh: New.

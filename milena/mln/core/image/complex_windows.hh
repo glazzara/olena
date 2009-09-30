@@ -35,7 +35,7 @@
 # include <mln/topo/adj_higher_face_iter.hh>
 # include <mln/topo/adj_lower_higher_face_iter.hh>
 
-/** \brief Generate a complex window class, as well as its traits.
+/** \brief Generate a centered complex window class, as well as its traits.
 
     \param Win              The name of the class to generate.
     \param Fwd_Complex_Iter The underlying forward iterator type.
@@ -49,7 +49,7 @@
                                              Win <D, G> >
 
     where D and G are template parameters of the generated Win class.  */
-# define mln_gen_complex_window(Win, Fwd_Complex_Iter, Bkd_Complex_Iter) \
+# define mln_gen_complex_window_p(Win, Fwd_Complex_Iter, Bkd_Complex_Iter) \
   /* Forward declaration.  */						\
   template <unsigned D, typename G> struct Win;				\
 									\
@@ -80,47 +80,51 @@
 namespace mln
 {
 
+  /*-------------------.
+  | Centered windows.  |
+  `-------------------*/
+
   /// \brief Window centered on an n-face of complex returning its
   /// adjacent (n-1)-faces as well as the center n-face.
-  mln_gen_complex_window(complex_lower_window_p,
-			 topo::adj_lower_face_fwd_iter,
-			 topo::adj_lower_face_bkd_iter);
+  mln_gen_complex_window_p(complex_lower_window_p,
+			   topo::adj_lower_face_fwd_iter,
+			   topo::adj_lower_face_bkd_iter);
 
   /// \brief Window centered on an n-face of complex returning its
   /// adjacent (n+1)-faces as well as the center n-face.
-  mln_gen_complex_window(complex_higher_window_p,
-			 topo::adj_higher_face_fwd_iter,
-			 topo::adj_higher_face_bkd_iter);
+  mln_gen_complex_window_p(complex_higher_window_p,
+			   topo::adj_higher_face_fwd_iter,
+			   topo::adj_higher_face_bkd_iter);
 
   /// \brief Window centered on an n-face of complex returning its
   /// adjacent (n-1)-faces and (n+1)-faces as well as the center
   /// n-face.
-  mln_gen_complex_window(complex_lower_higher_window_p,
-			 topo::adj_lower_higher_face_fwd_iter,
-			 topo::adj_lower_higher_face_bkd_iter);
+  mln_gen_complex_window_p(complex_lower_higher_window_p,
+			   topo::adj_lower_higher_face_fwd_iter,
+			   topo::adj_lower_higher_face_bkd_iter);
 
   /// \brief Window centered on an n-face of complex returning the
   /// n-faces sharing an (n-1)-face with the center n-face, as well as
   /// this center n-face.
-  mln_gen_complex_window(complex_lower_dim_connected_n_face_window_p,
-			 topo::adj_lower_dim_connected_n_face_fwd_iter,
-			 topo::adj_lower_dim_connected_n_face_bkd_iter);
+  mln_gen_complex_window_p(complex_lower_dim_connected_n_face_window_p,
+			   topo::adj_lower_dim_connected_n_face_fwd_iter,
+			   topo::adj_lower_dim_connected_n_face_bkd_iter);
 
   /// \brief Window centered on an n-face of complex returning the
   /// n-faces sharing an (n+1)-face with the center n-face, as well as
   /// this center n-face.
-  mln_gen_complex_window(complex_higher_dim_connected_n_face_window_p,
-			 topo::adj_higher_dim_connected_n_face_fwd_iter,
-			 topo::adj_higher_dim_connected_n_face_bkd_iter);
+  mln_gen_complex_window_p(complex_higher_dim_connected_n_face_window_p,
+			   topo::adj_higher_dim_connected_n_face_fwd_iter,
+			   topo::adj_higher_dim_connected_n_face_bkd_iter);
 
   /// \brief Window centered on an n-face of complex returning
   /// the m-faces transitively adjacent to this center n-face.
-  mln_gen_complex_window(complex_m_face_window,
-			 topo::adj_m_face_fwd_iter,
-			 topo::adj_m_face_bkd_iter);
+  mln_gen_complex_window_p(complex_m_face_window,
+			   topo::adj_m_face_fwd_iter,
+			   topo::adj_m_face_bkd_iter);
 
 } // end of namespace mln
 
-# undef mln_gen_complex_window
+# undef mln_gen_complex_window_p
 
 #endif // ! MLN_CORE_IMAGE_COMPLEX_WINDOWS_HH
