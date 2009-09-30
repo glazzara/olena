@@ -35,21 +35,21 @@
 # include <mln/topo/adj_higher_face_iter.hh>
 # include <mln/topo/adj_lower_higher_face_iter.hh>
 
-/** \brief Generate a centered complex window class, as well as its traits.
+
+/** \brief Generate a complex window class, as well as its traits,
+    using a given base class.
 
     \param Win              The name of the class to generate.
     \param Fwd_Complex_Iter The underlying forward iterator type.
     \param Bkd_Complex_Iter The underlying backward iterator type.
+    \param Base             The name of the base class, with no parameter.
 
     The generated class inherits from
 
-      mln:: internal::complex_window_p_base< D, G,
-                                             Fwd_Complex_Iter<D>,
-                                             Bkd_Complex_Iter<D>,
-                                             Win <D, G> >
+      Base < D, G, Fwd_Complex_Iter<D>, Bkd_Complex_Iter<D>, Win <D, G> >
 
     where D and G are template parameters of the generated Win class.  */
-# define mln_gen_complex_window_p(Win, Fwd_Complex_Iter, Bkd_Complex_Iter) \
+# define mln_gen_complex_window_with_base(Win, Fwd_Complex_Iter, Bkd_Complex_Iter, Base) \
   /* Forward declaration.  */						\
   template <unsigned D, typename G> struct Win;				\
 									\
@@ -58,10 +58,10 @@
   {									\
     template <unsigned D, typename G>					\
     struct window_< Win <D, G> >					\
-      : window_< mln::internal::complex_window_p_base< D, G,		\
-						       Fwd_Complex_Iter<D>, \
-						       Bkd_Complex_Iter <D>, \
-						       Win <D, G> > >	\
+      : window_< Base < D, G,						\
+			Fwd_Complex_Iter<D>,				\
+			Bkd_Complex_Iter <D>,				\
+			Win <D, G> > >					\
     {									\
     };									\
   }									\
@@ -69,12 +69,34 @@
   /* Definition.  */							\
   template <unsigned D, typename G>					\
   struct Win								\
-    : internal::complex_window_p_base< D, G,				\
-				       Fwd_Complex_Iter <D>,		\
-				       Bkd_Complex_Iter <D>,		\
-				       Win <D, G> >			\
+    : Base < D, G,							\
+	     Fwd_Complex_Iter <D>,					\
+	     Bkd_Complex_Iter <D>,					\
+	     Win <D, G> >						\
   {									\
   }
+
+
+/** \brief Generate a centered complex window class, as well as its traits.
+
+    \param Win              The name of the class to generate.
+    \param Fwd_Complex_Iter The underlying forward iterator type.
+    \param Bkd_Complex_Iter The underlying backward iterator type.
+
+    The generated class inherits from
+
+      mln::internal::complex_window_p_base< D, G,
+                                            Fwd_Complex_Iter<D>,
+                                            Bkd_Complex_Iter<D>,
+                                            Win <D, G> >
+
+    where D and G are template parameters of the generated Win class.  */
+# define mln_gen_complex_window_p(Win, Fwd_Complex_Iter, Bkd_Complex_Iter) \
+    mln_gen_complex_window_with_base(Win,				\
+                                     Fwd_Complex_Iter,			\
+                                     Bkd_Complex_Iter,			\
+                                     mln::internal::complex_window_p_base)
+
 
 
 namespace mln
@@ -127,5 +149,6 @@ namespace mln
 } // end of namespace mln
 
 # undef mln_gen_complex_window_p
+# undef mln_gen_complex_window_from_base
 
 #endif // ! MLN_CORE_IMAGE_COMPLEX_WINDOWS_HH

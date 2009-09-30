@@ -1,5 +1,14 @@
 2009-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Prepare the factoring of complex windows generators.
+
+	* mln/core/image/complex_windows.hh
+	(mln_gen_complex_window_with_base): New macro.
+	Use it to factor...
+	(mln_gen_complex_window_p): ...this macro.
+
+2009-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename mln::complex_m_face_window as mln::complex_m_face_window_p.
 
 	* mln/core/image/complex_windows.hh: Here.
