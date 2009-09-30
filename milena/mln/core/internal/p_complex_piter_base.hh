@@ -85,6 +85,9 @@ namespace mln
       /// Go to the next point.
       void next_();
 
+      /// Change the target of the underlying complex iterator.
+      void change_target_(const S& pc);
+
     private:
       /// Update the psite.
       void update_();
@@ -124,8 +127,15 @@ namespace mln
     p_complex_piter_base_<I, S, P, E>::p_complex_piter_base_(const S& pc)
     {
       this->change_target(pc);
-      iter_.set_cplx(pc.cplx());
       mln_postcondition(!this->is_valid());
+    }
+
+    template <typename I, typename S, typename P, typename E>
+    inline
+    void
+    p_complex_piter_base_<I, S, P, E>::change_target_(const S& pc)
+    {
+      iter_.set_cplx(pc.cplx());
     }
 
     template <typename I, typename S, typename P, typename E>

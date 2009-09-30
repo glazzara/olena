@@ -1,5 +1,15 @@
 2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix target change in complex piters.
+
+	* mln/core/internal/p_complex_piter_base.hh
+	(p_complex_piter_base<I, S, P, E>::p_complex_piter_base_(const S&)):
+	Move the underlying iterator's (target) complex assignment...
+	(p_complex_piter_base<I, S, P, E>::change_target_):
+	...here (new method).
+
+2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Allow iterators to perform extra work while changing their target.
 
 	* mln/core/concept/pseudo_site.hh
