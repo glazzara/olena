@@ -43,8 +43,11 @@ namespace mln
     namespace inter_pixel
     {
 
-      /// Double neighborhood used for inter-pixel images.
-      typedef neighb< win::multiple<window2d, dim2::is_row_odd> > dbl_neighb2d;
+      /// Double window.
+      typedef win::multiple<window2d, dim2::is_row_odd> dbl_window2d;
+
+      /// Double neighborhood, used for inter-pixel images.
+      typedef neighb< dbl_window2d > dbl_neighb2d;
 
 
       /// Vertex (pixel) to neighboring vertices (pixels).

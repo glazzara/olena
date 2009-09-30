@@ -1,3 +1,13 @@
+2009-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Introduce mln::world::inter_pixel::dbl_window2d.
+
+	* mln/world/inter_pixel/neighb2d.hh
+	(mln::world::inter_pixel::dbl_window2d): New typedef.
+	Use to shorten the definition of...
+	(mln::world::inter_pixel::dbl_neighb2d):
+	...this typedef.
+
 2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use Milena's dilation/erosion in graph morpho on bin_1complex_image2d.
