@@ -79,10 +79,9 @@ namespace mln
 
   namespace if_possible
   {
-    // Nota: This procedure is used in internal::site_iterator_base.
-
-    template <typename P>
-    void change_target(Pseudo_Site<P>& p, const typename P::target_t& new_target);
+    // Nota: This procedure is used in
+    // internal::site_set_iterator_base and
+    // site_relative_iterator_base.
 
     template <typename O, typename T>
     void change_target(Object<O>&, const T&);
@@ -125,9 +124,10 @@ namespace mln
       template <>
       struct helper< /* is an Object */ true >
       {
-
+ 
 	template <typename P>
-	void change_target(Pseudo_Site<P>& p, const mln_target(P)& new_target) const
+	void change_target(Pseudo_Site<P>& p,
+			   const mln_target(P)& new_target) const
 	{
 	  exact(p).change_target(new_target);
 	}
@@ -157,7 +157,8 @@ namespace mln
     void change_target(O& o, const D& d)
     {
       enum { is_object = mlc_is_a(O, Object)::value };
-      mln::if_possible::internal::helper< is_object >().change_target(exact(o), d);
+      mln::if_possible::internal::helper< is_object >().change_target(exact(o),
+								      d);
     }
 
   } // end of namespace mln::if_possible

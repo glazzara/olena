@@ -45,7 +45,8 @@ namespace mln
     /// Parameter \c S is the targeted site set type.
     ///
     /// IMPORTANT: Sub-classes have to define start_, next_,
-    /// is_valid_ and invalidate_.
+    /// is_valid_ and invalidate_.  They may also define
+    /// change_target_.
     //
     template <typename S, typename E>
     class site_set_iterator_base : public site_iterator_base<S, E>
@@ -63,6 +64,10 @@ namespace mln
 
       /// Change the site set targeted by this iterator.
       void change_target(const S& s);
+
+      /// Part of the change_target specific to the exact iterator
+      /// type, empty by default (to be overloaded).
+      void change_target_(const S& s);
 
     protected:
 
@@ -100,8 +105,18 @@ namespace mln
       // p might be also updated since it can hold a pointer towards
       // the set it designates, so:
       if_possible::change_target(p_, s);
+      // Likewise, the iterator might need to update specific data.
+      exact(this)->change_target_(s);
       // Last:
       this->invalidate();
+    }
+
+    template <typename S, typename E>
+    inline
+    void
+    site_set_iterator_base<S, E>::change_target_(const S& /* s */)
+    {
+      // Empty by default.
     }
 
     template <typename S, typename E>
