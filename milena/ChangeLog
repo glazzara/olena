@@ -1,3 +1,14 @@
+2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use Milena's dilation/erosion in graph morpho on bin_1complex_image2d.
+
+	* apps/graph-morpho/morpho.hh
+	(impl::dilation_e2v(const mln::bin_1complex_image2d&))
+	(impl::erosion_v2e(const mln::bin_1complex_image2d&))
+	(impl::erosion_e2v(const mln::bin_1complex_image2d&))
+	(impl::dilation_v2e(const mln::bin_1complex_image2d&)):
+	Here.
+
 2009-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix a precondition in apps/graph-morpho/io.hh.

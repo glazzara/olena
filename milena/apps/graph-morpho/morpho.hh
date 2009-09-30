@@ -41,6 +41,8 @@
 
 # include <mln/core/image/dmorph/image_if.hh>
 
+# include <mln/core/image/dmorph/extension_ima.hh>
+
 # include <mln/core/routine/extend.hh>
 # include <mln/core/routine/duplicate.hh>
 
@@ -56,6 +58,8 @@
 
 # include <mln/morpho/dilation.hh>
 # include <mln/morpho/erosion.hh>
+
+# include <mln/topo/is_n_face.hh>
 
 // FIXME: Instead of providing several implementation, move specific
 // parts (neighborhoods, etc.) to a graph_traits class, and write
@@ -167,25 +171,16 @@ namespace impl
   mln::bin_1complex_image2d
   dilation_e2v(const mln::bin_1complex_image2d& input)
   {
-    mln::bin_1complex_image2d output;
-    mln::initialize(output, input);
+    mln::topo::is_n_face<0> is_0_face;
     typedef mln_geom_(mln::bin_1complex_image2d) geom_t;
-    // Iterator on vertices.
-    mln::p_n_faces_fwd_piter<1, geom_t> v(input.domain(), 0);
-    // Vertex-to-edges neighborhood.
-    typedef mln::complex_higher_neighborhood<1, geom_t> v2e_t;
+    typedef mln::complex_higher_window<1, geom_t> v2e_t;
     const v2e_t v2e;
-    mln_niter_(v2e_t) e(v2e, v);
-    for_all(v)
-    {
-      output(v) = false;
-      for_all(e)
-	if (input(e))
-	  {
-	    output(v) = true;
-	    break;
-	  }
-    }
+    mln::bin_1complex_image2d output(input.domain());
+    mln::data::fill(output, false);
+    mln::data::paste(mln::morpho::dilation(mln::extend(input | is_0_face,
+    						       input),
+    					   v2e),
+    		     output);
     return output;
   }
 
@@ -195,25 +190,16 @@ namespace impl
   mln::bin_1complex_image2d
   erosion_v2e(const mln::bin_1complex_image2d& input)
   {
-    mln::bin_1complex_image2d output;
-    mln::initialize(output, input);
+    mln::topo::is_n_face<1> is_1_face;
     typedef mln_geom_(mln::bin_1complex_image2d) geom_t;
-    // Iterator on edges.
-    mln::p_n_faces_fwd_piter<1, geom_t> e(input.domain(), 1);
-    // Edge-to-vertices neighborhood.
-    typedef mln::complex_lower_neighborhood<1, geom_t> e2v_t;
+    typedef mln::complex_lower_window<1, geom_t> e2v_t;
     const e2v_t e2v;
-    mln_niter_(e2v_t) v(e2v, e);
-    for_all(e)
-    {
-      output(e) = true;
-      for_all(v)
-	if (!input(v))
-	  {
-	    output(e) = false;
-	    break;
-	  }
-    }
+    mln::bin_1complex_image2d output(input.domain());
+    mln::data::fill(output, false);
+    mln::data::paste(mln::morpho::erosion(mln::extend(input | is_1_face,
+						      input),
+					  e2v),
+    		     output);
     return output;
   }
 
@@ -223,25 +209,16 @@ namespace impl
   mln::bin_1complex_image2d
   erosion_e2v(const mln::bin_1complex_image2d& input)
   {
-    mln::bin_1complex_image2d output;
-    mln::initialize(output, input);
+    mln::topo::is_n_face<0> is_0_face;
     typedef mln_geom_(mln::bin_1complex_image2d) geom_t;
-    // Iterator on vertices.
-    mln::p_n_faces_fwd_piter<1, geom_t> v(input.domain(), 0);
-    // Vertex-to-edges neighborhood.
-    typedef mln::complex_higher_neighborhood<1, geom_t> v2e_t;
+    typedef mln::complex_higher_window<1, geom_t> v2e_t;
     const v2e_t v2e;
-    mln_niter_(v2e_t) e(v2e, v);
-    for_all(v)
-    {
-      output(v) = true;
-      for_all(e)
-	if (!input(e))
-	  {
-	    output(v) = false;
-	    break;
-	  }
-    }
+    mln::bin_1complex_image2d output(input.domain());
+    mln::data::fill(output, false);
+    mln::data::paste(mln::morpho::erosion(mln::extend(input | is_0_face,
+						      input),
+					  v2e),
+    		     output);
     return output;
   }
 
@@ -251,25 +228,16 @@ namespace impl
   mln::bin_1complex_image2d
   dilation_v2e(const mln::bin_1complex_image2d& input)
   {
-    mln::bin_1complex_image2d output;
-    mln::initialize(output, input);
+    mln::topo::is_n_face<1> is_1_face;
     typedef mln_geom_(mln::bin_1complex_image2d) geom_t;
-    // Iterator on edges.
-    mln::p_n_faces_fwd_piter<1, geom_t> e(input.domain(), 1);
-    // Edge-to-vertices neighborhood.
-    typedef mln::complex_lower_neighborhood<1, geom_t> e2v_t;
+    typedef mln::complex_lower_window<1, geom_t> e2v_t;
     const e2v_t e2v;
-    mln_niter_(e2v_t) v(e2v, e);
-    for_all(e)
-    {
-      output(e) = false;
-      for_all(v)
-	if (input(v))
-	  {
-	    output(e) = true;
-	    break;
-	  }
-    }
+    mln::bin_1complex_image2d output(input.domain());
+    mln::data::fill(output, false);
+    mln::data::paste(mln::morpho::dilation(mln::extend(input | is_1_face,
+						      input),
+					  e2v),
+    		     output);
     return output;
   }
 
