@@ -70,6 +70,8 @@ inline
 QRectF
 ImageRegion::boundingRect() const
 {
+  if (selected_)
+    return mapFromScene(scene()->sceneRect()).boundingRect();
   return rect_;
 }
 

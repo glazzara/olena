@@ -104,6 +104,7 @@ ImageRegion::select()
   {
     selected_ = true;
     setZValue(2);
+    prepareGeometryChange();
     scene()->invalidate();
     update();
   }
@@ -115,8 +116,9 @@ ImageRegion::deselect()
   if (selected_)
   {
     selected_ = false;
-    scene()->invalidate();
     setZValue(1);
+    prepareGeometryChange();
+    scene()->invalidate();
     update();
   }
 }
