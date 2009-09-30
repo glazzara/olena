@@ -27,7 +27,6 @@
 # define MLN_CORE_IMAGE_COMPLEX_NEIGHBORHOOD_PITER_HH
 
 /// \file
-///
 /// Definition of a site iterator on a complex neighborhood.
 
 # include <mln/core/concept/neighborhood.hh>
@@ -36,10 +35,10 @@
 // FIXME: These might be factor-able, both between fwd/bkd and nbh/win.
 
 /* FIXME: Do we really want to inherit from
-   internal::site_relative_iterator_base?  I might duplicate things,
+   internal::site_relative_iterator_base?  It might duplicate things,
    since most of the implementation of this iterator is delegated to
-   the underlying complex iter.  Moreover, change_target_() is
-   useless.  Think about introducing base class replacement.  */
+   the underlying complex iter.  Think about introducing base class
+   replacement.  */
 
 
 namespace mln
@@ -49,7 +48,7 @@ namespace mln
   | complex_neighborhood_fwd_piter<I, G, N>.  |
   `------------------------------------------*/
 
-  /// Forward iterator on complex neighborhood.
+  /// \brief Forward iterator on complex neighborhood.
   template <typename I, typename G, typename N>
   class complex_neighborhood_fwd_piter
     : public internal::site_relative_iterator_base< N,
@@ -73,6 +72,10 @@ namespace mln
 				   const Pref& p_ref);
     /// \}
 
+    /// Delayed initialization.
+    template <typename Pref>
+    void init_(const Neighborhood<N>& nbh, const Pref& p_ref);
+
     /// Manipulation.
     /// \{
     /// Test if the iterator is valid.
@@ -85,7 +88,7 @@ namespace mln
     /// Go to the next site.
     void do_next_();
 
-    /// Set the reference psite.
+    /// Additional work while setting the reference site.
     template <typename Pref>
     void center_at_(const Pref& c);
 
@@ -93,7 +96,7 @@ namespace mln
     psite compute_p_() const;
     /// \}
 
-    /// Accessors.
+    /// \brief Accessors.
     /// \{
     const iter_type& iter() const;
     iter_type& iter();
@@ -116,7 +119,7 @@ namespace mln
   | complex_neighborhood_bkd_piter<I, G, N>.  |
   `------------------------------------------*/
 
-  /// Backward iterator on complex neighborhood.
+  /// \brief Backward iterator on complex neighborhood.
   template <typename I, typename G, typename N>
   class complex_neighborhood_bkd_piter
     : public internal::site_relative_iterator_base< N,
@@ -140,6 +143,10 @@ namespace mln
 				   const Pref& p_ref);
     /// \}
 
+    /// Delayed initialization.
+    template <typename Pref>
+    void init_(const Neighborhood<N>& nbh, const Pref& p_ref);
+
     /// Manipulation.
     /// \{
     /// Test if the iterator is valid.
@@ -152,15 +159,15 @@ namespace mln
     /// Go to the next site.
     void do_next_();
 
-    /// Do some work while setting the reference site.
+    /// Additional work while setting the reference site.
     template <typename Pref>
-    void center_at_(const Pref&);
+    void center_at_(const Pref& c);
 
     /// Compute the current psite.
     psite compute_p_() const;
     /// \}
 
-    /// Accessors.
+    /// \brief Accessors.
     /// \{
     const iter_type& iter() const;
     iter_type& iter();
@@ -197,6 +204,16 @@ namespace mln
   inline
   complex_neighborhood_fwd_piter<I, G, N>::complex_neighborhood_fwd_piter(const Neighborhood<N>& nbh,
 									  const Pref& p_ref)
+  {
+    init_(nbh, p_ref);
+  }
+
+  template <typename I, typename G, typename N>
+  template <typename Pref>
+  inline
+  void
+  complex_neighborhood_fwd_piter<I, G, N>::init_(const Neighborhood<N>& nbh,
+						 const Pref& p_ref)
   {
     this->change_target(exact(nbh));
     this->center_at(p_ref);
@@ -294,6 +311,16 @@ namespace mln
   inline
   complex_neighborhood_bkd_piter<I, G, N>::complex_neighborhood_bkd_piter(const Neighborhood<N>& nbh,
 									  const Pref& p_ref)
+  {
+    init_(nbh, p_ref);
+  }
+
+  template <typename I, typename G, typename N>
+  template <typename Pref>
+  inline
+  void
+  complex_neighborhood_bkd_piter<I, G, N>::init_(const Neighborhood<N>& nbh,
+						 const Pref& p_ref)
   {
     this->change_target(exact(nbh));
     this->center_at(p_ref);

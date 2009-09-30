@@ -1,5 +1,23 @@
 2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make complex window and complex neighborhood piters symmetric.
+
+	* mln/core/image/complex_neighborhood_piter.hh
+	(complex_window_fwd_piter<I, G, W>::init_)
+	(complex_window_bkd_piter<I, G, W>::init_):
+	s/center_at/this->center_at/
+	Misc. documentation changes.
+	* mln/core/image/complex_window_piter.hh
+	(complex_neighborhood_fwd_piter(const Neighborhood<N>&, const Pref&))
+	(complex_neighborhood_bkd_piter(const Neighborhood<N>&, const Pref&)):
+	Move the initializations...
+	(complex_neighborhood_fwd_piter<I, G, N>::init_)
+	(complex_neighborhood_bkd_piter<I, G, N>::init_):
+	...here (new method).
+	Misc. documentation changes.
+
+2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have complex neighborhoods depend on complex windows.
 
 	* mln/core/internal/complex_neighborhood_base.hh

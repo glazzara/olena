@@ -29,17 +29,16 @@
 /// \file
 /// \brief  Definition of a site iterator on a complex window.
 
+# include <mln/core/concept/window.hh>
 # include <mln/core/internal/site_relative_iterator_base.hh>
 
 // FIXME: These might be factor-able, both between fwd/bkd and nbh/win.
 
 /* FIXME: Do we really want to inherit from
-   internal::site_relative_iterator_base?  I might duplicate things,
+   internal::site_relative_iterator_base?  It might duplicate things,
    since most of the implementation of this iterator is delegated to
-   the underlying complex iter.  Moreover, change_target_() is
-   useless, and center_at() ``hides'' an existing method in (one of)
-   the super class(es) which is not sound, IMHO.  Think about
-   introducing base class replacement.  */
+   the underlying complex iter.  Think about introducing base class
+   replacement.  */
 
 
 namespace mln
@@ -88,7 +87,7 @@ namespace mln
     /// Go to the next site.
     void do_next_();
 
-    /// Do some work while setting the reference site.
+    /// Additional work while setting the reference site.
     template <typename Pref>
     void center_at_(const Pref& c);
 
@@ -158,7 +157,7 @@ namespace mln
     /// Go to the next site.
     void do_next_();
 
-    /// Do some work while setting the reference site.
+    /// Additional work while setting the reference site.
     template <typename Pref>
     void center_at_(const Pref& c);
 
@@ -215,7 +214,7 @@ namespace mln
 					   const Pref& p_ref)
   {
     this->change_target(exact(win));
-    center_at(p_ref);
+    this->center_at(p_ref);
     mln_postcondition(!this->is_valid());
   }
 
@@ -323,7 +322,7 @@ namespace mln
 					   const Pref& p_ref)
   {
     this->change_target(exact(win));
-    center_at(p_ref);
+    this->center_at(p_ref);
     mln_postcondition(!this->is_valid());
   }
 
