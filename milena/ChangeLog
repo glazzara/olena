@@ -1,5 +1,15 @@
 2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have mln::topo::is_n_face<B> expose a more tolerant interface.
+
+	* mln/topo/is_n_face.hh
+	(is_n_face<N>::operator()(const mln::complex_psite<D, G>& p) const):
+	Turn into...
+	(is_n_face<N>::operator()(const P& p) const):
+	...this.
+
+2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make complex window and complex neighborhood piters symmetric.
 
 	* mln/core/image/complex_neighborhood_piter.hh

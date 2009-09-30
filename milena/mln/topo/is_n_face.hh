@@ -49,18 +49,18 @@ namespace mln
     {
       typedef bool result;
 
-      template <unsigned D, typename G>
-      bool operator()(const mln::complex_psite<D, G>& p) const;
+      template <typename P>
+      bool operator()(const P& p) const;
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned N> 
-    template <unsigned D, typename G>
+    template <typename P>
     inline
     bool
-    is_n_face<N>::operator()(const mln::complex_psite<D, G>& p) const
+    is_n_face<N>::operator()(const P& p) const
     {
       return p.n() == N;
     }
