@@ -41,6 +41,7 @@
 
 # include <mln/core/image/dmorph/image_if.hh>
 
+# include <mln/core/routine/extend.hh>
 # include <mln/core/routine/duplicate.hh>
 
 # include <mln/core/site_set/p_n_faces_piter.hh>
@@ -53,7 +54,8 @@
 
 # include <mln/data/paste.hh>
 
-# include "apps/graph-morpho/image_if_large.hh"
+# include <mln/morpho/dilation.hh>
+# include <mln/morpho/erosion.hh>
 
 // FIXME: Instead of providing several implementation, move specific
 // parts (neighborhoods, etc.) to a graph_traits class, and write
@@ -135,72 +137,6 @@ combine(const mln::Image<I>& vertices, const mln::Image<I>& edges)
 /*-------------------------.
 | Dilations and erosions.  |
 `-------------------------*/
-
-/// A neighborhood-aware and graph-friendly version of the binary dilation.
-template <typename I, typename N>
-mln_concrete(I)
-dilation(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_)
-{
-  using namespace mln;
-
-  typedef mln_concrete(I) O;
-  const I& input = exact(input_);
-  const N& nbh = exact(nbh_);
-
-  O output;
-  initialize(output, input);
-
-  mln_piter(I) p(input.domain());
-  mln_niter(N) n(nbh, p);
-  for_all(p)
-  {
-    /* There is a slight difference with Milena's classical binary
-       dilation here: instead of initializing OUTPUT with INPUT, we
-       fill it with default (here, false) values.  */
-    output(p) = false;
-    for_all(n) if (input.has(n))
-      if (input(n) == true)
-	{
-	  output(p) = true;
-	  break;
-	}
-  }
-  return output;
-}
-
-
-/// A neighborhood-aware and graph-friendly version of the binary erosion.
-template <typename I, typename N>
-mln_concrete(I)
-erosion(const mln::Image<I>& input_, const mln::Neighborhood<N>& nbh_)
-{
-  using namespace mln;
-
-  typedef mln_concrete(I) O;
-  const I& input = exact(input_);
-  const N& nbh = exact(nbh_);
-
-  O output;
-  initialize(output, input);
-
-  mln_piter(I) p(input.domain());
-  mln_niter(N) n(nbh, p);
-  for_all(p)
-  {
-    /* There is a slight difference with Milena's classical erosion
-       here: instead of initializing OUTPUT with INPUT, we fill it
-       with default (here, true) values.  */
-    output(p) = true;
-    for_all(n) if (input.has(n))
-      if (input(n) == false)
-	{
-	  output(p) = false;
-	  break;
-	}
-  }
-  return output;
-}
-
 
 namespace impl
 {
@@ -341,11 +277,6 @@ namespace impl
   // Implementations on (mln::image2d-based) cubical 2-complexes.  //
   // ------------------------------------------------------------- //
 
-  /* Note the operator `||' in the following routines: we have to use
-     our own ``tolerant'' version of mln::image_if (namely
-     mln::image_if_large) for these dilations and erosions to
-     work.  */
-
   /// Dilation from edges to vertices (\f$\delta^\bullet\f$) on
   /// an mln::image2d<T>-based cubical complex.
   template <typename T>
@@ -353,10 +284,14 @@ namespace impl
   mln::image2d<T>
   dilation_e2v(const mln::image2d<T>& input)
   {
+    using mln::world::inter_pixel::dim2::is_pixel;
+    using mln::world::inter_pixel::v2e;
+
     mln::image2d<T> output(input.domain());
     mln::data::fill(output, false);
-    mln::data::paste(dilation(input || mln::world::inter_pixel::dim2::is_pixel(),
-			      mln::world::inter_pixel::v2e()),
+    mln::data::paste(mln::morpho::dilation(mln::extend(input | is_pixel(),
+						       input),
+					   v2e().win()),
 		     output);
     return output;
   }
@@ -368,10 +303,14 @@ namespace impl
   mln::image2d<T>
   erosion_v2e(const mln::image2d<T>& input)
   {
+    using mln::world::inter_pixel::dim2::is_edge;
+    using mln::world::inter_pixel::e2v;
+
     mln::image2d<T> output(input.domain());
     mln::data::fill(output, false);
-    mln::data::paste(erosion(input || mln::world::inter_pixel::dim2::is_edge(),
-			     mln::world::inter_pixel::e2v()),
+    mln::data::paste(mln::morpho::erosion(mln::extend(input | is_edge(),
+						      input),
+					  e2v().win()),
 		     output);
     return output;
   }
@@ -383,10 +322,14 @@ namespace impl
   mln::image2d<T>
   erosion_e2v(const mln::image2d<T>& input)
   {
+    using mln::world::inter_pixel::dim2::is_pixel;
+    using mln::world::inter_pixel::v2e;
+
     mln::image2d<T> output(input.domain());
     mln::data::fill(output, false);
-    mln::data::paste(erosion(input || mln::world::inter_pixel::dim2::is_pixel(),
-			     mln::world::inter_pixel::v2e()),
+    mln::data::paste(mln::morpho::erosion(mln::extend(input | is_pixel(),
+						      input),
+					  v2e().win()),
 		     output);
     return output;
   }
@@ -398,10 +341,14 @@ namespace impl
   mln::image2d<T>
   dilation_v2e(const mln::image2d<T>& input)
   {
+    using mln::world::inter_pixel::dim2::is_edge;
+    using mln::world::inter_pixel::e2v;
+
     mln::image2d<T> output(input.domain());
     mln::data::fill(output, false);
-    mln::data::paste(dilation(input || mln::world::inter_pixel::dim2::is_edge(),
-			      mln::world::inter_pixel::e2v()),
+    mln::data::paste(mln::morpho::dilation(mln::extend(input | is_edge(),
+						       input),
+					   e2v().win()),
 		     output);
     return output;
   }

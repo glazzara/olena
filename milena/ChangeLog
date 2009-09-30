@@ -1,3 +1,20 @@
+2009-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Replace ad hoc code by Milena's in apps/graph-morpho.
+
+	* apps/graph-morpho/morpho.hh
+	(dilation(const mln::Image<I>&, const mln::Neighborhood<N>&))
+	(erosion(const mln::Image<I>&, const mln::Neighborhood<N>&)):
+	Remove functions.
+	(dilation_e2v(const mln::Image<I>&))
+	(erosion_v2e(const mln::Image<I>&))
+	(erosion_e2v(const mln::Image<I>&))
+	(dilation_v2e(const mln::Image<I>&)):
+	Use mln::dilation and mln::erosion instead of these ad hoc
+	dilation and erosion routines.
+	Use mln::image_if and mln::extend instead of the ad hoc
+	image_if_large.
+
 2009-09-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add test for dual input and fix p_transformed test.
