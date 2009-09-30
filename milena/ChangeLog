@@ -1,5 +1,15 @@
 2009-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add graph traits to apps/graph-morpho.
+
+	* apps/graph-morpho/morpho.hh (trait::graph<I>):
+	New (empty) traits class.
+	(trait::graph< mln::image2d<T> >)
+	(trait::graph< mln::complex_image<1, G, V> >):
+	New traits class specializations.
+
+2009-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Introduce mln::world::inter_pixel::dbl_window2d.
 
 	* mln/world/inter_pixel/neighb2d.hh

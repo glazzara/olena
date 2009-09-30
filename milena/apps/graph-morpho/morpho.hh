@@ -66,6 +66,112 @@
 // generic version of combine, dilation_e2v, erosion_v2e, etc.
 
 
+/*---------------.
+| Graph traits.  |
+`---------------*/
+
+namespace trait
+{
+  /// Graph traits.
+  template <typename I>
+  struct graph
+  {
+    /* Empty by default.
+
+       Specializations must provide these static member functions:
+
+         static F1 is_vertex()
+         static F2 is_edge()
+         static W1 v2e()
+         static W2 e2v()
+
+       where F1, F2, W1 and W2 are types depending on I.
+    */
+  };
+
+  // ----------------------------------------------------------- //
+  // Graph traits for (mln::image2d-based) cubical 2-complexes.  //
+  // ----------------------------------------------------------- //
+
+  /// Graph traits for mln::image2d.
+  template <typename T>
+  struct graph< mln::image2d<T> >
+  {
+    // Return a functor saying whether a psite is a vertex or not.
+    static
+    const mln::world::inter_pixel::dim2::is_pixel& is_vertex()
+    {
+      static mln::world::inter_pixel::dim2::is_pixel is_vertex_fun;
+      return is_vertex_fun;
+    }
+
+    // Return a functor saying whether a psite is a vertex or not.
+    static
+    const mln::world::inter_pixel::dim2::is_edge& is_edge()
+    {
+      static mln::world::inter_pixel::dim2::is_edge is_edge_fun;
+      return is_edge_fun;
+    }
+
+    // Return a window containing the edges adjacent to a vertex.
+    static
+    const mln::window2d& v2e()
+    {
+      return mln::world::inter_pixel::v2e().win();
+    }
+
+    // Return a window containing the vertices adjacent to an edge.
+    static
+    const mln::world::inter_pixel::dbl_window2d& e2v()
+    {
+      return mln::world::inter_pixel::e2v().win();
+    }
+  };
+
+  // ---------------------------------------- //
+  // Graph traits for (general) 1-complexes.  //
+  // ---------------------------------------- //
+
+  /// Graph traits for 1-complexes images.
+  template <typename G, typename V>
+  struct graph< mln::complex_image<1, G, V> >
+  {
+    // Return a functor saying whether a psite is a vertex or not.
+    static
+    const mln::topo::is_n_face<0>& is_vertex()
+    {
+      static mln::topo::is_n_face<0> is_vertex_fun;
+      return is_vertex_fun;
+    }
+
+    // Return a functor saying whether a psite is a vertex or not.
+    static
+    const mln::topo::is_n_face<1>& is_edge()
+    {
+      static mln::topo::is_n_face<1> is_edge_fun;
+      return is_edge_fun;
+    }
+
+    // Return a window containing the edges adjacent to a vertex.
+    static
+    const mln::complex_higher_window<1, G>& v2e()
+    {
+      static mln::complex_higher_window<1, G> v2e_win;
+      return v2e_win;
+    }
+
+    // Return a window containing the vertices adjacent to an edge.
+    static
+    const mln::complex_lower_window<1, G>& e2v()
+    {
+      static mln::complex_lower_window<1, G> e2v_win;
+      return e2v_win;
+    }
+  };
+
+} // end of namespace trait
+
+
 /*----------------------------.
 | Vertices-edges combinator.  |
 `----------------------------*/
