@@ -30,34 +30,24 @@
 /// \brief Definitions of some neighborhoods of complex images.
 
 # include <mln/core/internal/complex_neighborhood_base.hh>
+# include <mln/core/image/complex_windows.hh>
 
-# include <mln/topo/adj_lower_face_iter.hh>
-# include <mln/topo/adj_higher_face_iter.hh>
-# include <mln/topo/adj_lower_higher_face_iter.hh>
-# include <mln/topo/adj_lower_dim_connected_n_face_iter.hh>
-# include <mln/topo/adj_higher_dim_connected_n_face_iter.hh>
+# include <mln/topo/complex_iterators.hh>
 
-/** \brief Generate a complex neighborhood class.
+/** \brief Generate a complex neighborhood class (based on a window).
 
-    \param Nbh              The name of the class to generate.
-    \param Fwd_Complex_Iter The underlying forward iterator type.
-    \param Bkd_Complex_Iter The underlying backward iterator type.
+    \param Nbh  The name of the class to generate.
+    \param Win  The underlying window (with no parameter).
 
     The generated class inherits from
 
-      mln:: internal::complex_neighborhood_base< D, G,
-                                                 Fwd_Complex_Iter<D>,
-                                                 Bkd_Complex_Iter<D>,
-                                                 Nbh <D, G> >
+      mln::internal::complex_neighborhood_base< Win <D, G>, Nbh <D, G> >
 
     where D and G are template parameters of the generated Nbh class.  */
-# define mln_gen_complex_neighborhood(Nbh, Fwd_Complex_Iter, Bkd_Complex_Iter) \
+# define mln_gen_complex_neighborhood(Nbh, Win)				\
   template <unsigned D, typename G>					\
   struct Nbh								\
-    : internal::complex_neighborhood_base< D, G,			\
-					   Fwd_Complex_Iter <D>,	\
-					   Bkd_Complex_Iter <D>,	\
-					   Nbh <D, G> >			\
+    : internal::complex_neighborhood_base< Win <D, G>, Nbh <D, G> >	\
   {									\
   }
 
@@ -68,38 +58,32 @@ namespace mln
   /// \brief Neighborhood centered on an n-face of complex returning
   /// its adjacent (n-1)-faces.
   mln_gen_complex_neighborhood(complex_lower_neighborhood,
-			       topo::adj_lower_face_fwd_iter,
-			       topo::adj_lower_face_bkd_iter);
+			       complex_lower_window);
 
   /// \brief Neighborhood centered on an n-face of complex returning
   /// its adjacent (n+1)-faces.
   mln_gen_complex_neighborhood(complex_higher_neighborhood,
-			       topo::adj_higher_face_fwd_iter,
-			       topo::adj_higher_face_bkd_iter);
+			       complex_higher_window);
 
   /// \brief Neighborhood centered on an n-face of complex returning
   /// its adjacent (n-1)-faces and (n+1)-faces.
   mln_gen_complex_neighborhood(complex_lower_higher_neighborhood,
-			       topo::adj_lower_higher_face_fwd_iter,
-			       topo::adj_lower_higher_face_bkd_iter);
+			       complex_lower_higher_window);
 
   /// \brief Neighborhood centered on an n-face of complex returning
   /// the n-faces sharing an (n-1)-face with the center n-face.
   mln_gen_complex_neighborhood(complex_lower_dim_connected_n_face_neighborhood,
-			       topo::adj_lower_dim_connected_n_face_fwd_iter,
-			       topo::adj_lower_dim_connected_n_face_bkd_iter);
+			       complex_lower_dim_connected_n_face_window);
 
   /// \brief Neighborhood centered on an n-face of complex returning
   /// the n-faces sharing an (n+1)-face with the center n-face.
   mln_gen_complex_neighborhood(complex_higher_dim_connected_n_face_neighborhood,
-			       topo::adj_higher_dim_connected_n_face_fwd_iter,
-			       topo::adj_higher_dim_connected_n_face_bkd_iter);
+			       complex_higher_dim_connected_n_face_window);
 
   /// \brief Neighborhood centered on an n-face of complex returning
   /// the m-faces transitively adjacent to this center n-face.
   mln_gen_complex_neighborhood(complex_m_face_neighborhood,
-			       topo::adj_m_face_fwd_iter,
-			       topo::adj_m_face_bkd_iter);
+			       complex_m_face_window);
 
 } // end of namespace mln
 

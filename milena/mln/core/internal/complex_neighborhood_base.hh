@@ -27,15 +27,15 @@
 # define MLN_CORE_INTERNAL_COMPLEX_NEIGHBORHOOD_BASE_HH
 
 /// \file
-/// \brief Definition of a generic neighborhood centered on the face
-/// of a complex, based on a pair of (forward and backward) complex
+/// \brief Definition of a generic neighborhood of the face of a
+/// complex, based on a pair of (forward and backward) complex
 /// iterators.
 
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/complex_psite.hh>
 # include <mln/core/image/complex_neighborhood_piter.hh>
 
-// FIXME: Factor with mln::internal::complex_window_base.
+# include <mln/core/internal/neighb_base.hh>
 
 
 namespace mln
@@ -48,7 +48,7 @@ namespace mln
 
   namespace internal
   {
-    template <unsigned D, typename G, typename F, typename B, typename E>
+    template <typename W, typename E>
     class complex_neighborhood_base;
   }
 
@@ -58,78 +58,76 @@ namespace mln
     /** \brief Generic neighborhood centered on the face of a complex,
 	based on an pair of (forward and backward) complex iterators.
 	
-	\tparam D The dimension of the complex.
-	\tparam G The type of the geometry functor of the complex.
-	\tparam F The underlying forward iterator type.
-	\tparam B The underlying backward iterator type.
+	\tparam W The underlying window.
 	\tparam E The exact type.  */
-  template <unsigned D, typename G, typename F, typename B, typename E>
-  class complex_neighborhood_base : public Neighborhood<E>
-  {
-  public:
-    /// The associated complex iterators.
-    /// \{
-    typedef F complex_fwd_iter;
-    typedef B complex_bkd_iter;
-    /// \}
+    template <typename W, typename E>
+    class complex_neighborhood_base : public Neighborhood<E>
+    {
+    public:
+      /// The associated complex iterators.
+      /// \{
+      typedef typename W::complex_fwd_iter complex_fwd_iter;
+      typedef typename W::complex_bkd_iter complex_bkd_iter;
+      /// \}
 
-  public:
-    /// Associated types.
-    /// \{
-    /// The type of psite corresponding to the neighborhood.
-    typedef complex_psite<D, G> psite;
-    /// The type of site corresponding to the neighborhood.
-    typedef mln_site(psite) site;
+    public:
+      /// Associated types.
+      /// \{
+      /// The geometry of the complex.
+      typedef mln_geom(W) G;
+      /// The type of psite corresponding to the neighborhood.
+      typedef mln_psite(W) psite;
+      /// The type of site corresponding to the neighborhood.
+      typedef mln_site(W) site;
 
-    /// \brief Site_Iterator type to browse the psites of the neighborhood
-    /// w.r.t. the ordering of vertices.
-    typedef
-    complex_neighborhood_fwd_piter<complex_fwd_iter, G, E> fwd_niter;
+      /// \brief Site_Iterator type to browse the psites of the neighborhood
+      /// w.r.t. the ordering of vertices.
+      typedef
+      complex_neighborhood_fwd_piter<complex_fwd_iter, G, E> fwd_niter;
 
-    /// \brief Site_Iterator type to browse the psites of the neighborhood
-    /// w.r.t. the reverse ordering of vertices.
-    typedef
-    complex_neighborhood_bkd_piter<complex_bkd_iter, G, E> bkd_niter;
+      /// \brief Site_Iterator type to browse the psites of the neighborhood
+      /// w.r.t. the reverse ordering of vertices.
+      typedef
+      complex_neighborhood_bkd_piter<complex_bkd_iter, G, E> bkd_niter;
 
-    /// The default niter type.
-    typedef fwd_niter niter;
-    /// \}
+      /// The default niter type.
+      typedef fwd_niter niter;
 
-    /// Conversions.
-    /// \{
-    /// The window type corresponding to this neighborhood.
-    // FIXME: Dummy.
-    typedef E window;
-    /// Create a window corresponding to this neighborhood.
-    const window& win() const;
-    /// \}
+      /// The window type corresponding to this neighborhood.
+      typedef W window;
+      /// \}
 
-    /// Return true by default.
-    bool is_valid() const;
-  };
+    public:
+      /// Get the corresponding window.
+      const W& win() const;
+
+      /// Is this neighborhood valid?
+      bool is_valid() const;
+
+    private:
+      /// The underlying window.
+      W win_;
+    };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // FIXME: Dummy.
-  template <unsigned D, typename G, typename F, typename B, typename E>
-  inline
-  // FIXME: Change (dummy) type.
-  const typename complex_neighborhood_base<D, G, F, B, E>::window&
-  complex_neighborhood_base<D, G, F, B, E>::win() const
-  {
-    // FIXME: Dummy.
-    return exact(*this);
-  }
+    template <typename W, typename E>
+    inline
+    const W&
+    complex_neighborhood_base<W, E>::win() const
+    {
+      return win_;
+    }
 
-  template <unsigned D, typename G, typename F, typename B, typename E>
-  inline
-  bool
-  complex_neighborhood_base<D, G, F, B, E>::is_valid() const
-  {
-    return true;
-  }
+    template <typename W, typename E>
+    inline
+    bool
+    complex_neighborhood_base<W, E>::is_valid() const
+    {
+      return win().is_valid();
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

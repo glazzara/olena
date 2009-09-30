@@ -103,7 +103,7 @@ namespace mln
       typedef void dpsite;
 
       /* FIXME: Ideally, the `is_centered' information should be
-         fetched from the iterators, but that's not an straighforward
+         fetched from the iterators, but that's not a straighforward
          task.  */
       complex_window_base(bool is_centered = false);
 

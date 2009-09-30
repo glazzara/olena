@@ -1,5 +1,35 @@
 2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have complex neighborhoods depend on complex windows.
+
+	* mln/core/internal/complex_neighborhood_base.hh
+	(mln::internal::complex_neighborhood_base<D, G, F, B, E>):
+	Turn class into...
+	(mln::internal::complex_neighborhood_base<W, E>):
+	...this.
+	(mln::internal::complex_neighborhood_base<W, E>::complex_fwd_iter)
+	(mln::internal::complex_neighborhood_base<W, E>::complex_bkd_iter)
+	(mln::internal::complex_neighborhood_base<W, E>::psite)
+	(mln::internal::complex_neighborhood_base<W, E>::site)
+	(mln::internal::complex_neighborhood_base<W, E>::window):
+	Depend on W.
+	(mln::internal::complex_neighborhood_base<W, E>::G):
+	New typedef.
+	(mln::internal::complex_neighborhood_base<W, E>::win)
+	(mln::internal::complex_neighborhood_base<W, E>::is_valid):
+	Provide actual implementations.
+	(mln::internal::complex_neighborhood_base<W, E>::win_):
+	New attribute.
+	* mln/core/image/complex_neighborhoods.hh
+	(mln_gen_complex_neighborhood(Nbh,Fwd_Complex_Iter,Bkd_Complex_Iter)):
+	Turn macro into...
+	(mln_gen_complex_neighborhood(Nbh,Win)):
+	...this.
+	Adjust callers.
+	* mln/core/internal/complex_window_base.hh: Typo in comment.
+
+2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix target change in complex piters.
 
 	* mln/core/internal/p_complex_piter_base.hh
