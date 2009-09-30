@@ -285,45 +285,45 @@
 2009-09-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add test for dual input and fix p_transformed test.
-	*  core/site_set/p_transformed.cc: Add inverse and typedefs.
-	*  morpho/tree/Makefile.am,
-	*  morpho/tree/dual_input_tree.cc,
+	* core/site_set/p_transformed.cc: Add inverse and typedefs.
+	* morpho/tree/Makefile.am,
+	* morpho/tree/dual_input_tree.cc,
 	Add dual input tree tests.
-	*  morpho/tree/filter/filter.cc: Minor changes.
+	* morpho/tree/filter/filter.cc: Minor changes.
 
 2009-09-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add fast version of dual input max tree computation and fix.
-	*  morpho/tree/all.hh: Update.
-	*  morpho/tree/compute_parent_dual_input.hh: Remove.
-	*  morpho/tree/data.hh: Fix constructors.
-	*  morpho/tree/dual_input_tree.hh: Add dispatches for
+	* morpho/tree/all.hh: Update.
+	* morpho/tree/compute_parent_dual_input.hh: Remove.
+	* morpho/tree/data.hh: Fix constructors.
+	* morpho/tree/dual_input_tree.hh: Add dispatches for
 	generic / low quantized algorithms.
-	*  morpho/tree/impl/dual_hqueue.hh: New.
-	*  morpho/tree/impl/dual_union_find.hh: New.
-	*  morpho/tree/impl: New.
+	* morpho/tree/impl/dual_hqueue.hh: New.
+	* morpho/tree/impl/dual_union_find.hh: New.
+	* morpho/tree/impl: New.
 
 2009-09-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Fix non generic stuff in translation function and fix transform morpher.
-	*  core/image/imorph/tr_image.hh,
-	*  core/site_set/p_transformed.hh,
-	*  core/site_set/p_transformed_piter.hh:
+	* core/image/imorph/tr_image.hh,
+	* core/site_set/p_transformed.hh,
+	* core/site_set/p_transformed_piter.hh:
 	Make them less strict with function return type. Allow
 	functions having values that can be converted in the requested
 	site. (ex: vector<1, u> -> point1d).
-	*  fun/p2p/translation.hh: Add argument type definition.
-	*  fun/x2x/translation.hh: Add inverse function.
-	*  geom/translate.hh: Fix non generic stuff and bug.
+	* fun/p2p/translation.hh: Add argument type definition.
+	* fun/x2x/translation.hh: Add inverse function.
+	* geom/translate.hh: Fix non generic stuff and bug.
 
 2009-09-25  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add hierarchical queues for Salembier's algorithm.
-	*  core/site_set/p_queue_fast.hh: Add empty method.
-	*  util/all.hh: Update.
-	*  util/hqueues.hh: New.
-	*  value/all.hh: Update.
-	*  value/value_array.hh: New. Create an array indexed by
+	* core/site_set/p_queue_fast.hh: Add empty method.
+	* util/all.hh: Update.
+	* util/hqueues.hh: New.
+	* value/all.hh: Update.
+	* value/value_array.hh: New. Create an array indexed by
 	a given type. (Similar to histo::array but the
 	values are not limited to unsigned type).
 

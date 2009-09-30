@@ -44,7 +44,7 @@
 	Prepare kmean demo for theo. Work in progress.
 
 	* green/mln/clustering/kmean1d.hh: New library file.
-	
+
 	* green/demo/clustering/kmean1d: New directory.
 	* green/demo/clustering/kmean1d/Makefile.am: New makefile.
 	* green/demo/clustering/kmean1d/kmean1d.cc: New demo.
