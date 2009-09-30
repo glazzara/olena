@@ -61,10 +61,6 @@
 
 # include <mln/topo/is_n_face.hh>
 
-// FIXME: Instead of providing several implementation, move specific
-// parts (neighborhoods, etc.) to a graph_traits class, and write
-// generic version of combine, dilation_e2v, erosion_v2e, etc.
-
 
 /*---------------.
 | Graph traits.  |
@@ -248,191 +244,21 @@ combine(const mln::Image<I>& vertices, const mln::Image<I>& edges)
 | Dilations and erosions.  |
 `-------------------------*/
 
-namespace impl
-{
-  // ------------------------------------------ //
-  // Implementations on (general) 2-complexes.  //
-  // ------------------------------------------ //
+// ----------------------------- //
+// Core dilations and erosions.  //
+// ----------------------------- //
 
-  /* FIXME: By constraining the domain of the input and passing the
-     neighborhood, one should be able to use a truly generic dilation
-     (resp. erosion), or even use Milena's standard morpho::dilation
-     (resp. morpho::erosion).
-  
-     It'd be convenient to write something like this:
-  
-       dilation(ima | vertices);
-  
-     We can /actually/ write this, but `vertices' has to be a predicate
-     on sites (p2b function), which is not efficient, since both
-     vertices and edges will be browsed.
-  
-     It would be very nice if `vertices' could be an actual site set,
-     so that `ima | vertices' creates a morpher smart enough to
-     browse /only/ vertices.  */
+/* Note: When writing
 
-  /// Dilation from edges to vertices (\f$\delta^\bullet\f$) on
-  /// mln::bin_1complex_image2d.
-  inline
-  mln::bin_1complex_image2d
-  dilation_e2v(const mln::bin_1complex_image2d& input)
-  {
-    mln::topo::is_n_face<0> is_0_face;
-    typedef mln_geom_(mln::bin_1complex_image2d) geom_t;
-    typedef mln::complex_higher_window<1, geom_t> v2e_t;
-    const v2e_t v2e;
-    mln::bin_1complex_image2d output(input.domain());
-    mln::data::fill(output, false);
-    mln::data::paste(mln::morpho::dilation(mln::extend(input | is_0_face,
-    						       input),
-    					   v2e),
-    		     output);
-    return output;
-  }
+     dilation(ima | vertices);
 
-  /// Erosion from vertices to edges (\f$\epsilon^\times\f$) on
-  /// mln::bin_1complex_image2d.
-  inline
-  mln::bin_1complex_image2d
-  erosion_v2e(const mln::bin_1complex_image2d& input)
-  {
-    mln::topo::is_n_face<1> is_1_face;
-    typedef mln_geom_(mln::bin_1complex_image2d) geom_t;
-    typedef mln::complex_lower_window<1, geom_t> e2v_t;
-    const e2v_t e2v;
-    mln::bin_1complex_image2d output(input.domain());
-    mln::data::fill(output, false);
-    mln::data::paste(mln::morpho::erosion(mln::extend(input | is_1_face,
-						      input),
-					  e2v),
-    		     output);
-    return output;
-  }
+   `vertices' is a predicate on sites (p2b function), which
+   is not efficient, since both vertices and edges will be browsed.
 
-  /// Erosion from edges to vertices (\f$\epsilon^\bullet\f$) on
-  /// mln::bin_1complex_image2d.
-  inline
-  mln::bin_1complex_image2d
-  erosion_e2v(const mln::bin_1complex_image2d& input)
-  {
-    mln::topo::is_n_face<0> is_0_face;
-    typedef mln_geom_(mln::bin_1complex_image2d) geom_t;
-    typedef mln::complex_higher_window<1, geom_t> v2e_t;
-    const v2e_t v2e;
-    mln::bin_1complex_image2d output(input.domain());
-    mln::data::fill(output, false);
-    mln::data::paste(mln::morpho::erosion(mln::extend(input | is_0_face,
-						      input),
-					  v2e),
-    		     output);
-    return output;
-  }
+   It would be very nice if `vertices' could be an actual site set,
+   so that `ima | vertices' creates a morpher smart enough to
+   browse /only/ vertices.  */
 
-  /// Dilation from vertices to edges (\f$\delta^\times\f$) on
-  /// mln::bin_1complex_image2d.
-  inline
-  mln::bin_1complex_image2d
-  dilation_v2e(const mln::bin_1complex_image2d& input)
-  {
-    mln::topo::is_n_face<1> is_1_face;
-    typedef mln_geom_(mln::bin_1complex_image2d) geom_t;
-    typedef mln::complex_lower_window<1, geom_t> e2v_t;
-    const e2v_t e2v;
-    mln::bin_1complex_image2d output(input.domain());
-    mln::data::fill(output, false);
-    mln::data::paste(mln::morpho::dilation(mln::extend(input | is_1_face,
-						      input),
-					  e2v),
-    		     output);
-    return output;
-  }
-
-  // ------------------------------------------------------------- //
-  // Implementations on (mln::image2d-based) cubical 2-complexes.  //
-  // ------------------------------------------------------------- //
-
-  /// Dilation from edges to vertices (\f$\delta^\bullet\f$) on
-  /// an mln::image2d<T>-based cubical complex.
-  template <typename T>
-  inline
-  mln::image2d<T>
-  dilation_e2v(const mln::image2d<T>& input)
-  {
-    using mln::world::inter_pixel::dim2::is_pixel;
-    using mln::world::inter_pixel::v2e;
-
-    mln::image2d<T> output(input.domain());
-    mln::data::fill(output, false);
-    mln::data::paste(mln::morpho::dilation(mln::extend(input | is_pixel(),
-						       input),
-					   v2e().win()),
-		     output);
-    return output;
-  }
-
-  /// Erosion from vertices to edges (\f$\epsilon^\times\f$) on an
-  /// mln::image2d<T>-based cubical complex.
-  template <typename T>
-  inline
-  mln::image2d<T>
-  erosion_v2e(const mln::image2d<T>& input)
-  {
-    using mln::world::inter_pixel::dim2::is_edge;
-    using mln::world::inter_pixel::e2v;
-
-    mln::image2d<T> output(input.domain());
-    mln::data::fill(output, false);
-    mln::data::paste(mln::morpho::erosion(mln::extend(input | is_edge(),
-						      input),
-					  e2v().win()),
-		     output);
-    return output;
-  }
-
-  /// Erosion from edges to vertices (\f$\epsilon^\bullet\f$) on an
-  /// mln::image2d<T>-based cubical complex.
-  template <typename T>
-  inline
-  mln::image2d<T>
-  erosion_e2v(const mln::image2d<T>& input)
-  {
-    using mln::world::inter_pixel::dim2::is_pixel;
-    using mln::world::inter_pixel::v2e;
-
-    mln::image2d<T> output(input.domain());
-    mln::data::fill(output, false);
-    mln::data::paste(mln::morpho::erosion(mln::extend(input | is_pixel(),
-						      input),
-					  v2e().win()),
-		     output);
-    return output;
-  }
-
-  /// Dilation from vertices to edges (\f$\delta^\times\f$) on an
-  /// mln::image2d<T>-based cubical complex.
-  template <typename T>
-  inline
-  mln::image2d<T>
-  dilation_v2e(const mln::image2d<T>& input)
-  {
-    using mln::world::inter_pixel::dim2::is_edge;
-    using mln::world::inter_pixel::e2v;
-
-    mln::image2d<T> output(input.domain());
-    mln::data::fill(output, false);
-    mln::data::paste(mln::morpho::dilation(mln::extend(input | is_edge(),
-						       input),
-					   e2v().win()),
-		     output);
-    return output;
-  }
-
-}
-
-
-// ------------------------------------------ //
-// Facades of (core) dilations and erosions.  //
-// ------------------------------------------ //
 
 /// Dilation from edges to vertices (\f$\delta^\bullet\f$).
 template <typename I>
@@ -440,7 +266,16 @@ inline
 mln_concrete(I)
 dilation_e2v(const mln::Image<I>& input)
 {
-  return impl::dilation_e2v(mln::exact(input));
+  typedef trait::graph<I> T;
+
+  mln_concrete(I) output;
+  mln::initialize(output, mln::exact(input));
+  mln::data::fill(output, false);
+  mln::data::paste(mln::morpho::dilation(mln::extend(input | T::is_vertex(),
+						       input),
+					   T::v2e()),
+		     output);
+  return output;
 }
 
 /// Erosion from vertices to edges (\f$\epsilon^\times\f$).
@@ -449,7 +284,16 @@ inline
 mln_concrete(I)
 erosion_v2e(const mln::Image<I>& input)
 {
-  return impl::erosion_v2e(mln::exact(input));
+  typedef trait::graph<I> T;
+
+  mln_concrete(I) output;
+  mln::initialize(output, mln::exact(input));
+  mln::data::fill(output, false);
+  mln::data::paste(mln::morpho::erosion(mln::extend(input | T::is_edge(),
+						      input),
+					  T::e2v()),
+		     output);
+  return output;
 }
 
 /// Erosion from edges to vertices (\f$\epsilon^\bullet\f$).
@@ -458,7 +302,16 @@ inline
 mln_concrete(I)
 erosion_e2v(const mln::Image<I>& input)
 {
-  return impl::erosion_e2v(mln::exact(input));
+  typedef trait::graph<I> T;
+
+  mln_concrete(I) output;
+  mln::initialize(output, mln::exact(input));
+  mln::data::fill(output, false);
+  mln::data::paste(mln::morpho::erosion(mln::extend(input | T::is_vertex(),
+						      input),
+					   T::v2e()),
+		     output);
+  return output;
 }
 
 /// Dilation from vertices to edges (\f$\delta^\times\f$).
@@ -467,7 +320,16 @@ inline
 mln_concrete(I)
 dilation_v2e(const mln::Image<I>& input)
 {
-  return impl::dilation_v2e(mln::exact(input));
+  typedef trait::graph<I> T;
+
+  mln_concrete(I) output;
+  mln::initialize(output, mln::exact(input));
+  mln::data::fill(output, false);
+  mln::data::paste(mln::morpho::dilation(mln::extend(input | T::is_edge(),
+						       input),
+					   T::e2v()),
+		     output);
+  return output;
 }
 
 

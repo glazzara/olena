@@ -1,5 +1,26 @@
 2009-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Generic core dilations and erosions on graphs.
+
+	* apps/graph-morpho/morpho.hh
+	(impl::dilation_e2v(const mln::bin_1complex_image2d&))
+	(impl::erosion_v2e(const mln::bin_1complex_image2d&))
+	(impl::erosion_e2v(const mln::bin_1complex_image2d&))
+	(impl::dilation_v2e(const mln::bin_1complex_image2d&))
+	(impl::dilation_e2v(const mln::image2d<T>&))
+	(impl::erosion_v2e(const mln::image2d<T>&))
+	(impl::erosion_e2v(const mln::image2d<T>&))
+	(impl::dilation_v2e(const mln::image2d<T>&)):
+	Remove.
+	(dilation_e2v(const mln::Image<I>&))
+	(erosion_v2e(const mln::Image<I>&))
+	(erosion_e2v(const mln::Image<I>&))
+	(dilation_v2e(const mln::Image<I>&)):
+	Reimplement using Milena's dilation and erosion as well as graph
+	traits.
+
+2009-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add graph traits to apps/graph-morpho.
 
 	* apps/graph-morpho/morpho.hh (trait::graph<I>):
