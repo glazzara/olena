@@ -166,7 +166,7 @@ namespace mln
       inline
       void fill_dispatch(mln::trait::image::category::primary,
 			 mln::trait::image::speed::any,
-			 I& ima, const mln_value(I)& v)
+			 I& /* ima */, const mln_value(I)& /* v */)
       {
 	// No border so no-op.
       }

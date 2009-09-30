@@ -1,5 +1,13 @@
 2009-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Avoid a warning about unused variables in mln::border::fill.
+
+	* mln/border/fill.hh
+	(fill_dispatch(category::primary, speed::any, I&, const mln_value(I)&)):
+	Here.
+
+2009-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Generic core dilations and erosions on graphs.
 
 	* apps/graph-morpho/morpho.hh
