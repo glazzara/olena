@@ -1,5 +1,19 @@
 2009-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add non-centered complex windows.
+
+	* mln/core/image/complex_windows.hh (mln_gen_complex_window):
+	New (generator) macro.
+	(complex_lower_window)
+	(complex_higher_window)
+	(complex_lower_higher_window)
+	(complex_lower_dim_connected_n_face_window)
+	(complex_higher_dim_connected_n_face_window)
+	(complex_m_face_window):
+	New classes.
+
+2009-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Prepare the factoring of complex windows generators.
 
 	* mln/core/image/complex_windows.hh
