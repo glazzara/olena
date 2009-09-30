@@ -31,9 +31,13 @@
 
 # include <cstddef>
 
+# include <algorithm>
 # include <vector>
 
 # include <mln/core/concept/object.hh>
+
+# include <mln/util/ord.hh>
+
 
 namespace mln
 {
@@ -79,6 +83,12 @@ namespace mln
     template <typename P>
     bool
     operator==(const multi_site<P>& lhs, const multi_site<P>& rhs);
+
+    /* FIXME: Required (indirectly) by a postcondition in
+       mln::morpho::dilation.  */
+    template <typename P>
+    bool
+    operator< (const multi_site<P>& lhs, const multi_site<P>& rhs);
 
 
 
@@ -141,6 +151,17 @@ namespace mln
     operator==(const multi_site<P>& lhs, const multi_site<P>& rhs)
     {
       return lhs.sites == rhs.sites;
+    }
+
+    template <typename P>
+    bool
+    operator< (const multi_site<P>& lhs, const multi_site<P>& rhs)
+    {
+      // FIXME: This comparison is meaningless, since LHS and RHS are
+      // not sorted!
+      return std::lexicographical_compare(lhs.sites.begin(), lhs.sites.end(),
+					  rhs.sites.begin(), rhs.sites.end(),
+					  util::ord<P>());
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,5 +1,13 @@
 2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a dummy operator< to mln::util::multi_site<P>.
+
+	* mln/util/multi_site.hh
+	(operator< (const multi_site<P>& lhs, const multi_site<P>& rhs)):
+	New.
+
+2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have mln::topo::is_n_face<B> expose a more tolerant interface.
 
 	* mln/topo/is_n_face.hh
