@@ -172,63 +172,6 @@ namespace trait
 | Vertices-edges combinator.  |
 `----------------------------*/
 
-namespace impl
-{
-  // ------------------------------------------ //
-  // Implementations on (general) 2-complexes.  //
-  // ------------------------------------------ //
-
-  /// Combine the vertices and the edges of two
-  /// mln::bin_1complex_image2d images to create a new graph image
-  /// (``operator'' \f$\ovee\f$)
-  inline
-  mln::bin_1complex_image2d
-  combine(const mln::bin_1complex_image2d& vertices,
-	  const mln::bin_1complex_image2d& edges)
-  {
-    mln_precondition(vertices.domain() == edges.domain());
-
-    mln::bin_1complex_image2d output;
-    mln::initialize(output, vertices);
-    typedef mln_geom_(mln::bin_1complex_image2d) geom_t;
-    mln::p_n_faces_fwd_piter<1, geom_t> v(output.domain(), 0);
-    for_all(v)
-      output(v) = vertices(v);
-    mln::p_n_faces_fwd_piter<1, geom_t> e(output.domain(), 1);
-    for_all(e)
-      output(e) = edges(e);
-    return output;
-  }
-
-  // ------------------------------------------------------------- //
-  // Implementations on (mln::image2d-based) cubical 2-complexes.  //
-  // ------------------------------------------------------------- //
-
-  /// Combine the vertices and the edges of two
-  /// mln::image2d<T> images to create a new graph image
-  /// (``operator'' \f$\ovee\f$)
-  template <typename T>
-  inline
-  mln::image2d<T>
-  combine(const mln::image2d<T>& vertices,
-	  const mln::image2d<T>& edges)
-  {
-    mln_precondition(vertices.domain() == edges.domain());
-    mln::image2d<T> output;
-    mln::initialize(output, vertices);
-    mln::data::fill(output, false);
-    mln::data::paste(vertices | mln::world::inter_pixel::dim2::is_pixel(),
-		     output);
-    mln::data::paste(edges | mln::world::inter_pixel::dim2::is_edge(),
-		     output);
-    return output;
-  }
-}
-
-// -------- //
-// Facade.  //
-// -------- //
-
 /// Combine the vertices and the edges of two images to create a new
 /// graph image (``operator'' \f$\ovee\f$).
 template <typename I>
@@ -236,7 +179,15 @@ inline
 mln_concrete(I)
 combine(const mln::Image<I>& vertices, const mln::Image<I>& edges)
 {
-  return impl::combine(mln::exact(vertices), mln::exact(edges));
+  typedef trait::graph<I> T;
+
+  mln_precondition(vertices.domain() == edges.domain());
+  mln_concrete(I) output;
+  mln::initialize(output, exact(vertices));
+  mln::data::fill(output, false);
+  mln::data::paste(vertices | T::is_vertex(), output);
+  mln::data::paste(edges | T::is_edge(), output);
+  return output;
 }
 
 

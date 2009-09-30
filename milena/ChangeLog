@@ -1,5 +1,16 @@
 2009-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Generic vertices-edges combinator in apps/graph-morpho/.
+
+	* apps/graph-morpho/morpho.hh
+	(combine(const bin_1complex_image2d&, const bin_1complex_image2d&))
+	(combine(const mln::image2d<T>&, const mln::image2d<T>&)):
+	Remove.
+	(combine(const mln::Image<I>&, const mln::Image<I>&)):
+	Reimplement using graph traits.
+
+2009-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Avoid a warning about unused variables in mln::border::fill.
 
 	* mln/border/fill.hh
