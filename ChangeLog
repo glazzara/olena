@@ -1,5 +1,9 @@
 2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* configure.ac: Configure scribo/src/debug.
+
+2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* configure.ac: Configure milena/doc/technical.
 
 2009-09-28  Guillaume Lazzara  <z@lrde.epita.fr>
