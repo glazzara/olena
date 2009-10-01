@@ -102,8 +102,7 @@ RECURSIVE              = YES
 EXCLUDE                = @top_srcdir@/milena/sandbox			\
                          @top_srcdir@/milena/mln/core/concept/proxy.hxx \
                          @top_srcdir@/milena/trash			\
-                         @top_srcdir@/milena/doc/examples/trash		\
-			 @top_srcdir@/milena/doc/examples/split
+                         @top_srcdir@/milena/doc/examples/trash
 EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *spe.hh
 EXCLUDE_SYMBOLS	       =
@@ -114,8 +113,9 @@ EXAMPLE_PATH           = @top_srcdir@/milena/doc/examples	    \
 EXAMPLE_PATTERNS       = *.cc \
 		       	 *.cc.raw
 EXAMPLE_RECURSIVE      = NO
-IMAGE_PATH             = @top_srcdir@/milena/doc/img	    \
-			 @top_srcdir@/milena/doc/figures    \
+IMAGE_PATH             = @top_srcdir@/milena/doc/devel/figures \
+			 @top_srcdir@/milena/doc/img	       \
+			 @top_srcdir@/milena/doc/figures       \
 			 @top_builddir@/milena/doc/figures
 INPUT_FILTER           =
 FILTER_PATTERNS        =

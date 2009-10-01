@@ -1,5 +1,9 @@
 2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/Doxyfile.in Add missing include paths for doc generation.
+
+2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Introduce a technical documentation.
 
 	* doc/Makefile.am: Add technical as subdir.
