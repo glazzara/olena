@@ -1,6 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory (LRDE)
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008,2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,12 +30,12 @@
 ///
 /// \brief Implements the optimized kmean algorithm.
 ///
-/// This algorithm is optimized in the way it proceeds directly with the 
-/// greylevel attribute inspite of pixel attribute. The algorithm is 
-/// independant from the image dimension. But, we have to use to compute
-/// one time the histogram. In fact, we move a recurrent cost to a fix cost
-/// in the complexity. This version is very adapted to image with small
-/// quantification.
+/// This algorithm is optimized in the way it proceeds directly with
+/// the greylevel attribute inspite of the pixel attribute. The
+/// algorithm is independant from the image dimension. But, we have to
+/// compute one time the histogram. In fact, we move a recurrent cost
+/// to a fix cost in the complexity. This version is very adapted to
+/// images with small quantification.
 
 #include <limits.h>
 #include <iostream>
@@ -127,7 +125,7 @@ namespace mln
       /// \param[in] point     : the image as the population of pixels.
       /// \param[in] k_center  : the number of centers.
       /// \param[in] watch_dog : the limit to observe the convergence (10).
-      /// \param[in] n_times   : the number of times that we executed it (10).
+      /// \param[in] n_times   : the number of times that we executed kmean(10).
 
       kmean1d(const t_point_img& point,
 	      const unsigned     k_center,
@@ -165,7 +163,7 @@ namespace mln
       // Testing outputs
       t_color_dbg&    get_color_dbg();
       t_mean_dbg&     get_mean_dbg();
-      t_label_dbg&    get_label_dbg();      
+      t_label_dbg&    get_label_dbg();
 
       t_mean_cnv&     get_mean_cnv();
       t_variance_cnv& get_variance_cnv();
@@ -183,8 +181,8 @@ namespace mln
       /// \{
       /// \brief Two ways: Regular greylevel tick or random greylevel value or.
       ///
-      /// There is two way to proceed the initialization. First of all, we 
-      /// divide the greyscale in regular tick and we assigne them to the mean 
+      /// There is two way to proceed the initialization. First of all, we
+      /// divide the greyscale in regular tick and we assigne them to the mean
       /// of the centers. Finaly, we can ask random initialization along the
       /// greyscale axis. The second process is needed to launch_n_times the
       /// kmean and converge to the best descent.
@@ -195,7 +193,7 @@ namespace mln
 
       /// \}
 
-      
+
       //------------------------------------------------------------------------
       // Computations of distance, group, center, within variance
       //------------------------------------------------------------------------
@@ -206,7 +204,7 @@ namespace mln
       ///
       /// The kmean process is a loop where distance from centers to pixels are
       /// first compute. Then we assign the pixels to their nearest center.
-      /// The new location of each center can then update. Finaly, hommogenity
+      /// The new location of each center can then update. Finaly, hommogeneity
       /// in group is observed by the within variance.
 
       void update_distance();
@@ -220,17 +218,37 @@ namespace mln
       // Main loop
       //------------------------------------------------------------------------
 
+      /// kmean main loop
+      /// \{
+      /// \brief User interface to launch the kmean process.
+      ///
+      /// There are two ways to launch the kmean process. The first one allow to
+      /// run it one time until convergence. As the process is a descent, it
+      /// depends on the initial center locations. The second call allow us to
+      /// rerun the process many times and to keep the best result (the one
+      /// with the smallest within variance).
+
       void launch_one_time();
       void launch_n_times();
 
+      /// \}
 
       //------------------------------------------------------------------------
       // Checking the validiy of the results
       //------------------------------------------------------------------------
 
-      bool is_valid();
-      bool is_number_valid();
-      bool is_descent_valid();      
+      /// Checking the validity of the results.
+      /// \{
+      /// \brief These methods help us to determine the validity of the results.
+      ///
+      /// After each launching the kmean process one time, we need to know if
+      /// the descent was successfull or not. The method is_valid_descent do it
+      /// for us. The method looks for a bad center (a class with no greylevel
+      /// associate to it) and a failure in the convergence.
+
+      bool is_descent_valid();
+
+      /// \}
 
       //------------------------------------------------------------------------
       // Debugging tools
@@ -242,9 +260,11 @@ namespace mln
       ///
       /// The methods build_label_dbg and build_all_dbg work in the input data
       /// space. The first one build the 2d image of labels. The second call the
-      /// first one and then builds the colorize label' image  and the mean 
-      /// greylevel image. 
-      
+      /// first one and then builds the colorize label' image  and the mean
+      /// greylevel image. The update_cnv and finalize_cnv methods are used to
+      /// trace the convergence. They fill two images with the mean info and
+      /// the within variance info along the convergence and the tries.
+
       void build_label_dbg();
       void build_all_dbg();
       void update_cnv();
@@ -264,7 +284,7 @@ namespace mln
       /// that the process will not converge at all. The second parameter
       /// n_times is the number of times we launch again and again the simple
       /// kmean loop. As the kmean process is a descent, restarting the process
-      /// from different location will confort us in that we found a global 
+      /// from different location will confort us in that we found a global
       /// minima, not just a local one.
 
       unsigned       _k_center;
@@ -277,14 +297,19 @@ namespace mln
       /// \{
       /// \brief This information is used to follow the convergence.
       ///
-      /// The within_variance is the homogenity indicator for the kmean process.
-      /// The ideal situation is to find the center with the minimum variance
-      /// around them. The within variance is just the sum of all variance 
-      /// around the centers. The current_step variable allows us to remember
-      /// the current iteration in the kmean loop. This information is needed
-      /// by is_descent_valid routine which decide if convergence occurs or not.
-      /// The last information, current_launching, traces the progress while
-      /// iterates kmean loop again and again.
+      /// The within_variance is the homogeniety indicator for the
+      /// kmean process.  The ideal situation is to find the center
+      /// with the minimum variance around them. The within variance
+      /// is just the sum of all variance around the centers. The
+      /// current_step variable allows us to remember the current
+      /// iteration in the kmean loop. This information is needed by
+      /// is_descent_valid routine which decide if convergence occurs
+      /// or not. The current_step info explicit where we are in the
+      /// kmean iteration. The last information, current_launching,
+      /// traces the progress while iterates kmean loop again and
+      /// again. The flag is_number_valid is set when a empty class
+      /// appears.  This flag inhibit the process and force to restart
+      /// a try.
 
       t_result       _within_variance;
       unsigned       _current_step;
@@ -298,9 +323,9 @@ namespace mln
       /// Result of the kmean process.
       /// \{
       /// \brief The center location are the major results of the kmean process.
-      /// 
+      ///
       /// The kmean process result is composed by three information. The best
-      /// launching iteration, the best within variance obtained and the 
+      /// launching iteration, the best within variance obtained and the
       /// location of the centers associated.
 
       unsigned        _launching_min;
@@ -323,7 +348,7 @@ namespace mln
       /// \{
       /// \brief Centers are described by the first moment of their group.
       ///
-      /// Centers are describe by their group attributes like the number of 
+      /// Centers are describe by their group attributes like the number of
       /// pixels wich are relying on, the mass center of the group and the
       /// homogeneity of the group. The variance is used as indicator for the
       /// convergence. The number of pixels is used as integrity indicator.
@@ -340,8 +365,8 @@ namespace mln
       /// \{
       /// \brief The information are concerned with the greylevel input image.
       ///
-      /// The group image allow us to decide which greylevel (and of course 
-      /// which pixel) is assigned to a center. The distance image give us a 
+      /// The group image allow us to decide which greylevel (and of course
+      /// which pixel) is assigned to a center. The distance image give us a
       /// clue on how a greylevel could contribute to a center. The summation
       /// over the greylevels of a center give us the within variance.
 
@@ -349,7 +374,7 @@ namespace mln
       t_distance_img _distance; // label x graylevel
 
       /// \}
-      
+
       /// Debugging, calibrating and testing results.
       /// \{
       /// \brief Some exports information to control the results.
@@ -652,7 +677,7 @@ namespace mln
     //--------------------------------------------------------------------------
     // Initialization of centers
     //--------------------------------------------------------------------------
-   
+
     template <typename T, unsigned n>
     inline
     void kmean1d<T,n>::init_mean_regular()
@@ -660,7 +685,7 @@ namespace mln
       trace::entering("mln::clustering::kmean1d::init_mean_regular");
       T  step = (mln_max(t_value) - mln_min(t_value)) / (_k_center-1);
       mln_piter(image1d<t_value>) l(_mean.domain());
-      
+
       for_all(l)
       {
 	_mean(l) = (l.ind()*step) + mln_min(t_value);
@@ -668,7 +693,7 @@ namespace mln
 
       trace::exiting("mln::clustering::kmean1d<T,n,k>::init_mean_regular");
     }
-    
+
 
     template <typename T, unsigned n>
     inline
@@ -684,9 +709,9 @@ namespace mln
       {
 	_mean(l) = (rand() % (max-min)) + min;
 
-	std::cout << "mean" << l << " : " << _mean(l) << std::endl;
+	//std::cout << "mean" << l << " : " << _mean(l) << std::endl;
       }
-	      
+
       trace::exiting("mln::clustering::kmean1d::init_mean_random");
     }
 
@@ -755,12 +780,12 @@ namespace mln
 	    label = l.ind();
 	  }
 
-	  //std::cout << "d" << l << " = " << 
+	  //std::cout << "d" << l << " = " <<
 	  //  _distance(point2d(g.ind(), l.ind())) << std::endl;
 	}
 
 	//std::cout << "g = " << g << std::endl;
-	
+
 	_group(g) =  label;
 	//std::cout << "group = " << _group(g) << std::endl;
 	//std::cout << "-----------" << std::endl;
@@ -783,7 +808,7 @@ namespace mln
       //
       // Vg in [0..255]
       // si w[g] = l
-      //    c[l] += g
+      //    c[l] += h(g) * g
       //    n[l] += h(g)
       //
       // c[l] /= n
@@ -800,7 +825,7 @@ namespace mln
       }
 
       mln_piter(t_mean_img)       l(_mean.domain());
-      
+
       /*
       for_all(l)
       {
@@ -810,7 +835,7 @@ namespace mln
       */
       for_all(l)
       {
-	// State the stopping propagation Nan flag 
+	// State the stopping propagation Nan flag
 	_is_number_valid = (0 != _number(l));
 
 	// Emergency exit
@@ -821,7 +846,7 @@ namespace mln
 	_mean(l) /= _number(l);
 
 	// Debugging
-	std::cout << "c" << l << " = " << _mean(l) << std::endl;
+	//std::cout << "c" << l << " = " << _mean(l) << std::endl;
       }
 
       trace::exiting("mln::clustering::kmean1d::update_mean");
@@ -849,7 +874,7 @@ namespace mln
 	}
 
 	_within_variance += _variance(l);
-	std::cout << "v(" << l << ") = " << _variance(l) << std::endl;
+	//std::cout << "v(" << l << ") = " << _variance(l) << std::endl;
       }
 
       //std::cout << "result" << result << std::endl;
@@ -869,12 +894,12 @@ namespace mln
 
       mln_piter(t_point_img) pi(_point.domain());
       mln_piter(t_label_dbg) po(_label_dbg.domain());
-      
+
       for_all_2(pi, po)
 	{
 	  t_value    val = _point(pi);
 	  t_label    grp = _group(point1d(val));
-	  
+
 	  _label_dbg(po) = grp;
 	}
 
@@ -900,14 +925,14 @@ namespace mln
     {
       trace::entering("mln::clustering::kmean1d::update_cnv");
 
-      _variance_cnv(point2d(_current_launching, 
+      _variance_cnv(point2d(_current_launching,
 			    _current_step))  = _within_variance;
 
       mln_piter(t_mean_img) l(_mean.domain());
-      
+
       for_all(l)
       {
-	_mean_cnv(point3d(_current_launching, 
+	_mean_cnv(point3d(_current_launching,
 			  l.ind(),
 			  _current_step)) = _mean(l);
       }
@@ -924,7 +949,7 @@ namespace mln
       // saturate the curv with the within variance
       for (unsigned i = _current_step; i < _watch_dog; ++i)
 	_variance_cnv(point2d(_current_launching, i))  = _within_variance;
-      
+
       for (unsigned i = _current_step; i < _watch_dog; ++i)
       {
 	mln_piter(t_mean_img) l(_mean.domain());
@@ -954,18 +979,7 @@ namespace mln
       trace::exiting("mln::clustering::kmean1d::is_descent_valid");
       return result;
     }
-  
-    template <typename T, unsigned n>
-    inline
-    bool kmean1d<T,n>::is_number_valid()
-    {
-      trace::entering("mln::clustering::kmean1d::is_valid");
 
-      bool result = _is_number_valid;      
-
-      trace::exiting("mln::clustering::kmean1d::is_valid");
-      return result;
-    }
 
     //--------------------------------------------------------------------------
     // Main loop
@@ -977,7 +991,7 @@ namespace mln
     {
       trace::entering("mln::clustering::kmean1d::launch_one_time");
 
-      std::cout << "----------------------------------------" << std::endl;
+      //std::cout << "----------------------------------------" << std::endl;
 
       // Initialization to start the descent
       t_result old_variance   = mln_max(t_result);
@@ -988,7 +1002,7 @@ namespace mln
       init_mean();
       update_distance();
 
-      std::cout << "first_variance : " << old_variance << std::endl;
+      //std::cout << "first_variance : " << old_variance << std::endl;
 
       // Execute the descent
       do
@@ -1009,31 +1023,29 @@ namespace mln
 	// Debugging code
 	update_cnv();
 
-	std::cout << "_current_step    : " << _current_step    << std::endl;
-	std::cout << "_within_variance : " << _within_variance << std::endl;
+	//std::cout << "_current_step    : " << _current_step    << std::endl;
+	//std::cout << "_within_variance : " << _within_variance << std::endl;
 
 	++_current_step;
       }
       while (_current_step < _watch_dog && _within_variance < old_variance);
 
-      std::cout << "----------------------------------------" << std::endl;
+      //std::cout << "----------------------------------------" << std::endl;
 
       finalize_cnv();
 
       trace::exiting("mln::clustering::kmean1d::launch_one_time");
     }
 
-    /// FIXME There is a risk of infinite loop if convergence is not observed
-    /// FIXME What do we prefer, bad results or infinite loop ?
 
     template <typename T, unsigned n>
     inline
     void kmean1d<T,n>::launch_n_times()
     {
       trace::entering("mln::clustering::kmean1d::launch_n_times");
-      
-      std::cout << "watch_dog : " << _watch_dog << std::endl;
-      std::cout << "n_times   : " << _n_times   << std::endl;
+
+      //std::cout << "watch_dog : " << _watch_dog << std::endl;
+      //std::cout << "n_times   : " << _n_times   << std::endl;
 
       // number of times we reexecute launch_one_time without any success
       unsigned tries     = 0;
@@ -1054,15 +1066,15 @@ namespace mln
 	    _mean_min      = _mean;
 	    _launching_min = _current_launching;
 	  }
-	  
+
 	  // Reinitialize the number of echecs possible
 	  tries = 0;
 
-	  std::cout << "_current_launching : " << _current_launching
-		    << std::endl;
+	  //std::cout << "_current_launching : " << _current_launching
+	  //	    << std::endl;
 
-	  std::cout << "within_variance[" << _current_launching << "] = " 
-		    << _within_variance << std::endl;
+	  //std::cout << "within_variance[" << _current_launching << "] = "
+	  //	    << _within_variance << std::endl;
 
 	  ++_current_launching;
 	}

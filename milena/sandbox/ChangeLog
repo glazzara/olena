@@ -1,3 +1,9 @@
+2009-10-01  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Correct typo, update documentation and comment debugging outputs.
+
+	* green/mln/clustering/kmean1d.hh: Do minor modifications.
+
 2009-09-30  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	First draft for loading and saving example codes for the
@@ -9,18 +15,18 @@
 
 2009-09-29  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
-	Fix behaviour when empty class appears. Fix methods order of the 
+	Fix behaviour when empty class appears. Fix methods order of the
 	kmean1d loop.
 
 	* green/mln/clustering/kmean1d.hh
 	(update_kmean, launch_one_time, is_valid, is_descent_valid): Introduce
 	_is_number_valid which turns to false when empty class appears.
-	
+
 	* green/mln/clustering/kmean1d.hh
 	(launch_one_time): Fix method call order in kmean's loop.
-	
+
 	* green/mln/clustering/kmean1d.hh
-	(launch_n_times): Introduce nb_tries that garanties to be infinite 
+	(launch_n_times): Introduce nb_tries that garanties to be infinite
 	loop safe.
 
 	Update kmean.launch_n_times method call.
