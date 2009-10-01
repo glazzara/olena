@@ -21,6 +21,7 @@ include $(top_srcdir)/scribo/scribo.mk
 
 SUBDIRS =					\
   binarization 					\
+  debug 					\
   primitive 					\
   filter 					\
   misc 						\

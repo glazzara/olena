@@ -1,5 +1,19 @@
 2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	New debugging tools for Scribo.
+
+	* src/Makefile.am: Add debug as subdir.
+
+	* src/debug/Makefile.am,
+	* src/debug/show_left_right_links_validation.cc,
+	* src/debug/show_link_single_left.cc,
+	* src/debug/show_link_single_right.cc,
+	* src/debug/show_objects_large.cc,
+	* src/debug/show_objects_small.cc,
+	* src/debug/show_objects_thin.cc: New.
+
+2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Few improvements in Scribo.
 
 	* debug/usage.hh: Improve output.
