@@ -15,8 +15,9 @@
 Divers binaires pour convertir des images.
 Par exemple, `dumpi12_to_pgm' convertit un dump en int_u12 en une image PGM.
 
-./binarization/ (Deprecated)
+./binarization/
 ===============
+Calcule l'interligne median pour ICDAR.
 
 ./dcmtk/
 ========
@@ -25,7 +26,86 @@ Abandonne au profit de GDCM (bibliotheque pour le format DICOM).
 
 ./igr/
 ======
+      all_labels2gif.sh : cree des animations pour visualiser les labels dans une
+			  image temporelle
 
+      check*.sh : scripts pour tester des traitements, generalement la chaine de
+		  traitement est crop -> gradient -> fermeture -> watershed
+      
+      clo_vol.cc : fermeture de volume
+
+      crop.cc : crop :)
+
+      dist_edges.cc : calcule une distance entre 2 edges dans une image inter-pixel
+
+      filter.cc
+
+      filter_morpho_us.cc
+
+      fun_labels.cc
+
+      fun_labels.sh
+
+      grad.cc
+
+      graph.cc
+
+      igr.cc
+
+      label2gif.cc
+
+      launch2d.sh
+
+      launch3d.sh
+
+      launch.sh
+
+      maj.cc
+
+      matlab.cc
+
+      mean_median_label.cc
+
+      mean_slices.cc
+
+      med.cc
+
+      min_max_float.cc
+
+      nbasins_check.sh
+
+      nbasins_finder.cc
+
+      norm.cc
+
+      plot_label.hh
+
+      seg2d.cc
+
+      seg3d.cc
+
+      seg_vol_irm.hh
+
+      segment_us_morpho.sh
+
+      thres.cc
+
+      time_max.cc
+
+      time_max_norm.cc
+
+      tmax.sh
+
+      watershed2d.cc
+
+      watershed3d.cc
+
+      watershed.hh
+
+      wst.cc
+
+      wst_edges.cc
+      
       ./igr/color
       ===========
 
@@ -54,7 +134,7 @@ Abandonne au profit de GDCM (bibliotheque pour le format DICOM).
 ./magick/ (Deprecated)
 =========
 Premiers tests pour support ImageMagick.
-Ce support a ete deplace dans mln/io/magick
+Le support ImageMagick est maintenant dans mln/io/magick
 
 ./mln/
 ======
