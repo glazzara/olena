@@ -34,7 +34,7 @@
 
 # include <mln/math/abs.hh>
 
-# include "apps/graph-morpho/io.hh"
+# include "apps/graph-morpho/make.hh"
 
 
 namespace convert
@@ -132,7 +132,7 @@ namespace convert
     // consider only vertices (edges are set ``between'' vertices).
     box2d output_box(input_box.nrows() / 2 + 1,
 		     input_box.ncols() / 2 + 1);
-    bin_1complex_image2d output = build_regular_complex1d_image(output_box);
+    bin_1complex_image2d output = ::make::complex1d_image<bool>(output_box);
 
     const unsigned dim = 1;
     typedef geom::complex_geometry<dim, point2d> geom_t;

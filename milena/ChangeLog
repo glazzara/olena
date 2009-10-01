@@ -1,5 +1,16 @@
 2009-10-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Clean up a creation routine in graph-morpho.
+
+	* apps/graph-morpho/io.hh: Rename as...
+	* apps/graph-morpho/make.hh: ...this.
+	(build_regular_complex1d_image): Turn into...
+	(make::complex1d_image<V>): ...this.
+	* apps/graph-morpho/convert.hh: Adjust client.
+	* apps/graph-morpho/Makefile.am (noinst_HEADERS): s/io.hh/make.hh/.
+
+2009-10-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Clean up another conversion routine in graph-morpho.
 
 	* apps/graph-morpho/io.hh (make_regular_complex1d_image):
