@@ -1,0 +1,234 @@
+%% Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+%%
+%% This file is part of Olena.
+%%
+%% Olena is free software: you can redistribute it and/or modify it under
+%% the terms of the GNU General Public License as published by the Free
+%% Software Foundation, version 2 of the License.
+%%
+%% Olena is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+%% General Public License for more details.
+%%
+%% You should have received a copy of the GNU General Public License
+%% along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Milena's technical documentation. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass{report}
+
+%\usepackage{hevea}
+
+\usepackage{html}
+\usepackage{graphicx}
+\usepackage{makeidx}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{pgf}
+\usepackage{hyperref}
+\usepackage{doxyfuns}
+\usepackage{milena}
+
+\title{Milena -- Technical documentation}
+\author{LRDE}
+\date{}
+\makeindex
+
+\begin{document}
+
+
+% Doxygen use only - Generate the left menu.
+%Write foreword below.
+\begin{htmlonly}
+\backslash endhtmlonly
+
+\backslash page techdoc Technical Documentation
+- \backslash subpage codingstyle
+- \backslash subpage extendlib
+- \backslash subpage ressources
+\backslash htmlonly
+\end{htmlonly}
+
+
+
+\begin{latexonly}
+\maketitle
+
+%===============================================================
+\chapter*{Copyright}
+
+Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+
+
+This document is part of Olena.
+
+
+Olena is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation, version 2 of the License.
+
+
+Olena is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+for more details.
+
+
+You should have received a copy of the GNU General Public License
+along with Olena.  If not, see $<$http://www.gnu.org/licenses/$>$.
+
+
+\tableofcontents
+\end{latexonly}
+
+
+
+
+
+%===============================================================
+\doxychapter{codingstyle}{Coding Style}
+
+The coding style is going to be updated. However, there are few
+reference documents available here:
+
+\begin{itemize}
+  \item https://trac.lrde.org/olena/wiki/CodingStyle
+
+  \item https://olena.lrde.epita.fr/cgi-bin/twiki/view/Olena/CodingStyle010
+\end{itemize}
+
+
+
+
+
+%===============================================================
+\doxychapter{extendlib}{Extend the Library}
+
+
+
+%***************************************************************
+\doxysection{newvaluetype}{Add a new image value type}
+
+%  - classes parentes/de base
+%  - Ajouts d'operateurs associes
+
+
+%***************************************************************
+\doxysection{newimagetype}{Add a new image type}
+
+
+
+%***************************************************************
+\clearpage
+\doxysection{newroutine}{Add a new routine}
+
+
+Writing a new routine in Milena requires a specific layout in the
+code. This layout is described in figure \ref{figures/file_layout}.
+
+\begin{center}
+  \doxyimg{figures/file_layout}{8cm}
+\end{center}
+
+
+For a better understanding, we are going to comment this figure
+(fig. \ref{figures/file_layout}) from the bottom to the top.
+
+\begin{itemize}
+  \item \textbf{Facade}. The facade is the public routine that will be
+    called by the user. It \should not contains any processing code
+    but call dispatch routines. It \must be fully generic.
+
+    An example:
+    \doxyrawcode{devel/facade}
+
+
+  \item \textbf{Implementation dispatch}. According to specific
+    information, the dispatch will call the proper implementation of
+    the algorithm. The dispatch is almost always static. It might
+    contains dynamic dispatch in very specific cases. Dispatch
+    function names are composed of the routine name with
+    ``\_dispatch'' appended to it.
+    Dispatch entry point routine must have the same prototype as the
+    facade.
+    Dispatch routines are not intended to be called by the user.
+
+    An example:
+    \doxyrawcode{devel/dispatch}
+
+
+  \item \textbf{Specific implementation}. Implementation routine are
+    intended to be called by the user. Thus, they must have an
+    explicit name of what they do and what they take as
+    parameter. They implement de processing code which may be specific
+    for certain types.
+    \var{namespace impl} may also have a sub namespace called
+    \var{generic} for the generic algorithm.
+
+    An example:
+    \doxyrawcode{devel/impl}
+
+
+  \item \textbf{Shared tests and internal routines}. This is the right
+    place to move all the internal routines related to this new
+    routine. They will be hidden to the user.
+
+
+  \item \textbf{Facade prototype}. This is what the user should see
+    first if the file is edited. The documentation should be written
+    here.
+\end{itemize}
+
+
+Note that all parts of the file except the ``facade prototype'' are included between \var{MLN\_INCLUDE\_ONLY} guards.
+
+
+%===============================================================
+\doxychapter{ressources}{Developer Ressources}
+
+
+%***************************************************************
+\doxysection{quality}{Project Quality}
+
+\begin{itemize}
+  \item QA Center : https://trac.lrde.org/olena/wiki/QACenter
+  \item Buildbot : https://buildfarm.lrde.org/buildfarm/oln/
+  \item Trac : http://trac.lrde.org/olena
+\end{itemize}
+
+
+%***************************************************************
+\doxysection{qna}{Questions and Answers}
+
+The best way to keep in touch with the latest patches or ask your
+questions is to subscribe to our mailing lists.
+
+Currently four mailing-lists are available:
+
+\begin{tabular}{l l}
+  \textbf{Olena}		& Discussion about the project Olena  \\
+  \textbf{Olena-bugs}	& Bugs from Olena projects	      \\
+  \textbf{Olena-core}	& Internal list for the Olena project \\
+  \textbf{Olena-patches}	& patches for the Olena project	      \\
+\end{tabular}
+
+You can subscribe to these mailing lists at the following address:
+
+\begin{center}
+\begin{verbatim}
+https://www.lrde.epita.fr/mailman/listinfo/
+\end{verbatim}
+\end{center}
+
+Just click on the name of the mailing list you want to subscribe to
+and fill out the form.
+
+
+\end{document}

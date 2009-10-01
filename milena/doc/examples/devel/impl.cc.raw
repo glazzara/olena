@@ -1,0 +1,40 @@
+namespace impl
+{
+
+  namespace generic
+  {
+
+    template <typename I, typename N>
+    mln_concrete(I)
+    erosion_tolerant_on_set(const Image<I>& input_,
+  			    const Neighborhood<N>& nbh_,
+  			    unsigned rank)
+    {
+      trace::entering("impl::generic::erosion_tolerant");
+
+      // Do it...
+
+      trace::exiting("impl::generic::erosion_tolerant");
+      return output;
+    }
+
+  }
+
+
+  template <typename I, typename N>
+  mln_concrete(I)
+  erosion_tolerant_on_set_fastest(const Image<I>& input_,
+				  const Neighborhood<N>& nbh_,
+				  unsigned rank)
+  {
+    trace::entering("impl::erosion_tolerant_on_set_fastest");
+
+
+    // Do it...
+
+    trace::exiting("impl::erosion_tolerant_on_set_fastest");
+    return output;
+  }
+
+
+} // end of namespace impl

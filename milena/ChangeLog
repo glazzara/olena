@@ -1,5 +1,23 @@
 2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce a technical documentation.
+
+	* doc/Makefile.am: Add technical as subdir.
+
+	* doc/doxyfuns.sty: Do not force the use of png images.
+
+	* doc/examples/devel/dispatch.cc.raw,
+	* doc/examples/devel/facade.cc.raw,
+	* doc/examples/devel/impl.cc.raw: New. Examples used in the
+	developer documentation.
+
+	* doc/technical/Makefile.am,
+	* doc/technical/figures/file_layout.pdf,
+	* doc/technical/figures/file_layout.png,
+	* doc/technical/technical.tex: New.
+
+2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* doc/ref_guide/ref_guide.tex: Add a new section about common compilation errors.
 
 2009-10-01  Roland Levillain  <roland@lrde.epita.fr>

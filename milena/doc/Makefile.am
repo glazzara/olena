@@ -23,6 +23,7 @@ include $(top_srcdir)/milena/doc/doc.mk
 SUBDIRS =		\
   examples		\
   ref_guide		\
+  technical 		\
   tutorial 		\
   white_paper
 
