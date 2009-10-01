@@ -1,3 +1,12 @@
+2009-09-30  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	First draft for loading and saving example codes for the
+	quick_tour milena documentation.
+
+	* green/doc/example/io: New directory.
+	* green/doc/example/io/Makefile.am: New makefile.
+	* green/doc/example/io/io.cc: New code example.
+
 2009-09-29  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Fix behaviour when empty class appears. Fix methods order of the 
