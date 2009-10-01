@@ -125,6 +125,7 @@ namespace mln
 
       /// \brief Constructor
       /// \param[in] point     : the image as the population of pixels.
+      /// \param[in] k_center  : the number of centers.
       /// \param[in] watch_dog : the limit to observe the convergence (10).
       /// \param[in] n_times   : the number of times that we executed it (10).
 
@@ -228,6 +229,7 @@ namespace mln
       //------------------------------------------------------------------------
 
       bool is_valid();
+      bool is_number_valid();
       bool is_descent_valid();      
 
       //------------------------------------------------------------------------
@@ -287,6 +289,9 @@ namespace mln
       t_result       _within_variance;
       unsigned       _current_step;
       unsigned       _current_launching;
+      bool           _is_number_valid;
+
+      static const unsigned _N_TRIES = 3;
 
       /// \}
 
@@ -384,8 +389,6 @@ namespace mln
     // Constructor
     //--------------------------------------------------------------------------
 
-    /// FIXME k must be a parameter, not a static compilation paramater.
-
     template <typename T, unsigned n>
     inline
     kmean1d<T,n>::kmean1d(const t_point_img& point,
@@ -396,12 +399,15 @@ namespace mln
       trace::entering("mln::clustering::kmean1d::kmean1d");
       mln_precondition(point.is_valid());
 
-      _k_center  = k_center;
-      _watch_dog = watch_dog;
-      _n_times   = n_times;
+      _k_center        = k_center;
+      _watch_dog       = watch_dog;
+      _n_times         = n_times;
 
-      _point     = point;
-      _histo     = data::compute(accu::meta::stat::histo1d(), _point);
+      _point           = point;
+      _histo           = data::compute(accu::meta::stat::histo1d(), _point);
+
+      // Results aren't valid since they aren't available
+      _is_number_valid = false;
 
       _number.init_(box1d(point1d(0),point1d(_k_center-1)));
       _mean.init_(box1d(point1d(0),point1d(_k_center-1)));
@@ -804,7 +810,17 @@ namespace mln
       */
       for_all(l)
       {
+	// State the stopping propagation Nan flag 
+	_is_number_valid = (0 != _number(l));
+
+	// Emergency exit
+	if (!_is_number_valid)
+	  break;
+
+	// Compute the mean
 	_mean(l) /= _number(l);
+
+	// Debugging
 	std::cout << "c" << l << " = " << _mean(l) << std::endl;
       }
 
@@ -932,44 +948,28 @@ namespace mln
     bool kmean1d<T,n>::is_descent_valid()
     {
       trace::entering("mln::clustering::kmean1d::is_descent_valid");
-      bool result = true;
 
-      mln_piter(t_number_img) l(_number.domain());
-      
-      for_all(l)
-      {
-	result = result && (_number(l) != 0.0);
-      }
-
-      result = result && (_current_step < _watch_dog);
+      bool result = _is_number_valid && (_current_step < _watch_dog);
 
       trace::exiting("mln::clustering::kmean1d::is_descent_valid");
       return result;
     }
-
+  
     template <typename T, unsigned n>
     inline
-    bool kmean1d<T,n>::is_valid()
+    bool kmean1d<T,n>::is_number_valid()
     {
       trace::entering("mln::clustering::kmean1d::is_valid");
-      bool result = true;
 
-      mln_piter(t_number_img) l(_number.domain());
-      
-      for_all(l)
-      {
-	result = result && (_number(l) != 0.0);
-      }
+      bool result = _is_number_valid;      
 
       trace::exiting("mln::clustering::kmean1d::is_valid");
       return result;
     }
-  
 
     //--------------------------------------------------------------------------
     // Main loop
     //--------------------------------------------------------------------------
-
 
     template <typename T, unsigned n>
     inline
@@ -981,33 +981,40 @@ namespace mln
 
       // Initialization to start the descent
       t_result old_variance   = mln_max(t_result);
+      _within_variance        = mln_max(t_result);
+      _current_step           = 0;
 
-      // Choose random points and compute within variance
+      // Build the first group and evaluate its caharacteristics
       init_mean();
       update_distance();
-      update_group();
-      update_variance(); // update _within_variance
 
-      std::cout << "first_variance : " << _within_variance << std::endl;
+      std::cout << "first_variance : " << old_variance << std::endl;
 
       // Execute the descent
-      for (_current_step = 0;
-	   _current_step < _watch_dog && _within_variance < old_variance;
-	   ++_current_step)
+      do
       {
 	old_variance = _within_variance;
 
-	update_mean();
-	update_distance();
 	update_group();
+	update_mean(); // update _is_number_valid
+
+	// Stopping Nan propagation
+	if (!_is_number_valid)
+	  break;
+
+	update_distance();
 	update_variance(); // update _within_variance
 
-	// debugging code
+
+	// Debugging code
 	update_cnv();
 
 	std::cout << "_current_step    : " << _current_step    << std::endl;
 	std::cout << "_within_variance : " << _within_variance << std::endl;
+
+	++_current_step;
       }
+      while (_current_step < _watch_dog && _within_variance < old_variance);
 
       std::cout << "----------------------------------------" << std::endl;
 
@@ -1015,6 +1022,9 @@ namespace mln
 
       trace::exiting("mln::clustering::kmean1d::launch_one_time");
     }
+
+    /// FIXME There is a risk of infinite loop if convergence is not observed
+    /// FIXME What do we prefer, bad results or infinite loop ?
 
     template <typename T, unsigned n>
     inline
@@ -1025,6 +1035,9 @@ namespace mln
       std::cout << "watch_dog : " << _watch_dog << std::endl;
       std::cout << "n_times   : " << _n_times   << std::endl;
 
+      // number of times we reexecute launch_one_time without any success
+      unsigned tries     = 0;
+
       _variance_min      = mln_max(t_result);
       _current_launching = 0;
 
@@ -1033,7 +1046,7 @@ namespace mln
       {
 	launch_one_time();
 
-	if (is_descent_valid())
+	if (is_descent_valid() || _N_TRIES < tries)
 	{
 	  if (_within_variance < _variance_min)
 	  {
@@ -1042,6 +1055,9 @@ namespace mln
 	    _launching_min = _current_launching;
 	  }
 	  
+	  // Reinitialize the number of echecs possible
+	  tries = 0;
+
 	  std::cout << "_current_launching : " << _current_launching
 		    << std::endl;
 
@@ -1050,7 +1066,12 @@ namespace mln
 
 	  ++_current_launching;
 	}
+	else
+	  ++tries;
       }
+
+      //Debugging code
+      build_all_dbg();
 
       trace::exiting("mln::clustering::kmean1d::launch_n_times");
     }

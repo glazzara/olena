@@ -1,3 +1,24 @@
+2009-09-29  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Fix behaviour when empty class appears. Fix methods order of the 
+	kmean1d loop.
+
+	* green/mln/clustering/kmean1d.hh
+	(update_kmean, launch_one_time, is_valid, is_descent_valid): Introduce
+	_is_number_valid which turns to false when empty class appears.
+	
+	* green/mln/clustering/kmean1d.hh
+	(launch_one_time): Fix method call order in kmean's loop.
+	
+	* green/mln/clustering/kmean1d.hh
+	(launch_n_times): Introduce nb_tries that garanties to be infinite 
+	loop safe.
+
+	Update kmean.launch_n_times method call.
+
+	* green/demo/clustering/kmean1d/kmean1d.cc
+	(do_demo): Add comments.
+
 2009-09-29  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Update benchmark for types of image.

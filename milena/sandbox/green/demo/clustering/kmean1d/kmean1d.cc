@@ -42,7 +42,9 @@ void do_demo(const std::string& image,
   //mln::trace::quiet = false;
 
   kmean.launch_n_times();
-  
+
+  // Not safe because we don't test kmean.is_valid()
+
   t_kmean::t_color_dbg    color_img    = kmean.get_color_dbg();
   t_kmean::t_mean_dbg     mean_img     = kmean.get_mean_dbg();
   t_kmean::t_label_dbg    label_img    = kmean.get_label_dbg();
