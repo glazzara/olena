@@ -87,8 +87,8 @@ namespace scribo
       mlc_equal(mln_value(I), bool)::check();
 
       image2d<bool>
-	bhlines = scribo::primitive::extract::lines_h_pattern(input, 51),
-	bvlines = scribo::primitive::extract::lines_v_pattern(input, 51);
+	bhlines = scribo::primitive::extract::lines_h_pattern(input, 51, 3),
+	bvlines = scribo::primitive::extract::lines_v_pattern(input, 51, 3);
 
       V nhlines, nvlines;
       object_image(mln_ch_value(I,V))

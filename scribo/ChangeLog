@@ -1,5 +1,9 @@
 2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* table/extract.hh: Fix invalid calls to lines_*_pattern.
+
+2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	New debugging tools for Scribo.
 
 	* src/Makefile.am: Add debug as subdir.
