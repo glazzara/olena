@@ -79,9 +79,9 @@ namespace scribo
 	mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
 	mln_assertion(lbl.is_valid());
 
-	if (lbl.domain().has(p) // Not outside image domain
-	    && lbl(p) != literal::zero // Not the background
-	    && lbl(p) != i // Not the current component
+	if (lbl.domain().has(p)         // Not outside image domain
+	    && lbl(p) != literal::zero  // Not the background
+	    && lbl(p) != i              // Not the current component
 	    && (math::abs(p.col() - c.col())) < dmax // Not too far
 	    && link_array[lbl(p)] != i) // Not creating a loop
 	  link_array[i] = lbl(p);

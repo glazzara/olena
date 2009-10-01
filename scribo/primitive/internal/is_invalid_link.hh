@@ -23,25 +23,18 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_INTERNAL_FIND_RIGHT_LINK_HH
-# define SCRIBO_PRIMITIVE_INTERNAL_FIND_RIGHT_LINK_HH
+#ifndef SCRIBO_PRIMITIVE_INTERNAL_IS_INVALID_LINK_HH
+# define SCRIBO_PRIMITIVE_INTERNAL_IS_INVALID_LINK_HH
 
 /// \file
 ///
-/// Find the right neighbor of a line of text if exists.
+/// Check whether an objects link is invalid or not.
 
-# include <mln/core/concept/image.hh>
 
 # include <mln/math/abs.hh>
-
-# include <mln/util/array.hh>
+# include <mln/literal/zero.hh>
 
 # include <scribo/core/object_image.hh>
-# include <scribo/primitive/internal/update_link_array.hh>
-# include <scribo/primitive/internal/is_invalid_link.hh>
-
-//FIXME: not generic.
-# include <mln/core/alias/dpoint2d.hh>
 
 namespace scribo
 {
@@ -52,51 +45,55 @@ namespace scribo
     namespace internal
     {
 
-      /// Find the right neighbor of a line of text if exists.
+      using namespace mln;
+
+
+      /// Check whether an objects link is invalid or not.
       ///
-      /// \param objects An image of objects.
-      /// \param right_link The right neighbors.
-      /// \param current_comp A text line id.
-      /// \param dmax The maximum lookup distance.
-      /// \param c The lookup start point.
+      /// \param objects      An image of objects.
+      /// \param left_link    The left neighbors.
+      /// \param p            The current site.
+      /// \param current_comp The current object id.
+      /// \param c            The left link start point.
+      /// \param dmax         The maximum lookup distance.
       //
       template <typename L>
-      void
-      find_right_link(const object_image(L)& objects,
-		     mln::util::array<unsigned>& right_link,
-		     unsigned current_comp,
-		     int dmax,
-		     const mln_site(L)& c);
-
+      bool
+      is_invalid_link(const object_image(L)& objects_,
+		      mln::util::array<unsigned>& link_array,
+		      const mln_site(L)& p,
+		      unsigned current_comp,
+		      const mln_site(L)& c,
+		      int dmax);
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename L>
-      void
-      find_right_link(const object_image(L)& objects,
-		     mln::util::array<unsigned>& right_link,
-		     unsigned current_comp,
-		     int dmax,
-		     const mln_site(L)& c)
+      inline
+      bool
+      is_invalid_link(const object_image(L)& objects,
+		      mln::util::array<unsigned>& link_array,
+		      const mln_site(L)& p,
+		      unsigned current_comp,
+		      const mln_site(L)& c,
+		      int dmax)
       {
-	///FIXME: the following code is not generic...
-	/// First site on the right of the central site
-	mln_site(L) p = c + mln::right;
-
-	while (is_invalid_link(objects, right_link, p,
-			       current_comp, c, dmax))
-	  ++p.col();
-
-	update_link_array(objects, right_link, p, c, current_comp, dmax);
+	return (objects.domain().has(p)           // Not outside image domain
+		&& (objects(p) == literal::zero   // Is the background
+		    || objects(p) == current_comp // Is the current component
+		    || link_array[objects(p)] == current_comp) // Creates a loop
+		&& math::abs(p.col() - c.col()) < dmax); // Not too far
       }
 
-# endif // MLN_INCLUDE_ONLY
+# endif // ! MLN_INCLUDE_ONLY
 
-      } // end of namespace scribo::primitive::internal
+    } // end of namespace scribo::primitive::internal
 
   } // end of namespace scribo::primitive
 
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_PRIMITIVE_INTERNAL_FIND_RIGHT_LINK_HH
+#endif // ! SCRIBO_PRIMITIVE_INTERNAL_IS_INVALID_LINK_HH
+
+

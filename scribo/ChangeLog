@@ -1,3 +1,18 @@
+2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Few improvements in Scribo.
+
+	* debug/usage.hh: Improve output.
+
+	* primitive/internal/find_left_link.hh,
+	* primitive/internal/find_right_link.hh: Move a big 'if'...
+
+	* primitive/internal/is_invalid_link.hh: ... in this new routine.
+
+	* primitive/internal/update_link_array.hh: Reindent.
+
+	* src/text_in_doc_ppm.cc: New example to process a color document.
+
 2009-09-28 Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
 	Add a first draft of a multi-scale process.

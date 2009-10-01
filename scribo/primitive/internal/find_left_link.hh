@@ -38,6 +38,7 @@
 
 # include <scribo/core/object_image.hh>
 # include <scribo/primitive/internal/update_link_array.hh>
+# include <scribo/primitive/internal/is_invalid_link.hh>
 
 //FIXME: not generic.
 # include <mln/core/alias/dpoint2d.hh>
@@ -82,11 +83,8 @@ namespace scribo
 	/// First site on the right of the central site
 	mln_site(L) p = c + mln::left;
 
-	while (objects.domain().has(p) // Not outside image domain
-	       && (objects(p) == literal::zero // Is the background
-		   || objects(p) == current_comp // Is the current component
-		   || left_link[objects(p)] == current_comp) // Creates a loop
-	       && math::abs(p.col() - c.col()) < dmax) // Not to far
+	while (is_invalid_link(objects, left_link, p,
+			       current_comp, c, dmax))
 	  --p.col();
 
 	update_link_array(objects, left_link, p, c, current_comp, dmax);
