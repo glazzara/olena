@@ -29,11 +29,11 @@
 
 #include <mln/io/pbm/load.hh>
 
-#include <mln/debug/println.hh>
-
 #include "apps/graph-morpho/morpho.hh"
 
 #include "apps/graph-morpho/io.hh"
+#include "apps/graph-morpho/debug.hh"
+
 #include "apps/data.hh"
 
 
@@ -58,19 +58,19 @@ int main()
   /* Create an image corresponding to the graph X of the ISMM 2009
      paper from Jean Cousty et al.  */
   image2d<bool> x = io::pbm::load(MLN_APPS_DIR "/graph-morpho/x.pbm");
-  debug::println("x:", x);
+  ::debug::println_graph("x:", x);
 
-  debug::println("dilation_e2v(x):", dilation_e2v(x)) ;
-  debug::println("erosion_v2e(x):",  erosion_v2e(x));
+  ::debug::println_graph("dilation_e2v(x):", dilation_e2v(x)) ;
+  ::debug::println_graph("erosion_v2e(x):",  erosion_v2e(x));
 
-  debug::println("erosion_e2v(x):",  erosion_e2v(x));
-  debug::println("dilation_v2e(x):", dilation_v2e(x));
+  ::debug::println_graph("erosion_e2v(x):",  erosion_e2v(x));
+  ::debug::println_graph("dilation_v2e(x):", dilation_v2e(x));
 
-  debug::println("dilation_graph(x):", dilation_graph(x));
-  debug::println("erosion_graph(x):",  erosion_graph(x));
+  ::debug::println_graph("dilation_graph(x):", dilation_graph(x));
+  ::debug::println_graph("erosion_graph(x):",  erosion_graph(x));
 
-  debug::println("alpha3(x):", alpha3(x));
-  debug::println("beta3(x):",  beta3(x));
+  ::debug::println_graph("alpha3(x):", alpha3(x));
+  ::debug::println_graph("beta3(x):",  beta3(x));
 
   // --------- //
   // Filters.  //
@@ -78,17 +78,17 @@ int main()
 
   // Create an image corresponding to the graph Y.
   image2d<bool> y = io::pbm::load(MLN_APPS_DIR "/graph-morpho/y.pbm");
-  debug::println("y:", y);
+  ::debug::println_graph("y:", y);
 
-  debug::println("opening_graph(y):",      opening_graph(y));
-  debug::println("half_opening_graph(y):", half_opening_graph(y));
-  debug::println("beta3(alpha3(y)):",      beta3(alpha3(y)));
+  ::debug::println_graph("opening_graph(y):",      opening_graph(y));
+  ::debug::println_graph("half_opening_graph(y):", half_opening_graph(y));
+  ::debug::println_graph("beta3(alpha3(y)):",      beta3(alpha3(y)));
 
   // Create an image corresponding to the graph Z.
   image2d<bool> z = io::pbm::load(MLN_APPS_DIR "/graph-morpho/z.pbm");
-  debug::println("z:", z);
+  ::debug::println_graph("z:", z);
 
-  debug::println("closing_graph(z):",      closing_graph(z));
-  debug::println("half_closing_graph(z):", half_closing_graph(z));
-  debug::println("alpha3(beta3(z)):",      alpha3(beta3(z)));
+  ::debug::println_graph("closing_graph(z):",      closing_graph(z));
+  ::debug::println_graph("half_closing_graph(z):", half_closing_graph(z));
+  ::debug::println_graph("alpha3(beta3(z)):",      alpha3(beta3(z)));
 }

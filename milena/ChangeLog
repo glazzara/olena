@@ -1,3 +1,17 @@
+2009-10-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean up some conversion and pretty-printing routines in graph-morpho.
+
+	* apps/graph-morpho/convert.hh,
+	* apps/graph-morpho/debug.hh:
+	New files.
+	* apps/graph-morpho/io.hh (println): Remove function.
+	* apps/graph-morpho/samples-image2d.cc,
+	* apps/graph-morpho/samples-complex1d.cc:
+	Adjust clients.
+	* apps/graph-morpho/Makefile.am (noinst_HEADERS):
+	Add convert.hh and debug.hh.
+
 2009-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Generic vertices-edges combinator in apps/graph-morpho/.

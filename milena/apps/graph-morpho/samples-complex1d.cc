@@ -35,6 +35,8 @@
 #include "apps/graph-morpho/morpho.hh"
 
 #include "apps/graph-morpho/io.hh"
+#include "apps/graph-morpho/debug.hh"
+
 #include "apps/data.hh"
 
 
@@ -57,20 +59,19 @@ int main()
      paper from Jean Cousty et al.  */
   image2d<bool> x_pbm = io::pbm::load(MLN_APPS_DIR "/graph-morpho/x.pbm");
   ima_t x = make_regular_complex1d_image(x_pbm);
-  box2d x_box(x_pbm.nrows() / 2 + 1, x_pbm.ncols() / 2 + 1);
-  println("x:", x, x_box);
+  ::debug::println_graph("x:", x);
   
-  println("dilation_e2v(x):", dilation_e2v(x), x_box);
-  println("erosion_v2e(x):",  erosion_v2e(x),  x_box);
+  ::debug::println_graph("dilation_e2v(x):", dilation_e2v(x));
+  ::debug::println_graph("erosion_v2e(x):",  erosion_v2e(x));
 
-  println("erosion_e2v(x):",  erosion_e2v(x),  x_box);
-  println("dilation_v2e(x):", dilation_v2e(x), x_box);
+  ::debug::println_graph("erosion_e2v(x):",  erosion_e2v(x));
+  ::debug::println_graph("dilation_v2e(x):", dilation_v2e(x));
 
-  println("dilation_graph(x):", dilation_graph(x), x_box);
-  println("erosion_graph(x):",  erosion_graph(x),  x_box);
+  ::debug::println_graph("dilation_graph(x):", dilation_graph(x));
+  ::debug::println_graph("erosion_graph(x):",  erosion_graph(x));
 
-  println("alpha3(x):", alpha3(x), x_box);
-  println("beta3(x):",  beta3(x),  x_box);
+  ::debug::println_graph("alpha3(x):", alpha3(x));
+  ::debug::println_graph("beta3(x):",  beta3(x));
 
   // --------- //
   // Filters.  //
@@ -79,20 +80,18 @@ int main()
   // Create an image corresponding to the graph Y.
   image2d<bool> y_pbm = io::pbm::load(MLN_APPS_DIR "/graph-morpho/y.pbm");
   ima_t y = make_regular_complex1d_image(y_pbm);
-  box2d y_box(y_pbm.nrows() / 2 + 1, y_pbm.ncols() / 2 + 1);
-  println("y:", y, y_box);
+  ::debug::println_graph("y:", y);
 
-  println("opening_graph(y):",      opening_graph(y),      y_box);
-  println("half_opening_graph(y):", half_opening_graph(y), y_box);
-  println("beta3(alpha3(y)):",      beta3(alpha3(y)),      y_box);
+  ::debug::println_graph("opening_graph(y):",      opening_graph(y));
+  ::debug::println_graph("half_opening_graph(y):", half_opening_graph(y));
+  ::debug::println_graph("beta3(alpha3(y)):",      beta3(alpha3(y)));
 
   // Create an image corresponding to the graph Z.
   image2d<bool> z_pbm = io::pbm::load(MLN_APPS_DIR "/graph-morpho/z.pbm");
   ima_t z = make_regular_complex1d_image(z_pbm);
-  box2d z_box(z_pbm.nrows() / 2 + 1, z_pbm.ncols() / 2 + 1);
-  println("z:", z, z_box);
+  ::debug::println_graph("z:", z);
 
-  println("closing_graph(z):",      closing_graph(z),      z_box);
-  println("half_closing_graph(z):", half_closing_graph(z), z_box);
-  println("alpha3(beta3(z)):",      alpha3(beta3(z)),      z_box);
+  ::debug::println_graph("closing_graph(z):",      closing_graph(z));
+  ::debug::println_graph("half_closing_graph(z):", half_closing_graph(z));
+  ::debug::println_graph("alpha3(beta3(z)):",      alpha3(beta3(z)));
 }

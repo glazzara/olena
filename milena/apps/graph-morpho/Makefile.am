@@ -20,7 +20,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
-noinst_HEADERS = io.hh morpho.hh make_complex2d.hh
+noinst_HEADERS = convert.hh debug.hh io.hh morpho.hh make_complex2d.hh
 
 noinst_PROGRAMS = samples-complex1d samples-image2d asf-complex1d asf-image2d
 samples_complex1d_SOURCES = samples-complex1d.cc
