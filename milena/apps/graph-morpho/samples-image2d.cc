@@ -31,7 +31,7 @@
 
 #include "apps/graph-morpho/morpho.hh"
 
-#include "apps/graph-morpho/io.hh"
+#include "apps/graph-morpho/convert.hh"
 #include "apps/graph-morpho/debug.hh"
 
 #include "apps/data.hh"

@@ -36,7 +36,7 @@
 #include "apps/graph-morpho/morpho.hh"
 
 #include "apps/graph-morpho/make_complex2d.hh"
-#include "apps/graph-morpho/io.hh"
+#include "apps/graph-morpho/convert.hh"
 
 #include "apps/data.hh"
 
@@ -60,7 +60,7 @@ int main()
      cubical 1-complex here, but they are not yet available (as of
      2009-09-10).  */
   typedef mln::bin_1complex_image2d ima_t;
-  ima_t graph_ima = make_regular_complex1d_image(input_x2);
+  ima_t graph_ima = ::convert::to_complex_image(input_x2);
 
   // ASF.
   ima_t asf_ima = asf(graph_ima, 8);

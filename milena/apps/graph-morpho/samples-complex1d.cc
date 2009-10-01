@@ -34,7 +34,7 @@
 
 #include "apps/graph-morpho/morpho.hh"
 
-#include "apps/graph-morpho/io.hh"
+#include "apps/graph-morpho/convert.hh"
 #include "apps/graph-morpho/debug.hh"
 
 #include "apps/data.hh"
@@ -58,7 +58,7 @@ int main()
   /* Create an image corresponding to the graph X of the ISMM 2009
      paper from Jean Cousty et al.  */
   image2d<bool> x_pbm = io::pbm::load(MLN_APPS_DIR "/graph-morpho/x.pbm");
-  ima_t x = make_regular_complex1d_image(x_pbm);
+  ima_t x = ::convert::to_complex_image(x_pbm);
   ::debug::println_graph("x:", x);
   
   ::debug::println_graph("dilation_e2v(x):", dilation_e2v(x));
@@ -79,7 +79,7 @@ int main()
 
   // Create an image corresponding to the graph Y.
   image2d<bool> y_pbm = io::pbm::load(MLN_APPS_DIR "/graph-morpho/y.pbm");
-  ima_t y = make_regular_complex1d_image(y_pbm);
+  ima_t y = ::convert::to_complex_image(y_pbm);
   ::debug::println_graph("y:", y);
 
   ::debug::println_graph("opening_graph(y):",      opening_graph(y));
@@ -88,7 +88,7 @@ int main()
 
   // Create an image corresponding to the graph Z.
   image2d<bool> z_pbm = io::pbm::load(MLN_APPS_DIR "/graph-morpho/z.pbm");
-  ima_t z = make_regular_complex1d_image(z_pbm);
+  ima_t z = ::convert::to_complex_image(z_pbm);
   ::debug::println_graph("z:", z);
 
   ::debug::println_graph("closing_graph(z):",      closing_graph(z));
