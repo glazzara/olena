@@ -1985,12 +1985,39 @@ mln\_edge\_nbh\_edge\_iter(G)	  & G : graph type & Iterator on the edges adjacen
 %====================================
 %\newpage
 %\clearpage
-%Ugly workaround to avoid missing chapter references in doxygen.
-%\begin{htmlonly}
-%\doxychapter{2}{}
-%\end{htmlonly}
 %\doxychapter{debugtools}{Debugging tools}
 
 %FIXME write it
+
+
+
+%====================================
+\newpage
+\clearpage
+\doxychapter{compilerrors}{Common Compilation Errors}
+
+In this section, the most common compilation errors are gathered and explained.
+
+\begin{itemize}
+  \item
+    \textbf{error: 'check' is not a member of 'mln::metal::not\_equal$<$bool, bool$>$} \\
+    \textbf{error: 'check' is not a member of 'mln::metal::converts\_to$<$mln::value::rgb$<$8u$>$, unsigned int$>$'} \\
+
+    The routine does not support a given image with such a value type
+    or an automatic conversion from the image value type to the
+    expected value type is not available.
+
+
+  \item
+    \textbf{error: using 'typename' outside of template} \\
+
+    Macros like \code{mln\_site} or \code{mln\_domain} can only be
+    used in templated functions. In order to use them in a
+    non-templated function, a `\_' must be appended to the macro
+    name. For instance : \code{mln\_site\_} and \code{mln\_domain\_}.
+
+\end{itemize}
+
+
 
 \end{document}
