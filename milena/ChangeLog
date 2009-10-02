@@ -30,7 +30,8 @@
 
 2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	* doc/ref_guide/ref_guide.tex: Add a new section about common compilation errors.
+	* doc/ref_guide/ref_guide.tex: Add a new section about common
+	compilation errors.
 
 2009-10-01  Roland Levillain  <roland@lrde.epita.fr>
 

@@ -1,4 +1,3 @@
-
 2009-10-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Add impl and internal namespace, correct static dispatch.
@@ -8,7 +7,7 @@
 2009-10-01  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Update README.
-	*  fabien/README: Update.
+	* fabien/README: Update.
 
 2009-10-01  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
