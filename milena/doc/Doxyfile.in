@@ -111,7 +111,8 @@ EXAMPLE_PATH           = @top_srcdir@/milena/doc/examples	    \
 			 @top_srcdir@/milena/doc/examples/split	    \
 			 @top_srcdir@/milena/doc/outputs/split
 EXAMPLE_PATTERNS       = *.cc \
-		       	 *.cc.raw
+		       	 *.cc.raw \
+			 *.txt
 EXAMPLE_RECURSIVE      = NO
 IMAGE_PATH             = @top_srcdir@/milena/doc/devel/figures \
 			 @top_srcdir@/milena/doc/img	       \

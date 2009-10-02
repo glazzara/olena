@@ -1,6 +1,14 @@
+2009-10-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in documentation.
+
+	* doc/Doxyfile.in: Fix example file name patterns.
+
+	* doc/ref_guide/ref_guide.tex: Comment an empty chapter.
+
 2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	* doc/Doxyfile.in Add missing include paths for doc generation.
+	* doc/Doxyfile.in: Add missing include paths for doc generation.
 
 2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
