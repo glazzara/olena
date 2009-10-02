@@ -38,97 +38,107 @@ Abandonne au profit de GDCM (bibliotheque pour le format DICOM).
 
       dist_edges.cc : calcule une distance entre 2 edges dans une image inter-pixel
 
-      filter.cc
+      filter.cc : lisse les images 2D+t avec des moyennes ouverture/fermeture
 
-      filter_morpho_us.cc
+      filter_morpho_us.cc : filtre les images ultrasons, prend la plus grande
+			    composante et remplit les trous
 
-      fun_labels.cc
+      fun_labels.cc, fun_labels.sh : plot des labels
 
-      fun_labels.sh
+      grad.cc : gradient
 
-      grad.cc
+      graph.cc : cree une image de graphe (j'ai recopie le code de Z a l'epoque,
+		 il doit plus etre valide)
 
-      graph.cc
+      igr.cc : premier source pour l'IGR, binarise, trouve le temoin et le contour
+	       du plus proche object a cote du temoin
 
-      igr.cc
+      label2gif.cc : sauvegarde un label 2D+t sous forme de plusieurs images
 
-      label2gif.cc
+      launch2d.sh : renomme les outputs pour `seg2d'
 
-      launch2d.sh
+      launch3d.sh : renomme les outputs pour `seg3d'
 
-      launch3d.sh
+      launch.sh : appelle `launch2d.sh' et `launch3d.sh'
 
-      launch.sh
+      maj.cc : remplace une region par son majoritaire
 
-      maj.cc
+      matlab.cc : traduction du fichier matlab fourni par l'IGR
 
-      matlab.cc
+      mean_median_label.cc : calcule moyenne et ecart-type sur inter-pixel
 
-      mean_median_label.cc
+      mean_slices.cc : remplace une region d'une slice par sa moyenne
 
-      mean_slices.cc
+      med.cc : calcule le median
 
-      med.cc
+      min_max_float.cc : trouve les valeurs extremes d'une image
 
-      min_max_float.cc
+      nbasins_check.sh : appelle `nbasins_finder'
 
-      nbasins_check.sh
+      nbasins_finder.cc : effectue un watershed et retourne une image colorisee
 
-      nbasins_finder.cc
+      norm.cc : normalise une image
 
-      norm.cc
+      plot_label.hh : plot un label 2D dans une image 2D+t
 
-      plot_label.hh
+      seg2d.cc : seuille une image 2D
 
-      seg2d.cc
+      seg3d.cc : seuille une image 3D
 
-      seg3d.cc
+      seg_vol_irm.hh : binarise une image IRM en cherchant une valeur de seuil
 
-      seg_vol_irm.hh
+      segment_us_morpho.sh : seuillage des images d'ultrasons
 
-      segment_us_morpho.sh
+      thres.cc : simple seuillage
 
-      thres.cc
+      time_max.cc : cree carte des t max
 
-      time_max.cc
+      time_max_norm.cc : cree carte des t max normalises
 
-      time_max_norm.cc
+      tmax.sh : appelle `time_max_norm'
 
-      tmax.sh
+      watershed2d.cc : watershed 2D avec construction de graphe
 
-      watershed2d.cc
+      watershed3d.cc : watershed 3D avec construction de graphe (non finalise)
 
-      watershed3d.cc
+      watershed.hh : watershed 2D avec construction de graphe (avant de se faire
+		     eclater en `watershed2d')
 
-      watershed.hh
+      wst.cc : simple watershed
 
-      wst.cc
-
-      wst_edges.cc
+      wst_edges.cc : watershed en inter-pixel
       
       ./igr/color
       ===========
+      Trouve une couleur donnee dans une image (format HSL).
 
       ./igr/fixed_seg
       ===============
+      Trouve une segmentation 2D d'une image 2D+t.
 
       ./igr/mat2mln
       =============
+      Convertit un dump Matlab en une image Milena.
 
       ./igr/plot_points
       =================
+      Divers outils pour plotter des points.
 
       ./igr/point_filtering
       =====================
+      Filtrage morphologique sur un point d'une image 2D+t.
 
       ./igr/smooth_fixed_seg
       ======================
+      Segmentation en inter-pixel.
 
       ./igr/space_smooth
       ==================
+      Lissage spatial d'une image 2D+t
 
       ./igr/time_smooth
       =================
+      Lissage temporel d'une image 2D+t
 
 
 ./magick/ (Deprecated)
