@@ -1,3 +1,9 @@
+2009-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a main() to src/debug/show_objects_thin.cc to have it link.
+
+	* src/debug/show_objects_thin.cc (main): New function.
+
 2009-10-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* table/extract.hh: Fix invalid calls to lines_*_pattern.
