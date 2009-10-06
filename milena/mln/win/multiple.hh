@@ -340,8 +340,8 @@ namespace mln
     void
     multiple_qiter<W,F>::change_target(const multiple<W,F>& w)
     {
-      this->super_::change_target(w);
       size_ = w.size();
+      this->super_::change_target(w);
     }
 
     template <typename W, typename F>

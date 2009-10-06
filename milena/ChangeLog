@@ -1,5 +1,13 @@
 2009-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the instruction flow in multiple_qiter<W,F>::change_target.
+
+	* mln/win/multiple.hh (mln::win::multiple_qiter<W,F>::change_target):
+	Set the size before delegating the call to the base class, so that
+	postconditions can be honored.
+
+2009-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Honor strict-aliasing rules in memset_.
 
 	* mln/data/memset_.hh (mln::data::impl::memset): Here.
