@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -101,9 +102,16 @@ namespace mln
 
 	if (sizeof(mln_value(I)) == 1)
 	  {
-	    std::memset((void*)(& pix.val()),
-			*(const int*)(&v), // violent cast
-			n);
+	    /* Because of strict-aliasing rules, we cannot use
+
+	         *(const int*)(&v)
+
+	       as second argument for std::memset.  Hence the use of
+	       std::memcpy. See the `-fstrict-aliasing' entry in GCC's
+	       documentation for more information.  */
+	    char c;
+	    std::memcpy(&c, &v, 1);
+	    std::memset((void*)(& pix.val()), c, n);
 	  }
 	else
 	  {

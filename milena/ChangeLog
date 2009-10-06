@@ -1,5 +1,11 @@
 2009-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Honor strict-aliasing rules in memset_.
+
+	* mln/data/memset_.hh (mln::data::impl::memset): Here.
+
+2009-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Warn about a bug in memcpy_ with g++ 4.2 on Debian for IA-32.
 
 	* mln/data/memcpy_.hh (mln::data::impl::memcpy_): Here.
