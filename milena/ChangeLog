@@ -1,3 +1,9 @@
+2009-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Warn about a bug in memcpy_ with g++ 4.2 on Debian for IA-32.
+
+	* mln/data/memcpy_.hh (mln::data::impl::memcpy_): Here.
+
 2009-10-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes in documentation.
