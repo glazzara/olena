@@ -177,13 +177,15 @@ namespace trait
 template <typename I>
 inline
 mln_concrete(I)
-combine(const mln::Image<I>& vertices, const mln::Image<I>& edges)
+combine(const mln::Image<I>& vertices_, const mln::Image<I>& edges_)
 {
   typedef trait::graph<I> T;
+  const I& vertices = mln::exact(vertices_);
+  const I& edges = mln::exact(edges_);
 
   mln_precondition(vertices.domain() == edges.domain());
   mln_concrete(I) output;
-  mln::initialize(output, exact(vertices));
+  mln::initialize(output, vertices);
   mln::data::fill(output, false);
   mln::data::paste(vertices | T::is_vertex(), output);
   mln::data::paste(edges | T::is_edge(), output);

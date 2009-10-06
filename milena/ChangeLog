@@ -1,5 +1,12 @@
 2009-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix a precondition in apps/graph-morpho.
+
+	* apps/graph-morpho/morpho.hh (combine): Check the exact images,
+	not the abstract ones.
+
+2009-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the instruction flow in multiple_qiter<W,F>::change_target.
 
 	* mln/win/multiple.hh (mln::win::multiple_qiter<W,F>::change_target):
