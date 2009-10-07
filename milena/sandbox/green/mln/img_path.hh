@@ -28,8 +28,14 @@
 #ifndef MLN_IMG_PATH_HH
 #define MLN_IMG_PATH_HH
 
-#define IMG_PATH        "/home/green/svn/oln/trunk/milena/sandbox/green/img"
-#define OLENA_IMG_PATH  IMG_PATH"/olena"
-#define SCRIBO_IMG_PATH IMG_PATH"/scribo/pgm_50p"
+#define IMG_PATH "/home/green/svn/oln/trunk/milena/sandbox/green/img"
+
+#define INIM_IMG_PATH         IMG_PATH"/inim"
+#define INIM_FG_BG_IMG_PATH   INIM_IMG_PATH"/fg_bg"
+#define INIM_IN_IMG_PATH      INIM_IMG_PATH"/in"
+#define OLENA_IMG_PATH        IMG_PATH"/olena"
+#define SCRIBO_IMG_PATH       IMG_PATH"/scribo"
+#define SCRIBO_JPG_IMG_PATH   SCRIBO_IMG_PATH"/jpg_50p"
+#define SCRIBO_PGM_IMG_PATH   SCRIBO_IMG_PATH"/pgm_50p"
 
 #endif // ! MLN_IMG_PATH_HH

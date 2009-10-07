@@ -1,5 +1,11 @@
 2009-10-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Add resource for scribo and inim image loacations.
+
+	* green/mln/img_path: New macros for scribo and inim images.
+
+2009-10-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Work on the rgb version of kmean.
 
 	* green/mln/clustering/kmean3d.hh: New library code.
