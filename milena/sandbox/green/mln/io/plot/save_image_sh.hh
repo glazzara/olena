@@ -53,6 +53,8 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
 
+#include <mln/geom/min_ind.hh>
+#include <mln/geom/max_ind.hh>
 #include <mln/geom/min_row.hh>
 #include <mln/geom/max_row.hh>
 #include <mln/geom/min_col.hh>
@@ -65,6 +67,8 @@
 #include <mln/value/rgb.hh>
 #include <mln/value/hsl.hh>
 #include <mln/value/hsi.hh>
+
+#include <mln/util/array.hh>
 
 
 namespace mln
@@ -94,6 +98,26 @@ namespace mln
       template <typename I>
       bool save_image_sh(const Image<I>& img, const std::string& filename);
 
+      /// \brief Save a stack of image.
+      ///
+      /// This is an experimental support.
+      ///
+      /// \param[in] stack    the stack of image to save.
+      /// \param[in] filename the name of the unix script shell.
+      /// \return             the status of the opening file operation.
+      ///
+      /// The result depends on the permission to save the file with
+      /// filename parameter as unix path. The script shell file must have the
+      /// permission to execute (chmod 755). Launch the script shell to call
+      /// gnuplot in batchmode with fine parameters.
+      template <typename I>
+      bool save_image_sh(const util::array< image1d<I> >& stack,
+			 const std::string& filename);
+
+      template <typename I>
+      bool save_image_sh(const util::array< util::array< image1d<I> > >& stack,
+			 const std::string& filename);
+
     } // end of namespace mln::io::plot
 
   } // end of namespace mln::io
@@ -113,6 +137,263 @@ namespace mln
 
       namespace impl
       {
+
+
+	//----------------------------------------------------------------------
+	// save_image_sh_array_array_image1d(const array<array<image1d<I>>>&,
+	//                                   const string&)
+	//----------------------------------------------------------------------
+
+	template <typename I>
+	inline
+	bool save_image_sh_array_array_image1d(const util::array< util::array<
+					       image1d<I> > >&        stack,
+					       const std::string&     filename)
+	{
+	  trace::entering("mln::io::plot::impl::"
+			  "save_image_sh_array_array_image1d");
+
+	  mln_precondition(!stack.is_empty());
+	  mln_precondition(!stack[0].is_empty());
+	  mln_precondition(stack[0][0].is_valid());
+
+	  std::ofstream           out(filename.c_str());
+	  bool                    result  = !out.fail();
+	  unsigned                min_ind = geom::min_ind(stack[0][0]);
+	  unsigned                max_ind = geom::max_ind(stack[0][0]);
+
+	  if (result)
+	  {
+	    // Output data prelude (terminal X11, image).
+	    out << "#!/bin/sh"                                     << std::endl;
+	    out << "####################################"          << std::endl;
+	    out << "# Columns = (x, y, val)            #"          << std::endl;
+	    out << "####################################"          << std::endl;
+	    out                                                    << std::endl;
+	    out << "gnuplot <<EOF"                                 << std::endl;
+	    out << "set terminal x11 persist 1"                    << std::endl;
+	    out << "set xrange ["                                  << min_ind;
+	    out << ":"                                             << max_ind;
+	    out << "]"                                             << std::endl;
+	    out << "plot '-' with line";
+
+	    for (unsigned i = 1; i < stack.size(); ++i)
+	    {
+	      for (unsigned j = 1; j < stack[i].size(); ++j)
+	      {
+
+		out << ",\\"                                       << std::endl;
+		out << "     '-' with line";
+	      }
+	    }
+
+	    out                                                    << std::endl;
+
+	    mln_eiter(util::array< util::array< image1d<I> > >) e0(stack);
+
+	    for_all (e0)
+	    {
+	      mln_eiter(util::array< image1d<I> >) e1(stack[e0.index_()]);
+
+	      for_all (e1)
+	      {
+		mln_piter(image1d< I >)
+		  p(stack[e0.index_()][e1.index_()].domain());
+
+		// Output data.
+		for_all(p)
+		{
+		  out << p.ind()            << " ";
+		  out << stack[e0.index_()][e1.index_()](p)   << std::endl;;
+		}
+
+	      // Close gnuplot data stream.
+	      out << "e"                                           << std::endl;
+	      }
+	    }
+
+	    out << "EOF"                                           << std::endl;
+	    out.close();
+	  }
+	  else
+	  {
+	    std::cerr << "ERROR[mln::io::plot::save_image_sh]:"    << filename;
+	    std::cerr << " couldn't be opened !!"                  << std::endl;
+	  }
+
+	  trace::exiting("mln::io::plot::impl::"
+			 "save_image_sh_array_array_image1d");
+
+	  return result;
+	}
+
+	//----------------------------------------------------------------------
+	// save_image_sh_array_array_image1d_vec3(
+	//                              const array<array<image1d<vec<3,T>>>>&,
+	//                              const string&)
+	//----------------------------------------------------------------------
+
+	template <typename T>
+	inline
+	bool save_image_sh_array_array_image1d_vec3(
+	  const util::array<util::array<image1d<algebra::vec<3,T> > > >& stack,
+	  const std::string&                                           filename)
+	{
+	  trace::entering("mln::io::plot::impl::"
+			  "save_image_sh_array_array_image1d_vec3");
+
+	  typedef algebra::vec<3,T>    t_val;
+	  typedef image1d<t_val>       t_img;
+	  typedef util::array<t_img>   t_array;
+	  typedef util::array<t_array> t_stack;
+
+	  mln_precondition(!stack.is_empty());
+	  mln_precondition(!stack[0].is_empty());
+	  mln_precondition(stack[0][0].is_valid());
+
+	  std::ofstream           out(filename.c_str());
+	  bool                    result  = !out.fail();
+	  unsigned                min_ind = geom::min_ind(stack[0][0]);
+	  unsigned                max_ind = geom::max_ind(stack[0][0]);
+
+	  if (result)
+	  {
+	    // Output data prelude (terminal X11, image).
+	    out << "#!/bin/sh"                                     << std::endl;
+	    out << "####################################"          << std::endl;
+	    out << "# Columns = (x, y, val)            #"          << std::endl;
+	    out << "####################################"          << std::endl;
+	    out                                                    << std::endl;
+	    out << "gnuplot <<EOF"                                 << std::endl;
+	    out << "set terminal x11 persist 1"                    << std::endl;
+	    out << "set xrange ["                                  << min_ind;
+	    out << ":"                                             << max_ind;
+	    out << "]"                                             << std::endl;
+	    out << "splot '-' with line palette";
+
+	    for (unsigned i = 1; i < stack.size(); ++i)
+	    {
+	      for (unsigned j = 1; j < stack[i].size(); ++j)
+	      {
+
+		out << ",\\"                                       << std::endl;
+		out << "      '-' with line palette";
+	      }
+	    }
+
+	    out                                                    << std::endl;
+
+	    mln_eiter(t_stack)   e0(stack);
+
+	    for_all (e0)
+	    {
+	      mln_eiter(t_array) e1(stack[e0.index_()]);
+
+	      for_all (e1)
+	      {
+		mln_piter(t_img) p(stack[e0.index_()][e1.index_()].domain());
+
+		// Output data.
+		for_all(p)
+		{
+		  out << p.ind()                                  << " ";
+		  out << stack[e0.index_()][e1.index_()](p)[0]    << " ";
+		  out << stack[e0.index_()][e1.index_()](p)[1]    << " ";
+		  out << stack[e0.index_()][e1.index_()](p)[2]    << std::endl;;
+		}
+
+	      // Close gnuplot data stream.
+	      out << "e"                                           << std::endl;
+	      }
+	    }
+
+	    out << "EOF"                                           << std::endl;
+	    out.close();
+	  }
+	  else
+	  {
+	    std::cerr << "ERROR[mln::io::plot::save_image_sh]:"    << filename;
+	    std::cerr << " couldn't be opened !!"                  << std::endl;
+	  }
+
+	  trace::exiting("mln::io::plot::impl::"
+			 "save_image_sh_array_array_image1d_vec3");
+
+	  return result;
+	}
+
+	//----------------------------------------------------------------------
+	// save_image_sh_array_image1d(const array<image1d<I>>&, const string&)
+	//----------------------------------------------------------------------
+
+	template <typename I>
+	inline
+	bool save_image_sh_array_image1d(const util::array< image1d<I> >& stack,
+					 const std::string&            filename)
+	{
+	  trace::entering("mln::io::plot::impl::save_image_sh_array_image1d");
+	  mln_precondition(!stack.is_empty());
+	  mln_precondition(stack[0].is_valid());
+
+	  std::ofstream           out(filename.c_str());
+	  bool                    result  = !out.fail();
+	  unsigned                min_ind = geom::min_ind(stack[0]);
+	  unsigned                max_ind = geom::max_ind(stack[0]);
+
+	  if (result)
+	  {
+	    // Output data prelude (terminal X11, image).
+	    out << "#!/bin/sh"                                     << std::endl;
+	    out << "####################################"          << std::endl;
+	    out << "# Columns = (x, y, val)            #"          << std::endl;
+	    out << "####################################"          << std::endl;
+	    out                                                    << std::endl;
+	    out << "gnuplot <<EOF"                                 << std::endl;
+	    out << "set terminal x11 persist 1"                    << std::endl;
+	    out << "set xrange ["                                  << min_ind;
+	    out << ":"                                             << max_ind;
+	    out << "]"                                             << std::endl;
+	    out << "plot '-' with line";
+
+	    for (unsigned i = 1; i < stack.size(); ++i)
+	    {
+
+	      out << ",\\"                                         << std::endl;
+	      out << "     '-' with line";
+	    }
+
+	    out                                                    << std::endl;
+
+	    mln_eiter(util::array< image1d<I> >) e(stack);
+
+	    for_all (e)
+	    {
+	      mln_piter(image1d< I >) p(stack[e.index_()].domain());
+
+	      // Output data.
+	      for_all(p)
+	      {
+		out << p.ind()       << " ";
+		out << stack[e.index_()](p)   << std::endl;;
+	      }
+
+	      // Close gnuplot data stream.
+	      out << "e"                                           << std::endl;
+	    }
+
+	    out << "EOF"                                           << std::endl;
+	    out.close();
+	  }
+	  else
+	  {
+	    std::cerr << "ERROR[mln::io::plot::save_image_sh]:"    << filename;
+	    std::cerr << " couldn't be opened !!"                  << std::endl;
+	  }
+
+	  trace::exiting("mln::io::plot::impl::save_image_sh_array_image1d");
+	  return result;
+	}
+
 
 	//----------------------------------------------------------------------
 	// save_image_sh_image2d_rgb(const image2d<rgb<n>>&, const string&)
@@ -533,6 +814,32 @@ namespace mln
 
       namespace internal
       {
+	template <typename I>
+	inline
+	bool save_image_sh_dispatch(const util::array< image1d<I> >& stack,
+				    const std::string&             filename)
+	{
+	  return impl::save_image_sh_array_image1d(stack, filename);
+	}
+
+	template <typename I>
+	inline
+	bool save_image_sh_dispatch(const util::array<
+				    util::array <image1d<I> > >& stack,
+				    const std::string&           filename)
+	{
+	  return impl::save_image_sh_array_array_image1d(stack, filename);
+	}
+
+	template <typename T>
+	inline
+	bool save_image_sh_dispatch(
+	  const util::array<util::array<image1d<algebra::vec<3,T> > > >& stack,
+	  const std::string&                                           filename)
+	{
+	  return impl::save_image_sh_array_array_image1d_vec3(stack, filename);
+	}
+
 	template <unsigned n>
 	inline
 	bool save_image_sh_dispatch(const image2d<value::rgb<n> >& img,
@@ -603,6 +910,32 @@ namespace mln
 	trace::entering("mln::io::plot::save_image_sh");
 
 	bool result = internal::save_image_sh_dispatch(img, filename);
+
+	trace::exiting("mln::io::plot::save_image_sh");
+	return result;
+      }
+
+      template <typename I>
+      inline
+      bool save_image_sh(const util::array< image1d<I> >& stack,
+			 const std::string& filename)
+      {
+	trace::entering("mln::io::plot::save_image_sh");
+
+	bool result = internal::save_image_sh_dispatch(stack, filename);
+
+	trace::exiting("mln::io::plot::save_image_sh");
+	return result;
+      }
+
+      template <typename I>
+      inline
+      bool save_image_sh(const util::array< util::array< image1d<I> > >& stack,
+			 const std::string& filename)
+      {
+	trace::entering("mln::io::plot::save_image_sh");
+
+	bool result = internal::save_image_sh_dispatch(stack, filename);
 
 	trace::exiting("mln::io::plot::save_image_sh");
 	return result;

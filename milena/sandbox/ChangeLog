@@ -1,7 +1,19 @@
+2009-10-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Refactor the save_image_sh after the discution with Z.
+
+	* green/mln/io/plot/save_image_sh.hh:
+	Refactor to follow LRDE code norm.
+
+	* green/mln/io/plot/save_image_sh.hh
+	(save_image_sh_array_image1d, save_image_sh_array_array_image1d_vec3):
+	New fonctions to save and visualize kmean data.
+
 2009-10-02  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Update README.
 	*  fabien/README: Update.
+
 
 2009-10-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
