@@ -1,5 +1,11 @@
 2009-10-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Touch histo3d_rgb.
+
+	* green/mln/accu/stat/histo3_rgb.hh: Touch it.
+
+2009-10-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Fix a bug in kmean1d.
 
 	* green/mln/clustering/kmean1d.hh (kmean1d):
