@@ -1,5 +1,15 @@
 2009-10-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Work on the rgb version of kmean.
+
+	* green/mln/clustering/kmean3d.hh: New library code.
+
+	* green/demo/clustering/kmean3d: New directory.
+	* green/demo/clustering/kmean3d/Makefile.am: New makefile.
+	* green/demo/clustering/kmean3d/kmean3d.cc: New demo code.
+
+2009-10-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Put a bug into light in mean_values.hh
 
 	* green/bug/labeling/mean_values: New directory.
