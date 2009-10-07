@@ -1,5 +1,12 @@
 2009-10-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Fix a bug in kmean1d.
+
+	* green/mln/clustering/kmean1d.hh (kmean1d):
+	Initialize _current_launching.
+
+2009-10-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Refactor the save_image_sh after the discution with Z.
 
 	* green/mln/io/plot/save_image_sh.hh:

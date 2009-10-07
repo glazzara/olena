@@ -424,15 +424,18 @@ namespace mln
       trace::entering("mln::clustering::kmean1d::kmean1d");
       mln_precondition(point.is_valid());
 
-      _k_center        = k_center;
-      _watch_dog       = watch_dog;
-      _n_times         = n_times;
+      _k_center          = k_center;
+      _watch_dog         = watch_dog;
+      _n_times           = n_times;
 
-      _point           = point;
-      _histo           = data::compute(accu::meta::stat::histo1d(), _point);
+      _point             = point;
+      _histo             = data::compute(accu::meta::stat::histo1d(), _point);
 
       // Results aren't valid since they aren't available
-      _is_number_valid = false;
+      _is_number_valid   = false;
+      _current_step      = 0;
+      _current_launching = 0;
+
 
       _number.init_(box1d(point1d(0),point1d(_k_center-1)));
       _mean.init_(box1d(point1d(0),point1d(_k_center-1)));
