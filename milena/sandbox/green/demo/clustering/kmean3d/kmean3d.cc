@@ -51,7 +51,6 @@ void do_demo(const std::string& image,
   kmean.launch_n_times();
 
   // Not safe because we don't test kmean.is_valid()
-  // Pb à la création des images de debug.
 
   t_kmean::t_color_dbg    color_img    = kmean.get_color_dbg();
   t_kmean::t_mean_dbg     mean_img     = kmean.get_mean_dbg();
@@ -63,6 +62,7 @@ void do_demo(const std::string& image,
   mln::io::ppm::save(color_img, "color.ppm");
   mln::io::pgm::save(label_img, "label.pgm");
 
+  mln::io::plot::save_image_sh(mean_img,     "mean.sh");
   mln::io::plot::save_image_sh(mean_cnv,     "mean_cnv.sh");
   mln::io::plot::save_image_sh(variance_cnv, "variance_cnv.sh");
 }
