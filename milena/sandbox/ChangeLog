@@ -1,3 +1,59 @@
+2009-10-07  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Alternate representation of tree (some tries...).
+	* edwin/exec/benchmark/Makefile,
+	* edwin/exec/benchmark/newv.cc,
+	* edwin/exec/benchmark/oldv.cc,
+	* edwin/exec/benchmark:
+	Applications, and comparaisons between the old and new
+	version.
+
+	* edwin/mln/core,
+	* edwin/mln/core/concept/dindex_site.hh,
+	* edwin/mln/core/concept/index_site.hh,
+	* edwin/mln/core/dindex_site.hh,
+	* edwin/mln/core/internal/index_site_base.hh,
+	* edwin/mln/core/internal,
+	* edwin/mln/core/site_set/p_run_idx.hh,
+	* edwin/mln/core/site_set/p_run_idx_piter.hh,
+	* edwin/mln/core/site_set:
+	Temporary type for index site (used by the node type), its
+	site set and its iterators.
+
+	* edwin/mln/core/concept/tree.hh,
+	* edwin/mln/core/concept:
+	Tree concept.
+
+	* edwin/mln/core/image,
+	* edwin/mln/core/image/attribute_image.hh:
+	Attribute image type.
+
+	* edwin/mln/debug,
+	* edwin/mln/debug/ctree.hh:
+	Debug tools with println overloads.
+
+	* edwin/mln/morpho/tree/component_tree.hh: Shortcuts for
+	building min and max tree.
+
+	* edwin/mln/morpho/tree/compute_attribute_image.hh: Compute an
+        attribute using the new tree representation.
+
+	* edwin/mln/morpho/tree/impl,
+	* edwin/mln/morpho/tree/impl/union_find.hh:
+	(Simple) tree computation based on union-find method.
+
+	* edwin/mln/morpho/tree/propagate_node.hh:
+	Temporary methods for fast propagation. Will be useless as
+	soon as the subdomain morpher will be specialized.
+
+	* edwin/mln/util,
+	* edwin/mln/util/ctree,
+	* edwin/mln/util/ctree/ctree.hh,
+	* edwin/mln/util/ctree/internal,
+	* edwin/mln/util/ctree/internal/tree_base.hh,
+	* edwin/mln/util/ctree/node.hh:
+	Materials for the new tree representation.
+
 2009-10-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Update the demo for debugging purpose.
