@@ -60,6 +60,7 @@
 #include <mln/debug/println.hh>
 #include <mln/data/fill.hh>
 #include <mln/literal/zero.hh>
+#include <mln/literal/one.hh>
 #include <mln/labeling/colorize.hh>
 #include <mln/labeling/mean_values.hh>
 
@@ -1117,7 +1118,8 @@ namespace mln
 	  t_value    val = _point(pi);
 	  t_label    grp = _group(point3d(val.blue(), val.red(), val.green()));
 
-	  _label_dbg(po) = grp;
+	  // As label zero has got a particular semantic, the first label is one
+	  _label_dbg(po) = ++grp;
       }
 
       trace::exiting("mln::clustering::kmean3d::build_label_dbg");
@@ -1148,8 +1150,8 @@ namespace mln
     {
       trace::entering("mln::clustering::kmean3d::build_all_dbg");
       build_label_dbg();
-      build_mean_dbg();
-      //_mean_dbg  = labeling::mean_values(_point, _label_dbg, _k_center);
+      //build_mean_dbg();
+      _mean_dbg  = labeling::mean_values(_point, _label_dbg, _k_center);
       _color_dbg = labeling::colorize(value::rgb8(), _label_dbg);
 
       trace::exiting("mln::clustering::kmean3d::build_all_dbg");
