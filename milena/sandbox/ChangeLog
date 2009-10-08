@@ -1,5 +1,12 @@
 2009-10-08  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Fix LRDE norm fault in rgb8_to_rgn.hh
+
+	* green/mln/fun/v2v/rg8_to_rgn.hh: Correct space location.
+
+
+2009-10-08  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Add a new (red,green) value type.
 
 	* green/mln/value/rg.hh: New library file.

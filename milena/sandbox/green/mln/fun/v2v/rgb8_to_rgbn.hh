@@ -25,12 +25,12 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_V2V_RGB8_TO_RGBN_HH
-#define MLN_FUN_V2V_RGB8_TO_RGBN_HH
+#ifndef  MLN_FUN_V2V_RGB8_TO_RGBN_HH
+# define MLN_FUN_V2V_RGB8_TO_RGBN_HH
 
-#include <mln/value/rgb8.hh>
-#include <mln/value/rgb.hh>
-#include <mln/core/contract.hh>
+# include <mln/value/rgb8.hh>
+# include <mln/value/rgb.hh>
+# include <mln/core/contract.hh>
 
 /// \file
 ///
@@ -41,7 +41,7 @@ namespace mln
 
   namespace fun
   {
-    
+
     namespace v2v
     {
 
@@ -54,13 +54,13 @@ namespace mln
       {
 	typedef value::rgb8   argument;
 	typedef value::rgb<n> result;
-	
+
 	result operator()(const argument& c) const
 	{
 	  mln_precondition(8 > n);
 
 	  unsigned size = pow(2,(8-n));
-	  /*	  
+	  /*
 	  std::cout << "c    : " << c << std::endl;
 	  std::cout << "red  : " << c.red() << std::endl;
 	  std::cout << "size : " << size << std::endl;
@@ -68,13 +68,13 @@ namespace mln
 	  std::cout << "max  : " << (mln_max(mln::value::int_u<n>)) << std::endl;
 	  */
 	  result   res(c.red() / size, c.green() / size, c.blue() / size);
-	  
+
 	  return res;
 	}
       };
 
     }
-    
+
   }
 
 }
