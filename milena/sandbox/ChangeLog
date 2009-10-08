@@ -1,5 +1,13 @@
 2009-10-08  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Add a new (red,green) value type.
+
+	* green/mln/value/rg.hh: New library file.
+	* green/mln/fun/v2v/rgb_to_rg.hh: New library file.
+	* green/mln/fun/v2v/rg_to_rgb.hh: New library file.
+
+2009-10-08  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Add histogram accumulator which produce a 2d image result.
 
 	* green/mln/accu/stat/histo2d.hh: New library file.
