@@ -1,5 +1,13 @@
 2009-10-08  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Add kmean2d demo for theo, work in progress.
+
+	* green/demo/clustering/kmean2d/Makefile.am: New makefile.
+	* green/demo/clustering/kmean2d/kmean2d.cc: New demo code.
+	* green/mln/clustering/kmean2d.hh: New library file.
+
+2009-10-08  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Fix LRDE norm fault in rgb8_to_rgn.hh
 
 	* green/mln/fun/v2v/rg8_to_rgn.hh: Correct space location.
