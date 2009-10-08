@@ -1,5 +1,12 @@
 2009-10-08  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Add histogram accumulator which produce a 2d image result.
+
+	* green/mln/accu/stat/histo2d.hh: New library file.
+
+
+2009-10-08  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Correct bad behaviour in kmean3d (see usage of zero label).
 
 	* green/mln/clustering/kmean3d.hh
