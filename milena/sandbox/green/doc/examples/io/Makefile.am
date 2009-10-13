@@ -6,7 +6,9 @@
 # TOOLS #
 #########
 
-INCLUDES=       -I$(HOME)/svn/oln/trunk/milena/sandbox/green
+INC_SANDBOX_MLN=-I$(HOME)/svn/oln/trunk/milena/sandbox/green
+INC_MAGICK=     -I/usr/include/ImageMagick
+INCLUDES=       $(INC_SANDBOX_MLN) $(INC_MAGICK)
 CXXFLAGS=       -ggdb -O0 -Wall -W -pedantic -ansi -pipe $(INCLUDES)
 ECHO=           echo
 RM=             rm

@@ -1,13 +1,12 @@
 // The aim of this file is to test the different ways to load and save images.
 
-// NEED SPECIFIC LINUX INSTALL
-/*
+
 #include <mln/io/dicom/load.hh>
 #include <mln/io/fits/load.hh>
 #include <mln/io/magick/load.hh>
 #include <mln/io/magick/save.hh>
 #include <mln/io/tiff/load.hh>
-*/
+
 
 #include <mln/io/cloud/load.hh>
 #include <mln/io/cloud/save.hh>

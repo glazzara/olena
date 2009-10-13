@@ -1,3 +1,10 @@
+2009-10-13  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Make the milena image loading example works.
+
+	* green/doc/examples/io/Makefile: Add include path directive.
+	* green/doc/examples/io/io.cc: Test specific image format loading.
+
 2009-10-08  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Add kmean2d demo for theo, work in progress.
