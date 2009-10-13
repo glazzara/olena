@@ -37,5 +37,6 @@
 #define SCRIBO_IMG_PATH       IMG_PATH"/scribo"
 #define SCRIBO_JPG_IMG_PATH   SCRIBO_IMG_PATH"/jpg_50p"
 #define SCRIBO_PGM_IMG_PATH   SCRIBO_IMG_PATH"/pgm_50p"
+#define SCRIBO_PPM_IMG_PATH   SCRIBO_IMG_PATH"/ppm_50p"
 
 #endif // ! MLN_IMG_PATH_HH
