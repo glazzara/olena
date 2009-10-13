@@ -1,5 +1,26 @@
 2009-10-13  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Plot the red/green histo on every scribo images.
+
+	* green/demo/accu/stat/histo2d: New directory.
+	* green/demo/accu/stat/histo2d/Makefile.am: New makefile.
+	* green/demo/accu/stat/histo2d/histo2d.cc: New demo executable.
+
+2009-10-13  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Improve plotting library with a new method.
+
+	* green/mln/io/plot/save_image_sh.hh
+	(save_image_sh_array_array_image1d_vec2): Add new method.
+
+2009-10-13  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Add new directory location for ppm scribo image.
+
+	* green/mln/img_path.hh: Add SCRIBO_PPM_IMAGE_PATH macro.
+
+2009-10-13  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Make the milena image loading example works.
 
 	* green/doc/examples/io/Makefile: Add include path directive.
