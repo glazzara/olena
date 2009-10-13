@@ -322,6 +322,101 @@ namespace mln
 	  return result;
 	}
 
+
+	//----------------------------------------------------------------------
+	// save_image_sh_array_array_image1d_vec2(
+	//                              const array<array<image1d<vec<2,T>>>>&,
+	//                              const string&)
+	//----------------------------------------------------------------------
+
+	template <typename T>
+	inline
+	bool save_image_sh_array_array_image1d_vec2(
+	  const util::array<util::array<image1d<algebra::vec<2,T> > > >& stack,
+	  const std::string&                                           filename)
+	{
+	  trace::entering("mln::io::plot::impl::"
+			  "save_image_sh_array_array_image1d_vec2");
+
+	  typedef algebra::vec<2,T>    t_val;
+	  typedef image1d<t_val>       t_img;
+	  typedef util::array<t_img>   t_array;
+	  typedef util::array<t_array> t_stack;
+
+	  mln_precondition(!stack.is_empty());
+	  mln_precondition(!stack[0].is_empty());
+	  mln_precondition(stack[0][0].is_valid());
+
+	  std::ofstream           out(filename.c_str());
+	  bool                    result  = !out.fail();
+	  unsigned                min_ind = geom::min_ind(stack[0][0]);
+	  unsigned                max_ind = geom::max_ind(stack[0][0]);
+
+	  if (result)
+	  {
+	    // Output data prelude (terminal X11, image).
+	    out << "#!/bin/sh"                                     << std::endl;
+	    out << "####################################"          << std::endl;
+	    out << "# Columns = (x, y, val)            #"          << std::endl;
+	    out << "####################################"          << std::endl;
+	    out                                                    << std::endl;
+	    out << "gnuplot <<EOF"                                 << std::endl;
+	    out << "set terminal x11 persist 1"                    << std::endl;
+	    out << "set xrange ["                                  << min_ind;
+	    out << ":"                                             << max_ind;
+	    out << "]"                                             << std::endl;
+	    out << "splot '-' with line";
+
+	    for (unsigned i = 1; i < stack.size(); ++i)
+	    {
+	      for (unsigned j = 1; j < stack[i].size(); ++j)
+	      {
+
+		out << ",\\"                                       << std::endl;
+		out << "      '-' with line";
+	      }
+	    }
+
+	    out                                                    << std::endl;
+
+	    mln_eiter(t_stack)   e0(stack);
+
+	    for_all (e0)
+	    {
+	      mln_eiter(t_array) e1(stack[e0.index_()]);
+
+	      for_all (e1)
+	      {
+		mln_piter(t_img) p(stack[e0.index_()][e1.index_()].domain());
+
+		// Output data.
+		for_all(p)
+		{
+		  out << p.ind()                                  << " ";
+		  out << stack[e0.index_()][e1.index_()](p)[0]    << " ";
+		  out << stack[e0.index_()][e1.index_()](p)[1]    << std::endl;;
+		}
+
+	      // Close gnuplot data stream.
+	      out << "e"                                           << std::endl;
+	      }
+	    }
+
+	    out << "EOF"                                           << std::endl;
+	    out.close();
+	  }
+	  else
+	  {
+	    std::cerr << "ERROR[mln::io::plot::save_image_sh]:"    << filename;
+	    std::cerr << " couldn't be opened !!"                  << std::endl;
+	  }
+
+	  trace::exiting("mln::io::plot::impl::"
+			 "save_image_sh_array_array_image1d_vec2");
+
+	  return result;
+	}
+
 	//----------------------------------------------------------------------
 	// save_image_sh_array_image1d(const array<image1d<I>>&, const string&)
 	//----------------------------------------------------------------------
@@ -838,6 +933,15 @@ namespace mln
 	  const std::string&                                           filename)
 	{
 	  return impl::save_image_sh_array_array_image1d_vec3(stack, filename);
+	}
+
+	template <typename T>
+	inline
+	bool save_image_sh_dispatch(
+	  const util::array<util::array<image1d<algebra::vec<2,T> > > >& stack,
+	  const std::string&                                           filename)
+	{
+	  return impl::save_image_sh_array_array_image1d_vec2(stack, filename);
 	}
 
 	template <unsigned n>
