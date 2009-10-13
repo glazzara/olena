@@ -939,8 +939,7 @@ namespace mln
 	  // the square distance
 	  t_result1d diff2_row = math::sqr(d.row() - _mean[i][0]);
 	  t_result1d diff2_col = math::sqr(d.col() - _mean[i][1]);
-	  t_result1d diff2_sli = math::sqr(d.sli() - _mean[i][2]);
-	  _distance[i](d)      = _histo(d)*(diff2_row + diff2_col + diff2_sli);
+	  _distance[i](d)      = _histo(d)*(diff2_row + diff2_col);
 	  /*
 	    std::cout << "row      : " << d.row()                  << std::endl;
 	    std::cout << "col      : " << d.col()                  << std::endl;
@@ -1125,9 +1124,12 @@ namespace mln
 
       for_all(p)
       {
-	_mean_dbg(p).red()   = static_cast<unsigned>(_mean[_label_dbg(p)][0]);
-	_mean_dbg(p).green() = static_cast<unsigned>(_mean[_label_dbg(p)][1]);
-	_mean_dbg(p).blue()  = static_cast<unsigned>(_mean[_label_dbg(p)][2]);
+	t_label grp = _label_dbg(p);
+
+	--grp;
+
+	_mean_dbg(p).red()  = static_cast<unsigned>(_mean[grp][0]);
+	_mean_dbg(p).green()= static_cast<unsigned>(_mean[grp][1]);
       }
 
       trace::exiting("mln::clustering::kmean2d::build_mean_dbg");
@@ -1140,8 +1142,8 @@ namespace mln
     {
       trace::entering("mln::clustering::kmean2d::build_all_dbg");
       build_label_dbg();
-      //build_mean_dbg();
-      _mean_dbg  = labeling::mean_values(_point, _label_dbg, _k_center);
+      build_mean_dbg();
+      //_mean_dbg  = labeling::mean_values(_point, _label_dbg, _k_center);
       _color_dbg = labeling::colorize(value::rgb8(), _label_dbg);
 
       trace::exiting("mln::clustering::kmean2d::build_all_dbg");
@@ -1265,8 +1267,8 @@ namespace mln
 	// Debugging code
 	update_cnv();
 
-	std::cout << "_current_step    : " << _current_step    << std::endl;
-	std::cout << "_within_variance : " << _within_variance << std::endl;
+	//std::cout << "_current_step    : " << _current_step    << std::endl;
+	//std::cout << "_within_variance : " << _within_variance << std::endl;
 
 	++_current_step;
       }
@@ -1313,11 +1315,11 @@ namespace mln
 	  // Reinitialize the number of echecs possible
 	  tries = 0;
 
-	  //std::cout << "_current_launching : " << _current_launching
-	  //	    << std::endl;
+	  std::cout << "_current_launching : " << _current_launching
+	  	    << std::endl;
 
-	  //std::cout << "within_variance[" << _current_launching << "] = "
-	  //	    << _within_variance << std::endl;
+	  std::cout << "within_variance[" << _current_launching << "] = "
+	  	    << _within_variance << std::endl;
 
 	  ++_current_launching;
 	}
@@ -1327,6 +1329,7 @@ namespace mln
 
       //Debugging code
       build_all_dbg();
+      print_number();
 
       trace::exiting("mln::clustering::kmean2d::launch_n_times");
     }

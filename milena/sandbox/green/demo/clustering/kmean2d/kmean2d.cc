@@ -34,109 +34,309 @@
 #include <mln/accu/stat/histo2d.hh>
 #include <mln/data/compute.hh>
 
+#include <mln/arith/revert.hh>
+#include <mln/morpho/elementary/dilation.hh>
+#include <mln/morpho/elementary/opening.hh>
+#include <mln/labeling/regional_maxima.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/routine/initialize.hh>
+#include <mln/literal/colors.hh>
+#include <mln/morpho/watershed/flooding.hh>
+#include <mln/morpho/opening/structural.hh>
+
+#include <mln/core/alias/window2d.hh>
+#include <mln/win/disk2d.hh>
 
 
-void do_demo(const std::string& image,
-	     const unsigned     k_center,
-	     const unsigned     n_times,
-	     const unsigned     watch_dog)
+//
+// Test kmean image processing chain.
+// Ok pour la convergence.
+// demander à Théo pour le temps (45 sec pour chaque launching [house,3 cl.])
+//
+void do_demo_kmean(const std::string& image,
+		   const unsigned     k_center,
+		   const unsigned     n_times,
+		   const unsigned     watch_dog)
 {
   typedef mln::clustering::kmean2d<double,8>          t_kmean;
   typedef mln::value::rg<8>                           t_rg8;
   typedef mln::value::rgb8                            t_rgb8;
-  typedef mln::value::int_u8                          t_int_u8;
-  typedef mln::algebra::vec<2,t_int_u8>               t_vec_rg8;
   typedef mln::image2d<t_rgb8>                        t_image2d_rgb8;
-  typedef mln::image2d<t_int_u8>                      t_image2d_int_u8;
-  typedef mln::fun::v2v::component<t_rgb8, 0>         t_comp_red;
-  typedef mln::fun::v2v::component<t_rgb8, 1>         t_comp_green;
-  typedef mln::fun::v2v::component<t_rgb8, 2>         t_comp_blue;
+  typedef mln::image2d<t_rg8>                         t_image2d_rg8;
   typedef mln::fun::v2v::rgb_to_rg<8>                 t_rgb_to_rg;
   typedef mln::fun::v2v::rg_to_rgb<8>                 t_rg_to_rgb;
-  typedef mln::image2d<t_vec_rg8>                     t_image2d_vec_rg8;
-  typedef mln::image2d<t_rg8>                         t_image2d_rg8;
-  typedef mln::image2d<unsigned>                      t_histo2d;
 
-  t_image2d_rgb8                                      house_rgb8;
-  t_image2d_int_u8                                    house_red;
-  t_image2d_int_u8                                    house_blue;
-  t_image2d_int_u8                                    house_green;
-  //t_image2d_vec_rg8                                   house_rg8;
-  t_image2d_rgb8                                      house_cast;
-  t_image2d_rg8                                       house_rg8;
-  t_histo2d                                           house_histo;
+  t_image2d_rgb8                                      img_rgb8;
+  t_image2d_rgb8                                      point_img_rgb8;
+  t_image2d_rgb8                                      mean_img_rgb8;
+  t_image2d_rgb8                                      mean_dbg_rgb8;
+  t_image2d_rg8                                       img_rg8;
 
+  // Read input.
+  mln::io::ppm::load(img_rgb8, image.c_str());
+  img_rg8   = mln::data::transform(img_rgb8, t_rgb_to_rg());
 
-  mln::io::ppm::load(house_rgb8, image.c_str());
-  house_red   = mln::data::transform(house_rgb8, t_comp_red());
-  house_green = mln::data::transform(house_rgb8, t_comp_green());
-  house_blue  = mln::data::transform(house_rgb8, t_comp_blue());
-
-  house_rg8   = mln::data::transform(house_rgb8, t_rgb_to_rg());
-  house_histo = mln::data::compute(mln::accu::meta::stat::histo2d(), house_rg8);
-
-  house_cast  = mln::data::transform(house_rg8,  t_rg_to_rgb());
-
-  t_kmean kmean(house_rg8, k_center, watch_dog, n_times);
-
-  mln::io::pgm::save(house_red,   "red.pgm");
-  mln::io::pgm::save(house_green, "green.pgm");
-  mln::io::pgm::save(house_blue,  "blue.pgm");
-  mln::io::ppm::save(house_cast,  "red_green.ppm");
-  mln::io::pgm::save(house_histo, "histo.pgm");
-  mln::io::plot::save_image_sh(house_histo, "histo.sh");
-
-/*
-  mln::io::plot::save_image_sh(mean_img,     "mean.sh");
-  mln::io::plot::save_image_sh(mean_cnv,     "mean_cnv.sh");
-  mln::io::plot::save_image_sh(variance_cnv, "variance_cnv.sh");
-*/
-}
-/*
-void do_demo(const std::string& image,
-	     const unsigned     k_center,
-	     const unsigned     n_times,
-	     const unsigned     watch_dog)
-{
-  typedef mln::clustering::kmean3d<double,5>          t_kmean;
-  typedef mln::value::label_8                         t_label_8;
-  typedef mln::value::rgb8                            t_rgb8;
-  typedef mln::value::rgb<5>                          t_rgb5;
-  typedef mln::image2d<t_rgb8>                        t_image2d_rgb8;
-  typedef mln::image2d<t_rgb5>                        t_image2d_rgb5;
-
-  t_image2d_rgb8                                      house_rgb8;
-  t_image2d_rgb5                                      house_rgb5;
-
-  mln::io::ppm::load(house_rgb8, image.c_str());
-  house_rgb5=mln::data::transform(house_rgb8,mln::fun::v2v::rgb8_to_rgbn<5>());
-
-  t_kmean kmean(house_rgb5, k_center, watch_dog, n_times);
+  // Call kmean.
+  t_kmean kmean(img_rg8, k_center, watch_dog, n_times);
 
   mln::trace::quiet = false;
-
-  //kmean.launch_one_time();
   kmean.launch_n_times();
 
-  // Not safe because we don't test kmean.is_valid()
-
+  // Get outputs.
+  t_kmean::t_point_img    point_img    = kmean.get_point();
   t_kmean::t_color_dbg    color_img    = kmean.get_color_dbg();
   t_kmean::t_mean_dbg     mean_img     = kmean.get_mean_dbg();
   t_kmean::t_label_dbg    label_img    = kmean.get_label_dbg();
   t_kmean::t_variance_cnv variance_cnv = kmean.get_variance_cnv();
   t_kmean::t_mean_cnv     mean_cnv     = kmean.get_mean_cnv();
 
-  mln::io::ppm::save(mean_img,  "mean.ppm");
-  mln::io::ppm::save(color_img, "color.ppm");
-  mln::io::pgm::save(label_img, "label.pgm");
+  // Convert outputs.
+  point_img_rgb8 = mln::data::transform(point_img, t_rg_to_rgb());
+  mean_img_rgb8  = mln::data::transform(mean_img,  t_rg_to_rgb());
 
-  mln::io::plot::save_image_sh(mean_img,     "mean.sh");
+  mln::io::ppm::save(mean_img_rgb8,  "mean.ppm");
+  mln::io::ppm::save(color_img,      "color.ppm");
+  mln::io::pgm::save(label_img,      "label.pgm");
+  mln::io::ppm::save(point_img_rgb8, "point.ppm");
+
   mln::io::plot::save_image_sh(mean_cnv,     "mean_cnv.sh");
   mln::io::plot::save_image_sh(variance_cnv, "variance_cnv.sh");
 }
+
+
+
+mln::image2d<mln::value::rgb<8> >
+merge(const mln::image2d<mln::value::rg<8> >&  input,
+      const mln::image2d<mln::value::label_8>& label)
+{
+  mln::image2d<mln::value::rgb8> output;
+
+  mln::initialize(output, input);
+
+  mln_piter_(mln::image2d<mln::value::rg<8> >)  p_rg(input.domain());
+  mln_piter_(mln::image2d<mln::value::rgb8>)    p_rgb(output.domain());
+
+  for_all_2(p_rg, p_rgb)
+  {
+    if (0 < label(mln::point2d(input(p_rg).red(), input(p_rg).green())))
+    {
+      output(p_rgb).red()   = input(p_rg).red();
+      output(p_rgb).green() = input(p_rg).green();
+      output(p_rgb).blue()  = label(mln::point2d(input(p_rg).red(),
+						 input(p_rg).green()));
+    }
+    else
+      output(p_rgb) = mln::literal::red;
+    //output(p_rgb) = mln::literal::black;
+  }
+
+  return output;
+}
+
+
+//
+// Watershed image processing chain.
+//
+void do_demo_watershed(const std::string& image,
+		       const unsigned     k_center,
+		       const unsigned     n_times,
+		       const unsigned     watch_dog)
+{
+  typedef mln::value::label_8                         t_lbl8;
+  typedef mln::value::rg<8>                           t_rg8;
+  typedef mln::value::rgb8                            t_rgb8;
+  typedef mln::value::int_u8                          t_int_u8;
+  typedef mln::image2d<t_lbl8>                        t_image2d_lbl8;
+  typedef mln::image2d<t_rgb8>                        t_image2d_rgb8;
+  typedef mln::image2d<t_int_u8>                      t_image2d_int_u8;
+  typedef mln::image2d<t_rg8>                         t_image2d_rg8;
+  typedef mln::image2d<unsigned>                      t_histo2d;
+  typedef mln::fun::v2v::rgb_to_rg<8>                 t_rgb_to_rg;
+  typedef mln::fun::v2v::rg_to_rgb<8>                 t_rg_to_rgb;
+
+  t_image2d_rgb8                                      img_rgb8;
+  t_image2d_rgb8                                      output;
+  t_image2d_rgb8                                      img_cast;
+  t_image2d_rg8                                       img_rg8;
+  t_histo2d                                           histo;
+  t_image2d_lbl8                                      label;
+  t_lbl8                                              n_labels;
+  t_histo2d                                           reverted;
+
+  // IMAGE LOADING PHASE
+  mln::io::ppm::load(house_rgb8, image.c_str());
+  img_rg8   = mln::data::transform(img_rgb8, t_rgb_to_rg());
+  img_cast  = mln::data::transform(img_rg8,  t_rg_to_rgb());
+  mln::io::ppm::save(img_cast,  "red_green.ppm");
+
+
+  // HISTO COMPUTING AND FILTERING PHASE
+  histo    = mln::data::compute(mln::accu::meta::stat::histo2d(), img_rg8);
+  mln::io::plot::save_image_sh(histo, "histo.sh");
+
+  //histo    = mln::morpho::elementary::opening(histo, mln::c4());
+
+  mln::io::plot::save_image_sh(histo, "histo.sh");
+
+  // LABELING PHASE
+  reverted = mln::arith::revert(histo);
+  label    = mln::morpho::watershed::flooding(reverted, mln::c4(), n_labels);
+
+  mln::io::pgm::save(label, "label.pgm");
+
+  // OUTPUT PHASE
+  output   = merge(house_rg8, label);
+
+  mln::io::ppm::save(output,  "merge.ppm");
+}
+
+
+//
+// Regional maxima image processing chain.
+//
+void do_demo_regional1(const std::string& image,
+		       const unsigned     k_center,
+		       const unsigned     n_times,
+		       const unsigned     watch_dog)
+{
+  typedef mln::value::label_8                         t_lbl8;
+  typedef mln::value::rg<8>                           t_rg8;
+  typedef mln::value::rgb8                            t_rgb8;
+  typedef mln::value::int_u8                          t_int_u8;
+  typedef mln::image2d<t_lbl8>                        t_image2d_lbl8;
+  typedef mln::image2d<t_rgb8>                        t_image2d_rgb8;
+  typedef mln::image2d<t_int_u8>                      t_image2d_int_u8;
+  typedef mln::image2d<t_rg8>                         t_image2d_rg8;
+  typedef mln::image2d<unsigned>                      t_histo2d;
+  typedef mln::fun::v2v::rgb_to_rg<8>                 t_rgb_to_rg;
+  typedef mln::fun::v2v::rg_to_rgb<8>                 t_rg_to_rgb;
+
+  t_image2d_rgb8                                      img_rgb8;
+  t_image2d_rgb8                                      output;
+  t_image2d_rgb8                                      img_cast;
+  t_image2d_rg8                                       img_rg8;
+  t_histo2d                                           histo;
+  t_histo2d                                           opened;
+  t_image2d_lbl8                                      label;
+  t_image2d_lbl8                                      dilated;
+  t_lbl8                                              n_labels;
+
+
+  // IMAGE LOADING PHASE
+  mln::io::ppm::load(img_rgb8, image.c_str());
+  img_rg8   = mln::data::transform(img_rgb8, t_rgb_to_rg());
+  img_cast  = mln::data::transform(img_rg8,  t_rg_to_rgb());
+  mln::io::ppm::save(img_cast,  "red_green.ppm");
+
+
+  // HISTO COMPUTING PHASE
+  histo    = mln::data::compute(mln::accu::meta::stat::histo2d(), img_rg8);
+  mln::io::plot::save_image_sh(histo, "histo.sh");
+
+
+  // HISTO FILTERING PHASE
+  opened = mln::morpho::elementary::opening(histo, mln::c8());
+  mln::io::plot::save_image_sh(opened, "opened.sh");
+
+
+  // HISTO LABELING PHASE
+  label    = mln::labeling::regional_maxima(opened, mln::c8(), n_labels);
+  mln::io::pgm::save(label, "label.pgm");
+
+
+  // HISTO FUZZY PHASE
+  dilated  = mln::morpho::elementary::dilation(label, mln::c8());
+  mln::io::pgm::save(dilated, "dilated.pgm");
+
+
+  // OUTPUT PHASE
+  output   = merge(img_rg8, dilated);
+  mln::io::ppm::save(output,  "merge.ppm");
+}
+
+//
+// Regional maxima image processing chain.
+//
+void do_demo_regional2(const std::string& image,
+		       const unsigned     k_center,
+		       const unsigned     n_times,
+		       const unsigned     watch_dog)
+{
+  typedef mln::value::label_8                         t_lbl8;
+  typedef mln::value::rg<8>                           t_rg8;
+  typedef mln::value::rgb8                            t_rgb8;
+  typedef mln::value::int_u8                          t_int_u8;
+  typedef mln::image2d<t_lbl8>                        t_image2d_lbl8;
+  typedef mln::image2d<t_rgb8>                        t_image2d_rgb8;
+  typedef mln::image2d<t_int_u8>                      t_image2d_int_u8;
+  typedef mln::image2d<t_rg8>                         t_image2d_rg8;
+  typedef mln::image2d<unsigned>                      t_histo2d;
+  typedef mln::fun::v2v::rgb_to_rg<8>                 t_rgb_to_rg;
+  typedef mln::fun::v2v::rg_to_rgb<8>                 t_rg_to_rgb;
+
+  t_image2d_rgb8                                      img_rgb8;
+  t_image2d_rgb8                                      output;
+  t_image2d_rgb8                                      img_cast;
+  t_image2d_rg8                                       img_rg8;
+  t_histo2d                                           histo;
+  t_histo2d                                           filtered;
+  t_image2d_lbl8                                      label;
+  t_lbl8                                              n_labels;
+
+
+  // IMAGE LOADING PHASE
+  mln::io::ppm::load(img_rgb8, image.c_str());
+  img_rg8   = mln::data::transform(img_rgb8, t_rgb_to_rg());
+  img_cast  = mln::data::transform(img_rg8,  t_rg_to_rgb());
+
+  mln::io::ppm::save(img_cast,  "red_green.ppm");
+
+
+  // HISTO COMPUTING AND FILTERING PHASE
+  histo    = mln::data::compute(mln::accu::meta::stat::histo2d(), img_rg8);
+
+  mln::io::plot::save_image_sh(histo, "histo.sh");
+
+  // FILTERING
+  // a) one pixel with c4 or c8
+  // histo   = mln::morpho::elementary::opening(histo, mln::c4());
+
+  // b) structural element with c4 or c8
+
+  filtered   = mln::morpho::opening::structural(histo, mln::win_c8p());
+
+/*
+  // c) structural element with disk
+
+  // 11 ==> trop peu
+  // 21 ???
+  // 31 ???
+  // 51 ==> beaucoup trop (2 labels)
+  mln::win::disk2d disk2d(21);
+
+  histo    = mln::morpho::opening::structural(histo, disk2d);
+
 */
-void demo(const std::string& image     = OLENA_IMG_PATH"/house.ppm",
-	  const unsigned     k_center  = 3,
+  mln::io::plot::save_image_sh(histo, "filtered.sh");
+
+
+  // LABELING PHASE
+  label    = mln::labeling::regional_maxima(filtered, mln::c8(), n_labels);
+  label    = mln::morpho::elementary::dilation(label, mln::c8());
+  mln::io::pgm::save(label, "label.pgm");
+
+
+  // OUTPUT PHASE
+  output   = merge(img_rg8, label);
+  mln::io::ppm::save(output,  "merge.ppm");
+}
+
+
+
+void demo(const std::string& image     = SCRIBO_PPM_IMG_PATH"/mp00082c_50p.ppm",
+	  //const std::string& image     = OLENA_IMG_PATH"/house.ppm",
+	  const unsigned     k_center  = 2,
+	  //const unsigned     k_center  = 3,
 	  const unsigned     n_times   = 10,
 	  const unsigned     watch_dog = 10)
 {
@@ -148,7 +348,10 @@ void demo(const std::string& image     = OLENA_IMG_PATH"/house.ppm",
   std::cout << "watch_dog : " << watch_dog                << std::endl;
   std::cout << "----------------------------------------" << std::endl;
 
-  do_demo(image, k_center, n_times, watch_dog);
+//  do_demo_kmean(image, k_center, n_times, watch_dog);
+//  do_demo_watershed(image, k_center, n_times, watch_dog);
+  do_demo_regional1(image, k_center, n_times, watch_dog);
+  //do_demo_regional2(image, k_center, n_times, watch_dog);
 }
 
 void usage(const int argc, const char *args[])
@@ -160,7 +363,7 @@ void usage(const int argc, const char *args[])
     std::cout << "args[" << i << "] : " << args[i] << std::endl;
 
   std::cout << "----------------------------------------" << std::endl;
-  std::cout << "usage: kmean1d [image [k_center [n_times [watch_dog]]]]"
+  std::cout << "usage: kmean2d [image [k_center [n_times [watch_dog]]]]"
 	    << std::endl;
   std::cout << "pbm image          (points to work with)" << std::endl;
   std::cout << "unsigned k_center  (number of centers)"   << std::endl;

@@ -1,5 +1,12 @@
 2009-10-13  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Fix bugs in kmean2d.hh and continue kmean demo in the red/green space.
+
+	* green/demo/clustering/kmean2d/kmean2d.cc: Continue demo.
+	* green/mln/clustering/kmean2d/kmean2d.hh: Fix bugs.
+
+2009-10-13  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Plot the red/green histo on every scribo images.
 
 	* green/demo/accu/stat/histo2d: New directory.
