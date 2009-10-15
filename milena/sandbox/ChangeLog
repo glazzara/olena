@@ -1,3 +1,12 @@
+2009-10-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Make Théo projection for histogram available.
+
+	* green/mln/display: New directory.
+	* green/mln/display/display_histo.hh: New library file.
+	* green/mln/display/project_histo.hh: New library file.
+	* green/mln/fun/v2v/log.hh: New library file.
+
 2009-10-14  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Add spaces to conform to the LRDE coding norm.
