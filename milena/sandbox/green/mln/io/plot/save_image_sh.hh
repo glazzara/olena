@@ -26,7 +26,7 @@
 // executable file might be covered by the GNU General Public License.
 
 #ifndef MLN_IO_PLOT_SAVE_IMAGE_SH_HH
-#define MLN_IO_PLOT_SAVE_IMAGE_SH_HH
+# define MLN_IO_PLOT_SAVE_IMAGE_SH_HH
 
 /// \file
 ///
@@ -41,34 +41,34 @@
 /// that's all.
 ///
 
-#include <fstream>
-#include <string>
+# include <fstream>
+# include <string>
 
-#include <mln/trace/entering.hh>
-#include <mln/trace/exiting.hh>
+# include <mln/trace/entering.hh>
+# include <mln/trace/exiting.hh>
 
-#include <mln/core/macros.hh>
-#include <mln/core/contract.hh>
-#include <mln/core/image/image1d.hh>
-#include <mln/core/image/image2d.hh>
-#include <mln/core/image/image3d.hh>
+# include <mln/core/macros.hh>
+# include <mln/core/contract.hh>
+# include <mln/core/image/image1d.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/image/image3d.hh>
 
-#include <mln/geom/min_ind.hh>
-#include <mln/geom/max_ind.hh>
-#include <mln/geom/min_row.hh>
-#include <mln/geom/max_row.hh>
-#include <mln/geom/min_col.hh>
-#include <mln/geom/max_col.hh>
+# include <mln/geom/min_ind.hh>
+# include <mln/geom/max_ind.hh>
+# include <mln/geom/min_row.hh>
+# include <mln/geom/max_row.hh>
+# include <mln/geom/min_col.hh>
+# include <mln/geom/max_col.hh>
 
-#include <mln/trait/value_.hh>
+# include <mln/trait/value_.hh>
 
-#include <mln/value/int_u.hh>
-#include <mln/value/int_s.hh>
-#include <mln/value/rgb.hh>
-#include <mln/value/hsl.hh>
-#include <mln/value/hsi.hh>
+# include <mln/value/int_u.hh>
+# include <mln/value/int_s.hh>
+# include <mln/value/rgb.hh>
+# include <mln/value/hsl.hh>
+# include <mln/value/hsi.hh>
 
-#include <mln/util/array.hh>
+# include <mln/util/array.hh>
 
 
 namespace mln

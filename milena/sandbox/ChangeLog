@@ -1,3 +1,9 @@
+2009-10-14  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Add spaces to conform to the LRDE coding norm.
+
+	* green/mln/io/plot/save_image_sh.hh: Add spaces in #include.
+
 2009-10-13  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Fix bugs in kmean2d.hh and continue kmean demo in the red/green space.
