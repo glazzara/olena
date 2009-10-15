@@ -1,5 +1,12 @@
 2009-10-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Work on regional labeling chain in the rgb space.
+
+	* green/demo/labeling/regional_maxima/Makefile.am: New Makefile.
+	* green/demo/labeling/regional_maxima/regional_maxima.cc: New file.
+
+2009-10-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Correct kmean3d documentation.
 
 	* green/mln/clustering/kmean3d.hh: Fix mistakes in documentation.
