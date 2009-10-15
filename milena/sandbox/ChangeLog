@@ -1,5 +1,11 @@
 2009-10-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Correct kmean3d documentation.
+
+	* green/mln/clustering/kmean3d.hh: Fix mistakes in documentation.
+
+2009-10-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Make Théo projection for histogram available.
 
 	* green/mln/display: New directory.

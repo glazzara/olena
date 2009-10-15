@@ -31,11 +31,11 @@
 /// \brief Implements the optimized kmean algorithm.
 ///
 /// This algorithm is optimized in the way it proceeds directly with
-/// the greylevel attribute inspite of the pixel attribute. The
+/// the rgb values inspite of the pixel attribute. The
 /// algorithm is independant from the image dimension. But, we have to
 /// compute one time the histogram. In fact, we move a recurrent cost
-/// to a fix cost in the complexity. This version is very adapted to
-/// images with small quantification.
+/// to a fix cost in the complexity. This version is adapted to
+/// image with small quantification.
 
 #include <limits.h>
 #include <iostream>
@@ -86,12 +86,12 @@ namespace mln
   {
     /// \brief Implements the kmean algorithm in a specific way.
     ///
-    /// This version of the kmean algorithm uses a greyscale image as input,
+    /// This version of the kmean algorithm uses a rgb image as input,
     /// temporary images for computations and produces images as result. Images
-    /// play the role of matrix or vector in standard statistic algoritm.
+    /// play the role of matrix or vector in standard statistic algorithm.
     ///
     /// T is the type used for computations (float or double).
-    /// n is the quantification for the image grayscale.
+    /// n is the quantification for the rgb image.
     template <typename T, unsigned n>
     struct kmean3d
     {
@@ -208,7 +208,7 @@ namespace mln
       /// \brief Two ways: Regular greylevel tick or random greylevel value or.
       ///
       /// There is two way to proceed the initialization. First of all, we
-      /// divide the greyscale in regular tick and we assigne them to the mean
+      /// divide the rgb space in regular tick and we assigne them to the mean
       /// of the centers. Finaly, we can ask random initialization along the
       /// greyscale axis. The second process is needed to launch_n_times the
       /// kmean and converge to the best descent.
@@ -388,17 +388,17 @@ namespace mln
 
       /// \}
 
-      /// Greylevels description.
+      /// rgb image description.
       /// \{
-      /// \brief The information are concerned with the greylevel input image.
+      /// \brief The information are concerned with the rgb input image.
       ///
-      /// The group image allow us to decide which greylevel (and of course
+      /// The group image allow us to decide which rgb color (and of course
       /// which pixel) is assigned to a center. The distance image give us a
       /// clue on how a greylevel could contribute to a center. The summation
-      /// over the greylevels of a center give us the within variance.
+      /// over the rgb space of a center give us the within variance.
 
-      t_group_img    _group;    // g x 1 because dim(t_value) = 1
-      t_distance_img _distance; // label x graylevel
+      t_group_img    _group;    // g x 3 because dim(t_value) = 3
+      t_distance_img _distance; // label x rgb space
 
       /// \}
 
@@ -1008,8 +1008,6 @@ namespace mln
     {
       trace::entering("mln::clustering::kmean3d::update_mean");
 
-      /// FIXME VERIFIER QUE L'ON PEUT OBTENIR UNE IMAGE EN NDG SIGNE
-
       // avec g    le niveau de gris (signed or not signed)
       //      w[g] la classe de g sous forme d'image
       //      h[g] l'histogramme de l'image sous forme d'image
@@ -1035,7 +1033,6 @@ namespace mln
 
       for_all(rgb)
       {
-	// peut être faut-il le decomposer par composantes
 	_mean[_group(rgb)][0] += rgb.row() * _histo(rgb);
 	_mean[_group(rgb)][1] += rgb.col() * _histo(rgb);
 	_mean[_group(rgb)][2] += rgb.sli() * _histo(rgb);
@@ -1275,8 +1272,8 @@ namespace mln
 	// Debugging code
 	update_cnv();
 
-	std::cout << "_current_step    : " << _current_step    << std::endl;
-	std::cout << "_within_variance : " << _within_variance << std::endl;
+	//std::cout << "_current_step    : " << _current_step    << std::endl;
+	//std::cout << "_within_variance : " << _within_variance << std::endl;
 
 	++_current_step;
       }
