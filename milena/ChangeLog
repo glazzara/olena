@@ -1,3 +1,12 @@
+2009-10-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Some fixes.
+
+	* mln/data/transform.spe.hh: Layout.
+	* mln/data/transform_inplace.hh (transform_tests): Rename as...
+	(transform_inplace_tests): ...this; it is a naming bug fix.
+	* mln/convert/to.hh: Remove trace and add a tech note about it.
+
 2009-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix a precondition in apps/graph-morpho.

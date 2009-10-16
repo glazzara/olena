@@ -233,7 +233,6 @@ namespace mln
       {
         trace::entering("data::impl::transform_fast");
 
-
         const I& input = exact(input_);
         const F& f     = exact(f_);
         data::internal::transform_tests(input, f);

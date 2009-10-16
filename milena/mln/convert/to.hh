@@ -62,14 +62,16 @@ namespace mln
     T
     to(const O& from)
     {
+      // Technical note:
+      // No trace should be produced by this routine since it can be
+      // applied on large sets of data.
+      
       mlc_equal(T, mln_exact(T))::check();
       mlc_equal(O, mln_exact(O))::check();
-      trace::entering("convert::to");
 
       T tmp;
       from_to(from, tmp);
 
-      trace::exiting("convert::to");
       return tmp;
     }
 

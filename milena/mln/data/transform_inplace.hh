@@ -106,9 +106,9 @@ namespace mln
 
       template <typename I1, typename I2, typename F>
       inline
-      void transform_tests(const Image<I1>& ima,
-			   const Image<I2>& aux,
-                           const Function_v2v<F>& f)
+      void transform_inplace_tests(Image<I1>& ima,
+				   const Image<I2>& aux,
+				   const Function_vv2v<F>& f)
       {
         // Properties checks.
         mlc_or(mlc_is(mln_trait_image_pw_io(I1),
@@ -156,7 +156,7 @@ namespace mln
 	  I& ima = exact(ima_);
 	  const F& f = exact(f_);
 
-          data::internal::transform_inplace_tests(ima, f);
+          internal::transform_inplace_tests(ima, f);
 
 	  mln_piter(I) p(ima.domain());
 	  for_all(p)
@@ -185,7 +185,7 @@ namespace mln
 	  const I2& aux = exact(aux_);
 	  const F&  f   = exact(f_);
 
-	  data::internal::transform_inplace_tests(ima, aux, f);
+	  internal::transform_inplace_tests(ima, aux, f);
 
 	  mln_piter(I1) p(ima.domain());
 	  for_all(p)
@@ -211,7 +211,7 @@ namespace mln
 	I& input  = exact(input_);
 	const F& f      = exact(f_);
 
-        data::internal::transform_inplace_tests(input, f);
+        internal::transform_inplace_tests(input, f);
 
         value::lut_vec<mln_vset(I), mln_result(F)>
           lut(input.values_eligible(), f);
@@ -236,7 +236,7 @@ namespace mln
 	I& input  = exact(input_);
 	const F& f      = exact(f_);
 
-        data::internal::transform_inplace_tests(input, f);
+        internal::transform_inplace_tests(input, f);
 
         value::lut_vec<mln_vset(I), mln_result(F)>
           lut(input.taken_values(), f);
@@ -259,7 +259,7 @@ namespace mln
 	I& input  = exact(input_);
 	const F& f      = exact(f_);
 
-        data::internal::transform_inplace_tests(input, f);
+        internal::transform_inplace_tests(input, f);
 
         opt::value(input) = f(opt::value(input));
 
@@ -275,7 +275,7 @@ namespace mln
 	I& ima = exact(ima_);
 	const F& f = exact(f_);
 
-	data::internal::transform_inplace_tests(ima, f);
+	internal::transform_inplace_tests(ima, f);
 
 	mln_pixter(I) p(ima);
 	for_all(p)
@@ -295,7 +295,7 @@ namespace mln
         I& input = exact(input_);
 	const F& f     = exact(f_);
 
-        data::internal::transform_inplace_tests(input, f);
+        internal::transform_inplace_tests(input, f);
 
         value::lut_vec<mln_vset(I), mln_result(F)>
           lut(input.values_eligible(), f);
@@ -322,7 +322,7 @@ namespace mln
 	const I2& aux = exact(aux_);
 	const F&  f   = exact(f_);
 
-	data::internal::transform_inplace_tests(ima, aux, f);
+	internal::transform_inplace_tests(ima, aux, f);
 
 	mln_pixter(I1) pi(ima);
 	mln_pixter(const I2) pa(aux);
