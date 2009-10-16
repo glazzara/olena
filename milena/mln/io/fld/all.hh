@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,61 +23,27 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_IO_ALL_HH
-# define MLN_IO_ALL_HH
+#ifndef MLN_IO_FLD_ALL_HH
+# define MLN_IO_FLD_ALL_HH
 
 /// \file
-/// \brief Inclusion of all I/O routines.
+/// \brief Inclusion of all AVS field file I/O routines.
 
 
 namespace mln
 {
 
-  /// Namespace of input/output handling.
   namespace io
   {
-    /// Internal namespace of io namespace.
-    namespace internal {}
+    /// Namespace of pgm input/output handling.
+    namespace fld {}
   }
 
 }
 
+# include <mln/io/fld/load_header.hh>
+# include <mln/io/fld/write_header.hh>
+# include <mln/io/fld/load.hh>
+# include <mln/io/fld/save.hh>
 
-/*-----------------------.
-| Built-in I/O support.  |
-`-----------------------*/
-
-# include <mln/io/cloud/all.hh>
-# include <mln/io/dump/all.hh>
-# include <mln/io/pbm/all.hh>
-# include <mln/io/pfm/all.hh>
-# include <mln/io/pgm/all.hh>
-# include <mln/io/plot/all.hh>
-# include <mln/io/pnm/all.hh>
-# include <mln/io/ppm/all.hh>
-# include <mln/io/txt/all.hh>
-# include <mln/io/off/all.hh>
-# include <mln/io/fld/all.hh>
-
-
-/*--------------------------------------------------.
-| I/O routines depending on a third-party library.  |
-`--------------------------------------------------*/
-
-# ifdef HAVE_GDCM
-#  include <mln/io/dicom/all.hh>
-# endif // ! HAVE_GDCM
-
-# ifdef HAVE_CFITSIO
-#  include <mln/io/fits/all.hh>
-# endif // ! HAVE_CFITSIO
-
-# ifdef HAVE_MAGICKXX
-#  include <mln/io/magick/all.hh>
-# endif // ! HAVE_MAGICKXX
-
-# ifdef HAVE_TIFF
-#  include <mln/io/tiff/all.hh>
-# endif // ! HAVE_LIBTIFF
-
-#endif // ! MLN_IO_ALL_HH
+#endif // ! MLN_IO_FLD_ALL_HH
