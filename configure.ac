@@ -320,6 +320,7 @@ AC_CONFIG_FILES([
       milena/tests/io/dicom/Makefile
       milena/tests/io/dump/Makefile
       milena/tests/io/fits/Makefile
+      milena/tests/io/fld/Makefile
       milena/tests/io/magick/Makefile
       milena/tests/io/off/Makefile
       milena/tests/io/pbm/Makefile
