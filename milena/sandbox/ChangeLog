@@ -1,3 +1,17 @@
+2009-10-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a 1st version of some morpho geodesic ops.
+
+	* theo/mln/morpho: New directory.
+	* theo/mln/morpho/geodesic: New directory.
+
+	* theo/mln/morpho/geodesic/dilation.hh: New.
+	* theo/mln/morpho/geodesic/dilation_permissive.hh: New.
+	* theo/mln/morpho/geodesic/dilation.cc: New.
+	* theo/mln/morpho/geodesic/dilation_permissive_n.cc: New.
+	* theo/mln/morpho/geodesic/dilation_permissive_bench.cc: New.
+	* theo/mln/morpho/geodesic/dilation_permissive.cc: New.
+
 2009-10-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Work on regional labeling chain in the rgb space.
