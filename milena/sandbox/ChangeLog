@@ -1,3 +1,21 @@
+2009-10-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add new morphological operators.
+
+	* theo/mln/morpho/reconstruction: New directory.
+	* theo/mln/morpho/reconstruction/by_dilation.cc: New.
+	* theo/mln/morpho/reconstruction/by_dilation_tiny.cc: New.
+	* theo/mln/morpho/reconstruction/by_dilation.hh: New.
+	* theo/mln/morpho/geodesic/dilation.hh: Fix layout.
+	Fix typo in postconditions.
+	* theo/mln/morpho/geodesic/dilation_permissive.hh (todo): New.
+	(nota): New.
+	(FIXME): New.
+	* theo/mln/morpho/max.hh: New.
+	* theo/mln/morpho/conditional: New directory.
+	* theo/mln/morpho/conditional/dilation.hh: New.
+	* theo/mln/morpho/conditional/dilation.cc: New.
+
 2009-10-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a 1st version of some morpho geodesic ops.

@@ -29,6 +29,13 @@
 /// \file
 ///
 /// Morphological geodesic dilation; permissive version.
+///
+/// \todo We should add some other implementations for size n > 1.  We
+/// have the iterative version (dilation_permissive_n); we should also
+/// have at least the front-base version...
+///
+/// \todo We should use a point-wise morpho::sup instead of
+/// fun::vv2v::max.
 
 # include <mln/morpho/includes.hh>
 # include <mln/morpho/elementary/dilation.hh>
@@ -53,6 +60,9 @@ namespace mln
       dilation_permissive(const Image<I>& f, const Image<J>& g,
 			  const Neighborhood<N>& nbh,
 			  unsigned n = 1);
+
+      // Nota bene : We have
+      // dilation permissive (f, g) = dilation strict (f inter g, g) union (f and not g).
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -428,6 +438,13 @@ namespace mln
 
 	mln_concrete(I) output;
 	output = internal::dilation_permissive_dispatch(f, g, nbh, n);
+
+	mln_postcondition(output >= f);
+
+	// FIXME: Is the post-condition bellow correct and sufficient?
+	// mln_postcondition(morpho::minus(output, f) <= g);
+	// FIXME: What about this other one below?
+	// mln_postcondition(output <= morpho::max(f, g));
 
 	trace::exiting("morpho::geodesic::dilation_permissive");
 	return output;

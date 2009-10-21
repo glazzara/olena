@@ -23,15 +23,16 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_MORPHO_GEODESIC_DILATION_HH
-# define MLN_MORPHO_GEODESIC_DILATION_HH
+#ifndef MLN_MORPHO_CONDITIONAL_DILATION_HH
+# define MLN_MORPHO_CONDITIONAL_DILATION_HH
 
 /// \file
 ///
-/// Morphological geodesic dilation; strict version.
+/// Morphological conditional dilation.
+///
+/// \todo Write a version with (f, g, nbh, n) instead of (f, g, win).
 
-// # include <mln/morpho/geodesic/dilation_permissive.hh>
-# include "dilation_permissive.hh"
+# include <mln/morpho/includes.hh>
 
 
 namespace mln
@@ -40,49 +41,71 @@ namespace mln
   namespace morpho
   {
 
-    namespace geodesic
+    namespace conditional
     {
 
-      /// Morphological geodesic dilation of size n; strict version.
-      template <typename I, typename J, typename N>
+      /// Morphological conditional dilation.
+      template <typename I, typename J, typename W>
       mln_concrete(I)
       dilation(const Image<I>& f, const Image<J>& g,
-	       const Neighborhood<N>& nbh,
-	       unsigned n = 1);
+	       const Window<W>& win);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename I, typename J, typename N>
+
+      // Tests.
+
+      namespace internal
+      {
+
+	template <typename I, typename J, typename W>
+	inline
+	void
+	dilation_tests(const Image<I>& f_, const Image<J>& g_,
+		       const Window<W>& win_)
+	{
+	  const I& f = exact(f_);
+	  const J& g = exact(g_);
+	  const W& win = exact(win_);
+
+	  mln_precondition(f.is_valid());
+	  mln_precondition(g.is_valid());
+	  mln_precondition(win.is_valid());
+
+	  mln_precondition(f.domain() == g.domain());
+
+	  (void) f;
+	  (void) g;
+	  (void) win;
+	}
+
+      } // end of namespace morpho::conditional::internal
+
+
+      template <typename I, typename J, typename W>
       inline
       mln_concrete(I)
       dilation(const Image<I>& f, const Image<J>& g,
-	       const Neighborhood<N>& nbh,
-	       unsigned n)
+	       const Window<W>& win)
       {
-	trace::entering("morpho::geodesic::dilation");
+	trace::entering("morpho::conditional::dilation");
 
-	mln_precondition(n != 0);
-	internal::dilation_permissive_tests(f, g, nbh);
-	mln_precondition(f <= g);
+	internal::dilation_tests(f, g, win);
 
-	mln_concrete(I) output;
-	output = internal::dilation_permissive_dispatch(f, g, nbh, n);
+	mln_concrete(I) output = morpho::min(morpho::dilation(f, win), g);
 
-	mln_postcondition(output >= f);
-	mln_postcondition(output <= g);
-
-	trace::exiting("morpho::geodesic::dilation");
+	trace::exiting("morpho::conditional::dilation");
 	return output;
       }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::geodesic
+    } // end of namespace mln::conditional
 
   } // end of namespace mln::morpho
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_GEODESIC_DILATION_HH
+#endif // ! MLN_MORPHO_CONDITIONAL_DILATION_HH
