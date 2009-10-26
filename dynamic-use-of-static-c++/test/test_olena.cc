@@ -1,21 +1,26 @@
 #include "dyn-all.hh"
+
 using namespace dyn::language;
 
 int main()
 {
-  dyn::include_dir(OLENA_PROTO_STL_STYLE); // FIXME: Move it into fixtures/olean-proto-stl-style
-  // FIXME: Add
-  dyn::include("all.hh");
+  dyn::include_dir(MILENA_DIR);
+  dyn::include("mln/core/image/image2d.hh");
+  dyn::include("mln/data/fill.hh");
+  dyn::include("mln/debug/iota.hh");
+  dyn::include("mln/debug/println.hh");
 
-  fun  iota("iota");
-  fun  println_2d("println_2d");
-  ctor mk_image2d_int("image2d<int>");
+  ctor mk_image2d_int("mln::image2d<int>");
+  fun fill("mln::data::fill");
+  fun iota("mln::debug::iota");
+  fun println("mln::debug::println");
 
   var ima = mk_image2d_int(3, 3);
 
-  println_2d(std::cout, "ima_before=", ima);
+  fill(ima, 0);
+  println("ima_before=", ima);
   iota(ima);
-  println_2d(std::cout, "ima-after=", ima);
+  println("ima-after=", ima);
 
   std::cout << "exiting" << std::endl;
 }

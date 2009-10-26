@@ -1,5 +1,16 @@
 2009-10-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Convert the test on Olena from proto-stl-style to Milena.
+
+	* configure.ac (OLENA_PROTO_STL_STYLE): Remove variable.
+	(MILENA_DIR): New variable.
+	* src/config.hh.in (OLENA_PROTO_STL_STYLE): Remove macro.
+	(MILENA_DIR): New macro.
+	* test/test_olena.cc: Convert this test to Milena's interface.
+	Fill the very first image with 0 before printing it.
+
+2009-10-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Disable colored outputs for now.
 
 	* src/function_loader.cc (dyn::function_loader_t::load): Here.

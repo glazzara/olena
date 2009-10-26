@@ -102,6 +102,7 @@ dnl  fi
 
 dnl  AC_MSG_RESULT([$has_swig])
 
+# FIXME: Doesn't Autoconf provide something like abs_top_srcdir?
 my_abs_srcdir=`cd $srcdir && pwd`
 
 # FIXME: Remove me when function_loader will be pure C++
@@ -109,8 +110,8 @@ AC_SUBST([DYNDIR], [$my_abs_srcdir/src])
 
 AC_SUBST([DYN_FIXTURES], [$my_abs_srcdir/test/fixtures])
 
-# Make the proper link to the olena-proto-stl-style in test
-AC_SUBST([OLENA_PROTO_STL_STYLE], [$my_abs_srcdir/test/olena/proto-stl-style])
+# Absolute path to Milena.
+AC_SUBST([MILENA_DIR], [$my_abs_srcdir/../milena])
 
 AC_SUBST([LIBERTYARG],
          $my_abs_srcdir/$(ERB([lib/libiberty-<%= RUBY_PLATFORM %>.la])))
