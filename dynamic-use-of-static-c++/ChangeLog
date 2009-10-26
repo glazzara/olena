@@ -1,3 +1,17 @@
+2009-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Various fixes in src/Makefile.am.
+
+	* src/Makefile.am: Aesthetic changes.
+	(dyn_light_hh_DEPENDECIES, dyn_all_hh_DEPENDECIES):
+	Rename as...
+	(dyn_light_hh_deps, dyn_all_hh_deps):
+	...this.
+	(BUILT_SOURCES): List only #include'd header and remove files that
+	will be built anyway.
+	(CLEANFILES): Adjust.
+	(libdyn_la_DEPENDENCIES): s/LIBLTDL/LTDLDEPS/.
+
 2009-10-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Address compilation warnings.
