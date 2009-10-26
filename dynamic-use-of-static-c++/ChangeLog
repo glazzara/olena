@@ -1,5 +1,20 @@
 2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have the dynamic function loader use the C++ framework by default.
+
+	* src/function_loader.cc (HAVE_DYN_RUBY_GENERATOR): New macro,
+	depending on DYN_RUBY_GENERATOR.
+	(dyn::function_loader_t::function_loader_t): Feed the Ruby stream
+	only if HAVE_DYN_RUBY_GENERATOR is true.
+	(dyn::function_loader_t::load): Rename method as...
+	(dyn::function_loader_t::ruby_load): ...this.
+	(dyn::load_function) [HAVE_DYN_RUBY_GENERATOR]: Delegate the call
+	to function_loader.ruby_load.
+	(dyn::load_function) [!HAVE_DYN_RUBY_GENERATOR]: Delegate the call
+	to function_loader.cxx_load.
+
+2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Provide a C++ implementation of the dynamic function loader.
 
 	* src/function_loader.cc (dyn::function_loader_t::cxx_load):

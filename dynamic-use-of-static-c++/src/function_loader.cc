@@ -18,6 +18,14 @@
 # include "function_loader.hh"
 # include "ruby_stream.hh"
 
+// For more details about this, see
+// http://www.gnu.org/prep/standards/html_node/Conditional-Compilation.html
+# ifdef DYN_RUBY_GENERATOR
+#  define HAVE_DYN_RUBY_GENERATOR true
+# else
+#  define HAVE_DYN_RUBY_GENERATOR false
+# endif
+
 namespace bfs = boost::filesystem;
 namespace ba = boost::algorithm;
 
@@ -116,10 +124,13 @@ namespace dyn {
     function_loader_t()
     {
       lt_dlinit();
-      ruby << "$: << \"" << DYNDIR << "\"" << ruby::eval;
-      ruby << "require 'function_loader'" << ruby::eval;
-      ruby << "require 'md5'" << ruby::eval;
-      ruby << "Signal.trap(:SEGV, 'IGNORE')" << ruby::eval;
+      if (HAVE_DYN_RUBY_GENERATOR)
+	{
+	  ruby << "$: << \"" << DYNDIR << "\"" << ruby::eval;
+	  ruby << "require 'function_loader'" << ruby::eval;
+	  ruby << "require 'md5'" << ruby::eval;
+	  ruby << "Signal.trap(:SEGV, 'IGNORE')" << ruby::eval;
+	}
     }
 
     ~function_loader_t()
@@ -339,11 +350,12 @@ namespace dyn {
 	}     
     }
 
+    // Most of the ruby-dependent code generator is in this function.
     void*
-    load(fun_kind kind,
-         const std::string& name,
-         const arguments_types_t& arguments_types,
-         const std::string& paths)
+    ruby_load(fun_kind kind,
+	      const std::string& name,
+	      const arguments_types_t& arguments_types,
+	      const std::string& paths)
     {
       std::ostringstream ostr;
       ostr << name << '(';
@@ -405,7 +417,7 @@ namespace dyn {
       return ptr;
     }
 
-    // FIXME: This C++ version of load shares a lot with the latter.
+    // FIXME: This C++ version of ruby_load shares a lot with the latter.
     void*
     cxx_load(fun_kind kind,
 	     const std::string& name,
@@ -530,7 +542,12 @@ namespace dyn {
                 const arguments_types_t& arguments_types,
                 const std::string& header_path)
   {
-    return function_loader.load(kind, name, arguments_types, header_path);
+    if (HAVE_DYN_RUBY_GENERATOR)
+      return function_loader.ruby_load(kind, name, arguments_types,
+				       header_path);
+    else
+      return function_loader.cxx_load(kind, name, arguments_types,
+				      header_path);
   }
 
 } // end of namespace dyn
