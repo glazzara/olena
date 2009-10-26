@@ -1,5 +1,11 @@
 2009-10-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Disable colored outputs for now.
+
+	* src/function_loader.cc (dyn::function_loader_t::load): Here.
+
+2009-10-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Catch up with the current interface of Ruby's MD5 class.
 
 	* src/function_loader.cc (dyn::function_loader_t::load): Here.

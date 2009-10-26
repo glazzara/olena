@@ -287,11 +287,19 @@ namespace dyn {
 
       if ( ptr_it != cache.end() )
       {
+	// FIXME: Colors should be used only when the terminal supports them.
+#if 0
         std::cerr << "\e[36mJIT: \e[32mHIT: \e[0m " << prototype << std::endl;
+#endif
+        std::cerr << "JIT: HIT:  " << prototype << std::endl;
         return ptr_it->second;
       }
 
+      // FIXME: Colors should be used only when the terminal supports them.
+#if 0
       std::cerr << "\e[36mJIT: \e[31mMISS: compile: \e[0m " << prototype << std::endl;
+#endif
+      std::cerr << "JIT: MISS: compile:  " << prototype << std::endl;
 
       ruby << "compile %q{";
       gen_cxx(identifier, name, arguments_types, kind, paths, ruby);
