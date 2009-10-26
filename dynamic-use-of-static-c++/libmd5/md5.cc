@@ -46,6 +46,7 @@ documentation and/or software.
 
 
 #include <cassert>
+#include <cstring>
 #include <strings.h>
 
 #include <iostream>
