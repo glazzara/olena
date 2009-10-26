@@ -1,5 +1,11 @@
 2009-10-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Send dyn patches to the olena-patches mailing list.
+
+	* vcs/dynamic_static_bridge_vcs.rb: Here.
+
+2009-10-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Aesthetic changes.
 
 	* src/function_loader.cc: Wrap long lines.
