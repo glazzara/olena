@@ -29,6 +29,7 @@ Active LRDE Staff.
   - G++ 4.0 and 4.1 compatibility (Olena 0.10a).
   - Integration of GNU Libtool (Olena 0.10a).
   - SCOOP 2 and Static (Olena pre-1.0).
+  - Revive the dynamic-static bridge prototype from Olena proto-1.0.
 
 
 ================================
@@ -129,7 +130,7 @@ Students from Class 2006.
   - SCOOP 2 (Olena proto-1.0).
 
 * Nicolas Pouillard
-  - Dynamic? (Dyn) (Olena proto-1.0).
+  - Dynamic-static bridge prototype (Dyn) (Olena proto-1.0).
 
 * Damien Thivolle
   - Contributions to document the code.
@@ -139,7 +140,7 @@ Students from Class 2006.
   - G++ 4.0 compatibility (Olena 0.10a).
   - Canvas for algorithms (Olena proto-1.0).
   - SCOOP 2 (Olena proto-1.0).
-  - Dynamic (Dyn) (Olena proto-1.0).
+  - Dynamic-static bridge prototype (Dyn) (Olena proto-1.0).
 
 =========================
 Students from Class 2005.
