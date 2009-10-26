@@ -1,8 +1,6 @@
 #ifndef DYN_DATA_HH
 # define DYN_DATA_HH
 
-// FIXME: rename me without the .erb
-
 # include <string>
 # include <cassert>
 # include "function.hh"

@@ -1,5 +1,15 @@
 2009-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename src/data.erb.hh as src/data.hh and stop generating the latter.
+
+	* src/data.erb.hh: Rename as...
+	* src/data.hh: ...this.
+	* src/Makefile.am (dyn_light_hh_deps, dyn_all_hh_deps):
+	s|data.hh|$(srcdir)/data.hh|.
+	(BUILT_SOURCES): Remove data.hh.
+
+2009-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Various fixes in src/Makefile.am.
 
 	* src/Makefile.am: Aesthetic changes.

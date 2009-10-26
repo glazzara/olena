@@ -7,7 +7,7 @@ dyn_light_hh_deps =				\
   $(srcdir)/name_of.hh				\
   function.hh					\
   all_methods.hh				\
-  data.hh					\
+  $(srcdir)/data.hh				\
   $(srcdir)/policy.hh
 
 dyn_all_hh_deps =				\
@@ -15,7 +15,7 @@ dyn_all_hh_deps =				\
   $(srcdir)/name_of.hh				\
   function.hh					\
   all_methods.hh				\
-  data.hh					\
+  $(srcdir)/data.hh				\
   $(srcdir)/data.hxx				\
   $(srcdir)/function_loader.hh			\
   $(srcdir)/dyn.hh
@@ -24,7 +24,6 @@ dyn_all_hh_deps =				\
 BUILT_SOURCES =					\
   all_methods.hh				\
   function.hh					\
-  data.hh					\
   config.hh
 
 # Clean generated files.
