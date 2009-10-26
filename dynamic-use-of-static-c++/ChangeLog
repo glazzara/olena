@@ -1,5 +1,13 @@
 2009-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise libmd5.
+
+	* libmd5/results: New.
+	* libmd5/Makefile.am (EXTRA_DIST): Add results.
+	(check-local): New target.
+
+2009-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have libmd5 compile.
 
 	* libmd5/md5.hh, libmd5/driver.cc: Use modern C++ header names.

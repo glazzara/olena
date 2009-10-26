@@ -31,3 +31,8 @@ md5_SOURCES = driver.cc
 md5_LDADD = libmd5.la
 
 EXTRA_DIST = README test-suite
+
+# Test.
+EXTRA_DIST += results
+check-local:
+	./md5$(EXEEXT) -x | cmp $(srcdir)/results -
