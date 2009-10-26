@@ -85,5 +85,4 @@ int main()
   assert(i == 4);
 
   echo("exiting");
-  return 0;
 }

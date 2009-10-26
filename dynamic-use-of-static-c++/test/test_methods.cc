@@ -22,5 +22,4 @@ int main()
   print(v2, 2, "21");
 
   std::cout << "exiting" << std::endl;
-  return 0;
 }

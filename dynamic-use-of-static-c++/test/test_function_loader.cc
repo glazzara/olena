@@ -71,5 +71,4 @@ int main()
   assert(count == 1);
 
   echo("exiting");
-  return 0;
 }

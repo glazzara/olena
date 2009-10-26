@@ -2,11 +2,12 @@
 # define DYN_FUNCTION_LOADER_CC
 
 # include <cstdlib>
-# include <ltdl.h>
-# include <map>
 
+# include <map>
 // FIXME: Use and improve the logger to avoid use of std::cerr.
 # include <iostream>
+
+# include <ltdl.h>
 
 # include <boost/filesystem.hpp>
 # include <boost/filesystem/fstream.hpp>
@@ -31,7 +32,8 @@ namespace ba = boost::algorithm;
 
 
 template <typename InputIterator, typename T, typename OStream>
-OStream& join(const InputIterator& begin, const InputIterator& end, const T& elt, OStream& ostr)
+OStream& join(const InputIterator& begin, const InputIterator& end,
+	      const T& elt, OStream& ostr)
 {
   InputIterator it = begin;
 
@@ -57,17 +59,17 @@ namespace dyn {
   {
     std::list<std::string>::const_iterator it;
     unsigned last = 0, pos;
-    while (42)
+    while (true)
     {
       pos = header_paths.find(":", last);
       std::string sub = header_paths.substr(last, pos - last);
       if (sub == "*")
       {
-        for (it = includes_.begin(); it != includes_.end(); ++it)
-          fun(*it);
+	for (it = includes_.begin(); it != includes_.end(); ++it)
+	  fun(*it);
       }
       else if (sub != "")
-        fun(sub);
+	fun(sub);
       if (pos >= std::string::npos) break;
       last = pos + 1;
     }
@@ -80,13 +82,14 @@ namespace dyn {
     void operator() (const std::string& path)
     {
       ostr << "#include ";
-      if (path.find("<") == std::string::npos || path.find("\"") == std::string::npos)
-        if (path.find(".hh") == path.length() - 3)
-          ostr << "\"" << path << "\"";
-        else
-          ostr << "<" << path << ">";
+      if (path.find("<") == std::string::npos
+	  || path.find("\"") == std::string::npos)
+	if (path.find(".hh") == path.length() - 3)
+	  ostr << "\"" << path << "\"";
+	else
+	  ostr << "<" << path << ">";
       else
-        ostr << path;
+	ostr << path;
       ostr << '\n';
     }
     OStream& ostr;
@@ -100,11 +103,11 @@ namespace dyn {
     {
       if (first)
       {
-        first = false;
-        ostr << path;
+	first = false;
+	ostr << path;
       }
       else
-        ostr << ':' << path;
+	ostr << ':' << path;
     }
     bool first;
     OStream& ostr;
@@ -133,15 +136,14 @@ namespace dyn {
     template <typename OStream>
     void
     gen_cxx(const std::string& identifier,
-            const std::string& name,
-            const std::list<std::string>& args,
-            fun_kind kind,
-            const std::string paths,
-            OStream& ostr)
+	    const std::string& name,
+	    const std::list<std::string>& args,
+	    fun_kind kind,
+	    const std::string paths,
+	    OStream& ostr)
     {
-      ruby::stream r;
-      typedef std::string        str;
-      typedef std::list<str>     str_list;
+      typedef std::string str;
+      typedef std::list<str> str_list;
       str_list call_args;
       std::ostringstream body, call;
       str nl("\n        ");
@@ -154,45 +156,48 @@ namespace dyn {
       foreach_path_in_paths(paths, fun);
 
       ostr << "extern \"C\" {\n"
-           << "  namespace dyn {\n"
-           << "    namespace generated {\n"
-           << "      data\n"
-           << "      dyn_" << identifier << "(";
+	   << "  namespace dyn {\n"
+	   << "    namespace generated {\n"
+	   << "      data\n"
+	   << "      dyn_" << identifier << "(";
 
       int i = 0;
       for (it = args.begin(); it != args.end(); ++it, ++i)
       {
-        std::ostringstream oarg;
-        oarg << "arg" << i;
-        str arg(oarg.str());
+	std::ostringstream oarg;
+	oarg << "arg" << i;
+	str arg(oarg.str());
 
-        str type(*it);
-        // remove references cause they are forbidden on lhs
-        while (*type.rbegin() == '&') type.erase(--type.end());
+	str type(*it);
+	// Remove references cause they are forbidden on lhs.
+	while (*type.rbegin() == '&') type.erase(--type.end());
 
-        if ( kind == METH and i == 0 )
-        {
-          // check if the first type is a pointer to choose the good op (. or ->)
-          str stripped_type(type);
-          unsigned pos;
-          while ((pos = stripped_type.find(" ")) != str::npos) stripped_type.erase(pos, 1);
-          unsigned len = stripped_type.length();
-          first_type_is_ptr = ((stripped_type.compare(len - 7, 7, "*const>") == 0)
-                            || (stripped_type.compare(len - 2, 2, "*>") == 0));
-        }
+	if (kind == METH and i == 0)
+	{
+	  // Check if the first type is a pointer to choose the good
+	  // operator (`.' or `->').
+	  str stripped_type(type);
+	  unsigned pos;
+	  while ((pos = stripped_type.find(" ")) != str::npos)
+	    stripped_type.erase(pos, 1);
+	  unsigned len = stripped_type.length();
+	  first_type_is_ptr =
+	    ((stripped_type.compare(len - 7, 7, "*const>") == 0)
+	     || (stripped_type.compare(len - 2, 2, "*>") == 0));
+	}
 
-        if (it != args.begin()) ostr << ", ";
-        ostr << "const data& " << arg;
-        call_args.push_back(arg + "_reinterpret_cast_ptr->obj()");
-        body << type << "* " << arg << "_reinterpret_cast_ptr = "
-             << "reinterpret_cast<" << type << "* >(" << arg << ".proxy());"
-             << nl << "assert(" << arg << "_reinterpret_cast_ptr);" << nl;
+	if (it != args.begin()) ostr << ", ";
+	ostr << "const data& " << arg;
+	call_args.push_back(arg + "_reinterpret_cast_ptr->obj()");
+	body << type << "* " << arg << "_reinterpret_cast_ptr = "
+	     << "reinterpret_cast<" << type << "* >(" << arg << ".proxy());"
+	     << nl << "assert(" << arg << "_reinterpret_cast_ptr);" << nl;
       }
 
-      if ( kind == METH)
-      {        
-        call << call_args.front() << ((first_type_is_ptr)? "->" : ".");
-        call_args.pop_front();
+      if (kind == METH)
+      {
+	call << call_args.front() << ((first_type_is_ptr)? "->" : ".");
+	call_args.pop_front();
       }
 
       call << name << "(";
@@ -203,51 +208,52 @@ namespace dyn {
 
       switch (kind)
       {
-        case OP:
-          if ( op.compare(0, 8, "operator") == 0 )
-            op.erase(0, 8);
-          call.str(std::string());
-          switch (call_args.size())
-          {
-            case 1:
-              call << op << "(" << *call_args.begin() << ")";
-              break;
-            case 2:
-              it = call_args.begin();
-              call << "(" << *it++ << ") ";
-              call << op
-                   << " (" << *it << ")";
-              break;
-            default: assert(0);
-          }
-          // no break here
-        case METH:
-        case FUN:
-          body << "policy::receiver<select_dyn_policy((" << call.str() << "))> receiver;" << nl
-               << "(receiver(), " << call.str() << ");" << nl
-               << "data ret(receiver.proxy(), (proxy_tag*)0);" << nl
-               << "return ret;\n";
-          break;
-        case CTOR:
-          body << "typedef " << name << " T;" << nl
-               << "T* ptr = new T(";
-          join(call_args.begin(), call_args.end(), ", ", body);
-          body << ");" << nl
-               << "abstract_data* proxy = new data_proxy_by_ptr<T>(ptr);" << nl
-               << "data ret(proxy, (proxy_tag*)0);" << nl
-               << "return ret;\n";
-          break;
-        default:
-          assert(!"Unknown kind");
+	case OP:
+	  if (op.compare(0, 8, "operator") == 0)
+	    op.erase(0, 8);
+	  call.str(std::string());
+	  switch (call_args.size())
+	  {
+	    case 1:
+	      call << op << "(" << *call_args.begin() << ")";
+	      break;
+	    case 2:
+	      it = call_args.begin();
+	      call << "(" << *it++ << ") ";
+	      call << op
+		   << " (" << *it << ")";
+	      break;
+	    default: assert(0);
+	  }
+	  // no break here
+	case METH:
+	case FUN:
+	  body << "policy::receiver<select_dyn_policy(("
+	       << call.str() << "))> receiver;" << nl
+	       << "(receiver(), " << call.str() << ");" << nl
+	       << "data ret(receiver.proxy(), (proxy_tag*)0);" << nl
+	       << "return ret;\n";
+	  break;
+	case CTOR:
+	  body << "typedef " << name << " T;" << nl
+	       << "T* ptr = new T(";
+	  join(call_args.begin(), call_args.end(), ", ", body);
+	  body << ");" << nl
+	       << "abstract_data* proxy = new data_proxy_by_ptr<T>(ptr);" << nl
+	       << "data ret(proxy, (proxy_tag*)0);" << nl
+	       << "return ret;\n";
+	  break;
+	default:
+	  assert(!"Unknown kind");
       }
 
       ostr << ")\n"
-           << "      {" << nl
-           << body.str()
-           << "      }\n"
-           << "    }\n"
-           << "  }\n"
-           << "};\n";
+	   << "      {" << nl
+	   << body.str()
+	   << "      }\n"
+	   << "    }\n"
+	   << "  }\n"
+	   << "};\n";
 
     }
 
@@ -339,7 +345,7 @@ namespace dyn {
 		    << out_log.rdbuf() << std::endl;
 	  // FIXME: Isn't this a bit too violent?
 	  std::exit(1);
-	}     
+	}
     }
 
     // Most of the ruby-dependent code generator is in this function.
@@ -354,16 +360,16 @@ namespace dyn {
       arguments_types_t::const_iterator it(arguments_types.begin());
       if (it != arguments_types.end())
       {
-        ostr << *it;
-        for (++it; it != arguments_types.end(); ++it)
-          ostr << ", " << *it;
+	ostr << *it;
+	for (++it; it != arguments_types.end(); ++it)
+	  ostr << ", " << *it;
       }
       ostr << ')';
       if (paths != "")
       {
-        ostr << ", paths: ";
-        gen_path<std::ostream> fun(ostr);
-        foreach_path_in_paths(paths, fun);
+	ostr << ", paths: ";
+	gen_path<std::ostream> fun(ostr);
+	foreach_path_in_paths(paths, fun);
       }
       std::string prototype = ostr.str();
 
@@ -372,19 +378,21 @@ namespace dyn {
 
       cache_type::iterator ptr_it = cache.find(identifier);
 
-      if ( ptr_it != cache.end() )
+      if (ptr_it != cache.end())
       {
+	// FIXME: Don't use a hard-coded error stream (std::cerr).
 	// FIXME: Colors should be used only when the terminal supports them.
 #if 0
-        std::cerr << "\e[36mJIT: \e[32mHIT: \e[0m " << prototype << std::endl;
+	std::cerr << "\e[36mJIT: \e[32mHIT: \e[0m " << prototype << std::endl;
 #endif
-        std::cerr << "JIT: HIT:  " << prototype << std::endl;
-        return ptr_it->second;
+	std::cerr << "JIT: HIT:  " << prototype << std::endl;
+	return ptr_it->second;
       }
 
       // FIXME: Colors should be used only when the terminal supports them.
 #if 0
-      std::cerr << "\e[36mJIT: \e[31mMISS: compile: \e[0m " << prototype << std::endl;
+      std::cerr
+	<< "\e[36mJIT: \e[31mMISS: compile: \e[0m " << prototype << std::endl;
 #endif
       std::cerr << "JIT: MISS: compile:  " << prototype << std::endl;
 
@@ -398,7 +406,7 @@ namespace dyn {
 
       const char* error;
       std::string lib_path = std::string("repository/") + identifier
-                             + "/libdyn_" + identifier + ".la";
+			     + "/libdyn_" + identifier + ".la";
       std::string symb = std::string("dyn_") + identifier;
 
       lt_dlhandle lib = lt_dlopen(lib_path.c_str());
@@ -421,22 +429,23 @@ namespace dyn {
       arguments_types_t::const_iterator it(arguments_types.begin());
       if (it != arguments_types.end())
       {
-        ostr << *it;
-        for (++it; it != arguments_types.end(); ++it)
-          ostr << ", " << *it;
+	ostr << *it;
+	for (++it; it != arguments_types.end(); ++it)
+	  ostr << ", " << *it;
       }
       ostr << ')';
       if (paths != "")
       {
-        ostr << ", paths: ";
-        gen_path<std::ostream> fun(ostr);
-        foreach_path_in_paths(paths, fun);
+	ostr << ", paths: ";
+	gen_path<std::ostream> fun(ostr);
+	foreach_path_in_paths(paths, fun);
       }
       std::string prototype = ostr.str();
 
       // FIXME: Careful, this cast removes a const!  We should improve
       // the interface of libmd5.
-      std::string identifier(MD5((unsigned char*)prototype.c_str()).hex_digest());
+      std::string identifier =
+	MD5((unsigned char*)prototype.c_str()).hex_digest();
 
       cache_type::iterator ptr_it = cache.find(identifier);
 
@@ -444,17 +453,19 @@ namespace dyn {
       // never hit).  See why this is happening.
       if (ptr_it != cache.end())
       {
+	// FIXME: Don't use a hard-coded error stream (std::cerr).
 	// FIXME: Colors should be used only when the terminal supports them.
 #if 0
-        std::cerr << "\e[36mJIT: \e[32mHIT: \e[0m " << prototype << std::endl;
+	std::cerr << "\e[36mJIT: \e[32mHIT: \e[0m " << prototype << std::endl;
 #endif
-        std::cerr << "JIT: HIT:  " << prototype << std::endl;
-        return ptr_it->second;
+	std::cerr << "JIT: HIT:  " << prototype << std::endl;
+	return ptr_it->second;
       }
 
       // FIXME: Colors should be used only when the terminal supports them.
 #if 0
-      std::cerr << "\e[36mJIT: \e[31mMISS: compile: \e[0m " << prototype << std::endl;
+      std::cerr
+	<< "\e[36mJIT: \e[31mMISS: compile: \e[0m " << prototype << std::endl;
 #endif
       std::cerr << "JIT: MISS: compile:  " << prototype << std::endl;
 
@@ -486,7 +497,7 @@ namespace dyn {
 
       const char* error;
       std::string lib_path = std::string("repository/") + identifier
-                             + "/libdyn_" + identifier + ".la";
+			     + "/libdyn_" + identifier + ".la";
       std::string symb = std::string("dyn_") + identifier;
 
       lt_dlhandle lib = lt_dlopen(lib_path.c_str());
@@ -497,7 +508,7 @@ namespace dyn {
       return ptr;
     }
 
-    protected:
+  protected:
     typedef std::map<std::string, void*> cache_type;
     /* FIXME: Introduce a real cache object, with
        debugging/pretty-printing methods.  */
@@ -506,6 +517,7 @@ namespace dyn {
        executions.  Of course, this is safer, but it would be great to
        benefit from a long-term cache.  */
     cache_type cache;
+    // FIXME: Rename cflags as cxxflags.
     std::list<std::string> cflags_, ldflags_;
     ruby::stream ruby;
   };
@@ -536,9 +548,9 @@ namespace dyn {
 
   void*
   load_function(fun_kind kind,
-                const std::string& name,
-                const arguments_types_t& arguments_types,
-                const std::string& header_path)
+		const std::string& name,
+		const arguments_types_t& arguments_types,
+		const std::string& header_path)
   {
     if (HAVE_DYN_RUBY_GENERATOR)
       return function_loader.ruby_load(kind, name, arguments_types,

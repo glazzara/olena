@@ -1,5 +1,19 @@
 2009-10-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Aesthetic changes.
+
+	* src/function_loader.cc: Wrap long lines.
+	Clean up whitespace.
+	(dyn::function_loader_t::gen_cxx): Remove a useless Ruby stream.
+	* test/test_containers.cc,
+	* test/test_damien.cc,
+	* test/test_function_loader.cc,
+	* test/test_methods.cc,
+	* test/test_var_and_val.cc:
+	Remove useless `return 0' statements at end of `main'.
+
+2009-10-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the caching system.
 
 	* src/function_loader.cc (dyn::function_loader_t::cache_type): Use

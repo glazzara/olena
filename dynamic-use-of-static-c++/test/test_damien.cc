@@ -92,5 +92,4 @@ int main()
   }
 
   std::cout << "exiting" << std::endl;
-  return 0;
 }

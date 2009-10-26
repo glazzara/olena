@@ -91,5 +91,4 @@ int main()
   assert(str == "b youhou");
 
   echo("exiting");
-  return 0;
 }
