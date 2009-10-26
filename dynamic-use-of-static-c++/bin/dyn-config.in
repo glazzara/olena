@@ -1,0 +1,70 @@
+#!/usr/bin/env ruby
+require 'optparse'
+require 'pathname'
+
+def expand ( var, binding )
+  var.gsub(/\$\{(.*)\}/) { eval($1, binding) }
+end
+
+name = 'libdyn'
+version = '0.1'
+prefix = Pathname.new('@prefix@')
+includedir = expand('@includedir@', binding)
+top_builddir = Pathname.new(__FILE__).dirname.parent
+top_srcdir = expand('@top_srcdir@', binding)
+exec_prefix = expand('@exec_prefix@', binding)
+libdir = expand('@libdir@', binding)
+
+libtool_flags = '-export-dynamic'
+libdir_libdyn_la = Pathname.new("#{libdir}/libdyn.la")
+if libdir_libdyn_la.exist? # FIXME Perhaps is assertion is bad.
+  cflags = "-I#{includedir}"
+  libtool = 'libtool' # Hope that libtool is installed
+  libtool_libs = "#{libdir_libdyn_la} #{libtool_flags}"
+else
+  cflags = "-I#{top_builddir}/src -I#{top_srcdir}/src"
+  libtool_libs = "#{top_builddir}/src/libdyn.la #{libtool_flags}"
+  libtool = "#{top_builddir}/libtool"
+end
+
+o = OptionParser.new do |o|
+  o.banner { "Usage: #$0 [OPTION]" }
+
+  o.on('--prefix DIR',
+       "change #{name} prefix [default #{prefix}])") { |prefix| }
+
+  o.on('--exec-prefix DIR',
+       "change #{name} exec prefix [default #{exec_prefix}])") { |exec_prefix| }
+
+  # o.on('--libs', 'print library linking information') do
+  # end
+
+  o.on('--libtool-libs', 'print linking information for use with libtool') do
+    puts libtool_libs
+  end
+
+  o.on('--cflags', 'print pre-processor and compiler flags') do
+    puts cflags
+  end
+
+  o.on('--compile', 'compile line (add at least the input and the output)') do
+    puts "#{libtool} --mode=compile --tag=CXX ccache g++ -c #{cflags}"
+  end
+
+  o.on('--link', 'link line (add at least the input and the output)') do
+    puts "#{libtool} --mode=link --tag=CXX ccache g++ #{libtool_libs}"
+  end
+
+  o.on_tail('--help', 'display this help and exit') do
+    STDERR.puts o
+    exit
+  end
+  
+  o.on_tail('--version', 'output version information') do
+    puts "#$0 #{version}"
+  end
+end
+
+puts o if ARGV.empty?
+
+o.parse!(ARGV)

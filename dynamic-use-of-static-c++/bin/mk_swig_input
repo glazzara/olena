@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+require 'pathname'
+load Pathname.new(__FILE__).dirname.parent + 'configure'
+includes = []
+
+# dir = ARGV.shift
+if ARGV.empty?
+  # STDERR.puts "usage #$0 <dir> <path/to/some/c++/headers.hh>*"
+  STDERR.puts "usage #$0 <dir>*"
+  exit
+end
+# patt = /\.t?h(h|xx)$/
+patt = /\.t?hh$/
+flags = '' # '-DVCSN_USE_INTERFACE_ONLY'
+File.open('all.hh', 'w') do |all|
+  ARGV.each do |root|
+    Pathname.new(root).find do |path|
+      next unless path.to_s =~ patt
+      all.puts "#include \"#{path}\""
+    end
+  end
+end
+dirs = ARGV.map {|x| '-I' + x}
+`g++ #{dirs.join ' '} -I. #{CFLAGS} -I#{DYNDIR} #{flags} -E all.hh | grep '^#.*vaucanson'`.to_a.reverse_each do |line|
+  line.chomp!
+  line.gsub!(/^.*include\/(vaucanson\/.*)".*$/, '\1')
+  next unless line =~ patt
+
+  next if line =~ /\/(static|letter|freemonoid_product(_base)?)\.hh/ # XXX hard skipping
+
+  includes << line unless includes.include? line
+end
+File.open('vcsn.i', 'w') do |vcsn_i|
+  includes.reverse_each do |include|
+    vcsn_i.puts "%include \"#{include}\""
+  end
+  vcsn_i.puts "%module vcsn"
+end

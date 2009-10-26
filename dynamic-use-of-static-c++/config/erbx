@@ -1,0 +1,111 @@
+#!/usr/bin/env ruby
+
+# For this project only
+DYN_MAX_ARGUMENTS = 10
+ALL_METHODS = { 'fake_method' => ['*'] }
+# end
+
+require 'erb'
+require 'pathname'
+require 'optparse'
+require 'ostruct'
+
+opts = OpenStruct.new
+opts.input_file = '-'
+out = STDOUT
+
+OptionParser.new do |o|
+  o.on('-c', '--copy', 'Copy the input before the result') { |opts.copy| }
+  o.on('-C', '--smart-copy', 'Smart copy see the manual') { |opts.smart_copy| }
+  o.on('-e', '--one-line INPUT', 'One line of input') { |opts.input_line| }
+  o.on('-i', '--input FILE', 'Input file (stdin by default)') { |opts.input_file| }
+  o.on('-o', '--output FILE', 'Output file (stdout by default)') do |output_file|
+    out_path = Pathname.new(output_file)
+    out_path.chmod(0644) if out_path.exist?
+    out = out_path.open('w')
+    out_path.chmod(0444) if out_path.exist?
+  end
+  o.on('--chomp', 'Remove the trailing new-line at the end') { |opts.chomp| }
+  o.on_tail('-h', '--help', 'This help message') { STDERR.puts o ; exit }
+end.parse!(ARGV)
+
+case opts.input_file
+when '-'
+  input = opts.input_line || STDIN.read
+else
+  input = File.read(opts.input_file)
+end
+
+
+print input if opts.copy
+
+comment = '#erb# '
+
+=begin
+mode -C
+example:
+
+  foo: do not touch me ...
+
+  =begin
+  erb code <%= 6 * 7 %>...
+  =end
+  
+  bar: ...
+
+become:
+
+  foo: do not touch me ...
+
+  #erb# =begin # Read the documentation of erbx to see how to change this part
+  #erb# erb code <%= 6 * 7 %>...
+  #erb# =end
+
+  #erb# =generated
+  erb code 42...
+  #erb# =end_generated
+  
+  bar: ...
+
+and this output can be an new input where the generated part
+will be updated
+=end
+
+documentation    = ' # Read the documentation of erbx to see how to change this part'
+comment_re       = /^#{comment}/
+begin_re         = /^(?:#{comment})?=begin[^\n]*$/
+end_re           = /^(?:#{comment})?=end$/
+generated_re     = /^#{comment}=generated$/
+end_generated_re = /^#{comment}=end_generated$/
+begin_t          = "#{comment}=begin#{documentation}\n"
+end_t            = "#{comment}=end\n"
+generated_t      = "#{comment}=generated\n"
+end_generated_t  = "#{comment}=end_generated\n"
+
+code = input[/#{begin_re}\n(.*)#{end_re}/m, 1]
+code = input if code.nil? or code.empty?
+code.gsub!(comment_re, '')
+
+output = ERB.new(code, $SAFE, '<-%->', '$erbout_').result
+
+if input =~ generated_re
+  input.gsub!(/\n(#{generated_re}).*(#{end_generated_re})/mx,
+              "\\1\n#{output}\\2")
+else
+  input.gsub!(/(#{end_re}\n)/, "\\1#{generated_t}#{output}#{end_generated_t}")
+end
+
+if opts.smart_copy
+  code.gsub!(/^/, comment)
+  input.gsub!(/#{begin_re}.*#{end_re}/mx,
+              "#{begin_t}#{code}#{end_t}")
+  input.chomp!
+  out.print input
+else
+  output.chomp!
+  out.print output
+end
+
+out.puts unless opts.input_line
+
+out.close

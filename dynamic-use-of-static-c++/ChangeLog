@@ -1,0 +1,884 @@
+2006-01-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add another version of libiberty.
+
+	* lib/libiberty-powerpc-darwin8.3.0.la: A copy of
+  libiberty-powerpc-darwin.la
+
+2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Remove to ruby evals.
+
+	* src/function_loader.cc: Update.
+
+2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Remove options, add method.
+
+	* src/function.erb.cc,
+	* src/function.erb.hh,
+	* src/function_loader.cc,
+	* src/function_loader.hh,
+	* src/all_methods.erb.cc,
+	* src/data.erb.hh,
+	* src/data.cc: Update.
+	* src/dyn.hh: Add typdefs.
+	* test/test_function_loader.cc,
+	* test/test_damien.cc,
+	* test/test_methods.cc,
+	* test/test_containers.cc: Update tests.
+
+2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Disable the ruby segv handler.
+
+	* src/function_loader.cc: Ignore segv cause the system handle it
+      normally.
+
+2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Flags and include_dirs go to the (dark) C++ side.
+
+	* src/function_loader.rb: Simplify since it's just a function now.
+	* src/function_loader.cc: Update accordingly.
+	* test/Makefile.am: Add a rule to build tests.
+
+2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Generate the C++ code from C++.
+
+	* src/function_loader.cc,
+	* src/function_loader.hh,
+	* src/function_loader.rb: More C++, less ruby.
+
+	* src/function.erb.cc: Reverse load_function argument order.
+	* src/function.erb.hh: Reorder arguments.
+	* src/ruby_stream.hh: Add a debug mode.
+	* src/data.erb.hh: Remove a useless comma.
+	* src/data.cc: Add * to paths in method().
+	* config/erbx: Add * to fake_method.
+	* test/test_function_loader.cc: The path is the third argument.
+	* configure.ac: Add -Werror.
+
+2005-12-04  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Make the config.site compliant with sub-confgiures on linux.
+
+	* config.site: Do not exit if the package name is wrong.
+
+2005-12-04  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Use libltdl.
+
+	* bootstrap,
+	* Makefile.am,
+	* configure.ac: Add the libltld.
+
+	* src/Makefile.am,
+	* src/function.erb.cc,
+	* src/ruby_stream.hh,
+	* src/function.erb.hh,
+	* src/function_loader.cc,
+	* src/function_loader.hh,
+	* src/function_loader.rb: More C++ less ruby.
+
+	* bin/dyn-config.in: .
+	* data/Makefile.am: Produce two makefiles for the repository.
+	* data/function.cc: Update the include.
+
+	* test/Makefile.am: Update flags.
+	* test/fixtures/my_lib/damien.hxx: Remove the name_of include.
+	* test/test_function_loader.cc: Add another dfoo1 call.
+
+2005-12-04  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Remove all svn:ignore properties.
+
+	* ., test, src: Update.
+
+2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Use a more portable pattern.
+
+	* src/Makefile.am: No # since it begins a comment.
+
+2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Now works installed.
+
+	* src/Makefile.am: Adapt to the new design.
+	* src/function_loader.rb: Use dyn-light.hh.
+	* src/data.erb.hh: Leave a FIXME.
+	* bin/dyn-config.in: More calls to expand.
+	* bin/Makefile.am: Install just dyn-config.
+
+	* test/test_var_and_val.cc,
+	* test/test_damien.cc,
+	* test/test_olena.cc,
+	* test/test_methods.cc,
+	* test/test_containers.cc,
+	* test/test_function_loader.cc: Include dyn-all.hh.
+
+2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Update the liberty lib for i486-linux.
+
+	* lib/libiberty-linux.a: Remove.
+	* lib/libiberty-i486-linux.la: New.
+	* lib/.libs/libiberty-i486-linux.a: New.
+
+2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Clean svn:ignore properties.
+
+	* .,
+	* src,
+	* test,
+	* test/vaucanson,
+	* test/olena: Remove svn:ignore since the .vcs handle them.
+
+2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Commit a common .vcs.
+
+	* .vcs: New.
+
+2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	2 little fixes.
+
+	* configure.ac: Remove useless echo ans comments.
+	* README: Talk about the PATH extension.
+
+2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Dyn now use the autotools!
+
+	* README: Deal with the new the schema.
+	* bin/dyn-config.in: New. A nice tool to use the project.
+
+	Removing part:
+	* configure: Remove.
+	* Makefile.in: Remove.
+	* test/Makefile.in: Remove.
+	* test/vaucanson/Makefile.in: Remove.
+
+	New autotools part:
+	* bootstrap: New.
+	* configure.ac: New.
+	* config: New.
+	* config/erbx: New.
+	* config/ruby.m4: New.
+	* config/mk_local_config_rb_in.rb: New.
+	* config/rbconfig_gen.rb: New.
+	* config/warning.m4: New.
+	* config/Makefile.am: New.
+	* config.site: New.
+	* Makefile.am: New.
+	* data/Makefile.am: New.
+	* data/function.cc: New. Dummy function to make a base makefile.
+	* bin/Makefile.am: New.
+	* src/Makefile.am: New.
+	* test/Makefile.am: New.
+	* test/vaucanson/Makefile.am: New.
+
+	Test part:
+	* test/test_var_and_val.cc,
+	* test/test_damien.cc,
+	* test/test_olena.cc,
+	* test/test_methods.cc,
+	* test/test_containers.cc,
+	* test/test_function_loader.cc: Update include dirs.
+
+	* src/all_methods.erb.hh,
+	* src/all_methods.erb.cc,
+	* src/function.erb.hh,
+	* src/function.erb.cc,
+	* src/ruby_stream.hh: Update includes and erb variables.
+
+	* src/function_loader.rb: Use md5 for filenames.
+	* src/config.hh.in: Add DYN_FIXTURES.
+	* src/data.cc: Properly setup de logger.
+
+2005-11-27  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Improve background compilation.
+
+	* configure: Add silent_link (libtool --silent).
+	* src/function_loader.rb: Make objects without libtool (to avoid the
+	double compilation), and use the silent linking.
+
+2005-11-27  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Vaucanson test...
+
+
+2005-11-27  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Handle multiple paths for a same function (sep by `:').
+
+	* test/test_methods.cc: New.
+	* bin/mk_swig_input,
+	* bin/yaml_to_dyn_decls,
+	* src/cxx_symbols.rb,
+	* src/function_loader.rb,
+	* configure,
+	* test/Makefile.in,
+	* test/fixtures/my_lib/lib.hh: Update.
+
+2005-11-26  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Code re-organisation. Produce a library using libtool.
+
+	* src/dyn.hh: Update.
+	* src/data.erb.hh: Inherit from all_methods.
+	* src/data.erb.hxx: Remove. No more an erb template.
+	* src/data.hxx: New. From data.erb.hxx.
+	* src/data.cc: New.
+	* src/ruby_stream.hh: Export ruby::eval, add the environment struct.
+	* src/ruby_stream.cc: New.
+	* src/function.erb.cc: New.
+	* src/policy.hh: Export the implementation.
+	* src/policy.cc: New.
+	* src/name_of.hh: Export the implementation.
+	* src/name_of.cc: New.
+	* src/function_loader.hh: Export the implementation.
+	* src/function_loader.cc: New.
+	* src/function_loader.rb: Update to libtool.
+	* src/all_methods.erb.hh: New.
+	* src/all_methods.erb.cc: New.
+	* src/function.erb.hxx: Remove.
+
+	Remove the old static library, add a libtool one.
+	* lib/libiberty-macos.a: Remove.
+	* lib/.libs: New.
+	* lib/libiberty-powerpc-darwin.la: New.
+	* lib/.libs/libiberty-powerpc-darwin.a: New.
+
+	* configure: Improve and simplify.
+	* Makefile.in: New.
+
+	* test/Makefile.in: Update to libtool.
+	* test/fixtures/my_lib/lib.hh,
+	* test/fixtures/my_lib/damien.hh: Remove the name_of.hh include.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Use a data_proxy_by_ptr values returned by a ctor.
+
+	* src/function_loader.rb: Change the generated code for ctors.
+	* src/data.erb.hh: Some fixes in data_proxy_by_ptr<T>.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Change the data methods extension system.
+
+	* src/data.erb.hh: Declare them.
+	* src/data.erb.hxx: Implement them.
+	* configure: Give it as argument the file containing your methods.
+	* src/dyn.hh: Define DYN_FULL_IMPLEMENTATION.
+	* bin/yaml_to_dyn_decls: Generate methods with the new format.
+	* test/vaucanson/Makefile.in: Update.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Higly simplify the arguments handling.
+
+	* src/function_loader.rb: No more stringify then parse arguments.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Revert the previous patch.
+
+	* src/data.erb.hxx, src/data.erb.hh: Restore this useful piece
+      of code.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Remove a FIXME and some useless code.
+
+	* src/data.erb.hh, src/data.erb.hxx: Remove data::get_const_ref and the
+	const version of operator*.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Make works the var -> val conversion.
+
+	* src/dyn.hh: Use const_assign.
+	* src/data.erb.hh: Implement it.
+	* test/test_var_and_val.cc: Remove the FIXME about that.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Factor cpy ctors.
+
+	* src/data.erb.hh, src/data.erb.hxx:
+	Clean, unify and factor the cpy ctors, and assignments operators.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Little fix with the constness.
+
+	* test/test_containers.cc: Restore the "for" loop over a std::vector.
+	* src/function_loader.rb: Make const optional in the first_type_is_ptr
+	regexp.
+	* src/policy.hh: Do not write in cout but in logger. Do not propagate
+	the const here.
+	* src/data.erb.hh: But here.
+
+2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Automatic void detection, and automatic referencing for ret values.
+
+	* src/policy.hh: New. Use few C++ tricks to get rid of void functions,
+	and detect functions returning references and const references.
+	* src/data.erb.hh,
+	* src/data.erb.hxx,
+	* src/function_loader.rb: Update to the new policy system.
+	* src/function.erb.hh: Remove proc and ctor2.
+	* src/cxx_symbols.rb: Better const handling.
+	* src/dyn.hh: Update.
+	* bin/yaml_to_dyn_decls: No more generate proc decls.
+
+	* lib/libiberty-macos.a: Use a new and patched version (no use of environ).
+
+	* test/test_damien.cc,
+	* test/test_olena.cc,
+	* test/test_function_loader.cc: Replace proc by fun.
+
+2005-11-24  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Merge the demangling branch into the trunk.
+
+
+2005-11-23  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Use the compiler typeof + binutils demangling.
+
+2005-11-22  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Merge trunk -> branch.
+
+	Merge from 342 to 344.
+
+2005-11-22  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	No more share the same nil object.
+
+	* src/data.erb.hh: Update clone and the cpy ctor of data.
+
+2005-11-22  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Work in progess.
+
+
+2005-11-22  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Merge trunk -> branch.
+
+	Merge from 335 to 341.
+	Replace misc_compile_line to cflags and ldflags
+
+2005-11-21  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	More ctors, more tests.
+
+	* test/test_var_and_val.cc: More tests.
+	* src/name_of.hh: Add T[], and T[N].
+	* src/data.erb.hxx: Add 2 ctors defs.
+	* src/dyn.hh: Add 3 ctors defs.
+	* src/cxx_symbols.rb: Handle [].
+	* src/data.erb.hh: Add is_const() and 2 ctors decls.
+
+2005-11-21  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Make nil_proxy a pointer and no more take its address.
+
+	* src/data.erb.hxx, src/data.erb.hh: Update.
+
+2005-11-21  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add val, improve var.
+
+	* test/test_var_and_val.cc: New. Does not works completly.
+	* src/dyn.hh: Add the var and the val classes.
+	* src/data.erb.hh: Add new ctors decls.
+	* src/data.erb.hxx: Add the new ctors defs.
+
+	* test/Makefile.in:Make it an erb template.
+	* src/config.hh.in,
+	* configure,
+	* test/test_damien.cc,
+	* test/test_olena.cc,
+	* test/test_containers.cc,
+	* test/test_function_loader.cc: Update.
+	* test/olena: New.
+
+2005-11-20  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Constness, reference/copy returned values...
+
+	* src/data.erb.hh, src/data.erb.hxx:
+	Really handle the constness (without const_cast), provide different
+	kinds of memory managment (by_ptr, by_ref, by_cpy, by_const_ref), to
+	honor readonly, lvalue, by_cpy properties. Add a traits to make a
+	good automatic default behaviour.
+
+	* configure: Improve and make it loadable.
+	* src/dyn.hh,
+	* src/function_loader.hh,
+	* src/function_loader.rb,
+	* src/function.erb.hh: Update.
+	* src/cxx_symbols.rb: Better const handling.
+
+	* test/test_containers.cc: New. Extract from test_function_loader.cc.
+	* test/test_function_loader.cc: Remove the container tests.
+
+	* test/Makefile.in: Make it real, but do not handle deps :(
+	* test/test_olena.cc,
+	* src/config.hh.in,
+	* test/vaucanson/dyn_algorithms.cc,
+	* test/test_damien.cc: Replace SOURCE_DIR by DYNDIR.
+
+2005-11-20  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	In fact, an iterator has a copy ctor :).
+
+	* test/fixtures/my_lib/lib.hh: Remove this silly and buggy
+	specializtion.
+
+2005-11-19  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Restore the Damien patch into the new branch.
+
+	Add demangle from libiberty.
+
+	* test/test_damien.cc: a few changes.
+	* test/fixtures/my_lib/damien.hxx: Add sqr.
+	* test/fixtures/my_lib/damien.hh: Add sqr.
+	* lib/libiberty-linux.a: New. libiberty for linux.
+	* lib/libiberty-macos.a: New. libiberty for macos.
+	* src/demangle.h: New. Demangling header.
+	* src/ansidecl.h: New. Needed by demangle.h
+	* src/function_loader.hh: Add misc_compile_line for add compilation
+	line options.
+	* src/function_loader.rb: Likewise.
+	* src/data.erb.hh: Now use demangling from libiberty instead of
+	name_of.
+
+2005-11-19  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add a better support for methods.
+
+2005-11-19  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Revert the previous patch before make a branch.
+
+2005-11-18  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add type2() and simplify the function options.
+
+2005-11-18  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add a little README file.
+
+	* README: New.
+	* test/test_function_loader.cc: Add an exit message.
+
+2005-11-18  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add some operators and handle returned references.
+
+2005-11-17  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Fix some tests.
+
+	* test/fixtures/some_identifiers.yml.cc,
+	* test/test_function_loader.rb,
+	* test/test_function_loader_cxx.rb: Adapt these tests to the current
+	version. 
+	* src/function_loader.rb: Improve the void detection.
+
+2005-11-16  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	After the rush...
+
+	* test/fixtures/vaucanson: New.
+	* test/fixtures/vaucanson/dyn_vaucanson_mlc_name_of.hh: New.
+	* test/fixtures/vaucanson/dyn_vaucanson_dyn_mirror.hh: New.
+	* test/vaucanson/dyn_algorithms.cc: New.
+	* test/test_damien.cc,
+	* test/fixtures/my_lib/lib.hh,
+	* test/vaucanson/Makefile.in,
+	* test/test_function_loader.cc,
+	* src/name_of.hh,
+	* src/data.erb.hxx,
+	* src/cxx_symbols.rb,
+	* src/function_loader.rb,
+	* src/data.erb.hh,
+	* bin/yaml_to_dyn_decls: Many changes.
+
+2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Some fixes.
+
+	* test/test_function_loader.cc: Exit.
+	* src/function_loader.rb: Fix.
+
+2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Make works better.
+
+	* test/fixtures/my_lib/lib.hh,
+	* test/test_function_loader.cc,
+	* configure,
+	* src/data.erb.hxx,
+	* src/function_loader.hh,
+	* src/function_loader.rb,
+	* src/data.erb.hh: Update.
+
+2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	A printable is not a not_printable.
+
+2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Less badly used references.
+
+2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Fix basics tests.
+
+	* test/fixtures/my_lib/damien.hxx,
+	* test/fixtures/my_lib/lib.hh,
+	* test/fixtures/my_lib/damien.hh: Use name_of not mlc.
+	* src/name_of.hh: Add std::ostream.
+	* src/function_loader.rb: Fix simple function file mangling.
+
+2005-11-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add the vaucanson test.
+
+	* src/name_of.hh: Error at compile time for default case of mlc_name<T>.
+	* src/function_loader.hh: Put the SOURCE_DIR in $:.
+	* src/data.erb.hh: Add some mlc_set_name().
+	* bin/mk_swig_input: Take the dir as argument.
+	* bin/yaml_to_dyn_decls: Mangle conversion operators.
+	* src/cxx_symbols.rb: New. Extract from ...
+	* src/function_loader.rb: ... here.
+
+	* test/Makefile.in: Add vaucanson.
+	* test/vaucanson: New.
+	* test/vaucanson/Makefile.in: New.
+	* configure: Update.
+	* test: Add some ignore rules.
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add 2 big trees.
+
+	* test/fixtures/tree: New.
+	* test/fixtures/tree/tree.yml: New.
+	* test/fixtures/tree/tree.swig: New.
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add some swig tools.
+
+	* bin: New.
+	* bin/mk_swig_input: New.
+	* bin/yaml_to_dyn_decls: New.
+	* bin/swig_tree_to_yaml: New.
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	post_include and unset.
+
+	* src: Ignore function.hxx.
+	* src/function_loader.hh: Handle post_include and unset macros to
+	avoid multiple defs.
+	* src/function_loader.rb: Implement post_include.
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Separation interface/implementation for function.erb.hh.
+
+
+2005-11-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Rename some includes and add olena test to Makefile.in.
+
+	* test/test_olena.cc: Include dyn.hh.
+	* test/Makefile.in: Add olena test.
+	* test/fixtures/oln_name.hh: New. Contains name declarations for
+	olena.
+	* src/name_of.hh: New. Old mlc.hh
+	* src/data.erb.hxx: Update mlc.hh -> name_of.hh.
+	* src/mlc.hh: Remove.
+	* src/function_loader.hh: Update mlc.hh -> name_of.hh.
+	* src/data.erb.hh: Likewise.
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	More warning flags.
+
+
+2005-11-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Add olena entry to Makefile.in.
+
+	* test/Makefile.in: Refer to title.
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	More examples.
+
+	* test/test_damien.cc: Test deref, get_i, get_t, and clone.
+	* test/fixtures/my_lib/damien.hxx: New. To test that it works even if
+	the code is not available during the driver compilation.
+	Add deref, get_i, get_t, change, clone.
+	* test/fixtures/my_lib/damien.hh: It's now just the minimal interface.
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Yeah it works.
+
+	* src/data.erb.hh: Setup conditional inheritance to handle printablity.
+
+	* src/data.erb.hxx, src/function.erb.hh: Fix argument number
+	compatiblity.
+
+	* test/test_damien.cc: Add test about printablity.
+	* test/fixtures/my_lib/damien.hh: Add proc change.
+	* test/test_function_loader.cc: Include dyn not function_loader.
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Minor changes.
+
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Touch data_gen.hh in configure.
+
+
+2005-11-14  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Work in progress.
+
+	* test/test_function_loader.cc: Restore the include.
+	* src/dyn.hh: Manage includes in the proper order.
+	* src/mlc.hh: Add mlc_name2 for dynamic type deductions.
+	* src/function_loader.rb: Support for method_fun2 and method_proc2.
+
+	* src/function_loader.erb.hh: Remove.
+	* src/data.erb.hxx: New.
+	* src/function_loader.hh: New.
+	* src/function.erb.hh: New.
+	* src/data.erb.hh: New.
+	* src/data.hh: Remove.
+
+	* src/ruby_stream.hh,
+	* test/test_damien.cc,
+	* test/fixtures/my_lib/damien.hh,
+	* configure: Update.
+
+2005-11-13  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Add const/non const proxy support and tests for olena.
+
+	* test/test_olena.cc: New. Tests for olena.
+	* test/fixtures/my_lib/lib.hh: Remove templates from constructor
+	names.
+	* test/test_function_loader.cc: Remove an include.
+	* src/function_loader.erb.hh: Operator() now takes directly dyn::data
+	objects as arguments.
+	* src/data.hh: Comment print methods so that we can have proxy_data
+	of std::ostream..
+	* src/mlc.hh: Add useful empty lines.
+	* src/function_loader.rb: Change pointers to references.
+
+2005-11-13  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add constructors.
+
+
+2005-11-13  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Remove \r in data.hh.
+
+
+2005-11-13  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Fix the conversion (step1).
+
+2005-11-13  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Use a SortedSet for includes and include_dirs.
+
+
+2005-11-13  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Add methods.
+
+	* .: .
+	* test/test_damien.cc: Test methods.
+	* test/fixtures/my_lib/damien.hh: Add a method that doesn't take a
+	std::ostream as argument :).
+	* src/function_loader.erb.hh: Add method_proc and method_fun.
+	* src/data.hh: Nothing worth being mentionned, mostly comments
+	that I've been too lazy to remove.
+	* src/function_loader.rb: Add method wrappers generation..
+
+2005-11-12  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Change dynamic_cast to reinterpret_case.
+
+	* src/function_loader.rb: Change dynamic_cast to reinterpret_case.
+		For some reasons, dynamic_cast doesn't work in a function
+		called via the DL API.
+
+2005-11-10  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Remove data#assign.
+
+
+2005-11-10  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	mlc_name_of: const and ref.
+
+
+2005-11-10  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add a default include handling.
+
+
+2005-11-10  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Simplify the function handling.
+
+	* test/test_damien.cc,
+	* test/test_function_loader.cc,
+	* src/function_loader.erb.hh,
+	* src/data.hh,
+	* src/function_loader.rb: Update.
+
+2005-11-08  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	More tests, more warnings, less errors.
+
+	* src/data.hh,
+	* src/dyn.hh,
+	* src/function_loader.erb.hh,
+	* src/function_loader.rb,
+	* test/test_damien.cc,
+	* test/fixtures/my_lib/lib.hh,
+	* test/test_function_loader.cc,
+	* configure: Update.
+	* src/env.hh: Remove.
+	* src/call.hh: Remove.
+
+2005-11-08  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Add procedures.
+
+	* test/test_function_loader.cc: Use procedures and functions.
+	* src/function_loader.erb.hh: Add procedures.
+
+2005-11-08  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Make call_ret works.
+
+	* test/test_function_loader.cc,
+	* src/function_loader.erb.hh,
+	* src/data.hh,
+	* src/dyn.hh,
+	* src/mlc.hh,
+	* src/function_loader.rb: Update.
+
+2005-11-08  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Improve the call convention.
+
+	* test/test_damien.cc,
+	* test/Makefile.in,
+	* test/fixtures/my_lib/lib.hh,
+	* test/fixtures/my_lib/damien.hh,
+	* test/test_function_loader.cc,
+	* test/test_function_loader_cxx.rb,
+	* configure,
+	* src/env.hh,
+	* src/data.hh,
+	* src/dyn.hh,
+	* src/call.hh,
+	* src/mlc.hh,
+	* src/function_loader.rb: Improve the call convention.
+	* src/function_loader.hh: Rename to ...
+	* src/function_loader.erb.hh: ... this.
+
+2005-11-07  Damien Thivolle  <damien@lrde.epita.fr>
+
+	New loader c++-side interface.
+
+	* test/test_damien.cc: New. A test.
+	* test/Makefile.in: Add test_damien.cc compilation.
+	* test/fixtures/my_lib/damien.hh: New. Functions needed by the test.
+	* src/mangle.hh: Remove.
+	* src/env.hh: remove this->name_ = name.
+	* src/data.hh: Comment mangle related methods.
+	* src/dyn.hh: Remove mangle.hh inclusion.
+	* src/function_loader.hh: Add call methods.
+
+2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Fix a test.
+
+	* test/test_function_loader_cxx.rb: Remove a incorrect *.
+
+2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add from_cxx_call.
+
+	* src/function_loader.rb: Add from_cxx_call.
+	* test/fixtures/some_identifiers.yml.cc: Remove the useless type spec.
+	* test/test_function_loader_cxx.rb: New.
+
+2005-11-07  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Changes in the loader.
+
+	* src/function_loader.hh: Add call_ret().
+
+2005-11-07  Damien Thivolle  <damien@lrde.epita.fr>
+
+	Add call() in the loader.
+
+	* src/function_loader.hh: Add call() in the loader.
+
+2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Use YAML instead of PStore.
+
+	* src/function_loader.rb: Because PStore segv sometimes :(.
+
+2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Some fixes.
+
+	* src/data.hh, src/call.hh: include cassert.
+	* src/function_loader.rb: Use Pathname#read instead of File.read.
+
+2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Change the argument parser.
+
+	* src/function_loader.rb: Use a little LL parser.
+	* test/fixtures/some_identifiers.yml.cc: All tests passes now.
+
+2005-11-07  Nicolas Pouillard  <ertai@lrde.epita.fr>
+
+	Add the Vcs extension.
+
+	* vcs: New.
+	* vcs/dynamic_static_bridge_vcs.rb: New.
+

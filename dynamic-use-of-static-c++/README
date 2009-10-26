@@ -1,0 +1,23 @@
+HOW TO USE THIS PROJECT
+
+From the repository:
+
+  # Initialize the build system
+  ./bootstrap
+
+  # Make a build dir
+  mkdir _build && cd _build
+
+  # Configure the build for your system
+  # The config.site try to use more efficient tools (g++-4.0 and ccache)
+  # it also enable the configure caching.
+  # With --prefix you can set the destination (here _install)
+  CONFIG_SITE=`pwd`/../config.site ../configure --prefix=`pwd`/../_install
+
+  # For now need to add the bin directory to your path because dyn-config is
+  # by programs compiled with our system
+  export PATH=$PATH:`pwd`/bin
+
+  make check # The test with a latest prototype of olena will fail if you
+             # don't checkout it:
+             # cd test/olena && svn co https://svn.lrde.epita.fr/svn/oln/prototypes/proto-stl-style

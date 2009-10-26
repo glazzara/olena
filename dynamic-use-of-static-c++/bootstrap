@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Failures do matter.
+set -e
+# Tell what's going on.
+set -x
+
+mkdir -p _config
+touch _config/local-config.rb.in
+
+# Make the libtool with ltdl
+libtoolize --force --copy --automake --ltdl
+
+# Finally, install the GNU Build System.
+autoreconf -f -v -i
+
+# FIXME: autoheader does not obey --force.
+find . -name 'config.h*.in' -o -name 'local-config.*.in' | xargs touch

@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+str = STDIN.read
+str.gsub!(/^(\s*)  \+\+\+ (\w+) -+$/, '\1- \2:')
+str.gsub!(/^(\s*)\+\+\+ (\w+) -+$/, '\1\2:')
+str.gsub!(/^(\s*)\| (\S+)\s+- (.*)$/, '\1  \2: \3')
+str.gsub!(/^$(\s*)  -/, "\\1contents:\n\\1  -")
+str.gsub!(/^\s*\|\s*$/, '')
+puts str

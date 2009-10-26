@@ -1,0 +1,24 @@
+# -*- shell-script -*-
+
+if test $PACKAGE_TARNAME == dyn; then
+
+# Use the cache.
+cache_file=config.cache
+
+# Use a pretty recent GCC.
+for i in -snapshot -4.0 ''
+do
+    gcc$i --help >/dev/null 2>&1 &&
+    : ${CC=ccache gcc$i}
+    g++$i --help >/dev/null 2>&1 &&
+    : ${CXX=ccache g++$i}
+done
+# Don't optimize, but do debug.
+: ${CXXFLAGS=-ggdb}
+echo CC:$CC
+echo CXX:$CXX
+echo CXXFLAGS:$CXXFLAGS
+
+else
+  echo "Loading config.site for the wrong package." >&2
+fi

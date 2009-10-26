@@ -1,3 +1,12 @@
+2009-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Import dynamic-use-of-static-c++.
+
+	* dynamic-use-of-static-c++/: New directory.
+	Fetched from
+	https://svn.lrde.epita.fr/svn/oln/prototypes/dynamic-use-of-static-c++/trunk
+	at revision 377.
+
 2009-10-16  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Update configure.ac with AVS IO tests Makefile.

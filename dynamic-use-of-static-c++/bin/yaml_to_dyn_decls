@@ -1,0 +1,197 @@
+#!/usr/bin/env ruby
+require 'yaml'
+require 'rubygems'
+require_gem 'ruby_ex'
+require 'ruby_ex'
+require 'r_path'
+require 'set'
+require __FILE__.to_path.dirname.parent/'src/cxx_symbols'
+tree = YAML.load STDIN.read
+raise "Tree is Empty" if tree.nil?
+class Hash
+  undef type
+  def name
+    # self['sym:name'] || super
+    super.gsub(/.*::/, '')
+  end
+  def method_missing ( meth )
+    self[meth.to_s]
+  end
+end
+class Dumper
+  def initialize
+    @namespace = []
+    @includes = []
+    @states = []
+    @all_methods = {}
+    @qualified_names = SortedSet[]
+    # @mlc_set_names = []
+    @io = STDOUT
+
+    @path_clean_re = /^.*\/include\/(.*)$/
+  end
+  def with ( io, &block )
+    oldio = @io
+    begin
+      @io = io
+      block[]
+    ensure
+      @io = oldio
+    end
+  end
+  def operator ( name )
+    mangle(name)
+  end
+  def puts ( *args )
+    @io.print '  ' * @namespace.size
+    @io.puts(*args)
+  end
+  def namespace ( name, &block )
+    puts "namespace #{name} {"
+    @namespace << name
+    @states << 'namespace'
+    block[]
+    @namespace.pop
+    @states.pop
+    puts "} // end of namespace #{name}"
+  end
+  def struct ( name, qualified_name, &block )
+    puts "// struct #{name} {"
+    @namespace << name
+    @states << 'struct'
+    block[]
+    unless @qualified_names.include? "ctor #{qualified_name}"
+      @qualified_names << "ctor #{qualified_name}"
+      puts "ctor #{name}(\"#{qualified_name}\");"
+    end
+    @namespace.pop
+    @states.pop
+    puts '// };'
+  end
+  def print_dyn ( key, tree )
+    return if tree.nil?
+    case tree
+    when Array
+      tree.each do |node|
+        print_dyn(nil, node)
+      end
+      return
+    when Hash
+      if tree.size == 1
+        print_dyn(*tree.to_a.first)
+        return
+      end
+    when String
+      return
+    end
+    key = tree.kind if key.nil? or (%w[template class].include? key)
+
+    # No struct specializations
+    return if tree.specialization == '1'
+    return if tree.partialspecialization == '1'
+
+    # No instance variables
+    return if key == 'cdecl' and not (tree.decl != '' and tree.access.nil?)
+    
+    # No typdefs
+    return if tree.storage == 'typedef'
+
+    case key
+    when 'namespace'
+      namespace tree.name do
+        print_dyn nil, tree.contents
+      end
+    when 'struct', 'class'
+      name = (@namespace[1..-1] + [tree.name]).join('::')
+      unless @qualified_names.include? name
+        @qualified_names << name
+=begin
+        case n = (parms = (tree.templateparms || '').split(/\s*,\s*/)).size
+        when 0 then @mlc_set_names << "mlc_set_name(#{name});"
+        else
+          b = -1
+          builtin_type = /bool|char/
+          parms.map! { |p| (p =~ builtin_type)? "#{p} B#{b += 1}" : p }
+          parm_names = parms.map { |p| p.split(/\s+/).last }
+          name_of = parms.map do |p|
+            var = p.split(/\s+/).last
+            case p
+            when /bool/ then "((#{var})? \"true\" : \"false\")"
+            when /char/ then "\"'\" + std::string(#{var}) + \"'\""
+            else "mlc_name<#{var}>::of()"
+            end
+          end.join(" + \", \" + ")
+          @mlc_set_names <<
+            "template <#{parms.join(', ')}> struct mlc_name " +
+            "< #{name}<#{parm_names.join(', ')}> > " +
+            "{ static std::string of() { return std::string(\"#{name}\") + " +
+            "\"< \" + #{name_of} + \" >\"; } };"
+        end
+=end
+      end
+      struct tree.name, name do
+        print_dyn nil, tree.contents
+      end
+    when 'cdecl'
+      node_name = tree.name
+      if node_name =~ /operator/
+        node_name = operator(node_name)
+      end
+      name = (@namespace + [node_name]).join('::')
+      return if @qualified_names.include? name
+      @qualified_names << name
+      if @states.last == 'struct'
+        @all_methods[node_name] ||= Set.new
+        @all_methods[node_name] << @includes.last
+      else
+        puts "fun #{node_name}(\"#{name}\", \"\", \"#{@includes.last}\");"
+      end
+    when 'include'
+      @includes << tree.name
+      print_dyn nil, tree.contents
+      @includes.pop
+    # when 'constructor'
+      # dump "dyn::ctor(#{convert_params(tree.parms)})"
+    end
+  end
+  def print_all_methods
+    @all_methods.each { |k, v| @all_methods[k] = v.map { |x| x.gsub(@path_clean_re, '\1') } }
+    puts @all_methods.to_yaml
+  end
+=begin
+  def print_mlc_set_names
+    @mlc_set_names.each do |mlc_set_name|
+      next if mlc_set_name =~ /TiSlot|PartialExp/  # XXX constant ignoring
+      puts mlc_set_name
+    end
+  end
+=end
+end
+dumper = Dumper.new
+root = tree.rpath_find(:first, ARGV[0] || 'top/contents/include/*name/vcsn\.i')
+# puts root.to_yaml
+puts '// ------------------------------------------------ '
+puts '// dyn_vaucanson_dyn_mirror.hh'
+File.open('dyn_vaucanson_dyn_mirror.hh', 'w') do |dyn_vaucanson_dyn_mirror_hh|
+  dumper.with(dyn_vaucanson_dyn_mirror_hh) do
+    dumper.namespace 'dyn' do
+      dumper.print_dyn nil, root['contents']
+    end
+  end
+end
+puts '// ------------------------------------------------ '
+puts '// all_methods.yml'
+File.open('dyn_vaucanson_methods.yml', 'w') do |all_methods_yml|
+  dumper.with(all_methods_yml) do
+    dumper.print_all_methods
+  end
+end
+=begin
+puts '// ------------------------------------------------ '
+puts '// dyn_vaucanson_mlc_name.hh'
+File.open('dyn_vaucanson_mlc_name.hh', 'w') do |dyn_vaucanson_mlc_name_hh|
+  dumper.with(dyn_vaucanson_mlc_name_hh) do
+    dumper.print_mlc_set_names
+  end
+end
+=end
