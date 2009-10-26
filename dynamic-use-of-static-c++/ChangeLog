@@ -1,5 +1,16 @@
 2009-10-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the caching system.
+
+	* src/function_loader.cc (dyn::function_loader_t::cache_type): Use
+	C++ string as keys so as to solve some memory management issues.
+	(dyn::function_loader_t::ruby_load)
+	(dyn::function_loader_t::cxx_load):
+	Adjust.
+	(dyn::ltstr): Remove functor class.
+
+2009-10-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Clean the test repository during general cleaning.
 
 	* test/Makefile.am (repository_clean): Rename target as...

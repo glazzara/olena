@@ -49,14 +49,6 @@ namespace dyn {
 
   ruby::environment ruby_environment;
 
-  struct ltstr
-  {
-    bool operator()(const char* s1, const char* s2) const
-    {
-      return strcmp(s1, s2) < 0;
-    }
-  };
-
   std::list<std::string> includes_;
 
   template <typename Fun>
@@ -376,7 +368,7 @@ namespace dyn {
       std::string prototype = ostr.str();
 
       ruby << "MD5.new(%q{" << prototype.c_str() << "}).to_s" << ruby::eval;
-      const char* identifier = STR2CSTR(ruby.last_value());
+      std::string identifier = STR2CSTR(ruby.last_value());
 
       cache_type::iterator ptr_it = cache.find(identifier);
 
@@ -446,7 +438,7 @@ namespace dyn {
       // the interface of libmd5.
       std::string identifier(MD5((unsigned char*)prototype.c_str()).hex_digest());
 
-      cache_type::iterator ptr_it = cache.find(identifier.c_str());
+      cache_type::iterator ptr_it = cache.find(identifier);
 
       // FIXME: It seems the cache doesn't work at all (we almost
       // never hit).  See why this is happening.
@@ -506,7 +498,13 @@ namespace dyn {
     }
 
     protected:
-    typedef std::map<const char*, void*, ltstr> cache_type;
+    typedef std::map<std::string, void*> cache_type;
+    /* FIXME: Introduce a real cache object, with
+       debugging/pretty-printing methods.  */
+    /* FIXME: It seems this cache is only valid for a (single) run,
+       i.e., cached values won't be preserved across several
+       executions.  Of course, this is safer, but it would be great to
+       benefit from a long-term cache.  */
     cache_type cache;
     std::list<std::string> cflags_, ldflags_;
     ruby::stream ruby;
