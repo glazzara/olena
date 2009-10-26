@@ -1,5 +1,12 @@
 2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add support for the Boost Filesystem and String Algorithms Libraries.
+
+	* config/boost.m4: New (imported).
+	* configure.ac: Invoke BOOST_FILESYSTEM and BOOST_STRING_ALGO.
+
+2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a missing constructor to class MD5.
 
 	* libmd5/md5.cc (MD5::MD5(unsigned char *)): New.

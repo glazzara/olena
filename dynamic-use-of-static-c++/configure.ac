@@ -73,6 +73,13 @@ AC_PROG_LIBTOOL
 AC_SUBST(INCLTDL)
 AC_SUBST(LIBLTDL)
 
+## ------ ##
+## Boost. ##
+## ------ ##
+
+BOOST_FILESYSTEM
+BOOST_STRING_ALGO
+
 dnl  ## ------ ##
 dnl  ## Swig.  ##
 dnl  ## ------ ##
