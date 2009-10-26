@@ -1,5 +1,14 @@
 2009-10-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have DYN_CXX_WARNINGS be compatible with recent versions of Autoconf.
+
+	* build-aux/warning.m4
+	(AC_COMPILE_STDERR_IFELSE, DYN_CXX_WARNINGS): Prevent unwanted
+	concatenations creating dummy tokens with recent versions of
+	Autoconf.
+
+2009-10-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Require more recent versions of Autoconf and Automake.
 
 	* configure.ac: Here.

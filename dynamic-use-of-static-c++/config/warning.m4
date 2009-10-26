@@ -1,6 +1,6 @@
-# Finding valid warning flags for the C Compiler.           -*-Autoconf-*-
+# Finding valid warning flags for the C and C++ Compilers.  -*-Autoconf-*-
 #
-# Copyright (C) 2003 Free Software Foundation, Inc.
+# Copyright (C) 2003, 2006, 2009 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ AS_IF([_AC_EVAL_STDERR($ac_compile) &&
 	 AC_TRY_COMMAND([test -s conftest.$ac_objext])],
       [$2],
       [_AC_MSG_LOG_CONFTEST
-m4_ifvaln([$3],[$3])dnl])dnl
+m4_ifvaln([$3],[$3])dnl])
 rm -f conftest.$ac_objext m4_ifval([$1], [conftest.$ac_ext])[]dnl
 ])# AC_COMPILE_STDERR_IFELSE
 
@@ -99,7 +99,10 @@ AC_DEFUN([DYN_CXX_WARNINGS],
 m4_foreach([AC_Option], [$1],
     [DYN_COMPILER_OPTION_IF(AC_Option,
            [WARNING_CXXFLAGS="$WARNING_CXXFLAGS AC_Option"
-            DYN_COMPILER_FLAGS_NAME="$ac_save_compiler_flags $WARNING_FLAGS"])])
+            DYN_COMPILER_FLAGS_NAME="$ac_save_compiler_flags $WARNING_FLAGS"])
+dnl Newlines inserted on purpose, to avoid erroneous concatenations.
+
+])
 DYN_COMPILER_FLAGS_NAME=$ac_save_compiler_flags
 AC_SUBST([WARNING_CXXFLAGS])
 ])# DYN_CXX_WARNINGS(OPTIONS)
