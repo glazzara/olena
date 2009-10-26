@@ -1,5 +1,14 @@
 2009-09-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Various fixes in data/Makefile.am.
+
+	* data/Makefile.am
+	(libdyn_function_la_LDFLAGS, libdyn_function_la_CPPFLAGS):
+	Do not rely on the shell to set these variables.
+	(BUILT_SOURCES, CLEANFILES, SUBDIRS): Remove.
+
+2009-09-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add GNU libiberty for Mac OS X Leopard (10.5).
 
 	Careful, everything in lib/ should be removed ultimately (the

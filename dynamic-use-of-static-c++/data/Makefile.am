@@ -1,11 +1,11 @@
 # Do not install me
 lib_LTLIBRARIES = libdyn_function.la
-libdyn_function_la_LDFLAGS = `dyn-config --libtool-libs`
-libdyn_function_la_CXXFLAGS = `dyn-config --cflags`
+# FIXME: This is probably not portable!  
+# libdyn_function_la_LDFLAGS = `dyn-config --libtool-libs`
+# libdyn_function_la_CXXFLAGS = `dyn-config --cflags`
+libdyn_function_la_LDFLAGS = $(top_builddir)/src/libdyn.la -export-dynamic
+libdyn_function_la_CPPFLAGS = -I$(top_builddir)/src -I$(top_srcdir)/src
 libdyn_function_la_SOURCES = function.cc
-BUILT_SOURCES = function.cc
-CLEANFILES = function.cc
-SUBDIRS =
 
 pkgdata_DATA = Makefile.template Makefile.repository
 
