@@ -1,3 +1,4 @@
 #define DYNDIR "@DYNDIR@"
+#define DYN_DATADIR "@DYN_DATADIR@"
 #define DYN_FIXTURES "@DYN_FIXTURES@"
 #define MILENA_DIR "@MILENA_DIR@"

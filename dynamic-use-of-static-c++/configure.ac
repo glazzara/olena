@@ -111,9 +111,13 @@ dnl  AC_MSG_RESULT([$has_swig])
 
 # FIXME: Doesn't Autoconf provide something like abs_top_srcdir?
 my_abs_srcdir=`cd $srcdir && pwd`
+# FIXME: Likewise.
+my_abs_builddir=`pwd`
 
 # FIXME: Remove me when function_loader will be pure C++
 AC_SUBST([DYNDIR], [$my_abs_srcdir/src])
+
+AC_SUBST([DYN_DATADIR], [$my_abs_builddir/data])
 
 AC_SUBST([DYN_FIXTURES], [$my_abs_srcdir/test/fixtures])
 

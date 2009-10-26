@@ -1,15 +1,23 @@
 #ifndef DYN_FUNCTION_LOADER_CC
 # define DYN_FUNCTION_LOADER_CC
 
+# include <cstdlib>
 # include <ltdl.h>
 # include <map>
 
 // FIXME: Use and improve the logger to avoid use of std::cerr.
 # include <iostream>
 
+# include <boost/filesystem.hpp>
+# include <boost/filesystem/fstream.hpp>
+# include <boost/algorithm/string/replace.hpp>
+
 # include "data.hh"
 # include "function_loader.hh"
 # include "ruby_stream.hh"
+
+namespace bfs = boost::filesystem;
+namespace ba = boost::algorithm;
 
 
 template <typename InputIterator, typename T, typename OStream>
@@ -254,6 +262,79 @@ namespace dyn {
     ldflags(const std::string& elt)
     {
       ldflags_.push_back(elt);
+    }
+
+    // A C++ implementation of function_loader.rb's `compile'.
+    void
+    cxx_compile(const std::string& cxx, const std::string& identifier,
+		const std::string& cflags, const std::string& ldflags)
+    {
+      bfs::path dyn_datadir(DYN_DATADIR);
+
+      bfs::path repository("repository");
+      if (!bfs::exists(repository))
+	{
+	  bfs::create_directory(repository);
+	  bfs::create_symlink(dyn_datadir / "Makefile.repository",
+			      repository / "Makefile");
+	}
+
+      bfs::path dir = repository / identifier;
+      if (!bfs::exists(dir))
+	{
+	  bfs::create_directory(dir);
+
+	  bfs::ifstream makefile_orig_str(dyn_datadir / "Makefile.template");
+	  std::stringstream makefile_orig;
+	  makefile_orig << makefile_orig_str.rdbuf();
+	  bfs::ofstream makefile(dir / "Makefile");
+	  /* FIXME: We might want to use boost::format in several
+	     places here, since
+
+	       (boost::format("libdyn_%1%.la") % identifier).str()
+
+	     may be more elegant than
+
+	       std::string("libdyn_") + identifier + ".la")
+	  */
+	  /* FIXME: It would be more elegant if we could replace
+	     `libdyn_function.la' on the fly while copying the
+	     Makefile (as we would do with Perl).  See what Boost
+	     proposes.  */
+	  makefile <<
+	    ba::replace_all_copy(makefile_orig.str(),
+				 "libdyn_function.la",
+				 std::string("libdyn_") + identifier + ".la");
+	  makefile << "CXXFLAGS += " << cflags << std::endl;
+	  makefile << "LDFLAGS += " << ldflags << std::endl;
+
+	  bfs::create_directory(dir / ".deps");
+	  bfs::ofstream(dir / ".deps" / "libdyn_function_la-function.Plo");
+
+	  bfs::path file = dir / "function.cc";
+	  bfs::ofstream function(file);
+	  function << cxx;
+	}
+
+      bfs::path out = dir / "make.out";
+      // FIXME: Same remark wrt boost::format.
+      std::string cmd =
+	std::string("cd ") + dir.string() + " && make >make.out 2>&1";
+      if (system(cmd.c_str()) == 0)
+	{
+	  if (bfs::exists(out))
+	    bfs::remove(out);
+	}
+      else
+	{
+	  bfs::ifstream out_log(out);
+	  std::cerr << "JIT: Error when compiling this code" << std::endl
+		    << cxx << std::endl
+		    << cmd << std::endl
+		    << out_log.rdbuf() << std::endl;
+	  // FIXME: Isn't this a bit too violent?
+	  std::exit(1);
+	}     
     }
 
     void*

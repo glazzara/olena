@@ -1,5 +1,15 @@
 2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Provide a C++ implementation of the compile-at-runtime routine.
+
+	* src/function_loader.cc (dyn::function_loader_t::cxx_compile):
+	New method.
+	* src/config.hh.in (DYN_DATADIR): New macro.
+	* configure.ac (my_abs_builddir): New variable.
+	(DYN_DATADIR): New (substituted) variable.
+
+2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have libdyn depend on Boost Filesystem and Boost String Algorithms.
 
 	* src/Makefile.am (libdyn_la_LIBADD): Add $(BOOST_FILESYSTEM_LIBS).
