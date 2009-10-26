@@ -1,3 +1,7 @@
+2009-10-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	* headers.mk, tests/unit_test/unit-tests.mk: Regen.
+
 2009-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a main() to src/debug/show_objects_thin.cc to have it link.

@@ -24,9 +24,8 @@ nobase_scribo_HEADERS = \
 ./draw/bounding_boxes.hh \
 ./estim/object_groups_v_thickness.hh \
 ./filter/all.hh \
-./filter/common/object_groups_photo.hh \
-./filter/common/object_links_photo.hh \
 ./filter/common/objects_photo.hh \
+./filter/object_groups_size_ratio.hh \
 ./filter/object_groups_small.hh \
 ./filter/object_groups_v_thickness.hh \
 ./filter/object_links_bbox_h_ratio.hh \
@@ -38,10 +37,13 @@ nobase_scribo_HEADERS = \
 ./filter/object_links_non_aligned_simple.hh \
 ./filter/object_links_non_h_aligned.hh \
 ./filter/object_links_non_v_aligned.hh \
+./filter/objects_h_thin.hh \
 ./filter/objects_large.hh \
+./filter/objects_size_ratio.hh \
 ./filter/objects_small.hh \
 ./filter/objects_thick.hh \
 ./filter/objects_thin.hh \
+./filter/objects_v_thin.hh \
 ./fun/v2b/objects_small_filter.hh \
 ./make/all.hh \
 ./make/debug_filename.hh \
@@ -80,6 +82,7 @@ nobase_scribo_HEADERS = \
 ./primitive/internal/find_root.hh \
 ./primitive/internal/have_link_valid.hh \
 ./primitive/internal/init_link_array.hh \
+./primitive/internal/is_invalid_link.hh \
 ./primitive/internal/is_link_valid.hh \
 ./primitive/internal/update_graph_link.hh \
 ./primitive/internal/update_link_array.hh \
