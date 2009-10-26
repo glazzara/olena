@@ -37,11 +37,13 @@ std::ostream& operator<< (std::ostream& ostr, const t<T, V>& x)
   return ostr << "t< " << x.x_ << ", " << x.y_ << " >";
 }
 
+inline
 void foo1()
 {
   std::cout << "foo1()" << std::endl;
 }
 
+inline
 int* foo2()
 {
   static int i = 42;
@@ -49,6 +51,7 @@ int* foo2()
   return &i;
 }
 
+inline
 int foo2b()
 {
   std::cout << "foo2b() => 42" << std::endl;

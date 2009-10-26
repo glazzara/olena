@@ -1,6 +1,8 @@
 #ifndef NAME_OF
 # define NAME_OF
 
+# include <typeinfo>
+
 # include <string>
 # include <sstream>
 

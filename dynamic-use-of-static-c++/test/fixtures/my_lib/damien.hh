@@ -44,6 +44,7 @@ struct down : public up
 };
 
 
+inline
 std::ostream& operator<<(std::ostream& ostr, const up& obj)
 {
   obj.print(ostr);

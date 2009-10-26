@@ -1,5 +1,14 @@
 2009-10-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Address compilation warnings.
+
+	* src/name_of.hh: Include typeinfo for typeif.
+	* test/fixtures/my_lib/damien.hh (operator<<)
+	* test/fixtures/my_lib/lib.hh (foo1, foo2, foo2b):
+	Qualify these functions as inline to pacify the compiler.
+
+2009-10-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Convert the test on Olena from proto-stl-style to Milena.
 
 	* configure.ac (OLENA_PROTO_STL_STYLE): Remove variable.
