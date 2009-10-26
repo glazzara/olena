@@ -142,6 +142,7 @@ AC_CONFIG_FILES([
   Makefile
   bin/Makefile
   bin/dyn-config
+  libmd5/Makefile
   src/Makefile
   src/config.hh
   data/Makefile

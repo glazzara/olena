@@ -1,5 +1,21 @@
 2009-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Import a C++ implementation of the MD5 algorithm.
+
+	* libmd5/: New directory.
+	* libmd5/driver.cc,
+	* libmd5/md5.cc,
+	* libmd5/md5.hh,
+	* libmd5/README,
+	* libmd5/test-suite:
+	New.
+	Imported from http://userpages.umbc.edu/~mabzug1/cs/md5/md5.html.
+	* libmd5/Makefile.am: New.
+	* Makefile.am (SUBDIRS): Add libmd5.
+	* configure.ac: Configure libmd5/Makefile.
+
+2009-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Typos.
 
 	* src/function_loader.cc,
