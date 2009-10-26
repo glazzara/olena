@@ -56,5 +56,7 @@ TESTS = $(check_PROGRAMS)
 
 tests: $(check_PROGRAMS)
 
-repository_clean: clean
-	rm -rf repository
+clean-local: clean-repository
+.PHONY: clean-repository
+clean-repository:
+	-rm -rf repository
