@@ -1,5 +1,13 @@
 2009-10-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use modern M4sh idioms in warning.m4.
+
+	* build-aux/warning.m4 (DYN_COMPILER_OPTION_IF):
+	Use AS_VAR_IF instead of AS_IF and AS_VAR_GET.
+	Use AS_VAR_POPDEF instead of AS_VAR_PUSHDEF.
+
+2009-10-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have DYN_CXX_WARNINGS be compatible with recent versions of Autoconf.
 
 	* build-aux/warning.m4

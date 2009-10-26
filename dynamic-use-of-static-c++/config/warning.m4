@@ -78,8 +78,8 @@ AC_COMPILE_STDERR_IFELSE([AC_LANG_PROGRAM],
    fi])
 DYN_COMPILER_FLAGS_NAME=$ac_save_[]DYN_COMPILER_FLAGS_NAME
 ])
-AS_IF([test AS_VAR_GET(ac_Option) = yes], [$2], [$3])[]dnl
-AS_VAR_PUSHDEF([ac_Option])dnl
+AS_VAR_IF([ac_Option], [yes], [$2], [$3])dnl
+AS_VAR_POPDEF([ac_Option])dnl
 ])# DYN_COMPILER_OPTION_IF
 
 
