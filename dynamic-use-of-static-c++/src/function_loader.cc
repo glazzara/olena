@@ -12,6 +12,8 @@
 # include <boost/filesystem/fstream.hpp>
 # include <boost/algorithm/string/replace.hpp>
 
+# include "md5.hh"
+
 # include "data.hh"
 # include "function_loader.hh"
 # include "ruby_stream.hh"
@@ -399,6 +401,94 @@ namespace dyn {
       if ((error = lt_dlerror())) std::cerr << error << std::endl;
       void* ptr = lt_dlsym(lib, symb.c_str());
       cache[identifier] = ptr;
+      if ((error = lt_dlerror())) std::cerr << error << std::endl;
+      return ptr;
+    }
+
+    // FIXME: This C++ version of load shares a lot with the latter.
+    void*
+    cxx_load(fun_kind kind,
+	     const std::string& name,
+	     const arguments_types_t& arguments_types,
+	     const std::string& paths)
+    {
+      std::ostringstream ostr;
+      ostr << name << '(';
+      arguments_types_t::const_iterator it(arguments_types.begin());
+      if (it != arguments_types.end())
+      {
+        ostr << *it;
+        for (++it; it != arguments_types.end(); ++it)
+          ostr << ", " << *it;
+      }
+      ostr << ')';
+      if (paths != "")
+      {
+        ostr << ", paths: ";
+        gen_path<std::ostream> fun(ostr);
+        foreach_path_in_paths(paths, fun);
+      }
+      std::string prototype = ostr.str();
+
+      // FIXME: Careful, this cast removes a const!  We should improve
+      // the interface of libmd5.
+      std::string identifier(MD5((unsigned char*)prototype.c_str()).hex_digest());
+
+      cache_type::iterator ptr_it = cache.find(identifier.c_str());
+
+      // FIXME: It seems the cache doesn't work at all (we almost
+      // never hit).  See why this is happening.
+      if (ptr_it != cache.end())
+      {
+	// FIXME: Colors should be used only when the terminal supports them.
+#if 0
+        std::cerr << "\e[36mJIT: \e[32mHIT: \e[0m " << prototype << std::endl;
+#endif
+        std::cerr << "JIT: HIT:  " << prototype << std::endl;
+        return ptr_it->second;
+      }
+
+      // FIXME: Colors should be used only when the terminal supports them.
+#if 0
+      std::cerr << "\e[36mJIT: \e[31mMISS: compile: \e[0m " << prototype << std::endl;
+#endif
+      std::cerr << "JIT: MISS: compile:  " << prototype << std::endl;
+
+      std::ostringstream cxx;
+      gen_cxx(identifier, name, arguments_types, kind, paths, cxx);
+      // FIXME: Rename cflags_ as cxxflags_.
+      /* FIXME: The interface of join is not elegant.  I'd prefer to write
+
+	   std::stringstream cflags_stream;
+	   cflags_stream << join(cflags_.begin(), cflags_.end(), ' ');
+
+	 or even
+
+	   std::string cflags_string =
+	     join(cflags_.begin(), cflags_.end(), ' ');
+
+	 But doesn't Boost propose this? E.g. :
+
+	   std::string cflags = ba::string::join(cflags_, ' ');
+
+	 ?  */
+      std::stringstream cflags_stream;
+      join(cflags_.begin(), cflags_.end(), ' ', cflags_stream);
+      std::stringstream ldflags_stream;
+      join(ldflags_.begin(), ldflags_.end(), ' ', ldflags_stream);
+
+      cxx_compile(cxx.str(), identifier,
+		  cflags_stream.str(), ldflags_stream.str());
+
+      const char* error;
+      std::string lib_path = std::string("repository/") + identifier
+                             + "/libdyn_" + identifier + ".la";
+      std::string symb = std::string("dyn_") + identifier;
+
+      lt_dlhandle lib = lt_dlopen(lib_path.c_str());
+      if ((error = lt_dlerror())) std::cerr << error << std::endl;
+      void* ptr = lt_dlsym(lib, symb.c_str());
+      cache[identifier.c_str()] = ptr;
       if ((error = lt_dlerror())) std::cerr << error << std::endl;
       return ptr;
     }

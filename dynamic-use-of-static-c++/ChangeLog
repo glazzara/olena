@@ -1,5 +1,12 @@
 2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Provide a C++ implementation of the dynamic function loader.
+
+	* src/function_loader.cc (dyn::function_loader_t::cxx_load):
+	New method.
+
+2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have libdyn depend on libmd5.
 
 	* src/Makefile.am (libdyn_la_LIBADD): Add
