@@ -295,6 +295,7 @@ mln_core_internal_check_image_all \
 mln_core_internal_check_image_fastest \
 mln_core_internal_classical_window_base \
 mln_core_internal_complex_neighborhood_base \
+mln_core_internal_complex_window_base \
 mln_core_internal_complex_window_p_base \
 mln_core_internal_coord_impl \
 mln_core_internal_data \
@@ -633,6 +634,7 @@ mln_geom_seeds2tiling_roundness \
 mln_geom_size1d \
 mln_geom_size2d \
 mln_geom_size3d \
+mln_geom_translate \
 mln_graph_all \
 mln_graph_attribute_card \
 mln_graph_attribute_representative \
@@ -655,6 +657,13 @@ mln_io_dump_all \
 mln_io_dump_load \
 mln_io_dump_save \
 mln_io_essential \
+mln_io_fld_all \
+mln_io_fld_header \
+mln_io_fld_load \
+mln_io_fld_load_header \
+mln_io_fld_max_components \
+mln_io_fld_save \
+mln_io_fld_write_header \
 mln_io_off_all \
 mln_io_off_load \
 mln_io_off_save \
@@ -928,15 +937,19 @@ mln_morpho_thin_fit \
 mln_morpho_thinning \
 mln_morpho_top_hat \
 mln_morpho_tree_all \
+mln_morpho_tree_component_tree \
 mln_morpho_tree_compute_attribute_image \
 mln_morpho_tree_compute_parent \
 mln_morpho_tree_data \
+mln_morpho_tree_dual_input_tree \
 mln_morpho_tree_filter_all \
 mln_morpho_tree_filter_direct \
 mln_morpho_tree_filter_filter \
 mln_morpho_tree_filter_max \
 mln_morpho_tree_filter_min \
 mln_morpho_tree_filter_subtractive \
+mln_morpho_tree_impl_dual_hqueue \
+mln_morpho_tree_impl_dual_union_find \
 mln_morpho_tree_max \
 mln_morpho_tree_propagate_if \
 mln_morpho_tree_propagate_node \
@@ -945,6 +958,7 @@ mln_morpho_tree_utils \
 mln_morpho_watershed_all \
 mln_morpho_watershed_flooding \
 mln_morpho_watershed_superpose \
+mln_morpho_watershed_topological \
 mln_norm_all \
 mln_norm_essential \
 mln_norm_l1 \
@@ -1113,6 +1127,8 @@ mln_transform_internal_all \
 mln_transform_internal_closest_point_functor \
 mln_transform_internal_distance_functor \
 mln_transform_internal_influence_zone_functor \
+mln_upscaling_art_scale2x \
+mln_upscaling_art_scale3x \
 mln_util_adjacency_matrix \
 mln_util_all \
 mln_util_array \
@@ -1128,6 +1144,7 @@ mln_util_graph \
 mln_util_graph_ids \
 mln_util_greater_point \
 mln_util_greater_psite \
+mln_util_hqueues \
 mln_util_ignore \
 mln_util_index \
 mln_util_internal_edge_impl \
@@ -1233,6 +1250,7 @@ mln_value_shell \
 mln_value_sign \
 mln_value_stack \
 mln_value_super_value \
+mln_value_value_array \
 mln_value_viter \
 mln_win_all \
 mln_win_backdiag2d \
@@ -1570,6 +1588,7 @@ mln_core_internal_check_image_all_SOURCES = mln_core_internal_check_image_all.cc
 mln_core_internal_check_image_fastest_SOURCES = mln_core_internal_check_image_fastest.cc
 mln_core_internal_classical_window_base_SOURCES = mln_core_internal_classical_window_base.cc
 mln_core_internal_complex_neighborhood_base_SOURCES = mln_core_internal_complex_neighborhood_base.cc
+mln_core_internal_complex_window_base_SOURCES = mln_core_internal_complex_window_base.cc
 mln_core_internal_complex_window_p_base_SOURCES = mln_core_internal_complex_window_p_base.cc
 mln_core_internal_coord_impl_SOURCES = mln_core_internal_coord_impl.cc
 mln_core_internal_data_SOURCES = mln_core_internal_data.cc
@@ -1908,6 +1927,7 @@ mln_geom_seeds2tiling_roundness_SOURCES = mln_geom_seeds2tiling_roundness.cc
 mln_geom_size1d_SOURCES = mln_geom_size1d.cc
 mln_geom_size2d_SOURCES = mln_geom_size2d.cc
 mln_geom_size3d_SOURCES = mln_geom_size3d.cc
+mln_geom_translate_SOURCES = mln_geom_translate.cc
 mln_graph_all_SOURCES = mln_graph_all.cc
 mln_graph_attribute_card_SOURCES = mln_graph_attribute_card.cc
 mln_graph_attribute_representative_SOURCES = mln_graph_attribute_representative.cc
@@ -1930,6 +1950,13 @@ mln_io_dump_all_SOURCES = mln_io_dump_all.cc
 mln_io_dump_load_SOURCES = mln_io_dump_load.cc
 mln_io_dump_save_SOURCES = mln_io_dump_save.cc
 mln_io_essential_SOURCES = mln_io_essential.cc
+mln_io_fld_all_SOURCES = mln_io_fld_all.cc
+mln_io_fld_header_SOURCES = mln_io_fld_header.cc
+mln_io_fld_load_SOURCES = mln_io_fld_load.cc
+mln_io_fld_load_header_SOURCES = mln_io_fld_load_header.cc
+mln_io_fld_max_components_SOURCES = mln_io_fld_max_components.cc
+mln_io_fld_save_SOURCES = mln_io_fld_save.cc
+mln_io_fld_write_header_SOURCES = mln_io_fld_write_header.cc
 mln_io_off_all_SOURCES = mln_io_off_all.cc
 mln_io_off_load_SOURCES = mln_io_off_load.cc
 mln_io_off_save_SOURCES = mln_io_off_save.cc
@@ -2203,15 +2230,19 @@ mln_morpho_thin_fit_SOURCES = mln_morpho_thin_fit.cc
 mln_morpho_thinning_SOURCES = mln_morpho_thinning.cc
 mln_morpho_top_hat_SOURCES = mln_morpho_top_hat.cc
 mln_morpho_tree_all_SOURCES = mln_morpho_tree_all.cc
+mln_morpho_tree_component_tree_SOURCES = mln_morpho_tree_component_tree.cc
 mln_morpho_tree_compute_attribute_image_SOURCES = mln_morpho_tree_compute_attribute_image.cc
 mln_morpho_tree_compute_parent_SOURCES = mln_morpho_tree_compute_parent.cc
 mln_morpho_tree_data_SOURCES = mln_morpho_tree_data.cc
+mln_morpho_tree_dual_input_tree_SOURCES = mln_morpho_tree_dual_input_tree.cc
 mln_morpho_tree_filter_all_SOURCES = mln_morpho_tree_filter_all.cc
 mln_morpho_tree_filter_direct_SOURCES = mln_morpho_tree_filter_direct.cc
 mln_morpho_tree_filter_filter_SOURCES = mln_morpho_tree_filter_filter.cc
 mln_morpho_tree_filter_max_SOURCES = mln_morpho_tree_filter_max.cc
 mln_morpho_tree_filter_min_SOURCES = mln_morpho_tree_filter_min.cc
 mln_morpho_tree_filter_subtractive_SOURCES = mln_morpho_tree_filter_subtractive.cc
+mln_morpho_tree_impl_dual_hqueue_SOURCES = mln_morpho_tree_impl_dual_hqueue.cc
+mln_morpho_tree_impl_dual_union_find_SOURCES = mln_morpho_tree_impl_dual_union_find.cc
 mln_morpho_tree_max_SOURCES = mln_morpho_tree_max.cc
 mln_morpho_tree_propagate_if_SOURCES = mln_morpho_tree_propagate_if.cc
 mln_morpho_tree_propagate_node_SOURCES = mln_morpho_tree_propagate_node.cc
@@ -2220,6 +2251,7 @@ mln_morpho_tree_utils_SOURCES = mln_morpho_tree_utils.cc
 mln_morpho_watershed_all_SOURCES = mln_morpho_watershed_all.cc
 mln_morpho_watershed_flooding_SOURCES = mln_morpho_watershed_flooding.cc
 mln_morpho_watershed_superpose_SOURCES = mln_morpho_watershed_superpose.cc
+mln_morpho_watershed_topological_SOURCES = mln_morpho_watershed_topological.cc
 mln_norm_all_SOURCES = mln_norm_all.cc
 mln_norm_essential_SOURCES = mln_norm_essential.cc
 mln_norm_l1_SOURCES = mln_norm_l1.cc
@@ -2388,6 +2420,8 @@ mln_transform_internal_all_SOURCES = mln_transform_internal_all.cc
 mln_transform_internal_closest_point_functor_SOURCES = mln_transform_internal_closest_point_functor.cc
 mln_transform_internal_distance_functor_SOURCES = mln_transform_internal_distance_functor.cc
 mln_transform_internal_influence_zone_functor_SOURCES = mln_transform_internal_influence_zone_functor.cc
+mln_upscaling_art_scale2x_SOURCES = mln_upscaling_art_scale2x.cc
+mln_upscaling_art_scale3x_SOURCES = mln_upscaling_art_scale3x.cc
 mln_util_adjacency_matrix_SOURCES = mln_util_adjacency_matrix.cc
 mln_util_all_SOURCES = mln_util_all.cc
 mln_util_array_SOURCES = mln_util_array.cc
@@ -2403,6 +2437,7 @@ mln_util_graph_SOURCES = mln_util_graph.cc
 mln_util_graph_ids_SOURCES = mln_util_graph_ids.cc
 mln_util_greater_point_SOURCES = mln_util_greater_point.cc
 mln_util_greater_psite_SOURCES = mln_util_greater_psite.cc
+mln_util_hqueues_SOURCES = mln_util_hqueues.cc
 mln_util_ignore_SOURCES = mln_util_ignore.cc
 mln_util_index_SOURCES = mln_util_index.cc
 mln_util_internal_edge_impl_SOURCES = mln_util_internal_edge_impl.cc
@@ -2508,6 +2543,7 @@ mln_value_shell_SOURCES = mln_value_shell.cc
 mln_value_sign_SOURCES = mln_value_sign.cc
 mln_value_stack_SOURCES = mln_value_stack.cc
 mln_value_super_value_SOURCES = mln_value_super_value.cc
+mln_value_value_array_SOURCES = mln_value_value_array.cc
 mln_value_viter_SOURCES = mln_value_viter.cc
 mln_win_all_SOURCES = mln_win_all.cc
 mln_win_backdiag2d_SOURCES = mln_win_backdiag2d.cc

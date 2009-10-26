@@ -2,6 +2,9 @@
 
 EXTRA_DIST +=  \
 examples/accu-wrong-instanciation.cc.raw \
+examples/devel/dispatch.cc.raw \
+examples/devel/facade.cc.raw \
+examples/devel/impl.cc.raw \
 examples/fill-proto.cc.raw \
 examples/ima2d-restricted-1.cc.raw \
 examples/ima2d-restricted-2.cc.raw \

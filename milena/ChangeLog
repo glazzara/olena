@@ -1,3 +1,12 @@
+2009-10-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Regen Makefile helpers.
+
+	* doc/examples/examples.mk,
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk:
+	Regen.
+
 2009-10-16  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
 	Add AVS field file support.

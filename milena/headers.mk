@@ -314,6 +314,7 @@ mln/core/internal/check/image_all.hh \
 mln/core/internal/check/image_fastest.hh \
 mln/core/internal/classical_window_base.hh \
 mln/core/internal/complex_neighborhood_base.hh \
+mln/core/internal/complex_window_base.hh \
 mln/core/internal/complex_window_p_base.hh \
 mln/core/internal/coord_impl.hh \
 mln/core/internal/data.hh \
@@ -607,6 +608,7 @@ mln/geom/seeds2tiling_roundness.hh \
 mln/geom/size1d.hh \
 mln/geom/size2d.hh \
 mln/geom/size3d.hh \
+mln/geom/translate.hh \
 mln/graph/all.hh \
 mln/graph/attribute/card.hh \
 mln/graph/attribute/representative.hh \
@@ -634,6 +636,13 @@ mln/io/dump/save.hh \
 mln/io/essential.hh \
 mln/io/fits/all.hh \
 mln/io/fits/load.hh \
+mln/io/fld/all.hh \
+mln/io/fld/header.hh \
+mln/io/fld/load.hh \
+mln/io/fld/load_header.hh \
+mln/io/fld/max_components.hh \
+mln/io/fld/save.hh \
+mln/io/fld/write_header.hh \
 mln/io/magick/all.hh \
 mln/io/magick/load.hh \
 mln/io/magick/save.hh \
@@ -909,15 +918,19 @@ mln/morpho/thin_fit.hh \
 mln/morpho/thinning.hh \
 mln/morpho/top_hat.hh \
 mln/morpho/tree/all.hh \
+mln/morpho/tree/component_tree.hh \
 mln/morpho/tree/compute_attribute_image.hh \
 mln/morpho/tree/compute_parent.hh \
 mln/morpho/tree/data.hh \
+mln/morpho/tree/dual_input_tree.hh \
 mln/morpho/tree/filter/all.hh \
 mln/morpho/tree/filter/direct.hh \
 mln/morpho/tree/filter/filter.hh \
 mln/morpho/tree/filter/max.hh \
 mln/morpho/tree/filter/min.hh \
 mln/morpho/tree/filter/subtractive.hh \
+mln/morpho/tree/impl/dual_hqueue.hh \
+mln/morpho/tree/impl/dual_union_find.hh \
 mln/morpho/tree/max.hh \
 mln/morpho/tree/propagate_if.hh \
 mln/morpho/tree/propagate_node.hh \
@@ -926,6 +939,7 @@ mln/morpho/tree/utils.hh \
 mln/morpho/watershed/all.hh \
 mln/morpho/watershed/flooding.hh \
 mln/morpho/watershed/superpose.hh \
+mln/morpho/watershed/topological.hh \
 mln/norm/all.hh \
 mln/norm/essential.hh \
 mln/norm/l1.hh \
@@ -1078,6 +1092,8 @@ mln/transform/internal/all.hh \
 mln/transform/internal/closest_point_functor.hh \
 mln/transform/internal/distance_functor.hh \
 mln/transform/internal/influence_zone_functor.hh \
+mln/upscaling/art/scale2x.hh \
+mln/upscaling/art/scale3x.hh \
 mln/util/adjacency_matrix.hh \
 mln/util/all.hh \
 mln/util/array.hh \
@@ -1093,6 +1109,7 @@ mln/util/graph.hh \
 mln/util/graph_ids.hh \
 mln/util/greater_point.hh \
 mln/util/greater_psite.hh \
+mln/util/hqueues.hh \
 mln/util/ignore.hh \
 mln/util/index.hh \
 mln/util/internal/edge_impl.hh \
@@ -1194,6 +1211,7 @@ mln/value/scalar.hh \
 mln/value/set.hh \
 mln/value/sign.hh \
 mln/value/super_value.hh \
+mln/value/value_array.hh \
 mln/value/viter.hh \
 mln/win/all.hh \
 mln/win/backdiag2d.hh \
