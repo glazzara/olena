@@ -36,7 +36,7 @@ namespace ruby
     environment()
     {
       ruby_init();
-      ruby_script("embeddeed ruby");
+      ruby_script("Embedded Ruby");
       ruby_init_loadpath();
     }
 

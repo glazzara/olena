@@ -1,5 +1,13 @@
 2009-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Typos.
+
+	* src/function_loader.cc,
+	* src/ruby_stream.hh (ruby::environment::environment):
+	Here.
+
+2009-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename src/data.erb.hh as src/data.hh and stop generating the latter.
 
 	* src/data.erb.hh: Rename as...

@@ -4,7 +4,7 @@
 # include <ltdl.h>
 # include <map>
 
-// FIXME use and improve the logger to avoid use of std::cerr
+// FIXME: Use and improve the logger to avoid use of std::cerr.
 # include <iostream>
 
 # include "data.hh"
