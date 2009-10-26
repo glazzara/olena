@@ -1,5 +1,11 @@
 2009-10-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Require more recent versions of Autoconf and Automake.
+
+	* configure.ac: Here.
+
+2009-10-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make bootstrap compatible with Mac OS X.
 
 	* bootstrap: Handle glibtoolize.

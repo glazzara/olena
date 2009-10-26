@@ -1,4 +1,4 @@
-AC_PREREQ([2.59])
+AC_PREREQ([2.61])
 
 # Catch some macros that are not expanded.
 m4_pattern_forbid([^AC_LIBLTDL_])
@@ -18,7 +18,7 @@ AC_INIT([LRDE C++ Static-Dynamic bridge], [0.1],
 AC_CONFIG_AUX_DIR([_config])
 
 # Automake.
-AM_INIT_AUTOMAKE([1.9 foreign check-news dist-bzip2 -Wall nostdinc])
+AM_INIT_AUTOMAKE([1.10 foreign check-news dist-bzip2 -Wall nostdinc])
 
 
 ## --------------------- ##
