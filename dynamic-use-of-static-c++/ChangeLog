@@ -1,5 +1,13 @@
 2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have libdyn depend on Boost Filesystem and Boost String Algorithms.
+
+	* src/Makefile.am (libdyn_la_LIBADD): Add $(BOOST_FILESYSTEM_LIBS).
+	(libdyn_la_CPPFLAGS): Add $(BOOST_CPPFLAGS).
+	(libdyn_la_LDFLAGS): Add $(BOOST_FILESYSTEM_LDFLAGS).
+
+2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add support for the Boost Filesystem and String Algorithms Libraries.
 
 	* config/boost.m4: New (imported).

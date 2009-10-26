@@ -45,13 +45,15 @@ libdyn_la_SOURCES =				\
   ruby_stream.hh ruby_stream.cc			\
   ansidecl.h demangle.h config.hh
 
-libdyn_la_LIBADD = @LIBERTYARG@ @RUBY_LIBRUBYARG_SHARED@ $(LIBLTDL)
+libdyn_la_LIBADD = @LIBERTYARG@ @RUBY_LIBRUBYARG_SHARED@ $(LIBLTDL) \
+	$(BOOST_FILESYSTEM_LIBS)
 libdyn_la_DEPENDENCIES = $(LTDLDEPS)
 
-libdyn_la_CPPFLAGS =							\
-	$(LTDLINCL) -I$(top_builddir) -I$(srcdir) -I. -I@RUBY_topdir@
+libdyn_la_CPPFLAGS =							   \
+  $(LTDLINCL) $(BOOST_CPPFLAGS)						   \
+  -I$(top_builddir) -I$(srcdir) -I. -I@RUBY_topdir@
 libdyn_la_CXXFLAGS = $(WARNING_CXXFLAGS)
-libdyn_la_LDFLAGS = -version-info 0:1:0
+libdyn_la_LDFLAGS = -version-info 0:1:0 $(BOOST_FILESYSTEM_LDFLAGS)
 
 
 #############
