@@ -1,5 +1,13 @@
 2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have libdyn depend on libmd5.
+
+	* src/Makefile.am (libdyn_la_LIBADD): Add
+	$(top_builddir)/libmd5/libmd5.la.
+	(libdyn_la_CPPFLAGS): Add -I$(top_srcdir)/libmd5.
+
+2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Provide a C++ implementation of the compile-at-runtime routine.
 
 	* src/function_loader.cc (dyn::function_loader_t::cxx_compile):

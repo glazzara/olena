@@ -46,12 +46,12 @@ libdyn_la_SOURCES =				\
   ansidecl.h demangle.h config.hh
 
 libdyn_la_LIBADD = @LIBERTYARG@ @RUBY_LIBRUBYARG_SHARED@ $(LIBLTDL) \
-	$(BOOST_FILESYSTEM_LIBS)
+  $(top_builddir)/libmd5/libmd5.la $(BOOST_FILESYSTEM_LIBS)
 libdyn_la_DEPENDENCIES = $(LTDLDEPS)
 
 libdyn_la_CPPFLAGS =							   \
   $(LTDLINCL) $(BOOST_CPPFLAGS)						   \
-  -I$(top_builddir) -I$(srcdir) -I. -I@RUBY_topdir@
+  -I$(top_builddir) -I$(srcdir) -I. -I$(top_srcdir)/libmd5 -I@RUBY_topdir@
 libdyn_la_CXXFLAGS = $(WARNING_CXXFLAGS)
 libdyn_la_LDFLAGS = -version-info 0:1:0 $(BOOST_FILESYSTEM_LDFLAGS)
 
