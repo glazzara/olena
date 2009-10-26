@@ -1,5 +1,12 @@
 2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the implementation of the Autoconf macro RBCONFIG.
+
+	* config/rbconfig_gen.rb (gen_m4): Generate quoted values to
+	avoid issues with, e.g., commas.
+
+2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have the dynamic function loader use the C++ framework by default.
 
 	* src/function_loader.cc (HAVE_DYN_RUBY_GENERATOR): New macro,
