@@ -1,3 +1,20 @@
+2009-09-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add GNU libiberty for Mac OS X Leopard (10.5).
+
+	Careful, everything in lib/ should be removed ultimately (the
+	repository contains compiled libraries in this directory!).
+	`configure' should be used instead, to look for a
+	working (installed) libiberty library.
+
+	* lib/.libs/libiberty-i686-darwin9.a,
+	* lib/.libs/libiberty-universal-darwin9.0.a:
+	New (absolute) symbolic links.
+	* lib/libiberty-i686-darwin9.la,
+	* lib/libiberty-universal-darwin9.0.la:
+	New Libtool archives.
+	* lib/FIXME: New.
+
 2009-10-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use modern M4sh idioms in warning.m4.
