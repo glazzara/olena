@@ -1,3 +1,9 @@
+2009-10-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Make bootstrap compatible with Mac OS X.
+
+	* bootstrap: Handle glibtoolize.
+
 2006-01-15  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
 	Add another version of libiberty.

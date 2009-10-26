@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 
 # Failures do matter.
 set -e
@@ -8,8 +8,17 @@ set -x
 mkdir -p _config
 touch _config/local-config.rb.in
 
+libtoolize=libtoolize
+for l in "$LIBTOOLIZE" glibtoolize libtoolize;
+do
+  if ($l --version) >/dev/null 2>&1; then
+    libtoolize=$l
+    break
+  fi
+done
+export LIBTOOLIZE=$libtoolize
 # Make the libtool with ltdl
-libtoolize --force --copy --automake --ltdl
+"$libtoolize" --force --copy --automake --ltdl
 
 # Finally, install the GNU Build System.
 autoreconf -f -v -i
