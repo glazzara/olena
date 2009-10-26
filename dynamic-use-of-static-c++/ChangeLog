@@ -1,3 +1,9 @@
+2009-10-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Catch up with the current interface of Ruby's MD5 class.
+
+	* src/function_loader.cc (dyn::function_loader_t::load): Here.
+
 2009-09-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Various fixes in data/Makefile.am.

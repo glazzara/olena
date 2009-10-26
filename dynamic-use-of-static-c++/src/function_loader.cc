@@ -280,7 +280,7 @@ namespace dyn {
       }
       std::string prototype = ostr.str();
 
-      ruby << "Digest::MD5.new(%q{" << prototype.c_str() << "}).to_s" << ruby::eval;
+      ruby << "MD5.new(%q{" << prototype.c_str() << "}).to_s" << ruby::eval;
       const char* identifier = STR2CSTR(ruby.last_value());
 
       cache_type::iterator ptr_it = cache.find(identifier);
