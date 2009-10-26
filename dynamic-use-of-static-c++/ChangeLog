@@ -3,7 +3,7 @@
 	Add another version of libiberty.
 
 	* lib/libiberty-powerpc-darwin8.3.0.la: A copy of
-  libiberty-powerpc-darwin.la
+	libiberty-powerpc-darwin.la.
 
 2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
@@ -152,7 +152,7 @@
 
 2005-12-01  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
-	Dyn now use the autotools!
+	Dyn now uses the autotools!
 
 	* README: Deal with the new the schema.
 	* bin/dyn-config.in: New. A nice tool to use the project.
@@ -340,7 +340,8 @@
 	* src/dyn.hh: Update.
 	* bin/yaml_to_dyn_decls: No more generate proc decls.
 
-	* lib/libiberty-macos.a: Use a new and patched version (no use of environ).
+	* lib/libiberty-macos.a: Use a new and patched version (no use of
+	environ).
 
 	* test/test_damien.cc,
 	* test/test_olena.cc,
@@ -496,7 +497,7 @@
 	* test/fixtures/some_identifiers.yml.cc,
 	* test/test_function_loader.rb,
 	* test/test_function_loader_cxx.rb: Adapt these tests to the current
-	version. 
+	version.
 	* src/function_loader.rb: Improve the void detection.
 
 2005-11-16  Nicolas Pouillard  <ertai@lrde.epita.fr>
@@ -559,7 +560,8 @@
 
 	Add the vaucanson test.
 
-	* src/name_of.hh: Error at compile time for default case of mlc_name<T>.
+	* src/name_of.hh: Error at compile time for default case of
+	mlc_name<T>.
 	* src/function_loader.hh: Put the SOURCE_DIR in $:.
 	* src/data.erb.hh: Add some mlc_set_name().
 	* bin/mk_swig_input: Take the dir as argument.
@@ -881,4 +883,3 @@
 
 	* vcs: New.
 	* vcs/dynamic_static_bridge_vcs.rb: New.
-
