@@ -45,11 +45,12 @@ documentation and/or software.
 
 
 
-#include "md5.hh"
-
-#include <assert.h>
+#include <cassert>
 #include <strings.h>
-#include <iostream.h>
+
+#include <iostream>
+
+#include "md5.hh"
 
 
 
@@ -75,7 +76,7 @@ void MD5::update (uint1 *input, uint4 input_length) {
   uint4 buffer_space;                // how much space is left in buffer
 
   if (finalized){  // so we can't update!
-    cerr << "MD5::update:  Can't update a finalized digest!" << endl;
+    std::cerr << "MD5::update:  Can't update a finalized digest!" << std::endl;
     return;
   }
 
@@ -134,16 +135,17 @@ void MD5::update(FILE *file){
 
 
 
-// MD5 update for istreams.
+// MD5 update for std::istreams.
 // Like update for files; see above.
 
-void MD5::update(istream& stream){
+void MD5::update(std::istream& stream){
 
   unsigned char buffer[1024];
   int len;
 
+  char* buffer_ = (char*)(buffer);
   while (stream.good()){
-    stream.read(buffer, 1024); // note that return value of read is unusable.
+    stream.read(buffer_, 1024); // note that return value of read is unusable.
     len=stream.gcount();
     update(buffer, len);
   }
@@ -155,16 +157,17 @@ void MD5::update(istream& stream){
 
 
 
-// MD5 update for ifstreams.
+// MD5 update for std::ifstreams.
 // Like update for files; see above.
 
-void MD5::update(ifstream& stream){
+void MD5::update(std::ifstream& stream){
 
   unsigned char buffer[1024];
   int len;
 
   while (stream.good()){
-    stream.read(buffer, 1024); // note that return value of read is unusable.
+    // FIXME: Cast BUFFER to char* to be compatible with std::istream::read.
+    stream.read((char*)buffer, 1024); // note that return value of read is unusable.
     len=stream.gcount();
     update(buffer, len);
   }
@@ -191,7 +194,7 @@ void MD5::finalize (){
     };
 
   if (finalized){
-    cerr << "MD5::finalize:  Already finalized this digest!" << endl;
+    std::cerr << "MD5::finalize:  Already finalized this digest!" << std::endl;
     return;
   }
 
@@ -229,7 +232,7 @@ MD5::MD5(FILE *file){
 
 
 
-MD5::MD5(istream& stream){
+MD5::MD5(std::istream& stream){
 
   init();  // must called by all constructors
   update (stream);
@@ -238,7 +241,7 @@ MD5::MD5(istream& stream){
 
 
 
-MD5::MD5(ifstream& stream){
+MD5::MD5(std::ifstream& stream){
 
   init();  // must called by all constructors
   update (stream);
@@ -252,8 +255,8 @@ unsigned char *MD5::raw_digest(){
   uint1 *s = new uint1[16];
 
   if (!finalized){
-    cerr << "MD5::raw_digest:  Can't get digest if you haven't "<<
-      "finalized the digest!" <<endl;
+    std::cerr << "MD5::raw_digest:  Can't get digest if you haven't "<<
+      "finalized the digest!" << std::endl;
     return ( (unsigned char*) "");
   }
 
@@ -269,8 +272,8 @@ char *MD5::hex_digest(){
   char *s= new char[33];
 
   if (!finalized){
-    cerr << "MD5::hex_digest:  Can't get digest if you haven't "<<
-      "finalized the digest!" <<endl;
+    std::cerr << "MD5::hex_digest:  Can't get digest if you haven't "<<
+      "finalized the digest!" << std::endl;
     return "";
   }
 
@@ -286,7 +289,7 @@ char *MD5::hex_digest(){
 
 
 
-ostream& operator<<(ostream &stream, MD5 context){
+std::ostream& operator<<(std::ostream &stream, MD5 context){
 
   stream << context.hex_digest();
   return stream;

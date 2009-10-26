@@ -1,5 +1,15 @@
 2009-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have libmd5 compile.
+
+	* libmd5/md5.hh, libmd5/driver.cc: Use modern C++ header names.
+	Add missing `std::' qualifiers.
+	* libmd5/md5.cc: Likewise.
+	(MD5::update(std::ifstream&)): Cast the type of	the buffer to make
+	it compatible with std::istream::read.
+
+2009-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Import a C++ implementation of the MD5 algorithm.
 
 	* libmd5/: New directory.

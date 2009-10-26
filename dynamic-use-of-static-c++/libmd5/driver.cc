@@ -27,10 +27,10 @@ These notices must be retained in any copies of any part of this
 documentation and/or software.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
+#include <cstring>
 
 #include "md5.hh"
 
@@ -62,11 +62,11 @@ int main (int argc, char *argv[]){
       else if (strcmp (argv[i], "-x") == 0)
 	MD5_testSuite ();
       else if (strcmp (argv[i], "-h") == 0)
-	cout << MD5_usage()<< flush;
+	std::cout << MD5_usage() << std::flush;
       else if (strcmp (argv[i], "-help")==0)
-	cout << MD5_usage()<< flush;
+	std::cout << MD5_usage() << std::flush;
       else if (argv[i][0] == '-'){
-	cerr << argv[i] << " is an unknown option.\n" << MD5_usage()<< flush;
+	std::cerr << argv[i] << " is an unknown option.\n" << MD5_usage() << std::flush;
 	exit (1);
       }
       else
@@ -88,8 +88,8 @@ static void MD5_timeTrial ()
   unsigned int i;
 
 
-  cout << "MD5 time trial. Digesting "<< TEST_BLOCK_LEN << " ";
-  cout << TEST_BLOCK_COUNT << "-byte blocks ...";
+  std::cout << "MD5 time trial. Digesting "<< TEST_BLOCK_LEN << " ";
+  std::cout << TEST_BLOCK_COUNT << "-byte blocks ...";
 
   // Initialize block
   for (i = 0; i < TEST_BLOCK_LEN; i++)
@@ -107,15 +107,15 @@ static void MD5_timeTrial ()
   // Stop timer
   time (&endTime);
 
-  cout << " done" << endl;
+  std::cout << " done" << std::endl;
 
-  cout << "Digest = " << context << endl;
+  std::cout << "Digest = " << context << std::endl;
 
-  cout << "Time = "<< (long)(endTime-startTime) << " seconds" << endl;
+  std::cout << "Time = "<< (long)(endTime-startTime) << " seconds" << std::endl;
 
-  cout << "Speed = ";
-  cout << (long)TEST_BLOCK_LEN * (long)TEST_BLOCK_COUNT/(endTime-startTime);
-  cout << "bytes/second" <<endl;
+  std::cout << "Speed = ";
+  std::cout << (long)TEST_BLOCK_LEN * (long)TEST_BLOCK_COUNT/(endTime-startTime);
+  std::cout << "bytes/second" << std::endl;
 
 }
 
@@ -123,7 +123,7 @@ static void MD5_timeTrial ()
 
 static void MD5_testSuite ()
 {
-  cout << "MD5 test suite:" << endl;
+  std::cout << "MD5 test suite:" << std::endl;
 
   MD5_string ( (unsigned char*) "");
   MD5_string ( (unsigned char*) "a");
@@ -142,13 +142,13 @@ static void MD5_testSuite ()
 
 static void MD5_file (char *filename){
 
-  ifstream file(filename);
+  std::ifstream file(filename);
 
   if (!file)
-    cerr << filename <<" can't be opened" << endl;
+    std::cerr << filename <<" can't be opened" << std::endl;
   else {
     MD5 context(file);
-    cout <<  "MD5 ("  << filename <<  ") = "  <<  context << endl;
+    std::cout <<  "MD5 ("  << filename <<  ") = "  <<  context << std::endl;
   }
 }
 
@@ -157,10 +157,10 @@ static void MD5_file (char *filename){
 static void MD5_filter ()
 {
 
-  MD5 context(cin);  // ie. run istream version of MD5 on cin.
-                     // Could also run file version of MD5 on stdin.
+  MD5 context(std::cin);  // ie. run istream version of MD5 on std::cin.
+                          // Could also run file version of MD5 on stdin.
 
-  cout << context << endl;
+  std::cout << context << std::endl;
 }
 
 
@@ -175,7 +175,7 @@ void MD5_string (unsigned char *string){
   context.update   (string, len);
   context.finalize ();
 
-  cout << "MD5 (\"" << (char *)string << "\") = " << context <<endl;
+  std::cout << "MD5 (\"" << (char *)string << "\") = " << context << std::endl;
 }
 
 
