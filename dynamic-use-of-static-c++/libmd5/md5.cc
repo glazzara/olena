@@ -222,6 +222,16 @@ void MD5::finalize (){
 
 
 
+MD5::MD5(unsigned char *string){
+
+  init();  // must be called be all constructors
+  update(string, strlen((char*)string));
+  finalize ();
+}
+
+
+
+
 MD5::MD5(FILE *file){
 
   init();  // must be called be all constructors

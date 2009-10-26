@@ -1,3 +1,9 @@
+2009-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a missing constructor to class MD5.
+
+	* libmd5/md5.cc (MD5::MD5(unsigned char *)): New.
+
 2009-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Exercise libmd5.
