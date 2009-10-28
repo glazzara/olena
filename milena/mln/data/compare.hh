@@ -95,7 +95,7 @@ namespace mln
     mln_precondition(lhs.domain() == rhs.domain());
 
     typedef fun::vv2b::eq<mln_value(L), mln_value(R)> F;
-    bool res = test::predicate(lhs_, rhs_, F());
+    bool res = test::predicate(lhs, rhs, F());
 
     trace::exiting("data::compare (==)");
     return res;

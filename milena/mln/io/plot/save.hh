@@ -57,8 +57,8 @@ namespace mln
 	  \param[out] filename The output file.
 	  \param[in] start_value The start index value of the plot
 	             (optional).  */
-      template <typename I>
-      void save(util::array<I>& arr,
+      template <typename T>
+      void save(util::array<T>& arr,
 		const std::string& filename,
 		int start_value = 0);
 
@@ -82,9 +82,9 @@ namespace mln
 	trace::exiting("mln::io::plot::save");
       }
 
-      template <typename I>
+      template <typename T>
       inline
-      void save(const util::array<I>& arr, const std::string& filename,
+      void save(const util::array<T>& arr, const std::string& filename,
 		int start_value = 0)
       {
 	trace::entering("mln::io::plot::save");

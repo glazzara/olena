@@ -50,8 +50,8 @@ namespace mln
     //
     template <typename L>
     struct count_labels
-      : public mln::accu::internal::base< unsigned , count_labels<L> >,
-	mlc_is_a(L, mln::value::Symbolic)::check_t
+      : public mln::accu::internal::base< unsigned , count_labels<L> >
+    //	mlc_is_a(L, mln::value::Symbolic)::check_t
     {
       typedef L argument;
 

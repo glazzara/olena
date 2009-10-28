@@ -1,5 +1,22 @@
 2009-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* mln/accu/count_labels.hh,
+	* mln/labeling/relabel.hh: Disable preconditions related to
+	Symbolic value types.
+
+	* mln/data/compare.hh: Pass variable with exact type.
+
+	* mln/geom/max_sli.hh,
+	* mln/geom/min_sli.hh: Use geom::bbox.
+
+	* mln/io/plot/save.hh: Rename template parameter.
+
+	* mln/util/set.hh: Reindent header.
+
+2009-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add data::wrap.
 
 	* mln/data/wrap.hh: New.

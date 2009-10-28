@@ -32,6 +32,7 @@
 
 # include <mln/core/concept/image.hh>
 
+# include <mln/geom/bbox.hh>
 
 namespace mln
 {
@@ -53,7 +54,7 @@ namespace mln
       trace::entering("mln::geom::max_sli");
 
       mln_precondition(exact(ima).is_valid());
-      mln_deduce(I, site, coord) maxsli = exact(ima).bbox().pmax().sli();
+      mln_deduce(I, site, coord) maxsli = geom::bbox(ima).pmax().sli();
 
       trace::exiting("mln::geom::max_sli");
       return maxsli;

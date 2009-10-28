@@ -120,7 +120,7 @@ namespace mln
 		    mln_value(I)&	    new_nlabels)
       {
         // FIXME: we may want to check that it is exactly a label.
-        mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
+//        mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
         mln_precondition(exact(label).is_valid());
 	(void) label;
 	(void) new_nlabels;
@@ -134,7 +134,7 @@ namespace mln
 		    const Function<F>&	    f)
       {
         // FIXME: we may want to check that it is exactly a label.
-        mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
+//        mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
         mln_precondition(exact(label).is_valid());
 	(void) label;
 	(void) nlabels;
@@ -149,7 +149,7 @@ namespace mln
 		    const Function<F>&	    f)
       {
         // FIXME: we may want to check that it is exactly a label.
-        mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
+//        mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
         mln_precondition(exact(label).is_valid());
 	(void) label;
 	(void) nlabels;
@@ -164,7 +164,7 @@ namespace mln
 			    const Function<F>&	    f)
       {
         // FIXME: we may want to check that it is exactly a label.
-        mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
+//        mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
         mln_precondition(exact(label).is_valid());
 	(void) label;
 	(void) nlabels;
