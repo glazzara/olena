@@ -1,3 +1,11 @@
+2009-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add data::wrap.
+
+	* mln/data/wrap.hh: New.
+
+	* mln/data/all.hh: Include this new file.
+
 2009-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes.

@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,56 +23,66 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_DATA_ALL_HH
-# define MLN_DATA_ALL_HH
+#ifndef MLN_DATA_WRAP_HH
+# define MLN_DATA_WRAP_HH
 
 /// \file
 ///
-/// File that includes all data-related routines.
+/// \brief Routine to wrap values such as 0 -> 0 and [1, lmax] maps to [1,
+/// Lmax] (using modulus).
+
+
+#include <mln/core/concept/image.hh>
+
+#include <mln/data/transform.hh>
+#include <mln/fun/v2v/wrap.hh>
 
 
 namespace mln
 {
 
-  /// Namespace of image processing routines related to pixel data.
   namespace data
   {
 
-    /// Implementation namespace of data namespace.
-    namespace impl {
+    /*! \brief Routine to wrap values such as 0 -> 0 and [1, lmax] maps to [1,
+               Lmax] (using modulus).
 
-      /// Generic implementation namespace of data namespace.
-      namespace generic {}
+        \param[in] v     The target value type.
+	\param[in] input Input image.
 
+	\return An image with wrapped values.
+    */
+    template <typename V, typename I>
+    mln_ch_value(I, V)
+    wrap(const V& v, const Image<I>& input);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+    template <typename V, typename I>
+    mln_ch_value(I, V)
+    wrap(const V& v, const Image<I>& input_)
+    {
+      trace::entering("mln::data::wrap");
+
+      (void) v;
+      const I& input = exact(input_);
+
+      mln_precondition(input.is_valid());
+
+      mln_ch_value(I, V)
+	output = data::transform(input, fun::v2v::wrap<V>());
+
+      trace::exiting("mln::data::wrap");
+      return output;
     }
-  }
-}
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::data
+
+} // end of namespace mln
 
 
-# include <mln/data/abs.hh>
-# include <mln/data/apply.hh>
-# include <mln/data/approx/all.hh>
-# include <mln/data/compare.hh>
-# include <mln/data/compute.hh>
-# include <mln/data/convert.hh>
-# include <mln/data/fast_median.hh>
-# include <mln/data/fill.hh>
-# include <mln/data/median.hh>
-# include <mln/data/naive/all.hh>
-# include <mln/data/paste.hh>
-# include <mln/data/replace.hh>
-# include <mln/data/saturate.hh>
-# include <mln/data/sort_offsets.hh>
-# include <mln/data/sort_psites.hh>
-# include <mln/data/stretch.hh>
-# include <mln/data/to_enc.hh>
-# include <mln/data/transform.hh>
-# include <mln/data/update.hh>
-//<<lrde
-# include <mln/data/was.median.hh>
-//>>
-# include <mln/data/wrap.hh>
-
-
-
-#endif // ! MLN_DATA_ALL_HH
+#endif // ! MLN_DATA_WRAP_HH
