@@ -32,12 +32,14 @@
 
 #include <mln/core/image/image3d.hh>
 #include <mln/core/image/imorph/labeled_image.hh>
+#include <mln/core/image/dmorph/slice_image.hh>
 #include <mln/core/concept/function.hh>
+
+#include <mln/geom/nslis.hh>
 
 #include <mln/data/wrap.hh>
 #include <mln/data/transform_inplace.hh>
 
-#include <mln/value/int_u16.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/io/ppm/save.hh>
@@ -46,8 +48,11 @@
 #include <mln/literal/colors.hh>
 
 #include <mln/labeling/colorize.hh>
+#include <mln/labeling/relabel.hh>
 
 #include <mln/fun/v2v/wrap.hh>
+
+#include <mln/accu/stat/max.hh>
 
 namespace mln
 {
@@ -57,23 +62,23 @@ namespace mln
 
 //     struct merge_component : Function_v2v<merge_component>
 //     {
-//       typedef value::int_u16 result;
+//       typedef value::int_u8 result;
 
-//       merge_component(const value::int_u16& replaced,
-// 		      const value::int_u16& by)
+//       merge_component(const value::int_u8& replaced,
+// 		      const value::int_u8& by)
 // 	: replaced_(replaced), by_(by)
 //       {
 //       }
 
-//       value::int_u16 operator()(const value::int_u16& v) const
+//       value::int_u8 operator()(const value::int_u8& v) const
 //       {
 // 	if (v == replaced_)
 // 	  return by_;
 // 	return v;
 //       }
 
-//       value::int_u16 replaced_;
-//       value::int_u16 by_;
+//       value::int_u8 replaced_;
+//       value::int_u8 by_;
 //     };
 
 //   } // end of namespace mln::internal
@@ -91,7 +96,7 @@ namespace mln
       setupUi(this);
 
       connect(viewer, SIGNAL(slider_valueChanged(int)),
-	      this, SLOT(compute_image()));
+	      this, SLOT(compute_image(int)));
 
       connect(viewer, SIGNAL(mouse_draw_line(const QPointF&, const QPointF&)),
 	      this, SLOT(join_components(const QPointF&, const QPointF&)));
@@ -102,38 +107,60 @@ namespace mln
 
     edit_seg::~edit_seg()
     {
-
     }
 
 
     void edit_seg::on_browseBtn_clicked(bool)
     {
       QString
-	filename = QFileDialog::getOpenFileName(this,
+	filename = QFileDialog::getOpenFileName(0,
 	  tr("Open Image."),
 	  QString(),
 	  tr("Images (*.dump)"));
 
       if (!filename.isEmpty())
+      {
 	filepath->setText(filename);
 
-      // Initial load.
-      image2d<value::int_u16> tmp;
-      io::dump::load(tmp, filepath->text().toStdString());
-      seg_ = labeled_image<image2d<value::int_u16> >(tmp);
+	// Release memory
+  	seg_.destroy();
+  	seg_rgb8_.destroy();
 
-      selected_.resize(seg_.nlabels(), false);
+	io::dump::load(seg_, filepath->text().toStdString());
 
-      image2d<value::int_u8> tmp2 = data::wrap(value::int_u8(), seg_);
-      seg_rgb8_ = data::convert(value::rgb8(), tmp2);
+	mln_assertion(seg_.is_valid());
 
-      viewer->set_image_layer_count(1);
+	nlabels_ = data::compute(accu::meta::stat::max(), seg_);
+
+	fselected_.resize(nlabels_, false);
+	selected_.clear();
+
+ 	seg_rgb8_ = data::convert(value::rgb8(),
+ 				  data::wrap(value::int_u8(), seg_));
+
+  	viewer->set_image_layer_count(geom::nslis(seg_));
+      }
     }
 
 
-    void edit_seg::compute_image()
+    void edit_seg::compute_image(int sli)
     {
-      QImage ima = to_qimage(seg_rgb8_);
+      current_sli_ = sli;
+
+      slice_image<image3d<value::int_u8> > sl_ima = slice(seg_, sli);
+
+      bboxes_ = labeling::compute(accu::meta::shape::bbox(), sl_ima, nlabels_);
+
+
+      slice_image<image3d<value::rgb8> > sl_ima_rgb = slice(seg_rgb8_, sli);
+      for (unsigned i = 0; i < selected_.nelements(); ++i)
+	if (selected_[i] < bboxes_.nelements()
+	    && bboxes_(selected_[i]).is_valid())
+	  data::fill(((sl_ima_rgb | bboxes_(selected_[i])).rw()
+		      | (pw::value(sl_ima) == pw::cst(selected_[i]))).rw(),
+		     literal::red);
+
+      QImage ima = to_qimage(duplicate(sl_ima_rgb));
       viewer->update_image(ima);
     }
 
@@ -160,42 +187,61 @@ namespace mln
     void edit_seg::on_saveBtn_clicked(bool)
     {
       QString
-	filename = QFileDialog::getOpenFileName(this,
+	filename = QFileDialog::getSaveFileName(this,
 						tr("Save Image."),
 						QString(),
 						tr("Images (*.dump)"));
 
+      if (!filename.isEmpty())
+      {
+	value::int_u8 new_nlabels;
+	image3d<value::int_u8>
+	  out = labeling::relabel(seg_, nlabels_,
+				  new_nlabels, fselected_);
 
-      image2d<value::int_u16>
-	out = data::transform(seg_.unmorph_(), selected_);
+	io::dump::save(out, filename.toStdString());
+      }
 
-      io::dump::save(out, filename.toStdString());
     }
 
 
     void edit_seg::select_component(const QPointF& p)
     {
-      point2d
-	mln_p = point2d(p.y(), p.x());
+      point3d
+	mln_p(current_sli_, p.y(), p.x());
 
-      if (seg_.domain().has(mln_p)
-	  && !selected_(seg_(mln_p))
-	  && seg_(mln_p) != 0) // Not the wsl
-      {
-	selected_(seg_(mln_p)) = true;
-	data::fill((seg_rgb8_ | seg_.subdomain(seg_(mln_p))).rw(),
-		   literal::red);
-      }
-      else
-      {
-	selected_(seg_(mln_p)) = false;
-	value::rgb8
-	  v = convert::to<value::rgb8>(fun::v2v:wrap<value::int_u8>(seg_(mln_p)));
+      slice_image<image3d<value::rgb8> >
+	sl_ima_rgb = slice(seg_rgb8_, current_sli_);
+      slice_image<image3d<value::int_u8> >
+	sl_ima = slice(seg_, current_sli_);
 
-	value::rgb8 v(seg_(mln_p), seg_(mln_p), seg_(mln_p));
-	data::fill((seg_rgb8_ | seg_.subdomain(seg_(mln_p))).rw(), v);
+      if (seg_.domain().has(mln_p))
+      {
+	value::int_u8 v = seg_(mln_p);
+
+	if (!fselected_(v) && v != 0) // Not the wsl
+	{
+	  fselected_(v) = true;
+	  selected_.insert(v);
+	  data::fill(((sl_ima_rgb | bboxes_(v)).rw()
+		      | (pw::value(sl_ima) == pw::cst(v))).rw(),
+		     literal::red);
+	}
+	else
+	{
+	  fselected_(v) = false;
+	  selected_.remove(v);
+
+//	  fun::v2v::wrap<value::int_u8> f;
+//	  value::int_u8 v8 = f(v);
+	  value::rgb8 v_rgb(v, v, v);
+	  data::fill(((sl_ima_rgb | bboxes_(v)).rw()
+		      | (pw::value(sl_ima) == pw::cst(v))).rw(), v_rgb);
+	}
       }
-      compute_image();
+
+      saveBtn->setEnabled(selected_.nelements() > 0);
+      compute_image(current_sli_);
     }
 
 

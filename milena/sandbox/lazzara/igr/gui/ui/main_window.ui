@@ -15,18 +15,23 @@
   <widget class="QWidget" name="centralwidget" >
    <layout class="QGridLayout" name="gridLayout" >
     <item row="0" column="0" >
-     <widget class="QTabWidget" name="tabWidget" >
+     <widget class="QTabWidget" name="display" >
       <property name="currentIndex" >
        <number>0</number>
       </property>
-      <widget class="mln::demo::display_seg" name="Visualization" >
+      <widget class="mln::demo::display" name="display" >
        <attribute name="title" >
-        <string>Visualization</string>
+        <string>Display</string>
        </attribute>
       </widget>
-      <widget class="mln::demo::edit_seg" name="Edition" >
+      <widget class="mln::demo::display_seg" name="displaySeg" >
        <attribute name="title" >
-        <string>Edition</string>
+        <string>Display segmentation</string>
+       </attribute>
+      </widget>
+      <widget class="mln::demo::edit_seg" name="editSeg" >
+       <attribute name="title" >
+        <string>Edit segmentation</string>
        </attribute>
       </widget>
      </widget>
@@ -56,6 +61,12 @@
    <class>mln::demo::edit_seg</class>
    <extends>QWidget</extends>
    <header>src/edit_seg.hh</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>mln::demo::display</class>
+   <extends>QWidget</extends>
+   <header>src/display.hh</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

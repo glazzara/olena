@@ -23,7 +23,7 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_DEMO_SRC_DISPLAY_SEG_HH
+#ifndef MLN_DEMO_SRC_DISPLAY_HH
 
 # include <QDir>
 # include <QTimer>
@@ -31,7 +31,7 @@
 # include <QProcess>
 # include <QtGui>
 # include <QProgressDialog>
-# include <ui_display_seg.h>
+# include <ui_display.h>
 
 # ifndef INCLUDE_MLN_FILES
 #  define MLN_INCLUDE_ONLY
@@ -40,6 +40,7 @@
 # include <mln/core/image/image3d.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/value/int_u8.hh>
+# include <mln/value/int_u16.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/value/hsl.hh>
 
@@ -49,29 +50,24 @@ namespace mln
   namespace demo
   {
 
-    class display_seg : public QWidget, private Ui::DisplaySeg
+    class display : public QWidget, private Ui::Display
     {
       Q_OBJECT
 
       typedef image3d<value::int_u8> dcm_ima_t;
-      typedef image3d<value::int_u8> seg_ima_t;
-      typedef image2d<value::hsl_f> result_t;
 
     public:
-      display_seg(QWidget *parent = 0);
-      ~display_seg();
+      display(QWidget *parent = 0);
+      ~display();
 
 
     private slots:
       void on_browseBtn_clicked(bool);
-      void on_browseSegBtn_clicked(bool);
       void compute_image(int sli);
       void on_loadBtn_clicked(bool);
 
     private: // Members
-
       void setup_result();
-      void load_seg(const QString& filename);
       void load_dicom(const QString& filename);
 
       template <typename I>
@@ -81,9 +77,6 @@ namespace mln
 
     private: // Attributes
       dcm_ima_t dcm_ima;
-      seg_ima_t seg_ima;
-      value::int_u8 nlabels_;
-      result_t result;
 
     };
 
@@ -92,4 +85,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_DEMO_SRC_DISPLAY_SEG_HH
+#endif // ! MLN_DEMO_SRC_DISPLAY_HH

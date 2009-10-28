@@ -39,9 +39,10 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/imorph/labeled_image.hh>
-# include <mln/value/int_u16.hh>
+# include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/util/array.hh>
+# include <mln/util/set.hh>
 
 namespace mln
 {
@@ -61,7 +62,7 @@ namespace mln
     private slots:
       void on_browseBtn_clicked(bool);
       void on_saveBtn_clicked(bool);
-      void compute_image();
+      void compute_image(int sli);
       void join_components(const QPointF& p1, const QPointF& p2);
       void select_component(const QPointF& p);
 
@@ -69,9 +70,15 @@ namespace mln
 
 
     private: // Attributes
-      labeled_image<image2d<value::int_u16> > seg_;
-      image2d<value::rgb8> seg_rgb8_;
-      mln::util::array<bool> selected_;
+      image3d<value::int_u8> seg_;
+      value::int_u8 nlabels_;
+      image3d<value::rgb8> seg_rgb8_;
+      mln::util::array<box2d> bboxes_;
+
+      mln::util::array<bool> fselected_;
+      mln::util::set<value::int_u8> selected_;
+
+      int current_sli_;
     };
 
 

@@ -11,6 +11,6 @@ LIBS += -L/lrde/dev/linux-x86/stable/gdcm/lib -lgdcmCommon -lgdcmDICT -lgdcmDSED
 #CONFIG += debug
 
 # Input
-HEADERS += src/main_window.hh src/image_viewer.hh src/display_seg.hh src/edit_seg.hh src/internal/interactive_scene.hh
-FORMS += ui/main_window.ui ui/image_viewer.ui ui/display_seg.ui ui/edit_seg.ui
+HEADERS += src/main_window.hh src/image_viewer.hh src/display_seg.hh src/edit_seg.hh src/internal/interactive_scene.hh src/display.hh
+FORMS += ui/main_window.ui ui/image_viewer.ui ui/display_seg.ui ui/edit_seg.ui ui/display.ui
 SOURCES += src/main.cc src/main_window.cc src/image_viewer.cc src/widgets.cc src/internal/interactive_scene.cc

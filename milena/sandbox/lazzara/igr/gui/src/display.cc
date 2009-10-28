@@ -28,7 +28,7 @@
 #include <QtGui>
 
 # define INCLUDE_MLN_FILES
-#include <src/display_seg.hh>
+#include <src/display.hh>
 #include <src/image_viewer.hh>
 
 #include <src/to_qimage.hh>
@@ -42,6 +42,7 @@
 #include <mln/value/hsl.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/value/int_u12.hh>
+#include <mln/value/int_u8.hh>
 #include <mln/value/int_u32.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/data/convert.hh>
@@ -60,7 +61,7 @@ namespace mln
   namespace demo
   {
 
-    display_seg::display_seg(QWidget *parent)
+    display::display(QWidget *parent)
       : QWidget(parent)
     {
       setupUi(this);
@@ -69,14 +70,14 @@ namespace mln
 	      this, SLOT(compute_image(int)));
     }
 
-    display_seg::~display_seg()
+    display::~display()
     {
     }
 
 
     // Private slots
 
-    void display_seg::on_browseBtn_clicked(bool)
+    void display::on_browseBtn_clicked(bool)
     {
       QString
 	filename = QFileDialog::getOpenFileName(this,
@@ -88,39 +89,19 @@ namespace mln
 	filepath->setText(filename);
     }
 
-
-    void display_seg::on_browseSegBtn_clicked(bool)
-    {
-      QString
-	filename = QFileDialog::getOpenFileName(this,
-	  tr("Open Image."),
-	  QString(),
-	  tr("Images (*.dump)"));
-
-      if (!filename.isEmpty())
-	segfilepath->setText(filename);
-    }
-
-
-    void display_seg::compute_image(int sli)
+    void display::compute_image(int sli)
     {
       slice_image<dcm_ima_t> sl_ima = slice(dcm_ima, sli);
 
-      mln_piter_(result_t) p(result.domain());
-      for_all(p)
-	result(p).lum() = (sl_ima(p) / static_cast<float>(mln_max(value::int_u8))) * 0.7;
-
-      QImage ima = to_qimage(data::convert(value::rgb8(), result));
+      QImage ima = to_qimage(data::convert(value::rgb8(), sl_ima));
 
       viewer->update_image(ima);
     }
 
 
-    void display_seg::on_loadBtn_clicked(bool)
+    void display::on_loadBtn_clicked(bool)
     {
       load_dicom(filepath->text());
-      load_seg(segfilepath->text());
-      setup_result();
 
       viewer->set_image_layer_count(geom::nslis(dcm_ima));
     }
@@ -129,25 +110,7 @@ namespace mln
 
     // Private members
 
-    void display_seg::setup_result()
-    {
-      slice_image<seg_ima_t> sl_ima = slice(seg_ima, 0);
-      initialize(result, sl_ima);
-      mln_piter_(result_t) p(result.domain());
-      for_all(p)
-      {
-	result(p).hue() = ((sl_ima(p) * 10) % 359) + 1;
-	result(p).sat() = 1;
-      }
-    }
-
-    void display_seg::load_seg(const QString& filename)
-    {
-      io::dump::load(seg_ima, filename.toStdString());
-    }
-
-
-    void display_seg::load_dicom(const QString& filename)
+    void display::load_dicom(const QString& filename)
     {
       image3d<value::int_u12> tmp;
       io::dicom::load(tmp, filename.toStdString());
@@ -156,7 +119,7 @@ namespace mln
 
 
     template <typename I>
-    mln_ch_value(I, value::int_u8) display_seg::to_int_u8(const Image<I>& ima_)
+    mln_ch_value(I, value::int_u8) display::to_int_u8(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.is_valid());
