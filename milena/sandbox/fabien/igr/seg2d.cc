@@ -40,14 +40,14 @@ int main(int argc, char* argv[])
   data::fill(ima_thres, false);
   unsigned threshold_value =  find_threshold_value(ima, c4());
   std::cout << "double threshold value = " << threshold_value << std::endl;
-  data::fill((ima_thres | pw::value(ima) < pw::cst(threshold_value)).rw(), true);
+  data::fill((ima_thres | (pw::value(ima) < pw::cst(threshold_value))).rw(), true);
 
   io::pbm::save(ima_thres, "result_double.pbm");
 
   data::fill(ima_thres, false);
   threshold_value = find_threshold_mean(ima, c4());
   std::cout << " deviation threshold value = " << threshold_value << std::endl;
-  data::fill((ima_thres | pw::value(ima) < pw::cst(threshold_value)).rw(), true);
+  data::fill((ima_thres | (pw::value(ima) < pw::cst(threshold_value))).rw(), true);
 
   io::pbm::save(ima_thres, "result_deviation.pbm");
 

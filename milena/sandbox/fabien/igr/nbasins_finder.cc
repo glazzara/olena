@@ -25,8 +25,6 @@
 #include <mln/morpho/closing/volume.hh>
 #include <mln/morpho/watershed/flooding.hh>
 
-#include <mln/fun/l2l/wrap.hh>
-
 #include <mln/labeling/colorize.hh>
 
 
@@ -72,7 +70,7 @@ int main(int argc, char *argv[])
 
   // Visualization
   std::cout << "    nbasins = " << nbasins << std::endl;
-  //io::dump::save(data::transform(wshed, fun::l2l::wrap<int_u8>()), "result_nbasins.dump");
+  //io::dump::save(data::transform(wshed, fun::v2v::wrap<int_u8>()), "result_nbasins.dump");
   //io::dump::save(data::stretch(int_u8(), wshed), "result_nbasins.dump");
   io::dump::save(labeling::colorize(rgb8(), wshed, nbasins), "result_nbasins.dump");
 

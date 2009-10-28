@@ -1,5 +1,22 @@
 2009-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix compilation issues in IGR's code.
+
+	* sandbox/fabien/igr/Makefile: Add target 'all' and do not use
+	watershed.hh as dependency.
+
+	* sandbox/fabien/igr/fun_labels.cc,
+	* sandbox/fabien/igr/graph.cc,
+	* sandbox/fabien/igr/mean_slices.cc,
+	* sandbox/fabien/igr/nbasins_finder.cc,
+	* sandbox/fabien/igr/seg2d.cc,
+	* sandbox/fabien/igr/seg_vol_irm.hh,
+	* sandbox/fabien/igr/watershed2d.cc,
+	* sandbox/fabien/igr/watershed3d.cc,
+	* sandbox/fabien/igr/wst_edges.cc: Fix compilations issues.
+
+2009-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update IGR's GUI.
 
 	* demo.pro: Include new files.

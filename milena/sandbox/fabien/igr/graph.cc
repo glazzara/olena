@@ -1,64 +1,53 @@
 #include <iostream>
+
+#include <mln/core/alias/dpoint2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/alias/neighb3d.hh>
+#include <mln/core/alias/vec3d.hh>
+#include <mln/core/alias/window2d.hh>
+#include <mln/core/alias/window3d.hh>
+#include <mln/core/image/dmorph/image_if.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
-#include <mln/core/image/dmorph/image_if.hh>
+#include <mln/core/routine/extend.hh>
+#include <mln/core/var.hh>
 
-#include <mln/core/alias/neighb2d.hh>
-#include <mln/core/alias/window2d.hh>
-#include <mln/core/alias/neighb3d.hh>
-#include <mln/core/alias/window3d.hh>
+#include <mln/accu/center.hh>
+#include <mln/accu/compute.hh>
+#include <mln/convert/to_fun.hh>
 
-#include <mln/io/dump/all.hh>
+#include <mln/data/stretch.hh>
+
+#include <mln/debug/draw_graph.hh>
+
+#include <mln/draw/box.hh>
+
+#include <mln/fun/v2v/id.hh>
+
 #include <mln/io/dicom/load.hh>
+#include <mln/io/dump/all.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/ppm/save.hh>
 
-#include <mln/value/int_u8.hh>
-#include <mln/value/int_u12.hh>
-#include <mln/value/label_16.hh>
-#include <mln/value/label_32.hh>
-#include <mln/value/rgb8.hh>
+#include <mln/labeling/colorize.hh>
+#include <mln/labeling/mean_values.hh>
 
-#include <mln/morpho/watershed/flooding.hh>
+#include <mln/make/region_adjacency_graph.hh>
 
 #include <mln/math/diff_abs.hh>
 
-#include <mln/labeling/mean_values.hh>
+#include <mln/morpho/elementary/dilation.hh>
+#include <mln/morpho/watershed/flooding.hh>
 
-#include <mln/convert/to_fun.hh>
-
-#include <mln/make/graph.hh>
 #include <mln/util/graph.hh>
 
-#include <mln/fun/l2l/wrap.hh>
-
-#include <mln/core/var.hh>
-#include <mln/morpho/elementary/dilation.hh>
-
-#include <mln/core/routine/extend.hh>
-
-#include <mln/core/alias/vec3d.hh>
-#include <mln/debug/draw_graph.hh>
-#include <mln/accu/center.hh>
-#include <mln/io/dump/all.hh>
+#include <mln/value/int_u12.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/value/label_16.hh>
+#include <mln/value/label_32.hh>
 #include <mln/value/label_8.hh>
 #include <mln/value/rgb16.hh>
-#include <mln/accu/compute.hh>
-#include <mln/core/alias/dpoint2d.hh>
-#include <mln/draw/box.hh>
-#include <mln/data/stretch.hh>
-#include <mln/fun/v2v/id.hh>
-#include <mln/fun/l2l/wrap.hh>
-#include <mln/core/image/line_graph_elt_neighborhood.hh>
-#include <mln/labeling/mean_values.hh>
-#include <mln/extension/adjust_fill.hh>
-#include <mln/extract/all.hh>
-#include <mln/make/region_adjacency_graph.hh>
-
-#include <mln/labeling/colorize.hh>
-
-
-
+#include <mln/value/rgb8.hh>
 
 // Given a color image and a wshed image, computes the component graph.
 // Vertex values are computed thanks to a RGB image.
@@ -274,7 +263,7 @@ int main(int argc, char *argv[])
     io::dicom::load(dcm, argv[3]);
 
     /// Build graph
-    util::graph g = make::graph(wshed, c4(), nbasins);
+    util::graph g = make::region_adjacency_graph(wshed, c4(), nbasins);
     // Build graph images and compute distance values with a RGB image.
     mln_VAR(ima_v, make_vertex_graph_image(g, dcm, wshed, nbasins));
     mln_VAR(ima_e, make_edge_graph_image(ima_v, g));
@@ -308,7 +297,7 @@ int main(int argc, char *argv[])
     image2d<label_16> wsd2 = data::transform(wshed, f);
 
     /// Reconstruct a graph from the simplified image.
-    util::graph g2 = make::graph(wsd2, c4(), nbasins2);
+    util::graph g2 = make::region_adjacency_graph(wsd2, c4(), nbasins2);
 
     // Compute distance values with a RGB image.
     mln_VAR(ima_v2, make_vertex_graph_image(g2, dcm, wsd2, nbasins2));

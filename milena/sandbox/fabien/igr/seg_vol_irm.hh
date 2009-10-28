@@ -186,7 +186,7 @@ find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
   unsigned result = 0;
 
   // We remove the 0 value because it is not part of the image.
-  histo::array<mln_value(I)> arr_histo = histo::compute(input | pw::value(input) != 0);
+  histo::array<mln_value(I)> arr_histo = histo::compute(input | (pw::value(input) != 0));
   image1d<unsigned> ima_histo;
   convert::from_to(arr_histo, ima_histo);
 
@@ -205,12 +205,12 @@ find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
   {
     if (!low_done && ((ima_histo(point1d(i)) * 100) / max) > bg_thres)
     {
-      data::fill((ima_bg | pw::value(input) < pw::cst(i)).rw(), true);
+      data::fill((ima_bg | (pw::value(input) < pw::cst(i))).rw(), true);
       low_done = true;
     }
     if (!high_done && ((ima_histo(point1d(i)) * 100) / max) > (100 - obj_thres))
     {
-      data::fill((ima_obj | pw::value(input) > pw::cst(i)).rw(), true);
+      data::fill((ima_obj | (pw::value(input) > pw::cst(i))).rw(), true);
       high_done = true;
     }
   }
@@ -246,9 +246,9 @@ find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
   data::fill((ima_obj | (pw::value(obj_labels) != pw::cst(arr_o_big[1]))).rw(), false);*/
 
   // Debug output images
-  mln_ch_value(I, rgb8) out = data::convert(rgb8(), level::stretch(int_u8(), input));
-  data::fill((out | pw::value(morpho::elementary::gradient_internal(ima_bg, nbh)) == true).rw(), literal::red);
-  data::fill((out | pw::value(morpho::elementary::gradient_internal(ima_obj, nbh)) == true).rw(), literal::green);
+  mln_ch_value(I, rgb8) out = data::convert(rgb8(), data::stretch(int_u8(), input));
+  data::fill((out | (pw::value(morpho::elementary::gradient_internal(ima_bg, nbh)) == true)).rw(), literal::red);
+  data::fill((out | (pw::value(morpho::elementary::gradient_internal(ima_obj, nbh)) == true)).rw(), literal::green);
   save_regions_color(out, metal::int_<I::site::dim>());
   if (I::site::dim == 2)
   {
@@ -262,8 +262,8 @@ find_threshold_value(const Image<I>& input, const Neighborhood<N>& nbh)
   }
 
   // Histo
-  histo::array<mln_value(I)> bg_histo = histo::compute(input | pw::value(ima_bg) == true);
-  histo::array<mln_value(I)> obj_histo = histo::compute(input | pw::value(ima_obj) == true);
+  histo::array<mln_value(I)> bg_histo = histo::compute(input | (pw::value(ima_bg) == true));
+  histo::array<mln_value(I)> obj_histo = histo::compute(input | (pw::value(ima_obj) == true));
 
   accu::math::sum<unsigned> sum_accu;
   image1d<unsigned> ima_bg_histo;
@@ -313,13 +313,14 @@ template <typename I, typename N>
 unsigned
 find_threshold_mean(const Image<I>& input, const Neighborhood<N>& nbh)
 {
+  (void) nbh;
   unsigned coef = 1;
 
   accu::stat::mean<unsigned> mean_accu;
   unsigned mean = data::compute(mean_accu, (input | (pw::value(input) != 0)));
 
   accu::stat::deviation<unsigned, unsigned, float> dev_accu(mean);
-  float deviation = data::compute(dev_accu, (input | pw::value(input) != 0));
+  float deviation = data::compute(dev_accu, (input | (pw::value(input) != 0)));
 
   std::cout << "[mean = " << mean  << " | deviation = " << deviation << "]";
   return floor(mean + coef * deviation);

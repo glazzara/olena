@@ -58,7 +58,7 @@
 
 #include "plot_points/int2rgb.hh"
 
-#include <mln/world/inter_pixel/display_region.hh>
+#include <mln/world/inter_pixel/display_edge.hh>
 
 
 using namespace mln;

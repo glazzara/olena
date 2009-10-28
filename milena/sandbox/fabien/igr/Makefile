@@ -1,23 +1,33 @@
 include Makefile.rules
 
+TGT= seg2d seg3d wsd2d wsd3d nbasins \
+     grad clo_vol wst maj graph med \
+     thres matlab time_max time_max_norm \
+     fun_labels mean_slices \
+     crop label2gif min_max_float filter \
+     norm dist_edges wst_edges mean_median_label \
+     filter_morpho_us
+
+all: $(TGT)
+
 seg2d: seg_vol_irm.hh seg2d.cc
 	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} seg2d.cc -o seg2d
 
 seg3d: seg_vol_irm.hh seg3d.cc
 	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} seg3d.cc -o seg3d
 
-wsd2d: watershed.hh watershed2d.cc
+wsd2d: watershed2d.cc
 	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o wsd2d
 
-wsd3d: watershed.hh watershed3d.cc
+wsd3d: watershed3d.cc
 	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o wsd3d
 
 nbasins: nbasins_finder.cc
 	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o nbasins_finder
-	
+
 grad: grad.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o grad
-	
+
 clo_vol: clo_vol.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o clo_vol
 
@@ -26,27 +36,24 @@ wst: wst.cc
 
 maj: maj.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o maj
-	
+
 graph: graph.cc
 	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} $^ -o graph
-	
+
 med: med.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o med
-	
+
 thres: thres.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o thres
-	
+
 matlab: matlab.cc
 	${CXX} -I../../../ ${DICOM} ${CXXFLAGS} -lm $^ -o matlab
-	
+
 time_max: time_max.cc
 	${CXX} -I../../../ ${DICOM} ${MAGICK} ${CXXFLAGS} -lm $^ -o time_max
-	
+
 time_max_norm: time_max_norm.cc
 	${CXX} -I../../../ ${CXXFLAGS} -lm $^ -o time_max_norm
-	
-first_slice_dicom: first_slice_dicom.cc
-	${CXX} -I../../../ ${DICOM} ${MAGICK} ${CXXFLAGS} -lm $^ -o first_slice_dicom
 
 fun_labels: fun_labels.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o fun_labels
@@ -73,7 +80,7 @@ norm: norm.cc
 
 dist_edges: dist_edges.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o dist_edges
-	
+
 wst_edges: wst_edges.cc
 	${CXX} -I../../../ ${CXXFLAGS} $^ -o wst_edges
 

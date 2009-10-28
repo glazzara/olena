@@ -133,7 +133,7 @@ void plot_all_labels(Image<I>& ima, Image<L>& ima_labels, unsigned nlabels)
 
 template <typename L>
 inline
-void save_label_plot(int count, const char* desc, L prev_lbl, util::array<float> arr, int start)
+void save_label_plot(int count, const char* desc, L prev_lbl, const util::array<float>& arr, int start)
 {
   std::ostringstream slabel;
   if (count < 10)

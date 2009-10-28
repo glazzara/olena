@@ -25,7 +25,7 @@
 
 #include <mln/accu/stat/mean.hh>
 #include <mln/accu/stat/median_h.hh>
-#include <mln/labeling/relabel.hh>
+#include <mln/labeling/pack.hh>
 #include <mln/labeling/mean_values.hh>
 #include <mln/data/compute.hh>
 #include <mln/make/image3d.hh>
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
   {
     image2d<int_u12> sli = duplicate(slice(ima, i));
     image2d<L> sli_labels = duplicate(slice(ima_labels, i));
-    image2d<L> labels = labeling::relabel(sli_labels, nlabels);
+    image2d<L> labels = labeling::pack(sli_labels, nlabels);
     mln_VAR(mean_slice, labeling::mean_values(sli, labels, nlabels));
     arr.append(mean_slice);
   }
