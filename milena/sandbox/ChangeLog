@@ -1,3 +1,34 @@
+2009-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a GUI for IGR.
+
+	* Makefile.am,
+	* demo.pro,
+	* src/bak/mainwindow.cc,
+	* src/bak/mainwindow.hh,
+	* src/display_seg.cc,
+	* src/display_seg.hh,
+	* src/edit_seg.cc,
+	* src/edit_seg.hh,
+	* src/image_viewer.cc,
+	* src/image_viewer.hh,
+	* src/internal/interactive_scene.cc,
+	* src/internal/interactive_scene.hh,
+	* src/main.cc,
+	* src/main_window.cc,
+	* src/main_window.hh,
+	* src/to_qimage.hh,
+	* src/widgets.cc,
+	* ui/bak/mainwindow.ui,
+	* ui/display_seg.ui,
+	* ui/edit_seg.ui,
+	* ui/image_viewer.ui,
+	* ui/main_window.ui,
+	* ui_display_seg.h,
+	* ui_edit_seg.h,
+	* ui_image_viewer.h,
+	* ui_main_window.h: New files.
+
 2009-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* lazzara/fonctionnalites_milena.ods: Add a document listing
