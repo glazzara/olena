@@ -655,38 +655,36 @@ namespace mln
 	      deja_vu(p) = true;
 	    }
 	  }
-
 	  
-	  	// Sequence---Forth.
-	  	{
-	  	  data::fill(deja_vu, false);
-	  	  mln_fwd_piter(I) p(f.domain());
-	  	  mln_niter(N) n(nbh, p);
-	  	  for_all(p)
-	  	  {
-	  	    if (g(p) && ! output(p))
-	  	      {
-	  		for_all(n)
-	  		  if (f.domain().has(n) && deja_vu(n) // N+
-	  		      && g(n) && output(n))
-	  		    {
-	  		      output(p) = true;
-	  		      break;
-	  		    }
-	  	      }
-	  	    if (output(p))
-	  	      {
-	  		for_all(n)
-	  		  if (f.domain().has(n) && deja_vu(n) // N+
-	  		      && output(n) == false && g(n) == true)
-	  		    {
-	  		      q.push(p);
-	  		      break;
-	  		    }
-	  	      }
-	  	  }
-	  	}
-
+	  // Sequence---Forth.
+	  {
+	    data::fill(deja_vu, false);
+	    mln_fwd_piter(I) p(f.domain());
+	    mln_niter(N) n(nbh, p);
+	    for_all(p)
+	    {
+	      if (g(p) && ! output(p))
+		{
+		  for_all(n)
+		    if (f.domain().has(n) && deja_vu(n) // N+
+			&& g(n) && output(n))
+		      {
+			output(p) = true;
+			break;
+		      }
+		}
+	      if (output(p))
+		{
+		  for_all(n)
+		    if (f.domain().has(n) && deja_vu(n) // N+
+			&& output(n) == false && g(n) == true)
+		      {
+			q.push(p);
+			break;
+		      }
+		}
+	    }
+	  }
 
 	  // Propagation.
 	  {
