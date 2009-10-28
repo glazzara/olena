@@ -1,3 +1,14 @@
+2009-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Revamp Sauvola binarization.
+
+	* binarization/sauvola.hh: Revamp and now returns a threshold
+	image. Move parts...
+
+	* binarization/sauvola_threshold.hh: ... here. New file.
+
+	* binarization/binarize.hh: New routine.
+
 2009-10-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	* headers.mk, tests/unit_test/unit-tests.mk: Regen.
