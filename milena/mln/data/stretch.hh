@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -79,7 +80,7 @@ namespace mln
       template <typename V, typename I>
       inline
       mln_ch_value(I, V)
-      stretch(const V& v, const Image<I>& input)
+	stretch(const V& v, const Image<I>& input)
       {
 	trace::entering("data::impl::stretch");
 
@@ -91,25 +92,25 @@ namespace mln
 	mln_value(I) min_, max_;
 	estim::min_max(input, min_, max_);
 	if (max_ != min_)
-	  {
-	    //FIXME: we would like to use float instead of double but we
-	    //can't for precision reasons. See ticket #179.
-	    double
-	      min = double(min_),
-	      max = double(max_),
-	      epsilon = mln_epsilon(float),
-	      M = mln_max(V) + 0.5f - epsilon,
-	      m = 0.0f - 0.5f + epsilon,
-	      a = (M - m) / (max - min),
-	      b = (m * max - M * min) / (max - min);
-	    fun::v2v::linear_sat<mln_value(I), double, V> f(a, b);
-	    output = data::transform(input, f);
-	  }
+	{
+	  //FIXME: we would like to use float instead of double but we
+	  //can't for precision reasons. See ticket #179.
+	  double
+	    min = double(min_),
+	    max = double(max_),
+	    epsilon = mln_epsilon(float),
+	    M = mln_max(V) + 0.5f - epsilon,
+	    m = 0.0f - 0.5f + epsilon,
+	    a = (M - m) / (max - min),
+	    b = (m * max - M * min) / (max - min);
+	  fun::v2v::linear_sat<mln_value(I), double, V> f(a, b);
+	  output = data::transform(input, f);
+	}
 	else
-	  {
-	    initialize(output, input);
-	    trace::warning("output has no significative data!");
-	  }
+	{
+	  initialize(output, input);
+	  trace::warning("output has no significative data!");
+	}
 
 	trace::exiting("data::impl::stretch");
 	return output;

@@ -45,18 +45,17 @@ namespace mln
     /*!
     ** The file name is formatted as follow:
     **
-    ** `filename_prefix`_`id`_`filename`_`postfix_id`
+    ** `filename_prefix`_`id`_`filename`
     **
     ** Where:
     **  - `filename_prefix` can be set through the global variable
     **  debug::internal::filename_prefix.
-    **  - `id` is auto-incremented and cannot be controlled.
+    ** - `postfix_id` is autoincremented by default. Its value can be
+         forced.
     **  - `filename` is the given filename
-    **  - `postfix_id` is an optional counter which can be controlled contrary
-    **  to `id`.
     */
     std::string
-    filename(const std::string& filename, int postfix_id);
+    filename(const std::string& filename, int id);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -66,7 +65,7 @@ namespace mln
 
       std::string filename_prefix = "";
 
-    } // end of namespace scribo::make::internal
+    } // end of namespace mln::debug::internal
 
 
     inline
@@ -80,7 +79,7 @@ namespace mln
       if (! internal::filename_prefix.empty())
 	os << internal::filename_prefix << "_";
 
-      if (id >= 0)
+      if (id == -1)
       {
 	if (file_id < 10)
 	  os << "0";
@@ -90,7 +89,7 @@ namespace mln
 	os << file_id++;
       }
       else
-	os << "_" << id;
+	os << id;
 
       os << "_"
 	 << filename;

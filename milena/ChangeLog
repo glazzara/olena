@@ -1,3 +1,18 @@
+2009-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* milena/mln/data/paste.spe.hh,
+	* milena/mln/data/stretch.hh,
+	* milena/mln/fun/x2v/bilinear.hh,
+	* milena/mln/morpho/erosion.hh,
+	* milena/mln/value/mixin.hh: Fix layout.
+
+	* milena/mln/debug/filename.hh: Update doc.
+
+	* milena/mln/subsampling/subsampling.hh: Fix invalid min rows and
+	cols.
+
 2009-10-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Regen Makefile helpers.

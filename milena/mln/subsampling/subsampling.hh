@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -66,8 +67,10 @@ namespace mln
         mln_concrete(image2d<T>) output(geom::nrows(input) / gap,
                                geom::ncols(input) / gap);
 
-        for (unsigned j = 0; j < geom::ncols(output); ++j)
-          for (unsigned i = 0; i < geom::nrows(output); ++i)
+        for (def::coord j = geom::min_col(output);
+	     j <= geom::max_col(output); ++j)
+          for (def::coord i = geom::min_row(output);
+	       i <= geom::max_row(output); ++i)
             {
               point2d p1(i, j);
               point2d p2(first_p[0] + i * gap, first_p[1] + j * gap);
