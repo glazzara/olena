@@ -1,5 +1,14 @@
 2009-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new debug routines.
+
+	* debug/alignment_decision_image.hh,
+	* debug/links_decision_image.hh,
+	* debug/save_object_diff.hh,
+	* debug/several_links_decision_image.hh: New.
+
+2009-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Revamp Sauvola binarization.
 
 	* binarization/sauvola.hh: Revamp and now returns a threshold
