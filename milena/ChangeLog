@@ -1,5 +1,17 @@
 2009-10-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add ISMM 2009 input images and generate outputs.
+
+	* apps/papers/levillain.09.ismm/Makefile.am (data_DATA):
+	New variable.
+	(lena-s.ppm, graph-s.png, graph-s.neato, m283-s.off):
+	New targets.
+	* apps/papers/levillain.09.ismm/seeds.pgm,
+	* apps/papers/levillain.09.ismm/m283-c.off:
+	New (imported).
+
+2009-10-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Import the code of the illustrations of the ISMM 2009 paper.
 
 	* apps/papers/,

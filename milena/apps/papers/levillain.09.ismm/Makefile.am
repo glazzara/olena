@@ -28,3 +28,21 @@ noinst_PROGRAMS = image2d graph complex
 image2d_SOURCES = image2d.cc
 graph_SOURCES = graph.cc
 complex_SOURCES = complex.cc
+
+# Input images.
+# FIXME: Move them to milena/img/?
+data_DATA = seeds.pgm m283-c.off
+
+# Output images.
+data_DATA += lena-s.ppm graph-s.png m283-s.off
+
+lena-s.ppm: $(top_srcdir)/milena/img/lena.pgm image2d$(EXEEXT)
+	./image2d$(EXEEXT) $< 1000 $@
+
+graph-s.png: graph-s.neato
+	neato -Tpng $< >$@
+graph-s.neato: seeds.pgm graph$(EXEEXT)
+	./graph$(EXEEXT) $< 2 $@
+
+m283-s.off: m283-c.off complex$(EXEEXT)
+	./complex$(EXEEXT) $< 100 $@
