@@ -1,3 +1,10 @@
+2009-10-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Configure Makefiles under milena/apps/papers/.
+
+	* configure.ac: Configure milena/apps/papers/Makefile and
+	milena/apps/papers/levillain.09.ismm/Makefile.
+
 2009-10-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	* AUTHORS: Update.
