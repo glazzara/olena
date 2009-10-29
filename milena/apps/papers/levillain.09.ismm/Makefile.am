@@ -13,10 +13,18 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
 
-# Applied examples of Milena.
-SUBDIRS = mesh-segm-skel graph-morpho constrained-connectivity
+# Illustrations from the ISMM 2009 paper.
 
-# Examples from papers.
-SUBDIRS += papers
+# Find Milena headers.
+AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
+# Produce fast code.
+APPS_CXXFLAGS = @APPS_CXXFLAGS@
+AM_CXXFLAGS = $(APPS_CXXFLAGS)
+
+noinst_HEADERS = chain.hh
+
+noinst_PROGRAMS = image2d graph complex
+image2d_SOURCES = image2d.cc
+graph_SOURCES = graph.cc
+complex_SOURCES = complex.cc

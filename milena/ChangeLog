@@ -1,3 +1,21 @@
+2009-10-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Import the code of the illustrations of the ISMM 2009 paper.
+
+	* apps/papers/,
+	* apps/papers/levillain.09.ismm/:
+	New directories.
+	* apps/papers/levillain.09.ismm/chain.hh,
+	* apps/papers/levillain.09.ismm/complex.cc,
+	* apps/papers/levillain.09.ismm/graph.cc,
+	* apps/papers/levillain.09.ismm/image2d.cc:
+	New (imported from ISMM 2009).
+	Adjust.
+	* apps/Makefile.am (SUBDIRS): Add papers.
+	* apps/papers/Makefile.am,
+	* apps/papers/levillain.09.ismm/Makefile.am:
+	New.
+
 2009-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes.

@@ -13,10 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
-
-# Applied examples of Milena.
-SUBDIRS = mesh-segm-skel graph-morpho constrained-connectivity
 
 # Examples from papers.
-SUBDIRS += papers
+
+SUBDIRS = levillain.09.ismm
