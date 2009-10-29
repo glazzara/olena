@@ -61,6 +61,13 @@ libdyn_la_SOURCES =				\
   ruby_stream.hh ruby_stream.cc			\
   ansidecl.h demangle.h config.hh
 
+# Provide a dummy `environ' symbol expected by libiberty (from the
+# MacPorts), but missing on Mac OS X.  This is just a workaround.  We
+# should file a problem report to the MacPorts about this.
+if DARWIN
+  libdyn_la_SOURCES += libiberty-fix.c
+endif DARWIN
+
 libdyn_la_LIBADD = @RUBY_LIBRUBYARG_SHARED@ $(LIBLTDL) \
   $(top_builddir)/libmd5/libmd5.la $(BOOST_FILESYSTEM_LIBS)
 libdyn_la_DEPENDENCIES = $(LTDLDEPS)

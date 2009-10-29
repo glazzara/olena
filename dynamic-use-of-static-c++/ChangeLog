@@ -1,5 +1,14 @@
 2009-10-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix issues w.r.t. MacPorts' libiberty to have Python bindings work.
+
+	* configure.ac (DARWIN): New conditional.
+	* src/libiberty-fix.c: New.
+	* src/Makefile.am (libdyn_la_SOURCES) [DARWIN]: Add
+	libiberty-fix.c.
+
+2009-10-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Provide some Python bindings over dyn using SWIG.
 
 	* Makefile.am (SUBDIRS): Add swig.
