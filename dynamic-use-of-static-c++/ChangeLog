@@ -303,7 +303,7 @@
 	Disable the ruby segv handler.
 
 	* src/function_loader.cc: Ignore segv cause the system handle it
-      normally.
+	normally.
 
 2005-12-06  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
@@ -561,7 +561,7 @@
 	Revert the previous patch.
 
 	* src/data.erb.hxx, src/data.erb.hh: Restore this useful piece
-      of code.
+	of code.
 
 2005-11-25  Nicolas Pouillard  <ertai@lrde.epita.fr>
 
