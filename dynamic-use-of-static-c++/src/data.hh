@@ -338,6 +338,9 @@ namespace dyn {
 
     data() : proxy_(nil_proxy) {}
 
+    /* FIXME: What's the purpose of the second argument?  I (Roland)
+       presume it serve as a desambiguition mechanism w.r.t to ctors
+       `data<T>(T&)' and `data<T>(const T&)'.  If so, document it.  */
     data(abstract_data* proxy, proxy_tag*) : all_methods(), proxy_(proxy) {}
 
     template <class T>

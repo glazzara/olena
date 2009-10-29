@@ -102,34 +102,64 @@ DYN_LIBIBERTY
 BOOST_FILESYSTEM
 BOOST_STRING_ALGO
 
-dnl  ## ------ ##
-dnl  ## Swig.  ##
-dnl  ## ------ ##
+## ------ ##
+## Swig.  ##
+## ------ ##
 
-dnl  AC_ARG_WITH([swig],
-            dnl  [AC_HELP_STRING([--with-swig],
-                            dnl  [require Swig modules (defaults to auto)])],
-            dnl  [],
-            dnl  [with_swig=auto])
+# FIXME: Unify the Autoconf machinery w.r.t. SWIG and Python with Olena's.
 
-dnl  if test x$with_swig != xno; then
-  dnl  has_swig=yes
+AC_ARG_WITH([swig],
+            [AC_HELP_STRING([--with-swig],
+                            [require Swig modules (defaults to auto)])],
+            [],
+            [with_swig=auto])
 
-  dnl  # Check for python and swig
+if test x$with_swig != xno; then
+  has_swig=yes
 
-  dnl  AC_PROG_SWIG([1.3.24])
-  dnl  if (eval "$SWIG -version") >/dev/null 2>&1; then :; else
-    dnl  has_swig=no
-  dnl  fi
+  # Check for Python.
+  AM_PATH_PYTHON([2.5])
+  adl_CHECK_PYTHON
 
-  dnl  case $with_swig:$has_swig in
-    dnl  yes:no)
-      dnl  AC_MSG_ERROR([SWIG 1.3.24 is required.
-                    dnl  Use `--without-swig' to disable SWIG modules.]);;
-  dnl  esac
-dnl  fi
+  # Check for Python and SWIG.
+  save_CPPFLAGS=$CPPFLAGS
+  CPPFLAGS="$CPPFLAGS -I$PYTHONINC"
+  AC_CHECK_HEADERS([Python.h],
+		   [python_headers=yes],
+	           [python_headers=no])
 
-dnl  AC_MSG_RESULT([$has_swig])
+  if test x$python_headers = xno; then
+    oln_has_swig=no
+    if test x$with_swig = xyes; then
+      AC_MSG_ERROR(
+	  [Python.h is required to build SWIG modules.
+	  Add `-I python_include_path' to `CPPFLAGS'
+	  or `--without-swig' to disable SWIG modules.])
+    fi
+  fi
+
+  CPPFLAGS=$save_CPPFLAGS
+
+  AC_PROG_SWIG([1.3.36])
+  if (eval "$SWIG -version") >/dev/null 2>&1; then :; else
+    has_swig=no
+  fi
+
+  case $with_swig:$has_swig in
+    yes:no)
+      AC_MSG_ERROR([SWIG 1.3.36 is required.
+                    Use `--without-swig' to disable SWIG modules.]);;
+  esac
+fi
+
+AC_MSG_RESULT([$has_swig])
+
+AC_CONFIG_FILES([swig/Makefile
+		 swig/python/Makefile])
+
+AC_CONFIG_FILES([swig/run], [chmod +x swig/run])
+
+
 
 # FIXME: Doesn't Autoconf provide something like abs_top_srcdir?
 my_abs_srcdir=`cd $srcdir && pwd`

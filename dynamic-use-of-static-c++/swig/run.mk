@@ -1,4 +1,4 @@
-# Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -14,8 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = libltdl libmd5 bin src config data test swig
+# A test/script wrapper.
 
-ACLOCAL_AMFLAGS = -I config -I libltdl
-
-EXTRA_DIST = bootstrap
+RUN = $(top_builddir)/swig/run
+RUN_IN = $(top_srcdir)/swig/run.in
+$(RUN): $(RUN_IN)
+	cd $(top_builddir)/swig && $(MAKE) $(AM_MAKEFLAGS) run

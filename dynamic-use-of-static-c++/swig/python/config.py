@@ -1,4 +1,6 @@
-# Copyright (C) 2005, 2009 EPITA Research and Development Laboratory (LRDE).
+#! /usr/bin/env python
+
+# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -14,8 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = libltdl libmd5 bin src config data test swig
+# \file 
+# \brief Configuration values of the package.
 
-ACLOCAL_AMFLAGS = -I config -I libltdl
+# FIXME: We might want to turn this into a config.py.in file and
+# generate it instead of getting variables from the environment.
 
-EXTRA_DIST = bootstrap
+import os
+
+abs_top_srcdir = os.environ["abs_top_srcdir"]
+abs_milena_dir = os.path.join(abs_top_srcdir, "..", "milena")

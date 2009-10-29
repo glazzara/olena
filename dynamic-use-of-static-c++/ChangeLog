@@ -1,3 +1,26 @@
+2009-10-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Provide some Python bindings over dyn using SWIG.
+
+	* Makefile.am (SUBDIRS): Add swig.
+	* config/pypath.m4: New symlink to ../../m4/pypath.m4.
+	* config/swig.m4: New symlink to ../../m4/swig.m4.
+	* configure.ac: Re-enable and update the configuration of SWIG and
+	Python.
+	* swig/,
+	* swig/python/:
+	New directories.
+	* swig/dyn.i,
+	* swig/run.mk,
+	* swig/Makefile.am,
+	* swig/python/config.py,
+	* swig/python/milena.py,
+	* swig/python/Makefile.am:
+	New.
+	* swig/run.in: New symlink to ../../swilena/run.in.
+	* swig/python/ltihooks.py: New symlink to
+	../../../swilena/python/ltihooks.py.
+
 2009-10-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have configure find libiberty and stop depending on compiled libaries.
