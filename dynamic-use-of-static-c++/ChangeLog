@@ -1,3 +1,18 @@
+2009-10-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing copyright headers to configure.ac and Makefile.am's.
+
+	* configure.ac,
+	* Makefile.am,
+	* bin/Makefile.am,
+	* config/Makefile.am,
+	* data/Makefile.am,
+	* libmd5/Makefile.am,
+	* src/Makefile.am,
+	* test/Makefile.am,
+	* test/vaucanson/Makefile.am:
+	Here.
+
 2009-10-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Send dyn patches to the olena-patches mailing list.
