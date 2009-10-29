@@ -61,7 +61,7 @@ libdyn_la_SOURCES =				\
   ruby_stream.hh ruby_stream.cc			\
   ansidecl.h demangle.h config.hh
 
-libdyn_la_LIBADD = @LIBERTYARG@ @RUBY_LIBRUBYARG_SHARED@ $(LIBLTDL) \
+libdyn_la_LIBADD = @RUBY_LIBRUBYARG_SHARED@ $(LIBLTDL) \
   $(top_builddir)/libmd5/libmd5.la $(BOOST_FILESYSTEM_LIBS)
 libdyn_la_DEPENDENCIES = $(LTDLDEPS)
 

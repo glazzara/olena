@@ -89,6 +89,12 @@ AC_PROG_LIBTOOL
 AC_SUBST(INCLTDL)
 AC_SUBST(LIBLTDL)
 
+## ----------- ##
+## Libiberty.  ##
+## ----------- ##
+
+DYN_LIBIBERTY
+
 ## ------ ##
 ## Boost. ##
 ## ------ ##
@@ -139,10 +145,6 @@ AC_SUBST([DYN_FIXTURES], [$my_abs_srcdir/test/fixtures])
 
 # Absolute path to Milena.
 AC_SUBST([MILENA_DIR], [$my_abs_srcdir/../milena])
-
-AC_SUBST([LIBERTYARG],
-         $my_abs_srcdir/$(ERB([lib/libiberty-<%= RUBY_PLATFORM %>.la])))
-
 
 ## ------------------- ##
 ## Ruby Configuration. ##

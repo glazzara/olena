@@ -1,5 +1,28 @@
 2009-10-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have configure find libiberty and stop depending on compiled libaries.
+
+	* config/libiberty.m4: New.
+	* configure.ac (LIBERTYARG): Remove this (substituted) variable.
+	* src/Makefile.am (libdyn_la_LIBADD): Remove @LIBERTYARG@.
+	* lib/FIXME: Remove.
+	* lib/libiberty-i486-linux.la,
+	* lib/libiberty-i686-darwin9.la,
+	* lib/libiberty-powerpc-darwin.la,
+	* lib/libiberty-powerpc-darwin8.3.0.la,
+	* lib/libiberty-universal-darwin9.0.la:
+	Remove Libtool archives.
+	* lib/.libs/libiberty-i486-linux.a,
+	* lib/.libs/libiberty-i686-darwin9.a,
+	* lib/.libs/libiberty-powerpc-darwin.a,
+	* lib/.libs/libiberty-universal-darwin9.0.a:
+	Remove binary (compiled) libraries.
+	* lib/.libs/,
+	* lib/:
+	Remove directories.
+
+2009-10-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add missing copyright headers to configure.ac and Makefile.am's.
 
 	* configure.ac,

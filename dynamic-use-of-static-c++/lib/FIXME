@@ -1,3 +1,0 @@
-FIXME: Binaries should not be hosted on the repository.  Remove all
-`.a' and `.la' files in lib/ and have configure find a suitable
-libiberty instead of providing binary versions of it.
