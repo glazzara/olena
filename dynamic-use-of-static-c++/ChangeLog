@@ -1,3 +1,17 @@
+2009-10-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplify the construction of dyn.data objects in SWIG wrappers.
+
+	* swig/dyn.i (make_data_by_cpy): Remove inlined wrapper.
+	(generate_data_ctor)
+	(generate_data_ctor_val)
+	(generate_data_ctor_ref):
+	New macros.
+	Use them to generate dyn::data ctors using a proxy-by-value for
+	`int' and `std::string'.
+	* swig/python/milena.py: Adjust: use dyn.data directly instead of
+	helpers dyn.integer and dyn.string.
+
 2009-10-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix issues w.r.t. MacPorts' libiberty to have Python bindings work.

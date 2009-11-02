@@ -41,11 +41,11 @@ println = dyn.fun("mln::debug::println")
 #
 # but we just can't.  `mk_image2d_int' only accept `dyn.data' as
 # arguments, so we have to encapsulate integers in `dyn.data' objects
-# using `dyn.integer' (likewise for strings with `dyn.string').
+# (likewise for strings).
 
-ima = mk_image2d_int(dyn.integer(3), dyn.integer(3))
+ima = mk_image2d_int(dyn.data(3), dyn.data(3))
 
-fill(ima, dyn.integer(0))
-println(dyn.string("ima (before) ="), ima)
+fill(ima, dyn.data(0))
+println(dyn.data("ima (before) ="), ima)
 iota(ima)
-println(dyn.string("ima (after) ="), ima)
+println(dyn.data("ima (after) ="), ima)

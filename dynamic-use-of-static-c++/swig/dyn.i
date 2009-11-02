@@ -35,7 +35,7 @@
 #include "dyn-all.hh"
 %}
 
-// Ignore global objects causing trouble.
+// Ignore global objects causing trouble to swig.
 %ignore dyn::logger;
 %ignore dyn::internal::operator_push;
 %ignore dyn::internal::operator_pop;
@@ -49,29 +49,48 @@
 
 %include "dyn-all.hh";
 
-%inline %{
-  /* The natural, single-argument ctors of dyn::data manipulate the
-     encapulsated by reference, which is wrong when these data are of
-     builtin types of the target language (e.g., Pythons' `int's),
-     because we have no control on them and they can vanish at any
-     moment.
+/*---------------.
+| Construction.  |
+`---------------*/
+
+/* The natural, single-argument ctors of dyn::data manipulate the
+   encapsulated member by reference, which is wrong when these data
+   are of builtin types of the target language (e.g., Pythons'
+   `int's), because we have no control on them and they can vanish at
+   any moment.
     
-     To prevent this, provide construction helpers creating dyn::data
-     objects manipulating data by value (copy).  */
-  template <typename T>
-  dyn::data make_data_by_cpy(T i)
+   To prevent this, provide constructors helpers creating dyn::data
+   objects manipulating data by value (copy).  */
+%define generate_data_ctor(Arg, Type)
+%extend dyn::data
+{
+  data(Arg v)
   {
     dyn::proxy_tag* dummy = 0;
     // This dummy pointer passed as second argument is required to
     // call the right ctor.
-    dyn::data d(new dyn::data_proxy_by_cpy<T>(i), dummy);
-    return d;
+    return new dyn::data(new dyn::data_proxy_by_cpy< Type >(v), dummy);
   }
-%}
+}
+%enddef // !generate_data_ctor
 
-// Instantiate make_data_by_cpy ctors for some types.
-%template(integer) make_data_by_cpy<int>;
-%template(string)  make_data_by_cpy<std::string>;
+// Shortcut to generate a ctor taking its argument by value (copy).
+%define generate_data_ctor_val(Type)
+generate_data_ctor(Type, Type)
+%enddef
+
+// Shortcut to generate a ctor taking its argument by (const) reference.
+%define generate_data_ctor_ref(Type)
+generate_data_ctor(const Type &, Type)
+%enddef
+
+// Generate dyn::data ctors using a proxy-by-value for classic types.
+generate_data_ctor_val(int)
+generate_data_ctor_ref(std::string)
+
+/*--------------.
+| Conversions.  |
+`--------------*/
 
 // Instantiate dyn::data explicit conversion routines for some types.
 %extend dyn::data
