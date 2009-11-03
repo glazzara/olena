@@ -40,6 +40,27 @@ namespace dyn
   namespace mln
   {
 
+    /*-----------------.
+    | Initialization.  |
+    `-----------------*/
+
+    /* FIXME: This is not really elegant, but this is a lot safer than
+       the previous approach relying on the (implementation-defined)
+       order of initialization of global objects' ctors.  We can
+       probably improve this by reworking dyn::function_loader.  See
+       also hints and advice from
+       http://en.allexperts.com/q/C-1040/Constructors-Global-Object.htm.  */
+
+    // This function *must* be called prior to any call to the wrapped
+    // routines below in order to find the headers of the functions
+    // they wrap.
+    void initialize();
+
+
+    /*-------------------------.
+    | A few wrapped routines.  |
+    `-------------------------*/
+
     extern dyn::language::ctor mk_image2d_int;
 
     extern dyn::language::fun fill;

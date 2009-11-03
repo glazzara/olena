@@ -30,6 +30,8 @@
 
 int main()
 {
+  dyn::mln::initialize();
+
   dyn::language::var ima = dyn::mln::mk_image2d_int(3, 3);
   dyn::mln::fill(ima, 0);
   dyn::mln::println("ima (before) =", ima);

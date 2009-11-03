@@ -1,5 +1,16 @@
 2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make the initialization of Milena wrappers deterministic.
+
+	* src/wrappers/milena.cc (dyn::mln::init_type): Remove class.
+	Replace it by...
+	* src/wrappers/milena.hh, src/wrappers/milena.cc
+	(dyn::mln::initialize): ...this (new) function.
+	* test/wrappers/test-milena.cc (main): Call dyn::mln::initialize()
+	before calling wrappers.
+
+2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Help Mac OS X's Mach-O dynamic linker (dyld) find libdynmilena.
 
 	* swig/run.in: Remove symlink, and replace it by an actual copy of

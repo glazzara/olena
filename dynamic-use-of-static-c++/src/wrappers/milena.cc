@@ -41,32 +41,14 @@ namespace dyn
     | Initialization.  |
     `-----------------*/
 
-    /* This initialization relies on ctors of the fact that
-       constructors of global objects called before `main', or more
-       precisely:
-
-         [...] the constructor of a global object is called either
-	 before the first statement of main or may be deferred until
-	 after the first statement of main but before the first use of
-	 any object or function in the same translation unit as the
-	 global object is defined in.
-
-       according to this page:
-       http://en.allexperts.com/q/C-1040/Constructors-Global-Object.htm.  */
-
-    struct init_type
+    void initialize()
     {
-      init_type()
-      {
-	dyn::include_dir(MILENA_DIR);
-	dyn::include("mln/core/image/image2d.hh");
-	dyn::include("mln/data/fill.hh");
-	dyn::include("mln/debug/iota.hh");
-	dyn::include("mln/debug/println.hh");
-	}
-    };
-
-    init_type init;
+      dyn::include_dir(MILENA_DIR);
+      dyn::include("mln/core/image/image2d.hh");
+      dyn::include("mln/data/fill.hh");
+      dyn::include("mln/debug/iota.hh");
+      dyn::include("mln/debug/println.hh");
+    }
 
 
     /*-------------------------.
