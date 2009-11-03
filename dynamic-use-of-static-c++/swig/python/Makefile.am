@@ -26,12 +26,15 @@
 CLEANFILES =
 AM_CPPFLAGS = -I$(PYTHONINC) -I$(top_builddir)/src -I$(top_srcdir)/src
 ## FIXME: Define an equivalent to Olena's TOOLS_CXXFLAGS?
-## TOOLS_CXXFLAGS = @TOOLS_CXXFLAGS@
-## AM_CXXFLAGS = $(TOOLS_CXXFLAGS)
+##TOOLS_CXXFLAGS = @TOOLS_CXXFLAGS@
+##AM_CXXFLAGS = $(TOOLS_CXXFLAGS)
+## FIXME: Warning, `AM_SWIGFLAGS' is not a standard Automake variable.
 AM_SWIGFLAGS = -Wall -c++ -python -I$(top_builddir)/src -I$(top_srcdir)/src
 # We build modules, not plain libs.
 AM_LDFLAGS = -avoid-version -module -shared
-AM_LIBADD  = $(top_builddir)/src/libdyn.la # $(LIBLTDL)
+# Libraries with their dependencies.
+libdyn_la = $(top_builddir)/src/libdyn.la
+libdynmilena_la = $(top_builddir)/src/wrappers/libdynmilena.la $(libdyn_la)
 
 # Run Swig to create the C++ wrapper files, the Python interface
 # files, and the dependency Makefile snippets.
@@ -69,12 +72,23 @@ pyexec_LTLIBRARIES =
 ## dyn.
 pyexec_LTLIBRARIES += _dyn.la
 nodist__dyn_la_SOURCES = dyn-wrap.cc
-_dyn_la_LIBADD = $(AM_LIBADD)
+_dyn_la_LIBADD = $(libdyn_la)
 CLEANFILES += $(nodist__dyn_la_SOURCES) dyn.py dyn.py[co]
 ## Include the dependency files.  Copied from Automake's generated
 ## case for C++.
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_dyn-wrap.Pcc@am__quote@
 nodist_python_PYTHON += dyn.py
+
+# FIXME: Should be optional.
+## mln.
+pyexec_LTLIBRARIES += _mln.la
+nodist__mln_la_SOURCES = mln-wrap.cc
+_mln_la_LIBADD = $(libdynmilena_la)
+CLEANFILES += $(nodist__mln_la_SOURCES) mln.py mln.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_mln-wrap.Pcc@am__quote@
+nodist_python_PYTHON += mln.py
 
 
 ## ------- ##

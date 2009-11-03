@@ -1,5 +1,20 @@
 2009-11-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Expose the Milena wrappers to SWIG.
+
+	* swig/mln.i: New.
+	* swig/Makefile.am (EXTRA_DIST): Add mln.i.
+	* swig/python/Makefile.am (AM_LIBADD): Remove variable.
+	(libdyn_la, libdynmilena_la): New variables.
+	(_dyn_la_LIBADD): s/AM_LIBADD/libdyn_la/.
+	(pyexec_LTLIBRARIES): Add _mln.la.
+	(nodist__mln_la_SOURCES, _mln_la_LIBADD): New variables.
+	(CLEANFILES): Add $(nodist__mln_la_SOURCES), mln.py and
+	mln.py[co].
+	(nodist_python_PYTHON): Add mln.py.
+
+2009-11-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Exercise Milena precompiled wrappers.
 
 	* test/wrappers/test-milena.cc: New.

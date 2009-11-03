@@ -16,6 +16,6 @@
 
 SUBDIRS = python
 
-EXTRA_DIST = dyn.i
+EXTRA_DIST = dyn.i mln.i
 
 check_SCRIPTS = run
