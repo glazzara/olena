@@ -23,8 +23,8 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef NAME_OF
-# define NAME_OF
+#ifndef DYN_NAME_OF_HH
+# define DYN_NAME_OF_HH
 
 # include <typeinfo>
 
@@ -207,4 +207,4 @@ mlc_set_name(std::ostringstream);
 
 # endif
 
-#endif
+#endif // ! DYN_NAME_OF_HH

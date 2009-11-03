@@ -587,4 +587,4 @@ namespace dyn {
 
 } // end of namespace dyn
 
-#endif
+#endif // ! DYN_FUNCTION_LOADER_CC

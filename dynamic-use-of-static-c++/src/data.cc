@@ -150,4 +150,4 @@ dyn::data operator+(const dyn::data& lhs, const dyn::data& rhs)
   return dyn::internal::operator_plus(lhs, rhs);
 }
 
-#endif
+#endif // ! DYN_DATA_CC

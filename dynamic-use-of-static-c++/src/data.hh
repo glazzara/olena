@@ -441,4 +441,4 @@ struct dyn_choose_data_proxy<T, (dyn::policy::type)(dyn::policy::is_ref + dyn::p
 # include "data.hxx"
 # endif
 
-#endif
+#endif // ! DYN_DATA_HH

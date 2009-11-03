@@ -23,8 +23,8 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef RUBY_STREAM_CC
-# define RUBY_STREAM_CC
+#ifndef DYN_RUBY_STREAM_CC
+# define DYN_RUBY_STREAM_CC
 
 # include "ruby_stream.hh"
 
@@ -33,4 +33,4 @@ namespace ruby
   eval_type eval;
 }
 
-#endif
+#endif // ! DYN_RUBY_STREAM_CC

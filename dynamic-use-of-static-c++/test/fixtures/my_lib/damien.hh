@@ -23,10 +23,10 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DAMIEN_HH
-#define DAMIEN_HH
+#ifndef MY_LIB_DAMIEN_HH
+# define MY_LIB_DAMIEN_HH
 
-#include <iostream>
+# include <iostream>
 
 struct up
 {
@@ -82,5 +82,4 @@ void print(const T&);
 template <typename T>
 T sqr(const T&);
 
-#endif
-
+#endif // ! MY_LIB_DAMIEN_HH

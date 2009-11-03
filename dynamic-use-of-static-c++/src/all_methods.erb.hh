@@ -59,4 +59,4 @@ namespace dyn
 
 }
 
-#endif // !DYN_ALL_METHODS_HH
+#endif // ! DYN_ALL_METHODS_HH

@@ -23,11 +23,11 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef DAMIEN_HXX
-#define DAMIEN_HXX
+#ifndef MY_LIB_DAMIEN_HXX
+# define MY_LIB_DAMIEN_HXX
 
-#include <iostream>
-#include "damien.hh"
+# include <iostream>
+# include "damien.hh"
 
 template <typename T>
 const T* down<T>::get_t() const { return &t_; }
@@ -78,5 +78,4 @@ T sqr(const T& a)
 }
 
 
-#endif
-
+#endif // ! MY_LIB_DAMIEN_HXX

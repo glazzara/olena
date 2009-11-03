@@ -83,4 +83,4 @@ bool operator!=(const dyn::data& lhs, const dyn::data& rhs);
 bool operator==(const dyn::data& lhs, const dyn::data& rhs);
 dyn::data operator+(const dyn::data& lhs, const dyn::data& rhs);
 
-#endif
+#endif // ! DYN_DATA_HXX

@@ -23,8 +23,8 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef FUNCTION_HH
-#define FUNCTION_HH
+#ifndef DYN_FUNCTION_HH
+# define DYN_FUNCTION_HH
 
 # include <cassert>
 # include <string>
@@ -85,4 +85,4 @@ namespace dyn
 
 } // end of namespace dyn
 
-#endif
+#endif // ! DYN_FUNCTION_HH

@@ -23,8 +23,8 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#ifndef RUBY_STREAM_HH
-#define RUBY_STREAM_HH
+#ifndef DYN_RUBY_STREAM_HH
+# define DYN_RUBY_STREAM_HH
 
 // #define DEBUG_RUBY_STREAM
 
@@ -122,4 +122,4 @@ ruby::stream& operator<< (ruby::stream& stream, const T& obj)
   return stream;
 }
 
-#endif
+#endif // ! DYN_RUBY_STREAM_HH

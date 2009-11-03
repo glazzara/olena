@@ -1,5 +1,26 @@
 2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Normalize header guards.
+
+	* src/all_methods.erb.cc,
+	* src/all_methods.erb.hh,
+	* src/data.cc,
+	* src/data.hh,
+	* src/data.hxx,
+	* src/dyn.hh,
+	* src/function.erb.cc,
+	* src/function.erb.hh,
+	* src/function_loader.cc,
+	* src/function_loader.hh,
+	* src/name_of.hh,
+	* src/ruby_stream.cc,
+	* src/ruby_stream.hh,
+	* test/fixtures/my_lib/damien.hh,
+	* test/fixtures/my_lib/damien.hxx:
+	Here.
+
+2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add missing header guards.
 
 	* libmd5/md5.hh,
