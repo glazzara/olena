@@ -2,36 +2,6 @@
 
 	* mln/value/label_32.hh: New.
 
-2009-10-02  Roland Levillain  <roland@lrde.epita.fr>
-
-	Add ISMM 2009 input images and generate outputs.
-
-	* apps/papers/levillain.09.ismm/Makefile.am (data_DATA):
-	New variable.
-	(lena-s.ppm, graph-s.png, graph-s.neato, m283-s.off):
-	New targets.
-	* apps/papers/levillain.09.ismm/seeds.pgm,
-	* apps/papers/levillain.09.ismm/m283-c.off:
-	New (imported).
-
-2009-10-02  Roland Levillain  <roland@lrde.epita.fr>
-
-	Import the code of the illustrations of the ISMM 2009 paper.
-
-	* apps/papers/,
-	* apps/papers/levillain.09.ismm/:
-	New directories.
-	* apps/papers/levillain.09.ismm/chain.hh,
-	* apps/papers/levillain.09.ismm/complex.cc,
-	* apps/papers/levillain.09.ismm/graph.cc,
-	* apps/papers/levillain.09.ismm/image2d.cc:
-	New (imported from ISMM 2009).
-	Adjust.
-	* apps/Makefile.am (SUBDIRS): Add papers.
-	* apps/papers/Makefile.am,
-	* apps/papers/levillain.09.ismm/Makefile.am:
-	New.
-
 2009-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes.
@@ -57,6 +27,15 @@
 
 	* mln/data/all.hh: Include this new file.
 
+2009-10-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Regen Makefile helpers.
+
+	* doc/examples/examples.mk,
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk:
+	Regen.
+
 2009-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes.
@@ -71,15 +50,6 @@
 
 	* milena/mln/subsampling/subsampling.hh: Fix invalid min rows and
 	cols.
-
-2009-10-26  Roland Levillain  <roland@lrde.epita.fr>
-
-	Regen Makefile helpers.
-
-	* doc/examples/examples.mk,
-	* headers.mk,
-	* tests/unit_test/unit-tests.mk:
-	Regen.
 
 2009-10-16  Edwin Carlinet  <carlinet@lrde.epita.fr>
 
@@ -135,6 +105,36 @@
 	Warn about a bug in memcpy_ with g++ 4.2 on Debian for IA-32.
 
 	* mln/data/memcpy_.hh (mln::data::impl::memcpy_): Here.
+
+2009-10-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add ISMM 2009 input images and generate outputs.
+
+	* apps/papers/levillain.09.ismm/Makefile.am (data_DATA):
+	New variable.
+	(lena-s.ppm, graph-s.png, graph-s.neato, m283-s.off):
+	New targets.
+	* apps/papers/levillain.09.ismm/seeds.pgm,
+	* apps/papers/levillain.09.ismm/m283-c.off:
+	New (imported).
+
+2009-10-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Import the code of the illustrations of the ISMM 2009 paper.
+
+	* apps/papers/,
+	* apps/papers/levillain.09.ismm/:
+	New directories.
+	* apps/papers/levillain.09.ismm/chain.hh,
+	* apps/papers/levillain.09.ismm/complex.cc,
+	* apps/papers/levillain.09.ismm/graph.cc,
+	* apps/papers/levillain.09.ismm/image2d.cc:
+	New (imported from ISMM 2009).
+	Adjust.
+	* apps/Makefile.am (SUBDIRS): Add papers.
+	* apps/papers/Makefile.am,
+	* apps/papers/levillain.09.ismm/Makefile.am:
+	New.
 
 2009-10-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -269,6 +269,12 @@
 	(mln::world::inter_pixel::dbl_neighb2d):
 	...this typedef.
 
+2009-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix a precondition in apps/graph-morpho/io.hh.
+
+	* apps/graph-morpho/io.hh (println): Here.
+
 2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use Milena's dilation/erosion in graph morpho on bin_1complex_image2d.
@@ -279,12 +285,6 @@
 	(impl::erosion_e2v(const mln::bin_1complex_image2d&))
 	(impl::dilation_v2e(const mln::bin_1complex_image2d&)):
 	Here.
-
-2009-09-30  Roland Levillain  <roland@lrde.epita.fr>
-
-	Fix a precondition in apps/graph-morpho/io.hh.
-
-	* apps/graph-morpho/io.hh (println): Here.
 
 2009-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
