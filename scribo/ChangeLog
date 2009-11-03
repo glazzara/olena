@@ -1,5 +1,17 @@
 2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new link filters.
+
+	* filter/internal/compute.hh: New routine to compute filter
+	results.
+
+	* filter/object_links_center_aligned.hh,
+	* filter/object_links_top_aligned.hh,
+	* filter/objects_h_thick.hh,
+	* filter/objects_v_thick.hh: New filters.
+
+2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Revamp code related to object linking.
 
 	* core/concept/link_functor.hh: New concept.
