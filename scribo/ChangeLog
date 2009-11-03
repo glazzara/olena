@@ -1,5 +1,13 @@
 2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	First draft of multiscale Sauvola's binarization.
+
+	* scribo/src/binarization/Makefile.am: Add new target.
+
+	* scribo/src/binarization/sauvola_ms.cc: New.
+
+2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve line pattern recognition routine.
 
 	* primitive/extract/lines_pattern.hh: Make it less tolerant.
