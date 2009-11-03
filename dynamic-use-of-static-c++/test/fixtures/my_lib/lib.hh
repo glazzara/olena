@@ -25,10 +25,13 @@
 
 // part of generic lib
 
-#include <cmath>
-#include <iostream>
-#include <sstream> // Warning does not work without me
-#include <vector>
+#ifndef MY_LIB_LIB_HH
+# define MY_LIB_LIB_HH
+
+# include <cmath>
+# include <iostream>
+# include <sstream> // Warning does not work without me
+# include <vector>
 
 template <class T>
 struct u
@@ -126,8 +129,10 @@ namespace my_lib
     std::ostream& ostr_;
   };
 
-#define stl_each(c, i) for (i = c.begin(); i != c.end(); ++i)
+# define stl_each(c, i) for (i = c.begin(); i != c.end(); ++i)
 
-#define echo(i) std::cout << i << std::endl
+# define echo(i) std::cout << i << std::endl
 
 } // end of my_lib
+
+#endif // ! MY_LIB_LIB_HH

@@ -39,6 +39,9 @@ documentation and/or software.
 
 */
 
+#ifndef MD5_HH
+# define MD5_HH
+
 #include <cstdio>
 #include <fstream>
 #include <iostream>
@@ -107,3 +110,5 @@ private:
 			    uint4 s, uint4 ac);
 
 };
+
+#endif // ! MD5_HH

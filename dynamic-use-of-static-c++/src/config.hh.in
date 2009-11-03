@@ -25,7 +25,12 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#define DYNDIR "@DYNDIR@"
-#define DYN_DATADIR "@DYN_DATADIR@"
-#define DYN_FIXTURES "@DYN_FIXTURES@"
-#define MILENA_DIR "@MILENA_DIR@"
+#ifndef DYN_CONFIG_HH
+# define DYN_CONFIG_HH
+
+# define DYNDIR "@DYNDIR@"
+# define DYN_DATADIR "@DYN_DATADIR@"
+# define DYN_FIXTURES "@DYN_FIXTURES@"
+# define MILENA_DIR "@MILENA_DIR@"
+
+#endif // ! DYN_CONFIG_HH

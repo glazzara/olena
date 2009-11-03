@@ -1,5 +1,14 @@
 2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add missing header guards.
+
+	* libmd5/md5.hh,
+	* src/config.hh.in,
+	* test/fixtures/my_lib/lib.hh:
+	Here.
+
+2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	* README: Update.
 
 2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
