@@ -1,5 +1,51 @@
 2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add missing copyright headers.
+
+	* bin/dyn-config.in,
+	* bin/mk_swig_input,
+	* bin/swig_tree_to_yaml,
+	* bin/yaml_to_dyn_decls,
+	* bootstrap,
+	* config/erbx,
+	* config/mk_local_config_rb_in.rb,
+	* config/rbconfig_gen.rb,
+	* config/ruby.m4,
+	* src/all_methods.erb.cc,
+	* src/all_methods.erb.hh,
+	* src/config.hh.in,
+	* src/cxx_symbols.rb,
+	* src/data.cc,
+	* src/data.hh,
+	* src/data.hxx,
+	* src/dyn.hh,
+	* src/function.erb.cc,
+	* src/function.erb.hh,
+	* src/function_loader.cc,
+	* src/function_loader.hh,
+	* src/function_loader.rb,
+	* src/name_of.cc,
+	* src/name_of.hh,
+	* src/policy.cc,
+	* src/policy.hh,
+	* src/ruby_stream.cc,
+	* src/ruby_stream.hh,
+	* test/fixtures/my_lib/damien.hh,
+	* test/fixtures/my_lib/damien.hxx,
+	* test/fixtures/my_lib/lib.hh,
+	* test/test_containers.cc,
+	* test/test_damien.cc,
+	* test/test_function_loader.cc,
+	* test/test_function_loader.rb,
+	* test/test_function_loader_cxx.rb,
+	* test/test_methods.cc,
+	* test/test_milena.cc,
+	* test/test_var_and_val.cc,
+	* test/vaucanson/test-loader.cc:
+	Here.
+
+2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Adjust the initialization of the SWIG Python Milena wrappers.
 
 	* swig/mln.i: Call dyn::mln::initialize in %init section.
