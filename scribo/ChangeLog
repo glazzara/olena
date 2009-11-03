@@ -1,5 +1,13 @@
 2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new example in Scribo.
+
+	* scribo/src/primitive/extract/Makefile.am: Add a new target.
+
+	* scribo/src/primitive/extract/lines_pattern.cc: New.
+
+2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	First draft of multiscale Sauvola's binarization.
 
 	* scribo/src/binarization/Makefile.am: Add new target.

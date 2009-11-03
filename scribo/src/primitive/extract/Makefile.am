@@ -25,11 +25,13 @@ bin_PROGRAMS = 			\
   extract_discontinued_vlines   \
   extract_discontinued_hlines  	\
   extract_thick_vlines  	\
-  extract_thick_hlines 
+  extract_thick_hlines  	\
+  lines_pattern
 
 extract_discontinued_lines_SOURCES = extract_discontinued_lines.cc
 extract_discontinued_vlines_SOURCES = extract_discontinued_vlines.cc
 extract_discontinued_hlines_SOURCES = extract_discontinued_hlines.cc
 extract_thick_vlines_SOURCES = extract_thick_vlines.cc
 extract_thick_hlines_SOURCES = extract_thick_hlines.cc
+lines_pattern_SOURCES = lines_pattern.cc
 
