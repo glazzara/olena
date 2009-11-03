@@ -30,7 +30,8 @@
 ///
 /// Update a lookup table if a neighbor is found on the right of
 /// the current bbox.
-
+///
+/// \todo To be deleted.
 
 # include <mln/core/concept/image.hh>
 # include <mln/util/array.hh>
@@ -58,21 +59,21 @@ namespace scribo
       /// \param[in] c A site of \p lbl.
       //
       template <typename I>
-      void
+      bool
       update_link_array(const Image<I>& lbl,
 			mln::util::array<unsigned>& link_array,
 			const mln_site(I)& p, const mln_site(I)& c,
-			unsigned i, int dmax);
+			unsigned i, float dmax);
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
       inline
-      void
+      bool
       update_link_array(const Image<I>& lbl_,
 			mln::util::array<unsigned>& link_array,
 			const mln_site(I)& p, const mln_site(I)& c,
-			unsigned i, int dmax)
+			unsigned i, float dmax)
       {
 	const I& lbl = exact(lbl_);
 
@@ -82,9 +83,14 @@ namespace scribo
 	if (lbl.domain().has(p)         // Not outside image domain
 	    && lbl(p) != literal::zero  // Not the background
 	    && lbl(p) != i              // Not the current component
-	    && (math::abs(p.col() - c.col())) < dmax // Not too far
+	    && static_cast<float>((math::abs(p.col() - c.col()))) < dmax // Not too far
 	    && link_array[lbl(p)] != i) // Not creating a loop
+	{
 	  link_array[i] = lbl(p);
+	  return true;
+	}
+
+	return false;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

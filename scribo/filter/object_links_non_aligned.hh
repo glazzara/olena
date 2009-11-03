@@ -31,6 +31,7 @@
 /// Invalidate links between two non aligned objects.
 
 
+# include <mln/math/abs.hh>
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
@@ -115,9 +116,10 @@ namespace scribo
 	    hmax = i;
 	  }
 
-	  if ((bboxes[hmin].pmin()[dim] - (float)bboxes[hmax].pmin()[dim]) > max_delta
-	      || (bboxes[hmin].pmax()[dim] - (float) bboxes[hmax].pmax()[dim]) > max_delta)
+	  if (static_cast<unsigned>(math::abs((bboxes[hmin].pmin()[dim] - bboxes[hmax].pmin()[dim]))) > max_delta
+	      || static_cast<unsigned>(math::abs((bboxes[hmin].pmax()[dim] - bboxes[hmax].pmax()[dim]))) > max_delta)
 	    output[i] = i;
+
 	}
 
       trace::exiting("scribo::filter::object_links_non_aligned");

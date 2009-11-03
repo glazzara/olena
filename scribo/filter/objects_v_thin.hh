@@ -137,6 +137,7 @@ namespace scribo
     {
       trace::entering("scribo::filter::objects_v_thin");
 
+      (void) label_type;
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
 
@@ -153,7 +154,7 @@ namespace scribo
       objects.relabel(fv2b);
 
       mln_concrete(I) output = duplicate(input);
-      data::fill((output | pw::value(objects) == pw::cst(literal::zero)).rw(),
+      data::fill((output | (pw::value(objects) == pw::cst(literal::zero))).rw(),
 		 false);
 
       trace::exiting("scribo::filter::objects_v_thin");

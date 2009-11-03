@@ -29,7 +29,8 @@
 /// \file
 ///
 /// Validate a link from two different links.
-
+///
+/// \todo To be deleted ?.
 
 # include <mln/util/array.hh>
 # include <mln/util/couple.hh>

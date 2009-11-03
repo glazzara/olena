@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
   typedef object_image(L) text_t;
   text_t text = primitive::extract::objects(input, c8(), nbboxes);
 
-  mln::util::graph g = primitive::link::with_graph(text, 30);
+  mln::util::graph g = primitive::link::with_graph(text, 255);
 
   std::cout << "BEFORE - nbboxes = " << nbboxes.next() << std::endl;
   scribo::debug::save_linked_bboxes_image(input,

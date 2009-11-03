@@ -28,8 +28,10 @@
 
 /// \file
 ///
-/// Invalidate links between two objects with too different height or
-/// width.
+/// Invalidate links between two objects with too different height.
+///
+/// \todo rename to object_links_bbox_v_ratio (v for vertical) to be
+/// consistent with other routine names.
 
 
 # include <mln/util/array.hh>
@@ -52,7 +54,7 @@ namespace scribo
 
 	\param[in] objects     An object image.
 	\param[in] links       Link objects information.
-	\param[in] min_h_ratio The minimum height ratio of two linked
+	\param[in] max_h_ratio The maximum height ratio of two linked
 	                       bounding boxes.
 
 	\result A filtered object link information.
@@ -61,7 +63,7 @@ namespace scribo
     object_links<L>
     object_links_bbox_h_ratio(const object_image(L)& objects,
 			      const object_links<L>& links,
-			      float min_h_ratio);
+			      float max_h_ratio);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -71,7 +73,7 @@ namespace scribo
     object_links<L>
     object_links_bbox_h_ratio(const object_image(L)& objects,
 			      const object_links<L>& links,
-			      float min_h_ratio)
+			      float max_h_ratio)
     {
       trace::entering("scribo::filter::object_links_bbox_h_ratio");
 
@@ -79,7 +81,7 @@ namespace scribo
       mln_precondition(links.is_valid());
 
       object_links<L>
-	output = object_links_bbox_ratio(objects, links, 0, min_h_ratio);
+	output = object_links_bbox_ratio(objects, links, 0, max_h_ratio);
 
       trace::exiting("scribo::filter::object_links_bbox_h_ratio");
       return output;

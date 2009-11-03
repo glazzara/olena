@@ -107,8 +107,8 @@ namespace scribo
 
 	  is_line_v_single(const object_image(L)& objects,
 			   float h_w_ratio, unsigned min_line_length)
-	    : objects_(objects),
-	      h_w_ratio_(h_w_ratio), min_line_length_(min_line_length)
+	    : h_w_ratio_(h_w_ratio), min_line_length_(min_line_length),
+	      objects_(objects)
 	  {
 	  }
 

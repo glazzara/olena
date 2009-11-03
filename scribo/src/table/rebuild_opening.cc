@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
   io::pgm::save(tables, scribo::make::debug_filename("table_cells.pgm"));
 
   image2d<value::rgb8> input_rgb = data::convert(value::rgb8(), input);
-  data::fill((input_rgb | pw::value(tables) == pw::cst(0u)).rw(), literal::red);
+  data::fill((input_rgb | (pw::value(tables) == pw::cst(0u))).rw(), literal::red);
   io::ppm::save(input_rgb, scribo::make::debug_filename("table_superposed.ppm"));
 
   image2d<bool> in_wo_tables = table::erase(input, hlines, vlines);

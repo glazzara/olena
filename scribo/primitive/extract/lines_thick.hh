@@ -93,6 +93,9 @@ namespace scribo
 	  mln_precondition(exact(nbh).is_valid());
 	  mln_precondition(exact(win).is_valid());
 
+	  (void) input;
+	  (void) nbh;
+	  (void) win;
 	  (void) nlines;
 	}
 

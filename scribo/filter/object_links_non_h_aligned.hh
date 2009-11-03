@@ -76,7 +76,7 @@ namespace scribo
     object_links<L>
     object_links_non_h_aligned(const object_image(L)& objects,
 			       const object_links<L>& links,
-			       float ratio);
+			       float max_delta);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -85,14 +85,14 @@ namespace scribo
     object_links<L>
     object_links_non_h_aligned(const object_image(L)& objects,
 			       const object_links<L>& links,
-			       float ratio)
+			       float max_delta)
     {
       trace::entering("scribo::filter::object_links_non_h_aligned");
 
       mln_precondition(objects.is_valid());
 
       object_links<L>
-	output = object_links_non_aligned(objects, links, 1, ratio);
+	output = object_links_non_aligned(objects, links, 0, max_delta);
 
       trace::exiting("scribo::filter::object_links_non_h_aligned");
       return output;

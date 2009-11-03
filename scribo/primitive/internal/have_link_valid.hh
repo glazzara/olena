@@ -29,7 +29,8 @@
 /// \file
 ///
 /// Tells whether a component have at least one valid link
-
+///
+/// \todo To be deleted ?.
 
 # include <mln/util/array.hh>
 # include <mln/util/couple.hh>

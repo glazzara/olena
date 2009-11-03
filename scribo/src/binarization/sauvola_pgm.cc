@@ -29,9 +29,11 @@
 #include <scribo/binarization/sauvola.hh>
 #include <scribo/debug/usage.hh>
 
+
 const char *args_desc[][2] =
 {
   { "input.pgm", "A gray level image." },
+  { "w", "Window size." },
   {0, 0}
 };
 
@@ -41,20 +43,20 @@ int main(int argc, char *argv[])
   using namespace mln;
   using value::int_u8;
 
-  if (argc != 3)
+  if (argc != 4)
     return scribo::debug::usage(argv,
 				"Binarization of a gray level image based on Sauvola's algorithm.",
-				"input.pgm output.pbm",
+				"input.pgm w output.pbm",
 				args_desc, "A binary image.");
 
   trace::entering("main");
 
+  unsigned w = atoi(argv[2]);
+
   image2d<int_u8> input;
   io::pgm::load(input, argv[1]);
 
-
-  io::pbm::save(scribo::binarization::sauvola(input),
-		argv[2]);
+  io::pbm::save(scribo::binarization::sauvola(input, w), argv[3]);
 
 
   trace::exiting("main");

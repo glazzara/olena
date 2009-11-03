@@ -52,7 +52,7 @@ namespace scribo
 	\param[in] objects   An object image.
 	\param[in] links     Link objects information.
 	\param[in] dim       The dimension to use to compare bbox length.
-	\param[in] min_ratio The minimum length ratio of two linked
+	\param[in] max_ratio The maximum length ratio of two linked
 	                     bounding boxes.
 
 	\result A filtered object link information.
@@ -62,7 +62,7 @@ namespace scribo
     object_links_bbox_ratio(const object_image(L)& objects,
 			    const object_links<L>& links,
 			    unsigned dim,
-			    float min_ratio);
+			    float max_ratio);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -73,7 +73,7 @@ namespace scribo
     object_links_bbox_ratio(const object_image(L)& objects,
 			    const object_links<L>& links,
 			    unsigned dim,
-			    float min_ratio)
+			    float max_ratio)
     {
       trace::entering("scribo::filter::object_links_bbox_ratio");
 
@@ -82,18 +82,19 @@ namespace scribo
 
       object_links<L> output(links);
       for (unsigned i = 1; i < links.size(); ++i)
-      {
-	float
-	  lmin = objects.bbox(i).pmax()[dim] - objects.bbox(i).pmin()[dim],
-	  lmax = objects.bbox(links(i)).pmax()[dim]
-	          - objects.bbox(links(i)).pmin()[dim];
+	if (links[i] != i)
+	{
+	  float
+	    lmin = objects.bbox(i).pmax()[dim] - objects.bbox(i).pmin()[dim],
+	    lmax = objects.bbox(links(i)).pmax()[dim]
+	            - objects.bbox(links(i)).pmin()[dim];
 
-	if (lmin > lmax)
-	  std::swap(lmin, lmax);
+	  if (lmin > lmax)
+	    std::swap(lmin, lmax);
 
-	if (lmin / lmax < min_ratio)
-	  output(i) = i;
-      }
+	  if ((lmax/ lmin) > max_ratio)
+	    output(i) = i;
+	}
 
       trace::exiting("scribo::filter::object_links_bbox_ratio");
       return output;

@@ -32,6 +32,8 @@
 
 
 # include <mln/util/array.hh>
+# include <mln/math/abs.hh>
+# include <mln/math/pi.hh>
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
@@ -50,9 +52,7 @@ namespace scribo
 
 	\param[in] objects   An object image.
 	\param[in] links     Object links information.
-	\param[in] dim       Choose the dimension on which applying the
-	                     filter.
-        \param[in] max_delta Maximum delta.
+        \param[in] max_alpha Maximum angle value (degrees).
 
 
 	Exemple with dim == 1 and edge == 1 (bottom
@@ -65,22 +65,33 @@ namespace scribo
 	  ------       |    |
 	  |    |       |    |
 	  | x------------x  |
-	  |    |       |    |     v
-	  ------ ~ ~ ~ |~ ~ | ~ ~ ~
-	  object1      |    |     | => delta, must be < to max_delta
-		       ------ ~ ~ ~
-                      object2     ^
-
+	  |    |       |    |
+	  ------~ ~ ~ ~| ~ ~| ~ ~
+	 object1  ~    |    |   ^
+	            ~  |    |   |
+		      ~------   |
+                      object2   | Alpha
+                        ~       |
+			  ~     |
+			    ~   |
+			      ~ v
+			        ~
 	\endverbatim
+
+	The angle between the two bottoms must be lower than \p alpha.
+
+	edge values :
+	 0 = top
+	 1 = bottom
+	 2 = center
 
     */
     template <typename L>
     object_links<L>
     object_links_non_aligned_simple(const object_image(L)& objects,
 				    const object_links<L>& links,
-				    unsigned dim,
 				    unsigned edge,
-				    unsigned max_delta);
+				    float max_alpha);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -90,9 +101,8 @@ namespace scribo
     object_links<L>
     object_links_non_aligned_simple(const object_image(L)& objects,
 				    const object_links<L>& links,
-				    unsigned dim,
 				    unsigned edge,
-				    unsigned max_delta)
+				    float max_alpha)
     {
       trace::entering("scribo::filter::object_links_non_aligned_simple");
 
@@ -102,34 +112,59 @@ namespace scribo
       typedef typename object_image(L)::bbox_t bbox_t;
       const mln::util::array<bbox_t>& bboxes = objects.bboxes();
       object_links<L> output(links);
-      unsigned delta;
+      float dr, dc;
 
 
+      float max_alpha_rad = (max_alpha / 180.0f) * math::pi;
+
+      // Top
       if (edge == 0)
       {
 	for_all_components(i, objects.bboxes())
 	  if (links[i] != i)
 	  {
-	    delta = bboxes[i].pmin()[dim] - bboxes[i].pmin()[dim];
+	    dr = math::abs(bboxes[i].pmin().row()
+			   - bboxes[links[i]].pmin().row());
+	    dc = math::abs(bboxes[i].center().col()
+			   - bboxes[links[i]].center().col());
 
-	    if (delta > max_delta)
+	    if (std::atan(dr / dc) > max_alpha_rad)
 	      output[i] = i;
 	  }
       }
+      // Bottom
       else if (edge == 1)
 	for_all_components(i, objects.bboxes())
 	{
 	  if (links[i] != i)
 	  {
-	    delta = bboxes[i].pmax()[dim] - bboxes[i].pmax()[dim];
+	    dr = math::abs(bboxes[i].pmax().row()
+			   - bboxes[links[i]].pmax().row());
+	    dc = math::abs(bboxes[i].center().col()
+			   - bboxes[links[i]].center().col());
 
-	    if (delta > max_delta)
+	    if (std::atan(dr / dc) > max_alpha_rad)
+	      output[i] = i;
+	  }
+	}
+      // Center
+      else if (edge == 2)
+	for_all_components(i, objects.bboxes())
+	{
+	  if (links[i] != i)
+	  {
+	    dr = math::abs(bboxes[i].center().row()
+			   - bboxes[links[i]].center().row());
+	    dc = math::abs(bboxes[i].center().col()
+			   - bboxes[links[i]].center().col());
+
+	    if (std::atan(dr / dc) > max_alpha_rad)
 	      output[i] = i;
 	  }
 	}
       else
       {
-	trace::warning("Invalid edge value...");
+	trace::warning("Invalid edge value... Aborting computation.");
 	trace::exiting("scribo::filter::object_links_non_aligned_simple");
 	return output;
       }

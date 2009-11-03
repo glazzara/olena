@@ -101,7 +101,7 @@ namespace scribo
 	for_all_ncomponents(i, objects.nlabels())
 	{
 	  mln::util::couple<bool, unsigned>
-	    nbh = internal::is_link_valid(left_link, right_link, i);
+	    nbh = primitive::internal::is_link_valid(left_link, right_link, i);
 	  if (!nbh.first())
 	    merge[i] = i;
 	}

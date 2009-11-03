@@ -104,7 +104,7 @@ namespace scribo
       mln_precondition(groups.is_valid());
       mln_precondition(filtered_groups.is_valid());
       mln_precondition(groups.size() == filtered_groups.size());
-      mln_precondition(groups.objects_id() != filtered_groups.objects_id());
+      mln_precondition(groups.objects_id_() != filtered_groups.objects_id_());
       /// Fixme: check that objects has been computed from input.
 
       image2d<value::rgb8>

@@ -29,12 +29,15 @@
 /// \file
 ///
 /// Find the right neighbor of a line of text if exists.
+///
+/// \todo To be deleted.
 
 # include <mln/core/concept/image.hh>
 
 # include <mln/math/abs.hh>
 
 # include <mln/util/array.hh>
+# include <mln/util/couple.hh>
 
 # include <scribo/core/object_image.hh>
 # include <scribo/primitive/internal/update_link_array.hh>
@@ -61,25 +64,25 @@ namespace scribo
       /// \param c The lookup start point.
       //
       template <typename L>
-      void
+      mln::util::couple<bool, mln_site(L)>
       find_right_link(const object_image(L)& objects,
 		     mln::util::array<unsigned>& right_link,
 		     unsigned current_comp,
-		     int dmax,
+		     float dmax,
 		     const mln_site(L)& c);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename L>
-      void
+      mln::util::couple<bool, mln_site(L)>
       find_right_link(const object_image(L)& objects,
 		     mln::util::array<unsigned>& right_link,
 		     unsigned current_comp,
-		     int dmax,
+		     float dmax,
 		     const mln_site(L)& c)
       {
-	///FIXME: the following code is not generic...
+	/// FIXME: the following code is not generic...
 	/// First site on the right of the central site
 	mln_site(L) p = c + mln::right;
 
@@ -87,7 +90,10 @@ namespace scribo
 			       current_comp, c, dmax))
 	  ++p.col();
 
-	update_link_array(objects, right_link, p, c, current_comp, dmax);
+	bool
+	  b = update_link_array(objects, right_link, p, c, current_comp, dmax);
+
+	return mln::make::couple(b, p);
       }
 
 # endif // MLN_INCLUDE_ONLY

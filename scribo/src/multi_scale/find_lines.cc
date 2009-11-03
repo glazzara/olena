@@ -65,6 +65,8 @@ namespace mln
   process(const I& input, const std::string& filename,
 	  unsigned length, unsigned delta, unsigned ratio)
   {
+    (void) filename;
+
     I hlines = scribo::primitive::extract::lines_h_pattern(input,
 							   length,
 							   delta);
@@ -72,7 +74,6 @@ namespace mln
     value::label_16 nhlines;
     hlines = scribo::filter::objects_v_thin(hlines, c8(),
 					    nhlines, delta * ratio);
-
 //     I vlines = scribo::primitive::extract::lines_v_pattern(input,
 // 							   length,
 // 							   delta);

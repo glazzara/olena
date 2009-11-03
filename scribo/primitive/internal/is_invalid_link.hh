@@ -29,7 +29,8 @@
 /// \file
 ///
 /// Check whether an objects link is invalid or not.
-
+///
+/// \todo To be deleted.
 
 # include <mln/math/abs.hh>
 # include <mln/literal/zero.hh>
@@ -64,7 +65,7 @@ namespace scribo
 		      const mln_site(L)& p,
 		      unsigned current_comp,
 		      const mln_site(L)& c,
-		      int dmax);
+		      float dmax);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -76,13 +77,13 @@ namespace scribo
 		      const mln_site(L)& p,
 		      unsigned current_comp,
 		      const mln_site(L)& c,
-		      int dmax)
+		      float dmax)
       {
 	return (objects.domain().has(p)           // Not outside image domain
 		&& (objects(p) == literal::zero   // Is the background
 		    || objects(p) == current_comp // Is the current component
 		    || link_array[objects(p)] == current_comp) // Creates a loop
-		&& math::abs(p.col() - c.col()) < dmax); // Not too far
+		&& static_cast<float>(math::abs(p.col() - c.col())) < dmax); // Not too far
       }
 
 # endif // ! MLN_INCLUDE_ONLY

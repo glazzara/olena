@@ -32,6 +32,8 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
+# include <mln/core/image/dmorph/image_if.hh>
+# include <mln/pw/all.hh>
 
 # include <mln/util/array.hh>
 
@@ -140,6 +142,7 @@ namespace scribo
 
       mln_precondition(input.is_valid());
       mln_precondition(nbh.is_valid());
+      (void) label_type;
 
       V nlabels;
       typedef mln_ch_value(I,V) lbl_t;
@@ -151,7 +154,7 @@ namespace scribo
       objects.relabel(fv2b);
 
       mln_concrete(I) output = duplicate(input);
-      data::fill((output | pw::value(objects) == pw::cst(literal::zero)).rw(),
+      data::fill((output | (pw::value(objects) == pw::cst(literal::zero))).rw(),
 		 false);
 
       trace::exiting("scribo::filter::objects_thin");

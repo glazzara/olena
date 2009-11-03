@@ -25,6 +25,7 @@
 
 #include <mln/io/ppm/load.hh>
 #include <mln/io/pbm/save.hh>
+#include <mln/value/rgb8.hh>
 
 #include <scribo/binarization/sauvola.hh>
 #include <scribo/debug/usage.hh>
@@ -52,9 +53,7 @@ int main(int argc, char *argv[])
   image2d<rgb8> input;
   io::ppm::load(input, argv[1]);
 
-
-  io::pbm::save(scribo::binarization::sauvola(input),
-		argv[2]);
+  io::pbm::save(scribo::binarization::sauvola(input), argv[2]);
 
 
   trace::exiting("main");

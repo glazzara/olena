@@ -90,7 +90,7 @@ namespace scribo
       mln_precondition(lbl.is_valid());
 
       util::array<mln_result(A)>
-	values = labeling::compute(accu, lbl_, nlabels);
+	values = labeling::compute(accu, lbl, nlabels);
 
       vertex_image<void, mln_result(A), G>
 	v_ima = mln::make::vertex_image(g, values);

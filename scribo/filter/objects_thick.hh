@@ -66,7 +66,7 @@ namespace scribo
 		  unsigned max_thickness);
 
 
-    /// Remove lines of text thicker or equal to \p max_thickness.
+    /// Remove objects thicker or equal to \p max_thickness.
     ///
     /// \param[in] objects An object image.
     /// \param[in] max_thickness The maximum thickness value.

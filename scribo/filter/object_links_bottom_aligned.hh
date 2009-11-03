@@ -53,31 +53,37 @@ namespace scribo
 
 	\param[in] objects   An object image.
 	\param[in] links     Object links information.
-	\param[in] dim       Choose the dimension on which applying the
-	                     filter.
-        \param[in] max_delta Maximum delta.
+        \param[in] max_alpha Maximum angle value (degrees).
 
 	\verbatim
+
 
                        ------
                        |    |
 	  ------       |    |
 	  |    |       |    |
 	  | x------------x  |
-	  |    |       |    |     v
-	  ------ ~ ~ ~ |~ ~ | ~ ~ ~
-	  object1      |    |     | => delta, must be < to max_delta
-		       ------ ~ ~ ~
-                      object2     ^
-
+	  |    |       |    |
+	  ------~ ~ ~ ~| ~ ~| ~ ~
+	 object1  ~    |    |   ^
+	            ~  |    |   |
+		      ~------   |
+                      object2   | Alpha
+                        ~       |
+			  ~     |
+			    ~   |
+			      ~ v
+			        ~
 	\endverbatim
+
+	The angle between the two bottoms must be lower than \p max_alpha.
 
     */
     template <typename L>
     object_links<L>
     object_links_bottom_aligned(const object_image(L)& objects,
 				const object_links<L>& links,
-				unsigned max_delta);
+				float max_alpha);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -87,7 +93,7 @@ namespace scribo
     object_links<L>
     object_links_bottom_aligned(const object_image(L)& objects,
 				const object_links<L>& links,
-				unsigned max_delta)
+				float max_alpha)
     {
       trace::entering("scribo::filter::object_links_bottom_aligned");
 
@@ -96,8 +102,7 @@ namespace scribo
 
       object_links<L>
 	output = object_links_non_aligned_simple(objects, links,
-						 1, 1,
-						 max_delta);
+						 1, max_alpha);
 
       trace::exiting("scribo::filter::object_links_bottom_aligned");
       return output;
@@ -112,4 +117,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_FILTER_OBJECT_LINKS_NON_ALIGNED_SIMPLE_HH
+#endif // ! SCRIBO_FILTER_OBJECT_LINKS_BOTTOM_ALIGNED_HH

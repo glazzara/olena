@@ -105,6 +105,7 @@ namespace scribo
       mlc_equal(mln_value(I),bool)::check();
       mln_precondition(input.is_valid());
       mln_precondition(dmap_win.is_valid());
+      (void) dmap_win;
 
 
       // Resize
