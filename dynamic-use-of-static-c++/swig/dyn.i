@@ -37,15 +37,6 @@
 
 // Ignore global objects causing trouble to swig.
 %ignore dyn::logger;
-%ignore dyn::internal::operator_push;
-%ignore dyn::internal::operator_pop;
-%ignore dyn::internal::operator_incr;
-%ignore dyn::internal::operator_decr;
-%ignore dyn::internal::operator_plus;
-%ignore dyn::internal::operator_star;
-%ignore dyn::internal::operator_equal;
-%ignore dyn::internal::operator_not_equal;
-%ignore dyn::internal::operator_square_brackets;
 
 %include "dyn-all.hh";
 

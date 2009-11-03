@@ -1,5 +1,11 @@
 2009-11-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Wrap global objects (operator functors) previously ignored.
+
+	* swig/dyn.i: Here.
+
+2009-11-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make dyn::generic_fun assignable to help SWIG wrap it properly.
 
 	* src/function.erb.hh
