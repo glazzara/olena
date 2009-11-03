@@ -1,3 +1,12 @@
+2009-11-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Rename test/test_olena as test/test_milena.
+
+	* test/test_olena.cc: Rename as...
+	* test/test_milena.cc: ...this.
+	Aesthetic changes.
+	* test/Makefile.am: Adjust.
+
 2009-10-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Simplify the construction of dyn.data objects in SWIG wrappers.

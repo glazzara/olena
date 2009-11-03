@@ -16,11 +16,8 @@ int main()
   fun println("mln::debug::println");
 
   var ima = mk_image2d_int(3, 3);
-
   fill(ima, 0);
-  println("ima_before=", ima);
+  println("ima (before) =", ima);
   iota(ima);
-  println("ima-after=", ima);
-
-  std::cout << "exiting" << std::endl;
+  println("ima (after) =", ima);
 }

@@ -27,7 +27,7 @@ SUBDIRS = vaucanson
 #erb#   containers
 #erb#   var_and_val
 #erb#   methods
-#erb#   olena
+#erb#   milena
 #erb# ]
 #erb# %>
 #erb# check_PROGRAMS = <%= TESTS.map { |t| "#{t}.test" }.join ' ' %>
@@ -40,7 +40,13 @@ SUBDIRS = vaucanson
 
 #erb# =generated
 
-check_PROGRAMS = function_loader.test damien.test containers.test var_and_val.test methods.test olena.test
+check_PROGRAMS = function_loader.test damien.test containers.test var_and_val.test methods.test milena.test
+
+# FIXME: Factor *_LDADD variables.
+# FIXME: *_DEPENDENCIES are probably useless.
+# FIXME: Use Automake 1.11's default extension for tests?
+# FIXME: If the code reduces to a single definition of
+# `check_PROGRAM', stop using erbx.
 
 function_loader_test_SOURCES = test_function_loader.cc
 function_loader_test_LDADD = $(top_builddir)/src/libdyn.la
@@ -62,9 +68,9 @@ methods_test_SOURCES = test_methods.cc
 methods_test_LDADD = $(top_builddir)/src/libdyn.la
 methods_test_DEPENDENCIES = $(top_builddir)/src/libdyn.la
 
-olena_test_SOURCES = test_olena.cc
-olena_test_LDADD = $(top_builddir)/src/libdyn.la
-olena_test_DEPENDENCIES = $(top_builddir)/src/libdyn.la
+milena_test_SOURCES = test_milena.cc
+milena_test_LDADD = $(top_builddir)/src/libdyn.la
+milena_test_DEPENDENCIES = $(top_builddir)/src/libdyn.la
 
 #erb# =end_generated
 
