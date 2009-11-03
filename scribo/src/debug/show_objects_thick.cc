@@ -46,7 +46,7 @@
 const char *args_desc[][2] =
 {
   { "input.pbm", "    A binary image. True for objects and False for the background." },
-  { "min_thickness", "Minimum bounding box thickness. (common value: 1)" },
+  { "max_thickness", "Maximum bounding box thickness. (common value: 300)" },
   {0, 0}
 };
 
@@ -57,10 +57,10 @@ int main(int argc, char *argv[])
 
   if (argc != 4)
     return scribo::debug::usage(argv,
-				"Show components being to thin.",
-				"input.pbm min_thickness output.ppm",
+				"Show components being to thick.",
+				"input.pbm max_thickness output.ppm",
 				args_desc,
-				"A color image. Too thin components have their bounding boxes drawn in red.");
+				"A color image. Too thick components have their bounding boxes drawn in red.");
 
   trace::entering("main");
 

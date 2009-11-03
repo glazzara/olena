@@ -38,11 +38,11 @@
 #include <mln/io/ppm/save.hh>
 
 #include <scribo/primitive/extract/objects.hh>
-#include <scribo/primitive/link/with_single_left_link.hh>
+#include <scribo/primitive/link/with_several_right_links.hh>
 
 #include <scribo/draw/bounding_boxes.hh>
 
-#include <scribo/debug/save_linked_bboxes_image.hh>
+#include <scribo/debug/several_links_decision_image.hh>
 #include <scribo/debug/usage.hh>
 
 
@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 
   if (argc != 4)
     return scribo::debug::usage(argv,
-				"Show sucessful/unsuccessful left links between components.",
+				"Show sucessful/unsuccessful right links between components.",
 				"input.pbm max_nbh_dist output.ppm",
 				args_desc,
 				"A color image. Valid links are drawn in green, invalid ones in red.");
@@ -77,41 +77,19 @@ int main(int argc, char* argv[])
   object_image(L) objects
     = scribo::primitive::extract::objects(input, c8(), nbboxes);
 
-  // Finding left links.
-  object_links<L> left_link
-    = primitive::link::with_single_left_link(objects, atoi(argv[2]));
-
-
-
-  // Preparing output image.
-  image2d<value::rgb8> output = data::convert(value::rgb8(), input);
-  scribo::draw::bounding_boxes(output, objects, literal::blue);
-
+  // Finding right links.
+  object_links<L> right_link
+    = primitive::link::with_several_right_links(objects, atoi(argv[2]));
 
   // Drawing links.
   mln::util::array<mln_result_(accu::center<mln_psite_(L)>)>
     mass_centers = labeling::compute(accu::meta::center(),
 				     objects, objects.nlabels());
 
-  for_all_ncomponents(i, objects.nlabels())
-  {
-    unsigned midcol = (objects.bbox(i).pmax().col()
-		       - objects.bbox(i).pmin().col()) / 2;
-    int dmax = midcol + atoi(argv[2]);
-    mln_site_(L) c = mass_centers(i);
+  image2d<value::rgb8> decision_image
+    = scribo::debug::several_links_decision_image(input,
+						  right_link,
+						  right_link);
 
-    mln_site_(L) p = c + mln::left;
-
-    while (is_invalid_link(objects, left_link, p, i, c, dmax))
-    {
-      if (left_link[i] != i)
-	output(p) = literal::green;
-      else
-	output(p) = literal::red;
-      --p.col();
-    }
-
-  }
-
-  io::ppm::save(output, argv[3]);
+  io::ppm::save(decision_image, argv[3]);
 }

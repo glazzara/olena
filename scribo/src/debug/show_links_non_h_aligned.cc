@@ -39,10 +39,11 @@
 
 #include <scribo/primitive/extract/objects.hh>
 #include <scribo/primitive/link/with_single_right_link.hh>
+#include <scribo/primitive/link/with_single_left_link.hh>
+#include <scribo/filter/object_links_non_h_aligned.hh>
 
-#include <scribo/draw/bounding_boxes.hh>
-
-#include <scribo/debug/save_linked_bboxes_image.hh>
+#include <scribo/debug/decision_image.hh>
+#include <scribo/debug/links_decision_image.hh>
 #include <scribo/debug/usage.hh>
 
 
@@ -50,7 +51,7 @@
 const char *args_desc[][2] =
 {
   { "input.pbm", "A binary image. True for objects and False for the background." },
-  { "max_nbh_dist", " Maximum distance for neighborhood search. (common value : 30)" },
+  { "delta", "Max delta for horizontal alignment. (common value : 5)" },
   {0, 0}
 };
 
@@ -63,8 +64,8 @@ int main(int argc, char* argv[])
 
   if (argc != 4)
     return scribo::debug::usage(argv,
-				"Show sucessful/unsuccessful right links between components.",
-				"input.pbm max_nbh_dist output.ppm",
+				"Show valid or invalid links according the horizontal alignment (based on top and bottom lines).",
+				"input.pbm delta output.ppm",
 				args_desc,
 				"A color image. Valid links are drawn in green, invalid ones in red.");
 
@@ -77,41 +78,21 @@ int main(int argc, char* argv[])
   object_image(L) objects
     = scribo::primitive::extract::objects(input, c8(), nbboxes);
 
+
   // Finding right links.
-  object_links<L> right_link
-    = primitive::link::with_single_right_link(objects, atoi(argv[2]));
+  object_links<L> right_links
+    = primitive::link::with_single_right_link(objects);
+
+  // Filtering.
+  object_links<L> filtered_links
+    = filter::object_links_non_h_aligned(objects, right_links, atoi(argv[2]));
 
 
+  // Debug image.
+  image2d<value::rgb8> decision_image
+    = scribo::debug::links_decision_image(input,
+					  right_links,
+					  filtered_links);
+  io::ppm::save(decision_image, argv[3]);
 
-  // Preparing output image.
-  image2d<value::rgb8> output = data::convert(value::rgb8(), input);
-  scribo::draw::bounding_boxes(output, objects, literal::blue);
-
-
-  // Drawing links.
-  mln::util::array<mln_result_(accu::center<mln_psite_(L)>)>
-    mass_centers = labeling::compute(accu::meta::center(),
-				     objects, objects.nlabels());
-
-  for_all_ncomponents(i, objects.nlabels())
-  {
-    unsigned midcol = (objects.bbox(i).pmax().col()
-		       - objects.bbox(i).pmin().col()) / 2;
-    int dmax = midcol + atoi(argv[2]);
-    mln_site_(L) c = mass_centers(i);
-
-    mln_site_(L) p = c + mln::right;
-
-    while (is_invalid_link(objects, right_link, p, i, c, dmax))
-    {
-      if (right_link[i] != i)
-	output(p) = literal::green;
-      else
-	output(p) = literal::red;
-      ++p.col();
-    }
-
-  }
-
-  io::ppm::save(output, argv[3]);
 }

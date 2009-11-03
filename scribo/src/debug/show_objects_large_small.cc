@@ -38,15 +38,18 @@
 #include <mln/io/ppm/save.hh>
 
 #include <scribo/primitive/extract/objects.hh>
-#include <scribo/filter/objects_thin.hh>
+#include <scribo/filter/objects_large.hh>
+#include <scribo/filter/objects_small.hh>
 #include <scribo/draw/bounding_boxes.hh>
 #include <scribo/debug/usage.hh>
 
+#include <scribo/debug/save_object_diff.hh>
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "    A binary image. True for objects and False for the background." },
-  { "min_thickness", "Minimum bounding box thickness. (common value: 1)" },
+  { "input.pbm", "A binary image. True for objects and False for the background." },
+  { "min_card", " Minimum cardinality in a component." },
+  { "max_card", " Maximum cardinality in a component." },
   {0, 0}
 };
 
@@ -55,12 +58,12 @@ int main(int argc, char *argv[])
 {
   using namespace mln;
 
-  if (argc != 4)
+  if (argc != 5)
     return scribo::debug::usage(argv,
-				"Show components being to thin.",
-				"input.pbm min_thickness output.ppm",
+				"Show components not being too small nor too large.",
+				"input.pbm min_card max_card output.ppm",
 				args_desc,
-				"A color image. Too thin components have their bounding boxes drawn in red.");
+				"A color image. Too small components are drawn in red, too large components in orange and others in green.");
 
   trace::entering("main");
 
@@ -72,13 +75,26 @@ int main(int argc, char *argv[])
   object_image(L) objects
     = scribo::primitive::extract::objects(input, c8(), nbboxes);
 
+  object_image(L) filter(objects);
 
-  image2d<value::rgb8> output = data::convert(value::rgb8(), input);
-  scribo::draw::bounding_boxes(output, objects, literal::red);
+  if (atoi(argv[2]) != 0)
+    filter = scribo::filter::objects_small(filter, atoi(argv[2]));
 
-  object_image(L) filtered_objects
-    = scribo::filter::objects_thin(objects, atoi(argv[2]));
-  scribo::draw::bounding_boxes(output, filtered_objects, literal::green);
+  if (atoi(argv[3]) != 0)
+    filter = scribo::filter::objects_large(filter, atoi(argv[3]));
 
-  io::ppm::save(output, argv[3]);
+  image2d<value::rgb8> output;
+  initialize(output, objects);
+
+  data::fill(output, literal::black);
+
+  for_all_components(i, objects.bboxes())
+    data::fill(((output | objects.bbox(i)).rw() | (pw::value(objects) == i)).rw(), literal::red);
+
+  for_all_components(i, filter.bboxes())
+    data::fill(((output | filter.bbox(i)).rw() | (pw::value(filter) == i)).rw(), literal::green);
+
+
+
+  io::ppm::save(output, argv[4]);
 }

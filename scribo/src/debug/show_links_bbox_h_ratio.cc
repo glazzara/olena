@@ -30,55 +30,69 @@
 
 #include <mln/data/convert.hh>
 
-#include <mln/value/label_16.hh>
 #include <mln/value/rgb8.hh>
+#include <mln/value/label_16.hh>
 #include <mln/literal/colors.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/ppm/save.hh>
 
 #include <scribo/primitive/extract/objects.hh>
-#include <scribo/filter/objects_thin.hh>
-#include <scribo/draw/bounding_boxes.hh>
+#include <scribo/primitive/link/with_single_right_link.hh>
+#include <scribo/primitive/link/with_single_left_link.hh>
+#include <scribo/filter/object_links_bbox_h_ratio.hh>
+
+#include <scribo/debug/decision_image.hh>
+#include <scribo/debug/links_decision_image.hh>
 #include <scribo/debug/usage.hh>
+
 
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "    A binary image. True for objects and False for the background." },
-  { "min_thickness", "Minimum bounding box thickness. (common value: 1)" },
+  { "input.pbm", "A binary image. True for objects and False for the background." },
+  { "height_ratio", "Min height ratio between two bboxes. (common value : 2)" },
   {0, 0}
 };
 
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
+  using namespace scribo;
+  using namespace scribo::primitive::internal;
   using namespace mln;
 
   if (argc != 4)
     return scribo::debug::usage(argv,
-				"Show components being to thin.",
-				"input.pbm min_thickness output.ppm",
+				"Show valid or invalid links according the bboxes height ratio.",
+				"input.pbm height_ratio output.ppm",
 				args_desc,
-				"A color image. Too thin components have their bounding boxes drawn in red.");
-
-  trace::entering("main");
+				"A color image. Valid links are drawn in green, invalid ones in red.");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
+  // Finding objects.
   value::label_16 nbboxes;
   typedef image2d<value::label_16> L;
   object_image(L) objects
     = scribo::primitive::extract::objects(input, c8(), nbboxes);
 
 
-  image2d<value::rgb8> output = data::convert(value::rgb8(), input);
-  scribo::draw::bounding_boxes(output, objects, literal::red);
+  // Finding right links.
+  object_links<L> right_links
+    = primitive::link::with_single_right_link(objects);
 
-  object_image(L) filtered_objects
-    = scribo::filter::objects_thin(objects, atoi(argv[2]));
-  scribo::draw::bounding_boxes(output, filtered_objects, literal::green);
+  // Filtering.
+  object_links<L> hratio_filtered_links
+    = filter::object_links_bbox_h_ratio(objects, right_links, atof(argv[2]));
 
-  io::ppm::save(output, argv[3]);
+
+  // Debug image.
+  image2d<value::rgb8> hratio_decision_image
+    = scribo::debug::links_decision_image(input,
+					  right_links,
+					  hratio_filtered_links);
+  io::ppm::save(hratio_decision_image, argv[3]);
+
 }

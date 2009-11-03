@@ -1,5 +1,28 @@
 2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new debug tools.
+
+	* src/debug/Makefile.am: Add new targets.
+
+	* src/debug/show_links_bbox_h_ratio.cc,
+	* src/debug/show_links_bbox_overlap.cc,
+	* src/debug/show_links_bottom_aligned.cc,
+	* src/debug/show_links_center_aligned.cc,
+	* src/debug/show_links_non_h_aligned.cc,
+	* src/debug/show_links_several_right.cc,
+	* src/debug/show_links_several_right_overlap.cc,
+	* src/debug/show_links_single_left.cc,
+	* src/debug/show_links_single_left_dmax_ratio.cc,
+	* src/debug/show_links_single_right.cc,
+	* src/debug/show_links_single_right_dmax_ratio.cc,
+	* src/debug/show_links_top_aligned.cc,
+	* src/debug/show_objects_large_small.cc,
+	* src/debug/show_objects_thick.cc: New debug tools.
+
+	* src/debug/show_objects_thin.cc: Write it.
+
+2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new link filters.
 
 	* filter/internal/compute.hh: New routine to compute filter
