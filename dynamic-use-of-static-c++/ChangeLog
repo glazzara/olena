@@ -8,6 +8,17 @@
 
 2009-11-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise the SWIG (Python) Milena wrappers.
+
+	* swig/python/milena-libdynmilena.py: New.
+	* swig/python/milena.py: Rename as...
+	* swig/python/milena-libdyn.py: ...this.
+	Add comments.
+	* swig/python/Makefile.am (TESTS): s/milena.py/milena-libdyn.py/
+	Add milena-libdynmilena.py.
+
+2009-11-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Expose the Milena wrappers to SWIG.
 
 	* swig/mln.i: New.

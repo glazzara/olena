@@ -17,35 +17,27 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 # \file
-# \brief A Python version of test/test_olena.cc.
+# \brief A Python version of test/test_milena.cc using libdynmilena.
 
 import ltihooks
 
 import dyn
-import config
-
-dyn.include_dir(config.abs_milena_dir)
-dyn.include("mln/core/image/image2d.hh")
-dyn.include("mln/data/fill.hh")
-dyn.include("mln/debug/iota.hh")
-dyn.include("mln/debug/println.hh")
-
-mk_image2d_int = dyn.ctor("mln::image2d<int>")
-fill = dyn.fun("mln::data::fill")
-iota = dyn.fun("mln::debug::iota")
-println = dyn.fun("mln::debug::println")
+import mln
 
 # We'd like to be able to write this:
 #
-#  ima = mk_image2d_int(3, 3)
+#  ima = mln.mk_image2d_int(3, 3)
 #
 # but we just can't.  `mk_image2d_int' only accept `dyn.data' as
 # arguments, so we have to encapsulate integers in `dyn.data' objects
 # (likewise for strings).
+#
+# Moreover, mk_image2d_int is a global object (functor), registered as
+# an attribute of the `mln.cvar' object.
 
-ima = mk_image2d_int(dyn.data(3), dyn.data(3))
+ima = mln.cvar.mk_image2d_int(dyn.data(3), dyn.data(3))
 
-fill(ima, dyn.data(0))
-println(dyn.data("ima (before) ="), ima)
-iota(ima)
-println(dyn.data("ima (after) ="), ima)
+mln.cvar.fill(ima, dyn.data(0))
+mln.cvar.println(dyn.data("ima (before) ="), ima)
+mln.cvar.iota(ima)
+mln.cvar.println(dyn.data("ima (after) ="), ima)

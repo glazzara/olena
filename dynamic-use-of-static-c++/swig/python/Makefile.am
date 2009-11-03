@@ -119,7 +119,7 @@ $(srcdir)/run.stamp: $(RUN_IN)
 # and a test.  Alas, the script `run' expects a file name with an
 # extension as argument.  We could improve this by adding options such
 # as `--python' to `run'.
-TESTS = milena.py
+TESTS = milena-libdyn.py milena-libdynmilena.py
 
 # FIXME: Is this really needed?
 EXTRA_DIST += $(TESTS)
