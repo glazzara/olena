@@ -23,9 +23,11 @@
    exception does not however invalidate any other reasons why the
    executable file might be covered by the GNU General Public License.  */
 
-#include "dyn-all.hh"
-using namespace dyn::language;
 #include <iostream>
+
+#include "dyn-all.hh"
+
+using namespace dyn::language;
 
 int main()
 {

@@ -1,5 +1,24 @@
 2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Aesthetic changes w.r.t. white space and comments.
+
+	* bin/dyn-config.in,
+	* bin/mk_swig_input,
+	* bin/swig_tree_to_yaml,
+	* bin/yaml_to_dyn_decls,
+	* config/erbx,
+	* data/function.cc,
+	* src/wrappers/milena.cc,
+	* src/wrappers/milena.hh,
+	* swig/dyn.i,
+	* swig/mln.i,
+	* swig/run.in,
+	* test/test_methods.cc,
+	* test/wrappers/test-milena.cc:
+	Here.
+
+2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add missing copyright headers.
 
 	* bin/dyn-config.in,
