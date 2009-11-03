@@ -214,6 +214,7 @@ AC_CONFIG_FILES([
   _config/local-config.rb
   test/Makefile
     test/vaucanson/Makefile
+    test/wrappers/Makefile
 ], [chmod +x bin/dyn-config])
 
 # Instantiate the output files.

@@ -17,7 +17,7 @@
 AM_CPPFLAGS = -I$(srcdir)/fixtures -I$(top_srcdir)/src -I$(top_builddir)/src
 AM_CXXFLAGS = $(WARNING_CXXFLAGS)
 
-SUBDIRS = vaucanson
+SUBDIRS = . vaucanson wrappers
 
 #erb# =begin # Read the documentation of erbx to see how to change this part
 #erb# <%

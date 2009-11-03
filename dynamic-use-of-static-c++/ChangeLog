@@ -1,5 +1,14 @@
 2009-11-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise Milena precompiled wrappers.
+
+	* test/wrappers/test-milena.cc: New.
+	* test/wrappers/Makefile.am: New.
+	* test/Makefile.am (SUBDIRS): Append `wrappers' and prepend `.'.
+	* configure.ac: Configure test/wrappers/Makefile.
+
+2009-11-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Start to provide some precompiled wrappers for Milena.
 
 	* src/wrappers/milena.hh, src/wrappers/milena.cc: New.
