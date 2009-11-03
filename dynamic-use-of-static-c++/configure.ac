@@ -208,6 +208,7 @@ AC_CONFIG_FILES([
   libmd5/Makefile
   src/Makefile
   src/config.hh
+    src/wrappers/Makefile
   data/Makefile
   config/Makefile
   _config/local-config.rb

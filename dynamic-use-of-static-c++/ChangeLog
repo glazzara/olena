@@ -1,5 +1,15 @@
 2009-11-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Start to provide some precompiled wrappers for Milena.
+
+	* src/wrappers/milena.hh, src/wrappers/milena.cc: New.
+	* src/wrappers/Makefile.am: New.
+	* src/Makefile.am (SUBDIRS): New.
+	Add . and wrappers.
+	* configure.ac: Configure src/wrappers/Makefile.
+
+2009-11-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Wrap global objects (operator functors) previously ignored.
 
 	* swig/dyn.i: Here.
