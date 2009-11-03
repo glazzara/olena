@@ -1,5 +1,11 @@
 2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Adjust the initialization of the SWIG Python Milena wrappers.
+
+	* swig/mln.i: Call dyn::mln::initialize in %init section.
+
+2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make the initialization of Milena wrappers deterministic.
 
 	* src/wrappers/milena.cc (dyn::mln::init_type): Remove class.

@@ -37,3 +37,9 @@
 %}
 
 %include "wrappers/milena.hh"
+
+%init
+%{
+  // Set up header paths.
+  dyn::mln::initialize();
+%}
