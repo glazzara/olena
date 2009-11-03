@@ -33,9 +33,9 @@ namespace dyn
       operator() (<%= (["const data&"] * i).join(', ') %>) const;
     <%- end -%>
 
-    const fun_kind kind_;
-    const std::string name_;
-    const std::string header_paths_;
+    fun_kind kind_;
+    std::string name_;
+    std::string header_paths_;
     const data* obj_ptr_;
   };
 

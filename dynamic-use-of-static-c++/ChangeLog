@@ -1,5 +1,15 @@
 2009-11-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make dyn::generic_fun assignable to help SWIG wrap it properly.
+
+	* src/function.erb.hh
+	(dyn::generic_fun::kind_)
+	(dyn::generic_fun::name_)
+	(dyn::generic_fun::header_paths_):
+	Remove const qualifiers.
+
+2009-11-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename test/test_olena as test/test_milena.
 
 	* test/test_olena.cc: Rename as...
