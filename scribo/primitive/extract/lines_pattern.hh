@@ -62,6 +62,7 @@ namespace scribo
       /// \param[in] win_   A window corresponding to the line pattern.
       ///
       /// \return A image with lines of direction \p dir.
+      ///
       //
       template <typename I, typename W>
       mln_concrete(I)
@@ -92,19 +93,31 @@ namespace scribo
 
 	mln_piter(I) p(input.domain());
 	mln_qiter(window2d) q(win, p);
+	bool is_foreground;
 	for_all(p)
 	{
+
+	  // If the foreground part of the pattern has more than 20%
+	  // of background pixels, the current pixel is considered as
+	  // background pixel.
 	  if (length - tmp(p) > (0.2f * length))
 	  {
 	    output(p) = false;
 	    continue;
 	  }
 
-	  unsigned bg_count = 0;
+	  // If the background parts of the pattern have less than 95%
+	  // of foreground pixels, the current pixel is considered as
+	  // part of the background.
+	  is_foreground = true;
 	  for_all(q)
-	    bg_count += tmp(q);
+	    if ((length - tmp(q)) < (length * 0.95f))
+	    {
+	      is_foreground = false;
+	      break;
+	    }
 
-	  output(p) = (2 * length - bg_count) > (2 * length * 0.90f);
+	  output(p) = is_foreground;
 	}
 
 

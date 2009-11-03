@@ -1,5 +1,11 @@
 2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve line pattern recognition routine.
+
+	* primitive/extract/lines_pattern.hh: Make it less tolerant.
+
+2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new debug tools.
 
 	* src/debug/Makefile.am: Add new targets.
