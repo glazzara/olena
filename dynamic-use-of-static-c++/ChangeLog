@@ -1,5 +1,9 @@
 2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	* README: Update.
+
+2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Aesthetic changes w.r.t. white space and comments.
 
 	* bin/dyn-config.in,

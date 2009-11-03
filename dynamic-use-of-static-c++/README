@@ -1,23 +1,31 @@
 HOW TO USE THIS PROJECT
 
+  Note: These instructions have been updated since this project has
+  been re-integrated into the Olena repository (October 2009).
+  However, they will probably evolve again, since the project should
+  eventually become a part of the Olena distribution.  The biggest
+  change will probably be to run things from the parent directory
+  (Olena's) and enable a configure flag to activate this module.
+
 From the repository:
 
-  # Initialize the build system
+  # Initialize the build system.
   ./bootstrap
 
-  # Make a build dir
+  # Make a build dir.
   mkdir _build && cd _build
 
-  # Configure the build for your system
-  # The config.site try to use more efficient tools (g++-4.0 and ccache)
-  # it also enable the configure caching.
-  # With --prefix you can set the destination (here _install)
+  # Configure the build for your system.
+  ../configure
+
+  # You can also use the file `config.site' shipped with the
+  # distribution, though it is a bit old.  `config.site' tries to use
+  # more efficient tools (g++-4.0 and ccache).  It also enables
+  # configure's caching mechanism.  With `--prefix' you can set the
+  # destination (here, `../_install').
   CONFIG_SITE=`pwd`/../config.site ../configure --prefix=`pwd`/../_install
 
-  # For now need to add the bin directory to your path because dyn-config is
-  # by programs compiled with our system
+  # You may want to add the `bin/' directory to your path, but it is
+  # no longer mandatory (`dyn-config' from `bin/' used to be required
+  # by programs compiled with our system).
   export PATH=$PATH:`pwd`/bin
-
-  make check # The test with a latest prototype of olena will fail if you
-             # don't checkout it:
-             # cd test/olena && svn co https://svn.lrde.epita.fr/svn/oln/prototypes/proto-stl-style
