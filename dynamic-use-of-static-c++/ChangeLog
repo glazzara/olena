@@ -1,3 +1,11 @@
+2009-11-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Help Mac OS X's Mach-O dynamic linker (dyld) find libdynmilena.
+
+	* swig/run.in: Remove symlink, and replace it by an actual copy of
+	../../swilena/run.in.
+	(modpath): Append @abs_top_builddir@/src/wrappers/.libs.
+
 2009-11-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Expose the Milena wrappers to SWIG.

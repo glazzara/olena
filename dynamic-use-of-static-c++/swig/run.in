@@ -1,1 +1,59 @@
-../../swilena/run.in
+#!/bin/sh
+
+# Copyright (C) 2003, 2004, 2006, 2009  Laboratoire d'Informatique de Paris 6
+# (LIP6), département Systèmes Répartis Coopératifs (SRC), Université
+# Pierre et Marie Curie.
+#
+# This file is part of Spot, a model checking library.
+#
+# Spot is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# Spot is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+# or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+# License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Spot; see the file COPYING.  If not, write to the Free
+# Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+
+
+# If we are running from make check (srcdir is set) and VERBOSE is
+# unset, be quiet.
+test -n "$srcdir" && test -z "$VERBOSE" && exec >/dev/null 2>&1
+
+# Darwin needs some help in figuring out where non-installed libtool
+# libraries are (on this platform libtool encodes the expected final
+# path of dependent libraries in each library).
+## FIXME: This path should be configurable from outside the script.
+modpath='.libs:@abs_top_builddir@/src/.libs:@abs_top_builddir@/src/wrappers/.libs'
+
+case $1 in
+  '' | *.py)
+    PYTHONPATH='@abs_builddir@/python:@abs_srcdir@/python':"$PYTHONPATH" \
+    DYLD_LIBRARY_PATH=$modpath \
+    exec @PYTHON@ "$@"
+    ;;
+  # What's the point in adding `.libs' to SWILENA_RUBY_PATH?
+  #
+  # As some of our SWIG interfaces import other SWIG interfaces
+  # (with the `%import' keyword), we must add the `.libs' directory
+  # to SWILENA_RUBY_PATH so that the Ruby interpreter can load the
+  # corresponding dynamic module(s) (SWIG's `%import' statements
+  # generate code in dynamic modules that bypass Ruby's
+  # `Kernel.require' mechanism).
+  *.rb)
+    SWILENA_RUBY_PATH='@abs_builddir@/ruby:@abs_srcdir@/ruby:.libs' \
+    DYLD_LIBRARY_PATH=$modpath \
+    exec @RUBY@ "$@"
+  ;;
+  *.test)
+    exec sh -x "$@";;
+  *)
+    echo "Unknown extension" 2>&1
+    exit 2;;
+esac
