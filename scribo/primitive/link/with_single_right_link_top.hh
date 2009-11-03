@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_HH
-# define SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_HH
+#ifndef SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_TOP_HH
+# define SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_TOP_HH
 
 /// \file
 ///
@@ -44,7 +44,7 @@
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>
-# include <scribo/primitive/link/internal/link_ms_dmax_base.hh>
+# include <scribo/primitive/link/internal/link_center_dmax_base.hh>
 
 # include <scribo/primitive/link/compute.hh>
 
@@ -59,7 +59,7 @@ namespace scribo
     {
 
       /// \brief Link objects with their right neighbor if exists.
-      /// Lookup startup point is the object mass center.
+      /// Lookup startup point is the object top center.
       ///
       /// \param[in] objects An object image.
       /// \param[in] The maximum distance allowed to seach a neighbor object.
@@ -69,7 +69,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects,
+      with_single_right_link_top(const object_image(L)& objects,
 			     unsigned neighb_max_distance);
 
 
@@ -78,7 +78,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects);
+      with_single_right_link_top(const object_image(L)& objects);
 
 
 
@@ -91,17 +91,20 @@ namespace scribo
 	// Functor
 
 	template <typename L>
-	class single_right_functor
-	  : public internal::link_ms_dmax_base<L, single_right_functor<L> >
+	class single_right_top_functor
+	  : public link_center_dmax_base<L,
+					 single_right_top_functor<L> >
 	{
 	  typedef
-	    internal::link_ms_dmax_base<L, single_right_functor<L> > super_;
+	    link_center_dmax_base<L, single_right_top_functor<L> >
+	  super_;
 
 	public:
 	  typedef mln_site(L) P;
 
-	  single_right_functor(const object_image(L)& objects, unsigned dmax)
-	    : super_(objects, dmax)
+	  single_right_top_functor(const object_image(L)& objects,
+				      unsigned dmax)
+	    : super_(objects, dmax, 0)
 	  {
 	  }
 
@@ -121,19 +124,19 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects,
+      with_single_right_link_top(const object_image(L)& objects,
 			     unsigned neighb_max_distance)
       {
-	trace::entering("scribo::primitive::link::with_single_right_link");
+	trace::entering("scribo::primitive::link::with_single_right_link_top");
 
 	mln_precondition(objects.is_valid());
 
-	internal::single_right_functor<L>
+	internal::single_right_top_functor<L>
 	  functor(objects, neighb_max_distance);
 
 	object_links<L> output = compute(functor);
 
-	trace::exiting("scribo::primitive::link::with_single_right_link");
+	trace::exiting("scribo::primitive::link::with_single_right_link_top");
 	return output;
       }
 
@@ -141,9 +144,9 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects)
+      with_single_right_link_top(const object_image(L)& objects)
       {
-	return with_single_right_link(objects, mln_max(unsigned));
+	return with_single_right_link_top(objects, mln_max(unsigned));
       }
 
 
@@ -155,4 +158,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_HH
+#endif // ! SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_TOP_HH

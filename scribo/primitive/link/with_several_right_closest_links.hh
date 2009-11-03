@@ -23,17 +23,21 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_LINK_WITH_SEVERAL_RIGHT_LINKS_HH
-# define SCRIBO_PRIMITIVE_LINK_WITH_SEVERAL_RIGHT_LINKS_HH
+#ifndef SCRIBO_PRIMITIVE_LINK_WITH_SEVERAL_RIGHT_CLOSEST_LINKS_HH
+# define SCRIBO_PRIMITIVE_LINK_WITH_SEVERAL_RIGHT_CLOSEST_LINKS_HH
 
 /// \file
 ///
 /// Link text bounding boxes with their right neighbor.
 ///
 /// Merge code with primitive::link::with_single_right_link.hh
+///
+/// \todo Factor code with primitive::link::with_several_right_links
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
+
+# include <mln/extension/fill.hh>
 
 # include <mln/util/array.hh>
 
@@ -56,35 +60,68 @@ namespace scribo
 
       using namespace mln;
 
-      /// Map each character bounding box to its right bounding box neighbor
-      /// if possible.
-      /// Iterate to the right but link boxes to the right.
+
+      /// Map each character bounding box to its right bounding box
+      /// neighbor if possible. If there are several right neighbor,
+      /// the closest one is chosen.
       ///
-      /// \return an mln::util::array. Map a bounding box to its right neighbor.
+      /// \return an mln::util::array. Map a bounding box to its right
+      /// neighbor.
+      //
       template <typename L>
       inline
       object_links<L>
-      with_several_right_links(const object_image(L)& objects,
-			       unsigned neighb_max_distance);
+      with_several_right_closest_links(const object_image(L)& objects,
+				       unsigned neighb_max_distance);
 
       /// \overload
       template <typename L>
       inline
       object_links<L>
-      with_several_right_links(const object_image(L)& objects);
+      with_several_right_closest_links(const object_image(L)& objects);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+
+      namespace internal
+      {
+
+	template <unsigned n, typename P>
+	inline
+	unsigned
+	find_closest(const algebra::vec<n,
+		                        mln::util::couple<bool, P> >& res,
+		     const P& c)
+	{
+	  algebra::vec<3, unsigned> dist;
+	  for (unsigned j = 0; j < 3; ++j)
+	    dist[j] = math::abs(res[j].second().col() - c.col());
+
+	  unsigned idx = 0;
+	  for (unsigned i = 1; i < n; ++i)
+	    if (dist[i] < dist[idx])
+	      idx = i;
+
+	  return idx;
+	}
+
+      } // end of namespace scribo::primitive::link::internal
+
+
+
       template <typename L>
       inline
       object_links<L>
-      with_several_right_links(const object_image(L)& objects,
-			       unsigned neighb_max_distance)
+      with_several_right_closest_links(const object_image(L)& objects,
+				       unsigned neighb_max_distance)
       {
-	trace::entering("scribo::primitive::link::with_several_right_links");
+	trace::entering("scribo::primitive::link::with_several_right_closest_links");
 
 	mln_precondition(objects.is_valid());
+
+	extension::fill(objects, 0);
 
 	object_links<L>
 	  link_1(objects, objects.nlabels().next()),
@@ -92,9 +129,9 @@ namespace scribo
 	  link_3(objects, objects.nlabels().next()),
 	  final_link(objects, objects.nlabels().next());
 
-	internal::init_link_array(link_1);
-	internal::init_link_array(link_2);
-	internal::init_link_array(link_3);
+	primitive::internal::init_link_array(link_1);
+	primitive::internal::init_link_array(link_2);
+	primitive::internal::init_link_array(link_3);
 
 	mln::util::array<mln_result(accu::center<mln_psite(L)>)>
 	    mass_centers = labeling::compute(accu::meta::center(),
@@ -104,47 +141,56 @@ namespace scribo
 	for_all_ncomponents(i, objects.nlabels())
 	{
 	  //  -------
-	  //  |	 X------->
+	  //  |	 a1------->
 	  //  |	    |
 	  //  |	    |
-	  //  |	 X------->
+	  //  |	 mc------->
 	  //  |	    |
 	  //  |	    |
-	  //  |	 X------->
+	  //  |	 a2------->
 	  //  -------
+
 	  float midcol = (objects.bbox(i).pmax().col()
 			  - objects.bbox(i).pmin().col()) / 2;
 	  float dmax = midcol + neighb_max_distance;
 
 	  mln_site(L) c = objects.bbox(i).center();
 
-	  /// Right link from the top anchor.
+	  algebra::vec<3, mln::util::couple<bool, mln_site(L)> > res;
+
+	  // Right link from the top anchor.
 	  mln_site(L) a1 = c;
-	  a1.row() = objects.bbox(i).pmin().row() + (c.row() - objects.bbox(i).pmin().row()) / 4;
-	  internal::find_right_link(objects, link_1, i, dmax, a1);
+	  a1.row() = objects.bbox(i).pmin().row()
+	    + (c.row() - objects.bbox(i).pmin().row()) / 4;
+	  res[0] = primitive::internal::find_right_link(objects, link_1,
+							i, dmax, a1);
 
-	  /// Right link from the central site
-	  internal::find_right_link(objects, link_2, i, dmax, mass_centers[i]);
+	  // Right link from the central site
+	  res[1] = primitive::internal::find_right_link(objects, link_2,
+							i, dmax,
+							mass_centers[i]);
 
-	  /// Right link from the bottom anchor.
+	  // Right link from the bottom anchor.
 	  mln_site(L) a2 = c;
-	  a2.row() = objects.bbox(i).pmax().row() - (c.row() - objects.bbox(i).pmin().row()) / 4;
-	  internal::find_right_link(objects, link_3, i, dmax, a2);
+	  a2.row() = objects.bbox(i).pmax().row()
+	    - (c.row() - objects.bbox(i).pmin().row()) / 4;
+	  res[2] = primitive::internal::find_right_link(objects, link_3,
+							i, dmax, a2);
+
+	  // Try to find the closest object.
+
+	  unsigned closest_idx = internal::find_closest(res, c);
 
 
-	  if (link_2[i] != i)
-	    final_link[i] = link_2[i];
-	  else if (link_1[i] == link_3[i])
-	    final_link[i] = link_1[i];
-	  else if (link_1[i] != i && link_3[i] == i)
-	    final_link[i] = link_1[i];
-	  else if (link_3[i] != i && link_1[i] == i)
-	    final_link[i] = link_3[i];
-	  else
+	  // If there exists a link and the site is not outside the
+	  // image domain.
+ 	  if (res[closest_idx].first())
+ 	    final_link[i] = objects(res[closest_idx].second());
+ 	  else
 	    final_link[i] = i;
 	}
 
-	trace::exiting("scribo::primitive::link::with_several_right_links");
+	trace::exiting("scribo::primitive::link::with_several_right_closest_links");
 	return final_link;
       }
 
@@ -152,9 +198,9 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_several_right_links(const object_image(L)& objects)
+      with_several_right_closest_links(const object_image(L)& objects)
       {
-	return with_several_right_links(objects, mln_max(unsigned));
+	return with_several_right_closest_links(objects, mln_max(unsigned));
       }
 
 
@@ -166,4 +212,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_PRIMITIVE_LINK_WITH_SEVERAL_RIGHT_LINKS_HH
+#endif // ! SCRIBO_PRIMITIVE_LINK_WITH_SEVERAL_RIGHT_CLOSEST_LINKS_HH

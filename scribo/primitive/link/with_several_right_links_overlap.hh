@@ -23,30 +23,24 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_HH
-# define SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_HH
+#ifndef SCRIBO_PRIMITIVE_LINK_WITH_SEVERAL_RIGHT_LINKS_OVERLAP_HH
+# define SCRIBO_PRIMITIVE_LINK_WITH_SEVERAL_RIGHT_LINKS_OVERLAP_HH
 
 /// \file
 ///
-/// Link text objects with their right neighbor.
-
+/// Link text bounding boxes with their right neighbor.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 
-# include <mln/accu/center.hh>
-# include <mln/labeling/compute.hh>
-# include <mln/math/abs.hh>
 # include <mln/util/array.hh>
 
-# include <scribo/core/macros.hh>
-# include <scribo/core/object_image.hh>
 # include <scribo/core/object_links.hh>
-
-# include <scribo/primitive/link/internal/find_link.hh>
-# include <scribo/primitive/link/internal/link_ms_dmax_base.hh>
-
-# include <scribo/primitive/link/compute.hh>
+# include <scribo/core/object_image.hh>
+# include <scribo/core/macros.hh>
+# include <scribo/primitive/internal/init_link_array.hh>
+# include <scribo/primitive/internal/find_right_link.hh>
+# include <scribo/util/text.hh>
 
 
 namespace scribo
@@ -58,92 +52,92 @@ namespace scribo
     namespace link
     {
 
-      /// \brief Link objects with their right neighbor if exists.
-      /// Lookup startup point is the object mass center.
+      using namespace mln;
+
+      /// Map each character bounding box to its right bounding box neighbor
+      /// if possible.
+      /// Iterate to the right but link boxes to the right.
       ///
-      /// \param[in] objects An object image.
-      /// \param[in] The maximum distance allowed to seach a neighbor object.
-      ///
-      /// \return Object links data.
-      //
+      /// \return an mln::util::array. Map a bounding box to its right neighbor.
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects,
-			     unsigned neighb_max_distance);
-
+      with_several_right_links_overlap(const object_image(L)& objects,
+				       unsigned neighb_max_distance);
 
       /// \overload
-      /// Max distance is set to mln_max(unsigned).
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects);
-
+      with_several_right_links_overlap(const object_image(L)& objects);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-
       namespace internal
       {
 
-	// Functor
-
 	template <typename L>
-	class single_right_functor
-	  : public internal::link_ms_dmax_base<L, single_right_functor<L> >
+	class several_right_overlap_functor
+	  : public link_several_dmax_base<L, several_right_overlap_functor<L> >
 	{
 	  typedef
-	    internal::link_ms_dmax_base<L, single_right_functor<L> > super_;
+	    link_several_dmax_base<L, several_right_overlap_functor<L> >
+	  super_;
 
 	public:
 	  typedef mln_site(L) P;
 
-	  single_right_functor(const object_image(L)& objects, unsigned dmax)
-	    : super_(objects, dmax)
+	  several_right_overlap_functor(const object_image(L)& objects,
+					unsigned dmax)
+	    : super_(objects, dmax, 3)
 	  {
 	  }
+
+	  template <typename L, typename E>
+	  inline
+	  mln_site(L)
+	  start_point_(unsigned current_object, unsigned anchor)
+	  {
+	    return anchors_3(this->objects_, this->mass_centers_,
+			     current_object, anchor);
+	  }
+
 
 	  void compute_next_site_(P& p)
 	  {
 	    ++p.col();
 	  }
 
-	};
-
       } // end of namespace scribo::primitive::link::internal
 
-
-
-      // Facades
 
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects,
-			     unsigned neighb_max_distance)
+      with_several_right_links_overlap(const object_image(L)& objects,
+				       unsigned neighb_max_distance)
       {
-	trace::entering("scribo::primitive::link::with_single_right_link");
+	trace::entering("scribo::primitive::link::with_several_right_links_overlap");
 
 	mln_precondition(objects.is_valid());
 
-	internal::single_right_functor<L>
-	  functor(objects, neighb_max_distance);
+	several_right_overlap_functor<L> functor(objects, neighb_max_distance);
 
-	object_links<L> output = compute(functor);
+	for_all_ncomponents(current_object, objects.nlabels())
+	  internal::find_several_links(functor, current_object);
 
-	trace::exiting("scribo::primitive::link::with_single_right_link");
-	return output;
+	trace::exiting("scribo::primitive::link::with_several_right_links_overlap");
+	return functor.links();
       }
 
 
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects)
+      with_several_right_links_overlap(const object_image(L)& objects)
       {
-	return with_single_right_link(objects, mln_max(unsigned));
+	return with_several_right_links_overlap(objects, mln_max(unsigned));
       }
 
 
@@ -155,4 +149,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_HH
+#endif // ! SCRIBO_PRIMITIVE_LINK_WITH_SEVERAL_RIGHT_LINKS_OVERLAP_HH

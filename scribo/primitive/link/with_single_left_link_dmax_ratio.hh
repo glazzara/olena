@@ -23,13 +23,13 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_HH
-# define SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_HH
+#ifndef SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_LEFT_LINK_DMAX_RATIO_HH
+# define SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_LEFT_LINK_DMAX_RATIO_HH
 
 /// \file
 ///
-/// Link text objects with their right neighbor.
-
+/// Link text objects with their left neighbor according to a maximum
+/// distance.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -44,7 +44,7 @@
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>
-# include <scribo/primitive/link/internal/link_ms_dmax_base.hh>
+# include <scribo/primitive/link/internal/link_ms_dmax_ratio_base.hh>
 
 # include <scribo/primitive/link/compute.hh>
 
@@ -58,27 +58,34 @@ namespace scribo
     namespace link
     {
 
-      /// \brief Link objects with their right neighbor if exists.
-      /// Lookup startup point is the object mass center.
-      ///
-      /// \param[in] objects An object image.
-      /// \param[in] The maximum distance allowed to seach a neighbor object.
-      ///
-      /// \return Object links data.
-      //
+      /*! \brief Link objects with their left neighbor if exists.
+
+	  \param[in] objects An object image.
+	  \param[in] dmax_ratio
+
+	  \return Object links data.
+
+
+	  Look for a neighbor until a maximum distance defined by :
+
+	  dmax = w / 2 + dmax_ratio * max(h, w)
+
+	  where w is the bounding box width and h the bounding box height.
+
+      */
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects,
-			     unsigned neighb_max_distance);
+      with_single_left_link_dmax_ratio(const object_image(L)& objects,
+					float dmax_ratio);
 
 
       /// \overload
-      /// Max distance is set to mln_max(unsigned).
+      /// dmax_ratio is set to 3.
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects);
+      with_single_left_link_dmax_ratio(const object_image(L)& objects);
 
 
 
@@ -91,23 +98,25 @@ namespace scribo
 	// Functor
 
 	template <typename L>
-	class single_right_functor
-	  : public internal::link_ms_dmax_base<L, single_right_functor<L> >
+	class single_left_dmax_ratio_functor
+	  : public internal::link_ms_dmax_ratio_base<L,
+						     single_left_dmax_ratio_functor<L> >
 	{
-	  typedef
-	    internal::link_ms_dmax_base<L, single_right_functor<L> > super_;
+	  typedef single_left_dmax_ratio_functor<L> self_t;
+	  typedef internal::link_ms_dmax_ratio_base<L, self_t> super_;
 
 	public:
 	  typedef mln_site(L) P;
 
-	  single_right_functor(const object_image(L)& objects, unsigned dmax)
+	  single_left_dmax_ratio_functor(const object_image(L)& objects,
+					  unsigned dmax)
 	    : super_(objects, dmax)
 	  {
 	  }
 
 	  void compute_next_site_(P& p)
 	  {
-	    ++p.col();
+	    --p.col();
 	  }
 
 	};
@@ -121,19 +130,19 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects,
-			     unsigned neighb_max_distance)
+      with_single_left_link_dmax_ratio(const object_image(L)& objects,
+					float dmax_ratio)
       {
-	trace::entering("scribo::primitive::link::with_single_right_link");
+	trace::entering("scribo::primitive::link::with_single_left_link_dmax_ratio");
 
 	mln_precondition(objects.is_valid());
 
-	internal::single_right_functor<L>
-	  functor(objects, neighb_max_distance);
+	internal::single_left_dmax_ratio_functor<L>
+	  functor(objects, dmax_ratio);
 
 	object_links<L> output = compute(functor);
 
-	trace::exiting("scribo::primitive::link::with_single_right_link");
+	trace::exiting("scribo::primitive::link::with_single_left_link_dmax_ratio");
 	return output;
       }
 
@@ -141,9 +150,9 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects)
+      with_single_left_link_dmax_ratio(const object_image(L)& objects)
       {
-	return with_single_right_link(objects, mln_max(unsigned));
+	return with_single_left_link_dmax_ratio(objects, 3);
       }
 
 
@@ -155,4 +164,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_HH
+#endif // ! SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_LEFT_LINK_DMAX_RATIO_HH

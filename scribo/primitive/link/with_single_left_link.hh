@@ -29,8 +29,6 @@
 /// \file
 ///
 /// Link text objects with their left neighbor.
-///
-/// Merge code with primitive::link::with_single_right_link.hh
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -43,14 +41,16 @@
 
 # include <mln/util/array.hh>
 
-# include <scribo/core/object_links.hh>
+
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_image.hh>
-# include <scribo/primitive/internal/init_link_array.hh>
-# include <scribo/primitive/internal/find_left_link.hh>
+# include <scribo/core/object_links.hh>
 
-//FIXME: not generic.
-# include <mln/core/alias/dpoint2d.hh>
+# include <scribo/primitive/link/internal/find_link.hh>
+# include <scribo/primitive/link/internal/link_ms_dmax_base.hh>
+
+# include <scribo/primitive/link/compute.hh>
+
 
 namespace scribo
 {
@@ -61,14 +61,12 @@ namespace scribo
     namespace link
     {
 
-      /// Map each text object to its left bounding box neighbor
-      /// if possible.
-      /// Iterate to the right but link boxes to the left.
+      /// \brief Link objects with their left neighbor if exists.
       ///
       /// \param[in] objects An object image.
       /// \param[in] The maximum distance allowed to seach a neighbor object.
       ///
-      /// \return an mln::util::array. Map a bounding box to its left neighbor.
+      /// \return Object links data.
       //
       template <typename L>
       inline
@@ -76,39 +74,79 @@ namespace scribo
       with_single_left_link(const object_image(L)& objects,
 			    unsigned neighb_max_distance);
 
+
+      /// \overload
+      /// Max distance is set to mln_max(unsigned).
+      template <typename L>
+      inline
+      object_links<L>
+      with_single_left_link(const object_image(L)& objects);
+
+
 # ifndef MLN_INCLUDE_ONLY
+
+
+      namespace internal
+      {
+
+	// Functor
+
+	template <typename L>
+	class single_left_functor
+	  : public internal::link_ms_dmax_base<L, single_left_functor<L> >
+	{
+	  typedef
+	    internal::link_ms_dmax_base<L, single_left_functor<L> > super_;
+
+	public:
+	  typedef mln_site(L) P;
+
+	  single_left_functor(const object_image(L)& objects, unsigned dmax)
+	    : super_(objects, dmax)
+	  {
+	  }
+
+	  void compute_next_site_(P& p)
+	  {
+	    --p.col();
+	  }
+
+	};
+
+      } // end of namespace scribo::primitive::link::internal
+
+
+
+      // Facades
 
       template <typename L>
       inline
       object_links<L>
       with_single_left_link(const object_image(L)& objects,
-			    unsigned neighb_max_distance)
+			     unsigned neighb_max_distance)
       {
 	trace::entering("scribo::primitive::link::with_single_left_link");
 
 	mln_precondition(objects.is_valid());
 
-	object_links<L> left_link(objects, objects.nlabels().next());
-	internal::init_link_array(left_link);
+	internal::single_left_functor<L>
+	  functor(objects, neighb_max_distance);
 
-	mln::util::array<mln_result(accu::center<mln_psite(L)>)>
-	    mass_centers = labeling::compute(accu::meta::center(),
-					     objects, objects.nlabels());
-
-	for_all_ncomponents(i, objects.nlabels())
-	{
-	  unsigned midcol = (objects.bbox(i).pmax().col()
-				- objects.bbox(i).pmin().col()) / 2;
-	  int dmax = midcol + neighb_max_distance;
-	  mln_site(L) c = mass_centers(i);
-
-	  /// Find a neighbor on the left
-	  internal::find_left_link(objects, left_link, i, dmax, c);
-	}
+	object_links<L> output = compute(functor);
 
 	trace::exiting("scribo::primitive::link::with_single_left_link");
-	return left_link;
+	return output;
       }
+
+
+      template <typename L>
+      inline
+      object_links<L>
+      with_single_left_link(const object_image(L)& objects)
+      {
+	return with_single_left_link(objects, mln_max(unsigned));
+      }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

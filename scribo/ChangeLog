@@ -1,3 +1,89 @@
+2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Revamp code related to object linking.
+
+	* core/concept/link_functor.hh: New concept.
+
+	* core/internal/link_functor_base.hh: New Base class for link
+	functor.
+
+	* primitive/link/compute.hh,
+	* primitive/link/compute_several.hh,
+	* primitive/link/internal/anchors_3.hh,
+	* primitive/link/internal/find_link.hh,
+	* primitive/link/internal/find_several_links.hh,
+	* primitive/link/with_several_right_closest_links.hh,
+	* primitive/link/with_several_right_links_overlap.hh,
+	* primitive/link/with_single_left_link_dmax_ratio.hh,
+	* primitive/link/with_single_right_link_bottom.hh,
+	* primitive/link/with_single_right_link_dmax_ratio.hh,
+	* primitive/link/with_single_right_link_top.hh: New routines.
+
+	* primitive/link/internal/link_center_dmax_base.hh,
+	* primitive/link/internal/link_center_dmax_ratio_base.hh,
+	* primitive/link/internal/link_functor_base.hh,
+	* primitive/link/internal/link_ms_dmax_base.hh,
+	* primitive/link/internal/link_ms_dmax_ratio_base.hh: New functors.
+
+	* primitive/link/with_several_left_links.hh,
+	* primitive/link/with_several_right_links.hh: Use the new routines.
+
+	* primitive/link/with_single_left_link.hh,
+	* primitive/link/with_single_right_link.hh: Revamp and use the new
+	routines.
+
+2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Scribo.
+
+	* debug/decision_image.hh: Fix precondition.
+
+	* filter/object_links_bbox_h_ratio.hh,
+	* filter/objects_thick.hh,
+	* primitive/internal/have_link_valid.hh,
+	* primitive/internal/is_link_valid.hh: Fix doc.
+
+	* filter/object_links_bbox_ratio.hh: Fix doc and invert ratio.
+
+	* filter/object_links_bottom_aligned.hh: Fix doc and use a float
+	angle value.
+
+	* filter/object_links_non_aligned.hh: Use absolute values.
+
+	* filter/object_links_non_aligned_simple.hh: Add special cases.
+
+	* filter/object_links_non_h_aligned.hh: Fix call to an underlying
+	routine.
+
+	* filter/objects_small.hh,
+	* filter/objects_thin.hh,
+	* filter/objects_v_thin.hh,
+	* primitive/extract/lines_discontinued.hh,
+	* primitive/extract/lines_h_single.hh,
+	* primitive/extract/lines_h_thick_and_single.hh,
+	* primitive/extract/lines_thick.hh,
+	* primitive/extract/lines_v_discontinued.hh,
+	* primitive/extract/lines_v_single.hh,
+	* primitive/extract/lines_v_thick_and_single.hh,
+	* primitive/internal/is_invalid_link.hh,
+	* src/multi_scale/find_lines.cc,
+	* src/primitive/group/group_from_rag.cc,
+	* src/table/rebuild_opening.cc,
+	* src/table/rebuild_rank.cc,
+	* text/clean.hh: Avoid warnings.
+
+	* primitive/internal/find_left_link.hh,
+	* primitive/internal/find_right_link.hh,
+	* primitive/internal/update_link_array.hh: Make the routine return
+	a value.
+
+	* src/binarization/sauvola.cc,
+	* src/binarization/sauvola_pgm.cc: Fix call to Sauvola's algorithm.
+
+	* src/primitive/group/group_from_graph.cc,
+	* src/primitive/group/group_from_several_graph.cc: Change
+	arguments values while calling with_several_graphes.
+
 2009-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add new debug routines.

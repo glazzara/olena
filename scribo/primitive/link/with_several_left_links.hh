@@ -29,8 +29,6 @@
 /// \file
 ///
 /// Link text bounding boxes with their left neighbor.
-///
-/// Merge code with primitive::link::with_single_right_link.hh
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -64,6 +62,14 @@ namespace scribo
       with_several_left_links(const object_image(L)& objects,
 			      unsigned neighb_max_distance);
 
+
+      /// \overload
+      template <typename L>
+      inline
+      object_links<L>
+      with_several_left_links(const object_image(L)& objects);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename L>
@@ -82,9 +88,9 @@ namespace scribo
 	  link_3(objects, objects.nlabels().next()),
 	  final_link(objects, objects.nlabels().next());
 
-	internal::init_link_array(link_1);
-	internal::init_link_array(link_2);
-	internal::init_link_array(link_3);
+	primitive::internal::init_link_array(link_1);
+	primitive::internal::init_link_array(link_2);
+	primitive::internal::init_link_array(link_3);
 
 	mln::util::array<mln_result(accu::center<mln_psite(L)>)>
 	    mass_centers = labeling::compute(accu::meta::center(),
@@ -110,15 +116,16 @@ namespace scribo
 	  /// Left link from the top anchor.
 	  mln_site(L) a1 = c;
 	  a1.row() = objects.bbox(i).pmin().row() + (c.row() - objects.bbox(i).pmin().row()) / 4;
-	  internal::find_left_link(objects, link_1, i, dmax, a1);
+	  primitive::internal::find_left_link(objects, link_1, i, dmax, a1);
 
 	  /// Left link from the central site
-	  internal::find_left_link(objects, link_2, i, dmax, mass_centers[i]);
+	  primitive::internal::find_left_link(objects, link_2, i,
+					      dmax, mass_centers[i]);
 
 	  /// Left link from the bottom anchor.
 	  mln_site(L) a2 = c;
 	  a2.row() = objects.bbox(i).pmax().row() - (c.row() - objects.bbox(i).pmin().row()) / 4;
-	  internal::find_left_link(objects, link_3, i, dmax, a2);
+	  primitive::internal::find_left_link(objects, link_3, i, dmax, a2);
 	}
 
 	for_all_ncomponents(i, objects.nlabels())
@@ -137,6 +144,15 @@ namespace scribo
 
 	trace::exiting("scribo::primitive::link::with_several_left_links");
 	return final_link;
+      }
+
+
+      template <typename L>
+      inline
+      object_links<L>
+      with_several_left_links(const object_image(L)& objects)
+      {
+	return with_several_left_links(objects);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
