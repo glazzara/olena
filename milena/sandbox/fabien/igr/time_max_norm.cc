@@ -78,6 +78,7 @@ int main(int argc, char* argv[])
   if (argc != 2)
   {
     std::cout << "Usage: " << argv[0] << " input" << std::endl;
+    std::cout << "  input: input 3D image in dump format encoded in float" << std::endl;
     return 1;
   }
 

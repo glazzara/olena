@@ -59,7 +59,9 @@ int main(int argc, char* argv[])
 {
   if (argc != 3)
   {
-    std::cout << "Usage: " << argv[0] << " input output" << std::endl;
+    std::cout << "Usage: " << argv[0] << " input output" << std::endl
+	      << "  input:  input 2D image in PPM format encoded in rgb8" << std::endl
+	      << "  output: output 2D image in PGM format encoded in int_u8" << std::endl;
     return 1;
   }
 

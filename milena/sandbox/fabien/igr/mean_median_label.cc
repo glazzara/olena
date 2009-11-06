@@ -107,7 +107,10 @@ namespace mln
 
 int usage(const char* bin)
 {
-  std::cout << "Usage: " << bin << " dist.dump wst.dump nbasins" << std::endl;
+  std::cout << "Usage: " << bin << " dist_ima wst_ima nbasins" << std::endl;
+  std::cout << "  dist_ima: distance 2D image in dump format encoded in int_u12" << std::endl;
+  std::cout << "  wst_ima:  watershed 2D image in dump format encoded in label_16" << std::endl;
+  std::cout << "  nbasins:  number of labels in wst_ima" << std::endl;
   return 1;
 }
 

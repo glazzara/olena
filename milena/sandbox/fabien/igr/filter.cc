@@ -99,7 +99,9 @@ mean_image(image1d<V>& input, unsigned seg_size)
 
 int usage(const char* bin)
 {
-  std::cout << "Usage: " << bin << " input.dump output.dump" << std::endl;
+  std::cout << "Usage: " << bin << " input output" << std::endl
+	    << "  input:  input 3D image in dump format encoded in int_u12" << std::endl
+	    << "  output: output 3D image in dump format encoded in float" <<  std::endl;
   return 1;
 }
 

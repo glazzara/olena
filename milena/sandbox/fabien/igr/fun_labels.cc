@@ -203,8 +203,10 @@ int main(int argc, char *argv[])
 
   if (argc != 4)
   {
-    std::cout << "Usage: " << argv[0] << " <ima.dump> <source.dump> <nbasins>"
-	      << std::endl;
+    std::cout << "Usage: " << argv[0] << " label_ima source nbasins" << std::endl;
+    std::cout << "  label_ima: label 3D image in dump format encoded in label_16" << std::endl;
+    std::cout << "  source:    input 3D image in dump format encoded in float" << std::endl;
+    std::cout << "  nbasins:   number of labels in label_ima" << std::endl;
     return 1;
   }
 

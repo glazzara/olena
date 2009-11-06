@@ -53,12 +53,13 @@ using value::label_32;
 
 int main(int argc, char *argv[])
 {
-  typedef label_32 L;
+  typedef label_16 L;
 
   if (argc != 3)
   {
-    std::cout << "Usage: " << argv[0] << " <ima.dump> <ima.dcm>"
-	      << std::endl;
+    std::cout << "Usage: " << argv[0] << " labels_ima input" << std::endl;
+    std::cout << "  labels_ima: labels 3D image in dump format encoded in label_16" << std::endl;
+    std::cout << "  input:      input 3D image in DICOM format encoded in int_u12" << std::endl;
     return 1;
   }
 

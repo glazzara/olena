@@ -82,8 +82,11 @@ int main(int argc, char *argv[])
 
   if (argc != 5)
   {
-    std::cout << "Usage: " << argv[0] << " <labels.dump> <source.dump> <nbasins> <label>"
-	      << std::endl;
+    std::cout << "Usage: " << argv[0] << " labels_ima source nbasins label" << std::endl;
+    std::cout << "  labels_ima: labels 3D image in dump format encoded in label_16" << std::endl;
+    std::cout << "  source:     input 3D image in dump format encoded in int_u12" << std::endl;
+    std::cout << "  nbasins:    number of labels in labels_ima" << std::endl;
+    std::cout << "  label:      index of the label selected for gif creation" << std::endl;
     return 1;
   }
 

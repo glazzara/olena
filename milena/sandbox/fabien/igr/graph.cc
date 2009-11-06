@@ -235,12 +235,16 @@ int main(int argc, char *argv[])
   using value::label_16;
   using value::label_32;
   using value::rgb8;
-  typedef label_32 L;
+  typedef label_16 L;
 
   if (argc != 6)
   {
-    std::cout << "Usage: " << argv[0] << " <wst.dump> <dimensions> <ima.dcm> <dist_max> <nbasins>"
-	      << std::endl;
+    std::cout << "Usage: " << argv[0] << " wst_ima dim ima dist_max nbasins" << std::endl;
+    std::cout << "  wst_ima:  watershed 2D image in dump format encoded in label_16" << std::endl;
+    std::cout << "  dim:      number of dimensions of the input image {2, 3}" << std::endl;
+    std::cout << "  ima:      input 2D image in DICOM format encoded in int_u12"<< std::endl;
+    std::cout << "  dist_max: maximum distance used in graph constrcution" << std::endl;
+    std::cout << "  nbasins:  number of labels in wst_ima" << std::endl;
     return 1;
   }
 

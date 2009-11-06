@@ -29,7 +29,6 @@
 //               //
 ///////////////////
 
-
 int main(int argc, char *argv[])
 {
   using namespace mln;
@@ -39,8 +38,11 @@ int main(int argc, char *argv[])
 
   if (argc != 5)
   {
-    std::cout << "Usage: " << argv[0] << " input.dump dim lambda output.dump"
-	      << std::endl;
+    std::cout << "Usage: " << argv[0] << " input dim lambda output" << std::endl
+	      << "  input:  input image in dump format encoded in int_u8" << std::endl
+	      << "  dim:    number of dimensions of the input image {2, 3}" << std::endl
+	      << "  lambda: parameter for the volume closing" << std::endl
+	      << "  output: output image in dump format encoded in int_u8" << std::endl;
     return 1;
   }
 

@@ -88,8 +88,11 @@ int main(int argc, char *argv[])
 {
   if (argc != 5)
   {
-    std::cout << "Usage: " << argv[0] << " ima.dump first_slice last_slice output.dump"
-	      << std::endl;
+    std::cout << "Usage: " << argv[0] << " ima.dump first_slice last_slice output.dump" << std::endl;
+    std::cout << "  input:       input 3D image in dump format encoded in float" << std::endl;
+    std::cout << "  first_slice: index of the first slice used for normalization" << std::endl;
+    std::cout << "  last_slice:  index of the last slice used for normalization" << std::endl;
+    std::cout << "  output:      output 3D image in dump format encoded in float" << std::endl;
     return 1;
   }
 

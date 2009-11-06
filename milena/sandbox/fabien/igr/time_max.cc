@@ -59,6 +59,7 @@ int main(int argc, char* argv[])
   if (argc != 2)
   {
     std::cout << "Usage: " << argv[0] << " input" << std::endl;
+    std::cout << "  input: input 3D image in DICOM format encoded in int_u12" << std::endl;
     return 1;
   }
 

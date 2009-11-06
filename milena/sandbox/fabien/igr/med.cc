@@ -48,8 +48,11 @@ int main(int argc, char *argv[])
 
   if (argc != 5)
   {
-    std::cout << "Usage: " << argv[0] << " <ima.dump> <dimensions> <ima.dcm> <nbasins>"
-	      << std::endl;
+    std::cout << "Usage: " << argv[0] << " labels_ima dim ima nbasins" << std::endl;
+    std::cout << "  labels_ima: labels image in dump format encoded in label_16" << std::endl;
+    std::cout << "  dim:        number of dimensions of the input image {2, 3}" << std::endl;
+    std::cout << "  ima:        input 3D image in dump format encoded in int_u12" << std::endl;
+    std::cout << "  nbasins:    number of labels in labels_ima" << std::endl;
     return 1;
   }
 

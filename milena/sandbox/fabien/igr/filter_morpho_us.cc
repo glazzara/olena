@@ -44,6 +44,11 @@ int main (int argc, char* argv[])
   if (argc != 6)
   {
     std::cout << "Usage: " << argv[0] << " input closing threshold opening size" << std::endl;
+    std::cout << "  input:     input 3D image in dump format encoded in int_u8" << std::endl;
+    std::cout << "  closing:   closing lambda" << std::endl;
+    std::cout << "  threshold: threshold value" << std::endl;
+    std::cout << "  opening:   opening lambda" << std::endl;
+    std::cout << "  size:      size of the disk 2D window for filling holes" << std::endl;
     return 1;
   }
 

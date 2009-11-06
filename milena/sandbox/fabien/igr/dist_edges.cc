@@ -219,7 +219,11 @@ struct dist5_t : Function_vv2v<dist5_t>
 
 int usage(const char* bin)
 {
-  std::cout << "Usage: " << bin << " input.dump min dist_type output.dump" << std::endl;
+  std::cout << "Usage: " << bin << " input min dist_type output" << std::endl;
+  std::cout << "  input:     input 3D image in dump format encoded in float" << std::endl;
+  std::cout << "  min:       minimum value in input" << std::endl;
+  std::cout << "  dist_type: type of distance {1, 2, 3, 4, 5}" << std::endl;
+  std::cout << "  output:    output inter-pixel image in dump format encoded in int_u12" << std::endl;
   return 1;
 }
 

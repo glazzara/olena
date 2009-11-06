@@ -42,8 +42,9 @@ int main(int argc, char *argv[])
 
   if (argc != 3)
   {
-    std::cout << "Usage: " << argv[0] << " wst.dump output.dump"
-	      << std::endl;
+    std::cout << "Usage: " << argv[0] << " wst output" << std::endl;
+    std::cout << "  wst:    watershed 3D label image in dump foramt encoded in label_8" << std::endl;
+    std::cout << "  output: output 3D label image in dump format encoded in label_8" << std::endl;
     return 1;
   }
 

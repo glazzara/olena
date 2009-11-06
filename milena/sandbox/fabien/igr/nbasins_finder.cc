@@ -47,8 +47,9 @@ int main(int argc, char *argv[])
 
   if (argc != 3)
   {
-    std::cout << "Usage: " << argv[0] << " <ima.dcm> <closure_lambda>"
-	      << std::endl;
+    std::cout << "Usage: " << argv[0] << " input lamda" << std::endl;
+    std::cout << "  input: input 3D image in DICOM format encoded in int_u12" << std::endl;
+    std::cout << "  lambda: parameter for the volume closing" << std::endl;
     return 1;
   }
 

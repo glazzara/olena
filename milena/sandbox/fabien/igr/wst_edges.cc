@@ -99,7 +99,9 @@ namespace mln
 
 int usage(const char* bin)
 {
-  std::cout << "Usage: " << bin << " input.dump lambda" << std::endl;
+  std::cout << "Usage: " << bin << " input lambda" << std::endl;
+  std::cout << "  input:  input 2D inter_pixel image in dump format encoded in int_u12" << std::endl;
+  std::cout << "  lambda: parameter for the volume closing" << std::endl;
   return 1;
 }
 

@@ -25,7 +25,15 @@
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.dcm s_min r_min c_min s_max r_max c_max output.dump" << std::endl;
+  std::cerr << "Usage: " << argv[0] << " input s_min r_min c_min s_max r_max c_max output" << std::endl
+	    << "  input:  input image in DICOM format encoded in int_u12" << std::endl
+	    << "  s_min:  slice index of pmin" << std::endl
+	    << "  r_min:  row index of pmin" << std::endl
+	    << "  c_min:  column index of pmin" << std::endl
+	    << "  s_max:  slice index of pmax" << std::endl
+	    << "  r_max:  row index of pmax" << std::endl
+	    << "  c_max:  column index of pmax" << std::endl
+	    << "  output: output image in dump format encoded in int_u12" << std::endl;
   abort();
 }
 

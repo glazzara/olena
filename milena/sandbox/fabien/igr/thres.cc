@@ -38,8 +38,10 @@ int main(int argc, char *argv[])
 
   if (argc != 4)
   {
-    std::cout << "Usage: " << argv[0] << " <ima.dump> <dimensions> <threshold>"
-	      << std::endl;
+    std::cout << "Usage: " << argv[0] << " input dim threshold" << std::endl;
+    std::cout << "  input:     input image in dump format encoded in int_u12" << std::endl;
+    std::cout << "  dim:       number of dimensions of the input image {2, 3}" << std::endl;
+    std::cout << "  threshold: threshold value" << std::endl;
     return 1;
   }
 

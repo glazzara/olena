@@ -1,3 +1,29 @@
+2009-11-06  Fabien Freling  <fabien.freling@lrde.epita.fr>
+
+	Update usage message.
+	*  fabien/igr/clo_vol.cc,
+	fabien/igr/color/find_color.cc,
+	fabien/igr/crop.cc,
+	fabien/igr/dist_edges.cc,
+	fabien/igr/filter.cc,
+	fabien/igr/filter_morpho_us.cc,
+	fabien/igr/fun_labels.cc,
+	fabien/igr/grad.cc,
+	fabien/igr/graph.cc,
+	fabien/igr/label2gif.cc,
+	fabien/igr/maj.cc,
+	fabien/igr/mean_median_label.cc,
+	fabien/igr/mean_slices.cc,
+	fabien/igr/med.cc,
+	fabien/igr/min_max_float.cc,
+	fabien/igr/nbasins_finder.cc,
+	fabien/igr/norm.cc,
+	fabien/igr/thres.cc,
+	fabien/igr/time_max.cc,
+	fabien/igr/time_max_norm.cc,
+	fabien/igr/wst.cc,
+	fabien/igr/wst_edges.cc: Udate usage message.
+
 2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove generated files from repository.
