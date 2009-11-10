@@ -21,6 +21,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
   box_runstart_piter				\
+  box_runend_piter				\
   category					\
   dpoints_pixter				\
   graph_elt_neighborhood			\
@@ -40,6 +41,7 @@ check_PROGRAMS =				\
   w_window
 
 box_runstart_piter_SOURCES = box_runstart_piter.cc
+box_runend_piter_SOURCES = box_runend_piter.cc
 category_SOURCES = category.cc
 dpoints_pixter_SOURCES = dpoints_pixter.cc
 graph_elt_neighborhood_SOURCES = graph_elt_neighborhood.cc
