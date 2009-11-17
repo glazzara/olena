@@ -1,3 +1,7 @@
+2009-11-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	* python/morpho-segm.py: Remove a superfluous semi-colon.
+
 2013-03-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Replace remaining uses of mln::morpho::meyer_wst in Swilena.

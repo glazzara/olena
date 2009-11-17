@@ -34,7 +34,7 @@ image.save(gradient, "morpho-segm-gradient.pgm")
 # Area closing of the gradient.
 closed_gradient = image.closing_area(ima, c4(), 50)
 # Watershed transform.
-nbasins = int_u8();
+nbasins = int_u8()
 ws = image.watershed_flooding(closed_gradient, c4(), nbasins)
 print nbasins
 image.save(ws, "morpho-segm-ws.pgm")
