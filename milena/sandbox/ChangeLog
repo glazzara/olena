@@ -1,3 +1,43 @@
+2009-11-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add some bench + canvas + subsampling + browsing code.
+
+	* bench: New directory.
+	* bench/input_iz.pgm.gz: New.
+	* bench/fastest_statistical_tour_browsing.cc: New.
+	* bench/fastest_forall_p_browsing.cc: New.
+	* bench/iz.cc: New.
+	* bench/fastest_statistical_tour_nbh_browsing.cc: New.
+	* bench/z_sub_browsing: New.
+	* bench/z_sub_browsing/fast.cc: New.
+	* bench/z_sub_browsing/debase.hh: New.
+	* bench/z_sub_browsing/integral.hh: New.
+	* bench/z_sub_browsing/+inc: New.
+	* bench/z_sub_browsing/in.pgm.gz: New.
+	* bench/z_sub_browsing/debase.cc: New.
+	* bench/z_sub_browsing/integral.cc: New.
+	* bench/z_sub_browsing/README: New.
+
+	* theo/mln/morpho/canvas/lena_blurred.pgm.gz: New.
+	* theo/mln/morpho/canvas/lena.pgm.gz: New.
+	* theo/mln/morpho/canvas/g.pbm.gz: New.
+	* theo/mln/morpho/canvas/lena_min.pgm.gz: New.
+	* theo/mln/morpho/canvas/reconstruction_on_set.hh: Layout.
+	* theo/mln/morpho/canvas/f_and_g.pbm.gz: New.
+	* theo/mln/morpho/canvas/regminid.pbm.gz: New.
+	* theo/mln/morpho/canvas/one_domain.cc: New.
+
+	* theo/mln/subsampling: New directory.
+	* theo/mln/subsampling/sizes.cc: New.
+	* theo/mln/subsampling/debase.hh: New.
+	* theo/mln/subsampling/integral.hh: New.
+	* theo/mln/subsampling/in.pgm.gz: New.
+	* theo/mln/subsampling/debase.cc: New.
+	* theo/mln/subsampling/integral.cc: New.
+
+	* theo/mln/browsing: New directory.
+	* theo/mln/browsing/window_sliding.cc: New.
+
 2009-11-06  Fabien Freling  <fabien.freling@lrde.epita.fr>
 
 	Update usage message.

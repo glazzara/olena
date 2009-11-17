@@ -208,7 +208,7 @@ namespace mln
 	      if (functor.domain_(p))                              //  <-- domain
 		{
 		  // Make-Set.
-		  parent.element(p) = p;
+ 		  parent.element(p) = p;
 		  functor.init_(p);                                //  <--  init
 		  
 		  // Deja-vu part.
