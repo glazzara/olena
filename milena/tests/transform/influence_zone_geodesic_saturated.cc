@@ -29,7 +29,7 @@
 #include <mln/make/image2d.hh>
 #include <mln/debug/println.hh>
 
-#include <mln/transform/influence_zone_geodesic.hh>
+#include <mln/transform/influence_zone_geodesic_saturated.hh>
 
 
 int main()
@@ -47,6 +47,6 @@ int main()
       0, 0, 0, 0, 0, 0, 0 };
   image2d<int_u8> input = make::image2d(vals);
 
-  image2d<int_u8> output = transform::influence_zone_geodesic(input, c4());
+  image2d<int_u8> output = transform::influence_zone_geodesic_saturated(input, c4(), int_u8(2));
   debug::println(output);
 }

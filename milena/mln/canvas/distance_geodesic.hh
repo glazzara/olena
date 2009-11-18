@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,8 +52,8 @@ namespace mln
     template <typename I, typename N, typename D,
 	      typename F>
     mln_ch_value(I, D)
-      distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh, D max,
-			F& functor);
+    distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh,
+		      D max, F& functor);
 
 
 
@@ -67,7 +68,8 @@ namespace mln
       template <typename I, typename N, typename D,
 		typename F>
       void
-      distance_geodesic_tests(const Image<I>& input_, const Neighborhood<N>& nbh_, D max,
+      distance_geodesic_tests(const Image<I>& input_,
+			      const Neighborhood<N>& nbh_, D max,
 			      F& functor)
       {
 	const I& input = exact(input_);
@@ -98,8 +100,8 @@ namespace mln
 	template <typename I, typename N, typename D,
 		  typename F>
 	mln_ch_value(I, D)
-	  distance_geodesic(const Image<I>& input_, const Neighborhood<N>& nbh_, D max,
-			    F& functor)
+	distance_geodesic(const Image<I>& input_, const Neighborhood<N>& nbh_,
+			  D max, F& functor)
 	{
 	  trace::entering("canvas::impl::generic::distance_geodesic");
 
@@ -119,8 +121,6 @@ namespace mln
 
 	  // Initialization.
 	  {
-	    trace::entering("initialization");
-
 	    functor.init(input); // <-- init
 	    data::fill(dmap, max);
 
@@ -139,12 +139,10 @@ namespace mln
 			break;
 		      }
 		}
-	    trace::exiting("initialization");
 	  }
 
 	  // Propagation.
 	  {
-	    trace::entering("propagation");
 	    P p;
 	    mln_niter(N) n(nbh, p);
 	    while (! q.is_empty())
@@ -164,7 +162,6 @@ namespace mln
 		      q.push(n);
 		    }
 	      }
-	    trace::exiting("propagation");
 	  }
 
 	  trace::exiting("canvas::impl::generic::distance_geodesic");
@@ -180,8 +177,10 @@ namespace mln
       template <typename I, typename N, typename D,
 		typename F>
       mln_ch_value(I, D)
-	distance_geodesic_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_, D max,
-				  F& functor)
+      distance_geodesic_fastest(const Image<I>& input_,
+				const Neighborhood<N>& nbh_,
+				D max,
+				F& functor)
       {
 	trace::entering("canvas::impl::distance_geodesic_fastest");
 
@@ -199,8 +198,6 @@ namespace mln
 
 	// Initialization.
 	{
-	  trace::entering("initialization");
-
 	  functor.init_(input); // <-- init
 	  data::fill(dmap, max);
 	  // For the extension to be ignored:
@@ -221,13 +218,10 @@ namespace mln
 		      break;
 		    }
 	      }
-
-	  trace::exiting("initialization");
 	}
 
 	// Propagation.
 	{
-	  trace::entering("propagation");
 	  unsigned p;
 
 	  util::array<int> dp = offsets_wrt(input, nbh);
@@ -251,9 +245,8 @@ namespace mln
 		    }
 		}
 	    }
-	  trace::exiting("propagation");
 	}
-	  
+
 	trace::exiting("canvas::impl::distance_geodesic_fastest");
 	return dmap;
       }
@@ -272,9 +265,10 @@ namespace mln
 		typename F>
       inline
       mln_ch_value(I, D)
-	distance_geodesic_dispatch(metal::false_,
-				   const Image<I>& input, const Neighborhood<N>& nbh, D max,
-				   F& functor)
+      distance_geodesic_dispatch(metal::false_,
+				 const Image<I>& input,
+				 const Neighborhood<N>& nbh, D max,
+				 F& functor)
       {
 	return impl::generic::distance_geodesic(input, nbh, max,
 						functor);
@@ -284,9 +278,10 @@ namespace mln
 		typename F>
       inline
       mln_ch_value(I, D)
-	distance_geodesic_dispatch(metal::true_,
-				   const Image<I>& input, const Neighborhood<N>& nbh, D max,
-				   F& functor)
+      distance_geodesic_dispatch(metal::true_,
+				 const Image<I>& input,
+				 const Neighborhood<N>& nbh, D max,
+				 F& functor)
       {
   	return impl::distance_geodesic_fastest(input, nbh, max, functor);
 // 	return impl::generic::distance_geodesic(input, nbh, max,
@@ -297,8 +292,9 @@ namespace mln
 		typename F>
       inline
       mln_ch_value(I, D)
-	distance_geodesic_dispatch(const Image<I>& input, const Neighborhood<N>& nbh, D max,
-				   F& functor)
+      distance_geodesic_dispatch(const Image<I>& input,
+				 const Neighborhood<N>& nbh, D max,
+				 F& functor)
       {
 	enum {
 	  test = mlc_equal(mln_trait_image_speed(I),
@@ -322,8 +318,8 @@ namespace mln
 	      typename F>
     inline
     mln_ch_value(I, D)
-      distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh, D max,
-			F& functor)
+    distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh,
+		      D max, F& functor)
     {
       trace::entering("canvas::distance_geodesic");
 

@@ -25,15 +25,19 @@ check_PROGRAMS =				\
   distance_front				\
   distance_geodesic				\
   hough 					\
+  kht 						\
   influence_zone_front				\
-  influence_zone_geodesic
+  influence_zone_geodesic 			\
+  influence_zone_geodesic_saturated
 
 bench_closest_point_geodesic_SOURCES = bench_closest_point_geodesic.cc
 distance_and_closest_point_geodesic_SOURCES = distance_and_closest_point_geodesic.cc
 distance_front_SOURCES = distance_front.cc
 distance_geodesic_SOURCES = distance_geodesic.cc
 hough_SOURCES = hough.cc
+kht_SOURCES = kht.cc
 influence_zone_front_SOURCES = influence_zone_front.cc
 influence_zone_geodesic_SOURCES = influence_zone_geodesic.cc
+influence_zone_geodesic_saturated_SOURCES = influence_zone_geodesic_saturated.cc
 
 TESTS = $(check_PROGRAMS)

@@ -1,3 +1,20 @@
+2009-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve influence zone geodesic.
+
+	* mln/canvas/distance_geodesic.hh: Remove useless traces.
+
+	* mln/transform/influence_zone_geodesic.hh: Add a specific fastest
+	version and move some code...
+
+	* mln/transform/influence_zone_geodesic_saturated.hh: ... here.
+
+	* tests/transform/influence_zone_geodesic.cc: Update test
+	according to the new interface.
+
+	* tests/transform/Makefile.am,
+	* tests/transform/influence_zone_geodesic_saturated.cc: New test.
+
 2009-11-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add box_runend_piter.

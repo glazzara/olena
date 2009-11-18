@@ -30,6 +30,7 @@
 ///
 /// Geodesic influence zone transform.
 
+# include <mln/extension/adjust.hh>
 # include <mln/canvas/distance_geodesic.hh>
 # include <mln/transform/internal/influence_zone_functor.hh>
 
@@ -44,26 +45,9 @@ namespace mln
     ///
     /// \param[in] input	    An image.
     /// \param[in] nbh		    A neighborhood.
-    /// \param[in] max		    The maximum influence zone distance.
-    /// \param[in] background_value The value used as background (i.e.
-    ///				    not propagated).
     ///
     /// \return An image of influence zone.
     //
-    template <typename I, typename N, typename D>
-    mln_concrete(I)
-    influence_zone_geodesic(const Image<I>& input,
-			    const Neighborhood<N>& nbh,
-			    const D& max, const mln_value(I)& background_value);
-
-    /// \overload
-    template <typename I, typename N, typename D>
-    mln_concrete(I)
-    influence_zone_geodesic(const Image<I>& input,
-			    const Neighborhood<N>& nbh, const D& max);
-
-
-    /// \overload
     template <typename I, typename N>
     mln_concrete(I)
     influence_zone_geodesic(const Image<I>& input, const Neighborhood<N>& nbh);
@@ -73,38 +57,176 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
-    template <typename I, typename N, typename D>
-    mln_concrete(I)
-    influence_zone_geodesic(const Image<I>& input, const Neighborhood<N>& nbh,
-			    const D& max, const mln_value(I)& background_value)
+    namespace internal
     {
-      trace::entering("transform::influence_zone_geodesic");
 
-      mln_precondition(exact(input).is_valid());
-      mln_precondition(exact(nbh).is_valid());
+      template <typename I, typename N>
+      void
+      influence_zone_geodesic_tests(const Image<I>& input,
+				    const Neighborhood<N>& nbh)
+      {
+	mln_precondition(exact(input).is_valid());
+	mln_precondition(exact(nbh).is_valid());
 
-      internal::influence_zone_functor<I> f(background_value);
-      (void) mln::canvas::distance_geodesic(input, nbh, max, f);
+	(void) input;
+	(void) nbh;
+      }
 
-      trace::exiting("transform::influence_zone_geodesic");
-      return f.output;
-    }
+    } // end of namespace mln::transform::internal
 
 
-    template <typename I, typename N, typename D>
-    mln_concrete(I)
-    influence_zone_geodesic(const Image<I>& input, const Neighborhood<N>& nbh,
-			    const D& max)
+    namespace impl
     {
-      return influence_zone_geodesic(input, nbh, max, literal::zero);
-    }
+
+      namespace generic
+      {
+
+	template <typename I, typename N>
+	mln_concrete(I)
+	influence_zone_geodesic(const Image<I>& input,
+				const Neighborhood<N>& nbh)
+	{
+	  // FIXME: To be written...
+	  mlc_abort(I)::check();
+	}
+
+      } // end of namespace mln::transform::impl::generic
+
+
+      template <typename I, typename N>
+      mln_concrete(I)
+      influence_zone_geodesic_fastest(const Image<I>& input_,
+				      const Neighborhood<N>& nbh_)
+      {
+	trace::entering("transform::impl::influence_zone_geodesic_fastest");
+
+	const I& input = exact(input_);
+	const N& nbh = exact(nbh_);
+
+	internal::influence_zone_geodesic_tests(input, nbh);
+	mln_precondition(input.domain().pmin() == literal::origin);
+
+	std::queue<mln_value(I)*> q;
+	mln_concrete(I) output;
+
+	util::array<int> dp = offsets_wrt(input, nbh);
+	const unsigned n_nbhs = dp.nelements();
+	const unsigned
+	  ncols = input.ncols(),
+	  first_offset = input.border() * (ncols + 2 * input.border() + 1);
+
+	// Initialization.
+	{
+	  extension::adjust(input, nbh);
+	  output = duplicate(input);
+	  // For the extension to be ignored:
+	  extension::fill(input, 0);  // in initialization
+	  extension::fill(output, 1); // in propagation
+
+	  const unsigned nelts = input.nelements();
+	  const mln_value(I)* p_i = & input.at_(0, 0);
+	  mln_value(I)* p_o = & output.at_(0, 0);
+	  for (unsigned i = first_offset; i < nelts; ++i, ++p_i, ++p_o)
+	  {
+	    if (*p_i == 0)
+	      continue;
+	    for (unsigned j = 0; j < n_nbhs; ++j)
+	    {
+	      const mln_value(I)* n_i = p_i + dp[j];
+	      if (*n_i == 0)
+	      {
+		q.push(p_o);
+		break;
+	      }
+	    }
+	  }
+
+	}
+
+ 	// Propagation.
+	{
+	  mln_value(I)* ptr;
+
+	  while (! q.empty())
+	  {
+	    ptr = q.front();
+	    q.pop();
+	    mln_invariant(*ptr != 0);
+	    for (unsigned j = 0; j < n_nbhs; ++j)
+	    {
+	      mln_value(I)* ntr = ptr + dp[j];
+	      if (*ntr == 0)
+	      {
+		*ntr = *ptr;
+		q.push(ntr);
+	      }
+	    }
+	  }
+	}
+
+	trace::exiting("transform::impl::influence_zone_geodesic_fastest");
+	return output;
+      }
+
+
+    } // end of namespace mln::transform::impl
+
+
+    namespace internal
+    {
+
+      template <typename I, typename N>
+      mln_concrete(I)
+      influence_zone_geodesic_dispatch(trait::image::value_alignment::any,
+				       trait::image::value_storage::any,
+				       trait::image::value_access::any,
+				       const I& input,
+				       const N& nbh)
+      {
+	return impl::generic::influence_zone_geodesic(input, nbh);
+      }
+
+
+      template <typename I, typename N>
+      mln_concrete(I)
+      influence_zone_geodesic_dispatch(trait::image::value_alignment::with_grid,
+				       trait::image::value_storage::one_block,
+				       trait::image::value_access::direct,
+				       const I& input,
+				       const N& nbh)
+      {
+	return impl::influence_zone_geodesic_fastest(input, nbh);
+      }
+
+
+      template <typename I, typename N>
+      mln_concrete(I)
+      influence_zone_geodesic_dispatch(const Image<I>& input,
+				       const Neighborhood<N>& nbh)
+      {
+	return
+	  influence_zone_geodesic_dispatch(mln_trait_image_value_alignment(I)(),
+					   mln_trait_image_value_storage(I)(),
+					   mln_trait_image_value_access(I)(),
+					   exact(input), exact(nbh));
+      }
+
+    } // end of namespace mln::transform::internal
 
 
     template <typename I, typename N>
     mln_concrete(I)
     influence_zone_geodesic(const Image<I>& input, const Neighborhood<N>& nbh)
     {
-      return influence_zone_geodesic(input, nbh, mln_max(unsigned));
+      trace::entering("transform::influence_zone_geodesic");
+
+      internal::influence_zone_geodesic_tests(input, nbh);
+
+      mln_concrete(I)
+	output = internal::influence_zone_geodesic_dispatch(input, nbh);
+
+      trace::exiting("transform::influence_zone_geodesic");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
