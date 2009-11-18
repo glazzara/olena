@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -54,12 +55,9 @@ namespace mln
     inline
     mln_deduce(I, site, coord) max_col(const Image<I>& ima)
     {
-      trace::entering("mln::geom::max_col");
-
       mln_precondition(exact(ima).is_valid());
       mln_deduce(I, site, coord) maxcol = geom::bbox(ima).pmax().col();
 
-      trace::exiting("mln::geom::max_col");
       return maxcol;
     }
 
@@ -68,12 +66,9 @@ namespace mln
     inline
     mln_deduce(B, point, coord) max_col(const Box<B>& b)
     {
-      trace::entering("mln::geom::max_col");
-
       metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
       mln_deduce(B, point, coord) maxcol = exact(b).pmax().col();
 
-      trace::exiting("mln::geom::max_col");
       return maxcol;
     }
 

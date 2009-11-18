@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,7 +35,7 @@
  * \todo Re-activate precondition so introduce
  * "set::nsites(Site_Set)"...
  *
- * \todo Add a static check "domain is ok for bbox (like grid)". 
+ * \todo Add a static check "domain is ok for bbox (like grid)".
  *
  * \todo Add the weighted_window case.
  */
@@ -120,34 +121,27 @@ namespace mln
     inline
     box<mln_site(S)> bbox(const Site_Set<S>& pset)
     {
-      trace::entering("geom::bbox");
 //       mln_precondition(set::is_empty(pset) != 0);
 
       box<mln_site(S)> b = impl::bbox_(mln_trait_site_set_bbox(S)(),
 				       exact(pset));
 
-      trace::exiting("geom::bbox");
       return b;
     }
 
     template <typename I>
     box<mln_site(I)> bbox(const Image<I>& ima_)
     {
-      trace::entering("geom::bbox");
-
       const I& ima = exact(ima_);
       mln_precondition(ima.is_valid());
       box<mln_site(I)> b = geom::bbox(ima.domain());
 
-      trace::exiting("geom::bbox");
       return b;
     }
 
     template <typename W>
     box<mln_psite(W)> bbox(const Window<W>& win)
     {
-      trace::entering("geom::bbox");
-
       typedef mln_psite(W) P;
       accu::shape::bbox<P> b;
       P O = literal::origin;
@@ -155,18 +149,14 @@ namespace mln
       for_all(q)
 	b.take(q);
 
-      trace::exiting("geom::bbox");
       return b;
     }
 
     template <typename W>
     box<mln_psite(W)> bbox(const Weighted_Window<W>& win)
     {
-      trace::entering("geom::bbox");
-
       box<mln_psite(W)> b = bbox(exact(win).win());
 
-      trace::exiting("geom::bbox");
       return b;
     }
 

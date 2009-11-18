@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,12 +56,9 @@ namespace mln
     inline
     unsigned ncols(const Image<I>& ima)
     {
-      trace::entering("mln::geom::ncols");
-
       mln_precondition(exact(ima).is_valid());
       unsigned ncols = geom::max_col(ima) - geom::min_col(ima) + 1;
 
-      trace::exiting("mln::geom::ncols");
       return ncols;
     }
 
@@ -68,12 +66,9 @@ namespace mln
     template <typename B>
     unsigned ncols(const Box<B>& b)
     {
-      trace::entering("mln::geom::ncols");
-
       metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
       unsigned ncols = geom::max_col(b) - geom::min_col(b) + 1;
 
-      trace::exiting("mln::geom::ncols");
       return ncols;
     }
 

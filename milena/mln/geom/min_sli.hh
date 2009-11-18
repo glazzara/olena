@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,12 +52,9 @@ namespace mln
     inline
     mln_deduce(I, site, coord) min_sli(const Image<I>& ima)
     {
-      trace::entering("mln::geom::min_sli");
-
       mln_precondition(exact(ima).is_valid());
       mln_deduce(I, site, coord) minsli = geom::bbox(ima).pmin().sli();
 
-      trace::exiting("mln::geom::min_sli");
       return minsli;
     }
 

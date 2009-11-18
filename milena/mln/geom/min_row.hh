@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,12 +59,9 @@ namespace mln
     inline
     mln_deduce(I, site, coord) min_row(const Image<I>& ima)
     {
-      trace::entering("mln::geom::min_row");
-
       mln_precondition(exact(ima).is_valid());
       mln_deduce(I, site, coord) minrow = geom::bbox(ima).pmin().row();
 
-      trace::exiting("mln::geom::min_row");
       return minrow;
     }
 
@@ -72,12 +70,9 @@ namespace mln
     inline
     mln_deduce(B, point, coord) min_row(const Box<B>& b)
     {
-      trace::entering("mln::geom::min_row");
-
       metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
       mln_deduce(B, point, coord) minrow = exact(b).pmin().row();
 
-      trace::exiting("mln::geom::min_row");
       return minrow;
     }
 

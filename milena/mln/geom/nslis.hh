@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,12 +52,9 @@ namespace mln
     inline
     unsigned nslis(const Image<I>& ima)
     {
-      trace::entering("mln::geom::nslis");
-
       mln_precondition(exact(ima).is_valid());
       unsigned nslis = geom::max_sli(ima) - geom::min_sli(ima) + 1;
 
-      trace::exiting("mln::geom::nslis");
       return nslis;
     }
 

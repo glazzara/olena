@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,24 +56,18 @@ namespace mln
     inline
     unsigned nrows(const Image<I>& ima)
     {
-      trace::entering("mln::geom::nrows");
-
       mln_precondition(exact(ima).is_valid());
       unsigned nrows = geom::max_row(ima) - geom::min_row(ima) + 1;
 
-      trace::exiting("mln::geom::nrows");
       return nrows;
     }
 
     template <typename B>
     unsigned nrows(const Box<B>& b)
     {
-      trace::entering("mln::geom::nrows");
-
       metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
       unsigned nrows = geom::max_row(b) - geom::min_row(b) + 1;
 
-      trace::exiting("mln::geom::nrows");
       return nrows;
     }
 

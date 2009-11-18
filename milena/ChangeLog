@@ -1,5 +1,20 @@
 2009-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Remove useless traces.
+
+	* mln/geom/bbox.hh,
+	* mln/geom/max_col.hh,
+	* mln/geom/max_row.hh,
+	* mln/geom/max_sli.hh,
+	* mln/geom/min_col.hh,
+	* mln/geom/min_row.hh,
+	* mln/geom/min_sli.hh,
+	* mln/geom/ncols.hh,
+	* mln/geom/nrows.hh,
+	* mln/geom/nslis.hh: Remove useless traces.
+
+2009-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve influence zone geodesic.
 
 	* mln/canvas/distance_geodesic.hh: Remove useless traces.
