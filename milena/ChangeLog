@@ -1,5 +1,14 @@
 2009-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce labeled_image_base.
+
+	* mln/core/internal/labeled_image_base.hh: New.
+
+	* mln/core/image/imorph/labeled_image.hh: Make inherit from
+	labeled_image_base.
+
+2009-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix invalid macros.
 
 	* mln/core/box_runend_piter.hh,
