@@ -1,5 +1,9 @@
 2009-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* doc/white_paper/white_paper.tex: Fix an invalid URL.
+
+2009-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Introduce labeled_image_base.
 
 	* mln/core/internal/labeled_image_base.hh: New.
