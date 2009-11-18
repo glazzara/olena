@@ -1,5 +1,13 @@
 2009-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix invalid macros.
+
+	* mln/core/box_runend_piter.hh,
+	* mln/core/box_runstart_piter.hh: use mln_psite_ in macros
+	dedicated for non templated functions.
+
+2009-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Remove useless traces.
 
 	* mln/geom/bbox.hh,

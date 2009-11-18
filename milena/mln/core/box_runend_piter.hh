@@ -35,7 +35,7 @@
 
 
 #define mln_box_runend_piter(I)  typename mln::box_runend_piter<mln_psite(I)>
-#define mln_box_runend_piter_(I)          mln::box_runend_piter<mln_psite(I)>
+#define mln_box_runend_piter_(I)          mln::box_runend_piter<mln_psite_(I)>
 
 
 namespace mln
