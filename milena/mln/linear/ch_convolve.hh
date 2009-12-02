@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,9 +45,15 @@
 # define mln_ch_convolve(I, W) \
   typename mln::linear::ch_convolve<I, W>::ret
 
+# define mln_ch_convolve_(I, W) \
+           mln::linear::ch_convolve<I, W>::ret
+
+
 # define mln_ch_convolve_grad(I, W) \
   typename mln::trait::ch_value< I, algebra::vec< I::site::dim, typename mln::linear::ch_convolve<I,W>::ret::value > >::ret
 
+# define mln_ch_convolve_grad_(I, W) \
+           mln::trait::ch_value< I, algebra::vec< I::site::dim, mln::linear::ch_convolve<I,W>::ret::value > >::ret
 
 
 namespace mln
