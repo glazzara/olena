@@ -77,6 +77,13 @@
 
 2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Benchmark on distance, preliminary work before optimizing kmean.
+
+	* green/bench/transform/distance/Makefile: New Makefile.
+	* green/bench/transform/distance/distance.cc: New processing chain.
+
+2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Works on Millet2008 descriptors.
 
 	* green/mln/demo/annoting/bic/Makefile: New Makefile.
