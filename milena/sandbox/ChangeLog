@@ -1,9 +1,21 @@
 2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Optimize regional maxima processing for statistical counts and outputs.
+
+	* green/demo/labeling/regional_maxima/Makefile.am: Add some compilation
+	directives.
+	* green/demo/labeling/regional_maxima/regional_maxima.cc
+	(t_channel,t_labeling_rgbn,label_image,unquant,print_count2): New.
+	* green/demo/labeling/regional_maxima/regional_maxima.cc
+	(print_count, merge, do_demo) : Update.
+
+
+2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Test experimentation with regmax code on annoting database.
 
 	* green/exp/labeling/regional_maxima/Makefile.am: New Makefile.
-	* green/exp/clustering/regional_maxima/regional_maxima.cc: New directory
+	* green/exp/labeling/regional_maxima/regional_maxima.cc: New directory
 	oriented demonstration code.
 
 2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
