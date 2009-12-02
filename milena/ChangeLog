@@ -1,3 +1,10 @@
+2009-12-02  Yann Jacquelet <jacquelet@lrde.epita.fr>
+
+	Fix the outside template use case for the convolve macros.
+
+	* mln/linear/ch_convolve.hh (mln_ch_convolve_, mln_ch_convolve_grad_):
+	Define new macros to work outside templates.
+
 2009-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/white_paper/white_paper.tex: Fix an invalid URL.
