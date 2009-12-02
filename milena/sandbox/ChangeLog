@@ -77,6 +77,31 @@
 
 2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Works on Millet2008 descriptors.
+
+	* green/mln/demo/annoting/bic/Makefile: New Makefile.
+	* green/mln/demo/annoting/bic/bic.cc: New impl. of the bic descriptor.
+
+	* green/mln/demo/annoting/lep/Makefile: New Makefile.
+	* green/mln/demo/annoting/lep/lep.cc: New impl. of the lep descriptor.
+
+	* green/mln/demo/annoting/project/Makefile: New Makefile.
+	* green/mln/demo/annoting/project/project.cc: New impl. of the project
+	descriptor.
+
+	* green/mln/demo/annoting/rgb_64/Makefile: New Makefile.
+	* green/mln/demo/annoting/rgb_64/rgb_64.cc: New impl. of the rgb_64
+	descriptor.
+
+	* green/mln/demo/annoting/rgb_64_9/Makefile: New Makefile.
+	* green/mln/demo/annoting/rgb_64_9/rgb_64_9.cc: New impl. of the
+	rgb_64_9 descriptor.
+
+	* green/mln/demo/annoting/class.txt: New notes on fax class.
+
+
+2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Extend the test image database.
 
 	* green/mln/img_path.hh: Add annoting directories to experiment
