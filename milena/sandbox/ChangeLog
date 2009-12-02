@@ -75,6 +75,14 @@
 	* bin/pgm_to_pbm.cc,
 	* bin/ppm_negate.cc: New.
 
+2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Extend the test image database.
+
+	* green/mln/img_path.hh: Add annoting directories to experiment
+	algorithms on fax, handwritten, typed, logo, bill, map, screenshot,
+	slide image.
+
 2009-11-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add some bench + canvas + subsampling + browsing code.
