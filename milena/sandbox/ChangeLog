@@ -1,37 +1,45 @@
 2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Test experimentation with regmax code on annoting database.
+
+	* green/exp/labeling/regional_maxima/Makefile.am: New Makefile.
+	* green/exp/clustering/regional_maxima/regional_maxima.cc: New directory
+	oriented demonstration code.
+
+2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Transform kmean object in a big function and then a canvas.
 
 	* green/mln/clustering/kmean_rgb.hh: New library source code.
-	* green/demo/clustering/kmean_rgb/Makefile: New Makefile.
+	* green/demo/clustering/kmean_rgb/Makefile.am: New Makefile.
 	* green/demo/clustering/kmean_rgb/kmean_rgb.cc: New demo. code.
 
 2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Benchmark on distance, preliminary work before optimizing kmean.
 
-	* green/bench/transform/distance/Makefile: New Makefile.
+	* green/bench/transform/distance/Makefile.am: New Makefile.
 	* green/bench/transform/distance/distance.cc: New processing chain.
 
 2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Works on Millet2008 descriptors.
 
-	* green/mln/demo/annoting/bic/Makefile: New Makefile.
+	* green/mln/demo/annoting/bic/Makefile.am: New Makefile.
 	* green/mln/demo/annoting/bic/bic.cc: New impl. of the bic descriptor.
 
-	* green/mln/demo/annoting/lep/Makefile: New Makefile.
+	* green/mln/demo/annoting/lep/Makefile.am: New Makefile.
 	* green/mln/demo/annoting/lep/lep.cc: New impl. of the lep descriptor.
 
-	* green/mln/demo/annoting/project/Makefile: New Makefile.
+	* green/mln/demo/annoting/project/Makefile.am: New Makefile.
 	* green/mln/demo/annoting/project/project.cc: New impl. of the project
 	descriptor.
 
-	* green/mln/demo/annoting/rgb_64/Makefile: New Makefile.
+	* green/mln/demo/annoting/rgb_64/Makefile.am: New Makefile.
 	* green/mln/demo/annoting/rgb_64/rgb_64.cc: New impl. of the rgb_64
 	descriptor.
 
-	* green/mln/demo/annoting/rgb_64_9/Makefile: New Makefile.
+	* green/mln/demo/annoting/rgb_64_9/Makefile.am: New Makefile.
 	* green/mln/demo/annoting/rgb_64_9/rgb_64_9.cc: New impl. of the
 	rgb_64_9 descriptor.
 
