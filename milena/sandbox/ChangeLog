@@ -77,6 +77,14 @@
 
 2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Transform kmean object in a big function and then a canvas.
+
+	* green/mln/clustering/kmean_rgb.hh: New library source code.
+	* green/demo/clustering/kmean_rgb/Makefile: New Makefile.
+	* green/demo/clustering/kmean_rgb/kmean_rgb.cc: New demo. code.
+
+2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Benchmark on distance, preliminary work before optimizing kmean.
 
 	* green/bench/transform/distance/Makefile: New Makefile.
