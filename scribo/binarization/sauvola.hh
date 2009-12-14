@@ -35,6 +35,8 @@
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
 
+# include <mln/fun/v2v/rgb_to_int_u.hh>
+
 # include <scribo/binarization/sauvola_threshold.hh>
 # include <scribo/binarization/binarize.hh>
 
@@ -106,7 +108,7 @@ namespace scribo
 	mln_precondition(exact(input).is_valid());
 
 	mln_ch_value(I, value::int_u8) gima;
-	gima = data::transform(input, internal::rgb8_to_int_u8());
+	gima = data::transform(input, mln::fun::v2v::rgb_to_int_u<8>());
 
 	mln_ch_value(I, bool)
 	  output = binarize(gima,

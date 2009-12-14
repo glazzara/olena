@@ -44,6 +44,8 @@
 # include <mln/pw/all.hh>
 # include <mln/core/routine/duplicate.hh>
 
+# include <mln/fun/v2v/rgb_to_int_u.hh>
+
 # include <scribo/core/init_integral_image.hh>
 
 
@@ -95,16 +97,6 @@ namespace scribo
 
     namespace internal
     {
-
-      struct rgb8_to_int_u8 : Function_v2v< rgb8_to_int_u8 >
-      {
-	typedef value::int_u8 result;
-	result operator()(const value::rgb8& c) const
-	{
-	  return (c.red() + c.green() + c.blue()) / 3;
-	}
-      };
-
 
       /*! \brief compute Sauvola's threshold applying directly the formula.
 
@@ -383,7 +375,7 @@ namespace scribo
 
 	mln_ch_value(I, value::int_u8) gima;
 	gima = data::transform(input,
-			       internal::rgb8_to_int_u8());
+			       mln::fun::v2v::rgb_to_int_u<8>());
 
 	mln_ch_value(I, value::int_u8)
 	  output = impl::generic::sauvola_threshold(gima, window_size,

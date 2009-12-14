@@ -1,5 +1,19 @@
 2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Cleanup Sauvola's binarization code.
+
+	* binarization/sauvola_threshold.hh,
+	* binarization/sauvola.hh: Use fun::v2v::rgb_to_int_u8.
+
+	* binarization/sauvola_ms.hh: New. Sauvola multi-scale routine.
+
+	* src/binarization/sauvola.cc: Make the window size a program
+	argument.
+
+	* src/binarization/sauvola_ms.cc: Use Sauvola multi-scale routine.
+
+2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* core/object_image.hh: Make use of mln::labeled_image_base.
 
 2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>

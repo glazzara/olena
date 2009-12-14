@@ -33,6 +33,7 @@
 const char *args_desc[][2] =
 {
   { "input.ppm", "A color image." },
+  { "wsize", "Window size (Common value: 51)." },
   {0, 0}
 };
 
@@ -42,10 +43,10 @@ int main(int argc, char *argv[])
   using namespace mln;
   using value::rgb8;
 
-  if (argc != 3)
+  if (argc != 4)
     return scribo::debug::usage(argv,
 				"Binarization of a color image based on Sauvola's algorithm.",
-				"input.ppm output.pbm",
+				"input.ppm wsize output.pbm",
 				args_desc, "A binary image.");
 
   trace::entering("main");
@@ -53,7 +54,7 @@ int main(int argc, char *argv[])
   image2d<rgb8> input;
   io::ppm::load(input, argv[1]);
 
-  io::pbm::save(scribo::binarization::sauvola(input), argv[2]);
+  io::pbm::save(scribo::binarization::sauvola(input, atoi(argv[2])), argv[3]);
 
 
   trace::exiting("main");
