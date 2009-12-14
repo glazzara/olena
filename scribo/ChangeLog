@@ -1,5 +1,9 @@
 2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* core/object_image.hh: Make use of mln::labeled_image_base.
+
+2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve linking routines.
 
 	* core/anchors.hh: New. Add anchor types.
