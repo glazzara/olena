@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,13 +23,9 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_FUN_V2V_ALL_HH
-# define MLN_FUN_V2V_ALL_HH
 
-/// \file
-///
-/// File that includes all functions from value to value.
-
+#ifndef MLN_FUN_V2V_RGB_TO_INT_U_HH
+# define MLN_FUN_V2V_RGB_TO_INT_U_HH
 
 namespace mln
 {
@@ -38,35 +33,32 @@ namespace mln
   namespace fun
   {
 
-    /// \brief Namespace of functions from value to value.
-    ///
-    /// \ingroup modfun
-    namespace v2v {}
+    namespace v2v
+    {
 
-  }
-}
+      template <unsigned n>
+      struct rgb_to_int_u : Function_v2v< rgb_to_int_u<n> >
+      {
+	typedef value::int_u<n> result;
 
+	result operator()(const value::rgb<n>& c) const;
+      };
 
-# include <mln/fun/v2v/abs.hh>
-# include <mln/fun/v2v/cast.hh>
-# include <mln/fun/v2v/convert.hh>
-# include <mln/fun/v2v/dec.hh>
-# include <mln/fun/v2v/enc.hh>
-//<<lrde
-# include <mln/fun/v2v/hsi_to_rgb.hh>
-# include <mln/fun/v2v/hsl_to_rgb.hh>
-//>>
-# include <mln/fun/v2v/id.hh>
-# include <mln/fun/v2v/linear.hh>
-# include <mln/fun/v2v/norm.hh>
-# include <mln/fun/v2v/projection.hh>
-# include <mln/fun/v2v/rgb_to_int_u.hh>
-//<<lrde
-# include <mln/fun/v2v/rgb_to_hsi.hh>
-# include <mln/fun/v2v/rgb_to_hsl.hh>
-//>>
-# include <mln/fun/v2v/saturate.hh>
-# include <mln/fun/v2v/wrap.hh>
+# ifndef MLN_INCLUDE_ONLY
 
+      template <unsigned n>
+      typename rgb_to_int_u<n>::result
+      rgb_to_int_u<n>::operator()(const value::rgb<n>& c) const
+      {
+	return (c.red() + c.green() + c.blue()) / 3;
+      }
 
-#endif // ! MLN_FUN_V2V_ALL_HH
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::v2v
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
+
+#endif // ! MLN_FUN_V2V_RGB_TO_INT_U_HH

@@ -1,5 +1,13 @@
 2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add rbg_to_int_u function.
+
+	* mln/fun/v2v/all.hh: Include the new header.
+
+	* mln/fun/v2v/rgb_to_int_u.hh: New.
+
+2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add an antialiased subsampling.
 
 	* mln/subsampling/antialiased.hh: New.
