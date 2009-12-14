@@ -1,3 +1,44 @@
+2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve linking routines.
+
+	* core/anchors.hh: New. Add anchor types.
+
+	* filter/objects_thin.hh: Use filter::internal::compute.
+
+	* primitive/link/internal/find_several_links.hh,
+	* primitive/link/internal/find_link.hh,
+	* primitive/link/compute.hh: Update functor interface in order to
+	specify anchors.
+
+	* primitive/link/compute_several.hh: Fix an invalid namespace.
+
+	* primitive/link/internal/anchors_3.hh: Move...
+
+	* primitive/link/internal/compute_anchor.hh: ... here.
+
+	* primitive/link/internal/link_functor_base.hh: Use anchor type.
+
+	* primitive/link/internal/link_several_dmax_base.hh: New.
+
+	* primitive/link/internal/link_center_dmax_base.hh,
+	* primitive/link/internal/link_center_dmax_ratio_base.hh: Removed.
+
+	* primitive/link/with_several_right_links_overlap.hh: Fix includes.
+
+	* primitive/link/with_single_right_link_bottom.hh,
+	* primitive/link/with_single_right_link_top.hh,
+	* primitive/link/with_single_left_link.hh,
+	* primitive/link/with_single_right_link.hh: Use
+	link_single_dmax_base functor.
+
+	* src/debug/show_links_several_right_overlap.cc,
+	* src/debug/show_links_single_left.cc,
+	* src/debug/show_links_single_left_dmax_ratio.cc,
+	* src/debug/show_links_single_right.cc,
+	* src/debug/show_links_single_right_dmax_ratio.cc: Update functor
+	interface.
+
 2009-12-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve Sauvola Multi-scale.

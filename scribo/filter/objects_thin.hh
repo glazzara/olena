@@ -39,6 +39,7 @@
 
 # include <scribo/core/object_image.hh>
 # include <scribo/primitive/extract/objects.hh>
+# include <scribo/filter/internal/compute.hh>
 
 namespace scribo
 {
@@ -91,8 +92,6 @@ namespace scribo
       struct objects_thin_filter
 	: Function_v2b< objects_thin_filter<L> >
       {
-	typedef accu::shape::bbox<mln_psite(L)> box_accu_t;
-
 	/// Constructor
 	///
 	/// \param[in] objects object bounding boxes.
@@ -175,9 +174,7 @@ namespace scribo
       typedef internal::objects_thin_filter<L> func_t;
       func_t is_not_too_thin(objects, min_thickness);
 
-      object_image(L) output;
-      output.init_from_(objects);
-      output.relabel(is_not_too_thin);
+      object_image(L) output = internal::compute(objects, is_not_too_thin);
 
       trace::exiting("scribo::filter::objects_thin");
       return output;

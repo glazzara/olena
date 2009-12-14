@@ -40,11 +40,12 @@
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
+# include <scribo/core/anchors.hh>
 # include <scribo/core/object_image.hh>
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>
-# include <scribo/primitive/link/internal/link_ms_dmax_base.hh>
+# include <scribo/primitive/link/internal/link_single_dmax_base.hh>
 
 # include <scribo/primitive/link/compute.hh>
 
@@ -92,10 +93,10 @@ namespace scribo
 
 	template <typename L>
 	class single_right_functor
-	  : public internal::link_ms_dmax_base<L, single_right_functor<L> >
+	  : public internal::link_single_dmax_base<L, single_right_functor<L> >
 	{
 	  typedef
-	    internal::link_ms_dmax_base<L, single_right_functor<L> > super_;
+	    internal::link_single_dmax_base<L, single_right_functor<L> > super_;
 
 	public:
 	  typedef mln_site(L) P;
@@ -131,7 +132,7 @@ namespace scribo
 	internal::single_right_functor<L>
 	  functor(objects, neighb_max_distance);
 
-	object_links<L> output = compute(functor);
+	object_links<L> output = compute(functor, anchor::MassCenter);
 
 	trace::exiting("scribo::primitive::link::with_single_right_link");
 	return output;

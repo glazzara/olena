@@ -37,13 +37,17 @@
 # include <mln/util/array.hh>
 # include <mln/util/couple.hh>
 
+# include <mln/labeling/compute.hh>
+# include <mln/accu/center.hh>
+
+# include <scribo/core/anchors.hh>
 # include <scribo/core/object_image.hh>
 # include <scribo/core/object_links.hh>
 # include <scribo/core/concept/link_functor.hh>
+# include <scribo/primitive/link/internal/compute_anchor.hh>
 # include <scribo/primitive/internal/update_link_array.hh>
 # include <scribo/primitive/internal/init_link_array.hh>
 # include <scribo/primitive/internal/is_invalid_link.hh>
-
 
 # define scribo_support(T) typename T::support
 # define scribo_support_(T) T::support
@@ -68,6 +72,7 @@ namespace scribo
 
 	  typedef L support;
 	  typedef mln_site(L) P;
+	  typedef mln::util::couple<anchor::Type, P> couple_t;
 
 	  link_functor_base(const object_image(L)& objects, unsigned nanchors);
 
@@ -85,7 +90,7 @@ namespace scribo
 
 
 	  void initialize_link(unsigned current_object);
-	  mln_site(L) finalize_link(unsigned current_object);
+	  couple_t finalize_link(unsigned current_object);
 
 
 	  bool verify_link_criterion(unsigned current_object,
@@ -106,7 +111,7 @@ namespace scribo
 	  void validate_link(unsigned current_object,
 			     const P& start_point,
 			     const P& p,
-			     unsigned anchor);
+			     anchor::Type anchor);
 
 	  /// \overload
 	  /// \p anchor is set to 0.
@@ -115,7 +120,7 @@ namespace scribo
 
 	  void invalidate_link(unsigned current_object,
 			       const P& start_point, const P& p,
-			       unsigned anchor);
+			       anchor::Type anchor);
 
 	  /// \overload
 	  /// \p anchor is set to 0
@@ -130,7 +135,7 @@ namespace scribo
 	  void compute_next_site(P& p);
 
 
-	  mln_site(L) start_point(unsigned current_object, unsigned anchor);
+	  mln_site(L) start_point(unsigned current_object, anchor::Type anchor);
 
 	  /// \overload
 	  /// \p anchor is set to 0.
@@ -146,7 +151,7 @@ namespace scribo
 	  // methods.
 
 	  void initialize_link_(unsigned current_object);
-	  mln_site(L) finalize_link_(unsigned current_object);
+	  couple_t finalize_link_(unsigned current_object);
 
 	  bool is_potential_link_(unsigned current_object,
 				  const P& start_point, const P& p) const;
@@ -159,21 +164,24 @@ namespace scribo
 
 	  void validate_link_(unsigned current_object,
 			      const P& start_point, const P& p,
-			      unsigned anchor);
+			      anchor::Type anchor);
 
 	  void invalidate_link_(unsigned current_object,
 				const P& start_point, const P& p,
-				unsigned anchor);
+				anchor::Type anchor);
 
 	  void compute_next_site_(P& p);
 
 	  void start_processing_object_(unsigned current_object);
 
+	  mln_site(L) start_point_(unsigned current_object,
+				   anchor::Type anchor);
 
 	protected:
 	  object_links<L> links_;
 	  const object_image(L) objects_;
 	  unsigned nanchors_;
+	  util::array<mln_result(accu::center<mln_site(L)>)> mass_centers_;
 	};
 
 
@@ -191,6 +199,9 @@ namespace scribo
 	    nanchors_(nanchors)
 	{
 	  primitive::internal::init_link_array(links_);
+
+	  mass_centers_ = labeling::compute(accu::meta::center(),
+					    objects, objects.nlabels());
 	}
 
 
@@ -203,6 +214,9 @@ namespace scribo
 	    nanchors_(1)
 	{
 	  primitive::internal::init_link_array(links_);
+
+	  mass_centers_ = labeling::compute(accu::meta::center(),
+					    objects, objects.nlabels());
 	}
 
 
@@ -266,7 +280,7 @@ namespace scribo
 
 	template <typename L, typename E>
 	inline
-	mln_site(L)
+	mln::util::couple<anchor::Type, mln_site(L)>
 	link_functor_base<L,E>::finalize_link(unsigned current_object)
 	{
 	  return exact(this)->finalize_link_(current_object);
@@ -303,7 +317,7 @@ namespace scribo
 	link_functor_base<L,E>::validate_link(unsigned current_object,
 					      const P& start_point,
 					      const P& p,
-					      unsigned anchor)
+					      anchor::Type anchor)
 	{
 	  exact(this)->validate_link_(current_object, start_point, p, anchor);
 	}
@@ -327,7 +341,7 @@ namespace scribo
 	link_functor_base<L,E>::invalidate_link(unsigned current_object,
 						const P& start_point,
 						const P& p,
-						unsigned anchor)
+						anchor::Type anchor)
 	{
 	  exact(this)->invalidate_link_(current_object, start_point, p, anchor);
 	}
@@ -361,7 +375,7 @@ namespace scribo
 	inline
 	mln_site(L)
 	link_functor_base<L,E>::start_point(unsigned current_object,
-					    unsigned anchor)
+					    anchor::Type anchor)
 	{
 	  return exact(this)->start_point_(current_object, anchor);
 	}
@@ -404,12 +418,12 @@ namespace scribo
 
 	template <typename L, typename E>
 	inline
-	mln_site(L)
+	mln::util::couple<anchor::Type, mln_site(L)>
 	link_functor_base<L,E>::finalize_link_(unsigned current_object)
 	{
 	  (void) current_object;
 	  // No-Op
-	  return P();
+	  return mln::make::couple(anchor::Invalid, P());
 	}
 
 
@@ -460,7 +474,7 @@ namespace scribo
 	link_functor_base<L,E>::validate_link_(unsigned current_object,
 					       const P& start_point,
 					       const P& p,
-					       unsigned anchor)
+					       anchor::Type anchor)
 	{
 	  (void) start_point;
 	  (void) anchor;
@@ -474,7 +488,7 @@ namespace scribo
 	link_functor_base<L,E>::invalidate_link_(unsigned current_object,
 						 const P& start_point,
 						 const P& p,
-						 unsigned anchor)
+						 anchor::Type anchor)
 	{
 	  (void) current_object;
 	  (void) start_point;
@@ -486,11 +500,13 @@ namespace scribo
 
 	template <typename L, typename E>
 	inline
-	void
-	link_functor_base<L,E>::compute_next_site_(P& p)
+	mln_site(L)
+	link_functor_base<L,E>::start_point_(unsigned current_object,
+					     anchor::Type anchor)
 	{
-	  (void) p;
-	  // No-Op
+	  (void) anchor;
+	  return internal::compute_anchor(this->objects_, mass_centers_,
+					  current_object, anchor);
 	}
 
 	template <typename L, typename E>

@@ -23,24 +23,27 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_LINK_INTERNAL_LINK_CENTER_DMAX_HH_
-# define SCRIBO_PRIMITIVE_LINK_INTERNAL_LINK_CENTER_DMAX_HH_
+#ifndef SCRIBO_PRIMITIVE_LINK_INTERNAL_LINK_SINGLE_DMAX_RATIO_BASE_HH_
+# define SCRIBO_PRIMITIVE_LINK_INTERNAL_LINK_SINGLE_DMAX_RATIO_BASE_HH_
 
 /// \file
 ///
-/// Base class for link functors using center sites and a given max
-/// distance.
+/// \brief Base class for link functors using bounding box center and
+/// a proportional max distance.
 
 
 # include <mln/accu/center.hh>
 # include <mln/labeling/compute.hh>
 # include <mln/math/abs.hh>
+# include <mln/math/max.hh>
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
+# include <scribo/core/anchors.hh>
 # include <scribo/core/object_image.hh>
 # include <scribo/core/object_links.hh>
 
+# include <scribo/primitive/link/internal/compute_anchor.hh>
 # include <scribo/primitive/link/internal/find_link.hh>
 # include <scribo/primitive/link/internal/link_functor_base.hh>
 
@@ -59,45 +62,39 @@ namespace scribo
       namespace internal
       {
 
-	/// \brief Base class for link functors using mass centers and
-	/// a given max distance.
+	/// \brief Base class for link functors using bounding box
+	/// center and a proportional max distance.
 	//
 	template <typename L, typename E>
-	class link_center_dmax_base
+	class link_single_dmax_ratio_base
 	  : public link_functor_base<L, E>
 	{
 	  typedef link_functor_base<L,E> super_;
+	  typedef mln_result(accu::center<mln_psite(L)>) ms_t;
 
 	public:
 
 	  typedef mln_site(L) P;
 
 
-	  /*!
+	  link_single_dmax_ratio_base(const object_image(L)& objects,
+				  float dmax_ratio,
+				  unsigned center_type_);
 
-	    center_type can have the following values:
-	    0 - top bounding box center
-	    1 - bounding box center
-	    2 - bottom bounding box center
-
-	   */
-	  link_center_dmax_base(const object_image(L)& objects,
-				unsigned neighb_max_distance,
-				unsigned center_type);
 
 
 	  bool verify_link_criterion_(unsigned current_object,
 				      const P& start_point, const P& p) const;
 
 	  mln_site(L) start_point_(unsigned current_object,
-				   unsigned anchor);
+				   anchor::Type anchor);
 
 	  void start_processing_object_(unsigned current_object);
 
 	private:
+	  float dmax_ratio_;
 	  float dmax_;
-	  float neighb_max_distance_;
-	  unsigned center_type_;
+	  mln::util::array<ms_t> mass_centers_;
 	};
 
 
@@ -106,23 +103,22 @@ namespace scribo
 
 	template <typename L, typename E>
 	inline
-	link_center_dmax_base<L, E>::link_center_dmax_base(
+	link_single_dmax_ratio_base<L, E>::link_single_dmax_ratio_base(
 	  const object_image(L)& objects,
-	  unsigned neighb_max_distance,
-	  unsigned center_type)
+	  float dmax_ratio)
 
 	  : super_(objects),
-	    dmax_(0),
-	    neighb_max_distance_(neighb_max_distance),
-	    center_type_(center_type)
+	    dmax_ratio_(dmax_ratio),
+	    dmax_(0)
 	{
+	  mass_centers_ = labeling::compute(accu::meta::center(),
+					    objects, objects.nlabels());
 	}
-
 
 	template <typename L, typename E>
 	inline
 	bool
-	link_center_dmax_base<L, E>::verify_link_criterion_(
+	link_single_dmax_ratio_base<L, E>::verify_link_criterion_(
 	  unsigned current_object,
 	  const P& start_point,
 	  const P& p) const
@@ -137,30 +133,27 @@ namespace scribo
 	template <typename L, typename E>
 	inline
 	mln_site(L)
-	link_center_dmax_base<L, E>::start_point_(unsigned current_object,
-						  unsigned anchor)
+	link_single_dmax_ratio_base<L, E>::start_point_(unsigned current_object,
+							anchor::Type anchor)
 	{
 	  (void) anchor;
-	  mln_site(L) sp = this->objects_.bbox(current_object).center();
-	  if (center_type_ == 0)
-	    sp.row() = this->objects_.bbox(current_object).pmin().row();
-	  else if (center_type_ == 2)
-	    sp.row() = this->objects_.bbox(current_object).pmax().row();
-
-	  return sp;
+	  return internal::compute_anchors(this->objects_, mass_centers_,
+					   current_object, anchor);
 	}
 
 
 	template <typename L, typename E>
 	inline
 	void
-	link_center_dmax_base<L, E>::start_processing_object_(
+	link_single_dmax_ratio_base<L, E>::start_processing_object_(
 	  unsigned current_object)
 	{
 	  float
-	    midcol = (this->objects_.bbox(current_object).pmax().col()
-		      - this->objects_.bbox(current_object).pmin().col()) / 2;
-	  dmax_ = midcol + neighb_max_distance_;
+	    w = (this->objects_.bbox(current_object).pmax().col()
+		 - this->objects_.bbox(current_object).pmin().col()),
+	    h = (this->objects_.bbox(current_object).pmax().row()
+		 - this->objects_.bbox(current_object).pmin().row());
+	  dmax_ = (w / 2.0f) + (dmax_ratio_ * math::max(w, h));
 	}
 
 
@@ -176,4 +169,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // SCRIBO_PRIMITIVE_LINK_INTERNAL_LINK_CENTER_DMAX_HH_
+#endif // SCRIBO_PRIMITIVE_LINK_INTERNAL_LINK_SINGLE_DMAX_RATIO_BASE_HH_

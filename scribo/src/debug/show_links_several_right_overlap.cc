@@ -30,6 +30,8 @@
 
 #include <mln/data/convert.hh>
 
+#include <mln/util/couple.hh>
+
 #include <mln/value/rgb8.hh>
 #include <mln/value/label_16.hh>
 #include <mln/literal/colors.hh>
@@ -41,7 +43,7 @@
 
 #include <scribo/primitive/extract/objects.hh>
 #include <scribo/primitive/link/internal/link_several_dmax_base.hh>
-#include <scribo/primitive/link/internal/anchors_3.hh>
+#include <scribo/primitive/link/internal/compute_anchor.hh>
 #include <scribo/primitive/link/compute_several.hh>
 
 #include <scribo/draw/bounding_boxes.hh>
@@ -61,11 +63,7 @@ namespace scribo
     typedef
       primitive::link::internal::link_several_dmax_base<L, self_t> super_;
 
-    typedef
-      mln::util::array<mln::util::couple<unsigned, mln_site(L)>
-      potential_links_t;
-
-    public:
+  public:
     typedef mln_site(L) P;
 
     several_right_overlap_debug_functor(const I& input,
@@ -79,35 +77,32 @@ namespace scribo
     }
 
 
-    void validate_link_(unsigned current_object,
-			const P& start_point,
-			const P& p,
-			unsigned anchor)
+    mln::util::couple<anchor::Type, mln_site(L)>
+    finalize_link_(unsigned current_object)
     {
-      mln::draw::line(output_, start_point, p, literal::green);
+      mln::util::couple<anchor::Type, mln_site(L)>
+	c = super_::finalize_link_(current_object);
 
-      super_::validate_link_(current_object, start_point, p, anchor);
-    }
-
-
-
-    void invalidate_link_(unsigned current_object,
-			  const P& start_point,
-			  const P& p,
-			  unsigned anchor)
-    {
-      if (output_.domain().has(p))
-	mln::draw::line(output_, start_point, p, literal::red);
-      else
+      if (c.first() != anchor::Invalid)
       {
-	P tmp = p;
-	++tmp.col();
-	mln::draw::line(output_, start_point, tmp, literal::red);
+	mln_site(L)
+	  p = primitive::link::internal::compute_anchor(this->objects_,
+							this->mass_centers_,
+							current_object,
+							c.first());
+	mln::draw::line(output_, p, c.second(), literal::green);
       }
 
-      super_::invalidate_link_(current_object, start_point, p, anchor);
+      return c;
     }
 
+    mln_site(L)
+    start_point_(unsigned current_object, anchor::Type anchor)
+    {
+      return primitive::link::internal::compute_anchor(this->objects_,
+						       this->mass_centers_,
+						       current_object, anchor);
+    }
 
 
     void compute_next_site_(P& p)

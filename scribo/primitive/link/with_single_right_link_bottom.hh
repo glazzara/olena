@@ -40,11 +40,12 @@
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
+# include <scribo/core/anchors.hh>
 # include <scribo/core/object_image.hh>
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>
-# include <scribo/primitive/link/internal/link_center_dmax_base.hh>
+# include <scribo/primitive/link/internal/link_single_dmax_base.hh>
 
 # include <scribo/primitive/link/compute.hh>
 
@@ -70,7 +71,7 @@ namespace scribo
       inline
       object_links<L>
       with_single_right_link_bottom(const object_image(L)& objects,
-			     unsigned neighb_max_distance);
+				    unsigned neighb_max_distance);
 
 
       /// \overload
@@ -92,11 +93,11 @@ namespace scribo
 
 	template <typename L>
 	class single_right_bottom_functor
-	  : public link_center_dmax_base<L,
+	  : public link_single_dmax_base<L,
 					 single_right_bottom_functor<L> >
 	{
 	  typedef
-	    link_center_dmax_base<L, single_right_bottom_functor<L> >
+	    link_single_dmax_base<L, single_right_bottom_functor<L> >
 	  super_;
 
 	public:
@@ -104,7 +105,7 @@ namespace scribo
 
 	  single_right_bottom_functor(const object_image(L)& objects,
 				      unsigned dmax)
-	    : super_(objects, dmax, 2)
+	    : super_(objects, dmax)
 	  {
 	  }
 
@@ -134,7 +135,7 @@ namespace scribo
 	internal::single_right_bottom_functor<L>
 	  functor(objects, neighb_max_distance);
 
-	object_links<L> output = compute(functor);
+	object_links<L> output = compute(functor, anchor::Bottom);
 
 	trace::exiting("scribo::primitive::link::with_single_right_link_bottom");
 	return output;

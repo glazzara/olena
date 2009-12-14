@@ -78,7 +78,7 @@ namespace scribo
     void validate_link_(unsigned current_object,
 			const P& start_point,
 			const P& p,
-			unsigned anchor)
+			anchor::Type anchor)
     {
       mln::draw::line(output_, start_point, p, literal::green);
 
@@ -90,7 +90,7 @@ namespace scribo
     void invalidate_link_(unsigned current_object,
 			  const P& start_point,
 			  const P& p,
-			  unsigned anchor)
+			  anchor::Type anchor)
     {
       if (output_.domain().has(p))
 	mln::draw::line(output_, start_point, p, literal::red);

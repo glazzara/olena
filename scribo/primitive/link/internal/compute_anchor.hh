@@ -23,14 +23,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_LINK_INTERNAL_ANCHORS_3_HH
-# define SCRIBO_PRIMITIVE_LINK_INTERNAL_ANCHORS_3_HH
+#ifndef SCRIBO_PRIMITIVE_LINK_INTERNAL_COMPUTE_ANCHOR_HH
+# define SCRIBO_PRIMITIVE_LINK_INTERNAL_COMPUTE_ANCHOR_HH
 
 /// \file
 ///
-/// Routine providing 3 anchors for neighbor seeking.
+/// Routine providing anchors for neighbor seeking.
 
 # include <mln/math/min.hh>
+# include <mln/util/array.hh>
 
 # include <scribo/core/object_image.hh>
 
@@ -46,10 +47,9 @@ namespace scribo
 
       namespace internal
       {
+	using namespace mln;
 
 	/*! \brief Return the proper anchor used to find a neighbor.
-
-	  This routine provides up to 3 different anchors.
 
 	  \param[in] objects        An object image.
 	  \param[in] mass_centers   Object mass centers.
@@ -57,9 +57,10 @@ namespace scribo
 	  \param[in] anchor         The expected anchor.
 
 	  Anchor can take one of the following values:
-	  - 0, top anchor.
-	  - 1, center anchor. It is the mass center.
-	  - 2, bottom anchor.
+	  - anchor::MassCenter, mass center anchor.
+	  - anchor::Top, top anchor.
+	  - anchor::Bottom, bottom anchor.
+	  - anchor::Center, center anchor.
 
 
 	  Top and bottom anchors are respectively computed from the
@@ -77,52 +78,55 @@ namespace scribo
 	 */
 	template <typename L, typename P>
 	mln_site(L)
-	anchors_3(const object_image(L)& objects,
-		  const mln::util::array<P>& mass_centers,
-		  unsigned current_object, unsigned anchor);
+	compute_anchor(const object_image(L)& objects,
+		       const mln::util::array<P>& mass_centers,
+		       unsigned current_object, anchor::Type anchor);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 	template <typename L, typename P>
 	mln_site(L)
-	anchors_3(const object_image(L)& objects,
-		  const mln::util::array<P>& mass_centers,
-		  unsigned current_object, unsigned anchor)
+	compute_anchor(const object_image(L)& objects,
+		       const mln::util::array<P>& mass_centers,
+		       unsigned current_object, anchor::Type anchor)
 	{
 	  unsigned h = objects.bbox(current_object).pmax().row()
 	               - objects.bbox(current_object).pmin().row();
 
 	  mln_site(L) sp = objects.bbox(current_object).center();
-	  def::coord r;
+	  def::coord r = 0;
 
 	  switch (anchor)
 	  {
-	    // Top
-	    case 0:
-	      if (h < 30)
-		r = objects.bbox(current_object).pmin().row()
-		  + math::min(2u, (h + 1) / 2 - 1);
-	      else
-		r = objects.bbox(current_object).pmin().row()
-		  - math::min(10u, h /10);
-	      break;
-
-
-	      // Center
-	    case 1:
+	    // Masss Center
+	    case anchor::MassCenter:
 	      return mass_centers(current_object);
 
 
-	      // Bottom
-	    case 2:
+	    // Top
+	    case anchor::Top:
+	      if (h < 30)
+		r = objects.bbox(current_object).pmin().row()
+		  + math::min(2u, (h + 1) / 2 - 1);
+	      else
+		r = objects.bbox(current_object).pmin().row()
+		  + math::min(10u, h /10);
+	      break;
+
+
+	    // Bottom
+	    case anchor::Bottom:
 	      if (h < 30)
 		r = objects.bbox(current_object).pmax().row()
-		  + math::min(2u, (h + 1) / 2 - 1);
+		  - math::min(2u, (h + 1) / 2 - 1);
 	      else
 		r = objects.bbox(current_object).pmax().row()
 		  - math::min(10u, h /10);
 	      break;
+
+	    case anchor::Center:
+	      return objects.bbox(current_object).center();
 
 	    default:
 	      trace::warning("Non handled anchor");
@@ -143,4 +147,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_PRIMITIVE_LINK_INTERNAL_ANCHORS_3_HH
+#endif // ! SCRIBO_PRIMITIVE_LINK_INTERNAL_COMPUTE_ANCHOR_HH

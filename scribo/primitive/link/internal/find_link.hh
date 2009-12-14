@@ -38,6 +38,7 @@
 # include <mln/util/couple.hh>
 
 # include <scribo/core/concept/link_functor.hh>
+# include <scribo/core/anchors.hh>
 # include <scribo/core/object_image.hh>
 # include <scribo/core/object_links.hh>
 # include <scribo/primitive/internal/update_link_array.hh>
@@ -59,27 +60,30 @@ namespace scribo
 	\param[in,out] functor Functor used to compute the
 	                       links. Stores the results.
 	\param[in] current_object Current object id.
+	\param[in] anchor The lookup anchor.
 
 	\return A couple. The first argument tells whether a valid
 	link has been found, the second one is link anchor if exists.
       */
       template <typename F>
       mln::util::couple<bool, mln_site(scribo_support_(F))>
-      find_link(Link_Functor<F>& functor, unsigned current_object);
+      find_link(Link_Functor<F>& functor, unsigned current_object,
+		anchor::Type anchor);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename F>
       mln::util::couple<bool, mln_site(scribo_support_(F))>
-      find_link(Link_Functor<F>& functor_, unsigned current_object)
+      find_link(Link_Functor<F>& functor_, unsigned current_object,
+		anchor::Type anchor)
       {
 	F& functor = exact(functor_);
 
 	functor.initialize_link(current_object); // <-- initialize_link
 
 	mln_site(scribo_support_(F))
-	  start_point = functor.start_point(current_object),
+	  start_point = functor.start_point(current_object, anchor), // <-- start_point
 	  p = start_point;
 
 	mln_postcondition(p == start_point);
@@ -93,9 +97,9 @@ namespace scribo
 	  functor.compute_next_site(p); // <-- compute_next_site
 
 	if (functor.valid_link(current_object, start_point, p)) // <-- valid_link
-	  functor.validate_link(current_object, start_point, p); // <-- validate_link
+	  functor.validate_link(current_object, start_point, p, anchor); // <-- validate_link
 	else
-	  functor.invalidate_link(current_object, start_point, p); // <-- invalidate_link
+	  functor.invalidate_link(current_object, start_point, p, anchor); // <-- invalidate_link
 
 	functor.finalize_link(current_object); // <-- finalize_link
 

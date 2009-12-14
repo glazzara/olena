@@ -47,7 +47,7 @@
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>
-# include <scribo/primitive/link/internal/link_ms_dmax_base.hh>
+# include <scribo/primitive/link/internal/link_single_dmax_base.hh>
 
 # include <scribo/primitive/link/compute.hh>
 
@@ -93,10 +93,10 @@ namespace scribo
 
 	template <typename L>
 	class single_left_functor
-	  : public internal::link_ms_dmax_base<L, single_left_functor<L> >
+	  : public internal::link_single_dmax_base<L, single_left_functor<L> >
 	{
 	  typedef
-	    internal::link_ms_dmax_base<L, single_left_functor<L> > super_;
+	    internal::link_single_dmax_base<L, single_left_functor<L> > super_;
 
 	public:
 	  typedef mln_site(L) P;

@@ -39,7 +39,8 @@
 # include <scribo/core/object_image.hh>
 # include <scribo/core/macros.hh>
 # include <scribo/primitive/internal/init_link_array.hh>
-# include <scribo/primitive/internal/find_right_link.hh>
+# include <scribo/primitive/link/internal/find_several_links.hh>
+# include <scribo/primitive/link/internal/link_several_dmax_base.hh>
 # include <scribo/util/text.hh>
 
 
@@ -94,8 +95,6 @@ namespace scribo
 	  {
 	  }
 
-	  template <typename L, typename E>
-	  inline
 	  mln_site(L)
 	  start_point_(unsigned current_object, unsigned anchor)
 	  {
@@ -108,6 +107,8 @@ namespace scribo
 	  {
 	    ++p.col();
 	  }
+
+	};
 
       } // end of namespace scribo::primitive::link::internal
 
@@ -122,7 +123,8 @@ namespace scribo
 
 	mln_precondition(objects.is_valid());
 
-	several_right_overlap_functor<L> functor(objects, neighb_max_distance);
+	internal::several_right_overlap_functor<L>
+	  functor(objects, neighb_max_distance);
 
 	for_all_ncomponents(current_object, objects.nlabels())
 	  internal::find_several_links(functor, current_object);
