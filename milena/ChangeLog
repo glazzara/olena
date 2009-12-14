@@ -1,5 +1,11 @@
 2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add an antialiased subsampling.
+
+	* mln/subsampling/antialiased.hh: New.
+
+2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add hooks for subclasses in labeled_image_base.
 
 	* mln/core/internal/labeled_image_base.hh: New methods which can
