@@ -1,3 +1,12 @@
+2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add hooks for subclasses in labeled_image_base.
+
+	* mln/core/internal/labeled_image_base.hh: New methods which can
+	be overridden in subclasses.
+
+	* mln/core/image/imorph/labeled_image.hh: Add a missing header.
+
 2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes.

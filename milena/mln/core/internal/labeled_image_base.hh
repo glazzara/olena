@@ -168,7 +168,13 @@ namespace mln
     template <typename F>
     void relabel_(const Function_v2b<F>& f);
 
+    /// Called during relabeling.
+    /// @{
+    void init_update_data_();
+    void prepare_update_data_(const mln_value(I)& lbl,
+			      const mln_value(I)& new_lbl);
     void update_data_(const fun::i2v::array<mln_value(I)>& relabel_fun);
+    /// @}
   };
 
 
@@ -275,9 +281,14 @@ namespace mln
     util::array<accu::shape::bbox<mln_psite(I)> >
       new_bboxes(static_cast<unsigned>(this->data_->nlabels_) + 1);
 
+    exact(this)->init_update_data_();
+
     for (unsigned i = 1; i < this->data_->bboxes_.size(); ++i)
       if (relabel_fun(i) != 0)
+      {
 	new_bboxes[relabel_fun(i)].take(this->data_->bboxes_[i]);
+	exact(this)->prepare_update_data_(i, relabel_fun(i));
+      }
 
     convert::from_to(new_bboxes, this->data_->bboxes_);
 
@@ -340,6 +351,24 @@ namespace mln
     (void) relabel_fun;
     // No-Op.
   }
+
+  template <typename I, typename E>
+  void
+  labeled_image_base<I,E>::prepare_update_data_(const mln_value(I)& lbl,
+						const mln_value(I)& new_lbl)
+  {
+    (void) lbl;
+    (void) new_lbl;
+    // No-Op.
+  }
+
+  template <typename I, typename E>
+  void
+  labeled_image_base<I,E>::init_update_data_()
+  {
+    // No-Op.
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
