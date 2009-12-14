@@ -1,5 +1,16 @@
 2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix object links filters.
+
+	* filter/object_links_bottom_aligned.hh,
+	* filter/object_links_center_aligned.hh,
+	* filter/object_links_non_aligned_simple.hh,
+	* filter/object_links_top_aligned.hh: Pass the proper dimension as
+	routine argument.
+
+
+2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Cleanup Sauvola's binarization code.
 
 	* binarization/sauvola_threshold.hh,

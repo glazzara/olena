@@ -95,7 +95,7 @@ namespace scribo
 
       object_links<L>
 	output = object_links_non_aligned_simple(objects, links,
-						 2, max_alpha);
+						 0, max_alpha);
 
       trace::exiting("scribo::filter::object_links_center_aligned");
       return output;

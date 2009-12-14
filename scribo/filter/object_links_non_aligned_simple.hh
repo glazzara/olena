@@ -81,9 +81,9 @@ namespace scribo
 	The angle between the two bottoms must be lower than \p alpha.
 
 	edge values :
-	 0 = top
-	 1 = bottom
-	 2 = center
+	 0 = center
+	 1 = top
+	 2 = bottom
 
     */
     template <typename L>
@@ -117,8 +117,25 @@ namespace scribo
 
       float max_alpha_rad = (max_alpha / 180.0f) * math::pi;
 
-      // Top
+      // Center
       if (edge == 0)
+      {
+	for_all_components(i, objects.bboxes())
+	{
+	  if (links[i] != i)
+	  {
+	    dr = math::abs(bboxes[i].center().row()
+			   - bboxes[links[i]].center().row());
+	    dc = math::abs(bboxes[i].center().col()
+			   - bboxes[links[i]].center().col());
+
+	    if (std::atan(dr / dc) > max_alpha_rad)
+	      output[i] = i;
+	  }
+	}
+      }
+      // Top
+      else if (edge == 1)
       {
 	for_all_components(i, objects.bboxes())
 	  if (links[i] != i)
@@ -133,7 +150,8 @@ namespace scribo
 	  }
       }
       // Bottom
-      else if (edge == 1)
+      else if (edge == 2)
+      {
 	for_all_components(i, objects.bboxes())
 	{
 	  if (links[i] != i)
@@ -147,21 +165,7 @@ namespace scribo
 	      output[i] = i;
 	  }
 	}
-      // Center
-      else if (edge == 2)
-	for_all_components(i, objects.bboxes())
-	{
-	  if (links[i] != i)
-	  {
-	    dr = math::abs(bboxes[i].center().row()
-			   - bboxes[links[i]].center().row());
-	    dc = math::abs(bboxes[i].center().col()
-			   - bboxes[links[i]].center().col());
-
-	    if (std::atan(dr / dc) > max_alpha_rad)
-	      output[i] = i;
-	  }
-	}
+      }
       else
       {
 	trace::warning("Invalid edge value... Aborting computation.");
