@@ -58,9 +58,13 @@ namespace scribo
 	double& mean, double& stddev)
       {
 	mean = sum / n;
-	stddev = std::sqrt(sum_2 / n - mean * mean);
+//	stddev = std::sqrt(sum_2 / n - mean * mean);
+
+// 	std::cout << "(" << mean << " - " << stddev << " - " << n << "),";
+
 	// unbias version:
-	//   stddev = std::sqrt((sum_2 - n * mean * mean) / (n - 1));
+	stddev = std::sqrt((sum_2 - sum * sum / n) / (n - 1));
+
       }
 
     } // end of namespace scribo::canvas::internal
@@ -72,6 +76,7 @@ namespace scribo
     void integral_browsing(const image2d<util::couple<double, double> >& ima,
 			   unsigned step,
 			   unsigned w, unsigned h,
+			   unsigned s,
 			   F& functor)
     {
       typedef util::couple<double, double> V;
@@ -112,6 +117,8 @@ namespace scribo
 
       double mean, stddev;
 
+      unsigned s_2 = s * s;
+
 
       // -------------------------------
       //           T (top)
@@ -146,7 +153,7 @@ namespace scribo
 	  // D
 	  internal::compute_stats(d_ima->first(),
 				  d_ima->second(),
-				  size_tl,
+				  size_tl * s_2,
 				  mean, stddev);
 	  functor.exec(mean, stddev);
 	  d_ima += step;
@@ -166,7 +173,7 @@ namespace scribo
 	  // D - C
 	  internal::compute_stats(d_ima->first()   - c_ima->first(),
 				  d_ima->second() - c_ima->second(),
-				  size_tc,
+				  size_tc * s_2,
 				  mean, stddev);
 	  functor.exec(mean, stddev);
 	  c_ima += step;
@@ -188,7 +195,7 @@ namespace scribo
 	  // D* - C
 	  internal::compute_stats(d_sum   - c_ima->first(),
 				  d_sum_2 - c_ima->second(),
-				  size_tr,
+				  size_tr * s_2,
 				  mean, stddev);
 	  functor.exec(mean, stddev);
 	  c_ima += step;
@@ -239,7 +246,7 @@ namespace scribo
 	  // D - B
 	  internal::compute_stats(d_ima->first()   - b_ima->first(),
 				  d_ima->second() - b_ima->second(),
-				  size_ml,
+				  size_ml * s_2,
 				  mean, stddev);
 	  functor.exec(mean, stddev);
 	  b_ima += step;
@@ -258,11 +265,40 @@ namespace scribo
 	for (; col <= max_col_mid; col += step)
 	{
 	  // D + A - B - C
+
+// 	  if (row == 3 && col == 3)
+// 	    std::cout << "p(" << row << "," << col << ") - "
+
+// 		      << "A" << ima.point_at_index(a_ima - ima.buffer())
+// 		      << "=" << a_ima->first() << " - "
+
+// 		      << "B" << ima.point_at_index(b_ima - ima.buffer())
+// 		      << "=" << b_ima->first() << " - "
+
+// 		      << "C" << ima.point_at_index(c_ima - ima.buffer())
+// 		      << "=" << c_ima->first() << " - "
+
+// 		      << "D" << ima.point_at_index(d_ima - ima.buffer())
+// 		      << "=" << d_ima->first() << " - "
+
+// 		      << "n =" << size_mc << " - "
+// 		      << "n*s_2 =" << size_mc * s_2
+// 		      << std::endl;
+
 	  internal::compute_stats((d_ima->first()   - b_ima->first())   + (a_ima->first()   - c_ima->first()),
 				  (d_ima->second() - b_ima->second()) + (a_ima->second() - c_ima->second()),
-				  size_mc,
+				  size_mc * s_2,
 				  mean, stddev);
+
 	  functor.exec(mean, stddev);
+
+// 	  std::cout << " - " << mean
+// 		    << " - " << stddev
+// 		    << " - " << (d_ima->first()   - b_ima->first())   + (a_ima->first()   - c_ima->first())
+// 		    << " - " << (d_ima->second() - b_ima->second()) + (a_ima->second() - c_ima->second())
+// 		    << std::endl;
+
+
 	  a_ima += step;
 	  b_ima += step;
 	  c_ima += step;
@@ -283,7 +319,7 @@ namespace scribo
 	  // D* + A - B* - C
 	  internal::compute_stats(d_b_sum   + (a_ima->first()   - c_ima->first()),
 				  d_b_sum_2 + (a_ima->second() - c_ima->second()),
-				  size_mr,
+				  size_mr * s_2,
 				  mean, stddev);
 	  functor.exec(mean, stddev);
 	  a_ima += step;
@@ -332,7 +368,7 @@ namespace scribo
 	  // D* - B
 	  internal::compute_stats(d_ima->first()   - b_ima->first(),
 				  d_ima->second() - b_ima->second(),
-				  size_bl,
+				  size_bl * s_2,
 				  mean, stddev);
 	  functor.exec(mean, stddev);
 	  b_ima += step;
@@ -354,7 +390,7 @@ namespace scribo
 	  // D* + A - B - C*
 	  internal::compute_stats((d_ima->first()   - b_ima->first())   + (a_ima->first()   - c_ima->first()),
 				  (d_ima->second() - b_ima->second()) + (a_ima->second() - c_ima->second()),
-				  size_bc,
+				  size_bc * s_2,
 				  mean, stddev);
 // 	  std::cout << (d_ima->second() - b_ima->second()) + (a_ima->second() - c_ima->second()) << std::endl;
 
@@ -385,7 +421,7 @@ namespace scribo
 	  // D* + A - B* - C*
 	  internal::compute_stats(d_b_sum   + (a_ima->first()  - c_ima->first()),
 				  d_b_sum_2 + (a_ima->second() - c_ima->second()),
-				  size_br,
+				  size_br * s_2,
 				  mean, stddev);
 	  functor.exec(mean, stddev);
 	  a_ima += step;

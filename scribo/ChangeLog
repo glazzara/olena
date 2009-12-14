@@ -1,3 +1,19 @@
+2009-12-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve Sauvola Multi-scale.
+
+	* binarization/internal/first_pass_functor.hh: Use
+	sauvola_threshold routine.
+
+	* binarization/sauvola_threshold.hh: Remove debug and fix invalid
+	read in integral image.
+
+	* canvas/integral_browsing.hh,
+	* subsampling/integral_single_image.hh: Fix stats computation.
+
+	* src/binarization/sauvola_ms.cc: Fix window parameter and make
+	debug output optional.
+
 2009-12-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Optimize Sauvola's multiscale binarization.

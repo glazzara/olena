@@ -98,8 +98,16 @@ namespace scribo
 
 	  // Use an inlined and developed version of sauvola's
 	  // threshold formula.
- 	  value::int_u8 t_p = mean * (one_k + k_R * stddev);
-//          value::int_u8 t_p = sauvola_threshold_formula(mean, stddev);
+//  	  value::int_u8 t_p = mean * (one_k + k_R * stddev);
+
+// 	  std::cout << t_p << ", ";
+
+// 	  std::cout << input.element(p) <<  " - " << t_p << std::endl;
+          value::int_u8 t_p = sauvola_threshold_formula(mean, stddev);
+
+//  	  std::cout << input.point_at_index(p)
+// 		    << " - " << sauvola_threshold_formula(mean, stddev);
+
 
 	  msk.element(p) = input.element(p) < t_p;
 	  t_sub.element(p) = t_p;
@@ -128,6 +136,8 @@ namespace scribo
 	void finalize()
 	{
  	  mln_assertion(! pxl.is_valid());
+
+// 	  std::cout << std::endl << " ------- " << std::endl;
 	}
       };
 

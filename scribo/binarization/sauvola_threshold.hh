@@ -46,6 +46,9 @@
 
 # include <scribo/core/init_integral_image.hh>
 
+
+#include <mln/io/pgm/save.hh>
+
 namespace scribo
 {
 
@@ -168,8 +171,8 @@ namespace scribo
 	// Window half width.
 	int w_2 = win_width >> 1;
 
-	int row_min = std::max(0, p.row() - w_2);
-	int col_min = std::max(0, p.col() - w_2);
+	int row_min = std::max(0, p.row() - w_2 - 1);
+	int col_min = std::max(0, p.col() - w_2 - 1);
 
 	int row_max = std::min(static_cast<int>(simple.nrows()) - 1,
 			       p.row() + w_2);
@@ -177,12 +180,7 @@ namespace scribo
 			       p.col() + w_2);
 
 
-// 	std::cout << "sauvola threshold : "
-// 		  << simple.domain() << " - "
-// 		  << row_max << " - "
-// 		  << col_max << std::endl;
-
-	double wh = (row_max - row_min + 1) * (col_max - col_min + 1);
+	double wh = (row_max - row_min) * (col_max - col_min);
 
 	// Mean.
 	double m_x_y_tmp = (simple.at_(row_max, col_max)
@@ -200,8 +198,37 @@ namespace scribo
 
 	double s_x_y = std::sqrt((s_x_y_tmp - (m_x_y_tmp * m_x_y_tmp) / wh) / (wh - 1.f));
 
+
+// 	if (p == point2d(3,3))// || p == point2d(4,4) || p == point2d(1,1))
+// 	{
+// //  	  std::cout << "p" << p << " - A(" << row_min << ", " << col_min
+// // 		    << ") = " << simple.at_(row_min, col_min)
+
+// 		    << " - B(" << row_min << ", " << col_max
+// 		    << ") = " << simple.at_(row_min, col_max)
+
+// 		    << " - C(" << row_max << ", " << col_min
+// 		    << ") = " << simple.at_(row_max, col_min)
+
+// 		    << " - D(" << row_max << ", " << col_max
+// 		    << ") = " << simple.at_(row_max, col_max)
+// 		    << " - n = " << wh
+// 		    << std::endl;
+
+//		    << std::endl;
+//	}
+
 	// Thresholding.
 	double t_x_y = sauvola_threshold_formula(m_x_y, s_x_y, k, R);
+
+
+// 	std::cout << p
+// 		  << " - m = " << m_x_y
+// 		  << " - s = " << s_x_y
+// 		  << " - t = " << t_x_y
+// 		  << " - sum = " << m_x_y_tmp
+// 		  << " - sum_2 = " << s_x_y_tmp
+// 		  << std::endl;
 
 	return t_x_y;
       }
@@ -219,18 +246,11 @@ namespace scribo
 	int row_min = std::max(0, p.row() - w_2);
 	int col_min = std::max(0, p.col() - w_2);
 
-        //FIXME: offset (-4) should be replaced by the number of
-        //padding pixels.
 	int row_max = std::min(static_cast<int>(integral.nrows()) - 1,
 			       p.row() + w_2);
 	int col_max = std::min(static_cast<int>(integral.ncols()) - 1,
 			       p.col() + w_2);
 
-
-// 	std::cout << "sauvola threshold : "
-// 		  << simple.domain() << " - "
-// 		  << row_max << " - "
-// 		  << col_max << std::endl;
 
 	double wh = (row_max - row_min + 1) * (col_max - col_min + 1);
 
@@ -251,7 +271,7 @@ namespace scribo
 	double s_x_y = std::sqrt((s_x_y_tmp - (m_x_y_tmp * m_x_y_tmp) / wh) / (wh - 1.f));
 
 	// Thresholding.
-	double t_x_y = m_x_y * (1.0 + 0.14 * ((s_x_y / 128) - 1.0));
+	double t_x_y = m_x_y * (1.0 + 0.34 * ((s_x_y / 128) - 1.0));
 
 	return t_x_y;
       }
@@ -438,6 +458,25 @@ namespace scribo
       mln_precondition(mln_site_(I)::dim == 2);
       mln_precondition(exact(input).is_valid());
 
+
+//       {
+// 	J& simple_ = exact(simple);
+// 	J& squared_ = exact(squared);
+// 	mln_piter(J) p(simple_.domain());
+// 	for_all(p)
+// 	{
+// 	  std::cout << simple_(p) << ", ";
+// 	}
+// 	std::cout << std::endl << " ------- " << std::endl;
+// 	for_all(p)
+// 	{
+// 	  std::cout << squared_(p) << ", ";
+// 	}
+// 	std::cout << std::endl << " ------- " << std::endl;
+//       }
+
+
+
       typedef mln_value(I) value_t;
       mln_ch_value(I, value::int_u8)
 	output = internal::sauvola_threshold_dispatch(value_t(), exact(input),
@@ -445,6 +484,8 @@ namespace scribo
 						      exact(simple),
 						      exact(squared));
 
+//       std::cout << std::endl << " ------- " << std::endl;
+      io::pgm::save(output, "ref_2_t.pgm");
       trace::exiting("scribo::text::ppm2pbm");
       return output;
     }

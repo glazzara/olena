@@ -107,7 +107,6 @@ namespace scribo
 
 	const I& input = exact(input_);
 	J& integral_sum_sum_2 = exact(integral_sum_sum_2_);
-	const unsigned area = scale * scale;
 
 	mln_precondition(input.is_valid());
 	mln_precondition(input.domain().pmin() == literal::origin);
@@ -142,19 +141,22 @@ namespace scribo
 	  const V* ptr3 = & input.at_(row + 2, 0);
 	  for (unsigned col = 0; col < ncols; col += scale)
 	  {
-	    S sum;
-	    sum  = *ptr1 + *(ptr1 + 1) + *(ptr1 + 2);
-	    sum += *ptr2 + *(ptr2 + 1) + *(ptr2 + 2);
-	    sum += *ptr3 + *(ptr3 + 1) + *(ptr3 + 2);
+	    V v11 = *ptr1, v12 = *(ptr1 + 1), v13 = *(ptr1 + 2),
+	      v21 = *ptr2, v22 = *(ptr2 + 1), v23 = *(ptr2 + 2),
+	      v31 = *ptr3, v32 = *(ptr3 + 1), v33 = *(ptr3 + 2);
 	    ptr1 += 3;
 	    ptr2 += 3;
 	    ptr3 += 3;
+	    S local_sum   = v11     + v12     + v13
+	                  + v21     + v22     + v23
+	                  + v31     + v32     + v33,
+	      local_sum_2 = v11*v11 + v12*v12 + v13*v13
+	                  + v21*v21 + v22*v22 + v23*v23
+	                  + v31*v31 + v32*v32 + v33*v33;
 
-	    S val = sum / area;
-	    *p_sub++ = val;
-
-	    h_sum   += val;
-	    h_sum_2 += val * val;
+	    *p_sub++ = local_sum / 9;
+	    h_sum   += local_sum;
+	    h_sum_2 += local_sum_2;
 
 	    // exception
 	    p_integ->first() = h_sum;
@@ -172,24 +174,27 @@ namespace scribo
 	for (row += scale; row < nrows; row += scale)
 	{
 	  S h_sum = 0, h_sum_2 = 0;
-	  const V* ptr1 = & input.at_(row, 0);
+    	  const V* ptr1 = & input.at_(row, 0);
 	  const V* ptr2 = & input.at_(row + 1, 0);
 	  const V* ptr3 = & input.at_(row + 2, 0);
 	  for (unsigned col = 0; col < ncols; col += scale)
 	  {
-	    S sum;
-	    sum  = *ptr1 + *(ptr1 + 1) + *(ptr1 + 2);
-	    sum += *ptr2 + *(ptr2 + 1) + *(ptr2 + 2);
-	    sum += *ptr3 + *(ptr3 + 1) + *(ptr3 + 2);
+	    V v11 = *ptr1, v12 = *(ptr1 + 1), v13 = *(ptr1 + 2),
+	      v21 = *ptr2, v22 = *(ptr2 + 1), v23 = *(ptr2 + 2),
+	      v31 = *ptr3, v32 = *(ptr3 + 1), v33 = *(ptr3 + 2);
 	    ptr1 += 3;
 	    ptr2 += 3;
 	    ptr3 += 3;
+	    S local_sum   = v11     + v12     + v13
+	                  + v21     + v22     + v23
+	                  + v31     + v32     + v33,
+	      local_sum_2 = v11*v11 + v12*v12 + v13*v13
+	                  + v21*v21 + v22*v22 + v23*v23
+	                  + v31*v31 + v32*v32 + v33*v33;
 
-	    S val = sum / area;
-	    *p_sub++ = val;
-
-	    h_sum   += val;
-	    h_sum_2 += val * val;
+	    *p_sub++ = local_sum / 9;
+	    h_sum   += local_sum;
+	    h_sum_2 += local_sum_2;
 
 	    p_integ->first() = h_sum + (p_integ + up)->first();
 	    p_integ->second() = h_sum_2 + (p_integ + up)->second();
@@ -220,7 +225,6 @@ namespace scribo
 
 	const I& input = exact(input_);
 	J& integral_sum_sum_2 = exact(integral_sum_sum_2_);
-	const unsigned area = scale * scale;
 
 	typedef mln_value(I) V;
 	typedef mln_sum(V) S;
@@ -257,6 +261,7 @@ namespace scribo
 	  const V* ptr2 = & input.at_(row + 1, 0);
 	  for (unsigned col = 0; col < ncols; col += scale)
 	  {
+/*
 	    S sum;
 	    sum  = *ptr1 + *(ptr1 + 1);
 	    sum += *ptr2 + *(ptr2 + 1);
@@ -268,6 +273,22 @@ namespace scribo
 
 	    h_sum   += val;
 	    h_sum_2 += val * val;
+*/
+
+	    // NEW:
+
+	    V v11 = *ptr1, v12 = *(ptr1 + 1),
+	      v21 = *ptr2, v22 = *(ptr2 + 1);
+	    ptr1 += 2;
+	    ptr2 += 2;
+	    S local_sum   = v11     + v12     + v21     + v22,
+	      local_sum_2 = v11*v11 + v12*v12 + v21*v21 + v22*v22;
+	    *p_sub++ = local_sum / 4;
+	    h_sum   += local_sum;
+	    h_sum_2 += local_sum_2;
+
+	    // end of NEW.
+
 
 	    // exception
 	    p_integ->first() = h_sum;
@@ -289,6 +310,29 @@ namespace scribo
 	  const V* ptr2 = & input.at_(row + 1, 0);
 	  for (unsigned col = 0; col < ncols; col += scale)
 	  {
+	    // NEW:
+
+	    V v11 = *ptr1, v12 = *(ptr1 + 1),
+	      v21 = *ptr2, v22 = *(ptr2 + 1);
+	    ptr1 += 2;
+	    ptr2 += 2;
+	    S local_sum   = v11     + v12     + v21     + v22,
+	      local_sum_2 = v11*v11 + v12*v12 + v21*v21 + v22*v22;
+	    *p_sub++ = local_sum / 4;
+	    h_sum   += local_sum;
+	    h_sum_2 += local_sum_2;
+
+	    // end of NEW.
+
+
+	    /*
+
+	    // To get the strict equivalent to the integral image
+            // computed at working scale (scale (2)), we need the code
+            // below.  In addition, the integral_browsing shall call
+            // the threshold formula with (..size..) and NOT with
+	    // (..size * s_2..).
+
 	    S sum;
 	    sum  = *ptr1 + *(ptr1 + 1);
 	    sum += *ptr2 + *(ptr2 + 1);
@@ -297,9 +341,21 @@ namespace scribo
 
 	    S val = sum / area;
 	    *p_sub++ = val;
-
 	    h_sum   += val;
 	    h_sum_2 += val * val;
+
+	    */
+
+
+            // Never write something like this:
+            //   *p_sub++ = sum / area;
+	    //   h_sum   += sum;
+            //   h_sum_2 += sum * sum;
+	    // because the product 'sum * sum' is not
+            // equivalent to the sum of the value^2.  E.g.
+            // we have (v1 + v2 + v3 + v4)^2 + etc. instead
+            // of having the correct sum_2 being v1^2 + v2^2 etc.
+
 
 	    p_integ->first() = h_sum + (p_integ + up)->first();
 	    p_integ->second() = h_sum_2 + (p_integ + up)->second();
