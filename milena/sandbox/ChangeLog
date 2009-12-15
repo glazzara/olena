@@ -1,5 +1,11 @@
 2009-12-15  green  <jacquelet@lrde.epita.fr>
 
+	Introduce new image converter from color to greyscale.
+
+	* green/mln/fun/v2v/rgb8_to_int_u8.hh: New image converter.
+
+2009-12-15  green  <jacquelet@lrde.epita.fr>
+
 	Add new image paths to use the annoting database.
 
 	* green/mln/img_path.hh: Update to LRDE norm and add annoting database.
