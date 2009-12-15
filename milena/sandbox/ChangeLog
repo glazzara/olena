@@ -75,6 +75,19 @@
 	* bin/pgm_to_pbm.cc,
 	* bin/ppm_negate.cc: New.
 
+2009-12-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Introduce clipart operators described by Millet.
+
+	* green/demo/annoting/nb_color: New demonstration directory.
+	* green/demo/annoting/nb_color/Makefile.am: New Makefile.
+	* green/demo/annoting/nb_color/nb_color.cc: New source file.
+
+	* green/demo/annoting/stddev_color: New demonstration directory.
+	* green/demo/annoting/stddev_color/Makefile.am: New Makefile.
+	* green/demo/annoting/stddev_color/stddev_color.cc: New source file.
+
+
 2009-12-02  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Optimize regional maxima processing for statistical counts and outputs.
