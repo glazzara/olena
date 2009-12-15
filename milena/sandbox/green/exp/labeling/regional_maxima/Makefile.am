@@ -6,6 +6,7 @@
 # TOOLS #
 #########
 
+LOADLIBES=      -lboost_filesystem
 INCLUDES=       -I$(HOME)/svn/oln/trunk/milena/sandbox/green
 #CXXFLAGS=       -ggdb -O0 -Wall -W -pedantic -ansi -pipe $(INCLUDES)
 #CXXFLAGS=       -DNDEBUG -O1 -Wall -W -pedantic -ansi -pipe $(INCLUDES)

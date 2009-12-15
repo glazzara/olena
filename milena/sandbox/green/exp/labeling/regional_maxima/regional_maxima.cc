@@ -98,10 +98,10 @@ unsigned count_image_color(const std::string& image)
 
   input_rgbn = mln::data::transform(input_rgb8, t_rgb8_to_rgbn());
   // FIXME UTILISER UN PREDICAT COMME FUN::CHESS
-  histo      = mln::data::compute(t_histo3d_fun(), input_rgbn | mln::pw::value(0));
-//   return mln::data::compute(t_count_fun(), input_rgbn);
+  histo      = mln::data::compute(t_histo3d_fun(), input_rgbn);
+  return mln::data::compute(t_count_fun(), histo);
   // FIXME REALISER UN COUNT AVEC UN PREDICA SUR L'IMAGE
-  return nb_pixel;
+  //return nb_pixel;
 //   opened     = mln::morpho::opening::volume(histo, mln::c6(), min_volume);
 //   label      = mln::labeling::regional_maxima(opened, mln::c6(), n_labels);
 
