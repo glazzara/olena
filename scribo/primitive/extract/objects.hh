@@ -119,8 +119,14 @@ namespace scribo
 	  results = labeling::blobs_and_compute(input, nbh, nobjects,
 						accu_bbox());
 
+	// FIXME: enable mass centers computation and maybe merge this
+	// computation with blobs computation above.
+	util::array<mln_result(accu::center<mln_site(I)>)>
+	  mass_centers;
+ 	mass_centers = labeling::compute(accu::meta::center(),
+					 results.first(), nobjects);
 	object_image(L)
-	  output(results.first(), nobjects, results.second());
+	  output(results.first(), nobjects, results.second(), mass_centers);
 
 	trace::exiting("scribo::objects");
 	return output;
