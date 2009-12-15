@@ -26,31 +26,43 @@
 // executable file might be covered by the GNU General Public License.
 
 #ifndef MLN_IMG_PATH_HH
-#define MLN_IMG_PATH_HH
+# define MLN_IMG_PATH_HH
 
-#define IMG_PATH "/home/green/svn/oln/trunk/milena/sandbox/green/img"
+# define IMG_PATH    "/home/green/svn/oln/trunk/milena/sandbox/green/img"
+# define RESULT_PATH "/home/green/svn/oln/trunk/milena/sandbox/green/result"
 
-#define INIM_IMG_PATH         IMG_PATH"/inim"
-#define INIM_FG_BG_IMG_PATH   INIM_IMG_PATH"/fg_bg"
-#define INIM_IN_IMG_PATH      INIM_IMG_PATH"/in"
+# define INIM_IMG_PATH         IMG_PATH"/inim"
+# define INIM_FG_BG_IMG_PATH   INIM_IMG_PATH"/fg_bg"
+# define INIM_IN_IMG_PATH      INIM_IMG_PATH"/in"
 
-#define OLENA_IMG_PATH        IMG_PATH"/olena"
+# define OLENA_IMG_PATH        IMG_PATH"/olena"
 
-#define SCRIBO_IMG_PATH       IMG_PATH"/scribo"
-#define SCRIBO_JPG_IMG_PATH   SCRIBO_IMG_PATH"/jpg_50p"
-#define SCRIBO_PGM_IMG_PATH   SCRIBO_IMG_PATH"/pgm_50p"
-#define SCRIBO_PPM_IMG_PATH   SCRIBO_IMG_PATH"/ppm_50p"
+# define SCRIBO_IMG_PATH       IMG_PATH"/scribo"
+# define SCRIBO_JPG_IMG_PATH   SCRIBO_IMG_PATH"/jpg_50p"
+# define SCRIBO_PGM_IMG_PATH   SCRIBO_IMG_PATH"/pgm_50p"
+# define SCRIBO_PPM_IMG_PATH   SCRIBO_IMG_PATH"/ppm_50p"
 
-#define ANNOTING_IMG_PATH             IMG_PATH"/annoting"
-#define ANNOTING_BILL_IMG_PATH        ANNOTING_IMG_PATH"/bill"
-#define ANNOTING_FAX_IMG_PATH         ANNOTING_IMG_PATH"/fax"
-#define ANNOTING_HANDWRITTEN_IMG_PATH ANNOTING_IMG_PATH"/handwritten"
-#define ANNOTING_LOGO_IMG_PATH        ANNOTING_IMG_PATH"/logo"
-#define ANNOTING_MAP_IMG_PATH         ANNOTING_IMG_PATH"/map"
-#define ANNOTING_SCREENSHOT_IMG_PATH  ANNOTING_IMG_PATH"/screenshot"
-#define ANNOTING_SLIDE_IMG_PATH       ANNOTING_IMG_PATH"/slide"
-#define ANNOTING_TYPED_IMG_PATH       ANNOTING_IMG_PATH"/typed"
+# define ANNOTING_IMG_PATH             IMG_PATH"/annoting"
+# define ANNOTING_BILL_IMG_PATH        ANNOTING_IMG_PATH"/bill"
+# define ANNOTING_FAX_IMG_PATH         ANNOTING_IMG_PATH"/fax"
+# define ANNOTING_HANDWRITTEN_IMG_PATH ANNOTING_IMG_PATH"/handwritten"
+# define ANNOTING_LOGO_IMG_PATH        ANNOTING_IMG_PATH"/logo"
+# define ANNOTING_MAP_IMG_PATH         ANNOTING_IMG_PATH"/map"
+# define ANNOTING_SCREENSHOT_IMG_PATH  ANNOTING_IMG_PATH"/screenshot"
+# define ANNOTING_SLIDE_IMG_PATH       ANNOTING_IMG_PATH"/slide"
+# define ANNOTING_TYPED_IMG_PATH       ANNOTING_IMG_PATH"/typed"
+# define ANNOTING_PHOTO_IMG_PATH       ANNOTING_IMG_PATH"/photo"
 
-
+// result directories
+# define RESULT_ANNOTING_PATH             RESULT_PATH"/annoting"
+# define RESULT_ANNOTING_BILL_PATH        RESULT_ANNOTING_PATH"/bill"
+# define RESULT_ANNOTING_FAX_PATH         RESULT_ANNOTING_PATH"/fax"
+# define RESULT_ANNOTING_HANDWRITTEN_PATH RESULT_ANNOTING_PATH"/handwritten"
+# define RESULT_ANNOTING_LOGO_PATH        RESULT_ANNOTING_PATH"/logo"
+# define RESULT_ANNOTING_MAP_PATH         RESULT_ANNOTING_PATH"/map"
+# define RESULT_ANNOTING_SCREENSHOT_PATH  RESULT_ANNOTING_PATH"/screenshot"
+# define RESULT_ANNOTING_SLIDE_PATH       RESULT_ANNOTING_PATH"/slide"
+# define RESULT_ANNOTING_TYPED_PATH       RESULT_ANNOTING_PATH"/typed"
+# define RESULT_ANNOTING_PHOTO_PATH       RESULT_ANNOTING_PATH"/photo"
 
 #endif // ! MLN_IMG_PATH_HH

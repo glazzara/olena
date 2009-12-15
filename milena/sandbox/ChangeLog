@@ -75,6 +75,32 @@
 	* bin/pgm_to_pbm.cc,
 	* bin/ppm_negate.cc: New.
 
+2009-12-15  green  <jacquelet@lrde.epita.fr>
+
+	Add new image paths to use the annoting database.
+
+	* green/mln/img_path.hh: Update to LRDE norm and add annoting database.
+
+2009-12-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Work around the regional labeling chain and experiment it on the
+	annoting database.
+
+	* green/exp/labeling/regional_maxima/Makefile.am: Add boost library.
+	* green/exp/labeling/regional_maxima/regional_maxima.cc: Count colors.
+
+2009-12-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Test clipart operators described by Millet on annoting database.
+
+	* green/exp/annoting/nb_color: New experimentation directory.
+	* green/exp/annoting/nb_color/Makefile.am: New Makefile.
+	* green/exp/annoting/nb_color/nb_color.cc: New experementation.
+
+	* green/exp/annoting/stddev_color: New experimentation directory.
+	* green/exp/annoting/stddev_color/Makefile.am: New Makefile.
+	* green/exp/annoting/stddev_color/stddev_color.cc: New experimentation.
+
 2009-12-15  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Introduce clipart operators described by Millet.
