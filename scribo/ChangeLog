@@ -1,5 +1,14 @@
 2009-12-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new test for object_image.
+
+	* tests/Makefile.am,
+	* tests/core/Makefile.am: Update build system.
+
+	* tests/core/object_image.cc: New test.
+
+2009-12-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* primitive/extract/objects.hh: Compute and store mass centers.
 
 2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>

@@ -13,19 +13,15 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-
-include $(srcdir)/tests.mk
+#
 
 ## Process this file through Automake to create Makefile.in.
 
-SUBDIRS = 		\
-  core 			\
-  filter 		\
-  preprocessing 	\
-  table 		\
-  text 			\
-  unit_test
+include $(top_srcdir)/scribo/tests/tests.mk
 
-# Regen files recursively.
-include $(top_srcdir)/build-aux/regen-recursive.mk
-REGEN_SUBDIRS += unit_test
+check_PROGRAMS =				\
+  object_image 
+
+object_image_SOURCES = object_image.cc
+
+TESTS = $(check_PROGRAMS)
