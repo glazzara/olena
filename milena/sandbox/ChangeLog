@@ -75,6 +75,27 @@
 	* bin/pgm_to_pbm.cc,
 	* bin/ppm_negate.cc: New.
 
+2009-12-16  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Correct typo into directories.
+
+	* green/demo/annoting: Rename as ...
+	* green/demo/annotating: ... these.
+
+	* green/exp/annoting: Rename as ...
+	* green/exp/annotating: ... these.
+
+	* green/mln/img_path.hh: Propagate mistake corrections.
+
+	* green/exp/labeling/regional_maxima/regional_maxima.cc (main):
+	Rename ANNOTING macro references as ANNOTATING ones.
+
+	* green/exp/annotating/stddev_color/stddev_color (main):
+	Rename ANNOTING macro references as ANNOTATING ones.
+
+	* green/exp/annotating/nb_color/nb_color.cc (main):
+	Rename ANNOTING macro references as ANNOTATING ones.
+
 2009-12-15  green  <jacquelet@lrde.epita.fr>
 
 	Introduce new image converter from color to greyscale.

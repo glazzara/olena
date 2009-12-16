@@ -115,7 +115,7 @@ int main()
   //typedef boost::filesystem::initial_path<t_path()> t_init_path;
   typedef boost::filesystem::directory_iterator     t_iter_path;
 
-  t_path full_path(ANNOTING_TYPED_IMG_PATH);
+  t_path full_path(ANNOTATING_TYPED_IMG_PATH);
 
   std::cout << "entering "   << full_path << std::endl;
 
