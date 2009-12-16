@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <boost/format.hpp>
 
 #include <mln/img_path.hh>
 
@@ -106,30 +107,31 @@ struct t_labeling_rgbn : mln::Function_v2v< t_labeling_rgbn<n> >
   }
 };
 
+// Version optimisée de mean_values
 
-// version non optimisée de label
-
-template <unsigned n>
-mln::image2d<mln::value::label_8>
-label_image(const mln::image2d< mln::value::rgb<n> >& input,
-	    const mln::image3d< mln::value::label_8>& label)
+struct t_mean_lbl8_with_rgb8 : mln::Function_v2v< t_mean_lbl8_with_rgb8 >
 {
-  mln::image2d<mln::value::label_8> output;
+  typedef mln::value::rgb8                     t_rgb8;
+  typedef mln::algebra::vec<3,float>           t_vec3f;
+  typedef mln::value::label_8                  t_lbl8;
+  typedef t_lbl8                               argument;
+  typedef t_rgb8                               result;
+  typedef mln::image3d<t_lbl8>                 t_label;
+  typedef mln::util::array<t_vec3f>            t_mean_array;
 
-  initialize(output, input);
+  const t_mean_array& _mean_array;
 
-  mln_piter(mln::image2d< mln::value::label_8 >) po(output.domain());
-  mln_piter(mln::image2d< mln::value::rgb<n>  >) pi(input.domain());
+  t_mean_lbl8_with_rgb8(const t_mean_array& mean_array) :
+    _mean_array(mean_array) {}
 
-  for_all_2(po, pi)
+  result operator()(const argument& c) const
   {
-    const mln::value::rgb<n>& vi = input(pi);
+    t_rgb8 tmp = _mean_array[c];
 
-    output(po) = mln::opt::at(label, vi.blue(), vi.red(), vi.green());
+    return tmp;
   }
+};
 
-  return output;
-}
 
 template <unsigned n>
 unsigned unquant(const float& value)
@@ -253,6 +255,109 @@ void print_count2(const mln::image2d<mln::value::rgb<n> >& input_rgbn,
   }
 }
 
+template <unsigned n>
+mln::image2d<mln::value::label_8>
+compute_stats(const mln::image2d<mln::value::rgb8>&    input_rgb8,
+	      const mln::image2d<mln::value::rgb<n> >& input_rgbn,
+	      const mln::image3d<unsigned>&            histo,
+	      const mln::image3d<mln::value::label_8>& label,
+	      const unsigned                           n_labels)
+{
+  typedef mln::value::label_8                               t_lbl8;
+  typedef mln::value::rgb<n>                                t_rgbn;
+  typedef mln::value::rgb8                                  t_rgb8;
+  typedef mln::value::int_u<n>                              t_int_un;
+  typedef mln::algebra::vec<3,float>                        t_vec3f;
+  typedef mln::accu::math::sum<unsigned,unsigned>           t_sum;
+  typedef mln::accu::stat::mean<t_vec3f,t_vec3f,t_vec3f>    t_mean;
+  typedef mln::image2d<t_lbl8>                              t_image2d_lbl8;
+  typedef mln::image2d<t_rgbn>                              t_image2d_rgbn;
+  typedef mln::image2d<t_rgb8>                              t_image2d_rgb8;
+  typedef mln::image2d<t_int_un>                            t_image2d_int_un;
+  typedef mln::util::array<unsigned>                        t_count_array;
+  typedef mln::util::array<t_vec3f>                         t_mean_array;
+
+  mln::util::array<float>  abs((unsigned)(n_labels)+1);
+  mln::util::array<float>  rel((unsigned)(n_labels)+1);
+  unsigned                 nb = 0;
+
+  for (unsigned i = 0; i <= n_labels; ++i)
+  {
+    abs[i] = 0.0;
+    rel[i] = 0.0;
+  }
+
+  // COMPUTE THE SUM
+  t_count_array count = mln::labeling::compute(t_sum(),
+					       histo,
+					       label,
+					       n_labels);
+
+  // COMPUTE THE TOTAL
+  for (unsigned i = 0; i <= n_labels; ++i)
+  {
+    unsigned c = count[i];
+    nb += c;
+  }
+
+  // COMPUTE THE PERCENTAGES
+  for (unsigned i = 0; i <= n_labels; ++i)
+    if (0 < count[i])
+    {
+      abs[i] = ((float)count[i] / nb)*100.0;
+      rel[i] = ((float)count[i] / (nb - count[0]))*100.0;
+    }
+
+  // COMPUTE THE MEAN
+  t_image2d_lbl8 label_img = mln::data::transform(input_rgbn,
+						  t_labeling_rgbn<n>(label));
+
+  t_mean_array mean = mln::labeling::compute(t_mean(),
+					     input_rgb8,
+					     label_img,
+					     n_labels);
+
+  // CORRECT LABEL 0 STATS
+  rel[0] = 0;
+  mean[0][0] = 255.0;
+  mean[0][1] = 255.0;
+  mean[0][2] = 0.0;
+
+  for (unsigned i = 0; i <= n_labels; ++i)
+  {
+    const t_vec3f& mean_v = mean[i];
+
+    std::cout << boost::format("%2i|"
+			       "r = %6.2f, g = %6.2f, b = %6.2f |"
+			       "c = %7i, %%i = %5.2f, %%c = %5.2f")
+      % i
+      % mean_v[0]
+      % mean_v[1]
+      % mean_v[2]
+      % count[i]
+      % abs[i]
+      % rel[i]
+	      << std::endl;
+    /*
+    std::cout << i << "|("
+	      << "r = " << unquant<n>(mean_v[0]) << ", "
+	      << "g = " << unquant<n>(mean_v[1]) << ", "
+	      << "b = " << unquant<n>(mean_v[2]) << ")|("
+	      << "c = " << count[i]              << ", "
+	      << "%i= " << abs[i]                << "%, "
+	      << "%c= " << rel[i]                << "%)"
+	      << std::endl;
+    */
+  }
+
+  t_image2d_rgb8 mean_rgb8 = mln::data::transform(label_img,
+						  t_mean_lbl8_with_rgb8(mean));
+
+  mln::io::ppm::save(mean_rgb8, "mean.ppm");
+
+  return label_img;
+}
+
 void print_count(const mln::image3d<unsigned>&            histo,
 		 const mln::image3d<mln::value::label_8>& label,
 		 const unsigned                           n_labels)
@@ -320,26 +425,32 @@ void print_count(const mln::image3d<unsigned>&            histo,
 template <unsigned n>
 struct t_merge_lbl8_with_rgbn : mln::Function_v2v< t_merge_lbl8_with_rgbn<n> >
 {
-  typedef mln::value::rgb<n>    t_rgbn;
-  typedef mln::value::label_8   t_lbl8;
-  typedef t_rgbn                argument;
-  typedef t_rgbn                result;
-  typedef mln::image3d<t_lbl8>  t_label;
+  typedef mln::value::rgb<n>                   t_rgbn;
+  typedef mln::value::rgb8                     t_rgb8;
+  typedef mln::value::label_8                  t_lbl8;
+  typedef t_rgb8                               argument;
+  typedef t_rgb8                               result;
+  typedef mln::image3d<t_lbl8>                 t_label;
+  typedef mln::fun::v2v::rgb8_to_rgbn<n>       t_rgb8_to_rgbn;
 
-  const t_label& _label;
+  const t_label&       _label;
+  const t_rgb8_to_rgbn _convert;
 
   t_merge_lbl8_with_rgbn(const t_label& label) : _label(label) {}
 
   result operator()(const argument& c) const
   {
-    t_rgbn tmp = c;
+    t_rgb8 tmp_rgb8 = c;
+    t_rgbn tmp_rgbn = _convert(c);
 
-    if (0 == mln::opt::at(_label, c.blue(), c.red(), c.green()))
+    if (0==mln::opt::at(_label,tmp_rgbn.blue(),tmp_rgbn.red(),tmp_rgbn.green()))
     {
-      tmp = mln::literal::black;
+      // tmp = mln::literal::black;
+      // tmp = mln::literal::yellow;
+      tmp_rgb8 = mln::literal::red;
     }
 
-    return tmp;
+    return tmp_rgb8;
   }
 };
 
@@ -452,13 +563,8 @@ int main2()
 
 // n < 8, n is the degree of quantification
 template <unsigned n>
-void demo()
+void demo(const std::string& image, const unsigned min_volume)
 {
-  const unsigned     min_volume = 1000;
-  //const std::string& image      = OLENA_IMG_PATH"/fly.ppm";
-  const std::string& image      = SCRIBO_PPM_IMG_PATH"/mp00082c_50p.ppm";
-  //const std::string& image = OLENA_IMG_PATH"/tiny.ppm";
-
   typedef mln::value::label_8                         t_lbl8;
   typedef mln::value::int_u8                          t_int_u8;
   typedef mln::value::rgb8                            t_rgb8;
@@ -473,16 +579,13 @@ void demo()
   typedef mln::fun::v2v::rgb8_to_rgbn<n>              t_rgb8_to_rgbn;
   typedef mln::accu::meta::stat::histo3d_rgb          t_histo3d_fun;
 
-  mln::util::timer timer;
-
   // START OF IMAGE PROCESSING CHAIN
-  timer.start();
-
   t_image2d_rgb8                                      input_rgb8;
   t_image2d_rgbn                                      input_rgbn;
-  t_image2d_rgbn                                      output_rgbn;
-  // t_image2d_rgbn                                      mean_rgb5;
+  t_image2d_rgb8                                      output_rgb8;
+  t_image2d_rgb8                                      mean_rgb8;
   t_histo3d                                           histo;
+  t_histo3d                                           histo2;
   // t_image2d_int_u8                                    projected;
   // t_image2d_int_u8                                    filtered;
   t_histo3d                                           opened;
@@ -490,18 +593,35 @@ void demo()
   t_image2d_lbl8                                      label_img;
   t_image3d_lbl8                                      dilated;
   t_lbl8                                              n_labels;
-  // t_rgbn                                              value_rgbn;
 
   mln::io::ppm::load(input_rgb8, image.c_str());
   input_rgbn = mln::data::transform(input_rgb8, t_rgb8_to_rgbn());
   histo      = mln::data::compute(t_histo3d_fun(), input_rgbn);
   opened     = mln::morpho::opening::volume(histo, mln::c6(), min_volume);
   label      = mln::labeling::regional_maxima(opened, mln::c6(), n_labels);
-  dilated    = mln::morpho::elementary::dilation(label, mln::c26());
+  // dilated    = mln::morpho::elementary::dilation(label, mln::c26());
 
-  timer.stop();
   // END OF IMAGE PROCESSING CHAIN
 
+
+  // BEGIN DUMPING
+  label_img   = compute_stats(input_rgb8, input_rgbn, histo, label, n_labels);
+  // mean_rgb8   = mln::labeling::mean_values(input_rgb8, label_img, n_labels);
+  // mln::io::ppm::save(mean_rgb8, "mean.ppm");
+
+  output_rgb8 = mln::data::transform(input_rgb8,
+				     t_merge_lbl8_with_rgbn<5>(label));
+
+
+  mln::io::ppm::save(output_rgb8, "merge.ppm");
+  mln::io::pgm::save(label_img, "label.pgm");
+
+
+//   histo2      = mln::data::compute(t_histo3d_fun(), mean_rgbn);
+//   mln::debug::println(histo2);
+  // END DUMPING
+
+/*
   std::ostringstream				      name;
   std::ostringstream				      name2;
   std::ostringstream				      name3;
@@ -510,17 +630,11 @@ void demo()
   name2 << "output_rgb" << n <<  ".ppm";
   name3 << "label_img"  << n <<  ".pgm";
 
-  std::cout << "Done in : " << timer.read() << " s" << std::endl;
   std::cout << "Labels  : " << n_labels << std::endl;
   std::cout << "Name    : " << name.str() << std::endl;
 
-  mln::io::ppm::save(input_rgbn,  name.str());
+//  mln::io::ppm::save(input_rgbn,  name.str());
 
-  mln::util::timer timer2;
-
-  timer2.start();
-  print_count2(input_rgbn, histo, dilated, n_labels);
-  timer2.stop();
   std::cout << "timer2 : " << timer2.read() << std::endl;
   output_rgbn = mln::data::transform(input_rgbn,
 				     t_merge_lbl8_with_rgbn<n>(label));
@@ -531,7 +645,7 @@ void demo()
 				   t_labeling_rgbn<n>(label));
   // label_img = label_image<n>(input_rgbn, dilated);
   mln::io::pgm::save(label_img, name3.str());
-
+*/
 
   // localiser les couleurs sur l'image (fond en black, le reste)
 
@@ -571,8 +685,8 @@ void demo()
   */
 }
 
-
-int main()
+/*
+int main_old()
 {
   demo<2>(); //  2.26 s
   demo<3>(); //  2.29 s
@@ -581,4 +695,51 @@ int main()
   demo<6>(); //  3.19 s
   demo<7>(); // 11.43 s
   demo<8>(); // 96.19 s
+}
+*/
+void usage()
+{
+  std::cout << std::endl;
+  std::cout << "regional_maxima"       << std::endl;
+  std::cout << "image          <name>" << std::endl;
+  std::cout << "quantification {5,6}"  << std::endl;
+  std::cout << "volume          1000"  << std::endl;
+
+  // 3 paramètres en entré:
+  // * l'image
+  // * la quantification utilisée
+  // * le volume minimale laissé pour les pics de l'histo
+
+  // sorties:
+  // * fichier de stats [etiquette|couleur moyenne|% image|% classé]
+  // * couleur moyenne de l'étiquette + couleur specifique pour étiquette 0
+  // * histo sur l'image d'étiquette
+}
+
+int main(int argc, char* args[])
+{
+  if (argc != 3)
+  {
+    // const std::string& image     = OLENA_IMG_PATH"/fly.ppm";
+    const std::string& image     = SCRIBO_PPM_IMG_PATH"/mp00082c_50p.ppm";
+    // const std::string& image     = OLENA_IMG_PATH"/tiny.ppm";
+    // const std::string image      = OLENA_IMG_PATH"/tiny.ppm";
+    const unsigned    min_volume = 1000;
+    // const unsigned    min_volume = atoi(args[2]);
+
+    switch(args[2][0])
+    {
+      case '2': demo<2>(image, min_volume); break;
+      case '3': demo<3>(image, min_volume); break;
+      case '4': demo<4>(image, min_volume); break;
+      case '5': demo<5>(image, min_volume); break;
+      case '6': demo<6>(image, min_volume); break;
+      case '7': demo<7>(image, min_volume); break;
+      case '8': demo<8>(image, min_volume); break;
+      default:  demo<5>(image, min_volume); break;
+      // default: usage(); break;
+    }
+  }
+  else
+    usage();
 }
