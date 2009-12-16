@@ -102,15 +102,15 @@ int main()
   typedef boost::filesystem::path                   t_path;
   typedef boost::filesystem::directory_iterator     t_iter_path;
 
-  t_path full_path[] = {t_path(ANNOTING_BILL_IMG_PATH),
-			t_path(ANNOTING_FAX_IMG_PATH),
-			t_path(ANNOTING_HANDWRITTEN_IMG_PATH),
-			t_path(ANNOTING_LOGO_IMG_PATH),
-			t_path(ANNOTING_MAP_IMG_PATH),
-			t_path(ANNOTING_PHOTO_IMG_PATH),
-			t_path(ANNOTING_SCREENSHOT_IMG_PATH),
-			t_path(ANNOTING_SLIDE_IMG_PATH),
-			t_path(ANNOTING_TYPED_IMG_PATH)};
+  t_path full_path[] = {t_path(ANNOTATING_BILL_IMG_PATH),
+			t_path(ANNOTATING_FAX_IMG_PATH),
+			t_path(ANNOTATING_HANDWRITTEN_IMG_PATH),
+			t_path(ANNOTATING_LOGO_IMG_PATH),
+			t_path(ANNOTATING_MAP_IMG_PATH),
+			t_path(ANNOTATING_PHOTO_IMG_PATH),
+			t_path(ANNOTATING_SCREENSHOT_IMG_PATH),
+			t_path(ANNOTATING_SLIDE_IMG_PATH),
+			t_path(ANNOTATING_TYPED_IMG_PATH)};
 
   for (int i = 0; i < 9; ++i)
   {
