@@ -1,3 +1,13 @@
+2009-12-16  Yann Jacquelet <jacquelet@lrde.epita.fr>
+
+	Group Millet2008 documentation files.
+
+	* green/doc/annotating: New directory.
+	* green/doc/annotating/class.txt: New hierarchy description.
+	* green/doc/annotating/testMillet2008.txt: New result interpretations.
+	* green/doc/annotating/syntheseMillet2008.txt: New feature extractions.
+	* green/demo/annotating/class.txt: Remove this obsolete file.
+
 2009-12-16  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Correct typo into directories.

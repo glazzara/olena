@@ -9,6 +9,12 @@ Dans scribo les classes de documents sont:
 - infographie (logo, carte, dessin vectoriel)
 - slide (copie d'écran ou sauvegarde au format image)
 
+Le problème avec cette hiérarchie c'est quelle induit une connaissance
+fonctionnelle des images traitées et que les extracteurs de primitives font
+plutôt ressortir des informations relatives à la nature de l'image.
+
+Par exemple, les slides peuvent contenir aussi bien du texte, que des photos
+ou des cliparts. C'est une forme de "composite" par définition.
 
 Où se situent les faxes ?
 
@@ -30,4 +36,7 @@ Description des photos:
 - ratio non A4, non US Letter
 
 
-
+Google hiérarchie:
+- line drawing
+- clipart
+- photo
