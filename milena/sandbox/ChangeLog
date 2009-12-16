@@ -1,5 +1,14 @@
 2009-12-16  Yann Jacquelet <jacquelet@lrde.epita.fr>
 
+	Introduce the local deviation operator (Millet2008) which
+	subdivise the image in 16 parts.
+
+	* green/demo/annotating/stddev_color_16: New directory.
+	* green/demo/annotating/stddev_color_16/Makefile.am: New Makefile.
+	* green/demo/annotating/stddev_color_16/stddev_color_16.cc: New demo.
+
+2009-12-16  Yann Jacquelet <jacquelet@lrde.epita.fr>
+
 	Group Millet2008 documentation files.
 
 	* green/doc/annotating: New directory.
