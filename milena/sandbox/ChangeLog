@@ -1,3 +1,13 @@
+2009-12-16  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Fix bugs in regional_maxima routine, work with rgb8 for stats.
+
+	* green/demo/labeling/regional_maxima/regional_maxima.cc
+	(compute_stats): New function.
+
+	* green/demo/labeling/regional_maxima/regional_maxima.cc
+	(demo,main): Update functions to map Theo's view.
+
 2009-12-16  Yann Jacquelet <jacquelet@lrde.epita.fr>
 
 	Test the local deviation operator (Millet2008) on the annotating base.
