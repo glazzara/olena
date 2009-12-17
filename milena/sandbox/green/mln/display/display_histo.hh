@@ -28,10 +28,12 @@
 #ifndef MLN_DISPLAY_DISPLAY_HISTO_HH
 # define MLN_DISPLAY_DISPLAY_HISTO_HH
 
-# include <mln/data/stretch.hh>
-# include <mln/fun/v2v/log.hh>
-# include <mln/display/project_histo.hh>
 # include <mln/accu/math/sum.hh>
+# include <mln/data/stretch.hh>
+# include <mln/display/project_histo.hh>
+# include <mln/fun/v2v/log.hh>
+# include <mln/value/int_u8.hh>
+
 
 /// \file
 ///
@@ -59,9 +61,12 @@ namespace mln
     ///
     /// The 3d histogram is projected in red/green space by
     /// accumulating around the the blue dimension (green and blue
-    /// composantes are being correlated). In fact, we sum in along
+    /// composantes are being correlated). In fact, we sum along
     /// the blue direction. Then, we stretch value to feet pgm
     /// format.
+    /// Direction r = 1
+    /// Direction g = 2
+    /// Direction b = 0
     ///
     /// \parameter[in] histo the histogram in 3d.
     /// \result return a equivalent 2d image.
@@ -74,7 +79,7 @@ namespace mln
       typedef value::int_u8                      t_int_u8;
       typedef fun::v2v::log<float>               t_log;
 
-      image2d<unsigned> proj     = project_histo<t_sum,2>(histo);
+      image2d<unsigned> proj     = project_histo<t_sum,0>(histo);
       image2d<t_int_u8> proj_int = data::stretch(t_int_u8(),
 						 data::transform(proj,
 								 t_log()));
