@@ -1,3 +1,11 @@
+2009-12-17  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Fix bug in the direction of projection.
+
+	* green/mln/display/display_histo.hh: Fix bug in the direction.
+	* green/mln/display/project_histo.hh: Add spaces to follow the LRDE
+	norm.
+
 2009-12-16  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Fix bugs in regional_maxima routine, work with rgb8 for stats.

@@ -54,7 +54,7 @@ namespace mln
     image2d<mln_result(A)>
     project_histo(const image3d<V>& histo);
 
-#ifndef MLN_INCLUDE_ONLY
+# ifndef MLN_INCLUDE_ONLY
 
     /// \brief Allow the visualization of 3d histogram.
     ///
@@ -86,7 +86,7 @@ namespace mln
       return accu::image::to_result(histo_accu);
     }
 
-#endif // ! MLN_INCLUDE_ONLY
+# endif // ! MLN_INCLUDE_ONLY
 
 
   } // end of namespace mln::transform
