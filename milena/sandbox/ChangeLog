@@ -75,6 +75,14 @@
 	* bin/pgm_to_pbm.cc,
 	* bin/ppm_negate.cc: New.
 
+2009-12-18  Yann Jacquelet<jacquelet@lrde.epita.fr>
+
+	Fix the right behaviour of the regmax software.
+
+	* green/demo/labeling/regional_maxima/regional_maxima.cc: Add
+	many modifications to reach the current software state. There is some
+	nomenclatura, some refactoring and debugging.
+
 2009-12-17  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Fix bug in the direction of projection.
