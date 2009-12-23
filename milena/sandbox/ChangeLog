@@ -75,6 +75,41 @@
 	* bin/pgm_to_pbm.cc,
 	* bin/ppm_negate.cc: New.
 
+2009-12-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Experiment variation on regional maxima labeling.
+
+	* green/doc/regional_maxima/cmp_method/h0_input.pgm.gz: New histogram.
+	* green/doc/regional_maxima/cmp_method/h2_mean.pgm.gz: New histogram.
+	* green/doc/regional_maxima/cmp_method/h2_merge.pgm.gz: New histogram.
+	* green/doc/regional_maxima/cmp_method/h3_mean.pgm.gz: New histogram.
+	* green/doc/regional_maxima/cmp_method/h3_merge.pgm.gz: New histogram.
+	* green/doc/regional_maxima/cmp_method/h4_mean.pgm.gz: New histogram.
+	* green/doc/regional_maxima/cmp_method/h4_merge.pgm.gz: New histogram.
+	* green/doc/regional_maxima/cmp_method/h5_mean.pgm.gz: New histogram.
+	* green/doc/regional_maxima/cmp_method/h5_merge.pgm.gz: New histogram.
+	* green/doc/regional_maxima/cmp_method/i2_mean.pgm.gz: New mean image.
+	* green/doc/regional_maxima/cmp_method/i2_merge.pgm.gz: New merge img.
+	* green/doc/regional_maxima/cmp_method/i3_mean.pgm.gz: New mean image.
+	* green/doc/regional_maxima/cmp_method/i3_merge.pgm.gz: New merge img.
+	* green/doc/regional_maxima/cmp_method/i4_mean.pgm.gz: New mean image.
+	* green/doc/regional_maxima/cmp_method/i4_merge.pgm.gz: New merge img.
+	* green/doc/regional_maxima/cmp_method/i5_mean.pgm.gz: New mean image.
+	* green/doc/regional_maxima/cmp_method/i5_merge.pgm.gz: New merge img.
+	* green/doc/regional_maxima/cmp_method/l2_input.pgm.gz: New label image.
+	* green/doc/regional_maxima/cmp_method/l3_input.pgm.gz: New label image.
+	* green/doc/regional_maxima/cmp_method/l4_input.pgm.gz: New label image
+	* green/doc/regional_maxima/cmp_method/l5_input.pgm.gz: New label image.
+	* green/doc/regional_maxima/cmp_method/s2_histo.txt: New statistics.
+	* green/doc/regional_maxima/cmp_method/s3_histo.txt: New statistics.
+	* green/doc/regional_maxima/cmp_method/s4_histo.txt: New statistics.
+	* green/doc/regional_maxima/cmp_method/s5_histo.txt: New statistics.
+	* green/doc/regional_maxima/cmp_method/synthese.txt: New documentation.
+	* green/doc/regional_maxima/cmp_method/reponse_theo.eml: New email.
+	* green/demo/labeling/regional_maxima/regional_maxima
+	(demo_17_12_2009): New function that describes the experimentation.
+
+
 2009-12-18  Yann Jacquelet<jacquelet@lrde.epita.fr>
 
 	Fix the right behaviour of the regmax software.
