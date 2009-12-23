@@ -77,6 +77,12 @@
 
 2009-12-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Write the opening volume thresholds for the scribo image mp00082c.ppm.
+
+	* green/demo/labeling/regional_maxima/thresholds.txt: New documentation.
+
+2009-12-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Experiment various quantifications on regional maxima labeling.
 
 	* green/doc/regional_maxima/cmp_quant/h0_input.pgm.gz: New histogram.
