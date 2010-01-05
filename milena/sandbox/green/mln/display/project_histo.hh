@@ -37,6 +37,12 @@
 # include <mln/accu/image/take.hh>
 # include <mln/accu/image/to_result.hh>
 
+# include <mln/opt/at.hh>
+
+# include <mln/value/int_u8.hh>
+# include <mln/value/rgb8.hh>
+# include <mln/value/label_8.hh>
+
 /// \file
 ///
 /// \brief Allow the visualization of 3d histogram.
@@ -53,6 +59,10 @@ namespace mln
     template <typename A, unsigned direction, typename V>
     image2d<mln_result(A)>
     project_histo(const image3d<V>& histo);
+
+    template <typename A, unsigned direction, typename V>
+    image2d<mln_result(A)>
+    project2_histo(const image3d<V>& histo);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -84,6 +94,340 @@ namespace mln
 			histo);
 
       return accu::image::to_result(histo_accu);
+    }
+
+    template <unsigned direction>
+    image2d<value::int_u8>
+    project2_histo(const image3d<unsigned>& histo)
+    {
+      image2d<value::int_u8> result;
+
+      if (0 == direction) // blue
+      {
+	image2d<value::int_u8> arg_max(histo.ncols(), histo.nslices());
+
+	for (unsigned j = 0; j < histo.ncols(); ++j)
+	  for (unsigned i = 0; i < histo.nslices(); ++i)
+	  {
+	    unsigned max = 0; // minimum as possible
+	    signed   pos = -1;
+
+	    for (unsigned k = 0; k < histo.nrows(); ++k)
+	    {
+	      if (max <= opt::at(histo,i,j,k))
+	      {
+		max = opt::at(histo,i,j,k);
+		pos = k;
+	      }
+	    }
+
+	    opt::at(arg_max,i,j) = pos;
+	  }
+
+	result = arg_max;
+      }
+      else if (1 == direction) // red
+      {
+	image2d<value::int_u8> arg_max(histo.nrows(), histo.nslices());
+
+	for (unsigned j = 0; j < histo.nslices(); ++j)
+	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	  {
+	    unsigned max = 0; // minimum as possible
+	    signed   pos = -1;
+
+	    for (unsigned k = 0; k < histo.ncols(); ++k)
+	    {
+	      if (max <= opt::at(histo,i,j,k))
+	      {
+		max = opt::at(histo,i,j,k);
+		pos = k;
+	      }
+	    }
+
+	    opt::at(arg_max,i,j) = pos;
+	  }
+
+	result = arg_max;
+      }
+      else // 2 == direction // green
+      {
+	image2d<value::int_u8> arg_max(histo.nrows(), histo.ncols());
+
+	for (unsigned j = 0; j < histo.ncols(); ++j)
+	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	  {
+	    unsigned max = 0; // minimum as possible
+	    signed   pos = -1;
+
+	    for (unsigned k = 0; k < histo.nslices(); ++k)
+	    {
+	      if (max <= opt::at(histo,i,j,k))
+	      {
+		max = opt::at(histo,i,j,k);
+		pos = k;
+	      }
+	    }
+
+	    opt::at(arg_max,i,j) = pos;
+	  }
+
+	result = arg_max;
+      }
+
+      return result;
+    }
+
+    template <unsigned direction>
+    image2d<value::label_8>
+    project2_histo(const image3d<unsigned>&       histo,
+		   const image3d<value::label_8>& label)
+    {
+      image2d<value::label_8> result;
+
+      if (0 == direction) // blue
+      {
+	image2d<value::label_8> arg_max(histo.ncols(), histo.nslices());
+
+	for (unsigned j = 0; j < histo.ncols(); ++j)
+	  for (unsigned i = 0; i < histo.nslices(); ++i)
+	  {
+	    unsigned max = 0; // minimum as possible
+	    signed   pos = -1;
+
+	    for (unsigned k = 0; k < histo.nrows(); ++k)
+	    {
+	      if (max <= opt::at(histo,i,j,k))
+	      {
+		max = opt::at(histo,i,j,k);
+		pos = k;
+	      }
+	    }
+
+	    opt::at(arg_max,i,j) = opt::at(label,i,j,pos);
+	  }
+
+	result = arg_max;
+      }
+      else if (1 == direction) // red
+      {
+	image2d<value::label_8> arg_max(histo.nrows(), histo.nslices());
+
+	for (unsigned j = 0; j < histo.nslices(); ++j)
+	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	  {
+	    unsigned max = 0; // minimum as possible
+	    signed   pos = -1;
+
+	    for (unsigned k = 0; k < histo.ncols(); ++k)
+	    {
+	      if (max <= opt::at(histo,i,j,k))
+	      {
+		max = opt::at(histo,i,j,k);
+		pos = k;
+	      }
+	    }
+
+	    opt::at(arg_max,i,j) = opt::at(label,pos,i,j);
+	  }
+
+	result = arg_max;
+      }
+      else // 2 == direction // green
+      {
+	image2d<value::label_8> arg_max(histo.nrows(), histo.ncols());
+
+	for (unsigned j = 0; j < histo.ncols(); ++j)
+	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	  {
+	    unsigned max = 0; // minimum as possible
+	    signed   pos = -1;
+
+	    for (unsigned k = 0; k < histo.nslices(); ++k)
+	    {
+	      if (max <= opt::at(histo,i,j,k))
+	      {
+		max = opt::at(histo,i,j,k);
+		pos = k;
+	      }
+	    }
+
+	    opt::at(arg_max,i,j) = opt::at(label,i,pos,j);
+	  }
+
+	result = arg_max;
+      }
+
+      return result;
+    }
+
+
+    // FIXME ... determine the color of each class.
+    template <unsigned direction>
+    image2d<value::rgb8>
+    project3_histo(const image3d<unsigned>&       histo,
+		   const image3d<value::label_8>& label)
+    {
+      image2d<value::rgb8> result;
+
+      if (0 == direction) // blue
+      {
+	image2d<value::rgb8> arg_max(histo.ncols(), histo.nslices());
+
+	for (unsigned j = 0; j < histo.ncols(); ++j)
+	  for (unsigned i = 0; i < histo.nslices(); ++i)
+	  {
+	    unsigned max = 0; // minimum as possible
+	    signed   pos = -1;
+
+	    for (unsigned k = 0; k < histo.nrows(); ++k)
+	    {
+	      if (max <= opt::at(histo,i,j,k))
+	      {
+		max = opt::at(histo,i,j,k);
+		pos = k;
+	      }
+	    }
+
+	    opt::at(arg_max,i,j) = value::rgb8(i,j,pos);
+	  }
+
+	result = arg_max;
+      }
+      else if (1 == direction) // red
+      {
+	image2d<value::rgb8> arg_max(histo.nrows(), histo.nslices());
+
+	for (unsigned j = 0; j < histo.nslices(); ++j)
+	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	  {
+	    unsigned max = 0; // minimum as possible
+	    signed   pos = -1;
+
+	    for (unsigned k = 0; k < histo.ncols(); ++k)
+	    {
+	      if (max <= opt::at(histo,i,j,k))
+	      {
+		max = opt::at(histo,i,j,k);
+		pos = k;
+	      }
+	    }
+
+	    opt::at(arg_max,i,j) = value::rgb8(pos,i,j);
+	  }
+
+	result = arg_max;
+      }
+      else // 2 == direction // green
+      {
+	image2d<value::rgb8> arg_max(histo.nrows(), histo.ncols());
+
+	for (unsigned j = 0; j < histo.ncols(); ++j)
+	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	  {
+	    unsigned max = 0; // minimum as possible
+	    signed   pos = -1;
+
+	    for (unsigned k = 0; k < histo.nslices(); ++k)
+	    {
+	      if (max <= opt::at(histo,i,j,k))
+	      {
+		max = opt::at(histo,i,j,k);
+		pos = k;
+	      }
+	    }
+
+	    // FIXME ... how to fix the n of rgb
+	    opt::at(arg_max,i,j) = value::rgb8(i,pos,j);
+	  }
+
+	result = arg_max;
+      }
+
+      return result;
+    }
+
+    template <unsigned direction>
+    image2d<value::rgb8>
+    project3_histo(const image3d<unsigned>& histo)
+    {
+      image2d<value::rgb8> result;
+
+      if (0 == direction) // blue
+      {
+	image2d<value::rgb8> arg_max(histo.ncols(), histo.nslices());
+
+	for (unsigned j = 0; j < histo.ncols(); ++j)
+	  for (unsigned i = 0; i < histo.nslices(); ++i)
+	  {
+	    unsigned max = 0; // minimum as possible
+	    signed   pos = -1;
+
+	    for (unsigned k = 0; k < histo.nrows(); ++k)
+	    {
+	      if (max <= opt::at(histo,i,j,k))
+	      {
+		max = opt::at(histo,i,j,k);
+		pos = k;
+	      }
+	    }
+
+	    opt::at(arg_max,i,j) = value::rgb8(i,j,pos);
+	  }
+
+	result = arg_max;
+      }
+      else if (1 == direction) // red
+      {
+	image2d<value::rgb8> arg_max(histo.nrows(), histo.nslices());
+
+	for (unsigned j = 0; j < histo.nslices(); ++j)
+	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	  {
+	    unsigned max = 0; // minimum as possible
+	    signed   pos = -1;
+
+	    for (unsigned k = 0; k < histo.ncols(); ++k)
+	    {
+	      if (max <= opt::at(histo,i,j,k))
+	      {
+		max = opt::at(histo,i,j,k);
+		pos = k;
+	      }
+	    }
+
+	    opt::at(arg_max,i,j) = value::rgb8(pos,i,j);
+	  }
+
+	result = arg_max;
+      }
+      else // 2 == direction // green
+      {
+	image2d<value::rgb8> arg_max(histo.nrows(), histo.ncols());
+
+	for (unsigned j = 0; j < histo.ncols(); ++j)
+	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	  {
+	    unsigned max = 0; // minimum as possible
+	    signed   pos = -1;
+
+	    for (unsigned k = 0; k < histo.nslices(); ++k)
+	    {
+	      if (max <= opt::at(histo,i,j,k))
+	      {
+		max = opt::at(histo,i,j,k);
+		pos = k;
+	      }
+	    }
+
+	    // FIXME ... how to fix the n of rgb
+	    opt::at(arg_max,i,j) = value::rgb8(i,pos,j);
+	  }
+
+	result = arg_max;
+      }
+
+      return result;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

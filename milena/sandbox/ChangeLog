@@ -77,6 +77,19 @@
 
 2010-01-05  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Extend the histogram visualization tools for new projection concept.
+
+	* green/mln/display/project_histo.hh (project2_histo): New functions
+	that keep the max of the histogram or the class associate to it while
+	projecting along a direction.
+	* green/mln/display/project_histo.hh (project3_histo): New functions
+	that keep the color of the class associate to the histogram maximum
+	while projecting along a direction.
+	* green/mln/display/display_histo.hh: New interface functions for
+	project2_histo and project3_histo.
+
+2010-01-05  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Build translation table between number of pixels and percentage of
 	pixels in image for the scribo database.
 

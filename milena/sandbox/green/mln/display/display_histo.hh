@@ -33,6 +33,8 @@
 # include <mln/display/project_histo.hh>
 # include <mln/fun/v2v/log.hh>
 # include <mln/value/int_u8.hh>
+# include <mln/value/rgb8.hh>
+# include <mln/value/label_8.hh>
 
 
 /// \file
@@ -54,6 +56,20 @@ namespace mln
     // Forward declaration.
     image2d<value::int_u8>
     display_histo3d_unsigned(const image3d<unsigned>& histo);
+
+    image2d<value::int_u8>
+    display2_histo3d_unsigned(const image3d<unsigned>& histo);
+
+    image2d<value::label_8>
+    display2_histo3d_unsigned(const image3d<unsigned>&       histo,
+			      const image3d<value::label_8>& label);
+
+    image2d<value::rgb8>
+    display3_histo3d_unsigned(const image3d<unsigned>& histo);
+
+    image2d<value::rgb8>
+    display3_histo3d_unsigned(const image3d<unsigned>&       histo,
+			      const image3d<value::label_8>& label);
 
 #ifndef MLN_INCLUDE_ONLY
 
@@ -84,6 +100,40 @@ namespace mln
 						 data::transform(proj,
 								 t_log()));
       return proj_int;
+    }
+
+    image2d<value::int_u8>
+    display2_histo3d_unsigned(const image3d<unsigned>& histo)
+    {
+      image2d<value::int_u8> proj = project2_histo<0>(histo);
+
+      return proj;
+    }
+
+    image2d<value::label_8>
+    display2_histo3d_unsigned(const image3d<unsigned>&       histo,
+			      const image3d<value::label_8>& label)
+    {
+      image2d<value::label_8> proj = project2_histo<0>(histo, label);
+
+      return proj;
+    }
+
+    image2d<value::rgb8>
+    display3_histo3d_unsigned(const image3d<unsigned>& histo)
+    {
+      image2d<value::rgb8> proj = project3_histo<0>(histo);
+
+      return proj;
+    }
+
+    image2d<value::rgb8>
+    display3_histo3d_unsigned(const image3d<unsigned>&       histo,
+			      const image3d<value::label_8>& label)
+    {
+      image2d<value::rgb8> proj = project3_histo<0>(histo, label);
+
+      return proj;
     }
 
 #endif // ! MLN_INCLUDE_ONLY
