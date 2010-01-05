@@ -1,3 +1,17 @@
+2010-01-05  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Split the regional maxima binary in small atomic binaries.
+
+	* green/tools/annotating/histo: New directory.
+	* green/tools/annotating/histo/Makefile.am: New Makefile.
+	* green/tools/annotating/histo/histo.cc: New source file.
+	* green/tools/annotating/opening: New directory.
+	* green/tools/annotating/opening/Makefile.am: New Makefile.
+	* green/tools/annotating/opening/opening.cc: New source file.
+	* green/tools/annotating/regmax: New directory.
+	* green/tools/annotating/regmax/Makefile.am: New Makefile.
+	* green/tools/annotating/regmax/regmax.cc: New source file.
+
 2009-12-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Write the opening volume thresholds for the scribo image mp00082c.ppm.
