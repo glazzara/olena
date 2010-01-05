@@ -77,6 +77,14 @@
 
 2010-01-05  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Build translation table between number of pixels and percentage of
+	pixels in image for the scribo database.
+
+	* green/demo/labeling/regional_maxima/threshold.txt: New translation
+	table.
+
+2010-01-05  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Split the regional maxima binary in small atomic binaries.
 
 	* green/tools/annotating/histo: New directory.
