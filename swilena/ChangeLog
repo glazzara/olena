@@ -1,5 +1,13 @@
 2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a Swilena meta-wrapper for mln::value::rgb<n>.
+
+	* rgb.ixx: New file.
+	* Makefile.am (meta_wrappers): Add rgb.ixx.
+	* python/Makefile.am (rgb_ixx_deps): New variable.
+
+2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve dependency management in Swilena/Python.
 
 	* python/Makefile.am (int_u_ixx_deps, box_ixx_deps)

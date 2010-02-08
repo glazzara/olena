@@ -198,6 +198,7 @@ nodist_python_PYTHON += dynamic_image2d.py
 
 # Dependencies pulled by the meta wrapper (.ixx) files.
 int_u_ixx_deps = $(top_srcdir)/swilena/python-utils.ixx
+rgb_ixx_deps = $(top_srcdir)/swilena/python-utils.ixx
 
 box_ixx_deps = $(top_srcdir)/swilena/coord.ixx
 
