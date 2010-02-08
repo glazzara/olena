@@ -190,6 +190,46 @@ CLEANFILES += $(nodist__dynamic_image2d_la_SOURCES) dynamic_image2d.py dynamic_i
 nodist_python_PYTHON += dynamic_image2d.py
 
 
+## -------------------- ##
+## Extra dependencies.  ##
+## -------------------- ##
+
+# FIXME: It would be cool to have them generated automatically.
+
+# Dependencies pulled by the meta wrapper (.ixx) files.
+int_u_ixx_deps = $(top_srcdir)/swilena/python-utils.ixx
+
+box_ixx_deps = $(top_srcdir)/swilena/coord.ixx
+
+morpho_ixx_deps =				\
+  $(top_srcdir)/swilena/concrete.ixx		\
+  $(top_srcdir)/swilena/ch_value.ixx
+
+# Dependencies of wrappers not automatically computed (yet).
+int_u8-wrap.cc: $(top_srcdir)/swilena/int_u.ixx $(int_u_ixx_deps)
+int_u32-wrap.cc: $(top_srcdir)/swilena/int_u.ixx $(int_u_ixx_deps)
+
+box2d-wrap.cc: $(top_srcdir)/swilena/box.ixx $(box_ixx_deps)
+box2d_piter-wrap.cc: $(top_srcdir)/swilena/box_piter.ixx
+
+point2d-wrap.cc: $(top_srcdir)/swilena/concat.ixx
+point2d-wrap.cc: $(top_srcdir)/swilena/python-utils.ixx
+
+dynamic_image2d-wrap.cc: $(top_srcdir)/swilena/fill.ixx
+dynamic_image2d-wrap.cc: $(top_srcdir)/swilena/println.ixx
+
+image2d_int-wrap.cc: $(top_srcdir)/swilena/image2d.ixx
+image2d_int-wrap.cc: $(top_srcdir)/swilena/fill.ixx
+image2d_int-wrap.cc: $(top_srcdir)/swilena/println.ixx
+image2d_int-wrap.cc: $(top_srcdir)/swilena/morpho.ixx $(morpho_ixx_deps)
+
+image2d_int_u8-wrap.cc: $(top_srcdir)/swilena/image2d.ixx
+image2d_int_u8-wrap.cc: $(top_srcdir)/swilena/pgm.ixx
+image2d_int_u8-wrap.cc: $(top_srcdir)/swilena/fill.ixx
+image2d_int_u8-wrap.cc: $(top_srcdir)/swilena/println.ixx
+image2d_int_u8-wrap.cc: $(top_srcdir)/swilena/morpho.ixx $(morpho_ixx_deps)
+
+
 ## ---------------------------- ##
 ## Swilena Python Shell (sps).  ##
 ## ---------------------------- ##
