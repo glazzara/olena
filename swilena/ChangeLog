@@ -1,5 +1,11 @@
 2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a setter in the mln::image2d<T> meta-wrapper.
+
+	* image2d.ixx (mln::image2d<T>::set): New method (extension).
+
+2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a Swilena wrapper for mln::value::rgb8.
 
 	* rgb8.i: New file.

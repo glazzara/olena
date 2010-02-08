@@ -1,5 +1,6 @@
 //						       		-*- C++ -*-
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -63,6 +64,24 @@
 
 // FIXME: Doc.
 %define instantiate_image2d(I, T)
+  /* Add a setter, since Python does not seem to allow writings like
+
+       ima(p) = 1
+
+     and will complain with this message:
+
+       SyntaxError: can't assign to function call
+
+     which is a real pain.  How about adding an operator `[]'?  Or a
+     method , like `at'? */
+  %extend mln::image2d< T >
+  {
+    void set(const point2d& p, const T& v)
+    {
+      (*$self)(p) = v;
+    }
+  }
+
   // Instantiate base classes of mln::image2d<T> so that Swig knows it
   // derives from mln::Image.
   %template() mln::internal::image_primary< T, mln::box2d, mln::image2d< T > >;
@@ -70,4 +89,4 @@
   %template() mln::internal::image_checked_< mln::image2d< T > >;
   // Instantiate mln::image2d<T>
   %template(I) mln::image2d< T >;
-%enddef
+%enddef // !instantiate_image2d
