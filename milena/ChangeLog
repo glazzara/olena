@@ -1,5 +1,11 @@
 2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use Doxygen comments properly.
+
+	* mln/value/rgb.hh: Here.
+
+2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Typos in comments.
 
 	* mln/core/concept/function.hh: Here.
