@@ -1,5 +1,18 @@
 2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a Swilena wrapper for mln::value::rgb8.
+
+	* rgb8.i: New file.
+	* Makefile.am (wrappers): Add rgb8.i.
+	* python/swilena.py: Import the contents of module rgb8.
+	* python/Makefile.am (pyexec_LTLIBRARIES): Add _rgb8.la.
+	(nodist__rgb8_la_SOURCES, _rgb8_la_LIBADD): New.
+	(CLEANFILES): Add $(nodist__rgb8_la_SOURCES) rgb8.py rgb8.py[co].
+	(nodist_python_PYTHON): Add rgb8.py.
+	(rgb8-wrap.cc): Add dependencies.
+
+2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a Swilena meta-wrapper for mln::value::rgb<n>.
 
 	* rgb.ixx: New file.

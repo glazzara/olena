@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# Copyright (C) 2008, 2009, 2013 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2013 EPITA Research and Development
 # Laboratory (LRDE)
 #
 # This file is part of Olena.
@@ -32,6 +32,7 @@ from window2d import *
 
 from int_u8 import *
 from int_u24 import *
+from rgb8 import *
 
 import image2d_int
 import image2d_int_u8

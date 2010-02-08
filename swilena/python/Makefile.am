@@ -145,6 +145,16 @@ CLEANFILES += $(nodist__neighb2d_la_SOURCES) neighb2d.py neighb2d.py[co]
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_neighb2d-wrap.Pcc@am__quote@
 nodist_python_PYTHON += neighb2d.py
 
+## rgb8.
+pyexec_LTLIBRARIES += _rgb8.la
+nodist__rgb8_la_SOURCES = rgb8-wrap.cc
+_rgb8_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__rgb8_la_SOURCES) rgb8.py rgb8.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_rgb8-wrap.Pcc@am__quote@
+nodist_python_PYTHON += rgb8.py
+
 ## window2d.
 pyexec_LTLIBRARIES += _window2d.la
 nodist__window2d_la_SOURCES = window2d-wrap.cc
@@ -209,6 +219,7 @@ morpho_ixx_deps =				\
 # Dependencies of wrappers not automatically computed (yet).
 int_u8-wrap.cc: $(top_srcdir)/swilena/int_u.ixx $(int_u_ixx_deps)
 int_u32-wrap.cc: $(top_srcdir)/swilena/int_u.ixx $(int_u_ixx_deps)
+rgb8-wrap.cc: $(top_srcdir)/swilena/rgb.ixx $(rgb_ixx_deps)
 
 box2d-wrap.cc: $(top_srcdir)/swilena/box.ixx $(box_ixx_deps)
 box2d_piter-wrap.cc: $(top_srcdir)/swilena/box_piter.ixx

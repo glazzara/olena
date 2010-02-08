@@ -48,6 +48,7 @@ wrappers =					\
   int_u8.i					\
   neighb2d.i					\
   point2d.i					\
+  rgb8.i					\
   window2d.i					\
 						\
   dynamic_image2d.i
