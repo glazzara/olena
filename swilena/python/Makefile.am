@@ -185,6 +185,16 @@ CLEANFILES += $(nodist__image2d_int_u8_la_SOURCES) image2d_int_u8.py image2d_int
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_image2d_int_u8-wrap.Pcc@am__quote@
 nodist_python_PYTHON += image2d_int_u8.py
 
+## image2d_rgb8.
+pyexec_LTLIBRARIES += _image2d_rgb8.la
+nodist__image2d_rgb8_la_SOURCES = image2d_rgb8-wrap.cc
+_image2d_rgb8_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__image2d_rgb8_la_SOURCES) image2d_rgb8.py image2d_rgb8.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_image2d_rgb8-wrap.Pcc@am__quote@
+nodist_python_PYTHON += image2d_rgb8.py
+
 ## dynamic_image2d.
 pyexec_LTLIBRARIES += _dynamic_image2d.la
 # Swig also generates a header for this module, since it makes use of
@@ -240,6 +250,11 @@ image2d_int_u8-wrap.cc: $(top_srcdir)/swilena/pgm.ixx
 image2d_int_u8-wrap.cc: $(top_srcdir)/swilena/fill.ixx
 image2d_int_u8-wrap.cc: $(top_srcdir)/swilena/println.ixx
 image2d_int_u8-wrap.cc: $(top_srcdir)/swilena/morpho.ixx $(morpho_ixx_deps)
+
+image2d_rgb8-wrap.cc: $(top_srcdir)/swilena/image2d.ixx
+image2d_rgb8-wrap.cc: $(top_srcdir)/swilena/ppm.ixx
+image2d_rgb8-wrap.cc: $(top_srcdir)/swilena/fill.ixx
+image2d_rgb8-wrap.cc: $(top_srcdir)/swilena/println.ixx
 
 
 ## ---------------------------- ##
