@@ -1,5 +1,12 @@
 2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a Swilena meta-wrapper for PPM I/O.
+
+	* ppm.ixx: New file.
+	* Makefile.am (meta_wrappers): Add ppm.ixx.
+
+2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a setter in the mln::image2d<T> meta-wrapper.
 
 	* image2d.ixx (mln::image2d<T>::set): New method (extension).

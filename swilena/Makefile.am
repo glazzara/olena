@@ -32,6 +32,7 @@ meta_wrappers =					\
   intp.ixx					\
   morpho.ixx					\
   pgm.ixx					\
+  ppm.ixx					\
   println.ixx					\
   python-utils.ixx				\
   rgb.ixx
