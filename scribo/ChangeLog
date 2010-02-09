@@ -1,3 +1,43 @@
+2010-02-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Move Scribo demo.
+
+	* demo/Makefile.am,
+	* demo/demo.pro,
+	* demo/demo.qrc,
+	* demo/icons/document-open.png,
+	* demo/icons/edit-find.png,
+	* demo/icons/format-indent-more.png,
+	* demo/icons/go-next.png,
+	* demo/icons/image-x-generic.png,
+	* demo/icons/list-add.png,
+	* demo/icons/ocr.png,
+	* demo/icons/text-x-generic.png,
+	* demo/icons/view-refresh.png,
+	* demo/icons/x-office-spreadsheet.png,
+	* demo/src/main.cc,
+	* demo/src/mainwindow.cc,
+	* demo/src/mainwindow.hh,
+	* demo/ui/mainwindow.ui: Move...
+
+	* demo/review/Makefile.am,
+	* demo/review/icons/document-open.png,
+	* demo/review/icons/edit-find.png,
+	* demo/review/icons/format-indent-more.png,
+	* demo/review/icons/go-next.png,
+	* demo/review/icons/image-x-generic.png,
+	* demo/review/icons/list-add.png,
+	* demo/review/icons/ocr.png,
+	* demo/review/icons/text-x-generic.png,
+	* demo/review/icons/view-refresh.png,
+	* demo/review/icons/x-office-spreadsheet.png,
+	* demo/review/review.pro,
+	* demo/review/review.qrc,
+	* demo/review/src/main.cc,
+	* demo/review/src/mainwindow.cc,
+	* demo/review/src/mainwindow.hh,
+	* demo/review/ui/mainwindow.ui: ... here.
+
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* io/xml/save_text_lines.hh: New. Add partial support for

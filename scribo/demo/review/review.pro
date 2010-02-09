@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET = 
 DEPENDPATH += . src ui
-INCLUDEPATH += . src ../../ ../../milena
+INCLUDEPATH += . src ../../../ ../../../milena
 DEFINES += NDEBUG
 
 # Input
@@ -13,4 +13,4 @@ HEADERS += src/mainwindow.hh
 FORMS += ui/mainwindow.ui
 SOURCES += src/main.cc src/mainwindow.cc
 
-RESOURCES = demo.qrc
+RESOURCES = review.qrc
