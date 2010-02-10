@@ -77,6 +77,95 @@
 
 2010-02-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Save Theo's exhaustive demonstration results.
+
+	* green/doc/regional_maxima/mp00411c/colormap_all_q4.txt.gz: New cmap.
+	* green/doc/regional_maxima/mp00411c/colormap_all_q5.txt.gz: New cmap.
+	* green/doc/regional_maxima/mp00411c/colormap_thick_q4.txt.gz: New cmap.
+	* green/doc/regional_maxima/mp00411c/colormap_thick_q5.pgm.gz: New cmap.
+	* green/doc/regional_maxima/mp00411c/colormap_thin_q4.pgm.gz: New cmap.
+	* green/doc/regional_maxima/mp00411c/colormap_thin_q5.pgm.gz: New cmap.
+	* green/doc/regional_maxima/mp00411c/histo_all_q4.dump.gz: New histo.
+	* green/doc/regional_maxima/mp00411c/histo_all_q5.dump.gz: New histo.
+	* green/doc/regional_maxima/mp00411c/histo_thick_q4.dump.gz: New histo.
+	* green/doc/regional_maxima/mp00411c/histo_thick_q5.dump.gz: New histo.
+	* green/doc/regional_maxima/mp00411c/histo_thin_q4.dump.gz: New histo.
+	* green/doc/regional_maxima/mp00411c/histo_thin_q5.dump.gz: New histo.
+	* green/doc/regional_maxima/mp00411c/iz_all_q4.dump.gz: New labeled img.
+	* green/doc/regional_maxima/mp00411c/iz_all_q5.pgm.gz: New labeled img.
+	* green/doc/regional_maxima/mp00411c/iz_thick_q4.dump.gz: New lbl img.
+	* green/doc/regional_maxima/mp00411c/iz_thick_q5.dump.gz: New lbl img.
+	* green/doc/regional_maxima/mp00411c/iz_thin_q4.dump.gz: New lbl img.
+	* green/doc/regional_maxima/mp00411c/iz_thin_q5.dump.gz: New lbl img.
+	* green/doc/regional_maxima/mp00411c/labeled_all_q4.dump.gz: New img.
+	* green/doc/regional_maxima/mp00411c/labeled_all_q5.dump.gz: New img.
+	* green/doc/regional_maxima/mp00411c/labeled_thick_q4.dump.gz: New img.
+	* green/doc/regional_maxima/mp00411c/labeled_thick_q5.dump.gz: New img.
+	* green/doc/regional_maxima/mp00411c/labeled_thin_q4.dump.gz: New img.
+	* green/doc/regional_maxima/mp00411c/labeled_thin_q5.dump.gz: New img.
+	* green/doc/regional_maxima/mp00411c/mean3_all_q4.ppm.gz: New mean img.
+	* green/doc/regional_maxima/mp00411c/mean3_all_q5.ppm.gz: New mean img.
+	* green/doc/regional_maxima/mp00411c/mean3_thick_q4.ppm.gz:New mean img.
+	* green/doc/regional_maxima/mp00411c/mean3_thick_q5.ppm.gz:New mean img.
+	* green/doc/regional_maxima/mp00411c/mean3_thin_q4.ppm.gz:New mean img.
+	* green/doc/regional_maxima/mp00411c/mean3_thin_q5.ppm.gz:New mean img.
+	* green/doc/regional_maxima/mp00411c/mean4_all_q4.ppm.gz:New mean img.
+	* green/doc/regional_maxima/mp00411c/mean4_all_q5.ppm.gz:New mean img.
+	* green/doc/regional_maxima/mp00411c/mean4_thick_q4.ppm.gz:New mean img.
+	* green/doc/regional_maxima/mp00411c/mean4_thick_q5.ppm.gz:New mean img.
+	* green/doc/regional_maxima/mp00411c/mean4_thin_q4.ppm.gz:New mean img.
+	* green/doc/regional_maxima/mp00411c/mean4_thin_q5.ppm.gz:New mean img.
+	* green/doc/regional_maxima/mp00411c/mp00411c.ppm.gz: New input img.
+	* green/doc/regional_maxima/mp00411c/mp00411c.sh.gz: New script file.
+	* green/doc/regional_maxima/mp00411c/mp00411c_thick.pbm.gz: New mask.
+	* green/doc/regional_maxima/mp00411c/mp00411c_thin.pbm.gz: New mask.
+	* green/doc/regional_maxima/mp00411c/opened_all_q4.dump.gz: New histo.
+	* green/doc/regional_maxima/mp00411c/opened_all_q5.dump.gz: New histo.
+	* green/doc/regional_maxima/mp00411c/opened_thick_q4.dump.gz: New histo.
+	* green/doc/regional_maxima/mp00411c/opened_thick_q5.dump.gz: New histo.
+	* green/doc/regional_maxima/mp00411c/opened_thin_q4.dump.gz: New histo.
+	* green/doc/regional_maxima/mp00411c/opened_thin_q5.dump.gz: New histo.
+	* green/doc/regional_maxima/mp00411c/proj1_all_q4.pgm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj1_all_q5.pgm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj1_thick_q4.pgm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj1_thick_q5.pgm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj1_thin_q4.pgm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj1_thin_q5.pgm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj2_all_q4.pgm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj2_all_q5.pgm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj2_thick_q4.pgm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj2_thick_q5.pgm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj2_thin_q4.pgm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj2_thin_q5.pgm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj3_all_q4.ppm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj3_all_q5.ppm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj3_thick_q4.ppm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj3_thick_q5.ppm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj3_thin_q4.ppm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj3_thin_q5.ppm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj4_all_q4.ppm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj4_all_q5.ppm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj4_thick_q4.ppm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj4_thick_q5.ppm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj4_thin_q4.ppm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/proj4_thin_q5.ppm.gz: New proj.
+	* green/doc/regional_maxima/mp00411c/quant_q4.ppm.gz: New quant img.
+	* green/doc/regional_maxima/mp00411c/quant_q5.ppm.gz: New quant img.
+	* green/doc/regional_maxima/mp00411c/stats3_all_q4.txt.gz: New stats.
+	* green/doc/regional_maxima/mp00411c/stats3_all_q5.txt.gz: New stats.
+	* green/doc/regional_maxima/mp00411c/stats3_thick_q4.txt.gz: New stats.
+	* green/doc/regional_maxima/mp00411c/stats3_thick_q5.txt.gz: New stats.
+	* green/doc/regional_maxima/mp00411c/stats3_thin_q4.txt.gz: New stats.
+	* green/doc/regional_maxima/mp00411c/stats3_thin_q5.txt.gz: New stats.
+	* green/doc/regional_maxima/mp00411c/stats4_all_q4.txt.gz: New stats.
+	* green/doc/regional_maxima/mp00411c/stats4_all_q5.txt.gz: New stats.
+	* green/doc/regional_maxima/mp00411c/stats4_thick_q4.txt.gz: New stats.
+	* green/doc/regional_maxima/mp00411c/stats4_thick_q5.txt.gz: New stats.
+	* green/doc/regional_maxima/mp00411c/stats4_thin_q4.txt.gz: New stats.
+	* green/doc/regional_maxima/mp00411c/synthese.txt.gz: New synthese.
+
+2010-02-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Fix bugs in the histogram visualization tools.
 
 	* green/mln/display/display_histo.cc: Add new vizualisations.
