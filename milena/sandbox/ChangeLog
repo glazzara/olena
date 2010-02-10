@@ -1,5 +1,12 @@
 2010-02-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Fix bugs in the histogram visualization tools.
+
+	* green/mln/display/display_histo.cc: Add new vizualisations.
+	* green/mln/display/project_histo.cc: Add new color projections.
+
+2010-02-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Fix last details in the image processing chain.
 
 	* green/tools/annotating/histo/histo.cc: Manage new inputs/outputs.

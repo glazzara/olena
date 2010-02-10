@@ -29,12 +29,14 @@
 # define MLN_DISPLAY_DISPLAY_HISTO_HH
 
 # include <mln/accu/math/sum.hh>
+# include <mln/algebra/vec.hh>
 # include <mln/data/stretch.hh>
 # include <mln/display/project_histo.hh>
 # include <mln/fun/v2v/log.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/value/label_8.hh>
+# include <mln/util/array.hh>
 
 
 /// \file
@@ -57,19 +59,28 @@ namespace mln
     image2d<value::int_u8>
     display_histo3d_unsigned(const image3d<unsigned>& histo);
 
-    image2d<value::int_u8>
-    display2_histo3d_unsigned(const image3d<unsigned>& histo);
+    template <unsigned n>
+    image2d< value::int_u<n> >
+    display2_histo3d_unsigned(const image3d<unsigned>& histo,
+			      const value::int_u<n>    ambiguous_color);
 
+    template <unsigned n>
     image2d<value::label_8>
     display2_histo3d_unsigned(const image3d<unsigned>&       histo,
-			      const image3d<value::label_8>& label);
+			      const image3d<value::label_8>& label,
+			      const value::label_8           ambiguous_label);
 
-    image2d<value::rgb8>
-    display3_histo3d_unsigned(const image3d<unsigned>& histo);
+    template <unsigned n>
+    image2d< value::rgb<n> >
+    display3_histo3d_unsigned(const image3d<unsigned>& histo,
+			      const value::rgb<n>      ambiguous_color);
 
-    image2d<value::rgb8>
-    display3_histo3d_unsigned(const image3d<unsigned>&       histo,
-			      const image3d<value::label_8>& label);
+    template <unsigned n>
+    image2d< value::rgb8 >
+    display3_histo3d_unsigned(const image3d<unsigned>&               histo,
+			      const image3d<value::label_8>&         label,
+			      const util::array< algebra::vec<3,float> >& pal,
+			      const value::rgb8              ambiguous_color);
 
 #ifndef MLN_INCLUDE_ONLY
 
@@ -87,7 +98,7 @@ namespace mln
     /// \parameter[in] histo the histogram in 3d.
     /// \result return a equivalent 2d image.
 
-
+    // FIXME : display_shape [in int_u8]
     image2d<value::int_u8>
     display_histo3d_unsigned(const image3d<unsigned>& histo)
     {
@@ -102,39 +113,61 @@ namespace mln
       return proj_int;
     }
 
-    image2d<value::int_u8>
-    display2_histo3d_unsigned(const image3d<unsigned>& histo)
+    // FIXME : display_color [in int_un]
+    template <unsigned n>
+    image2d< value::int_u<n> >
+    display2_histo3d_unsigned(const image3d<unsigned>& histo,
+			      const value::int_u<n>    ambiguous_color)
     {
-      image2d<value::int_u8> proj = project2_histo<0>(histo);
+      image2d< value::int_u<n> > proj = project2_histo<n,0>(histo,
+							    ambiguous_color);
 
       return proj;
     }
 
+    // FIXME : display_label [in label]
+    template <unsigned n>
     image2d<value::label_8>
     display2_histo3d_unsigned(const image3d<unsigned>&       histo,
-			      const image3d<value::label_8>& label)
+			      const image3d<value::label_8>& label,
+			      const value::label_8           ambiguous_label)
     {
-      image2d<value::label_8> proj = project2_histo<0>(histo, label);
+      image2d<value::label_8> proj = project2_histo<n,0>(histo,
+							 label,
+							 ambiguous_label);
 
       return proj;
     }
 
-    image2d<value::rgb8>
-    display3_histo3d_unsigned(const image3d<unsigned>& histo)
+    // FIXME : display_color [in color]
+    template <unsigned n>
+    image2d< value::rgb<n> >
+    display3_histo3d_unsigned(const image3d<unsigned>& histo,
+			      const value::rgb<n>      ambiguous_color)
     {
-      image2d<value::rgb8> proj = project3_histo<0>(histo);
+      image2d< value::rgb<n> > proj = project3_histo<n,0>(histo,
+							  ambiguous_color);
 
       return proj;
     }
 
-    image2d<value::rgb8>
-    display3_histo3d_unsigned(const image3d<unsigned>&       histo,
-			      const image3d<value::label_8>& label)
+
+    // FIXME : display_label [in color]
+    template <unsigned n>
+    image2d< value::rgb8 >
+    display3_histo3d_unsigned(const image3d<unsigned>&              histo,
+			      const image3d<value::label_8>&        label,
+			      const util::array<algebra::vec<3,float> >& pal,
+			      const value::rgb8             ambiguous_color)
     {
-      image2d<value::rgb8> proj = project3_histo<0>(histo, label);
+      image2d< value::rgb8 > proj = project3_histo<n,0>(histo,
+							  label,
+							  pal,
+							  ambiguous_color);
 
       return proj;
     }
+
 
 #endif // ! MLN_INCLUDE_ONLY
 

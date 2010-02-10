@@ -37,11 +37,15 @@
 # include <mln/accu/image/take.hh>
 # include <mln/accu/image/to_result.hh>
 
+# include <mln/algebra/vec.hh>
+
 # include <mln/opt/at.hh>
 
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/value/label_8.hh>
+
+# include <mln/util/array.hh>
 
 /// \file
 ///
@@ -60,9 +64,30 @@ namespace mln
     image2d<mln_result(A)>
     project_histo(const image3d<V>& histo);
 
-    template <typename A, unsigned direction, typename V>
+    template <typename A, unsigned n, unsigned direction, typename V>
     image2d<mln_result(A)>
-    project2_histo(const image3d<V>& histo);
+    project2_histo(const image3d<V>&      histo,
+		   const value::int_u<n>& ambiguous_color);
+
+    template <unsigned n, unsigned direction, typename V>
+    image2d<V>
+    project2_histo(const image3d<unsigned>& histo,
+		   const image3d<V>&        label);
+
+    template <unsigned n, unsigned direction>
+    image2d< value::rgb<n> >
+    project3_histo(const image3d<unsigned>& histo,
+		   const value::rgb<n>      ambiguous_color);
+
+    template <unsigned n, unsigned direction>
+    image2d< value::rgb8 >
+    project3_histo(const image3d<unsigned>&                    histo,
+		   const image3d<value::label_8>&              label,
+		   const util::array<algebra::vec<3, float> >& pal,
+		   const value::rgb8                           ambiguous_color);
+    // FIXME ==> palette must be 1d-image not an array !!
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -96,80 +121,96 @@ namespace mln
       return accu::image::to_result(histo_accu);
     }
 
-    template <unsigned direction>
-    image2d<value::int_u8>
-    project2_histo(const image3d<unsigned>& histo)
+    // 0 ==> blue
+    // 1 ==> red
+    // 2 ==> green
+
+    // mln::opt::at(histo, blue, red, green)
+
+    template <unsigned n, unsigned direction>
+    image2d< value::int_u<n> >
+    project2_histo(const image3d<unsigned>& histo,
+		   const value::int_u<n>&   ambiguous_color)
     {
-      image2d<value::int_u8> result;
+      image2d< value::int_u<n> > result;
 
       if (0 == direction) // blue
       {
-	image2d<value::int_u8> arg_max(histo.ncols(), histo.nslices());
+	image2d< value::int_u<n> > arg_max(histo.nrows(), histo.ncols());
 
-	for (unsigned j = 0; j < histo.ncols(); ++j)
-	  for (unsigned i = 0; i < histo.nslices(); ++i)
+	for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
+	  for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	  {
-	    unsigned max = 0; // minimum as possible
-	    signed   pos = -1;
+	    unsigned   max = 0; // minimum as possible
+	    def::coord pos = -1;
 
-	    for (unsigned k = 0; k < histo.nrows(); ++k)
+	    for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
 	    {
-	      if (max <= opt::at(histo,i,j,k))
+	      if (max < opt::at(histo,blue,red,green))
 	      {
-		max = opt::at(histo,i,j,k);
-		pos = k;
+		max = opt::at(histo,blue,red,green);
+		pos = blue;
 	      }
 	    }
 
-	    opt::at(arg_max,i,j) = pos;
+	    if (-1 == pos)
+	      opt::at(arg_max,red,green) = ambiguous_color;
+	    else
+	      opt::at(arg_max,red,green) = pos;
 	  }
 
 	result = arg_max;
       }
       else if (1 == direction) // red
       {
-	image2d<value::int_u8> arg_max(histo.nrows(), histo.nslices());
+	image2d< value::int_u<n> > arg_max(histo.ncols(), histo.nslices());
 
-	for (unsigned j = 0; j < histo.nslices(); ++j)
-	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	  for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
 	  {
 	    unsigned max = 0; // minimum as possible
 	    signed   pos = -1;
 
-	    for (unsigned k = 0; k < histo.ncols(); ++k)
+	    for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	    {
-	      if (max <= opt::at(histo,i,j,k))
+	      if (max < opt::at(histo,blue,red,green))
 	      {
-		max = opt::at(histo,i,j,k);
-		pos = k;
+		max = opt::at(histo,blue,red,green);
+		pos = red;
 	      }
 	    }
 
-	    opt::at(arg_max,i,j) = pos;
+	    if (-1 == pos)
+	      opt::at(arg_max,green,blue) = ambiguous_color;
+	    else
+	      opt::at(arg_max,green,blue) = pos;
 	  }
 
 	result = arg_max;
       }
       else // 2 == direction // green
       {
-	image2d<value::int_u8> arg_max(histo.nrows(), histo.ncols());
+	image2d< value::int_u<n> > arg_max(histo.nrows(), histo.nslices());
 
-	for (unsigned j = 0; j < histo.ncols(); ++j)
-	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	  for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	  {
 	    unsigned max = 0; // minimum as possible
 	    signed   pos = -1;
 
-	    for (unsigned k = 0; k < histo.nslices(); ++k)
+	    for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
 	    {
-	      if (max <= opt::at(histo,i,j,k))
+	      if (max < opt::at(histo,blue,red,green))
 	      {
-		max = opt::at(histo,i,j,k);
-		pos = k;
+		max = opt::at(histo,blue,red,green);
+		pos = green;
 	      }
 	    }
 
-	    opt::at(arg_max,i,j) = pos;
+	    if (-1 == pos)
+	      opt::at(arg_max,red,blue) = ambiguous_color;
+	    else
+	      opt::at(arg_max,red,blue) = pos;
 	  }
 
 	result = arg_max;
@@ -178,81 +219,91 @@ namespace mln
       return result;
     }
 
-    template <unsigned direction>
+    template <unsigned n, unsigned direction>
     image2d<value::label_8>
     project2_histo(const image3d<unsigned>&       histo,
-		   const image3d<value::label_8>& label)
+		   const image3d<value::label_8>& label,
+		   const value::label_8           ambiguous_label)
     {
       image2d<value::label_8> result;
 
       if (0 == direction) // blue
       {
-	image2d<value::label_8> arg_max(histo.ncols(), histo.nslices());
+	image2d<value::label_8> arg_max(histo.nrows(), histo.ncols());
 
-	for (unsigned j = 0; j < histo.ncols(); ++j)
-	  for (unsigned i = 0; i < histo.nslices(); ++i)
+	for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
+	  for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	  {
-	    unsigned max = 0; // minimum as possible
-	    signed   pos = -1;
+	    unsigned   max = 0; // minimum as possible
+	    def::coord pos = -1;
 
-	    for (unsigned k = 0; k < histo.nrows(); ++k)
+	    for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
 	    {
-	      if (max <= opt::at(histo,i,j,k))
+	      if (max < opt::at(histo,blue,red,green))
 	      {
-		max = opt::at(histo,i,j,k);
-		pos = k;
+		max = opt::at(histo,blue,red,green);
+		pos = blue;
 	      }
 	    }
 
-	    opt::at(arg_max,i,j) = opt::at(label,i,j,pos);
+	    if (-1 == pos)
+	      opt::at(arg_max,red,green) = ambiguous_label;
+	    else
+	      opt::at(arg_max,red,green) = opt::at(label, pos, red, green);
 	  }
 
 	result = arg_max;
       }
       else if (1 == direction) // red
+      {
+	image2d<value::label_8> arg_max(histo.ncols(), histo.nslices());
+
+	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	  for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
+	  {
+	    unsigned max = 0; // minimum as possible
+	    signed   pos = -1;
+
+	    for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
+	    {
+	      if (max < opt::at(histo,blue,red,green))
+	      {
+		max = opt::at(histo,blue,red,green);
+		pos = red;
+	      }
+	    }
+
+	    if (-1 == pos)
+	      opt::at(arg_max,green,blue) = ambiguous_label;
+	    else
+	      opt::at(arg_max,green,blue) = opt::at(label, blue, pos, green);
+	  }
+
+	result = arg_max;
+      }
+      else // 2 == direction // green
       {
 	image2d<value::label_8> arg_max(histo.nrows(), histo.nslices());
 
-	for (unsigned j = 0; j < histo.nslices(); ++j)
-	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	  for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	  {
 	    unsigned max = 0; // minimum as possible
 	    signed   pos = -1;
 
-	    for (unsigned k = 0; k < histo.ncols(); ++k)
+	    for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
 	    {
-	      if (max <= opt::at(histo,i,j,k))
+	      if (max < opt::at(histo,blue,red,green))
 	      {
-		max = opt::at(histo,i,j,k);
-		pos = k;
+		max = opt::at(histo,blue,red,green);
+		pos = green;
 	      }
 	    }
 
-	    opt::at(arg_max,i,j) = opt::at(label,pos,i,j);
-	  }
-
-	result = arg_max;
-      }
-      else // 2 == direction // green
-      {
-	image2d<value::label_8> arg_max(histo.nrows(), histo.ncols());
-
-	for (unsigned j = 0; j < histo.ncols(); ++j)
-	  for (unsigned i = 0; i < histo.nrows(); ++i)
-	  {
-	    unsigned max = 0; // minimum as possible
-	    signed   pos = -1;
-
-	    for (unsigned k = 0; k < histo.nslices(); ++k)
-	    {
-	      if (max <= opt::at(histo,i,j,k))
-	      {
-		max = opt::at(histo,i,j,k);
-		pos = k;
-	      }
-	    }
-
-	    opt::at(arg_max,i,j) = opt::at(label,i,pos,j);
+	    if (-1 == pos)
+	      opt::at(arg_max,red,blue) = ambiguous_label;
+	    else
+	      opt::at(arg_max,red,blue) = opt::at(label, blue, red, pos);
 	  }
 
 	result = arg_max;
@@ -260,85 +311,119 @@ namespace mln
 
       return result;
     }
+
+
 
 
     // FIXME ... determine the color of each class.
-    template <unsigned direction>
-    image2d<value::rgb8>
-    project3_histo(const image3d<unsigned>&       histo,
-		   const image3d<value::label_8>& label)
+    // FIXME la palette est supposée en 8 bits
+    template <unsigned n, unsigned direction>
+    image2d< value::rgb8 >
+    project3_histo(const image3d<unsigned>&                   histo,
+		   const image3d<value::label_8>&             label,
+		   const util::array<algebra::vec<3,float> >& pal,
+		   const value::rgb8                          ambiguous_color)
     {
-      image2d<value::rgb8> result;
+      image2d< value::rgb8 > result;
 
       if (0 == direction) // blue
       {
-	image2d<value::rgb8> arg_max(histo.ncols(), histo.nslices());
+	image2d< value::rgb8 > arg_max(histo.nrows(), histo.ncols());
 
-	for (unsigned j = 0; j < histo.ncols(); ++j)
-	  for (unsigned i = 0; i < histo.nslices(); ++i)
+	for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
+	  for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	  {
-	    unsigned max = 0; // minimum as possible
-	    signed   pos = -1;
+	    unsigned   max = 0; // minimum as possible
+	    def::coord pos = -1;
 
-	    for (unsigned k = 0; k < histo.nrows(); ++k)
+	    for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
 	    {
-	      if (max <= opt::at(histo,i,j,k))
+	      if (max < opt::at(histo,blue,red,green))
 	      {
-		max = opt::at(histo,i,j,k);
-		pos = k;
+		max = opt::at(histo,blue,red,green);
+		pos = blue;
 	      }
 	    }
 
-	    opt::at(arg_max,i,j) = value::rgb8(i,j,pos);
+	    if (-1 == pos)
+	      opt::at(arg_max,red,green) = ambiguous_color;
+	    else
+	    {
+	      value::int_u8 r = pal[opt::at(label,pos,red,green)][0];
+	      value::int_u8 g = pal[opt::at(label,pos,red,green)][1];
+	      value::int_u8 b = pal[opt::at(label,pos,red,green)][2];
+	      value::rgb8   color(r,g,b);
+
+	      opt::at(arg_max,red,green) = color;
+	    }
 	  }
 
 	result = arg_max;
       }
       else if (1 == direction) // red
       {
-	image2d<value::rgb8> arg_max(histo.nrows(), histo.nslices());
+	image2d< value::rgb8 > arg_max(histo.ncols(), histo.nslices());
 
-	for (unsigned j = 0; j < histo.nslices(); ++j)
-	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	  for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
 	  {
 	    unsigned max = 0; // minimum as possible
 	    signed   pos = -1;
 
-	    for (unsigned k = 0; k < histo.ncols(); ++k)
+	    for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	    {
-	      if (max <= opt::at(histo,i,j,k))
+	      if (max < opt::at(histo,blue,red,green))
 	      {
-		max = opt::at(histo,i,j,k);
-		pos = k;
+		max = opt::at(histo,blue,red,green);
+		pos = red;
 	      }
 	    }
 
-	    opt::at(arg_max,i,j) = value::rgb8(pos,i,j);
+	    if (-1 == pos)
+	      opt::at(arg_max,green,blue) = ambiguous_color;
+	    else
+	    {
+	      value::int_u8 r = pal[opt::at(label,blue,pos,green)][0];
+	      value::int_u8 g = pal[opt::at(label,blue,pos,green)][1];
+	      value::int_u8 b = pal[opt::at(label,blue,pos,green)][2];
+	      value::rgb8   color(r,g,b);
+
+	      opt::at(arg_max,green,blue) = color;
+	    }
 	  }
 
 	result = arg_max;
       }
       else // 2 == direction // green
       {
-	image2d<value::rgb8> arg_max(histo.nrows(), histo.ncols());
+	image2d< value::rgb8 > arg_max(histo.nrows(), histo.nslices());
 
-	for (unsigned j = 0; j < histo.ncols(); ++j)
-	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	  for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	  {
 	    unsigned max = 0; // minimum as possible
 	    signed   pos = -1;
 
-	    for (unsigned k = 0; k < histo.nslices(); ++k)
+	    for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
 	    {
-	      if (max <= opt::at(histo,i,j,k))
+	      if (max < opt::at(histo,blue,red,green))
 	      {
-		max = opt::at(histo,i,j,k);
-		pos = k;
+		max = opt::at(histo,blue,red,green);
+		pos = green;
 	      }
 	    }
 
-	    // FIXME ... how to fix the n of rgb
-	    opt::at(arg_max,i,j) = value::rgb8(i,pos,j);
+	    if (-1 == pos)
+	      opt::at(arg_max,red,blue) = ambiguous_color;
+	    else
+	    {
+	      value::int_u8 r = pal[opt::at(label,blue,red,pos)][0];
+	      value::int_u8 g = pal[opt::at(label,blue,red,pos)][1];
+	      value::int_u8 b = pal[opt::at(label,blue,red,pos)][2];
+	      value::rgb8   color(r,g,b);
+
+	      opt::at(arg_max,red,blue) = color;
+	    }
 	  }
 
 	result = arg_max;
@@ -347,81 +432,91 @@ namespace mln
       return result;
     }
 
-    template <unsigned direction>
-    image2d<value::rgb8>
-    project3_histo(const image3d<unsigned>& histo)
+
+    template <unsigned n, unsigned direction>
+    image2d< value::rgb<n> >
+    project3_histo(const image3d<unsigned>& histo,
+		   const value::rgb<n>      ambiguous_color)
     {
-      image2d<value::rgb8> result;
+      image2d< value::rgb<n> > result;
 
       if (0 == direction) // blue
       {
-	image2d<value::rgb8> arg_max(histo.ncols(), histo.nslices());
+	image2d< value::rgb<n> > arg_max(histo.nrows(), histo.ncols());
 
-	for (unsigned j = 0; j < histo.ncols(); ++j)
-	  for (unsigned i = 0; i < histo.nslices(); ++i)
+	for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
+	  for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	  {
-	    unsigned max = 0; // minimum as possible
-	    signed   pos = -1;
+	    unsigned   max = 0; // minimum as possible
+	    def::coord pos = -1;
 
-	    for (unsigned k = 0; k < histo.nrows(); ++k)
+	    for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
 	    {
-	      if (max <= opt::at(histo,i,j,k))
+	      if (max < opt::at(histo,blue,red,green))
 	      {
-		max = opt::at(histo,i,j,k);
-		pos = k;
+		max = opt::at(histo,blue,red,green);
+		pos = blue;
 	      }
 	    }
 
-	    opt::at(arg_max,i,j) = value::rgb8(i,j,pos);
+	    if (-1 == pos)
+	      opt::at(arg_max,red,green) = ambiguous_color;
+	    else
+	      opt::at(arg_max,red,green) = value::rgb<n>(red,green,pos);
 	  }
 
 	result = arg_max;
       }
       else if (1 == direction) // red
       {
-	image2d<value::rgb8> arg_max(histo.nrows(), histo.nslices());
+	image2d< value::rgb<n> > arg_max(histo.ncols(), histo.nslices());
 
-	for (unsigned j = 0; j < histo.nslices(); ++j)
-	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	  for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
 	  {
 	    unsigned max = 0; // minimum as possible
 	    signed   pos = -1;
 
-	    for (unsigned k = 0; k < histo.ncols(); ++k)
+	    for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	    {
-	      if (max <= opt::at(histo,i,j,k))
+	      if (max < opt::at(histo,blue,red,green))
 	      {
-		max = opt::at(histo,i,j,k);
-		pos = k;
+		max = opt::at(histo,blue,red,green);
+		pos = red;
 	      }
 	    }
 
-	    opt::at(arg_max,i,j) = value::rgb8(pos,i,j);
+	    if (-1 == pos)
+	      opt::at(arg_max,green,blue) = ambiguous_color;
+	    else
+	      opt::at(arg_max,green,blue) = value::rgb<n>(pos,green,blue);;
 	  }
 
 	result = arg_max;
       }
       else // 2 == direction // green
       {
-	image2d<value::rgb8> arg_max(histo.nrows(), histo.ncols());
+	image2d< value::rgb<n> > arg_max(histo.nrows(), histo.nslices());
 
-	for (unsigned j = 0; j < histo.ncols(); ++j)
-	  for (unsigned i = 0; i < histo.nrows(); ++i)
+	for (def::coord blue = 0; blue < (signed)histo.nslices(); ++blue)
+	  for (def::coord red = 0; red < (signed)histo.nrows(); ++red)
 	  {
 	    unsigned max = 0; // minimum as possible
 	    signed   pos = -1;
 
-	    for (unsigned k = 0; k < histo.nslices(); ++k)
+	    for (def::coord green = 0; green < (signed)histo.ncols(); ++green)
 	    {
-	      if (max <= opt::at(histo,i,j,k))
+	      if (max < opt::at(histo,blue,red,green))
 	      {
-		max = opt::at(histo,i,j,k);
-		pos = k;
+		max = opt::at(histo,blue,red,green);
+		pos = green;
 	      }
 	    }
 
-	    // FIXME ... how to fix the n of rgb
-	    opt::at(arg_max,i,j) = value::rgb8(i,pos,j);
+	    if (-1 == pos)
+	      opt::at(arg_max,red,blue) = ambiguous_color;
+	    else
+	      opt::at(arg_max,red,blue) = value::rgb<n>(red,pos,blue);
 	  }
 
 	result = arg_max;
