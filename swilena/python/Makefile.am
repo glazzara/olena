@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
+
 ## ------------------ ##
 ## Generic material.  ##
 ## ------------------ ##
@@ -26,11 +27,11 @@ AM_CPPFLAGS = -I$(PYTHONINC) -I$(top_srcdir)/milena
 TOOLS_CXXFLAGS = @TOOLS_CXXFLAGS@
 AM_CXXFLAGS = $(TOOLS_CXXFLAGS)
 AM_SWIGFLAGS = -Wall -c++ -python -I$(top_srcdir)/milena
-## We build modules, not plain libs.
+# We build modules, not plain libs.
 AM_LDFLAGS = -avoid-version -module -shared
 
-## Run Swig to create the C++ wrapper files, the Python interface
-## files, and the dependency Makefile snippets.
+# Run Swig to create the C++ wrapper files, the Python interface
+# files, and the dependency Makefile snippets.
 %-wrap.cc %.py: $(top_srcdir)/swilena/%.i
 @AMDEP_TRUE@	if $(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -MD -MF "$(DEPDIR)/$*-wrap.Tcc" -o $@ $<; then \
 @AMDEP_TRUE@	  mv -f "$(DEPDIR)/$*-wrap.Tcc" "$(DEPDIR)/$*-wrap.Pcc";\
@@ -44,8 +45,9 @@ AM_LDFLAGS = -avoid-version -module -shared
 python_PYTHON = ltihooks.py
 # swilena.py: The whole Swilena suite.
 python_PYTHON += swilena.py
+
 # data.py: Access to the data of the distribution (images, meshes, etc.)
-python_PYTHON += data.py
+EXTRA_DIST = data.py
 
 
 ## ----------------- ##
@@ -217,7 +219,7 @@ $(TESTS): $(srcdir)/run.stamp
 # The dependency is on `run.in' and not `run', since `run' is
 # regenerated at distribution time, and voids the time stamps (which
 # we don't want!).
-EXTRA_DIST = $(srcdir)/run.stamp
+EXTRA_DIST += $(srcdir)/run.stamp
 $(srcdir)/run.stamp: $(RUN_IN)
 	@rm -f $@
 	@rm -f $@.tmp
