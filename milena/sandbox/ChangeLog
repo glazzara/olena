@@ -75,6 +75,16 @@
 	* bin/pgm_to_pbm.cc,
 	* bin/ppm_negate.cc: New.
 
+2010-02-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Fix last details in the image processing chain.
+
+	* green/tools/annotating/histo/histo.cc: Manage new inputs/outputs.
+	* green/tools/annotating/opening/opening.cc: Manage new inputs/outputs.
+	* green/tools/annotating/iz/Makefile.am: New Makefile.
+	* green/tools/annotating/iz/iz.cc: New file.
+	* green/tools/annotating/regmax/regmax.cc: Manage new inputs/outputs.
+
 2010-01-05  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Extend the histogram visualization tools for new projection concept.
