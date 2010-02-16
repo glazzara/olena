@@ -1,5 +1,11 @@
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a routine to convert to a QImage.
+
+	* mln/convert/to_qimage.hh: New.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add box<>::merge.
 
 	* mln/core/site_set/box.hh: New member 'merge()'.
