@@ -1,3 +1,14 @@
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix invalid value type names in dump format.
+
+	* milena/mln/value/internal/make_generic_name.hh: New.
+
+	* milena/mln/value/int_u.hh,
+	* milena/mln/value/label.hh,
+	* milena/mln/value/rgb.hh: Make use of the new routine to print a
+	correct type names in dump format.
+
 2009-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* doc/white_paper/white_paper.tex: Fix an invalid URL.
