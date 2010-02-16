@@ -30,6 +30,7 @@
 /// \file
 ///
 /// Draw a line in an image.
+/// \fixme Add specializations for horizontal lines (use pointers/memset).
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/p_line2d.hh>

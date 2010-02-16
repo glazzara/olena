@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Load a Milena image rawed into a file.
+/// Load a raw image header.
 
 # include <iostream>
 # include <fstream>

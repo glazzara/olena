@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,7 +61,7 @@ namespace mln
       template <typename T>
       void save(util::array<T>& arr,
 		const std::string& filename,
-		int start_value = 0);
+		int start_value);
 
 
 # ifndef MLN_INCLUDE_ONLY
