@@ -114,9 +114,9 @@ namespace mln
       V random_color(const V&);
 
 
-      template <unsigned n>
-      mln::value::rgb<n>
-      random_color(const mln::value::rgb<n>&)
+      template <typename RGB>
+      RGB
+      random_color_rgb(const RGB&)
       {
 	static unsigned
 	  nelements = colorize_::max_value - colorize_::min_value + 1;
@@ -153,8 +153,26 @@ namespace mln
 	while (green_[green - colorize_::min_value].has(blue));
 	green_[green - colorize_::min_value].insert(blue);
 
-	return mln::value::rgb<n>(red, green, blue);
+	return RGB(red, green, blue);
       }
+
+      template <unsigned n>
+      mln::value::rgb<n>
+      random_color(const mln::value::rgb<n>& v)
+      {
+	return random_color_rgb(v);
+      }
+
+
+# ifdef MLN_VALUE_QT_RGB32_HH
+
+      mln::value::qt::rgb32
+      random_color(const mln::value::qt::rgb32& v)
+      {
+	return random_color_rgb(v);
+      }
+
+# endif // ! MLN_VALUE_QT_RGB32_HH
 
     }
 

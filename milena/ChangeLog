@@ -1,3 +1,7 @@
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/labeling/colorize.hh: Add support for value::qt::rgb32.
+
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes in Milena.
