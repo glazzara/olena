@@ -1,5 +1,13 @@
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new rgb32 type for Qt compatibility.
+
+	* milena/mln/convert/from_to.hxx: Declare conversion routines.
+
+	* milena/mln/value/qt/rgb32.hh: New.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix invalid value type names in dump format.
 
 	* milena/mln/value/internal/make_generic_name.hh: New.
