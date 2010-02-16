@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,11 +40,6 @@
 
 # include <mln/value/qt/rgb32.hh>
 # include <mln/value/rgb8.hh>
-
-
-
-// # undef QT_VERSION
-// # define QT_VERSION 0x040000
 
 
 # if QT_VERSION < 0x040000
@@ -105,45 +100,6 @@ namespace mln
 
 	return qima;
       }
-
-
-
-
-//       template <typename I>
-//       inline
-//       QImage to_qimage_scalar(const Image<I>& ima_)
-//       {
-// 	const I& ima = exact(ima_);
-// 	mln_precondition(ima.is_valid());
-
-// 	const int
-// 	  nrows = geom::nrows(ima),
-// 	  ncols = geom::ncols(ima);
-
-// 	// Required by a one-shot data copy:
-// 	mln::border::resize(ima, 0);
-
-// 	QImage qima(ncols, nrows, QImage::Format_RGB888);
-// 	uchar * ptr_qima = qima.scanLine(0);
-// 	const mln_value(I)* ptr_ima = &ima(ima.domain().pmin());
-// 	unsigned row_offset = ima.delta_index(dpoint2d(+1, - ncols));
-
-// 	for (unsigned row = 0; row < nrows; ++row, ptr_ima += row_offset)
-// 	  for (unsigned col = 0; col < ncols; ++col)
-// 	  {
-// 	    const mln_value(I)& v = *ptr_ima++;
-
-
-
-// 	std::memcpy(qima.scanLine(0),
-// 		    ima.buffer(),
-// 		    ima.nelements() * sizeof(mln_value(I)));
-
-// 	return qima;
-//       }
-
-// # endif // ! QT_VERSION
-
 
 
 
@@ -235,105 +191,6 @@ namespace mln
 
 	return qima;
       }
-
-
-      // Not used by default since it does not create a deep copy.
-      template <typename I>
-      inline
-      QImage to_qimage_qt_rgb32_nocopy(const Image<I>& ima_)
-      {
-	const I& ima = exact(ima_);
-	mln_precondition(ima.is_valid());
-
-	const int
-	  nrows = geom::nrows(ima),
-	  ncols = geom::ncols(ima);
-
-
-	// Required by a one-shot data copy:
-	mln::border::resize(ima, 0);
-
-	QImage qima((uchar *)(ima.buffer()), ncols, nrows,
-		    QImage::Format_RGB32);
-
-	return qima;
-      }
-
-
-//       template <typename I>
-//       inline
-//       QImage to_qimage_rgb8_3(const Image<I>& ima_)
-//       {
-// 	const I& ima = exact(ima_);
-// 	mln_precondition(ima.is_valid());
-
-// 	const int
-// 	  nrows = geom::nrows(ima),
-// 	  ncols = geom::ncols(ima);
-
-// 	QImage qima(ncols, nrows, QImage::Format_RGB888);
-// 	uchar * ptr_qima = qima.scanLine(0);
-// 	const mln_value(I)* ptr_ima = &ima(ima.domain().pmin());
-// 	unsigned row_offset = ima.delta_index(dpoint2d(+1, - ncols));
-
-// 	for (unsigned row = 0; row < nrows; ++row, ptr_ima += row_offset)
-// 	  for (unsigned col = 0; col < ncols; ++col)
-// 	  {
-// 	    const value::rgb8& v = *ptr_ima++;
-// 	    *ptr_qima++ = v.red();
-// 	    *ptr_qima++ = v.green();
-// 	    *ptr_qima++ = v.blue();
-// 	  }
-
-// 	return qima;
-//       }
-
-
-//       template <typename I>
-//       inline
-//       QImage to_qimage_rgb8_4(const Image<I>& ima_)
-//       {
-// 	const I& ima = exact(ima_);
-// 	mln_precondition(ima.is_valid());
-
-// 	const int
-// 	  nrows = geom::nrows(ima),
-// 	  ncols = geom::ncols(ima);
-
-
-// 	// Required by a one-shot data copy:
-// 	mln::border::resize(ima, 0);
-
-// 	QImage qima(ncols, nrows, QImage::Format_RGB32);
-// 	std::memcpy(qima.scanLine(0),
-// 		    ima.buffer(),
-// 		    ima.nelements() * 4);
-
-// 	return qima;
-//       }
-
-
-//       template <typename I>
-//       inline
-//       QImage to_qimage_rgb8_5(const Image<I>& ima_)
-//       {
-// 	const I& ima = exact(ima_);
-// 	mln_precondition(ima.is_valid());
-
-// 	const int
-// 	  nrows = geom::nrows(ima),
-// 	  ncols = geom::ncols(ima);
-
-// 	QImage qima(ncols + 2 * ima.border(),
-// 		    nrows + 2 * ima.border(),
-// 		    QImage::Format_RGB32);
-// 	std::memcpy(qima.scanLine(0),
-// 		    ima.buffer(),
-// 		    ima.nelements() * 3);
-
-// 	return qima;
-//       }
-
 
 
     } // end of namespace mln::convert::implementation

@@ -1,5 +1,14 @@
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Cleanup to_qimage convertion routines.
+
+	* mln/convert/to_qimage.hh: Remove useless comments and move a
+	specific implementation...
+
+	* mln/convert/to_qimage_nocopy.hh: ... in this new file.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a routine to convert to a QImage.
 
 	* mln/convert/to_qimage.hh: New.
