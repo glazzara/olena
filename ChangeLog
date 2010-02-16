@@ -1,3 +1,7 @@
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Configure scribo/demo/review.
+
 2009-12-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* configure.ac: Configure scribo/tests/core.
