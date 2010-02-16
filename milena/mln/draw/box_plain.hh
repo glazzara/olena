@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,19 +23,19 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_DRAW_BOX_HH
-# define MLN_DRAW_BOX_HH
+#ifndef MLN_DRAW_BOX_PLAIN_HH
+# define MLN_DRAW_BOX_PLAIN_HH
 
 /*! \file
  *
- * \brief Draw a box in an image.
+ * \brief Draw a plain box in an image.
  *
- * \fixme Rename as box_frame.hh
+ * \fixme Rename as box.hh
  */
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/box2d.hh>
-# include <mln/data/paste.hh>
+# include <mln/data/fill.hh>
 # include <mln/draw/line.hh>
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>
@@ -48,10 +47,10 @@ namespace mln
   namespace draw
   {
 
-    /*! Draw a box at value \p v in image \p ima
+    /*! Draw a plain box at value \p v in image \p ima
      *
      * \param[in,out] ima The image to be drawn.
-     * \param[in] b the boxto draw.
+     * \param[in] b the box to draw.
      * \param[in] v The value to assign to all drawn pixels.
      *
      * \pre \p ima has to be initialized.
@@ -60,18 +59,18 @@ namespace mln
      *
      */
     template <typename I, typename B>
-    void box(Image<I>& ima,
-	     const Box<B>& b,
-	     const mln_value(I)& v);
+    void box_plain(Image<I>& ima,
+		   const Box<B>& b,
+		   const mln_value(I)& v);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename B>
     inline
-    void box(Image<I>& ima,
-	     const Box<B>& b,
-	     const mln_value(I)& v)
+    void box_plain(Image<I>& ima,
+		   const Box<B>& b,
+		   const mln_value(I)& v)
     {
       mln_precondition(exact(ima).is_valid());
 
@@ -80,15 +79,7 @@ namespace mln
 
       mln_precondition(exact(ima).has(pmin) && exact(ima).has(pmax));
 
-      mln_psite(I) p1 (pmin[0], pmin[1]);
-      mln_psite(I) p2 (pmax[0], pmin[1]);
-      mln_psite(I) p3 (pmin[0], pmax[1]);
-      mln_psite(I) p4 (pmax[0], pmax[1]);
-
-      draw::line (ima, p1, p2, v);
-      draw::line (ima, p2, p4, v);
-      draw::line (ima, p4, p3, v);
-      draw::line (ima, p3, p1, v);
+      data::fill((ima | b).rw(), v);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -98,4 +89,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_DRAW_BOX_HH
+#endif // ! MLN_DRAW_BOX_PLAIN_HH
