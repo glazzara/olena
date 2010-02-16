@@ -54,7 +54,7 @@ int main()
   image3d<bool> ima3d;
   io::pbms::load(ima3d, files);
 
-  mln_assertion(ima3d.nslices() == 2);
+  mln_assertion(ima3d.nslis() == 2);
   mln_assertion(slice(ima3d, 0) == pic);
   mln_assertion(slice(ima3d, 1) == pic2);
 

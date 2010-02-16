@@ -61,7 +61,7 @@ int main()
     image3d<int_u8> ima3d;
     io::pgms::load(ima3d, files);
 
-    mln_assertion(ima3d.nslices() == 2);
+    mln_assertion(ima3d.nslis() == 2);
     mln_assertion(slice(ima3d, 0) == lena);
     mln_assertion(slice(ima3d, 1) == lena2);
   }

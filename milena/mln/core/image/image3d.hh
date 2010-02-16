@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -208,7 +209,7 @@ namespace mln
 
 
     /// Give the number of slices.
-    unsigned nslices() const;
+    unsigned nslis() const;
 
     /// Give the number of rows.
     unsigned nrows() const;
@@ -511,7 +512,7 @@ namespace mln
   template <typename T>
   inline
   unsigned
-  image3d<T>::nslices() const
+  image3d<T>::nslis() const
   {
     mln_precondition(this->is_valid());
     return this->data_->b_.len(0);

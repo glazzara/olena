@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -86,11 +87,11 @@ namespace mln
 
       mln_precondition(input.is_valid());
       mln_precondition(n_horizontal > 0 && n_vertical > 0);
-      mln_precondition(input.nslices() <= n_horizontal * n_vertical);
+      mln_precondition(input.nslis() <= n_horizontal * n_vertical);
 
       image2d<mln_value(I)> output(input.nrows() * n_vertical,
 				   input.ncols() * n_horizontal);
-      if (input.nslices() != n_horizontal * n_vertical)
+      if (input.nslis() != n_horizontal * n_vertical)
 	data::fill(output, bg);
 
       const point3d& p_min = input.domain().pmin();
@@ -152,7 +153,7 @@ namespace mln
 	    n_vertical = internal::round_up(n_v);
 	  }
       }
-      
+
     } // end of namespace mln::debug::internal
 
 
@@ -170,10 +171,10 @@ namespace mln
       mln_precondition(ratio_hv > 0.f);
 
       unsigned n_horizontal, n_vertical;
-      internal::slices2d_helper(input.nslices(), input.nrows(), input.ncols(),
+      internal::slices2d_helper(input.nslis(), input.nrows(), input.ncols(),
 				ratio_hv,
 				n_horizontal, n_vertical);
-      mln_assertion(n_horizontal * n_vertical >= input.nslices());
+      mln_assertion(n_horizontal * n_vertical >= input.nslis());
 
       image2d<mln_value(I)> output = slices_2d(input, n_horizontal, n_vertical, bg);
 

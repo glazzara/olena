@@ -1,5 +1,15 @@
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rename image3d<>::nslices to image3d<>::nslis.
+
+	* mln/core/image/image3d.hh,
+	* mln/debug/slices_2d.hh,
+	* tests/io/pbms/load.cc,
+	* tests/io/pgms/load.cc,
+	* tests/io/ppms/load.cc: Rename nslices to nslis.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Various small fixes.
 
 	* doc/tutorial/tutorial.tex: Add more contacts.
