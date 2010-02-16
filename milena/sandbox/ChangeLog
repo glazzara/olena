@@ -1,3 +1,25 @@
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a GUI for AFP's use case.
+
+	* lazzara/afp/photos/gui/gui.pro,
+	* lazzara/afp/photos/gui/gui.qrc,
+	* lazzara/afp/photos/gui/icons/next.png,
+	* lazzara/afp/photos/gui/icons/ok.png,
+	* lazzara/afp/photos/gui/icons/photos.png,
+	* lazzara/afp/photos/gui/icons/prev.png,
+	* lazzara/afp/photos/gui/icons/remove.png,
+	* lazzara/afp/photos/gui/src/custom_delegate.cc,
+	* lazzara/afp/photos/gui/src/custom_delegate.hh,
+	* lazzara/afp/photos/gui/src/launch_dialog.cc,
+	* lazzara/afp/photos/gui/src/launch_dialog.hh,
+	* lazzara/afp/photos/gui/src/main.cc,
+	* lazzara/afp/photos/gui/src/main_window.cc,
+	* lazzara/afp/photos/gui/src/main_window.hh,
+	* lazzara/afp/photos/gui/ui/launch_dialog.ui,
+	* lazzara/afp/photos/gui/ui/main_window.ui: New files. GUI meant
+	to display the results of text finding in pictures.
+
 2010-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add new benchs.
