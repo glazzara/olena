@@ -1,5 +1,14 @@
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add box<>::merge.
+
+	* mln/core/site_set/box.hh: New member 'merge()'.
+
+	* tests/core/site_set/Makefile.am,
+	* tests/core/site_set/box.cc: New test.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rename image3d<>::nslices to image3d<>::nslis.
 
 	* mln/core/image/image3d.hh,

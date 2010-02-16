@@ -152,6 +152,9 @@ namespace mln
     /// Crop this bbox in order to fit in the reference box \p b.
     void crop_wrt(const box<P>& b);
 
+    /// Merge inplace with another box.
+    void merge(const box<P>& b);
+
     /// Return the size of this site set in memory.
     std::size_t memory_size() const;
 
@@ -208,6 +211,27 @@ namespace mln
       pmax_.col() = ref.pmax().col();
     if (pmax_.row() > ref.pmax().row())
       pmax_.row() = ref.pmax().row();
+  }
+
+  template <typename P>
+  inline
+  void
+  box<P>::merge(const box<P>& b)
+  {
+    mln_precondition(is_valid());
+    if (! b.is_valid())
+    {
+      // no-op
+      return;
+    }
+
+    for (unsigned i = 0; i < P::dim; ++i)
+    {
+      if (b.pmin()[i] < pmin_[i])
+	pmin_[i] = b.pmin()[i];
+      if (b.pmax()[i] > pmax_[i])
+	pmax_[i] = b.pmax()[i];
+    }
   }
 
   template <typename P>
