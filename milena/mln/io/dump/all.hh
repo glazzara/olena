@@ -41,6 +41,7 @@ namespace mln
 
 }
 
+# include <mln/io/dump/get_header.hh>
 # include <mln/io/dump/load.hh>
 # include <mln/io/dump/save.hh>
 

@@ -1,5 +1,13 @@
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a routine to read dump files header.
+
+	* mln/io/dump/all.hh: Include a new file.
+
+	* mln/io/dump/get_header.hh: New.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a routine to read DICOM files header.
 
 	* mln/io/dicom/all.hh: Include a new file.
