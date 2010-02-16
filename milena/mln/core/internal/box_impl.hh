@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,6 +38,8 @@
 
 namespace mln
 {
+
+  // Forward declaration
 
   namespace internal
   {
@@ -79,6 +82,15 @@ namespace mln
 
       /// Give the minimum col.
       C max_col() const;
+
+      /// Give the width.
+      unsigned width() const;
+
+      /// Give the height.
+      unsigned height() const;
+
+      /// Give the depth.
+      unsigned depth() const;
     };
 
     template <typename C, typename E> // FIXME: Add an extra param to replace 'unsigned'.
@@ -101,6 +113,13 @@ namespace mln
 
       /// Give the minimum col.
       C max_col() const;
+
+      /// Give the width.
+      unsigned width() const;
+
+      /// Give the height.
+      unsigned height() const;
+
     };
 
     template <typename C, typename E> // FIXME: Add an extra param to replace 'unsigned'.
@@ -187,6 +206,28 @@ namespace mln
     }
 
 
+    template <typename C, typename E>
+    inline
+    unsigned box_impl_<3, C, E>::width() const
+    {
+      return internal::force_exact<E>(*this).bbox().len(2);
+    }
+
+    template <typename C, typename E>
+    inline
+    unsigned box_impl_<3, C, E>::height() const
+    {
+      return internal::force_exact<E>(*this).bbox().len(1);
+    }
+
+    template <typename C, typename E>
+    inline
+    unsigned box_impl_<3, C, E>::depth() const
+    {
+      return internal::force_exact<E>(*this).bbox().len(0);
+    }
+
+
     // 2
 
     template <typename C, typename E>
@@ -229,6 +270,20 @@ namespace mln
     C box_impl_<2, C, E>::max_col() const
     {
       return internal::force_exact<E>(*this).bbox().pmax()[1];
+    }
+
+    template <typename C, typename E>
+    inline
+    unsigned box_impl_<2, C, E>::width() const
+    {
+      return internal::force_exact<E>(*this).bbox().len(1);
+    }
+
+    template <typename C, typename E>
+    inline
+    unsigned box_impl_<2, C, E>::height() const
+    {
+      return internal::force_exact<E>(*this).bbox().len(0);
     }
 
     // 1

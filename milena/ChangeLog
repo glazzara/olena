@@ -1,5 +1,11 @@
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add more implementations for box specializations.
+
+	* mln/core/internal/box_impl.hh: Add width, height and depth.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	First draft of raw format support.
 
 	* milena/mln/io/raw/all.hh,
@@ -11,26 +17,26 @@
 
 	Add new 3D neighborhoods and windows.
 
-	* milena/mln/core/alias/neighb3d.hh,
-	* milena/mln/win/sline3d.hh: New.
+	* mln/core/alias/neighb3d.hh,
+	* mln/win/sline3d.hh: New.
 
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a new rgb32 type for Qt compatibility.
 
-	* milena/mln/convert/from_to.hxx: Declare conversion routines.
+	* mln/convert/from_to.hxx: Declare conversion routines.
 
-	* milena/mln/value/qt/rgb32.hh: New.
+	* mln/value/qt/rgb32.hh: New.
 
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix invalid value type names in dump format.
 
-	* milena/mln/value/internal/make_generic_name.hh: New.
+	* mln/value/internal/make_generic_name.hh: New.
 
-	* milena/mln/value/int_u.hh,
-	* milena/mln/value/label.hh,
-	* milena/mln/value/rgb.hh: Make use of the new routine to print a
+	* mln/value/int_u.hh,
+	* mln/value/label.hh,
+	* mln/value/rgb.hh: Make use of the new routine to print a
 	correct type names in dump format.
 
 2009-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
