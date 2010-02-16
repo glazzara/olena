@@ -1,5 +1,12 @@
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new 3D neighborhoods and windows.
+
+	* milena/mln/core/alias/neighb3d.hh,
+	* milena/mln/win/sline3d.hh: New.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a new rgb32 type for Qt compatibility.
 
 	* milena/mln/convert/from_to.hxx: Declare conversion routines.

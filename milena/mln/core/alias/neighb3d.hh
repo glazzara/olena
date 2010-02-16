@@ -49,6 +49,33 @@ namespace mln
   //
   typedef neighb<window3d> neighb3d;
 
+
+  /// \brief depth 2-connectivity neighborhood on the 3D grid.
+  /*!
+    \verbatim
+
+     . . .
+    . o .
+   . . .
+
+     . . .
+    . x .
+   . . .
+
+     . . .
+    . o .
+   . . .
+
+    \endverbatim
+
+
+    \return A neighb3d.
+
+    \ingroup modneighb3d
+  */
+  const neighb3d& c2_3d_sli();
+
+
   /// \brief 4-connectivity neighborhood on the 3D grid.
   /*!
     \verbatim
@@ -194,6 +221,21 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  inline
+  const neighb3d& c2_3d_sli()
+  {
+    static neighb3d it;
+    if (it.size() == 0)
+      {
+	window3d& win = it.hook_win_();
+	win
+	  .insert(-1, 0, 0)
+	  .insert(1, 0, 0);
+      }
+    return it;
+  }
+
 
   inline
   const neighb3d& c4_3d()
