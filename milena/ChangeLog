@@ -1,5 +1,10 @@
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/topo/skeleton/crest.hh: Fix invalid PSI values for component
+	edge sites.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a routine to read dump files header.
 
 	* mln/io/dump/all.hh: Include a new file.
