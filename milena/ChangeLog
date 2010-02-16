@@ -1,5 +1,15 @@
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a routine to read DICOM files header.
+
+	* mln/io/dicom/all.hh: Include a new file.
+
+	* mln/io/dicom/get_header.hh: New.
+
+	* mln/io/dicom/load.hh: Add more doc.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add A new routine to draw plain boxes.
 
 	* mln/draw/all.hh: Include new file.

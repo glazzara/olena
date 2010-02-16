@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,6 +42,7 @@ namespace mln
 
 }
 
+# include <mln/io/dicom/get_header.hh>
 # include <mln/io/dicom/load.hh>
 
 #endif // ! MLN_IO_DICOM_ALL_HH
