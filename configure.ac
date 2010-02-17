@@ -34,7 +34,8 @@ AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_FILES([build-aux/Makefile])
 
 # Automake.
-AM_INIT_AUTOMAKE([1.10 subdir-objects check-news tar-ustar dist-bzip2 nostdinc -Wall])
+AM_INIT_AUTOMAKE([1.11 subdir-objects check-news tar-ustar dist-bzip2
+                  nostdinc -Wall])
 
 # Package metadata.
 AC_CONFIG_FILES([milena/mln/version.hh])

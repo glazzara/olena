@@ -1,3 +1,9 @@
+2010-02-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Require Automake 1.11.
+
+	* bootstrap, configure.ac: Here.
+
 2013-02-07  Roland Levillain  <roland@lrde.epita.fr>
 
 	Always write FIXME with uppercase letters.

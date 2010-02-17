@@ -141,7 +141,7 @@ done
 
 # Requirements over bootstrap tools.
 require autoconf 2.61
-require automake 1.10
+require automake 1.11
 libtoolize=libtoolize
 for l in "$LIBTOOLIZE" glibtoolize libtoolize;
 do
