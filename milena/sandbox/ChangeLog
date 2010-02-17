@@ -1,3 +1,7 @@
+2010-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* lazzara/skeleton_crest/main.cc: New tool.
+
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add new tools in bin sandbox.
