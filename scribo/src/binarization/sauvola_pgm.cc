@@ -29,6 +29,7 @@
 #include <scribo/binarization/sauvola.hh>
 #include <scribo/debug/usage.hh>
 
+#include <mln/util/timer.hh>
 
 const char *args_desc[][2] =
 {
@@ -56,7 +57,14 @@ int main(int argc, char *argv[])
   image2d<int_u8> input;
   io::pgm::load(input, argv[1]);
 
-  io::pbm::save(scribo::binarization::sauvola(input, w), argv[3]);
+  util::timer t;
+  t.start();
+  image2d<bool> out = scribo::binarization::sauvola(input, w);
+  t.stop();
+  std::cout << t << std::endl;
+
+
+  io::pbm::save(out, argv[3]);
 
 
   trace::exiting("main");

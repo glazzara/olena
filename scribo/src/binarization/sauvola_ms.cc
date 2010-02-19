@@ -31,7 +31,6 @@
 #include <scribo/binarization/sauvola_ms.hh>
 #include <scribo/debug/usage.hh>
 
-
 bool check_args(int argc, char * argv[])
 {
   if (argc < 5 || argc > 6)
@@ -88,21 +87,20 @@ int main(int argc, char *argv[])
   image2d<value::int_u8> input_1;
   io::pgm::load(input_1, argv[1]);
 
-  {
-    unsigned max_dim = math::max(input_1.ncols(),
-				 input_1.nrows());
-    if (w_1 > max_dim)
-    {
-      std::cout << "------------------" << std::endl;
-      std::cout << "The window is too large! Image size is only "
-		<< input_1.nrows() << "x" << input_1.ncols()
-		<< std::endl
-		<< "Window size must not exceed " << max_dim
-		<< std::endl;
-      return 1;
-    }
-  }
-
+//   {
+//     unsigned max_dim = math::min(input_1.ncols() / s,
+// 				 input_1.nrows() / s);
+//     if ((w_1 / s * 4) > max_dim)
+//     {
+//       std::cout << "------------------" << std::endl;
+//       std::cout << "The window is too large! Image size is only "
+// 		<< input_1.nrows() << "x" << input_1.ncols()
+// 		<< std::endl
+// 		<< "Window size must not exceed " << max_dim * s / 4
+// 		<< std::endl;
+//       return 1;
+//     }
+//   }
 
   image2d<bool>
     output = scribo::binarization::sauvola_ms(input_1, w_1, s, lambda_min_1);

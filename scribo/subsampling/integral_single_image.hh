@@ -123,7 +123,7 @@ namespace scribo
 	integral_sum_sum_2.init_(output_domain, border_thickness);
 	V2* p_integ = integral_sum_sum_2.buffer();
 
-	const unsigned up = sub.delta_index(dpoint2d(-1, 0));
+	const int up = sub.delta_index(dpoint2d(-1, 0));
 
 	const unsigned nrows = 3 * output_domain.nrows();
 	const unsigned ncols = 3 * output_domain.ncols();
@@ -242,7 +242,7 @@ namespace scribo
 	integral_sum_sum_2.init_(output_domain, border_thickness);
 	V2* p_integ = integral_sum_sum_2.buffer();
 
-	const unsigned up = sub.delta_index(dpoint2d(-1, 0));
+	const int up = sub.delta_index(dpoint2d(-1, 0));
 
 	const unsigned nrows = 2 * output_domain.nrows();
 	const unsigned ncols = 2 * output_domain.ncols();

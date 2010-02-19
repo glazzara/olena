@@ -1,3 +1,15 @@
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup and avoid warnings in Sauvola related files.
+
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_threshold.hh,
+	* scribo/canvas/integral_browsing.hh,
+	* scribo/src/binarization/sauvola_ms.cc,
+	* scribo/src/binarization/sauvola_pgm.cc,x
+	* scribo/subsampling/integral_single_image.hh: Cleanup and avoir
+	warnings.
+
 2009-12-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a new test for object_image.

@@ -48,9 +48,6 @@
 
 # include <scribo/core/init_integral_image.hh>
 
-
-#include <mln/io/pgm/save.hh>
-
 namespace scribo
 {
 
@@ -476,8 +473,6 @@ namespace scribo
 						      exact(simple),
 						      exact(squared));
 
-//       std::cout << std::endl << " ------- " << std::endl;
-      io::pgm::save(output, "ref_2_t.pgm");
       trace::exiting("scribo::text::ppm2pbm");
       return output;
     }

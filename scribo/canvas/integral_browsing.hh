@@ -63,7 +63,11 @@ namespace scribo
 // 	std::cout << "(" << mean << " - " << stddev << " - " << n << "),";
 
 	// unbias version:
-	stddev = std::sqrt((sum_2 - sum * sum / n) / (n - 1));
+	double num = (sum_2 - sum * sum / n);
+	if (num > 0)
+	  stddev = std::sqrt(num / (n - 1));
+	else
+	  stddev = 0;
 
       }
 
@@ -83,18 +87,21 @@ namespace scribo
       typedef const V* Ptr;
       Ptr a_ima, b_ima, c_ima, d_ima;
 
-      const unsigned
+//       mln_precondition((h/2) < ima.nrows());
+//       mln_precondition((w/2) < ima.ncols());
+
+      const int
 	nrows = ima.nrows(),
 	ncols = ima.ncols(),
 	row_0 = step / 2,
 	col_0 = step / 2;
 
-      const unsigned
+      const int
 	offset_down  = ima.delta_index(dpoint2d(step, 0)),
 	offset_ante  = ima.delta_index(dpoint2d(0, -w)),
 	offset_below = ima.delta_index(dpoint2d(+h, 0));
 
-      const unsigned
+      const int
 	max_row_top  = h/2,
 	max_row_mid  = nrows - 1 - h/2,
 	max_col_left = w/2,
@@ -105,10 +112,11 @@ namespace scribo
 	h_top  = row_0 + h/2 + 1,
 	w_left = col_0 + w/2 + 1;
 
-      unsigned row, col;
+
+      int row, col;
 
       for (col = col_0; col <= max_col_mid; col += step) ;
-      unsigned w_right = ncols - col + w/2;
+      int w_right = ncols - col + w/2;
 
       Ptr
 	d_tl_start, d_tr_start,
@@ -119,6 +127,18 @@ namespace scribo
 
       unsigned s_2 = s * s;
 
+      // Make sure the window fits in the image domain.
+      if (w >= static_cast<const unsigned>(ncols))
+      {
+	w = ncols - 1;
+	trace::warning("integral_browsing - Adjusting window width since it was larger than image width.");
+      }
+      if (h >= static_cast<const unsigned>(nrows))
+      {
+	h = nrows - 1;
+	trace::warning("integral_browsing - Adjusting window height since it was larger than image height.");
+      }
+
 
       // -------------------------------
       //           T (top)
@@ -128,7 +148,7 @@ namespace scribo
 	delta_start_left  = step * w_left,
 	delta_start_right = step * w_right,
 	step_w = step * w;
-      unsigned
+      int
 	size_tl_start = h_top * w_left,
 	size_tl,
 	delta_size_tl = h_top * step,
@@ -209,7 +229,6 @@ namespace scribo
       }
 
 
-
       // -------------------------------
       //          (M) middle
       // -------------------------------
@@ -266,38 +285,12 @@ namespace scribo
 	{
 	  // D + A - B - C
 
-// 	  if (row == 3 && col == 3)
-// 	    std::cout << "p(" << row << "," << col << ") - "
-
-// 		      << "A" << ima.point_at_index(a_ima - ima.buffer())
-// 		      << "=" << a_ima->first() << " - "
-
-// 		      << "B" << ima.point_at_index(b_ima - ima.buffer())
-// 		      << "=" << b_ima->first() << " - "
-
-// 		      << "C" << ima.point_at_index(c_ima - ima.buffer())
-// 		      << "=" << c_ima->first() << " - "
-
-// 		      << "D" << ima.point_at_index(d_ima - ima.buffer())
-// 		      << "=" << d_ima->first() << " - "
-
-// 		      << "n =" << size_mc << " - "
-// 		      << "n*s_2 =" << size_mc * s_2
-// 		      << std::endl;
-
 	  internal::compute_stats((d_ima->first()   - b_ima->first())   + (a_ima->first()   - c_ima->first()),
 				  (d_ima->second() - b_ima->second()) + (a_ima->second() - c_ima->second()),
 				  size_mc * s_2,
 				  mean, stddev);
 
 	  functor.exec(mean, stddev);
-
-// 	  std::cout << " - " << mean
-// 		    << " - " << stddev
-// 		    << " - " << (d_ima->first()   - b_ima->first())   + (a_ima->first()   - c_ima->first())
-// 		    << " - " << (d_ima->second() - b_ima->second()) + (a_ima->second() - c_ima->second())
-// 		    << std::endl;
-
 
 	  a_ima += step;
 	  b_ima += step;
@@ -332,7 +325,6 @@ namespace scribo
       }
 
 
-
       // -------------------------------
       //         B (bottom)
       // -------------------------------
@@ -342,6 +334,7 @@ namespace scribo
 	size_bl,
 	delta_size_bl = (nrows - row + h/2) * step,
 	size_bc = (nrows - row + h/2) * w,
+
 	size_br_start = (nrows - row + h/2) * w_right,
 	delta_size_br = (nrows - row + h/2) * step,
 	size_br;
@@ -392,12 +385,6 @@ namespace scribo
 				  (d_ima->second() - b_ima->second()) + (a_ima->second() - c_ima->second()),
 				  size_bc * s_2,
 				  mean, stddev);
-// 	  std::cout << (d_ima->second() - b_ima->second()) + (a_ima->second() - c_ima->second()) << std::endl;
-
-// 	  std::cout << d_ima->second() << " - " << b_ima->second() << " - "
-// 		    << a_ima->second() << " - " << c_ima->second() << std::endl;
-// 	  std::cout << d_ima->first() << " - " << b_ima->first() << " - "
-// 		    << a_ima->first() << " - " << c_ima->first() << std::endl;
 	  functor.exec(mean, stddev);
 	  a_ima += step;
 	  b_ima += step;
