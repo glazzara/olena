@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
 				   links,
 				   literal::green);
 
-  util::array<bool> drawn(objects.nlabels(), 0);
+  util::array<bool> drawn(static_cast<unsigned>(objects.nlabels()) + 1, 0);
   for_all_components(i, objects.bboxes())
     if (links[i] == i && ! drawn(i))
     {

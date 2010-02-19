@@ -1,5 +1,33 @@
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new tools in Scribo.
+
+	* src/preprocessing/Makefile.am,
+	* src/filter/Makefile.am,
+	* src/debug/Makefile.am: Add new targets.
+
+	* src/debug/show_info_median_inter_characters.cc,
+	* src/debug/show_info_x_height.cc,
+	* src/debug/show_links_single_down.cc,
+	* src/debug/show_links_single_down_left_aligned.cc,
+	* src/debug/show_links_single_down_right_aligned.cc,
+	* src/debug/show_links_single_up.cc,
+	* src/debug/show_links_single_up_left_aligned.cc,
+	* src/debug/show_links_single_up_right_aligned.cc,
+	* src/filter/objects_with_holes.cc,
+	* src/filter/objects_with_holes_pgm.cc,
+	* src/pbm_lines_in_doc.cc,
+	* src/preprocessing/split_bg_fg_ms.cc,
+	* src/text_in_article.cc,
+	* src/text_in_photo_ppm_fast.cc: New tools.
+
+	* src/debug/show_left_right_links_validation.cc: Rename as...
+	* src/debug/show_links_left_right_links_validation.cc: ...this.
+
+	* src/debug/show_links_bbox_h_ratio.cc: Add a missing argument.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/src/text_in_photo_ppm.cc: Improve output.
 
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>

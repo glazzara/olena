@@ -37,21 +37,25 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/ppm/save.hh>
 
+#include <mln/math/pi.hh>
+
+#include <mln/draw/line.hh>
+
 #include <scribo/primitive/extract/objects.hh>
-#include <scribo/primitive/link/with_single_right_link.hh>
-#include <scribo/primitive/link/with_single_left_link.hh>
-#include <scribo/filter/object_links_bbox_h_ratio.hh>
+#include <scribo/primitive/link/with_single_up_link.hh>
+#include <scribo/primitive/link/compute.hh>
+#include <scribo/filter/object_links_right_aligned.hh>
 
-#include <scribo/debug/decision_image.hh>
-#include <scribo/debug/links_decision_image.hh>
+#include <scribo/draw/bounding_boxes.hh>
+
+#include <scribo/debug/save_linked_bboxes_image.hh>
 #include <scribo/debug/usage.hh>
-
 
 
 const char *args_desc[][2] =
 {
   { "input.pbm", "A binary image. True for objects and False for the background." },
-  { "height_ratio", "Min height ratio between two bboxes. (common value : 2)" },
+  { "dmax", "The maximum lookup distance. (common value : 300)" },
   {0, 0}
 };
 
@@ -64,12 +68,13 @@ int main(int argc, char* argv[])
 
   if (argc != 4)
     return scribo::debug::usage(argv,
-				"Show valid or invalid links according the bboxes height ratio.",
-				"input.pbm height_ratio output.ppm",
+				"Show sucessful/unsuccessful up links between components.",
+				"input.pbm dmax output.ppm",
 				args_desc,
 				"A color image. Valid links are drawn in green, invalid ones in red.");
 
-  image2d<bool> input;
+  typedef image2d<bool> I;
+  I input;
   io::pbm::load(input, argv[1]);
 
   // Finding objects.
@@ -78,21 +83,16 @@ int main(int argc, char* argv[])
   object_image(L) objects
     = scribo::primitive::extract::objects(input, c8(), nbboxes);
 
-
-  // Finding right links.
-  object_links<L> right_links
-    = primitive::link::with_single_right_link(objects);
+  object_links<L>
+    up_links = primitive::link::with_single_up_link(objects,
+						    atof(argv[2]),
+						    anchor::Right);
 
   // Filtering.
-  object_links<L> hratio_filtered_links
-    = filter::object_links_bbox_h_ratio(objects, right_links, atof(argv[2]));
+  up_links = filter::object_links_right_aligned(objects, up_links, 5);
 
 
-  // Debug image.
-  image2d<value::rgb8> hratio_decision_image
-    = scribo::debug::links_decision_image(input,
-					  right_links,
-					  hratio_filtered_links, 200);
-  io::ppm::save(hratio_decision_image, argv[3]);
-
+  scribo::debug::save_linked_bboxes_image(input, objects, up_links,
+					  literal::blue, literal::green,
+					  argv[3], anchor::ActualRight);
 }

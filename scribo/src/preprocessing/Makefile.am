@@ -22,8 +22,10 @@ include $(top_srcdir)/scribo/scribo.mk
 bin_PROGRAMS = 				\
   preprocess 				\
   split_bg_fg 				\
+  split_bg_fg_ms			\
   unskew
 
 preprocess_SOURCES = preprocess.cc
 split_bg_fg_SOURCES = split_bg_fg.cc
+split_bg_fg_ms_SOURCES = split_bg_fg_ms.cc
 unskew_SOURCES = unskew.cc

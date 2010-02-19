@@ -23,9 +23,13 @@ bin_PROGRAMS = 				\
   objects_large 			\
   objects_small 			\
   objects_thick 			\
-  objects_thin
+  objects_thin 				\
+  objects_with_holes 			\
+  objects_with_holes_pgm
 
 objects_large_SOURCES = objects_large.cc
 objects_small_SOURCES = objects_small.cc
 objects_thick_SOURCES = objects_thick.cc
 objects_thin_SOURCES = objects_thin.cc
+objects_with_holes_SOURCES = objects_with_holes.cc
+objects_with_holes_pgm_SOURCES = objects_with_holes_pgm.cc
