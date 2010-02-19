@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Draw a list of bounding boxes and their associated mass center.
+/// Draw a list of bounding boxes
 
 # include <mln/core/concept/image.hh>
 # include <mln/draw/box.hh>
@@ -45,7 +45,7 @@ namespace scribo
 
     using namespace mln;
 
-    /// Draw a list of bounding boxes and their associated mass center.
+    /// Draw a list of bounding boxes.
     template <typename I>
     void
     bounding_boxes(Image<I>& input_,
@@ -53,7 +53,7 @@ namespace scribo
 		   const mln_value(I)& value);
 
 
-    /// Draw object bounding boxes and their associated mass center.
+    /// Draw object bounding boxes.
     template <typename I, typename L>
     void
     bounding_boxes(Image<I>& input_,
@@ -79,10 +79,7 @@ namespace scribo
 
       for_all_components(i, boxes)
         if (boxes[i].is_valid())
-	{
-	  input(boxes[i].center()) = value;
 	  mln::draw::box(input, boxes[i], value);
-	}
 
       trace::exiting("scribo::draw::bounding_boxes");
     }
