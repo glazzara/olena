@@ -1,3 +1,8 @@
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* io/xml/save_text_lines.hh: New. Add partial support for
+	PageContent XML format.
+
 2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Introduce new Scribo core classes and start using them.
@@ -48,58 +53,58 @@
 
 	Add anchor support in debug routines.
 
-	* scribo/debug/alignment_decision_image.hh,
-	* scribo/debug/links_decision_image.hh,
-	* scribo/debug/save_linked_bboxes_image.hh,
-	* scribo/draw/bounding_box_links.hh: Make use of anchor points to
+	* debug/alignment_decision_image.hh,
+	* debug/links_decision_image.hh,
+	* debug/save_linked_bboxes_image.hh,
+	* draw/bounding_box_links.hh: Make use of anchor points to
 	draw debug outputs.
 
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add new link filters.
 
-	* scribo/filter/object_links_non_aligned_simple.hh: Handle new
+	* filter/object_links_non_aligned_simple.hh: Handle new
 	cases.
 
-	* scribo/filter/object_links_left_aligned.hh,
-	* scribo/filter/object_links_right_aligned.hh: New filters.
+	* filter/object_links_left_aligned.hh,
+	* filter/object_links_right_aligned.hh: New filters.
 
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve object linking backend.
 
-	* scribo/primitive/internal/find_left_link.hh,
-	* scribo/primitive/internal/find_right_link.hh,
-	* scribo/primitive/internal/is_invalid_link.hh: Remove.
+	* primitive/internal/find_left_link.hh,
+	* primitive/internal/find_right_link.hh,
+	* primitive/internal/is_invalid_link.hh: Remove.
 
-	* scribo/primitive/link/internal/compute_anchor.hh,
-	* scribo/primitive/link/internal/link_ms_dmax_base.hh,
-	* scribo/primitive/link/internal/link_ms_dmax_ratio_base.hh,
-	* scribo/primitive/link/internal/link_single_dmax_base.hh,
-	* scribo/primitive/link/internal/link_single_dmax_ratio_base.hh,
-	* scribo/primitive/link/with_single_down_link.hh,
-	* scribo/primitive/link/with_single_left_link.hh,
-	* scribo/primitive/link/with_single_left_link_dmax_ratio.hh,
-	* scribo/primitive/link/with_single_right_link.hh,
-	* scribo/primitive/link/with_single_right_link_dmax_ratio.hh,
-	* scribo/primitive/link/with_single_up_link.hh: Introduce the
+	* primitive/link/internal/compute_anchor.hh,
+	* primitive/link/internal/link_ms_dmax_base.hh,
+	* primitive/link/internal/link_ms_dmax_ratio_base.hh,
+	* primitive/link/internal/link_single_dmax_base.hh,
+	* primitive/link/internal/link_single_dmax_ratio_base.hh,
+	* primitive/link/with_single_down_link.hh,
+	* primitive/link/with_single_left_link.hh,
+	* primitive/link/with_single_left_link_dmax_ratio.hh,
+	* primitive/link/with_single_right_link.hh,
+	* primitive/link/with_single_right_link_dmax_ratio.hh,
+	* primitive/link/with_single_up_link.hh: Introduce the
 	anchor concept and make use of it.
 
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	* scribo/filter/objects_with_holes.hh: New component filter.
+	* filter/objects_with_holes.hh: New component filter.
 
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	* scribo/draw/bounding_boxes.hh: Do not draw box centers anymore.
+	* draw/bounding_boxes.hh: Do not draw box centers anymore.
 
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add dedicated routines for AFP's use case.
 
-	* scribo/src/afp/components.hh,
-	* scribo/src/afp/link.hh,
-	* scribo/src/afp/regroup.hh: New.
+	* src/afp/components.hh,
+	* src/afp/link.hh,
+	* src/afp/regroup.hh: New.
 
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
