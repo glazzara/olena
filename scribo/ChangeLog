@@ -1,5 +1,15 @@
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new link filters.
+
+	* scribo/filter/object_links_non_aligned_simple.hh: Handle new
+	cases.
+
+	* scribo/filter/object_links_left_aligned.hh,
+	* scribo/filter/object_links_right_aligned.hh: New filters.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve object linking backend.
 
 	* scribo/primitive/internal/find_left_link.hh,

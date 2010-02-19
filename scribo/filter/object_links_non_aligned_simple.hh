@@ -84,6 +84,8 @@ namespace scribo
 	 0 = center
 	 1 = top
 	 2 = bottom
+	 3 = left
+	 4 = right
 
     */
     template <typename L>
@@ -162,6 +164,40 @@ namespace scribo
 			   - bboxes[links[i]].center().col());
 
 	    if (std::atan(dr / dc) > max_alpha_rad)
+	      output[i] = i;
+	  }
+	}
+      }
+      // Left
+      else if (edge == 3)
+      {
+	for_all_components(i, objects.bboxes())
+	{
+	  if (links[i] != i)
+	  {
+	    dr = math::abs(bboxes[i].center().row()
+			   - bboxes[links[i]].center().row());
+	    dc = math::abs(bboxes[i].pmin().col()
+			   - bboxes[links[i]].pmin().col());
+
+	    if (std::atan(dc / dr) > max_alpha_rad)
+	      output[i] = i;
+	  }
+	}
+      }
+      // Right
+      else if (edge == 4)
+      {
+	for_all_components(i, objects.bboxes())
+	{
+	  if (links[i] != i)
+	  {
+	    dr = math::abs(bboxes[i].center().row()
+			   - bboxes[links[i]].center().row());
+	    dc = math::abs(bboxes[i].pmax().col()
+			   - bboxes[links[i]].pmax().col());
+
+	    if (std::atan(dc / dr) > max_alpha_rad)
 	      output[i] = i;
 	  }
 	}
