@@ -1,5 +1,16 @@
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a small tool to recognize text in a binary image.
+
+	* src/text/Makefile.am: New target.
+
+	* src/text/pbm_recognition.cc: New.
+
+	* text/recognition.hh: Add an overload taking an image as
+	argument.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a subsampling algorithm.
 
 	* subsampling/integral.hh: New. Compute a subsample image and an

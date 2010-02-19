@@ -38,5 +38,15 @@ if HAVE_TIFF
 			   $(TESSERACT_LDFLAGS) \
 			   $(TIFF_LDFLAGS) \
 			   -lpthread
+
+    bin_PROGRAMS 	     += pbm_recognition
+    pbm_recognition_SOURCES   = pbm_recognition.cc
+    pbm_recognition_CPPFLAGS  = $(AM_CPPFLAGS) \
+			        $(TESSERACT_CPPFLAGS) \
+			   	$(TIFF_CPPFLAGS)
+    pbm_recognition_LDFLAGS   = $(AM_LDFLAGS) \
+			   	$(TESSERACT_LDFLAGS) \
+			   	$(TIFF_LDFLAGS) \
+			   	-lpthread
 endif HAVE_TIFF
 endif HAVE_TESSERACT

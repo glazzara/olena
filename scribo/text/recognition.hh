@@ -39,26 +39,16 @@
 # include <mln/core/image/dmorph/image_if.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/box.hh>
+
 # include <mln/util/array.hh>
-# include <mln/labeling/blobs.hh>
 # include <mln/data/fill.hh>
+# include <mln/data/paste.hh>
 # include <mln/pw/all.hh>
-
-# include <mln/transform/distance_front.hh>
-
-# include <mln/morpho/thickening.hh>
-# include <mln/morpho/dilation.hh>
 
 # include <mln/core/alias/w_window2d_int.hh>
 # include <mln/make/w_window2d_int.hh>
 
 # include <mln/border/resize.hh>
-
-# include <mln/win/rectangle2d.hh>
-# include <mln/win/disk2d.hh>
-# include <mln/win/octagon2d.hh>
-
-# include <mln/debug/put_word.hh>
 
 # include <scribo/core/macros.hh>
 
@@ -66,14 +56,11 @@
 
 # include <scribo/text/clean.hh>
 
+# include <scribo/core/line_set.hh>
+
+
 # include <tesseract/baseapi.h>
 
-
-#include <mln/labeling/colorize.hh>
-
-
-#include <mln/debug/filename.hh>
-#include <mln/io/pbm/save.hh>
 
 
 namespace scribo
@@ -96,7 +83,15 @@ namespace scribo
     void
     recognition(const line_set<L>& lines,
 		const char *language,
-		const char *output_file);
+		const char *output_file = 0);
+
+
+    /// Recognize text from an image.
+    template <typename I>
+    void
+    recognition(const Image<I>& line,
+		const char *language,
+		const char *output_file = 0);
 
 
 
@@ -109,7 +104,7 @@ namespace scribo
     void
     recognition(const line_set<L>& lines,
 		const char *language,
-		const char *output_file)
+		const char *output_file = 0)
     {
       trace::entering("scribo::text::recognition");
 
@@ -182,10 +177,6 @@ namespace scribo
 	    text_ima_cleaned.nrows());		      // n rows
 
 
-
-	mln_site(L) p = lines(i).bbox().pcenter();
-	p.col() -= (lines(i).bbox().pmax().col()
-		    - lines(i).bbox().pmin().col()) / 2;
 	if (s != 0)
 	{
 	  std::cerr << s << std::endl;
@@ -202,6 +193,65 @@ namespace scribo
 
       trace::exiting("scribo::text::recognition");
     }
+
+
+    template <typename I>
+    void
+    recognition(const Image<I>& line_,
+		const char *language,
+		const char *output_file = 0)
+    {
+      trace::entering("scribo::text::recognition");
+
+      const I& line = exact(line_);
+      mln_precondition(line.is_valid());
+
+      // Initialize Tesseract.
+      TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
+
+      std::ofstream file;
+      if (output_file != 0)
+	file.open(output_file);
+
+      mln_domain(I) box = line.domain();
+      // Make sure characters are isolated from the borders.
+      // Help Tesseract.
+      box.enlarge(2);
+
+      I text_ima(box);
+      data::fill(text_ima, false);
+      data::paste(line, text_ima);
+
+      // Make sure there is no border.
+      border::resize(text_ima, 0);
+
+      // Recognize characters.
+      char* s = TessBaseAPI::TesseractRect(
+	(unsigned char*) text_ima.buffer(),
+	sizeof (bool),			  // Pixel size.
+	text_ima.ncols() * sizeof (bool), // Row_offset
+	0,				  // Left
+	0,				  // Top
+	text_ima.ncols(),		  // n cols
+	text_ima.nrows());		  // n rows
+
+
+	if (s != 0)
+	{
+	  std::cout << s << std::endl;
+	  if (output_file != 0)
+	    file << line.domain() << " " << s << std::endl;
+	}
+
+	// The string has been allocated by Tesseract. We must free it.
+	free(s);
+
+	if (output_file != 0)
+	  file.close();
+
+	trace::exiting("scribo::text::recognition");
+    }
+
 
 
 # endif // ! MLN_INCLUDE_ONLY
