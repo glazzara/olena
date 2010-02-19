@@ -1,5 +1,13 @@
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add dedicated routines for AFP's use case.
+
+	* scribo/src/afp/components.hh,
+	* scribo/src/afp/link.hh,
+	* scribo/src/afp/regroup.hh: New.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new tools in Scribo.
 
 	* src/preprocessing/Makefile.am,
