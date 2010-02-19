@@ -1,5 +1,9 @@
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/filter/objects_with_holes.hh: New component filter.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/draw/bounding_boxes.hh: Do not draw box centers anymore.
 
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
