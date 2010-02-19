@@ -1,5 +1,9 @@
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/src/text_in_photo_ppm.cc: Improve output.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Cleanup and avoid warnings in Sauvola related files.
 
 	* scribo/binarization/sauvola_ms.hh,
