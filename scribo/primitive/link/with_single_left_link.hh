@@ -102,7 +102,7 @@ namespace scribo
 	  typedef mln_site(L) P;
 
 	  single_left_functor(const object_image(L)& objects, unsigned dmax)
-	    : super_(objects, dmax)
+	    : super_(objects, dmax, anchor::Horizontal)
 	  {
 	  }
 

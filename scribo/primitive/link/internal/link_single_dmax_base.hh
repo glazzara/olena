@@ -76,7 +76,8 @@ namespace scribo
 	  typedef mln_site(L) P;
 
 	  link_single_dmax_base(const object_image(L)& objects,
-				unsigned neighb_max_distance);
+				unsigned neighb_max_distance,
+				anchor::Direction direction);
 
 
 	  bool verify_link_criterion_(unsigned current_object,
@@ -90,7 +91,7 @@ namespace scribo
 	private:
 	  float dmax_;
 	  float neighb_max_distance_;
-//	  mln::util::array<ms_t> mass_centers_;
+	  anchor::Direction direction_;
 	};
 
 
@@ -101,14 +102,14 @@ namespace scribo
 	inline
 	link_single_dmax_base<L, E>::link_single_dmax_base(
 	  const object_image(L)& objects,
-	  unsigned neighb_max_distance)
+	  unsigned neighb_max_distance,
+	  anchor::Direction direction)
 
 	  : super_(objects),
 	    dmax_(0),
-	    neighb_max_distance_(neighb_max_distance)
+	    neighb_max_distance_(neighb_max_distance),
+	    direction_(direction)
 	{
-// 	  mass_centers_ = labeling::compute(accu::meta::center(),
-// 					    objects, objects.nlabels());
 	}
 
 
@@ -122,7 +123,7 @@ namespace scribo
 	{
 	  (void) current_object;
 
-	  float dist = math::abs(p.col() - start_point.col());
+	  float dist = math::abs(p[direction_] - start_point[direction_]);
 	  return dist <= dmax_; // Not too far
 	}
 
@@ -133,7 +134,7 @@ namespace scribo
 	link_single_dmax_base<L, E>::start_point_(unsigned current_object,
 						  anchor::Type anchor)
 	{
-	  return internal::compute_anchor(this->objects_, this->objects_.mass_centers(),//mass_centers_,
+	  return internal::compute_anchor(this->objects_,
 					  current_object, anchor);
 	}
 
@@ -145,8 +146,8 @@ namespace scribo
 	  unsigned current_object)
 	{
 	  float
-	    midcol = (this->objects_.bbox(current_object).pmax().col()
-		      - this->objects_.bbox(current_object).pmin().col()) / 2;
+	    midcol = (this->objects_.bbox(current_object).pmax()[direction_]
+		      - this->objects_.bbox(current_object).pmin()[direction_]) / 2;
 	  dmax_ = midcol + neighb_max_distance_;
 	}
 

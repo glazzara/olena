@@ -44,7 +44,7 @@
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>
-# include <scribo/primitive/link/internal/link_ms_dmax_ratio_base.hh>
+# include <scribo/primitive/link/internal/link_single_dmax_ratio_base.hh>
 
 # include <scribo/primitive/link/compute.hh>
 
@@ -99,18 +99,18 @@ namespace scribo
 
 	template <typename L>
 	class single_left_dmax_ratio_functor
-	  : public internal::link_ms_dmax_ratio_base<L,
-						     single_left_dmax_ratio_functor<L> >
+	  : public internal::link_single_dmax_ratio_base<L,
+							 single_left_dmax_ratio_functor<L> >
 	{
 	  typedef single_left_dmax_ratio_functor<L> self_t;
-	  typedef internal::link_ms_dmax_ratio_base<L, self_t> super_;
+	  typedef internal::link_single_dmax_ratio_base<L, self_t> super_;
 
 	public:
 	  typedef mln_site(L) P;
 
 	  single_left_dmax_ratio_functor(const object_image(L)& objects,
 					  unsigned dmax)
-	    : super_(objects, dmax)
+	    : super_(objects, dmax, anchor::Horizontal)
 	  {
 	  }
 

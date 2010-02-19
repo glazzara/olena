@@ -99,18 +99,18 @@ namespace scribo
 
 	template <typename L>
 	class single_right_dmax_ratio_functor
-	  : public link_ms_dmax_ratio_base<L,
-					   single_right_dmax_ratio_functor<L> >
+	  : public link_single_dmax_ratio_base<L,
+					       single_right_dmax_ratio_functor<L> >
 	{
 	  typedef single_right_dmax_ratio_functor<L> self_t;
-	  typedef link_ms_dmax_ratio_base<L, self_t> super_;
+	  typedef link_single_dmax_ratio_base<L, self_t> super_;
 
 	public:
 	  typedef mln_site(L) P;
 
 	  single_right_dmax_ratio_functor(const object_image(L)& objects,
 					  unsigned dmax)
-	    : super_(objects, dmax)
+	    : super_(objects, dmax, anchor::Horizontal)
 	  {
 	  }
 

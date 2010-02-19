@@ -78,8 +78,8 @@ namespace scribo
 
 
 	  link_single_dmax_ratio_base(const object_image(L)& objects,
-				  float dmax_ratio,
-				  unsigned center_type_);
+				      float dmax_ratio,
+				      anchor::Direction direction);
 
 
 
@@ -94,7 +94,7 @@ namespace scribo
 	private:
 	  float dmax_ratio_;
 	  float dmax_;
-	  mln::util::array<ms_t> mass_centers_;
+	  anchor::Direction direction_;
 	};
 
 
@@ -105,14 +105,14 @@ namespace scribo
 	inline
 	link_single_dmax_ratio_base<L, E>::link_single_dmax_ratio_base(
 	  const object_image(L)& objects,
-	  float dmax_ratio)
+	  float dmax_ratio,
+	  anchor::Direction direction)
 
 	  : super_(objects),
 	    dmax_ratio_(dmax_ratio),
-	    dmax_(0)
+	    dmax_(0),
+	    direction_(direction)
 	{
-	  mass_centers_ = labeling::compute(accu::meta::center(),
-					    objects, objects.nlabels());
 	}
 
 	template <typename L, typename E>
@@ -125,7 +125,7 @@ namespace scribo
 	{
 	  (void) current_object;
 
-	  float dist = math::abs(p.col() - start_point.col());
+	  float dist = math::abs(p[direction_] - start_point[direction_]);
 	  return dist <= dmax_; // Not too far
 	}
 
@@ -137,8 +137,8 @@ namespace scribo
 							anchor::Type anchor)
 	{
 	  (void) anchor;
-	  return internal::compute_anchors(this->objects_, mass_centers_,
-					   current_object, anchor);
+	  return internal::compute_anchor(this->objects_,
+					  current_object, anchor);
 	}
 
 

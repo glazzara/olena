@@ -75,12 +75,11 @@ namespace scribo
 
 
 	  link_ms_dmax_base(const object_image(L)& objects,
-			    unsigned neighb_max_distance);
-
-
+			    unsigned neighb_max_distance,
+			    anchor::Direction direction);
 
 	  bool verify_link_criterion_(unsigned current_object,
-				  const P& start_point, const P& p) const;
+				      const P& start_point, const P& p) const;
 
 	  mln_site(L) start_point_(unsigned current_object,
 				   unsigned anchor);
@@ -88,9 +87,9 @@ namespace scribo
 	  void start_processing_object_(unsigned current_object);
 
 	private:
-	  mln::util::array<ms_t> mass_centers_;
 	  float dmax_;
 	  float neighb_max_distance_;
+	  anchor::Direction direction_;
 	};
 
 
@@ -101,16 +100,16 @@ namespace scribo
 	inline
 	link_ms_dmax_base<L, E>::link_ms_dmax_base(
 	  const object_image(L)& objects,
-	  unsigned neighb_max_distance)
+	  unsigned neighb_max_distance,
+	  anchor::Direction direction)
 
 	  : super_(objects),
 	    dmax_(0),
-	    neighb_max_distance_(neighb_max_distance)
+	    neighb_max_distance_(neighb_max_distance),
+	    direction_(direction)
 	{
-
-	  mass_centers_ = labeling::compute(accu::meta::center(),
-					    objects, objects.nlabels());
 	}
+
 
 	template <typename L, typename E>
 	inline
@@ -121,7 +120,7 @@ namespace scribo
 	{
 	  (void) current_object;
 
-	  float dist = math::abs(p.col() - start_point.col());
+	  float dist = math::abs(p[direction_] - start_point[direction_]);
 	  return dist <= dmax_; // Not too far
 	}
 
@@ -133,7 +132,7 @@ namespace scribo
 					      unsigned anchor)
 	{
 	  (void) anchor;
-	  return mass_centers_(current_object);
+	  return this->objects_.mass_center(current_object);
 	}
 
 
@@ -144,8 +143,8 @@ namespace scribo
 	  unsigned current_object)
 	{
 	  float
-	    midcol = (this->objects_.bbox(current_object).pmax().col()
-		      - this->objects_.bbox(current_object).pmin().col()) / 2;
+	    midcol = (this->objects_.bbox(current_object).pmax()[direction_]
+		      - this->objects_.bbox(current_object).pmin()[direction_]) / 2;
 	  dmax_ = midcol + neighb_max_distance_;
 	}
 

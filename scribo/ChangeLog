@@ -1,5 +1,26 @@
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve object linking backend.
+
+	* scribo/primitive/internal/find_left_link.hh,
+	* scribo/primitive/internal/find_right_link.hh,
+	* scribo/primitive/internal/is_invalid_link.hh: Remove.
+
+	* scribo/primitive/link/internal/compute_anchor.hh,
+	* scribo/primitive/link/internal/link_ms_dmax_base.hh,
+	* scribo/primitive/link/internal/link_ms_dmax_ratio_base.hh,
+	* scribo/primitive/link/internal/link_single_dmax_base.hh,
+	* scribo/primitive/link/internal/link_single_dmax_ratio_base.hh,
+	* scribo/primitive/link/with_single_down_link.hh,
+	* scribo/primitive/link/with_single_left_link.hh,
+	* scribo/primitive/link/with_single_left_link_dmax_ratio.hh,
+	* scribo/primitive/link/with_single_right_link.hh,
+	* scribo/primitive/link/with_single_right_link_dmax_ratio.hh,
+	* scribo/primitive/link/with_single_up_link.hh: Introduce the
+	anchor concept and make use of it.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/filter/objects_with_holes.hh: New component filter.
 
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>

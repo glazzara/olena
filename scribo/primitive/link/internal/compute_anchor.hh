@@ -52,15 +52,11 @@ namespace scribo
 	/*! \brief Return the proper anchor used to find a neighbor.
 
 	  \param[in] objects        An object image.
-	  \param[in] mass_centers   Object mass centers.
 	  \param[in] current_object An object id.
 	  \param[in] anchor         The expected anchor.
 
-	  Anchor can take one of the following values:
-	  - anchor::MassCenter, mass center anchor.
-	  - anchor::Top, top anchor.
-	  - anchor::Bottom, bottom anchor.
-	  - anchor::Center, center anchor.
+	  Anchor can take one of the values defined in the
+	  scribo::anchor::Type enum.
 
 
 	  Top and bottom anchors are respectively computed from the
@@ -76,64 +72,169 @@ namespace scribo
 	   out.row = P.row - min(10, h /10)
 
 	 */
-	template <typename L, typename P>
+	template <typename L>
 	mln_site(L)
 	compute_anchor(const object_image(L)& objects,
-		       const mln::util::array<P>& mass_centers,
 		       unsigned current_object, anchor::Type anchor);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-	template <typename L, typename P>
+	template <typename L>
 	mln_site(L)
 	compute_anchor(const object_image(L)& objects,
-		       const mln::util::array<P>& mass_centers,
 		       unsigned current_object, anchor::Type anchor)
 	{
+	  typedef mln_site(L) P;
+
 	  unsigned h = objects.bbox(current_object).pmax().row()
 	               - objects.bbox(current_object).pmin().row();
+	  unsigned w = objects.bbox(current_object).pmax().col()
+	               - objects.bbox(current_object).pmin().col();
 
 	  mln_site(L) sp = objects.bbox(current_object).center();
-	  def::coord r = 0;
 
 	  switch (anchor)
 	  {
-	    // Masss Center
+	    // Component masss center
 	    case anchor::MassCenter:
-	      return mass_centers(current_object);
+	      return objects.mass_center(current_object);
 
 
-	    // Top
+	    // Bounding box top center
 	    case anchor::Top:
 	      if (h < 30)
-		r = objects.bbox(current_object).pmin().row()
+		sp.row() = objects.bbox(current_object).pmin().row()
 		  + math::min(2u, (h + 1) / 2 - 1);
 	      else
-		r = objects.bbox(current_object).pmin().row()
+		sp.row() = objects.bbox(current_object).pmin().row()
 		  + math::min(10u, h /10);
 	      break;
 
 
-	    // Bottom
+	    // Bounding box bottom center
 	    case anchor::Bottom:
 	      if (h < 30)
-		r = objects.bbox(current_object).pmax().row()
+		sp.row() = objects.bbox(current_object).pmax().row()
 		  - math::min(2u, (h + 1) / 2 - 1);
 	      else
-		r = objects.bbox(current_object).pmax().row()
+		sp.row() = objects.bbox(current_object).pmax().row()
 		  - math::min(10u, h /10);
 	      break;
 
+
+	    // Bounding box center
 	    case anchor::Center:
 	      return objects.bbox(current_object).center();
 
+
+	    // Bounding box actual left center
+	    case anchor::ActualLeft:
+	      return P(objects.bbox(current_object).center().row(),
+		       objects.bbox(current_object).pmin().col());
+
+
+	    // Bounding box left center
+	    case anchor::Left:
+	      if (w < 30)
+		sp.col() = objects.bbox(current_object).pmin().col()
+		  + math::min(2u, (w + 1) / 2 - 1);
+	      else
+		sp.col() = objects.bbox(current_object).pmin().col()
+		  + math::min(10u, w /10);
+	      break;
+
+
+	    // Bounding box actual right center
+	    case anchor::ActualRight:
+	      return P(objects.bbox(current_object).center().row(),
+		       objects.bbox(current_object).pmax().col());
+
+
+	    // Bounding box right center
+	    case anchor::Right:
+	      if (w < 30)
+		sp.col() = objects.bbox(current_object).pmax().col()
+		  - math::min(2u, (w + 1) / 2 - 1);
+	      else
+		sp.col() = objects.bbox(current_object).pmax().col()
+		  - math::min(10u, w /10);
+	      break;
+
+
+	    // Bounding box top left
+	    case anchor::TopLeft:
+	      if (h < 30)
+		sp.row() = objects.bbox(current_object).pmin().row()
+		  + math::min(2u, (h + 1) / 2 - 1);
+	      else
+		sp.row() = objects.bbox(current_object).pmin().row()
+		  + math::min(10u, h /10);
+	      if (w < 30)
+		sp.col() = objects.bbox(current_object).pmin().col()
+		  + math::min(2u, (w + 1) / 2 - 1);
+	      else
+		sp.col() = objects.bbox(current_object).pmin().col()
+		  + math::min(10u, w /10);
+	      break;
+
+
+	    // Bounding box top right
+	    case anchor::TopRight:
+	      if (h < 30)
+		sp.row() = objects.bbox(current_object).pmin().row()
+		  + math::min(2u, (h + 1) / 2 - 1);
+	      else
+		sp.row() = objects.bbox(current_object).pmin().row()
+		  + math::min(10u, h /10);
+	      if (w < 30)
+		sp.col() = objects.bbox(current_object).pmax().col()
+		  - math::min(2u, (w + 1) / 2 - 1);
+	      else
+		sp.col() = objects.bbox(current_object).pmax().col()
+		  - math::min(10u, w /10);
+	      break;
+
+
+	    // Bounding box bottom left
+	    case anchor::BottomLeft:
+	      if (h < 30)
+		sp.row() = objects.bbox(current_object).pmax().row()
+		  - math::min(2u, (h + 1) / 2 - 1);
+	      else
+		sp.row() = objects.bbox(current_object).pmax().row()
+		  - math::min(10u, h /10);
+	      if (w < 30)
+		sp.col() = objects.bbox(current_object).pmin().col()
+		  + math::min(2u, (w + 1) / 2 - 1);
+	      else
+		sp.col() = objects.bbox(current_object).pmin().col()
+		  + math::min(10u, w /10);
+	      break;
+
+	    // Bounding box bottom right
+	    case anchor::BottomRight:
+	      if (h < 30)
+		sp.row() = objects.bbox(current_object).pmax().row()
+		  - math::min(2u, (h + 1) / 2 - 1);
+	      else
+		sp.row() = objects.bbox(current_object).pmax().row()
+		  - math::min(10u, h /10);
+	      if (w < 30)
+		sp.col() = objects.bbox(current_object).pmax().col()
+		  - math::min(2u, (w + 1) / 2 - 1);
+	      else
+		sp.col() = objects.bbox(current_object).pmax().col()
+		  - math::min(10u, w /10);
+	      break;
+
+
+
 	    default:
 	      trace::warning("Non handled anchor");
-	      mln_assertion(anchor > 2);
+	      mln_assertion(anchor < anchor::Invalid);
 	  }
 
-	  sp.row() = r;
 	  return sp;
 	}
 

@@ -23,24 +23,26 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_HH
-# define SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_HH
+#ifndef SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_DOWN_LINK_HH
+# define SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_DOWN_LINK_HH
 
 /// \file
 ///
-/// Link text objects with their right neighbor.
-
+/// Link text objects with their down neighbor.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 
 # include <mln/accu/center.hh>
+
 # include <mln/labeling/compute.hh>
+
 # include <mln/math/abs.hh>
+
 # include <mln/util/array.hh>
 
+
 # include <scribo/core/macros.hh>
-# include <scribo/core/tag/anchor.hh>
 # include <scribo/core/object_image.hh>
 # include <scribo/core/object_links.hh>
 
@@ -59,19 +61,30 @@ namespace scribo
     namespace link
     {
 
-      /// \brief Link objects with their right neighbor if exists.
-      /// Lookup startup point is the object mass center.
+      /// \brief Link objects with their down neighbor if exists.
       ///
       /// \param[in] objects An object image.
-      /// \param[in] The maximum distance allowed to seach a neighbor object.
+      /// \param[in] neighb_max_distance The maximum distance allowed
+      ///                                to seach a neighbor object.
+      /// \param[in] anchor The neighborhod lookup start point.
       ///
       /// \return Object links data.
       //
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects,
-			     unsigned neighb_max_distance);
+      with_single_down_link(const object_image(L)& objects,
+			    unsigned neighb_max_distance,
+			    anchor::Type anchor);
+
+      /// \overload
+      /// Anchor type is set to anchor::MassCenter
+      //
+      template <typename L>
+      inline
+      object_links<L>
+      with_single_down_link(const object_image(L)& objects,
+			    unsigned neighb_max_distance);
 
 
       /// \overload
@@ -79,8 +92,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects);
-
+      with_single_down_link(const object_image(L)& objects);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -92,23 +104,23 @@ namespace scribo
 	// Functor
 
 	template <typename L>
-	class single_right_functor
-	  : public internal::link_single_dmax_base<L, single_right_functor<L> >
+	class single_down_functor
+	  : public internal::link_single_dmax_base<L, single_down_functor<L> >
 	{
 	  typedef
-	    internal::link_single_dmax_base<L, single_right_functor<L> > super_;
+	    internal::link_single_dmax_base<L, single_down_functor<L> > sdowner_;
 
 	public:
 	  typedef mln_site(L) P;
 
-	  single_right_functor(const object_image(L)& objects, unsigned dmax)
-	    : super_(objects, dmax, anchor::Horizontal)
+	  single_down_functor(const object_image(L)& objects, unsigned dmax)
+	    : sdowner_(objects, dmax, anchor::Vertical)
 	  {
 	  }
 
 	  void compute_next_site_(P& p)
 	  {
-	    ++p.col();
+	    ++p.row();
 	  }
 
 	};
@@ -122,19 +134,20 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects,
-			     unsigned neighb_max_distance)
+      with_single_down_link(const object_image(L)& objects,
+			    unsigned neighb_max_distance,
+			    anchor::Type anchor)
       {
-	trace::entering("scribo::primitive::link::with_single_right_link");
+	trace::entering("scribo::primitive::link::with_single_down_link");
 
 	mln_precondition(objects.is_valid());
 
-	internal::single_right_functor<L>
+	internal::single_down_functor<L>
 	  functor(objects, neighb_max_distance);
 
-	object_links<L> output = compute(functor, anchor::MassCenter);
+	object_links<L> output = compute(functor, anchor);
 
-	trace::exiting("scribo::primitive::link::with_single_right_link");
+	trace::exiting("scribo::primitive::link::with_single_down_link");
 	return output;
       }
 
@@ -142,9 +155,20 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects)
+      with_single_down_link(const object_image(L)& objects,
+			    unsigned neighb_max_distance)
       {
-	return with_single_right_link(objects, mln_max(unsigned));
+	return with_single_down_link(objects, neighb_max_distance,
+				     anchor::MassCenter);
+      }
+
+
+      template <typename L>
+      inline
+      object_links<L>
+      with_single_down_link(const object_image(L)& objects)
+      {
+	return with_single_down_link(objects, mln_max(unsigned));
       }
 
 
@@ -156,4 +180,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_RIGHT_LINK_HH
+#endif // ! SCRIBO_PRIMITIVE_LINK_WITH_SINGLE_DOWN_LINK_HH
