@@ -62,6 +62,21 @@ namespace scribo
     /// \param[in] box_value Value used to draw line bounding boxes.
     /// \param[in] link_value Value used to draw line links.
     /// \param[in] filename The target file name.
+    /// \param[in] anchor Anchor from where the links are drawn.
+    //
+    template <typename I, typename L>
+    void
+    save_linked_bboxes_image(const Image<I>& input,
+			     const object_image(L)& objects,
+			     const object_links<L>& array,
+			     const value::rgb8& box_value,
+			     const value::rgb8& link_value,
+			     const std::string& filename,
+			     anchor::Type anchor);
+
+    /// \overload
+    /// The default anchor type is set to anchor::Center.
+    //
     template <typename I, typename L>
     void
     save_linked_bboxes_image(const Image<I>& input,
@@ -145,25 +160,37 @@ namespace scribo
 			     const object_links<L>& array,
 			     const value::rgb8& box_value,
 			     const value::rgb8& link_value,
-			     const std::string& filename)
+			     const std::string& filename,
+			     anchor::Type anchor)
     {
       trace::entering("scribo::debug::save_linked_bboxes_image");
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
 
-      mln::util::array<mln_result(accu::center<mln_psite(L)>)>
-	    mass_center = labeling::compute(accu::meta::center(),
-					    objects,
-					    objects.nlabels());
-
       draw::bounding_boxes(tmp, objects.bboxes(), box_value);
-      draw::bounding_box_links(tmp, mass_center, array, link_value);
+      draw::bounding_box_links(tmp, array, link_value, anchor);
 
       io::ppm::save(tmp, filename);
 
       trace::exiting("scribo::debug::save_linked_bboxes_image");
     }
+
+
+    template <typename I, typename L>
+    inline
+    void
+    save_linked_bboxes_image(const Image<I>& input,
+			     const object_image(L)& objects,
+			     const object_links<L>& array,
+			     const value::rgb8& box_value,
+			     const value::rgb8& link_value,
+			     const std::string& filename)
+    {
+      save_linked_bboxes_image(input, objects, array, box_value,
+			       link_value, filename, anchor::Center);
+    }
+
 
 
     template <typename I, typename L>
@@ -182,13 +209,8 @@ namespace scribo
 
       mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
 
-      mln::util::array<mln_result(accu::center<mln_psite(L)>)>
-	    mass_center = labeling::compute(accu::meta::center(),
-					    objects,
-					    objects.nlabels());
-
       draw::bounding_boxes(tmp, objects.bboxes(), box_value);
-      draw::bounding_box_links(tmp, mass_center,
+      draw::bounding_box_links(tmp, objects.mass_centers(),
 			       left_link, right_link,
 			       value);
 

@@ -114,7 +114,8 @@ namespace scribo
     alignment_decision_image(const Image<I>& input_,
 			     const object_links<L>& links,
 			     const object_links<L>& filtered_links,
-			     const Alignment& alignment)
+			     const Alignment& alignment,
+			     unsigned max_link_length)
     {
       trace::entering("scribo::debug::alignment_decision_image");
       const I& input = exact(input_);
@@ -147,10 +148,11 @@ namespace scribo
 
 	  mln::util::couple<P,P>
 	    anchors = internal::find_anchors(objects, i, links[i], alignment);
-	  mln::draw::line(decision_image,
-			  anchors.first(),
-			  anchors.second(),
-			  value);
+	  if (norm::l1_distance(anchors.first(), anchors.second()) < max_link_length)
+	    mln::draw::line(decision_image,
+			    anchors.first(),
+			    anchors.second(),
+			    value);
 	}
       }
 
@@ -158,6 +160,20 @@ namespace scribo
       return decision_image;
     }
 
+
+    template <typename I, typename L>
+    mln_ch_value(I,value::rgb8)
+    alignment_decision_image(const Image<I>& input_,
+			     const object_links<L>& links,
+			     const object_links<L>& filtered_links,
+			     const Alignment& alignment)
+    {
+      return alignment_decision_image(input_,
+				      links,
+				      filtered_links,
+				      alignment,
+				      mln_max(unsigned));
+    }
 
 
 # endif // ! MLN_INCLUDE_ONLY

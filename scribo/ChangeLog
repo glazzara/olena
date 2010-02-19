@@ -1,5 +1,15 @@
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add anchor support in debug routines.
+
+	* scribo/debug/alignment_decision_image.hh,
+	* scribo/debug/links_decision_image.hh,
+	* scribo/debug/save_linked_bboxes_image.hh,
+	* scribo/draw/bounding_box_links.hh: Make use of anchor points to
+	draw debug outputs.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new link filters.
 
 	* scribo/filter/object_links_non_aligned_simple.hh: Handle new

@@ -36,6 +36,7 @@
 # include <mln/value/rgb8.hh>
 # include <mln/literal/colors.hh>
 # include <mln/util/array.hh>
+# include <mln/norm/l1.hh>
 
 # include <scribo/core/object_groups.hh>
 # include <scribo/draw/bounding_boxes.hh>
@@ -54,8 +55,15 @@ namespace scribo
     mln_ch_value(I,value::rgb8)
     links_decision_image(const Image<I>& input_,
 			 const object_links<L>& links,
-			 const object_links<L>& filtered_links);
+			 const object_links<L>& filtered_links,
+			 unsigned max_link_length);
 
+    /// \overload
+    template <typename I, typename L>
+    mln_ch_value(I,value::rgb8)
+    links_decision_image(const Image<I>& input_,
+			 const object_links<L>& links,
+			 const object_links<L>& filtered_links);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -63,7 +71,8 @@ namespace scribo
     mln_ch_value(I,value::rgb8)
     links_decision_image(const Image<I>& input_,
 			 const object_links<L>& links,
-			 const object_links<L>& filtered_links)
+			 const object_links<L>& filtered_links,
+			 unsigned max_link_length)
     {
       trace::entering("scribo::debug::links_decision_image");
       const I& input = exact(input_);
@@ -105,10 +114,11 @@ namespace scribo
 	  while (objects(p2) != links[i] && objects.domain().has(p2))
 	    ++p2.col();
 
-	  mln::draw::line(links_decision_image,
-			  p1,
-			  p2,
-			  value);
+	  if (norm::l1_distance(p2.to_vec(), p1.to_vec()) < max_link_length)
+	    mln::draw::line(links_decision_image,
+			    p1,
+			    p2,
+			    value);
 	}
       }
 
@@ -116,6 +126,18 @@ namespace scribo
       return links_decision_image;
     }
 
+
+    template <typename I, typename L>
+    mln_ch_value(I,value::rgb8)
+    links_decision_image(const Image<I>& input_,
+			 const object_links<L>& links,
+			 const object_links<L>& filtered_links)
+    {
+      return links_decision_image(input_,
+				  links,
+				  filtered_links,
+				  mln_max(unsigned));
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
