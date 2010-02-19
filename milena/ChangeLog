@@ -1,3 +1,28 @@
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Milena.
+
+	* milena/mln/accu/center.hh: Add nsites() member.
+
+	* milena/mln/accu/pair.hh: Provide access to the underlying accus.
+
+	* milena/mln/accu/stat/variance.hh: Use literal::zero.
+
+	* milena/mln/core/internal/labeled_image_base.hh: Indent.
+
+	* milena/mln/core/site_set/box.hh: Rename center() as pcenter().
+
+	* milena/mln/labeling/blobs_and_compute.hh: Return the array of
+	accumulators.
+
+	* milena/mln/labeling/colorize.hh: Make sure a color is not used
+	twice in the same image.
+
+	* milena/mln/labeling/compute.hh: Add a new overload.
+
+	* milena/mln/transform/influence_zone_geodesic.hh: Fix a
+	segmentation fault when an image had a border.
+
 2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add rbg_to_int_u function.

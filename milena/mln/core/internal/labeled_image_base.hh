@@ -310,7 +310,7 @@ namespace mln
   const util::array<typename labeled_image_base<I,E>::bbox_t>&
   labeled_image_base<I,E>::bboxes() const
   {
-      return this->data_->bboxes_;
+    return this->data_->bboxes_;
   }
 
 

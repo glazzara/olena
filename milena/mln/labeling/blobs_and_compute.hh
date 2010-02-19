@@ -53,7 +53,9 @@ namespace mln
 
      */
     template <typename I, typename N, typename L, typename A>
-    util::couple<mln_ch_value(I, L), util::array<mln_result(A)> >
+    util::couple<mln_ch_value(I,L),
+		 util::couple<util::array<mln_result(A)>,
+			      util::array<A> > >
     blobs_and_compute(const Image<I>& input, const Neighborhood<N>& nbh,
 		      L& nlabels, const Accumulator<A>& accu);
 
@@ -72,7 +74,8 @@ namespace mln
       {
 	typedef mln_result(A) accu_result;
 	typedef mln_argument(A) accu_argument;
-	typedef util::array<accu_result> result;
+	typedef util::couple<util::array<accu_result>,
+			     util::array<A> > result;
 
 	void init()
 	{
@@ -133,7 +136,9 @@ namespace mln
 
 
     template <typename I, typename N, typename L, typename A>
-    util::couple<mln_ch_value(I,L), util::array<mln_result(A)> >
+    util::couple<mln_ch_value(I,L),
+		 util::couple<util::array<mln_result(A)>,
+			      util::array<A> > >
     blobs_and_compute(const Image<I>& input, const Neighborhood<N>& nbh,
 		      L& nlabels, const Accumulator<A>& accu)
     {
@@ -151,7 +156,8 @@ namespace mln
 	output = canvas::labeling::blobs(input, nbh, nlabels, functor);
 
       util::couple<out_t, typename func_t::result>
-	result = make::couple(output, functor.result_);
+	result = make::couple(output,
+			      make::couple(functor.result_, functor.accus_));
 
       trace::exiting("labeling::blobs_and_compute");
       return result;

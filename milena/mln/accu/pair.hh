@@ -81,8 +81,15 @@ namespace mln
       void get_result(result_1& r1, result_2& r2) const;
       /// \}
 
+      /// Return the result of the first accumulator.
       mln_result(A1) first() const;
+      /// Return the result of the second accumulator.
       mln_result(A2) second() const;
+
+      /// Return the first accumulator.
+      A1 first_accu() const;
+      /// Return the second accumulator.
+      A2 second_accu() const;
 
       /// Check whether this accu is able to return a result.
       /// Always true here.
@@ -193,6 +200,25 @@ namespace mln
     {
       return a2_.to_result();
     }
+
+
+
+    template <typename A1, typename A2, typename T>
+    inline
+    A1
+    pair<A1,A2,T>::first_accu() const
+    {
+      return a1_;
+    }
+
+    template <typename A1, typename A2, typename T>
+    inline
+    A2
+    pair<A1,A2,T>::second_accu() const
+    {
+      return a2_;
+    }
+
 
     template <typename A1, typename A2, typename T>
     inline

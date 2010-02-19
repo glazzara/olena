@@ -143,7 +143,7 @@ namespace mln
     box<P> to_larger(unsigned b) const;
 
     /// Return the approximated central site of this box.
-    P center() const;
+    P pcenter() const;
 
     /// Test that the box owns valid data, i.e., is initialized and
     /// with pmin being 'less-than' pmax.
@@ -390,7 +390,7 @@ namespace mln
   template <typename P>
   inline
   P
-  box<P>::center() const
+  box<P>::pcenter() const
   {
     mln_precondition(is_valid());
     P center;

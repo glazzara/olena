@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,23 +61,6 @@ namespace mln
     /// Compute an accumulator onto the pixel values of the image \p input.
     /// for each component of the image \p label.
     ///
-    /// \param[in] a An array of accumulator.
-    /// \param[in] input The input image.
-    /// \param[in] label The labeled image.
-    /// \param[in] nlabels The number of labels in \p label.
-    /// \return A mln::p_array of accumulator result (one result per label).
-    //
-    template <typename A, typename I, typename L>
-    util::array<mln_result(A)>
-    compute(util::array<A>& a,
-	    const Image<I>& input,
-	    const Image<L>& label,
-	    const mln_value(L)& nlabels);
-
-
-    /// Compute an accumulator onto the pixel values of the image \p input.
-    /// for each component of the image \p label.
-    ///
     /// \param[in] a An accumulator.
     /// \param[in] input The input image.
     /// \param[in] label The labeled image.
@@ -134,6 +118,23 @@ namespace mln
     template <typename A, typename L>
     util::array<mln_meta_accu_result(A, mln_psite(L))>
     compute(const Meta_Accumulator<A>& a,
+	    const Image<L>& label,
+	    const mln_value(L)& nlabels);
+
+
+    /// Compute an accumulator onto the pixel values of the image \p input.
+    /// for each component of the image \p label.
+    ///
+    /// \param[in] a An array of accumulator.
+    /// \param[in] input The input image.
+    /// \param[in] label The labeled image.
+    /// \param[in] nlabels The number of labels in \p label.
+    /// \return A mln::p_array of accumulator result (one result per label).
+    //
+    template <typename A, typename I, typename L>
+    util::array<mln_result(A)>
+    compute(util::array<A>& a,
+	    const Image<I>& input,
 	    const Image<L>& label,
 	    const mln_value(L)& nlabels);
 
@@ -220,6 +221,49 @@ namespace mln
 	  trace::exiting("labeling::impl::generic::compute");
 	  return res;
 	}
+
+	/// Generic implementation of labeling::compute.
+	///
+	/// \param[in] accus_ An array of accumulators. If the size is
+	///                   set to nlabels + 1, the accumulators are
+	///                   considered as initialized. Otherwise,
+	///                   the size is adjusted.
+	/// \param[in] label_  The labeled image.
+	/// \param[in] nlabels The number of labels in \p label.
+	///
+	/// \return A mln::p_array of accumulator result (one result per label).
+	//
+	template <typename A, typename L>
+	inline
+	util::array<mln_result(A)>
+	compute(util::array<A>& accus,
+		const Image<L>& label_,
+		const mln_value(L)& nlabels)
+	{
+	  trace::entering("labeling::impl::generic::compute");
+	  internal::compute_tests(A(), label_, nlabels);
+
+	  if (static_cast<unsigned>(nlabels) + 1 != accus.size())
+	  {
+	    accus.resize(0); // Make sure all the accumulators are
+			     // re-initialized when resizing on next
+			     // line.
+	    accus.resize(static_cast<unsigned>(nlabels) + 1);
+	  }
+
+	  const L& label = exact(label_);
+
+	  mln_piter(L) p(label.domain());
+	  for_all(p)
+	    accus[label(p)].take(p);
+
+	  util::array<mln_result(A)> res;
+	  convert::from_to(accus, res);
+
+	  trace::exiting("labeling::impl::generic::compute");
+	  return res;
+	}
+
 
 
 	/// Generic implementation of labeling::compute.
@@ -343,6 +387,15 @@ namespace mln
 	return impl::generic::compute(a, input, label, nlabels);
       }
 
+      template <typename A, typename L>
+      inline
+      util::array<mln_result(A)>
+      compute_dispatch(util::array<A>& accus,
+		       const Image<L>& label,
+		       const mln_value(L)& nlabels)
+      {
+	return impl::generic::compute(accus, label, nlabels);
+      }
 
     } // end of namespace mln::labeling::internal
 
@@ -401,6 +454,28 @@ namespace mln
 
       return compute(a_, input, label, nlabels);
     }
+
+
+    template <typename A, typename L>
+    inline
+    util::array<mln_result(A)>
+    compute(util::array<A>& accus,
+	    const Image<L>& label,
+	    const mln_value(L)& nlabels)
+    {
+      trace::entering("labeling::compute");
+
+      internal::compute_tests(A(), label, nlabels);
+
+      typedef util::array<mln_result(A)> R;
+      R res = internal::compute_dispatch(accus, label, nlabels);
+
+      mln_postcondition(res.nelements() == static_cast<unsigned>(nlabels) + 1);
+
+      trace::exiting("labeling::compute");
+      return res;
+    }
+
 
 
     template <typename A, typename L>

@@ -103,11 +103,9 @@ namespace mln
 
       unsigned random_number()
       {
-	static unsigned last = 1;
+	unsigned last = colorize_::min_value + (colorize_::max_value - colorize_::min_value + 1) * rand();
 
-	last = (323 * last + 6603) % 1025;
-
-	return colorize_::min_value + last % colorize_::max_value;
+	return math::min(colorize_::min_value + last % colorize_::max_value, colorize_::max_value);
       }
 
 
@@ -120,17 +118,42 @@ namespace mln
       mln::value::rgb<n>
       random_color(const mln::value::rgb<n>&)
       {
-	// Make sure the numbers are generated in the same order
-	// whatever the compiler used.
-	// For instance, ICC does not compute function arguments in
-	// the same order as GCC does.
-	unsigned
-	  red = random_number(),
-	  green = random_number(),
+	static unsigned
+	  nelements = colorize_::max_value - colorize_::min_value + 1;
+	static util::array<util::set<unsigned> >
+	  red_(nelements),
+	  green_(nelements);
+
+	unsigned red, green, blue;
+
+	unsigned ntries = 0;
+	do
+	{
+	  red = random_number();
+	  ++ntries;
+	}
+	while (red_[red - colorize_::min_value].nelements() == nelements
+	       && ntries < nelements);
+
+	if (ntries == nelements)
+	{
+	  trace::warning("labeling::colorize - Can't find a new unique color. Returning black.");
+	  return literal::black;
+	}
+
+
+	do
+	  green = random_number();
+	while (red_[red - colorize_::min_value].has(green)
+	       || green_[green - colorize_::min_value].nelements() == nelements);
+	red_[red - colorize_::min_value].insert(green);
+
+	do
 	  blue = random_number();
-	return mln::value::rgb<n>(red,
-				  green,
-				  blue);
+	while (green_[green - colorize_::min_value].has(blue));
+	green_[green - colorize_::min_value].insert(blue);
+
+	return mln::value::rgb<n>(red, green, blue);
       }
 
     }
