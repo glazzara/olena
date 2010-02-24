@@ -1,3 +1,12 @@
+2010-02-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add white gaussian noise function.
+
+	* mln/fun/all.hh: Include a new file.
+
+	* mln/fun/n2v/all.hh,
+	* mln/fun/n2v/white_gaussian.hh: New.
+
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Cleanup to_qimage convertion routines.
