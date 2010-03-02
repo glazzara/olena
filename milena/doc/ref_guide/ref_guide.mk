@@ -1,3 +1,5 @@
+#							-*- Automake -*-
+
 # Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -15,15 +17,15 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-.PHONY: ref-guide ref-guide-html
+.PHONY: ref-guide ref-guide-html ref-guide-pdf
 
-include $(top_srcdir)/milena/doc/doc.mk
-
-TEXINPUTS ="$(DOC_SRCDIR):$(OUTPUTS_SRCDIR):\
+ref_guide_TEXINPUTS = "$(DOC_SRCDIR):$(OUTPUTS_SRCDIR):\
 $(SPLIT_OUTPUTS_SRCDIR):$(IMG_SRCDIR):$(SPLIT_EXAMPLES_SRCDIR):"
 
 
 ref-guide: ref-guide-html ref-guide-pdf
+
+ref_guide_dir = $(doc_dir)/ref_guide
 
 # FIXME: As in milena/doc/Makefile.am, we should probably strip
 # $(srcdir) prefixes from target variables, e.g. instead of:
@@ -52,43 +54,38 @@ ref-guide: ref-guide-html ref-guide-pdf
 # Intermediate product for the various doc targets of the parent
 # directory.
 #
-# This is not a bug: REF_GUIDE_HH is meant to have a `.hh'
-# extension, since it is later parsed by Doxygen, which complains
-# about `.html' files.
-REF_GUIDE_HH = $(srcdir)/ref_guide.hh
+# This is not a bug: REF_GUIDE_HH is meant to have a `.hh' extension,
+# since it is later parsed by Doxygen, which complains about `.html'
+# files.
+REF_GUIDE_HH = $(ref_guide_dir)/ref_guide.hh
 ref-guide-html: $(REF_GUIDE_HH)
-$(REF_GUIDE_HH): ref_guide.tex $(srcdir)/../figures.stamp
-	$(DOC_SRCDIR)/tools/todoxygen.sh		\
-	  $< $(DOC_SRCDIR)/ref_guide $(DOC_SRCDIR)
+$(REF_GUIDE_HH): $(ref_guide_dir)/ref_guide.tex $(doc_dir)/figures.stamp
+	$(doc_dir)/tools/todoxygen.sh $< $(ref_guide_dir) $(doc_dir)
 
 
 # Final product.
-REF_GUIDE_PDF = $(srcdir)/ref_guide.pdf
+REF_GUIDE_PDF = $(ref_guide_dir)/ref_guide.pdf
 ref-guide-pdf: $(REF_GUIDE_PDF)
-$(REF_GUIDE_PDF): ref_guide.tex $(srcdir)/../figures.stamp
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<  			\
-	test "$(top_srcdir)" == "$(top_builddir)"		\
-		|| mv -f $(builddir)/ref_guide.pdf $(srcdir)
+$(REF_GUIDE_PDF): $(ref_guide_dir)/ref_guide.tex $(doc_dir)/figures.stamp
+	TEXINPUTS=$(ref_guide_TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(ref_guide_TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(ref_guide_TEXINPUTS) pdflatex $<	\
+	test x"$(ref_guide_dir)" != x.			\
+	  && mv -f ref_guide.pdf $(ref_guide_dir)
 
-# FIXME: Regenerating figures.stamp requires make to go back to the
-# parent directory.  We already do the opposite (descending from
-# milena/doc/ to milena/doc/tutorial/Makefile in milena/doc/ to update
-# tutorial.hh).  This is not sound.  We probably want to put together
-# somes of these files, and maybe get rid of some directories, or at
-# least move most of the Makefile machinery into
-# milena/doc/Makefile.am.
-$(srcdir)/../figures.stamp:
-	cd .. && $(MAKE) $(AM_MAKEFLAGS) fig-convert
+dist_doc_DATA += $(REF_GUIDE_PDF)
 
-dist_doc_DATA = $(REF_GUIDE_PDF)
-
-EXTRA_DIST =					\
-  ref_guide.tex					\
+EXTRA_DIST +=					\
+  $(ref_guide_dir)/ref_guide.tex		\
   $(REF_GUIDE_HH)
 
-CLEANFILES =								\
+# FIXME: Remove `ref_guide.aux ref_guide.toc ref_guide.log
+# ref_guide.bbl ref_guide.out *blg *.lot' when texi2dvi is used.
+#
+# FIXME: Why is $(REF_GUIDE_PDF) listed here?  It should be
+# automatically cleaned.  I'm not sure either about the rest of
+# CLEANFILES.
+CLEANFILES +=								\
   ref_guide.aux ref_guide.toc ref_guide.log ref_guide.bbl ref_guide.out	\
   *blg *.lot								\
   $(REF_GUIDE_PDF)							\

@@ -22,14 +22,16 @@ include $(top_srcdir)/milena/doc/doc.mk
 
 SUBDIRS =		\
   examples		\
-  ref_guide		\
   technical 		\
   tutorial 		\
   white_paper
 
-
 DOXYGEN = doxygen
 
+# Initialiaze variables.
+EXTRA_DIST =
+dist_doc_DATA =
+CLEANFILES =
 
 
 .PHONY: doc						\
@@ -39,7 +41,6 @@ DOXYGEN = doxygen
 	ref-doc-devel-pdf ref-doc-devel-html		\
 	tutorial-pdf tutorial-html			\
 	white-paper-pdf white-paper-html		\
-	ref-guide-pdf ref-guide-html			\
 	examples data-regen fig-convert
 
 
@@ -58,17 +59,15 @@ doc-devel-html: tutorial-html ref-guide-html white-paper-html \
 		ref-doc-devel-html
 
 
-## ----------------------------------------------------------------- ##
-## Shared dependencies on the products of tutorial/ and ref_guide/.  ##
-## ----------------------------------------------------------------- ##
+## -------------------------------------------------- ##
+## Shared dependencies on the products of tutorial/.  ##
+## -------------------------------------------------- ##
 
 # FIXME: Maintaining dependencies across directories is too
 # complicated.  Simplify.
 EXTRA_DEPS = $(srcdir)/tutorial/tutorial.hh $(srcdir)/ref_guide/ref_guide.hh
 $(srcdir)/tutorial/tutorial.hh: fig-convert
 	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) tutorial-html
-$(srcdir)/ref_guide/ref_guide.hh: fig-convert
-	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) ref-guide-html
 
 ## ----------------------- ##
 ## Doxygen documentation.  ##
@@ -142,14 +141,10 @@ white-paper-html:
 ## Reference Guide.  ##
 ## ----------------- ##
 
-ref-guide-pdf: fig-convert
-	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) $@
-
-ref-guide-html: fig-convert
-	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) $@
+include $(srcdir)/ref_guide/ref_guide.mk
 
 
-# FIXME: Adresse the construction of examples (see examples/Makefile.am).
+# FIXME: Adress the construction of examples (see examples/Makefile.am).
 data-regen:
 	cd examples && $(MAKE) $(AM_MAKEFLAGS) $@
 
@@ -160,7 +155,7 @@ fix-refdata:
 
 # Make sure the figures are the first files in EXTRA_DIST.
 # Make the 'fake-doc' rule works correctly.
-EXTRA_DIST =
+EXTRA_DIST +=
 $(srcdir)/figures/figures.mk: $(srcdir)/headers.stamp
 include $(srcdir)/figures/figures.mk
 
@@ -244,7 +239,7 @@ include $(srcdir)/examples/examples.mk
 include $(srcdir)/outputs/outputs.mk
 
 
-dist_doc_DATA =	$(USER_REFMAN_PDF)
+dist_doc_DATA += $(USER_REFMAN_PDF)
 
 # Installing a directory located in the source dir is not supported by
 # Automake by default, so we cannot add `USER_REFMAN_HTML' to
@@ -293,7 +288,7 @@ EXTRA_DIST +=					\
   tools/split_sample.sh				\
   tools/todoxygen.sh
 
-CLEANFILES =					\
+CLEANFILES +=					\
   Doxyfile_user					\
   Doxyfile_user_pdf				\
   Doxyfile_devel				\

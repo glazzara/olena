@@ -15,6 +15,19 @@
 
 2010-03-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Stop make from recurring in doc/ref_guide.
+
+	* doc/ref_guide/Makefile.am: Rename as...
+	* doc/ref_guide/ref_guide.mk: ...this.
+	Adjust.
+	* doc/doc.mk (doc_dir): New variable.
+	* doc/Makefile.am: Include doc/ref_guide/ref_guide.mk.
+	(SUBDIRS): Remove ref_guide.
+	($(srcdir)/ref_guide/ref_guide.hh): Remove target.
+	(ref-guide-pdf, ref-guide-html): Remove (phony) targets.
+
+2010-03-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Get rid of Make targets `fake-doc' and `void-doc'.
 
 	* doc/Makefile.am,

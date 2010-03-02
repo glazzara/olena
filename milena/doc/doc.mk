@@ -1,6 +1,6 @@
-#								-*- Automake -*-
+#							-*- Automake -*-
 
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development Laboratory
 # (LRDE).
 #
 # This file is part of Olena.
@@ -34,3 +34,9 @@ FIGURES_SRCDIR = $(DOC_SRCDIR)/figures
 EXAMPLES_SRCDIR = $(DOC_SRCDIR)/examples
 SPLIT_EXAMPLES_SRCDIR = $(EXAMPLES_SRCDIR)/split
 IMG_SRCDIR = $(DOC_SRCDIR)/img
+
+# FIXME: Adjust when $(DOC_SRCDIR) is renamed or removed.
+#
+# FIXME: Careful, `doc_dir' is close to `docdir', which is reserved by
+# Automake.  Change this name?
+doc_dir = $(DOC_SRCDIR)
