@@ -1,3 +1,9 @@
+2010-03-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Regen SCRIBO's Makefile helpers.
+
+	* headers.mk, tests/unit_test/unit-tests.mk: Here.
+
 2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a new example in Scribo.
