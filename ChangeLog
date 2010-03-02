@@ -1,5 +1,9 @@
 2010-03-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	* configure.ac: Do not configure milena/doc/ref_guide/Makefile.
+
+2010-03-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Stop pruning Makefiles under milena/doc/.
 
 	* Makefile.am (LRDE_STRIPPED_DIST_FILES): Remove
