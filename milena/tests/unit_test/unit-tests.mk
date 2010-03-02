@@ -191,6 +191,7 @@ mln_core_alias_window1d \
 mln_core_alias_window2d \
 mln_core_alias_window3d \
 mln_core_all \
+mln_core_box_runend_piter \
 mln_core_box_runstart_piter \
 mln_core_category \
 mln_core_concept_accumulator \
@@ -313,6 +314,7 @@ mln_core_internal_image_morpher \
 mln_core_internal_image_primary \
 mln_core_internal_image_value_morpher \
 mln_core_internal_is_masked_impl_selector \
+mln_core_internal_labeled_image_base \
 mln_core_internal_morpher_lvalue \
 mln_core_internal_neighb_base \
 mln_core_internal_neighb_niter_base \
@@ -427,6 +429,7 @@ mln_data_transform \
 mln_data_transform_inplace \
 mln_data_update \
 mln_data_was_median \
+mln_data_wrap \
 mln_debug_all \
 mln_debug_draw_graph \
 mln_debug_essential \
@@ -1123,6 +1126,7 @@ mln_transform_essential \
 mln_transform_hough \
 mln_transform_influence_zone_front \
 mln_transform_influence_zone_geodesic \
+mln_transform_influence_zone_geodesic_saturated \
 mln_transform_internal_all \
 mln_transform_internal_closest_point_functor \
 mln_transform_internal_distance_functor \
@@ -1235,6 +1239,7 @@ mln_value_internal_value_like \
 mln_value_interval \
 mln_value_label \
 mln_value_label_16 \
+mln_value_label_32 \
 mln_value_label_8 \
 mln_value_lut_vec \
 mln_value_mixin \
@@ -1484,6 +1489,7 @@ mln_core_alias_window1d_SOURCES = mln_core_alias_window1d.cc
 mln_core_alias_window2d_SOURCES = mln_core_alias_window2d.cc
 mln_core_alias_window3d_SOURCES = mln_core_alias_window3d.cc
 mln_core_all_SOURCES = mln_core_all.cc
+mln_core_box_runend_piter_SOURCES = mln_core_box_runend_piter.cc
 mln_core_box_runstart_piter_SOURCES = mln_core_box_runstart_piter.cc
 mln_core_category_SOURCES = mln_core_category.cc
 mln_core_concept_accumulator_SOURCES = mln_core_concept_accumulator.cc
@@ -1606,6 +1612,7 @@ mln_core_internal_image_morpher_SOURCES = mln_core_internal_image_morpher.cc
 mln_core_internal_image_primary_SOURCES = mln_core_internal_image_primary.cc
 mln_core_internal_image_value_morpher_SOURCES = mln_core_internal_image_value_morpher.cc
 mln_core_internal_is_masked_impl_selector_SOURCES = mln_core_internal_is_masked_impl_selector.cc
+mln_core_internal_labeled_image_base_SOURCES = mln_core_internal_labeled_image_base.cc
 mln_core_internal_morpher_lvalue_SOURCES = mln_core_internal_morpher_lvalue.cc
 mln_core_internal_neighb_base_SOURCES = mln_core_internal_neighb_base.cc
 mln_core_internal_neighb_niter_base_SOURCES = mln_core_internal_neighb_niter_base.cc
@@ -1720,6 +1727,7 @@ mln_data_transform_SOURCES = mln_data_transform.cc
 mln_data_transform_inplace_SOURCES = mln_data_transform_inplace.cc
 mln_data_update_SOURCES = mln_data_update.cc
 mln_data_was_median_SOURCES = mln_data_was_median.cc
+mln_data_wrap_SOURCES = mln_data_wrap.cc
 mln_debug_all_SOURCES = mln_debug_all.cc
 mln_debug_draw_graph_SOURCES = mln_debug_draw_graph.cc
 mln_debug_essential_SOURCES = mln_debug_essential.cc
@@ -2416,6 +2424,7 @@ mln_transform_essential_SOURCES = mln_transform_essential.cc
 mln_transform_hough_SOURCES = mln_transform_hough.cc
 mln_transform_influence_zone_front_SOURCES = mln_transform_influence_zone_front.cc
 mln_transform_influence_zone_geodesic_SOURCES = mln_transform_influence_zone_geodesic.cc
+mln_transform_influence_zone_geodesic_saturated_SOURCES = mln_transform_influence_zone_geodesic_saturated.cc
 mln_transform_internal_all_SOURCES = mln_transform_internal_all.cc
 mln_transform_internal_closest_point_functor_SOURCES = mln_transform_internal_closest_point_functor.cc
 mln_transform_internal_distance_functor_SOURCES = mln_transform_internal_distance_functor.cc
@@ -2528,6 +2537,7 @@ mln_value_internal_value_like_SOURCES = mln_value_internal_value_like.cc
 mln_value_interval_SOURCES = mln_value_interval.cc
 mln_value_label_SOURCES = mln_value_label.cc
 mln_value_label_16_SOURCES = mln_value_label_16.cc
+mln_value_label_32_SOURCES = mln_value_label_32.cc
 mln_value_label_8_SOURCES = mln_value_label_8.cc
 mln_value_lut_vec_SOURCES = mln_value_lut_vec.cc
 mln_value_mixin_SOURCES = mln_value_mixin.cc

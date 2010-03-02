@@ -194,6 +194,7 @@ mln/core/alias/window1d.hh \
 mln/core/alias/window2d.hh \
 mln/core/alias/window3d.hh \
 mln/core/all.hh \
+mln/core/box_runend_piter.hh \
 mln/core/box_runstart_piter.hh \
 mln/core/category.hh \
 mln/core/concept/accumulator.hh \
@@ -332,6 +333,7 @@ mln/core/internal/image_morpher.hh \
 mln/core/internal/image_primary.hh \
 mln/core/internal/image_value_morpher.hh \
 mln/core/internal/is_masked_impl_selector.hh \
+mln/core/internal/labeled_image_base.hh \
 mln/core/internal/morpher_lvalue.hh \
 mln/core/internal/neighb_base.hh \
 mln/core/internal/neighb_niter_base.hh \
@@ -451,6 +453,7 @@ mln/data/transform.hh \
 mln/data/transform.spe.hh \
 mln/data/transform_inplace.hh \
 mln/data/update.hh \
+mln/data/wrap.hh \
 mln/debug/all.hh \
 mln/debug/draw_graph.hh \
 mln/debug/essential.hh \
@@ -1088,6 +1091,7 @@ mln/transform/essential.hh \
 mln/transform/hough.hh \
 mln/transform/influence_zone_front.hh \
 mln/transform/influence_zone_geodesic.hh \
+mln/transform/influence_zone_geodesic_saturated.hh \
 mln/transform/internal/all.hh \
 mln/transform/internal/closest_point_functor.hh \
 mln/transform/internal/distance_functor.hh \
@@ -1198,6 +1202,7 @@ mln/value/internal/value_like.hh \
 mln/value/interval.hh \
 mln/value/label.hh \
 mln/value/label_16.hh \
+mln/value/label_32.hh \
 mln/value/label_8.hh \
 mln/value/lut_vec.hh \
 mln/value/mixin.hh \
