@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <set>
 #include <algorithm>
 
 #include <mln/core/image/image2d.hh>
@@ -12,6 +13,8 @@
 
 #include <mln/data/fill.hh>
 #include <mln/data/wrap.hh>
+
+#include <mln/make/box2d.hh>
 
 #include <mln/util/timer.hh>
 
@@ -30,11 +33,82 @@ namespace scribo
       using value::int_u8;
 
 
+      template <typename L>
+      inline
+      int delta_of_line(const scribo::line_info<L>& l)
+      {
+	return l.char_width() + l.char_space();
+      }
+
+
+      template <typename L>
+      inline
+      bool looks_like_a_text_line(const scribo::line_info<L>& l)
+      {
+	return
+	  l.card() >= 3                  // at least 3 components
+	  && l.bbox().height() > 10      // and minimal height
+	  && l.bbox().width() > l.bbox().height(); // and more horizontal-like than vertical
+	// FIXME: Later on, add a criterion based on the number
+	// of alignments (on top and bot).
+      }
+
+
+      /*!
+
+       */
+      template <typename L>
+      struct group_data_t
+      {
+	group_data_t()
+	  : info(0)
+	{
+	}
+
+	group_data_t(const scribo::line_info<L>& info_)
+	  : info(&info_)
+	{
+	  finalize();
+	}
+
+	const scribo::line_info<L>* info;
+
+	// deduced:
+	int meanline;
+	bool looks_like_a_line;
+	unsigned delta;
+	box2d ebox;
+
+	void finalize()
+	{
+	  if (info->x_height() == 0)
+	    std::cerr << "oops" << std::endl;
+
+	  meanline = info->baseline() - int(info->x_height()) + 1;
+
+	  looks_like_a_line = looks_like_a_text_line(*info);
+
+	  // delta = looks_like_a_line ? char_space + char_width : 0;
+	  delta = delta_of_line(*info);
+	  // FIXME: choose between:
+	  //   char_width + char_space
+	  //   2 * char_width
+	  //   char_width + 2 * char_space
+
+	  int A = info->a_height() - info->x_height(), D = - info->d_height();
+	  if (A <= 2 && D > 2)
+	    A = D;
+	  if (D <= 2 && A > 2)
+	    D = A;
+	  ebox = mln::make::box2d(meanline - A, info->bbox().pmin().col() - delta,
+				  info->baseline() + D, info->bbox().pmax().col() + delta);
+	}
+
+      };
 
       template <typename T, typename T2>
       void draw_box(image2d<T>& input, const box2d& b, T2 l)
       {
-//     data::fill((input | b).rw(), l);
 	const unsigned
 	  delta = input.delta_index(dpoint2d(1,0)),
 	  nrows = b.nrows(),
@@ -114,39 +188,39 @@ namespace scribo
 
 
       template <typename L>
-      unsigned do_union(scribo::line_set<L>& lines,
+      unsigned do_union(util::array<group_data_t<L> >& dta,
+			scribo::line_set<L>& lines,
 			unsigned l1,
 			unsigned l2,
 			util::array<unsigned>& parent)
       {
-	unsigned
-	  l1r = my_find_root(parent, l1),
-	  l2r = my_find_root(parent, l2);
-	if (l1r == l2r)
+	l1 = my_find_root(parent, l1);
+	l2 = my_find_root(parent, l2);
+	if (l1 == l2)
+	  return l1;
+
+	swap_ordering(l1, l2);
+	parent[l2] = l1; // The smallest label value is root.
+
+	if (lines(l2).card() > lines(l1).card())
 	{
-	  std::cout << '.' << std::endl;
-	  return l1r;
+          // we transfer data from the largest item to the root one.
+	  scribo::line_info<L> tmp = lines(l1);
+	  lines(l1) = lines(l2);
+	  lines(l1).fast_merge(tmp);
+
+	  // We must set manually the tag for lines(l2) since it is
+	  // not used directly in merge process so its tag cannot be
+	  // updated automatically.
+	  lines(l2).update_tag(line::Merged);
 	}
+	else
+	  lines(l1).fast_merge(lines(l2));
 
-//    swap_ordering(l1, l2);
-
-//     parent[l2] = l1; // The smallest label value is root.
-//     lines(l1).fast_merge(lines(l2));
-
-	if (lines(l1).card() < lines(l2).card())
-	  std::swap(l1, l2);
-
-	parent[l2] = l1; // The text line with the most component count is root.
-	lines(l1).fast_merge(lines(l2));
-
-//	looks_like_a_text_line_[l1] = looks_like_a_text_line(lines(l1));
-
+	dta[l1].finalize();
 
 	// l1's tag is automatically set to line::Needs_Precise_Stats_Update
 	// l2's tag is automatically set to line::Merged
-
-	// looks_like_txt_line[l1] = looks_like_txt_line[l1] || looks_like_txt_line[l2];
-	// merge of "approximate stats": (n, (n x sum))  =>  useful for computing the enlarging delta
 
 	return l1;
       }
@@ -160,100 +234,47 @@ namespace scribo
       }
 
 
-      void compute_data(// in
-	unsigned tl, unsigned tr, unsigned bl, unsigned br,
-	// out
-	unsigned& l1, unsigned& l2, unsigned& l3, unsigned& l4,
-	unsigned& count_non_zero,
-	unsigned& count_different_labels)
-      {
-	l1 = l2 = l3 = l4 = 0;
-	count_non_zero = 0;
-	if (tl)
-	{
-	  l1 = tl;
-	  ++count_non_zero;
-	}
-	if (tr)
-	{
-	  if (! l1) l1 = tr;
-	  else if (tr != l1) l2 = tr;
-	  ++count_non_zero;
-	}
-	if (bl)
-	{
-	  if (! l1) l1 = bl;
-	  else if (! l2) { if (bl != l1) l2 = bl; }
-	  else if (bl != l1 && bl != l2) l3 = bl;
-	  ++count_non_zero;
-	}
-	if (br)
-	{
-	  if (! l1) l1 = br;
-	  else if (! l2) { if (br != l1) l2 = br; }
-	  else if (! l3) { if (br != l1 && br != l2) l3 = br; }
-	  else if (br != l1 && br != l2 && br != l3) l4 = br;
-	  ++count_non_zero;
-	}
-
-	if (l1 == 0)
-	  count_different_labels = 0;
-	else if (l2 == 0)
-	  count_different_labels = 1;
-	else if (l3 == 0)
-	  count_different_labels = 2;
-	else if (l4 == 0)
-	  count_different_labels = 3;
-	else
-	  count_different_labels = 4;
-
-	if (count_different_labels == 0)
-	  std::cerr << "bug 0" << std::endl;
-      }
-
-
-      template <typename L>
-      bool looks_like_a_text_line(const scribo::line_info<L>& l)
-      {
-	return
-	  /*l.card() > 2                                 //     suffisient cardinality
-	  && */l.bbox().height() > 20                    // and suffisient height
-	  && l.bbox().width() > 50                     // and suffisient width
-	  && l.bbox().width() > 2 * l.bbox().height(); // and horizontal-like.
-
-	// FIXME:
-	// if (n_comps > 2)
-	//   return true;
-	// FIXME: Refine?
-      }
-
-
-      template <typename L>
-      int delta_of_line(const scribo::line_info<L>& l)
-      {
-	return l.char_width() /* / 2 */ + l.char_space();
-      }
-
-
       template <typename L>
       void draw_enlarged_box(image2d<unsigned>& output,
-			     const scribo::line_info<L>& l)
+			     const util::array<group_data_t<L> >& dta,
+			     unsigned l)
       {
-	if (looks_like_a_text_line(l))
-	  draw_box(output, enlarge(l.bbox(), delta_of_line(l)), l.id());
-	else
-	  draw_box(output, l.bbox(), l.id());
+	box2d b = dta[l].ebox;
+	b.crop_wrt(output.domain());
+	draw_box(output, b, l);
       }
 
 
-      template <typename L>
-      bool lines_can_merge(const scribo::line_info<L>& l1, const scribo::line_info<L>& l2)
-      {
-	float hratio = float(l1.bbox().height()) / float(l2.bbox().height());
-	float xhratio = float(l1.x_height()) / float(l2.x_height());
-	if ((hratio < 0.5 || hratio > 2.) && (xhratio < 0.8 || xhratio > 1.25)) // too different heights
-	  return false;
+      /*! \brief Check whether two lines can merge.
 
+	Criterions:
+	- Height ratio must be <= 1.7
+	- Baselines delta must be <= 3
+	- Boxes must not overlap too much.
+
+      */
+      template <typename L>
+      bool lines_can_merge(const scribo::line_info<L>& l1,
+			   const scribo::line_info<L>& l2)
+      {
+	// Parameters.
+	const float x_ratio_max = 1.7, baseline_delta_max = 3;
+
+	// Similarity of x_height.
+	{
+	  float x1 = l1.x_height(), x2 = l2.x_height();
+	  float x_ratio = std::max(x1, x2) / std::min(x1, x2);
+	  if (x_ratio > x_ratio_max)
+	    return false;
+	}
+
+	// Same baseline.
+	{
+	  if (std::abs(l1.baseline() - l2.baseline()) > baseline_delta_max)
+	    return false;
+	}
+
+	// left / right
 	unsigned
 	  col1 = l1.bbox().pcenter().col(),
 	  col2 = l2.bbox().pcenter().col();
@@ -264,64 +285,201 @@ namespace scribo
       }
 
 
-
-//   struct line_info<L>
-//   {
-//     bool looks_like_a_text_line; // pre-computed
-//     int delta_of_line; // pre-computed before each merging pass
-
-//     // FIXME:
-//     //
-//     // Important note: after merging two lines, we draw the
-//     // merged line over the existing one; we have to ensure that we
-//     // cover the previous rectangle (otherwise we have a label in
-//     // 'output' that is not used anymore! and it can mix up the
-//     // detection of upcoming merges...)  so this delta has to remain
-//     // the same during one pass.  Another solution (yet more costly)
-//     // could be of erasing the previous rectangle before re-drawing...
-//   };
+      template <typename L>
+      int horizontal_distance(const scribo::line_info<L>& l1,
+			      const scribo::line_info<L>& l2)
+      {
+	if (l1.bbox().pcenter().col() < l2.bbox().pcenter().col())
+	  return l2.bbox().pmin().col() - l1.bbox().pmax().col();
+	else
+	  return l1.bbox().pmin().col() - l2.bbox().pmax().col();
+      }
 
 
+      /*! \brief Check whether a non line component and a line can merge.
+
+	Criterions:
+	- Small height (c.height < l.x_height)
+	- Character width mean in 'c' must be lower than the character
+        width median of 'l'. (c.width / c.ncomps < l.char_width)
+
+	OR
+
+	- Small height (c.height < l.x_height)
+	- Not so long width (c.width < 5 * l.char_width)
+	- Aligned with the 'x' center ((l.baseline + l.meanline / 2) - c.center.row < 7)
+	- tiny spacing (horizontal distance < 5)
+
+      */
+      template <typename L>
+      bool non_line_and_line_can_merge(const scribo::line_info<L>& l_cur,
+				       const group_data_t<L>& dta_cur, // current
+				       const scribo::line_info<L>& l_ted,
+				       const group_data_t<L>& dta_ted) // touched
+      {
+	if (dta_cur.looks_like_a_line || ! dta_ted.looks_like_a_line)
+	  return false;
+	// the current object is a NON-textline
+	// the background (touched) object is a textline
+
+
+	// FIXME: THERE IS A BUG
+	// The second condition should be replaced by the commented one.
+	//
+	// General case (for tiny components like --> ',:."; <--):
+	if (l_cur.bbox().height() < l_ted.x_height()
+	    && float(l_cur.char_width()) / float(l_cur.card()) < l_ted.char_width())
+//	    && float(l_cur.bbox().width()) / float(l_cur.card()) < l_ted.char_width())
+	  return true;
+
+
+	// Special case for '---':
+	if (// small height:
+	  l_cur.bbox().height() < l_ted.x_height()
+	  // // not so long width:
+	  && l_cur.bbox().width() < 5 * l_ted.char_width()
+	  // align with the 'x' center:
+	  && std::abs((l_ted.baseline() + dta_ted.meanline) / 2 - l_cur.bbox().pcenter().row()) < 7
+	  // tiny spacing:
+	  && horizontal_distance(l_cur, l_ted) < 5
+	  )
+	{
+	  return true;
+	}
+
+
+	// Special case
+
+//     // FIXME: Box are aligned; the main problem is that we can have multiple valid box
+//     // depending on the presence of descent and/or ascent!
+//     if (std::abs(dta_cur.box.pmin().row() - dta_ted.box.pmin().row()) < 5     // top
+// 	&& std::abs(dta_cur.box.pmax().row() - dta_ted.box.pmax().row()) < 5  // bot
+// 	&& ((dta_ted.box.pcenter().col() < dta_cur.box.pcenter().col()  &&  dta_cur.box.pmin().col() - dta_ted.box.pmax().col() < 10)     // small distance when cur is at right
+// 	    || (dta_cur.box.pcenter().col() < dta_ted.box.pcenter().col()  &&  dta_ted.box.pmin().col() - dta_cur.box.pmax().col() < 10)) // or when is at left.
+// 	)
+//       return true;
+
+
+	return false;
+
+	// The unused criterion below is too restrictive; it does not work
+	// for ending '-', and neither for ',' when there's no descent.
+	//       dta_ted.box.has(dta_cur.box.pcenter())
+      }
+
+
+      /*! \brief Merge text lines.
+
+	This algorithm iterates over all the components ordered by size.
+	It uses a 2d labeled image, tmp_box, to draw component bounding
+	boxes and uses that image to check bounding box collisions.
+	Depending on that collisions and whether the component looks like
+	a text line or not, bounding boxes are merged.
+
+	\verbatim
+	ALGORITHM:
+	for each component 'cur' in decreasing order
+	  if already merged
+	    continue
+
+	    ///
+	    /// x-----------x
+	    /// |           |
+	    /// x     x     x
+	    /// |           |
+	    /// x-----------x
+	    ///
+
+	    Set labels <- Every labels corresponding to the colliding bounding
+	                  boxes (uses only the 7 sites detailled above).
+
+	    If label.card == 1
+	      l = label.get(0);
+	      If l != background
+	        If looks_like_a_line(cur)
+		  If looks_like_a_line(l)
+		    // Error case: a line is included in a line.
+		  else
+		    // Line cur is included in a frame or a drawing.
+		    draw_enlarged_box(l)
+		  end
+		else
+		  If looks_like_a_line(l)
+		  // Component cur is a punctuation overlapping with line l.
+		  l_ <- do_union(cur, l)
+		  draw_enlarged_box(l_)
+		end
+	      end
+	    else
+	      If looks_like_a_line(cur)
+	        // Component cur is a new line.
+		draw_enlarged_box(l)
+	      end
+	    end
+	  else
+	    for each label l in labels
+	      If l == background
+	        continue
+	      end
+
+	      If lines_can_merge(cur, l)
+	        l_ <- do_union(cur, l)
+		draw_enlarged_box(l_)
+		continue
+	      end
+
+	      If !looks_like_a_line(cur) and looks_like_a_line(l)
+	     	If non_line_and_line_can_merge(cur, l)
+		  // A punctuation merge with a line
+		  l_ <- do_union(cur, l)
+		  draw_enlarged_box(l_)
+		  continue
+		else
+		  // None
+		end
+	      else
+	      // Error case
+	    end
+	  end
+
+	  \endverbatim
+      */
+      // FIXME:
+      //
+      // Important note: after merging two lines, we draw the
+      // merged line over the existing one; we have to ensure that we
+      // cover the previous rectangle (otherwise we have a label in
+      // 'output' that is not used anymore! and it can mix up the
+      // detection of upcoming merges...)  so this delta has to remain
+      // the same during one pass.  Another solution (yet more costly)
+      // could be of erasing the previous rectangle before re-drawing...
+      //
       template <typename L>
       image2d<unsigned>
       one_merge_pass(unsigned ith_pass,
 		     const box2d& domain,
 		     std::vector<scribo::line_id_t>& v,
 		     scribo::line_set<L>& lines,
-		     util::array<unsigned>& parent,
-		     util::array<bool>& looks_like_a_text_line_,
-		     bool last_pass = false)
+		     util::array<group_data_t<L> >& dta,
+		     util::array<unsigned>& parent)
       {
-	image2d<unsigned> canvas(domain);
-	data::fill(canvas, 0);
+	image2d<unsigned> output(domain);
+	data::fill(output, 0);
 
 	image2d<value::int_u8> log(domain);
 	data::fill(log, 0);
 
-	unsigned
-	  count_new = 0,
-	  count_include = 0,
-	  count_merge = 0,
-	  count_grow = 0,
-	  count_bad_3 = 0,
-	  count_bad_4 = 0;
-
-	unsigned
-
-	  count_1_grow_ok = 0,
-	  count_1_grow_KO = 0,
-	  count_1_merge_ok = 0,
-	  count_1_merge_KO = 0,
-	  count_1_other = 0,
-
-	  count_2_merge_hyphen_ok = 0,
-	  count_2_merge_hyphen_KO = 0,
-	  count_2_merge_all_ok = 0,
-	  count_2_merge_all_KO = 0,
-	  count_2_merge_other = 0;
-
-	const unsigned n = lines.nelements();
+	const unsigned n = dta.nelements() - 1;
 	unsigned l_;
+
+	unsigned
+	  count_txtline_IN_txtline = 0,
+	  count_txtline_IN_junk = 0,
+	  count_two_lines_merge = 0,
+	  count_new_txtline = 0,
+	  count_comp_IN_txtline = 0,
+	  count_comp_HITS_txtline = 0,
+	  count_WTF = 0;
 
 	for (int i = n - 1; i >= 0; --i)
 	{
@@ -332,324 +490,191 @@ namespace scribo
 
 	  box2d b = lines(l).bbox();
 
-	  unsigned tl, tr, bl, br;
+	  unsigned tl, tr, ml, mc, mr, bl, br;
 
 	  {
-	    box2d b_ =
-	      looks_like_a_text_line_(lines(l).id()) ?
-	      enlarge(b, delta_of_line(lines(l))) :
-	      b;
-	    tl = canvas(b_.pmin());
-	    tr = canvas.at_(b_.pmin().row(), b_.pmax().col());
-	    bl = canvas.at_(b_.pmax().row(), b_.pmin().col());
-	    br = canvas(b_.pmax());
+	    box2d b_;
+
+	    b_ = enlarge(lines(l).bbox(), dta[l].delta);
+	    b_.crop_wrt(output.domain());
+
+
+	    /*
+	      tl             tr
+	      x---------------x
+	      |               |
+	      |       mc      |
+	   ml x       x       x mr
+	      |               |
+	      |               |
+	      x---------------x
+	      bl             br
+
+	    */
+
+
+	    tl = output(b_.pmin());
+	    tr = output.at_(b_.pmin().row(), b_.pmax().col());
+	    ml = output.at_(b_.pcenter().row(), b_.pmin().col());
+	    mc = output.at_(b_.pcenter().row(), b_.pcenter().col());
+	    mr = output.at_(b_.pcenter().row(), b_.pmax().col());
+	    bl = output.at_(b_.pmax().row(), b_.pmin().col());
+	    br = output(b_.pmax());
 	  }
 
-// 	{
-// 	  tl = canvas(b.pmin());
-// 	  tr = canvas.at_(b.pmin().row(), b.pmax().col());
-// 	  bl = canvas.at_(b.pmax().row(), b.pmin().col());
-// 	  br = canvas(b.pmax());
-// 	}
+	  typedef std::set<unsigned> set_t;
+	  std::set<unsigned> labels;
+	  labels.insert(tl);
+	  labels.insert(tl);
+	  labels.insert(tr);
+	  labels.insert(ml);
+	  labels.insert(mc);
+	  labels.insert(mr);
+	  labels.insert(bl);
+	  labels.insert(br);
 
-	  if (tl == tr && bl == br && tl == bl) // Same behavior for all corners.
+
+	  if (labels.size() == 1) // Same behavior for all ancors.
 	  {
-	    if (tl != 0)
+	    if (mc != 0)
 	    {
 	      // Main case: it is an "included" box (falling in an already drawn box)
-	      ++count_include;
 
-	      // Merge lines #tl and #l.
-	      l_ = do_union(lines, tl, l, parent);
-	      // We have to re-draw the original largest line since
-	      // it may change of label (take the one of the included line).
-	      draw_enlarged_box(canvas, lines(l_));
+	      if (dta[l].looks_like_a_line)
+	      {
+		if (dta[mc].looks_like_a_line)
+		{
+		  ++count_txtline_IN_txtline;
+		  std::cout << "weird: inclusion of a txt_line in a txt_line!" << std::endl;
+		}
+		else
+		{
+		  ++count_txtline_IN_junk;
 
-	      // Log:
-	      draw_box(log, b, 128);
+		  // a non-line (probably a drawing or a frame) includes a line
+		  draw_enlarged_box(output, dta, l);
+		  // Log:
+		  draw_box(log, b, 100);
+		}
+	      }
+	      else // the current object is NOT a line
+	      {
+		if (dta[mc].looks_like_a_line)
+		{
+		  ++count_comp_IN_txtline;
+		  // FIXME: critere petouille a ajouter ici
+
+		  // Merge non-line #l into line #mc.
+		  l_ = do_union(dta, lines, mc, l, parent);
+		  // We have to re-draw the original largest line since
+		  // it may change of label (take the one of the included line).
+		  draw_enlarged_box(output, dta, l_);
+
+		  // Log:
+		  draw_box(log, b, 128);
+		}
+	      }
 	    }
 	    else
 	    {
-	      // Main case: it is a "new" box, to be drawn in the background.
-	      ++count_new;
+	      // Main case: it is a "new" box, that might be drawn in the background.
 
-	      // Extra test:
-	      if (canvas(b.pcenter()) == 0)
-		// confirmation that we are not in this rare pathological case:
-		//
-		//        o---o
-		//   +----|---|---------+
-		//   |    | ? |         |
-		//   +----|---|---------+
-		//        o---o
+	      // we only draw this box if it is a text-line!!!
+	      if (dta[l].looks_like_a_line)
 	      {
-		draw_enlarged_box(canvas, lines(l));
+		++count_new_txtline;
+		draw_enlarged_box(output, dta, l);
 		// Log:
 		draw_box(log, b, 127);
 	      }
 	      else
-	      {
-		// FIXME:
-		// We have to tag as pathological the line l.
-		if (last_pass)
-		  lines(l).update_tag(scribo::line::Pathological);
-		std::cout << "pathological ''new box''" << std::endl;
-	      }
+		draw_box(log, b, 1);
 	    }
 	  }
 	  else
 	  {
 	    // Particular cases.
-	    unsigned
-	      l1, l2, l3, l4,
-	      count_non_zero, count_different_labels;
-
-	    compute_data(// in
-	      tl, tr, bl, br,
-	      // out
-	      l1, l2, l3, l4,
-	      count_non_zero, count_different_labels);
-
-
-	    if (count_different_labels == 0)
-	      std::cout << "bug 0000" << std::endl;
-
-
-	    if (count_different_labels == 1 && count_non_zero == 3)
+	    for (set_t::const_iterator it = labels.begin();
+		 it != labels.end();
+		 ++it)
 	    {
-	      //  +----------+
-	      //  |  x--x    |
-	      //  |  |  |    |
-	      //  |  x--0 !! |
-	      //  +----------+
-	      std::cout << "bug 1-3" << std::endl;
-	    }
+	      unsigned lcand = *it;
 
-	    // FIXME: Handle the case where count_different_labels ==
-	    // 2 && count_non_zero == 3?
+	      if (lcand == 0) // Skip background.
+		continue;
 
-
-	    if (count_different_labels == 4)
-	    {
-	      ++count_bad_4;
-
-	      // FIXME:
-	      // We have to tag as pathological the line l.
-	      if (last_pass)
-		lines(l).update_tag(scribo::line::Pathological);
-
-	      // Log:
-	      draw_box(log, b, 254);
-	    }
-
-
-	    if (count_different_labels == 3)
-	    {
-	      ++count_bad_3;
-
-	      // FIXME:
-	      // We have to tag as pathological the line l.
-	      if (last_pass)
-		lines(l).update_tag(scribo::line::Pathological);
-
-	      // Log:
-	      draw_box(log, b, 253);
-	    }
-
-
-	    if (count_different_labels == 1)  // Usually a "grow" case thanks to comma, hyphen, etc.
-	    {
-	      ++count_grow;
-
-	      if (count_non_zero == 0 || count_non_zero == 4)
-		std::cerr << "bug 1-04" << std::endl;
-
-	      // We have to test if we shall merge!
-
-	      bool
-		l_is_line  = looks_like_a_text_line_(lines(l).id()),
-		l1_is_line = looks_like_a_text_line_(lines(l1).id());
-
-	      if (! l_is_line && l1_is_line)
+	      if (lines_can_merge(lines(l), lines(lcand)))
 	      {
-		// This is the classical "grow" case: a small component
-		// makes a larger one grow.
-
-		// l should be a comma, hyphen, etc. of the line l1
-		// so we try to make line l1 grow.
-		if (lines(l).bbox().height() < lines(l1).bbox().height()
-		    && lines(l).bbox().width() < lines(l1).bbox().width())
-		{
-		  // line l height and width are resp. smaller than line l1 height and width.
-		  ++count_1_grow_ok;
-		  l_ = do_union(lines, l, l1, parent);
-		  draw_enlarged_box(canvas, lines(l_));
-		  // Log:
-		  draw_box(log, b, 100);
-		}
-		else
-		{
-		  ++count_1_grow_KO;
-
-		  //    ,-.
-		  //    | | l etait une fois...
-		  //    | |
-		  //    | | bla bla bla.
-		  //    | |
-		  //    | | bla bla bla
-		  //    `-'
-		  //
-		  // It is usually the case of a dropped initial...
-		  //
-		  // FIXME: Do we want to set this line as pathological?
-
-		  if (last_pass)
-		    lines(l).update_tag(scribo::line::Pathological);
-
-		  draw_box(canvas, b, l);
-
-		  // Log:
-		  draw_box(log, b, 101);
-		}
-		// It seems better to distinguish between the
-		// different cases : if the height of line l is
-		// larger than the width, I can be a comma so I
-		// only merge if my location is at the bottom of
-		// line l1, and so on.
-	      }
-
-	      else if (l_is_line && l1_is_line)
-	      {
-		// Less common case than the above "grow" one:
-		// two lines merge.
-
-		if (lines_can_merge(lines(l), lines(l1)))
-		{
-		  ++count_1_merge_ok;
-		  l_ = do_union(lines, l, l1,  parent);
-		  draw_enlarged_box(canvas, lines(l_));
-		  // Log:
-		  draw_box(log, b, 110);
-		}
-		else
-		{
-		  ++count_1_merge_KO;
-		  if (last_pass)
-		    lines(l).update_tag(scribo::line::Pathological);
-
-		  // Log:
-		  draw_box(log, b, 111);
-		}
-	      }
-	      else
-	      {
-		++count_1_other;
+		++count_two_lines_merge;
+		l_ = do_union(dta, lines, l, lcand,  parent);
+		draw_enlarged_box(output, dta, l_);
 		// Log:
-		draw_box(log, b, 120);
+		draw_box(log, b, 151);
+		continue;
 	      }
-	    }
 
 
-	    if (count_different_labels == 2)
-	    {
-
-	      bool
-		l_is_line  = looks_like_a_text_line_(lines(l).id()),
-		l1_is_line = looks_like_a_text_line_(lines(l1).id()),
-		l2_is_line = looks_like_a_text_line_(lines(l2).id());
-
-	      if (! l_is_line && l1_is_line && l2_is_line)
+	      if (! dta[l].looks_like_a_line && dta[lcand].looks_like_a_line)
 	      {
-		// Typically an hyphen joins two tines (two chunks of the same line).
-		if (lines_can_merge(lines(l1), lines(l2)))
+		++count_comp_HITS_txtline;
+		if (non_line_and_line_can_merge(lines(l), dta[l], lines(lcand), dta[lcand]))
+		  // a petouille merges with a text line?
 		{
-		  ++count_2_merge_hyphen_ok;
-		  do_union(lines, l1, l2, parent);
-		  l_ = do_union(lines, l, l2,  parent);
-		  draw_enlarged_box(canvas, lines(l_));
+		  ++count_comp_HITS_txtline;
+		  l_ = do_union(dta, lines, l, lcand,  parent);
+		  draw_enlarged_box(output, dta, l_);
 		  // Log:
-		  draw_box(log, b, 80);
+		  draw_box(log, b, 169);
+		  continue;
 		}
 		else
 		{
-		  ++count_2_merge_hyphen_KO;
-		  if (last_pass)
-		    lines(l).update_tag(scribo::line::Pathological);
 		  // Log:
-		  draw_box(log, b, 81);
-		}
-	      }
-	      else if (l_is_line && l1_is_line && l2_is_line)
-	      {
-		// Typically three chunks of the same line.
-		if (lines_can_merge(lines(l1), lines(l2))
-		    && lines_can_merge(lines(l), lines(l1))
-		    && lines_can_merge(lines(l), lines(l2)))
-		{
-		  ++count_2_merge_all_ok;
-		  do_union(lines, l1, l2, parent);
-		  l_ = do_union(lines, l, l2,  parent);
-		  draw_enlarged_box(canvas, lines(l_));
-		  // Log:
-		  draw_box(log, b, 90);
-		}
-		else
-		{
-		  ++count_2_merge_all_KO;
-		  if (last_pass)
-		    lines(l).update_tag(scribo::line::Pathological);
-		  // Log:
-		  draw_box(log, b, 91);
+		  draw_box(log, b, 254);
 		}
 	      }
 	      else
 	      {
-		++count_2_merge_other;
-		if (last_pass)
-		  lines(l).update_tag(scribo::line::Pathological);
+		++count_WTF;
 		// Log:
 		draw_box(log, b, 255);
 	      }
 
-	      // FIXME: Perhaps there is only one merge...
-
 	    }
-
 	  }
+
 	}
 
-	std::cout
-	  << "new = " << count_new << std::endl
-	  << "inc = " << count_include << std::endl
-	  << "mrg = " << count_merge << std::endl
-	  << "grw = " << count_grow << std::endl
-	  << "bd3 = " << count_bad_3 << std::endl
-	  << "bd4 = " << count_bad_4 << std::endl;
 
 	std::cout
-	  << std::endl
-	  << "#1 grow  ok = " << count_1_grow_ok << std::endl
-	  << "#1 grow  KO = " << count_1_grow_KO << std::endl
-	  << "#1 merge ok = " << count_1_merge_ok << std::endl
-	  << "#1 merge KO = " << count_1_merge_KO << std::endl
-	  << "#1 other    = " << count_1_other << std::endl;
+	  << "   new txtline        = " << count_new_txtline        << std::endl
+	  << "   comp IN txtline    = " << count_comp_IN_txtline    << std::endl
+	  << "   2 lines merge      = " << count_two_lines_merge    << std::endl
+	  << "   comp HITS txtline  = " << count_comp_HITS_txtline  << std::endl
+	  << "   txtline IN junk    = " << count_txtline_IN_junk    << std::endl
+	  << "   txtline IN txtline = " << count_txtline_IN_txtline << std::endl
+	  << "   WTF!               = " << count_WTF << std::endl;
 
-	std::cout
-	  << std::endl
-	  << "#2 merge hyphen ok = " << count_2_merge_hyphen_ok << std::endl
-	  << "#2 merge hyphen KO = " << count_2_merge_hyphen_KO << std::endl
-	  << "#2 merge all ok    = " << count_2_merge_all_ok << std::endl
-	  << "#2 merge all KO    = " << count_2_merge_all_KO << std::endl
-	  << "#2 merge other     = " << count_2_merge_other << std::endl;
 
-	if (ith_pass == 1)
-	  mln::io::pgm::save(log, "log_1.pgm");
-	else if (ith_pass == 2)
-	  mln::io::pgm::save(log, "log_2.pgm");
-	else if (ith_pass == 3)
-	  mln::io::pgm::save(log, "log_3.pgm");
+	(void) ith_pass;
+// 	if (ith_pass == 1)
+// 	{
+// 	  mln::io::pgm::save(log, "log_1.pgm");
+// 	  mln::io::pgm::save(data::wrap(int_u8(), output), "log_1e.pgm");
+// 	}
+// 	else if (ith_pass == 2)
+// 	{
+// 	  mln::io::pgm::save(log, "log_2.pgm");
+// 	  mln::io::pgm::save(data::wrap(int_u8(), output), "log_2e.pgm");
+// 	}
+// 	else if (ith_pass == 3)
+// 	{
+// 	  mln::io::pgm::save(log, "log_3.pgm");
+// 	  mln::io::pgm::save(data::wrap(int_u8(), output), "log_3e.pgm");
+// 	}
 
-	return canvas;
+	return output;
+
       }
 
 
@@ -671,6 +696,8 @@ namespace scribo
 
 	scribo::line_set<L> lines_;
       };
+
+
 
       template <typename L>
       scribo::line_set<L>
@@ -702,34 +729,32 @@ namespace scribo
 	util::timer t;
 
 
-	// Caching whether a line looks like a text line.
-	util::array<bool>
-	  looks_like_a_text_line_(unsigned(lines.nelements()) + 1);
+	// Caching line temporary data.
+	util::array<group_data_t<L> >
+	  dta;
+	dta.reserve(unsigned(lines.nelements()) + 1);
+	dta.append(group_data_t<L>());
 	for_all_lines(l, lines)
-	  looks_like_a_text_line_[l] = looks_like_a_text_line(lines(l));
-
+	  dta.append(group_data_t<L>(lines(l)));
 
 	// First pass
 	t.start();
-	one_merge_pass(1, input_domain, v, lines,
-		       parent, looks_like_a_text_line_);
+	one_merge_pass(1, input_domain, v, lines, dta, parent);
 	float ts = t.stop();
 	std::cout << "time " << ts << std::endl;
 
 	// Second pass
 	t.start();
-	canvas = one_merge_pass(2, input_domain, v, lines,
-				parent, looks_like_a_text_line_,
-				true); // <- last pass
+	canvas = one_merge_pass(2, input_domain, v, lines, dta, parent); // <- last pass
 	ts = t.stop();
 	std::cout << "time " << ts << std::endl;
 
 
-	using value::int_u8;
+// 	using value::int_u8;
 	//io::pgm::save(data::wrap(int_u8(), canvas), "merge_result.pgm");
 
-	mln::io::ppm::save(labeling::colorize(value::rgb8(), canvas),
-		      "merge_result.ppm");
+// 	mln::io::ppm::save(labeling::colorize(value::rgb8(), canvas),
+// 		      "merge_result.ppm");
 
 
 	return lines;
