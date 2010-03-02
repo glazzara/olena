@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -96,17 +96,3 @@ CLEANFILES =								\
   technical.html							\
   technical.idx								\
   $(TECHNICAL_HH)
-
-
-#<<lrde
-# Pretend the documentation is up-to-date.
-.PHONY: fake-doc
-fake-doc:
-	touch $(TECHNICAL_HH)
-	touch $(TECHNICAL_PDF)
-
-# The converse of the previous rule, voiding the timestamps.
-.PHONY: void-doc
-void-doc:
-	touch $(srcdir)/technical.tex
-#>>

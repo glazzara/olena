@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -316,38 +316,3 @@ $(srcdir)/Doxyfile_devel: $(srcdir)/Doxyfile.in
 
 $(srcdir)/Doxyfile_devel_pdf: Doxyfile_devel
 	$(edit_pdf) $< >$@
-
-
-#<<lrde
-# Pretend the documentation is up-to-date.  This is really useful for
-# developers who want to check the distribution mechanism, for
-# generating the Doxygen documentation make take up to 1 hour.
-#
-# We selectively refresh files by hand in a certain order (some
-# of them being already listed in EXTRA_DIST), to satisfy the
-# dependencies.
-.PHONY: fake-doc
-fake-doc:
-	cd $(srcdir) && touch $(EXTRA_DIST)
-	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) $@
-	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
-	cd white_paper && $(MAKE) $(AM_MAKEFLAGS) $@
-	touch $(EXTRA_DEPS)
-	touch $(srcdir)/Doxyfile_devel
-	touch $(srcdir)/Doxyfile_devel_pdf
-	touch $(srcdir)/Doxyfile_user
-	touch $(srcdir)/Doxyfile_user_pdf
-	cd $(srcdir) && test -d user || mkdir user
-	for d in $(srcdir)/$(USER_REFMAN_HTML) $(srcdir)/user/latex; do	\
-	  if test -d $$d; then touch $$d; else mkdir $$d; fi;	\
-	done
-	touch $(srcdir)/$(USER_REFMAN_PDF)
-
-# The converse of the previous rule, voiding the timestamps.
-.PHONY: void-doc
-void-doc:
-	touch $(srcdir)/Doxyfile.in
-	cd ref_guide && $(MAKE) $(AM_MAKEFLAGS) $@
-	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
-	cd white_paper && $(MAKE) $(AM_MAKEFLAGS) $@
-#>>

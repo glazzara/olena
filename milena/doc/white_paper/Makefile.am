@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -96,20 +96,3 @@ CLEANFILES =					\
 
 clean-local:
 	-rm -rf white_paper_html figures
-
-
-#<<lrde
-# Pretend the documentation is up-to-date.
-.PHONY: fake-doc
-fake-doc:
-	test -d figures || mkdir figures
-	touch $(EPSS)
-	test -d $(srcdir)/white_paper_html || mkdir $(srcdir)/white_paper_html
-	touch $(WHITE_PAPER_HTML)
-	touch $(WHITE_PAPER_PDF)
-
-# The converse of the previous rule, voiding the timestamps.
-.PHONY: void-doc
-void-doc:
-	touch $(srcdir)/white_paper.tex
-#>>

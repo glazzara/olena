@@ -15,6 +15,17 @@
 
 2010-03-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Get rid of Make targets `fake-doc' and `void-doc'.
+
+	* doc/Makefile.am,
+	* doc/ref_guide/Makefile.am,
+	* doc/technical/Makefile.am,
+	* doc/tutorial/Makefile.am,
+	* doc/white_paper/Makefile.am
+	(fake-doc, void-doc): Remove targets.
+
+2010-03-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Regen Milena's Makefile helpers.
 
 	* headers.mk, tests/unit_test/unit-tests.mk: Here.
