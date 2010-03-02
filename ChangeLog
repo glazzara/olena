@@ -1,3 +1,13 @@
+2010-03-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Stop pruning Makefiles under milena/doc/.
+
+	* Makefile.am (LRDE_STRIPPED_DIST_FILES): Remove
+	$(distdir)/milena/doc/Makefile.am,
+	$(distdir)/milena/doc/ref_guide/Makefile.am,
+	$(distdir)/milena/doc/tutorial/Makefile.am and
+	$(distdir)/milena/doc/white_paper/Makefile.am.
+
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Aesthetic changes.
