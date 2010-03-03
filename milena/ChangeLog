@@ -1,5 +1,15 @@
 2010-03-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Stop make from recurring in doc/technical.
+
+	* doc/technical/Makefile.am: Rename as...
+	* doc/technical/technical.mk: ...this.
+	Adjust.
+	* doc/Makefile.am: Include $(srcdir)/technical/technical.mk.
+	(SUBDIRS): Remove technical.
+
+2010-03-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Stop make from recurring in doc/tutorial.
 
 	* doc/tutorial/Makefile.am: Rename as...

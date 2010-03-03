@@ -22,7 +22,6 @@ include $(top_srcdir)/milena/doc/doc.mk
 
 SUBDIRS =		\
   examples		\
-  technical 		\
   white_paper
 
 DOXYGEN = doxygen
@@ -113,6 +112,12 @@ DEVEL_REFMAN_HTML = devel/html
 ref-doc-devel-html: $(srcdir)/$(DEVEL_REFMAN_HTML)
 $(srcdir)/$(DEVEL_REFMAN_HTML): $(srcdir)/Doxyfile_devel $(srcdir)/figures.stamp $(EXTRA_DEPS)
 	$(DOXYGEN) $<
+
+## ------------------------- ##
+## Technical Documentation.  ##
+## ------------------------- ##
+
+include $(srcdir)/technical/technical.mk
 
 ## ---------- ##
 ## Tutorial.  ##
