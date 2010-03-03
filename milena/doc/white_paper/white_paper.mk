@@ -1,3 +1,5 @@
+#							-*- Automake -*-
+
 # Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -15,15 +17,17 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-include $(top_srcdir)/milena/doc/doc.mk
+.PHONY: white-paper white-paper-html white-paper-pdf
 
-TEXINPUTS=$(DOC_SRCDIR):$(srcdir):
+white_paper_dir = $(doc_dir)/white_paper
 
-PNGS = 					\
-  figures/house.png 			\
-  figures/house_rag.png 		\
-  figures/house_wshed.png 		\
-  figures/house_wshed_mean_colors.png
+white_paper_TEXINPUTS = $(DOC_SRCDIR):$(white_paper_dir):
+
+PNGS =								\
+  $(white_paper_dir)/figures/house.png				\
+  $(white_paper_dir)/figures/house_rag.png			\
+  $(white_paper_dir)/figures/house_wshed.png			\
+  $(white_paper_dir)/figures/house_wshed_mean_colors.png
 
 EPSS = $(PNGS:png=eps)
 
@@ -33,10 +37,7 @@ EPSS = $(PNGS:png=eps)
 	convert $< $@
 
 
-.PHONY: white-paper white-paper-html white-paper-pdf
-
 white-paper: white-paper-pdf white-paper-html
-
 
 # FIXME: As in milena/doc/Makefile.am, we should probably strip
 # $(srcdir) prefixes from target variables, e.g. instead of:
@@ -62,37 +63,41 @@ white-paper: white-paper-pdf white-paper-html
 # product is a directory, also refresh a timestamp (in the source
 # dir).
 
-WHITE_PAPER_HTML = $(srcdir)/white_paper_html/index.html
+# FIXME: Use texi2dvi/TeX4ht instead of plain hevea.
+WHITE_PAPER_HTML = $(white_paper_dir)/white_paper_html/index.html
 white-paper-html: $(WHITE_PAPER_HTML)
-$(WHITE_PAPER_HTML): white_paper.tex $(EPSS)
-	test -d $(srcdir)/white_paper_html || mkdir $(srcdir)/white_paper_html
-	TEXINPUTS=$(TEXINPUTS) hevea -O -fix $< -o $@
-	$(top_srcdir)/milena/doc/tools/clearbanner.sh $@
+$(WHITE_PAPER_HTML): $(white_paper_dir)/white_paper.tex $(EPSS)
+	test -d $(white_paper_dir)/white_paper_html	\
+	  || mkdir $(white_paper_dir)/white_paper_html
+	TEXINPUTS=$(white_paper_TEXINPUTS) hevea -O -fix $< -o $@
+	$(doc_dir)/tools/clearbanner.sh $@
 
 
-WHITE_PAPER_PDF = $(srcdir)/white_paper.pdf
+WHITE_PAPER_PDF = $(white_paper_dir)/white_paper.pdf
 white-paper-pdf: $(WHITE_PAPER_PDF)
-$(WHITE_PAPER_PDF): white_paper.tex $(PNGS)
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<		\
-	test "$(top_srcdir)" == "$(top_builddir)" 	\
-		|| mv -f white_paper.pdf $(srcdir)
+$(WHITE_PAPER_PDF): $(white_paper_dir)/white_paper.tex $(PNGS)
+	TEXINPUTS=$(white_paper_TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(white_paper_TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(white_paper_TEXINPUTS) pdflatex $<	\
+	test "x$(white_paper_dir)" != x.		\
+	  && mv -f white_paper.pdf $(white_paper_dir)
 
 
-dist_doc_DATA =					\
+dist_doc_DATA +=				\
   $(WHITE_PAPER_HTML)				\
   $(WHITE_PAPER_PDF)
 
-EXTRA_DIST =					\
-  white_paper.tex				\
+EXTRA_DIST +=					\
+  $(white_paper_dir)/white_paper.tex		\
   $(PNGS)					\
   $(EPSS)
 
-CLEANFILES =					\
+# FIXME: Remove unnecessary patterns.
+CLEANFILES +=					\
   white_paper_image.*				\
   white_paper.pdf				\
   *.log *.idx *.out *.aux
 
+# FIXME: Likewise.
 clean-local:
 	-rm -rf white_paper_html figures

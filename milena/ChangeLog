@@ -1,5 +1,16 @@
 2010-03-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Stop make from recurring in doc/white_paper.
+
+	* doc/white_paper/Makefile.am: Rename as...
+	* doc/white_paper/white_paper.mk: ...this.
+	Adjust.
+	* doc/Makefile.am: Include $(srcdir)/white_paper/white_paper.mk.
+	(SUBDIRS): Remove white_paper.
+	(white-paper-pdf, white-paper-html): Remove (phony) targets.
+
+2010-03-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Stop make from recurring in doc/technical.
 
 	* doc/technical/Makefile.am: Rename as...

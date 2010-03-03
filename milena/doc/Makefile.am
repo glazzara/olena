@@ -21,8 +21,7 @@
 include $(top_srcdir)/milena/doc/doc.mk
 
 SUBDIRS =		\
-  examples		\
-  white_paper
+  examples
 
 DOXYGEN = doxygen
 
@@ -37,7 +36,6 @@ CLEANFILES =
 	doc-pdf doc-html doc-devel-pdf doc-devel-html	\
 	ref-doc-pdf ref-doc-html			\
 	ref-doc-devel-pdf ref-doc-devel-html		\
-	white-paper-pdf white-paper-html		\
 	examples data-regen fig-convert
 
 
@@ -129,11 +127,7 @@ include $(srcdir)/tutorial/tutorial.mk
 ## White Paper.  ##
 ## ------------- ##
 
-white-paper-pdf:
-	cd white_paper && $(MAKE) $(AM_MAKEFLAGS) $@
-
-white-paper-html:
-	cd white_paper && $(MAKE) $(AM_MAKEFLAGS) $@
+include $(srcdir)/white_paper/white_paper.mk
 
 ## ----------------- ##
 ## Reference Guide.  ##
