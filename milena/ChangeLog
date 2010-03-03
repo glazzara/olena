@@ -1,3 +1,15 @@
+2010-03-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Stop make from recurring in doc/tutorial.
+
+	* doc/tutorial/Makefile.am: Rename as...
+	* doc/tutorial/tutorial.mk: ...this.
+	Adjust.
+	* doc/Makefile.am: Include $(srcdir)/tutorial/tutorial.mk.
+	(SUBDIRS): Remove tutorial.
+	($(srcdir)/tutorial/tutorial.hh): Remove target.
+	(tutorial-pdf, tutorial-html): Remove (phony) targets.
+
 2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix apps/mesh-segm-skel/io.hh.

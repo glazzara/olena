@@ -23,7 +23,6 @@ include $(top_srcdir)/milena/doc/doc.mk
 SUBDIRS =		\
   examples		\
   technical 		\
-  tutorial 		\
   white_paper
 
 DOXYGEN = doxygen
@@ -39,7 +38,6 @@ CLEANFILES =
 	doc-pdf doc-html doc-devel-pdf doc-devel-html	\
 	ref-doc-pdf ref-doc-html			\
 	ref-doc-devel-pdf ref-doc-devel-html		\
-	tutorial-pdf tutorial-html			\
 	white-paper-pdf white-paper-html		\
 	examples data-regen fig-convert
 
@@ -66,8 +64,6 @@ doc-devel-html: tutorial-html ref-guide-html white-paper-html \
 # FIXME: Maintaining dependencies across directories is too
 # complicated.  Simplify.
 EXTRA_DEPS = $(srcdir)/tutorial/tutorial.hh $(srcdir)/ref_guide/ref_guide.hh
-$(srcdir)/tutorial/tutorial.hh: fig-convert
-	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) tutorial-html
 
 ## ----------------------- ##
 ## Doxygen documentation.  ##
@@ -122,10 +118,7 @@ $(srcdir)/$(DEVEL_REFMAN_HTML): $(srcdir)/Doxyfile_devel $(srcdir)/figures.stamp
 ## Tutorial.  ##
 ## ---------- ##
 
-tutorial-pdf: fig-convert
-	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
-tutorial-html: fig-convert
-	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) $@
+include $(srcdir)/tutorial/tutorial.mk
 
 ## ------------- ##
 ## White Paper.  ##

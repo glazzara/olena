@@ -1,3 +1,5 @@
+#							-*- Automake -*-
+
 # Copyright (C) 2008, 2009, 2010 EPITA Research and Development
 # Laboratory (LRDE).
 #
@@ -16,14 +18,14 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-.PHONY: tutorial tutorial-html
+.PHONY: tutorial tutorial-html tutorial-pdf
 
-include $(top_srcdir)/milena/doc/doc.mk
-
-TEXINPUTS = $(DOC_SRCDIR):$(OUTPUTS_SRCDIR):$(IMG_SRCDIR):
+tutorial_TEXINPUTS = $(DOC_SRCDIR):$(OUTPUTS_SRCDIR):$(IMG_SRCDIR):
 
 
 tutorial: tutorial-html tutorial-pdf
+
+tutorial_dir = $(doc_dir)/tutorial
 
 # FIXME: As in milena/doc/Makefile.am, we should probably strip
 # $(srcdir) prefixes from target variables, e.g. instead of:
@@ -55,44 +57,39 @@ tutorial: tutorial-html tutorial-pdf
 # This is not a bug: TUTORIAL_HH is meant to have a `.hh' extension,
 # since it is later parsed by Doxygen, which complains about `.html'
 # files.
-TUTORIAL_HH = $(srcdir)/tutorial.hh
+TUTORIAL_HH = $(tutorial_dir)/tutorial.hh
 tutorial-html: $(TUTORIAL_HH)
-$(TUTORIAL_HH): tutorial.tex $(srcdir)/../figures.stamp
-	$(DOC_SRCDIR)/tools/todoxygen.sh		\
-	  $< $(DOC_SRCDIR)/tutorial $(DOC_SRCDIR)
+$(TUTORIAL_HH): $(tutorial_dir)/tutorial.tex $(doc_dir)/figures.stamp
+	$(doc_dir)/tools/todoxygen.sh $< $(tutorial_dir) $(doc_dir)
+
 
 # Final product.
-TUTORIAL_PDF = $(srcdir)/tutorial.pdf
+TUTORIAL_PDF = $(tutorial_dir)/tutorial.pdf
 tutorial-pdf: $(TUTORIAL_PDF)
-$(TUTORIAL_PDF): tutorial.tex $(srcdir)/../figures.stamp
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(TEXINPUTS) pdflatex $<		\
-	test "$(top_srcdir)" == "$(top_builddir)"	\
-		|| mv -f tutorial.pdf $(srcdir)
+$(TUTORIAL_PDF): $(tutorial_dir)/tutorial.tex $(doc_dir)/figures.stamp
+	TEXINPUTS=$(tutorial_TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(tutorial_TEXINPUTS) pdflatex $<
+	TEXINPUTS=$(tutorial_TEXINPUTS) pdflatex $<	\
+	test x"$(tutorial_dir)" != x.			\
+	  && mv -f tutorial.pdf $(tutorial_dir)
 
-# FIXME: Regenerating figures.stamp requires make to go back to the
-# parent directory.  We already do the opposite (descending from
-# milena/doc/ to milena/doc/tutorial/Makefile in milena/doc/ to update
-# tutorial.hh).  This is not sound.  We probably want to put together
-# somes of these files, and maybe get rid of some directories, or at
-# least move most of the Makefile machinery into
-# milena/doc/Makefile.am.
-$(srcdir)/../figures.stamp:
-	cd .. && $(MAKE) $(AM_MAKEFLAGS) fig-convert
+dist_doc_DATA += $(TUTORIAL_PDF)
 
-dist_doc_DATA = $(TUTORIAL_PDF)
-
-EXTRA_DIST =					\
-  tutorial.tex					\
+EXTRA_DIST +=					\
+  $(tutorial_dir)/tutorial.tex			\
   $(TUTORIAL_HH)
 
-CLEANFILES =								\
+# FIXME: Remove `tutorial.aux tutorial.toc tutorial.log tutorial.bbl
+# tutorial.out *blg *.lot' when texi2dvi is used.
+#
+# FIXME: Why is $(TUTORIAL_PDF) listed here?  It should be
+# automatically cleaned.  I'm not sure either about the rest of
+# CLEANFILES.
+CLEANFILES +=								\
   tutorial.aux tutorial.toc tutorial.log tutorial.bbl tutorial.out	\
   *blg *.lot								\
   $(TUTORIAL_PDF)							\
   *.haux *.hh *.html *.htoc						\
-  tutorial.haux								\
   tutorial.html								\
   tutorial.idx								\
   $(TUTORIAL_HH)
