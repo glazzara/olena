@@ -1,4 +1,6 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+#							-*- Automake -*-
+
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,9 +19,9 @@
 
 ## Process this file through Automake to create Makefile.in.
 
-include $(top_srcdir)/milena/doc/doc.mk
+examples_dir = $(doc_dir)/examples
 
-EXTRA_PROGRAMS =		\
+PROGRAMS_examples =	\
   accu-right-instanciation 	\
   borderthickness 		\
   box2d-bbox 			\
@@ -63,90 +65,93 @@ EXTRA_PROGRAMS =		\
   win-create-1 			\
   win-create-2
 
-EXTRA_PROGRAMS += 		\
+PROGRAMS_examples += 	\
   tuto2_first_image 		\
   tuto3_rw_image 		\
   tuto4_genericity_and_algorithms
 
 # Tuto3
-EXTRA_PROGRAMS +=	 	\
+PROGRAMS_examples += 	\
   tuto3_colorize 		\
   tuto3_println 		\
   tuto3_trace
 
 # Tuto4
-EXTRA_PROGRAMS +=	 	\
+PROGRAMS_examples += 	\
   tuto4_point2d			\
   tuto4_site_set_create
 
-CLEANFILES = $(EXTRA_PROGRAMS)
+EXTRA_PROGRAMS = $(PROGRAMS_examples)
 
-accu_right_instanciation_SOURCES = accu-right-instanciation.cc
-borderthickness_SOURCES = borderthickness.cc
-box2d_bbox_SOURCES = box2d-bbox.cc
-domain_display_SOURCES = domain-display.cc
-dpoint_1_SOURCES = dpoint-1.cc
-estim_sites_SOURCES = estim-sites.cc
-extend_SOURCES = extend.cc
-extension_ignore_SOURCES = extension-ignore.cc
-fill_SOURCES = fill.cc
-fill_call_1_SOURCES = fill-call-1.cc
-fill_part_image_SOURCES = fill-part-image.cc
-fill_subdomain_SOURCES = fill-subdomain.cc
-fill_subdomain_shorter_SOURCES = fill-subdomain-shorter.cc
-fill_imageif_cfun_SOURCES = fill-imageif-cfun.cc
-first_routine_SOURCES = tuto3/first_routine.cc
-forall_piter_SOURCES = forall-piter.cc
-fun_p2v_1_SOURCES = fun-p2v-1.cc
-graph_data_SOURCES = graph-data.cc
-graph_iter_SOURCES = graph-iter.cc
-ima_has_SOURCES = ima-has.cc
-ima_save_SOURCES = ima-save.cc
-ima_size_SOURCES = ima-size.cc
-ima2d_1_SOURCES = ima2d-1.cc
-ima2d_2_SOURCES = ima2d-2.cc
-ima2d_3_SOURCES = ima2d-3.cc
-ima2d_4_SOURCES = ima2d-4.cc
-ima2d_5_SOURCES = ima2d-5.cc
-ima2d_6_clone_SOURCES = ima2d-6-clone.cc
-ima2d_7_SOURCES = ima2d-7.cc
-ima2d_rot_SOURCES = ima2d-rot.cc
-labeling_compute_SOURCES = labeling-compute.cc
-logical_not_SOURCES = logical-not.cc
-mln_var_SOURCES = mln_var.cc
-paste_SOURCES = paste.cc
-paste_call_1_SOURCES = paste-call-1.cc
-parray_append_SOURCES = parray-append.cc
-parray_bbox_SOURCES = parray-bbox.cc
-point_1_SOURCES = point-1.cc
-predicate_1_SOURCES = predicate-1.cc
-win_create_1_SOURCES = win-create-1.cc
-win_create_2_SOURCES = win-create-2.cc
+# FIXME: Is this really needed?
+CLEANFILES += $(PROGRAMS_examples)
 
-tuto2_first_image_SOURCES = tuto2_first_image.cc
-tuto3_rw_image_SOURCES = tuto3_rw_image.cc
-tuto4_genericity_and_algorithms_SOURCES = tuto4_genericity_and_algorithms.cc
+accu_right_instanciation_SOURCES = $(examples_dir)/accu-right-instanciation.cc
+borderthickness_SOURCES = $(examples_dir)/borderthickness.cc
+box2d_bbox_SOURCES = $(examples_dir)/box2d-bbox.cc
+domain_display_SOURCES = $(examples_dir)/domain-display.cc
+dpoint_1_SOURCES = $(examples_dir)/dpoint-1.cc
+estim_sites_SOURCES = $(examples_dir)/estim-sites.cc
+extend_SOURCES = $(examples_dir)/extend.cc
+extension_ignore_SOURCES = $(examples_dir)/extension-ignore.cc
+fill_SOURCES = $(examples_dir)/fill.cc
+fill_call_1_SOURCES = $(examples_dir)/fill-call-1.cc
+fill_part_image_SOURCES = $(examples_dir)/fill-part-image.cc
+fill_subdomain_SOURCES = $(examples_dir)/fill-subdomain.cc
+fill_subdomain_shorter_SOURCES = $(examples_dir)/fill-subdomain-shorter.cc
+fill_imageif_cfun_SOURCES = $(examples_dir)/fill-imageif-cfun.cc
+first_routine_SOURCES = $(examples_dir)/tuto3/first_routine.cc
+forall_piter_SOURCES = $(examples_dir)/forall-piter.cc
+fun_p2v_1_SOURCES = $(examples_dir)/fun-p2v-1.cc
+graph_data_SOURCES = $(examples_dir)/graph-data.cc
+graph_iter_SOURCES = $(examples_dir)/graph-iter.cc
+ima_has_SOURCES = $(examples_dir)/ima-has.cc
+ima_save_SOURCES = $(examples_dir)/ima-save.cc
+ima_size_SOURCES = $(examples_dir)/ima-size.cc
+ima2d_1_SOURCES = $(examples_dir)/ima2d-1.cc
+ima2d_2_SOURCES = $(examples_dir)/ima2d-2.cc
+ima2d_3_SOURCES = $(examples_dir)/ima2d-3.cc
+ima2d_4_SOURCES = $(examples_dir)/ima2d-4.cc
+ima2d_5_SOURCES = $(examples_dir)/ima2d-5.cc
+ima2d_6_clone_SOURCES = $(examples_dir)/ima2d-6-clone.cc
+ima2d_7_SOURCES = $(examples_dir)/ima2d-7.cc
+ima2d_rot_SOURCES = $(examples_dir)/ima2d-rot.cc
+labeling_compute_SOURCES = $(examples_dir)/labeling-compute.cc
+logical_not_SOURCES = $(examples_dir)/logical-not.cc
+mln_var_SOURCES = $(examples_dir)/mln_var.cc
+paste_SOURCES = $(examples_dir)/paste.cc
+paste_call_1_SOURCES = $(examples_dir)/paste-call-1.cc
+parray_append_SOURCES = $(examples_dir)/parray-append.cc
+parray_bbox_SOURCES = $(examples_dir)/parray-bbox.cc
+point_1_SOURCES = $(examples_dir)/point-1.cc
+predicate_1_SOURCES = $(examples_dir)/predicate-1.cc
+win_create_1_SOURCES = $(examples_dir)/win-create-1.cc
+win_create_2_SOURCES = $(examples_dir)/win-create-2.cc
+
+tuto2_first_image_SOURCES = $(examples_dir)/tuto2_first_image.cc
+tuto3_rw_image_SOURCES = $(examples_dir)/tuto3_rw_image.cc
+tuto4_genericity_and_algorithms_SOURCES = $(examples_dir)/tuto4_genericity_and_algorithms.cc
 
 # Tuto 3
-tuto3_colorize_SOURCES = tuto3/colorize.cc
-tuto3_println_SOURCES = tuto3/println.cc
-tuto3_trace_SOURCES = tuto3/trace.cc
+tuto3_colorize_SOURCES = $(examples_dir)/tuto3/colorize.cc
+tuto3_println_SOURCES = $(examples_dir)/tuto3/println.cc
+tuto3_trace_SOURCES = $(examples_dir)/tuto3/trace.cc
 
 # Tuto 4
-tuto4_site_set_create_SOURCES = tuto4/site_set_create.cc
-tuto4_point2d_SOURCES = tuto4/point2d.cc
+tuto4_site_set_create_SOURCES = $(examples_dir)/tuto4/site_set_create.cc
+tuto4_point2d_SOURCES = $(examples_dir)/tuto4/point2d.cc
 
 
 .PHONY : examples run-examples diff-data fix-refdata 		\
 	 split-examples split-outputs
 
-examples: $(EXTRA_PROGRAMS)
+examples: $(PROGRAMS_examples)
 
 run-examples: examples
 	test -d $(top_builddir)/milena/doc/figures  			\
 		|| mkdir $(top_builddir)/milena/doc/figures;		\
-	@failcom='exit 1'; 						\
-	list='$(EXTRA_PROGRAMS)'; for bin in $$list; do 		\
+	failcom='exit 1'; 						\
+	list='$(PROGRAMS_examples)'; for bin in $$list; do	\
 	  echo "Running $$bin"; 					\
 	  ./$$bin > $(OUTPUTS_SRCDIR)/$$bin.txt || eval $$failcom; 	\
 	done

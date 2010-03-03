@@ -15,6 +15,8 @@ int main()
   image2d<bool> ima = make::image(vals);
 
   // \{
-  io::pbm::save(ima, "../figures/ima_save.pbm");
+  /* FIXME: Hard-coded paths are bad!  Use something like
+     milena/tests/data.hh.in instead.  */
+  io::pbm::save(ima, "figures/ima_save.pbm");
   // \}
 }

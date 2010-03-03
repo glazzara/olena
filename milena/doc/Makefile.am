@@ -20,9 +20,6 @@
 
 include $(top_srcdir)/milena/doc/doc.mk
 
-SUBDIRS =		\
-  examples
-
 DOXYGEN = doxygen
 
 # Initialiaze variables.
@@ -35,9 +32,7 @@ CLEANFILES =
 	doc-user doc-devel				\
 	doc-pdf doc-html doc-devel-pdf doc-devel-html	\
 	ref-doc-pdf ref-doc-html			\
-	ref-doc-devel-pdf ref-doc-devel-html		\
-	examples data-regen fig-convert
-
+	ref-doc-devel-pdf ref-doc-devel-html
 
 doc: doc-user doc-devel
 
@@ -136,14 +131,6 @@ include $(srcdir)/white_paper/white_paper.mk
 include $(srcdir)/ref_guide/ref_guide.mk
 
 
-# FIXME: Adress the construction of examples (see examples/Makefile.am).
-data-regen:
-	cd examples && $(MAKE) $(AM_MAKEFLAGS) $@
-
-
-fix-refdata:
-	cd examples && $(MAKE) $(AM_MAKEFLAGS) $@
-
 
 # Make sure the figures are the first files in EXTRA_DIST.
 # Make the 'fake-doc' rule works correctly.
@@ -200,6 +187,12 @@ edit_user = sed								      \
   -e 's,PROJECT_NUMBER         = \",PROJECT_NUMBER          = \"User documentation ,g'	 \
   -e 's,EXCLUDE_SYMBOLS	       =,EXCLUDE_SYMBOLS	  = *::internal* *_ mln::trait::*,g'
 
+
+## ---------- ##
+## Examples.  ##
+## ---------- ##
+
+include $(top_srcdir)/milena/doc/examples/make.mk
 
 # Regen files.
 EXTRA_DIST += generate_dist_files.sh headers.stamp

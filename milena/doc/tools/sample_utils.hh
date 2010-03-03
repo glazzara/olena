@@ -43,7 +43,9 @@ namespace doc
     static int file_id = 1;
 
     std::ostringstream os;
-    os << "../figures/"
+    /* FIXME: Hard-coded paths are bad!  Use something like
+       milena/tests/data.hh.in instead.  */
+    os << "figures/"
       << name
       << "-"
       << file_id++

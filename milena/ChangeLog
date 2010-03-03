@@ -1,5 +1,21 @@
 2010-03-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Stop make from recurring in doc/examples.
+
+	* doc/Makefile.am: Include
+	$(top_srcdir)/milena/doc/examples/make.mk.
+	(SUBDIRS): Remove variable.
+	(examples, data-regen, fig-convert): Remove (phony) targets.
+	* doc/examples/Makefile.am: Rename as...
+	* doc/examples/make.mk: ...this.
+	Adjust.
+	* doc/examples/ima-save.cc,
+	* doc/tools/sample_utils.hh:
+	Adjust as well.
+	* milena/doc/examples/split/ima-save-1.cc.raw: Regen.
+
+2010-03-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Stop make from recurring in doc/white_paper.
 
 	* doc/white_paper/Makefile.am: Rename as...
