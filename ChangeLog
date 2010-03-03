@@ -1,5 +1,9 @@
 2010-03-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	* configure.ac: Do not configure milena/doc/technical/Makefile.
+
+2010-03-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	* configure.ac: Do not configure milena/doc/tutorial/Makefile.
 
 2010-03-02  Roland Levillain  <roland@lrde.epita.fr>
