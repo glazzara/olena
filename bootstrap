@@ -87,7 +87,7 @@ require ()
   test x"$version" != x ||
     fatal "$1 is required"
   case $(version_compare "$2" "$version") in
-    '>') fatal "$1 $2 or better is required: this is $1 $2";;
+    '>') fatal "$1 $2 or better is required: this is $1 $version";;
   esac
 }
 
