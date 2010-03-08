@@ -343,24 +343,20 @@ edit = sed -e "s|@ID@|$$Id|"					\
 	   -e 's,@srcdir\@,$(srcdir),g'				\
 	   -e 's,@builddir\@,$(builddir),g'
 
-# FIXME: This is not good.  We should set these parameters for both
-# documentation (devel and user) using @VARIABLES@.  Don't generate
-# Doxyfile_user_html from Doxyfile_devel_html!  Both should be a product
-# derived from a single source, Doxyfile.in.
-edit_user = sed								      \
-  -e 's,OUTPUT_DIRECTORY       = @srcdir@/devel/,OUTPUT_DIRECTORY       = @srcdir@/user/,g' \
-  -e 's,EXTRACT_ALL            = YES,EXTRACT_ALL            = NO,g'	      \
-  -e 's,EXTRACT_PRIVATE        = YES,EXTRACT_PRIVATE        = NO,g'	      \
-  -e 's,EXTRACT_STATIC         = YES,EXTRACT_STATIC         = NO,g'	      \
-  -e 's,EXTRACT_LOCAL_CLASSES  = YES,EXTRACT_LOCAL_CLASSES  = NO,g'	      \
-  -e 's,HIDE_UNDOC_MEMBERS     = NO,HIDE_UNDOC_MEMBERS      = YES,g'	      \
-  -e 's,HIDE_UNDOC_CLASSES     = NO,HIDE_UNDOC_CLASSES      = YES,g'	      \
-  -e 's,HIDE_FRIEND_COMPOUNDS  = NO,HIDE_FRIEND_COMPOUNDS   = YES,g'	      \
-  -e 's,HIDE_IN_BODY_DOCS      = NO,HIDE_IN_BODY_DOCS       = YES,g'	      \
-  -e 's,INTERNAL_DOCS          = YES,INTERNAL_DOCS          = NO,g'	      \
-  -e 's,GENERATE_TODOLIST      = YES,GENERATE_TODOLIST      = NO,g'	      \
-  -e 's,PROJECT_NUMBER         = \",PROJECT_NUMBER          = \"User documentation ,g'	 \
-  -e 's,EXCLUDE_SYMBOLS	       =,EXCLUDE_SYMBOLS	  = *::internal* *_ mln::trait::*,g'
+edit_devel = sed							      \
+  -e 's,OUTPUT_DIRECTORY       = @srcdir@/user/,OUTPUT_DIRECTORY       = @srcdir@/devel/,' \
+  -e 's,EXTRACT_ALL            = NO,EXTRACT_ALL            = YES,'	      \
+  -e 's,EXTRACT_PRIVATE        = NO,EXTRACT_PRIVATE        = YES,'	      \
+  -e 's,EXTRACT_STATIC         = NO,EXTRACT_STATIC         = YES,'	      \
+  -e 's,EXTRACT_LOCAL_CLASSES  = NO,EXTRACT_LOCAL_CLASSES  = YES,'	      \
+  -e 's,HIDE_UNDOC_MEMBERS     = YES,HIDE_UNDOC_MEMBERS     = NO,'	      \
+  -e 's,HIDE_UNDOC_CLASSES     = YES,HIDE_UNDOC_CLASSES     = NO,'	      \
+  -e 's,HIDE_FRIEND_COMPOUNDS  = YES,HIDE_FRIEND_COMPOUNDS  = NO,'	      \
+  -e 's,HIDE_IN_BODY_DOCS      = YES,HIDE_IN_BODY_DOCS      = NO,'	      \
+  -e 's,INTERNAL_DOCS          = NO,INTERNAL_DOCS          = YES,'	      \
+  -e 's,GENERATE_TODOLIST      = NO,GENERATE_TODOLIST      = YES,'	      \
+  -e 's,PROJECT_NUMBER         = \"User documentation ,PROJECT_NUMBER         = \",'	 \
+  -e 's,EXCLUDE_SYMBOLS	       = \*::internal\* \*_ mln::trait::\*,EXCLUDE_SYMBOLS	       =,'
 
 # Sed is used to generate Doxyfile from Doxyfile.in instead of
 # configure, because the former is way faster than the latter.
@@ -370,14 +366,16 @@ edit_user = sed								      \
 ## change.  See Bison's build system.
 ##
 ## FIXME: Move these rules higher, closer to their use sites.
-##
-## FIXME: It'd be more logical to generate $(DOXYFILE_DEVEL) from
-## $(DOXYFILE_USER), not the reverse.
 
-$(DOXYFILE_USER): $(DOXYFILE_DEVEL)
-	$(edit_user) $< >$@
-
-$(DOXYFILE_DEVEL): $(srcdir)/$(DOXYFILE).in
+$(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
 	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
 	      | sed -e 's/\\\$$//g'`;				\
 	  $(edit) $< >$@
+
+$(DOXYFILE_DEVEL): $(srcdir)/$(DOXYFILE).in
+	rm -f $@.tmp
+	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
+	      | sed -e 's/\\\$$//g'`;				\
+	  $(edit) $< >$@.tmp
+	$(edit_devel) $@.tmp >$@
+	rm -f $@.tmp

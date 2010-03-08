@@ -1,5 +1,17 @@
 2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have Doxyfile.in generate the user documentation.
+
+	* doc/Doxyfile.in: Switch settings to generate the user
+	documentation.
+	* doc/Makefile.am (edit_user): Remove variable.
+	(edit_devel): New variable.
+	($(DOXYFILE_USER)): Generate it directly from
+	$(srcdir)/$(DOXYFILE).in.
+	($(DOXYFILE_DEVEL)): Adjust to use edit_devel.
+
+2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Generate the HTML and LaTeX Doxygen documentation in a single pass.
 
 	* doc/Doxyfile.in (GENERATE_LATEX): Enable.
