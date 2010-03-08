@@ -1,5 +1,11 @@
 2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update the documentation's copyright header.
+
+	* mln/core/concept/object.hh: Here.
+
+2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have Doxygen generate its outputs in the build directory.
 
 	* doc/Doxyfile.in (OUTPUT_DIRECTORY):
