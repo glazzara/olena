@@ -1,5 +1,13 @@
 2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Reorganize doc/Makefile.am.
+
+	* doc/Makefile.am (edit, $(DOXYFILE_USER)):
+	Move these definitions closer to their use site.
+	(edit_devel, $(DOXYFILE_DEVEL)): Likewise.
+
+2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have Doxyfile.in generate the user documentation.
 
 	* doc/Doxyfile.in: Switch settings to generate the user

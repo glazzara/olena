@@ -79,6 +79,25 @@ regen-doc:
 
 DOXYFILE_USER = Doxyfile_user
 
+# Sed is used to generate Doxyfile from Doxyfile.in instead of
+# configure, because the former is way faster than the latter.
+#
+## FIXME: This is because, as in TC, we depend on $Id$ from the
+## ChangeLog.  Maybe we should depend from something less prone to
+## change.  See Bison's build system.
+edit = sed -e "s|@ID@|$$Id|"					\
+	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g'		\
+	   -e 's,@PACKAGE_VERSION\@,$(PACKAGE_VERSION),g'	\
+	   -e 's,@top_srcdir\@,$(top_srcdir),g'			\
+	   -e 's,@top_builddir\@,$(top_builddir),g'		\
+	   -e 's,@srcdir\@,$(srcdir),g'				\
+	   -e 's,@builddir\@,$(builddir),g'
+
+$(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
+	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
+	      | sed -e 's/\\\$$//g'`;				\
+	  $(edit) $< >$@
+
 ## FIXME: Rename USER_REFMAN_PDF to something else?
 USER_REFMAN_PDF = user-refman.pdf
 ## FIXME: Likewise?
@@ -133,6 +152,29 @@ regen-devel-doc:
 	$(MAKE) $(AM_MAKEFLAGS) $(srcdir)/devel-refman.stamp
 
 DOXYFILE_DEVEL = Doxyfile_devel
+
+edit_devel = sed							      \
+  -e 's,OUTPUT_DIRECTORY       = @srcdir@/user/,OUTPUT_DIRECTORY       = @srcdir@/devel/,' \
+  -e 's,EXTRACT_ALL            = NO,EXTRACT_ALL            = YES,'	      \
+  -e 's,EXTRACT_PRIVATE        = NO,EXTRACT_PRIVATE        = YES,'	      \
+  -e 's,EXTRACT_STATIC         = NO,EXTRACT_STATIC         = YES,'	      \
+  -e 's,EXTRACT_LOCAL_CLASSES  = NO,EXTRACT_LOCAL_CLASSES  = YES,'	      \
+  -e 's,HIDE_UNDOC_MEMBERS     = YES,HIDE_UNDOC_MEMBERS     = NO,'	      \
+  -e 's,HIDE_UNDOC_CLASSES     = YES,HIDE_UNDOC_CLASSES     = NO,'	      \
+  -e 's,HIDE_FRIEND_COMPOUNDS  = YES,HIDE_FRIEND_COMPOUNDS  = NO,'	      \
+  -e 's,HIDE_IN_BODY_DOCS      = YES,HIDE_IN_BODY_DOCS      = NO,'	      \
+  -e 's,INTERNAL_DOCS          = NO,INTERNAL_DOCS          = YES,'	      \
+  -e 's,GENERATE_TODOLIST      = NO,GENERATE_TODOLIST      = YES,'	      \
+  -e 's,PROJECT_NUMBER         = \"User documentation ,PROJECT_NUMBER         = \",'	 \
+  -e 's,EXCLUDE_SYMBOLS	       = \*::internal\* \*_ mln::trait::\*,EXCLUDE_SYMBOLS	       =,'
+
+$(DOXYFILE_DEVEL): $(srcdir)/$(DOXYFILE).in
+	rm -f $@.tmp
+	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
+	      | sed -e 's/\\\$$//g'`;				\
+	  $(edit) $< >$@.tmp
+	$(edit_devel) $@.tmp >$@
+	rm -f $@.tmp
 
 ## FIXME: Rename DEVEL_REFMAN_PDF to something else?
 DEVEL_REFMAN_PDF = devel-refman-pdf
@@ -334,48 +376,3 @@ EXTRA_DIST +=					\
 MAINTAINERCLEANFILES =				\
   Doxyfile_user					\
   Doxyfile_devel
-
-edit = sed -e "s|@ID@|$$Id|"					\
-	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g'		\
-	   -e 's,@PACKAGE_VERSION\@,$(PACKAGE_VERSION),g'	\
-	   -e 's,@top_srcdir\@,$(top_srcdir),g'			\
-	   -e 's,@top_builddir\@,$(top_builddir),g'		\
-	   -e 's,@srcdir\@,$(srcdir),g'				\
-	   -e 's,@builddir\@,$(builddir),g'
-
-edit_devel = sed							      \
-  -e 's,OUTPUT_DIRECTORY       = @srcdir@/user/,OUTPUT_DIRECTORY       = @srcdir@/devel/,' \
-  -e 's,EXTRACT_ALL            = NO,EXTRACT_ALL            = YES,'	      \
-  -e 's,EXTRACT_PRIVATE        = NO,EXTRACT_PRIVATE        = YES,'	      \
-  -e 's,EXTRACT_STATIC         = NO,EXTRACT_STATIC         = YES,'	      \
-  -e 's,EXTRACT_LOCAL_CLASSES  = NO,EXTRACT_LOCAL_CLASSES  = YES,'	      \
-  -e 's,HIDE_UNDOC_MEMBERS     = YES,HIDE_UNDOC_MEMBERS     = NO,'	      \
-  -e 's,HIDE_UNDOC_CLASSES     = YES,HIDE_UNDOC_CLASSES     = NO,'	      \
-  -e 's,HIDE_FRIEND_COMPOUNDS  = YES,HIDE_FRIEND_COMPOUNDS  = NO,'	      \
-  -e 's,HIDE_IN_BODY_DOCS      = YES,HIDE_IN_BODY_DOCS      = NO,'	      \
-  -e 's,INTERNAL_DOCS          = NO,INTERNAL_DOCS          = YES,'	      \
-  -e 's,GENERATE_TODOLIST      = NO,GENERATE_TODOLIST      = YES,'	      \
-  -e 's,PROJECT_NUMBER         = \"User documentation ,PROJECT_NUMBER         = \",'	 \
-  -e 's,EXCLUDE_SYMBOLS	       = \*::internal\* \*_ mln::trait::\*,EXCLUDE_SYMBOLS	       =,'
-
-# Sed is used to generate Doxyfile from Doxyfile.in instead of
-# configure, because the former is way faster than the latter.
-#
-## FIXME: This is because, as in TC, we depend on $Id$ from the
-## ChangeLog.  Maybe we should depend from something less prone to
-## change.  See Bison's build system.
-##
-## FIXME: Move these rules higher, closer to their use sites.
-
-$(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
-	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
-	      | sed -e 's/\\\$$//g'`;				\
-	  $(edit) $< >$@
-
-$(DOXYFILE_DEVEL): $(srcdir)/$(DOXYFILE).in
-	rm -f $@.tmp
-	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
-	      | sed -e 's/\\\$$//g'`;				\
-	  $(edit) $< >$@.tmp
-	$(edit_devel) $@.tmp >$@
-	rm -f $@.tmp
