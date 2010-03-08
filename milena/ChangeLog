@@ -1,5 +1,14 @@
 2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Shorten the list of files visited by Doxygen.
+
+	* doc/Doxyfile.in (STRIP_FROM_PATH, INPUT, IMAGE_PATH):
+	Remove all paths from the build directory.
+	(EXCLUDE): Add paths to generated documentation and generated unit
+	tests.
+
+2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	* apps/graph-morpho/morpho.hh: Help Doxygen compile LaTeX formulas.
 
 2010-03-04  Roland Levillain  <roland@lrde.epita.fr>

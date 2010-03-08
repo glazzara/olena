@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 # Laboratory (LRDE)
 #
 # This file is part of Olena.
@@ -31,8 +31,7 @@ ABBREVIATE_BRIEF       =
 ALWAYS_DETAILED_SEC    = YES
 INLINE_INHERITED_MEMB  = YES
 FULL_PATH_NAMES        = NO
-STRIP_FROM_PATH        = @top_srcdir@/milena \
-                         @top_builddir@/milena
+STRIP_FROM_PATH        = @top_srcdir@/milena
 STRIP_FROM_INC_PATH    =
 SHORT_NAMES            = YES
 JAVADOC_AUTOBRIEF      = YES
@@ -92,17 +91,23 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = @top_srcdir@/milena	\
-                         @top_builddir@/milena
+INPUT                  = @top_srcdir@/milena
 FILE_PATTERNS          = *.cc	\
                          *.hh	\
                          *.hxx	\
                          *.hcc
 RECURSIVE              = YES
 EXCLUDE                = @top_srcdir@/milena/sandbox			\
-                         @top_srcdir@/milena/mln/core/concept/proxy.hxx \
                          @top_srcdir@/milena/trash			\
-                         @top_srcdir@/milena/doc/examples/trash
+                         @top_srcdir@/milena/mln/core/concept/proxy.hxx \
+                         @top_srcdir@/milena/doc/examples/trash		\
+                         @top_srcdir@/milena/doc/user			\
+                         @top_srcdir@/milena/doc/user-refman-html	\
+                         @top_srcdir@/milena/doc/user-refman-latex	\
+                         @top_srcdir@/milena/doc/devel			\
+                         @top_srcdir@/milena/doc/devel-refman-html	\
+                         @top_srcdir@/milena/doc/devel-refman-latex	\
+                         @top_srcdir@/milena/tests/unit_test
 EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *spe.hh
 EXCLUDE_SYMBOLS	       =
@@ -116,8 +121,7 @@ EXAMPLE_PATTERNS       = *.cc \
 EXAMPLE_RECURSIVE      = NO
 IMAGE_PATH             = @top_srcdir@/milena/doc/devel/figures \
 			 @top_srcdir@/milena/doc/img	       \
-			 @top_srcdir@/milena/doc/figures       \
-			 @top_builddir@/milena/doc/figures
+			 @top_srcdir@/milena/doc/figures
 INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
@@ -362,3 +366,7 @@ DOT_CLEANUP            = YES
 # Configuration::additions related to the search engine
 #---------------------------------------------------------------------------
 SEARCHENGINE           = YES
+
+# Local Variables:
+# mode: Makefile
+# End:
