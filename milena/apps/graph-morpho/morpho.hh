@@ -172,8 +172,13 @@ namespace trait
 | Vertices-edges combinator.  |
 `----------------------------*/
 
+/* The original paper uses an operator `\ovee' to combine node and
+   edge graphs.  However, this symbol requires the use of the
+   `stmaryrd' package, and Doyxgen provides no means to require it.
+   So, we use a more ``standard'' symbol instead (`\oplus').  */
+
 /// Combine the vertices and the edges of two images to create a new
-/// graph image (``operator'' \f$\ovee\f$).
+/// graph image (``operator'' \f$\oplus\f$).
 template <typename I>
 inline
 mln_concrete(I)
@@ -290,7 +295,7 @@ dilation_v2e(const mln::Image<I>& input)
 // Other dilations and erosions.  //
 // ------------------------------ //
 
-/// Vertex dilation (\f$delta\f$).
+/// Vertex dilation (\f$\delta\f$).
 template <typename I>
 inline
 mln_concrete(I)
@@ -299,7 +304,7 @@ dilation_vertex(const mln::Image<I>& input)
   return dilation_e2v(dilation_v2e(input));
 }
 
-/// Vertex erosion (\f$epsilon\f$).
+/// Vertex erosion (\f$\epsilon\f$).
 template <typename I>
 inline
 mln_concrete(I)
@@ -309,7 +314,7 @@ erosion_vertex(const mln::Image<I>& input)
 }
 
 
-/// Edge dilation (\f$Delta\f$).
+/// Edge dilation (\f$\Delta\f$).
 template <typename I>
 inline
 mln_concrete(I)
@@ -318,7 +323,7 @@ dilation_edge(const mln::Image<I>& input)
   return dilation_v2e(dilation_e2v(input));
 }
 
-/// Edge erosion (\f$Epsilon\f$).
+/// Edge erosion (\f$\mathcal{E}\f$).
 template <typename I>
 inline
 mln_concrete(I)
@@ -328,7 +333,7 @@ erosion_edge(const mln::Image<I>& input)
 }
 
 
-/// Graph dilation (\f$delta \ovee Delta\f$).
+/// Graph dilation (\f$\delta \oplus \Delta\f$).
 template <typename I>
 inline
 mln_concrete(I)
@@ -337,7 +342,7 @@ dilation_graph(const mln::Image<I>& input)
   return combine(dilation_vertex(input), dilation_edge(input));
 }
 
-/// Graph erosion (\f$epsilon \ovee Epsilon\f$).
+/// Graph erosion (\f$\epsilon \oplus \mathcal{E}\f$).
 template <typename I>
 inline
 mln_concrete(I)
@@ -448,7 +453,7 @@ closing_edge(const mln::Image<I>& input)
 }
 
 
-/// Graph opening (\f${\gamma \ovee \Gamma}_1\f$).
+/// Graph opening (\f${\gamma \oplus \Gamma}_1\f$).
 template <typename I>
 inline
 mln_concrete(I)
@@ -457,7 +462,7 @@ opening_graph(const mln::Image<I>& input)
   return combine(opening_vertex(input), opening_edge(input));
 }
 
-/// Graph closing (\f${\phi \ovee \Phi}_1\f$).
+/// Graph closing (\f${\phi \oplus \Phi}_1\f$).
 template <typename I>
 inline
 mln_concrete(I)
@@ -509,7 +514,7 @@ half_closing_edge(const mln::Image<I>& input)
 }
 
 
-/// Graph half-opening (\f${\gamma \ovee \Gamma}_{1/2}\f$).
+/// Graph half-opening (\f${\gamma \oplus \Gamma}_{1/2}\f$).
 template <typename I>
 inline
 mln_concrete(I)
@@ -518,7 +523,7 @@ half_opening_graph(const mln::Image<I>& input)
   return combine(half_opening_vertex(input), half_opening_edge(input));
 }
 
-/// Graph half-closing (\f${\phi \ovee \Phi}_{1/2}\f$).
+/// Graph half-closing (\f${\phi \oplus \Phi}_{1/2}\f$).
 template <typename I>
 inline
 mln_concrete(I)
@@ -532,7 +537,7 @@ half_closing_graph(const mln::Image<I>& input)
 | Parameterized openings and closings (granulometries).  |
 `-------------------------------------------------------*/
 
-/// Opening (\f${\gamma \ovee \Gamma}_{\lambda/2}\f$).
+/// Opening (\f${\gamma \oplus \Gamma}_{\lambda/2}\f$).
 template <typename I>
 inline
 mln_concrete(I)
@@ -550,7 +555,7 @@ opening(const mln::Image<I>& input, unsigned lambda)
   return output;
 }
 
-/// Opening (\f${\phi \ovee \Phi}_{\lambda/2}\f$).
+/// Opening (\f${\phi \oplus \Phi}_{\lambda/2}\f$).
 template <typename I>
 inline
 mln_concrete(I)

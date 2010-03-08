@@ -1,3 +1,7 @@
+2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	* apps/graph-morpho/morpho.hh: Help Doxygen compile LaTeX formulas.
+
 2010-03-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Clean up Doxygen-related Make rules in milena/doc/.
