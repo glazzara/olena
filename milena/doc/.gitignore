@@ -1,9 +1,11 @@
 /Doxyfile_devel
-/Doxyfile_devel_pdf
 /Doxyfile_user
-/Doxyfile_user_pdf
 /devel
+/devel-refman
+/devel-refman.pdf
 /user
+/user-refman
+/user-refman.pdf
 /figures/*.png
 /ref_guide/ref_guide.haux
 /ref_guide/ref_guide.hh
@@ -21,8 +23,6 @@
 /tutorial/tutorial.hh-e
 /tutorial/tutorial.html
 /tutorial/tutorial.pdf
-/user-refman-html
-/user-refman.pdf
 /white_paper/figures/house.eps
 /white_paper/figures/house_rag.eps
 /white_paper/figures/house_wshed.eps

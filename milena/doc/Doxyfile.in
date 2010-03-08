@@ -102,11 +102,9 @@ EXCLUDE                = @top_srcdir@/milena/sandbox			\
                          @top_srcdir@/milena/mln/core/concept/proxy.hxx \
                          @top_srcdir@/milena/doc/examples/trash		\
                          @top_srcdir@/milena/doc/user			\
-                         @top_srcdir@/milena/doc/user-refman-html	\
-                         @top_srcdir@/milena/doc/user-refman-latex	\
+                         @top_srcdir@/milena/doc/user-refman
                          @top_srcdir@/milena/doc/devel			\
-                         @top_srcdir@/milena/doc/devel-refman-html	\
-                         @top_srcdir@/milena/doc/devel-refman-latex	\
+                         @top_srcdir@/milena/doc/devel-refman
                          @top_srcdir@/milena/tests/unit_test
 EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *spe.hh
@@ -167,7 +165,7 @@ TREEVIEW_WIDTH         = 250
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
 #---------------------------------------------------------------------------
-GENERATE_LATEX         = NO
+GENERATE_LATEX         = YES
 LATEX_OUTPUT           = latex
 LATEX_CMD_NAME         = latex
 MAKEINDEX_CMD_NAME     = makeindex

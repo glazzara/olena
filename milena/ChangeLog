@@ -1,5 +1,61 @@
 2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Generate the HTML and LaTeX Doxygen documentation in a single pass.
+
+	* doc/Doxyfile.in (GENERATE_LATEX): Enable.
+	(EXCLUDE): Adjust.
+	* doc/Makefile.am (ref-doc-html, ref-doc-devel-html):
+	Remove (phony) targets.
+	(ref-doc, ref-doc-devel):
+	New (phony) targets.
+	(doc-html, doc-devel-html):
+	Adjust targets.
+	(DOXYFILE_USER_PDF, DOXYFILE_USER_HTML)
+	(DOXYFILE_DEVEL_PDF, DOXYFILE_DEVEL_HTML):
+	Remove variables.
+	(DOXYFILE_USER_PDF, DOXYFILE_DEVEL):
+	New variables.
+	(USER_REFMAN_LATEX, USER_REFMAN_HTML)
+	(DEVEL_REFMAN_LATEX, DEVEL_REFMAN_HTML):
+	Remove variables.
+	(USER_REFMAN): New variable.
+	(all-local): Adjust.
+	($(srcdir)/user-refman-latex.stamp)
+	($(srcdir)/$(USER_REFMAN_LATEX))
+	($(srcdir)/user-refman-html.stamp)
+	($(srcdir)/$(USER_REFMAN_HTML))
+	($(srcdir)/devel-refman-latex.stamp)
+	($(srcdir)/$(DEVEL_REFMAN_LATEX))
+	($(srcdir)/devel-refman-html.stamp)
+	($(srcdir)/$(DEVEL_REFMAN_HTML)):
+	Remove targets.
+	($(srcdir)/user-refman.stamp)
+	($(srcdir)/$(USER_REFMAN))
+	($(srcdir)/devel-refman.stamp)
+	($(srcdir)/$(DEVEL_REFMAN)):
+	New targets.
+	($(srcdir)/$(USER_REFMAN_PDF), $(srcdir)/$(DEVEL_REFMAN_PDF)):
+	Adjust targets.
+	(regen-doc, regen-devel-doc): New (phony) targets.
+	(clean-user-refman-latex, clean-user-refman-html)
+	(clean-devel-refman-latex, clean-devel-refman-html):
+	Remove (phony) targets.
+	(maintainer-clean-local): Adjust.
+	(edit_pdf): Remove variable.
+	(EXTRA_DIST): Remove $(USER_REFMAN_HTML).
+	Add $(USER_REFMAN)/html.
+	(install-data-local, uninstall-local): Adjust.
+	(CLEANFILES): Remove Doxyfile_user, Doxyfile_user_pdf,
+	Doxyfile_devel, Doxyfile_devel_pdf, devel and user.
+	(MAINTAINERCLEANFILES): Add Doxyfile_user and Doxyfile_devel.
+	($(DOXYFILE_USER_PDF), $(DOXYFILE_USER_HTML))
+	($(DOXYFILE_DEVEL_PDF), $(DOXYFILE_DEVEL_HTML)):
+	Remove targets.
+	($(DOXYFILE_USER), $(DOXYFILE_DEVEL)):
+	New targets.
+
+2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Shorten the list of files visited by Doxygen.
 
 	* doc/Doxyfile.in (STRIP_FROM_PATH, INPUT, IMAGE_PATH):
