@@ -22,11 +22,15 @@ include $(top_srcdir)/milena/doc/doc.mk
 
 DOXYGEN = doxygen
 
+DOXYFILE = Doxyfile
+
 # Initialiaze variables.
 EXTRA_DIST =
 dist_doc_DATA =
 CLEANFILES =
 
+# FIXME: Simplify all of this.  ``Devel'' targets are really
+# secondary.  And we probably don't need so much target aliases!
 
 .PHONY: doc						\
 	doc-user doc-devel				\
@@ -66,45 +70,199 @@ EXTRA_DEPS = $(srcdir)/tutorial/tutorial.hh $(srcdir)/ref_guide/ref_guide.hh
 ## directory of the _source_ tree.  See how this is implemented in
 ## Vaucanson's doc build system.  (Do not forget to adjust Doxyfiles.)
 
-# Doxygen PDF documentation outputs.
+# ----------------------------- #
+# User reference manual (PDF).  #
+# ----------------------------- #
+
+# FIXME: Keep it or throw it away?
+all-local: $(srcdir)/$(USER_REFMAN_PDF)
+
+DOXYFILE_USER_PDF = Doxyfile_user_pdf
+
+## FIXME: Rename USER_REFMAN_PDF to something else?
 USER_REFMAN_PDF = user-refman.pdf
+## FIXME: Likewise?
+USER_REFMAN_LATEX = user-refman-latex
+
 ref-doc-pdf: $(srcdir)/$(USER_REFMAN_PDF)
-# FIXME: Split in two rules: one generating the LaTeX file from the
-# Doxyfile, and another one generating the PDF from the LaTeX source.
-# Moreover, the LaTeX to PDF rule could be factored using a suffix
-# rule (as in LRDE's share/).
-$(srcdir)/$(USER_REFMAN_PDF): $(srcdir)/Doxyfile_user_pdf $(srcdir)/figures.stamp $(EXTRA_DEPS)
-	$(DOXYGEN) $<					\
-	  && cd $(srcdir)/user/latex			\
-	  && $(MAKE) pdf				\
-	  && cp -f refman.pdf ../../$(USER_REFMAN_PDF)
 
-# FIXME: Careful, `user-refman-pdf' is a directory, and this make rule
-# depends on its timestamp, which is wrong.
+# FIXME: Use texi2dvi instead of Doxygen's generated Makefile?
+# (The LaTeX to PDF rule could be factored using a suffix rule, as in
+# LRDE's share/).
+$(srcdir)/$(USER_REFMAN_PDF): $(srcdir)/$(USER_REFMAN_LATEX)
+	cd $(srcdir)/$(USER_REFMAN_LATEX) && $(MAKE) $(AM_MAKEFLAGS) pdf
+	cp -f $(srcdir)/$(USER_REFMAN_LATEX)/refman.pdf $@
+
+## FIXME: Use a variable instead of `$(srcdir)/user/latex'.
+##
+## FIXME: Are dependencies $(srcdir)/figures.stamp $(EXTRA_DEPS) set
+## on the right rule?  Does Doxygen make a copy of figures, or does it
+## generate LaTeX inputs relying on the existence of such figures in
+## the initial location?  Investigate.
+$(srcdir)/user-refman-latex.stamp: $(srcdir)/$(DOXYFILE).in $(srcdir)/figures.stamp $(EXTRA_DEPS)
+	@rm -f $@.tmp
+	@touch $@.tmp
+	-rm -rf $(srcdir)/user/latex
+	$(MAKE) $(AM_MAKE_FLAGS) $(DOXYFILE_USER_PDF)
+	$(DOXYGEN) $(DOXYFILE_USER_PDF)
+## Doxygen may generate an incomplete output and exit with success!
+## Check some files before deeming the output as acceptable.
+	test -f $(srcdir)/user/latex/refman.tex
+	-rm -rf $(srcdir)/$(USER_REFMAN_LATEX)
+## FIXME: moving directories between file systems is not portable.
+	mv $(srcdir)/user/latex $(srcdir)/$(USER_REFMAN_LATEX)
+	@mv -f $@.tmp $@
+
+# FIXME: Probably superfluous.  Should vanish when HTML and LaTeX
+# genarations are merged.
+$(srcdir)/$(USER_REFMAN_LATEX): $(srcdir)/user-refman-latex.stamp
+## Recover from the removal of $@
+	@if test -d $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
+# Clean Doxygen products.
+.PHONY: clean-user-refman-latex
+clean-user-refman-latex:
+	rm -rf $(srcdir)/user/latex $(srcdir)/$(USER_REFMAN_LATEX)
+
+# ------------------------------ #
+# User reference manual (HTML).  #
+# ------------------------------ #
+
+# FIXME: Keep it or throw it away?
+all-local: $(srcdir)/user-refman-html.stamp
+
+# FIXME: Rename USER_REFMAN_HTML as DOCDIR_USER_HTML?
 USER_REFMAN_HTML = user-refman-html
+
+DOXYFILE_USER_HTML = Doxyfile_user_html
+
 ref-doc-html: $(srcdir)/$(USER_REFMAN_HTML)
-$(srcdir)/$(USER_REFMAN_HTML): $(srcdir)/Doxyfile_user $(srcdir)/figures.stamp $(EXTRA_DEPS)
-	$(DOXYGEN) $<							\
-	  && rm -fr $(srcdir)/$(USER_REFMAN_HTML)			\
-	  && mv $(srcdir)/user/html $(srcdir)/$(USER_REFMAN_HTML)
 
-# Doxygen HTML documentation output directories.
-DEVEL_REFMAN_PDF = devel/latex/refman.pdf
+# FIXME: Use `$(USER_REFMAN_HTML).tmp' instead of `$(srcdir)/user/html'.
+$(srcdir)/user-refman-html.stamp: $(srcdir)/$(DOXYFILE).in $(srcdir)/figures.stamp $(EXTRA_DEPS)
+	@rm -f $@.tmp
+	@touch $@.tmp
+	-rm -rf $(srcdir)/user/html
+	$(MAKE) $(AM_MAKE_FLAGS) $(DOXYFILE_USER_HTML)
+	$(DOXYGEN) $(DOXYFILE_USER_HTML)
+	-rm -rf $(srcdir)/$(USER_REFMAN_HTML)
+## FIXME: moving directories between file systems is not portable.
+	mv $(srcdir)/user/html $(srcdir)/$(USER_REFMAN_HTML)
+	@mv -f $@.tmp $@
+
+$(srcdir)/$(USER_REFMAN_HTML): $(srcdir)/user-refman-html.stamp
+## Recover from the removal of $@
+	@if test -d $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
+# Clean Doxygen products.
+.PHONY: clean-user-refman-html
+clean-user-refman-html:
+	rm -rf $(srcdir)/user/html $(srcdir)/$(USER_REFMAN_HTML)
+
+# ---------------------------------- #
+# Developer reference manual (PDF).  #
+# ---------------------------------- #
+
+DOXYFILE_DEVEL_PDF = Doxyfile_devel_pdf
+
+## FIXME: Rename DEVEL_REFMAN_PDF to something else?
+DEVEL_REFMAN_PDF = devel-refman-pdf
+## FIXME: Likewise?
+DEVEL_REFMAN_LATEX = devel-refman-latex
+
 ref-doc-devel-pdf: $(srcdir)/$(DEVEL_REFMAN_PDF)
-# FIXME: Split in two rules: one generating the LaTeX file from the
-# Doxyfile, and another one generating the PDF from the LaTeX source.
-# Moreover, the LaTeX to PDF rule could be factored using a suffix
-# rule (as in LRDE's share/).
-$(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/Doxyfile_devel_pdf $(srcdir)/figures.stamp $(EXTRA_DEPS)
-	$(DOXYGEN) $<
-	cd $(srcdir)/devel/latex && $(MAKE) $(AM_MAKEFLAGS)
 
-# FIXME: Careful, `devel/html' is a directory, and this make rule
-# depends on its timestamp, which is wrong.
-DEVEL_REFMAN_HTML = devel/html
+## FIXME: Use texi2dvi instead of Doxygen's generated Makefile?  (The
+## LaTeX to PDF rule could be factored using a suffix rule, as in
+## LRDE's share/).
+$(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/$(DEVEL_REFMAN_LATEX)
+	cd $(srcdir)/$(DEVEL_REFMAN_LATEX) && $(MAKE) $(AM_MAKEFLAGS) pdf
+	cp -f $(srcdir)/$(DEVEL_REFMAN_LATEX)/refman.pdf $@
+
+## FIXME: Use a variable instead of `$(srcdir)/devel/latex'.
+##
+## FIXME: Are dependencies $(srcdir)/figures.stamp $(EXTRA_DEPS) set
+## on the right rule?  Does Doxygen make a copy of figures, or does it
+## generate LaTeX inputs relying on the existence of such figures in
+## the initial location?  Investigate.
+$(srcdir)/devel-refman-latex.stamp: $(srcdir)/$(DOXYFILE).in $(srcdir)/figures.stamp $(EXTRA_DEPS)
+	@rm -f $@.tmp
+	@touch $@.tmp
+	-rm -rf $(srcdir)/devel/latex
+	$(MAKE) $(AM_MAKE_FLAGS) $(DOXYFILE_DEVEL_PDF)
+	$(DOXYGEN) $(DOXYFILE_DEVEL_PDF)
+## Doxygen may generate an incomplete output and exit with success!
+## Check some files before deeming the output as acceptable.
+	test -f $(srcdir)/devel/latex/refman.tex
+	-rm -rf $(srcdir)/$(DEVEL_REFMAN_LATEX)
+## FIXME: moving directories between file systems is not portable.
+	mv $(srcdir)/devel/latex $(srcdir)/$(DEVEL_REFMAN_LATEX)
+	@mv -f $@.tmp $@
+
+# FIXME: Probably superfluous.  Should vanish when HTML and LaTeX
+# genarations are merged.
+$(srcdir)/$(DEVEL_REFMAN_LATEX): $(srcdir)/devel-refman-latex.stamp
+## Recover from the removal of $@
+	@if test -d $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
+# Clean Doxygen products.
+.PHONY: clean-devel-refman-latex
+clean-devel-refman-latex:
+	rm -rf $(srcdir)/devel/latex $(srcdir)/$(DEVEL_REFMAN_LATEX)
+
+# ----------------------------------- #
+# Developer reference manual (HTML).  #
+# ----------------------------------- #
+
+# FIXME: Rename DEVEL_REFMAN_HTML as DOCDIR_DEVEL_HTML?
+DEVEL_REFMAN_HTML = devel-refman-html
+
+DOXYFILE_DEVEL_HTML = Doxyfile_devel_html
+
 ref-doc-devel-html: $(srcdir)/$(DEVEL_REFMAN_HTML)
-$(srcdir)/$(DEVEL_REFMAN_HTML): $(srcdir)/Doxyfile_devel $(srcdir)/figures.stamp $(EXTRA_DEPS)
-	$(DOXYGEN) $<
+
+# FIXME: Use `$(DEVEL_REFMAN_HTML).tmp' instead of `$(srcdir)/devel/html'.
+$(srcdir)/devel-refman-html.stamp: $(srcdir)/$(DOXYFILE).in $(srcdir)/figures.stamp $(EXTRA_DEPS)
+	@rm -f $@.tmp
+	@touch $@.tmp
+	-rm -rf $(srcdir)/devel/html
+	$(MAKE) $(AM_MAKE_FLAGS) $(DOXYFILE_DEVEL_HTML)
+	$(DOXYGEN) $(DOXYFILE_DEVEL_HTML)
+	-rm -rf $(srcdir)/$(DEVEL_REFMAN_HTML)
+## FIXME: moving directories between file systems is not portable.
+	mv $(srcdir)/devel/html $(srcdir)/$(DEVEL_REFMAN_HTML)
+	@mv -f $@.tmp $@
+
+$(srcdir)/$(DEVEL_REFMAN_HTML): $(srcdir)/devel-refman-html.stamp
+## Recover from the removal of $@
+	@if test -d $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
+# Clean Doxygen products.
+.PHONY: clean-devel-refman-html
+clean-devel-refman-html:
+	rm -rf $(srcdir)/devel/html $(srcdir)/$(DEVEL_REFMAN_HTML)
+
+# ---------- #
+# Cleaning.  #
+# ---------- #
+
+maintainer-clean-local: clean-user-refman-latex	clean-user-refman-html
+maintainer-clean-local: clean-devel-refman-latex clean-devel-refman-html
+maintainer-clean-local:
+	rm -rf $(srcdir)/user
+	rm -rf $(srcdir)/devel
 
 ## ------------------------- ##
 ## Technical Documentation.  ##
@@ -165,12 +323,14 @@ edit = sed -e "s|@ID@|$$Id|"					\
 	   -e 's,@srcdir\@,$(srcdir),g'				\
 	   -e 's,@builddir\@,$(builddir),g'
 
+## FIXME: Instead of generating HTML and PDF (LaTeX actualy) output in
+## two passes, do it in a row.  It will save us a lot of time.
 edit_pdf = sed -e 's,GENERATE_LATEX         = NO,GENERATE_LATEX = YES,g' \
 	       -e 's,GENERATE_HTML          = YES,GENERATE_HTML = NO,g'
 
 # FIXME: This is not good.  We should set these parameters for both
 # documentation (devel and user) using @VARIABLES@.  Don't generate
-# Doxyfile_user from Doxyfile_devel!  Both should be a product
+# Doxyfile_user_html from Doxyfile_devel_html!  Both should be a product
 # derived from a single source, Doxyfile.in.
 edit_user = sed								      \
   -e 's,OUTPUT_DIRECTORY       = @srcdir@/devel/,OUTPUT_DIRECTORY       = @srcdir@/user/,g' \
@@ -249,13 +409,15 @@ uninstall-local:
 	chmod -R 700 $(DESTDIR)$(htmldir)/$(USER_REFMAN_HTML)
 	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN_HTML)
 
+## FIXME: These are now generated in the build directory.
+# EXTRA_DIST +=					\
+#   Doxyfile_devel_html				\
+#   Doxyfile_devel_pdf				\
+#   Doxyfile_user_html				\
+#   Doxyfile_user_pdf
 
 EXTRA_DIST +=					\
-  Doxyfile.in					\
-  Doxyfile_devel				\
-  Doxyfile_devel_pdf				\
-  Doxyfile_user					\
-  Doxyfile_user_pdf				\
+  $(DOXYFILE).in					\
   groups/accu.hh				\
   groups/graph.hh				\
   groups/images.hh				\
@@ -273,6 +435,13 @@ EXTRA_DIST +=					\
   tools/split_sample.sh				\
   tools/todoxygen.sh
 
+## FIXME: Unsure about this.  If the directory of the generated
+## documentation is to be removed during `maintainer-clean' (see
+## Vaucanson's doc/Makefile.am), then the source Doxyfiles should not
+## be removed earlier (i.e. at `clean') !
+##
+## Note: if configure is used to generate Doxyfiles (see below), these
+## files should be (and will be automatically) remove by `distclean'.
 CLEANFILES +=					\
   Doxyfile_user					\
   Doxyfile_user_pdf				\
@@ -283,16 +452,28 @@ CLEANFILES +=					\
 
 # Sed is used to generate Doxyfile from Doxyfile.in instead of
 # configure, because the former is way faster than the latter.
-$(srcdir)/Doxyfile_user: Doxyfile_devel
-	$(edit_user) $< >$@
+#
+## FIXME: This is because, as in TC, we depend on $Id$ from the
+## ChangeLog.  Maybe we should depend from something less prone to
+## change.
+##
+## FIXME: Move these rules higher, closer to their use sites.
+##
+## FIXME: There are too many indirect generations here.  Simplify.
 
-$(srcdir)/Doxyfile_user_pdf: Doxyfile_user
+# FIXME: Directly depend on $(DOXYFILE).in instead.
+$(DOXYFILE_USER_PDF): $(DOXYFILE_USER_HTML)
 	$(edit_pdf) $< >$@
 
-$(srcdir)/Doxyfile_devel: $(srcdir)/Doxyfile.in
+# FIXME: Directly depend on $(DOXYFILE).in instead.
+$(DOXYFILE_USER_HTML): $(DOXYFILE_DEVEL_HTML)
+	$(edit_user) $< >$@
+
+# FIXME: Directly depend on $(DOXYFILE).in instead.
+$(DOXYFILE_DEVEL_PDF): $(DOXYFILE_DEVEL_HTML)
+	$(edit_pdf) $< >$@
+
+$(DOXYFILE_DEVEL_HTML): $(srcdir)/$(DOXYFILE).in
 	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
 	      | sed -e 's/\\\$$//g'`;				\
 	$(edit) $< >$@
-
-$(srcdir)/Doxyfile_devel_pdf: Doxyfile_devel
-	$(edit_pdf) $< >$@

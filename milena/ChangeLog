@@ -1,3 +1,45 @@
+2010-03-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean up Doxygen-related Make rules in milena/doc/.
+
+	* doc/Makefile.am (DOXYFILE)
+	(DOXYFILE_USER_PDF, DOXYFILE_USER_HTML)
+	(DOXYFILE_DEVEL_PDF, DOXYFILE_DEVEL_HTML):
+	New variables.
+	(USER_REFMAN_LATEX)
+	(DEVEL_REFMAN_PDF, DEVEL_REFMAN_LATEX, DEVEL_REFMAN_HTML):
+	New variables.
+	(all-local): Depend on $(srcdir)/$(USER_REFMAN_PDF),
+	$(srcdir)/user-refman-html.stamp.
+	($(srcdir)/$(USER_REFMAN_PDF)): Split these targets and move the
+	generation of the LaTeX sources...
+	($(srcdir)/user-refman-latex.stamp)
+	($(srcdir)/$(USER_REFMAN_LATEX))
+	($(srcdir)/devel-refman-latex.stamp)
+	($(srcdir)/$(DEVEL_REFMAN_LATEX)):
+	...here (new targets).
+	($(srcdir)/$(USER_REFMAN_HTML))
+	($(srcdir)/$(DEVEL_REFMAN_HTML)):
+	Delegate the actions to...
+	($(srcdir)/user-refman-html.stamp)
+	($(srcdir)/devel-refman-html.stamp):
+	...these (new) targets.
+	(clean-user-refman-latex, clean-user-refman-html)
+	(clean-devel-refman-latex, clean-devel-refman-html):
+	New (phony) targets.
+	(maintainer-clean-local): Depend on clean-user-refman-latex,
+	clean-user-refman-html, clean-devel-refman-latex and
+	clean-devel-refman-html.
+	(EXTRA_DIST): Disable Doxyfile_devel_html, Doxyfile_devel_pdf,
+	Doxyfile_user_html and Doxyfile_user_pdf.
+	Add $(DOXYFILE).in.
+	($(srcdir)/Doxyfile_user, $(srcdir)/Doxyfile_user_pdf)
+	($(srcdir)/Doxyfile_devel, $(srcdir)/Doxyfile_devel_pdf):
+	Rename targets as...
+	($(DOXYFILE_USER_HTML), $(DOXYFILE_USER_PDF))
+	($(DOXYFILE_DEVEL_HTML), $(DOXYFILE_DEVEL_PDF)):
+	...these.
+
 2010-03-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Stop make from recurring in doc/examples.
