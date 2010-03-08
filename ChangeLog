@@ -1,5 +1,12 @@
 2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Require Doxygen 1.5.6 at bootstrapping time.
+
+	* bootstrap: Here.
+	(require): Be more tolerant w.r.t. version messages.
+
+2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	* bootstrap: Fix a typo in an error message.
 
 2010-03-03  Roland Levillain  <roland@lrde.epita.fr>
