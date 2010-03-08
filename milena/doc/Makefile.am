@@ -113,8 +113,6 @@ $(srcdir)/$(USER_REFMAN_PDF): $(srcdir)/$(USER_REFMAN)
 	cd $(srcdir)/$(USER_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
 	cp -f $(srcdir)/$(USER_REFMAN)/latex/refman.pdf $@
 
-## FIXME: Use a variable instead of `$(srcdir)/user' directly?
-##
 ## FIXME: Are dependencies $(srcdir)/figures.stamp $(EXTRA_DEPS) set
 ## on the right rule?  Does Doxygen make a copy of figures, or does it
 ## generate LaTeX inputs relying on the existence of such figures in
@@ -122,15 +120,15 @@ $(srcdir)/$(USER_REFMAN_PDF): $(srcdir)/$(USER_REFMAN)
 $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(srcdir)/figures.stamp $(EXTRA_DEPS)
 	@rm -f $@.tmp
 	@touch $@.tmp
-	-rm -rf $(srcdir)/user
+	-rm -rf $(USER_REFMAN).tmp
 	$(MAKE) $(AM_MAKE_FLAGS) $(DOXYFILE_USER)
 	$(DOXYGEN) $(DOXYFILE_USER)
 ## Doxygen may generate an incomplete output and exit with success!
 ## Check some files before deeming the output as acceptable.
-	test -f $(srcdir)/user/latex/refman.tex
+	test -f $(USER_REFMAN).tmp/latex/refman.tex
 	-rm -rf $(srcdir)/$(USER_REFMAN)
 ## FIXME: Moving directories between file systems is not portable.
-	mv $(srcdir)/user $(srcdir)/$(USER_REFMAN)
+	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
 	@mv -f $@.tmp $@
 
 $(srcdir)/$(USER_REFMAN): $(srcdir)/user-refman.stamp
@@ -154,7 +152,7 @@ regen-devel-doc:
 DOXYFILE_DEVEL = Doxyfile_devel
 
 edit_devel = sed							      \
-  -e 's,OUTPUT_DIRECTORY       = @srcdir@/user/,OUTPUT_DIRECTORY       = @srcdir@/devel/,' \
+  -e 's,OUTPUT_DIRECTORY       = @builddir@/user-refman.tmp/,OUTPUT_DIRECTORY       = @builddir@/devel-refman.tmp/,' \
   -e 's,EXTRACT_ALL            = NO,EXTRACT_ALL            = YES,'	      \
   -e 's,EXTRACT_PRIVATE        = NO,EXTRACT_PRIVATE        = YES,'	      \
   -e 's,EXTRACT_STATIC         = NO,EXTRACT_STATIC         = YES,'	      \
@@ -195,8 +193,6 @@ $(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/$(DEVEL_REFMAN)
 	cd $(srcdir)/$(DEVEL_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
 	cp -f $(srcdir)/$(DEVEL_REFMAN)/latex/refman.pdf $@
 
-## FIXME: Use a variable instead of `$(srcdir)/devel' directly?
-##
 ## FIXME: Are dependencies $(srcdir)/figures.stamp $(EXTRA_DEPS) set
 ## on the right rule?  Does Doxygen make a copy of figures, or does it
 ## generate LaTeX inputs relying on the existence of such figures in
@@ -204,15 +200,15 @@ $(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/$(DEVEL_REFMAN)
 $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(srcdir)/figures.stamp $(EXTRA_DEPS)
 	@rm -f $@.tmp
 	@touch $@.tmp
-	-rm -rf $(srcdir)/devel
+	-rm -rf $(DEVEL_REFMAN).tmp
 	$(MAKE) $(AM_MAKE_FLAGS) $(DOXYFILE_DEVEL)
 	$(DOXYGEN) $(DOXYFILE_DEVEL)
 ## Doxygen may generate an incomplete output and exit with success!
 ## Check some files before deeming the output as acceptable.
-	test -f $(srcdir)/devel/latex/refman.tex
+	test -f $(DEVEL_REFMAN).tmp/latex/refman.tex
 	-rm -rf $(srcdir)/$(DEVEL_REFMAN)
 ## FIXME: Moving directories between file systems is not portable.
-	mv $(srcdir)/devel $(srcdir)/$(DEVEL_REFMAN)
+	mv $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
 	@mv -f $@.tmp $@
 
 $(srcdir)/$(DEVEL_REFMAN): $(srcdir)/devel-refman.stamp
@@ -225,8 +221,8 @@ $(srcdir)/$(DEVEL_REFMAN): $(srcdir)/devel-refman.stamp
 
 # Clean Doxygen products.
 maintainer-clean-local:
-	-rm -rf $(srcdir)/user $(srcdir)/$(USER_REFMAN)
-	-rm -rf $(srcdir)/devel $(srcdir)/$(DEVEL_REFMAN)
+	-rm -rf $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
+	-rm -rf $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
 
 
 ## ------------------------- ##

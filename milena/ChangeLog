@@ -1,5 +1,18 @@
 2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have Doxygen generate its outputs in the build directory.
+
+	* doc/Doxyfile.in (OUTPUT_DIRECTORY):
+	s,@srcdir@/user/,@builddir@/user-refman.tmp,.
+	(EXCLUDE): Adjust.
+	* doc/Makefile.am (edit_devel): Adjust.
+	($(srcdir)/user-refman.stamp)
+	($(srcdir)/devel-refman.stamp)
+	(maintainer-clean-local):
+	Adjust targets.
+
+2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Reorganize doc/Makefile.am.
 
 	* doc/Makefile.am (edit, $(DOXYFILE_USER)):
