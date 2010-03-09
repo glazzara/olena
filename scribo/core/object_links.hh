@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,10 +30,10 @@
 /// \file
 ///
 /// \brief Object links representation.
-///
-/// \fixme Should not inherit from util::array.
+
 
 # include <mln/util/array.hh>
+# include <mln/util/tracked_ptr.hh>
 
 # include <scribo/core/component_set.hh>
 
@@ -42,58 +43,121 @@ namespace scribo
 
   using namespace mln;
 
+  // Forward declaration.
+  template <typename L> class object_links;
+
+
+  namespace internal
+  {
+    /// Data structure for \c scribo::object_links<I>.
+    template <typename L>
+    struct object_links_data
+    {
+      object_links_data();
+      object_links_data(const component_set<L>& components, unsigned size);
+      object_links_data(const component_set<L>& components,
+			unsigned size, unsigned value);
+
+      mln::util::array<unsigned> comp_to_link_;
+      component_set<L> components_;
+    };
+
+  } // end of namespace scribo::internal
+
+
+
+
   /// \brief Object group representation.
   //
   template <typename L>
   class object_links
-    : public mln::util::array<unsigned>
   {
-    typedef mln::util::array<unsigned> super_t;
+    typedef internal::object_links_data<L> data_t;
 
   public:
     object_links();
     object_links(const component_set<L>& components);
     object_links(const component_set<L>& components, unsigned value);
 
-    const component_set<L>& component_set_() const;
+    const component_set<L>& components() const;
 
     bool is_valid() const;
 
+    unsigned nelements() const;
+
+    unsigned& operator()(unsigned comp_id);
+    const unsigned& operator()(unsigned comp_id) const;
+
+    const mln::util::array<unsigned>& comp_to_link() const;
+
+
   private:
-    component_set<L> components_;
+    mln::util::tracked_ptr<data_t> data_;
   };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+  namespace internal
+  {
+
+
+    /// Data structure for \c scribo::object_links<I>.
+    template <typename L>
+    object_links_data<L>::object_links_data()
+    {
+    }
+
+
+    template <typename L>
+    object_links_data<L>::object_links_data(const component_set<L>& components,
+					    unsigned size)
+      : comp_to_link_(size), components_(components)
+    {
+    };
+
+
+    template <typename L>
+    object_links_data<L>::object_links_data(const component_set<L>& components,
+					    unsigned size, unsigned value)
+      : comp_to_link_(size, value), components_(components)
+    {
+    };
+
+
+  } // end of namespace scribo::internal
+
+
+
   template <typename L>
   object_links<L>::object_links()
   {
+    data_ = new data_t();
   }
+
 
   template <typename L>
   object_links<L>::object_links(const component_set<L>& components)
-    : super_t(static_cast<unsigned>(components.nelements()) + 1),
-      components_(components)
   {
-
+    data_ = new data_t(components, unsigned(components.nelements()) + 1);
   }
+
 
   template <typename L>
   object_links<L>::object_links(const component_set<L>& components,
 				unsigned value)
-    : super_t(static_cast<unsigned>(components.nelements()) + 1, value),
-      components_(components)
   {
-
+    data_ = new data_t(components, unsigned(components.nelements()) + 1,
+		       value);
   }
 
 
   template <typename L>
   const component_set<L>&
-  object_links<L>::component_set_() const
+  object_links<L>::components() const
   {
-    return components_;
+    return data_->components_;
   }
 
 
@@ -101,7 +165,40 @@ namespace scribo
   bool
   object_links<L>::is_valid() const
   {
-    return components_.is_valid() && components_.nelements() == (this->size() - 1);
+    return data_->components_.is_valid()
+      && data_->components_.nelements() == (this->nelements() - 1);
+  }
+
+
+  template <typename L>
+  unsigned
+  object_links<L>::nelements() const
+  {
+    return data_->comp_to_link_.nelements() ;
+  }
+
+
+  template <typename L>
+  unsigned&
+  object_links<L>::operator()(unsigned comp_id)
+  {
+    return data_->comp_to_link_(comp_id);
+  }
+
+
+  template <typename L>
+  const unsigned&
+  object_links<L>::operator()(unsigned comp_id) const
+  {
+    return data_->comp_to_link_(comp_id);
+  }
+
+
+  template <typename L>
+  const mln::util::array<unsigned>&
+  object_links<L>::comp_to_link() const
+  {
+    return data_->comp_to_link_;
   }
 
 

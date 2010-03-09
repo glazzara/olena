@@ -1,3 +1,11 @@
+2010-03-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Share internal data in groups and links structures.
+
+	* core/object_groups.hh,
+	* core/object_links.hh: Share internal data using a tracked
+	pointer.
+
 2010-03-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* text/merging.hh (scribo): Update code with lastest Theo's
