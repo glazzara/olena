@@ -151,7 +151,9 @@ namespace scribo
 	  float
 	    w = this->components_.info(current_object).bbox().width(),
 	    h = this->components_.info(current_object).bbox().height();
-	  dmax_ = (w / 2.0f) + (dmax_ratio_ * math::max(w, h));
+//	  dmax_ = (w / 2.0f) + (dmax_ratio_ * math::max(w, h));
+//	  dmax_ = (w / 2.0f) + (dmax_ratio_ * w);
+	  dmax_ = (w / 2.0f) + (h + w);
 	}
 
 

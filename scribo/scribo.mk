@@ -18,4 +18,5 @@
 # Add path to Scribo's headers
 AM_CPPFLAGS = -I$(top_srcdir)/ -I$(top_builddir)/ -I$(top_srcdir)/milena -I$(top_builddir)/milena
 
-AM_CXXFLAGS = -DNDEBUG -O2
+AM_CXXFLAGS = -DNDEBUG -O2 -Wall -Wextra
+#AM_CXXFLAGS = -O0 -ggdb -Wall -Wextra -DNDEBUG

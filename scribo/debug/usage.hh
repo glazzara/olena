@@ -55,13 +55,13 @@ namespace scribo
     usage(char* argv[], const char *desc, const char* args,
 	  const char*args_desc[][2], const char *out_desc)
     {
-      std::cout	<< std::endl
-		<< desc << std::endl
-      		<< std::endl;
-      std::cout << "-----------" << std::endl;
       std::cout << "Usage: " << argv[0] << " " << args
 		<< std::endl
 		<< std::endl;
+      std::cout << "-----------" << std::endl;
+      std::cout	<< std::endl
+		<< desc << std::endl
+      		<< std::endl;
 
       for (unsigned i = 0; args_desc[i][0] != 0; ++i)
 	std::cout << "  " << args_desc[i][0] << ": " << args_desc[i][1]

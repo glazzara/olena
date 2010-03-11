@@ -147,11 +147,11 @@ namespace scribo
 	  unsigned current_object)
 	{
 	  float
-	    w = (this->objects_.bbox(current_object).pmax().col()
-		 - this->objects_.bbox(current_object).pmin().col()),
-	    h = (this->objects_.bbox(current_object).pmax().row()
-		 - this->objects_.bbox(current_object).pmin().row());
-	  dmax_ = (w / 2.0f) + (dmax_ratio_ * math::max(w, h));
+	    w = this->objects_.bbox(current_object).width();
+// 	    h = (this->objects_.bbox(current_object).pmax().row()
+// 		 - this->objects_.bbox(current_object).pmin().row());
+//	  dmax_ = (w / 2.0f) + (dmax_ratio_ * math::max(w, h));
+	  dmax_ = (w / 2.0f) + (dmax_ratio_ * w);
 	}
 
 

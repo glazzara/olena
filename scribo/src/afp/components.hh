@@ -82,13 +82,11 @@ namespace mln
   };
 
 
-
   template <typename V>
   image2d<V>
   extract_components(const image2d<bool>& input,
 		     V& nlabels,
-		     util::array<box2d>& bboxes,
-		     util::array<point2d>& mass_centers)
+		     util::array<std::pair<box2d, std::pair<point2d, unsigned> > >& attribs)
   {
     typedef image2d<bool> I;
 
@@ -97,8 +95,7 @@ namespace mln
       nrows = input.nrows(),
       ncols = input.ncols();
 
-    bboxes.resize(1);
-    mass_centers.resize(1);
+    attribs.resize(1);
 
     image2d<info>     data;
     image2d<V> label;
@@ -175,9 +172,10 @@ namespace mln
 	    {
 	      label.element(p) = ++current_label;
 
-	      bboxes.append(box2d(dta.p_min, dta.p_max));
-	      mass_centers.append(point2d(dta.row_sum / dta.card,
-					  dta.col_sum / dta.card));
+	      attribs.append(
+		std::make_pair(box2d(dta.p_min, dta.p_max),
+			       std::make_pair(point2d(dta.row_sum / dta.card,
+						      dta.col_sum / dta.card), dta.card)));
 	    }
 	  }
 	  else
@@ -195,61 +193,3 @@ namespace mln
 } // mln
 
 
-
-// void usage(char* argv[])
-// {
-//   std::cerr << argv[0] << " input.pbm output.pgm" << std::endl;
-//   std::abort();
-// }
-
-
-// int main(int argc, char* argv[])
-// {
-//   if (argc != 3)
-//     usage(argv);
-
-//   using namespace mln;
-
-//   image2d<bool> input;
-//   io::pbm::load(input, argv[1]);
-
-
-//   image2d<unsigned> ref;
-
-// //   {
-// //     util::timer t;
-// //     t.start();
-
-// //     unsigned nlabels;
-// //     ref = labeling::foreground(input, c4(), nlabels);
-
-// //     float ts = t.stop();
-// //     std::cout << "tufa: " << ts << "  " << nlabels << std::endl;
-// //   }
-
-//   {
-//     util::timer t;
-//     t.start();
-
-
-//     util::array<box2d> bboxes(1, box2d(1,1));
-//     util::array<point2d> mass_centers(1, point2d(0,0));
-
-// //     util::array<std::pair<box2d, point2d> > data_out(1);
-//     unsigned nlabels;
-//     image2d<unsigned> comps = extract_components(input, nlabels, bboxes, mass_centers);
-
-//     float ts = t.stop();
-//     std::cout << ts <<  "  " << nlabels << std::endl;
-
-// //     std::cout << bboxes << std::endl;
-// //     std::cout << mass_centers << std::endl;
-
-// //     if (comps != ref)
-// //       std::cout << "diff" << std::endl;
-
-//     io::pgm::save(labeling::wrap(value::int_u8(), comps),
-// 		  argv[2]);
-//   }
-
-// }

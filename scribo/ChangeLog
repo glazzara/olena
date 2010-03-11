@@ -1,5 +1,28 @@
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* binarization/sauvola_ms.hh: Remove a useless include.
+
+	* debug/usage.hh: Move description output.
+
+	* io/xml/save_text_lines.hh: Fix invalid xml output.
+
+	* primitive/link/internal/link_ms_dmax_ratio_base.hh,
+	* primitive/link/internal/link_single_dmax_ratio_base.hh: update
+	distance criterion.
+
+	* scribo.mk: Change compilation flags.
+
+	* src/afp/components.hh: Merge data in only one array.
+
+	* tests/filter/Makefile.am,
+	* tests/filter/objects_with_holes.cc: New test.
+
+	* text/clean.hh: use upsampling::hq4x instead of upsampling::hq2x.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Keep updating code according to last changed in core classes.
 
 	* debug/decision_image.hh,
@@ -32,15 +55,15 @@
 
 	Improve core classes.
 
-	* scribo/core/component_info.hh,
-	* scribo/core/component_set.hh,
-	* scribo/core/line_info.hh,
-	* scribo/core/line_set.hh,
-	* scribo/core/object_groups.hh: Add more methods and constructors.
+	* core/component_info.hh,
+	* core/component_set.hh,
+	* core/line_info.hh,
+	* core/line_set.hh,
+	* core/object_groups.hh: Add more methods and constructors.
 
-	* scribo/core/macros.hh: Add a new macro.
+	* core/macros.hh: Add a new macro.
 
-	* scribo/core/tag/line.hh: Add more enums.
+	* core/tag/line.hh: Add more enums.
 
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -51,46 +74,46 @@
 
 	Introduce new Scribo core classes and start using them.
 
-	* scribo/core/component_info.hh,
-	* scribo/core/component_set.hh,
-	* scribo/core/line_info.hh,
-	* scribo/core/line_set.hh,
-	* scribo/core/macros.hh,
-	* scribo/core/object_groups.hh,
-	* scribo/core/object_links.hh,
-	* scribo/core/tag/anchor.hh,
-	* scribo/core/tag/component.hh,
-	* scribo/core/tag/line.hh: New core classes.
+	* core/component_info.hh,
+	* core/component_set.hh,
+	* core/line_info.hh,
+	* core/line_set.hh,
+	* core/macros.hh,
+	* core/object_groups.hh,
+	* core/object_links.hh,
+	* core/tag/anchor.hh,
+	* core/tag/component.hh,
+	* core/tag/line.hh: New core classes.
 
-	* scribo/core/object_image.hh: Remove.
+	* core/object_image.hh: Remove.
 
-	* scribo/core/anchors.hh
-	* scribo/primitive/extract/objects.hh: Rename as...
+	* core/anchors.hh
+	* primitive/extract/objects.hh: Rename as...
 
-	* scribo/primitive/link/internal/compute_anchor.hh,
-	* scribo/primitive/extract/components.hh: ... this.
+	* primitive/link/internal/compute_anchor.hh,
+	* primitive/extract/components.hh: ... this.
 
-	* scribo/draw/bounding_box_links.hh,
-	* scribo/filter/object_links_bbox_h_ratio.hh,
-	* scribo/filter/object_links_bbox_ratio.hh,
-	* scribo/filter/objects_small.hh,
-	* scribo/fun/v2b/objects_small_filter.hh,
-	* scribo/primitive/group/apply.hh,
-	* scribo/primitive/group/from_single_link.hh,
-	* scribo/primitive/internal/find_root.hh,
-	* scribo/primitive/internal/init_link_array.hh,
-	* scribo/primitive/link/compute.hh,
-	* scribo/primitive/link/internal/find_link.hh,
-	* scribo/primitive/link/internal/find_several_links.hh,
-	* scribo/primitive/link/internal/link_functor_base.hh,
-	* scribo/primitive/link/internal/link_several_dmax_base.hh,
-	* scribo/primitive/link/internal/link_single_dmax_base.hh,
-	* scribo/primitive/link/internal/link_single_dmax_ratio_base.hh,
-	* scribo/primitive/link/merge_double_link.hh,
-	* scribo/primitive/link/with_single_left_link_dmax_ratio.hh,
-	* scribo/primitive/link/with_single_right_link_bottom.hh,
-	* scribo/primitive/link/with_single_right_link_dmax_ratio.hh,
-	* scribo/primitive/link/with_single_right_link_top.hh: Make use of
+	* draw/bounding_box_links.hh,
+	* filter/object_links_bbox_h_ratio.hh,
+	* filter/object_links_bbox_ratio.hh,
+	* filter/objects_small.hh,
+	* fun/v2b/objects_small_filter.hh,
+	* primitive/group/apply.hh,
+	* primitive/group/from_single_link.hh,
+	* primitive/internal/find_root.hh,
+	* primitive/internal/init_link_array.hh,
+	* primitive/link/compute.hh,
+	* primitive/link/internal/find_link.hh,
+	* primitive/link/internal/find_several_links.hh,
+	* primitive/link/internal/link_functor_base.hh,
+	* primitive/link/internal/link_several_dmax_base.hh,
+	* primitive/link/internal/link_single_dmax_base.hh,
+	* primitive/link/internal/link_single_dmax_ratio_base.hh,
+	* primitive/link/merge_double_link.hh,
+	* primitive/link/with_single_left_link_dmax_ratio.hh,
+	* primitive/link/with_single_right_link_bottom.hh,
+	* primitive/link/with_single_right_link_dmax_ratio.hh,
+	* primitive/link/with_single_right_link_top.hh: Make use of
 	the new core classes.
 
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
@@ -180,18 +203,18 @@
 
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	* scribo/src/text_in_photo_ppm.cc: Improve output.
+	* src/text_in_photo_ppm.cc: Improve output.
 
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Cleanup and avoid warnings in Sauvola related files.
 
-	* scribo/binarization/sauvola_ms.hh,
-	* scribo/binarization/sauvola_threshold.hh,
-	* scribo/canvas/integral_browsing.hh,
-	* scribo/src/binarization/sauvola_ms.cc,
-	* scribo/src/binarization/sauvola_pgm.cc,x
-	* scribo/subsampling/integral_single_image.hh: Cleanup and avoir
+	* binarization/sauvola_ms.hh,
+	* binarization/sauvola_threshold.hh,
+	* canvas/integral_browsing.hh,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_pgm.cc,x
+	* subsampling/integral_single_image.hh: Cleanup and avoir
 	warnings.
 
 2009-12-15  Guillaume Lazzara  <z@lrde.epita.fr>
@@ -316,17 +339,17 @@
 
 	Add a new example in Scribo.
 
-	* scribo/src/primitive/extract/Makefile.am: Add a new target.
+	* src/primitive/extract/Makefile.am: Add a new target.
 
-	* scribo/src/primitive/extract/lines_pattern.cc: New.
+	* src/primitive/extract/lines_pattern.cc: New.
 
 2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	First draft of multiscale Sauvola's binarization.
 
-	* scribo/src/binarization/Makefile.am: Add new target.
+	* src/binarization/Makefile.am: Add new target.
 
-	* scribo/src/binarization/sauvola_ms.cc: New.
+	* src/binarization/sauvola_ms.cc: New.
 
 2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 

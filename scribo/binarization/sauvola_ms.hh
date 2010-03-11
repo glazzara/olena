@@ -43,7 +43,6 @@
 # include <scribo/subsampling/integral_single_image.hh>
 
 # include <scribo/core/macros.hh>
-# include <scribo/core/object_image.hh>
 
 # include <scribo/binarization/sauvola_threshold.hh>
 # include <scribo/binarization/internal/first_pass_functor.hh>
