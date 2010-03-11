@@ -1,3 +1,36 @@
+// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+//
+// This file is part of Olena.
+//
+// Olena is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation, version 2 of the License.
+//
+// Olena is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+//
+// As a special exception, you may use this file as part of a free
+// software project without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to produce
+// an executable, this file does not by itself cause the resulting
+// executable to be covered by the GNU General Public License.  This
+// exception does not however invalidate any other reasons why the
+// executable file might be covered by the GNU General Public License.
+
+#ifndef SCRIBO_TEXT_MERGING_HH
+# define SCRIBO_TEXT_MERGING_HH
+
+/// \file
+///
+/// \brief Merge text component in order to reconstruct text lines.
+
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -16,6 +49,12 @@
 
 #include <mln/make/box2d.hh>
 
+#include <mln/value/rgb8.hh>
+#include <mln/io/ppm/save.hh>
+
+#include <mln/draw/box.hh>
+#include <mln/data/stretch.hh>
+#include <mln/data/wrap.hh>
 #include <mln/util/timer.hh>
 
 
@@ -26,19 +65,31 @@ namespace scribo
   namespace text
   {
 
+
+    /// \brief Merge text component in order to reconstruct text lines.
+    ///
+    /// \param[in] lines A line set.
+    ///
+    /// \return A new line set.  Line ids are preserved and merged
+    /// lines (not valid anymore) are tagged with line::Merged.  The
+    /// lines produced with this algorithm (valid lines) are tagged
+    /// with line::None. Line type is also set either with line::Text
+    /// or line::Punctuation.
+    //
+    template <typename L>
+    line_set<L>
+    merging(const scribo::line_set<L>& lines);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+
     namespace internal
     {
 
       using namespace mln;
       using value::int_u8;
 
-
-      template <typename L>
-      inline
-      int delta_of_line(const scribo::line_info<L>& l)
-      {
-	return l.char_width() + l.char_space();
-      }
 
 
       template <typename L>
@@ -53,58 +104,6 @@ namespace scribo
 	// of alignments (on top and bot).
       }
 
-
-      /*!
-
-       */
-      template <typename L>
-      struct group_data_t
-      {
-	group_data_t()
-	  : info(0)
-	{
-	}
-
-	group_data_t(const scribo::line_info<L>& info_)
-	  : info(&info_)
-	{
-	  finalize();
-	}
-
-	const scribo::line_info<L>* info;
-
-	// deduced:
-	int meanline;
-	bool looks_like_a_line;
-	unsigned delta;
-	box2d ebox;
-
-	void finalize()
-	{
-	  if (info->x_height() == 0)
-	    std::cerr << "oops" << std::endl;
-
-	  meanline = info->baseline() - int(info->x_height()) + 1;
-
-	  looks_like_a_line = looks_like_a_text_line(*info);
-
-	  // delta = looks_like_a_line ? char_space + char_width : 0;
-	  delta = delta_of_line(*info);
-	  // FIXME: choose between:
-	  //   char_width + char_space
-	  //   2 * char_width
-	  //   char_width + 2 * char_space
-
-	  int A = info->a_height() - info->x_height(), D = - info->d_height();
-	  if (A <= 2 && D > 2)
-	    A = D;
-	  if (D <= 2 && A > 2)
-	    D = A;
-	  ebox = mln::make::box2d(meanline - A, info->bbox().pmin().col() - delta,
-				  info->baseline() + D, info->bbox().pmax().col() + delta);
-	}
-
-      };
 
       template <typename T, typename T2>
       void draw_box(image2d<T>& input, const box2d& b, T2 l)
@@ -123,6 +122,7 @@ namespace scribo
 	  p_start += delta;
 	}
       }
+
 
 
 
@@ -160,12 +160,14 @@ namespace scribo
 
 
 
+
       unsigned my_find_root(util::array<unsigned>& parent, unsigned x)
       {
 	if (parent[x] == x)
 	  return x;
 	return parent[x] = my_find_root(parent, parent[x]);
       }
+
 
       void swap_ordering(unsigned l1, unsigned l2)
       {
@@ -177,19 +179,9 @@ namespace scribo
       }
 
 
-      box2d union_of(const box2d& b1, const box2d& b2)
-      {
-	box2d b(point2d(std::min(b1.pmin().row(), b2.pmin().row()),
-			std::min(b1.pmin().col(), b2.pmin().col())),
-		point2d(std::max(b1.pmax().row(), b2.pmax().row()),
-			std::max(b1.pmax().col(), b2.pmax().col())));
-	return b;
-      }
-
 
       template <typename L>
-      unsigned do_union(util::array<group_data_t<L> >& dta,
-			scribo::line_set<L>& lines,
+      unsigned do_union(scribo::line_set<L>& lines,
 			unsigned l1,
 			unsigned l2,
 			util::array<unsigned>& parent)
@@ -197,7 +189,10 @@ namespace scribo
 	l1 = my_find_root(parent, l1);
 	l2 = my_find_root(parent, l2);
 	if (l1 == l2)
-	  return l1;
+	  {
+	    std::cerr << "what! in'do_union': already merged!!!" << std::endl;
+	    return l1;
+	  }
 
 	swap_ordering(l1, l2);
 	parent[l2] = l1; // The smallest label value is root.
@@ -213,17 +208,18 @@ namespace scribo
 	  // not used directly in merge process so its tag cannot be
 	  // updated automatically.
 	  lines(l2).update_tag(line::Merged);
+	  lines(l2).set_hidden(true);
 	}
 	else
 	  lines(l1).fast_merge(lines(l2));
-
-	dta[l1].finalize();
 
 	// l1's tag is automatically set to line::Needs_Precise_Stats_Update
 	// l2's tag is automatically set to line::Merged
 
 	return l1;
       }
+
+
 
 
       box2d enlarge(const box2d& b, int delta)
@@ -235,13 +231,34 @@ namespace scribo
 
 
       template <typename L>
-      void draw_enlarged_box(image2d<unsigned>& output,
-			     const util::array<group_data_t<L> >& dta,
-			     unsigned l)
+      bool between_separators(const scribo::line_info<L>& l1,
+			      const scribo::line_info<L>& l2)
       {
-	box2d b = dta[l].ebox;
-	b.crop_wrt(output.domain());
-	draw_box(output, b, l);
+	unsigned
+	  col1 = l1.bbox().pcenter().col(),
+	  col2 = l2.bbox().pcenter().col();
+	const mln_ch_value(L, bool)&
+	  separators = l1.holder().components().separators();
+
+	typedef const bool* sep_ptr_t;
+	sep_ptr_t sep_ptr, end;
+
+	if (col1 < col2)
+	{
+	  sep_ptr = &separators(l1.bbox().pcenter());
+	  end = sep_ptr + col2 - col1;
+	}
+	else
+	{
+	  sep_ptr = &separators(l2.bbox().pcenter());
+	  end = sep_ptr + col1 - col2;
+	}
+
+	// If sep_ptr is true, then a separator is reached.
+	while (!*sep_ptr && sep_ptr != end)
+	  ++sep_ptr;
+
+	return *sep_ptr;
       }
 
 
@@ -279,10 +296,23 @@ namespace scribo
 	  col1 = l1.bbox().pcenter().col(),
 	  col2 = l2.bbox().pcenter().col();
 	if (col1 < col2)
-	  return col1 + l1.bbox().width() / 4  <  col2 - l2.bbox().width() / 4;
+	{
+	  if ((col1 + l1.bbox().width() / 4) >= (col2 - l2.bbox().width() / 4))
+ 	    return false;
+	}
 	else
-	  return col2 + l2.bbox().width() / 4  <  col1 - l1.bbox().width() / 4;
+	  if ((col2 + l2.bbox().width() / 4) >= (col1 - l1.bbox().width() / 4))
+	    return false;
+
+
+ 	// Check that there is no separator in between.
+	if (l1.holder().components().has_separators())
+	  return ! between_separators(l1, l2);
+
+	return true;
       }
+
+
 
 
       template <typename L>
@@ -296,7 +326,9 @@ namespace scribo
       }
 
 
-      /*! \brief Check whether a non line component and a line can merge.
+
+
+      /*! \brief Check whether a non text line and a text line can merge.
 
 	Criterions:
 	- Small height (c.height < l.x_height)
@@ -312,24 +344,24 @@ namespace scribo
 
       */
       template <typename L>
-      bool non_line_and_line_can_merge(const scribo::line_info<L>& l_cur,
-				       const group_data_t<L>& dta_cur, // current
-				       const scribo::line_info<L>& l_ted,
-				       const group_data_t<L>& dta_ted) // touched
+      bool non_text_and_text_can_merge(const scribo::line_info<L>& l_cur, // current
+				       const scribo::line_info<L>& l_ted) // touched
       {
-	if (dta_cur.looks_like_a_line || ! dta_ted.looks_like_a_line)
+	if (l_cur.type() == line::Text || l_ted.type() != line::Text)
 	  return false;
 	// the current object is a NON-textline
 	// the background (touched) object is a textline
 
 
-	// FIXME: THERE IS A BUG
-	// The second condition should be replaced by the commented one.
-	//
+ 	// Check that there is no separator in between.
+	if (l_cur.holder().components().has_separators()
+	    && between_separators(l_cur, l_ted))
+	  return false;
+
+
 	// General case (for tiny components like --> ',:."; <--):
 	if (l_cur.bbox().height() < l_ted.x_height()
-	    && float(l_cur.char_width()) / float(l_cur.card()) < l_ted.char_width())
-//	    && float(l_cur.bbox().width()) / float(l_cur.card()) < l_ted.char_width())
+	    && float(l_cur.bbox().width()) / float(l_cur.card()) < l_ted.char_width())
 	  return true;
 
 
@@ -339,9 +371,9 @@ namespace scribo
 	  // // not so long width:
 	  && l_cur.bbox().width() < 5 * l_ted.char_width()
 	  // align with the 'x' center:
-	  && std::abs((l_ted.baseline() + dta_ted.meanline) / 2 - l_cur.bbox().pcenter().row()) < 7
+	  && std::abs((l_ted.baseline() + l_ted.meanline()) / 2 - l_cur.bbox().pcenter().row()) < 7
 	  // tiny spacing:
-	  && horizontal_distance(l_cur, l_ted) < 5
+	  && unsigned(horizontal_distance(l_cur, l_ted)) < l_ted.char_width()
 	  )
 	{
 	  return true;
@@ -350,22 +382,44 @@ namespace scribo
 
 	// Special case
 
-//     // FIXME: Box are aligned; the main problem is that we can have multiple valid box
-//     // depending on the presence of descent and/or ascent!
-//     if (std::abs(dta_cur.box.pmin().row() - dta_ted.box.pmin().row()) < 5     // top
-// 	&& std::abs(dta_cur.box.pmax().row() - dta_ted.box.pmax().row()) < 5  // bot
-// 	&& ((dta_ted.box.pcenter().col() < dta_cur.box.pcenter().col()  &&  dta_cur.box.pmin().col() - dta_ted.box.pmax().col() < 10)     // small distance when cur is at right
-// 	    || (dta_cur.box.pcenter().col() < dta_ted.box.pcenter().col()  &&  dta_ted.box.pmin().col() - dta_cur.box.pmax().col() < 10)) // or when is at left.
-// 	)
-//       return true;
+	// Looking for alignement.
+	def::coord
+	  top_row = l_cur.bbox().pmin().row(),
+	  bot_row = l_cur.bbox().pmax().row();
 
+
+// 	std::cout << "top_row = " << top_row << " - bot_row = " << bot_row << std::endl;
+// 	std::cout << std::abs(bot_row - l_ted.baseline())
+// 		  << " - d "
+// 		  << std::abs(bot_row - l_ted.descent())
+// 		  << " - dd "
+// 		  << std::abs(bot_row - l_ted.ebbox().pmax().row())
+// 		  << " - "
+// 		  << std::abs(top_row - l_ted.meanline())
+// 		  << " - a "
+// 		  << std::abs(top_row - l_ted.ascent())
+// 		  << " - aa "
+// 		  << std::abs(top_row - l_ted.ebbox().pmin().row())
+// 		  << " - "
+// 		  << l_ted.ascent()
+// 		  << " - "
+// 		  << l_ted.descent()
+// 		  << std::endl;
+
+	if ((std::abs(bot_row - l_ted.baseline()) < 5
+	     || std::abs(bot_row - l_ted.ebbox().pmax().row()) < 5)
+	    &&
+	    (std::abs(top_row - l_ted.meanline()) < 5
+	     || std::abs(top_row - l_ted.ebbox().pmin().row()) < 5))
+	{
+	  return true;
+	}
 
 	return false;
-
-	// The unused criterion below is too restrictive; it does not work
-	// for ending '-', and neither for ',' when there's no descent.
-	//       dta_ted.box.has(dta_cur.box.pcenter())
       }
+
+
+
 
 
       /*! \brief Merge text lines.
@@ -373,7 +427,7 @@ namespace scribo
 	This algorithm iterates over all the components ordered by size.
 	It uses a 2d labeled image, tmp_box, to draw component bounding
 	boxes and uses that image to check bounding box collisions.
-	Depending on that collisions and whether the component looks like
+	Depending on that collisions and whether the lines looks like
 	a text line or not, bounding boxes are merged.
 
 	\verbatim
@@ -396,22 +450,22 @@ namespace scribo
 	    If label.card == 1
 	      l = label.get(0);
 	      If l != background
-	        If looks_like_a_line(cur)
-		  If looks_like_a_line(l)
+	        If looks_like_a_text_line(cur)
+		  If looks_like_a_text_line(l)
 		    // Error case: a line is included in a line.
 		  else
 		    // Line cur is included in a frame or a drawing.
 		    draw_enlarged_box(l)
 		  end
 		else
-		  If looks_like_a_line(l)
+		  If looks_like_a_text_line(l)
 		  // Component cur is a punctuation overlapping with line l.
 		  l_ <- do_union(cur, l)
 		  draw_enlarged_box(l_)
 		end
 	      end
 	    else
-	      If looks_like_a_line(cur)
+	      If looks_like_a_text_line(cur)
 	        // Component cur is a new line.
 		draw_enlarged_box(l)
 	      end
@@ -428,8 +482,8 @@ namespace scribo
 		continue
 	      end
 
-	      If !looks_like_a_line(cur) and looks_like_a_line(l)
-	     	If non_line_and_line_can_merge(cur, l)
+	      If !looks_like_a_text_line(cur) and looks_like_a_text_line(l)
+	     	If non_text_and_text_can_merge(cur, l)
 		  // A punctuation merge with a line
 		  l_ <- do_union(cur, l)
 		  draw_enlarged_box(l_)
@@ -449,27 +503,26 @@ namespace scribo
       // Important note: after merging two lines, we draw the
       // merged line over the existing one; we have to ensure that we
       // cover the previous rectangle (otherwise we have a label in
-      // 'output' that is not used anymore! and it can mix up the
+      // 'billboard' that is not used anymore! and it can mix up the
       // detection of upcoming merges...)  so this delta has to remain
       // the same during one pass.  Another solution (yet more costly)
       // could be of erasing the previous rectangle before re-drawing...
       //
       template <typename L>
-      image2d<unsigned>
+      void
       one_merge_pass(unsigned ith_pass,
 		     const box2d& domain,
 		     std::vector<scribo::line_id_t>& v,
 		     scribo::line_set<L>& lines,
-		     util::array<group_data_t<L> >& dta,
 		     util::array<unsigned>& parent)
       {
-	image2d<unsigned> output(domain);
-	data::fill(output, 0);
+	image2d<unsigned> billboard(domain);
+	data::fill(billboard, 0);
 
 	image2d<value::int_u8> log(domain);
 	data::fill(log, 0);
 
-	const unsigned n = dta.nelements() - 1;
+	const unsigned n = v.size();
 	unsigned l_;
 
 	unsigned
@@ -493,11 +546,7 @@ namespace scribo
 	  unsigned tl, tr, ml, mc, mr, bl, br;
 
 	  {
-	    box2d b_;
-
-	    b_ = enlarge(lines(l).bbox(), dta[l].delta);
-	    b_.crop_wrt(output.domain());
-
+	    box2d b_ = lines(l).ebbox();
 
 	    /*
 	      tl             tr
@@ -513,13 +562,13 @@ namespace scribo
 	    */
 
 
-	    tl = output(b_.pmin());
-	    tr = output.at_(b_.pmin().row(), b_.pmax().col());
-	    ml = output.at_(b_.pcenter().row(), b_.pmin().col());
-	    mc = output.at_(b_.pcenter().row(), b_.pcenter().col());
-	    mr = output.at_(b_.pcenter().row(), b_.pmax().col());
-	    bl = output.at_(b_.pmax().row(), b_.pmin().col());
-	    br = output(b_.pmax());
+	    tl = billboard(b_.pmin());
+	    tr = billboard.at_(b_.pmin().row(), b_.pmax().col());
+	    ml = billboard.at_(b_.pcenter().row(), b_.pmin().col());
+	    mc = billboard.at_(b_.pcenter().row(), b_.pcenter().col());
+	    mr = billboard.at_(b_.pcenter().row(), b_.pmax().col());
+	    bl = billboard.at_(b_.pmax().row(), b_.pmin().col());
+	    br = billboard(b_.pmax());
 	  }
 
 	  typedef std::set<unsigned> set_t;
@@ -534,56 +583,103 @@ namespace scribo
 	  labels.insert(br);
 
 
-	  if (labels.size() == 1) // Same behavior for all ancors.
+	  for (set_t::const_iterator it = labels.begin();
+	       it != labels.end();
+	       ++it)
+	  {
+	    if (*it == 0)
+	      continue;
+
+	    if (lines(*it).type() != line::Text)
+	      std::cerr << "outch: we have hit, so drawn, a non-text..." << std::endl;
+	  }
+
+
+	  if (labels.size() == 1) // Same behavior for all anchors.
 	  {
 	    if (mc != 0)
 	    {
 	      // Main case: it is an "included" box (falling in an already drawn box)
 
-	      if (dta[l].looks_like_a_line)
+	      if (lines(l).type() == line::Text) // the current object IS a text line
 	      {
-		if (dta[mc].looks_like_a_line)
+		if (lines(mc).type() == line::Text) // included in a text line => weird
 		{
 		  ++count_txtline_IN_txtline;
 		  std::cout << "weird: inclusion of a txt_line in a txt_line!" << std::endl;
+
+		  /// Merge is perform if the current line is a
+		  /// petouille considered as a line.
+// 		  if ((std::abs(lines(l).ascent() - lines(mc).ascent()) >= 5)
+// 		      || (std::abs(lines(l).descent() - lines(mc).descent()) >= 5))
+// 		      continue;
+
+// 		  // FIXME: Is it valid?
+// 		  // A text line is included in another text line.
+// 		  // They are merged.
+// 		  //
+// 		  l_ = do_union(lines, mc, l, parent);
+// 		  draw_box(billboard, lines(l_).ebbox(), l_);
+
+ 		  // Log:
+ 		  draw_box(log, b, 126);
+
 		}
-		else
+
+		else  // FIXME: Remove!  since included in a non-text-line, so not drawn, so inclusion impossible!!!!!!!!!!
 		{
+		  std::cout << "error: should NOT happen (a text line included in a NON-text-line (so not drawn!!!)" << std::endl;
 		  ++count_txtline_IN_junk;
 
-		  // a non-line (probably a drawing or a frame) includes a line
-		  draw_enlarged_box(output, dta, l);
+		  // a non-text-line (probably a drawing or a frame) includes a text line
+		  draw_box(billboard, lines(l).ebbox(), l);
 		  // Log:
 		  draw_box(log, b, 100);
 		}
+
 	      }
-	      else // the current object is NOT a line
+	      else // the current object is NOT a text line
 	      {
-		if (dta[mc].looks_like_a_line)
+		if (lines(mc).type() == line::Text) // included in a text line
 		{
 		  ++count_comp_IN_txtline;
-		  // FIXME: critere petouille a ajouter ici
 
-		  // Merge non-line #l into line #mc.
-		  l_ = do_union(dta, lines, mc, l, parent);
-		  // We have to re-draw the original largest line since
+		  // The current object is supposed to be punctuation
+		  // since it is fully included in the bbox of a line
+		  // of text, so we always want to merge this object
+		  // with the line.
+		  //
+		  // However, in case of a bad quality document, we
+		  // may not always want to merge since this object
+		  // could be noise or garbage... So adding new
+		  // criterions could fix this issue.
+		  //
+ 		  //if (!non_text_and_text_can_merge(lines(l), lines(mc)))
+ 		  //  continue;
+
+		  // Mark current line as punctuation.
+		  lines(l).update_type(line::Punctuation);
+
+		  // Merge non-text-line #l into text line #mc.
+		  l_ = do_union(lines, mc, l, parent);
+		  // We have to re-draw the original largest text line since
 		  // it may change of label (take the one of the included line).
-		  draw_enlarged_box(output, dta, l_);
+		  draw_box(billboard, lines(l_).ebbox(), l_);
 
 		  // Log:
 		  draw_box(log, b, 128);
 		}
 	      }
 	    }
-	    else
+	    else // mc == 0
 	    {
 	      // Main case: it is a "new" box, that might be drawn in the background.
 
 	      // we only draw this box if it is a text-line!!!
-	      if (dta[l].looks_like_a_line)
+	      if (lines(l).type() == line::Text)
 	      {
 		++count_new_txtline;
-		draw_enlarged_box(output, dta, l);
+		draw_box(billboard, lines(l).ebbox(), l);
 		// Log:
 		draw_box(log, b, 127);
 	      }
@@ -593,6 +689,8 @@ namespace scribo
 	  }
 	  else
 	  {
+	    l_ = l; // current label.
+
 	    // Particular cases.
 	    for (set_t::const_iterator it = labels.begin();
 		 it != labels.end();
@@ -603,26 +701,44 @@ namespace scribo
 	      if (lcand == 0) // Skip background.
 		continue;
 
-	      if (lines_can_merge(lines(l), lines(lcand)))
+	      if (lines(lcand).type() != line::Text)
+		std::cerr << "again!" << std::endl;
+
+
+	      if (lines(l_).type() == line::Text)
 	      {
-		++count_two_lines_merge;
-		l_ = do_union(dta, lines, l, lcand,  parent);
-		draw_enlarged_box(output, dta, l_);
-		// Log:
-		draw_box(log, b, 151);
-		continue;
+		// l_ and lcand look like text line chunks.
+		if (lines_can_merge(lines(l_), lines(lcand)))
+		{
+		  ++count_two_lines_merge;
+		  l_ = do_union(lines, l_, lcand,  parent);
+
+		  draw_box(billboard, lines(l_).ebbox(), l_);
+		  // Log:
+		  draw_box(log, b, 151);
+		  continue;
+		}
+		else
+		{
+		  ++count_WTF;
+		  // Log:
+		  draw_box(log, b, 255);
+
+		  // (*) SEE BELOW
+		  draw_box(billboard, lines(l_).ebbox(), l_);
+		}
 	      }
-
-
-	      if (! dta[l].looks_like_a_line && dta[lcand].looks_like_a_line)
+	      else
 	      {
+		// l_ does NOT looks like a text line chunk.
 		++count_comp_HITS_txtline;
-		if (non_line_and_line_can_merge(lines(l), dta[l], lines(lcand), dta[lcand]))
+		if (non_text_and_text_can_merge(lines(l_), lines(lcand)))
 		  // a petouille merges with a text line?
 		{
 		  ++count_comp_HITS_txtline;
-		  l_ = do_union(dta, lines, l, lcand,  parent);
-		  draw_enlarged_box(output, dta, l_);
+		  l_ = do_union(lines, l_, lcand,  parent);
+		  draw_box(billboard, lines(l_).ebbox(), l_);
+
 		  // Log:
 		  draw_box(log, b, 169);
 		  continue;
@@ -633,12 +749,39 @@ namespace scribo
 		  draw_box(log, b, 254);
 		}
 	      }
-	      else
-	      {
-		++count_WTF;
-		// Log:
-		draw_box(log, b, 255);
-	      }
+
+
+		/*  (*)  Text lines verticaly overlap.
+
+		   --------------------------
+		   |           l            |
+		   |                        |
+		   --------------------------
+		   |           lcand        |
+		   |                        |
+		   --------------------------
+
+		   or
+
+		   --------------------------
+		   |          l             |
+		   |                        |
+		   |---------------------------
+		   |------------------------- |
+		   |         lcand            |
+		   ----------------------------
+
+		   or
+
+		   --------------------------
+		   |          lcand         |
+		   |                        |
+ 		   |---------------------------
+		   |------------------------- |
+		   |           l              |
+		   ----------------------------
+
+		 */
 
 	    }
 	  }
@@ -657,25 +800,23 @@ namespace scribo
 
 
 	(void) ith_pass;
-// 	if (ith_pass == 1)
-// 	{
-// 	  mln::io::pgm::save(log, "log_1.pgm");
-// 	  mln::io::pgm::save(data::wrap(int_u8(), output), "log_1e.pgm");
-// 	}
-// 	else if (ith_pass == 2)
-// 	{
-// 	  mln::io::pgm::save(log, "log_2.pgm");
-// 	  mln::io::pgm::save(data::wrap(int_u8(), output), "log_2e.pgm");
-// 	}
-// 	else if (ith_pass == 3)
-// 	{
-// 	  mln::io::pgm::save(log, "log_3.pgm");
-// 	  mln::io::pgm::save(data::wrap(int_u8(), output), "log_3e.pgm");
-// 	}
-
-	return output;
-
+	if (ith_pass == 1)
+	{
+	  mln::io::pgm::save(log, "log_1.pgm");
+	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_1e.pgm");
+	}
+	else if (ith_pass == 2)
+	{
+	  mln::io::pgm::save(log, "log_2.pgm");
+	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_2e.pgm");
+	}
+	else if (ith_pass == 3)
+	{
+	  mln::io::pgm::save(log, "log_3.pgm");
+	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_3e.pgm");
+	}
       }
+
 
 
 
@@ -696,7 +837,6 @@ namespace scribo
 
 	scribo::line_set<L> lines_;
       };
-
 
 
       template <typename L>
@@ -725,37 +865,37 @@ namespace scribo
 	// Sort lines by bbox.nelements() and ids.
 	std::sort(v.begin(), v.end(), func);
 
-	image2d<unsigned> canvas;
 	util::timer t;
 
 
-	// Caching line temporary data.
-	util::array<group_data_t<L> >
-	  dta;
-	dta.reserve(unsigned(lines.nelements()) + 1);
-	dta.append(group_data_t<L>());
+	// Setting lines as text lines according to specific criterions.
 	for_all_lines(l, lines)
-	  dta.append(group_data_t<L>(lines(l)));
+	  if (looks_like_a_text_line(lines(l)))
+	    lines(l).update_type(line::Text);
+
 
 	// First pass
 	t.start();
-	one_merge_pass(1, input_domain, v, lines, dta, parent);
+	one_merge_pass(1, input_domain, v, lines, parent);
 	float ts = t.stop();
 	std::cout << "time " << ts << std::endl;
 
+
+//	lines.force_stats_update();
+
+	// Sort lines by bbox.nelements() and ids again!
+	// line may have grown differently since the first pass.
+	std::sort(v.begin(), v.end(), func);
+
+
 	// Second pass
 	t.start();
-	canvas = one_merge_pass(2, input_domain, v, lines, dta, parent); // <- last pass
+	one_merge_pass(2, input_domain, v, lines, parent); // <- last pass
 	ts = t.stop();
 	std::cout << "time " << ts << std::endl;
 
 
-// 	using value::int_u8;
-	//io::pgm::save(data::wrap(int_u8(), canvas), "merge_result.pgm");
-
-// 	mln::io::ppm::save(labeling::colorize(value::rgb8(), canvas),
-// 		      "merge_result.ppm");
-
+	lines.force_stats_update();
 
 	return lines;
       }
@@ -768,22 +908,26 @@ namespace scribo
 
     template <typename L>
     line_set<L>
-    merging(const box2d& input_domain,
-	    const scribo::line_set<L>& lines)
+    merging(const scribo::line_set<L>& lines)
     {
       using namespace mln;
 
       util::timer t;
       t.start();
 
-      scribo::line_set<L> output = internal::draw_boxes(input_domain, lines);
+      scribo::line_set<L> output
+	= internal::draw_boxes(lines.components().labeled_image().domain(),
+			       lines);
       float ts = t.stop();
       std::cout << ts << std::endl;
 
       return output;
     }
 
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace scribo::text
 
 } // end of namespace scribo
+
+#endif // ! SCRIBO_TEXT_MERGING_HH

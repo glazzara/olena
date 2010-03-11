@@ -1,5 +1,12 @@
 2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve text line merging algorithm.
+
+	* text/merging.hh: Change merge rules and improve integration with
+	Scribo line structures.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a reconstruction algorithm.
 
 	* primitive/internal/rd.hh: New.
