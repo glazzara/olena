@@ -49,7 +49,6 @@ namespace scribo
     /*! \brief Invalidate links between two components with too different
         height or width.
 
-	\param[in] components   An object image.
 	\param[in] links     Link components information.
 	\param[in] dim       The dimension to use to compare bbox length.
 	\param[in] max_ratio The maximum length ratio of two linked
@@ -59,8 +58,7 @@ namespace scribo
     */
     template <typename L>
     object_links<L>
-    object_links_bbox_ratio(const component_set<L>& components,
-			    const object_links<L>& links,
+    object_links_bbox_ratio(const object_links<L>& links,
 			    unsigned dim,
 			    float max_ratio);
 
@@ -70,19 +68,19 @@ namespace scribo
 
     template <typename L>
     object_links<L>
-    object_links_bbox_ratio(const component_set<L>& components,
-			    const object_links<L>& links,
+    object_links_bbox_ratio(const object_links<L>& links,
 			    unsigned dim,
 			    float max_ratio)
     {
       trace::entering("scribo::filter::object_links_bbox_ratio");
 
-      mln_precondition(components.is_valid());
       mln_precondition(links.is_valid());
 
+      const component_set<L>& components = links.components();
+
       object_links<L> output(links);
-      for (unsigned i = 1; i < links.size(); ++i)
-	if (links[i] != i)
+      for (unsigned i = 1; i < links.nelements(); ++i)
+	if (links(i) != i)
 	{
 	  float
 	    lmin = components(i).bbox().pmax()[dim]

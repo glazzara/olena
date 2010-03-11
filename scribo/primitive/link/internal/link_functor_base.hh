@@ -233,7 +233,7 @@ namespace scribo
 	unsigned
 	link_functor_base<L,E>::link(unsigned object) const
 	{
-	  return links_[object];
+	  return links_(object);
 	}
 
 	template <typename L, typename E>
@@ -256,9 +256,14 @@ namespace scribo
 	{
 	  (void) start_point;
 	  mln_value(L) v = this->labeled_image_(p);
+	  bool is_separator = this->components_.separators()(p);
+
+	  if (is_separator)
+	    return true;
+
 	  return v != literal::zero  // Not the background
 	    && v != current_object // Not the current component
-	    && this->links_[v] != current_object  // No loops
+	    && this->links_(v) != current_object  // No loops
 	    && this->components_(v).tag() != component::Ignored; // Not ignored
 	}
 
@@ -288,8 +293,12 @@ namespace scribo
 						      const P& start_point,
 						      const P& p) const
 	{
-	  return exact(this)->verify_link_criterion_(current_object,
-						     start_point, p);
+	  return
+	    // Do not link with separators...
+	    ! this->components_.separators()(p)
+	    // ... and perform custom checks.
+	    && exact(this)->verify_link_criterion_(current_object,
+						   start_point, p);
 	}
 
 	template <typename L, typename E>
@@ -471,7 +480,7 @@ namespace scribo
 	{
 	  (void) start_point;
 	  (void) anchor;
-	  this->links_[current_object] = this->labeled_image_(p);
+	  this->links_(current_object) = this->labeled_image_(p);
 	}
 
 

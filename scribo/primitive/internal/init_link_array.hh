@@ -58,12 +58,12 @@ namespace scribo
       void
       init_link_array(object_links<L>& link_array)
       {
-	const component_set<L>& comp_set = link_array.component_set_();
+	const component_set<L>& comp_set = link_array.components();
 	for (unsigned i = 0; i < link_array.nelements(); ++i)
 	  if (comp_set(i).tag() == component::Ignored)
-	    link_array[i] = 0;
+	    link_array(i) = 0;
 	  else
-	    link_array[i] = i;
+	    link_array(i) = i;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

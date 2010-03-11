@@ -245,13 +245,13 @@ namespace scribo
 
       mln_precondition(input.is_valid());
 
-      const component_set<L>& comp_set = links.component_set_();
-      for_all_components(i, links)
-	if (links[i] != i && links[i] != 0)
+      const component_set<L>& comp_set = links.components();
+      for_all_links(i, links)
+	if (links(i) != i && links(i) != 0)
 	{
 	  mln_site(L)
 	    p1 = primitive::link::internal::compute_anchor(comp_set, i, anchor),
-	    p2 = primitive::link::internal::compute_anchor(comp_set, links[i], anchor);
+	    p2 = primitive::link::internal::compute_anchor(comp_set, links(i), anchor);
 
 	  mln::draw::line(input, p1, p2, value);
 	}
@@ -293,19 +293,19 @@ namespace scribo
       dleft[0] = 2;
       mln_dpsite(P) dright = literal::zero;
       dright[0] = -2;
-      for_all_components(i, left_link)
+      for_all_links(i, left_link)
       {
 	mln::draw::line(input,
 			internal::shift_site(input, mass_centers[i], dleft),
 			internal::shift_site(input,
-					     mass_centers[left_link[i]],
+					     mass_centers[left_link(i)],
 					     dleft),
 			left_link_value);
 
 	mln::draw::line(input,
 			internal::shift_site(input, mass_centers[i], dright),
 			internal::shift_site(input,
-					     mass_centers[right_link[i]],
+					     mass_centers[right_link(i)],
 					     dright),
 			right_link_value);
 
@@ -347,16 +347,16 @@ namespace scribo
       dleft[0] = 2;
       mln_site(I)::vec dright = literal::origin;
       dright[0] = -2;
-      for_all_components(i, left_link)
+      for_all_links(i, left_link)
       {
 	mln::draw::line(input,
 			bboxes[i].center() + dleft,
-			bboxes[left_link[i]].center() + dleft,
+			bboxes[left_link(i)].center() + dleft,
 			left_link_value);
 
 	mln::draw::line(input,
 			bboxes[i].center() + dright,
-			bboxes[right_link[i]].center() + dright,
+			bboxes[right_link(i)].center() + dright,
 			right_link_value);
 
 	mln::util::couple<bool, unsigned>

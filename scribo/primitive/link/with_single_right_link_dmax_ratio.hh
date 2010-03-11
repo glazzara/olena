@@ -61,7 +61,9 @@ namespace scribo
       /*! \brief Link objects with their right neighbor if exists.
 
 	  \param[in] components A component set.
-	  \param[in] dmax_ratio
+	  \param[in] dmax_ratio Size ratio defining the maximum lookup
+	                        distance.
+	  \param[in] anchor Starting point for the neighbor lookup.
 
 	  \return Object links data.
 
@@ -77,11 +79,20 @@ namespace scribo
       inline
       object_links<L>
       with_single_right_link_dmax_ratio(const component_set<L>& components,
+					float dmax_ratio, anchor::Type anchor);
+
+      /// \overload
+      /// anchor is set to MassCenter.
+      template <typename L>
+      inline
+      object_links<L>
+      with_single_right_link_dmax_ratio(const component_set<L>& components,
 					float dmax_ratio);
 
 
       /// \overload
       /// dmax_ratio is set to 3.
+      /// anchor is set to MassCenter.
       template <typename L>
       inline
       object_links<L>
@@ -127,11 +138,12 @@ namespace scribo
 
       // Facades
 
+
       template <typename L>
       inline
       object_links<L>
       with_single_right_link_dmax_ratio(const component_set<L>& components,
-					float dmax_ratio)
+					float dmax_ratio, anchor::Type anchor)
       {
 	trace::entering("scribo::primitive::link::with_single_right_link_dmax_ratio");
 
@@ -140,10 +152,22 @@ namespace scribo
 	internal::single_right_dmax_ratio_functor<L>
 	  functor(components, dmax_ratio);
 
-	object_links<L> output = compute(functor);
+	object_links<L> output = compute(functor, anchor);
 
 	trace::exiting("scribo::primitive::link::with_single_right_link_dmax_ratio");
 	return output;
+      }
+
+
+
+      template <typename L>
+      inline
+      object_links<L>
+      with_single_right_link_dmax_ratio(const component_set<L>& components,
+					float dmax_ratio)
+      {
+	return with_single_right_link_dmax_ratio(components, dmax_ratio,
+						 anchor::MassCenter);
       }
 
 

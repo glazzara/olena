@@ -143,7 +143,7 @@ namespace scribo
 	data::fill(text_ima, true);
 
 	// Careful : background is set to 'False'
-	const component_set<L>& comp_set = lines.component_set_();
+	const component_set<L>& comp_set = lines.components();
 	const L& lbl = comp_set.labeled_image();
 
 	const mln::util::array<component_id_t>& comps = lines(i).components();

@@ -77,7 +77,7 @@ namespace scribo
 
       mln_precondition(input.is_valid());
 
-      for_all_components(i, boxes)
+      for_all_comp_data(i, boxes)
         if (boxes[i].is_valid())
 	  mln::draw::box(input, boxes[i], value);
 

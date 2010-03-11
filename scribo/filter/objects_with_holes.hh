@@ -532,7 +532,7 @@ namespace scribo
 		true);
 
       bool to_remove = false;
-      for_all_components(i, components)
+      for_all_comps(i, components)
 	if (components(i).tag() != component::Ignored)
 	{
 	  mln_domain(L) b = components(i).bbox();
@@ -549,7 +549,7 @@ namespace scribo
 					  c8(), nlabels,
 					  accu_t()).second();
 	  unsigned nholes = 0;
-	  for_all_components(j, counts)
+	  for_all_comp_data(j, counts)
 	    if (counts(j) > 4u)
 	      ++nholes;
 

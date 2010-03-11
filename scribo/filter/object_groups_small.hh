@@ -81,7 +81,7 @@ namespace scribo
       output(0) = 0;
       for_all_groups(i, output)
 	if (group_size[groups(i)] < n_links
-	    || !groups.component_set_()(i).is_valid())
+	    || !groups.components()(i).is_valid())
 	  output(i) = 0;
 
       trace::exiting("scribo::filter::object_groups_small");

@@ -38,7 +38,6 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
 
 namespace scribo
 {
@@ -51,7 +50,6 @@ namespace scribo
     /*! \brief Invalidate links between two non aligned components.
 	Alignment is based on a given edge of object bounding boxes.
 
-	\param[in] components   A component set.
 	\param[in] links        Object links information.
         \param[in] max_alpha    Maximum angle value (degrees).
 
@@ -91,8 +89,7 @@ namespace scribo
     */
     template <typename L>
     object_links<L>
-    object_links_non_aligned_simple(const component_set<L>& components,
-				    const object_links<L>& links,
+    object_links_non_aligned_simple(const object_links<L>& links,
 				    unsigned edge,
 				    float max_alpha);
 
@@ -102,15 +99,16 @@ namespace scribo
 
     template <typename L>
     object_links<L>
-    object_links_non_aligned_simple(const component_set<L>& comps,
-				    const object_links<L>& links,
+    object_links_non_aligned_simple(const object_links<L>& links,
 				    unsigned edge,
 				    float max_alpha)
     {
       trace::entering("scribo::filter::object_links_non_aligned_simple");
 
-      mln_precondition(comps.is_valid());
       mln_precondition(links.is_valid());
+
+
+      const component_set<L>& comps = links.components();
 
       object_links<L> output(links);
       float dr, dc;
@@ -123,81 +121,81 @@ namespace scribo
       {
 	for_all_comps(i, comps)
 	{
-	  if (links[i] != i)
+	  if (links(i) != i)
 	  {
 	    dr = math::abs(comps(i).bbox().pcenter().row()
-			   - comps(links[i]).bbox().pcenter().row());
+			   - comps(links(i)).bbox().pcenter().row());
 	    dc = math::abs(comps(i).bbox().pcenter().col()
-			   - comps(links[i]).bbox().pcenter().col());
+			   - comps(links(i)).bbox().pcenter().col());
 
 	    if (std::atan(dr / dc) > max_alpha_rad)
-	      output[i] = i;
+	      output(i) = i;
 	  }
 	}
       }
       // Top
       else if (edge == 1)
       {
-	for_all_comps(i, comps.bboxes())
-	  if (links[i] != i)
+	for_all_comps(i, comps)
+	  if (links(i) != i)
 	  {
 	    dr = math::abs(comps(i).bbox().pmin().row()
-			   - comps(links[i]).bbox().pmin().row());
+			   - comps(links(i)).bbox().pmin().row());
 	    dc = math::abs(comps(i).bbox().pcenter().col()
-			   - comps(links[i]).bbox().pcenter().col());
+			   - comps(links(i)).bbox().pcenter().col());
 
 	    if (std::atan(dr / dc) > max_alpha_rad)
-	      output[i] = i;
+	      output(i) = i;
 	  }
       }
       // Bottom
       else if (edge == 2)
       {
-	for_all_comps(i, comps.bboxes())
+	for_all_comps(i, comps)
 	{
-	  if (links[i] != i)
+	  if (links(i) != i)
 	  {
 	    dr = math::abs(comps(i).bbox().pmax().row()
-			   - comps(links[i]).bbox().pmax().row());
+			   - comps(links(i)).bbox().pmax().row());
 	    dc = math::abs(comps(i).bbox().pcenter().col()
-			   - comps(links[i]).bbox().pcenter().col());
+			   - comps(links(i)).bbox().pcenter().col());
 
 	    if (std::atan(dr / dc) > max_alpha_rad)
-	      output[i] = i;
+	      output(i) = i;
 	  }
 	}
       }
       // Left
       else if (edge == 3)
       {
-	for_all_comps(i, comps.bboxes())
+	for_all_comps(i, comps)
 	{
-	  if (links[i] != i)
+	  if (links(i) != i)
 	  {
 	    dr = math::abs(comps(i).bbox().pcenter().row()
-			   - comps(links[i]).bbox().pcenter().row());
+			   - comps(links(i)).bbox().pcenter().row());
 	    dc = math::abs(comps(i).bbox().pmin().col()
-			   - comps(links[i]).bbox().pmin().col());
+			   - comps(links(i)).bbox().pmin().col());
 
 	    if (std::atan(dc / dr) > max_alpha_rad)
-	      output[i] = i;
+	      output(i) = i;
 	  }
 	}
       }
       // Right
       else if (edge == 4)
       {
-	for_all_comps(i, comps.bboxes())
+	for_all_comps(i, comps)
 	{
-	  if (links[i] != i)
+	  if (links(i) != i)
 	  {
 	    dr = math::abs(comps(i).bbox().pcenter().row()
-			   - comps(links[i]).bbox().pcenter().row());
+			   - comps(links(i)).bbox().pcenter().row());
 	    dc = math::abs(comps(i).bbox().pmax().col()
-			   - comps(links[i]).bbox().pmax().col());
+			   - comps(links(i)).bbox().pmax().col());
 
 	    if (std::atan(dc / dr) > max_alpha_rad)
-	      output[i] = i;
+	      output(i) = i;
 	  }
 	}
       }

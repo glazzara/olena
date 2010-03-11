@@ -52,7 +52,6 @@ namespace scribo
     /*! \brief Invalidate links between two components with too different
         height.
 
-	\param[in] components  A component set.
 	\param[in] links       Link objects information.
 	\param[in] max_h_ratio The maximum height ratio of two linked
 	                       bounding boxes.
@@ -61,8 +60,7 @@ namespace scribo
     */
     template <typename L>
     object_links<L>
-    object_links_bbox_h_ratio(const component_set<L>& components,
-			      const object_links<L>& links,
+    object_links_bbox_h_ratio(const object_links<L>& links,
 			      float max_h_ratio);
 
 
@@ -71,17 +69,15 @@ namespace scribo
 
     template <typename L>
     object_links<L>
-    object_links_bbox_h_ratio(const component_set<L>& components,
-			      const object_links<L>& links,
+    object_links_bbox_h_ratio(const object_links<L>& links,
 			      float max_h_ratio)
     {
       trace::entering("scribo::filter::object_links_bbox_h_ratio");
 
-      mln_precondition(components.is_valid());
       mln_precondition(links.is_valid());
 
       object_links<L>
-	output = object_links_bbox_ratio(components, links, 0, max_h_ratio);
+	output = object_links_bbox_ratio(links, 0, max_h_ratio);
 
       trace::exiting("scribo::filter::object_links_bbox_h_ratio");
       return output;

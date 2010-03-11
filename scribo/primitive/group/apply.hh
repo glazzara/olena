@@ -53,21 +53,18 @@ namespace scribo
 
       /*! \brief Apply grouping in an object image.
 
-	  \param components A component set.
 	  \param groups     An object group structure.
 
 	  \return A copy of \p components with grouped components.
       */
       template <typename L>
       component_set<L>
-      apply(const component_set<L>& components,
-	    const object_groups<L>& groups);
+      apply(const object_groups<L>& groups);
 
       /// \overload
       template <typename L>
       component_set<L>
-      apply(const component_set<L>& components,
-	    const object_links<L>& links);
+      apply(const object_links<L>& links);
 
 
 
@@ -76,16 +73,14 @@ namespace scribo
 
       template <typename L>
       component_set<L>
-      apply(const component_set<L>& components,
-	    const object_groups<L>& groups)
+      apply(const object_groups<L>& groups)
 
       {
 	trace::entering("scribo::primitive::group::apply");
 
-	mln_precondition(components.is_valid());
-	mln_precondition(groups.nelements() == components.nlabels().next());
-	mln_precondition(groups.nelements() == components.bboxes().nelements());
-	mln_precondition(groups.components_id_() == components.id_());
+	mln_precondition(groups.is_valid());
+
+	const component_set<L>& components = groups.components();
 
 	L labeled_image = duplicate(components.labeled_image());
 
@@ -94,7 +89,7 @@ namespace scribo
 	  packed_relabel_fun = mln::make::relabelfun(groups.comp_to_group(),
 						     components.nelements(),
 						     new_nlabels);
-	new_nlabels = components.nelements();
+
 	labeling::relabel_inplace(labeled_image, new_nlabels,
 				  packed_relabel_fun);
 
@@ -107,21 +102,15 @@ namespace scribo
 
       template <typename L>
       component_set<L>
-      apply(const component_set<L>& components,
-	    const object_links<L>& links)
+      apply(const object_links<L>& links)
 
       {
 	trace::entering("scribo::primitive::group::apply");
 
-	mln_precondition(components.is_valid());
-	mln_precondition(links.nelements() == components.nlabels().next());
-	mln_precondition(links.nelements() == components.bboxes().nelements());
-	mln_precondition(links.components_id_() == components.id_());
+	mln_precondition(links.is_valid());
 
-
-	object_groups<L> group = group::from_single_link(components, links);
-
-	component_set<L> output = apply(components, links);
+	object_groups<L> group = group::from_single_link(links);
+	component_set<L> output = apply(group);
 
 	trace::exiting("scribo::primitive::group::apply");
 	return output;

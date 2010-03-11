@@ -64,7 +64,6 @@ namespace scribo
 	 \brief Validate and merge double link information. A link
 	 must exist in both ways to be validated.
 
-	  \param[in] components     The Lines of text.
 	  \param[in] left_link   The left neighbor of each line of text.
 	  \param[in] right_link  The right neighbor of each line of text.
 
@@ -72,8 +71,7 @@ namespace scribo
       */
       template <typename L>
       object_links<L>
-      merge_double_link(const component_set<L>& components,
-			const object_links<L>& left_link,
+      merge_double_link(const object_links<L>& left_link,
 			const object_links<L>& right_link);
 
 
@@ -84,31 +82,30 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      merge_double_link(const component_set<L>& components,
-			const object_links<L>& left_link,
+      merge_double_link(const object_links<L>& left_link,
 			const object_links<L>& right_link)
       {
 	trace::entering("scribo::primitive::link::merge_double_link");
 
-	mln_precondition(components.is_valid());
-	mln_precondition(left_link.nelements() == right_link.nelements());
-	mln_precondition(left_link.components_id_() == components.id_());
-	mln_precondition(right_link.components_id_() == components.id_());
+	mln_precondition(left_link.is_valid());
+	mln_precondition(right_link.is_valid());
+	mln_precondition(left_link.components() == right_link.components());
 
+	const component_set<L>& components = left_link.components();
 
 	object_links<L> merge(left_link);
 
 	for_all_ncomponents(i, components.nelements())
 	{
 	  if (components(i).tag() == component::Ignored)
-	    merge[i] = 0;
+	    merge(i) = 0;
 	  else
 	  {
 	    mln::util::couple<bool, unsigned>
 	      nbh = primitive::internal::is_link_valid(left_link,
 						       right_link, i);
 	    if (!nbh.first())
-	      merge[i] = i;
+	      merge(i) = i;
 	  }
 	}
 

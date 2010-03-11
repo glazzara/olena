@@ -1,5 +1,41 @@
 2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Update code according to last changes in Scribo core classes.
+
+	* draw/bounding_box_links.hh,
+	* primitive/internal/init_link_array.hh,
+	* primitive/internal/is_link_valid.hh,
+	* primitive/link/internal/link_single_dmax_base.hh,
+	* src/afp/link.hh: Update the use of object_link class.
+
+	* draw/bounding_boxes.hh,
+	* filter/objects_with_holes.hh,
+	* src/afp/regroup.hh: Update for_all macro.
+
+	* estim/object_groups_v_thickness.hh,
+	* filter/object_groups_small.hh,
+	* filter/object_groups_v_thickness.hh,
+	* text/recognition.hh: Update access to component_set.
+
+	* filter/object_links_bbox_h_ratio.hh,
+	* filter/object_links_bbox_overlap.hh,
+	* filter/object_links_bbox_ratio.hh,
+	* filter/object_links_bottom_aligned.hh,
+	* filter/object_links_non_aligned_simple.hh,
+	* filter/object_links_top_aligned.hh,
+	* primitive/group/apply.hh,
+	* primitive/group/from_single_link.hh,
+	* primitive/link/merge_double_link.hh,
+	* primitive/link/with_single_right_link_bottom.hh,
+	* primitive/link/with_single_right_link_dmax_ratio.hh,
+	* primitive/link/with_single_right_link_top.hh: Improve routine
+	prototypes.
+
+	* primitive/link/internal/link_functor_base.hh: Make use of
+	separators if exist.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve debug routines in Scribo.
 
 	* debug/bboxes_enlarged_image.hh,

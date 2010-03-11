@@ -28,7 +28,7 @@ namespace scribo
 	  new_groups(components, static_cast<unsigned>(components.nlabels()) + 1, 0);
 
 	unsigned ngroups = 0;
-	for_all_components(i, components.bboxes())
+	for_all_comps(i, components)
 	{
 	  if (groups[i] == 0)
 	    continue;

@@ -37,7 +37,6 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
-# include <scribo/core/component_set.hh>
 
 # include <scribo/filter/object_links_non_aligned_simple.hh>
 
@@ -52,7 +51,6 @@ namespace scribo
     /*! \brief Invalidate links between two components if their bottom are not
                aligned.
 
-	\param[in] components   A component set.
 	\param[in] links        Object links information.
         \param[in] max_alpha    Maximum angle value (degrees).
 
@@ -82,8 +80,7 @@ namespace scribo
     */
     template <typename L>
     object_links<L>
-    object_links_bottom_aligned(const component_set<L>& components,
-				const object_links<L>& links,
+    object_links_bottom_aligned(const object_links<L>& links,
 				float max_alpha);
 
 
@@ -92,18 +89,15 @@ namespace scribo
 
     template <typename L>
     object_links<L>
-    object_links_bottom_aligned(const component_set<L>& components,
-				const object_links<L>& links,
+    object_links_bottom_aligned(const object_links<L>& links,
 				float max_alpha)
     {
       trace::entering("scribo::filter::object_links_bottom_aligned");
 
-      mln_precondition(components.is_valid());
       mln_precondition(links.is_valid());
 
       object_links<L>
-	output = object_links_non_aligned_simple(components, links,
-						 2, max_alpha);
+	output = object_links_non_aligned_simple(links, 2, max_alpha);
 
       trace::exiting("scribo::filter::object_links_bottom_aligned");
       return output;

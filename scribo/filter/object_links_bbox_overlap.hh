@@ -53,7 +53,6 @@ namespace scribo
     /*! \brief Invalidate links between two components having their bounding box
         overlapping too much.
 
-	\param[in] components        A component set.
 	\param[in] links             Link components information.
 	\param[in] max_overlap_ratio The maximum ratio of the overlapping
 	                             areas.
@@ -62,8 +61,7 @@ namespace scribo
     */
     template <typename L>
     object_links<L>
-    object_links_bbox_overlap(const component_set<L>& components,
-			      const object_links<L>& links,
+    object_links_bbox_overlap(const object_links<L>& links,
 			      float max_overlap_ratio);
 
 
@@ -72,19 +70,17 @@ namespace scribo
 
     template <typename L>
     object_links<L>
-    object_links_bbox_overlap(const component_set<L>& components,
-			      const object_links<L>& links,
+    object_links_bbox_overlap(const object_links<L>& links,
 			      float max_overlap_ratio)
     {
       trace::entering("scribo::filter::object_links_bbox_overlap");
 
-      mln_precondition(components.is_valid());
       mln_precondition(links.is_valid());
-      mln_precondition(components.id_() == links.components_id_());
 
+      const component_set<L>& components = links.components();
       object_links<L> output(links);
 
-      for_all_components(i, components)
+      for_all_comps(i, components)
 	if (components(i).is_valid() && links(i) != i)
 	{
 	  bool has_intersection = true;
@@ -92,9 +88,9 @@ namespace scribo
 	  for (unsigned dim = 0; dim < mln_site_(L)::dim; ++dim)
 	  {
 	    pmin[dim] = math::max(components(i).bbox().pmin()[dim],
-				  components(links[i]).bbox().pmin()[dim]);
+				  components(links(i)).bbox().pmin()[dim]);
 	    pmax[dim] = math::min(components(i).bbox().pmax()[dim],
-				  components(links[i]).bbox().pmax()[dim]);
+				  components(links(i)).bbox().pmax()[dim]);
 
 	    if (pmin[dim] > pmax[dim])
 	    {
@@ -113,7 +109,7 @@ namespace scribo
 
 	  if (ratio_i >= max_overlap_ratio
 	      || ratio_link_i >= max_overlap_ratio)
-	    output[i] = i;
+	    output(i) = i;
 	}
 
       trace::exiting("scribo::filter::object_links_bbox_overlap");

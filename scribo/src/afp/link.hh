@@ -60,9 +60,9 @@ namespace scribo
 	    {
 	      if (*p != literal::zero  // Not the background
 		  && *p != i // Not the current component
-		  && right[*p] != i) // No loops
+		  && right(*p) != i) // No loops
 	      {
-		right[i] = *p;
+		right(i) = *p;
 		break;
 	      }
 	    }
@@ -79,9 +79,9 @@ namespace scribo
 	    {
 	      if (*p != literal::zero  // Not the background
 		  && *p != i // Not the current component
-		  && left[*p] != i) // No loops
+		  && left(*p) != i) // No loops
 	      {
-		left[i] = *p;
+		left(i) = *p;
 		break;
 	      }
 	    }
@@ -123,9 +123,9 @@ namespace scribo
 	    {
 	      if (*p != literal::zero  // Not the background
 		  && *p != i // Not the current component
-		  && left[*p] != i) // No loops
+		  && left(*p) != i) // No loops
 	      {
-		left[i] = *p;
+		left(i) = *p;
 		break;
 	      }
 	    }

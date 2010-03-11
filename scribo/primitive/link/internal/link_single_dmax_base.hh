@@ -146,8 +146,8 @@ namespace scribo
 	  unsigned current_object)
 	{
 	  float
-	    midcol = (this->components_.bbox(current_object).pmax()[direction_]
-		      - this->components_.bbox(current_object).pmin()[direction_]) / 2;
+	    midcol = (this->components_(current_object).bbox().pmax()[direction_]
+		      - this->components_(current_object).bbox().pmin()[direction_]) / 2;
 	  dmax_ = midcol + neighb_max_distance_;
 	}
 

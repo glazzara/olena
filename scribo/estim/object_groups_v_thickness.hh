@@ -69,7 +69,7 @@ namespace scribo
 
       mln_precondition(groups.is_valid());
 
-      const component_set<L>& components = groups.component_set_();
+      const component_set<L>& components = groups.components();
 
       //FIXME: remove when object_groups will store the number of
       //elements per group.
