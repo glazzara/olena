@@ -63,10 +63,10 @@ namespace scribo
     struct line_set_data
     {
       line_set_data();
-      line_set_data(const mln::util::array<scribo::line_info>& infos,
+      line_set_data(const mln::util::array<scribo::line_info<L> >& infos,
 		    const component_set<L>& comp_set);
 
-      mln::util::array<scribo::line_info> infos_;
+      mln::util::array<scribo::line_info<L> > infos_;
       component_set<L> comp_set_;
     };
 
@@ -89,23 +89,23 @@ namespace scribo
     /// @}
 
     /// Compute line stats and fill the underlying information.
-    util::array<line_stats_extra> compute_lines(const object_links<L>& links,
-						const object_groups<L>& groups);
+    void compute_lines(const object_links<L>& links,
+		       const object_groups<L>& groups);
 
     /// Return the line count.
     mln_value(L) nelements() const;
 
     /// Return line information for a given line id \p id.
-    const line_info& info(const mln_value(L)& id) const;
+    const line_info<L>& info(const mln_value(L)& id) const;
 
     /// Return line information for a given line id \p id.
-    line_info& info(const mln_value(L)& id);
+    line_info<L>& info(const mln_value(L)& id);
 
     /// Return line information for a given line id \p id.
-    line_info& operator()(const line_id_t& id);
+    line_info<L>& operator()(const line_id_t& id);
 
     /// Return line information for a given line id \p id.
-    const line_info& operator()(const line_id_t& id) const;
+    const line_info<L>& operator()(const line_id_t& id) const;
 
     /// Update tag of lines set to 'false' in \p f with \p tag.
     template <typename F>
@@ -121,7 +121,7 @@ namespace scribo
     /// @{
 
     /// Return all the line infos.
-    const mln::util::array<scribo::line_info>& infos_() const;
+    const mln::util::array<scribo::line_info<L> >& infos_() const;
 
     /// @}
 
@@ -165,7 +165,7 @@ namespace scribo
 
     template <typename L>
     inline
-    line_set_data<L>::line_set_data(const mln::util::array<scribo::line_info>& infos,
+    line_set_data<L>::line_set_data(const mln::util::array<scribo::line_info<L> >& infos,
 				    const component_set<L>& comp_set)
       : infos_(infos), comp_set_(comp_set)
     {
@@ -194,7 +194,8 @@ namespace scribo
   // FIXME: groups should have a reference to the links data and we
   // should only required groups as argument.
   template <typename L>
-  util::array<line_stats_extra>
+//   util::array<line_stats_extra>
+  void
   line_set<L>::compute_lines(const object_links<L>& links,
 			     const object_groups<L>& groups)
   {
@@ -217,51 +218,51 @@ namespace scribo
     // implementation for high quantification types...
 
     // Init.
-    typedef mln::value::int_u<12> median_data_t;
-    typedef mln::accu::stat::median_h<median_data_t> median_t;
-    util::array<median_t>
-      absolute_median(static_cast<unsigned>(n_groups) + 1),
-      absolute_baseline(static_cast<unsigned>(n_groups) + 1),
-      char_space(static_cast<unsigned>(n_groups) + 1),
-      char_width(static_cast<unsigned>(n_groups) + 1);
+//     typedef mln::value::int_u<12> median_data_t;
+//     typedef mln::accu::stat::median_h<median_data_t> median_t;
+//     util::array<median_t>
+//       absolute_median(static_cast<unsigned>(n_groups) + 1),
+//       absolute_baseline(static_cast<unsigned>(n_groups) + 1),
+//       char_space(static_cast<unsigned>(n_groups) + 1),
+//       char_width(static_cast<unsigned>(n_groups) + 1);
 
-    util::array<mln::accu::shape::bbox<P> >
-      bbox(static_cast<unsigned>(n_groups) + 1);
+//     util::array<mln::accu::shape::bbox<P> >
+//       bbox(static_cast<unsigned>(n_groups) + 1);
 
     util::array< util::array<component_id_t> >
       comps(static_cast<unsigned>(n_groups) + 1);
 
     // 1st pass - Compute data.
     for (unsigned i = 1; i < packed_groups.size(); ++i)
-      if (comp_set(i).tag() != component::Ignored)
+      if (comp_set(i).is_valid())
       {
 	unsigned group_id = packed_groups(i);
 	if (group_id != 0) // Is this component part of a group?
 	{
-	  const box2d& bb = comp_set(i).bbox();
+// 	  const box2d& bb = comp_set(i).bbox();
 
-	  // Space between characters.
-	  int space = bb.pmin().col()
-	    - comp_set(links[i]).bbox().pmax().col();
-	  // -- Ignore overlapped characters.
-	  if (space > 0)
-	    char_space(group_id).take(space);
+// 	  // Space between characters.
+// 	  int space = bb.pmin().col()
+// 	    - comp_set(links[i]).bbox().pmax().col();
+// 	  // -- Ignore overlapped characters.
+// 	  if (space > 0)
+// 	    char_space(group_id).take(space);
 
-	  // Character width
-	  // -- Ignore too large components.
-	  if (bb.width() <= 1000)
-	    char_width(group_id).take(bb.width());
+// 	  // Character width
+// 	  // -- Ignore too large components.
+// 	  if (bb.width() <= 1000)
+// 	    char_width(group_id).take(bb.width());
 
-	  // Median (compute an absolute value, from the top left
-	  // corner of the image).
-	  absolute_median(group_id).take(bb.pmin().row());
+// 	  // Median (compute an absolute value, from the top left
+// 	  // corner of the image).
+// 	  absolute_median(group_id).take(bb.pmin().row());
 
-	  // Baseline (compute an absolute value, from the top left
-	  // corner of the image).
-	  absolute_baseline(group_id).take(bb.pmax().row());
+// 	  // Baseline (compute an absolute value, from the top left
+// 	  // corner of the image).
+// 	  absolute_baseline(group_id).take(bb.pmax().row());
 
-	  // Bounding box.
-	  bbox(group_id).take(bb);
+// 	  // Bounding box.
+// 	  bbox(group_id).take(bb);
 
 	  // Component id.
 	  comps(group_id).append(i);
@@ -270,57 +271,33 @@ namespace scribo
 
     // 2nd pass - Store data.
     data_->infos_.reserve(groups.nelements());
-    data_->infos_.append(line_info()); // line with id 0 is invalid.
+    data_->infos_.append(line_info<L>()); // line with id 0 is invalid.
 
-    util::array<line_stats_extra> stats_extra;
-    stats_extra.reserve(static_cast<unsigned>(n_groups) + 1);
-    stats_extra.append(line_stats_extra());
+//     util::array<line_stats_extra> stats_extra;
+//     stats_extra.reserve(static_cast<unsigned>(n_groups) + 1);
+//     stats_extra.append(line_stats_extra());
 
     for (unsigned i = 1; i <= n_groups; ++i)
     {
-      // FIXME: should be removable when object_group will store the
-      // relation 'group -> comp'
-      // Special cases for lines with 1 or 2 components.
-      // {
-      int
-	cspace,
-	cwidth;
-      if (comps(i).nelements() == 1)
-	cspace = 0;
-      else
-	cspace = char_space(i).to_result();
-      if (comps(i).nelements() == 2)
-	cwidth = (comp_set(comps(i)[0]).bbox().width()
-		  + comp_set(comps(i)[1]).bbox().width()) / 2;
-      else
-	cwidth = char_width(i).to_result();
-      // }
-
 
       // Add line info.
-      line_info info(i,
-		     bbox(i).to_result(),
-		     comps(i),
-		     absolute_median(i).to_result(),
-		     absolute_baseline(i).to_result(),
-		     cspace,
-		     cwidth);
+      line_info<L> info(links, i, comps(i));
       data_->infos_.append(info);
 
 
       // Prepare extra stats to be returned.
-      line_stats_extra stats(absolute_median(i) * absolute_median(i).card(),
-			     absolute_median(i).card(),
-			     absolute_baseline(i) * absolute_baseline(i).card(),
-			     absolute_baseline(i).card(),
-			     char_space(i) * char_space(i).card(),
-			     char_space(i).card(),
-			     char_width(i) * char_width(i).card(),
-			     char_width(i).card());
-      stats_extra.append(stats);
+//       line_stats_extra stats(absolute_median(i) * absolute_median(i).card(),
+// 			     absolute_median(i).card(),
+// 			     absolute_baseline(i) * absolute_baseline(i).card(),
+// 			     absolute_baseline(i).card(),
+// 			     char_space(i) * char_space(i).card(),
+// 			     char_space(i).card(),
+// 			     char_width(i) * char_width(i).card(),
+// 			     char_width(i).card());
+//       stats_extra.append(stats);
     }
 
-    return stats_extra;
+//    return stats_extra;
   }
 
 
@@ -335,7 +312,7 @@ namespace scribo
 
   template <typename L>
   inline
-  const line_info&
+  const line_info<L>&
   line_set<L>::info(const mln_value(L)& id) const
   {
     return this->data_->infos_[id];
@@ -343,7 +320,7 @@ namespace scribo
 
   template <typename L>
   inline
-  line_info&
+  line_info<L>&
   line_set<L>::info(const mln_value(L)& id)
   {
     return this->data_->infos_[id];
@@ -351,7 +328,7 @@ namespace scribo
 
   template <typename L>
   inline
-  const line_info&
+  const line_info<L>&
   line_set<L>::operator()(const line_id_t& id) const
   {
     return this->data_->infos_[id];
@@ -359,7 +336,7 @@ namespace scribo
 
   template <typename L>
   inline
-  line_info&
+  line_info<L>&
   line_set<L>::operator()(const line_id_t& id)
   {
     return this->data_->infos_[id];
@@ -401,7 +378,7 @@ namespace scribo
 
   template <typename L>
   inline
-  const mln::util::array<scribo::line_info>&
+  const mln::util::array<scribo::line_info<L> >&
   line_set<L>::infos_() const
   {
     return data_->infos_;
@@ -431,17 +408,18 @@ namespace scribo
       return tmp;
     }
 
-    template <typename L>
-    scribo::line_set<L>
-    line_set(const object_links<L>& links,
-	     const object_groups<L>& groups,
-	     util::array<line_stats_extra>& line_stats)
-    {
-      mln_precondition(exact(ima).is_valid());
-      scribo::line_set<L> tmp;
-      line_stats = tmp.compute_lines(links, groups);
-      return tmp;
-    }
+
+//     template <typename L>
+//     scribo::line_set<L>
+//     line_set(const object_links<L>& links,
+// 	     const object_groups<L>& groups,
+// 	     util::array<line_stats_extra>& line_stats)
+//     {
+//       mln_precondition(exact(ima).is_valid());
+//       scribo::line_set<L> tmp;
+//       line_stats = tmp.compute_lines(links, groups);
+//       return tmp;
+//     }
 
   } // end of namespace scribo::make
 

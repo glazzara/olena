@@ -46,4 +46,7 @@
 # define for_all_lines(E, S) \
   for_all_comps(E, S)
 
+# define for_all_groups(E, S) \
+  for_all_comp_data(E, S)
+
 #endif // ! SCRIBO_CORE_MACROS_HH

@@ -33,16 +33,23 @@
 
 # include <mln/core/alias/box2d.hh>
 # include <mln/core/alias/point2d.hh>
+# include <mln/accu/stat/median_h.hh>
+# include <mln/accu/shape/bbox.hh>
 # include <mln/util/object_id.hh>
 
 # include <scribo/core/tag/component.hh>
 # include <scribo/core/tag/line.hh>
+
+// # include <scribo/filter/object_links_bottom_aligned.hh>
+// # include <scribo/filter/object_links_top_aligned.hh>
+
 
 namespace scribo
 {
 
   typedef mln::util::object_id<scribo::LineId, unsigned> line_id_t;
 
+  template <typename L>
   class line_info
   {
     typedef mln::util::object_id<scribo::ComponentId, unsigned> component_id_t;
@@ -57,6 +64,9 @@ namespace scribo
 	      unsigned absolute_baseline,
 	      unsigned char_space,
 	      unsigned char_width);
+    line_info(const object_links<L>& links,
+	      const line_id_t& id,
+	      const mln::util::array<component_id_t>& comps);
 
     line_id_t id() const;
 
@@ -79,9 +89,42 @@ namespace scribo
 
     unsigned word_space() const;
 
-    void merge(const line_info& line) const;
+    line::ReadingDirection reading_direction() const;
+    line::Type type() const;
+    bool reverse_video() const;
+
+    float orientation() const;
+    float reading_orientation() const;
+
+    bool indented() const;
+
 
     bool is_valid() const;
+
+
+    /// Merge related routines.
+    /// @{
+
+    /// This merge only updates the component list and the bounding box.
+    ///
+    /// After this merge, the line is tagged with
+    /// line::Needs_Precise_Stats_Update.
+    //
+    void fast_merge(line_info<L>& other);
+
+    /// This merge updates the component list and recompute from
+    /// scratch statistics, bounding box and other line attributes.
+    ///
+    /// After this merge, the line is tagged with line::None.
+    //
+    void precise_merge(line_info<L>& other);
+
+    /// @}
+
+
+    /// Force a new computation of statistics.
+    void force_stats_update();
+
 
   private:
     line_id_t id_;
@@ -105,17 +148,39 @@ namespace scribo
 
     // Words related stats.
     unsigned word_space_;
+
+    // Reading direction
+    line::ReadingDirection reading_direction_;
+
+    // Line type
+    line::Type type_;
+
+    // Is this line in reverse video?
+    bool reverse_video_;
+
+    // Text orientation
+    float orientation_;
+
+    // Text reading orientation
+    float reading_orientation_;
+
+    bool indented_;
+
+    // Related object links information.
+    const object_links<L>* links_;
   };
 
 
+  template <typename L>
   std::ostream&
-  operator<<(std::ostream& ostr, const line_info& info);
+  operator<<(std::ostream& ostr, const line_info<L>& info);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-  line_info::line_info()
+  template <typename L>
+  line_info<L>::line_info()
     : id_(0)
   {
 
@@ -144,141 +209,324 @@ namespace scribo
 
     All the metrics are computed relatively to the Baseline.
 
-    The baseline is computed relatively to the top left corner of the
-    line bounding box.
+    The baseline is defined as an absolute row index.
 
   */
-  line_info::line_info(const line_id_t& id,
-		       const mln::box2d& bbox,
-		       const mln::util::array<component_id_t>& comps,
-		       unsigned absolute_median,
-		       unsigned absolute_baseline,
-		       unsigned char_space,
-		       unsigned char_width)
-    : id_(id), tag_(line::None), bbox_(bbox), components_(comps),
-      char_space_(char_space), char_width_(char_width)
+
+  template <typename L>
+  line_info<L>::line_info(const object_links<L>& links,
+			  const line_id_t& id,
+			  const mln::util::array<component_id_t>& comps)
+    : id_(id), tag_(line::None), components_(comps), links_(&links)
   {
-    baseline_ = absolute_baseline - bbox.pmin().row();
-    median_   = absolute_median - bbox.pmin().row();
-    x_height_ = absolute_baseline - absolute_median + 1;
-    d_height_ = bbox.pmax().row() - absolute_baseline;
-    a_height_ = absolute_baseline - bbox.pmin().row() + 1;
+    force_stats_update();
+
+
+//     typedef mln_site(L) P;
+//     const component_set<L>& comp_set = links_->component_set_();
+//     mln::accu::shape::bbox<P> bbox;
+//     for_all_elements(i, components_)
+//     {
+//       unsigned c = components_(i);
+//       const box2d& bb = comp_set(c).bbox();
+//       // Bounding box.
+//       bbox.take(bb);
+//     }
+//     bbox_ = bbox.to_result();
+
+
+
+
+    // FIXME: set valid information for these attributes.
+    word_space_ = 0;
+    reading_direction_ = line::LeftToRight;
+    type_ = line::Paragraph;
+    reverse_video_ = false;
+
+    orientation_ = 0.;
+    reading_orientation_ = 0.;
+
+    indented_ = false;
   }
 
 
-  line_info::line_id_t
-  line_info::id() const
+  template <typename L>
+  typename line_info<L>::line_id_t
+  line_info<L>::id() const
   {
     return id_;
   }
 
+  template <typename L>
   line::Tag
-  line_info::tag() const
+  line_info<L>::tag() const
   {
     return tag_;
   }
 
 
+  template <typename L>
   void
-  line_info::update_tag(line::Tag tag)
+  line_info<L>::update_tag(line::Tag tag)
   {
     tag_ = tag;
   }
 
+
+  template <typename L>
   const mln::box2d&
-  line_info::bbox() const
+  line_info<L>::bbox() const
   {
     return bbox_;
   }
 
 
-  const mln::util::array<line_info::component_id_t>&
-  line_info::components() const
+  template <typename L>
+  const mln::util::array<typename line_info<L>::component_id_t>&
+  line_info<L>::components() const
   {
     return components_;
   }
 
+  template <typename L>
   unsigned
-  line_info::card() const
+  line_info<L>::card() const
   {
     return components_.size();
   }
 
 
+  template <typename L>
   unsigned
-  line_info::baseline() const
+  line_info<L>::baseline() const
   {
     return baseline_;
   }
 
 
+  template <typename L>
   unsigned
-  line_info::median() const
+  line_info<L>::median() const
   {
     return median_;
   }
 
+  template <typename L>
   int
-  line_info::x_height() const
+  line_info<L>::x_height() const
   {
     return x_height_;
   }
 
 
+  template <typename L>
   int
-  line_info::d_height() const
+  line_info<L>::d_height() const
   {
     return d_height_;
   }
 
 
+  template <typename L>
   int
-  line_info::a_height() const
+  line_info<L>::a_height() const
   {
     return a_height_;
   }
 
 
+  template <typename L>
   unsigned
-  line_info::char_space() const
+  line_info<L>::char_space() const
   {
     return char_space_;
   }
 
 
+  template <typename L>
   unsigned
-  line_info::char_width() const
+  line_info<L>::char_width() const
   {
     return char_width_;
   }
 
 
+  template <typename L>
   unsigned
-  line_info::word_space() const
+  line_info<L>::word_space() const
   {
     return word_space_;
   }
 
 
-  void
-  line_info::merge(const line_info& line) const
+  template <typename L>
+  line::ReadingDirection
+  line_info<L>::reading_direction() const
   {
-    (void) line;
-    std::cout << "merge not implemented!" << std::endl;
-    abort();
+    return reading_direction_;
+  }
+
+  template <typename L>
+  line::Type
+  line_info<L>::type() const
+  {
+    return type_;
   }
 
 
+  template <typename L>
   bool
-  line_info::is_valid() const
+  line_info<L>::reverse_video() const
+  {
+    return reverse_video_;
+  }
+
+
+  template <typename L>
+  float
+  line_info<L>::orientation() const
+  {
+    return orientation_;
+  }
+
+
+  template <typename L>
+  float
+  line_info<L>::reading_orientation() const
+  {
+    return reading_orientation_;
+  }
+
+
+  template <typename L>
+  bool
+  line_info<L>::indented() const
+  {
+    return indented_;
+  }
+
+
+  template <typename L>
+  bool
+  line_info<L>::is_valid() const
   {
     return id_ != 0u;
   }
 
 
+  template <typename L>
+  void
+  line_info<L>::fast_merge(line_info<L>& other)
+  {
+    tag_ = line::Needs_Precise_Stats_Update;
+    other.update_tag(line::Merged);
 
+    bbox_.merge(other.bbox());
+    components_.append(other.components());
+  }
+
+
+  template <typename L>
+  void
+  line_info<L>::precise_merge(line_info<L>& other)
+  {
+    fast_merge(other);
+    force_stats_update();
+  }
+
+  template <typename L>
+  void
+  line_info<L>::force_stats_update()
+  {
+    typedef mln_site(L) P;
+    const component_set<L>& comp_set = links_->component_set_();
+
+    // FIXME: int_u<12> may not be enought but we can't use unsigned
+    // or any other larger types since there is no median
+    // implementation for high quantification types...
+
+    // Init.
+    typedef mln::value::int_u<12> median_data_t;
+    typedef mln::accu::stat::median_h<median_data_t> median_t;
+    median_t
+      absolute_median,
+      absolute_baseline,
+      char_space,
+      char_width;
+
+    mln::accu::shape::bbox<P> bbox;
+
+    for_all_elements(i, components_)
+    {
+      unsigned c = components_(i);
+
+      const box2d& bb = comp_set(c).bbox();
+
+      // Space between characters.
+      int space = bb.pmin().col()
+	- comp_set((*links_)[c]).bbox().pmax().col();
+      // -- Ignore overlapped characters.
+      if (space > 0)
+	char_space.take(space);
+
+      // Character width
+      // -- Ignore too large components.
+      if (bb.width() <= 1000)
+	char_width.take(bb.width());
+
+      // Median (compute an absolute value, from the top left
+      // corner of the image).
+      absolute_median.take(bb.pmin().row());
+
+      // Baseline (compute an absolute value, from the top left
+      // corner of the image).
+      absolute_baseline.take(bb.pmax().row());
+
+      // Bounding box.
+      bbox.take(bb);
+    }
+
+    // Finalization
+    {
+      tag_ = line::None;
+      bbox_ = bbox.to_result();
+
+      // Char space
+      if (card() == 1)
+	char_space_ = 0;
+      else
+	char_space_ = char_space.to_result();
+
+      // Char width
+      if (card() == 2)
+	char_width_ = (comp_set(components_[0]).bbox().width()
+		       + comp_set(components_[1]).bbox().width()) / 2;
+      else
+	char_width_ = char_width.to_result();
+
+
+      baseline_ = absolute_baseline.to_result();
+      median_   = absolute_baseline - absolute_median;
+      x_height_ = absolute_baseline - absolute_median + 1;
+      d_height_ = absolute_baseline - bbox.to_result().pmax().row();
+      a_height_ = absolute_baseline - bbox.to_result().pmin().row() + 1;
+
+      //FIXME
+      //
+      //word_space_ = ...;
+      //reading_direction_ = ...;
+      //type_ = ...;
+      //reverse_video_ = ...;
+      //orientation_ = ...;
+      //reading_orientation_ = ...;
+      //indented_ = ...;
+    }
+  }
+
+
+  template <typename L>
   std::ostream&
-  operator<<(std::ostream& ostr, const line_info& info)
+  operator<<(std::ostream& ostr, const line_info<L>& info)
   {
     return ostr << "line_info("
 		<< "id=" << info.id()
@@ -293,6 +541,12 @@ namespace scribo
 		<< ", char_space=" << info.char_space()
 		<< ", char_width=" << info.char_width()
 		<< ", word_space=" << info.word_space()
+		<< ", reading_direction=" << info.reading_direction()
+		<< ", type=" << info.type()
+		<< ", reverse_video=" << info.reverse_video()
+		<< ", orientation=" << info.orientation()
+		<< ", reading_orientation=" << info.reading_orientation()
+		<< ", indented=" << info.indented()
 		<< ")" << std::endl;
   }
 

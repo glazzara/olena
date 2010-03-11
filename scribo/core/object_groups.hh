@@ -55,7 +55,8 @@ namespace scribo
   public:
     object_groups();
     object_groups(const component_set<L>& components);
-    object_groups(const component_set<L>& components, unsigned value);
+    object_groups(const component_set<L>& components,
+		  unsigned value);
 
     const component_set<L>& component_set_() const;
 

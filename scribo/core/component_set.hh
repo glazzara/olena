@@ -62,16 +62,25 @@ namespace scribo
       typedef mln::accu::shape::bbox<mln_site(L)> bbox_accu_t;
       typedef mln::accu::pair<bbox_accu_t, center_accu_t> pair_accu_t;
 
+      typedef std::pair<mln_box(L),
+			std::pair<mln_site(L), unsigned> > pair_data_t;
+
       typedef mln_result(center_accu_t) center_t;
 
       component_set_data();
       component_set_data(const L& ima, const mln_value(L)& ncomps);
       component_set_data(const L& ima, const mln_value(L)& ncomps,
 			 const mln::util::array<pair_accu_t>& attribs);
+      component_set_data(const L& ima, const mln_value(L)& ncomps,
+			 const mln::util::array<pair_data_t>& attribs);
 
       component_set_data(const L& ima, const mln_value(L)& ncomps,
 			 const mln::util::array<scribo::component_info>& infos);
+
       void fill_infos(const mln::util::array<pair_accu_t>& attribs);
+
+      void fill_infos(const mln::util::array<pair_data_t>& attribs);
+
 
       L ima_;
       mln_value(L) ncomps_;
@@ -89,6 +98,9 @@ namespace scribo
     typedef mln::accu::center<mln_site(L)> center_accu_t;
     typedef mln::accu::pair<bbox_accu_t, center_accu_t> pair_accu_t;
 
+    typedef std::pair<mln_box(L),
+		      std::pair<mln_site(L), unsigned> > pair_data_t;
+
     typedef mln_result(center_accu_t) center_t;
 
   public:
@@ -105,6 +117,9 @@ namespace scribo
     /// attributes values (bounding box and mass center).
     component_set(const L& ima, const mln_value(L)& ncomps,
 		  const mln::util::array<pair_accu_t>& attribs);
+
+    component_set(const L& ima, const mln_value(L)& ncomps,
+		  const mln::util::array<pair_data_t>& attribs);
     /// @}
 
     /// Return the component count.
@@ -206,6 +221,16 @@ namespace scribo
     inline
     component_set_data<L>::component_set_data(const L& ima,
 					      const mln_value(L)& ncomps,
+					      const mln::util::array<pair_data_t>& attribs)
+      : ima_(ima), ncomps_(ncomps)
+    {
+      fill_infos(attribs);
+    }
+
+    template <typename L>
+    inline
+    component_set_data<L>::component_set_data(const L& ima,
+					      const mln_value(L)& ncomps,
 					      const mln::util::array<scribo::component_info>& infos)
       : ima_(ima), ncomps_(ncomps), infos_(infos)
     {
@@ -229,6 +254,25 @@ namespace scribo
  	infos_.append(info);
       }
     }
+
+    template <typename L>
+    inline
+    void
+    component_set_data<L>::fill_infos(const mln::util::array<pair_data_t>& attribs)
+    {
+      typedef mln_site(L) P;
+
+      infos_.reserve(static_cast<unsigned>(ncomps_) + 1);
+
+      infos_.append(component_info()); // Component 0, i.e. the background.
+      for_all_components(i, attribs)
+      {
+ 	component_info info(i, attribs[i].first,
+			    attribs[i].second.first, attribs[i].second.second);
+ 	infos_.append(info);
+      }
+    }
+
 
   } // end of namespace mln::internal
 
@@ -260,6 +304,17 @@ namespace scribo
 
   template <typename L>
   inline
+
+  component_set<L>::component_set(const L& ima, const mln_value(L)& ncomps,
+				  const mln::util::array<pair_data_t>& attribs)
+  {
+    data_ = new internal::component_set_data<L>(ima, ncomps, attribs);
+  }
+
+
+  template <typename L>
+  inline
+
   mln_value(L)
   component_set<L>::nelements() const
   {
@@ -364,8 +419,8 @@ namespace scribo
   component_set<L>::init_(const component_set<L>& set)
   {
     data_ = new internal::component_set_data<L>();
-    data_->ima_ = set.object_image_();
-    data_->ncomps_ = set.ncomps();
+    data_->ima_ = set.labeled_image();
+    data_->ncomps_ = set.nelements();
     data_->infos_ = set.infos_();
   }
 

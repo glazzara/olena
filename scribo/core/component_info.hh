@@ -64,6 +64,8 @@ namespace scribo
 
     line_id_t line_id() const;
 
+    bool is_valid() const;
+
   private:
     component_id_t id_;
     mln::box2d bbox_;
@@ -79,6 +81,7 @@ namespace scribo
 
 
   component_info::component_info()
+    : id_(0), tag_(component::Ignored)
   {
 
   }
@@ -139,6 +142,12 @@ namespace scribo
   component_info::line_id() const
   {
     return line_id_;
+  }
+
+  bool
+  component_info::is_valid() const
+  {
+    return tag_ != component::Ignored;
   }
 
 

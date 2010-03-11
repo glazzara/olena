@@ -44,8 +44,148 @@ namespace scribo
     {
       None = 0,
       Separator,
-      Ignored
+      Ignored,
+      Needs_Precise_Stats_Update,
+      Merged,
+      Pathological
     };
+
+
+
+    // The following next enumerations are based on the page content
+    // XML format.
+    //
+    // XSD:
+    // http://schema.primaresearch.org/PAGE/gts/pagecontent/2009-03-16/pagecontent.xsd
+
+    enum ReadingDirection
+    {
+      BottomToTop,
+      LeftToRight,
+      RightToLeft,
+      TopToBottom
+    };
+
+
+    enum Type
+    {
+      Caption,
+      Credit,
+      DropCapital,
+      Floating,
+      Footer,
+      Header,
+      Heading,
+      PageNumber,
+      Paragraph
+    };
+
+
+    std::ostream&
+    operator<<(std::ostream& ostr, const Tag& tag);
+
+    std::ostream&
+    operator<<(std::ostream& ostr, const ReadingDirection& direction);
+
+    std::ostream&
+    operator<<(std::ostream& ostr, const Type& type);
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    std::ostream&
+    operator<<(std::ostream& ostr, const Tag& tag)
+    {
+      std::string str;
+      switch(tag)
+      {
+	default:
+	case None:
+	  str = "None";
+	  break;
+	case Separator:
+	  str = "Separator";
+	  break;
+	case Ignored:
+	  str = "Ignored";
+	  break;
+	case Needs_Precise_Stats_Update:
+	  str = "Needs_Precise_Stats_Update";
+	  break;
+	case Merged:
+	  str = "Merged";
+	  break;
+	case Pathological:
+	  str = "Pathological";
+	  break;
+      }
+
+      return ostr << str;
+    }
+
+
+
+    std::ostream&
+    operator<<(std::ostream& ostr, const ReadingDirection& direction)
+    {
+      std::string str;
+      switch(direction)
+      {
+	case BottomToTop:
+	  str = "bottom-to-top";
+	  break;
+	default:
+	case LeftToRight:
+	  str = "left-to-right";
+	  break;
+	case RightToLeft:
+	  str = "right-to-left";
+	  break;
+	case TopToBottom:
+	  str = "top-to-bottom";
+	  break;
+      }
+
+      return ostr << str;
+    }
+
+
+    std::ostream&
+    operator<<(std::ostream& ostr, const Type& type)
+    {
+      std::string str;
+      switch(type)
+      {
+	case Caption:
+	  str = "caption";
+	  break;
+	default:
+	case Credit:
+	  str = "credit";
+	  break;
+	case DropCapital:
+	  str = "drop-capital";
+	  break;
+	case Floating:
+	  str = "floating";
+	case Footer:
+	  str = "footer";
+	case Header:
+	  str = "header";
+	case Heading:
+	  str = "heading";
+	case PageNumber:
+	  str = "page-number";
+	case Paragraph:
+	  str = "paragraph";
+	  break;
+      }
+
+      return ostr << str;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 
   } // end of namespace scribo::line
