@@ -1,5 +1,11 @@
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a first draft of a text line merging algorithm.
+
+	* text/merging.hh: New.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add and update examples.
 
 	* src/Makefile.am,
