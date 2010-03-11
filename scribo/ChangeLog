@@ -1,5 +1,35 @@
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Keep updating code according to last changed in core classes.
+
+	* debug/decision_image.hh,
+	* debug/save_linked_bboxes_image.hh,
+	* draw/bounding_boxes.hh,
+	* estim/object_groups_v_thickness.hh,
+	* filter/common/objects_photo.hh,
+	* filter/internal/compute.hh,
+	* filter/object_groups_size_ratio.hh,
+	* filter/object_groups_small.hh,
+	* filter/object_groups_v_thickness.hh,
+	* filter/object_links_bbox_overlap.hh,
+	* filter/object_links_bottom_aligned.hh,
+	* filter/object_links_non_aligned_simple.hh,
+	* filter/objects_thick.hh,
+	* filter/objects_thin.hh,
+	* filter/objects_with_holes.hh,
+	* primitive/group/apply.hh,
+	* primitive/group/from_double_link.hh,
+	* primitive/group/from_single_link.hh,
+	* primitive/link/internal/link_single_dmax_base.hh,
+	* primitive/link/with_single_left_link.hh,
+	* primitive/link/with_single_right_link.hh,
+	* src/afp/link.hh,
+	* src/afp/regroup.hh,
+	* text/recognition.hh: Update the use of core classes. Replace the
+	use of object_image with component_set.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve core classes.
 
 	* scribo/core/component_info.hh,

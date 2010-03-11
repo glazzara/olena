@@ -77,8 +77,9 @@ namespace scribo
 
       object_groups<L> output(groups);
       output(0) = 0;
-      for (unsigned i = 1; i < output.size(); ++i)
-	if (group_thickness[groups[i]] < thickness)
+      for (unsigned i = 1; i < output.nelements(); ++i)
+	if (groups.component_set_()(i).is_valid()
+	    && group_thickness[groups(i)] < thickness)
 	  output(i) = 0;
 
       trace::exiting("scribo::filter::object_groups_v_thickness");

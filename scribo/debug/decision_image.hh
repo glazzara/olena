@@ -58,7 +58,7 @@ namespace scribo
 	\input[in] filtered_groups A copy of \p groups which have been
 	                           filtered.
 
-	\return A color image. Objects part of a validated group are
+	\return A color image. Components part of a validated group are
 	        drawn in green with their bounding box. Otherwise,
 	        they are drawn in red.
      */
@@ -98,23 +98,23 @@ namespace scribo
       trace::entering("scribo::debug::decision_image");
       const I& input = exact(input_);
 
-      const object_image(L)& objects = groups.object_image_();
+      const component_set<L>& components = groups.object_image_();
 
       mln_precondition(input.is_valid());
       mln_precondition(groups.is_valid());
       mln_precondition(filtered_groups.is_valid());
       mln_precondition(groups.size() == filtered_groups.size());
-      mln_precondition(groups.objects_id_() != filtered_groups.objects_id_());
-      /// Fixme: check that objects has been computed from input.
+      mln_precondition(groups.components_id_() != filtered_groups.components_id_());
+      /// Fixme: check that components has been computed from input.
 
       image2d<value::rgb8>
 	decision_image = data::convert(value::rgb8(), input);
 
       for (unsigned i = 1; i < groups.size(); ++i)
 	if (groups(i) != filtered_groups(i))
-	  mln::draw::box(decision_image, objects.bbox(i), literal::red);
+	  mln::draw::box(decision_image, components(i).bbox(), literal::red);
 	else
-	  mln::draw::box(decision_image, objects.bbox(i), literal::green);
+	  mln::draw::box(decision_image, components(i).bbox(), literal::green);
 
       trace::exiting("scribo::debug::decision_image");
       return decision_image;
@@ -130,20 +130,20 @@ namespace scribo
       trace::entering("scribo::debug::decision_image");
       const I& input = exact(input_);
 
-      const object_image(L)& objects = links.object_image_();
+      const component_set<L>& components = links.component_set_();
 
       mln_precondition(input.is_valid());
       mln_precondition(links.is_valid());
       mln_precondition(filtered_links.is_valid());
       mln_precondition(links.size() == filtered_links.size());
       mln_precondition(links.object_image_() != filtered_links.object_image_());
-      /// Fixme: check that objects has been computed from input.
+      /// Fixme: check that components has been computed from input.
 
       image2d<value::rgb8>
 	decision_image = data::convert(value::rgb8(), input);
 
-      for_all_components(i, objects.bboxes())
-	mln::draw::box(decision_image, objects.bbox(i), literal::blue);
+      for_all_components(i, components)
+	mln::draw::box(decision_image, components(i).bbox(), literal::blue);
 
       for (unsigned i = 1; i < links.size(); ++i)
       {
@@ -154,8 +154,8 @@ namespace scribo
 	  if (links[i] != filtered_links[i])
 	    value = literal::red;
 	  mln::draw::line(decision_image,
-			  objects.bbox(i).center(),
-			  objects.bbox(links[i]).center(),
+			  components(i).bbox().pcenter(),
+			  components(links[i]).bbox().pcenter(),
 			  value);
 	}
       }

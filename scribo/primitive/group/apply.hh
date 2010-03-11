@@ -91,7 +91,7 @@ namespace scribo
 
 	mln_value(L) new_nlabels;
 	fun::i2v::array<mln_value(L)>
-	  packed_relabel_fun = mln::make::relabelfun(groups,
+	  packed_relabel_fun = mln::make::relabelfun(groups.comp_to_group(),
 						     components.nelements(),
 						     new_nlabels);
 	new_nlabels = components.nelements();

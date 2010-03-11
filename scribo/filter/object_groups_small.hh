@@ -73,14 +73,15 @@ namespace scribo
       mln_precondition(groups.is_valid());
 
       // Counting the number of objects per group.
-      mln::util::array<unsigned> group_size(groups.size(), 0);
-      for (unsigned i = 1; i < group_size.size(); ++i)
-	++group_size[groups[i]];
+      mln::util::array<unsigned> group_size(groups.nelements(), 0);
+      for_all_groups(i, group_size)
+	++group_size[groups(i)];
 
       object_groups<L> output(groups);
       output(0) = 0;
-      for (unsigned i = 1; i < output.size(); ++i)
-	if (group_size[groups[i]] < n_links)
+      for_all_groups(i, output)
+	if (group_size[groups(i)] < n_links
+	    || !groups.component_set_()(i).is_valid())
 	  output(i) = 0;
 
       trace::exiting("scribo::filter::object_groups_small");

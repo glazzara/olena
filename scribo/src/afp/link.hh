@@ -1,7 +1,7 @@
 #include <mln/geom/ncols.hh>
 #include <mln/geom/nrows.hh>
 #include <mln/util/couple.hh>
-#include <scribo/core/object_image.hh>
+#include <scribo/core/component_set.hh>
 #include <scribo/core/macros.hh>
 #include <scribo/primitive/internal/init_link_array.hh>
 
@@ -17,33 +17,35 @@ namespace scribo
 
       template <typename L>
       util::couple<object_links<L>, object_links<L> >
-      left_right(const object_image(L)& objects)
+      left_right(const component_set<L>& components)
       {
 	object_links<L>
-	  right(objects, static_cast<unsigned>(objects.nlabels()) + 1);
+	  right(components, static_cast<unsigned>(components.nelements()) + 1);
 	primitive::internal::init_link_array(right);
 
 	object_links<L>
-	  left(objects, static_cast<unsigned>(objects.nlabels()) + 1);
+	  left(components, static_cast<unsigned>(components.nelements()) + 1);
 	primitive::internal::init_link_array(left);
 
-	for_all_components(i, objects.bboxes())
+	const L& lbl_ima = components.labeled_image();
+
+	for_all_comps(i, components)
 	{
 	  float
-	    w = (objects.bbox(i).pmax().col()
-		 - objects.bbox(i).pmin().col()),
-	    h = (objects.bbox(i).pmax().row()
-		 - objects.bbox(i).pmin().row());
+	    w = (components(i).bbox().pmax().col()
+		 - components(i).bbox().pmin().col()),
+	    h = (components(i).bbox().pmax().row()
+		 - components(i).bbox().pmin().row());
 	  unsigned dmax = (w / 2.0f) + (3 * math::max(w, h));
 
 
-	  const mln_site(L) c = objects.mass_center(i);
+	  const mln_site(L) c = components(i).mass_center();
 
 	  int
-	    midcol = (objects.bbox(i).pmax().col()
-		      - objects.bbox(i).pmin().col()) / 2;
+	    midcol = (components(i).bbox().pmax().col()
+		      - components(i).bbox().pmin().col()) / 2;
 	  int
-	    nrightima = geom::ncols(objects) - c.col(),
+	    nrightima = geom::ncols(lbl_ima) - c.col(),
 	    nleftima = c.col(),
 	    nright = std::min(static_cast<unsigned>(nrightima), midcol + dmax),
 	    nleft = std::min(static_cast<unsigned>(nleftima), midcol + dmax);
@@ -51,7 +53,7 @@ namespace scribo
 	  // Right
 	  {
 	    const mln_value(L)
-	      *p = &objects(c),
+	      *p = &lbl_ima(c),
 	      *pstop = p + nright + 1;
 
 	    for (; p != pstop; ++p)
@@ -70,7 +72,7 @@ namespace scribo
 	  // Left
 	  {
 	    const mln_value(L)
-	      *p = &objects(c),
+	      *p = &lbl_ima(c),
 	      *pstop = p - nleft - 1;
 
 	    for (; p != pstop; --p)
@@ -92,19 +94,21 @@ namespace scribo
 
       template <typename L>
       object_links<L>
-      left(const object_image(L)& objects, unsigned dmax)
+      left(const component_set<L>& components, unsigned dmax)
       {
 	object_links<L>
-	  left(objects, static_cast<unsigned>(objects.nlabels()) + 1);
+	  left(components, static_cast<unsigned>(components.nelements()) + 1);
 	primitive::internal::init_link_array(left);
 
-	for_all_components(i, objects.bboxes())
+	const L& lbl_ima = components.labeled_image();
+
+	for_all_comps(i, components)
 	{
-	  const mln_site(L) c = objects.mass_center(i);
+	  const mln_site(L) c = components(i).mass_center();
 
 	  int
-	    midcol = (objects.bbox(i).pmax().col()
-		      - objects.bbox(i).pmin().col()) / 2;
+	    midcol = (components(i).bbox().pmax().col()
+		      - components(i).bbox().pmin().col()) / 2;
 	  int
 	    nleftima = c.col(),
 	    nleft = std::min(static_cast<unsigned>(nleftima), midcol + dmax);
@@ -112,7 +116,7 @@ namespace scribo
 	  // Left
 	  {
 	    const mln_value(L)
-	      *p = &objects(c),
+	      *p = &lbl_ima(c),
 	      *pstop = p - nleft - 1;
 
 	    for (; p != pstop; --p)

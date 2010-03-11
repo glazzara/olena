@@ -90,7 +90,10 @@ namespace scribo
 	parent_array.init_(link_array);
 
 	for_all_components(i, parent_array)
-	  primitive::internal::find_root(parent_array, i);
+	  if (!components(i).is_valid())
+	    parent_array(i) = 0;
+	  else
+	    primitive::internal::find_root(parent_array, i);
 
 	trace::exiting("scribo::primitive::group::from_single_link");
 	return parent_array;

@@ -28,15 +28,15 @@
 
 /// \file
 ///
-/// Remove too thick objects.
+/// Remove too thick components.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 
 # include <mln/util/array.hh>
 
-# include <scribo/core/object_image.hh>
-# include <scribo/primitive/extract/objects.hh>
+# include <scribo/core/component_set.hh>
+# include <scribo/primitive/extract/components.hh>
 
 
 
@@ -48,14 +48,14 @@ namespace scribo
 
     using namespace mln;
 
-    /// Remove objects thicker or equal to \p max_thickness.
+    /// Remove components thicker or equal to \p max_thickness.
     ///
     /// \param[in] input_ A binary image.
     /// \param[in] nbh_ A neighborhood used in labeling algorithms.
     /// \param[in] label_type The label type used for labeling.
     /// \param[in] max_thickness The maximum thickness value.
     ///
-    /// \result A binary image without thick objects.
+    /// \result A binary image without thick components.
     //
     template <typename I, typename N, typename V>
     inline
@@ -66,17 +66,17 @@ namespace scribo
 		  unsigned max_thickness);
 
 
-    /// Remove objects thicker or equal to \p max_thickness.
+    /// Remove components thicker or equal to \p max_thickness.
     ///
-    /// \param[in] objects An object image.
+    /// \param[in] components An object image.
     /// \param[in] max_thickness The maximum thickness value.
     ///
-    /// \result An object image without too thick objects.
+    /// \result An object image without too thick components.
     //
     template <typename L>
     inline
-    object_image(L)
-    objects_thick(const object_image(L)& objects,
+    component_set<L>
+    objects_thick(const component_set<L>& components,
 		  unsigned max_thickness);
 
 
@@ -85,7 +85,7 @@ namespace scribo
     namespace internal
     {
 
-      /// Filter Functor. Return false for all objects which are too
+      /// Filter Functor. Return false for all components which are too
       /// large.
       template <typename L>
       struct thick_object_filter
@@ -94,16 +94,16 @@ namespace scribo
 
 	/// Constructor
 	///
-	/// \param[in] objects An object image.
+	/// \param[in] components An object image.
 	/// \param[in] max_thickness the maximum thickness allowed.
-	thick_object_filter(const object_image(L)& objects,
+	thick_object_filter(const component_set<L>& components,
 			    unsigned max_thickness)
-	  : objects_(objects), max_thickness_(max_thickness)
+	  : components_(components), max_thickness_(max_thickness)
 	{
 	}
 
 
-	/// Return false if the objects is thicker than
+	/// Return false if the components is thicker than
 	/// \p max_thickness_.
 	///
 	/// \param[in] l An image value.
@@ -111,13 +111,13 @@ namespace scribo
 	{
 	  if (l == literal::zero)
 	    return true;
-	  return objects_.bbox(l).nrows() < max_thickness_
-		&& objects_.bbox(l).ncols() < max_thickness_;
+	  return components_.bbox(l).nrows() < max_thickness_
+		&& components_.bbox(l).ncols() < max_thickness_;
 	}
 
 
 	/// An object image.
-	object_image(L) objects_;
+	component_set<L> components_;
 
 	/// The maximum thickness.
 	unsigned max_thickness_;
@@ -145,15 +145,15 @@ namespace scribo
 
       V nlabels;
       typedef mln_ch_value(I,V) lbl_t;
-      object_image(lbl_t) objects
-	  = primitive::extract::objects(input, nbh, nlabels);
+      component_set<lbl_t> components
+	  = primitive::extract::components(input, nbh, nlabels);
 
       typedef internal::thick_object_filter<lbl_t> func_t;
-      func_t fv2b(objects, max_thickness);
-      objects.relabel(fv2b);
+      func_t fv2b(components, max_thickness);
+      components.relabel(fv2b);
 
       mln_concrete(I) output = duplicate(input);
-      data::fill((output | pw::value(objects) == literal::zero).rw(), false);
+      data::fill((output | pw::value(components) == literal::zero).rw(), false);
 
       trace::exiting("scribo::filter::objects_thick");
       return output;
@@ -162,19 +162,19 @@ namespace scribo
 
     template <typename L>
     inline
-    object_image(L)
-    objects_thick(const object_image(L)& objects,
+    component_set<L>
+    objects_thick(const component_set<L>& components,
 		  unsigned max_thickness)
     {
       trace::entering("scribo::filter::objects_thick");
 
-      mln_precondition(objects.is_valid());
+      mln_precondition(components.is_valid());
 
       typedef internal::thick_object_filter<L> func_t;
-      func_t is_not_too_thick(objects, max_thickness);
+      func_t is_not_too_thick(components, max_thickness);
 
-      object_image(L) output;
-      output.init_from_(objects);
+      component_set<L> output;
+      output.init_from_(components);
       output.relabel(is_not_too_thick);
 
       trace::exiting("scribo::filter::objects_thick");

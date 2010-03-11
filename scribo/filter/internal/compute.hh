@@ -35,8 +35,8 @@
 
 # include <mln/util/array.hh>
 
-# include <scribo/core/object_image.hh>
-# include <scribo/primitive/extract/objects.hh>
+# include <scribo/core/component_set.hh>
+# include <scribo/primitive/extract/components.hh>
 
 
 
@@ -71,14 +71,14 @@ namespace scribo
 
       /// Filter an object image.
       ///
-      /// \param[in] objects An object image.
+      /// \param[in] components A component set.
       /// \param[in] filter A filter functor.
       ///
       /// \result A filtered object image.
       //
       template <typename L, typename F>
-      object_image(L)
-      compute(const object_image(L)& objects,
+      component_set<L>
+      compute(const component_set<L>& components,
 	      const Function_v2b<F>& filter);
 
 
@@ -103,14 +103,14 @@ namespace scribo
 
 	V nlabels;
 	typedef mln_ch_value(I,V) lbl_t;
-	object_image(lbl_t) objects
-	  = primitive::extract::objects(input, nbh, nlabels);
+	component_set<lbl_t> components
+	  = primitive::extract::components(input, nbh, nlabels);
 
-	filter.update_objects(objects);
-	objects.relabel(filter);
+	filter.update_components(components);
+	components.relabel(filter);
 
 	mln_concrete(I) output = duplicate(input);
-	data::fill((output | pw::value(objects) == literal::zero).rw(), false);
+	data::fill((output | pw::value(components) == literal::zero).rw(), false);
 
 	trace::exiting("scribo::filter::internal::compute");
 	return output;
@@ -119,16 +119,16 @@ namespace scribo
 
       template <typename L, typename F>
       inline
-      object_image(L)
-      compute(const object_image(L)& objects,
+      component_set<L>
+      compute(const component_set<L>& components,
 	      const Function_v2b<F>& filter)
       {
 	trace::entering("scribo::filter::internal::compute");
 
-	mln_precondition(objects.is_valid());
+	mln_precondition(components.is_valid());
 
-	object_image(L) output;
-	output.init_from_(objects);
+	component_set<L> output;
+	output.init_from_(components);
 	output.relabel(filter);
 
 	trace::exiting("scribo::filter::internal::compute");

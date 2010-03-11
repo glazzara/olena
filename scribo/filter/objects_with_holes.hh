@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// \brief Remove objects having a minimum number of holes.
+/// \brief Remove components having a minimum number of holes.
 
 # include <sstream>
 
@@ -56,7 +57,7 @@
 # include <mln/labeling/background.hh>
 
 # include <scribo/core/macros.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/filter/internal/compute.hh>
 
 # include <mln/data/fill.hh>
@@ -78,22 +79,22 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Remove objects having a minimum number of holes.
+    /*! \brief Remove components having a minimum number of holes.
 
 
 
      */
     template <typename L>
-    object_image(L)
-    objects_with_holes(const object_image(L)& objects,
+    component_set<L>
+    objects_with_holes(const component_set<L>& components,
 		       unsigned min_holes_count,
 		       unsigned min_size);
 
 
     template <typename L>
     inline
-    object_image(L)
-    objects_with_two_holes(const object_image(L)& objects,
+    component_set<L>
+    components_with_two_holes(const component_set<L>& components,
 			   unsigned min_size);
 
 
@@ -113,32 +114,36 @@ namespace scribo
 
       template <typename L>
       mln_concrete(L)
-      compute_bboxes_image(const object_image(L)& objects)
+      compute_bboxes_image(const component_set<L>& components)
       {
 	typedef mln_psite(L) P;
 	typedef mln_dpsite(P) D;
 
-	extension::adjust_fill(objects, 1, 0);
+	const L& lbl = components.labeled_image();
+	extension::adjust_fill(lbl, 1, 0);
 
 	mln_concrete(L) output;
-	initialize(output, objects);
+	initialize(output, lbl);
 	data::fill(output, 0);
 
-	for_all_components(i, objects.bboxes())
-	{
-	  mln_box(L) b = objects.bbox(i);
-	  b.enlarge(1);
+	for_all_comps(i, components)
+	  if (components(i).is_valid())
+	  {
+	    std::cout << components(i).bbox() << std::endl;
+	    std::cout << components(i).tag() << std::endl;
+	    mln_box(L) b = components(i).bbox();
+	    b.enlarge(1);
 
-	  unsigned
-	    nrows = b.pmax().row() - b.pmin().row() + 1,
-	    ncols = b.pmax().col() - b.pmin().col() + 1,
-	    row_offset = objects.labeled_image_().delta_index(D(+1, -ncols));
+	    unsigned
+	      nrows = b.pmax().row() - b.pmin().row() + 1,
+	      ncols = b.pmax().col() - b.pmin().col() + 1,
+	      row_offset = lbl.delta_index(D(+1, -ncols));
 
-	  mln_value(L) *ptr = &output(b.pmin());
-	  for (unsigned row = 0; row < nrows; ++row, ptr += row_offset)
-	    for (unsigned col = 0; col < ncols; ++col)
-	      *ptr++ = i;
-	}
+	    mln_value(L) *ptr = &output(b.pmin());
+	    for (unsigned row = 0; row < nrows; ++row, ptr += row_offset)
+	      for (unsigned col = 0; col < ncols; ++col)
+		*ptr++ = i;
+	  }
 
 	extension::duplicate(output);
 
@@ -156,47 +161,47 @@ namespace scribo
      */
     template <typename L>
     inline
-    object_image(L)
-    objects_with_holes(const object_image(L)& objects,
+    component_set<L>
+    objects_with_holes(const component_set<L>& components,
 		       unsigned min_holes_count,
 		       unsigned min_size)
     {
       trace::entering("scribo::filter::objects_with_holes");
 
-      typedef object_image(L) O;
+      typedef component_set<L> O;
       neighb2d nbh = c4();
 
       image2d<unsigned> parent, card;
       L bboxes_ima;
 
       util::array<util::set<unsigned> > bg_comps(
-	static_cast<unsigned>(objects.nlabels()) + 1);
+	static_cast<unsigned>(components.nelements()) + 1);
 
       fun::i2v::array<bool>
-	to_keep(static_cast<unsigned>(objects.nlabels()) + 1,
+	to_keep(static_cast<unsigned>(components.nelements()) + 1,
 		false);
 
-      const L& lbl = objects.labeled_image_();
+      const L& lbl = components.labeled_image();
 
-      std::cout << "objects.nlabels = " << objects.nlabels() << std::endl;
+      std::cout << "components.nlabels = " << components.nelements() << std::endl;
 
       util::timer timer_;
       timer_.start();
 
       // init
       {
-	extension::adjust_fill(objects, nbh, mln_max(mln_value(L)));
-	initialize(parent, objects);
+	extension::adjust_fill(lbl, nbh, mln_max(mln_value(L)));
+	initialize(parent, lbl);
 	data::fill(parent, 0u);
 
-	initialize(card, objects);
+	initialize(card, lbl);
 	data::fill(card, 1);
 
 
 	// FIXME: Improve.
 	util::timer t2;
 	t2.start();
-	bboxes_ima = internal::compute_bboxes_image(objects);
+	bboxes_ima = internal::compute_bboxes_image(components);
 	float t2_ = t2;
 	std::cout << "compute bboxes image " << t2_ << std::endl;
 
@@ -297,16 +302,15 @@ namespace scribo
 //  	std::cout << to_keep << std::endl;
 
 	timer_.restart();
-	object_image(L) output;
 
-	if (kept == objects.nlabels())
+	if (kept == components.nelements())
 	{
 	  trace::exiting("scribo::filter::objects_with_holes");
-	  return objects;
+	  return components;
 	}
 
-	output.init_from_(objects);
-	output.relabel(to_keep);
+	component_set<L> output = components.duplicate();
+	output.update_tags(to_keep, component::Ignored);
 	t_ = timer_;
 	std::cout << "init output = " << t_ << std::endl;
 
@@ -320,43 +324,43 @@ namespace scribo
 
     template <typename L>
     inline
-    object_image(L)
-    objects_with_two_holes(const object_image(L)& objects,
-			   unsigned min_size)
+    component_set<L>
+    components_with_two_holes(const component_set<L>& components,
+			      unsigned min_size)
     {
       trace::entering("scribo::filter::objects_with_holes");
 
-      std::cout << objects.nlabels() << std::endl;
+      std::cout << components.nelements() << std::endl;
 
-      typedef object_image(L) O;
+      typedef component_set<L> O;
       neighb2d nbh = c8();
 
       image2d<unsigned> parent, card;
       L bboxes_ima;
 
       util::array<unsigned> bg_comps(
-	static_cast<unsigned>(objects.nlabels()) + 1, 0);
+	static_cast<unsigned>(components.nelements()) + 1, 0);
       util::array<bool> bg_comps_done(
-	static_cast<unsigned>(objects.nlabels()) + 1, false);
+	static_cast<unsigned>(components.nelements()) + 1, false);
 
       fun::i2v::array<bool>
-	to_keep(static_cast<unsigned>(objects.nlabels()) + 1,
+	to_keep(static_cast<unsigned>(components.nelements()) + 1,
 		false);
 
-      const L& lbl = objects.labeled_image_();
+      const L& lbl = components.labeled_image();
 
       // init
       {
-	extension::fill(objects, mln_max(mln_value(L)));
-//	extension::adjust_fill(objects, nbh, mln_max(mln_value(L)));
-	initialize(parent, objects);
+	extension::fill(lbl, mln_max(mln_value(L)));
+//	extension::adjust_fill(components, nbh, mln_max(mln_value(L)));
+	initialize(parent, lbl);
 	data::fill(parent, 0u);
 
-	initialize(card, objects);
+	initialize(card, lbl);
 	data::fill(card, 1);
 	border::fill(card, 1);
 
-	bboxes_ima = internal::compute_bboxes_image(objects);
+	bboxes_ima = internal::compute_bboxes_image(components);
 
 	to_keep(0) = true;
       }
@@ -421,7 +425,7 @@ namespace scribo
 	      && bboxes_ima.element(p) != literal::zero)
 	  {
 	    mln_value(L) object_id = bboxes_ima.element(p);
-	    if (!bg_comps_done(object_id))
+	    if (!bg_comps_done(object_id) && components(object_id).is_valid())
 	    {
 	      if (bg_comps(object_id) == 0)
 	      {
@@ -437,15 +441,15 @@ namespace scribo
 	  }
 	}
 
-	object_image(L) output;
-	if (kept == objects.nlabels())
+	component_set<L> output;
+	if (kept == components.nelements())
 	{
 	  trace::exiting("scribo::filter::objects_with_holes");
-	  return objects;
+	  return components;
 	}
 
-	output.init_from_(objects);
-	output.relabel(to_keep);
+	output = components.duplicate();
+	output.update_tags(to_keep, component::Ignored);
 
 	trace::exiting("scribo::filter::objects_with_holes");
 	return output;
@@ -457,32 +461,32 @@ namespace scribo
 
 //     template <typename L>
 //     inline
-//     object_image(L)
-//     objects_with_holes(const object_image(L)& objects,
+//     component_set<L>
+//     objects_with_holes(const component_set<L>& components,
 // 		       unsigned min_holes_count)
 //     {
 //       trace::entering("scribo::filter::objects_with_holes");
 
-//       mln_precondition(objects.is_valid());
+//       mln_precondition(components.is_valid());
 
 
 //       L bboxes_ima;
-//       initialize(bboxes_ima, objects);
+//       initialize(bboxes_ima, components);
 //       data::fill(bboxes_ima, literal::zero);
 
-//       for_all_components(i, objects.bboxes())
-// 	mln::draw::box(bboxes_ima, objects.bbox(i), i);
+//       for_all_components(i, components.bboxes())
+// 	mln::draw::box(bboxes_ima, components.bbox(i), i);
 
 //       util::array<util::set<mln_value(L)> > first_bg_comp(
-// 	static_cast<unsigned>(objects.nlabels()) + 1);
+// 	static_cast<unsigned>(components.nlabels()) + 1);
 
 //       fun::i2v::array<bool>
-// 	to_keep(static_cast<unsigned>(objects.nlabels()) + 1,
+// 	to_keep(static_cast<unsigned>(components.nlabels()) + 1,
 // 		false);
 //       to_keep(0) = true;
 
 //       mln_value(L) nbglabels;
-//       L bg_lbl = labeling::background(objects, c8(), nbglabels);
+//       L bg_lbl = labeling::background(components, c8(), nbglabels);
 
 //       unsigned kept;
 //       mln_piter(L) p(bboxes_ima.domain());
@@ -502,11 +506,11 @@ namespace scribo
 // 	    }
 //       }
 
-//       object_image(L) output;
-//       if (kept == objects.nlabels())
-// 	output = objects;
+//       component_set<L> output;
+//       if (kept == components.nlabels())
+// 	output = components;
 //       else
-// 	output = internal::compute(objects, to_keep);
+// 	output = internal::compute(components, to_keep);
 
 //       trace::exiting("scribo::filter::objects_with_holes");
 //       return output;
@@ -515,51 +519,52 @@ namespace scribo
 
     template <typename L>
     inline
-    object_image(L)
-    objects_with_holes_slow(const object_image(L)& objects,
+    component_set<L>
+    objects_with_holes_slow(const component_set<L>& components,
 			    unsigned min_holes_count)
     {
       trace::entering("scribo::filter::objects_with_holes");
 
-      mln_precondition(objects.is_valid());
+      mln_precondition(components.is_valid());
 
       fun::i2v::array<bool>
-	to_keep(static_cast<unsigned>(objects.nlabels()) + 1,
+	to_keep(static_cast<unsigned>(components.nlabels()) + 1,
 		true);
 
       bool to_remove = false;
-      for_all_components(i, objects.bboxes())
-      {
-	mln_domain(L) b = objects.bbox(i);
-	b.enlarge(1);
-
-	mln_ch_value(L, bool) tmp(b);
-	data::fill(tmp, true);
- 	data::fill((tmp | ((objects | objects.bbox(i)) | (pw::value(objects) == pw::cst(i))).domain()).rw(), false);
-
-	typedef accu::math::count<mln_value(L)> accu_t;
-	mln_value(L) nlabels;
-	util::array<unsigned> counts
-	  = labeling::blobs_and_compute(tmp,
-					c8(), nlabels,
-					accu_t()).second();
-	unsigned nholes = 0;
-	for_all_components(j, counts)
-	  if (counts(j) > 4u)
-	    ++nholes;
-
-	if (nholes < min_holes_count)
+      for_all_components(i, components)
+	if (components(i).tag() != component::Ignored)
 	{
-	  to_keep(i) = false;
-	  to_remove = true;
-	}
-      }
+	  mln_domain(L) b = components(i).bbox();
+	  b.enlarge(1);
 
-      object_image(L) output;
+	  mln_ch_value(L, bool) tmp(b);
+	  data::fill(tmp, true);
+	  data::fill((tmp | ((components | components.bbox(i)) | (pw::value(components) == pw::cst(i))).domain()).rw(), false);
+
+	  typedef accu::math::count<mln_value(L)> accu_t;
+	  mln_value(L) nlabels;
+	  util::array<unsigned> counts
+	    = labeling::blobs_and_compute(tmp,
+					  c8(), nlabels,
+					  accu_t()).second();
+	  unsigned nholes = 0;
+	  for_all_components(j, counts)
+	    if (counts(j) > 4u)
+	      ++nholes;
+
+	  if (nholes < min_holes_count)
+	  {
+	    to_keep(i) = false;
+	    to_remove = true;
+	  }
+	}
+
+      component_set<L> output;
       if (! to_remove)
-	output = objects;
+	output = components;
       else
-	output = internal::compute(objects, to_keep);
+	output = internal::compute(components, to_keep);
 
       trace::exiting("scribo::filter::objects_with_holes");
       return output;

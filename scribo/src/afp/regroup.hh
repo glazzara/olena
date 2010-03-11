@@ -1,7 +1,7 @@
 #include <mln/geom/ncols.hh>
 #include <mln/geom/nrows.hh>
 #include <mln/util/couple.hh>
-#include <scribo/core/object_image.hh>
+#include <scribo/core/component_set.hh>
 #include <scribo/core/macros.hh>
 #include <scribo/primitive/internal/init_link_array.hh>
 
@@ -16,7 +16,7 @@ namespace scribo
 
       template <typename L>
       object_groups<L>
-      regroup_left(const object_image(L)& objects,
+      regroup_left(const component_set<L>& components,
 		   const object_groups<L>& groups,
 		   unsigned dmax)
       {
@@ -25,10 +25,10 @@ namespace scribo
 	mln_precondition(groups.is_valid());
 
 	object_groups<L>
-	  new_groups(objects, static_cast<unsigned>(objects.nlabels()) + 1, 0);
+	  new_groups(components, static_cast<unsigned>(components.nlabels()) + 1, 0);
 
 	unsigned ngroups = 0;
-	for_all_components(i, objects.bboxes())
+	for_all_components(i, components.bboxes())
 	{
 	  if (groups[i] == 0)
 	    continue;
@@ -38,19 +38,19 @@ namespace scribo
 	  if (new_groups[i] == 0)
 	    new_groups[i] = ++ngroups;
 
-	  const mln_site(L) c = objects.mass_center(i);
+	  const mln_site(L) c = components.mass_center(i);
 
 	  int
-	    midcol = (objects.bbox(i).pmax().col()
-		      - objects.bbox(i).pmin().col()) / 2;
+	    midcol = (components.bbox(i).pmax().col()
+		      - components.bbox(i).pmin().col()) / 2;
 	  int
-	    nleftima = geom::ncols(objects),
+	    nleftima = geom::ncols(components),
 	    nleft = std::min(static_cast<unsigned>(nleftima), midcol + dmax);
 
 	  // Left
 	  {
 	    const mln_value(L)
-	      *p = &objects(c),
+	      *p = &components(c),
 	      *pstop = p - nleft - 1;
 
 	    for (; p != pstop; --p)

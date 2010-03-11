@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Invalidate links between two objects having their bounding box
+/// Invalidate links between two components having their bounding box
 /// overlapping too much.
 
 
@@ -38,7 +39,7 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/filter/object_links_bbox_ratio.hh>
 
 namespace scribo
@@ -49,11 +50,11 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Invalidate links between two objects having their bounding box
+    /*! \brief Invalidate links between two components having their bounding box
         overlapping too much.
 
-	\param[in] objects           An object image.
-	\param[in] links             Link objects information.
+	\param[in] components        A component set.
+	\param[in] links             Link components information.
 	\param[in] max_overlap_ratio The maximum ratio of the overlapping
 	                             areas.
 
@@ -61,7 +62,7 @@ namespace scribo
     */
     template <typename L>
     object_links<L>
-    object_links_bbox_overlap(const object_image(L)& objects,
+    object_links_bbox_overlap(const component_set<L>& components,
 			      const object_links<L>& links,
 			      float max_overlap_ratio);
 
@@ -71,31 +72,29 @@ namespace scribo
 
     template <typename L>
     object_links<L>
-    object_links_bbox_overlap(const object_image(L)& objects,
+    object_links_bbox_overlap(const component_set<L>& components,
 			      const object_links<L>& links,
 			      float max_overlap_ratio)
     {
       trace::entering("scribo::filter::object_links_bbox_overlap");
 
-      mln_precondition(objects.is_valid());
+      mln_precondition(components.is_valid());
       mln_precondition(links.is_valid());
-      mln_precondition(objects.id_() == links.objects_id_());
+      mln_precondition(components.id_() == links.components_id_());
 
-      typedef typename object_image(L)::bbox_t bbox_t;
-      const mln::util::array<bbox_t>& bboxes = objects.bboxes();
       object_links<L> output(links);
 
-      for_all_components(i, objects.bboxes())
-	if (links(i) != i)
+      for_all_components(i, components)
+	if (components(i).is_valid() && links(i) != i)
 	{
 	  bool has_intersection = true;
 	  mln_site(L) pmin, pmax;
 	  for (unsigned dim = 0; dim < mln_site_(L)::dim; ++dim)
 	  {
-	    pmin[dim] = math::max(bboxes(i).pmin()[dim],
-				  bboxes(links[i]).pmin()[dim]);
-	    pmax[dim] = math::min(bboxes(i).pmax()[dim],
-				  bboxes(links[i]).pmax()[dim]);
+	    pmin[dim] = math::max(components(i).bbox().pmin()[dim],
+				  components(links[i]).bbox().pmin()[dim]);
+	    pmax[dim] = math::min(components(i).bbox().pmax()[dim],
+				  components(links[i]).bbox().pmax()[dim]);
 
 	    if (pmin[dim] > pmax[dim])
 	    {
@@ -109,8 +108,8 @@ namespace scribo
 
 	  mln_box(L) interbbox(pmin, pmax);
 	  float
-	    ratio_i = interbbox.nsites() /(float)bboxes(i).nsites(),
-	    ratio_link_i = interbbox.nsites() /(float)bboxes(links(i)).nsites();
+	    ratio_i = interbbox.nsites() /(float)components(i).bbox().nsites(),
+	    ratio_link_i = interbbox.nsites() /(float)components(links(i)).bbox().nsites();
 
 	  if (ratio_i >= max_overlap_ratio
 	      || ratio_link_i >= max_overlap_ratio)

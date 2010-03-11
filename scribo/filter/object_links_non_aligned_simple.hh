@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Invalidate links between two non aligned objects.
+/// Invalidate links between two non aligned components.
 
 
 # include <mln/util/array.hh>
@@ -47,12 +48,12 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Invalidate links between two non aligned objects.
+    /*! \brief Invalidate links between two non aligned components.
 	Alignment is based on a given edge of object bounding boxes.
 
-	\param[in] objects   An object image.
-	\param[in] links     Object links information.
-        \param[in] max_alpha Maximum angle value (degrees).
+	\param[in] components   A component set.
+	\param[in] links        Object links information.
+        \param[in] max_alpha    Maximum angle value (degrees).
 
 
 	Exemple with dim == 1 and edge == 1 (bottom
@@ -90,7 +91,7 @@ namespace scribo
     */
     template <typename L>
     object_links<L>
-    object_links_non_aligned_simple(const object_image(L)& objects,
+    object_links_non_aligned_simple(const component_set<L>& components,
 				    const object_links<L>& links,
 				    unsigned edge,
 				    float max_alpha);
@@ -101,18 +102,16 @@ namespace scribo
 
     template <typename L>
     object_links<L>
-    object_links_non_aligned_simple(const object_image(L)& objects,
+    object_links_non_aligned_simple(const component_set<L>& comps,
 				    const object_links<L>& links,
 				    unsigned edge,
 				    float max_alpha)
     {
       trace::entering("scribo::filter::object_links_non_aligned_simple");
 
-      mln_precondition(objects.is_valid());
+      mln_precondition(comps.is_valid());
       mln_precondition(links.is_valid());
 
-      typedef typename object_image(L)::bbox_t bbox_t;
-      const mln::util::array<bbox_t>& bboxes = objects.bboxes();
       object_links<L> output(links);
       float dr, dc;
 
@@ -122,14 +121,14 @@ namespace scribo
       // Center
       if (edge == 0)
       {
-	for_all_components(i, objects.bboxes())
+	for_all_comps(i, comps)
 	{
 	  if (links[i] != i)
 	  {
-	    dr = math::abs(bboxes[i].center().row()
-			   - bboxes[links[i]].center().row());
-	    dc = math::abs(bboxes[i].center().col()
-			   - bboxes[links[i]].center().col());
+	    dr = math::abs(comps(i).bbox().pcenter().row()
+			   - comps(links[i]).bbox().pcenter().row());
+	    dc = math::abs(comps(i).bbox().pcenter().col()
+			   - comps(links[i]).bbox().pcenter().col());
 
 	    if (std::atan(dr / dc) > max_alpha_rad)
 	      output[i] = i;
@@ -139,13 +138,13 @@ namespace scribo
       // Top
       else if (edge == 1)
       {
-	for_all_components(i, objects.bboxes())
+	for_all_comps(i, comps.bboxes())
 	  if (links[i] != i)
 	  {
-	    dr = math::abs(bboxes[i].pmin().row()
-			   - bboxes[links[i]].pmin().row());
-	    dc = math::abs(bboxes[i].center().col()
-			   - bboxes[links[i]].center().col());
+	    dr = math::abs(comps(i).bbox().pmin().row()
+			   - comps(links[i]).bbox().pmin().row());
+	    dc = math::abs(comps(i).bbox().pcenter().col()
+			   - comps(links[i]).bbox().pcenter().col());
 
 	    if (std::atan(dr / dc) > max_alpha_rad)
 	      output[i] = i;
@@ -154,14 +153,14 @@ namespace scribo
       // Bottom
       else if (edge == 2)
       {
-	for_all_components(i, objects.bboxes())
+	for_all_comps(i, comps.bboxes())
 	{
 	  if (links[i] != i)
 	  {
-	    dr = math::abs(bboxes[i].pmax().row()
-			   - bboxes[links[i]].pmax().row());
-	    dc = math::abs(bboxes[i].center().col()
-			   - bboxes[links[i]].center().col());
+	    dr = math::abs(comps(i).bbox().pmax().row()
+			   - comps(links[i]).bbox().pmax().row());
+	    dc = math::abs(comps(i).bbox().pcenter().col()
+			   - comps(links[i]).bbox().pcenter().col());
 
 	    if (std::atan(dr / dc) > max_alpha_rad)
 	      output[i] = i;
@@ -171,14 +170,14 @@ namespace scribo
       // Left
       else if (edge == 3)
       {
-	for_all_components(i, objects.bboxes())
+	for_all_comps(i, comps.bboxes())
 	{
 	  if (links[i] != i)
 	  {
-	    dr = math::abs(bboxes[i].center().row()
-			   - bboxes[links[i]].center().row());
-	    dc = math::abs(bboxes[i].pmin().col()
-			   - bboxes[links[i]].pmin().col());
+	    dr = math::abs(comps(i).bbox().pcenter().row()
+			   - comps(links[i]).bbox().pcenter().row());
+	    dc = math::abs(comps(i).bbox().pmin().col()
+			   - comps(links[i]).bbox().pmin().col());
 
 	    if (std::atan(dc / dr) > max_alpha_rad)
 	      output[i] = i;
@@ -188,14 +187,14 @@ namespace scribo
       // Right
       else if (edge == 4)
       {
-	for_all_components(i, objects.bboxes())
+	for_all_comps(i, comps.bboxes())
 	{
 	  if (links[i] != i)
 	  {
-	    dr = math::abs(bboxes[i].center().row()
-			   - bboxes[links[i]].center().row());
-	    dc = math::abs(bboxes[i].pmax().col()
-			   - bboxes[links[i]].pmax().col());
+	    dr = math::abs(comps(i).bbox().pcenter().row()
+			   - comps(links[i]).bbox().pcenter().row());
+	    dc = math::abs(comps(i).bbox().pmax().col()
+			   - comps(links[i]).bbox().pmax().col());
 
 	    if (std::atan(dc / dr) > max_alpha_rad)
 	      output[i] = i;

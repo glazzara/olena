@@ -41,7 +41,7 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/tag/anchor.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>
@@ -59,10 +59,10 @@ namespace scribo
     namespace link
     {
 
-      /// \brief Link objects with their right neighbor if exists.
+      /// \brief Link components with their right neighbor if exists.
       /// Lookup startup point is the object mass center.
       ///
-      /// \param[in] objects An object image.
+      /// \param[in] components An object image.
       /// \param[in] The maximum distance allowed to seach a neighbor object.
       ///
       /// \return Object links data.
@@ -70,7 +70,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects,
+      with_single_right_link(const component_set<L>& components,
 			     unsigned neighb_max_distance);
 
 
@@ -79,7 +79,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects);
+      with_single_right_link(const component_set<L>& components);
 
 
 
@@ -101,8 +101,8 @@ namespace scribo
 	public:
 	  typedef mln_site(L) P;
 
-	  single_right_functor(const object_image(L)& objects, unsigned dmax)
-	    : super_(objects, dmax, anchor::Horizontal)
+	  single_right_functor(const component_set<L>& components, unsigned dmax)
+	    : super_(components, dmax, anchor::Horizontal)
 	  {
 	  }
 
@@ -122,15 +122,15 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects,
+      with_single_right_link(const component_set<L>& components,
 			     unsigned neighb_max_distance)
       {
 	trace::entering("scribo::primitive::link::with_single_right_link");
 
-	mln_precondition(objects.is_valid());
+	mln_precondition(components.is_valid());
 
 	internal::single_right_functor<L>
-	  functor(objects, neighb_max_distance);
+	  functor(components, neighb_max_distance);
 
 	object_links<L> output = compute(functor, anchor::MassCenter);
 
@@ -142,9 +142,9 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link(const object_image(L)& objects)
+      with_single_right_link(const component_set<L>& components)
       {
-	return with_single_right_link(objects, mln_max(unsigned));
+	return with_single_right_link(components, mln_max(unsigned));
       }
 
 

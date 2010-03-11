@@ -39,7 +39,7 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/tag/anchor.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>
@@ -75,7 +75,7 @@ namespace scribo
 
 	  typedef mln_site(L) P;
 
-	  link_single_dmax_base(const object_image(L)& objects,
+	  link_single_dmax_base(const component_set<L>& components,
 				unsigned neighb_max_distance,
 				anchor::Direction direction);
 
@@ -101,11 +101,11 @@ namespace scribo
 	template <typename L, typename E>
 	inline
 	link_single_dmax_base<L, E>::link_single_dmax_base(
-	  const object_image(L)& objects,
+	  const component_set<L>& components,
 	  unsigned neighb_max_distance,
 	  anchor::Direction direction)
 
-	  : super_(objects),
+	  : super_(components),
 	    dmax_(0),
 	    neighb_max_distance_(neighb_max_distance),
 	    direction_(direction)
@@ -134,7 +134,7 @@ namespace scribo
 	link_single_dmax_base<L, E>::start_point_(unsigned current_object,
 						  anchor::Type anchor)
 	{
-	  return internal::compute_anchor(this->objects_,
+	  return internal::compute_anchor(this->components_,
 					  current_object, anchor);
 	}
 
@@ -146,8 +146,8 @@ namespace scribo
 	  unsigned current_object)
 	{
 	  float
-	    midcol = (this->objects_.bbox(current_object).pmax()[direction_]
-		      - this->objects_.bbox(current_object).pmin()[direction_]) / 2;
+	    midcol = (this->components_.bbox(current_object).pmax()[direction_]
+		      - this->components_.bbox(current_object).pmin()[direction_]) / 2;
 	  dmax_ = midcol + neighb_max_distance_;
 	}
 

@@ -43,7 +43,7 @@
 # include <scribo/core/macros.hh>
 
 # include <scribo/core/object_groups.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/primitive/internal/find_root.hh>
 # include <scribo/primitive/internal/is_link_valid.hh>
 # include <scribo/primitive/internal/init_link_array.hh>
@@ -58,11 +58,11 @@ namespace scribo
     namespace group
     {
 
-      /*! Group objects from left and right links information and
+      /*! Group components from left and right links information and
 	  validate These links. A link must exist in both ways to be
 	  validated.
 
-	  \param[in] objects     The Lines of text.
+	  \param[in] components  A component set.
 	  \param[in] left_link   The left neighbor of each line of text.
 	  \param[in] right_link  The right neighbor of each line of text.
 	  \param[in] parent_link The function used to group components.
@@ -71,7 +71,7 @@ namespace scribo
       */
       template <typename L>
       object_groups<L>
-      from_double_link(const object_image(L)& objects,
+      from_double_link(const component_set<L>& components,
 		       const object_links<L>& left_link,
 		       const object_links<L>& right_link);
 
@@ -83,19 +83,19 @@ namespace scribo
       template <typename L>
       inline
       object_groups<L>
-      from_double_link(const object_image(L)& objects,
+      from_double_link(const component_set<L>& components,
 		       const object_links<L>& left_link,
 		       const object_links<L>& right_link)
       {
 	trace::entering("scribo::primitive::group::from_double_link");
 
 	mln_precondition(left_link.nelements() == right_link.nelements());
-	mln_precondition(left_link.objects_id_() == objects.id_());
-	mln_precondition(right_link.objects_id_() == objects.id_());
+	mln_precondition(left_link.components_id_() == components.id_());
+	mln_precondition(right_link.components_id_() == components.id_());
 
-	object_groups<L> parent(objects, left_link.nelements());
+	object_groups<L> parent(components, left_link.nelements());
 	internal::init_link_array(parent);
-	for_all_ncomponents(i, objects.nlabels())
+	for_all_ncomponents(i, components.nlabels())
 	{
 	  mln::util::couple<bool, unsigned>
 	    nbh = internal::is_link_valid(left_link, right_link, i);
