@@ -48,12 +48,30 @@ namespace scribo
     using namespace mln;
 
 
-    /// Draw a list of bounding boxes and their associated mass center.
+    /// Draw a list of bounding boxes
     template <typename I>
     void
     save_bboxes_image(const Image<I>& input,
 		      const mln::util::array< box<mln_site(I)> >& bboxes,
-		      const value::rgb8& value,
+		      const std::string& filename,
+		      const value::rgb8& value);
+
+
+    template <typename I, typename L>
+    void
+    save_bboxes_image(const Image<I>& input,
+		      const line_set<L>& lines,
+		      const std::string& filename,
+      		      const value::rgb8& value);
+
+    /// \overload
+    /// value is set to literal::red.
+    //
+    template <typename I, typename L>
+    inline
+    void
+    save_bboxes_image(const Image<I>& input,
+		      const line_set<L>& lines,
 		      const std::string& filename);
 
 
@@ -64,8 +82,8 @@ namespace scribo
     void
     save_bboxes_image(const Image<I>& input,
 		      const mln::util::array< box<mln_site(I)> >& bboxes,
-		      const value::rgb8& value,
-		      const std::string& filename)
+		      const std::string& filename,
+		      const value::rgb8& value)
     {
       trace::entering("scribo::debug::save_bboxes_image");
       mln_precondition(exact(input).is_valid());
@@ -76,6 +94,40 @@ namespace scribo
 
       trace::exiting("scribo::debug::save_bboxes_image");
     }
+
+
+    template <typename I, typename L>
+    inline
+    void
+    save_bboxes_image(const Image<I>& input,
+		      const line_set<L>& lines,
+		      const std::string& filename,
+      		      const value::rgb8& value)
+    {
+      trace::entering("scribo::debug::save_bboxes_image");
+      mln_precondition(exact(input).is_valid());
+
+      image2d<value::rgb8> output = data::convert(value::rgb8(), input);
+
+      for_all_lines(l, lines)
+	if (! lines(l).hidden())
+	  mln::draw::box(output, lines(l).bbox(), value);
+
+      io::ppm::save(output, filename);
+      trace::exiting("scribo::debug::save_bboxes_image");
+    }
+
+
+    template <typename I, typename L>
+    inline
+    void
+    save_bboxes_image(const Image<I>& input,
+		      const line_set<L>& lines,
+		      const std::string& filename)
+    {
+      return save_bboxes_image(input, lines, filename, literal::red);
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

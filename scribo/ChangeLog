@@ -1,5 +1,20 @@
 2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve debug routines in Scribo.
+
+	* debug/bboxes_enlarged_image.hh,
+	* debug/looks_like_a_text_line_image.hh,
+	* debug/mean_and_base_lines_image.hh: New routines.
+
+	* debug/alignment_decision_image.hh,
+	* debug/decision_image.hh,
+	* debug/save_bboxes_image.hh: Update code according to last
+	changes in core classes.
+
+	* debug/usage.hh: Make the description optional.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve core classes in Scribo.
 
 	* core/component_info.hh,

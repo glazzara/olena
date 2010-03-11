@@ -130,7 +130,7 @@ namespace scribo
       trace::entering("scribo::debug::decision_image");
       const I& input = exact(input_);
 
-      const component_set<L>& components = links.component_set_();
+      const component_set<L>& components = links.components();
 
       mln_precondition(input.is_valid());
       mln_precondition(links.is_valid());
@@ -142,20 +142,20 @@ namespace scribo
       image2d<value::rgb8>
 	decision_image = data::convert(value::rgb8(), input);
 
-      for_all_components(i, components)
+      for_all_comps(i, components)
 	mln::draw::box(decision_image, components(i).bbox(), literal::blue);
 
-      for (unsigned i = 1; i < links.size(); ++i)
+      for (unsigned i = 1; i < links.nelements(); ++i)
       {
 
-	if (links[i] != i)
+	if (links(i) != i)
 	{
 	  value::rgb8 value = literal::green;
-	  if (links[i] != filtered_links[i])
+	  if (links(i) != filtered_links(i))
 	    value = literal::red;
 	  mln::draw::line(decision_image,
 			  components(i).bbox().pcenter(),
-			  components(links[i]).bbox().pcenter(),
+			  components(links(i)).bbox().pcenter(),
 			  value);
 	}
       }
