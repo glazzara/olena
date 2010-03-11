@@ -44,9 +44,70 @@ namespace scribo
     enum Tag
     {
       None = 0,
-      Separator,
       Ignored
     };
+
+
+    enum Type
+    {
+      Undefined = 0,
+      Character,
+      Separator,
+      Noise,
+      Punctuation
+    };
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+    std::ostream&
+    operator<<(std::ostream& ostr, const Tag& tag)
+    {
+      std::string str;
+      switch(tag)
+      {
+	default:
+	case None:
+	  str = "None";
+	  break;
+	case Ignored:
+	  str = "Ignored";
+	  break;
+      }
+
+      return ostr << str;
+    }
+
+
+    std::ostream&
+    operator<<(std::ostream& ostr, const Type& type)
+    {
+      std::string str;
+      switch(type)
+      {
+	default:
+	case Undefined:
+	  str = "Undefined";
+	  break;
+	case Character:
+	  str = "Character";
+	  break;
+	case Separator:
+	  str = "Separator";
+	  break;
+	case Noise:
+	  str = "Noise";
+	  break;
+	case Punctuation:
+	  str = "Punctuation";
+	  break;
+      }
+
+      return ostr << str;
+    }
+
+
+# endif // ! MLN_INCLUDE_ONLY
 
 
   } // end of namespace scribo::component

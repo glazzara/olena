@@ -43,7 +43,6 @@ namespace scribo
     enum Tag
     {
       None = 0,
-      Separator,
       Ignored,
       Needs_Precise_Stats_Update,
       Merged,
@@ -77,7 +76,12 @@ namespace scribo
       Header,
       Heading,
       PageNumber,
-      Paragraph
+      Paragraph,
+
+      // These types are not supported by the XSD.
+      Punctuation,
+      Text,
+      Undefined
     };
 
 
@@ -103,9 +107,6 @@ namespace scribo
 	default:
 	case None:
 	  str = "None";
-	  break;
-	case Separator:
-	  str = "Separator";
 	  break;
 	case Ignored:
 	  str = "Ignored";
@@ -160,7 +161,6 @@ namespace scribo
 	case Caption:
 	  str = "caption";
 	  break;
-	default:
 	case Credit:
 	  str = "credit";
 	  break;
@@ -169,16 +169,33 @@ namespace scribo
 	  break;
 	case Floating:
 	  str = "floating";
+	  break;
 	case Footer:
 	  str = "footer";
+	  break;
 	case Header:
 	  str = "header";
+	  break;
 	case Heading:
 	  str = "heading";
+	  break;
 	case PageNumber:
 	  str = "page-number";
+	  break;
 	case Paragraph:
 	  str = "paragraph";
+	  break;
+
+	// Values unsupported by the XSD
+	case Punctuation:
+	  str = "punctuation";
+	  break;
+	case Text:
+	  str = "text";
+	  break;
+	default:
+	case Undefined:
+	  str = "undefined";
 	  break;
       }
 

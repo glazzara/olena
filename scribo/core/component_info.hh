@@ -58,10 +58,17 @@ namespace scribo
     component_id_t id() const;
     const mln::box2d& bbox() const;
     const mln::point2d& mass_center() const;
+
+    // The number of pixels in this component.
     unsigned card() const;
+
     component::Tag tag() const;
     void update_tag(component::Tag tag);
 
+    component::Type type() const;
+    void update_type(component::Type type);
+
+    // The line it is rattached to. 0 means an invalid line.
     line_id_t line_id() const;
 
     bool is_valid() const;
@@ -71,10 +78,17 @@ namespace scribo
     mln::box2d bbox_;
     mln::point2d mass_center_;
     unsigned card_;
+
     component::Tag tag_;
+    component::Type type_;
 
     line_id_t line_id_;
   };
+
+
+
+  std::ostream&
+  operator<<(std::ostream& ostr, const component_info& info);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -138,6 +152,21 @@ namespace scribo
     tag_ = tag;
   }
 
+
+  component::Type
+  component_info::type() const
+  {
+    return type_;
+  }
+
+
+  void
+  component_info::update_type(component::Type type)
+  {
+    type_ = type;
+  }
+
+
   component_info::line_id_t
   component_info::line_id() const
   {
@@ -148,6 +177,20 @@ namespace scribo
   component_info::is_valid() const
   {
     return tag_ != component::Ignored;
+  }
+
+
+  std::ostream&
+  operator<<(std::ostream& ostr, const component_info& info)
+  {
+    return ostr << "component_info("
+		<< "id=" << info.id()
+		<< ", bbox=" << info.bbox()
+		<< ", mass_center=" << info.mass_center()
+		<< ", card=" << info.card()
+		<< ", tag=" << info.tag()
+		<< ", line_id=" << info.line_id()
+		<< ")" << std::endl;
   }
 
 

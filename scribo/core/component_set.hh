@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,6 +31,11 @@
 ///
 /// \brief Definition of a component set.
 
+# include <mln/core/concept/site_set.hh>
+# include <mln/core/concept/function.hh>
+
+# include <mln/data/fill.hh>
+
 # include <mln/util/array.hh>
 
 # include <mln/accu/pair.hh>
@@ -40,6 +46,10 @@
 
 # include <mln/convert/from_to.hh>
 
+# include <mln/core/image/dmorph/image_if.hh>
+# include <mln/pw/all.hh>
+
+# include <mln/core/routine/duplicate.hh>
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/component_info.hh>
@@ -86,6 +96,7 @@ namespace scribo
       mln_value(L) ncomps_;
       mln::util::array<scribo::component_info> infos_;
 
+      mln_ch_value(L, bool) separators_;
     };
 
   } // end of namespace scribo::internal
@@ -131,13 +142,6 @@ namespace scribo
     /// Return component information for a given component id \p id.
     component_info& info(const mln_value(L)& id);
 
-//     /// Return component information for a given component id \p id.
-//     component_info& operator()(const mln_value(L)& id);
-
-//     /// Return component information for a given component id \p id.
-//     const component_info& operator()(const mln_value(L)& id) const;
-
-
     /// Return component information for a given component id \p id.
     component_info& operator()(const component_id_t& id);
 
@@ -155,11 +159,37 @@ namespace scribo
     /// Return the underlying labeled image
     const L& labeled_image() const;
 
+    /// Is this component set valid?
+    bool is_valid() const;
+
+
+    /// Separators components related routines.
+    /// @{
+
+    /// Return true if an image of separator exists.
+    bool has_separators() const;
+
+    /// Add separators in the underlying labeled image.
+    void add_separators(const mln_ch_value(L, bool)& ima);
+
+    /// Return the Boolean image of separators.
+    const mln_ch_value(L, bool)& separators() const;
+
+    /// Remove any existing separators.
+    void clear_separators();
+
+    /// @}
+
+
+
     /// Internal methods
     /// @{
 
     /// Return all the component infos.
     const mln::util::array<scribo::component_info>& infos_() const;
+
+    /// Unique set Id.
+    unsigned id_() const;
 
     /// @}
 
@@ -169,6 +199,18 @@ namespace scribo
 
     mln::util::tracked_ptr< internal::component_set_data<L> > data_;
   };
+
+
+  template <typename L>
+  bool
+  operator==(const component_set<L>& lhs, const component_set<L>& rhs);
+
+
+  template <typename L>
+  std::ostream&
+  operator<<(std::ostream& ostr, const component_set<L>& info);
+
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -195,6 +237,9 @@ namespace scribo
 					      const mln_value(L)& ncomps)
       : ima_(ima), ncomps_(ncomps)
     {
+      initialize(separators_, ima); // FIXME: do we really want that?
+      mln::data::fill(separators_, false);
+
       typedef mln::accu::shape::bbox<mln_site(L)> bbox_accu_t;
       typedef mln::accu::center<mln_site(L)> center_accu_t;
       typedef mln::accu::pair<bbox_accu_t, center_accu_t> pair_accu_t;
@@ -214,6 +259,9 @@ namespace scribo
 					      const mln::util::array<pair_accu_t>& attribs)
       : ima_(ima), ncomps_(ncomps)
     {
+      initialize(separators_, ima);  // FIXME: do we really want that?
+      mln::data::fill(separators_, false);
+
       fill_infos(attribs);
     }
 
@@ -224,6 +272,9 @@ namespace scribo
 					      const mln::util::array<pair_data_t>& attribs)
       : ima_(ima), ncomps_(ncomps)
     {
+      initialize(separators_, ima);  // FIXME: do we really want that?
+      mln::data::fill(separators_, false);
+
       fill_infos(attribs);
     }
 
@@ -234,6 +285,8 @@ namespace scribo
 					      const mln::util::array<scribo::component_info>& infos)
       : ima_(ima), ncomps_(ncomps), infos_(infos)
     {
+      initialize(separators_, ima); // FIXME: do we really want that?
+      mln::data::fill(separators_, false);
     }
 
 
@@ -247,7 +300,7 @@ namespace scribo
       infos_.reserve(static_cast<unsigned>(ncomps_) + 1);
 
       infos_.append(component_info()); // Component 0, i.e. the background.
-      for_all_components(i, attribs)
+      for_all_comp_data(i, attribs)
       {
  	component_info info(i, attribs[i].first(),
 			    attribs[i].second(), attribs[i].second_accu().nsites());
@@ -265,7 +318,7 @@ namespace scribo
       infos_.reserve(static_cast<unsigned>(ncomps_) + 1);
 
       infos_.append(component_info()); // Component 0, i.e. the background.
-      for_all_components(i, attribs)
+      for_all_comp_data(i, attribs)
       {
  	component_info info(i, attribs[i].first,
 			    attribs[i].second.first, attribs[i].second.second);
@@ -379,7 +432,7 @@ namespace scribo
   {
     const F& f = exact(f_);
 
-    for_all_components(i, data_->infos_)
+    for_all_comp_data(i, data_->infos_)
       if (!f(i))
 	data_->infos_[i].update_tag(tag);
   }
@@ -405,6 +458,61 @@ namespace scribo
     return this->data_->ima_;
   }
 
+
+  template <typename L>
+  inline
+  bool
+  component_set<L>::is_valid() const
+  {
+    return this->data_->ima_.is_valid();
+  }
+
+
+  template <typename L>
+  inline
+  unsigned
+  component_set<L>::id_() const
+  {
+    return (unsigned)data_.ptr_;
+  }
+
+
+  template <typename L>
+  inline
+  bool
+  component_set<L>::has_separators() const
+  {
+    return this->data_->separators_.is_valid();
+  }
+
+
+  template <typename L>
+  inline
+  void
+  component_set<L>::add_separators(const mln_ch_value(L, bool)& ima)
+  {
+    this->data_->separators_ = ima;
+  }
+
+
+  template <typename L>
+  inline
+  const mln_ch_value(L, bool)&
+  component_set<L>::separators() const
+  {
+    return this->data_->separators_;
+  }
+
+
+  template <typename L>
+  inline
+  void
+  component_set<L>::clear_separators()
+  {
+    this->data_->separators_.destroy();
+  }
+
+
   template <typename L>
   inline
   const mln::util::array<scribo::component_info>&
@@ -419,11 +527,31 @@ namespace scribo
   component_set<L>::init_(const component_set<L>& set)
   {
     data_ = new internal::component_set_data<L>();
-    data_->ima_ = set.labeled_image();
+    data_->ima_ = mln::duplicate(set.labeled_image());
     data_->ncomps_ = set.nelements();
     data_->infos_ = set.infos_();
+    data_->separators_ = set.separators();
   }
 
+
+  template <typename L>
+  bool
+  operator==(const component_set<L>& lhs, const component_set<L>& rhs)
+  {
+    return lhs.id_() == rhs.id_();
+  }
+
+  template <typename L>
+  std::ostream&
+  operator<<(std::ostream& ostr, const component_set<L>& info)
+  {
+    ostr << "component_set[" << std::endl;
+    for_all_comps(i, info)
+      ostr << info(i);
+    ostr << "]" << std::endl;
+
+    return ostr;
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

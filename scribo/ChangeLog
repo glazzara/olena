@@ -1,3 +1,19 @@
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve core classes in Scribo.
+
+	* core/component_info.hh,
+	* core/component_set.hh: Add new methods and an output operator.
+
+	* core/line_info.hh: Add new methods and improve stats computation.
+
+	* core/line_set.hh: Add new methods.
+
+	* core/macros.hh: Add more specific macros.
+
+	* core/tag/component.hh,
+	* core/tag/line.hh: Add output operators.
+
 2010-03-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Share internal data in groups and links structures.
