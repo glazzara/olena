@@ -43,6 +43,8 @@
 
 # include <mln/util/array.hh>
 
+# include <mln/extension/fill.hh>
+
 # include <scribo/core/component_set.hh>
 
 
@@ -88,7 +90,7 @@ namespace scribo
 		      const Neighborhood<N>& nbh, V& ncomponents)
 	{
 	  mlc_equal(mln_value(I),bool)::check();
-	  mlc_is_a(V, mln::value::Symbolic)::check();
+//	  mlc_is_a(V, mln::value::Symbolic)::check();
 	  mln_precondition(exact(input).is_valid());
 	  mln_precondition(exact(nbh).is_valid());
 	  (void) input;
@@ -114,6 +116,9 @@ namespace scribo
 	typedef mln::accu::shape::bbox<mln_site(L)> bbox_accu_t;
 	typedef mln::accu::center<mln_site(L)> center_accu_t;
 	typedef mln::accu::pair<bbox_accu_t, center_accu_t> pair_accu_t;
+
+	// Setting extension value.
+	extension::fill(input, 0);
 
 	util::couple<L,
 	  util::couple<util::array<mln_result(pair_accu_t)>,

@@ -40,6 +40,8 @@
 
 # include <mln/core/box_runend_piter.hh>
 
+# include <mln/util/couple.hh>
+
 # include <scribo/subsampling/integral_single_image.hh>
 
 # include <scribo/core/macros.hh>
@@ -62,6 +64,8 @@ namespace scribo
 
     namespace internal
     {
+
+      using namespace mln;
 
       template <typename V>
       V my_find_root(image2d<V>& parent, const V& x)

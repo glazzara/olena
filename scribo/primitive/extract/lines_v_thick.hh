@@ -104,7 +104,7 @@ namespace scribo
 			   const Neighborhood<N>& nbh, V& nlines,
 			   unsigned line_length)
       {
-	trace::entering("scribo::primitive::lines_v_thick");
+	trace::entering("scribo::primitive::extract::lines_v_thick");
 
 	internal::lines_v_thick_tests(input, nbh, nlines,
 	    line_length);
@@ -114,7 +114,7 @@ namespace scribo
 	object_image(mln_ch_value(I,V))
 	  output = lines_thick(input, nbh, nlines, win);
 
-	trace::exiting("scribo::primitive::lines_v_thick");
+	trace::exiting("scribo::primitive::extract::lines_v_thick");
 	return output;
       }
 

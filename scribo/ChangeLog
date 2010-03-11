@@ -1,5 +1,23 @@
 2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* binarization/sauvola_ms.hh: Add a missing include.
+
+	* binarization/sauvola_threshold.hh: Remove debug and useless
+	comments.
+
+	* preprocessing/unskew.hh: Fix invalid guards.
+
+	* primitive/extract/components.hh: Fill image extension.
+
+	* primitive/extract/lines_pattern.hh: Adjust and fill image
+	extension.
+
+	* primitive/extract/lines_v_thick.hh: Fix traces.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new preprocessing routines.
 
 	* preprocessing/denoise.hh,

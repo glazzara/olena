@@ -46,6 +46,8 @@
 
 # include <mln/fun/v2v/rgb_to_int_u.hh>
 
+# include <mln/debug/println.hh>
+
 # include <scribo/core/init_integral_image.hh>
 
 namespace scribo
@@ -187,37 +189,8 @@ namespace scribo
 
 	double s_x_y = std::sqrt((s_x_y_tmp - (m_x_y_tmp * m_x_y_tmp) / wh) / (wh - 1.f));
 
-
-// 	if (p == point2d(3,3))// || p == point2d(4,4) || p == point2d(1,1))
-// 	{
-// //  	  std::cout << "p" << p << " - A(" << row_min << ", " << col_min
-// // 		    << ") = " << simple.at_(row_min, col_min)
-
-// 		    << " - B(" << row_min << ", " << col_max
-// 		    << ") = " << simple.at_(row_min, col_max)
-
-// 		    << " - C(" << row_max << ", " << col_min
-// 		    << ") = " << simple.at_(row_max, col_min)
-
-// 		    << " - D(" << row_max << ", " << col_max
-// 		    << ") = " << simple.at_(row_max, col_max)
-// 		    << " - n = " << wh
-// 		    << std::endl;
-
-//		    << std::endl;
-//	}
-
 	// Thresholding.
 	double t_x_y = sauvola_threshold_formula(m_x_y, s_x_y, k, R);
-
-
-// 	std::cout << p
-// 		  << " - m = " << m_x_y
-// 		  << " - s = " << s_x_y
-// 		  << " - t = " << t_x_y
-// 		  << " - sum = " << m_x_y_tmp
-// 		  << " - sum_2 = " << s_x_y_tmp
-// 		  << std::endl;
 
 	return t_x_y;
       }
@@ -486,6 +459,12 @@ namespace scribo
       mln_ch_value(I, double)
 	simple = init_integral_image(input, scribo::internal::identity_),
 	squared = init_integral_image(input, scribo::internal::square_);
+
+//       debug::println(input);
+//       std::cout << "============" << std::endl;
+// //       debug::println(simple);
+// //       std::cout << "============" << std::endl;
+// //       debug::println(squared);
 
       return sauvola_threshold(input, window_size, simple, squared);
     }

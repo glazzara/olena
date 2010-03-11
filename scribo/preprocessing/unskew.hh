@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_UNSKEW_HOUGH_HH
-# define SCRIBO_UNSKEW_HOUGH_HH
+#ifndef SCRIBO_PREPROCESSING_UNSKEW_HH
+# define SCRIBO_PREPROCESSING_UNSKEW_HH
 
 /// \file
 ///
@@ -112,4 +112,4 @@ namespace scribo
 
 } // end of namespace mln
 
-# endif // SCRIBO_UNSKEW_HOUGH_HH
+# endif // SCRIBO_PREPROCESSING_UNSKEW_HH
