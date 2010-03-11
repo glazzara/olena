@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -153,7 +154,7 @@ namespace mln
     mask_non_text f(mask);
     mln_concrete(I) output = data::transform(input_rgb, f);
 
-    for_all_components(i, components)
+    for_all_comps(i, components)
       if (components(i).is_valid())
 	mln::draw::box(output, components(i).bbox(), literal::red);
 
@@ -255,9 +256,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
     timer_.start();
     std::cout << "** Using split_bg_fg" << std::endl;
     image2d<value::rgb8>
-      fg = preprocessing::split_bg_fg(input_rgb,
-				      lambda,
-				      32).second();
+      fg = preprocessing::split_bg_fg(input_rgb, lambda, 32).second();
     intensity_ima = data::transform(fg, mln::fun::v2v::rgb_to_int_u<8>());
     t_ = timer_;
     std::cout << "Foreground extracted. " << t_ << std::endl;
@@ -379,9 +378,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   // Validating left and right links.
   timer_.restart();
   object_links<L>
-    merged_links = primitive::link::merge_double_link(filtered_components,
-						      left_link,
-						      right_link);
+    merged_links = primitive::link::merge_double_link(left_link, right_link);
   t_ = timer_;
   std::cout << "Right/Left Validation. " << t_ << std::endl;
 
@@ -389,8 +386,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   // Remove links if bboxes have too different sizes.
   timer_.restart();
   object_links<L>
-    hratio_filtered_links = filter::object_links_bbox_h_ratio(filtered_components,
-							      merged_links,
+    hratio_filtered_links = filter::object_links_bbox_h_ratio(merged_links,
 							      1.50f);
 
 
@@ -413,9 +409,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
   //Remove links if bboxes overlap too much.
   object_links<L> overlap_filtered_links
-    = filter::object_links_bbox_overlap(filtered_components,
-					hratio_filtered_links,
-					0.80f);
+    = filter::object_links_bbox_overlap(hratio_filtered_links, 0.80f);
 
 
 
@@ -438,16 +432,14 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
   timer_.restart();
   object_groups<L>
-    groups = primitive::group::from_single_link(filtered_components,
-						overlap_filtered_links);
+    groups = primitive::group::from_single_link(overlap_filtered_links);
 
 
 
 //  Apply grouping in a temporary image (for debug purpose).
 #ifndef NOUT
   component_set<L>
-    raw_group_image = primitive::group::apply(filtered_components,
-					      groups);
+    raw_group_image = primitive::group::apply(groups);
 #endif // !NOUT
 
   t_ = timer_;
@@ -505,10 +497,9 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   {
     decision_image = data::convert(value::rgb8(), input);
     component_set<L>
-      grouped_objects = primitive::group::apply(filtered_components,
-						filtered_small_groups);
+      grouped_objects = primitive::group::apply(filtered_small_groups);
 
-    for_all_components(i, filtered_components)
+    for_all_comps(i, filtered_components)
       if (filtered_components(i).is_valid()
 	  && filtered_small_groups(i) != 0)
 	mln::draw::box(decision_image, filtered_components(i).bbox(), literal::green);
@@ -544,10 +535,9 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
     decision_image = data::convert(value::rgb8(), input);
 
     component_set<L>
-      grouped_components = primitive::group::apply(filtered_components,
-						   filtered_thin_groups);
+      grouped_components = primitive::group::apply(filtered_thin_groups);
 
-    for_all_components(i, filtered_components)
+    for_all_comps(i, filtered_components)
       if (filtered_components(i).is_valid()
 	  && filtered_thin_groups(i) != 0)
 	mln::draw::box(decision_image, filtered_components(i).bbox(), literal::green);
@@ -571,8 +561,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 // 					  30);
 
   component_set<L>
-    grouped_components = primitive::group::apply(filtered_components,
-						 filtered_thin_groups);
+    grouped_components = primitive::group::apply(filtered_thin_groups);
 
   t_ = g_timer;
   std::cout << "Group applied to object image " << t_ << std::endl;
@@ -588,10 +577,10 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
 
   /// Grouping groups.
-  groups = primitive::group::from_single_link(grouped_components, left_link);
+  groups = primitive::group::from_single_link(left_link);
 
-//   component_set<L>
-  grouped_components = primitive::group::apply(grouped_components, groups);
+//  component_set<L>
+    grouped_components = primitive::group::apply(groups);
 
   t_ = g_timer;
   std::cout << "Link and group again " << t_ << std::endl;
@@ -663,9 +652,17 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
   std::cout << "# objects = " << grouped_components.nelements() << std::endl;
 
+  std::cout << filtered_components << std::endl;
+
+  for_all_comps(c, filtered_components)
+    if (filtered_components(c).is_valid())
+      std::cout << filtered_components(c) << ", ";
+  std::cout << std::endl;
+
+  std::cout << filtered_thin_groups << std::endl;
 
   scribo::line_set<L>
-    lines = scribo::line_set<L>(filtered_components, filtered_thin_groups);
+    lines = scribo::make::line_set(filtered_thin_groups);
   text::recognition(lines, "fra", "out.txt");
 
   trace::exiting("main");

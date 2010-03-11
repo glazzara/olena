@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,45 +24,42 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/io/ppm/all.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/io/pgm/all.hh>
 
-#include <scribo/preprocessing/split_bg_fg.hh>
+#include <mln/subsampling/antialiased.hh>
+
+#include <mln/value/int_u8.hh>
+
 #include <scribo/debug/usage.hh>
 
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A color image." },
-  { "lambda", "Lambda value. (FIX Description)" },
-  { "delta", "Delta value. (FIX Description)" },
-  { "fg.ppm", "The foreground image (1st output)." },
-  { "bg.ppm", "The background image (2nd output)." },
+  { "input.pgm", "A gray-scale image." },
+  { "ratio", "Scale ratio." },
   {0, 0}
 };
 
 
-
 int main(int argc, char *argv[])
 {
-  mln::trace::entering("main");
   using namespace mln;
 
-  if (argc != 6)
+  if (argc != 4)
     return scribo::debug::usage(argv,
-				"Split background and foreground.",
-				"input.pbm lambda delta fg.ppm bg.ppm",
-				args_desc, "The foreground image.");
+				"Subsample.",
+				"input.pgm ratio output.pgm",
+				args_desc);
 
-  typedef image2d<value::rgb8> I;
+  trace::entering("main");
+
+  typedef image2d<value::int_u8> I;
   I input;
-  io::ppm::load(input, argv[1]);
+  io::pgm::load(input, argv[1]);
 
-  util::couple<I,I>
-    bg_fg = scribo::preprocessing::split_bg_fg(input,
-					       atoi(argv[2]),
-					       atoi(argv[3]));
-  io::ppm::save(bg_fg.first(), argv[5]);
-  io::ppm::save(bg_fg.second(), argv[4]);
+  unsigned ratio = atoi(argv[2]);
+  io::pgm::save(mln::subsampling::antialiased(input, ratio), argv[3]);
 
-  mln::trace::exiting("main");
+  trace::exiting("main");
 }

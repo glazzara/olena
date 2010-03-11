@@ -1,5 +1,28 @@
 2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Update examples.
+
+	* src/text_in_photo_ppm_fast.cc,
+	* src/debug/show_links_bottom_aligned.cc,
+	* src/debug/show_links_top_aligned.cc: Update calls to routines.
+
+	* src/preprocessing/trash.cc,
+	* src/text_in_photo_ppm_fast_2.cc,
+	* src/preprocessing/split_bg_fg_ms.cc,
+	* src/preprocessing/denoising.cc: Removed.
+
+	* src/preprocessing/denoise.cc,
+	* src/preprocessing/homogeneous_contrast.ccm,
+	* src/preprocessing/subsample.cc: New.
+
+	* src/preprocessing/Makefile.am: Add new files as target.
+
+	* src/preprocessing/split_bg_fg.cc: Fix usage.
+
+	* src/text_in_article.cc: Update processing chain.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve text line merging algorithm.
 
 	* text/merging.hh: Change merge rules and improve integration with

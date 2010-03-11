@@ -36,63 +36,44 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/io/dump/save.hh>
 
-#include <mln/math/min.hh>
-
 #include <mln/literal/colors.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/value/label_16.hh>
-#include <mln/value/int_u16.hh>
 
-#include <mln/draw/box.hh>
-#include <mln/draw/line.hh>
-
-#include <mln/data/convert.hh>
-
-#include <mln/extension/adjust.hh>
-
-#include <mln/accu/stat/median_h.hh>
-
-#include <mln/labeling/colorize.hh>
-#include <mln/labeling/relabel.hh>
-
-//#include <scribo/draw/bounding_boxes.hh>
-#include <scribo/draw/bounding_box_links.hh>
+#include <scribo/core/line_set.hh>
 
 #include <scribo/primitive/extract/components.hh>
+#include <scribo/primitive/extract/vertical_separators.hh>
+
+#include <scribo/primitive/remove/separators.hh>
 
 #include <scribo/primitive/link/merge_double_link.hh>
 #include <scribo/primitive/link/with_single_left_link_dmax_ratio.hh>
 #include <scribo/primitive/link/with_single_right_link_dmax_ratio.hh>
 
-#include <scribo/primitive/group/apply.hh>
-// #include <scribo/primitive/group/from_double_link.hh>
 #include <scribo/primitive/group/from_single_link.hh>
 
 #include <scribo/filter/object_links_bbox_h_ratio.hh>
 
-#include <scribo/filter/objects_small.hh>
-// #include <scribo/filter/objects_thin.hh>
-// #include <scribo/filter/objects_thick.hh>
-
-// #include <scribo/filter/object_groups_small.hh>
-
-// #include <scribo/debug/decision_image.hh>
-// #include <scribo/debug/save_bboxes_image.hh>
-// #include <scribo/debug/save_bboxes_image.hh>
-// #include <scribo/debug/save_linked_bboxes_image.hh>
-
-#include <scribo/core/line_set.hh>
-#include <scribo/io/xml/save_text_lines.hh>
-
 
 #include <scribo/debug/usage.hh>
+#include <scribo/debug/save_bboxes_image.hh>
+#include <scribo/debug/bboxes_enlarged_image.hh>
+#include <scribo/debug/mean_and_base_lines_image.hh>
+#include <scribo/debug/looks_like_a_text_line_image.hh>
 
 #include <scribo/make/debug_filename.hh>
 
-//#include <scribo/text/recognition.hh>
+#include <scribo/text/recognition.hh>
 
 #include <scribo/text/merging.hh>
 
+
+#include <scribo/preprocessing/denoise_fg.hh>
+
+
+// #include <mln/morpho/closing/structural.hh>
+// #include <mln/win/rectangle2d.hh>
 
 
 const char *args_desc[][2] =
@@ -128,82 +109,60 @@ int main(int argc, char* argv[])
   typedef value::label_16 V;
   typedef image2d<V> L;
 
+
+  // Add whitespace separators.
+//   win::rectangle2d win = win::rectangle2d(151, 41);
+//   image2d<bool> whitespaces = morpho::closing::structural(input, win);
+//   logical::not_inplace(whitespaces);
+
+  // Remove separators
+  std::cout << "Find vertical separators..." << std::endl;
+  image2d<bool> separators = primitive::extract::vertical_separators(input, 81);
+
+  std::cout << "Remove separators..." << std::endl;
+  image2d<bool> input_cleaned = primitive::remove::separators(input,
+							      separators);
+
+//   whitespaces += separators;
+
+  mln::io::pbm::save(separators, "vseparators.pbm");
+//   mln::io::pbm::save(whitespaces, "separators.pbm");
+
+//   mln::io::pbm::save(input_cleaned, "input_no_separators.pbm");
+
+  // Denoise
+  std::cout << "Denoise..." << std::endl;
+  input_cleaned = preprocessing::denoise_fg(input_cleaned, c8(), 3);
+
+//   mln::io::pbm::save(input_cleaned, "input_denoised.pbm");
+
   /// Finding components.
   std::cout << "Finding components..." << std::endl;
   V ncomponents;
   component_set<L>
-    components = scribo::primitive::extract::components(input,
-							c8(),
+    components = scribo::primitive::extract::components(input_cleaned, c8(),
 							ncomponents);
 
-  /// First filtering.
-  std::cout << "Filtering components..." << std::endl;
-  component_set<L> filtered_components
-    = scribo::filter::components_small(components, 6);
+  /// Set separator components.
+  components.add_separators(separators);
+//  components.add_separators(whitespaces);
 
-  {
-    unsigned none = 0, ignored = 0;
-    for_all_comps(i, filtered_components)
-    {
-      if (filtered_components.info(i).tag() == component::Ignored)
-	++ignored;
-      else
-	++none;
-    }
-    std::cout << "stats - none = " << none << " - ignored = " << ignored << std::endl;
-
-  }
 
   /// Linking potential objects
   std::cout << "Linking objects..." << std::endl;
   object_links<L> left_link
-    = primitive::link::with_single_left_link_dmax_ratio(filtered_components, 2);
+    = primitive::link::with_single_left_link_dmax_ratio(components, 2);
   object_links<L> right_link
-    = primitive::link::with_single_right_link_dmax_ratio(filtered_components, 2);
+    = primitive::link::with_single_right_link_dmax_ratio(components, 2);
 
   // Validating left and right links.
   object_links<L>
-    merged_links = primitive::link::merge_double_link(filtered_components,
-						      left_link,
-						      right_link);
+    merged_links = primitive::link::merge_double_link(left_link, right_link);
 
-// #ifndef NOUT
-//   if (argc == 4)
-//   {
-//     image2d<value::rgb8> output = data::convert(value::rgb8(), input);
-//     scribo::draw::bounding_box_links(output,
-// 				     merged_links,
-// 				     literal::green);
-
-//     mln::util::array<bool> drawn(static_cast<unsigned>(filtered_components.nelements()) + 1, 0);
-//     for_all_comps(i, filtered_components)
-//       if (filtered_components(i).tag() != component::Ignored)
-//       {
-// 	if (merged_links[i] == i && ! drawn(i))
-// 	{
-// 	  mln::draw::box(output, filtered_components(i).bbox(), literal::orange);
-// 	  drawn[i] = true;
-// 	}
-// 	else
-// 	{
-// 	  mln::draw::box(output, filtered_components(i).bbox(), literal::blue);
-// 	  mln::draw::box(output, filtered_components(merged_links[i]).bbox(), literal::blue);
-// 	  drawn[i] = true;
-// 	  drawn[merged_links[i]] = true;
-// 	}
-//       }
-
-//     mln::io::ppm::save(output, scribo::make::debug_filename("links.ppm"));
-//   }
-// #endif
 
   // Remove links if bboxes have too different sizes.
   object_links<L> hratio_filtered_links
-    = filter::object_links_bbox_h_ratio(filtered_components,
-					merged_links,
-					2.5f);
-
-
+    = filter::object_links_bbox_h_ratio(merged_links, 2.5f);
 
 
 // #ifndef NOUT
@@ -224,8 +183,7 @@ int main(int argc, char* argv[])
 //   //
 //   //######
   object_groups<L>
-    groups = primitive::group::from_single_link(filtered_components,
-						hratio_filtered_links);
+    groups = primitive::group::from_single_link(hratio_filtered_links);
 //   value::label_16 n_groups;
 //   mln::fun::i2v::array<value::label_16>
 //     groups_packed = mln::make::relabelfun(groups,
@@ -235,64 +193,25 @@ int main(int argc, char* argv[])
 
 
 
-//   mln::util::array<line_stats_extra> line_stats;
+  // Construct a line set.
   line_set<L>
-    lines = scribo::make::line_set(hratio_filtered_links, groups);
+    lines = scribo::make::line_set(groups);
 
 
 
+  //===== DEBUG =====
 
   // Bboxes image.
-  {
-    image2d<value::rgb8> output = data::convert(value::rgb8(), input);
-
-    for_all_lines(l, lines)
-      if (lines(l).tag() != line::Ignored)
-	mln::draw::box(output, lines(l).bbox(), literal::red);
-
-    mln::io::ppm::save(output,
-		       scribo::make::debug_filename("step1_bboxes.ppm"));
-  }
+  scribo::debug::save_bboxes_image(input, lines,
+				   scribo::make::debug_filename("step1_bboxes.ppm"));
 
   // Bboxes enlarged
-  {
-    image2d<value::rgb8> output = data::convert(value::rgb8(), input);
-
-    for_all_lines(l, lines)
-      if (lines(l).tag() != line::Ignored)
-      {
-	if (text::internal::looks_like_a_text_line(lines(l)))
-	{
-	  box2d
-	    b = text::internal::enlarge(lines(l).bbox(),
-					text::internal::delta_of_line(lines(l)));
-	  b.crop_wrt(input.domain());
-	  mln::draw::box(output, b, literal::green);
-	}
-	else
-	  mln::draw::box(output, lines(l).bbox(), literal::red);
-      }
-
-    mln::io::ppm::save(output,
-		       scribo::make::debug_filename("step1_bboxes_enlarged.ppm"));
-  }
+  mln::io::ppm::save(scribo::debug::bboxes_enlarged_image(input, lines),
+		     scribo::make::debug_filename("step1_bboxes_enlarged.ppm"));
 
   // Looks like a text line
-  {
-    image2d<value::rgb8> output = data::convert(value::rgb8(), input);
-
-    for_all_lines(l, lines)
-      if (lines(l).tag() != line::Ignored)
-      {
-	if (text::internal::looks_like_a_text_line(lines(l)))
-	  mln::draw::box(output, lines(l).bbox(), literal::green);
-	else
-	  mln::draw::box(output, lines(l).bbox(), literal::red);
-      }
-
-    mln::io::ppm::save(output,
-		       scribo::make::debug_filename("step1_looks_like_a_text_line.ppm"));
-  }
+  mln::io::ppm::save(scribo::debug::looks_like_a_text_line_image(input, lines),
+		     scribo::make::debug_filename("step1_looks_like_a_text_line.ppm"));
 
 
   // Bboxes + line infos
@@ -312,7 +231,7 @@ int main(int argc, char* argv[])
 	     << lines(l).card()              << " "
 	     << lines(l).baseline()          << " "
 	     << lines(l).x_height()          << " "
-	     << lines(l).median()            << " "
+	     << lines(l).meanline()          << " "
 	     << lines(l).d_height()          << " "
 	     << lines(l).a_height()          << " "
 	     << lines(l).char_space()        << " "
@@ -329,88 +248,38 @@ int main(int argc, char* argv[])
   }
 
 
+  // mean and base lines.
+  mln::io::ppm::save(scribo::debug::mean_and_base_lines_image(input, lines),
+		     scribo::make::debug_filename("step1_x_height.ppm"));
+
+  //===== END OF DEBUG =====
+
+
+
+
    std::cout << "Merging lines..." << std::endl;
-   lines = scribo::text::merging(input.domain(), lines);
+   lines = scribo::text::merging(lines);
 
-  // Median and base lines.
-  {
-    image2d<value::rgb8> output = data::convert(value::rgb8(), input);
 
-    for_all_lines(l, lines)
-    {
-      if (lines(l).tag() == line::Pathological)
-	mln::draw::box(output, lines(l).bbox(), literal::orange);
-      else if (lines(l).tag() != line::Merged)
-      {
-	if (lines(l).card() > 1)
-	{
-	  point2d
-	    b_top(lines(l).baseline() - lines(l).median(), lines(l).bbox().pmin().col()),
-	    e_top(lines(l).baseline() - lines(l).median(), lines(l).bbox().pmax().col()),
-	    b_bot(lines(l).baseline(), lines(l).bbox().pmin().col()),
-	    e_bot(lines(l).baseline(), lines(l).bbox().pmax().col());
 
-	  mln::draw::line(output, b_top, e_top, literal::blue);
-	  mln::draw::line(output, b_bot, e_bot, literal::cyan);
+   //===== DEBUG =====
 
-//	  std::cout << lines(l) << std::endl;
-	}
- 	mln::draw::box(output, lines(l).bbox(), literal::purple);
-      }
-    }
+   // mean and base lines.
+   mln::io::ppm::save(scribo::debug::mean_and_base_lines_image(input, lines),
+		      scribo::make::debug_filename("step2_x_height.ppm"));
 
-    mln::io::ppm::save(output, scribo::make::debug_filename("step2_x_height.ppm"));
-  }
-
+  // Looks like a text line
+  mln::io::ppm::save(scribo::debug::looks_like_a_text_line_image(input, lines),
+		     scribo::make::debug_filename("step2_looks_like_a_text_line.ppm"));
 
   // Bboxes image.
-  {
-    image2d<value::rgb8> output = data::convert(value::rgb8(), input);
+  scribo::debug::save_bboxes_image(input, lines, argv[2]);
 
-    for_all_lines(l, lines)
-      if (lines(l).tag() != line::Merged
-	  && lines(l).tag() != line::Ignored
-	  && lines(l).tag() != line::Pathological)
-      {
-	mln::draw::box(output, lines(l).bbox(), literal::red);
-      }
-
-    mln::io::ppm::save(output, argv[2]);
-  }
-
-
-//   // line label image.
-//   {
-//     util::array<V>
-//       f(static_cast<unsigned>(filtered_components.nelements()) + 1, 0);
-//     for_all_lines(l, lines)
-//       if (lines(l).tag() != line::Merged
-// 	  && lines(l).tag() != line::Ignored
-// 	  && lines(l).tag() != line::Pathological)
-//       {
-// 	for_all_elements(c, lines(l).components())
-// 	  f(lines(l).components()[c]) = l;
-//       }
-//     L line_label = duplicate(filtered_components.labeled_image());
-//     V nlbl = filtered_components.nelements();
-//     mln::labeling::relabel_inplace(line_label, nlbl, f);
-
-//     mln::io::ppm::save(labeling::colorize(value::rgb8(), line_label),
-// 		       scribo::make::debug_filename("labeled_lines.ppm"));
-//     mln::io::dump::save(line_label, scribo::make::debug_filename("labeled_lines.dump"));
-//   }
+  //===== END OF DEBUG =====
 
 
 
-//   scribo::io::xml::save_text_lines(argv[1], lines, "out.xml");
-
-
-
-
-
-
-
-//  scribo::text::recognition(lines, "fra", "out.txt");
+  scribo::text::recognition(lines, "fra", "out.txt");
 
 
 //   // Display median character space.
@@ -458,5 +327,5 @@ int main(int argc, char* argv[])
 
 //   }
 
-//   trace::exiting("main");
+  trace::exiting("main");
 }
