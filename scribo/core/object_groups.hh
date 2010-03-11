@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,7 +36,7 @@
 # include <mln/util/array.hh>
 
 # include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 
 namespace scribo
 {
@@ -47,25 +48,31 @@ namespace scribo
   //
   template <typename L>
   class object_groups
-    : public mln::util::array<unsigned>
+  //    : public mln::util::array<unsigned>
   {
-    typedef mln::util::array<unsigned> super_t;
+//    typedef mln::util::array<unsigned> super_t;
 
   public:
     object_groups();
-    object_groups(const object_image(L)& objects);
-    object_groups(const object_image(L)& objects, unsigned n);
-    object_groups(const object_image(L)& objects, unsigned n, unsigned value);
+    object_groups(const component_set<L>& components);
+    object_groups(const component_set<L>& components, unsigned value);
 
-    const void* objects_id_() const;
-    const object_image(L)& object_image_() const;
+    const component_set<L>& component_set_() const;
 
     void init_(const object_links<L>& links);
 
     bool is_valid() const;
 
+    unsigned nelements() const;
+
+    unsigned& operator()(unsigned comp_id);
+    const unsigned& operator()(unsigned comp_id) const;
+
+    const util::array<unsigned>& comp_to_group() const;
+
   private:
-    object_image(L) objects_;
+    mln::util::array<unsigned> comp_to_group_;
+    component_set<L> components_;
   };
 
 
@@ -77,41 +84,29 @@ namespace scribo
   }
 
   template <typename L>
-  object_groups<L>::object_groups(const object_image(L)& objects)
-    : objects_(objects)
-  {
-
-  }
-
-
-  template <typename L>
-  object_groups<L>::object_groups(const object_image(L)& objects, unsigned n)
-    : super_t(n), objects_(objects)
-  {
-
-  }
-
-
-  template <typename L>
-  object_groups<L>::object_groups(const object_image(L)& objects,
-				  unsigned n, unsigned value)
-    : super_t(n, value), objects_(objects)
+  object_groups<L>::object_groups(const component_set<L>& components)
+  //    : super_t(static_cast<unsigned>(components.nelements()) + 1),
+    : comp_to_group_(static_cast<unsigned>(components.nelements()) + 1),
+      components_(components)
   {
 
   }
 
   template <typename L>
-  const void*
-  object_groups<L>::objects_id_() const
+  object_groups<L>::object_groups(const component_set<L>& components,
+				  unsigned value)
+  //    : super_t(static_cast<unsigned>(components.nelements()) + 1, value),
+    : comp_to_group_(static_cast<unsigned>(components.nelements()) + 1),
+      components_(components)
   {
-    return objects_.id_();
+
   }
 
   template <typename L>
-  const object_image(L)&
-  object_groups<L>::object_image_() const
+  const component_set<L>&
+  object_groups<L>::component_set_() const
   {
-    return objects_;
+    return components_;
   }
 
 
@@ -119,17 +114,46 @@ namespace scribo
   void
   object_groups<L>::init_(const object_links<L>& links)
   {
-    objects_ = links.object_image_();
-    this->hook_std_vector_() = links.std_vector();
+    components_ = links.component_set_();
+    comp_to_group_.hook_std_vector_() = links.std_vector();
   }
 
   template <typename L>
   bool
   object_groups<L>::is_valid() const
   {
-    return objects_.is_valid() && objects_.nlabels() == (this->size() - 1);
+    return components_.is_valid() && components_.nelements() == (this->size() - 1);
   }
 
+  template <typename L>
+  unsigned
+  object_groups<L>::nelements() const
+  {
+    return comp_to_group_.nelements();
+  }
+
+
+  template <typename L>
+  unsigned&
+  object_groups<L>::operator()(unsigned comp_id)
+  {
+    return comp_to_group_(comp_id);
+  }
+
+
+  template <typename L>
+  const unsigned&
+  object_groups<L>::operator()(unsigned comp_id) const
+  {
+    return comp_to_group_(comp_id);
+  }
+
+  template <typename L>
+  const util::array<unsigned>&
+  object_groups<L>::comp_to_group() const
+  {
+    return comp_to_group_;
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

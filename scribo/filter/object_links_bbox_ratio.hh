@@ -36,7 +36,7 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 
 namespace scribo
 {
@@ -46,11 +46,11 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Invalidate links between two objects with too different
+    /*! \brief Invalidate links between two components with too different
         height or width.
 
-	\param[in] objects   An object image.
-	\param[in] links     Link objects information.
+	\param[in] components   An object image.
+	\param[in] links     Link components information.
 	\param[in] dim       The dimension to use to compare bbox length.
 	\param[in] max_ratio The maximum length ratio of two linked
 	                     bounding boxes.
@@ -59,7 +59,7 @@ namespace scribo
     */
     template <typename L>
     object_links<L>
-    object_links_bbox_ratio(const object_image(L)& objects,
+    object_links_bbox_ratio(const component_set<L>& components,
 			    const object_links<L>& links,
 			    unsigned dim,
 			    float max_ratio);
@@ -70,14 +70,14 @@ namespace scribo
 
     template <typename L>
     object_links<L>
-    object_links_bbox_ratio(const object_image(L)& objects,
+    object_links_bbox_ratio(const component_set<L>& components,
 			    const object_links<L>& links,
 			    unsigned dim,
 			    float max_ratio)
     {
       trace::entering("scribo::filter::object_links_bbox_ratio");
 
-      mln_precondition(objects.is_valid());
+      mln_precondition(components.is_valid());
       mln_precondition(links.is_valid());
 
       object_links<L> output(links);
@@ -85,9 +85,10 @@ namespace scribo
 	if (links[i] != i)
 	{
 	  float
-	    lmin = objects.bbox(i).pmax()[dim] - objects.bbox(i).pmin()[dim],
-	    lmax = objects.bbox(links(i)).pmax()[dim]
-	            - objects.bbox(links(i)).pmin()[dim];
+	    lmin = components(i).bbox().pmax()[dim]
+	            - components(i).bbox().pmin()[dim],
+	    lmax = components(links(i)).bbox().pmax()[dim]
+	            - components(links(i)).bbox().pmin()[dim];
 
 	  if (lmin > lmax)
 	    std::swap(lmin, lmax);

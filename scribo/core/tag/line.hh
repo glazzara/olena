@@ -23,26 +23,34 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_CORE_ANCHORS_HH
-# define SCRIBO_CORE_ANCHORS_HH
+#ifndef SCRIBO_CORE_TAG_LINE_HH
+# define SCRIBO_CORE_TAG_LINE_HH
+
+/// \file
+///
+/// \brief Line tags.
 
 namespace scribo
 {
 
-  namespace anchor
+  // Line id tag.
+  struct LineId;
+
+
+  namespace line
   {
 
-    enum Type
+    enum Tag
     {
-      MassCenter = 0,
-      Top,
-      Bottom,
-      Center,
-      Invalid
+      None = 0,
+      Separator,
+      Ignored
     };
 
-  }
+
+  } // end of namespace scribo::line
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_CORE_ANCHORS_HH
+
+#endif // ! SCRIBO_CORE_TAG_COMP_HH

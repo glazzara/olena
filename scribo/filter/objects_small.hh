@@ -23,12 +23,12 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_FILTER_OBJECTS_SMALL_HH
-# define SCRIBO_FILTER_OBJECTS_SMALL_HH
+#ifndef SCRIBO_FILTER_COMPONENTS_SMALL_HH
+# define SCRIBO_FILTER_COMPONENTS_SMALL_HH
 
 /// \file
 ///
-/// Remove small objects in a binary image.
+/// Remove small components in a binary image.
 
 
 # include <mln/core/concept/image.hh>
@@ -50,9 +50,9 @@
 # include <mln/set/compute.hh>
 
 
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/fun/v2b/objects_small_filter.hh>
-# include <scribo/primitive/extract/objects.hh>
+# include <scribo/primitive/extract/components.hh>
 
 
 namespace scribo
@@ -64,33 +64,33 @@ namespace scribo
     using namespace mln;
 
 
-    /// Remove small objects in a binary image.
-    /// Set to 'false' all the removed objects.
+    /// Remove small components in a binary image.
+    /// Set to 'false' all the removed components.
     ///
     /// \param[in] input_     A binary image.
     /// \param[in] nbh_	      A neighborhood used for labeling \p input_.
     /// \param[in] label_type The label type used for labeling.
     /// \param[in] min_size   The minimum cardinality of an object.
     ///
-    /// \return A binary image without small objects.
+    /// \return A binary image without small components.
     template <typename I, typename N, typename V>
     mln_concrete(I)
-    objects_small(const Image<I>& input_,
-		  const Neighborhood<N>& nbh_,
-		  const V& label_type,
-		  unsigned min_size);
+    components_small(const Image<I>& input_,
+		     const Neighborhood<N>& nbh_,
+		     const V& label_type,
+		     unsigned min_size);
 
 
-    /// Remove too small objects.
+    /// Remove too small components.
     ///
-    /// \param[in] objects    An object image.
+    /// \param[in] components    An object image.
     /// \param[in] min_size   The minimum cardinality of an object.
     ///
-    /// \return An object image without small objects.
+    /// \return An object image without small components.
     template <typename L>
-    object_image(L)
-    objects_small(const object_image(L)& objects,
-		  unsigned min_size);
+    component_set<L>
+    components_small(const component_set<L>& components,
+		     unsigned min_size);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -99,12 +99,12 @@ namespace scribo
    template <typename I, typename N, typename V>
    inline
    mln_concrete(I)
-   objects_small(const Image<I>& input_,
-		 const Neighborhood<N>& nbh_,
-		 const V& label_type,
-		 unsigned min_size)
+   components_small(const Image<I>& input_,
+		    const Neighborhood<N>& nbh_,
+		    const V& label_type,
+		    unsigned min_size)
    {
-     trace::entering("scribo::filter::objects_small");
+     trace::entering("scribo::filter::components_small");
 
      const I& input = exact(input_);
      const N& nbh = exact(nbh_);
@@ -115,9 +115,10 @@ namespace scribo
 
      V nlabels;
      typedef mln_ch_value(I,V) lbl_t;
-     object_image(lbl_t) lbl = primitive::extract::objects(input, nbh, nlabels);
+     component_set<lbl_t>
+       lbl = primitive::extract::components(input, nbh, nlabels);
 
-     typedef fun::v2b::objects_small_filter<mln_ch_value(I,V)> func_t;
+     typedef fun::v2b::components_small_filter<mln_ch_value(I,V)> func_t;
      func_t fv2b(lbl, min_size);
      lbl.relabel(fv2b);
 
@@ -125,28 +126,27 @@ namespace scribo
      data::fill((output | (pw::value(lbl) == pw::cst(literal::zero))).rw(),
 		false);
 
-     trace::exiting("scribo::filter::objects_small");
+     trace::exiting("scribo::filter::components_small");
      return output;
    }
 
 
     template <typename L>
     inline
-    object_image(L)
-    objects_small(const object_image(L)& objects,
-		  unsigned min_size)
+    component_set<L>
+    components_small(const component_set<L>& components,
+		     unsigned min_size)
     {
-      trace::entering("scribo::filter::objects_small");
+      trace::entering("scribo::filter::components_small");
 
-      mln_precondition(objects.is_valid());
+      mln_precondition(components.is_valid());
 
-      fun::v2b::objects_small_filter<L> f(objects, min_size);
+      fun::v2b::components_small_filter<L> f(components, min_size);
 
-      object_image(L) output;
-      output.init_from_(objects);
-      output.relabel(f);
+      component_set<L> output = components;
+      output.update_tags(f, component::Ignored);
 
-      trace::exiting("scribo::filter::objects_small");
+      trace::exiting("scribo::filter::components_small");
       return output;
     }
 
@@ -157,4 +157,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_FILTER_OBJECTS_SMALL_HH
+#endif // ! SCRIBO_FILTER_COMPONENTS_SMALL_HH

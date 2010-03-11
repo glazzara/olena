@@ -23,12 +23,12 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_FUN_V2B_OBJECTS_SMALL_FILTER_HH
-# define SCRIBO_FUN_V2B_OBJECTS_SMALL_FILTER_HH
+#ifndef SCRIBO_FUN_V2B_COMPONENTS_SMALL_FILTER_HH
+# define SCRIBO_FUN_V2B_COMPONENTS_SMALL_FILTER_HH
 
 /// \file
 ///
-/// Remove small objects in a binary image.
+/// Remove small components in a binary image.
 
 
 
@@ -40,7 +40,7 @@
 
 # include <mln/labeling/compute.hh>
 
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 
 
 namespace scribo
@@ -56,20 +56,20 @@ namespace scribo
 
 
       /// Filter Functor.
-      /// Return false for all objects which are too small.
+      /// Return false for all components which are too small.
       template <typename L>
-      struct objects_small_filter
-	: Function_v2b< objects_small_filter<L> >
+      struct components_small_filter
+	: Function_v2b< components_small_filter<L> >
       {
 	typedef accu::math::count<mln_psite(L)> card_t;
 
 	/// Constructor
 	///
-	/// \param[in] objects Component bounding boxes.
+	/// \param[in] components Component bounding boxes.
 	/// \param[in] min_size Minimum component size.
 	//
-	objects_small_filter(const object_image(L)& objects,
-			     unsigned min_size);
+	components_small_filter(const component_set<L>& components,
+				unsigned min_size);
 
 
 	/// Check if the component is large enough.
@@ -81,11 +81,11 @@ namespace scribo
 	//
 	bool operator()(const mln_value(L)& l) const;
 
-	/// The component bounding boxes.
-	mln::util::array<mln_result(card_t)> card_;
-
 	/// The minimum area.
 	unsigned min_size_;
+
+	/// The component set to filter.
+	const component_set<L> components_;
       };
 
 
@@ -96,12 +96,11 @@ namespace scribo
 
       template <typename L>
       inline
-      objects_small_filter<L>::objects_small_filter(
-	const object_image(L)& objects,
+      components_small_filter<L>::components_small_filter(
+	const component_set<L>& components,
 	unsigned min_size)
+	: min_size_(min_size), components_(components)
       {
-	card_ = labeling::compute(card_t(), objects, objects.nlabels());
-	min_size_ = min_size;
       }
 
 
@@ -109,11 +108,11 @@ namespace scribo
       template <typename L>
       inline
       bool
-      objects_small_filter<L>::operator()(const mln_value(L)& l) const
+      components_small_filter<L>::operator()(const mln_value(L)& l) const
       {
 	if (l == literal::zero)
 	  return true;
-	return card_[l] >= min_size_;
+	return components_.info(l).card() >= min_size_;
       }
 
 
@@ -126,4 +125,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_FUN_V2B_OBJECTS_SMALL_FILTER_HH
+#endif // ! SCRIBO_FUN_V2B_COMPONENTS_SMALL_FILTER_HH

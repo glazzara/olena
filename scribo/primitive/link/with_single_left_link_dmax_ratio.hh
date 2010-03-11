@@ -40,7 +40,7 @@
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>
@@ -58,9 +58,9 @@ namespace scribo
     namespace link
     {
 
-      /*! \brief Link objects with their left neighbor if exists.
+      /*! \brief Link components with their left neighbor if exists.
 
-	  \param[in] objects An object image.
+	  \param[in] components An component image.
 	  \param[in] dmax_ratio
 
 	  \return Object links data.
@@ -76,8 +76,8 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_left_link_dmax_ratio(const object_image(L)& objects,
-					float dmax_ratio);
+      with_single_left_link_dmax_ratio(const component_set<L>& components,
+				       float dmax_ratio);
 
 
       /// \overload
@@ -85,7 +85,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_left_link_dmax_ratio(const object_image(L)& objects);
+      with_single_left_link_dmax_ratio(const component_set<L>& components);
 
 
 
@@ -108,9 +108,9 @@ namespace scribo
 	public:
 	  typedef mln_site(L) P;
 
-	  single_left_dmax_ratio_functor(const object_image(L)& objects,
-					  unsigned dmax)
-	    : super_(objects, dmax, anchor::Horizontal)
+	  single_left_dmax_ratio_functor(const component_set<L>& components,
+					 unsigned dmax)
+	    : super_(components, dmax, anchor::Horizontal)
 	  {
 	  }
 
@@ -130,15 +130,15 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_left_link_dmax_ratio(const object_image(L)& objects,
-					float dmax_ratio)
+      with_single_left_link_dmax_ratio(const component_set<L>& components,
+				       float dmax_ratio)
       {
 	trace::entering("scribo::primitive::link::with_single_left_link_dmax_ratio");
 
-	mln_precondition(objects.is_valid());
+	mln_precondition(components.is_valid());
 
 	internal::single_left_dmax_ratio_functor<L>
-	  functor(objects, dmax_ratio);
+	  functor(components, dmax_ratio);
 
 	object_links<L> output = compute(functor);
 
@@ -150,9 +150,9 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_left_link_dmax_ratio(const object_image(L)& objects)
+      with_single_left_link_dmax_ratio(const component_set<L>& components)
       {
-	return with_single_left_link_dmax_ratio(objects, 3);
+	return with_single_left_link_dmax_ratio(components, 3);
       }
 
 

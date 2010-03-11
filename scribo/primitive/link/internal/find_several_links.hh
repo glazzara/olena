@@ -41,12 +41,9 @@
 # include <mln/util/couple.hh>
 
 # include <scribo/core/concept/link_functor.hh>
-# include <scribo/core/anchors.hh>
+# include <scribo/core/tag/anchor.hh>
 # include <scribo/core/object_image.hh>
 # include <scribo/core/object_links.hh>
-# include <scribo/primitive/internal/update_link_array.hh>
-# include <scribo/primitive/internal/init_link_array.hh>
-# include <scribo/primitive/internal/is_invalid_link.hh>
 
 
 namespace scribo

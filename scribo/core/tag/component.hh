@@ -23,51 +23,35 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_INTERNAL_FIND_ROOT_LINK_ARRAY_HH
-# define SCRIBO_PRIMITIVE_INTERNAL_FIND_ROOT_LINK_ARRAY_HH
+#ifndef SCRIBO_CORE_TAG_COMPONENT_HH
+# define SCRIBO_CORE_TAG_COMPONENT_HH
 
 /// \file
 ///
-/// Find root in a parent array arrays.
-
-
-# include <scribo/core/object_groups.hh>
-
+/// \brief Component tags.
 
 namespace scribo
 {
 
-  namespace primitive
+  // Component id tag.
+  struct ComponentId;
+
+
+
+  namespace component
   {
 
-      namespace internal
-      {
+    enum Tag
+    {
+      None = 0,
+      Separator,
+      Ignored
+    };
 
-	/// Find root in a parent array arrays.
-	template <typename L>
-	unsigned
-        find_root(object_groups<L>& parent, unsigned x);
 
-# ifndef MLN_INCLUDE_ONLY
-
-	template <typename L>
-	inline
-	unsigned
-        find_root(object_groups<L>& parent, unsigned x)
-        {
-          if (parent(x) == x)
-	    return x;
-	  else
-	    return parent(x) = find_root(parent, parent(x));
-	}
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace scribo::primitive::internal
-
-  } // end of namespace scribo::text
+  } // end of namespace scribo::component
 
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_PRIMITIVE_INTERNAL_FIND_ROOT_LINK_ARRAY_HH
+#endif // ! SCRIBO_CORE_TAG_COMP_HH

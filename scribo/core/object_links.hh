@@ -34,7 +34,7 @@
 
 # include <mln/util/array.hh>
 
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 
 
 namespace scribo
@@ -52,18 +52,15 @@ namespace scribo
 
   public:
     object_links();
-    object_links(const object_image(L)& objects);
-    object_links(const object_image(L)& objects, unsigned n);
-    object_links(const object_image(L)& objects, unsigned n, unsigned value);
+    object_links(const component_set<L>& components);
+    object_links(const component_set<L>& components, unsigned value);
 
-
-    const void* objects_id_() const;
-    const object_image(L)& object_image_() const;
+    const component_set<L>& component_set_() const;
 
     bool is_valid() const;
 
   private:
-    object_image(L) objects_;
+    component_set<L> components_;
   };
 
 
@@ -75,41 +72,28 @@ namespace scribo
   }
 
   template <typename L>
-  object_links<L>::object_links(const object_image(L)& objects)
-    : objects_(objects)
+  object_links<L>::object_links(const component_set<L>& components)
+    : super_t(static_cast<unsigned>(components.nelements()) + 1),
+      components_(components)
   {
 
   }
 
   template <typename L>
-  object_links<L>::object_links(const object_image(L)& objects, unsigned n)
-    : super_t(n), objects_(objects)
-  {
-
-  }
-
-
-  template <typename L>
-  object_links<L>::object_links(const object_image(L)& objects,
-				unsigned n, unsigned value)
-    : super_t(n, value), objects_(objects)
+  object_links<L>::object_links(const component_set<L>& components,
+				unsigned value)
+    : super_t(static_cast<unsigned>(components.nelements()) + 1, value),
+      components_(components)
   {
 
   }
 
 
   template <typename L>
-  const void *
-  object_links<L>::objects_id_() const
+  const component_set<L>&
+  object_links<L>::component_set_() const
   {
-    return objects_.id_();
-  }
-
-  template <typename L>
-  const object_image(L)&
-  object_links<L>::object_image_() const
-  {
-    return objects_;
+    return components_;
   }
 
 
@@ -117,7 +101,7 @@ namespace scribo
   bool
   object_links<L>::is_valid() const
   {
-    return objects_.is_valid() && objects_.nlabels() == (this->size() - 1);
+    return components_.is_valid() && components_.nelements() == (this->size() - 1);
   }
 
 

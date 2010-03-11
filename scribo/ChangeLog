@@ -1,3 +1,49 @@
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce new Scribo core classes and start using them.
+
+	* scribo/core/component_info.hh,
+	* scribo/core/component_set.hh,
+	* scribo/core/line_info.hh,
+	* scribo/core/line_set.hh,
+	* scribo/core/macros.hh,
+	* scribo/core/object_groups.hh,
+	* scribo/core/object_links.hh,
+	* scribo/core/tag/anchor.hh,
+	* scribo/core/tag/component.hh,
+	* scribo/core/tag/line.hh: New core classes.
+
+	* scribo/core/object_image.hh: Remove.
+
+	* scribo/core/anchors.hh
+	* scribo/primitive/extract/objects.hh: Rename as...
+
+	* scribo/primitive/link/internal/compute_anchor.hh,
+	* scribo/primitive/extract/components.hh: ... this.
+
+	* scribo/draw/bounding_box_links.hh,
+	* scribo/filter/object_links_bbox_h_ratio.hh,
+	* scribo/filter/object_links_bbox_ratio.hh,
+	* scribo/filter/objects_small.hh,
+	* scribo/fun/v2b/objects_small_filter.hh,
+	* scribo/primitive/group/apply.hh,
+	* scribo/primitive/group/from_single_link.hh,
+	* scribo/primitive/internal/find_root.hh,
+	* scribo/primitive/internal/init_link_array.hh,
+	* scribo/primitive/link/compute.hh,
+	* scribo/primitive/link/internal/find_link.hh,
+	* scribo/primitive/link/internal/find_several_links.hh,
+	* scribo/primitive/link/internal/link_functor_base.hh,
+	* scribo/primitive/link/internal/link_several_dmax_base.hh,
+	* scribo/primitive/link/internal/link_single_dmax_base.hh,
+	* scribo/primitive/link/internal/link_single_dmax_ratio_base.hh,
+	* scribo/primitive/link/merge_double_link.hh,
+	* scribo/primitive/link/with_single_left_link_dmax_ratio.hh,
+	* scribo/primitive/link/with_single_right_link_bottom.hh,
+	* scribo/primitive/link/with_single_right_link_dmax_ratio.hh,
+	* scribo/primitive/link/with_single_right_link_top.hh: Make use of
+	the new core classes.
+
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add anchor support in debug routines.

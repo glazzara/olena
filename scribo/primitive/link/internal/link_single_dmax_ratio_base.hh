@@ -39,8 +39,8 @@
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
-# include <scribo/core/anchors.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/tag/anchor.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/compute_anchor.hh>
@@ -77,7 +77,7 @@ namespace scribo
 	  typedef mln_site(L) P;
 
 
-	  link_single_dmax_ratio_base(const object_image(L)& objects,
+	  link_single_dmax_ratio_base(const component_set<L>& components,
 				      float dmax_ratio,
 				      anchor::Direction direction);
 
@@ -104,11 +104,11 @@ namespace scribo
 	template <typename L, typename E>
 	inline
 	link_single_dmax_ratio_base<L, E>::link_single_dmax_ratio_base(
-	  const object_image(L)& objects,
+	  const component_set<L>& components,
 	  float dmax_ratio,
 	  anchor::Direction direction)
 
-	  : super_(objects),
+	  : super_(components),
 	    dmax_ratio_(dmax_ratio),
 	    dmax_(0),
 	    direction_(direction)
@@ -137,7 +137,7 @@ namespace scribo
 							anchor::Type anchor)
 	{
 	  (void) anchor;
-	  return internal::compute_anchor(this->objects_,
+	  return internal::compute_anchor(this->components_,
 					  current_object, anchor);
 	}
 
@@ -149,10 +149,8 @@ namespace scribo
 	  unsigned current_object)
 	{
 	  float
-	    w = (this->objects_.bbox(current_object).pmax().col()
-		 - this->objects_.bbox(current_object).pmin().col()),
-	    h = (this->objects_.bbox(current_object).pmax().row()
-		 - this->objects_.bbox(current_object).pmin().row());
+	    w = this->components_.info(current_object).bbox().width(),
+	    h = this->components_.info(current_object).bbox().height();
 	  dmax_ = (w / 2.0f) + (dmax_ratio_ * math::max(w, h));
 	}
 

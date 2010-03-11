@@ -40,7 +40,7 @@
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
-# include <scribo/core/anchors.hh>
+# include <scribo/core/tag/anchor.hh>
 # include <scribo/core/object_image.hh>
 # include <scribo/core/object_links.hh>
 

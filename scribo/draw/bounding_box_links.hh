@@ -245,13 +245,13 @@ namespace scribo
 
       mln_precondition(input.is_valid());
 
-      const object_image(L)& objects = links.object_image_();
+      const component_set<L>& comp_set = links.component_set_();
       for_all_components(i, links)
 	if (links[i] != i && links[i] != 0)
 	{
 	  mln_site(L)
-	    p1 = primitive::link::internal::compute_anchor(objects, i, anchor),
-	    p2 = primitive::link::internal::compute_anchor(objects, links[i], anchor);
+	    p1 = primitive::link::internal::compute_anchor(comp_set, i, anchor),
+	    p2 = primitive::link::internal::compute_anchor(comp_set, links[i], anchor);
 
 	  mln::draw::line(input, p1, p2, value);
 	}

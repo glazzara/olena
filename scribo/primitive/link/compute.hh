@@ -32,6 +32,7 @@
 
 
 # include <scribo/core/macros.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/core/object_links.hh>
 # include <scribo/core/concept/link_functor.hh>
 # include <scribo/primitive/link/internal/find_link.hh>
@@ -97,12 +98,15 @@ namespace scribo
 	trace::entering("scribo::primitive::link::compute");
 
 	F& functor = exact(functor_);
+	const typename F::component_set_t&
+	  comp_set = functor.components();
 
-	for_all_ncomponents(current_object, functor.objects().nlabels())
-	{
-	  functor.start_processing_object(current_object); //<-- start_processing_object
-	  primitive::internal::find_link(functor, current_object, anchor);
-	}
+	for_all_ncomponents(current_object, comp_set.nelements())
+	  if (comp_set(current_object).tag() != component::Ignored)
+	  {
+	    functor.start_processing_object(current_object); //<-- start_processing_object
+	    primitive::internal::find_link(functor, current_object, anchor);
+	  }
 
 	trace::exiting("scribo::primitive::link::compute");
 	return functor.links();

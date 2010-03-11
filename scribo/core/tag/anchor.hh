@@ -23,51 +23,46 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_INTERNAL_FIND_ROOT_LINK_ARRAY_HH
-# define SCRIBO_PRIMITIVE_INTERNAL_FIND_ROOT_LINK_ARRAY_HH
-
-/// \file
-///
-/// Find root in a parent array arrays.
-
-
-# include <scribo/core/object_groups.hh>
-
+#ifndef SCRIBO_CORE_ANCHORS_HH
+# define SCRIBO_CORE_ANCHORS_HH
 
 namespace scribo
 {
 
-  namespace primitive
+  namespace anchor
   {
 
-      namespace internal
-      {
+    enum Type
+    {
+      MassCenter = 0,
+      Top,
+      Bottom,
+      Center,
+      ActualLeft,
+      Left,
+      ActualRight,
+      Right,
+      TopLeft,
+      TopRight,
+      BottomLeft,
+      BottomRight,
+      Invalid
+    };
 
-	/// Find root in a parent array arrays.
-	template <typename L>
-	unsigned
-        find_root(object_groups<L>& parent, unsigned x);
-
-# ifndef MLN_INCLUDE_ONLY
-
-	template <typename L>
-	inline
-	unsigned
-        find_root(object_groups<L>& parent, unsigned x)
-        {
-          if (parent(x) == x)
-	    return x;
-	  else
-	    return parent(x) = find_root(parent, parent(x));
-	}
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace scribo::primitive::internal
-
-  } // end of namespace scribo::text
+    /// Values are based on coordinates indexes in a mln::point.
+    ///
+    /// For vertical direction only rows are supposed to change. So
+    /// anchor::Vertical is set to 0, like the row indexes in a
+    /// mln::point.
+    //
+    enum Direction
+    {
+      Vertical = 0,
+      Horizontal,
+      None
+    };
+  }
 
 } // end of namespace scribo
 
-
-#endif // ! SCRIBO_PRIMITIVE_INTERNAL_FIND_ROOT_LINK_ARRAY_HH
+#endif // ! SCRIBO_CORE_ANCHORS_HH

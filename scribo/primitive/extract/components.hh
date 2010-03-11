@@ -23,30 +23,28 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_EXTRACT_OBJECTS_HH
-# define SCRIBO_PRIMITIVE_EXTRACT_OBJECTS_HH
+#ifndef SCRIBO_PRIMITIVE_EXTRACT_COMPONENTS_HH
+# define SCRIBO_PRIMITIVE_EXTRACT_COMPONENTS_HH
 
 /// \file
 ///
-/// Extract objects in a binary image.
+/// Extract components in a binary image.
 
 
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/box.hh>
 
 # include <mln/accu/shape/bbox.hh>
+# include <mln/accu/center.hh>
+# include <mln/accu/pair.hh>
 
 # include <mln/labeling/blobs_and_compute.hh>
 # include <mln/labeling/compute.hh>
 
 # include <mln/util/array.hh>
 
-# include <mln/debug/println.hh>
+# include <scribo/core/component_set.hh>
 
-# include <scribo/core/object_image.hh>
-
-#include <mln/accu/shape/bbox.hh>
-#include <mln/accu/center.hh>
 
 
 namespace scribo
@@ -60,21 +58,21 @@ namespace scribo
 
       using namespace mln;
 
-      /// Extract objects in a binary image.
+      /// Extract components in a binary image.
       ///
-      /// \param[in]	 input	  A binary image. Objects are must be set
+      /// \param[in]	 input	  A binary image. Components are must be set
       ///                         to 'true'
       ///			  and background to 'false'.
       /// \param[in]	 nbh	  A neighborhood to be used for labeling.
-      /// \param[in,out] nobjects Will store the numbers of objects found.
+      /// \param[in,out] ncomponents Will store the numbers of components found.
       ///
-      /// \return An image of labeled objects.
+      /// \return An image of labeled components.
       //
       template <typename I, typename N, typename V>
       inline
-      object_image(mln_ch_value(I,V))
-      objects(const Image<I>& input,
-	      const Neighborhood<N>& nbh, V& nobjects);
+      component_set<mln_ch_value(I,V)>
+      components(const Image<I>& input,
+		 const Neighborhood<N>& nbh, V& ncomponents);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -86,8 +84,8 @@ namespace scribo
         template <typename I, typename N, typename V>
         inline
 	void
-        objects_tests(const Image<I>& input,
-		      const Neighborhood<N>& nbh, V& nobjects)
+        components_tests(const Image<I>& input,
+		      const Neighborhood<N>& nbh, V& ncomponents)
 	{
 	  mlc_equal(mln_value(I),bool)::check();
 	  mlc_is_a(V, mln::value::Symbolic)::check();
@@ -95,7 +93,7 @@ namespace scribo
 	  mln_precondition(exact(nbh).is_valid());
 	  (void) input;
 	  (void) nbh;
-	  (void) nobjects;
+	  (void) ncomponents;
 	}
 
 
@@ -104,31 +102,29 @@ namespace scribo
 
       template <typename I, typename N, typename V>
       inline
-      object_image(mln_ch_value(I,V))
-      objects(const Image<I>& input,
-	      const Neighborhood<N>& nbh, V& nobjects)
+      component_set<mln_ch_value(I,V)>
+      components(const Image<I>& input,
+		 const Neighborhood<N>& nbh, V& ncomponents)
       {
-	trace::entering("scribo::objects");
+	trace::entering("scribo::components");
 
-	internal::objects_tests(input, nbh, nobjects);
+	internal::components_tests(input, nbh, ncomponents);
 
 	typedef mln_ch_value(I,V) L;
-	typedef accu::shape::bbox<mln_psite(I)> accu_bbox;
+	typedef mln::accu::shape::bbox<mln_site(L)> bbox_accu_t;
+	typedef mln::accu::center<mln_site(L)> center_accu_t;
+	typedef mln::accu::pair<bbox_accu_t, center_accu_t> pair_accu_t;
 
-	util::couple<L, util::array<mln_box(I)> >
-	  results = labeling::blobs_and_compute(input, nbh, nobjects,
-						accu_bbox());
+	util::couple<L,
+	  util::couple<util::array<mln_result(pair_accu_t)>,
+	  util::array<pair_accu_t> > >
+	  results = labeling::blobs_and_compute(input, nbh, ncomponents,
+						pair_accu_t());
 
-	// FIXME: enable mass centers computation and maybe merge this
-	// computation with blobs computation above.
-	util::array<mln_result(accu::center<mln_site(I)>)>
-	  mass_centers;
- 	mass_centers = labeling::compute(accu::meta::center(),
-					 results.first(), nobjects);
-	object_image(L)
-	  output(results.first(), nobjects, results.second(), mass_centers);
+	component_set<L>
+	output(results.first(), ncomponents, results.second().second());
 
-	trace::exiting("scribo::objects");
+	trace::exiting("scribo::components");
 	return output;
       }
 
@@ -141,4 +137,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_PRIMITIVE_EXTRACT_OBJECTS_HH
+#endif // ! SCRIBO_PRIMITIVE_EXTRACT_COMPONENTS_HH

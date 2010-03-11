@@ -40,14 +40,12 @@
 # include <mln/labeling/compute.hh>
 # include <mln/accu/center.hh>
 
-# include <scribo/core/anchors.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/tag/anchor.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/core/object_links.hh>
 # include <scribo/core/concept/link_functor.hh>
 # include <scribo/primitive/link/internal/compute_anchor.hh>
-# include <scribo/primitive/internal/update_link_array.hh>
 # include <scribo/primitive/internal/init_link_array.hh>
-# include <scribo/primitive/internal/is_invalid_link.hh>
 
 # define scribo_support(T) typename T::support
 # define scribo_support_(T) T::support
@@ -70,15 +68,16 @@ namespace scribo
 	{
 	public:
 
+	  typedef component_set<L> component_set_t;
 	  typedef L support;
 	  typedef mln_site(L) P;
 	  typedef mln::util::couple<anchor::Type, P> couple_t;
 
-	  link_functor_base(const object_image(L)& objects, unsigned nanchors);
+	  link_functor_base(const component_set<L>& components, unsigned nanchors);
 
 	  /// \overload
 	  /// \p nanchors is set to 1.
-	  link_functor_base(const object_image(L)& objects);
+	  link_functor_base(const component_set<L>& components);
 
 
 	  unsigned nanchors() const;
@@ -86,7 +85,7 @@ namespace scribo
 	  const object_links<L>& links() const;
 
 	  unsigned link(unsigned object) const;
-	  const object_image(L)& objects() const;
+	  const component_set<L>& components() const;
 
 
 	  void initialize_link(unsigned current_object);
@@ -114,7 +113,7 @@ namespace scribo
 			     anchor::Type anchor);
 
 	  /// \overload
-	  /// \p anchor is set to 0.
+	  /// \p anchor is set to anchor::MassCenter.
 	  void validate_link(unsigned current_object,
 			     const P& start_point, const P& p);
 
@@ -123,13 +122,9 @@ namespace scribo
 			       anchor::Type anchor);
 
 	  /// \overload
-	  /// \p anchor is set to 0
+	  /// \p anchor is set to anchor::MassCenter
 	  void invalidate_link(unsigned current_object,
 			       const P& start_point, const P& p);
-
-
-
-
 
 
 	  void compute_next_site(P& p);
@@ -138,7 +133,7 @@ namespace scribo
 	  mln_site(L) start_point(unsigned current_object, anchor::Type anchor);
 
 	  /// \overload
-	  /// \p anchor is set to 0.
+	  /// \p anchor is set to anchor::MassCenter.
 	  mln_site(L) start_point(unsigned current_object);
 
 
@@ -179,9 +174,9 @@ namespace scribo
 
 	protected:
 	  object_links<L> links_;
-	  const object_image(L) objects_;
+	  const component_set<L> components_;
+	  const L& labeled_image_;
 	  unsigned nanchors_;
-	  util::array<mln_result(accu::center<mln_site(L)>)> mass_centers_;
 	};
 
 
@@ -192,31 +187,27 @@ namespace scribo
 	template <typename L, typename E>
 	inline
 	link_functor_base<L,E>::link_functor_base(
-	  const object_image(L)& objects,
+	  const component_set<L>& components,
 	  unsigned nanchors)
-	  : links_(objects, static_cast<unsigned>(objects.nlabels()) + 1),
-	    objects_(objects),
+	  : links_(components),
+	    components_(components),
+	    labeled_image_(this->components_.labeled_image()),
 	    nanchors_(nanchors)
 	{
 	  primitive::internal::init_link_array(links_);
-
-	  mass_centers_ = labeling::compute(accu::meta::center(),
-					    objects, objects.nlabels());
 	}
 
 
 	template <typename L, typename E>
 	inline
 	link_functor_base<L,E>::link_functor_base(
-	  const object_image(L)& objects)
-	  : links_(objects, static_cast<unsigned>(objects.nlabels()) + 1),
-	    objects_(objects),
+	  const component_set<L>& components)
+	  : links_(components),
+	    components_(components),
+	    labeled_image_(this->components_.labeled_image()),
 	    nanchors_(1)
 	{
 	  primitive::internal::init_link_array(links_);
-
-	  mass_centers_ = labeling::compute(accu::meta::center(),
-					    objects, objects.nlabels());
 	}
 
 
@@ -247,10 +238,10 @@ namespace scribo
 
 	template <typename L, typename E>
 	inline
-	const object_image(L)&
-	link_functor_base<L,E>::objects() const
+	const component_set<L>&
+	link_functor_base<L,E>::components() const
 	{
-	  return objects_;
+	  return components_;
 	}
 
 
@@ -264,9 +255,11 @@ namespace scribo
 						  const P& p) const
 	{
 	  (void) start_point;
-	  return this->objects_(p) != literal::zero  // Not the background
-	    && this->objects_(p) != current_object // Not the current component
-	    && this->links_[this->objects_(p)] != current_object; // No loops
+	  mln_value(L) v = this->labeled_image_(p);
+	  return v != literal::zero  // Not the background
+	    && v != current_object // Not the current component
+	    && this->links_[v] != current_object  // No loops
+	    && this->components_(v).tag() != component::Ignored; // Not ignored
 	}
 
 
@@ -306,7 +299,7 @@ namespace scribo
 					   const P& start_point,
 					   const P& p)
 	{
-	  return this->objects_.domain().has(p)
+	  return this->labeled_image_.domain().has(p)
 	    && exact(this)->valid_link_(current_object, start_point, p);
 	}
 
@@ -331,7 +324,7 @@ namespace scribo
 					      const P& start_point,
 					      const P& p)
 	{
-	  validate_link(current_object, start_point, p, 0);
+	  validate_link(current_object, start_point, p, anchor::MassCenter);
 	}
 
 
@@ -354,7 +347,7 @@ namespace scribo
 						const P& start_point,
 						const P& p)
 	{
-	  invalidate_link(current_object, start_point, p, 0);
+	  invalidate_link(current_object, start_point, p, anchor::MassCenter);
 	}
 
 
@@ -386,7 +379,7 @@ namespace scribo
 	mln_site(L)
 	link_functor_base<L,E>::start_point(unsigned current_object)
 	{
-	  return start_point(current_object, 0);
+	  return start_point(current_object, anchor::MassCenter);
 	}
 
 
@@ -478,7 +471,7 @@ namespace scribo
 	{
 	  (void) start_point;
 	  (void) anchor;
-	  this->links_[current_object] = this->objects_(p);
+	  this->links_[current_object] = this->labeled_image_(p);
 	}
 
 
@@ -505,7 +498,7 @@ namespace scribo
 					     anchor::Type anchor)
 	{
 	  (void) anchor;
-	  return internal::compute_anchor(this->objects_, mass_centers_,
+	  return internal::compute_anchor(this->components_,
 					  current_object, anchor);
 	}
 

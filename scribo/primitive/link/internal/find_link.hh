@@ -38,12 +38,8 @@
 # include <mln/util/couple.hh>
 
 # include <scribo/core/concept/link_functor.hh>
-# include <scribo/core/anchors.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/tag/anchor.hh>
 # include <scribo/core/object_links.hh>
-# include <scribo/primitive/internal/update_link_array.hh>
-# include <scribo/primitive/internal/init_link_array.hh>
-# include <scribo/primitive/internal/is_invalid_link.hh>
 
 
 namespace scribo
@@ -86,11 +82,9 @@ namespace scribo
 	  start_point = functor.start_point(current_object, anchor), // <-- start_point
 	  p = start_point;
 
-	mln_postcondition(p == start_point);
-
 	// is_potential_link
 	// verify_link_criterion
-	while (functor.objects().domain().has(p)
+	while (functor.components().labeled_image().domain().has(p)
 	       && ! functor.is_potential_link(current_object,
 					      start_point, p)
 	       && functor.verify_link_criterion(current_object, start_point, p))
