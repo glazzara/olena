@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
   if (argc != 6)
     return scribo::debug::usage(argv,
 				"Split background and foreground.",
-				"input.pbm bg.ppm fg.ppm",
+				"input.pbm lambda delta bg.ppm fg.ppm",
 				args_desc, "The foreground image.");
 
   typedef image2d<value::rgb8> I;

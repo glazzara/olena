@@ -20,11 +20,13 @@
 include $(top_srcdir)/scribo/scribo.mk
 
 bin_PROGRAMS = 				\
+  denoising 				\
   preprocess 				\
   split_bg_fg 				\
   split_bg_fg_ms			\
   unskew
 
+denoising_SOURCES = denoising.cc
 preprocess_SOURCES = preprocess.cc
 split_bg_fg_SOURCES = split_bg_fg.cc
 split_bg_fg_ms_SOURCES = split_bg_fg_ms.cc

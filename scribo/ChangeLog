@@ -1,5 +1,23 @@
 2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add and update examples.
+
+	* src/Makefile.am,
+	* src/binarization/Makefile.am,
+	* src/preprocessing/Makefile.am: Add new targets.
+
+	* src/preprocessing/denoising.cc: New.
+
+	* src/preprocessing/split_bg_fg.cc: Fix usage.
+
+	* src/text_in_article.cc,
+	* src/text_in_photo_ppm_fast.cc: Update code according last
+	changes in core classes.
+
+	* src/text_in_photo_ppm_fast_2.cc: New example.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes.
 
 	* binarization/sauvola_ms.hh: Remove a useless include.

@@ -58,7 +58,7 @@
 #include <scribo/binarization/sauvola_ms.hh>
 #include <scribo/binarization/sauvola.hh>
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 
 #include <scribo/primitive/link/merge_double_link.hh>
 #include <scribo/primitive/link/with_single_left_link.hh>
@@ -94,6 +94,9 @@
 #include <scribo/src/afp/components.hh>
 #include <scribo/src/afp/link.hh>
 #include <scribo/src/afp/regroup.hh>
+
+#include <scribo/core/line_set.hh>
+#include <scribo/text/recognition.hh>
 
 const char *args_desc[][2] =
 {
@@ -137,20 +140,22 @@ namespace mln
   template <typename I, typename L>
   mln_concrete(I)
   compute_highlight_image(const I& input_rgb,
-			  const object_image<L>& objects)
+			  const scribo::component_set<L>& components)
   {
     mln_ch_value(I, bool) mask;
     initialize(mask, input_rgb);
     data::fill(mask, false);
 
-    for_all_components(i, objects.bboxes())
-      data::fill((mask | objects.bbox(i)).rw(), true);
+    for_all_comps(i, components)
+      if (components(i).is_valid())
+	data::fill((mask | components(i).bbox()).rw(), true);
 
     mask_non_text f(mask);
     mln_concrete(I) output = data::transform(input_rgb, f);
 
-    for_all_components(i, objects.bboxes())
-      mln::draw::box(output, objects.bbox(i), literal::red);
+    for_all_components(i, components)
+      if (components(i).is_valid())
+	mln::draw::box(output, components(i).bbox(), literal::red);
 
     return output;
   }
@@ -158,17 +163,17 @@ namespace mln
   template <typename I, typename L>
   mln_concrete(I)
   compute_text_image(const I& input_rgb,
-		     const object_image<L>& grouped_objects)
+		     const scribo::component_set<L>& grouped_objects)
   {
-    const util::array<mln_domain(L)>& bboxes = grouped_objects.bboxes();
-
     unsigned shift = 5;
     float height = 1, width = 0;
-    for_all_components(i, bboxes)
-    {
-      height += bboxes(i).nrows() + shift;
-      width = math::max(static_cast<float>(bboxes(i).ncols()), width);
-    }
+    for_all_comps(i, grouped_objects)
+      if (grouped_objects(i).is_valid())
+      {
+	height += grouped_objects(i).bbox().nrows() + shift;
+	width = math::max(static_cast<float>(grouped_objects(i).bbox().ncols()),
+			  width);
+      }
     if (width == 0)
       width = 1;
 
@@ -178,21 +183,23 @@ namespace mln
     algebra::vec<2, float> dv;
     dv[0] = 0;
     dv[1] = 0;
-    for_all_ncomponents(i, grouped_objects.nlabels())
-    {
-      mln_VAR(tmp, duplicate(input_rgb | grouped_objects.bbox(i)));
+    for_all_comps(i, grouped_objects)
+      if (grouped_objects(i).is_valid())
+      {
+	mln_VAR(tmp, duplicate(input_rgb | grouped_objects(i).bbox()));
 
-      typedef fun::x2x::translation<mln_site_(I)::dim, float> trans_t;
-      trans_t trans(dv - grouped_objects.bbox(i).pmin().to_vec());
+	typedef fun::x2x::translation<mln_site_(I)::dim, float> trans_t;
+	trans_t trans(dv - grouped_objects(i).bbox().pmin().to_vec());
 
-      mln_domain(I) tr_box(grouped_objects.bbox(i).pmin().to_vec() + trans.t(),
-			   grouped_objects.bbox(i).pmax().to_vec() + trans.t());
+	mln_domain(I)
+	  tr_box(grouped_objects(i).bbox().pmin().to_vec() + trans.t(),
+		 grouped_objects(i).bbox().pmax().to_vec() + trans.t());
 
-      tr_image<mln_domain(I), tmp_t, trans_t> tr_ima(tr_box, tmp, trans);
+	tr_image<mln_domain(I), tmp_t, trans_t> tr_ima(tr_box, tmp, trans);
 
-      data::paste(tr_ima, output);
-      dv[0] += grouped_objects.bbox(i).nrows() + shift;
-    }
+	data::paste(tr_ima, output);
+	dv[0] += grouped_objects(i).bbox().nrows() + shift;
+      }
 
     return output;
   }
@@ -237,7 +244,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   std::cout << "Using lambda = " << lambda << std::endl;
 
   image2d<value::int_u8> intensity_ima;
-  util::timer timer_, global_t_;
+  mln::util::timer timer_, global_t_;
   float t_;
 
   global_t_.start();
@@ -284,12 +291,12 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   if (argc > 4 && atoi(argv[4]) != 0)
   {
     std::cout << "** Using sauvola_ms with w_1 = " << w << std::endl;
-    input = binarization::sauvola_ms(intensity_ima, w, 3, 67);
+    input = scribo::binarization::sauvola_ms(intensity_ima, w, 3, 67);
   }
   else
   {
     std::cout << "** Using sauvola with w_1 = " << w << std::endl;
-    input = binarization::sauvola(intensity_ima, w);
+    input = scribo::binarization::sauvola(intensity_ima, w);
   }
 #ifndef NOUT
     if (debug)
@@ -310,45 +317,44 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
   typedef image2d<value::label_16> L;
 
-  /// Finding objects.
+  /// Finding components.
   timer_.restart();
 
-  typedef object_image(L) Obj;
-  Obj filtered_objects;
+  typedef component_set<L> Obj;
+  Obj filtered_components;
 
   {
-    util::array<box2d> bboxes;
-    util::array<point2d> mass_centers;
+    mln::util::array<std::pair<box2d, std::pair<point2d, unsigned> > > attribs;
 
-    value::label_16 nobjects;
-    L components = extract_components(input, nobjects, bboxes, mass_centers);
+    value::label_16 ncomponents;
+    L components = extract_components(input, ncomponents, attribs);
 
-    filtered_objects = Obj(components, nobjects, bboxes, mass_centers);
+    filtered_components = Obj(components, ncomponents, attribs);
   }
 
   t_ = timer_;
-  std::cout << "Object extracted " << t_ << " - " << filtered_objects.nlabels() << " objects" << std::endl;
+  std::cout << "Object extracted " << t_ << " - " << filtered_components.nelements() << " components" << std::endl;
 
 //   if (debug)
-//     io::pgm::save(data::stretch(value::int_u8(), filtered_objects), "ref_objects.pgm");
+//     io::pgm::save(data::stretch(value::int_u8(), filtered_components), "ref_components.pgm");
 
 
-  /// linking potential objects
+  /// linking potential components
   timer_.restart();
-  util::couple<object_links<L>, object_links<L> >
-    links = primitive::link::left_right(filtered_objects);
+  mln::util::couple<object_links<L>, object_links<L> >
+    links = primitive::link::left_right(filtered_components);
 
   object_links<L>& left_link = links.first();
   object_links<L>& right_link = links.second();
 
 //   object_links<L> left_link
-//     = primitive::link::with_single_left_link(filtered_objects, 30);
+//     = primitive::link::with_single_left_link(filtered_components, 30);
 //   t_ = timer_;
 //   std::cout << "Left Link done " << t_ << std::endl;
 
 //   timer_.restart();
 //   object_links<L> right_link
-//     = primitive::link::with_single_right_link(filtered_objects, 30);
+//     = primitive::link::with_single_right_link(filtered_components, 30);
   t_ = timer_;
   std::cout << "Link done " << t_ << std::endl;
 
@@ -357,9 +363,9 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 #ifndef NOUT
   if (debug)
   {
-    std::cerr << "BEFORE - nobjects = " << filtered_objects.nlabels() << std::endl;
+    std::cerr << "BEFORE - ncomponents = " << filtered_components.nelements() << std::endl;
     scribo::debug::save_linked_bboxes_image(input,
-					    filtered_objects,
+					    filtered_components,
 					    left_link, right_link,
 					    literal::red, literal::cyan,
 					    literal::yellow,
@@ -373,7 +379,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   // Validating left and right links.
   timer_.restart();
   object_links<L>
-    merged_links = primitive::link::merge_double_link(filtered_objects,
+    merged_links = primitive::link::merge_double_link(filtered_components,
 						      left_link,
 						      right_link);
   t_ = timer_;
@@ -383,7 +389,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   // Remove links if bboxes have too different sizes.
   timer_.restart();
   object_links<L>
-    hratio_filtered_links = filter::object_links_bbox_h_ratio(filtered_objects,
+    hratio_filtered_links = filter::object_links_bbox_h_ratio(filtered_components,
 							      merged_links,
 							      1.50f);
 
@@ -407,7 +413,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
   //Remove links if bboxes overlap too much.
   object_links<L> overlap_filtered_links
-    = filter::object_links_bbox_overlap(filtered_objects,
+    = filter::object_links_bbox_overlap(filtered_components,
 					hratio_filtered_links,
 					0.80f);
 
@@ -428,39 +434,43 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
 
   t_ = timer_;
-  std::cout << "Objects links filtered. " << t_ << std::endl;
+  std::cout << "Components links filtered. " << t_ << std::endl;
 
   timer_.restart();
   object_groups<L>
-    groups = primitive::group::from_single_link(filtered_objects,
+    groups = primitive::group::from_single_link(filtered_components,
 						overlap_filtered_links);
 
 
 
 //  Apply grouping in a temporary image (for debug purpose).
 #ifndef NOUT
-  object_image(L)
-    raw_group_image = primitive::group::apply(filtered_objects,
+  component_set<L>
+    raw_group_image = primitive::group::apply(filtered_components,
 					      groups);
 #endif // !NOUT
 
   t_ = timer_;
-  std::cout << "Objects grouped. " << t_ << std::endl;
+  std::cout << "Components grouped. " << t_ << std::endl;
 
 #ifndef NOUT
 
   if (debug)
   {
-    image2d<value::rgb8> decision_image = data::convert(value::rgb8(), input);
+    image2d<value::rgb8>
+      decision_image = data::convert(value::rgb8(), input);
 
-    scribo::draw::bounding_boxes(decision_image, filtered_objects, literal::green);
-    scribo::draw::bounding_boxes(decision_image, raw_group_image, literal::blue);
+    scribo::draw::bounding_boxes(decision_image,
+				 filtered_components, literal::green);
+    scribo::draw::bounding_boxes(decision_image,
+				 raw_group_image, literal::blue);
 
     io::ppm::save(decision_image,
 		  scribo::make::debug_filename("group_and_object_image.ppm"));
 
     decision_image = data::convert(value::rgb8(), input);
-    scribo::draw::bounding_boxes(decision_image, raw_group_image, literal::blue);
+    scribo::draw::bounding_boxes(decision_image,
+				 raw_group_image, literal::blue);
     io::ppm::save(decision_image,
 		  scribo::make::debug_filename("group_image.ppm"));
   }
@@ -469,10 +479,10 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
   std::cout << "Filtering groups..." << std::endl;
 
-  util::timer g_timer;
+  mln::util::timer g_timer;
 
   timer_.restart();
-  // Remove objects part of groups with strictly less than 3 objects.
+  // Remove components part of groups with strictly less than 3 components.
 
   g_timer.start();
   object_groups<L> filtered_small_groups;
@@ -489,18 +499,19 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
 
 #ifndef NOUT
-  object_image(L) debug_image;
+  component_set<L> debug_image;
   image2d<value::rgb8> decision_image;
   if (debug)
   {
     decision_image = data::convert(value::rgb8(), input);
-    object_image(L)
-      grouped_objects = primitive::group::apply(filtered_objects,
+    component_set<L>
+      grouped_objects = primitive::group::apply(filtered_components,
 						filtered_small_groups);
 
-    for_all_components(i, filtered_objects.bboxes())
-      if (filtered_small_groups(i) != 0)
-	mln::draw::box(decision_image, filtered_objects.bbox(i), literal::green);
+    for_all_components(i, filtered_components)
+      if (filtered_components(i).is_valid()
+	  && filtered_small_groups(i) != 0)
+	mln::draw::box(decision_image, filtered_components(i).bbox(), literal::green);
     scribo::draw::bounding_boxes(decision_image, raw_group_image, literal::red);
     scribo::draw::bounding_boxes(decision_image, grouped_objects, literal::blue);
 
@@ -512,7 +523,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
 
 
-  // Remove objects part of groups having a mean thickness lower than 8.
+  // Remove components part of groups having a mean thickness lower than 8.
   g_timer.restart();
   object_groups<L> filtered_thin_groups;
   if (argc > 7 && atoi(argv[7]) != 0)
@@ -532,22 +543,21 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   {
     decision_image = data::convert(value::rgb8(), input);
 
-    object_image(L)
-      grouped_objects = primitive::group::apply(filtered_objects,
-						filtered_thin_groups);
+    component_set<L>
+      grouped_components = primitive::group::apply(filtered_components,
+						   filtered_thin_groups);
 
-    for_all_components(i, filtered_objects.bboxes())
-    {
-      if (filtered_thin_groups(i) != 0)
-	mln::draw::box(decision_image, filtered_objects.bbox(i), literal::green);
-    }
+    for_all_components(i, filtered_components)
+      if (filtered_components(i).is_valid()
+	  && filtered_thin_groups(i) != 0)
+	mln::draw::box(decision_image, filtered_components(i).bbox(), literal::green);
 
     scribo::draw::bounding_boxes(decision_image, debug_image, literal::red);
-    scribo::draw::bounding_boxes(decision_image, grouped_objects, literal::blue);
+    scribo::draw::bounding_boxes(decision_image, grouped_components, literal::blue);
 
     io::ppm::save(decision_image,
 		  scribo::make::debug_filename("thin_groups_filter.ppm"));
-    debug_image = grouped_objects;
+    debug_image = grouped_components;
   }
 #endif
 
@@ -556,32 +566,32 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   /// Apply grouping in the object image.
   g_timer.restart();
 
-//   groups = primitive::group::regroup_left(filtered_objects,
+//   groups = primitive::group::regroup_left(filtered_components,
 // 					  filtered_thin_groups,
 // 					  30);
 
-  object_image(L)
-    grouped_objects = primitive::group::apply(filtered_objects,
-					      filtered_thin_groups);
+  component_set<L>
+    grouped_components = primitive::group::apply(filtered_components,
+						 filtered_thin_groups);
 
   t_ = g_timer;
   std::cout << "Group applied to object image " << t_ << std::endl;
 
-  /// Objects have been grouped. We try to link groups together.
-  /// This time a single link is enough since non-wanted objects have
+  /// Components have been grouped. We try to link groups together.
+  /// This time a single link is enough since non-wanted components have
   /// been removed.
   g_timer.restart();
 
-  left_link = primitive::link::left(grouped_objects, 30);
+  left_link = primitive::link::left(grouped_components, 30);
 //   left_link
-//     = primitive::link::with_single_left_link(grouped_objects, 30);
+//     = primitive::link::with_single_left_link(grouped_components, 30);
 
 
   /// Grouping groups.
-  groups = primitive::group::from_single_link(grouped_objects, left_link);
+  groups = primitive::group::from_single_link(grouped_components, left_link);
 
-//   object_image(L)
-  grouped_objects = primitive::group::apply(grouped_objects, groups);
+//   component_set<L>
+  grouped_components = primitive::group::apply(grouped_components, groups);
 
   t_ = g_timer;
   std::cout << "Link and group again " << t_ << std::endl;
@@ -590,21 +600,21 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
 //   if (debug)
 //     io::ppm::save(mln::labeling::colorize(value::rgb8(),
-// 					  grouped_objects,
-// 					  grouped_objects.nlabels()),
+// 					  grouped_components,
+// 					  grouped_components.nelements()),
 // 		  scribo::make::debug_filename("out_raw.ppm"));
 
 
   timer_.resume();
 
-//   io::pgm::save(data::wrap(value::int_u8(), grouped_objects.labeled_image_()), "lbl_to_be_filtered.pgm");
+//   io::pgm::save(data::wrap(value::int_u8(), grouped_components.labeled_image_()), "lbl_to_be_filtered.pgm");
 
   g_timer.restart();
   /// Filter grouped objects not having enough background components.
   if (argc > 5 && atoi(argv[5]) != 0)
   {
     std::cout << "** Using objects_with_two_holes" << std::endl;
-    grouped_objects = scribo::filter::objects_with_two_holes(grouped_objects, 5);
+    grouped_components = scribo::filter::components_with_two_holes(grouped_components, 5);
     t_ = g_timer;
     std::cout << "Objects_with_holes " << t_ << std::endl;
   }
@@ -623,36 +633,41 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
     decision_image = data::convert(value::rgb8(), input);
 
     scribo::draw::bounding_boxes(decision_image, debug_image, literal::red);
-    scribo::draw::bounding_boxes(decision_image, grouped_objects, literal::blue);
+    scribo::draw::bounding_boxes(decision_image, grouped_components, literal::blue);
     io::ppm::save(decision_image, scribo::make::debug_filename("group_with_holes_filter.ppm"));
 
-    std::cerr << "AFTER - nobjects = " << grouped_objects.nlabels() << std::endl;
+    std::cerr << "AFTER - nobjects = " << grouped_components.nelements() << std::endl;
   }
 #endif
 
   timer_.restart();
   std::cout << "Saving result..." << std::endl;
   io::ppm::save(mln::labeling::colorize(value::rgb8(),
-					grouped_objects,
-					grouped_objects.nlabels()),
+					grouped_components.labeled_image(),
+					grouped_components.nelements()),
 		argv[2]);
 
 #ifndef NOUT
-//   scribo::debug::save_bboxes_image(input_rgb, grouped_objects.bboxes(),
+//   scribo::debug::save_bboxes_image(input_rgb, grouped_components.bboxes(),
 // 				   literal::red,
 // 				   scribo::make::debug_filename("orig_with_bboxes.ppm"));
 #endif
 
-  io::ppm::save(compute_highlight_image(input_rgb, grouped_objects),
+  io::ppm::save(compute_highlight_image(input_rgb, grouped_components),
 		out_base_dir + "_input_with_bboxes.ppm");
-  io::ppm::save(compute_text_image(input_rgb, grouped_objects),
+  io::ppm::save(compute_text_image(input_rgb, grouped_components),
 		out_base_dir + "_out_text.ppm");
 
   t_ = timer_;
   std::cout << "Output saved " << t_ << std::endl;
 
-  std::cout << "# objects = " << grouped_objects.nlabels() << std::endl;
+  std::cout << "# objects = " << grouped_components.nelements() << std::endl;
+
+
+  scribo::line_set<L>
+    lines = scribo::line_set<L>(filtered_components, filtered_thin_groups);
+  text::recognition(lines, "fra", "out.txt");
 
   trace::exiting("main");
-  return grouped_objects.nlabels() != 0;
+  return grouped_components.nelements() != 0;
 }
