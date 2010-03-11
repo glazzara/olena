@@ -44,10 +44,7 @@
 # include <mln/pw/all.hh>
 # include <mln/core/routine/duplicate.hh>
 
-
-// Forward declaration.
-namespace mln { template <typename T> class integral_image; }
-
+# include <scribo/core/init_integral_image.hh>
 
 namespace scribo
 {
@@ -60,7 +57,7 @@ namespace scribo
     /*! \brief Compute a threshold image with Sauvola's algorithm.
 
       \input[in]  input       An image.
-      \input[in]  window_size The window size.x
+      \input[in]  window_size The window size.
       \input[out] simple      The sum of all intensities of \p input.
       \input[out] squared     The sum of all squared intensities of \p
                               input.
@@ -68,11 +65,11 @@ namespace scribo
       \return An image of local thresholds.
 
      */
-    template <typename I, typename T>
+    template <typename I, typename J>
     mln_ch_value(I, value::int_u8)
     sauvola_threshold(const Image<I>& input, unsigned window_size,
-		      integral_image<T>& simple,
-		      integral_image<T>& squared);
+		      Image<J>& simple,
+		      Image<J>& squared);
 
 
     /// \overload
@@ -106,36 +103,63 @@ namespace scribo
       };
 
 
-      unsigned long long square_(const value::int_u8& val)
+      /*! \brief compute Sauvola's threshold applying directly the formula.
+
+	\param[in] m_x_y Mean value.
+	\param[in] s_x_y Standard deviation.
+        \param[in] k Control the threshold value in the local
+                     window. The higher, the lower the threshold
+                     form the local mean m(x, y).
+        \param[in] R Maximum value of the standard deviation (128
+                     for grayscale documents).
+
+	\return A threshold.
+       */
+      inline
+      double
+      sauvola_threshold_formula(const double m_x_y, const double s_x_y,
+				const double k, const double R)
       {
-	unsigned long long v = static_cast<unsigned long long>(val);
-	return v * v;
+      	return m_x_y * (1.0 + k * ((s_x_y / R) - 1.0));
       }
 
-      unsigned long long identity_(const value::int_u8& val)
+
+      /// \overload
+      //
+      inline
+      double
+      sauvola_threshold_formula(double m_x_y, double s_x_y)
       {
-	return static_cast<unsigned long long>(val);
+	// Badekas et al. said 0.34 was best.
+	const double k = 0.34;
+
+	// 128 is best for grayscale documents.
+	const double R = 128;
+
+	return sauvola_threshold_formula(m_x_y, s_x_y, k, R);
       }
 
 
-      /// \brief Compute a point wise threshold according Sauvola's
-      /// binarization.
-      ///
-      /// \param[in] p A site.
-      /// \param[in] simple An integral image of mean values.
-      /// \param[in] squared An integral image of squared mean values.
-      /// \param[in] win_width Window width.
-      /// \param[in] k Control the threshold value in the local
-      ///              window. The higher, the lower the threshold
-      ///              form the local mean m(x, y).
-      /// \param[in] R Maximum value of the standard deviation (128
-      ///              for grayscale documents).
+      /*! \brief Compute a point wise threshold according Sauvola's
+          binarization.
 
-      template <typename P, typename T>
+          \param[in] p A site.
+          \param[in] simple An integral image of mean values.
+          \param[in] squared An integral image of squared mean values.
+          \param[in] win_width Window width.
+          \param[in] k Control the threshold value in the local
+                       window. The higher, the lower the threshold
+                       form the local mean m(x, y).
+          \param[in] R Maximum value of the standard deviation (128
+                       for grayscale documents).
+
+	  \return A threshold.
+      */
+      template <typename P, typename J>
       double
       compute_sauvola_threshold(const P& p,
-				const integral_image<T>& simple,
-				const integral_image<T>& squared,
+				const J& simple,
+				const J& squared,
 				int win_width, double k, double R)
       {
 	mln_precondition(simple.nrows() == squared.nrows());
@@ -146,39 +170,99 @@ namespace scribo
 
 	int row_min = std::max(0, p.row() - w_2);
 	int col_min = std::max(0, p.col() - w_2);
-	int row_max = std::min(simple.nrows() - 1, p.row() + w_2);
-	int col_max = std::min(simple.ncols() - 1, p.col() + w_2);
+
+	int row_max = std::min(static_cast<int>(simple.nrows()) - 1,
+			       p.row() + w_2);
+	int col_max = std::min(static_cast<int>(simple.ncols()) - 1,
+			       p.col() + w_2);
+
+
+// 	std::cout << "sauvola threshold : "
+// 		  << simple.domain() << " - "
+// 		  << row_max << " - "
+// 		  << col_max << std::endl;
 
 	double wh = (row_max - row_min + 1) * (col_max - col_min + 1);
 
 	// Mean.
-	double m_x_y_tmp = (simple(row_max, col_max)
-			    + simple(row_min, col_min)
-			    - simple(row_max, col_min)
-			    - simple(row_min, col_max));
+	double m_x_y_tmp = (simple.at_(row_max, col_max)
+			    + simple.at_(row_min, col_min)
+			    - simple.at_(row_max, col_min)
+			    - simple.at_(row_min, col_max));
 
 	double m_x_y = m_x_y_tmp / wh;
 
 	// Standard deviation.
-	double s_x_y_tmp = (squared(row_max, col_max)
-			    + squared(row_min, col_min)
-			    - squared(row_max, col_min)
-			    - squared(row_min, col_max));
+	double s_x_y_tmp = (squared.at_(row_max, col_max)
+			    + squared.at_(row_min, col_min)
+			    - squared.at_(row_max, col_min)
+			    - squared.at_(row_min, col_max));
 
 	double s_x_y = std::sqrt((s_x_y_tmp - (m_x_y_tmp * m_x_y_tmp) / wh) / (wh - 1.f));
 
 	// Thresholding.
-	double t_x_y = m_x_y * (1.0 + k * ((s_x_y / R) - 1.0));
+	double t_x_y = sauvola_threshold_formula(m_x_y, s_x_y, k, R);
 
 	return t_x_y;
       }
 
 
-      template <typename P, typename T>
+      template <typename P, typename J>
+      double
+      compute_sauvola_threshold_single_image(const P& p,
+					     const J& integral,
+					     int win_width)
+      {
+	// Window half width.
+	int w_2 = win_width >> 1;
+
+	int row_min = std::max(0, p.row() - w_2);
+	int col_min = std::max(0, p.col() - w_2);
+
+        //FIXME: offset (-4) should be replaced by the number of
+        //padding pixels.
+	int row_max = std::min(static_cast<int>(integral.nrows()) - 1,
+			       p.row() + w_2);
+	int col_max = std::min(static_cast<int>(integral.ncols()) - 1,
+			       p.col() + w_2);
+
+
+// 	std::cout << "sauvola threshold : "
+// 		  << simple.domain() << " - "
+// 		  << row_max << " - "
+// 		  << col_max << std::endl;
+
+	double wh = (row_max - row_min + 1) * (col_max - col_min + 1);
+
+	// Mean.
+	double m_x_y_tmp = (integral.at_(row_max, col_max).first()
+			    + integral.at_(row_min, col_min).first()
+			    - integral.at_(row_max, col_min).first()
+			    - integral.at_(row_min, col_max).first());
+
+	double m_x_y = m_x_y_tmp / wh;
+
+	// Standard deviation.
+	double s_x_y_tmp = (integral.at_(row_max, col_max).second()
+			    + integral.at_(row_min, col_min).second()
+			    - integral.at_(row_max, col_min).second()
+			    - integral.at_(row_min, col_max).second());
+
+	double s_x_y = std::sqrt((s_x_y_tmp - (m_x_y_tmp * m_x_y_tmp) / wh) / (wh - 1.f));
+
+	// Thresholding.
+	double t_x_y = m_x_y * (1.0 + 0.14 * ((s_x_y / 128) - 1.0));
+
+	return t_x_y;
+      }
+
+
+
+      template <typename P, typename J>
       double
       compute_sauvola_threshold(const P& p,
-				const integral_image<T>& simple,
-				const integral_image<T>& squared,
+				const J& simple,
+				const J& squared,
 				int win_width)
       {
 	// Badekas et al. said 0.34 was best.
@@ -198,92 +282,6 @@ namespace scribo
 } // end of namespace scribo
 
 
-namespace mln
-{
-
-  template <typename T>
-  class integral_image
-  {
-  public:
-
-    integral_image()
-      : img_(0), nrows_(0), ncols_(0)
-    {}
-
-    template<class F>
-    integral_image(const image2d<T>& i, F func)
-      : img_(0),
-	nrows_(0),
-	ncols_(0)
-    {
-      init_(i, func);
-    }
-
-    template<class F>
-    void init_(const image2d<T>& i, F func)
-    {
-      nrows_ = i.nrows();
-      ncols_ = i.ncols();
-
-      img_ = (unsigned long long**)malloc(sizeof(unsigned long long*) * nrows_);
-      for (int n = 0; n < nrows_; ++n)
-	img_[n] = (unsigned long long*)malloc(sizeof(unsigned long long) * ncols_);
-
-      img_[0][0] = func(i.at_(0, 0));
-
-      for (int row = 1; row < nrows_; ++row)
-	img_[row][0] = (*this)(row - 1, 0) + func(i.at_(row, 0));
-
-      for (int col = 1; col < ncols_; ++col)
-	img_[0][col] = (*this)(0, col - 1)
-	  + func(i.at_(0, col));
-
-      for (int row = 1; row < nrows_; ++row)
-	for (int col = 1; col < ncols_; ++col)
-	  img_[row][col] = (*this)(row - 1, col)
-	    + (*this)(row, col - 1)
-	    - (*this)(row - 1, col - 1)
-	    + func(i.at_(row, col));
-    }
-
-
-    ~integral_image()
-    {
-      for (int n = 0; n < nrows_; ++n)
-	free(img_[n]);
-      free(img_);
-    }
-
-    bool is_valid() const
-    {
-      return img_ != 0;
-    }
-
-    unsigned long long operator()(int row, int col) const
-    {
-      return img_[row][col];
-    }
-
-    int nrows() const
-    {
-      return nrows_;
-    }
-
-    int ncols() const
-    {
-      return ncols_;
-    }
-
-
-  private:
-    unsigned long long** img_;
-    int nrows_;
-    int ncols_;
-  };
-
-} // end of namespace mln
-
-
 
 namespace scribo
 {
@@ -300,23 +298,25 @@ namespace scribo
       namespace generic
       {
 
-	template <typename I, typename T>
+	template <typename I, typename J>
 	inline
 	mln_concrete(I)
-	sauvola_threshold(const I& input, unsigned window_size,
-			  integral_image<T>& simple,
-			  integral_image<T>& squared)
+	sauvola_threshold(const Image<I>& input_, unsigned window_size,
+			  Image<J>& simple_,
+			  Image<J>& squared_)
 	{
 	  trace::entering("scribo::binarization::impl::generic::sauvola_threshold");
 
+	  const I& input = exact(input_);
+	  J& simple = exact(simple_);
+	  J& squared = exact(squared_);
+
+	  mln_assertion(input.is_valid());
+	  mln_assertion(simple.is_valid());
+	  mln_assertion(squared.is_valid());
+
 	  typedef mln_value(I) V;
 	  typedef mln_site(I) P;
-
-	  // Compute the sum of all intensities of input
-	  simple.init_(input, internal::identity_);
-
-	  // Compute the sum of all squared intensities of input
-	  squared.init_(input, internal::square_);
 
 	  // Savaula Algorithm with I.I.
 
@@ -340,24 +340,24 @@ namespace scribo
 
 
 
-      template <typename I, typename T>
+      template <typename I, typename J>
       inline
       mln_concrete(I)
       sauvola_threshold_gl(const I& input, unsigned window_size,
-			   integral_image<T>& simple,
-			   integral_image<T>& squared)
+			   Image<J>& simple,
+			   Image<J>& squared)
       {
 	return impl::generic::sauvola_threshold(input, window_size,
 						simple, squared);
       }
 
 
-      template <typename I, typename T>
+      template <typename I, typename J>
       inline
       mln_ch_value(I, value::int_u8)
       sauvola_threshold_rgb8(const I& input, unsigned window_size,
-			     integral_image<T>& simple,
-			     integral_image<T>& squared)
+			     Image<J>& simple,
+			     Image<J>& squared)
       {
 	trace::entering("scribo::binarization::impl::sauvola_threshold_rgb8");
 
@@ -384,36 +384,36 @@ namespace scribo
     namespace internal
     {
 
-      template <unsigned n, typename I, typename T>
+      template <unsigned n, typename I, typename J>
       inline
       mln_ch_value(I, value::int_u<n>)
       sauvola_threshold_dispatch(const value::int_u<n>&, const I& input,
 		       unsigned window_size,
-		       integral_image<T>& simple,
-		       integral_image<T>& squared)
+		       J& simple,
+		       J& squared)
       {
 	return impl::sauvola_threshold_gl(input, window_size, simple, squared);
       }
 
-      template <typename I, typename T>
+      template <typename I, typename J>
       inline
       mln_ch_value(I, value::int_u8)
       sauvola_threshold_dispatch(const value::rgb8&, const I& input,
 		       unsigned window_size,
-		       integral_image<T>& simple,
-		       integral_image<T>& squared)
+		       J& simple,
+		       J& squared)
       {
 	return impl::sauvola_threshold_rgb8(input, window_size,
 					    simple, squared);
       }
 
-      template <typename I, typename T>
+      template <typename I, typename J>
       inline
       mln_ch_value(I, value::int_u8)
       sauvola_threshold_dispatch(const mln_value(I)&, const I& input,
 		       unsigned window_size,
-		       integral_image<T>& simple,
-		       integral_image<T>& squared)
+		       J& simple,
+		       J& squared)
       {
 	// No dispatch for this kind of value type.
 	mlc_abort(I)::check();
@@ -427,11 +427,11 @@ namespace scribo
 
 
 
-    template <typename I, typename T>
+    template <typename I, typename J>
     mln_ch_value(I, value::int_u8)
     sauvola_threshold(const Image<I>& input, unsigned window_size,
-		      integral_image<T>& simple,
-		      integral_image<T>& squared)
+		      Image<J>& simple,
+		      Image<J>& squared)
     {
       trace::entering("scribo::binarization::sauvola_threshold");
 
@@ -441,8 +441,9 @@ namespace scribo
       typedef mln_value(I) value_t;
       mln_ch_value(I, value::int_u8)
 	output = internal::sauvola_threshold_dispatch(value_t(), exact(input),
-						      window_size, simple,
-						      squared);
+						      window_size,
+						      exact(simple),
+						      exact(squared));
 
       trace::exiting("scribo::text::ppm2pbm");
       return output;
@@ -454,7 +455,10 @@ namespace scribo
     mln_ch_value(I, value::int_u8)
     sauvola_threshold(const Image<I>& input, unsigned window_size)
     {
-      mln::integral_image<value::int_u8> simple, squared;
+      mln_ch_value(I, double)
+	simple = init_integral_image(input, scribo::internal::identity_),
+	squared = init_integral_image(input, scribo::internal::square_);
+
       return sauvola_threshold(input, window_size, simple, squared);
     }
 

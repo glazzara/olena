@@ -25,6 +25,11 @@
 
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/data/stretch.hh>
+#include <mln/data/paste.hh>
+// #include <mln/debug/iota.hh>
+// #include <mln/debug/quiet.hh>
+// #include <mln/debug/println.hh>
+// #include <mln/debug/println_with_border.hh>
 #include <mln/debug/filename.hh>
 #include <mln/fun/i2v/array.hh>
 #include <mln/io/pbm/all.hh>
@@ -32,17 +37,30 @@
 #include <mln/io/ppm/all.hh>
 #include <mln/literal/colors.hh>
 #include <mln/math/sqr.hh>
-#include <mln/subsampling/subsampling.hh>
+#include <mln/math/abs.hh>
+
+#include <mln/subsampling/antialiased.hh>
+
 #include <mln/transform/influence_zone_geodesic.hh>
 #include <mln/util/timer.hh>
 #include <mln/value/int_u16.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/label_16.hh>
 #include <mln/value/rgb8.hh>
+#include <mln/border/equalize.hh>
+#include <mln/border/mirror.hh>
+#include <mln/border/adjust.hh>
 #include <mln/debug/filename.hh>
+
+#include <mln/core/box_runend_piter.hh>
+#include <mln/core/box_runstart_piter.hh>
+
+#include <scribo/subsampling/integral_single_image.hh>
+//#include <scribo/subsampling/integral.hh>
 
 #include <scribo/core/macros.hh>
 #include <scribo/core/object_image.hh>
+
 #include <scribo/filter/objects_small.hh>
 #include <scribo/filter/objects_large.hh>
 
@@ -50,152 +68,734 @@
 #include <scribo/filter/objects_thick.hh>
 
 #include <scribo/primitive/extract/objects.hh>
+
 #include <scribo/binarization/sauvola_threshold.hh>
+#include <scribo/binarization/internal/first_pass_functor.hh>
+
+#include <scribo/canvas/integral_browsing.hh>
+
 #include <scribo/debug/usage.hh>
 #include <scribo/debug/save_object_diff.hh>
+
 
 namespace mln
 {
 
+  using value::int_u8;
 
-// FIXME: do not use scribo's filters since they use object images.
-// Object images computes object bounding boxes which are not needed here.
-//
-//   template <typename L>
-//   mln_concrete(L)
-//   filter_small_objects(const Image<L>& objects,
-// 		       const mln_value(L)& nobjects, unsigned min_size)
-//   {
-//     card = labeling::compute(card_t(), objects, objects.nlabels());
 
-//     mln_concrete(L) output;
-//     initialize(output, objects);
-
-//     fun::i2v::array<bool> f(nobjects.next(), 0);
-//     for (unsigned i = 0; i < card.size(); ++i)
-
-//   }
-
-  template <typename I, typename T>
-  mln_ch_value(I, bool)
-  apply_sauvola(const I& intensity, const T& threshold, unsigned s)
+  unsigned my_find_root(image2d<unsigned>& parent, unsigned x)
   {
-    mln_precondition(intensity.domain() == threshold.domain());
-
-    mln_ch_value(I, bool) output;
-    initialize(output, intensity);
-
-    mln_piter(I) p(intensity.domain());
-    for_all(p)
-      output(p) = (intensity(p) <= threshold(p / s));
-
-    return output;
+    if (parent.element(x) == x)
+      return x;
+    return parent.element(x) = my_find_root(parent,
+					    parent.element(x));
   }
 
 
-  template <typename I>
-  mln_concrete(I)
-  enlarge(const Image<I>& input_, unsigned ratio)
+  image2d<int_u8>
+  compute_t_n_and_e_2(const image2d<int_u8>& sub, image2d<int_u8>& e_2,
+		      unsigned lambda_min, unsigned lambda_max,
+		      unsigned q, unsigned i, unsigned w,
+		      const image2d<util::couple<double,double> >& integral_sum_sum_2)
+  // lambdas: limits of component cardinality at this scale
   {
-    const I& input = exact(input_);
-    mln_precondition(input.is_valid());
+    typedef image2d<int_u8> I;
+    typedef point2d P;
 
-    mln_domain(I) bbox(input.domain().pmin() * ratio,
-		       input.domain().pmax() * ratio
-		       + (ratio - 1) * mln::down_right);
+    util::timer tt;
+    float t_;
 
-    mln_concrete(I) output(bbox);
+    unsigned ratio = std::pow(q, i - 2);  // Ratio in comparison to e_2
 
-    mln_site(I) first_p = input.domain().pmin();
-    for (def::coord j = geom::min_col(input);
-	 j <= geom::max_col(input); ++j)
-      for (def::coord i = geom::min_row(input);
-	   i <= geom::max_row(input); ++i)
+
+    tt.restart();
+
+    unsigned w_2 = w / 2 * ratio;
+
+    // 1st pass
+    scribo::binarization::internal::first_pass_functor< image2d<int_u8> >
+      f(sub);
+    scribo::canvas::integral_browsing(integral_sum_sum_2,
+				      ratio,
+				      w_2, w_2,
+				      f);
+
+//     debug::println("mask", f.msk);
+//     debug::println("parent", f.parent);
+//     debug::println("card", f.card);
+
+    t_ = tt;
+    if (mln::debug::quiet)
+      std::cout << "1st pass - " << t_ << std::endl;
+
+    tt.restart();
+
+    {
+      util::array<mln_value_(I) *> ptr(ratio);
+      unsigned nrows = geom::nrows(e_2);
+
+      mln_box_runend_piter_(I) sp(sub.domain()); // Backward.
+      unsigned ncols = sp.run_length();
+      for_all(sp)
       {
-	point2d p1(i, j);
-	point2d p2(first_p[0] + i * ratio, first_p[1] + j * ratio);
+	unsigned p = &sub(sp) - sub.buffer(); // Offset
+	P site = sp;
 
-	output(p2) = input(p1);
-	output(p2 + mln::right) = input(p1);
-	output(p2 + mln::down_right) = input(p1);
-	output(p2 + mln::down) = input(p1);
+	{
+	  P tmp = site * ratio;
+
+	  // FIXME: to be removed!
+	  if (tmp.row() + ratio >= nrows)
+	    ptr.resize(nrows - tmp.row());
+
+	  ptr(0) = &e_2(tmp);
+	  // FIXME: pointers could just be updated with an offset.
+	  for (unsigned j = 1; j < ptr.size(); ++j)
+	  {
+ 	    tmp[0] += 1;
+	    ptr(j) = & e_2(tmp);
+	  }
+	}
+
+	for (unsigned j = 0; j < ncols; ++j)
+	{
+	  if (f.msk.element(p))
+	  {
+
+	    mln_site_(I) sq = site * ratio;
+
+	    if (f.parent.element(p) == p)
+	    {
+	      // test over the component cardinality
+	      f.msk.element(p) = f.card.element(p) > lambda_min
+  		&& f.card.element(p) < lambda_max;
+
+	      if (f.msk.element(p) && e_2(sq) == 0u)
+	      {
+		for (unsigned l = 0; l < ptr.size(); ++l)
+		  std::memset(ptr(l), i, ratio * sizeof(mln_value_(I)));
+//  		debug(sq) = i;
+	      }
+
+	    }
+	    else
+	    {
+	      // Propagation
+	      f.msk.element(p) = f.msk.element(f.parent.element(p));
+
+	      if (f.msk.element(p) && e_2(sq) == 0u)
+	      {
+		for (unsigned l = 0; l < ptr.size(); ++l)
+		  std::memset(ptr(l), i, ratio * sizeof(mln_value_(I)));
+//  		debug(sq) = i;
+	      }
+
+	    }
+	  }
+
+	  for (unsigned l = 0; l < ptr.size(); ++l)
+	    ptr(l) -= ratio;
+
+	  --site[1];
+	  --p;
+	}
+
       }
 
-    return output;
+      t_ = tt;
+      if (mln::debug::quiet)
+	std::cout << "2nd pass - " << t_ << std::endl;
+
+//       io::pgm::save(e_2, mln::debug::filename("e.pgm", i));
+//       io::pgm::save(debug, mln::debug::filename("debug.pgm", i));
+//       debug::println(msk);
+//       io::pbm::save(f.msk, mln::debug::filename("mask.pbm", i));
+//       io::pgm::save(data::stretch(int_u8(), card), mln::debug::filename("card.pgm"));
+    } // end of 2nd pass
+
+//     io::pgm::save(f.t_sub, mln::debug::filename("t.pgm", i));
+    return f.t_sub;
+  }
+
+
+
+  template <typename I, typename J, typename K>
+  mln_ch_value(I, bool)
+  binarize_generic(const I& in, const J& e2, const util::array<K>& t_ima,
+		   unsigned s)
+  {
+    mln_ch_value(I,bool) out;
+    initialize(out, in);
+
+    typedef const mln_value(K)* ptr_type;
+
+    ptr_type ptr_t[5];
+    ptr_t[2] = & t_ima[2].at_(0, 0);
+    ptr_t[3] = & t_ima[3].at_(0, 0);
+    ptr_t[4] = & t_ima[4].at_(0, 0);
+
+
+    const mln_value(J)* ptr_e2   = & e2.at_(0, 0);
+    const mln_value(I)* ptr__in = & in.at_(0, 0);
+    bool*    ptr__out = & out.at_(0, 0);
+
+
+    // Since we iterate from a smaller image in the largest ones and
+    // image at scale 1 does not always have a size which can be
+    // divided by (4*s), some sites in the border may not be processed
+    // and we must skip them.
+    unsigned more_offset = in.border() - ((4 * s) - in.ncols() % (4 * s));
+
+    if (more_offset == (4 * s))
+      more_offset = 0; // No offset needed.
+
+    const int
+      nrows4 = t_ima[4].nrows(), ncols4 = t_ima[4].ncols(),
+
+
+      delta1  = in.delta_index(dpoint2d(+1, -(s - 1))),
+      delta1b = in.delta_index(dpoint2d(+1, -(s + s - 1))),
+      delta1c = in.delta_index(dpoint2d(-(s + s - 1), +1)),
+      delta1d = in.delta_index(dpoint2d(+1, -(s * 4 - 1))),
+      delta1e = in.delta_index(dpoint2d(-(s * 4 - 1), +1)),
+      delta1f = in.delta_index(dpoint2d(-(s - 1), +1)),
+
+      delta2  = t_ima[2].delta_index(dpoint2d(+1, -1)),
+      delta2b = t_ima[2].delta_index(dpoint2d(+1, -3)),
+      delta2c = t_ima[2].delta_index(dpoint2d(-3, +1)),
+
+      delta3  = t_ima[3].delta_index(dpoint2d(+1, -1)),
+
+      eor1 = in.delta_index(dpoint2d(+4 * s, - in.ncols() - in.border())) + more_offset,
+      eor2 = t_ima[2].delta_index(dpoint2d(+4,- t_ima[2].ncols())),
+      eor3 = t_ima[3].delta_index(dpoint2d(+2,- t_ima[3].ncols())),
+      eor4 = t_ima[4].delta_index(dpoint2d(+1,- t_ima[4].ncols()));
+
+    mln_value(J) threshold;
+    for (int row4 = 0; row4 < nrows4; ++row4)
+    {
+      for (int col4 = 0; col4 < ncols4; ++col4)
+      {
+	// top left  1
+	{
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1f; ptr__in += delta1f;
+	  }
+
+	  ++ptr_t[2]; ++ptr_e2;
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1b; ptr__in += delta1b;
+	  }
+
+	  ptr_t[2] += delta2; ptr_e2 += delta2;
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1f; ptr__in += delta1f;
+
+	  }
+
+	  ++ptr_t[2]; ++ptr_e2;
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1c; ptr__in += delta1c;
+	  }
+
+	  ptr_t[2] -= delta2; ptr_e2 -= delta2;
+	}
+
+	// top right 1
+	ptr_t[3] += 1;
+	{
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1f; ptr__in += delta1f;
+	  }
+
+	  ++ptr_t[2]; ++ptr_e2;
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1b; ptr__in += delta1b;
+	  }
+
+	  ptr_t[2] += delta2; ptr_e2 += delta2;
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1f; ptr__in += delta1f;
+	  }
+
+	  ++ptr_t[2]; ++ptr_e2;
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1d; ptr__in += delta1d;
+	  }
+
+	  ptr_t[2] += delta2b; ptr_e2 += delta2b;
+	}
+
+	// bot left  1
+	ptr_t[3] += delta3;
+	{
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1f; ptr__in += delta1f;
+	  }
+
+	  ++ptr_t[2]; ++ptr_e2;
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1b; ptr__in += delta1b;
+	  }
+
+	  ptr_t[2] += delta2; ptr_e2 += delta2;
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1f; ptr__in += delta1f;
+	  }
+
+	  ++ptr_t[2]; ++ptr_e2;
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1c; ptr__in += delta1c;
+	  }
+
+	  ptr_t[2] -= delta2; ptr_e2 -= delta2;
+	}
+
+	// bot right 1
+	ptr_t[3] += 1;
+	{
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1f; ptr__in += delta1f;
+	  }
+
+	  ++ptr_t[2]; ++ptr_e2;
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1b; ptr__in += delta1b;
+	  }
+
+	  ptr_t[2] += delta2; ptr_e2 += delta2;
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1f; ptr__in += delta1f;
+	  }
+
+	  ++ptr_t[2]; ++ptr_e2;
+	  threshold = *ptr_t[*ptr_e2];
+	  {
+	    for (unsigned i = 1; i < s; ++i)
+	    {
+	      for (unsigned j = 1; j < s; ++j)
+	      {
+		*ptr__out = *ptr__in < threshold;
+		++ptr__out; ++ptr__in;
+	      }
+
+	      *ptr__out = *ptr__in < threshold;
+	      ptr__out += delta1; ptr__in += delta1;
+	    }
+
+	    for (unsigned j = 1; j < s; ++j)
+	    {
+	      *ptr__out = *ptr__in < threshold;
+	      ++ptr__out; ++ptr__in;
+	    }
+	    *ptr__out = *ptr__in < threshold;
+	    ptr__out += delta1e; ptr__in += delta1e;
+	  }
+	}
+
+	// bot right -> next top left
+	ptr_t[2] += delta2c; ptr_e2 += delta2c;
+	ptr_t[3] = ptr_t[3] - delta3;
+	ptr_t[4] += 1;
+      }
+
+      // eof -> next bof
+      ptr__out += eor1; ptr__in  += eor1;
+      ptr_t[2] += eor2; ptr_e2 += eor2;
+      ptr_t[3] += eor3;
+      ptr_t[4] += eor4;
+    }
+
+
+//     mln::debug::println(out);
+
+    return out;
+  }
+
+
+
+
+  unsigned sub(unsigned nbr, unsigned down_scaling)
+  {
+    return (nbr + down_scaling - 1) / down_scaling;
   }
 
   template <typename I>
-  object_image(mln_ch_value(I, value::label_16))
-  get_objects(const Image<I>& input_,
-	      unsigned min_size, unsigned max_size,
-	      unsigned ratio, unsigned w, unsigned scale)
+  util::array<util::couple<mln_domain(I), unsigned> >
+  compute_sub_domains(const I& ima, unsigned n_scales, unsigned s)
   {
-    const I& input = exact(input_);
+    util::array<util::couple<unsigned, unsigned> > n(n_scales + 2);
 
-    mln_precondition(input.is_valid());
+    n(1) = make::couple(ima.nrows(), ima.ncols());
+    n(2) = make::couple(sub(n(1).first(), s),
+			sub(n(1).second(), s));
+    for (unsigned i = 3; i <= n_scales + 1; ++i)
+      n(i) = make::couple(sub(n(i - 1).first(), 2),
+			  sub(n(i - 1).second(), 2));
 
-    typedef mln_ch_value(I, value::label_16) L;
 
-    dpoint2d none(0, 0);
-    I input_sub = mln::subsampling::subsampling(input, none, ratio);
+    util::array<util::couple<mln_domain(I), unsigned> > out(n.size());
+    out(0) = make::couple(make::box2d(1,1), 1u);
+    out(1) = make::couple(make::box2d(ima.nrows(), ima.ncols()), 2u);
+    out(n_scales + 1) = make::couple(make::box2d(n(n_scales + 1).first(),
+						 n(n_scales + 1).second()),
+				     1u);
 
-    image2d<value::int_u8>
-      t = scribo::binarization::sauvola_threshold(input_sub, w);
+    for (unsigned i = n_scales; i > 1; --i)
+      out(i) = make::couple(make::box2d(2 * out(i + 1).first().nrows(),
+					2 * out(i + 1).first().ncols()),
+			    2 * out(i + 1).second());
 
-    image2d<bool> b = apply_sauvola(input_sub, t, 1);
+    out(1).second() = std::max(out(2).first().ncols() * s - ima.ncols(),
+			       out(2).first().nrows() * s - ima.nrows());
 
-    value::label_16 nb;
-    object_image(L) lbl = scribo::primitive::extract::objects(b, c8(), nb);
-    object_image(L) lbl_raw(lbl);
+//     out(1).second() = std::max(ima.ncols() % (4 * s),
+// 			       ima.nrows() % (4 * s));
 
-    if (min_size > 0)
-      lbl = scribo::filter::objects_small(lbl, min_size);
-    if (max_size > 0)
-      lbl = scribo::filter::objects_large(lbl, max_size);
-    scribo::debug::save_object_diff(lbl_raw, lbl,
-				    mln::debug::filename("filter_diff.ppm", scale + 2));
+// out(2).first().ncols() * s - ima.ncols(),
+// 			       out(2).first().nrows() * s - ima.nrows() );
 
-    return lbl;
+    return out;
   }
+
 
 
   bool
   check_args(int argc, char * argv[])
   {
-    if (argc < 7)
+    if (argc < 5 || argc > 7)
       return false;
 
-    int nb_scale = atoi(argv[3]);
-    int s = atoi(argv[4]);
-    int q = atoi(argv[5]);
+//     int nb_scale = atoi(argv[3]);
+    int s = atoi(argv[3]);
+//     int q = atoi(argv[5]);
 
-    if (q < 2)
+//     if (q < 2)
+//     {
+//       std::cout << "q must be greater than 2." << std::endl;
+//       return false;
+//     }
+    if (s < 1 || s > 3)// || s < q)
     {
-      std::cout << "q must be greater than 2." << std::endl;
-      return false;
-    }
-    if (s < 1 || s < q)
-    {
-      std::cout << "s must be greater or equal to 1 and greater than q."
+      std::cout << "s must be set to 2 or 3."
 		<< std::endl;
       return false;
     }
 
-    if (nb_scale < 1)
-    {
-      std::cout << "Not enough scales." << std::endl;
-      return false;
-    }
 
-    if ((argc - 7) != (nb_scale - 1))
-    {
-      std::cout << "Not enough area threshold."
-		<< "There must be nb_scale - 1 thresholds."
-		<< std::endl;
-      return false;
-    }
+//     if (nb_scale < 1)
+//     {
+//       std::cout << "Not enough scales." << std::endl;
+//       return false;
+//     }
+
+//     if ((argc - 7) != (nb_scale - 1))
+//     {
+//       std::cout << "Not enough area threshold."
+// 		<< "There must be nb_scale - 1 thresholds."
+// 		<< std::endl;
+//       return false;
+//     }
 
     return true;
+  }
+
+
+  void data_rand(image2d<unsigned>& e2)
+  {
+    unsigned v = 2;
+    mln_piter_(box2d) p(e2.domain());
+    for_all(p)
+    {
+      e2(p) = v++;
+      if (v == 5) v = 2;
+    }
   }
 
 
@@ -207,11 +807,10 @@ namespace mln
 const char *args_desc[][2] =
 {
   { "input.pgm", "A graylevel image." },
-  { "w", "Window size." },
-  { "nb_scale",    "Number of scales (Common value: 3)." },
+  { "w", "Window size. (Common value: 51)" },
   { "s", "First subsampling ratio (Common value: 2)." },
-  { "q", "Next subsampling ratio (Common value: 2)." },
-  { "<area threshold> (Common values: 200 800)",    "Area threshold" },
+  { "min_area",    "Minimum object area (relative to scale 2) (Common value: 200)" },
+  { "debug", "Display debug/bench data if set to 1" },
   {0, 0}
 };
 
@@ -229,11 +828,10 @@ int main(int argc, char *argv[])
 
   typedef image2d<label_16> L;
 
-
   if (!check_args(argc, argv))
     return scribo::debug::usage(argv,
-				"Binarization of a color image based on Sauvola's algorithm.",
-				"input.pgm w nb_scale s q <area thresholds>",
+				"Multi-Scale Binarization of a color image based on Sauvola's algorithm.",
+				"input.pgm w s area_thresholds output.pbm [debug]",
 				args_desc, "A binary image.");
 
   trace::entering("main");
@@ -244,163 +842,233 @@ int main(int argc, char *argv[])
   unsigned w = atoi(argv[2]);
 
   // First subsampling scale.
-  unsigned s = atoi(argv[4]);
+  unsigned s = atoi(argv[3]);
 
   // Number of subscales.
-  unsigned nb_subscale = atoi(argv[3]);
+  unsigned nb_subscale = 3;//atoi(argv[3]);
 
   // Subscale step.
-  unsigned q = atoi(argv[5]);
+  unsigned q = 2;//atoi(argv[5]);
 
-  std::cout << "Running Sauvola_ms with w = " << w
-	    << ", s = " << s
-	    << ", nb_subscale = " << nb_subscale
-	    << ", q = " << q
-	    << std::endl;
+  mln::debug::quiet = true;
+
+  if (argc == 7)
+    mln::debug::quiet = ! atoi(argv[6]);
+
+
+  if (mln::debug::quiet)
+    std::cout << "Running Sauvola_ms with w = " << w
+	      << ", s = " << s
+	      << ", nb_subscale = " << nb_subscale
+	      << ", q = " << q
+	      << std::endl;
 
   typedef image2d<value::int_u8> I;
   dpoint2d none(0, 0);
 
-  mln::util::timer timer_;
+  mln::util::timer
+    timer_,
+    sauvola_timer_;;
 
-  timer_.start();
+  // Tmp variable used for timer results;
+  float t_;
+
   I input_full;
   io::pgm::load(input_full, argv[1]);
-  std::cout << "Image loaded - " << timer_ << std::endl;
+
+  {
+    unsigned max_dim = math::max(input_full.ncols() / 2,
+				 input_full.nrows() / 2);
+    if (w > max_dim)
+    {
+      std::cout << "------------------" << std::endl;
+      std::cout << "The window is too large! Image size is only "
+		<< input_full.nrows() << "x" << input_full.ncols()
+		<< std::endl
+		<< "Window size must not exceed " << max_dim
+		<< std::endl;
+      return 1;
+    }
+  }
+
+//   I input_full(9,9);
+//   mln::debug::iota(input_full);
+
+  sauvola_timer_.start();
+
+  unsigned lambda_min = atoi(argv[4]);
+  unsigned lambda_max = lambda_min * q; // * atoi(argv[7])
+
+
+  util::array<I> t_ima;
+
+  // Make sure t_ima indexes start from 2.
+  {
+    I dummy(1,1);
+    for (unsigned i = 0; i < nb_subscale + 2; ++i)
+      t_ima.append(dummy);
+  }
+
+
+
+  image2d<int_u8> e_2;
+  util::array<I> sub_ima;
+
+  // Make sure sub_ima indexes start from 2.
+  {
+    I dummy(1,1);
+    sub_ima.append(dummy);
+    sub_ima.append(dummy);
+  }
+
 
   timer_.restart();
 
-  util::array<object_image(L)> lbls;
+  util::array<util::couple<box2d, unsigned> >
+    sub_domains = compute_sub_domains(input_full, nb_subscale, s);
+
+  if (mln::debug::quiet)
+    std::cout << "adjusting input border to " << sub_domains(1).second()
+	      << std::endl;
+
+  border::adjust(input_full, sub_domains(1).second());
+  border::mirror(input_full);
+
+//   mln::debug::println_with_border(input_full);
+
+  t_ = timer_;
+  if (mln::debug::quiet)
+    std::cout << "sub domains computed and adjust input border size  - "
+	      << t_ << std::endl;
+
+  // Resize input and compute integral images.
+  timer_.restart();
+  image2d<util::couple<double,double> > integral_sum_sum_2;
+
+  if (mln::debug::quiet)
+    std::cout << "sub_domain(2).domain() == " << sub_domains(2).first() << std::endl;
+
+  sub_ima.append(scribo::subsampling::integral(input_full, s,
+					       integral_sum_sum_2,
+					       sub_domains[2].first(),
+					       sub_domains[2].second()));
+
+//   mln::debug::println(integral_sum_sum_2);
+
+  t_ = timer_;
+  if (mln::debug::quiet)
+    std::cout << "subsampling 1 -> 2 And integral images - " << t_
+	      << " - nsites = "
+	      << input_full.domain().nsites() << " -> "
+	      << sub_ima[2].domain().nsites() << " - "
+	      << input_full.domain() << " -> "
+	      << sub_ima[2].domain() << std::endl;
 
 
-
-  // First subsampling 1/s
-
-//  std::cout << "1/" << s << std::endl;
-  timer_.start();
-  I input = mln::subsampling::subsampling(input_full, none, s);
-
-  integral_image<int_u8> simple, squared;
-  image2d<int_u8>
-    t_1 = scribo::binarization::sauvola_threshold(input, w, simple, squared);
-
-  label_16 nb1;
-  image2d<bool> b_1 = apply_sauvola(input, t_1, 1);
-
+  for (unsigned i = 3; i <= nb_subscale + 1; ++i)
   {
-    lbls.append(primitive::extract::objects(b_1, c8(), nb1));
-    object_image(L) lbl_raw(lbls[0]);
-    lbls[0] = filter::objects_large(lbls[0], atoi(argv[6]));
-    scribo::debug::save_object_diff(lbl_raw, lbls[0],
-				    mln::debug::filename("filter_diff.ppm", 2));
-  }
-
-  std::cout << "Scale 2 - 1/" << s << " Done - " << timer_ << std::endl;
-
-
-
-
-  // Additional subscales.
-  for (unsigned i = 1; i < nb_subscale; ++i)
-  {
-    unsigned ratio = std::pow(q, i);
-//    std::cout << "Scale " << 2 + i << " - 1/" << s * ratio << std::endl;
     timer_.restart();
-    unsigned
-      min_size = atoi(argv[5 + i]) / ratio,
-      max_size;
-    if ((3 + i) == static_cast<unsigned>(argc))
-      max_size = 0; // Last subscale, so not max size limit.
-    else
-      max_size = atoi(argv[6 + i]) / ratio;
-
-    lbls.append(get_objects(input, min_size, max_size, ratio, w, i));
-    std::cout << "Scale " << 2 + i
-	      << " - 1/" << s * ratio
-	      << " Done - " << timer_ << std::endl;
+    sub_ima.append(mln::subsampling::antialiased(sub_ima[i - 1], q, none,
+						 sub_domains[i].first(),
+						 sub_domains[i].second()));
+    t_ = timer_;
+    if (mln::debug::quiet)
+      std::cout << "subsampling " << (i - 1) << " -> " << i
+		<< " - " << t_
+		<< " - nsites = "
+		<< sub_ima[i].domain().nsites() << " - "
+		<< sub_ima[i].domain()
+		<< std::endl;
   }
 
-  std::cout << "--------" << std::endl;
 
-  // Constructing "scale image".
-  image2d<int_u8> e;
-  initialize(e, input);
+  initialize(e_2, sub_ima[2]);
+  data::fill(e_2, 0u);
 
-  data::fill(e, 0);
+  // Compute threshold image.
 
-  typedef object_image(L) obj_t;
-
-  for (int i = nb_subscale - 1; i >= 0; --i)
+  // Highest scale -> no maximum component size.
   {
-    unsigned ratio = std::pow(q, i);
+    timer_.restart();
+    int i = sub_ima.size() - 1;
+    unsigned ratio = std::pow(q, i - 2); // Ratio compared to e_2
+    t_ima[i] = compute_t_n_and_e_2(sub_ima[i], e_2,
+				   lambda_min / ratio,
+				   mln_max(unsigned),
+				   q, i, w, integral_sum_sum_2);
 
-    std::cout << "Scale " << 2 + i << " - 1/" << s * ratio << " merged" << std::endl;
-
-    mln_piter_(obj_t) p(lbls[i].domain());
-    for_all(p)
-      if (lbls[i](p) != 0 && e(p * ratio) == 0)
-      {
-	box2d b(p * ratio, p * ratio + mln::down_right * (ratio - 1));
-	data::fill((e | b).rw(), i + 1);
-      }
+    t_ = timer_;
+    if (mln::debug::quiet)
+      std::cout << "Scale " << i
+		<< " - 1/"  << s * ratio
+		<< " compute t_n and update e - " << t_ << std::endl;
   }
 
-  std::cout << "--------" << std::endl;
-
-  /// Saving "scale image".
+  // Other scales -> maximum and minimum component size.
   {
-    mln::fun::i2v::array<value::int_u8> f(nb_subscale + 1, 0);
-    for (unsigned i = 1; i <= nb_subscale; ++i)
-      f(i) = 255 / nb_subscale * i;
+    for (int i = sub_ima.size() - 2; i > 2; --i)
+    {
+      timer_.restart();
+      unsigned ratio = std::pow(q, i - 2); // Ratio compared to e_2
+      t_ima[i] = compute_t_n_and_e_2(sub_ima[i], e_2,
+				     lambda_min / ratio,
+				     lambda_max / ratio,
+				     q, i, w, integral_sum_sum_2);
 
-    io::pgm::save(e, "e_raw.pgm");
-    io::pgm::save(data::transform(e, f), "e.pgm");
+      t_ = timer_;
+      if (mln::debug::quiet)
+	std::cout << "Scale " << i
+		  << " - 1/"  << s * ratio
+		  << " compute t_n and update e - " << t_ << std::endl;
+    }
   }
 
-
-  /// Saving influence zone scale image.
-  image2d<int_u8>
-    e_ext = transform::influence_zone_geodesic(e, c8(), mln_max(unsigned));
-  io::pgm::save(e_ext, "e_ext.pgm");
-
-
-  /// Creating window size image
-  std::cout << "Creating window size image..." << std::endl;
-  mln::fun::i2v::array<value::int_u16> f(nb_subscale, 0);
-  for (unsigned i = 0; i < nb_subscale; ++i)
+  // Lowest scale -> no minimum component size.
   {
-    unsigned ratio = std::pow(q, i);
-    f(i) = ratio * w;
+    timer_.restart();
+    t_ima[2] = compute_t_n_and_e_2(sub_ima[2], e_2, 0, lambda_max,
+				   1, 2, w, integral_sum_sum_2);
+    t_ = timer_;
+    if (mln::debug::quiet)
+      std::cout << "Scale " << 2
+		<< " - 1/" << s
+		<< " compute t_n and update e - " << t_ << std::endl;
+
   }
 
-  image2d<int_u16> wsize = data::transform(e_ext, f);
-  io::pgm::save(data::stretch(int_u8(), wsize), "wsize.pgm");
+  if (mln::debug::quiet)
+    std::cout << "--------" << std::endl;
+//   io::pgm::save(e_2, mln::debug::filename("e.pgm"));
 
-
-
-  /// Constructing threshold image
-  image2d<int_u8> t;
-  initialize(t, input);
-
-  std::cout << "Computing threshold image..." << std::endl;
-  timer_.restart();
-  mln_piter_(L) p(input.domain());
-  for_all(p)
-    t(p) = binarization::internal::compute_sauvola_threshold(p,
-							     simple,
-							     squared,
-							     wsize(p));
-  std::cout << "Compute t Done - " << timer_ << std::endl;
-
-  io::pgm::save(t, "t.pgm");
 
 
   timer_.restart();
+  e_2 = transform::influence_zone_geodesic(e_2, c8());
+  t_ = timer_;
+  if (mln::debug::quiet)
+    std::cout << "influence zone - " << t_ << std::endl;
 
-  /// Applying threshold image and save.
-  io::pbm::save(apply_sauvola(input_full, t, s), argv[argc - 1]);
-  std::cout << "sauvola applied and saved Done - " << timer_ << std::endl;
 
 
-  trace::exiting("main");
+// Saving influence zone scale image.
+//   io::pgm::save(e_2, mln::debug::filename("e_ext.pgm"));
+//   io::pbm::save(bin, argv[8]);
+//   io::pgm::save(t, mln::debug::filename("t.pgm"));
+
+//   for (unsigned i = 2; i < t_ima.size(); ++i)
+//     io::pgm::save(t_ima[i], mln::debug::filename("t.pgm", i));
+
+
+  timer_.restart();
+  image2d<bool> out_new = binarize_generic(input_full, e_2, t_ima, s);
+//  image2d<bool> out_new = binarize(input_full, e_2, t_ima);
+  t_ = timer_;
+  if (mln::debug::quiet)
+    std::cout << "Compute bin - " << t_ << std::endl;
+
+  t_ = sauvola_timer_;
+  if (mln::debug::quiet)
+    std::cout << "Sauvola : " << t_ << std::endl;
+  io::pbm::save(out_new, argv[5]);
 }
+

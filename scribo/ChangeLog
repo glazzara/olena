@@ -1,3 +1,23 @@
+2009-12-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Optimize Sauvola's multiscale binarization.
+
+	* core/init_integral_image.hh: New.
+
+	* src/binarization/sauvola_ms.cc: Optimize and make it more
+	robust.
+
+	* canvas/integral_browsing.hh: New canvas to browse and compute
+	data in an integral image.
+
+	* binarization/internal/first_pass_functor.hh: New functor to be
+	used in the integral browsing.
+
+	* binarization/sauvola_threshold.hh: Add new overloads.
+
+	* subsampling/integral_single_image.hh: Subsample an image and
+	compute integral images at the same time.
+
 2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a new example in Scribo.
