@@ -1,5 +1,13 @@
 2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new example for finding text in pictures.
+
+	* src/Makefile.am: Add new target.
+
+	* src/text_in_photo_pbm_fast.cc: New.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	First draft of the dematerialization wizard.
 
 	* demo/shared/icons/Symbols-Delete-icon.png,

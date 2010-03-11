@@ -35,7 +35,7 @@ bin_PROGRAMS = 				\
   text_in_photo 			\
   text_in_photo_ppm 			\
   text_in_photo_ppm_fast		\
-  text_in_photo_ppm_fast_2		\
+  text_in_photo_pbm_fast		\
   text_in_photo_invert
 
 
@@ -43,7 +43,7 @@ pbm_lines_in_doc_SOURCES = pbm_lines_in_doc.cc
 text_in_photo_SOURCES = text_in_photo.cc
 text_in_photo_ppm_SOURCES = text_in_photo_ppm.cc
 text_in_photo_ppm_fast_SOURCES = text_in_photo_ppm_fast.cc
-text_in_photo_ppm_fast_2_SOURCES = text_in_photo_ppm_fast_2.cc
+text_in_photo_pbm_fast_SOURCES = text_in_photo_pbm_fast.cc
 text_in_photo_invert_SOURCES = text_in_photo_invert.cc
 
 
@@ -70,6 +70,7 @@ if HAVE_TIFF
 			   $(TESSERACT_LDFLAGS) \
 			   $(TIFF_LDFLAGS) \
 			   -lpthread -lhpdf
+
 
     bin_PROGRAMS	+= text_in_article
     text_in_article_CPPFLAGS = $(AM_CPPFLAGS) \
