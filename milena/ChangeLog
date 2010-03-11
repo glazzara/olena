@@ -1,3 +1,7 @@
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/draw/dashed_line.hh: New draw line routine.
+
 2010-02-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add white gaussian noise function.
