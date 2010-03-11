@@ -1,5 +1,11 @@
 2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a reconstruction algorithm.
+
+	* primitive/internal/rd.hh: New.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes.
 
 	* binarization/sauvola_ms.hh: Add a missing include.
