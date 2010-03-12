@@ -1,5 +1,22 @@
 2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use texi2dvi to produce PDF from LaTeX.
+
+	* doc/Makefile.am: Include $(top_srcdir)/build-aux/tex.mk.
+	(TEXI2DVI_FLAGS): Append -I $(DOC_SRCDIR), -I $(OUTPUTS_SRCDIR),
+	-I $(SPLIT_OUTPUTS_SRCDIR), -I $(IMG_SRCDIR) and -I
+	$(SPLIT_EXAMPLES_SRCDIR).
+	(technical_TEXINPUTS, tutorial_TEXINPUTS)
+	(white_paper_TEXINPUTS, ref_guide_TEXINPUTS):
+	Remove variables.
+	($(TECHNICAL_PDF), $(TUTORIAL_PDF))
+	($(WHITE_PAPER_PDF), $(REF_GUIDE_PDF)):
+	Reduce these rules to a list of extra dependencies and let the
+	generic tex-to-pdf rule do the job.
+	($(WHITE_PAPER_HTML)): Adjust rule.
+
+2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Merge doc/ Makefile helpers into doc/Makefile.am.
 
 	* milena/doc/doc.mk,

@@ -79,6 +79,17 @@ doc-devel-html: tutorial-html ref-guide-html white-paper-html \
 		ref-doc-devel
 
 
+## --------------------- ##
+## LaTeX configuration.  ##
+## --------------------- ##
+
+include $(top_srcdir)/build-aux/tex.mk
+
+# FIXME: Check this list.
+TEXI2DVI_FLAGS +=							\
+  -I $(DOC_SRCDIR) -I $(OUTPUTS_SRCDIR) -I $(SPLIT_OUTPUTS_SRCDIR)	\
+  -I $(IMG_SRCDIR) -I $(SPLIT_EXAMPLES_SRCDIR)
+
 ## ----------------------- ##
 ## Doxygen documentation.  ##
 ## ----------------------- ##
@@ -266,10 +277,6 @@ maintainer-clean-local:
 
 .PHONY: technical technical-html technical-pdf
 
-technical_TEXINPUTS ="$(DOC_SRCDIR):$(OUTPUTS_SRCDIR):$(srcdir):\
-$(SPLIT_OUTPUTS_SRCDIR):$(IMG_SRCDIR):$(SPLIT_EXAMPLES_SRCDIR):"
-
-
 technical: technical-html technical-pdf
 
 technical_dir = $(doc_dir)/technical
@@ -318,12 +325,8 @@ $(TECHNICAL_HH): $(technical_dir)/technical.tex $(technical_dependencies)
 # Final product.
 TECHNICAL_PDF = $(technical_dir)/technical.pdf
 technical-pdf: $(TECHNICAL_PDF)
-$(TECHNICAL_PDF): $(technical_dir)/technical.tex $(technical_dependencies)
-	TEXINPUTS=$(technical_TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(technical_TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(technical_TEXINPUTS) pdflatex $<	\
-	test "x$(technical_dir)" != x.			\
-	  && mv -f technical.pdf $(technical_dir)
+# Extra dependencies.
+$(TECHNICAL_PDF): $(technical_dependencies)
 
 dist_doc_DATA += $(TECHNICAL_PDF)
 
@@ -352,9 +355,6 @@ CLEANFILES +=								\
 ## ---------- ##
 
 .PHONY: tutorial tutorial-html tutorial-pdf
-
-tutorial_TEXINPUTS = $(DOC_SRCDIR):$(OUTPUTS_SRCDIR):$(IMG_SRCDIR):
-
 
 tutorial: tutorial-html tutorial-pdf
 
@@ -407,12 +407,8 @@ $(TUTORIAL_HH): $(tutorial_dir)/tutorial.tex $(tutorial_dependencies)
 # Final product.
 TUTORIAL_PDF = $(tutorial_dir)/tutorial.pdf
 tutorial-pdf: $(TUTORIAL_PDF)
-$(TUTORIAL_PDF): $(tutorial_dir)/tutorial.tex $(tutorial_dependencies)
-	TEXINPUTS=$(tutorial_TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(tutorial_TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(tutorial_TEXINPUTS) pdflatex $<	\
-	test x"$(tutorial_dir)" != x.			\
-	  && mv -f tutorial.pdf $(tutorial_dir)
+# Extra dependencies.
+$(TUTORIAL_PDF): $(tutorial_dependencies)
 
 dist_doc_DATA += $(TUTORIAL_PDF)
 
@@ -443,8 +439,6 @@ CLEANFILES +=								\
 .PHONY: white-paper white-paper-html white-paper-pdf
 
 white_paper_dir = $(doc_dir)/white_paper
-
-white_paper_TEXINPUTS = $(DOC_SRCDIR):$(white_paper_dir):
 
 PNGS =								\
   $(white_paper_dir)/figures/house.png				\
@@ -487,24 +481,20 @@ white-paper: white-paper-pdf white-paper-html
 # dir).
 
 # FIXME: Use texi2dvi/TeX4ht instead of plain hevea.
+# FIXME: Why is WHITE_PAPER_HTML generated in a subdirectory?
 WHITE_PAPER_HTML = $(white_paper_dir)/white_paper_html/index.html
 white-paper-html: $(WHITE_PAPER_HTML)
 $(WHITE_PAPER_HTML): $(white_paper_dir)/white_paper.tex $(EPSS)
 	test -d $(white_paper_dir)/white_paper_html	\
 	  || mkdir $(white_paper_dir)/white_paper_html
-	TEXINPUTS=$(white_paper_TEXINPUTS) hevea -O -fix $< -o $@
+	TEXINPUTS="$(DOC_SRCDIR):$(white_paper_dir):" hevea -O -fix $< -o $@
 	$(doc_dir)/tools/clearbanner.sh $@
 
 
 WHITE_PAPER_PDF = $(white_paper_dir)/white_paper.pdf
 white-paper-pdf: $(WHITE_PAPER_PDF)
-$(WHITE_PAPER_PDF): $(white_paper_dir)/white_paper.tex $(PNGS)
-	TEXINPUTS=$(white_paper_TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(white_paper_TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(white_paper_TEXINPUTS) pdflatex $<	\
-	test "x$(white_paper_dir)" != x.		\
-	  && mv -f white_paper.pdf $(white_paper_dir)
-
+# Extra dependencies.
+$(WHITE_PAPER_PDF): $(PNGS)
 
 dist_doc_DATA +=				\
   $(WHITE_PAPER_HTML)				\
@@ -531,10 +521,6 @@ clean-local:
 ## ----------------- ##
 
 .PHONY: ref-guide ref-guide-html ref-guide-pdf
-
-ref_guide_TEXINPUTS = "$(DOC_SRCDIR):$(OUTPUTS_SRCDIR):\
-$(SPLIT_OUTPUTS_SRCDIR):$(IMG_SRCDIR):$(SPLIT_EXAMPLES_SRCDIR):"
-
 
 ref-guide: ref-guide-html ref-guide-pdf
 
@@ -588,12 +574,8 @@ $(REF_GUIDE_HH): $(ref_guide_dir)/ref_guide.tex $(ref_guide_dependencies)
 # Final product.
 REF_GUIDE_PDF = $(ref_guide_dir)/ref_guide.pdf
 ref-guide-pdf: $(REF_GUIDE_PDF)
-$(REF_GUIDE_PDF): $(ref_guide_dir)/ref_guide.tex $(ref_guide_dependencies)
-	TEXINPUTS=$(ref_guide_TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(ref_guide_TEXINPUTS) pdflatex $<
-	TEXINPUTS=$(ref_guide_TEXINPUTS) pdflatex $<	\
-	test x"$(ref_guide_dir)" != x.			\
-	  && mv -f ref_guide.pdf $(ref_guide_dir)
+# Extra dependencies.
+$(REF_GUIDE_PDF): $(ref_guide_dependencies)
 
 dist_doc_DATA += $(REF_GUIDE_PDF)
 
