@@ -245,6 +245,10 @@ dnl>>
 # Ask for config.h creation.
 AC_CONFIG_HEADERS([config.h])
 
+# Ask for the creation of a milena/doc/tool/data.hh, used to access to
+# data (images) from the documentation.
+AC_CONFIG_FILES([milena/doc/tools/data.hh])
+
 # Ask for the Makefile creations.
 AC_CONFIG_FILES([
   Makefile

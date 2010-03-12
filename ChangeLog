@@ -1,3 +1,7 @@
+2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure milena/doc/tools/data.hh.
+
 2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Require Doxygen 1.5.6 at bootstrapping time.
