@@ -15,13 +15,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
 
-## Process this file through Automake to create Makefile.in.
-
-examples_dir = $(doc_dir)/examples
-
-PROGRAMS_examples =	\
+PROGRAMS_examples =		\
   accu-right-instanciation 	\
   borderthickness 		\
   box2d-bbox 			\
@@ -32,10 +27,10 @@ PROGRAMS_examples =	\
   extension-ignore 		\
   fill 				\
   fill-call-1			\
+  fill-imageif-cfun 		\
   fill-part-image 		\
   fill-subdomain 		\
   fill-subdomain-shorter	\
-  fill-imageif-cfun 		\
   first_routine 		\
   forall-piter  		\
   fun-p2v-1 			\
@@ -52,14 +47,13 @@ PROGRAMS_examples =	\
   ima2d-6-clone			\
   ima2d-7 			\
   ima2d-rot 			\
-  ima-size 			\
   labeling-compute 		\
   logical-not 			\
   mln_var 			\
+  parray-append 		\
   parray-bbox 			\
   paste 			\
   paste-call-1 			\
-  parray-append 		\
   point-1 			\
   predicate-1 			\
   win-create-1 			\
@@ -82,198 +76,262 @@ PROGRAMS_examples += 	\
   tuto4_site_set_create
 
 EXTRA_PROGRAMS = $(PROGRAMS_examples)
-
-# FIXME: Is this really needed?
 CLEANFILES += $(PROGRAMS_examples)
 
-accu_right_instanciation_SOURCES = $(examples_dir)/accu-right-instanciation.cc
-borderthickness_SOURCES = $(examples_dir)/borderthickness.cc
-box2d_bbox_SOURCES = $(examples_dir)/box2d-bbox.cc
-domain_display_SOURCES = $(examples_dir)/domain-display.cc
-dpoint_1_SOURCES = $(examples_dir)/dpoint-1.cc
-estim_sites_SOURCES = $(examples_dir)/estim-sites.cc
-extend_SOURCES = $(examples_dir)/extend.cc
-extension_ignore_SOURCES = $(examples_dir)/extension-ignore.cc
-fill_SOURCES = $(examples_dir)/fill.cc
-fill_call_1_SOURCES = $(examples_dir)/fill-call-1.cc
-fill_part_image_SOURCES = $(examples_dir)/fill-part-image.cc
-fill_subdomain_SOURCES = $(examples_dir)/fill-subdomain.cc
-fill_subdomain_shorter_SOURCES = $(examples_dir)/fill-subdomain-shorter.cc
-fill_imageif_cfun_SOURCES = $(examples_dir)/fill-imageif-cfun.cc
-first_routine_SOURCES = $(examples_dir)/tuto3/first_routine.cc
-forall_piter_SOURCES = $(examples_dir)/forall-piter.cc
-fun_p2v_1_SOURCES = $(examples_dir)/fun-p2v-1.cc
-graph_data_SOURCES = $(examples_dir)/graph-data.cc
-graph_iter_SOURCES = $(examples_dir)/graph-iter.cc
-ima_has_SOURCES = $(examples_dir)/ima-has.cc
-ima_save_SOURCES = $(examples_dir)/ima-save.cc
-ima_size_SOURCES = $(examples_dir)/ima-size.cc
-ima2d_1_SOURCES = $(examples_dir)/ima2d-1.cc
-ima2d_2_SOURCES = $(examples_dir)/ima2d-2.cc
-ima2d_3_SOURCES = $(examples_dir)/ima2d-3.cc
-ima2d_4_SOURCES = $(examples_dir)/ima2d-4.cc
-ima2d_5_SOURCES = $(examples_dir)/ima2d-5.cc
-ima2d_6_clone_SOURCES = $(examples_dir)/ima2d-6-clone.cc
-ima2d_7_SOURCES = $(examples_dir)/ima2d-7.cc
-ima2d_rot_SOURCES = $(examples_dir)/ima2d-rot.cc
-labeling_compute_SOURCES = $(examples_dir)/labeling-compute.cc
-logical_not_SOURCES = $(examples_dir)/logical-not.cc
-mln_var_SOURCES = $(examples_dir)/mln_var.cc
-paste_SOURCES = $(examples_dir)/paste.cc
-paste_call_1_SOURCES = $(examples_dir)/paste-call-1.cc
-parray_append_SOURCES = $(examples_dir)/parray-append.cc
-parray_bbox_SOURCES = $(examples_dir)/parray-bbox.cc
-point_1_SOURCES = $(examples_dir)/point-1.cc
-predicate_1_SOURCES = $(examples_dir)/predicate-1.cc
-win_create_1_SOURCES = $(examples_dir)/win-create-1.cc
-win_create_2_SOURCES = $(examples_dir)/win-create-2.cc
+# FIXME: Careful, this will only work if this file is included by
+# `milena/doc/Makefile.am', since `examples/' is a subdirectory of
+# `milena/doc/'.  Anyway, this file is to be eventually inlined in
+# `milena/doc/Makefile.am', so this is not a big deal.
+accu_right_instanciation_SOURCES = examples/accu-right-instanciation.cc
+borderthickness_SOURCES = examples/borderthickness.cc
+box2d_bbox_SOURCES = examples/box2d-bbox.cc
+domain_display_SOURCES = examples/domain-display.cc
+dpoint_1_SOURCES = examples/dpoint-1.cc
+estim_sites_SOURCES = examples/estim-sites.cc
+extend_SOURCES = examples/extend.cc
+extension_ignore_SOURCES = examples/extension-ignore.cc
+fill_SOURCES = examples/fill.cc
+fill_call_1_SOURCES = examples/fill-call-1.cc
+fill_imageif_cfun_SOURCES = examples/fill-imageif-cfun.cc
+fill_part_image_SOURCES = examples/fill-part-image.cc
+fill_subdomain_SOURCES = examples/fill-subdomain.cc
+fill_subdomain_shorter_SOURCES = examples/fill-subdomain-shorter.cc
+first_routine_SOURCES = examples/tuto3/first_routine.cc
+forall_piter_SOURCES = examples/forall-piter.cc
+fun_p2v_1_SOURCES = examples/fun-p2v-1.cc
+graph_data_SOURCES = examples/graph-data.cc
+graph_iter_SOURCES = examples/graph-iter.cc
+ima2d_1_SOURCES = examples/ima2d-1.cc
+ima2d_2_SOURCES = examples/ima2d-2.cc
+ima2d_3_SOURCES = examples/ima2d-3.cc
+ima2d_4_SOURCES = examples/ima2d-4.cc
+ima2d_5_SOURCES = examples/ima2d-5.cc
+ima2d_6_clone_SOURCES = examples/ima2d-6-clone.cc
+ima2d_7_SOURCES = examples/ima2d-7.cc
+ima2d_rot_SOURCES = examples/ima2d-rot.cc
+ima_has_SOURCES = examples/ima-has.cc
+ima_save_SOURCES = examples/ima-save.cc
+ima_size_SOURCES = examples/ima-size.cc
+labeling_compute_SOURCES = examples/labeling-compute.cc
+logical_not_SOURCES = examples/logical-not.cc
+mln_var_SOURCES = examples/mln_var.cc
+parray_append_SOURCES = examples/parray-append.cc
+parray_bbox_SOURCES = examples/parray-bbox.cc
+paste_SOURCES = examples/paste.cc
+paste_call_1_SOURCES = examples/paste-call-1.cc
+point_1_SOURCES = examples/point-1.cc
+predicate_1_SOURCES = examples/predicate-1.cc
+win_create_1_SOURCES = examples/win-create-1.cc
+win_create_2_SOURCES = examples/win-create-2.cc
 
-tuto2_first_image_SOURCES = $(examples_dir)/tuto2_first_image.cc
-tuto3_rw_image_SOURCES = $(examples_dir)/tuto3_rw_image.cc
-tuto4_genericity_and_algorithms_SOURCES = $(examples_dir)/tuto4_genericity_and_algorithms.cc
+tuto2_first_image_SOURCES = examples/tuto2_first_image.cc
+tuto3_rw_image_SOURCES = examples/tuto3_rw_image.cc
+tuto4_genericity_and_algorithms_SOURCES = examples/tuto4_genericity_and_algorithms.cc
 
 # Tuto 3
-tuto3_colorize_SOURCES = $(examples_dir)/tuto3/colorize.cc
-tuto3_println_SOURCES = $(examples_dir)/tuto3/println.cc
-tuto3_trace_SOURCES = $(examples_dir)/tuto3/trace.cc
+tuto3_colorize_SOURCES = examples/tuto3/colorize.cc
+tuto3_println_SOURCES = examples/tuto3/println.cc
+tuto3_trace_SOURCES = examples/tuto3/trace.cc
 
 # Tuto 4
-tuto4_site_set_create_SOURCES = $(examples_dir)/tuto4/site_set_create.cc
-tuto4_point2d_SOURCES = $(examples_dir)/tuto4/point2d.cc
+tuto4_point2d_SOURCES = examples/tuto4/point2d.cc
+tuto4_site_set_create_SOURCES = examples/tuto4/site_set_create.cc
 
 
-.PHONY : examples run-examples diff-data fix-refdata 		\
-	 split-examples split-outputs
+# FIXME: Try to avoid the use an extensive list: either use Make's
+# substitution rules or generate it.  Actually this list is already
+# generated (see outputs/outputs.mk).
+OUTPUTS =						\
+  $(srcdir)/outputs/accu-right-instanciation.txt	\
+  $(srcdir)/outputs/borderthickness.txt			\
+  $(srcdir)/outputs/box2d-bbox.txt			\
+  $(srcdir)/outputs/domain-display.txt			\
+  $(srcdir)/outputs/dpoint-1.txt			\
+  $(srcdir)/outputs/estim-sites.txt			\
+  $(srcdir)/outputs/extend.txt				\
+  $(srcdir)/outputs/extension-ignore.txt		\
+  $(srcdir)/outputs/fill-call-1.txt			\
+  $(srcdir)/outputs/fill-imageif-cfun.txt		\
+  $(srcdir)/outputs/fill-part-image.txt			\
+  $(srcdir)/outputs/fill-subdomain-shorter.txt		\
+  $(srcdir)/outputs/fill-subdomain.txt			\
+  $(srcdir)/outputs/fill.txt				\
+  $(srcdir)/outputs/first_routine.txt			\
+  $(srcdir)/outputs/forall-piter.txt			\
+  $(srcdir)/outputs/fun-p2v-1.txt			\
+  $(srcdir)/outputs/graph-data.txt			\
+  $(srcdir)/outputs/graph-iter.txt			\
+  $(srcdir)/outputs/graph-output-1.txt			\
+  $(srcdir)/outputs/ima2d-1.txt				\
+  $(srcdir)/outputs/ima2d-2.txt				\
+  $(srcdir)/outputs/ima2d-3.txt				\
+  $(srcdir)/outputs/ima2d-4.txt				\
+  $(srcdir)/outputs/ima2d-5.txt				\
+  $(srcdir)/outputs/ima2d-6-clone.txt			\
+  $(srcdir)/outputs/ima2d-7.txt				\
+  $(srcdir)/outputs/ima2d-decl-2.txt			\
+  $(srcdir)/outputs/ima2d-display-1.txt			\
+  $(srcdir)/outputs/ima2d-display-2.txt			\
+  $(srcdir)/outputs/ima2d-display-output-1.txt		\
+  $(srcdir)/outputs/ima2d-display-output-2.txt		\
+  $(srcdir)/outputs/ima2d-rot.txt			\
+  $(srcdir)/outputs/ima-has.txt				\
+  $(srcdir)/outputs/ima-save.txt			\
+  $(srcdir)/outputs/ima-size.txt			\
+  $(srcdir)/outputs/labeling-compute.txt		\
+  $(srcdir)/outputs/logical-not.txt			\
+  $(srcdir)/outputs/mln_var.txt				\
+  $(srcdir)/outputs/parray-append.txt			\
+  $(srcdir)/outputs/parray-bbox.txt			\
+  $(srcdir)/outputs/parray-display-1.txt		\
+  $(srcdir)/outputs/paste-call-1.txt			\
+  $(srcdir)/outputs/paste.txt				\
+  $(srcdir)/outputs/point-1.txt				\
+  $(srcdir)/outputs/predicate-1.txt			\
+  $(srcdir)/outputs/tuto2_first_image.txt		\
+  $(srcdir)/outputs/tuto3_colorize.txt			\
+  $(srcdir)/outputs/tuto3_println.txt			\
+  $(srcdir)/outputs/tuto3_rw_image.txt			\
+  $(srcdir)/outputs/tuto3_trace.txt			\
+  $(srcdir)/outputs/tuto4_genericity_and_algorithms.txt	\
+  $(srcdir)/outputs/tuto4_point2d.txt			\
+  $(srcdir)/outputs/tuto4_site_set_create.txt		\
+  $(srcdir)/outputs/win-create-1-display.txt		\
+  $(srcdir)/outputs/win-create-1.txt			\
+  $(srcdir)/outputs/win-create-2.txt
 
-examples: $(PROGRAMS_examples)
+## FIXME: Do not forget to turn the dependency
+## $(srcdir)/examples/make.mk into $(srcdir)/Makefile.am when the
+## former is merged into the latter.
+$(DOC_SRCDIR)/examples-outputs.mk: $(DOC_SRCDIR)/gen-examples-outputs-mk $(srcdir)/examples/make.mk
+	$(DOC_SRCDIR)/gen-examples-outputs-mk $(PROGRAMS_examples) >$@.tmp
+	mv -f $@.tmp $@
+	chmod -w $@
+include $(DOC_SRCDIR)/examples-outputs.mk
 
-run-examples: examples
-	test -d $(top_builddir)/milena/doc/figures  			\
-		|| mkdir $(top_builddir)/milena/doc/figures;		\
-	failcom='exit 1'; 						\
-	list='$(PROGRAMS_examples)'; for bin in $$list; do	\
-	  echo "Running $$bin"; 					\
-	  ./$$bin > $(OUTPUTS_SRCDIR)/$$bin.txt || eval $$failcom; 	\
+MAINTAINERCLEANFILES += $(OUTPUTS)
+
+# FIXME: Warning: $(SPLIT_EXAMPLES_SRCDIR) might not exist.  Ensure it
+# exists.
+
+# FIXME: Try to avoid the use an extensive list: either use Make's
+# substitution rules or generate it.
+EXAMPLES =						\
+  $(srcdir)/examples/ima-save.cc			\
+  $(srcdir)/examples/accu-right-instanciation.cc	\
+  $(srcdir)/examples/borderthickness.cc			\
+  $(srcdir)/examples/box2d-bbox.cc			\
+  $(srcdir)/examples/domain-display.cc			\
+  $(srcdir)/examples/dpoint-1.cc			\
+  $(srcdir)/examples/estim-sites.cc			\
+  $(srcdir)/examples/extend.cc				\
+  $(srcdir)/examples/extension-ignore.cc		\
+  $(srcdir)/examples/fill-call-1.cc			\
+  $(srcdir)/examples/fill-imageif-cfun.cc		\
+  $(srcdir)/examples/fill-part-image.cc			\
+  $(srcdir)/examples/fill-subdomain-shorter.cc		\
+  $(srcdir)/examples/fill-subdomain.cc			\
+  $(srcdir)/examples/fill.cc				\
+  $(srcdir)/examples/forall-piter.cc			\
+  $(srcdir)/examples/fun-p2v-1.cc			\
+  $(srcdir)/examples/graph-data.cc			\
+  $(srcdir)/examples/graph-iter.cc			\
+  $(srcdir)/examples/ima-has.cc				\
+  $(srcdir)/examples/ima-load.cc			\
+  $(srcdir)/examples/ima-size.cc			\
+  $(srcdir)/examples/ima2d-1.cc				\
+  $(srcdir)/examples/ima2d-2.cc				\
+  $(srcdir)/examples/ima2d-3.cc				\
+  $(srcdir)/examples/ima2d-4.cc				\
+  $(srcdir)/examples/ima2d-5.cc				\
+  $(srcdir)/examples/ima2d-6-clone.cc			\
+  $(srcdir)/examples/ima2d-7.cc				\
+  $(srcdir)/examples/ima2d-rot.cc			\
+  $(srcdir)/examples/labeling-compute.cc		\
+  $(srcdir)/examples/logical-not.cc			\
+  $(srcdir)/examples/mln_var.cc				\
+  $(srcdir)/examples/parray-append.cc			\
+  $(srcdir)/examples/parray-bbox.cc			\
+  $(srcdir)/examples/paste-call-1.cc			\
+  $(srcdir)/examples/paste.cc				\
+  $(srcdir)/examples/point-1.cc				\
+  $(srcdir)/examples/predicate-1.cc			\
+  $(srcdir)/examples/trash/accu.cc			\
+  $(srcdir)/examples/trash/box.cc			\
+  $(srcdir)/examples/trash/cpp_issue.cc			\
+  $(srcdir)/examples/trash/erosion.cc			\
+  $(srcdir)/examples/trash/for_Z.cc			\
+  $(srcdir)/examples/trash/graph.cc			\
+  $(srcdir)/examples/trash/image2d.cc			\
+  $(srcdir)/examples/trash/image_flat.cc		\
+  $(srcdir)/examples/trash/image_if.cc			\
+  $(srcdir)/examples/trash/image_plain.cc		\
+  $(srcdir)/examples/trash/image_safe.cc		\
+  $(srcdir)/examples/trash/labeling_algo.cc		\
+  $(srcdir)/examples/trash/mk_graph.cc			\
+  $(srcdir)/examples/trash/p_array.2.cc			\
+  $(srcdir)/examples/trash/p_array.cc			\
+  $(srcdir)/examples/trash/p_image.cc			\
+  $(srcdir)/examples/trash/p_key.2.cc			\
+  $(srcdir)/examples/trash/p_key.cc			\
+  $(srcdir)/examples/trash/p_line2d.cc			\
+  $(srcdir)/examples/trash/p_mutable_array_of.cc	\
+  $(srcdir)/examples/trash/p_queue.cc			\
+  $(srcdir)/examples/trash/p_run.cc			\
+  $(srcdir)/examples/trash/p_vaccess.cc			\
+  $(srcdir)/examples/trash/proxy.cc			\
+  $(srcdir)/examples/trash/sub_image.cc			\
+  $(srcdir)/examples/trash/sub_image_if.cc		\
+  $(srcdir)/examples/trash/tuto_bis.cc			\
+  $(srcdir)/examples/trash/tuto_one.cc			\
+  $(srcdir)/examples/trash/vec.cc			\
+  $(srcdir)/examples/trash/win_multiple.cc		\
+  $(srcdir)/examples/trash/window.cc			\
+  $(srcdir)/examples/tuto2_first_image.cc		\
+  $(srcdir)/examples/tuto3/colorize.cc			\
+  $(srcdir)/examples/tuto3/first_routine.cc		\
+  $(srcdir)/examples/tuto3/println.cc			\
+  $(srcdir)/examples/tuto3/trace.cc			\
+  $(srcdir)/examples/tuto3_rw_image.cc			\
+  $(srcdir)/examples/tuto4/image.cc			\
+  $(srcdir)/examples/tuto4/point2d.cc			\
+  $(srcdir)/examples/tuto4/site_set_create.cc		\
+  $(srcdir)/examples/tuto4_genericity_and_algorithms.cc	\
+  $(srcdir)/examples/win-create-1.cc			\
+  $(srcdir)/examples/win-create-2.cc
+
+# FIXME: Place split files in their own directory, e.g.: split
+# `examples/foo.cc' into `examples/split/foo.dir/foo-1.cc',
+# `examples/split/foo.dir/foo-2.cc', etc.  It makes removal of these
+# files easier.  We probably also nee a stamp file to keep track of
+# dependencies.
+
+# FIXME: Loops are bad, as they prevent parallelism.  And we prefer
+# data-driven actions anyway.  This would imply that we know in
+# advance the list out outputs (here, split examples).  Maybe we can
+# infer it from the LaTeX document.
+$(srcdir)/split-examples.stamp: $(EXAMPLES)
+	@rm -f $@.tmp
+	@touch $@.tmp
+	failcom='exit 1';				\
+	for file in $(EXAMPLES); do			\
+	  $(DOC_SRCDIR)/tools/split_sample.sh		\
+	      $$file cc raw $(SPLIT_EXAMPLES_SRCDIR)	\
+	    || eval $$failcom;				\
 	done
+	@mv -f $@.tmp $@
 
-## FIXME: This is wrong.  Make is not an imperative language, and this
-## rule probably does not work as expected.
-data-regen: examples run-examples split-examples split-outputs diff-data
-
-
-diff-data: run-examples split-examples
-	@failcom='exit 1'; 						\
-	has_txt_diff="";						\
-	txtlist="$(OUTPUTS_SRCDIR)/*.txt"; for txt in $$txtlist; do 	\
-	  echo "Diff `basename $$txt`";					\
-	  diff $$txt $(OUTPUTS_SRCDIR)/`basename $$txt` >/dev/null 2>&1	\
-		|| has_txt_diff="$$has_txt_diff `basename $$txt`";	\
-	done;								\
-	has_fig_diff="";						\
-	figlist="$(FIGURES_SRCDIR)/*.p*m"; for fig in $$figlist; do 	\
-	  echo "Diff `basename $$fig`";					\
-	  diff $$fig $(FIGURES_SRCDIR)/`basename $$fig` >/dev/null 2>&1 \
-		|| has_fig_diff="$$has_fig_diff `basename $$fig`";	\
-	done; 								\
-	has_split_out_diff="";						\
-	split_outlist="$(SPLIT_OUTPUTS_SRCDIR)/*"; for split_out in $$split_outlist; do \
-	  echo "Diff `basename $$split_out`";				\
-	  diff $$split_out $(SPLIT_OUTPUTS_SRCDIR)/`basename $$split_out` >/dev/null 2>&1 \
-		|| has_split_out_diff="$$has_split_out_diff `basename $$split_out`";	\
-	done; 								\
-	has_split_ex_diff="";						\
-	split_exlist="$(SPLIT_EXAMPLES_SRCDIR)/*"; for split_ex in $$split_exlist; do \
-	  echo "Diff `basename $$split_ex`";				\
-	  diff $$split_ex $(SPLIT_EXAMPLES_SRCDIR)/`basename $$split_ex` >/dev/null 2>&1 \
-		|| has_split_ex_diff="$$has_split_ex_diff `basename $$split_ex`";	\
-	done; 								\
-	(test -z "$$has_txt_diff" && test -z "$$has_fig_diff" && 	\
-	 test -z "$$has_split_out_diff" && test -z "$$has_split_ex_diff")\
-	 || (echo "--------";						\
-	     echo "ERROR: please check if the tutorial needs an update.";\
-	     echo "       The following files differ from their \
-reference or their reference file does not exist:";  			\
-	     echo "--------"; 						\
-	     echo "* Outputs:";						\
-	     echo "";							\
-	     echo "$$has_txt_diff"; 					\
-	     echo "";							\
-	     echo "--------"; 						\
-	     echo "* Figures:"; 					\
-	     echo "";							\
-	     echo "$$has_fig_diff"; 					\
-	     echo "";							\
-	     echo "--------"; 						\
-	     echo "* Split outputs:"; 					\
-	     echo "";							\
-	     echo "$$has_split_out_diff"; 				\
-	     echo "";							\
-	     echo "--------"; 						\
-	     echo "* Split examples:"; 					\
-	     echo "";							\
-	     echo "$$has_split_ex_diff"; 				\
-	     echo "";							\
-	     echo "--------"; 						\
-	     echo "* Please update manually the reference files located in:" \
-	     echo "";							\
-	     echo " $(OUTPUTS_SRCDIR)"; 				\
-	     echo " $(FIGURES_SRCDIR)"; 				\
-	     echo " $(SPLIT_EXAMPLES_SRCDIR)"; 				\
-	     echo " $(SPLIT_OUTPUTS_SRCDIR)"; 				\
-	     echo "";							\
-	     echo "* Reference files can updated automatically with 'make fix-refdata'"; \
-	     echo "";							\
-	     echo "";							\
-	     eval $$failcom);
-
-
-fix-refdata:
-	@failcom='exit 1'; 						\
-	txtlist="$(OUTPUTS_SRCDIR)/*.txt"; for txt in $$txtlist; do 	\
-	  diff $$txt $(OUTPUTS_SRCDIR)/`basename $$txt` >/dev/null 2>&1	\
-		|| echo "Updating reference file for $$txt"; 		\
-		   cp $$txt $(OUTPUTS_SRCDIR);				\
-	done;								\
-	figlist="$(FIGURES_SRCDIR)/*.p*m"; for fig in $$figlist; do 	\
-	  diff $$fig $(FIGURES_SRCDIR)/`basename $$fig` >/dev/null 2>&1 \
-		|| echo "Updating reference file for $$fig";		\
-		   cp $$fig $(FIGURES_SRCDIR);				\
-	done; 								\
-	split_outlist="$(SPLIT_OUTPUTS_SRCDIR)/*.txt"; for split_out in $$split_outlist; do \
-	  diff $$split_out $(SPLIT_OUTPUTS_SRCDIR)/`basename $$split_out` >/dev/null 2>&1 \
-		|| echo "Updating reference file for $$split_out";	\
-		   cp $$split_out $(SPLIT_OUTPUTS_SRCDIR);		\
-	done; 								\
-	split_exlist="$(SPLIT_EXAMPLES_SRCDIR)/*.cc"; for split_ex in $$split_exlist; do \
-	  diff $$split_ex $(SPLIT_EXAMPLES_SRCDIR)/`basename $$split_ex` >/dev/null 2>&1 \
-		|| echo "Updating reference file for $$split_ex";	\
-		   cp $$split_ex $(SPLIT_EXAMPLES_SRCDIR);		\
-	done;
-
-
-split-examples:
-	test -d $(SPLIT_EXAMPLES_SRCDIR) || mkdir $(SPLIT_EXAMPLES_SRCDIR)
-	@failcom='exit 1'; 						\
-	list=`find $(EXAMPLES_SRCDIR) -type f -name '*.cc'`; for file in $$list; do \
-	$(DOC_SRCDIR)/tools/split_sample.sh $$file cc raw $(SPLIT_EXAMPLES_SRCDIR)\
-					      || eval $$failcom; 	\
+# FIXME: Loops are bad, as they prevent parallelism.  And we prefer
+# data-driven actions anyway.  This would imply that we know in
+# advance the list out outputs (here, split outputs).  Maybe we can
+# infer it from the LaTeX document.
+$(srcdir)/split-outputs.stamp: $(OUTPUTS)
+	@rm -f $@.tmp
+	@touch $@.tmp
+	failcom='exit 1';				\
+	for file in $(OUTPUTS); do			\
+	  $(DOC_SRCDIR)/tools/split_sample.sh		\
+	      $$file txt "" $(SPLIT_OUTPUTS_SRCDIR)	\
+	    || eval $$failcom;				\
 	done
-
-split-outputs:
-	test -d $(SPLIT_OUTPUTS_SRCDIR) || mkdir $(SPLIT_OUTPUTS_SRCDIR)
-	@failcom='exit 1'; 						\
-	list='$(OUTPUTS_SRCDIR)/*.txt'; for file in $$list; do 	\
-	$(DOC_SRCDIR)/tools/split_sample.sh $$file txt "" $(SPLIT_OUTPUTS_SRCDIR)\
-					      || eval $$failcom; 	\
-	done
-
-## FIXME: Generated products recored in the repository should be
-## listed in MAINTAINERCLEANFILES.
-clean-local: clean-figures
-##	rm -Rf $(OUTPUTS_BUILDDIR)
-##	rm -f $(EXAMPLES_BUILDDIR)/*.cc
-
-## FIXME: Generated products recored in the repository should be
-## listed in MAINTAINERCLEANFILES.
-clean-figures:
-##	rm -Rf $(FIGURES_BUILDDIR)
+	@mv -f $@.tmp $@

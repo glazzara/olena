@@ -18,6 +18,9 @@
 
 # FIXME: To be overhauled! (See ticket #134).
 
+# FIXME: Do not use includes if they're used only once: inline them
+# instead.
+
 include $(top_srcdir)/milena/doc/doc.mk
 
 DOXYGEN = doxygen
@@ -28,6 +31,7 @@ DOXYFILE = Doxyfile
 EXTRA_DIST =
 dist_doc_DATA =
 CLEANFILES =
+MAINTAINERCLEANFILES =
 
 # FIXME: Simplify all of this.  ``Devel'' targets are really
 # secondary.  And we probably don't need so much target aliases!
@@ -53,17 +57,20 @@ doc-devel-html: tutorial-html ref-guide-html white-paper-html \
 		ref-doc-devel
 
 
-## -------------------------------------------------- ##
-## Shared dependencies on the products of tutorial/.  ##
-## -------------------------------------------------- ##
-
-# FIXME: Maintaining dependencies across directories is too
-# complicated.  Simplify.
-EXTRA_DEPS = $(srcdir)/tutorial/tutorial.hh $(srcdir)/ref_guide/ref_guide.hh
-
 ## ----------------------- ##
 ## Doxygen documentation.  ##
 ## ----------------------- ##
+
+# FIXME: Check these dependencies.
+# 1. They might be redundant.
+# 2. It'd be better to depend on actual files rather than timestamps
+#    correponding to a bunch of files.
+refman_dependencies =				\
+  $(srcdir)/split-examples.stamp		\
+  $(srcdir)/split-outputs.stamp			\
+  $(srcdir)/figures.stamp			\
+  $(srcdir)/tutorial/tutorial.hh		\
+  $(srcdir)/ref_guide/ref_guide.hh
 
 # ----------------------- #
 # User reference manual.  #
@@ -113,11 +120,11 @@ $(srcdir)/$(USER_REFMAN_PDF): $(srcdir)/$(USER_REFMAN)
 	cd $(srcdir)/$(USER_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
 	cp -f $(srcdir)/$(USER_REFMAN)/latex/refman.pdf $@
 
-## FIXME: Are dependencies $(srcdir)/figures.stamp $(EXTRA_DEPS) set
-## on the right rule?  Does Doxygen make a copy of figures, or does it
-## generate LaTeX inputs relying on the existence of such figures in
-## the initial location?  Investigate.
-$(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(srcdir)/figures.stamp $(EXTRA_DEPS)
+## FIXME: Are dependencies (`$(refman_dependencies)') set on the right
+## rule?  Does Doxygen make a copy of figures, or does it generate
+## LaTeX inputs relying on the existence of such figures in the
+## initial location?  Investigate.
+$(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(refman_dependencies)
 	@rm -f $@.tmp
 	@touch $@.tmp
 	-rm -rf $(USER_REFMAN).tmp
@@ -193,11 +200,11 @@ $(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/$(DEVEL_REFMAN)
 	cd $(srcdir)/$(DEVEL_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
 	cp -f $(srcdir)/$(DEVEL_REFMAN)/latex/refman.pdf $@
 
-## FIXME: Are dependencies $(srcdir)/figures.stamp $(EXTRA_DEPS) set
-## on the right rule?  Does Doxygen make a copy of figures, or does it
-## generate LaTeX inputs relying on the existence of such figures in
-## the initial location?  Investigate.
-$(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(srcdir)/figures.stamp $(EXTRA_DEPS)
+## FIXME: Are dependencies (`$(refman_dependencies)') set on the right
+## rule?  Does Doxygen make a copy of figures, or does it generate
+## LaTeX inputs relying on the existence of such figures in the
+## initial location?  Investigate.
+$(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(refman_dependencies)
 	@rm -f $@.tmp
 	@touch $@.tmp
 	-rm -rf $(DEVEL_REFMAN).tmp
@@ -223,6 +230,12 @@ $(srcdir)/$(DEVEL_REFMAN): $(srcdir)/devel-refman.stamp
 maintainer-clean-local:
 	-rm -rf $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
 	-rm -rf $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
+	-rm -f $(EXAMPLES_BUILDDIR)/*.cc
+# FIXME: If we remove a *directory*, we are supposed to know how to
+# recreate it later.  I doubt our rules are all currently able to
+# handle this.  See how `make maintainer-clean all' behaves.
+	-rm -rf $(OUTPUTS_BUILDDIR)
+	-rm -rf $(FIGURES_BUILDDIR)
 
 
 ## ------------------------- ##
@@ -257,14 +270,8 @@ include $(srcdir)/ref_guide/ref_guide.mk
 ## Figures.  ##
 ## --------- ##
 
-# Make sure the figures are the first files in EXTRA_DIST.
-# Make the 'fake-doc' rule works correctly.
-EXTRA_DIST +=
 $(srcdir)/figures/figures.mk: $(srcdir)/headers.stamp
 include $(srcdir)/figures/figures.mk
-
-
-fig-convert: $(srcdir)/figures.stamp
 
 EXTRA_DIST += figures.stamp
 $(srcdir)/figures.stamp: $(FIGURES_SRCDIR)/*.p*m
@@ -288,9 +295,11 @@ $(srcdir)/figures.stamp: $(FIGURES_SRCDIR)/*.p*m
 
 include $(top_srcdir)/milena/doc/examples/make.mk
 
-# Regen files.
+# Regen Make helpers.
 EXTRA_DIST += generate_dist_files.sh headers.stamp
 include $(top_srcdir)/build-aux/regen-recursive.mk
+## FIXME: It'd probably be better to separate the rules generating
+## examples/examples.mk, outputs/outputs.mk and figures/figures.mk.
 regen-am:
 	@rm -f $(srcdir)/headers.stamp.tmp
 	@touch $(srcdir)/headers.stamp.tmp
@@ -369,6 +378,6 @@ EXTRA_DIST +=					\
   tools/split_sample.sh				\
   tools/todoxygen.sh
 
-MAINTAINERCLEANFILES =				\
+MAINTAINERCLEANFILES +=				\
   Doxyfile_user					\
   Doxyfile_devel
