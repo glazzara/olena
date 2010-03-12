@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Milena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,13 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef DOC_TUTORIAL_TOOLS_SAMPLE_UTILS_HH
-# define DOC_TUTORIAL_TOOLS_SAMPLE_UTILS_HH
+#ifndef DOC_TOOLS_SAMPLE_UTILS_HH
+# define DOC_TOOLS_SAMPLE_UTILS_HH
 
 # include <mln/core/image/image2d.hh>
 # include <mln/io/pbm/all.hh>
 # include <mln/io/pgm/all.hh>
 # include <mln/io/ppm/all.hh>
+
+# include "doc/tools/data.hh"
 
 namespace doc
 {
@@ -43,9 +46,7 @@ namespace doc
     static int file_id = 1;
 
     std::ostringstream os;
-    /* FIXME: Hard-coded paths are bad!  Use something like
-       milena/tests/data.hh.in instead.  */
-    os << "figures/"
+    os << MLN_DOC_DIR "/figures/"
       << name
       << "-"
       << file_id++
@@ -94,5 +95,5 @@ namespace doc
 
 } // end of namespace doc
 
-#endif // ! DOC_TUTORIAL_TOOLS_SAMPLE_UTILS_HH
+#endif // ! DOC_TOOLS_SAMPLE_UTILS_HH
 

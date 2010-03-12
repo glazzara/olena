@@ -1,3 +1,15 @@
+2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have documentation's examples not depend on hard-coded paths.
+
+	* doc/tools/data.hh.in: New file.
+	Use it...
+	* doc/examples/ima-save.cc:
+	...here, to avoid hard-coded paths.
+	* doc/tools/sample_utils.hh: Likewise.
+	Adjust header guards.
+	* doc/examples/split/ima-save-1.cc.raw: Regen.
+
 2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update the documentation's copyright header.

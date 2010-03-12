@@ -1,3 +1,1 @@
-  /* FIXME: Hard-coded paths are bad!  Use something like
-     milena/tests/data.hh.in instead.  */
-  io::pbm::save(ima, "figures/ima_save.pbm");
+  io::pbm::save(ima, MLN_DOC_DIR "/figures/ima_save.pbm");

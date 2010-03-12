@@ -1,6 +1,9 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/io/pbm/save.hh>
 #include <mln/make/image.hh>
+
+#include "doc/tools/data.hh"
+
 int main()
 {
   using namespace mln;
@@ -15,8 +18,6 @@ int main()
   image2d<bool> ima = make::image(vals);
 
   // \{
-  /* FIXME: Hard-coded paths are bad!  Use something like
-     milena/tests/data.hh.in instead.  */
-  io::pbm::save(ima, "figures/ima_save.pbm");
+  io::pbm::save(ima, MLN_DOC_DIR "/figures/ima_save.pbm");
   // \}
 }
