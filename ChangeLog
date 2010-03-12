@@ -1,5 +1,15 @@
 2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add texi2dvi as well as a Make helper to use it.
+
+	* build-aux/texi2dvi: New script.
+	Imported from Texinfo.
+	* build-aux/tex.mk: New Makefile helper.
+	Inspired by LRDE share/style/tex.mk.
+	* build-aux/Makefile.am (EXTRA_DIST): Add texi2dvi.
+
+2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	* configure.ac: Configure milena/doc/tools/data.hh.
 
 2010-03-08  Roland Levillain  <roland@lrde.epita.fr>
