@@ -90,6 +90,10 @@ TEXI2DVI_FLAGS +=							\
   -I $(DOC_SRCDIR) -I $(OUTPUTS_SRCDIR) -I $(SPLIT_OUTPUTS_SRCDIR)	\
   -I $(IMG_SRCDIR) -I $(SPLIT_EXAMPLES_SRCDIR)
 
+# Additional files for HeVeA compilations.
+DOC_PACKAGES = $(srcdir)/doxyfuns.sty $(srcdir)/milena.sty
+
+
 ## ----------------------- ##
 ## Doxygen documentation.  ##
 ## ----------------------- ##
@@ -310,6 +314,16 @@ technical_dependencies = $(doc_dir)/figures.stamp
 # product is a directory, also refresh a timestamp (in the source
 # dir).
 
+## FIXME: technical technical.hh does not seem to be used (by the
+## Doyxgen documentation); remove its generation? Careful,
+## technical/technical.html *is* probably required, though.
+
+TECHNICAL_HTML = $(technical_dir)/technical.html
+$(TECHNICAL_HTML): $(technical_dir)/technical.tex $(technical_dependencies)
+	hevea -O -fix $(DOC_PACKAGES) $< -o $@
+
+dist_doc_DATA += $(TECHNICAL_HTML)
+
 # Intermediate product for the various doc targets of the parent
 # directory.
 #
@@ -317,8 +331,10 @@ technical_dependencies = $(doc_dir)/figures.stamp
 # extension, since it is later parsed by Doxygen, which complains
 # about `.html' files.
 TECHNICAL_HH = $(technical_dir)/technical.hh
+# FIXME: Careful, technical-html depends on $(TECHNICAL_HH), not
+# $(TECHNICAL_HTML).  Anyway, this shortcut should vanish soon.
 technical-html: $(TECHNICAL_HH)
-$(TECHNICAL_HH): $(technical_dir)/technical.tex $(technical_dependencies)
+$(TECHNICAL_HH): $(TECHNICAL_HTML) $(doc_dir)/tools/todoxygen.sh
 	$(doc_dir)/tools/todoxygen.sh $< $(technical_dir) $(doc_dir)
 
 
@@ -334,20 +350,7 @@ EXTRA_DIST +=					\
   $(technical_dir)/technical.tex		\
   $(TECHNICAL_HH)
 
-# FIXME: Remove `tutorial.aux tutorial.toc tutorial.log tutorial.bbl
-# tutorial.out *blg *.lot' when texi2dvi is used.
-#
-# FIXME: Why is $(TUTORIAL_PDF) listed here?  It should be
-# automatically cleaned.  I'm not sure either about the rest of
-# CLEANFILES.
-CLEANFILES +=								\
-  technical.aux technical.toc technical.log technical.bbl technical.out	\
-  *blg *.lot								\
-  $(TECHNICAL_PDF)							\
-  *.haux *.hh *.html *.htoc						\
-  technical.html							\
-  technical.idx								\
-  $(TECHNICAL_HH)
+CLEANFILES += $(technical_dir)/technical.haux
 
 
 ## ---------- ##
@@ -393,6 +396,12 @@ tutorial_dependencies =				\
 # product is a directory, also refresh a timestamp (in the source
 # dir).
 
+TUTORIAL_HTML = $(tutorial_dir)/tutorial.html
+$(TUTORIAL_HTML): $(tutorial_dir)/tutorial.tex $(tutorial_dependencies)
+	hevea -O -fix $(DOC_PACKAGES) $< -o $@
+
+dist_doc_DATA += $(TUTORIAL_HTML)
+
 # Intermediate product for the various doc targets of the parent
 # directory.
 #
@@ -400,9 +409,12 @@ tutorial_dependencies =				\
 # since it is later parsed by Doxygen, which complains about `.html'
 # files.
 TUTORIAL_HH = $(tutorial_dir)/tutorial.hh
+# FIXME: Careful, tutorial-html depends on $(TUTORIAL_HH), not
+# $(TUTORIAL_HTML).  Anyway, this shortcut should vanish soon.
 tutorial-html: $(TUTORIAL_HH)
-$(TUTORIAL_HH): $(tutorial_dir)/tutorial.tex $(tutorial_dependencies)
+$(TUTORIAL_HH): $(TUTORIAL_HTML) $(doc_dir)/tools/todoxygen.sh
 	$(doc_dir)/tools/todoxygen.sh $< $(tutorial_dir) $(doc_dir)
+
 
 # Final product.
 TUTORIAL_PDF = $(tutorial_dir)/tutorial.pdf
@@ -416,20 +428,10 @@ EXTRA_DIST +=					\
   $(tutorial_dir)/tutorial.tex			\
   $(TUTORIAL_HH)
 
-# FIXME: Remove `tutorial.aux tutorial.toc tutorial.log tutorial.bbl
-# tutorial.out *blg *.lot' when texi2dvi is used.
-#
-# FIXME: Why is $(TUTORIAL_PDF) listed here?  It should be
+# FIXME: Why is $(TUTORIAL_HH) listed here?  It should be
 # automatically cleaned.  I'm not sure either about the rest of
 # CLEANFILES.
-CLEANFILES +=								\
-  tutorial.aux tutorial.toc tutorial.log tutorial.bbl tutorial.out	\
-  *blg *.lot								\
-  $(TUTORIAL_PDF)							\
-  *.haux *.hh *.html *.htoc						\
-  tutorial.html								\
-  tutorial.idx								\
-  $(TUTORIAL_HH)
+CLEANFILES += $(tutorial_dir)/tutorial.haux
 
 
 ## ------------- ##
@@ -505,15 +507,10 @@ EXTRA_DIST +=					\
   $(PNGS)					\
   $(EPSS)
 
-# FIXME: Remove unnecessary patterns.
-CLEANFILES +=					\
-  white_paper_image.*				\
-  white_paper.pdf				\
-  *.log *.idx *.out *.aux
+CLEANFILES += $(EPSS)
 
-# FIXME: Likewise.
 clean-local:
-	-rm -rf white_paper_html figures
+	-rm -rf $(white_paper_dir)/white_paper_html
 
 
 ## ----------------- ##
@@ -559,6 +556,12 @@ ref_guide_dependencies =			\
 # product is a directory, also refresh a timestamp (in the source
 # dir).
 
+REF_GUIDE_HTML = $(ref_guide_dir)/ref_guide.html
+$(REF_GUIDE_HTML): $(ref_guide_dir)/ref_guide.tex $(ref_guide_dependencies)
+	hevea -O -fix $(DOC_PACKAGES) $< -o $@
+
+dist_doc_DATA += $(REF_GUIDE_HTML)
+
 # Intermediate product for the various doc targets of the parent
 # directory.
 #
@@ -566,8 +569,10 @@ ref_guide_dependencies =			\
 # since it is later parsed by Doxygen, which complains about `.html'
 # files.
 REF_GUIDE_HH = $(ref_guide_dir)/ref_guide.hh
+# FIXME: Careful, ref-guide-html depends on $(REF_GUIDE_HH), not
+# $(REF_GUIDE_HTML).  Anyway, this shortcut should vanish soon.
 ref-guide-html: $(REF_GUIDE_HH)
-$(REF_GUIDE_HH): $(ref_guide_dir)/ref_guide.tex $(ref_guide_dependencies)
+$(REF_GUIDE_HH): $(REF_GUIDE_HTML) $(doc_dir)/tools/todoxygen.sh
 	$(doc_dir)/tools/todoxygen.sh $< $(ref_guide_dir) $(doc_dir)
 
 
@@ -583,20 +588,9 @@ EXTRA_DIST +=					\
   $(ref_guide_dir)/ref_guide.tex		\
   $(REF_GUIDE_HH)
 
-# FIXME: Remove `ref_guide.aux ref_guide.toc ref_guide.log
-# ref_guide.bbl ref_guide.out *blg *.lot' when texi2dvi is used.
-#
-# FIXME: Why is $(REF_GUIDE_PDF) listed here?  It should be
-# automatically cleaned.  I'm not sure either about the rest of
-# CLEANFILES.
-CLEANFILES +=								\
-  ref_guide.aux ref_guide.toc ref_guide.log ref_guide.bbl ref_guide.out	\
-  *blg *.lot								\
-  $(REF_GUIDE_PDF)							\
-  *.haux *.hh *.html *.htoc						\
-  ref_guide.html							\
-  ref_guide.idx								\
-  $(REF_GUIDE_HH)
+CLEANFILES +=					\
+  $(ref_guide_dir)/ref_guide.haux		\
+  $(ref_guide_dir)/ref_guide.htoc
 
 
 ## --------- ##
