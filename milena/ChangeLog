@@ -1,5 +1,23 @@
 2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Merge doc/ Makefile helpers into doc/Makefile.am.
+
+	* milena/doc/doc.mk,
+	* milena/doc/examples/make.mk,
+	* milena/doc/ref_guide/ref_guide.mk,
+	* milena/doc/technical/technical.mk,
+	* milena/doc/tutorial/tutorial.mk,
+	* milena/doc/white_paper/white_paper.mk:
+	Remove and inline these files...
+	* doc/Makefile.am: ...here.
+	Do not include $(top_srcdir)/milena/tests/tests.mk.
+	(AM_CPPFLAGS): Add -I$(top_srcdir)/milena and
+	-I$(top_builddir)/milena.
+	($(DOC_SRCDIR)/examples-outputs.mk): Depend on
+	$(srcdir)/Makefile.am instead of $(srcdir)/examples/make.mk.
+
+2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve dependencies of some documentation products.
 
 	* doc/ref_guide/ref_guide.mk (ref_guide_dependencies):
