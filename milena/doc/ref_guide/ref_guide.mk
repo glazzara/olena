@@ -27,6 +27,15 @@ ref-guide: ref-guide-html ref-guide-pdf
 
 ref_guide_dir = $(doc_dir)/ref_guide
 
+# FIXME: Check these dependencies.
+# 1. They might be redundant.
+# 2. It'd be better to depend on actual files rather than timestamps
+#    correponding to a bunch of files.
+ref_guide_dependencies =			\
+  $(doc_dir)/split-examples.stamp		\
+  $(doc_dir)/split-outputs.stamp		\
+  $(doc_dir)/figures.stamp
+
 # FIXME: As in milena/doc/Makefile.am, we should probably strip
 # $(srcdir) prefixes from target variables, e.g. instead of:
 #
@@ -59,14 +68,14 @@ ref_guide_dir = $(doc_dir)/ref_guide
 # files.
 REF_GUIDE_HH = $(ref_guide_dir)/ref_guide.hh
 ref-guide-html: $(REF_GUIDE_HH)
-$(REF_GUIDE_HH): $(ref_guide_dir)/ref_guide.tex $(doc_dir)/figures.stamp
+$(REF_GUIDE_HH): $(ref_guide_dir)/ref_guide.tex $(ref_guide_dependencies)
 	$(doc_dir)/tools/todoxygen.sh $< $(ref_guide_dir) $(doc_dir)
 
 
 # Final product.
 REF_GUIDE_PDF = $(ref_guide_dir)/ref_guide.pdf
 ref-guide-pdf: $(REF_GUIDE_PDF)
-$(REF_GUIDE_PDF): $(ref_guide_dir)/ref_guide.tex $(doc_dir)/figures.stamp
+$(REF_GUIDE_PDF): $(ref_guide_dir)/ref_guide.tex $(ref_guide_dependencies)
 	TEXINPUTS=$(ref_guide_TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(ref_guide_TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(ref_guide_TEXINPUTS) pdflatex $<	\

@@ -1,5 +1,25 @@
 2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve dependencies of some documentation products.
+
+	* doc/ref_guide/ref_guide.mk (ref_guide_dependencies):
+	New variable.
+	Use it to define dependencies of...
+	($(REF_GUIDE_HH), $(REF_GUIDE_PDF)):
+	...these targets.
+	* doc/technical/technical.mk (technical_dependencies):
+	New variable.
+	Use it to define dependencies of...
+	($(TECHNICAL_HH), $(TECHNICAL_PDF)):
+	...these targets.
+	* doc/tutorial/tutorial.mk (tutorial_dependencies):
+	New variable.
+	Use it to define dependencies of...
+	($(TUTORIAL_HH), $(TUTORIAL_PDF)):
+	...these targets.
+
+2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Revamp the Makefile machinery in milena/doc/examples/.
 
 	* doc/gen-examples-outputs-mk: New script.

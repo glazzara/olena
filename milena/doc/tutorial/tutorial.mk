@@ -27,6 +27,15 @@ tutorial: tutorial-html tutorial-pdf
 
 tutorial_dir = $(doc_dir)/tutorial
 
+# FIXME: Check these dependencies.
+# 1. They might be redundant.
+# 2. It'd be better to depend on actual files rather than timestamps
+#    correponding to a bunch of files.
+tutorial_dependencies =				\
+  $(doc_dir)/split-examples.stamp		\
+  $(doc_dir)/split-outputs.stamp		\
+  $(doc_dir)/figures.stamp
+
 # FIXME: As in milena/doc/Makefile.am, we should probably strip
 # $(srcdir) prefixes from target variables, e.g. instead of:
 #
@@ -59,14 +68,13 @@ tutorial_dir = $(doc_dir)/tutorial
 # files.
 TUTORIAL_HH = $(tutorial_dir)/tutorial.hh
 tutorial-html: $(TUTORIAL_HH)
-$(TUTORIAL_HH): $(tutorial_dir)/tutorial.tex $(doc_dir)/figures.stamp
+$(TUTORIAL_HH): $(tutorial_dir)/tutorial.tex $(tutorial_dependencies)
 	$(doc_dir)/tools/todoxygen.sh $< $(tutorial_dir) $(doc_dir)
-
 
 # Final product.
 TUTORIAL_PDF = $(tutorial_dir)/tutorial.pdf
 tutorial-pdf: $(TUTORIAL_PDF)
-$(TUTORIAL_PDF): $(tutorial_dir)/tutorial.tex $(doc_dir)/figures.stamp
+$(TUTORIAL_PDF): $(tutorial_dir)/tutorial.tex $(tutorial_dependencies)
 	TEXINPUTS=$(tutorial_TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(tutorial_TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(tutorial_TEXINPUTS) pdflatex $<	\

@@ -27,6 +27,11 @@ technical: technical-html technical-pdf
 
 technical_dir = $(doc_dir)/technical
 
+# FIXME: Check these dependencies.  And it'd be better to depend on
+# actual files rather than timestamps correponding to a bunch of
+# files.
+technical_dependencies = $(doc_dir)/figures.stamp
+
 # FIXME: As in milena/doc/Makefile.am, we should probably strip
 # $(srcdir) prefixes from target variables, e.g. instead of:
 #
@@ -59,14 +64,14 @@ technical_dir = $(doc_dir)/technical
 # about `.html' files.
 TECHNICAL_HH = $(technical_dir)/technical.hh
 technical-html: $(TECHNICAL_HH)
-$(TECHNICAL_HH): $(technical_dir)/technical.tex $(doc_dir)/figures.stamp
+$(TECHNICAL_HH): $(technical_dir)/technical.tex $(technical_dependencies)
 	$(doc_dir)/tools/todoxygen.sh $< $(technical_dir) $(doc_dir)
 
 
 # Final product.
 TECHNICAL_PDF = $(technical_dir)/technical.pdf
 technical-pdf: $(TECHNICAL_PDF)
-$(TECHNICAL_PDF): $(technical_dir)/technical.tex $(doc_dir)/figures.stamp
+$(TECHNICAL_PDF): $(technical_dir)/technical.tex $(technical_dependencies)
 	TEXINPUTS=$(technical_TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(technical_TEXINPUTS) pdflatex $<
 	TEXINPUTS=$(technical_TEXINPUTS) pdflatex $<	\
