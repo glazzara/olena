@@ -771,7 +771,9 @@ OUTPUTS =						\
   $(srcdir)/outputs/fun-p2v-1.txt			\
   $(srcdir)/outputs/graph-data.txt			\
   $(srcdir)/outputs/graph-iter.txt			\
-  $(srcdir)/outputs/graph-output-1.txt			\
+  $(srcdir)/outputs/ima-has.txt				\
+  $(srcdir)/outputs/ima-save.txt			\
+  $(srcdir)/outputs/ima-size.txt			\
   $(srcdir)/outputs/ima2d-1.txt				\
   $(srcdir)/outputs/ima2d-2.txt				\
   $(srcdir)/outputs/ima2d-3.txt				\
@@ -779,21 +781,12 @@ OUTPUTS =						\
   $(srcdir)/outputs/ima2d-5.txt				\
   $(srcdir)/outputs/ima2d-6-clone.txt			\
   $(srcdir)/outputs/ima2d-7.txt				\
-  $(srcdir)/outputs/ima2d-decl-2.txt			\
-  $(srcdir)/outputs/ima2d-display-1.txt			\
-  $(srcdir)/outputs/ima2d-display-2.txt			\
-  $(srcdir)/outputs/ima2d-display-output-1.txt		\
-  $(srcdir)/outputs/ima2d-display-output-2.txt		\
   $(srcdir)/outputs/ima2d-rot.txt			\
-  $(srcdir)/outputs/ima-has.txt				\
-  $(srcdir)/outputs/ima-save.txt			\
-  $(srcdir)/outputs/ima-size.txt			\
   $(srcdir)/outputs/labeling-compute.txt		\
   $(srcdir)/outputs/logical-not.txt			\
   $(srcdir)/outputs/mln_var.txt				\
   $(srcdir)/outputs/parray-append.txt			\
   $(srcdir)/outputs/parray-bbox.txt			\
-  $(srcdir)/outputs/parray-display-1.txt		\
   $(srcdir)/outputs/paste-call-1.txt			\
   $(srcdir)/outputs/paste.txt				\
   $(srcdir)/outputs/point-1.txt				\
@@ -806,9 +799,21 @@ OUTPUTS =						\
   $(srcdir)/outputs/tuto4_genericity_and_algorithms.txt	\
   $(srcdir)/outputs/tuto4_point2d.txt			\
   $(srcdir)/outputs/tuto4_site_set_create.txt		\
-  $(srcdir)/outputs/win-create-1-display.txt		\
   $(srcdir)/outputs/win-create-1.txt			\
   $(srcdir)/outputs/win-create-2.txt
+
+## FIXME: These outpouts are also required by the (LaTeX)
+## documentation.  However, they have no corresponding program in
+## examples/, hence they cannot be regenerated.  Are they hand-made
+## outputs?  Or maybe outputs of which program has been removed since?
+MORE_OUTPUTS =					\
+  $(srcdir)/outputs/graph-output-1.txt		\
+  $(srcdir)/outputs/ima2d-display-1.txt		\
+  $(srcdir)/outputs/ima2d-display-2.txt		\
+  $(srcdir)/outputs/ima2d-display-output-1.txt	\
+  $(srcdir)/outputs/ima2d-display-output-2.txt	\
+  $(srcdir)/outputs/parray-display-1.txt	\
+  $(srcdir)/outputs/win-create-1-display.txt
 
 $(DOC_SRCDIR)/examples-outputs.mk: $(DOC_SRCDIR)/gen-examples-outputs-mk $(srcdir)/Makefile.am
 	$(DOC_SRCDIR)/gen-examples-outputs-mk $(PROGRAMS_examples) >$@.tmp
@@ -824,7 +829,6 @@ MAINTAINERCLEANFILES += $(OUTPUTS)
 # FIXME: Try to avoid the use an extensive list: either use Make's
 # substitution rules or generate it.
 EXAMPLES =						\
-  $(srcdir)/examples/ima-save.cc			\
   $(srcdir)/examples/accu-right-instanciation.cc	\
   $(srcdir)/examples/borderthickness.cc			\
   $(srcdir)/examples/box2d-bbox.cc			\
@@ -845,6 +849,7 @@ EXAMPLES =						\
   $(srcdir)/examples/graph-iter.cc			\
   $(srcdir)/examples/ima-has.cc				\
   $(srcdir)/examples/ima-load.cc			\
+  $(srcdir)/examples/ima-save.cc			\
   $(srcdir)/examples/ima-size.cc			\
   $(srcdir)/examples/ima2d-1.cc				\
   $(srcdir)/examples/ima2d-2.cc				\

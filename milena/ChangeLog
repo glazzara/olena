@@ -1,5 +1,22 @@
 2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	List non generated documentation outputs separately.
+
+	* doc/Makefile.am (OUTPUTS, EXAMPLES):
+	Sort in lexicographical order.
+	Remove $(srcdir)/outputs/ima2d-decl-2.txt
+	Move $(srcdir)/outputs/graph-output-1.txt,
+	$(srcdir)/outputs/ima2d-display-1.txt,
+	$(srcdir)/outputs/ima2d-display-2.txt,
+	$(srcdir)/outputs/ima2d-display-output-1.txt,
+	$(srcdir)/outputs/ima2d-display-output-2.txt,
+	$(srcdir)/outputs/parray-display-1.txt and
+	$(srcdir)/outputs/win-create-1-display.txt...
+	(MORE_OUTPUTS): ...here (new variable).
+	* doc/outputs/ima2d-decl-2.txt: Remove.
+
+2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use texi2dvi to produce PDF from LaTeX.
 
 	* doc/Makefile.am: Include $(top_srcdir)/build-aux/tex.mk.
