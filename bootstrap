@@ -129,8 +129,26 @@ export LIBTOOLIZE=$libtoolize
 require $libtoolize 1.5.22
 
 require doxygen 1.5.6
-# FIXME: These should no longer be required when TeX4HT is used.
-require hevea 1.10 -version
+require convert 6.3.7
+
+# Check for TeX4ht.  htlatex and friends do not have options like
+# `--version', `-version', `-v', etc.  Hence this ad hoc procedure.
+tempdir=`mktemp -d`
+cleanup() { rm -rf "$tempdir"; exit; }
+trap cleanup 0 1 2 3 6 15
+(
+  cd "$tempdir"
+  cat >test.tex <<EOF
+  \documentclass{article}
+  \begin{document}
+  Test
+  \end{document}
+EOF
+  htlatex >/dev/null 2>&1 test.tex || fatal "TeX4ht is required"
+)
+rm -rf "$tempdir"
+# dvipnh is required by TeX4ht.
+require dvipng 1.11
 
 # Tell what's going on.
 set -x

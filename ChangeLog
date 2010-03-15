@@ -1,5 +1,13 @@
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have texi2dvi use TeX4ht instead of HeVeA to produce HTML outputs.
+
+	* build-aux/tex.mk (TEXI2HTML): Add --tex4ht.
+	* bootstrap (tempdir): Check for TeX4ht, dvipng and convert (from
+	ImageMagick).
+
+2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Support HTML outputs in tex.mk.
 
 	* build-aux/tex.mk (SUFFIXES): Add .html.
