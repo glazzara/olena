@@ -1,4 +1,3 @@
-
 # Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 # Laboratory (LRDE).
 #
@@ -15,7 +14,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
 
 # FIXME: To be overhauled! (See ticket #134).
 
@@ -52,8 +50,6 @@ DOXYFILE = Doxyfile
 # Initialiaze variables.
 EXTRA_DIST =
 dist_doc_DATA =
-CLEANFILES =
-MAINTAINERCLEANFILES =
 
 # FIXME: Simplify all of this.  ``Devel'' targets are really
 # secondary.  And we probably don't need so much target aliases!
@@ -144,6 +140,7 @@ $(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
 	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
 	      | sed -e 's/\\\$$//g'`;				\
 	  $(edit) $< >$@
+MAINTAINERCLEANFILES = $(DOXYFILE_USER)
 
 ## FIXME: Rename USER_REFMAN_PDF to something else?
 USER_REFMAN_PDF = user-refman.pdf
@@ -220,6 +217,7 @@ $(DOXYFILE_DEVEL): $(srcdir)/$(DOXYFILE).in
 	  $(edit) $< >$@.tmp
 	$(edit_devel) $@.tmp >$@
 	rm -f $@.tmp
+MAINTAINERCLEANFILES += $(DOXYFILE_DEVEL)
 
 ## FIXME: Rename DEVEL_REFMAN_PDF to something else?
 DEVEL_REFMAN_PDF = devel-refman-pdf
@@ -373,13 +371,13 @@ technical-pdf: $(TECHNICAL_PDF)
 $(TECHNICAL_PDF): $(technical_dependencies)
 
 dist_doc_DATA += $(TECHNICAL_PDF)
+MAINTAINERCLEANFILES += $(TECHNICAL_PDF)
 
 EXTRA_DIST +=					\
   $(technical_dir)/technical.tex		\
   $(TECHNICAL_HH)
 
-CLEANFILES += $(technical_dir)/technical.haux
-
+MAINTAINERCLEANFILES += $(TECHNICAL_HH)
 
 ## ---------- ##
 ## Tutorial.  ##
@@ -476,15 +474,13 @@ tutorial-pdf: $(TUTORIAL_PDF)
 $(TUTORIAL_PDF): $(tutorial_dependencies)
 
 dist_doc_DATA += $(TUTORIAL_PDF)
+MAINTAINERCLEANFILES += $(TUTORIAL_PDF)
 
 EXTRA_DIST +=					\
   $(tutorial_dir)/tutorial.tex			\
   $(TUTORIAL_HH)
 
-# FIXME: Why is $(TUTORIAL_HH) listed here?  It should be
-# automatically cleaned.  I'm not sure either about the rest of
-# CLEANFILES.
-CLEANFILES += $(tutorial_dir)/tutorial.haux
+MAINTAINERCLEANFILES += $(TUTORIAL_HH)
 
 
 ## ------------- ##
@@ -572,19 +568,15 @@ white-paper-pdf: $(WHITE_PAPER_PDF)
 # Extra dependencies.
 $(WHITE_PAPER_PDF): $(PNGS)
 
-dist_doc_DATA +=				\
-  $(WHITE_PAPER_HTML)				\
-  $(WHITE_PAPER_PDF)
+dist_doc_DATA += $(WHITE_PAPER_PDF)
+MAINTAINERCLEANFILES += $(WHITE_PAPER_PDF)
 
 EXTRA_DIST +=					\
   $(white_paper_dir)/white_paper.tex		\
   $(PNGS)					\
   $(EPSS)
 
-CLEANFILES += $(EPSS)
-
-clean-local:
-	-rm -rf $(white_paper_dir)/white_paper_html
+MAINTAINERCLEANFILES += $(EPSS)
 
 
 ## ----------------- ##
@@ -685,14 +677,13 @@ ref-guide-pdf: $(REF_GUIDE_PDF)
 $(REF_GUIDE_PDF): $(ref_guide_dependencies)
 
 dist_doc_DATA += $(REF_GUIDE_PDF)
+MAINTAINERCLEANFILES += $(REF_GUIDE_PDF)
 
 EXTRA_DIST +=					\
   $(ref_guide_dir)/ref_guide.tex		\
   $(REF_GUIDE_HH)
 
-CLEANFILES +=					\
-  $(ref_guide_dir)/ref_guide.haux		\
-  $(ref_guide_dir)/ref_guide.htoc
+MAINTAINERCLEANFILES += $(REF_GUIDE_HH)
 
 
 ## --------- ##
@@ -782,7 +773,7 @@ PROGRAMS_examples += 	\
   tuto4_site_set_create
 
 EXTRA_PROGRAMS = $(PROGRAMS_examples)
-CLEANFILES += $(PROGRAMS_examples)
+CLEANFILES = $(PROGRAMS_examples)
 
 # FIXME: Careful, this will only work if this file is included by
 # `milena/doc/Makefile.am', since `examples/' is a subdirectory of
@@ -1128,7 +1119,3 @@ EXTRA_DIST +=					\
   tools/sample_utils.hh				\
   tools/split_sample.sh				\
   tools/todoxygen.sh
-
-MAINTAINERCLEANFILES +=				\
-  Doxyfile_user					\
-  Doxyfile_devel

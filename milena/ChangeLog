@@ -1,5 +1,22 @@
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve doc/'s cleaning rules.
+
+	* doc/Makefile.am (CLEANFILES): Remove
+	$(technical_dir)/technical.haux,
+	$(tutorial_dir)/tutorial.haux,
+	$(ref_guide_dir)/ref_guide.haux and
+	$(ref_guide_dir)/ref_guide.htoc.
+	(clean-local): Remove (phony) target.
+	($(EPSS)): Move...
+	(MAINTAINERCLEANFILES): ...here.
+	Add $(TECHNICAL_PDF), $(TECHNICAL_HH),
+	$(TUTORIAL_PDF), $(TUTORIAL_HH),
+	$(WHITE_PAPER_PDF)
+	$(REF_GUIDE_PDF) and $(REF_GUIDE_HH).
+
+2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Prevent todoxygen.sh from generating incomplete outputs.
 
 	* doc/tools/todoxygen.sh: Take an output file as second argument
