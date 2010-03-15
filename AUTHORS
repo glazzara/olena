@@ -5,10 +5,6 @@ This package was written by and with the assistance of
 Active LRDE Staff.
 ==================
 
-* Fabien Freling	fabien.freling@lrde.epita.fr
-  - Work on Melimage with IGR.
-  - Library improvements.
-
 * Thierry Géraud	theo@lrde.epita.fr
   - Management of the project in the first place.
   - Type system.
@@ -18,13 +14,15 @@ Active LRDE Staff.
   - Olena 1.0 core.
   - Numerous hours spent thinking about Olena.
 
+* Yann Jacquelet	jacquelet@lrde.epita.fr
+
 * Guillaume Lazzara	z@lrde.epita.fr
   - Work on Scribo
   - Library improvements.
 
 * Roland Levillain	roland@lrde.epita.fr
   - Project manager.
-  - Theoritical mentor.
+  - Theoretical mentor.
   - Renovation of Swilena (Olena 0.10a).
   - G++ 4.0 and 4.1 compatibility (Olena 0.10a).
   - Integration of GNU Libtool (Olena 0.10a).
@@ -55,15 +53,25 @@ Past contributors of LRDE Staff.
   - First documentation system.
   - Numerous hours spent on Olena to make it better.
 
+* Fabien Freling	fabien.freling@lrde.epita.fr
+  - Work on Melimage with IGR.
+  - Library improvements.
+
+
+=========================
+Students from Class 2012.
+=========================
+
+* Frédéric Bour 	frederic.bour@lrde.epita.fr
+  - Prototype of the upcoming functions system.
+
+* Julien Marquegnies 	julien.marquegnies@lrde.epita.fr
 
 =========================
 Students from Class 2011.
 =========================
 
-* Frédéric Bour
-  - Prototype of the upcoming functions system.
-
-* Edwin Carlinet
+* Edwin Carlinet	 edwin.carlinet@lrde.epita.fr
   - Accumulators.
   - Morphological connected filters.
 
