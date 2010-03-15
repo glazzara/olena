@@ -27,10 +27,16 @@ TEXI2DVI_FLAGS = --tidy --build-dir=tmp.t2d --batch
 TEXI2PDF = $(TEXI2DVI) --pdf
 TEXI2PDF_FLAGS = $(TEXI2DVI_FLAGS)
 
-SUFFIXES = .pdf .tex
+TEXI2HTML = $(TEXI2DVI) --html
+TEXI2HTML_FLAGS = $(TEXI2DVI_FLAGS)
+
+SUFFIXES = .tex .pdf .html
 
 .tex.pdf:
 	$(TEXI2PDF) $(TEXI2PDF_FLAGS) -o $@ $<
+
+.tex.html:
+	$(TEXI2HTML) $(TEXI2HTML_FLAGS) -o $@ $<
 
 tex-mostlyclean:
 	rm -rf tmp.t2d

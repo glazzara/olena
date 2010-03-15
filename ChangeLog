@@ -1,5 +1,13 @@
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Support HTML outputs in tex.mk.
+
+	* build-aux/tex.mk (SUFFIXES): Add .html.
+	(.tex.html): New rule.
+	(TEXI2HTML, TEXI2HTML_FLAGS): New variables.
+
+2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Automake configuration.
 
 	* configure.ac: Remove option `foreign'.
