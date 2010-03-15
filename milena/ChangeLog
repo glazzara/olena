@@ -1,3 +1,12 @@
+2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Aesthetic changes.
+
+	* tests/tests.mk,
+	* tests/tests-recursive.mk:
+	Here.
+	Help Emacs find out the nature of these files.
+
 2010-03-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Regen Milena's Makefile helpers.
