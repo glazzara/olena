@@ -19,10 +19,10 @@
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
 test $# -eq 3 \
-  || { echo "Usage: $0 <file.html> <output dir> <path to .sty>"; exit 1; }
+  || { echo "Usage: $0 <input.html> <output.hh> <path to .sty>"; exit 1; }
 
 html="$1"
-out="$2/`basename $1 .html`.hh"
+out="$2"
 
 bodyl=`grep -n -i "<BODY" $html | cut -d ':' -f 1`
 nlines=`wc -l $html | cut -d ' ' -f 1`

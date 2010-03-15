@@ -1,5 +1,16 @@
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Prevent todoxygen.sh from generating incomplete outputs.
+
+	* doc/tools/todoxygen.sh: Take an output file as second argument
+	instead of an output directory.
+	* doc/Makefile.am
+	($(TECHNICAL_HH), $(TUTORIAL_HH), $(REF_GUIDE_HH)): Adjust.
+	Use a temporary file to prevent  todoxygen.sh from generating
+	incomplete outputs.
+
+2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Adjust todoxygen.sh to TeX4ht outputs.
 
 	* doc/tools/todoxygen.sh: Here.

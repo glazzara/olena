@@ -357,7 +357,13 @@ TECHNICAL_HH = $(technical_dir)/technical.hh
 # $(TECHNICAL_HTML).  Anyway, this shortcut should vanish soon.
 technical-html: $(TECHNICAL_HH)
 $(TECHNICAL_HH): $(TECHNICAL_HTML) $(doc_dir)/tools/todoxygen.sh
-	$(doc_dir)/tools/todoxygen.sh $< $(technical_dir) $(doc_dir)
+# The script `todoxygen.sh' may fail and still create a (partial and
+# invalid) file, thus preventing Make from trying to generate it
+# again.  The solution is to use a temporary file as output and rename
+# it if the script succeeds.
+	rm -f $@.tmp
+	$(doc_dir)/tools/todoxygen.sh $< $@.tmp $(doc_dir)
+	mv -f $@.tmp $@
 
 
 # Final product.
@@ -454,7 +460,13 @@ TUTORIAL_HH = $(tutorial_dir)/tutorial.hh
 # $(TUTORIAL_HTML).  Anyway, this shortcut should vanish soon.
 tutorial-html: $(TUTORIAL_HH)
 $(TUTORIAL_HH): $(TUTORIAL_HTML) $(doc_dir)/tools/todoxygen.sh
-	$(doc_dir)/tools/todoxygen.sh $< $(tutorial_dir) $(doc_dir)
+# The script `todoxygen.sh' may fail and still create a (partial and
+# invalid) file, thus preventing Make from trying to generate it
+# again.  The solution is to use a temporary file as output and rename
+# it if the script succeeds.
+	rm -f $@.tmp
+	$(doc_dir)/tools/todoxygen.sh $< $@.tmp $(doc_dir)
+	mv -f $@.tmp $@
 
 
 # Final product.
@@ -657,7 +669,13 @@ REF_GUIDE_HH = $(ref_guide_dir)/ref_guide.hh
 # $(REF_GUIDE_HTML).  Anyway, this shortcut should vanish soon.
 ref-guide-html: $(REF_GUIDE_HH)
 $(REF_GUIDE_HH): $(REF_GUIDE_HTML) $(doc_dir)/tools/todoxygen.sh
-	$(doc_dir)/tools/todoxygen.sh $< $(ref_guide_dir) $(doc_dir)
+# The script `todoxygen.sh' may fail and still create a (partial and
+# invalid) file, thus preventing Make from trying to generate it
+# again.  The solution is to use a temporary file as output and rename
+# it if the script succeeds.
+	rm -f $@.tmp
+	$(doc_dir)/tools/todoxygen.sh $< $@.tmp $(doc_dir)
+	mv -f $@.tmp $@
 
 
 # Final product.
