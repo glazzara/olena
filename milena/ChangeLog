@@ -1,5 +1,11 @@
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Adjust todoxygen.sh to TeX4ht outputs.
+
+	* doc/tools/todoxygen.sh: Here.
+
+2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Adapt HTML generation to TeX4ht.
 
 	* doc/Makefile.am

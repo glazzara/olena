@@ -24,7 +24,7 @@ test $# -eq 3 \
 html="$1"
 out="$2/`basename $1 .html`.hh"
 
-bodyl=`grep -n "<BODY >" $html | cut -d ':' -f 1`
+bodyl=`grep -n -i "<BODY" $html | cut -d ':' -f 1`
 nlines=`wc -l $html | cut -d ' ' -f 1`
 tail_line=$(($nlines - $bodyl))
 
