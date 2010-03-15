@@ -1,3 +1,14 @@
+2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use texi2dvi to produce HTML from LaTeX.
+
+	* doc/Makefile.am
+	(TEXI2DVI_FLAGS): Add -I $(DOC_SRCDIR)/white_paper.
+	($(TECHNICAL_PDF), $(TUTORIAL_PDF))
+	($(WHITE_PAPER_PDF), $(REF_GUIDE_PDF)):
+	Reduce these rules to a list of extra dependencies and let the
+	generic tex-to-html rule do the job.
+
 2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Split LaTeX-to-HTML rules to clear things up.

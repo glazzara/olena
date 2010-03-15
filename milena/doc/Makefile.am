@@ -90,6 +90,9 @@ TEXI2DVI_FLAGS +=							\
   -I $(DOC_SRCDIR) -I $(OUTPUTS_SRCDIR) -I $(SPLIT_OUTPUTS_SRCDIR)	\
   -I $(IMG_SRCDIR) -I $(SPLIT_EXAMPLES_SRCDIR)
 
+# Illustrations of the white paper.
+TEXI2DVI_FLAGS += -I $(DOC_SRCDIR)/white_paper
+
 # Additional files for HeVeA compilations.
 DOC_PACKAGES = $(srcdir)/doxyfuns.sty $(srcdir)/milena.sty
 
@@ -318,9 +321,10 @@ technical_dependencies = $(doc_dir)/figures.stamp
 ## Doyxgen documentation); remove its generation? Careful,
 ## technical/technical.html *is* probably required, though.
 
+# Final product.
 TECHNICAL_HTML = $(technical_dir)/technical.html
-$(TECHNICAL_HTML): $(technical_dir)/technical.tex $(technical_dependencies)
-	hevea -O -fix $(DOC_PACKAGES) $< -o $@
+# Extra dependencies.
+$(TECHNICAL_HTML): $(technical_dependencies)
 
 dist_doc_DATA += $(TECHNICAL_HTML)
 
@@ -396,9 +400,10 @@ tutorial_dependencies =				\
 # product is a directory, also refresh a timestamp (in the source
 # dir).
 
+# Final product.
 TUTORIAL_HTML = $(tutorial_dir)/tutorial.html
-$(TUTORIAL_HTML): $(tutorial_dir)/tutorial.tex $(tutorial_dependencies)
-	hevea -O -fix $(DOC_PACKAGES) $< -o $@
+# Extra dependencies.
+$(TUTORIAL_HTML): $(tutorial_dependencies)
 
 dist_doc_DATA += $(TUTORIAL_HTML)
 
@@ -482,15 +487,12 @@ white-paper: white-paper-pdf white-paper-html
 # product is a directory, also refresh a timestamp (in the source
 # dir).
 
-# FIXME: Use texi2dvi/TeX4ht instead of plain hevea.
-# FIXME: Why is WHITE_PAPER_HTML generated in a subdirectory?
-WHITE_PAPER_HTML = $(white_paper_dir)/white_paper_html/index.html
+# Final product.
+WHITE_PAPER_HTML = $(white_paper_dir)/white_paper.html
 white-paper-html: $(WHITE_PAPER_HTML)
-$(WHITE_PAPER_HTML): $(white_paper_dir)/white_paper.tex $(EPSS)
-	test -d $(white_paper_dir)/white_paper_html	\
-	  || mkdir $(white_paper_dir)/white_paper_html
-	TEXINPUTS="$(DOC_SRCDIR):$(white_paper_dir):" hevea -O -fix $< -o $@
-	$(doc_dir)/tools/clearbanner.sh $@
+$(WHITE_PAPER_HTML): $(EPSS)
+# FIXME: Keep this pass?
+#	$(doc_dir)/tools/clearbanner.sh $@
 
 
 WHITE_PAPER_PDF = $(white_paper_dir)/white_paper.pdf
@@ -556,9 +558,10 @@ ref_guide_dependencies =			\
 # product is a directory, also refresh a timestamp (in the source
 # dir).
 
+# Final product.
 REF_GUIDE_HTML = $(ref_guide_dir)/ref_guide.html
-$(REF_GUIDE_HTML): $(ref_guide_dir)/ref_guide.tex $(ref_guide_dependencies)
-	hevea -O -fix $(DOC_PACKAGES) $< -o $@
+# Extra dependencies.
+$(REF_GUIDE_HTML): $(ref_guide_dependencies)
 
 dist_doc_DATA += $(REF_GUIDE_HTML)
 
