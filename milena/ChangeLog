@@ -1,5 +1,14 @@
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Distribute and clean documentation timestamps.
+
+	* doc/Makefile.am (EXTRA_DIST, MAINTAINERCLEANFILES):
+	Add $(srcdir)/user-refman.stamp, $(srcdir)/devel-refman.stamp,
+	$(srcdir)/figures.stamp, $(srcdir)/split-examples.stamp and
+	$(srcdir)/split-outputs.stamp.
+
+2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve doc/'s cleaning rules.
 
 	* doc/Makefile.am (CLEANFILES): Remove

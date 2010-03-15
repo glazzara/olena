@@ -157,6 +157,8 @@ $(srcdir)/$(USER_REFMAN_PDF): $(srcdir)/$(USER_REFMAN)
 	cd $(srcdir)/$(USER_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
 	cp -f $(srcdir)/$(USER_REFMAN)/latex/refman.pdf $@
 
+EXTRA_DIST += $(srcdir)/user-refman.stamp
+MAINTAINERCLEANFILES += $(srcdir)/user-refman.stamp
 ## FIXME: Are dependencies (`$(refman_dependencies)') set on the right
 ## rule?  Does Doxygen make a copy of figures, or does it generate
 ## LaTeX inputs relying on the existence of such figures in the
@@ -238,6 +240,8 @@ $(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/$(DEVEL_REFMAN)
 	cd $(srcdir)/$(DEVEL_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
 	cp -f $(srcdir)/$(DEVEL_REFMAN)/latex/refman.pdf $@
 
+EXTRA_DIST += $(srcdir)/devel-refman.stamp
+MAINTAINERCLEANFILES += $(srcdir)/devel-refman.stamp
 ## FIXME: Are dependencies (`$(refman_dependencies)') set on the right
 ## rule?  Does Doxygen make a copy of figures, or does it generate
 ## LaTeX inputs relying on the existence of such figures in the
@@ -693,7 +697,8 @@ MAINTAINERCLEANFILES += $(REF_GUIDE_HH)
 $(srcdir)/figures/figures.mk: $(srcdir)/headers.stamp
 include $(srcdir)/figures/figures.mk
 
-EXTRA_DIST += figures.stamp
+EXTRA_DIST += $(srcdir)/figures.stamp
+MAINTAINERCLEANFILES += $(srcdir)/figures.stamp
 $(srcdir)/figures.stamp: $(FIGURES_SRCDIR)/*.p*m
 	rm -f $@.tmp
 	touch $@.tmp
@@ -1005,6 +1010,8 @@ EXAMPLES =						\
 # files easier.  We probably also nee a stamp file to keep track of
 # dependencies.
 
+EXTRA_DIST += $(srcdir)/split-examples.stamp
+MAINTAINERCLEANFILES += $(srcdir)/split-examples.stamp
 # FIXME: Loops are bad, as they prevent parallelism.  And we prefer
 # data-driven actions anyway.  This would imply that we know in
 # advance the list out outputs (here, split examples).  Maybe we can
@@ -1020,6 +1027,8 @@ $(srcdir)/split-examples.stamp: $(EXAMPLES)
 	done
 	@mv -f $@.tmp $@
 
+EXTRA_DIST += $(srcdir)/split-outputs.stamp
+MAINTAINERCLEANFILES += $(srcdir)/split-outputs.stamp
 # FIXME: Loops are bad, as they prevent parallelism.  And we prefer
 # data-driven actions anyway.  This would imply that we know in
 # advance the list out outputs (here, split outputs).  Maybe we can
