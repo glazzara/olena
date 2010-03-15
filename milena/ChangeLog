@@ -1,5 +1,30 @@
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Adapt HTML generation to TeX4ht.
+
+	* doc/Makefile.am
+	(TECHNICAL_HTML_OUTPUTS, TUTORIAL_HTML_OUTPUTS)
+	(WHITE_PAPER_HTML_OUTPUTS, REF_GUIDE_HTML_OUTPUTS):
+	New variables.
+	($(TECHNICAL_HTML), $(TUTORIAL_HTML))
+	($(WHITE_PAPER_HTML), $(REF_GUIDE_HTML)):
+	Remove these targets.
+	Superseded by...
+	($(TECHNICAL_HTML).stamp, $(TECHNICAL_HTML_OUTPUTS))
+	($(TUTORIAL_HTML).stamp, $(TUTORIAL_HTML_OUTPUTS))
+	($(WHITE_PAPER_HTML).stamp, $(WHITE_PAPER_HTML_OUTPUTS))
+	($(REF_GUIDE_HTML).stamp, $(REF_GUIDE_HTML_OUTPUTS)):
+	...these (new) targets.
+	(EXTRA_DIST, MAINTAINERCLEANFILES): Add $(TECHNICAL_HTML).stamp,
+	($(TUTORIAL_HTML).stamp, $(WHITE_PAPER_HTML).stamp and
+	$(REF_GUIDE_HTML).stamp.
+	(dist_doc_DATA, MAINTAINERCLEANFILES): Remove $(TECHNICAL_HTML),
+	$(TUTORIAL_HTML), $(WHITE_PAPER_HTML) and $(REF_GUIDE_HTML).
+	Add $(TECHNICAL_HTML_OUTPUTS), $(TUTORIAL_HTML_OUTPUTS),
+	$(WHITE_PAPER_HTML_OUTPUTS) and $(REF_GUIDE_HTML_OUTPUTS).
+
+2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use texi2dvi to produce HTML from LaTeX.
 
 	* doc/Makefile.am

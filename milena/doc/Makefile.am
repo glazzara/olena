@@ -323,10 +323,28 @@ technical_dependencies = $(doc_dir)/figures.stamp
 
 # Final product.
 TECHNICAL_HTML = $(technical_dir)/technical.html
-# Extra dependencies.
-$(TECHNICAL_HTML): $(technical_dependencies)
+TECHNICAL_HTML_OUTPUTS = $(TECHNICAL_HTML) $(technical_dir)/technical.css
 
-dist_doc_DATA += $(TECHNICAL_HTML)
+EXTRA_DIST += $(TECHNICAL_HTML).stamp
+MAINTAINERCLEANFILES += $(TECHNICAL_HTML).stamp
+# HTML outputs contains several files (the HTML file itself, its CSS
+# style sheet, possibly some images).  Therefore, we cannot rely on a
+# simple suffix rule to produce them.
+$(TECHNICAL_HTML).stamp: $(technical_dir)/technical.tex $(technical_dependencies)
+	@rm -f $@.tmp
+	@touch $@.tmp
+	$(TEXI2HTML) $(TEXI2HTML_FLAGS) -o $(TECHNICAL_HTML) $<
+	@mv -f $@.tmp $@
+
+$(TECHNICAL_HTML_OUTPUTS): $(TECHNICAL_HTML).stamp
+## Recover from the removal of $@
+	@if test -d $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
+dist_doc_DATA += $(TECHNICAL_HTML_OUTPUTS)
+MAINTAINERCLEANFILES += $(TECHNICAL_HTML_OUTPUTS)
 
 # Intermediate product for the various doc targets of the parent
 # directory.
@@ -402,10 +420,28 @@ tutorial_dependencies =				\
 
 # Final product.
 TUTORIAL_HTML = $(tutorial_dir)/tutorial.html
-# Extra dependencies.
-$(TUTORIAL_HTML): $(tutorial_dependencies)
+TUTORIAL_HTML_OUTPUTS = $(TUTORIAL_HTML) $(tutorial_dir)/tutorial.css
 
-dist_doc_DATA += $(TUTORIAL_HTML)
+EXTRA_DIST += $(TUTORIAL_HTML).stamp
+MAINTAINERCLEANFILES += $(TUTORIAL_HTML).stamp
+# HTML outputs contains several files (the HTML file itself, its CSS
+# style sheet, possibly some images).  Therefore, we cannot rely on a
+# simple suffix rule to produce them.
+$(TUTORIAL_HTML).stamp: $(tutorial_dir)/tutorial.tex $(tutorial_dependencies)
+	@rm -f $@.tmp
+	@touch $@.tmp
+	$(TEXI2HTML) $(TEXI2HTML_FLAGS) -o $(TUTORIAL_HTML) $<
+	@mv -f $@.tmp $@
+
+$(TUTORIAL_HTML_OUTPUTS): $(TUTORIAL_HTML).stamp
+## Recover from the removal of $@
+	@if test -d $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
+dist_doc_DATA += $(TUTORIAL_HTML_OUTPUTS)
+MAINTAINERCLEANFILES += $(TUTORIAL_HTML_OUTPUTS)
 
 # Intermediate product for the various doc targets of the parent
 # directory.
@@ -490,10 +526,34 @@ white-paper: white-paper-pdf white-paper-html
 # Final product.
 WHITE_PAPER_HTML = $(white_paper_dir)/white_paper.html
 white-paper-html: $(WHITE_PAPER_HTML)
-$(WHITE_PAPER_HTML): $(EPSS)
-# FIXME: Keep this pass?
-#	$(doc_dir)/tools/clearbanner.sh $@
+WHITE_PAPER_HTML_OUTPUTS =			\
+  $(WHITE_PAPER_HTML)				\
+  $(white_paper_dir)/white_paper.css		\
+  $(white_paper_dir)/white_paper0x.png		\
+  $(white_paper_dir)/white_paper1x.png		\
+  $(white_paper_dir)/white_paper2x.png		\
+  $(white_paper_dir)/white_paper3x.png
 
+EXTRA_DIST += $(WHITE_PAPER_HTML).stamp
+MAINTAINERCLEANFILES += $(WHITE_PAPER_HTML).stamp
+# HTML outputs contains several files (the HTML file itself, its CSS
+# style sheet, possibly some images).  Therefore, we cannot rely on a
+# simple suffix rule to produce them.
+$(WHITE_PAPER_HTML).stamp: $(white_paper_dir)/white_paper.tex $(EPSS)
+	@rm -f $@.tmp
+	@touch $@.tmp
+	$(TEXI2HTML) $(TEXI2HTML_FLAGS) -o $(WHITE_PAPER_HTML) $<
+	@mv -f $@.tmp $@
+
+$(WHITE_PAPER_HTML_OUTPUTS): $(WHITE_PAPER_HTML).stamp
+## Recover from the removal of $@
+	@if test -d $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
+dist_doc_DATA += $(WHITE_PAPER_HTML_OUTPUTS)
+MAINTAINERCLEANFILES += $(WHITE_PAPER_HTML_OUTPUTS)
 
 WHITE_PAPER_PDF = $(white_paper_dir)/white_paper.pdf
 white-paper-pdf: $(WHITE_PAPER_PDF)
@@ -560,10 +620,31 @@ ref_guide_dependencies =			\
 
 # Final product.
 REF_GUIDE_HTML = $(ref_guide_dir)/ref_guide.html
-# Extra dependencies.
-$(REF_GUIDE_HTML): $(ref_guide_dependencies)
+REF_GUIDE_HTML_OUTPUTS =			\
+  $(REF_GUIDE_HTML)				\
+  $(ref_guide_dir)/ref_guide.css		\
+  $(ref_guide_dir)/ref_guide0x.png
 
-dist_doc_DATA += $(REF_GUIDE_HTML)
+EXTRA_DIST += $(REF_GUIDE_HTML).stamp
+MAINTAINERCLEANFILES += $(REF_GUIDE_HTML).stamp
+# HTML outputs contains several files (the HTML file itself, its CSS
+# style sheet, possibly some images).  Therefore, we cannot rely on a
+# simple suffix rule to produce them.
+$(REF_GUIDE_HTML).stamp: $(ref_guide_dir)/ref_guide.tex $(ref_guide_dependencies)
+	@rm -f $@.tmp
+	@touch $@.tmp
+	$(TEXI2HTML) $(TEXI2HTML_FLAGS) -o $(REF_GUIDE_HTML) $<
+	@mv -f $@.tmp $@
+
+$(REF_GUIDE_HTML_OUTPUTS): $(REF_GUIDE_HTML).stamp
+## Recover from the removal of $@
+	@if test -d $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
+dist_doc_DATA += $(REF_GUIDE_HTML_OUTPUTS)
+MAINTAINERCLEANFILES += $(REF_GUIDE_HTML_OUTPUTS)
 
 # Intermediate product for the various doc targets of the parent
 # directory.
