@@ -1,3 +1,8 @@
+2010-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/subsampling/antialiased.hh: Add support for reduction factor
+	different from 2 or 3.
+
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/labeling/colorize.hh: Add support for value::qt::rgb32.

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,7 +35,7 @@
 
 #include <mln/core/concept/image.hh>
 #include <mln/border/thickness.hh>
-
+#include <mln/core/macros.hh>
 
 namespace mln
 {
@@ -42,7 +43,14 @@ namespace mln
   namespace subsampling
   {
 
-    /*! FIXME: Doc.
+    /*! \brief Antialiased subsampling.
+
+      \param[in] input A gray-level image.
+      \param[in] gap Subsampling ratio. Must be divisible by 2 or 3.
+      \param[in] shift Top left shift for iteration.
+      \param[in] output_domain Force output domain.
+      \param[in] border_thickness Force output border thickness.
+
      */
     template <typename I>
     inline
@@ -73,6 +81,46 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+    // Internal routines
+
+    namespace internal
+    {
+
+      bool is_valid_gap(unsigned gap)
+      {
+	return gap > 1 && (!(gap % 2) || !(gap % 3));
+      }
+
+
+      unsigned next_gap(unsigned& gap_left)
+      {
+	if (! (gap_left % 3))
+	{
+	  gap_left /= 3;
+	  return 3;
+	}
+	else if (! (gap_left % 2))
+	{
+	  gap_left /= 2;
+	  return 2;
+	}
+	else if (gap_left == 1)
+	{
+	  gap_left = 0;
+	  return 0;
+	}
+	else
+	{
+	  trace::warning("subsampling::internal::next_gap - Invalid gap!");
+	  return 0;
+	}
+      }
+
+    } // end of namespace mln::subsampling::internal
+
+
+
     // Tests
 
     namespace internal
@@ -92,7 +140,7 @@ namespace mln
 	mlc_is_a(mln_domain(I), Box)::check();
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(input).domain().pmin() == literal::origin);
-	mln_precondition(gap > 1);
+	mln_precondition(internal::is_valid_gap(gap));
 	for (unsigned i = 0; i < P::dim; ++i)
 	  mln_precondition(shift[i] < static_cast<int>(gap));
 
@@ -102,7 +150,6 @@ namespace mln
 	(void) output_domain;
 	(void) border_thickness;
       }
-
 
     } // end of namespace mln::subsampling::internal
 
@@ -381,9 +428,15 @@ namespace mln
       internal::antialiased_tests(input, gap, shift,
 				  output_domain, border_thickness);
 
-      mln_concrete(I) output;
-      output = internal::antialiased_dispatch(input, gap, shift,
-					      output_domain, border_thickness);
+      mln_concrete(I) output = exact(input);
+      while (gap)
+      {
+	unsigned next_gap = internal::next_gap(gap);
+	if (next_gap)
+	  output = internal::antialiased_dispatch(output, next_gap, shift,
+						  output_domain,
+						  border_thickness);
+      }
 
       trace::exiting("subsampling::antialiased");
       return output;
