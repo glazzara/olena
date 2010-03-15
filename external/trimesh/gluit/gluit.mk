@@ -1,4 +1,4 @@
-## Linking with gluit and GLUT/OpenGL.			-*- Automake -*-
+## Linking with gluit and GLUT/OpenGL.		-*- Makefile-Automake -*-
 
 ## ------------------------------------------------------------------ ##
 ## Before loading this file, you must define `gluit_builddir' first.  ##

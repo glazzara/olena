@@ -1,3 +1,7 @@
+2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	* gluit/gluit.mk: Help Emacs find out the nature of this file.
+
 2009-09-09  Guillaume Lazzara <guillaume.lazzara@epita.fr>
 
 	Add extra LD_FLAGS in Trimesh.
