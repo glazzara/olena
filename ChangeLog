@@ -1,5 +1,14 @@
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Disable the implicit generation of HTML from LaTeX.
+
+	* build-aux/tex.mk (.tex.html): Remove this rule, since (TeX4ht)
+	HTML outputs may contain more than one file (e.g., CSS style
+	sheets, images, etc.).
+	(SUFFIXES): Remove .html.
+
+2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have texi2dvi use TeX4ht instead of HeVeA to produce HTML outputs.
 
 	* build-aux/tex.mk (TEXI2HTML): Add --tex4ht.

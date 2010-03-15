@@ -30,13 +30,10 @@ TEXI2PDF_FLAGS = $(TEXI2DVI_FLAGS)
 TEXI2HTML = $(TEXI2DVI) --html --tex4ht
 TEXI2HTML_FLAGS = $(TEXI2DVI_FLAGS)
 
-SUFFIXES = .tex .pdf .html
+SUFFIXES = .tex .pdf
 
 .tex.pdf:
 	$(TEXI2PDF) $(TEXI2PDF_FLAGS) -o $@ $<
-
-.tex.html:
-	$(TEXI2HTML) $(TEXI2HTML_FLAGS) -o $@ $<
 
 tex-mostlyclean:
 	rm -rf tmp.t2d
