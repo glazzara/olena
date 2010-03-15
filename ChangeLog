@@ -1,3 +1,10 @@
+2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have bootstrap check for HeVeA 1.10.
+
+	* bootstrap (require): Take a flag as an optional second argument.
+	Use it to check for HeVeA 1.10.
+
 2010-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add texi2dvi as well as a Make helper to use it.

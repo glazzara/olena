@@ -78,14 +78,17 @@ version_compare ()
   esac
 }
 
-# require TOOL REQUIREMENT
-# ------------------------
+# require TOOL REQUIREMENT [OPTION]
+# ---------------------------------
 # Test that TOOL exists, and its version is at least REQUIREMENT.
+# If given, use OPTION to query TOOL; use `--version' otherwise.
 require ()
 {
-  local version=$($1 --version | sed -n 's/[^0-9.]*\([0-9][0-9.]*\).*/\1/p;q')
+  local option
+  if test $# -eq 3; then option=$3; else option=--version; fi
+  local version=$($1 $option | sed -n 's/[^0-9.]*\([0-9][0-9.]*\).*/\1/p;q')
   test x"$version" != x ||
-    fatal "$1 is required"
+    fatal "$1 (version $2 or better) is required"
   case $(version_compare "$2" "$version") in
     '>') fatal "$1 $2 or better is required: this is $1 $version";;
   esac
@@ -126,6 +129,8 @@ export LIBTOOLIZE=$libtoolize
 require $libtoolize 1.5.22
 
 require doxygen 1.5.6
+# FIXME: These should no longer be required when TeX4HT is used.
+require hevea 1.10 -version
 
 # Tell what's going on.
 set -x
