@@ -1,5 +1,12 @@
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Automake configuration.
+
+	* configure.ac: Remove option `foreign'.
+	Pass option `subdir-objects'.
+
+2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have bootstrap check for HeVeA 1.10.
 
 	* bootstrap (require): Take a flag as an optional second argument.
