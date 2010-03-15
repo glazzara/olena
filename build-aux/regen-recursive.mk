@@ -1,20 +1,21 @@
-# regen-recursive.mk					-*- Automake -*-
-# Regenerate files recursively.
+## regen-recursive.mk				-*- Makefile-Automake -*-
 
-# Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
-# 2003, 2004, 2005, 2006, 2008  Free Software Foundation, Inc.
-# This Makefile.in is free software; the Free Software Foundation
-# gives unlimited permission to copy and/or distribute it,
-# with or without modifications, as long as this notice is preserved.
+## Regenerate files recursively.
 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
-# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-# PARTICULAR PURPOSE.
+## Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+## 2003, 2004, 2005, 2006, 2008  Free Software Foundation, Inc.
+## This Makefile.in is free software; the Free Software Foundation
+## gives unlimited permission to copy and/or distribute it,
+## with or without modifications, as long as this notice is preserved.
+
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+## even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+## PARTICULAR PURPOSE.
 
 
-# To use this file, include it in Makefile.am and populate
-# REGEN_SUBDIRS (using `+=') with the subdirectories to visit.
+## To use this file, include it in Makefile.am and populate
+## REGEN_SUBDIRS (using `+=') with the subdirectories to visit.
 
 REGEN_SUBDIRS =
 

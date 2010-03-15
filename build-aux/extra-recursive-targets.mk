@@ -1,16 +1,17 @@
-# extra-recursive-targets.mk				-*- Automake -*-
-# Factor the installation of additional recursive targets.
+## extra-recursive-targets.mk			-*- Makefile-Automake -*-
 
-# Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
-# 2003, 2004, 2005, 2006, 2008  Free Software Foundation, Inc.
-# This Makefile.in is free software; the Free Software Foundation
-# gives unlimited permission to copy and/or distribute it,
-# with or without modifications, as long as this notice is preserved.
+## Factor the installation of additional recursive targets.
 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
-# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-# PARTICULAR PURPOSE.
+## Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+## 2003, 2004, 2005, 2006, 2008  Free Software Foundation, Inc.
+## This Makefile.in is free software; the Free Software Foundation
+## gives unlimited permission to copy and/or distribute it,
+## with or without modifications, as long as this notice is preserved.
+
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+## even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+## PARTICULAR PURPOSE.
 
 EXTRA_RECURSIVE_TARGETS =
 

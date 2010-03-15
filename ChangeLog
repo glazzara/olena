@@ -1,5 +1,14 @@
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Aesthetic changes.
+
+	* build-aux/regen-recursive.mk,
+	* build-aux/extra-recursive-targets.mk:
+	Here.
+	Help Emacs find out the nature of these files.
+
+2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	* AUTHORS: Update.
 
 2009-10-27  Roland Levillain  <roland@lrde.epita.fr>
