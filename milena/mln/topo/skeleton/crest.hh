@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,6 +34,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/data/fill.hh>
+
 
 namespace mln
 {
@@ -101,6 +103,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
       template <typename I, typename D, typename N>
       mln_concrete(I)
       crest(const Image<I>& input_, const Image<D>& dist_map_,
@@ -139,7 +142,7 @@ namespace mln
 	    {
 	      if (dist_map(n) == dist_map(p))
 		++nb_eq;
-	      else
+	      else if (dist_map(n) < dist_map(p))
 		++nb_lt;
 	    }
 

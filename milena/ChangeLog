@@ -1,5 +1,35 @@
 2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* mln/accu/count_value.hh: Fix doc.
+
+	* mln/convert/from_to.hxx,
+	* mln/value/int_u.hh,
+	* mln/value/qt/rgb32.hhL: Add new from_to overloads.
+
+	* mln/convert/to_qimage.hh: Add a missing include.
+
+	* mln/convert/to_qimage_nocopy.hh: Rename an overload.
+
+	* mln/core/concept/function.hh: Add new concept n2v.
+
+	* mln/geom/rotate.hh: rename center() to pcenter().
+
+	* mln/histo/compute.hh: Fix a namespace ambiguity.
+
+	* mln/io/magick/save.hh: Handle qt::rgb32.
+
+	* mln/io/plot/save.hh: Add an overload for histograms.
+
+	* mln/labeling/relabel.hh: Make 'nlabels' const.
+
+	* mln/topo/skeleton/crest.hh: Fix a bug.
+
+	* tests/core/other/box_runstart_piter.cc: Write a valid test.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/draw/dashed_line.hh: New draw line routine.
 
 2010-02-24  Guillaume Lazzara  <z@lrde.epita.fr>

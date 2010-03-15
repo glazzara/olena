@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -115,7 +116,7 @@ namespace mln
       mlc_is_a(S,Box)::check();
       // FIXME: A precondition is probably missing for the extension value.
 
-      mln_site(I) c = geom::bbox(input).center();
+      mln_site(I) c = geom::bbox(input).pcenter();
       typedef fun::x2x::translation<2,double> trans_t;
       trans_t
 	t(-1 * c.to_vec()),

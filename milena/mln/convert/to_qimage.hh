@@ -41,6 +41,8 @@
 # include <mln/value/qt/rgb32.hh>
 # include <mln/value/rgb8.hh>
 
+// FIXME: not generic.
+# include <mln/core/alias/dpoint2d.hh>
 
 # if QT_VERSION < 0x040000
 #  error "Your version of Qt is too old and is not supported."

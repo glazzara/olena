@@ -37,6 +37,7 @@
 
 # include <mln/literal/zero.hh>
 # include <mln/literal/black.hh>
+# include <mln/literal/white.hh>
 
 namespace mln
 {
@@ -84,12 +85,16 @@ namespace mln
       template <unsigned m>
       void from_to_(const value::int_u<m>& from, value::qt::rgb32& to);
 
-      // hsl -> rgb8.
+      // hsl -> rgb32.
       template <typename H, typename S, typename L>
       void from_to_(const value::hsl_<H,S,L>&, value::qt::rgb32& to);
 
-      // rgb8 -> bool.
+      // rgb32 -> bool.
       void from_to_(const value::qt::rgb32& from, bool& to);
+
+
+      // bool -> rgb32.
+      void from_to_(const bool& from, value::qt::rgb32& to);
 
 
     } // end of namespace mln::convert::over_load
@@ -771,6 +776,15 @@ namespace mln
       void from_to_(const value::qt::rgb32& from, bool& to)
       {
 	to = ((from == literal::black) ? false : true);
+      }
+
+
+      void from_to_(const bool& from, value::qt::rgb32& to)
+      {
+	if (from)
+	  to = literal::white;
+	else
+	  to = literal::black;
       }
 
 

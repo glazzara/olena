@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,6 +38,7 @@
 # include <mln/metal/equal.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
+# include <mln/value/qt/rgb32.hh>
 # include <Magick++.h>
 
 
@@ -90,6 +92,14 @@ namespace mln
 				256 - value.blue());
       }
 
+      inline
+      Magick::Color get_color(const value::qt::rgb32& value)
+      {
+	return Magick::ColorRGB(256 - value.red(),
+				256 - value.green(),
+				256 - value.blue());
+      }
+
       template <typename I>
       inline
       void save(const Image<I>& ima_, const std::string& filename)
@@ -100,7 +110,8 @@ namespace mln
 	const I& ima = exact(ima_);
 	if (!(mln::metal::equal<mln_value(I), bool>::value ||
 	    mln::metal::equal<mln_value(I), value::int_u8>::value ||
-	    mln::metal::equal<mln_value(I), value::rgb8>::value))
+	    mln::metal::equal<mln_value(I), value::rgb8>::value ||
+	      mln::metal::equal<mln_value(I), value::qt::rgb32>::value))
 	{
 	  std::cerr << "error: trying to save an unsupported format" << std::endl;
 	  std::cerr << "supported formats: binary, 8bits grayscale (int_u8), 8bits truecolor (rgb8)" << std::endl;
@@ -112,11 +123,13 @@ namespace mln
 
 	Magick::PixelPacket* pixel_cache = im_file.getPixels(0, 0, ima.nrows(), ima.ncols());
 	Magick::PixelPacket* pixel;
+
+	mln_site(I) pmin = ima.domain().pmin();
 	mln_piter(I) p(ima.domain());
 	for_all(p)
 	{
-	  pixel = pixel_cache + (int) p.to_site().to_vec()[0] * ima.ncols()
-			      + (int) p.to_site().to_vec()[1];
+	  pixel = pixel_cache + (int) (p.to_site().to_vec()[0] - pmin.to_vec()[0]) * ima.ncols()
+	    + (int) (p.to_site().to_vec()[1] - pmin.to_vec()[1]);
 	  *pixel = get_color(ima(p));
 	}
 	im_file.syncPixels();

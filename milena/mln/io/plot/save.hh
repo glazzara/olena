@@ -50,8 +50,7 @@ namespace mln
 	  \param[in] ima A reference to the image to save.
 	  \param[out] filename The output file.  */
       template <typename I>
-      void save(const image1d<I>& ima,
-		const std::string& filename);
+      void save(const image1d<I>& ima, const std::string& filename);
 
       /*! \brief Save a Milena array in a plot file.
           \param[in] arr A reference to the array to save.
@@ -59,10 +58,13 @@ namespace mln
 	  \param[in] start_value The start index value of the plot
 	             (optional).  */
       template <typename T>
-      void save(util::array<T>& arr,
-		const std::string& filename,
+      void save(util::array<T>& arr, const std::string& filename,
 		int start_value);
 
+      /// \overload
+      template <typename T>
+      inline
+      void save(const histo::array<T>& arr, const std::string& filename);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -93,6 +95,19 @@ namespace mln
 	std::ofstream file_out(filename.c_str());
 	for (unsigned i = 0; i < arr.nelements(); ++i)
 	  file_out << start_value + i << " " << arr[i] << std::endl;
+
+	trace::exiting("mln::io::plot::save");
+      }
+
+      template <typename T>
+      inline
+      void save(const histo::array<T>& arr, const std::string& filename)
+      {
+	trace::entering("mln::io::plot::save");
+
+	std::ofstream file_out(filename.c_str());
+	for (unsigned i = 0; i < arr.nvalues(); ++i)
+	  file_out << i << " " << arr[i] << std::endl;
 
 	trace::exiting("mln::io::plot::save");
       }

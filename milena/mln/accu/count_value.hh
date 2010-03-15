@@ -28,7 +28,7 @@
 
 /// \file
 ///
-/// Define an accumulator that counts the number of different value.
+/// \brief Define an accumulator that counts the occurrence of a given value.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
@@ -40,7 +40,7 @@ namespace mln
   namespace accu
   {
 
-    /// \brief Count a given value.
+    /// \brief Define an accumulator that counts the occurrence of a given value.
     ///
     /// \ingroup modaccuvalues
     //

@@ -121,7 +121,7 @@ namespace mln
 
     template <typename I>
     inline
-    QImage to_qimage_nocopy_nocopy(const Image<I>& ima_)
+    QImage to_qimage_nocopy(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.is_valid());

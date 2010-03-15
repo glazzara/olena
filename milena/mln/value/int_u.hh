@@ -122,6 +122,12 @@ namespace mln
       from_to_(const value::int_u<n>& from, unsigned& to_);
 
 
+      // int_u -> bool.
+      template <unsigned n>
+      void
+      from_to_(const value::int_u<n>& from, bool& to_);
+
+
     } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
@@ -216,6 +222,16 @@ namespace mln
       {
 	to_ = from;
       }
+
+      // int_u -> bool.
+      template <unsigned n>
+      inline
+      void
+      from_to_(const value::int_u<n>& from, bool& to_)
+      {
+	to_ = (from != 0u);
+      }
+
 
     } // end of namespace mln::convert::over_load
 

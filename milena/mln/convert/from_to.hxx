@@ -163,8 +163,13 @@ namespace mln
       void
       from_to_(bool from, value::rgb<m>& to);
 
+      // rgb32 -> bool
       void
       from_to_(const value::qt::rgb32& from, bool& to);
+
+      // bool -> rgb32
+      void
+      from_to_(const bool& from, value::qt::rgb32& to);
 
       // int_u -> rgb.
       template <unsigned m>
@@ -181,6 +186,11 @@ namespace mln
       // int_u -> unsigned
       template <unsigned n>
       void from_to_(const value::int_u<n>& from, unsigned& to_);
+
+      // int_u -> bool.
+      template <unsigned n>
+      void
+      from_to_(const value::int_u<n>& from, bool& to_);
 
       // label -> int_u.
       template <unsigned n>
