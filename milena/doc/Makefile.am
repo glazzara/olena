@@ -216,6 +216,27 @@ regen-examples-mk:
 	mv -f $(srcdir)/examples.mk.tmp $(srcdir)/examples.mk
 	chmod -w $(srcdir)/examples.mk
 
+## ---------------- ##
+## Split examples.  ##
+## ---------------- ##
+
+$(srcdir)/split-examples.mk: $(srcdir)/gen-split-examples-mk
+	rm -f $@.tmp
+	cd $(srcdir) && ./gen-split-examples-mk >split-examples.mk.tmp
+	mv -f $@.tmp $@
+	chmod -w $@
+include $(srcdir)/split-examples.mk
+EXTRA_DIST += $(SPLIT_EXAMPLES)
+MAINTAINERCLEANFILES += $(SPLIT_EXAMPLES)
+
+.PHONY: regen-split-examples-mk
+regen-split-examples-mk:
+	rm -f $(srcdir)/split-examples.mk.tmp
+	cd $(srcdir) && ./gen-split-examples-mk >split-examples.mk.tmp
+	mv -f $(srcdir)/split-examples.mk.tmp $(srcdir)/split-examples.mk
+	chmod -w $(srcdir)/split-examples.mk
+
+
 ## ----------------------- ##
 ## Doxygen documentation.  ##
 ## ----------------------- ##
@@ -225,7 +246,7 @@ regen-examples-mk:
 # 2. It'd be better to depend on actual files rather than timestamps
 #    corresponding to a bunch of files.
 refman_dependencies =				\
-  $(srcdir)/split-examples.stamp		\
+  $(SPLIT_EXAMPLES)				\
   $(srcdir)/split-outputs.stamp			\
   $(PNG_FIGURES)				\
   $(srcdir)/tutorial/tutorial.hh		\
@@ -521,7 +542,7 @@ tutorial_dir = $(doc_dir)/tutorial
 # 2. It'd be better to depend on actual files rather than timestamps
 #    corresponding to a bunch of files.
 tutorial_dependencies =				\
-  $(doc_dir)/split-examples.stamp		\
+  $(SPLIT_EXAMPLES)				\
   $(doc_dir)/split-outputs.stamp		\
   $(PNG_FIGURES)
 
@@ -721,7 +742,7 @@ ref_guide_dir = $(doc_dir)/ref_guide
 # 2. It'd be better to depend on actual files rather than timestamps
 #    corresponding to a bunch of files.
 ref_guide_dependencies =			\
-  $(doc_dir)/split-examples.stamp		\
+  $(SPLIT_EXAMPLES)				\
   $(doc_dir)/split-outputs.stamp		\
   $(PNG_FIGURES)
 
@@ -1022,31 +1043,9 @@ regen-examples-outputs-mk:
 
 MAINTAINERCLEANFILES += $(OUTPUTS)
 
-# FIXME: Warning: $(SPLIT_EXAMPLES_SRCDIR) might not exist.  Ensure it
-# exists.
-
-# FIXME: Place split files in their own directory, e.g.: split
-# `examples/foo.cc' into `examples/split/foo.dir/foo-1.cc',
-# `examples/split/foo.dir/foo-2.cc', etc.  It makes removal of these
-# files easier.  We probably also nee a stamp file to keep track of
-# dependencies.
-
-EXTRA_DIST += $(srcdir)/split-examples.stamp
-MAINTAINERCLEANFILES += $(srcdir)/split-examples.stamp
-# FIXME: Loops are bad, as they prevent parallelism.  And we prefer
-# data-driven actions anyway.  This would imply that we know in
-# advance the list out outputs (here, split examples).  Maybe we can
-# infer it from the LaTeX document.
-$(srcdir)/split-examples.stamp: $(EXAMPLES)
-	@rm -f $@.tmp
-	@touch $@.tmp
-	failcom='exit 1';				\
-	for file in $(EXAMPLES); do			\
-	  $(DOC_SRCDIR)/tools/split_sample.sh		\
-	      $$file cc raw $(SPLIT_EXAMPLES_SRCDIR)	\
-	    || eval $$failcom;				\
-	done
-	@mv -f $@.tmp $@
+## --------------- ##
+## Split outputs.  ##
+## --------------- ##
 
 EXTRA_DIST += $(srcdir)/split-outputs.stamp
 MAINTAINERCLEANFILES += $(srcdir)/split-outputs.stamp
@@ -1082,13 +1081,12 @@ regen-am:
 	$(MAKE) $(AM_MAKEFLAGS) regen-pgm-figures-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-ppm-figures-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-examples-mk
+	$(MAKE) $(AM_MAKEFLAGS) regen-split-examples-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-examples-outputs-mk
 	@cd $(srcdir) && 				\
 	  ./generate_dist_files.sh outputs txt &&	\
-	  ./generate_dist_files.sh examples cc.raw
 	@mv -f $(srcdir)/headers.stamp.tmp $(srcdir)/headers.stamp
 
-$(srcdir)/examples/examples.mk: $(srcdir)/headers.stamp
 $(srcdir)/outputs/outputs.mk: $(srcdir)/headers.stamp
 
 
@@ -1097,11 +1095,9 @@ $(srcdir)/headers.stamp: $(srcdir)/generate_dist_files.sh
 	@touch $@.tmp
 	@cd $(srcdir) && 				\
 	  ./generate_dist_files.sh outputs txt &&	\
-	  ./generate_dist_files.sh examples cc.raw
 	@mv -f $@.tmp $@
 
 
-include $(srcdir)/examples/examples.mk
 include $(srcdir)/outputs/outputs.mk
 
 
@@ -1160,3 +1156,5 @@ EXTRA_DIST +=					\
 EXTRA_DIST += gen-make-variable
 # FIXME: Can't we implement this using `gen-make-variable'?
 EXTRA_DIST += gen-examples-outputs-mk
+# Generate a Makefile handling the generation of split examples.
+EXTRA_DIST += gen-split-examples-mk

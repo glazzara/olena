@@ -1,5 +1,32 @@
 2010-03-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Generate the list of split examples in the documentation.
+
+	* doc/gen-split-examples-mk: New script.
+	* doc/Makefile.am: Include ($(srcdir)/split-examples.mk).
+	($(srcdir)/split-examples.mk): New target.
+	(EXTRA_DIST, MAINTAINERCLEANFILES): Add $(SPLIT_EXAMPLES).
+	(refman_dependencies)
+	(tutorial_dependencies)
+	(ref_guide_dependencies):
+	Remove $(doc_dir)/split-examples.stamp.
+	Add $(SPLIT_EXAMPLES).
+	(regen-split-examples-mk): New (phony) target.
+	(regen-am): Remake regen-split-examples-mk instead of using
+	generate_dist_files.sh.
+	($(srcdir)/headers.stamp): No longer call generate_dist_files.sh
+	to regen doc/examples/examples.mk.
+	No longer include $(srcdir)/examples/examples.mk.
+	($(srcdir)/examples/examples.mk, $(srcdir)/split-examples.stamp):
+	Remove rules.
+	(EXTRA_DIST, MAINTAINERCLEANFILES):
+	Remove $(srcdir)/split-examples.stamp.
+	(EXTRA_DIST): Add gen-split-examples-mk.
+	* doc/split-examples.mk: New (generated) Make helper.
+	* doc/examples/examples.mk: Remove.
+
+2010-03-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Generate the list of examples in the documentation.
 
 	* doc/Makefile.am (EXAMPLES): Remove this variable that used to be
