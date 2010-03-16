@@ -173,6 +173,10 @@ gen_doc_figures PBM_FIGURES pbm
 gen_doc_figures PGM_FIGURES pgm
 gen_doc_figures PPM_FIGURES ppm
 run milena/doc/ ./generate_dist_files.sh outputs txt
+# * Examples.
+milena/doc/gen-make-variable EXAMPLES					    \
+  `find milena/doc/examples -name '*.cc' | sed 's,^milena/doc,\$(srcdir),'` \
+  >milena/doc/examples.mk
 run milena/doc/ ./generate_dist_files.sh examples cc.raw
 
 # Generate unit test files.

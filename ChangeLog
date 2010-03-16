@@ -1,5 +1,9 @@
 2010-03-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	* bootstrap: Regen the list of examples of the documentation.
+
+2010-03-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Catch up with milena/doc figure generators.
 
 	* bootstrap: Here.
