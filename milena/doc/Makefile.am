@@ -1128,3 +1128,5 @@ EXTRA_DIST +=					\
   tools/sample_utils.hh				\
   tools/split_sample.sh				\
   tools/todoxygen.sh
+
+EXTRA_DIST += gen-examples-outputs-mk

@@ -1,3 +1,9 @@
+2010-03-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Ship doc/gen-examples-outputs-mk.
+
+	* doc/Makefile.am (EXTRA_DIST): Add gen-examples-outputs-mk.
+
 2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the regeneration of HTML outputs.
