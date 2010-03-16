@@ -177,7 +177,8 @@ run milena/doc/ ./generate_dist_files.sh outputs txt
 milena/doc/gen-make-variable EXAMPLES					    \
   `find milena/doc/examples -name '*.cc' | sed 's,^milena/doc,\$(srcdir),'` \
   >milena/doc/examples.mk
-run milena/doc/ ./generate_dist_files.sh examples cc.raw
+# * Split examples.
+cd milena/doc && ./gen-split-examples-mk >split-examples.mk
 
 # Generate unit test files.
 run . ./build-aux/build_unit_test.sh `pwd`/milena/mln milena/tests/unit_test milena/tests/unit_test/disabled_tests
