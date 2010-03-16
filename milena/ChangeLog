@@ -1,5 +1,18 @@
 2010-03-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Generate the list of examples in the documentation.
+
+	* doc/Makefile.am (EXAMPLES): Remove this variable that used to be
+	populated by hand.
+	Include ($(srcdir)/examples.mk).
+	($(srcdir)/examples.mk): New target.
+	(EXTRA_DIST): Add $(EXAMPLES).
+	(regen-examples-mk): New (phony) target.
+	(regen-am): Remake regen-examples-mk.
+	* doc/examples.mk: New (generated) Make helper.
+
+2010-03-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Revamp the conversion of images in the documentation.
 
 	* gen-make-variable: New script.

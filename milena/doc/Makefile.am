@@ -191,6 +191,31 @@ EXTRA_DIST += $(PNG_FIGURES)
 MAINTAINERCLEANFILES = $(PNG_FIGURES)
 
 
+## ---------- ##
+## Examples.  ##
+## ---------- ##
+
+$(srcdir)/examples.mk: $(srcdir)/gen-make-variable
+	rm -f $@.tmp
+	$(srcdir)/gen-make-variable EXAMPLES	\
+	  `find $(srcdir)/examples -name '*.cc'	\
+	     | sed 's,^$(srcdir),\$$(srcdir),'`	\
+	  >$@.tmp
+	mv -f $@.tmp $@
+	chmod -w $@
+include $(srcdir)/examples.mk
+EXTRA_DIST += $(EXAMPLES)
+
+.PHONY: regen-examples-mk
+regen-examples-mk:
+	rm -f $(srcdir)/examples.mk.tmp
+	$(srcdir)/gen-make-variable EXAMPLES	\
+	  `find $(srcdir)/examples -name '*.cc'	\
+	     | sed 's,^$(srcdir),\$$(srcdir),'`	\
+	  >$(srcdir)/examples.mk.tmp
+	mv -f $(srcdir)/examples.mk.tmp $(srcdir)/examples.mk
+	chmod -w $(srcdir)/examples.mk
+
 ## ----------------------- ##
 ## Doxygen documentation.  ##
 ## ----------------------- ##
@@ -789,7 +814,7 @@ MAINTAINERCLEANFILES += $(REF_GUIDE_HH)
 
 
 ## ---------- ##
-## Examples.  ##
+## Programs.  ##
 ## ---------- ##
 
 PROGRAMS_examples =		\
@@ -1000,92 +1025,6 @@ MAINTAINERCLEANFILES += $(OUTPUTS)
 # FIXME: Warning: $(SPLIT_EXAMPLES_SRCDIR) might not exist.  Ensure it
 # exists.
 
-# FIXME: Try to avoid the use an extensive list: either use Make's
-# substitution rules or generate it.
-EXAMPLES =						\
-  $(srcdir)/examples/accu-right-instanciation.cc	\
-  $(srcdir)/examples/borderthickness.cc			\
-  $(srcdir)/examples/box2d-bbox.cc			\
-  $(srcdir)/examples/domain-display.cc			\
-  $(srcdir)/examples/dpoint-1.cc			\
-  $(srcdir)/examples/estim-sites.cc			\
-  $(srcdir)/examples/extend.cc				\
-  $(srcdir)/examples/extension-ignore.cc		\
-  $(srcdir)/examples/fill-call-1.cc			\
-  $(srcdir)/examples/fill-imageif-cfun.cc		\
-  $(srcdir)/examples/fill-part-image.cc			\
-  $(srcdir)/examples/fill-subdomain-shorter.cc		\
-  $(srcdir)/examples/fill-subdomain.cc			\
-  $(srcdir)/examples/fill.cc				\
-  $(srcdir)/examples/forall-piter.cc			\
-  $(srcdir)/examples/fun-p2v-1.cc			\
-  $(srcdir)/examples/graph-data.cc			\
-  $(srcdir)/examples/graph-iter.cc			\
-  $(srcdir)/examples/ima-has.cc				\
-  $(srcdir)/examples/ima-load.cc			\
-  $(srcdir)/examples/ima-save.cc			\
-  $(srcdir)/examples/ima-size.cc			\
-  $(srcdir)/examples/ima2d-1.cc				\
-  $(srcdir)/examples/ima2d-2.cc				\
-  $(srcdir)/examples/ima2d-3.cc				\
-  $(srcdir)/examples/ima2d-4.cc				\
-  $(srcdir)/examples/ima2d-5.cc				\
-  $(srcdir)/examples/ima2d-6-clone.cc			\
-  $(srcdir)/examples/ima2d-7.cc				\
-  $(srcdir)/examples/ima2d-rot.cc			\
-  $(srcdir)/examples/labeling-compute.cc		\
-  $(srcdir)/examples/logical-not.cc			\
-  $(srcdir)/examples/mln_var.cc				\
-  $(srcdir)/examples/parray-append.cc			\
-  $(srcdir)/examples/parray-bbox.cc			\
-  $(srcdir)/examples/paste-call-1.cc			\
-  $(srcdir)/examples/paste.cc				\
-  $(srcdir)/examples/point-1.cc				\
-  $(srcdir)/examples/predicate-1.cc			\
-  $(srcdir)/examples/trash/accu.cc			\
-  $(srcdir)/examples/trash/box.cc			\
-  $(srcdir)/examples/trash/cpp_issue.cc			\
-  $(srcdir)/examples/trash/erosion.cc			\
-  $(srcdir)/examples/trash/for_Z.cc			\
-  $(srcdir)/examples/trash/graph.cc			\
-  $(srcdir)/examples/trash/image2d.cc			\
-  $(srcdir)/examples/trash/image_flat.cc		\
-  $(srcdir)/examples/trash/image_if.cc			\
-  $(srcdir)/examples/trash/image_plain.cc		\
-  $(srcdir)/examples/trash/image_safe.cc		\
-  $(srcdir)/examples/trash/labeling_algo.cc		\
-  $(srcdir)/examples/trash/mk_graph.cc			\
-  $(srcdir)/examples/trash/p_array.2.cc			\
-  $(srcdir)/examples/trash/p_array.cc			\
-  $(srcdir)/examples/trash/p_image.cc			\
-  $(srcdir)/examples/trash/p_key.2.cc			\
-  $(srcdir)/examples/trash/p_key.cc			\
-  $(srcdir)/examples/trash/p_line2d.cc			\
-  $(srcdir)/examples/trash/p_mutable_array_of.cc	\
-  $(srcdir)/examples/trash/p_queue.cc			\
-  $(srcdir)/examples/trash/p_run.cc			\
-  $(srcdir)/examples/trash/p_vaccess.cc			\
-  $(srcdir)/examples/trash/proxy.cc			\
-  $(srcdir)/examples/trash/sub_image.cc			\
-  $(srcdir)/examples/trash/sub_image_if.cc		\
-  $(srcdir)/examples/trash/tuto_bis.cc			\
-  $(srcdir)/examples/trash/tuto_one.cc			\
-  $(srcdir)/examples/trash/vec.cc			\
-  $(srcdir)/examples/trash/win_multiple.cc		\
-  $(srcdir)/examples/trash/window.cc			\
-  $(srcdir)/examples/tuto2_first_image.cc		\
-  $(srcdir)/examples/tuto3/colorize.cc			\
-  $(srcdir)/examples/tuto3/first_routine.cc		\
-  $(srcdir)/examples/tuto3/println.cc			\
-  $(srcdir)/examples/tuto3/trace.cc			\
-  $(srcdir)/examples/tuto3_rw_image.cc			\
-  $(srcdir)/examples/tuto4/image.cc			\
-  $(srcdir)/examples/tuto4/point2d.cc			\
-  $(srcdir)/examples/tuto4/site_set_create.cc		\
-  $(srcdir)/examples/tuto4_genericity_and_algorithms.cc	\
-  $(srcdir)/examples/win-create-1.cc			\
-  $(srcdir)/examples/win-create-2.cc
-
 # FIXME: Place split files in their own directory, e.g.: split
 # `examples/foo.cc' into `examples/split/foo.dir/foo-1.cc',
 # `examples/split/foo.dir/foo-2.cc', etc.  It makes removal of these
@@ -1134,14 +1073,15 @@ $(srcdir)/split-outputs.stamp: $(OUTPUTS)
 # Regen Make helpers.
 EXTRA_DIST += generate_dist_files.sh headers.stamp
 include $(top_srcdir)/build-aux/regen-recursive.mk
-## FIXME: It'd probably be better to separate the rules generating
-## examples/examples.mk, outputs/outputs.mk and figures/figures.mk.
+## FIXME: Get rid of headers.stamp, which is (was) used by two many
+## generators.
 regen-am:
 	@rm -f $(srcdir)/headers.stamp.tmp
 	@touch $(srcdir)/headers.stamp.tmp
 	$(MAKE) $(AM_MAKEFLAGS) regen-pbm-figures-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-pgm-figures-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-ppm-figures-mk
+	$(MAKE) $(AM_MAKEFLAGS) regen-examples-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-examples-outputs-mk
 	@cd $(srcdir) && 				\
 	  ./generate_dist_files.sh outputs txt &&	\
