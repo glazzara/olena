@@ -1,3 +1,46 @@
+2010-03-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revamp the conversion of images in the documentation.
+
+	* gen-make-variable: New script.
+	* doc/Makefile.am: Include $(srcdir)/pbm-figures.mk,
+	($(srcdir)/pgm-figures.mk and $(srcdir)/ppm-figures.mk.
+	($(srcdir)/pbm-figures.mk)
+	($(srcdir)/pgm-figures.mk)
+	($(srcdir)/ppm-figures.mk):
+	New targets.
+	(EXTRA_DIST): Add $(PBM_FIGURES), $(PGM_FIGURES), $(PPM_FIGURES).
+	(regen-pbm-figures-mk)
+	(regen-pgm-figures-mk)
+	(regen-ppm-figures-mk):
+	New (phony target).
+	(regen-am): Remake regen-pbm-figures-mk, regen-pgm-figures-mk and
+	regen-ppm-figures-mk instead of calling generate_dist_files.sh to
+	convert figures.
+	($(srcdir)/headers.stamp): No longer call generate_dist_files.sh to
+	convert figures.
+	(convert_to_png): New variable.
+	(SUFFIXES): Add .pbm, .pgm, .ppm and .png.
+	(.pbm.png, .pgm.png, .ppm.png): New suffix rules.
+	(PNG_FIGURES): New variable.
+	(EXTRA_DIST, MAINTAINERCLEANFILES): Add $(PNG_FIGURES).
+	(refman_dependencies):
+	Remove $(srcdir)/figures.stamp.
+	Add $(PNG_FIGURES).
+	(technical_dependencies)
+	(tutorial_dependencies)
+	(ref_guide_dependencies):
+	Likewise.
+	No longer include $(srcdir)/figures/figures.mk.
+	($(srcdir)/figures/figures.mk, $(srcdir)/figures.stamp):
+	Remove rules.
+	(EXTRA_DIST, MAINTAINERCLEANFILES):
+	Remove $(srcdir)/figures.stamp.
+	(EXTRA_DIST): Add gen-make-variable.
+	* pbm-figures.mk, pgm-figures.mk, ppm-figures.mk:
+	New (generated) Make helpers.
+	* figures/figures.mk: Remove.
+
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a rule to forcefully regen doc/examples-outputs.mk.

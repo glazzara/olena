@@ -93,6 +93,104 @@ TEXI2DVI_FLAGS += -I $(DOC_SRCDIR)/white_paper
 DOC_PACKAGES = $(srcdir)/doxyfuns.sty $(srcdir)/milena.sty
 
 
+## --------- ##
+## Figures.  ##
+## --------- ##
+
+# ----- #
+# PBM.  #
+# ----- #
+
+$(srcdir)/pbm-figures.mk: $(srcdir)/gen-make-variable
+	rm -f $@.tmp
+	$(srcdir)/gen-make-variable PBM_FIGURES				  \
+	  `find $(srcdir)/figures/*.pbm | sed 's,^$(srcdir),\$$(srcdir),'` \
+	  >$@.tmp
+	mv -f $@.tmp $@
+	chmod -w $@
+include $(srcdir)/pbm-figures.mk
+EXTRA_DIST += $(PBM_FIGURES)
+
+.PHONY: regen-pbm-figures-mk
+regen-pbm-figures-mk:
+	rm -f $(srcdir)/pbm-figures.mk.tmp
+	$(srcdir)/gen-make-variable PBM_FIGURES				  \
+	  `find $(srcdir)/figures/*.pbm | sed 's,^$(srcdir),\$$(srcdir),'` \
+	  >$(srcdir)/pbm-figures.mk.tmp
+	mv -f $(srcdir)/pbm-figures.mk.tmp $(srcdir)/pbm-figures.mk
+	chmod -w $(srcdir)/pbm-figures.mk
+
+# ----- #
+# PGM.  #
+# ----- #
+
+$(srcdir)/pgm-figures.mk: $(srcdir)/gen-make-variable
+	rm -f $@.tmp
+	$(srcdir)/gen-make-variable PGM_FIGURES				  \
+	  `find $(srcdir)/figures/*.pgm | sed 's,^$(srcdir),\$$(srcdir),'` \
+	  >$@.tmp
+	mv -f $@.tmp $@
+	chmod -w $@
+include $(srcdir)/pgm-figures.mk
+EXTRA_DIST += $(PGM_FIGURES)
+
+.PHONY: regen-pgm-figures-mk
+regen-pgm-figures-mk:
+	rm -f $(srcdir)/pgm-figures.mk.tmp
+	$(srcdir)/gen-make-variable PGM_FIGURES				  \
+	  `find $(srcdir)/figures/*.pgm | sed 's,^$(srcdir),\$$(srcdir),'` \
+	  >$(srcdir)/pgm-figures.mk.tmp
+	mv -f $(srcdir)/pgm-figures.mk.tmp $(srcdir)/pgm-figures.mk
+	chmod -w $(srcdir)/pgm-figures.mk
+
+# ----- #
+# PPM.  #
+# ----- #
+
+$(srcdir)/ppm-figures.mk: $(srcdir)/gen-make-variable
+	rm -f $@.tmp
+	$(srcdir)/gen-make-variable PPM_FIGURES				  \
+	  `find $(srcdir)/figures/*.ppm | sed 's,^$(srcdir),\$$(srcdir),'` \
+	  >$@.tmp
+	mv -f $@.tmp $@
+	chmod -w $@
+include $(srcdir)/ppm-figures.mk
+EXTRA_DIST += $(PPM_FIGURES)
+
+.PHONY: regen-ppm-figures-mk
+regen-ppm-figures-mk:
+	rm -f $(srcdir)/ppm-figures.mk.tmp
+	$(srcdir)/gen-make-variable PPM_FIGURES				  \
+	  `find $(srcdir)/figures/*.ppm | sed 's,^$(srcdir),\$$(srcdir),'` \
+	  >$(srcdir)/ppm-figures.mk.tmp
+	mv -f $(srcdir)/ppm-figures.mk.tmp $(srcdir)/ppm-figures.mk
+	chmod -w $(srcdir)/ppm-figures.mk
+
+# ----- #
+# PNG.  #
+# ----- #
+
+convert_to_png = convert -scale 250 -bordercolor black -border 2x2
+
+SUFFIXES += .pbm .pgm .ppm .png
+
+.pbm.png:
+	$(convert_to_png) $< $@
+
+.pgm.png:
+	$(convert_to_png) $< $@
+
+.ppm.png:
+	$(convert_to_png) $< $@
+
+PNG_FIGURES =					\
+  $(PBM_FIGURES:.pbm=.png)			\
+  $(PGM_FIGURES:.pgm=.png)			\
+  $(PPM_FIGURES:.ppm=.png)
+EXTRA_DIST += $(PNG_FIGURES)
+MAINTAINERCLEANFILES = $(PNG_FIGURES)
+
+
 ## ----------------------- ##
 ## Doxygen documentation.  ##
 ## ----------------------- ##
@@ -104,7 +202,7 @@ DOC_PACKAGES = $(srcdir)/doxyfuns.sty $(srcdir)/milena.sty
 refman_dependencies =				\
   $(srcdir)/split-examples.stamp		\
   $(srcdir)/split-outputs.stamp			\
-  $(srcdir)/figures.stamp			\
+  $(PNG_FIGURES)				\
   $(srcdir)/tutorial/tutorial.hh		\
   $(srcdir)/ref_guide/ref_guide.hh
 
@@ -140,7 +238,7 @@ $(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
 	Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog	\
 	      | sed -e 's/\\\$$//g'`;				\
 	  $(edit) $< >$@
-MAINTAINERCLEANFILES = $(DOXYFILE_USER)
+MAINTAINERCLEANFILES += $(DOXYFILE_USER)
 
 ## FIXME: Rename USER_REFMAN_PDF to something else?
 USER_REFMAN_PDF = user-refman.pdf
@@ -293,7 +391,7 @@ technical_dir = $(doc_dir)/technical
 # FIXME: Check these dependencies.  And it'd be better to depend on
 # actual files rather than timestamps corresponding to a bunch of
 # files.
-technical_dependencies = $(doc_dir)/figures.stamp
+technical_dependencies = $(PNG_FIGURES)
 
 # FIXME: As in milena/doc/Makefile.am, we should probably strip
 # $(srcdir) prefixes from target variables, e.g. instead of:
@@ -400,7 +498,7 @@ tutorial_dir = $(doc_dir)/tutorial
 tutorial_dependencies =				\
   $(doc_dir)/split-examples.stamp		\
   $(doc_dir)/split-outputs.stamp		\
-  $(doc_dir)/figures.stamp
+  $(PNG_FIGURES)
 
 # FIXME: As in milena/doc/Makefile.am, we should probably strip
 # $(srcdir) prefixes from target variables, e.g. instead of:
@@ -600,7 +698,7 @@ ref_guide_dir = $(doc_dir)/ref_guide
 ref_guide_dependencies =			\
   $(doc_dir)/split-examples.stamp		\
   $(doc_dir)/split-outputs.stamp		\
-  $(doc_dir)/figures.stamp
+  $(PNG_FIGURES)
 
 # FIXME: As in milena/doc/Makefile.am, we should probably strip
 # $(srcdir) prefixes from target variables, e.g. instead of:
@@ -688,30 +786,6 @@ EXTRA_DIST +=					\
   $(REF_GUIDE_HH)
 
 MAINTAINERCLEANFILES += $(REF_GUIDE_HH)
-
-
-## --------- ##
-## Figures.  ##
-## --------- ##
-
-$(srcdir)/figures/figures.mk: $(srcdir)/headers.stamp
-include $(srcdir)/figures/figures.mk
-
-EXTRA_DIST += $(srcdir)/figures.stamp
-MAINTAINERCLEANFILES += $(srcdir)/figures.stamp
-$(srcdir)/figures.stamp: $(FIGURES_SRCDIR)/*.p*m
-	rm -f $@.tmp
-	touch $@.tmp
-	failcom='exit 1';						\
-	list="$(FIGURES_SRCDIR)/*.p*m"; for img in $$list; do		\
-	  echo "Converting $$img to PNG";				\
-	  name=`basename $$img`						\
-	  ext=`echo $$name | cut -d '.' -f 2`;				\
-	  convert -scale 250 -bordercolor black -border 2x2 $$img 	\
-	    $(FIGURES_SRCDIR)/`basename $$img $$ext`png			\
-	    || eval $$failcom;						\
-	done
-	mv -f $@.tmp $@
 
 
 ## ---------- ##
@@ -1065,9 +1139,11 @@ include $(top_srcdir)/build-aux/regen-recursive.mk
 regen-am:
 	@rm -f $(srcdir)/headers.stamp.tmp
 	@touch $(srcdir)/headers.stamp.tmp
+	$(MAKE) $(AM_MAKEFLAGS) regen-pbm-figures-mk
+	$(MAKE) $(AM_MAKEFLAGS) regen-pgm-figures-mk
+	$(MAKE) $(AM_MAKEFLAGS) regen-ppm-figures-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-examples-outputs-mk
 	@cd $(srcdir) && 				\
-	  ./generate_dist_files.sh figures 'p*m' && 	\
 	  ./generate_dist_files.sh outputs txt &&	\
 	  ./generate_dist_files.sh examples cc.raw
 	@mv -f $(srcdir)/headers.stamp.tmp $(srcdir)/headers.stamp
@@ -1080,7 +1156,6 @@ $(srcdir)/headers.stamp: $(srcdir)/generate_dist_files.sh
 	@rm -f $@.tmp
 	@touch $@.tmp
 	@cd $(srcdir) && 				\
-	  ./generate_dist_files.sh figures 'p*m' && 	\
 	  ./generate_dist_files.sh outputs txt &&	\
 	  ./generate_dist_files.sh examples cc.raw
 	@mv -f $@.tmp $@
@@ -1141,4 +1216,7 @@ EXTRA_DIST +=					\
   tools/split_sample.sh				\
   tools/todoxygen.sh
 
+# Generate a Makefile helper containing a variable assignment.
+EXTRA_DIST += gen-make-variable
+# FIXME: Can't we implement this using `gen-make-variable'?
 EXTRA_DIST += gen-examples-outputs-mk
