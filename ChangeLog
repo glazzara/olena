@@ -1,3 +1,9 @@
+2010-03-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Catch up with milena/doc figure generators.
+
+	* bootstrap: Here.
+
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Disable the implicit generation of HTML from LaTeX.

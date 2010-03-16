@@ -161,7 +161,17 @@ run scribo `pwd`/build-aux/generate_dist_headers.sh . headers.mk nodist-headers 
 
 # Generate lists of files to be part of the distribution
 # for the tutorial.
-run milena/doc/ ./generate_dist_files.sh figures 'p*m'
+# * Figures.
+gen_doc_figures()
+{
+  milena/doc/gen-make-variable "$1"					\
+    `find milena/doc/figures/*.$2 | sed 's,^milena/doc,\$(srcdir),'`	\
+    >"milena/doc/$2-figures.mk"						\
+  || fatal "unexpected failure: $@"
+}
+gen_doc_figures PBM_FIGURES pbm
+gen_doc_figures PGM_FIGURES pgm
+gen_doc_figures PPM_FIGURES ppm
 run milena/doc/ ./generate_dist_files.sh outputs txt
 run milena/doc/ ./generate_dist_files.sh examples cc.raw
 
