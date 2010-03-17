@@ -1,5 +1,13 @@
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Prepare for the generation of multiple outputs from doc/ programs.
+
+	* doc/gen-examples-outputs-mk: Split generated rules in two so
+	that they produce a timestamp that outputs (and soon generated
+	figures) depend on.
+
+2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Generate doc/examples-outputs.mk using sources in lieu of programs.
 
 	* doc/gen-examples-outputs-mk: Take sources as input instead of
