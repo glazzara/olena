@@ -150,9 +150,6 @@ EOF
 # dvipng is required by TeX4ht.
 require dvipng 1.11
 
-# Tell what's going on.
-set -x
-
 # Generate milena/headers.mk
 run milena `pwd`/build-aux/generate_dist_headers.sh mln ./headers.mk ./nodist-headers
 
