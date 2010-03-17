@@ -1,3 +1,67 @@
+2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Move bits about programs out of doc/Makefile.am to improve readability.
+
+	* doc/Makefile.am (PROGRAMS_examples)
+	(accu_right_instanciation_SOURCES)
+	(borderthickness_SOURCES)
+	(box2d_bbox_SOURCES)
+	(domain_display_SOURCES)
+	(dpoint_1_SOURCES)
+	(estim_sites_SOURCES)
+	(extend_SOURCES)
+	(extension_ignore_SOURCES)
+	(fill_SOURCES)
+	(fill_call_1_SOURCES)
+	(fill_imageif_cfun_SOURCES)
+	(fill_part_image_SOURCES)
+	(fill_subdomain_SOURCES)
+	(fill_subdomain_shorter_SOURCES)
+	(first_routine_SOURCES)
+	(forall_piter_SOURCES)
+	(fun_p2v_1_SOURCES)
+	(graph_data_SOURCES)
+	(graph_iter_SOURCES)
+	(ima2d_1_SOURCES)
+	(ima2d_2_SOURCES)
+	(ima2d_3_SOURCES)
+	(ima2d_4_SOURCES)
+	(ima2d_5_SOURCES)
+	(ima2d_6_clone_SOURCES)
+	(ima2d_7_SOURCES)
+	(ima2d_rot_SOURCES)
+	(ima_has_SOURCES)
+	(ima_save_SOURCES)
+	(ima_size_SOURCES)
+	(labeling_compute_SOURCES)
+	(logical_not_SOURCES)
+	(mln_var_SOURCES)
+	(parray_append_SOURCES)
+	(parray_bbox_SOURCES)
+	(paste_SOURCES)
+	(paste_call_1_SOURCES)
+	(point_1_SOURCES)
+	(predicate_1_SOURCES)
+	(tuto2_first_image_SOURCES)
+	(tuto3_colorize_SOURCES)
+	(tuto3_println_SOURCES)
+	(tuto3_rw_image_SOURCES)
+	(tuto3_trace_SOURCES)
+	(tuto4_genericity_and_algorithms_SOURCES)
+	(tuto4_point2d_SOURCES)
+	(tuto4_site_set_create_SOURCES)
+	(win_create_1_SOURCES)
+	(win_create_2_SOURCES):
+	Move variables...
+	* doc/programs-examples.mk: ...here (new file).
+	(PROGRAMS_examples): Rename first_routine as tuto3_first_routine.
+	Add ima-load and tuto4_image.
+	(first_routine_SOURCES): Remove this variable.
+	Superseded by...
+	(tuto3_first_routine_SOURCES): ...this (new) variable.
+	(ima_load_SOURCES, tuto4_image_SOURCES): New variables.
+	* doc/Makefile.am: Include $(srcdir)/programs-examples.mk.
+
 2010-03-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	Generate the list of split examples in the documentation.
