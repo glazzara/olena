@@ -12,7 +12,6 @@ PPM_FIGURES = \
   $(srcdir)/figures/fill-subdomain-2.ppm \
   $(srcdir)/figures/fill-subdomain-3.ppm \
   $(srcdir)/figures/fill-subdomain-4.ppm \
-  $(srcdir)/figures/fill-subimage-cfun-1.ppm \
   $(srcdir)/figures/ima2d-rot-1.ppm \
   $(srcdir)/figures/ima2d-rot-2.ppm \
   $(srcdir)/figures/labeling-compute-2.ppm \

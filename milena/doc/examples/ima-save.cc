@@ -17,6 +17,9 @@ int main()
   };
   image2d<bool> ima = make::image(vals);
 
+  /* FIXME: MLN_DOC_DIR looks probably confusing in the
+     documentation...  But we have to handle parallel builds.  Maybe a
+     solution could be to prepare the the build dir for data? */
   // \{
   io::pbm::save(ima, MLN_DOC_DIR "/figures/ima_save.pbm");
   // \}

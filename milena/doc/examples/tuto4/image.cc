@@ -8,7 +8,5 @@ int main()
   image2d<value::int_u8> input(2,2);
 
   box2d b(2,2);
-  image2d<value::int_u8> input(b);
-
-  image2d<value::int_u8>
+  image2d<value::int_u8> input2(b);
 }

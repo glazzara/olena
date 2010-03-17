@@ -1,5 +1,20 @@
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix programs in doc/examples/.
+
+	* doc/examples/ima-save.cc: Add a FIXME.
+	* doc/examples/ima-load.cc: Likewise.
+	Avoid hard-coded paths.
+	* doc/examples/tuto4/image.cc: Make it compile.
+	* doc/img/small.pbm: New symbolic link to img/small.pbm.
+	* doc/examples/split/ima-load-1.cc.raw: Regen.
+	* doc/examples/fill-imageif-cfun.cc,
+	* figures.mk,
+	* ppm-figures.mk:
+	s/fill-subimage-cfun/fill-imageif-cfun/.
+
+2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update PNG-to-EPS conversion rule.
 
 	* doc/Makefile.am (.png.eps): No longer try to build figures/ in

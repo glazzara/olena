@@ -1,2 +1,2 @@
   image2d<bool> ima;
-  io::pbm::load(ima, "my_image.pbm");
+  io::pbm::load(ima, MLN_DOC_DIR "/img/small.pbm");

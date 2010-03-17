@@ -46,5 +46,5 @@ int main()
   data::fill((ima2 | row_oddity).rw(), literal::red);
   // \}
 
-  doc::ppmsave(ima2, "fill-subimage-cfun");
+  doc::ppmsave(ima2, "fill-imageif-cfun");
 }

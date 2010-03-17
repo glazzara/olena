@@ -46,7 +46,7 @@ $(srcdir)/figures/fill-subdomain-1.pbm $(srcdir)/figures/fill-subdomain-2.ppm $(
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-$(srcdir)/figures/fill-subimage-cfun-1.ppm: $(srcdir)/examples/fill-imageif-cfun.stamp
+$(srcdir)/figures/fill-imageif-cfun-1.ppm: $(srcdir)/examples/fill-imageif-cfun.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
