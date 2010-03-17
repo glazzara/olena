@@ -89,8 +89,8 @@ TEXI2DVI_FLAGS +=							\
 # Illustrations of the white paper.
 TEXI2DVI_FLAGS += -I $(DOC_SRCDIR)/white_paper
 
-# Additional files for HeVeA compilations.
-DOC_PACKAGES = $(srcdir)/doxyfuns.sty $(srcdir)/milena.sty
+# Additional files for LaTeX compilations.
+DOC_PACKAGES = doxyfuns.sty milena.sty
 
 
 ## --------- ##
@@ -437,7 +437,7 @@ technical_dir = $(doc_dir)/technical
 # FIXME: Check these dependencies.  And it'd be better to depend on
 # actual files rather than timestamps corresponding to a bunch of
 # files.
-technical_dependencies = $(PNG_FIGURES)
+technical_dependencies = $(PNG_FIGURES) $(DOC_PACKAGES)
 
 # FIXME: As in milena/doc/Makefile.am, we should probably strip
 # $(srcdir) prefixes from target variables, e.g. instead of:
@@ -544,7 +544,8 @@ tutorial_dir = $(doc_dir)/tutorial
 tutorial_dependencies =				\
   $(SPLIT_EXAMPLES)				\
   $(doc_dir)/split-outputs.stamp		\
-  $(PNG_FIGURES)
+  $(PNG_FIGURES)				\
+  $(DOC_PACKAGES)
 
 # FIXME: As in milena/doc/Makefile.am, we should probably strip
 # $(srcdir) prefixes from target variables, e.g. instead of:
@@ -744,7 +745,8 @@ ref_guide_dir = $(doc_dir)/ref_guide
 ref_guide_dependencies =			\
   $(SPLIT_EXAMPLES)				\
   $(doc_dir)/split-outputs.stamp		\
-  $(PNG_FIGURES)
+  $(PNG_FIGURES)				\
+  $(DOC_PACKAGES)
 
 # FIXME: As in milena/doc/Makefile.am, we should probably strip
 # $(srcdir) prefixes from target variables, e.g. instead of:
