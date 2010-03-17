@@ -1,5 +1,9 @@
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	* bootstrap: Regen the list of outputs of the documentation.
+
+2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	* bootstrap: Regen the list of outputs rules and timestamps.
 
 2010-03-16  Roland Levillain  <roland@lrde.epita.fr>

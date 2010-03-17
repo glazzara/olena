@@ -179,6 +179,14 @@ milena/doc/gen-make-variable EXAMPLES					    \
   >milena/doc/examples.mk
 # * Split examples.
 cd milena/doc && ./gen-split-examples-mk >split-examples.mk
+# * Outputs.
+milena/doc/gen-make-variable OUTPUTS				\
+  `find milena/doc/examples					\
+       -name \*.cc -a \! -path milena/doc/examples/trash/\*	\
+     | sed -e 's,milena/doc/examples/,,'			\
+           -e 'y,/,_,'						\
+           -e 's,\(.*\)\.cc$,milena/doc/outputs/\1.txt,'`	\
+  >milena/doc/outputs.mk
 # * Outputs rules and timestamps.
 cd milena/doc &&						\
   ./gen-examples-outputs-mk					\
