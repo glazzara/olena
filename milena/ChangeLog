@@ -1,5 +1,23 @@
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Generate doc/examples-outputs.mk using sources in lieu of programs.
+
+	* doc/gen-examples-outputs-mk: Take sources as input instead of
+	programs.
+	* doc/examples-outputs.mk: Regen.
+	* doc/Makefile.am ($(DOC_SRCDIR)/examples-outputs.mk):
+	Adjust caller.
+	Use `find' to get inputs instead of relying on
+	$(PROGRAMS_examples).
+	Rename target as...
+	($(srcdir)/examples-outputs.mk): ...this.
+	Depend only on $(srcdir)/gen-examples-outputs-mk, and no longer on
+	$(srcdir)/Makefile.am.
+	(regen-examples-outputs-mk): Adjust as well.
+	* doc/programs-examples.mk: Adjust comments.
+
+2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Move bits about programs out of doc/Makefile.am to improve readability.
 
 	* doc/Makefile.am (PROGRAMS_examples)

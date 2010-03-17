@@ -909,19 +909,28 @@ MORE_OUTPUTS =					\
   $(srcdir)/outputs/parray-display-1.txt	\
   $(srcdir)/outputs/win-create-1-display.txt
 
-$(DOC_SRCDIR)/examples-outputs.mk: $(DOC_SRCDIR)/gen-examples-outputs-mk $(srcdir)/Makefile.am
-	$(DOC_SRCDIR)/gen-examples-outputs-mk $(PROGRAMS_examples) >$@.tmp
+$(srcdir)/examples-outputs.mk: $(srcdir)/gen-examples-outputs-mk
+	rm -f $@.tmp
+# Ignore sources in examples/trash/.
+	cd $(srcdir) &&							\
+	  ./gen-examples-outputs-mk					\
+	    `find examples -name \*.cc -a \! -path examples/trash/\*	\
+	       | env LC_ALL=C sort`					\
+	    >examples-outputs.mk.tmp
 	mv -f $@.tmp $@
 	chmod -w $@
-include $(DOC_SRCDIR)/examples-outputs.mk
+include $(srcdir)/examples-outputs.mk
 
 .PHONY: regen-examples-outputs-mk
 regen-examples-outputs-mk:
-	$(DOC_SRCDIR)/gen-examples-outputs-mk $(PROGRAMS_examples)	\
-	   >$(DOC_SRCDIR)/examples-outputs.mk.tmp
-	mv -f $(DOC_SRCDIR)/examples-outputs.mk.tmp	\
-	  $(DOC_SRCDIR)/examples-outputs.mk
-	chmod -w $(DOC_SRCDIR)/examples-outputs.mk
+	rm -f $(srcdir)/examples-outputs.mk.tmp
+	cd $(srcdir) &&							\
+	  ./gen-examples-outputs-mk					\
+	    `find examples -name \*.cc -a \! -path examples/trash/\*	\
+	       | env LC_ALL=C sort`					\
+	    >examples-outputs.mk.tmp
+	mv -f $(srcdir)/examples-outputs.mk.tmp $(srcdir)/examples-outputs.mk
+	chmod -w $(srcdir)/examples-outputs.mk
 
 MAINTAINERCLEANFILES += $(OUTPUTS)
 

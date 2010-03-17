@@ -20,9 +20,7 @@
 ## generation of examples-outputs.mk depends only on this file, instead
 ## of Makefile.am.
 
-## FIXME: Generate this file?  Probably a good idea.  If so, we
-## probably won't need to have examples-outputs.mk depend on it (which
-## will simplify the regen calling sequence in bootstrap as well).
+## FIXME: Generate this file?  Probably a good idea.
 ##
 ## If generated, merge examples-outputs.mk and outputs.mk?
 
