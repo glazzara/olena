@@ -1,5 +1,12 @@
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update PNG-to-EPS conversion rule.
+
+	* doc/Makefile.am (.png.eps): No longer try to build figures/ in
+	the build directory.
+
+2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove useless paths in texi2dvi invocations.
 
 	* doc/Makefile.am (TEXI2DVI_FLAGS):

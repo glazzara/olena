@@ -639,11 +639,8 @@ PNGS =								\
 
 EPSS = $(PNGS:png=eps)
 
-# FIXME: we want to check if 'figures' exists only once!
 .png.eps:
-	test -d figures || mkdir figures
 	convert $< $@
-
 
 white-paper: white-paper-pdf white-paper-html
 
