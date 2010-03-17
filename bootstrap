@@ -134,6 +134,7 @@ require convert 6.3.7
 # Check for TeX4ht.  htlatex and friends do not have options like
 # `--version', `-version', `-v', etc.  Hence this ad hoc procedure.
 tempdir=`mktemp -d`
+# Set up automatic cleanup.
 cleanup() { rm -rf "$tempdir"; exit; }
 trap cleanup 0 1 2 3 6 15
 (
@@ -146,8 +147,7 @@ trap cleanup 0 1 2 3 6 15
 EOF
   htlatex >/dev/null 2>&1 test.tex || fatal "TeX4ht is required"
 )
-rm -rf "$tempdir"
-# dvipnh is required by TeX4ht.
+# dvipng is required by TeX4ht.
 require dvipng 1.11
 
 # Tell what's going on.

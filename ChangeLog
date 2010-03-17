@@ -1,5 +1,9 @@
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	* bootstrap: Don't remove the automatically collected temp dir.
+
+2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	* bootstrap: Regen the list of outputs of the documentation.
 
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
