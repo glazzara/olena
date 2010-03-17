@@ -55,6 +55,7 @@
 #include <mln/geom/translate.hh>
 
 #include <scribo/draw/bounding_boxes.hh>
+#include <scribo/draw/groups_bboxes.hh>
 
 #include <scribo/binarization/sauvola_ms.hh>
 #include <scribo/binarization/sauvola.hh>
@@ -69,7 +70,11 @@
 #include <scribo/primitive/group/from_double_link.hh>
 #include <scribo/primitive/group/from_single_link.hh>
 
-#include <scribo/filter/objects_with_holes.hh>
+#include <scribo/primitive/regroup/from_single_left_link.hh>
+
+//#include <scribo/filter/objects_with_holes.hh>
+#include <scribo/filter/object_groups_with_holes.hh>
+
 #include <scribo/filter/object_links_bbox_h_ratio.hh>
 #include <scribo/filter/object_links_bbox_overlap.hh>
 
@@ -496,19 +501,14 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   if (debug)
   {
     decision_image = data::convert(value::rgb8(), input);
-    component_set<L>
-      grouped_objects = primitive::group::apply(filtered_small_groups);
 
-    for_all_comps(i, filtered_components)
-      if (filtered_components(i).is_valid()
-	  && filtered_small_groups(i) != 0)
-	mln::draw::box(decision_image, filtered_components(i).bbox(), literal::green);
-    scribo::draw::bounding_boxes(decision_image, raw_group_image, literal::red);
-    scribo::draw::bounding_boxes(decision_image, grouped_objects, literal::blue);
+    scribo::draw::groups_bboxes(decision_image, groups, literal::red);
+    scribo::draw::groups_bboxes(decision_image, filtered_small_groups,
+				literal::blue);
+
 
     io::ppm::save(decision_image,
 		  scribo::make::debug_filename("small_groups_filter.ppm"));
-    debug_image = grouped_objects;
   }
 #endif
 
@@ -534,20 +534,13 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   {
     decision_image = data::convert(value::rgb8(), input);
 
-    component_set<L>
-      grouped_components = primitive::group::apply(filtered_thin_groups);
-
-    for_all_comps(i, filtered_components)
-      if (filtered_components(i).is_valid()
-	  && filtered_thin_groups(i) != 0)
-	mln::draw::box(decision_image, filtered_components(i).bbox(), literal::green);
-
-    scribo::draw::bounding_boxes(decision_image, debug_image, literal::red);
-    scribo::draw::bounding_boxes(decision_image, grouped_components, literal::blue);
+    scribo::draw::groups_bboxes(decision_image, filtered_small_groups,
+				literal::red);
+    scribo::draw::groups_bboxes(decision_image, filtered_thin_groups,
+				literal::blue);
 
     io::ppm::save(decision_image,
 		  scribo::make::debug_filename("thin_groups_filter.ppm"));
-    debug_image = grouped_components;
   }
 #endif
 
@@ -556,31 +549,13 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   /// Apply grouping in the object image.
   g_timer.restart();
 
-//   groups = primitive::group::regroup_left(filtered_components,
-// 					  filtered_thin_groups,
-// 					  30);
-
-  component_set<L>
-    grouped_components = primitive::group::apply(filtered_thin_groups);
-
-  t_ = g_timer;
-  std::cout << "Group applied to object image " << t_ << std::endl;
-
-  /// Components have been grouped. We try to link groups together.
-  /// This time a single link is enough since non-wanted components have
-  /// been removed.
-  g_timer.restart();
-
-  left_link = primitive::link::left(grouped_components, 30);
-//   left_link
-//     = primitive::link::with_single_left_link(grouped_components, 30);
+  // Grouping groups together if possible.
+  groups = primitive::regroup::from_single_left_link(filtered_thin_groups, 30);
 
 
-  /// Grouping groups.
-  groups = primitive::group::from_single_link(left_link);
+//   component_set<L>
+//     grouped_components = primitive::group::apply(groups);
 
-//  component_set<L>
-    grouped_components = primitive::group::apply(groups);
 
   t_ = g_timer;
   std::cout << "Link and group again " << t_ << std::endl;
@@ -603,7 +578,9 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   if (argc > 5 && atoi(argv[5]) != 0)
   {
     std::cout << "** Using objects_with_two_holes" << std::endl;
-    grouped_components = scribo::filter::components_with_two_holes(grouped_components, 5);
+
+    groups  = scribo::filter::object_groups_with_holes(groups, 5);
+
     t_ = g_timer;
     std::cout << "Objects_with_holes " << t_ << std::endl;
   }
@@ -621,50 +598,38 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   {
     decision_image = data::convert(value::rgb8(), input);
 
-    scribo::draw::bounding_boxes(decision_image, debug_image, literal::red);
-    scribo::draw::bounding_boxes(decision_image, grouped_components, literal::blue);
-    io::ppm::save(decision_image, scribo::make::debug_filename("group_with_holes_filter.ppm"));
+    scribo::draw::groups_bboxes(decision_image, groups, literal::blue);
 
-    std::cerr << "AFTER - nobjects = " << grouped_components.nelements() << std::endl;
+    io::ppm::save(decision_image, scribo::make::debug_filename("group_with_holes_filter.ppm"));
   }
 #endif
 
+
   timer_.restart();
   std::cout << "Saving result..." << std::endl;
+
+  component_set<L> comps = primitive::group::apply(groups);
   io::ppm::save(mln::labeling::colorize(value::rgb8(),
-					grouped_components.labeled_image(),
-					grouped_components.nelements()),
+					comps.labeled_image(),
+					comps.nelements()),
 		argv[2]);
 
-#ifndef NOUT
-//   scribo::debug::save_bboxes_image(input_rgb, grouped_components.bboxes(),
-// 				   literal::red,
-// 				   scribo::make::debug_filename("orig_with_bboxes.ppm"));
-#endif
-
-  io::ppm::save(compute_highlight_image(input_rgb, grouped_components),
+  io::ppm::save(compute_highlight_image(input_rgb, comps),
 		out_base_dir + "_input_with_bboxes.ppm");
-  io::ppm::save(compute_text_image(input_rgb, grouped_components),
+  io::ppm::save(compute_text_image(input_rgb, comps),
 		out_base_dir + "_out_text.ppm");
 
   t_ = timer_;
   std::cout << "Output saved " << t_ << std::endl;
 
-  std::cout << "# objects = " << grouped_components.nelements() << std::endl;
+  std::cout << "# objects = " << comps.nelements() << std::endl;
 
-  std::cout << filtered_components << std::endl;
 
-  for_all_comps(c, filtered_components)
-    if (filtered_components(c).is_valid())
-      std::cout << filtered_components(c) << ", ";
-  std::cout << std::endl;
-
-  std::cout << filtered_thin_groups << std::endl;
 
   scribo::line_set<L>
-    lines = scribo::make::line_set(filtered_thin_groups);
+    lines = scribo::make::line_set(groups);
   text::recognition(lines, "fra", "out.txt");
 
   trace::exiting("main");
-  return grouped_components.nelements() != 0;
+  return comps.nelements() != 0;
 }

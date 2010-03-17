@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -73,7 +74,8 @@ namespace scribo
 
       template <typename L>
       component_set<L>
-      apply(const object_groups<L>& groups)
+      apply(const object_groups<L>& groups,
+	    fun::i2v::array<mln_value(L)>& relabel_fun)
 
       {
 	trace::entering("scribo::primitive::group::apply");
@@ -85,18 +87,26 @@ namespace scribo
 	L labeled_image = duplicate(components.labeled_image());
 
 	mln_value(L) new_nlabels;
-	fun::i2v::array<mln_value(L)>
-	  packed_relabel_fun = mln::make::relabelfun(groups.comp_to_group(),
-						     components.nelements(),
-						     new_nlabels);
+	relabel_fun = mln::make::relabelfun(groups.comp_to_group(),
+					    components.nelements(),
+					    new_nlabels);
 
 	labeling::relabel_inplace(labeled_image, new_nlabels,
-				  packed_relabel_fun);
+				  relabel_fun);
 
 	component_set<L> output(labeled_image, new_nlabels);
 
 	trace::exiting("scribo::primitive::group::apply");
 	return output;
+      }
+
+
+      template <typename L>
+      component_set<L>
+      apply(const object_groups<L>& groups)
+      {
+	fun::i2v::array<mln_value(L)> relabel_fun;
+	return apply(groups, relabel_fun);
       }
 
 

@@ -92,7 +92,9 @@ namespace scribo
 
     const mln::util::array<unsigned>& comp_to_group() const;
 
-  private:
+    object_groups<L> duplicate() const;
+
+  private: // attributes
     mln::util::tracked_ptr<data_t> data_;
   };
 
@@ -209,6 +211,18 @@ namespace scribo
   object_groups<L>::comp_to_group() const
   {
     return data_->comp_to_group_;
+  }
+
+  template <typename L>
+  inline
+  object_groups<L>
+  object_groups<L>::duplicate() const
+  {
+    object_groups<L> output;
+    output.data_ = new data_t();
+
+    *(output.data_.ptr_) = *(data_.ptr_);
+    return output;
   }
 
 

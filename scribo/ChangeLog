@@ -1,3 +1,18 @@
+2010-03-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update AFP's toolchain according to last changes in core classes.
+
+	* core/object_groups.hh: Add duplicate().
+
+	* primitive/group/apply.hh: Preserve components ids.
+
+	* draw/groups_bboxes.hh,
+	* filter/object_groups_with_holes.hh,
+	* primitive/regroup/from_single_left_link.hh: New.
+
+	* src/text_in_photo_ppm_fast.cc: Make it work with the new core
+	classes. Fix component ids issues when relabeling.
+
 2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a new example for finding text in pictures.
