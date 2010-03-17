@@ -86,9 +86,6 @@ TEXI2DVI_FLAGS +=							\
   -I $(DOC_SRCDIR) -I $(OUTPUTS_SRCDIR) -I $(SPLIT_OUTPUTS_SRCDIR)	\
   -I $(IMG_SRCDIR) -I $(SPLIT_EXAMPLES_SRCDIR)
 
-# Illustrations of the white paper.
-TEXI2DVI_FLAGS += -I $(DOC_SRCDIR)/white_paper
-
 # Additional files for LaTeX compilations.
 DOC_PACKAGES = doxyfuns.sty milena.sty
 

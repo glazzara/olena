@@ -1,5 +1,12 @@
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove useless paths in texi2dvi invocations.
+
+	* doc/Makefile.am (TEXI2DVI_FLAGS):
+	Remove -I $(DOC_SRCDIR)/white_paper.
+
+2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update cleaning rules in doc/.
 
 	* doc/Makefile.am (maintainer-clean-local):
