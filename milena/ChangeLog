@@ -1,5 +1,12 @@
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update cleaning rules in doc/.
+
+	* doc/Makefile.am (maintainer-clean-local):
+	Remove outdated actions.
+
+2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add missing dependencies.
 
 	* doc/Makefile.am (DOC_PACKAGES): Strip useless $(srcdir) prefixes.

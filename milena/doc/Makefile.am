@@ -416,12 +416,6 @@ $(srcdir)/$(DEVEL_REFMAN): $(srcdir)/devel-refman.stamp
 maintainer-clean-local:
 	-rm -rf $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
 	-rm -rf $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
-	-rm -f $(EXAMPLES_BUILDDIR)/*.cc
-# FIXME: If we remove a *directory*, we are supposed to know how to
-# recreate it later.  I doubt our rules are all currently able to
-# handle this.  See how `make maintainer-clean all' behaves.
-	-rm -rf $(OUTPUTS_BUILDDIR)
-	-rm -rf $(FIGURES_BUILDDIR)
 
 
 ## ------------------------- ##
