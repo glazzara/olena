@@ -842,59 +842,39 @@ include $(srcdir)/programs-examples.mk
 EXTRA_PROGRAMS = $(PROGRAMS_examples)
 CLEANFILES = $(PROGRAMS_examples)
 
-# FIXME: Try to avoid the use an extensive list: either use Make's
-# substitution rules or generate it.  Actually this list is already
-# generated (see outputs/outputs.mk).
-OUTPUTS =						\
-  $(srcdir)/outputs/accu-right-instanciation.txt	\
-  $(srcdir)/outputs/borderthickness.txt			\
-  $(srcdir)/outputs/box2d-bbox.txt			\
-  $(srcdir)/outputs/domain-display.txt			\
-  $(srcdir)/outputs/dpoint-1.txt			\
-  $(srcdir)/outputs/estim-sites.txt			\
-  $(srcdir)/outputs/extend.txt				\
-  $(srcdir)/outputs/extension-ignore.txt		\
-  $(srcdir)/outputs/fill-call-1.txt			\
-  $(srcdir)/outputs/fill-imageif-cfun.txt		\
-  $(srcdir)/outputs/fill-part-image.txt			\
-  $(srcdir)/outputs/fill-subdomain-shorter.txt		\
-  $(srcdir)/outputs/fill-subdomain.txt			\
-  $(srcdir)/outputs/fill.txt				\
-  $(srcdir)/outputs/first_routine.txt			\
-  $(srcdir)/outputs/forall-piter.txt			\
-  $(srcdir)/outputs/fun-p2v-1.txt			\
-  $(srcdir)/outputs/graph-data.txt			\
-  $(srcdir)/outputs/graph-iter.txt			\
-  $(srcdir)/outputs/ima-has.txt				\
-  $(srcdir)/outputs/ima-save.txt			\
-  $(srcdir)/outputs/ima-size.txt			\
-  $(srcdir)/outputs/ima2d-1.txt				\
-  $(srcdir)/outputs/ima2d-2.txt				\
-  $(srcdir)/outputs/ima2d-3.txt				\
-  $(srcdir)/outputs/ima2d-4.txt				\
-  $(srcdir)/outputs/ima2d-5.txt				\
-  $(srcdir)/outputs/ima2d-6-clone.txt			\
-  $(srcdir)/outputs/ima2d-7.txt				\
-  $(srcdir)/outputs/ima2d-rot.txt			\
-  $(srcdir)/outputs/labeling-compute.txt		\
-  $(srcdir)/outputs/logical-not.txt			\
-  $(srcdir)/outputs/mln_var.txt				\
-  $(srcdir)/outputs/parray-append.txt			\
-  $(srcdir)/outputs/parray-bbox.txt			\
-  $(srcdir)/outputs/paste-call-1.txt			\
-  $(srcdir)/outputs/paste.txt				\
-  $(srcdir)/outputs/point-1.txt				\
-  $(srcdir)/outputs/predicate-1.txt			\
-  $(srcdir)/outputs/tuto2_first_image.txt		\
-  $(srcdir)/outputs/tuto3_colorize.txt			\
-  $(srcdir)/outputs/tuto3_println.txt			\
-  $(srcdir)/outputs/tuto3_rw_image.txt			\
-  $(srcdir)/outputs/tuto3_trace.txt			\
-  $(srcdir)/outputs/tuto4_genericity_and_algorithms.txt	\
-  $(srcdir)/outputs/tuto4_point2d.txt			\
-  $(srcdir)/outputs/tuto4_site_set_create.txt		\
-  $(srcdir)/outputs/win-create-1.txt			\
-  $(srcdir)/outputs/win-create-2.txt
+## --------- ##
+## Outputs.  ##
+## --------- ##
+
+$(srcdir)/outputs.mk: $(srcdir)/gen-make-variable
+	rm -f $@.tmp
+# Ignore sources in examples/trash/.
+	$(srcdir)/gen-make-variable OUTPUTS				\
+	  `find $(srcdir)/examples					\
+               -name \*.cc -a \! -path $(srcdir)/examples/trash/\*	\
+	     | sed -e 's,$(srcdir)/examples/,,'				\
+	           -e 'y,/,_,'						\
+	           -e 's,\(.*\)\.cc$$,$$(srcdir)/outputs/\1.txt,'`	\
+	  >$@.tmp
+	mv -f $@.tmp $@
+	chmod -w $@
+include $(srcdir)/outputs.mk
+EXTRA_DIST += $(OUTPUTS)
+MAINTAINERCLEANFILES += $(OUTPUTS)
+
+.PHONY: regen-outputs-mk
+regen-outputs-mk:
+	rm -f $(srcdir)/outputs.mk.tmp
+# Ignore sources in examples/trash/.
+	$(srcdir)/gen-make-variable OUTPUTS				\
+	  `find $(srcdir)/examples					\
+               -name \*.cc -a \! -path $(srcdir)/examples/trash/\*	\
+	     | sed -e 's,$(srcdir)/examples/,,'				\
+	           -e 'y,/,_,'						\
+	           -e 's,\(.*\)\.cc$$,$$(srcdir)/outputs/\1.txt,'`	\
+	  >$(srcdir)/outputs.mk.tmp
+	mv -f $(srcdir)/outputs.mk.tmp $(srcdir)/outputs.mk
+	chmod -w $(srcdir)/outputs.mk
 
 ## FIXME: These outpouts are also required by the (LaTeX)
 ## documentation.  However, they have no corresponding program in
@@ -932,8 +912,6 @@ regen-examples-outputs-mk:
 	mv -f $(srcdir)/examples-outputs.mk.tmp $(srcdir)/examples-outputs.mk
 	chmod -w $(srcdir)/examples-outputs.mk
 
-MAINTAINERCLEANFILES += $(OUTPUTS)
-
 include $(srcdir)/figures.mk
 
 ## --------------- ##
@@ -963,35 +941,16 @@ $(srcdir)/split-outputs.stamp: $(OUTPUTS)
 ## -------------- ##
 
 # Regen Make helpers.
-EXTRA_DIST += generate_dist_files.sh headers.stamp
+EXTRA_DIST += generate_dist_files.sh
 include $(top_srcdir)/build-aux/regen-recursive.mk
-## FIXME: Get rid of headers.stamp, which is (was) used by two many
-## generators.
 regen-am:
-	@rm -f $(srcdir)/headers.stamp.tmp
-	@touch $(srcdir)/headers.stamp.tmp
 	$(MAKE) $(AM_MAKEFLAGS) regen-pbm-figures-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-pgm-figures-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-ppm-figures-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-examples-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-split-examples-mk
+	$(MAKE) $(AM_MAKEFLAGS) regen-outputs-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-examples-outputs-mk
-	@cd $(srcdir) && 				\
-	  ./generate_dist_files.sh outputs txt &&	\
-	@mv -f $(srcdir)/headers.stamp.tmp $(srcdir)/headers.stamp
-
-$(srcdir)/outputs/outputs.mk: $(srcdir)/headers.stamp
-
-
-$(srcdir)/headers.stamp: $(srcdir)/generate_dist_files.sh
-	@rm -f $@.tmp
-	@touch $@.tmp
-	@cd $(srcdir) && 				\
-	  ./generate_dist_files.sh outputs txt &&	\
-	@mv -f $@.tmp $@
-
-
-include $(srcdir)/outputs/outputs.mk
 
 
 ## -------------- ##
