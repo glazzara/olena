@@ -1,5 +1,11 @@
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have split_sample.sh announce the right number of output files.
+
+	* doc/tools/split_sample.sh: Here.
+
+2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix programs in doc/examples/.
 
 	* doc/examples/ima-save.cc: Add a FIXME.
