@@ -913,6 +913,14 @@ $(DOC_SRCDIR)/examples-outputs.mk: $(DOC_SRCDIR)/gen-examples-outputs-mk $(srcdi
 	chmod -w $@
 include $(DOC_SRCDIR)/examples-outputs.mk
 
+.PHONY: regen-examples-outputs-mk
+regen-examples-outputs-mk:
+	$(DOC_SRCDIR)/gen-examples-outputs-mk $(PROGRAMS_examples)	\
+	   >$(DOC_SRCDIR)/examples-outputs.mk.tmp
+	mv -f $(DOC_SRCDIR)/examples-outputs.mk.tmp	\
+	  $(DOC_SRCDIR)/examples-outputs.mk
+	chmod -w $(DOC_SRCDIR)/examples-outputs.mk
+
 MAINTAINERCLEANFILES += $(OUTPUTS)
 
 # FIXME: Warning: $(SPLIT_EXAMPLES_SRCDIR) might not exist.  Ensure it
@@ -1045,6 +1053,10 @@ $(srcdir)/split-outputs.stamp: $(OUTPUTS)
 	@mv -f $@.tmp $@
 
 
+## -------------- ##
+## Regeneration.  ##
+## -------------- ##
+
 # Regen Make helpers.
 EXTRA_DIST += generate_dist_files.sh headers.stamp
 include $(top_srcdir)/build-aux/regen-recursive.mk
@@ -1053,12 +1065,12 @@ include $(top_srcdir)/build-aux/regen-recursive.mk
 regen-am:
 	@rm -f $(srcdir)/headers.stamp.tmp
 	@touch $(srcdir)/headers.stamp.tmp
+	$(MAKE) $(AM_MAKEFLAGS) regen-examples-outputs-mk
 	@cd $(srcdir) && 				\
 	  ./generate_dist_files.sh figures 'p*m' && 	\
 	  ./generate_dist_files.sh outputs txt &&	\
 	  ./generate_dist_files.sh examples cc.raw
 	@mv -f $(srcdir)/headers.stamp.tmp $(srcdir)/headers.stamp
-## FIXME: Regen examples-outputs.mk as well?
 
 $(srcdir)/examples/examples.mk: $(srcdir)/headers.stamp
 $(srcdir)/outputs/outputs.mk: $(srcdir)/headers.stamp
