@@ -179,6 +179,12 @@ milena/doc/gen-make-variable EXAMPLES					    \
   >milena/doc/examples.mk
 # * Split examples.
 cd milena/doc && ./gen-split-examples-mk >split-examples.mk
+# * Outputs rules and timestamps.
+cd milena/doc &&						\
+  ./gen-examples-outputs-mk					\
+    `find examples -name \*.cc -a \! -path examples/trash/\*	\
+       | env LC_ALL=C sort`					\
+    >examples-outputs.mk
 
 # Generate unit test files.
 run . ./build-aux/build_unit_test.sh `pwd`/milena/mln milena/tests/unit_test milena/tests/unit_test/disabled_tests
