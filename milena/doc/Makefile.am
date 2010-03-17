@@ -934,6 +934,8 @@ regen-examples-outputs-mk:
 
 MAINTAINERCLEANFILES += $(OUTPUTS)
 
+include $(srcdir)/figures.mk
+
 ## --------------- ##
 ## Split outputs.  ##
 ## --------------- ##

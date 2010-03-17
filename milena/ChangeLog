@@ -1,5 +1,13 @@
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Handle dependencies of generated figures.
+
+	* doc/figures.mk: New Make helper.
+	Include it...
+	* doc/Makefile.am: ...here.
+
+2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	* doc/examples-outputs.mk: Regen.
 
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
