@@ -876,7 +876,7 @@ regen-outputs-mk:
 	mv -f $(srcdir)/outputs.mk.tmp $(srcdir)/outputs.mk
 	chmod -w $(srcdir)/outputs.mk
 
-## FIXME: These outpouts are also required by the (LaTeX)
+## FIXME: These outputs are also required by the (LaTeX)
 ## documentation.  However, they have no corresponding program in
 ## examples/, hence they cannot be regenerated.  Are they hand-made
 ## outputs?  Or maybe outputs of which program has been removed since?
@@ -888,6 +888,7 @@ MORE_OUTPUTS =					\
   $(srcdir)/outputs/ima2d-display-output-2.txt	\
   $(srcdir)/outputs/parray-display-1.txt	\
   $(srcdir)/outputs/win-create-1-display.txt
+EXTRA_DIST += $(MORE_OUTPUTS)
 
 $(srcdir)/examples-outputs.mk: $(srcdir)/gen-examples-outputs-mk
 	rm -f $@.tmp

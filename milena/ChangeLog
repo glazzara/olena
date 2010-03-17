@@ -1,5 +1,11 @@
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Ship non generated outputs.
+
+	* doc/Makefile.am (EXTRA_DIST): Add $(MORE_OUTPUTS).
+
+2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Generate the list of outputs in the documentation.
 
 	* doc/Makefile.am (OUTPUTS): Remove this variable that used to be
