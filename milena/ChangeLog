@@ -1,5 +1,9 @@
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	* doc/examples-outputs.mk: Regen.
+
+2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Prepare for the generation of multiple outputs from doc/ programs.
 
 	* doc/gen-examples-outputs-mk: Split generated rules in two so
