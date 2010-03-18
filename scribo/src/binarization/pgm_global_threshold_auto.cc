@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,15 +27,12 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pbm/save.hh>
 
-#include <scribo/binarization/sauvola.hh>
+#include <scribo/binarization/global_threshold_auto.hh>
 #include <scribo/debug/usage.hh>
-
-#include <mln/util/timer.hh>
 
 const char *args_desc[][2] =
 {
   { "input.pgm", "A gray level image." },
-  { "w", "Window size." },
   {0, 0}
 };
 
@@ -44,27 +42,20 @@ int main(int argc, char *argv[])
   using namespace mln;
   using value::int_u8;
 
-  if (argc != 4)
+  if (argc != 3)
     return scribo::debug::usage(argv,
-				"Binarization of a gray level image based on Sauvola's algorithm.",
-				"input.pgm w output.pbm",
+				"Binarization of a gray-level image using an automatic global threshold.",
+				"input.pgm output.pbm",
 				args_desc, "A binary image.");
 
   trace::entering("main");
 
-  unsigned w = atoi(argv[2]);
-
   image2d<int_u8> input;
   io::pgm::load(input, argv[1]);
 
-  util::timer t;
-  t.start();
-  image2d<bool> out = scribo::binarization::sauvola(input, w);
-  t.stop();
-  std::cout << t << std::endl;
 
-
-  io::pbm::save(out, argv[3]);
+  io::pbm::save(scribo::binarization::global_threshold_auto(input),
+		argv[2]);
 
 
   trace::exiting("main");

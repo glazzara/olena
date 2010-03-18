@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,6 +28,12 @@
 #ifndef SCRIBO_BINARIZATION_SAUVOLA_MS_HH
 # define SCRIBO_BINARIZATION_SAUVOLA_MS_HH
 
+/// \file
+///
+/// \brief Binarize an image using a multi-scale implementation of
+/// Sauvola's algoritm.
+
+
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/data/fill.hh>
 
@@ -34,19 +41,24 @@
 
 # include <mln/transform/influence_zone_geodesic.hh>
 
+# include <mln/data/split.hh>
+
 # include <mln/value/int_u8.hh>
 # include <mln/border/mirror.hh>
 # include <mln/border/adjust.hh>
+# include <mln/border/resize.hh>
 
 # include <mln/core/box_runend_piter.hh>
 
 # include <mln/util/couple.hh>
 
+# include <mln/extension/adjust.hh>
+
 # include <scribo/subsampling/integral_single_image.hh>
 
 # include <scribo/core/macros.hh>
 
-# include <scribo/binarization/sauvola_threshold.hh>
+# include <scribo/binarization/sauvola_threshold_image.hh>
 # include <scribo/binarization/internal/first_pass_functor.hh>
 
 # include <scribo/canvas/integral_browsing.hh>
@@ -61,6 +73,32 @@ namespace scribo
     using namespace mln;
     using value::int_u8;
 
+
+    /*! \brief Binarize an image using a multi-scale implementation of
+        Sauvola's algoritm.
+
+      \param[in] input_1 A grayscale or a color image.
+      \param[in] w_1 The window size used to compute stats.
+      \param[in] s The scale factor used for the first subscaling.
+      \param[in] lambda_min_1 Size of the objects kept at scale 1.
+
+
+      \p w_1 and \p lambda_min_1 are expressed according to the image
+      at scale 0, i.e. the original size.
+
+      \return A Boolean image.
+     */
+    template <typename I>
+    mln_ch_value(I,bool)
+    sauvola_ms(const Image<I>& input_1, unsigned w_1,
+	       unsigned s, unsigned lambda_min_1);
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+    // Routines
 
     namespace internal
     {
@@ -188,9 +226,9 @@ namespace scribo
 
       template <typename I, typename J, typename K>
       mln_ch_value(I, bool)
-	multi_scale_binarization(const I& in, const J& e2,
-				 const util::array<K>& t_ima,
-				 unsigned s)
+      multi_scale_binarization(const I& in, const J& e2,
+			       const util::array<K>& t_ima,
+			       unsigned s)
       {
 	mln_ch_value(I,bool) out;
 	initialize(out, in);
@@ -252,20 +290,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 	      }
 
@@ -276,20 +314,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1b; ptr__in += delta1b;
 	      }
 
@@ -300,20 +338,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 
 	      }
@@ -325,20 +363,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1c; ptr__in += delta1c;
 	      }
 
@@ -354,20 +392,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 	      }
 
@@ -378,20 +416,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1b; ptr__in += delta1b;
 	      }
 
@@ -402,20 +440,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 	      }
 
@@ -426,20 +464,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1d; ptr__in += delta1d;
 	      }
 
@@ -455,20 +493,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 	      }
 
@@ -479,20 +517,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1b; ptr__in += delta1b;
 	      }
 
@@ -503,20 +541,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 	      }
 
@@ -527,20 +565,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1c; ptr__in += delta1c;
 	      }
 
@@ -556,20 +594,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 	      }
 
@@ -580,20 +618,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1b; ptr__in += delta1b;
 	      }
 
@@ -604,20 +642,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 	      }
 
@@ -628,20 +666,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in < threshold;
+		    *ptr__out = *ptr__in >= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in < threshold;
+		  *ptr__out = *ptr__in >= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in < threshold;
+		*ptr__out = *ptr__in >= threshold;
 		ptr__out += delta1e; ptr__in += delta1e;
 	      }
 	    }
@@ -707,6 +745,250 @@ namespace scribo
 
 
 
+    // Implementation
+
+    namespace impl
+    {
+
+      namespace generic
+      {
+
+	template <typename I>
+	mln_ch_value(I,bool)
+	sauvola_ms(const Image<I>& input_1_, unsigned w_1,
+		   unsigned s, unsigned lambda_min_1)
+	{
+	  trace::entering("scribo::binarization::sauvola_ms");
+
+	  const I& input_1 = exact(input_1_);
+
+	  mlc_is_a(mln_value(I), value::Scalar)::check();
+	  mln_precondition(input_1.is_valid());
+
+	  dpoint2d none(0, 0);
+
+	  // Number of subscales.
+	  unsigned nb_subscale = 3;
+
+	  // Window size.
+	  unsigned w_work = w_1 / s;        // Scale 2
+
+
+	  // Subscale step.
+	  unsigned q = 2;
+
+	  unsigned lambda_min_2 = lambda_min_1 / s;
+	  unsigned lambda_max_2 = lambda_min_2 * q;
+
+
+	  util::array<I> t_ima;
+
+	  // Make sure t_ima indexes start from 2.
+	  {
+	    I dummy(1,1);
+	    for (unsigned i = 0; i < nb_subscale + 2; ++i)
+	      t_ima.append(dummy);
+	  }
+
+	  util::array<I> sub_ima;
+
+	  // Make sure sub_ima indexes start from 2.
+	  {
+	    I dummy(1,1);
+	    sub_ima.append(dummy);
+	    sub_ima.append(dummy);
+	  }
+
+	  util::array<util::couple<box2d, unsigned> >
+	    sub_domains = internal::compute_sub_domains(input_1, nb_subscale, s);
+
+	  border::adjust(input_1, sub_domains(1).second());
+	  border::mirror(input_1);
+
+
+	  // Resize input and compute integral images.
+	  typedef image2d<util::couple<double,double> > integral_t;
+	  integral_t integral_sum_sum_2;
+
+	  // Subsampling from scale 1 to 2.
+	  sub_ima.append(scribo::subsampling::integral(input_1, s,
+						       integral_sum_sum_2,
+						       sub_domains[2].first(),
+						       sub_domains[2].second()));
+
+
+	  // Subsampling to scale 3 and 4.
+	  for (unsigned i = 3; i <= nb_subscale + 1; ++i)
+	    sub_ima.append(mln::subsampling::antialiased(sub_ima[i - 1], q, none,
+							 sub_domains[i].first(),
+							 sub_domains[i].second()));
+
+
+	  // Compute threshold images.
+	  image2d<int_u8> e_2;
+	  initialize(e_2, sub_ima[2]);
+	  data::fill(e_2, 0u);
+
+	  // Highest scale -> no maximum component size.
+	  {
+	    int i = sub_ima.size() - 1;
+	    unsigned ratio = std::pow(q, i - 2); // Ratio compared to e_2
+	    t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
+						     lambda_min_2 / ratio,
+						     mln_max(unsigned),
+						     s,
+						     q, i, w_work,
+						     integral_sum_sum_2);
+	  }
+
+	  // Other scales -> maximum and minimum component size.
+	  {
+	    for (int i = sub_ima.size() - 2; i > 2; --i)
+	    {
+	      unsigned ratio = std::pow(q, i - 2); // Ratio compared to e_2
+	      t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
+						       lambda_min_2 / ratio,
+						       lambda_max_2 / ratio,
+						       s,
+						       q, i, w_work,
+						       integral_sum_sum_2);
+	    }
+	  }
+
+	  // Lowest scale -> no minimum component size.
+	  {
+	    t_ima[2] = internal::compute_t_n_and_e_2(sub_ima[2], e_2, 0,
+						     lambda_max_2,
+						     s, 1, 2, w_work,
+						     integral_sum_sum_2);
+	  }
+
+
+	  // Propagate scale values.
+	  e_2 = transform::influence_zone_geodesic(e_2, c8());
+
+
+	  // Binarize
+	  image2d<bool>
+	    output = internal::multi_scale_binarization(input_1, e_2, t_ima, s);
+
+	  trace::exiting("scribo::binarization::sauvola_ms");
+	  return output;
+	}
+
+      } // end of namespace scribo::binarization::impl::generic
+
+
+      template <typename I>
+      mln_ch_value(I,bool)
+      sauvola_ms_rgb8(const Image<I>& input_1_, unsigned w_1,
+		      unsigned s, unsigned lambda_min_1)
+      {
+	const I& input_1 = exact(input_1_);
+
+	mln_ch_value(I, value::int_u8) gima;
+	gima = data::transform(input_1, mln::fun::v2v::rgb_to_int_u<8>());
+
+	mln_ch_value(I, bool)
+	  output = generic::sauvola_ms(gima, w_1, s, lambda_min_1);
+
+
+// 	typedef mln_ch_value(I,bool) bin_t;
+
+
+// 	mln_ch_value(I, value::int_u8) r_i, g_i, b_i;
+
+// 	// Split the rgb8 image into 3 intensity images.
+// 	mln::data::split(input_1, r_i, g_i, b_i);
+
+// 	bin_t r_b, g_b, b_b;
+
+// 	r_b = generic::sauvola_ms(r_i, w_1, s, lambda_min_1);
+// 	g_b = generic::sauvola_ms(g_i, w_1, s, lambda_min_1);
+// 	b_b = generic::sauvola_ms(b_i, w_1, s, lambda_min_1);
+
+// 	border::resize(r_b, input_1.border());
+// 	border::resize(g_b, input_1.border());
+// 	border::resize(b_b, input_1.border());
+
+// 	bin_t output;
+// 	initialize(output, input_1);
+
+// 	typedef bool * b_ptr_t;
+// 	b_ptr_t
+// 	  out_ptr = output.buffer(),
+// 	  r_ptr = r_b.buffer(),
+// 	  g_ptr = g_b.buffer(),
+// 	  b_ptr = b_b.buffer();
+
+// 	unsigned ntrue;
+// 	for (unsigned n = 0; n < output.nelements(); ++n)
+// 	{
+// 	  ntrue = 0;
+// 	  if (*r_ptr)
+// 	    ++ntrue;
+// 	  if (*g_ptr)
+// 	    ++ntrue;
+// 	  if (*b_ptr)
+// 	    ++ntrue;
+
+// 	  *out_ptr++ = ntrue > 1;;
+
+// 	  ++r_ptr;
+// 	  ++g_ptr;
+// 	  ++b_ptr;
+// 	}
+
+	return output;
+      }
+
+
+    } // end of namespace scribo::binarization::impl
+
+
+
+    // Dispatch
+
+    namespace internal
+    {
+
+      template <typename I>
+      mln_ch_value(I,bool)
+	sauvola_ms_dispatch(const mln_value(I)&,
+			    const Image<I>& input_1, unsigned w_1,
+			    unsigned s, unsigned lambda_min_1)
+      {
+	return impl::generic::sauvola_ms(input_1, w_1, s, lambda_min_1);
+      }
+
+
+
+      template <typename I>
+      mln_ch_value(I,bool)
+	sauvola_ms_dispatch(const value::rgb8&,
+			    const Image<I>& input_1, unsigned w_1,
+			    unsigned s, unsigned lambda_min_1)
+      {
+	return impl::sauvola_ms_rgb8(input_1, w_1, s, lambda_min_1);
+      }
+
+
+      template <typename I>
+      mln_ch_value(I,bool)
+      sauvola_ms_dispatch(const Image<I>& input_1, unsigned w_1,
+			  unsigned s, unsigned lambda_min_1)
+      {
+	typedef mln_value(I) V;
+	return sauvola_ms_dispatch(V(), input_1, w_1, s, lambda_min_1);
+      }
+
+
+    } // end of namespace scribo::binarization::internal
+
+
+
+    // Facade
+
     template <typename I>
     mln_ch_value(I,bool)
     sauvola_ms(const Image<I>& input_1_, unsigned w_1,
@@ -714,121 +996,18 @@ namespace scribo
     {
       trace::entering("scribo::binarization::sauvola_ms");
 
-      const I& input_1 = exact(input_1_);
-
-      mlc_is_a(mln_value(I), value::Scalar)::check();
       mln_precondition(input_1.is_valid());
 
-      dpoint2d none(0, 0);
-
-      // Number of subscales.
-      unsigned nb_subscale = 3;
-
-      // Window size.
-      unsigned w_work = w_1 / s;        // Scale 2
-
-
-      // Subscale step.
-      unsigned q = 2;
-
-      unsigned lambda_min_2 = lambda_min_1 / s;
-      unsigned lambda_max_2 = lambda_min_2 * q;
-
-
-      util::array<I> t_ima;
-
-      // Make sure t_ima indexes start from 2.
-      {
-	I dummy(1,1);
-	for (unsigned i = 0; i < nb_subscale + 2; ++i)
-	  t_ima.append(dummy);
-      }
-
-      util::array<I> sub_ima;
-
-      // Make sure sub_ima indexes start from 2.
-      {
-	I dummy(1,1);
-	sub_ima.append(dummy);
-	sub_ima.append(dummy);
-      }
-
-      util::array<util::couple<box2d, unsigned> >
-	sub_domains = internal::compute_sub_domains(input_1, nb_subscale, s);
-
-      border::adjust(input_1, sub_domains(1).second());
-      border::mirror(input_1);
-
-
-      // Resize input and compute integral images.
-      typedef image2d<util::couple<double,double> > integral_t;
-      integral_t integral_sum_sum_2;
-
-      // Subsampling from scale 1 to 2.
-      sub_ima.append(scribo::subsampling::integral(input_1, s,
-						   integral_sum_sum_2,
-						   sub_domains[2].first(),
-						   sub_domains[2].second()));
-
-
-      // Subsampling to scale 3 and 4.
-      for (unsigned i = 3; i <= nb_subscale + 1; ++i)
-	sub_ima.append(mln::subsampling::antialiased(sub_ima[i - 1], q, none,
-						     sub_domains[i].first(),
-						     sub_domains[i].second()));
-
-
-      // Compute threshold images.
-      image2d<int_u8> e_2;
-      initialize(e_2, sub_ima[2]);
-      data::fill(e_2, 0u);
-
-      // Highest scale -> no maximum component size.
-      {
-	int i = sub_ima.size() - 1;
-	unsigned ratio = std::pow(q, i - 2); // Ratio compared to e_2
-	t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
-						 lambda_min_2 / ratio,
-						 mln_max(unsigned),
-						 s,
-						 q, i, w_work,
-						 integral_sum_sum_2);
-      }
-
-      // Other scales -> maximum and minimum component size.
-      {
-	for (int i = sub_ima.size() - 2; i > 2; --i)
-	{
-	  unsigned ratio = std::pow(q, i - 2); // Ratio compared to e_2
-	  t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
-						   lambda_min_2 / ratio,
-						   lambda_max_2 / ratio,
-						   s,
-						   q, i, w_work,
-						   integral_sum_sum_2);
-	}
-      }
-
-      // Lowest scale -> no minimum component size.
-      {
-	t_ima[2] = internal::compute_t_n_and_e_2(sub_ima[2], e_2, 0,
-						 lambda_max_2,
-						 s, 1, 2, w_work,
-						 integral_sum_sum_2);
-      }
-
-
-      // Propagate scale values.
-      e_2 = transform::influence_zone_geodesic(e_2, c8());
-
-
-      // Binarize
-      image2d<bool>
-	output = internal::multi_scale_binarization(input_1, e_2, t_ima, s);
+      mln_ch_value(I,bool)
+	output = internal::sauvola_ms_dispatch(input_1_, w_1, s, lambda_min_1);
 
       trace::exiting("scribo::binarization::sauvola_ms");
       return output;
     }
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
 
   } // end of namespace scribo::binarization
 

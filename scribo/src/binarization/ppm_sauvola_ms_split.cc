@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,16 +25,16 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/io/pgm/load.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/io/ppm/load.hh>
 #include <mln/io/pbm/save.hh>
 
-#include <scribo/binarization/sauvola_ms.hh>
+#include <scribo/binarization/sauvola_ms_split.hh>
 #include <scribo/debug/usage.hh>
 
 bool check_args(int argc, char * argv[])
 {
-  if (argc < 5 || argc > 6)
+  if (argc != 7)
     return false;
 
   int s = atoi(argv[3]);
@@ -51,10 +52,11 @@ bool check_args(int argc, char * argv[])
 
 const char *args_desc[][2] =
 {
-  { "input.pgm", "A graylevel image." },
+  { "input.ppm", "A color image." },
   { "w", "Window size at scale 1. (Common value: 101)" },
   { "s", "First subsampling ratio (Common value: 3)." },
   { "min_area",    "Minimum object area at scale 1 (Common value: 67)" },
+  { "min_ntrue",   "The number of components in which a site must be set to 'True' in order to be set to 'True' in the output (Possible values: 1, 2, 3).  (Common value: 2)" },
   {0, 0}
 };
 
@@ -68,8 +70,8 @@ int main(int argc, char *argv[])
 
   if (!check_args(argc, argv))
     return scribo::debug::usage(argv,
-				"Multi-Scale Binarization of a color image based on Sauvola's algorithm.",
-				"input.pgm w s area_threshold output.pbm",
+				"Multi-Scale Binarization of a color image based on Sauvola's algorithm. Performs a binarization on each component of the color image and merges the results.",
+				"input.ppm w s area_threshold output.pbm",
 				args_desc, "A binary image.");
 
   trace::entering("main");
@@ -84,28 +86,13 @@ int main(int argc, char *argv[])
   unsigned lambda_min_1 = atoi(argv[4]);
 
 
-  image2d<value::int_u8> input_1;
-  io::pgm::load(input_1, argv[1]);
-
-//   {
-//     unsigned max_dim = math::min(input_1.ncols() / s,
-// 				 input_1.nrows() / s);
-//     if ((w_1 / s * 4) > max_dim)
-//     {
-//       std::cout << "------------------" << std::endl;
-//       std::cout << "The window is too large! Image size is only "
-// 		<< input_1.nrows() << "x" << input_1.ncols()
-// 		<< std::endl
-// 		<< "Window size must not exceed " << max_dim * s / 4
-// 		<< std::endl;
-//       return 1;
-//     }
-//   }
+  image2d<value::rgb8> input_1;
+  io::ppm::load(input_1, argv[1]);
 
   image2d<bool>
-    output = scribo::binarization::sauvola_ms(input_1, w_1, s, lambda_min_1);
+    output = scribo::binarization::sauvola_ms_split(input_1, w_1, s, lambda_min_1, atoi(argv[5]));
 
-  io::pbm::save(output, argv[5]);
+  io::pbm::save(output, argv[6]);
 }
 
 

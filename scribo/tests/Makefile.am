@@ -19,6 +19,7 @@ include $(srcdir)/tests.mk
 ## Process this file through Automake to create Makefile.in.
 
 SUBDIRS = 		\
+  binarization 		\
   core 			\
   filter 		\
   preprocessing 	\

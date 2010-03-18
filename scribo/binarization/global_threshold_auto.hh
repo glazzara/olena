@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,12 +24,14 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_BINARIZATION_SIMPLE_HH
-# define SCRIBO_BINARIZATION_SIMPLE_HH
+#ifndef SCRIBO_BINARIZATION_GLOBAL_THRESHOLD_AUTO_HH
+# define SCRIBO_BINARIZATION_GLOBAL_THRESHOLD_AUTO_HH
 
 /// \file
 ///
-/// Simple binarization of a gray-level document.
+/// Binarize a graylevel image using an automatic global threshold.
+///
+/// \fixme: Adapt the filtering if no threshold is found.
 
 # include <mln/core/image/image1d.hh>
 # include <mln/core/alias/neighb1d.hh>
@@ -65,16 +68,17 @@ namespace scribo
 
     using namespace mln;
 
-    /// Simple binarization of a gray-level document.
+    /// \brief Simple binarization of a gray-level document.
     /*!
-     *
-     * \param[in] input_ A gray-level image.
-     *
-     * \result A Boolean image.
+       Automatically find a global threshold for the given image.
+
+       \param[in] input A gray-level image.
+
+       \result A Boolean image.
      */
     template <typename I>
     mln_ch_value(I, bool)
-    simple(const Image<I>& input_);
+    global_threshold_auto(const Image<I>& input);
 
 
 
@@ -83,9 +87,9 @@ namespace scribo
     template <typename I>
     inline
     mln_ch_value(I, bool)
-    simple(const Image<I>& input_)
+    global_threshold_auto(const Image<I>& input_)
     {
-      trace::entering("scribo::binarization::simple");
+      trace::entering("scribo::binarization::global_threshold_auto");
 
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
@@ -145,14 +149,12 @@ namespace scribo
 	  v.push_back(c[i].ind());
 	std::sort(v.begin(), v.end());
 	threshold = v[n.prev()];
-
-	// std::cout << "threshold = " << threshold << std::endl;
       }
 
       mln_ch_value(I, bool) output;
       output = duplicate((pw::value(input) > pw::cst(threshold)) | input.domain());
 
-      trace::exiting("scribo::binarization::simple");
+      trace::exiting("scribo::binarization::global_threshold_auto");
       return output;
     }
 
@@ -163,4 +165,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_BINARIZATION_SIMPLE_HH
+#endif // ! SCRIBO_BINARIZATION_GLOBAL_THRESHOLD_AUTO_HH

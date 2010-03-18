@@ -28,7 +28,7 @@
 
 # include <mln/value/int_u8.hh>
 
-# include <scribo/binarization/sauvola_threshold.hh>
+# include <scribo/binarization/sauvola_threshold_image.hh>
 
 
 // #include <mln/border/adjust.hh>

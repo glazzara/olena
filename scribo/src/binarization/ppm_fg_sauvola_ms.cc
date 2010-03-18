@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,39 +24,81 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+#include <mln/core/image/image2d.hh>
+#include <mln/value/rgb8.hh>
 #include <mln/io/ppm/load.hh>
 #include <mln/io/pbm/save.hh>
-#include <mln/value/rgb8.hh>
 
-#include <scribo/binarization/sauvola.hh>
+#include <scribo/binarization/sauvola_ms.hh>
+#include <scribo/preprocessing/split_bg_fg.hh>
 #include <scribo/debug/usage.hh>
+
+bool check_args(int argc, char * argv[])
+{
+  if (argc != 7)
+    return false;
+
+  int s = atoi(argv[4]);
+
+  if (s < 2 || s > 3)
+  {
+    std::cout << "s must be set to 2 or 3."
+	      << std::endl;
+    return false;
+  }
+
+  return true;
+}
+
 
 const char *args_desc[][2] =
 {
   { "input.ppm", "A color image." },
-  { "wsize", "Window size (Common value: 51)." },
+  { "lambda", "Lambda used to split bg/fg." },
+  { "w", "Window size at scale 1. (Common value: 101)" },
+  { "s", "First subsampling ratio (Common value: 3)." },
+  { "min_area",    "Minimum object area at scale 1 (Common value: 67)" },
   {0, 0}
 };
+
+
 
 
 int main(int argc, char *argv[])
 {
   using namespace mln;
-  using value::rgb8;
+  using namespace scribo;
 
-  if (argc != 4)
+  if (!check_args(argc, argv))
     return scribo::debug::usage(argv,
-				"Binarization of a color image based on Sauvola's algorithm.",
-				"input.ppm wsize output.pbm",
+				"Multi-Scale Binarization of a color image based on Sauvola's algorithm. Performs a binarization on each component of the color image and merges the results.",
+				"input.ppm w s area_threshold output.pbm",
 				args_desc, "A binary image.");
 
   trace::entering("main");
 
-  image2d<rgb8> input;
-  io::ppm::load(input, argv[1]);
+  unsigned lambda = atoi(argv[2]);
 
-  io::pbm::save(scribo::binarization::sauvola(input, atoi(argv[2])), argv[3]);
+  // Window size
+  unsigned w_1 = atoi(argv[3]);  // Scale 1
+
+  // First subsampling scale.
+  unsigned s = atoi(argv[4]);
+
+  // Lambda value
+  unsigned lambda_min_1 = atoi(argv[5]);
 
 
-  trace::exiting("main");
+  image2d<value::rgb8> input_1;
+  io::ppm::load(input_1, argv[1]);
+
+  image2d<value::rgb8>
+    fg = scribo::preprocessing::split_bg_fg(input_1, lambda, 32).first();
+
+  image2d<bool>
+    output = scribo::binarization::sauvola_ms(fg, w_1, s, lambda_min_1);
+
+  io::pbm::save(output, argv[6]);
 }
+
+

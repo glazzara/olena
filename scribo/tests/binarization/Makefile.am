@@ -17,21 +17,14 @@
 
 ## Process this file through Automake to create Makefile.in.
 
-include $(top_srcdir)/scribo/scribo.mk
+include $(top_srcdir)/scribo/tests/tests.mk
 
-bin_PROGRAMS = 				\
-  pgm_global_threshold_auto 		\
-  pgm_sauvola 				\
-  pgm_sauvola_ms			\
-  ppm_sauvola 				\
-  ppm_fg_sauvola_ms 			\
-  ppm_sauvola_ms 			\
-  ppm_sauvola_ms_split
+check_PROGRAMS =				\
+  global_threshold 				\
+  local_threshold
 
-pgm_global_threshold_auto_SOURCES = pgm_global_threshold_auto.cc
-pgm_sauvola_SOURCES = pgm_sauvola.cc
-pgm_sauvola_ms_SOURCES = pgm_sauvola_ms.cc
-ppm_sauvola_SOURCES = ppm_sauvola.cc
-ppm_fg_sauvola_ms_SOURCES = ppm_fg_sauvola_ms.cc
-ppm_sauvola_ms_SOURCES = ppm_sauvola_ms.cc
-ppm_sauvola_ms_split_SOURCES = ppm_sauvola_ms_split.cc
+
+global_threshold_SOURCES = global_threshold.cc
+local_threshold_SOURCES = local_threshold.cc
+
+TESTS = $(check_PROGRAMS)

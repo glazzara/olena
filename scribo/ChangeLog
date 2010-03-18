@@ -1,3 +1,44 @@
+2010-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup binarization tools.
+
+	* binarization/binarize.hh,
+	* binarization/simple.hh,
+	* binarization/sauvola_threshold.hh,
+	* src/binarization/simple.cc,
+	* src/binarization/sauvola_pgm.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola.cc: Rename as...
+
+
+	* binarization/local_threshold.hh,
+	* binarization/global_threshold_auto.hh,
+	* binarization/sauvola_threshold_image.hh,
+	* src/binarization/pgm_global_threshold_auto.cc,
+	* src/binarization/pgm_sauvola.cc,
+	* src/binarization/pgm_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola.cc: ... this.
+
+	* binarization/global_threshold.hh,
+	* binarization/sauvola_ms_split.hh,
+	* src/binarization/ppm_fg_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola_ms_split.cc: New.
+
+	* binarization/internal/first_pass_functor.hh: Fix an include.
+
+	* binarization/sauvola.hh: Update code according to last renaming.
+
+	* binarization/sauvola_ms.hh: Invert threshold test and add
+	documentation.
+
+	* src/binarization/Makefile.am: Add new targets.
+
+	* tests/Makefile.am,
+	* tests/binarization/Makefile.am,
+	* tests/binarization/global_threshold.cc,
+	* tests/binarization/local_threshold.cc: New tests.
+
 2010-03-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update AFP's toolchain according to last changes in core classes.
