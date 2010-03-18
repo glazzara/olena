@@ -1,3 +1,12 @@
+2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Prepare doc source files for the automation of output splitting.
+
+	* doc/examples/tuto3/println.cc,
+	* doc/examples/tuto4/site_set_create.cc:
+	Use doc::begin_output and doc::end_output instead of hand-made
+	delimiters.
+
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have split_sample.sh announce the right number of output files.

@@ -5,29 +5,31 @@
 #include <mln/debug/println.hh>
 #include <mln/debug/println_with_border.hh>
 
+#include <doc/tools/sample_utils.hh>
+
 int main()
 {
   using namespace mln;
   using namespace mln::value;
 
   {
-    std::cout << "// \\{" << std::endl;
+    doc::begin_output();
     // \{
     image2d<int_u8> ima(5,5);
     data::fill(ima, 2);
     debug::println(ima);
     // \}
-    std::cout << "// \\}" << std::endl;
+    doc::end_output();
   }
 
   {
-    std::cout << "// \\{" << std::endl;
+    doc::begin_output();
     // \{
     image2d<int_u8> ima(5,5);
     data::fill(ima, 2);
     border::fill(ima, 7);
     debug::println_with_border(ima);
     // \}
-    std::cout << "// \\}" << std::endl;
+    doc::end_output();
   }
 }
