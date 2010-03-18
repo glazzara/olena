@@ -244,7 +244,7 @@ regen-split-examples-mk:
 #    corresponding to a bunch of files.
 refman_dependencies =				\
   $(SPLIT_EXAMPLES)				\
-  $(srcdir)/split-outputs.stamp			\
+  $(SPLIT_OUTPUTS)				\
   $(PNG_FIGURES)				\
   $(srcdir)/tutorial/tutorial.hh		\
   $(srcdir)/ref_guide/ref_guide.hh
@@ -534,7 +534,7 @@ tutorial_dir = $(doc_dir)/tutorial
 #    corresponding to a bunch of files.
 tutorial_dependencies =				\
   $(SPLIT_EXAMPLES)				\
-  $(doc_dir)/split-outputs.stamp		\
+  $(SPLIT_OUTPUTS)				\
   $(PNG_FIGURES)				\
   $(DOC_PACKAGES)
 
@@ -732,7 +732,7 @@ ref_guide_dir = $(doc_dir)/ref_guide
 #    corresponding to a bunch of files.
 ref_guide_dependencies =			\
   $(SPLIT_EXAMPLES)				\
-  $(doc_dir)/split-outputs.stamp		\
+  $(SPLIT_OUTPUTS)				\
   $(PNG_FIGURES)				\
   $(DOC_PACKAGES)
 
@@ -909,22 +909,21 @@ include $(srcdir)/figures.mk
 ## Split outputs.  ##
 ## --------------- ##
 
-EXTRA_DIST += $(srcdir)/split-outputs.stamp
-MAINTAINERCLEANFILES += $(srcdir)/split-outputs.stamp
-# FIXME: Loops are bad, as they prevent parallelism.  And we prefer
-# data-driven actions anyway.  This would imply that we know in
-# advance the list out outputs (here, split outputs).  Maybe we can
-# infer it from the LaTeX document.
-$(srcdir)/split-outputs.stamp: $(OUTPUTS)
-	@rm -f $@.tmp
-	@touch $@.tmp
-	failcom='exit 1';				\
-	for file in $(OUTPUTS); do			\
-	  $(DOC_SRCDIR)/tools/split_sample.sh		\
-	      $$file txt "" $(SPLIT_OUTPUTS_SRCDIR)	\
-	    || eval $$failcom;				\
-	done
-	@mv -f $@.tmp $@
+$(srcdir)/split-outputs.mk: $(srcdir)/gen-split-outputs-mk
+	rm -f $@.tmp
+	cd $(srcdir) && ./gen-split-outputs-mk >split-outputs.mk.tmp
+	mv -f $@.tmp $@
+	chmod -w $@
+include $(srcdir)/split-outputs.mk
+EXTRA_DIST += $(SPLIT_OUTPUTS)
+MAINTAINERCLEANFILES += $(SPLIT_OUTPUTS)
+
+.PHONY: regen-split-outputs-mk
+regen-split-outputs-mk:
+	rm -f $(srcdir)/split-outputs.mk.tmp
+	cd $(srcdir) && ./gen-split-outputs-mk >split-outputs.mk.tmp
+	mv -f $(srcdir)/split-outputs.mk.tmp $(srcdir)/split-outputs.mk
+	chmod -w $(srcdir)/split-outputs.mk
 
 
 ## -------------- ##
@@ -942,6 +941,7 @@ regen-am:
 	$(MAKE) $(AM_MAKEFLAGS) regen-split-examples-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-outputs-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-examples-outputs-mk
+	$(MAKE) $(AM_MAKEFLAGS) regen-split-outputs-mk
 
 
 ## -------------- ##

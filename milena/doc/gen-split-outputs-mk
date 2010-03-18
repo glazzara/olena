@@ -46,10 +46,11 @@ backslashify()
 # Get this list as argument?
 inputs()
 {
+  # FIXME: Or « find examples -name \*.cc -a \! -path examples/trash/\* » ?
   find examples -name \*.cc
 }
 
-output_dir=examples/split
+output_dir=outputs/split
 
 # Use a temporary file to dump rules at the end of the output.
 tempfile=`mktemp`
@@ -65,11 +66,12 @@ EOF
 
 # Output target names in a variable.
 {
-  echo "SPLIT_EXAMPLES ="
+  echo "SPLIT_OUTPUTS ="
   inputs | while read file; do
+
     # Count the number of opening and closing marks.
-    nopening=`grep -c '// *\\\{' "$file"`
-    nclosing=`grep -c '// *\\\}' "$file"`
+    nopening=`grep -c 'doc::begin_output' "$file"`
+    nclosing=`grep -c 'doc::end_output'   "$file"`
     test "$nopening" -eq "$nclosing" \
       || die "Unbalanced marks in $file ($nopening vs $nclosing)"
 
@@ -83,15 +85,17 @@ EOF
                       | sed -e 's,examples/,,'	\
                             -e 'y,/,_,'		\
                             -e 's,\.cc$,,'`
-    # Timestamp split examples (outputs) depend on.
-    timestamp="\$(srcdir)/$output_dir/$canonical_name.cc.stamp"
+    # Output file to be split.
+    output="\$(srcdir)/outputs/$canonical_name.txt"
+    # Timestamp split outputs depend on.
+    timestamp="\$(srcdir)/$output_dir/$canonical_name.txt.stamp"
     # List of targets associated to FILE.
     targets=
     {
       i=1
       while test "$i" -le "$nopening"; do
         # i-th part of the split file.
-        part="\$(srcdir)/$output_dir/$canonical_name-$i.cc.raw"
+        part="\$(srcdir)/$output_dir/$canonical_name-$i.txt"
 
         if test -z "$targets"; then
           targets="$part"
@@ -106,10 +110,10 @@ EOF
     cat >>"$tempfile" <<EOF
 
 
-$timestamp: \$(srcdir)/$file
+$timestamp: $output
 	@rm -f \$@.tmp
 	@touch \$@.tmp
-	\$(srcdir)/tools/split_sample.sh \$< cc raw \$(srcdir)/$output_dir
+	\$(srcdir)/tools/split_sample.sh \$< txt "" \$(srcdir)/$output_dir
 	@mv -f \$@.tmp \$@
 EXTRA_DIST += $timestamp
 MAINTAINERCLEANFILES += $timestamp

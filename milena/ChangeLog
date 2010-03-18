@@ -1,5 +1,23 @@
 2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Generate the list of split outputs in the documentation.
+
+	* doc/Makefile.am ($(srcdir)/split-outputs.mk): New rule.
+	(regen-split-outputs-mk): New (phony) target.
+	($(srcdir)/split-outputs.stamp): Remove rule.
+	(refman_dependencies)
+	(tutorial_dependencies)
+	(ref_guide_dependencies)
+	(EXTRA_DIST, MAINTAINERCLEANFILES):
+	Remove $(srcdir)/split-outputs.stamp
+	Add $(SPLIT_OUTPUTS).
+	(regen-am): Remake regen-split-outputs-mk.
+	* doc/gen-split-outputs-mk: New script.
+	Use it to generate...
+	* doc/split-outputs.mk: ...this (new) Make helper.
+
+2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Prepare doc source files for the automation of output splitting.
 
 	* doc/examples/tuto3/println.cc,
