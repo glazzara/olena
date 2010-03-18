@@ -340,7 +340,7 @@ $(TECHNICAL_HTML).stamp: $(technical_dir)/technical.tex $(technical_dependencies
 
 $(TECHNICAL_HTML_OUTPUTS): $(TECHNICAL_HTML).stamp
 ## Recover from the removal of $@
-	@if test -d $@; then :; else \
+	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
@@ -443,7 +443,7 @@ $(TUTORIAL_HTML).stamp: $(tutorial_dir)/tutorial.tex $(tutorial_dependencies)
 
 $(TUTORIAL_HTML_OUTPUTS): $(TUTORIAL_HTML).stamp
 ## Recover from the removal of $@
-	@if test -d $@; then :; else \
+	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
@@ -559,7 +559,7 @@ $(WHITE_PAPER_HTML).stamp: $(white_paper_dir)/white_paper.tex $(EPSS)
 
 $(WHITE_PAPER_HTML_OUTPUTS): $(WHITE_PAPER_HTML).stamp
 ## Recover from the removal of $@
-	@if test -d $@; then :; else \
+	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
@@ -646,7 +646,7 @@ $(REF_GUIDE_HTML).stamp: $(ref_guide_dir)/ref_guide.tex $(ref_guide_dependencies
 
 $(REF_GUIDE_HTML_OUTPUTS): $(REF_GUIDE_HTML).stamp
 ## Recover from the removal of $@
-	@if test -d $@; then :; else \
+	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi

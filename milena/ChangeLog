@@ -1,3 +1,14 @@
+2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the regeneration of HTML outputs.
+
+	* doc/Makefile.am
+	($(TECHNICAL_HTML_OUTPUTS))
+	($(TUTORIAL_HTML_OUTPUTS))
+	($(WHITE_PAPER_HTML_OUTPUTS))
+	($(REF_GUIDE_HTML_OUTPUTS)):
+	Fix tests on targets.
+
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Distribute and clean documentation timestamps.
