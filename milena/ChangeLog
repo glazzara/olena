@@ -1,5 +1,27 @@
 2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have ``make maintainer-clean'' remove generated figures in doc/.
+
+	* doc/figures.mk
+	(EXTEND_FIGURES)
+	(FILL_FIGURES)
+	(FILL_SUBDOMAIN_FIGURES)
+	(FILL_IMAGEIF_CFUN_FIGURES)
+	(IMA2D_ROT_FIGURES)
+	(IMA_SAVE_FIGURES)
+	(LABELING_COMPUTE_FIGURES)
+	(LOGICAL_NOT_FIGURES)
+	(TUTO2_FIRST_IMAGE_FIGURES)
+	(TUTO3_COLORIZE_FIGURES)
+	(TUTO3_RW_IMAGE_FIGURES)
+	(TUTO4_GENERICITY_AND_ALGORITHMS_FIGURES):
+	New variables.
+	Use them to simplify rules.
+	(FIGURES): New variable.
+	* doc/Makefile.am (MAINTAINERCLEANFILES): Add $(FIGURES).
+
+2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Generate the list of split outputs in the documentation.
 
 	* doc/Makefile.am ($(srcdir)/split-outputs.mk): New rule.

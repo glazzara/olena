@@ -94,6 +94,14 @@ DOC_PACKAGES = doxyfuns.sty milena.sty
 ## Figures.  ##
 ## --------- ##
 
+# Generated figures.
+include $(srcdir)/figures.mk
+# FIXME: $(FIGURES) is not added to EXTRA_DIST (though it is added to
+# MAINTAINERCLEANFILES), because its contents is already in EXTRA_DIST
+# thanks to PBM_FIGURES, PGM_FIGURES and PPM_FIGURES.  However, these
+# variables may be removed someday (see FIXME below).
+MAINTAINERCLEANFILES = $(FIGURES)
+
 # ----- #
 # PBM.  #
 # ----- #
@@ -185,7 +193,7 @@ PNG_FIGURES =					\
   $(PGM_FIGURES:.pgm=.png)			\
   $(PPM_FIGURES:.ppm=.png)
 EXTRA_DIST += $(PNG_FIGURES)
-MAINTAINERCLEANFILES = $(PNG_FIGURES)
+MAINTAINERCLEANFILES += $(PNG_FIGURES)
 
 
 ## ---------- ##
@@ -902,8 +910,6 @@ regen-examples-outputs-mk:
 	    >examples-outputs.mk.tmp
 	mv -f $(srcdir)/examples-outputs.mk.tmp $(srcdir)/examples-outputs.mk
 	chmod -w $(srcdir)/examples-outputs.mk
-
-include $(srcdir)/figures.mk
 
 ## --------------- ##
 ## Split outputs.  ##

@@ -25,86 +25,141 @@
 ## outputs (as a side effect) or at least if the extraction of this
 ## list from the source file was straightforward.
 
-$(srcdir)/figures/extend-1.ppm $(srcdir)/figures/extend-2.ppm $(srcdir)/figures/extend-3.ppm $(srcdir)/figures/extend-4.ppm $(srcdir)/figures/extend-5.ppm: $(srcdir)/examples/extend.stamp
+EXTEND_FIGURES =				\
+  $(srcdir)/figures/extend-1.ppm		\
+  $(srcdir)/figures/extend-2.ppm		\
+  $(srcdir)/figures/extend-3.ppm		\
+  $(srcdir)/figures/extend-4.ppm		\
+  $(srcdir)/figures/extend-5.ppm
+$(EXTEND_FIGURES): $(srcdir)/examples/extend.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-$(srcdir)/figures/fill-1.ppm $(srcdir)/figures/fill-2.ppm: $(srcdir)/examples/fill.stamp
+FILL_FIGURES =					\
+  $(srcdir)/figures/fill-1.ppm			\
+  $(srcdir)/figures/fill-2.ppm
+$(FILL_FIGURES): $(srcdir)/examples/fill.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-$(srcdir)/figures/fill-subdomain-1.pbm $(srcdir)/figures/fill-subdomain-2.ppm $(srcdir)/figures/fill-subdomain-3.ppm $(srcdir)/figures/fill-subdomain-4.ppm: $(srcdir)/examples/fill-subdomain.stamp
+FILL_SUBDOMAIN_FIGURES =			\
+  $(srcdir)/figures/fill-subdomain-1.pbm	\
+  $(srcdir)/figures/fill-subdomain-2.ppm	\
+  $(srcdir)/figures/fill-subdomain-3.ppm	\
+  $(srcdir)/figures/fill-subdomain-4.ppm
+$(FILL_SUBDOMAIN_FIGURES): $(srcdir)/examples/fill-subdomain.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-$(srcdir)/figures/fill-imageif-cfun-1.ppm: $(srcdir)/examples/fill-imageif-cfun.stamp
+FILL_IMAGEIF_CFUN_FIGURES = $(srcdir)/figures/fill-imageif-cfun-1.ppm
+$(FILL_IMAGEIF_CFUN_FIGURES): $(srcdir)/examples/fill-imageif-cfun.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-$(srcdir)/figures/ima2d-rot-1.ppm $(srcdir)/figures/ima2d-rot-2.ppm: $(srcdir)/examples/ima2d-rot.stamp
+IMA2D_ROT_FIGURES =				\
+  $(srcdir)/figures/ima2d-rot-1.ppm		\
+  $(srcdir)/figures/ima2d-rot-2.ppm
+$(IMA2D_ROT_FIGURES): $(srcdir)/examples/ima2d-rot.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-$(srcdir)/figures/ima_save.pbm: $(srcdir)/examples/ima-save.stamp
+IMA_SAVE_FIGURES = $(srcdir)/figures/ima_save.pbm
+$(IMA_SAVE_FIGURES): $(srcdir)/examples/ima-save.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-$(srcdir)/figures/labeling-compute-1.pbm $(srcdir)/figures/labeling-compute-2.ppm: $(srcdir)/examples/labeling-compute.stamp
+LABELING_COMPUTE_FIGURES =			\
+  $(srcdir)/figures/labeling-compute-1.pbm	\
+  $(srcdir)/figures/labeling-compute-2.ppm
+$(LABELING_COMPUTE_FIGURES): $(srcdir)/examples/labeling-compute.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-$(srcdir)/figures/logical-not-1.pbm $(srcdir)/figures/logical-not-2.pbm $(srcdir)/figures/logical-not-3.pbm: $(srcdir)/examples/logical-not.stamp
+LOGICAL_NOT_FIGURES =				\
+  $(srcdir)/figures/logical-not-1.pbm		\
+  $(srcdir)/figures/logical-not-2.pbm		\
+  $(srcdir)/figures/logical-not-3.pbm
+$(LOGICAL_NOT_FIGURES): $(srcdir)/examples/logical-not.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-$(srcdir)/figures/tuto2_first_image-1.pbm: $(srcdir)/examples/tuto2_first_image.stamp
+TUTO2_FIRST_IMAGE_FIGURES = $(srcdir)/figures/tuto2_first_image-1.pbm
+$(TUTO2_FIRST_IMAGE_FIGURES): $(srcdir)/examples/tuto2_first_image.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-$(srcdir)/figures/tuto3_colorize-1.pgm $(srcdir)/figures/tuto3_colorize-2.ppm: $(srcdir)/examples/tuto3/colorize.stamp
+TUTO3_COLORIZE_FIGURES =			\
+  $(srcdir)/figures/tuto3_colorize-1.pgm	\
+  $(srcdir)/figures/tuto3_colorize-2.ppm
+$(TUTO3_COLORIZE_FIGURES): $(srcdir)/examples/tuto3/colorize.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-$(srcdir)/figures/tuto3_rw_image-1.ppm $(srcdir)/figures/tuto3_rw_image-3.ppm: $(srcdir)/examples/tuto3_rw_image.stamp
+TUTO3_RW_IMAGE_FIGURES =			\
+  $(srcdir)/figures/tuto3_rw_image-1.ppm	\
+  $(srcdir)/figures/tuto3_rw_image-3.ppm
+$(TUTO3_RW_IMAGE_FIGURES): $(srcdir)/examples/tuto3_rw_image.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-$(srcdir)/figures/tuto4_genericity_and_algorithms-1.ppm $(srcdir)/figures/tuto4_genericity_and_algorithms-2.ppm $(srcdir)/figures/tuto4_genericity_and_algorithms-3.pbm $(srcdir)/figures/tuto4_genericity_and_algorithms-4.ppm $(srcdir)/figures/tuto4_genericity_and_algorithms-5.ppm $(srcdir)/figures/tuto4_genericity_and_algorithms-6.ppm: $(srcdir)/examples/tuto4_genericity_and_algorithms.stamp
+TUTO4_GENERICITY_AND_ALGORITHMS_FIGURES =			\
+  $(srcdir)/figures/tuto4_genericity_and_algorithms-1.ppm	\
+  $(srcdir)/figures/tuto4_genericity_and_algorithms-2.ppm	\
+  $(srcdir)/figures/tuto4_genericity_and_algorithms-3.pbm	\
+  $(srcdir)/figures/tuto4_genericity_and_algorithms-4.ppm	\
+  $(srcdir)/figures/tuto4_genericity_and_algorithms-5.ppm	\
+  $(srcdir)/figures/tuto4_genericity_and_algorithms-6.ppm
+$(TUTO4_GENERICITY_AND_ALGORITHMS_FIGURES): $(srcdir)/examples/tuto4_genericity_and_algorithms.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
+
+# The list of all generated figures.
+FIGURES =					\
+  $(EXTEND_FIGURES)				\
+  $(FILL_FIGURES)				\
+  $(FILL_SUBDOMAIN_FIGURES)			\
+  $(FILL_IMAGEIF_CFUN_FIGURES)			\
+  $(IMA2D_ROT_FIGURES)				\
+  $(IMA_SAVE_FIGURES)				\
+  $(LABELING_COMPUTE_FIGURES)			\
+  $(LOGICAL_NOT_FIGURES)			\
+  $(TUTO2_FIRST_IMAGE_FIGURES)			\
+  $(TUTO3_COLORIZE_FIGURES)			\
+  $(TUTO3_RW_IMAGE_FIGURES)			\
+  $(TUTO4_GENERICITY_AND_ALGORITHMS_FIGURES)
