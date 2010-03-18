@@ -1,5 +1,13 @@
 2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Distribute non generated examples in the documentation.
+
+	* doc/Makefile.am (TECHNICAL_EXAMPLES, MORE_EXAMPLES):
+	New variables.
+	(EXTRA_DIST): Add $(TECHNICAL_EXAMPLES) and $(MORE_EXAMPLES).
+
+2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have ``make maintainer-clean'' remove generated figures in doc/.
 
 	* doc/figures.mk

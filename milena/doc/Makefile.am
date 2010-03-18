@@ -221,6 +221,23 @@ regen-examples-mk:
 	mv -f $(srcdir)/examples.mk.tmp $(srcdir)/examples.mk
 	chmod -w $(srcdir)/examples.mk
 
+# Examples used in the technical documentation. 
+TECHNICAL_EXAMPLES =				\
+  examples/devel/dispatch.cc.raw		\
+  examples/devel/facade.cc.raw			\
+  examples/devel/impl.cc.raw
+EXTRA_DIST += $(TECHNICAL_EXAMPLES)
+
+# Non generated examples.
+MORE_EXAMPLES =					\
+  examples/accu-wrong-instanciation.cc.raw	\
+  examples/fill-proto.cc.raw			\
+  examples/ima2d-restricted-1.cc.raw		\
+  examples/ima2d-restricted-2.cc.raw		\
+  examples/ima2d-restricted-3.cc.raw		\
+  examples/tuto3/fill_non_generic.cc.raw
+EXTRA_DIST += $(MORE_EXAMPLES)
+
 ## ---------------- ##
 ## Split examples.  ##
 ## ---------------- ##
