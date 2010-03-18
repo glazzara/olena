@@ -1,5 +1,15 @@
 2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix dependencies in doc/.
+
+	* doc/Makefile.am (refman_dependencies):
+	Remove $(SPLIT_EXAMPLES) and $(SPLIT_OUTPUTS).
+	(technical_dependencies): Add $(TECHNICAL_EXAMPLES).
+	(tutorial_dependencies, ref_guide_dependencies):
+	Add $(EXAMPLES)	and $(OUTPUTS).
+
+2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Distribute non generated figures in the documentation.
 
 	* doc/Makefile.am (MORE_FIGURES): New variable.

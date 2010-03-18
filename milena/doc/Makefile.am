@@ -267,13 +267,7 @@ regen-split-examples-mk:
 ## Doxygen documentation.  ##
 ## ----------------------- ##
 
-# FIXME: Check these dependencies.
-# 1. They might be redundant.
-# 2. It'd be better to depend on actual files rather than timestamps
-#    corresponding to a bunch of files.
 refman_dependencies =				\
-  $(SPLIT_EXAMPLES)				\
-  $(SPLIT_OUTPUTS)				\
   $(PNG_FIGURES)				\
   $(srcdir)/tutorial/tutorial.hh		\
   $(srcdir)/ref_guide/ref_guide.hh
@@ -454,10 +448,10 @@ technical: technical-html technical-pdf
 
 technical_dir = $(doc_dir)/technical
 
-# FIXME: Check these dependencies.  And it'd be better to depend on
-# actual files rather than timestamps corresponding to a bunch of
-# files.
-technical_dependencies = $(PNG_FIGURES) $(DOC_PACKAGES)
+technical_dependencies =			\
+  $(TECHNICAL_EXAMPLES)				\
+  $(PNG_FIGURES)				\
+  $(DOC_PACKAGES)
 
 # FIXME: As in milena/doc/Makefile.am, we should probably strip
 # $(srcdir) prefixes from target variables, e.g. instead of:
@@ -557,12 +551,10 @@ tutorial: tutorial-html tutorial-pdf
 
 tutorial_dir = $(doc_dir)/tutorial
 
-# FIXME: Check these dependencies.
-# 1. They might be redundant.
-# 2. It'd be better to depend on actual files rather than timestamps
-#    corresponding to a bunch of files.
 tutorial_dependencies =				\
+  $(EXAMPLES)					\
   $(SPLIT_EXAMPLES)				\
+  $(OUTPUTS)					\
   $(SPLIT_OUTPUTS)				\
   $(PNG_FIGURES)				\
   $(DOC_PACKAGES)
@@ -755,12 +747,10 @@ ref-guide: ref-guide-html ref-guide-pdf
 
 ref_guide_dir = $(doc_dir)/ref_guide
 
-# FIXME: Check these dependencies.
-# 1. They might be redundant.
-# 2. It'd be better to depend on actual files rather than timestamps
-#    corresponding to a bunch of files.
 ref_guide_dependencies =			\
+  $(EXAMPLES)					\
   $(SPLIT_EXAMPLES)				\
+  $(OUTPUTS)					\
   $(SPLIT_OUTPUTS)				\
   $(PNG_FIGURES)				\
   $(DOC_PACKAGES)
