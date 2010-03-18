@@ -1,3 +1,7 @@
+2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	* bootstrap: Regen the list of split outputs of the documentation.
+
 2010-03-17  Roland Levillain  <roland@lrde.epita.fr>
 
 	* bootstrap: Be terser.

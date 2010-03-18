@@ -190,6 +190,8 @@ cd milena/doc &&						\
     `find examples -name \*.cc -a \! -path examples/trash/\*	\
        | env LC_ALL=C sort`					\
     >examples-outputs.mk
+# * Split outputs.
+cd milena/doc && ./gen-split-outputs-mk >split-outputs.mk
 
 # Generate unit test files.
 run . ./build-aux/build_unit_test.sh `pwd`/milena/mln milena/tests/unit_test milena/tests/unit_test/disabled_tests
