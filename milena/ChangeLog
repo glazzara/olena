@@ -1,5 +1,13 @@
 2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Distribute non generated figures in the documentation.
+
+	* doc/Makefile.am (MORE_FIGURES): New variable.
+	Add figures/accu_image_morpher_big_picture.pdf.
+	(EXTRA_DIST): Add $(MORE_FIGURES).
+
+2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Distribute non generated examples in the documentation.
 
 	* doc/Makefile.am (TECHNICAL_EXAMPLES, MORE_EXAMPLES):

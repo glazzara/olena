@@ -102,6 +102,10 @@ include $(srcdir)/figures.mk
 # variables may be removed someday (see FIXME below).
 MAINTAINERCLEANFILES = $(FIGURES)
 
+# This image seems to be used nowhere.
+MORE_FIGURES = figures/accu_image_morpher_big_picture.pdf
+EXTRA_DIST += $(MORE_FIGURES)
+
 # ----- #
 # PBM.  #
 # ----- #
