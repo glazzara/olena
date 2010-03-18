@@ -234,7 +234,7 @@ EXTRA_DIST += $(TECHNICAL_EXAMPLES)
 
 # Non generated examples.
 MORE_EXAMPLES =					\
-  examples/accu-wrong-instanciation.cc.raw	\
+  examples/accu-wrong-instantiation.cc.raw	\
   examples/fill-proto.cc.raw			\
   examples/ima2d-restricted-1.cc.raw		\
   examples/ima2d-restricted-2.cc.raw		\

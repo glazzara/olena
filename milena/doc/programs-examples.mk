@@ -25,7 +25,7 @@
 ## If generated, merge examples-outputs.mk and outputs.mk?
 
 PROGRAMS_examples =		\
-  accu-right-instanciation 	\
+  accu-right-instantiation 	\
   borderthickness 		\
   box2d-bbox 			\
   domain-display 		\
@@ -89,7 +89,7 @@ PROGRAMS_examples +=				\
 # `milena/doc/Makefile.am', since `examples/' is a subdirectory of
 # `milena/doc/'.  Anyway, this file is to be eventually inlined in
 # `milena/doc/Makefile.am', so this is not a big deal.
-accu_right_instanciation_SOURCES = examples/accu-right-instanciation.cc
+accu_right_instantiation_SOURCES = examples/accu-right-instantiation.cc
 borderthickness_SOURCES = examples/borderthickness.cc
 box2d_bbox_SOURCES = examples/box2d-bbox.cc
 domain_display_SOURCES = examples/domain-display.cc

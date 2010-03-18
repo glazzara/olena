@@ -2,7 +2,7 @@
 
 SPLIT_EXAMPLES = \
   $(srcdir)/examples/split/ima-save-1.cc.raw \
-  $(srcdir)/examples/split/accu-right-instanciation-1.cc.raw \
+  $(srcdir)/examples/split/accu-right-instantiation-1.cc.raw \
   $(srcdir)/examples/split/borderthickness-1.cc.raw \
   $(srcdir)/examples/split/box2d-bbox-1.cc.raw \
   $(srcdir)/examples/split/domain-display-1.cc.raw \
@@ -132,15 +132,15 @@ $(srcdir)/examples/split/ima-save-1.cc.raw: $(srcdir)/examples/split/ima-save.cc
 	fi
 
 
-$(srcdir)/examples/split/accu-right-instanciation.cc.stamp: $(srcdir)/examples/accu-right-instanciation.cc
+$(srcdir)/examples/split/accu-right-instantiation.cc.stamp: $(srcdir)/examples/accu-right-instantiation.cc
 	@rm -f $@.tmp
 	@touch $@.tmp
 	$(srcdir)/tools/split_sample.sh $< cc raw $(srcdir)/examples/split
 	@mv -f $@.tmp $@
-EXTRA_DIST += $(srcdir)/examples/split/accu-right-instanciation.cc.stamp
-MAINTAINERCLEANFILES += $(srcdir)/examples/split/accu-right-instanciation.cc.stamp
+EXTRA_DIST += $(srcdir)/examples/split/accu-right-instantiation.cc.stamp
+MAINTAINERCLEANFILES += $(srcdir)/examples/split/accu-right-instantiation.cc.stamp
 
-$(srcdir)/examples/split/accu-right-instanciation-1.cc.raw: $(srcdir)/examples/split/accu-right-instanciation.cc.stamp
+$(srcdir)/examples/split/accu-right-instantiation-1.cc.raw: $(srcdir)/examples/split/accu-right-instantiation.cc.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \

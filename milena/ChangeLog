@@ -1,5 +1,29 @@
 2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Typo in doc/.
+
+	* doc/examples/accu-right-instanciation.cc: Rename as...
+	* doc/examples/accu-right-instantiation.cc: ...this.
+	* doc/examples/accu-wrong-instanciation.cc.raw,
+	* doc/examples/split/accu-right-instanciation-1.cc.raw,
+	* doc/outputs/accu-right-instanciation.txt:
+	Likewise, rename as...
+	* doc/examples/accu-wrong-instantiation.cc.raw,
+	* doc/examples/split/accu-right-instantiation-1.cc.raw,
+	* doc/outputs/accu-right-instantiation.txt:
+	...these.
+	* doc/ref_guide/ref_guide.tex,
+	* doc/programs-examples.mk,
+	* doc/Makefile.am (MORE_EXAMPLES):
+	s/instanciation/instantiation/.
+	* doc/examples-outputs.mk,
+	* doc/examples.mk,
+	* doc/outputs.mk,
+	* doc/split-examples.mk:
+	Regen.
+
+2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix dependencies in doc/.
 
 	* doc/Makefile.am (refman_dependencies):
