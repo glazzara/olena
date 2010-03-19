@@ -230,6 +230,7 @@ AC_CONFIG_FILES([scribo/tests/data.hh])
 
 AC_CONFIG_FILES([
   scribo/tests/Makefile
+    scribo/tests/binarization/Makefile
     scribo/tests/core/Makefile
     scribo/tests/filter/Makefile
     scribo/tests/preprocessing/Makefile
