@@ -50,11 +50,15 @@ namespace scribo
     namespace shared
     {
 
-      class crop_item : public QGraphicsItem
+      class crop_item : public QObject, public QGraphicsItem
       {
+	Q_OBJECT;
+
       public:
 	crop_item(QGraphicsItem *parent);
-	const QRectF& cropRect() const;
+	virtual ~crop_item();
+
+	QRectF cropRect() const;
 
 	QRectF boundingRect() const;
 	void paint (QPainter *painter,
@@ -67,8 +71,12 @@ namespace scribo
 	void mousePressEvent (QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent (QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event);
 
 //	void updateCursor(QGraphicsSceneMouseEvent *event);
+
+      signals:
+	void ready_for_crop();
 
       private:
 	enum CropItemResize

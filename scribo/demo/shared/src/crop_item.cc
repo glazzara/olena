@@ -46,6 +46,11 @@ namespace scribo
 	grabMouse();
       }
 
+      crop_item::~crop_item()
+      {
+
+      }
+
       void crop_item::reset()
       {
         if (parentItem())
@@ -54,15 +59,15 @@ namespace scribo
 	  cropRect_ = QRectF(20, 20, 100, 70);
       }
 
-      const QRectF& crop_item::cropRect() const
+      QRectF crop_item::cropRect() const
       {
-	return cropRect_;
+	return mapToScene(cropRect_).boundingRect();
       }
 
 
       QRectF crop_item::boundingRect() const
       {
-	return parentItem()->boundingRect();
+	return scene()->sceneRect();
       }
 
       void crop_item::paint(QPainter *painter,
@@ -84,15 +89,16 @@ namespace scribo
 	painter->fillPath(windowPath, QColor(0x33, 0x33, 0x33, 0xcc));
 
 	// Draw Crop Rect
-	painter->setPen(QPen(QColor(0xdd, 0xdd, 0xdd), 1));
+	// QColor(0xdd, 0xdd, 0xdd)
+	painter->setPen(QPen(Qt::magenta, 3));
 	painter->drawPath(cropPath);
 
 	int topRightX = cropRect_.x() + cropRect_.width();
 	int bottomY = cropRect_.y() + cropRect_.height();
 
 	QPainterPath borderPath;
-	int corner_width = cropRect_.width() / 6.f;
-	int corner_height = cropRect_.height() / 6.f;
+	int corner_width = std::min(int(cropRect_.width() / 6.f), 80);
+	int corner_height = std::min(int(cropRect_.height() / 6.f), 80);
 
 	// Top-Left Corner
 	painter->drawRect(QRectF(cropRect_.x(), cropRect_.y(),
@@ -128,8 +134,8 @@ namespace scribo
 	cropResize_ = CropItemResizeNone;
 	if (event->buttons() & Qt::LeftButton)
 	{
-	  int wsize = cropRect_.width() / 6.f;
-	  int hsize = cropRect_.height() / 6.f;
+	  int wsize = std::min(int(cropRect_.width() / 6.f), 80);
+	  int hsize = std::min(int(cropRect_.height() / 6.f), 80);
 
 	  int rightX = cropRect_.x() + cropRect_.width() - wsize;
 	  int leftX = cropRect_.x();
@@ -304,6 +310,29 @@ namespace scribo
 	update();
       }
 
+
+      void crop_item::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
+      {
+	QGraphicsItem::mouseDoubleClickEvent(event);
+
+	switch (cropResize_)
+	{
+	  case CropItemResizeNone:
+	    if (!cropRect_.contains(event->pos()))
+	      return;
+
+	    setCursor(Qt::SizeAllCursor);
+
+	    if (!(event->buttons() & Qt::LeftButton))
+	      return;
+
+	    emit ready_for_crop();
+	    break;
+
+	  default:
+	    break;
+	}
+      }
 
     }  // end of namespace scribo::demo::shared
 

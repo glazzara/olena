@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>464</width>
+    <width>529</width>
     <height>350</height>
    </rect>
   </property>
@@ -37,7 +37,33 @@
         </spacer>
        </item>
        <item>
+        <widget class="QPushButton" name="crop_btn" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
+         <property name="maximumSize" >
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text" >
+          <string>Crop</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../shared.qrc" >
+           <normaloff>:/icons/icons/crop-icon.png</normaloff>:/icons/icons/crop-icon.png</iconset>
+         </property>
+         <property name="checkable" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="rotate_lbl" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
          <property name="text" >
           <string>Rotate:</string>
          </property>
@@ -45,6 +71,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="rotate_cw_btn" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
          <property name="toolTip" >
           <string>Rotate clock-wise</string>
          </property>
@@ -59,6 +88,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="rotate_ccw_btn" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
          <property name="toolTip" >
           <string>Rotate counter-clock-wise</string>
          </property>

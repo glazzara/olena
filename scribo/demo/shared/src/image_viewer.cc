@@ -38,7 +38,8 @@ namespace scribo
     {
 
       image_viewer::image_viewer(QWidget *parent)
-	: QWidget(parent), image_(0), selection_(0), angle_(0)
+	: QWidget(parent), image_(0), selection_(0), angle_(0),
+	  zoom_fixed_(false)
       {
 	setupUi(this);
 
@@ -87,7 +88,8 @@ namespace scribo
 	viewer_->show();
       }
 
-      void image_viewer::draw_image(const mln::image2d<dsp_data_t>& ima)
+      template <typename V>
+      void image_viewer::draw_image(const mln::image2d<V>& ima)
       {
 	QImage
 	  qima = mln::convert::to_qimage_nocopy(ima);
@@ -127,18 +129,15 @@ namespace scribo
 	if (pixmap.width() > viewer_->maximumViewportSize().width())
 	  viewer_->fitInView(image_->boundingRect(), Qt::KeepAspectRatio);
 
-	zoomLabel->setEnabled(true);
-	zoomIn->setEnabled(true);
-	zoomOut->setEnabled(true);
-	zoomFixed->setEnabled(true);
-	zoomOriginal->setEnabled(true);
+	enable_widgets(true);
 
 	image_->translate(origin.x(), origin.y());
+
 
 	viewer_->setSceneRect(image_->sceneBoundingRect());
 
 	// Restore selection mode if needed
-	set_selection_enabled(restore_selection);
+	on_crop_btn_toggled(restore_selection);
       }
 
 
@@ -150,8 +149,11 @@ namespace scribo
 
       void image_viewer::resizeEvent(QResizeEvent * event)
       {
-	if (image_ != 0)
-	  resize_image(image_->boundingRect());
+	if (zoom_fixed_)
+	  on_zoomFixed_clicked();
+	else
+	  on_zoomOriginal_clicked();
+
 	event->ignore();
       }
 
@@ -238,12 +240,14 @@ namespace scribo
 
       void image_viewer::on_zoomFixed_clicked()
       {
+	zoom_fixed_ = true;
 	if (image_ != 0)
 	  resize_image(image_->boundingRect());
       }
 
       void image_viewer::on_zoomOriginal_clicked()
       {
+	zoom_fixed_ = false;
 	if (image_ != 0)
 	  resize_image(viewer_->viewport()->geometry());
       }
@@ -259,18 +263,35 @@ namespace scribo
 	}
       }
 
-      void image_viewer::set_selection_enabled(bool b)
+      void image_viewer::on_crop_btn_toggled(bool b)
       {
 	if (b)
 	{
 	  if (selection_ == 0)
+	  {
 	    selection_ = new crop_item(image_);
+	    connect(selection_, SIGNAL(ready_for_crop()),
+		    this, SIGNAL(ready_for_crop()));
+
+	  }
 	}
 	else
 	{
 	  delete selection_;
 	  selection_ = 0;
 	}
+      }
+
+
+      void image_viewer::enable_crop_tool(bool b)
+      {
+	crop_btn->setChecked(b);
+      }
+
+
+      void image_viewer::set_selection_enabled(bool b)
+      {
+	crop_btn->setVisible(b);
       }
 
 
@@ -290,12 +311,11 @@ namespace scribo
       }
 
 
-      const QRectF& image_viewer::selection() const
+      QRectF image_viewer::selection() const
       {
 	static QRectF invalid_selection;
-	mln_assertion(has_selection());
 
-	if (selection_)
+	if (has_selection())
 	  return selection_->cropRect();
 
 	return invalid_selection;
@@ -336,6 +356,23 @@ namespace scribo
 	slider->setSliderPosition(sli);
 	on_slider_valueChanged(sli);
       }
+
+
+      void image_viewer::enable_widgets(bool b)
+      {
+	zoomLabel->setEnabled(b);
+	zoomIn->setEnabled(b);
+	zoomOut->setEnabled(b);
+	zoomFixed->setEnabled(b);
+	zoomOriginal->setEnabled(b);
+
+	rotate_ccw_btn->setEnabled(b);
+	rotate_cw_btn->setEnabled(b);
+	rotate_lbl->setEnabled(b);
+
+	crop_btn->setEnabled(b);
+      }
+
 
     } // end of namespace scribo::demo::shared
 
