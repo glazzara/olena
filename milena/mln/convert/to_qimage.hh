@@ -57,7 +57,7 @@ namespace mln
 
     // Implementation
 
-    namespace implementation
+    namespace impl
     {
 
 
@@ -195,7 +195,7 @@ namespace mln
       }
 
 
-    } // end of namespace mln::convert::implementation
+    } // end of namespace mln::convert::impl
 
 
 
@@ -208,21 +208,21 @@ namespace mln
       inline
       QImage to_qimage_dispatch(const Image<I>& ima, const value::Scalar<S>&)
       {
-	return implementation::to_qimage_scalar(ima);
+	return impl::to_qimage_scalar(ima);
       }
 
       template <typename I>
       inline
       QImage to_qimage_dispatch(const Image<I>& ima, const value::rgb8&)
       {
-	return implementation::to_qimage_rgb8(ima);
+	return impl::to_qimage_rgb8(ima);
       }
 
       template <typename I>
       inline
       QImage to_qimage_dispatch(const Image<I>& ima, const value::qt::rgb32&)
       {
-	return implementation::to_qimage_qt_rgb32(ima);
+	return impl::to_qimage_qt_rgb32(ima);
       }
 
 

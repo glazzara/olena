@@ -1,3 +1,12 @@
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve to_qimage routines.
+
+	* mln/convert/to_qimage.hh: rename namespace.
+
+	* mln/convert/to_qimage_nocopy.hh: Add a new implementation and
+	improve existing ones.
+
 2010-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/subsampling/antialiased.hh: Add support for reduction factor

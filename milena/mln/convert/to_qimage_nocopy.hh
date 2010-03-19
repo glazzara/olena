@@ -55,7 +55,7 @@ namespace mln
 
     // Implementation
 
-    namespace implementation
+    namespace impl
     {
 
       template <typename I>
@@ -69,16 +69,41 @@ namespace mln
 	  nrows = geom::nrows(ima),
 	  ncols = geom::ncols(ima);
 
-	mln::border::resize(ima, 0);
-
-	QImage qima((uchar *)(ima.buffer()), ncols, nrows,
+	typedef mln_value(I) V;
+	QImage qima((uchar *)(&ima(ima.domain().pmin())), ncols, nrows,
+		    (ncols + 2 * ima.border()) * sizeof(V),
 		    QImage::Format_RGB32);
 
 	return qima;
       }
 
 
-    } // end of namespace mln::convert::implementation
+# if QT_VERSION > 0x040300
+
+      template <typename I>
+      inline
+      QImage to_qimage_nocopy_rgb8(const Image<I>& ima_)
+      {
+	const I& ima = exact(ima_);
+	mln_precondition(ima.is_valid());
+
+	const int
+	  nrows = geom::nrows(ima),
+	  ncols = geom::ncols(ima);
+
+	typedef mln_value(I) V;
+	QImage qima((uchar *)(&ima(ima.domain().pmin())), ncols, nrows,
+		    (ncols + 2 * ima.border()) * sizeof(V),
+		    QImage::Format_RGB888);
+
+	return qima;
+      }
+
+# endif
+
+
+    } // end of namespace mln::convert::impl
+
 
 
 
@@ -89,10 +114,24 @@ namespace mln
 
       template <typename I>
       inline
-      QImage to_qimage_nocopy_dispatch(const Image<I>& ima, const value::qt::rgb32&)
+      QImage to_qimage_nocopy_dispatch(const Image<I>& ima,
+				       const value::qt::rgb32&)
       {
-	return implementation::to_qimage_nocopy_qt_rgb32(ima);
+	return impl::to_qimage_nocopy_qt_rgb32(ima);
       }
+
+
+# if QT_VERSION > 0x040300
+
+      template <typename I>
+      inline
+      QImage to_qimage_nocopy_dispatch(const Image<I>& ima,
+				       const value::rgb8&)
+      {
+	return impl::to_qimage_nocopy_rgb8(ima);
+      }
+
+# endif
 
 
       template <typename I, typename V>
