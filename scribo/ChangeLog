@@ -1,3 +1,27 @@
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new demo in Scribo.
+
+	* demo/demat/demat.pro,
+	* demo/demat/demat.qrc,
+	* demo/demat/src/doc_type.hh,
+	* demo/demat/src/main.cc,
+	* demo/demat/src/main_window.cc,
+	* demo/demat/src/main_window.hh,
+	* demo/demat/src/mln_widgets.cc,
+	* demo/demat/src/preprocessing_task.hh,
+	* demo/demat/src/process_args.hh,
+	* demo/demat/src/runner.cc,
+	* demo/demat/src/runner.hh,
+	* demo/demat/ui/main_window.ui: New.
+
+	* demo/shared/src/crop_item.cc,
+	* demo/shared/src/crop_item.hh,
+	* demo/shared/src/image_viewer.cc,
+	* demo/shared/src/image_viewer.hh,
+	* demo/shared/ui/image_viewer.ui: Update according the needs of
+	this new demo.
+
 2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* io/xml/save_text_lines.hh: Fix XML output.
