@@ -63,19 +63,6 @@ namespace mln
       graphicsView->setScene(new QGraphicsScene());
 
 
-      // Setup StatusBar
-      QStatusBar *status = new QStatusBar();
-      setStatusBar(status);
-      status->addWidget(&progressLabel_);
-      status->addWidget(&progressBar_);
-
-      QPushButton *cancelBtn = new QPushButton(tr("Cancel"));
-      connect(cancelBtn, SIGNAL(clicked(bool)),
-	      this, SLOT(cancel_clicked(bool)));
-      status->addWidget(cancelBtn);
-      statusBar()->hide();
-
-
       // Customize item view delegate for picture with text.
       withTextListWidget->setItemDelegate(new custom_delegate());
 
@@ -88,7 +75,24 @@ namespace mln
       connect(removeImage, SIGNAL(triggered(bool)),
 	      this, SLOT(remove_image(bool)));
       toolbar_->addAction(removeImage);
+
       addToolBar(toolbar_);
+
+
+      // Setup StatusBar
+      progressToolBar_ = new QToolBar(tr("ProgressBar"));
+
+      progressToolBar_->addWidget(&progressLabel_);
+      progressToolBar_->addWidget(&progressBar_);
+
+      QPushButton *cancelBtn = new QPushButton(tr("&Cancel"));
+      connect(cancelBtn, SIGNAL(clicked(bool)),
+	      this, SLOT(cancel_clicked(bool)));
+      progressToolBar_->addWidget(cancelBtn);
+
+      addToolBar(progressToolBar_);
+      progressToolBar_->hide();
+
 
 
       // Hide visualization buttons
@@ -121,13 +125,14 @@ namespace mln
     main_window::on_actionScan_directory_triggered()
     {
       launch_dialog *dialog = new launch_dialog(this);
-      connect(dialog, SIGNAL(ok_clicked(const QString&, bool)),
-	      this, SLOT(init_and_start_process(const QString&, bool)));
+      connect(dialog, SIGNAL(ok_clicked(const QString&, const QString&)),
+	      this, SLOT(init_and_start_process(const QString&, const QString&)));
       dialog->show();
     }
 
    void
-   main_window::init_and_start_process(const QString& dirname, bool bgfg)
+   main_window::init_and_start_process(const QString& dirname,
+				       const QString& options)
    {
      dir_.setPath(dirname);
 
@@ -136,12 +141,12 @@ namespace mln
      withTextListWidget->clear();
      withoutTextListWidget->clear();
 
-     statusBar()->show();
+     progressToolBar_->show();
      progressLabel_.setText(tr("Processing images..."));
      progressBar_.setRange(0, file_list_.size());
      progressBar_.setValue(0);
 
-     bgfg_ = bgfg;
+     options_ = options;
      start_process();
    }
 
@@ -162,7 +167,7 @@ namespace mln
 	start_process();
       else
       {
-	statusBar()->hide();
+	progressToolBar_->hide();
 	emit process_finished();
       }
     }
@@ -192,9 +197,14 @@ namespace mln
     {
       QStringList args;
       args << file_list_.at(current_file_).absoluteFilePath()    // input file.
-	   << textMask_file(file_list_.at(current_file_).baseName()) // output file.
-	   << QString("%1").arg(bgfg_) // Enable/Disable remove background.
-	   << "1" << "1" << "1" << "1" // Enable all steps.
+	   << textMask_file(file_list_.at(current_file_).baseName()); // output file.
+
+      // Enable/Disable remove background + Enable/Disable sauvola_ms.
+      QStringList options = options_.split(' ');
+      foreach(QString option, options)
+	args << option;
+
+      args << "1" << "1" << "1" // Enable all steps.
 	   << "/tmp/" + file_list_.at(current_file_).baseName();
 
       process_.start(text_in_photo_ppm_, args);
@@ -367,7 +377,7 @@ namespace mln
       process_.waitForFinished();
       progressBar_.setValue(progressBar_.maximum());
       connect_process();
-      statusBar()->hide();
+      progressToolBar_->hide();
     }
 
     void

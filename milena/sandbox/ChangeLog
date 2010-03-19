@@ -1,3 +1,14 @@
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve options menu and progress dialog.
+
+	* lazzara/afp/photos/gui/src/launch_dialog.cc,
+	* lazzara/afp/photos/gui/src/launch_dialog.hh,
+	* lazzara/afp/photos/gui/src/main_window.cc,
+	* lazzara/afp/photos/gui/src/main_window.hh,
+	* lazzara/afp/photos/gui/ui/launch_dialog.ui: Improve options menu
+	and progress dialog.
+
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a GUI for AFP's use case.

@@ -62,7 +62,7 @@ namespace mln
     void
     launch_dialog::on_dialogBtnBox_accepted()
     {
-      emit ok_clicked(pathToPics->text(), checkBox->isChecked());
+      emit ok_clicked(pathToPics->text(), get_options());
     }
 
 
@@ -70,6 +70,21 @@ namespace mln
     launch_dialog::on_pathToPics_textChanged(const QString& str)
     {
       dialogBtnBox->button(QDialogButtonBox::Ok)->setEnabled(!str.isEmpty());
+    }
+
+
+    QString launch_dialog::get_options() const
+    {
+      if (binarizationMode->currentIndex() == 0)
+	return "0 0";
+      if (binarizationMode->currentIndex() == 1)
+	return "1 0";
+      if (binarizationMode->currentIndex() == 2)
+	return "0 1";
+      if (binarizationMode->currentIndex() == 3)
+	return "1 1";
+
+      return "";
     }
 
   } // end of namespace scribo::demo

@@ -58,7 +58,8 @@ namespace mln
 
       void on_tabWidget_currentChanged(int index);
       void on_actionScan_directory_triggered();
-      void init_and_start_process(const QString& dirname, bool bgfg);
+      void init_and_start_process(const QString& dirname,
+				  const QString& options);
       void cancel_clicked(bool);
 
       void remove_image(bool);
@@ -85,12 +86,13 @@ namespace mln
       QDir dir_;
       QString text_in_photo_ppm_;
       QProcess process_;
-      bool bgfg_;
+      QString options_;
 
       QFileInfoList file_list_;
       int current_file_;
 
-      // Status bar
+      // Progress tool bar
+      QToolBar *progressToolBar_;
       QLabel progressLabel_;
       QProgressBar progressBar_;
 

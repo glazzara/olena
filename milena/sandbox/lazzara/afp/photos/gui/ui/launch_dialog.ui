@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>285</width>
-    <height>165</height>
+    <width>371</width>
+    <height>160</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -36,13 +36,30 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout" >
         <item>
-         <widget class="QCheckBox" name="checkBox" >
-          <property name="text" >
-           <string>Enable Foreground extraction (slower)</string>
+         <widget class="QComboBox" name="binarizationMode" >
+          <property name="currentIndex" >
+           <number>3</number>
           </property>
-          <property name="checked" >
-           <bool>true</bool>
-          </property>
+          <item>
+           <property name="text" >
+            <string>Binarization from intensity</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Binarization from foreground (slower)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Multiscale Binarization from intensity </string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Multiscale Binarization from foreground (slower)</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>

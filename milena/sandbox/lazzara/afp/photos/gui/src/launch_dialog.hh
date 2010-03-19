@@ -49,8 +49,10 @@ namespace mln
       void on_pathToPics_textChanged(const QString& str);
 
     signals:
-      void ok_clicked(const QString& path, bool fgbg);
+      void ok_clicked(const QString& path, const QString& options);
 
+    private: // members
+      QString get_options() const;
     };
 
 
