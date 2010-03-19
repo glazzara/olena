@@ -1,5 +1,14 @@
 2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new routine to split a color image into three grayscale
+	images.
+
+	* mln/data/split.hh: New.
+
+	* tests/data/split.cc: New test.
+
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new implementations of paste_without_localization.
 
 	* mln/data/paste_without_localization.hh: Add new implementations.
