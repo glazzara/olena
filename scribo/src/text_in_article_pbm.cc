@@ -80,6 +80,7 @@ const char *args_desc[][2] =
 {
   { "input.pbm", "A binary image. 'False' for object, 'True'\
 for the background." },
+  { "denoise", "1 enables denoising, 0 disables it. (enabled by default)" },
   { "debug_dir", "Output directory for debug image" },
   {0, 0}
 };
@@ -90,15 +91,15 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  if (argc != 3 && argc != 4)
+  if (argc != 3 && argc != 4 && argc != 5)
     return scribo::debug::usage(argv,
 				"Find text lines using left/right validation and display x-height in a binarized article.",
-				"input.pbm out.ppm <debug_dir>",
+				"input.pbm out.txt <denoise: 0|1> <debug_dir>",
 				args_desc,
-				"A color image. The following colors are used : dark blue for object bboxes, orange for single object bboxes, purple for group bboxes and light blue for x-height.");
+				"Text output.");
 
-  if (argc == 4)
-    scribo::make::internal::debug_filename_prefix = argv[3];
+  if (argc == 5)
+    scribo::make::internal::debug_filename_prefix = argv[4];
 
   trace::entering("main");
 
@@ -131,8 +132,11 @@ int main(int argc, char* argv[])
 //   mln::io::pbm::save(input_cleaned, "input_no_separators.pbm");
 
   // Denoise
-  std::cout << "Denoise..." << std::endl;
-  input_cleaned = preprocessing::denoise_fg(input_cleaned, c8(), 3);
+  if (argc > 3 && atoi(argv[3]) != 0)
+  {
+    std::cout << "Denoise..." << std::endl;
+    input_cleaned = preprocessing::denoise_fg(input_cleaned, c8(), 3);
+  }
 
 //   mln::io::pbm::save(input_cleaned, "input_denoised.pbm");
 
@@ -273,13 +277,14 @@ int main(int argc, char* argv[])
 		     scribo::make::debug_filename("step2_looks_like_a_text_line.ppm"));
 
   // Bboxes image.
-  scribo::debug::save_bboxes_image(input, lines, argv[2]);
+  scribo::debug::save_bboxes_image(input, lines,
+				   scribo::make::debug_filename("step2_bboxes.ppm"));
 
   //===== END OF DEBUG =====
 
 
 
-  scribo::text::recognition(lines, "fra", "out.txt");
+  scribo::text::recognition(lines, "fra", argv[2]);
 
 
 //   // Display median character space.

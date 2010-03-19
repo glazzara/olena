@@ -36,6 +36,7 @@
 # include <mln/util/array.hh>
 # include <mln/io/ppm/save.hh>
 
+# include <scribo/core/line_set.hh>
 # include <scribo/draw/bounding_boxes.hh>
 
 

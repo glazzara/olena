@@ -1,3 +1,21 @@
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Scribo.
+
+	* binarization/sauvola_ms.hh: Fix compilation issues on MacOS X.
+
+	* core/component_set.hh: Add labeled_image_() member.
+
+	* debug/save_bboxes_image.hh: Add a missing include.
+
+	* preprocessing/split_bg_fg.hh,
+	* primitive/extract/components.hh: Fix namespace ambiguities.
+
+	* src/text_in_article.cc: Rename as...
+	* src/text_in_article_pbm.cc: ... this.
+
+	* src/Makefile.am: Update source file names.
+
 2010-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Cleanup binarization tools.

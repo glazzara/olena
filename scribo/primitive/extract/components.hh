@@ -42,6 +42,7 @@
 # include <mln/labeling/compute.hh>
 
 # include <mln/util/array.hh>
+# include <mln/util/couple.hh>
 
 # include <mln/extension/fill.hh>
 
@@ -120,9 +121,9 @@ namespace scribo
 	// Setting extension value.
 	extension::fill(input, 0);
 
-	util::couple<L,
-	  util::couple<util::array<mln_result(pair_accu_t)>,
-	  util::array<pair_accu_t> > >
+	mln::util::couple<L,
+	  mln::util::couple<mln::util::array<mln_result(pair_accu_t)>,
+	  mln::util::array<pair_accu_t> > >
 	  results = labeling::blobs_and_compute(input, nbh, ncomponents,
 						pair_accu_t());
 

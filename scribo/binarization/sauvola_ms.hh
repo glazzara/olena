@@ -125,7 +125,8 @@ namespace scribo
 	typedef image2d<int_u8> I;
 	typedef point2d P;
 
-	unsigned ratio = std::pow(q, i - 2);  // Ratio in comparison to e_2
+	// Cast to float is needed on MacOS X.
+	unsigned ratio = std::pow(float(q), float(i - 2u));  // Ratio in comparison to e_2
 
 	unsigned
 	  w_local = w * ratio,
@@ -832,7 +833,8 @@ namespace scribo
 	  // Highest scale -> no maximum component size.
 	  {
 	    int i = sub_ima.size() - 1;
-	    unsigned ratio = std::pow(q, i - 2); // Ratio compared to e_2
+	    // Cast to float is needed on MacOS X.
+	    unsigned ratio = std::pow(float(q), float(i - 2)); // Ratio compared to e_2
 	    t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
 						     lambda_min_2 / ratio,
 						     mln_max(unsigned),
@@ -845,7 +847,8 @@ namespace scribo
 	  {
 	    for (int i = sub_ima.size() - 2; i > 2; --i)
 	    {
-	      unsigned ratio = std::pow(q, i - 2); // Ratio compared to e_2
+	      // Cast to float is needed on MacOS X.
+	      unsigned ratio = std::pow(float(q), float(i - 2)); // Ratio compared to e_2
 	      t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
 						       lambda_min_2 / ratio,
 						       lambda_max_2 / ratio,

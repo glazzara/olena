@@ -72,16 +72,16 @@ if HAVE_TIFF
 			   -lpthread -lhpdf
 
 
-    bin_PROGRAMS	+= text_in_article
-    text_in_article_CPPFLAGS = $(AM_CPPFLAGS) \
+    bin_PROGRAMS	+= text_in_article_pbm
+    text_in_article_pbm_CPPFLAGS = $(AM_CPPFLAGS) \
 			       $(TESSERACT_CPPFLAGS) \
 			       $(TIFF_CPPFLAGS)
-    text_in_article_LDFLAGS  = $(AM_LDFLAGS) \
+    text_in_article_pbm_LDFLAGS  = $(AM_LDFLAGS) \
 			       $(TESSERACT_LDFLAGS) \
 			       $(TIFF_LDFLAGS) \
 			       -lpthread
 # -lhpdf
-    text_in_article_SOURCES = text_in_article.cc
+    text_in_article_pbm_SOURCES = text_in_article_pbm.cc
 
 
     text_in_photo_ppm_fast_CPPFLAGS = $(AM_CPPFLAGS) \
