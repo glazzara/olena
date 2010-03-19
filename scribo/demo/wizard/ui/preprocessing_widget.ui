@@ -70,7 +70,7 @@
         <item>
          <widget class="QCheckBox" name="removeNoise" >
           <property name="enabled" >
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="text" >
            <string>Remove noise</string>
@@ -83,7 +83,7 @@
         <item>
          <widget class="QCheckBox" name="improveContrast" >
           <property name="enabled" >
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="text" >
            <string>Improve brightness/contrast</string>

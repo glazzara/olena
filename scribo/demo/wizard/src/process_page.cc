@@ -21,11 +21,6 @@ namespace scribo
       setSubTitle("Processing...");
       setTitle("Please wait while computing results.");
 
-
-      void progress(unsigned i);
-
-      void progress(unsigned i);
-
       connect(&runner_, SIGNAL(new_intermediate_result(const QImage&)),
 	      widget_, SLOT(update_pixmap(const QImage&)));
 

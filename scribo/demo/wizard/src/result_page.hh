@@ -23,11 +23,12 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_DEMO_WIZARD_SRC_MAIN_WINDOW_HH
-# define SCRIBO_DEMO_WIZARD_SRC_MAIN_WINDOW_HH
+#ifndef SCRIBO_DEMO_SHARED_SRC_RESULT_PAGE_HH
+# define SCRIBO_DEMO_SHARED_SRC_RESULT_PAGE_HH
 
-# include <QtGui/QWizard>
-//# include <ui_main_window.h>
+# include <QtGui>
+# include <src/result_widget.hh>
+# include <src/runner.hh>
 
 namespace scribo
 {
@@ -35,38 +36,25 @@ namespace scribo
   namespace demo
   {
 
-    namespace wizard
+
+    class result_page : public QWizardPage
     {
+      Q_OBJECT;
 
+    public:
+      result_page(QWidget *parent = 0);
 
-      class main_window : public QWizard
-      {
-	Q_OBJECT;
+      virtual void cleanupPage();
+      virtual void initializePage();
 
-      public:
-	main_window();
+    private: // attributes
+      result_widget* widget_;
+    };
 
-	virtual int nextId() const;
-
-      private slots:
-	void showCustomButton_slot(int id);
-
-      private:
-	enum { Page_Load,
-	       Page_Task,
-	       Page_Crop,
-	       Page_Rotate,
-	       Page_Preprocessing,
-	       Page_Process,
-	       Page_Result };
-      };
-
-
-    } // end of namespace scribo::demo::wizard
 
   } // end of namespace scribo::demo
 
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_DEMO_WIZARD_SRC_MAIN_WINDOW_HH
+#endif // ! SCRIBO_DEMO_SHARED_SRC_RESULT_PAGE_HH

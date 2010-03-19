@@ -27,7 +27,7 @@ namespace scribo
   namespace demo
   {
 
-    QString basedir_ = "/home/lazzara/build/scribo/src";
+    QString basedir_ = "";
 
     runner::runner(QObject *parent)
       : QThread(parent)
@@ -52,6 +52,8 @@ namespace scribo
     {
       // Notification of the number of tasks.
       emit new_progress_max_value(tasks_.size() + 2);
+
+      qDebug() << "progress steps : " << tasks_.size() + 2;
 
       image2d<value::qt::rgb32> ima = load();
 
@@ -131,10 +133,10 @@ namespace scribo
 	std::cout << "Improve contrast homogeneity" << std::endl;
 	emit new_progress_label("Improve contrast homogeneity");
 
-	intensity_ima = preprocessing::homogeneous_contrast(intensity_ima, 75);
+	intensity_ima = arith::revert(preprocessing::homogeneous_contrast(intensity_ima, 75));
 
  	image2d<value::qt::rgb32>
- 	  tmp_color32 = data::convert(value::qt::rgb32(), out_bool);
+ 	  tmp_color32 = data::convert(value::qt::rgb32(), intensity_ima);
  	emit new_intermediate_result(convert::to_qimage(tmp_color32));
 	emit progress(1);
       }
@@ -149,14 +151,13 @@ namespace scribo
       {
 	// FIXME: sauvola should not negate the image.
 	std::cout << "Binarization Sauvola" << std::endl;
-	out_bool = logical::not_(binarization::sauvola(intensity_ima));
+	out_bool = binarization::sauvola(intensity_ima);
       }
       else if (tasks_.contains(BinarizationSauvolaMs))
       {
 	// FIXME: sauvola should not negate the image.
 	std::cout << "Binarization Sauvola_ms" << std::endl;
-	out_bool = logical::not_(binarization::sauvola_ms(intensity_ima,
-							 51, 2, 67));
+	out_bool = binarization::sauvola_ms(intensity_ima, 51, 2, 67);
       }
       else if (tasks_.contains(BinarizationSimple))
       {
@@ -175,22 +176,24 @@ namespace scribo
       emit progress(1);
 
 
+      // FIXME: remove!
+      logical::not_inplace(out_bool);
+
       //========
       // Denoise
       //========
-      if (tasks_.contains(RemoveNoise))
-      {
-	std::cout << "Remove noise" << std::endl;
-	emit new_progress_label("Remove noise");
+//       if (tasks_.contains(RemoveNoise))
+//       {
+// 	std::cout << "Remove noise" << std::endl;
+// 	emit new_progress_label("Remove noise");
 
-	out_bool = preprocessing::denoise(out_bool, c8(), 2, 2);
+// 	out_bool = preprocessing::denoise(out_bool, c8(), 2, 2);
 
- 	image2d<value::qt::rgb32>
- 	  tmp_color32 = data::convert(value::qt::rgb32(), out_bool);
- 	emit new_intermediate_result(convert::to_qimage(tmp_color32));
-	emit progress(1);
-      }
-
+//  	image2d<value::qt::rgb32>
+//  	  tmp_color32 = data::convert(value::qt::rgb32(), out_bool);
+//  	emit new_intermediate_result(convert::to_qimage(tmp_color32));
+// 	emit progress(1);
+//       }
 
       //=======
       // Unskew
@@ -226,8 +229,21 @@ namespace scribo
       switch(doc_type_)
       {
 	case Text_Doc:
+	  emit new_progress_label("Finding text in document...");
 	  qDebug() << "Running text_in_article_pbm";
-	  args << "/tmp/tmp.pbm" << "/tmp/out.ppm";
+	  args << "/tmp/tmp.pbm" << "/tmp/out.txt";
+
+	  // Denoise.
+	  if (! tasks_.contains(RemoveNoise))
+	    args << "0";
+	  else
+	  {
+	    args << "1";
+	    emit progress(1); // Consider denoising as done even though it is performed later.
+	  }
+
+	  args << "/tmp/";
+
 	  if (process_.execute(basedir_ + "/text_in_article_pbm", args))
 	  {
 	    qDebug() << "Error while running text_in_article_pbm.";
@@ -236,6 +252,7 @@ namespace scribo
 	  break;
 
 	case Picture:
+	  emit new_progress_label("Finding text in picture...");
 	  qDebug() << "Running text_in_photo_pbm_fast";
 	  args << "/tmp/tmp.pbm" << "/tmp/out.ppm" << "1" << "1" << "1";
 	  if (process_.execute(basedir_ + "/text_in_photo_pbm_fast", args))
@@ -263,7 +280,7 @@ namespace scribo
       process_.waitForFinished(-1);
 
       emit progress(1);
-      emit new_intermediate_result(QImage("/tmp/out.ppm"));
+      emit new_intermediate_result(QImage("/tmp/_09_step2_bboxes.ppm"));
       qDebug() << "Done";
     }
 

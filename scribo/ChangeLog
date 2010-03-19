@@ -1,5 +1,24 @@
 2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve dematerialization wizard.
+
+	* demo/wizard/src/crop_widget.cc,
+	* demo/wizard/src/main.cc,
+	* demo/wizard/src/main_window.cc,
+	* demo/wizard/src/main_window.hh,
+	* demo/wizard/src/preprocessing_widget.cc,
+	* demo/wizard/src/process_page.cc,
+	* demo/wizard/src/result_page.cc,
+	* demo/wizard/src/result_page.hh,
+	* demo/wizard/src/result_widget.cc,
+	* demo/wizard/src/result_widget.hh,
+	* demo/wizard/src/runner.cc,
+	* demo/wizard/ui/preprocessing_widget.ui,
+	* demo/wizard/wizard.pro: Add support for text recognition and
+	display results.
+
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a new demo in Scribo.
 
 	* demo/demat/demat.pro,

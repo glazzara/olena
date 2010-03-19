@@ -35,8 +35,11 @@ namespace scribo
     {
       qDebug() << "setup text doc";
 
-      removeBg->setChecked(true);
-      unskew->setChecked(true);
+      // Disabled
+      removeBg->setChecked(false);
+      unskew->setChecked(false);
+
+      // Enabled
       removeNoise->setChecked(true);
       improveContrast->setChecked(true);
     }
@@ -44,6 +47,9 @@ namespace scribo
 
     void preprocessing_widget::clear_checked()
     {
+      // Enabled
+
+      // Disabled
       removeBg->setChecked(false);
       unskew->setChecked(false);
       removeNoise->setChecked(false);
