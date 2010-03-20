@@ -94,6 +94,8 @@ DOC_PACKAGES = doxyfuns.sty milena.sty
 ## Figures.  ##
 ## --------- ##
 
+EXTRA_DIST += gen-figures-mk
+
 # Generated figures.
 include $(srcdir)/figures.mk
 # FIXME: $(FIGURES) is not added to EXTRA_DIST (though it is added to

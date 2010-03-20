@@ -1,5 +1,12 @@
 2010-03-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a script to generate doc/figures.mk.
+
+	* doc/gen-figures-mk: New script.
+	* doc/Makefile.am (EXTRA_DIST): Add gen-figures-mk.
+
+2010-03-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use a more uniform style in doc/figures.mk.
 
 	* doc/figures.mk: Here.
