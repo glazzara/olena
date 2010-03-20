@@ -48,6 +48,15 @@ $(FILL_FIGURES): $(srcdir)/examples/fill.stamp
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
+FILL_IMAGEIF_CFUN_FIGURES = \
+  $(srcdir)/figures/fill-imageif-cfun-1.ppm
+$(FILL_IMAGEIF_CFUN_FIGURES): $(srcdir)/examples/fill-imageif-cfun.stamp
+## Recover from the removal of $@
+	@if test -f $@; then :; else \
+	  rm -f $<; \
+	  $(MAKE) $(AM_MAKEFLAGS) $<; \
+	fi
+
 FILL_SUBDOMAIN_FIGURES =			\
   $(srcdir)/figures/fill-subdomain-1.pbm	\
   $(srcdir)/figures/fill-subdomain-2.ppm	\
@@ -60,8 +69,9 @@ $(FILL_SUBDOMAIN_FIGURES): $(srcdir)/examples/fill-subdomain.stamp
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-FILL_IMAGEIF_CFUN_FIGURES = $(srcdir)/figures/fill-imageif-cfun-1.ppm
-$(FILL_IMAGEIF_CFUN_FIGURES): $(srcdir)/examples/fill-imageif-cfun.stamp
+IMA_SAVE_FIGURES = \
+  $(srcdir)/figures/ima_save.pbm
+$(IMA_SAVE_FIGURES): $(srcdir)/examples/ima-save.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
@@ -72,14 +82,6 @@ IMA2D_ROT_FIGURES =				\
   $(srcdir)/figures/ima2d-rot-1.ppm		\
   $(srcdir)/figures/ima2d-rot-2.ppm
 $(IMA2D_ROT_FIGURES): $(srcdir)/examples/ima2d-rot.stamp
-## Recover from the removal of $@
-	@if test -f $@; then :; else \
-	  rm -f $<; \
-	  $(MAKE) $(AM_MAKEFLAGS) $<; \
-	fi
-
-IMA_SAVE_FIGURES = $(srcdir)/figures/ima_save.pbm
-$(IMA_SAVE_FIGURES): $(srcdir)/examples/ima-save.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
 	  rm -f $<; \
@@ -107,7 +109,8 @@ $(LOGICAL_NOT_FIGURES): $(srcdir)/examples/logical-not.stamp
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-TUTO2_FIRST_IMAGE_FIGURES = $(srcdir)/figures/tuto2_first_image-1.pbm
+TUTO2_FIRST_IMAGE_FIGURES = \
+  $(srcdir)/figures/tuto2_first_image-1.pbm
 $(TUTO2_FIRST_IMAGE_FIGURES): $(srcdir)/examples/tuto2_first_image.stamp
 ## Recover from the removal of $@
 	@if test -f $@; then :; else \
@@ -127,6 +130,7 @@ $(TUTO3_COLORIZE_FIGURES): $(srcdir)/examples/tuto3/colorize.stamp
 
 TUTO3_RW_IMAGE_FIGURES =			\
   $(srcdir)/figures/tuto3_rw_image-1.ppm	\
+  $(srcdir)/figures/tuto3_rw_image-2.ppm	\
   $(srcdir)/figures/tuto3_rw_image-3.ppm
 $(TUTO3_RW_IMAGE_FIGURES): $(srcdir)/examples/tuto3_rw_image.stamp
 ## Recover from the removal of $@
@@ -153,10 +157,10 @@ $(TUTO4_GENERICITY_AND_ALGORITHMS_FIGURES): $(srcdir)/examples/tuto4_genericity_
 FIGURES =					\
   $(EXTEND_FIGURES)				\
   $(FILL_FIGURES)				\
-  $(FILL_SUBDOMAIN_FIGURES)			\
   $(FILL_IMAGEIF_CFUN_FIGURES)			\
-  $(IMA2D_ROT_FIGURES)				\
+  $(FILL_SUBDOMAIN_FIGURES)			\
   $(IMA_SAVE_FIGURES)				\
+  $(IMA2D_ROT_FIGURES)				\
   $(LABELING_COMPUTE_FIGURES)			\
   $(LOGICAL_NOT_FIGURES)			\
   $(TUTO2_FIRST_IMAGE_FIGURES)			\

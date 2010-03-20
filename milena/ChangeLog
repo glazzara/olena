@@ -1,5 +1,12 @@
 2010-03-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use a more uniform style in doc/figures.mk.
+
+	* doc/figures.mk: Here.
+	Reorder items.
+
+2010-03-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Prepare doc examples for the automated generation of figures.mk.
 
 	* doc/examples/ima2d-rot.cc (main): Pass a literal string as
