@@ -23,9 +23,6 @@ int main()
 {
   using namespace mln;
 
-  const char *IMA1_PPM = "ima2d-rot";
-  const char *IMA2_PPM = "ima2d-rot";
-
   // \{
   border::thickness = 30;
 
@@ -47,7 +44,7 @@ int main()
   // Draw the domain bounding box
   draw::box(ima1, geom::bbox(ima1_), literal::red);
   // Save the image, including its border.
-  doc::ppmsave(ima1 | extended_domain, IMA1_PPM);
+  doc::ppmsave(ima1 | extended_domain, "ima2d-rot");
 
   // Define and apply a point-wise rotation
   fun::x2x::rotation<2,float> rot1(0.5, literal::zero);
@@ -60,7 +57,7 @@ int main()
   }
 
   draw::box(ima2, ima2.bbox(), literal::red);
-  doc::ppmsave(extended_to(ima2, extended_domain), IMA2_PPM);
+  doc::ppmsave(extended_to(ima2, extended_domain), "ima2d-rot");
   // \}
 
 }

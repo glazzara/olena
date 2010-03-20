@@ -39,8 +39,7 @@ int main()
   label_8 nlabels;
   image2d<label_8> lbl = labeling::blobs(ima, c4(), nlabels);
   // \}
-  doc::ppmsave(labeling::colorize(rgb8(), lbl, nlabels),
-	       "labeling-compute");
+  doc::ppmsave(labeling::colorize(rgb8(), lbl, nlabels), "labeling-compute");
 
 
   // \{

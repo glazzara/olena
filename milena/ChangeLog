@@ -1,3 +1,12 @@
+2010-03-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Prepare doc examples for the automated generation of figures.mk.
+
+	* doc/examples/ima2d-rot.cc (main): Pass a literal string as
+	second argument to doc::ppmsave to help gen-figures-mk.
+	* doc/examples/labeling-compute.cc (main): Have calls to
+	doc::ppmsave fit on a single line to help gen-figures-mk.
+
 2010-03-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	Typo in doc/.
