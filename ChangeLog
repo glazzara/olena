@@ -1,5 +1,9 @@
 2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	* bootstrap: Regen milena/doc/figures.mk.
+
+2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	* bootstrap: Various fixes.
 
 2010-03-18  Roland Levillain  <roland@lrde.epita.fr>

@@ -159,6 +159,13 @@ run scribo `pwd`/build-aux/generate_dist_headers.sh . headers.mk nodist-headers 
 
 # Generate files of Milena's documentation.
 # * Figures.
+(
+  cd milena/doc
+  rm -f figures.mk.tmp
+  ./gen-figures-mk >figures.mk.tmp
+  mv -f figures.mk.tmp figures.mk
+  chmod -w figures.mk
+)
 gen_doc_figures()
 {
   rm -f "milena/doc/$2-figures.mk.tmp"
