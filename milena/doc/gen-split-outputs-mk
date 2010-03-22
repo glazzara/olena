@@ -60,7 +60,7 @@ inputs()
 output_dir=outputs/split
 
 # Use a temporary file to dump rules at the end of the output.
-tempfile=`mktemp`
+tempfile=`mktemp /tmp/temp.XXXXXX`
 # Set up automatic cleanup.
 cleanup() { rm -f "$tempfile"; exit; }
 trap cleanup 0 1 2 3 6 15

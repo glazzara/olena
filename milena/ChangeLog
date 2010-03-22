@@ -1,5 +1,13 @@
 2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make a more portable use of mktemp.
+
+	* doc/gen-split-examples-mk,
+	* doc/gen-split-outputs-mk:
+	Here.
+
+2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Sort inputs of generators to make them deterministic w.r.t. outputs.
 
 	* doc/gen-split-examples-mk,
