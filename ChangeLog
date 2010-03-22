@@ -1,5 +1,11 @@
 2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Regen INSTALL using autoreconf.
+
+	* INSTALL: New.
+
+2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Move INSTALL's contents to README and HACKING.
 
 	* INSTALL: Remove this file and move its contents...
