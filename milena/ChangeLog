@@ -1,5 +1,12 @@
 2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Distribute doc/gen-split-outputs-mk.
+
+	* doc/Makefile.am (EXTRA_DIST): Add gen-split-outputs-mk.
+	Aesthetic changes.
+
+2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make a more portable use of mktemp.
 
 	* doc/gen-split-examples-mk,

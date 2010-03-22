@@ -217,6 +217,9 @@ MAINTAINERCLEANFILES += $(PNG_FIGURES)
 ## Examples.  ##
 ## ---------- ##
 
+# Generate a Makefile helper containing a variable assignment.
+EXTRA_DIST += gen-make-variable
+
 $(srcdir)/examples.mk: $(srcdir)/gen-make-variable
 	rm -f $@.tmp
 	$(srcdir)/gen-make-variable EXAMPLES	\
@@ -259,6 +262,8 @@ EXTRA_DIST += $(MORE_EXAMPLES)
 ## Split examples.  ##
 ## ---------------- ##
 
+# Generate a Makefile helper handling the generation of split examples.
+EXTRA_DIST += gen-split-examples-mk
 $(srcdir)/split-examples.mk: $(srcdir)/gen-split-examples-mk
 	rm -f $@.tmp
 	cd $(srcdir) && ./gen-split-examples-mk >split-examples.mk.tmp
@@ -912,6 +917,9 @@ MORE_OUTPUTS =					\
   $(srcdir)/outputs/win-create-1-display.txt
 EXTRA_DIST += $(MORE_OUTPUTS)
 
+# FIXME: Can't we implement this using `gen-make-variable'?
+EXTRA_DIST += gen-examples-outputs-mk
+
 $(srcdir)/examples-outputs.mk: $(srcdir)/gen-examples-outputs-mk
 	rm -f $@.tmp
 # Ignore sources in examples/trash/.
@@ -939,6 +947,8 @@ regen-examples-outputs-mk:
 ## Split outputs.  ##
 ## --------------- ##
 
+# Generate a Makefile helper handling the generation of split outputs.
+EXTRA_DIST += gen-split-outputs-mk
 $(srcdir)/split-outputs.mk: $(srcdir)/gen-split-outputs-mk
 	rm -f $@.tmp
 	cd $(srcdir) && ./gen-split-outputs-mk >split-outputs.mk.tmp
@@ -1025,10 +1035,3 @@ EXTRA_DIST +=					\
   tools/sample_utils.hh				\
   tools/split_sample.sh				\
   tools/todoxygen.sh
-
-# Generate a Makefile helper containing a variable assignment.
-EXTRA_DIST += gen-make-variable
-# FIXME: Can't we implement this using `gen-make-variable'?
-EXTRA_DIST += gen-examples-outputs-mk
-# Generate a Makefile handling the generation of split examples.
-EXTRA_DIST += gen-split-examples-mk
