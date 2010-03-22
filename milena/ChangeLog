@@ -1,5 +1,14 @@
 2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Sort inputs of generators to make them deterministic w.r.t. outputs.
+
+	* doc/gen-split-examples-mk,
+	* doc/gen-split-outputs-mk:
+	Here.
+	* doc/split-examples.mk: Regen.
+
+2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Generate the list of figures in the documentation.
 
 	* doc/Makefile.am ($(srcdir)/figures.mk): New rule.

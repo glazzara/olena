@@ -22,6 +22,9 @@
 
 me=`basename $0`
 
+# Use the C locale to have a deterministic sort.
+export LC_ALL=C
+
 die ()
 {
   echo >&2 "$me: $@"
@@ -46,8 +49,12 @@ backslashify()
 # Get this list as argument?
 inputs()
 {
+  # Remove the .cc extension before sorting file names.
   # FIXME: Or « find examples -name \*.cc -a \! -path examples/trash/\* » ?
-  find examples -name \*.cc
+  find examples -name \*.cc			\
+    | sed 's/.cc$//'				\
+    | sort					\
+    | sed 's/$/.cc/'
 }
 
 output_dir=outputs/split
