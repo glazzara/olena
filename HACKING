@@ -1,0 +1,95 @@
+Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+
+This file is part of Olena.
+
+Olena is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation, version 2 of the License.
+
+Olena is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+
+The complete GNU General Public License Notice can also be found in
+the 'COPYING' file in the root directory.
+
+
+=================
+Developer's Guide
+=================
+
+This file gathers some useful information for Olena developers and
+contributors.
+
+
+-------------
+Bootstrapping
+-------------
+
+If you are fetching Olena from its Git repository, you will need to
+run `bootstrap' to build files that are not recorded in the
+repository::
+
+        ./bootstrap
+
+By default, `bootstrap' does not regenerate files that are stored on
+the repository.  If you want to refresh them (e.g., because your
+working copy is in a bad state), you can ask boostrap to regenerate
+them::
+
+        ./bootstrap --regen
+
+On a configured tree, you can also use Make to perform the same task::
+
+        make regen
+
+
+-----------------
+Required Software
+-----------------
+
+In addition to the required packages listed in README, you may need
+the following extra programs if you want to work on the Olena project.
+
+   * If you want to make changes anywhere within the project, you will
+     need:
+
+        - GNU Autoconf 2.61
+
+        - GNU Automake 1.10
+
+        - GNU Libtool 1.5.22
+
+   * If you plan to make changes within Swilena, you must have:
+
+        - SWIG 1.3.36
+
+        - Python 2.5
+
+   * If you want to change and/or rebuild the documentation, the
+     following tools are required:
+
+        - Doxygen 1.5.6
+
+        - a fairly recent LaTeX distribution
+
+        - the `listings' LaTeX package
+
+        - the `convert' utility from ImageMagick
+
+        - TeX4ht, to compile the LaTeX documentation into HTML
+
+        - dvipng (required by TeX4ht)
+
+
+Note that `bootstrap' checks for the presence of most of these tools.
+
+
+
+.. Local Variables:
+.. mode: rst
+.. End:

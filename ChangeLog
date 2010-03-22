@@ -1,5 +1,13 @@
 2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Move INSTALL's contents to README and HACKING.
+
+	* INSTALL: Remove this file and move its contents...
+	* README: ...here, and...
+	* HACKING: ...here (new file).
+
+2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove useless regen actions from bootstrap.
 
 	* bootstrap (gen_doc_figures): Remove this function, and its uses
