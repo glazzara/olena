@@ -696,7 +696,6 @@ regen-split-outputs-mk:
 ## -------------- ##
 
 # Regen Make helpers.
-EXTRA_DIST += generate_dist_files.sh
 include $(top_srcdir)/build-aux/regen-recursive.mk
 regen-am:
 	$(MAKE) $(AM_MAKEFLAGS) regen-figures-mk
@@ -735,7 +734,6 @@ EXTRA_DIST +=					\
   img/small.png					\
   doxyfuns.sty					\
   milena.sty					\
-  tools/clearbanner.sh				\
   tools/sample_utils.hh				\
   tools/split_sample.sh				\
   tools/todoxygen.sh				\
