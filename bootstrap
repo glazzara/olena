@@ -155,6 +155,9 @@ require $libtoolize 1.5.22
 
 require doxygen 1.5.6
 require convert 6.3.7
+# FIXME: Also check these:
+#   epstopdf
+#   pgf (how?)
 
 # Check for TeX4ht.  htlatex and friends do not have options like
 # `--version', `-version', `-v', etc.  Hence this ad hoc procedure.
@@ -177,16 +180,6 @@ EOF
 require dvipng 1.11
 
 
-gen_doc_figures()
-{
-  rm -f "milena/doc/$2-figures.mk.tmp"
-  milena/doc/gen-make-variable "$1"					\
-    `find milena/doc/figures/*.$2 | sed 's,^milena/doc,\$(srcdir),'`	\
-    >"milena/doc/$2-figures.mk.tmp"
-  mv -f "milena/doc/$2-figures.mk.tmp" "milena/doc/$2-figures.mk"
-  chmod -w "milena/doc/$2-figures.mk"
-}
-
 # Regen files stored in the repository if asked so.
 if $regen_p; then
   # Generate files of Milena's documentation.
@@ -198,9 +191,6 @@ if $regen_p; then
     mv -f figures.mk.tmp figures.mk
     chmod -w figures.mk
   )
-  gen_doc_figures PBM_FIGURES pbm
-  gen_doc_figures PGM_FIGURES pgm
-  gen_doc_figures PPM_FIGURES ppm
   # * Examples.
   rm -f milena/doc/examples.mk.tmp
   milena/doc/gen-make-variable EXAMPLES					    \

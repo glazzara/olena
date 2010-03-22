@@ -1,5 +1,12 @@
 2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove useless regen actions from bootstrap.
+
+	* bootstrap (gen_doc_figures): Remove this function, and its uses
+	as well.
+
+2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add options to boostrap.
 
 	* bootstrap: Here.
