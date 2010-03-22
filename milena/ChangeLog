@@ -1,5 +1,29 @@
 2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Regen documentation products.
+
+	* doc/examples/split/ima2d-rot-1.cc.raw,
+	* doc/figures/fill-subdomain-2.ppm,
+	* doc/figures/fill-subdomain-3.ppm,
+	* doc/figures/labeling-compute-2.ppm,
+	* doc/figures/tuto3_colorize-2.ppm,
+	* doc/figures/tuto4_genericity_and_algorithms-1.ppm,
+	* doc/figures/tuto4_genericity_and_algorithms-5.ppm:
+	Regen
+	* doc/figures/tuto4_genericity_and_algorithms-7.pgm,
+	* doc/figures/tuto4_genericity_and_algorithms-7.ppm,
+	* doc/figures/tuto4_genericity_and_algorithms-8.pgm,
+	* doc/figures/tuto4_genericity_and_algorithms-8.ppm,
+	* doc/figures/tuto4_genericity_and_algorithms-9.pgm,
+	* doc/figures/tuto4_genericity_and_algorithms-9.ppm:
+	Delete.
+	* doc/outputs/ima-load.txt,
+	* doc/outputs/tuto3_first_routine.txt,
+	* doc/outputs/tuto4_image.txt:
+	New.
+
+2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have doc/gen-figures-mk generate more Makefile bits.
 
 	* doc/gen-figures-mk: Generate Make variables PBM_FIGURES,
