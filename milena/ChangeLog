@@ -1,3 +1,12 @@
+2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Generate the list of figures in the documentation.
+
+	* doc/Makefile.am ($(srcdir)/figures.mk): New rule.
+	(regen-figures-mk): New phony target.
+	(regen-am): Invoke regen-figures-mk.
+	* doc/figures.mk: Regen.
+
 2010-03-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a script to generate doc/figures.mk.

@@ -94,15 +94,26 @@ DOC_PACKAGES = doxyfuns.sty milena.sty
 ## Figures.  ##
 ## --------- ##
 
+# Generate a Makefile helper containing the list of generated figures.
 EXTRA_DIST += gen-figures-mk
-
-# Generated figures.
+$(srcdir)/figures.mk: $(srcdir)/gen-figures-mk
+	rm -f $@.tmp
+	cd $(srcdir) && ./gen-figures-mk >figures.mk.tmp
+	mv -f $@.tmp $@
+	chmod -w $@
 include $(srcdir)/figures.mk
 # FIXME: $(FIGURES) is not added to EXTRA_DIST (though it is added to
 # MAINTAINERCLEANFILES), because its contents is already in EXTRA_DIST
 # thanks to PBM_FIGURES, PGM_FIGURES and PPM_FIGURES.  However, these
 # variables may be removed someday (see FIXME below).
 MAINTAINERCLEANFILES = $(FIGURES)
+
+.PHONY: regen-figures-mk
+regen-figures-mk:
+	rm -f $(srcdir)/figures.mk.tmp
+	cd $(srcdir) && ./gen-figures-mk >figures.mk.tmp
+	mv -f $(srcdir)/figures.mk.tmp $(srcdir)/figures.mk
+	chmod -w $(srcdir)/figures.mk
 
 # This image seems to be used nowhere.
 MORE_FIGURES = figures/accu_image_morpher_big_picture.pdf
@@ -953,6 +964,7 @@ regen-split-outputs-mk:
 EXTRA_DIST += generate_dist_files.sh
 include $(top_srcdir)/build-aux/regen-recursive.mk
 regen-am:
+	$(MAKE) $(AM_MAKEFLAGS) regen-figures-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-pbm-figures-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-pgm-figures-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-ppm-figures-mk
