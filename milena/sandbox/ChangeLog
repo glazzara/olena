@@ -1,3 +1,14 @@
+2010-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new benchs.
+
+	* bench/README_CFLAGS: New. Compilation flags guide.
+
+	* bench/extract_vertical_lines.cc,
+	* bench/fast_components_and_attributes.cc,
+	* bench/fast_rows.cc,
+	* bench/fast_tiles.cc: New.
+
 2010-02-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* lazzara/skeleton_crest/main.cc: New tool.
