@@ -1,5 +1,14 @@
 2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rework doc/gen-figures-mk a bit.
+
+	* doc/gen-figures-mk (gen_var): New function.
+	Use to factor the emission of the Make variable at the end of the
+	output.
+	Aesthetic changes.
+
+2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Distribute doc/gen-split-outputs-mk.
 
 	* doc/Makefile.am (EXTRA_DIST): Add gen-split-outputs-mk.
