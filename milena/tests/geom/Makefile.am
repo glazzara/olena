@@ -21,6 +21,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
 bbox						\
+horizontal_symmetry 				\
 max_col						\
 max_ind						\
 max_row						\
@@ -38,10 +39,12 @@ pmin_pmax					\
 rotate	 					\
 seed2tiling					\
 seed2tiling_roundness 				\
-translate
+translate 					\
+vertical_symmetry
 
 
 bbox_SOURCES = bbox.cc
+horizontal_symmetry_SOURCES = horizontal_symmetry.cc
 max_col_SOURCES = max_col.cc
 max_ind_SOURCES = max_ind.cc
 max_row_SOURCES = max_row.cc
@@ -60,5 +63,6 @@ rotate_SOURCES = rotate.cc
 seed2tiling_SOURCES = seed2tiling.cc
 seed2tiling_roundness_SOURCES = seed2tiling_roundness.cc
 translate_SOURCES = translate.cc
+vertical_symmetry_SOURCES = vertical_symmetry.cc
 
 TESTS = $(check_PROGRAMS)

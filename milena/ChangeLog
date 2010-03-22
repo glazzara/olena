@@ -1,5 +1,18 @@
 2010-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add vertical/horizontal symmetry.
+
+	* mln/labeling/relabel.hh: Fix an invalid 'const'.
+
+	* mln/geom/horizontal_symmetry.hh,
+	* mln/geom/vertical_symmetry.hh: New routines.
+
+	* tests/geom/Makefile.am,
+	* tests/geom/horizontal_symmetry.cc,
+	* tests/geom/vertical_symmetry.cc: New tests.
+
+2010-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/debug/z_order.hh: New image data initializer.
 
 2010-03-22  Guillaume Lazzara  <z@lrde.epita.fr>

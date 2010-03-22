@@ -248,8 +248,9 @@ namespace mln
       internal::relabel_inplace_tests(label, nlabels, fv2b);
 
       typedef fun::i2v::array<mln_value(I)> fv2v_t;
-      fv2v_t fv2v = make::relabelfun(fv2b, nlabels, nlabels);
-      labeling::relabel_inplace(label, nlabels, fv2v);
+      mln_value(I) tmp;
+      fv2v_t fv2v = make::relabelfun(fv2b, nlabels, tmp);
+      labeling::relabel_inplace(label, tmp, fv2v);
 
       trace::exiting("labeling::relabel_inplace");
     }
