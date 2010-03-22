@@ -1,5 +1,9 @@
 2010-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/debug/z_order.hh: New image data initializer.
+
+2010-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve antialiased subsampling.
 
 	* mln/subsampling/antialiased.hh: Add support for any factors and
