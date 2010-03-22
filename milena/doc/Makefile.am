@@ -102,10 +102,7 @@ $(srcdir)/figures.mk: $(srcdir)/gen-figures-mk
 	mv -f $@.tmp $@
 	chmod -w $@
 include $(srcdir)/figures.mk
-# FIXME: $(FIGURES) is not added to EXTRA_DIST (though it is added to
-# MAINTAINERCLEANFILES), because its contents is already in EXTRA_DIST
-# thanks to PBM_FIGURES, PGM_FIGURES and PPM_FIGURES.  However, these
-# variables may be removed someday (see FIXME below).
+EXTRA_DIST += $(FIGURES)
 MAINTAINERCLEANFILES = $(FIGURES)
 
 .PHONY: regen-figures-mk
@@ -115,82 +112,11 @@ regen-figures-mk:
 	mv -f $(srcdir)/figures.mk.tmp $(srcdir)/figures.mk
 	chmod -w $(srcdir)/figures.mk
 
-# This image seems to be used nowhere.
-MORE_FIGURES = figures/accu_image_morpher_big_picture.pdf
-EXTRA_DIST += $(MORE_FIGURES)
+# ------------- #
+# PNG figures.  #
+# ------------- #
 
-# ----- #
-# PBM.  #
-# ----- #
-
-$(srcdir)/pbm-figures.mk: $(srcdir)/gen-make-variable
-	rm -f $@.tmp
-	$(srcdir)/gen-make-variable PBM_FIGURES				  \
-	  `find $(srcdir)/figures/*.pbm | sed 's,^$(srcdir),\$$(srcdir),'` \
-	  >$@.tmp
-	mv -f $@.tmp $@
-	chmod -w $@
-include $(srcdir)/pbm-figures.mk
-EXTRA_DIST += $(PBM_FIGURES)
-
-.PHONY: regen-pbm-figures-mk
-regen-pbm-figures-mk:
-	rm -f $(srcdir)/pbm-figures.mk.tmp
-	$(srcdir)/gen-make-variable PBM_FIGURES				  \
-	  `find $(srcdir)/figures/*.pbm | sed 's,^$(srcdir),\$$(srcdir),'` \
-	  >$(srcdir)/pbm-figures.mk.tmp
-	mv -f $(srcdir)/pbm-figures.mk.tmp $(srcdir)/pbm-figures.mk
-	chmod -w $(srcdir)/pbm-figures.mk
-
-# ----- #
-# PGM.  #
-# ----- #
-
-$(srcdir)/pgm-figures.mk: $(srcdir)/gen-make-variable
-	rm -f $@.tmp
-	$(srcdir)/gen-make-variable PGM_FIGURES				  \
-	  `find $(srcdir)/figures/*.pgm | sed 's,^$(srcdir),\$$(srcdir),'` \
-	  >$@.tmp
-	mv -f $@.tmp $@
-	chmod -w $@
-include $(srcdir)/pgm-figures.mk
-EXTRA_DIST += $(PGM_FIGURES)
-
-.PHONY: regen-pgm-figures-mk
-regen-pgm-figures-mk:
-	rm -f $(srcdir)/pgm-figures.mk.tmp
-	$(srcdir)/gen-make-variable PGM_FIGURES				  \
-	  `find $(srcdir)/figures/*.pgm | sed 's,^$(srcdir),\$$(srcdir),'` \
-	  >$(srcdir)/pgm-figures.mk.tmp
-	mv -f $(srcdir)/pgm-figures.mk.tmp $(srcdir)/pgm-figures.mk
-	chmod -w $(srcdir)/pgm-figures.mk
-
-# ----- #
-# PPM.  #
-# ----- #
-
-$(srcdir)/ppm-figures.mk: $(srcdir)/gen-make-variable
-	rm -f $@.tmp
-	$(srcdir)/gen-make-variable PPM_FIGURES				  \
-	  `find $(srcdir)/figures/*.ppm | sed 's,^$(srcdir),\$$(srcdir),'` \
-	  >$@.tmp
-	mv -f $@.tmp $@
-	chmod -w $@
-include $(srcdir)/ppm-figures.mk
-EXTRA_DIST += $(PPM_FIGURES)
-
-.PHONY: regen-ppm-figures-mk
-regen-ppm-figures-mk:
-	rm -f $(srcdir)/ppm-figures.mk.tmp
-	$(srcdir)/gen-make-variable PPM_FIGURES				  \
-	  `find $(srcdir)/figures/*.ppm | sed 's,^$(srcdir),\$$(srcdir),'` \
-	  >$(srcdir)/ppm-figures.mk.tmp
-	mv -f $(srcdir)/ppm-figures.mk.tmp $(srcdir)/ppm-figures.mk
-	chmod -w $(srcdir)/ppm-figures.mk
-
-# ----- #
-# PNG.  #
-# ----- #
+# PNG figures are generated from PBM, PGM and PPM figures.
 
 convert_to_png = convert -scale 250 -bordercolor black -border 2x2
 
@@ -211,6 +137,14 @@ PNG_FIGURES =					\
   $(PPM_FIGURES:.ppm=.png)
 EXTRA_DIST += $(PNG_FIGURES)
 MAINTAINERCLEANFILES += $(PNG_FIGURES)
+
+# --------------- #
+# Other figures.  #
+# --------------- #
+
+# This image seems to be used nowhere.
+MORE_FIGURES = figures/accu_image_morpher_big_picture.pdf
+EXTRA_DIST += $(MORE_FIGURES)
 
 
 ## ---------- ##

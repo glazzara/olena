@@ -1,5 +1,25 @@
 2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have doc/gen-figures-mk generate more Makefile bits.
+
+	* doc/gen-figures-mk: Generate Make variables PBM_FIGURES,
+	PGM_FIGURES and PPM_FIGURES in output.
+	* doc/figures.mk: Regen.
+	* doc/Makefile.am: No longer include $(srcdir)/pbm-figures.mk,
+	$(srcdir)/pgm-figures.mk nor $(srcdir)/ppm-figures.mk.
+	($(srcdir)/pbm-figures.mk, regen-pbm-figures-mk)
+	($(srcdir)/pgm-figures.mk, regen-pgm-figures-mk)
+	($(srcdir)/ppm-figures.mk, regen-ppm-figures-mk):
+	Remove rules.
+	(EXTRA_DIST): Add $(FIGURES).
+	Remove $(PBM_FIGURES), $(PGM_FIGURES) and $(PPM_FIGURES).
+	* doc/pbm-figures.mk,
+	* doc/pgm-figures.mk,
+	* doc/ppm-figures.mk:
+	Remove.
+
+2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rework doc/gen-figures-mk a bit.
 
 	* doc/gen-figures-mk (gen_var): New function.

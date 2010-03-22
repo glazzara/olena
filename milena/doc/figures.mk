@@ -145,3 +145,44 @@ FIGURES = \
   $(TUTO3_COLORIZE_FIGURES) \
   $(TUTO3_RW_IMAGE_FIGURES) \
   $(TUTO4_GENERICITY_AND_ALGORITHMS_FIGURES)
+
+# The list of all generated PBM figures.
+PBM_FIGURES = \
+  $(srcdir)/figures/fill-subdomain-1.pbm \
+  $(srcdir)/figures/ima_save.pbm \
+  $(srcdir)/figures/labeling-compute-1.pbm \
+  $(srcdir)/figures/logical-not-1.pbm \
+  $(srcdir)/figures/logical-not-2.pbm \
+  $(srcdir)/figures/logical-not-3.pbm \
+  $(srcdir)/figures/tuto2_first_image-1.pbm \
+  $(srcdir)/figures/tuto4_genericity_and_algorithms-3.pbm
+
+# The list of all generated PGM figures.
+PGM_FIGURES = \
+  $(srcdir)/figures/tuto3_colorize-1.pgm
+
+# The list of all generated PPM figures.
+PPM_FIGURES = \
+  $(srcdir)/figures/extend-1.ppm \
+  $(srcdir)/figures/extend-2.ppm \
+  $(srcdir)/figures/extend-3.ppm \
+  $(srcdir)/figures/extend-4.ppm \
+  $(srcdir)/figures/extend-5.ppm \
+  $(srcdir)/figures/fill-1.ppm \
+  $(srcdir)/figures/fill-2.ppm \
+  $(srcdir)/figures/fill-imageif-cfun-1.ppm \
+  $(srcdir)/figures/fill-subdomain-2.ppm \
+  $(srcdir)/figures/fill-subdomain-3.ppm \
+  $(srcdir)/figures/fill-subdomain-4.ppm \
+  $(srcdir)/figures/ima2d-rot-1.ppm \
+  $(srcdir)/figures/ima2d-rot-2.ppm \
+  $(srcdir)/figures/labeling-compute-2.ppm \
+  $(srcdir)/figures/tuto3_colorize-2.ppm \
+  $(srcdir)/figures/tuto3_rw_image-1.ppm \
+  $(srcdir)/figures/tuto3_rw_image-2.ppm \
+  $(srcdir)/figures/tuto3_rw_image-3.ppm \
+  $(srcdir)/figures/tuto4_genericity_and_algorithms-1.ppm \
+  $(srcdir)/figures/tuto4_genericity_and_algorithms-2.ppm \
+  $(srcdir)/figures/tuto4_genericity_and_algorithms-4.ppm \
+  $(srcdir)/figures/tuto4_genericity_and_algorithms-5.ppm \
+  $(srcdir)/figures/tuto4_genericity_and_algorithms-6.ppm
