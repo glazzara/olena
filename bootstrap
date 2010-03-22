@@ -11,6 +11,22 @@ stderr ()
     echo >&2 "$0: $@"
 }
 
+usage ()
+{
+  cat <<EOF
+Usage: $0 [OPTION]
+
+Options:
+  -h, --help              display this message
+  -r, --regen             regenerate files stored in the repository
+
+Report bugs to <olena-bugs@lrde.epita.fr>
+EOF
+}
+
+# Regenerate files stored in the repository?
+regen_p=false
+
 awk_strverscmp='
   # Use only awk features that work with 7th edition Unix awk (1978).
   # My, what an old awk you have, Mr. Solaris!
@@ -114,6 +130,15 @@ run ()
 # Failures do matter.
 set -e
 
+# Process arguments.
+for arg in "$@"; do
+  case "$arg" in
+    -h|--help) usage; exit 0 ;;
+    -r|--regen) regen_p=true ;;
+    *) fatal "error: unrecognized option: $1" ;;
+  esac
+done
+
 # Requirements over bootstrap tools.
 require autoconf 2.61
 require automake 1.10
@@ -151,21 +176,7 @@ EOF
 # dvipng is required by TeX4ht.
 require dvipng 1.11
 
-# Generate milena/headers.mk
-run milena `pwd`/build-aux/generate_dist_headers.sh mln ./headers.mk ./nodist-headers
 
-# Generate scribo/headers.mk
-run scribo `pwd`/build-aux/generate_dist_headers.sh . headers.mk nodist-headers scribo scribo
-
-# Generate files of Milena's documentation.
-# * Figures.
-(
-  cd milena/doc
-  rm -f figures.mk.tmp
-  ./gen-figures-mk >figures.mk.tmp
-  mv -f figures.mk.tmp figures.mk
-  chmod -w figures.mk
-)
 gen_doc_figures()
 {
   rm -f "milena/doc/$2-figures.mk.tmp"
@@ -175,60 +186,73 @@ gen_doc_figures()
   mv -f "milena/doc/$2-figures.mk.tmp" "milena/doc/$2-figures.mk"
   chmod -w "milena/doc/$2-figures.mk"
 }
-gen_doc_figures PBM_FIGURES pbm
-gen_doc_figures PGM_FIGURES pgm
-gen_doc_figures PPM_FIGURES ppm
-# * Examples.
-rm -f milena/doc/examples.mk.tmp
-milena/doc/gen-make-variable EXAMPLES					    \
-  `find milena/doc/examples -name '*.cc' | sed 's,^milena/doc,\$(srcdir),'` \
-  >milena/doc/examples.mk.tmp
-mv -f milena/doc/examples.mk.tmp milena/doc/examples.mk
-chmod -w milena/doc/examples.mk
-# * Split examples.
-(
-  cd milena/doc
-  rm -f split-examples.mk.tmp
-  ./gen-split-examples-mk >split-examples.mk.tmp
-  mv -f split-examples.mk.tmp split-examples.mk
-  chmod -w split-examples.mk
-)
-# * Outputs.
-rm -f milena/doc/outputs.mk.tmp
-milena/doc/gen-make-variable OUTPUTS				\
-  `find milena/doc/examples					\
-       -name \*.cc -a \! -path milena/doc/examples/trash/\*	\
-     | sed -e 's,milena/doc/examples/,,'			\
-           -e 'y,/,_,'						\
-           -e 's,\(.*\)\.cc$,$(srcdir)/outputs/\1.txt,'`	\
-  >milena/doc/outputs.mk.tmp
-mv -f milena/doc/outputs.mk.tmp milena/doc/outputs.mk
-chmod -w milena/doc/outputs.mk
-# * Outputs rules and timestamps.
-(
-  cd milena/doc
-  rm -f examples-outputs.mk.tmp
-  ./gen-examples-outputs-mk					\
-    `find examples -name \*.cc -a \! -path examples/trash/\*	\
-       | env LC_ALL=C sort`					\
-    >examples-outputs.mk.tmp
-  mv -f examples-outputs.mk.tmp examples-outputs.mk
-  chmod -w examples-outputs.mk
-)
-# * Split outputs.
-(
-  cd milena/doc
-  rm -f split-outputs.mk.tmp
-  ./gen-split-outputs-mk >split-outputs.mk.tmp
-  mv -f split-outputs.mk.tmp split-outputs.mk
-  chmod -w split-outputs.mk
-)
 
-# Generate unit test files.
-run . ./build-aux/build_unit_test.sh `pwd`/milena/mln milena/tests/unit_test milena/tests/unit_test/disabled_tests
+# Regen files stored in the repository if asked so.
+if $regen_p; then
+  # Generate files of Milena's documentation.
+  # * Figures.
+  (
+    cd milena/doc
+    rm -f figures.mk.tmp
+    ./gen-figures-mk >figures.mk.tmp
+    mv -f figures.mk.tmp figures.mk
+    chmod -w figures.mk
+  )
+  gen_doc_figures PBM_FIGURES pbm
+  gen_doc_figures PGM_FIGURES pgm
+  gen_doc_figures PPM_FIGURES ppm
+  # * Examples.
+  rm -f milena/doc/examples.mk.tmp
+  milena/doc/gen-make-variable EXAMPLES					    \
+    `find milena/doc/examples -name '*.cc' | sed 's,^milena/doc,\$(srcdir),'` \
+    >milena/doc/examples.mk.tmp
+  mv -f milena/doc/examples.mk.tmp milena/doc/examples.mk
+  chmod -w milena/doc/examples.mk
+  # * Split examples.
+  (
+    cd milena/doc
+    rm -f split-examples.mk.tmp
+    ./gen-split-examples-mk >split-examples.mk.tmp
+    mv -f split-examples.mk.tmp split-examples.mk
+    chmod -w split-examples.mk
+  )
+  # * Outputs.
+  rm -f milena/doc/outputs.mk.tmp
+  milena/doc/gen-make-variable OUTPUTS				\
+    `find milena/doc/examples					\
+         -name \*.cc -a \! -path milena/doc/examples/trash/\*	\
+       | sed -e 's,milena/doc/examples/,,'			\
+             -e 'y,/,_,'						\
+             -e 's,\(.*\)\.cc$,$(srcdir)/outputs/\1.txt,'`	\
+    >milena/doc/outputs.mk.tmp
+  mv -f milena/doc/outputs.mk.tmp milena/doc/outputs.mk
+  chmod -w milena/doc/outputs.mk
+  # * Outputs rules and timestamps.
+  (
+    cd milena/doc
+    rm -f examples-outputs.mk.tmp
+    ./gen-examples-outputs-mk					\
+      `find examples -name \*.cc -a \! -path examples/trash/\*	\
+         | env LC_ALL=C sort`					\
+      >examples-outputs.mk.tmp
+    mv -f examples-outputs.mk.tmp examples-outputs.mk
+    chmod -w examples-outputs.mk
+  )
+  # * Split outputs.
+  (
+    cd milena/doc
+    rm -f split-outputs.mk.tmp
+    ./gen-split-outputs-mk >split-outputs.mk.tmp
+    mv -f split-outputs.mk.tmp split-outputs.mk
+    chmod -w split-outputs.mk
+  )
 
-# Generate unit test files for Scribo.
-run scribo/tests/unit_test ./build_unit_test.sh `pwd`/scribo .
+  # Generate unit test files.
+  run . ./build-aux/build_unit_test.sh `pwd`/milena/mln milena/tests/unit_test milena/tests/unit_test/disabled_tests
+
+  # Generate unit test files for Scribo.
+  run scribo/tests/unit_test ./build_unit_test.sh `pwd`/scribo .
+fi
 
 # Install the GNU Build System.
 autoreconf -f -v -i
