@@ -31,10 +31,10 @@
 ///
 /// Antialiased subsampling.
 
-/// \fixme: shift is not used for the moment......
 
 #include <mln/core/concept/image.hh>
 #include <mln/border/thickness.hh>
+#include <mln/extension/adjust_duplicate.hh>
 #include <mln/core/macros.hh>
 
 namespace mln
@@ -46,8 +46,7 @@ namespace mln
     /*! \brief Antialiased subsampling.
 
       \param[in] input A gray-level image.
-      \param[in] gap Subsampling ratio. Must be divisible by 2 or 3.
-      \param[in] shift Top left shift for iteration.
+      \param[in] factor Subsampling ratio. Must be divisible by 2 or 3.
       \param[in] output_domain Force output domain.
       \param[in] border_thickness Force output border thickness.
 
@@ -56,8 +55,7 @@ namespace mln
     inline
     mln_concrete(I)
     antialiased(const Image<I>& input,
-		unsigned gap,
-		const mln_deduce(I, site, delta)& shift,
+		unsigned factor,
 		const mln_domain(I)& output_domain,
 		unsigned border_thickness);
 
@@ -66,58 +64,11 @@ namespace mln
      */
     template <typename I>
     mln_concrete(I)
-    antialiased(const Image<I>& input,
-		unsigned gap,
-		const mln_deduce(I, site, delta)& shift); // FIXME: Add round_up_size.
-
-
-    /*! \overload
-     */
-    template <typename I>
-    mln_concrete(I)
-    antialiased(const Image<I>& input, unsigned gap);
+    antialiased(const Image<I>& input, unsigned factor);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-
-    // Internal routines
-
-    namespace internal
-    {
-
-      bool is_valid_gap(unsigned gap)
-      {
-	return gap > 1 && (!(gap % 2) || !(gap % 3));
-      }
-
-
-      unsigned next_gap(unsigned& gap_left)
-      {
-	if (! (gap_left % 3))
-	{
-	  gap_left /= 3;
-	  return 3;
-	}
-	else if (! (gap_left % 2))
-	{
-	  gap_left /= 2;
-	  return 2;
-	}
-	else if (gap_left == 1)
-	{
-	  gap_left = 0;
-	  return 0;
-	}
-	else
-	{
-	  trace::warning("subsampling::internal::next_gap - Invalid gap!");
-	  return 0;
-	}
-      }
-
-    } // end of namespace mln::subsampling::internal
 
 
 
@@ -130,8 +81,7 @@ namespace mln
       inline
       void
       antialiased_tests(const Image<I>& input,
-			unsigned gap,
-			const mln_deduce(I, site, delta)& shift,
+			unsigned factor,
 			const mln_domain(I)& output_domain,
 			unsigned border_thickness)
       {
@@ -140,13 +90,10 @@ namespace mln
 	mlc_is_a(mln_domain(I), Box)::check();
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(input).domain().pmin() == literal::origin);
-	mln_precondition(internal::is_valid_gap(gap));
-	for (unsigned i = 0; i < P::dim; ++i)
-	  mln_precondition(shift[i] < static_cast<int>(gap));
+	mln_precondition(internal::is_valid_factor(factor));
 
 	(void) input;
-	(void) gap;
-	(void) shift;
+	(void) factor;
 	(void) output_domain;
 	(void) border_thickness;
       }
@@ -168,8 +115,7 @@ namespace mln
 	inline
 	mln_concrete(I)
 	antialiased(const Image<I>& input_,
-		    unsigned gap,
-		    const mln_deduce(I, site, delta)& shift,
+		    unsigned factor,
 		    const mln_domain(I)& output_domain,
 		    unsigned border_thickness)
 	{
@@ -183,17 +129,18 @@ namespace mln
       } // end of namespace mln::subsampling::impl::generic
 
 
+
       template <typename I>
       inline
       mln_concrete(I)
-      antialiased_2d_antialias_fastest_2(const Image<I>& input_,
-					 const mln_deduce(I, site, delta)& shift,
-					 const mln_domain(I)& output_domain,
-					 unsigned border_thickness)
+      antialiased_2d_fastest_scalar(const Image<I>& input_,
+				    unsigned factor,
+				    const mln_domain(I)& output_domain,
+				    unsigned border_thickness)
       {
-	trace::entering("subsampling::impl::antialiased_2d_antialias_fastest_2");
+	trace::entering("subsampling::impl::antialiased_2d_fastest");
 
-	internal::antialiased_tests(input_, 2, shift,
+	internal::antialiased_tests(input_, factor,
 				    output_domain, border_thickness);
 
 	const I& input = exact(input_);
@@ -205,40 +152,50 @@ namespace mln
 	box<P> b = output_domain;
 	if (!b.is_valid())
 	{
-	  P pmin = input.domain().pmin() / 2,
-	    pmax = input.domain().pmax() / 2;
+	  P pmin = input.domain().pmin() / factor,
+	    pmax = input.domain().pmax() / factor;
 	  b = box<P>(pmin, pmax);
 	}
-
 	typedef mln_concrete(I) O;
 	O output(b, border_thickness);
 
-	const V* ptr1 = & input.at_(0, 0);
-	const V* ptr2 = & input.at_(1, 0);
+	// Make sure there is enough data in input border.
+	unsigned input_border = factor - std::max(input.nrows() % factor,
+						  input.ncols() % factor);
+	extension::adjust_duplicate(input, input_border);
+
+
+	typedef const V* ptr_t;
+
+	util::array<ptr_t> ptrs(factor, 0);
+	for (unsigned i = 0; i < factor; ++i)
+	  ptrs[i] = & input.at_(i, 0);
 
 	mln_box_runstart_piter(O) s(output.domain());
 	const unsigned n = s.run_length();
-
-	unsigned offset = input.delta_index(point2d(2,0) - point2d(0,2*n));
+	const unsigned
+	  factor_2 = factor * factor,
+	  factor_round = factor_2 / 2;
+	unsigned offset = input.delta_index(point2d(factor,0) - point2d(0,factor*n));
 
 	for_all(s)
 	{
 	  mln_value(O)* po = & output(s);
 	  for (unsigned i = 0; i < n; ++i)
-	    {
-	      S s;
-	      s  = *ptr1 + *(ptr1 + 1);
-	      s += *ptr2 + *(ptr2 + 1);
-	      ptr1 += 2;
-	      ptr2 += 2;
+	  {
+	    mln_sum(V) s = literal::zero;
+	    for (unsigned j = 0; j < factor; ++j)
+	      for (unsigned k = 0; k < factor; ++k)
+		s += *ptrs[j]++;
 
-	      *po++ = (s + 2) / 4;
-	    }
-	  ptr1 += offset;
-	  ptr2 += offset;
+	    *po++ = (s + factor_round) / factor_2;
+	  }
+
+	  for (unsigned j = 0; j < factor; ++j)
+	    ptrs[j] += offset;
 	}
 
-	trace::exiting("subsampling::impl::antialiased_2d_antialias_fastest_2");
+	trace::exiting("subsampling::impl::antialiased_2d_fastest");
 	return output;
       }
 
@@ -247,14 +204,14 @@ namespace mln
       template <typename I>
       inline
       mln_concrete(I)
-      antialiased_2d_antialias_fastest_3(const Image<I>& input_,
-					 const mln_deduce(I, site, delta)& shift,
-					 const mln_domain(I)& output_domain,
-					 unsigned border_thickness)
+      antialiased_2d_fastest_rgb(const Image<I>& input_,
+				 unsigned factor,
+				 const mln_domain(I)& output_domain,
+				 unsigned border_thickness)
       {
-	trace::entering("subsampling::impl::antialiased_2d_antialias_fastest_3");
+	trace::entering("subsampling::impl::antialiased_2d_rgb");
 
-	internal::antialiased_tests(input_, 3, shift,
+	internal::antialiased_tests(input_, factor,
 				    output_domain, border_thickness);
 
 	const I& input = exact(input_);
@@ -263,46 +220,55 @@ namespace mln
 	typedef mln_sum(V) S;
 
 	typedef mln_site(I) P;
-	box<P> b = output_domain;
-	if (!b.is_valid())
-	{
-	  P pmin = input.domain().pmin() / 3,
-	    pmax = input.domain().pmax() / 3;
+ 	box<P> b = output_domain;
+ 	if (!b.is_valid())
+ 	{
+	  P pmin = input.domain().pmin() / factor,
+	    pmax = input.domain().pmax() / factor;
 	  b = box<P>(pmin, pmax);
-	}
+ 	}
 	typedef mln_concrete(I) O;
 	O output(b, border_thickness);
 
-	const V* ptr1 = & input.at_(0, 0);
-	const V* ptr2 = & input.at_(1, 0);
-	const V* ptr3 = & input.at_(2, 0);
+	// Make sure there is enough data in input border.
+	unsigned input_border = factor - std::max(input.nrows() % factor,
+						  input.ncols() % factor);
+	extension::adjust_duplicate(input, input_border);
+
+
+	typedef const V* ptr_t;
+
+	util::array<ptr_t> ptrs(factor, 0);
+	for (unsigned i = 0; i < factor; ++i)
+	  ptrs[i] = & input.at_(i, 0);
 
 	mln_box_runstart_piter(O) s(output.domain());
 	const unsigned n = s.run_length();
-
-	unsigned offset = input.delta_index(point2d(3,0) - point2d(0,3*n));
+	const unsigned
+	  factor_2 = factor * factor,
+	  factor_round = factor_2 / 2;
+	unsigned offset = input.delta_index(point2d(factor,0) - point2d(0,factor*n));
 
 	for_all(s)
 	{
 	  mln_value(O)* po = & output(s);
 	  for (unsigned i = 0; i < n; ++i)
 	    {
-	      S s;
-	      s  = *ptr1 + *(ptr1 + 1) + *(ptr1 + 2);
-	      s += *ptr2 + *(ptr2 + 1) + *(ptr2 + 2);
-	      s += *ptr3 + *(ptr3 + 1) + *(ptr3 + 2);
-	      ptr1 += 3;
-	      ptr2 += 3;
-	      ptr3 += 3;
+	      mln_sum(V) s = literal::zero;
+	      for (unsigned j = 0; j < factor; ++j)
+		for (unsigned k = 0; k < factor; ++k)
+		{
+		  algebra::vec<3, float> tmp = *ptrs[j]++;
+		  s += tmp;
+		}
 
-	      *po++ = (s + 4) / 9;
+	      *po++ = (s /*+ factor_round*/) / factor_2;
 	    }
-	  ptr1 += offset;
-	  ptr2 += offset;
-	  ptr3 += offset;
+	  for (unsigned j = 0; j < factor; ++j)
+	    ptrs[j] += offset;
 	}
 
-	trace::exiting("subsampling::impl::antialiased_2d_antialias_fastest_3");
+	trace::exiting("subsampling::impl::antialiased_2d_rgb");
 	return output;
       }
 
@@ -324,8 +290,7 @@ namespace mln
 			   trait::image::value_storage::any,
 			   trait::image::value_access::any,
 			   const Image<I>& input,
-			   unsigned gap,
-			   const mln_deduce(I, site, delta)& shift,
+			   unsigned factor,
 			   const mln_domain(I)& output_domain,
 			   unsigned border_thickness)
       {
@@ -336,26 +301,45 @@ namespace mln
       template <typename I>
       inline
       mln_concrete(I)
-      antialiased_2d_antialias_fastest_dispatch(
-	const Image<I>& input,
-	unsigned gap,
-	const mln_deduce(I, site, delta)& shift,
-	const mln_domain(I)& output_domain,
-	unsigned border_thickness)
+      antialiased_2d_fastest_dispatch(const mln_value(I)&,
+				      const Image<I>& input,
+				      unsigned factor,
+				      const mln_domain(I)& output_domain,
+				      unsigned border_thickness)
       {
-	if (gap == 2)
-	  return impl::antialiased_2d_antialias_fastest_2(input, shift,
-							  output_domain,
-							  border_thickness);
-	else if (gap == 3)
-	  return impl::antialiased_2d_antialias_fastest_3(input, shift,
-							  output_domain,
-							  border_thickness);
-	else
-	  trace::warning("Not implemented yet!");
+	return impl::antialiased_2d_fastest_scalar(input, factor,
+						   output_domain,
+						   border_thickness);
+      }
 
-	mln_concrete(I) output;
-	return output;
+
+      template <unsigned n, typename I>
+      inline
+      mln_concrete(I)
+      antialiased_2d_fastest_dispatch(const value::rgb<n>&,
+				      const Image<I>& input,
+				      unsigned factor,
+				      const mln_domain(I)& output_domain,
+				      unsigned border_thickness)
+      {
+	return impl::antialiased_2d_fastest_rgb(input, factor,
+						output_domain,
+						border_thickness);
+      }
+
+
+      template <typename I>
+      inline
+      mln_concrete(I)
+      antialiased_2d_fastest_dispatch(const Image<I>& input,
+				      unsigned factor,
+				      const mln_domain(I)& output_domain,
+				      unsigned border_thickness)
+      {
+	typedef mln_value(I) V;
+	return antialiased_2d_fastest_dispatch(V(), input, factor,
+					       output_domain,
+					       border_thickness);
       }
 
 
@@ -366,15 +350,13 @@ namespace mln
 			      trait::image::value_storage::one_block,
 			      trait::image::value_access::direct,
 			      const Image<I>& input,
-			      unsigned gap,
-			      const mln_deduce(I, site, delta)& shift,
+			      unsigned factor,
 			      const mln_domain(I)& output_domain,
 			      unsigned border_thickness)
       {
-	return antialiased_2d_antialias_fastest_dispatch(input, gap,
-							 shift,
-							 output_domain,
-							 border_thickness);
+	return antialiased_2d_fastest_dispatch(input, factor,
+					       output_domain,
+					       border_thickness);
       }
 
 
@@ -382,8 +364,7 @@ namespace mln
       inline
       mln_concrete(I)
       antialiased_dispatch(const Image<I>& input,
-			   unsigned gap,
-			   const mln_deduce(I, site, delta)& shift,
+			   unsigned factor,
 			   const mln_domain(I)& output_domain,
 			   unsigned border_thickness)
       {
@@ -395,8 +376,7 @@ namespace mln
 	    mln_trait_image_value_storage(I)(),
 	    mln_trait_image_value_access(I)(),
 	    input,
-	    gap,
-	    shift,
+	    factor,
 	    output_domain,
 	    border_thickness);
 	else
@@ -416,8 +396,7 @@ namespace mln
     inline
     mln_concrete(I)
     antialiased(const Image<I>& input,
-		unsigned gap,
-		const mln_deduce(I, site, delta)& shift,
+		unsigned factor,
 		const mln_domain(I)& output_domain,
 		unsigned border_thickness)
     {
@@ -425,18 +404,13 @@ namespace mln
 
       typedef mln_site(I) P;
 
-      internal::antialiased_tests(input, gap, shift,
+      internal::antialiased_tests(input, factor,
 				  output_domain, border_thickness);
 
-      mln_concrete(I) output = exact(input);
-      while (gap)
-      {
-	unsigned next_gap = internal::next_gap(gap);
-	if (next_gap)
-	  output = internal::antialiased_dispatch(output, next_gap, shift,
-						  output_domain,
-						  border_thickness);
-      }
+      mln_concrete(I)
+	output = internal::antialiased_dispatch(input, factor,
+						output_domain,
+						border_thickness);
 
       trace::exiting("subsampling::antialiased");
       return output;
@@ -446,22 +420,12 @@ namespace mln
     template <typename I>
     inline
     mln_concrete(I)
-    antialiased(const Image<I>& input,
-		unsigned gap,
-		const mln_deduce(I, site, delta)& shift)
+    antialiased(const Image<I>& input, unsigned factor)
     {
       mln_domain(I) domain;
-      return antialiased(input, gap, shift, domain, border::thickness);
+      return antialiased(input, factor, domain, border::thickness);
     }
 
-
-    template <typename I>
-    inline
-    mln_concrete(I)
-    antialiased(const Image<I>& input, unsigned gap)
-    {
-      return antialiased(input, gap, literal::zero);
-    }
 
 
 # endif // ! MLN_INCLUDE_ONLY

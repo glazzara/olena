@@ -1,3 +1,10 @@
+2010-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve antialiased subsampling.
+
+	* mln/subsampling/antialiased.hh: Add support for any factors and
+	for RGB images.
+
 2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a new routine to split a color image into three grayscale
