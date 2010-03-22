@@ -133,7 +133,7 @@ require convert 6.3.7
 
 # Check for TeX4ht.  htlatex and friends do not have options like
 # `--version', `-version', `-v', etc.  Hence this ad hoc procedure.
-tempdir=`mktemp -d`
+tempdir=`mktemp -d /tmp/temp.XXXXXX`
 # Set up automatic cleanup.
 cleanup() { rm -rf "$tempdir"; exit; }
 trap cleanup 0 1 2 3 6 15
