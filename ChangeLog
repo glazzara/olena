@@ -1,3 +1,7 @@
+2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	* Makefile.am (LOCAL_RECURSIVE_TARGETS): Remove doc.
+
 2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Regen INSTALL using autoreconf.

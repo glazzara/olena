@@ -32,7 +32,7 @@ endif ENABLE_SCRIBO
 #>>
 
 # Target shortcuts delegating the actual action to milena/Makefile.
-LOCAL_RECURSIVE_TARGETS = doc pretty-check tests
+LOCAL_RECURSIVE_TARGETS = pretty-check tests
 $(LOCAL_RECURSIVE_TARGETS):
 	cd milena && $(MAKE) $(AM_MAKEFLAGS) $@
 .PHONY: $(LOCAL_RECURSIVE_TARGETS)
