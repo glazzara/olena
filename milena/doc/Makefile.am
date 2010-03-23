@@ -235,24 +235,15 @@ $(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
 	  $(edit) $< >$@
 MAINTAINERCLEANFILES += $(DOXYFILE_USER)
 
-## FIXME: Rename USER_REFMAN_PDF to something else?
 USER_REFMAN_PDF = user-refman.pdf
-## FIXME: Likewise?
 USER_REFMAN = user-refman
 
-# FIXME: Use texi2dvi instead of Doxygen's generated Makefile?
-# (The LaTeX to PDF rule could be factored using a suffix rule, as in
-# LRDE's share/).
 $(srcdir)/$(USER_REFMAN_PDF): $(srcdir)/$(USER_REFMAN)
 	cd $(srcdir)/$(USER_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
 	cp -f $(srcdir)/$(USER_REFMAN)/latex/refman.pdf $@
 
 EXTRA_DIST += $(srcdir)/user-refman.stamp
 MAINTAINERCLEANFILES += $(srcdir)/user-refman.stamp
-## FIXME: Are dependencies (`$(refman_dependencies)') set on the right
-## rule?  Does Doxygen make a copy of figures, or does it generate
-## LaTeX inputs relying on the existence of such figures in the
-## initial location?  Investigate.
 $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(refman_dependencies)
 	@rm -f $@.tmp
 	@touch $@.tmp
@@ -311,28 +302,18 @@ $(DOXYFILE_DEVEL): $(srcdir)/$(DOXYFILE).in
 	rm -f $@.tmp
 MAINTAINERCLEANFILES += $(DOXYFILE_DEVEL)
 
-## FIXME: Rename DEVEL_REFMAN_PDF to something else?
 DEVEL_REFMAN_PDF = devel-refman-pdf
-## FIXME: Likewise?
 DEVEL_REFMAN = devel-refman
 
 # Be warned, most LaTeX installations will not be able to compile the
 # PDF development documentation as-is, as TeX's default memory
 # capacities are usually too small to handle such a large document.
-#
-## FIXME: Use texi2dvi instead of Doxygen's generated Makefile?  (The
-## LaTeX to PDF rule could be factored using a suffix rule, as in
-## LRDE's share/).
 $(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/$(DEVEL_REFMAN)
 	cd $(srcdir)/$(DEVEL_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
 	cp -f $(srcdir)/$(DEVEL_REFMAN)/latex/refman.pdf $@
 
 EXTRA_DIST += $(srcdir)/devel-refman.stamp
 MAINTAINERCLEANFILES += $(srcdir)/devel-refman.stamp
-## FIXME: Are dependencies (`$(refman_dependencies)') set on the right
-## rule?  Does Doxygen make a copy of figures, or does it generate
-## LaTeX inputs relying on the existence of such figures in the
-## initial location?  Investigate.
 $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(refman_dependencies)
 	@rm -f $@.tmp
 	@touch $@.tmp
@@ -372,34 +353,6 @@ technical_dependencies =			\
   $(PNG_FIGURES)				\
   $(DOC_PACKAGES)
 
-# FIXME: As in milena/doc/Makefile.am, we should probably strip
-# $(srcdir) prefixes from target variables, e.g. instead of:
-#
-#   FOO = $(srcdir)/foo.pdf
-#   $(FOO): foo.tex bar.tex
-#   dist_doc_DATA = $(FOO)
-#
-# we should use:
-#
-#   FOO = foo.pdf
-#   $(srcdir)/$(FOO): foo.tex bar.tex
-#   dist_doc_DATA = $(FOO)
-#
-# since it minimizes installation issues (see milena/doc/Makefile.am
-# and Vaucanson's doc/Makefile.am).
-
-# FIXME: Distributed products should be generated in the source dir.
-# That's actually the case, *but* the current solution is not clean
-# and might break sometimes.  The clean approach is to create a
-# temporary directory, try to generate the documentation there, and
-# move its contents to the source dir in case of success.  If the
-# product is a directory, also refresh a timestamp (in the source
-# dir).
-
-## FIXME: technical technical.hh does not seem to be used (by the
-## Doyxgen documentation); remove its generation? Careful,
-## technical/technical.html *is* probably required, though.
-
 # Final product.
 TECHNICAL_HTML = $(technical_dir)/technical.html
 TECHNICAL_HTML_OUTPUTS = $(TECHNICAL_HTML) $(technical_dir)/technical.css
@@ -424,6 +377,10 @@ $(TECHNICAL_HTML_OUTPUTS): $(TECHNICAL_HTML).stamp
 
 dist_doc_DATA += $(TECHNICAL_HTML_OUTPUTS)
 MAINTAINERCLEANFILES += $(TECHNICAL_HTML_OUTPUTS)
+
+## FIXME: technical technical.hh does not seem to be used (by the
+## Doyxgen documentation); remove its generation? Careful,
+## technical/technical.html *is* probably required, though.
 
 # Intermediate product for the various doc targets of the parent
 # directory.
@@ -469,30 +426,6 @@ tutorial_dependencies =				\
   $(SPLIT_OUTPUTS)				\
   $(PNG_FIGURES)				\
   $(DOC_PACKAGES)
-
-# FIXME: As in milena/doc/Makefile.am, we should probably strip
-# $(srcdir) prefixes from target variables, e.g. instead of:
-#
-#   FOO = $(srcdir)/foo.pdf
-#   $(FOO): foo.tex bar.tex
-#   dist_doc_DATA = $(FOO)
-#
-# we should use:
-#
-#   FOO = foo.pdf
-#   $(srcdir)/$(FOO): foo.tex bar.tex
-#   dist_doc_DATA = $(FOO)
-#
-# since it minimizes installation issues (see milena/doc/Makefile.am
-# and Vaucanson's doc/Makefile.am).
-
-# FIXME: Distributed products should be generated in the source dir.
-# That's actually the case, *but* the current solution is not clean
-# and might break sometimes.  The clean approach is to create a
-# temporary directory, try to generate the documentation there, and
-# move its contents to the source dir in case of success.  If the
-# product is a directory, also refresh a timestamp (in the source
-# dir).
 
 # Final product.
 TUTORIAL_HTML = $(tutorial_dir)/tutorial.html
@@ -568,30 +501,6 @@ EPSS = $(PNGS:png=eps)
 .png.eps:
 	convert $< $@
 
-# FIXME: As in milena/doc/Makefile.am, we should probably strip
-# $(srcdir) prefixes from target variables, e.g. instead of:
-#
-#   FOO = $(srcdir)/foo.pdf
-#   $(FOO): foo.tex bar.tex
-#   dist_doc_DATA = $(FOO)
-#
-# we should use:
-#
-#   FOO = foo.pdf
-#   $(srcdir)/$(FOO): foo.tex bar.tex
-#   dist_doc_DATA = $(FOO)
-#
-# since it minimizes installation issues (see milena/doc/Makefile.am
-# and Vaucanson's doc/Makefile.am).
-
-# FIXME: Distributed products should be generated in the source dir.
-# That's actually the case, *but* the current solution is not clean
-# and might break sometimes.  The clean approach is to create a
-# temporary directory, try to generate the documentation there, and
-# move its contents to the source dir in case of success.  If the
-# product is a directory, also refresh a timestamp (in the source
-# dir).
-
 # Final product.
 WHITE_PAPER_HTML = $(white_paper_dir)/white_paper.html
 WHITE_PAPER_HTML_OUTPUTS =			\
@@ -651,30 +560,6 @@ ref_guide_dependencies =			\
   $(SPLIT_OUTPUTS)				\
   $(PNG_FIGURES)				\
   $(DOC_PACKAGES)
-
-# FIXME: As in milena/doc/Makefile.am, we should probably strip
-# $(srcdir) prefixes from target variables, e.g. instead of:
-#
-#   FOO = $(srcdir)/foo.pdf
-#   $(FOO): foo.tex bar.tex
-#   dist_doc_DATA = $(FOO)
-#
-# we should use:
-#
-#   FOO = foo.pdf
-#   $(srcdir)/$(FOO): foo.tex bar.tex
-#   dist_doc_DATA = $(FOO)
-#
-# since it minimizes installation issues (see milena/doc/Makefile.am
-# and Vaucanson's doc/Makefile.am).
-
-# FIXME: Distributed products should be generated in the source dir.
-# That's actually the case, *but* the current solution is not clean
-# and might break sometimes.  The clean approach is to create a
-# temporary directory, try to generate the documentation there, and
-# move its contents to the source dir in case of success.  If the
-# product is a directory, also refresh a timestamp (in the source
-# dir).
 
 # Final product.
 REF_GUIDE_HTML = $(ref_guide_dir)/ref_guide.html
@@ -778,10 +663,9 @@ regen-outputs-mk:
 	mv -f $(srcdir)/outputs.mk.tmp $(srcdir)/outputs.mk
 	chmod -w $(srcdir)/outputs.mk
 
-## FIXME: These outputs are also required by the (LaTeX)
-## documentation.  However, they have no corresponding program in
-## examples/, hence they cannot be regenerated.  Are they hand-made
-## outputs?  Or maybe outputs of which program has been removed since?
+## These outputs are also required by the (LaTeX) documentation.
+## However, they have no corresponding program in examples/, hence
+## they cannot be regenerated.
 MORE_OUTPUTS =					\
   $(srcdir)/outputs/graph-output-1.txt		\
   $(srcdir)/outputs/ima2d-display-1.txt		\
@@ -792,7 +676,7 @@ MORE_OUTPUTS =					\
   $(srcdir)/outputs/win-create-1-display.txt
 EXTRA_DIST += $(MORE_OUTPUTS)
 
-# FIXME: Can't we implement this using `gen-make-variable'?
+# Generate a Makefile helper containing outputs rules and timestamps.
 EXTRA_DIST += gen-examples-outputs-mk
 
 $(srcdir)/examples-outputs.mk: $(srcdir)/gen-examples-outputs-mk
