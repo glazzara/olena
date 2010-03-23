@@ -31,6 +31,8 @@
 /// \file apps/mesh-segm-skel/io.hh
 /// \brief I/O routines adapted from TriMesh's ones.
 
+#include <cstdio>
+
 #include <algorithm>
 
 #include <TriMesh.h>

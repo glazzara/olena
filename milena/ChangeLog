@@ -1,3 +1,9 @@
+2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix apps/mesh-segm-skel/io.hh.
+
+	* apps/mesh-segm-skel/io.hh: Include cstdio.
+
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Aesthetic changes.
