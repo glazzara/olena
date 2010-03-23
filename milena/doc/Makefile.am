@@ -23,26 +23,6 @@ AM_CPPFLAGS =						\
   -I$(top_srcdir)/milena -I$(top_builddir)/milena	\
   -I$(top_srcdir)/milena/doc/tutorial/tools
 
-## FIXME: Upercase variables should be reserved for special names:
-## classical Make variables (e.g. `CXXFLAGS') Automake variables
-## (e.g. `SUBDIRS'), etc.
-##
-## Moreover, do we really need all these variables?  See how things
-## evolve during the refurbishing of the build system in doc/.
-DOC_SRCDIR = $(top_srcdir)/milena/doc
-OUTPUTS_SRCDIR = $(DOC_SRCDIR)/outputs
-SPLIT_OUTPUTS_SRCDIR = $(OUTPUTS_SRCDIR)/split
-FIGURES_SRCDIR = $(DOC_SRCDIR)/figures
-EXAMPLES_SRCDIR = $(DOC_SRCDIR)/examples
-SPLIT_EXAMPLES_SRCDIR = $(EXAMPLES_SRCDIR)/split
-IMG_SRCDIR = $(DOC_SRCDIR)/img
-
-# FIXME: Adjust when $(DOC_SRCDIR) is renamed or removed.
-#
-# FIXME: Careful, `doc_dir' is close to `docdir', which is reserved by
-# Automake.  Change this name?
-doc_dir = $(DOC_SRCDIR)
-
 DOXYGEN = doxygen
 
 DOXYFILE = Doxyfile
@@ -60,8 +40,8 @@ include $(top_srcdir)/build-aux/tex.mk
 
 # FIXME: Check this list.
 TEXI2DVI_FLAGS +=							\
-  -I $(DOC_SRCDIR) -I $(OUTPUTS_SRCDIR) -I $(SPLIT_OUTPUTS_SRCDIR)	\
-  -I $(IMG_SRCDIR) -I $(SPLIT_EXAMPLES_SRCDIR)
+  -I $(srcdir) -I $(srcdir)/outputs -I $(srcdir)/outputs/split		\
+  -I $(srcdir)/img -I $(srcdir)/examples/split
 
 # Additional files for LaTeX compilations.
 DOC_PACKAGES = doxyfuns.sty milena.sty
@@ -346,7 +326,7 @@ maintainer-clean-local:
 ## Technical Documentation.  ##
 ## ------------------------- ##
 
-technical_dir = $(doc_dir)/technical
+technical_dir = $(srcdir)/technical
 
 technical_dependencies =			\
   $(TECHNICAL_EXAMPLES)				\
@@ -389,13 +369,13 @@ MAINTAINERCLEANFILES += $(TECHNICAL_HTML_OUTPUTS)
 # extension, since it is later parsed by Doxygen, which complains
 # about `.html' files.
 TECHNICAL_HH = $(technical_dir)/technical.hh
-$(TECHNICAL_HH): $(TECHNICAL_HTML) $(doc_dir)/tools/todoxygen.sh
+$(TECHNICAL_HH): $(TECHNICAL_HTML) $(srcdir)/tools/todoxygen.sh
 # The script `todoxygen.sh' may fail and still create a (partial and
 # invalid) file, thus preventing Make from trying to generate it
 # again.  The solution is to use a temporary file as output and rename
 # it if the script succeeds.
 	rm -f $@.tmp
-	$(doc_dir)/tools/todoxygen.sh $< $@.tmp $(doc_dir)
+	$(srcdir)/tools/todoxygen.sh $< $@.tmp $(srcdir)
 	mv -f $@.tmp $@
 
 
@@ -417,7 +397,7 @@ MAINTAINERCLEANFILES += $(TECHNICAL_HH)
 ## Tutorial.  ##
 ## ---------- ##
 
-tutorial_dir = $(doc_dir)/tutorial
+tutorial_dir = $(srcdir)/tutorial
 
 tutorial_dependencies =				\
   $(EXAMPLES)					\
@@ -459,13 +439,13 @@ MAINTAINERCLEANFILES += $(TUTORIAL_HTML_OUTPUTS)
 # since it is later parsed by Doxygen, which complains about `.html'
 # files.
 TUTORIAL_HH = $(tutorial_dir)/tutorial.hh
-$(TUTORIAL_HH): $(TUTORIAL_HTML) $(doc_dir)/tools/todoxygen.sh
+$(TUTORIAL_HH): $(TUTORIAL_HTML) $(srcdir)/tools/todoxygen.sh
 # The script `todoxygen.sh' may fail and still create a (partial and
 # invalid) file, thus preventing Make from trying to generate it
 # again.  The solution is to use a temporary file as output and rename
 # it if the script succeeds.
 	rm -f $@.tmp
-	$(doc_dir)/tools/todoxygen.sh $< $@.tmp $(doc_dir)
+	$(srcdir)/tools/todoxygen.sh $< $@.tmp $(srcdir)
 	mv -f $@.tmp $@
 
 
@@ -488,7 +468,7 @@ MAINTAINERCLEANFILES += $(TUTORIAL_HH)
 ## White Paper.  ##
 ## ------------- ##
 
-white_paper_dir = $(doc_dir)/white_paper
+white_paper_dir = $(srcdir)/white_paper
 
 PNGS =								\
   $(white_paper_dir)/figures/house.png				\
@@ -551,7 +531,7 @@ MAINTAINERCLEANFILES += $(EPSS)
 ## Reference Guide.  ##
 ## ----------------- ##
 
-ref_guide_dir = $(doc_dir)/ref_guide
+ref_guide_dir = $(srcdir)/ref_guide
 
 ref_guide_dependencies =			\
   $(EXAMPLES)					\
@@ -596,13 +576,13 @@ MAINTAINERCLEANFILES += $(REF_GUIDE_HTML_OUTPUTS)
 # since it is later parsed by Doxygen, which complains about `.html'
 # files.
 REF_GUIDE_HH = $(ref_guide_dir)/ref_guide.hh
-$(REF_GUIDE_HH): $(REF_GUIDE_HTML) $(doc_dir)/tools/todoxygen.sh
+$(REF_GUIDE_HH): $(REF_GUIDE_HTML) $(srcdir)/tools/todoxygen.sh
 # The script `todoxygen.sh' may fail and still create a (partial and
 # invalid) file, thus preventing Make from trying to generate it
 # again.  The solution is to use a temporary file as output and rename
 # it if the script succeeds.
 	rm -f $@.tmp
-	$(doc_dir)/tools/todoxygen.sh $< $@.tmp $(doc_dir)
+	$(srcdir)/tools/todoxygen.sh $< $@.tmp $(srcdir)
 	mv -f $@.tmp $@
 
 

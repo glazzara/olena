@@ -1,5 +1,15 @@
 2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify doc/Makefile.am.
+
+	* doc/Makefile.am:
+	(DOC_SRCDIR, OUTPUTS_SRCDIR, SPLIT_OUTPUTS_SRCDIR, FIGURES_SRCDIR)
+	(EXAMPLES_SRCDIR, SPLIT_EXAMPLES_SRCDIR, IMG_SRCDIR, doc_dir):
+	Remove variables.
+	Adjust.
+
+2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	* doc/Makefile.am: Update FIXMEs.
 
 2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
