@@ -31,14 +31,7 @@ if ENABLE_TOOLS
   SUBDIRS += tools
 endif ENABLE_TOOLS
 
-.PHONY: doc tutorial pretty-check tests
-
-doc:
-	cd doc && $(MAKE) $(AM_MAKEFLAGS) $@
-
-# FIXME: This target has no trigger in the top-level.
-tutorial:
-	cd doc && $(MAKE) $(AM_MAKEFLAGS) $@
+.PHONY: pretty-check tests
 
 pretty-check:
 	cd tests && $(MAKE) $(AM_MAKEFLAGS) $@

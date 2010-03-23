@@ -51,29 +51,6 @@ DOXYFILE = Doxyfile
 EXTRA_DIST =
 dist_doc_DATA =
 
-# FIXME: Simplify all of this.  ``Devel'' targets are really
-# secondary.  And we probably don't need so much target aliases!
-
-.PHONY: doc						\
-	doc-user doc-devel				\
-	doc-pdf doc-html doc-devel-pdf doc-devel-html	\
-	ref-doc ref-doc-pdf				\
-	ref-doc-devel ref-doc-devel-pdf
-
-doc: doc-user doc-devel
-
-doc-user: doc-pdf doc-html
-doc-devel: doc-devel-pdf doc-devel-html
-
-doc-pdf: tutorial-pdf white-paper-pdf ref-guide-pdf ref-doc-pdf
-
-doc-html: tutorial-html white-paper-html ref-guide-html ref-doc
-
-doc-devel-pdf: tutorial-pdf ref-guide-pdf white-paper-pdf ref-doc-devel-pdf
-
-doc-devel-html: tutorial-html ref-guide-html white-paper-html \
-		ref-doc-devel
-
 
 ## --------------------- ##
 ## LaTeX configuration.  ##
@@ -263,9 +240,6 @@ USER_REFMAN_PDF = user-refman.pdf
 ## FIXME: Likewise?
 USER_REFMAN = user-refman
 
-ref-doc-pdf: $(srcdir)/$(USER_REFMAN_PDF)
-ref-doc: $(srcdir)/$(USER_REFMAN)
-
 # FIXME: Use texi2dvi instead of Doxygen's generated Makefile?
 # (The LaTeX to PDF rule could be factored using a suffix rule, as in
 # LRDE's share/).
@@ -342,9 +316,6 @@ DEVEL_REFMAN_PDF = devel-refman-pdf
 ## FIXME: Likewise?
 DEVEL_REFMAN = devel-refman
 
-ref-doc-devel-pdf: $(srcdir)/$(DEVEL_REFMAN_PDF)
-ref-doc-devel: $(srcdir)/$(DEVEL_REFMAN)
-
 # Be warned, most LaTeX installations will not be able to compile the
 # PDF development documentation as-is, as TeX's default memory
 # capacities are usually too small to handle such a large document.
@@ -393,10 +364,6 @@ maintainer-clean-local:
 ## ------------------------- ##
 ## Technical Documentation.  ##
 ## ------------------------- ##
-
-.PHONY: technical technical-html technical-pdf
-
-technical: technical-html technical-pdf
 
 technical_dir = $(doc_dir)/technical
 
@@ -465,9 +432,6 @@ MAINTAINERCLEANFILES += $(TECHNICAL_HTML_OUTPUTS)
 # extension, since it is later parsed by Doxygen, which complains
 # about `.html' files.
 TECHNICAL_HH = $(technical_dir)/technical.hh
-# FIXME: Careful, technical-html depends on $(TECHNICAL_HH), not
-# $(TECHNICAL_HTML).  Anyway, this shortcut should vanish soon.
-technical-html: $(TECHNICAL_HH)
 $(TECHNICAL_HH): $(TECHNICAL_HTML) $(doc_dir)/tools/todoxygen.sh
 # The script `todoxygen.sh' may fail and still create a (partial and
 # invalid) file, thus preventing Make from trying to generate it
@@ -480,7 +444,6 @@ $(TECHNICAL_HH): $(TECHNICAL_HTML) $(doc_dir)/tools/todoxygen.sh
 
 # Final product.
 TECHNICAL_PDF = $(technical_dir)/technical.pdf
-technical-pdf: $(TECHNICAL_PDF)
 # Extra dependencies.
 $(TECHNICAL_PDF): $(technical_dependencies)
 
@@ -496,10 +459,6 @@ MAINTAINERCLEANFILES += $(TECHNICAL_HH)
 ## ---------- ##
 ## Tutorial.  ##
 ## ---------- ##
-
-.PHONY: tutorial tutorial-html tutorial-pdf
-
-tutorial: tutorial-html tutorial-pdf
 
 tutorial_dir = $(doc_dir)/tutorial
 
@@ -567,9 +526,6 @@ MAINTAINERCLEANFILES += $(TUTORIAL_HTML_OUTPUTS)
 # since it is later parsed by Doxygen, which complains about `.html'
 # files.
 TUTORIAL_HH = $(tutorial_dir)/tutorial.hh
-# FIXME: Careful, tutorial-html depends on $(TUTORIAL_HH), not
-# $(TUTORIAL_HTML).  Anyway, this shortcut should vanish soon.
-tutorial-html: $(TUTORIAL_HH)
 $(TUTORIAL_HH): $(TUTORIAL_HTML) $(doc_dir)/tools/todoxygen.sh
 # The script `todoxygen.sh' may fail and still create a (partial and
 # invalid) file, thus preventing Make from trying to generate it
@@ -582,7 +538,6 @@ $(TUTORIAL_HH): $(TUTORIAL_HTML) $(doc_dir)/tools/todoxygen.sh
 
 # Final product.
 TUTORIAL_PDF = $(tutorial_dir)/tutorial.pdf
-tutorial-pdf: $(TUTORIAL_PDF)
 # Extra dependencies.
 $(TUTORIAL_PDF): $(tutorial_dependencies)
 
@@ -600,8 +555,6 @@ MAINTAINERCLEANFILES += $(TUTORIAL_HH)
 ## White Paper.  ##
 ## ------------- ##
 
-.PHONY: white-paper white-paper-html white-paper-pdf
-
 white_paper_dir = $(doc_dir)/white_paper
 
 PNGS =								\
@@ -614,8 +567,6 @@ EPSS = $(PNGS:png=eps)
 
 .png.eps:
 	convert $< $@
-
-white-paper: white-paper-pdf white-paper-html
 
 # FIXME: As in milena/doc/Makefile.am, we should probably strip
 # $(srcdir) prefixes from target variables, e.g. instead of:
@@ -643,7 +594,6 @@ white-paper: white-paper-pdf white-paper-html
 
 # Final product.
 WHITE_PAPER_HTML = $(white_paper_dir)/white_paper.html
-white-paper-html: $(WHITE_PAPER_HTML)
 WHITE_PAPER_HTML_OUTPUTS =			\
   $(WHITE_PAPER_HTML)				\
   $(white_paper_dir)/white_paper.css		\
@@ -674,7 +624,6 @@ dist_doc_DATA += $(WHITE_PAPER_HTML_OUTPUTS)
 MAINTAINERCLEANFILES += $(WHITE_PAPER_HTML_OUTPUTS)
 
 WHITE_PAPER_PDF = $(white_paper_dir)/white_paper.pdf
-white-paper-pdf: $(WHITE_PAPER_PDF)
 # Extra dependencies.
 $(WHITE_PAPER_PDF): $(PNGS)
 
@@ -692,10 +641,6 @@ MAINTAINERCLEANFILES += $(EPSS)
 ## ----------------- ##
 ## Reference Guide.  ##
 ## ----------------- ##
-
-.PHONY: ref-guide ref-guide-html ref-guide-pdf
-
-ref-guide: ref-guide-html ref-guide-pdf
 
 ref_guide_dir = $(doc_dir)/ref_guide
 
@@ -766,9 +711,6 @@ MAINTAINERCLEANFILES += $(REF_GUIDE_HTML_OUTPUTS)
 # since it is later parsed by Doxygen, which complains about `.html'
 # files.
 REF_GUIDE_HH = $(ref_guide_dir)/ref_guide.hh
-# FIXME: Careful, ref-guide-html depends on $(REF_GUIDE_HH), not
-# $(REF_GUIDE_HTML).  Anyway, this shortcut should vanish soon.
-ref-guide-html: $(REF_GUIDE_HH)
 $(REF_GUIDE_HH): $(REF_GUIDE_HTML) $(doc_dir)/tools/todoxygen.sh
 # The script `todoxygen.sh' may fail and still create a (partial and
 # invalid) file, thus preventing Make from trying to generate it
@@ -781,7 +723,6 @@ $(REF_GUIDE_HH): $(REF_GUIDE_HTML) $(doc_dir)/tools/todoxygen.sh
 
 # Final product.
 REF_GUIDE_PDF = $(ref_guide_dir)/ref_guide.pdf
-ref-guide-pdf: $(REF_GUIDE_PDF)
 # Extra dependencies.
 $(REF_GUIDE_PDF): $(ref_guide_dependencies)
 

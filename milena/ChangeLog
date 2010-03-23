@@ -1,3 +1,15 @@
+2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove Make aliases in the documentation.
+
+	* doc/Makefile.am (doc, doc-user, doc-devel)
+	(doc-pdf, doc-html, doc-devel-pdf, doc-devel-html)
+	(ref-doc, ref-doc-pdf, ref-doc-devel, ref-doc-devel-pdf)
+	(tutorial-pdf, white-paper-pdf, ref-guide-pdf)
+	(tutorial-html, white-paper-html, ref-guide-html):
+	Remove (phony) targets.
+	* Makefile.am (doc, tutorial): Likewise.
+
 2010-03-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Regen documentation products.
