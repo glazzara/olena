@@ -1,5 +1,12 @@
 2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Do not distribute the developer (Doxygen) reference manual.
+
+	* doc/Makefile.am (EXTRA_DIST): Remove
+	$(srcdir)/devel-refman.stamp.
+
+2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the name of the developer (Doxygen) PDF reference manual.
 
 	* doc/Makefile.am (DEVEL_REFMAN_PDF):

@@ -288,7 +288,6 @@ $(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/$(DEVEL_REFMAN)
 	cd $(srcdir)/$(DEVEL_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
 	cp -f $(srcdir)/$(DEVEL_REFMAN)/latex/refman.pdf $@
 
-EXTRA_DIST += $(srcdir)/devel-refman.stamp
 MAINTAINERCLEANFILES += $(srcdir)/devel-refman.stamp
 $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(refman_dependencies)
 	@rm -f $@.tmp
