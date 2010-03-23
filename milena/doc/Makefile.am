@@ -380,9 +380,7 @@ $(TECHNICAL_PDF): $(technical_dependencies)
 
 dist_pdf_DATA = $(TECHNICAL_PDF)
 
-EXTRA_DIST +=					\
-  $(technical_dir)/technical.tex		\
-  $(TECHNICAL_HH)
+EXTRA_DIST += $(technical_dir)/technical.tex
 
 MAINTAINERCLEANFILES += $(TECHNICAL_HH)
 

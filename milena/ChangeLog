@@ -1,5 +1,13 @@
 2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the Milena distribution.
+
+	* doc/Makefile.am (EXTRA_DIST): Remove $(TECHNICAL_HH).
+	* tests/transform/Makefile.am (check_PROGRAMS): Remove kht.
+	(kht_SOURCES): Remove.
+
+2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Do not distribute the developer (Doxygen) reference manual.
 
 	* doc/Makefile.am (EXTRA_DIST): Remove
