@@ -1,5 +1,19 @@
 2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use finer installation variables.
+
+	* doc/Makefile.am (dist_doc_DATA): Remove variable.
+	(dist_html_DATA, dist_pdf_DATA): New variables.
+	(MAINTAINERCLEANFILES):
+	Remove $(TECHNICAL_HTML_OUTPUTS), $(TECHNICAL_PDF),
+	$(TUTORIAL_HTML_OUTPUTS), $(TUTORIAL_PDF),
+	$(WHITE_PAPER_HTML_OUTPUTS), $(WHITE_PAPER_PDF),
+	$(REF_GUIDE_HTML_OUTPUTS), $(REF_GUIDE_PDF) and
+	$(USER_REFMAN_PDF).
+	Add $(dist_html_DATA) and $(dist_pdf_DATA).
+
+2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Simplify doc/Makefile.am.
 
 	* doc/Makefile.am:

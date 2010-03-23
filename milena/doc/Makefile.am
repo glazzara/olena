@@ -27,10 +27,6 @@ DOXYGEN = doxygen
 
 DOXYFILE = Doxyfile
 
-# Initialiaze variables.
-EXTRA_DIST =
-dist_doc_DATA =
-
 
 ## --------------------- ##
 ## LaTeX configuration.  ##
@@ -52,7 +48,7 @@ DOC_PACKAGES = doxyfuns.sty milena.sty
 ## --------- ##
 
 # Generate a Makefile helper containing the list of generated figures.
-EXTRA_DIST += gen-figures-mk
+EXTRA_DIST = gen-figures-mk
 $(srcdir)/figures.mk: $(srcdir)/gen-figures-mk
 	rm -f $@.tmp
 	cd $(srcdir) && ./gen-figures-mk >figures.mk.tmp
@@ -355,8 +351,7 @@ $(TECHNICAL_HTML_OUTPUTS): $(TECHNICAL_HTML).stamp
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-dist_doc_DATA += $(TECHNICAL_HTML_OUTPUTS)
-MAINTAINERCLEANFILES += $(TECHNICAL_HTML_OUTPUTS)
+dist_html_DATA = $(TECHNICAL_HTML_OUTPUTS)
 
 ## FIXME: technical technical.hh does not seem to be used (by the
 ## Doyxgen documentation); remove its generation? Careful,
@@ -384,8 +379,7 @@ TECHNICAL_PDF = $(technical_dir)/technical.pdf
 # Extra dependencies.
 $(TECHNICAL_PDF): $(technical_dependencies)
 
-dist_doc_DATA += $(TECHNICAL_PDF)
-MAINTAINERCLEANFILES += $(TECHNICAL_PDF)
+dist_pdf_DATA = $(TECHNICAL_PDF)
 
 EXTRA_DIST +=					\
   $(technical_dir)/technical.tex		\
@@ -429,8 +423,7 @@ $(TUTORIAL_HTML_OUTPUTS): $(TUTORIAL_HTML).stamp
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-dist_doc_DATA += $(TUTORIAL_HTML_OUTPUTS)
-MAINTAINERCLEANFILES += $(TUTORIAL_HTML_OUTPUTS)
+dist_html_DATA += $(TUTORIAL_HTML_OUTPUTS)
 
 # Intermediate product for the various doc targets of the parent
 # directory.
@@ -454,8 +447,7 @@ TUTORIAL_PDF = $(tutorial_dir)/tutorial.pdf
 # Extra dependencies.
 $(TUTORIAL_PDF): $(tutorial_dependencies)
 
-dist_doc_DATA += $(TUTORIAL_PDF)
-MAINTAINERCLEANFILES += $(TUTORIAL_PDF)
+dist_pdf_DATA += $(TUTORIAL_PDF)
 
 EXTRA_DIST +=					\
   $(tutorial_dir)/tutorial.tex			\
@@ -509,15 +501,13 @@ $(WHITE_PAPER_HTML_OUTPUTS): $(WHITE_PAPER_HTML).stamp
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-dist_doc_DATA += $(WHITE_PAPER_HTML_OUTPUTS)
-MAINTAINERCLEANFILES += $(WHITE_PAPER_HTML_OUTPUTS)
+dist_html_DATA += $(WHITE_PAPER_HTML_OUTPUTS)
 
 WHITE_PAPER_PDF = $(white_paper_dir)/white_paper.pdf
 # Extra dependencies.
 $(WHITE_PAPER_PDF): $(PNGS)
 
-dist_doc_DATA += $(WHITE_PAPER_PDF)
-MAINTAINERCLEANFILES += $(WHITE_PAPER_PDF)
+dist_pdf_DATA += $(WHITE_PAPER_PDF)
 
 EXTRA_DIST +=					\
   $(white_paper_dir)/white_paper.tex		\
@@ -566,8 +556,7 @@ $(REF_GUIDE_HTML_OUTPUTS): $(REF_GUIDE_HTML).stamp
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
-dist_doc_DATA += $(REF_GUIDE_HTML_OUTPUTS)
-MAINTAINERCLEANFILES += $(REF_GUIDE_HTML_OUTPUTS)
+dist_html_DATA += $(REF_GUIDE_HTML_OUTPUTS)
 
 # Intermediate product for the various doc targets of the parent
 # directory.
@@ -591,8 +580,7 @@ REF_GUIDE_PDF = $(ref_guide_dir)/ref_guide.pdf
 # Extra dependencies.
 $(REF_GUIDE_PDF): $(ref_guide_dependencies)
 
-dist_doc_DATA += $(REF_GUIDE_PDF)
-MAINTAINERCLEANFILES += $(REF_GUIDE_PDF)
+dist_pdf_DATA += $(REF_GUIDE_PDF)
 
 EXTRA_DIST +=					\
   $(ref_guide_dir)/ref_guide.tex		\
@@ -729,7 +717,7 @@ regen-am:
 ## -------------- ##
 
 # PDF.
-dist_doc_DATA += $(USER_REFMAN_PDF)
+dist_pdf_DATA += $(USER_REFMAN_PDF)
 
 # HTML.
 # Installing a directory located in the source dir is not supported by
@@ -754,6 +742,9 @@ install-data-local:
 uninstall-local:
 	chmod -R 700 $(DESTDIR)$(htmldir)/user-refman
 	rm -rf $(DESTDIR)$(htmldir)/user-refman
+
+
+MAINTAINERCLEANFILES += $(dist_html_DATA) $(dist_pdf_DATA)
 
 
 EXTRA_DIST +=					\
