@@ -1,5 +1,12 @@
 2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the name of the developer (Doxygen) PDF reference manual.
+
+	* doc/Makefile.am (DEVEL_REFMAN_PDF):
+	s/devel-refman-pdf/devel-refman.pdf/.
+
+2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use finer installation variables.
 
 	* doc/Makefile.am (dist_doc_DATA): Remove variable.

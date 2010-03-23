@@ -278,7 +278,7 @@ $(DOXYFILE_DEVEL): $(srcdir)/$(DOXYFILE).in
 	rm -f $@.tmp
 MAINTAINERCLEANFILES += $(DOXYFILE_DEVEL)
 
-DEVEL_REFMAN_PDF = devel-refman-pdf
+DEVEL_REFMAN_PDF = devel-refman.pdf
 DEVEL_REFMAN = devel-refman
 
 # Be warned, most LaTeX installations will not be able to compile the
