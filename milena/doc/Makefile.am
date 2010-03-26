@@ -352,27 +352,6 @@ $(TECHNICAL_HTML_OUTPUTS): $(TECHNICAL_HTML).stamp
 
 dist_html_DATA = $(TECHNICAL_HTML_OUTPUTS)
 
-## FIXME: technical technical.hh does not seem to be used (by the
-## Doyxgen documentation); remove its generation? Careful,
-## technical/technical.html *is* probably required, though.
-
-# Intermediate product for the various doc targets of the parent
-# directory.
-#
-# This is not a bug: TECHNICAL_HH is meant to have a `.hh'
-# extension, since it is later parsed by Doxygen, which complains
-# about `.html' files.
-TECHNICAL_HH = $(technical_dir)/technical.hh
-$(TECHNICAL_HH): $(TECHNICAL_HTML) $(srcdir)/tools/todoxygen.sh
-# The script `todoxygen.sh' may fail and still create a (partial and
-# invalid) file, thus preventing Make from trying to generate it
-# again.  The solution is to use a temporary file as output and rename
-# it if the script succeeds.
-	rm -f $@.tmp
-	$(srcdir)/tools/todoxygen.sh $< $@.tmp $(srcdir)
-	mv -f $@.tmp $@
-
-
 # Final product.
 TECHNICAL_PDF = $(technical_dir)/technical.pdf
 # Extra dependencies.
@@ -382,7 +361,6 @@ dist_pdf_DATA = $(TECHNICAL_PDF)
 
 EXTRA_DIST += $(technical_dir)/technical.tex
 
-MAINTAINERCLEANFILES += $(TECHNICAL_HH)
 
 ## ---------- ##
 ## Tutorial.  ##

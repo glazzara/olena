@@ -1,5 +1,13 @@
 2010-03-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	No longer generate doc/technical/technical.hh.
+
+	* doc/Makefile.am (TECHNICAL_HH): Remove variable.
+	($(TECHNICAL_HH)): Remove rule.
+	(MAINTAINERCLEANFILES): Remove $(TECHNICAL_HH).
+
+2010-03-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the regeneration of files in doc/.
 
 	* doc/Makefile.am (regen-am): No longer invoke
