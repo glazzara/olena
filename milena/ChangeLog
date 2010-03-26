@@ -1,3 +1,11 @@
+2010-03-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the regeneration of files in doc/.
+
+	* doc/Makefile.am (regen-am): No longer invoke
+	regen-pbm-figures-mk, regen-pgm-figures-mk nor
+	regen-ppm-figures-mk.
+
 2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the Milena distribution.

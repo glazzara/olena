@@ -699,9 +699,6 @@ EXTRA_DIST += generate_dist_files.sh
 include $(top_srcdir)/build-aux/regen-recursive.mk
 regen-am:
 	$(MAKE) $(AM_MAKEFLAGS) regen-figures-mk
-	$(MAKE) $(AM_MAKEFLAGS) regen-pbm-figures-mk
-	$(MAKE) $(AM_MAKEFLAGS) regen-pgm-figures-mk
-	$(MAKE) $(AM_MAKEFLAGS) regen-ppm-figures-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-examples-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-split-examples-mk
 	$(MAKE) $(AM_MAKEFLAGS) regen-outputs-mk
