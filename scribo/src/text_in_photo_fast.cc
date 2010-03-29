@@ -37,6 +37,7 @@
 
 #include <mln/io/pbm/all.hh>
 #include <mln/io/ppm/save.hh>
+#include <mln/io/magick/all.hh>
 
 #include <mln/math/min.hh>
 
@@ -53,6 +54,10 @@
 #include <mln/draw/box.hh>
 
 #include <mln/geom/translate.hh>
+
+#include <mln/subsampling/antialiased.hh>
+
+#include <mln/subsampling/antialiased_rgb.hh>
 
 #include <scribo/draw/bounding_boxes.hh>
 #include <scribo/draw/groups_bboxes.hh>
@@ -101,8 +106,8 @@
 #include <scribo/src/afp/link.hh>
 #include <scribo/src/afp/regroup.hh>
 
-#include <scribo/core/line_set.hh>
-#include <scribo/text/recognition.hh>
+// #include <scribo/core/line_set.hh>
+// #include <scribo/text/recognition.hh>
 
 const char *args_desc[][2] =
 {
@@ -210,6 +215,19 @@ namespace mln
     return output;
   }
 
+
+  template <typename I>
+  unsigned get_factor(const I& ima)
+  {
+    unsigned
+      nrows = ima.nrows(),
+      ncols = ima.ncols(),
+      max_dim = std::max(nrows, ncols),
+      factor = max_dim / 512;
+
+    return factor ? factor : 1;
+  }
+
 } // end of namespace mln
 
 
@@ -238,8 +256,17 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   trace::entering("main");
 
   image2d<value::rgb8> input_rgb;
-  io::ppm::load(input_rgb, argv[1]);
+  io::magick::load(input_rgb, argv[1]);
 
+  unsigned factor = get_factor(input_rgb);
+
+  std::cout << "Reduction Factor : " << factor << std::endl;
+
+  std::cout << "Original domain: " << input_rgb.domain() << std::endl;
+
+  input_rgb = mln::subsampling::impl::antialiased_2d_rgb(input_rgb, factor);
+
+  std::cout << "Resized domain: " << input_rgb.domain() << std::endl;
 
   unsigned lambda;
   if (argc == 10)
@@ -291,7 +318,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   unsigned w = std::min(intensity_ima.nrows() / 3, intensity_ima.ncols() / 3);
   if (! w % 2)
     ++w;
-  w = std::min(w, 101u);
+  w = std::min(w, 51u);
   if (argc > 4 && atoi(argv[4]) != 0)
   {
     std::cout << "** Using sauvola_ms with w_1 = " << w << std::endl;
@@ -311,6 +338,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
 #endif // !NOUT
 
+    logical::not_inplace(input);
 
 //   if (debug)
 //     io::pbm::save(input, "input.pbm");
@@ -626,9 +654,9 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
 
 
-  scribo::line_set<L>
-    lines = scribo::make::line_set(groups);
-  text::recognition(lines, "fra", "out.txt");
+//   scribo::line_set<L>
+//     lines = scribo::make::line_set(groups);
+//   text::recognition(lines, "fra", "out.txt");
 
   trace::exiting("main");
   return comps.nelements() != 0;

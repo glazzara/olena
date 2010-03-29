@@ -34,7 +34,6 @@ bin_PROGRAMS = 				\
   pbm_lines_in_doc 			\
   text_in_photo 			\
   text_in_photo_ppm 			\
-  text_in_photo_ppm_fast		\
   text_in_photo_pbm_fast		\
   text_in_photo_invert
 
@@ -42,7 +41,6 @@ bin_PROGRAMS = 				\
 pbm_lines_in_doc_SOURCES = pbm_lines_in_doc.cc
 text_in_photo_SOURCES = text_in_photo.cc
 text_in_photo_ppm_SOURCES = text_in_photo_ppm.cc
-text_in_photo_ppm_fast_SOURCES = text_in_photo_ppm_fast.cc
 text_in_photo_pbm_fast_SOURCES = text_in_photo_pbm_fast.cc
 text_in_photo_invert_SOURCES = text_in_photo_invert.cc
 
@@ -84,13 +82,15 @@ if HAVE_TIFF
     text_in_article_pbm_SOURCES = text_in_article_pbm.cc
 
 
-    text_in_photo_ppm_fast_CPPFLAGS = $(AM_CPPFLAGS) \
-			       		$(TESSERACT_CPPFLAGS) \
-			       		$(TIFF_CPPFLAGS)
-    text_in_photo_ppm_fast_LDFLAGS  = $(AM_LDFLAGS) \
-			     	  	$(TESSERACT_LDFLAGS) \
-			       		$(TIFF_LDFLAGS) \
-			      	 	-lpthread
+    bin_PROGRAMS	+= text_in_photo_fast
+    text_in_photo_fast_SOURCES = text_in_photo_fast.cc
+    text_in_photo_fast_CPPFLAGS = $(AM_CPPFLAGS) \
+				 $(TESSERACT_CPPFLAGS) \
+			         `Magick++-config --cppflags`
+
+    text_in_photo_fast_LDFLAGS  = $(AM_LDFLAGS) \
+			     	  $(TESSERACT_LDFLAGS) \
+			      	 -lpthread  `Magick++-config --libs`
 
 endif HAVE_TIFF
 endif HAVE_TESSERACT

@@ -1,3 +1,12 @@
+2010-03-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add support for various image types in text_in_photo_fast.
+
+	* src/Makefile.am: Add ImageMagick CPPFLAGS and LDFLAGS.
+
+	* src/text_in_photo_ppm_fast.cc: Rename as...
+	* src/text_in_photo_fast.cc: ... this. Use ImageMagick to load images.
+
 2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve dematerialization wizard.
