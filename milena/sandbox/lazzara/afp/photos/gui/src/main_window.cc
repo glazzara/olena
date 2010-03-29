@@ -46,7 +46,12 @@ namespace mln
 
       // Setup directory listing
       QStringList filters;
-      filters << "*.ppm";
+      filters << "*.ppm"
+	      << "*.pgm"
+	      << "*.pbm"
+	      << "*.jpg"
+	      << "*.png"
+	      << "*.tiff";
       dir_.setNameFilters(filters);
       dir_.setFilter(QDir::Files);
       dir_.setSorting(QDir::Name);
@@ -113,7 +118,7 @@ namespace mln
     }
 
     main_window::~main_window()
-    {
+     {
       if (process_.state() == QProcess::Running)
       {
 	process_.disconnect();
@@ -147,7 +152,14 @@ namespace mln
      progressBar_.setValue(0);
 
      options_ = options;
-     start_process();
+
+     if (current_file_ < file_list_.size())
+       start_process();
+     else
+     {
+       QMessageBox::critical(this, "No image found!", QString("This application could not find any supported images in the provided directory. Supported file types are: %1").arg(dir_.nameFilters().join(" ")));
+       stop_process();
+     }
    }
 
     void
@@ -166,10 +178,7 @@ namespace mln
       if (current_file_ < file_list_.size())
 	start_process();
       else
-      {
-	progressToolBar_->hide();
-	emit process_finished();
-      }
+	stop_process();
     }
 
 
@@ -208,6 +217,13 @@ namespace mln
 	   << "/tmp/" + file_list_.at(current_file_).baseName();
 
       process_.start(text_in_photo_ppm_, args);
+    }
+
+    void
+    main_window::stop_process()
+    {
+      progressToolBar_->hide();
+      emit process_finished();
     }
 
     void

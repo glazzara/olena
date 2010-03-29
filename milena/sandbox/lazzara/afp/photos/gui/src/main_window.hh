@@ -77,6 +77,7 @@ namespace mln
 
       void display_image(const QString& filename);
       void start_process();
+      void stop_process();
       void next_process();
 
       void connect_process();
