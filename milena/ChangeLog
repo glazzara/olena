@@ -1,5 +1,24 @@
 2010-03-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Adjust the installation of the HTML documentation.
+
+	* doc/Makefile.am (all-local): Do not depend on
+	$(srcdir)/$(USER_REFMAN_PDF).
+	(dist_pdf_DATA): Add $(srcdir)/$(USER_REFMAN_PDF) instead of
+	$(USER_REFMAN_PDF).
+	(AM_CPPFLAGS): Remove -I$(top_srcdir)/milena/doc/tutorial/tools.
+	(regen-doc, $(srcdir)/user-refman.stamp)
+	(regen-devel-doc, $(srcdir)/devel-refman.stamp):
+	Remove `-' before `rm' actions.
+	(EXTRA_DIST): Add $(USER_REFMAN).
+	(maintainer-clean-local)
+	(install-data-local)
+	(uninstall-local):
+	Handle the new HTML subdirectories.
+	(MAINTAINERCLEANFILES): Remove $(dist_html_DATA).
+
+2010-03-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Move LaTeX sources at the root of doc/; generate HTML in subdirs.
 
 	* doc/tutorial/tutorial.tex,

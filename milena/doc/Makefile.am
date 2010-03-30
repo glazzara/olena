@@ -15,13 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-# FIXME: To be overhauled! (See ticket #134).
 
-# Look for Milena header in srcdir and for (generated) test headers
+# Look for Milena headers in srcdir and for (generated) test headers
 # (like data.hh) in builddir.
-AM_CPPFLAGS =						\
-  -I$(top_srcdir)/milena -I$(top_builddir)/milena	\
-  -I$(top_srcdir)/milena/doc/tutorial/tools
+AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 
 DOXYGEN = doxygen
 
@@ -34,7 +31,6 @@ DOXYFILE = Doxyfile
 
 include $(top_srcdir)/build-aux/tex.mk
 
-# FIXME: Check this list.
 TEXI2DVI_FLAGS +=							\
   -I $(srcdir) -I $(srcdir)/outputs -I $(srcdir)/outputs/split		\
   -I $(srcdir)/img -I $(srcdir)/examples/split
@@ -191,15 +187,15 @@ REFMAN_deps =				\
   $(srcdir)/ref-guide.hh
 
 # ----------------------- #
-# User reference manual.  #
+# User Reference Manual.  #
 # ----------------------- #
 
-all-local: $(srcdir)/$(USER_REFMAN) $(srcdir)/$(USER_REFMAN_PDF)
+all-local: $(srcdir)/$(USER_REFMAN)
 
 # Run "make regen-doc" to forcefully rebuild the Doxygen documentation.
 .PHONY: regen-doc
 regen-doc:
-	-rm -f $(srcdir)/user-refman.stamp
+	rm -f $(srcdir)/user-refman.stamp
 	$(MAKE) $(AM_MAKEFLAGS) $(srcdir)/user-refman.stamp
 
 DOXYFILE_USER = Doxyfile_user
@@ -224,45 +220,57 @@ $(DOXYFILE_USER): $(srcdir)/$(DOXYFILE).in
 	  $(edit) $< >$@
 MAINTAINERCLEANFILES += $(DOXYFILE_USER)
 
-USER_REFMAN_PDF = user-refman.pdf
 USER_REFMAN = user-refman
+
+# PDF.
+USER_REFMAN_PDF = user-refman.pdf
+dist_pdf_DATA = $(srcdir)/$(USER_REFMAN_PDF)
 
 $(srcdir)/$(USER_REFMAN_PDF): $(srcdir)/$(USER_REFMAN)
 	cd $(srcdir)/$(USER_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
 	cp -f $(srcdir)/$(USER_REFMAN)/latex/refman.pdf $@
 
+# HTML.
 EXTRA_DIST += $(srcdir)/user-refman.stamp
 MAINTAINERCLEANFILES += $(srcdir)/user-refman.stamp
 $(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	@rm -f $@.tmp
 	@touch $@.tmp
-	-rm -rf $(USER_REFMAN).tmp
+	rm -rf $(USER_REFMAN).tmp
 	$(MAKE) $(AM_MAKE_FLAGS) $(DOXYFILE_USER)
 	$(DOXYGEN) $(DOXYFILE_USER)
 ## Doxygen may generate an incomplete output and exit with success!
 ## Check some files before deeming the output as acceptable.
 	test -f $(USER_REFMAN).tmp/latex/refman.tex
-	-rm -rf $(srcdir)/$(USER_REFMAN)
+	rm -rf $(srcdir)/$(USER_REFMAN)
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
 	@mv -f $@.tmp $@
 
 $(srcdir)/$(USER_REFMAN): $(srcdir)/user-refman.stamp
-## Recover from the removal of $@
+## Recover from the removal of $@.
 	@if test -d $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
 
+# Installing a directory located in the source dir is not supported by
+# Automake by default, so we cannot simply add `$(USER_REFMAN)/html'
+# to `dist_doc_DATA'.  The rule `install-data-local' (see below) used
+# to work around this limitation is borrowed from the Vaucanson
+# project.
+EXTRA_DIST += $(USER_REFMAN)
+
+
 # ---------------------------- #
-# Developer reference manual.  #
+# Developer Reference Manual.  #
 # ---------------------------- #
 
 # Run "make regen-devel-doc" to forcefully rebuild the Doxygen
 # developer documentation.
 .PHONY: regen-devel-doc
 regen-devel-doc:
-	-rm -f $(srcdir)/devel-refman.stamp
+	rm -f $(srcdir)/devel-refman.stamp
 	$(MAKE) $(AM_MAKEFLAGS) $(srcdir)/devel-refman.stamp
 
 DOXYFILE_DEVEL = Doxyfile_devel
@@ -291,9 +299,10 @@ $(DOXYFILE_DEVEL): $(srcdir)/$(DOXYFILE).in
 	rm -f $@.tmp
 MAINTAINERCLEANFILES += $(DOXYFILE_DEVEL)
 
-DEVEL_REFMAN_PDF = devel-refman.pdf
 DEVEL_REFMAN = devel-refman
 
+# PDF.
+DEVEL_REFMAN_PDF = devel-refman.pdf
 # Be warned, most LaTeX installations will not be able to compile the
 # PDF development documentation as-is, as TeX's default memory
 # capacities are usually too small to handle such a large document.
@@ -301,33 +310,28 @@ $(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/$(DEVEL_REFMAN)
 	cd $(srcdir)/$(DEVEL_REFMAN)/latex && $(MAKE) $(AM_MAKEFLAGS) pdf
 	cp -f $(srcdir)/$(DEVEL_REFMAN)/latex/refman.pdf $@
 
+# HTML.
 MAINTAINERCLEANFILES += $(srcdir)/devel-refman.stamp
 $(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	@rm -f $@.tmp
 	@touch $@.tmp
-	-rm -rf $(DEVEL_REFMAN).tmp
+	rm -rf $(DEVEL_REFMAN).tmp
 	$(MAKE) $(AM_MAKE_FLAGS) $(DOXYFILE_DEVEL)
 	$(DOXYGEN) $(DOXYFILE_DEVEL)
 ## Doxygen may generate an incomplete output and exit with success!
 ## Check some files before deeming the output as acceptable.
 	test -f $(DEVEL_REFMAN).tmp/latex/refman.tex
-	-rm -rf $(srcdir)/$(DEVEL_REFMAN)
+	rm -rf $(srcdir)/$(DEVEL_REFMAN)
 ## FIXME: Moving directories between file systems is not portable.
 	mv $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
 	@mv -f $@.tmp $@
 
 $(srcdir)/$(DEVEL_REFMAN): $(srcdir)/devel-refman.stamp
-## Recover from the removal of $@
+## Recover from the removal of $@.
 	@if test -d $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
-
-
-# Clean Doxygen products.
-maintainer-clean-local:
-	-rm -rf $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
-	-rm -rf $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
 
 
 ## ------------------------- ##
@@ -683,39 +687,8 @@ regen-am:
 
 
 ## -------------- ##
-## Installation.  ##
+## Distribution.  ##
 ## -------------- ##
-
-# PDF.
-dist_pdf_DATA += $(USER_REFMAN_PDF)
-
-# HTML.
-# Installing a directory located in the source dir is not supported by
-# Automake by default, so we cannot add `$(USER_REFMAN)/html' to
-# `dist_doc_DATA'.  The following two rules are are workaround from
-# the Vaucanson project.
-EXTRA_DIST += $(USER_REFMAN)/html
-
-# We install by hand, otherwise Automake produces "install .../srcdoc
-# .../srcdoc", which installs our dir into the previous one, instead
-# of replacing it.
-install-data-local:
-	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)/html
-	$(mkdir_p) $(DESTDIR)$(htmldir)
-	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/user-refman
-## Try GNU chmod's X mode before resorting to something slower but
-## more standard.
-	chmod -R a+rX $(DESTDIR)$(htmldir) || \
-	find $(DESTDIR)$(htmldir) \( -type d -a -exec chmod a+rx {} \; \) \
-             -o -exec chmod a+r {} \;
-
-uninstall-local:
-	chmod -R 700 $(DESTDIR)$(htmldir)/user-refman
-	rm -rf $(DESTDIR)$(htmldir)/user-refman
-
-
-MAINTAINERCLEANFILES += $(dist_html_DATA) $(dist_pdf_DATA)
-
 
 EXTRA_DIST +=					\
   $(DATA_html_dirs)				\
@@ -736,3 +709,52 @@ EXTRA_DIST +=					\
   tools/sample_utils.hh				\
   tools/split_sample.sh				\
   tools/todoxygen.sh
+
+
+## ---------- ##
+## Cleaning.  ##
+## ---------- ##
+
+MAINTAINERCLEANFILES += $(dist_pdf_DATA)
+
+maintainer-clean-local:
+	-rm -rf $(USER_REFMAN).tmp $(srcdir)/$(USER_REFMAN)
+	-rm -rf $(DEVEL_REFMAN).tmp $(srcdir)/$(DEVEL_REFMAN)
+	-for d in $(DATA_html_dirs); do		\
+	  rm -rf $$d.tmp $(srcdir)/$$d;		\
+	done
+
+
+## -------------- ##
+## Installation.  ##
+## -------------- ##
+
+# We install by hand, otherwise Automake produces "install .../srcdoc
+# .../srcdoc", which installs our dir into the previous one, instead
+# of replacing it.
+install-data-local:
+	$(mkdir_p) $(DESTDIR)$(htmldir)
+# The user reference manual is located in a subdirectory, hence this
+# special case.
+	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)
+	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/$(USER_REFMAN)
+# Other HTML directories can be processed uniformly.
+	for d in $(DATA_html_dirs); do			\
+	  rm -rf $(DESTDIR)$(htmldir)/$$d;		\
+	  cp -r $(srcdir)/$$d $(DESTDIR)$(htmldir);	\
+	done
+## Try GNU chmod's X mode before resorting to something slower but
+## more standard.
+	chmod -R a+rX $(DESTDIR)$(htmldir) || \
+	find $(DESTDIR)$(htmldir) \( -type d -a -exec chmod a+rx {} \; \) \
+             -o -exec chmod a+r {} \;
+
+uninstall-local:
+	for d in $(DATA_html_dirs); do			\
+	  chmod -R 700 $(DESTDIR)$(htmldir)/$$d;	\
+	  rm -rf $(DESTDIR)$(htmldir)/$$d;		\
+	done
+# Same remark as above regarding the special case of the user
+# reference manual.
+	chmod -R 700 $(DESTDIR)$(htmldir)/$(USER_REFMAN)
+	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)
