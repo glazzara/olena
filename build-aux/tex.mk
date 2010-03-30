@@ -27,7 +27,11 @@ TEXI2DVI_FLAGS = --tidy --build-dir=tmp.t2d --batch
 TEXI2PDF = $(TEXI2DVI) --pdf
 TEXI2PDF_FLAGS = $(TEXI2DVI_FLAGS)
 
-TEXI2HTML = $(TEXI2DVI) --html --tex4ht
+# FIXME: Switch back to HeVeA, since we currently rely on its outputs
+# to produce intermediate products later read by Doxygen.  When these
+# intermediate files are produced directly (from LaTeX sources),
+# switch again to TeX4ht.
+TEXI2HTML = $(TEXI2DVI) --html # --tex4ht
 TEXI2HTML_FLAGS = $(TEXI2DVI_FLAGS)
 
 SUFFIXES = .tex .pdf

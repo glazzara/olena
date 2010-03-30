@@ -1,3 +1,9 @@
+2010-03-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revert to HeVeA to generate HTML from LaTeX.
+
+	* build-aux/tex.mk (TEXI2HTML): Disable flag `--tex4ht'.
+
 2010-03-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	* Makefile.am (LOCAL_RECURSIVE_TARGETS): Remove doc.
