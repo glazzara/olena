@@ -1,5 +1,13 @@
 2010-03-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Do not install low-quality HTML documentation.
+
+	* doc/Makefile.am (DATA_html_dirs_inst): New.
+	Use it...
+	(install-data-local, uninstall-local): Here.
+
+2010-03-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Adjust the installation of the HTML documentation.
 
 	* doc/Makefile.am (all-local): Do not depend on

@@ -729,6 +729,12 @@ maintainer-clean-local:
 ## Installation.  ##
 ## -------------- ##
 
+## FIXME: The current HTML outputs of technical.tex, tutorial.tex and
+## ref-guide.tex are awful.  Only install the white paper HTML product
+## for the moment.
+# DATA_html_dirs_inst = $(DATA_html_dirs)
+DATA_html_dirs_inst = $(WHITE_PAPER)
+
 # We install by hand, otherwise Automake produces "install .../srcdoc
 # .../srcdoc", which installs our dir into the previous one, instead
 # of replacing it.
@@ -739,7 +745,7 @@ install-data-local:
 	rm -rf $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 	cp -r $(srcdir)/$(USER_REFMAN)/html $(DESTDIR)$(htmldir)/$(USER_REFMAN)
 # Other HTML directories can be processed uniformly.
-	for d in $(DATA_html_dirs); do			\
+	for d in $(DATA_html_dirs_inst); do			\
 	  rm -rf $(DESTDIR)$(htmldir)/$$d;		\
 	  cp -r $(srcdir)/$$d $(DESTDIR)$(htmldir);	\
 	done
@@ -750,7 +756,7 @@ install-data-local:
              -o -exec chmod a+r {} \;
 
 uninstall-local:
-	for d in $(DATA_html_dirs); do			\
+	for d in $(DATA_html_dirs_inst); do			\
 	  chmod -R 700 $(DESTDIR)$(htmldir)/$$d;	\
 	  rm -rf $(DESTDIR)$(htmldir)/$$d;		\
 	done
