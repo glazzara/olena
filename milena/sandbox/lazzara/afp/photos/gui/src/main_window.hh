@@ -48,8 +48,8 @@ namespace mln
       void process__error_slot(QProcess::ProcessError);
       void process__finished_slot(int exitCode,
 				  QProcess::ExitStatus exitStatus);
-      void on_withTextListWidget_itemClicked(QListWidgetItem * item);
-      void on_withoutTextListWidget_itemClicked(QListWidgetItem * item);
+      void on_withTextListWidget_currentItemChanged(QListWidgetItem * item);
+      void on_withoutTextListWidget_currentItemChanged(QListWidgetItem * item);
 
       void on_fullImageButton_toggled(bool b);
       void on_textBoxesButton_toggled(bool);
@@ -63,6 +63,7 @@ namespace mln
       void cancel_clicked(bool);
 
       void remove_image(bool);
+      void show_hidden_images(bool b);
 
     signals:
       void process_finished();
@@ -82,12 +83,15 @@ namespace mln
 
       void connect_process();
 
+      void update_withtext_count();
+
     private: // Attributes
       QString output_dir_;
       QDir dir_;
       QString text_in_photo_ppm_;
       QProcess process_;
       QString options_;
+      QSet<QListWidgetItem *> hidden_;
 
       QFileInfoList file_list_;
       int current_file_;
@@ -99,6 +103,7 @@ namespace mln
 
       // ToolBar
       QToolBar *toolbar_;
+      QAction *showHiddenImages_;
     };
 
 

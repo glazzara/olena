@@ -1,3 +1,11 @@
+2010-03-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve the usability of AFP's GUI.
+
+	* lazzara/afp/photos/gui/src/main_window.cc,
+	* lazzara/afp/photos/gui/src/main_window.hh: Add shortcuts to
+	navigate quickly.
+
 2010-03-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add support for more image types.

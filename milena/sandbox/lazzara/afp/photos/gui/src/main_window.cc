@@ -81,6 +81,15 @@ namespace mln
 	      this, SLOT(remove_image(bool)));
       toolbar_->addAction(removeImage);
 
+      showHiddenImages_ = new QAction(QIcon(":/icons/photos.png"),
+				      tr("Show hidden photos."),
+				      toolbar_);
+      showHiddenImages_->setCheckable(true);
+      connect(showHiddenImages_, SIGNAL(toggled(bool)),
+	      this, SLOT(show_hidden_images(bool)));
+      toolbar_->addAction(showHiddenImages_);
+
+
       addToolBar(toolbar_);
 
 
@@ -167,13 +176,6 @@ namespace mln
     {
       ++current_file_;
       progressBar_.setValue(current_file_);
-
-      tabWidget->setTabText(0,
-			    QString(tr("With text (%1)"))
-			    .arg(withTextListWidget->count()));
-      tabWidget->setTabText(1,
-			    QString(tr("Without text (%1)"))
-			    .arg(withoutTextListWidget->count()));
 
       if (current_file_ < file_list_.size())
 	start_process();
@@ -264,17 +266,23 @@ namespace mln
 
 	  item->setSizeHint(QSize(170, 200));
 	  withTextListWidget->addItem(item);
-	  // Fixme: update tab title with number of photos.
 	  if (withTextListWidget->count() == 1)
 	  {
 	    withTextListWidget->setCurrentRow(0, QItemSelectionModel::SelectCurrent);
-	    on_withTextListWidget_itemClicked(withTextListWidget->item(0));
+	    on_withTextListWidget_currentItemChanged(withTextListWidget->item(0));
 	  }
 	}
 	else
-	  // Fixme: update tab title with number of photos.
 	  withoutTextListWidget->addItem(item);
       }
+
+      // Update tab titles.
+      tabWidget->setTabText(0,
+			    QString(tr("With text (%1)"))
+			    .arg(withTextListWidget->count()));
+      tabWidget->setTabText(1,
+			    QString(tr("Without text (%1)"))
+			    .arg(withoutTextListWidget->count()));
 
       next_process();
     }
@@ -299,7 +307,7 @@ namespace mln
 
 
     void
-    main_window::on_withTextListWidget_itemClicked(QListWidgetItem * item)
+    main_window::on_withTextListWidget_currentItemChanged(QListWidgetItem * item)
     {
       if (fullImageButton->isChecked())
 	on_fullImageButton_toggled(true);
@@ -317,7 +325,7 @@ namespace mln
     }
 
     void
-    main_window::on_withoutTextListWidget_itemClicked(QListWidgetItem * item)
+    main_window::on_withoutTextListWidget_currentItemChanged(QListWidgetItem * item)
     {
       display_image(file_list_.at(item->data(Qt::UserRole).toInt()).absoluteFilePath());
     }
@@ -380,7 +388,7 @@ namespace mln
 	if (withoutTextListWidget->count())
 	{
 	  withoutTextListWidget->setCurrentRow(0, QItemSelectionModel::Select);
-	  on_withoutTextListWidget_itemClicked(withoutTextListWidget->item(0));
+	  on_withoutTextListWidget_currentItemChanged(withoutTextListWidget->item(0));
 	}
       }
     }
@@ -401,10 +409,41 @@ namespace mln
     {
       QList<QListWidgetItem *> items = withTextListWidget->selectedItems();
       foreach(QListWidgetItem *item, items)
-	delete withTextListWidget->takeItem(withTextListWidget->row(item));
+      {
+	hidden_.insert(item);
+	if (! showHiddenImages_->isChecked())
+	  item->setHidden(true);
+      }
 
-      if (withTextListWidget->count())
-	withTextListWidget->setCurrentRow(0, QItemSelectionModel::Select);
+      update_withtext_count();
+//       if (withTextListWidget->count())
+// 	withTextListWidget->setCurrentRow(0, QItemSelectionModel::Select);
+    }
+
+
+    void
+    main_window::show_hidden_images(bool b)
+    {
+      foreach(QListWidgetItem *item, hidden_)
+	item->setHidden(! b);
+
+      update_withtext_count();
+//       if (withTextListWidget->count())
+// 	withTextListWidget->setCurrentRow(0, QItemSelectionModel::Select);
+    }
+
+
+    void
+    main_window::update_withtext_count()
+    {
+      unsigned count;
+      if (! showHiddenImages_->isChecked())
+	count = withTextListWidget->count() - hidden_.size();
+      else
+	count = withTextListWidget->count();
+      tabWidget->setTabText(0,
+			    QString(tr("With text (%1)"))
+			    .arg(count));
     }
 
 
