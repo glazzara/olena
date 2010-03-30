@@ -8,29 +8,16 @@
 
 /figures/*.png
 
-/ref_guide/ref_guide.css
-/ref_guide/ref_guide.hh
-/ref_guide/ref_guide.html
-/ref_guide/ref_guide.pdf
-/ref_guide/ref_guide0x.png
+/ref-guide.hh
+/ref-guide.pdf
+/ref-guide/
 
-/technical/technical.css
-/technical/technical.html
-/technical/technical.pdf
+/technical.pdf
+/technical/
 
-/tutorial/tutorial.css
-/tutorial/tutorial.hh
-/tutorial/tutorial.html
-/tutorial/tutorial.pdf
+/tutorial.hh
+/tutorial.pdf
+/tutorial/
 
-/white_paper/figures/house.eps
-/white_paper/figures/house_rag.eps
-/white_paper/figures/house_wshed.eps
-/white_paper/figures/house_wshed_mean_colors.eps
-/white_paper/white_paper.css
-/white_paper/white_paper.html
-/white_paper/white_paper.pdf
-/white_paper/white_paper0x.png
-/white_paper/white_paper1x.png
-/white_paper/white_paper2x.png
-/white_paper/white_paper3x.png
+/white-paper.pdf
+/white-paper/

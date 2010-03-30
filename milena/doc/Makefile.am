@@ -95,8 +95,21 @@ MAINTAINERCLEANFILES += $(PNG_FIGURES)
 # Other figures.  #
 # --------------- #
 
+TECHNICAL_FIGURES =				\
+  figures/technical/file_layout.pdf		\
+  figures/technical/file_layout.png
+MORE_FIGURES = $(TECHNICAL_FIGURES)
+
+WHITE_PAPER_FIGURES =				\
+  $(srcdir)/figures/house.png			\
+  $(srcdir)/figures/house_rag.png		\
+  $(srcdir)/figures/house_wshed.png		\
+  $(srcdir)/figures/house_wshed_mean_colors.png
+MORE_FIGURES += $(WHITE_PAPER_FIGURES)
+
 # This image seems to be used nowhere.
-MORE_FIGURES = figures/accu_image_morpher_big_picture.pdf
+MORE_FIGURES += figures/accu_image_morpher_big_picture.pdf
+
 EXTRA_DIST += $(MORE_FIGURES)
 
 
@@ -172,10 +185,10 @@ regen-split-examples-mk:
 ## Doxygen documentation.  ##
 ## ----------------------- ##
 
-refman_dependencies =				\
+REFMAN_deps =				\
   $(PNG_FIGURES)				\
-  $(srcdir)/tutorial/tutorial.hh		\
-  $(srcdir)/ref_guide/ref_guide.hh
+  $(srcdir)/tutorial.hh				\
+  $(srcdir)/ref-guide.hh
 
 # ----------------------- #
 # User reference manual.  #
@@ -220,7 +233,7 @@ $(srcdir)/$(USER_REFMAN_PDF): $(srcdir)/$(USER_REFMAN)
 
 EXTRA_DIST += $(srcdir)/user-refman.stamp
 MAINTAINERCLEANFILES += $(srcdir)/user-refman.stamp
-$(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(refman_dependencies)
+$(srcdir)/user-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	@rm -f $@.tmp
 	@touch $@.tmp
 	-rm -rf $(USER_REFMAN).tmp
@@ -289,7 +302,7 @@ $(srcdir)/$(DEVEL_REFMAN_PDF): $(srcdir)/$(DEVEL_REFMAN)
 	cp -f $(srcdir)/$(DEVEL_REFMAN)/latex/refman.pdf $@
 
 MAINTAINERCLEANFILES += $(srcdir)/devel-refman.stamp
-$(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(refman_dependencies)
+$(srcdir)/devel-refman.stamp: $(srcdir)/$(DOXYFILE).in $(REFMAN_deps)
 	@rm -f $@.tmp
 	@touch $@.tmp
 	-rm -rf $(DEVEL_REFMAN).tmp
@@ -318,57 +331,59 @@ maintainer-clean-local:
 
 
 ## ------------------------- ##
-## Technical Documentation.  ##
+## Technical documentation.  ##
 ## ------------------------- ##
 
-technical_dir = $(srcdir)/technical
+EXTRA_DIST += technical.tex
 
-technical_dependencies =			\
+TECHNICAL_deps =				\
+  $(TECHNICAL_FIGURES)				\
   $(TECHNICAL_EXAMPLES)				\
   $(PNG_FIGURES)				\
   $(DOC_PACKAGES)
 
-# Final product.
-TECHNICAL_HTML = $(technical_dir)/technical.html
-TECHNICAL_HTML_OUTPUTS = $(TECHNICAL_HTML) $(technical_dir)/technical.css
+# PDF.
+TECHNICAL_PDF = $(srcdir)/technical.pdf
+dist_pdf_DATA += $(TECHNICAL_PDF)
+$(TECHNICAL_PDF): $(TECHNICAL_deps)
 
-EXTRA_DIST += $(TECHNICAL_HTML).stamp
-MAINTAINERCLEANFILES += $(TECHNICAL_HTML).stamp
-# HTML outputs contains several files (the HTML file itself, its CSS
-# style sheet, possibly some images).  Therefore, we cannot rely on a
-# simple suffix rule to produce them.
-$(TECHNICAL_HTML).stamp: $(technical_dir)/technical.tex $(technical_dependencies)
+# HTML.
+TECHNICAL = technical
+all-local: $(srcdir)/$(TECHNICAL).stamp
+# The HTML output contains several files (the HTML file itself, its
+# CSS style sheet, possibly some images).  Therefore, we cannot rely
+# on a simple suffix rule to produce them.  Instead, put the products
+# in a directory and use a time stamp.
+$(srcdir)/$(TECHNICAL).stamp: $(srcdir)/technical.tex $(TECHNICAL_deps)
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(TEXI2HTML) $(TEXI2HTML_FLAGS) -o $(TECHNICAL_HTML) $<
+	rm -rf $(TECHNICAL).tmp
+	mkdir $(TECHNICAL).tmp
+	$(TEXI2HTML) $(TEXI2HTML_FLAGS) \
+	  -o $(TECHNICAL).tmp/$(TECHNICAL).html $<
+	rm -rf $(srcdir)/$(TECHNICAL)
+## FIXME: moving directories between file systems is not portable.
+	mv $(TECHNICAL).tmp $(srcdir)/$(TECHNICAL)
 	@mv -f $@.tmp $@
+EXTRA_DIST += $(srcdir)/$(TECHNICAL).stamp
+MAINTAINERCLEANFILES += $(srcdir)/$(TECHNICAL).stamp
 
-$(TECHNICAL_HTML_OUTPUTS): $(TECHNICAL_HTML).stamp
-## Recover from the removal of $@
-	@if test -f $@; then :; else \
+$(srcdir)/$(TECHNICAL): $(srcdir)/$(TECHNICAL).stamp
+## Recover from the removal of $@.
+	@if test -d $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
-
-dist_html_DATA = $(TECHNICAL_HTML_OUTPUTS)
-
-# Final product.
-TECHNICAL_PDF = $(technical_dir)/technical.pdf
-# Extra dependencies.
-$(TECHNICAL_PDF): $(technical_dependencies)
-
-dist_pdf_DATA = $(TECHNICAL_PDF)
-
-EXTRA_DIST += $(technical_dir)/technical.tex
+DATA_html_dirs = $(TECHNICAL)
 
 
 ## ---------- ##
 ## Tutorial.  ##
 ## ---------- ##
 
-tutorial_dir = $(srcdir)/tutorial
+EXTRA_DIST += tutorial.tex
 
-tutorial_dependencies =				\
+TUTORIAL_deps =					\
   $(EXAMPLES)					\
   $(SPLIT_EXAMPLES)				\
   $(OUTPUTS)					\
@@ -376,58 +391,57 @@ tutorial_dependencies =				\
   $(PNG_FIGURES)				\
   $(DOC_PACKAGES)
 
-# Final product.
-TUTORIAL_HTML = $(tutorial_dir)/tutorial.html
-TUTORIAL_HTML_OUTPUTS = $(TUTORIAL_HTML) $(tutorial_dir)/tutorial.css
+# PDF.
+TUTORIAL_PDF = $(srcdir)/tutorial.pdf
+dist_pdf_DATA += $(TUTORIAL_PDF)
+$(TUTORIAL_PDF): $(TUTORIAL_deps)
 
-EXTRA_DIST += $(TUTORIAL_HTML).stamp
-MAINTAINERCLEANFILES += $(TUTORIAL_HTML).stamp
-# HTML outputs contains several files (the HTML file itself, its CSS
-# style sheet, possibly some images).  Therefore, we cannot rely on a
-# simple suffix rule to produce them.
-$(TUTORIAL_HTML).stamp: $(tutorial_dir)/tutorial.tex $(tutorial_dependencies)
+# HTML.
+TUTORIAL = tutorial
+all-local: $(srcdir)/$(TUTORIAL).stamp
+
+# The HTML output contains several files (the HTML file itself, its
+# CSS style sheet, possibly some images).  Therefore, we cannot rely
+# on a simple suffix rule to produce them.  Instead, put the products
+# in a directory and use a time stamp.
+$(srcdir)/$(TUTORIAL).stamp: $(srcdir)/tutorial.tex $(TUTORIAL_deps)
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(TEXI2HTML) $(TEXI2HTML_FLAGS) -o $(TUTORIAL_HTML) $<
+	rm -rf $(TUTORIAL).tmp
+	mkdir $(TUTORIAL).tmp
+	$(TEXI2HTML) $(TEXI2HTML_FLAGS)			\
+	  -o $(TUTORIAL).tmp/$(TUTORIAL).html $<
+	rm -rf $(srcdir)/$(TUTORIAL)
+## FIXME: moving directories between file systems is not portable.
+	mv $(TUTORIAL).tmp $(srcdir)/$(TUTORIAL)
 	@mv -f $@.tmp $@
+EXTRA_DIST += $(srcdir)/$(TUTORIAL).stamp
+MAINTAINERCLEANFILES += $(srcdir)/$(TUTORIAL).stamp
 
-$(TUTORIAL_HTML_OUTPUTS): $(TUTORIAL_HTML).stamp
-## Recover from the removal of $@
-	@if test -f $@; then :; else \
+$(srcdir)/$(TUTORIAL): $(srcdir)/$(TUTORIAL).stamp
+## Recover from the removal of $@.
+	@if test -d $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
+DATA_html_dirs += $(TUTORIAL)
 
-dist_html_DATA += $(TUTORIAL_HTML_OUTPUTS)
-
-# Intermediate product for the various doc targets of the parent
-# directory.
+# Intermediate product for the (Doxygen) User Reference Manual.
 #
 # This is not a bug: TUTORIAL_HH is meant to have a `.hh' extension,
 # since it is later parsed by Doxygen, which complains about `.html'
 # files.
-TUTORIAL_HH = $(tutorial_dir)/tutorial.hh
-$(TUTORIAL_HH): $(TUTORIAL_HTML) $(srcdir)/tools/todoxygen.sh
+TUTORIAL_HH = $(srcdir)/tutorial.hh
+$(TUTORIAL_HH): $(srcdir)/$(TUTORIAL).stamp $(srcdir)/tools/todoxygen.sh
 # The script `todoxygen.sh' may fail and still create a (partial and
 # invalid) file, thus preventing Make from trying to generate it
 # again.  The solution is to use a temporary file as output and rename
 # it if the script succeeds.
 	rm -f $@.tmp
-	$(srcdir)/tools/todoxygen.sh $< $@.tmp $(srcdir)
+	$(srcdir)/tools/todoxygen.sh					\
+	  $(srcdir)/$(TUTORIAL)/$(TUTORIAL).html $@.tmp $(srcdir)
 	mv -f $@.tmp $@
-
-
-# Final product.
-TUTORIAL_PDF = $(tutorial_dir)/tutorial.pdf
-# Extra dependencies.
-$(TUTORIAL_PDF): $(tutorial_dependencies)
-
-dist_pdf_DATA += $(TUTORIAL_PDF)
-
-EXTRA_DIST +=					\
-  $(tutorial_dir)/tutorial.tex			\
-  $(TUTORIAL_HH)
-
+EXTRA_DIST += $(TUTORIAL_HH)
 MAINTAINERCLEANFILES += $(TUTORIAL_HH)
 
 
@@ -435,70 +449,58 @@ MAINTAINERCLEANFILES += $(TUTORIAL_HH)
 ## White Paper.  ##
 ## ------------- ##
 
-white_paper_dir = $(srcdir)/white_paper
+EXTRA_DIST += white-paper.tex graphicx.hva
 
-PNGS =								\
-  $(white_paper_dir)/figures/house.png				\
-  $(white_paper_dir)/figures/house_rag.png			\
-  $(white_paper_dir)/figures/house_wshed.png			\
-  $(white_paper_dir)/figures/house_wshed_mean_colors.png
+WHITE_PAPER_deps =				\
+  $(WHITE_PAPER_FIGURES)			\
+  graphicx.hva
 
-EPSS = $(PNGS:png=eps)
+# PDF.
+WHITE_PAPER_PDF = $(srcdir)/white-paper.pdf
+dist_pdf_DATA += $(WHITE_PAPER_PDF)
+$(WHITE_PAPER_PDF): $(WHITE_PAPER_deps)
 
-.png.eps:
-	convert $< $@
+# HTML.
+WHITE_PAPER = white-paper
+all-local: $(srcdir)/$(WHITE_PAPER).stamp
 
-# Final product.
-WHITE_PAPER_HTML = $(white_paper_dir)/white_paper.html
-WHITE_PAPER_HTML_OUTPUTS =			\
-  $(WHITE_PAPER_HTML)				\
-  $(white_paper_dir)/white_paper.css		\
-  $(white_paper_dir)/white_paper0x.png		\
-  $(white_paper_dir)/white_paper1x.png		\
-  $(white_paper_dir)/white_paper2x.png		\
-  $(white_paper_dir)/white_paper3x.png
-
-EXTRA_DIST += $(WHITE_PAPER_HTML).stamp
-MAINTAINERCLEANFILES += $(WHITE_PAPER_HTML).stamp
-# HTML outputs contains several files (the HTML file itself, its CSS
-# style sheet, possibly some images).  Therefore, we cannot rely on a
-# simple suffix rule to produce them.
-$(WHITE_PAPER_HTML).stamp: $(white_paper_dir)/white_paper.tex $(EPSS)
+# The HTML output contains several files (the HTML file itself, its
+# CSS style sheet, possibly some images).  Therefore, we cannot rely
+# on a simple suffix rule to produce them.  Instead, put the products
+# in a directory and use a time stamp.
+$(srcdir)/$(WHITE_PAPER).stamp: $(srcdir)/white-paper.tex $(WHITE_PAPER_deps)
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(TEXI2HTML) $(TEXI2HTML_FLAGS) -o $(WHITE_PAPER_HTML) $<
+	rm -rf $(WHITE_PAPER).tmp
+	mkdir $(WHITE_PAPER).tmp
+## Copy images.
+	mkdir $(WHITE_PAPER).tmp/figures
+	cp $(WHITE_PAPER_FIGURES) $(WHITE_PAPER).tmp/figures
+	$(TEXI2HTML) $(TEXI2HTML_FLAGS)			\
+	  -o $(WHITE_PAPER).tmp/$(WHITE_PAPER).html $<
+	rm -rf $(srcdir)/$(WHITE_PAPER)
+## FIXME: moving directories between file systems is not portable.
+	mv $(WHITE_PAPER).tmp $(srcdir)/$(WHITE_PAPER)
 	@mv -f $@.tmp $@
+EXTRA_DIST += $(srcdir)/$(WHITE_PAPER).stamp
+MAINTAINERCLEANFILES += $(srcdir)/$(WHITE_PAPER).stamp
 
-$(WHITE_PAPER_HTML_OUTPUTS): $(WHITE_PAPER_HTML).stamp
-## Recover from the removal of $@
-	@if test -f $@; then :; else \
+$(srcdir)/$(WHITE_PAPER): $(srcdir)/$(WHITE_PAPER).stamp
+## Recover from the removal of $@.
+	@if test -d $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
-
-dist_html_DATA += $(WHITE_PAPER_HTML_OUTPUTS)
-
-WHITE_PAPER_PDF = $(white_paper_dir)/white_paper.pdf
-# Extra dependencies.
-$(WHITE_PAPER_PDF): $(PNGS)
-
-dist_pdf_DATA += $(WHITE_PAPER_PDF)
-
-EXTRA_DIST +=					\
-  $(white_paper_dir)/white_paper.tex		\
-  $(PNGS)					\
-  $(EPSS)
-
-MAINTAINERCLEANFILES += $(EPSS)
+DATA_html_dirs += $(WHITE_PAPER)
 
 
 ## ----------------- ##
 ## Reference Guide.  ##
 ## ----------------- ##
 
-ref_guide_dir = $(srcdir)/ref_guide
+EXTRA_DIST += ref-guide.tex
 
-ref_guide_dependencies =			\
+REF_GUIDE_deps =				\
   $(EXAMPLES)					\
   $(SPLIT_EXAMPLES)				\
   $(OUTPUTS)					\
@@ -506,61 +508,57 @@ ref_guide_dependencies =			\
   $(PNG_FIGURES)				\
   $(DOC_PACKAGES)
 
-# Final product.
-REF_GUIDE_HTML = $(ref_guide_dir)/ref_guide.html
-REF_GUIDE_HTML_OUTPUTS =			\
-  $(REF_GUIDE_HTML)				\
-  $(ref_guide_dir)/ref_guide.css		\
-  $(ref_guide_dir)/ref_guide0x.png
+# PDF.
+REF_GUIDE_PDF = $(srcdir)/ref-guide.pdf
+dist_pdf_DATA += $(REF_GUIDE_PDF)
+$(REF_GUIDE_PDF): $(REF_GUIDE_deps)
 
-EXTRA_DIST += $(REF_GUIDE_HTML).stamp
-MAINTAINERCLEANFILES += $(REF_GUIDE_HTML).stamp
-# HTML outputs contains several files (the HTML file itself, its CSS
-# style sheet, possibly some images).  Therefore, we cannot rely on a
-# simple suffix rule to produce them.
-$(REF_GUIDE_HTML).stamp: $(ref_guide_dir)/ref_guide.tex $(ref_guide_dependencies)
+# HTML.
+REF_GUIDE = ref-guide
+all-local: $(srcdir)/$(REF_GUIDE).stamp
+
+# The HTML output contains several files (the HTML file itself, its
+# CSS style sheet, possibly some images).  Therefore, we cannot rely
+# on a simple suffix rule to produce them.  Instead, put the products
+# in a directory and use a time stamp.
+$(srcdir)/$(REF_GUIDE).stamp: $(srcdir)/ref-guide.tex $(REF_GUIDE_deps)
 	@rm -f $@.tmp
 	@touch $@.tmp
-	$(TEXI2HTML) $(TEXI2HTML_FLAGS) -o $(REF_GUIDE_HTML) $<
+	rm -rf $(REF_GUIDE).tmp
+	mkdir $(REF_GUIDE).tmp
+	$(TEXI2HTML) $(TEXI2HTML_FLAGS)			\
+	  -o $(REF_GUIDE).tmp/$(REF_GUIDE).html $<
+	rm -rf $(srcdir)/$(REF_GUIDE)
+## FIXME: moving directories between file systems is not portable.
+	mv $(REF_GUIDE).tmp $(srcdir)/$(REF_GUIDE)
 	@mv -f $@.tmp $@
+EXTRA_DIST += $(srcdir)/$(REF_GUIDE).stamp
+MAINTAINERCLEANFILES += $(srcdir)/$(REF_GUIDE).stamp
 
-$(REF_GUIDE_HTML_OUTPUTS): $(REF_GUIDE_HTML).stamp
-## Recover from the removal of $@
-	@if test -f $@; then :; else \
+$(srcdir)/$(REF_GUIDE): $(srcdir)/$(REF_GUIDE).stamp
+## Recover from the removal of $@.
+	@if test -d $@; then :; else \
 	  rm -f $<; \
 	  $(MAKE) $(AM_MAKEFLAGS) $<; \
 	fi
+DATA_html_dirs += $(REF_GUIDE)
 
-dist_html_DATA += $(REF_GUIDE_HTML_OUTPUTS)
-
-# Intermediate product for the various doc targets of the parent
-# directory.
+# Intermediate product for the (Doxygen) User Reference Manual.
 #
 # This is not a bug: REF_GUIDE_HH is meant to have a `.hh' extension,
 # since it is later parsed by Doxygen, which complains about `.html'
 # files.
-REF_GUIDE_HH = $(ref_guide_dir)/ref_guide.hh
-$(REF_GUIDE_HH): $(REF_GUIDE_HTML) $(srcdir)/tools/todoxygen.sh
+REF_GUIDE_HH = $(srcdir)/ref-guide.hh
+$(REF_GUIDE_HH): $(srcdir)/$(REF_GUIDE).stamp $(srcdir)/tools/todoxygen.sh
 # The script `todoxygen.sh' may fail and still create a (partial and
 # invalid) file, thus preventing Make from trying to generate it
 # again.  The solution is to use a temporary file as output and rename
 # it if the script succeeds.
 	rm -f $@.tmp
-	$(srcdir)/tools/todoxygen.sh $< $@.tmp $(srcdir)
+	$(srcdir)/tools/todoxygen.sh \
+	  $(srcdir)/$(REF_GUIDE)/$(REF_GUIDE).html $@.tmp $(srcdir)
 	mv -f $@.tmp $@
-
-
-# Final product.
-REF_GUIDE_PDF = $(ref_guide_dir)/ref_guide.pdf
-# Extra dependencies.
-$(REF_GUIDE_PDF): $(ref_guide_dependencies)
-
-dist_pdf_DATA += $(REF_GUIDE_PDF)
-
-EXTRA_DIST +=					\
-  $(ref_guide_dir)/ref_guide.tex		\
-  $(REF_GUIDE_HH)
-
+EXTRA_DIST += $(REF_GUIDE_HH)
 MAINTAINERCLEANFILES += $(REF_GUIDE_HH)
 
 
@@ -720,6 +718,7 @@ MAINTAINERCLEANFILES += $(dist_html_DATA) $(dist_pdf_DATA)
 
 
 EXTRA_DIST +=					\
+  $(DATA_html_dirs)				\
   $(DOXYFILE).in				\
   groups/accu.hh				\
   groups/graph.hh				\

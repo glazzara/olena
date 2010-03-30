@@ -1,3 +1,124 @@
+2010-03-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Move LaTeX sources at the root of doc/; generate HTML in subdirs.
+
+	* doc/tutorial/tutorial.tex,
+	* doc/technical/technical.tex,
+	* doc/ref_guide/ref_guide.tex,
+	* doc/white_paper/white_paper.tex:
+	Move...
+	* doc/tutorial.tex,
+	* doc/technical.tex,
+	* doc/ref-guide.tex,
+	* doc/white-paper.tex:
+	...here.
+	* doc/graphicx.hva: New.
+	* doc/technical/figures/file_layout.pdf,
+	* doc/technical/figures/file_layout.png,
+	* doc/white_paper/figures/house.png,
+	* doc/white_paper/figures/house_rag.png,
+	* doc/white_paper/figures/house_wshed.png,
+	* doc/white_paper/figures/house_wshed_mean_colors.png:
+	Move...
+	* doc/figures/technical/file_layout.pdf,
+	* doc/figures/technical/file_layout.png,
+	* doc/figures/house.png,
+	* doc/figures/house_rag.png,
+	* doc/figures/house_wshed.png,
+	* doc/figures/house_wshed_mean_colors.png:
+	...here.
+	* doc/technical.tex: Adjust paths.
+	* doc/technical/designs/,
+	* doc/tutorial/designs/,
+	* doc/tutorial/doxyfile_tuto.local,
+	* doc/tutorial/image_types.txt,
+	* doc/tutorial/image_values.txt,
+	* doc/tutorial/images_tour.txt,
+	* doc/tutorial/slides.tex:
+	Rename as...
+	* doc/technical.old/designs/,
+	* doc/tutorial.old/design/,
+	* doc/tutorial.old/doxyfile_tuto.local,
+	* doc/tutorial.old/image_types.txt,
+	* doc/tutorial.old/image_values.txt,
+	* doc/tutorial.old/images_tour.txt,
+	* doc/tutorial.old/slides.tex:
+	...this.
+	* tutorial/headers.stamp: Remove.
+	* doc/Makefile.am (REFMAN_deps): Rename as...
+	(refman_dependencies): ...this.
+	Adjust paths.
+	($(srcdir)/user-refman.stamp, $(srcdir)/devel-refman.stamp):
+	Adjust.
+	(PNGS, EPSS): Remove.
+	(.png.eps): Remove rule.
+	(TECHNICAL_FIGURES, WHITE_PAPER_FIGURES): New.
+	(MORE_FIGURES): Add $(TECHNICAL_FIGURES) and
+	$(WHITE_PAPER_FIGURES).
+	(technical_dir, tutorial_dir, white_paper_dir, ref_guide_dir):
+	Remove.
+	(TECHNICAL, TUTORIAL, WHITE_PAPER, REF_GUIDE): New.
+	(TECHNICAL_PDF, TUTORIAL_PDF, WHITE_PAPER_PDF, REF_GUIDE_PDF)
+	(TUTORIAL_HH, REF_GUIDE_HH)
+	(EXTRA_DIST, MAINTAINERCLEANFILES): Adjust.
+	Remove (EPSS).
+	(EXTRA_DIST): Remove $(PNGS).
+	Add graphicx.hva.
+	(technical_dependencies)
+	(tutorial_dependencies)
+	(ref_guide_dependencies):
+	Rename as...
+	(TECHNICAL_deps)
+	(TUTORIAL_deps)
+	(REF_GUIDE_deps):
+	...this.
+	(TECHNICAL_deps): Add $(TECHNICAL_FIGURES).
+	(WHITE_PAPER_deps): New.
+	($(TECHNICAL_PDF))
+	($(TUTORIAL_PDF))
+	($(WHITE_PAPER_PDF))
+	($(REF_GUIDE_PDF)):
+	Adjust.
+	(TECHNICAL_HTML, TECHNICAL_HTML_OUTPUTS)
+	(TUTORIAL_HTML, TUTORIAL_HTML_OUTPUTS)
+	(WHITE_PAPER_HTML, WHITE_PAPER_HTML_OUTPUTS)
+	(REF_GUIDE_HTML, REF_GUIDE_HTML_OUTPUTS):
+	Remove.
+	(all-local): Depend on
+	$(srcdir)/$(TECHNICAL).stamp,
+	$(srcdir)/$(TUTORIAL).stamp,
+	$(srcdir)/$(WHITE_PAPER).stamp and
+	$(srcdir)/$(REF_GUIDE).stamp.
+	($(TECHNICAL_HTML).stamp)
+	($(TUTORIAL_HTML).stamp)
+	($(WHITE_PAPER_HTML).stamp)
+	($(REF_GUIDE_HTML).stamp):
+	Turn targets into...
+	($(srcdir)/$(TECHNICAL).stamp)
+	($(srcdir)/$(TUTORIAL).stamp)
+	($(srcdir)/$(WHITE_PAPER).stamp)
+	($(srcdir)/$(REF_GUIDE).stamp):
+	...this.
+	Adjust rules to generate outputs in a subdirectory.
+	($(TECHNICAL_HTML_OUTPUTS))
+	($(TUTORIAL_HTML_OUTPUTS))
+	($(WHITE_PAPER_HTML_OUTPUTS))
+	($(REF_GUIDE_HTML_OUTPUTS)):
+	Turn targets into...
+	($(srcdir)/$(TECHNICAL))
+	($(srcdir)/$(TUTORIAL))
+	($(srcdir)/$(WHITE_PAPER))
+	($(srcdir)/$(REF_GUIDE)):
+	...this.
+	Adjust.
+	($(TUTORIAL_HH)): Depend on $(srcdir)/$(TUTORIAL).stamp.
+	Adjust rule.
+	($(REF_GUIDE_HH)): Depend on (srcdir)/$(REF_GUIDE).stamp.
+	Adjust rule.
+	(dist_html_DATA): Remove.
+	(DATA_html_dirs): New.
+	(EXTRA_DIST): Add $(DATA_html_dirs).
+
 2010-03-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	No longer generate doc/technical/technical.hh.

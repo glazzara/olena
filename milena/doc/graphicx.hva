@@ -1,0 +1,3 @@
+                                                        % -*- LaTeX -*-
+
+\newcommand{\includegraphics}[2][]{\imgsrc{#2.png}}
