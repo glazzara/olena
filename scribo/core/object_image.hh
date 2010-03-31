@@ -33,6 +33,6 @@
 # include <mln/core/image/imorph/labeled_image.hh>
 
 # define object_image(L)	  \
-   labeled_image<L>
+   mln::labeled_image<L>
 
 #endif // ! SCRIBO_CORE_OBJECT_IMAGE_HH

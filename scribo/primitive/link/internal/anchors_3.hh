@@ -31,6 +31,7 @@
 /// Routine providing 3 anchors for neighbor seeking.
 
 # include <mln/math/min.hh>
+# include <mln/util/array.hh>
 
 # include <scribo/core/object_image.hh>
 
@@ -94,7 +95,7 @@ namespace scribo
 	               - objects.bbox(current_object).pmin().row();
 
 	  mln_site(L) sp = objects.bbox(current_object).center();
-	  def::coord r;
+	  mln::def::coord r;
 
 	  switch (anchor)
 	  {
@@ -102,10 +103,10 @@ namespace scribo
 	    case 0:
 	      if (h < 30)
 		r = objects.bbox(current_object).pmin().row()
-		  + math::min(2u, (h + 1) / 2 - 1);
+		  + mln::math::min(2u, (h + 1) / 2 - 1);
 	      else
 		r = objects.bbox(current_object).pmin().row()
-		  - math::min(10u, h /10);
+		  - mln::math::min(10u, h /10);
 	      break;
 
 
@@ -118,14 +119,14 @@ namespace scribo
 	    case 2:
 	      if (h < 30)
 		r = objects.bbox(current_object).pmax().row()
-		  + math::min(2u, (h + 1) / 2 - 1);
+		  + mln::math::min(2u, (h + 1) / 2 - 1);
 	      else
 		r = objects.bbox(current_object).pmax().row()
-		  - math::min(10u, h /10);
+		  - mln::math::min(10u, h /10);
 	      break;
 
 	    default:
-	      trace::warning("Non handled anchor");
+	      mln::trace::warning("Non handled anchor");
 	      mln_assertion(anchor > 2);
 	  }
 

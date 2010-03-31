@@ -33,7 +33,7 @@
 #include <mln/literal/colors.hh>
 #include <mln/math/sqr.hh>
 #include <mln/subsampling/subsampling.hh>
-#include <mln/transform/influence_zone_geodesic.hh>
+#include <mln/transform/influence_zone_geodesic_saturated.hh>
 #include <mln/util/timer.hh>
 #include <mln/value/int_u16.hh>
 #include <mln/value/int_u8.hh>
@@ -359,8 +359,8 @@ int main(int argc, char *argv[])
 
 
   /// Saving influence zone scale image.
-  image2d<int_u8>
-    e_ext = transform::influence_zone_geodesic(e, c8(), mln_max(unsigned));
+  image2d<int_u8> e_ext =
+    transform::influence_zone_geodesic_saturated(e, c8(), mln_max(unsigned));
   io::pgm::save(e_ext, "e_ext.pgm");
 
 

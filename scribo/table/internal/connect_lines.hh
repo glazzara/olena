@@ -35,15 +35,13 @@
 
 # include <mln/data/fill.hh>
 
-# include <mln/transform/influence_zone_geodesic.hh>
+# include <mln/transform/influence_zone_geodesic_saturated.hh>
 
 # include <mln/morpho/elementary/dilation.hh>
 # include <mln/util/array.hh>
 # include <mln/util/couple.hh>
 
 # include <mln/opt/at.hh>
-
-# include <mln/transform/influence_zone_geodesic.hh>
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/central_sites.hh>
@@ -96,7 +94,8 @@ namespace scribo
 	for_all_elements(i, aligned_lines)
 	  opt::at(l, aligned_lines[i]) = aligned_lines[i];
 
-	l = transform::influence_zone_geodesic(l, c2(), max_distance, -1);
+	l = transform::influence_zone_geodesic_saturated(l, c2(),
+							 max_distance, -1);
 
 	for_all_components(i, boxes)
 	{
