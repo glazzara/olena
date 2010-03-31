@@ -1,3 +1,7 @@
+2010-03-31  Roland Levillain  <roland@lrde.epita.fr>
+
+	* bootstrap: Check for HeVeA instead of TeX4ht.
+
 2010-03-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Revert to HeVeA to generate HTML from LaTeX.

@@ -155,29 +155,7 @@ require $libtoolize 1.5.22
 
 require doxygen 1.5.6
 require convert 6.3.7
-# FIXME: Also check these:
-#   epstopdf
-#   pgf (how?)
-
-# Check for TeX4ht.  htlatex and friends do not have options like
-# `--version', `-version', `-v', etc.  Hence this ad hoc procedure.
-tempdir=`mktemp -d /tmp/temp.XXXXXX`
-# Set up automatic cleanup.
-cleanup() { rm -rf "$tempdir"; exit; }
-trap cleanup 0 1 2 3 6 15
-(
-  cd "$tempdir"
-  cat >test.tex <<EOF
-  \documentclass{article}
-  \begin{document}
-  Test
-  \end{document}
-EOF
-  htlatex >/dev/null 2>&1 test.tex
-) || fatal "TeX4ht is required"
-
-# dvipng is required by TeX4ht.
-require dvipng 1.11
+require hevea 1.10 -version
 
 
 # Regen files stored in the repository if asked so.
