@@ -37,3 +37,5 @@ from rgb8 import *
 import image2d_int
 import image2d_int_u8
 import image2d_rgb8
+
+import image2d_point2d

@@ -45,6 +45,7 @@ wrappers =					\
   dpoint2d.i					\
   image2d_int.i					\
   image2d_int_u8.i				\
+  image2d_point2d.i				\
   image2d_rgb8.i				\
   int_u24.i					\
   int_u8.i					\

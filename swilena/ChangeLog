@@ -1,5 +1,21 @@
 2010-04-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a Swilena wrapper for mln::image2d<mln::point2d>.
+
+	* image2d_point2d.i: New.
+	* Makefile.am (wrappers): Add image2d_point2d.i.
+	* python/Makefile.am (pyexec_LTLIBRARIES):
+	Add _image2d_point2d.la.
+	(nodist__image2d_point2d_la_SOURCES, _image2d_point2d_la_LIBADD):
+	New.
+	(CLEANFILES): Add $(nodist__image2d_point2d_la_SOURCES)
+	image2d_point2d.py image2d_point2d.py[co].
+	(nodist_python_PYTHON): Add image2d_point2d.py.
+	(image2d_point2d-wrap.cc): Add dependencies.
+	* python/swilena.py: Import image2d_point2d.
+
+2010-04-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have Make generate the Swilena Python Shell (sps).
 
 	* python/Makefile.am (EXTRA_DIST): Add sps-common.in, sps.in and
