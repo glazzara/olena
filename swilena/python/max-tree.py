@@ -1,0 +1,48 @@
+#! /usr/bin/env python
+
+# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
+#
+# This file is part of Olena.
+#
+# Olena is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, version 2 of the License.
+#
+# Olena is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+
+# \file python/max-tree.py
+# \brief Test on the max-tree.
+
+import data
+from swilena import *
+
+# Module aliases.
+image = image2d_int_u8
+par_image = image2d_point2d
+
+ima = image.load(data.lena)
+ima = image.image2d_int_u8(3, 3)
+
+values = [5, 6, 6,
+          8, 9, 9,
+          8, 9, 9]
+
+v = values.__iter__()
+
+for p in ima.domain():
+  ima.set(p, int_u8(v.next()))
+image.println("ima =", ima)
+
+max_tree_parent = image.max_tree(ima, c4());
+# FIXME: Why can't we use
+#
+#   image2d_point2d.println("max_tree_parent =", max_tree_parent)
+#
+# ?
+par_image.println(max_tree_parent)

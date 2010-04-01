@@ -340,7 +340,8 @@ $(srcdir)/run.stamp: $(RUN_IN)
 # as `--python' to `run'.
 TESTS =									\
   box2d-misc.py								\
-  image2d-misc.py morpho-fun.py morpho-segm.py dynamic-image2d-misc.py
+  image2d-misc.py morpho-fun.py morpho-segm.py max-tree.py		\
+  dynamic-image2d-misc.py
 
 EXTRA_DIST += $(TESTS)
 

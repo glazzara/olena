@@ -1,5 +1,15 @@
 2010-04-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Wrap function mln::morpho::tree::max<I, N>.
+
+	* morpho.ixx (instantiate_max_tree): New macro.
+	Call it...
+	(instantiate_morpho): ...here.
+	* python/max-tree.py: New test.
+	* python/Makefile.am (TESTS): Add max-tree.py.
+
+2010-04-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a Swilena wrapper for mln::image2d<mln::point2d>.
 
 	* image2d_point2d.i: New.
