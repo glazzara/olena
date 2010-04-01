@@ -1,3 +1,12 @@
+2010-04-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have Make generate the Swilena Python Shell (sps).
+
+	* python/Makefile.am (EXTRA_DIST): Add sps-common.in, sps.in and
+	sps-local.in.
+	(edit): New.
+	(sps, sps-local): New rules.
+
 2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a Swilena wrapper for mln::image2d<mln::value::rgb8>.

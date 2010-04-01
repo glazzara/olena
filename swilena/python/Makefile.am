@@ -261,13 +261,38 @@ image2d_rgb8-wrap.cc: $(top_srcdir)/swilena/println.ixx
 ## Swilena Python Shell (sps).  ##
 ## ---------------------------- ##
 
-# FIXME: We might want to rename this shell as something else.
 python_PYTHON += sps.py
 
 # The script to be used in installed distributions.
 bin_SCRIPTS = sps
 # The script to be used in non-installed build trees.
 noinst_SCRIPTS = sps-local
+
+EXTRA_DIST += sps-common.in sps.in sps-local.in
+
+# Use Make to generate shell scripts (`sps' and `sps-local') instead
+# of `configure', as advised by Autoconf's manual (see section
+# ``Installation Directory Variables'').
+edit = sed							\
+         -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'			\
+         -e 's|@abs_builddir[@]|$(abs_builddir)|g'		\
+         -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'	\
+         -e 's|@libdir[@]|$(libdir)|g'				\
+         -e 's|@pythondir[@]|$(pythondir)|g'			\
+         -e 's|@PYTHON[@]|$(PYTHON)|g'
+
+sps sps-local: Makefile $(srcdir)/sps-common.in
+	rm -f $@ $@.tmp
+	srcdir='';				\
+	  test -f ./$@.in || srcdir=$(srcdir)/;	\
+	  cp $${srcdir}/sps-common.in $@.tmp;	\
+	  $(edit) $${srcdir}$@.in >>$@.tmp
+	chmod +x $@.tmp
+	chmod a-w $@.tmp
+	mv $@.tmp $@
+
+sps: $(srcdir)/sps.in
+sps-local: $(srcdir)/sps-local.in
 
 CLEANFILES += $(bin_SCRIPTS) $(noinst_SCRIPTS)
 
