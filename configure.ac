@@ -313,15 +313,6 @@ AC_CONFIG_FILES([swilena/Makefile
 
 AC_CONFIG_FILES([swilena/run], [chmod +x swilena/run])
 
-AC_CONFIG_FILES(m4_do([swilena/python/sps],
-                      [:swilena/python/sps-common.in],
-                      [:swilena/python/sps.in]),
-                [chmod +x swilena/python/sps])
-AC_CONFIG_FILES(m4_do([swilena/python/sps-local],
-                      [:swilena/python/sps-common.in],
-                      [:swilena/python/sps-local.in]),
-                [chmod +x swilena/python/sps-local])
-
 ## -------- ##
 ## Scribo.  ##
 ## -------- ##
