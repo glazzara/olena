@@ -1,3 +1,7 @@
+2010-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/histo/equalize.hh: New. Add histogram equalization.
+
 2010-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add vertical/horizontal symmetry.
