@@ -1,3 +1,10 @@
+2010-04-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Help Swilena wrap mln::complex<D>.
+
+	* mln/topo/complex.hh: Use `0' instead of `0u' as template
+	parameter.
+
 2013-03-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove morpho::meyer_wst.

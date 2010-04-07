@@ -108,7 +108,7 @@ namespace mln
       complex();
 
       /// Add a 0-face to the complex.
-      n_face<0u, D> add_face();
+      n_face<0, D> add_face();
 
       /// Add a \p (N+1)-face to the complex (with \p N >= 0).
       ///
@@ -370,9 +370,9 @@ namespace mln
 
       /// Faces of lowest dimension (0).
       template <unsigned D>
-      struct faces_set_mixin<0u, D> : public higher_dim_faces_set_mixin<0u, D>
+      struct faces_set_mixin<0, D> : public higher_dim_faces_set_mixin<0, D>
       {
-	std::vector< face_data<0u, D> > faces_;
+	std::vector< face_data<0, D> > faces_;
 
 	/// Pretty-printing.
 	/// \{
@@ -397,9 +397,9 @@ namespace mln
 
       /// Faces of a 0-complex.
       template <>
-      struct faces_set_mixin<0u, 0u>
+      struct faces_set_mixin<0, 0>
       {
-	std::vector< face_data<0u, 0u> > faces_;
+	std::vector< face_data<0, 0> > faces_;
 
 	/// Pretty-printing.
 	/// \{
@@ -476,18 +476,18 @@ namespace mln
 
     template <unsigned D>
     inline
-    n_face<0u, D>
+    n_face<0, D>
     complex<D>::add_face()
     {
       // Upcast `data_' to get access to the field `faces_' of its
-      // base class `internal::faces_set_mixin<0u, D>'.
-      std::vector< face_data<0u, D> >& faces_0 =
-	static_cast< internal::faces_set_mixin<0u, D>& >(*data_).faces_;
+      // base class `internal::faces_set_mixin<0, D>'.
+      std::vector< face_data<0, D> >& faces_0 =
+	static_cast< internal::faces_set_mixin<0, D>& >(*data_).faces_;
       /* FIXME: This is not thread-proof (these two lines should
 	 form an atomic section).  */
-      faces_0.push_back(face_data<0u, D>());
-      unsigned id = nfaces_of_static_dim<0u>() - 1;
-      return n_face<0u, D>(*this, id);
+      faces_0.push_back(face_data<0, D>());
+      unsigned id = nfaces_of_static_dim<0>() - 1;
+      return n_face<0, D>(*this, id);
     }
 
     template <unsigned D>
@@ -741,7 +741,7 @@ namespace mln
       template <unsigned D>
       inline
       void
-      faces_set_mixin<0u, D>::print_rec_asc(std::ostream& ostr) const
+      faces_set_mixin<0, D>::print_rec_asc(std::ostream& ostr) const
       {
 	print(ostr);
       }
@@ -757,7 +757,7 @@ namespace mln
 
       inline
       void
-      faces_set_mixin<0u, 0u>::print_rec_asc(std::ostream& ostr) const
+      faces_set_mixin<0, 0>::print_rec_asc(std::ostream& ostr) const
       {
 	print(ostr);
       }
@@ -785,9 +785,9 @@ namespace mln
       template <unsigned D>
       inline
       void
-      faces_set_mixin<0u, D>::print(std::ostream& ostr) const
+      faces_set_mixin<0, D>::print(std::ostream& ostr) const
       {
-	const unsigned N = 0u;
+	const unsigned N = 0;
 	ostr << "Faces of dimension " << N
 	     << " and their ajacent faces of dimension "
 	     << N + 1 << std::endl;
@@ -818,9 +818,9 @@ namespace mln
 
       inline
       void
-      faces_set_mixin<0u, 0u>::print(std::ostream& ostr) const
+      faces_set_mixin<0, 0>::print(std::ostream& ostr) const
       {
-	const unsigned N = 0u;
+	const unsigned N = 0;
 	ostr << "Faces of dimension " << N << std::endl;
 	for (unsigned f = 0; f < faces_.size(); ++f)
 	  ostr << "  " << f << std::endl;
@@ -904,7 +904,7 @@ namespace mln
       template <typename BinaryFunction, typename T>
       inline
       T
-      faces_set_mixin<0u, D>::fold_left_(const BinaryFunction& f,
+      faces_set_mixin<0, D>::fold_left_(const BinaryFunction& f,
 					 const T& accu) const
       {
 	return f(accu, faces_);
@@ -913,7 +913,7 @@ namespace mln
       template <typename BinaryFunction, typename T>
       inline
       T
-      faces_set_mixin<0u, 0u>::fold_left_(const BinaryFunction& f,
+      faces_set_mixin<0, 0>::fold_left_(const BinaryFunction& f,
 					  const T& accu) const
       {
 	return f(accu, faces_);
@@ -976,7 +976,7 @@ namespace mln
       template <typename UnaryFunction>
       inline
       typename UnaryFunction::result_type
-      faces_set_mixin<0u, D>::apply_if_dim_matches_(unsigned n,
+      faces_set_mixin<0, D>::apply_if_dim_matches_(unsigned n,
 						    const UnaryFunction& f) const
       {
 	// If we reached this method, then N should be 0.
@@ -989,7 +989,7 @@ namespace mln
       template <typename UnaryFunction>
       inline
       typename UnaryFunction::result_type
-      faces_set_mixin<0u, 0u>::apply_if_dim_matches_(unsigned n,
+      faces_set_mixin<0, 0>::apply_if_dim_matches_(unsigned n,
 						     const UnaryFunction& f) const
       {
 	// If we reached this method, then N should be 0.
