@@ -409,9 +409,9 @@ namespace mln
       inline
       rgb32::rgb32(const algebra::vec<3, float>& v)
       {
-	this->v_[0] = v[2];
-	this->v_[1] = v[1];
-	this->v_[2] = v[0];
+	this->v_[0] = unsigned(v[2]);
+	this->v_[1] = unsigned(v[1]);
+	this->v_[2] = unsigned(v[0]);
       }
 
 
@@ -460,27 +460,27 @@ namespace mln
       inline
       rgb32::rgb32(const mln::literal::light_gray_t&)
       {
-	this->v_[0] = mln_max(int_u<8>) * 0.75;
-	this->v_[1] = mln_max(int_u<8>) * 0.75;
-	this->v_[2] = mln_max(int_u<8>) * 0.75;
+	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.75);
+	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.75);
+	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.75);
       }
 
 
       inline
       rgb32::rgb32(const mln::literal::medium_gray_t&)
       {
-	this->v_[0] = mln_max(int_u<8>) * 0.50;
-	this->v_[1] = mln_max(int_u<8>) * 0.50;
-	this->v_[2] = mln_max(int_u<8>) * 0.50;
+	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.50);
+	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.50);
+	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.50);
       }
 
 
       inline
       rgb32::rgb32(const mln::literal::dark_gray_t&)
       {
-	this->v_[0] = mln_max(int_u<8>) * 0.25;
-	this->v_[1] = mln_max(int_u<8>) * 0.25;
-	this->v_[2] = mln_max(int_u<8>) * 0.25;
+	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.25);
+	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.25);
+	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.25);
       }
 
 
@@ -514,9 +514,9 @@ namespace mln
       inline
       rgb32::rgb32(const mln::literal::brown_t&)
       {
-	this->v_[0] = mln_max(int_u<8>) * 0.25;
-	this->v_[1] = mln_max(int_u<8>) * 0.50;
-	this->v_[2] = mln_max(int_u<8>) * 0.75;
+	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.25);
+	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.50);
+	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.75);
       }
 
 
@@ -525,7 +525,7 @@ namespace mln
       {
 	this->v_[0] = 0;
 	this->v_[1] = mln_max(int_u<8>);
-	this->v_[2] = mln_max(int_u<8>) * 0.75;
+	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.75);
       }
 
 
@@ -533,7 +533,7 @@ namespace mln
       rgb32::rgb32(const mln::literal::orange_t&)
       {
 	this->v_[0] = 0;
-	this->v_[1] = mln_max(int_u<8>) * 0.50;
+	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.50);
 	this->v_[2] = mln_max(int_u<8>);
       }
 
@@ -541,8 +541,8 @@ namespace mln
       inline
       rgb32::rgb32(const mln::literal::pink_t&)
       {
-	this->v_[0] = mln_max(int_u<8>) * 0.75;
-	this->v_[1] = mln_max(int_u<8>) * 0.75;
+	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.75);
+	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.75);
 	this->v_[2] = mln_max(int_u<8>);
       }
 
@@ -550,17 +550,17 @@ namespace mln
       inline
       rgb32::rgb32(const mln::literal::purple_t&)
       {
-	this->v_[0] = mln_max(int_u<8>) * 0.25;
+	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.25);
 	this->v_[1] = 0;
-	this->v_[2] = mln_max(int_u<8>) * 0.75;
+	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.75);
       }
 
 
       inline
       rgb32::rgb32(const mln::literal::teal_t&)
       {
-	this->v_[0] = mln_max(int_u<8>) * 0.50;
-	this->v_[1] = mln_max(int_u<8>) * 0.50;
+	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.50);
+	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.50);
 	this->v_[2] = 0;
       }
 
@@ -568,9 +568,9 @@ namespace mln
       inline
       rgb32::rgb32(const mln::literal::violet_t&)
       {
-	this->v_[0] = mln_max(int_u<8>) * 0.50;
+	this->v_[0] = unsigned(mln_max(int_u<8>) * 0.50);
 	this->v_[1] = 0;
-	this->v_[2] = mln_max(int_u<8>) * 0.50;
+	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.50);
       }
 
 
@@ -605,8 +605,8 @@ namespace mln
       rgb32::rgb32(const mln::literal::olive_t&)
       {
 	this->v_[0] = 0;
-	this->v_[1] = mln_max(int_u<8>) * 0.50;
-	this->v_[2] = mln_max(int_u<8>) * 0.50;
+	this->v_[1] = unsigned(mln_max(int_u<8>) * 0.50);
+	this->v_[2] = unsigned(mln_max(int_u<8>) * 0.50);
       }
 
 
