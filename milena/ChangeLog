@@ -1,5 +1,9 @@
 2010-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* img/picasso.ppm: Add a ppm version.
+
+2010-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/value/qt/rgb32.hh: Explicitly cast float values to unsigned.
 
 2010-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
