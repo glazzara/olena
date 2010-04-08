@@ -22,21 +22,20 @@
 import data
 from swilena import *
 
+import itertools
+
 # Module aliases.
 image = image2d_int_u8
 par_image = image2d_point2d
 
-ima = image.load(data.lena)
 ima = image.image2d_int_u8(3, 3)
 
 values = [5, 6, 6,
           8, 9, 9,
           8, 9, 9]
 
-v = values.__iter__()
-
-for p in ima.domain():
-  ima.set(p, int_u8(v.next()))
+for p, v in itertools.izip(ima.domain(), values):
+  ima.set(p, int_u8(v))
 image.println("ima =", ima)
 
 max_tree_parent = image.max_tree(ima, c4());

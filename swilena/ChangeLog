@@ -1,5 +1,12 @@
 2010-04-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify python/max-tree.py using Python's itertools.
+
+	* python/max-tree.py (values): Use itertools.izip to shorten the
+	parallel iterations on sites and values.
+
+2010-04-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Clean up Swilena a bit.
 
 	* python-utils.ixx (generate__str__):
