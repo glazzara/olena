@@ -62,7 +62,7 @@
 // mln::image2d definition.
 %include "mln/core/image/image2d.hh"
 
-// FIXME: Doc.
+// Generate a wrapper of mln::image2d<T> named I.
 %define instantiate_image2d(I, T)
   /* Add a setter, since Python does not seem to allow writings like
 

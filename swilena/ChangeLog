@@ -1,5 +1,22 @@
 2010-04-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Clean up Swilena a bit.
+
+	* python-utils.ixx (generate__str__):
+	Do not include C++ header `string'.
+	* image2d_int.i,
+	* image2d_int_u8.i,
+	* image2d_rgb8.i:
+	Fix the Swilena documentation headers.
+	* int_u.ixx,
+	* rgb.ixx,
+	* image2d.ixx:
+	More Doxygen documentation.
+	* concat.ixx: Typo in comment.
+	* box_piter.ixx: Remove a blank line.
+
+2010-04-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	Wrap a subset of complexes' features.
 
 	* complex.ixx, complex2.i: New.

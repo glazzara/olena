@@ -1,5 +1,5 @@
 //								-*- C++ -*-
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,7 +30,6 @@
 %module box_piter
 
 %{
-
 #include "mln/core/site_set/box_piter.hh"
 %}
 

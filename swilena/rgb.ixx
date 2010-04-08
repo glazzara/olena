@@ -126,17 +126,21 @@ namespace mln
     };
 
 
-    /*! \brief Print an unsigned integer \p i into the output stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] i An unsigned integer.
-     *
-     * \return The modified output stream \p ostr.
-     */
+    /// Print an RGB \p c value on the output stream \p ostr.
+    ///
+    /// \param[in,out] ostr An output stream.
+    /// \param[in] c An RGB value.
+    ///
+    /// \return The modified output stream \p ostr.
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const rgb<n>& i);
 
-    // FIXME: Doc!
+    /// Get an RGB value \p c from the input stream \p istr.
+    ///
+    /// \param[in,out] istr An input stream.
+    /// \param[out] c An RGB value (destination).
+    ///
+    /// \return The modified input stream \p istr.
     template <unsigned n>
     std::istream& operator>>(std::istream& istr, rgb<n>& i);
 

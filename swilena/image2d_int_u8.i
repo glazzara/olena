@@ -1,5 +1,5 @@
 //								-*- C++ -*-
-// Copyright (C) 2008, 2009, 2012, 2013 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010, 2012, 2013  EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -25,7 +25,7 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-/// \file image2d.i
+/// \file image2d_int_u8.i
 /// \brief A simple wrapping of mln::image2d<mln::value::int_u8> along
 /// with some algorithms.
 

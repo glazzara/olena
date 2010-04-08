@@ -25,7 +25,7 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-/// \file image2d.i
+/// \file image2d_rgb8.i
 /// \brief A simple wrapping of mln::image2d<mln::value::rgb8> along
 /// with some algorithms.
 

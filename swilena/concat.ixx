@@ -1,5 +1,5 @@
 //						       		-*- C++ -*-
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +28,7 @@
 /// \brief Macros concatenating their arguments.
 ///
 /// These macros are useful to wrap strings containing commas and
-/// passed as arguments other macros.  For instance, to pass the
+/// passed as arguments to other macros.  For instance, to pass the
 /// argument <tt>Bar<int, float></tt> to a macro
 /// <tt>instantiate_foo</tt> taking a single argument, use this:
 ///
