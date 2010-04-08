@@ -75,6 +75,16 @@ CLEANFILES += $(nodist__config_la_SOURCES) config.py config.py[co]
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_config-wrap.Pcc@am__quote@
 nodist_python_PYTHON += config.py
 
+## complex2.
+pyexec_LTLIBRARIES += _complex2.la
+nodist__complex2_la_SOURCES = complex2-wrap.cc
+_complex2_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__complex2_la_SOURCES) complex2.py complex2.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_complex2-wrap.Pcc@am__quote@
+nodist_python_PYTHON += complex2.py
+
 ## point2d.
 pyexec_LTLIBRARIES += _point2d.la
 nodist__point2d_la_SOURCES = point2d-wrap.cc
@@ -232,6 +242,8 @@ rgb_ixx_deps = $(top_srcdir)/swilena/python-utils.ixx
 
 box_ixx_deps = $(top_srcdir)/swilena/coord.ixx
 
+complex_ixx_deps = $(top_srcdir)/swilena/python-utils.ixx
+
 morpho_ixx_deps =				\
   $(top_srcdir)/swilena/concrete.ixx		\
   $(top_srcdir)/swilena/ch_value.ixx
@@ -243,6 +255,8 @@ rgb8-wrap.cc: $(top_srcdir)/swilena/rgb.ixx $(rgb_ixx_deps)
 
 box2d-wrap.cc: $(top_srcdir)/swilena/box.ixx $(box_ixx_deps)
 box2d_piter-wrap.cc: $(top_srcdir)/swilena/box_piter.ixx
+
+complex2-wrap.cc: $(top_srcdir)/swilena/complex.ixx $(complex_ixx_deps)
 
 point2d-wrap.cc: $(top_srcdir)/swilena/concat.ixx
 point2d-wrap.cc: $(top_srcdir)/swilena/python-utils.ixx
@@ -317,7 +331,6 @@ CLEANFILES += $(bin_SCRIPTS) $(noinst_SCRIPTS)
 
 include $(top_srcdir)/swilena/run.mk
 
-## FIXME: Do we really need to pass top_srcdir and top_builddir to run?
 TESTS_ENVIRONMENT = \
   top_srcdir="$(top_srcdir)" top_builddir="$(top_builddir)" $(RUN)
 # Ensure `run' is rebuilt before the tests are run.
@@ -339,7 +352,7 @@ $(srcdir)/run.stamp: $(RUN_IN)
 # extension as argument.  We could improve this by adding options such
 # as `--python' to `run'.
 TESTS =									\
-  box2d-misc.py								\
+  box2d-misc.py complex2-misc.py					\
   image2d-misc.py morpho-fun.py morpho-segm.py max-tree.py		\
   dynamic-image2d-misc.py
 

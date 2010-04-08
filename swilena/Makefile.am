@@ -23,6 +23,7 @@ meta_wrappers =					\
   box.ixx					\
   box_piter.ixx					\
   ch_value.ixx					\
+  complex.ixx					\
   concat.ixx					\
   concrete.ixx					\
   coord.ixx					\
@@ -41,6 +42,7 @@ meta_wrappers =					\
 wrappers =					\
   box2d.i					\
   box2d_piter.i					\
+  complex2.i					\
   config.i					\
   dpoint2d.i					\
   image2d_int.i					\

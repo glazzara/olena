@@ -1,3 +1,22 @@
+2010-04-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Wrap a subset of complexes' features.
+
+	* complex.ixx, complex2.i: New.
+	* Makefile.am (meta_wrappers): Add complex.ixx.
+	(wrappers): Add complex2.i.
+	* python/Makefile.am (pyexec_LTLIBRARIES): Add _complex2.la.
+	(nodist__complex2_la_SOURCES, _complex2_la_LIBADD): New.
+	(CLEANFILES): Add $(nodist__complex2_la_SOURCES) complex2.py
+	complex2.py[co].
+	(nodist_python_PYTHON): Add complex2.py.
+	(complex_ixx_deps): New.
+	(complex2-wrap.cc): Add dependencies on
+	$(top_srcdir)/swilena/complex.ixx $(complex_ixx_deps).
+	(TESTS): Add complex2-misc.py.
+	* python/complex2-misc.py: New.
+	* python/swilena.py: Import the contents of module complex2.
+
 2010-04-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	Wrap function mln::morpho::tree::max<I, N>.
