@@ -1,3 +1,33 @@
+2010-04-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rename nslis to nslices.
+
+	* mln/geom/nslis.hh,
+	* tests/geom/nslis.cc: Rename as...
+
+	* mln/geom/nslices.hh,
+	* tests/geom/nslices.cc: ... this.
+
+	* mln/core/image/image3d.hh,
+	* mln/core/internal/box_impl.hh,
+	* mln/core/site_set/box.hh,
+	* mln/debug/slices_2d.hh,
+	* mln/geom/all.hh,
+	* mln/geom/size3d.hh,
+	* mln/linear/gaussian.hh,
+	* mln/linear/gaussian/impl.hh,
+	* mln/make/box3d.hh,
+	* mln/make/image.hh,
+	* mln/registration/icp.hh,
+	* tests/core/alias/box3d.cc,
+	* tests/core/image/image3d.cc,
+	* tests/geom/Makefile.am,
+	* tests/io/pbms/load.cc,
+	* tests/io/pgms/load.cc,
+	* tests/io/ppms/load.cc,
+	* tests/transform/bench_closest_point_geodesic.cc: Rename nslis to
+	nslices.
+
 2010-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* img/picasso.ppm: Add a ppm version.

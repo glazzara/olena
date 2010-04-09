@@ -57,7 +57,7 @@ namespace mln
     struct box_impl_<3, C, E>
     {
       /// Give the number of slis.
-      unsigned nslis() const;
+      unsigned nslices() const;
 
       /// Give the minimum sli.
       C min_sli() const;
@@ -144,7 +144,7 @@ namespace mln
 
     template <typename C, typename E>
     inline
-    unsigned box_impl_<3, C, E>::nslis() const
+    unsigned box_impl_<3, C, E>::nslices() const
     {
       return internal::force_exact<E>(*this).bbox().len(0);
     }

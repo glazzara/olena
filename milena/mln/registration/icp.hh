@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -153,7 +153,7 @@ namespace mln
       closest_point_with_map(const p_array<P>& X)
       {
 	box3d box = geom::bbox(X);
-	box.enlarge(0, box.nslis());
+	box.enlarge(0, box.nslices());
 	box.enlarge(1, box.nrows());
 	box.enlarge(2, box.ncols());
 

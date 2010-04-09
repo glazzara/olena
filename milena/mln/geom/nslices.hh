@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -24,8 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_GEOM_NSLIS_HH
-# define MLN_GEOM_NSLIS_HH
+#ifndef MLN_GEOM_NSLICES_HH
+# define MLN_GEOM_NSLICES_HH
 
 /// \file
 ///
@@ -43,19 +43,19 @@ namespace mln
 
     /// Give the number of slices of an image.
     template <typename I>
-    unsigned nslis(const Image<I>& ima);
+    unsigned nslices(const Image<I>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
     inline
-    unsigned nslis(const Image<I>& ima)
+    unsigned nslices(const Image<I>& ima)
     {
       mln_precondition(exact(ima).is_valid());
-      unsigned nslis = geom::max_sli(ima) - geom::min_sli(ima) + 1;
+      unsigned nslices = geom::max_sli(ima) - geom::min_sli(ima) + 1;
 
-      return nslis;
+      return nslices;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -65,4 +65,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_GEOM_NSLIS_HH
+#endif // ! MLN_GEOM_NSLICES_HH
