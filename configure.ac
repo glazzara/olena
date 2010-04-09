@@ -111,15 +111,11 @@ fi
 # ``--enable-all'' is set and a given feature is disabled (say,
 # ``--disable-apps''), then the disable flag has priority.
 
-# FIXME: Due to with-swilena.m4's limitations, we have to explicitly
-# enable SWIG.  Will be repaired when OLN_WITH_SWILENA is revamped.
-
 AC_ARG_ENABLE([all],
               [AS_HELP_STRING([--enable-all],
                               [enable maintainer mode])],
               [
                enable_trimesh=yes
-               with_swig=yes
                enable_swilena=yes
 dnl<<lrde
                enable_scribo=yes
@@ -184,8 +180,32 @@ AC_CONFIG_SUBDIRS([external/trimesh])
 ## Swilena.  ##
 ## --------- ##
 
-OLN_WITH_SWILENA([enable_swilena=yes], [])
-AM_CONDITIONAL([ENABLE_SWILENA], [test x$enable_swilena = xyes])
+AC_ARG_ENABLE([swilena],
+              [AS_HELP_STRING([--enable-swilena],
+                              [build Swilena Python bindings])])
+AS_IF([test "x$enable_swilena" = xyes],
+      [# Ensure dynamic libraries are enabled.
+       if test "x$enable_shared" = xno; then
+         AC_MSG_ERROR([`--enable-swilena' was given, but dynamic libraries are
+disabled.  Try to invoke configure with `--enable-shared'.])
+       fi
+       # Check for SWIG.
+       AC_PROG_SWIG([1.3.35])
+       if (eval "$SWIG -version") >/dev/null 2>&1; then :; else
+         AC_MSG_ERROR([SWIG 1.3.35 is required for Swilena])
+       fi
+       # Check for Python.
+       AM_PATH_PYTHON([2.4], [],
+                      [AC_MSG_ERROR([Python 2.4 is required for Swilena.])])
+       adl_CHECK_PYTHON
+       # Check for Python headers.
+       save_CPPFLAGS=$CPPFLAGS
+       CPPFLAGS="$CPPFLAGS -I$PYTHONINC"
+       AC_CHECK_HEADERS([Python.h], [],
+                        [AC_MSG_ERROR([`Python.h' is required for Swilena.
+Try adding `-I <Python include path>' to `CPPFLAGS'.])])
+       CPPFLAGS=$save_CPPFLAGS])
+AM_CONDITIONAL([ENABLE_SWILENA], [test "x$enable_swilena" = xyes])
 
 AC_CONFIG_FILES([swilena/Makefile
 		 swilena/python/Makefile])
