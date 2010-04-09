@@ -1,5 +1,14 @@
 2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new implementations of paste_without_localization.
+
+	* mln/data/paste_without_localization.hh: Add new implementations.
+
+	* tests/data/Makefile.am,
+	* tests/data/paste_without_localization.cc: New tests.
+
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve to_qimage routines.
 
 	* mln/convert/to_qimage.hh: rename namespace.

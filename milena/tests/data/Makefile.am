@@ -35,8 +35,10 @@ check_PROGRAMS =				\
   memcpy_					\
   memset_					\
   paste						\
+  paste_without_localization 			\
   saturate					\
   sort_psites					\
+  split 					\
   stretch					\
   transform					\
   transform_inplace				\
@@ -55,7 +57,9 @@ median_fast_SOURCES = median_fast.cc
 memcpy__SOURCES = memcpy_.cc
 memset__SOURCES = memset_.cc
 paste_SOURCES = paste.cc
+paste_without_localization_SOURCES = paste_without_localization.cc
 saturate_SOURCES = saturate.cc
+split_SOURCES = split.cc
 sort_psites_SOURCES = sort_psites.cc
 stretch_SOURCES = stretch.cc
 transform_SOURCES = transform.cc
