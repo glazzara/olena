@@ -1,5 +1,11 @@
 2010-04-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Require Python >= 2.4 for Swilena.
+
+	* m4/with-swilena.m4 (_OLN_WITH_SWIG): Here.
+
+2010-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Require SWIG >= 1.3.35 for Swilena.
 
 	* m4/with-swilena.m4 (_OLN_WITH_SWIG): Here.
