@@ -226,6 +226,9 @@ dnl<<lrde
 ## Scribo.  ##
 ## -------- ##
 
+AC_ARG_ENABLE([scribo],
+              [AS_HELP_STRING([--enable-scribo],
+                              [enable Scribo])])
 AM_CONDITIONAL([ENABLE_SCRIBO], [test "x$enable_scribo" = xyes])
 
 AC_CONFIG_FILES([

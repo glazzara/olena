@@ -1,5 +1,9 @@
 2010-04-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	* configure.ac: Add option `--enable-scribo'.
+
+2010-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	* configure.ac: Protect variables with double quotes.
 
 2010-04-09  Roland Levillain  <roland@lrde.epita.fr>
