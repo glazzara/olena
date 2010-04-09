@@ -1,3 +1,9 @@
+2010-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix test core/other/box_runend_piter.
+
+	* tests/core/other/box_runend_piter.cc: Fix assertion.
+
 2010-03-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Do not install low-quality HTML documentation.

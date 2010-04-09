@@ -35,7 +35,7 @@ int main()
   box_runend_piter<point2d> p(b);
   unsigned i = 2;
   for_all(p)
-    mln_assertion(p == point2d(i, 2));
+    mln_assertion(p == point2d(i--, 2));
 
   mln_assertion(p.run_length() == 3);
 }
