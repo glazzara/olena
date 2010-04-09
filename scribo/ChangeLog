@@ -1,3 +1,10 @@
+2010-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Help g++ 4.1 compile Scribo.
+
+	* binarization/sauvola_threshold.hh: Help g++ 4.1 find an
+	unambiguous overload of std::pow.
+
 2010-03-31  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have Scribo compile again.

@@ -303,7 +303,7 @@ int main(int argc, char *argv[])
   // Additional subscales.
   for (unsigned i = 1; i < nb_subscale; ++i)
   {
-    unsigned ratio = std::pow(q, i);
+    unsigned ratio = std::pow(float(q), int(i));
 //    std::cout << "Scale " << 2 + i << " - 1/" << s * ratio << std::endl;
     timer_.restart();
     unsigned
@@ -332,7 +332,7 @@ int main(int argc, char *argv[])
 
   for (int i = nb_subscale - 1; i >= 0; --i)
   {
-    unsigned ratio = std::pow(q, i);
+    unsigned ratio = std::pow(float(q), int(i));
 
     std::cout << "Scale " << 2 + i << " - 1/" << s * ratio << " merged" << std::endl;
 
@@ -369,7 +369,7 @@ int main(int argc, char *argv[])
   mln::fun::i2v::array<value::int_u16> f(nb_subscale, 0);
   for (unsigned i = 0; i < nb_subscale; ++i)
   {
-    unsigned ratio = std::pow(q, i);
+    unsigned ratio = std::pow(float(q), int(i));
     f(i) = ratio * w;
   }
 
