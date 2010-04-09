@@ -173,7 +173,7 @@ OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full], [tesseract], 
 AC_ARG_ENABLE([trimesh],
               [AS_HELP_STRING([--enable-trimesh],
                               [build the (bundled) trimesh2 library])])
-AM_CONDITIONAL([ENABLE_TRIMESH], [test x$enable_trimesh = xyes])
+AM_CONDITIONAL([ENABLE_TRIMESH], [test "x$enable_trimesh" = xyes])
 AC_CONFIG_SUBDIRS([external/trimesh])
 
 ## --------- ##
@@ -226,7 +226,7 @@ dnl<<lrde
 ## Scribo.  ##
 ## -------- ##
 
-AM_CONDITIONAL([ENABLE_SCRIBO], [test x$enable_scribo = xyes])
+AM_CONDITIONAL([ENABLE_SCRIBO], [test "x$enable_scribo" = xyes])
 
 AC_CONFIG_FILES([
   scribo/Makefile

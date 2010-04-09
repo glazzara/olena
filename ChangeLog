@@ -1,5 +1,9 @@
 2010-04-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	* configure.ac: Protect variables with double quotes.
+
+2010-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve Swilena's configuration.
 
 	* m4/with-swilena.m4: Remove file.
