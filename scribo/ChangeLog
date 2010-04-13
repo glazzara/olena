@@ -1,5 +1,9 @@
 2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* io/xml/save_text_lines.hh: Fix XML output.
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* debug/decision_image.hh: Add the anchor::Type as argument.
 
 2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
