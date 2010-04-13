@@ -33,6 +33,7 @@
 const char *args_desc[][2] =
 {
   { "input.pgm", "A gray level image." },
+  { "output.pbm", "A binary image." },
   {0, 0}
 };
 
@@ -46,7 +47,7 @@ int main(int argc, char *argv[])
     return scribo::debug::usage(argv,
 				"Binarization of a gray-level image using an automatic global threshold.",
 				"input.pgm output.pbm",
-				args_desc, "A binary image.");
+				args_desc);
 
   trace::entering("main");
 

@@ -68,12 +68,12 @@ namespace scribo
 	unsigned n_nbhs;
 	util::array<int> dp;
 
-	static const double one_k = 1 - 0.34;
-	static const double k_R = 0.34 / 128.0;
+	double K_;
 
-	first_pass_functor(const I& input)
+	first_pass_functor(const I& input, double K)
 	  : input(input),
-	    pxl(input)
+	    pxl(input),
+	    K_(K)
 	{
 	  res = 0;
 	  pxl.start();
@@ -96,17 +96,9 @@ namespace scribo
 
 	  unsigned p = pxl.offset();
 
-	  // Use an inlined and developed version of sauvola's
-	  // threshold formula.
-//  	  value::int_u8 t_p = mean * (one_k + k_R * stddev);
-
-// 	  std::cout << t_p << ", ";
-
-// 	  std::cout << input.element(p) <<  " - " << t_p << std::endl;
-          value::int_u8 t_p = sauvola_threshold_formula(mean, stddev);
-
-//  	  std::cout << input.point_at_index(p)
-// 		    << " - " << sauvola_threshold_formula(mean, stddev);
+          value::int_u8 t_p = sauvola_threshold_formula(mean, stddev,
+							K_,
+							SCRIBO_DEFAULT_SAUVOLA_R);
 
 
 	  msk.element(p) = input.element(p) < t_p;

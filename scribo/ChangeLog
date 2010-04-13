@@ -1,3 +1,37 @@
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new Sauvola overloads and update examples.
+
+	* scribo/binarization/internal/first_pass_functor.hh,
+	* scribo/binarization/local_threshold.hh,
+	* scribo/binarization/sauvola.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_ms_split.hh,
+	* scribo/binarization/sauvola_threshold_image.hh,
+	* scribo/canvas/integral_browsing.hh: Add more parameters to
+	Sauvola routines.
+
+	* scribo/binarization/sauvola_threshold_image_debug.hh: New. New
+	overload providing debug outputs.
+
+	* scribo/debug/usage.hh: Remove a parameter.
+
+	* scribo/src/binarization/Makefile.am,
+	* scribo/src/binarization/pgm_global_threshold_auto.cc,
+	* scribo/src/binarization/pgm_sauvola.cc,
+	* scribo/src/binarization/pgm_sauvola_ms.cc,
+	* scribo/src/binarization/ppm_fg_sauvola_ms.cc,
+	* scribo/src/binarization/ppm_sauvola.cc,
+	* scribo/src/binarization/ppm_sauvola_ms.cc,
+	* scribo/src/binarization/ppm_sauvola_ms_split.cc: Add new
+          program arguments.
+
+	* scribo/src/binarization/fg_sauvola_ms.cc,
+        * scribo/src/binarization/sauvola.cc,
+        * scribo/src/binarization/sauvola_ms.cc,
+        * scribo/src/binarization/sauvola_ms_split.cc,
+	* scribo/src/binarization/sauvola_debug.cc: New.
+
 2010-03-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add support for various image types in text_in_photo_fast.

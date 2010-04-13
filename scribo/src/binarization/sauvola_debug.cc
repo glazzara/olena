@@ -24,16 +24,22 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/io/ppm/load.hh>
+#include <mln/io/magick/load.hh>
 #include <mln/io/pbm/save.hh>
+#include <mln/io/pgm/save.hh>
 
-#include <scribo/binarization/sauvola.hh>
+#include <scribo/binarization/local_threshold.hh>
+#include <scribo/binarization/sauvola_threshold_image_debug.hh>
 #include <scribo/debug/usage.hh>
 
 const char *args_desc[][2] =
 {
-  { "input.ppm", "A color image." },
+  { "input.*", "An image." },
   { "output.pbm", "A binary image." },
+  { "mean.pgm", "The local mean image." },
+  { "stddev.pgm", "The local standard deviation image." },
+  { "mean_factor", "Mean value factor (default 1)." },
+  { "stddev_factor", "Standard deviation value factor (default 10)." },
   { "w", "Window size (default 51)." },
   { "k", "Sauvola's formulae parameter (default 0.34)." },
   {0, 0}
@@ -43,37 +49,57 @@ const char *args_desc[][2] =
 int main(int argc, char *argv[])
 {
   using namespace mln;
+  using namespace scribo::binarization;
 
-  if (argc != 5 && argc != 4 && argc != 3)
+  if (argc < 5 || argc >= 9)
     return scribo::debug::usage(argv,
-				"Binarization of a gray level image based on Sauvola's algorithm.",
-				"input.ppm output.pbm <w> <k>",
+				"Binarization based on Sauvola's algorithm.",
+				"input.* output.pbm mean.pgm stddev.pgm <mean_factor> <stddev_factor> <w> <k>",
 				args_desc);
 
   trace::entering("main");
 
   unsigned w;
-  if (argc == 4)
-    w = atoi(argv[3]);
+  if (argc >= 8)
+    w = atoi(argv[7]);
   else
     w = 51;
 
   double k;
-  if (argc == 5)
-    k = atof(argv[4]);
+  if (argc >= 9)
+    k = atof(argv[8]);
   else
     k = 0.34f;
 
   std::cout << "Using w=" << w << " and k=" << k << std::endl;
 
-  image2d<value::rgb8> input;
-  io::ppm::load(input, argv[1]);
+  if (argc >= 6)
+    scribo::binarization::internal::mean_debug_factor   = atoi(argv[5]);
+  if (argc >= 7)
+    scribo::binarization::internal::stddev_debug_factor = atoi(argv[6]);
 
-  image2d<bool> out = scribo::binarization::sauvola(input, w, k);
+  image2d<value::rgb8> input;
+  io::magick::load(input, argv[1]);
+
+
+  image2d<value::int_u8> mean, stddev;
+  initialize(mean, input);
+  initialize(stddev, input);
+
+  image2d<value::int_u8>
+    gima = data::transform(input,
+			   mln::fun::v2v::rgb_to_int_u<8>());
+
+
+  image2d<bool>
+    out = local_threshold(gima,
+			  sauvola_threshold_image_debug(gima, w, k,
+							mean, stddev));
 
 
   io::pbm::save(out, argv[2]);
-
+  io::pgm::save(mean, argv[3]);
+  io::pgm::save(stddev, argv[4]);
 
   trace::exiting("main");
 }

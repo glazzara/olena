@@ -61,6 +61,7 @@ namespace scribo
       \param[in] min_ntrue A site is set to 'True' in the output if it
                            is set to 'True' at least \p min_ntrue
                            components. Possible values: 1, 2, 3.
+      \param[in] K Sauvola's formula parameter.
 
       \p w_1 and \p lambda_min_1 are expressed according to the image
       at scale 0, i.e. the original size.
@@ -70,7 +71,17 @@ namespace scribo
     template <typename I>
     mln_ch_value(I, bool)
     sauvola_ms_split(const Image<I>& input_1_, unsigned w_1,
+		     unsigned s, unsigned lambda_min_1, unsigned min_ntrue,
+		     double K);
+
+
+    /// \overload
+    /// K is set to 0.34.
+    template <typename I>
+    mln_ch_value(I, bool)
+    sauvola_ms_split(const Image<I>& input_1_, unsigned w_1,
 		     unsigned s, unsigned lambda_min_1, unsigned min_ntrue);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -79,7 +90,8 @@ namespace scribo
     template <typename I>
     mln_ch_value(I, bool)
     sauvola_ms_split(const Image<I>& input_1_, unsigned w_1,
-		     unsigned s, unsigned lambda_min_1, unsigned min_ntrue)
+		     unsigned s, unsigned lambda_min_1, unsigned min_ntrue,
+		     double K)
     {
       trace::entering("scribo::binarization::sauvola_ms_split");
 
@@ -97,9 +109,9 @@ namespace scribo
 
       bin_t r_b, g_b, b_b;
 
-      r_b = impl::generic::sauvola_ms(r_i, w_1, s, lambda_min_1);
-      g_b = impl::generic::sauvola_ms(g_i, w_1, s, lambda_min_1);
-      b_b = impl::generic::sauvola_ms(b_i, w_1, s, lambda_min_1);
+      r_b = impl::generic::sauvola_ms(r_i, w_1, s, lambda_min_1, K);
+      g_b = impl::generic::sauvola_ms(g_i, w_1, s, lambda_min_1, K);
+      b_b = impl::generic::sauvola_ms(b_i, w_1, s, lambda_min_1, K);
 
       border::resize(r_b, input_1.border());
       border::resize(g_b, input_1.border());
@@ -137,6 +149,15 @@ namespace scribo
       return output;
     }
 
+
+    template <typename I>
+    mln_ch_value(I, bool)
+    sauvola_ms_split(const Image<I>& input_1, unsigned w_1,
+		     unsigned s, unsigned lambda_min_1, unsigned min_ntrue)
+    {
+      return sauvola_ms_split(input_1, w_1, s, lambda_min_1, min_ntrue,
+			      SCRIBO_DEFAULT_SAUVOLA_K);
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

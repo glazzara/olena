@@ -24,56 +24,92 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/io/ppm/load.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/io/magick/load.hh>
 #include <mln/io/pbm/save.hh>
 
-#include <scribo/binarization/sauvola.hh>
+#include <scribo/binarization/sauvola_ms.hh>
 #include <scribo/debug/usage.hh>
+
+bool check_args(int argc, char * argv[])
+{
+  if (argc < 3 || argc > 7)
+    return false;
+
+  if (argc >= 5)
+  {
+    int s = atoi(argv[4]);
+
+    if (s < 1 || s > 3)
+    {
+      std::cout << "s must be set to 2 or 3."
+		<< std::endl;
+      return false;
+    }
+  }
+
+  return true;
+}
+
 
 const char *args_desc[][2] =
 {
-  { "input.ppm", "A color image." },
-  { "output.pbm", "A binary image." },
-  { "w", "Window size (default 51)." },
-  { "k", "Sauvola's formulae parameter (default 0.34)." },
+  { "input.*", "An image." },
+  { "out.pbm", "A binary image." },
+  { "w", "Window size at scale 1. (default: 101)" },
+  { "s", "First subsampling ratio (default: 3)." },
+  { "k",    "Sauvola's formuale parameter (default: 0.34)" },
+  { "scale.pgm", "Image of scales used for binarization." },
   {0, 0}
 };
+
+
 
 
 int main(int argc, char *argv[])
 {
   using namespace mln;
+  using namespace scribo;
 
-  if (argc != 5 && argc != 4 && argc != 3)
+  if (!check_args(argc, argv))
     return scribo::debug::usage(argv,
-				"Binarization of a gray level image based on Sauvola's algorithm.",
-				"input.ppm output.pbm <w> <k>",
+				"Multi-Scale Binarization based on Sauvola's algorithm.",
+				"input.* output.pbm <w> <s> <k> <scale.pgm>",
 				args_desc);
 
   trace::entering("main");
 
-  unsigned w;
-  if (argc == 4)
-    w = atoi(argv[3]);
+  // Window size
+  unsigned w_1;
+  if (argc >= 4)
+    w_1 = atoi(argv[3]);  // Scale 1
   else
-    w = 51;
+    w_1 = 101u;
+
+  // First subsampling scale.
+  unsigned s;
+  if (argc >= 5)
+    s = atoi(argv[4]);
+  else
+    s = 3u;
 
   double k;
-  if (argc == 5)
-    k = atof(argv[4]);
+  if (argc >= 6)
+    k = atof(argv[5]);
   else
     k = 0.34f;
 
-  std::cout << "Using w=" << w << " and k=" << k << std::endl;
+  if (argc >= 7)
+    scribo::binarization::internal::scale_image_output = argv[6];
 
-  image2d<value::rgb8> input;
-  io::ppm::load(input, argv[1]);
+  image2d<value::rgb8> input_1;
+  io::magick::load(input_1, argv[1]);
 
-  image2d<bool> out = scribo::binarization::sauvola(input, w, k);
+  image2d<bool>
+    output = scribo::binarization::sauvola_ms(input_1, w_1, s, k);
 
-
-  io::pbm::save(out, argv[2]);
-
-
-  trace::exiting("main");
+  io::pbm::save(output, argv[2]);
 }
+
+

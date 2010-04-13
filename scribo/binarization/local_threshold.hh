@@ -200,9 +200,6 @@ namespace scribo
 
       internal::local_threshold_tests(input, threshold);
 
-
-
-
       mln_ch_value(I, bool)
 	output = internal::local_threshold_dispatch(input, threshold);
 
