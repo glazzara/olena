@@ -3,7 +3,6 @@
 #include <mln/util/couple.hh>
 #include <scribo/core/component_set.hh>
 #include <scribo/core/macros.hh>
-#include <scribo/primitive/internal/init_link_array.hh>
 
 namespace scribo
 {

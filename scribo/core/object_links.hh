@@ -90,10 +90,16 @@ namespace scribo
 
     const mln::util::array<unsigned>& comp_to_link() const;
 
+    void init();
 
   private:
     mln::util::tracked_ptr<data_t> data_;
   };
+
+
+  template <typename L>
+  std::ostream&
+  operator<<(std::ostream& ostr, const object_links<L>& links);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -174,7 +180,7 @@ namespace scribo
   unsigned
   object_links<L>::nelements() const
   {
-    return data_->comp_to_link_.nelements() ;
+    return data_->comp_to_link_.nelements();
   }
 
 
@@ -199,6 +205,33 @@ namespace scribo
   object_links<L>::comp_to_link() const
   {
     return data_->comp_to_link_;
+  }
+
+
+  template <typename L>
+  void
+  object_links<L>::init()
+  {
+    for (unsigned i = 0; i < nelements(); ++i)
+      if (data_->components_(i).tag() == component::Ignored)
+	data_->comp_to_link_(i) = 0;
+      else
+	data_->comp_to_link_(i) = i;
+  }
+
+
+  template <typename L>
+  std::ostream&
+  operator<<(std::ostream& ostr, const object_links<L>& links)
+  {
+    ostr << "object_links[";
+
+    for_all_links(l, links)
+      ostr << l << "->" << links.comp_to_link()[l] << ", ";
+
+    ostr << "]";
+
+    return ostr;
   }
 
 

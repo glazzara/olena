@@ -48,7 +48,6 @@
 # include <scribo/core/component_set.hh>
 # include <scribo/primitive/internal/find_root.hh>
 # include <scribo/primitive/internal/is_link_valid.hh>
-# include <scribo/primitive/internal/init_link_array.hh>
 
 
 namespace scribo

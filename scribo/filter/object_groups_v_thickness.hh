@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -75,7 +76,7 @@ namespace scribo
       mln::util::array<float>
 	group_thickness = estim::object_groups_v_thickness(groups);
 
-      object_groups<L> output(groups);
+      object_groups<L> output = groups.duplicate();
       output(0) = 0;
       for (unsigned i = 1; i < output.nelements(); ++i)
 	if (groups.components()(i).is_valid()

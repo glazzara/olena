@@ -45,7 +45,6 @@
 # include <scribo/core/object_links.hh>
 # include <scribo/core/concept/link_functor.hh>
 # include <scribo/primitive/link/internal/compute_anchor.hh>
-# include <scribo/primitive/internal/init_link_array.hh>
 
 # define scribo_support(T) typename T::support
 # define scribo_support_(T) T::support
@@ -194,7 +193,7 @@ namespace scribo
 	    labeled_image_(this->components_.labeled_image()),
 	    nanchors_(nanchors)
 	{
-	  primitive::internal::init_link_array(links_);
+	  links_.init();
 	}
 
 
@@ -207,7 +206,7 @@ namespace scribo
 	    labeled_image_(this->components_.labeled_image()),
 	    nanchors_(1)
 	{
-	  primitive::internal::init_link_array(links_);
+	  links_.init();
 	}
 
 

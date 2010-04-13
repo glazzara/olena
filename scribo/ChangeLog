@@ -1,41 +1,57 @@
 2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	* scribo/src/text_in_photo_fast.cc: Group routine parameters in a
-	global structure.
+	Add init() member to object_links structure.
+
+	* core/object_links.hh: New init() member.
+
+	* filter/object_groups_v_thickness.hh,
+	* filter/object_groups_with_holes.hh,
+	* primitive/group/from_double_link.hh,
+	* primitive/link/internal/link_functor_base.hh,
+	* primitive/link/merge_double_link.hh,
+	* src/afp/link.hh,
+	* src/afp/regroup.hh: Call init() on object_links instances.
+
+	* primitive/internal/init_link_array.hh: Remove.
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/text_in_photo_fast.cc: Group routine parameters in a global
+	structure.
 
 2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add new Sauvola overloads and update examples.
 
-	* scribo/binarization/internal/first_pass_functor.hh,
-	* scribo/binarization/local_threshold.hh,
-	* scribo/binarization/sauvola.hh,
-	* scribo/binarization/sauvola_ms.hh,
-	* scribo/binarization/sauvola_ms_split.hh,
-	* scribo/binarization/sauvola_threshold_image.hh,
-	* scribo/canvas/integral_browsing.hh: Add more parameters to
-	Sauvola routines.
+	* binarization/internal/first_pass_functor.hh,
+	* binarization/local_threshold.hh,
+	* binarization/sauvola.hh,
+	* binarization/sauvola_ms.hh,
+	* binarization/sauvola_ms_split.hh,
+	* binarization/sauvola_threshold_image.hh,
+	* canvas/integral_browsing.hh: Add more parameters to Sauvola
+	routines.
 
-	* scribo/binarization/sauvola_threshold_image_debug.hh: New. New
-	overload providing debug outputs.
+	* binarization/sauvola_threshold_image_debug.hh: New. New overload
+	providing debug outputs.
 
-	* scribo/debug/usage.hh: Remove a parameter.
+	* debug/usage.hh: Remove a parameter.
 
-	* scribo/src/binarization/Makefile.am,
-	* scribo/src/binarization/pgm_global_threshold_auto.cc,
-	* scribo/src/binarization/pgm_sauvola.cc,
-	* scribo/src/binarization/pgm_sauvola_ms.cc,
-	* scribo/src/binarization/ppm_fg_sauvola_ms.cc,
-	* scribo/src/binarization/ppm_sauvola.cc,
-	* scribo/src/binarization/ppm_sauvola_ms.cc,
-	* scribo/src/binarization/ppm_sauvola_ms_split.cc: Add new
-          program arguments.
+	* src/binarization/Makefile.am,
+	* src/binarization/pgm_global_threshold_auto.cc,
+	* src/binarization/pgm_sauvola.cc,
+	* src/binarization/pgm_sauvola_ms.cc,
+	* src/binarization/ppm_fg_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola.cc,
+	* src/binarization/ppm_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola_ms_split.cc: Add new program
+	  arguments.
 
-	* scribo/src/binarization/fg_sauvola_ms.cc,
-        * scribo/src/binarization/sauvola.cc,
-        * scribo/src/binarization/sauvola_ms.cc,
-        * scribo/src/binarization/sauvola_ms_split.cc,
-	* scribo/src/binarization/sauvola_debug.cc: New.
+	* src/binarization/fg_sauvola_ms.cc,
+        * src/binarization/sauvola.cc,
+        * src/binarization/sauvola_ms.cc,
+        * src/binarization/sauvola_ms_split.cc,
+	* src/binarization/sauvola_debug.cc: New.
 
 2010-03-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
