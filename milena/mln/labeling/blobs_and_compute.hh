@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -77,10 +78,14 @@ namespace mln
 	typedef util::couple<util::array<accu_result>,
 			     util::array<A> > result;
 
+	compute_functor(const mln_value(L)& nlabels)
+	  : nlabels_(nlabels)
+	{
+	}
+
 	void init()
 	{
-	  // FIXME: arbitrary value...
-	  accus_.reserve(static_cast<unsigned>(mln_max(mln_value(L))) / 2);
+	  accus_.reserve(static_cast<unsigned>(nlabels_));
 	  accus_.append(A());
 	}
 
@@ -126,6 +131,7 @@ namespace mln
 	util::array<mln_result(A)> result_;
 	util::array<A> accus_;
 	mln_value(L) current_lbl_;
+	mln_value(L) nlabels_;
       };
 
     } // end of namespace mln::labeling::internal
@@ -151,7 +157,7 @@ namespace mln
 
       typedef mln_ch_value(I,L) out_t;
       typedef internal::compute_functor<out_t,A> func_t;
-      func_t functor;
+      func_t functor(nlabels);
       out_t
 	output = canvas::labeling::blobs(input, nbh, nlabels, functor);
 

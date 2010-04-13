@@ -1,5 +1,10 @@
 2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/labeling/blobs_and_compute.hh: Fix an invalid size of
+	reserved memory.
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/subsampling/antialiased.hh: Fix the use of 'factor round'.
 
 2010-04-09  Guillaume Lazzara  <z@lrde.epita.fr>
