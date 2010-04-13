@@ -147,11 +147,9 @@ namespace mln
 
       mln_precondition(exact(input).is_valid());
 
-      //FIXME: why adding util::pix here?
       typedef mln_accu_with(A, util::pix<I>) A_;
-      util::pix<I>* pix_; // So we can pass a pixel below (pixel has
-			  // no ctor without arg).
-      A_ a_ = accu::unmeta(exact(a), *pix_);
+      util::pix<I> pix_(exact(input), mln_psite(I)());
+      A_ a_ = accu::unmeta(exact(a), pix_);
 
       mln_result(A_) output = internal::compute_dispatch(a_, input);
 

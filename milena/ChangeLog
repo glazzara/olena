@@ -1,3 +1,10 @@
+2010-04-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix accu::compute(const Meta_Accumulator<A>, const Image<I>&).
+
+	* mln/accu/compute.hh
+	(accu::compute(const Meta_Accumulator<A>, const Image<I>&)): Here.
+
 2010-04-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Exercise mln::util::ord.
