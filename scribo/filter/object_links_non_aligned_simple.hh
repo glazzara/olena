@@ -38,6 +38,7 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
+# include <scribo/filter/internal/component_aligned.hh>
 
 namespace scribo
 {
@@ -48,13 +49,13 @@ namespace scribo
     using namespace mln;
 
     /*! \brief Invalidate links between two non aligned components.
-	Alignment is based on a given edge of object bounding boxes.
+	Alignment is based on a given anchor of object bounding boxes.
 
 	\param[in] links        Object links information.
         \param[in] max_alpha    Maximum angle value (degrees).
 
 
-	Exemple with dim == 1 and edge == 1 (bottom
+	Exemple with dim == 1 and anchor == 1 (bottom
 	horizontal filter):
 
 	\verbatim
@@ -79,18 +80,11 @@ namespace scribo
 
 	The angle between the two bottoms must be lower than \p alpha.
 
-	edge values :
-	 0 = center
-	 1 = top
-	 2 = bottom
-	 3 = left
-	 4 = right
-
     */
     template <typename L>
     object_links<L>
     object_links_non_aligned_simple(const object_links<L>& links,
-				    unsigned edge,
+				    anchor::Type anchor,
 				    float max_alpha);
 
 
@@ -100,7 +94,7 @@ namespace scribo
     template <typename L>
     object_links<L>
     object_links_non_aligned_simple(const object_links<L>& links,
-				    unsigned edge,
+				    anchor::Type anchor,
 				    float max_alpha)
     {
       trace::entering("scribo::filter::object_links_non_aligned_simple");
@@ -111,100 +105,13 @@ namespace scribo
       const component_set<L>& comps = links.components();
 
       object_links<L> output(links);
-      float dr, dc;
 
 
       float max_alpha_rad = (max_alpha / 180.0f) * math::pi;
 
-      // Center
-      if (edge == 0)
-      {
-	for_all_comps(i, comps)
-	{
-	  if (links(i) != i)
-	  {
-	    dr = math::abs(comps(i).bbox().pcenter().row()
-			   - comps(links(i)).bbox().pcenter().row());
-	    dc = math::abs(comps(i).bbox().pcenter().col()
-			   - comps(links(i)).bbox().pcenter().col());
-
-	    if (std::atan(dr / dc) > max_alpha_rad)
-	      output(i) = i;
-	  }
-	}
-      }
-      // Top
-      else if (edge == 1)
-      {
-	for_all_comps(i, comps)
-	  if (links(i) != i)
-	  {
-	    dr = math::abs(comps(i).bbox().pmin().row()
-			   - comps(links(i)).bbox().pmin().row());
-	    dc = math::abs(comps(i).bbox().pcenter().col()
-			   - comps(links(i)).bbox().pcenter().col());
-
-	    if (std::atan(dr / dc) > max_alpha_rad)
-	      output(i) = i;
-	  }
-      }
-      // Bottom
-      else if (edge == 2)
-      {
-	for_all_comps(i, comps)
-	{
-	  if (links(i) != i)
-	  {
-	    dr = math::abs(comps(i).bbox().pmax().row()
-			   - comps(links(i)).bbox().pmax().row());
-	    dc = math::abs(comps(i).bbox().pcenter().col()
-			   - comps(links(i)).bbox().pcenter().col());
-
-	    if (std::atan(dr / dc) > max_alpha_rad)
-	      output(i) = i;
-	  }
-	}
-      }
-      // Left
-      else if (edge == 3)
-      {
-	for_all_comps(i, comps)
-	{
-	  if (links(i) != i)
-	  {
-	    dr = math::abs(comps(i).bbox().pcenter().row()
-			   - comps(links(i)).bbox().pcenter().row());
-	    dc = math::abs(comps(i).bbox().pmin().col()
-			   - comps(links(i)).bbox().pmin().col());
-
-	    if (std::atan(dc / dr) > max_alpha_rad)
-	      output(i) = i;
-	  }
-	}
-      }
-      // Right
-      else if (edge == 4)
-      {
-	for_all_comps(i, comps)
-	{
-	  if (links(i) != i)
-	  {
-	    dr = math::abs(comps(i).bbox().pcenter().row()
-			   - comps(links(i)).bbox().pcenter().row());
-	    dc = math::abs(comps(i).bbox().pmax().col()
-			   - comps(links(i)).bbox().pmax().col());
-
-	    if (std::atan(dc / dr) > max_alpha_rad)
-	      output(i) = i;
-	  }
-	}
-      }
-      else
-      {
-	trace::warning("Invalid edge value... Aborting computation.");
-	trace::exiting("scribo::filter::object_links_non_aligned_simple");
-	return output;
-      }
+      for_all_comps(i, comps)
+	if (!internal::component_aligned_rad(comps, i, links(i), anchor, max_alpha_rad))
+	  output(i) = i;
 
 
       trace::exiting("scribo::filter::object_links_non_aligned_simple");

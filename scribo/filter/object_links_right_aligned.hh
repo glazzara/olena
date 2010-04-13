@@ -102,7 +102,7 @@ namespace scribo
 
       object_links<L>
 	output = object_links_non_aligned_simple(objects, links,
-						 4,
+						 anchor::Right,
 						 max_alpha);
 
       trace::exiting("scribo::filter::object_links_right_aligned");

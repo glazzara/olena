@@ -1,5 +1,19 @@
 2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Use anchor::Type in alignment routines' dispatch.
+
+	* filter/object_links_bottom_aligned.hh,
+	* filter/object_links_center_aligned.hh,
+	* filter/object_links_left_aligned.hh,
+	* filter/object_links_non_aligned_simple.hh,
+	* filter/object_links_right_aligned.hh,
+	* filter/object_links_top_aligned.hh: Use anchor::Type.
+
+	* filter/internal/alignment_angle.hh,
+	* filter/internal/component_aligned.hh: New.
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes related to object_groups.
 
 	* core/object_groups.hh: Add more preconditions.

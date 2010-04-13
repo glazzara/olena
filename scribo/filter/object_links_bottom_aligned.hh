@@ -97,7 +97,7 @@ namespace scribo
       mln_precondition(links.is_valid());
 
       object_links<L>
-	output = object_links_non_aligned_simple(links, 2, max_alpha);
+	output = object_links_non_aligned_simple(links, anchor::Bottom, max_alpha);
 
       trace::exiting("scribo::filter::object_links_bottom_aligned");
       return output;
