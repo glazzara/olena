@@ -1,5 +1,10 @@
 2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/src/text_in_photo_fast.cc: Group routine parameters in a
+	global structure.
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new Sauvola overloads and update examples.
 
 	* scribo/binarization/internal/first_pass_functor.hh,

@@ -57,8 +57,6 @@
 
 #include <mln/subsampling/antialiased.hh>
 
-#include <mln/subsampling/antialiased_rgb.hh>
-
 #include <scribo/draw/bounding_boxes.hh>
 #include <scribo/draw/groups_bboxes.hh>
 
@@ -112,6 +110,7 @@
 const char *args_desc[][2] =
 {
   { "input.ppm", "A color image." },
+  { "ouput.ppm", "A color image where the text is highlighted." },
   { "debug_output_dir", "Directory were debug images will be saved" },
   { "lambda", "Lambda value used for foreground extraction" },
   {0, 0}
@@ -120,6 +119,38 @@ const char *args_desc[][2] =
 
 namespace mln
 {
+
+
+  struct config
+  {
+    config()
+    {
+      sauvola_s = 3u;
+      sauvola_min_w = 51u;
+
+      // Group Filtering
+      bbox_h_ratio = 1.50f;
+      bbox_overlap = 0.80f;
+      small_groups = 3;
+      v_thickness = 8;
+      regroup_dmax = 30;
+      group_min_holes = 3;
+    }
+
+
+    // Sauvola ms
+    unsigned sauvola_s;
+    unsigned sauvola_min_w;
+
+    // Group Filtering
+    float bbox_h_ratio;
+    float bbox_overlap;
+    unsigned small_groups;
+    unsigned v_thickness;
+    unsigned regroup_dmax;
+    unsigned group_min_holes;
+  };
+
 
   struct mask_non_text : Function_v2v<mask_non_text>
   {
@@ -239,10 +270,9 @@ int main(int argc, char* argv[])
   if (argc < 3 || argc > 10)
     return scribo::debug::usage(argv,
 				"Find text in a photo.\n\n\
-Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
+Common usage: ./text_in_photo_fast input.ppm output.ppm 1 1 1 1 1",
 				"input.ppm output.ppm <bg/fg enabled> <sauvola_ms enabled> <Bg comp filter enabled> <small group filter enabled> <thin group filter enabled> [debug_output_dir] [lambda]",
-				args_desc,
-				"A color image where the text is highlighted.");
+				args_desc);
 
   std::string out_base_dir;
   bool debug = false;
@@ -255,6 +285,8 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
   trace::entering("main");
 
+  config conf;
+
   image2d<value::rgb8> input_rgb;
   io::magick::load(input_rgb, argv[1]);
 
@@ -264,7 +296,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
   std::cout << "Original domain: " << input_rgb.domain() << std::endl;
 
-  input_rgb = mln::subsampling::impl::antialiased_2d_rgb(input_rgb, factor);
+  input_rgb = mln::subsampling::antialiased(input_rgb, factor);
 
   std::cout << "Resized domain: " << input_rgb.domain() << std::endl;
 
@@ -318,11 +350,11 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   unsigned w = std::min(intensity_ima.nrows() / 3, intensity_ima.ncols() / 3);
   if (! w % 2)
     ++w;
-  w = std::min(w, 51u);
+  w = std::min(w, conf.sauvola_min_w);
   if (argc > 4 && atoi(argv[4]) != 0)
   {
     std::cout << "** Using sauvola_ms with w_1 = " << w << std::endl;
-    input = scribo::binarization::sauvola_ms(intensity_ima, w, 3, 67);
+    input = scribo::binarization::sauvola_ms(intensity_ima, w, conf.sauvola_s);
   }
   else
   {
@@ -420,7 +452,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   timer_.restart();
   object_links<L>
     hratio_filtered_links = filter::object_links_bbox_h_ratio(merged_links,
-							      1.50f);
+							      conf.bbox_h_ratio);
 
 
 
@@ -431,7 +463,8 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
     image2d<value::rgb8>
       hratio_decision_image = scribo::debug::decision_image(input,
 							    merged_links,
-							    hratio_filtered_links);
+							    hratio_filtered_links,
+							    anchor::MassCenter);
     io::ppm::save(hratio_decision_image,
 		  scribo::make::debug_filename("hratio_links_decision_image.ppm"));
   }
@@ -442,7 +475,8 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
   //Remove links if bboxes overlap too much.
   object_links<L> overlap_filtered_links
-    = filter::object_links_bbox_overlap(hratio_filtered_links, 0.80f);
+    = filter::object_links_bbox_overlap(hratio_filtered_links,
+					conf.bbox_overlap);
 
 
 
@@ -453,7 +487,8 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
     image2d<value::rgb8> overlap_decision_image
       = scribo::debug::decision_image(input,
 				      hratio_filtered_links,
-				      overlap_filtered_links);
+				      overlap_filtered_links,
+				      anchor::MassCenter);
     io::ppm::save(overlap_decision_image,
 		  scribo::make::debug_filename("overlap_links_decision_image.ppm"));
   }
@@ -514,7 +549,8 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   if (argc > 6 && atoi(argv[6]) != 0)
   {
     std::cout << "** Using group too small" << std::endl;
-    filtered_small_groups = filter::object_groups_small(groups, 3);
+    filtered_small_groups = filter::object_groups_small(groups,
+							conf.small_groups);
   }
   else
     filtered_small_groups = groups;
@@ -532,7 +568,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
 
     scribo::draw::groups_bboxes(decision_image, groups, literal::red);
     scribo::draw::groups_bboxes(decision_image, filtered_small_groups,
-				literal::blue);
+				literal::green);
 
 
     io::ppm::save(decision_image,
@@ -549,7 +585,8 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   {
     std::cout << "** Using group too thin" << std::endl;
     filtered_thin_groups
-      = filter::object_groups_v_thickness(filtered_small_groups, 8);
+      = filter::object_groups_v_thickness(filtered_small_groups,
+					  conf.v_thickness);
   }
   else
     filtered_thin_groups = filtered_small_groups;
@@ -565,7 +602,7 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
     scribo::draw::groups_bboxes(decision_image, filtered_small_groups,
 				literal::red);
     scribo::draw::groups_bboxes(decision_image, filtered_thin_groups,
-				literal::blue);
+				literal::green);
 
     io::ppm::save(decision_image,
 		  scribo::make::debug_filename("thin_groups_filter.ppm"));
@@ -578,7 +615,8 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   g_timer.restart();
 
   // Grouping groups together if possible.
-  groups = primitive::regroup::from_single_left_link(filtered_thin_groups, 30);
+  groups = primitive::regroup::from_single_left_link(filtered_thin_groups,
+						     conf.regroup_dmax);
 
 
 //   component_set<L>
@@ -607,7 +645,8 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   {
     std::cout << "** Using objects_with_two_holes" << std::endl;
 
-    groups  = scribo::filter::object_groups_with_holes(groups, 5);
+    groups  = scribo::filter::object_groups_with_holes(groups,
+						       conf.group_min_holes);
 
     t_ = g_timer;
     std::cout << "Objects_with_holes " << t_ << std::endl;
@@ -626,7 +665,9 @@ Common usage: ./ppm_text_in_photo input.ppm output.ppm 1 1 1 1 1",
   {
     decision_image = data::convert(value::rgb8(), input);
 
-    scribo::draw::groups_bboxes(decision_image, groups, literal::blue);
+    scribo::draw::groups_bboxes(decision_image, filtered_thin_groups,
+				literal::red);
+    scribo::draw::groups_bboxes(decision_image, groups, literal::green);
 
     io::ppm::save(decision_image, scribo::make::debug_filename("group_with_holes_filter.ppm"));
   }
