@@ -212,18 +212,18 @@
       </widget>
       <widget class="QDockWidget" name="dockWidget" >
        <property name="sizePolicy" >
-        <sizepolicy vsizetype="Maximum" hsizetype="Maximum" >
+        <sizepolicy vsizetype="Maximum" hsizetype="Expanding" >
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="maximumSize" >
-        <size>
-         <width>550</width>
-         <height>524287</height>
-        </size>
-       </property>
        <widget class="QWidget" name="dockWidgetContents" >
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <layout class="QGridLayout" name="gridLayout_2" >
          <item row="0" column="0" >
           <layout class="QVBoxLayout" name="verticalLayout_7" >
@@ -256,7 +256,7 @@
            <item>
             <widget class="QGraphicsView" name="graphicsView" >
              <property name="sizePolicy" >
-              <sizepolicy vsizetype="Expanding" hsizetype="Maximum" >
+              <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -269,7 +269,7 @@
              </property>
              <property name="maximumSize" >
               <size>
-               <width>512</width>
+               <width>16777215</width>
                <height>512</height>
               </size>
              </property>
@@ -496,7 +496,7 @@
      <x>0</x>
      <y>0</y>
      <width>708</width>
-     <height>31</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile" >

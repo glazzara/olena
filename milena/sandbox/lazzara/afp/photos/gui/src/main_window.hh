@@ -48,7 +48,10 @@ namespace mln
       void process__error_slot(QProcess::ProcessError);
       void process__finished_slot(int exitCode,
 				  QProcess::ExitStatus exitStatus);
+
+      void on_withTextListWidget_itemClicked(QListWidgetItem * item);
       void on_withTextListWidget_currentItemChanged(QListWidgetItem * item);
+      void on_withoutTextListWidget_itemClicked(QListWidgetItem * item);
       void on_withoutTextListWidget_currentItemChanged(QListWidgetItem * item);
 
       void on_fullImageButton_toggled(bool b);
@@ -64,6 +67,8 @@ namespace mln
 
       void remove_image(bool);
       void show_hidden_images(bool b);
+
+      void update_tab_title();
 
     signals:
       void process_finished();

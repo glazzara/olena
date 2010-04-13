@@ -9,6 +9,8 @@ INCLUDEPATH += . src
 
 CONFIG += release
 
+QMAKE_CXXFLAGS = -g
+
 # Input
 HEADERS += src/main_window.hh src/custom_delegate.hh src/launch_dialog.hh
 FORMS += ui/main_window.ui ui/launch_dialog.ui

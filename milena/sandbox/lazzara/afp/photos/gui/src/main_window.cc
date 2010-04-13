@@ -152,8 +152,10 @@ namespace mln
 
      file_list_ = dir_.entryInfoList();
      current_file_ = 0;
+
      withTextListWidget->clear();
      withoutTextListWidget->clear();
+     update_tab_title();
 
      progressToolBar_->show();
      progressLabel_.setText(tr("Processing images..."));
@@ -276,13 +278,8 @@ namespace mln
 	  withoutTextListWidget->addItem(item);
       }
 
-      // Update tab titles.
-      tabWidget->setTabText(0,
-			    QString(tr("With text (%1)"))
-			    .arg(withTextListWidget->count()));
-      tabWidget->setTabText(1,
-			    QString(tr("Without text (%1)"))
-			    .arg(withoutTextListWidget->count()));
+      // Update tab title.
+      update_tab_title();
 
       next_process();
     }
@@ -307,8 +304,17 @@ namespace mln
 
 
     void
+    main_window::on_withTextListWidget_itemClicked(QListWidgetItem * item)
+    {
+      on_withTextListWidget_currentItemChanged(item);
+    }
+
+    void
     main_window::on_withTextListWidget_currentItemChanged(QListWidgetItem * item)
     {
+      if (!withTextListWidget->count())
+	return;
+
       if (fullImageButton->isChecked())
 	on_fullImageButton_toggled(true);
       else if (textOnlyButton->isChecked())
@@ -325,15 +331,22 @@ namespace mln
     }
 
     void
+    main_window::on_withoutTextListWidget_itemClicked(QListWidgetItem * item)
+    {
+      on_withoutTextListWidget_currentItemChanged(item);
+    }
+
+    void
     main_window::on_withoutTextListWidget_currentItemChanged(QListWidgetItem * item)
     {
-      display_image(file_list_.at(item->data(Qt::UserRole).toInt()).absoluteFilePath());
+      if (withoutTextListWidget->count() && item)
+	display_image(file_list_.at(item->data(Qt::UserRole).toInt()).absoluteFilePath());
     }
 
     void
     main_window::on_fullImageButton_toggled(bool)
     {
-      if (withTextListWidget->count())
+      if (withTextListWidget->count() && withTextListWidget->currentItem())
       {
 	QString filename = file_list_.at(withTextListWidget->currentItem()->data(Qt::UserRole).toInt()).absoluteFilePath();
 	display_image(filename);
@@ -343,7 +356,7 @@ namespace mln
     void
     main_window::on_textBoxesButton_toggled(bool)
     {
-      if (withTextListWidget->count())
+      if (withTextListWidget->count() && withTextListWidget->currentItem())
       {
 	QFileInfo f(withTextListWidget->currentItem()->text());
 	display_image(textBoxes_file(f.baseName()));
@@ -353,7 +366,7 @@ namespace mln
     void
     main_window::on_textMaskButton_toggled(bool)
     {
-      if (withTextListWidget->count())
+      if (withTextListWidget->count() && withTextListWidget->currentItem())
       {
 	QFileInfo f(withTextListWidget->currentItem()->text());
 	display_image(textMask_file(f.baseName()));
@@ -363,7 +376,7 @@ namespace mln
     void
     main_window::on_textOnlyButton_toggled(bool)
     {
-      if (withTextListWidget->count())
+      if (withTextListWidget->count() && withTextListWidget->currentItem())
       {
 	QFileInfo f(withTextListWidget->currentItem()->text());
 	display_image(output_file(f.baseName()));
@@ -492,6 +505,19 @@ namespace mln
 
       event->ignore();
     }
+
+
+    void
+    main_window::update_tab_title()
+    {
+      tabWidget->setTabText(0,
+			    QString(tr("With text (%1)"))
+			    .arg(withTextListWidget->count()));
+      tabWidget->setTabText(1,
+			    QString(tr("Without text (%1)"))
+			    .arg(withoutTextListWidget->count()));
+    }
+
 
   } // end of namespace scribo::demo
 
