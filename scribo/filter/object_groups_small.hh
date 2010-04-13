@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -77,7 +78,7 @@ namespace scribo
       for_all_groups(i, group_size)
 	++group_size[groups(i)];
 
-      object_groups<L> output(groups);
+      object_groups<L> output = groups.duplicate();
       output(0) = 0;
       for_all_groups(i, output)
 	if (group_size[groups(i)] < n_links

@@ -165,6 +165,7 @@ namespace scribo
   const object_links<L>&
   object_groups<L>::links() const
   {
+    mln_assertion(data_ != 0);
     return data_->links_;
   }
 
@@ -172,6 +173,7 @@ namespace scribo
   void
   object_groups<L>::init_(const object_links<L>& links)
   {
+    mln_assertion(data_ != 0);
     data_->comp_to_group_ = links.comp_to_link();
   }
 

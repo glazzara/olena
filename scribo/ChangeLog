@@ -1,5 +1,13 @@
 2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes related to object_groups.
+
+	* core/object_groups.hh: Add more preconditions.
+
+	* filter/object_groups_small.hh: Call duplicate().
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add init() member to object_links structure.
 
 	* core/object_links.hh: New init() member.
