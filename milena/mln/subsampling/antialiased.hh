@@ -90,7 +90,6 @@ namespace mln
 	mlc_is_a(mln_domain(I), Box)::check();
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(input).domain().pmin() == literal::origin);
-	mln_precondition(internal::is_valid_factor(factor));
 
 	(void) input;
 	(void) factor;
@@ -261,6 +260,11 @@ namespace mln
 		  algebra::vec<3, float> tmp = *ptrs[j]++;
 		  s += tmp;
 		}
+
+	      // FIXME: should be removed and replaced by the
+	      // commented part below.
+	      for (unsigned j = 0; j < P::dim; ++j)
+		s[j] += factor_round;
 
 	      *po++ = (s /*+ factor_round*/) / factor_2;
 	    }
