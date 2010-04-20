@@ -1,5 +1,11 @@
 2010-04-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add Doxygen documentation to a test.
+
+	* tests/topo/complex.cc: Here.
+
+2010-04-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix Doxygen comments.
 
 	* mln/value/int_u.hh,

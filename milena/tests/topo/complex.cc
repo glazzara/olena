@@ -23,6 +23,9 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+/// \file
+/// \brief Exercise mln::complex.
+
 #include <algorithm>
 #include <iterator>
 #include <iostream>
