@@ -1,5 +1,15 @@
 2010-04-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix more tests.
+
+	* mln/core/image/imorph/labeled_image.hh: Include
+	mln/data/compute.hh.
+	* mln/io/fld/save.hh: Fix headers' inclusions.
+	* mln/io/fld/write_header.hh: Likewise.
+	Add missing namespace qualifiers.
+
+2010-04-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Install meshes in $(pkgdatadir)/meshes.
 
 	* mesh/Makefile.am (meshdir): Here.

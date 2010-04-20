@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -25,10 +26,13 @@
 
 #ifndef MLN_IO_FLD_SAVE_HH
 # define MLN_IO_FLD_SAVE_HH
+
 /// \file
 /// \brief Save an image to AVS field file format.
 ///
 /// \todo Handle not high speed images.
+
+# include <fstream>
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/gpoint.hh>
@@ -38,9 +42,7 @@
 
 # include <mln/algebra/vec.hh>
 
-# include <mln/geom/nsites.hh>
-# include <fstream>
-# include <iostream>
+# include <mln/geom/bbox.hh>
 
 namespace mln
 {

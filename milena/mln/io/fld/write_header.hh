@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,15 +27,14 @@
 #ifndef MLN_IO_FLD_WRITE_HEADER_HH
 # define  MLN_IO_FLD_WRITE_HEADER_HH
 
-///
+/// \file
 /// \brief Write AVS headers in a file.
-///
-///
-///
 
+# include <cstdlib>
+
+# include <iostream>
 
 # include <mln/io/fld/header.hh>
-# include <iostream>
 
 namespace mln
 {
@@ -86,7 +86,7 @@ namespace mln
 	      break;
 	    default:
 	      std::cerr << "Data type not supported: abort().";
-	      abort();
+	      std::abort();
 	  }
 
 	switch (h.field)
@@ -102,7 +102,7 @@ namespace mln
 	      break;
 	    default:
 	      std::cerr << "Field type not suported: abort().";
-	      abort();
+	      std::abort();
 	  }
 
 	file << "min_ext=";

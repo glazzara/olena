@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,6 +39,8 @@
 # include <mln/accu/center.hh>
 # include <mln/accu/shape/bbox.hh>
 # include <mln/accu/stat/max.hh>
+
+# include <mln/data/compute.hh>
 
 # include <mln/labeling/compute.hh>
 
