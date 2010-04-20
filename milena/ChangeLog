@@ -1,3 +1,11 @@
+2010-04-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix Doxygen comments.
+
+	* mln/value/int_u.hh,
+	* mln/value/rgb.hh:
+	Here.
+
 2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove a useless comment line.

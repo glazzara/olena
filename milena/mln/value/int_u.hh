@@ -174,18 +174,22 @@ namespace mln
 
 
 
-    /// \brief Print an unsigned integer \p i into the output stream \p ostr.
+    /// \brief Print an unsigned integer \p i on the output stream \p ostr.
     ///
     /// \param[in,out] ostr An output stream.
     /// \param[in] i An unsigned integer.
     ///
     /// \return The modified output stream \p ostr.
-    ///
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const int_u<n>& i);
 
-
-    // FIXME: Doc!
+    /// \brief Get an unsigned integer \p i from the input stream \p istr.
+    ///
+    /// \param[in,out] istr An input stream.
+    /// \param[out] i An unsigned integer (destination).
+    ///
+    /// \return The modified input stream \p istr.
+    ///
     template <unsigned n>
     std::istream& operator>>(std::istream& istr, int_u<n>& i);
 
