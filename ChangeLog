@@ -1,3 +1,9 @@
+2010-04-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Unconditionally regen files not recorded in the repository.
+
+	* bootstrap: Here.
+
 2010-04-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Add option `--enable-scribo'.

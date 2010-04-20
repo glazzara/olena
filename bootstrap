@@ -214,13 +214,13 @@ if $regen_p; then
     mv -f split-outputs.mk.tmp split-outputs.mk
     chmod -w split-outputs.mk
   )
-
-  # Generate unit test files.
-  run . ./build-aux/build_unit_test.sh `pwd`/milena/mln milena/tests/unit_test milena/tests/unit_test/disabled_tests
-
-  # Generate unit test files for Scribo.
-  run scribo/tests/unit_test ./build_unit_test.sh `pwd`/scribo .
 fi
+
+# Generate unit test files.
+run . ./build-aux/build_unit_test.sh `pwd`/milena/mln milena/tests/unit_test milena/tests/unit_test/disabled_tests
+
+# Generate unit test files for Scribo.
+run scribo/tests/unit_test ./build_unit_test.sh `pwd`/scribo .
 
 # Install the GNU Build System.
 autoreconf -f -v -i
