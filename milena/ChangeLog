@@ -1,3 +1,9 @@
+2010-04-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Install meshes in $(pkgdatadir)/meshes.
+
+	* mesh/Makefile.am (meshdir): Here.
+
 2010-04-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix test core/other/box_runend_piter.

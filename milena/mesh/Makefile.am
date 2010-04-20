@@ -21,7 +21,7 @@
 ## patsubst).  We might want to turn it into something more portable
 ## when Olena is released.
 
-meshdir = $(pkgdatadir)/images
+meshdir = $(pkgdatadir)/meshes
 dist_mesh_DATA =
 
 ## -------- ##
