@@ -1,5 +1,12 @@
 2010-04-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Move a test from Scribo into Milena.
+
+	* scribo/test.cc: Move...
+	* milena/tests/util/ord.cc: ...here.
+
+2010-04-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Unconditionally regen files not recorded in the repository.
 
 	* bootstrap: Here.
