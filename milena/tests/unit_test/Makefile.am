@@ -34,7 +34,7 @@ regen-am:
 #
 # `$(abs_top_srcdir)' is required because of the change of directory
 # at the beginning og the action.
-$(srcdir)/unit-tests.mk: $(top_srcdir)/build-aux/build_unit_test.sh
+$(srcdir)/unit-tests.mk: $(top_srcdir)/build-aux/build_unit_test.sh disabled_tests
 	cd $(top_srcdir)					\
 	&& ./build-aux/build_unit_test.sh 			\
 		milena/mln 					\

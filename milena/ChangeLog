@@ -1,3 +1,10 @@
+2010-04-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix Milena's unit tests generator's dependencies.
+
+	* tests/unit_test/Makefile.am ($(srcdir)/unit-tests.mk):
+	Depend on disabled_tests.
+
 2010-04-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix accu::compute(const Meta_Accumulator<A>, const Image<I>&).
