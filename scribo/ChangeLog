@@ -1,5 +1,12 @@
 2010-04-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the Scribo distribution.
+
+	* tests/unit_test/Makefile.am (EXTRA_DIST):
+	Add build_unit_test.sh and disabled_tests.
+
+2010-04-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have Scribo's unit tests pass.
 
 	* tests/unit_test/disabled_tests:

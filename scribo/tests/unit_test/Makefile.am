@@ -19,6 +19,8 @@
 
 include $(top_srcdir)/scribo/tests/tests.mk
 
+EXTRA_DIST = build_unit_test.sh disabled_tests
+
 # Regen files.
 include $(top_srcdir)/build-aux/regen-recursive.mk
 regen-am:
