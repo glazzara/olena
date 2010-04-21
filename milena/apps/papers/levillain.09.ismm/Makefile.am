@@ -31,10 +31,10 @@ complex_SOURCES = complex.cc
 
 # Input images.
 # FIXME: Move them to milena/img/?
-data_DATA = seeds.pgm m283-c.off
+dist_data_DATA = seeds.pgm m283-c.off
 
 # Output images.
-data_DATA += lena-s.ppm graph-s.png m283-s.off
+data_DATA = lena-s.ppm graph-s.png m283-s.off
 
 lena-s.ppm: $(top_srcdir)/milena/img/lena.pgm image2d$(EXEEXT)
 	./image2d$(EXEEXT) $< 1000 $@

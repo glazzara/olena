@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -18,6 +19,8 @@
 ## Process this file through Automake to create Makefile.in.
 
 include $(top_srcdir)/milena/tests/tests.mk
+
+EXTRA_DIST = disabled_tests
 
 # Regen files.
 include $(top_srcdir)/build-aux/regen-recursive.mk
