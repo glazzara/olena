@@ -1,3 +1,13 @@
+2010-04-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update Scribo's unit tests generator.
+
+	* tests/unit_test/build_unit_test.sh: Catch up with Milena's
+	version of this script.
+	* tests/unit_test/Makefile.am (regen-am, $(srcdir)/unit-tests.mk):
+	Adjust.
+	* tests/unit_test/disabled_tests: New.
+
 2010-04-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Help g++ 4.1 compile Scribo.
