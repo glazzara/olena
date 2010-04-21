@@ -1,5 +1,15 @@
 2010-04-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have Scribo's unit tests pass.
+
+	* tests/unit_test/disabled_tests:
+	Add scribo/primitive/link/compute_several.hh and
+	scribo/primitive/link/internal/find_several_links.hh, as they
+	do not pass the unit tests.
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2010-04-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update Scribo's unit tests generator.
 
 	* tests/unit_test/build_unit_test.sh: Catch up with Milena's
