@@ -121,8 +121,6 @@ EOF
 	    echo "$cppflags \${AM_CPPFLAGS}" >>"$output"
 	    echo "$ldflags \${AM_LDFLAGS}" >>"$output"
 	fi
-
-	echo "${NAME}_SOURCES = $FILE_CC" >>"$output"
     done
 
     # End conditions if necessary
