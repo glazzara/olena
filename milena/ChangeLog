@@ -1,5 +1,14 @@
 2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix distcleancheck.
+
+	* apps/papers/levillain.09.ismm/Makefile.am (CLEANFILES): New.
+	Add $(noinst_DATA) and graph-s.neato.
+	* tests/morpho/watershed/Makefile.am (CLEANFILES):
+	Add topo_wst.pgm.
+
+2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Do not install images from papers (yet).
 
 	* apps/papers/levillain.09.ismm/Makefile.am

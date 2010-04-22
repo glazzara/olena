@@ -34,6 +34,6 @@ TESTS = $(check_PROGRAMS)
 # FIXME: each test should clean its output, temporary output should
 # not be cleaned up by make.
 CLEANFILES =					\
+  topo_wst.pgm					\
   tmp_ref.pgm					\
   tmp_out.pgm
-
