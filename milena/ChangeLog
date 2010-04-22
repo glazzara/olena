@@ -1,3 +1,10 @@
+2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the Milena installation.
+
+	* Makefile.am (nobase_include_HEADERS): Move mln/version.hh...
+	(nobase_nodist_include_HEADERS): ...here.
+
 2010-04-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the Milena distribution.
