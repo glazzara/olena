@@ -1,5 +1,12 @@
 2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor Makefiles' helpers.
+
+	* scribo.mk, tests/tests.mk (AM_CPPFLAGS): Move...
+	* common.mk: ...here.
+
+2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use AM_DEFAULT_SOURCE_EXT to simplify Scribo's Makefiles.
 
 	* common.mk: New.

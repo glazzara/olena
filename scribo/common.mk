@@ -20,3 +20,7 @@
 
 # C++ sources.
 AM_DEFAULT_SOURCE_EXT = .cc
+
+# Add paths to Scribo's headers.
+AM_CPPFLAGS = -I$(top_srcdir)/ -I$(top_builddir)/ \
+  -I$(top_srcdir)/milena -I$(top_builddir)/milena

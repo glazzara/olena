@@ -17,13 +17,6 @@
 
 include $(top_srcdir)/scribo/common.mk
 
-# Add path to Scribo's headers
-AM_CPPFLAGS = 			\
-	-I$(top_srcdir)/scribo 	\
-	-I$(top_builddir)/scribo\
-	-I$(top_srcdir)/milena 	\
-	-I$(top_builddir)/milena
-
 SCRIBO_CXXFLAGS = @SCRIBO_CXXFLAGS@
 AM_CXXFLAGS = $(SCRIBO_CXXFLAGS)
 
