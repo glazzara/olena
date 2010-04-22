@@ -1,3 +1,29 @@
+2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use AM_DEFAULT_SOURCE_EXT to simplify Scribo's Makefiles.
+
+	* common.mk: New.
+	Include it...
+	* scribo.mk,
+	* tests/tests.mk:
+	...here.
+	* src/Makefile.am,
+	* src/binarization/Makefile.am,
+	* src/debug/Makefile.am,
+	* src/filter/Makefile.am,
+	* src/misc/Makefile.am,
+	* src/preprocessing/Makefile.am,
+	* src/primitive/extract/Makefile.am,
+	* src/primitive/find/Makefile.am,
+	* src/primitive/group/Makefile.am,
+	* src/table/Makefile.am,
+	* src/text/Makefile.am,
+	* tests/filter/Makefile.am,
+	* tests/preprocessing/Makefile.am,
+	* tests/table/Makefile.am:
+	Remove (now useless) `*_SOURCES' variables using
+	sed -ri '/^(\s|#)*\S+_SOURCES\s*=\s*\S+.cc\s*$/d'.
+
 2013-02-07  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove scoria from Makefiles.

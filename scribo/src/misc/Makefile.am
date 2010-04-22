@@ -24,10 +24,3 @@ noinst_PROGRAMS = 			\
   negate 				\
   rectangularity 			\
   superpose
-
-closure_rectangle_SOURCES = closure_rectangle.cc
-dmap_SOURCES = dmap.cc
-morpho_SOURCES = morpho.cc
-negate_SOURCES = negate.cc
-rectangularity_SOURCES = rectangularity.cc
-superpose_SOURCES = superpose.cc

@@ -21,14 +21,10 @@ noinst_PROGRAMS = 	\
   cleantxt
 
 
-cleantxt_SOURCES = cleantxt.cc
-
-
 if HAVE_TESSERACT
 if HAVE_TIFF
 
     noinst_PROGRAMS 	  	  += pbm_lines_recognition
-    pbm_lines_recognition_SOURCES  = pbm_lines_recognition.cc
     pbm_lines_recognition_CPPFLAGS = $(AM_CPPFLAGS) \
 		  		     $(TESSERACT_CPPFLAGS) \
 				     $(TIFF_CPPFLAGS) \
@@ -39,7 +35,6 @@ if HAVE_TIFF
 				     -lpthread
 
     noinst_PROGRAMS	     += pbm_recognition
-    pbm_recognition_SOURCES   = pbm_recognition.cc
     pbm_recognition_CPPFLAGS  = $(AM_CPPFLAGS) \
 			        $(TESSERACT_CPPFLAGS) \
 			   	$(TIFF_CPPFLAGS) \

@@ -24,9 +24,3 @@ noinst_PROGRAMS = 		\
   find_single_lines 		\
   find_thick_lines 		\
   find_thick_and_single_lines
-
-find_discontinued_lines_SOURCES = find_discontinued_lines.cc
-find_pattern_lines_SOURCES = find_pattern_lines.cc
-find_single_lines_SOURCES = find_single_lines.cc
-find_thick_lines_SOURCES = find_thick_lines.cc
-find_thick_and_single_lines_SOURCES = find_thick_and_single_lines.cc

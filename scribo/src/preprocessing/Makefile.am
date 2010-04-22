@@ -24,16 +24,10 @@ noinst_PROGRAMS = 			\
   preprocess 				\
   unskew
 
-denoise_bg_SOURCES = denoise_bg.cc
-denoise_fg_SOURCES = denoise_fg.cc
-homogeneous_contrast_SOURCES = homogeneous_contrast.cc
-preprocess_SOURCES = preprocess.cc
-unskew_SOURCES = unskew.cc
 
 if HAVE_MAGICKXX
 
     noinst_PROGRAMS    	+= split_bg_fg
-    split_bg_fg_SOURCES  = split_bg_fg.cc
     split_bg_fg_CPPFLAGS = $(AM_CPPFLAGS) \
 		           $(MAGICKXX_CPPFLAGS)
     split_bg_fg_LDFLAGS  = $(AM_LDFLAGS) \
@@ -41,7 +35,6 @@ if HAVE_MAGICKXX
 			   -lpthread
 
     noinst_PROGRAMS += rotate
-    rotate_SOURCES  = rotate.cc
     rotate_CPPFLAGS = $(AM_CPPFLAGS) \
 	              $(MAGICKXX_CPPFLAGS)
     rotate_LDFLAGS  = $(AM_LDFLAGS) \
@@ -49,7 +42,6 @@ if HAVE_MAGICKXX
 		      -lpthread
 
     noinst_PROGRAMS   += rotate_90
-    rotate_90_SOURCES  = rotate_90.cc
     rotate_90_CPPFLAGS = $(AM_CPPFLAGS) \
 	                 $(MAGICKXX_CPPFLAGS)
     rotate_90_LDFLAGS  = $(AM_LDFLAGS) \
@@ -57,7 +49,6 @@ if HAVE_MAGICKXX
 			 -lpthread
 
     noinst_PROGRAMS += to_pgm
-    to_pgm_SOURCES   = to_pgm.cc
     to_pgm_CPPFLAGS  = $(AM_CPPFLAGS) \
 		       $(MAGICKXX_CPPFLAGS)
     to_pgm_LDFLAGS   = $(AM_LDFLAGS) \
@@ -65,7 +56,6 @@ if HAVE_MAGICKXX
 		       -lpthread
 
     noinst_PROGRAMS   += subsample
-    subsample_SOURCES  = subsample.cc
     subsample_CPPFLAGS = $(AM_CPPFLAGS) \
 			 $(MAGICKXX_CPPFLAGS)
     subsample_LDFLAGS  = $(AM_LDFLAGS) \

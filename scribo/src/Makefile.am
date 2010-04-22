@@ -41,7 +41,6 @@ if HAVE_MAGICKXX
 if HAVE_TESSERACT
 
     utilexec_PROGRAMS	    += pbm_text_in_doc
-    pbm_text_in_doc_SOURCES  = pbm_text_in_doc.cc
     pbm_text_in_doc_CPPFLAGS = $(AM_CPPFLAGS) \
 			       $(TESSERACT_CPPFLAGS) \
 			       $(TIFF_CPPFLAGS) \
@@ -56,7 +55,6 @@ if HAVE_TESSERACT
 endif HAVE_TESSERACT
 
     utilexec_PROGRAMS		   += text_in_doc_preprocess
-    text_in_doc_preprocess_SOURCES  = text_in_doc_preprocess.cc
     text_in_doc_preprocess_CPPFLAGS = $(AM_CPPFLAGS) \
 				      $(MAGICKXX_CPPFLAGS)
     text_in_doc_preprocess_LDFLAGS  = $(AM_LDFLAGS) \
@@ -65,7 +63,6 @@ endif HAVE_TESSERACT
 
 
     utilexec_PROGRAMS	    += text_in_picture
-    text_in_picture_SOURCES  = text_in_picture.cc
     text_in_picture_CPPFLAGS = $(AM_CPPFLAGS) \
 			       $(MAGICKXX_CPPFLAGS)
     text_in_picture_LDFLAGS  = $(AM_LDFLAGS) \
@@ -74,7 +71,6 @@ endif HAVE_TESSERACT
 
 
     utilexec_PROGRAMS	    	+= text_in_picture_neg
-    text_in_picture_neg_SOURCES  = text_in_picture_neg.cc
     text_in_picture_neg_CPPFLAGS = $(AM_CPPFLAGS) \
 			       	   $(MAGICKXX_CPPFLAGS)
     text_in_picture_neg_LDFLAGS  = $(AM_LDFLAGS) \
@@ -85,7 +81,6 @@ endif HAVE_TESSERACT
 if HAVE_TESSERACT
 
     utilexec_PROGRAMS			+= text_recognition_in_picture
-    text_recognition_in_picture_SOURCES  = text_recognition_in_picture.cc
     text_recognition_in_picture_CPPFLAGS = $(AM_CPPFLAGS) \
 	  			           $(TESSERACT_CPPFLAGS) \
 			       		   $(TIFF_CPPFLAGS) \
@@ -100,7 +95,6 @@ if HAVE_TESSERACT
 if HAVE_QT
 
     utilexec_PROGRAMS	   += content_in_doc
-    content_in_doc_SOURCES  = content_in_doc.cc
     content_in_doc_CPPFLAGS = $(AM_CPPFLAGS) \
 			      $(TESSERACT_CPPFLAGS) \
 			      $(TIFF_CPPFLAGS) \
@@ -118,7 +112,6 @@ if HAVE_QT
 			      $(QT_LIBS)
 
     utilexec_PROGRAMS	   += content_in_hdoc
-    content_in_hdoc_SOURCES  = content_in_hdoc.cc
     content_in_hdoc_CPPFLAGS = $(AM_CPPFLAGS) \
 			      $(TESSERACT_CPPFLAGS) \
 			      $(TIFF_CPPFLAGS) \
@@ -137,7 +130,6 @@ if HAVE_QT
 
 
     utilexec_PROGRAMS	   += non_text_components
-    non_text_components_SOURCES  = non_text_components.cc
     non_text_components_CPPFLAGS = $(AM_CPPFLAGS) \
 			      $(TESSERACT_CPPFLAGS) \
 			      $(TIFF_CPPFLAGS) \

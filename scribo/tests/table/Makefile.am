@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -21,8 +21,5 @@ check_PROGRAMS =
 # check_PROGRAMS =				\
 #   extract_lines_with_rank 			\
 #   repair_lines
-
-# extract_lines_with_rank_SOURCES = extract_lines_with_rank.cc
-# repair_lines_SOURCES = repair_lines.cc
 
 TESTS = $(check_PROGRAMS)

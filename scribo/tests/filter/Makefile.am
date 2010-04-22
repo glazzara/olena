@@ -35,22 +35,4 @@ check_PROGRAMS =				\
   components_small 				\
   components_large
 
-
-objects_with_holes_SOURCES = objects_with_holes.cc
-objects_on_border_SOURCES = objects_on_border.cc
-object_links_bbox_h_ratio_SOURCES = object_links_bbox_h_ratio.cc
-object_links_bbox_w_ratio_SOURCES = object_links_bbox_w_ratio.cc
-object_links_bbox_overlap_SOURCES = object_links_bbox_overlap.cc
-object_links_bottom_aligned_SOURCES = object_links_bottom_aligned.cc
-object_links_center_aligned_SOURCES = object_links_center_aligned.cc
-object_links_left_aligned_SOURCES = object_links_left_aligned.cc
-object_links_right_aligned_SOURCES = object_links_right_aligned.cc
-object_links_top_aligned_SOURCES = object_links_top_aligned.cc
-object_groups_mean_width_SOURCES = object_groups_mean_width.cc
-object_groups_size_ratio_SOURCES = object_groups_size_ratio.cc
-object_groups_small_SOURCES = object_groups_small.cc
-object_groups_with_holes_SOURCES = object_groups_with_holes.cc
-components_small_SOURCES = components_small.cc
-components_large_SOURCES = components_large.cc
-
 TESTS = $(check_PROGRAMS)
