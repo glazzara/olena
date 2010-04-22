@@ -1,5 +1,15 @@
 2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Do not install images from papers (yet).
+
+	* apps/papers/levillain.09.ismm/Makefile.am
+	(dist_data_DATA): Move seeds.pgm and m283-c.off...
+	(dist_noinst_DATA): ...here.
+	(data_DATA): Move lena-s.ppm, graph-s.png and m283-s.off...
+	(noinst_DATA): ...here.
+
+2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the Milena installation.
 
 	* Makefile.am (nobase_include_HEADERS): Move mln/version.hh...
