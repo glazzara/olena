@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -36,21 +36,5 @@ check_PROGRAMS =				\
   tree_fast					\
   tree_to_fast
 
-adjacency_matrix_SOURCES = adjacency_matrix.cc
-branch_iter_SOURCES = branch_iter.cc
-branch_iter_ind_SOURCES = branch_iter_ind.cc
-eat_SOURCES = eat.cc
-fibonacci_heap_SOURCES = fibonacci_heap.cc
-graph_SOURCES = graph.cc
-lazy_set_SOURCES = lazy_set.cc
-lemmings_SOURCES = lemmings.cc
-line_graph_SOURCES = line_graph.cc
-ord_SOURCES = ord.cc
-ord_pair_SOURCES = ord_pair.cc
-set_SOURCES = set.cc
-soft_heap_SOURCES = soft_heap.cc
-tree_SOURCES = tree.cc
-tree_fast_SOURCES = tree_fast.cc
-tree_to_fast_SOURCES = tree_to_fast.cc
 
 TESTS = $(check_PROGRAMS)

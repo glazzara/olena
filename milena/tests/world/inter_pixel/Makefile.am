@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -26,10 +26,5 @@ check_PROGRAMS =				\
   is_separator					\
   separator_to_pixels
 
-compute_SOURCES = compute.cc
-immerse_SOURCES = immerse.cc
-is_pixel_SOURCES = is_pixel.cc
-is_separator_SOURCES = is_separator.cc
-separator_to_pixels_SOURCES = separator_to_pixels.cc
 
 TESTS = $(check_PROGRAMS)

@@ -29,14 +29,6 @@ check_PROGRAMS =				\
   structural					\
   sum
 
-area_on_vertices_SOURCES = area_on_vertices.cc
-leveling_SOURCES = leveling.cc
-algebraic_SOURCES = algebraic.cc
-height_SOURCES = height.cc
-area_SOURCES = area.cc
-volume_SOURCES = volume.cc
-structural_SOURCES = structural.cc
-sum_SOURCES = sum.cc
 
 TESTS = $(check_PROGRAMS)
 

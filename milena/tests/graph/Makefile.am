@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -21,6 +21,5 @@ SUBDIRS = attribute
 check_PROGRAMS = 				\
   labeling
 
-labeling_SOURCES = labeling.cc
 
 TESTS = $(check_PROGRAMS)

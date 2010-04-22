@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -22,10 +22,6 @@ check_PROGRAMS =				\
   projection					\
   wrap
 
-norm_SOURCES = norm.cc
-projection_SOURCES = projection.cc
-wrap_SOURCES = wrap.cc
-
 
 if HAVE_QT
 
@@ -34,11 +30,10 @@ qt_rgb_to_int_u_SOURCES = qt_rgb_to_int_u.cc
 
 endif HAVE_QT
 
+
 check_PROGRAMS +=				\
   hsl_to_rgb					\
   rgb_to_hsl
 
-hsl_to_rgb_SOURCES = hsl_to_rgb.cc
-rgb_to_hsl_SOURCES = rgb_to_hsl.cc
 
 TESTS = $(check_PROGRAMS)

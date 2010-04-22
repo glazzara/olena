@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -22,8 +22,5 @@ check_PROGRAMS =				\
   point_from_value				\
   to_image1d
 
-compute_SOURCES = compute.cc
-point_from_value_SOURCES = point_from_value.cc
-to_image1d_SOURCES = to_image1d.cc
 
 TESTS = $(check_PROGRAMS)

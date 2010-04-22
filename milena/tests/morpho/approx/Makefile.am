@@ -20,8 +20,6 @@ check_PROGRAMS =				\
   dilation 					\
   erosion
 
-dilation_SOURCES = dilation.cc
-erosion_SOURCES = erosion.cc
 
 TESTS = $(check_PROGRAMS)
 

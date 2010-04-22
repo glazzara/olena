@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
+include $(top_srcdir)/milena/common.mk
 
 ## FIXME: Revamp (see Olena 0.11's test suite).
 

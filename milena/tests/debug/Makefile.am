@@ -1,4 +1,5 @@
-# Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2007, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -22,9 +23,5 @@ check_PROGRAMS =				\
   iota						\
   slices_2d
 
-println_SOURCES = println.cc
-println_with_border_SOURCES = println_with_border.cc
-iota_SOURCES = iota.cc
-slices_2d_SOURCES = slices_2d.cc
 
 TESTS = $(check_PROGRAMS)

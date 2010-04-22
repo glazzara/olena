@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -25,12 +26,5 @@ check_PROGRAMS =				\
   vec						\
   vec2
 
-h_mat_SOURCES = h_mat.cc
-h_vec_SOURCES = h_vec.cc
-mat_SOURCES = mat.cc
-mat2_SOURCES = mat2.cc
-quat_SOURCES = quat.cc
-vec_SOURCES = vec.cc
-vec2_SOURCES = vec2.cc
 
 TESTS = $(check_PROGRAMS)

@@ -1,5 +1,5 @@
-# Copyright (C) 2008, 2009, 2012 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010, 2012 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -14,6 +14,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+
+include $(top_srcdir)/milena/common.mk
 
 # Find Milena headers.
 AM_CPPFLAGS = -I$(top_srcdir)/milena
@@ -42,7 +44,6 @@ noinst_HEADERS = misc.hh
 # A small program exercising the curvature computation routines ported
 # from Trimesh to Milena.
 bin_PROGRAMS += mesh-complex-max-curv
-mesh_complex_max_curv_SOURCES = mesh-complex-max-curv.cc
 TESTS += test-mesh-complex-max-curv
 MOSTLYCLEANFILES += teapot-complex-max-curv.off
 
@@ -52,7 +53,6 @@ MOSTLYCLEANFILES += teapot-complex-max-curv.off
 
 # Segmentation program working on precomputed meshes with curvatures data.
 bin_PROGRAMS += mesh-complex-segm
-mesh_complex_segm_SOURCES = mesh-complex-segm.cc
 TESTS += test-mesh-complex-segm
 MOSTLYCLEANFILES +=				\
   socket-max-curv-segm.off			\
@@ -65,7 +65,6 @@ MOSTLYCLEANFILES +=				\
 # `mesh-complex-segm', data are read from polygons, which implies an
 # extra averaging step).
 bin_PROGRAMS += mesh-complex-max-curv-segm
-mesh_complex_max_curv_segm_SOURCES = mesh-complex-max-curv-segm.cc
 TESTS += test-mesh-complex-max-curv-segm
 MOSTLYCLEANFILES +=				\
   socket-complex-max-curv-segm.off		\

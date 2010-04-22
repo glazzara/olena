@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -20,7 +20,5 @@ check_PROGRAMS =				\
   card 						\
   representative
 
-card_SOURCES = card.cc
-representative_SOURCES = representative.cc
 
 TESTS = $(check_PROGRAMS)

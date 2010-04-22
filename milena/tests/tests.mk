@@ -2,7 +2,7 @@
 
 ## Shared configuration for tests.
 
-## Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+## Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 ## Laboratory (LRDE)
 ##
 ## This file is part of Olena.
@@ -18,6 +18,8 @@
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+
+include $(top_srcdir)/milena/common.mk
 
 # Look for Milena header in srcdir and for (generated) test headers
 # (like data.hh) in builddir.

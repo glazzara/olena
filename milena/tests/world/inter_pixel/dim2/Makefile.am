@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -19,6 +19,5 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS = 				\
   make_edge_image 
 
-make_edge_image_SOURCES = make_edge_image.cc
 
 TESTS = $(check_PROGRAMS)

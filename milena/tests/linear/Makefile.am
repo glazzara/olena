@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009, 2012 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010, 2012 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -28,12 +28,6 @@ check_PROGRAMS =				\
   log						\
   sobel_2d
 
-convolve_SOURCES = convolve.cc
-lap_SOURCES = lap.cc
-convolve_directional_SOURCES = convolve_directional.cc
-convolve_2x1d_SOURCES = convolve_2x1d.cc
-log_SOURCES = log.cc
-sobel_2d_SOURCES = sobel_2d.cc
 
 check_PROGRAMS += gaussian_
 gaussian__SOURCES = gaussian.cc

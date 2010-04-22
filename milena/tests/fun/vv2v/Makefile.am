@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -20,7 +21,5 @@ check_PROGRAMS =				\
   max						\
   min
 
-max_SOURCES = max.cc
-min_SOURCES = min.cc
 
 TESTS = $(check_PROGRAMS)

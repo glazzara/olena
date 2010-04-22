@@ -29,16 +29,4 @@ check_PROGRAMS =				\
   mean						\
   rank
 
-deviation_SOURCES = deviation.cc
-var_SOURCES = var.cc
-mean_SOURCES = mean.cc
-median_h_SOURCES = median_h.cc
-min_SOURCES = min.cc
-min_h_SOURCES = min_h.cc
-max_SOURCES = max.cc
-max_h_SOURCES = max_h.cc
-min_max_SOURCES = min_max.cc
-rank_SOURCES = rank.cc
-
 TESTS = $(check_PROGRAMS)
-

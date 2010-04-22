@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -22,9 +22,5 @@ check_PROGRAMS =				\
   volume					\
   height
 
-card_SOURCES = card.cc
-sum_SOURCES = sum.cc
-volume_SOURCES = volume.cc
-height_SOURCES = height.cc
 
 TESTS = $(check_PROGRAMS)

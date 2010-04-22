@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -19,7 +19,6 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
   median
 
-median_SOURCES = median.cc
 # FIXME: The current median test is way too long to run.  Break it
 # into two tests: a fast one, executed during `make check', compiled
 # with no optimization, using a small kernel and a small image; and a

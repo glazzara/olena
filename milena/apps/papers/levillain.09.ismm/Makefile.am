@@ -1,4 +1,4 @@
-# Copyright (C) 2008, 2009, 2011 EPITA Research and Development
+# Copyright (C) 2008, 2009, 2010, 2011 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -17,6 +17,8 @@
 
 # Illustrations from the ISMM 2009 paper and presentation (slides).
 
+include $(top_srcdir)/milena/common.mk
+
 # Find Milena headers.
 AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 # Produce fast code.
@@ -25,15 +27,11 @@ AM_CXXFLAGS = $(APPS_CXXFLAGS)
 
 noinst_HEADERS = chain.hh io.hh influence_zones.hh
 
-noinst_PROGRAMS = image2d graph complex classif-graph classif-1complex
-image2d_SOURCES = image2d.cc
-graph_SOURCES = graph.cc
-complex_SOURCES = complex.cc
+noinst_PROGRAMS = image2d graph complex
 # This example (implemented both with graph- and 1-complex-based
 # images) has been shown in the ISMM 2009 presentation only (not in
 # the paper).
-classif_graph_SOURCES = classif-graph.cc
-classif_1complex_SOURCES = classif-1complex.cc
+noinst_PROGRAMS += classif-graph classif-1complex
 
 # Input images.
 # FIXME: Move them to milena/img/?

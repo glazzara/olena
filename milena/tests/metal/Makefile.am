@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -24,8 +24,5 @@ check_PROGRAMS =				\
   is						\
   unconst
 
-converts_to_SOURCES = converts_to.cc
-is_SOURCES = is.cc
-unconst_SOURCES = unconst.cc
 
 TESTS = $(check_PROGRAMS)

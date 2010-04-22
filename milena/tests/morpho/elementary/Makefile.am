@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -27,14 +28,5 @@ check_PROGRAMS =				\
   gradient 					\
   erosion
 
-laplacian_SOURCES = laplacian.cc
-dilation_SOURCES = dilation.cc
-gradient_internal_SOURCES = gradient_internal.cc
-opening_SOURCES = opening.cc
-closing_SOURCES = closing.cc
-top_hat_SOURCES = top_hat.cc
-gradient_external_SOURCES = gradient_external.cc
-gradient_SOURCES = gradient.cc
-erosion_SOURCES = erosion.cc
 
 TESTS = $(check_PROGRAMS)

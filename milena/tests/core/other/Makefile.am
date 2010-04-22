@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -37,24 +38,5 @@ check_PROGRAMS =				\
   var 						\
   w_window
 
-box_runstart_piter_SOURCES = box_runstart_piter.cc
-box_runend_piter_SOURCES = box_runend_piter.cc
-category_SOURCES = category.cc
-dpoints_pixter_SOURCES = dpoints_pixter.cc
-graph_elt_neighborhood_SOURCES = graph_elt_neighborhood.cc
-graph_elt_neighborhood_if_SOURCES = graph_elt_neighborhood_if.cc
-graph_elt_window_SOURCES = graph_elt_window.cc
-graph_elt_window_if_SOURCES = graph_elt_window_if.cc
-neighb_SOURCES = neighb.cc
-pixel_SOURCES = pixel.cc
-pixter1d_SOURCES = pixter1d.cc
-pixter1d_more_SOURCES = pixter1d_more.cc
-pixter2d_SOURCES = pixter2d.cc
-pixter2d_more_SOURCES = pixter2d_more.cc
-pixter3d_SOURCES = pixter3d.cc
-pixter3d_more_SOURCES = pixter3d_more.cc
-point_set_compatibility_SOURCES = point_set_compatibility.cc
-var_SOURCES = var.cc
-w_window_SOURCES = w_window.cc
 
 TESTS = $(check_PROGRAMS)

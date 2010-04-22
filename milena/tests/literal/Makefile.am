@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -24,10 +24,5 @@ check_PROGRAMS =				\
   white						\
   zero
 
-black_SOURCES = black.cc
-medium_gray_SOURCES = medium_gray.cc
-one_SOURCES = one.cc
-white_SOURCES = white.cc
-zero_SOURCES = zero.cc
 
 TESTS = $(check_PROGRAMS)

@@ -1,5 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-# Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -33,19 +33,5 @@ check_PROGRAMS =				\
   w_window					\
   w_window_directional
 
-dual_neighb_SOURCES = dual_neighb.cc
-dummy_p_edges_SOURCES = dummy_p_edges.cc
-dummy_p_vertices_SOURCES = dummy_p_vertices.cc
-influence_zone_adjacency_graph_SOURCES = influence_zone_adjacency_graph.cc
-h_mat_SOURCES = h_mat.cc
-image2d_SOURCES = image2d.cc
-image3d_SOURCES = image3d.cc
-mat_SOURCES = mat.cc
-p_edges_with_mass_centers_SOURCES = p_edges_with_mass_centers.cc
-p_vertices_with_mass_centers_SOURCES = p_vertices_with_mass_centers.cc
-region_adjacency_graph_SOURCES = region_adjacency_graph.cc
-rag_and_labeled_wsl_SOURCES = rag_and_labeled_wsl.cc
-w_window_SOURCES = w_window.cc
-w_window_directional_SOURCES = w_window_directional.cc
 
 TESTS = $(check_PROGRAMS)

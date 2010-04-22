@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -20,7 +20,5 @@ check_PROGRAMS =				\
   fold						\
   translation
 
-fold_SOURCES = fold.cc
-translation_SOURCES = translation.cc
 
 TESTS = $(check_PROGRAMS)
