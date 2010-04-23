@@ -1,3 +1,11 @@
+2010-04-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Prevent g++ 4.2 from issuing bad code for graph-morpho/samples_image2d.
+
+	* apps/graph-morpho/Makefile.am (STRICT_ALIASING_CXXFLAGS): New.
+	(samples_image2d_CXXFLAGS): New.
+	Set to $(AM_CXXFLAGS) $(STRICT_ALIASING_CXXFLAGS).
+
 2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix distcleancheck.

@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -19,6 +19,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 # Produce fast code.
 APPS_CXXFLAGS = @APPS_CXXFLAGS@
 AM_CXXFLAGS = $(APPS_CXXFLAGS)
+STRICT_ALIASING_CXXFLAGS = @STRICT_ALIASING_CXXFLAGS@
 
 noinst_HEADERS = convert.hh debug.hh make.hh morpho.hh make_complex2d.hh
 
@@ -27,6 +28,7 @@ samples_complex1d_SOURCES = samples-complex1d.cc
 samples_image2d_SOURCES = samples-image2d.cc
 asf_complex1d_SOURCES = asf-complex1d.cc
 asf_image2d_SOURCES = asf-image2d.cc
+samples_image2d_CXXFLAGS = $(AM_CXXFLAGS) $(STRICT_ALIASING_CXXFLAGS)
 
 TESTS = samples-complex1d samples-image2d
 
