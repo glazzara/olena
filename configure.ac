@@ -61,6 +61,9 @@ fi
 AC_LANG([C++])
 AC_PROG_CXX
 
+# Set `ICPC' to `yes' if the Intel C++ compiler is used.
+test $CXX --version 2>/dev/null | grep '\bICC\b' >/dev/null 2>&1 && ICPC=yes
+
 # GNU C++ compiler setup.
 if test "$GXX" = yes; then
   # Speed up compiling times.

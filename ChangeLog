@@ -1,3 +1,9 @@
+2010-04-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a simple test to identify the Intel C++ compiler.
+
+	* configure.ac: Here.
+
 2010-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Clean up a bit Olena's Makefiles.
