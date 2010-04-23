@@ -309,6 +309,15 @@ AC_CONFIG_FILES([
     scribo/tests/text/Makefile
     scribo/tests/unit_test/Makefile
 ])
+
+# Flags for Scribo
+AC_ARG_VAR([SCRIBO_CXXFLAGS], [C++ compiler flags for Scribo binaries])
+AC_ARG_VAR([SCRIBO_TESTS_CXXFLAGS], [C++ compiler flags for Scribo tests])
+if test "$GXX" = yes || test "$ICPC" = yes; then
+  test -z "$SCRIBO_CXXFLAGS" && SCRIBO_CXXFLAGS="-DNDEBUG -O2"
+  # FIXME: We might want to use -ggdb when g++ is used.
+  test -z "$SCRIBO_TESTS_CXXFLAGS" && SCRIBO_TESTS_CXXFLAGS="-g -O0"
+fi
 dnl>>
 
 ## --------------- ##

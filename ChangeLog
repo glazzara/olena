@@ -1,3 +1,10 @@
+2010-04-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add variables for C++ compiler flags for Scribo.
+
+	* configure.ac (SCRIBO_CXXFLAGS, SCRIBO_TESTS_CXXFLAGS):
+	New configure variables.
+
 2010-06-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Set decent compiler flags when the Intel C++ compiler is used.
