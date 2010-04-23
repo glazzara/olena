@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -16,4 +16,5 @@
 
 AM_CPPFLAGS = -I$(top_srcdir)/ -I$(top_builddir)/ -I$(top_srcdir)/milena -I$(top_builddir)/milena
 
-AM_CXXFLAGS = -g -O0
+SCRIBO_TESTS_CXXFLAGS = @SCRIBO_TESTS_CXXFLAGS@
+AM_CXXFLAGS = $(SCRIBO_TESTS_CXXFLAGS)
