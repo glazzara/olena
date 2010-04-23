@@ -1,3 +1,7 @@
+2010-04-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Typo.
+
 2013-06-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have configure find bib2bib and bibtex2html.

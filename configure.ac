@@ -579,7 +579,7 @@ AC_CONFIG_FILES([milena/apps/data.hh])
 
 AC_ARG_ENABLE([apps],
               [AS_HELP_STRING([--enable-apps],
-                              [enable application])])
+                              [enable applications])])
 AM_CONDITIONAL([ENABLE_APPS], [test "x$enable_apps" = "xyes"])
 
 # Ask for the creation of applications' Makefiles.
