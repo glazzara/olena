@@ -1,3 +1,10 @@
+2010-04-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Work around g++ 4.2's behavior regarding strict aliasing.
+
+	* configure.ac: Set STRICT_ALIASING_CXXFLAGS to
+	`-fno-strict-aliasing' when the compiler is g++ 4.2.
+
 2010-04-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	Catch up with the new interface of Scribo's unit tests generator.
