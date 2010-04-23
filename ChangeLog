@@ -1,5 +1,11 @@
 2010-04-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Document configure variables.
+
+	* configure.ac: Here.
+
+2010-04-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Work around g++ 4.2's behavior regarding strict aliasing.
 
 	* configure.ac: Set STRICT_ALIASING_CXXFLAGS to

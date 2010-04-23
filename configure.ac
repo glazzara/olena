@@ -69,7 +69,7 @@ AC_SUBST([STRICT_ALIASING_CXXFLAGS])
 
 
 # Adjusting warning options according to compilers.
-AC_ARG_VAR([WARNINGS_CXXFLAGS])
+AC_ARG_VAR([WARNINGS_CXXFLAGS], [C++ compiler warning flags])
 case "$CXX" in
      # Intel compiler
      *icpc*)
@@ -88,7 +88,7 @@ esac
 # FIXME: We might want to write an Autoconf macro to factor this.
 
 # Standard flags for tests.
-AC_ARG_VAR([TESTS_CXXFLAGS])
+AC_ARG_VAR([TESTS_CXXFLAGS], [C++ compiler flags for tests])
 # We want no optimization for the tests (it slows down compiling
 # times), and debugging information.
 if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS"; then
@@ -96,7 +96,8 @@ if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS"; then
 fi
 
 # Flags for complex tests.
-AC_ARG_VAR([TESTS_CXXFLAGS_SPEED])
+AC_ARG_VAR([TESTS_CXXFLAGS_SPEED],
+           [C++ compiler optimization flags for (complex) tests])
 # We want optimization for complex tests, and keep debugging flags
 # (still useful).
 if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS_SPEED"; then
@@ -104,7 +105,7 @@ if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS_SPEED"; then
 fi
 
 # Flags for tests with with all debugging features turned on.
-AC_ARG_VAR([TESTS_CXXFLAGS_DEBUG])
+AC_ARG_VAR([TESTS_CXXFLAGS_DEBUG], [C++ compiler debug flags])
 # We want no optimization for the tests (it slows down compiling
 # times), and a lot of debugging features.
 # * GNU C++ Library Debug Mode:
@@ -474,7 +475,7 @@ AC_CONFIG_FILES([milena/apps/constrained-connectivity/test-constrained-connectiv
 		[chmod +x milena/apps/constrained-connectivity/test-constrained-connectivity])
 
 # Flags for apps.
-AC_ARG_VAR([APPS_CXXFLAGS])
+AC_ARG_VAR([APPS_CXXFLAGS], [C++ compiler flags for applications])
 # We want fast binaries for apps.
 if test "$GXX" = yes && test -z "$APPS_CXXFLAGS"; then
   APPS_CXXFLAGS="-O3 -DNDEBUG -ggdb $WARNINGS_CXXFLAGS"
@@ -493,7 +494,7 @@ AM_CONDITIONAL([ENABLE_TOOLS], [test "x$enable_tools" = "xyes"])
 AC_CONFIG_FILES([milena/tools/Makefile])
 
 # Flags for tools.
-AC_ARG_VAR([TOOLS_CXXFLAGS])
+AC_ARG_VAR([TOOLS_CXXFLAGS], [C++ compiler flags for tools])
 # We want fast binaries for tools.
 if test "$GXX" = yes && test -z "$TOOLS_CXXFLAGS"; then
   TOOLS_CXXFLAGS="-O3 -DNDEBUG -ggdb $WARNINGS_CXXFLAGS"
