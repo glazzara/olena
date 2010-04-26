@@ -1,3 +1,10 @@
+2010-04-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean Scribo's tests' outputs.
+
+	* tests/preprocessing/Makefile.am (MOSTLYCLEANFILES): New.
+	Add unskew.pbm
+
 2010-04-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the Scribo distribution.
