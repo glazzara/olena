@@ -1,3 +1,9 @@
+2010-04-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update lrde-upload.sh.
+
+	* lrde-upload.sh: Catch up with the tree's current layout.
+
 2010-04-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Document configure variables.
