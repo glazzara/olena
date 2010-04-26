@@ -1,3 +1,9 @@
+2010-04-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Enable parallel tests.
+
+	* configure.ac (AM_INIT_AUTOMAKE): Add option `parallel-tests'.
+
 2010-04-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Regen unit tests' Makefile fragments.
