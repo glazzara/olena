@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -29,14 +30,14 @@ ima = image.load(data.lena)
 
 # Gradient.
 gradient = image.gradient(ima, win_c4p())
-image.save(gradient, "gradient.pgm")
+image.save(gradient, "morpho-segm-gradient.pgm")
 # Area closing of the gradient.
 closed_gradient = image.closing_area(ima, c4(), 50)
 # Watershed transform.
 nbasins = int_u8();
 ws = image.meyer_wst (closed_gradient, c4(), nbasins)
 print nbasins
-image.save(ws, "segm.pgm")
+image.save(ws, "morpho-segm-ws.pgm")
 
 # FIXME: Also re-enable the naive segmentation with no gradient
 # simplification, and an output on an image2d<int_u32>.

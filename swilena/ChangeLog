@@ -1,3 +1,15 @@
+2010-04-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Canonize Swilena's tests' output file names.
+
+	* python/morpho-fun.py,
+	* python/morpho-segm.py:
+	Add the name of the test as prefix of its output file names.
+	* python/Makefile.am (CLEANFILES): Adjust.
+	Add morpho-segm-gradient.pgm.
+	Rename as...
+	(MOSTLYCLEANFILES): ...this.
+
 2010-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Clean up a bit Swilena's Makefiles.
