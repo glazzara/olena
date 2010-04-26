@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,15 +44,14 @@ int main()
   io::ppm::load(lena_mln, MLN_IMG_DIR "/tiny.ppm");
   value::rgb8 c = lena_mln(p);
 
-  io::magick::save(lena_mln, "tiny.png");
+  io::magick::save(lena_mln, "save-tiny.png");
 
   image2d<value::rgb8> lena_im;
-  io::magick::load(lena_im, "tiny.png");
+  io::magick::load(lena_im, "save-tiny.png");
   mln_assertion(lena_im(p) == c);
 
-  io::ppm::save(lena_im, "tiny.ppm");
+  io::ppm::save(lena_im, "save-tiny.ppm");
 
   mln_assertion(lena_im.domain() == lena_mln.domain());
   mln_assertion(lena_im == lena_mln);
-
 }

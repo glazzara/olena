@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,5 +49,5 @@ int main()
 
   out = morpho::opening::structural(lena,
 				    convert::to<window2d>(w));
-  io::pgm::save(out, "out.pgm");
+  io::pgm::save(out, "structural-out.pgm");
 }

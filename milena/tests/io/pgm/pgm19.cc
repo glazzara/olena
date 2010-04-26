@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -74,12 +75,12 @@ int main()
   image2d<int_u19> out(lena.domain());
 
   out = data::transform(lena, to19bits());
-  io::pgm::save(out, "out19.pgm");
+  io::pgm::save(out, "pgm19-out19.pgm");
 
-  image2d<int_u19> lena2 = io::pgm::load<int_u19>("out19.pgm");
+  image2d<int_u19> lena2 = io::pgm::load<int_u19>("pgm19-out19.pgm");
 
   image2d<int_u8> out2(lena.domain());
   out2 = data::transform(lena2, to8bits());
-  io::pgm::save(out2, "out8.pgm");
+  io::pgm::save(out2, "pgm19-out8.pgm");
   assert(out2 == lena);
 }

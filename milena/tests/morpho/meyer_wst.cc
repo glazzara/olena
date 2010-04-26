@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,5 +52,5 @@ int main()
   L nbasins;
   image2d<L> output = morpho::meyer_wst(input, c4(), nbasins);
 
-  io::pgm::save(output, "out.pgm");
+  io::pgm::save(output, "meyer_wst-out.pgm");
 }

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -75,12 +76,7 @@ int main()
   image2d<bool> pic;
   io::pbm::load(pic, MLN_IMG_DIR "/picasso.pbm");
   image2d<bool> out = morpho::hit_or_miss(pic, win_hit, win_miss);
-  // FIXME: We shall handle out images as well as input images.
-  // Currently, output images are named `out.*', and each test
-  // overwrites the product(s) of the previous one.  Moreover, nothing
-  // is cleaned upon `make clean', which will probably bother `make
-  // distcheck'.
-  io::pbm::save(out, "out.pbm");
+  io::pbm::save(out, "hit_or_miss-out.pbm");
 
   mln_postcondition(morpho::hit_or_miss(morpho::complementation(pic),
 					win_miss, win_hit) == out);

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -76,13 +77,13 @@ int main()
     image2d<int_u16> out(lena.domain());
 
     out = data::transform(lena, to16bits());
-    io::pgm::save(out, "out16.pgm");
+    io::pgm::save(out, "pgm16-out16.pgm");
 
-    image2d<int_u16> lena2 = io::pgm::load<int_u16>("out16.pgm");
+    image2d<int_u16> lena2 = io::pgm::load<int_u16>("pgm16-out16.pgm");
 
     image2d<int_u8> out2(lena.domain());
     out2 = data::transform(lena2, to8bits());
-    io::pgm::save(out2, "out8.pgm");
+    io::pgm::save(out2, "pgm16-out8.pgm");
   }
 
 
@@ -90,10 +91,10 @@ int main()
     /* FIXME: Is this dead code, or code not working?  Be more specific.  */
     // Abort
 //     image2d< value::int_u<8> > a;
-//     io::pgm::load(a, "out16.pgm");
+//     io::pgm::load(a, "pgm16-out16.pgm");
 
     image2d< value::int_u<16> > b;
-    io::pgm::load(b, "out16.pgm");
+    io::pgm::load(b, "pgm16-out16.pgm");
   }
 
 }

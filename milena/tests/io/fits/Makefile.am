@@ -1,4 +1,5 @@
-# Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2007, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -25,10 +26,6 @@ fits_SOURCES = fits.cc
 
 TESTS = $(check_PROGRAMS)
 
-
-
-# FIXME: each test should clean its output, temporary output should
-# not be cleaned up by make.
-CLEANFILES =					\
-  out.pfm					\
-  out2.pfm
+MOSTLYCLEANFILES =				\
+  fits-out.pfm					\
+  fits-out2.pfm

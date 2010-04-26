@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -23,7 +23,9 @@ dump_SOURCES = dump.cc
 
 TESTS = $(check_PROGRAMS)
 
-
-# FIXME: each test should clean its output, temporary output should
-# not be cleaned up by make.
-CLEANFILES = pic.dump
+MOSTLYCLEANFILES =				\
+  dump-bool.dump				\
+  dump-float.dump				\
+  dump-int_u8.dump				\
+  dump-rgb8.dump				\
+  dump-unsigned.dump

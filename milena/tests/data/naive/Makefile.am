@@ -33,8 +33,4 @@ median_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
 
 TESTS = $(check_PROGRAMS)
 
-
-# FIXME: each test should clean its output, temporary output should
-# not be cleaned up by make.
-CLEANFILES = 					\
-  out.pgm
+MOSTLYCLEANFILES = median-out.pgm

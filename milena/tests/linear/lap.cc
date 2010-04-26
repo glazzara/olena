@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,5 +47,5 @@ int main()
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
   io::pgm::save(data::stretch(int_u8(), linear::lap_4(lena)),
-		"out.pgm");
+		"lap-out.pgm");
 }

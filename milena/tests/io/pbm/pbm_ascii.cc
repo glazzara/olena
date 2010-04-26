@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,10 +60,10 @@ int main()
   {
     image2d<bool> lena_ascii;
     io::pbm::load(lena_ascii, MLN_TESTS_IMG_DIR "/lena_ascii.pbm");
-    io::pbm::save(lena_ascii, "out.pbm");
+    io::pbm::save(lena_ascii, "pbm_ascii-out.pbm");
 
     image2d<bool> out;
-    io::pbm::load(out, "out.pbm");
+    io::pbm::load(out, "pbm_ascii-out.pbm");
 
     mln_assertion(out == lena_ascii);
     mln_assertion(out == lena_raw);

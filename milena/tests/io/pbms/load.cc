@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,11 +45,11 @@ int main()
   image2d<bool> pic2 = duplicate(pic);
 
   pic2(point2d(0,0)) = true;
-  io::pbm::save(pic2, "out.pbm");
+  io::pbm::save(pic2, "pbms-out.pbm");
 
   util::array<std::string> files(2);
   files[0] = MLN_IMG_DIR "/tiny.pbm";
-  files[1] = "out.pbm";
+  files[1] = "pbms-out.pbm";
 
   image3d<bool> ima3d;
   io::pbms::load(ima3d, files);

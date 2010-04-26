@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,5 +59,5 @@ int main()
   image2d<float> tmp = linear::convolve(lena, w_win);
 
   io::pgm::save(data::transform(tmp, math::round<int_u8>()),
-		"out.pgm");
+		"convolve-out.pgm");
 }

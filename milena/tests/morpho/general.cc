@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -120,7 +121,7 @@ int main()
 
     // Octagon
     ref = morpho::impl::generic::erosion_on_function(lena, oct);
-    // io::pgm::save(ref, "out_oct_ref.pgm");
+    // io::pgm::save(ref, "general-out_oct_ref.pgm");
 
     */
   }

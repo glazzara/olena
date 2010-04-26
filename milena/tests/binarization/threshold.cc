@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,7 +43,7 @@ int main()
     image2d<int_u8> lena;
     io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
     
-    io::pbm::save(binarization::threshold(lena, 50), "out1.pgm");
+    io::pbm::save(binarization::threshold(lena, 50), "threshold-out1.pgm");
   }
   
   {
@@ -53,7 +54,7 @@ int main()
     
     data::paste(l, lena);
     
-    io::pbm::save(binarization::threshold(lena, 50), "out2.pgm");
+    io::pbm::save(binarization::threshold(lena, 50), "threshold-out2.pgm");
   }
   
 }

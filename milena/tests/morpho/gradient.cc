@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,6 +47,6 @@ int main()
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
 
-  io::pgm::save( morpho::gradient(lena, rect),
-                 "out.pgm" );
+  io::pgm::save(morpho::gradient(lena, rect),
+		"gradient-out.pgm");
 }

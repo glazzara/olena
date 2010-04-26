@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,5 +49,5 @@ int main()
   io::pgm::load(input, MLN_IMG_DIR "/tiny.pgm");
 
   image2d<float> output = linear::sobel_2d_l1_norm(input);
-  io::pgm::save(data::stretch(int_u8(), output), "out.pgm");
+  io::pgm::save(data::stretch(int_u8(), output), "sobel_2d-out.pgm");
 }

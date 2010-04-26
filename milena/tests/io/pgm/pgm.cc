@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,9 +48,9 @@ int main()
 
   {
     image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/lena.pgm");
-    io::pgm::save(lena, "out.pgm");
+    io::pgm::save(lena, "pgm-out.pgm");
 
-    image2d<int_u8> lena2 = io::pgm::load<int_u8>("out.pgm");
+    image2d<int_u8> lena2 = io::pgm::load<int_u8>("pgm-out.pgm");
     mln_assertion(lena2 == lena);
   }
 
@@ -57,9 +58,9 @@ int main()
     image2d< value::int_u<8> > lena, lena2;
     io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
-    io::pgm::save(lena, "out.pgm");
+    io::pgm::save(lena, "pgm-out2.pgm");
 
-    io::pgm::load(lena2, "out.pgm");
+    io::pgm::load(lena2, "pgm-out2.pgm");
     mln_assertion(lena2 == lena);
   }
 

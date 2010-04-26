@@ -63,13 +63,10 @@ update_SOURCES = update.cc
 # FIXME: enable it when make full-check is enabled.
 #fill_full_SOURCES = fill_full.cc
 
+
 TESTS = $(check_PROGRAMS)
 
-
-
-# FIXME: each test should clean its output, temporary output should
-# not be cleaned up by make.
-CLEANFILES =					\
-  out_line.pgm					\
-  out.pgm					\
-  out_rect.pgm
+MOSTLYCLEANFILES =				\
+  median-out_line.pgm				\
+  median-out_rect.pgm				\
+  median_fast-out.pgm

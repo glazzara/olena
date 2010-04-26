@@ -1,4 +1,5 @@
-# Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2007, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,9 +18,9 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-     ppm16					\
-     ppm23					\
-     ppm
+  ppm16						\
+  ppm23						\
+  ppm
 
 ppm16_SOURCES = ppm16.cc
 ppm23_SOURCES = ppm23.cc
@@ -27,12 +28,9 @@ ppm_SOURCES = ppm.cc
 
 TESTS = $(check_PROGRAMS)
 
-
-
-# FIXME: each test should clean its output, temporary output should
-# not be cleaned up by make.
-CLEANFILES =					\
-  out.ppm					\
-  out16.ppm					\
-  out23.ppm					\
-  out8.ppm
+MOSTLYCLEANFILES =				\
+  ppm16-out16.ppm				\
+  ppm16-out8.ppm				\
+  ppm23-out23.ppm				\
+  ppm23-out8.ppm				\
+  ppm-out.ppm

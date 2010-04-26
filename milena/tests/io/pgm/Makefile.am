@@ -1,4 +1,5 @@
-# Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2007, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,11 +18,11 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-     pgm16					\
-     pgm19					\
-     pgm27					\
-     pgm_ascii 					\
-     pgm
+  pgm16						\
+  pgm19						\
+  pgm27						\
+  pgm_ascii					\
+  pgm
 
 pgm16_SOURCES = pgm16.cc
 pgm19_SOURCES = pgm19.cc
@@ -31,12 +32,14 @@ pgm_SOURCES = pgm.cc
 
 TESTS = $(check_PROGRAMS)
 
-
-# FIXME: each test should clean its output, temporary output should
-# not be cleaned up by make.
-CLEANFILES =					\
-  out8.pgm					\
-  out27.pgm					\
-  out19.pgm					\
-  out16.pgm					\
-  out.pgm
+MOSTLYCLEANFILES =				\
+  pgm16-out16.pgm				\
+  pgm16-out8.pgm				\
+  pgm19-out19.pgm				\
+  pgm19-out8.pgm				\
+  pgm27-out27.pgm				\
+  pgm27-out8.pgm				\
+  pgm_ascii-out.pgm				\
+  pgm_ascii-out2.pgm				\
+  pgm-out.pgm					\
+  pgm-out2.pgm

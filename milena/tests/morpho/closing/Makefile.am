@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -19,15 +19,15 @@ include $(top_srcdir)/milena/tests/tests.mk
 SUBDIRS =					\
   approx
 
-check_PROGRAMS = 			\
-	area_on_vertices 		\
-	leveling			\
-	algebraic			\
-	height				\
-	area				\
-	volume				\
-	structural			\
-	sum
+check_PROGRAMS =				\
+  area_on_vertices				\
+  leveling					\
+  algebraic					\
+  height					\
+  area						\
+  volume					\
+  structural					\
+  sum
 
 area_on_vertices_SOURCES = area_on_vertices.cc
 leveling_SOURCES = leveling.cc
@@ -40,11 +40,13 @@ sum_SOURCES = sum.cc
 
 TESTS = $(check_PROGRAMS)
 
-
-# FIXME: each test should clean its output, temporary output should
-# not be cleaned up by make.
-CLEANFILES =					\
-  ref.pgm					\
-  out.pbm					\
-  ref.pbm					\
-  out.pgm
+MOSTLYCLEANFILES =				\
+  algebraic-out.pgm				\
+  algebraic-ref.pgm				\
+  height-out.pgm				\
+  leveling-out.pgm				\
+  leveling-ref.pgm				\
+  structural-out.pgm				\
+  sum-out.pgm					\
+  volume-out.pgm				\
+  volume-ref.pgm

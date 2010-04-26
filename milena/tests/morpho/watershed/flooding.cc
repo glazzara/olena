@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -68,17 +69,19 @@ int main()
   {
     util::timer t;
     t.start();
-    image2d<L> output = morpho::watershed::impl::generic::flooding(input, c4(), n_basins);
+    image2d<L> output =
+      morpho::watershed::impl::generic::flooding(input, c4(), n_basins);
     std::cout << "gen:  " << t << std::endl;
     io::pgm::save(data::transform(output, f_16_to_8()),
-		  "tmp_ref.pgm");
+		  "flooding-tmp_ref.pgm");
   }
   {
     util::timer t;
     t.start();
-    image2d<L> output = morpho::watershed::impl::flooding_fastest(input, c4(), n_basins);
+    image2d<L> output =
+      morpho::watershed::impl::flooding_fastest(input, c4(), n_basins);
     std::cout << "fast: " << t << std::endl;
     io::pgm::save(data::transform(output, f_16_to_8()),
-		  "tmp_out.pgm");
+		  "flooding-tmp_out.pgm");
   }
 }

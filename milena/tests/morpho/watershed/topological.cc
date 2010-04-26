@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,5 +52,5 @@ int main()
   io::pgm::load(ima, MLN_IMG_DIR "/small.pgm");
   morpho::watershed::topo_wst< ima_t, neighb2d> n(ima, c4());
   n.go();
-  io::pgm::save(morpho::watershed::topological(n), "topo_wst.pgm");
+  io::pgm::save(morpho::watershed::topological(n), "topological-out.pgm");
 }

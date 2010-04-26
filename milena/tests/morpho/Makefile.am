@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -102,14 +102,22 @@ meyer_wst_long_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
 
 TESTS = $(check_PROGRAMS)
 
-
-# FIXME: each test should clean its output, temporary output should
-# not be cleaned up by make.
-CLEANFILES =					\
-  out.ppm					\
-  out.pbm					\
-  out3.pgm					\
-  wst.neato					\
-  out1.pgm					\
-  out2.pgm					\
-  out.pgm
+MOSTLYCLEANFILES =				\
+  artificial_line_graph_image_wst-out.ppm	\
+  complex_image_wst-wst.neato			\
+  constrast-out.pgm				\
+  dilation-out1.pgm				\
+  dilation-out2.pgm				\
+  dilation-out3.pgm				\
+  dilation-out4.pgm				\
+  dilation-out5.pgm				\
+  general-out_oct_ref.pgm			\
+  gradient-out.pgm				\
+  hit_or_miss-out.pbm				\
+  laplacian-out.pgm				\
+  lena_line_graph_image_wst1-out.ppm		\
+  lena_line_graph_image_wst2-out.ppm		\
+  meyer_wst-out.pgm				\
+  meyer_wst_long-out.ppm			\
+  thinning-out.pbm				\
+  thinning-out.pgm

@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,16 +40,18 @@ int main()
 {
   using namespace mln;
 
+  // FIXME: Factor.
+
   /// Value: bool
   {
     bool data[4] = { 0, 1,
 		     1, 0 };
     image2d<bool> pic = make::image2d(data);
 
-    io::dump::save(pic, "pic.dump");
+    io::dump::save(pic, "dump-bool.dump");
 
     image2d<bool> pic2;
-    io::dump::load(pic2, "pic.dump");
+    io::dump::load(pic2, "dump-bool.dump");
 
     mln_assertion(pic.domain() == pic2.domain());
     mln_assertion(pic == pic2);
@@ -60,9 +62,9 @@ int main()
     value::int_u8 data[4] = { 5, 1,
 			      1, 9 };
     image2d<value::int_u8> pic = make::image2d(data);
-    io::dump::save(pic, "pic.dump");
+    io::dump::save(pic, "dump-int_u8.dump");
     image2d<value::int_u8> pic2;
-    io::dump::load(pic2, "pic.dump");
+    io::dump::load(pic2, "dump-int_u8.dump");
 
     mln_assertion(pic.domain() == pic2.domain());
     mln_assertion(pic == pic2);
@@ -73,9 +75,9 @@ int main()
     unsigned data[4] = { 5, 1,
 			 1, 9 };
     image2d<unsigned> pic = make::image2d(data);
-    io::dump::save(pic, "pic.dump");
+    io::dump::save(pic, "dump-unsigned.dump");
     image2d<unsigned> pic2;
-    io::dump::load(pic2, "pic.dump");
+    io::dump::load(pic2, "dump-unsigned.dump");
 
     mln_assertion(pic.domain() == pic2.domain());
     mln_assertion(pic == pic2);
@@ -86,9 +88,9 @@ int main()
     float data[4] = { 5, 1,
 			 1, 9 };
     image2d<float> pic = make::image2d(data);
-    io::dump::save(pic, "pic.dump");
+    io::dump::save(pic, "dump-float.dump");
     image2d<float> pic2;
-    io::dump::load(pic2, "pic.dump");
+    io::dump::load(pic2, "dump-float.dump");
 
     mln_assertion(pic.domain() == pic2.domain());
     mln_assertion(pic == pic2);
@@ -101,10 +103,10 @@ int main()
     value::rgb8 data[4] = { rgb8(2,4,5),     rgb8(1,23,255),
 			    rgb8(64,41,150), rgb8(23,53,49) };
     image2d<value::rgb8> pic = make::image2d(data);
-    io::dump::save(pic, "pic.dump");
+    io::dump::save(pic, "dump-rgb8.dump");
 
     image2d<value::rgb8> pic2;
-    io::dump::load(pic2, "pic.dump");
+    io::dump::load(pic2, "dump-rgb8.dump");
 
     mln_assertion(pic.domain() == pic2.domain());
     mln_assertion(pic == pic2);

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -239,7 +240,7 @@ int main()
 
   colorize color(nbasins);
 
-  std::ofstream g("wst.neato");
+  std::ofstream g("complex_image_wst-wst.neato");
   g << "graph wst"  << std::endl
     << "{" << std::endl
     << "  graph [bgcolor = \"#000000\"]" << std::endl

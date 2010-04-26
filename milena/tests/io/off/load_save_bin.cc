@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,5 +41,5 @@ int main()
   typedef bin_2complex_image3df ima_t;
   ima_t ima;
   io::off::load(ima, MLN_MESH_DIR "/tetrahedron.off");
-  io::off::save(ima, "out.off");
+  io::off::save(ima, "load_save_bin-out.off");
 }

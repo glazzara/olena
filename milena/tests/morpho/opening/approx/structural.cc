@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,12 +45,12 @@ int main()
 
   {
     ref = morpho::opening::structural(lena, dsk);
-    io::pbm::save(ref, "ref.pbm");
+    io::pbm::save(ref, "structural-ref.pbm");
   }
 
   {
     out = morpho::opening::approx::structural(lena, dsk);
-    io::pbm::save(out, "out.pbm");
+    io::pbm::save(out, "structural-out.pbm");
   }
 
 }

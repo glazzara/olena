@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,16 +49,16 @@ int main()
   using value::rgb8;
 
   image2d<rgb8> ima = io::ppm::load<rgb8>(MLN_IMG_DIR "/fly.ppm");
-  io::ppm::save(ima, "out.ppm");
+  io::ppm::save(ima, "load-out.ppm");
   image2d<rgb8> ima2 = duplicate(ima);
 
 
   ima2(point2d(0,0)) = literal::green;
-  io::ppm::save(ima2, "out.ppm");
+  io::ppm::save(ima2, "load-out.ppm");
 
   util::array<std::string> files(2);
   files[0] = MLN_IMG_DIR "/fly.ppm";
-  files[1] = "out.ppm";
+  files[1] = "load-out.ppm";
 
   image3d<rgb8> ima3d;
   io::ppms::load(ima3d, files);

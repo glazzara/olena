@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -67,13 +68,13 @@ int main()
 
   { 
     image2d<int_u8> out = morpho::dilation(lena, rec);
-    io::pgm::save(out, "out1.pgm");
+    io::pgm::save(out, "dilation-out1.pgm");
   }
 
   {
     win::octagon2d oct(7);
     image2d<int_u8> out = morpho::dilation(lena, oct);
-    io::pgm::save(out, "out2.pgm");
+    io::pgm::save(out, "dilation-out2.pgm");
   }
 
   {
@@ -85,7 +86,7 @@ int main()
     image2d<int_u8>::fwd_piter p(lena.domain());
     for_all(p)
       test(p) = out(p) ? 255 : 0;
-    io::pgm::save(test, "out3.pgm");
+    io::pgm::save(test, "dilation-out3.pgm");
   }
 
   /* FIXME: Re-enable these tests for Olena 1.1, when associated
@@ -94,12 +95,12 @@ int main()
 #if 0
   {
     image2d<int_u8> out = morpho::dilation(lena + c4());
-    io::pgm::save(out, "out4.pgm");
+    io::pgm::save(out, "dilation-out4.pgm");
   }
 
   {
     image2d<int_u8> out = morpho::dilation(lena + c8());
-    io::pgm::save(out, "out5.pgm");
+    io::pgm::save(out, "dilation-out5.pgm");
   }
 #endif
 }

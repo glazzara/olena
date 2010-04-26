@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,12 +41,12 @@ int main()
   {
     image2d<float> fits_in = io::fits::load(MLN_IMG_DIR "/test.fits");
 
-    io::pfm::save(fits_in, "out.pfm");
-    image2d<float> pfm = io::pfm::load("out.pfm");
+    io::pfm::save(fits_in, "fits-out.pfm");
+    image2d<float> pfm = io::pfm::load("fits-out.pfm");
     mln_assertion(pfm == fits_in);
 
-    io::pfm::save(fits_in, "out2.pfm");
-    image2d<float> pfm2 = io::pfm::load("out2.pfm");
+    io::pfm::save(fits_in, "fits-out2.pfm");
+    image2d<float> pfm2 = io::pfm::load("fits-out2.pfm");
     mln_assertion(fits_in == pfm2);
   }
 }

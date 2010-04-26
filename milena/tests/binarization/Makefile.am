@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -23,9 +24,6 @@ threshold_SOURCES = threshold.cc
 
 TESTS = $(check_PROGRAMS)
 
-
-# FIXME: each test should clean its output, temporary output should
-# not be cleaned up by make.
-CLEANFILES = 					\
-out1.pgm					\
-out2.pgm
+MOSTLYCLEANFILES =				\
+  threshold-out1.pgm				\
+  threshold-out2.pgm

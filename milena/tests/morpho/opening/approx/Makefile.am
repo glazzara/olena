@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -22,3 +22,7 @@ check_PROGRAMS =				\
 structural_SOURCES = structural.cc
 
 TESTS = $(check_PROGRAMS)
+
+MOSTLYCLEANFILES =				\
+  structural-out.pbm				\
+  structural-ref.pbm

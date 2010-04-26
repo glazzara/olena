@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -67,5 +68,6 @@ int main()
   image2d<L> ws = morpho::meyer_wst(clo, c4(), nbasins);
 
   // Save the image in color.
-  io::ppm::save(labeling::colorize(value::rgb8(), ws, nbasins), "out.ppm");
+  io::ppm::save(labeling::colorize(value::rgb8(), ws, nbasins),
+		"meyer_wst_long-out.ppm");
 }

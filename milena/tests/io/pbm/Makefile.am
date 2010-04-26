@@ -1,4 +1,5 @@
-# Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2007, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,15 +18,14 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-   pbm 						\
-   pbm_ascii
+  pbm 						\
+  pbm_ascii
 
 pbm_SOURCES = pbm.cc
 pbm_ascii_SOURCES = pbm_ascii.cc
 
 TESTS = $(check_PROGRAMS)
 
-
-# FIXME: each test should clean its output, temporary output should
-# not be cleaned up by make.
-CLEANFILES = out.pbm
+MOSTLYCLEANFILES =				\
+  pbm-out.pbm					\
+  pbm_ascii-out.pbm

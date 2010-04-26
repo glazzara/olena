@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,7 +51,7 @@ int main()
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
   image2d<value::int_u8> out = linear::gaussian(lena, 5.1f);
-  io::pgm::save(out, "out.pgm");
+  io::pgm::save(out, "gaussian-out.pgm");
 
 
   image2d<float> lenaf(lena.domain());

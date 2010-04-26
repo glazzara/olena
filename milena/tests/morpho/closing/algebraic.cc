@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -52,11 +52,11 @@ int main()
 //   {
 //     accu::math::count<point2d> a;
 //     io::pgm::save(morpho::closing::algebraic(lena, c4(), a, 10),
-// 		  "ref.pgm");
+// 		  "algebraic-ref.pgm");
 //   }
   {
     morpho::attribute::card<I> a;
     io::pgm::save(morpho::closing::algebraic(lena, c4(), a, 10),
-		  "out.pgm");
+		  "algebraic-out.pgm");
   }
 }

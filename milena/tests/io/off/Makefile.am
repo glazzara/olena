@@ -1,4 +1,5 @@
-# Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -19,7 +20,6 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
   load_bin					\
   load_save_bin					\
-						\
   load_float
 
 load_bin_SOURCES = load_bin.cc
@@ -29,8 +29,4 @@ load_float_SOURCES = load_float.cc
 
 TESTS = $(check_PROGRAMS)
 
-
-# FIXME: each test should clean its output, temporary output should
-# not be cleaned up by make.
-CLEANFILES =					\
-  out.off
+MOSTLYCLEANFILES = load_save_bin-out.off

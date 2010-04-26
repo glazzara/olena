@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -25,9 +25,8 @@ erosion_SOURCES = erosion.cc
 
 TESTS = $(check_PROGRAMS)
 
-
-# FIXME: each test should clean its output, temporary output should
-# not be cleaned up by make.
-CLEANFILES =					\
-  out.pbm					\
-  ref.pbm
+MOSTLYCLEANFILES =				\
+  dilation-out.pbm				\
+  dilation-ref.pbm				\
+  erosion-out.pbm				\
+  erosion-ref.pbm

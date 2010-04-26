@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,5 +46,5 @@ int main()
   image2d<int_u8> out(lena.domain());
 
   out = morpho::opening::area(lena, c4(), 510);
-  io::pgm::save(out, "out.pgm");
+  io::pgm::save(out, "area-out.pgm");
 }

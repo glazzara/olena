@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,12 +46,12 @@ int main()
 
   {
     image2d<bool> ref = morpho::erosion(lena, dsk);
-    io::pbm::save(ref, "ref.pbm");
+    io::pbm::save(ref, "erosion-ref.pbm");
   }
 
   {
     image2d<bool> out = morpho::approx::erosion(lena, dsk);
-    io::pbm::save(out, "out.pbm");
+    io::pbm::save(out, "erosion-out.pbm");
   }
 
 }

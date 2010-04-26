@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -53,6 +54,6 @@ int main()
   image2d<int> lap(tiny.domain());
   morpho::laplacian(tiny, rect, lap);
 
-  io::pgm::save( arith::plus_cst< value::int_u_sat<8> >(lap, 128),
-		 "out.pgm" );
+  io::pgm::save(arith::plus_cst< value::int_u_sat<8> >(lap, 128),
+		"laplacian-out.pgm");
 }

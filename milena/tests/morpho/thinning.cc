@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -61,11 +62,11 @@ int main()
   {
     image2d<bool> pic;
     io::pbm::load(pic, MLN_IMG_DIR "/picasso.pbm");
-    io::pbm::save(morpho::thinning(pic, win_fg, win_bg), "out.pbm");
+    io::pbm::save(morpho::thinning(pic, win_fg, win_bg), "thinning-out.pbm");
   }
   // FIXME: Dead code?
 //   {
 //     image2d<int_u8> pic = io::pgm::load(MLN_IMG_DIR "/picasso.pgm");
-//     io::pgm::save( morpho::thinning(pic, win_fg, win_bg), "out.pgm" );
+//     io::pgm::save( morpho::thinning(pic, win_fg, win_bg), "thinning-out.pgm" );
 //   }
 }

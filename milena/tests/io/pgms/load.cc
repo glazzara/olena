@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -52,11 +52,11 @@ int main()
     image2d<int_u8> lena2 = duplicate(lena);
     lena2(point2d(0,0)) = 200;
 
-    io::pgm::save(lena2, "out.pgm");
+    io::pgm::save(lena2, "pgms-out.pgm");
 
     util::array<std::string> files(2);
     files[0] = MLN_IMG_DIR "/tiny.pgm";
-    files[1] = "out.pgm";
+    files[1] = "pgms-out.pgm";
 
     image3d<int_u8> ima3d;
     io::pgms::load(ima3d, files);

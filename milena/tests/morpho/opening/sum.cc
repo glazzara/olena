@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,5 +48,5 @@ int main()
   typedef morpho::attribute::sum<I> A;
   io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
   io::pgm::save(morpho::opening::leveling(lena, c4(), A(), 10000),
- 		"out.pgm");
+		"sum-out.pgm");
 }

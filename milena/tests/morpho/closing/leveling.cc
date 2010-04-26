@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,11 +50,11 @@ int main()
 //   {
 //     accu::shape::volume<I> a;
 //     io::pgm::save(morpho::closing::leveling(lena, c4(), a, 10),
-// 		  "ref.pgm");
+// 		  "leveling-ref.pgm");
 //   }
   {
     morpho::attribute::volume<I> a;
     io::pgm::save(morpho::closing::leveling(lena, c4(), a, 10),
-		  "out.pgm");
+		  "leveling-out.pgm");
   }
 }

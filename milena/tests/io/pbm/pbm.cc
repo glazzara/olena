@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,8 +41,8 @@ int main()
   using namespace mln;
 
   image2d<bool> pic = io::pbm::load(MLN_IMG_DIR "/picasso.pbm");
-  io::pbm::save(pic, "out.pbm");
-  image2d<bool> pic2 = io::pbm::load("out.pbm");
+  io::pbm::save(pic, "pbm-out.pbm");
+  image2d<bool> pic2 = io::pbm::load("pbm-out.pbm");
 
   mln_assertion(pic == pic2);
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -27,10 +27,7 @@ topological_SOURCES = topological.cc
 
 TESTS = $(check_PROGRAMS)
 
-
-# FIXME: each test should clean its output, temporary output should
-# not be cleaned up by make.
-CLEANFILES =					\
-  topo_wst.pgm					\
-  tmp_ref.pgm					\
-  tmp_out.pgm
+MOSTLYCLEANFILES =				\
+  flooding-tmp_out.pgm				\
+  flooding-tmp_ref.pgm				\
+  topological-out.pgm

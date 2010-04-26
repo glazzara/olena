@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,11 +46,11 @@ int main()
   {
     win::octagon2d oct(49);
     image2d<int_u8> out = data::approx::median(lena, oct);
-    io::pgm::save(out, "out_oct.pgm");
+    io::pgm::save(out, "median-out_oct.pgm");
   }
   {
     win::rectangle2d rec(51, 51);
     image2d<int_u8> out = data::approx::median(lena, rec);
-    io::pgm::save(out, "out_rec.pgm");
+    io::pgm::save(out, "median-out_rec.pgm");
   }
 }

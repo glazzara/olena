@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -210,5 +211,5 @@ int main()
     if (nwsheds >= 2)
       output(p_out) = literal::red;      
   }
-  io::ppm::save(output, "out.ppm");
+  io::ppm::save(output, "lena_line_graph_image_wst2-out.ppm");
 }

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -84,10 +85,10 @@ int main()
     to16bits f;
     for_all(p)
       b(p) = f(a(p));
-    io::ppm::save(b, "out16.ppm");
+    io::ppm::save(b, "ppm16-out16.ppm");
 
     // reload B into C
-    image2d<rgb16> c = io::ppm::load<rgb16>("out16.ppm");
+    image2d<rgb16> c = io::ppm::load<rgb16>("ppm16-out16.ppm");
     image2d<rgb8> d(a.domain());
 
 
@@ -95,9 +96,9 @@ int main()
     to8bits g;
     for_all(p)
       d(p) = g(c(p));
-    io::ppm::save(d, "out8.ppm");
+    io::ppm::save(d, "ppm16-out8.ppm");
 
-    // D should equals A
+    // D shall equal A
     mln_assertion(d == a);
   }
 

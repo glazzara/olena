@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,7 +52,7 @@ int main()
      does), and fill it with min_value(V), sot that the post-condition
      in opening works.  */
   image2d<int_u8> out = morpho::contrast(lena, rect);
-  io::pgm::save(out, "out.pgm");
+  io::pgm::save(out, "constrast-out.pgm");
 
   {
     // Self-duality test.
