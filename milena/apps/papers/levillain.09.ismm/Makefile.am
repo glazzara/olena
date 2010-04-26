@@ -35,7 +35,7 @@ dist_noinst_DATA = seeds.pgm m283-c.off
 
 # Output images.
 noinst_DATA = lena-s.ppm graph-s.png m283-s.off
-CLEANFILES = $(noinst_DATA) graph-s.neato
+MOSTLYCLEANFILES = $(noinst_DATA) graph-s.neato
 
 lena-s.ppm: $(top_srcdir)/milena/img/lena.pgm image2d$(EXEEXT)
 	./image2d$(EXEEXT) $< 1000 $@

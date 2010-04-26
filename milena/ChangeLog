@@ -1,5 +1,14 @@
 2010-04-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Clean Milena's tests' outputs during `make mostlyclean'.
+
+	* apps/mesh-segm-skel/Makefile.am,
+	* apps/papers/levillain.09.ismm/Makefile.am
+	(CLEANFILES): Rename as...
+	(MOSTLYCLEANFILES): ...this.
+
+2010-04-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Canonize Milena's tests' output file names.
 
 	* tests/binarization/threshold.cc,
