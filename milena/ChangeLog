@@ -1,3 +1,11 @@
+2010-04-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Help g++ 3.3 compile Milena code.
+
+	* apps/graph-morpho/convert.hh
+	(convert::to_image2d(const mln::bin_1complex_image2d&)):
+	Break up an object's construction to help g++ 3.3 understand it.
+
 2010-04-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Prevent g++ 4.2 from issuing bad code for graph-morpho/samples_image2d.

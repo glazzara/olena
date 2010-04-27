@@ -64,10 +64,9 @@ namespace convert
     }
     mln::box2d support = bbox;
 
-    image2d<bool> output(box2d(point2d(support.pmin().row() * 2,
-				       support.pmin().col() * 2),
-			       point2d(support.pmax().row() * 2,
-				       support.pmax().col() * 2)));
+    point2d box_p_min(support.pmin().row() * 2, support.pmin().col() * 2);
+    point2d box_p_max(support.pmax().row() * 2, support.pmax().col() * 2);
+    image2d<bool> output(box2d(box_p_min, box_p_max));
     data::fill(output, false);
 
     // Iterate on vertices.
