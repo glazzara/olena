@@ -1,3 +1,10 @@
+2010-04-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Help g++ 3.3 compile Scribo code.
+
+	* text/clean.hh (scribo::text::clean): Help g++ 3.3 type-check a
+	pointer on template function.
+
 2010-04-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Clean Scribo's tests' outputs.

@@ -129,7 +129,7 @@ namespace scribo
       // Skeleton
       I skel_on_gaussian =
         morpho::skeleton_constrained(input_large, c8(),
-                                     topo::skeleton::is_simple_point<I,neighb2d>,
+                                     &topo::skeleton::is_simple_point<I,neighb2d>,
                                      extend(K, false), arith::revert(blur));
 
       // Dilation
