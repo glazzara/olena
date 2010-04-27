@@ -51,8 +51,14 @@ chmod -R a+rX milena/doc/white-paper
 cp -pR milena/doc/user-refman $DEST_DOC/user-refman.tmp
 cp -pR milena/doc/white-paper $DEST_DOC/white-paper.tmp
 
-mv -f $DEST_DOC/user-refman $DEST_DOC/user-refman.old
-mv -f $DEST_DOC/white-paper $DEST_DOC/white-paper.old
+if test -e $DEST_DOC/user-refman; then
+  rm -rf $DEST_DOC/user-refman.old
+  mv -f $DEST_DOC/user-refman $DEST_DOC/user-refman.old
+fi
+if test -e $DEST_DOC/white-paper; then
+  rm -rf $DEST_DOC/white-paper.old
+  mv -f $DEST_DOC/white-paper $DEST_DOC/white-paper.old
+fi
 
 mv -f $DEST_DOC/user-refman.tmp $DEST_DOC/user-refman
 mv -f $DEST_DOC/white-paper.tmp $DEST_DOC/white-paper

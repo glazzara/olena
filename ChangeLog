@@ -1,3 +1,9 @@
+2010-04-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve lrde-upload.sh.
+
+	* lrde-upload.sh: Be more robust to cases of missing files.
+
 2010-04-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update lrde-upload.sh.
