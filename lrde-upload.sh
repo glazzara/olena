@@ -46,12 +46,12 @@ cp milena/doc/white-paper.pdf $DEST_DOC && chmod a+r $DEST_DOC/white-paper.pdf
 rm -rf $DEST_DOC/user-refman.tmp
 rm -rf $DEST_DOC/white-paper.tmp
 
-# `make distcheck' sets umask to 077.  Restore read permissions for all.
-chmod -R a+rX milena/doc/user-refman
-chmod -R a+rX milena/doc/white-paper
-
 cp -pR milena/doc/user-refman $DEST_DOC/user-refman.tmp
 cp -pR milena/doc/white-paper $DEST_DOC/white-paper.tmp
+
+# Likewise, set permissions for all on uploaded directories.
+chmod -R a+rX $DEST_DOC/user-refman.tmp
+chmod -R a+rX $DEST_DOC/white-paper.tmp
 
 if test -e $DEST_DOC/user-refman; then
   rm -rf $DEST_DOC/user-refman.old
