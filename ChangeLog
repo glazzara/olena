@@ -1,3 +1,9 @@
+2010-04-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix read permissions on uploaded PDF files.
+
+	* lrde-upload.sh: Here.
+
 2010-04-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve lrde-upload.sh.

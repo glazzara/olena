@@ -36,10 +36,12 @@ chmod -R a+r $DEST/olena-$REV.tar.bz2
 # Upload a copy of the reference manual and other documentation.
 mkdir -p $DEST_DOC
 
-cp milena/doc/ref-guide.pdf   $DEST_DOC
-cp milena/doc/tutorial.pdf    $DEST_DOC
-cp milena/doc/user-refman.pdf $DEST_DOC
-cp milena/doc/white-paper.pdf $DEST_DOC
+# BuildBots' buildslaves set umask to 077 in their default
+# configuration.  Set read permissions for all on uploaded files.
+cp milena/doc/ref-guide.pdf   $DEST_DOC && chmod a+r $DEST_DOC/ref-guide.pdf
+cp milena/doc/tutorial.pdf    $DEST_DOC && chmod a+r $DEST_DOC/tutorial.pdf
+cp milena/doc/user-refman.pdf $DEST_DOC && chmod a+r $DEST_DOC/user-refman.pdf
+cp milena/doc/white-paper.pdf $DEST_DOC && chmod a+r $DEST_DOC/white-paper.pdf
 
 rm -rf $DEST_DOC/user-refman.tmp
 rm -rf $DEST_DOC/white-paper.tmp
