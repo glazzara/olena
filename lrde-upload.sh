@@ -46,7 +46,8 @@ cp milena/doc/white-paper.pdf $DEST_DOC && chmod a+r $DEST_DOC/white-paper.pdf
 rm -rf $DEST_DOC/user-refman.tmp
 rm -rf $DEST_DOC/white-paper.tmp
 
-cp -pR milena/doc/user-refman $DEST_DOC/user-refman.tmp
+# Upload only the HTML version of the user reference manual. 
+cp -pR milena/doc/user-refman/html $DEST_DOC/user-refman.tmp
 cp -pR milena/doc/white-paper $DEST_DOC/white-paper.tmp
 
 # Likewise, set permissions for all on uploaded directories.

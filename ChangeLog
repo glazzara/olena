@@ -1,5 +1,11 @@
 2010-04-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Upload only the HTML version of the user reference manual.
+
+	* lrde-upload.sh: Here.
+
+2010-04-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Change permissions on uploaded files instead of on original files.
 
 	* lrde-upload.sh: Here.
