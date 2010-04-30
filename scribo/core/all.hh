@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,6 +45,5 @@ namespace scribo
 #include <scribo/core/central_sites.hh>
 #include <scribo/core/erase_objects.hh>
 #include <scribo/core/macros.hh>
-#include <scribo/core/object_image.hh>
 
 #endif // ! SCRIBO_CORE_ALL_HH

@@ -112,7 +112,7 @@ namespace scribo
 	typedef mln_ch_value(I,value::label_16) L;
 	L l(input.domain());
 	data::fill(l, literal::zero);
-	for_all_components(i, tableboxes)
+	for_all_comps(i, tableboxes)
 	{
 	  mln::util::couple<P,P> cp = central_sites(tableboxes[i], axis);
 	  l(cp.first()) = i;

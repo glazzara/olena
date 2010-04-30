@@ -32,12 +32,11 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/box.hh>
-# include <mln/data/paste.hh>
+# include <mln/data/fill.hh>
 # include <mln/pw/all.hh>
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
-# include <scribo/core/object_image.hh>
 
 namespace scribo
 {
@@ -47,14 +46,13 @@ namespace scribo
   /// Remove labeled components from a binary image.
   ///
   /// \param[in,out] input_   A binary image.
-  /// \param[in]     objects  An object image. Objects will be set to
-  ///			      false in \p input_.
+  /// \param[in] objects An image of objects (object value must be
+  ///                    different from 0).
   ///
   //
   template <typename I, typename L>
   void
-  erase_objects(Image<I>& input_,
-	       const object_image(L)& objects);
+  erase_objects(Image<I>& input, const Image<L>& objects);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -63,13 +61,14 @@ namespace scribo
   template <typename I, typename L>
   void
   erase_objects(Image<I>& input_,
-	       const object_image(L)& objects)
+		const Image<L>& objects_)
   {
     trace::entering("scribo::erase_objects");
 
     mlc_equal(mln_value(I),bool)::check();
 
     I& input = exact(input_);
+    I& objects = exact(objects_);
     mln_precondition(input.is_valid());
     mln_precondition(objects.is_valid());
 

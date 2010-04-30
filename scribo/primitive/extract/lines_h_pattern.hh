@@ -30,14 +30,17 @@
 ///
 /// Extract horizontal lines matching a specific pattern.
 
-#include <mln/core/concept/image.hh>
-#include <mln/core/alias/window2d.hh>
-
-# include <mln/win/hline2d.hh>
-
+# include <mln/core/concept/image.hh>
+# include <mln/core/alias/window2d.hh>
+# include <mln/win/rectangle2d.hh>
 # include <mln/morpho/dilation.hh>
 
+# include <mln/arith/times.hh>
+
 # include <scribo/primitive/extract/lines_pattern.hh>
+
+# include <scribo/primitive/internal/rd.hh>
+
 
 namespace scribo
 {
@@ -74,17 +77,6 @@ namespace scribo
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(length % 2 == 1);
 
-// 	bool win_def[7][1] = { {1},
-// 			       {0},
-// 			       {0},
-// 			       {0},
-// 			       {0},
-// 			       {0},
-// 			       {1} };
-
-// 	window2d win;
-// 	convert::from_to(win_def, win);
-
 	// FIXME: not generic.
  	window2d win;
 	mln_deduce(I, site, dpsite)
@@ -93,11 +85,16 @@ namespace scribo
 	win.insert(dp1);
 	win.insert(dp2);
 
-	//FIXME: Add reconstruction instead of this arbitrary dilation.
- 	win::hline2d hwin(length/2 + 2);
-//	win::hline2d hwin(length);
-	return morpho::dilation(lines_pattern(input, length, 1, win), hwin);
-//	return lines_pattern(input, length, 1, win);
+	mln_concrete(I) output = lines_pattern(input, length, 1, win);
+
+	mln_concrete(I)
+	  output_dil = morpho::dilation(output,
+					win::rectangle2d(3, length / 2 + delta));
+
+	output = scribo::primitive::internal::rd(output, input * output_dil);
+
+	trace::exiting("scribo::primitive::extract::lines_h_pattern");
+	return output;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

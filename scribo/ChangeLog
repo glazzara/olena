@@ -1,3 +1,61 @@
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Scribo.
+
+	* binarization/sauvola_ms.hh,
+	* binarization/sauvola_threshold_image_debug.hh: Update prototypes.
+
+	* primitive/internal/rd.hh,
+	* primitive/group/apply.hh,
+	* debug/save_bboxes_image.hh: Add missing mln:: namespace prefix.
+
+	* filter/objects_large.hh: Split into a routine and a functor.
+
+	* fun/v2b/objects_large_filter.hh: New.
+
+	* io/xml/save_text_lines.hh: Save line type.
+
+	* table/internal/repair_lines.hh,
+	* table/internal/align_lines.hh,
+	* make/text.hh: Update macro name.
+
+	* core/erase_objects.hh,
+	* primitive/extract/lines_discontinued.hh,
+	* primitive/extract/lines_h_discontinued.hh,
+	* primitive/extract/lines_h_pattern.hh,
+	* primitive/extract/lines_h_single.hh,
+	* primitive/extract/lines_h_thick.hh,
+	* primitive/extract/lines_thick.hh,
+	* primitive/extract/lines_v_discontinued.hh,
+	* primitive/extract/lines_v_single.hh,
+	* primitive/extract/lines_v_thick.hh,
+	* primitive/group/from_graph.hh,
+	* primitive/internal/find_graph_link.hh,
+	* primitive/link/with_graph.hh,
+	* primitive/link/with_several_graphes.hh,
+	* primitive/link/with_several_left_links.hh,
+	* primitive/link/with_several_right_links.hh,
+	* table/erase.hh,
+	* table/extract.hh: Remove any references to object_image.
+
+	* table/internal/connect_lines.hh: use
+	influence_zone_geodesic_saturated
+
+	* filter/objects_small.hh: Duplicate component set.
+
+	* primitive/internal/all.hh,
+	* primitive/extract/all.hh,
+	* filter/all.hh,
+	* core/all.hh: Remove non existing includes.
+
+	* core/macros.hh: New macro.
+
+	* core/line_info.hh: Fix stats.
+
+	* filter/object_links_non_aligned.hh,
+	* filter/object_links_non_h_aligned.hh,
+	* filter/object_links_non_v_aligned.hh: Removed.
+
 2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve dematerialization wizard.

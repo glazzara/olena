@@ -37,7 +37,6 @@
 
 # include <mln/util/array.hh>
 
-# include <scribo/core/object_image.hh>
 # include <scribo/primitive/internal/update_graph_link.hh>
 
 //FIXME: not generic.

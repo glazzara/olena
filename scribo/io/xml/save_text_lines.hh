@@ -104,6 +104,7 @@ namespace scribo
 		 << "\" txt_orientation=\"" << lines(l).orientation()
 		 << "\" txt_reading_orientation=\"" << lines(l).reading_orientation()
 		 << "\" txt_reading_direction=\"" << lines(l).reading_direction()
+		 << "\" txt_text_type=\"" << lines(l).type()
 		 << "\" txt_reverse_video=\"" << (lines(l).reverse_video() ? "true" : "false")
 		 << "\" txt_indented=\"" << (lines(l).indented() ? "true" : "false")
 		 << "\" kerning=\"" << lines(l).char_space()

@@ -154,7 +154,7 @@ namespace scribo
 
       mln::util::array< accu::shape::bbox<mln_site(L)> > tboxes(new_nbboxes.next());
       mln::util::array< accu::center<mln_site(L)> > tcenters(new_nbboxes.next());
-      for_all_components(i, text.bboxes())
+      for_all_comps(i, text.bboxes())
       {
 	tboxes[fv2v(i)].take(text.bbox(i));
 	tcenters[fv2v(i)].take(text.mass_center(i));

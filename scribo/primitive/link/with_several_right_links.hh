@@ -38,10 +38,7 @@
 # include <mln/util/array.hh>
 
 # include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
 # include <scribo/core/macros.hh>
-# include <scribo/primitive/internal/init_link_array.hh>
-# include <scribo/primitive/internal/find_right_link.hh>
 # include <scribo/util/text.hh>
 
 

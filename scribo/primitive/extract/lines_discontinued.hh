@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,8 +42,7 @@
 # include <mln/morpho/dilation.hh>
 
 # include <scribo/core/macros.hh>
-# include <scribo/core/object_image.hh>
-# include <scribo/primitive/extract/objects.hh>
+# include <scribo/primitive/extract/components.hh>
 
 namespace scribo
 {
@@ -70,7 +70,7 @@ namespace scribo
        * \return An image in which lines are labeled.
        */
       template <typename I, typename N, typename V, typename W>
-      object_image(mln_ch_value(I,V))
+      component_set<mln_ch_value(I,V)>
       lines_discontinued(const Image<I>& input_,
 			 const Neighborhood<N>& nbh_, V& nlines,
 			 const Window<W>& win_, unsigned rank_k);
@@ -111,7 +111,7 @@ namespace scribo
 
       template <typename I, typename N, typename V, typename W>
       inline
-      object_image(mln_ch_value(I,V))
+      component_set<mln_ch_value(I,V)>
       lines_discontinued(const Image<I>& input_,
 			 const Neighborhood<N>& nbh_, V& nlines,
 			 const Window<W>& win_, unsigned rank_k)
@@ -132,8 +132,8 @@ namespace scribo
 
 	mln_ch_value(I,bool) filter
 	  = morpho::dilation(morpho::rank_filter(input, win, rank_k), W(dil));
-	object_image(mln_ch_value(I,V)) output
-	  = primitive::extract::objects(filter, nbh, nlines);
+	component_set<mln_ch_value(I,V)> output
+	  = primitive::extract::components(filter, nbh, nlines);
 
 	trace::exiting("scribo::primitive::extract::lines_discontinued");
 	return output;

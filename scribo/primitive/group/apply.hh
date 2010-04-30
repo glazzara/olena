@@ -75,7 +75,7 @@ namespace scribo
       template <typename L>
       component_set<L>
       apply(const object_groups<L>& groups,
-	    fun::i2v::array<mln_value(L)>& relabel_fun)
+	    mln::fun::i2v::array<mln_value(L)>& relabel_fun)
 
       {
 	trace::entering("scribo::primitive::group::apply");
@@ -105,7 +105,7 @@ namespace scribo
       component_set<L>
       apply(const object_groups<L>& groups)
       {
-	fun::i2v::array<mln_value(L)> relabel_fun;
+	mln::fun::i2v::array<mln_value(L)> relabel_fun;
 	return apply(groups, relabel_fun);
       }
 

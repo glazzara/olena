@@ -123,10 +123,10 @@ namespace scribo
 
 	  \return A threshold.
       */
-      template <typename P, typename I, typename J>
+      template <typename P, typename M, typename J>
       double
       compute_sauvola_threshold(const P& p,
-				I& mean, I& stddev,
+				M& mean, M& stddev,
 				const J& simple,
 				const J& squared,
 				int win_width, double K, double R)
@@ -156,7 +156,7 @@ namespace scribo
 
 	double m_x_y = m_x_y_tmp / wh;
 
-	mean(p) = m_x_y * mean_debug_factor;
+	mean(p) = m_x_y;// * mean_debug_factor;
 
 	// Standard deviation.
 	double s_x_y_tmp = (squared.at_(row_max, col_max)
@@ -166,7 +166,7 @@ namespace scribo
 
 	double s_x_y = std::sqrt((s_x_y_tmp - (m_x_y_tmp * m_x_y_tmp) / wh) / (wh - 1.f));
 
-	stddev(p) = s_x_y * stddev_debug_factor;
+	stddev(p) = s_x_y;// * stddev_debug_factor;
 
 	// Thresholding.
 	double t_x_y = sauvola_threshold_formula(m_x_y, s_x_y, K, R);
@@ -198,21 +198,21 @@ namespace scribo
       namespace generic
       {
 
-	template <typename I, typename J>
+	template <typename I, typename M, typename J>
 	inline
 	mln_concrete(I)
 	sauvola_threshold_image_debug(const Image<I>& input_,
 				      unsigned window_size,
 				      double K,
-				      Image<I>& mean_, Image<I>& stddev_,
+				      Image<M>& mean_, Image<M>& stddev_,
 				      Image<J>& simple_,
 				      Image<J>& squared_)
 	{
 	  trace::entering("scribo::binarization::impl::generic::sauvola_threshold_image_debug");
 
 	  const I& input = exact(input_);
-	  I& mean = exact(mean_);
-	  I& stddev = exact(stddev_);
+	  M& mean = exact(mean_);
+	  M& stddev = exact(stddev_);
 	  J& simple = exact(simple_);
 	  J& squared = exact(squared_);
 
@@ -248,13 +248,13 @@ namespace scribo
 
 
 
-      template <typename I, typename J>
+      template <typename I, typename M, typename J>
       inline
       mln_concrete(I)
       sauvola_threshold_image_debug_gl(const Image<I>& input,
 				       unsigned window_size,
 				       double K,
-				       Image<I>& mean, Image<I>& stddev,
+				       Image<M>& mean, Image<M>& stddev,
 				       Image<J>& simple,
 				       Image<J>& squared)
       {
@@ -265,13 +265,13 @@ namespace scribo
       }
 
 
-      template <typename I, typename J>
+      template <typename I, typename M, typename J>
       inline
       mln_ch_value(I, value::int_u8)
       sauvola_threshold_image_debug_rgb8(const Image<I>& input,
 					 unsigned window_size,
 					 double K,
-					 Image<I>& mean, Image<I>& stddev,
+					 Image<M>& mean, Image<M>& stddev,
 					 Image<J>& simple,
 					 Image<J>& squared)
       {
@@ -302,14 +302,14 @@ namespace scribo
     namespace internal
     {
 
-      template <unsigned n, typename I, typename J>
+      template <unsigned n, typename I, typename M, typename J>
       inline
       mln_ch_value(I, value::int_u<n>)
       sauvola_threshold_image_debug_dispatch(const value::int_u<n>&,
 					     const I& input,
 					     unsigned window_size,
 					     double K,
-					     I& mean, I& stddev,
+					     M& mean, M& stddev,
 					     J& simple,
 					     J& squared)
       {
@@ -318,13 +318,13 @@ namespace scribo
 						      simple, squared);
       }
 
-      template <typename I, typename J>
+      template <typename I, typename M, typename J>
       inline
       mln_ch_value(I, value::int_u8)
       sauvola_threshold_image_debug_dispatch(const value::rgb8&, const I& input,
 					     unsigned window_size,
 					     double K,
-					     I& mean, I& stddev,
+					     M& mean, M& stddev,
 					     J& simple,
 					     J& squared)
       {
@@ -333,11 +333,11 @@ namespace scribo
 							simple, squared);
       }
 
-      template <typename I, typename J>
+      template <typename I, typename M, typename J>
       inline
       mln_ch_value(I, value::int_u8)
       sauvola_threshold_image_debug_dispatch(const mln_value(I)&, const I& input,
-					     I& mean, I& stddev,
+					     M& mean, M& stddev,
 					     unsigned window_size,
 					     double K,
 					     J& simple,
@@ -355,11 +355,11 @@ namespace scribo
 
 
 
-    template <typename I, typename J>
+    template <typename I, typename M, typename J>
     mln_ch_value(I, value::int_u8)
     sauvola_threshold_image_debug(const Image<I>& input, unsigned window_size,
 				  double K,
-				  Image<I>& mean, Image<I>& stddev,
+				  Image<M>& mean, Image<M>& stddev,
 				  Image<J>& simple,
 				  Image<J>& squared)
     {
@@ -384,12 +384,12 @@ namespace scribo
     }
 
 
-    template <typename I>
+    template <typename I, typename M>
     inline
     mln_ch_value(I, value::int_u8)
     sauvola_threshold_image_debug(const Image<I>& input, unsigned window_size,
 				  double K,
-				  Image<I>& mean, Image<I>& stddev)
+				  Image<M>& mean, Image<M>& stddev)
     {
       mln_ch_value(I, double)
 	simple = init_integral_image(input, scribo::internal::identity_),

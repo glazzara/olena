@@ -795,7 +795,7 @@ namespace scribo
 
       // Space between characters.
       int space = bb.pmin().col()
-	- comp_set(holder_.links()(c)).bbox().pmax().col();
+	- comp_set(holder_.links()(c)).bbox().pmax().col() + 1;
 
       // -- Ignore overlapped characters.
       if (space > 0)

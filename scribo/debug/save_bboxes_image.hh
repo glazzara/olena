@@ -35,6 +35,7 @@
 # include <mln/value/rgb8.hh>
 # include <mln/util/array.hh>
 # include <mln/io/ppm/save.hh>
+# include <mln/literal/colors.hh>
 
 # include <scribo/core/line_set.hh>
 # include <scribo/draw/bounding_boxes.hh>
@@ -108,13 +109,14 @@ namespace scribo
       trace::entering("scribo::debug::save_bboxes_image");
       mln_precondition(exact(input).is_valid());
 
-      image2d<value::rgb8> output = data::convert(value::rgb8(), input);
+      mln_ch_value(I, value::rgb8)
+	output = data::convert(value::rgb8(), input);
 
       for_all_lines(l, lines)
 	if (! lines(l).hidden())
 	  mln::draw::box(output, lines(l).bbox(), value);
 
-      io::ppm::save(output, filename);
+      mln::io::ppm::save(output, filename);
       trace::exiting("scribo::debug::save_bboxes_image");
     }
 

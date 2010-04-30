@@ -37,8 +37,6 @@
 
 # include <scribo/core/object_links.hh>
 # include <scribo/core/macros.hh>
-# include <scribo/primitive/internal/init_link_array.hh>
-# include <scribo/primitive/internal/find_left_link.hh>
 # include <scribo/util/text.hh>
 
 

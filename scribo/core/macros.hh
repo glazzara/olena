@@ -52,6 +52,9 @@
 # define for_all_lines(E, S) \
   for_all_comps(E, S)
 
+# define for_all_line_comps(E, S) \
+  for_all_elements(E, S)
+
 # define for_all_lines_info(E, S) \
   for_all_comp_data(E, S)
 

@@ -94,16 +94,14 @@ namespace scribo
      */
     template <typename I>
     mln_ch_value(I,bool)
-    sauvola_ms(const Image<I>& input_1_, unsigned w_1,
-	       unsigned s, unsigned lambda_min_1, double K);
+    sauvola_ms(const Image<I>& input_1_, unsigned w_1, unsigned s, double K);
 
     /// \overload
     /// K is set to 0.34.
     //
     template <typename I>
     mln_ch_value(I,bool)
-    sauvola_ms(const Image<I>& input_1, unsigned w_1,
-	       unsigned s, unsigned lambda_min_1);
+    sauvola_ms(const Image<I>& input_1, unsigned w_1, unsigned s);
 
 
 

@@ -37,9 +37,8 @@
 
 # include <mln/morpho/opening/structural.hh>
 
-# include <scribo/core/object_image.hh>
 # include <scribo/core/macros.hh>
-# include <scribo/primitive/extract/objects.hh>
+# include <scribo/primitive/extract/components.hh>
 
 namespace scribo
 {
@@ -66,7 +65,7 @@ namespace scribo
        * \return An image in which lines are labeled.
        */
       template <typename I, typename N, typename V, typename W>
-      object_image(mln_ch_value(I,V))
+      component_set<mln_ch_value(I,V)>
       lines_thick(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_, V& nlines,
 		  const Window<W>& win_);
@@ -105,7 +104,7 @@ namespace scribo
 
       template <typename I, typename N, typename V, typename W>
       inline
-      object_image(mln_ch_value(I,V))
+      component_set<mln_ch_value(I,V)>
       lines_thick(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_, V& nlines,
 		  const Window<W>& win_)
@@ -119,8 +118,8 @@ namespace scribo
 	const W& win = exact(win_);
 
 	mln_ch_value(I,bool) filter = morpho::opening::structural(input, win);
-	object_image(mln_ch_value(I,V)) output
-	  = primitive::extract::objects(filter, nbh, nlines);
+	component_set<mln_ch_value(I,V)> output
+	  = primitive::extract::components(filter, nbh, nlines);
 
 	trace::exiting("scribo::primitive::lines_thick");
 	return output;

@@ -100,7 +100,7 @@ namespace scribo
 	  initialize(parent, f);
 	}
 
-	util::array<int> dp = negative_offsets_wrt(f, nbh);
+	mln::util::array<int> dp = negative_offsets_wrt(f, nbh);
 	const unsigned n_nbhs = dp.nelements();
 
 	// First pass.
