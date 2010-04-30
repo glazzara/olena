@@ -38,6 +38,8 @@
 # include <mln/data/transform.hh>
 # include <mln/data/compute.hh>
 # include <mln/accu/stat/max.hh>
+# include <mln/util/array.hh>
+# include <mln/util/set.hh>
 
 
 namespace mln

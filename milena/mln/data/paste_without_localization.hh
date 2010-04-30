@@ -258,7 +258,8 @@ namespace mln
       {
         if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
         {
-          if (border::get(input) == border::get(output))
+          if (border::get(input) == border::get(output)
+	      && input.domain() == output.domain())
             impl::paste_without_localization_fastest(input, output);
           else
             impl::paste_without_localization_lines(input, output);

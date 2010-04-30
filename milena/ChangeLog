@@ -1,3 +1,18 @@
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Milena.
+
+	* milena/mln/canvas/labeling/blobs.hh: Fill extension.
+
+	* milena/mln/data/paste_without_localization.hh: Check whether the
+	two images have the same domain.
+
+	* milena/mln/labeling/blobs_and_compute.hh: Rename members.
+
+	* milena/mln/labeling/colorize.hh: Add missing includes.
+
+	* milena/mln/world/binary_2d/enlarge.hh: use def::coord.
+
 2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/labeling/blobs_and_compute.hh: Fix an invalid size of

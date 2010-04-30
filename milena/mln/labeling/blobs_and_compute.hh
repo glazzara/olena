@@ -97,12 +97,12 @@ namespace mln
 
 	void process_p(const util::pix<L>& pix)
 	{
-	  process_(accu_argument(), pix);
+	  process__(accu_argument(), pix);
 	}
 
 	void process_n(const util::pix<L>& pix)
 	{
-	  process_(accu_argument(), pix);
+	  process__(accu_argument(), pix);
 	}
 
 	void finalize()
@@ -112,17 +112,17 @@ namespace mln
 
 
       private:
-	void process_(const mln_psite(L)&, const util::pix<L>& pix)
+	void process__(const mln_psite(L)&, const util::pix<L>& pix)
 	{
 	  accus_[current_lbl_].take(pix.p());
 	}
 
-	void process_(const mln_value(L)&, const util::pix<L>& pix)
+	void process__(const mln_value(L)&, const util::pix<L>& pix)
 	{
 	  accus_[current_lbl_].take(pix.v());
 	}
 
-	void process_(const util::pix<L>&, const util::pix<L>& pix)
+	void process__(const util::pix<L>&, const util::pix<L>& pix)
 	{
 	  accus_[current_lbl_].take(pix);
 	}

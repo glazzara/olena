@@ -117,9 +117,9 @@ namespace mln
 
 	  mln_precondition(input.is_valid());
 
-	  unsigned
+	  def::coord
 	    mrow = geom::min_row(input),
-		 mcol = geom::min_col(input);
+	    mcol = geom::min_col(input);
 
 	  image2d<int_u8> output(make::box2d(mrow, mcol,
 					     mrow + 2 * input.nrows() - 1,

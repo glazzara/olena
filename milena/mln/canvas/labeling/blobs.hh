@@ -36,6 +36,8 @@
 # include <mln/data/fill.hh>
 # include <mln/core/site_set/p_queue_fast.hh>
 
+# include <mln/extension/fill.hh>
+
 # include <mln/util/pix.hh>
 
 namespace mln
@@ -100,6 +102,9 @@ namespace mln
 	    out_t output;
 	    initialize(output, input);
 	    data::fill(output, zero);
+
+	    extension::fill(input, false);
+
 	    functor.init(); // <-- functor.init()
 
 	    // Loop.
