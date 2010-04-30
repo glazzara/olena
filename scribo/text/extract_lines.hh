@@ -47,7 +47,7 @@
 # include <mln/util/graph.hh>
 # include <mln/value/label_16.hh>
 
-# include <scribo/primitive/extract/objects.hh>
+# include <scribo/primitive/extract/components.hh>
 # include <scribo/primitive/group/apply.hh>
 # include <scribo/primitive/link/with_several_left_links.hh>
 # include <scribo/primitive/link/with_several_right_links.hh>
@@ -75,7 +75,7 @@ namespace scribo
     ** \param[in,out] nbboxes Will hold the number of bounding boxes
     **			      at the end of the routine.
     **
-    ** \return An object image with grouped potential text objects.
+    ** \return An object image with grouped potential text components.
     */
     template <typename I, typename N, typename V>
     object_image(mln_ch_value(I,V))
@@ -103,7 +103,7 @@ namespace scribo
 
       typedef mln_ch_value(I,V) L;
       typedef object_image(L) text_t;
-      text_t text = scribo::primitive::extract::objects(input, nbh, nbboxes);
+      text_t text = scribo::primitive::extract::components(input, nbh, nbboxes);
 
 # ifndef SCRIBO_NDEBUG
       debug::save_bboxes_image(input, text.bboxes(), literal::red,

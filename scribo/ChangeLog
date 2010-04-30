@@ -1,5 +1,23 @@
 2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve OCR recognition.
+
+	* src/text_in_article_pbm.cc: Update call to text::recognition.
+
+	* text/clean.hh: Resize text lines according to their x_height.
+
+	* text/extract_lines.hh: Update call to extract::components.
+
+	* text/merging.hh: Remove Debug.
+
+	* text/recognition.hh: Update call to text::clean and do
+	recognition only on lines considered as text.
+
+	* subsampling/bilinear.hh,
+	* upsampling/bs2x.hh: New.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* postprocessing/fill_object_holes.hh: New routine.
 
 2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>

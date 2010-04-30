@@ -48,12 +48,14 @@
 #include <scribo/primitive/remove/separators.hh>
 
 #include <scribo/primitive/link/merge_double_link.hh>
+#include <scribo/primitive/link/internal/dmax_width_and_height.hh>
 #include <scribo/primitive/link/with_single_left_link_dmax_ratio.hh>
 #include <scribo/primitive/link/with_single_right_link_dmax_ratio.hh>
 
 #include <scribo/primitive/group/from_single_link.hh>
 
 #include <scribo/filter/object_links_bbox_h_ratio.hh>
+#include <scribo/filter/objects_small.hh>
 
 
 #include <scribo/debug/usage.hh>
@@ -71,6 +73,7 @@
 
 #include <scribo/preprocessing/denoise_fg.hh>
 
+#include <scribo/io/xml/save_text_lines.hh>
 
 // #include <mln/morpho/closing/structural.hh>
 // #include <mln/win/rectangle2d.hh>
@@ -80,6 +83,7 @@ const char *args_desc[][2] =
 {
   { "input.pbm", "A binary image. 'False' for object, 'True'\
 for the background." },
+  { "out.txt", "Text output" },
   { "denoise", "1 enables denoising, 0 disables it. (enabled by default)" },
   { "debug_dir", "Output directory for debug image" },
   {0, 0}
@@ -95,8 +99,7 @@ int main(int argc, char* argv[])
     return scribo::debug::usage(argv,
 				"Find text lines using left/right validation and display x-height in a binarized article.",
 				"input.pbm out.txt <denoise: 0|1> <debug_dir>",
-				args_desc,
-				"Text output.");
+				args_desc);
 
   if (argc == 5)
     scribo::make::internal::debug_filename_prefix = argv[4];
@@ -151,13 +154,19 @@ int main(int argc, char* argv[])
   components.add_separators(separators);
 //  components.add_separators(whitespaces);
 
+  components = scribo::filter::components_small(components, 3);
+
 
   /// Linking potential objects
   std::cout << "Linking objects..." << std::endl;
   object_links<L> left_link
-    = primitive::link::with_single_left_link_dmax_ratio(components, 2);
+    = primitive::link::with_single_left_link_dmax_ratio(components,
+							primitive::link::internal::dmax_width_and_height(1),
+							anchor::MassCenter);
   object_links<L> right_link
-    = primitive::link::with_single_right_link_dmax_ratio(components, 2);
+    = primitive::link::with_single_right_link_dmax_ratio(components,
+							 primitive::link::internal::dmax_width_and_height(1),
+							 anchor::MassCenter);
 
   // Validating left and right links.
   object_links<L>
@@ -218,38 +227,38 @@ int main(int argc, char* argv[])
 		     scribo::make::debug_filename("step1_looks_like_a_text_line.ppm"));
 
 
-  // Bboxes + line infos
-  {
-    std::ofstream file(scribo::make::debug_filename("step1_bboxes_100p.txt").c_str());
-    std::ofstream file_50p(scribo::make::debug_filename("step1_bboxes_50p.txt").c_str());
+//   // Bboxes + line infos
+//   {
+//     std::ofstream file(scribo::make::debug_filename("step1_bboxes_100p.txt").c_str());
+// //     std::ofstream file_50p(scribo::make::debug_filename("step1_bboxes_50p.txt").c_str());
 
-    for_all_lines(l, lines)
-      if (lines(l).tag() != line::Merged
-	  && lines(l).tag() != line::Ignored
-	  && lines(l).tag() != line::Pathological)
-      {
-	file << lines(l).bbox().pmin().row() << " "
-	     << lines(l).bbox().pmin().col() << " "
-	     << lines(l).bbox().pmax().row() << " "
-	     << lines(l).bbox().pmax().col() << " "
-	     << lines(l).card()              << " "
-	     << lines(l).baseline()          << " "
-	     << lines(l).x_height()          << " "
-	     << lines(l).meanline()          << " "
-	     << lines(l).d_height()          << " "
-	     << lines(l).a_height()          << " "
-	     << lines(l).char_space()        << " "
-	     << lines(l).char_width()        << std::endl;
+//     for_all_lines(l, lines)
+//       if (lines(l).tag() != line::Merged
+// 	  && lines(l).tag() != line::Ignored
+// 	  && lines(l).tag() != line::Pathological)
+//       {
+// 	file << lines(l).bbox().pmin().row() << " "
+// 	     << lines(l).bbox().pmin().col() << " "
+// 	     << lines(l).bbox().pmax().row() << " "
+// 	     << lines(l).bbox().pmax().col() << " "
+// 	     << lines(l).card()              << " "
+// 	     << lines(l).baseline()          << " "
+// 	     << lines(l).x_height()          << " "
+// 	     << lines(l).meanline()          << " "
+// 	     << lines(l).d_height()          << " "
+// 	     << lines(l).a_height()          << " "
+// 	     << lines(l).char_space()        << " "
+// 	     << lines(l).char_width()        << std::endl;
 
-	file_50p << lines(l).bbox().pmin().row() / 2 << " "
-		 << lines(l).bbox().pmin().col() / 2 << " "
-		 << lines(l).bbox().pmax().row() / 2 << " "
-		 << lines(l).bbox().pmax().col() / 2 << std::endl;
-      }
+// // 	file_50p << lines(l).bbox().pmin().row() / 2 << " "
+// // 		 << lines(l).bbox().pmin().col() / 2 << " "
+// // 		 << lines(l).bbox().pmax().row() / 2 << " "
+// // 		 << lines(l).bbox().pmax().col() / 2 << std::endl;
+//       }
 
-    file.close();
-    file_50p.close();
-  }
+//     file.close();
+// //     file_50p.close();
+//   }
 
 
   // mean and base lines.
@@ -280,57 +289,49 @@ int main(int argc, char* argv[])
   scribo::debug::save_bboxes_image(input, lines,
 				   scribo::make::debug_filename("step2_bboxes.ppm"));
 
+
+  {
+    std::ofstream file(scribo::make::debug_filename("step2_bboxes_100p.txt").c_str());
+//     std::ofstream file_50p(scribo::make::debug_filename("step2_bboxes_50p.txt").c_str());
+
+    for_all_lines(l, lines)
+      if (lines(l).tag() != line::Merged
+	  && lines(l).tag() != line::Ignored
+	  && lines(l).tag() != line::Pathological)
+      {
+	file << lines(l).bbox().pmin().row() << " "
+	     << lines(l).bbox().pmin().col() << " "
+	     << lines(l).bbox().pmax().row() << " "
+	     << lines(l).bbox().pmax().col() << " "
+	     << lines(l).card()              << " "
+	     << lines(l).baseline()          << " "
+	     << lines(l).x_height()          << " "
+	     << lines(l).meanline()          << " "
+	     << lines(l).d_height()          << " "
+	     << lines(l).a_height()          << " "
+	     << lines(l).char_space()        << " "
+	     << lines(l).char_width()        << std::endl;
+
+// 	file_50p << lines(l).bbox().pmin().row() / 2 << " "
+// 		 << lines(l).bbox().pmin().col() / 2 << " "
+// 		 << lines(l).bbox().pmax().row() / 2 << " "
+// 		 << lines(l).bbox().pmax().col() / 2 << std::endl;
+      }
+
+    file.close();
+//     file_50p.close();
+  }
+
+
   //===== END OF DEBUG =====
+
+
+  scribo::io::xml::save_text_lines(argv[1], lines, "out.xml");
 
 
 
   scribo::text::recognition(lines, "fra", argv[2]);
 
-
-//   // Display median character space.
-//   {
-//     image2d<value::rgb8> output = data::convert(value::rgb8(), input);
-//     typedef mln::value::int_u<8> median_t;
-//     typedef mln::accu::stat::median_h<median_t> accu_t;
-//     util::array<accu_t>
-//       lspace_med(static_cast<unsigned>(grouped_objects.nlabels()) + 1);
-
-//     for_all_components(i, filtered_objects.bboxes())
-//       if (groups_packed(i) != 0)
-//       {
-// 	if (hratio_filtered_links(i) != i)
-// 	{
-// 	  unsigned
-// 	    space = filtered_objects.bbox(i).pmin().col() - filtered_objects.bbox(hratio_filtered_links(i)).pmax().col();
-
-// 	  lspace_med(groups_packed(i)).take(space);
-
-// 	}
-//       }
-
-//     std::cout << "Drawing median character space" << std::endl;
-//     for_all_components(i, filtered_objects.bboxes())
-//       if (groups_packed(i) != 0 && lspace_med(groups_packed(i)).card() > 1)
-//       {
-// 	unsigned med = lspace_med(groups_packed(i)).to_result();
-
-// 	mln::draw::box(output, grouped_objects.bbox(groups_packed(i)),
-// 		       literal::purple);
-
-// 	point2d
-// 	  beg = filtered_objects.bbox(i).pmax(),
-// 	  end = beg;
-// 	beg.row() = filtered_objects.bbox(i).pmin().row();
-// 	mln::draw::line(output, beg, end, literal::cyan);
-// 	beg.col() += med;
-// 	end.col() += med;
-// 	mln::draw::line(output, beg, end, literal::cyan);
-
-//       }
-
-//     io::ppm::save(output, "median_wspace.ppm");
-
-//   }
 
   trace::exiting("main");
 }

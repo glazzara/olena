@@ -128,11 +128,12 @@ namespace scribo
       /// Use text bboxes with Tesseract
       for_all_lines(i, lines)
       {
-	if (! lines(i).is_valid())
+	if (! lines(i).is_valid() || lines(i).tag() != line::None || lines(i).type() != line::Text)
 	  continue;
 
 	std::cout << "Text recognition... ("
 		  << i << "/" << lines.nelements() << ")" << std::endl;
+	std::cout << "x_height = " << lines(i).x_height() << std::endl;
 
 	mln_domain(I) box = lines(i).bbox();
 	// Make sure characters are isolated from the borders.
@@ -157,7 +158,7 @@ namespace scribo
 	/// Improve text quality.
 
 	/// text_ima_cleaned domain is larger than text_ima's.
-	I text_ima_cleaned = text::clean(text_ima, dmap_win);
+	I text_ima_cleaned = text::clean(lines(i), text_ima);
 	mln::io::pbm::save(text_ima_cleaned, mln::debug::filename("line.pbm", debug_id++));
 
         // Setting objects to 'True'

@@ -800,21 +800,21 @@ namespace scribo
 
 
 	(void) ith_pass;
-	if (ith_pass == 1)
-	{
-	  mln::io::pgm::save(log, "log_1.pgm");
-	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_1e.pgm");
-	}
-	else if (ith_pass == 2)
-	{
-	  mln::io::pgm::save(log, "log_2.pgm");
-	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_2e.pgm");
-	}
-	else if (ith_pass == 3)
-	{
-	  mln::io::pgm::save(log, "log_3.pgm");
-	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_3e.pgm");
-	}
+// 	if (ith_pass == 1)
+// 	{
+// 	  mln::io::pgm::save(log, "log_1.pgm");
+// 	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_1e.pgm");
+// 	}
+// 	else if (ith_pass == 2)
+// 	{
+// 	  mln::io::pgm::save(log, "log_2.pgm");
+// 	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_2e.pgm");
+// 	}
+// 	else if (ith_pass == 3)
+// 	{
+// 	  mln::io::pgm::save(log, "log_3.pgm");
+// 	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_3e.pgm");
+// 	}
       }
 
 
