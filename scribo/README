@@ -1,0 +1,51 @@
+Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+
+This file is part of Scribo.
+
+Scribo is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation, version 2 of the License.
+
+Scribo is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+
+The complete GNU General Public License Notice can also be found in
+the 'COPYING' file in the root directory.
+
+
+======================
+ Introduction to Olena
+======================
+
+Scribo aims to provide tools for Document Image Analysis (DIA).
+
+
+========
+ Content
+========
+
+demo/
+
+  demat
+     Sample GUI used to retrieve text from a whole document or a
+     region of interest.
+
+  wizard
+     Sample GUI used to retrieve text from a whole document or a
+     region of interest.
+
+  tip
+     Sample GUI used to display text localization in picture results.
+
+
+src/
+  text_in_article_pbm
+     Retrieve text from a document.
+
+  text_in_picture_fast
+     Localize text in pictures.
