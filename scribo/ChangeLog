@@ -1,5 +1,14 @@
 2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new routines to detect separators.
+
+	* scribo/primitive/extract/horizontal_separators.hh,
+	* scribo/primitive/extract/separators.hh,
+	* scribo/primitive/extract/vertical_separators.hh,
+	* scribo/primitive/remove/separators.hh: New.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add A first draft of a README in Scribo.
 
 	* README: New.
