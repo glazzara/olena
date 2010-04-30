@@ -1,5 +1,11 @@
 2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add fastest implementations in labeling::compute.
+
+	* mln/labeling/compute.hh: New fastest implementations.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes in Milena.
 
 	* milena/mln/canvas/labeling/blobs.hh: Fill extension.
