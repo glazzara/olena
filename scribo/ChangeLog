@@ -1,11 +1,15 @@
 2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* postprocessing/fill_object_holes.hh: New routine.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new routines to detect separators.
 
-	* scribo/primitive/extract/horizontal_separators.hh,
-	* scribo/primitive/extract/separators.hh,
-	* scribo/primitive/extract/vertical_separators.hh,
-	* scribo/primitive/remove/separators.hh: New.
+	* primitive/extract/horizontal_separators.hh,
+	* primitive/extract/separators.hh,
+	* primitive/extract/vertical_separators.hh,
+	* primitive/remove/separators.hh: New.
 
 2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
