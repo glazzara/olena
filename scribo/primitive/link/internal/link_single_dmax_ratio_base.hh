@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,6 +44,8 @@
 # include <scribo/core/component_set.hh>
 # include <scribo/core/object_links.hh>
 
+# include <scribo/core/concept/dmax_functor.hh>
+
 # include <scribo/primitive/link/internal/compute_anchor.hh>
 # include <scribo/primitive/link/internal/find_link.hh>
 # include <scribo/primitive/link/internal/link_functor_base.hh>
@@ -65,9 +68,9 @@ namespace scribo
 	/// \brief Base class for link functors using bounding box
 	/// center and a proportional max distance.
 	//
-	template <typename L, typename E>
+	template <typename L, typename F, typename E>
 	class link_single_dmax_ratio_base
-	  : public link_functor_base<L, E>
+	  : public link_functor_base<L,E>
 	{
 	  typedef link_functor_base<L,E> super_;
 	  typedef mln_result(accu::center<mln_psite(L)>) ms_t;
@@ -76,10 +79,9 @@ namespace scribo
 
 	  typedef mln_site(L) P;
 
-
 	  link_single_dmax_ratio_base(const component_set<L>& components,
-				      float dmax_ratio,
-				      anchor::Direction direction);
+				      anchor::Direction direction,
+				      const DMax_Functor<F>& dmax_f);
 
 
 
@@ -91,8 +93,8 @@ namespace scribo
 
 	  void start_processing_object_(unsigned current_object);
 
-	private:
-	  float dmax_ratio_;
+	protected:
+	  const F dmax_f_;
 	  float dmax_;
 	  anchor::Direction direction_;
 	};
@@ -101,24 +103,24 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-	template <typename L, typename E>
+	template <typename L, typename F, typename E>
 	inline
-	link_single_dmax_ratio_base<L, E>::link_single_dmax_ratio_base(
+	link_single_dmax_ratio_base<L, F, E>::link_single_dmax_ratio_base(
 	  const component_set<L>& components,
-	  float dmax_ratio,
-	  anchor::Direction direction)
+	  anchor::Direction direction,
+	  const DMax_Functor<F>& dmax_f)
 
-	  : super_(components),
-	    dmax_ratio_(dmax_ratio),
+	: super_(components),
+	    dmax_f_(exact(dmax_f)),
 	    dmax_(0),
 	    direction_(direction)
 	{
 	}
 
-	template <typename L, typename E>
+	template <typename L, typename F, typename E>
 	inline
 	bool
-	link_single_dmax_ratio_base<L, E>::verify_link_criterion_(
+	link_single_dmax_ratio_base<L, F, E>::verify_link_criterion_(
 	  unsigned current_object,
 	  const P& start_point,
 	  const P& p) const
@@ -130,10 +132,10 @@ namespace scribo
 	}
 
 
-	template <typename L, typename E>
+	template <typename L, typename F, typename E>
 	inline
 	mln_site(L)
-	link_single_dmax_ratio_base<L, E>::start_point_(unsigned current_object,
+	link_single_dmax_ratio_base<L, F, E>::start_point_(unsigned current_object,
 							anchor::Type anchor)
 	{
 	  (void) anchor;
@@ -142,18 +144,33 @@ namespace scribo
 	}
 
 
-	template <typename L, typename E>
+	template <typename L, typename F, typename E>
 	inline
 	void
-	link_single_dmax_ratio_base<L, E>::start_processing_object_(
+	link_single_dmax_ratio_base<L, F, E>::start_processing_object_(
 	  unsigned current_object)
 	{
-	  float
-	    w = this->components_.info(current_object).bbox().width(),
-	    h = this->components_.info(current_object).bbox().height();
-//	  dmax_ = (w / 2.0f) + (dmax_ratio_ * math::max(w, h));
-//	  dmax_ = (w / 2.0f) + (dmax_ratio_ * w);
-	  dmax_ = (w / 2.0f) + (h + w);
+	  dmax_ = dmax_f_(this->components_.info(current_object).bbox());
+
+
+// 	  float
+// 	    w = this->components_.info(current_object).bbox().width();
+// //	    h = this->components_.info(current_object).bbox().height();
+
+// 	  // FIXME: default case
+// //	  dmax_ = (w / 2.0f) + (dmax_ratio_ * math::max(w, h));
+
+// 	  // FIXME: to use for paragraph alignment
+// 	  dmax_ = (w / 2.0f) + (dmax_ratio_ * w);
+
+	  // FIXME: to use for newspapers like ICDAR documents!
+//	  dmax_ = (w / 2.0f) + (h + w);
+
+	  // FIXME: more general use case for newspapers
+//	  dmax_ = (w / 2.0f) + dmax_ratio_ * (h + w);
+
+
+	  // FIXME: WE WANT TO PROVIDE A DMAX RULE THROUGH A FUNCTOR.
 	}
 
 

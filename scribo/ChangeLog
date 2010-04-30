@@ -1,5 +1,20 @@
 2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce dmax_functor concept.
+
+	* core/concept/dmax_functor.hh,
+	* primitive/link/internal/dmax_default.hh,
+	* primitive/link/internal/dmax_functor_base.hh,
+	* primitive/link/internal/dmax_width_and_height.hh,
+	* primitive/link/internal/dmax_width_only.hh: New.
+
+	* primitive/link/internal/link_single_dmax_ratio_base.hh,
+	* primitive/link/with_single_left_link_dmax_ratio.hh,
+	* primitive/link/with_single_right_link_dmax_ratio.hh: Make use of
+	the new functors.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes in Scribo.
 
 	* binarization/sauvola_ms.hh,

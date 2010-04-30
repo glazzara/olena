@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -61,25 +62,32 @@ namespace scribo
       /*! \brief Link objects with their right neighbor if exists.
 
 	  \param[in] components A component set.
-	  \param[in] dmax_ratio Size ratio defining the maximum lookup
-	                        distance.
 	  \param[in] anchor Starting point for the neighbor lookup.
+	  \param[in] dmax_f DMax functor defining the maximum lookup
+	                    distance.
 
 	  \return Object links data.
 
 
-	  Look for a neighbor until a maximum distance defined by :
-
-	  dmax = w / 2 + dmax_ratio * max(h, w)
-
-	  where w is the bounding box width and h the bounding box height.
-
+	  Look for a neighbor until a maximum distance is reached. The
+	  maximum distance is defined thanks to a functor \p dmax_f.
       */
+      template <typename L, typename F>
+      inline
+      object_links<L>
+      with_single_right_link_dmax_ratio(const component_set<L>& components,
+					const DMax_Functor<F>& dmax_f,
+					anchor::Type anchor);
+
+
+      /// \overload
+      /// \p dmax_f is set to internal::dmax_default.
       template <typename L>
       inline
       object_links<L>
       with_single_right_link_dmax_ratio(const component_set<L>& components,
-					float dmax_ratio, anchor::Type anchor);
+					float dmax_ratio,
+					anchor::Type anchor);
 
       /// \overload
       /// anchor is set to MassCenter.
@@ -108,20 +116,20 @@ namespace scribo
 
 	// Functor
 
-	template <typename L>
+	template <typename L, typename F>
 	class single_right_dmax_ratio_functor
-	  : public link_single_dmax_ratio_base<L,
-					       single_right_dmax_ratio_functor<L> >
+	  : public link_single_dmax_ratio_base<L, F,
+					       single_right_dmax_ratio_functor<L,F> >
 	{
-	  typedef single_right_dmax_ratio_functor<L> self_t;
-	  typedef link_single_dmax_ratio_base<L, self_t> super_;
+	  typedef single_right_dmax_ratio_functor<L, F> self_t;
+	  typedef link_single_dmax_ratio_base<L, F, self_t> super_;
 
 	public:
 	  typedef mln_site(L) P;
 
 	  single_right_dmax_ratio_functor(const component_set<L>& components,
-					  unsigned dmax)
-	    : super_(components, dmax, anchor::Horizontal)
+					  const DMax_Functor<F>& dmax_f)
+	    : super_(components, anchor::Horizontal, exact(dmax_f))
 	  {
 	  }
 
@@ -139,23 +147,37 @@ namespace scribo
       // Facades
 
 
-      template <typename L>
+      template <typename L, typename F>
       inline
       object_links<L>
       with_single_right_link_dmax_ratio(const component_set<L>& components,
-					float dmax_ratio, anchor::Type anchor)
+					const DMax_Functor<F>& dmax_f,
+					anchor::Type anchor)
       {
 	trace::entering("scribo::primitive::link::with_single_right_link_dmax_ratio");
 
 	mln_precondition(components.is_valid());
 
-	internal::single_right_dmax_ratio_functor<L>
-	  functor(components, dmax_ratio);
+	internal::single_right_dmax_ratio_functor<L, F>
+	  functor(components, dmax_f);
 
 	object_links<L> output = compute(functor, anchor);
 
 	trace::exiting("scribo::primitive::link::with_single_right_link_dmax_ratio");
 	return output;
+      }
+
+      template <typename L>
+      inline
+      object_links<L>
+      with_single_right_link_dmax_ratio(const component_set<L>& components,
+					float dmax_ratio,
+					anchor::Type anchor)
+      {
+	return
+	  with_single_right_link_dmax_ratio(components,
+					    internal::dmax_default(dmax_ratio),
+					    anchor);
       }
 
 
@@ -166,7 +188,8 @@ namespace scribo
       with_single_right_link_dmax_ratio(const component_set<L>& components,
 					float dmax_ratio)
       {
-	return with_single_right_link_dmax_ratio(components, dmax_ratio,
+	return with_single_right_link_dmax_ratio(components,
+						 dmax_ratio,
 						 anchor::MassCenter);
       }
 
