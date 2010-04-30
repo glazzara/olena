@@ -1,5 +1,16 @@
 2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add some code in my sandbox.
+
+	* milena/sandbox/lazzara/scribo/binarization_naive/main.cc,
+	* milena/sandbox/lazzara/scribo/binarization_naive/toto.cc,
+	* milena/sandbox/lazzara/scribo/fill_holes/main.cc,
+	* milena/sandbox/lazzara/scribo/separateurs_materialises/lines_pattern.cc,
+	* milena/sandbox/lazzara/scribo/skeleton_crest/main.cc,
+	* milena/sandbox/lazzara/skeleton_crest/main.cc: New.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add fastest implementations in labeling::compute.
 
 	* mln/labeling/compute.hh: New fastest implementations.
