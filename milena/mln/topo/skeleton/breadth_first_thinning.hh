@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -90,7 +90,7 @@ namespace mln
 	F& is_simple = exact(is_simple_);
 	const H& constraint = exact(constraint_);
 
-	I output = duplicate(input);
+	mln_concrete(I) output = duplicate(input);
 	// Attach the work image to IS_SIMPLE.
 	is_simple.set_image(output);
 
@@ -133,15 +133,23 @@ namespace mln
 		/* FIXME: We compute the cell and attachment of P twice:
 		   during the call to is_simple() and within detach().
 		   How could we reuse this elegantly, without breaking
-		   the genericity of the skeleton algorithm?  */
+		   the genericity of the skeleton algorithm?
+		   Also, keep in mind that functors can maintain an
+		   internal state and make side effects, meaning that
+		   e.g. constraint(p) might not be constant for a
+		   given p during the thinning.  */
 		if (constraint(p) && is_simple(p))
 		  {
 		    detach(p, output);
-		    mln_niter(N) n(nbh, p);
-		    for_all(n)
+		    mln_niter(N) n_(nbh, p);
+		    for_all(n_)
+		    {
+		      // Same remark as above regarding P and P_.
+		      psite n = n_;
 		      if (output.domain().has(n)
-			  && output(n) && constraint(p) && is_simple(n))
+			  && output(n) && constraint(n) && is_simple(n))
 			next_set.insert(n);
+		    }
 		  }
 	      }
 	    set.clear();

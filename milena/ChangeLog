@@ -1,3 +1,13 @@
+2010-05-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve topo::skeleton::breadth_first_thinning.
+
+	* mln/topo/skeleton/breadth_first_thinning.hh
+	(mln::topo::skeleton::breadth_first_thinning):
+	Fix a bias in the algorithm due to a buggy predicate.
+	Introduce a temporary psite to help the compiler.
+	Fix the type of `output'.
+
 2013-08-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Catch up with the new interface of the topological watershed.
