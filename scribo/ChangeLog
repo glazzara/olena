@@ -1,3 +1,19 @@
+2010-05-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Prepare DIA tools for Nuxeo/XWiki.
+
+	* scribo/src/Makefile.am: Add a new target.
+
+	* scribo/src/text_in_article_preprocess.cc: New.
+
+	* scribo/src/text_in_article_pbm.cc: Add optional cropping and
+	makes the debug optionnal.
+
+	* scribo/text/clean.hh: Improve cleanup.
+
+	* scribo/text/recognition.hh: Remove last '\n' in Tesseract's
+	output.
+
 2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve OCR recognition.

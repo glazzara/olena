@@ -40,6 +40,8 @@
 #include <mln/value/rgb8.hh>
 #include <mln/value/label_16.hh>
 
+#include <mln/data/paste_without_localization.hh>
+
 #include <scribo/core/line_set.hh>
 
 #include <scribo/primitive/extract/components.hh>
@@ -85,6 +87,10 @@ const char *args_desc[][2] =
 for the background." },
   { "out.txt", "Text output" },
   { "denoise", "1 enables denoising, 0 disables it. (enabled by default)" },
+  { "pmin_row", "Row index of the top left corner of the Region of interest." },
+  { "pmin_col", "Col index of the top left corner of the Region of interest." },
+  { "pmax_row", "Row index of the bottom right corner of the Region of interest." },
+  { "pmax_col", "Col index of the bottom right corner of the Region of interest." },
   { "debug_dir", "Output directory for debug image" },
   {0, 0}
 };
@@ -95,20 +101,47 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  if (argc != 3 && argc != 4 && argc != 5)
+  if (argc != 3 && argc != 4 && argc != 5 && argc != 8 && argc != 9)
     return scribo::debug::usage(argv,
 				"Find text lines using left/right validation and display x-height in a binarized article.",
-				"input.pbm out.txt <denoise: 0|1> <debug_dir>",
+				"input.pbm out.txt <denoise: 0|1> [<pmin_row> <pmin_col> <pmax_row> <pmax_col>] <debug_dir>",
 				args_desc);
 
-  if (argc == 5)
-    scribo::make::internal::debug_filename_prefix = argv[4];
+  bool debug = false;
+
+  // Enable debug output.
+  if (argc == 5 || argc == 9)
+  {
+    scribo::make::internal::debug_filename_prefix = argv[argc - 1];
+    debug = true;
+  }
 
   trace::entering("main");
 
 
   image2d<bool> input;
   mln::io::pbm::load(input, argv[1]);
+
+
+  // Optional Cropping
+  if (argc >= 8)
+  {
+    def::coord
+      minr = atoi(argv[4]),
+      minc = atoi(argv[5]),
+      maxr = atoi(argv[6]),
+      maxc = atoi(argv[7]);
+
+    box2d roi = mln::make::box2d(minr, minc, maxr, maxc);
+    image2d<bool> tmp(maxr - minr + 1, maxc - minc + 1);
+    data::paste_without_localization(input | roi, tmp);
+    input = tmp;
+
+    if (debug)
+      mln::io::pbm::save(input,
+			 scribo::make::debug_filename("input_cropped.pbm"));
+  }
+
 
   typedef value::label_16 V;
   typedef image2d<V> L;
@@ -129,7 +162,9 @@ int main(int argc, char* argv[])
 
 //   whitespaces += separators;
 
-  mln::io::pbm::save(separators, "vseparators.pbm");
+  if (debug)
+    mln::io::pbm::save(separators,
+		       scribo::make::debug_filename("vseparators.pbm"));
 //   mln::io::pbm::save(whitespaces, "separators.pbm");
 
 //   mln::io::pbm::save(input_cleaned, "input_no_separators.pbm");
@@ -214,18 +249,20 @@ int main(int argc, char* argv[])
 
   //===== DEBUG =====
 
-  // Bboxes image.
-  scribo::debug::save_bboxes_image(input, lines,
-				   scribo::make::debug_filename("step1_bboxes.ppm"));
+  if (debug)
+  {
 
-  // Bboxes enlarged
-  mln::io::ppm::save(scribo::debug::bboxes_enlarged_image(input, lines),
-		     scribo::make::debug_filename("step1_bboxes_enlarged.ppm"));
+    // Bboxes image.
+    scribo::debug::save_bboxes_image(input, lines,
+				     scribo::make::debug_filename("step1_bboxes.ppm"));
 
-  // Looks like a text line
-  mln::io::ppm::save(scribo::debug::looks_like_a_text_line_image(input, lines),
-		     scribo::make::debug_filename("step1_looks_like_a_text_line.ppm"));
+    // Bboxes enlarged
+    mln::io::ppm::save(scribo::debug::bboxes_enlarged_image(input, lines),
+		       scribo::make::debug_filename("step1_bboxes_enlarged.ppm"));
 
+    // Looks like a text line
+    mln::io::ppm::save(scribo::debug::looks_like_a_text_line_image(input, lines),
+		       scribo::make::debug_filename("step1_looks_like_a_text_line.ppm"));
 
 //   // Bboxes + line infos
 //   {
@@ -261,10 +298,11 @@ int main(int argc, char* argv[])
 //   }
 
 
-  // mean and base lines.
-  mln::io::ppm::save(scribo::debug::mean_and_base_lines_image(input, lines),
-		     scribo::make::debug_filename("step1_x_height.ppm"));
+    // mean and base lines.
+    mln::io::ppm::save(scribo::debug::mean_and_base_lines_image(input, lines),
+		       scribo::make::debug_filename("step1_x_height.ppm"));
 
+  }
   //===== END OF DEBUG =====
 
 
@@ -277,56 +315,62 @@ int main(int argc, char* argv[])
 
    //===== DEBUG =====
 
-   // mean and base lines.
-   mln::io::ppm::save(scribo::debug::mean_and_base_lines_image(input, lines),
-		      scribo::make::debug_filename("step2_x_height.ppm"));
+   if (debug)
+   {
 
-  // Looks like a text line
-  mln::io::ppm::save(scribo::debug::looks_like_a_text_line_image(input, lines),
-		     scribo::make::debug_filename("step2_looks_like_a_text_line.ppm"));
+     // mean and base lines.
+     mln::io::ppm::save(scribo::debug::mean_and_base_lines_image(input, lines),
+			scribo::make::debug_filename("step2_x_height.ppm"));
 
-  // Bboxes image.
-  scribo::debug::save_bboxes_image(input, lines,
-				   scribo::make::debug_filename("step2_bboxes.ppm"));
+     // Looks like a text line
+     mln::io::ppm::save(scribo::debug::looks_like_a_text_line_image(input, lines),
+			scribo::make::debug_filename("step2_looks_like_a_text_line.ppm"));
 
-
-  {
-    std::ofstream file(scribo::make::debug_filename("step2_bboxes_100p.txt").c_str());
-//     std::ofstream file_50p(scribo::make::debug_filename("step2_bboxes_50p.txt").c_str());
-
-    for_all_lines(l, lines)
-      if (lines(l).tag() != line::Merged
-	  && lines(l).tag() != line::Ignored
-	  && lines(l).tag() != line::Pathological)
-      {
-	file << lines(l).bbox().pmin().row() << " "
-	     << lines(l).bbox().pmin().col() << " "
-	     << lines(l).bbox().pmax().row() << " "
-	     << lines(l).bbox().pmax().col() << " "
-	     << lines(l).card()              << " "
-	     << lines(l).baseline()          << " "
-	     << lines(l).x_height()          << " "
-	     << lines(l).meanline()          << " "
-	     << lines(l).d_height()          << " "
-	     << lines(l).a_height()          << " "
-	     << lines(l).char_space()        << " "
-	     << lines(l).char_width()        << std::endl;
-
-// 	file_50p << lines(l).bbox().pmin().row() / 2 << " "
-// 		 << lines(l).bbox().pmin().col() / 2 << " "
-// 		 << lines(l).bbox().pmax().row() / 2 << " "
-// 		 << lines(l).bbox().pmax().col() / 2 << std::endl;
-      }
-
-    file.close();
-//     file_50p.close();
-  }
+     // Bboxes image.
+     scribo::debug::save_bboxes_image(input, lines,
+				      scribo::make::debug_filename("step2_bboxes.ppm"));
 
 
-  //===== END OF DEBUG =====
+   }
 
 
-  scribo::io::xml::save_text_lines(argv[1], lines, "out.xml");
+//    {
+//      std::ofstream file(scribo::make::debug_filename("step2_bboxes_100p.txt").c_str());
+// //     std::ofstream file_50p(scribo::make::debug_filename("step2_bboxes_50p.txt").c_str());
+
+//      for_all_lines(l, lines)
+//        if (lines(l).tag() != line::Merged
+// 	   && lines(l).tag() != line::Ignored
+// 	   && lines(l).tag() != line::Pathological)
+//        {
+// 	 file << lines(l).bbox().pmin().row() << " "
+// 	      << lines(l).bbox().pmin().col() << " "
+// 	      << lines(l).bbox().pmax().row() << " "
+// 	      << lines(l).bbox().pmax().col() << " "
+// 	      << lines(l).card()              << " "
+// 	      << lines(l).baseline()          << " "
+// 	      << lines(l).x_height()          << " "
+// 	      << lines(l).meanline()          << " "
+// 	      << lines(l).d_height()          << " "
+// 	      << lines(l).a_height()          << " "
+// 	      << lines(l).char_space()        << " "
+// 	      << lines(l).char_width()        << std::endl;
+
+// // 	file_50p << lines(l).bbox().pmin().row() / 2 << " "
+// // 		 << lines(l).bbox().pmin().col() / 2 << " "
+// // 		 << lines(l).bbox().pmax().row() / 2 << " "
+// // 		 << lines(l).bbox().pmax().col() / 2 << std::endl;
+//        }
+
+//      file.close();
+// //     file_50p.close();
+//    }
+
+
+   //===== END OF DEBUG =====
+
+
+   scribo::io::xml::save_text_lines(argv[1], lines, "out.xml");
 
 
 

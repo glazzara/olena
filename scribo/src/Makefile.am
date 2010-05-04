@@ -82,6 +82,15 @@ if HAVE_TIFF
     text_in_article_pbm_SOURCES = text_in_article_pbm.cc
 
 
+    bin_PROGRAMS	+= text_in_article_preprocess
+    text_in_article_preprocess_CPPFLAGS = $(AM_CPPFLAGS) \
+			         `Magick++-config --cppflags`
+    text_in_article_preprocess_LDFLAGS  = $(AM_LDFLAGS) \
+			      	 -lpthread  `Magick++-config --libs`
+    text_in_article_preprocess_SOURCES = text_in_article_preprocess.cc
+
+
+
     bin_PROGRAMS	+= text_in_photo_fast
     text_in_photo_fast_SOURCES = text_in_photo_fast.cc
     text_in_photo_fast_CPPFLAGS = $(AM_CPPFLAGS) \

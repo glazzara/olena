@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -113,14 +114,14 @@ namespace scribo
       if (fact < 1)
       {
 	std::cout << "Upsampling..." << " - "
-		  << std::ceil(fact) << std::endl;
-	while (fact < 1)
+		  << fact << std::endl;
+	while (fact < 0.90)
 	{
 	  output = scribo::upsampling::bs2x(output); // 2x upsampling
 	  fact *= 2.0f;
-// 	  std::cout << "fact = " << fact
-// 		    << " - output.domain = " << output.domain()
-// 		    << std::endl;
+//  	  std::cout << "fact = " << fact
+//  		    << " - output.domain = " << output.domain()
+//  		    << std::endl;
 	}
       }
       else if (fact > 2.5f)

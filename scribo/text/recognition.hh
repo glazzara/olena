@@ -159,7 +159,7 @@ namespace scribo
 
 	/// text_ima_cleaned domain is larger than text_ima's.
 	I text_ima_cleaned = text::clean(lines(i), text_ima);
-	mln::io::pbm::save(text_ima_cleaned, mln::debug::filename("line.pbm", debug_id++));
+//	mln::io::pbm::save(text_ima_cleaned, mln::debug::filename("line.pbm", debug_id++));
 
         // Setting objects to 'True'
 	logical::not_inplace(text_ima_cleaned);
@@ -182,7 +182,11 @@ namespace scribo
 	{
 	  std::cerr << s << std::endl;
 	  if (output_file != 0)
-	    file << lines(i).bbox() << " " << s << std::endl;
+	  {
+	    std::string str(s);
+	    str = str.substr(0, str.length() - 1);
+	    file << lines(i).bbox() << " " << str;
+	  }
 	}
 
 	// The string has been allocated by Tesseract. We must free it.
@@ -241,7 +245,11 @@ namespace scribo
 	{
 	  std::cout << s << std::endl;
 	  if (output_file != 0)
-	    file << line.domain() << " " << s << std::endl;
+	  {
+	    std::string str(s);
+	    str = str.substr(0, str.length() - 1);
+	    file << line.domain() << " " << str;
+	  }
 	}
 
 	// The string has been allocated by Tesseract. We must free it.
