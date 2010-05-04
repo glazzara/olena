@@ -606,7 +606,7 @@ namespace scribo
 		if (lines(mc).type() == line::Text) // included in a text line => weird
 		{
 		  ++count_txtline_IN_txtline;
-		  std::cout << "weird: inclusion of a txt_line in a txt_line!" << std::endl;
+//		  std::cout << "weird: inclusion of a txt_line in a txt_line!" << std::endl;
 
 		  /// Merge is perform if the current line is a
 		  /// petouille considered as a line.
