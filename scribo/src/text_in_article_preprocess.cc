@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
     lambda = 1.2 * (input_rgb.nrows() + input_rgb.ncols());
 
   // Extract foreground
-  if (argc == 4 && atoi(argv[3]) == 1)
+  if (argc >= 4 && atoi(argv[3]) == 1)
   {
     std::cout << "Extracting foreground..." << std::endl;
     input_rgb = preprocessing::split_bg_fg(input_rgb, lambda, 32).second();

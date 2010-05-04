@@ -1,5 +1,18 @@
 2010-05-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes for Nuxeo/XWiki.
+
+	* src/text_in_article_preprocess.cc: Fix use of program
+	arguments.
+
+	* core/line_set.hh,
+	* text/clean.hh,
+	* text/merging.hh: Fix compilation.
+
+	* text/recognition.hh: Update output format.
+
+2010-05-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* text/merging.hh: Disable some debug.
 
 2010-05-04  Guillaume Lazzara  <z@lrde.epita.fr>

@@ -31,6 +31,7 @@
 ///
 /// Improve the quality of a text area.
 
+# include <mln/core/concept/image.hh>
 # include <mln/core/concept/weighted_window.hh>
 # include <mln/core/routine/extend.hh>
 
@@ -65,6 +66,7 @@
 #include <mln/value/rgb8.hh>
 #include <mln/io/pgm/all.hh>
 
+#include <scribo/core/line_info.hh>
 #include <scribo/upsampling/bs2x.hh>
 #include <scribo/subsampling/bilinear.hh>
 

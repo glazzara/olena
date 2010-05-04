@@ -185,7 +185,15 @@ namespace scribo
 	  {
 	    std::string str(s);
 	    str = str.substr(0, str.length() - 1);
-	    file << lines(i).bbox() << " " << str;
+	    file << lines(i).bbox().pmin().row()
+		 << " "
+		 << lines(i).bbox().pmin().col()
+		 << " "
+		 << lines(i).bbox().pmax().row()
+		 << " "
+		 << lines(i).bbox().pmax().col()
+		 << " "
+		 << str;
 	  }
 	}
 
@@ -248,7 +256,15 @@ namespace scribo
 	  {
 	    std::string str(s);
 	    str = str.substr(0, str.length() - 1);
-	    file << line.domain() << " " << str;
+	    file << line.domain().bbox().pmin().row()
+		 << " "
+		 << line.domain().bbox().pmin().col()
+		 << " "
+		 << line.domain().bbox().pmax().row()
+		 << " "
+		 << line.domain().bbox().pmax().col()
+		 << " "
+		 << str;
 	  }
 	}
 

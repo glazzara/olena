@@ -59,11 +59,14 @@
 
 
 
+
 namespace scribo
 {
 
   namespace text
   {
+
+    using namespace mln;
 
 
     /// \brief Merge text component in order to reconstruct text lines.
@@ -161,7 +164,7 @@ namespace scribo
 
 
 
-      unsigned my_find_root(util::array<unsigned>& parent, unsigned x)
+      unsigned my_find_root(mln::util::array<unsigned>& parent, unsigned x)
       {
 	if (parent[x] == x)
 	  return x;
@@ -184,7 +187,7 @@ namespace scribo
       unsigned do_union(scribo::line_set<L>& lines,
 			unsigned l1,
 			unsigned l2,
-			util::array<unsigned>& parent)
+			mln::util::array<unsigned>& parent)
       {
 	l1 = my_find_root(parent, l1);
 	l2 = my_find_root(parent, l2);
@@ -514,7 +517,7 @@ namespace scribo
 		     const box2d& domain,
 		     std::vector<scribo::line_id_t>& v,
 		     scribo::line_set<L>& lines,
-		     util::array<unsigned>& parent)
+		     mln::util::array<unsigned>& parent)
       {
 	image2d<unsigned> billboard(domain);
 	data::fill(billboard, 0);
@@ -852,7 +855,7 @@ namespace scribo
 	v.reserve(n);
 
 	// Union-find parent data, used to merge lines.
-	util::array<unsigned> parent(n + 1);
+	mln::util::array<unsigned> parent(n + 1);
 
 	// Initialize data
 	parent(0) = 0;
@@ -865,7 +868,7 @@ namespace scribo
 	// Sort lines by bbox.nelements() and ids.
 	std::sort(v.begin(), v.end(), func);
 
-	util::timer t;
+	mln::util::timer t;
 
 
 	// Setting lines as text lines according to specific criterions.
@@ -912,7 +915,7 @@ namespace scribo
     {
       using namespace mln;
 
-      util::timer t;
+      mln::util::timer t;
       t.start();
 
       scribo::line_set<L> output
