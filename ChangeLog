@@ -1,3 +1,10 @@
+2010-05-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Upload only branches master and next, in their own directories.
+
+	* lrde-upload.sh: Here.
+	Inspired from Vaucanson's lrde-upload.sh.
+
 2010-04-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Upload only the HTML version of the user reference manual.

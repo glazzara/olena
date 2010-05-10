@@ -5,13 +5,43 @@
 
 set -ex
 
-DEST=/lrde/dload/olena/snapshots
+# Layout of /lrde/dload/olena/snapshots:
+#
+#   /lrde/dload/olena/snapshots
+#   |-- master
+#   |   |-- doc
+#   |   |   `-- milena
+#   |   |       `-- ...
+#   |   |-- olena-$VERSION-snapshot-master-$date.tar.bz2
+#   |   `-- olena-$VERSION-snapshot-master-$date.tar.gz
+#   `-- next
+#       |-- doc
+#       |   `-- milena
+#       |       `-- ...
+#       |-- olena-$VERSION-snapshot-next-$date.tar.bz2
+#       `-- olena-$VERSION-snapshot-next-$date.tar.gz
+
+# Buildbot will tell us the name of the branch being compiled using $1.
+branch=$1
+
+case "$branch" in
+  # Consider these branches only.
+  master|next) ;;
+  # Don't upload other branches.
+  *) exit ;;
+esac
+
+subdir=$branch
+suffix=snapshot-$branch
+
+DEST=/lrde/dload/olena/snapshots/$subdir
 DEST_DOC=$DEST/doc/milena
 
 # Retrieve the package version
 VERSION=`autoconf --trace='AC_INIT:$2'`
-CURRENT_DATE=`date +'%d_%m_%y'`
-REV=$VERSION-snapshot-$CURRENT_DATE
+
+date=`date +'%Y-%m-%d'`
+REV=$VERSION-$suffix-$date
 
 # Always do "cp then mv" when uploading the file, so that nobody
 # can start a download while the destination file is incomplete.
