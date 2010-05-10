@@ -1,3 +1,9 @@
+2010-05-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	More conversions from C-style casts to C++-style casts.
+
+	* mln/core/contract.hh: Here.
+
 2010-02-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use Doxygen comments properly.

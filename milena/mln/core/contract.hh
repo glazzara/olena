@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,16 +44,16 @@
 #endif
 
 /// Assertion.
-# define mln_assertion(expr)     assert((bool)(expr))
+# define mln_assertion(expr)     assert(static_cast<bool>(expr))
 
 /// Invariant.
-# define mln_invariant(expr)     assert((bool)(expr))
+# define mln_invariant(expr)     assert(static_cast<bool>(expr))
 
 /// Precondition.
-# define mln_precondition(expr)  assert((bool)(expr))
+# define mln_precondition(expr)  assert(static_cast<bool>(expr))
 
 /// Postcondition.
-# define mln_postcondition(expr) assert((bool)(expr))
+# define mln_postcondition(expr) assert(static_cast<bool>(expr))
 
 
 namespace mln
