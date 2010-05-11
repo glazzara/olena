@@ -165,9 +165,7 @@ AC_ARG_ENABLE([all],
   [if test "x$enable_all" != xno; then
      enable_trimesh=yes
      enable_swilena=yes
-dnl<<lrde
      enable_scribo=yes
-dnl>>
      enable_apps=yes
      enable_tools=yes
    fi])
@@ -304,7 +302,6 @@ AC_CONFIG_FILES(m4_do([swilena/python/sps-local],
                       [:swilena/python/sps-local.in]),
                 [chmod +x swilena/python/sps-local])
 
-dnl<<lrde
 ## -------- ##
 ## Scribo.  ##
 ## -------- ##
@@ -363,7 +360,6 @@ if test "$GXX" = yes || test "$ICPC" = yes; then
   # FIXME: We might want to use -ggdb when g++ is used.
   test -z "$SCRIBO_TESTS_CXXFLAGS" && SCRIBO_TESTS_CXXFLAGS="-g -O0"
 fi
-dnl>>
 
 ## --------------- ##
 ## Configuration.  ##

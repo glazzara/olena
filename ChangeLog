@@ -1,3 +1,12 @@
+2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Distribute Scribo.
+
+	* configure.ac: Remove tags `<<lrde' and `dnl>>' around
+	Scribo-related bits.
+	* Makefile.am: Likewise.
+	(LRDE_NODIST_FILES): Remove $(distdir)/scribo.
+
 2010-10-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Handle Tesseract 2.x and 3.x in configuration.

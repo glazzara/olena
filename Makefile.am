@@ -1,4 +1,4 @@
-# Copyright (C) 2006, 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2006, 2007, 2008, 2009, 2010 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -23,11 +23,9 @@ if ENABLE_SWILENA
   SUBDIRS += swilena
 endif ENABLE_SWILENA
 
-#<<lrde
 if ENABLE_SCRIBO
   SUBDIRS += scribo
 endif ENABLE_SCRIBO
-#>>
 
 # Target shortcuts delegating the actual action to milena/Makefile.
 LOCAL_RECURSIVE_TARGETS = pretty-check tests
@@ -87,8 +85,7 @@ LRDE_NODIST_FILES =					\
   $(distdir)/milena/tests/linear/gaussian.cc		\
   $(distdir)/milena/tests/linear/gaussian/filter.cc	\
   $(distdir)/milena/tests/registration/registration.cc	\
-  $(distdir)/milena/tests/value/stack.cc		\
-  $(distdir)/scribo
+  $(distdir)/milena/tests/value/stack.cc
 
 ## FIXME: Running `build-aux/build_unit_test.sh' just to update
 ## `milena/tests/unit_test/unit-tests.mk' is overkill:
