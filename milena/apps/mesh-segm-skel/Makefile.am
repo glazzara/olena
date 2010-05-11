@@ -30,16 +30,33 @@ MOSTLYCLEANFILES =
 # FIXME: Have program names embed the type of structure used (either
 # graph or complex).
 
+## --------------------------- ##
+## Graph-based applications.   ##
+## --------------------------- ##
+
+# FIXME: To be written (and factored, of course):
+#
+#  mesh-graph-{max,pinv}-curv
+#
+#  mesh-graph-segm
+#  mesh-graph-{max,pinv}-curv-segm
+#
+#  mesh-graph-skel
+#  mesh-graph-{max,pinv}-curv-skel
+#
+#  ...
+
 ## ---------------------------- ##
 ## Complex-based applications.  ##
 ## ---------------------------- ##
 
 # A Milena re-implementation of some features from Trimesh.  This code
 # is completely independent from the Trimesh library.
+# FIXME: Integrate this header into Milena.
 noinst_HEADERS = misc.hh
 
-## Segmentation.
-## ------------
+## Curvature computation.
+## ----------------------
 
 # A small program exercising the curvature computation routines ported
 # from Trimesh to Milena.
@@ -47,6 +64,7 @@ bin_PROGRAMS += mesh-complex-max-curv
 TESTS += test-mesh-complex-max-curv
 MOSTLYCLEANFILES += teapot-complex-max-curv.off
 
+# FIXME: Implement (and exercise) mesh-complex-pinv-curv.
 
 # A program computing the max curvature at each (2-)face of the
 # surface of a triangle mesh and displaying its local minima
@@ -58,7 +76,14 @@ MOSTLYCLEANFILES +=					\
   socket-complex-max-curv-extrema.off		\
   teapot-complex-max-curv-extrema.off
 
-# Segmentation program working on precomputed meshes with curvatures data.
+# FIXME: Implement (and exercise) mesh-complex-pinv-curv-extrema.
+
+## Segmentation.
+## -------------
+
+# Segmentation program working on precomputed meshes with curvature
+# data.  Less accurate, since curvature is stored on triangles
+# (polygons), whereas the segmentation is performed on edges.
 bin_PROGRAMS += mesh-complex-segm
 TESTS += test-mesh-complex-segm
 MOSTLYCLEANFILES +=				\
@@ -92,3 +117,6 @@ MOSTLYCLEANFILES +=				\
   socket-max-curv-skel.off			\
   teapot-max-curv-skel.off			\
   three-triangles-skel.off
+
+# FIXME: Implement `mesh-complex-{max,pinv}-curv-skel'.
+# ...

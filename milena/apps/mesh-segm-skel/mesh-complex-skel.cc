@@ -207,7 +207,7 @@ main(int argc, char* argv[])
   `---------*/
 
   /* FIXME: This does not work (yet).
-     Use workaround mln::io::off::save_bin_salt instead (bad!)  */
+     Use workaround mln::io::off::save_bin_alt instead (bad!)  */
 #if 0
   mln::io::off::save(skel | mln::pw::value(skel) == mln::pw::cst(true),
 		     output_filename);

@@ -1,5 +1,13 @@
 2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Clean up and new FIXMES in in apps/mesh-segm-skel.
+
+	* apps/mesh-segm-skel/mesh-complex-max-curv.cc: Remove dead code.
+	* apps/mesh-segm-skel/mesh-complex-skel.cc: Typo.
+	* apps/mesh-segm-skel/Makefile.am: Add titles and FIXMES.
+
+2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	New application: mesh-complex-max-curv-extrema.
 
 	* apps/mesh-segm-skel/mesh-complex-max-curv-extrema.cc: New.
