@@ -47,9 +47,16 @@ bin_PROGRAMS += mesh-complex-max-curv
 TESTS += test-mesh-complex-max-curv
 MOSTLYCLEANFILES += teapot-complex-max-curv.off
 
-# FIXME: Write a program showing the local minima (and maxima) of
-# scalar-valued complex-based mesh (to see the curvature extrema).
-# ...
+
+# A program computing the max curvature at each (2-)face of the
+# surface of a triangle mesh and displaying its local minima
+# (in blue) and maxima (in red).
+bin_PROGRAMS += mesh-complex-max-curv-extrema
+mesh_complex_max_curv_extrema_SOURCES = mesh-complex-max-curv-extrema.cc
+TESTS += test-mesh-complex-max-curv-extrema
+MOSTLYCLEANFILES +=					\
+  socket-complex-max-curv-extrema.off		\
+  teapot-complex-max-curv-extrema.off
 
 # Segmentation program working on precomputed meshes with curvatures data.
 bin_PROGRAMS += mesh-complex-segm

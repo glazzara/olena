@@ -1,0 +1,10 @@
+#! /bin/sh
+
+set -ex
+
+mesh_dir=@top_srcdir@/milena/mesh
+
+time ./mesh-complex-max-curv-extrema $mesh_dir/socket.off socket-complex-max-curv-extrema.off
+time ./mesh-complex-max-curv-extrema $mesh_dir/teapot.off teapot-complex-max-curv-extrema.off
+# FIXME: Too long.  Should be run with (future) target `check-full'.
+#time ./mesh-complex-max-curv-extrema $mesh_dir/bunny-holefilled.off bunny-holefilled-complex-max-curv-extrema.off
