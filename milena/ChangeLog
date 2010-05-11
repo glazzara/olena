@@ -1,5 +1,11 @@
 2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove a useless comment line.
+
+	* apps/Makefile.am: Here.
+
+2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Wrap long lines.
 
 	* mln/data/fill.hh: Here.
