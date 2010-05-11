@@ -46,7 +46,7 @@ namespace mln
 
     /// Construct an edge image.
     ///
-    /// \param[in] g  A graph
+    /// \param[in] g  A graph.
     /// \param[in] fv A function mapping edge ids to values.
     ///
     /// \return an edge image.
@@ -57,7 +57,7 @@ namespace mln
 
     /// Construct an edge image.
     ///
-    /// \param[in] g  A graph
+    /// \param[in] g  A graph.
     /// \param[in] fv A function mapping edge ids to values.
     ///
     /// \return an edge image.
@@ -69,7 +69,7 @@ namespace mln
 
     /// Construct an edge image.
     ///
-    /// \param[in] g_  A graph
+    /// \param[in] g_ A graph.
     /// \param[in] fp A function mapping edge ids to sites.
     /// \param[in] fv A function mapping edge ids to values.
     ///
@@ -86,7 +86,7 @@ namespace mln
     /// Construct an edge image.
     ///
     /// \param[in] v_ima_ A vertex image.
-    /// \param[in] pe	  A p_edges mapping graph element to sites .
+    /// \param[in] pe	  A p_edges mapping graph elements to sites.
     /// \param[in] fv_	  A function mapping two vertex ids to a value.
     ///			  The result is associated to the corresponding edge.
     ///
@@ -103,7 +103,7 @@ namespace mln
     /// Construct an edge image.
     ///
     /// \param[in] v_ima_ A vertex image.
-    /// \param[in] fv_	  A function mapping two vertices ids to a value.
+    /// \param[in] fv_	  A function mapping two vertices' values to a value.
     ///			  The result is associated to the corresponding edge.
     ///
     /// \return an edge image without localization information mapped to
@@ -118,8 +118,9 @@ namespace mln
     /// Construct an edge image.
     ///
     /// \param[in] v_ima_ A vertex image.
-    /// \param[in] fv_	  A function mapping a vertex ids to a value.
-    ///			  The result is associated to the corresponding edge.
+    /// \param[in] fv_	  A predicate on a vertex's value.
+    ///			  The (Boolean) result is associated to the
+    ///			  edges adjacent to the vertex.
     ///
     /// \return an edge image without localization information mapped to
     /// graph elements.
@@ -142,8 +143,8 @@ namespace mln
       trace::entering("make::edge_image");
       mln_precondition(exact(g).is_valid());
 
-      p_vertices<G> pv(g);
-      mln::edge_image<void,V,G> ima(pv, fv);
+      p_edges<G> pe(g);
+      mln::edge_image<void,V,G> ima(pe, fv);
 
       trace::exiting("make::edge_image");
       return ima;
@@ -183,8 +184,8 @@ namespace mln
       const G& g = exact(g_);
       mln_precondition(g.is_valid());
 
-      p_vertices<G,FP> pv(g,fp);
-      mln::edge_image<mln_result(FP),mln_result(FV),G> ima(pv, fv);
+      p_edges<G,FP> pe(g,fp);
+      mln::edge_image<mln_result(FP),mln_result(FV),G> ima(pe, fv);
 
       trace::exiting("make::edge_image");
       return ima;
@@ -256,7 +257,6 @@ namespace mln
       const v_ima_t& v_ima = exact(v_ima_);
       mln_precondition(v_ima.is_valid());
 
-
       p_edges<G> pe(v_ima.domain().graph());
       typedef mln::edge_image<void,bool,G> edge_ima_t;
       edge_ima_t ima_e(pe);
@@ -269,8 +269,7 @@ namespace mln
 	  typename v_ima_t::edge_win_t win;
 	  mln_qiter(v_ima_t::edge_win_t) q(win, p);
 	  for_all(q)
-	    std::cout << q << std::endl;
-//	    ima_e(q) = false;
+	    ima_e(q) = false;
 	}
 
       trace::exiting("make::edge_image");

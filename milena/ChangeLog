@@ -1,3 +1,16 @@
+2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix make::edge_image.
+
+	* mln/make/edge_image.hh: Fix Doxygen comments.
+	(make::edge_image(const Graph<G>&, const fun::i2v::array<V>&))
+	(make::edge_image(const Graph<G>&, const Function_v2v<FP>&,
+	const Function_v2v<FV>&))):
+	Properly build the required p_edges site sets.
+	(make::edge_image(const vertex_image<P,V,G>&, const Function_v2b<F>&)):
+	Actually use the predicate passed as second argument.
+	Remove debug code.
+
 2010-04-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Help g++ 3.3 compile Milena code.
