@@ -1,3 +1,12 @@
+2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have the topological WST be more generic.
+
+	* mln/morpho/watershed/topological.hh: s/site/psite/g.
+	(morpho::watershed::min, morpho::watershed::max):
+	Abort when the set of components is empty.
+	* mln/core/site_set/p_set.hh (p_set<P>::is_empty): New method.
+
 2013-08-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix Pi usage in Milena's apps.

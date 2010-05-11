@@ -37,6 +37,8 @@
 ///   Journal of Mathematical Imaging and Vision (JMIV), vol. 22,
 ///   no. 2-3, pages 231--249, 2005.
 
+# include <cstdlib>
+
 # include <vector>
 # include <map>
 # include <queue>
@@ -63,15 +65,16 @@ namespace mln
     {
 
       template <class I>
-      mln_site(I) min (const Image<I> &ima_, p_set<mln_site(I)>& components)
+      mln_psite(I) min(const Image<I> &ima_, p_set<mln_psite(I)>& components)
       {
 	const I& ima = exact(ima_);
 
-	if (components.nsites() == 0)
-	  return mln_site(I)(-1, -1); // FIXME
+	if (components.is_empty())
+	  // FIXME: Display an error message?  Or throw an exception?
+	  abort();
 
-	typename p_set<mln_site(I)>::fwd_piter it(components);
-	mln_site(I) min = components[0];
+	typename p_set<mln_psite(I)>::fwd_piter it(components);
+	mln_psite(I) min = components[0];
 
 	for_all(it)
 	  if (ima(it) < ima(min))
@@ -81,13 +84,14 @@ namespace mln
       }
 
       template <class I>
-      mln_site(I) max (p_set<mln_site(I)>& components)
+      mln_psite(I) max(p_set<mln_psite(I)>& components)
       {
-	if (components.nsites() == 0)
-	  return mln_site(I)(-1, -1); // FIXME
+	if (components.is_empty())
+	  // FIXME: Display an error message?  Or throw an exception?
+	  abort();
 
-	typename p_set<mln_site(I)>::fwd_piter it(components);
-	mln_site(I) max = components[0];
+	typename p_set<mln_psite(I)>::fwd_piter it(components);
+	mln_psite(I) max = components[0];
 
 	for_all(it)
 	  if (ima(it) > ima(max))
@@ -103,7 +107,7 @@ namespace mln
       {
 	// Typedefs
 	// --------
-	typedef mln_site(I) site;
+	typedef mln_psite(I) psite;
 	typedef I image_t;
 	typedef N neighborhood_t;
 
@@ -114,23 +118,23 @@ namespace mln
 	  mln_value(I) level;
 	  int area;
 	  int highest;
-	  typedef mln_site(I) site;
+	  typedef mln_psite(I) psite;
 	  // Can't modify the sites in a p_array
-	  // p_array<mln_site(I)> children;
-	  std::vector<site> children;
+	  // p_array<mln_psite(I)> children;
+	  std::vector<psite> children;
 
 	  void addChildren(const node& n)
 	  {
-	    // typename p_array<mln_site(I)>::fwd_piter it(n.children);
+	    // typename p_array<mln_psite(I)>::fwd_piter it(n.children);
 	    // for (it.start();
 	    //      it.is_valid();
 	    //      it.next())
-	    //  children.append(it.to_site());
+	    //  children.append(it.to_psite());
 	    for (unsigned i=0; i < n.children.size(); ++i)
 	      children.push_back(n.children[i]);
 	  }
 
-	  void addChild(const site p)
+	  void addChild(const psite p)
 	  {
 	    // children.append(n);
 	    children.push_back(p);
@@ -139,25 +143,25 @@ namespace mln
 
       public:
 
-	mln_ch_value(I, site) Par_node;
-	mln_ch_value(I, site) Par_tree;
+	mln_ch_value(I, psite) Par_node;
+	mln_ch_value(I, psite) Par_tree;
 
 	mln_ch_value(I, int) Rnk_tree;
 	mln_ch_value(I, int) Rnk_node;
-	mln_ch_value(I, site) subtreeRoot;
+	mln_ch_value(I, psite) subtreeRoot;
 	mln_ch_value(I, node) nodes;
-	site Root;
+	psite Root;
 
       private:
 
-	void MakeSet_tree(site x);
-	void MakeSet_node(site x);
-	site Find_tree(site x);
-	site Find_node(site x);
+	void MakeSet_tree(psite x);
+	void MakeSet_node(psite x);
+	psite Find_tree(psite x);
+	psite Find_node(psite x);
 	void BuildComponentTree();
-	site MergeNode(site& node1, site& node2);
-	site Link_tree(site x, site y);
-	site Link_node(site x, site y);
+	psite MergeNode(psite& node1, psite& node2);
+	psite Link_tree(psite x, psite y);
+	psite Link_node(psite x, psite y);
 	node MakeNode(int level);
 
       private:
@@ -176,31 +180,31 @@ namespace mln
 	void go();
 
       private:
-	site min (p_set<site>& components);
-	site max (p_set<site>& components);
-	bool highest_fork (p_set<site>& components);
-	bool highest_fork (p_set<site>& components, site &r);
+	psite min (p_set<psite>& components);
+	psite max (p_set<psite>& components);
+	bool highest_fork (p_set<psite>& components);
+	bool highest_fork (p_set<psite>& components, psite &r);
 
 	// Optimized LCA Algorithm
 
       public:
-	site lca (site a, site b);
+	psite lca (psite a, psite b);
 
       private:
 	int *euler;
 	int *depth;
 	int ctree_size;
-	std::map<site, int, mln::util::ord<site> > pos;
-	site *repr;
+	std::map<psite, int, mln::util::ord<psite> > pos;
+	psite *repr;
 
 	int *minim;
 	int **Minim;
 
-	void compute_ctree_size (site p);
-	void build_euler_tour_rec(site p, int &position, int d);
+	void compute_ctree_size (psite p);
+	void build_euler_tour_rec(psite p, int &position, int d);
 	void build_euler_tour();
 	void build_minim ();
-	void removeOneSonNodes(site *p, mln_ch_value(I, site) &newPar_node);
+	void removeOneSonNodes(psite *p, mln_ch_value(I, psite) &newPar_node);
 	void compressTree();
       };
 
@@ -229,21 +233,21 @@ namespace mln
       }
 
       template <class I, class N>
-      void topo_wst<I, N>::MakeSet_tree(site x)
+      void topo_wst<I, N>::MakeSet_tree(psite x)
       {
 	Par_tree(x) = x;
 	Rnk_tree(x) = 0;
       }
 
       template <class I, class N>
-      void topo_wst<I, N>::MakeSet_node(site x)
+      void topo_wst<I, N>::MakeSet_node(psite x)
       {
 	Par_node(x) = x;
 	Rnk_node(x) = 0;
       }
 
       template <class I, class N>
-      typename topo_wst<I, N>::site topo_wst<I, N>::Find_tree(site x)
+      typename topo_wst<I, N>::psite topo_wst<I, N>::Find_tree(psite x)
       {
 	if (Par_tree(x) != x)
 	  Par_tree(x) = Find_tree(Par_tree(x));
@@ -251,7 +255,7 @@ namespace mln
       }
 
       template <class I, class N>
-      typename topo_wst<I, N>::site topo_wst<I, N>::Find_node(site x)
+      typename topo_wst<I, N>::psite topo_wst<I, N>::Find_node(psite x)
       {
 	if (Par_node(x) != x)
 	  Par_node(x) = Find_node(Par_node(x));
@@ -274,14 +278,14 @@ namespace mln
 	// Init:
 
 	// Sort the sites in increasing order
-	p_array<mln_site(I)> S;
+	p_array<mln_psite(I)> S;
 	S = data::sort_psites_increasing(ima);
 
 	// Clear the marker map
 	data::fill(isproc, false);
 	for (int ip = 0; ip < int(S.nsites()); ++ip)
 	  {
-	    site p = S[ip];
+	    psite p = S[ip];
 	    MakeSet_node(p);
 	    MakeSet_tree(p);
 	    //	      if (subtreeRoot.hold(p))
@@ -292,21 +296,21 @@ namespace mln
 
 
 
-	typename p_array<mln_site(I)>::fwd_piter ip(S);
+	typename p_array<mln_psite(I)>::fwd_piter ip(S);
 	for_all(ip)
 	{
-	  site p = ip.to_site();
+	  psite p = ip;
 
-	  site curCanonicalElt = Find_tree(p);
-	  site curNode = Find_node(subtreeRoot(curCanonicalElt));
+	  psite curCanonicalElt = Find_tree(p);
+	  psite curNode = Find_node(subtreeRoot(curCanonicalElt));
 
 	  // FIXME: Should be `n' instead of `q'.
 	  mln_niter(N) q(nbh, ip);
 	  for_all(q)
 	    if (ima.has(q) and isproc(q) and ima(q) <= ima(p))
 	      {
-		site adjCanonicalElt = Find_tree(q);
-		site adjNode = Find_node(subtreeRoot(adjCanonicalElt));
+		psite adjCanonicalElt = Find_tree(q);
+		psite adjNode = Find_node(subtreeRoot(adjCanonicalElt));
 		if (curNode != adjNode)
 		  {
 		    if (nodes(curNode).level == nodes(adjNode).level)
@@ -324,10 +328,10 @@ namespace mln
 	      }
 	  isproc(p) = true;
 	}
-	// Pour garder une map de correspondance site <-> local_root
+	// Pour garder une map de correspondance psite <-> local_root
 	//            for (int ip = 0; ip < int(S.size()); ++ip)
 	//              {
-	//                site p = S[ip];
+	//                psite p = S[ip];
 	//	       M(p) = Find_node(p);
 	//	     }
 
@@ -335,7 +339,7 @@ namespace mln
 	for_all(r)
 	  Par_node(r) = Find_node(r);
 
-	// Find the ``first'' site of ima, according to the forward
+	// Find the ``first'' psite of ima, according to the forward
 	// traversal order.
 	mln_fwd_piter(I) rp(Par_node.domain());;
 	rp.start();
@@ -345,11 +349,11 @@ namespace mln
 
 
       template <class I, class N>
-      typename topo_wst<I, N>::site topo_wst<I, N>::MergeNode(site& node1,
-							      site& node2)
+      typename topo_wst<I, N>::psite topo_wst<I, N>::MergeNode(psite& node1,
+							      psite& node2)
       {
-	site tmpNode = Link_node(node1, node2);
-	site tmpNode2;
+	psite tmpNode = Link_node(node1, node2);
+	psite tmpNode2;
 	if (tmpNode == node2)
 	  {
 	    nodes(node2).addChildren(nodes(node1));
@@ -366,7 +370,7 @@ namespace mln
       }
 
       template <class I, class N>
-      typename topo_wst<I, N>::site topo_wst<I, N>::Link_tree(site x, site y)
+      typename topo_wst<I, N>::psite topo_wst<I, N>::Link_tree(psite x, psite y)
       {
 	if (Rnk_tree(x) > Rnk_tree(y))
 	  std::swap(x, y);
@@ -378,7 +382,7 @@ namespace mln
       }
 
       template <class I, class N>
-      typename topo_wst<I, N>::site topo_wst<I, N>::Link_node(site x, site y)
+      typename topo_wst<I, N>::psite topo_wst<I, N>::Link_node(psite x, psite y)
       {
 	if (Rnk_node(x) > Rnk_node(y))
 	  std::swap(x, y);
@@ -401,7 +405,7 @@ namespace mln
 
 
       template <class I, class N>
-      bool topo_wst<I, N>::highest_fork (p_set<site>& components, site &r)
+      bool topo_wst<I, N>::highest_fork (p_set<psite>& components, psite &r)
       {
 	if (components.nsites() == 0)
 	  {
@@ -409,19 +413,19 @@ namespace mln
 	    return false;
 	  }
 
-	site
+	psite
 	  m = min(components),
 	  hfork = m;
 
-	typename p_set<site>::fwd_piter it(components);
+	typename p_set<psite>::fwd_piter it(components);
 	for_all(it)
 	{
-	  // Can't remove the site from the set
-	  if (it.to_site() == m)
+	  // Can't remove the psite from the set
+	  if (it.to_psite() == m)
 	    continue;
 
-	  site c = lca(hfork, it.to_site());
-	  if (c != it.to_site())
+	  psite c = lca(hfork, it.to_psite());
+	  if (c != it.to_psite())
 	    hfork = c;
 	}
 
@@ -433,20 +437,20 @@ namespace mln
       }
 
       template <class I, class N>
-      bool topo_wst<I, N>::highest_fork (p_set<site>& components) {
-	site i;
+      bool topo_wst<I, N>::highest_fork (p_set<psite>& components) {
+	psite i;
 	return highest_fork(components, i);
       }
 
       template <class I, class N>
-      void topo_wst<I, N>::compute_ctree_size (site p)
+      void topo_wst<I, N>::compute_ctree_size (psite p)
       {
 	ctree_size += 1;
 	node& n = nodes(p);
 
-	// typename p_array<mln_site(I)>::fwd_piter it(n.children);
+	// typename p_array<mln_psite(I)>::fwd_piter it(n.children);
 	// for_all(it)
-	//   compute_ctree_size(it.to_site());
+	//   compute_ctree_size(it.to_psite());
 
 	for (unsigned i=0; i < n.children.size(); ++i)
 	  compute_ctree_size(n.children[i]);
@@ -454,7 +458,7 @@ namespace mln
 
 
       template <class I, class N>
-      void topo_wst<I, N>::build_euler_tour_rec(site p, int &position, int d)
+      void topo_wst<I, N>::build_euler_tour_rec(psite p, int &position, int d)
       {
 	if (pos.find(p) == pos.end())
 	  pos[p] = position;
@@ -465,10 +469,10 @@ namespace mln
 	++position;
 	node& n = nodes(p);
 
-	// typename p_array<mln_site(I)>::fwd_piter it(n.children);
+	// typename p_array<mln_psite(I)>::fwd_piter it(n.children);
 	// for_all(it)
 	// {
-	//   build_euler_tour_rec(it.to_site(), position, d+1);
+	//   build_euler_tour_rec(it.to_psite(), position, d+1);
 	//   depth[position] = d; // Not optimized
 	//   euler[position] = pos[p];
 	//   repr[position] = p; // Pas necessaire?
@@ -497,7 +501,7 @@ namespace mln
 	// FIXME : free this
 	euler = new int[size];
 	depth = new int[size];
-	repr = new site[size];
+	repr = new psite[size];
 
 	int position = 0;
 	build_euler_tour_rec(Root, position, 0);
@@ -548,7 +552,7 @@ namespace mln
 
 
       template <class I, class N>
-      typename topo_wst<I, N>::site topo_wst<I, N>::lca (site a, site b)
+      typename topo_wst<I, N>::psite topo_wst<I, N>::lca (psite a, psite b)
       {
 	int
 	  m = pos[a],
@@ -576,8 +580,8 @@ namespace mln
 
 
       template <class I, class N>
-      void topo_wst<I, N>::removeOneSonNodes(site *p,
-					     mln_ch_value(I, site) &newPar_node)
+      void topo_wst<I, N>::removeOneSonNodes(psite *p,
+					     mln_ch_value(I, psite) &newPar_node)
       {
 	node &n = nodes(*p);
 
@@ -599,7 +603,7 @@ namespace mln
       template <class I, class N>
       void topo_wst<I, N>::compressTree()
       {
-	mln_ch_value(I, site) newPar_node;
+	mln_ch_value(I, psite) newPar_node;
 	initialize(newPar_node, Par_node);
 
 	// Remove the nodes with one son
@@ -613,7 +617,7 @@ namespace mln
       }
 
       template <class T>
-      bool w_constructible(T &tree, typename T::site p, typename T::site &r)
+      bool w_constructible(T &tree, typename T::psite p, typename T::psite &r)
       {
 
 	typedef typename T::image_t I;
@@ -624,7 +628,7 @@ namespace mln
 
 	// FIXME: Should be `n' instead of `q'.
 	mln_niter(N) q(nbh, p);
-	p_set<mln_site(I)> v;
+	p_set<mln_psite(I)> v;
 
 	for_all(q)
 	  // FIXME: Shouldn't it be: `ima.has(q)' instead of
@@ -641,17 +645,17 @@ namespace mln
 	    return true;
 	  }
 
-	mln_site(I) c = min(ima, v);
-	mln_site(I) cmin = c;
+	mln_psite(I) c = min(ima, v);
+	mln_psite(I) cmin = c;
 
-	typename p_set<mln_site(I)>::fwd_piter it(v);
+	typename p_set<mln_psite(I)>::fwd_piter it(v);
 	for_all(it)
 	{
-	  // Can't remove the site from the set
-	  if (it.to_site() == cmin)
+	  // Can't remove the psite from the set
+	  if (it == cmin)
 	    continue;
 
-	  mln_site(I) c1 = tree.lca(c, it);
+	  mln_psite(I) c1 = tree.lca(c, it);
 
 	  if (c1 != it)
 	    c = c1;
@@ -665,8 +669,8 @@ namespace mln
       }
 
       template <class T>
-      bool w_constructible(T &tree, typename T::site p) {
-	typename T::site r;
+      bool w_constructible(T &tree, typename T::psite p) {
+	typename T::psite r;
 	return w_constructible(tree, p, r);
       }
 
@@ -690,9 +694,9 @@ namespace mln
 	mln_ch_value(I, bool) enqueued;
 	initialize(enqueued, ima);
 
-	p_priority< mln_value(I), p_queue_fast<mln_site(I)> > l;
-	// p_queue < site > m;
-	std::queue<mln_site(I)> m;
+	p_priority< mln_value(I), p_queue_fast<mln_psite(I)> > l;
+	// p_queue < psite > m;
+	std::queue<mln_psite(I)> m;
 
 	// Flag C-maxima
 	data::fill(cmax, false);
@@ -700,7 +704,7 @@ namespace mln
 
 	mln_piter(I) it(tree.Par_node.domain());
 	for_all(it)
-	  // if (nodes(Par_node(it.to_site())).children.nsites() == 0)
+	  // if (nodes(Par_node(it.to_psite())).children.nsites() == 0)
 	  if (tree.nodes(tree.Par_node(it)).children.size() == 0)
 	    {
 	      cmax(it) = true;
@@ -726,11 +730,11 @@ namespace mln
 	// Main loop
 	while (!l.is_empty())
 	  {
-	    mln_site(I) x = l.front();
+	    mln_psite(I) x = l.front();
 	    l.pop();
 	    enqueued(x) = false;
 
-	    mln_site(I) c;
+	    mln_psite(I) c;
 	    bool is_w = w_constructible(tree, x, c);
 
 	    if (is_w)

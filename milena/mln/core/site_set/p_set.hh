@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -108,6 +109,9 @@ namespace mln
     /// Give the number of sites.
     unsigned nsites() const;
 
+    /// Is the set empty?
+    bool is_empty() const;
+
 
     /// Insertion element associated type. 
     typedef P i_element;
@@ -195,6 +199,14 @@ namespace mln
   p_set<P>::nsites() const
   {
     return s_.nelements();
+  }
+
+  template <typename P>
+  inline
+  bool
+  p_set<P>::is_empty() const
+  {
+    return s_.is_empty();
   }
 
   template <typename P>
