@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,7 +48,7 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::image2d<T>.
+    /// Data structure for mln::util::graph.
     template <>
     struct data<util::graph>
     {
@@ -165,9 +166,11 @@ namespace mln
       /// \}
 
       /// Return the number of vertices in the graph.
+      // FIXME: Rename as nvertices.
       size_t v_nmax() const;
 
       /// Check whether a vertex id \p id_v exists in the graph.
+      // FIXME: Is the `_v' suffix really needed?
       bool has_v(const vertex_id_t& id_v) const;
 
 
@@ -205,12 +208,12 @@ namespace mln
       const std::vector<util::ord_pair<vertex_id_t> >& edges() const;
 
       /// Return the number of edges in the graph.
+      // FIXME: Rename as nedges.
       size_t e_nmax() const;
 
       /// Return whether \p id_e is in the graph.
-      /// \@{
+      // FIXME: Is the `_e' suffix really needed?
       bool has_e(const edge_id_t& id_e) const;
-      /// \@}
 
       /// Return the corresponding edge id if exists. If it is not, returns
       /// an invalid edge.
@@ -287,9 +290,9 @@ namespace mln
       this->data_ = new mln::internal::data<util::graph>(nvertices);
     }
 
-    /*---------------.
-    | Vertex related |
-    `---------------*/
+    /*--------------------------.
+    | Vertex-related services.  |
+    `--------------------------*/
 
     inline
     unsigned
@@ -374,9 +377,9 @@ namespace mln
     }
 
 
-    /*--------------.
-    | Edges related |
-    `---------------*/
+    /*-------------------------.
+    | Edges-related services.  |
+    `-------------------------*/
 
     inline
     edge_id_t
@@ -388,6 +391,8 @@ namespace mln
 
       // Does this edge already exist in the graph?
       edge_data_t edge(id_v1, id_v2);
+      /* FIXME: This is not sound: the behavior of the algorithm
+	 changes when NDEBUG is defined.  */
 # ifndef NDEBUG
       if (data_->edges_set_.find(edge) != data_->edges_set_.end ())
         {

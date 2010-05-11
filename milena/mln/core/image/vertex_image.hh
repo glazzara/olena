@@ -167,7 +167,7 @@ namespace mln
 
 
     /// Constructors.
-    /// @{
+    /// \{
     vertex_image();
     vertex_image(const p_vertices<G, site_function_t>& pv);
     vertex_image(const p_vertices<G, site_function_t>& pv,
@@ -175,13 +175,13 @@ namespace mln
     template <typename FV>
     vertex_image(const p_vertices<G, site_function_t>& pv,
 		 const Function_v2v<FV>& vertex_values);
-    /// @}
+    /// \}
 
     /// Value accessors/operators overloads.
-    /// @{
+    /// \{
     rvalue operator()(unsigned v_id) const;
     lvalue operator()(unsigned v_id);
-    /// @}
+    /// \}
 
 
     // Just to help g++-2.95...

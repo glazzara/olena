@@ -77,8 +77,8 @@ int main()
   g.add_edge(3, 4);
   g.add_edge(4, 2);
 
-  /// Create the corresponding line graph.
-  /// Edges are now considered as vertices.
+  // Create the corresponding line graph.
+  // Edges are now considered as vertices.
   util::line_graph<util::graph> lg(g);
 
   // Points associated to the line graph vertices (edges in the graph).

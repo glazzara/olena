@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -165,8 +165,8 @@ namespace mln
   namespace internal
   {
 
+    /// subject_impl specialization (Proxy).
     /// \{
-    /// subject_impl specialization (Proxy)
 
     template <typename G, typename E>
     struct subject_impl< const util::vertex<G>, E >
@@ -174,6 +174,8 @@ namespace mln
 //	Can't be provided since there is an ambiguity with the iterator's
 //	member.
 //
+//      FIXME: Check the above statement again, as a naive test does
+//      not exhibit its conclusion.
 //      bool is_valid() const;
 
       const G& graph() const;
@@ -191,7 +193,7 @@ namespace mln
     };
 
     template <typename G, typename E>
-    struct subject_impl<       util::vertex<G>, E > :
+    struct subject_impl< util::vertex<G>, E > :
       subject_impl< const util::vertex<G>, E >
     {
       void invalidate();
@@ -396,6 +398,10 @@ namespace mln
   namespace internal
   {
 
+    /*-------------------------------------------.
+    | subject_impl< const util::vertex<G>, E >.  |
+    `-------------------------------------------*/
+
     template <typename G, typename E>
     inline
     const E&
@@ -471,10 +477,14 @@ namespace mln
     }
 
 
+    /*-------------------------------------.
+    | subject_impl< util::vertex<G>, E >.  |
+    `-------------------------------------*/
+
     template <typename G, typename E>
     inline
     E&
-    subject_impl<	util::vertex<G>, E >::exact_()
+    subject_impl< util::vertex<G>, E >::exact_()
     {
       return internal::force_exact<E>(*this);
     }
@@ -482,7 +492,7 @@ namespace mln
     template <typename G, typename E>
     inline
     void
-    subject_impl<	util::vertex<G>, E >::invalidate()
+    subject_impl< util::vertex<G>, E >::invalidate()
     {
       exact_().get_subject().invalidate();
     }
@@ -490,7 +500,7 @@ namespace mln
     template <typename G, typename E>
     inline
     void
-    subject_impl<       util::vertex<G>, E >::change_graph(const G& g)
+    subject_impl< util::vertex<G>, E >::change_graph(const G& g)
     {
       exact_().get_subject().change_graph(g);
     }
@@ -498,7 +508,7 @@ namespace mln
     template <typename G, typename E>
     inline
     void
-    subject_impl<       util::vertex<G>, E >::update_id(const util::vertex_id_t& id)
+    subject_impl< util::vertex<G>, E >::update_id(const util::vertex_id_t& id)
     {
       exact_().get_subject().update_id(id);
     };

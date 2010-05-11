@@ -160,7 +160,7 @@ namespace mln
 
 
     /// Constructors.
-    /// @{
+    /// \{
     edge_image();
     edge_image(const p_edges<G, site_function_t>& pe);
     edge_image(const Graph<G>& g,
@@ -178,13 +178,13 @@ namespace mln
     template <typename FV>
     edge_image(const p_edges<G,site_function_t>& pe,
 	       const Function_v2v<FV>& edge_values);
-    /// @}
+    /// \}
 
     /// Value accessors/operators overloads.
-    /// @{
+    /// \{
     rvalue operator()(unsigned e_id) const;
     lvalue operator()(unsigned e_id);
-    /// @}
+    /// \}
 
     // Just to help g++-2.95...
     rvalue operator()(const psite& p) const;

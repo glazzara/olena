@@ -1,5 +1,20 @@
 2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Miscellaneous changes in graphs and graph-based images.
+
+	* mln/util/graph.hh,
+	* mln/util/line_graph.hh,
+	* mln/core/image/vertex_image.hh,
+	* mln/core/image/edge_image.hh:
+	Fix the Doxygen documentation.
+	* mln/util/vertex.hh: Aesthetic changes.
+	* mln/util/edge.hh: Aesthetic changes.
+	(util::edge<G>::invalidate): Remove dead code.
+	* tests/morpho/line_graph_image_morpho.cc:
+	Fix (non) Doxygen comments.
+
+2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix make::edge_image.
 
 	* mln/make/edge_image.hh: Fix Doxygen comments.

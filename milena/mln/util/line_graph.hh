@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Definitions of undirected graphs.
+/// Definition of an (undirected) line graph (adaptor).
 
 # include <mln/util/internal/graph_base.hh>
 # include <mln/util/internal/graph_iter.hh>
@@ -49,7 +50,7 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::image2d<T>.
+    /// Data structure for mln::util::line_graph<G>.
     template <typename G>
     struct data< util::line_graph<G> >
     {
@@ -157,11 +158,14 @@ namespace mln
       /// \}
 
       /// Return the number of vertices in the graph.
+      // FIXME: Rename as nvertices.
       size_t v_nmax() const;
 
-      /// Check whether a vertex id \p id_v exists in the graph.
+      /// Check whether a vertex id \p id_v exists in the line graph.
+      // FIXME: Is the `_v' suffix really needed?
       bool has_v(const vertex_id_t& id_v) const;
-      /// Check whether an edge \p v exists in the graph.
+
+      /// Check whether a vertex \p v exists in the line graph.
       template <typename G2>
       bool has(const util::vertex<G2>& v) const;
 
@@ -188,12 +192,14 @@ namespace mln
       edge_t edge(const edge_id_t& e) const;
 
       /// Return the number of edges in the graph.
+      // FIXME: Rename as nedges.
       size_t e_nmax() const;
 
-      /// Return whether \p id_e is in the graph.
+      /// Return whether \p id_e is in the line graph.
+      // FIXME: Is the `_e' suffix really needed?
       bool has_e(const util::edge_id_t& id_e) const;
 
-      /// Return whether \p e is in the graph.
+      /// Return whether \p e is in the line graph.
       template <typename G2>
       bool has(const util::edge<G2>& e) const;
 

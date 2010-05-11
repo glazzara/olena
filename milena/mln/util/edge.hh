@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -174,7 +175,7 @@ namespace mln
   namespace internal
   {
 
-    /// subject_impl specialization (Proxy)
+    /// subject_impl specialization (Proxy).
     /// \{
 
     template <typename G, typename E>
@@ -199,7 +200,7 @@ namespace mln
     };
 
     template <typename G, typename E>
-    struct subject_impl<       util::edge<G>, E > :
+    struct subject_impl< util::edge<G>, E > :
       subject_impl< const util::edge<G>, E >
     {
       void update_id(const util::edge_id_t& id);
@@ -217,10 +218,6 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-  /*---------------------.
-    | Operators on edges.  |
-    `---------------------*/
 
   namespace util
   {
@@ -308,7 +305,6 @@ namespace mln
     void
     edge<G>::invalidate()
     {
-      //id_ = mln_max(unsigned);
       id_.invalidate();
     }
 
@@ -391,9 +387,9 @@ namespace mln
   namespace internal
   {
 
-    /*----------------------------------`
-      | subject_impl< const util::edge<G> |
-      \----------------------------------*/
+    /*-----------------------------------------.
+    | subject_impl< const util::edge<G>, E >.  |
+    `-----------------------------------------*/
 
     template <typename G, typename E>
     inline
@@ -460,14 +456,14 @@ namespace mln
     }
 
 
-    /*----------------------------------`
-    | subject_impl<       util::edge<G> |
-    \----------------------------------*/
+    /*-----------------------------------.
+    | subject_impl< util::edge<G>, E >.  |
+    `-----------------------------------*/
 
     template <typename G, typename E>
     inline
     void
-    subject_impl<	util::edge<G>, E >::update_id(const util::edge_id_t& id)
+    subject_impl< util::edge<G>, E >::update_id(const util::edge_id_t& id)
     {
       return exact_().get_subject().update_id(id);
     }
@@ -475,7 +471,7 @@ namespace mln
     template <typename G, typename E>
     inline
     void
-    subject_impl<	util::edge<G>, E >::change_graph(const mlc_const(G)& g)
+    subject_impl< util::edge<G>, E >::change_graph(const mlc_const(G)& g)
     {
       return exact_().get_subject().change_graph(g);
     }
@@ -483,7 +479,7 @@ namespace mln
     template <typename G, typename E>
     inline
     void
-    subject_impl<	util::edge<G>, E >::invalidate()
+    subject_impl< util::edge<G>, E >::invalidate()
     {
       return exact_().get_subject().invalidate();
     }
