@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -66,17 +67,14 @@ namespace mln
 
 	/// Construction and assignment.
 	/// \{
-	/* FIXME: Keep this non-const?  See a (big) comment about this in
-	   milena/tests/complex_image.cc.   */
 	complex_set_iterator_base();
-	complex_set_iterator_base(complex_type& c);
+	complex_set_iterator_base(const complex_type& c);
 	/// \}
 
 	/// Manipulation.
 	/// \{
 	/// Change the target complex.
-	// FIXME: Same comment as the ctor above.
-	void set_cplx(complex_type& c);
+	void set_cplx(const complex_type& c);
 
 	/// Test if the iterator is valid.
 	bool is_valid() const;
@@ -98,7 +96,7 @@ namespace mln
 
       template <typename F, typename E>
       inline
-      complex_set_iterator_base<F, E>::complex_set_iterator_base(complex_type& c)
+      complex_set_iterator_base<F, E>::complex_set_iterator_base(const complex_type& c)
       {
 	this->f_.set_cplx(c);
 	// Invalidate f_.
@@ -108,7 +106,7 @@ namespace mln
       template <typename F, typename E>
       inline
       void
-      complex_set_iterator_base<F, E>::set_cplx(complex_type& c)
+      complex_set_iterator_base<F, E>::set_cplx(const complex_type& c)
       {
 	this->f_.set_cplx(c);
 	// Invalidate f_.
