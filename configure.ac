@@ -605,6 +605,8 @@ AC_CONFIG_FILES([
 # tests for the sake of speed.
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv],
                 [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-max-curv])
+AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-extrema],
+                [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-extrema])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-segm],
                 [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-segm])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-segm],

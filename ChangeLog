@@ -1,3 +1,9 @@
+2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Configure milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-extrema.
+
+	* configure.ac: Here.
+
 2013-08-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve the generation of Doxyfiles in Olena.
