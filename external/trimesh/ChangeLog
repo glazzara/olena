@@ -1,3 +1,14 @@
+2010-05-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove improper copyright headers in Trimesh.
+
+	* Makefile.am,
+	* gluit/Makefile.am,
+	* include/Makefile.am,
+	* libsrc/Makefile.am,
+	* utilsrc/Makefile.am:
+	Here.
+
 2010-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	* gluit/gluit.mk: Help Emacs find out the nature of this file.
