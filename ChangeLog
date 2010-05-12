@@ -1,3 +1,15 @@
+2010-05-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing copyright headers.
+
+	* build-aux/devtools.sh,
+	* build-aux/devtools_utils.sh,
+	* build-aux/generate_dist_headers.sh,
+	* build-aux/make_report_utils.sh,
+	* configure.ac,
+	* lrde-upload.sh:
+	Here.
+
 2010-05-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add `swilena' to the branches to be uploaded.
