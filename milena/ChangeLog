@@ -1,3 +1,19 @@
+2010-05-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing copyright headers in Milena.
+
+	* apps/constrained-connectivity/test-constrained-connectivity.in,
+	* apps/mesh-segm-skel/test-mesh-complex-max-curv-segm.in,
+	* apps/mesh-segm-skel/test-mesh-complex-max-curv.in,
+	* apps/mesh-segm-skel/test-mesh-complex-segm.in,
+	* apps/mesh-segm-skel/test-mesh-complex-skel.in,
+	* apps/mesh-segm-skel/test-mesh-max-curv.in,
+	* apps/mesh-segm-skel/test-mesh-segm.in,
+	* doc/graphicx.hva,
+	* doc/tools/clearbanner.sh,
+	* doc/tools/split_sample.sh:
+	Here.
+
 2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Miscellaneous changes in graphs and graph-based images.
