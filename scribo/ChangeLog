@@ -1,3 +1,12 @@
+2010-05-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing copyright headers in Scribo.
+
+	* scribo/Doxyfile,
+	* scribo/Doxyfile_tex,
+	* scribo/demo/Makefile.am:
+	Here.
+
 2010-04-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Help g++ 3.3 compile Scribo code.
