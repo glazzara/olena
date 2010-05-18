@@ -123,7 +123,17 @@ namespace mln
 	//  abort();
 	//}
 
-	Magick::Image im_file(filename);
+	Magick::Image im_file;
+	im_file.ping(filename);
+
+	// Force a minimum resolution of 300DPI for PDF document.
+	if (im_file.magick() == "PDF"
+	    && (im_file.xResolution() < 300 || im_file.yResolution() < 300))
+	  im_file.density(Magick::Geometry(300, 300));
+
+	im_file.read(filename);
+
+
 	im_file.modifyImage();
 	im_file.type(Magick::TrueColorType);
 	int columns = im_file.columns();
