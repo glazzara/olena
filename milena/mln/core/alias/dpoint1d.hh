@@ -68,11 +68,15 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
   const dpoint1d before = dpoint1d( -1 );
   const dpoint1d after  = dpoint1d( +1 );
 
   const dpoint1d ind_dec = before;
   const dpoint1d ind_inc = after;
+
+#  endif // !MLN_WO_GLOBAL_VARS
 
 # endif // ! MLN_INCLUDE_ONLY
 

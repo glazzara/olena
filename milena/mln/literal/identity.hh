@@ -49,7 +49,11 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
     const identity_t& identity = identity_t();
+
+#  endif // !MLN_WO_GLOBAL_VARS
 
 # endif
 

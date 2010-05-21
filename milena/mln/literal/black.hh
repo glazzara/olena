@@ -55,7 +55,11 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
     const black_t& black = black_t();
+
+#  endif
 
 #  ifdef MLN_NEW_VALUE_TYPES
     inline

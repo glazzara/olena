@@ -152,6 +152,8 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
     const red_t& red = red_t();
 
     const green_t& green = green_t();
@@ -179,6 +181,8 @@ namespace mln
     const yellow_t& yellow = yellow_t();
 
     const olive_t& olive = olive_t();
+
+#  endif
 
 # endif
 

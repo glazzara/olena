@@ -43,7 +43,11 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
     unsigned thickness = 3;
+
+#  endif // !MLN_WO_GLOBAL_VARS
 
 # endif // !MLN_INCLUDE_ONLY
 

@@ -57,6 +57,8 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
     bool quiet = true;
     unsigned tab  = 0;
     bool full_trace = false;
@@ -68,8 +70,9 @@ namespace mln
       unsigned max_tab  = 0;
       timeval start_time;
       bool is_quiet = quiet;
-
     } // end of namespace mln::trace::internal
+
+#  endif // !MLN_WO_GLOBAL_VARS
 
 # endif // !MLN_INCLUDE_ONLY
 

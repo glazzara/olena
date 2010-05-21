@@ -67,12 +67,16 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
   const dpoint3d sagittal_dec = dpoint3d( 0,  0, -1);
   const dpoint3d sagittal_inc = dpoint3d( 0,  0, +1);
   const dpoint3d axial_dec    = dpoint3d( 0, -1,  0);
   const dpoint3d axial_inc    = dpoint3d( 0, +1,  0);
   const dpoint3d coronal_dec  = dpoint3d(-1,  0,  0);
   const dpoint3d coronal_inc  = dpoint3d(+1,  0,  0);
+
+#  endif // !MLN_WO_GLOBAL_VARS
 
 # endif // ! MLN_INCLUDE_ONLY
 

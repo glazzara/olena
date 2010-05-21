@@ -55,7 +55,11 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
     const white_t& white = white_t();
+
+#  endif
 
 #  ifdef MLN_NEW_VALUE_TYPES
     inline
