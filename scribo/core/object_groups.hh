@@ -94,6 +94,8 @@ namespace scribo
 
     object_groups<L> duplicate() const;
 
+    void init();
+
   private: // attributes
     mln::util::tracked_ptr<data_t> data_;
   };
@@ -119,7 +121,7 @@ namespace scribo
 
     template <typename L>
     object_groups_data<L>::object_groups_data(const object_links<L>& links)
-      : comp_to_group_(unsigned(links.nelements()) + 1),
+      : comp_to_group_(unsigned(links.nelements())),
 	components_(links.components()), links_(links)
     {
     };
@@ -128,7 +130,7 @@ namespace scribo
     template <typename L>
     object_groups_data<L>::object_groups_data(const object_links<L>& links,
 					      unsigned value)
-      : comp_to_group_(unsigned(links.nelements() + 1), value),
+      : comp_to_group_(unsigned(links.nelements()), value),
 	components_(links.components()), links_(links)
     {
     };
@@ -181,7 +183,7 @@ namespace scribo
   bool
   object_groups<L>::is_valid() const
   {
-    mln_assertion(data_->components_.nelements() == (nelements() - 1));
+    mln_assertion(data_->components_.nelements() == (nelements()));
     return data_->links_.is_valid();
   }
 
@@ -225,6 +227,14 @@ namespace scribo
 
     *(output.data_.ptr_) = *(data_.ptr_);
     return output;
+  }
+
+  template <typename L>
+  void
+  object_groups<L>::init()
+  {
+    for (unsigned i = 0; i < nelements(); ++i)
+      data_->comp_to_group_(i) = i;
   }
 
 

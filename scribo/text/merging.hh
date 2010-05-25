@@ -386,7 +386,7 @@ namespace scribo
 	// Special case
 
 	// Looking for alignement.
-	def::coord
+	mln::def::coord
 	  top_row = l_cur.bbox().pmin().row(),
 	  bot_row = l_cur.bbox().pmax().row();
 

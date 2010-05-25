@@ -72,7 +72,7 @@ namespace scribo
 
       typedef mln_value(I) V;
 
-      def::coord
+      mln::def::coord
 	mrow = geom::min_row(input),
 	mcol = geom::min_col(input);
 
@@ -83,7 +83,7 @@ namespace scribo
 					      mcol + 2 * input.ncols() - 1));
       for_all(p)
       {
-	def::coord
+	mln::def::coord
 	  row = mrow + 2 * (p.row() - mrow),
 	  col = mcol + 2 * (p.col() - mcol);
 

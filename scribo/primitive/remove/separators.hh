@@ -84,8 +84,18 @@ namespace scribo
 	mln_precondition(separators.is_valid());
 
 	mln_concrete(I) output = duplicate(input);
-	data::fill((output | (pw::value(separators) == pw::cst(true))).rw(),
-		   false);
+
+	border::resize(separators, output.border());
+
+	typedef const mln_value(I)* sep_ptr_t;
+	sep_ptr_t
+	  sep_ptr = separators.buffer(),
+	  end_ptr = sep_ptr + input.nelements();
+	mln_value(I) *out_ptr = output.buffer();
+
+	for (; sep_ptr < end_ptr; ++out_ptr)
+	  if (*sep_ptr++)
+	    *out_ptr = false;
 
 	trace::exiting("scribo::primitive::remove::separators");
 	return output;

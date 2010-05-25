@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,8 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_INTERNAL_FIND_ROOT_LINK_ARRAY_HH
-# define SCRIBO_PRIMITIVE_INTERNAL_FIND_ROOT_LINK_ARRAY_HH
+#ifndef SCRIBO_PRIMITIVE_INTERNAL_FIND_ROOT_HH
+# define SCRIBO_PRIMITIVE_INTERNAL_FIND_ROOT_HH
 
 /// \file
 ///
@@ -70,4 +71,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_PRIMITIVE_INTERNAL_FIND_ROOT_LINK_ARRAY_HH
+#endif // ! SCRIBO_PRIMITIVE_INTERNAL_FIND_ROOT_HH

@@ -37,6 +37,7 @@
 // FIXME: not generic
 # include <mln/core/alias/dpoint2d.hh>
 
+//FIXME: add more preconditions + a dispatch !?
 
 namespace scribo
 {

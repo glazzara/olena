@@ -67,7 +67,7 @@ namespace scribo
       mln_piter(I) p(output.domain());
       mln_value(I) pixels[4];
 
-      def::coord
+      mln::def::coord
 	x_offset = input.domain().pmin().col(),
 	y_offset = input.domain().pmin().row();
 

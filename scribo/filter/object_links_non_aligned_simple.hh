@@ -110,7 +110,9 @@ namespace scribo
       float max_alpha_rad = (max_alpha / 180.0f) * math::pi;
 
       for_all_comps(i, comps)
-	if (!internal::component_aligned_rad(comps, i, links(i), anchor, max_alpha_rad))
+	if (!::scribo::filter::internal::component_aligned_rad(comps, i, links(i),
+							     anchor,
+							     max_alpha_rad))
 	  output(i) = i;
 
 

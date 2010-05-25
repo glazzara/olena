@@ -48,6 +48,7 @@
 # include <scribo/primitive/link/internal/link_single_dmax_ratio_base.hh>
 
 # include <scribo/primitive/link/compute.hh>
+# include <scribo/primitive/link/internal/dmax_default.hh>
 
 
 namespace scribo

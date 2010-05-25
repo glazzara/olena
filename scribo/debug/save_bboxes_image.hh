@@ -92,7 +92,7 @@ namespace scribo
 
       mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
       draw::bounding_boxes(tmp, bboxes, value);
-      io::ppm::save(tmp, filename);
+      mln::io::ppm::save(tmp, filename);
 
       trace::exiting("scribo::debug::save_bboxes_image");
     }

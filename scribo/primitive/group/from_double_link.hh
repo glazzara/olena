@@ -64,7 +64,6 @@ namespace scribo
 	  \param[in] components  A component set.
 	  \param[in] left_link   The left neighbor of each line of text.
 	  \param[in] right_link  The right neighbor of each line of text.
-	  \param[in] parent_link The function used to group components.
 
 	  \return Return object groups information.
       */

@@ -1,5 +1,29 @@
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* core/object_groups.hh: Fix an invalid size.
+
+	* debug/save_bboxes_image.hh,
+	* filter/object_links_non_aligned_simple.hh,
+	* primitive/group/from_single_link.hh,
+	* subsampling/bilinear.hh,
+	* text/merging.hh,
+	* upsampling/bs2x.hh: Fix namespace ambiguities.
+
+	* primitive/group/from_double_link.hh: Fix comment.
+
+	* primitive/internal/find_root.hh: Fix guards.
+
+	* primitive/link/with_single_right_link_dmax_ratio.hh: Add a
+	missing include.
+
+	* primitive/remove/separators.hh: Improve computation time.
+
+	* preprocessing/rotate_90.hh: Add a fixme.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Store OCR results in the line_info structure.
 
 	* core/line_info.hh: Add a new attribute 'text'.

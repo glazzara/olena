@@ -88,7 +88,13 @@ namespace scribo
 	  if (!links.components()(i).is_valid())
 	    parent(i) = 0;
 	  else
-	    primitive::internal::find_root(parent, i);
+	    ::scribo::primitive::internal::find_root(parent, i);
+
+
+	// FIXME: useful?
+	// Make sure the root is propagated.
+	for_all_groups(g, parent)
+	  internal::find_root(parent, g);
 
 	trace::exiting("scribo::primitive::group::from_single_link");
 	return parent;
