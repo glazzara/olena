@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -83,7 +84,7 @@ namespace mln
   struct interpolated :
     public mln::internal::image_identity< I, mln_domain(I), interpolated<I,F> >
   {
-    
+
     typedef mln::internal::image_identity< I, mln_domain(I),
 					   interpolated<I,F> > super_;
 
@@ -119,7 +120,8 @@ namespace mln
     using super_::has;
 
     /// Test if a pixel value is accessible at \p v.
-    bool has(const mln::algebra::vec<I::psite::dim, float>& v) const;
+    template <typename C>
+    bool has(const mln::algebra::vec<I::psite::dim, C>& v) const;
 
     /// Read-only access of pixel value at point site \p p.
     /// Mutable access is only OK for reading (not writing).
@@ -182,14 +184,16 @@ namespace mln
   }
 
   template <typename I, template <class> class F>
+  template <typename C>
   inline
-  bool interpolated<I,F>::has(const mln::algebra::vec<I::psite::dim, float>& v) const
+  bool interpolated<I,F>::has(const mln::algebra::vec<I::psite::dim, C>& v) const
   {
     mln_psite(I) p;
     for (unsigned i = 0; i < I::psite::dim; ++i)
       p[i] = static_cast<int>(round(v[i]));
     return this->data_->ima_.has(p);
   }
+
 
   template <typename I, template <class> class F>
   inline
@@ -206,6 +210,7 @@ namespace mln
   {
     return fun_(v);
   }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

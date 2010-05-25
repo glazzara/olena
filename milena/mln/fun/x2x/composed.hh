@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -60,10 +61,13 @@ namespace mln
         /// Helper for describing a bijective composition.
         template <typename T2, typename T1, typename E>
         struct helper_composed_<T2,T1,E,true>
-          : public fun::internal::x2x_linear_impl_<mln_result(T2), E >,
+          : public fun::internal::x2x_linear_impl_<mln_result(T2), typename T2::data_t, E >,
             public Function_v2v<E>
         {
-          typedef fun::internal::x2x_linear_impl_<typename T2::result, E > super_;
+          typedef fun::internal::x2x_linear_impl_<typename T2::result, typename T2::data_t, E > super_;
+
+	  /// Type of the underlying data stored in vectors and matrices.
+	  typedef typename T2::data_t data_t;
 
           using super_::dim;
 
@@ -98,10 +102,14 @@ namespace mln
         /// Helper for describing a non bijective composition.
         template <typename T2, typename T1, typename E>
         struct helper_composed_<T2,T1,E,false>
-          : public fun::internal::x2x_linear_impl_<mln_result(T2), E >,
+          : public fun::internal::x2x_linear_impl_<mln_result(T2), typename T2::data_t, E >,
             public Function_v2v<E>
         {
-          typedef fun::internal::x2x_linear_impl_<typename T2::result, E > super_;
+          typedef fun::internal::x2x_linear_impl_<typename T2::result, typename T2::data_t, E > super_;
+
+
+	  /// Type of the underlying data stored in vectors and matrices.
+	  typedef typename T2::data_t data_t;
 
           using super_::dim;
 

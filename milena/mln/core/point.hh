@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,6 +36,7 @@
 /// second there is a room for the couple of methods (in the
 /// subject_impl specializations defined in core/alias/point*d.hh).
 
+# include <cmath>
 # include <mln/core/def/coord.hh>
 # include <mln/core/concept/proxy.hh>
 # include <mln/core/concept/gpoint.hh>
@@ -149,6 +151,11 @@ namespace mln
     /// Constructor from an algebra vector.
     template <typename C2>
     point(const algebra::vec<dim,C2>& v);
+
+    point(const algebra::vec<dim,C>& v);
+    point(const algebra::vec<dim,double>& v);
+    point(const algebra::vec<dim,float>& v);
+
 
     /// \{ Constructors with different numbers of arguments
     /// (coordinates) w.r.t. the dimension.
@@ -321,6 +328,48 @@ namespace mln
 	coord_[i-j] = static_cast<C>(v[j]);
     }
   }
+
+
+  template <typename G, typename C>
+  inline
+  point<G,C>::point(const algebra::vec<dim,C>& v)
+  {
+    unsigned j = 0;
+    //FIXME: to be improved while adding a conversion routine.
+    if (dim < 3)
+      coord_ = v;
+    else
+    {
+      for (unsigned i = dim - 2; i < dim; ++i)
+	coord_[i]   = v[j++];
+      for (unsigned i = 2; i < dim; ++i, ++j)
+	coord_[i-j] = v[j];
+    }
+  }
+
+
+  template <typename G, typename C>
+  inline
+  point<G,C>::point(const algebra::vec<dim,double>& v)
+  {
+    unsigned j = 0;
+    for (unsigned i = dim - 2; i < dim; ++i)
+      coord_[i]   = round(v[j++]);
+    for (unsigned i = 2; i < dim; ++i, ++j)
+      coord_[i-j] = round(v[j]);
+  }
+
+  template <typename G, typename C>
+  inline
+  point<G,C>::point(const algebra::vec<dim,float>& v)
+  {
+    unsigned j = 0;
+    for (unsigned i = dim - 2; i < dim; ++i)
+      coord_[i]   = round(v[j++]);
+    for (unsigned i = 2; i < dim; ++i, ++j)
+      coord_[i-j] = round(v[j]);
+  }
+
 
   template <typename G, typename C>
   inline

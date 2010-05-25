@@ -1,3 +1,32 @@
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Reduce precision issues in transformations.
+
+	* milena/mln/core/image/imorph/interpolated.hh: Make the vector
+	type more generic.
+
+	* milena/mln/core/point.hh: Provide specific conversion operators
+	for float and double.
+
+	* milena/mln/fun/internal/x2x_linear_impl.hh: Allow to set the
+	matrix value type.
+
+	* milena/mln/fun/x2x/composed.hh,
+	* milena/mln/fun/x2x/rotation.hh,
+	* milena/mln/fun/x2x/translation.hh: Introduce data_t typedef
+	passed to x2x_linear_impl.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add some code in my sandbox.
+
+	* sandbox/lazzara/scribo/binarization_naive/main.cc,
+	* sandbox/lazzara/scribo/binarization_naive/toto.cc,
+	* sandbox/lazzara/scribo/fill_holes/main.cc,
+	* sandbox/lazzara/scribo/separateurs_materialises/lines_pattern.cc,
+	* sandbox/lazzara/scribo/skeleton_crest/main.cc,
+	* sandbox/lazzara/skeleton_crest/main.cc: New.
+
 2010-05-21  edwin carlinet  <carlinet@lrde.epita.fr>
 
 	Add MLN_WO_GLOBAL_VARS directive that prevents globals vars to be
@@ -41,16 +70,16 @@
 
 	Small fixes in Milena.
 
-	* milena/mln/canvas/labeling/blobs.hh: Fill extension.
+	* mln/canvas/labeling/blobs.hh: Fill extension.
 
-	* milena/mln/data/paste_without_localization.hh: Check whether the
+	* mln/data/paste_without_localization.hh: Check whether the
 	two images have the same domain.
 
-	* milena/mln/labeling/blobs_and_compute.hh: Rename members.
+	* mln/labeling/blobs_and_compute.hh: Rename members.
 
-	* milena/mln/labeling/colorize.hh: Add missing includes.
+	* mln/labeling/colorize.hh: Add missing includes.
 
-	* milena/mln/world/binary_2d/enlarge.hh: use def::coord.
+	* mln/world/binary_2d/enlarge.hh: use def::coord.
 
 2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -172,25 +201,25 @@
 
 	Small fixes in Milena.
 
-	* milena/mln/accu/center.hh: Add nsites() member.
+	* mln/accu/center.hh: Add nsites() member.
 
-	* milena/mln/accu/pair.hh: Provide access to the underlying accus.
+	* mln/accu/pair.hh: Provide access to the underlying accus.
 
-	* milena/mln/accu/stat/variance.hh: Use literal::zero.
+	* mln/accu/stat/variance.hh: Use literal::zero.
 
-	* milena/mln/core/internal/labeled_image_base.hh: Indent.
+	* mln/core/internal/labeled_image_base.hh: Indent.
 
-	* milena/mln/core/site_set/box.hh: Rename center() as pcenter().
+	* mln/core/site_set/box.hh: Rename center() as pcenter().
 
-	* milena/mln/labeling/blobs_and_compute.hh: Return the array of
+	* mln/labeling/blobs_and_compute.hh: Return the array of
 	accumulators.
 
-	* milena/mln/labeling/colorize.hh: Make sure a color is not used
+	* mln/labeling/colorize.hh: Make sure a color is not used
 	twice in the same image.
 
-	* milena/mln/labeling/compute.hh: Add a new overload.
+	* mln/labeling/compute.hh: Add a new overload.
 
-	* milena/mln/transform/influence_zone_geodesic.hh: Fix a
+	* mln/transform/influence_zone_geodesic.hh: Fix a
 	segmentation fault when an image had a border.
 
 2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
@@ -366,10 +395,10 @@
 
 	First draft of raw format support.
 
-	* milena/mln/io/raw/all.hh,
-	* milena/mln/io/raw/get_header.hh,
-	* milena/mln/io/raw/load.hh,
-	* milena/mln/io/raw/save.hh: New.
+	* mln/io/raw/all.hh,
+	* mln/io/raw/get_header.hh,
+	* mln/io/raw/load.hh,
+	* mln/io/raw/save.hh: New.
 
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -501,15 +530,15 @@
 
 	Small fixes.
 
-	* milena/mln/data/paste.spe.hh,
-	* milena/mln/data/stretch.hh,
-	* milena/mln/fun/x2v/bilinear.hh,
-	* milena/mln/morpho/erosion.hh,
-	* milena/mln/value/mixin.hh: Fix layout.
+	* mln/data/paste.spe.hh,
+	* mln/data/stretch.hh,
+	* mln/fun/x2v/bilinear.hh,
+	* mln/morpho/erosion.hh,
+	* mln/value/mixin.hh: Fix layout.
 
-	* milena/mln/debug/filename.hh: Update doc.
+	* mln/debug/filename.hh: Update doc.
 
-	* milena/mln/subsampling/subsampling.hh: Fix invalid min rows and
+	* mln/subsampling/subsampling.hh: Fix invalid min rows and
 	cols.
 
 2009-10-16  Edwin Carlinet  <carlinet@lrde.epita.fr>
@@ -1649,8 +1678,8 @@
 
 	* mln/labeling/blobs_and_compute.hh: New routine.
 
-	* milena/tests/labeling/Makefile.am,
-	* milena/tests/labeling/blobs_and_compute.cc: New test.
+	* tests/labeling/Makefile.am,
+	* tests/labeling/blobs_and_compute.cc: New test.
 
 2009-08-21  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -1855,7 +1884,7 @@
 
 	Have transform_line fastest.
 
-	* milena/mln/accu/transform_line.hh: Add documentation.
+	* mln/accu/transform_line.hh: Add documentation.
 	(todo): Remove, done:
 	The specialization for fastest images is now up.
 	(todo): New.  A version that ignores extensions should
@@ -1868,29 +1897,29 @@
 	(transform_line_dispatch): Revamp to take into account
 	accumulator properties.
 	(transform_line): Call properly the dispatch mechanism.
-	* milena/tests/accu/transform_line.cc: Test both generic and
+	* tests/accu/transform_line.cc: Test both generic and
 	fastest versions.
 
 	Fix missing properties for some accumulators.
 
-	* milena/mln/accu/stat/min.hh,
-	* milena/mln/accu/stat/max.hh (set_value): New method.
-	* milena/mln/accu/stat/max_h.hh (invariant_): New method.
+	* mln/accu/stat/min.hh,
+	* mln/accu/stat/max.hh (set_value): New method.
+	* mln/accu/stat/max_h.hh (invariant_): New method.
 	(max_h): Add calls to invariant_.
 	(debug_print_): Augment.
-	* milena/mln/accu/math/count.hh,
-	* milena/mln/accu/logic/lor.hh,
-	* milena/mln/accu/logic/lor_basic.hh,
-	* milena/mln/accu/logic/land.hh,
-	* milena/mln/accu/logic/land_basic.hh,
-	* milena/mln/accu/stat/min.hh,
-	* milena/mln/accu/stat/max.hh,
-	* milena/mln/accu/stat/min_h.hh,
-	* milena/mln/accu/stat/max_h.hh (trait): Add missing traits.
+	* mln/accu/math/count.hh,
+	* mln/accu/logic/lor.hh,
+	* mln/accu/logic/lor_basic.hh,
+	* mln/accu/logic/land.hh,
+	* mln/accu/logic/land_basic.hh,
+	* mln/accu/stat/min.hh,
+	* mln/accu/stat/max.hh,
+	* mln/accu/stat/min_h.hh,
+	* mln/accu/stat/max_h.hh (trait): Add missing traits.
 
 	Misc.
 
-	* milena/mln/morpho/general.spe.hh: Fix layout.
+	* mln/morpho/general.spe.hh: Fix layout.
 	Remove useless includes.
 
 2009-08-13  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
@@ -2320,8 +2349,8 @@
 
 	Regen headers.mk and unit-tests.mk.
 
-	* milena/headers.mk,
-	* milena/tests/unit_test/unit-tests.mk: regen.
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: regen.
 
 2009-06-30  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
@@ -3873,7 +3902,7 @@
 	Complete the installation of the Make rule `tests' in Milena.
 
 	* Makefile.am (tests): New phony target.
-	* tests/world/Makefile.am: Include milena/tests/tests.mk.
+	* tests/world/Makefile.am: Include tests/tests.mk.
 
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 
