@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,11 +24,16 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/core/image/image2d.hh>
-#include <mln/io/pbm/load.hh>
-#include <mln/io/pbm/save.hh>
+/// \file
+///
+/// \fixme Add a better test.....
 
-#include <scribo/preprocessing/unskew.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/io/pgm/all.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/data/compare.hh>
+
+#include <scribo/preprocessing/deskew.hh>
 
 #include <scribo/tests/data.hh>
 
@@ -37,8 +43,10 @@ int main(int argc, char *argv[])
   (void) argv;
   using namespace mln;
 
-  image2d<bool> ima;
-  io::pbm::load(ima, SCRIBO_IMG_DIR "/text_to_group.pbm");
+  image2d<value::int_u8> ima;
+  io::pgm::load(ima, SCRIBO_IMG_DIR "/text_to_group.pgm");
 
-  io::pbm::save(scribo::preprocessing::unskew(ima).first(), "unskew.pbm");
+  image2d<value::int_u8> tmp = scribo::preprocessing::deskew(ima);
+
+  mln_assertion(ima == tmp);
 }

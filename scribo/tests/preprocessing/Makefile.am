@@ -23,11 +23,11 @@ check_PROGRAMS =				\
   crop 						\
   crop_without_localization 			\
   rotate_90 					\
-  unskew
+  deskew
 
 crop_SOURCES = crop.cc
 crop_without_localization_SOURCES = crop_without_localization.cc
 rotate_90_SOURCES = rotate_90.cc
-unskew_SOURCES = unskew.cc
+deskew_SOURCES = deskew.cc
 
 TESTS = $(check_PROGRAMS)

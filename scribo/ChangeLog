@@ -1,5 +1,21 @@
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new deskew algorithm.
+
+	* preprocessing/deskew.hh,
+	* preprocessing/deskew_crop.hh: New.
+
+	* preprocessing/unskew.hh: Remove. Deprecated.
+
+	* tests/preprocessing/unskew.cc: Rename as...
+	* tests/preprocessing/deskew.cc: ... this.
+
+	* tests/preprocessing/Makefile.am: Update.
+
+	* tests/img/text_to_group.pgm: New test image.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add crop tools.
 
 	* preprocessing/crop.hh,
