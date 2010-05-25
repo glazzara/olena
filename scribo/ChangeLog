@@ -1,5 +1,13 @@
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Store OCR results in the line_info structure.
+
+	* core/line_info.hh: Add a new attribute 'text'.
+
+	* text/recognition.hh: Store results in the line_info structure.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve debug outputs in Sauvola and make binarization tools
 	compile again.
 
