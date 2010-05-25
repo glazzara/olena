@@ -1,5 +1,9 @@
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* io/text_boxes/save.hh: New. Save text boxes information.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a new deskew algorithm.
 
 	* preprocessing/deskew.hh,
