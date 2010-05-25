@@ -216,7 +216,6 @@ AC_CONFIG_FILES([
       scribo/src/debug/Makefile
       scribo/src/filter/Makefile
       scribo/src/misc/Makefile
-      scribo/src/multi_scale/Makefile
       scribo/src/preprocessing/Makefile
       scribo/src/primitive/Makefile
 	scribo/src/primitive/extract/Makefile

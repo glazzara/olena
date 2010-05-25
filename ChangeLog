@@ -1,3 +1,7 @@
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Do not configure scribo/src/multi_scale anymore.
+
 2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* configure.ac: Configure scribo/tests/binarization.
