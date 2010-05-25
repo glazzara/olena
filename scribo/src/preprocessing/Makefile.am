@@ -25,12 +25,34 @@ bin_PROGRAMS = 				\
   homogeneous_contrast 			\
   preprocess 				\
   split_bg_fg 				\
-  subsample 				\
   unskew
 
 denoise_SOURCES = denoise.cc
 homogeneous_contrast_SOURCES = homogeneous_contrast.cc
 preprocess_SOURCES = preprocess.cc
 split_bg_fg_SOURCES = split_bg_fg.cc
-subsample_SOURCES = subsample.cc
 unskew_SOURCES = unskew.cc
+
+if HAVE_MAGICKXX
+
+    bin_PROGRAMS	+= to_pgm
+    to_pgm_SOURCES = to_pgm.cc
+    to_pgm_CPPFLAGS = $(AM_CPPFLAGS) \
+				 $(TESSERACT_CPPFLAGS) \
+			         `Magick++-config --cppflags`
+
+    to_pgm_LDFLAGS  = $(AM_LDFLAGS) \
+			     	  $(TESSERACT_LDFLAGS) \
+			      	 -lpthread  `Magick++-config --libs`
+
+    bin_PROGRAMS	+= subsample
+    subsample_SOURCES = subsample.cc
+    subsample_CPPFLAGS = $(AM_CPPFLAGS) \
+			 $(TESSERACT_CPPFLAGS) \
+			 `Magick++-config --cppflags`
+
+    subsample_LDFLAGS  = $(AM_LDFLAGS) \
+			 $(TESSERACT_LDFLAGS) \
+			 -lpthread  `Magick++-config --libs`
+
+endif HAVE_MAGICKXX

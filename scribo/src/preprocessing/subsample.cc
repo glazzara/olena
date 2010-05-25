@@ -25,19 +25,21 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/io/pgm/all.hh>
+#include <mln/io/magick/load.hh>
+#include <mln/io/ppm/save.hh>
 
 #include <mln/subsampling/antialiased.hh>
 
-#include <mln/value/int_u8.hh>
+#include <mln/value/rgb8.hh>
 
 #include <scribo/debug/usage.hh>
 
 
 const char *args_desc[][2] =
 {
-  { "input.pgm", "A gray-scale image." },
+  { "input.*", "An image." },
   { "ratio", "Scale ratio." },
+  { "output.ppm", "A color image." },
   {0, 0}
 };
 
@@ -49,17 +51,17 @@ int main(int argc, char *argv[])
   if (argc != 4)
     return scribo::debug::usage(argv,
 				"Subsample.",
-				"input.pgm ratio output.pgm",
+				"input.* ratio output.ppm",
 				args_desc);
 
   trace::entering("main");
 
-  typedef image2d<value::int_u8> I;
+  typedef image2d<value::rgb8> I;
   I input;
-  io::pgm::load(input, argv[1]);
+  io::magick::load(input, argv[1]);
 
   unsigned ratio = atoi(argv[2]);
-  io::pgm::save(mln::subsampling::antialiased(input, ratio), argv[3]);
+  io::ppm::save(mln::subsampling::antialiased(input, ratio), argv[3]);
 
   trace::exiting("main");
 }

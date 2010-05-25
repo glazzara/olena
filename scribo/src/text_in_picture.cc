@@ -106,6 +106,7 @@
 
 // #include <scribo/core/line_set.hh>
 // #include <scribo/text/recognition.hh>
+// #include <scribo/text/merging.hh>
 
 const char *args_desc[][2] =
 {
@@ -697,6 +698,7 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm 1 1 1 1 1",
 
 //   scribo::line_set<L>
 //     lines = scribo::make::line_set(groups);
+//   lines = scribo::text::merging(lines);
 //   text::recognition(lines, "fra", "out.txt");
 
   trace::exiting("main");

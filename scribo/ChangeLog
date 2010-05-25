@@ -1,5 +1,38 @@
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Cleanup sample tools.
+
+	* src/preprocessing/Makefile.am,
+	* src/text/Makefile.am,
+	* src/Makefile.am: Update.
+
+	* src/multi_scale/Makefile.am,
+	* src/multi_scale/find_lines.cc
+	* src/text/pbm_recognition.cc
+	* src/text/recognition.cc
+	* src/text_in_article_preprocess.cc
+	* src/text_in_doc.cc
+	* src/text_in_doc_ppm.cc
+	* src/text_in_photo.cc
+	* src/text_in_photo_invert.cc
+	* src/text_in_photo_pbm_fast.cc
+	* src/text_in_photo_ppm.cc
+	* test.cc: Remove. Deprecated.
+
+	* src/text_in_article_pbm.cc: Rename as...
+	* src/pbm_text_in_doc.cc: ... this. Make use of the new toolchain
+	routines.
+
+	* src/text/pbm_lines_recognition.cc,
+	* src/text_in_doc_preprocess.cc: New.
+
+	* src/text_in_photo_fast.cc: Rename as...
+	* src/text_in_picture.cc: ... this.
+
+	* src/preprocessing/subsample.cc: Make use of io::magick.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* toolchain/text_in_doc.hh: Introduce a new routine for extracting
 	text in a document.
 

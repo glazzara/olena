@@ -27,10 +27,22 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/io/pbm/load.hh>
+#include <mln/value/int_u16.hh>
 
 #include <scribo/text/recognition.hh>
 
 #include <scribo/debug/usage.hh>
+
+#include <scribo/core/component_set.hh>
+#include <scribo/core/object_links.hh>
+#include <scribo/core/object_groups.hh>
+
+#include <scribo/text/merging.hh>
+#include <scribo/primitive/extract/components.hh>
+#include <scribo/primitive/link/with_single_left_link_dmax_ratio.hh>
+#include <scribo/primitive/group/from_single_link.hh>
+
+#include <scribo/io/text_boxes/save.hh>
 
 
 const char *args_desc[][2] =
@@ -48,17 +60,31 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  if (argc != 2 && argc != 3)
+  if (argc != 2 && argc != 3 && argc != 4)
     return scribo::debug::usage(argv,
 				"Text recognition",
-				"input.pbm [lang]",
+				"input.pbm [lang] [file]",
 				args_desc);
 
   trace::entering("main");
 
   image2d<bool> input;
-  io::pbm::load(input, argv[1]);
+  mln::io::pbm::load(input, argv[1]);
 
+  typedef image2d<value::int_u16> L;
+  value::int_u16 ncomps;
+  component_set<L>
+    comps = scribo::primitive::extract::components(input, c8(), ncomps);
+  std::cout << "ncomps = " << ncomps << std::endl;
+
+  object_links<L>
+    links = scribo::primitive::link::with_single_left_link_dmax_ratio(comps, 2);
+
+  object_groups<L>
+    groups = scribo::primitive::group::from_single_link(links);
+
+  line_set<L> lines(groups);
+  lines = text::merging(lines);
 
   std::string str = argv[2];
   const char *lang;
@@ -69,7 +95,13 @@ int main(int argc, char* argv[])
   else
     lang = argv[2];
 
-  scribo::text::recognition(input, lang);
+  char *output = 0;
+  if (argc >= 4)
+    output = argv[3];
+
+  scribo::text::recognition(lines, lang);
+
+  scribo::io::text_boxes::save(lines, output);
 
   trace::exiting("main");
 }

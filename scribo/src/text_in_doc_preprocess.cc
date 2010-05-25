@@ -41,7 +41,10 @@
 #include <scribo/debug/usage.hh>
 
 #include <scribo/preprocessing/split_bg_fg.hh>
+#include <scribo/preprocessing/deskew.hh>
 
+
+#include <mln/io/pgm/all.hh>
 
 
 const char *args_desc[][2] =
@@ -81,11 +84,20 @@ int main(int argc, char* argv[])
     input_rgb = preprocessing::split_bg_fg(input_rgb, lambda, 32).second();
   }
 
+  // Convert to Gray level image.
+  image2d<value::int_u8>
+    input_gl = data::transform(input_rgb, mln::fun::v2v::rgb_to_int_u<8>());
+
+
+  // Deskewing
+  std::cout << "Deskew if needed..." << std::endl;
+  input_gl = preprocessing::deskew(input_gl);
+
   // Binarize foreground to use it in the processing chain.
   std::cout << "Binarizing foreground..." << std::endl;
-  image2d<bool> input = scribo::binarization::sauvola_ms(input_rgb, 101, 3);
+  image2d<bool> input_bin = scribo::binarization::sauvola_ms(input_gl, 101, 3);
 
-  logical::not_inplace(input);
+  logical::not_inplace(input_bin);
 
-  mln::io::pbm::save(input, argv[2]);
+  mln::io::pbm::save(input_bin, argv[2]);
 }
