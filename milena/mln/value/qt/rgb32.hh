@@ -642,8 +642,6 @@ namespace mln
       }
 
 
-      const rgb32 rgb32::zero(0,0,0);
-
       /*------------.
       | Operators.  |
       `------------*/
@@ -765,6 +763,7 @@ namespace mln
 	to = value::qt::rgb32(from, from, from);
       }
 
+
       // hsl -> rgb8.
       template <typename H, typename S, typename L>
       void from_to_(const value::hsl_<H,S,L>& from, value::qt::rgb32& to)
@@ -773,12 +772,15 @@ namespace mln
 	to = v.to_equiv();
       }
 
+
+      inline
       void from_to_(const value::qt::rgb32& from, bool& to)
       {
 	to = ((from == literal::black) ? false : true);
       }
 
 
+      inline
       void from_to_(const bool& from, value::qt::rgb32& to)
       {
 	if (from)

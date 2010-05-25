@@ -50,6 +50,7 @@
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/util/array.hh>
 # include <mln/convert/from_to.hh>
+# include <mln/geom/ncols.hh>
 
 
 namespace mln

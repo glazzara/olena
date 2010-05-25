@@ -1,7 +1,22 @@
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	* mln/subsampling/antialiased.hh: Fix invalid output buffer size
-	which may lead to a segfault.
+	Small fixes.
+
+	* mln/labeling/compute.hh: Add a missing include.
+
+	* mln/literal/colors.hh: Revamp header.
+
+	* mln/value/internal/make_generic_name.hh: Add a missing inline.
+
+	* mln/value/qt/rgb32.hh: Add a missing inline and a useless
+	literal.
+
+	* mln/value/rgb.hh: Add a fixme.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/subsampling/antialiased.hh: Fix an invalid output buffer
+	size which may lead to a segfault.
 
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 

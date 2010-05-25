@@ -47,6 +47,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+      inline
       std::string make_generic_name(const char *name, int quantification)
       {
 	std::stringstream out;
