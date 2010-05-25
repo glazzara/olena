@@ -1,5 +1,10 @@
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* toolchain/text_in_doc.hh: Introduce a new routine for extracting
+	text in a document.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* core/def/lbl_type.hh: Introduce a global label type.
 
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
