@@ -1,5 +1,15 @@
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve line detection.
+
+	* primitive/extract/lines_h_pattern.hh,
+	* primitive/extract/lines_v_pattern.hh: Use reconstruction
+	algorithm.
+
+	* primitive/extract/lines_pattern.hh: Add a fast implementation.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* io/text_boxes/save.hh: New. Save text boxes information.
 
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>

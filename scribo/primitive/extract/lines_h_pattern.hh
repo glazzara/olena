@@ -53,15 +53,30 @@ namespace scribo
 
       using namespace mln;
 
-      /// Extract horizontal lines matching a specific pattern.
-      ///
-      /// \param[in] input  A binary image.
-      /// \param[in] length The minimum line length.
-      /// \param[in] delta Distance between the object pixel and the
-      /// background pixel.
-      ///
-      /// \result An image of horizontal lines.
-      //
+      /*! \brief Extract horizontal lines matching a specific pattern.
+
+	\param[in] input  A binary image.
+	\param[in] length The minimum line length.
+	\param[in] delta Distance between the object pixel and the
+	background pixel.
+
+	\result An image of horizontal lines.
+
+
+	     o
+	     |     ^
+	     |     |  Delta
+	     |     v
+	     X
+	     |     ^
+	     |     |  Delta
+	     |     v
+	     o
+
+	Using a delta of 0 is equivalent to the use of a c2_row
+	neighborhood.
+
+      */
       template <typename I>
       mln_concrete(I)
       lines_h_pattern(const Image<I>& input, unsigned length, unsigned delta);
@@ -73,15 +88,16 @@ namespace scribo
       mln_concrete(I)
       lines_h_pattern(const Image<I>& input, unsigned length, unsigned delta)
       {
+	trace::entering("scribo::primitive::extract::lines_h_pattern");
+
 	mlc_is(mln_value(I), bool)::check();
 	mln_precondition(exact(input).is_valid());
-	mln_precondition(length % 2 == 1);
 
 	// FIXME: not generic.
  	window2d win;
 	mln_deduce(I, site, dpsite)
-	  dp1(-delta, 0),
-	  dp2( delta, 0);
+	  dp1(-delta - 1, 0),
+	  dp2( delta + 1, 0);
 	win.insert(dp1);
 	win.insert(dp2);
 
