@@ -119,6 +119,15 @@ namespace scribo
     namespace internal
     {
 
+#  ifdef SCRIBO_SAUVOLA_DEBUG
+      // Declare debug images.
+      image2d<value::int_u8> debug_k;
+      image2d<float> debug_s_n;
+      image2d<float> debug_k_l;
+#  endif // ! SCRIBO_SAUVOLA_DEBUG
+
+
+
       /*! \brief compute Sauvola's threshold applying directly the formula.
 
 	\param[in] m_x_y Mean value.
@@ -131,12 +140,96 @@ namespace scribo
 
 	\return A threshold.
        */
+#  ifdef SCRIBO_SAUVOLA_DEBUG
+      inline
+      double
+      sauvola_threshold_formula(const double m_x_y, const double s_x_y,
+				const double K, const double R,
+				value::int_u8& dbg_k, float& dbg_s_n,
+				float& dbg_k_l)
+#  else
       inline
       double
       sauvola_threshold_formula(const double m_x_y, const double s_x_y,
 				const double K, const double R)
+#  endif // ! SCRIBO_SAUVOLA_DEBUG
       {
-	return m_x_y * (1.0 + K * ((s_x_y / R) - 1.0));
+//	double s_N = s_x_y / 256;
+	double K_2 = K;
+//	double K_2 = exp(K * log(s_x_y / 256));
+// 	if (s_x_y < 30)
+// 	  K_2 = 0.01;
+// 	else if (s_x_y < 80)
+// 	  K_2 = 0.1;
+// 	else if (s_x_y > 80)
+// 	  K_2 = K;
+
+
+// Results_0.1_0.34
+//
+// 	if (s_N < 0.1f)
+// 	{
+// 	  K_2 = 0.1f;
+// 	  dbg_k = 0;
+// 	  dbg_s_n = s_N;
+// 	}
+// 	else if (s_N > 0.34)
+// 	{
+// 	  K_2 = 0.34;
+// 	  dbg_k = 255;
+// 	  dbg_s_n = s_N;
+// 	}
+// 	else
+// 	{
+// 	  K_2 = s_N;
+// 	  dbg_k = 150;
+// 	  dbg_s_n = s_N;
+// 	}
+
+
+// 	const double k_min = 0.1f;
+// 	const double k_max = 1.0f;
+// 	const double s_1 = 0.05f;
+// 	const double s_2 = 0.50f;
+
+// 	double k_b = (k_max - k_min) / (double)(s_2 - s_1);
+// 	double k_a = 0.1f - s_1  * k_b;
+// 	K_2 = k_a + k_b * s_N;
+
+// 	dbg_s_n = s_N;
+// 	if (K_2 < k_min)
+// 	  dbg_k = 0;
+// 	else if (K_2 > k_max)
+// 	  dbg_k = 255;
+// 	else
+// 	  dbg_k = 150;
+
+
+
+// 	if (s_N < 0.1f)
+// 	{
+// 	  K_2 = 0.1f;
+// 	  dbg_k = 0;
+// 	  dbg_s_n = s_N;
+// 	  dbg_k_l = 0.1;
+// 	}
+// 	else
+// 	{
+// //	  double K_L = ((long int)((s_N * 11) + 0.49999)) * s_N;
+// 	  double K_L = s_N * K / 3.0f;
+// //	  K_2 = std::min(K_L, (double) 1.0);
+// 	  K_2 = K_L;
+// 	  if (K_L > 1.0f)
+// 	    dbg_k = 255;
+// 	  else
+// 	    dbg_k = 150;
+
+// 	  dbg_s_n = s_N;
+// 	  dbg_k_l = K_L;
+// 	}
+
+
+	return m_x_y * (1.0 + K_2 * ((s_x_y / R) - 1.0));
       }
 
 
@@ -146,9 +239,15 @@ namespace scribo
       double
       sauvola_threshold_formula(double m_x_y, double s_x_y)
       {
-	return sauvola_threshold_formula(m_x_y, s_x_y,
-					 SCRIBO_DEFAULT_SAUVOLA_K,
-					 SCRIBO_DEFAULT_SAUVOLA_R);
+#  ifdef SCRIBO_SAUVOLA_DEBUG
+#   warning "This overload of sauvola_threshold_formula is disabled in debug mode!"
+	std::cout << "This overload of sauvola_threshold_formula is disabled in debug mode!" << std::endl;
+	return 0;
+#  else
+ 	return sauvola_threshold_formula(m_x_y, s_x_y,
+ 					 SCRIBO_DEFAULT_SAUVOLA_K,
+ 					 SCRIBO_DEFAULT_SAUVOLA_R);
+#  endif // !SCRIBO_SAUVOLA_DEBUG
       }
 
 
@@ -208,7 +307,11 @@ namespace scribo
 	double s_x_y = std::sqrt((s_x_y_tmp - (m_x_y_tmp * m_x_y_tmp) / wh) / (wh - 1.f));
 
 	// Thresholding.
+#  ifdef SCRIBO_SAUVOLA_DEBUG
+	double t_x_y = sauvola_threshold_formula(m_x_y, s_x_y, K, R, debug_k(p), debug_s_n(p), debug_k_l(p));
+#  else
 	double t_x_y = sauvola_threshold_formula(m_x_y, s_x_y, K, R);
+#  endif // ! SCRIBO_SAUVOLA_DEBUG
 
 	return t_x_y;
       }
@@ -252,7 +355,11 @@ namespace scribo
 	double s_x_y = std::sqrt((s_x_y_tmp - (m_x_y_tmp * m_x_y_tmp) / wh) / (wh - 1.f));
 
 	// Thresholding.
+#  ifdef SCRIBO_SAUVOLA_DEBUG
+	double t_x_y = sauvola_threshold_formula(m_x_y, s_x_y, K, R, debug_k(p), debug_s_n(p), debug_k_l(p));
+#  else
 	double t_x_y = sauvola_threshold_formula(m_x_y, s_x_y, K, R);
+#  endif // !SCRIBO_SAUVOLA_DEBUG
 
 	return t_x_y;
       }

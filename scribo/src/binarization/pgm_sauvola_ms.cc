@@ -93,10 +93,6 @@ int main(int argc, char *argv[])
   else
     s = 3u;
 
-  // Lambda value
-  unsigned lambda_min_1 = 67; // FIXME: should be adapted to the
-			      // window size.
-
   double k;
   if (argc >= 6)
     k = atof(argv[5]);
@@ -107,8 +103,7 @@ int main(int argc, char *argv[])
   io::pgm::load(input_1, argv[1]);
 
   image2d<bool>
-    output = scribo::binarization::sauvola_ms(input_1, w_1, s,
-					      lambda_min_1, k);
+    output = scribo::binarization::sauvola_ms(input_1, w_1, s, k);
 
   io::pbm::save(output, argv[2]);
 }

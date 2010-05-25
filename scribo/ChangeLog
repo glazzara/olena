@@ -1,3 +1,30 @@
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve debug outputs in Sauvola and make binarization tools
+	compile again.
+
+	* binarization/internal/first_pass_functor.hh,
+	* binarization/sauvola_ms.hh,
+	* binarization/sauvola_threshold_image.hh: Add debug outputs if
+	SCRIBO_SAUVOLA_DEBUG flag is set.
+
+	* binarization/sauvola_ms_split.hh: Remove lambda argument.
+
+	* binarization/sauvola_threshold_image_debug.hh: Add the threshold
+	image as debug output.
+
+	* src/binarization/Makefile.am: Add sauvola_ms_debug.
+	* src/binarization/sauvola_ms_debug.cc: New.
+
+	* src/binarization/fg_sauvola_ms.cc,
+	* src/binarization/pgm_sauvola_ms.cc,
+	* src/binarization/ppm_fg_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola_ms_split.cc,
+	* src/binarization/sauvola_debug.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_split.cc: Make compile again.
+
 2010-05-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes for Nuxeo/XWiki.

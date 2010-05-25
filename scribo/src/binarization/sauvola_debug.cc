@@ -28,6 +28,10 @@
 #include <mln/io/pbm/save.hh>
 #include <mln/io/pgm/save.hh>
 
+#include <mln/data/stretch.hh>
+#include <mln/data/convert.hh>
+#include <mln/data/saturate.hh>
+
 #include <scribo/binarization/local_threshold.hh>
 #include <scribo/binarization/sauvola_threshold_image_debug.hh>
 #include <scribo/debug/usage.hh>
@@ -82,9 +86,10 @@ int main(int argc, char *argv[])
   io::magick::load(input, argv[1]);
 
 
-  image2d<value::int_u8> mean, stddev;
+  image2d<float> mean, stddev, thres;
   initialize(mean, input);
   initialize(stddev, input);
+  initialize(thres, input);
 
   image2d<value::int_u8>
     gima = data::transform(input,
@@ -94,12 +99,18 @@ int main(int argc, char *argv[])
   image2d<bool>
     out = local_threshold(gima,
 			  sauvola_threshold_image_debug(gima, w, k,
-							mean, stddev));
+							mean, stddev, thres));
 
 
   io::pbm::save(out, argv[2]);
-  io::pgm::save(mean, argv[3]);
-  io::pgm::save(stddev, argv[4]);
+
+  io::pgm::save(data::stretch(value::int_u8(), mean), argv[3]);
+  io::pgm::save(data::stretch(value::int_u8(), stddev), argv[4]);
+
+  io::pgm::save(data::saturate(value::int_u8(), mean), "mean_saturated.pgm");
+  io::pgm::save(data::saturate(value::int_u8(), stddev), "stddev_saturated.pgm");
+
+  io::pgm::save(data::saturate(value::int_u8(), thres), "thres_saturated.pgm");
 
   trace::exiting("main");
 }

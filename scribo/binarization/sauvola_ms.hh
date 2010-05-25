@@ -54,9 +54,6 @@
 
 # include <mln/extension/adjust.hh>
 
-// FIXME: to be removed later...
-# include <mln/io/pgm/save.hh>
-
 # include <scribo/subsampling/integral_single_image.hh>
 
 # include <scribo/core/macros.hh>
@@ -65,6 +62,14 @@
 # include <scribo/binarization/internal/first_pass_functor.hh>
 
 # include <scribo/canvas/integral_browsing.hh>
+
+# ifdef SCRIBO_SAUVOLA_DEBUG
+#  include <mln/io/pgm/save.hh>
+#  include <mln/data/saturate.hh>
+#  include <mln/data/convert.hh>
+#  include <mln/arith/times.hh>
+# endif // ! SCRIBO_SAUVOLA_DEBUG
+
 
 
 namespace scribo
@@ -116,9 +121,12 @@ namespace scribo
       using namespace mln;
 
 
-      // FIXME: to be removed later...
+# ifdef SCRIBO_SAUVOLA_DEBUG
       char* scale_image_output = 0;
-
+      char* k_image_output = 0;
+      char* s_n_image_output = 0;
+      char* k_l_image_output = 0;
+# endif // ! SCRIBO_SAUVOLA_DEBUG
 
       template <typename V>
       V my_find_root(image2d<V>& parent, const V& x)
@@ -906,9 +914,10 @@ namespace scribo
 	  // Propagate scale values.
 	  e_2 = transform::influence_zone_geodesic(e_2, c8());
 
-	  // FIXME: Remove or make it better...
+#  ifdef SCRIBO_SAUVOLA_DEBUG
 	  if (internal::scale_image_output)
 	    io::pgm::save(e_2, internal::scale_image_output);
+#  endif // ! SCRIBO_SAUVOLA_DEBUG
 
 	  // Binarize
 	  image2d<bool>
@@ -921,65 +930,7 @@ namespace scribo
       } // end of namespace scribo::binarization::impl::generic
 
 
-      template <typename I>
-      mln_ch_value(I,bool)
-      sauvola_ms_rgb8(const Image<I>& input_1_, unsigned w_1,
-		      unsigned s, double K)
-      {
-	const I& input_1 = exact(input_1_);
-
-	mln_ch_value(I, value::int_u8) gima;
-	gima = data::transform(input_1, mln::fun::v2v::rgb_to_int_u<8>());
-
-	mln_ch_value(I, bool)
-	  output = generic::sauvola_ms(gima, w_1, s, K);
-
-	return output;
-      }
-
-
     } // end of namespace scribo::binarization::impl
-
-
-
-    // Dispatch
-
-    namespace internal
-    {
-
-      template <typename I>
-      mln_ch_value(I,bool)
-	sauvola_ms_dispatch(const mln_value(I)&,
-			    const Image<I>& input_1, unsigned w_1,
-			    unsigned s, double K)
-      {
-	return impl::generic::sauvola_ms(input_1, w_1, s, K);
-      }
-
-
-
-      template <typename I>
-      mln_ch_value(I,bool)
-	sauvola_ms_dispatch(const value::rgb8&,
-			    const Image<I>& input_1, unsigned w_1,
-			    unsigned s, double K)
-      {
-	return impl::sauvola_ms_rgb8(input_1, w_1, s, K);
-      }
-
-
-      template <typename I>
-      mln_ch_value(I,bool)
-      sauvola_ms_dispatch(const Image<I>& input_1, unsigned w_1,
-			  unsigned s, double K)
-      {
-	typedef mln_value(I) V;
-	return sauvola_ms_dispatch(V(), input_1, w_1, s, K);
-      }
-
-
-    } // end of namespace scribo::binarization::internal
-
 
 
     // Facade
@@ -992,9 +943,26 @@ namespace scribo
       trace::entering("scribo::binarization::sauvola_ms");
 
       mln_precondition(exact(input_1_).is_valid());
+      // Gray level images ONLY.
+      mlc_is_not_a(mln_value(I), value::Vectorial)::check();
+      mlc_is_not(mln_value(I), bool)::check();
 
       mln_ch_value(I,bool)
-	output = internal::sauvola_ms_dispatch(input_1_, w_1, s, K);
+	output = impl::generic::sauvola_ms(exact(input_1_), w_1, s, K);
+
+
+# ifdef SCRIBO_SAUVOLA_DEBUG
+      if (internal::k_image_output)
+	io::pgm::save(internal::debug_k, internal::k_image_output);
+
+      if (internal::s_n_image_output)
+	io::pgm::save(data::saturate(value::int_u8(), internal::debug_s_n * 100),
+		      internal::s_n_image_output);
+      if (internal::k_l_image_output)
+	io::pgm::save(data::saturate(value::int_u8(), internal::debug_k_l * 10),
+		      internal::k_l_image_output);
+# endif // ! SCRIBO_SAUVOLA_DEBUG
+
 
       trace::exiting("scribo::binarization::sauvola_ms");
       return output;

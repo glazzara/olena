@@ -54,24 +54,23 @@ namespace scribo
     /*! \brief Binarize a color image merging the binarization of each
         component using Sauvola's algorithm.
 
-      \param[in] input_1 A grayscale or a color image.
+      \param[in] input_1 A color image.
       \param[in] w_1 The window size used to compute stats.
       \param[in] s The scale factor used for the first subscaling.
-      \param[in] lambda_min_1 Size of the objects kept at scale 1.
       \param[in] min_ntrue A site is set to 'True' in the output if it
                            is set to 'True' at least \p min_ntrue
                            components. Possible values: 1, 2, 3.
       \param[in] K Sauvola's formula parameter.
 
-      \p w_1 and \p lambda_min_1 are expressed according to the image
-      at scale 0, i.e. the original size.
+      \p w_1 is expressed according to the image at scale 0, i.e. the
+      original size.
 
       \return A Boolean image.
     */
     template <typename I>
     mln_ch_value(I, bool)
     sauvola_ms_split(const Image<I>& input_1_, unsigned w_1,
-		     unsigned s, unsigned lambda_min_1, unsigned min_ntrue,
+		     unsigned s, unsigned min_ntrue,
 		     double K);
 
 
@@ -80,7 +79,7 @@ namespace scribo
     template <typename I>
     mln_ch_value(I, bool)
     sauvola_ms_split(const Image<I>& input_1_, unsigned w_1,
-		     unsigned s, unsigned lambda_min_1, unsigned min_ntrue);
+		     unsigned s, unsigned min_ntrue);
 
 
 
@@ -90,7 +89,7 @@ namespace scribo
     template <typename I>
     mln_ch_value(I, bool)
     sauvola_ms_split(const Image<I>& input_1_, unsigned w_1,
-		     unsigned s, unsigned lambda_min_1, unsigned min_ntrue,
+		     unsigned s, unsigned min_ntrue,
 		     double K)
     {
       trace::entering("scribo::binarization::sauvola_ms_split");
@@ -109,9 +108,9 @@ namespace scribo
 
       bin_t r_b, g_b, b_b;
 
-      r_b = impl::generic::sauvola_ms(r_i, w_1, s, lambda_min_1, K);
-      g_b = impl::generic::sauvola_ms(g_i, w_1, s, lambda_min_1, K);
-      b_b = impl::generic::sauvola_ms(b_i, w_1, s, lambda_min_1, K);
+      r_b = impl::generic::sauvola_ms(r_i, w_1, s, K);
+      g_b = impl::generic::sauvola_ms(g_i, w_1, s, K);
+      b_b = impl::generic::sauvola_ms(b_i, w_1, s, K);
 
       border::resize(r_b, input_1.border());
       border::resize(g_b, input_1.border());
@@ -153,9 +152,9 @@ namespace scribo
     template <typename I>
     mln_ch_value(I, bool)
     sauvola_ms_split(const Image<I>& input_1, unsigned w_1,
-		     unsigned s, unsigned lambda_min_1, unsigned min_ntrue)
+		     unsigned s, unsigned min_ntrue)
     {
-      return sauvola_ms_split(input_1, w_1, s, lambda_min_1, min_ntrue,
+      return sauvola_ms_split(input_1, w_1, s, min_ntrue,
 			      SCRIBO_DEFAULT_SAUVOLA_K);
     }
 

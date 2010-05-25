@@ -93,22 +93,23 @@ int main(int argc, char *argv[])
   else
     s = 3u;
 
-  // Lambda value
-  unsigned lambda_min_1 = 67; // FIXME: should be adapted to the
-			      // window size.
-
   double k;
   if (argc >= 6)
     k = atof(argv[5]);
   else
     k = 0.34f;
 
+  // Load
   image2d<value::rgb8> input_1;
   io::ppm::load(input_1, argv[1]);
 
+  // Convert to Gray level image.
+  image2d<value::int_u8>
+    input_1_gl = data::transform(input_1, mln::fun::v2v::rgb_to_int_u<8>());
+
+  // Binarize
   image2d<bool>
-    output = scribo::binarization::sauvola_ms(input_1, w_1, s,
-					      lambda_min_1, k);
+    output = scribo::binarization::sauvola_ms(input_1_gl, w_1, s, k);
 
   io::pbm::save(output, argv[2]);
 }

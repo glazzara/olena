@@ -34,7 +34,7 @@
 
 bool check_args(int argc, char * argv[])
 {
-  if (argc < 3 || argc > 7)
+  if (argc < 3 || argc > 6)
     return false;
 
   if (argc >= 5)
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
   if (!check_args(argc, argv))
     return scribo::debug::usage(argv,
 				"Multi-Scale Binarization based on Sauvola's algorithm.",
-				"input.* output.pbm <w> <s> <k> <scale.pgm>",
+				"input.* output.pbm <w> <s> <k>",
 				args_desc);
 
   trace::entering("main");
@@ -100,14 +100,17 @@ int main(int argc, char *argv[])
   else
     k = 0.34f;
 
-  if (argc >= 7)
-    scribo::binarization::internal::scale_image_output = argv[6];
-
+  // Load
   image2d<value::rgb8> input_1;
   io::magick::load(input_1, argv[1]);
 
+  // Convert to Gray level image.
+  image2d<value::int_u8>
+    input_1_gl = data::transform(input_1, mln::fun::v2v::rgb_to_int_u<8>());
+
+  // Binarize
   image2d<bool>
-    output = scribo::binarization::sauvola_ms(input_1, w_1, s, k);
+    output = scribo::binarization::sauvola_ms(input_1_gl, w_1, s, k);
 
   io::pbm::save(output, argv[2]);
 }

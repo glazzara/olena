@@ -101,9 +101,6 @@ int main(int argc, char *argv[])
   else
     min_ntrue = 2;
 
-  // Lambda value
-  unsigned lambda_min_1 = 67; // FIXME: should be adapted to the
-			      // window size.
 
   double k;
   if (argc >= 7)
@@ -112,14 +109,15 @@ int main(int argc, char *argv[])
     k = 0.34f;
 
 
-
+  // Load
   image2d<value::rgb8> input_1;
   io::ppm::load(input_1, argv[1]);
 
   std::cout << "Using w=" << w_1 << " - s=" << s << " - min_ntrue=" << min_ntrue << " - k=" << k << std::endl;
 
+  // Binarize
   image2d<bool>
-    output = scribo::binarization::sauvola_ms_split(input_1, w_1, s, lambda_min_1, min_ntrue, k);
+    output = scribo::binarization::sauvola_ms_split(input_1, w_1, s, min_ntrue, k);
 
   io::pbm::save(output, argv[2]);
 }
