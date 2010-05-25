@@ -1,20 +1,29 @@
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new meta tool to deduce an extension type.
+
+	mln/core/routine/extend.hh: Introduce a new macro
+	mln_extension_type.
+
+	mln/geom/rotate.hh: Make use of this new macro.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Reduce precision issues in transformations.
 
-	* milena/mln/core/image/imorph/interpolated.hh: Make the vector
-	type more generic.
+	* mln/core/image/imorph/interpolated.hh: Make the vector type more
+	generic.
 
-	* milena/mln/core/point.hh: Provide specific conversion operators
-	for float and double.
+	* mln/core/point.hh: Provide specific conversion operators for
+	float and double.
 
-	* milena/mln/fun/internal/x2x_linear_impl.hh: Allow to set the
-	matrix value type.
+	* mln/fun/internal/x2x_linear_impl.hh: Allow to set the matrix
+	value type.
 
-	* milena/mln/fun/x2x/composed.hh,
-	* milena/mln/fun/x2x/rotation.hh,
-	* milena/mln/fun/x2x/translation.hh: Introduce data_t typedef
-	passed to x2x_linear_impl.
+	* mln/fun/x2x/composed.hh,
+	* mln/fun/x2x/rotation.hh,
+	* mln/fun/x2x/translation.hh: Introduce data_t typedef passed to
+	x2x_linear_impl.
 
 2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
 

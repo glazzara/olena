@@ -45,6 +45,8 @@
 
 # include <mln/geom/bbox.hh>
 
+# include <mln/extension/duplicate.hh>
+
 # include <mln/fun/x2x/composed.hh>
 # include <mln/fun/x2x/rotation.hh>
 # include <mln/fun/x2x/translation.hh>
@@ -112,9 +114,11 @@ namespace mln
       // further in this routine, we define a default domain.
       mln_precondition(input.is_valid());
       mln_precondition(angle >= -360.0f && angle <= 360.0f);
-      mlc_converts_to(mln_exact(Ext), mln_value(I))::check();
+//      mlc_converts_to(mln_exact(Ext), mln_value(I))::check();
       mlc_is_a(S,Box)::check();
       // FIXME: A precondition is probably missing for the extension value.
+
+      extension::duplicate(input);
 
       mln_site(I) c = geom::bbox(input).pcenter();
       typedef fun::x2x::translation<2,double> trans_t;
@@ -145,9 +149,12 @@ namespace mln
       }
 
       typedef
-	tr_image<mln_box(I), extension_val<const I>, comp_transf_t> tr_t;
+	typename mln::internal::extension_type<const I, mln_exact(Ext)>::result ext_t;
 
-      tr_t tr = transposed_image(b, extend(input, extension), comp_transf);
+      typedef
+	tr_image<mln_box(I), ext_t, comp_transf_t> tr_t;
+
+      tr_t tr = transposed_image(b, ext_t(input, extension), comp_transf);
 
       typedef mln_site(I) P;
       P rpmin = P(rot(input.domain().pmin().to_vec()));
