@@ -20,10 +20,14 @@
 include $(top_srcdir)/scribo/tests/tests.mk
 
 check_PROGRAMS =				\
-  unskew 					\
-  rotate_90
+  crop 						\
+  crop_without_localization 			\
+  rotate_90 					\
+  unskew
 
-unskew_SOURCES = unskew.cc
+crop_SOURCES = crop.cc
+crop_without_localization_SOURCES = crop_without_localization.cc
 rotate_90_SOURCES = rotate_90.cc
+unskew_SOURCES = unskew.cc
 
 TESTS = $(check_PROGRAMS)

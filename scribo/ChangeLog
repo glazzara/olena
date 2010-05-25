@@ -1,5 +1,17 @@
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add crop tools.
+
+	* preprocessing/crop.hh,
+	* preprocessing/crop_without_localization.hh: new routines.
+
+	* tests/preprocessing/Makefile.am,
+	* tests/preprocessing/crop.cc,
+	* tests/preprocessing/crop_without_localization.cc: Associated
+	tests.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes.
 
 	* core/object_groups.hh: Fix an invalid size.
