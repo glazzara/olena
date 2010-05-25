@@ -1,5 +1,9 @@
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* core/def/lbl_type.hh: Introduce a global label type.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve line detection.
 
 	* primitive/extract/lines_h_pattern.hh,
