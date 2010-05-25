@@ -144,6 +144,13 @@ namespace mln
 
 	const I& input = exact(input_);
 
+	// No reduction.
+	if (factor == 1)
+	{
+	  trace::exiting("subsampling::impl::antialiased_2d_fastest");
+	  return duplicate(input);
+	}
+
 	typedef mln_value(I) V;
 	typedef mln_sum(V) S;
 
@@ -159,7 +166,7 @@ namespace mln
 	O output(b, border_thickness);
 
 	// Make sure there is enough data in input border.
-	unsigned input_border = factor - std::max(input.nrows() % factor,
+	unsigned input_border = factor - std::min(input.nrows() % factor,
 						  input.ncols() % factor);
 	extension::adjust_duplicate(input, input_border);
 
@@ -215,6 +222,14 @@ namespace mln
 
 	const I& input = exact(input_);
 
+
+	// No reduction.
+	if (factor == 1)
+	{
+	  trace::exiting("subsampling::impl::antialiased_2d_rgb");
+	  return duplicate(input);
+	}
+
 	typedef mln_value(I) V;
 	typedef mln_sum(V) S;
 
@@ -230,7 +245,7 @@ namespace mln
 	O output(b, border_thickness);
 
 	// Make sure there is enough data in input border.
-	unsigned input_border = factor - std::max(input.nrows() % factor,
+	unsigned input_border = factor - std::min(input.nrows() % factor,
 						  input.ncols() % factor);
 	extension::adjust_duplicate(input, input_border);
 

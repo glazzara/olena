@@ -1,5 +1,10 @@
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/subsampling/antialiased.hh: Fix invalid output buffer size
+	which may lead to a segfault.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a new meta tool to deduce an extension type.
 
 	mln/core/routine/extend.hh: Introduce a new macro
