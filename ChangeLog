@@ -1,3 +1,10 @@
+2010-05-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add `swilena' to the branches to be uploaded.
+
+	* lrde-upload.sh: Here.
+	Add a copyright header.
+
 2010-05-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Upload only branches master and next, in their own directories.

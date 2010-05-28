@@ -1,5 +1,22 @@
 #! /bin/sh
 
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
+#
+# This file is part of Olena.
+#
+# Olena is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, version 2 of the License.
+#
+# Olena is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+
+
 # This file is run by the LRDE autobuilder after a successful compilation.
 # It is not meant to be distributed with Olena.
 
@@ -14,19 +31,21 @@ set -ex
 #   |   |       `-- ...
 #   |   |-- olena-$VERSION-snapshot-master-$date.tar.bz2
 #   |   `-- olena-$VERSION-snapshot-master-$date.tar.gz
-#   `-- next
-#       |-- doc
-#       |   `-- milena
-#       |       `-- ...
-#       |-- olena-$VERSION-snapshot-next-$date.tar.bz2
-#       `-- olena-$VERSION-snapshot-next-$date.tar.gz
+#   |-- next
+#   |   |-- doc
+#   |   |   `-- milena
+#   |   |       `-- ...
+#   |   |-- olena-$VERSION-snapshot-next-$date.tar.bz2
+#   |   `-- olena-$VERSION-snapshot-next-$date.tar.gz
+#  ...
+#
 
 # Buildbot will tell us the name of the branch being compiled using $1.
 branch=$1
 
 case "$branch" in
   # Consider these branches only.
-  master|next) ;;
+  master|next|swilena) ;;
   # Don't upload other branches.
   *) exit ;;
 esac
