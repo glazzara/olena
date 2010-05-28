@@ -22,7 +22,6 @@
 
 ## FIXME: Factor as much as possible.  See how we handled this in TC.
 
-CLEANFILES =
 AM_CPPFLAGS = -I$(PYTHONINC) -I$(top_srcdir)/milena
 TOOLS_CXXFLAGS = @TOOLS_CXXFLAGS@
 AM_CXXFLAGS = $(TOOLS_CXXFLAGS)
@@ -41,13 +40,42 @@ AM_LDFLAGS = -avoid-version -module -shared
 @AMDEP_FALSE@	$(SWIG) $(AM_SWIGFLAGS) $(SWIGFLAGS) -o $@ $<
 
 
+# Use Make to generate `data.py' and shell scripts (`sps' and
+# `sps-local') instead of `configure', as advised by Autoconf's manual
+# (see section ``Installation Directory Variables'').
+edit = sed							\
+         -e 's|@top_srcdir[@]|$(top_srcdir)|g'			\
+         -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'			\
+         -e 's|@abs_builddir[@]|$(abs_builddir)|g'		\
+         -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'	\
+         -e 's|@libdir[@]|$(libdir)|g'				\
+         -e 's|@pythondir[@]|$(pythondir)|g'			\
+         -e 's|@PYTHON[@]|$(PYTHON)|g'
+
+
 # ltihooks.py: Python import hooks that understand Libtool libraries.
 python_PYTHON = ltihooks.py
 # swilena.py: The whole Swilena suite.
 python_PYTHON += swilena.py
 
-# data.py: Access to the data of the distribution (images, meshes, etc.)
-EXTRA_DIST = data.py
+# data.py: Access to the data of the distribution (images, meshes,
+# etc.).
+#
+# Use the all-local hook instead of the nodist_noinst_PYTHON variable,
+# since ``[...] byte-compilation occurs at install time, any files
+# listed in `noinst_PYTHON' will not be compiled'' (and therefore
+# generated, in our case), according to Automake's manual,
+all-local: data.py
+EXTRA_DIST = data.py.in
+data.py: data.py.in Makefile
+	rm -f $@ $@.tmp
+	srcdir='';				\
+	  test -f ./$< || srcdir=$(srcdir)/;	\
+	  $(edit) $${srcdir}$< >>$@.tmp
+	chmod a-w $@.tmp
+	mv $@.tmp $@
+
+CLEANFILES = data.py
 
 
 ## ----------------- ##
@@ -298,17 +326,6 @@ noinst_SCRIPTS = sps-local
 
 EXTRA_DIST += sps-common.in sps.in sps-local.in
 
-# Use Make to generate shell scripts (`sps' and `sps-local') instead
-# of `configure', as advised by Autoconf's manual (see section
-# ``Installation Directory Variables'').
-edit = sed							\
-         -e 's|@abs_srcdir[@]|$(abs_srcdir)|g'			\
-         -e 's|@abs_builddir[@]|$(abs_builddir)|g'		\
-         -e 's|@abs_top_builddir[@]|$(abs_top_builddir)|g'	\
-         -e 's|@libdir[@]|$(libdir)|g'				\
-         -e 's|@pythondir[@]|$(pythondir)|g'			\
-         -e 's|@PYTHON[@]|$(PYTHON)|g'
-
 sps sps-local: Makefile $(srcdir)/sps-common.in
 	rm -f $@ $@.tmp
 	srcdir='';				\
@@ -331,8 +348,7 @@ CLEANFILES += $(bin_SCRIPTS) $(noinst_SCRIPTS)
 
 include $(top_srcdir)/swilena/run.mk
 
-TESTS_ENVIRONMENT = \
-  top_srcdir="$(top_srcdir)" top_builddir="$(top_builddir)" $(RUN)
+TESTS_ENVIRONMENT = $(RUN)
 # Ensure `run' is rebuilt before the tests are run.
 $(TESTS): $(srcdir)/run.stamp
 # The dependency is on `run.in' and not `run', since `run' is

@@ -1,3 +1,21 @@
+2010-05-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Generate python/data.py.
+
+	* python/data.py: Rename as...
+	* python/data.py.in: ...this.
+	Adjust.
+	Turn top_srcdir into a variable substituted by configure.
+	* python/Makefile.am (EXTRA_DIST): s/data.py/data.py.in/.
+	* python/Makefile.am (all-local): New rule.
+	Depend on data.py.
+	(edit): Substitute top_srcdir.
+	(data.py): New rule.
+	(CLEANFILES): Add data.py.
+	(TESTS_ENVIRONMENT): No longer set top_srcdir and top_builddir.
+	* python/complex2-misc.py, python/max-tree.py:
+	Do not import `data', as it is not used.
+
 2010-04-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Simplify python/max-tree.py using Python's itertools.

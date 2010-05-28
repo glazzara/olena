@@ -22,7 +22,6 @@
 #
 # See also Milena's tests/topo/complex.cc.
 
-import data
 from swilena import *
 
 # A 2-d (simplicial) complex and its adjacency graph.

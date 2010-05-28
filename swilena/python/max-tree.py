@@ -19,7 +19,6 @@
 # \file python/max-tree.py
 # \brief Test on the max-tree.
 
-import data
 from swilena import *
 
 import itertools

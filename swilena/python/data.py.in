@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+# Copyright (C) 2008, 2010 EPITA Research and Development Laboratory (LRDE)
 #
 # This file is part of Olena.
 #
@@ -21,6 +21,6 @@
 
 import os
 
-top_srcdir = os.environ["top_srcdir"]
+top_srcdir = "@top_srcdir@"
 img_dir = os.path.join(top_srcdir, "milena", "img")
 lena = os.path.join (img_dir, "lena.pgm")
