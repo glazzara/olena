@@ -330,7 +330,8 @@ sps sps-local: Makefile $(srcdir)/sps-common.in
 	rm -f $@ $@.tmp
 	srcdir='';				\
 	  test -f ./$@.in || srcdir=$(srcdir)/;	\
-	  cp $${srcdir}/sps-common.in $@.tmp;	\
+	  cp $${srcdir}sps-common.in $@.tmp;	\
+	  chmod u+w $@.tmp;			\
 	  $(edit) $${srcdir}$@.in >>$@.tmp
 	chmod +x $@.tmp
 	chmod a-w $@.tmp
