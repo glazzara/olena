@@ -74,34 +74,29 @@ find $DEST -maxdepth 1 -type f -mtime +1 -name 'olena-*-snapshot-*' \
 # Upload the `.tar.gz' tarball.
 cp -f olena-$VERSION.tar.gz $DEST/olena-$REV.tar.gz.tmp
 mv -f $DEST/olena-$REV.tar.gz.tmp $DEST/olena-$REV.tar.gz
-chmod -R a+r $DEST/olena-$REV.tar.gz
 
 # Upload the `.tar.bz2' tarball.
 cp -f olena-$VERSION.tar.bz2 $DEST/olena-$REV.tar.bz2.tmp
 mv -f $DEST/olena-$REV.tar.bz2.tmp $DEST/olena-$REV.tar.bz2
-chmod -R a+r $DEST/olena-$REV.tar.bz2
 
 
 # Upload a copy of the reference manual and other documentation.
 mkdir -p $DEST_DOC
 
 # BuildBots' buildslaves set umask to 077 in their default
-# configuration.  Set read permissions for all on uploaded files.
-cp milena/doc/ref-guide.pdf   $DEST_DOC && chmod a+r $DEST_DOC/ref-guide.pdf
-cp milena/doc/tutorial.pdf    $DEST_DOC && chmod a+r $DEST_DOC/tutorial.pdf
-cp milena/doc/user-refman.pdf $DEST_DOC && chmod a+r $DEST_DOC/user-refman.pdf
-cp milena/doc/white-paper.pdf $DEST_DOC && chmod a+r $DEST_DOC/white-paper.pdf
+# configuration.
+cp milena/doc/ref-guide.pdf   $DEST_DOC
+cp milena/doc/tutorial.pdf    $DEST_DOC
+cp milena/doc/user-refman.pdf $DEST_DOC
+cp milena/doc/white-paper.pdf $DEST_DOC
 
 rm -rf $DEST_DOC/user-refman.tmp
 rm -rf $DEST_DOC/white-paper.tmp
 
-# Upload only the HTML version of the user reference manual. 
+# Upload only the HTML version (not the LaTeX sources) of the user
+# reference manual.
 cp -pR milena/doc/user-refman/html $DEST_DOC/user-refman.tmp
 cp -pR milena/doc/white-paper $DEST_DOC/white-paper.tmp
-
-# Likewise, set permissions for all on uploaded directories.
-chmod -R a+rX $DEST_DOC/user-refman.tmp
-chmod -R a+rX $DEST_DOC/white-paper.tmp
 
 if test -e $DEST_DOC/user-refman; then
   rm -rf $DEST_DOC/user-refman.old
@@ -117,6 +112,9 @@ mv -f $DEST_DOC/white-paper.tmp $DEST_DOC/white-paper
 
 rm -rf $DEST_DOC/user-refman.old
 rm -rf $DEST_DOC/white-paper.old
+
+# Expose uploaded files.
+chmod -R a+rX $DEST
 
 # We want to be able to modify these files with both the `build' and
 # `doc' accounts.
