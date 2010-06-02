@@ -75,7 +75,7 @@ data.py: data.py.in Makefile
 	chmod a-w $@.tmp
 	mv $@.tmp $@
 
-CLEANFILES = data.py
+CLEANFILES = data.py data.py[co]
 
 
 ## ----------------- ##
