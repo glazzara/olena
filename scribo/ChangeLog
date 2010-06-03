@@ -1,5 +1,16 @@
 2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add the binarization tool submitted to H-DIBCO 2010.
+
+	* src/Makefile.am,
+	* src/contest/Makefile.am,
+	* src/contest/hdibco-2010/Makefile.am: New.
+
+	* src/contest/hdibco-2010/sauvola_ms_hdibco.cc: New. Source code
+	of the submitted program for H-DIBCO 2010.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update tools in scribo/src.
 
 	* src/Makefile.am: Add postprocessing subdir.

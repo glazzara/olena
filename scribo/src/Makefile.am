@@ -22,6 +22,7 @@ include $(top_srcdir)/scribo/scribo.mk
 
 SUBDIRS =					\
   binarization 					\
+  contest 					\
   debug 					\
   primitive 					\
   filter 					\
