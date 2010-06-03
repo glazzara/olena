@@ -83,28 +83,33 @@ namespace mln
 	{
 	}
 
+	inline
 	void init()
 	{
-	  accus_.reserve(static_cast<unsigned>(nlabels_));
+	  accus_.reserve(1000);
 	  accus_.append(A());
 	}
 
+	inline
 	void new_label(const mln_value(L)& l)
 	{
 	  current_lbl_ = l;
 	  accus_.append(A());
 	}
 
-	void process_p(const util::pix<L>& pix)
+	inline
+	void process_p(const mln_site(L)& p)
 	{
-	  process__(accu_argument(), pix);
+	  process__(accu_argument(), p);
 	}
 
-	void process_n(const util::pix<L>& pix)
+	inline
+	void process_n(const mln_site(L)& n)
 	{
-	  process__(accu_argument(), pix);
+	  process__(accu_argument(), n);
 	}
 
+	inline
 	void finalize()
 	{
 	  convert::from_to(accus_, result_);
@@ -112,19 +117,23 @@ namespace mln
 
 
       private:
-	void process__(const mln_psite(L)&, const util::pix<L>& pix)
+	inline
+	void process__(const mln_psite(L)&, const mln_site(L)& p)
 	{
-	  accus_[current_lbl_].take(pix.p());
+	  accus_[current_lbl_].take(p);
 	}
 
-	void process__(const mln_value(L)&, const util::pix<L>& pix)
+	inline
+	void process__(const mln_value(L)&, const mln_site(L)&)
 	{
-	  accus_[current_lbl_].take(pix.v());
+	  accus_[current_lbl_].take(current_lbl_);
 	}
 
-	void process__(const util::pix<L>&, const util::pix<L>& pix)
+	template <typename V>
+	inline
+	void process__(const V&, const mln_site(L)&)
 	{
-	  accus_[current_lbl_].take(pix);
+	  mlc_abort(V)::check();
 	}
 
       public:

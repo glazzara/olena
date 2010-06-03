@@ -1,3 +1,13 @@
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use sites instead of pixels in canvas::labeling::blobs functors.
+
+	* mln/canvas/labeling/blobs.hh,
+	* mln/labeling/blobs.hh: Update members prototypes.
+
+	* mln/labeling/blobs_and_compute.hh: Do not construct on-the-fly
+	pixels anymore.
+
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes.
