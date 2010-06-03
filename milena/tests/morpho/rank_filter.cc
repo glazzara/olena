@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,6 @@
 #include <mln/core/alias/window2d.hh>
 
 #include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/data/fill.hh>
@@ -36,7 +36,6 @@
 #include <mln/data/median.hh>
 #include <mln/morpho/rank_filter.hh>
 #include <mln/morpho/dilation.hh>
-
 
 #include <mln/pw/value.hh>
 #include <mln/pw/cst.hh>

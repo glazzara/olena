@@ -1,5 +1,15 @@
 2010-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Clean up some tests in tests/morpho/.
+
+	* tests/morpho/rank_filter.cc: Do not include mln/io/pgm/save.hh.
+	* tests/morpho/skeleton_constrained.cc: Likewise.
+	(mln::show_connectivity_numbers): Move this function into the
+	global namespace to avoid the pollution of the `mln' namespace.
+	Aesthetic changes.
+
+2010-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Clean up a bit Milena's Makefiles.
 
 	* Makefile.am,
