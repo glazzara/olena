@@ -1,3 +1,9 @@
+2010-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean up a bit Olena's Makefiles.
+
+	* Makefile.am, external/Makefile.am: Here.
+
 2010-06-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	* lrde-upload.sh: Fix and factor uses of chmod.

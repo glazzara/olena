@@ -15,8 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-## Process this file through Automake to produce Makefile.in.
-
 ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = build-aux external milena
@@ -125,11 +123,10 @@ dist-hook:
 	)
 
 
-# Set the package version to olena-x.x-snapshot-dd-mm-yy
+# Set the package version to olena-x.x-snapshot-dd-mm-yy.
 #
 # Do not check NEWS file (this is not a release so there is no
 # entries in this file for this package).
-#
 snapshot:
 	current_date=`date +'%d-%m-%y'` 				\
 	&& sed -e "s/^\(AC_INIT(\[Olena\],\) \[\([\.[:alnum:]]*\)\(-snapshot-.*-[[:alnum:]]*\)*\], \(.*\)/\1 [\2-snapshot-$$current_date], \4/g" 	\
@@ -139,6 +136,4 @@ snapshot:
 	&& cp -f $(srcdir)/configure.ac.tmp $(srcdir)/configure.ac 	\
 	&& $(MAKE) $(AM_MAKEFLAGS) dist 				\
 	&& mv -f $(srcdir)/configure.ac.old $(srcdir)/configure.ac
-
 #>>
-#	&& $(srcdir)/build-aux/lrde-upload.sh

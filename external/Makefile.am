@@ -13,9 +13,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
-
-## Process this file through Automake to produce Makefile.in.
 
 SUBDIRS =
 
