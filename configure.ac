@@ -168,6 +168,11 @@ OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm], [GDCM],
 # Tesseract
 OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full], [tesseract], [TESSERACT])
 
+# Qt.
+AT_WITH_QT([], [], [],
+	   AC_DEFINE([HAVE_QT], 1, [Define to 1 if we can use Qt]),
+     	   AC_DEFINE([HAVE_QT], 0))
+AM_CONDITIONAL([HAVE_QT], [test x$QT_PATH != x])
 
 
 ## ---------------------------- ##
