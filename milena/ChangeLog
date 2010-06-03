@@ -1,5 +1,14 @@
 2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a function to convert qt::rgb32 values to int_u8.
+
+	* mln/fun/v2v/qt_rgb_to_int_u.hh: New.
+
+	* tests/fun/v2v/Makefile.am,
+	* tests/fun/v2v/qt_rgb_to_int_u.cc: New test.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Use sites instead of pixels in canvas::labeling::blobs functors.
 
 	* mln/canvas/labeling/blobs.hh,
