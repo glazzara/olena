@@ -1,3 +1,30 @@
+2010-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean up a bit Scribo's Makefiles.
+
+	* Makefile.am,
+	* demo/Makefile.am,
+	* src/Makefile.am,
+	* src/binarization/Makefile.am,
+	* src/debug/Makefile.am,
+	* src/filter/Makefile.am,
+	* src/misc/Makefile.am,
+	* src/multi_scale/Makefile.am,
+	* src/preprocessing/Makefile.am,
+	* src/primitive/Makefile.am,
+	* src/primitive/extract/Makefile.am,
+	* src/primitive/find/Makefile.am,
+	* src/primitive/group/Makefile.am,
+	* src/table/Makefile.am,
+	* src/text/Makefile.am,
+	* tests/Makefile.am,
+	* tests/filter/Makefile.am,
+	* tests/preprocessing/Makefile.am,
+	* tests/table/Makefile.am,
+	* tests/text/Makefile.am,
+	* tests/unit_test/Makefile.am:
+	Here.
+
 2010-05-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add missing copyright headers in Scribo.

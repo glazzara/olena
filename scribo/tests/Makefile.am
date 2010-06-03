@@ -16,8 +16,6 @@
 
 include $(srcdir)/tests.mk
 
-## Process this file through Automake to create Makefile.in.
-
 SUBDIRS = 		\
   filter 		\
   preprocessing 	\

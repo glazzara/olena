@@ -13,9 +13,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
-
-## Process this file through Automake to create Makefile.in.
 
 include $(top_srcdir)/scribo/scribo.mk
 
@@ -34,4 +31,3 @@ extract_discontinued_hlines_SOURCES = extract_discontinued_hlines.cc
 extract_thick_vlines_SOURCES = extract_thick_vlines.cc
 extract_thick_hlines_SOURCES = extract_thick_hlines.cc
 lines_pattern_SOURCES = lines_pattern.cc
-

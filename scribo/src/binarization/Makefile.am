@@ -13,9 +13,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
-
-## Process this file through Automake to create Makefile.in.
 
 include $(top_srcdir)/scribo/scribo.mk
 
@@ -29,4 +26,3 @@ sauvola_SOURCES = sauvola.cc
 sauvola_ms_SOURCES = sauvola_ms.cc
 sauvola_pgm_SOURCES = sauvola_pgm.cc
 simple_SOURCES = simple.cc
-

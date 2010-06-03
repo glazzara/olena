@@ -13,9 +13,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
-
-## Process this file through Automake to create Makefile.in.
 
 include $(top_srcdir)/scribo/scribo.mk
 
@@ -32,5 +29,3 @@ find_pattern_lines_SOURCES = find_pattern_lines.cc
 find_single_lines_SOURCES = find_single_lines.cc
 find_thick_lines_SOURCES = find_thick_lines.cc
 find_thick_and_single_lines_SOURCES = find_thick_and_single_lines.cc
-
-

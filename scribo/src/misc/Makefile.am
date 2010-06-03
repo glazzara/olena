@@ -13,9 +13,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
-
-## Process this file through Automake to create Makefile.in.
 
 include $(top_srcdir)/scribo/scribo.mk
 
@@ -31,4 +28,3 @@ morpho_SOURCES = morpho.cc
 negate_SOURCES = negate.cc
 rectangularity_SOURCES = rectangularity.cc
 superpose_SOURCES = superpose.cc
-
