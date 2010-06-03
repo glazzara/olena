@@ -183,7 +183,7 @@ namespace scribo
   bool
   object_groups<L>::is_valid() const
   {
-    mln_assertion(data_->components_.nelements() == (nelements()));
+    mln_assertion(data_->components_.nelements() == (nelements() - 1));
     return data_->links_.is_valid();
   }
 

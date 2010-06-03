@@ -131,11 +131,11 @@ namespace scribo
       util::array<unsigned>
 	result = labeling::compute(accu::meta::math::count(), lbl, nlabels);
 
-      mln::fun::i2v::array<bool> f(nlabels + 1, true);
-      f(0) = false;
+      mln::fun::i2v::array<bool> f(nlabels + 1, false);
+      f(0) = true;
       for (unsigned i = 1; i <= nlabels; ++i)
 	if (result(i) < min_card)
-	  f(i) = false;
+	  f(i) = true;
 
       scribo::fun::v2b::label_to_bool<unsigned> relabel_f(f);
       mln_concrete(I)

@@ -127,7 +127,6 @@ namespace scribo
 #  endif // ! SCRIBO_SAUVOLA_DEBUG
 
 
-
       /*! \brief compute Sauvola's threshold applying directly the formula.
 
 	\param[in] m_x_y Mean value.
@@ -170,20 +169,26 @@ namespace scribo
 // 	if (s_N < 0.1f)
 // 	{
 // 	  K_2 = 0.1f;
+// #  ifdef SCRIBO_SAUVOLA_DEBUG
 // 	  dbg_k = 0;
 // 	  dbg_s_n = s_N;
+// #  endif // !SCRIBO_SAUVOLA_DEBUG
 // 	}
 // 	else if (s_N > 0.34)
 // 	{
 // 	  K_2 = 0.34;
+// #  ifdef SCRIBO_SAUVOLA_DEBUG
 // 	  dbg_k = 255;
 // 	  dbg_s_n = s_N;
+// #  endif // !SCRIBO_SAUVOLA_DEBUG
 // 	}
 // 	else
 // 	{
 // 	  K_2 = s_N;
+// #  ifdef SCRIBO_SAUVOLA_DEBUG
 // 	  dbg_k = 150;
 // 	  dbg_s_n = s_N;
+// #  endif // !SCRIBO_SAUVOLA_DEBUG
 // 	}
 
 

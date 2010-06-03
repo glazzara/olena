@@ -1,5 +1,17 @@
 2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* binarization/sauvola_threshold_image.hh: Add ifdefs.
+
+	* core/object_groups.hh: Fix a wrong assertion.
+
+	* postprocessing/fill_object_holes.hh: Disable debug output.
+
+	* preprocessing/denoise_bg.hh: Do not negate the image anymore.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add the binarization tool submitted to H-DIBCO 2010.
 
 	* src/Makefile.am,

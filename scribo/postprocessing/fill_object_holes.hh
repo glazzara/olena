@@ -41,7 +41,11 @@
 # include <mln/core/routine/extend.hh>
 # include <mln/core/image/dmorph/extended.hh>
 
+# include <mln/data/fill.hh>
+# include <mln/data/transform.hh>
+
 # include <mln/extension/duplicate.hh>
+# include <mln/extension/adjust_fill.hh>
 
 # include <mln/draw/box_plain.hh>
 # include <mln/util/array.hh>
@@ -49,6 +53,14 @@
 # include <mln/accu/math/count.hh>
 
 # include <mln/fun/i2v/array.hh>
+
+# include <mln/value/int_u16.hh>
+
+# include <mln/labeling/blobs_and_compute.hh>
+
+# include <mln/logical/not.hh>
+
+# include <mln/transform/influence_zone_geodesic.hh>
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_groups.hh>
@@ -331,7 +343,7 @@ namespace scribo
 
       // Holes card Image
 
-      std::cout << "> Holes card image" << std::endl;
+//      std::cout << "> Holes card image" << std::endl;
 
       L nlabels;
 
@@ -345,7 +357,7 @@ namespace scribo
 
       // Threshold Image
 
-      std::cout << "> Threshold image" << std::endl;
+//      std::cout << "> Threshold image" << std::endl;
 
 
       I input_i = logical::not_(input);
@@ -363,7 +375,7 @@ namespace scribo
 
       // Thresholding
 
-      std::cout << "> Thresholding" << std::endl;
+//      std::cout << "> Thresholding" << std::endl;
 
       I hole_mask;
       initialize(hole_mask, holes);
@@ -376,7 +388,7 @@ namespace scribo
 
       // Cleanup
 
-      std::cout << "> Cleanup" << std::endl;
+//      std::cout << "> Cleanup" << std::endl;
 
       data::fill((output | pw::value(hole_mask)).rw(), false);
 
