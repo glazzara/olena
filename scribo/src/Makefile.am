@@ -1,4 +1,5 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -25,12 +26,12 @@ SUBDIRS =					\
   primitive 					\
   filter 					\
   misc 						\
-  nuxeo_xwiki 					\
+  postprocessing 				\
   preprocessing 				\
   table 					\
   text
 
-bin_PROGRAMS = 				\
+bin_PROGRAMS = 					\
   pbm_lines_in_doc
 
 

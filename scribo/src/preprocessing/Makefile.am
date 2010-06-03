@@ -21,13 +21,15 @@
 include $(top_srcdir)/scribo/scribo.mk
 
 bin_PROGRAMS = 				\
-  denoise 				\
+  denoise_bg 				\
+  denoise_fg 				\
   homogeneous_contrast 			\
   preprocess 				\
   split_bg_fg 				\
   unskew
 
-denoise_SOURCES = denoise.cc
+denoise_bg_SOURCES = denoise_bg.cc
+denoise_fg_SOURCES = denoise_fg.cc
 homogeneous_contrast_SOURCES = homogeneous_contrast.cc
 preprocess_SOURCES = preprocess.cc
 split_bg_fg_SOURCES = split_bg_fg.cc

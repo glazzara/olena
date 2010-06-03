@@ -1,5 +1,19 @@
 2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Update tools in scribo/src.
+
+	* src/Makefile.am: Add postprocessing subdir.
+
+	* src/postprocessing/Makefile.am,
+	* src/postprocessing/fill_object_holes.cc: New.
+
+	* src/preprocessing/denoise.cc: Remove.
+
+	* src/preprocessing/denoise_bg.cc,
+	* src/preprocessing/denoise_fg.cc: New.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a specific toolchain for Nepomuk integration.
 
 	* convert/from_qimage.hh: New. convert an image2d to a QImage.

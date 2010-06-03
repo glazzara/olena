@@ -28,7 +28,7 @@
 #include <mln/io/pbm/all.hh>
 
 #include <scribo/debug/usage.hh>
-#include <scribo/preprocessing/denoise.hh>
+#include <scribo/postprocessing/fill_object_holes.hh>
 
 
 
@@ -36,8 +36,7 @@ const char *args_desc[][2] =
 {
   { "input.pbm", "A binary image. 'True' for objects, 'False'\
 for the background." },
-  { "fg_min_card", "The minimum neighbor count to be set to true." },
-  { "bg_min_card", "The minimum neighbor count to be set to false." },
+  { "ratio", "The maximum holes size ratio to allow hole filling." },
   {0, 0}
 };
 
@@ -46,12 +45,11 @@ int main(int argc, char *argv[])
 {
   using namespace mln;
 
-  if (argc != 5)
+  if (argc != 4)
     return scribo::debug::usage(argv,
-				"Remove noise.",
-				"input.pbm fg_min_card bg_min_card output.pbm",
-				args_desc,
-				"A binary image.");
+				"Fill object holes.",
+				"input.pbm ratio output.pbm",
+				args_desc);
 
   trace::entering("main");
 
@@ -59,11 +57,11 @@ int main(int argc, char *argv[])
   I input;
   io::pbm::load(input, argv[1]);
 
-  unsigned fg_min_card = atoi(argv[2]);
-  unsigned bg_min_card = atoi(argv[3]);
+  float ratio = atof(argv[2]);
 
-  io::pbm::save(scribo::preprocessing::denoise(input, fg_min_card, bg_min_card),
-		argv[4]);
+  I output = scribo::postprocessing::fill_object_holes(input, ratio);
+
+  io::pbm::save(output, argv[3]);
 
   trace::exiting("main");
 }
