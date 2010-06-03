@@ -1,4 +1,5 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -13,9 +14,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-#
-
-## Process this file through Automake to create Makefile.in.
 
 include $(top_srcdir)/milena/tests/tests.mk
 
@@ -56,4 +54,3 @@ tree_fast_SOURCES = tree_fast.cc
 tree_to_fast_SOURCES = tree_to_fast.cc
 
 TESTS = $(check_PROGRAMS)
-
