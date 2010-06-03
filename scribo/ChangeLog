@@ -1,5 +1,9 @@
 2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* src/README: New.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve Scribo demo.
 
 	* demo/demat/demat.pro: Add new flags.
