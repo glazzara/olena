@@ -125,6 +125,7 @@ namespace scribo
 
     bool indented() const;
 
+    bool has_text() const;
     const std::string& text() const;
     void update_text(const std::string& str);
 
@@ -584,6 +585,13 @@ namespace scribo
   line_info<L>::indented() const
   {
     return indented_;
+  }
+
+  template <typename L>
+  bool
+  line_info<L>::has_text() const
+  {
+    return !text_.empty();
   }
 
   template <typename L>

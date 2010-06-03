@@ -1,3 +1,25 @@
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a specific toolchain for Nepomuk integration.
+
+	* convert/from_qimage.hh: New. convert an image2d to a QImage.
+
+	* core/line_info.hh: Add a new member has_text.
+
+	* text/recognition.hh: Remove an invalid precondition.
+
+	* toolchain/nepomuk/text_extraction.hh: New. Specific toolchain
+	for Nepomuk.
+
+	* tests/Makefile.am: Add toolchain/* subdirs.
+
+	* tests/toolchain/Makefile.am,
+	* tests/toolchain/nepomuk/Makefile.am: New.
+
+	* tests/img/wildly.pbm: New. New test image.
+
+	* tests/toolchain/nepomuk/text_extraction.cc: New. New test.
+
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Cleanup sample tools.

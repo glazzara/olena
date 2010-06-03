@@ -1,4 +1,4 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
 #
 # This file is part of Olena.
 #
@@ -13,21 +13,33 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
-
-include $(srcdir)/tests.mk
+#
 
 ## Process this file through Automake to create Makefile.in.
 
-SUBDIRS = 		\
-  binarization 		\
-  core 			\
-  filter 		\
-  preprocessing 	\
-  table 		\
-  text 			\
-  toolchain 		\
-  unit_test
+include $(top_srcdir)/scribo/tests/tests.mk
 
-# Regen files recursively.
-include $(top_srcdir)/build-aux/regen-recursive.mk
-REGEN_SUBDIRS += unit_test
+check_PROGRAMS =
+
+
+
+if HAVE_QT
+if HAVE_TESSERACT
+
+check_PROGRAMS += text_extraction
+text_extraction_SOURCES = text_extraction.cc
+text_extraction_CXXFLAGS = $(QT_CXXFLAGS) $(AM_CXXFLAGS)
+text_extraction_CPPFLAGS = $(QT_CPPFLAGS) $(AM_CPPFLAGS) \
+			   $(TESSERACT_CPPFLAGS) \
+			   $(TIFF_CPPFLAGS)
+text_extraction_LDFLAGS  = $(QT_LDFLAGS) $(LDFLAGS) \
+			   $(TESSERACT_LDFLAGS) \
+			   $(TIFF_LDFLAGS) \
+			   -lpthread
+text_extraction_LDADD    = $(QT_LIBS) $(LDADD)
+
+endif HAVE_TESSERACT
+endif HAVE_QT
+
+
+TESTS = $(check_PROGRAMS)

@@ -104,8 +104,6 @@ namespace scribo
     {
       trace::entering("scribo::text::recognition");
 
-      mln_precondition(lines.is_valid());
-
       // Initialize Tesseract.
       TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
 
