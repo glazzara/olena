@@ -218,9 +218,12 @@ AC_CONFIG_FILES([
     scribo/demo/review/Makefile
     scribo/src/Makefile
       scribo/src/binarization/Makefile
+      scribo/src/contest/Makefile
+      scribo/src/contest/hdibco-2010/Makefile
       scribo/src/debug/Makefile
       scribo/src/filter/Makefile
       scribo/src/misc/Makefile
+      scribo/src/postprocessing/Makefile
       scribo/src/preprocessing/Makefile
       scribo/src/primitive/Makefile
 	scribo/src/primitive/extract/Makefile
@@ -240,6 +243,8 @@ AC_CONFIG_FILES([
     scribo/tests/preprocessing/Makefile
     scribo/tests/table/Makefile
     scribo/tests/text/Makefile
+    scribo/tests/toolchain/Makefile
+    scribo/tests/toolchain/nepomuk/Makefile
     scribo/tests/unit_test/Makefile
 ])
 dnl>>

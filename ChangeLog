@@ -1,5 +1,9 @@
 2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* configure.ac: configure several directories in scribo/.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* configure.ac: Check for Qt library using AutoTroll.
 
 2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
