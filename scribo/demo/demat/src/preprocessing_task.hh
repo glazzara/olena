@@ -46,6 +46,7 @@ namespace scribo
       BinarizationSimple,
       BinarizationSauvola,
       BinarizationSauvolaMs,
+      BinarizationSauvolaMsSplit,
 
       PREPROCESSING_TASK_COUNT // Invalid task.
     };

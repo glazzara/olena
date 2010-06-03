@@ -1,3 +1,7 @@
+#undef MLN_WO_GLOBAL_VARS
+#include <mln/core/image/image2d.hh>
+#include <mln/trace/all.hh>
+
 #include <QtGui>
 #include <src/main_window.hh>
 #include <src/preprocessing_task.hh>

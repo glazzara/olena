@@ -44,10 +44,11 @@ namespace scribo
 
 
       main_window::main_window()
+	: QWizard(0, Qt::Window)
       {
-	QPixmap bg_pixmap(":/images/images/dematerialization.png");
-	setPixmap(QWizard::WatermarkPixmap, bg_pixmap);
-	setPixmap(QWizard::BackgroundPixmap, bg_pixmap);
+// 	QPixmap bg_pixmap(":/images/images/dematerialization.png");
+// 	setPixmap(QWizard::WatermarkPixmap, bg_pixmap);
+// 	setPixmap(QWizard::BackgroundPixmap, bg_pixmap);
 
 
 	connect(this, SIGNAL(currentIdChanged(int)),
@@ -76,7 +77,8 @@ namespace scribo
  	addPage(page_preprocessing);
 
 	// Page_Processing
-	addPage(new process_page(this));
+	process_page *page_process = new process_page(this);
+	addPage(page_process);
 
 	// Page_Result
 	addPage(new result_page(this));

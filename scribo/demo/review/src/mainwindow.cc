@@ -34,41 +34,41 @@
 
 
 const char * modes[][4] = {
-  { "Text in pictures", "pics", "../src/text_in_photo_ppm", "image-x-generic.png" },
-  { "Text in docs", "doc", "../src/text_in_doc", "edit-find.png" },
+  { "Text in pictures", "pics", "text_in_picture", "image-x-generic.png" },
+  { "Text in docs", "doc", "text_in_doc", "edit-find.png" },
   { (const char *)(1), 0, 0, 0}, // Separator
   { "Handwritten text lines", "hsc", "../../milena/sandbox/icdar/2009/hsc/input_to_lines", "text-x-generic.png" },
   { "Handwritten text words", "hsc", "../../milena/sandbox/icdar/2009/hsc/input_to_words", "text-x-generic.png" },
   { (const char *)(1), 0, 0, 0}, // Separator
-  { "Horizontal and Vertical Lines", "hvl", "../src/extract/primitive/find_discontinued_lines", "list-add.png" },
-  { "Tables", "hvl", "../src/table/extract", "x-office-spreadsheet.png" },
-  { "Pre-processing", "pproc", "../src/preprocess", "format-indent-more.png" },
-  { "OCR", "ocr", "../src/recognition", "edit-find.png" },
+  { "Horizontal and Vertical Lines", "hvl", "extract/primitive/find_discontinued_lines", "list-add.png" },
+  { "Tables", "hvl", "table/extract", "x-office-spreadsheet.png" },
+  { "Pre-processing", "pproc", "preprocess", "format-indent-more.png" },
+  { "OCR", "ocr", "recognition", "edit-find.png" },
   { 0, 0, 0 } // Empty line, do NOT delete.
 };
 
 
-// Allow to set up to 3 extra arguments to the binaries.
+// Allow to set up to 5 extra arguments to the binaries.
 //
 // A program will be launched as follow:
 //
-//    ./my_program input.pbm <arg1> <arg2> <arg3> output.ppm
+//    ./my_program input.pbm output <arg1> <arg2> <arg3> <arg4> <arg5>
 //
 // Unused arguments are set to 0.
 // Each line must be mapped to the related on in the previous
 // array "modes". So DO preserve the order.
 //
-const char *args_list[][3] = {
-  { 0, 0, 0 }, // Text in Pictures
-  { 0, 0, 0 }, // Text in Docs
-  { (const char *)(1), 0, 0}, // Separator
-  { "/dev/null",  0,  0 }, // Handwritten text lines
-  { "/dev/null",  0,  0 }, // Handwritten text words
-  { (const char *)(1), 0, 0}, // Separator
-  { "51", 0, 0 }, // Horizontal and Vertical lines
-  { "/dev/null",  0,  0 }, // Tables
-  { 0, 0, 0 }, // Pre-processing
-  { 0, 0, 0 }, // OCR
+const char *args_list[][6] = {
+  { "1", "1", "1", "1", "1", 0 }, // Text in Pictures
+  { 0, 0, 0, 0, 0, 0 }, // Text in Docs
+  { (const char *)(1), 0, 0, 0, 0, 0 }, // Separator
+  { "/dev/null",  0,  0, 0, 0, 0 }, // Handwritten text lines
+  { "/dev/null",  0,  0, 0, 0, 0 }, // Handwritten text words
+  { (const char *)(1), 0, 0, 0, 0, 0 }, // Separator
+  { "51", 0, 0, 0, 0, 0 }, // Horizontal and Vertical lines
+  { "/dev/null",  0, 0, 0, 0, 0 }, // Tables
+  { 0, 0, 0, 0, 0, 0 }, // Pre-processing
+  { 0, 0, 0, 0, 0, 0 }, // OCR
   // Not empty line needed.
 };
 
@@ -80,8 +80,8 @@ namespace scribo
   namespace demo
   {
 
-    MainWindow::MainWindow(QWidget *parent)
-      : QMainWindow(parent), context_(this)
+    MainWindow::MainWindow(const QString& exec_prefix, QWidget *parent)
+      : QMainWindow(parent), exec_prefix_(exec_prefix + "/"), context_(this)
     {
       setupUi(this);
 
@@ -92,7 +92,6 @@ namespace scribo
       cached_result_.resize(nmodes);
       mainRefItem_ = 0;
       mainResultItem_ = 0;
-      exec_prefix_ = "";
       base_img_dir_ = QCoreApplication::applicationDirPath();
 
       pdialog_.setRange(0,0);
@@ -165,7 +164,7 @@ namespace scribo
 	action->setCheckable(true);
 	action->setData(i);
 	action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_0 + i));
-	action->setEnabled(QFile::exists(modes[i][2]));
+	action->setEnabled(QFile::exists(exec_prefix_ +  modes[i][2]));
 
 	if (modes[i][3] != 0)
 	  action->setIcon(QIcon(QString(":/icons/") + modes[i][3]));
@@ -185,7 +184,7 @@ namespace scribo
 	filename = QFileDialog::getOpenFileName(this,
 	  tr("Open Image."),
 	  base_img_dir_ + "/" + current_dir,
-	  tr("Images (*.pbm *.pgm *.ppm)"));
+	  tr("Images (*.pbm *.pgm *.ppm *.jpg *.png *.tiff)"));
 
       prepare_for_run(filename);
     }
@@ -221,18 +220,21 @@ namespace scribo
       QString input = filepath->text();
 
       args << input;
+      QTemporaryFile f;
+      f.open();
+      args << f.fileName();
+      last_output_ = f.fileName();
+
       for (unsigned i = 0; args_list[mode_][i]; ++i)
 	args << args_list[mode_][i];
 
 //      if (!is_in_ocr_mode())
 //      {
-      QTemporaryFile f;
-      f.open();
-      args << f.fileName();
-      last_output_ = f.fileName();
 //      }
 
 //      reset_progress_dialog();
+      qDebug() << "Running " << exec_prefix_ + modes[mode_][2]
+	       << " " << args;
 
       exec_.start(exec_prefix_ + modes[mode_][2], args);
     }

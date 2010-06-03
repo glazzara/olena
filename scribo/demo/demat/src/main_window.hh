@@ -64,12 +64,15 @@ namespace scribo
 
 	void crop_slot();
 
+	void on_action_Reload_triggered(bool b);
+
       private: // members
 	void load();
 
 	void prepare_progress_bar(unsigned max);
 	Doc_Type get_doc_type();
 	preprocessing_task_set_t get_tasks();
+	mln::image2d<mln::value::rgb8> get_crop_image() const;
 
       private: // attributes
 	QPixmap input_dsp_;
@@ -78,6 +81,8 @@ namespace scribo
 
 	QProgressDialog* progress_;
 	runner runner_;
+
+	mln::image2d<mln::value::rgb8> input_;
       };
 
 

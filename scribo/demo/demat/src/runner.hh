@@ -81,6 +81,7 @@ namespace scribo
       QSet<Preprocessing_Task> tasks_;
       QString filename_;
       process_args args_;
+      mln::image2d<mln::value::rgb8> input_;
     };
 
 

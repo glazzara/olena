@@ -18,10 +18,11 @@
 #include <scribo/preprocessing/split_bg_fg.hh>
 #include <scribo/preprocessing/denoise.hh>
 #include <scribo/preprocessing/homogeneous_contrast.hh>
-#include <scribo/preprocessing/unskew.hh>
+#include <scribo/preprocessing/deskew.hh>
 #include <scribo/binarization/sauvola.hh>
 #include <scribo/binarization/sauvola_ms.hh>
-#include <scribo/binarization/simple.hh>
+#include <scribo/binarization/sauvola_ms_split.hh>
+#include <scribo/binarization/global_threshold_auto.hh>
 
 #include <mln/logical/not.hh>
 
@@ -32,9 +33,6 @@ namespace scribo
   {
 
     QString basedir_ = "";
-
-    // FIXME: move as attribute.
-    mln::image2d<mln::value::rgb8> input_;
 
 
     runner::runner(QObject *parent)
@@ -97,6 +95,19 @@ namespace scribo
       image2d<value::rgb8> tmp_color = duplicate(ima);
 
 
+      //
+      //==========
+      // Subsample
+      //==========
+      if (tasks_.contains(ReduceSize))
+      {
+	emit new_progress_label("Subsampling input image");
+	tmp_color = mln::subsampling::antialiased(tmp_color,
+						  find_best_scale(tmp_color));
+	emit progress(1);
+      }
+
+
       //==================
       // Remove background
       //==================
@@ -121,16 +132,16 @@ namespace scribo
       emit progress(1);
 
 
-      // FIXME: SUbsampling should be done at the very beginning!!!!
-      //
-      //==========
-      // Subsample
-      //==========
-      if (tasks_.contains(ReduceSize))
+      //=======
+      // Deskew
+      //=======
+      if (tasks_.contains(Unskew))
       {
-	emit new_progress_label("Subsampling input image");
-	intensity_ima = mln::subsampling::antialiased(intensity_ima,
-						      find_best_scale(intensity_ima));
+	std::cout << "Deskew" << std::endl;
+	emit new_progress_label("Deskew");
+
+	intensity_ima = scribo::preprocessing::deskew(intensity_ima);
+
 	emit progress(1);
       }
 
@@ -168,12 +179,20 @@ namespace scribo
       {
 	// FIXME: sauvola should not negate the image.
 	std::cout << "Binarization Sauvola_ms" << std::endl;
-	out_bool = binarization::sauvola_ms(intensity_ima, 51, 2, 67);
+	out_bool = binarization::sauvola_ms(intensity_ima, 51, 2);
+      }
+      else if (tasks_.contains(BinarizationSauvolaMsSplit))
+      {
+	// FIXME: sauvola should not negate the image.
+	// FIXME: WARNING: work directly on the color image -> it is
+	// NOT deskewed nor contrast improved.
+	std::cout << "Binarization Sauvola_ms_split" << std::endl;
+	out_bool = binarization::sauvola_ms_split(tmp_color, 51, 2, 2);
       }
       else if (tasks_.contains(BinarizationSimple))
       {
 	std::cout << "Binarization Simple" << std::endl;
-	out_bool = scribo::binarization::simple(intensity_ima);
+	out_bool = scribo::binarization::global_threshold_auto(intensity_ima);
       }
       else
       {
@@ -185,30 +204,18 @@ namespace scribo
 
 
       // FIXME: remove!
-//      logical::not_inplace(out_bool);
+      logical::not_inplace(out_bool);
+
 
       //========
       // Denoise
       //========
-//       if (tasks_.contains(RemoveNoise))
-//       {
-// 	std::cout << "Remove noise" << std::endl;
-// 	emit new_progress_label("Remove noise");
-
-// 	out_bool = preprocessing::denoise(out_bool, c8(), 2, 2);
-
-// 	emit progress(1);
-//       }
-
-      //=======
-      // Unskew
-      //=======
-      if (tasks_.contains(Unskew))
+      if (tasks_.contains(RemoveNoise))
       {
-	std::cout << "Unskew" << std::endl;
-	emit new_progress_label("Unskew");
+	std::cout << "Remove noise" << std::endl;
+	emit new_progress_label("Remove noise");
 
-	out_bool = scribo::preprocessing::unskew(out_bool).first();
+	out_bool = preprocessing::denoise(out_bool, c8(), 2, 2);
 
 	emit progress(1);
       }
@@ -232,7 +239,7 @@ namespace scribo
       {
 	case Text_Doc:
 	  emit new_progress_label("Finding text in document...");
-	  qDebug() << "Running text_in_article_pbm";
+	  qDebug() << "Running pbm_text_in_doc";
 	  args << "/tmp/tmp.pbm" << "/tmp/out.txt";
 
 	  // Denoise.
@@ -246,20 +253,24 @@ namespace scribo
 
 	  args << "/tmp/";
 
-	  if (process_.execute(basedir_ + "/text_in_article_pbm", args))
+	  qDebug() << "Running:"
+		   <<  basedir_ + "/pbm_text_in_doc"
+		   << args;
+
+	  if (process_.execute(basedir_ + "/pbm_text_in_doc", args))
 	  {
-	    qDebug() << "Error while running text_in_article_pbm.";
+	    qDebug() << "Error while running pbm_text_in_doc.";
 	    return;
 	  }
 	  break;
 
 	case Picture:
 	  emit new_progress_label("Finding text in picture...");
-	  qDebug() << "Running text_in_photo_pbm_fast";
+	  qDebug() << "Running text_in_picture";
 	  args << "/tmp/tmp.pbm" << "/tmp/out.ppm" << "1" << "1" << "1";
-	  if (process_.execute(basedir_ + "/text_in_photo_pbm_fast", args))
+	  if (process_.execute(basedir_ + "/text_in_picture", args))
 	  {
-	    qDebug() << "Error while running text_in_photo_pbm_fast.";
+	    qDebug() << "Error while running text_in_picture.";
 	    return;
 	  }
 	  break;

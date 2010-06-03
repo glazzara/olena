@@ -64,6 +64,8 @@
     </property>
     <addaction name="action_Open" />
     <addaction name="separator" />
+    <addaction name="action_Reload" />
+    <addaction name="separator" />
     <addaction name="action_Quit" />
    </widget>
    <widget class="QMenu" name="menuWindow" >
@@ -270,6 +272,11 @@
            <string>Local threshold multi-scale</string>
           </property>
          </item>
+         <item>
+          <property name="text" >
+           <string>Local threshold multi-scale (3-channels)</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
@@ -334,6 +341,14 @@
    </property>
    <property name="text" >
     <string>Advanced options</string>
+   </property>
+  </action>
+  <action name="action_Reload" >
+   <property name="text" >
+    <string>&amp;Reload</string>
+   </property>
+   <property name="shortcut" >
+    <string>F5, Ctrl+R</string>
    </property>
   </action>
  </widget>

@@ -55,6 +55,9 @@ namespace scribo
 
 	set_selection_enabled(false);
 	set_rotation_enabled(false);
+
+	// Set cache limit to 20Mb.
+	QPixmapCache::setCacheLimit(20480);
       }
 
 
@@ -88,17 +91,6 @@ namespace scribo
 	viewer_->show();
       }
 
-      template <typename V>
-      void image_viewer::draw_image(const mln::image2d<V>& ima)
-      {
-	QImage
-	  qima = mln::convert::to_qimage_nocopy(ima);
-	QPixmap pixmap = QPixmap::fromImage(qima);
-
-	draw_image(pixmap, QPoint(ima.domain().pmin().col(),
-				  ima.domain().pmin().row()));
-      }
-
 
       void image_viewer::draw_image(const QPixmap& pixmap)
       {
@@ -124,6 +116,8 @@ namespace scribo
 	}
 
 	image_ = viewer_->scene()->addPixmap(pixmap);
+	image_->setCacheMode(QGraphicsItem::DeviceCoordinateCache,
+			     QSize(100,100));
 	viewer_->scene()->setSceneRect(image_->boundingRect());
 
 	if (pixmap.width() > viewer_->maximumViewportSize().width())
@@ -137,7 +131,7 @@ namespace scribo
 	viewer_->setSceneRect(image_->sceneBoundingRect());
 
 	// Restore selection mode if needed
-	on_crop_btn_toggled(restore_selection);
+	setup_selection_tool(restore_selection);
       }
 
 
@@ -252,6 +246,32 @@ namespace scribo
 	  resize_image(viewer_->viewport()->geometry());
       }
 
+
+      void image_viewer::new_mouse_selection_slot(const QPointF& p)
+      {
+	if (selection_)
+	{
+	  if (selection_->cropRect().contains(p))
+	    return;
+	  else
+	  {
+	    setup_selection_tool(false);
+	    return;
+	  }
+	}
+
+	setup_selection_tool(false);   // Remove previous selection.
+	setup_selection_tool(true, p); // Create new selection.
+      }
+
+
+      void image_viewer::new_mouse_released_slot(const QPointF&)
+      {
+	if (selection_ && !selection_->cropRect().isValid()) // CAS POURRI!!
+	  setup_selection_tool(false);
+      }
+
+
       void image_viewer::clear()
       {
 	visible_slider(false);
@@ -263,16 +283,20 @@ namespace scribo
 	}
       }
 
-      void image_viewer::on_crop_btn_toggled(bool b)
+      void image_viewer::setup_selection_tool(bool b, const QPointF& p)
       {
 	if (b)
 	{
-	  if (selection_ == 0)
+	  if (viewer_->scene() && selection_ == 0)
 	  {
-	    selection_ = new crop_item(image_);
+	    if (!p.isNull())
+	      selection_ = new crop_item(p, image_);
+	    else
+	      selection_ = new crop_item(image_);
+
+	    // Enable cropping on double click.
 	    connect(selection_, SIGNAL(ready_for_crop()),
 		    this, SIGNAL(ready_for_crop()));
-
 	  }
 	}
 	else
@@ -283,15 +307,22 @@ namespace scribo
       }
 
 
-      void image_viewer::enable_crop_tool(bool b)
-      {
-	crop_btn->setChecked(b);
-      }
-
-
       void image_viewer::set_selection_enabled(bool b)
       {
-	crop_btn->setVisible(b);
+	if (b)
+	{
+	  connect(viewer_->scene(), SIGNAL(mouse_pressed(const QPointF&)),
+		  this, SLOT(new_mouse_selection_slot(const QPointF&)));
+	  connect(viewer_->scene(), SIGNAL(mouse_released(const QPointF&)),
+		  this, SLOT(new_mouse_released_slot(const QPointF&)));
+	}
+	else
+	{
+	  disconnect(viewer_->scene(), SIGNAL(mouse_pressed(const QPointF&)),
+		     this, SLOT(new_mouse_selection_slot(const QPointF&)));
+	  disconnect(viewer_->scene(), SIGNAL(mouse_released(const QPointF&)),
+		     this, SLOT(new_mouse_released_slot(const QPointF&)));
+	}
       }
 
 
@@ -369,8 +400,6 @@ namespace scribo
 	rotate_ccw_btn->setEnabled(b);
 	rotate_cw_btn->setEnabled(b);
 	rotate_lbl->setEnabled(b);
-
-	crop_btn->setEnabled(b);
       }
 
 

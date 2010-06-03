@@ -8,26 +8,31 @@ TARGET =
 DEPENDPATH += . src
 INCLUDEPATH += . ../ ../shared $(OLN)/milena $(OLN)
 
-QMAKE_CXXFLAGS += -g
+QMAKE_CXXFLAGS += -g -O0
 
-LIBS += `Magick++-config --ldflags --libs`
+LIBS +=/usr/lib/libMagick++.so
 
-DEFINES += NDEBUG MLN_INCLUDE_ONLY
+# `Magick++-config --ldflags --libs`
+
+DEFINES += NDEBUG MLN_WO_GLOBAL_VARS
 
 # Input
   HEADERS +=					\
+  ../shared/src/crop_item.hh			\
   ../shared/src/image_viewer.hh			\
   ../shared/src/internal/interactive_scene.hh	\
-  ../shared/src/crop_item.hh			\
   ../shared/src/browse_widget.hh		\
-  src/runner.hh					\
-  src/main_window.hh
+  src/main_window.hh                            \
+  src/runner.hh
 
 SOURCES +=					\
   ../shared/src/crop_item.cc			\
+  ../shared/src/image_viewer.cc			\
   ../shared/src/internal/interactive_scene.cc	\
   ../shared/src/browse_widget.cc		\
-  src/mln_widgets.cc
+  src/main_window.cc                            \
+  src/main.cc                                   \
+  src/runner.cc
 
 FORMS +=					\
   ../shared/ui/image_viewer.ui			\

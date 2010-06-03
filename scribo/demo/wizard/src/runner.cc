@@ -17,7 +17,7 @@
 #include <scribo/preprocessing/unskew.hh>
 #include <scribo/binarization/sauvola.hh>
 #include <scribo/binarization/sauvola_ms.hh>
-#include <scribo/binarization/simple.hh>
+#include <scribo/binarization/global_threshold_auto.hh>
 
 #include <mln/logical/not.hh>
 
@@ -157,12 +157,12 @@ namespace scribo
       {
 	// FIXME: sauvola should not negate the image.
 	std::cout << "Binarization Sauvola_ms" << std::endl;
-	out_bool = binarization::sauvola_ms(intensity_ima, 51, 2, 67);
+	out_bool = binarization::sauvola_ms(intensity_ima, 51, 2);
       }
       else if (tasks_.contains(BinarizationSimple))
       {
 	std::cout << "Binarization Simple" << std::endl;
-	out_bool = scribo::binarization::simple(intensity_ima);
+	out_bool = scribo::binarization::global_threshold_auto(intensity_ima);
       }
       else
       {

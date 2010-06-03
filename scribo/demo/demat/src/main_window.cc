@@ -45,10 +45,6 @@ namespace scribo
     namespace demat
     {
 
-      // FIXME: move it as attribute.
-      static mln::image2d<mln::value::rgb8> input_;
-
-
       main_window::main_window()
       {
 	setupUi(this);
@@ -86,6 +82,9 @@ namespace scribo
 	progress_->setCancelButton(0);
 	progress_->setAutoClose(true);
 
+	action_Reload->setEnabled(false);
+	run_btn->setEnabled(false);
+
 	// Setup crop tool.
 	viewer_->set_selection_enabled(true);
 	connect(viewer_, SIGNAL(ready_for_crop()), this, SLOT(crop_slot()));
@@ -114,13 +113,16 @@ namespace scribo
 
       void main_window::load()
       {
-	text_->hide();
+ 	text_->hide();
 
-	mln::io::magick::load(input_, current_image_.toStdString());
+ 	mln::io::magick::load(input_, current_image_.toStdString());
 
 	input_dsp_ = QPixmap::fromImage(mln::convert::to_qimage_nocopy(input_));
 
 	viewer_->draw_image(input_dsp_);
+
+	action_Reload->setEnabled(true);
+	run_btn->setEnabled(true);
       }
 
 
@@ -132,7 +134,8 @@ namespace scribo
 
 	process_args args; // Nothing for now.
 
-	runner_.start(current_image_, input_, Text_Doc, tasks, args);
+	runner_.start(current_image_, get_crop_image(), Text_Doc, tasks, args);
+	setEnabled(false);
       }
 
 
@@ -161,6 +164,8 @@ namespace scribo
 	  tasks.insert(BinarizationSauvola);
 	else if (binarizationCBox->currentIndex() == 2)
 	  tasks.insert(BinarizationSauvolaMs);
+	else if (binarizationCBox->currentIndex() == 3)
+	  tasks.insert(BinarizationSauvolaMsSplit);
 
 	return tasks;
       }
@@ -199,15 +204,24 @@ namespace scribo
 	while (!in.atEnd())
 	{
 	  QString line = in.readLine();
+	  line = line.section(' ', 4);
 	  text_->append(line);
 	}
 
 
 	text_->show();
+	setEnabled(true);
       }
 
 
-      void main_window::crop_slot()
+      void main_window::on_action_Reload_triggered(bool)
+      {
+	load();
+      }
+
+
+      mln::image2d<mln::value::rgb8>
+      main_window::get_crop_image() const
       {
 	mln::box2d b = input_.domain();
 	QRectF selection = viewer_->selection();
@@ -224,14 +238,26 @@ namespace scribo
 	  // Update underlying data.
 	  mln::image2d<mln::value::rgb8> output(sbox);
 	  mln::data::fill(output, input_);
-	  input_ = output;
+	  return output;
+	}
+
+	// No crop performed.
+	return input_;
+      }
+
+
+      void main_window::crop_slot()
+      {
+	mln::image2d<mln::value::rgb8> tmp = get_crop_image();
+	if (tmp.buffer() != input_.buffer()) // A crop has been performed.
+	{
+	  input_ = tmp;
 
 	  // Update display
 	  viewer_->draw_image(input_);
 	}
-
-	viewer_->enable_crop_tool(false); // Disable crop tool
       }
+
 
     } // end of namespace scribo::demo::demat
 

@@ -30,12 +30,19 @@
 
 int main(int argc, char *argv[])
 {
+  if (argc < 2 || argc > 4)
+  {
+    qDebug() << "Usage: "
+	     << argv[0] << " <path_to_scribo_src> [base_img_dir]";
+    return 0;
+  }
+
   QApplication app(argc, argv);
 
-  scribo::demo::MainWindow win;
+  scribo::demo::MainWindow win(argv[1]);
 
-  if (argc == 2)
-    win.set_base_img_dir(argv[1]);
+  if (argc == 3)
+    win.set_base_img_dir(argv[2]);
 
   win.show();
   return app.exec();

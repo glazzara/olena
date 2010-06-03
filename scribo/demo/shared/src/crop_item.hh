@@ -56,6 +56,11 @@ namespace scribo
 
       public:
 	crop_item(QGraphicsItem *parent);
+
+	// Mouse is pressed. The rectangle must be created and about
+	// to be enlarged.
+	crop_item(const QPointF& p, QGraphicsItem *parent);
+
 	virtual ~crop_item();
 
 	QRectF cropRect() const;
@@ -66,6 +71,8 @@ namespace scribo
 		    QWidget *widget = 0);
 
 	void reset();
+
+	void resize(const QPointF& delta);
 
       protected:
 	void mousePressEvent (QGraphicsSceneMouseEvent *event);
@@ -97,6 +104,7 @@ namespace scribo
       private:
 	CropItemResize cropResize_;
 	QRectF cropRect_;
+	QRectF draw_rect_;
 	bool mousePress_;
       };
 

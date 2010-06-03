@@ -1,5 +1,42 @@
 2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve Scribo demo.
+
+	* demo/demat/demat.pro: Add new flags.
+
+	* demo/demat/src/main.cc: Make use of MLN_WO_GLOBALS_VARS.
+
+	* demo/demat/src/main_window.cc,
+	* demo/demat/src/main_window.hh: Cropping is not required
+	anymore. Improve visualization speed.
+
+	* demo/demat/src/preprocessing_task.hh,
+	* demo/demat/src/runner.cc,
+	* demo/demat/src/runner.hh,
+	* demo/demat/ui/main_window.ui: Add a new task for Sauvola ms
+	split.
+
+	* demo/review/src/main.cc,
+	* demo/review/src/mainwindow.cc,
+	* demo/review/src/mainwindow.hh: Start updating executable names
+	and arguments.
+
+	* demo/shared/src/crop_item.cc,
+	* demo/shared/src/crop_item.hh,
+	* demo/shared/src/image_viewer.cc,
+	* demo/shared/src/image_viewer.hh,
+	* demo/shared/src/image_viewer.hxx,
+	* demo/shared/src/internal/interactive_scene.cc,
+	* demo/shared/src/internal/interactive_scene.hh,
+	* demo/shared/ui/image_viewer.ui: Improve look and feel and
+	drawing speed of these components.
+
+	* demo/wizard/src/load_page.cc,
+	* demo/wizard/src/main_window.cc,
+	* demo/wizard/src/runner.cc: Fix compilation.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes.
 
 	* binarization/sauvola_threshold_image.hh: Add ifdefs.

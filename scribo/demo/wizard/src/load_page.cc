@@ -45,6 +45,7 @@ namespace scribo
 
     void load_page::initializePage()
     {
+      cleanupPage();
     }
 
 

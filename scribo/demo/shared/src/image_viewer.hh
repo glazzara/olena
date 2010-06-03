@@ -73,6 +73,7 @@ namespace scribo
 	void clear();
 
 	void set_selection_enabled(bool b);
+// 	void set_mouse_selection_enabled(bool b);
 	void set_rotation_enabled(bool b);
 
 
@@ -100,7 +101,7 @@ namespace scribo
 	void move_vertical_sliders(int value);
 	void move_horizontal_sliders(int value);
 
-	void on_crop_btn_toggled(bool b);
+	void setup_selection_tool(bool b, const QPointF& p = QPointF());
 
 	void on_slider_valueChanged(int sli);
 
@@ -112,11 +113,13 @@ namespace scribo
 	void on_zoomFixed_clicked();
 	void on_zoomOriginal_clicked();
 
+ 	void new_mouse_selection_slot(const QPointF&);
+	void new_mouse_released_slot(const QPointF& p);
+// 	void selection_mouse_moved_slot(const QPointF& p);
 
       public slots:
 	void set_image_layer_count(unsigned nslis);
 	void update_image(const mln::image2d<dsp_data_t>& ima);
-	void enable_crop_tool(bool b);
 
       signals:
 	void slider_valueChanged(int sli);
@@ -139,5 +142,7 @@ namespace scribo
 
 } // end of namespace scribo
 
+
+# include <shared/src/image_viewer.hxx>
 
 #endif // ! SCRIBO_DEMO_SHARED_SRC_IMAGE_VIEWER_HH

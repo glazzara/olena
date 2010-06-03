@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>529</width>
+    <width>553</width>
     <height>350</height>
    </rect>
   </property>
@@ -35,29 +35,6 @@
           </size>
          </property>
         </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="crop_btn" >
-         <property name="enabled" >
-          <bool>false</bool>
-         </property>
-         <property name="maximumSize" >
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="text" >
-          <string>Crop</string>
-         </property>
-         <property name="icon" >
-          <iconset resource="../shared.qrc" >
-           <normaloff>:/icons/icons/crop-icon.png</normaloff>:/icons/icons/crop-icon.png</iconset>
-         </property>
-         <property name="checkable" >
-          <bool>true</bool>
-         </property>
-        </widget>
        </item>
        <item>
         <widget class="QLabel" name="rotate_lbl" >
@@ -236,11 +213,14 @@
        <property name="interactive" >
         <bool>true</bool>
        </property>
-       <property name="renderHints" >
-        <set>QPainter::Antialiasing</set>
-       </property>
        <property name="dragMode" >
         <enum>QGraphicsView::NoDrag</enum>
+       </property>
+       <property name="viewportUpdateMode" >
+        <enum>QGraphicsView::BoundingRectViewportUpdate</enum>
+       </property>
+       <property name="optimizationFlags" >
+        <set>QGraphicsView::DontAdjustForAntialiasing|QGraphicsView::DontClipPainter|QGraphicsView::DontSavePainterState</set>
        </property>
       </widget>
      </item>
