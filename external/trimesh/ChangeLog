@@ -1,3 +1,7 @@
+2010-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Clean up a bit.
+
 2010-05-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove improper copyright headers in Trimesh.

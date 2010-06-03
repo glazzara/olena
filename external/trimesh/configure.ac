@@ -1,6 +1,3 @@
-#                                               -*- Autoconf -*-
-# Process this file with autoconf to produce a configure script.
-
 AC_PREREQ([2.61])
 
 AC_INIT([trimesh2], [2.8], [smr at princeton edu])
