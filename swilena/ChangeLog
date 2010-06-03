@@ -1,3 +1,9 @@
+2010-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean up a bit Swilena's Makefiles.
+
+	* Makefile.am, python/Makefile.am: Here.
+
 2009-09-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	* neighb2d.i: Aesthetic changes.
