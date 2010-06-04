@@ -108,8 +108,14 @@ esac
 AC_ARG_VAR([TESTS_CXXFLAGS], [C++ compiler flags for tests])
 # We want no optimization for the tests (it slows down compiling
 # times), and debugging information.
-if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS"; then
-  TESTS_CXXFLAGS="-O0 -ggdb $WARNINGS_CXXFLAGS"
+if test -z "$TESTS_CXXFLAGS"; then
+  if test "$GXX" = yes; then
+    # GNU C++ compiler setup.
+    TESTS_CXXFLAGS="-O0 -ggdb $WARNINGS_CXXFLAGS"
+  elif test "$ICPC" = yes; then
+    # Intel C++ compiler setup.
+    TESTS_CXXFLAGS="-O0 -g $WARNINGS_CXXFLAGS"
+  fi
 fi
 
 # Flags for complex tests.
@@ -117,8 +123,14 @@ AC_ARG_VAR([TESTS_CXXFLAGS_SPEED],
            [C++ compiler optimization flags for (complex) tests])
 # We want optimization for complex tests, and keep debugging flags
 # (still useful).
-if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS_SPEED"; then
-  TESTS_CXXFLAGS_SPEED="-O3 -DNDEBUG -ggdb -Wall -W"
+if test -z "$TESTS_CXXFLAGS_SPEED"; then
+  if test "$GXX" = yes; then
+    # GNU C++ compiler setup.
+    TESTS_CXXFLAGS_SPEED="-O3 -DNDEBUG -ggdb $WARNINGS_CXXFLAGS"
+  elif test "$ICPC" = yes; then
+    # Intel C++ compiler setup.
+    TESTS_CXXFLAGS_SPEED="-O3 -DNDEBUG -g $WARNINGS_CXXFLAGS"
+  fi
 fi
 
 # Flags for tests with with all debugging features turned on.
@@ -129,8 +141,12 @@ AC_ARG_VAR([TESTS_CXXFLAGS_DEBUG], [C++ compiler debug flags])
 #   http://gcc.gnu.org/onlinedocs/libstdc++/manual/debug_mode.html
 # * GNU C++ Library Compile Time Checks (a.k.a. concept checking):
 #   http://gcc.gnu.org/onlinedocs/libstdc++/manual/bk01pt12ch29.html
-if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS_DEBUG"; then
-  TESTS_CXXFLAGS_DEBUG="-O0 -ggdb $WARNINGS_CXXFLAGS -D_GLIBCXX_DEBUG -D_GLIBCXX_CONCEPT_CHECKS"
+if test -z "$TESTS_CXXFLAGS_DEBUG"; then
+  if test "$GXX" = yes; then
+    TESTS_CXXFLAGS_DEBUG="-O0 -ggdb $WARNINGS_CXXFLAGS -D_GLIBCXX_DEBUG -D_GLIBCXX_CONCEPT_CHECKS"
+  elif test "$ICPC" = yes; then
+    TESTS_CXXFLAGS_DEBUG="-O0 -g $WARNINGS_CXXFLAGS -D_GLIBCXX_DEBUG -D_GLIBCXX_CONCEPT_CHECKS"
+  fi
 fi
 
 
@@ -194,8 +210,9 @@ OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
 OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm], [GDCM],
 	     [-lgdcmzlib])
 
-# Tesseract
-OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full], [tesseract], [TESSERACT])
+# Tesseract.
+OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
+	     [tesseract], [TESSERACT])
 
 
 
@@ -494,8 +511,12 @@ AC_CONFIG_FILES([milena/apps/constrained-connectivity/test-constrained-connectiv
 # Flags for apps.
 AC_ARG_VAR([APPS_CXXFLAGS], [C++ compiler flags for applications])
 # We want fast binaries for apps.
-if test "$GXX" = yes && test -z "$APPS_CXXFLAGS"; then
-  APPS_CXXFLAGS="-O3 -DNDEBUG -ggdb $WARNINGS_CXXFLAGS"
+if test -z "$APPS_CXXFLAGS"; then
+  if test "$GXX" = yes; then
+    APPS_CXXFLAGS="-O3 -DNDEBUG -ggdb $WARNINGS_CXXFLAGS"
+  elif test "$ICPC" = yes; then
+    APPS_CXXFLAGS="-O3 -DNDEBUG -g $WARNINGS_CXXFLAGS"
+  fi
 fi
 
 ## ------- ##
@@ -513,8 +534,12 @@ AC_CONFIG_FILES([milena/tools/Makefile])
 # Flags for tools.
 AC_ARG_VAR([TOOLS_CXXFLAGS], [C++ compiler flags for tools])
 # We want fast binaries for tools.
-if test "$GXX" = yes && test -z "$TOOLS_CXXFLAGS"; then
-  TOOLS_CXXFLAGS="-O3 -DNDEBUG -ggdb $WARNINGS_CXXFLAGS"
+if test -z "$TOOLS_CXXFLAGS"; then
+  if test "$GXX" = yes; then
+    TOOLS_CXXFLAGS="-O3 -DNDEBUG -ggdb $WARNINGS_CXXFLAGS"
+  elif test "$ICPC" = yes; then
+    TOOLS_CXXFLAGS="-O3 -DNDEBUG -g $WARNINGS_CXXFLAGS"
+  fi
 fi
 
 
