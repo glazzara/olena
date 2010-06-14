@@ -87,15 +87,18 @@ int main(int argc, char* argv[])
   mln::p_n_faces_fwd_piter<D, G> v(float_ima.domain(), 0);
   for_all(v)
     {
+      // FIXME: The program should allow the user to choose the kind
+      // of measure (curvature).
+#if 0
       float h = (curv.first(v) + curv.second(v)) / 2;
       // Pseudo-inverse curvature.
       float h_inv =
 	1 / float(mln::math::pi) * (atanf(-h) + float(mln::math::pi) / 2);
       float_ima(v) = h_inv;
-      // FIXME: The program should allow the user to choose the kind
-      // of measure.
-//       input(v) = mln::math::max(mln::math::sqr(curv.first(v)),
-// 				mln::math::sqr(curv.second(v)));
+#endif
+      // Max curvature.
+      float_ima(v) = mln::math::max(mln::math::sqr(curv.first(v)),
+				mln::math::sqr(curv.second(v)));
     }
 
   // Values on edges.

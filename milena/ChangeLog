@@ -1,5 +1,11 @@
 2010-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Actually use the maximal curvature in mesh-complex-max-curv-segm.
+
+	* apps/mesh-segm-skel/mesh-complex-max-curv-segm.cc: Here.
+
+2010-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve the precision of some mesh-segm-skel apps.
 
 	* apps/mesh-segm-skel/mesh-complex-segm.cc,
