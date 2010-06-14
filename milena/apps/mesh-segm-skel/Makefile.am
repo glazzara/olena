@@ -120,3 +120,10 @@ MOSTLYCLEANFILES +=				\
 
 # FIXME: Implement `mesh-complex-{max,pinv}-curv-skel'.
 # ...
+bin_PROGRAMS += mesh-complex-max-curv-skel
+mesh_complex_max_curv_skel_SOURCES =		\
+  mesh-complex-max-curv-skel.cc save_bin_alt.hh
+TESTS += test-mesh-complex-max-curv-skel
+MOSTLYCLEANFILES +=				\
+  socket-complex-max-curv-skel.off		\
+  teapot-complex-max-curv-skel.off

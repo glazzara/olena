@@ -1,0 +1,26 @@
+#! /bin/sh
+
+# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
+#
+# This file is part of Olena.
+#
+# Olena is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, version 2 of the License.
+#
+# Olena is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+
+set -ex
+
+mesh_dir=@top_srcdir@/milena/mesh
+
+time ./mesh-complex-max-curv-skel $mesh_dir/socket.off 10 socket-complex-max-curv-skel.off
+time ./mesh-complex-max-curv-skel $mesh_dir/teapot.off 20 teapot-complex-max-curv-skel.off
+# FIXME: Too long.  Should be run with (future) target `check-full'.
+#time ./mesh-complex-max-curv-skel $mesh_dir/bunny-holefilled.off 50 bunny-holefilled-complex-max-curv-skel.off
