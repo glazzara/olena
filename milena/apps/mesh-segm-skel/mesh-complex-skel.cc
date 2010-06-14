@@ -70,23 +70,37 @@ main(int argc, char* argv[])
   `----------------*/
 
   // Image type.
-  typedef mln::float_2complex_image3df ima_t;
+  typedef mln::float_2complex_image3df float_input_t;
   // Dimension of the image (and therefore of the complex).
-  static const unsigned D = ima_t::dim;
+  static const unsigned D = float_input_t::dim;
   // Geometry of the image.
-  typedef mln_geom_(ima_t) G;
+  typedef mln_geom_(float_input_t) G;
 
-  ima_t input;
-  mln::io::off::load(input, input_filename);
+  float_input_t float_input;
+  mln::io::off::load(float_input, input_filename);
+
+  // Convert the float image into an unsigned image because some
+  // algorithms do not handle float images well.
+  /* FIXME: This is bad: float images should be handled as-is.  At
+     least, we should use a decent conversion, using an optimal affine
+     transformation (stretching/shrinking) or any other kind of
+     interpolation.  */
+  typedef mln::unsigned_2complex_image3df ima_t;
+  ima_t input(float_input.domain());
+  // Process only triangles, as edges and vertices are set afterwards
+  // (see FIXME below).
+  mln::p_n_faces_fwd_piter<D, G> t(input.domain(), 2);
+  for_all(t)
+    input(t) = 1000 * float_input(t);
 
   /* FIXME: Workaround: Set maximal values on vertices and edges to
      exclude them from the set of minimal values.  */
   mln::p_n_faces_fwd_piter<D, G> v(input.domain(), 0);
   for_all(v)
-    input(v) = mln_max(float);
+    input(v) = mln_max(mln_value_(ima_t));
   mln::p_n_faces_fwd_piter<D, G> e(input.domain(), 1);
   for_all(e)
-    input(e) = mln_max(float);
+    input(e) = mln_max(mln_value_(ima_t));
 
   /*-----------------.
   | Simplification.  |
@@ -124,7 +138,7 @@ main(int argc, char* argv[])
     for_all(adj_t)
       if (minima(adj_t) == mln::literal::zero)
 	{
-	  // If E is adjcent to a non-minimal triangle, then it must
+	  // If E is adjacent to a non-minimal triangle, then it must
 	  // not belong to a minima.
 	  ref_adj_minimum = mln::literal::zero;
 	  break;
@@ -150,7 +164,7 @@ main(int argc, char* argv[])
     for_all(adj_e)
       if (minima(adj_e) == mln::literal::zero)
 	{
-	  // If V is adjcent to a non-minimal triangle, then it must
+	  // If V is adjacent to a non-minimal triangle, then it must
 	  // not belong to a minima.
 	  ref_adj_minimum = mln::literal::zero;
 	  break;
@@ -171,6 +185,13 @@ main(int argc, char* argv[])
   /*-----------------------.
   | Initial binary image.  |
   `-----------------------*/
+
+  /* Careful: creating ``holes'' in the surface obviously changes its
+     topology, but it may also split a single connected component in
+     two or more components, resulting in a disconnected skeleton.  We
+     may want to improve this step either by forbidding any splitting,
+     or by incrementally ``digging'' a regional minima as long as no
+     splitting occurs.  */
 
   typedef mln_ch_value_(ima_t, bool) bin_ima_t;
   bin_ima_t surface(minima.domain());

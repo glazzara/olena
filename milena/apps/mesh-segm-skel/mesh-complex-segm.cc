@@ -65,15 +65,27 @@ int main(int argc, char* argv[])
   | Complex image.  |
   `----------------*/
 
-  // Image type.
-  typedef mln::float_2complex_image3df ima_t;
+  // Input type.
+  typedef mln::float_2complex_image3df float_input_t;
   // Dimension of the image (and therefore of the complex).
-  static const unsigned D = ima_t::dim;
+  static const unsigned D = float_input_t::dim;
   // Geometry of the image.
-  typedef mln_geom_(ima_t) G;
+  typedef mln_geom_(float_input_t) G;
 
-  ima_t input;
-  mln::io::off::load(input, input_filename);
+  float_input_t float_input;
+  mln::io::off::load(float_input, input_filename);
+
+  // Convert the float image into an unsigned image because some
+  // algorithms do not handle float images well.
+  /* FIXME: This is bad: float images should be handled as-is.  At
+     least, we should use a decent conversion, using an optimal affine
+     transformation (stretching/shrinking) or any other kind of
+     interpolation.  */
+  typedef mln::unsigned_2complex_image3df ima_t;
+  ima_t input(float_input.domain());
+  mln_piter_(ima_t) p(input.domain());
+  for_all(p)
+    input(p) = 1000 * float_input(p);
 
   // Values on edges.
   mln::p_n_faces_fwd_piter<D, G> e(input.domain(), 1);

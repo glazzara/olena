@@ -1,5 +1,16 @@
 2010-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve the precision of some mesh-segm-skel apps.
+
+	* apps/mesh-segm-skel/mesh-complex-segm.cc,
+	* apps/mesh-segm-skel/mesh-complex-skel.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-segm.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-skel.cc:
+	Convert the floating point value input to an unsigned integer
+	image to avoid precision errors due to float comparisons.
+
+2010-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	New application: mesh-complex-max-curv-skel.
 
 	* apps/mesh-segm-skel/mesh-complex-max-curv-skel.cc: New.

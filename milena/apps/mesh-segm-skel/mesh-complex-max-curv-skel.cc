@@ -75,37 +75,38 @@ main(int argc, char* argv[])
   | Complex image.  |
   `----------------*/
 
-  // Image type.
-  typedef mln::float_2complex_image3df ima_t;
+  // Curvature image type.
+  typedef mln::float_2complex_image3df float_ima_t;
   // Dimension of the image (and therefore of the complex).
-  static const unsigned D = ima_t::dim;
+  static const unsigned D = float_ima_t::dim;
   // Geometry of the image.
-  typedef mln_geom_(ima_t) G;
+  typedef mln_geom_(float_ima_t) G;
 
   mln::bin_2complex_image3df bin_input;
   mln::io::off::load(bin_input, input_filename);
-  std::pair<ima_t, ima_t> curv = mln::geom::mesh_curvature(bin_input.domain());
+  std::pair<float_ima_t, float_ima_t> curv =
+    mln::geom::mesh_curvature(bin_input.domain());
 
   // Compute the pseudo_inverse curvature at each vertex.
-  ima_t input(bin_input.domain());
-  mln::p_n_faces_fwd_piter<D, G> v(input.domain(), 0);
+  float_ima_t float_ima(bin_input.domain());
+  mln::p_n_faces_fwd_piter<D, G> v(float_ima.domain(), 0);
   for_all(v)
     {
       // FIXME: The program should allow the user to choose the kind
-      // of measure.
+      // of measure (curvature).
 #if 0
       float h = (curv.first(v) + curv.second(v)) / 2;
       // Pseudo-inverse curvature.
       float h_inv = 1 / pi * (atan(-h) + pi / 2);
-      input(v) = h_inv;
+      float_ima(v) = h_inv;
 #endif
       // Max curvature.
-      input(v) = mln::math::max(mln::math::sqr(curv.first(v)),
- 				mln::math::sqr(curv.second(v)));
+      float_ima(v) = mln::math::max(mln::math::sqr(curv.first(v)),
+				    mln::math::sqr(curv.second(v)));
     }
 
   // Values on triangles.
-  mln::p_n_faces_fwd_piter<D, G> t(input.domain(), 2); 
+  mln::p_n_faces_fwd_piter<D, G> t(float_ima.domain(), 2); 
   // For each triangle (2-face) T, iterate on the the set of vertices
   // (0-faces) transitively adjacent to T.
   typedef mln::complex_m_face_neighborhood<D, G> adj_vertices_nbh_t;
@@ -123,21 +124,34 @@ main(int argc, char* argv[])
     // Iterate on vertices (0-faces).
     for_all(adj_v)
     {
-      s += input(adj_v);
+      s += float_ima(adj_v);
       ++n;
     }
-    input(t) = s / n;
+    float_ima(t) = s / n;
     // A triangle should be adjacent to exactly two vertices.
     mln_invariant(n <= 3);
   }
 
+  // Convert the float image into an unsigned image because some
+  // algorithms do not handle float images well.
+  /* FIXME: This is bad: float images should be handled as-is.  At
+     least, we should use a decent conversion, using an optimal affine
+     transformation (stretching/shrinking) or any other kind of
+     interpolation.  */
+  typedef mln::unsigned_2complex_image3df ima_t;
+  ima_t ima(float_ima.domain());
+  // Process only triangles, as edges and vertices are set afterwards
+  // (see FIXME below).
+  for_all(t)
+    ima(t) = 1000 * float_ima(t);
+
   /* FIXME: Workaround: Set maximal values on vertices and edges to
      exclude them from the set of minimal values.  */
   for_all(v)
-    input(v) = mln_max(float);
-  mln::p_n_faces_fwd_piter<D, G> e(input.domain(), 1);
+    ima(v) = mln_max(mln_value_(ima_t));
+  mln::p_n_faces_fwd_piter<D, G> e(float_ima.domain(), 1);
   for_all(e)
-    input(e) = mln_max(float);
+    ima(e) = mln_max(mln_value_(ima_t));
 
   /*-----------------.
   | Simplification.  |
@@ -147,7 +161,7 @@ main(int argc, char* argv[])
   typedef mln::complex_lower_dim_connected_n_face_neighborhood<D, G> nbh_t;
   nbh_t nbh;
 
-  ima_t closed_input = mln::morpho::closing::area(input, nbh, lambda);
+  ima_t closed_ima = mln::morpho::closing::area(ima, nbh, lambda);
 
   /*---------------.
   | Local minima.  |
@@ -161,7 +175,7 @@ main(int argc, char* argv[])
      to 2-faces.  */
   typedef mln_ch_value_(ima_t, label_t) label_ima_t;
   label_ima_t minima =
-    mln::labeling::regional_minima(closed_input, nbh, nminima);
+    mln::labeling::regional_minima(closed_ima, nbh, nminima);
 
   typedef mln::complex_higher_neighborhood<D, G> higher_nbh_t;
   higher_nbh_t higher_nbh;
@@ -201,7 +215,7 @@ main(int argc, char* argv[])
     for_all(adj_e)
       if (minima(adj_e) == mln::literal::zero)
 	{
-	  // If V is adjcent to a non-minimal triangle, then it must
+	  // If V is adjacent to a non-minimal triangle, then it must
 	  // not belong to a minima.
 	  ref_adj_minimum = mln::literal::zero;
 	  break;
@@ -222,6 +236,13 @@ main(int argc, char* argv[])
   /*-----------------------.
   | Initial binary image.  |
   `-----------------------*/
+
+  /* Careful: creating ``holes'' in the surface obviously changes its
+     topology, but it may also split a single connected component in
+     two or more components, resulting in a disconnected skeleton.  We
+     may want to improve this step either by forbidding any splitting,
+     or by incrementally ``digging'' a regional minima as long as no
+     splitting occurs.  */
 
   typedef mln_ch_value_(ima_t, bool) bin_ima_t;
   bin_ima_t surface(minima.domain());

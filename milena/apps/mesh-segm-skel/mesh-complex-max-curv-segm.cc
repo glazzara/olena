@@ -71,26 +71,27 @@ int main(int argc, char* argv[])
   `----------------*/
 
   // Image type.
-  typedef mln::float_2complex_image3df ima_t;
+  typedef mln::float_2complex_image3df float_ima_t;
   // Dimension of the image (and therefore of the complex).
-  static const unsigned D = ima_t::dim;
+  static const unsigned D = float_ima_t::dim;
   // Geometry of the image.
-  typedef mln_geom_(ima_t) G;
+  typedef mln_geom_(float_ima_t) G;
 
   mln::bin_2complex_image3df bin_input;
   mln::io::off::load(bin_input, input_filename);
-  std::pair<ima_t, ima_t> curv = mln::geom::mesh_curvature(bin_input.domain());
+  std::pair<float_ima_t, float_ima_t> curv =
+    mln::geom::mesh_curvature(bin_input.domain());
 
   // Compute the pseudo_inverse curvature at each vertex.
-  ima_t input(bin_input.domain());
-  mln::p_n_faces_fwd_piter<D, G> v(input.domain(), 0);
+  float_ima_t float_ima(bin_input.domain());
+  mln::p_n_faces_fwd_piter<D, G> v(float_ima.domain(), 0);
   for_all(v)
     {
       float h = (curv.first(v) + curv.second(v)) / 2;
       // Pseudo-inverse curvature.
       float h_inv =
 	1 / float(mln::math::pi) * (atanf(-h) + float(mln::math::pi) / 2);
-      input(v) = h_inv;
+      float_ima(v) = h_inv;
       // FIXME: The program should allow the user to choose the kind
       // of measure.
 //       input(v) = mln::math::max(mln::math::sqr(curv.first(v)),
@@ -98,7 +99,7 @@ int main(int argc, char* argv[])
     }
 
   // Values on edges.
-  mln::p_n_faces_fwd_piter<D, G> e(input.domain(), 1);
+  mln::p_n_faces_fwd_piter<D, G> e(float_ima.domain(), 1);
   typedef mln::complex_lower_neighborhood<D, G> adj_vertices_nbh_t;
   adj_vertices_nbh_t adj_vertices_nbh;
   mln_niter_(adj_vertices_nbh_t) adj_v(adj_vertices_nbh, e);
@@ -110,13 +111,25 @@ int main(int argc, char* argv[])
     // Iterate on vertices (0-faces).
     for_all(adj_v)
     {
-      s += input(adj_v);
+      s += float_ima(adj_v);
       ++n;
     }
-    input(e) = s / n;
+    float_ima(e) = s / n;
     // An edge should be adjacent to exactly two vertices.
     mln_invariant(n <= 2);
   }
+
+  // Convert the float image into an unsigned image because some
+  // algorithms do not handle float images well.
+  /* FIXME: This is bad: float images should be handled as-is.  At
+     least, we should use a decent conversion, using an optimal affine
+     transformation (stretching/shrinking) or any other kind of
+     interpolation.  */
+  typedef mln::unsigned_2complex_image3df ima_t;
+  ima_t ima(float_ima.domain());
+  mln_piter_(ima_t) p(float_ima.domain());
+  for_all(p)
+    ima(p) = 1000 * float_ima(p);
 
   /*-----------------.
   | Simplification.  |
@@ -128,7 +141,7 @@ int main(int argc, char* argv[])
     adj_edges_nbh_t;
   adj_edges_nbh_t adj_edges_nbh;
 
-  ima_t closed_input = mln::morpho::closing::area(input, adj_edges_nbh, lambda);
+  ima_t closed_ima = mln::morpho::closing::area(ima, adj_edges_nbh, lambda);
 
   /*------.
   | WST.  |
@@ -138,7 +151,7 @@ int main(int argc, char* argv[])
      not constrained the domain of the image to 1-faces only.
      It would be great if we could use something like this:
 
-       closed_input | mln::p_faces<1, D, G>(closed_input.domain())
+       closed_ima | mln::p_faces<1, D, G>(closed_ima.domain())
 
      as input of the WST.  */
 
@@ -147,7 +160,7 @@ int main(int argc, char* argv[])
   wst_val_t nbasins;
   typedef mln::unsigned_2complex_image3df wst_ima_t;
   wst_ima_t wshed =
-    mln::morpho::watershed::flooding(closed_input, adj_edges_nbh, nbasins);
+    mln::morpho::watershed::flooding(closed_ima, adj_edges_nbh, nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
 
   // Label polygons (i.e., propagate labels from edges to polygons).
