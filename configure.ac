@@ -613,6 +613,8 @@ AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-segm],
                 [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-segm])
 AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-skel],
                 [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-skel])
+AC_CONFIG_FILES([milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-skel],
+                [chmod +x milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-skel])
 
 AC_CONFIG_FILES([milena/apps/constrained-connectivity/test-constrained-connectivity],
                 [chmod +x milena/apps/constrained-connectivity/test-constrained-connectivity])

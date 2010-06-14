@@ -1,3 +1,9 @@
+2010-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Configure milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-skel.
+
+	* configure.ac: Here.
+
 2010-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Configure milena/apps/mesh-segm-skel/test-mesh-complex-max-curv-extrema.
