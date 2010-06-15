@@ -16,7 +16,7 @@
 
 ## Process this file through Automake to create Makefile.in.
 
-SUBDIRS = tests src
+SUBDIRS = demo tests src
 
 .PHONY: bin
 
