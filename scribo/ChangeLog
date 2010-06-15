@@ -1,5 +1,9 @@
 2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* primitive/extract/components.hh: Use labeling::value_and_compute.
+
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a fast rotation tool.
 
 	* scribo/src/preprocessing/Makefile.am,

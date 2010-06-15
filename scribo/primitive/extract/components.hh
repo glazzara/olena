@@ -38,7 +38,7 @@
 # include <mln/accu/center.hh>
 # include <mln/accu/pair.hh>
 
-# include <mln/labeling/blobs_and_compute.hh>
+# include <mln/labeling/value_and_compute.hh>
 # include <mln/labeling/compute.hh>
 
 # include <mln/util/array.hh>
@@ -124,7 +124,8 @@ namespace scribo
 	mln::util::couple<L,
 	  mln::util::couple<mln::util::array<mln_result(pair_accu_t)>,
 	  mln::util::array<pair_accu_t> > >
-	  results = labeling::blobs_and_compute(input, nbh, ncomponents,
+
+	  results = labeling::value_and_compute(input, true, nbh, ncomponents,
 						pair_accu_t());
 
 	component_set<L>
