@@ -1,3 +1,14 @@
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce labeling::value_and_compute.
+
+	* mln/canvas/labeling/video.hh: Call more functor members.
+
+	* mln/labeling/value.hh: Provide new members to the functor.
+
+	* mln/labeling/value_and_compute.hh: New functor computing
+	attributes while labeling.
+
 2010-05-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/io/magick/load.hh: set minimum resolution for PDF files to

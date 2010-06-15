@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_LABELING_VALUE_HH
-# define MLN_LABELING_VALUE_HH
+#ifndef MLN_LABELING_VALUE_AND_COMPUTE_HH
+# define MLN_LABELING_VALUE_AND_COMPUTE_HH
 
 /// \file
 ///
@@ -53,10 +52,13 @@ namespace mln
     /// \param[out] nlabels  The number of labels.
     /// \return              The label image.
     //
-    template <typename I, typename N, typename L>
-    mln_ch_value(I, L)
-    value(const Image<I>& input, const mln_value(I)& val,
-	  const Neighborhood<N>& nbh, L& nlabels);
+    template <typename I, typename N, typename L, typename A>
+    util::couple<mln_ch_value(I,L),
+		 util::couple<util::array<mln_result(A)>,
+			      util::array<A> > >
+    value_and_compute(const Image<I>& input, const mln_value(I)& val,
+		      const Neighborhood<N>& nbh, L& nlabels,
+		      const Accumulator<A>& accu);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -67,14 +69,16 @@ namespace mln
     namespace internal
     {
 
-      template <typename I, typename N, typename L>
+      template <typename I, typename N, typename L, typename A>
       void
-      value_tests(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-		  L& nlabels)
+      value_and_compute_tests(const Image<I>& input, const mln_value(I)& val,
+			      const Neighborhood<N>& nbh, L& nlabels,
+			      const Accumulator<A>& accu)
       {
 	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(nbh).is_valid());
 
+	(void) accu;
 	(void) input;
 	(void) val;
 	(void) nbh;
@@ -90,13 +94,22 @@ namespace mln
 
       // Generic functor.
 
-      template <typename I, typename L>
-      struct value_functor
+      template <typename I, typename L, typename A>
+      struct value_and_compute_functor
       {
 	typedef mln_psite(I) P;
 
+	util::array<mln_result(A)> result_;
+	util::array<A> accus_;
+
 	const I& input;
 	const mln_value(I)& val;
+
+	typedef mln_result(A) accu_result;
+	typedef mln_argument(A) accu_argument;
+	typedef util::couple<util::array<accu_result>,
+			     util::array<A> > result;
+
 
 	// Requirements from mln::canvas::labeling.
 
@@ -111,30 +124,78 @@ namespace mln
 	void do_no_union(const P&, const P&)      {}
 	void init_attr(const P&)		  {}
 	void merge_attr(const P&, const P&)	  {}
-	void set_new_label(const P& p, const L& l){}
-	void set_label(const P& p, const L& l)    {}
-	void finalize()                           {}
+	void set_new_label(const P& p, const L& l)
+	{
+	  accus_.append(A());
+	  process__(accu_argument(), p, l);
+	}
+	void set_label(const P& p, const L& l)    { process__(accu_argument(), p, l); };
+	void finalize() { convert::from_to(accus_, result_); }
+
+
 
 	// Fastest implementation
 
-	void init_()				  {}
+	void init_()				  { accus_.append(A()); }
 	bool handles_(unsigned p) const		  { return input.element(p) == val; }
 	bool equiv_(unsigned n, unsigned) const	  { return input.element(n) == val; }
 	bool labels_(unsigned) const		  { return true; }
 	void do_no_union_(unsigned, unsigned)	  {}
 	void init_attr_(unsigned)		  {}
 	void merge_attr_(unsigned, unsigned)	  {}
-	void set_new_label_(unsigned, const L&)   {}
-	void set_label_(unsigned, const L&)       {}
-	void finalize_()                          {}
+	void set_new_label_(unsigned p, const L& l)
+	{
+	  accus_.append(A());
+	  process__(accu_argument(), p, l);
+	};
+	void set_label_(unsigned p, const L& l)   { process__(accu_argument(), p, l); };
+	void finalize_() { convert::from_to(accus_, result_); }
 
 	// end of Requirements.
 
-	value_functor(const Image<I>& input_, const mln_value(I)& val)
+
+
+	value_and_compute_functor(const Image<I>& input_, const mln_value(I)& val)
 	  : input(exact(input_)),
 	    val(val)
 	{
 	}
+
+
+      private:
+	inline
+	void process__(const unsigned&, unsigned p, const L& l)
+	{
+	  accus_[l].take(p);
+	}
+
+	inline
+	void process__(const mln_psite(I)&, unsigned p, const L& l)
+	{
+	  accus_[l].take(input.point_at_index(p));
+	}
+
+
+	inline
+	void process__(const mln_psite(I)&, const mln_site(I)& p, const L& l)
+	{
+	  accus_[l].take(p);
+	}
+
+	inline
+	void process__(const mln_value(I)&, const mln_site(I)&, const L& l)
+	{
+	  accus_[l].take(l);
+	}
+
+	template <typename V>
+	inline
+	void process__(const V&, const mln_site(I)&, const L& l)
+	{
+	  mlc_abort(V)::check();
+	}
+
+
       };
 
     } // end of namespace mln::labeling::impl
@@ -144,21 +205,30 @@ namespace mln
 
     // Facade.
 
-    template <typename I, typename N, typename L>
-    mln_ch_value(I, L)
-    value(const Image<I>& input, const mln_value(I)& val,
-	  const Neighborhood<N>& nbh, L& nlabels)
+    template <typename I, typename N, typename L, typename A>
+    util::couple<mln_ch_value(I,L),
+		 util::couple<util::array<mln_result(A)>,
+			      util::array<A> > >
+    value_and_compute(const Image<I>& input, const mln_value(I)& val,
+		      const Neighborhood<N>& nbh, L& nlabels,
+		      const Accumulator<A>& accu)
     {
-      trace::entering("labeling::value");
+      trace::entering("labeling::value_and_compute");
 
-      internal::value_tests(input, val, nbh, nlabels);
+      internal::value_and_compute_tests(input, val, nbh, nlabels, accu);
 
-      mln_ch_value(I, L) output;
-      impl::value_functor<I,L> f(input, val);
-      output = canvas::labeling::video(input, nbh, nlabels, f);
+      typedef mln_ch_value(I,L) out_t;
+      typedef impl::value_and_compute_functor<I, L, A> func_t;
+      func_t f(input, val);
+      out_t output = canvas::labeling::video(input, nbh, nlabels, f);
 
-      trace::exiting("labeling::value");
-      return output;
+      util::couple<out_t, typename func_t::result>
+	result = make::couple(output,
+			      make::couple(f.result_, f.accus_));
+
+
+      trace::exiting("labeling::value_and_compute");
+      return result;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -168,4 +238,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_LABELING_VALUE_HH
+#endif // ! MLN_LABELING_VALUE_AND_COMPUTE_HH

@@ -162,14 +162,20 @@ namespace mln
 		    return output;
 		  }
 		  output.element(p) = ++nlabels;
+		  f.set_new_label_(p, nlabels);
 		}
 	      }
 	      else
-		output.element(p) = output.element(parent.element(p));
+	      {
+		L lbl = output.element(parent.element(p));
+		output.element(p) = lbl;
+		f.set_label_(p, lbl);
+	      }
 	    }
 	    status = true;
 	  }
 
+	  f.finalize();
 	  trace::exiting("canvas::impl::video_fastest");
 	  return output;
 	}
