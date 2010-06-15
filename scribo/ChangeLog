@@ -1,3 +1,14 @@
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new routine to highlight text areas in an image.
+
+	* debug/highlight_text_area.hh: New.
+
+	* src/debug/Makefile.am,
+	* src/debug/highlight_text_area.cc: New tool.
+
+	* src/text_in_picture.cc: Make use of this new routine.
+
 2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* src/README: New.

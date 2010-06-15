@@ -1,4 +1,5 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -74,3 +75,15 @@ show_objects_large_small_SOURCES = show_objects_large_small.cc
 show_objects_small_SOURCES = show_objects_small.cc
 show_objects_thick_SOURCES = show_objects_thick.cc
 show_objects_thin_SOURCES = show_objects_thin.cc
+
+
+if HAVE_MAGICKXX
+
+  bin_PROGRAMS += highlight_text_area
+  highlight_text_area_SOURCES = highlight_text_area.cc
+  highlight_text_area_CPPFLAGS = $(AM_CPPFLAGS) \
+				`Magick++-config --cppflags`
+  highlight_text_area_LDFLAGS  = $(AM_LDFLAGS) \
+			      	 -lpthread  `Magick++-config --libs`
+
+endif HAVE_MAGICKXX

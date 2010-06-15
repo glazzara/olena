@@ -86,6 +86,8 @@
 #include <scribo/filter/object_groups_small.hh>
 #include <scribo/filter/object_groups_v_thickness.hh>
 
+#include <scribo/debug/highlight_text_area.hh>
+
 #include <scribo/debug/decision_image.hh>
 #include <scribo/debug/save_bboxes_image.hh>
 #include <scribo/debug/save_linked_bboxes_image.hh>
@@ -153,55 +155,6 @@ namespace mln
   };
 
 
-  struct mask_non_text : Function_v2v<mask_non_text>
-  {
-    typedef value::rgb8 result;
-    typedef image2d<bool> I;
-
-    mask_non_text(const image2d<bool>& mask)
-      : mask_(mask), p_(mask_)
-    {
-      p_.start();
-    }
-
-    result operator()(const result& v) const
-    {
-      bool b = p_.val();
-      p_.next();
-      if (!b)
-	return v / 2;
-      else
-	return v;
-
-    }
-
-    I mask_;
-    mutable mln_pixter_(I) p_;
-  };
-
-
-  template <typename I, typename L>
-  mln_concrete(I)
-  compute_highlight_image(const I& input_rgb,
-			  const scribo::component_set<L>& components)
-  {
-    mln_ch_value(I, bool) mask;
-    initialize(mask, input_rgb);
-    data::fill(mask, false);
-
-    for_all_comps(i, components)
-      if (components(i).is_valid())
-	data::fill((mask | components(i).bbox()).rw(), true);
-
-    mask_non_text f(mask);
-    mln_concrete(I) output = data::transform(input_rgb, f);
-
-    for_all_comps(i, components)
-      if (components(i).is_valid())
-	mln::draw::box(output, components(i).bbox(), literal::red);
-
-    return output;
-  }
 
   template <typename I, typename L>
   mln_concrete(I)
@@ -684,7 +637,7 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm 1 1 1 1 1",
 					comps.nelements()),
 		argv[2]);
 
-  io::ppm::save(compute_highlight_image(input_rgb, comps),
+  io::ppm::save(scribo::debug::highlight_text_area(input_rgb, comps),
 		out_base_dir + "_input_with_bboxes.ppm");
   io::ppm::save(compute_text_image(input_rgb, comps),
 		out_base_dir + "_out_text.ppm");
