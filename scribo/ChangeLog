@@ -1,5 +1,12 @@
 2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Remove deprecated code.
+
+	* util/all.hh,
+	* util/text.hh: Remove.
+
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new Makefiles in Scribo demo directories.
 
 	* Makefile.am,
@@ -13,8 +20,8 @@
 
 	Add a fast rotation tool.
 
-	* scribo/src/preprocessing/Makefile.am,
-	* scribo/src/preprocessing/rotate_90.cc: New.
+	* src/preprocessing/Makefile.am,
+	* src/preprocessing/rotate_90.cc: New.
 
 2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
