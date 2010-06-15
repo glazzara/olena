@@ -1,5 +1,17 @@
 2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* debug/save_linked_bboxes_image.hh: Fix namespace ambiguity.
+
+	* src/pbm_text_in_doc.cc: Fix comment.
+
+	* src/text_in_picture: Change few settings.
+
+	* text/recognition.hh: Fix invalid default arguments.
+
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Remove deprecated code.
 
 	* util/all.hh,

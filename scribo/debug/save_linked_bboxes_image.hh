@@ -171,7 +171,7 @@ namespace scribo
       draw::bounding_boxes(tmp, components, box_value);
       draw::bounding_box_links(tmp, array, link_value, anchor);
 
-      io::ppm::save(tmp, filename);
+      mln::io::ppm::save(tmp, filename);
 
       trace::exiting("scribo::debug::save_linked_bboxes_image");
     }
@@ -214,7 +214,7 @@ namespace scribo
 			       left_link, right_link,
 			       value);
 
-      io::ppm::save(tmp, filename);
+      mln::io::ppm::save(tmp, filename);
 
       trace::exiting("scribo::debug::save_linked_bboxes_image");
     }
@@ -249,7 +249,7 @@ namespace scribo
 			       left_link_value, right_link_value,
 			       validated_link_value);
 
-      io::ppm::save(tmp, filename);
+      mln::io::ppm::save(tmp, filename);
 
       trace::exiting("scribo::debug::save_linked_bboxes_image");
     }
@@ -275,7 +275,7 @@ namespace scribo
       draw::bounding_boxes(tmp, components, box_value);
       draw::bounding_box_links(tmp, components, g, link_value);
 
-      io::ppm::save(tmp, filename);
+      mln::io::ppm::save(tmp, filename);
 
       trace::exiting("scribo::debug::save_linked_bboxes_image");
     }

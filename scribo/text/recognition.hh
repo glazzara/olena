@@ -52,8 +52,6 @@
 
 # include <scribo/core/macros.hh>
 
-# include <scribo/util/text.hh>
-
 # include <scribo/text/clean.hh>
 
 # include <scribo/core/line_set.hh>
@@ -89,7 +87,7 @@ namespace scribo
     void
     recognition(const Image<I>& line,
 		const char *language,
-		const std::string& output_file = 0);
+		const std::string& output_file = std::string());
 
 
 
@@ -187,7 +185,7 @@ namespace scribo
     void
     recognition(const Image<I>& line_,
 		const char *language,
-		const std::string& output_file = 0)
+		const std::string& output_file = std::string())
     {
       trace::entering("scribo::text::recognition");
 

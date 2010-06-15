@@ -124,9 +124,8 @@ int main(int argc, char* argv[])
   // Saving results
   scribo::io::xml::save_text_lines(argv[1], lines, "out.xml");
 
-  // Specify shift due to previous crop.
+  // Specify shift due to potential previous crop.
   scribo::io::text_boxes::save(lines, argv[2], crop_shift);
-
 
   trace::exiting("main");
 }

@@ -128,11 +128,11 @@ namespace mln
   {
     config()
     {
-      sauvola_s = 3u;
+      sauvola_s = 2u; // 3?
       sauvola_min_w = 51u;
 
       // Group Filtering
-      bbox_h_ratio = 1.50f;
+      bbox_h_ratio = 1.60f;
       bbox_overlap = 0.80f;
       small_groups = 3;
       v_thickness = 8;
