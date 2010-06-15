@@ -37,6 +37,16 @@ unskew_SOURCES = unskew.cc
 
 if HAVE_MAGICKXX
 
+    bin_PROGRAMS += rotate_90
+    rotate_90_SOURCES = rotate_90.cc
+    rotate_90_CPPFLAGS = $(AM_CPPFLAGS) \
+			 $(TESSERACT_CPPFLAGS) \
+			 `Magick++-config --cppflags`
+
+    rotate_90_LDFLAGS  = $(AM_LDFLAGS) \
+			 $(TESSERACT_LDFLAGS) \
+			 -lpthread  `Magick++-config --libs`
+
     bin_PROGRAMS	+= to_pgm
     to_pgm_SOURCES = to_pgm.cc
     to_pgm_CPPFLAGS = $(AM_CPPFLAGS) \

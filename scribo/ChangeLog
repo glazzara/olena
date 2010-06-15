@@ -1,5 +1,12 @@
 2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a fast rotation tool.
+
+	* scribo/src/preprocessing/Makefile.am,
+	* scribo/src/preprocessing/rotate_90.cc: New.
+
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a new routine to highlight text areas in an image.
 
 	* debug/highlight_text_area.hh: New.
