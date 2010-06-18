@@ -353,10 +353,16 @@ namespace mln
   point<G,C>::point(const algebra::vec<dim,double>& v)
   {
     unsigned j = 0;
-    for (unsigned i = dim - 2; i < dim; ++i)
-      coord_[i]   = round(v[j++]);
-    for (unsigned i = 2; i < dim; ++i, ++j)
-      coord_[i-j] = round(v[j]);
+    //FIXME: to be improved while adding a conversion routine.
+    if (dim < 3)
+      coord_ = v;
+    else
+    {
+      for (unsigned i = dim - 2; i < dim; ++i)
+	coord_[i]   = round(v[j++]);
+      for (unsigned i = 2; i < dim; ++i, ++j)
+	coord_[i-j] = round(v[j]);
+    }
   }
 
   template <typename G, typename C>
@@ -364,10 +370,16 @@ namespace mln
   point<G,C>::point(const algebra::vec<dim,float>& v)
   {
     unsigned j = 0;
-    for (unsigned i = dim - 2; i < dim; ++i)
-      coord_[i]   = round(v[j++]);
-    for (unsigned i = 2; i < dim; ++i, ++j)
-      coord_[i-j] = round(v[j]);
+    //FIXME: to be improved while adding a conversion routine.
+    if (dim < 3)
+      coord_ = v;
+    else
+    {
+      for (unsigned i = dim - 2; i < dim; ++i)
+	coord_[i]   = round(v[j++]);
+      for (unsigned i = 2; i < dim; ++i, ++j)
+	coord_[i-j] = round(v[j]);
+    }
   }
 
 

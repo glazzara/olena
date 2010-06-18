@@ -1,3 +1,13 @@
+2010-06-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix a bug in conversions from vec to point.
+
+	* milena/mln/core/concept/gpoint.hh: Fix comment.
+
+	* milena/mln/core/image/image1d.hh: Share a dpoint value.
+
+	* milena/mln/core/point.hh: Handle point1d.
+
 2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Introduce labeling::value_and_compute.

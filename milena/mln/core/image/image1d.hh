@@ -304,8 +304,10 @@ namespace mln
     void
     data< image1d<T> >::update_vb_()
     {
-      vb_.pmin() = b_.pmin() - dpoint1d(all_to(bdr_));
-      vb_.pmax() = b_.pmax() + dpoint1d(all_to(bdr_));
+      dpoint1d dp(all_to(bdr_));
+
+      vb_.pmin() = b_.pmin() - dp;
+      vb_.pmax() = b_.pmax() + dp;
     }
 
     template <typename T>
