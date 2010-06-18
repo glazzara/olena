@@ -1,3 +1,11 @@
+2010-06-18  green  <jacquelet@lrde.epita.fr>
+
+	Prepare green's sandbox.
+
+	* sandbox: New experimental directory.
+	* sandbox/green: New green'work.
+	* sandbox/green/ChangeLog: New ChangeLog file.
+
 2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes.
