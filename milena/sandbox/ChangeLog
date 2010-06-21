@@ -77,6 +77,14 @@
 
 2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Benchmark few descriptors.
+
+	* green/exp/annotating/bench: New directory.
+	* green/exp/annotating/bench/Makefile.am: New Makefile.
+	* green/exp/annotating/bench/bench.cc: New source.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Test on image database the achromatism descriptor.
 
 	* green/exp/annotating/achromatism/Makefile.am: New Makefile.
