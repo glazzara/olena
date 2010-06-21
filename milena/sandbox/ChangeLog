@@ -1,9 +1,21 @@
 2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Work on Millet saturation descriptor.
+
+	* green/exp/annotating/saturation: New directory.
+	* green/exp/annotating/saturation/Makefile.am: New Makefile.
+	* green/exp/annotating/saturation/saturation.cc: New source file.
+	* green/exp/annotating/saturation/text-color.txt: New image class.
+	* green/exp/annotating/saturation/text-img.txt: New image class.
+	* green/exp/annotating/saturation/text-only.txt: New image class.
+
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Work on Millet hsv descriptors.
 
 	* green/exp/annotating/hsv: New directory.
-	* green/Exp/annotating/hsv/hsv.cc: New source file.
+	* green/exp/annotating/hsv/hsv.cc: New source file.
 
 2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
