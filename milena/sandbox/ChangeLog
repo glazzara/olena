@@ -77,7 +77,37 @@
 
 2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
-	Work on Millet saturation descriptor.
+	Add milena library components.
+
+	* green/mln/accu/stat/histo1d.hh: New header component.
+	* green/mln/fun/p2b/achromatic.hh: New header component.
+	* green/mln/fun/p2b/component_equals.hh: New header component.
+	* green/mln/fun/v2v/achromatism.hh: New header component.
+	* green/mln/fun/v2v/hue_concentration.hh: New header component.
+	* green/mln/fun/v2v/rgb_to_achromatism_map.hh: New header component.
+	* green/mln/fun/v2v/rgb_to_hsv.hh: New header component.
+	* green/mln/fun/v2v/rgb_to_hue_map.hh: New header component.
+	* green/mln/fun/v2v/rgb_to_saturation_map.hh: New header component.
+	* green/mln/fun/v2v/rgb_to_value_map.hh: New header component.
+	* green/mln/img_path.hh: New header component.
+	* green/mln/math/ceil.hh: New header component.
+	* green/mln/math/floor.hh: New header component.
+	* green/mln/math/hsv.hh: New header component.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Work on Millet value descriptor.
+
+	* green/exp/annotating/value: New directory.
+	* green/exp/annotating/value/Makefile.am: New Makefile.
+	* green/exp/annotating/value/value.cc: New source file.
+	* green/exp/annotating/value/text-color.txt: New image class.
+	* green/exp/annotating/value/text-img.txt: New image class.
+	* green/exp/annotating/value/text-only.txt: New image class.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Work on Millet hue descriptor.
 
 	* green/exp/annotating/hue: New directory.
 	* green/exp/annotating/hue/Makefile.am: New Makefile.
