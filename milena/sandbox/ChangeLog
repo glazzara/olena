@@ -1,3 +1,21 @@
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Test on image database the achromatism descriptor.
+
+	* green/exp/annotating/achromatism/Makefile.am: New Makefile.
+	* green/exp/annotating/achromatism/achromatism.am: New source.
+	* green/exp/annotating/achromatism/text-color.txt: New image class.
+	* green/exp/annotating/achromatism/text-img.txt: New image class.
+	* green/exp/annotating/achromatism/text-only.txt: New image class.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Turn around Millet 2008 hsv descriptors.
+
+	* green/demo/annotating/hsv: New directory.
+	* green/demo/annotating/hsv/Makefile.am: New Makefile.
+
+
 2010-02-10  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Fix bugs in the histogram visualization tools.
