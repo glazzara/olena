@@ -1,5 +1,28 @@
 2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Work on Millet hsv descriptors.
+
+	* green/exp/annotating/hsv: New directory.
+	* green/Exp/annotating/hsv/hsv.cc: New source file.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Work on histograms view as density.
+
+	* green/exp/annotating/histo: New directory.
+	* green/exp/annotating/histo/histo.cc: New Makefile.am.
+	* green/exp/annotating/histo/histo.cc: New source.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Test error quantification as a color descriptor in our database.
+
+	* green/exp/annotating/error: New directory.
+	* green/exp/annotating/error/Makefile.am: New Makefile.
+	* green/exp/annotating/error/error.cc: New source.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Benchmark few descriptors.
 
 	* green/exp/annotating/bench: New directory.
@@ -10,6 +33,7 @@
 
 	Test on image database the achromatism descriptor.
 
+	* green/exp/annotating/achromatism: New directory.
 	* green/exp/annotating/achromatism/Makefile.am: New Makefile.
 	* green/exp/annotating/achromatism/achromatism.am: New source.
 	* green/exp/annotating/achromatism/text-color.txt: New image class.
