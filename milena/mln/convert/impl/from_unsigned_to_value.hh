@@ -118,6 +118,16 @@ namespace mln
 	  internal::from_unsigned_to_value_dispatch(from, to);
 	}
 
+
+	// Facades.
+	// unsigned-> float
+	void
+	from_to_(const unsigned& from, float& to)
+	{
+	  to = from;
+	}
+
+
       } // end of namespace mln::convert::over_load
 
 

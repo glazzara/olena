@@ -534,6 +534,13 @@
 	* mln/value/rgb.hh: Make use of the new routine to print a
 	correct type names in dump format.
 
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Fix the way to convert unsigned to float.
+
+	* mln/convert/from_to.hxx: New conversion utilities.
+	* mln/convert/impl/from_unsigned_to_value.hh: New conversion utilities.
+
 2009-12-02  Yann Jacquelet <jacquelet@lrde.epita.fr>
 
 	Fix the outside template use case for the convolve macros.
