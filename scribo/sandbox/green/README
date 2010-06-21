@@ -1,0 +1,32 @@
+Le travail est classé dans deux répertoires ok et ko.
+Le répertoire ok correspond aux sources qui ont été reprises et retestées.
+Le répertoire ko correspond aux sources qui ont été juste transférées.
+
+La première brique logicielle importante sur laquelle s'appuie mes travaux est
+la création d'histogrammes sous forme d'image.
+
+
+CREATION DES HISTOGRAMMES
+-------------------------
+
+ko/mln/accu/stat/histo1d.hh: histogramme image valeur scalaire.
+ko/mln/accu/stat/histo2d.hh: histogramme image valeur vectorielle 2d.
+ko/mln/accu/stat/histo3d_hsl.hh: histogramme image valeur vectorielle 3d (HSL).
+ko/mln/accu/stat/histo3d_rgb.hh: histogramme image valeur vectorielle 3d (RGB).
+
+
+
+
+ok/mln/accu/histo/histo1d.hh: histogramme image valeur scalaire entière.
+ok/mln/accu/histo/histo2d.hh: histogramme image valeur vectorielle 2d entière.
+ok/mln/accu/histo/histo3d.hh: histogramme image valeur vectorielle 3d entière.
+
+
+SAUVEGARDE DES HISTOGRAMMES
+---------------------------
+
+
+
+
+VISUALISATION DES HISTOGRAMMES
+------------------------------

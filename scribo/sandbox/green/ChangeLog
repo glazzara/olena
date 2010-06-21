@@ -1,0 +1,12 @@
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Simple integration test.
+
+	* README: New text file.
+	* ok/mln/img_path.hh: New header file.
+	* ok/mln/accu/histo/histo1d.hh: New header file.
+	* ok/mln/accu/histo/histo2d.hh: New header file.
+	* ok/mln/accu/histo/histo3d.hh: New header file.
+	* ok/test/accu/histo/gaussian.sh: New gnuplot script file.
+	* ok/test/accu/histo/histo1d.cc: New source file.
+
