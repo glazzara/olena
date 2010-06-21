@@ -2,6 +2,17 @@
 
 	Work on Millet saturation descriptor.
 
+	* green/exp/annotating/hue: New directory.
+	* green/exp/annotating/hue/Makefile.am: New Makefile.
+	* green/exp/annotating/hue/hue.cc: New source file.
+	* green/exp/annotating/hue/text-color.txt: New image class.
+	* green/exp/annotating/hue/text-img.txt: New image class.
+	* green/exp/annotating/hue/text-only.txt: New image class.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Work on Millet saturation descriptor.
+
 	* green/exp/annotating/saturation: New directory.
 	* green/exp/annotating/saturation/Makefile.am: New Makefile.
 	* green/exp/annotating/saturation/saturation.cc: New source file.
