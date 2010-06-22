@@ -1,6 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory (LRDE)
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA LRDE
 //
 // This file is part of Olena.
 //
@@ -26,54 +24,67 @@
 // executable file might be covered by the GNU General Public License.
 
 #ifndef MLN_ACCU_STAT_HISTO3D_RGB_HH
-#define MLN_ACCU_STAT_HISTO3D_RGB_HH
+# define MLN_ACCU_STAT_HISTO3D_RGB_HH
 
 /// \file
 ///
-/// \brief Define a histogram as an accumulator which returns an image1d .
+/// \brief Define a histogram as accumulator which returns an image3d.
 ///
-/// This source implements the discrete histogram version. The number of beans
-/// is infer from the number of greylevels. A typical rgb8 image has got
-/// 256x3 bins. Working with a 8 bit quantification in rgb is very costly.
+/// This source implements the discrete histogram version. It was
+/// created for images which the values are derived from integer
+/// type. The number of bins is directly infered from the cardinality
+/// of the image value. It works for RGB space. See histo1d.hh for limitations
+/// of such implementation. 8 bits quantification is very
+/// expensive, it produces image3d with [0..255,0..255,0..255] as domain.
+///
 /// The following sample is a typical use of the histogram.
 ///
-/// #include <mln/value/rgb.hh>
-/// #include <mln/core/image/image1d.hh>
-/// #include <mln/core/image/image3d.hh>
-/// #include <mln/io/ppm/load.hh>
 /// #include <mln/accu/stat/histo3d_rgb.hh>
+/// #include <mln/core/image/image2d.hh>
+/// #include <mln/core/image/image3d.hh>
 /// #include <mln/data/compute.hh>
+/// #include <mln/data/transform.hh>
+/// #include <mln/fun/v2v/rgb8_to_rgbn.hh>
+/// #include <mln/img_path.hh>
+/// #include <mln/io/ppm/load.hh>
+/// #include <mln/value/rgb.hh>
+/// #include <mln/value/rgb8.hh>
 ///
-/// #define  OLENA_LENA ""/usr/local/share/olena/images/lena.ppm"
-///
-/// void test()
+/// int main()
 /// {
-///   typedef mln::value::rgb<7> rgb7;
-///   mln::image2d<rgb7>         img_ref;
-///   mln::image3d<unsigned>     img_res;
+///   typedef mln::value::rgb8   t_rgb8;
+///   typedef mln::value::rgb<7> t_rgb7;
+///   mln::image2d<t_rgb8>       img_rgb8;
+///   mln::image2d<t_rgb7>       img_rgb7;
+///   mln::image3d<unsigned>     histo;
 ///
-///   mln::io::ppm::load(img_ref, OLENA_LENA);
-///   img_res=mln::data::compute(mln::accu::meta::stat::histo3d_rgb(),img_ref);
+///   mln::io::ppm::load(img_rgb8, OLENA_IMG_PATH"/lena.ppm");
+///   img_rgb7 =mln::data::transform(img_rgb8,mln::fun::v2v::rgb8_to_rgbn<7>());
+///   histo = mln::data::compute(mln::accu::meta::stat::histo3d_rgb(),img_rgb7);
+///
+///   return 0;
 /// }
 
 
-#include <iostream>
+# include <iostream>
 
-#include <mln/accu/internal/base.hh>
+# include <mln/accu/internal/base.hh>
 
-#include <mln/core/macros.hh>
-#include <mln/core/image/image3d.hh>
-#include <mln/core/alias/point3d.hh>
-#include <mln/core/alias/box3d.hh>
+# include <mln/arith/plus.hh>
 
-#include <mln/trait/value/comp.hh>
+# include <mln/core/macros.hh>
+# include <mln/core/image/image3d.hh>
+# include <mln/core/alias/point3d.hh>
+# include <mln/core/alias/box3d.hh>
 
-#include <mln/arith/plus.hh>
+# include <mln/literal/zero.hh>
 
-#include <mln/trace/entering.hh>
-#include <mln/trace/exiting.hh>
+# include <mln/trace/entering.hh>
+# include <mln/trace/exiting.hh>
 
-#include <mln/value/ops.hh>
+# include <mln/trait/value/comp.hh>
+
+# include <mln/value/ops.hh>
 
 namespace mln
 {
@@ -140,13 +151,13 @@ namespace mln
     namespace stat
     {
 
-      /// \brief Define an histogram which returns an image3d .
+      /// \brief Define a histogram as accumulator which returns an image3d.
       ///
-      /// Param V defines the space in which we count the values.
-      /// For instance, this histogram works image2d<rgb<2>> or
-      /// image2d<rgb<7>>. The histogram count the occurrence of each value.
-      /// The number of bins depends of the grayscale values, for 8 bits there
-      /// is 256x3 bins. Note that over
+      /// Param V defines the type of the input image value. It is in
+      /// this space that we count the values. For instance, this
+      /// histogram works well for image2d< rgb<2> > or with image2d<
+      /// rgb<7> >. The number of bins depends directly the values V.
+      /// For 8 bits there is 256x3 bins. Note that less
       /// quantification works too.
       ///
       /// \ingroup modaccuvalues
@@ -159,15 +170,14 @@ namespace mln
 	typedef image3d<unsigned> result;
 	typedef result            q_result;
 
-	/// Constructors
+	/// Constructors.
 	/// \{
-	/// \brief Initialize the size of the resulting image1d.
+	/// \brief Infer the size of the resulting image3d domain.
 	///
-	/// Initialize the size the resulting image from the theorical dynamic
-	/// of the greylevel values (Use V to manage it).
+	/// By evaluating the minimum and the maximum of V, we define the domain
+	/// of the resulting image3d.
 	histo3d_rgb();
 	/// \}
-
 
 	/// Manipulators.
 	/// \{
@@ -180,7 +190,7 @@ namespace mln
 
 
 	/// \brief Update the histogram with the RGB pixel t.
-	/// \param[in] t a greylevel pixel of type V.
+	/// \param[in] t a graylevel pixel of type V.
 	///
 	/// The end user shouldn't call this method. In place of it, he can
 	/// go through the data compute interface.
@@ -189,12 +199,15 @@ namespace mln
 
 	/// \brief Update the histogram with an other histogram.
 	/// \param[in] other the other histogram.
+	///
+	/// The end user shouldn't call this method. This is part of
+	/// data compute interface mechanism.
 	void take(const histo3d_rgb<V>& other);
 	/// \}
 
 	/// Accessors.
 	/// \{
-	/// \brief Return the histogram as an image1d.
+	/// \brief Return the histogram as an RGB image3d.
 	///
 	/// This is the machinery to communicate with data compute interface.
 	/// The end user should'nt use it.
@@ -216,19 +229,19 @@ namespace mln
       /// \param[in] histo1 the first histogram to compare with.
       /// \param[in] histo2 the second histogram.
       ///
-      /// The operator compare all the bins from the two histogram.
-
+      /// The operator compares all the bins from the two histograms.
+      /// Nobody uses this method unless unitary tests.
       template <typename V>
       bool operator==(const histo3d_rgb<V>& histo1,
 		      const histo3d_rgb<V>& histo2);
 
-#ifndef MLN_INCLUDE_ONLY
+# ifndef MLN_INCLUDE_ONLY
 
       template <typename V>
       inline
       histo3d_rgb<V>::histo3d_rgb()
       {
-	trace::entering("mln::accu::stat::histo3d_rgb<V>::histo3d_rgb");
+	trace::entering("mln::accu::stat::histo3d_rgb::cstor");
 	typedef mln_trait_value_comp(V,0) comp0;
 	typedef mln_trait_value_comp(V,1) comp1;
 	typedef mln_trait_value_comp(V,2) comp2;
@@ -244,31 +257,24 @@ namespace mln
 				   mln_max(comp1),
 				   mln_max(comp2))));
 
-	trace::exiting("mln::accu::stat::histo3d_rgb<V>::histo3d_rgb");
+	trace::exiting("mln::accu::stat::histo3d_rgb::cstor");
       }
 
       template <typename V>
       inline
       void histo3d_rgb<V>::init()
       {
-	trace::entering("mln::accu::stat::histo3d_rgb<V>::init");
-
-	data::fill(count_, 0);
-	trace::exiting("mln::accu::stat::histo3d_rgb<V>::init");
+	data::fill(count_, literal::zero);
       }
 
       template <typename V>
       inline
       void histo3d_rgb<V>::take(const argument& t)
       {
-	trace::entering("mln::accu::stat::histo3d_rgb<V>::take");
-
 	// Just convert a greyscale value (int_u8 like) to a position for an
 	// iterator on the resulting image.
 	// Take care to the constructor : Point(slice, row, column)
 	++count_(point3d(t.blue(), t.red(), t.green()));
-
-	trace::exiting("mln::accu::stat::histo3d_rgb<V>::take");
       }
 
 
@@ -276,20 +282,13 @@ namespace mln
       inline
       void histo3d_rgb<V>::take(const histo3d_rgb<V>& other)
       {
-	trace::entering("mln::accu::stat::histo3d_rgb<V>::take");
-
 	count_ += other.count_;
-
-	trace::exiting("mln::accu::stat::histo3d_rgb<V>::take");
       }
 
       template <typename V>
       inline
       typename histo3d_rgb<V>::result histo3d_rgb<V>::to_result() const
       {
-	trace::entering("mln::accu::stat::histo3d_rgb<V>::to_result");
-
-	trace::exiting("mln::accu::stat::histo3d_rgb<V>::to_result");
 	return count_;
       }
 
@@ -297,9 +296,6 @@ namespace mln
       inline
       histo3d_rgb<V>::operator result() const
       {
-	trace::entering("mln::accu::stat::histo3d_rgb<V>::operator result");
-
-	trace::exiting("mln::accu::stat::histo3d_rgb<V>::operator result");
 	return count_;
       }
 
@@ -307,10 +303,8 @@ namespace mln
       inline
       bool histo3d_rgb<V>::is_valid() const
       {
-	trace::entering("mln::accu::stat::histo3d_rgb<V>::is_valid");
 	bool result = count_.is_valid();
 
-	trace::exiting("mln::accu::stat::histo3d_rgb<V>::is_valid");
 	return result;
       }
 
@@ -318,7 +312,7 @@ namespace mln
       bool operator==(const histo3d_rgb<V>& histo1,
 		      const histo3d_rgb<V>& histo2)
       {
-	trace::entering("mln::accu::stat::operator==");
+	trace::entering("mln::accu::stat::histo3d_rgb::operator==");
 
 	bool  result                  = true;
 	const image3d<unsigned>& res1 = histo1.to_result();
@@ -333,11 +327,11 @@ namespace mln
 	for_all_2(p1, p2)
 	  result &= (res1(p1) == res2(p2));
 
-	trace::exiting("mln::accu::stat::operator==");
+	trace::exiting("mln::accu::stat::histo3d_rgb::operator==");
 	return result;
       }
 
-#endif // ! MLN_INCLUDE_ONLY
+# endif // ! MLN_INCLUDE_ONLY
 
 
     } // end of namespace mln::accu::stat

@@ -1,6 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory (LRDE)
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA LRDE
 //
 // This file is part of Olena.
 //
@@ -35,6 +33,37 @@
 /// \file
 ///
 /// \brief Convert rgb8 value to rgbn, n < 8.
+///
+/// The source implements the reduction of quantification for any size less 8.
+///
+/// The following sample is a typical use of the histogram.
+///
+/// #include <mln/accu/stat/histo3d_rgb.hh>
+/// #include <mln/core/image/image2d.hh>
+/// #include <mln/core/image/image3d.hh>
+/// #include <mln/data/compute.hh>
+/// #include <mln/data/transform.hh>
+/// #include <mln/fun/v2v/rgb8_to_rgbn.hh>
+/// #include <mln/img_path.hh>
+/// #include <mln/io/ppm/load.hh>
+/// #include <mln/value/rgb.hh>
+/// #include <mln/value/rgb8.hh>
+///
+/// int main()
+/// {
+///   typedef mln::value::rgb8   t_rgb8;
+///   typedef mln::value::rgb<7> t_rgb7;
+///   mln::image2d<t_rgb8>       img_rgb8;
+///   mln::image2d<t_rgb7>       img_rgb7;
+///   mln::image3d<unsigned>     histo;
+///
+///   mln::io::ppm::load(img_rgb8, OLENA_IMG_PATH"/lena.ppm");
+///   img_rgb7 =mln::data::transform(img_rgb8,mln::fun::v2v::rgb8_to_rgbn<7>());
+///   histo = mln::data::compute(mln::accu::meta::stat::histo3d_rgb(),img_rgb7);
+///
+///   return 0;
+/// }
+
 
 namespace mln
 {
@@ -45,15 +74,23 @@ namespace mln
     namespace v2v
     {
 
-      /// \brief Convert rgb8 value to rgbn, n < 8.
+      /// \brief Convert a rgb8 value to a rgn, n < 8.
+      ///
+      /// Param n defines the output quantification used for the transformation.
       ///
       /// \ingroup modfunv2v
-
       template <unsigned n>
       struct rgb8_to_rgbn : Function_v2v< rgb8_to_rgbn<n> >
       {
 	typedef value::rgb8   argument;
 	typedef value::rgb<n> result;
+
+	/// \brief Convert a rgb8 value to a rgn, n < 8.
+	///
+	/// \param[in] v the rgb8 value to convert.
+	///
+	/// Conversion is done by computing the size by which we
+	/// divide each rgb component.
 
 	result operator()(const argument& c) const
 	{
@@ -65,7 +102,7 @@ namespace mln
 	  std::cout << "red  : " << c.red() << std::endl;
 	  std::cout << "size : " << size << std::endl;
 	  std::cout << "res  : " << (c.red() / size) << std::endl;
-	  std::cout << "max  : " << (mln_max(mln::value::int_u<n>)) << std::endl;
+	  std::cout << "max  : " << (mln_max(mln::value::int_u<n>))<< std::endl;
 	  */
 	  result   res(c.red() / size, c.green() / size, c.blue() / size);
 

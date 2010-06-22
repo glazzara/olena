@@ -24,7 +24,7 @@
 // executable file might be covered by the GNU General Public License.
 
 #ifndef MLN_ACCU_STAT_HISTO1D_HH
-#define MLN_ACCU_STAT_HISTO1D_HH
+# define MLN_ACCU_STAT_HISTO1D_HH
 
 /// \file
 ///
@@ -64,24 +64,24 @@
 /// }
 
 
-#include <iostream>
+# include <iostream>
 
-#include <mln/accu/internal/base.hh>
+# include <mln/accu/internal/base.hh>
 
-#include <mln/arith/plus.hh>
+# include <mln/arith/plus.hh>
 
-#include <mln/core/concept/meta_accumulator.hh>
-#include <mln/core/image/image1d.hh>
-#include <mln/core/macros.hh>
+# include <mln/core/concept/meta_accumulator.hh>
+# include <mln/core/image/image1d.hh>
+# include <mln/core/macros.hh>
 
-#include <mln/literal/zero.hh>
+# include <mln/literal/zero.hh>
 
-#include <mln/trace/entering.hh>
-#include <mln/trace/exiting.hh>
+# include <mln/trace/entering.hh>
+# include <mln/trace/exiting.hh>
 
-#include <mln/trait/value/comp.hh>
+# include <mln/trait/value/comp.hh>
 
-#include <mln/value/ops.hh>
+# include <mln/value/ops.hh>
 
 namespace mln
 {
@@ -168,7 +168,7 @@ namespace mln
 	typedef image1d<unsigned> result;
 	typedef result            q_result;
 
-	/// Constructors
+	/// Constructors.
 	/// \{
 	/// \brief Infer the size of the resulting image1d domain.
 	///
@@ -201,7 +201,6 @@ namespace mln
 	///
 	/// The end user shouldn't call this method. This is part of
 	/// data compute interface mechanism.
-
 	void take(const histo1d<V>& other);
 	/// \}
 
@@ -231,11 +230,10 @@ namespace mln
       ///
       /// The operator compares all the bins from the two histograms.
       /// Nobody uses this method unless unitary tests.
-
       template <typename V>
       bool operator==(const histo1d<V>& histo1, const histo1d<V>& histo2);
 
-#ifndef MLN_INCLUDE_ONLY
+# ifndef MLN_INCLUDE_ONLY
 
       template <typename V>
       inline
@@ -328,7 +326,7 @@ namespace mln
 	return result;
       }
 
-#endif // ! MLN_INCLUDE_ONLY
+# endif // ! MLN_INCLUDE_ONLY
 
 
     } // end of namespace mln::accu::stat

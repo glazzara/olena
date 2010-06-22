@@ -38,12 +38,84 @@
 
 2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
-	Save histogram library.
+	Define accumulator which computes histogram view as image.
 
-	* mln/accu/histo/histo1d.hh: New header file.
-	* mln/accu/histo/histo2d.hh: New header file.
-	* mln/accu/histo/histo3d_rgb.hh: New header file.
-	* mln/accu/histo/histo3d_hsl.hh: New header file.
+	* mln/img_path.hh: New header file.
+
+	Define the 1d component version of the the library.
+
+	* mln/accu/stat/histo1d.hh: New header file.
+
+	Give an example of code.
+
+	* use/accu/stat/histo1d: New directory.
+	* use/accu/stat/histo1d/Makefile.am: New makefile.
+	* use/accu/stat/histo1d/histo1d.cc: New source.
+
+	Make some unitary tests on histo1d library.
+
+	* tests/accu/stat/histo1d: New directory.
+	* tests/accu/stat/histo1d/Makefile.am: New makefile.
+	* tests/accu/stat/histo1d/histo1d.cc: New source.
+
+	Define the 2d component version of the the library.
+
+	* mln/accu/stat/histo2d.hh: New header file.
+	* mln/value/rg.hh: New header file.
+	* mln/fun/v2v/rgb_to_rg.hh: New header file.
+
+	Give an example of code.
+
+	* use/accu/stat/histo2d: New directory.
+	* use/accu/stat/histo2d/Makefile.am: New makefile.
+	* use/accu/stat/histo2d/histo2d.cc: New source.
+
+	* use/value/rg: New directory.
+	* use/value/rg/Makefile.am: New makefile.
+	* use/value/rg/rg.cc: New source.
+
+	* use/fun/v2v/rgb_to_rg: New directory.
+	* use/fun/v2v/rgb_to_rg/Makefile.am: New makefile.
+	* use/fun/v2v/rgb_to_rg/rgb_to_rg.cc: New source.
+
+	Define the RGB 3d component version of the the library.
+
+	* mln/accu/stat/histo3d_rgb.hh: New header file.
+	* mln/fun/v2v/rgb8_to_rgbn.hh: New header file.
+
+	Give an example of code.
+
+	* use/accu/stat/histo3_rgb: New directory.
+	* use/accu/stat/histo3d_rgb/Makefile.am: New makefile.
+	* use/accu/stat/histo3d_rgb/histo3d_rgb.cc: New source.
+
+	* use/fun/v2v/rgb8_to_rgbn: New directory.
+	* use/fun/v2v/rgb8_to_rgbn/Makefile.am: New makefile.
+	* use/fun/v2v/rgb8_to_rgbn/rgb8_to_rgbn.cc: New source.
+
+	Make some unitary tests on histo3d library.
+
+	* tests/accu/stat/histo3d_rgb: New directory.
+	* tests/accu/stat/histo3d_rgb/Makefile.am: New makefile.
+	* tests/accu/stat/histo3d_rgb/histo3d_rgb.cc: New source.
+
+
+	Define the HSL 3d component version of the the library.
+
+	* mln/accu/stat/histo3d_hsl.hh: New header file.
+
+	Give an example of code.
+
+	* use/accu/stat/histo3_hsl: New directory.
+	* use/accu/stat/histo3d_hsl/Makefile.am: New makefile.
+	* use/accu/stat/histo3d_hsl/histo3d_hsl.cc: New source.
+
+	Make some unitary tests on histo3d library.
+
+	* tests/accu/stat/histo3d_hsl: New directory.
+	* tests/accu/stat/histo3d_hsl/Makefile.am: New makefile.
+	* tests/accu/stat/histo3d_hsl/histo3d_hsl.cc: New source.
+
 
 2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 

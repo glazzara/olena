@@ -153,18 +153,8 @@ d'exécution (chmod 755 gnuplot_shell_file.sh). Comme je trouve le format
 extrêmement pratique, il se retrouve preque partout dans mes sources.
 
 
-V MLN
------
-
-a) La sauvegarde des images au format gnuplot shell
-
-* mln/io/plot/save_image_sh.hh: Librairie sauvegarde format gnuplot shell.
-
-to do ...
-
-
-
-b) Les histogrammes
+V HISTOGRAMMES
+--------------
 
 Un des travaux demandés par théo est la réalisation d'une librairie
 d'histogramme permettant de fournir un résultat sous forme d'image.
@@ -178,20 +168,67 @@ de comptage puisqu'il est décrit sous la forme de triplets de float
 contient une séquence d'appels pour les routines permettant de
 considérer la dimension de la teinte comme circulaire.
 
+
+a) version 1d
+
 * mln/accu/stat/histo1d.hh: Accumulateur histogramme image1d.
 * use/accu/stat/histo1d: Code minimal utilisant un histogramme 1d.
+* tests/accu/stat/histo1d: Test unitaire sur l'histogramme 1d.
+
+
+b) version 2d
+
+* mln/value/rg.hh: Définition du type vectoriel 2d rouge/vert (RG).
+* use/value/rg: Exemple de code pour l'utilisation de rg.
+
+* mln/fun/v2v/rgb_to_rg.hh: Transformation de l'espace RGB vers l'espace RG.
+* use/fun/v2v/rgb_to_rg: Exemple de code pour l'utilisation de rgb_to_rg.
 
 * mln/accu/stat/histo2d.hh: Accumulateur histogramme image2d.
-* mln/value/rg.hh: Définition du type vectoriel 2d rouge/vert (RG).
-* mln/fun/v2v/rgb_to_rg.hh: Transformation de l'espace RGB vers l'espace RG.
 * use/accu/stat/histo2d: Code minimal utilisant un histogramme 2d.
 
 
-* mln/accu/stat/histo3d_rgb.hh: Accumulateur histogramme image3d RGB.
-* mln/accu/stat/histo3d_hsl.hh: Accumulateur histogramme image3d HSL.
+c) version 3d RGB
 
+
+* mln/fun/v2v/rgb8_to_rgbn.hh: Diminution de la quantification (n < 8 bits).
+* use/fun/v2v/rgb8_to_rgbn: Exemple de code pour l'utilisation de rgb8_to_rgbn.
+
+* mln/accu/stat/histo3d_rgb.hh: Accumulateur histogramme image3d RGB.
 * use/accu/stat/histo3_rgb: Code minimal utilisant un histogramme 3d RGB.
+
+
+
+d) version 3d HSL
+
+* mln/accu/stat/histo3d_hsl.hh: Accumulateur histogramme image3d HSL.
 * use/accu/stat/histo3_hsl: Code minimal utilisant un histogramme 3d HSL.
+* tests/accu/stat/histo3d_hsl: Test unitaire sur l'histogramme HSL 3d.
+
+Le code HSL ne compile plus car l'interface liant la transformation du
+domaine et la fonction fold a changée. Je n'ai pas le temps de
+regarder plus avant.
+
+
+
+V MLN
+-----
+
+a) La sauvegarde des images au format gnuplot shell
+
+* mln/io/plot/save_image_sh.hh: Librairie sauvegarde format gnuplot shell.
+
+to do ...
+
+
+
+b) Les histogrammes
+
+
+
+
+
+
 
 
 
@@ -210,6 +247,12 @@ considérer la dimension de la teinte comme circulaire.
 * use/accu/stat/histo3d_hsl
 * tests/accu/stat/histo3d_hsl
 
+VI SAUVEGARDE FORMAT GNUPLOT SHELL
+----------------------------------
+
+
+VII VISUALISATION HISTOGRAMMES 3D
+---------------------------------
 
 c) La visualisation des histogrammes 3d
 

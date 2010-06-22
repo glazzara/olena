@@ -73,14 +73,16 @@
 
 # include <mln/accu/internal/base.hh>
 
+# include <mln/arith/plus.hh>
+
 # include <mln/core/macros.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/point2d.hh>
 # include <mln/core/alias/box2d.hh>
 
-# include <mln/trait/value/comp.hh>
+#include <mln/literal/zero.hh>
 
-# include <mln/arith/plus.hh>
+# include <mln/trait/value/comp.hh>
 
 # include <mln/trace/entering.hh>
 # include <mln/trace/exiting.hh>
@@ -152,13 +154,13 @@ namespace mln
     namespace stat
     {
 
-      /// \brief Define an histogram which returns an image3d .
+      /// \brief Define a histogram as accumulator which returns an image2d.
       ///
-      /// Param V defines the space in which we count the values.
-      /// For instance, this histogram works image2d<rgb<2>> or
-      /// image2d<rgb<7>>. The histogram count the occurrence of each value.
-      /// The number of bins depends of the grayscale values, for 8 bits there
-      /// is 256x3 bins. Note that over
+      /// Param V defines the type of the input image value. It is in
+      /// this space that we count the values. For instance, this
+      /// histogram works well for image2d< rgb<2> > or with image2d<
+      /// rgb<7> >. The number of bins depends directly the values V.
+      /// For 8 bits there is 256x3 bins. Note that less
       /// quantification works too.
       ///
       /// \ingroup modaccuvalues
@@ -171,15 +173,14 @@ namespace mln
 	typedef image2d<unsigned> result;
 	typedef result            q_result;
 
-	/// Constructors
+	/// Constructors.
 	/// \{
-	/// \brief Initialize the size of the resulting image1d.
+	/// \brief Infer the size of the resulting image2d domain.
 	///
-	/// Initialize the size the resulting image from the theorical dynamic
-	/// of the greylevel values (Use V to manage it).
+	/// By evaluating the minimum and the maximum of V, we define the domain
+	/// of the resulting image2d.
 	histo2d();
 	/// \}
-
 
 	/// Manipulators.
 	/// \{
@@ -190,23 +191,24 @@ namespace mln
 	/// density.
 	void init();
 
-
-	/// \brief Update the histogram with the RGB pixel t.
-	/// \param[in] t a greylevel pixel of type V.
+	/// \brief Update the histogram with the RG pixel t.
+	/// \param[in] t a graylevel pixel of type V.
 	///
 	/// The end user shouldn't call this method. In place of it, he can
 	/// go through the data compute interface.
 	void take(const argument& t);
 
-
 	/// \brief Update the histogram with an other histogram.
 	/// \param[in] other the other histogram.
+	///
+	/// The end user shouldn't call this method. This is part of
+	/// data compute interface mechanism.
 	void take(const histo2d<V>& other);
 	/// \}
 
 	/// Accessors.
 	/// \{
-	/// \brief Return the histogram as an image1d.
+	/// \brief Return the histogram as an image2d.
 	///
 	/// This is the machinery to communicate with data compute interface.
 	/// The end user should'nt use it.
@@ -228,19 +230,19 @@ namespace mln
       /// \param[in] histo1 the first histogram to compare with.
       /// \param[in] histo2 the second histogram.
       ///
-      /// The operator compare all the bins from the two histogram.
-
+      /// The operator compares all the bins from the two histograms.
+      /// Nobody uses this method unless unitary tests.
       template <typename V>
       bool operator==(const histo2d<V>& histo1,
 		      const histo2d<V>& histo2);
 
-#ifndef MLN_INCLUDE_ONLY
+# ifndef MLN_INCLUDE_ONLY
 
       template <typename V>
       inline
       histo2d<V>::histo2d()
       {
-	trace::entering("mln::accu::stat::histo2d::histo2d");
+	trace::entering("mln::accu::stat::histo2d::cstor");
 	typedef mln_trait_value_comp(V,0) comp0;
 	typedef mln_trait_value_comp(V,1) comp1;
 
@@ -253,31 +255,24 @@ namespace mln
 			   point2d(mln_max(comp0),
 				   mln_max(comp1))));
 
-	trace::exiting("mln::accu::stat::histo2d::histo2d");
+	trace::exiting("mln::accu::stat::histo2d::cstor");
       }
 
       template <typename V>
       inline
       void histo2d<V>::init()
       {
-	trace::entering("mln::accu::stat::histo2d::init");
-
-	data::fill(count_, 0);
-	trace::exiting("mln::accu::stat::histo2d::init");
+	data::fill(count_, literal::zero);
       }
 
       template <typename V>
       inline
       void histo2d<V>::take(const argument& t)
       {
-	trace::entering("mln::accu::stat::histo2d::take");
-
 	// Just convert a greyscale value (int_u8 like) to a position for an
 	// iterator on the resulting image.
 	// Take care to the constructor : Point(slice, row, column)
 	++count_(point2d(t.red(), t.green()));
-
-	trace::exiting("mln::accu::stat::histo2d::take");
       }
 
 
@@ -285,20 +280,13 @@ namespace mln
       inline
       void histo2d<V>::take(const histo2d<V>& other)
       {
-	trace::entering("mln::accu::stat::histo2d::take");
-
 	count_ += other.count_;
-
-	trace::exiting("mln::accu::stat::histo2d::take");
       }
 
       template <typename V>
       inline
       typename histo2d<V>::result histo2d<V>::to_result() const
       {
-	trace::entering("mln::accu::stat::histo2d::to_result");
-
-	trace::exiting("mln::accu::stat::histo2d::to_result");
 	return count_;
       }
 
@@ -306,9 +294,6 @@ namespace mln
       inline
       histo2d<V>::operator result() const
       {
-	trace::entering("mln::accu::stat::histo2d::operator result");
-
-	trace::exiting("mln::accu::stat::histo2d::operator result");
 	return count_;
       }
 
@@ -316,10 +301,8 @@ namespace mln
       inline
       bool histo2d<V>::is_valid() const
       {
-	trace::entering("mln::accu::stat::histo2d::is_valid");
 	bool result = count_.is_valid();
 
-	trace::exiting("mln::accu::stat::histo2d::is_valid");
 	return result;
       }
 
@@ -327,7 +310,7 @@ namespace mln
       bool operator==(const histo2d<V>& histo1,
 		      const histo2d<V>& histo2)
       {
-	trace::entering("mln::accu::stat::operator==");
+	trace::entering("mln::accu::stat::histo2d::operator==");
 
 	bool  result                  = true;
 	const image2d<unsigned>& res1 = histo1.to_result();
@@ -342,11 +325,11 @@ namespace mln
 	for_all_2(p1, p2)
 	  result &= (res1(p1) == res2(p2));
 
-	trace::exiting("mln::accu::stat::operator==");
+	trace::exiting("mln::accu::stat::histo2d::operator==");
 	return result;
       }
 
-#endif // ! MLN_INCLUDE_ONLY
+# endif // ! MLN_INCLUDE_ONLY
 
 
     } // end of namespace mln::accu::stat
