@@ -25,7 +25,7 @@
 
 /// \file
 ///
-/// \brief Minimal code for building 2d image histogram version.
+/// \brief Example of using rgb_t_rg transformation to compute 2d histogram.
 ///
 
 #include <mln/accu/stat/histo2d.hh>

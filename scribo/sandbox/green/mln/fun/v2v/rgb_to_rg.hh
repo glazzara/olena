@@ -81,7 +81,6 @@ namespace mln
       /// Param n defines the quantification used for rgb space and rg space.
       ///
       /// \ingroup modfunv2v
-
       template <unsigned n>
       struct rgb_to_rg : Function_v2v< rgb_to_rg<n> >
       {
@@ -95,7 +94,6 @@ namespace mln
 	/// Conversion is done by calling the rg constructor. There is
 	/// no modification of values. The red/green fields from rgb the value
 	/// are preserved. Blue value is dropped.
-
 	result operator()(const argument& v) const
 	{
 	  return value::rg<n>(v);
