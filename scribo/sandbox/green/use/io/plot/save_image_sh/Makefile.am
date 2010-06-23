@@ -18,8 +18,8 @@ RM=             rm
 MKDIR=          mkdir -p
 CP=             cp
 
-SOURCE_PATTERN= green/tests
-BUILD__PATTERN= green/build/tests
+SOURCE_PATTERN= green/use
+BUILD__PATTERN= green/build/use
 
 
 ifeq ($(findstring $(BUILD__PATTERN),$(PWD)), $(BUILD__PATTERN))

@@ -38,6 +38,29 @@
 /// The script file call gnuplot in batch mode, the result window persists and
 /// that's all.
 ///
+/// The following sample is a typical use of the gnuplot shell export library.
+///
+/// #include <mln/accu/stat/histo1d.hh>
+/// #include <mln/data/compute.hh>
+/// #include <mln/core/image/image1d.hh>
+/// #include <mln/core/image/image2d.hh>
+/// #include <mln/img_path.hh>
+/// #include <mln/io/pgm/load.hh>
+/// #include <mln/io/plot/save_image_sh.hh>
+/// #include <mln/value/int_u8.hh>
+///
+/// int main()
+/// {
+///   typedef mln::value::int_u8 t_int_u8;
+///   mln::image2d<t_int_u8>     img;
+///   mln::image1d<unsigned>     histo;
+///
+///   mln::io::pgm::load(img, OLENA_IMG_PATH"/lena.pgm");
+///   histo = mln::data::compute(mln::accu::meta::histo::histo1d(), img);
+///   mln::io::plot::save_image_sh(histo, "histo.sh");
+///
+///   return 0;
+/// }
 
 # include <fstream>
 # include <string>
@@ -92,7 +115,6 @@ namespace mln
       /// filename parameter as unix path. The script shell file must have the
       /// permission to execute (chmod 755). Launch the script shell to call
       /// gnuplot in batchmode with fine parameters.
-
       template <typename I>
       bool save_image_sh(const Image<I>& img, const std::string& filename);
 
@@ -112,6 +134,18 @@ namespace mln
       bool save_image_sh(const util::array< image1d<I> >& stack,
 			 const std::string& filename);
 
+      /// \brief Save a stack of stack of image.
+      ///
+      /// This is an experimental support.
+      ///
+      /// \param[in] stack    the stack of image to save.
+      /// \param[in] filename the name of the unix script shell.
+      /// \return             the status of the opening file operation.
+      ///
+      /// The result depends on the permission to save the file with
+      /// filename parameter as unix path. The script shell file must have the
+      /// permission to execute (chmod 755). Launch the script shell to call
+      /// gnuplot in batchmode with fine parameters.
       template <typename I>
       bool save_image_sh(const util::array< util::array< image1d<I> > >& stack,
 			 const std::string& filename);

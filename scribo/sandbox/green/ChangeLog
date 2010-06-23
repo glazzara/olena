@@ -1,54 +1,20 @@
-2010-06-24  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+2010-06-23  green  <jacquelet@lrde.epita.fr>
 
-	Import files from milena/sandbox/green.
+	Define gnuplot shell export format.
 
-	* gaussian.sh: New gnuplot shell file.
-	* guassian2d.sh: New gnuplot shell file.
-	* test_labelling.cc: New source.
-	* tests/clustering/k_mean/Makefile.am: New makefile.
-	* tests/clustering/k_mean/k_mean.cc: New source.
-	* tests/clustering/kmean1d/Makefile.am: New makefile.
-	* tests/clustering/kmean1d/kmean1d.cc: New source.
-	* tests/io/plot/save_image_sh/Makefile.am: New makefile.
-	* tests/io/plot/save_image_sh/save_image_sh.cc: New source.
-
-2010-06-24  Yann Jacquelet  <jacquelet@lrde.epita.fr>
-
-	Import files from milena/sandbox/green.
-
-	* mln/accu/stat/histo1d.hh: New header file.
-	* mln/accu/stat/histo2d.hh: New header file.
-	* mln/accu/stat/histo3d_hsl.hh: New header file.
-	* mln/accu/stat/histo3d_rgb.hh: New header file.
-	* mln/clustering/k_mean.hh: New header file.
-	* mln/clustering/kmean1d.hh: New header file.
-	* mln/clustering/kmean2d.hh: New header file.
-	* mln/clustering/kmean3d.hh: New header file.
-	* mln/clustering/kmean_rgb.hh: New header file.
-	* mln/display/display_histo.hh: New header file.
-	* mln/display/project_histo.hh: New header file.
-	* mln/fun/p2b/achromatic.hh: New header file.
-	* mln/fun/p2b/component_equals.hh: New header file.
-	* mln/fun/v2v/achromatism.hh: New header file.
-	* mln/fun/v2v/hue_concentration.hh: New header file.
-	* mln/fun/v2v/int_u16_to_int_u14.hh: New header file.
-	* mln/fun/v2v/int_u16_to_int_u14.hh: New header file.
-	* mln/fun/v2v/log.hh: New header file.
-	* mln/fun/v2v/rg_to_rgb.hh: New header file.
-	* mln/fun/v2v/rgb8_to_int_u8: New header file.
-	* mln/fun/v2v/rgb_to_achromastism_map.hh: New header file.
-	* mln/fun/v2v/rgb_to_hsv.hh: New header file.
-	* mln/fun/v2v/rgb_to_hue_map.hh: New header file.
-	* mln/fun/v2v/rgb_to_saturation_map.hh: New header file.
-	* mln/fun/v2v/rgb_to_value_map.hh: New header file.
-	* mln/img_path.hh: New header file.
 	* mln/io/plot/save_image_sh.hh: New header file.
-	* mln/math/cell.hh: New header file.
-	* mln/math/floor.hh: New header file.
-	* tests/accu/stat/histo1d/Makefile.am: New makefile.
-	* tests/accu/stat/histo1d/histo1d.cc: New source.
-	* tests/accu/stat/histo2d/Makefile.am: New makefile.
-	* tests/accu/stat/histo2d/histo2d.cc: New source.
+
+	Give an example of code.
+
+	* use/io/plot/save_image_sh: New directory.
+	* use/io/plot/save_image_sh/Makefile.am: New makefile.
+	* use/io/plot/save_image_sh/save_image_sh.cc: New source file.
+
+	Make some unitary tests on gnuplot shell export.
+
+	* tests/io/plot/save_image_sh: New directory.
+	* tests/io/plot/save_image_sh/Makefile.am: New makefile.
+	* tests/io/plot/save_image_sh/save_image_sh.cc: New source file.
 
 2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
@@ -130,6 +96,57 @@
 	* tests/accu/stat/histo3d_hsl/Makefile.am: New makefile.
 	* tests/accu/stat/histo3d_hsl/histo3d_hsl.cc: New source.
 
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Import files from milena/sandbox/green.
+
+	* gaussian.sh: New gnuplot shell file.
+	* guassian2d.sh: New gnuplot shell file.
+	* test_labelling.cc: New source.
+	* tests/clustering/k_mean/Makefile.am: New makefile.
+	* tests/clustering/k_mean/k_mean.cc: New source.
+	* tests/clustering/kmean1d/Makefile.am: New makefile.
+	* tests/clustering/kmean1d/kmean1d.cc: New source.
+	* tests/io/plot/save_image_sh/Makefile.am: New makefile.
+	* tests/io/plot/save_image_sh/save_image_sh.cc: New source.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Import files from milena/sandbox/green.
+
+	* mln/accu/stat/histo1d.hh: New header file.
+	* mln/accu/stat/histo2d.hh: New header file.
+	* mln/accu/stat/histo3d_hsl.hh: New header file.
+	* mln/accu/stat/histo3d_rgb.hh: New header file.
+	* mln/clustering/k_mean.hh: New header file.
+	* mln/clustering/kmean1d.hh: New header file.
+	* mln/clustering/kmean2d.hh: New header file.
+	* mln/clustering/kmean3d.hh: New header file.
+	* mln/clustering/kmean_rgb.hh: New header file.
+	* mln/display/display_histo.hh: New header file.
+	* mln/display/project_histo.hh: New header file.
+	* mln/fun/p2b/achromatic.hh: New header file.
+	* mln/fun/p2b/component_equals.hh: New header file.
+	* mln/fun/v2v/achromatism.hh: New header file.
+	* mln/fun/v2v/hue_concentration.hh: New header file.
+	* mln/fun/v2v/int_u16_to_int_u14.hh: New header file.
+	* mln/fun/v2v/int_u16_to_int_u14.hh: New header file.
+	* mln/fun/v2v/log.hh: New header file.
+	* mln/fun/v2v/rg_to_rgb.hh: New header file.
+	* mln/fun/v2v/rgb8_to_int_u8: New header file.
+	* mln/fun/v2v/rgb_to_achromastism_map.hh: New header file.
+	* mln/fun/v2v/rgb_to_hsv.hh: New header file.
+	* mln/fun/v2v/rgb_to_hue_map.hh: New header file.
+	* mln/fun/v2v/rgb_to_saturation_map.hh: New header file.
+	* mln/fun/v2v/rgb_to_value_map.hh: New header file.
+	* mln/img_path.hh: New header file.
+	* mln/io/plot/save_image_sh.hh: New header file.
+	* mln/math/cell.hh: New header file.
+	* mln/math/floor.hh: New header file.
+	* tests/accu/stat/histo1d/Makefile.am: New makefile.
+	* tests/accu/stat/histo1d/histo1d.cc: New source.
+	* tests/accu/stat/histo2d/Makefile.am: New makefile.
+	* tests/accu/stat/histo2d/histo2d.cc: New source.
 
 2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
