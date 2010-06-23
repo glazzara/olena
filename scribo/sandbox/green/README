@@ -153,8 +153,8 @@ d'exécution (chmod 755 gnuplot_shell_file.sh). Comme je trouve le format
 extrêmement pratique, il se retrouve preque partout dans mes sources.
 
 
-V HISTOGRAMMES
---------------
+VI HISTOGRAMMES
+---------------
 
 Un des travaux demandés par théo est la réalisation d'une librairie
 d'histogramme permettant de fournir un résultat sous forme d'image.
@@ -173,7 +173,7 @@ a) version 1d
 
 * mln/accu/stat/histo1d.hh: Accumulateur histogramme image1d.
 * use/accu/stat/histo1d: Code minimal utilisant un histogramme 1d.
-* tests/accu/stat/histo1d: Test unitaire sur l'histogramme 1d.
+* tests/accu/stat/histo1d: Tests unitaires sur l'histogramme 1d.
 
 
 b) version 2d
@@ -203,15 +203,31 @@ d) version 3d HSL
 
 * mln/accu/stat/histo3d_hsl.hh: Accumulateur histogramme image3d HSL.
 * use/accu/stat/histo3_hsl: Code minimal utilisant un histogramme 3d HSL.
-* tests/accu/stat/histo3d_hsl: Test unitaire sur l'histogramme HSL 3d.
+* tests/accu/stat/histo3d_hsl: Tests unitaires sur l'histogramme HSL 3d.
 
 Le code HSL ne compile plus car l'interface liant la transformation du
 domaine et la fonction fold a changée. Je n'ai pas le temps de
 regarder plus avant.
 
 
+VII SAUVEGARDE FORMAT GNUPLOT SHELL
+-----------------------------------
 
-V MLN
+Ce travail est personnel. Ces développements m'ont été tellement
+utiles que je ne regrette pas l'investissement effectué. L'idée est de
+pouvoir avoir un format d'image en écriture lisible. J'ai pris celui
+de gnuplot, ce qui permet en plus de pouvoir "sucrer" la présentation
+des données à loisir. Les images sont plus lourdes car le codage est
+textuel et un peu plus "verbose" mais se compresse aisément par
+n'importe quel algorithme type huffman (tous les archiveurs en possède un).
+
+* mln/io/plot/save_image_sh.hh: Librairie de sauvegarde au format gnuplot shell.
+* use/io/plot/save_image_sh: Code simple d'utilisation de la sauvegarde.
+* tests/io/plot/save_image_sh: Tests unitaires sur l'export.
+
+
+
+VI MLN
 -----
 
 a) La sauvegarde des images au format gnuplot shell
@@ -222,33 +238,7 @@ to do ...
 
 
 
-b) Les histogrammes
 
-
-
-
-
-
-
-
-
-* tests/accu/stat/histo1d
-
-
-
-
-* tests/accu/stat/histo2d
-
-
-
-* use/accu/stat/histo3d_rgb
-* tests/accu/stat/histo3d_rgb
-
-* use/accu/stat/histo3d_hsl
-* tests/accu/stat/histo3d_hsl
-
-VI SAUVEGARDE FORMAT GNUPLOT SHELL
-----------------------------------
 
 
 VII VISUALISATION HISTOGRAMMES 3D
