@@ -17,7 +17,7 @@
 BrowserWidget::BrowserWidget(QDirModel* files, QString dir)
   : files_(files),
     view_(new QListView()),
-    path_(new QLabel(""))
+    path_(new QLineEdit(""))
 {
   QLabel* title = new QLabel(tr("Images"));
   title->setAlignment(Qt::AlignHCenter);
@@ -41,11 +41,23 @@ BrowserWidget::BrowserWidget(QDirModel* files, QString dir)
   path_->setText(files->filePath(view_->rootIndex()));
   connect(view_, SIGNAL(activated(const QModelIndex&)),
 	  this, SLOT(activate(const QModelIndex&)));
+  connect(path_, SIGNAL(returnPressed()),
+	  this, SLOT(path_return_pressed()));
 
   QStringList files_filters;
   files_filters << "*.png" << "*.jpg"
 		<< "*.tif" << "*.ppm" << "*.pgm" << "*.pbm";
   files->setNameFilters(files_filters);
+}
+
+void
+BrowserWidget::path_return_pressed()
+{
+  QString path = path_->text();
+  QDir d(path);
+
+  if (d.isReadable())
+    activate(files_->index(QString(path)));
 }
 
 void

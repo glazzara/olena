@@ -28,6 +28,7 @@ public:
 
 public slots:
   void activate(const QModelIndex& index);
+  void path_return_pressed();
 
 signals:
   void activated(QString filename);
@@ -35,7 +36,7 @@ signals:
 private:
   QDirModel* files_;
   QListView* view_;
-  QLabel* path_;
+  QLineEdit* path_;
 };
 
 #endif	    /* !BROWSER_WIDGET_HH_ */
