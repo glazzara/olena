@@ -45,7 +45,7 @@
 
 #include <scribo/preprocessing/crop_without_localization.hh>
 
-#include <scribo/io/xml/save_text_lines.hh>
+#include <scribo/io/xml/save.hh>
 #include <scribo/io/text_boxes/save.hh>
 
 
@@ -119,10 +119,9 @@ int main(int argc, char* argv[])
   typedef image2d<scribo::def::lbl_type> L;
   line_set<L>
     lines = scribo::toolchain::text_in_doc(input, denoise, debug);
-
-
+  
   // Saving results
-  scribo::io::xml::save_text_lines(argv[1], lines, "out.xml");
+  scribo::io::xml::save(argv[1], lines, "out.xml", true);
 
   // Specify shift due to potential previous crop.
   scribo::io::text_boxes::save(lines, argv[2], crop_shift);
