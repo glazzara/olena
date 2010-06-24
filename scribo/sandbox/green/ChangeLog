@@ -2,6 +2,20 @@
 
 	Import files from milena/sandbox/green.
 
+	* gaussian.sh: New gnuplot shell file.
+	* guassian2d.sh: New gnuplot shell file.
+	* test_labelling.cc: New source.
+	* tests/clustering/k_mean/Makefile.am: New makefile.
+	* tests/clustering/k_mean/k_mean.cc: New source.
+	* tests/clustering/kmean1d/Makefile.am: New makefile.
+	* tests/clustering/kmean1d/kmean1d.cc: New source.
+	* tests/io/plot/save_image_sh/Makefile.am: New makefile.
+	* tests/io/plot/save_image_sh/save_image_sh.cc: New source.
+
+2010-06-24  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Import files from milena/sandbox/green.
+
 	* mln/accu/stat/histo1d.hh: New header file.
 	* mln/accu/stat/histo2d.hh: New header file.
 	* mln/accu/stat/histo3d_hsl.hh: New header file.
