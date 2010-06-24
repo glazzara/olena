@@ -1,4 +1,13 @@
-2010-06-23  green  <jacquelet@lrde.epita.fr>
+2010-06-24  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Define documentation files.
+
+	* README: Delete this file and replace it by README.green.
+	* README.green: New index for source files in scribo/sandbox/green.
+	* README.img: New index for image database.
+	* README.result: New index for histogram database.
+
+2010-06-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Define gnuplot shell export format.
 
