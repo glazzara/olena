@@ -159,6 +159,15 @@
 
 2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
+	Save histogram library.
+
+	* mln/accu/histo/histo1d.hh: New header file.
+	* mln/accu/histo/histo2d.hh: New header file.
+	* mln/accu/histo/histo3d_rgb.hh: New header file.
+	* mln/accu/histo/histo3d_hsl.hh: New header file.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
 	Simple integration test.
 
 	* README: New text file.

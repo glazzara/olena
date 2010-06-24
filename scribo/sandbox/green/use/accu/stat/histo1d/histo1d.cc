@@ -36,8 +36,6 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/value/int_u8.hh>
 
-
-
 int main()
 {
   typedef mln::value::int_u8 t_int_u8;

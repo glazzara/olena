@@ -179,6 +179,7 @@ namespace mln
 	histo3d_rgb();
 	/// \}
 
+
 	/// Manipulators.
 	/// \{
 	/// \brief Initialize the histogram with zero value.
@@ -242,6 +243,7 @@ namespace mln
       histo3d_rgb<V>::histo3d_rgb()
       {
 	trace::entering("mln::accu::stat::histo3d_rgb::cstor");
+
 	typedef mln_trait_value_comp(V,0) comp0;
 	typedef mln_trait_value_comp(V,1) comp1;
 	typedef mln_trait_value_comp(V,2) comp2;

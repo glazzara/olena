@@ -328,7 +328,6 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-
     } // end of namespace mln::accu::stat
 
   } // end of namespace mln::accu

@@ -80,7 +80,7 @@
 # include <mln/core/alias/point2d.hh>
 # include <mln/core/alias/box2d.hh>
 
-#include <mln/literal/zero.hh>
+# include <mln/literal/zero.hh>
 
 # include <mln/trait/value/comp.hh>
 
@@ -182,6 +182,7 @@ namespace mln
 	histo2d();
 	/// \}
 
+
 	/// Manipulators.
 	/// \{
 	/// \brief Initialize the histogram with zero value.
@@ -191,12 +192,14 @@ namespace mln
 	/// density.
 	void init();
 
+
 	/// \brief Update the histogram with the RG pixel t.
-	/// \param[in] t a graylevel pixel of type V.
+	/// \param[in] t a R/G pixel of type V.
 	///
 	/// The end user shouldn't call this method. In place of it, he can
 	/// go through the data compute interface.
 	void take(const argument& t);
+
 
 	/// \brief Update the histogram with an other histogram.
 	/// \param[in] other the other histogram.
@@ -269,6 +272,8 @@ namespace mln
       inline
       void histo2d<V>::take(const argument& t)
       {
+	trace::entering("mln::accu::stat::histo2d::take");
+
 	// Just convert a greyscale value (int_u8 like) to a position for an
 	// iterator on the resulting image.
 	// Take care to the constructor : Point(slice, row, column)
