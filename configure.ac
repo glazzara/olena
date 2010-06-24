@@ -524,6 +524,7 @@ AC_CONFIG_FILES([
       milena/tests/io/ppm/Makefile
       milena/tests/io/ppms/Makefile
       milena/tests/io/tiff/Makefile
+      milena/tests/io/vtk/Makefile
     milena/tests/labeling/Makefile
     milena/tests/linear/Makefile
       milena/tests/linear/local/Makefile
