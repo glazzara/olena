@@ -1,5 +1,12 @@
 2010-06-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a specific (temporary) VTK output routine for binary mesh images.
+
+	* apps/mesh-segm-skel/save_bin_alt.hh
+	(mln::io::vtk::save_bin_alt): New function.
+
+2010-06-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Exercise mln::io::vtk::save.
 
 	* tests/io/vtk/save.cc: New.
