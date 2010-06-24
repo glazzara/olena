@@ -1,5 +1,13 @@
 2010-06-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise mln::io::vtk::save.
+
+	* tests/io/vtk/save.cc: New.
+	* tests/io/vtk/Makefile.am: New.
+	* tests/io/Makefile.am (SUBDIRS): Add vtk.
+
+2010-06-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Start a VTK output for complex-based images.
 
 	* mln/io/vtk/save.hh: New.
