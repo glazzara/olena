@@ -45,7 +45,7 @@ branch=$1
 
 case "$branch" in
   # Consider these branches only.
-  master|next|swilena) ;;
+  master|next|swilena|mesh-segm-skel) ;;
   # Don't upload other branches.
   *) exit ;;
 esac

@@ -1,3 +1,9 @@
+2010-06-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add `mesh-segm-skel' to the branches to be uploaded (as snapshot).
+
+	* lrde-upload.sh: Here.
+
 2010-04-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add variables for C++ compiler flags for Scribo.
