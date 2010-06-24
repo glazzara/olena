@@ -227,8 +227,53 @@ n'importe quel algorithme type huffman (tous les archiveurs en possède un).
 
 
 
-VI MLN
------
+VIII VISUALISATION HISTOGRAMMES 3D
+----------------------------------
+
+==> to do
+
+
+* demo/accu/stat/histo2d
+
+* mln/display/dispay_histo.hh
+* mln/display/project_histo.hh
+
+
+IX KMEANS
+---------
+
+Ce travail m'avait été demandé par théo. Je le laisse inachevé, quelque part
+perdu pendant l'optimisation du code et sa transformation en canevas.
+
+* mln/clustering/k_mean.hh: Première implémentation avec matrices et vecteurs.
+* mln/clustering/kmean1d.hh: Implémentation 1d avec des images.
+* mln/clustering/kmean2d.hh: Implémentation 2d avec des images.
+* mln/clustering/kmean3d.hh: Implémentation 3d avec des images.
+* mln/clustering/kmean_rgb.hh: Impl. 3d aplatie et en cours de mise en canevas.
+
+* tests/clustering/k_mean: Tests unitaires sur la permière version.
+* tests/clustering/kmean1d: Tests unitaire sur la version 1d.
+
+* demo/clustering/kmean1d: Utilisation de la version 1d.
+* demo/clustering/kmean2d: Utilisation de la version 2d.
+* demo/clustering/kmean3d: Utilisation de la version 3d.
+* demo/clustering/kmean_rgb: Utilisation de la version aplatie.
+
+* bench/clustering/distance: Comparaison algorithmes d'évaluation des distances.
+
+==> to do
+
+X REGIONAL MAXIMA
+-----------------
+
+==> to do
+
+
+XI ANNOTATING
+-------------
+
+==> to do
+
 
 a) La sauvegarde des images au format gnuplot shell
 
@@ -241,12 +286,3 @@ to do ...
 
 
 
-VII VISUALISATION HISTOGRAMMES 3D
----------------------------------
-
-c) La visualisation des histogrammes 3d
-
-* demo/accu/stat/histo2d
-
-* mln/display/dispay_histo.hh
-* mln/displayproject_histo.hh
