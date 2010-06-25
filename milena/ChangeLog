@@ -1,5 +1,16 @@
 2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new tests.
+
+	* tests/convert/Makefile.am,
+	* tests/subsampling/Makefile.am: Add targets for these new tests.
+
+	* tests/convert/to_qimage.cc,
+	* tests/convert/to_qimage_nocopy.cc,
+	* tests/subsampling/antialiased.cc: New.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix conversion routines towards qimage.
 
 	* mln/convert/to_qimage.hh: Fix invalid conversions.
