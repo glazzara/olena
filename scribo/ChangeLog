@@ -1,11 +1,15 @@
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* upsampling/eagle.hh: Add a new upsampling algorithm.
+
 2010-06-23  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
 
 	Add extensions to ICDAR XML format.
-	
+
 	* io/xml/save_text_lines.hh: Rename as...
 	* io/xml/save.hh: ...this.
-	
-	* src/pbm_text_in_doc.cc: update call to io::xml::save.	
+
+	* src/pbm_text_in_doc.cc: update call to io::xml::save.
 
 2010-06-18  green  <jacquelet@lrde.epita.fr>
 
@@ -14,7 +18,7 @@
 	* sandbox: New experimental directory.
 	* sandbox/green: New green'work.
 	* sandbox/green/ChangeLog: New ChangeLog file.
-	
+
 2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes.
