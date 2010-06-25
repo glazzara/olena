@@ -1,3 +1,8 @@
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* bench/fastest.cc: New. Add a bench for the best fastest
+	iteration.
+
 2010-03-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve the usability of AFP's GUI.
