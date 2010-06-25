@@ -68,6 +68,7 @@
 
 #include <scribo/core/line_info.hh>
 #include <scribo/upsampling/bs2x.hh>
+#include <scribo/upsampling/eagle.hh>
 #include <scribo/subsampling/bilinear.hh>
 
 
@@ -119,7 +120,7 @@ namespace scribo
 		  << fact << std::endl;
 	while (fact < 0.90)
 	{
-	  output = scribo::upsampling::bs2x(output); // 2x upsampling
+	  output = scribo::upsampling::eagle(output); // 2x upsampling
 	  fact *= 2.0f;
 //  	  std::cout << "fact = " << fact
 //  		    << " - output.domain = " << output.domain()

@@ -1,5 +1,14 @@
 2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve text recognition.
+
+	* text/clean.hh: Use upsampling::eagle.
+
+	* text/recognition.hh: Make sure there is a border around the
+	text even after having resized images.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* binarization/sauvola_ms.hh: Fix an invalid test.
 
 2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>

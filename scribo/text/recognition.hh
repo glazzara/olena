@@ -43,6 +43,7 @@
 # include <mln/util/array.hh>
 # include <mln/data/fill.hh>
 # include <mln/data/paste.hh>
+# include <mln/data/paste_without_localization.hh>
 # include <mln/pw/all.hh>
 
 # include <mln/core/alias/w_window2d_int.hh>
@@ -125,6 +126,7 @@ namespace scribo
 	std::cout << "x_height = " << lines(i).x_height() << std::endl;
 
 	mln_domain(I) box = lines(i).bbox();
+
 	// Make sure characters are isolated from the borders.
 	// Help Tesseract.
 	box.enlarge(2);
@@ -146,23 +148,29 @@ namespace scribo
 
 	/// Improve text quality.
 
-	/// text_ima_cleaned domain is larger than text_ima's.
-	I text_ima_cleaned = text::clean(lines(i), text_ima);
-//	mln::io::pbm::save(text_ima_cleaned, mln::debug::filename("line.pbm", debug_id++));
+	/// text_ima_cleaned domain may be larger than text_ima's.
+	text::clean_inplace(lines(i), text_ima);
+// 	mln::io::pbm::save(text_ima_cleaned, mln::debug::filename("line.pbm", debug_id++));
 
+	// Make sure characters are isolated from the borders.
+	// Help Tesseract.
+	mln_domain(I) lbox = text_ima.domain();
+	lbox.enlarge(lines(i).char_space() + 2);
+	I line_image(lbox, 0); // Make sure there is no border!
+	data::fill(line_image, false);
+	data::paste_without_localization(text_ima, line_image);
 
-	// Make sure there is no border.
-	border::resize(text_ima_cleaned, 0);
+//	mln::io::pbm::save(line_image, mln::debug::filename("line_image.pbm", debug_id++));
 
 	// Recognize characters.
 	char* s = TessBaseAPI::TesseractRect(
-	    (unsigned char*) text_ima_cleaned.buffer(),
-	    sizeof (bool),			      // Pixel size.
-	    text_ima_cleaned.ncols() * sizeof (bool), // Row_offset
-	    0,					      // Left
-	    0,					      // Top
-	    text_ima_cleaned.ncols(),		      // n cols
-	    text_ima_cleaned.nrows());		      // n rows
+	    (unsigned char*) line_image.buffer(),
+	    sizeof (bool),			 // Pixel size.
+	    line_image.ncols() * sizeof (bool),  // Row_offset
+	    0,					 // Left
+	    0,					 // Top
+	    line_image.ncols(),		         // n cols
+	    line_image.nrows());		 // n rows
 
 
 	if (s != 0)
