@@ -1,5 +1,13 @@
 2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix conversion routines towards qimage.
+
+	* mln/convert/to_qimage.hh: Fix invalid conversions.
+
+	* mln/convert/to_qimage_nocopy.hh: Avoid a warning.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/accu/count_value.hh: Add properties.
 
 2010-06-18  Guillaume Lazzara  <z@lrde.epita.fr>
