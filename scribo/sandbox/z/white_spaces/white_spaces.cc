@@ -72,6 +72,11 @@ namespace mln
 
   using namespace scribo;
 
+
+  // Enable debug.
+  bool _debug_;
+
+
   template <typename L>
   void filter_bad_groups(object_groups<L>& top_groups,
 			 object_groups<L>& bot_groups)
@@ -181,6 +186,11 @@ namespace mln
       ++p.col();
     }
 
+    void compute_next_site_f_(unsigned& p)
+    {
+      ++p;
+    }
+
 
     mln_site(L)
     start_point_(unsigned current_object, anchor::Type anchor)
@@ -211,14 +221,10 @@ namespace mln
 	dist = math::abs(p[this->direction_] - b.pmin()[this->direction_]);
 
 
-//       int ldist = std::max(this->components_(current_object).bbox().width() / 2,
-// 			   this->components_(this->labeled_image_(p)).bbox().width() / 2);
-
       int ldist = this->components_(current_object).bbox().width();
 
       // Components are really close, so the angle is more permissive.
       if (dist < 3 * ldist)
-//      if (dist < (ldist + 0.7 * ldist))
       {
 	return
 	  filter::internal::component_aligned_rad(this->components_,
@@ -245,40 +251,13 @@ namespace mln
     {
       super_::validate_link_(current_object, start_point, p, anchor);
 
-      mln_site(L)
-	p1 = mln::my_anchors(this->components_, current_object, anchor),
-	p2 = mln::my_anchors(this->components_, this->labeled_image_(p),
-			     anchor);
-      draw::line(debug_, p1, p2, literal::green);
-
-
-      float
-	angle = filter::internal::alignment_angle(this->components_,
-						  current_object,
-						  this->labeled_image_(p),
-						  anchor);
-      angle = (angle * 180.0f) / math::pi;
-      angle = angle * 20.0f + 1.0f;
-      draw::line(debug_angle_, p1, p2, value::rgb8(angle, angle, angle));
-    }
-
-    void invalidate_link_(unsigned current_object,
-			  const P& start_point,
-			  const P& p,
-			  anchor::Type anchor)
-    {
-      super_::invalidate_link_(current_object, start_point, p, anchor);
-
-      if (this->labeled_image_.domain().has(p) && this->labeled_image_(p) != 0)
+      if (_debug_)
       {
 	mln_site(L)
 	  p1 = mln::my_anchors(this->components_, current_object, anchor),
 	  p2 = mln::my_anchors(this->components_, this->labeled_image_(p),
 			       anchor);
-	if (this->labeled_image_.domain().has(p2) && norm::l1_distance(p1.to_vec(), p2.to_vec()) < 300)
-	{
-	  draw::line(debug_, p1, p2, literal::red);
-	}
+	draw::line(debug_, p1, p2, literal::green);
 
 
 	float
@@ -289,6 +268,39 @@ namespace mln
 	angle = (angle * 180.0f) / math::pi;
 	angle = angle * 20.0f + 1.0f;
 	draw::line(debug_angle_, p1, p2, value::rgb8(angle, angle, angle));
+      }
+    }
+
+    void invalidate_link_(unsigned current_object,
+			  const P& start_point,
+			  const P& p,
+			  anchor::Type anchor)
+    {
+      super_::invalidate_link_(current_object, start_point, p, anchor);
+
+      if (_debug_)
+      {
+	if (this->labeled_image_.domain().has(p) && this->labeled_image_(p) != 0)
+	{
+	  mln_site(L)
+	    p1 = mln::my_anchors(this->components_, current_object, anchor),
+	    p2 = mln::my_anchors(this->components_, this->labeled_image_(p),
+				 anchor);
+	  if (this->labeled_image_.domain().has(p2) && norm::l1_distance(p1.to_vec(), p2.to_vec()) < 300)
+	  {
+	    draw::line(debug_, p1, p2, literal::red);
+	  }
+
+
+	  float
+	    angle = filter::internal::alignment_angle(this->components_,
+						      current_object,
+						      this->labeled_image_(p),
+						      anchor);
+	  angle = (angle * 180.0f) / math::pi;
+	  angle = angle * 20.0f + 1.0f;
+	  draw::line(debug_angle_, p1, p2, value::rgb8(angle, angle, angle));
+	}
       }
     }
 
@@ -329,6 +341,11 @@ namespace mln
       ++p.col();
     }
 
+    void compute_next_site_f_(unsigned& p)
+    {
+      ++p;
+    }
+
   };
 
 
@@ -358,6 +375,12 @@ namespace mln
       --p.col();
     }
 
+    void compute_next_site_f_(unsigned& p)
+    {
+      --p;
+    }
+
+
   };
 
 }
@@ -374,7 +397,7 @@ int main(int argc, char *argv[])
     return 1;
   };
 
-  bool debug = (argc == 7);
+  _debug_ = (argc == 7);
 
   util::timer t;
   util::timer gt;
@@ -399,7 +422,7 @@ int main(int argc, char *argv[])
   t_ = t;
   std::cout << "closing_structural - " << t_ << std::endl;
 
-  if (debug)
+  if (_debug_)
   {
     // Restore input orientation.
     input = scribo::preprocessing::rotate_90(input, false);
@@ -427,7 +450,7 @@ int main(int argc, char *argv[])
   t_ = t;
   std::cout << "extract::components - " << t_ << std::endl;
 
-  if (debug)
+  if (_debug_)
     io::pgm::save(data::convert(value::int_u8(), components.labeled_image()),
 		  "lbl.pgm");
 
@@ -447,12 +470,12 @@ int main(int argc, char *argv[])
     // Right
     mln::single_right_dmax_ratio_aligned_functor<L>
       functor(input_clo, components, dmax, min_angle, max_angle, anchor::Top);
-    top_right = primitive::link::compute(functor, anchor::Top);
+    top_right = primitive::link::impl::compute_fastest(functor, anchor::Top);
 
     t.stop();
 
 
-    if (debug)
+    if (_debug_)
     {
       io::ppm::save(functor.debug_, "right_top.ppm");
       io::ppm::save(functor.debug_angle_, "right_top_angle.ppm");
@@ -468,7 +491,7 @@ int main(int argc, char *argv[])
 
     t.stop();
 
-    if (debug)
+    if (_debug_)
     {
       io::ppm::save(lfunctor.debug_, "left_top.ppm");
       io::ppm::save(lfunctor.debug_angle_, "left_top_angle.ppm");
@@ -491,7 +514,7 @@ int main(int argc, char *argv[])
     bot_right = primitive::link::compute(functor, anchor::Bottom);
     t.stop();
 
-    if (debug)
+    if (_debug_)
     {
       io::ppm::save(functor.debug_, "right_bot.ppm");
       io::ppm::save(functor.debug_angle_, "right_bot_angle.ppm");
@@ -505,13 +528,13 @@ int main(int argc, char *argv[])
     bot_left = primitive::link::compute(lfunctor, anchor::Bottom);
     t.stop();
 
-    if (debug)
+    if (_debug_)
     {
       io::ppm::save(lfunctor.debug_, "left_bot.ppm");
       io::ppm::save(lfunctor.debug_angle_, "left_bot_angle.ppm");
     }
 
-    if (debug)
+    if (_debug_)
     {
       image2d<value::rgb8> output = duplicate(functor.debug_);
       data::paste((lfunctor.debug_ | (pw::value(lfunctor.debug_) != pw::cst(literal::black))) | (pw::value(lfunctor.debug_) != pw::cst(literal::white)), output);
@@ -555,7 +578,7 @@ int main(int argc, char *argv[])
 
 
 
-  if (debug)
+  if (_debug_)
   {
 
     image2d<value::rgb8>
@@ -628,7 +651,7 @@ int main(int argc, char *argv[])
 
   image2d<value::rgb8> both;
 
-  if (debug)
+  if (_debug_)
     both = data::convert(value::rgb8(), input);
 
 
@@ -640,7 +663,7 @@ int main(int argc, char *argv[])
     {
       if (top_accu(d).is_valid())
       {
-	if (debug)
+	if (_debug_)
 	  mln::draw::line(both,
 			  top_accu(d).to_result().pmin(),
 			  point2d(top_accu(d).to_result().pmin().row(),
@@ -654,7 +677,7 @@ int main(int argc, char *argv[])
 			true);
       }
       else
-	if (debug && btop_accu(d).is_valid())
+	if (_debug_ && btop_accu(d).is_valid())
 	  mln::draw::line(both,
 			  btop_accu(d).to_result().pmin(),
 			  point2d(btop_accu(d).to_result().pmin().row(),
@@ -666,7 +689,7 @@ int main(int argc, char *argv[])
     {
       if (bot_accu(d).is_valid())
       {
-	if (debug)
+	if (_debug_)
 	  mln::draw::line(both,
 			  point2d(bot_accu(d).to_result().pmax().row(),
 				  bot_accu(d).to_result().pmin().col()),
@@ -680,7 +703,7 @@ int main(int argc, char *argv[])
 			true);
       }
       else
-	if (debug && bbot_accu(d).is_valid())
+	if (_debug_ && bbot_accu(d).is_valid())
 	  mln::draw::line(both,
 			  point2d(bbot_accu(d).to_result().pmax().row(),
 				  bbot_accu(d).to_result().pmin().col()),
@@ -693,7 +716,7 @@ int main(int argc, char *argv[])
   std::cout << "Drawing output image - " << t_ << std::endl;
 
 
-  if (debug)
+  if (_debug_)
   {
     io::ppm::save(both, argv[5]);
     io::pbm::save(separators, "separators.pbm");
@@ -702,17 +725,13 @@ int main(int argc, char *argv[])
 
   // Hit or miss
   {
-    t.restart();
-    image2d<bool> input_with_seps = duplicate(input_clo);
-    data::paste(separators | pw::value(separators), input_with_seps);
-    t.stop();
+    if (_debug_)
+    {
+      image2d<bool> input_with_seps = duplicate(input_clo);
+      data::paste(separators | pw::value(separators), input_with_seps);
 
-    t_ = t;
-    std::cout << "input with seps - " << t_ << std::endl;
-
-
-    if (debug)
       io::pbm::save(input_with_seps, "input_with_seps.pbm");
+    }
 
     t.restart();
     unsigned length = 25;
@@ -722,45 +741,63 @@ int main(int argc, char *argv[])
       dp2( 21, 0);
 
     // Adjusting extension.
-    extension::adjust_fill(separators, length / 2, 0);
+    t.restart();
+    extension::adjust_fill(input_clo, length / 2, 0);
 
     accu::count_value<bool> accu(true);
     typedef image2d<unsigned> I;
 
-    I tmp = accu::transform_line(accu, input_with_seps, length, 1);
+    I tmp = accu::transform_line(accu, input_clo, length, 1);
+    t_ = t;
+    std::cout << "* accu::transform_line - " << t_ << std::endl;
 
-    if (debug)
+    if (_debug_)
       io::pgm::save(data::convert(value::int_u8(), tmp), "tmp.pgm");
 
-    image2d<bool> output;
-    initialize(output, separators);
-    data::fill(output, false);
 
+    t.restart();
     value::int_u8 nlabels;
     image2d<value::int_u8>
-      sep_lbl = labeling::blobs(separators, c8(), nlabels);
+      sep_lbl = labeling::value(separators, true, c8(), nlabels);
+    t_ = t;
+    std::cout << "* labeling seps - " << t_ << std::endl;
 
-    mln_piter_(I) p(separators.domain());
 
-    util::array<unsigned> lcard(unsigned(nlabels) + 1, 0);
-    util::array<unsigned> lfalse(unsigned(nlabels) + 1, 0);
+    t.restart();
+//     util::array<unsigned> lcard(unsigned(nlabels) + 1, 0);
+//     util::array<unsigned> lfalse(unsigned(nlabels) + 1, 0);
 
     util::array<bool> relbl(unsigned(nlabels) + 1, true);
     relbl(0) = false;
 
-   for_all(p)
+
+//     unsigned
+//       tmp_next_line_dp1 = tmp.delta_index(dp1),
+//       tmp_next_line_dp2 = tmp.delta_index(dp2);
+
+//     const mln_value(I)* val_sep = &separators(separators.domain().pmin());
+//     const value::int_u8* val_lbl = &sep_lbl(sep_lbl.domain().pmin());
+
+//     bool go_next = false;
+    unsigned invalid_ratio = unsigned(length * 0.30f);
+
+//     for (unsigned row = 0; i < nrows; ++row)
+//     {
+//       for (unsigned col = 0; col < ncols; ++col)
+//       {
+
+//       }
+
+//       val_sep += ;
+//       val_lbl += ;
+//     }
+
+    mln_piter_(I) p(separators.domain());
+    for_all(p)
       if (separators(p))
       {
 	unsigned lbl = sep_lbl(p);
-	++lcard(lbl);
-
-// Useless since we already work on selected lines (separators image).
-//
-// 	if (tmp(p) > unsigned(0.95f * length) + 1)
-// 	{
-// 	  output(p) = false;
-// 	  continue;
-// 	}
+//	++lcard(lbl);
 
 	unsigned
 	  top_count = tmp(p + dp1),
@@ -768,19 +805,32 @@ int main(int argc, char *argv[])
 
 	// This site is wrapped between two lines of text so we don't
 	// want it.
-	if (top_count >= unsigned(length * 0.30f) + 1
-	    && bot_count >= unsigned(length * 0.30f) + 1)
-	  ++lfalse(lbl);
+	if (top_count >= invalid_ratio + 1
+	    && bot_count >= invalid_ratio + 1)
+	{
+	  relbl(lbl) = false;
+//	  go_next = true;
+	}
+//	  ++lfalse(lbl);
       }
 
-    for_all_comps(i, relbl)
-      relbl(i) = (lfalse(i) / (float) lcard(i)) < 0.02f;
+//     for_all_comps(i, relbl)
+//       relbl(i) = (lfalse(i) / (float) lcard(i)) < 0.02f;
+    t_ = t;
+    std::cout << "* reading data - " << t_ << std::endl;
 
+    t.restart();
     labeling::relabel_inplace(sep_lbl, nlabels, relbl);
-    data::paste(sep_lbl | (pw::value(sep_lbl) != pw::cst(0)), output);
+    t_ = t;
+    std::cout << "* relabel_inplace - " << t_ << std::endl;
 
-    if (debug)
+    image2d<bool> output = data::convert(bool(), sep_lbl);
+
+    if (_debug_)
+    {
       io::pbm::save(output, "separators_hom.pbm");
+      io::pbm::save(separators, "separators_filtered.pbm");
+    }
   }
 
   t_ = t;
