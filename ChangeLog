@@ -1,3 +1,7 @@
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Set HAVE_QT correctly.
+
 2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* configure.ac: Configure scribo/demo.

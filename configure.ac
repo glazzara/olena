@@ -170,8 +170,8 @@ OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full], [tesseract], 
 
 # Qt.
 AT_WITH_QT([+xml], [], [],
-	   AC_DEFINE([HAVE_QT], 1, [Define to 1 if we can use Qt]),
-     	   AC_DEFINE([HAVE_QT], 0))
+	   AC_DEFINE([HAVE_QT], 0, [Define to 1 if we can use Qt]),
+     	   AC_DEFINE([HAVE_QT], 1))
 AM_CONDITIONAL([HAVE_QT], [test x$QT_PATH != x])
 
 
