@@ -16,5 +16,9 @@
 
 ## Process this file through Automake to create Makefile.in.
 
+if HAVE_QT
+
 SUBDIRS = review viewer
+
+endif HAVE_QT
 

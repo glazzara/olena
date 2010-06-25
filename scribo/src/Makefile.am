@@ -59,9 +59,11 @@ if HAVE_MAGICKXX
 
     bin_PROGRAMS	+= text_in_doc_preprocess
     text_in_doc_preprocess_CPPFLAGS = $(AM_CPPFLAGS) \
-			              `Magick++-config --cppflags`
+				      $(MAGICKXX_CPPFLAGS)
     text_in_doc_preprocess_LDFLAGS  = $(AM_LDFLAGS) \
-			      	      -lpthread  `Magick++-config --libs`
+			      	      -lpthread \
+				      $(MAGICKXX_LDFLAGS)
+
     text_in_doc_preprocess_SOURCES = text_in_doc_preprocess.cc
 
 
@@ -69,9 +71,9 @@ if HAVE_MAGICKXX
     bin_PROGRAMS	+= text_in_picture
     text_in_picture_SOURCES = text_in_picture.cc
     text_in_picture_CPPFLAGS = $(AM_CPPFLAGS) \
-			       `Magick++-config --cppflags`
-
+			       $(MAGICKXX_CPPFLAGS)
     text_in_picture_LDFLAGS  = $(AM_LDFLAGS) \
-			       -lpthread  `Magick++-config --libs`
+		      	       -lpthread \
+			       $(MAGICKXX_LDFLAGS)
 
 endif HAVE_MAGICKXX

@@ -1,5 +1,13 @@
 2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small Fixes in Scribo build system.
+
+	* demo/Makefile.am: Enabled demos only if QT is configured.
+
+	* src/Makefile.am: Make use of MAGICKCXX flags.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve text recognition.
 
 	* text/clean.hh: Use upsampling::eagle.
