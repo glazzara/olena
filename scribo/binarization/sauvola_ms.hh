@@ -158,7 +158,7 @@ namespace scribo
 	  w_local_w = w_local;
 
 	// Make sure the window fits in the image domain.
-	if (w >= static_cast<const unsigned>(integral_sum_sum_2.ncols()))
+	if (w_local_w >= static_cast<const unsigned>(integral_sum_sum_2.ncols()))
 	{
 	  w_local_w = std::min(integral_sum_sum_2.ncols(), integral_sum_sum_2.nrows()) - integral_sum_sum_2.border();
 	  w_local_h = w_local_w;
