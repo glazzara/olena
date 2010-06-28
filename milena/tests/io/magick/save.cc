@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,12 +28,10 @@
 #include <mln/io/magick/load.hh>
 #include <mln/io/magick/save.hh>
 #include <mln/io/ppm/load.hh>
-#include <mln/io/ppm/save.hh>
 #include <mln/data/compare.hh>
 #include "tests/data.hh"
 
 #include <mln/io/magick/load.hh>
- 
 
 int main()
 {
@@ -48,9 +47,9 @@ int main()
 
   image2d<value::rgb8> lena_im;
   io::magick::load(lena_im, "tiny.png");
-  mln_assertion(lena_im(p) == c);
 
-  io::ppm::save(lena_im, "tiny.ppm");
+
+  mln_assertion(lena_im(p) == c);
 
   mln_assertion(lena_im.domain() == lena_mln.domain());
   mln_assertion(lena_im == lena_mln);

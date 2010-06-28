@@ -1,3 +1,14 @@
+2010-06-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Revamp and fix a bug in io::magick::*.
+
+	* mln/io/magick/load.hh: Revamp.
+
+	* mln/io/magick/save.hh: Fix a bug while saving. RGB values must
+	be between 0 and 1.
+
+	* tests/io/magick/save.cc: Remove useless output.
+
 2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add new tests.
