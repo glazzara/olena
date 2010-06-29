@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,26 +39,16 @@
 # include <mln/core/image/dmorph/image_if.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/box.hh>
+
 # include <mln/util/array.hh>
-# include <mln/labeling/blobs.hh>
 # include <mln/data/fill.hh>
+# include <mln/data/paste.hh>
 # include <mln/pw/all.hh>
-
-# include <mln/transform/distance_front.hh>
-
-# include <mln/morpho/thickening.hh>
-# include <mln/morpho/dilation.hh>
 
 # include <mln/core/alias/w_window2d_int.hh>
 # include <mln/make/w_window2d_int.hh>
 
 # include <mln/border/resize.hh>
-
-# include <mln/win/rectangle2d.hh>
-# include <mln/win/disk2d.hh>
-# include <mln/win/octagon2d.hh>
-
-# include <mln/debug/put_word.hh>
 
 # include <scribo/core/macros.hh>
 
@@ -65,10 +56,12 @@
 
 # include <scribo/text/clean.hh>
 
+# include <scribo/core/line_set.hh>
+
+
 # include <tesseract/baseapi.h>
 
 
-#include <mln/labeling/colorize.hh>
 
 namespace scribo
 {
@@ -80,7 +73,7 @@ namespace scribo
 
     /// Passes the text bboxes to Tesseract (OCR).
     ///
-    /// \param[in] text        The lines of text.
+    /// \param[in] lines       The lines of text.
     /// \param[in] language    The language which should be recognized by
     ///		               Tesseract. (fra, en, ...)
     /// \param[in] output_file If set, store the recognized text in
@@ -88,24 +81,34 @@ namespace scribo
     //
     template <typename L>
     void
-    recognition(const object_image(L)& objects,
+    recognition(const line_set<L>& lines,
 		const char *language,
-		const char *output_file);
+		const char *output_file = 0);
+
+
+    /// Recognize text from an image.
+    template <typename I>
+    void
+    recognition(const Image<I>& line,
+		const char *language,
+		const char *output_file = 0);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+    unsigned debug_id = 0;
+
 
     template <typename L>
     void
-    recognition(const object_image(L)& objects,
+    recognition(const line_set<L>& lines,
 		const char *language,
-		const char *output_file)
+		const char *output_file = 0)
     {
       trace::entering("scribo::text::recognition");
 
-      mln_precondition(objects.is_valid());
+      mln_precondition(lines.is_valid());
 
       // Initialize Tesseract.
       TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
@@ -123,12 +126,15 @@ namespace scribo
 	file.open(output_file);
 
       /// Use text bboxes with Tesseract
-      for_all_ncomponents(i, objects.nlabels())
+      for_all_lines(i, lines)
       {
-	std::cout << "Text recognition... ("
-		  << i << "/" << objects.nlabels() << ")" << std::endl;
+	if (! lines(i).is_valid())
+	  continue;
 
-	mln_domain(I) box = objects.bbox(i);
+	std::cout << "Text recognition... ("
+		  << i << "/" << lines.nelements() << ")" << std::endl;
+
+	mln_domain(I) box = lines(i).bbox();
 	// Make sure characters are isolated from the borders.
 	// Help Tesseract.
 	box.enlarge(2);
@@ -137,13 +143,22 @@ namespace scribo
 	data::fill(text_ima, true);
 
 	// Careful : background is set to 'False'
-	data::fill((text_ima | (pw::value(objects) == pw::cst(i))).rw(),
-		   false);
+	const component_set<L>& comp_set = lines.components();
+	const L& lbl = comp_set.labeled_image();
+
+	const mln::util::array<component_id_t>& comps = lines(i).components();
+	for_all_elements(e, lines(i).components())
+	{
+	  unsigned comp_id = comps(e);
+	  data::fill(((text_ima | comp_set(comp_id).bbox()).rw() | (pw::value(lbl) == pw::cst(comp_id))).rw(),
+		     false);
+	}
 
 	/// Improve text quality.
 
 	/// text_ima_cleaned domain is larger than text_ima's.
 	I text_ima_cleaned = text::clean(text_ima, dmap_win);
+	mln::io::pbm::save(text_ima_cleaned, mln::debug::filename("line.pbm", debug_id++));
 
         // Setting objects to 'True'
 	logical::not_inplace(text_ima_cleaned);
@@ -162,15 +177,11 @@ namespace scribo
 	    text_ima_cleaned.nrows());		      // n rows
 
 
-
-	mln_site(L) p = objects.bbox(i).center();
-	p.col() -= (objects.bbox(i).pmax().col()
-		      - objects.bbox(i).pmin().col()) / 2;
 	if (s != 0)
 	{
 	  std::cerr << s << std::endl;
 	  if (output_file != 0)
-	    file << s << std::endl;
+	    file << lines(i).bbox() << " " << s << std::endl;
 	}
 
 	// The string has been allocated by Tesseract. We must free it.
@@ -182,6 +193,65 @@ namespace scribo
 
       trace::exiting("scribo::text::recognition");
     }
+
+
+    template <typename I>
+    void
+    recognition(const Image<I>& line_,
+		const char *language,
+		const char *output_file = 0)
+    {
+      trace::entering("scribo::text::recognition");
+
+      const I& line = exact(line_);
+      mln_precondition(line.is_valid());
+
+      // Initialize Tesseract.
+      TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
+
+      std::ofstream file;
+      if (output_file != 0)
+	file.open(output_file);
+
+      mln_domain(I) box = line.domain();
+      // Make sure characters are isolated from the borders.
+      // Help Tesseract.
+      box.enlarge(2);
+
+      I text_ima(box);
+      data::fill(text_ima, false);
+      data::paste(line, text_ima);
+
+      // Make sure there is no border.
+      border::resize(text_ima, 0);
+
+      // Recognize characters.
+      char* s = TessBaseAPI::TesseractRect(
+	(unsigned char*) text_ima.buffer(),
+	sizeof (bool),			  // Pixel size.
+	text_ima.ncols() * sizeof (bool), // Row_offset
+	0,				  // Left
+	0,				  // Top
+	text_ima.ncols(),		  // n cols
+	text_ima.nrows());		  // n rows
+
+
+	if (s != 0)
+	{
+	  std::cout << s << std::endl;
+	  if (output_file != 0)
+	    file << line.domain() << " " << s << std::endl;
+	}
+
+	// The string has been allocated by Tesseract. We must free it.
+	free(s);
+
+	if (output_file != 0)
+	  file.close();
+
+	trace::exiting("scribo::text::recognition");
+    }
+
 
 
 # endif // ! MLN_INCLUDE_ONLY

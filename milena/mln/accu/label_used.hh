@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -116,7 +117,7 @@ namespace mln
     label_used<L>::take(const argument& l)
     {
       if (label_used_.size() <= l)
-	label_used_.resize(l.next(), false);
+	label_used_.resize(unsigned(l) + 1, false);
 
       label_used_(l) = true;
     }

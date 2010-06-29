@@ -40,7 +40,7 @@
 # include <mln/io/ppm/save.hh>
 
 # include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/draw/bounding_boxes.hh>
 # include <scribo/draw/bounding_box_links.hh>
 
@@ -54,49 +54,64 @@ namespace scribo
     using namespace mln;
 
 
-    /// Save the line of objects links image.
+    /// Save the line of components links image.
     ///
-    /// \param[in,out] input The binary from where the objects are extracted.
-    /// \param[in] objects An object image.
-    /// \param[in] link_array Lines of objects links.
+    /// \param[in,out] input The binary from where the components are extracted.
+    /// \param[in] components An object image.
+    /// \param[in] link_array Lines of components links.
     /// \param[in] box_value Value used to draw line bounding boxes.
     /// \param[in] link_value Value used to draw line links.
     /// \param[in] filename The target file name.
+    /// \param[in] anchor Anchor from where the links are drawn.
+    //
     template <typename I, typename L>
     void
     save_linked_bboxes_image(const Image<I>& input,
-			     const object_image(L)& objects,
+			     const component_set<L>& components,
+			     const object_links<L>& array,
+			     const value::rgb8& box_value,
+			     const value::rgb8& link_value,
+			     const std::string& filename,
+			     anchor::Type anchor);
+
+    /// \overload
+    /// The default anchor type is set to anchor::Center.
+    //
+    template <typename I, typename L>
+    void
+    save_linked_bboxes_image(const Image<I>& input,
+			     const component_set<L>& components,
 			     const object_links<L>& array,
 			     const value::rgb8& box_value,
 			     const value::rgb8& link_value,
 			     const std::string& filename);
 
-    /// Save the line of objects left and right links image.
+    /// Save the line of components left and right links image.
     ///
-    /// \param[in,out] input The binary from where the objects are extracted.
-    /// \param[in] objects An object image.
-    /// \param[in] left_link Lines of objects left links.
-    /// \param[in] right_link Lines of objects right links.
+    /// \param[in,out] input The binary from where the components are extracted.
+    /// \param[in] components An object image.
+    /// \param[in] left_link Lines of components left links.
+    /// \param[in] right_link Lines of components right links.
     /// \param[in] box_value Value used to draw line bounding boxes.
     /// \param[in] link_value Value used to draw line links.
     /// \param[in] filename The target file name.
     template <typename I, typename L>
     void
     save_linked_bboxes_image(const Image<I>& input,
-			     const object_image(L)& objects,
+			     const component_set<L>& components,
 			     const object_links<L>& left_link,
 			     const object_links<L>& right_link,
 			     const value::rgb8& box_value,
 			     const value::rgb8& link_value,
 			     const std::string& filename);
 
-    /// Save the line of objects left and right links image.
+    /// Save the line of components left and right links image.
     /// Draw also validated links.
     ///
-    /// \param[in,out] input The binary from where the objects are extracted.
-    /// \param[in] objects An object image.
-    /// \param[in] left_link Lines of objects left links.
-    /// \param[in] right_link Lines of objects right links.
+    /// \param[in,out] input The binary from where the components are extracted.
+    /// \param[in] components An object image.
+    /// \param[in] left_link Lines of components left links.
+    /// \param[in] right_link Lines of components right links.
     /// \param[in] box_value Value used to draw line bounding boxes.
     /// \param[in] left_link_value Value used to draw line left links.
     /// \param[in] right_link_value Value used to draw line left links.
@@ -106,7 +121,7 @@ namespace scribo
     inline
     void
     save_linked_bboxes_image(const Image<I>& input,
-			     const object_image(L)& objects,
+			     const component_set<L>& components,
 			     const object_links<L>& left_link,
 			     const object_links<L>& right_link,
 			     const value::rgb8& box_value,
@@ -118,8 +133,8 @@ namespace scribo
 
     /// Save the line link graph image.
     ///
-    /// \param[in,out] input The binary from where the objects are extracted.
-    /// \param[in] objects An object image.
+    /// \param[in,out] input The binary from where the components are extracted.
+    /// \param[in] components An object image.
     /// \param[in] g The link graph.
     /// \param[in] box_value Value used to draw line bounding boxes.
     /// \param[in] link_value Value used to draw line links.
@@ -127,7 +142,7 @@ namespace scribo
     template <typename I, typename L, typename G>
     void
     save_linked_bboxes_image(const Image<I>& input,
-			     const object_image(L)& objects,
+			     const component_set<L>& components,
 			     const Graph<G>& g,
 			     const value::rgb8& box_value,
 			     const value::rgb8& link_value,
@@ -141,24 +156,20 @@ namespace scribo
     inline
     void
     save_linked_bboxes_image(const Image<I>& input,
-			     const object_image(L)& objects,
+			     const component_set<L>& components,
 			     const object_links<L>& array,
 			     const value::rgb8& box_value,
 			     const value::rgb8& link_value,
-			     const std::string& filename)
+			     const std::string& filename,
+			     anchor::Type anchor)
     {
       trace::entering("scribo::debug::save_linked_bboxes_image");
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
 
-      mln::util::array<mln_result(accu::center<mln_psite(L)>)>
-	    mass_center = labeling::compute(accu::meta::center(),
-					    objects,
-					    objects.nlabels());
-
-      draw::bounding_boxes(tmp, objects.bboxes(), box_value);
-      draw::bounding_box_links(tmp, mass_center, array, link_value);
+      draw::bounding_boxes(tmp, components, box_value);
+      draw::bounding_box_links(tmp, array, link_value, anchor);
 
       io::ppm::save(tmp, filename);
 
@@ -170,7 +181,23 @@ namespace scribo
     inline
     void
     save_linked_bboxes_image(const Image<I>& input,
-			     const object_image(L)& objects,
+			     const component_set<L>& components,
+			     const object_links<L>& array,
+			     const value::rgb8& box_value,
+			     const value::rgb8& link_value,
+			     const std::string& filename)
+    {
+      save_linked_bboxes_image(input, components, array, box_value,
+			       link_value, filename, anchor::Center);
+    }
+
+
+
+    template <typename I, typename L>
+    inline
+    void
+    save_linked_bboxes_image(const Image<I>& input,
+			     const component_set<L>& components,
 			     const object_links<L>& left_link,
 			     const object_links<L>& right_link,
 			     const value::rgb8& box_value,
@@ -182,13 +209,8 @@ namespace scribo
 
       mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
 
-      mln::util::array<mln_result(accu::center<mln_psite(L)>)>
-	    mass_center = labeling::compute(accu::meta::center(),
-					    objects,
-					    objects.nlabels());
-
-      draw::bounding_boxes(tmp, objects.bboxes(), box_value);
-      draw::bounding_box_links(tmp, mass_center,
+      draw::bounding_boxes(tmp, components, box_value);
+      draw::bounding_box_links(tmp, components.mass_centers(),
 			       left_link, right_link,
 			       value);
 
@@ -202,7 +224,7 @@ namespace scribo
     inline
     void
     save_linked_bboxes_image(const Image<I>& input,
-			     const object_image(L)& objects,
+			     const component_set<L>& components,
 			     const object_links<L>& left_link,
 			     const object_links<L>& right_link,
 			     const value::rgb8& box_value,
@@ -218,10 +240,10 @@ namespace scribo
 
       mln::util::array<mln_result(accu::center<mln_psite(L)>)>
 	mass_center = labeling::compute(accu::meta::center(),
-					objects,
-					objects.nlabels());
+					components.labeled_image(),
+					components.nelements());
 
-      draw::bounding_boxes(tmp, objects.bboxes(), box_value);
+      draw::bounding_boxes(tmp, components, box_value);
       draw::bounding_box_links(tmp, mass_center,
 			       left_link, right_link,
 			       left_link_value, right_link_value,
@@ -238,7 +260,7 @@ namespace scribo
     inline
     void
     save_linked_bboxes_image(const Image<I>& input,
-			     const object_image(L)& objects,
+			     const component_set<L>& components,
 			     const Graph<G>& g,
 			     const value::rgb8& box_value,
 			     const value::rgb8& link_value,
@@ -250,8 +272,8 @@ namespace scribo
 
       mln_ch_value(I,value::rgb8) tmp = data::convert(value::rgb8(), input);
 
-      draw::bounding_boxes(tmp, objects.bboxes(), box_value);
-      draw::bounding_box_links(tmp, objects.bboxes(), g, link_value);
+      draw::bounding_boxes(tmp, components, box_value);
+      draw::bounding_box_links(tmp, components, g, link_value);
 
       io::ppm::save(tmp, filename);
 

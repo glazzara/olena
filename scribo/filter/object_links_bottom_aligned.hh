@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Invalidate links between two objects if their bottom are not
+/// Invalidate links between two components if their bottom are not
 /// aligned.
 
 
@@ -36,7 +37,6 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
 
 # include <scribo/filter/object_links_non_aligned_simple.hh>
 
@@ -48,12 +48,11 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Invalidate links between two objects if their bottom are not
+    /*! \brief Invalidate links between two components if their bottom are not
                aligned.
 
-	\param[in] objects   An object image.
-	\param[in] links     Object links information.
-        \param[in] max_alpha Maximum angle value (degrees).
+	\param[in] links        Object links information.
+        \param[in] max_alpha    Maximum angle value (degrees).
 
 	\verbatim
 
@@ -81,8 +80,7 @@ namespace scribo
     */
     template <typename L>
     object_links<L>
-    object_links_bottom_aligned(const object_image(L)& objects,
-				const object_links<L>& links,
+    object_links_bottom_aligned(const object_links<L>& links,
 				float max_alpha);
 
 
@@ -91,18 +89,15 @@ namespace scribo
 
     template <typename L>
     object_links<L>
-    object_links_bottom_aligned(const object_image(L)& objects,
-				const object_links<L>& links,
+    object_links_bottom_aligned(const object_links<L>& links,
 				float max_alpha)
     {
       trace::entering("scribo::filter::object_links_bottom_aligned");
 
-      mln_precondition(objects.is_valid());
       mln_precondition(links.is_valid());
 
       object_links<L>
-	output = object_links_non_aligned_simple(objects, links,
-						 1, max_alpha);
+	output = object_links_non_aligned_simple(links, 2, max_alpha);
 
       trace::exiting("scribo::filter::object_links_bottom_aligned");
       return output;

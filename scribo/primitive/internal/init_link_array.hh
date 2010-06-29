@@ -31,7 +31,8 @@
 /// Initialize a link array.
 
 
-# include <mln/util/array.hh>
+# include <scribo/core/object_links.hh>
+# include <scribo/core/component_set.hh>
 
 
 namespace scribo
@@ -46,17 +47,23 @@ namespace scribo
     {
 
       /// Initialize a link array.
+      template <typename L>
       void
-      init_link_array(mln::util::array<unsigned>& link_array);
+      init_link_array(object_links<L>& link_array);
 
 # ifndef MLN_INCLUDE_ONLY
 
+      template <typename L>
       inline
       void
-      init_link_array(mln::util::array<unsigned>& link_array)
+      init_link_array(object_links<L>& link_array)
       {
+	const component_set<L>& comp_set = link_array.components();
 	for (unsigned i = 0; i < link_array.nelements(); ++i)
-	  link_array[i] = i;
+	  if (comp_set(i).tag() == component::Ignored)
+	    link_array(i) = 0;
+	  else
+	    link_array(i) = i;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

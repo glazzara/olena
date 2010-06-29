@@ -69,23 +69,27 @@ namespace scribo
 
       mln_precondition(groups.is_valid());
 
-      const object_image(L)& objects = groups.object_image_();
+      const component_set<L>& components = groups.components();
 
       //FIXME: remove when object_groups will store the number of
       //elements per group.
-      mln::util::array<unsigned> group_card(groups.size(), 0.0);
+      mln::util::array<unsigned> group_card(groups.nelements(), 0.0);
 
-      mln::util::array<float> output(groups.size(), 0.0);
-      for_all_components(i, objects.bboxes())
-      {
-	output[groups[i]] += objects.bbox(i).pmax().row()
-	                     - objects.bbox(i).pmin().row();
-	++group_card[groups[i]];
-      }
+      mln::util::array<float> output(groups.nelements(), 0.0);
+      for_all_comps(i, components)
+	if (components(i).is_valid())
+	{
+	  output(groups(i)) += components(i).bbox().pmax().row()
+	    - components(i).bbox().pmin().row();
+	  ++group_card(groups(i));
+	}
 
       output(0) = 0;
-      for_all_components(i, output)
-	output(i) /= static_cast<float>(group_card[i]);
+      for_all_groups(i, output)
+	if (components(i).is_valid())
+	  output(i) /= static_cast<float>(group_card(i));
+	else
+	  output(i) = 0;
 
       trace::exiting("scribo::estim::object_groups_v_thickness");
       return output;

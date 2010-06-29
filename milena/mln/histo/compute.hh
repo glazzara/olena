@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,7 +47,7 @@ namespace mln
 
     /// Compute the histogram of image \p input.
     template <typename I>
-    array<mln_value(I)> compute(const Image<I>& input);
+    histo::array<mln_value(I)> compute(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -59,9 +60,9 @@ namespace mln
 
 	template <typename I>
 	inline
-	array<mln_value(I)> compute_(const I& input)
+	histo::array<mln_value(I)> compute_(const I& input)
 	{
-	  array<mln_value(I)> h;
+	  histo::array<mln_value(I)> h;
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
 	    ++h(input(p));
@@ -75,14 +76,14 @@ namespace mln
 
     template <typename I>
     inline
-    array<mln_value(I)> compute(const Image<I>& input)
+    histo::array<mln_value(I)> compute(const Image<I>& input)
     {
       trace::entering("histo::compute");
       mlc_equal(mln_trait_image_quant(I), mln::trait::image::quant::low)::check();
       mln_precondition(exact(input).is_valid());
 
-      array<mln_value(I)> h = impl::compute_(mln_trait_image_speed(I)(),
-					     exact(input));
+      histo::array<mln_value(I)> h = impl::compute_(mln_trait_image_speed(I)(),
+						    exact(input));
 
       trace::exiting("histo::compute");
       return h;

@@ -28,14 +28,14 @@
 
 /// \file
 ///
-/// Draw a list of bounding boxes and their associated mass center.
+/// Draw a list of bounding boxes
 
 # include <mln/core/concept/image.hh>
 # include <mln/draw/box.hh>
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 
 namespace scribo
 {
@@ -45,7 +45,7 @@ namespace scribo
 
     using namespace mln;
 
-    /// Draw a list of bounding boxes and their associated mass center.
+    /// Draw a list of bounding boxes.
     template <typename I>
     void
     bounding_boxes(Image<I>& input_,
@@ -53,11 +53,11 @@ namespace scribo
 		   const mln_value(I)& value);
 
 
-    /// Draw object bounding boxes and their associated mass center.
+    /// Draw object bounding boxes.
     template <typename I, typename L>
     void
     bounding_boxes(Image<I>& input_,
-		   const object_image(L)& objects,
+		   const component_set<L>& components,
 		   const mln_value(I)& value);
 
 
@@ -77,12 +77,9 @@ namespace scribo
 
       mln_precondition(input.is_valid());
 
-      for_all_components(i, boxes)
+      for_all_comp_data(i, boxes)
         if (boxes[i].is_valid())
-	{
-	  input(boxes[i].center()) = value;
 	  mln::draw::box(input, boxes[i], value);
-	}
 
       trace::exiting("scribo::draw::bounding_boxes");
     }
@@ -91,11 +88,21 @@ namespace scribo
     template <typename I, typename L>
     inline
     void
-    bounding_boxes(Image<I>& input,
-		   const object_image(L)& objects,
+    bounding_boxes(Image<I>& input_,
+		   const component_set<L>& components,
 		   const mln_value(I)& value)
     {
-      bounding_boxes(input, objects.bboxes(), value);
+      trace::entering("scribo::draw::bounding_boxes");
+
+      I& input = exact(input_);
+
+      mln_precondition(input.is_valid());
+
+      for_all_comps(i, components)
+	if (components(i).bbox().is_valid())
+	  mln::draw::box(input, components(i).bbox(), value);
+
+      trace::exiting("scribo::draw::bounding_boxes");
     }
 
 

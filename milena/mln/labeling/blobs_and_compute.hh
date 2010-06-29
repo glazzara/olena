@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -53,7 +54,9 @@ namespace mln
 
      */
     template <typename I, typename N, typename L, typename A>
-    util::couple<mln_ch_value(I, L), util::array<mln_result(A)> >
+    util::couple<mln_ch_value(I,L),
+		 util::couple<util::array<mln_result(A)>,
+			      util::array<A> > >
     blobs_and_compute(const Image<I>& input, const Neighborhood<N>& nbh,
 		      L& nlabels, const Accumulator<A>& accu);
 
@@ -72,31 +75,41 @@ namespace mln
       {
 	typedef mln_result(A) accu_result;
 	typedef mln_argument(A) accu_argument;
-	typedef util::array<accu_result> result;
+	typedef util::couple<util::array<accu_result>,
+			     util::array<A> > result;
 
+	compute_functor(const mln_value(L)& nlabels)
+	  : nlabels_(nlabels)
+	{
+	}
+
+	inline
 	void init()
 	{
-	  // FIXME: arbitrary value...
-	  accus_.reserve(static_cast<unsigned>(mln_max(mln_value(L))) / 2);
+	  accus_.reserve(1000);
 	  accus_.append(A());
 	}
 
+	inline
 	void new_label(const mln_value(L)& l)
 	{
 	  current_lbl_ = l;
 	  accus_.append(A());
 	}
 
-	void process_p(const util::pix<L>& pix)
+	inline
+	void process_p(const mln_site(L)& p)
 	{
-	  process_(accu_argument(), pix);
+	  process__(accu_argument(), p);
 	}
 
-	void process_n(const util::pix<L>& pix)
+	inline
+	void process_n(const mln_site(L)& n)
 	{
-	  process_(accu_argument(), pix);
+	  process__(accu_argument(), n);
 	}
 
+	inline
 	void finalize()
 	{
 	  convert::from_to(accus_, result_);
@@ -104,25 +117,30 @@ namespace mln
 
 
       private:
-	void process_(const mln_psite(L)&, const util::pix<L>& pix)
+	inline
+	void process__(const mln_psite(L)&, const mln_site(L)& p)
 	{
-	  accus_[current_lbl_].take(pix.p());
+	  accus_[current_lbl_].take(p);
 	}
 
-	void process_(const mln_value(L)&, const util::pix<L>& pix)
+	inline
+	void process__(const mln_value(L)&, const mln_site(L)&)
 	{
-	  accus_[current_lbl_].take(pix.v());
+	  accus_[current_lbl_].take(current_lbl_);
 	}
 
-	void process_(const util::pix<L>&, const util::pix<L>& pix)
+	template <typename V>
+	inline
+	void process__(const V&, const mln_site(L)&)
 	{
-	  accus_[current_lbl_].take(pix);
+	  mlc_abort(V)::check();
 	}
 
       public:
 	util::array<mln_result(A)> result_;
 	util::array<A> accus_;
 	mln_value(L) current_lbl_;
+	mln_value(L) nlabels_;
       };
 
     } // end of namespace mln::labeling::internal
@@ -133,7 +151,9 @@ namespace mln
 
 
     template <typename I, typename N, typename L, typename A>
-    util::couple<mln_ch_value(I,L), util::array<mln_result(A)> >
+    util::couple<mln_ch_value(I,L),
+		 util::couple<util::array<mln_result(A)>,
+			      util::array<A> > >
     blobs_and_compute(const Image<I>& input, const Neighborhood<N>& nbh,
 		      L& nlabels, const Accumulator<A>& accu)
     {
@@ -146,12 +166,13 @@ namespace mln
 
       typedef mln_ch_value(I,L) out_t;
       typedef internal::compute_functor<out_t,A> func_t;
-      func_t functor;
+      func_t functor(nlabels);
       out_t
 	output = canvas::labeling::blobs(input, nbh, nlabels, functor);
 
       util::couple<out_t, typename func_t::result>
-	result = make::couple(output, functor.result_);
+	result = make::couple(output,
+			      make::couple(functor.result_, functor.accus_));
 
       trace::exiting("labeling::blobs_and_compute");
       return result;

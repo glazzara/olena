@@ -71,6 +71,8 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
   const dpoint2d up    = dpoint2d( -1,  0 );
   const dpoint2d down  = dpoint2d( +1,  0 );
   const dpoint2d left  = dpoint2d(  0, -1 );
@@ -80,6 +82,8 @@ namespace mln
   const dpoint2d up_right    = dpoint2d( -1,  +1 );
   const dpoint2d down_left   = dpoint2d( +1,  -1 );
   const dpoint2d down_right  = dpoint2d( +1,  +1 );
+
+#  endif // !MLN_WO_GLOBAL_VARS
 
 # endif // ! MLN_INCLUDE_ONLY
 

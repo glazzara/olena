@@ -83,27 +83,27 @@ namespace mln
 
     /// Remove components and relabel a labeled image inplace.
     /// \param[in, out] label the labeled image.
-    /// \param[in, out] nlabels the number of labels in \p label.
-    /// \param[in]  fv2b function returning whether a label must be replaced
-    ///		      by the background.
+    /// \param[in]      nlabels the number of labels in \p label.
+    /// \param[in]      fv2b function returning whether a label must be replaced
+    ///		        by the background.
     //
     template <typename I, typename F>
     void
     relabel_inplace(Image<I>&		    label,
-		    mln_value(I)&	    nlabels,
+		    const mln_value(I)&	    nlabels,
 		    const Function_v2b<F>&  fv2b);
 
 
     /// Remove components and relabel a labeled image inplace.
     /// \param[in, out] label the labeled image.
-    /// \param[in, out] nlabels the number of labels in \p label.
+    /// \param[in]      nlabels the number of labels in \p label.
     /// \param[in]	fv2v function returning the new component id for each
     /// pixel value.
     //
     template <typename I, typename F>
     void
     relabel_inplace(Image<I>&		    label,
-		    mln_value(I)&	    nlabels,
+		    const mln_value(I)&	    nlabels,
 		    const Function_v2v<F>&  fv2v);
 
 
@@ -160,7 +160,7 @@ namespace mln
       inline
       void
       relabel_inplace_tests(Image<I>&		    label,
-			    mln_value(I)&	    nlabels,
+			    const mln_value(I)&	    nlabels,
 			    const Function<F>&	    f)
       {
         // FIXME: we may want to check that it is exactly a label.
@@ -221,7 +221,7 @@ namespace mln
     inline
     void
     relabel_inplace(Image<I>&		    label,
-		    mln_value(I)&	    nlabels,
+		    const mln_value(I)&	    nlabels,
 		    const Function_v2v<F>&  fv2v)
     {
       trace::entering("labeling::relabel_inplace");
@@ -240,7 +240,7 @@ namespace mln
     inline
     void
     relabel_inplace(Image<I>&		    label,
-		    mln_value(I)&	    nlabels,
+		    const mln_value(I)&	    nlabels,
 		    const Function_v2b<F>&  fv2b)
     {
       trace::entering("labeling::relabel_inplace");
@@ -248,8 +248,9 @@ namespace mln
       internal::relabel_inplace_tests(label, nlabels, fv2b);
 
       typedef fun::i2v::array<mln_value(I)> fv2v_t;
-      fv2v_t fv2v = make::relabelfun(fv2b, nlabels, nlabels);
-      labeling::relabel_inplace(label, nlabels, fv2v);
+      mln_value(I) tmp;
+      fv2v_t fv2v = make::relabelfun(fv2b, nlabels, tmp);
+      labeling::relabel_inplace(label, tmp, fv2v);
 
       trace::exiting("labeling::relabel_inplace");
     }

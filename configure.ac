@@ -214,6 +214,11 @@ OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm], [GDCM],
 OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
 	     [tesseract], [TESSERACT])
 
+# Qt.
+AT_WITH_QT([], [], [],
+	   AC_DEFINE([HAVE_QT], 1, [Define to 1 if we can use Qt]),
+     	   AC_DEFINE([HAVE_QT], 0))
+AM_CONDITIONAL([HAVE_QT], [test x$QT_PATH != x])
 
 
 ## ---------------------------- ##
@@ -283,13 +288,12 @@ AM_CONDITIONAL([ENABLE_SCRIBO], [test "x$enable_scribo" = xyes])
 
 AC_CONFIG_FILES([
   scribo/Makefile
-    scribo/demo/Makefile
+    scribo/demo/review/Makefile
     scribo/src/Makefile
       scribo/src/binarization/Makefile
       scribo/src/debug/Makefile
       scribo/src/filter/Makefile
       scribo/src/misc/Makefile
-      scribo/src/multi_scale/Makefile
       scribo/src/preprocessing/Makefile
       scribo/src/primitive/Makefile
 	scribo/src/primitive/extract/Makefile
@@ -303,6 +307,8 @@ AC_CONFIG_FILES([scribo/tests/data.hh])
 
 AC_CONFIG_FILES([
   scribo/tests/Makefile
+    scribo/tests/binarization/Makefile
+    scribo/tests/core/Makefile
     scribo/tests/filter/Makefile
     scribo/tests/preprocessing/Makefile
     scribo/tests/table/Makefile

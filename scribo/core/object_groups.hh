@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,13 +30,11 @@
 /// \file
 ///
 /// \brief Object groups representation.
-///
-/// \fixme Should not inherit from util::array.
 
 # include <mln/util/array.hh>
 
 # include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 
 namespace scribo
 {
@@ -43,33 +42,100 @@ namespace scribo
   using namespace mln;
 
 
+  // Forward declaration.
+  template <typename L> class object_groups;
+
+
+  namespace internal
+  {
+    /// Data structure for \c scribo::object_groups<I>.
+    template <typename L>
+    struct object_groups_data
+    {
+      object_groups_data();
+      object_groups_data(const object_links<L>& links);
+      object_groups_data(const object_links<L>& links, unsigned value);
+
+      mln::util::array<unsigned> comp_to_group_;
+      component_set<L> components_;
+      object_links<L> links_;
+    };
+
+  } // end of namespace scribo::internal
+
+
+
+
   /// \brief Object group representation.
   //
   template <typename L>
   class object_groups
-    : public mln::util::array<unsigned>
   {
-    typedef mln::util::array<unsigned> super_t;
+    typedef internal::object_groups_data<L> data_t;
 
   public:
     object_groups();
-    object_groups(const object_image(L)& objects);
-    object_groups(const object_image(L)& objects, unsigned n);
-    object_groups(const object_image(L)& objects, unsigned n, unsigned value);
+    object_groups(const object_links<L>& links);
+    object_groups(const object_links<L>& links, unsigned value);
 
-    const void* objects_id_() const;
-    const object_image(L)& object_image_() const;
+    const component_set<L>& components() const;
+    const object_links<L>& links() const;
 
     void init_(const object_links<L>& links);
 
     bool is_valid() const;
 
-  private:
-    object_image(L) objects_;
+    unsigned nelements() const;
+
+    unsigned& operator()(unsigned comp_id);
+    const unsigned& operator()(unsigned comp_id) const;
+
+    const mln::util::array<unsigned>& comp_to_group() const;
+
+    object_groups<L> duplicate() const;
+
+  private: // attributes
+    mln::util::tracked_ptr<data_t> data_;
   };
 
 
+  template <typename L>
+  std::ostream&
+  operator<<(std::ostream& ostr, const object_groups<L>& groups);
+
+
 # ifndef MLN_INCLUDE_ONLY
+
+  namespace internal
+  {
+
+
+    /// Data structure for \c scribo::object_groups<I>.
+    template <typename L>
+    object_groups_data<L>::object_groups_data()
+    {
+    }
+
+
+    template <typename L>
+    object_groups_data<L>::object_groups_data(const object_links<L>& links)
+      : comp_to_group_(unsigned(links.nelements()) + 1),
+	components_(links.components()), links_(links)
+    {
+    };
+
+
+    template <typename L>
+    object_groups_data<L>::object_groups_data(const object_links<L>& links,
+					      unsigned value)
+      : comp_to_group_(unsigned(links.nelements() + 1), value),
+	components_(links.components()), links_(links)
+    {
+    };
+
+
+  } // end of namespace scribo::internal
+
 
   template <typename L>
   object_groups<L>::object_groups()
@@ -77,57 +143,101 @@ namespace scribo
   }
 
   template <typename L>
-  object_groups<L>::object_groups(const object_image(L)& objects)
-    : objects_(objects)
+  object_groups<L>::object_groups(const object_links<L>& links)
   {
-
-  }
-
-
-  template <typename L>
-  object_groups<L>::object_groups(const object_image(L)& objects, unsigned n)
-    : super_t(n), objects_(objects)
-  {
-
-  }
-
-
-  template <typename L>
-  object_groups<L>::object_groups(const object_image(L)& objects,
-				  unsigned n, unsigned value)
-    : super_t(n, value), objects_(objects)
-  {
-
+    data_ = new data_t(links);
   }
 
   template <typename L>
-  const void*
-  object_groups<L>::objects_id_() const
+  object_groups<L>::object_groups(const object_links<L>& links, unsigned value)
   {
-    return objects_.id_();
+    data_ = new data_t(links, value);
   }
 
   template <typename L>
-  const object_image(L)&
-  object_groups<L>::object_image_() const
+  const component_set<L>&
+  object_groups<L>::components() const
   {
-    return objects_;
+    return data_->components_;
   }
 
+  template <typename L>
+  const object_links<L>&
+  object_groups<L>::links() const
+  {
+    return data_->links_;
+  }
 
   template <typename L>
   void
   object_groups<L>::init_(const object_links<L>& links)
   {
-    objects_ = links.object_image_();
-    this->hook_std_vector_() = links.std_vector();
+    data_->comp_to_group_ = links.comp_to_link();
   }
 
   template <typename L>
   bool
   object_groups<L>::is_valid() const
   {
-    return objects_.is_valid() && objects_.nlabels() == (this->size() - 1);
+    mln_assertion(data_->components_.nelements() == (nelements() - 1));
+    return data_->links_.is_valid();
+  }
+
+  template <typename L>
+  unsigned
+  object_groups<L>::nelements() const
+  {
+    return data_->comp_to_group_.nelements();
+  }
+
+
+  template <typename L>
+  unsigned&
+  object_groups<L>::operator()(unsigned comp_id)
+  {
+    return data_->comp_to_group_(comp_id);
+  }
+
+
+  template <typename L>
+  const unsigned&
+  object_groups<L>::operator()(unsigned comp_id) const
+  {
+    return data_->comp_to_group_(comp_id);
+  }
+
+  template <typename L>
+  const mln::util::array<unsigned>&
+  object_groups<L>::comp_to_group() const
+  {
+    return data_->comp_to_group_;
+  }
+
+  template <typename L>
+  inline
+  object_groups<L>
+  object_groups<L>::duplicate() const
+  {
+    object_groups<L> output;
+    output.data_ = new data_t();
+
+    *(output.data_.ptr_) = *(data_.ptr_);
+    return output;
+  }
+
+
+  template <typename L>
+  std::ostream&
+  operator<<(std::ostream& ostr, const object_groups<L>& groups)
+  {
+    ostr << "object_groups[";
+
+    for_all_groups(g, groups)
+      ostr << g << "->" << groups.comp_to_group()[g] << ", ";
+
+    ostr << "]";
+
+    return ostr;
   }
 
 

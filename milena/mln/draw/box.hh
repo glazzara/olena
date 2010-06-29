@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,6 +30,8 @@
 /*! \file
  *
  * \brief Draw a box in an image.
+ *
+ * \fixme Rename as box_frame.hh
  */
 
 # include <mln/core/concept/image.hh>

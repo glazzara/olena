@@ -45,7 +45,7 @@
 # include <scribo/core/macros.hh>
 
 # include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/primitive/internal/find_root.hh>
 # include <scribo/primitive/internal/is_link_valid.hh>
 # include <scribo/primitive/internal/init_link_array.hh>
@@ -64,7 +64,6 @@ namespace scribo
 	 \brief Validate and merge double link information. A link
 	 must exist in both ways to be validated.
 
-	  \param[in] objects     The Lines of text.
 	  \param[in] left_link   The left neighbor of each line of text.
 	  \param[in] right_link  The right neighbor of each line of text.
 
@@ -72,8 +71,7 @@ namespace scribo
       */
       template <typename L>
       object_links<L>
-      merge_double_link(const object_image(L)& objects,
-			const object_links<L>& left_link,
+      merge_double_link(const object_links<L>& left_link,
 			const object_links<L>& right_link);
 
 
@@ -84,26 +82,31 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      merge_double_link(const object_image(L)& objects,
-			const object_links<L>& left_link,
+      merge_double_link(const object_links<L>& left_link,
 			const object_links<L>& right_link)
       {
 	trace::entering("scribo::primitive::link::merge_double_link");
 
-	mln_precondition(objects.is_valid());
-	mln_precondition(left_link.nelements() == right_link.nelements());
-	mln_precondition(left_link.objects_id_() == objects.id_());
-	mln_precondition(right_link.objects_id_() == objects.id_());
+	mln_precondition(left_link.is_valid());
+	mln_precondition(right_link.is_valid());
+	mln_precondition(left_link.components() == right_link.components());
 
+	const component_set<L>& components = left_link.components();
 
 	object_links<L> merge(left_link);
 
-	for_all_ncomponents(i, objects.nlabels())
+	for_all_ncomponents(i, components.nelements())
 	{
-	  mln::util::couple<bool, unsigned>
-	    nbh = primitive::internal::is_link_valid(left_link, right_link, i);
-	  if (!nbh.first())
-	    merge[i] = i;
+	  if (components(i).tag() == component::Ignored)
+	    merge(i) = 0;
+	  else
+	  {
+	    mln::util::couple<bool, unsigned>
+	      nbh = primitive::internal::is_link_valid(left_link,
+						       right_link, i);
+	    if (!nbh.first())
+	      merge(i) = i;
+	  }
 	}
 
 	trace::exiting("scribo::primitive::link::merge_double_link");

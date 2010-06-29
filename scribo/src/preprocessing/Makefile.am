@@ -1,4 +1,5 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,10 +18,16 @@
 include $(top_srcdir)/scribo/scribo.mk
 
 bin_PROGRAMS = 				\
+  denoise 				\
+  homogeneous_contrast 			\
   preprocess 				\
   split_bg_fg 				\
+  subsample 				\
   unskew
 
+denoise_SOURCES = denoise.cc
+homogeneous_contrast_SOURCES = homogeneous_contrast.cc
 preprocess_SOURCES = preprocess.cc
 split_bg_fg_SOURCES = split_bg_fg.cc
+subsample_SOURCES = subsample.cc
 unskew_SOURCES = unskew.cc

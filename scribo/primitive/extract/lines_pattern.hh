@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,6 +36,8 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/window2d.hh>
 # include <mln/core/routine/duplicate.hh>
+
+# include <mln/extension/adjust_fill.hh>
 
 # include <mln/accu/transform_line.hh>
 # include <mln/accu/count_value.hh>
@@ -77,12 +80,15 @@ namespace scribo
       lines_pattern(const Image<I>& input_, unsigned length,
 		    unsigned dir, const Window<W>& win_)
       {
-	trace::entering("mln::lines_pattern");
+	trace::entering("scribo::primitive::extract::lines_pattern");
 
 	const I& input = exact(input_);
 	const W& win = exact(win_);
 	mlc_is(mln_value(I), bool)::check();
 	mln_precondition(input.is_valid());
+
+	// Adjusting extension.
+	extension::adjust_fill(input, length / 2, 0);
 
 	accu::count_value<bool> accu(true);
 	mln_ch_value(I,unsigned)
@@ -100,18 +106,18 @@ namespace scribo
 	  // If the foreground part of the pattern has more than 20%
 	  // of background pixels, the current pixel is considered as
 	  // background pixel.
-	  if (length - tmp(p) > (0.2f * length))
+	  if (length - tmp(p) > unsigned(0.2f * length) + 1)
 	  {
 	    output(p) = false;
 	    continue;
 	  }
 
-	  // If the background parts of the pattern have less than 95%
-	  // of foreground pixels, the current pixel is considered as
-	  // part of the background.
+	  // If the background parts of the pattern have exactly or
+	  // less than 95% of background pixels, the current pixel is
+	  // considered as part of the background.
 	  is_foreground = true;
 	  for_all(q)
-	    if ((length - tmp(q)) < (length * 0.95f))
+	    if ((length - tmp(q)) < unsigned(length * 0.95f) + 1)
 	    {
 	      is_foreground = false;
 	      break;
@@ -120,8 +126,7 @@ namespace scribo
 	  output(p) = is_foreground;
 	}
 
-
-	trace::exiting("mln::lines_pattern");
+	trace::exiting("scribo::primitive::extract::lines_pattern");
 	return output;
       }
 

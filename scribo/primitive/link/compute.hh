@@ -32,6 +32,7 @@
 
 
 # include <scribo/core/macros.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/core/object_links.hh>
 # include <scribo/core/concept/link_functor.hh>
 # include <scribo/primitive/link/internal/find_link.hh>
@@ -55,52 +56,68 @@ namespace scribo
 	  Functors must implement the following interface :
 
 
-	  bool is_potential_link(unsigned current_object,
+	  bool is_potential_link_(unsigned current_object,
 	                         const P& start_point, const P& p) const
 
-	  bool valid_link(unsigned current_object,
+	  bool valid_link_(unsigned current_object,
 	                  const P& start_point, const P& p)
 
-	  bool verify_link_criterion(unsigned current_object,
+	  bool verify_link_criterion_(unsigned current_object,
 	                             const P& start_point, const P& p)
 
-	  void validate_link(unsigned current_object,
-	                     const P& start_point, const P& p)
+	  void validate_link_(unsigned current_object,
+	                     const P& start_point, const P& p, unsigned anchor)
 
-	  void invalidate_link(unsigned current_object,
-	                       const P& start_point, const P& p)
+	  void invalidate_link_(unsigned current_object,
+	                       const P& start_point, const P& p, unsigned anchor)
 
-	  void compute_next_site(P& p)
+	  void compute_next_site_(P& p)
 
-	  const mln_site(L)& start_point(unsigned current_object)
+	  const mln_site(L)& start_point_(unsigned current_object, unsigned anchor)
 
-	  void start_processing_object(unsigned current_object)
+	  void start_processing_object_(unsigned current_object)
 
       */
       template <typename F>
       object_links<scribo_support(F)>
-      compute(Link_Functor<F>& functor);
+      compute(Link_Functor<F>& functor, anchor::Type anchor);
 
+      /// \overload
+      /// The default anchor is set to 0, the mass center.
+      template <typename F>
+      object_links<scribo_support(F)>
+      compute(Link_Functor<F>& functor);
 
 # ifndef MLN_INCLUDE_ONLY
 
 
       template <typename F>
       object_links<scribo_support(F)>
-      compute(Link_Functor<F>& functor_)
+      compute(Link_Functor<F>& functor_, anchor::Type anchor)
       {
 	trace::entering("scribo::primitive::link::compute");
 
 	F& functor = exact(functor_);
+	const typename F::component_set_t&
+	  comp_set = functor.components();
 
-	for_all_ncomponents(current_object, functor.objects().nlabels())
-	{
-	  functor.start_processing_object(current_object); //<-- start_processing_object
-	  primitive::internal::find_link(functor, current_object);
-	}
+	for_all_ncomponents(current_object, comp_set.nelements())
+	  if (comp_set(current_object).tag() != component::Ignored)
+	  {
+	    functor.start_processing_object(current_object); //<-- start_processing_object
+	    primitive::internal::find_link(functor, current_object, anchor);
+	  }
 
 	trace::exiting("scribo::primitive::link::compute");
 	return functor.links();
+      }
+
+
+      template <typename F>
+      object_links<scribo_support(F)>
+      compute(Link_Functor<F>& functor)
+      {
+	return compute(functor, anchor::MassCenter);
       }
 
 

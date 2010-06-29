@@ -197,7 +197,8 @@ namespace mln
       inline
       void load_raw_2d(std::ifstream& file, I& ima)
       {
-	if (sizeof(value::int_u8) == 1)
+	typedef mln_value(I) V;
+	if (sizeof(V) == 1)
 	  load_raw_2d_contiguous(file, ima);
 	else
 	  load_raw_2d_uncontiguous(file, ima);

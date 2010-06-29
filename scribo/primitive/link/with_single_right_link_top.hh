@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,11 +41,12 @@
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/tag/anchor.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>
-# include <scribo/primitive/link/internal/link_center_dmax_base.hh>
+# include <scribo/primitive/link/internal/link_single_dmax_base.hh>
 
 # include <scribo/primitive/link/compute.hh>
 
@@ -69,8 +71,8 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link_top(const object_image(L)& objects,
-			     unsigned neighb_max_distance);
+      with_single_right_link_top(const component_set<L>& objects,
+				 unsigned neighb_max_distance);
 
 
       /// \overload
@@ -78,7 +80,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link_top(const object_image(L)& objects);
+      with_single_right_link_top(const component_set<L>& objects);
 
 
 
@@ -92,19 +94,19 @@ namespace scribo
 
 	template <typename L>
 	class single_right_top_functor
-	  : public link_center_dmax_base<L,
+	  : public link_single_dmax_base<L,
 					 single_right_top_functor<L> >
 	{
 	  typedef
-	    link_center_dmax_base<L, single_right_top_functor<L> >
+	    link_single_dmax_base<L, single_right_top_functor<L> >
 	  super_;
 
 	public:
 	  typedef mln_site(L) P;
 
-	  single_right_top_functor(const object_image(L)& objects,
-				      unsigned dmax)
-	    : super_(objects, dmax, 0)
+	  single_right_top_functor(const component_set<L>& objects,
+				   unsigned dmax)
+	    : super_(objects, dmax, anchor::Horizontal)
 	  {
 	  }
 
@@ -124,8 +126,8 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link_top(const object_image(L)& objects,
-			     unsigned neighb_max_distance)
+      with_single_right_link_top(const component_set<L>& objects,
+				 unsigned neighb_max_distance)
       {
 	trace::entering("scribo::primitive::link::with_single_right_link_top");
 
@@ -134,7 +136,7 @@ namespace scribo
 	internal::single_right_top_functor<L>
 	  functor(objects, neighb_max_distance);
 
-	object_links<L> output = compute(functor);
+	object_links<L> output = compute(functor, anchor::Top);
 
 	trace::exiting("scribo::primitive::link::with_single_right_link_top");
 	return output;
@@ -144,7 +146,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link_top(const object_image(L)& objects)
+      with_single_right_link_top(const component_set<L>& objects)
       {
 	return with_single_right_link_top(objects, mln_max(unsigned));
       }

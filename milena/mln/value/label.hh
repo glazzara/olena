@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,6 +39,7 @@
 # include <mln/value/internal/convert.hh>
 # include <mln/value/internal/encoding.hh>
 
+# include <mln/value/internal/make_generic_name.hh>
 
 namespace mln
 {
@@ -79,7 +81,8 @@ namespace mln
 
       static const char* name()
       {
-	static std::string s = std::string("label_").append(1, n + '0');
+	static std::string
+	  s = mln::value::internal::make_generic_name("label_", n);
 	return s.c_str();
       }
 
@@ -99,6 +102,12 @@ namespace mln
       template <unsigned n>
       void
       from_to_(const value::int_u<n>& from, value::label<n>& to_);
+
+      // label -> int_u.
+      template <unsigned n>
+      void
+      from_to_(const value::label<n>& from, value::int_u<n>& to_);
+
 
       // int_u -> label.
       template <unsigned n, unsigned m>
@@ -203,6 +212,15 @@ namespace mln
       {
 	to_ = from;
       }
+
+      // label -> int_u.
+      template <unsigned n>
+      void
+      from_to_(const value::label<n>& from, value::int_u<n>& to_)
+      {
+	to_ = from;
+      }
+
 
       // int_u<n> -> label<m> with n < m.
       template <unsigned n, unsigned m>

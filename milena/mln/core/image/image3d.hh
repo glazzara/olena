@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -164,7 +165,7 @@ namespace mln
 
     /// Constructor with the numbers of indexes and the
     /// border thickness.
-    image3d(int nslis, int nrows, int ncols, unsigned bdr = border::thickness);
+    image3d(int nslices, int nrows, int ncols, unsigned bdr = border::thickness);
 
 
     /// Initialize an empty image.
@@ -395,9 +396,9 @@ namespace mln
 
   template <typename T>
   inline
-  image3d<T>::image3d(int nslis, int nrows, int ncols, unsigned bdr)
+  image3d<T>::image3d(int nslices, int nrows, int ncols, unsigned bdr)
   {
-    init_(make::box3d(nslis, nrows, ncols), bdr);
+    init_(make::box3d(nslices, nrows, ncols), bdr);
   }
 
   template <typename T>

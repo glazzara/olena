@@ -38,6 +38,7 @@ namespace mln
 
   // Forward declarations.
   template <typename E> struct Function;
+  template <typename E> struct Function_n2v;
   template <typename E> struct Function_v2v;
   template <typename E> struct Function_v2b;
   template <typename E> struct Function_vv2v;
@@ -69,6 +70,31 @@ namespace mln
   protected:
     Function();
     Function(const Function&);
+  };
+
+
+  /*---------------.
+  | Nil -> Value.  |
+  `---------------*/
+
+  template <>
+  struct Function_n2v<void> { typedef Function<void> super; };
+
+
+  /// \brief Base class for implementation of function-objects from
+  /// Nil to value.
+  ///
+  /// The parameter \a E is the exact type.
+  ///
+  /// \ingroup modfun
+  //
+  template <typename E>
+  struct Function_n2v : public Function<E>
+  {
+    typedef Function_n2v<void> category;
+  protected:
+    Function_n2v();
+    Function_n2v(const Function_n2v&);
   };
 
 
@@ -194,6 +220,23 @@ namespace mln
     : Object<E>(rhs)
   {
   }
+
+
+  // Function_n2v.
+
+  template <typename E>
+  inline
+  Function_n2v<E>::Function_n2v()
+  {
+  }
+
+  template <typename E>
+  inline
+  Function_n2v<E>::Function_n2v(const Function_n2v<E>& rhs)
+    : Function<E>(rhs)
+  {
+  }
+
 
   // Function_v2v.
 

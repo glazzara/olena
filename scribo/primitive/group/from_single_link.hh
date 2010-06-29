@@ -42,7 +42,7 @@
 
 # include <scribo/core/object_groups.hh>
 # include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/core/macros.hh>
 
 
@@ -58,18 +58,16 @@ namespace scribo
       using namespace mln;
 
       /*!
-	 \brief Link text objects with their neighbor line if they
+	 \brief Link text components with their neighbor line if they
 	 have one.
 
-	 \param[in] objects    An object image.
-	 \param[in] link_array The neighbor line of each line.
+	 \param[in] links      The neighbor line of each line.
 
 	 \return Object groups information.
       */
       template <typename L>
       object_groups<L>
-      from_single_link(const object_image(L)& objects,
-		       const object_links<L>& link_array);
+      from_single_link(const object_links<L>& links);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -77,24 +75,23 @@ namespace scribo
       template <typename L>
       inline
       object_groups<L>
-      from_single_link(const object_image(L)& objects,
-		       const object_links<L>& link_array)
+      from_single_link(const object_links<L>& links)
       {
 	trace::entering("scribo::primitive::group::from_single_link");
 
-	mln_precondition(objects.is_valid());
-	mln_precondition(link_array.nelements() == objects.nlabels().next());
-	mln_precondition(link_array.nelements() == objects.bboxes().nelements());
-	mln_precondition(link_array.objects_id_() == objects.id_());
+	mln_precondition(links.is_valid());
 
-	object_groups<L> parent_array(objects);
-	parent_array.init_(link_array);
+	object_groups<L> parent(links);
+	parent.init_(links);
 
-	for_all_components(i, parent_array)
-	  primitive::internal::find_root(parent_array, i);
+	for_all_groups(i, parent)
+	  if (!links.components()(i).is_valid())
+	    parent(i) = 0;
+	  else
+	    primitive::internal::find_root(parent, i);
 
 	trace::exiting("scribo::primitive::group::from_single_link");
-	return parent_array;
+	return parent;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

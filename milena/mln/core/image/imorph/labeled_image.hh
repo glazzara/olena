@@ -34,6 +34,8 @@
 
 # include <mln/core/routine/duplicate.hh>
 
+# include <mln/data/compute.hh>
+
 # include <mln/util/array.hh>
 
 # include <mln/accu/center.hh>

@@ -76,7 +76,8 @@ namespace scribo
 
 
 	  link_ms_dmax_ratio_base(const object_image(L)& objects,
-				  float dmax_ratio);
+				  float dmax_ratio,
+				  anchor::Direction direction);
 
 
 
@@ -89,9 +90,9 @@ namespace scribo
 	  void start_processing_object_(unsigned current_object);
 
 	private:
-	  mln::util::array<ms_t> mass_centers_;
 	  float dmax_ratio_;
 	  float dmax_;
+	  anchor::Direction direction_;
 	};
 
 
@@ -102,14 +103,14 @@ namespace scribo
 	inline
 	link_ms_dmax_ratio_base<L, E>::link_ms_dmax_ratio_base(
 	  const object_image(L)& objects,
-	  float dmax_ratio)
+	  float dmax_ratio,
+	  anchor::Direction direction)
 
 	  : super_(objects),
 	    dmax_ratio_(dmax_ratio),
-	    dmax_(0)
+	    dmax_(0),
+	    direction_(direction)
 	{
-	  mass_centers_ = labeling::compute(accu::meta::center(),
-					    objects, objects.nlabels());
 	}
 
 	template <typename L, typename E>
@@ -120,9 +121,10 @@ namespace scribo
 	  const P& start_point,
 	  const P& p) const
 	{
+	  mln_assertion(dmax_ != 0);
 	  (void) current_object;
 
-	  float dist = math::abs(p.col() - start_point.col());
+	  float dist = math::abs(p[direction_] - start_point[direction_]);
 	  return dist <= dmax_; // Not too far
 	}
 
@@ -134,7 +136,7 @@ namespace scribo
 						    unsigned anchor)
 	{
 	  (void) anchor;
-	  return mass_centers_(current_object);
+	  return this->objects_.mass_center(current_object);
 	}
 
 
@@ -145,11 +147,11 @@ namespace scribo
 	  unsigned current_object)
 	{
 	  float
-	    w = (this->objects_.bbox(current_object).pmax().col()
-		 - this->objects_.bbox(current_object).pmin().col()),
-	    h = (this->objects_.bbox(current_object).pmax().row()
-		 - this->objects_.bbox(current_object).pmin().row());
-	  dmax_ = (w / 2.0f) + (dmax_ratio_ * math::max(w, h));
+	    w = this->objects_.bbox(current_object).width();
+// 	    h = (this->objects_.bbox(current_object).pmax().row()
+// 		 - this->objects_.bbox(current_object).pmin().row());
+//	  dmax_ = (w / 2.0f) + (dmax_ratio_ * math::max(w, h));
+	  dmax_ = (w / 2.0f) + (dmax_ratio_ * w);
 	}
 
 

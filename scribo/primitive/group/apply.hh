@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,9 +31,13 @@
 ///
 /// Apply grouping in an object image.
 
+# include <mln/fun/i2v/array.hh>
+# include <mln/make/relabelfun.hh>
+# include <mln/labeling/relabel.hh>
+
 # include <scribo/core/object_links.hh>
 # include <scribo/core/object_groups.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 
 # include <scribo/primitive/group/from_single_link.hh>
 
@@ -49,21 +54,18 @@ namespace scribo
 
       /*! \brief Apply grouping in an object image.
 
-	  \param objects An object image.
-	  \param groups  An object group structure.
+	  \param groups     An object group structure.
 
-	  \return A copy of \p objects with grouped objects.
+	  \return A copy of \p components with grouped components.
       */
       template <typename L>
-      object_image(L)
-      apply(const object_image(L)& objects,
-	    const object_groups<L>& groups);
+      component_set<L>
+      apply(const object_groups<L>& groups);
 
       /// \overload
       template <typename L>
-      object_image(L)
-      apply(const object_image(L)& objects,
-	    const object_links<L>& links);
+      component_set<L>
+      apply(const object_links<L>& links);
 
 
 
@@ -71,21 +73,28 @@ namespace scribo
 
 
       template <typename L>
-      object_image(L)
-      apply(const object_image(L)& objects,
-	    const object_groups<L>& groups)
+      component_set<L>
+      apply(const object_groups<L>& groups,
+	    fun::i2v::array<mln_value(L)>& relabel_fun)
 
       {
 	trace::entering("scribo::primitive::group::apply");
 
-	mln_precondition(objects.is_valid());
-	mln_precondition(groups.nelements() == objects.nlabels().next());
-	mln_precondition(groups.nelements() == objects.bboxes().nelements());
-	mln_precondition(groups.objects_id_() == objects.id_());
+	mln_precondition(groups.is_valid());
 
-	object_image(L) output;
-	output.init_from_(objects);
-	output.relabel(groups);
+	const component_set<L>& components = groups.components();
+
+	L labeled_image = duplicate(components.labeled_image());
+
+	mln_value(L) new_nlabels;
+	relabel_fun = mln::make::relabelfun(groups.comp_to_group(),
+					    components.nelements(),
+					    new_nlabels);
+
+	labeling::relabel_inplace(labeled_image, new_nlabels,
+				  relabel_fun);
+
+	component_set<L> output(labeled_image, new_nlabels);
 
 	trace::exiting("scribo::primitive::group::apply");
 	return output;
@@ -93,22 +102,25 @@ namespace scribo
 
 
       template <typename L>
-      object_image(L)
-      apply(const object_image(L)& objects,
-	    const object_links<L>& links)
+      component_set<L>
+      apply(const object_groups<L>& groups)
+      {
+	fun::i2v::array<mln_value(L)> relabel_fun;
+	return apply(groups, relabel_fun);
+      }
+
+
+      template <typename L>
+      component_set<L>
+      apply(const object_links<L>& links)
 
       {
 	trace::entering("scribo::primitive::group::apply");
 
-	mln_precondition(objects.is_valid());
-	mln_precondition(links.nelements() == objects.nlabels().next());
-	mln_precondition(links.nelements() == objects.bboxes().nelements());
-	mln_precondition(links.objects_id_() == objects.id_());
+	mln_precondition(links.is_valid());
 
-
-	object_groups<L> group = group::from_single_link(objects, links);
-
-	object_image(L) output = apply(objects, links);
+	object_groups<L> group = group::from_single_link(links);
+	component_set<L> output = apply(group);
 
 	trace::exiting("scribo::primitive::group::apply");
 	return output;

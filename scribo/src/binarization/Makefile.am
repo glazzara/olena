@@ -1,4 +1,5 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,12 +18,65 @@
 include $(top_srcdir)/scribo/scribo.mk
 
 bin_PROGRAMS = 				\
-  sauvola 				\
-  sauvola_ms 				\
-  sauvola_pgm 				\
-  simple
+  pgm_global_threshold_auto 		\
+  pgm_sauvola 				\
+  pgm_sauvola_ms			\
+  ppm_sauvola 				\
+  ppm_fg_sauvola_ms 			\
+  ppm_sauvola_ms 			\
+  ppm_sauvola_ms_split
 
-sauvola_SOURCES = sauvola.cc
-sauvola_ms_SOURCES = sauvola_ms.cc
-sauvola_pgm_SOURCES = sauvola_pgm.cc
-simple_SOURCES = simple.cc
+
+pgm_global_threshold_auto_SOURCES = pgm_global_threshold_auto.cc
+pgm_sauvola_SOURCES = pgm_sauvola.cc
+pgm_sauvola_ms_SOURCES = pgm_sauvola_ms.cc
+ppm_sauvola_SOURCES = ppm_sauvola.cc
+ppm_fg_sauvola_ms_SOURCES = ppm_fg_sauvola_ms.cc
+ppm_sauvola_ms_SOURCES = ppm_sauvola_ms.cc
+ppm_sauvola_ms_split_SOURCES = ppm_sauvola_ms_split.cc
+
+
+if HAVE_MAGICKXX
+  bin_PROGRAMS +=                       \
+   fg_sauvola_ms 			\
+   sauvola 				\
+   sauvola_debug			\
+   sauvola_ms                           \
+   sauvola_ms_static                    \
+   sauvola_ms_split
+
+  fg_sauvola_ms_SOURCES = fg_sauvola_ms.cc
+  fg_sauvola_ms_CPPFLAGS = $(AM_CPPFLAGS) \
+			   $(MAGICKXX_CPPFLAGS)
+  fg_sauvola_ms_LDFLAGS = $(AM_LDFLAGS) \
+			  $(MAGICKXX_LDFLAGS)
+
+  sauvola_SOURCES = sauvola.cc
+  sauvola_CPPFLAGS = $(AM_CPPFLAGS) \
+		     $(MAGICKXX_CPPFLAGS)
+  sauvola_LDFLAGS = $(AM_LDFLAGS) \
+		    $(MAGICKXX_LDFLAGS)
+
+  sauvola_debug_SOURCES = sauvola_debug.cc
+  sauvola_debug_CPPFLAGS = $(AM_CPPFLAGS) \
+			   $(MAGICKXX_CPPFLAGS)
+  sauvola_debug_LDFLAGS = $(AM_LDFLAGS) \
+			  $(MAGICKXX_LDFLAGS)
+
+
+  sauvola_ms_SOURCES = sauvola_ms.cc
+  sauvola_ms_CPPFLAGS = $(AM_CPPFLAGS) \
+			$(MAGICKXX_CPPFLAGS)
+  sauvola_ms_LDFLAGS = $(AM_LDFLAGS) \
+		       $(MAGICKXX_LDFLAGS)
+
+
+  sauvola_ms_split_SOURCES = sauvola_ms_split.cc
+  sauvola_ms_split_CPPFLAGS = $(AM_CPPFLAGS) \
+			      $(MAGICKXX_CPPFLAGS)
+  sauvola_ms_split_LDFLAGS = $(AM_LDFLAGS) \
+			     $(MAGICKXX_LDFLAGS)
+
+
+endif HAVE_MAGICKXX
+

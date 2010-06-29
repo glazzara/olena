@@ -28,13 +28,19 @@ SUBDIRS =					\
   text
 
 bin_PROGRAMS = 				\
+  pbm_lines_in_doc 			\
   text_in_photo 			\
   text_in_photo_ppm 			\
+  text_in_photo_ppm_fast		\
+  text_in_photo_pbm_fast		\
   text_in_photo_invert
 
 
+pbm_lines_in_doc_SOURCES = pbm_lines_in_doc.cc
 text_in_photo_SOURCES = text_in_photo.cc
 text_in_photo_ppm_SOURCES = text_in_photo_ppm.cc
+text_in_photo_ppm_fast_SOURCES = text_in_photo_ppm_fast.cc
+text_in_photo_pbm_fast_SOURCES = text_in_photo_pbm_fast.cc
 text_in_photo_invert_SOURCES = text_in_photo_invert.cc
 
 
@@ -61,6 +67,27 @@ if HAVE_TIFF
 			   $(TESSERACT_LDFLAGS) \
 			   $(TIFF_LDFLAGS) \
 			   -lpthread -lhpdf
+
+
+    bin_PROGRAMS	+= text_in_article
+    text_in_article_CPPFLAGS = $(AM_CPPFLAGS) \
+			       $(TESSERACT_CPPFLAGS) \
+			       $(TIFF_CPPFLAGS)
+    text_in_article_LDFLAGS  = $(AM_LDFLAGS) \
+			       $(TESSERACT_LDFLAGS) \
+			       $(TIFF_LDFLAGS) \
+			       -lpthread
+# -lhpdf
+    text_in_article_SOURCES = text_in_article.cc
+
+
+    text_in_photo_ppm_fast_CPPFLAGS = $(AM_CPPFLAGS) \
+			       		$(TESSERACT_CPPFLAGS) \
+			       		$(TIFF_CPPFLAGS)
+    text_in_photo_ppm_fast_LDFLAGS  = $(AM_LDFLAGS) \
+			     	  	$(TESSERACT_LDFLAGS) \
+			       		$(TIFF_LDFLAGS) \
+			      	 	-lpthread
 
 endif HAVE_TIFF
 endif HAVE_TESSERACT

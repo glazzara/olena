@@ -52,20 +52,22 @@ namespace scribo
       ///
       /// \return True if the link is between the \p i-th component
       /// and it neighbor is validated.
+      template <typename L>
       mln::util::couple<bool,unsigned>
-      is_link_valid(const mln::util::array<unsigned>& left_link,
-		    const mln::util::array<unsigned>& right_link,
+      is_link_valid(const object_links<L>& left_link,
+		    const object_links<L>& right_link,
 		    unsigned i);
 
 # ifndef MLN_INCLUDE_ONLY
 
+      template <typename L>
       mln::util::couple<bool,unsigned>
-      is_link_valid(const mln::util::array<unsigned>& left_link,
-		    const mln::util::array<unsigned>& right_link,
+      is_link_valid(const object_links<L>& left_link,
+		    const object_links<L>& right_link,
 		    unsigned i)
       {
-	bool b = (right_link[left_link[i]] == i && left_link[i] != i);
-	return mln::make::couple(b, left_link[i]);
+	bool b = (right_link(left_link(i)) == i && left_link(i) != i);
+	return mln::make::couple(b, left_link(i));
       }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -35,9 +35,11 @@
 # include <mln/util/array.hh>
 # include <mln/canvas/browsing/depth_first_search.hh>
 
+# include <scribo/core/tag/anchor.hh>
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
 # include <scribo/primitive/internal/is_link_valid.hh>
+# include <scribo/primitive/link/internal/compute_anchor.hh>
 
 namespace scribo
 {
@@ -54,25 +56,22 @@ namespace scribo
     /// \param[in] bboxes Bounding boxes.
     /// \param[in] links Bounding box links.
     /// \param[in] value Value used to draw links.
+    /// \param[in] anchor Anchor from where the links are drawn.
+    //
     template <typename I, typename L>
     void
     bounding_box_links(Image<I>& input_,
-		       const mln::util::array< box<mln_site(I)> >& bboxes,
 		       const object_links<L>& link,
-		       const mln_value(I)& value);
+		       const mln_value(I)& value,
+		       anchor::Type anchor);
 
 
-    /// Draw a list of bounding box links from their mass centers.
-    ///
-    /// \param[in,out] input_ An image where to draw.
-    /// \param[in] mass_centers Bounding boxes mass centers.
-    /// \param[in] links Bounding box links.
-    /// \param[in] value Value used to draw links.
+    /// \overload
+    /// The default anchor type is set to anchor::Center.
+    //
     template <typename I, typename L>
-    inline
     void
     bounding_box_links(Image<I>& input_,
-		       const mln::util::array<mln_site(I)::vec>& mass_centers,
 		       const object_links<L>& link,
 		       const mln_value(I)& value);
 
@@ -236,9 +235,9 @@ namespace scribo
     inline
     void
     bounding_box_links(Image<I>& input_,
-		       const mln::util::array< box<mln_site(I)> >& bboxes,
 		       const object_links<L>& links,
-		       const mln_value(I)& value)
+		       const mln_value(I)& value,
+		       anchor::Type anchor)
     {
       trace::entering("scribo::draw::bounding_box_links");
 
@@ -246,41 +245,29 @@ namespace scribo
 
       mln_precondition(input.is_valid());
 
-      for_all_components(i, links)
-	if (links[i] != i)
-	  mln::draw::line(input,
-			  bboxes[i].center(),
-			  bboxes[links[i]].center(),
-			  value);
+      const component_set<L>& comp_set = links.components();
+      for_all_links(i, links)
+	if (links(i) != i && links(i) != 0)
+	{
+	  mln_site(L)
+	    p1 = primitive::link::internal::compute_anchor(comp_set, i, anchor),
+	    p2 = primitive::link::internal::compute_anchor(comp_set, links(i), anchor);
+
+	  mln::draw::line(input, p1, p2, value);
+	}
 
       trace::exiting("scribo::draw::bounding_box_links");
     }
 
+
     template <typename I, typename L>
     inline
     void
-    bounding_box_links(Image<I>& input_,
-		       const mln::util::array<mln_site(I)::vec>& mass_centers,
+    bounding_box_links(Image<I>& input,
 		       const object_links<L>& links,
 		       const mln_value(I)& value)
     {
-      trace::entering("scribo::draw::bounding_box_links");
-
-      I& input = exact(input_);
-
-      mln_precondition(input.is_valid());
-
-      for_all_components(i, links)
-      {
-	if (links[i] != i)
-	  mln::draw::line(input,
-			  mass_centers[i],
-			  mass_centers[links[i]],
-			  value);
-	input(mass_centers[i]) = value;
-      }
-
-      trace::exiting("scribo::draw::bounding_box_links");
+      return bounding_box_links(input, links, value, anchor::Center);
     }
 
 
@@ -306,19 +293,19 @@ namespace scribo
       dleft[0] = 2;
       mln_dpsite(P) dright = literal::zero;
       dright[0] = -2;
-      for_all_components(i, left_link)
+      for_all_links(i, left_link)
       {
 	mln::draw::line(input,
 			internal::shift_site(input, mass_centers[i], dleft),
 			internal::shift_site(input,
-					     mass_centers[left_link[i]],
+					     mass_centers[left_link(i)],
 					     dleft),
 			left_link_value);
 
 	mln::draw::line(input,
 			internal::shift_site(input, mass_centers[i], dright),
 			internal::shift_site(input,
-					     mass_centers[right_link[i]],
+					     mass_centers[right_link(i)],
 					     dright),
 			right_link_value);
 
@@ -360,16 +347,16 @@ namespace scribo
       dleft[0] = 2;
       mln_site(I)::vec dright = literal::origin;
       dright[0] = -2;
-      for_all_components(i, left_link)
+      for_all_links(i, left_link)
       {
 	mln::draw::line(input,
 			bboxes[i].center() + dleft,
-			bboxes[left_link[i]].center() + dleft,
+			bboxes[left_link(i)].center() + dleft,
 			left_link_value);
 
 	mln::draw::line(input,
 			bboxes[i].center() + dright,
-			bboxes[right_link[i]].center() + dright,
+			bboxes[right_link(i)].center() + dright,
 			right_link_value);
 
 	mln::util::couple<bool, unsigned>
@@ -401,7 +388,7 @@ namespace scribo
       mln_precondition(exact(g).v_nmax() == bboxes.nelements());
 
       internal::draw_graph_edges_functor<I> f(exact(input), bboxes, link_value);
-      canvas::browsing::depth_first_search(g, f);
+      mln::canvas::browsing::depth_first_search(g, f);
 
       trace::exiting("scribo::draw::bounding_box_links");
     }

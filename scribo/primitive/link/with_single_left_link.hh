@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Link text objects with their left neighbor.
+/// Link text components with their left neighbor.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -43,11 +44,11 @@
 
 
 # include <scribo/core/macros.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>
-# include <scribo/primitive/link/internal/link_ms_dmax_base.hh>
+# include <scribo/primitive/link/internal/link_single_dmax_base.hh>
 
 # include <scribo/primitive/link/compute.hh>
 
@@ -61,9 +62,9 @@ namespace scribo
     namespace link
     {
 
-      /// \brief Link objects with their left neighbor if exists.
+      /// \brief Link components with their left neighbor if exists.
       ///
-      /// \param[in] objects An object image.
+      /// \param[in] components A component set.
       /// \param[in] The maximum distance allowed to seach a neighbor object.
       ///
       /// \return Object links data.
@@ -71,7 +72,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_left_link(const object_image(L)& objects,
+      with_single_left_link(const component_set<L>& components,
 			    unsigned neighb_max_distance);
 
 
@@ -80,7 +81,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_left_link(const object_image(L)& objects);
+      with_single_left_link(const component_set<L>& components);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -93,16 +94,16 @@ namespace scribo
 
 	template <typename L>
 	class single_left_functor
-	  : public internal::link_ms_dmax_base<L, single_left_functor<L> >
+	  : public internal::link_single_dmax_base<L, single_left_functor<L> >
 	{
 	  typedef
-	    internal::link_ms_dmax_base<L, single_left_functor<L> > super_;
+	    internal::link_single_dmax_base<L, single_left_functor<L> > super_;
 
 	public:
 	  typedef mln_site(L) P;
 
-	  single_left_functor(const object_image(L)& objects, unsigned dmax)
-	    : super_(objects, dmax)
+	  single_left_functor(const component_set<L>& components, unsigned dmax)
+	    : super_(components, dmax, anchor::Horizontal)
 	  {
 	  }
 
@@ -122,15 +123,15 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_left_link(const object_image(L)& objects,
-			     unsigned neighb_max_distance)
+      with_single_left_link(const component_set<L>& components,
+			    unsigned neighb_max_distance)
       {
 	trace::entering("scribo::primitive::link::with_single_left_link");
 
-	mln_precondition(objects.is_valid());
+	mln_precondition(components.is_valid());
 
 	internal::single_left_functor<L>
-	  functor(objects, neighb_max_distance);
+	  functor(components, neighb_max_distance);
 
 	object_links<L> output = compute(functor);
 
@@ -142,9 +143,9 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_left_link(const object_image(L)& objects)
+      with_single_left_link(const component_set<L>& components)
       {
-	return with_single_left_link(objects, mln_max(unsigned));
+	return with_single_left_link(components, mln_max(unsigned));
       }
 
 

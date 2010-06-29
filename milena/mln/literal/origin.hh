@@ -50,9 +50,13 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
     const origin_t& origin = origin_t();
 
-# endif
+#  endif // !MLN_WO_GLOBAL_VARS
+
+# endif // !MLN_INCLUDE_ONLY
 
   } // end of namespace mln::literal
 

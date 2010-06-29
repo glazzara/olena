@@ -40,11 +40,11 @@
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>
-# include <scribo/primitive/link/internal/link_ms_dmax_ratio_base.hh>
+# include <scribo/primitive/link/internal/link_single_dmax_ratio_base.hh>
 
 # include <scribo/primitive/link/compute.hh>
 
@@ -60,8 +60,10 @@ namespace scribo
 
       /*! \brief Link objects with their right neighbor if exists.
 
-	  \param[in] objects An object image.
-	  \param[in] dmax_ratio
+	  \param[in] components A component set.
+	  \param[in] dmax_ratio Size ratio defining the maximum lookup
+	                        distance.
+	  \param[in] anchor Starting point for the neighbor lookup.
 
 	  \return Object links data.
 
@@ -76,16 +78,25 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link_dmax_ratio(const object_image(L)& objects,
+      with_single_right_link_dmax_ratio(const component_set<L>& components,
+					float dmax_ratio, anchor::Type anchor);
+
+      /// \overload
+      /// anchor is set to MassCenter.
+      template <typename L>
+      inline
+      object_links<L>
+      with_single_right_link_dmax_ratio(const component_set<L>& components,
 					float dmax_ratio);
 
 
       /// \overload
       /// dmax_ratio is set to 3.
+      /// anchor is set to MassCenter.
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link_dmax_ratio(const object_image(L)& objects);
+      with_single_right_link_dmax_ratio(const component_set<L>& components);
 
 
 
@@ -99,18 +110,18 @@ namespace scribo
 
 	template <typename L>
 	class single_right_dmax_ratio_functor
-	  : public link_ms_dmax_ratio_base<L,
-					   single_right_dmax_ratio_functor<L> >
+	  : public link_single_dmax_ratio_base<L,
+					       single_right_dmax_ratio_functor<L> >
 	{
 	  typedef single_right_dmax_ratio_functor<L> self_t;
-	  typedef link_ms_dmax_ratio_base<L, self_t> super_;
+	  typedef link_single_dmax_ratio_base<L, self_t> super_;
 
 	public:
 	  typedef mln_site(L) P;
 
-	  single_right_dmax_ratio_functor(const object_image(L)& objects,
+	  single_right_dmax_ratio_functor(const component_set<L>& components,
 					  unsigned dmax)
-	    : super_(objects, dmax)
+	    : super_(components, dmax, anchor::Horizontal)
 	  {
 	  }
 
@@ -127,32 +138,45 @@ namespace scribo
 
       // Facades
 
+
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link_dmax_ratio(const object_image(L)& objects,
-					float dmax_ratio)
+      with_single_right_link_dmax_ratio(const component_set<L>& components,
+					float dmax_ratio, anchor::Type anchor)
       {
 	trace::entering("scribo::primitive::link::with_single_right_link_dmax_ratio");
 
-	mln_precondition(objects.is_valid());
+	mln_precondition(components.is_valid());
 
 	internal::single_right_dmax_ratio_functor<L>
-	  functor(objects, dmax_ratio);
+	  functor(components, dmax_ratio);
 
-	object_links<L> output = compute(functor);
+	object_links<L> output = compute(functor, anchor);
 
 	trace::exiting("scribo::primitive::link::with_single_right_link_dmax_ratio");
 	return output;
       }
 
 
+
       template <typename L>
       inline
       object_links<L>
-      with_single_right_link_dmax_ratio(const object_image(L)& objects)
+      with_single_right_link_dmax_ratio(const component_set<L>& components,
+					float dmax_ratio)
       {
-	return with_single_right_link_dmax_ratio(objects, 3);
+	return with_single_right_link_dmax_ratio(components, dmax_ratio,
+						 anchor::MassCenter);
+      }
+
+
+      template <typename L>
+      inline
+      object_links<L>
+      with_single_right_link_dmax_ratio(const component_set<L>& components)
+      {
+	return with_single_right_link_dmax_ratio(components, 3);
       }
 
 

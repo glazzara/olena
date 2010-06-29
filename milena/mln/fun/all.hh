@@ -57,6 +57,8 @@ namespace mln
 
 // Sub-directories.
 
+# include <mln/fun/n2v/all.hh>
+
 # include <mln/fun/i2v/all.hh>
 //<<lrde
 # include <mln/fun/meta/all.hh>

@@ -29,10 +29,30 @@
 # define for_all_ncomponents(C, NCOMP) \
   for (unsigned C = 1; C <= NCOMP; ++C)
 
-# define for_all_components(C, S) \
-  for (unsigned C = 1; C < S.nelements(); ++C)
+// # define for_all_components(C, S)
+//   for (unsigned C = 1; C <= S.nelements(); ++C)
 
 # define for_all_elements(E, S) \
   for (unsigned E = 0; E < S.nelements(); ++E)
+
+
+// FIXME: we want to replace previous macros by these ones.
+# define for_all_comps(C, S) \
+  for (unsigned C = 1; C <= S.nelements(); ++C)
+
+# define for_all_comp_data(E, S) \
+  for (unsigned E = 1; E < S.nelements(); ++E)
+
+# define for_all_links(E, S) \
+  for_all_comp_data(E, S)
+
+# define for_all_groups(E, S) \
+  for_all_comp_data(E, S)
+
+# define for_all_lines(E, S) \
+  for_all_comps(E, S)
+
+# define for_all_lines_info(E, S) \
+  for_all_comp_data(E, S)
 
 #endif // ! SCRIBO_CORE_MACROS_HH

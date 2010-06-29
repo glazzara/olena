@@ -60,6 +60,7 @@ namespace mln
 # include <mln/fun/v2v/linear.hh>
 # include <mln/fun/v2v/norm.hh>
 # include <mln/fun/v2v/projection.hh>
+# include <mln/fun/v2v/rgb_to_int_u.hh>
 //<<lrde
 # include <mln/fun/v2v/rgb_to_hsi.hh>
 # include <mln/fun/v2v/rgb_to_hsl.hh>

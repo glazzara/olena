@@ -23,15 +23,15 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_FILTER_COMMON_OBJECTS_PHOTO_HH
-# define SCRIBO_FILTER_COMMON_OBJECTS_PHOTO_HH
+#ifndef SCRIBO_FILTER_COMMON_COMPONENTS_PHOTO_HH
+# define SCRIBO_FILTER_COMMON_COMPONENTS_PHOTO_HH
 
 /// \file
 ///
-/// \brief Common objects filters to use in photos.
+/// \brief Common components filters to use in photos.
 
 
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 
 # include <scribo/filter/objects_small.hh>
 # include <scribo/filter/objects_thin.hh>
@@ -48,41 +48,41 @@ namespace scribo
     {
 
 
-      /*! \brief Common objects filters to use in photos.
+      /*! \brief Common components filters to use in photos.
 
-	\param[in] objects An object image.
+	\param[in] components An object image.
 
 	\return A filtered object image.
        */
       template <typename L>
-      object_image(L)
-      objects_photo(const object_image(L)& objects);
+      component_set<L>
+      components_photo(const component_set<L>& components);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename L>
-      object_image(L)
-      objects_photo(const object_image(L)& objects)
+      component_set<L>
+      components_photo(const component_set<L>& components)
       {
-	trace::entering("scribo::filter::common::objects_photo");
+	trace::entering("scribo::filter::common::components_photo");
 
-	mln_precondition(objects.is_valid());
+	mln_precondition(components.is_valid());
 
 
-	object_image(L) filtered_objects
-	  = scribo::filter::objects_small(objects, 6);
+	component_set<L> filtered_components
+	  = scribo::filter::components_small(components, 6);
 
-	filtered_objects
-	  = scribo::filter::objects_thin(filtered_objects, 1);
+	filtered_components
+	  = scribo::filter::components_thin(filtered_components, 1);
 
-// 	filtered_objects
-// 	  = scribo::filter::objects_thick(filtered_objects,
+// 	filtered_components
+// 	  = scribo::filter::components_thick(filtered_components,
 // 					  math::min(input.ncols(),
 // 						    input.nrows()) / 5);
 
-	trace::exiting("scribo::filter::common::objects_photo");
-	return filtered_objects;
+	trace::exiting("scribo::filter::common::components_photo");
+	return filtered_components;
       }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -95,4 +95,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_FILTER_COMMON_OBJECTS_PHOTO_HH
+#endif // ! SCRIBO_FILTER_COMMON_COMPONENTS_PHOTO_HH

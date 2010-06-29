@@ -98,7 +98,7 @@ namespace scribo
 	for_all_ncomponents(current_object, functor.objects().nlabels())
 	{
 	  functor.start_processing_object(current_object); //<-- start_processing_object
-	  primitive::internal::find_several_links(functor, current_object);
+	  internal::find_several_links(functor, current_object);
 	}
 
 	trace::exiting("scribo::primitive::link::compute_several");

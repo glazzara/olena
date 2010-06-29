@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,6 +34,11 @@
 # include <mln/value/concept/vectorial.hh>
 # include <mln/value/int_u.hh>
 # include <mln/algebra/vec.hh>
+
+# include <mln/value/internal/make_generic_name.hh>
+
+// FIXME: should we consider that mln_min may be negative? => wrong
+// color formulae.
 
 namespace mln
 {
@@ -220,7 +226,8 @@ namespace mln
 
       static const char* name()
       {
-	static std::string s = std::string("rgb").append(1, n + '0');
+	static std::string
+	  s = mln::value::internal::make_generic_name("rgb", n);
 	return s.c_str();
       }
 

@@ -35,6 +35,7 @@ const char *args_desc[][2] =
   { "input.pbm", "A color image." },
   { "lambda", "Lambda value. (FIX Description)" },
   { "delta", "Delta value. (FIX Description)" },
+  { "fg.ppm", "The foreground image (1st output)." },
   { "bg.ppm", "The background image (2nd output)." },
   {0, 0}
 };
@@ -49,7 +50,7 @@ int main(int argc, char *argv[])
   if (argc != 6)
     return scribo::debug::usage(argv,
 				"Split background and foreground.",
-				"input.pbm bg.ppm fg.ppm",
+				"input.pbm lambda delta fg.ppm bg.ppm",
 				args_desc, "The foreground image.");
 
   typedef image2d<value::rgb8> I;
@@ -60,8 +61,8 @@ int main(int argc, char *argv[])
     bg_fg = scribo::preprocessing::split_bg_fg(input,
 					       atoi(argv[2]),
 					       atoi(argv[3]));
-  io::ppm::save(bg_fg.first(), argv[4]);
-  io::ppm::save(bg_fg.second(), argv[5]);
+  io::ppm::save(bg_fg.first(), argv[5]);
+  io::ppm::save(bg_fg.second(), argv[4]);
 
   mln::trace::exiting("main");
 }

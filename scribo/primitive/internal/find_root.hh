@@ -31,7 +31,7 @@
 /// Find root in a parent array arrays.
 
 
-# include <mln/util/array.hh>
+# include <scribo/core/object_groups.hh>
 
 
 namespace scribo
@@ -44,19 +44,21 @@ namespace scribo
       {
 
 	/// Find root in a parent array arrays.
+	template <typename L>
 	unsigned
-        find_root(mln::util::array<unsigned>& parent, unsigned x);
+        find_root(object_groups<L>& parent, unsigned x);
 
 # ifndef MLN_INCLUDE_ONLY
 
+	template <typename L>
 	inline
 	unsigned
-        find_root(mln::util::array<unsigned>& parent, unsigned x)
+        find_root(object_groups<L>& parent, unsigned x)
         {
-          if (parent[x] == x)
+          if (parent(x) == x)
 	    return x;
 	  else
-	    return parent[x] = find_root(parent, parent[x]);
+	    return parent(x) = find_root(parent, parent(x));
 	}
 
 # endif // ! MLN_INCLUDE_ONLY

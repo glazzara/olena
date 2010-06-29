@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Invalidate links between two non aligned objects.
+/// Invalidate links between two non aligned components.
 
 
 # include <mln/util/array.hh>
@@ -37,7 +38,6 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
 
 namespace scribo
 {
@@ -47,12 +47,11 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Invalidate links between two non aligned objects.
+    /*! \brief Invalidate links between two non aligned components.
 	Alignment is based on a given edge of object bounding boxes.
 
-	\param[in] objects   An object image.
-	\param[in] links     Object links information.
-        \param[in] max_alpha Maximum angle value (degrees).
+	\param[in] links        Object links information.
+        \param[in] max_alpha    Maximum angle value (degrees).
 
 
 	Exemple with dim == 1 and edge == 1 (bottom
@@ -81,15 +80,16 @@ namespace scribo
 	The angle between the two bottoms must be lower than \p alpha.
 
 	edge values :
-	 0 = top
-	 1 = bottom
-	 2 = center
+	 0 = center
+	 1 = top
+	 2 = bottom
+	 3 = left
+	 4 = right
 
     */
     template <typename L>
     object_links<L>
-    object_links_non_aligned_simple(const object_image(L)& objects,
-				    const object_links<L>& links,
+    object_links_non_aligned_simple(const object_links<L>& links,
 				    unsigned edge,
 				    float max_alpha);
 
@@ -99,69 +99,106 @@ namespace scribo
 
     template <typename L>
     object_links<L>
-    object_links_non_aligned_simple(const object_image(L)& objects,
-				    const object_links<L>& links,
+    object_links_non_aligned_simple(const object_links<L>& links,
 				    unsigned edge,
 				    float max_alpha)
     {
       trace::entering("scribo::filter::object_links_non_aligned_simple");
 
-      mln_precondition(objects.is_valid());
       mln_precondition(links.is_valid());
 
-      typedef typename object_image(L)::bbox_t bbox_t;
-      const mln::util::array<bbox_t>& bboxes = objects.bboxes();
+
+      const component_set<L>& comps = links.components();
+
       object_links<L> output(links);
       float dr, dc;
 
 
       float max_alpha_rad = (max_alpha / 180.0f) * math::pi;
 
-      // Top
+      // Center
       if (edge == 0)
       {
-	for_all_components(i, objects.bboxes())
-	  if (links[i] != i)
+	for_all_comps(i, comps)
+	{
+	  if (links(i) != i)
 	  {
-	    dr = math::abs(bboxes[i].pmin().row()
-			   - bboxes[links[i]].pmin().row());
-	    dc = math::abs(bboxes[i].center().col()
-			   - bboxes[links[i]].center().col());
+	    dr = math::abs(comps(i).bbox().pcenter().row()
+			   - comps(links(i)).bbox().pcenter().row());
+	    dc = math::abs(comps(i).bbox().pcenter().col()
+			   - comps(links(i)).bbox().pcenter().col());
 
 	    if (std::atan(dr / dc) > max_alpha_rad)
-	      output[i] = i;
+	      output(i) = i;
+	  }
+	}
+      }
+      // Top
+      else if (edge == 1)
+      {
+	for_all_comps(i, comps)
+	  if (links(i) != i)
+	  {
+	    dr = math::abs(comps(i).bbox().pmin().row()
+			   - comps(links(i)).bbox().pmin().row());
+	    dc = math::abs(comps(i).bbox().pcenter().col()
+			   - comps(links(i)).bbox().pcenter().col());
+
+	    if (std::atan(dr / dc) > max_alpha_rad)
+	      output(i) = i;
 	  }
       }
       // Bottom
-      else if (edge == 1)
-	for_all_components(i, objects.bboxes())
-	{
-	  if (links[i] != i)
-	  {
-	    dr = math::abs(bboxes[i].pmax().row()
-			   - bboxes[links[i]].pmax().row());
-	    dc = math::abs(bboxes[i].center().col()
-			   - bboxes[links[i]].center().col());
-
-	    if (std::atan(dr / dc) > max_alpha_rad)
-	      output[i] = i;
-	  }
-	}
-      // Center
       else if (edge == 2)
-	for_all_components(i, objects.bboxes())
+      {
+	for_all_comps(i, comps)
 	{
-	  if (links[i] != i)
+	  if (links(i) != i)
 	  {
-	    dr = math::abs(bboxes[i].center().row()
-			   - bboxes[links[i]].center().row());
-	    dc = math::abs(bboxes[i].center().col()
-			   - bboxes[links[i]].center().col());
+	    dr = math::abs(comps(i).bbox().pmax().row()
+			   - comps(links(i)).bbox().pmax().row());
+	    dc = math::abs(comps(i).bbox().pcenter().col()
+			   - comps(links(i)).bbox().pcenter().col());
 
 	    if (std::atan(dr / dc) > max_alpha_rad)
-	      output[i] = i;
+	      output(i) = i;
 	  }
 	}
+      }
+      // Left
+      else if (edge == 3)
+      {
+	for_all_comps(i, comps)
+	{
+	  if (links(i) != i)
+	  {
+	    dr = math::abs(comps(i).bbox().pcenter().row()
+			   - comps(links(i)).bbox().pcenter().row());
+	    dc = math::abs(comps(i).bbox().pmin().col()
+			   - comps(links(i)).bbox().pmin().col());
+
+	    if (std::atan(dc / dr) > max_alpha_rad)
+	      output(i) = i;
+	  }
+	}
+      }
+      // Right
+      else if (edge == 4)
+      {
+	for_all_comps(i, comps)
+	{
+	  if (links(i) != i)
+	  {
+	    dr = math::abs(comps(i).bbox().pcenter().row()
+			   - comps(links(i)).bbox().pcenter().row());
+	    dc = math::abs(comps(i).bbox().pmax().col()
+			   - comps(links(i)).bbox().pmax().col());
+
+	    if (std::atan(dc / dr) > max_alpha_rad)
+	      output(i) = i;
+	  }
+	}
+      }
       else
       {
 	trace::warning("Invalid edge value... Aborting computation.");

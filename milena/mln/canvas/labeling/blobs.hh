@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,6 +36,8 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/data/fill.hh>
 # include <mln/core/site_set/p_queue_fast.hh>
+
+# include <mln/extension/fill.hh>
 
 # include <mln/util/pix.hh>
 
@@ -85,8 +88,10 @@ namespace mln
 
 	  template <typename I, typename N, typename L, typename F>
 	  mln_ch_value(I, L)
-	  blobs(const I& input, const N& nbh, L& nlabels, F& functor)
+	  blobs(const Image<I>& input_, const N& nbh, L& nlabels, F& functor)
 	  {
+	    const I& input = exact(input_);
+
 	    typedef mln_psite(I) P;
 
 	    P cur;
@@ -100,6 +105,9 @@ namespace mln
 	    out_t output;
 	    initialize(output, input);
 	    data::fill(output, zero);
+
+	    extension::fill(input, false);
+
 	    functor.init(); // <-- functor.init()
 
 	    // Loop.
@@ -120,7 +128,8 @@ for this label type: nlabels > max(label_type).");
 		mln_invariant(qu.is_empty());
 		qu.push(p);
 		output(p) = nlabels;
-		functor.process_p(util::pix<out_t>(output, p)); // <-- functor.process_p()
+		functor.process_p(p); // <-- functor.process_p()
+		                      // output(p) == nlabels
 		do
 		{
 		  cur = qu.front();
@@ -131,20 +140,23 @@ for this label type: nlabels > max(label_type).");
 		      mln_invariant(! qu.compute_has(n));
 		      qu.push(n);
 		      output(n) = nlabels;
-		      functor.process_n(util::pix<out_t>(output, n)); // <-- functor.process_n()
+		      functor.process_n(n); // <-- functor.process_n()
+                                            // output(n) == nlabels
 		    }
 		}
 		while (! qu.is_empty());
 	      }
 
 	    functor.finalize(); // <-- functor.finalize()
+
 	    return output;
 	  }
 
 	} // end of namespace mln::labeling::impl::generic
 
-      } // end of namespace mln::labeling::impl
 
+
+      } // end of namespace mln::canvas::labeling::impl
 
 
       // Facade.

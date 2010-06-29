@@ -85,11 +85,14 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
       /// Global variables.
       /// \{
       f_hsl_to_rgb_3x8_t f_hsl_to_rgb_3x8;
       f_hsl_to_rgb_3x16_t f_hsl_to_rgb_3x16;
       /// \}
+#  endif // !MLN_WO_GLOBAL_VARS
 
 
       /// This method implements the conversion from HSL to RGB as described by

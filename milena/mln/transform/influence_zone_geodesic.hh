@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -104,16 +105,12 @@ namespace mln
 	const N& nbh = exact(nbh_);
 
 	internal::influence_zone_geodesic_tests(input, nbh);
-	mln_precondition(input.domain().pmin() == literal::origin);
 
 	std::queue<mln_value(I)*> q;
 	mln_concrete(I) output;
 
 	util::array<int> dp = offsets_wrt(input, nbh);
 	const unsigned n_nbhs = dp.nelements();
-	const unsigned
-	  ncols = input.ncols(),
-	  first_offset = input.border() * (ncols + 2 * input.border() + 1);
 
 	// Initialization.
 	{
@@ -124,9 +121,9 @@ namespace mln
 	  extension::fill(output, 1); // in propagation
 
 	  const unsigned nelts = input.nelements();
-	  const mln_value(I)* p_i = & input.at_(0, 0);
-	  mln_value(I)* p_o = & output.at_(0, 0);
-	  for (unsigned i = first_offset; i < nelts; ++i, ++p_i, ++p_o)
+	  const mln_value(I)* p_i = input.buffer();
+	  mln_value(I)* p_o = output.buffer();
+	  for (unsigned i = 0; i < nelts; ++i, ++p_i, ++p_o)
 	  {
 	    if (*p_i == 0)
 	      continue;

@@ -83,9 +83,9 @@ namespace mln
 
 	void new_label(const mln_value(L)&) {}
 
-	void process_p(const util::pix<L>&) {}
+	void process_p(const mln_site(L)&) {}
 
-	void process_n(const util::pix<L>&) {}
+	void process_n(const mln_site(L)&) {}
 
 	void finalize() {}
       };

@@ -29,6 +29,9 @@
 /// \file
 ///
 /// Find the neighbor of a line of text if exists.
+///
+/// \fixme do not iterate over the number of anchor types but use a
+/// set of anchors specified in the functor.
 
 # include <mln/core/concept/image.hh>
 
@@ -38,11 +41,9 @@
 # include <mln/util/couple.hh>
 
 # include <scribo/core/concept/link_functor.hh>
+# include <scribo/core/tag/anchor.hh>
 # include <scribo/core/object_image.hh>
 # include <scribo/core/object_links.hh>
-# include <scribo/primitive/internal/update_link_array.hh>
-# include <scribo/primitive/internal/init_link_array.hh>
-# include <scribo/primitive/internal/is_invalid_link.hh>
 
 
 namespace scribo
@@ -51,70 +52,82 @@ namespace scribo
   namespace primitive
   {
 
-    namespace internal
+    namespace link
     {
 
-      /*! Find the neighbor of a line of text if exists.
+      namespace internal
+      {
 
-	\param[in,out] functor Functor used to compute the
-	                       links. Stores the results.
-	\param current_object Current object id.
+	/*! Find the neighbor of a line of text if exists.
 
-	\return A couple. The first argument tells whether a valid
-	link has been found, the second one is link anchor if exists.
-      */
-      template <typename F>
-      mln::util::couple<bool, mln_site(scribo_support_(F))>
-      find_several_links(Link_Functor<F>& functor,
-			 unsigned current_object);
+	  \param[in,out] functor Functor used to compute the
+	  links. Stores the results.
+	  \param current_object Current object id.
+
+	  \return A couple. The first argument tells whether a valid
+	  link has been found, the second one is link anchor if exists.
+	*/
+	template <typename F>
+	mln::util::couple<bool,
+			  mln::util::couple<anchor::Type,
+					    mln_site(scribo_support_(F))> >
+	find_several_links(Link_Functor<F>& functor,
+			   unsigned current_object);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename F>
-      mln::util::couple<bool, mln_site(scribo_support_(F))>
-      find_several_links(Link_Functor<F>& functor_,
-			 unsigned current_object)
-      {
-	F& functor = exact(functor_);
-
-	typedef mln_site(scribo_support_(F)) P;
-	typedef mln::util::couple<unsigned, P> link_t;
-
-	P lp = functor.initialize_link(current_object); // <-- initialize_link
-
-	for (unsigned anchor = 0; anchor < functor.nanchors(); ++anchor) // <-- nanchor
+	template <typename F>
+	mln::util::couple<bool,
+			  mln::util::couple<anchor::Type,
+					    mln_site(scribo_support_(F))> >
+	find_several_links(Link_Functor<F>& functor_,
+			   unsigned current_object)
 	{
-	  mln_site(scribo_support_(F))
-	    start_point = functor.start_point(current_object, anchor), // <-- start_point
-	    p = start_point;
+	  F& functor = exact(functor_);
 
-	  mln_postcondition(p == start_point);
+	  typedef mln_site(scribo_support_(F)) P;
+	  typedef mln::util::couple<anchor::Type, P> link_t;
 
-	  while (functor.objects().domain().has(p)
-		 && ! functor.is_potential_link(current_object,
-						start_point, p) // <-- is_potential_link
-		 && functor.verify_link_criterion(current_object,
-						  start_point, p)) // <-- verify_link_criterion
-	    functor.compute_next_site(p); // <-- compute_next_site
+	  functor.initialize_link(current_object); // <-- initialize_link
 
-	  if (functor.valid_link(current_object, start_point, p)) // <-- valid_link
-	    functor.validate_link(current_object, start_point, p, anchor); // <-- validate_link
-	  else
-	    functor.invalidate_link(current_object, start_point, p, anchor); // <-- invalidate_link
+	  for (unsigned anchor_ = 0; anchor_ < functor.nanchors(); ++anchor_) // <-- nanchor
+	  {
+	    // FIXME : See fixme at the beginning of this file.
+	    anchor::Type anchor = static_cast<anchor::Type>(anchor_);
 
-       	}
+	    mln_site(scribo_support_(F))
+	      start_point = functor.start_point(current_object, anchor), // <-- start_point
+	      p = start_point;
 
-	P lp = functor.finalize_link(current_object);
+	    mln_postcondition(p == start_point);
 
-	bool b = (functor.link(current_object) != current_object); // <-- link
-	return mln::make::couple(b, lp);
-      }
+	    while (functor.objects().domain().has(p)
+		   && ! functor.is_potential_link(current_object,
+						  start_point, p) // <-- is_potential_link
+		   && functor.verify_link_criterion(current_object,
+						    start_point, p)) // <-- verify_link_criterion
+	      functor.compute_next_site(p); // <-- compute_next_site
+
+	    if (functor.valid_link(current_object, start_point, p)) // <-- valid_link
+	      functor.validate_link(current_object, start_point, p, anchor); // <-- validate_link
+	    else
+	      functor.invalidate_link(current_object, start_point, p, anchor); // <-- invalidate_link
+
+	  }
+
+	  link_t l = functor.finalize_link(current_object);
+
+	  bool b = (functor.link(current_object) != current_object); // <-- link
+	  return mln::make::couple(b, l);
+	}
 
 # endif // MLN_INCLUDE_ONLY
 
 
-    } // end of namespace scribo::primitive::internal
+      } // end of namespace scribo::primitive::link::internal
+
+    } // end of namespace scribo::primitive::link
 
   } // end of namespace scribo::primitive
 

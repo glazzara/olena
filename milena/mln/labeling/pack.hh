@@ -100,7 +100,7 @@ namespace mln
       pack_tests(const Image<I>& label, mln_value(I)& new_nlabels)
       {
         // FIXME: we may want to check that it is exactly a label.
-        mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
+        //mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
         mln_precondition(exact(label).is_valid());
 	(void) label;
 	(void) new_nlabels;

@@ -38,7 +38,7 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/filter/object_links_bbox_ratio.hh>
 
 namespace scribo
@@ -49,10 +49,9 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Invalidate links between two objects with too different
+    /*! \brief Invalidate links between two components with too different
         height.
 
-	\param[in] objects     An object image.
 	\param[in] links       Link objects information.
 	\param[in] max_h_ratio The maximum height ratio of two linked
 	                       bounding boxes.
@@ -61,8 +60,7 @@ namespace scribo
     */
     template <typename L>
     object_links<L>
-    object_links_bbox_h_ratio(const object_image(L)& objects,
-			      const object_links<L>& links,
+    object_links_bbox_h_ratio(const object_links<L>& links,
 			      float max_h_ratio);
 
 
@@ -71,17 +69,15 @@ namespace scribo
 
     template <typename L>
     object_links<L>
-    object_links_bbox_h_ratio(const object_image(L)& objects,
-			      const object_links<L>& links,
+    object_links_bbox_h_ratio(const object_links<L>& links,
 			      float max_h_ratio)
     {
       trace::entering("scribo::filter::object_links_bbox_h_ratio");
 
-      mln_precondition(objects.is_valid());
       mln_precondition(links.is_valid());
 
       object_links<L>
-	output = object_links_bbox_ratio(objects, links, 0, max_h_ratio);
+	output = object_links_bbox_ratio(links, 0, max_h_ratio);
 
       trace::exiting("scribo::filter::object_links_bbox_h_ratio");
       return output;

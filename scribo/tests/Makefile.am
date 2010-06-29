@@ -17,6 +17,8 @@
 include $(srcdir)/tests.mk
 
 SUBDIRS = 		\
+  binarization 		\
+  core 			\
   filter 		\
   preprocessing 	\
   table 		\

@@ -86,6 +86,7 @@ namespace mln
   }
 
   namespace value {
+    namespace qt { struct rgb32; }
     template <unsigned n> struct rgb;
     template <typename H, typename S, typename L> class hsl_;
     template <unsigned n> struct int_u;
@@ -162,14 +163,41 @@ namespace mln
       void
       from_to_(bool from, value::rgb<m>& to);
 
+      // rgb32 -> bool
+      void
+      from_to_(const value::qt::rgb32& from, bool& to);
+
+      // bool -> rgb32
+      void
+      from_to_(const bool& from, value::qt::rgb32& to);
+
       // int_u -> rgb.
       template <unsigned m>
       void from_to_(const value::int_u<m>& from, value::rgb<m>& to);
+
+      // int_u -> qt::rgb32.
+      template <unsigned m>
+      void from_to_(const value::int_u<m>& from, value::qt::rgb32& to);
 
       // int_u -> label
       template <unsigned n>
       void from_to_(const value::int_u<n>& from, value::label<n>& to_);
 
+      // int_u -> unsigned
+      template <unsigned n>
+      void from_to_(const value::int_u<n>& from, unsigned& to_);
+
+      // int_u -> bool.
+      template <unsigned n>
+      void
+      from_to_(const value::int_u<n>& from, bool& to_);
+
+      // label -> int_u.
+      template <unsigned n>
+      void
+      from_to_(const value::label<n>& from, value::int_u<n>& to_);
+
+      // label -> bool
       template <unsigned n>
       void from_to_(const value::label<n>& from, bool& to_);
 
@@ -186,6 +214,9 @@ namespace mln
       template <typename H, typename S, typename L>
       void from_to_(const value::hsl_<H,S,L>&, value::rgb<16>& to);
 
+      // hsl -> qt::rgb32.
+      template <typename H, typename S, typename L>
+      void from_to_(const value::hsl_<H,S,L>&, value::qt::rgb32& to);
 
       // rgb to hsl
       void

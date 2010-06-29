@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
   image2d<value::rgb8> hratio_decision_image
     = scribo::debug::links_decision_image(input,
 					  right_links,
-					  hratio_filtered_links);
+					  hratio_filtered_links, 200);
   io::ppm::save(hratio_decision_image, argv[3]);
 
 }

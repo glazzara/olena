@@ -125,7 +125,7 @@ namespace mln
     variance<T,S,R>::init()
     {
       n_ = 0;
-      sum_ = sum2_ = 0;
+      sum_ = sum2_ = literal::zero;
     }
 
     template <typename T, typename S, typename R>
@@ -187,7 +187,7 @@ namespace mln
     variance<T,S,R>::mean() const
     {
       if (n_ == 0u)
-	return 0; // Safety.
+	return literal::zero; // Safety.
       return sum_ / n_;
     }
 

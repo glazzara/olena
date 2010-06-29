@@ -65,8 +65,7 @@
 #include <mln/io/pgm/all.hh>
 
 #include <sandbox/inim/2009/ocr/resize.hh>
-#include <sandbox/fabien/mln/upsampling/hq4x.hh>
-
+#include <sandbox/fabien/mln/upsampling/hq2x.hh>
 
 namespace scribo
 {
@@ -92,7 +91,6 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
-
     template <typename I, typename W>
     mln_concrete(I)
     clean(const Image<I>& input_, const Weighted_Window<W>& dmap_win_)
@@ -111,11 +109,11 @@ namespace scribo
       // Resize
       typedef image2d<value::rgb8> J;
       J tmp = data::convert(value::rgb8(), input);
-      J clarge = mln::upsampling::hq4x(tmp);
+      J clarge = tmp;//mln::upsampling::hq2x(tmp); (FIXME: re-enable)
 
       //FIXME: not generic!
-      if (input.domain().pmax()[0] - input.domain().pmin()[0] <= 10)
-	clarge = mln::upsampling::hq4x(clarge);
+//       if (input.domain().pmax()[0] - input.domain().pmin()[0] <= 10)
+// 	clarge = mln::upsampling::hq4x(clarge);
 
       I input_large = data::convert(bool(), clarge);
 
@@ -139,7 +137,7 @@ namespace scribo
 // 	io::pgm::save(arith::revert(blur), "blur_revert.pgm");
 // 	io::pgm::save(blur, "gaussian.pgm");
 // 	io::pbm::save(input_large, mln::debug::filename("input_large_4x.pbm"));
-// 	io::pbm::save(K, mln::debug::filename("K.pbm"));
+//      io::pbm::save(K, mln::debug::filename("K.pbm"));
 // 	io::pbm::save(skel_on_gaussian, mln::debug::filename("skeleton_on_gaussian.pbm"));
 // 	io::pbm::save(dilate_on_gaussian, mln::debug::filename("dilation_on_gaussian.pbm"));
 

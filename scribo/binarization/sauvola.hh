@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,8 +36,10 @@
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
 
-# include <scribo/binarization/sauvola_threshold.hh>
-# include <scribo/binarization/binarize.hh>
+# include <mln/fun/v2v/rgb_to_int_u.hh>
+
+# include <scribo/binarization/sauvola_threshold_image.hh>
+# include <scribo/binarization/local_threshold.hh>
 
 
 namespace scribo
@@ -87,9 +90,9 @@ namespace scribo
 	  mln_precondition(exact(input).is_valid());
 
 	  mln_ch_value(I, bool)
-	    output = binarize(input,
-			      binarization::sauvola_threshold(input,
-							      window_size));
+	    output = local_threshold(input,
+				     binarization::sauvola_threshold_image(input,
+									   window_size));
 
 	  trace::exiting("scribo::binarization::impl::generic::sauvola");
 	  return output;
@@ -106,12 +109,12 @@ namespace scribo
 	mln_precondition(exact(input).is_valid());
 
 	mln_ch_value(I, value::int_u8) gima;
-	gima = data::transform(input, internal::rgb8_to_int_u8());
+	gima = data::transform(input, mln::fun::v2v::rgb_to_int_u<8>());
 
 	mln_ch_value(I, bool)
-	  output = binarize(gima,
-			    binarization::sauvola_threshold(gima,
-							    window_size));
+	  output = local_threshold(gima,
+				   binarization::sauvola_threshold_image(gima,
+									 window_size));
 
 	trace::exiting("scribo::binarization::impl::generic::sauvola");
 	return output;

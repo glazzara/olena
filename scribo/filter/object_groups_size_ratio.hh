@@ -85,7 +85,8 @@ namespace scribo
       object_groups<L> output(groups);
       output(0) = 0;
       for (unsigned i = 1; i < output.size(); ++i)
-	if ((invalid_object_in_group[groups[i]] / static_cast<float>(group_size[groups[i]])) >= max_invalid_ratio_per_group)
+	if ((invalid_object_in_group[groups[i]] / static_cast<float>(group_size[groups[i]])) >= max_invalid_ratio_per_group
+	    || !components(i).is_valid())
 	  output(i) = 0;
 
       trace::exiting("scribo::filter::object_groups_size_ratio");

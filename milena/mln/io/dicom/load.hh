@@ -50,11 +50,18 @@ namespace mln
     namespace dicom
     {
 
-      /// Load a DICOM file in a Milena image.
-      ///
-      /// \param[out] ima A reference to the image which will receive
-      /// data.
-      /// \param[in] filename The source.
+      /*! Load a DICOM file in a Milena image.
+
+          \param[out] ima A reference to the image which will receive
+          data.
+          \param[in] filename The source.
+
+
+	  Common compilation flags to link to gdcm if this file is used:
+
+	  -lgdcmCommon -lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib
+
+       */
       template <typename I>
       void load(Image<I>& ima,
 		const std::string& filename);

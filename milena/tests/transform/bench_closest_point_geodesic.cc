@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,14 +40,14 @@ int main()
   using value::int_u8;
 
   const unsigned
-    nslis = 100,
+    nslices = 100,
     nrows = 250,
     ncols = 250;
-  image3d<bool> input(nslis, nrows, ncols);
+  image3d<bool> input(nslices, nrows, ncols);
   data::fill(input, false);
   for (unsigned i = 0; i < 100; ++i)
     opt::at(input,
-	    std::rand() % nslis,
+	    std::rand() % nslices,
 	    std::rand() % nrows,
 	    std::rand() % ncols) = true;
 

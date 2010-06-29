@@ -1,4 +1,5 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -17,17 +18,26 @@
 include $(top_srcdir)/scribo/scribo.mk
 
 bin_PROGRAMS = 					\
-  show_left_right_links_validation 		\
+  show_info_x_height 				\
+  show_info_median_inter_characters		\
+  show_links_left_right_links_validation 	\
   show_links_bbox_h_ratio 			\
   show_links_bbox_overlap 			\
   show_links_bottom_aligned 			\
   show_links_center_aligned 			\
   show_links_non_h_aligned 			\
   show_links_several_right 			\
+  show_links_several_right_overlap		\
+  show_links_single_down 			\
+  show_links_single_down_left_aligned		\
+  show_links_single_down_right_aligned		\
   show_links_single_left 			\
   show_links_single_left_dmax_ratio		\
   show_links_single_right 			\
   show_links_single_right_dmax_ratio		\
+  show_links_single_up 	 			\
+  show_links_single_up_left_aligned		\
+  show_links_single_up_right_aligned		\
   show_links_top_aligned 			\
   show_objects_large 				\
   show_objects_large_small			\
@@ -35,17 +45,27 @@ bin_PROGRAMS = 					\
   show_objects_thick 				\
   show_objects_thin
 
-show_left_right_links_validation_SOURCES = show_left_right_links_validation.cc
+
+show_info_x_height_SOURCES = show_info_x_height.cc
+show_info_median_inter_characters_SOURCES = show_info_median_inter_characters.cc
+show_links_left_right_links_validation_SOURCES = show_links_left_right_links_validation.cc
 show_links_bbox_h_ratio_SOURCES = show_links_bbox_h_ratio.cc
 show_links_bbox_overlap_SOURCES = show_links_bbox_overlap.cc
 show_links_bottom_aligned_SOURCES = show_links_bottom_aligned.cc
 show_links_center_aligned_SOURCES = show_links_center_aligned.cc
 show_links_non_h_aligned_SOURCES = show_links_non_h_aligned.cc
 show_links_several_right_SOURCES = show_links_several_right.cc
+show_links_several_right_overlap_SOURCES = show_links_several_right_overlap.cc
+show_links_single_down_SOURCES = show_links_single_down.cc
+show_links_single_down_left_aligned_SOURCES = show_links_single_down_left_aligned.cc
+show_links_single_down_right_aligned_SOURCES = show_links_single_down_right_aligned.cc
 show_links_single_left_SOURCES = show_links_single_left.cc
 show_links_single_left_dmax_ratio_SOURCES = show_links_single_left_dmax_ratio.cc
 show_links_single_right_SOURCES = show_links_single_right.cc
 show_links_single_right_dmax_ratio_SOURCES = show_links_single_right_dmax_ratio.cc
+show_links_single_up_SOURCES = show_links_single_up.cc
+show_links_single_up_left_aligned_SOURCES = show_links_single_up_left_aligned.cc
+show_links_single_up_right_aligned_SOURCES = show_links_single_up_right_aligned.cc
 show_links_top_aligned_SOURCES = show_links_top_aligned.cc
 show_objects_large_SOURCES = show_objects_large.cc
 show_objects_large_small_SOURCES = show_objects_large_small.cc
