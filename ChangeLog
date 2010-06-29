@@ -1,3 +1,9 @@
+2010-06-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have AC_PROG_SWIG be more flexible w.r.t. major/minor version numbers.
+
+	* m4/swig.m4: Here.
+
 2010-06-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add `mesh-segm-skel' to the branches to be uploaded (as snapshot).
