@@ -53,7 +53,7 @@
 
 # include <scribo/core/macros.hh>
 
-# include <scribo/text/clean.hh>
+# include <scribo/text/clean_inplace.hh>
 
 # include <scribo/core/line_set.hh>
 

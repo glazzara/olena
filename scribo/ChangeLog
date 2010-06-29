@@ -1,3 +1,13 @@
+2010-06-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add text::clean_inplace.
+
+	* text/clean.hh: Make use of text::clean_inplace.
+
+	* text/clean_inplace.hh: New.
+
+	* text/recognition.hh: Include text::clean_inplace.
+
 2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small Fixes in Scribo build system.

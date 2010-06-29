@@ -1,5 +1,4 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_TEXT_CLEAN_HH
-# define SCRIBO_TEXT_CLEAN_HH
+#ifndef SCRIBO_TEXT_CLEAN_INPLACE_HH
+# define SCRIBO_TEXT_CLEAN_INPLACE_HH
 
 /// \file
 ///
@@ -71,7 +70,6 @@
 #include <scribo/upsampling/eagle.hh>
 #include <scribo/subsampling/bilinear.hh>
 
-#include <scribo/text/clean_inplace.hh>
 
 namespace scribo
 {
@@ -84,38 +82,60 @@ namespace scribo
 
     /// Improve quality of an image with text.
     ///
-    /// \param[in] line   Line info providing statistics about the text
+    /// \param[in] line Line info providing statistics about the text
     ///                   in the corresponding image \p input.
-    /// \param[in] input_ A binary image. Object are set to 'false'
-    ///                   and backgroud to 'true'.
-    ///
-    /// \return An image. The text have better quality.
+    /// \param[in,out] input  A binary image. Object are set to 'false'
+    ///                       and backgroud to 'true'.
     //
     template <typename L, typename I>
-    mln_concrete(I)
-    clean(const line_info<L>& line, const Image<I>& input_);
+    void
+    clean_inplace(const line_info<L>& line, Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename L, typename I>
-    mln_concrete(I)
-    clean(const line_info<L>& line, const Image<I>& input_)
+    void
+    clean_inplace(const line_info<L>& line, Image<I>& input_)
     {
-      trace::entering("scribo::text::clean");
+      trace::entering("scribo::text::clean_inplace");
 
-      const I& input = exact(input_);
+      I& input = exact(input_);
       mlc_bool(mln_site_(I)::dim == 2)::check();
       mlc_equal(mln_value(I),bool)::check();
       mln_precondition(input.is_valid());
       mln_precondition(line.is_valid());
 
-      mln_concrete(I) output = duplicate(input);
 
-      clean_inplace(line, output);
+      if (line.x_height() < 5) // Non significative text/remaining lines...
+	return;
 
-      trace::exiting("scribo::text::clean");
-      return output;
+      float fact = line.x_height() / 40.0f;
+      std::cout << fact << " - " << input.domain() << std::endl;
+      if (fact < 1)
+      {
+	std::cout << "Upsampling..." << " - "
+		  << fact << std::endl;
+	while (fact < 0.90)
+	{
+	  input = scribo::upsampling::eagle(input); // 2x upsampling
+	  fact *= 2.0f;
+//  	  std::cout << "fact = " << fact
+//  		    << " - input.domain = " << input.domain()
+//  		    << std::endl;
+	}
+      }
+      else if (fact > 2.5f)
+      {
+	std::cout << "subsampling::bilinear" << " - "
+		  << std::ceil(fact) << std::endl;
+	input = subsampling::bilinear(input, std::ceil(fact - 0.5)); // math::floor instead?
+
+      }
+      else
+	std::cout << "not clean_inplaceing text. Seems ok." << std::endl;
+
+      trace::exiting("scribo::text::clean_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -124,4 +144,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_TEXT_CLEAN_HH
+#endif // ! SCRIBO_TEXT_CLEAN_INPLACE_HH
