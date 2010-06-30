@@ -10,16 +10,16 @@
 INCLUDES1=       -I$(HOME)/git/olena/scribo/sandbox/green
 INCLUDES2=       -I$(HOME)/git/olena/milena
 INCLUDES=	$(INCLUDES1) $(INCLUDES2)
-CXXFLAGS=       -ggdb -O0 -Wall -W -pedantic -ansi -pipe $(INCLUDES)
+#CXXFLAGS=       -ggdb -O0 -Wall -W -pedantic -ansi -pipe $(INCLUDES)
 #CXXFLAGS=       -DNDEBUG -O1 -Wall -W -pedantic -ansi -pipe $(INCLUDES)
-#CXXFLAGS=       -DNDEBUG -O3 -Wall -W -pedantic -ansi -pipe $(INCLUDES)
+CXXFLAGS=       -DNDEBUG -O3 -Wall -W -pedantic -ansi -pipe $(INCLUDES)
 ECHO=           echo
 RM=             rm
 MKDIR=          mkdir -p
 CP=             cp
 
-SOURCE_PATTERN= green/tests
-BUILD__PATTERN= green/build/tests
+SOURCE_PATTERN= green/bench
+BUILD__PATTERN= green/build/bench
 
 
 ifeq ($(findstring $(BUILD__PATTERN),$(PWD)), $(BUILD__PATTERN))

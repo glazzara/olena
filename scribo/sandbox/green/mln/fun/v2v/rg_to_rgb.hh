@@ -1,6 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory (LRDE)
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007,2008,2009,2010 EPITA LRDE
 //
 // This file is part of Olena.
 //
@@ -34,7 +32,51 @@
 
 /// \file
 ///
-/// \brief Convert rg value to rgb
+/// \brief Convert a rg value to a rgb value.
+///
+/// This source implements the conversion between rg space and rgb space.
+///
+/// The following sample is a typical use of the rg/rgb conversion function.
+///
+/// #include <iostream>
+/// #include <mln/clustering/kmean2d.hh>
+/// #include <mln/core/image/image2d.hh>
+/// #include <mln/data/transform.hh>
+/// #include <mln/fun/v2v/rgb_to_rg.hh>
+/// #include <mln/fun/v2v/rg_to_rgb.hh>
+/// #include <mln/img_path.hh>
+/// #include <mln/io/ppm/load.hh>
+/// #include <mln/value/rg.hh>
+/// #include <mln/value/rgb8.hh>
+///
+/// int main()
+/// {
+///   typedef mln::value::rg<8>            t_rg8;
+///   typedef mln::value::rgb8             t_rgb8;
+///   typedef mln::image2d<t_rgb8>         t_image2d_rgb8;
+///   typedef mln::image2d<t_rg8>          t_image2d_rg8;
+///   typedef mln::fun::v2v::rgb_to_rg<8>  t_rgb_to_rg;
+///   typedef mln::fun::v2v::rg_to_rgb<8>  t_rg_to_rgb;
+///
+///   t_image2d_rgb8                       img_rgb8;
+///   t_image2d_rgb8                       point_img_rgb8;
+///   t_image2d_rg8                        img_rg8;
+///
+///   mln::io::ppm::load(img_rgb8, OLENA_IMG_PATH"/house.ppm");
+///
+///   img_rg8 = mln::data::transform(img_rgb8, t_rgb_to_rg());
+///
+///   mln::clustering::kmean2d<double, 8>  kmean(img_rg8, 3);
+///
+///   kmean.launch_n_times();
+///
+///   mln::clustering::kmean2d<double,8>::t_point_img point_img =
+///                                                           kmean.get_point();
+///
+///   point_img_rgb8 = mln::data::transform(point_img, t_rg_to_rgb());
+///
+///   return 0;
+/// }
 
 namespace mln
 {
@@ -47,14 +89,21 @@ namespace mln
 
       /// \brief Convert rg value to rgb.
       ///
+      /// Param n defines the quantification used for rgb space and rg space.
+      ///
       /// \ingroup modfunv2v
-
       template <unsigned n>
       struct rg_to_rgb : Function_v2v< rg_to_rgb<n> >
       {
 	typedef value::rg<n>  argument;
 	typedef value::rgb<n> result;
 
+	/// \brief Convert rg value to rgb value.
+	///
+	/// \param[in] v the rg value to convert.
+	///
+	/// Conversion is done by calling the rgb constructor and fill
+	/// the empty attirbute by 127.
 	result operator()(const argument& v) const
 	{
 	  return value::rgb<n>(v.red(), v.green(), 127);

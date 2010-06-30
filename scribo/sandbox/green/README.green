@@ -33,8 +33,7 @@ n'y a rien à copier. Rendons-nous dans le répertoire de compilation et lançon
 le makefile.
 
 #:~/git/olena/scribo/sandbox/green/demo/annotating/hsv$
-cd ../../../build/demo/annotating/hsv
-
+#:cd ../../../build/demo/annotating/hsv
 #:~/git/olena/scribo/sandbox/green/build/demo/annotating/hsv$ make clean all
 
 L'exécutable est généré par le makefile, il porte le nom du
@@ -168,6 +167,14 @@ de comptage puisqu'il est décrit sous la forme de triplets de float
 contient une séquence d'appels pour les routines permettant de
 considérer la dimension de la teinte comme circulaire.
 
+Après réflexion, le code des histogrammes et tous les accumulateurs
+qui en découlent devraient être rangés dans l'espace de nommage
+mln::accu::histo. Cela permettrait de ne pas parasiter mln::accu::stat
+avec tous les éléments propres aux histogrammes et de ne pas faire un
+espace de nommage à rallonge en introduisant histo dans stat. Donc
+mln::accu::stat semble être une bonne postion pour le rangement final
+du code relatif aux histogrammes.
+
 
 a) version 1d
 
@@ -196,7 +203,6 @@ c) version 3d RGB
 
 * mln/accu/stat/histo3d_rgb.hh: Accumulateur histogramme image3d RGB.
 * use/accu/stat/histo3_rgb: Code minimal utilisant un histogramme 3d RGB.
-
 
 
 d) version 3d HSL
@@ -245,23 +251,145 @@ IX KMEANS
 Ce travail m'avait été demandé par théo. Je le laisse inachevé, quelque part
 perdu pendant l'optimisation du code et sa transformation en canevas.
 
+
+a) Première implémentation avec matrices et vecteurs
+
+Cette version est bien documentée et permet de mieux comprendre les autres
+versions. Par ailleurs, elle n'est pas spécialement optimisée ce qui fait
+qu'elle colle davantage au modèle de l'algorithme kmean traditionnel.
+
 * mln/clustering/k_mean.hh: Première implémentation avec matrices et vecteurs.
-* mln/clustering/kmean1d.hh: Implémentation 1d avec des images.
-* mln/clustering/kmean2d.hh: Implémentation 2d avec des images.
-* mln/clustering/kmean3d.hh: Implémentation 3d avec des images.
-* mln/clustering/kmean_rgb.hh: Impl. 3d aplatie et en cours de mise en canevas.
-
+* use/clustering/k_mean:  Code minimal utilisant cette première implémentation.
 * tests/clustering/k_mean: Tests unitaires sur la permière version.
-* tests/clustering/kmean1d: Tests unitaire sur la version 1d.
 
-* demo/clustering/kmean1d: Utilisation de la version 1d.
-* demo/clustering/kmean2d: Utilisation de la version 2d.
-* demo/clustering/kmean3d: Utilisation de la version 3d.
+
+b) Seconde implémentation avec image en 1d
+
+Cette seconde version intègre une optimisation testée par théo il y a
+longtemps. Je me demande si ce n'étais pas pendant sa thèse qu'il
+avait travaillé sur cette version. Bref, dans la mesure où
+l'optimisation passe par la création d'un histogramme, cette version
+devient dépendante des histogrammes réalisés plutôt (il est aussi
+dépendant de la sauvegarde au format gnuplot shell). L'idée générale
+de l'optimisation est de ne plus raisonner sur l'image, mais sur
+l'histogramme. Car à un moment donné, la classification ne tient
+compte que de la valeur du pixel en intensité (pas de ses coordonnées
+dans l'image). Donc tout pixel de même intensité sera classé de
+manière identique. D'où l'intérêt de travailler avec les
+histogrammes. Les limites de cette optimisation se trouvent dans la
+taille des histogrammes. L'optimisation marche à merveille pour de
+faibles quantifications (8 bits c'est parfait). Par contre, lorsque
+l'on passe à un histogramme couleur, la taille de l'histogramme
+devient problématique et peut dépasser la taille de l'image. Cette
+optimisation n'a alors plus aucun sens.
+
+* mln/clustering/kmean1d.hh: Implémentation 1d avec des images.
+* use/clustering/kmean1d : Code minimal utilisant cette seconde implémentation.
+* demo/clustering/kmean1d : Demonstrateur.
+
+La visualisation de la convergence des moyennes, générée par le
+démonstrateur, n'est pas très lisible. La lecture textuelle du fichier
+gnuplot shell (mean_cnv.sh) permet d'interpréter ce qui se passe, par
+contre le graphique est à refaire.
+
+
+c) kmean2d
+
+Cette troisième version est identique à la seconde, sauf qu'elle
+permet de faire la classification dans un espace à deux
+dimensions. Malheureusement, un tel travail dans cet espace coûte
+beaucoup plus cher à l'exécution.
+
+* mln/fun/v2v/rg_to_rgb.hh: Transformation de l'espace RG vers l'espace RGB.
+* use/fun/v2v/rg_to_rgb: Exemple de code pour l'utilisation de rg_to_rgb.
+
+* mln/clustering/kmean2d.hh: Implémentation 2d avec des images.
+* use/clustering/kmean2d : Code minimal utilisant cette seconde implémentation.
+* demo/clustering/kmean2d : Demonstrateur.
+
+La visualisation de la convergence des moyennes est cette fois-ci
+complètement aboutie. Le fichier semble avoir quelques soucis, il
+manque des lignes dans le splot initial, en remettre pour qu'il y en
+ait autant que les blocs de données. L'espace des couleurs étant le
+bicanal r/g, on peut visualiser sur une troisième dimension
+l'évolution des centres dans l'espace initial. L'effet est très réussi
+et aussi très parlant. Chaque run, correspond alors à une trajectoire
+particulière. L'affichage des variations des variances a été rénové et
+est lui aussi beaucoup plus lisible.
+
+
+d) kmean3d
+
+Cette quatrième version est la copie conforme de la version
+précédente. Les problèmes de visualisation sur les fichiés générés
+sont les mêmes. L'affichage des convergences est identique. Le recours
+à une dégradation de l'image d'entrée est impérative pour avoir des
+temps encore acceptables.
+
+* mln/clustering/kmean3d.hh: Implémentation 3d avec des images.
+* use/clustering/kmean3d : Code minimal utilisant cette quatrième impl.
+* demo/clustering/kmean3d : Demonstrateur.
+
+
+e) kmean aplati
+
+Cette cinquième version est très spéciale. Elle doit permettre de
+gagner du temps d'exécution. Le concept est simple au départ, tout
+écrire d'un seul tenant. L'exercice est fastidieux et difficile
+(intellectuellement). Une fois fait, il faut réfléchir à ce qui peut
+être mis sous forme de canevas. Par exemple, la manière de calculer
+les distances peut être une information paramétrable. Cela pemettrait
+de faire un benchmark in situ. La transcription actuelle compile. Elle
+n'intègre pas tous les outils de debuggage que nous pouvions avoir sur
+les autres versions. Par ailleurs, comme le code est réuni en une
+seule fonction, nous avons pour l'instant une seule sortie, l'image de
+labels de la classification réalisée. A partir de cette image, nous
+pouvons en reconstruire d'autres. Il manque quand même la possibilité
+d'observer les convergences. Le travail était en cours, à prendre donc
+avec beaucoup de pincettes. La dernière exécution house.ppm, 3
+centres, 10 itérations et 10 runs fonctionne parfaitement sur les
+premiers runs puis l'affichage s'emballe sans que l'on y comprenne
+rien. Un dump dans un fichier révèle le non appariement de certaines
+traces (entering/exiting). Une piste à suivre est la sortie anticipée
+d'une de mes boucles sans pour autant fermer une trace ... ???
+
+* mln/clustering/kmean_rgb.hh: Implémentation 3d avec des images.
+* use/clustering/kmean_rgb : Code minimal utilisant cette quatrième impl.
 * demo/clustering/kmean_rgb: Utilisation de la version aplatie.
+
+
+f) optimisation possible
+
+Le calcul des distances entre les points et les différents centres
+peut être réalisé par des transformées. Certes, les distances ne seront
+pas les mêmes que la distance euclidienne, mais elles s'en approchent
+et cela constitue très certainement une très bonne approximation pour
+l'objectif que nous cherchons à atteindre. Le but de ce benchmark est
+de regarder quel type de transformation est le plus rapide pour
+arriver à nos fins en fonction des données d'entrée. Cette
+optimisation n'a pas encore été intégrée dans le code, et reste une
+piste à exploiter.
 
 * bench/clustering/distance: Comparaison algorithmes d'évaluation des distances.
 
-==> to do
+Une routine du benchmark ne compile plus. Il semble qu'il y ait un
+mauvais appel à la fonction at_ dans la routine
+influence_zone_geodesic.hh ligne 127. Le but du benchmark est de
+tester les distances en 2d et 3d pour des voisinages différents (c04,
+c08, c06, c18, c26) sur les routines distance euclidienne classique,
+zone d'influence geodesique et zone d'influence "front". La première
+serie de test vise à garder une taille d' image constante et
+d'augmenter le nombre de centres pour voir comment se comporte les
+algorithmes et la seconde serie, vise à garder un nombre constant de
+centres et à agrandir progressivement l'image. Attention, le benchmark
+essaye d'être assez exhaustif et donc se paye par un temps d'execution
+assez long. Les différents fichiers générés reprennent les différents
+tests effectués et montrent l'évolution du temps de calcul suivant la
+progression du paramètre observé (taille de l'image ou nombre de
+centres).
+
+==> to do : le changelog + commit + give it to scribo-z branch
+
 
 X REGIONAL MAXIMA
 -----------------

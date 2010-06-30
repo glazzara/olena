@@ -1,4 +1,4 @@
-// Copyright (C) 2008,2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007,2008,2009,2010 EPITA LRDE
 //
 // This file is part of Olena.
 //
@@ -24,51 +24,102 @@
 // executable file might be covered by the GNU General Public License.
 
 #ifndef MLN_CLUSTERING_KMEAN3D_HH
-#define MLN_CLUSTERING_KMEAN3D_HH
+# define MLN_CLUSTERING_KMEAN3D_HH
 
 /// \file
 ///
-/// \brief Implements the optimized kmean algorithm.
+/// \brief Implements the optimized kmean algorithm in 3d.
 ///
 /// This algorithm is optimized in the way it proceeds directly with
-/// the rgb values inspite of the pixel attribute. The
+/// the rgb value inspite of the pixel attribute. The
 /// algorithm is independant from the image dimension. But, we have to
 /// compute one time the histogram. In fact, we move a recurrent cost
-/// to a fix cost in the complexity. This version is adapted to
-/// image with small quantification.
+/// by a fix cost in the complexity. This version is very adapted to
+/// images with small quantification. But, in 3d, the execution
+/// becomes very slow. It's just normal because the quantification is
+/// n bits per axis. So the actual histogram may be bigger than the image.
+///
+/// Take care to the following point: The within variance is still a
+/// scalar value because we take the distance between two points and
+/// the result is a scalar from the geometrical point of view. An
+/// alternative implementation could study the variance/covariance
+/// matrix of each sub data clouds and works with the trace of the
+/// within variance matrix (as we do for the fisher criteria in N-d).
+///
+/// The following sample is a typical use of the new kmean implementation.
+///
+/// #include <iostream>
+/// #include <mln/clustering/kmean3d.hh>
+/// #include <mln/core/image/image2d.hh>
+/// #include <mln/data/transform.hh>
+/// #include <mln/fun/v2v/rgb8_to_rgbn.hh>
+/// #include <mln/img_path.hh>
+/// #include <mln/io/ppm/load.hh>
+/// #include <mln/value/rgb.hh>
+/// #include <mln/value/rgb8.hh>
+///
+/// int main()
+/// {
+///   typedef mln::clustering::kmean3d<double,5> t_kmean;
+///   typedef mln::value::rgb8                   t_rgb8;
+///   typedef mln::value::rgb<5>                 t_rgb5;
+///   typedef mln::image2d<t_rgb8>               t_image2d_rgb8;
+///   typedef mln::image2d<t_rgb5>               t_image2d_rgb5;
+///   typedef mln::fun::v2v::rgb8_to_rgbn<5>     t_rgb8_to_rgb5;
+///
+///   t_image2d_rgb8                             img_rgb8;
+///   t_image2d_rgb5                             img_rgb5;
+///
+///   mln::io::ppm::load(img_rgb8, OLENA_IMG_PATH"/house.ppm");
+///
+///   img_rgb5=mln::data::transform(img_rgb8, t_rgb8_to_rgb5());
+///
+///   t_kmean                                    kmean(img_rgb5, 3);
+///
+///   kmean.launch_n_times();
+///
+///   return 0;
+/// }
 
-#include <limits.h>
-#include <iostream>
-#include <mln/trace/entering.hh>
-#include <mln/trace/exiting.hh>
+# include <limits.h>
+# include <iostream>
 
-#include <mln/core/contract.hh>
-#include <mln/trait/value_.hh>
-#include <mln/accu/stat/histo3d_rgb.hh>
+# include <mln/accu/stat/histo3d_rgb.hh>
 
-#include <mln/math/min.hh>
-#include <mln/math/sqr.hh>
-#include <mln/norm/l2.hh>
+# include <mln/algebra/vec.hh>
 
-#include <mln/core/image/image2d.hh>
-#include <mln/core/concept/image.hh>
-#include <mln/value/int_u.hh>
-#include <mln/value/rgb8.hh>
-#include <mln/core/macros.hh>
+# include <mln/math/min.hh>
+# include <mln/math/sqr.hh>
+# include <mln/norm/l2.hh>
 
-#include <mln/data/compute.hh>
-#include <mln/debug/println.hh>
-#include <mln/data/fill.hh>
-#include <mln/literal/zero.hh>
-#include <mln/literal/one.hh>
-#include <mln/labeling/colorize.hh>
-#include <mln/labeling/mean_values.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/contract.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/macros.hh>
 
-#include <mln/io/ppm/save.hh>
-#include <mln/io/pgm/save.hh>
+# include <mln/data/compute.hh>
+# include <mln/data/fill.hh>
+# include <mln/debug/println.hh>
 
-#include <mln/util/array.hh>
-#include <mln/algebra/vec.hh>
+# include <mln/labeling/colorize.hh>
+# include <mln/labeling/mean_values.hh>
+
+# include <mln/literal/one.hh>
+# include <mln/literal/zero.hh>
+
+# include <mln/io/ppm/save.hh>
+# include <mln/io/pgm/save.hh>
+
+# include <mln/trace/entering.hh>
+# include <mln/trace/exiting.hh>
+
+# include <mln/trait/value_.hh>
+
+# include <mln/util/array.hh>
+
+# include <mln/value/int_u.hh>
+# include <mln/value/rgb8.hh>
+
 
 namespace mln
 {
@@ -98,7 +149,6 @@ namespace mln
       /// Type definitions.
       /// \brief A few type definitions to limit the refactoring impact.
       ///{
-
       typedef value::rgb<8>                      t_rgb;
       typedef value::label<8>                    t_label;
       typedef value::rgb<n>                      t_value;
@@ -108,7 +158,7 @@ namespace mln
       typedef T                                  t_result1d;
       typedef algebra::vec<3,T>                  t_result3d;
 
-      /// FIXME t_point n'est pas forcément une image 2d, bien au contraire.
+      /// \fixme t_point is not an image2d, it may be something else ...
       typedef image2d<t_value>                   t_point_img;
       typedef image3d<unsigned>                  t_histo_img;
       typedef util::array<t_result1d>            t_number_img;
@@ -128,35 +178,26 @@ namespace mln
       typedef util::array<t_mean_set>            t_mean_cnv;
       typedef image1d<t_result1d>                t_variance_val;
       typedef util::array<t_variance_val>        t_variance_cnv;
-
       ///}
 
-      //------------------------------------------------------------------------
-      // Constructor
-      //------------------------------------------------------------------------
 
-      /// \brief Constructor
+      /// \brief Constructor.
+      ///
       /// \param[in] point     : the image as the population of pixels.
       /// \param[in] k_center  : the number of centers.
       /// \param[in] watch_dog : the limit to observe the convergence (10).
       /// \param[in] n_times   : the number of times that we executed kmean(10).
-
       kmean3d(const t_point_img& point,
 	      const unsigned     k_center,
 	      const unsigned     watch_dog = 10,
 	      const unsigned     n_times   = 10);
 
-      //------------------------------------------------------------------------
-      // Accessors
-      //------------------------------------------------------------------------
-
-      /// Mutator and accessors.
+      /// Mutators and accessors.
       /// \{
       /// \brief Mutator and accessors are required for debugging and testing.
       ///
       /// Testing needs to hack the kmean loop process in order to verify each
       /// step of the algorithm.
-
       void set_point(t_point_img&       point);
       void set_histo(t_histo_img&       histo);
       void set_number(t_number_img&     number);
@@ -184,13 +225,13 @@ namespace mln
 
       // Normal outputs
       t_mean_img&     to_result();
-
       /// \}
 
-      //------------------------------------------------------------------------
-      // Printing temporary results
-      //------------------------------------------------------------------------
 
+      /// Show temporary results.
+      /// \{
+      /// \brief Formating temporary outputs for debugging.
+      ///
       void print_mean();
       void print_number();
       void print_variance();
@@ -198,31 +239,18 @@ namespace mln
       void print_group();
       void print_point();
       void print_histo();
-
-      //------------------------------------------------------------------------
-      // Initializations of centers
-      //------------------------------------------------------------------------
-
-      /// Initialization of centers.
-      /// \{
-      /// \brief Two ways: Regular greylevel tick or random greylevel value or.
-      ///
-      /// There is two way to proceed the initialization. First of all, we
-      /// divide the rgb space in regular tick and we assigne them to the mean
-      /// of the centers. Finaly, we can ask random initialization along the
-      /// greyscale axis. The second process is needed to launch_n_times the
-      /// kmean and converge to the best descent.
-
-      void init_mean();
-      void init_mean_regular();
-      void init_mean_random();
-
       /// \}
 
 
-      //------------------------------------------------------------------------
-      // Computations of distance, group, center, within variance
-      //------------------------------------------------------------------------
+      /// Initialization of centers.
+      /// \{
+      /// \brief Initialize centers by random position.
+      ///
+      /// Assign a random position in the rgb space to each center.
+      void init_mean();
+      void init_mean_random();
+      /// \}
+
 
       /// Computations of distance, group, center, within variance.
       /// \{
@@ -232,36 +260,27 @@ namespace mln
       /// first compute. Then we assign the pixels to their nearest center.
       /// The new location of each center can then update. Finaly, hommogeneity
       /// in group is observed by the within variance.
-
       void update_distance();
       void update_group();
       void update_mean();
       void update_variance();
-
       /// \}
 
-      //------------------------------------------------------------------------
-      // Main loop
-      //------------------------------------------------------------------------
 
       /// kmean main loop
       /// \{
       /// \brief User interface to launch the kmean process.
       ///
-      /// There are two ways to launch the kmean process. The first one allow to
-      /// run it one time until convergence. As the process is a descent, it
-      /// depends on the initial center locations. The second call allow us to
-      /// rerun the process many times and to keep the best result (the one
-      /// with the smallest within variance).
-
+      /// There are two ways to launch the kmean process. The first
+      /// one allows to run it one time until convergence. As the
+      /// process is a descent, it depends on the initial center
+      /// location. The second call allow us to rerun the process
+      /// many times and to keep the best result (the one with the
+      /// smallest within variance).
       void launch_one_time();
       void launch_n_times();
-
       /// \}
 
-      //------------------------------------------------------------------------
-      // Checking the validiy of the results
-      //------------------------------------------------------------------------
 
       /// Checking the validity of the results.
       /// \{
@@ -271,32 +290,22 @@ namespace mln
       /// the descent was successfull or not. The method is_valid_descent do it
       /// for us. The method looks for a bad center (a class with no greylevel
       /// associate to it) and a failure in the convergence.
-
       bool is_descent_valid();
-
       /// \}
 
-      //------------------------------------------------------------------------
-      // Debugging tools
-      //------------------------------------------------------------------------
-
-      /// Debugging tools
+      /// Checking the validity of the results.
       /// \{
-      /// \brief These methods help to interpret results.
+      /// \brief These methods help us to determine the validity of the results.
       ///
-      /// The methods build_label_dbg and build_all_dbg work in the input data
-      /// space. The first one build the 2d image of labels. The second call the
-      /// first one and then builds the colorize label' image  and the mean
-      /// greylevel image. The update_cnv and finalize_cnv methods are used to
-      /// trace the convergence. They fill two images with the mean info and
-      /// the within variance info along the convergence and the tries.
-
+      /// After each launching the kmean process one time, we need to know if
+      /// the descent was successfull or not. The method is_valid_descent do it
+      /// for us. The method looks for a bad center (a class with no color
+      /// associate to it) or a failure in the convergence.
       void build_label_dbg();
       void build_mean_dbg();
       void build_all_dbg();
       void update_cnv();
       void finalize_cnv();
-
       /// \}
 
 
@@ -313,12 +322,11 @@ namespace mln
       /// kmean loop. As the kmean process is a descent, restarting the process
       /// from different location will confort us in that we found a global
       /// minima, not just a local one.
-
       unsigned       _k_center;
       unsigned       _watch_dog;
       unsigned       _n_times;
-
       /// \}
+
 
       /// Convergence information.
       /// \{
@@ -337,14 +345,12 @@ namespace mln
       /// again. The flag is_number_valid is set when a empty class
       /// appears.  This flag inhibit the process and force to restart
       /// a try.
-
       t_result1d      _within_variance;
       unsigned       _current_step;
       unsigned       _current_launching;
       bool           _is_number_valid;
 
       static const unsigned _N_TRIES = 3;
-
       /// \}
 
       /// Result of the kmean process.
@@ -354,10 +360,10 @@ namespace mln
       /// The kmean process result is composed by three information. The best
       /// launching iteration, the best within variance obtained and the
       /// location of the centers associated.
-
       unsigned        _launching_min;
       t_result1d      _variance_min;
       t_mean_img      _mean_min;
+      /// \}
 
       /// Inputs.
       /// \{
@@ -365,11 +371,10 @@ namespace mln
       ///
       /// The point image is a saving data for the real inputs. In fact, we use
       /// the histogram information in the optimized kmean process.
-
       t_point_img    _point;
       t_histo_img    _histo;
-
       ///\}
+
 
       /// Centers description.
       /// \{
@@ -381,11 +386,9 @@ namespace mln
       /// convergence. The number of pixels is used as integrity indicator.
       /// A center with no point is a non sense. Theses informations are updated
       /// after each kmean iteration.
-
       t_number_img   _number;   // k x 1
-      t_mean_img     _mean;     // k x 1
+      t_mean_img     _mean;     // k x 3
       t_variance_img _variance; // k x 1 within group
-
       /// \}
 
       /// rgb image description.
@@ -396,11 +399,10 @@ namespace mln
       /// which pixel) is assigned to a center. The distance image give us a
       /// clue on how a greylevel could contribute to a center. The summation
       /// over the rgb space of a center give us the within variance.
-
       t_group_img    _group;    // g x 3 because dim(t_value) = 3
       t_distance_img _distance; // label x rgb space
-
       /// \}
+
 
       /// Debugging, calibrating and testing results.
       /// \{
@@ -412,14 +414,12 @@ namespace mln
       /// label (assigned to the same center) in the image. The mean image
       /// associate the mean of each pixel center to each pixel. We obtain thus
       /// a rebuilded image.
-
       t_label_dbg    _label_dbg;
       t_color_dbg    _color_dbg;
       t_mean_dbg     _mean_dbg;
-
       /// \}
 
-      /// Debugging, calibrating and testing convergence.
+      /// Variance and center evolutions.
       /// \{
       /// \brief Trace the variance and the center evolution.
       ///
@@ -428,10 +428,8 @@ namespace mln
       /// kmean loop or along the different launch. The variance_cnv is a trace
       /// of the within variance along the kmean loop or along the different
       /// launch.
-
       t_mean_cnv     _mean_cnv;
       t_variance_cnv _variance_cnv;
-
       /// \}
     };
 
@@ -448,7 +446,7 @@ namespace mln
 			  const unsigned     watch_dog,
 			  const unsigned     n_times)
     {
-      trace::entering("mln::clustering::kmean3d::kmean3d");
+      trace::entering("mln::clustering::kmean3d::cstor");
       mln_precondition(point.is_valid());
 
       _k_center          = k_center;
@@ -520,7 +518,7 @@ namespace mln
 	_mean_cnv.append(mean_set);
       }
 
-      trace::exiting("mln::clustering::kmean3d::kmean3d");
+      trace::exiting("mln::clustering::kmean3d::cstor");
     }
 
     //--------------------------------------------------------------------------
@@ -1338,7 +1336,7 @@ namespace mln
       trace::exiting("mln::clustering::kmean3d::launch_n_times");
     }
 
-#endif // ! MLN_INCLUDE_ONLY
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::clustering
 
