@@ -1,3 +1,9 @@
+2010-06-30  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
+
+	Change XML output (replacement of html markups).
+	
+	* io/xml/save.hh: Add internal::html_markups_replace.
+
 2010-06-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add text::clean_inplace.
@@ -39,13 +45,8 @@
 
 	* io/xml/save_text_lines.hh: Rename as...
 	* io/xml/save.hh: ...this.
-<<<<<<< HEAD:scribo/ChangeLog
-
-	* src/pbm_text_in_doc.cc: update call to io::xml::save.
-=======
 	
 	* src/pbm_text_in_doc.cc: Update call to io::xml::save.	
->>>>>>> New features in Qt interface.:scribo/ChangeLog
 
 2010-06-18  green  <jacquelet@lrde.epita.fr>
 

@@ -1,5 +1,3 @@
-
-
 // Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -35,7 +33,6 @@
 #include <fstream>
 #include <sstream>
 
-
 namespace scribo
 {
 
@@ -63,11 +60,30 @@ namespace scribo
 	   const line_set<L>& lines,
 	   const std::string& output_name,
 	   bool extended_format);
-      
+
 
 # ifndef MLN_INCLUDE_ONLY
 
+      namespace internal
+      {
+	std::string& 
+	html_markups_replace(std::string& input, 
+			     std::map<char, std::string>& map)
+	{
+	  for (unsigned i = 0; i < input.size(); ++i)
+	    {
+	      std::map<char, std::string>::iterator it = map.find(input.at(i));
+	      if (it != map.end())
+		{
+		  input.replace(i, 1, it->second);
+		  i += it->second.size() - 1;
+		}
+	    }
+	  return input;
+	}
 
+      } // end of namespace scribo::io::xml::internal
+            
       template <typename L>
       void
       save(const std::string& input_name,
@@ -83,11 +99,22 @@ namespace scribo
 	  std::cerr << "error: cannot open file '" << input_name << "'!";
 	  abort();
 	}
+	std::map<char, std::string> html_map;
+	html_map['\"'] = "&quot;";
+	html_map['<'] = "&lt;";
+	html_map['>'] = "&gt;";
+	html_map['&'] = "&amp;";
 
 	file << "<?xml version=\"1.0\"?>" << std::endl;
-	file << "<PcGts xmlns=\"http://schema.primaresearch.org/PAGE/gts/pagecontent/2009-03-16\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://schema.primaresearch.org/PAGE/gts/pagecontent/2009-03-16 http://schema.primaresearch.org/PAGE/gts/pagecontent/2009-03-16/pagecontent.xsd\" pcGtsId=\"" << input_name << "\">" << std::endl;
-
-
+	if (extended_format)
+	  {
+	    file << "<pcGts>" << std::endl;
+	  }
+	else
+	  {
+	    file << "<pcGts xmlns=\"http://schema.primaresearch.org/PAGE/gts/pagecontent/2009-03-16\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://schema.primaresearch.org/PAGE/gts/pagecontent/2009-03-16 http://schema.primaresearch.org/PAGE/gts/pagecontent/2009-03-16/pagecontent.xsd\" pcGtsId=\"" << input_name << "\">" << std::endl;
+	  }
+	
 	file << "  <PcMetadata>" << std::endl;
 	file << "    <PcCreator>LRDE</PcCreator>" << std::endl;
 	file << "    <PcCreated/>" << std::endl;
@@ -167,8 +194,11 @@ namespace scribo
 		  
 		  if (lines(l).has_text())
 		    {
+		      std::string tmp = lines(l).text();
+		      tmp = internal::html_markups_replace(tmp, html_map);
+		      
 		      file << "        <line text=\""
-			   << lines(l).text()
+			   << tmp
 			   << "\">" << std::endl;
 		    }
 		  else
@@ -199,7 +229,7 @@ namespace scribo
 	  }
 
 	file << "  </page>" << std::endl;
-	file << "</PcGts>" << std::endl;
+	file << "</pcGts>" << std::endl;
 
 
 
