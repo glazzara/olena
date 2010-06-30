@@ -26,7 +26,9 @@ KeyWidget::KeyWidget(const region::KeyMap& key_map)
   layout->addWidget(items_);
 
   for (int i = 0; i < key_map.size(); ++i)
-    add_item_(key_map[i].first, key_map[i].second);
+    add_item_(key_map[i].first, key_map[i].second, 
+	      (i == region::Paragraph) || 
+	      (i == region::Line) );
 
   setLayout(layout);
 
@@ -34,8 +36,29 @@ KeyWidget::KeyWidget(const region::KeyMap& key_map)
 	  this, SLOT(update(QListWidgetItem*)));
 }
 
+void 
+KeyWidget::change_mode(bool b)
+{
+  int id_region = region::Paragraph;
+  int id_line = region::Line;
+  if (b)
+    {
+      items_->item(id_region)->setCheckState(Qt::Checked);
+      items_->item(id_region)->setHidden(false);
+      items_->item(id_line)->setCheckState(Qt::Checked);
+      items_->item(id_line)->setHidden(false);
+    }
+  else
+    {
+      items_->item(id_region)->setCheckState(Qt::Unchecked);
+      items_->item(id_region)->setHidden(true);
+      items_->item(id_line)->setCheckState(Qt::Unchecked);
+      items_->item(id_line)->setHidden(true);
+    }
+}
+
 void
-KeyWidget::add_item_(QString text, QColor color)
+KeyWidget::add_item_(QString text, QColor color, bool b)
 {
   QListWidgetItem* item = new QListWidgetItem(text);
   QPixmap pixmap(10, 6);
@@ -44,6 +67,8 @@ KeyWidget::add_item_(QString text, QColor color)
   item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
   item->setCheckState(Qt::Checked);
   items_->addItem(item);
+  int id = items_->row(item);
+  items_->item(id)->setHidden(b);
 }
 
 bool

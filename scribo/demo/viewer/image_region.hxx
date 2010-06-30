@@ -56,9 +56,14 @@ void
 ImageRegion::setDrawIfSameId(int id, bool draw)
 {
   if (id == id_)
-    draw_ = draw;
-  scene()->invalidate();
-  update();
+    {
+      draw_ = draw;
+      if (scene())
+	{
+	  scene()->invalidate();
+	  update();
+	}
+    }
 }
 
 inline
@@ -73,8 +78,8 @@ inline
 QRectF
 ImageRegion::boundingRect() const
 {
-  if (selected_)
-    return mapFromScene(scene()->sceneRect()).boundingRect();
+//   if (selected_)
+//     return mapFromScene(scene()->sceneRect()).boundingRect();
   return rect_;
 }
 

@@ -34,9 +34,10 @@ signals:
 
 private slots:
   void update(QListWidgetItem* slot);
+  void change_mode(bool b);
 
 private:
-  void add_item_(QString text, QColor color);
+  void add_item_(QString text, QColor color, bool b);
 
   QListWidget* items_;
 };

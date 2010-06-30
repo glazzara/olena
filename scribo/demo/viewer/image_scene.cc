@@ -31,30 +31,58 @@ void
 ImageScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
   QGraphicsScene::mousePressEvent(event);
-  ImageRegion* item = dynamic_cast<ImageRegion*>(itemAt(event->pos()));
-  if (item)
-  {
-    if (item != selected_)
+  QList<QGraphicsItem *> items_list = items(event->pos()); // includes both ImageRegions and the picture.
+
+  // Selection is under the mouse click (at event->pos()).
+  bool selection_is_clicked = items_list.contains(selected_);
+
+  foreach(QGraphicsItem* elt, items_list)
     {
-      if (selected_)
-      {
-	selected_->deselect();
-	emit deselected(selected_->index());
-      }
-      selected_ = item;
-      item->select();
-      emit selected(item->index());
+      ImageRegion* item = dynamic_cast<ImageRegion*>(elt);
+      if (item)
+	{ 
+	  if (item != selected_)
+	    {
+	      if (selected_)
+		{
+		  if ( (item->boundingRect().intersects(selected_->boundingRect())))
+		    {
+		      int item_area = item->boundingRect().size().height() * item->boundingRect().size().width();
+		      int selected_area = selected_->boundingRect().size().height() * selected_->boundingRect().size().width();
+		      
+		      if (selected_area < item_area && selection_is_clicked)
+			return;
+		      else
+			{
+			  selected_->deselect();
+			  emit deselected(selected_->index());
+			  selected_ = 0;
+			}
+		    }
+		  else
+		    {
+		      selected_->deselect();
+		      emit deselected(selected_->index());
+		      selected_ = 0;
+		    }
+		}
+	      selected_ = item;	     
+	      item->select();
+	      emit selected(item->index());
+	      return;	      
+	    }
+	}
+      else
+	{
+	  if ( (selected_) 
+	       && (items_list.size() == 1) )// no ImageRegion, only the picture
+	    {
+	      selected_->deselect();
+	      emit deselected(selected_->index());
+	      selected_ = 0;
+	    }
+	}
     }
-  }
-  else
-  {
-    if (selected_)
-    {
-      selected_->deselect();
-      emit deselected(selected_->index());
-      selected_ = 0;
-    }
-  }
 }
 
 ImageScene::~ImageScene()

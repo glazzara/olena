@@ -28,7 +28,8 @@ viewer_SOURCES = $(BUILT_SOURCES)		\
 		 dommodel.cc			\
 		 domitem.cc			\
 		 image_region.cc		\
-		 help_dialog.cc
+		 help_dialog.cc			\
+		 step_widget.cc
 
 viewer_CPPFLAGS = $(QT_CPPFLAGS) $(AM_CPPFLAGS) -I$(srcdir)
 viewer_CXXFLAGS = $(QT_CXXFLAGS) $(AM_CXXFLAGS) -O3
@@ -46,7 +47,8 @@ BUILT_SOURCES = viewer.moc.cc			\
 		dommodel.moc.cc			\
 		domitem.moc.cc			\
 		image_region.moc.cc		\
-		help_dialog.moc.cc
+		help_dialog.moc.cc		\
+		step_widget.moc.cc
 
 include_HEADERS = viewer.hh			\
 		  viewer.hxx			\
@@ -62,6 +64,7 @@ include_HEADERS = viewer.hh			\
 		  image_region.hh		\
 		  image_region.hxx		\
 		  common.hh			\
-		  help_dialog.hh
+		  help_dialog.hh		\
+		  step_widget.hh
 
 EXTRA_DIST = README

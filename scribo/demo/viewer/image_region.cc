@@ -35,10 +35,15 @@ ImageRegion::ImageRegion(region::RegionId id,
     fill_(fill),
     draw_(draw),
     selected_(false),
-    alpha_(30)
+    alpha_(50)
 {
   setCursor(Qt::ArrowCursor);
-  setZValue(1);
+  if (id_ == region::Paragraph)
+    setZValue(2);
+  else if (id_ == region::Line)
+    setZValue(3);
+  else
+    setZValue(1);
 
   if (points.size() == 0)
     return;
@@ -56,6 +61,11 @@ ImageRegion::ImageRegion(region::RegionId id,
 ImageRegion::~ImageRegion()
 {
 }
+
+region::RegionId ImageRegion::id()
+{
+  return id_;
+}  
 
 void
 ImageRegion::paint(QPainter* painter,
@@ -103,7 +113,7 @@ ImageRegion::select()
   if (!selected_)
   {
     selected_ = true;
-    setZValue(2);
+    setZValue(4);
     prepareGeometryChange();
     scene()->invalidate();
     update();
@@ -116,7 +126,12 @@ ImageRegion::deselect()
   if (selected_)
   {
     selected_ = false;
-    setZValue(1);
+    if (id_ == region::Paragraph)
+      setZValue(2);
+    else if (id_ == region::Line)
+      setZValue(3);
+    else
+      setZValue(1);
     prepareGeometryChange();
     scene()->invalidate();
     update();

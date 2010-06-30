@@ -21,6 +21,7 @@
 class ImageScene;
 class DomModel;
 class KeyWidget;
+class ImageRegion;
 
 class Viewer
   : public QObject
@@ -39,20 +40,25 @@ public slots:
   // name is found.
   void load(QString filename);
   void help();
-
+  void load_xml(QString filename);
   void maybeChangeCacheMode(qreal scale);
   void useCache(bool b);
+  void useExtended(bool b);
 
 signals:
   void updated(DomModel* model);
+  void loaded(DomModel* model);
   void key_updated(int key, bool checked);
   void setOutline(bool b);
   void setPrecise(bool b);
   void setFill(bool b);
+  void mode_changed(bool b);
 
 private:
   Viewer(int &argc, char** argv);
   Viewer();
+
+  void xml_to_layout();
 
   QApplication* app_;
   QMainWindow* win_;
@@ -73,6 +79,8 @@ private:
   region::KeyMap key_map_;
 
   bool no_cache_;
+  bool extended_mode_;
+  QString xml_file_;
 };
 
 #include "viewer.hxx"

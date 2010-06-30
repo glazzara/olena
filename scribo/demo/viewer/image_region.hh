@@ -36,6 +36,7 @@ public:
 
   ~ImageRegion();
 
+  region::RegionId id();  
   void paint(QPainter* painter,
 	     const QStyleOptionGraphicsItem* option,
 	     QWidget* widget = 0);
@@ -43,6 +44,7 @@ public:
   const QModelIndex& index() const;
   QRectF boundingRect() const;
   QPainterPath shape() const;
+  QString name() { return name_; }
 
 public slots:
   void setOutline(bool outline);

@@ -1,3 +1,4 @@
+
 //
 // Document layout viewer.
 //
@@ -37,6 +38,7 @@ signals:
 
 private:
   ImageRegion* selected_;
+  QVector<ImageRegion*> region_vector_;
 };
 
 #endif	    /* !IMAGE_SCENE_HH_ */

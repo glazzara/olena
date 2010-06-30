@@ -20,17 +20,19 @@ namespace region
   typedef QVector<QPair<QString, QColor> > KeyMap;
 
   enum RegionId
-  {
-    Text = 0,
-    Image,
-    Noise,
-    Separator,
-    Table,
-    LineDrawing,
-    Graphic,
-    Chart,
-    Maths
-  };
-};
+    {
+      Text = 0,
+      Paragraph,
+      Line,
+      Image, 
+      Noise,
+      Separator,
+      Table,
+      LineDrawing,
+      Graphic,
+      Chart,
+      Maths
+    };
+}
 
 #endif	    /* !COMMON_HH_ */

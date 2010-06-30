@@ -1,9 +1,30 @@
 2010-06-30  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
 
+	Extended XML mode support.
+	
+	* scribo/demo/viewer/Makefile.am
+	
+	* demo/viewer/image_region.cc,
+	* viewer/image_region.hh,
+	* viewer/image_region.hxx: Change regions depths to have a hierarchy.
+	
+	* demo/viewer/image_scene.cc,
+	* demo/viewer/image_scene.hh: Change mouse click behaviour.
+	
+	* demo/viewer/key_widget.cc,
+	* demo/viewer/key_widget.hh: Add new items (text line and paragraph)
+	
+	* demo/viewer/viewer.cc,
+	* demo/viewer/viewer.hh: Chnage XML parsing to support extended format.
+
+	* scribo/demo/viewer/common.hh: Add new RegionId's.	
+
+2010-06-30  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
+
 	New features in Qt interface.
 	
 	* demo/viewer/browser_widget.hh: Improve picture browser.
-	* demo/viewer/step_widget.cc Add a "step chooser" to load several XML files related to one picture.
+	* demo/viewer/step_widget.cc: Add a "step chooser" to load several XML files related to one picture.
 
 2010-06-30  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
 
