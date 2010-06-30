@@ -1,4 +1,4 @@
-// Copyright (C) 2008,2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007,2008,2009,2010 EPITA LRDE
 //
 // This file is part of Olena.
 //
@@ -28,16 +28,68 @@
 
 /// \file
 ///
-/// \brief Implements the optimized kmean algorithm.
+/// \brief Implements the optimized kmean algorithm in the 3d-RGB space.
 ///
 /// This algorithm is optimized in the way it proceeds directly with
-/// the rgb values inspite of the pixel attribute. The
+/// the rgb value inspite of the pixel attribute. The
 /// algorithm is independant from the image dimension. But, we have to
 /// compute one time the histogram. In fact, we move a recurrent cost
-/// to a fix cost in the complexity. This version is adapted to
-/// image with small quantification.
-
-/// APLATISSEMENT DES KMEAN3D
+/// by a fix cost in the complexity. This version is very adapted to
+/// images with small quantification. But, in 3d, the execution
+/// becomes very slow. It's just normal because the quantification is
+/// n bits per axis. So the actual histogram may be bigger than the image.
+///
+/// Take care to the following point: The within variance is still a
+/// scalar value because we take the distance between two points and
+/// the result is a scalar from the geometrical point of view. An
+/// alternative implementation could study the variance/covariance
+/// matrix of each sub data clouds and works with the trace of the
+/// within variance matrix (as we do for the fisher criteria in N-d).
+///
+/// The following sample is a typical use of the functional (versus
+/// object) kmean implementation.
+///
+/// #include <iostream>
+/// #include <mln/clustering/kmean_rgb.hh>
+/// #include <mln/core/image/image2d.hh>
+/// #include <mln/data/transform.hh>
+/// #include <mln/fun/v2v/rgb8_to_rgbn.hh>
+/// #include <mln/img_path.hh>
+/// #include <mln/io/ppm/load.hh>
+/// #include <mln/value/label_8.hh>
+/// #include <mln/value/rgb.hh>
+/// #include <mln/value/rgb8.hh>
+///
+/// int main()
+/// {
+///   typedef mln::value::label_8                  t_lbl8;
+///   typedef mln::value::rgb8                     t_rgb8;
+///   typedef mln::value::rgb<5>                   t_rgb5;
+///   typedef mln::image2d<t_rgb8>                 t_image2d_rgb8;
+///   typedef mln::image2d<t_rgb5>                 t_image2d_rgb5;
+///   typedef mln::image2d<t_lbl8>                 t_image2d_lbl8;
+///   typedef mln::fun::v2v::rgb8_to_rgbn<5>       t_rgb8_to_rgb5;
+///
+///   t_image2d_rgb8                               img_rgb8;
+///   t_image2d_rgb5                               img_rgb5;
+///   t_image2d_lbl8                               img_lbl8;
+///
+///   mln::io::ppm::load(img_rgb8, OLENA_IMG_PATH"/house.ppm");
+///
+///   img_rgb5 = mln::data::transform(img_rgb8, t_rgb8_to_rgb5());
+///   img_lbl8 = mln::clustering::kmean_rgb<double,5>(img_rgb5, 3);
+///
+///   return 0;
+/// }
+///
+/// \fixme The execution shows a bug in printing outputs and it seems severe.
+///
+/// The last execution with the following set of parameters
+/// {house.ppm,3,10,10} shows that if the binary starts correctly, it
+/// ends before returning the label image and with disturbing outputs.
+/// Dumping the outputs in a file reveals that the number of
+/// trace::entering differs from the number of trace::exiting. May the
+/// program exit from a loop without ending a trace ???
 
 # include <limits.h>
 # include <iostream>
@@ -86,7 +138,7 @@
 
 
 //--------------------------------------------------------------------------
-// CODE APLATI
+// FUNCTIONAL CODE
 //--------------------------------------------------------------------------
 
 
@@ -95,7 +147,24 @@ namespace mln
 
   namespace clustering
   {
-
+    /// \brief Implements the functional kmean algorithm.
+    ///
+    /// This functional version of the kmean is very specific. All the
+    /// code is view as a one-block function. This code is provided as
+    /// is. I (YJ) don't know where i stopped this version. It may not
+    /// work. Debugging tools are not yet provided. This code is just
+    /// the functional transcription of the kmean3d version. The code
+    /// has the very experimental status.
+    ///
+    /// T is the type used for computations (float or double).
+    /// n is the quantification for the rgb image.
+    ///
+    /// \param[in] point     : the image as the population of pixels.
+    /// \param[in] k_center  : the number of centers.
+    /// \param[in] watch_dog : the limit to observe the convergence (10).
+    /// \param[in] n_times   : the number of times that we executed kmean(10).
+    ///
+    /// \return an image which represents the pixel classification.
     template <typename T, unsigned n, typename I>
     inline
     image2d<value::label_8>
