@@ -1,3 +1,10 @@
+2010-06-30  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Add some futur materials on regional maxima.
+
+	* test_labelling_2.cc: New file.
+	* test_labelling_3.cc: New file.
+
 2010-06-28  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Implement the kmean algorithh and start to optimize it.
