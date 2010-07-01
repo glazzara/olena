@@ -147,6 +147,16 @@ namespace mln
       void
       from_to_(const point<G,C1>& from, point<G,C2>& to);
 
+      // algebra::vec -> point
+      template <unsigned n, typename C1, typename G, typename C2>
+      void
+      from_to_(const algebra::vec<n,C1>& from, point<G,C2>& to);
+
+      // algebra::vec -> point
+      template <unsigned n, typename C1, typename G>
+      void
+      from_to_(const algebra::vec<n,C1>& from, point<G,C1>& to);
+
       // algebra::vec -> Gpoint.
       template <unsigned n, typename T, typename P>
       void

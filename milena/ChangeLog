@@ -1,3 +1,12 @@
+2010-07-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add from_to overloads for conversions from algebra::vec to point.
+
+	* mln/convert/from_to.hxx: Add new prototypes.
+
+	* mln/core/point.hh: Add new from_to overloads. Remove specialized
+	constructors causing ambiguities.
+
 2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a function to convert qt::rgb32 values to int_u8.

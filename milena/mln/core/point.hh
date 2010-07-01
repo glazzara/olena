@@ -74,6 +74,14 @@ namespace mln
       template <typename G, typename C1, typename C2>
       void from_to_(const point<G,C1>& from, point<G,C2>& to);
 
+      template <unsigned n, typename C1, typename G, typename C2>
+      void
+      from_to_(const algebra::vec<n,C1>& from, point<G,C2>& to);
+
+      template <unsigned n, typename C1, typename G>
+      void
+      from_to_(const algebra::vec<n,C1>& from, point<G,C1>& to);
+
     } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
@@ -89,6 +97,7 @@ namespace mln
     {
       typedef algebra::vec<G::dim, float> ret;
     };
+
   }
 
   /// Generic point class.
@@ -153,8 +162,6 @@ namespace mln
     point(const algebra::vec<dim,C2>& v);
 
     point(const algebra::vec<dim,C>& v);
-    point(const algebra::vec<dim,double>& v);
-    point(const algebra::vec<dim,float>& v);
 
 
     /// \{ Constructors with different numbers of arguments
@@ -210,6 +217,9 @@ namespace mln
     /// Point with all coordinates set to the mininum value.
     static const point<G,C>& minus_infty();
 
+    /// Return the underlying vector storing the coordinates.
+    algebra::vec<G::dim, C>& hook_coord_();
+
   protected:
     algebra::vec<G::dim, C> coord_;
   };
@@ -249,6 +259,49 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+  namespace internal
+  {
+
+    template <typename C, typename C2>
+    inline
+    C
+    convert_data_(metal::bool_<false>, const C2& v)
+    {
+      return static_cast<C>(v);
+    }
+
+    template <typename C, typename C2>
+    inline
+    C
+    convert_data_(metal::bool_<true>, const C2& v)
+    {
+      return round(v);
+    }
+
+    template <typename C, typename C2>
+    inline
+    C
+    convert_data(const C2& v)
+    {
+      // If (C != float && C != double) && (C2 == float || C2 == double)
+      // => We want to round the value.
+      // Otherwise we can just statically cast.
+      //
+      return convert_data_<C>(
+	typename mlc_and(
+	  mlc_and(mlc_is_not(C,float),
+		  mlc_is_not(C,double)),
+	  mlc_or(mlc_is(C2,float),
+		 mlc_is(C2, double)))::check_t(), v);
+    }
+
+
+
+  } // end of namespace mln::internal
+
+
+
   namespace convert
   {
 
@@ -261,8 +314,56 @@ namespace mln
       from_to_(const point<G,C1>& from, point<G,C2>& to)
       {
 	mlc_converts_to(C1,C2)::check();
-	to = point<G,C2>(from.to_vec());
+	enum { dim = G::dim };
+
+	for (unsigned i = 0; i < dim; ++i)
+	  to[i] = internal::convert_data<C2>(from[i]);
       }
+
+
+      template <unsigned n, typename C1, typename G, typename C2>
+      inline
+      void
+      from_to_(const algebra::vec<n,C1>& from, point<G,C2>& to)
+      {
+	mlc_converts_to(C1, C2)::check();
+	enum { dim = G::dim };
+	mlc_bool(G::dim == n)::check();
+
+	unsigned j = 0;
+	//FIXME: to be improved while adding a conversion routine.
+	if (dim < 3)
+	  to.hook_coord_() = from;
+	else
+	{
+	  for (unsigned i = dim - 2; i < dim; ++i)
+	    to[i]   = internal::convert_data<C2>(from[j++]);
+	  for (unsigned i = 2; i < dim; ++i, ++j)
+	    to[i-j] = internal::convert_data<C2>(from[j]);
+	}
+      }
+
+      template <unsigned n, typename C1, typename G>
+      inline
+      void
+      from_to_(const algebra::vec<n,C1>& from, point<G,C1>& to)
+      {
+	enum { dim = G::dim };
+	mlc_bool(G::dim == n)::check();
+
+	unsigned j = 0;
+	//FIXME: to be improved while adding a conversion routine.
+	if (dim < 3)
+	  to.hook_coord_() = from;
+	else
+	{
+	  for (unsigned i = dim - 2; i < dim; ++i)
+	    to[i]   = from[j++];
+	  for (unsigned i = 2; i < dim; ++i, ++j)
+	    to[i-j] = from[j];
+	}
+      }
+
 
     } // end of namespace mln::convert::over_load
 
@@ -315,18 +416,7 @@ namespace mln
   inline
   point<G,C>::point(const algebra::vec<dim,C2>& v)
   {
-    mlc_converts_to(C2, C)::check();
-    unsigned j = 0;
-    //FIXME: to be improved while adding a conversion routine.
-    if (dim < 3)
-      coord_ = v;
-    else
-    {
-      for (unsigned i = dim - 2; i < dim; ++i)
-	coord_[i]   = static_cast<C>(v[j++]);
-      for (unsigned i = 2; i < dim; ++i, ++j)
-	coord_[i-j] = static_cast<C>(v[j]);
-    }
+    convert::over_load::from_to_(v, *this);
   }
 
 
@@ -334,41 +424,9 @@ namespace mln
   inline
   point<G,C>::point(const algebra::vec<dim,C>& v)
   {
-    unsigned j = 0;
-    //FIXME: to be improved while adding a conversion routine.
-    if (dim < 3)
-      coord_ = v;
-    else
-    {
-      for (unsigned i = dim - 2; i < dim; ++i)
-	coord_[i]   = v[j++];
-      for (unsigned i = 2; i < dim; ++i, ++j)
-	coord_[i-j] = v[j];
-    }
+    convert::over_load::from_to_(v, *this);
   }
 
-
-  template <typename G, typename C>
-  inline
-  point<G,C>::point(const algebra::vec<dim,double>& v)
-  {
-    unsigned j = 0;
-    for (unsigned i = dim - 2; i < dim; ++i)
-      coord_[i]   = round(v[j++]);
-    for (unsigned i = 2; i < dim; ++i, ++j)
-      coord_[i-j] = round(v[j]);
-  }
-
-  template <typename G, typename C>
-  inline
-  point<G,C>::point(const algebra::vec<dim,float>& v)
-  {
-    unsigned j = 0;
-    for (unsigned i = dim - 2; i < dim; ++i)
-      coord_[i]   = round(v[j++]);
-    for (unsigned i = 2; i < dim; ++i, ++j)
-      coord_[i-j] = round(v[j]);
-  }
 
 
   template <typename G, typename C>
@@ -561,6 +619,14 @@ namespace mln
   {
     static const point<G,C> the_(all_to(mln_min(C)));
     return the_;
+  }
+
+  template <typename G, typename C>
+  inline
+  algebra::vec<G::dim, C>&
+  point<G,C>::hook_coord_()
+  {
+    return coord_;
   }
 
   namespace internal
