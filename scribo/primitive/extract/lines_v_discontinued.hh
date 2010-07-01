@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,7 +34,6 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 
-# include <scribo/core/object_image.hh>
 # include <scribo/primitive/extract/lines_discontinued.hh>
 
 
@@ -61,7 +61,7 @@ namespace scribo
        * from 0.
        */
       template <typename I, typename N, typename V>
-      object_image(mln_ch_value(I,V))
+      component_set<mln_ch_value(I,V)>
       lines_v_discontinued(const Image<I>& input,
 			   const Neighborhood<N>& nbh, V& nlines,
 			   unsigned line_length, unsigned rank_k);
@@ -99,7 +99,7 @@ namespace scribo
 
 
       template <typename I, typename N, typename V>
-      object_image(mln_ch_value(I,V))
+      component_set<mln_ch_value(I,V)>
       lines_v_discontinued(const Image<I>& input,
 			   const Neighborhood<N>& nbh, V& nlines,
 			   unsigned line_length, unsigned rank_k)
@@ -111,7 +111,7 @@ namespace scribo
 
 	win::vline2d win(line_length);
 
-	object_image(mln_ch_value(I,V))
+	component_set<mln_ch_value(I,V)>
 	  output = lines_discontinued(input, nbh, nlines, win, rank_k);
 
 	trace::exiting("scribo::primitive::lines_v_discontinued");

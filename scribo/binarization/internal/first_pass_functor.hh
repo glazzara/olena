@@ -42,6 +42,13 @@ namespace scribo
     namespace internal
     {
 
+# ifdef SCRIBO_SAUVOLA_DEBUG
+      // Global debug images.
+      extern image2d<value::int_u8> debug_k;
+      extern image2d<float> debug_s_n;
+      extern image2d<float> debug_k_l;
+# endif // ! SCRIBO_SAUVOLA_DEBUG
+
       using namespace mln;
 
 
@@ -68,12 +75,12 @@ namespace scribo
 	unsigned n_nbhs;
 	util::array<int> dp;
 
-	static const double one_k = 1 - 0.34;
-	static const double k_R = 0.34 / 128.0;
+	double K_;
 
-	first_pass_functor(const I& input)
+	first_pass_functor(const I& input, double K)
 	  : input(input),
-	    pxl(input)
+	    pxl(input),
+	    K_(K)
 	{
 	  res = 0;
 	  pxl.start();
@@ -81,6 +88,13 @@ namespace scribo
 	  initialize(t_sub, input);
 	  initialize(parent, input);
 	  initialize(msk, input);
+
+# ifdef SCRIBO_SAUVOLA_DEBUG
+	  initialize(debug_k, input);
+	  initialize(debug_s_n, input);
+	  initialize(debug_k_l, input);
+# endif // ! SCRIBO_SAUVOLA_DEBUG
+
 	  extension::fill(msk, false);
 
 	  initialize(card, input);
@@ -96,17 +110,20 @@ namespace scribo
 
 	  unsigned p = pxl.offset();
 
-	  // Use an inlined and developed version of sauvola's
-	  // threshold formula.
-//  	  value::int_u8 t_p = mean * (one_k + k_R * stddev);
-
-// 	  std::cout << t_p << ", ";
-
-// 	  std::cout << input.element(p) <<  " - " << t_p << std::endl;
-          value::int_u8 t_p = sauvola_threshold_formula(mean, stddev);
-
-//  	  std::cout << input.point_at_index(p)
-// 		    << " - " << sauvola_threshold_formula(mean, stddev);
+# ifdef SCRIBO_SAUVOLA_DEBUG
+          value::int_u8
+	    t_p = sauvola_threshold_formula(mean, stddev,
+					    K_,
+					    SCRIBO_DEFAULT_SAUVOLA_R,
+					    debug_k.element(p),
+					    debug_s_n.element(p),
+					    debug_k_l.element(p));
+# else
+          value::int_u8
+	    t_p = sauvola_threshold_formula(mean, stddev,
+					    K_,
+					    SCRIBO_DEFAULT_SAUVOLA_R);
+# endif // SCRIBO_SAUVOLA_DEBUG
 
 
 	  msk.element(p) = input.element(p) < t_p;

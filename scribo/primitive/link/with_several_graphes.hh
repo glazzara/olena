@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,10 +39,7 @@
 
 # include <mln/util/array.hh>
 # include <mln/util/graph.hh>
-
-# include <scribo/core/object_image.hh>
 # include <scribo/core/macros.hh>
-# include <scribo/primitive/internal/init_link_array.hh>
 # include <scribo/primitive/internal/find_graph_link.hh>
 
 namespace scribo

@@ -42,7 +42,7 @@ if HAVE_MAGICKXX
    sauvola 				\
    sauvola_debug			\
    sauvola_ms                           \
-   sauvola_ms_static                    \
+   sauvola_ms_debug                     \
    sauvola_ms_split
 
   fg_sauvola_ms_SOURCES = fg_sauvola_ms.cc
@@ -69,6 +69,12 @@ if HAVE_MAGICKXX
 			$(MAGICKXX_CPPFLAGS)
   sauvola_ms_LDFLAGS = $(AM_LDFLAGS) \
 		       $(MAGICKXX_LDFLAGS)
+
+  sauvola_ms_debug_SOURCES = sauvola_ms_debug.cc
+  sauvola_ms_debug_CPPFLAGS = $(AM_CPPFLAGS) -DSCRIBO_SAUVOLA_DEBUG \
+			      $(MAGICKXX_CPPFLAGS)
+  sauvola_ms_debug_LDFLAGS = $(AM_LDFLAGS) \
+		             $(MAGICKXX_LDFLAGS)
 
 
   sauvola_ms_split_SOURCES = sauvola_ms_split.cc

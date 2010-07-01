@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,10 +41,12 @@
 # include <mln/util/array.hh>
 
 # include <scribo/core/macros.hh>
+# include <scribo/core/concept/dmax_functor.hh>
 # include <scribo/core/component_set.hh>
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>
+# include <scribo/primitive/link/internal/dmax_default.hh>
 # include <scribo/primitive/link/internal/link_single_dmax_ratio_base.hh>
 
 # include <scribo/primitive/link/compute.hh>
@@ -60,19 +63,38 @@ namespace scribo
 
       /*! \brief Link components with their left neighbor if exists.
 
-	  \param[in] components An component image.
-	  \param[in] dmax_ratio
+	  \param[in] components A component set.
+	  \param[in] anchor Starting point for the neighbor lookup.
+	  \param[in] dmax_f DMax functor defining the maximum lookup
+	                    distance.
 
 	  \return Object links data.
 
-
-	  Look for a neighbor until a maximum distance defined by :
-
-	  dmax = w / 2 + dmax_ratio * max(h, w)
-
-	  where w is the bounding box width and h the bounding box height.
-
+	  Look for a neighbor until a maximum distance is reached. The
+	  maximum distance is defined thanks to a functor \p dmax_f.
       */
+      template <typename L, typename F>
+      inline
+      object_links<L>
+      with_single_left_link_dmax_ratio(const component_set<L>& components,
+				       const DMax_Functor<F>& dmax_f,
+				       anchor::Type anchor);
+
+      /// \overload
+      ///
+      /// The default dmax functor is used (internal::dmax_default).
+      //
+      template <typename L, typename F>
+      inline
+      object_links<L>
+      with_single_left_link_dmax_ratio(const component_set<L>& components,
+				       float dmax_ratio,
+				       anchor::Type anchor);
+
+
+      /// \overload
+      /// anchor is set to anchor::MassCenter.
+      //
       template <typename L>
       inline
       object_links<L>
@@ -81,12 +103,16 @@ namespace scribo
 
 
       /// \overload
-      /// dmax_ratio is set to 3.
-      template <typename L>
+      ///
+      /// The default dmax functor is used (internal::dmax_default)
+      /// with dmax_ratio set to 3.
+      ///
+      /// anchor is set to anchor::MassCenter.
+      //
+      template <typename L, typename F>
       inline
       object_links<L>
       with_single_left_link_dmax_ratio(const component_set<L>& components);
-
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -97,20 +123,20 @@ namespace scribo
 
 	// Functor
 
-	template <typename L>
+	template <typename L, typename F>
 	class single_left_dmax_ratio_functor
-	  : public internal::link_single_dmax_ratio_base<L,
-							 single_left_dmax_ratio_functor<L> >
+	  : public internal::link_single_dmax_ratio_base<L, F,
+							 single_left_dmax_ratio_functor<L, F> >
 	{
-	  typedef single_left_dmax_ratio_functor<L> self_t;
-	  typedef internal::link_single_dmax_ratio_base<L, self_t> super_;
+	  typedef single_left_dmax_ratio_functor<L, F> self_t;
+	  typedef internal::link_single_dmax_ratio_base<L, F, self_t> super_;
 
 	public:
 	  typedef mln_site(L) P;
 
 	  single_left_dmax_ratio_functor(const component_set<L>& components,
-					 unsigned dmax)
-	    : super_(components, dmax, anchor::Horizontal)
+					 const DMax_Functor<F>& dmax_f)
+	    : super_(components, anchor::Horizontal, exact(dmax_f))
 	  {
 	  }
 
@@ -127,23 +153,51 @@ namespace scribo
 
       // Facades
 
+      template <typename L, typename F>
+      inline
+      object_links<L>
+      with_single_left_link_dmax_ratio(const component_set<L>& components,
+				       const DMax_Functor<F>& dmax_f,
+				       anchor::Type anchor)
+      {
+	trace::entering("scribo::primitive::link::with_single_left_link_dmax_ratio");
+
+	mln_precondition(components.is_valid());
+
+	internal::single_left_dmax_ratio_functor<L, F>
+	  functor(components, dmax_f);
+
+	object_links<L> output = compute(functor, anchor);
+
+	trace::exiting("scribo::primitive::link::with_single_left_link_dmax_ratio");
+	return output;
+      }
+
+
+      template <typename L, typename F>
+      inline
+      object_links<L>
+      with_single_left_link_dmax_ratio(const component_set<L>& components,
+				       float dmax_ratio,
+				       anchor::Type anchor)
+      {
+	return
+	  with_single_left_link_dmax_ratio(components,
+					   internal::dmax_default(dmax_ratio),
+					   anchor);
+      }
+
+
       template <typename L>
       inline
       object_links<L>
       with_single_left_link_dmax_ratio(const component_set<L>& components,
 				       float dmax_ratio)
       {
-	trace::entering("scribo::primitive::link::with_single_left_link_dmax_ratio");
-
-	mln_precondition(components.is_valid());
-
-	internal::single_left_dmax_ratio_functor<L>
-	  functor(components, dmax_ratio);
-
-	object_links<L> output = compute(functor);
-
-	trace::exiting("scribo::primitive::link::with_single_left_link_dmax_ratio");
-	return output;
+	return
+	  with_single_left_link_dmax_ratio(components,
+					   internal::dmax_default(dmax_ratio),
+					   anchor::MassCenter);
       }
 
 

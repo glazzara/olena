@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,7 +59,7 @@ namespace scribo
 # include <scribo/primitive/extract/lines_v_thick.hh>
 # include <scribo/primitive/extract/lines_v_discontinued.hh>
 # include <scribo/primitive/extract/lines_h_pattern.hh>
-# include <scribo/primitive/extract/objects.hh>
+# include <scribo/primitive/extract/components.hh>
 # include <scribo/primitive/extract/cells.hh>
 # include <scribo/primitive/extract/lines_thick.hh>
 # include <scribo/primitive/extract/lines_h_discontinued.hh>

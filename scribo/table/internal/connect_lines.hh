@@ -97,7 +97,7 @@ namespace scribo
 	l = transform::influence_zone_geodesic_saturated(l, c2(),
 							 max_distance, -1);
 
-	for_all_components(i, boxes)
+	for_all_comps(i, boxes)
 	{
 	  mln::util::couple<P,P> cp = central_sites(boxes[i], dim);
 	  if (opt::at(l, cp.first()[dim]) != -1

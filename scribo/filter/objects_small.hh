@@ -143,7 +143,7 @@ namespace scribo
 
       fun::v2b::components_small_filter<L> f(components, min_size);
 
-      component_set<L> output = components;
+      component_set<L> output = components.duplicate();
       output.update_tags(f, component::Ignored);
 
       trace::exiting("scribo::filter::components_small");

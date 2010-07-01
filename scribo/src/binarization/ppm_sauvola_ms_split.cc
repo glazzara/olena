@@ -34,16 +34,19 @@
 
 bool check_args(int argc, char * argv[])
 {
-  if (argc != 7)
+  if (argc < 3 || argc > 7)
     return false;
 
-  int s = atoi(argv[3]);
-
-  if (s < 1 || s > 3)
+  if (argc >= 5)
   {
-    std::cout << "s must be set to 2 or 3."
-	      << std::endl;
-    return false;
+    int s = atoi(argv[4]);
+
+    if (s < 1 || s > 3)
+    {
+      std::cout << "s must be set to 2 or 3."
+		<< std::endl;
+      return false;
+    }
   }
 
   return true;
@@ -53,10 +56,11 @@ bool check_args(int argc, char * argv[])
 const char *args_desc[][2] =
 {
   { "input.ppm", "A color image." },
-  { "w", "Window size at scale 1. (Common value: 101)" },
-  { "s", "First subsampling ratio (Common value: 3)." },
-  { "min_area",    "Minimum object area at scale 1 (Common value: 67)" },
-  { "min_ntrue",   "The number of components in which a site must be set to 'True' in order to be set to 'True' in the output (Possible values: 1, 2, 3).  (Common value: 2)" },
+  { "output.pbm", "A binary image." },
+  { "w", "Window size at scale 1. (default: 101)" },
+  { "s", "First subsampling ratio (default: 3)." },
+  { "min_ntrue",   "The number of components in which a site must be set to 'True' in order to be set to 'True' in the output (Possible values: 1, 2, 3).  (default: 2)" },
+  { "K", "Sauvola's formula parameter (default: 0.34)." },
   {0, 0}
 };
 
@@ -71,28 +75,51 @@ int main(int argc, char *argv[])
   if (!check_args(argc, argv))
     return scribo::debug::usage(argv,
 				"Multi-Scale Binarization of a color image based on Sauvola's algorithm. Performs a binarization on each component of the color image and merges the results.",
-				"input.ppm w s area_threshold output.pbm",
-				args_desc, "A binary image.");
+				"input.ppm output.pbm <w> <s> <min_ntrue> <K>",
+				args_desc);
 
   trace::entering("main");
 
   // Window size
-  unsigned w_1 = atoi(argv[2]);  // Scale 1
+  unsigned w_1;
+  if (argc >= 4)
+    w_1 = atoi(argv[3]);  // Scale 1
+  else
+    w_1 = 101u;
 
   // First subsampling scale.
-  unsigned s = atoi(argv[3]);
+  unsigned s;
+  if (argc >= 5)
+    s = atoi(argv[4]);
+  else
+    s = 3u;
 
-  // Lambda value
-  unsigned lambda_min_1 = atoi(argv[4]);
+  // min_ntrue
+  unsigned min_ntrue;
+  if (argc >= 6)
+    min_ntrue = atoi(argv[5]);
+  else
+    min_ntrue = 2;
 
 
+  double k;
+  if (argc >= 7)
+    k = atof(argv[6]);
+  else
+    k = 0.34f;
+
+
+  // Load
   image2d<value::rgb8> input_1;
   io::ppm::load(input_1, argv[1]);
 
-  image2d<bool>
-    output = scribo::binarization::sauvola_ms_split(input_1, w_1, s, lambda_min_1, atoi(argv[5]));
+  std::cout << "Using w=" << w_1 << " - s=" << s << " - min_ntrue=" << min_ntrue << " - k=" << k << std::endl;
 
-  io::pbm::save(output, argv[6]);
+  // Binarize
+  image2d<bool>
+    output = scribo::binarization::sauvola_ms_split(input_1, w_1, s, min_ntrue, k);
+
+  io::pbm::save(output, argv[2]);
 }
 
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,8 +35,6 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/win/hline2d.hh>
 
-# include <scribo/core/object_image.hh>
-
 
 namespace scribo
 {
@@ -66,9 +65,9 @@ namespace scribo
        * labeled.
        */
       template <typename I, typename N, typename V>
-      object_image(mln_ch_value(I,V))
+      component_set<mln_ch_value(I,V)>
       lines_v_single(const Image<I>& input,
-		     const Neighborhood<N>& nbh, V& nlines,
+		     const Neighborhood<N>& nbh, const V& nlines,
 		     unsigned min_line_length,
 		     float h_w_ratio);
 
@@ -78,7 +77,7 @@ namespace scribo
        * Only single non discontinued lines are correctly extracted
        * with this routine.
        *
-       * \param[in]     objects     A labeled image.
+       * \param[in]     components     A labeled image.
        * \param[in]     line_length The minimum line length.
        * \param[in]     h_w_ratio   The minimum ratio height/width object
        *                            bounding boxes to consider an
@@ -88,8 +87,8 @@ namespace scribo
        * labeled.
        */
       template <typename L>
-      object_image(L)
-      lines_v_single(const object_image(L)& objects,
+      component_set<L>
+      lines_v_single(const component_set<L>& components,
 		     unsigned min_line_length,
 		     float h_w_ratio);
 
@@ -105,17 +104,17 @@ namespace scribo
 	{
 	  typedef bool result;
 
-	  is_line_v_single(const object_image(L)& objects,
+	  is_line_v_single(const component_set<L>& components,
 			   float h_w_ratio, unsigned min_line_length)
 	    : h_w_ratio_(h_w_ratio), min_line_length_(min_line_length),
-	      objects_(objects)
+	      components_(components)
 	  {
 	  }
 
 
 	  bool operator()(const mln_value(L)& label) const
 	  {
-	    mln_domain(L) box = objects_.bbox(label);
+	    const mln_domain(L)& box = components_(label).bbox();
 	    unsigned
 	      height = box.pmax().row() - box.pmin().row() + 1,
 	      width = box.pmax().col() - box.pmin().col() + 1;
@@ -127,7 +126,7 @@ namespace scribo
 	  float h_w_ratio_;
 	  unsigned min_line_length_;
 
-	  object_image(L) objects_;
+	  component_set<L> components_;
 	};
 
 
@@ -136,9 +135,9 @@ namespace scribo
 
 
       template <typename I, typename N, typename V>
-      object_image(mln_ch_value(I,V))
+      component_set<mln_ch_value(I,V)>
       lines_v_single(const Image<I>& input_,
-		     const Neighborhood<N>& nbh_, V& nlines,
+		     const Neighborhood<N>& nbh_, const V& nlines,
 		     unsigned min_line_length,
 		     float h_w_ratio)
       {
@@ -150,14 +149,13 @@ namespace scribo
 	mln_precondition(nbh.is_valid());
 
 	typedef mln_ch_value(I,V) L;
-	object_image(L)
-	  output = objects(input, nbh, nlines);
+	component_set<L>
+	  output = primitive::extract::components(input, nbh, nlines);
 
 	internal::is_line_v_single<L>
 	  is_line(output, h_w_ratio, min_line_length);
 
-	output.relabel(is_line);
-	nlines = output.nlabels();
+	output.update_tags(is_line, component::Ignored);
 
 	trace::exiting("scribo::primitive::lines_v_single");
 	return output;
@@ -166,21 +164,20 @@ namespace scribo
 
 
       template <typename L>
-      object_image(L)
-      lines_v_single(const object_image(L)& objects,
+      component_set<L>
+      lines_v_single(const component_set<L>& components,
 		     unsigned min_line_length,
 		     float h_w_ratio)
       {
 	trace::entering("scribo::primitive::lines_v_single");
 
-	mln_precondition(objects.is_valid());
+	mln_precondition(components.is_valid());
 
 	internal::is_line_v_single<L>
-	  is_line(objects, h_w_ratio, min_line_length);
+	  is_line(components, h_w_ratio, min_line_length);
 
-	object_image(L) output;
-	output.init_from_(objects);
-	output.relabel(is_line);
+	component_set<L> output = components.duplicate();
+	output.update_tags(is_line, component::Ignored);
 
 	trace::exiting("scribo::primitive::lines_v_single");
 	return output;

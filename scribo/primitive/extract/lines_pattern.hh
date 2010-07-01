@@ -75,60 +75,215 @@ namespace scribo
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+      // Implementations
+
+      namespace impl
+      {
+
+	namespace generic
+	{
+
+	  template <typename I, typename W>
+	  mln_concrete(I)
+	  lines_pattern(const Image<I>& input_, unsigned length,
+			unsigned dir, const Window<W>& win_)
+	  {
+	    trace::entering("scribo::primitive::extract::impl::generic::lines_pattern");
+
+	    const I& input = exact(input_);
+	    const W& win = exact(win_);
+	    mlc_is(mln_value(I), bool)::check();
+	    mln_precondition(input.is_valid());
+
+	    // Adjusting extension.
+	    extension::adjust_fill(input, length / 2, 0);
+
+	    accu::count_value<bool> accu(true);
+	    mln_ch_value(I,unsigned)
+	      tmp = accu::transform_line(accu, input, length, dir);
+
+	    mln_concrete(I) output;
+	    initialize(output, input);
+
+	    mln_piter(I) p(input.domain());
+	    mln_qiter(window2d) q(win, p);
+	    bool is_foreground;
+	    for_all(p)
+	    {
+
+	      // If the foreground part of the pattern has more than 20%
+	      // of background pixels, the current pixel is considered as
+	      // background pixel.
+	      if (length - tmp(p) > unsigned(0.2f * length) + 1)
+	      {
+		output(p) = false;
+		continue;
+	      }
+
+	      // If the background parts of the pattern have exactly or
+	      // less than 95% of background pixels, the current pixel is
+	      // considered as part of the background.
+	      is_foreground = true;
+	      for_all(q)
+		if ((length - tmp(q)) < unsigned(length * 0.95f) + 1)
+		{
+		  is_foreground = false;
+		  break;
+		}
+
+	      output(p) = is_foreground;
+	    }
+
+	    trace::exiting("scribo::primitive::extract::impl::generic::lines_pattern");
+	    return output;
+	  }
+
+	} // end of namespace scribo::primitive::extract::impl::generic
+
+
+
+	template <typename I, typename W>
+	mln_concrete(I)
+	lines_pattern_fast(const Image<I>& input_, unsigned length,
+			   unsigned dir, const Window<W>& win_)
+	{
+	  trace::entering("scribo::primitive::extract::impl::lines_pattern_fast");
+
+	  const I& input = exact(input_);
+	  const W& win = exact(win_);
+	  mlc_is(mln_value(I), bool)::check();
+	  mln_precondition(input.is_valid());
+
+	  // Adjusting extension.
+	  extension::adjust_fill(input, length / 2, 0);
+
+	  accu::count_value<bool> accu(true);
+	  mln_ch_value(I,unsigned)
+	    tmp = accu::transform_line(accu, input, length, dir);
+
+	  mln_concrete(I) output;
+	  initialize(output, input);
+
+	  util::array<int>
+	    q_arr = offsets_wrt(output, win);
+
+	  bool is_foreground;
+	  unsigned ncols = geom::ncols(output);
+	  unsigned hit_ratio = 0.2f * length + 1;
+	  unsigned miss_ratio = 0.95f * length + 1;
+
+	  mln_box_runstart_piter(I) p(output.domain());
+	  for_all(p)
+	  {
+	    unsigned pi = output.index_of_point(p);
+	    unsigned *tmp_ptr = &tmp.element(pi);
+	    unsigned *end_ptr = tmp_ptr + ncols;
+
+	    mln_value(I) *out_ptr = &output.element(pi);
+
+	    for (; tmp_ptr < end_ptr; ++out_ptr, ++tmp_ptr)
+	    {
+
+	      // If the foreground part of the pattern has more than 20%
+	      // of background pixels, the current pixel is considered as
+	      // background pixel.
+	      if (length - *tmp_ptr > hit_ratio)
+	      {
+		*out_ptr = false;
+		continue;
+	      }
+
+	      // If the background parts of the pattern have exactly or
+	      // less than 95% of background pixels, the current pixel is
+	      // considered as part of the background.
+	      is_foreground = true;
+	      for (unsigned i = 0; i < q_arr.size(); ++i)
+		if ((length - *(tmp_ptr + q_arr[i])) < miss_ratio)
+		{
+		  is_foreground = false;
+		  break;
+		}
+
+	      *out_ptr = is_foreground;
+	    }
+	  }
+
+	  trace::exiting("scribo::primitive::extract::impl::lines_pattern_fast");
+	  return output;
+	}
+
+      } // end of namespace scribo::primitive::extract::impl
+
+
+
+      // Dispatch
+
+      namespace internal
+      {
+
+	template <typename I, typename W>
+	mln_concrete(I)
+	lines_pattern_dispatch(mln::trait::image::value_storage::any,
+			       mln::trait::image::value_access::any,
+			       mln::trait::image::ext_domain::any,
+			       const Image<I>& input, unsigned length,
+			       unsigned dir, const Window<W>& win)
+	{
+	  return impl::generic::lines_pattern(input, length, dir, win);
+	}
+
+
+	template <typename I, typename W>
+	mln_concrete(I)
+	lines_pattern_dispatch(mln::trait::image::value_storage::one_block,
+			       mln::trait::image::value_access::direct,
+			       mln::trait::image::ext_domain::some,
+			       const Image<I>& input, unsigned length,
+			       unsigned dir, const Window<W>& win)
+	{
+	  return impl::lines_pattern_fast(input, length, dir, win);
+	}
+
+
+	template <typename I, typename W>
+	mln_concrete(I)
+	lines_pattern_dispatch(const Image<I>& input, unsigned length,
+			       unsigned dir, const Window<W>& win)
+	{
+	  return lines_pattern_dispatch(mln_trait_image_value_storage(I)(),
+					mln_trait_image_value_access(I)(),
+					mln_trait_image_ext_domain(I)(),
+					input,
+					length,
+					dir, win);
+	}
+
+      } // end of namespace scribo::primitive::extract::internal
+
+
+      // Facade
+
       template <typename I, typename W>
       mln_concrete(I)
-      lines_pattern(const Image<I>& input_, unsigned length,
-		    unsigned dir, const Window<W>& win_)
+      lines_pattern(const Image<I>& input, unsigned length,
+		    unsigned dir, const Window<W>& win)
       {
 	trace::entering("scribo::primitive::extract::lines_pattern");
 
-	const I& input = exact(input_);
-	const W& win = exact(win_);
 	mlc_is(mln_value(I), bool)::check();
-	mln_precondition(input.is_valid());
+	mln_precondition(exact(input).is_valid());
+	mln_precondition(exact(win).is_valid());
+	mln_precondition(length != 0);
+	mln_precondition(dir == 0 || dir == 1);
 
-	// Adjusting extension.
-	extension::adjust_fill(input, length / 2, 0);
-
-	accu::count_value<bool> accu(true);
-	mln_ch_value(I,unsigned)
-	  tmp = accu::transform_line(accu, input, length, dir);
-
-	mln_concrete(I) output;
-	initialize(output, input);
-
-	mln_piter(I) p(input.domain());
-	mln_qiter(window2d) q(win, p);
-	bool is_foreground;
-	for_all(p)
-	{
-
-	  // If the foreground part of the pattern has more than 20%
-	  // of background pixels, the current pixel is considered as
-	  // background pixel.
-	  if (length - tmp(p) > unsigned(0.2f * length) + 1)
-	  {
-	    output(p) = false;
-	    continue;
-	  }
-
-	  // If the background parts of the pattern have exactly or
-	  // less than 95% of background pixels, the current pixel is
-	  // considered as part of the background.
-	  is_foreground = true;
-	  for_all(q)
-	    if ((length - tmp(q)) < unsigned(length * 0.95f) + 1)
-	    {
-	      is_foreground = false;
-	      break;
-	    }
-
-	  output(p) = is_foreground;
-	}
+	mln_concrete(I)
+	  output = internal::lines_pattern_dispatch(input, length, dir, win);
 
 	trace::exiting("scribo::primitive::extract::lines_pattern");
 	return output;
       }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

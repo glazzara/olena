@@ -78,26 +78,29 @@ namespace mln
 	return Magick::ColorMono(value);
       }
 
+      // Gray values must be between 0 and 1.
       inline
       Magick::Color get_color(const value::int_u8& value)
       {
-	return Magick::ColorGray(256 - value);
+	return Magick::ColorGray(value / 255.0f);
       }
 
+      // Color values must be between 0 and 1.
       inline
       Magick::Color get_color(const value::rgb8& value)
       {
-	return Magick::ColorRGB(256 - value.red(),
-				256 - value.green(),
-				256 - value.blue());
+	return Magick::ColorRGB(value.red() / 255.0f,
+				value.green() / 255.0f,
+				value.blue() / 255.0f);
       }
 
+      // Color values must be between 0 and 1.
       inline
       Magick::Color get_color(const value::qt::rgb32& value)
       {
-	return Magick::ColorRGB(256 - value.red(),
-				256 - value.green(),
-				256 - value.blue());
+	return Magick::ColorRGB(value.red() / 255.0f,
+				value.green() / 255.0f,
+				value.blue() / 255.0f);
       }
 
       template <typename I>
@@ -119,20 +122,20 @@ namespace mln
 	}
 
 	Magick::Image im_file;
-	im_file.size(Magick::Geometry(ima.nrows(), ima.ncols()));
+	im_file.size(Magick::Geometry(ima.ncols(), ima.nrows()));
 
-	Magick::PixelPacket* pixel_cache = im_file.getPixels(0, 0, ima.nrows(), ima.ncols());
-	Magick::PixelPacket* pixel;
+	im_file.modifyImage();
+
+        Magick::PixelPacket *
+	  pp = im_file.getPixels(0,0, ima.ncols(), ima.nrows());
 
 	mln_site(I) pmin = ima.domain().pmin();
 	mln_piter(I) p(ima.domain());
 	for_all(p)
-	{
-	  pixel = pixel_cache + (int) (p.to_site().to_vec()[0] - pmin.to_vec()[0]) * ima.ncols()
-	    + (int) (p.to_site().to_vec()[1] - pmin.to_vec()[1]);
-	  *pixel = get_color(ima(p));
-	}
+	  *pp++ = get_color(ima(p));
+
 	im_file.syncPixels();
+
 	im_file.write(filename);
 
 	trace::exiting("mln::io::magick::save");

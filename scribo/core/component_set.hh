@@ -191,6 +191,13 @@ namespace scribo
     /// Unique set Id.
     unsigned id_() const;
 
+
+    /// Read/Write access to the underlying labeled image.
+    /// Careful! Write in this image at your own risks! It may lead to
+    /// non-synchronised related data.
+    //
+    L& labeled_image_();
+
     /// @}
 
   private:
@@ -474,6 +481,15 @@ namespace scribo
   component_set<L>::id_() const
   {
     return (unsigned)data_.ptr_;
+  }
+
+
+  template <typename L>
+  inline
+  L&
+  component_set<L>::labeled_image_()
+  {
+    return this->data_->ima_;
   }
 
 

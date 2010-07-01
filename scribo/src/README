@@ -1,0 +1,13 @@
+In this directory, you can find several small tools.
+
+Here is a description of some of them:
+
+./
+
+	pbm_text_in_doc: Localize and recognize text in a document.
+
+	text_in_doc_preprocess: Preprocess a document image in order
+				to extract its text.
+
+	text_in_picture: Localize text in pictures (Do NOT extract and
+			 recognize text)

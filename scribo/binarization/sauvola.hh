@@ -55,6 +55,23 @@ namespace scribo
 
       \input[in]  input       An image.
       \input[in]  window_size The window size.
+      \input[in]  K           Sauvola's formulae constant.
+
+      \return A binary image.
+
+     */
+    template <typename I>
+    mln_ch_value(I, bool)
+    sauvola(const Image<I>& input, unsigned window_size, double K);
+
+
+
+    /*! \brief Convert an image into a binary image.
+
+      Sauvola's formulae constant K is set to 0.34.
+
+      \input[in]  input       An image.
+      \input[in]  window_size The window size.
 
       \return A binary image.
 
@@ -84,7 +101,7 @@ namespace scribo
 
 	template <typename I>
 	mln_ch_value(I, bool)
-	sauvola(const Image<I>& input, unsigned window_size)
+	sauvola(const Image<I>& input, unsigned window_size, double K)
 	{
 	  trace::entering("scribo::binarization::impl::generic::sauvola");
 	  mln_precondition(exact(input).is_valid());
@@ -92,7 +109,8 @@ namespace scribo
 	  mln_ch_value(I, bool)
 	    output = local_threshold(input,
 				     binarization::sauvola_threshold_image(input,
-									   window_size));
+									   window_size,
+									   K));
 
 	  trace::exiting("scribo::binarization::impl::generic::sauvola");
 	  return output;
@@ -103,7 +121,7 @@ namespace scribo
 
       template <typename I>
       mln_ch_value(I, bool)
-      sauvola_rgb8(const Image<I>& input, unsigned window_size)
+      sauvola_rgb8(const Image<I>& input, unsigned window_size, double K)
       {
 	trace::entering("scribo::binarization::impl::generic::sauvola");
 	mln_precondition(exact(input).is_valid());
@@ -114,7 +132,8 @@ namespace scribo
 	mln_ch_value(I, bool)
 	  output = local_threshold(gima,
 				   binarization::sauvola_threshold_image(gima,
-									 window_size));
+									 window_size,
+									 K));
 
 	trace::exiting("scribo::binarization::impl::generic::sauvola");
 	return output;
@@ -132,26 +151,29 @@ namespace scribo
       template <typename I>
       mln_ch_value(I, bool)
 	sauvola_dispatch(const mln_value(I)&,
-			 const Image<I>& input, unsigned window_size)
+			 const Image<I>& input, unsigned window_size,
+			 double K)
       {
-	return impl::generic::sauvola(input, window_size);
+	return impl::generic::sauvola(input, window_size, K);
       }
 
       template <typename I>
       mln_ch_value(I, bool)
       sauvola_dispatch(const value::rgb8&,
-		       const Image<I>& input, unsigned window_size)
+		       const Image<I>& input, unsigned window_size,
+		       double K)
       {
-	return impl::sauvola_rgb8(input, window_size);
+	return impl::sauvola_rgb8(input, window_size, K);
       }
 
 
       template <typename I>
       mln_ch_value(I, bool)
-      sauvola_dispatch(const Image<I>& input, unsigned window_size)
+      sauvola_dispatch(const Image<I>& input, unsigned window_size,
+		       double K)
       {
 	typedef mln_value(I) V;
-	return sauvola_dispatch(V(), input, window_size);
+	return sauvola_dispatch(V(), input, window_size, K);
       }
 
     } // end of namespace scribo::binarization::internal
@@ -162,6 +184,22 @@ namespace scribo
 
     template <typename I>
     mln_ch_value(I, bool)
+      sauvola(const Image<I>& input, unsigned window_size, double K)
+    {
+      trace::entering("scribo::binarization::sauvola");
+
+      mln_precondition(exact(input).is_valid());
+
+      mln_ch_value(I, bool)
+	output = internal::sauvola_dispatch(input, window_size, K);
+
+      trace::exiting("scribo::binarization::sauvola");
+      return output;
+    }
+
+
+    template <typename I>
+    mln_ch_value(I, bool)
     sauvola(const Image<I>& input, unsigned window_size)
     {
       trace::entering("scribo::binarization::sauvola");
@@ -169,7 +207,8 @@ namespace scribo
       mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, bool)
-	output = internal::sauvola_dispatch(input, window_size);
+	output = internal::sauvola_dispatch(input, window_size,
+					    SCRIBO_DEFAULT_SAUVOLA_K);
 
       trace::exiting("scribo::binarization::sauvola");
       return output;

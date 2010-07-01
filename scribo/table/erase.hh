@@ -62,8 +62,8 @@ namespace scribo
     template <typename I, typename L>
     mln_concrete(I)
     erase(const Image<I>& input,
-	  const object_image(L)& hlines,
-	  const object_image(L)& vlines);
+	  const Image<L>& hlines,
+	  const Image<L>& vlines);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -73,12 +73,14 @@ namespace scribo
     inline
     mln_concrete(I)
     erase(const Image<I>& input,
-	  const object_image(L)& hlines,
-	  const object_image(L)& vlines)
+	  const Image<L>& hlines,
+	  const Image<L>& vlines)
     {
       trace::entering("scribo::internal::erase");
       mlc_equal(mln_value(I),bool)::check();
       mln_precondition(exact(input).is_valid());
+      mln_precondition(exact(hlines).is_valid());
+      mln_precondition(exact(vlines).is_valid());
 
       I output = duplicate(input);
 

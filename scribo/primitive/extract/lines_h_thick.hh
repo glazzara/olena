@@ -34,7 +34,7 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/win/hline2d.hh>
 
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/primitive/extract/lines_thick.hh>
 
 namespace scribo
@@ -61,7 +61,7 @@ namespace scribo
        * \return An image in which lines are labeled.
        */
       template <typename I, typename N, typename V, typename W>
-      object_image(mln_ch_value(I,V))
+      component_set<mln_ch_value(I,V)>
       lines_thick(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_, V& nlines,
 		  unsigned line_length);
@@ -99,7 +99,7 @@ namespace scribo
 
 
       template <typename I, typename N, typename V>
-      object_image(mln_ch_value(I,V))
+      component_set<mln_ch_value(I,V)>
       lines_h_thick(const Image<I>& input,
 		    const Neighborhood<N>& nbh, V& nlines,
 		    unsigned line_length)
@@ -111,7 +111,7 @@ namespace scribo
 
 	win::hline2d win(line_length);
 
-	object_image(mln_ch_value(I,V))
+	component_set<mln_ch_value(I,V)>
 	  output = lines_thick(input, nbh, nlines, win);
 
 	trace::exiting("scribo::primitive::lines_h_thick");

@@ -47,14 +47,11 @@ namespace scribo
 } // end of namespace scribo
 
 
-# include <scribo/primitive/internal/init_link_array.hh>
 # include <scribo/primitive/internal/is_link_valid.hh>
 # include <scribo/primitive/internal/find_root.hh>
 # include <scribo/primitive/internal/find_graph_link.hh>
-# include <scribo/primitive/internal/find_right_link.hh>
 # include <scribo/primitive/internal/update_graph_link.hh>
 # include <scribo/primitive/internal/update_link_array.hh>
-# include <scribo/primitive/internal/find_left_link.hh>
 
 
 #endif // ! SCRIBO_PRIMITIVE_INTERNAL_ALL_HH

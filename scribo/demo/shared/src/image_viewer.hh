@@ -60,7 +60,8 @@ namespace scribo
 	image_viewer(QWidget *parent = 0);
 	~image_viewer();
 
-	void draw_image(const mln::image2d<dsp_data_t>& ima);
+	template <typename V>
+	void draw_image(const mln::image2d<V>& ima);
 	void draw_image(const QPixmap& pixmap);
 	void draw_image(const QPixmap& pixmap, const QPoint& origin);
 
@@ -72,11 +73,12 @@ namespace scribo
 	void clear();
 
 	void set_selection_enabled(bool b);
+// 	void set_mouse_selection_enabled(bool b);
 	void set_rotation_enabled(bool b);
 
 
 	bool has_selection() const;
-	const QRectF& selection() const;
+	QRectF selection() const;
 
 	bool has_rotation() const;
 	qreal rotation() const;
@@ -91,11 +93,15 @@ namespace scribo
 	void keyPressEvent(QKeyEvent *event);
 	void resizeEvent(QResizeEvent * event);
 
+	void enable_widgets(bool b);
+
       private slots:
 	void visible_slider(bool b);
 
 	void move_vertical_sliders(int value);
 	void move_horizontal_sliders(int value);
+
+	void setup_selection_tool(bool b, const QPointF& p = QPointF());
 
 	void on_slider_valueChanged(int sli);
 
@@ -107,14 +113,17 @@ namespace scribo
 	void on_zoomFixed_clicked();
 	void on_zoomOriginal_clicked();
 
+ 	void new_mouse_selection_slot(const QPointF&);
+	void new_mouse_released_slot(const QPointF& p);
+// 	void selection_mouse_moved_slot(const QPointF& p);
 
       public slots:
 	void set_image_layer_count(unsigned nslis);
 	void update_image(const mln::image2d<dsp_data_t>& ima);
 
-
       signals:
 	void slider_valueChanged(int sli);
+	void ready_for_crop();
 
       private: // attributes
 	QGraphicsPixmapItem* image_;
@@ -122,6 +131,8 @@ namespace scribo
 	bool mouse_moving_;
 	QPoint p_start_;
 	qreal angle_;
+
+	bool zoom_fixed_;
       };
 
 
@@ -131,5 +142,7 @@ namespace scribo
 
 } // end of namespace scribo
 
+
+# include <shared/src/image_viewer.hxx>
 
 #endif // ! SCRIBO_DEMO_SHARED_SRC_IMAGE_VIEWER_HH

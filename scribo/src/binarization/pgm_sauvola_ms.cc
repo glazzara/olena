@@ -34,16 +34,19 @@
 
 bool check_args(int argc, char * argv[])
 {
-  if (argc < 5 || argc > 6)
+  if (argc < 3 || argc > 6)
     return false;
 
-  int s = atoi(argv[3]);
-
-  if (s < 1 || s > 3)
+  if (argc >= 5)
   {
-    std::cout << "s must be set to 2 or 3."
-	      << std::endl;
-    return false;
+    int s = atoi(argv[4]);
+
+    if (s < 1 || s > 3)
+    {
+      std::cout << "s must be set to 2 or 3."
+		<< std::endl;
+      return false;
+    }
   }
 
   return true;
@@ -53,9 +56,10 @@ bool check_args(int argc, char * argv[])
 const char *args_desc[][2] =
 {
   { "input.pgm", "A graylevel image." },
-  { "w", "Window size at scale 1. (Common value: 101)" },
-  { "s", "First subsampling ratio (Common value: 3)." },
-  { "min_area",    "Minimum object area at scale 1 (Common value: 67)" },
+  { "out.pbm", "A binary image." },
+  { "w", "Window size at scale 1. (default: 101)" },
+  { "s", "First subsampling ratio (default: 3)." },
+  { "k",    "Sauvola's formuale parameter (default: 0.34)" },
   {0, 0}
 };
 
@@ -70,28 +74,38 @@ int main(int argc, char *argv[])
   if (!check_args(argc, argv))
     return scribo::debug::usage(argv,
 				"Multi-Scale Binarization of a color image based on Sauvola's algorithm.",
-				"input.pgm w s area_threshold output.pbm",
-				args_desc, "A binary image.");
+				"input.pgm output.pbm <w> <s> <k>",
+				args_desc);
 
   trace::entering("main");
 
   // Window size
-  unsigned w_1 = atoi(argv[2]);  // Scale 1
+  unsigned w_1;
+  if (argc >= 4)
+    w_1 = atoi(argv[3]);  // Scale 1
+  else
+    w_1 = 101u;
 
   // First subsampling scale.
-  unsigned s = atoi(argv[3]);
+  unsigned s;
+  if (argc >= 5)
+    s = atoi(argv[4]);
+  else
+    s = 3u;
 
-  // Lambda value
-  unsigned lambda_min_1 = atoi(argv[4]);
-
+  double k;
+  if (argc >= 6)
+    k = atof(argv[5]);
+  else
+    k = 0.34f;
 
   image2d<value::int_u8> input_1;
   io::pgm::load(input_1, argv[1]);
 
   image2d<bool>
-    output = scribo::binarization::sauvola_ms(input_1, w_1, s, lambda_min_1);
+    output = scribo::binarization::sauvola_ms(input_1, w_1, s, k);
 
-  io::pbm::save(output, argv[5]);
+  io::pbm::save(output, argv[2]);
 }
 
 

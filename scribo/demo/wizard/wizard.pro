@@ -11,27 +11,29 @@ INCLUDEPATH += . ../ ../shared $(OLN)/milena $(OLN)
 DEFINES += NDEBUG MLN_INCLUDE_ONLY
 
 # Input
-HEADERS +=					\
- ../shared/src/image_viewer.hh			\
- ../shared/src/internal/interactive_scene.hh	\
- ../shared/src/crop_item.hh			\
+  HEADERS +=					\
+  ../shared/src/image_viewer.hh			\
+  ../shared/src/internal/interactive_scene.hh	\
+  ../shared/src/crop_item.hh			\
   ../shared/src/browse_widget.hh		\
- src/load_page.hh				\
- src/load_widget.hh				\
- src/doc_type_widget.hh				\
- src/doc_type_page.hh				\
- src/crop_widget.hh				\
- src/crop_page.hh				\
- src/rotate_widget.hh				\
- src/rotate_page.hh				\
- src/preprocessing_widget.hh			\
- src/preprocessing_page.hh			\
- src/process_page.hh				\
- src/process_widget.hh				\
- src/runner.hh					\
- src/preprocessing_task.hh			\
- src/doc_type.hh				\
- src/main_window.hh
+  src/load_page.hh				\
+  src/load_widget.hh				\
+  src/doc_type_widget.hh			\
+  src/doc_type_page.hh				\
+  src/crop_widget.hh				\
+  src/crop_page.hh				\
+  src/rotate_widget.hh				\
+  src/rotate_page.hh				\
+  src/preprocessing_widget.hh			\
+  src/preprocessing_page.hh			\
+  src/process_page.hh				\
+  src/process_widget.hh				\
+  src/runner.hh					\
+  src/preprocessing_task.hh			\
+  src/doc_type.hh				\
+  src/main_window.hh				\
+  src/result_page.hh				\
+  src/result_widget.hh
 
 
 SOURCES +=					\
@@ -40,7 +42,7 @@ SOURCES +=					\
   ../shared/src/browse_widget.cc		\
   src/main.cc					\
   src/main_window.cc				\
-  src/doc_type_widget.cc				\
+  src/doc_type_widget.cc			\
   src/doc_type_page.cc				\
   src/load_page.cc				\
   src/load_widget.cc				\
@@ -52,7 +54,9 @@ SOURCES +=					\
   src/preprocessing_page.cc			\
   src/process_page.cc				\
   src/process_widget.cc				\
-  src/mln_widgets.cc
+  src/mln_widgets.cc				\
+  src/result_page.cc				\
+  src/result_widget.cc
 
 FORMS +=					\
   ../shared/ui/browse_widget.ui			\

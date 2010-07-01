@@ -40,6 +40,7 @@
 # include <mln/accu/stat/median_h.hh>
 # include <mln/accu/shape/bbox.hh>
 # include <mln/util/object_id.hh>
+# include <mln/value/int_u.hh>
 
 # include <scribo/core/tag/component.hh>
 # include <scribo/core/tag/line.hh>
@@ -123,6 +124,10 @@ namespace scribo
     float reading_orientation() const;
 
     bool indented() const;
+
+    bool has_text() const;
+    const std::string& text() const;
+    void update_text(const std::string& str);
 
 
     bool is_valid() const;
@@ -232,6 +237,8 @@ namespace scribo
 
     bool indented_;
 
+    std::string text_;
+
     // Line set holding this element.
     line_set<L> holder_;
 
@@ -294,6 +301,8 @@ namespace scribo
     reading_orientation_ = other.reading_orientation();
 
     indented_ = other.indented();
+
+    text_ = other.text();
 
     holder_ = other.holder();
   }
@@ -578,6 +587,28 @@ namespace scribo
     return indented_;
   }
 
+  template <typename L>
+  bool
+  line_info<L>::has_text() const
+  {
+    return !text_.empty();
+  }
+
+  template <typename L>
+  const std::string&
+  line_info<L>::text() const
+  {
+    return text_;
+  }
+
+
+  template <typename L>
+  void
+  line_info<L>::update_text(const std::string& str)
+  {
+    text_ = str;
+  }
+
 
   template <typename L>
   bool
@@ -795,7 +826,7 @@ namespace scribo
 
       // Space between characters.
       int space = bb.pmin().col()
-	- comp_set(holder_.links()(c)).bbox().pmax().col();
+	- comp_set(holder_.links()(c)).bbox().pmax().col() + 1;
 
       // -- Ignore overlapped characters.
       if (space > 0)
@@ -833,7 +864,9 @@ namespace scribo
       else
 	char_width_ = char_width.to_result();
 
-
+      // FIXME: There is a bug here when the input document is too
+      // large. The baselines indexes are too high for the type used
+      // in the median accumulator!
       baseline_ = absolute_baseline.to_result();
       meanline_ = absolute_meanline.to_result();
       x_height_ = absolute_baseline - absolute_meanline + 1;
@@ -890,6 +923,7 @@ namespace scribo
 		<< ", orientation=" << info.orientation()
 		<< ", reading_orientation=" << info.reading_orientation()
 		<< ", indented=" << info.indented()
+		<< ", text=" << info.text()
 		<< ")" << std::endl;
   }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -25,7 +26,6 @@
 
 #include <mln/io/ppm/load.hh>
 #include <mln/io/pbm/save.hh>
-#include <mln/value/rgb8.hh>
 
 #include <scribo/binarization/sauvola.hh>
 #include <scribo/debug/usage.hh>
@@ -33,7 +33,9 @@
 const char *args_desc[][2] =
 {
   { "input.ppm", "A color image." },
-  { "wsize", "Window size (Common value: 51)." },
+  { "output.pbm", "A binary image." },
+  { "w", "Window size (default 51)." },
+  { "k", "Sauvola's formulae parameter (default 0.34)." },
   {0, 0}
 };
 
@@ -41,20 +43,36 @@ const char *args_desc[][2] =
 int main(int argc, char *argv[])
 {
   using namespace mln;
-  using value::rgb8;
 
-  if (argc != 4)
+  if (argc != 5 && argc != 4 && argc != 3)
     return scribo::debug::usage(argv,
-				"Binarization of a color image based on Sauvola's algorithm. First convert the color image to an intensity image and then run Sauvola.",
-				"input.ppm wsize output.pbm",
-				args_desc, "A binary image.");
+				"Binarization of a gray level image based on Sauvola's algorithm.",
+				"input.ppm output.pbm <w> <k>",
+				args_desc);
 
   trace::entering("main");
 
-  image2d<rgb8> input;
+  unsigned w;
+  if (argc == 4)
+    w = atoi(argv[3]);
+  else
+    w = 51;
+
+  double k;
+  if (argc == 5)
+    k = atof(argv[4]);
+  else
+    k = 0.34f;
+
+  std::cout << "Using w=" << w << " and k=" << k << std::endl;
+
+  image2d<value::rgb8> input;
   io::ppm::load(input, argv[1]);
 
-  io::pbm::save(scribo::binarization::sauvola(input, atoi(argv[2])), argv[3]);
+  image2d<bool> out = scribo::binarization::sauvola(input, w, k);
+
+
+  io::pbm::save(out, argv[2]);
 
 
   trace::exiting("main");

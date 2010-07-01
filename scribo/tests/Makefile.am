@@ -23,6 +23,7 @@ SUBDIRS = 		\
   preprocessing 	\
   table 		\
   text 			\
+  toolchain 		\
   unit_test
 
 # Regen files recursively.

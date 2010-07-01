@@ -127,19 +127,6 @@ namespace scribo
 
       unsigned s_2 = s * s;
 
-      // Make sure the window fits in the image domain.
-      if (w >= static_cast<const unsigned>(ncols))
-      {
-	w = ncols - 1;
-	trace::warning("integral_browsing - Adjusting window width since it was larger than image width.");
-      }
-      if (h >= static_cast<const unsigned>(nrows))
-      {
-	h = nrows - 1;
-	trace::warning("integral_browsing - Adjusting window height since it was larger than image height.");
-      }
-
-
       // -------------------------------
       //           T (top)
       // -------------------------------

@@ -42,9 +42,6 @@ namespace scribo
 } // end of namespace scribo
 
 # include <scribo/filter/object_groups_small.hh>
-# include <scribo/filter/object_links_non_aligned.hh>
-# include <scribo/filter/object_links_non_h_aligned.hh>
-# include <scribo/filter/object_links_non_v_aligned.hh>
 # include <scribo/filter/objects_large.hh>
 # include <scribo/filter/objects_small.hh>
 # include <scribo/filter/objects_thick.hh>

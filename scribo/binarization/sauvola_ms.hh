@@ -63,6 +63,14 @@
 
 # include <scribo/canvas/integral_browsing.hh>
 
+# ifdef SCRIBO_SAUVOLA_DEBUG
+#  include <mln/io/pgm/save.hh>
+#  include <mln/data/saturate.hh>
+#  include <mln/data/convert.hh>
+#  include <mln/arith/times.hh>
+# endif // ! SCRIBO_SAUVOLA_DEBUG
+
+
 
 namespace scribo
 {
@@ -81,6 +89,7 @@ namespace scribo
       \param[in] w_1 The window size used to compute stats.
       \param[in] s The scale factor used for the first subscaling.
       \param[in] lambda_min_1 Size of the objects kept at scale 1.
+      \param[in] K Sauvola's formulae parameter.
 
 
       \p w_1 and \p lambda_min_1 are expressed according to the image
@@ -90,8 +99,14 @@ namespace scribo
      */
     template <typename I>
     mln_ch_value(I,bool)
-    sauvola_ms(const Image<I>& input_1, unsigned w_1,
-	       unsigned s, unsigned lambda_min_1);
+    sauvola_ms(const Image<I>& input_1_, unsigned w_1, unsigned s, double K);
+
+    /// \overload
+    /// K is set to 0.34.
+    //
+    template <typename I>
+    mln_ch_value(I,bool)
+    sauvola_ms(const Image<I>& input_1, unsigned w_1, unsigned s);
 
 
 
@@ -104,6 +119,14 @@ namespace scribo
     {
 
       using namespace mln;
+
+
+# ifdef SCRIBO_SAUVOLA_DEBUG
+      char* scale_image_output = 0;
+      char* k_image_output = 0;
+      char* s_n_image_output = 0;
+      char* k_l_image_output = 0;
+# endif // ! SCRIBO_SAUVOLA_DEBUG
 
       template <typename V>
       V my_find_root(image2d<V>& parent, const V& x)
@@ -120,17 +143,33 @@ namespace scribo
 			  unsigned lambda_min, unsigned lambda_max,
 			  unsigned s,
 			  unsigned q, unsigned i, unsigned w,
-			  const image2d<util::couple<double,double> >& integral_sum_sum_2)
+			  const image2d<util::couple<double,double> >& integral_sum_sum_2,
+			  double K)
       {
 	typedef image2d<int_u8> I;
 	typedef point2d P;
 
-	unsigned ratio = std::pow(q, i - 2);  // Ratio in comparison to e_2
+	// Cast to float is needed on MacOS X.
+	unsigned ratio = std::pow(float(q), float(i - 2u));  // Ratio in comparison to e_2
 
 	unsigned
 	  w_local = w * ratio,
 	  w_local_h = w_local,
 	  w_local_w = w_local;
+
+	// Make sure the window fits in the image domain.
+	if (w_local_w >= static_cast<const unsigned>(integral_sum_sum_2.ncols()))
+	{
+	  w_local_w = std::min(integral_sum_sum_2.ncols(), integral_sum_sum_2.nrows()) - integral_sum_sum_2.border();
+	  w_local_h = w_local_w;
+	  trace::warning("integral_browsing - Adjusting window width since it was larger than image width.");
+	}
+	if (w_local_h >= static_cast<const unsigned>(integral_sum_sum_2.nrows()))
+	{
+	  w_local_h = std::min(integral_sum_sum_2.nrows(), integral_sum_sum_2.ncols()) - integral_sum_sum_2.border();
+	  w_local_w = w_local_h;
+	  trace::warning("integral_browsing - Adjusting window height since it was larger than image height.");
+	}
 
 	if (! (w_local % 2))
 	{
@@ -138,9 +177,10 @@ namespace scribo
 	  ++w_local_h;
 	}
 
+
 	// 1st pass
 	scribo::binarization::internal::first_pass_functor< image2d<int_u8> >
-	  f(sub);
+	  f(sub, K);
 	scribo::canvas::integral_browsing(integral_sum_sum_2,
 					  ratio,
 					  w_local_w, w_local_h,
@@ -756,7 +796,7 @@ namespace scribo
 	template <typename I>
 	mln_ch_value(I,bool)
 	sauvola_ms(const Image<I>& input_1_, unsigned w_1,
-		   unsigned s, unsigned lambda_min_1)
+		   unsigned s, double K)
 	{
 	  trace::entering("scribo::binarization::sauvola_ms");
 
@@ -766,6 +806,8 @@ namespace scribo
 	  mln_precondition(input_1.is_valid());
 
 	  dpoint2d none(0, 0);
+
+	  unsigned lambda_min_1 = w_1 / 2;
 
 	  // Number of subscales.
 	  unsigned nb_subscale = 3;
@@ -819,7 +861,7 @@ namespace scribo
 
 	  // Subsampling to scale 3 and 4.
 	  for (unsigned i = 3; i <= nb_subscale + 1; ++i)
-	    sub_ima.append(mln::subsampling::antialiased(sub_ima[i - 1], q, none,
+	    sub_ima.append(mln::subsampling::antialiased(sub_ima[i - 1], q,
 							 sub_domains[i].first(),
 							 sub_domains[i].second()));
 
@@ -832,26 +874,30 @@ namespace scribo
 	  // Highest scale -> no maximum component size.
 	  {
 	    int i = sub_ima.size() - 1;
-	    unsigned ratio = std::pow(q, i - 2); // Ratio compared to e_2
+	    // Cast to float is needed on MacOS X.
+	    unsigned ratio = std::pow(float(q), float(i - 2)); // Ratio compared to e_2
 	    t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
 						     lambda_min_2 / ratio,
 						     mln_max(unsigned),
 						     s,
 						     q, i, w_work,
-						     integral_sum_sum_2);
+						     integral_sum_sum_2,
+						     K);
 	  }
 
 	  // Other scales -> maximum and minimum component size.
 	  {
 	    for (int i = sub_ima.size() - 2; i > 2; --i)
 	    {
-	      unsigned ratio = std::pow(q, i - 2); // Ratio compared to e_2
+	      // Cast to float is needed on MacOS X.
+	      unsigned ratio = std::pow(float(q), float(i - 2)); // Ratio compared to e_2
 	      t_ima[i] = internal::compute_t_n_and_e_2(sub_ima[i], e_2,
 						       lambda_min_2 / ratio,
 						       lambda_max_2 / ratio,
 						       s,
 						       q, i, w_work,
-						       integral_sum_sum_2);
+						       integral_sum_sum_2,
+						       K);
 	    }
 	  }
 
@@ -860,13 +906,18 @@ namespace scribo
 	    t_ima[2] = internal::compute_t_n_and_e_2(sub_ima[2], e_2, 0,
 						     lambda_max_2,
 						     s, 1, 2, w_work,
-						     integral_sum_sum_2);
+						     integral_sum_sum_2,
+						     K);
 	  }
 
 
 	  // Propagate scale values.
 	  e_2 = transform::influence_zone_geodesic(e_2, c8());
 
+#  ifdef SCRIBO_SAUVOLA_DEBUG
+	  if (internal::scale_image_output)
+	    io::pgm::save(e_2, internal::scale_image_output);
+#  endif // ! SCRIBO_SAUVOLA_DEBUG
 
 	  // Binarize
 	  image2d<bool>
@@ -879,112 +930,7 @@ namespace scribo
       } // end of namespace scribo::binarization::impl::generic
 
 
-      template <typename I>
-      mln_ch_value(I,bool)
-      sauvola_ms_rgb8(const Image<I>& input_1_, unsigned w_1,
-		      unsigned s, unsigned lambda_min_1)
-      {
-	const I& input_1 = exact(input_1_);
-
-	mln_ch_value(I, value::int_u8) gima;
-	gima = data::transform(input_1, mln::fun::v2v::rgb_to_int_u<8>());
-
-	mln_ch_value(I, bool)
-	  output = generic::sauvola_ms(gima, w_1, s, lambda_min_1);
-
-
-// 	typedef mln_ch_value(I,bool) bin_t;
-
-
-// 	mln_ch_value(I, value::int_u8) r_i, g_i, b_i;
-
-// 	// Split the rgb8 image into 3 intensity images.
-// 	mln::data::split(input_1, r_i, g_i, b_i);
-
-// 	bin_t r_b, g_b, b_b;
-
-// 	r_b = generic::sauvola_ms(r_i, w_1, s, lambda_min_1);
-// 	g_b = generic::sauvola_ms(g_i, w_1, s, lambda_min_1);
-// 	b_b = generic::sauvola_ms(b_i, w_1, s, lambda_min_1);
-
-// 	border::resize(r_b, input_1.border());
-// 	border::resize(g_b, input_1.border());
-// 	border::resize(b_b, input_1.border());
-
-// 	bin_t output;
-// 	initialize(output, input_1);
-
-// 	typedef bool * b_ptr_t;
-// 	b_ptr_t
-// 	  out_ptr = output.buffer(),
-// 	  r_ptr = r_b.buffer(),
-// 	  g_ptr = g_b.buffer(),
-// 	  b_ptr = b_b.buffer();
-
-// 	unsigned ntrue;
-// 	for (unsigned n = 0; n < output.nelements(); ++n)
-// 	{
-// 	  ntrue = 0;
-// 	  if (*r_ptr)
-// 	    ++ntrue;
-// 	  if (*g_ptr)
-// 	    ++ntrue;
-// 	  if (*b_ptr)
-// 	    ++ntrue;
-
-// 	  *out_ptr++ = ntrue > 1;;
-
-// 	  ++r_ptr;
-// 	  ++g_ptr;
-// 	  ++b_ptr;
-// 	}
-
-	return output;
-      }
-
-
     } // end of namespace scribo::binarization::impl
-
-
-
-    // Dispatch
-
-    namespace internal
-    {
-
-      template <typename I>
-      mln_ch_value(I,bool)
-	sauvola_ms_dispatch(const mln_value(I)&,
-			    const Image<I>& input_1, unsigned w_1,
-			    unsigned s, unsigned lambda_min_1)
-      {
-	return impl::generic::sauvola_ms(input_1, w_1, s, lambda_min_1);
-      }
-
-
-
-      template <typename I>
-      mln_ch_value(I,bool)
-	sauvola_ms_dispatch(const value::rgb8&,
-			    const Image<I>& input_1, unsigned w_1,
-			    unsigned s, unsigned lambda_min_1)
-      {
-	return impl::sauvola_ms_rgb8(input_1, w_1, s, lambda_min_1);
-      }
-
-
-      template <typename I>
-      mln_ch_value(I,bool)
-      sauvola_ms_dispatch(const Image<I>& input_1, unsigned w_1,
-			  unsigned s, unsigned lambda_min_1)
-      {
-	typedef mln_value(I) V;
-	return sauvola_ms_dispatch(V(), input_1, w_1, s, lambda_min_1);
-      }
-
-
-    } // end of namespace scribo::binarization::internal
-
 
 
     // Facade
@@ -992,17 +938,42 @@ namespace scribo
     template <typename I>
     mln_ch_value(I,bool)
     sauvola_ms(const Image<I>& input_1_, unsigned w_1,
-	       unsigned s, unsigned lambda_min_1)
+	       unsigned s, double K)
     {
       trace::entering("scribo::binarization::sauvola_ms");
 
-      mln_precondition(input_1.is_valid());
+      mln_precondition(exact(input_1_).is_valid());
+      // Gray level images ONLY.
+      mlc_is_not_a(mln_value(I), value::Vectorial)::check();
+      mlc_is_not(mln_value(I), bool)::check();
 
       mln_ch_value(I,bool)
-	output = internal::sauvola_ms_dispatch(input_1_, w_1, s, lambda_min_1);
+	output = impl::generic::sauvola_ms(exact(input_1_), w_1, s, K);
+
+
+# ifdef SCRIBO_SAUVOLA_DEBUG
+      if (internal::k_image_output)
+	io::pgm::save(internal::debug_k, internal::k_image_output);
+
+      if (internal::s_n_image_output)
+	io::pgm::save(data::saturate(value::int_u8(), internal::debug_s_n * 100),
+		      internal::s_n_image_output);
+      if (internal::k_l_image_output)
+	io::pgm::save(data::saturate(value::int_u8(), internal::debug_k_l * 10),
+		      internal::k_l_image_output);
+# endif // ! SCRIBO_SAUVOLA_DEBUG
+
 
       trace::exiting("scribo::binarization::sauvola_ms");
       return output;
+    }
+
+
+    template <typename I>
+    mln_ch_value(I,bool)
+    sauvola_ms(const Image<I>& input_1, unsigned w_1, unsigned s)
+    {
+      return sauvola_ms(input_1, w_1, s, SCRIBO_DEFAULT_SAUVOLA_K);
     }
 
 

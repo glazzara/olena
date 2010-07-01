@@ -1,3 +1,77 @@
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Fix the way to convert unsigned to float.
+
+	* mln/convert/from_to.hxx: New conversion utilities.
+	* mln/convert/impl/from_unsigned_to_value.hh: New conversion utilities.
+
+2009-12-02  Yann Jacquelet <jacquelet@lrde.epita.fr>
+
+	Fix the outside template use case for the convolve macros.
+
+	* mln/linear/ch_convolve.hh (mln_ch_convolve_, mln_ch_convolve_grad_):
+	Define new macros to work outside templates.
+
+2010-06-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Revamp and fix a bug in io::magick::*.
+
+	* mln/io/magick/load.hh: Revamp.
+
+	* mln/io/magick/save.hh: Fix a bug while saving. RGB values must
+	be between 0 and 1.
+
+	* tests/io/magick/save.cc: Remove useless output.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new tests.
+
+	* tests/convert/Makefile.am,
+	* tests/subsampling/Makefile.am: Add targets for these new tests.
+
+	* tests/convert/to_qimage.cc,
+	* tests/convert/to_qimage_nocopy.cc,
+	* tests/subsampling/antialiased.cc: New.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix conversion routines towards qimage.
+
+	* mln/convert/to_qimage.hh: Fix invalid conversions.
+
+	* mln/convert/to_qimage_nocopy.hh: Avoid a warning.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/accu/count_value.hh: Add properties.
+
+2010-06-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix a bug in conversions from vec to point.
+
+	* milena/mln/core/concept/gpoint.hh: Fix comment.
+
+	* milena/mln/core/image/image1d.hh: Share a dpoint value.
+
+	* milena/mln/core/point.hh: Handle point1d.
+
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce labeling::value_and_compute.
+
+	* mln/canvas/labeling/video.hh: Call more functor members.
+
+	* mln/labeling/value.hh: Provide new members to the functor.
+
+	* mln/labeling/value_and_compute.hh: New functor computing
+	attributes while labeling.
+
+2010-05-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/io/magick/load.hh: set minimum resolution for PDF files to
+	300DPI.
+
 2010-07-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix a few tests.

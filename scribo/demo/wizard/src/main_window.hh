@@ -48,6 +48,8 @@ namespace scribo
 
 	virtual int nextId() const;
 
+      private slots:
+	void showCustomButton_slot(int id);
 
       private:
 	enum { Page_Load,

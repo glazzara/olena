@@ -73,6 +73,13 @@ show_objects_small_SOURCES = show_objects_small.cc
 show_objects_thick_SOURCES = show_objects_thick.cc
 show_objects_thin_SOURCES = show_objects_thin.cc
 
-## FIXME: Does not compile.
-## bin_PROGRAMS += show_links_several_right_overlap
-## show_links_several_right_overlap_SOURCES = show_links_several_right_overlap.cc
+if HAVE_MAGICKXX
+
+  bin_PROGRAMS += highlight_text_area
+  highlight_text_area_SOURCES = highlight_text_area.cc
+  highlight_text_area_CPPFLAGS = $(AM_CPPFLAGS) \
+				`Magick++-config --cppflags`
+  highlight_text_area_LDFLAGS  = $(AM_LDFLAGS) \
+			      	 -lpthread  `Magick++-config --libs`
+
+endif HAVE_MAGICKXX

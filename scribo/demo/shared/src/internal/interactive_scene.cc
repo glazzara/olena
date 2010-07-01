@@ -47,13 +47,18 @@ namespace scribo
 	{
 	  super_::mouseMoveEvent(e);
 
+
+//	  qDebug() << "interactiveScene::mouseMoveEvent";
+
 	  if (e->buttons() & Qt::LeftButton)
 	  {
-	    emit mouse_pressed(e->scenePos());
+	    emit mouse_moved_and_pressed(e->scenePos());
 	    mouse_moved_ = true;
 	  }
 
 	  emit mouse_moved(e->scenePos());
+
+	  e->ignore();
 	}
 
 	void interactiveScene::mousePressEvent(QGraphicsSceneMouseEvent *e)
@@ -64,6 +69,7 @@ namespace scribo
 	  pressed_point_ = e->scenePos();
 
 	  emit mouse_pressed(e->scenePos());
+	  e->ignore();
 	}
 
 	void interactiveScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *e)
@@ -75,7 +81,8 @@ namespace scribo
 
 	  emit mouse_released(e->scenePos());
 
-	  e->accept();
+//	  qDebug() << "crop_item::mouseReleaseEvent";
+	  e->ignore();
 	}
 
       } // end of namespace mln::demo::shared::internal

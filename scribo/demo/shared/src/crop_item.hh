@@ -50,11 +50,20 @@ namespace scribo
     namespace shared
     {
 
-      class crop_item : public QGraphicsItem
+      class crop_item : public QObject, public QGraphicsItem
       {
+	Q_OBJECT;
+
       public:
 	crop_item(QGraphicsItem *parent);
-	const QRectF& cropRect() const;
+
+	// Mouse is pressed. The rectangle must be created and about
+	// to be enlarged.
+	crop_item(const QPointF& p, QGraphicsItem *parent);
+
+	virtual ~crop_item();
+
+	QRectF cropRect() const;
 
 	QRectF boundingRect() const;
 	void paint (QPainter *painter,
@@ -63,12 +72,18 @@ namespace scribo
 
 	void reset();
 
+	void resize(const QPointF& delta);
+
       protected:
 	void mousePressEvent (QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent (QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event);
 
 //	void updateCursor(QGraphicsSceneMouseEvent *event);
+
+      signals:
+	void ready_for_crop();
 
       private:
 	enum CropItemResize
@@ -89,6 +104,7 @@ namespace scribo
       private:
 	CropItemResize cropResize_;
 	QRectF cropRect_;
+	QRectF draw_rect_;
 	bool mousePress_;
       };
 

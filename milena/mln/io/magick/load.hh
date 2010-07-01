@@ -116,14 +116,26 @@ namespace mln
 
 	I& ima = exact(ima_);
 
-	//std::ifstream file(filename.c_str());
-	//if (! file)
-	//{
-	//  std::cerr << "error: cannot open file '" << filename << "'!";
-	//  abort();
-	//}
+	Magick::Image im_file;
+	im_file.ping(filename);
 
-	Magick::Image im_file(filename);
+// 	if (im_file)
+// 	{
+// 	  std::cerr << "error: cannot open file '" << filename << "'!";
+// 	  abort();
+// 	}
+
+	// Force a minimum resolution of 300DPI for PDF document.
+	if (im_file.magick() == "PDF"
+	    && (im_file.xResolution() < 300
+		|| im_file.yResolution() < 300))
+	{
+	  im_file.density(Magick::Geometry(300, 300));
+	}
+
+	im_file.read(filename);
+
+
 	im_file.modifyImage();
 	im_file.type(Magick::TrueColorType);
 	int columns = im_file.columns();
@@ -134,7 +146,8 @@ namespace mln
 	  std::cout << "format: " <<im_file.format() << std::endl;
 	  std::cout << "magick: " <<im_file.magick() << std::endl;*/
 
-	const Magick::PixelPacket *pixel_cache = im_file.getConstPixels(0, 0, columns, rows);
+	const Magick::PixelPacket *
+	  pixel_cache = im_file.getConstPixels(0, 0, columns, rows);
 
 	algebra::vec<mln_site_(I)::dim, unsigned int> vmin;
 	algebra::vec<mln_site_(I)::dim, unsigned int> vmax;
@@ -149,10 +162,15 @@ namespace mln
 	mln_piter(I) p(ima.domain());
 	for_all(p)
 	{
-	  const Magick::PixelPacket *pixel = pixel_cache + (int) p.to_site().to_vec()[0] * columns
-					     + (int) p.to_site().to_vec()[1];
+	  const Magick::PixelPacket *
+	    pixel = pixel_cache
+	            + (int) p.to_site().to_vec()[0] * columns
+	            + (int) p.to_site().to_vec()[1];
+
 	  // FIXME: Quantum = 16bits but rgb is 8bits
-	  value::rgb8 pix(pixel->red % 256, pixel->green % 256, pixel->blue % 256);
+	  value::rgb8 pix(pixel->red % 256,
+			  pixel->green % 256,
+			  pixel->blue % 256);
 	  mln_value(I) res;
 	  if (!do_it(pix, res, filename))
 	    abort();

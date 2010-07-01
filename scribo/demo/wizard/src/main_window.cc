@@ -31,6 +31,7 @@
 #include <src/preprocessing_page.hh>
 #include <src/process_page.hh>
 #include <src/rotate_page.hh>
+#include <src/result_page.hh>
 
 namespace scribo
 {
@@ -43,14 +44,15 @@ namespace scribo
 
 
       main_window::main_window()
+	: QWizard(0, Qt::Window)
       {
-	setOptions(QWizard::NoBackButtonOnStartPage
-		   | QWizard::DisabledBackButtonOnLastPage
-		   | QWizard::NoCancelButton);
+// 	QPixmap bg_pixmap(":/images/images/dematerialization.png");
+// 	setPixmap(QWizard::WatermarkPixmap, bg_pixmap);
+// 	setPixmap(QWizard::BackgroundPixmap, bg_pixmap);
 
-	QPixmap bg_pixmap(":/images/images/dematerialization.png");
-	setPixmap(QWizard::WatermarkPixmap, bg_pixmap);
-	setPixmap(QWizard::BackgroundPixmap, bg_pixmap);
+
+	connect(this, SIGNAL(currentIdChanged(int)),
+		this, SLOT(showCustomButton_slot(int)));
 
 
 	// Page_Load
@@ -75,10 +77,11 @@ namespace scribo
  	addPage(page_preprocessing);
 
 	// Page_Processing
-	addPage(new process_page(this));
+	process_page *page_process = new process_page(this);
+	addPage(page_process);
 
 	// Page_Result
-	addPage(new QWizardPage(this));
+	addPage(new result_page(this));
       }
 
 
@@ -121,6 +124,18 @@ namespace scribo
 	}
       }
 
+
+      void main_window::showCustomButton_slot(int id)
+      {
+	if (id == Page_Result)
+	  setOptions(options() | QWizard::HaveCustomButton1);
+	else
+	{
+	  setOptions(QWizard::NoBackButtonOnStartPage
+//    		     | QWizard::DisabledBackButtonOnLastPage
+		     | QWizard::NoCancelButton);
+	}
+      }
 
     } // end of namespace scribo::demo::wizard
 

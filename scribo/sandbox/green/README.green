@@ -1,0 +1,416 @@
+I ARBORESCENCE
+--------------
+
+bench  ==> Comparaison d'algorithmes d'un point de vue temps d'exécution.
+bug    ==> Bug rencontrés dans milena et archivés sous forme de programme.
+build  ==> Répertoire d'exécution, non sauvé dans git.
+demo   ==> Première version d'un algorithme pour voir son comportement.
+doc    ==> Documentation tex ou code minimal pour de petits exemples.
+exp    ==> Version avancée des algorithmes pour traitées les bases de données.
+mln    ==> Partie mise en librairie milena des différents travaux.
+tests  ==> Tests unitaires sur certains algorithmes.
+tools  ==> Découpage de certains algorithmes pour mieux les tester séparément.
+use    ==> Test de compilation, code minimal pour compiler un élément.
+
+II COMPILATION
+--------------
+
+L'unité minimale de code choisie est le répertoire.
+Donc aller dans le répertoire qui nous interesse,
+par exemple, green/demo/annotating/hsv et lancé le make
+
+#:~/git/olena/scribo/sandbox/green$cd demo/annotating/hsv
+#:~/git/olena/scribo/sandbox/green/demo/annotating/hsv$ make -f Makefile.am
+
+Cette opération créé dans build le répertoire de compilation
+green/build/demo/annotating/hsv. Dans ce répertoire aura été copié un
+Makefile et tous les fichiers qui ne sont pas des sources. Par
+exemple, des fichiers de calibration comme gaussian.sh (pour vérifier
+la mire du filtre de gaussienne) ou de la documentation à la sauvette
+sous forme de fichiers textes jetés à la va vite dans le répertoire
+pour ne pas perdre l'information recherchée. En l'occurence, ici, il
+n'y a rien à copier. Rendons-nous dans le répertoire de compilation et lançons
+le makefile.
+
+#:~/git/olena/scribo/sandbox/green/demo/annotating/hsv$
+#:cd ../../../build/demo/annotating/hsv
+#:~/git/olena/scribo/sandbox/green/build/demo/annotating/hsv$ make clean all
+
+L'exécutable est généré par le makefile, il porte le nom du
+répertoire.  Si il y a besoin de mettre à jour le makefile, le faire
+dans le répertoire des sources en éditant Makefile.am, puis en
+régénérant le Makefile dans le répertoire d'exécution par la commande
+make -f Makefile.am depuis le répertoire source.
+
+
+III MAKEFILE
+------------
+
+Les makefiles utilisés sont tous les mêmes avec quelques variables
+dont le contenu change dans leur partie en-tête.
+
+Pour chaque répertoire, le makefile doit savoir si le chemin courant
+est un répertoire de compilation ou un répertoire de source. Pour les
+identifier, il a recours à un pattern qui malheureusemnt fait
+intervenir le nom de la branche de développement (bench,demo,bug,exp ...).
+
+SOURCE_PATTERN= green/demo
+BUILD__PATTERN= green/build/demo
+
+Si un makefile ne fonctionne pas, il faut vérifier ceci en premier
+lieu. Ici, le makefile doit être situé dans la branche démo.
+
+Autre élément à savoir, la compilation nécessite d'inclure la
+librairie milena, ainsi que les développements propres en vu de leur
+intégration futur dans milena, ceci est fait par un jeu d'INCLUDES1
+et INCLUDES2.
+
+INCLUDES1= -I$(HOME)/git/olena/scribo/sandbox/green
+INCLUDES2= -I$(HOME)/git/olena/milena
+INCLUDES=  $(INCLUDES1) $(INCLUDES2)
+
+Suivant l'allure du compte où l'on exécute les makefiles, il faut
+revoir le chemin pour trouver des deux répertoires.
+
+Enfin, les options de compilations ne sont pas toujours les mêmes. Les
+trois lignes possibles sont toutes présentes et seule celle qui est
+utilisée n'est pas commentée. Typiquement, dans la branche de
+développement démo où les perfomances ne sont pas le problème, on
+compilera avec tout le matériel pour utiliser gdb et sans
+optimisation. A l'inverse, dans la branche d'expérimentation, où le
+code a déjà été testé, on cherche à aller vite car on exécute ce code
+sur de nombreuses images. Dans cette optique, pas de débugage, pas de
+traçage, optimisation conséquente.
+
+CXXFLAGS= -ggdb -O0 -Wall -W -pedantic -ansi -pipe $(INCLUDES)
+#CXXFLAGS= -DNDEBUG -O1 -Wall -W -pedantic -ansi -pipe $(INCLUDES)
+#CXXFLAGS= -DNDEBUG -O3 -Wall -W -pedantic -ansi -pipe $(INCLUDES)
+
+Une dernière dernière information, dans le cadre des développements
+exp, et tools, on utilise la librairie boost soit pour la
+virtualisation du filesystem, soit pour le formatage des fichiers text
+(réalisation de colonnes, mettre des entiers sur un certain nombre de
+caractères). Une ligne de chargement des librairies peut apparaitre donc.
+
+LOADLIBES= -lboost_filesystem
+
+On retrouvera les includes suivantes dans les sources:
+
+#include <boost/format.hpp>
+#include <boost/filesystem.hpp>
+
+
+IV CHEMINS DES IMAGES
+---------------------
+
+Toutes les images ont toujours été locales sur mon ordinateur. La
+politique a toujours été d'utiliser un fichier img_path pour coder les
+chemins des images.  Les chemins étant plutôt long, j'ai toujours eu
+tendance à faire en sorte qu'ils soient compilés en dur (sauf pour la
+partie développement tools qui est vraiment voué à donner des
+exécutables indépendants et génériques). Le fichier mln/img_path.hh
+code la position de toutes les images dans mon arborescence. Il faudra
+donc veiller à changer tous les chemins pour les adapter au compte
+dans lequel on voudra reprendre le code. Dans le code, les références
+aux positions des images sont faites via des macros.
+
+Toutes les images sont située dans git/img. En règle générale, je ne
+traite que des images au format .pgm, .pbm et .ppm. Il m'arrive
+fréquemment de dumper des images au format .sh (gnuplot shell
+image). Pour la branche tools, nous avons utilisé les dumps de milena
+comme format de transfert d'un utilitaire à un autre. Les images sont
+classées suivant leur provenance. Nous avons tout d'abord la base
+OLENA (copie des images de tests milena), la base INIM (très peu
+utilisée voire jamais), la base ICDAR (très utilisée, surtout dans
+exp), la base AFP (très utilisée dans exp) et les bases ANNOTATING1 et
+ANNOTATING2 (pas très utilisées ni l'une, ni l'autre).
+
+La plus part du temps, sauver les résultats dans le répertoire
+d'exécution courant est largement suffisant. Parfois, il est
+nécessaire de sauvegarder de grosses quantités d'informations et de
+les classer comme dans la branche de développement exp. C'est pour
+cela, qu'un certain nombre de macros définissent des endroits pour
+sauvegarder les résultats lors d'expérimentation de grande ampleur sur
+toute la base ICDAR ou AFP.
+
+
+V GNUPLOT SCRIPT SHELL IMAGE FORMAT
+-----------------------------------
+
+J'abrège le nom du format par gnuplot shell format. En fait, c'est un
+format d'image particulier qui a besoin de gnuplot pour être lu. Il
+est donc compatible avec aucun viewer si ce n'est gnuplot, mais a la
+caractéristique d'afficher tous les points de manière visible. Par
+ailleurs, comme il s'agit d'un script gnuplot il permet d'insérer très
+facilement une fonction pour visualiser les données autrement (par
+exemple, changer d'espace: HSL, HSV). Le fichier tire son nom de la
+façon dont il fonctionne. C'est un script shell qui fait un appel à
+gnuplot et lui passe le jeu de données directement à partir de ce même
+fichier, pas besoin de faire appel à un autre fichier. Une fois
+généré, le fichier doit être modifié pour avoir les permissions
+d'exécution (chmod 755 gnuplot_shell_file.sh). Comme je trouve le format
+extrêmement pratique, il se retrouve preque partout dans mes sources.
+
+
+VI HISTOGRAMMES
+---------------
+
+Un des travaux demandés par théo est la réalisation d'une librairie
+d'histogramme permettant de fournir un résultat sous forme d'image.
+L'intérêt est ensuite de pouvoir filtrer directement ces histogrammes
+par les algorithmes de milena, ou encore d'étudier les valeurs
+caractéristiques par d'autres accumulateurs. Les codes réellement
+utilisés sont histo1d et histo3d RGB. Tous les autres codes sont très
+expérimentaux. Notemment, le code HSL demande de quantifier l'espace
+de comptage puisqu'il est décrit sous la forme de triplets de float
+(les autres sont inférés). Néanmoins, le code est à conserver car il
+contient une séquence d'appels pour les routines permettant de
+considérer la dimension de la teinte comme circulaire.
+
+Après réflexion, le code des histogrammes et tous les accumulateurs
+qui en découlent devraient être rangés dans l'espace de nommage
+mln::accu::histo. Cela permettrait de ne pas parasiter mln::accu::stat
+avec tous les éléments propres aux histogrammes et de ne pas faire un
+espace de nommage à rallonge en introduisant histo dans stat. Donc
+mln::accu::stat semble être une bonne postion pour le rangement final
+du code relatif aux histogrammes.
+
+
+a) version 1d
+
+* mln/accu/stat/histo1d.hh: Accumulateur histogramme image1d.
+* use/accu/stat/histo1d: Code minimal utilisant un histogramme 1d.
+* tests/accu/stat/histo1d: Tests unitaires sur l'histogramme 1d.
+
+
+b) version 2d
+
+* mln/value/rg.hh: Définition du type vectoriel 2d rouge/vert (RG).
+* use/value/rg: Exemple de code pour l'utilisation de rg.
+
+* mln/fun/v2v/rgb_to_rg.hh: Transformation de l'espace RGB vers l'espace RG.
+* use/fun/v2v/rgb_to_rg: Exemple de code pour l'utilisation de rgb_to_rg.
+
+* mln/accu/stat/histo2d.hh: Accumulateur histogramme image2d.
+* use/accu/stat/histo2d: Code minimal utilisant un histogramme 2d.
+
+
+c) version 3d RGB
+
+
+* mln/fun/v2v/rgb8_to_rgbn.hh: Diminution de la quantification (n < 8 bits).
+* use/fun/v2v/rgb8_to_rgbn: Exemple de code pour l'utilisation de rgb8_to_rgbn.
+
+* mln/accu/stat/histo3d_rgb.hh: Accumulateur histogramme image3d RGB.
+* use/accu/stat/histo3_rgb: Code minimal utilisant un histogramme 3d RGB.
+
+
+d) version 3d HSL
+
+* mln/accu/stat/histo3d_hsl.hh: Accumulateur histogramme image3d HSL.
+* use/accu/stat/histo3_hsl: Code minimal utilisant un histogramme 3d HSL.
+* tests/accu/stat/histo3d_hsl: Tests unitaires sur l'histogramme HSL 3d.
+
+Le code HSL ne compile plus car l'interface liant la transformation du
+domaine et la fonction fold a changée. Je n'ai pas le temps de
+regarder plus avant.
+
+
+VII SAUVEGARDE FORMAT GNUPLOT SHELL
+-----------------------------------
+
+Ce travail est personnel. Ces développements m'ont été tellement
+utiles que je ne regrette pas l'investissement effectué. L'idée est de
+pouvoir avoir un format d'image en écriture lisible. J'ai pris celui
+de gnuplot, ce qui permet en plus de pouvoir "sucrer" la présentation
+des données à loisir. Les images sont plus lourdes car le codage est
+textuel et un peu plus "verbose" mais se compresse aisément par
+n'importe quel algorithme type huffman (tous les archiveurs en possède un).
+
+* mln/io/plot/save_image_sh.hh: Librairie de sauvegarde au format gnuplot shell.
+* use/io/plot/save_image_sh: Code simple d'utilisation de la sauvegarde.
+* tests/io/plot/save_image_sh: Tests unitaires sur l'export.
+
+
+
+VIII VISUALISATION HISTOGRAMMES 3D
+----------------------------------
+
+==> to do
+
+
+* demo/accu/stat/histo2d
+
+* mln/display/dispay_histo.hh
+* mln/display/project_histo.hh
+
+
+IX KMEANS
+---------
+
+Ce travail m'avait été demandé par théo. Je le laisse inachevé, quelque part
+perdu pendant l'optimisation du code et sa transformation en canevas.
+
+
+a) Première implémentation avec matrices et vecteurs
+
+Cette version est bien documentée et permet de mieux comprendre les autres
+versions. Par ailleurs, elle n'est pas spécialement optimisée ce qui fait
+qu'elle colle davantage au modèle de l'algorithme kmean traditionnel.
+
+* mln/clustering/k_mean.hh: Première implémentation avec matrices et vecteurs.
+* use/clustering/k_mean:  Code minimal utilisant cette première implémentation.
+* tests/clustering/k_mean: Tests unitaires sur la permière version.
+
+
+b) Seconde implémentation avec image en 1d
+
+Cette seconde version intègre une optimisation testée par théo il y a
+longtemps. Je me demande si ce n'étais pas pendant sa thèse qu'il
+avait travaillé sur cette version. Bref, dans la mesure où
+l'optimisation passe par la création d'un histogramme, cette version
+devient dépendante des histogrammes réalisés plutôt (il est aussi
+dépendant de la sauvegarde au format gnuplot shell). L'idée générale
+de l'optimisation est de ne plus raisonner sur l'image, mais sur
+l'histogramme. Car à un moment donné, la classification ne tient
+compte que de la valeur du pixel en intensité (pas de ses coordonnées
+dans l'image). Donc tout pixel de même intensité sera classé de
+manière identique. D'où l'intérêt de travailler avec les
+histogrammes. Les limites de cette optimisation se trouvent dans la
+taille des histogrammes. L'optimisation marche à merveille pour de
+faibles quantifications (8 bits c'est parfait). Par contre, lorsque
+l'on passe à un histogramme couleur, la taille de l'histogramme
+devient problématique et peut dépasser la taille de l'image. Cette
+optimisation n'a alors plus aucun sens.
+
+* mln/clustering/kmean1d.hh: Implémentation 1d avec des images.
+* use/clustering/kmean1d : Code minimal utilisant cette seconde implémentation.
+* demo/clustering/kmean1d : Demonstrateur.
+
+La visualisation de la convergence des moyennes, générée par le
+démonstrateur, n'est pas très lisible. La lecture textuelle du fichier
+gnuplot shell (mean_cnv.sh) permet d'interpréter ce qui se passe, par
+contre le graphique est à refaire.
+
+
+c) kmean2d
+
+Cette troisième version est identique à la seconde, sauf qu'elle
+permet de faire la classification dans un espace à deux
+dimensions. Malheureusement, un tel travail dans cet espace coûte
+beaucoup plus cher à l'exécution.
+
+* mln/fun/v2v/rg_to_rgb.hh: Transformation de l'espace RG vers l'espace RGB.
+* use/fun/v2v/rg_to_rgb: Exemple de code pour l'utilisation de rg_to_rgb.
+
+* mln/clustering/kmean2d.hh: Implémentation 2d avec des images.
+* use/clustering/kmean2d : Code minimal utilisant cette seconde implémentation.
+* demo/clustering/kmean2d : Demonstrateur.
+
+La visualisation de la convergence des moyennes est cette fois-ci
+complètement aboutie. Le fichier semble avoir quelques soucis, il
+manque des lignes dans le splot initial, en remettre pour qu'il y en
+ait autant que les blocs de données. L'espace des couleurs étant le
+bicanal r/g, on peut visualiser sur une troisième dimension
+l'évolution des centres dans l'espace initial. L'effet est très réussi
+et aussi très parlant. Chaque run, correspond alors à une trajectoire
+particulière. L'affichage des variations des variances a été rénové et
+est lui aussi beaucoup plus lisible.
+
+
+d) kmean3d
+
+Cette quatrième version est la copie conforme de la version
+précédente. Les problèmes de visualisation sur les fichiés générés
+sont les mêmes. L'affichage des convergences est identique. Le recours
+à une dégradation de l'image d'entrée est impérative pour avoir des
+temps encore acceptables.
+
+* mln/clustering/kmean3d.hh: Implémentation 3d avec des images.
+* use/clustering/kmean3d : Code minimal utilisant cette quatrième impl.
+* demo/clustering/kmean3d : Demonstrateur.
+
+
+e) kmean aplati
+
+Cette cinquième version est très spéciale. Elle doit permettre de
+gagner du temps d'exécution. Le concept est simple au départ, tout
+écrire d'un seul tenant. L'exercice est fastidieux et difficile
+(intellectuellement). Une fois fait, il faut réfléchir à ce qui peut
+être mis sous forme de canevas. Par exemple, la manière de calculer
+les distances peut être une information paramétrable. Cela pemettrait
+de faire un benchmark in situ. La transcription actuelle compile. Elle
+n'intègre pas tous les outils de debuggage que nous pouvions avoir sur
+les autres versions. Par ailleurs, comme le code est réuni en une
+seule fonction, nous avons pour l'instant une seule sortie, l'image de
+labels de la classification réalisée. A partir de cette image, nous
+pouvons en reconstruire d'autres. Il manque quand même la possibilité
+d'observer les convergences. Le travail était en cours, à prendre donc
+avec beaucoup de pincettes. La dernière exécution house.ppm, 3
+centres, 10 itérations et 10 runs fonctionne parfaitement sur les
+premiers runs puis l'affichage s'emballe sans que l'on y comprenne
+rien. Un dump dans un fichier révèle le non appariement de certaines
+traces (entering/exiting). Une piste à suivre est la sortie anticipée
+d'une de mes boucles sans pour autant fermer une trace ... ???
+
+* mln/clustering/kmean_rgb.hh: Implémentation 3d avec des images.
+* use/clustering/kmean_rgb : Code minimal utilisant cette quatrième impl.
+* demo/clustering/kmean_rgb: Utilisation de la version aplatie.
+
+
+f) optimisation possible
+
+Le calcul des distances entre les points et les différents centres
+peut être réalisé par des transformées. Certes, les distances ne seront
+pas les mêmes que la distance euclidienne, mais elles s'en approchent
+et cela constitue très certainement une très bonne approximation pour
+l'objectif que nous cherchons à atteindre. Le but de ce benchmark est
+de regarder quel type de transformation est le plus rapide pour
+arriver à nos fins en fonction des données d'entrée. Cette
+optimisation n'a pas encore été intégrée dans le code, et reste une
+piste à exploiter.
+
+* bench/clustering/distance: Comparaison algorithmes d'évaluation des distances.
+
+Une routine du benchmark ne compile plus. Il semble qu'il y ait un
+mauvais appel à la fonction at_ dans la routine
+influence_zone_geodesic.hh ligne 127. Le but du benchmark est de
+tester les distances en 2d et 3d pour des voisinages différents (c04,
+c08, c06, c18, c26) sur les routines distance euclidienne classique,
+zone d'influence geodesique et zone d'influence "front". La première
+serie de test vise à garder une taille d' image constante et
+d'augmenter le nombre de centres pour voir comment se comporte les
+algorithmes et la seconde serie, vise à garder un nombre constant de
+centres et à agrandir progressivement l'image. Attention, le benchmark
+essaye d'être assez exhaustif et donc se paye par un temps d'execution
+assez long. Les différents fichiers générés reprennent les différents
+tests effectués et montrent l'évolution du temps de calcul suivant la
+progression du paramètre observé (taille de l'image ou nombre de
+centres).
+
+==> to do : le changelog + commit + give it to scribo-z branch
+
+
+X REGIONAL MAXIMA
+-----------------
+
+==> to do
+
+
+XI ANNOTATING
+-------------
+
+==> to do
+
+
+a) La sauvegarde des images au format gnuplot shell
+
+* mln/io/plot/save_image_sh.hh: Librairie sauvegarde format gnuplot shell.
+
+to do ...
+
+
+
+
+
+

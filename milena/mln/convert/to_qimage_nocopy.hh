@@ -136,7 +136,7 @@ namespace mln
 
       template <typename I, typename V>
       inline
-      QImage to_qimage_nocopy_dispatch(const Image<I>& ima, V&)
+      QImage to_qimage_nocopy_dispatch(const Image<I>&, V&)
       {
 	// Not supported yet!
 	mlc_abort(I)::check();

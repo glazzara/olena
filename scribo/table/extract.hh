@@ -38,12 +38,11 @@
 # include <mln/io/ppm/all.hh>
 # include <mln/labeling/colorize.hh>
 
-# include <scribo/core/object_image.hh>
 # include <scribo/table/rebuild.hh>
 # include <scribo/table/erase.hh>
 # include <scribo/primitive/extract/lines_h_pattern.hh>
 # include <scribo/primitive/extract/lines_v_pattern.hh>
-# include <scribo/primitive/extract/objects.hh>
+# include <scribo/primitive/extract/components.hh>
 
 # include <scribo/debug/save_bboxes_image.hh>
 

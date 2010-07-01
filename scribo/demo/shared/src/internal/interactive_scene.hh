@@ -64,6 +64,7 @@ namespace scribo
 	  void mouse_click(const QPointF& p);
 	  void mouse_moved(const QPointF& p);
 	  void mouse_pressed(const QPointF& p);
+	  void mouse_moved_and_pressed(const QPointF& p);
 	  void mouse_released(const QPointF& p);
 
 	private:

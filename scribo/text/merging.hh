@@ -59,11 +59,14 @@
 
 
 
+
 namespace scribo
 {
 
   namespace text
   {
+
+    using namespace mln;
 
 
     /// \brief Merge text component in order to reconstruct text lines.
@@ -161,7 +164,7 @@ namespace scribo
 
 
 
-      unsigned my_find_root(util::array<unsigned>& parent, unsigned x)
+      unsigned my_find_root(mln::util::array<unsigned>& parent, unsigned x)
       {
 	if (parent[x] == x)
 	  return x;
@@ -184,7 +187,7 @@ namespace scribo
       unsigned do_union(scribo::line_set<L>& lines,
 			unsigned l1,
 			unsigned l2,
-			util::array<unsigned>& parent)
+			mln::util::array<unsigned>& parent)
       {
 	l1 = my_find_root(parent, l1);
 	l2 = my_find_root(parent, l2);
@@ -383,7 +386,7 @@ namespace scribo
 	// Special case
 
 	// Looking for alignement.
-	def::coord
+	mln::def::coord
 	  top_row = l_cur.bbox().pmin().row(),
 	  bot_row = l_cur.bbox().pmax().row();
 
@@ -514,7 +517,7 @@ namespace scribo
 		     const box2d& domain,
 		     std::vector<scribo::line_id_t>& v,
 		     scribo::line_set<L>& lines,
-		     util::array<unsigned>& parent)
+		     mln::util::array<unsigned>& parent)
       {
 	image2d<unsigned> billboard(domain);
 	data::fill(billboard, 0);
@@ -606,7 +609,7 @@ namespace scribo
 		if (lines(mc).type() == line::Text) // included in a text line => weird
 		{
 		  ++count_txtline_IN_txtline;
-		  std::cout << "weird: inclusion of a txt_line in a txt_line!" << std::endl;
+//		  std::cout << "weird: inclusion of a txt_line in a txt_line!" << std::endl;
 
 		  /// Merge is perform if the current line is a
 		  /// petouille considered as a line.
@@ -800,21 +803,21 @@ namespace scribo
 
 
 	(void) ith_pass;
-	if (ith_pass == 1)
-	{
-	  mln::io::pgm::save(log, "log_1.pgm");
-	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_1e.pgm");
-	}
-	else if (ith_pass == 2)
-	{
-	  mln::io::pgm::save(log, "log_2.pgm");
-	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_2e.pgm");
-	}
-	else if (ith_pass == 3)
-	{
-	  mln::io::pgm::save(log, "log_3.pgm");
-	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_3e.pgm");
-	}
+// 	if (ith_pass == 1)
+// 	{
+// 	  mln::io::pgm::save(log, "log_1.pgm");
+// 	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_1e.pgm");
+// 	}
+// 	else if (ith_pass == 2)
+// 	{
+// 	  mln::io::pgm::save(log, "log_2.pgm");
+// 	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_2e.pgm");
+// 	}
+// 	else if (ith_pass == 3)
+// 	{
+// 	  mln::io::pgm::save(log, "log_3.pgm");
+// 	  mln::io::pgm::save(data::wrap(int_u8(), billboard), "log_3e.pgm");
+// 	}
       }
 
 
@@ -852,7 +855,7 @@ namespace scribo
 	v.reserve(n);
 
 	// Union-find parent data, used to merge lines.
-	util::array<unsigned> parent(n + 1);
+	mln::util::array<unsigned> parent(n + 1);
 
 	// Initialize data
 	parent(0) = 0;
@@ -865,7 +868,7 @@ namespace scribo
 	// Sort lines by bbox.nelements() and ids.
 	std::sort(v.begin(), v.end(), func);
 
-	util::timer t;
+	mln::util::timer t;
 
 
 	// Setting lines as text lines according to specific criterions.
@@ -912,7 +915,7 @@ namespace scribo
     {
       using namespace mln;
 
-      util::timer t;
+      mln::util::timer t;
       t.start();
 
       scribo::line_set<L> output

@@ -55,6 +55,17 @@ namespace mln
   namespace convert
   {
 
+    /// \brief Convert a Milena image to a Qimage.
+    ///
+    //
+    template <typename I>
+    inline
+    QImage
+    to_qimage(const Image<I>& ima);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
     // Implementation
 
     namespace impl
@@ -68,26 +79,30 @@ namespace mln
 	const I& ima = exact(ima_);
 	mln_precondition(ima.is_valid());
 
-	const int
+	const unsigned
 	  nrows = geom::nrows(ima),
 	  ncols = geom::ncols(ima);
 
 # if QT_VERSION >= 0x040000 && QT_VERSION < 0x040400
 	QImage qima(ncols, nrows, QImage::Format_RGB32);
-	uchar * ptr_qima = qima.scanLine(0);
+	uchar * ptr_qima = qima.bits();
+	unsigned offset = ima.delta_index(dpoint2d(+1, - ncols));
+	unsigned padding = 0;
 #  if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
 	++ptr_qima;
 #  endif // ! Q_BYTE_ORDER
 # else
 	QImage qima(ncols, nrows, QImage::Format_RGB888);
-	uchar * ptr_qima = qima.scanLine(0);
+	uchar * ptr_qima = qima.bits();
+	unsigned padding = ncols % 4;
 # endif // ! QT_VERSION
 
 	const mln_value(I)* ptr_ima = &ima(ima.domain().pmin());
-	unsigned row_offset = ima.delta_index(dpoint2d(+1, - ncols));
+	unsigned offset = ima.delta_index(dpoint2d(+1, - ncols));
 
 	// Data is stored as ABGR so we skip the first value which is ignored.
-	for (unsigned row = 0; row < nrows; ++row, ptr_ima += row_offset)
+	for (unsigned row = 0; row < nrows; ++row, ptr_ima += offset)
+	{
 	  for (unsigned col = 0; col < ncols; ++col)
 	  {
 	    const mln_value(I)& v = *ptr_ima++;
@@ -99,6 +114,8 @@ namespace mln
 	    ptr_qima += 3;
 # endif // ! QT_VERSION
 	  }
+	  ptr_qima += padding;
+	}
 
 	return qima;
       }
@@ -121,9 +138,10 @@ namespace mln
 	QImage qima(ncols, nrows, QImage::Format_RGB32);
 	uchar * ptr_qima = qima.scanLine(0);
 	const mln_value(I)* ptr_ima = &ima(ima.domain().pmin());
-	unsigned row_offset = ima.delta_index(dpoint2d(+1, - ncols));
+	unsigned offset = ima.delta_index(dpoint2d(+1, - ncols));
 
-	for (unsigned row = 0; row < nrows; ++row, ptr_ima += row_offset)
+	for (unsigned row = 0; row < nrows; ++row, ptr_ima += offset)
+	{
 	  for (unsigned col = 0; col < ncols; ++col)
 	  {
 	    const mln::value::rgb8& v = *ptr_ima++;
@@ -141,6 +159,7 @@ namespace mln
 	    *ptr_qima = v.blue();
 #  endif // ! Q_BYTE_ORDER
 	  }
+	}
 
 	return qima;
       }
@@ -158,13 +177,21 @@ namespace mln
 	  ncols = geom::ncols(ima);
 
 
+	typedef mln_site(I) P;
+	typedef mln_dpsite(P) DP;
+
 	// Required by a one-shot data copy:
 	mln::border::resize(ima, 0);
 
+	unsigned
+	  offset = ima.delta_index(DP(+1, 0)),
+	  line_offset = 0;
+
 	QImage qima(ncols, nrows, QImage::Format_RGB888);
-	std::memcpy(qima.scanLine(0),
-		    ima.buffer(),
-		    ima.nelements() * 3);
+	for (int i = 0 ; i < qima.height(); ++i, line_offset += offset)
+	  std::memcpy(qima.scanLine(i),
+		      ima.buffer() + line_offset,
+		      ima.ncols() * 3);
 
 	return qima;
       }
@@ -187,9 +214,7 @@ namespace mln
 	mln::border::resize(ima, 0);
 
 	QImage qima(ncols, nrows, QImage::Format_RGB32);
-	std::memcpy(qima.scanLine(0),
-		    ima.buffer(),
-		    ima.nelements() * 4);
+	std::memcpy(qima.bits(), ima.buffer(), ima.nelements() * 4);
 
 	return qima;
       }
@@ -262,6 +287,8 @@ namespace mln
       return output;
     }
 
+
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::convert
 

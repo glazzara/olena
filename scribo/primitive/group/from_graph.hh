@@ -48,7 +48,6 @@
 
 # include <scribo/core/object_links.hh>
 # include <scribo/core/object_groups.hh>
-# include <scribo/core/object_image.hh>
 # include <scribo/core/macros.hh>
 
 

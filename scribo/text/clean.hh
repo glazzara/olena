@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,6 +31,7 @@
 ///
 /// Improve the quality of a text area.
 
+# include <mln/core/concept/image.hh>
 # include <mln/core/concept/weighted_window.hh>
 # include <mln/core/routine/extend.hh>
 
@@ -64,8 +66,12 @@
 #include <mln/value/rgb8.hh>
 #include <mln/io/pgm/all.hh>
 
-#include <sandbox/inim/2009/ocr/resize.hh>
-#include <sandbox/fabien/mln/upsampling/hq2x.hh>
+#include <scribo/core/line_info.hh>
+#include <scribo/upsampling/bs2x.hh>
+#include <scribo/upsampling/eagle.hh>
+#include <scribo/subsampling/bilinear.hh>
+
+#include <scribo/text/clean_inplace.hh>
 
 namespace scribo
 {
@@ -78,71 +84,38 @@ namespace scribo
 
     /// Improve quality of an image with text.
     ///
+    /// \param[in] line   Line info providing statistics about the text
+    ///                   in the corresponding image \p input.
     /// \param[in] input_ A binary image. Object are set to 'false'
     ///                   and backgroud to 'true'.
-    /// \param[in] dmap_win_ A weighted window.
     ///
     /// \return An image. The text have better quality.
     //
-    template <typename I, typename W>
+    template <typename L, typename I>
     mln_concrete(I)
-    clean(const Image<I>& input_, const Weighted_Window<W>& dmap_win_);
+    clean(const line_info<L>& line, const Image<I>& input_);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename W>
+    template <typename L, typename I>
     mln_concrete(I)
-    clean(const Image<I>& input_, const Weighted_Window<W>& dmap_win_)
+    clean(const line_info<L>& line, const Image<I>& input_)
     {
       trace::entering("scribo::text::clean");
 
       const I& input = exact(input_);
-      const W& dmap_win = exact(dmap_win_);
       mlc_bool(mln_site_(I)::dim == 2)::check();
       mlc_equal(mln_value(I),bool)::check();
       mln_precondition(input.is_valid());
-      mln_precondition(dmap_win.is_valid());
-      (void) dmap_win;
+      mln_precondition(line.is_valid());
 
+      mln_concrete(I) output = duplicate(input);
 
-      // Resize
-      typedef image2d<value::rgb8> J;
-      J tmp = data::convert(value::rgb8(), input);
-      J clarge = tmp;//mln::upsampling::hq2x(tmp); (FIXME: re-enable)
-
-      //FIXME: not generic!
-//       if (input.domain().pmax()[0] - input.domain().pmin()[0] <= 10)
-// 	clarge = mln::upsampling::hq4x(clarge);
-
-      I input_large = data::convert(bool(), clarge);
-
-      // Blur
-      image2d<value::int_u8>
-	blur = linear::gaussian(data::convert(value::int_u8(), input_large), 2);
-
-      // Skeleton constraint
-      I K = topo::skeleton::crest(input_large, blur, c8());
-
-      // Skeleton
-      I skel_on_gaussian =
-        morpho::skeleton_constrained(input_large, c8(),
-                                     &topo::skeleton::is_simple_point<I,neighb2d>,
-                                     extend(K, false), arith::revert(blur));
-
-      // Dilation
-      win::octagon2d oct(7);
-      I dilate_on_gaussian = morpho::dilation(skel_on_gaussian, oct);
-
-// 	io::pgm::save(arith::revert(blur), "blur_revert.pgm");
-// 	io::pgm::save(blur, "gaussian.pgm");
-// 	io::pbm::save(input_large, mln::debug::filename("input_large_4x.pbm"));
-//      io::pbm::save(K, mln::debug::filename("K.pbm"));
-// 	io::pbm::save(skel_on_gaussian, mln::debug::filename("skeleton_on_gaussian.pbm"));
-// 	io::pbm::save(dilate_on_gaussian, mln::debug::filename("dilation_on_gaussian.pbm"));
+      clean_inplace(line, output);
 
       trace::exiting("scribo::text::clean");
-      return dilate_on_gaussian;
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -35,34 +35,60 @@ namespace scribo
     namespace shared
     {
 
+
       crop_item::crop_item(QGraphicsItem *parent)
 	: QGraphicsItem(parent)
       {
 	mousePress_ = false;
 	setAcceptHoverEvents(true);
+// 	draw_rect_ = scene()->sceneRect();
 
 	reset();
 
 	grabMouse();
       }
 
-      void crop_item::reset()
+
+      // Mouse is pressed. The rectangle must be created and about to
+      // be enlarged.
+      crop_item::crop_item(const QPointF& p, QGraphicsItem *parent)
+	: QGraphicsItem(parent)
       {
-        if (parentItem())
-          cropRect_ = parentItem()->boundingRect();
-	else
-	  cropRect_ = QRectF(20, 20, 100, 70);
+	mousePress_ = true;
+	setAcceptHoverEvents(true);
+
+// 	draw_rect_ = scene()->sceneRect();
+
+	cropRect_ = QRectF(p, QSize(4, 4));
+	cropResize_ = CropItemResizeBottomRight;
+
+	grabMouse();
       }
 
-      const QRectF& crop_item::cropRect() const
+      crop_item::~crop_item()
       {
-	return cropRect_;
+
+      }
+
+      void crop_item::reset()
+      {
+	cropRect_ = QRect();
+//         if (parentItem())
+//           cropRect_ = parentItem()->boundingRect();
+// 	else
+// 	  cropRect_ = QRectF(20, 20, 100, 70);
+      }
+
+      QRectF crop_item::cropRect() const
+      {
+	return mapToScene(cropRect_).boundingRect();
       }
 
 
       QRectF crop_item::boundingRect() const
       {
-	return parentItem()->boundingRect();
+	return scene()->sceneRect();
+//	return draw_rect_;
       }
 
       void crop_item::paint(QPainter *painter,
@@ -78,21 +104,23 @@ namespace scribo
 
 	QPainterPath windowPath;
 	windowPath.addRect(option->rect);
+//	windowPath.addRect(draw_rect_);
 	windowPath = windowPath.subtracted(cropPath);
 
 	// Draw Alpha-Black Background.
 	painter->fillPath(windowPath, QColor(0x33, 0x33, 0x33, 0xcc));
 
 	// Draw Crop Rect
-	painter->setPen(QPen(QColor(0xdd, 0xdd, 0xdd), 1));
+	// QColor(0xdd, 0xdd, 0xdd)
+	painter->setPen(QPen(Qt::magenta, 3));
 	painter->drawPath(cropPath);
 
 	int topRightX = cropRect_.x() + cropRect_.width();
 	int bottomY = cropRect_.y() + cropRect_.height();
 
 	QPainterPath borderPath;
-	int corner_width = cropRect_.width() / 6.f;
-	int corner_height = cropRect_.height() / 6.f;
+	int corner_width = std::min(int(cropRect_.width() / 6.f), 80);
+	int corner_height = std::min(int(cropRect_.height() / 6.f), 80);
 
 	// Top-Left Corner
 	painter->drawRect(QRectF(cropRect_.x(), cropRect_.y(),
@@ -128,8 +156,17 @@ namespace scribo
 	cropResize_ = CropItemResizeNone;
 	if (event->buttons() & Qt::LeftButton)
 	{
-	  int wsize = cropRect_.width() / 6.f;
-	  int hsize = cropRect_.height() / 6.f;
+	  if (!cropRect_.isValid())
+	  {
+	    cropRect_ = QRectF(event->pos(), QSize(4, 4));
+	    cropResize_ = CropItemResizeBottomRight;
+	    update();
+	    return;
+	  }
+
+
+	  int wsize = std::min(int(cropRect_.width() / 6.f), 80);
+	  int hsize = std::min(int(cropRect_.height() / 6.f), 80);
 
 	  int rightX = cropRect_.x() + cropRect_.width() - wsize;
 	  int leftX = cropRect_.x();
@@ -231,22 +268,35 @@ namespace scribo
 
 	QGraphicsItem::mouseMoveEvent(event);
 
-	qreal minSize = 4 + (CROP_BORDER_LINE << 1);
-
 	QPointF delta = event->pos() - event->lastPos();
+
+	if (cropResize_ == CropItemResizeNone)
+	{
+	  if (//!cropRect_.contains(event->pos())
+	      (!(event->buttons() & Qt::LeftButton)))
+	    return;
+
+	  // Moving existing rectangle
+	  setCursor(Qt::SizeAllCursor);
+	  cropRect_.translate(delta);
+
+//	  draw_rect_.translate(delta);
+	  update();
+	  return;
+	}
+
+	resize(delta);
+      }
+
+
+      void crop_item::resize(const QPointF& delta_)
+      {
+	qreal minSize = 4 + (CROP_BORDER_LINE << 1);
+	QPointF delta = delta_;
+
+	QRectF tmp = cropRect_;
 	switch (cropResize_)
 	{
-	  case CropItemResizeNone:
-	    if (!cropRect_.contains(event->pos()))
-	      return;
-
-	    setCursor(Qt::SizeAllCursor);
-
-	    if (!(event->buttons() & Qt::LeftButton))
-	      return;
-
-	    cropRect_.translate(delta);
-	    break;
 	  case CropItemResizeTopLeft:
 	    delta.setY(qMin(cropRect_.height() - minSize, delta.y()));
 	    delta.setX(qMin(cropRect_.width() - minSize, delta.x()));
@@ -269,11 +319,14 @@ namespace scribo
 	    cropRect_.translate(delta.x(), 0);
 	    setCursor(Qt::SizeBDiagCursor);
 	    break;
+
+	  default:
 	  case CropItemResizeBottomRight:
 	    cropRect_.setWidth(cropRect_.width() + delta.x());
 	    cropRect_.setHeight(cropRect_.height() + delta.y());
 	    setCursor(Qt::SizeFDiagCursor);
 	    break;
+
 	  case CropItemResizeLeft:
 	    delta.setX(qMin(cropRect_.width() - minSize, delta.x()));
 	    cropRect_.setWidth(cropRect_.width() - delta.x());
@@ -301,9 +354,39 @@ namespace scribo
 	if (cropRect_.height() < minSize)
 	  cropRect_.setHeight(minSize);
 
+
+	// Updating bounding rect.
+//  	if ((cropRect_.width() * cropRect_.height()) < (tmp.width() * tmp.height()))
+//  	  draw_rect_ = tmp;
+//  	else
+// 	draw_rect_ = cropRect_;
+
 	update();
       }
 
+
+      void crop_item::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
+      {
+	QGraphicsItem::mouseDoubleClickEvent(event);
+
+	switch (cropResize_)
+	{
+	  case CropItemResizeNone:
+	    if (!cropRect_.contains(event->pos()))
+	      return;
+
+	    setCursor(Qt::SizeAllCursor);
+
+	    if (!(event->buttons() & Qt::LeftButton))
+	      return;
+
+	    emit ready_for_crop();
+	    break;
+
+	  default:
+	    break;
+	}
+      }
 
     }  // end of namespace scribo::demo::shared
 

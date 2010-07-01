@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,7 +35,6 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/win/vline2d.hh>
 
-# include <scribo/core/object_image.hh>
 # include <scribo/primitive/extract/lines_thick.hh>
 
 namespace scribo
@@ -61,7 +61,7 @@ namespace scribo
        * \return An image in which lines are labeled.
        */
       template <typename I, typename N, typename V, typename W>
-      object_image(mln_ch_value(I,V))
+      component_set<mln_ch_value(I,V)>
       lines_thick(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_, V& nlines,
 		  unsigned line_length);
@@ -99,10 +99,10 @@ namespace scribo
 
 
       template <typename I, typename N, typename V>
-      object_image(mln_ch_value(I,V))
+      component_set<mln_ch_value(I,V)>
       lines_v_thick(const Image<I>& input,
-			   const Neighborhood<N>& nbh, V& nlines,
-			   unsigned line_length)
+		    const Neighborhood<N>& nbh, V& nlines,
+		    unsigned line_length)
       {
 	trace::entering("scribo::primitive::extract::lines_v_thick");
 
@@ -111,7 +111,7 @@ namespace scribo
 
 	win::vline2d win(line_length);
 
-	object_image(mln_ch_value(I,V))
+	component_set<mln_ch_value(I,V)>
 	  output = lines_thick(input, nbh, nlines, win);
 
 	trace::exiting("scribo::primitive::extract::lines_v_thick");

@@ -37,6 +37,7 @@ const char *args_desc[][2] =
 {
   { "input.pbm", "A binary image. 'True' for objects, 'False'\
 for the background." },
+  { "lang", "Must be set to \"eng\", \"fra\", \"deu\", \"spa\", \"ita\" (Default \"fra\")" },
   {0, 0}
 };
 
@@ -47,19 +48,28 @@ int main(int argc, char* argv[])
   using namespace scribo;
   using namespace mln;
 
-  if (argc != 2)
+  if (argc != 2 && argc != 3)
     return scribo::debug::usage(argv,
 				"Text recognition",
-				"input.pbm",
-				args_desc,
-				"The text is printed on the standard output");
+				"input.pbm [lang]",
+				args_desc);
 
   trace::entering("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
-  scribo::text::recognition(input, "fra");
+
+  std::string str = argv[2];
+  const char *lang;
+  if (argc < 3 || (str != "eng" && str != "fra"
+		   && str != "deu" && str != "spa"
+		   && str != "ita"))
+    lang = "fra";
+  else
+    lang = argv[2];
+
+  scribo::text::recognition(input, lang);
 
   trace::exiting("main");
 }

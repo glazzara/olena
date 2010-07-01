@@ -326,7 +326,7 @@ namespace scribo
       image2d<value::rgb8> fg = internal::inverted_diff_abs(input, bg);
 
       trace::exiting("scribo::preprocessing::split_bg_fg");
-      return make::couple(bg, fg);
+      return mln::make::couple(bg, fg);
     }
 
 

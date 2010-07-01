@@ -215,9 +215,9 @@ OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
 	     [tesseract], [TESSERACT])
 
 # Qt.
-AT_WITH_QT([], [], [],
-	   AC_DEFINE([HAVE_QT], 1, [Define to 1 if we can use Qt]),
-     	   AC_DEFINE([HAVE_QT], 0))
+AT_WITH_QT([+xml], [], [],
+	   AC_DEFINE([HAVE_QT], 0, [Define to 1 if we can use Qt]),
+     	   AC_DEFINE([HAVE_QT], 1))
 AM_CONDITIONAL([HAVE_QT], [test x$QT_PATH != x])
 
 
@@ -288,12 +288,17 @@ AM_CONDITIONAL([ENABLE_SCRIBO], [test "x$enable_scribo" = xyes])
 
 AC_CONFIG_FILES([
   scribo/Makefile
-    scribo/demo/review/Makefile
+    scribo/demo/Makefile
+      scribo/demo/review/Makefile
+      scribo/demo/viewer/Makefile
     scribo/src/Makefile
       scribo/src/binarization/Makefile
+      scribo/src/contest/Makefile
+      scribo/src/contest/hdibco-2010/Makefile
       scribo/src/debug/Makefile
       scribo/src/filter/Makefile
       scribo/src/misc/Makefile
+      scribo/src/postprocessing/Makefile
       scribo/src/preprocessing/Makefile
       scribo/src/primitive/Makefile
 	scribo/src/primitive/extract/Makefile
@@ -313,6 +318,8 @@ AC_CONFIG_FILES([
     scribo/tests/preprocessing/Makefile
     scribo/tests/table/Makefile
     scribo/tests/text/Makefile
+    scribo/tests/toolchain/Makefile
+    scribo/tests/toolchain/nepomuk/Makefile
     scribo/tests/unit_test/Makefile
 ])
 

@@ -3,7 +3,6 @@
 #include <mln/util/couple.hh>
 #include <scribo/core/component_set.hh>
 #include <scribo/core/macros.hh>
-#include <scribo/primitive/internal/init_link_array.hh>
 
 namespace scribo
 {
@@ -21,21 +20,19 @@ namespace scribo
       {
 	object_links<L>
 	  right(components, static_cast<unsigned>(components.nelements()) + 1);
-	primitive::internal::init_link_array(right);
+	right.init();
 
 	object_links<L>
 	  left(components, static_cast<unsigned>(components.nelements()) + 1);
-	primitive::internal::init_link_array(left);
+	left.init();
 
 	const L& lbl_ima = components.labeled_image();
 
 	for_all_comps(i, components)
 	{
 	  float
-	    w = (components(i).bbox().pmax().col()
-		 - components(i).bbox().pmin().col()),
-	    h = (components(i).bbox().pmax().row()
-		 - components(i).bbox().pmin().row());
+	    w = components(i).bbox().width(),
+	    h = components(i).bbox().height();
 	  unsigned dmax = (w / 2.0f) + (3 * math::max(w, h));
 
 
@@ -98,7 +95,7 @@ namespace scribo
       {
 	object_links<L>
 	  left(components, static_cast<unsigned>(components.nelements()) + 1);
-	primitive::internal::init_link_array(left);
+	left.init();
 
 	const L& lbl_ima = components.labeled_image();
 

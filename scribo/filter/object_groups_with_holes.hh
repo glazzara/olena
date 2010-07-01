@@ -42,33 +42,13 @@
 # include <mln/draw/box_plain.hh>
 # include <mln/util/array.hh>
 
-# include <mln/labeling/blobs_and_compute.hh>
-
 # include <mln/accu/math/count.hh>
 
 # include <mln/fun/i2v/array.hh>
 
-# include <mln/io/pbm/save.hh>
-# include <mln/io/pgm/save.hh>
-
-# include <mln/data/convert.hh>
-
-# include <mln/labeling/background.hh>
-
 # include <scribo/core/macros.hh>
 # include <scribo/core/component_set.hh>
-# include <scribo/filter/internal/compute.hh>
 
-# include <mln/data/fill.hh>
-# include <mln/data/paste.hh>
-
-# include <mln/util/timer.hh>
-
-# include <mln/value/label_16.hh>
-# include <mln/core/var.hh>
-
-
-#include <mln/debug/filename.hh>
 
 namespace scribo
 {
@@ -195,6 +175,9 @@ namespace scribo
 	    data::fill(card, 1);
 	    border::fill(card, 1);
 
+	    // We want to label background components only in the
+	    // group bounding boxes. Thus, this image is a labeling
+	    // constraint.
 	    bboxes_ima = internal::compute_bboxes_image(components);
 
 	    to_keep(0) = true;
@@ -285,7 +268,6 @@ namespace scribo
 	      if (! to_keep(groups(c)))
 		output(c) = 0;
 
-//	output.update_tags(to_keep, component::Ignored);
 
 	    trace::exiting("scribo::filter::impl::generic::object_groups_with_holes");
 	    return output;

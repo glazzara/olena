@@ -35,16 +35,19 @@
 
 bool check_args(int argc, char * argv[])
 {
-  if (argc != 7)
+  if (argc < 3 || argc > 7)
     return false;
 
-  int s = atoi(argv[4]);
-
-  if (s < 2 || s > 3)
+  if (argc >= 6)
   {
-    std::cout << "s must be set to 2 or 3."
-	      << std::endl;
-    return false;
+    int s = atoi(argv[5]);
+
+    if (s < 2 || s > 3)
+    {
+      std::cout << "s must be set to 2 or 3."
+		<< std::endl;
+      return false;
+    }
   }
 
   return true;
@@ -54,10 +57,11 @@ bool check_args(int argc, char * argv[])
 const char *args_desc[][2] =
 {
   { "input.ppm", "A color image." },
+  { "output.pbm", "A binary image." },
   { "lambda", "Lambda used to split bg/fg." },
-  { "w", "Window size at scale 1. (Common value: 101)" },
-  { "s", "First subsampling ratio (Common value: 3)." },
-  { "min_area",    "Minimum object area at scale 1 (Common value: 67)" },
+  { "w", "Window size at scale 1. (default: 101)" },
+  { "s", "First subsampling ratio. (default: 3)" },
+  { "k", "Sauvola's formula parameter. (default: 0.34)" },
   {0, 0}
 };
 
@@ -72,33 +76,53 @@ int main(int argc, char *argv[])
   if (!check_args(argc, argv))
     return scribo::debug::usage(argv,
 				"Multi-Scale Binarization of a color image based on Sauvola's algorithm. Performs a binarization on each component of the color image and merges the results.",
-				"input.ppm w s area_threshold output.pbm",
-				args_desc, "A binary image.");
+				"input.ppm output.pbm lambda <w> <s> <k>",
+				args_desc);
 
   trace::entering("main");
 
-  unsigned lambda = atoi(argv[2]);
+  unsigned lambda = atoi(argv[3]);
 
   // Window size
-  unsigned w_1 = atoi(argv[3]);  // Scale 1
+  unsigned w_1;
+  if (argc >= 5)
+    w_1 = atoi(argv[4]);  // Scale 1
+  else
+    w_1 = 101u;
 
   // First subsampling scale.
-  unsigned s = atoi(argv[4]);
+  unsigned s;
+  if (argc >= 6)
+    s = atoi(argv[5]);
+  else
+    s = 3u;
 
-  // Lambda value
-  unsigned lambda_min_1 = atoi(argv[5]);
+  double k;
+  if (argc >= 7)
+    k = atof(argv[6]);
+  else
+    k = 0.34f;
 
 
+  // Load
   image2d<value::rgb8> input_1;
   io::ppm::load(input_1, argv[1]);
 
+
+  // Split foreground/background
   image2d<value::rgb8>
-    fg = scribo::preprocessing::split_bg_fg(input_1, lambda, 32).first();
+    fg = scribo::preprocessing::split_bg_fg(input_1, lambda, 32).second();
 
+
+  // Convert to Gray level image.
+  image2d<value::int_u8>
+    fg_gl = data::transform(fg, mln::fun::v2v::rgb_to_int_u<8>());
+
+  // Binarize
   image2d<bool>
-    output = scribo::binarization::sauvola_ms(fg, w_1, s, lambda_min_1);
+    output = scribo::binarization::sauvola_ms(fg_gl, w_1, s, k);
 
-  io::pbm::save(output, argv[6]);
+  io::pbm::save(output, argv[2]);
 }
 
 

@@ -66,7 +66,8 @@ namespace scribo
     mln_ch_value(I,value::rgb8)
     decision_image(const Image<I>& input_,
 		   const object_groups<L>& groups,
-		   const object_groups<L>& filtered_groups);
+		   const object_groups<L>& filtered_groups,
+		   anchor::Type anchor);
 
     /*! \brief Save a color image showing the difference between to
         object links.
@@ -84,7 +85,8 @@ namespace scribo
     mln_ch_value(I,value::rgb8)
     decision_image(const Image<I>& input_,
 		   const object_links<L>& links,
-		   const object_links<L>& filtered_links);
+		   const object_links<L>& filtered_links,
+		   anchor::Type anchor);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -125,12 +127,13 @@ namespace scribo
     mln_ch_value(I,value::rgb8)
     decision_image(const Image<I>& input_,
 		   const object_links<L>& links,
-		   const object_links<L>& filtered_links)
+		   const object_links<L>& filtered_links,
+		   anchor::Type anchor)
     {
       trace::entering("scribo::debug::decision_image");
       const I& input = exact(input_);
 
-      const component_set<L>& components = links.components();
+      const component_set<L>& comps = links.components();
 
       mln_precondition(input.is_valid());
       mln_precondition(links.is_valid());
@@ -142,21 +145,22 @@ namespace scribo
       image2d<value::rgb8>
 	decision_image = data::convert(value::rgb8(), input);
 
-      for_all_comps(i, components)
-	mln::draw::box(decision_image, components(i).bbox(), literal::blue);
+      for_all_comps(i, comps)
+	mln::draw::box(decision_image, comps(i).bbox(), literal::blue);
 
       for (unsigned i = 1; i < links.nelements(); ++i)
       {
 
 	if (links(i) != i)
 	{
+	  mln_site(L)
+	    p1 = primitive::link::internal::compute_anchor(comps, i, anchor),
+	    p2 = primitive::link::internal::compute_anchor(comps, links(i), anchor);
+
 	  value::rgb8 value = literal::green;
 	  if (links(i) != filtered_links(i))
 	    value = literal::red;
-	  mln::draw::line(decision_image,
-			  components(i).bbox().pcenter(),
-			  components(links(i)).bbox().pcenter(),
-			  value);
+	  mln::draw::line(decision_image, p1, p2, value);
 	}
       }
 

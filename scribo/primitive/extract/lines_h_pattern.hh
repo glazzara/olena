@@ -30,14 +30,17 @@
 ///
 /// Extract horizontal lines matching a specific pattern.
 
-#include <mln/core/concept/image.hh>
-#include <mln/core/alias/window2d.hh>
-
-# include <mln/win/hline2d.hh>
-
+# include <mln/core/concept/image.hh>
+# include <mln/core/alias/window2d.hh>
+# include <mln/win/rectangle2d.hh>
 # include <mln/morpho/dilation.hh>
 
+# include <mln/arith/times.hh>
+
 # include <scribo/primitive/extract/lines_pattern.hh>
+
+# include <scribo/primitive/internal/rd.hh>
+
 
 namespace scribo
 {
@@ -50,15 +53,30 @@ namespace scribo
 
       using namespace mln;
 
-      /// Extract horizontal lines matching a specific pattern.
-      ///
-      /// \param[in] input  A binary image.
-      /// \param[in] length The minimum line length.
-      /// \param[in] delta Distance between the object pixel and the
-      /// background pixel.
-      ///
-      /// \result An image of horizontal lines.
-      //
+      /*! \brief Extract horizontal lines matching a specific pattern.
+
+	\param[in] input  A binary image.
+	\param[in] length The minimum line length.
+	\param[in] delta Distance between the object pixel and the
+	background pixel.
+
+	\result An image of horizontal lines.
+
+
+	     o
+	     |     ^
+	     |     |  Delta
+	     |     v
+	     X
+	     |     ^
+	     |     |  Delta
+	     |     v
+	     o
+
+	Using a delta of 0 is equivalent to the use of a c2_row
+	neighborhood.
+
+      */
       template <typename I>
       mln_concrete(I)
       lines_h_pattern(const Image<I>& input, unsigned length, unsigned delta);
@@ -70,34 +88,29 @@ namespace scribo
       mln_concrete(I)
       lines_h_pattern(const Image<I>& input, unsigned length, unsigned delta)
       {
+	trace::entering("scribo::primitive::extract::lines_h_pattern");
+
 	mlc_is(mln_value(I), bool)::check();
 	mln_precondition(exact(input).is_valid());
-	mln_precondition(length % 2 == 1);
-
-// 	bool win_def[7][1] = { {1},
-// 			       {0},
-// 			       {0},
-// 			       {0},
-// 			       {0},
-// 			       {0},
-// 			       {1} };
-
-// 	window2d win;
-// 	convert::from_to(win_def, win);
 
 	// FIXME: not generic.
  	window2d win;
 	mln_deduce(I, site, dpsite)
-	  dp1(-delta, 0),
-	  dp2( delta, 0);
+	  dp1(-delta - 1, 0),
+	  dp2( delta + 1, 0);
 	win.insert(dp1);
 	win.insert(dp2);
 
-	//FIXME: Add reconstruction instead of this arbitrary dilation.
- 	win::hline2d hwin(length/2 + 2);
-//	win::hline2d hwin(length);
-	return morpho::dilation(lines_pattern(input, length, 1, win), hwin);
-//	return lines_pattern(input, length, 1, win);
+	mln_concrete(I) output = lines_pattern(input, length, 1, win);
+
+	mln_concrete(I)
+	  output_dil = morpho::dilation(output,
+					win::rectangle2d(3, length / 2 + delta));
+
+	output = scribo::primitive::internal::rd(output, input * output_dil);
+
+	trace::exiting("scribo::primitive::extract::lines_h_pattern");
+	return output;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

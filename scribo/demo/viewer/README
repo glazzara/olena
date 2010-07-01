@@ -1,0 +1,33 @@
+
+Document layout viewer.
+
+Copyright (C) 2009 Florent D'Halluin.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+The complete GNU General Public Licence Notice can be found as the
+`COPYING' file in the root directory.
+
+__________________________________________________________________
+
+
+Document Layout Viewer
+
+Purpose:
+- Display layout information about image documents.
+
+Contact:
+d-halluin@lrde.epita.fr
+
+Usage:
+- Get XML layout descriptions (PAGE format, ICDAR2009).
+- Put XML and image files in the same directory, with the same name.
+- Select an image within the application.
+- Click on regions to display their attributes.
+
+Infos:
+- Everything is read-only.
+- The DOM Model classes are a slightly modified Qt example.

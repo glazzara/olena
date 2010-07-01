@@ -29,7 +29,7 @@ namespace scribo
 
     QPixmap crop_widget::image() const
     {
-      return viewer_->image().copy(crop_area().toRect());
+      return viewer_->image().copy(crop_area().toRect().intersected(viewer_->image().rect()));
     }
 
   } // end of namespace scribo::demo

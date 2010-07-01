@@ -45,7 +45,7 @@ namespace scribo
 
 
     public:
-      MainWindow(QWidget *parent = 0);
+      MainWindow(const QString& exec_prefix, QWidget *parent = 0);
       ~MainWindow();
 
       void set_base_img_dir(const QString& dir);

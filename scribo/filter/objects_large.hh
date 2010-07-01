@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,8 +24,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_FILTER_OBJECTS_LARGE_HH
-# define SCRIBO_FILTER_OBJECTS_LARGE_HH
+#ifndef SCRIBO_FILTER_COMPONENTS_LARGE_HH
+# define SCRIBO_FILTER_COMPONENTS_LARGE_HH
 
 /// \file
 ///
@@ -42,8 +43,9 @@
 
 # include <mln/pw/all.hh>
 
-# include <scribo/core/object_image.hh>
-# include <scribo/primitive/extract/objects.hh>
+# include <scribo/core/component_set.hh>
+# include <scribo/primitive/extract/components.hh>
+# include <scribo/fun/v2b/objects_large_filter.hh>
 
 namespace scribo
 {
@@ -65,128 +67,34 @@ namespace scribo
     /// \return A binary image without large objects.
     template <typename I, typename N, typename V>
     mln_concrete(I)
-    objects_large(const Image<I>& input_,
+    components_large(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_,
 		  const V& label_type,
 		  unsigned max_size);
-
-    /// Remove too large text objects.
-    ///
-    /// \param[in] objects    An object image.
-    /// \param[in] max_size   The minimum cardinality of an object.
-    ///
-    /// \return updated text data.
-    template <typename L>
-    object_image(L)
-    objects_large(const object_image(L)& objects,
-		  unsigned max_size);
-
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-    namespace internal
-    {
-
-
-      /// Filter Functor.
-      /// Return false for all objects which are too large.
-      template <typename L>
-      struct objects_large_filter
-	: Function_v2b< objects_large_filter<L> >
-      {
-
-	typedef accu::math::count<mln_psite(L)> card_t;
-
-	/// Constructor
-	///
-	/// \param[in] compbboxes Component bounding boxes.
-	/// \param[in] max_size Maximum object size.
-	objects_large_filter(const object_image(L)& objects,
-			     unsigned max_size)
-	{
-	  card_ = labeling::compute(card_t(), objects, objects.nlabels());
-	  max_size_ = max_size;
-	}
-
-
-	/// Check if the object is large enough.
-	///
-	/// \param l A label.
-	///
-	/// \return false if the object area is strictly inferior to
-	/// \p max_size_.
-	bool operator()(const mln_value(L)& l) const
-	{
-	  if (l == literal::zero)
-	    return true;
-	  return card_[l] <= max_size_;
-	}
-
-
-	/// The object bounding boxes.
-	mln::util::array<mln_result(card_t)> card_;
-	/// The maximum area.
-	unsigned max_size_;
-      };
-
-
-    } //  end of namespace scribo::filter::internal
-
-
-
-    template <typename I, typename N, typename V>
-    inline
-    mln_concrete(I)
-    objects_large(const Image<I>& input_,
-		  const Neighborhood<N>& nbh_,
-		  const V& label_type,
-		  unsigned max_size)
-    {
-      trace::entering("scribo::filter::objects_large");
-
-      const I& input = exact(input_);
-      const N& nbh = exact(nbh_);
-
-      mln_precondition(input.is_valid());
-      mln_precondition(nbh.is_valid());
-
-      V nlabels;
-      typedef object_image(mln_ch_value(I,V)) lbl_t;
-      lbl_t lbl = primitive::extract::objects(input, nbh, nlabels);
-
-      typedef internal::objects_large_filter<lbl_t> func_t;
-      func_t fv2b(lbl, max_size);
-      labeling::relabel_inplace(lbl, nlabels, fv2b);
-
-      mln_concrete(I) output = duplicate(input);
-      data::fill((output | pw::value(lbl) == literal::zero).rw(), false);
-
-      trace::exiting("scribo::filter::objects_large");
-      return output;
-    }
-
-
     template <typename L>
     inline
-    object_image(L)
-    objects_large(const object_image(L)& objects,
-		  unsigned max_size)
+    component_set<L>
+    components_large(const component_set<L>& components,
+		     unsigned max_size)
     {
-      trace::entering("scribo::filter::objects_large");
+      trace::entering("scribo::filter::components_large");
 
-      mln_precondition(objects.is_valid());
+      mln_precondition(components.is_valid());
 
-      internal::objects_large_filter<L> f(objects, max_size);
+      fun::v2b::components_large_filter<L> f(components, max_size);
 
-      object_image(L) output;
-      output.init_from_(objects);
-      output.relabel(f);
+      component_set<L> output = components.duplicate();
+      output.update_tags(f, component::Ignored);
 
-      trace::exiting("scribo::filter::objects_large");
+      trace::exiting("scribo::filter::components_large");
       return output;
     }
+
 
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -195,4 +103,4 @@ namespace scribo
 
 } // end of namespace scribo
 
-#endif // ! SCRIBO_FILTER_OBJECTS_LARGE_HH
+#endif // ! SCRIBO_FILTER_COMPONENTS_LARGE_HH

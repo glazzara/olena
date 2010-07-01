@@ -428,7 +428,6 @@ namespace mln
   }
 
 
-
   template <typename G, typename C>
   inline
   point<G,C>::point(C ind)

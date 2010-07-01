@@ -46,7 +46,6 @@
 # include <scribo/core/component_set.hh>
 # include <scribo/primitive/internal/find_root.hh>
 # include <scribo/primitive/internal/is_link_valid.hh>
-# include <scribo/primitive/internal/init_link_array.hh>
 
 
 namespace scribo
@@ -65,7 +64,6 @@ namespace scribo
 	  \param[in] components  A component set.
 	  \param[in] left_link   The left neighbor of each line of text.
 	  \param[in] right_link  The right neighbor of each line of text.
-	  \param[in] parent_link The function used to group components.
 
 	  \return Return object groups information.
       */
@@ -94,7 +92,7 @@ namespace scribo
 	mln_precondition(right_link.components_id_() == components.id_());
 
 	object_groups<L> parent(components, left_link.nelements());
-	internal::init_link_array(parent);
+	parent.init();
 	for_all_ncomponents(i, components.nlabels())
 	{
 	  mln::util::couple<bool, unsigned>

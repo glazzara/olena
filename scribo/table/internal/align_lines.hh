@@ -124,7 +124,7 @@ namespace scribo
 	lines.resize(nsites);
 
 	// Map components with actual lines.
-	for_all_components(i, line_bboxes)
+	for_all_comps(i, line_bboxes)
 	{
 	  int minline = line_bboxes[i].pmin()[dim] - max_alignment_diff;
 	  minline = (minline < min_coord ? min_coord : minline);

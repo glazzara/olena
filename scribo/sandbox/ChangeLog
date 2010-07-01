@@ -1,0 +1,9 @@
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add algorithms to retrieve white spaces.
+
+	* white_space/white_spaces.cc: Move...
+	* z/white_space/white_spaces.cc: ... Here. Improve speed.
+
+	* z/white_spaces/hom_sep.cc,
+	* z/white_space/white_space_closing.cc: New. Other approaches.

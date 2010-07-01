@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>464</width>
+    <width>553</width>
     <height>350</height>
    </rect>
   </property>
@@ -38,6 +38,9 @@
        </item>
        <item>
         <widget class="QLabel" name="rotate_lbl" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
          <property name="text" >
           <string>Rotate:</string>
          </property>
@@ -45,6 +48,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="rotate_cw_btn" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
          <property name="toolTip" >
           <string>Rotate clock-wise</string>
          </property>
@@ -59,6 +65,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="rotate_ccw_btn" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
          <property name="toolTip" >
           <string>Rotate counter-clock-wise</string>
          </property>
@@ -204,11 +213,14 @@
        <property name="interactive" >
         <bool>true</bool>
        </property>
-       <property name="renderHints" >
-        <set>QPainter::Antialiasing</set>
-       </property>
        <property name="dragMode" >
         <enum>QGraphicsView::NoDrag</enum>
+       </property>
+       <property name="viewportUpdateMode" >
+        <enum>QGraphicsView::BoundingRectViewportUpdate</enum>
+       </property>
+       <property name="optimizationFlags" >
+        <set>QGraphicsView::DontAdjustForAntialiasing|QGraphicsView::DontClipPainter|QGraphicsView::DontSavePainterState</set>
        </property>
       </widget>
      </item>
