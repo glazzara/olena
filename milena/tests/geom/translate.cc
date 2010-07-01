@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,7 +46,7 @@ int main()
   box2d b = make::box2d(-2, -2, 2, 2);
   image2d<bool>
     ima_rot = geom::translate(ima,
-			      -1 * ima.domain().center().to_vec(),
+			      -1 * ima.domain().pcenter().to_vec(),
 			      literal::zero, b);
 
   mln_piter_(image2d<bool>)

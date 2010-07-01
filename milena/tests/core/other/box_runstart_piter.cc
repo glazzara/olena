@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,7 +36,7 @@ int main()
   box_runstart_piter<point2d> p(b);
   unsigned i = 0;
   for_all(p)
-    mln_assertion(p == point2d(i, 0));
+    mln_assertion(p == point2d(i++, 0));
 
   mln_assertion(p.run_length() == 3);
 }

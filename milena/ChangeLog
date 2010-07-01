@@ -1,5 +1,12 @@
 2010-07-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix a few tests.
+
+	* tests/core/other/box_runstart_piter.cc,
+	* tests/geom/translate.cc: Fix test.
+
+2010-07-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update generated images included in the doc.
 
 	* doc/figures/fill-subdomain-3.ppm,
