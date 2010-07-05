@@ -1,0 +1,28 @@
+.line
+{
+    position:absolute;
+    background-color:white;
+    z-index:7;
+    display:inline;
+    white-space:pre;
+    letter-spacing:-2px;
+    padding:0px;
+    margin:0px;
+    filter:alpha(opacity=100);
+    font-family:"Times New Roman", Times, serif;
+}
+.para
+{
+    position:absolute;
+    z-index:6;
+}
+.region
+{
+    position:absolute;
+    z-index:5;
+}
+.image
+{
+    position:absolute;
+    border:0;
+}

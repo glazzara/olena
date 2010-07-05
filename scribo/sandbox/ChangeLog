@@ -1,3 +1,22 @@
+2010-07-05  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
+
+	ICDAR XML to HTML.
+
+	* arthur/xml_to_html/domitem.cc,
+	* arthur/xml_to_html/domitem.hh.,
+	* arthur/xml_to_html/dommodel.cc,
+	* arthur/xml_to_html/dommodel.hh: XML parsing.
+
+	* arthur/xml_to_html/patterns/css.css,
+	* arthur/xml_to_html/patterns/xsl.xsl: HTML patterns.
+
+	* arthur/xml_to_html/xml_to_html.cc,
+	* arthur/xml_to_html/xml_to_html.hh: Image croping and XML merging.
+
+	* arthur/xml_to_html/README
+	* arthur/xml_to_html/xml_to_html.pro
+	* arthur/xml_to_html/main.cc
+
 2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add algorithms to retrieve white spaces.
