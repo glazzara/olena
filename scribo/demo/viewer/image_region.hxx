@@ -58,6 +58,7 @@ ImageRegion::setDrawIfSameId(int id, bool draw)
   if (id == id_)
     {
       draw_ = draw;
+      setVisible(draw);
       if (scene())
 	{
 	  scene()->invalidate();

@@ -138,8 +138,8 @@ Viewer::Viewer(int &argc, char** argv)
   XmlWidget* xml_wgt = new XmlWidget();
   BrowserWidget* browser_wgt =
     new BrowserWidget(files_, argc != 2 ? QString() : argv[1]);
-  ImageWidget* image_wgt = new ImageWidget(scene_);
   key_wgt_ = new KeyWidget(key_map_);
+  ImageWidget* image_wgt = new ImageWidget(scene_);
 
   scene_->setBackgroundBrush(scene_->palette().window());
 
@@ -212,7 +212,7 @@ Viewer::load_xml(QString filename)
   scene_->removeItem(image_);
   scene_->clear();
   scene_->addItem(image_);
-  
+
   scene_->update();
 
   if (doc_layout_)
@@ -220,9 +220,9 @@ Viewer::load_xml(QString filename)
       doc_layout_->deleteLater();
       doc_layout_ = 0;
     }
-  
+
   emit updated(doc_layout_);
-  
+
   if (QFile::exists(xml_file))
   {
     QFile file(xml_file);
@@ -267,11 +267,11 @@ Viewer::xml_to_layout()
 	  attributes = doc_layout_->index(i, 1, page);
 	  QString name = doc_layout_->data(region, Qt::DisplayRole).toString();
 	  region::RegionId id = static_cast<region::RegionId>(region_ids_[name]);
-	  
+
 	  coords = doc_layout_->index(0, 0, region);
 	  if (!region.isValid() || !coords.isValid())
 	    break;
-	  
+
 	  QVector<QPoint> points;
 	  for (int j = 0; true; ++j)
 	    {
@@ -279,14 +279,14 @@ Viewer::xml_to_layout()
 	      point = doc_layout_->index(j, 1, coords);
 	      if (!point.isValid())
 		break;
-	      
+
 	      QMap<QString, QVariant> data =
 		doc_layout_->data(point, Qt::UserRole).toMap();
 	      int x = data["x"].toInt();
 	      int y = data["y"].toInt();
 	      points << QPoint(x, y);
 	    }
-	  
+
 	  // Create region
 	  ImageRegion* r = new ImageRegion(id,
 					   key_map_[id].first,
@@ -296,7 +296,7 @@ Viewer::xml_to_layout()
 					   fill_action_->isChecked(),
 					   precise_action_->isChecked(),
 					   key_wgt_->isChecked(id));
-	  
+
 	  connect(this, SIGNAL(key_updated(int, bool)),
 		  r, SLOT(setDrawIfSameId(int, bool)));
 	  connect(this, SIGNAL(setOutline(bool)),
@@ -305,7 +305,7 @@ Viewer::xml_to_layout()
 		  r, SLOT(setPrecise(bool)));
 	  connect(this, SIGNAL(setFill(bool)),
 		  r, SLOT(setFill(bool)));
-	  
+
 	  scene_->addItem(r);
 
 	  // EXTENDED MODE
@@ -325,6 +325,7 @@ Viewer::xml_to_layout()
 
 		  QModelIndex par_coords = doc_layout_->index(0, 0, paragraph);
 		  QModelIndex point_par;
+
 		  QVector<QPoint> points_par;
 		  for (int m = 0; true; ++m)
 		    {
@@ -332,7 +333,7 @@ Viewer::xml_to_layout()
 		      point_par = doc_layout_->index(m, 1, par_coords);
 		      if (!point_par.isValid())
 			break;
-		      
+
 		      QMap<QString, QVariant> data_par =
 			doc_layout_->data(point_par, Qt::UserRole).toMap();
 		      int x = data_par["x"].toInt();
@@ -349,7 +350,7 @@ Viewer::xml_to_layout()
 						       fill_action_->isChecked(),
 						       precise_action_->isChecked(),
 						       key_wgt_->isChecked(id_par));
-		  
+
 		  connect(this, SIGNAL(key_updated(int, bool)),
 			  r_par, SLOT(setDrawIfSameId(int, bool)));
 		  connect(this, SIGNAL(setOutline(bool)),
@@ -360,7 +361,7 @@ Viewer::xml_to_layout()
 			  r_par, SLOT(setFill(bool)));
 
 		  scene_->addItem(r_par);
-		  
+
 		  for (int l = 1; true; ++l)
 		    {
 		      QModelIndex line = doc_layout_->index(l, 0, paragraph);
@@ -370,7 +371,7 @@ Viewer::xml_to_layout()
 
 		      QString name_line = doc_layout_->data(line, Qt::DisplayRole).toString();
 		      region::RegionId id_line = static_cast<region::RegionId>(region_ids_[name_line]);
-		      
+
 		      QModelIndex line_coords = doc_layout_->index(0, 0, line);
 		      QModelIndex point_line;
 		      QVector<QPoint> points_line;
@@ -380,14 +381,14 @@ Viewer::xml_to_layout()
 			  point_line = doc_layout_->index(n, 1, line_coords);
 			  if (!point_line.isValid())
 			    break;
-			  
+
 			  QMap<QString, QVariant> data_line =
 			    doc_layout_->data(point_line, Qt::UserRole).toMap();
 			  int x = data_line["x"].toInt();
 			  int y = data_line["y"].toInt();
 			  points_line << QPoint(x, y);
 			}
-		      
+
 		      // Create region
 		      ImageRegion* r_line = new ImageRegion(id_line,
 							   key_map_[id_line].first,
@@ -397,7 +398,7 @@ Viewer::xml_to_layout()
 							   fill_action_->isChecked(),
 							   precise_action_->isChecked(),
 						       key_wgt_->isChecked(id_line));
-		      
+
 		      connect(this, SIGNAL(key_updated(int, bool)),
 			      r_line, SLOT(setDrawIfSameId(int, bool)));
 		      connect(this, SIGNAL(setOutline(bool)),
@@ -409,12 +410,12 @@ Viewer::xml_to_layout()
 
 		      scene_->addItem(r_line);
 		    }
-		} 
+		}
 	    }
 	  // END OF EXTENDED MODE
-	  
+
 	}
-      
+
       emit updated(doc_layout_);
     }
 }
@@ -481,6 +482,7 @@ Viewer::maybeChangeCacheMode(qreal scale)
 void Viewer::useExtended(bool b)
 {
   extended_mode_ = b;
+  key_wgt_->checkAll();
   if (xml_file_ != QString(""))
     load_xml(xml_file_);
 

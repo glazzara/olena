@@ -27,6 +27,7 @@ public:
   KeyWidget(const region::KeyMap& key_map);
   ~KeyWidget();
 
+  void checkAll();
   bool isChecked(region::RegionId id);
 
 signals:

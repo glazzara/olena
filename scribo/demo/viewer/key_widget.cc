@@ -36,6 +36,15 @@ KeyWidget::KeyWidget(const region::KeyMap& key_map)
 	  this, SLOT(update(QListWidgetItem*)));
 }
 
+void KeyWidget::checkAll()
+{
+  for (int i = 0; i < items_->count(); ++i)
+    {
+      items_->item(i)->setCheckState(Qt::Checked);
+      emit updated(i, true);      
+    }
+}
+
 void 
 KeyWidget::change_mode(bool b)
 {
