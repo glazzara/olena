@@ -1,5 +1,12 @@
 2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new debug routines.
+
+	* debug/char_space_image.hh,
+	* debug/line_info_image.hh: New.
+
+2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Disable some debug output.
 
 	* text/clean_inplace.hh,
