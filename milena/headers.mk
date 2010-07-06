@@ -603,7 +603,7 @@ mln/geom/ncols.hh \
 mln/geom/ninds.hh \
 mln/geom/nrows.hh \
 mln/geom/nsites.hh \
-mln/geom/nslis.hh \
+mln/geom/nslices.hh \
 mln/geom/pmin_pmax.hh \
 mln/geom/rotate.hh \
 mln/geom/seeds2tiling.hh \

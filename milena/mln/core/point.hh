@@ -76,11 +76,11 @@ namespace mln
 
       template <unsigned n, typename C1, typename G, typename C2>
       void
-      from_to_(const algebra::vec<n,C1>& from, point<G,C2>& to);
+      from_to_(const mln::algebra::vec<n,C1>& from, point<G,C2>& to);
 
       template <unsigned n, typename C1, typename G>
       void
-      from_to_(const algebra::vec<n,C1>& from, point<G,C1>& to);
+      from_to_(const mln::algebra::vec<n,C1>& from, point<G,C1>& to);
 
     } // end of namespace mln::convert::over_load
 
@@ -95,7 +95,7 @@ namespace mln
     template <typename G, typename C>
     struct vec_of_point
     {
-      typedef algebra::vec<G::dim, float> ret;
+      typedef mln::algebra::vec<G::dim, float> ret;
     };
 
   }
@@ -131,10 +131,10 @@ namespace mln
     typedef C coord;
 
     /// Algebra vector (vec) associated type.
-    typedef algebra::vec<G::dim, float> vec;
+    typedef mln::algebra::vec<G::dim, float> vec;
 
     /// Algebra hexagonal vector (hvec) associated type.
-    typedef algebra::h_vec<G::dim, float> h_vec;
+    typedef mln::algebra::h_vec<G::dim, float> h_vec;
 
     /// Read-only access to the \p i-th coordinate value.
     /// \param[in] i The coordinate index.
@@ -159,9 +159,9 @@ namespace mln
 
     /// Constructor from an algebra vector.
     template <typename C2>
-    point(const algebra::vec<dim,C2>& v);
+    point(const mln::algebra::vec<dim,C2>& v);
 
-    point(const algebra::vec<dim,C>& v);
+    point(const mln::algebra::vec<dim,C>& v);
 
 
     /// \{ Constructors with different numbers of arguments
@@ -218,10 +218,10 @@ namespace mln
     static const point<G,C>& minus_infty();
 
     /// Return the underlying vector storing the coordinates.
-    algebra::vec<G::dim, C>& hook_coord_();
+    mln::algebra::vec<G::dim, C>& hook_coord_();
 
   protected:
-    algebra::vec<G::dim, C> coord_;
+    mln::algebra::vec<G::dim, C> coord_;
   };
 
   namespace internal
@@ -250,7 +250,7 @@ namespace mln
 
   /// FIXME...
   template <typename G, typename C>
-  const algebra::vec<point<G,C>::dim - 1, C>& cut_(const point<G,C>& p);
+  const mln::algebra::vec<point<G,C>::dim - 1, C>& cut_(const point<G,C>& p);
 
   template <typename C>
   const util::yes& cut_(const point<grid::tick,C>& p);
@@ -293,7 +293,7 @@ namespace mln
 	  mlc_and(mlc_is_not(C,float),
 		  mlc_is_not(C,double)),
 	  mlc_or(mlc_is(C2,float),
-		 mlc_is(C2, double)))::check_t(), v);
+		 mlc_is(C2, double)))::eval(), v);
     }
 
 
@@ -324,7 +324,7 @@ namespace mln
       template <unsigned n, typename C1, typename G, typename C2>
       inline
       void
-      from_to_(const algebra::vec<n,C1>& from, point<G,C2>& to)
+      from_to_(const mln::algebra::vec<n,C1>& from, point<G,C2>& to)
       {
 	mlc_converts_to(C1, C2)::check();
 	enum { dim = G::dim };
@@ -346,7 +346,7 @@ namespace mln
       template <unsigned n, typename C1, typename G>
       inline
       void
-      from_to_(const algebra::vec<n,C1>& from, point<G,C1>& to)
+      from_to_(const mln::algebra::vec<n,C1>& from, point<G,C1>& to)
       {
 	enum { dim = G::dim };
 	mlc_bool(G::dim == n)::check();
@@ -414,7 +414,7 @@ namespace mln
   template <typename G, typename C>
   template <typename C2>
   inline
-  point<G,C>::point(const algebra::vec<dim,C2>& v)
+  point<G,C>::point(const mln::algebra::vec<dim,C2>& v)
   {
     convert::over_load::from_to_(v, *this);
   }
@@ -422,7 +422,7 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  point<G,C>::point(const algebra::vec<dim,C>& v)
+  point<G,C>::point(const mln::algebra::vec<dim,C>& v)
   {
     convert::over_load::from_to_(v, *this);
   }
@@ -563,7 +563,7 @@ namespace mln
     //FIXME: to be improved.
     if (dim > 2)
     {
-      algebra::vec<G::dim, float> tmp;
+      mln::algebra::vec<G::dim, float> tmp;
       unsigned j = 0;
       for (unsigned i = dim - 2; i < dim; ++i)
 	tmp[j++] = coord_[i];
@@ -581,7 +581,7 @@ namespace mln
   typename point<G,C>::h_vec
   point<G,C>::to_h_vec() const
   {
-    algebra::h_vec<G::dim, float> tmp;
+    mln::algebra::h_vec<G::dim, float> tmp;
 
     //FIXME: to be improved.
     if (dim == 1)
@@ -622,7 +622,7 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  algebra::vec<G::dim, C>&
+  mln::algebra::vec<G::dim, C>&
   point<G,C>::hook_coord_()
   {
     return coord_;
@@ -658,10 +658,10 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  const algebra::vec<point<G,C>::dim - 1, C>&
+  const mln::algebra::vec<point<G,C>::dim - 1, C>&
   cut_(const point<G,C>& p)
   {
-    return *(algebra::vec<point<G,C>::dim - 1, C>*)(& p.to_vec());
+    return *(mln::algebra::vec<point<G,C>::dim - 1, C>*)(& p.to_vec());
   }
 
   template <typename C>

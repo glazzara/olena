@@ -1,3 +1,16 @@
+2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in milena.
+
+	* doc/figures/ima2d-rot-2.ppm: Update generated output.
+
+	* mln/core/alias/window2d.hh: Aesthetic changes in the header.
+
+	* mln/core/point.hh: Add mln:: prefix.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Fix the way to convert unsigned to float.
