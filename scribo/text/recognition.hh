@@ -121,9 +121,9 @@ namespace scribo
 	if (! lines(i).is_valid() || lines(i).tag() != line::None || lines(i).type() != line::Text)
 	  continue;
 
-	std::cout << "Text recognition... ("
-		  << i << "/" << lines.nelements() << ")" << std::endl;
-	std::cout << "x_height = " << lines(i).x_height() << std::endl;
+// 	std::cout << "Text recognition... ("
+// 		  << i << "/" << lines.nelements() << ")" << std::endl;
+// 	std::cout << "x_height = " << lines(i).x_height() << std::endl;
 
 	mln_domain(I) box = lines(i).bbox();
 
@@ -175,7 +175,7 @@ namespace scribo
 
 	if (s != 0)
 	{
- 	  std::cerr << s << std::endl;
+//  	  std::cerr << s << std::endl;
 	  std::string str(s);
 	  str = str.substr(0, str.length() - 2);
 	  lines(i).update_text(str);
@@ -232,7 +232,7 @@ namespace scribo
 
 	if (s != 0)
 	{
-	  std::cout << s << std::endl;
+// 	  std::cout << s << std::endl;
 	  if (!output_file.empty())
 	  {
 	    std::string str(s);

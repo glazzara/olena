@@ -111,11 +111,11 @@ namespace scribo
 	return;
 
       float fact = line.x_height() / 40.0f;
-      std::cout << fact << " - " << input.domain() << std::endl;
+//       std::cout << fact << " - " << input.domain() << std::endl;
       if (fact < 1)
       {
-	std::cout << "Upsampling..." << " - "
-		  << fact << std::endl;
+// 	std::cout << "Upsampling..." << " - "
+// 		  << fact << std::endl;
 	while (fact < 0.90)
 	{
 	  input = scribo::upsampling::eagle(input); // 2x upsampling
@@ -127,13 +127,13 @@ namespace scribo
       }
       else if (fact > 2.5f)
       {
-	std::cout << "subsampling::bilinear" << " - "
-		  << std::ceil(fact) << std::endl;
+// 	std::cout << "subsampling::bilinear" << " - "
+// 		  << std::ceil(fact) << std::endl;
 	input = subsampling::bilinear(input, std::ceil(fact - 0.5)); // math::floor instead?
 
       }
-      else
-	std::cout << "not clean_inplaceing text. Seems ok." << std::endl;
+//       else
+// 	std::cout << "not clean_inplaceing text. Seems ok." << std::endl;
 
       trace::exiting("scribo::text::clean_inplace");
     }

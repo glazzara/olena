@@ -1,18 +1,25 @@
 2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Disable some debug output.
+
+	* text/clean_inplace.hh,
+	* text/recognition.hh: Disable some debug output.
+
+2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a tool for text recognition in natural pictures.
 
-	scribo/src/Makefile.am: Add a new rule.
+	* src/Makefile.am: Add a new rule.
 
-	scribo/src/text_recognition_in_picture.cc: New.
+	* src/text_recognition_in_picture.cc: New.
 
 2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add text::look_like_text_lines.
 
-	* scribo/text/look_like_text_lines.hh: New.
+	* text/look_like_text_lines.hh: New.
 
-	* scribo/text/merging.hh: Make use of
+	* text/merging.hh: Make use of
 	text::look_like_text_lines.
 
 2010-06-30  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
