@@ -1,5 +1,13 @@
 2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a tool for text recognition in natural pictures.
+
+	scribo/src/Makefile.am: Add a new rule.
+
+	scribo/src/text_recognition_in_picture.cc: New.
+
+2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add text::look_like_text_lines.
 
 	* scribo/text/look_like_text_lines.hh: New.

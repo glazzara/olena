@@ -73,4 +73,20 @@ if HAVE_MAGICKXX
 		      	       -lpthread \
 			       $(MAGICKXX_LDFLAGS)
 
+if HAVE_TESSERACT
+
+    bin_PROGRAMS	+= text_recognition_in_picture
+    text_recognition_in_picture_SOURCES  = text_recognition_in_picture.cc
+    text_recognition_in_picture_CPPFLAGS = $(AM_CPPFLAGS) \
+	  			           $(TESSERACT_CPPFLAGS) \
+			       		   $(TIFF_CPPFLAGS) \
+			       		   $(MAGICKXX_CPPFLAGS)
+    text_recognition_in_picture_LDFLAGS  = $(AM_LDFLAGS) \
+		      	       		   -lpthread \
+	  			           $(TESSERACT_LDFLAGS) \
+			       		   $(TIFF_LDFLAGS) \
+					   $(MAGICKXX_LDFLAGS)
+
+endif HAVE_TESSERACT
+
 endif HAVE_MAGICKXX
