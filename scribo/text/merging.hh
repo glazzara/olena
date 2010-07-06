@@ -57,7 +57,7 @@
 #include <mln/data/wrap.hh>
 #include <mln/util/timer.hh>
 
-
+#include <text/look_like_text_lines.hh>
 
 
 namespace scribo
@@ -92,20 +92,6 @@ namespace scribo
 
       using namespace mln;
       using value::int_u8;
-
-
-
-      template <typename L>
-      inline
-      bool looks_like_a_text_line(const scribo::line_info<L>& l)
-      {
-	return
-	  l.card() >= 3                  // at least 3 components
-	  && l.bbox().height() > 10      // and minimal height
-	  && l.bbox().width() > l.bbox().height(); // and more horizontal-like than vertical
-	// FIXME: Later on, add a criterion based on the number
-	// of alignments (on top and bot).
-      }
 
 
       template <typename T, typename T2>
