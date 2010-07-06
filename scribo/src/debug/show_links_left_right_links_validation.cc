@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,7 +40,7 @@
 #include <scribo/core/object_links.hh>
 #include <scribo/core/object_image.hh>
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 
 #include <scribo/primitive/link/with_single_left_link.hh>
 #include <scribo/primitive/link/with_single_right_link.hh>
@@ -70,8 +71,7 @@ int main(int argc, char *argv[])
     return scribo::debug::usage(argv,
 				"Display double validated (left and right) links between objects",
 				"<input.pbm> <hlmax> <hrmax> <output.ppm>",
-				args_desc,
-				"A color image. Validated links are drawn in green.");
+				args_desc);
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
@@ -79,43 +79,41 @@ int main(int argc, char *argv[])
   // Finding objects.
   value::label_16 nbboxes;
   typedef image2d<value::label_16> L;
-  object_image(L) objects = primitive::extract::objects(input, c8(), nbboxes);
+  component_set<L> comps = primitive::extract::components(input, c8(), nbboxes);
 
   // Left links.
   object_links<L> left_link
-    = primitive::link::with_single_left_link(objects, atoi(argv[2]));
+    = primitive::link::with_single_left_link(comps, atoi(argv[2]));
 
   // Right links.
   object_links<L> right_link
-    = primitive::link::with_single_right_link(objects, atoi(argv[3]));
+    = primitive::link::with_single_right_link(comps, atoi(argv[3]));
 
   // Validation.
   object_links<L>
-    links = primitive::link::merge_double_link(objects, left_link, right_link);
+    links = primitive::link::merge_double_link(left_link, right_link);
 
 
   // Saving result.
   image2d<value::rgb8> output = data::convert(value::rgb8(), input);
 
-//   scribo::draw::bounding_boxes(output, objects, literal::blue);
   scribo::draw::bounding_box_links(output,
-				   objects.bboxes(),
 				   links,
-				   literal::green);
+				   literal::green, anchor::MassCenter);
 
-  util::array<bool> drawn(static_cast<unsigned>(objects.nlabels()) + 1, 0);
-  for_all_components(i, objects.bboxes())
-    if (links[i] == i && ! drawn(i))
+  util::array<bool> drawn(unsigned(comps.nelements()) + 1, 0);
+  for_all_comps(i, comps)
+    if (links(i) == i && ! drawn(i))
     {
-      mln::draw::box(output, objects.bbox(i), literal::orange);
+      mln::draw::box(output, comps(i).bbox(), literal::orange);
       drawn[i] = true;
     }
     else
     {
-      mln::draw::box(output, objects.bbox(i), literal::blue);
-      mln::draw::box(output, objects.bbox(links[i]), literal::blue);
+      mln::draw::box(output, comps(i).bbox(), literal::blue);
+      mln::draw::box(output, comps(links(i)).bbox(), literal::blue);
       drawn[i] = true;
-      drawn[links[i]] = true;
+      drawn[links(i)] = true;
     }
 
   io::ppm::save(output, argv[4]);

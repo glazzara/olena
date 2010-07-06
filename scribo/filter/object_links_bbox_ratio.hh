@@ -78,7 +78,7 @@ namespace scribo
 
       const component_set<L>& components = links.components();
 
-      object_links<L> output(links);
+      object_links<L> output = links.duplicate();
       for (unsigned i = 1; i < links.nelements(); ++i)
 	if (links(i) != i)
 	{

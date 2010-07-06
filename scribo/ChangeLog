@@ -1,5 +1,28 @@
 2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Compilation related fixes in Scribo.
+
+	* core/line_info.hh: Rename hidden as is_hidden.
+
+	* core/object_links.hh: Add duplicate().
+
+	* filter/object_links_bbox_ratio.hh: Use object_links::duplicate.
+
+	* debug/links_decision_image.hh,
+	* src/debug/show_info_median_inter_characters.cc,
+	* src/debug/show_info_x_height.cc,
+	* src/debug/show_links_bbox_h_ratio.cc,
+	* src/debug/show_links_left_right_links_validation.cc: Make
+	compile again.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+	* text/extract_lines.hh: Update with latest changes.
+
+	* text/recognition.hh: Check whether a line is hidden or not.
+
+2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new debug routines.
 
 	* debug/char_space_image.hh,

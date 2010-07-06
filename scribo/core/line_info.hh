@@ -138,7 +138,7 @@ namespace scribo
     /// computing data over lines.
     ///
     /// @{
-    bool hidden() const;
+    bool is_hidden() const;
     void set_hidden(bool b);
     /// @}
 
@@ -268,10 +268,9 @@ namespace scribo
   {
     // Id MUST NOT change except if this instance have no id.
     if (! is_valid())
-    {
       id_ = other.id();
-      hidden_ = other.hidden_;
-    }
+
+    hidden_ = other.hidden_;
 
     tag_ = other.tag();
     bbox_ = other.bbox();
@@ -620,7 +619,7 @@ namespace scribo
 
   template <typename L>
   bool
-  line_info<L>::hidden() const
+  line_info<L>::is_hidden() const
   {
     return hidden_;
   }
@@ -923,6 +922,7 @@ namespace scribo
 		<< ", orientation=" << info.orientation()
 		<< ", reading_orientation=" << info.reading_orientation()
 		<< ", indented=" << info.indented()
+		<< ", hidden=" << info.is_hidden()
 		<< ", text=" << info.text()
 		<< ")" << std::endl;
   }

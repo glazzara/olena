@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,33 +33,25 @@
 
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/site_set/box.hh>
-
-# include <mln/data/fill.hh>
-
-# include <mln/accu/shape/bbox.hh>
-
-# include <mln/draw/box.hh>
-
-# include <mln/labeling/blobs.hh>
-# include <mln/labeling/compute.hh>
-
-# include <mln/util/array.hh>
-# include <mln/util/graph.hh>
 # include <mln/value/label_16.hh>
 
-# include <scribo/primitive/extract/components.hh>
-# include <scribo/primitive/group/apply.hh>
-# include <scribo/primitive/link/with_several_left_links.hh>
-# include <scribo/primitive/link/with_several_right_links.hh>
-# include <scribo/primitive/group/from_double_link.hh>
+# include <scribo/core/line_set.hh>
 
-# ifndef SCRIBO_NDEBUG
-#  include <mln/literal/colors.hh>
-#  include <scribo/make/debug_filename.hh>
-#  include <scribo/debug/save_bboxes_image.hh>
-#  include <scribo/debug/save_linked_bboxes_image.hh>
-# endif // SCRIBO_NDEBUG
+# include <scribo/primitive/extract/components.hh>
+
+# include <scribo/primitive/link/merge_double_link.hh>
+# include <scribo/primitive/link/with_single_left_link_dmax_ratio.hh>
+# include <scribo/primitive/link/with_single_right_link_dmax_ratio.hh>
+
+# include <scribo/filter/objects_small.hh>
+
+# include <scribo/primitive/group/apply.hh>
+# include <scribo/primitive/group/from_single_link.hh>
+
+# include <scribo/filter/object_links_bbox_h_ratio.hh>
+
+# include <scribo/text/merging.hh>
+
 
 namespace scribo
 {
@@ -70,28 +63,22 @@ namespace scribo
 
     /// Extract lines of text in a binary image.
     /*!
-    ** \param[in]     input_  A binary image.
-    ** \param[in]     nbh_    A neighborhood used for labeling.
-    ** \param[in,out] nbboxes Will hold the number of bounding boxes
-    **			      at the end of the routine.
+    ** \param[in]     input  A binary image.
+    ** \param[in]     nbh    A neighborhood used for labeling.
     **
-    ** \return An object image with grouped potential text components.
+    ** \return A set of lines.
     */
-    template <typename I, typename N, typename V>
-    object_image(mln_ch_value(I,V))
-    extract_lines(const Image<I>& input_,
-		  const Neighborhood<N>& nbh_,
-		  V& nbboxes);
+    template <typename I, typename N>
+    line_set<mln_ch_value(I,value::label_16)>
+    extract_lines(const Image<I>& input, const Neighborhood<N>& nbh);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-    template <typename I, typename N, typename V>
-    object_image(mln_ch_value(I,V))
-    extract_lines(const Image<I>& input_,
-		  const Neighborhood<N>& nbh_,
-		  V& nbboxes)
+    template <typename I, typename N>
+    line_set<mln_ch_value(I,value::label_16)>
+    extract_lines(const Image<I>& input_, const Neighborhood<N>& nbh_)
     {
       trace::entering("scribo::text::extract_lines");
 
@@ -101,46 +88,44 @@ namespace scribo
       mln_precondition(input.is_valid());
       mln_precondition(nbh.is_valid());
 
-      typedef mln_ch_value(I,V) L;
-      typedef object_image(L) text_t;
-      text_t text = scribo::primitive::extract::components(input, nbh, nbboxes);
+      typedef mln_ch_value(I,value::label_16) L;
 
-# ifndef SCRIBO_NDEBUG
-      debug::save_bboxes_image(input, text.bboxes(), literal::red,
-			       scribo::make::debug_filename("character-bboxes.ppm"));
-# endif // ! SCRIBO_NDEBUG
+      /// Finding comps.
+      value::label_16 ncomps;
+      component_set<L>
+	comps = scribo::primitive::extract::components(input, nbh, ncomps);
 
-      //Link character bboxes to their left neighboor if possible.
+      /// First filtering.
+      component_set<L> filtered_comps
+	= scribo::filter::components_small(comps, 6);
+
+      /// Linking potential comps
       object_links<L> left_link
-	= primitive::link::with_several_left_links(text, 30);
+	= primitive::link::with_single_left_link_dmax_ratio(filtered_comps);
       object_links<L> right_link
-	= primitive::link::with_several_right_links(text, 30);
+	= primitive::link::with_single_right_link_dmax_ratio(filtered_comps);
 
-# ifndef SCRIBO_NDEBUG
-      scribo::debug::save_linked_bboxes_image(input,
-					      text, left_link, right_link,
-					      literal::red, literal::cyan,
-					      literal::yellow, literal::green,
-					      scribo::make::debug_filename("links.ppm"));
-# endif // ! SCRIBO_NDEBUG
 
-      //Merge character bboxes through a graph.
+      // Validating left and right links.
+      object_links<L>
+	merged_links = primitive::link::merge_double_link(left_link,
+							  right_link);
+
+      // Remove links if bboxes have too different sizes.
+      object_links<L> hratio_filtered_links
+	= filter::object_links_bbox_h_ratio(merged_links, 2.0f);
+
 
       object_groups<L>
-	groups = primitive::group::from_double_link(text,
-						    left_link, right_link);
+	groups = primitive::group::from_single_link(hratio_filtered_links);
 
-      text_t grouped_text = primitive::group::apply(text, groups);
 
-# ifndef SCRIBO_NDEBUG
-      debug::save_bboxes_image(input, grouped_text.bboxes(),
-			       literal::red,
-			       scribo::make::debug_filename("multiple_links_grouped_text.ppm"));
-# endif // ! SCRIBO_NDEBUG
+      line_set<L> line = scribo::make::line_set(groups);
+      line = text::merging(line);
 
 
       trace::exiting("scribo::text::extract_lines");
-      return grouped_text;
+      return line;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

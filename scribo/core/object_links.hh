@@ -92,6 +92,8 @@ namespace scribo
 
     void init();
 
+    object_links<L> duplicate() const;
+
   private:
     mln::util::tracked_ptr<data_t> data_;
   };
@@ -217,6 +219,18 @@ namespace scribo
 	data_->comp_to_link_(i) = 0;
       else
 	data_->comp_to_link_(i) = i;
+  }
+
+  template <typename L>
+  inline
+  object_links<L>
+  object_links<L>::duplicate() const
+  {
+    object_links<L> output;
+    output.data_ = new data_t();
+
+    *(output.data_.ptr_) = *(data_.ptr_);
+    return output;
   }
 
 

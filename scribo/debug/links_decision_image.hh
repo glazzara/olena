@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,15 +32,11 @@
 /// Save a color image showing the difference between to object groups.
 
 # include <mln/core/concept/image.hh>
-# include <mln/accu/center.hh>
 # include <mln/data/convert.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/literal/colors.hh>
-# include <mln/util/array.hh>
-# include <mln/norm/l1.hh>
 
-# include <scribo/core/object_groups.hh>
-# include <scribo/draw/bounding_boxes.hh>
+# include <scribo/core/object_links.hh>
 
 
 namespace scribo
@@ -55,14 +52,6 @@ namespace scribo
     mln_ch_value(I,value::rgb8)
     links_decision_image(const Image<I>& input_,
 			 const object_links<L>& links,
-			 const object_links<L>& filtered_links,
-			 unsigned max_link_length);
-
-    /// \overload
-    template <typename I, typename L>
-    mln_ch_value(I,value::rgb8)
-    links_decision_image(const Image<I>& input_,
-			 const object_links<L>& links,
 			 const object_links<L>& filtered_links);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -71,73 +60,44 @@ namespace scribo
     mln_ch_value(I,value::rgb8)
     links_decision_image(const Image<I>& input_,
 			 const object_links<L>& links,
-			 const object_links<L>& filtered_links,
-			 unsigned max_link_length)
+			 const object_links<L>& filtered_links)
     {
       trace::entering("scribo::debug::links_decision_image");
       const I& input = exact(input_);
 
-      const object_image(L)& objects = links.object_image_();
+      const component_set<L>& comps = links.components();
 
       mln_precondition(input.is_valid());
-      mln_precondition(objects.is_valid());
+      mln_precondition(comps.is_valid());
       mln_precondition(links.is_valid());
       mln_precondition(filtered_links.is_valid());
       mln_precondition(links.size() == filtered_links.size());
-      mln_precondition(links.object_image_() != filtered_links.object_image_());
       /// Fixme: check that objects has been computed from input.
 
       image2d<value::rgb8>
 	links_decision_image = data::convert(value::rgb8(), input);
 
-      for_all_components(i, objects.bboxes())
-	mln::draw::box(links_decision_image, objects.bbox(i), literal::blue);
+      for_all_comps(i, comps)
+	mln::draw::box(links_decision_image, comps(i).bbox(), literal::blue);
 
-      // Computing mass centers.
-      mln::util::array<mln_result(accu::center<mln_psite(I)>)>
-	mass_centers = labeling::compute(accu::meta::center(),
-					 objects, objects.nlabels());
-
-      for (unsigned i = 1; i < links.size(); ++i)
-      {
-
-	if (links[i] != i)
+      for_all_links(i, links)
+	if (links(i) != i)
 	{
 	  value::rgb8 value = literal::green;
-	  if (links[i] != filtered_links[i])
+	  if (links(i) != filtered_links(i))
 	    value = literal::red;
 
 	  mln_site(I)
-	    p1 = mass_centers[i],
-	    p2 = p1 + mln::right; // FIXME: not generic
+	    p1 = comps(i).mass_center(),
+	    p2 = comps(links(i)).mass_center();
 
-	  while (objects(p2) != links[i] && objects.domain().has(p2))
-	    ++p2.col();
-
-	  if (norm::l1_distance(p2.to_vec(), p1.to_vec()) < max_link_length)
-	    mln::draw::line(links_decision_image,
-			    p1,
-			    p2,
-			    value);
+	  mln::draw::line(links_decision_image, p1, p2, value);
 	}
-      }
 
       trace::exiting("scribo::debug::links_decision_image");
       return links_decision_image;
     }
 
-
-    template <typename I, typename L>
-    mln_ch_value(I,value::rgb8)
-    links_decision_image(const Image<I>& input_,
-			 const object_links<L>& links,
-			 const object_links<L>& filtered_links)
-    {
-      return links_decision_image(input_,
-				  links,
-				  filtered_links,
-				  mln_max(unsigned));
-    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

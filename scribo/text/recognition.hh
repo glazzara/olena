@@ -118,7 +118,7 @@ namespace scribo
       /// Use text bboxes with Tesseract
       for_all_lines(i, lines)
       {
-	if (! lines(i).is_valid() || lines(i).tag() != line::None || lines(i).type() != line::Text)
+	if (! lines(i).is_valid() || lines(i).is_hidden() || lines(i).type() != line::Text)
 	  continue;
 
 // 	std::cout << "Text recognition... ("
