@@ -5,7 +5,10 @@
     z-index:7;
     display:inline;
     white-space:pre;
+
+    /* FIXME */
     letter-spacing:-2px;
+
     padding:0px;
     margin:0px;
     filter:alpha(opacity=100);

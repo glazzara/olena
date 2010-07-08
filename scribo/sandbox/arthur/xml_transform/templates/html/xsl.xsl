@@ -5,16 +5,11 @@
     <html>
       <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Fooooooo !</title>
+	<title>SCRIBO</title>
 	<link rel="stylesheet" type="text/css" href="css.css" />
       </head>
       <body>
 
-	<div class="image" style="top:0px;left:0px;">
-	  <img src="../../ppm/mp00076.png" />
-	</div>
-
-	  <!-- BEGIN IMAGE REGION -->
 	<xsl:for-each select="pcGts/page/graphic_region|
 			      pcGts/page/image_region|
 			      pcGts/page/chart_region|
@@ -23,6 +18,8 @@
 			      pcGts/page/text_region|
 			      pcGts/page/text_region/paragraph|
 			      pcGts/page/text_region/paragraph/line">
+
+	  <!-- Regions Coordinates -->
 
 	  <!-- y1 -->
 	  <xsl:variable name="y1">
@@ -64,16 +61,10 @@
 	    </xsl:for-each>
 	  </xsl:variable>
 
+	  <!-- END OF Regions Coordinates -->
+
 	  <!-- TEXT LINE-->
 	  <xsl:if test="name() = 'line'">
-
-	    <xsl:variable name="x_height">
-	      <xsl:value-of select="../../@x_height" />
-	    </xsl:variable>
-
-	    <xsl:variable name="a_height">
-	      <xsl:value-of select="../../@a_height" />
-	    </xsl:variable>
 
 	    <xsl:variable name="colour">
 	      <xsl:choose>
@@ -86,25 +77,36 @@
 	      </xsl:choose>
 	    </xsl:variable>
 
-	    <xsl:variable name="d_height_tmp">
-	      <xsl:value-of select="../../@d_height" />
+	    <!-- x_height -->
+	    <xsl:variable name="x_height">
+	      <xsl:value-of select="../../@x_height" />
 	    </xsl:variable>
 
-  	    <xsl:variable name="d_height">
+	    <!-- a_height -->
+	    <xsl:variable name="a_height">
+	      <xsl:value-of select="../../@a_height" />
+	    </xsl:variable>
+
+	    <!-- ABS(d_height) -->
+	    <xsl:variable name="d_height_abs">
 	      <xsl:choose>
-		<xsl:when test="$d_height_tmp &lt; 0">
-		  <xsl:value-of select="-$d_height_tmp" />
+		<xsl:when test="../../@d_height &lt; 0">
+		  <xsl:value-of select="-../../@d_height" />
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:value-of select="$d_height_tmp" />
+		  <xsl:value-of select="../../@d_height" />
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:variable>
 
+	    <!-- a_height computed, i.e>
+		 if (A - X < |D|)
+		 A = X + |D|
+	      -->
 	    <xsl:variable name="a">
 	      <xsl:choose>
-		<xsl:when test="($a_height - $x_height) &lt; $d_height">
-		  <xsl:value-of select="$x_height + $d_height" />
+		<xsl:when test="($a_height - $x_height) &lt; $d_height_abs">
+		  <xsl:value-of select="$x_height + $d_height_abs" />
 		</xsl:when>
 		<xsl:otherwise>
 		  <xsl:value-of select="$a_height" />
@@ -112,24 +114,17 @@
 	      </xsl:choose>
 	    </xsl:variable>
 
+	    <!-- d_height computed, i.e>
+		 if (A - A > |D|)
+		 |D| = A - X
+	      -->
 	    <xsl:variable name="d">
 	      <xsl:choose>
-		<xsl:when test="($a_height - $x_height) &gt; $d_height">
-		  <xsl:value-of select="-($a_height - $x_height)" />
+		<xsl:when test="($a_height - $x_height) &gt; $d_height_abs">
+		  <xsl:value-of select="$a_height - $x_height" />
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:value-of select="$d_height" />
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:variable>
-
-  	    <xsl:variable name="d_f">
-	      <xsl:choose>
-		<xsl:when test="$d &lt; 0">
-		  <xsl:value-of select="-$d" />
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:value-of select="$d" />
+		  <xsl:value-of select="$d_height_abs" />
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:variable>
@@ -139,7 +134,7 @@
               <xsl:attribute name="style">
                 opacity:1;
                 height:auto;
-                font-size:<xsl:value-of select="$a+$d_f" />px;
+                font-size:<xsl:value-of select="$a+$d" />px;
 		width:<xsl:value-of select="$x2 - $x1" />px;
                 left:<xsl:value-of select="$x1 " />px;
                 top:<xsl:value-of select="$y1 " />px;

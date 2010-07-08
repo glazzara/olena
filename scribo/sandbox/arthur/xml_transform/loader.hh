@@ -23,27 +23,27 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef   	IMAGE_CROP_HH
-# define   	IMAGE_CROP_HH
+#ifndef         LOADER_HH
+# define   	LOADER_HH
 
-# include <QtGui>
+//# include <QtGui>
+# include "xml_transform.hh"
 
 class DomModel;
 
-class ImageCrop : public QObject
+class Loader
 {
-  Q_OBJECT
   public:
-  ImageCrop();
-  ~ImageCrop();
-  void merge(QString in, QString other, QString output = "output.xml");
-  bool load_xml(QString xml_file, QString image_file = "", QString path = "output");
-  void find_image_regions();
-  private:
-  DomModel* layout_;
-  QString image_file_;
-  QString path_;
-  bool regions_;
+
+  Loader();
+  ~Loader();
+
+  //  void merge(QString in, QString other, QString output = "output.xml");
+  bool load_xml(QString xml_file, bool html, QString output);
+  DomModel* xml_to_dom(QString output);
+  bool set_output(QString& output);
+  void add_pdf_templates(bool crop, QString output);
+  void add_html_templates(QString output);
 };
 
-#endif	    /* !IMAGE_CROP_HH  */
+#endif	    /* !LOADER_HH  */

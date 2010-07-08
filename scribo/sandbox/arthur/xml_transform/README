@@ -1,0 +1,19 @@
+xml_transform <option> <xml_file> <ppm_file> <output_dir>
+
+Transforms an ICDAR XML file to different kind of output.
+
+OPTIONS:
+
+	--html: Produce a HTML output
+
+Once process is finished, open output.xml with your internet browser. If this one supports XSLT, there is no problem to display the result but if it does not support it (like Konqueror or Chrome in local), you should run `sh html_generator.sh` (xsltproc package required) to generate a HTML file readable by all browsers.
+
+     	--pdf: Produce a PDF output, regions will be cropped as follows in the XML file.
+     	--pdf-no-crop: Produce a PDF output without cropping regions, the entire picture will be displayed.
+
+PDF is not directly created once the process is finished, to produce it, go to the output_dir and run `sh pdf_generator.sh` (fop >= 0.95 required).
+
+
+BUILD:
+
+Chnage the environment variable QMAKE_CXXFLAGS to indicate the correct paths to milena and olena then, just type qmake and make.
