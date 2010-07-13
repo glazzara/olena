@@ -1,3 +1,7 @@
+2010-07-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	* AUTHORS: Update.
+
 2010-06-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have AC_PROG_SWIG be more flexible w.r.t. major/minor version numbers.
