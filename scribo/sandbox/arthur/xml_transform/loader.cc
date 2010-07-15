@@ -24,8 +24,6 @@
 // executable file might be covered by the GNU General Public License.
 
 # include "loader.hh"
-# include "dommodel.hh"
-# include "xml_transform.hh"
 
 Loader::Loader()
 {
@@ -35,21 +33,21 @@ Loader::~Loader()
 {
 }
 
-DomModel* Loader::xml_to_dom(QString output)
+QDomDocument* Loader::xml_to_dom(QString xml_file)
 {
-  QString file_path = output;
-
-  QFile file(file_path);
+  QFile file(xml_file);
 
   if (file.open(QIODevice::ReadOnly))
     {
-      QDomDocument document;
-      if (document.setContent(&file))
+      QDomDocument* document = new QDomDocument;
+      if (document->setContent(&file))
 	{
-	  return new DomModel(document);
+	  file.close();
+	  return document;
 	}
     }
 
+  file.close();
   return 0;
 }
 
@@ -61,9 +59,7 @@ bool Loader::set_output(QString& output)
     output.append("/");
 
   if (!dir.exists())
-    {
-      return dir.mkpath(".");
-    }
+    return dir.mkpath(".");
   else
     {
       QStringList list = dir.entryList(QDir::Writable | QDir::AllDirs);
@@ -72,25 +68,38 @@ bool Loader::set_output(QString& output)
 }
 
 
-void Loader::add_html_templates(QString output)
+void Loader::add_html_templates(bool base64, QString output)
 {
-
   QFile gen("templates/html/html_generator.sh");
   gen.copy(output + "html_generator.sh");
 
   QFile css("templates/html/css.css");
   css.copy(output + "css.css");
 
-  QFile xsl("templates/html/xsl.xsl");
-  xsl.copy(output + "xsl.xsl");
-
+  if (base64)
+    {
+      QFile xsl("templates/html/xsl_base64.xsl");
+      xsl.copy(output + "xsl.xsl");
+    }
+  else
+    {
+      QFile xsl("templates/html/xsl.xsl");
+      xsl.copy(output + "xsl.xsl");
+    }
 }
 
-void Loader::add_pdf_templates(bool crop, QString output)
+void Loader::add_pdf_templates(bool crop, bool base64, QString output)
 {
-
-  QFile regions("templates/pdf/regions.xsl");
-  regions.copy(output + "regions.xsl");
+  if (base64)
+    {
+      QFile regions("templates/pdf/regions_base64.xsl");
+      regions.copy(output + "regions.xsl");
+    }
+  else
+    {
+      QFile regions("templates/pdf/regions_png.xsl");
+      regions.copy(output + "regions.xsl");
+    }
 
   QFile gen("templates/pdf/pdf_generator.sh");
   gen.copy(output + "pdf_generator.sh");
@@ -104,59 +113,58 @@ void Loader::add_pdf_templates(bool crop, QString output)
     }
   else
     {
-      QFile xsl("templates/pdf/main.xsl");
-      xsl.copy(output + "main.xsl");
+      if (base64)
+	{
+	  QFile xsl("templates/pdf/main.xsl");
+	  xsl.copy(output + "main.xsl");
+	}
+      else
+	{
+	  QFile xsl("templates/pdf/main64.xsl");
+	  xsl.copy(output + "main.xsl");
+	}
     }
 }
 
-bool Loader::load_xml(QString xml_file, bool html, QString output)
+bool Loader::xml_output(QString xml_file, bool html, QString output)
 {
   QFile file(xml_file);
 
-  if (file.exists())
+  file.open(QIODevice::ReadOnly);
+
+  QFile out_file(output + "output.xml");
+  out_file.open(QIODevice::ReadWrite);
+
+  QTextStream stream_in(&file);
+  QTextStream stream_out(&out_file);
+
+  QString line = stream_in.readLine();
+
+  while(!line.contains("<?xml"))
+    line = stream_in.readLine();
+
+  stream_out << line;
+
+  if (html)
+    stream_out << "\n<?xml-stylesheet type=\"text/xsl\" href=\"xsl.xsl\" ?>";
+
+  // /!\ attributes of ICDAR PcGts removed.
+  while(!line.contains("<pcGts"))
+    line = stream_in.readLine();
+
+  line = stream_in.readLine();
+  stream_out << "\n<pcGts>";
+
+  while (!line.contains("</pcGts>"))
     {
-      file.open(QIODevice::ReadOnly);
-      set_output(output);
-
-      QFile out_file(output + "output.xml");
-      out_file.open(QIODevice::ReadWrite);
-
-      QTextStream stream_in(&file);
-      QTextStream stream_out(&out_file);
-
-      QString line = stream_in.readLine();
-
-      while(!line.contains("<?xml"))
-	line = stream_in.readLine();
-
-      stream_out << line;
-
-      if (html)
-	stream_out << "\n<?xml-stylesheet type=\"text/xsl\" href=\"xsl.xsl\" ?>";
-
-      // /!\ attributes of ICDAR PcGts removed.
-      while(!line.contains("<pcGts"))
-	line = stream_in.readLine();
-
-      line = stream_in.readLine();
-      stream_out << "\n<pcGts>";
-
-      while (!line.contains("</pcGts>"))
-	{
-	  stream_out << "\n" << line;
-	  line = stream_in.readLine();
-	}
-
       stream_out << "\n" << line;
-
-      file.close();
-      out_file.close();
-
-      return true;
+      line = stream_in.readLine();
     }
-  else
-    {
-      qDebug() << xml_file + " doesn't exist";
-      return false;
-    }
+
+  stream_out << "\n" << line;
+
+   file.close();
+   out_file.close();
+
+  return true;
 }

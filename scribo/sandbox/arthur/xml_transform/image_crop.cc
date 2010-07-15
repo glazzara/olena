@@ -25,7 +25,7 @@
 
 # include "image_crop.hh"
 # include "loader.hh"
-# include "dommodel.hh"
+# include "common.hh"
 
 # include <limits.h>
 
@@ -36,7 +36,10 @@
 #include <mln/io/magick/save.hh>
 #include <mln/io/ppm/all.hh>
 
-ImageCrop::ImageCrop()
+ImageCrop::ImageCrop(QString xml, QString img, QString output) :
+  xml_(xml),
+  image_(img),
+  output_dir_(output)
 {
 }
 
@@ -44,95 +47,242 @@ ImageCrop::~ImageCrop()
 {
 }
 
-void ImageCrop::save_image(QString image, QString output)
+/* Save PPM image to PNG format in output_dir/img. */
+void ImageCrop::save_image(QString file)
 {
   using namespace mln;
 
   image2d<value::rgb8> ima;
-  io::ppm::load(ima, image.toStdString());
+  io::ppm::load(ima, image_.toStdString());
 
-  io::magick::save(ima, output.toStdString() + "img/image.png");
+  QString filename;
+  if (file == QString::Null())
+    filename =  Common::get_file_name(image_);
+  else
+    filename = file;
+
+  std::cout << "Saving " << image_.toStdString() << " to "
+	    << output_dir_.toStdString() << "img/"
+	    << filename.toStdString()  << ".png"
+	    << std::endl;
+
+  io::magick::save(ima, output_dir_.toStdString() + "img/" + filename.toStdString() + ".png");
 }
 
-void ImageCrop::crop_regions(QString xml_file, QString image_file, QString output)
+/* Return the image in base 64. */
+QString ImageCrop::img_to_base64()
+{
+  QFile f(image_);
+  f.open(QIODevice::ReadOnly);
+
+  QByteArray file_content = f.readAll();
+
+  f.close();
+
+  return file_content.toBase64();
+}
+
+/* Decode the base 64 string str and save into output_dir_/img/img_name. */
+bool ImageCrop::img_from_base64(QString str, QString img_name, QString mime)
+{
+  QByteArray ba;
+
+  ba = ba.append(str);
+  QByteArray out_ba = QByteArray::fromBase64(ba);
+  QImage ima = QImage::fromData(out_ba);
+
+  return ima.save(output_dir_ + "img/" + img_name + "." + mime);
+}
+
+/* Read all regions of the XML file and save all base 64 data into output_dir/img */
+void ImageCrop::from_base64()
+{
+  QFile f_in(xml_);
+  f_in.open(QIODevice::ReadOnly);
+
+  QDomDocument doc;
+  doc.setContent(&f_in);
+  f_in.close();
+
+  QDomElement root = doc.documentElement();
+  QDomNode child = root.firstChild();
+
+  while (!child.isNull() && !child.toElement().tagName().contains("page"))
+    child = child.nextSibling();
+
+  child = child.firstChild();
+  while (!child.isNull())
+    {
+      if (child.toElement().tagName().contains(QRegExp("(image|graphic|chart|separator|table)_region")))
+	{
+	  QDomNode node = child.firstChild();
+	  QString id = child.toElement().attribute("id", "none");
+
+	  while (!node.isNull() && !node.toElement().tagName().contains("container"))
+	    node = node.nextSibling();
+
+	  if (!node.isNull())
+	    {
+	      QString data = node.firstChildElement("data").text();
+	      QString mime = node.firstChildElement("mime").text();
+	      img_from_base64(data, id, mime);
+	    }
+	}
+      child = child.nextSibling();
+    }
+}
+
+/* Tranfsorm the input XML file associated with images into a single
+   XML output containing datas if images in base 64. */
+void ImageCrop::to_base64(QString out_file, bool no_crop)
+{
+  QFile file(xml_);
+  file.open(QIODevice::ReadOnly);
+  QTextStream stream(&file);
+
+  QFile file2(out_file);
+  file2.open(QIODevice::ReadWrite);
+  QTextStream stream2(&file2);
+
+  QString line = stream.readLine();
+  stream2 << line;
+  line = stream.readLine();
+
+  // HEAD
+  while (!line.contains("<page"))
+    {
+      stream2 << "\n" << line;
+      line = stream.readLine();
+    }
+
+  if (no_crop)
+    {
+      stream2 << "\n" << line;
+
+      stream2 << "\n" << "    <image_region id=\"image\">";
+      stream2 << "\n" << "      <container>\n";
+      stream2 << "        <mime>png</mime>\n";
+
+      QString file_name = Common::get_file_name(image_);
+      save_image();
+      QFile img(output_dir_ + "img/" + file_name + ".png");
+
+      img.open(QIODevice::ReadOnly);
+      stream2 << "        <data>\n";
+
+      QByteArray byte = img.readAll();
+      stream2 << byte.toBase64();
+
+      stream2 << "        </data>";
+      stream2 << "\n      </container>";
+      stream2 << "\n      <coords>\n";
+
+      stream2 << "        <point x=\"0\" y=\"0\" />\n";
+      stream2 << "        <point x=\"0\" y=\"0\" />";
+
+      stream2 << "\n      </coords>";
+      stream2 << "\n" << "    </image_region>\n";
+      img.close();
+
+      line = stream.readLine();
+
+      while(!line.contains("</pcGts>"))
+	{
+	  stream2 << "\n" << line;
+	  line = stream.readLine();
+	}
+
+      stream2 << "\n" << line;
+    }
+  else
+    {
+      while(!line.contains("</pcGts>"))
+	{
+	  stream2 << "\n" << line;
+	  if (line.contains(QRegExp("<(image|graphic|chart|separator|table)_region")))
+	    {
+	      stream2 << "\n" << "      <container>\n";
+	      stream2 << "        <mime>png</mime>\n";
+
+	      QDomDocument doc;
+	      doc.setContent(line);
+
+	      QDomElement root = doc.documentElement();
+	      QString id = root.attribute("id", "none");
+
+	      QFile img(output_dir_ + "img/" + id + ".png");
+
+	      img.open(QIODevice::ReadOnly);
+	      stream2 << "        <data>\n";
+
+	      QByteArray byte = img.readAll();
+	      stream2 << byte.toBase64();
+
+	      stream2 << "        </data>";
+	      stream2 << "\n      </container>";
+	      img.close();
+	    }
+
+	  line = stream.readLine();
+	}
+
+      stream2 << "\n" << line;
+    }
+
+  file2.close();
+  file.close();
+}
+
+bool ImageCrop::crop_regions()
 {
   Loader loader;
+  QFile f(xml_);
+  f.open(QIODevice::ReadOnly);
+  QDomDocument doc;
 
-  QFile f(image_file);
-
-  if (!f.exists())
+  if (doc.setContent(&f))
     {
-      qDebug() << "Image doesn't exist !";
-      abort();
-    }
-  DomModel* layout = loader.xml_to_dom(xml_file);
-  if (layout)
-    {
-      QModelIndex pcGts = layout->index(1, 0);
-      QModelIndex page = layout->index(1, 0, pcGts);
-      QModelIndex region;
-      QModelIndex attributes;
-      QModelIndex coords;
-      QModelIndex point;
-      bool regions_found = false;
+      bool found_regions = false;
+      f.close();
 
-      for (int i = 0; true; ++i)
+      QDomElement root = doc.documentElement();
+      QDomNode page = root.firstChild();
+
+      while (!page.isNull() && !page.toElement().tagName().contains("page"))
+	page = page.nextSibling();
+
+      if (page.isNull())
+	return false;
+
+      QDomNode region = page.firstChild();
+
+      while (!region.isNull())
 	{
-	  region = layout->index(i, 0, page);
-	  attributes = layout->index(i, 1, page);
-
-	  QString name = layout->data(region, Qt::DisplayRole).toString();
-	  coords = layout->index(0, 0, region);
-
-	  bool is_region =
-	    name == QString("image_region")
-	    || name == QString("graphic_region")
-	    || name == QString("separator_region")
-	    || name == QString("chart_region")
-	    || name == QString("table_region") ;
-
-	  if (!region.isValid() || !coords.isValid())
-	    break;
-
-	  if (is_region)
+	  if (region.toElement().tagName().contains(QRegExp("(image|graphic|chart|separator|table)_region")))
 	    {
-	      regions_found = true;
-	      QMap<QString, QVariant> data =
-		layout->data(attributes, Qt::UserRole).toMap();
+	      found_regions = true;
 
-	      QString id;
-	      QMap<QString, QVariant>::iterator it = data.find("id");
+	      QDomNode coords = region.firstChild();
+	      QString id = region.toElement().attribute("id", "none");
 
-	      if (it == data.end() || it.key() != "id")
-		qDebug() << "WTF_Error : No image region.";
+	      qDebug() << region.toElement().tagName();
 
-	      while (it != data.end() && it.key() == "id")
-		{
-		  qDebug() << name;
-		  id = it.value().toString();
-		  qDebug() << it.key() + " = " + it.value().toString();
-		  ++it;
-		}
+	      while (!coords.isNull() && !coords.toElement().tagName().contains("coords"))
+		coords = coords.nextSibling();
 
+	      if (coords.isNull())
+		break;
+
+	      QDomNode point = coords.firstChild();
 	      int x_max = 0;
 	      int y_max = 0;
 	      int x_min = INT_MAX;
 	      int y_min = INT_MAX;
 
-	      //	      QVector<QMap<QString, QVariant> > vect;
-	      for (int j = 0; true; ++j)
+	      while (!point.isNull())
 		{
-		  // Navigate to the coordinate list
-		  point = layout->index(j, 1, coords);
-		  if (!point.isValid())
-		    break;
-
-		  QMap<QString, QVariant> data =
-		    layout->data(point, Qt::UserRole).toMap();
-		  int x = data["x"].toInt();
-		  int y = data["y"].toInt();
-
-		  //  vect << data;
+		  int x = point.toElement().attribute("x", "none").toInt();
+		  int y = point.toElement().attribute("y", "none").toInt();
 
 		  if (x < x_min)
 		    x_min = x;
@@ -144,41 +294,26 @@ void ImageCrop::crop_regions(QString xml_file, QString image_file, QString outpu
 		  if (y > y_max)
 		    y_max = y;
 
+		  point = point.nextSibling();
 		}
 
 	      using namespace mln;
-
 	      box2d box = make::box2d(y_min, x_min, y_max, x_max);
 
 	      image2d<value::rgb8> ima;
-	      io::ppm::load(ima, image_file.toStdString());
+	      io::ppm::load(ima, image_.toStdString());
 	      ima = scribo::preprocessing::crop(ima, box);
 
-	      //  image2d<bool> mask = make::box2d(y_min, x_min, y_max, x_max);
-	      // data::fill(mask, true);
-
-	      /*for (int a = 1; a < vect.size(); ++a)
-		{
-		int x = vect[a]["x"].toInt();
-		int y = vect[a]["y"].toInt();
-
-		data::fill((mask | make::box2d(y, x, y, x)).rw(), false);
-		}*/
-
-	      // io::pbm::save(mask, "output/img/mask_" + id.toStdString());
-	      io::magick::save(ima, output.toStdString() + "img/" + id.toStdString() + ".png");
-
+	      io::magick::save(ima, output_dir_.toStdString() + "img/" + id.toStdString() + ".png");
 	    }
+	  region = region.nextSibling();
 	}
 
-      if (!regions_found)
-	qDebug() << "No regions found.";
-
+      return found_regions;
     }
   else
     {
-      qDebug() << "Error with XML file.";
+      f.close();
+      return false;
     }
-
-
 }

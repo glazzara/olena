@@ -26,24 +26,23 @@
 #ifndef         LOADER_HH
 # define   	LOADER_HH
 
-//# include <QtGui>
-# include "xml_transform.hh"
+# include <QtCore>
+#include <QDomDocument>
 
-class DomModel;
-
-class Loader
+class Loader : public QObject
 {
+  Q_OBJECT
   public:
 
   Loader();
   ~Loader();
 
   //  void merge(QString in, QString other, QString output = "output.xml");
-  bool load_xml(QString xml_file, bool html, QString output);
-  DomModel* xml_to_dom(QString output);
+  bool xml_output(QString xml_file, bool html, QString output);
+  QDomDocument* xml_to_dom(QString xml_file);
   bool set_output(QString& output);
-  void add_pdf_templates(bool crop, QString output);
-  void add_html_templates(QString output);
+  void add_pdf_templates(bool crop, bool base64, QString output);
+  void add_html_templates(bool base64, QString output);
 };
 
 #endif	    /* !LOADER_HH  */

@@ -1,3 +1,36 @@
+2010-07-15  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
+
+	XML Tranform.
+
+	* scribo/sandbox/arthur/xml_transform/xml_transform.cc,
+	* scribo/sandbox/arthur/xml_transform/xml_transform.hh: Facade.
+
+	* scribo/sandbox/arthur/xml_transform/image_crop.cc,
+	* scribo/sandbox/arthur/xml_transform/image_crop.hh: Image process.
+
+	* scribo/sandbox/arthur/xml_transform/loader.cc,
+	* scribo/sandbox/arthur/xml_transform/loader.hh: XML loader.
+
+	* scribo/sandbox/arthur/xml_transform/main.cc
+	* scribo/sandbox/arthur/xml_transform/templates/html/xsl.xsl
+	* scribo/sandbox/arthur/xml_transform/xml_transform.pro
+	* scribo/sandbox/arthur/xml_transform/README
+
+	* scribo/sandbox/arthur/xml_transform/common.cc,
+	* scribo/sandbox/arthur/xml_transform/common.hh,
+	* scribo/sandbox/arthur/xml_transform/templates/html/xsl_base64.xsl,
+	* scribo/sandbox/arthur/xml_transform/templates/pdf/main64.xsl,
+	* scribo/sandbox/arthur/xml_transform/templates/pdf/regions_base64.xsl: New.
+
+	* scribo/sandbox/arthur/xml_transform/domitem.cc,
+	* scribo/sandbox/arthur/xml_transform/domitem.hh,
+	* scribo/sandbox/arthur/xml_transform/dommodel.cc,
+	* scribo/sandbox/arthur/xml_transform/dommodel.hh: Delete.
+
+	* scribo/sandbox/arthur/xml_transform/templates/pdf/regions.xsl: Rename as...
+	* scribo/sandbox/arthur/xml_transform/templates/pdf/regions_png.xsl:...this.
+
+
 2010-07-05  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
 
 	ICDAR XML to HTML.

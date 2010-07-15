@@ -174,9 +174,9 @@
 	  <!-- NON-TEXT REGIONS -->
 	  <xsl:if test="name() = 'image_region' or name() = 'separator_region' or name() = 'graphic_region' or name() = 'chart_region' or name() = 'table_region'">
 
-	    <!-- id -->
-	    <xsl:variable name="id">
-	      <xsl:value-of select="@id" />
+	    <!-- data -->
+	    <xsl:variable name="data">
+	      <xsl:value-of select="container/data" />
 	    </xsl:variable>
 
 	    <!-- depth -->
@@ -209,7 +209,9 @@
 		<xsl:attribute name="height">
 		  <xsl:value-of select="$y2 - $y1" />
 		</xsl:attribute>
-		<xsl:attribute name="src">img/<xsl:value-of select="$id"/>.png</xsl:attribute>
+		<xsl:attribute name="src">
+		  data:image/png;base64,<xsl:value-of select="$data"/>
+		</xsl:attribute>
 	      </img>
 	    </div>
 

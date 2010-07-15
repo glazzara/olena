@@ -26,22 +26,32 @@
 #ifndef XML_TRANFORM_HH
 # define XML_TRANFORM_HH
 
-# include <QtGui>
+# include <QtCore>
+
+
+class Loader;
+class ImageCrop;
 
 class XmlTransform : public QObject
 {
   Q_OBJECT
   public:
 
-  XmlTransform(QString output, QString xml_file);
+  XmlTransform(QString xml_file, QString image_file, QString output, QString file = QString::Null());
   ~XmlTransform();
 
-  void createHTML(QString img);
-  void createPDF(QString img, bool crop);
+  void createHTML(bool base64);
+  void createPDF(bool crop, bool base64);
+  void toBase64(bool crop);
+  void fromBase64();
 
-protected:
+private:
   QString output_dir_;
   QString xml_file_;
+  QString image_;
+  Loader* loader_;
+  ImageCrop* crop_;
+  QString file_;
 };
 
 #endif // !XML_TRANFORM_HH

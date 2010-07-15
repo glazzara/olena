@@ -23,69 +23,114 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
+# include "xml_transform.hh"
 # include "image_crop.hh"
 # include "loader.hh"
-# include "xml_transform.hh"
+# include "common.hh"
+# include <iostream>
 
-XmlTransform::XmlTransform(QString output, QString xml_file) :
-  output_dir_(output),
-  xml_file_(xml_file)
+XmlTransform::XmlTransform(QString xml_file, QString image_file, QString output, QString file) :
+  xml_file_(xml_file),
+  image_(image_file),
+  loader_(new Loader()),
+  file_(file)
 {
-  Loader loader;
-  if (!loader.set_output(output_dir_))
-    abort();
+  QFile fi(image_);
+  QFile fx(xml_file_);
+
+  if (file_ != QString::Null())
+    output_dir_ = "/tmp/xml_transform";
+  else
+    output_dir_ = output;
+
+  if (output_dir_ != QString::Null() && !loader_->set_output(output_dir_))
+    {
+      std::cout << "Cant't create " << output_dir_.toStdString() << "dir! Aborting..." << std::endl;
+      abort();
+    }
+  else if (!fi.exists() && image_ != QString::Null())
+    {
+      std::cout << "Image file does not exist ! Aborting..." << std::endl;
+      abort();
+    }
+  else if (!fx.exists())
+    {
+      std::cout << "XML file does not exist ! Aborting..." << std::endl;
+      abort();
+    }
+
+  crop_ = new ImageCrop(xml_file_, image_, output_dir_);
 }
 
 XmlTransform::~XmlTransform()
 {
 }
 
-void XmlTransform::createPDF (QString img, bool crop)
+void XmlTransform::fromBase64()
 {
-  Loader loader;
-
   QString output = output_dir_;
   output.append("img");
 
-  if (loader.set_output(output))
+  if (loader_->set_output(output))
+    crop_->from_base64();
+  else
+    abort();
+}
+
+void XmlTransform::toBase64(bool crop)
+{
+  QString output = output_dir_;
+  output.append("img");
+
+  if (loader_->set_output(output))
     {
-      if (loader.load_xml(xml_file_, false, output_dir_))
-	{
+      if (!crop)
+	crop_->crop_regions();
 
-	  ImageCrop Crop;
-
-	  if (crop)
-	    Crop.crop_regions(xml_file_, img, output_dir_);
-	  else
-	    Crop.save_image(img, output_dir_);
-
-	  loader.add_pdf_templates(crop, output_dir_);
-	}
-      else
-	abort();
+      crop_->to_base64(file_, crop);
     }
   else
     abort();
 }
 
-void XmlTransform::createHTML(QString img)
+void XmlTransform::createPDF (bool crop, bool base64)
 {
-  Loader loader;
-
-  QString output = output_dir_;
-  output.append("img");
-
-  if (loader.set_output(output))
+  if (loader_->xml_output(xml_file_, false, output_dir_))
     {
-      if (loader.load_xml(xml_file_, true, output_dir_))
+      if (!base64)
 	{
-	  ImageCrop Crop;
+	  QString output = output_dir_;
+	  output.append("img");
 
-	  Crop.crop_regions(xml_file_, img, output_dir_);
-	  loader.add_html_templates(output_dir_);
+	  if (loader_->set_output(output))
+	    {
+	      if (crop)
+		crop_->crop_regions();
+	      else
+		crop_->save_image("image");
+	    }
 	}
-      else
-	abort();
+
+      loader_->add_pdf_templates(crop, base64, output_dir_);
+    }
+  else
+    abort();
+}
+
+void XmlTransform::createHTML(bool base64)
+{
+  if (loader_->xml_output(xml_file_, true, output_dir_))
+    {
+      if (!base64)
+	{
+	  QString output = output_dir_;
+	  output.append("img");
+	  if (loader_->set_output(output))
+	    crop_->crop_regions();
+	  else
+	    abort();
+	}
+      loader_->add_html_templates(base64, output_dir_);
     }
   else
     abort();

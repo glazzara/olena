@@ -1,19 +1,24 @@
-xml_transform <option> <xml_file> <ppm_file> <output_dir>
-
-Transforms an ICDAR XML file to different kind of output.
+xml_transform
 
 OPTIONS:
 
-	--html: Produce a HTML output
+HTML output:
+     --html <xml> <ppm> <out_dir> : HTML output with non-text regions croped into many png files.
+     --html-base64 <xml> <out_dir> : HTML output from a container XML file.
 
-Once process is finished, open output.xml with your internet browser. If this one supports XSLT, there is no problem to display the result but if it does not support it (like Konqueror or Chrome in local), you should run `sh html_generator.sh` (xsltproc package required) to generate a HTML file readable by all browsers.
+PDF output:
+    --pdf <xml> <ppm> <out_dir> : PDF output with non-text regions croped into many png files.
+    --pdf-no-crop <xml> <ppm> <out_dir>: PDF output with the entire picture displayed over the text.
+    --pdf-base64 <xml> <out_dir> : PDF output from a container XML file.
+    --pdf-base64-no-crop <xml> <ppm> <out_dir> : PDF with the entire picture displayed over the text,
+ the picture is loaded from a container XML file.
 
-     	--pdf: Produce a PDF output, regions will be cropped as follows in the XML file.
-     	--pdf-no-crop: Produce a PDF output without cropping regions, the entire picture will be displayed.
-
-PDF is not directly created once the process is finished, to produce it, go to the output_dir and run `sh pdf_generator.sh` (fop >= 0.95 required).
+Base 64 operations:
+     --to-base64 <xml> <ppm> <out_xml> : Produces a container XML file by converting croped pictures into base 64 format.
+     --to-base64-no-crop <xml> <ppm> <out_xml> : Same as to-base64 but only the picture is converted in base 64.
+     --from-base64 <xml> <out_dir> : Decodes a XML container file to produce original image files.
 
 
 BUILD:
 
-Chnage the environment variable QMAKE_CXXFLAGS to indicate the correct paths to milena and olena then, just type qmake and make.
+Chnage the environment variable QMAKE_CXXFLAGS to indicate the correct paths to milena and olena  in the .pro file then, just type qmake and make.

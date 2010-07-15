@@ -26,7 +26,8 @@
 #ifndef   	IMAGE_CROP_HH
 # define   	IMAGE_CROP_HH
 
-# include <QtGui>
+#include <QDomDocument>
+# include <QtCore>
 
 class DomModel;
 
@@ -35,12 +36,22 @@ class ImageCrop : public QObject
   Q_OBJECT
   public:
 
-  ImageCrop();
+  ImageCrop(QString xml, QString img, QString output);
   ~ImageCrop();
 
-  void save_image(QString image, QString output);
-  void crop_regions(QString xml_file, QString image_file, QString output);
+  void save_image(QString file = QString::Null());
+  bool crop_regions();
 
+  QString img_to_base64();
+  bool img_from_base64(QString str, QString img_name, QString mime);
+  void to_base64(QString out_file, bool no_crop);
+
+  void from_base64();
+
+private:
+  QString xml_;
+  QString image_;
+  QString output_dir_;
 };
 
 #endif	    /* !IMAGE_CROP_HH  */
