@@ -1,3 +1,28 @@
+2010-07-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	mesh-complex-pinv-curv-segm and mesh-complex-pinv-curv-skel apps.
+
+	* apps/mesh-segm-skel/mesh-complex-pinv-curv-segm.cc,
+	* apps/mesh-segm-skel/mesh-complex-pinv-curv-skel.cc:
+	New.
+	* apps/mesh-segm-skel/mesh-complex-max-curv-segm.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-skel.cc:
+	Remove dead code.
+	* apps/mesh-segm-skel/test-mesh-complex-pinv-curv-segm.in,
+	* apps/mesh-segm-skel/test-mesh-complex-pinv-curv-skel.in:
+	New.
+	* apps/mesh-segm-skel/Makefile.am (bin_PROGRAMS): Add
+	mesh-complex-pinv-curv-segm and mesh-complex-pinv-curv-skel.
+	(mesh_complex_pinv_curv_segm_SOURCES)
+	(mesh_complex_pinv_curv_skel_SOURCES):
+	New.
+	(TESTS): Add test-mesh-complex-pinv-curv-segm and
+	test-mesh-complex-pinv-curv-skel.
+	(MOSTLYCLEANFILES): Add socket-complex-pinv-curv-segm.off,
+	teapot-complex-pinv-curv-segm.off,
+	socket-complex-pinv-curv-skel.off and
+	teapot-complex-pinv-curv-skel.off.
+
 2010-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Actually use the maximal curvature in mesh-complex-max-curv-segm.

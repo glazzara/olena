@@ -102,9 +102,13 @@ MOSTLYCLEANFILES +=				\
   socket-complex-max-curv-segm.off		\
   teapot-complex-max-curv-segm.off
 
-# FIXME: Implement `mesh-complex-pinv-curv-segm' (factor as much
-# code as possible with `mesh-complex-max-curv-segm'.
-# ...
+# Likewise, but using pseudo-inverse curvature.
+bin_PROGRAMS += mesh-complex-pinv-curv-segm
+mesh_complex_pinv_curv_segm_SOURCES = mesh-complex-pinv-curv-segm.cc
+TESTS += test-mesh-complex-pinv-curv-segm
+MOSTLYCLEANFILES +=				\
+  socket-complex-pinv-curv-segm.off		\
+  teapot-complex-pinv-curv-segm.off
 
 ## Skeletonization.
 ## ----------------
@@ -118,8 +122,6 @@ MOSTLYCLEANFILES +=				\
   teapot-max-curv-skel.off			\
   three-triangles-skel.off
 
-# FIXME: Implement `mesh-complex-{max,pinv}-curv-skel'.
-# ...
 bin_PROGRAMS += mesh-complex-max-curv-skel
 mesh_complex_max_curv_skel_SOURCES =		\
   mesh-complex-max-curv-skel.cc save_bin_alt.hh
@@ -127,3 +129,11 @@ TESTS += test-mesh-complex-max-curv-skel
 MOSTLYCLEANFILES +=				\
   socket-complex-max-curv-skel.off		\
   teapot-complex-max-curv-skel.off
+
+bin_PROGRAMS += mesh-complex-pinv-curv-skel
+mesh_complex_pinv_curv_skel_SOURCES =		\
+  mesh-complex-pinv-curv-skel.cc save_bin_alt.hh
+TESTS += test-mesh-complex-pinv-curv-skel
+MOSTLYCLEANFILES +=				\
+  socket-complex-pinv-curv-skel.off		\
+  teapot-complex-pinv-curv-skel.off

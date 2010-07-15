@@ -26,13 +26,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file apps/mesh-segm-skel/mesh-complex-max-curv-skel.cc
-/// \brief A program computing the maximal curvature values from the
-/// surface of the (triangle) mesh of a statue, then computing a
-/// skeleton of this surface (by thinning), using a complex-based
-/// image.
+/// \file apps/mesh-segm-skel/mesh-complex-pinv-curv-skel.cc
+/// \brief A program computing the pseudo-inverse curvature values
+/// from the surface of the (triangle) mesh of a statue, then
+/// computing a skeleton of this surface (by thinning), using a
+/// complex-based image.
 
-// FIXME: Factor with mesh-complex-pinv-curv-skel.cc.
+// FIXME: Factor with mesh-complex-max-curv-skel.cc.
 
 #include <iostream>
 
@@ -57,6 +57,10 @@
 #include "save_bin_alt.hh"
 
 #include "trimesh/misc.hh"
+
+
+// Doesn't C++ have a better way to express Pi?
+static const float pi = 4 * atanf(1);
 
 
 int
@@ -94,9 +98,10 @@ main(int argc, char* argv[])
   mln::p_n_faces_fwd_piter<D, G> v(float_ima.domain(), 0);
   for_all(v)
     {
-      // Max curvature.
-      float_ima(v) = mln::math::max(mln::math::sqr(curv.first(v)),
-				    mln::math::sqr(curv.second(v)));
+      float h = (curv.first(v) + curv.second(v)) / 2;
+      // Pseudo-inverse curvature.
+      float h_inv = 1 / pi * (atan(-h) + pi / 2);
+      float_ima(v) = h_inv;
     }
 
   // Values on triangles.

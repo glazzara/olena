@@ -1,35 +1,37 @@
-// Copyright (C) 2008, 2009, 2010, 2011, 2013 EPITA Research and Development
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
 // Laboratory (LRDE)
 //
-// This file is part of Olena.
+// This file is part of the Milena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
 //
-// Olena is free software: you can redistribute it and/or modify it under
-// the terms of the GNU General Public License as published by the Free
-// Software Foundation, version 2 of the License.
-//
-// Olena is distributed in the hope that it will be useful,
+// This library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+// Boston, MA 02111-1307, USA.
 //
 // As a special exception, you may use this file as part of a free
-// software project without restriction.  Specifically, if other files
+// software library without restriction.  Specifically, if other files
 // instantiate templates or use macros or inline functions from this
-// file, or you compile this file and link it with other files to produce
-// an executable, this file does not by itself cause the resulting
-// executable to be covered by the GNU General Public License.  This
-// exception does not however invalidate any other reasons why the
-// executable file might be covered by the GNU General Public License.
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
 
-/// \file apps/mesh-segm-skel/mesh-complex-max-curv-segm.cc
-/// \brief A program computing the maximal curvature values from the
-/// surface of the (triangle) mesh of a statue, then performing a
-/// WST-based segmentation, using a complex-based image.
+/// \file apps/mesh-segm-skel/mesh-complex-pinv-curv-segm.cc
+/// \brief A program computing the pseudo-inverse curvature values
+/// from the surface of the (triangle) mesh of a statue, then
+/// performing a WST-based segmentation, using a complex-based image.
 
-// Factor with mesh-complex-pinv-curv-segm.cc.
+// Factor with mesh-complex-max-curv-segm.cc.
 
 #include <cstdlib>
 #include <cmath>
@@ -41,9 +43,8 @@
 #include <mln/core/image/complex_neighborhoods.hh>
 
 #include <mln/morpho/closing/area.hh>
-#include <mln/morpho/watershed/flooding.hh>
+#include <mln/morpho/meyer_wst.hh>
 
-#include <mln/math/pi.hh>
 #include <mln/math/max.hh>
 #include <mln/math/sqr.hh>
 
@@ -52,7 +53,11 @@
 #include <mln/io/off/load.hh>
 #include <mln/io/off/save.hh>
 
-#include "misc.hh"
+#include "trimesh/misc.hh"
+
+
+// Doesn't C++ have a better way to express Pi?
+static const float pi = 4 * atanf(1);
 
 
 int main(int argc, char* argv[])
@@ -89,9 +94,10 @@ int main(int argc, char* argv[])
   mln::p_n_faces_fwd_piter<D, G> v(float_ima.domain(), 0);
   for_all(v)
     {
-      // Max curvature.
-      float_ima(v) = mln::math::max(mln::math::sqr(curv.first(v)),
-				    mln::math::sqr(curv.second(v)));
+      float h = (curv.first(v) + curv.second(v)) / 2;
+      // Pseudo-inverse curvature.
+      float h_inv = 1 / pi * (atan(-h) + pi / 2);
+      float_ima(v) = h_inv;
     }
 
   // Values on edges.
@@ -156,7 +162,7 @@ int main(int argc, char* argv[])
   wst_val_t nbasins;
   typedef mln::unsigned_2complex_image3df wst_ima_t;
   wst_ima_t wshed =
-    mln::morpho::watershed::flooding(closed_ima, adj_edges_nbh, nbasins);
+    mln::morpho::meyer_wst(closed_ima, adj_edges_nbh, nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
 
   // Label polygons (i.e., propagate labels from edges to polygons).
