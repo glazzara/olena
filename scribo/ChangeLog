@@ -1,41 +1,9 @@
-2010-07-08  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
+2010-07-16  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
-	XML transform program.
+	ChangeLog mistake.
 
-	* sandbox/arthur/xml_to_html/xml_to_html.hh,
-	* sandbox/arthur/xml_to_html/xml_to_html.cc,
-	* sandbox/arthur/xml_to_html/xml_to_html.pro: Remove.
-
-	* sandbox/arthur/xml_to_html/README,
-	* sandbox/arthur/xml_to_html/main.cc,
-	* sandbox/arthur/xml_to_html/domitem.cc,
-	* sandbox/arthur/xml_to_html/domitem.hh,
-	* sandbox/arthur/xml_to_html/dommodel.cc,
-	* sandbox/arthur/xml_to_html/dommodel.hh: Move to...
-
-	* sandbox/arthur/xml_transform/README,
-	* sandbox/arthur/xml_transform/main.cc,
-	* sandbox/arthur/xml_transform/domitem.cc,
-	* sandbox/arthur/xml_transform/domitem.hh,
-	* sandbox/arthur/xml_transform/dommodel.cc,
-	* sandbox/arthur/xml_transform/dommodel.hh: ...this.
-
-	* sandbox/arthur/xml_to_html/patterns/css.css,
-	* sandbox/arthur/xml_to_html/patterns/xsl.xsl: Move to...
-
-	* sandbox/arthur/xml_transform/templates/html/css.css,
-	* sandbox/arthur/xml_transform/templates/html/xsl.xsl: ...this.
-
-	* sandbox/arthur/xml_transform/image_crop.cc,
-	* sandbox/arthur/xml_transform/loader.cc: New.
-
-	* sandbox/arthur/xml_transform/templates/html/html_generator.sh,
-	* sandbox/arthur/xml_transform/templates/pdf/line.xsl,
-	* sandbox/arthur/xml_transform/templates/pdf/main.xsl,
-	* sandbox/arthur/xml_transform/templates/pdf/main_crop.xsl,
-	* sandbox/arthur/xml_transform/templates/pdf/pdf_generator.sh,
-	* sandbox/arthur/xml_transform/templates/pdf/regions.xsl,
-	* sandbox/arthur/xml_transform/xml_transform.pro: New.
+	* scribo/ChangeLog: Move 2010-07-08 entry in...
+	* scribo/sandbox/ChangeLog:...this.
 
 2010-06-30  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
 

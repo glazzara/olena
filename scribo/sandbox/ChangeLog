@@ -2,34 +2,72 @@
 
 	XML Tranform.
 
-	* scribo/sandbox/arthur/xml_transform/xml_transform.cc,
-	* scribo/sandbox/arthur/xml_transform/xml_transform.hh: Facade.
+	* arthur/xml_transform/xml_transform.cc,
+	* arthur/xml_transform/xml_transform.hh: Facade.
 
-	* scribo/sandbox/arthur/xml_transform/image_crop.cc,
-	* scribo/sandbox/arthur/xml_transform/image_crop.hh: Image process.
+	* arthur/xml_transform/image_crop.cc,
+	* arthur/xml_transform/image_crop.hh: Image process.
 
-	* scribo/sandbox/arthur/xml_transform/loader.cc,
-	* scribo/sandbox/arthur/xml_transform/loader.hh: XML loader.
+	* arthur/xml_transform/loader.cc,
+	* arthur/xml_transform/loader.hh: XML loader.
 
-	* scribo/sandbox/arthur/xml_transform/main.cc
-	* scribo/sandbox/arthur/xml_transform/templates/html/xsl.xsl
-	* scribo/sandbox/arthur/xml_transform/xml_transform.pro
-	* scribo/sandbox/arthur/xml_transform/README
+	* arthur/xml_transform/main.cc
+	* arthur/xml_transform/templates/html/xsl.xsl
+	* arthur/xml_transform/xml_transform.pro
+	* arthur/xml_transform/README
 
-	* scribo/sandbox/arthur/xml_transform/common.cc,
-	* scribo/sandbox/arthur/xml_transform/common.hh,
-	* scribo/sandbox/arthur/xml_transform/templates/html/xsl_base64.xsl,
-	* scribo/sandbox/arthur/xml_transform/templates/pdf/main64.xsl,
-	* scribo/sandbox/arthur/xml_transform/templates/pdf/regions_base64.xsl: New.
+	* arthur/xml_transform/common.cc,
+	* arthur/xml_transform/common.hh,
+	* arthur/xml_transform/templates/html/xsl_base64.xsl,
+	* arthur/xml_transform/templates/pdf/main64.xsl,
+	* arthur/xml_transform/templates/pdf/regions_base64.xsl: New.
 
-	* scribo/sandbox/arthur/xml_transform/domitem.cc,
-	* scribo/sandbox/arthur/xml_transform/domitem.hh,
-	* scribo/sandbox/arthur/xml_transform/dommodel.cc,
-	* scribo/sandbox/arthur/xml_transform/dommodel.hh: Delete.
+	* arthur/xml_transform/domitem.cc,
+	* arthur/xml_transform/domitem.hh,
+	* arthur/xml_transform/dommodel.cc,
+	* arthur/xml_transform/dommodel.hh: Delete.
 
-	* scribo/sandbox/arthur/xml_transform/templates/pdf/regions.xsl: Rename as...
-	* scribo/sandbox/arthur/xml_transform/templates/pdf/regions_png.xsl:...this.
+	* arthur/xml_transform/templates/pdf/regions.xsl: Rename as...
+	* arthur/xml_transform/templates/pdf/regions_png.xsl:...this.
 
+2010-07-08  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
+
+	XML transform program.
+
+	* arthur/xml_to_html/xml_to_html.hh,
+	* arthur/xml_to_html/xml_to_html.cc,
+	* arthur/xml_to_html/xml_to_html.pro: Remove.
+
+	* arthur/xml_to_html/README,
+	* arthur/xml_to_html/main.cc,
+	* arthur/xml_to_html/domitem.cc,
+	* arthur/xml_to_html/domitem.hh,
+	* arthur/xml_to_html/dommodel.cc,
+	* arthur/xml_to_html/dommodel.hh: Move to...
+
+	* arthur/xml_transform/README,
+	* arthur/xml_transform/main.cc,
+	* arthur/xml_transform/domitem.cc,
+	* arthur/xml_transform/domitem.hh,
+	* arthur/xml_transform/dommodel.cc,
+	* arthur/xml_transform/dommodel.hh: ...this.
+
+	* arthur/xml_to_html/patterns/css.css,
+	* arthur/xml_to_html/patterns/xsl.xsl: Move to...
+
+	* arthur/xml_transform/templates/html/css.css,
+	* arthur/xml_transform/templates/html/xsl.xsl: ...this.
+
+	* arthur/xml_transform/image_crop.cc,
+	* arthur/xml_transform/loader.cc: New.
+
+	* arthur/xml_transform/templates/html/html_generator.sh,
+	* arthur/xml_transform/templates/pdf/line.xsl,
+	* arthur/xml_transform/templates/pdf/main.xsl,
+	* arthur/xml_transform/templates/pdf/main_crop.xsl,
+	* arthur/xml_transform/templates/pdf/pdf_generator.sh,
+	* arthur/xml_transform/templates/pdf/regions.xsl,
+	* arthur/xml_transform/xml_transform.pro: New.
 
 2010-07-05  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
 
