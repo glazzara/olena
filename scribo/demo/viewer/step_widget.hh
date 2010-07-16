@@ -42,12 +42,12 @@ public:
   void add_element(const QString& element);
 
 signals:
-  void load_image(QString);
+  void load_image(QString, bool);
   void load_xml(QString);
   void activated(QListWidgetItem*);
 
 public slots:
-  void fill_steps(QString file, bool = false);
+  void fill_steps(QString file, bool step = false, bool container = false);
   void activate(QListWidgetItem* item);
 
 private:

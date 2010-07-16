@@ -68,57 +68,64 @@ void StepWidget::activate(QListWidgetItem* item)
 
 }
 
-void StepWidget::fill_steps(QString file, bool step)
+void StepWidget::fill_steps(QString file, bool step, bool container)
 {
   view_->clear();
   map_.clear();
 
-  // image is loaded once
-  emit load_image(file);
-
-  int cut = file.lastIndexOf(QChar('/'));
-  QString path = file.left(cut+1);
-  QString filename = file.mid(cut+1);
-
-  cut = filename.lastIndexOf(QChar('.'));
-
-  QString file_with_no_ext = filename.left(cut);
-  //  view_->addItem(file_with_no_ext);
-
-  QDir dir(path);
-
-  if (dir.isReadable())
+  if (container)
     {
-      QStringList filter;
-      filter << "*.xml";
-      QStringList xml_list = dir.entryList(filter);
-      for (int i = 0; i < xml_list.size(); ++i)
-	{
-	  if (xml_list.at(i).startsWith(file_with_no_ext))
-	    {
-	      cut = xml_list.at(i).lastIndexOf(QChar('.'));
-	      QString key = xml_list.at(i).left(cut);
-	      key.replace(file_with_no_ext + QString("_"), QString(""));
-	      key.replace(QRegExp("^step([0-9])"), "Step \\1");
-	      key.replace(QRegExp("^Step ([0-9])_"), "Step \\1 : ");
-	      key.replace("_", " ");
-	      QString value = path;
-	      map_.insertMulti(key, value.append(xml_list.at(i)));
-	      view_->addItem(key);
-	    }
-	}
-    }
-
-
-  if (step && step_ != QString::Null())
-    {
-      QList<QListWidgetItem*> list = view_->findItems(step_, Qt::MatchContains);
-
-      if (!list.isEmpty())
-	emit activated(list.first());
+      emit load_image(file, true);
+      emit load_xml(file);
     }
   else
-    step_ = QString::Null();
+    {
+      // image is loaded once
+      emit load_image(file, false);
+
+      int cut = file.lastIndexOf(QChar('/'));
+      QString path = file.left(cut+1);
+      QString filename = file.mid(cut+1);
+
+      cut = filename.lastIndexOf(QChar('.'));
+
+      QString file_with_no_ext = filename.left(cut);
+      //  view_->addItem(file_with_no_ext);
+
+      QDir dir(path);
+
+      if (dir.isReadable())
+	{
+	  QStringList filter;
+	  filter << "*.xml";
+	  QStringList xml_list = dir.entryList(filter);
+	  for (int i = 0; i < xml_list.size(); ++i)
+	    {
+	      if (xml_list.at(i).startsWith(file_with_no_ext))
+		{
+		  cut = xml_list.at(i).lastIndexOf(QChar('.'));
+		  QString key = xml_list.at(i).left(cut);
+		  key.replace(file_with_no_ext + QString("_"), QString(""));
+		  key.replace(QRegExp("^step([0-9])"), "Step \\1");
+		  key.replace(QRegExp("^Step ([0-9])_"), "Step \\1 : ");
+		  key.replace("_", " ");
+		  QString value = path;
+		  map_.insertMulti(key, value.append(xml_list.at(i)));
+		  view_->addItem(key);
+		}
+	    }
+	}
+
+      if ( (step && step_ != QString::Null()))
+	{
+	  QList<QListWidgetItem*> list = view_->findItems(step_, Qt::MatchContains);
+
+	  if (!list.isEmpty())
+	    emit activated(list.first());
+	}
+      else
+	step_ = QString::Null();
+    }
 }
 
 void StepWidget::add_element(const QString& element)

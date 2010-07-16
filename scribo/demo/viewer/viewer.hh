@@ -38,7 +38,7 @@ public:
 public slots:
   // Load the file as an image, load the layout if xml with the same
   // name is found.
-  void load(QString filename);
+  void load(QString filename, bool b);
   void help();
   void load_xml(QString filename);
   void maybeChangeCacheMode(qreal scale);
@@ -59,6 +59,7 @@ private:
   Viewer();
 
   void xml_to_layout();
+  QPixmap  load_base64(QString xml);
 
   QApplication* app_;
   QMainWindow* win_;

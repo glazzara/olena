@@ -169,11 +169,11 @@ Viewer::Viewer(int &argc, char** argv)
   h_sizes << 200 << 700;
   h_splitter->setSizes(h_sizes);
 
-  connect(browser_wgt, SIGNAL(activated(QString, bool)),
-	  step_widget, SLOT(fill_steps(QString, bool)));
+  connect(browser_wgt, SIGNAL(activated(QString, bool, bool)),
+	  step_widget, SLOT(fill_steps(QString, bool, bool)));
 
-  connect(step_widget, SIGNAL(load_image(QString)),
-	  this, SLOT(load(QString)));
+  connect(step_widget, SIGNAL(load_image(QString, bool)),
+	  this, SLOT(load(QString, bool)));
   connect(step_widget, SIGNAL(load_xml(QString)),
 	  this, SLOT(load_xml(QString)));
 
@@ -429,18 +429,20 @@ Viewer::xml_to_layout()
 }
 
 void
-Viewer::load(QString filename)
+Viewer::load(QString filename, bool b)
 {
   app_->setOverrideCursor(QCursor(Qt::WaitCursor));
   scene_->clear();
   scene_->update();
   image_ = 0;
-  //  xml_file_ = "";
 
   // Load the image in a pixmap that is directly shown on screen.
   // This is very slow when used with the normal rendering system.
   // OpenGL might speed up things a bit.
-  image_ = new QGraphicsPixmapItem(QPixmap(filename));
+  if (b)
+    image_ = new QGraphicsPixmapItem(load_base64(filename));
+  else
+    image_ = new QGraphicsPixmapItem(QPixmap(filename));
   image_->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
   image_->setZValue(0);
   scene_->addItem(image_);
@@ -509,6 +511,50 @@ Viewer::useCache(bool b)
   else
     if (image_)
       image_->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
+}
+
+QPixmap Viewer::load_base64(QString xml)
+{
+  QPixmap pix;
+  QFile f_in(xml);
+  f_in.open(QIODevice::ReadOnly);
+
+  QDomDocument doc;
+  doc.setContent(&f_in);
+  f_in.close();
+
+  QDomElement root = doc.documentElement();
+  QDomNode child = root.firstChild();
+
+  while (!child.isNull() && !child.toElement().tagName().contains("page"))
+    child = child.nextSibling();
+
+  child = child.firstChild();
+  while (!child.isNull())
+    {
+      if (child.toElement().tagName().contains(QRegExp("image_region")))
+        {
+          QDomNode node = child.firstChild();
+          QString id = child.toElement().attribute("id", "none");
+
+          while (!node.isNull() && !node.toElement().tagName().contains("container"))
+            node = node.nextSibling();
+
+          if (!node.isNull())
+            {
+              QString data = node.firstChildElement("data").text();
+	      QByteArray ba;
+	      ba = ba.append(data);
+	      QByteArray out_ba = QByteArray::fromBase64(ba);
+	      pix.loadFromData(out_ba);
+
+	      return pix;
+            }
+        }
+      child = child.nextSibling();
+    }
+
+  return pix;
 }
 
 //  LocalWords:  hh

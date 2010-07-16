@@ -1,29 +1,41 @@
 2010-07-16  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
+	Base 64 support in Qt interface (xmlc extension)
+
+	* demo/viewer/step_widget.cc
+	* demo/viewer/step_widget.hh
+	* demo/viewer/browser_widget.cc,
+	* demo/viewer/browser_widget.hh: Add .xmlc extension.
+
+	* demo/viewer/image_scene.cc
+	* demo/viewer/viewer.cc,
+	* demo/viewer/viewer.hh: base 64 loading.
+
+2010-07-16  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
+
 	Two new features in Qt interface.
 
 	* demo/viewer/browser_widget.cc,
-	* demo/viewer/browser_widget.hh: Add arrows to change image and keep
-	XML step.
+	* demo/viewer/browser_widget.hh: Add arrows to change image and
+	keep XML step.
 
 	* demo/viewer/key_widget.cc,
-	* demo/viewer/key_widget.hh: Change ListWidget to TreeWidget, Items can be
-	disabled/enabled in groups.
+	* demo/viewer/key_widget.hh: Change ListWidget to TreeWidget,
+	Items can be disabled/enabled in groups.
 
 	* demo/viewer/step_widget.cc,
-	* demo/viewer/step_widget.hh: Small changes to keep the step when next/prev.
-	picture is chosen.
+	* demo/viewer/step_widget.hh: Small changes to keep the step when
+	next/prev.  picture is chosen.
 
 	* demo/viewer/viewer.cc,
 	* demo/viewer/xml_widget.cc: Layout adjustement.
-
 
 2010-07-16  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
 	ChangeLog mistake.
 
-	* scribo/ChangeLog: Move 2010-07-08 entry in...
-	* scribo/sandbox/ChangeLog:...this.
+	* ChangeLog: Move 2010-07-08 entry in...
+	* sandbox/ChangeLog:...this.
 
 2010-06-30  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
 
@@ -78,12 +90,12 @@
 
 	Small fix in Qt interface.
 
-	* scribo/demo/viewer/viewer.cc,
-	* scribo/demo/viewer/image_region.hxx: Disable item click if
+	* demo/viewer/viewer.cc,
+	* demo/viewer/image_region.hxx: Disable item click if
 	unchecked in item list.
 
-	* scribo/demo/viewer/key_widget.cc,
-	* scribo/demo/viewer/key_widget.hh: Add KeyWidget::checkAll.
+	* demo/viewer/key_widget.cc,
+	* demo/viewer/key_widget.hh: Add KeyWidget::checkAll.
 
 
 2010-08-27  Guillaume Lazzara  <z@lrde.epita.fr>

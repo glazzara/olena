@@ -33,7 +33,7 @@ public slots:
   void prev() { change_pos(false); }
 
 signals:
-  void activated(QString filename, bool b);
+  void activated(QString filename, bool b, bool x);
 
 private:
   void change_pos(bool next);

@@ -40,7 +40,7 @@ ImageScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
     {
       ImageRegion* item = dynamic_cast<ImageRegion*>(elt);
       if (item)
-	{ 
+	{
 	  if (item != selected_)
 	    {
 	      if (selected_)
@@ -49,7 +49,7 @@ ImageScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 		    {
 		      int item_area = item->boundingRect().size().height() * item->boundingRect().size().width();
 		      int selected_area = selected_->boundingRect().size().height() * selected_->boundingRect().size().width();
-		      
+
 		      if (selected_area < item_area && selection_is_clicked)
 			return;
 		      else
@@ -66,15 +66,15 @@ ImageScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 		      selected_ = 0;
 		    }
 		}
-	      selected_ = item;	     
+	      selected_ = item;
 	      item->select();
 	      emit selected(item->index());
-	      return;	      
+	      return;
 	    }
 	}
       else
 	{
-	  if ( (selected_) 
+	  if ( (selected_)
 	       && (items_list.size() == 1) )// no ImageRegion, only the picture
 	    {
 	      selected_->deselect();

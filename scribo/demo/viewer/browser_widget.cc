@@ -66,7 +66,9 @@ BrowserWidget::BrowserWidget(QDirModel* files, QString dir)
 
   QStringList files_filters;
   files_filters << "*.png" << "*.jpg"
-		<< "*.tif" << "*.ppm" << "*.pgm" << "*.pbm" << "pnm";
+		<< "*.tif" << "*.ppm"
+		<< "*.pgm" << "*.pbm"
+		<< "*.pnm" << "*.xmle";
 
   files->setNameFilters(files_filters);
 }
@@ -95,7 +97,10 @@ BrowserWidget::activate(const QModelIndex& index, bool b)
 
   first_time_ = false;
 
-  emit activated(files_->filePath(index), b);
+  if (files_->filePath(index).endsWith(".xmlc"))
+    emit activated(files_->filePath(index), b, true);
+  else
+    emit activated(files_->filePath(index), b, false);
 }
 
 void
