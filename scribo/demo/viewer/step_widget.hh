@@ -44,14 +44,16 @@ public:
 signals:
   void load_image(QString);
   void load_xml(QString);
+  void activated(QListWidgetItem*);
 
 public slots:
-  void fill_steps(QString file);
+  void fill_steps(QString file, bool = false);
   void activate(QListWidgetItem* item);
 
 private:
   QListWidget* view_;
   StepQMap map_;
+  QString step_;
 };
 
 #endif	    /* !STEP_WIDGET_HH_ */

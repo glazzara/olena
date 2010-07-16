@@ -24,6 +24,7 @@ XmlWidget::XmlWidget()
   title->setAlignment(Qt::AlignHCenter);
 
   QVBoxLayout* layout = new QVBoxLayout;
+
   layout->addWidget(title);
   layout->addWidget(view_);
 
@@ -34,7 +35,7 @@ void
 XmlWidget::update(DomModel* model)
 {
   view_->setModel(model);
-  view_->resizeColumnToContents(2);
+  //  view_->resizeColumnToContents(2);
 }
 
 void

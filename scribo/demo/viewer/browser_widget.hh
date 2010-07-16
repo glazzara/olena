@@ -27,16 +27,20 @@ public:
   ~BrowserWidget();
 
 public slots:
-  void activate(const QModelIndex& index);
+  void activate(const QModelIndex& index, bool b = false);
   void path_return_pressed();
+  void next() { change_pos(true); }
+  void prev() { change_pos(false); }
 
 signals:
-  void activated(QString filename);
+  void activated(QString filename, bool b);
 
 private:
+  void change_pos(bool next);
   QDirModel* files_;
   QListView* view_;
   QLineEdit* path_;
+  bool first_time_;
 };
 
 #endif	    /* !BROWSER_WIDGET_HH_ */

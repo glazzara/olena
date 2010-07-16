@@ -27,20 +27,24 @@ public:
   KeyWidget(const region::KeyMap& key_map);
   ~KeyWidget();
 
-  void checkAll();
   bool isChecked(region::RegionId id);
+  QTreeWidget* items() { return items_; };
+  void update_all();
 
 signals:
   void updated(int key, bool checked);
 
 private slots:
-  void update(QListWidgetItem* slot);
   void change_mode(bool b);
+  void update(QTreeWidgetItem* item);
+  void setAllCheck(QTreeWidgetItem* parent);
 
 private:
-  void add_item_(QString text, QColor color, bool b);
+  void add_item_(QString text, QColor color, bool b, QTreeWidgetItem* parent);
 
-  QListWidget* items_;
+  QTreeWidget* items_;
+  QTreeWidgetItem* text_;
+  QTreeWidgetItem* regions_;
 };
 
 #endif	    /* !KEY_WIDGET_HH_ */

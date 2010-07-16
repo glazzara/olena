@@ -26,7 +26,8 @@
 # include "step_widget.hh"
 
 StepWidget::StepWidget()
-  : view_(new QListWidget())
+  : view_(new QListWidget()),
+    step_(QString::Null())
 {
   QLabel* title = new QLabel(tr("Steps"));
   title->setAlignment(Qt::AlignHCenter);
@@ -42,6 +43,9 @@ StepWidget::StepWidget()
 
   connect(view_, SIGNAL(itemActivated(QListWidgetItem*)),
 	  this, SLOT(activate(QListWidgetItem*)));
+
+  connect(this, SIGNAL(activated(QListWidgetItem*)),
+	  this, SLOT(activate(QListWidgetItem*)));
 }
 
 void StepWidget::activate(QListWidgetItem* item)
@@ -49,18 +53,22 @@ void StepWidget::activate(QListWidgetItem* item)
   QString key, value;
 
   StepQMap::iterator iter = map_.find(item->text());
-  
+
+  view_->setCurrentItem(item);
   if (iter != map_.end())
     {
+      step_ = item->text();
       key = iter.key();
       value = iter.value();
+
+      emit load_xml(value);
     }
-  
-  emit load_xml(value);
+  else
+    qDebug() << "Step not found!";
 
 }
 
-void StepWidget::fill_steps(QString file)
+void StepWidget::fill_steps(QString file, bool step)
 {
   view_->clear();
   map_.clear();
@@ -69,13 +77,14 @@ void StepWidget::fill_steps(QString file)
   emit load_image(file);
 
   int cut = file.lastIndexOf(QChar('/'));
-  QString path = file.left(cut+1); 
+  QString path = file.left(cut+1);
   QString filename = file.mid(cut+1);
-  
+
   cut = filename.lastIndexOf(QChar('.'));
+
   QString file_with_no_ext = filename.left(cut);
   //  view_->addItem(file_with_no_ext);
-  
+
   QDir dir(path);
 
   if (dir.isReadable())
@@ -84,7 +93,7 @@ void StepWidget::fill_steps(QString file)
       filter << "*.xml";
       QStringList xml_list = dir.entryList(filter);
       for (int i = 0; i < xml_list.size(); ++i)
-	{	      
+	{
 	  if (xml_list.at(i).startsWith(file_with_no_ext))
 	    {
 	      cut = xml_list.at(i).lastIndexOf(QChar('.'));
@@ -99,6 +108,17 @@ void StepWidget::fill_steps(QString file)
 	    }
 	}
     }
+
+
+  if (step && step_ != QString::Null())
+    {
+      QList<QListWidgetItem*> list = view_->findItems(step_, Qt::MatchContains);
+
+      if (!list.isEmpty())
+	emit activated(list.first());
+    }
+  else
+    step_ = QString::Null();
 }
 
 void StepWidget::add_element(const QString& element)

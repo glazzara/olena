@@ -1,5 +1,25 @@
 2010-07-16  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
+	Two new features in Qt interface.
+
+	* demo/viewer/browser_widget.cc,
+	* demo/viewer/browser_widget.hh: Add arrows to change image and keep
+	XML step.
+
+	* demo/viewer/key_widget.cc,
+	* demo/viewer/key_widget.hh: Change ListWidget to TreeWidget, Items can be
+	disabled/enabled in groups.
+
+	* demo/viewer/step_widget.cc,
+	* demo/viewer/step_widget.hh: Small changes to keep the step when next/prev.
+	picture is chosen.
+
+	* demo/viewer/viewer.cc,
+	* demo/viewer/xml_widget.cc: Layout adjustement.
+
+
+2010-07-16  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
+
 	ChangeLog mistake.
 
 	* scribo/ChangeLog: Move 2010-07-08 entry in...

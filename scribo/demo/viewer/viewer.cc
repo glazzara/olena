@@ -44,6 +44,7 @@ Viewer::Viewer(int &argc, char** argv)
   key_map_[region::Text] = qMakePair(tr("Text Region"), QColor(0, 200, 0));
   key_map_[region::Paragraph] = qMakePair(tr("Paragraph"), QColor(0, 0, 255));
   key_map_[region::Line] = qMakePair(tr("Text line"), QColor(255, 0, 0));
+
   key_map_[region::Image] = qMakePair(tr("Image"), QColor(255, 120, 0));
   key_map_[region::Noise] = qMakePair(tr("Noise"), QColor(43, 39, 128));
   key_map_[region::Separator] = qMakePair(tr("Separator"), QColor(0, 0, 255));
@@ -70,7 +71,7 @@ Viewer::Viewer(int &argc, char** argv)
 
   // Layout
 
-  win_->resize(1024, 768);
+  win_->resize(1152, 864);
   win_->statusBar();
 
   QMenu* file_menu = win_->menuBar()->addMenu(tr("File"));
@@ -157,7 +158,7 @@ Viewer::Viewer(int &argc, char** argv)
   win_->setCentralWidget(h_splitter);
 
   QList<int> v_sizes;
-  v_sizes << 300 << 200 << 200 << 300;
+  v_sizes << 200 << 200 << 300 << 400;
   v_splitter->setSizes(v_sizes);
 
   QList<int> v_sizes2;
@@ -168,8 +169,8 @@ Viewer::Viewer(int &argc, char** argv)
   h_sizes << 200 << 700;
   h_splitter->setSizes(h_sizes);
 
-  connect(browser_wgt, SIGNAL(activated(QString)),
-	  step_widget, SLOT(fill_steps(QString)));
+  connect(browser_wgt, SIGNAL(activated(QString, bool)),
+	  step_widget, SLOT(fill_steps(QString, bool)));
 
   connect(step_widget, SIGNAL(load_image(QString)),
 	  this, SLOT(load(QString)));
@@ -252,6 +253,11 @@ Viewer::load_xml(QString filename)
 void
 Viewer::xml_to_layout()
 {
+
+  /* /!\ XML parsing is VERY UGLY /!\
+     TO DO: use same parsing as xml_transfrom. */
+
+
   // Add layout info to the scene.
   if (doc_layout_)
     {
@@ -284,6 +290,7 @@ Viewer::xml_to_layout()
 		doc_layout_->data(point, Qt::UserRole).toMap();
 	      int x = data["x"].toInt();
 	      int y = data["y"].toInt();
+
 	      points << QPoint(x, y);
 	    }
 
@@ -396,8 +403,8 @@ Viewer::xml_to_layout()
 							   attributes_line, points_line,
 							   outline_action_->isChecked(),
 							   fill_action_->isChecked(),
-							   precise_action_->isChecked(),
-						       key_wgt_->isChecked(id_line));
+							    precise_action_->isChecked(),
+							    key_wgt_->isChecked(id_line));
 
 		      connect(this, SIGNAL(key_updated(int, bool)),
 			      r_line, SLOT(setDrawIfSameId(int, bool)));
@@ -417,6 +424,7 @@ Viewer::xml_to_layout()
 	}
 
       emit updated(doc_layout_);
+      key_wgt_->update_all();
     }
 }
 
@@ -427,7 +435,7 @@ Viewer::load(QString filename)
   scene_->clear();
   scene_->update();
   image_ = 0;
-  xml_file_ = "";
+  //  xml_file_ = "";
 
   // Load the image in a pixmap that is directly shown on screen.
   // This is very slow when used with the normal rendering system.
@@ -482,7 +490,7 @@ Viewer::maybeChangeCacheMode(qreal scale)
 void Viewer::useExtended(bool b)
 {
   extended_mode_ = b;
-  key_wgt_->checkAll();
+  key_wgt_->update_all();
   if (xml_file_ != QString(""))
     load_xml(xml_file_);
 
