@@ -1,3 +1,31 @@
+2010-07-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix and improve the Magick++ I/O API wrapper.
+
+	* mln/io/magick/load.hh
+	(io::magick::do_it): Enclose these helpers...
+	(io::magick::impl::do_it): ...in a sub-namespace.
+	(io::magick::load): Ensure a Magick++'s Quantum is an 8-bit value.
+	Use a pixel view (Magick::Pixels) to access to pixel values.
+	No longer pass the input filename to the `do_it' helper.
+	Simplify the code.
+	Improve the documentation.
+	Aesthetic changes.
+	* mln/io/magick/save.hh
+	(io::magick::get_color): Enclose these helpers...
+	(io::magick::impl::get_color): ...in a sub-namespace.
+	Properly use Magick::Color.
+	Properly pass the width and the height of the image.
+	Use a pixel view (Magick::Pixels) to access to pixel values.
+	Simplify the code.
+	Aesthetic changes.
+	* tests/io/magick/load.cc,
+	* tests/io/magick/save.cc:
+	Properly initialize Magick++.
+	Exercice more cases.
+	* tests/io/magick/Makefile.am (MOSTLYCLEANFILES):
+	Update the list of files created by tests.
+
 2010-04-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Clean Milena's tests' outputs during `make mostlyclean'.

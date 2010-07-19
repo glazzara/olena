@@ -24,34 +24,92 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <mln/core/image/image2d.hh>
+
+#include <mln/data/compare.hh>
+
 #include <mln/io/magick/load.hh>
 #include <mln/io/magick/save.hh>
+
+#include <mln/io/pbm/load.hh>
+#include <mln/io/pbm/save.hh>
+
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
+
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
-#include <mln/data/compare.hh>
+
 #include "tests/data.hh"
 
-#include <mln/io/magick/load.hh>
  
+using namespace mln;
 
-int main()
+
+template <typename T>
+image2d<T>
+test(const image2d<T>& lena_mln, const std::string& temp_filename)
+{
+  point2d p(0,0);
+
+  T c = lena_mln(p);
+
+  io::magick::save(lena_mln, temp_filename);
+  image2d<T> lena_im;
+  io::magick::load(lena_im, temp_filename);
+
+  mln_assertion(lena_im(p) == c);
+  mln_assertion(lena_im.domain() == lena_mln.domain());
+  mln_assertion(lena_im == lena_mln);
+
+  return lena_im;
+}
+
+
+int main(int /* argc */, char* argv[])
 {
   using namespace mln;
 
+  /* From http://www.graphicsmagick.org/Magick++/Image.html:
+
+       The InitializeMagick() function MUST be invoked before
+       constructing any Magick++ objects.  This used to be optional,
+       but now it is absolutely required.  This function initalizes
+       semaphores and configuration information necessary for the
+       software to work correctly.  Failing to invoke
+       InitializeMagick() is likely to lead to a program crash or
+       thrown assertion.  If the program resides in the same directory
+       as the GraphicsMagick files, then argv[0] may be passed as an
+       argument so that GraphicsMagick knows where its files reside,
+       otherwise NULL may be passed and GraphicsMagick will try to use
+       other means (if necessary).  */
+  Magick::InitializeMagick(*argv);
+
   point2d p(0,0);
 
-  image2d<value::rgb8> lena_mln;
-  io::ppm::load(lena_mln, MLN_IMG_DIR "/tiny.ppm");
-  value::rgb8 c = lena_mln(p);
+  // Grayscale values (PBM -> PBM -> PBM).
+  {
+    typedef image2d<bool> I;
+    I lena_mln;
+    io::pbm::load(lena_mln, MLN_IMG_DIR "/tiny.pbm");
+    I lena_im = ::test(lena_mln, "save-tiny-temp.pbm");
+    io::pbm::save(lena_im, "save-tiny.pbm");
+  }
 
-  io::magick::save(lena_mln, "save-tiny.png");
+  // Grayscale values (PGM -> PGM -> PGM).
+  {
+    typedef image2d<value::int_u8> I;
+    I lena_mln;
+    io::pgm::load(lena_mln, MLN_IMG_DIR "/tiny.pgm");
+    I lena_im = ::test(lena_mln, "save-tiny-temp.pgm");
+    io::pgm::save(lena_im, "save-tiny.pgm");
+  }
 
-  image2d<value::rgb8> lena_im;
-  io::magick::load(lena_im, "save-tiny.png");
-  mln_assertion(lena_im(p) == c);
-
-  io::ppm::save(lena_im, "save-tiny.ppm");
-
-  mln_assertion(lena_im.domain() == lena_mln.domain());
-  mln_assertion(lena_im == lena_mln);
+  // Color values (PPM -> PNG -> PPM).
+  {
+    typedef image2d<value::rgb8> I;
+    I lena_mln;
+    io::ppm::load(lena_mln, MLN_IMG_DIR "/tiny.ppm");
+    I lena_im = ::test(lena_mln, "save-tiny-temp.png");
+    io::ppm::save(lena_im, "save-tiny.ppm");
+  }
 }

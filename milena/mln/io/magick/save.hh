@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,16 +28,23 @@
 
 /// \file
 ///
-/// Define a function which saves an image of kind magick with
-/// given path.
+/// \brief Image output routines based on Magick++.
 ///
-/// \todo At the moment it works; is it a miracle?
+/// Do not forget to call Magick::InitializeMagick(*argv)
+/// <em>before</em> using any of these functions, as advised by the
+/// GraphicsMagick documentation
+/// (http://www.graphicsmagick.org/Magick++/Image.html).
+
+# include <cstdlib>
+
+# include <Magick++.h>
+
+# include <mln/metal/equal.hh>
 
 # include <mln/core/image/image2d.hh>
-# include <mln/metal/equal.hh>
+
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
-# include <Magick++.h>
 
 
 namespace mln
@@ -49,84 +56,106 @@ namespace mln
     namespace magick
     {
 
-      /*! Save a Milena image in a magick image.
-       *
-       * \param[out] ima A reference to the image to save.
-       * \param[in] filename The output.
-       */
-      template <typename I>
-      void save(const Image<I>& ima,
-		const std::string& filename);
+      /** Save a Milena image into a file using Magick++.
 
-      /*! Save a Milena tiled image in a magick image.
-       *
-       * \param[out] ima A reference to the image to save.
-       * \param[in] filename The output.
-       */
-      /*template <typename T>
-      void save(Image< tiled2d<T> >& ima,
-		const std::string& filename);*/
+	  \param[out] ima       The image to save.
+	  \param[in]  filename  The name of the output file.  */
+      template <typename I>
+      void
+      save(const Image<I>& ima, const std::string& filename);
+
+
+      // FIXME: Unfinished?
+#if 0
+      /** Save a Milena tiled image into a file using Magick++.
+
+	  \param[out] ima       The image to save.
+	  \param[in]  filename  The name of the output file.  */
+      template <typename T>
+      void
+      save(const Image< tiled2d<T> >& ima, const std::string& filename);
+#endif
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      inline
-      Magick::Color get_color(bool value)
+      namespace impl
       {
-	return Magick::ColorMono(value);
-      }
 
-      inline
-      Magick::Color get_color(const value::int_u8& value)
-      {
-	return Magick::ColorGray(256 - value);
-      }
+	inline
+	Magick::Color get_color(bool value)
+	{
+	  return Magick::ColorMono(value);
+	}
 
-      inline
-      Magick::Color get_color(const value::rgb8& value)
-      {
-	return Magick::ColorRGB(256 - value.red(),
-				256 - value.green(),
-				256 - value.blue());
-      }
+	inline
+	Magick::Color get_color(const value::int_u8& value)
+	{
+	  // Ensure a Magick++'s Quantum is an 8-bit value.
+	  mln::metal::equal<Magick::Quantum, unsigned char>::check();
+	  return Magick::Color(value, value, value);
+	}
+
+	inline
+	Magick::Color get_color(const value::rgb8& value)
+	{
+	  // Ensure a Magick++'s Quantum is an 8-bit value.
+	  mln::metal::equal<Magick::Quantum, unsigned char>::check();
+	  return Magick::Color(value.red(), value.green(), value.blue());
+	}
+
+      } // end of namespace mln::io::magick::impl
+
 
       template <typename I>
       inline
-      void save(const Image<I>& ima_, const std::string& filename)
+      void
+      save(const Image<I>& ima_, const std::string& filename)
       {
 	trace::entering("mln::io::magick::save");
 
 	mln_precondition(mln_site_(I)::dim == 2);
-	const I& ima = exact(ima_);
+	// Turn this into a static check?
 	if (!(mln::metal::equal<mln_value(I), bool>::value ||
 	    mln::metal::equal<mln_value(I), value::int_u8>::value ||
 	    mln::metal::equal<mln_value(I), value::rgb8>::value))
 	{
-	  std::cerr << "error: trying to save an unsupported format" << std::endl;
-	  std::cerr << "supported formats: binary, 8bits grayscale (int_u8), 8bits truecolor (rgb8)" << std::endl;
+	  std::cerr <<
+	    "error: trying to save an unsupported format\n"
+	    "supported formats are:\n"
+	    "  binary (bool)\n"
+	    "  8-bit grayscale (mln::value::int_u8)\n"
+	    "  3x8-bit truecolor (rgb8)" << std::endl;
 	  abort();
 	}
 
-	Magick::Image im_file;
-	im_file.size(Magick::Geometry(ima.nrows(), ima.ncols()));
+	const I& ima = exact(ima_);
 
-	Magick::PixelPacket* pixel_cache = im_file.getPixels(0, 0, ima.nrows(), ima.ncols());
-	Magick::PixelPacket* pixel;
+	Magick::Image magick_ima;
+	// In the construction of a Geometry object, the width (i.e.
+	// `ncols') comes first, then the height (i.e. `nrows')
+	// follows.
+	magick_ima.size(Magick::Geometry(ima.ncols(), ima.nrows()));
+
+	Magick::Pixels view(magick_ima);
+	// As above, `ncols' is passed before `nrows'.
+	Magick::PixelPacket* pixels = view.get(0, 0, ima.ncols(), ima.nrows());
 	mln_piter(I) p(ima.domain());
 	for_all(p)
-	{
-	  pixel = pixel_cache + (int) p.to_site().to_vec()[0] * ima.ncols()
-			      + (int) p.to_site().to_vec()[1];
-	  *pixel = get_color(ima(p));
-	}
-	im_file.syncPixels();
-	im_file.write(filename);
+	  *pixels++ = impl::get_color(ima(p));
+
+	view.sync();
+	magick_ima.write(filename);
 
 	trace::exiting("mln::io::magick::save");
       }
 
-      /*template <typename T>
-      void save(Image< tiled2d<T> >& ima_, const std::string& filename)
+
+      // FIXME: Unfinished?
+#if 0
+      template <typename T>
+      void
+      save(const Image< tiled2d<T> >& ima_, const std::string& filename)
       {
 	trace::entering("mln::io::magick::save");
 
@@ -135,7 +164,8 @@ namespace mln
 	ima.buffer().write(filename);
 
 	trace::exiting("mln::io::magick::save");
-      }*/
+      }
+#endif
 
 
 # endif // ! MLN_INCLUDE_ONLY

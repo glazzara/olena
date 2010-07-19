@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,13 +28,21 @@
 
 /// \file
 ///
-/// Define a function which loads an image of kind magick with
-/// given path.
+/// \brief Image intput routines based on Magick++.
+///
+/// Do not forget to call Magick::InitializeMagick(*argv)
+/// <em>before</em> using any of these functions, as advised by the
+/// GraphicsMagick documentation
+/// (http://www.graphicsmagick.org/Magick++/Image.html).
+
+# include <cstdlib>
+
+# include <Magick++.h>
 
 # include <mln/core/image/image2d.hh>
+
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
-# include <Magick++.h>
 
 
 namespace mln
@@ -46,66 +54,83 @@ namespace mln
     namespace magick
     {
 
-      /*! Load a magick image in a Milena image.
-       *
-       * \param[out] ima A reference to the image which will receive
-       * data.
-       * \param[in] filename The source.
-       */
+      /** Load data from a file into a Milena image using Magick++.
+
+	  \param[out] ima       The image data are loaded into.
+	  \param[in]  filename  The name of the input file.  */
       template <typename I>
       void load(Image<I>& ima, const std::string& filename);
 
-      /*! Load a magick image in a tiled image.
-       *
-       * \param[out] ima A reference to the image which will receive
-       * data.
-       * \param[in] filename The source.
-       */
-      /*template <typename T>
-      void load(Image<tiled2d<T> >& ima, const std::string& filename);*/
+
+      // FIXME: Unfinished?
+#if 0
+      /** Load data from a file into a Milena tiled image using
+	  Magick++.
+
+	  \param[out] ima       The image data are loaded into.
+	  \param[in]  filename  The name of the input file.  */
+      template <typename T>
+      void load(Image<tiled2d<T> >& ima, const std::string& filename);
+#endif
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      inline
-      bool do_it(const value::rgb8& in, bool& out, const std::string& filename)
+      namespace impl
       {
-	if (in.red() == 255u && in.green() == 255u && in.blue() == 255u)
-	{
-	  out = true;
-	  return true;
-	}
-	if (in.red() == 0u && in.green() == 0u && in.blue() == 0u)
-	{
-	  out = false;
-	  return true;
-	}
-	if (in.red() == in.green() && in.green() == in.blue())
-	  std::cerr << "error: trying to load '" << filename << "' which is a grayscale image into a bool image" << std::endl;
-	else
-	  std::cerr << "error: trying to load '" << filename << "' which is a truecolor image into a bool image" << std::endl;
-	return false;
-      }
 
-      inline
-      bool do_it(const value::rgb8& in, value::int_u8& out, const std::string& filename)
-      {
-	if (in.red() == in.green() && in.green() == in.blue())
+	inline
+	bool
+	do_it(const value::rgb8& in, bool& out)
 	{
+	  if (in.red() != in.green() || in.green() != in.blue())
+	    {
+	      std::cerr <<
+		"error: attempt to load what looks like a color\n"
+		"(mln::value::rgb8) image into a Boolean (bool) image" <<
+		std::endl;
+	      return false;
+	    }
+	  if (in.red() != 0 &&
+	      in.red() != mln_max(value::rgb8::red_t))
+	    {
+	      std::cerr <<
+		"error: attempt to load what looks like a grayscale\n"
+		"(mln::value::int_u8) image into a Boolean (bool) image" <<
+		std::endl;
+	      return false;
+	    }
+
+	  out = (in.red() != 0);
+	  return true;
+	}
+
+	inline
+	bool
+	do_it(const value::rgb8& in, value::int_u8& out)
+	{
+	  if (in.red() != in.green() || in.green() != in.blue())
+	    {
+	      std::cerr <<
+		"error: attempt to load what looks like a color\n"
+		"(mln::value::rgb8) image into a grayscale\n"
+		"(mln::int_u8 values) image" << std::endl;
+	      return false;
+	    }
+
 	  out = in.red();
 	  return true;
 	}
-	std::cerr << "error: trying to load '" << filename << "' which is a truecolor image into a grayscale image" << std::endl;
-	return false;
-      }
 
-      inline
-      bool do_it(const value::rgb8& in, value::rgb8& out, const std::string& filename)
-      {
-	(void) filename;
-	out = in;
-	return true;
-      }
+	inline
+	bool
+	do_it(const value::rgb8& in, value::rgb8& out)
+	{
+	  out = in;
+	  return true;
+	}
+
+      } // end of namespace mln::io::magick::impl
 
 
       template <typename I>
@@ -114,58 +139,51 @@ namespace mln
       {
 	trace::entering("mln::io::magick::load");
 
+	// Ensure a Magick++'s Quantum is an 8-bit value.
+	mln::metal::equal<Magick::Quantum, unsigned char>::check();
+
 	I& ima = exact(ima_);
 
-	//std::ifstream file(filename.c_str());
-	//if (! file)
-	//{
-	//  std::cerr << "error: cannot open file '" << filename << "'!";
-	//  abort();
-	//}
-
-	Magick::Image im_file(filename);
-	im_file.modifyImage();
-	im_file.type(Magick::TrueColorType);
-	int columns = im_file.columns();
-	int rows = im_file.rows();
-	/*std::cout << "width: " <<columns << std::endl;
-	  std::cout << "height: " <<rows << std::endl;
-	  std::cout << "depth: " <<im_file.depth() << std::endl;
-	  std::cout << "format: " <<im_file.format() << std::endl;
-	  std::cout << "magick: " <<im_file.magick() << std::endl;*/
-
-	const Magick::PixelPacket *pixel_cache = im_file.getConstPixels(0, 0, columns, rows);
-
-	algebra::vec<mln_site_(I)::dim, unsigned int> vmin;
-	algebra::vec<mln_site_(I)::dim, unsigned int> vmax;
-	vmin[0] = 0;
-	vmin[1] = 0;
-	vmax[0] = rows - 1;
-	vmax[1] = columns - 1;
-	mln_site(I) pmin(vmin);
-	mln_site(I) pmax(vmax);
+	// FIXME: Handle Magick++'s exceptions (see either
+	// ImageMagick++'s or GraphicsMagick++'s documentation).
+	Magick::Image magick_ima(filename);
+	magick_ima.read(filename);
+	magick_ima.type(Magick::TrueColorType);
+	int nrows = magick_ima.rows();
+	int ncols = magick_ima.columns();
+	mln_site(I) pmin(0, 0);
+	mln_site(I) pmax(nrows - 1, ncols - 1);
 	mln_concrete(I) result(box<mln_site(I)>(pmin, pmax));
 	initialize(ima, result);
+
+	Magick::Pixels view(magick_ima);
+	// Note that `ncols' is passed before `nrows'.
+	Magick::PixelPacket* pixels = view.get(0, 0, ima.ncols(), ima.nrows());
 	mln_piter(I) p(ima.domain());
 	for_all(p)
 	{
-	  const Magick::PixelPacket *pixel = pixel_cache + (int) p.to_site().to_vec()[0] * columns
-					     + (int) p.to_site().to_vec()[1];
-	  // FIXME: Quantum = 16bits but rgb is 8bits
-	  value::rgb8 pix(pixel->red % 256, pixel->green % 256, pixel->blue % 256);
+	  value::rgb8 c(pixels->red, pixels->green, pixels->blue);
 	  mln_value(I) res;
-	  if (!do_it(pix, res, filename))
-	    abort();
+	  if (!impl::do_it(c, res))
+	    {
+	      std::cerr << "while trying to load `" << filename << "'"
+			<< std::endl;
+	      abort();
+	    }
 	  ima(p) = res;
+	  ++pixels;
 	}
 
 	trace::exiting("mln::io::magick::load");
       }
 
 
-      /*template<typename T>
+      // FIXME: Unfinished?
+#if 0
+      template<typename T>
       inline
-      void load(Image<tiled2d<T> >& ima_, const std::string& filename)
+      void
+      load(Image<tiled2d<T> >& ima_, const std::string& filename)
       {
 	trace::entering("mln::io::magick::load");
 
@@ -175,8 +193,8 @@ namespace mln
 
 	ima = result;
 	trace::exiting("mln::io::magick::load");
-      }*/
-
+      }
+#endif
 
 
 # endif // ! MLN_INCLUDE_ONLY

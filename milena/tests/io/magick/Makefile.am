@@ -29,5 +29,9 @@ save_SOURCES = save.cc
 TESTS = $(check_PROGRAMS)
 
 MOSTLYCLEANFILES =				\
-  save-tiny.ppm					\
-  save-tiny.png
+  save-tiny-temp.pbm				\
+  save-tiny-temp.pgm				\
+  save-tiny-temp.png				\
+  save-tiny.pbm					\
+  save-tiny.pgm					\
+  save-tiny.ppm
