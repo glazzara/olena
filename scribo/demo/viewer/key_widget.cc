@@ -128,7 +128,7 @@ KeyWidget::update(QTreeWidgetItem* item)
   int id;
   id = text_->indexOfChild(item);
   if (id == -1)
-    id = regions_->indexOfChild(item) + 3;
+    id = regions_->indexOfChild(item) + 4;
 
   emit updated(id, item->checkState(0) == Qt::Checked);
 

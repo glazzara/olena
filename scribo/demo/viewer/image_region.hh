@@ -27,7 +27,7 @@ public:
   ImageRegion(region::RegionId id,
 	      QString name,
 	      QColor color,
-	      QModelIndex index,
+	      QString attr_id,
 	      const QVector<QPoint>& points,
 	      bool outline,
 	      bool fill,
@@ -36,15 +36,16 @@ public:
 
   ~ImageRegion();
 
-  region::RegionId id();  
+  region::RegionId id();
   void paint(QPainter* painter,
 	     const QStyleOptionGraphicsItem* option,
 	     QWidget* widget = 0);
 
-  const QModelIndex& index() const;
   QRectF boundingRect() const;
   QPainterPath shape() const;
   QString name() { return name_; }
+  QRectF rect() { return rect_; }
+  QString attr_id() { return attr_id_; }
 
 public slots:
   void setOutline(bool outline);
@@ -60,7 +61,7 @@ private:
   region::RegionId id_;
   QString name_;
   QColor color_;
-  QModelIndex index_;
+  QString attr_id_;
   QPainterPath shape_;
   QRectF rect_;
   bool outline_;

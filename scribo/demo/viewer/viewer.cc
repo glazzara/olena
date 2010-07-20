@@ -1,19 +1,29 @@
+// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
 //
-// Document layout viewer.
+// This file is part of Olena.
 //
-// Copyright (C) 2009 Florent D'Halluin.
+// Olena is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation, version 2 of the License.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// Olena is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
 //
-// The complete GNU General Public Licence Notice can be found as the
-// `COPYING' file in the root directory.
+// You should have received a copy of the GNU General Public License
+// along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 //
+// As a special exception, you may use this file as part of a free
+// software project without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to produce
+// an executable, this file does not by itself cause the resulting
+// executable to be covered by the GNU General Public License.  This
+// exception does not however invalidate any other reasons why the
+// executable file might be covered by the GNU General Public License.
 
 #include "viewer.hh"
-#include "property_widget.hh"
 #include "key_widget.hh"
 #include "browser_widget.hh"
 #include "image_widget.hh"
@@ -22,8 +32,7 @@
 #include "image_scene.hh"
 #include "image_region.hh"
 #include "help_dialog.hh"
-
-#include "dommodel.hh"
+#include <limits.h>
 
 #include "common.hh"
 
@@ -37,7 +46,10 @@ Viewer::Viewer(int &argc, char** argv)
     key_map_(11),
     no_cache_(false),
     extended_mode_(false),
-    xml_file_(QString(""))
+    xml_file_(QString::Null()),
+    base64_(false),
+    text_(true),
+    use_image_(true)
 {
   // Key map
 
@@ -123,6 +135,23 @@ Viewer::Viewer(int &argc, char** argv)
 	  this, SLOT(useExtended(bool)));
   option_menu->addAction(extended_action);
 
+  QAction* show_image_action = new QAction(tr("Show pictures"), file_menu);
+  //show_image_action->setStatusTip(tr(""));
+
+  show_image_action->setCheckable(true);
+  show_image_action->setChecked(true);
+  connect(show_image_action, SIGNAL(toggled(bool)),
+	  this, SLOT(useImage(bool)));
+  option_menu->addAction(show_image_action);
+
+  QAction* show_text_action = new QAction(tr("Show text"), file_menu);
+  show_text_action->setStatusTip(tr("Show detected text inside boxes."));
+  show_text_action->setCheckable(true);
+  show_text_action->setChecked(true);
+  connect(show_text_action, SIGNAL(toggled(bool)),
+	  this, SLOT(useText(bool)));
+  option_menu->addAction(show_text_action);
+
   QMenu* help_menu = win_->menuBar()->addMenu(tr("Help"));
   QAction* about_action = new QAction(tr("About"), help_menu);
   about_action->setStatusTip(tr("About this program."));
@@ -135,7 +164,6 @@ Viewer::Viewer(int &argc, char** argv)
   QSplitter* v_splitter2 = new QSplitter(Qt::Vertical);
 
   StepWidget* step_widget = new StepWidget();
-  PropertyWidget* property_wgt = new PropertyWidget();
   XmlWidget* xml_wgt = new XmlWidget();
   BrowserWidget* browser_wgt =
     new BrowserWidget(files_, argc != 2 ? QString() : argv[1]);
@@ -144,7 +172,6 @@ Viewer::Viewer(int &argc, char** argv)
 
   scene_->setBackgroundBrush(scene_->palette().window());
 
-  v_splitter->addWidget(property_wgt);
   v_splitter->addWidget(step_widget);
   v_splitter->addWidget(key_wgt_);
   v_splitter->addWidget(browser_wgt);
@@ -158,280 +185,302 @@ Viewer::Viewer(int &argc, char** argv)
   win_->setCentralWidget(h_splitter);
 
   QList<int> v_sizes;
-  v_sizes << 200 << 200 << 300 << 400;
+  v_sizes << 200 << 300 << 300;
   v_splitter->setSizes(v_sizes);
 
   QList<int> v_sizes2;
-  v_sizes2 << 500 << 100;
+  v_sizes2 << 650 << 150;
   v_splitter2->setSizes(v_sizes2);
 
   QList<int> h_sizes;
-  h_sizes << 200 << 700;
+  h_sizes << 200 << 900;
   h_splitter->setSizes(h_sizes);
 
   connect(browser_wgt, SIGNAL(activated(QString, bool, bool)),
 	  step_widget, SLOT(fill_steps(QString, bool, bool)));
 
+  connect(step_widget, SIGNAL(change_base(bool)),
+	  this, SLOT(change_base(bool)));
   connect(step_widget, SIGNAL(load_image(QString, bool)),
 	  this, SLOT(load(QString, bool)));
   connect(step_widget, SIGNAL(load_xml(QString)),
 	  this, SLOT(load_xml(QString)));
 
-  connect(this, SIGNAL(updated(DomModel*)),
-	  property_wgt, SLOT(update(DomModel*)));
   connect(this, SIGNAL(mode_changed(bool)),
 	  key_wgt_, SLOT(change_mode(bool)));
-  connect(this, SIGNAL(updated(DomModel*)),
-	  xml_wgt, SLOT(update(DomModel*)));
-  connect(this, SIGNAL(updated(DomModel*)),
+  connect(this, SIGNAL(updated()),
 	  image_wgt, SLOT(update()));
+  connect(this, SIGNAL(fill_xml(QString)),
+	  xml_wgt, SLOT(fill_widget(QString)));
 
   connect(key_wgt_, SIGNAL(updated(int, bool)),
 	  this, SIGNAL(key_updated(int, bool)));
 
-  connect(scene_, SIGNAL(selected(QModelIndex)),
-	  property_wgt, SLOT(select(QModelIndex)));
-  connect(scene_, SIGNAL(deselected(QModelIndex)),
-	  property_wgt, SLOT(deselect(QModelIndex)));
-  connect(scene_, SIGNAL(selected(QModelIndex)),
-	  xml_wgt, SLOT(select(QModelIndex)));
-  connect(scene_, SIGNAL(deselected(QModelIndex)),
-	  xml_wgt, SLOT(deselect(QModelIndex)));
+  connect(scene_, SIGNAL(selected(QString, QString)),
+	  xml_wgt, SLOT(select(QString, QString)));
+    connect(scene_, SIGNAL(deselected()),
+  	  xml_wgt, SLOT(deselect()));
 
   connect(image_wgt, SIGNAL(scaleUpdated(qreal)),
 	  this, SLOT(maybeChangeCacheMode(qreal)));
 }
 
+
 void
-Viewer::load_xml(QString filename)
+Viewer::add_text(QDomNode line, QDomNode region)
 {
-  QString xml_file = filename;
-  xml_file_ = filename;
 
-  app_->setOverrideCursor(QCursor(Qt::WaitCursor));
+  int a_height = region.toElement().attribute("a_height", "0").toInt();
+  int d_height = region.toElement().attribute("d_height", "0").toInt();
+  int x_height = region.toElement().attribute("x_height", "0").toInt();
 
-  scene_->removeItem(image_);
-  scene_->clear();
-  scene_->addItem(image_);
+  if (d_height < 0)
+    d_height = -d_height;
 
-  scene_->update();
+  if ( (a_height - x_height) < (d_height))
+    a_height = x_height + d_height;
 
-  if (doc_layout_)
+  if ( (a_height - x_height) > (d_height))
+    d_height = a_height - x_height;
+
+  QDomNode coords = region.firstChild();
+
+  while (!coords.isNull() && !coords.toElement().tagName().contains("coords"))
+    coords = coords.nextSibling();
+
+  if (coords.isNull())
+    return;
+
+  QDomNode point = coords.firstChild();
+
+  int x_min = INT_MAX;
+  int y_min = INT_MAX;
+
+  while (!point.isNull())
     {
-      doc_layout_->deleteLater();
-      doc_layout_ = 0;
+      int x = point.toElement().attribute("x", "0").toInt();
+      int y = point.toElement().attribute("y", "0").toInt();
+
+      if (x < x_min)
+	x_min = x;
+
+      if (y < y_min)
+	y_min = y;
+
+      point = point.nextSibling();
     }
 
-  emit updated(doc_layout_);
+  QString text = line.toElement().attribute("text", "none");
+  QFont font("Times");
+  font.setPixelSize(a_height + d_height);
+  QGraphicsTextItem* text_item  = scene_->addText(text, font);
+  text_item->setPos(x_min, y_min);
+  text_vector_ << text_item;
+  if (!text_)
+    scene_->removeItem(text_item);
 
-  if (QFile::exists(xml_file))
-  {
-    QFile file(xml_file);
-    if (file.open(QIODevice::ReadOnly))
-    {
-      QDomDocument document;
-      if (document.setContent(&file))
-      {
-	doc_layout_ = new DomModel(document, this);
-      }
-      else
-	{
-	  app_->restoreOverrideCursor();
-	  QMessageBox msgBox;
-	  msgBox.setText("Error while loading the XML file, please choose another.");
-	  msgBox.exec();
-	}
-      file.close();
-    }
-  }
-
-  xml_to_layout();
-
-  app_->restoreOverrideCursor();
 }
 
 void
-Viewer::xml_to_layout()
+Viewer::add_region(QDomNode father, QString attr_id)
 {
+  QDomNode coords = father.firstChild();
+  QString name = father.toElement().tagName();
+  region::RegionId id = static_cast<region::RegionId>(region_ids_[name]);
 
-  /* /!\ XML parsing is VERY UGLY /!\
-     TO DO: use same parsing as xml_transfrom. */
+  while (!coords.isNull() && !coords.toElement().tagName().contains("coords"))
+    coords = coords.nextSibling();
 
+  if (coords.isNull())
+    return;
 
-  // Add layout info to the scene.
-  if (doc_layout_)
+  QDomNode point = coords.firstChild();
+  QVector<QPoint> points;
+
+  while (!point.isNull())
     {
-      QModelIndex pgGts = doc_layout_->index(1, 0);
-      QModelIndex page = doc_layout_->index(1, 0, pgGts);
-      QModelIndex region;
-      QModelIndex attributes;
-      QModelIndex coords;
-      QModelIndex point;
-      for (int i = 0; true; ++i)
-	{
-	  region = doc_layout_->index(i, 0, page);
-	  attributes = doc_layout_->index(i, 1, page);
-	  QString name = doc_layout_->data(region, Qt::DisplayRole).toString();
-	  region::RegionId id = static_cast<region::RegionId>(region_ids_[name]);
+      int x = point.toElement().attribute("x", "0").toInt();
+      int y = point.toElement().attribute("y", "0").toInt();
 
-	  coords = doc_layout_->index(0, 0, region);
-	  if (!region.isValid() || !coords.isValid())
-	    break;
+      points << QPoint(x, y);
+      point = point.nextSibling();
+    }
 
-	  QVector<QPoint> points;
-	  for (int j = 0; true; ++j)
+  ImageRegion* r = new ImageRegion(id,
+				   key_map_[id].first,
+				   key_map_[id].second,
+				   attr_id, points,
+				   outline_action_->isChecked(),
+				   fill_action_->isChecked(),
+				   precise_action_->isChecked(),
+				   key_wgt_->isChecked(id));
+
+  connect(this, SIGNAL(key_updated(int, bool)),
+	  r, SLOT(setDrawIfSameId(int, bool)));
+  connect(this, SIGNAL(setOutline(bool)),
+	  r, SLOT(setOutline(bool)));
+  connect(this, SIGNAL(setPrecise(bool)),
+	  r, SLOT(setPrecise(bool)));
+  connect(this, SIGNAL(setFill(bool)),
+	  r, SLOT(setFill(bool)));
+
+  scene_->addItem(r);
+}
+
+void
+Viewer::load_xml(QString filename)
+{
+  text_vector_.clear();
+  image_vector_.clear();
+
+  app_->setOverrideCursor(QCursor(Qt::WaitCursor));
+  emit fill_xml(filename);
+
+  if (image_ && image_->scene() && image_->scene() == scene_)
+    scene_->removeItem(image_);
+
+  scene_->clear();
+
+  if (!base64_ && use_image_)
+    scene_->addItem(image_);
+
+  scene_->update();
+
+  xml_file_ = filename;
+  QFile f_in(xml_file_);
+  f_in.open(QIODevice::ReadOnly);
+
+  QDomDocument doc;
+  doc.setContent(&f_in);
+  f_in.close();
+
+  QDomElement root = doc.documentElement();
+  QDomNode page = root.firstChild();
+
+  while (!page.isNull() && !page.toElement().tagName().contains("page"))
+    page = page.nextSibling();
+
+  if (page.isNull())
+    return;
+
+  int width = page.toElement().attribute("image_width", "none").toInt();
+  int height = page.toElement().attribute("image_height", "none").toInt();
+
+  scene_->setSceneRect(0, 0, width, height);
+
+  QDomNode region = page.firstChild();
+
+  while (!region.isNull())
+    {
+      if (region.toElement().tagName().contains(QRegExp("(image|graphic|chart|separator|table|text)_region")))
+        {
+	  QString attr_id = region.toElement().attribute("id", "none");
+	  add_region(region, attr_id);
+
+	  if ( base64_ &&
+	       region.toElement().tagName().contains(QRegExp("(image|graphic|chart|separator|table)_region")))
 	    {
-	      // Navigate to the coordinate list
-	      point = doc_layout_->index(j, 1, coords);
-	      if (!point.isValid())
-		break;
+	      QDomNode container = region.firstChild();
 
-	      QMap<QString, QVariant> data =
-		doc_layout_->data(point, Qt::UserRole).toMap();
-	      int x = data["x"].toInt();
-	      int y = data["y"].toInt();
+	      while (!container.isNull() && !container.toElement().tagName().contains("container"))
+		container = container.nextSibling();
 
-	      points << QPoint(x, y);
-	    }
+	      QDomNode coords = region.firstChild();
 
-	  // Create region
-	  ImageRegion* r = new ImageRegion(id,
-					   key_map_[id].first,
-					   key_map_[id].second,
-					   attributes, points,
-					   outline_action_->isChecked(),
-					   fill_action_->isChecked(),
-					   precise_action_->isChecked(),
-					   key_wgt_->isChecked(id));
+	      while (!coords.isNull() && !coords.toElement().tagName().contains("coords"))
+		coords = coords.nextSibling();
 
-	  connect(this, SIGNAL(key_updated(int, bool)),
-		  r, SLOT(setDrawIfSameId(int, bool)));
-	  connect(this, SIGNAL(setOutline(bool)),
-		  r, SLOT(setOutline(bool)));
-	  connect(this, SIGNAL(setPrecise(bool)),
-		  r, SLOT(setPrecise(bool)));
-	  connect(this, SIGNAL(setFill(bool)),
-		  r, SLOT(setFill(bool)));
-
-	  scene_->addItem(r);
-
-	  // EXTENDED MODE
-	  if (extended_mode_)
-	    {
-              for (int k = 1; true; ++k)
+	      if (!container.isNull() && !coords.isNull())
 		{
-		  QModelIndex paragraph = doc_layout_->index(k, 0, region);
-		  QModelIndex attributes_par = doc_layout_->index(k, 1, region);
-		  if (!paragraph.isValid())
-		    break;
+		  QDomNode child = container.firstChild();
 
-		  QString name_par = doc_layout_->data(paragraph, Qt::DisplayRole).toString();
-		  region::RegionId id_par = static_cast<region::RegionId>(region_ids_[name_par]);
+		  while (!child.isNull() && !child.toElement().tagName().contains("data"))
+		    child = child.nextSibling();
 
-		  QDebug(&name_par) << name_par;
+		  QPixmap pix;
+		  QString data = child.toElement().text();
+		  QByteArray ba;
+		  ba = ba.append(data);
+		  QByteArray out_ba = QByteArray::fromBase64(ba);
+		  pix.loadFromData(out_ba);
 
-		  QModelIndex par_coords = doc_layout_->index(0, 0, paragraph);
-		  QModelIndex point_par;
+		  QGraphicsPixmapItem* image = new QGraphicsPixmapItem(pix);
 
-		  QVector<QPoint> points_par;
-		  for (int m = 0; true; ++m)
+		  QDomNode point = coords.firstChild();
+
+		  int x_min = INT_MAX;
+		  int y_min = INT_MAX;
+
+		  while (!point.isNull())
 		    {
-		      // Navigate to the coordinate list
-		      point_par = doc_layout_->index(m, 1, par_coords);
-		      if (!point_par.isValid())
-			break;
+		      int x = point.toElement().attribute("x", "0").toInt();
+		      int y = point.toElement().attribute("y", "0").toInt();
 
-		      QMap<QString, QVariant> data_par =
-			doc_layout_->data(point_par, Qt::UserRole).toMap();
-		      int x = data_par["x"].toInt();
-		      int y = data_par["y"].toInt();
-		      points_par << QPoint(x, y);
+		      if (x < x_min)
+			x_min = x;
+
+		      if (y < y_min)
+			y_min = y;
+
+		      point = point.nextSibling();
 		    }
 
-		  // Create region
-		  ImageRegion* r_par = new ImageRegion(id_par,
-						       key_map_[id_par].first,
-						       key_map_[id_par].second,
-						       attributes_par, points_par,
-						       outline_action_->isChecked(),
-						       fill_action_->isChecked(),
-						       precise_action_->isChecked(),
-						       key_wgt_->isChecked(id_par));
+		  image->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
+		  image->setZValue(0);
+		  image->setOffset(x_min, y_min);
+		  if (use_image_)
+		    scene_->addItem(image);
+		  image_vector_ << image;
 
-		  connect(this, SIGNAL(key_updated(int, bool)),
-			  r_par, SLOT(setDrawIfSameId(int, bool)));
-		  connect(this, SIGNAL(setOutline(bool)),
-			  r_par, SLOT(setOutline(bool)));
-		  connect(this, SIGNAL(setPrecise(bool)),
-			  r_par, SLOT(setPrecise(bool)));
-		  connect(this, SIGNAL(setFill(bool)),
-			  r_par, SLOT(setFill(bool)));
+		  if (no_cache_)
+		    image->setCacheMode(QGraphicsItem::NoCache);
+		  else
+		    image->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 
-		  scene_->addItem(r_par);
+		  child = child.nextSibling();
+		}
+	    }
 
-		  for (int l = 1; true; ++l)
+	  if (extended_mode_ &&
+	      region.toElement().tagName().contains("text_region"))
+	    {
+	      QDomNode para = region.firstChild();
+	      while (!para.isNull() && !para.toElement().tagName().contains("paragraph"))
+		para = para.nextSibling();
+
+	      if (!para.isNull())
+		{
+		  add_region(para, attr_id);
+
+		  QDomNode line = para.firstChild();
+		  while (!line.isNull() && !line.toElement().tagName().contains("line"))
+		    line = line.nextSibling();
+
+		  if (!line.isNull())
 		    {
-		      QModelIndex line = doc_layout_->index(l, 0, paragraph);
-		      QModelIndex attributes_line = doc_layout_->index(l, 1, paragraph);
-		      if (!line.isValid())
-			break;
-
-		      QString name_line = doc_layout_->data(line, Qt::DisplayRole).toString();
-		      region::RegionId id_line = static_cast<region::RegionId>(region_ids_[name_line]);
-
-		      QModelIndex line_coords = doc_layout_->index(0, 0, line);
-		      QModelIndex point_line;
-		      QVector<QPoint> points_line;
-		      for (int n = 0; true; ++n)
-			{
-			  // Navigate to the coordinate list
-			  point_line = doc_layout_->index(n, 1, line_coords);
-			  if (!point_line.isValid())
-			    break;
-
-			  QMap<QString, QVariant> data_line =
-			    doc_layout_->data(point_line, Qt::UserRole).toMap();
-			  int x = data_line["x"].toInt();
-			  int y = data_line["y"].toInt();
-			  points_line << QPoint(x, y);
-			}
-
-		      // Create region
-		      ImageRegion* r_line = new ImageRegion(id_line,
-							   key_map_[id_line].first,
-							   key_map_[id_line].second,
-							   attributes_line, points_line,
-							   outline_action_->isChecked(),
-							   fill_action_->isChecked(),
-							    precise_action_->isChecked(),
-							    key_wgt_->isChecked(id_line));
-
-		      connect(this, SIGNAL(key_updated(int, bool)),
-			      r_line, SLOT(setDrawIfSameId(int, bool)));
-		      connect(this, SIGNAL(setOutline(bool)),
-			      r_line, SLOT(setOutline(bool)));
-		      connect(this, SIGNAL(setPrecise(bool)),
-			      r_line, SLOT(setPrecise(bool)));
-		      connect(this, SIGNAL(setFill(bool)),
-			      r_line, SLOT(setFill(bool)));
-
-		      scene_->addItem(r_line);
+		      add_region(line, attr_id);
+		      add_text(line, region);
 		    }
 		}
 	    }
-	  // END OF EXTENDED MODE
 
-	}
+        }
 
-      emit updated(doc_layout_);
-      key_wgt_->update_all();
+      region = region.nextSibling();
     }
+
+  emit updated();
+  scene_->update();
+  key_wgt_->update_all();
+
+  app_->restoreOverrideCursor();
 }
 
 void
 Viewer::load(QString filename, bool b)
 {
   app_->setOverrideCursor(QCursor(Qt::WaitCursor));
+
   scene_->clear();
   scene_->update();
   image_ = 0;
@@ -443,24 +492,21 @@ Viewer::load(QString filename, bool b)
     image_ = new QGraphicsPixmapItem(load_base64(filename));
   else
     image_ = new QGraphicsPixmapItem(QPixmap(filename));
+
   image_->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
   image_->setZValue(0);
-  scene_->addItem(image_);
+  if (use_image_)
+    scene_->addItem(image_);
 
   if (no_cache_)
     image_->setCacheMode(QGraphicsItem::NoCache);
   else
     image_->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 
-  if (doc_layout_)
-  {
-    doc_layout_->deleteLater();
-    doc_layout_ = 0;
-  }
+  app_->restoreOverrideCursor();
+  emit updated();
 
   app_->restoreOverrideCursor();
-
-  emit updated(doc_layout_);
 }
 
 int
@@ -493,10 +539,11 @@ void Viewer::useExtended(bool b)
 {
   extended_mode_ = b;
   key_wgt_->update_all();
-  if (xml_file_ != QString(""))
+
+  if (xml_file_ != QString::Null())
     load_xml(xml_file_);
 
-  emit mode_changed (b);
+  emit mode_changed(b);
 }
 
 void
@@ -557,4 +604,54 @@ QPixmap Viewer::load_base64(QString xml)
   return pix;
 }
 
-//  LocalWords:  hh
+void
+Viewer::useText(bool b)
+{
+  text_ = b;
+  if (!b)
+    {
+      for (int i = 0; i < text_vector_.size(); ++i)
+	scene_->removeItem(text_vector_[i]);
+    }
+  else
+    {
+      for (int i = 0; i < text_vector_.size(); ++i)
+	scene_->addItem(text_vector_[i]);
+    }
+
+  emit updated();
+  scene_->update();
+}
+
+void
+Viewer::useImage(bool b)
+{
+  use_image_ = b;
+  if (!b)
+    {
+      if (image_ && image_->scene() && image_->scene() == scene_)
+	scene_->removeItem(image_);
+
+      for (int i = 0; i < image_vector_.size(); ++i)
+	scene_->removeItem(image_vector_[i]);
+    }
+  else
+    {
+      if (image_ && image_->scene() == 0)
+	scene_->addItem(image_);
+
+      for (int i = 0; i < image_vector_.size(); ++i)
+	scene_->addItem(image_vector_[i]);
+    }
+
+
+
+  emit updated();
+  scene_->update();
+}
+
+void
+Viewer::change_base(bool b)
+{
+  base64_ = b;
+}

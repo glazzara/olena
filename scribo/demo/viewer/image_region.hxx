@@ -91,11 +91,4 @@ ImageRegion::shape() const
   return shape_;
 }
 
-inline
-const QModelIndex&
-ImageRegion::index() const
-{
-  return index_;
-}
-
 #endif	    /* !IMAGE_REGION_HXX_ */

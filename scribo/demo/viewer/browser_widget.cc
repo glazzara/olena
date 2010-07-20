@@ -68,7 +68,7 @@ BrowserWidget::BrowserWidget(QDirModel* files, QString dir)
   files_filters << "*.png" << "*.jpg"
 		<< "*.tif" << "*.ppm"
 		<< "*.pgm" << "*.pbm"
-		<< "*.pnm" << "*.xmle";
+		<< "*.pnm" << "*.xmlc";
 
   files->setNameFilters(files_filters);
 }

@@ -17,6 +17,7 @@
 
 # include <QtGui>
 # include "common.hh"
+# include <QDomNode>
 
 class ImageScene;
 class DomModel;
@@ -44,15 +45,18 @@ public slots:
   void maybeChangeCacheMode(qreal scale);
   void useCache(bool b);
   void useExtended(bool b);
+  void useText(bool b);
+  void useImage(bool b);
+  void change_base(bool b);
 
 signals:
-  void updated(DomModel* model);
-  void loaded(DomModel* model);
+  void updated();
   void key_updated(int key, bool checked);
   void setOutline(bool b);
   void setPrecise(bool b);
   void setFill(bool b);
   void mode_changed(bool b);
+  void fill_xml(QString);
 
 private:
   Viewer(int &argc, char** argv);
@@ -60,6 +64,8 @@ private:
 
   void xml_to_layout();
   QPixmap  load_base64(QString xml);
+  void add_region(QDomNode father, QString attr_id);
+  void add_text(QDomNode line, QDomNode region);
 
   QApplication* app_;
   QMainWindow* win_;
@@ -82,6 +88,11 @@ private:
   bool no_cache_;
   bool extended_mode_;
   QString xml_file_;
+  bool base64_;
+  bool text_;
+  bool use_image_;
+  QVector<QGraphicsTextItem *> text_vector_;
+  QVector<QGraphicsPixmapItem*> image_vector_;
 };
 
 #include "viewer.hxx"

@@ -33,8 +33,8 @@ public:
   void clear();
 
 signals:
-  void selected(const QModelIndex& index);
-  void deselected(const QModelIndex& index);
+  void selected(QString, QString);
+  void deselected();
 
 private:
   ImageRegion* selected_;

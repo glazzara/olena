@@ -75,11 +75,13 @@ void StepWidget::fill_steps(QString file, bool step, bool container)
 
   if (container)
     {
-      emit load_image(file, true);
+      emit change_base(true);
+      //      emit load_image(file, true);
       emit load_xml(file);
     }
   else
     {
+      emit change_base(false);
       // image is loaded once
       emit load_image(file, false);
 

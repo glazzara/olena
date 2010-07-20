@@ -14,6 +14,7 @@
 
 include $(top_srcdir)/build-aux/autotroll.mk
 
+
 bin_PROGRAMS = scribo-viewer
 scribo_viewer_SOURCES = $(BUILT_SOURCES)	\
 			viewer.cc		\
@@ -40,15 +41,13 @@ BUILT_SOURCES = viewer.moc.cc			\
 		image_widget.moc.cc		\
 		xml_widget.moc.cc		\
 		key_widget.moc.cc		\
-		property_widget.moc.cc		\
 		browser_widget.moc.cc		\
 		image_scene.moc.cc		\
 		image_view.moc.cc		\
-		dommodel.moc.cc			\
-		domitem.moc.cc			\
 		image_region.moc.cc		\
 		help_dialog.moc.cc		\
 		step_widget.moc.cc
+
 
 noinst_HEADERS = viewer.hh		\
 	 	 viewer.hxx		\

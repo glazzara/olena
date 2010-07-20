@@ -1,3 +1,36 @@
+2010-07-20  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
+
+	Some changes in XML interface.
+
+	* demo/viewer/property_widget.cc,
+	* demo/viewer/property_widget.hh,
+	* demo/viewer/domitem.cc,
+	* demo/viewer/domitem.hh,
+	* demo/viewer/dommodel.cc,
+	* demo/viewer/dommodel.hh: Delete.
+
+	* demo/viewer/Makefile.am
+
+	* demo/viewer/browser_widget.cc: Fix, xmlc extension instead of xmle.
+
+	* demo/viewer/key_widget.cc,
+	* demo/viewer/step_widget.cc,
+	* demo/viewer/step_widget.hh,
+	* demo/viewer/image_scene.cc,
+	* demo/viewer/image_scene.hh,
+	* demo/viewer/help_dialog.cc,
+	* demo/viewer/image_region.cc,
+	* demo/viewer/image_region.hh,
+	* demo/viewer/image_region.hxx: Small changes.
+
+	* demo/viewer/viewer.cc,
+	* demo/viewer/viewer.hh: Add base 64 cropped pictures support, text viewer
+	and change XML parsing.
+
+	* demo/viewer/xml_widget.cc,
+	* demo/viewer/xml_widget.hh: Change widget, tree and attributes are together.
+
+
 2010-07-16  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
 	Base 64 support in Qt interface (xmlc extension)

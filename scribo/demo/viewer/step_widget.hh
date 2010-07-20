@@ -45,6 +45,7 @@ signals:
   void load_image(QString, bool);
   void load_xml(QString);
   void activated(QListWidgetItem*);
+  void change_base(bool);
 
 public slots:
   void fill_steps(QString file, bool step = false, bool container = false);

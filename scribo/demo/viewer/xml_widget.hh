@@ -16,6 +16,7 @@
 # define   	XML_WIDGET_HH_
 
 # include <QtGui>
+# include <QDomNode>
 
 class DomModel;
 
@@ -29,13 +30,17 @@ public:
   ~XmlWidget();
 
 public slots:
-  void update(DomModel* model);
-  void select(const QModelIndex& index);
-  void deselect(const QModelIndex& index);
+  void select(QString id, QString name);
+  void deselect();
+  void fill_widget(QString xml);
+  void check_item (QTreeWidgetItem* item);
 
 private:
-  QTreeView* view_;
-  DomModel* model_;
+  void NFS(QDomNode node, QTreeWidgetItem* item);
+  QTreeWidget* tree_;
+  QTreeWidget* property_;
+  QMap<QString, QTreeWidgetItem*> item_map_;
+  QMap<QTreeWidgetItem*, QDomNode> node_map_;
 };
 
 #endif	    /* !XML_WIDGET_HH_ */

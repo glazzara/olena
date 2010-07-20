@@ -31,7 +31,17 @@ void
 ImageScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
   QGraphicsScene::mousePressEvent(event);
-  QList<QGraphicsItem *> items_list = items(event->pos()); // includes both ImageRegions and the picture.
+  QList<QGraphicsItem *> items_list = items(event->scenePos()); // includes both ImageRegions and the picture.
+
+  if (items_list.isEmpty())
+    {
+      if (selected_)
+	{
+	  selected_->deselect();
+	  emit deselected();
+	  selected_ = 0;
+	}
+    }
 
   // Selection is under the mouse click (at event->pos()).
   bool selection_is_clicked = items_list.contains(selected_);
@@ -55,20 +65,20 @@ ImageScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 		      else
 			{
 			  selected_->deselect();
-			  emit deselected(selected_->index());
+			  emit deselected();
 			  selected_ = 0;
 			}
 		    }
 		  else
 		    {
 		      selected_->deselect();
-		      emit deselected(selected_->index());
+		      emit deselected();
 		      selected_ = 0;
 		    }
 		}
 	      selected_ = item;
 	      item->select();
-	      emit selected(item->index());
+	      emit selected(item->attr_id(), item->name());
 	      return;
 	    }
 	}
@@ -78,7 +88,7 @@ ImageScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 	       && (items_list.size() == 1) )// no ImageRegion, only the picture
 	    {
 	      selected_->deselect();
-	      emit deselected(selected_->index());
+	      emit deselected();
 	      selected_ = 0;
 	    }
 	}

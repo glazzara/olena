@@ -35,10 +35,8 @@ HelpDialog::HelpDialog()
 		    "   select regions to display their properties.\n"
 		    " - Use the mouse or keyboard to move and zoom\n"
 		    "   (Arrows, PageUp, PageDown, Home, End).\n"
-		    "\n"
-		    "Contact: d-halluin@lrde.epita.fr\n"
-		    "\n"
-		    "Copyright Florent D'Halluin, 2009.\n");
+		    "\n");
+
 
   QLabel* label = new QLabel(help);
 

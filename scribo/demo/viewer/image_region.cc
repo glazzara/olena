@@ -17,7 +17,7 @@
 ImageRegion::ImageRegion(region::RegionId id,
 			 QString name,
 			 QColor color,
-			 QModelIndex index,
+			 QString attr_id,
 			 const QVector<QPoint>& points,
 			 bool outline,
 			 bool fill,
@@ -27,7 +27,7 @@ ImageRegion::ImageRegion(region::RegionId id,
     id_(id),
     name_(name),
     color_(color),
-    index_(index),
+    attr_id_(attr_id),
     shape_(),
     rect_(),
     outline_(outline),
@@ -65,7 +65,7 @@ ImageRegion::~ImageRegion()
 region::RegionId ImageRegion::id()
 {
   return id_;
-}  
+}
 
 void
 ImageRegion::paint(QPainter* painter,
