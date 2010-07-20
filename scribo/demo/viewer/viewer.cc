@@ -275,6 +275,7 @@ Viewer::add_text(QDomNode line, QDomNode region)
   font.setPixelSize(a_height + d_height);
   QGraphicsTextItem* text_item  = scene_->addText(text, font);
   text_item->setPos(x_min, y_min);
+  text_item->setTextInteractionFlags(Qt::TextSelectableByMouse);
   text_vector_ << text_item;
   if (!text_)
     scene_->removeItem(text_item);
@@ -619,7 +620,6 @@ Viewer::useText(bool b)
 	scene_->addItem(text_vector_[i]);
     }
 
-  emit updated();
   scene_->update();
 }
 
@@ -644,9 +644,6 @@ Viewer::useImage(bool b)
 	scene_->addItem(image_vector_[i]);
     }
 
-
-
-  emit updated();
   scene_->update();
 }
 
