@@ -1,3 +1,14 @@
+2010-07-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have Tesseract-related parts of Scribo compile again.
+
+	* scribo/debug/bboxes_enlarged_image.hh,
+	* scribo/debug/looks_like_a_text_line_image.hh,
+	* scribo/debug/mean_and_base_lines_image.hh,
+	* scribo/debug/save_bboxes_image.hh:
+	Catch up with scribo::line_info<L>'s current interface.
+	Reported by Olivier Grisel <ogrisel@nuxeo.com>.
+
 2010-08-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* core/component_set.hh: Add a new internal member

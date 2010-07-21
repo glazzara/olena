@@ -98,7 +98,7 @@ namespace scribo
       image2d<value::rgb8> output = data::convert(value::rgb8(), input);
 
       for_all_lines(l, lines)
-	if (! lines(l).hidden())
+	if (! lines(l).is_hidden())
 	{
 	  if (text::internal::looks_like_a_text_line(lines(l)))
 	    mln::draw::box(output, lines(l).bbox(), text_value);

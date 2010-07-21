@@ -113,7 +113,7 @@ namespace scribo
 	output = data::convert(value::rgb8(), input);
 
       for_all_lines(l, lines)
-	if (! lines(l).hidden())
+	if (! lines(l).is_hidden())
 	  mln::draw::box(output, lines(l).bbox(), value);
 
       mln::io::ppm::save(output, filename);
