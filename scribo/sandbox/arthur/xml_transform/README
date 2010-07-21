@@ -21,4 +21,9 @@ Base 64 operations:
 
 BUILD:
 
-Chnage the environment variable QMAKE_CXXFLAGS to indicate the correct paths to milena and olena  in the .pro file then, just type qmake and make.
+Chnage the environment variable QMAKE_CXXFLAGS in xml_transfrom.pro then
+
+mkdir _build
+cd _build
+qmake ../xml_transfrom.pro
+make

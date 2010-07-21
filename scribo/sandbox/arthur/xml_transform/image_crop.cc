@@ -61,10 +61,10 @@ void ImageCrop::save_image(QString file)
   else
     filename = file;
 
-  std::cout << "Saving " << image_.toStdString() << " to "
-	    << output_dir_.toStdString() << "img/"
-	    << filename.toStdString()  << ".png"
-	    << std::endl;
+  //  std::cout << "Saving " << image_.toStdString() << " to "
+  //	    << output_dir_.toStdString() << "img/"
+  //	    << filename.toStdString()  << ".png"
+  //	    << std::endl;
 
   io::magick::save(ima, output_dir_.toStdString() + "img/" + filename.toStdString() + ".png");
 }

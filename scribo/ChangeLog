@@ -1,5 +1,14 @@
 2010-07-21  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
+	Small changes in xml_transform.
+
+	* scribo/sandbox/arthur/xml_transform/README
+
+	* scribo/sandbox/arthur/xml_transform/image_crop.cc: Delete verbose mode.
+	* scribo/sandbox/arthur/xml_transform/main.cc: Small fix.
+
+2010-07-21  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
+
 	Files headers change + base64 data hide in xml tree.
 
 	* scribo/demo/viewer/README,

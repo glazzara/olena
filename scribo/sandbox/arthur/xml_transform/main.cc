@@ -9,15 +9,15 @@ int main(int argc, char **argv)
   man = "xml_transform\n";
   man += "OPTIONS:\n\n";
   man += "HTML output:\n";
-  man += "\t--html <xml> <ppm> <out_dir> : HTML output with non-text regions croped into many png files.\n";
+  man += "\t--html <xml> <ppm> <out_dir> : HTML output with non-text regions cropped into many png files.\n";
   man += "\t--html-base64 <xml> <out_dir> : HTML output from a container XML file.\n\n";
   man += "PDF output:\n";
-  man += "\t--pdf <xml> <ppm> <out_dir> : PDF output with non-text regions croped into many png files.\n";
+  man += "\t--pdf <xml> <ppm> <out_dir> : PDF output with non-text regions cropped into many png files.\n";
   man += "\t--pdf-no-crop <xml> <ppm> <out_dir>: PDF output with the entire picture displayed over the text.\n";
   man += "\t--pdf-base64 <xml> <out_dir> : PDF output from a container XML file.\n";
   man += "\t--pdf-base64-no-crop <xml> <ppm> <out_dir> : PDF with the entire picture displayed over the text, the picture is loaded from a container XML file.\n\n";
   man += "Base 64 operations:\n";
-  man += "\t--to-base64 <xml> <ppm> <out_xml> : Produces a container XML file by converting croped pictures into base 64 format.\n";
+  man += "\t--to-base64 <xml> <ppm> <out_xml> : Produces a container XML file by converting cropped pictures into base 64 format.\n";
   man += "\t--to-base64-no-crop <xml> <ppm> <out_xml> : Same as to-base64 but only the picture is converted in base 64.\n";
   man += "\t--from-base64 <xml> <out_dir> : Decodes a XML container file to produce original image files.\n";
 
