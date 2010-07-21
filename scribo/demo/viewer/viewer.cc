@@ -185,11 +185,11 @@ Viewer::Viewer(int &argc, char** argv)
   win_->setCentralWidget(h_splitter);
 
   QList<int> v_sizes;
-  v_sizes << 200 << 300 << 300;
+  v_sizes << 200 << 250 << 350;
   v_splitter->setSizes(v_sizes);
 
   QList<int> v_sizes2;
-  v_sizes2 << 650 << 150;
+  v_sizes2 << 725 << 175;
   v_splitter2->setSizes(v_sizes2);
 
   QList<int> h_sizes;

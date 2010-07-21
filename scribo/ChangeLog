@@ -1,3 +1,31 @@
+2010-07-21  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
+
+	Files headers change + base64 data hide in xml tree.
+
+	* scribo/demo/viewer/README,
+	* scribo/demo/viewer/browser_widget.cc,
+	* scribo/demo/viewer/browser_widget.hh,
+	* scribo/demo/viewer/common.hh,
+	* scribo/demo/viewer/help_dialog.cc,
+	* scribo/demo/viewer/help_dialog.hh,
+	* scribo/demo/viewer/image_region.cc,
+	* scribo/demo/viewer/image_region.hh,
+	* scribo/demo/viewer/image_scene.cc,
+	* scribo/demo/viewer/image_scene.hh,
+	* scribo/demo/viewer/image_view.cc,
+	* scribo/demo/viewer/image_view.hh,
+	* scribo/demo/viewer/image_widget.cc,
+	* scribo/demo/viewer/image_widget.hh,
+	* scribo/demo/viewer/key_widget.cc,
+	* scribo/demo/viewer/key_widget.hh,
+	* scribo/demo/viewer/main.cc,
+	* scribo/demo/viewer/viewer.cc,
+	* scribo/demo/viewer/viewer.hh,
+	* scribo/demo/viewer/viewer.hxx,
+	* scribo/demo/viewer/xml_widget.cc: Change header (add LRDE copyright)
+
+	* scribo/demo/viewer/xml_widget.hh: Hide data in base 64 to improve loading speed.
+
 2010-07-20  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
 	Text selectable in Qt interface.
