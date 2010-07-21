@@ -331,18 +331,17 @@ Viewer::add_region(QDomNode father, QString attr_id)
 void
 Viewer::load_xml(QString filename)
 {
-  text_vector_.clear();
-  image_vector_.clear();
-
   app_->setOverrideCursor(QCursor(Qt::WaitCursor));
   emit fill_xml(filename);
 
   if (image_ && image_->scene() && image_->scene() == scene_)
     scene_->removeItem(image_);
 
+  text_vector_.clear();
+  image_vector_.clear();
   scene_->clear();
 
-  if (!base64_ && use_image_)
+  if (!base64_ && use_image_ && image_)
     scene_->addItem(image_);
 
   scene_->update();
@@ -470,7 +469,7 @@ Viewer::load_xml(QString filename)
       region = region.nextSibling();
     }
 
-  emit updated();
+  //emit updated();
   scene_->update();
   key_wgt_->update_all();
 
@@ -483,8 +482,11 @@ Viewer::load(QString filename, bool b)
   app_->setOverrideCursor(QCursor(Qt::WaitCursor));
 
   scene_->clear();
+  text_vector_.clear();
+  image_vector_.clear();
   scene_->update();
   image_ = 0;
+  xml_file_ = QString::Null();
 
   // Load the image in a pixmap that is directly shown on screen.
   // This is very slow when used with the normal rendering system.

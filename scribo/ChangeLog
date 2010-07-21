@@ -1,5 +1,11 @@
 2010-07-21  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
+	Fix Segfault bug in Qt interface.
+
+	* demo/viewer/viewer.cc: Clean vectors when load new picture.
+
+2010-07-21  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
+
 	Small changes in xml_transform.
 
 	* scribo/sandbox/arthur/xml_transform/README
