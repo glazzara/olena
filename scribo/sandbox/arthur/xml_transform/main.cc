@@ -6,20 +6,27 @@ int main(int argc, char **argv)
 {
 
   std::string man;
-  man = "xml_transform\n";
-  man += "OPTIONS:\n\n";
-  man += "HTML output:\n";
-  man += "\t--html <xml> <ppm> <out_dir> : HTML output with non-text regions cropped into many png files.\n";
-  man += "\t--html-base64 <xml> <out_dir> : HTML output from a container XML file.\n\n";
-  man += "PDF output:\n";
-  man += "\t--pdf <xml> <ppm> <out_dir> : PDF output with non-text regions cropped into many png files.\n";
-  man += "\t--pdf-no-crop <xml> <ppm> <out_dir>: PDF output with the entire picture displayed over the text.\n";
-  man += "\t--pdf-base64 <xml> <out_dir> : PDF output from a container XML file.\n";
-  man += "\t--pdf-base64-no-crop <xml> <ppm> <out_dir> : PDF with the entire picture displayed over the text, the picture is loaded from a container XML file.\n\n";
-  man += "Base 64 operations:\n";
-  man += "\t--to-base64 <xml> <ppm> <out_xml> : Produces a container XML file by converting cropped pictures into base 64 format.\n";
-  man += "\t--to-base64-no-crop <xml> <ppm> <out_xml> : Same as to-base64 but only the picture is converted in base 64.\n";
-  man += "\t--from-base64 <xml> <out_dir> : Decodes a XML container file to produce original image files.\n";
+  man = "xml_transform\n"
+    "OPTIONS:\n\n"
+    "HTML output:\n"
+    "\t--html <xml> <ppm> <out_dir> : HTML output with non-text regions cropped into many png files.\n"
+    "\t--html-base64 <xml> <out_dir> : HTML output from a container XML file.\n\n"
+    "PDF output:\n"
+    "\t--pdf <xml> <ppm> <out_dir> : PDF output with non-text regions cropped into many png files.\n"
+    "\t--pdf-no-crop <xml> <ppm> <out_dir>: PDF output with the entire picture displayed over the text.\n"
+    "\t--pdf-base64 <xml> <out_dir> : PDF output from a container XML file.\n"
+    "\t--pdf-base64-no-crop <xml> <ppm> <out_dir> : PDF with the entire picture displayed over the text, the picture is loaded from a container XML file.\n\n"
+    "SVG output:\n"
+    "\t--svg <xml> <out_dir> : SVG output (works only with base 64 xml encoded.\n\n"
+    "Base 64 operations:\n"
+    "\t--to-base64 <xml> <ppm> <out_xml> : Produces a container XML file by converting cropped pictures into base 64 format.\n"
+    "\t--to-base64-no-crop <xml> <ppm> <out_xml> : Same as to-base64 but only the picture is converted in base 64.\n"
+    "\t--from-base64 <xml> <out_dir> : Decodes a XML container file to produce original image files.\n\n"
+    "For PDF/HTML/SVG output, Bourne shell scripts are provided to produce the outputs, just run sh *_generator.sh \n"
+    "Requirements:\n"
+    "PDF : fop >= 0.95\n"
+    "HTML : xsltproc\n"
+    "SVG : trunk version of fop\n";
 
   if (argc > 4)
     {
@@ -60,6 +67,7 @@ int main(int argc, char **argv)
   else if (argc > 3)
     {
       std::string pdfbase64 = "--pdf-base64";
+      std::string svg = "--svg";
       std::string pdfbase64nocrop = "--pdf-base64-no-crop";
       std::string htmlbase64 = "--html-base64";
       std::string from_base64 = "--from-base64";
@@ -68,6 +76,11 @@ int main(int argc, char **argv)
 	{
 	  XmlTransform xmlt(argv[2], QString::Null(), argv[3]);
 	  xmlt.createPDF(true, true);
+	}
+      else if (svg.compare(argv[1]) == 0)
+	{
+	  XmlTransform xmlt(argv[2], QString::Null(), argv[3]);
+	  xmlt.createSVG();
 	}
       else if (pdfbase64nocrop.compare(argv[1]) == 0)
 	{

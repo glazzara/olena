@@ -1,23 +1,29 @@
 xml_transform
-
 OPTIONS:
 
 HTML output:
-     --html <xml> <ppm> <out_dir> : HTML output with non-text regions croped into many png files.
+     --html <xml> <ppm> <out_dir> : HTML output with non-text regions cropped into many png files.
      --html-base64 <xml> <out_dir> : HTML output from a container XML file.
 
 PDF output:
-    --pdf <xml> <ppm> <out_dir> : PDF output with non-text regions croped into many png files.
+    --pdf <xml> <ppm> <out_dir> : PDF output with non-text regions cropped into many png files.
     --pdf-no-crop <xml> <ppm> <out_dir>: PDF output with the entire picture displayed over the text.
     --pdf-base64 <xml> <out_dir> : PDF output from a container XML file.
-    --pdf-base64-no-crop <xml> <ppm> <out_dir> : PDF with the entire picture displayed over the text,
- the picture is loaded from a container XML file.
+    --pdf-base64-no-crop <xml> <ppm> <out_dir> : PDF with the entire picture displayed over the text, the picture is loaded from a container XML file.
+
+SVG output:
+    --svg <xml> <out_dir> : SVG output (works only with base 64 xml encoded.
 
 Base 64 operations:
-     --to-base64 <xml> <ppm> <out_xml> : Produces a container XML file by converting croped pictures into base 64 format.
+     --to-base64 <xml> <ppm> <out_xml> : Produces a container XML file by converting cropped pictures into base 64 format.
      --to-base64-no-crop <xml> <ppm> <out_xml> : Same as to-base64 but only the picture is converted in base 64.
      --from-base64 <xml> <out_dir> : Decodes a XML container file to produce original image files.
 
+For PDF/HTML/SVG output, Bourne shell scripts are provided to produce the outputs, just run sh *_generator.sh
+Requirements:
+PDF : fop >= 0.95
+HTML : xsltproc
+SVG : trunk version of fop
 
 BUILD:
 
@@ -25,5 +31,10 @@ Chnage the environment variable QMAKE_CXXFLAGS in xml_transfrom.pro then
 
 mkdir _build
 cd _build
+cp -r ../templates .
 qmake ../xml_transfrom.pro
 make
+
+/!\ IMPORTANT NOTE /!\
+
+xml_transfrom uses a templates directory, binary and this folder should be in the same place.

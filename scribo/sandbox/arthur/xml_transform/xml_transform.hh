@@ -42,6 +42,7 @@ class XmlTransform : public QObject
 
   void createHTML(bool base64);
   void createPDF(bool crop, bool base64);
+  void createSVG();
   void toBase64(bool crop);
   void fromBase64();
 

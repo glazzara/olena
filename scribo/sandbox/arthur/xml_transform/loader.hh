@@ -42,6 +42,7 @@ class Loader : public QObject
   QDomDocument* xml_to_dom(QString xml_file);
   bool set_output(QString& output);
   void add_pdf_templates(bool crop, bool base64, QString output);
+  void add_svg_templates(QString output);
   void add_html_templates(bool base64, QString output);
 };
 

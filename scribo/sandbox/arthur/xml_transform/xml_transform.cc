@@ -117,6 +117,16 @@ void XmlTransform::createPDF (bool crop, bool base64)
     abort();
 }
 
+void XmlTransform::createSVG ()
+{
+  if (loader_->xml_output(xml_file_, false, output_dir_))
+    {
+      loader_->add_svg_templates(output_dir_);
+    }
+  else
+    abort();
+}
+
 void XmlTransform::createHTML(bool base64)
 {
   if (loader_->xml_output(xml_file_, true, output_dir_))

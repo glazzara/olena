@@ -126,6 +126,21 @@ void Loader::add_pdf_templates(bool crop, bool base64, QString output)
     }
 }
 
+void Loader::add_svg_templates(QString output)
+{
+  QFile regions("templates/pdf/regions_svg.xsl");
+  regions.copy(output + "regions.xsl");
+
+  QFile gen("templates/pdf/svg_generator.sh");
+  gen.copy(output + "svg_generator.sh");
+
+  QFile line("templates/pdf/line.xsl");
+  line.copy(output + "line.xsl");
+
+  QFile xsl("templates/pdf/main_crop.xsl");
+  xsl.copy(output + "main.xsl");
+}
+
 bool Loader::xml_output(QString xml_file, bool html, QString output)
 {
   QFile file(xml_file);

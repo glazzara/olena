@@ -1,3 +1,18 @@
+2010-07-22  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
+
+	SVG output.
+
+	* arthur/xml_transform/README
+	* arthur/xml_transform/loader.cc
+	* arthur/xml_transform/loader.hh
+	* arthur/xml_transform/main.cc
+	* arthur/xml_transform/xml_transform.cc
+	* arthur/xml_transform/xml_transform.hh
+
+	* arthur/xml_transform/templates/pdf/regions_svg.xsl,
+	* arthur/xml_transform/templates/pdf/svg_generator.sh: New.
+
+
 2010-07-15  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
 
 	XML Tranform.
