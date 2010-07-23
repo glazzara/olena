@@ -43,6 +43,7 @@ class Loader : public QObject
   bool set_output(QString& output);
   void add_pdf_templates(bool crop, bool base64, QString output);
   void add_svg_templates(QString output);
+  void add_open_templates(QString output);
   void add_html_templates(bool base64, QString output);
 };
 

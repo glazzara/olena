@@ -1,3 +1,18 @@
+2010-07-23  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
+
+	OpenDocument output (odt and odf).
+
+	* arthur/xml_transform/templates/opendoc/css.css,
+	* arthur/xml_transform/templates/opendoc/opendoc_generator.sh,
+	* arthur/xml_transform/templates/opendoc/xsl.xsl: New.
+
+	* arthur/xml_transform/README
+	* arthur/xml_transform/loader.cc
+	* arthur/xml_transform/loader.hh
+	* arthur/xml_transform/main.cc
+	* arthur/xml_transform/xml_transform.cc
+	* arthur/xml_transform/xml_transform.hh
+
 2010-07-22  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
 	SVG output.

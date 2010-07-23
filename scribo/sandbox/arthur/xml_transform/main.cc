@@ -19,18 +19,25 @@ int main(int argc, char **argv)
     "SVG output:\n"
     "\t--svg <xml> <out_dir> : SVG output (works only with base 64 xml encoded.\n\n"
     "Base 64 operations:\n"
+    "\t--to-base64 <xml> <ppm> <out_xml> : Produces a container XML file by converting cropped pictures into base 64 format.\n\n"
+
+    "OpenDocument output:\n"
+    "\t--open <xml> <ppm> <out_dir> : OpenDocument output (odt, odf).\n\n"
+    "Base 64 operations:\n"
     "\t--to-base64 <xml> <ppm> <out_xml> : Produces a container XML file by converting cropped pictures into base 64 format.\n"
     "\t--to-base64-no-crop <xml> <ppm> <out_xml> : Same as to-base64 but only the picture is converted in base 64.\n"
     "\t--from-base64 <xml> <out_dir> : Decodes a XML container file to produce original image files.\n\n"
-    "For PDF/HTML/SVG output, Bourne shell scripts are provided to produce the outputs, just run sh *_generator.sh \n"
+    "For PDF/HTML/SVG/OD output, Bourne shell scripts are provided to produce the outputs, just run sh *_generator.sh \n"
     "Requirements:\n"
     "PDF : fop >= 0.95\n"
     "HTML : xsltproc\n"
-    "SVG : trunk version of fop\n";
+    "SVG : trunk version of fop\n"
+    "OpenDocument : ooconvert";
 
   if (argc > 4)
     {
       std::string html = "--html";
+      std::string open = "--open";
       std::string pdf = "--pdf";
       std::string pdf_no_crop = "--pdf-no-crop";
       std::string to_base64 = "--to-base64";
@@ -41,10 +48,15 @@ int main(int argc, char **argv)
 	  XmlTransform xmlt(argv[2], argv[3], argv[4]);
 	  xmlt.createHTML(false);
 	}
-      if (pdf.compare(argv[1]) == 0)
+      else if (pdf.compare(argv[1]) == 0)
 	{
 	  XmlTransform xmlt(argv[2], argv[3], argv[4]);
 	  xmlt.createPDF(true, false);
+	}
+      else if (open.compare(argv[1]) == 0)
+	{
+	  XmlTransform xmlt(argv[2], argv[3], argv[4]);
+	  xmlt.createOpen();
 	}
       else if (pdf_no_crop.compare(argv[1]) == 0)
 	{

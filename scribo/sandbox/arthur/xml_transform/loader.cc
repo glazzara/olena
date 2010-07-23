@@ -141,6 +141,18 @@ void Loader::add_svg_templates(QString output)
   xsl.copy(output + "main.xsl");
 }
 
+void Loader::add_open_templates(QString output)
+{
+  QFile css("templates/opendoc/css.css");
+  css.copy(output + "css.css");
+
+  QFile gen("templates/opendoc/opendoc_generator.sh");
+  gen.copy(output + "opendoc_generator.sh");
+
+  QFile xsl("templates/opendoc/xsl.xsl");
+  xsl.copy(output + "xsl.xsl");
+}
+
 bool Loader::xml_output(QString xml_file, bool html, QString output)
 {
   QFile file(xml_file);

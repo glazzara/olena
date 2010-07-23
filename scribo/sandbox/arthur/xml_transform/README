@@ -16,14 +16,21 @@ SVG output:
 
 Base 64 operations:
      --to-base64 <xml> <ppm> <out_xml> : Produces a container XML file by converting cropped pictures into base 64 format.
+
+OpenDocument output:
+	     --open <xml> <ppm> <out_dir> : OpenDocument output (odt, odf).
+
+Base 64 operations:
+     --to-base64 <xml> <ppm> <out_xml> : Produces a container XML file by converting cropped pictures into base 64 format.
      --to-base64-no-crop <xml> <ppm> <out_xml> : Same as to-base64 but only the picture is converted in base 64.
      --from-base64 <xml> <out_dir> : Decodes a XML container file to produce original image files.
 
-For PDF/HTML/SVG output, Bourne shell scripts are provided to produce the outputs, just run sh *_generator.sh
+For PDF/HTML/SVG/OD output, Bourne shell scripts are provided to produce the outputs, just run sh *_generator.sh
 Requirements:
 PDF : fop >= 0.95
 HTML : xsltproc
 SVG : trunk version of fop
+OpenDocument : ooconvert
 
 BUILD:
 

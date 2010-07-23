@@ -117,6 +117,25 @@ void XmlTransform::createPDF (bool crop, bool base64)
     abort();
 }
 
+void XmlTransform::createOpen ()
+{
+  if (loader_->xml_output(xml_file_, false, output_dir_))
+    {
+      QString output = output_dir_;
+      output.append("img");
+
+      if (loader_->set_output(output))
+	{
+	  crop_->crop_regions();
+	  loader_->add_open_templates(output_dir_);
+	}
+      else
+	abort();
+    }
+  else
+    abort();
+}
+
 void XmlTransform::createSVG ()
 {
   if (loader_->xml_output(xml_file_, false, output_dir_))
