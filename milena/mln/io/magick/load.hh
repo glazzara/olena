@@ -61,7 +61,8 @@ namespace mln
 	  \ingroup iomagick
       */
       template <typename I>
-      void load(Image<I>& ima, const std::string& filename);
+      void
+      load(Image<I>& ima, const std::string& filename);
 
 
       // FIXME: Unfinished?
@@ -72,7 +73,8 @@ namespace mln
 	  \param[out] ima       The image data are loaded into.
 	  \param[in]  filename  The name of the input file.  */
       template <typename T>
-      void load(Image<tiled2d<T> >& ima, const std::string& filename);
+      void
+      load(Image<tiled2d<T> >& ima, const std::string& filename);
 #endif
 
 
@@ -137,7 +139,8 @@ namespace mln
 
       template <typename I>
       inline
-      void load(Image<I>& ima_, const std::string& filename)
+      void
+      load(Image<I>& ima_, const std::string& filename)
       {
 	mln_trace("mln::io::magick::load");
 

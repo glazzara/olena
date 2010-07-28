@@ -1,3 +1,9 @@
+2010-07-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Enforce coding style w.r.t. function declarations.
+
+	* mln/io/magick/load.hh: Here.
+
 2010-04-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add Doxygen documentation to a test.
