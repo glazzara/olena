@@ -1,5 +1,9 @@
 2010-07-28  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/io/off/save.hh: Fix documentation.
+
+2010-07-28  Roland Levillain  <roland@lrde.epita.fr>
+
 	Enforce coding style w.r.t. function declarations.
 
 	* mln/io/magick/load.hh: Here.

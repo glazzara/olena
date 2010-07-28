@@ -124,7 +124,7 @@ namespace mln
 	  /// \brief Constructor, with static checks.
 	  off_saver();
 
-	  /// Load an image from \a filename into \a ima.
+	  /// Save an image \a ima into \a filename.
 	  void operator()(const I& ima, const std::string& filename) const;
 	};
 
@@ -324,7 +324,7 @@ namespace mln
 	  // transitively adjacent to the reference point.
 	  nbh_t nbh;
 	  mln_fwd_niter(nbh_t) u(nbh, f);
-	  /* FIXME: We should be able to pas this value (m) either at
+	  /* FIXME: We should be able to pass this value (m) either at
 	     the construction of the neighborhood or at the construction
 	     of the iterator.  */
 	  u.iter().set_m(0);
