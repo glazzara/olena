@@ -58,41 +58,35 @@ namespace mln
       /** \brief Save a (binary) VTK image into a complex image.
 
 	  \param[in] ima      The image to save.
-	  \param[in] filename The name of the file where to save the image.
-
-	  The image is said binary since data represent only the
-	  existence of faces.  */
+	  \param[in] filename The name of the file where to save the
+			      image.
+      */
       void save(const bin_2complex_image3df& ima,
 		const std::string& filename);
 
-      /** \brief Save an 8-bit grey-level VTK image into a complex image.
+      /** \brief Save an 8-bit gray-level VTK image into a complex image.
 
 	  \param[in] ima      The image to save.
-	  \param[in] filename The name of the file where to save the image.
-
-	  Only data is attached to 2-faces is saved; the VTK file
-	  cannot store data attached to faces of other dimensions.  */
+	  \param[in] filename The name of the file where to save the
+			      image.
+      */
       void save(const int_u8_2complex_image3df& ima,
 		const std::string& filename);
 
-      /** \brief Save a floating-point value grey-level VTK image into
+      /** \brief Save a floating-point value gray-level VTK image into
 	  a complex image.
 
 	  \param[in] ima      The image to save.
-	  \param[in] filename The name of the file where to save the image.
-
-	  Only data is attached to 2-faces is saved; the VTK file
-	  cannot store data attached to faces of other dimensions.  */
+	  \param[in] filename The name of the file where to save the
+			      image.  */
       void save(const float_2complex_image3df& ima,
 		const std::string& filename);
 
       /** \brief Save a 3x8-bit RGB (color) VTK image into a complex image.
 
 	  \param[in] ima      The image to save.
-	  \param[in] filename The name of the file where to save the image.
-
-	  Only data is attached to 2-faces is saved; the VTK file
-	  cannot store data attached to faces of other dimensions.  */
+	  \param[in] filename The name of the file where to save the
+			      image.  */
       void save(const rgb8_2complex_image3df& ima,
 		const std::string& filename);
 
@@ -248,7 +242,7 @@ namespace mln
 	     parts.'' */
 
 	  /* ``1. The first part is the file version and
-                  identifier.  This part contains the single line:
+		  identifier.  This part contains the single line:
 
 		    # vtk  DataFile Version x.x.
 
@@ -268,9 +262,9 @@ namespace mln
 	       << std::endl;
 
 	  /* ``3. The next part is the file format.  The file format
-	          describes the type of file, either ASCII or
-	          binary.  On this line the single word ASCII or BINARY
-	          must appear.'' */
+		  describes the type of file, either ASCII or
+		  binary.  On this line the single word ASCII or BINARY
+		  must appear.'' */
 	  ostr << "ASCII" << std::endl;
 
 	  /*-------.

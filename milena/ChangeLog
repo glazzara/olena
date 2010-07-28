@@ -1,3 +1,7 @@
+2010-07-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	* mln/io/vtk/save.hh: Fix documentation.
+
 2010-07-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	* mln/io/vtk/all.hh: New.
