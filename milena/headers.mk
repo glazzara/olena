@@ -737,6 +737,8 @@ mln/io/tiff/all.hh \
 mln/io/tiff/load.hh \
 mln/io/txt/all.hh \
 mln/io/txt/save.hh \
+mln/io/vtk/all.hh \
+mln/io/vtk/save.hh \
 mln/labeling/all.hh \
 mln/labeling/background.hh \
 mln/labeling/blobs.hh \

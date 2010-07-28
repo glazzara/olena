@@ -1,5 +1,11 @@
 2010-07-28  Roland Levillain  <roland@lrde.epita.fr>
 
+	Regen Milena's Makefile helpers.
+
+	* headers.mk, tests/unit_test/unit-tests.mk: Here.
+
+2010-07-28  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a VTK output for images of unsigned integers.
 
 	* mln/io/vtk/save.hh

@@ -790,6 +790,8 @@ mln_io_raw_load \
 mln_io_raw_save \
 mln_io_txt_all \
 mln_io_txt_save \
+mln_io_vtk_all \
+mln_io_vtk_save \
 mln_labeling_all \
 mln_labeling_background \
 mln_labeling_blobs \
