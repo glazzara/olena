@@ -1,5 +1,17 @@
 2010-07-28  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a VTK output for images of unsigned integers.
+
+	* mln/io/vtk/save.hh
+	(io::vtk::save(const unsigned_2complex_image3df&, const std::string&)):
+	New function.
+	(io::vtk::internal::unsigned_vtk_saver): New structure.
+	* tests/io/vtk/save.cc: Add a tests case for images of unsigneds.
+	* tests/io/vtk/Makefile.am (MOSTLYCLEANFILES):
+	Add save-tetrahedron-unsigned.vtk.
+
+2010-07-28  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/io/vtk/save.hh: Fix documentation.
 
 2010-07-27  Roland Levillain  <roland@lrde.epita.fr>

@@ -73,6 +73,14 @@ namespace mln
       void save(const int_u8_2complex_image3df& ima,
 		const std::string& filename);
 
+      /** \brief Save a gray-level VTK image into a complex image.
+
+	  \param[in] ima      The image to save.
+	  \param[in] filename The name of the file where to save the
+			      image.  */
+      void save(const unsigned_2complex_image3df& ima,
+		const std::string& filename);
+
       /** \brief Save a floating-point value gray-level VTK image into
 	  a complex image.
 
@@ -127,8 +135,17 @@ namespace mln
 	  void write_face_data(std::ostream& ostr, const image& ima) const;
 	};
 
+
 	struct int_u8_vtk_saver
 	  : public vtk_saver< int_u8_2complex_image3df, int_u8_vtk_saver >
+	{
+	  /// \brief Save face data.
+	  void write_face_data(std::ostream& ostr, const image& ima) const;
+	};
+
+
+	struct unsigned_vtk_saver
+	  : public vtk_saver< unsigned_2complex_image3df, unsigned_vtk_saver >
 	{
 	  /// \brief Save face data.
 	  void write_face_data(std::ostream& ostr, const image& ima) const;
@@ -173,6 +190,14 @@ namespace mln
       {
 	trace::entering("mln::io::vtk::save");
 	internal::int_u8_vtk_saver()(ima, filename);
+	trace::exiting("mln::io::vtk::save");
+      }
+
+      void
+      save(const unsigned_2complex_image3df& ima, const std::string& filename)
+      {
+	trace::entering("mln::io::vtk::save");
+	internal::unsigned_vtk_saver()(ima, filename);
 	trace::exiting("mln::io::vtk::save");
       }
 
@@ -564,6 +589,13 @@ namespace mln
 					  const image& ima) const
 	{
 	  write_scalar_data(ostr, ima, "unsigned_char");
+	}
+
+	void
+	unsigned_vtk_saver::write_face_data(std::ostream& ostr,
+					    const image& ima) const
+	{
+	  write_scalar_data(ostr, ima, "unsigned_int");
 	}
 
 	void

@@ -73,6 +73,15 @@ main()
 		  "save-tetrahedron-int_u8.vtk");
   }
 
+  // Unsigned integer values.
+  {
+    std::vector<unsigned> values(nfaces);
+    for (unsigned i = 0; i < nfaces; ++i)
+      values[i] = mln_max(unsigned) / nfaces * i;
+    io::vtk::save(make_image<unsigned_2complex_image3df>(bin_ima, values),
+		  "save-tetrahedron-unsigned.vtk");
+  }
+
   // Floating-point values.
   {
     std::vector<float> values(nfaces);

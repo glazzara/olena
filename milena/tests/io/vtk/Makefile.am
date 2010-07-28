@@ -25,5 +25,6 @@ TESTS = $(check_PROGRAMS)
 MOSTLYCLEANFILES =				\
   save-tetrahedron-bool.vtk			\
   save-tetrahedron-int_u8.vtk			\
+  save-tetrahedron-unsigned.vtk			\
   save-tetrahedron-float.vtk			\
   save-tetrahedron-rgb8.vtk
