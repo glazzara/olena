@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -744,7 +745,7 @@ namespace mln
       typename self_t::depth1st_piter n(t);
       mln_psite(self_t) old;
 
-      std::cout << std::endl << "Hierarchy: " << std::endl;
+      os << std::endl << "Hierarchy: " << std::endl;
       n.start();
 
       if (!n.is_valid())

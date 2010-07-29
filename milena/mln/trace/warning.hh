@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,8 +31,8 @@
 ///
 /// Display warning message in trace output.
 
-# include <string>
 # include <iostream>
+# include <string>
 
 # include <mln/trace/quiet.hh>
 
@@ -44,14 +45,13 @@ namespace mln
 
     void warning(const std::string& message);
 
+
 # ifndef MLN_INCLUDE_ONLY
 
     inline
     void warning(const std::string& message)
     {
-      std::cout << "Warning: "
-		<< message
-		<< std::endl;
+      std::cerr << "Warning: " << message << std::endl;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,3 +1,20 @@
+2010-07-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix output streams uses.
+
+	* mln/core/concept/value_set.hh
+	(operator<<(std::ostream&, const Value_Set<E>&))
+	* mln/morpho/tree/data.hh
+	(operator<< (std::ostream&, const tree::data<I, S>&)):
+	Use the stream passed as argument instead of std::cout.
+	* mln/util/fibonacci_heap.hh
+	(mln::util::internal::fibonacci_heap_node::print_): Take an output
+	stream as argument instead of using the standard output.
+	(mln::util::fibonacci_heap::print_): Rename first argument from
+	`cout' to `ostr' prevent confusions with std::cout.
+	* mln/trace/warning.hh (mln::trace::warning): Print warnings on
+	the standard error instead of the standard ourput.
+
 2010-10-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	Handle properly non 8-bit Magick::Quantum's.

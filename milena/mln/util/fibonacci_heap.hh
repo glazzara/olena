@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -87,7 +87,7 @@ namespace mln
 	bool operator==(fibonacci_heap_node<P,T>& rhs);
 	bool operator<(fibonacci_heap_node<P,T>& rhs);
 
-	void print_() const;
+	void print_(std::ostream& ostr) const;
 
 
       private:
@@ -164,7 +164,7 @@ namespace mln
 
 
 
-      std::ostream& print_(std::ostream& cout,
+      std::ostream& print_(std::ostream& ostr,
 			   internal::fibonacci_heap_node<P,T> *tree   = 0,
 			   internal::fibonacci_heap_node<P,T> *parent = 0) const;
 
@@ -245,7 +245,7 @@ namespace mln
 
     template <typename P, typename T>
     std::ostream&
-    operator<<(std::ostream& cout, const fibonacci_heap<P,T>& heap);
+    operator<<(std::ostream& ostr, const fibonacci_heap<P,T>& heap);
 
 
 
@@ -453,9 +453,9 @@ namespace mln
 
       template <typename P, typename T>
       inline
-      void fibonacci_heap_node<P,T>::print_() const
+      void fibonacci_heap_node<P,T>::print_(std::ostream& ostr) const
       {
-	std::cout << value_ << " (" << priority_ << ")";
+	ostr << value_ << " (" << priority_ << ")";
       }
 
 
@@ -767,7 +767,7 @@ namespace mln
 
     template <typename P, typename T>
     std::ostream&
-    fibonacci_heap<P,T>::print_(std::ostream& cout,
+    fibonacci_heap<P,T>::print_(std::ostream& ostr,
 				internal::fibonacci_heap_node<P,T> *tree,
 				internal::fibonacci_heap_node<P,T> *parent) const
     {
@@ -781,38 +781,38 @@ namespace mln
       {
 	do {
 	  if (temp->left() == 0)
-	    cout << "(left is 0)";
+	    ostr << "(left is 0)";
 	  temp->print_();
 	  if (temp->parent() != parent)
-	    cout << "(parent is incorrect)";
+	    ostr << "(parent is incorrect)";
 	  if (temp->right() == 0)
-	    cout << "(right is 0)";
+	    ostr << "(right is 0)";
 	  else if (temp->right()->left() != temp)
-	    cout << "(Error in left link left) ->";
+	    ostr << "(Error in left link left) ->";
 	  else
-	    cout << " <-> ";
+	    ostr << " <-> ";
 
 	  temp = temp->right();
 
 	} while (temp != 0 && temp != tree);
       }
       else
-	cout << "  <empty>" << std::endl;
-      cout << std::endl;
+	ostr << "  <empty>" << std::endl;
+      ostr << std::endl;
 
       temp = tree;
       if (temp != 0)
       {
 	do {
-	  cout << "children of " << temp->value() << ": ";
+	  ostr << "children of " << temp->value() << ": ";
 	  if (temp->child() == 0)
-	    cout << "NONE" << std::endl;
-	  else print_(cout, temp->child(), temp);
+	    ostr << "NONE" << std::endl;
+	  else print_(ostr, temp->child(), temp);
 	  temp = temp->right();
 	} while (temp!=0 && temp != tree);
       }
 
-      return cout;
+      return ostr;
     }
 
 
@@ -1029,9 +1029,9 @@ namespace mln
 
     template <typename P, typename T>
     std::ostream&
-    operator<<(std::ostream& cout, const fibonacci_heap<P,T>& heap)
+    operator<<(std::ostream& ostr, const fibonacci_heap<P,T>& heap)
     {
-      return heap.print_(cout);
+      return heap.print_(ostr);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
