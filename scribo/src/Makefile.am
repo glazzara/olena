@@ -50,7 +50,7 @@ if HAVE_TIFF
     text_in_doc_LDFLAGS  = $(AM_LDFLAGS) \
 			   $(TESSERACT_LDFLAGS) \
 			   $(TIFF_LDFLAGS) \
-			   -lpthread -lhpdf
+			   -lpthread
 
     bin_PROGRAMS 	+= text_in_doc_ppm
     text_in_doc_ppm_SOURCES = text_in_doc_ppm.cc
@@ -60,7 +60,7 @@ if HAVE_TIFF
     text_in_doc_ppm_LDFLAGS  = $(AM_LDFLAGS) \
 			   $(TESSERACT_LDFLAGS) \
 			   $(TIFF_LDFLAGS) \
-			   -lpthread -lhpdf
+			   -lpthread
 
 endif HAVE_TIFF
 endif HAVE_TESSERACT

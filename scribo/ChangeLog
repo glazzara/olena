@@ -1,3 +1,10 @@
+2010-07-31  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix Scribo's dependencies w.r.t. libraries.
+
+	* src/Makefile.am (text_in_doc_LDFLAGS, text_in_doc_ppm_LDFLAGS):
+	Remove -lhpdf.
+
 2010-04-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Get C++ compiler flags for Scribo from configure.
