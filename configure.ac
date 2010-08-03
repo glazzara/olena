@@ -193,10 +193,20 @@ AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 
 # Prepare calls to pkg-config
 PKG_PROG_PKG_CONFIG
+
+AC_MSG_RESULT([])
+AC_MSG_RESULT([])
+AC_MSG_RESULT([Checking external libraries])
+AC_MSG_RESULT([------------------------------------------------------------])
+
+
 ### Support for FreeImagePlus has been disabled for Olena 1.0.
 ## OLN_WITH_LIB([FreeImagePlus], [FreeImagePlus.h], [freeimageplus])
 
 # CFITSIO library.
+AC_MSG_RESULT([])
+AC_MSG_RESULT([* libcfitsio])
+AC_MSG_RESULT([------------])
 OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 
 
@@ -245,21 +255,39 @@ AM_CONDITIONAL(HAVE_MAGICKXX, test "x$have_magickxx" = 'xyes')
 
 
 # TIFF library.
+AC_MSG_RESULT([])
+AC_MSG_RESULT([* libtiff])
+AC_MSG_RESULT([---------])
 OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
 
 # Grassroots DiCoM (GDCM).
+AC_MSG_RESULT([])
+AC_MSG_RESULT([* libgdcm])
+AC_MSG_RESULT([---------])
 OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm], [GDCM],
 	     [-lgdcmzlib])
 
 # Tesseract.
+AC_MSG_RESULT([])
+AC_MSG_RESULT([* Tesseract])
+AC_MSG_RESULT([-----------])
 OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
 	     [tesseract], [TESSERACT])
 
 # Qt.
+AC_MSG_RESULT([])
+AC_MSG_RESULT([* Qt])
+AC_MSG_RESULT([----])
 AT_WITH_QT([+xml], [], [],
 	   AC_DEFINE([HAVE_QT], 0, [Define to 1 if we can use Qt]),
      	   AC_DEFINE([HAVE_QT], 1))
 AM_CONDITIONAL([HAVE_QT], [test x$QT_PATH != x])
+
+
+AC_MSG_RESULT([])
+AC_MSG_RESULT([------------------------------------------------------------])
+AC_MSG_RESULT([])
+AC_MSG_RESULT([])
 
 
 ## ---------------------------- ##
