@@ -1,3 +1,12 @@
+2010-08-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Handle libMagick++ dependency with pkg-config.
+
+	* configure.ac: Use PKG_* macros to find Magick++ path and
+	libraries.
+
+	* m4/pkg.m4: New macros to use pkg-config.
+
 2010-07-01  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* m4/autotroll.m4: Fix invalid configuration when Qt is missing.

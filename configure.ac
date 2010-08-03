@@ -191,17 +191,58 @@ AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 ## External libraries.  ##
 ## -------------------- ##
 
+# Prepare calls to pkg-config
+PKG_PROG_PKG_CONFIG
 ### Support for FreeImagePlus has been disabled for Olena 1.0.
 ## OLN_WITH_LIB([FreeImagePlus], [FreeImagePlus.h], [freeimageplus])
 
 # CFITSIO library.
 OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 
+
+#------------------------------------------------------------
 # Magick++.
-# FIXME: We should handle Magick++ using pkgconfig (and/or
-# Magick++-config?) instead of OLN_WITH_LIB.  See how other projects
-# handle this.
-OLN_WITH_LIB([Magick++], [Magick++.h], [Magick++], [magickxx], [MAGICKXX])
+
+# FIXME: We should handle Magick++ both with Magick++-config and
+# pkg-config?  instead of OLN_WITH_LIB.  See how other projects handle
+# this.
+#OLN_WITH_LIB([Magick++], [Magick++.h], [Magick++], [magickxx], [MAGICKXX])
+
+AC_ARG_WITH([magickxx],
+    [AC_HELP_STRING([--with-magickxx],
+                    [enable magickxx support (default)])],
+        [with_magickxx=$withval],
+        [with_magickxx='yes'])
+
+if test "x$with_magickxx" != 'xyes'; then
+    DISTCHECK_CONFIG_FLAGS="${DISTCHECK_CONFIG_FLAGS} --with-magickxx=$with_magickxx "
+fi
+
+have_magickxx='no'
+MAGICKXX_CFLAGS=""
+MAGICKXX_LIBS=""
+MAGICKXX_PKG=""
+if test "x$with_magickxx" = 'xyes'; then
+    AC_MSG_RESULT([])
+    AC_MSG_RESULT([* libMagick++])
+    AC_MSG_RESULT([---------------])
+    PKG_CHECK_MODULES(MAGICKXX,[ImageMagick++], have_magickxx=yes, have_magickxx=no)
+    AC_MSG_RESULT([])
+fi
+
+if test "$have_magickxx" = 'yes'; then
+   AC_DEFINE([HAVE_MAGICKXX], 1, [Define to 1 if we can use libMagick++])
+   # Use standard variable names.
+   MAGICKXX_CPPFLAGS="$MAGICKXX_CFLAGS"
+   MAGICKXX_LDFLAGS="$MAGICKXX_LIBS"
+   AC_SUBST(MAGICKXX_CPPFLAGS)
+   AC_SUBST(MAGICKXX_LDFLAGS)
+fi
+
+AM_CONDITIONAL(HAVE_MAGICKXX, test "x$have_magickxx" = 'xyes')
+
+#------------------------------------------------------------
+
 
 # TIFF library.
 OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
