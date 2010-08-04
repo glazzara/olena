@@ -1,3 +1,12 @@
+2010-08-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Replace deduced type 'point' by 'site'.
+
+	* mln/geom/max_col.hh,
+	* mln/geom/max_row.hh,
+	* mln/geom/min_col.hh,
+	* mln/geom/min_row.hh: Replace deduced type 'point' by 'site'.
+
 2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes in milena.
