@@ -1,3 +1,10 @@
+2010-08-04  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
+
+	Fix bug in Qt interface.
+
+	* scribo/demo/viewer/key_widget.cc
+	* scribo/demo/viewer/viewer.cc
+
 2010-07-21  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
 	Fix Segfault bug in Qt interface.

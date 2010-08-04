@@ -441,7 +441,7 @@ Viewer::load_xml(QString filename)
 		}
 	    }
 
-	  if (extended_mode_ &&
+	  if ((extended_mode_ || text_) &&
 	      region.toElement().tagName().contains("text_region"))
 	    {
 	      QDomNode para = region.firstChild();
@@ -450,7 +450,8 @@ Viewer::load_xml(QString filename)
 
 	      if (!para.isNull())
 		{
-		  add_region(para, attr_id);
+		  if (extended_mode_)
+		    add_region(para, attr_id);
 
 		  QDomNode line = para.firstChild();
 		  while (!line.isNull() && !line.toElement().tagName().contains("line"))
@@ -458,7 +459,8 @@ Viewer::load_xml(QString filename)
 
 		  if (!line.isNull())
 		    {
-		      add_region(line, attr_id);
+		      if (extended_mode_)
+			add_region(line, attr_id);
 		      add_text(line, region);
 		    }
 		}

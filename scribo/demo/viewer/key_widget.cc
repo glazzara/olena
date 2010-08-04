@@ -90,16 +90,16 @@ KeyWidget::change_mode(bool b)
 
   if (b)
     {
-      text_->child(id_region)->setCheckState(0, Qt::Checked);
+      //text_->child(id_region)->setCheckState(0, Qt::Checked);
       text_->child(id_region)->setHidden(false);
-      text_->child(id_line)->setCheckState(0, Qt::Checked);
+      //      text_->child(id_line)->setCheckState(0, Qt::Checked);
       text_->child(id_line)->setHidden(false);
     }
   else
     {
-      text_->child(id_region)->setCheckState(0, Qt::Unchecked);
+      //text_->child(id_region)->setCheckState(0, Qt::Unchecked);
       text_->child(id_region)->setHidden(true);
-      text_->child(id_line)->setCheckState(0, Qt::Unchecked);
+      //      text_->child(id_line)->setCheckState(0, Qt::Unchecked);
       text_->child(id_line)->setHidden(true);
     }
 }
