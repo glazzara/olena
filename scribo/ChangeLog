@@ -1,5 +1,10 @@
 2010-08-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* core/component_set.hh: Add a new internal member
+	valid_comps_image_().
+
+2010-08-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* filter/object_groups_with_holes.hh: Fix an invalid mismatch
 	between groups ids and their related component ids and add more
 	comments.

@@ -43,6 +43,7 @@
 # include <mln/accu/shape/bbox.hh>
 
 # include <mln/labeling/compute.hh>
+# include <mln/labeling/relabel.hh>
 
 # include <mln/convert/from_to.hh>
 
@@ -197,6 +198,13 @@ namespace scribo
     /// non-synchronised related data.
     //
     L& labeled_image_();
+
+    /// Return the underlying labeled image where invalid components
+    /// have been erased.
+    ///
+    /// WARNING: this image is computed on the fly...!
+    //
+    mln_concrete(L) valid_comps_image_() const;
 
     /// @}
 
@@ -490,6 +498,28 @@ namespace scribo
   component_set<L>::labeled_image_()
   {
     return this->data_->ima_;
+  }
+
+
+  template <typename L>
+  inline
+  mln_concrete(L)
+  component_set<L>::valid_comps_image_() const
+  {
+    mln::util::array<bool> f(unsigned(this->data_->ncomps_) + 1);
+    f(0) = true;
+
+    for_all_comps(c, (*this))
+      f(c) = (*this)(c).is_valid();
+
+    mln_value(L) new_ncomps;
+    mln_concrete(L)
+      output = mln::labeling::relabel(this->data_->ima_,
+				      this->data_->ncomps_,
+				      new_ncomps,
+				      f);
+
+    return output;
   }
 
 
