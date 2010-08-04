@@ -28,7 +28,8 @@
 
 /// \file
 ///
-/// \brief Remove groups not having a minimum number of holes.
+/// \brief Remove groups not having at least two background components
+/// of a minimum size.
 
 # include <sstream>
 
@@ -36,6 +37,9 @@
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/routine/extend.hh>
 # include <mln/core/image/dmorph/extended.hh>
+
+# include <mln/geom/ncols.hh>
+# include <mln/geom/nrows.hh>
 
 # include <mln/extension/duplicate.hh>
 
@@ -58,9 +62,8 @@ namespace scribo
 
     using namespace mln;
 
-    /*! \brief Remove groups not having a minimum number of holes.
-
-
+    /*! \brief Remove groups not having at least two background
+     *  components of \p min_size pixels.
 
      */
     template <typename L>
@@ -108,8 +111,8 @@ namespace scribo
 	    b.enlarge(1);
 
 	    unsigned
-	      nrows = b.pmax().row() - b.pmin().row() + 1,
-	      ncols = b.pmax().col() - b.pmin().col() + 1,
+	      nrows = geom::nrows(b),
+	      ncols = geom::ncols(b),
 	      row_offset = lbl.delta_index(D(+1, -ncols));
 
 	    mln_value(L) *ptr = &output(b.pmin());
@@ -146,18 +149,27 @@ namespace scribo
 
 	  // Grouping groups and relabel the underlying labeled image.
 	  // Groups are now considered as components.
-	  component_set<L> components = primitive::group::apply(groups);
+          //
+	  // The relabeling function used in group::apply is kept in
+	  // order to map properly the groups and their new component
+	  // id.
+	  //
+	  mln::fun::i2v::array<mln_value(L)> group_2_comp;
+	  component_set<L>
+	    components = primitive::group::apply(groups, group_2_comp);
 
 	  neighb2d nbh = c8();
 
 	  image2d<unsigned> parent, card;
 	  L bboxes_ima;
 
+	  // Will store the first background component id associated
+	  // to a group.
 	  util::array<unsigned> bg_comps(
 	    static_cast<unsigned>(components.nelements()) + 1, 0);
-	  util::array<bool> bg_comps_done(
-	    static_cast<unsigned>(components.nelements()) + 1, false);
 
+	  // Will 'True' if a group has at least two background
+	  // components.
 	  fun::i2v::array<bool>
 	    to_keep(static_cast<unsigned>(components.nelements()) + 1,
 		    false);
@@ -166,22 +178,26 @@ namespace scribo
 
 	  // init
 	  {
-	    extension::fill(lbl, mln_max(mln_value(L)));
-//	extension::adjust_fill(components, nbh, mln_max(mln_value(L)));
+	    // The border should be considered as the background.
+	    extension::fill(lbl, literal::zero);
+
 	    initialize(parent, lbl);
 	    data::fill(parent, 0u);
+	    border::fill(parent, 0u);
 
 	    initialize(card, lbl);
 	    data::fill(card, 1);
 	    border::fill(card, 1);
 
 	    // We want to label background components only in the
-	    // group bounding boxes. Thus, this image is a labeling
-	    // constraint.
+	    // group/component bounding boxes. This image is a
+	    // labeling constraint.
 	    bboxes_ima = internal::compute_bboxes_image(components);
 
-	    to_keep(0) = true;
-	  }
+//	    to_keep(0) = true;
+
+	  } // end of init
+
 
 	  // 1st pass
 	  {
@@ -212,11 +228,13 @@ namespace scribo
 
 	    } // for_all(pxl)
 
-	  }
+	  } // end of 1st pass
+
+	  unsigned kept = 0;
+
 
 	  // 2nd pass
 	  {
-	    unsigned kept = 0;
 	    mln_fwd_pixter(const L) pxl(bboxes_ima); // Forward.
 	    for_all(pxl)
 	    {
@@ -241,37 +259,44 @@ namespace scribo
 		  && bboxes_ima.element(p) != literal::zero)
 	      {
 		mln_value(L) group_id = bboxes_ima.element(p);
-		if (!bg_comps_done(group_id) && components(group_id).is_valid())
+		if (!to_keep(group_id))
 		{
+		  // The group must have at least 2 different
+		  // background components.
+		  //
+		  // This is the first background component found.
 		  if (bg_comps(group_id) == 0)
 		  {
 		    bg_comps(group_id) = parent_p;
 		  }
+		  // This is the second background component found.
 		  else if (bg_comps(group_id) != parent_p)
 		  {
-		    bg_comps_done(group_id) = true;
 		    to_keep(group_id) = true;
 		    ++kept;
 		  }
 		}
 	      }
-	    }
+	    } // for_all(pxl)
 
-	    if (kept == components.nelements())
-	    {
-	      trace::exiting("scribo::filter::impl::generic::object_groups_with_holes");
-	      return groups.duplicate();
-	    }
-
-	    object_groups<L> output = groups.duplicate();
-	    for_all_groups(c, groups)
-	      if (! to_keep(groups(c)))
-		output(c) = 0;
+	  } // end of 2nd pass
 
 
+	  // No groups need to be invalidated.
+	  if (kept == components.nelements())
+	  {
 	    trace::exiting("scribo::filter::impl::generic::object_groups_with_holes");
-	    return output;
+	    return groups.duplicate();
 	  }
+
+	  // Invalidate groups when necessary.
+	  object_groups<L> output = groups.duplicate();
+	  for_all_groups(c, groups)
+	    if (! to_keep(group_2_comp(c)))
+	      output(c) = 0;
+
+	  trace::exiting("scribo::filter::impl::generic::object_groups_with_holes");
+	  return output;
 
 	}
 
