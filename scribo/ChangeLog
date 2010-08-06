@@ -1,5 +1,11 @@
 2010-08-06  Arthur Crepin-Leblond  <crepin@lrde.epita.fr>
 
+	Add arrows shortcuts.
+
+	* demo/viewer/browser_widget.cc: prev/next binded to Ctrl+Left/Right.
+
+2010-08-06  Arthur Crepin-Leblond  <crepin@lrde.epita.fr>
+
 	Add shortcuts in Qt interface.
 
 	* demo/viewer/browser_widget.cc: Change arrows icon.

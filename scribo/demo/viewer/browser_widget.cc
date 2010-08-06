@@ -36,6 +36,8 @@ BrowserWidget::BrowserWidget(QDirModel* files, QString dir)
 
   prev->setIcon(style()->standardIcon(QStyle::SP_ArrowLeft));
   next->setIcon(style()->standardIcon(QStyle::SP_ArrowRight));
+  next->setShortcut(QKeySequence("Ctrl+right"));
+  prev->setShortcut(QKeySequence("Ctrl+left"));
 
   QLabel* title = new QLabel(tr("Images"));
   title->setAlignment(Qt::AlignHCenter);
