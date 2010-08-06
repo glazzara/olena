@@ -19,7 +19,7 @@ OpenDocument output:
 
 Base 64 operations:
      --to-base64 input.xml image output.xml		Creates a container XML file. It will contain regions which are cropped and converted in base 64.
-     --to-base64-no-crop input.xml mage output.xml	Same as --to-base64 but only the full picture will be converted, regions are not cropped
+     --to-base64-no-crop input.xml image output.xml	Same as --to-base64 but only the full picture will be converted, regions are not cropped
      --from-base64 input.xml output_dir			Decodes a XML file which has been encoded in base 64, regions will be converted into png files and saved in output_dir.
 
 Requirements:

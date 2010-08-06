@@ -40,7 +40,7 @@ int main(int argc, char **argv)
     "\t\033[01m--to-base64\033[00m \033[04minput.xml\033[00m \033[04mimage\033[00m \033[04moutput.xml\033[00m"
     "\t\t\tCreates a container XML file. It will contain regions which are cropped and converted in base 64.\n"
 
-    "\t\033[01m--to-base64-no-crop\033[00m \033[04minput.xml\033[00m \033[04image\033[00m \033[04moutput.xml\033[00m"
+    "\t\033[01m--to-base64-no-crop\033[00m \033[04minput.xml\033[00m \033[04mimage\033[00m \033[04moutput.xml\033[00m"
     "\t\tSame as --to-base64 but only the full picture will be converted, regions are not cropped\n"
 
     "\t\033[01m--from-base64\033[00m \033[04minput.xml\033[00m \033[04moutput_dir\033[00m"
