@@ -77,6 +77,7 @@ private:
   QPixmap  load_base64(QString xml);
   void add_region(QDomNode father, QString attr_id);
   void add_text(QDomNode line, QDomNode region);
+  QAction *create_action(QString name, QMenu* menu, QString status, QString shortcut);
 
   QApplication* app_;
   QMainWindow* win_;

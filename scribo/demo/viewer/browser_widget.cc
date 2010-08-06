@@ -33,8 +33,9 @@ BrowserWidget::BrowserWidget(QDirModel* files, QString dir)
 {
   QToolButton* next= new QToolButton();
   QToolButton* prev= new QToolButton();
-  next->setArrowType(Qt::RightArrow);
-  prev->setArrowType(Qt::LeftArrow);
+
+  prev->setIcon(style()->standardIcon(QStyle::SP_ArrowLeft));
+  next->setIcon(style()->standardIcon(QStyle::SP_ArrowRight));
 
   QLabel* title = new QLabel(tr("Images"));
   title->setAlignment(Qt::AlignHCenter);

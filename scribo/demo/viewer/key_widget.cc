@@ -39,9 +39,10 @@ KeyWidget::KeyWidget(const region::KeyMap& key_map)
   items_->setHeaderHidden(true);
 
   text_->setCheckState(0, Qt::Checked);
+  text_->setExpanded(true);
+
   regions_->setCheckState(0, Qt::Checked);
   regions_->setExpanded(true);
-  text_->setExpanded(true);
 
   for (int i = 0; i < 3; ++i)
     add_item_(key_map.at(i).first, key_map.at(i).second,
@@ -68,6 +69,18 @@ void KeyWidget::update_all()
 
   for (int i = 0; i < regions_->childCount(); ++i)
       update(regions_->child(i));
+}
+
+void KeyWidget::setAll(bool b)
+{
+  Qt::CheckState state;
+  if (b)
+    state = Qt::Checked;
+  else
+    state = Qt::Unchecked;
+
+  text_->setCheckState(0, state);
+  regions_->setCheckState(0, state);
 }
 
 void KeyWidget::setAllCheck(QTreeWidgetItem* parent)

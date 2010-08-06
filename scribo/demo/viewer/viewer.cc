@@ -87,74 +87,94 @@ Viewer::Viewer(int &argc, char** argv)
   win_->statusBar();
 
   QMenu* file_menu = win_->menuBar()->addMenu(tr("File"));
-  QAction* quit_action = new QAction(tr("Quit"), file_menu);
+  QMenu* option_menu = win_->menuBar()->addMenu(tr("Options"));
+  QMenu* help_menu = win_->menuBar()->addMenu(tr("Help"));
+
+  QAction* quit_action = create_action("Quit", file_menu,
+				       "Exit the program.", "Ctrl+q");
   connect(quit_action, SIGNAL(triggered()),
 	  app_, SLOT(quit()));
-  quit_action->setStatusTip(tr("Exit the program."));
   file_menu->addAction(quit_action);
 
-  QMenu* option_menu = win_->menuBar()->addMenu(tr("Options"));
-  outline_action_ = new QAction(tr("Draw outline"), option_menu);
-  outline_action_->setStatusTip(tr("Draw region outlines."));
+  outline_action_ = create_action("Draw outline", option_menu,
+				  "Draw region outlines.", "Ctrl+o");
   outline_action_->setCheckable(true);
   outline_action_->setChecked(true);
   connect(outline_action_, SIGNAL(toggled(bool)),
 	  this, SIGNAL(setOutline(bool)));
   option_menu->addAction(outline_action_);
-  precise_action_ = new QAction(tr("Precise outline"), option_menu);
-  precise_action_->setStatusTip(tr("1px outline relative to the image "
-				   "(1px relative to the view if off)."));
+
+  precise_action_ = create_action("Precise outline", option_menu,
+				  "1px outline relative to the image "
+				  "(1px relative to the view if off).",
+				  "Ctrl+p");
   precise_action_->setCheckable(true);
   precise_action_->setChecked(false);
   connect(precise_action_, SIGNAL(toggled(bool)),
 	  this, SIGNAL(setPrecise(bool)));
   option_menu->addAction(precise_action_);
-  fill_action_ = new QAction(tr("Fill regions"), option_menu);
-  fill_action_->setStatusTip(tr("Color the inside of regions."));
+
+  fill_action_ = create_action("Fill regions", option_menu,
+			       "Color the inside of regions.", "Ctrl+f");
   fill_action_->setCheckable(true);
   fill_action_->setChecked(true);
   connect(fill_action_, SIGNAL(toggled(bool)),
 	  this, SIGNAL(setFill(bool)));
   option_menu->addAction(fill_action_);
 
-  QAction* cache_action = new QAction(tr("Disable cache"), file_menu);
-  cache_action->setStatusTip(tr("Disable the image cache (useful for"
-				" large images)."));
+  QAction* cache_action = create_action("Disable cache", option_menu,
+					"Disable the image cache (useful for"
+					" large images).", "Ctrl+c");
   cache_action->setCheckable(true);
   cache_action->setChecked(false);
   connect(cache_action, SIGNAL(toggled(bool)),
 	  this, SLOT(useCache(bool)));
   option_menu->addAction(cache_action);
 
-  QAction* extended_action = new QAction(tr("Extended mode"), file_menu);
-  extended_action->setStatusTip(tr("If enabled, some features not supported by ICDAR"
-				" are added such as text regions or text lines"));
+
+  QAction* extended_action = create_action("Extended mode", option_menu,
+					   "If enabled, some features "
+					   "not supported by ICDAR"
+					   " are added such as text regions"
+					   "or text lines", "Ctrl+e");
   extended_action->setCheckable(true);
   extended_action->setChecked(false);
   connect(extended_action, SIGNAL(toggled(bool)),
 	  this, SLOT(useExtended(bool)));
   option_menu->addAction(extended_action);
 
-  QAction* show_image_action = new QAction(tr("Show pictures"), file_menu);
-  //show_image_action->setStatusTip(tr(""));
-
+  QAction* show_image_action = create_action("Show pictures", option_menu,
+					     "Display pictures on the scene or not",
+					     "Ctrl+i");
   show_image_action->setCheckable(true);
   show_image_action->setChecked(true);
   connect(show_image_action, SIGNAL(toggled(bool)),
 	  this, SLOT(useImage(bool)));
   option_menu->addAction(show_image_action);
 
-  QAction* show_text_action = new QAction(tr("Show text"), file_menu);
-  show_text_action->setStatusTip(tr("Show detected text inside boxes."));
+  QAction* show_text_action = create_action("Show text", option_menu,
+					    "Show detected text inside boxes.",
+					    "Ctrl+t");
   show_text_action->setCheckable(true);
   show_text_action->setChecked(true);
   connect(show_text_action, SIGNAL(toggled(bool)),
 	  this, SLOT(useText(bool)));
   option_menu->addAction(show_text_action);
 
-  QMenu* help_menu = win_->menuBar()->addMenu(tr("Help"));
-  QAction* about_action = new QAction(tr("About"), help_menu);
-  about_action->setStatusTip(tr("About this program."));
+  key_wgt_ = new KeyWidget(key_map_);
+  QAction *show_region_action = create_action("Show regions", option_menu,
+					      "Display regions that are present in"
+					      " the XML file.",
+					      "Ctrl+r");
+  show_region_action->setCheckable(true);
+  show_region_action->setChecked(true);
+  connect(show_region_action, SIGNAL(toggled(bool)),
+	  key_wgt_, SLOT(setAll(bool)));
+  option_menu->addAction(show_region_action);
+
+  QAction* about_action = create_action("About", help_menu,
+					"About this program",
+					"Ctrl+h");
   connect(about_action, SIGNAL(triggered()),
 	  this, SLOT(help()));
   help_menu->addAction(about_action);
@@ -167,7 +187,6 @@ Viewer::Viewer(int &argc, char** argv)
   XmlWidget* xml_wgt = new XmlWidget();
   BrowserWidget* browser_wgt =
     new BrowserWidget(files_, argc != 2 ? QString() : argv[1]);
-  key_wgt_ = new KeyWidget(key_map_);
   ImageWidget* image_wgt = new ImageWidget(scene_);
 
   scene_->setBackgroundBrush(scene_->palette().window());
@@ -276,6 +295,7 @@ Viewer::add_text(QDomNode line, QDomNode region)
   QGraphicsTextItem* text_item  = scene_->addText(text, font);
   text_item->setPos(x_min, y_min);
   text_item->setTextInteractionFlags(Qt::TextSelectableByMouse);
+  text_item->setZValue(5);
   text_vector_ << text_item;
   if (!text_)
     scene_->removeItem(text_item);
@@ -441,8 +461,8 @@ Viewer::load_xml(QString filename)
 		}
 	    }
 
-	  if ((extended_mode_ || text_) &&
-	      region.toElement().tagName().contains("text_region"))
+	  //	  if ((extended_mode_ || text_) &&
+	  if (region.toElement().tagName().contains("text_region"))
 	    {
 	      QDomNode para = region.firstChild();
 	      while (!para.isNull() && !para.toElement().tagName().contains("paragraph"))
@@ -655,4 +675,15 @@ void
 Viewer::change_base(bool b)
 {
   base64_ = b;
+}
+
+
+QAction
+*Viewer::create_action(QString name, QMenu *menu, QString status, QString shortcut)
+{
+  QAction* action = new QAction(name, menu);
+  action->setStatusTip(status);
+  action->setShortcut(QKeySequence(shortcut));
+
+  return (action);
 }

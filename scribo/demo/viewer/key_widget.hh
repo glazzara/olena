@@ -45,6 +45,9 @@ public:
 signals:
   void updated(int key, bool checked);
 
+public slots:
+  void setAll(bool b);
+
 private slots:
   void change_mode(bool b);
   void update(QTreeWidgetItem* item);

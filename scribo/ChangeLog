@@ -1,3 +1,14 @@
+2010-08-06  Arthur Crepin-Leblond  <crepin@lrde.epita.fr>
+
+	Add shortcuts in Qt interface.
+
+	* demo/viewer/browser_widget.cc: Change arrows icon.
+	* demo/viewer/help_dialog.cc: Add more informations.
+	* demo/viewer/key_widget.cc,
+	* demo/viewer/key_widget.hh: Add setAll(bool).
+	* demo/viewer/viewer.cc,
+	* demo/viewer/viewer.hh: Add shortcuts.
+
 2010-08-04  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
 	Fix bug in Qt interface.
