@@ -34,13 +34,14 @@ int main(int argc, char **argv)
 
     "OpenDocument output:\n"
     "\t\033[01m--oo-doc\033[00m \033[04minput.xml\033[00m \033[04mimage\033[00m \033[04moutput.odt\033[00m"
-    "\t\t\tCreates Open Document Writer (odt) file.\n\n"
+    "\t\t\tCreates Open Document Writer (odt) file.\n"
+    "\tThis is experimental, Open Office will warn you and ask you to repair the file which is corrupted, click on repair.\n\n"
 
     "Base 64 operations:\n"
-    "\t\033[01m--to-base64\033[00m \033[04minput.xml\033[00m \033[04mimage\033[00m \033[04moutput.xml\033[00m"
+    "\t\033[01m--to-base64\033[00m \033[04minput.xml\033[00m \033[04mimage\033[00m \033[04moutput.xmlc\033[00m"
     "\t\t\tCreates a container XML file. It will contain regions which are cropped and converted in base 64.\n"
 
-    "\t\033[01m--to-base64-no-crop\033[00m \033[04minput.xml\033[00m \033[04mimage\033[00m \033[04moutput.xml\033[00m"
+    "\t\033[01m--to-base64-no-crop\033[00m \033[04minput.xml\033[00m \033[04mimage\033[00m \033[04moutput.xmlc\033[00m"
     "\t\tSame as --to-base64 but only the full picture will be converted, regions are not cropped\n"
 
     "\t\033[01m--from-base64\033[00m \033[04minput.xml\033[00m \033[04moutput_dir\033[00m"
@@ -50,7 +51,8 @@ int main(int argc, char **argv)
     "PDF : fop >= 0.95\n"
     "HTML : xsltproc\n"
     "SVG : trunk version of fop\n"
-    "OpenDocument : ooconvert (included)";
+    "OpenDocument : ooconvert (included) and OpenOffice >= 3.xx";
+
   if (argc > 4)
     {
       std::string html = "--html";

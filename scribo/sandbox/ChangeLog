@@ -1,5 +1,13 @@
 2010-08-06  Arthur Crepin-Leblond  <crepin@lrde.epita.fr>
 
+	Open Document bug warning.
+
+	* arthur/xml_transform/README
+	* arthur/xml_transform/main.cc
+	* arthur/xml_transform/TODO: New.
+
+2010-08-06  Arthur Crepin-Leblond  <crepin@lrde.epita.fr>
+
 	Fix man error.
 
 	* arthur/xml_transform/README
