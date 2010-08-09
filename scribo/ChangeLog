@@ -1,5 +1,13 @@
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new rotation tool.
+
+	* src/preprocessing/Makefile.am: Add a new target.
+
+	* src/preprocessing/rotate.cc: New.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Remove deprecated references to object_image.
 
 	* core/object_image.hh: Remove.

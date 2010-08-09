@@ -41,6 +41,15 @@ if HAVE_MAGICKXX
 			  $(MAGICKXX_LDFLAGS) \
 			  -lpthread
 
+    bin_PROGRAMS += rotate
+    rotate_SOURCES = rotate.cc
+    rotate_CPPFLAGS = $(AM_CPPFLAGS) \
+	              $(MAGICKXX_CPPFLAGS)
+
+    rotate_LDFLAGS = $(AM_LDFLAGS) \
+		     $(MAGICKXX_LDFLAGS) \
+		     -lpthread
+
     bin_PROGRAMS += rotate_90
     rotate_90_SOURCES = rotate_90.cc
     rotate_90_CPPFLAGS = $(AM_CPPFLAGS) \
