@@ -1,5 +1,4 @@
-scribo/demo/src/mainwindow.hh
 scribo/primitive/link/compute_several.hh
 scribo/primitive/link/internal/find_several_links.hh
 scribo/primitive/link/with_several_right_links_overlap.hh
-scribo/text/recognition.hh
+scribo/primitive/link/with_several_right_closest_links.hh

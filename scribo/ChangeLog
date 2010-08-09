@@ -1,5 +1,9 @@
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/unit_test/disabled_tests: Update list of disabled tests.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a new rotation tool.
 
 	* src/preprocessing/Makefile.am: Add a new target.
