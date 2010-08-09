@@ -39,7 +39,6 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
 # include <scribo/filter/object_links_bbox_ratio.hh>
 
 namespace scribo

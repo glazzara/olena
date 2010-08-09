@@ -35,7 +35,6 @@
 
 #include <scribo/debug/usage.hh>
 
-#include <scribo/core/object_image.hh>
 #include <scribo/primitive/extract/lines_h_discontinued.hh>
 #include <scribo/primitive/extract/lines_v_discontinued.hh>
 

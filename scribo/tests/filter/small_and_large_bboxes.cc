@@ -32,9 +32,6 @@
 #include <mln/value/label_16.hh>
 #include <mln/io/pbm/load.hh>
 #include <mln/literal/colors.hh>
-
-#include <scribo/core/object_image.hh>
-
 #include <scribo/primitive/extract/components.hh>
 #include <scribo/primitive/group/apply.hh>
 #include <scribo/primitive/link/with_single_left_link.hh>

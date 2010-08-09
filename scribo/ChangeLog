@@ -1,5 +1,27 @@
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Remove deprecated references to object_image.
+
+	* core/object_image.hh: Remove.
+
+	* filter/object_groups_size_ratio.hh,
+	* filter/object_links_bbox_w_ratio.hh,
+	* filter/object_links_left_aligned.hh,
+	* filter/object_links_right_aligned.hh,
+	* primitive/extract/lines_h_thick_and_single.hh,
+	* primitive/extract/lines_v_thick_and_single.hh,
+	* primitive/link/internal/find_several_links.hh,
+	* primitive/link/internal/link_several_dmax_base.hh,
+	* primitive/link/with_single_up_link.hh,
+	* src/debug/show_links_left_right_links_validation.cc,
+	* src/primitive/find/find_discontinued_lines.cc,
+	* src/primitive/find/find_pattern_lines.cc,
+	* tests/filter/small_and_large_bboxes.cc,
+	* src/primitive/group/group_from_double_link_filter_non_aligned.cc:
+	Remove include of object_image.hh.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Cleanup Makefiles.
 
 	* src/Makefile.am: Disable tests and remove deprecated ones.

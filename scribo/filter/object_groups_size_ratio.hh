@@ -35,7 +35,6 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_groups.hh>
-# include <scribo/core/object_image.hh>
 
 namespace scribo
 {

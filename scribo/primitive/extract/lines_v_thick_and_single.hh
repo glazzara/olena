@@ -38,7 +38,6 @@
 
 # include <mln/morpho/opening/structural.hh>
 
-# include <scribo/core/object_image.hh>
 # include <scribo/core/macros.hh>
 
 # include <scribo/primitive/extract/lines_v_thick.hh>

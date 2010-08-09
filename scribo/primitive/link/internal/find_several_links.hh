@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,7 +43,6 @@
 
 # include <scribo/core/concept/link_functor.hh>
 # include <scribo/core/tag/anchor.hh>
-# include <scribo/core/object_image.hh>
 # include <scribo/core/object_links.hh>
 
 

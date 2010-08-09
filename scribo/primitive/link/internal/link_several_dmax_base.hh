@@ -43,7 +43,6 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/tag/anchor.hh>
-# include <scribo/core/object_image.hh>
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>

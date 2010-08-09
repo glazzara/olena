@@ -36,7 +36,6 @@
 #include <mln/value/label_16.hh>
 
 #include <scribo/core/object_links.hh>
-#include <scribo/core/object_image.hh>
 
 #include <scribo/primitive/extract/components.hh>
 #include <scribo/primitive/group/apply.hh>
