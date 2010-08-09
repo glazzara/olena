@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,11 +29,11 @@
 
 /// \file
 ///
-///
+/// \brief Invalidate components with a width/height ratio too low.
 
 # include <mln/core/concept/function.hh>
-# include <scribo/core/object_image.hh>
 
+# include <scribo/core/component_set.hh>
 
 
 namespace scribo
@@ -42,10 +43,18 @@ namespace scribo
   {
     using namespace mln;
 
+    /// \brief Invalidate components with a height/width ratio too low.
+    ///
+    /// Compute the ratio height/width from the component bounding
+    /// boxes and compare it to \p size_ratio.
+    ///
+    /// If the height/width ratio is lower than min_size_ratio then
+    /// the component is invalidated.
+    //
     template <typename L>
-    object_image(L)
-    objects_size_ratio(const object_image(L)& objects,
-		       float size_ratio);
+    component_set<L>
+    objects_size_ratio(const component_set<L>& comps,
+		       float min_size_ratio);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -56,16 +65,15 @@ namespace scribo
 
 
       /// Filter Functor.
-      /// Return false for all objects which have a bad ratio.
+      /// Return false for all components having  a too low size ratio.
+      //
       template <typename L>
-      struct objects_size_ratio_filter
-	: Function_v2b< objects_size_ratio_filter<L> >
+      struct components_size_ratio_filter
+	: Function_v2b< components_size_ratio_filter<L> >
       {
-	typedef accu::shape::bbox<mln_psite(L)> box_accu_t;
-
-	objects_size_ratio_filter(const object_image(L)& objects,
-				  float ratio)
-	  : objects_(objects), ratio_(ratio)
+	components_size_ratio_filter(const component_set<L>& comps,
+				  float min_size_ratio)
+	  : comps_(comps), min_size_ratio_(min_size_ratio)
 	{
 	}
 
@@ -73,14 +81,14 @@ namespace scribo
 	{
 	  if (l == literal::zero)
 	    return true;
-	  return (objects_.bbox(l).nrows() / static_cast<float>(objects_.bbox(l).ncols())) < ratio_;
+	  return (comps_(l).bbox().height() / static_cast<float>(comps_(l).bbox().width())) >= min_size_ratio_;
 	}
 
-	/// Component bounding boxes.
-	object_image(L) objects_;
+	/// Components data.
+	component_set<L> comps_;
 
-	/// The maximum size ratio.
-	float ratio_;
+	/// The minimum size ratio.
+	float min_size_ratio_;
       };
 
 
@@ -89,21 +97,18 @@ namespace scribo
 
 
     template <typename L>
-    object_image(L)
-    objects_size_ratio(const object_image(L)& objects,
-		       float size_ratio)
+    component_set<L>
+    objects_size_ratio(const component_set<L>& comps,
+		       float min_size_ratio)
     {
 
       trace::entering("scribo::primitive::objects_size_ratio");
 
-      mln_precondition(objects.is_valid());
+      typedef internal::components_size_ratio_filter<L> func_t;
+      func_t has_valid_size_ratio(comps, min_size_ratio);
 
-      typedef internal::objects_size_ratio_filter<L> func_t;
-      func_t has_bad_ratio(objects, size_ratio);
-
-      object_image(L) output;
-      output.init_from_(objects);
-      output.relabel(has_bad_ratio);
+      component_set<L> output = comps.duplicate();
+      output.update_tags(has_valid_size_ratio, component::Ignored);
 
       trace::exiting("scribo::primitive::objects_size_ratio");
       return output;
@@ -117,4 +122,4 @@ namespace scribo
 } // end of namespace scribo
 
 
-#endif // ! SCRIBO_FILTER_OBJECTs_SIZE_RATIO_HH
+#endif // ! SCRIBO_FILTER_OBJECTS_SIZE_RATIO_HH

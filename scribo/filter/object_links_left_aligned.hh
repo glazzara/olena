@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -52,7 +53,6 @@ namespace scribo
     /*! \brief Invalidate links between two objects if their left are not
                aligned.
 
-	\param[in] objects   An object image.
 	\param[in] links     Object links information.
         \param[in] max_alpha Maximum angle value (degrees).
 
@@ -82,8 +82,7 @@ namespace scribo
     */
     template <typename L>
     object_links<L>
-    object_links_left_aligned(const object_image(L)& objects,
-			      const object_links<L>& links,
+    object_links_left_aligned(const object_links<L>& links,
 			      float max_alpha);
 
 
@@ -92,17 +91,15 @@ namespace scribo
 
     template <typename L>
     object_links<L>
-    object_links_left_aligned(const object_image(L)& objects,
-			      const object_links<L>& links,
+    object_links_left_aligned(const object_links<L>& links,
 			      float max_alpha)
     {
       trace::entering("scribo::filter::object_links_left_aligned");
 
-      mln_precondition(objects.is_valid());
       mln_precondition(links.is_valid());
 
       object_links<L>
-	output = object_links_non_aligned_simple(objects, links,
+	output = object_links_non_aligned_simple(links,
 						 anchor::Left,
 						 max_alpha);
 

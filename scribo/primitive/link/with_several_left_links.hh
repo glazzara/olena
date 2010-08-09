@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,9 +36,10 @@
 
 # include <mln/util/array.hh>
 
+# include <scribo/primitive/link/with_single_left_link.hh>
 # include <scribo/core/object_links.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/core/macros.hh>
-# include <scribo/util/text.hh>
 
 
 namespace scribo
@@ -53,11 +55,12 @@ namespace scribo
       /// if possible.
       /// Iterate to the right but link boxes to the left.
       ///
-      /// \return an mln::util::array. Map a bounding box to its left neighbor.
+      /// \return object links data.
+      //
       template <typename L>
       inline
       object_links<L>
-      with_several_left_links(const object_image(L)& objects,
+      with_several_left_links(const component_set<L>& objects,
 			      unsigned neighb_max_distance);
 
 
@@ -65,7 +68,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_several_left_links(const object_image(L)& objects);
+      with_several_left_links(const component_set<L>& comps);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -73,29 +76,11 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_several_left_links(const object_image(L)& objects,
+      with_several_left_links(const component_set<L>& comps,
 			      unsigned neighb_max_distance)
       {
 	trace::entering("scribo::primitive::link::with_several_left_links");
 
-	mln_precondition(objects.is_valid());
-
-	object_links<L>
-	  link_1(objects, objects.nlabels().next()),
-	  link_2(objects, objects.nlabels().next()),
-	  link_3(objects, objects.nlabels().next()),
-	  final_link(objects, objects.nlabels().next());
-
-	primitive::internal::init_link_array(link_1);
-	primitive::internal::init_link_array(link_2);
-	primitive::internal::init_link_array(link_3);
-
-	mln::util::array<mln_result(accu::center<mln_psite(L)>)>
-	    mass_centers = labeling::compute(accu::meta::center(),
-					     objects, objects.nlabels());
-
-	for_all_ncomponents(i, objects.nlabels())
-	{
 	  //	  -------
 	  //  <------X  |
 	  //	  |     |
@@ -105,40 +90,32 @@ namespace scribo
 	  //	  |	|
 	  //  <------X  |
 	  //	  -------
-	  unsigned midcol = (objects.bbox(i).pmax().col()
-				- objects.bbox(i).pmin().col()) / 2;
-	  int dmax = midcol + neighb_max_distance;
 
-	  mln_site(L) c = objects.bbox(i).center();
+	// FIXME: make it faster.
+	internal::single_left_functor<L>
+	  functor(comps, neighb_max_distance);
+	object_links<L> link_center = compute(functor, anchor::Center);
+	object_links<L> link_top    = compute(functor, anchor::Top);
+	object_links<L> link_bot    = compute(functor, anchor::Bottom);
 
-	  /// Left link from the top anchor.
-	  mln_site(L) a1 = c;
-	  a1.row() = objects.bbox(i).pmin().row() + (c.row() - objects.bbox(i).pmin().row()) / 4;
-	  primitive::internal::find_left_link(objects, link_1, i, dmax, a1);
 
-	  /// Left link from the central site
-	  primitive::internal::find_left_link(objects, link_2, i,
-					      dmax, mass_centers[i]);
+	object_links<L> final_link(comps);
 
-	  /// Left link from the bottom anchor.
-	  mln_site(L) a2 = c;
-	  a2.row() = objects.bbox(i).pmax().row() - (c.row() - objects.bbox(i).pmin().row()) / 4;
-	  primitive::internal::find_left_link(objects, link_3, i, dmax, a2);
-	}
-
-	for_all_ncomponents(i, objects.nlabels())
+	for_all_comps(i, comps)
 	{
-	  if (link_2[i] != i)
-	    final_link[i] = link_2[i];
-	  else if (link_1[i] == link_3[i])
-	    final_link[i] = link_1[i];
-	  else if (link_1[i] != i && link_3[i] == i)
-	    final_link[i] = link_1[i];
-	  else if (link_3[i] != i && link_1[i] == i)
-	    final_link[i] = link_3[i];
+	  if (link_center(i) != i)
+	    final_link(i) = link_center(i);
+	  else if (link_top(i) == link_bot(i))
+	    final_link(i) = link_top(i);
+	  else if (link_top(i) != i && link_bot(i) == i)
+	    final_link(i) = link_top(i);
+	  else if (link_bot(i) != i && link_top(i) == i)
+	    final_link(i) = link_bot(i);
 	  else
-	    final_link[i] = i;
+	    final_link(i) = i;
 	}
+
+
 
 	trace::exiting("scribo::primitive::link::with_several_left_links");
 	return final_link;
@@ -148,9 +125,9 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_several_left_links(const object_image(L)& objects)
+      with_several_left_links(const component_set<L>& comps)
       {
-	return with_several_left_links(objects);
+	return with_several_left_links(comps);
       }
 
 # endif // ! MLN_INCLUDE_ONLY

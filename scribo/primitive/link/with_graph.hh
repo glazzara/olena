@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,6 +43,7 @@
 # include <mln/util/graph.hh>
 
 # include <scribo/core/macros.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/primitive/internal/find_graph_link.hh>
 
 
@@ -55,12 +57,14 @@ namespace scribo
     namespace link
     {
 
+      using namespace mln;
+
       /*!
 	  Construct the links between each line of text and store
 	  it as a graph.
 	  Look up for neighbors on the right of each box.
 
-	  \param[in] objects             An object image.
+	  \param[in] comps               A component set.
 	  \param[in] neighb_max_distance The maximum distance allowed to
 	          			 look for a neighbor.
 
@@ -68,8 +72,8 @@ namespace scribo
       */
       template <typename L>
       mln::util::graph
-      with_graph(const object_image(L)& objects,
-		       unsigned neighb_max_distance);
+      with_graph(const component_set<L>& comps,
+		 unsigned neighb_max_distance);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -77,32 +81,26 @@ namespace scribo
       template <typename L>
       inline
       mln::util::graph
-      with_graph(const object_image(L)& objects,
+      with_graph(const component_set<L>& comps,
 		 unsigned neighb_max_distance)
       {
 	trace::entering("scribo::primitive::link::with_graph");
 
-	mln_precondition(objects.is_valid());
+	mln::util::graph g(comps.nelements().next());
 
-	mln::util::graph g(objects.nlabels().next());
-
-	for_all_ncomponents(i, objects.nlabels())
+	for_all_comps(i, comps)
 	{
-	  unsigned midcol = (objects.bbox(i).pmax().col()
-			     - objects.bbox(i).pmin().col()) / 2;
+	  unsigned midcol = (comps(i).bbox().pmax().col()
+			     - comps(i).bbox().pmin().col()) / 2;
 	  int dmax = midcol + neighb_max_distance;
-
-	  mln::util::array<mln_result(accu::center<mln_psite(L)>)>
-	    mass_center = labeling::compute(accu::meta::center(),
-					    objects,
-					    objects.nlabels());
 
 	  //  -------
 	  //  |	    |
 	  //  |	 X------->
 	  //  |	    |
 	  //  -------
-	  internal::find_graph_link(g, objects, i, dmax, mass_center[i]);
+	  internal::find_graph_link(g, comps, i, dmax,
+				    comps(i).mass_center());
 	}
 
 	trace::exiting("scribo::primitive::link::with_graph");

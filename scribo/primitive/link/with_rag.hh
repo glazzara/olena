@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,7 +30,7 @@
 
 /// \file
 ///
-/// Link objects with a region adjacency graph.
+/// Link components with a region adjacency graph.
 
 # include <mln/core/concept/neighborhood.hh>
 
@@ -42,7 +43,7 @@
 
 
 # include <scribo/core/macros.hh>
-# include <scribo/core/object_image.hh>
+# include <scribo/core/component_set.hh>
 
 
 namespace scribo
@@ -57,10 +58,12 @@ namespace scribo
       using namespace mln;
 
 
+      /// \brief Link components with a region adjacency graph.
+      //
       template <typename L, typename N>
       util::couple<mln::util::graph, mln_concrete(L)>
-      with_rag(const object_image(L)& objects,
-		     const Neighborhood<N>& nbh);
+      with_rag(const component_set<L>& comps,
+	       const Neighborhood<N>& nbh);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -68,20 +71,21 @@ namespace scribo
 
       template <typename L, typename N>
       util::couple<mln::util::graph, mln_concrete(L)>
-      with_rag(const object_image(L)& objects,
-		     const Neighborhood<N>& nbh)
+      with_rag(const component_set<L>& comps,
+	       const Neighborhood<N>& nbh)
       {
 	trace::entering("scribo::primitive::link::with_rag");
 
-	mln_precondition(objects.is_valid());
+	mln_precondition(comps.is_valid());
 
 	mln_concrete(L)
-	  iz = transform::influence_zone_geodesic(objects, nbh);
+	  iz = transform::influence_zone_geodesic(comps.labeled_image(),
+						  nbh);
 
 	mln::util::graph
 	  g = mln::make::influence_zone_adjacency_graph(iz,
 							nbh,
-							objects.nlabels());
+							comps.nelements());
 
 	trace::exiting("scribo::primitive::link::with_rag");
 	return make::couple(g, iz);

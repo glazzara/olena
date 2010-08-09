@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,19 +29,22 @@
 
 /// \file
 ///
-/// Find the right neighbor of a line of text if exists.
+/// Find the right neighbor of a component if exists.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/graph.hh>
+
+//FIXME: not generic.
+# include <mln/core/alias/dpoint2d.hh>
 
 # include <mln/math/abs.hh>
 
 # include <mln/util/array.hh>
 
-# include <scribo/primitive/internal/update_graph_link.hh>
 
-//FIXME: not generic.
-# include <mln/core/alias/dpoint2d.hh>
+# include <scribo/core/component_set.hh>
+
+# include <scribo/primitive/internal/update_graph_link.hh>
 
 
 namespace scribo
@@ -52,10 +56,10 @@ namespace scribo
     namespace internal
     {
 
-      /// Find a neighbor of a text line in a specific range if it exists.
+      /// Find a neighbor of a component in a specific range if it exists.
       ///
       /// \param g_ The link graph.
-      /// \param text The lines of text.
+      /// \param comps A component set.
       /// \param current_comp The current line being processed.
       /// \param dmax The maximum lookup distance.
       /// \param c Start point of the neighbor lookup.
@@ -63,7 +67,7 @@ namespace scribo
       template <typename G, typename L>
       void
       find_graph_link(Graph<G>& g_,
-		      const object_image(L)& text,
+		      const component_set<L>& comps,
 		      unsigned current_comp,
 		      int dmax,
 		      const mln_site(L)& c);
@@ -73,7 +77,7 @@ namespace scribo
       template <typename G, typename L>
       void
       find_graph_link(Graph<G>& g_,
-		      const object_image(L)& text,
+		      const component_set<L>& comps,
 		      unsigned current_comp,
 		      int dmax,
 		      const mln_site(L)& c)
@@ -82,18 +86,19 @@ namespace scribo
 
 	G& g = exact(g_);
 	mln_precondition(g.is_valid());
-	mln_precondition(text.is_valid());
 
 	///FIXME: the following code is not generic...
 	/// First site on the right of the central site
 	mln_site(L) p = c + right;
 
-	while (text.domain().has(p) && (text(p) == literal::zero
-					|| text(p) == current_comp)
+	const L& lbl = comps.labeled_image();
+
+	while (comps.domain().has(p) && (lbl(p) == literal::zero
+					|| lbl(p) == current_comp)
 	       && math::abs(p.col() - c.col()) < dmax)
 	  ++p.col();
 
-	update_graph_link(text, g, p, c, current_comp, dmax);
+	update_graph_link(comps, g, p, c, current_comp, dmax);
 
 	trace::exiting("scribo::primitive::internal::find_graph_link");
       }
@@ -102,7 +107,7 @@ namespace scribo
 
     } // end of namespace scribo::primitive::internal
 
-  } // end of namespace scribo::text
+  } // end of namespace scribo::primitive
 
 } // end of namespace scribo
 

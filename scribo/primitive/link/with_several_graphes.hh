@@ -39,7 +39,9 @@
 
 # include <mln/util/array.hh>
 # include <mln/util/graph.hh>
+
 # include <scribo/core/macros.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/primitive/internal/find_graph_link.hh>
 
 namespace scribo
@@ -51,11 +53,13 @@ namespace scribo
     namespace link
     {
 
+      using namespace mln;
+
       /// Link character bounding boxes with several graphes.
       /// Look up for neighbors on the left of each box.
       template <typename L>
       mln::util::graph
-      with_several_graphes(const object_image(L)& objects,
+      with_several_graphes(const component_set<L>& comps,
 			   unsigned neighb_max_distance);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -63,25 +67,20 @@ namespace scribo
       template <typename L>
       inline
       mln::util::graph
-      with_several_graphes(const object_image(L)& objects,
+      with_several_graphes(const component_set<L>& comps,
 			   unsigned neighb_max_distance)
       {
 	trace::entering("scribo::primitive::link::with_several_graphes");
 
-	mln::util::graph g(objects.nlabels().next());
+	mln::util::graph g(comps.nelements().next());
 
-	for_all_ncomponents(i, objects.nlabels())
+	for_all_comps(i, comps)
 	{
-	  unsigned midcol = (objects.bbox(i).pmax().col()
-				- objects.bbox(i).pmin().col()) / 2;
+	  unsigned midcol = (comps(i).bbox().pmax().col()
+			     - comps(i).bbox().pmin().col()) / 2;
 	  int dmax = midcol + neighb_max_distance;
 
-	  mln::util::array<mln_result(accu::center<mln_psite(L)>)>
-	    mass_center = labeling::compute(accu::meta::center(),
-					    objects,
-					    objects.nlabels());
-
-	  mln_site(L) c = mass_center(i);
+	  mln_site(L) c = comps(i).mass_center();
 
 	  //  -------
 	  //  |	 X------->
@@ -98,16 +97,18 @@ namespace scribo
 
 	  /// Left link from the top anchor.
 	  mln_site(L) a1 = c;
-	  a1.row() = objects.bbox(i).pmin().row() + (c.row() - objects.bbox(i).pmin().row()) / 4;
-	  internal::find_graph_link(g, objects, i, dmax, a1);
+	  a1.row() = comps(i).bbox().pmin().row()
+	    + (c.row() - comps(i).bbox().pmin().row()) / 4;
+	  internal::find_graph_link(g, comps, i, dmax, a1);
 
 	  /// First site on the right of the central site
-	  internal::find_graph_link(g, objects, i, dmax, c);
+	  internal::find_graph_link(g, comps, i, dmax, c);
 
 	  /// Left link from the bottom anchor.
 	  mln_site(L) a2 = c;
-	  a2.row() = objects.bbox(i).pmax().row() - (c.row() - objects.bbox(i).pmin().row()) / 4;
-	  internal::find_graph_link(g, objects, i, dmax, a2);
+	  a2.row() = comps(i).bbox().pmax().row()
+	    - (c.row() - comps(i).bbox().pmin().row()) / 4;
+	  internal::find_graph_link(g, comps, i, dmax, a2);
 
 	}
 

@@ -37,9 +37,10 @@
 
 # include <mln/util/array.hh>
 
+# include <scribo/primitive/link/with_single_right_link.hh>
 # include <scribo/core/object_links.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/core/macros.hh>
-# include <scribo/util/text.hh>
 
 
 namespace scribo
@@ -57,88 +58,64 @@ namespace scribo
       /// if possible.
       /// Iterate to the right but link boxes to the right.
       ///
-      /// \return an mln::util::array. Map a bounding box to its right neighbor.
+      /// \return Object links.
+      //
       template <typename L>
       inline
       object_links<L>
-      with_several_right_links(const object_image(L)& objects,
+      with_several_right_links(const component_set<L>& comps,
 			       unsigned neighb_max_distance);
 
       /// \overload
       template <typename L>
       inline
       object_links<L>
-      with_several_right_links(const object_image(L)& objects);
+      with_several_right_links(const component_set<L>& comps);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+
       template <typename L>
       inline
       object_links<L>
-      with_several_right_links(const object_image(L)& objects,
+      with_several_right_links(const component_set<L>& comps,
 			       unsigned neighb_max_distance)
       {
 	trace::entering("scribo::primitive::link::with_several_right_links");
 
-	mln_precondition(objects.is_valid());
+	//  -------
+	//  |  X------->
+	//  |	  |
+	//  |	  |
+	//  |  X------->
+	//  |	  |
+	//  |	  |
+	//  |  X------->
+	//  -------
 
-	object_links<L>
-	  link_1(objects, objects.nlabels().next()),
-	  link_2(objects, objects.nlabels().next()),
-	  link_3(objects, objects.nlabels().next()),
-	  final_link(objects, objects.nlabels().next());
-
-	internal::init_link_array(link_1);
-	internal::init_link_array(link_2);
-	internal::init_link_array(link_3);
-
-	mln::util::array<mln_result(accu::center<mln_psite(L)>)>
-	    mass_centers = labeling::compute(accu::meta::center(),
-					     objects, objects.nlabels());
+	// FIXME: make it faster.
+	internal::single_right_functor<L>
+	  functor(comps, neighb_max_distance);
+	object_links<L> link_center = compute(functor, anchor::Center);
+	object_links<L> link_top    = compute(functor, anchor::Top);
+	object_links<L> link_bot    = compute(functor, anchor::Bottom);
 
 
-	for_all_ncomponents(i, objects.nlabels())
+	object_links<L> final_link(comps);
+
+	for_all_comps(i, comps)
 	{
-	  //  -------
-	  //  |	 X------->
-	  //  |	    |
-	  //  |	    |
-	  //  |	 X------->
-	  //  |	    |
-	  //  |	    |
-	  //  |	 X------->
-	  //  -------
-	  float midcol = (objects.bbox(i).pmax().col()
-			  - objects.bbox(i).pmin().col()) / 2;
-	  float dmax = midcol + neighb_max_distance;
-
-	  mln_site(L) c = objects.bbox(i).center();
-
-	  /// Right link from the top anchor.
-	  mln_site(L) a1 = c;
-	  a1.row() = objects.bbox(i).pmin().row() + (c.row() - objects.bbox(i).pmin().row()) / 4;
-	  internal::find_right_link(objects, link_1, i, dmax, a1);
-
-	  /// Right link from the central site
-	  internal::find_right_link(objects, link_2, i, dmax, mass_centers[i]);
-
-	  /// Right link from the bottom anchor.
-	  mln_site(L) a2 = c;
-	  a2.row() = objects.bbox(i).pmax().row() - (c.row() - objects.bbox(i).pmin().row()) / 4;
-	  internal::find_right_link(objects, link_3, i, dmax, a2);
-
-
-	  if (link_2[i] != i)
-	    final_link[i] = link_2[i];
-	  else if (link_1[i] == link_3[i])
-	    final_link[i] = link_1[i];
-	  else if (link_1[i] != i && link_3[i] == i)
-	    final_link[i] = link_1[i];
-	  else if (link_3[i] != i && link_1[i] == i)
-	    final_link[i] = link_3[i];
+	  if (link_center(i) != i)
+	    final_link(i) = link_center(i);
+	  else if (link_top(i) == link_bot(i))
+	    final_link(i) = link_top(i);
+	  else if (link_top(i) != i && link_bot(i) == i)
+	    final_link(i) = link_top(i);
+	  else if (link_bot(i) != i && link_top(i) == i)
+	    final_link(i) = link_bot(i);
 	  else
-	    final_link[i] = i;
+	    final_link(i) = i;
 	}
 
 	trace::exiting("scribo::primitive::link::with_several_right_links");
@@ -149,9 +126,9 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_several_right_links(const object_image(L)& objects)
+      with_several_right_links(const component_set<L>& comps)
       {
-	return with_several_right_links(objects, mln_max(unsigned));
+	return with_several_right_links(comps, mln_max(unsigned));
       }
 
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,7 +40,6 @@
 
 # include <scribo/core/object_image.hh>
 # include <scribo/core/macros.hh>
-# include <scribo/primitive/extract/objects.hh>
 
 # include <scribo/primitive/extract/lines_v_thick.hh>
 # include <scribo/primitive/extract/lines_v_single.hh>
@@ -58,8 +58,9 @@ namespace scribo
 
       /// Extract vertical thick lines in a binary image.
       /*!
-       * Only non discontinued lines are correctly extracted with this routine.
-       * Only lines matching the given criterions are kept in the result.
+       * Only non discontinued lines are correctly extracted with this
+       * routine.  Only lines matching the given criterions are kept
+       * in the result.
        *
        * \param[in]     input_	  A binary image.
        * \param[in]     nbh_	  The neighborhood used for labeling image
@@ -73,7 +74,7 @@ namespace scribo
        * \return An image in which lines are labeled.
        */
       template <typename I, typename N, typename V>
-      object_image(mln_ch_value(I,V))
+      component_set<mln_ch_value(I,V)>
       lines_v_thick_and_single(const Image<I>& input_,
 			       const Neighborhood<N>& nbh_,
 			       V& nlines,
@@ -116,7 +117,7 @@ namespace scribo
 
       template <typename I, typename N, typename V>
       inline
-      object_image(mln_ch_value(I,V))
+      component_set<mln_ch_value(I,V)>
       lines_v_thick_and_single(const Image<I>& input,
 			       const Neighborhood<N>& nbh,
 			       V& nlines,
@@ -129,7 +130,7 @@ namespace scribo
 						 nlines,
 						 min_line_length, h_w_ratio);
 
-	object_image(mln_ch_value(I,V))
+	component_set<mln_ch_value(I,V)>
 	  output = lines_v_thick(input, nbh, nlines, min_line_length);
 
 	output = lines_v_single(output, min_line_length, h_w_ratio);

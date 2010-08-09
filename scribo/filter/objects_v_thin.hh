@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,15 +29,14 @@
 
 /// \file
 ///
-/// Remove too thin objects.
+/// Remove too thin components.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 
-# include <mln/util/array.hh>
+# include <scribo/core/component_set.hh>
+# include <scribo/filter/internal/compute.hh>
 
-# include <scribo/core/object_image.hh>
-# include <scribo/primitive/extract/objects.hh>
 
 namespace scribo
 {
@@ -46,14 +46,14 @@ namespace scribo
 
     using namespace mln;
 
-    /// Remove objects thinner or equal to \p min_thickness.
+    /// Remove components thinner or equal to \p min_thinness.
     ///
     /// \param[in] input_ a binary image.
     /// \param[in] nbh_ a neighborhood used in labeling algorithms.
     /// \param[in] label_type the label type used for labeling.
-    /// \param[in] min_thickness the minimum thickness value.
+    /// \param[in] min_thinness the minimum thinness value.
     ///
-    /// \result A binary image without v_thin objects.
+    /// \result A binary image without v_thin components.
     //
     template <typename I, typename N, typename V>
     inline
@@ -61,20 +61,20 @@ namespace scribo
     objects_v_thin(const Image<I>& input_,
 		   const Neighborhood<N>& nbh_,
 		   const V& label_type,
-		   unsigned min_thickness);
+		   unsigned min_thinness);
 
-    /// Remove lines of text thinner or equal to \p min_thickness.
+    /// Remove lines of text thinner or equal to \p min_thinness.
     ///
-    /// \param[in] objects An object image.
-    /// \param[in] min_thickness the minimum thickness value.
+    /// \param[in] comps A component set.
+    /// \param[in] min_thinness the minimum thinness value.
     ///
-    /// \result An object image without too thin vertical objects.
+    /// \result An object image without too thin vertical components.
     //
     template <typename L>
     inline
-    object_image(L)
-    objects_v_thin(const object_image(L)& text,
-		   unsigned min_thickness);
+    component_set<L>
+    components_v_thin(const component_set<L>& text,
+		      unsigned min_thinness);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -93,19 +93,36 @@ namespace scribo
 
 	/// Constructor
 	///
-	/// \param[in] objects object bounding boxes.
-	/// \param[in] min_thickness the minimum of vertical thickness
+	/// \param[in] comps A component set.
+	/// \param[in] min_thinness the minimum of vertical thinness
 	/// allowed.
 	//
-	objects_v_thin_filter(const object_image(L)& objects,
-			    unsigned min_thickness)
-	  : objects_(objects), min_thickness_(min_thickness)
+	objects_v_thin_filter(const component_set<L>& comps,
+			      unsigned min_thinness)
+	  : comps_(comps), min_thinness_(min_thinness)
 	{
 	}
 
 
-	/// Return false if the objects is thinner than
-	/// \p min_thickness_.
+	/// Constructor
+	///
+	/// \param[in] min_thinness the maximum thinness allowed.
+	//
+	objects_v_thin_filter(unsigned min_thinness)
+	  : min_thinness_(min_thinness)
+	{
+	}
+
+	/// Set the underlying component set.
+	//
+	void update_objects(const component_set<L>& comps)
+	{
+	  comps_ = comps;
+	}
+
+
+	/// Return false if the components is thinner than
+	/// \p min_thinness_.
 	///
 	/// \param[in] l An image value.
 	//
@@ -113,14 +130,14 @@ namespace scribo
 	{
 	  if (l == literal::zero)
 	    return true;
-	  return objects_.bbox(l).nrows() > min_thickness_;
+	  return comps_.bbox(l).nrows() > min_thinness_;
 	}
 
 	/// Component bounding boxes.
-	object_image(L) objects_;
+	component_set<L> comps_;
 
-	/// The minimum vertical thickness.
-	unsigned min_thickness_;
+	/// The minimum vertical thinness.
+	unsigned min_thinness_;
       };
 
 
@@ -133,7 +150,7 @@ namespace scribo
     objects_v_thin(const Image<I>& input_,
 		   const Neighborhood<N>& nbh_,
 		   const V& label_type,
-		   unsigned min_thickness)
+		   unsigned min_thinness)
     {
       trace::entering("scribo::filter::objects_v_thin");
 
@@ -144,18 +161,9 @@ namespace scribo
       mln_precondition(input.is_valid());
       mln_precondition(nbh.is_valid());
 
-      V nlabels;
-      typedef mln_ch_value(I,V) lbl_t;
-      object_image(lbl_t) objects
-	  = primitive::extract::objects(input, nbh, nlabels);
-
-      typedef internal::objects_v_thin_filter<lbl_t> func_t;
-      func_t fv2b(objects, min_thickness);
-      objects.relabel(fv2b);
-
-      mln_concrete(I) output = duplicate(input);
-      data::fill((output | (pw::value(objects) == pw::cst(literal::zero))).rw(),
-		 false);
+      internal::objects_v_thin_filter<V> fv2b(min_thinness);
+      mln_concrete(I)
+	output = internal::compute(input, nbh, label_type, fv2b);
 
       trace::exiting("scribo::filter::objects_v_thin");
       return output;
@@ -164,20 +172,15 @@ namespace scribo
 
     template <typename L>
     inline
-    object_image(L)
-    objects_v_thin(const object_image(L)& objects,
-		   unsigned min_thickness)
+    component_set<L>
+    objects_v_thin(const component_set<L>& comps,
+		   unsigned min_thinness)
     {
       trace::entering("scribo::filter::objects_v_thin");
 
-      mln_precondition(objects.is_valid());
-
-      typedef internal::objects_v_thin_filter<L> func_t;
-      func_t is_not_too_v_thin(objects, min_thickness);
-
-      object_image(L) output;
-      output.init_from_(objects);
-      output.relabel(is_not_too_v_thin);
+      internal::objects_v_thin_filter<L>
+	is_not_too_v_thin(comps, min_thinness);
+      component_set<L> output = internal::compute(comps, is_not_too_v_thin);
 
       trace::exiting("scribo::filter::objects_v_thin");
       return output;

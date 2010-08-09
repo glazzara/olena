@@ -36,7 +36,6 @@
 
 # include <scribo/core/macros.hh>
 # include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
 
 # include <scribo/filter/object_links_non_aligned_simple.hh>
 
@@ -74,8 +73,7 @@ namespace scribo
     */
     template <typename L>
     object_links<L>
-    object_links_center_aligned(const object_image(L)& objects,
-				const object_links<L>& links,
+    object_links_center_aligned(const object_links<L>& links,
 				float max_alpha);
 
 
@@ -84,17 +82,15 @@ namespace scribo
 
     template <typename L>
     object_links<L>
-    object_links_center_aligned(const object_image(L)& objects,
-				const object_links<L>& links,
+    object_links_center_aligned(const object_links<L>& links,
 				float max_alpha)
     {
       trace::entering("scribo::filter::object_links_center_aligned");
 
-      mln_precondition(objects.is_valid());
       mln_precondition(links.is_valid());
 
       object_links<L>
-	output = object_links_non_aligned_simple(objects, links,
+	output = object_links_non_aligned_simple(links,
 						 anchor::Center, max_alpha);
 
       trace::exiting("scribo::filter::object_links_center_aligned");

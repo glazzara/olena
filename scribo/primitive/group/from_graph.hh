@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -64,14 +65,14 @@ namespace scribo
 
       /// Group objects according to a graph of links
       ///
-      /// \param[in] objects  An object image.
+      /// \param[in] comps    A component set.
       /// \param[in] g_	      The graph of object links.
       ///
       /// \return Object groups information.
       //
       template <typename L, typename G>
       object_groups<L>
-      from_graph(const object_image(L)& objects,
+      from_graph(const component_set<L>& comps,
 		 const Graph<G>& g_);
 
 
@@ -87,8 +88,8 @@ namespace scribo
 	struct map_vertex_to_representative_id_functor
 	{
 
-	  map_vertex_to_representative_id_functor(const object_image(L)& objects)
-	    : vertextorep(objects)
+	  map_vertex_to_representative_id_functor(const component_set<L>& comps)
+	    : vertextorep(comps)
 	  {
 	  }
 
@@ -148,7 +149,7 @@ namespace scribo
       template <typename L, typename G>
       inline
       object_groups<L>
-      from_graph(const object_image(L)& objects,
+      from_graph(const component_set<L>& comps,
 		 const Graph<G>& g_)
       {
 	trace::entering("scribo::primitive::group::from_graph");
@@ -157,10 +158,10 @@ namespace scribo
 
 	mln_assertion(g.is_valid());
 
-	internal::map_vertex_to_representative_id_functor<L> f(objects);
+	internal::map_vertex_to_representative_id_functor<L> f(comps);
 	canvas::browsing::depth_first_search(g, f);
 
-	object_groups<L> groups(objects);
+	object_groups<L> groups(comps);
 	groups.init_(f.vertextorep);
 
 	trace::exiting("scribo::primitive::group::from_graph");

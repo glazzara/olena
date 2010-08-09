@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,20 +34,21 @@
 /// Merge code with primitive::link::with_single_right_link.hh
 ///
 /// \todo Factor code with primitive::link::with_several_right_links
+///
+/// FIXME: rewrite the code with functors -> See with_several_right_links
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
+
+# include <mln/math/abs.hh>
 
 # include <mln/extension/fill.hh>
 
 # include <mln/util/array.hh>
 
-# include <scribo/core/object_links.hh>
-# include <scribo/core/object_image.hh>
+
 # include <scribo/core/macros.hh>
-# include <scribo/primitive/internal/init_link_array.hh>
-# include <scribo/primitive/internal/find_right_link.hh>
-# include <scribo/util/text.hh>
+# include <scribo/core/object_links.hh>
 
 
 namespace scribo
@@ -71,14 +73,14 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_several_right_closest_links(const object_image(L)& objects,
+      with_several_right_closest_links(const component_set<L>& comps,
 				       unsigned neighb_max_distance);
 
       /// \overload
       template <typename L>
       inline
       object_links<L>
-      with_several_right_closest_links(const object_image(L)& objects);
+      with_several_right_closest_links(const component_set<L>& comps);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -114,31 +116,21 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_several_right_closest_links(const object_image(L)& objects,
+      with_several_right_closest_links(const component_set<L>& comps,
 				       unsigned neighb_max_distance)
       {
 	trace::entering("scribo::primitive::link::with_several_right_closest_links");
 
-	mln_precondition(objects.is_valid());
-
-	extension::fill(objects, 0);
+	extension::fill(comps.labeled_image_(), 0);
 
 	object_links<L>
-	  link_1(objects, objects.nlabels().next()),
-	  link_2(objects, objects.nlabels().next()),
-	  link_3(objects, objects.nlabels().next()),
-	  final_link(objects, objects.nlabels().next());
+	  link_1(comps), link_2(comps), link_3(comps), final_link(comps);
 
-	primitive::internal::init_link_array(link_1);
-	primitive::internal::init_link_array(link_2);
-	primitive::internal::init_link_array(link_3);
+	link_1.init();
+	link_2.init();
+	link_3.init();
 
-	mln::util::array<mln_result(accu::center<mln_psite(L)>)>
-	    mass_centers = labeling::compute(accu::meta::center(),
-					     objects, objects.nlabels());
-
-
-	for_all_ncomponents(i, objects.nlabels())
+	for_all_comps(i, comps)
 	{
 	  //  -------
 	  //  |	 a1------->
@@ -150,31 +142,31 @@ namespace scribo
 	  //  |	 a2------->
 	  //  -------
 
-	  float midcol = (objects.bbox(i).pmax().col()
-			  - objects.bbox(i).pmin().col()) / 2;
+	  float midcol = (comps(i).bbox().pmax().col()
+			  - comps(i).bbox().pmin().col()) / 2;
 	  float dmax = midcol + neighb_max_distance;
 
-	  mln_site(L) c = objects.bbox(i).center();
+	  mln_site(L) c = comps(i).bbox().center();
 
 	  algebra::vec<3, mln::util::couple<bool, mln_site(L)> > res;
 
 	  // Right link from the top anchor.
 	  mln_site(L) a1 = c;
-	  a1.row() = objects.bbox(i).pmin().row()
-	    + (c.row() - objects.bbox(i).pmin().row()) / 4;
-	  res[0] = primitive::internal::find_right_link(objects, link_1,
+	  a1.row() = comps(i).bbox().pmin().row()
+	    + (c.row() - comps(i).bbox().pmin().row()) / 4;
+	  res[0] = primitive::internal::find_right_link(comps, link_1,
 							i, dmax, a1);
 
 	  // Right link from the central site
-	  res[1] = primitive::internal::find_right_link(objects, link_2,
+	  res[1] = primitive::internal::find_right_link(comps, link_2,
 							i, dmax,
-							mass_centers[i]);
+							comps(i).mass_center());
 
 	  // Right link from the bottom anchor.
 	  mln_site(L) a2 = c;
-	  a2.row() = objects.bbox(i).pmax().row()
-	    - (c.row() - objects.bbox(i).pmin().row()) / 4;
-	  res[2] = primitive::internal::find_right_link(objects, link_3,
+	  a2.row() = comps(i).bbox().pmax().row()
+	    - (c.row() - comps(i).bbox().pmin().row()) / 4;
+	  res[2] = primitive::internal::find_right_link(comps, link_3,
 							i, dmax, a2);
 
 	  // Try to find the closest object.
@@ -185,7 +177,7 @@ namespace scribo
 	  // If there exists a link and the site is not outside the
 	  // image domain.
  	  if (res[closest_idx].first())
- 	    final_link[i] = objects(res[closest_idx].second());
+ 	    final_link[i] = comps(res[closest_idx].second());
  	  else
 	    final_link[i] = i;
 	}
@@ -198,9 +190,9 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_several_right_closest_links(const object_image(L)& objects)
+      with_several_right_closest_links(const component_set<L>& comps)
       {
-	return with_several_right_closest_links(objects, mln_max(unsigned));
+	return with_several_right_closest_links(comps, mln_max(unsigned));
       }
 
 

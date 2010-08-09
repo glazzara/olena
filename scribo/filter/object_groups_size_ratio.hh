@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -63,7 +64,7 @@ namespace scribo
 
       mln_precondition(groups.is_valid());
 
-      const object_image(L)& objects = groups.object_image_();
+      const component_set<L>& comps = groups.components();
 
       // FIXME: estimating the group size should be removed once
       // available in the object_group structure.
@@ -73,9 +74,9 @@ namespace scribo
 	group_size(groups.size(), 0),
 	invalid_object_in_group(groups.size(), 0);
 
-      for_all_ncomponents(i, objects.nlabels())
+      for_all_comps(i, comps)
       {
-	if ((objects.bbox(i).nrows() / objects.bbox(i).ncols())
+	if ((comps(i).bbox().nrows() / comps(i).bbox().ncols())
 	    >= max_size_ratio)
 	  ++invalid_object_in_group[groups[i]];
 
@@ -86,7 +87,7 @@ namespace scribo
       output(0) = 0;
       for (unsigned i = 1; i < output.size(); ++i)
 	if ((invalid_object_in_group[groups[i]] / static_cast<float>(group_size[groups[i]])) >= max_invalid_ratio_per_group
-	    || !components(i).is_valid())
+	    || !comps(i).is_valid())
 	  output(i) = 0;
 
       trace::exiting("scribo::filter::object_groups_size_ratio");

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Remove the content of bounding boxes from an image.
+/// Erase components in an image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/box.hh>
@@ -36,6 +37,7 @@
 # include <mln/pw/all.hh>
 # include <mln/util/array.hh>
 
+# include <scribo/core/component_set.hh>
 # include <scribo/core/macros.hh>
 
 namespace scribo
@@ -46,13 +48,12 @@ namespace scribo
   /// Remove labeled components from a binary image.
   ///
   /// \param[in,out] input_   A binary image.
-  /// \param[in] objects An image of objects (object value must be
-  ///                    different from 0).
+  /// \param[in]     comps    A set of components to be erased.
   ///
   //
   template <typename I, typename L>
   void
-  erase_objects(Image<I>& input, const Image<L>& objects);
+  erase_objects(Image<I>& input, const component_set<L>& comps);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -61,18 +62,17 @@ namespace scribo
   template <typename I, typename L>
   void
   erase_objects(Image<I>& input_,
-		const Image<L>& objects_)
+		const component_set<L>& comps)
   {
     trace::entering("scribo::erase_objects");
 
     mlc_equal(mln_value(I),bool)::check();
 
     I& input = exact(input_);
-    I& objects = exact(objects_);
     mln_precondition(input.is_valid());
-    mln_precondition(objects.is_valid());
 
-    data::fill((input | (pw::value(objects) != pw::cst(literal::zero))).rw(),
+    data::fill((input | (pw::value(comps.labeled_image())
+			 != pw::cst(literal::zero))).rw(),
 	       false);
 
     trace::exiting("scribo::erase_objects");

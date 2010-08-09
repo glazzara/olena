@@ -94,10 +94,9 @@ namespace scribo
       trace::entering("scribo::debug::several_links_decision_image");
       const I& input = exact(input_);
 
-      const object_image(L)& objects = links.object_image_();
+      const component_set<L>& comps = links.components();
 
       mln_precondition(input.is_valid());
-      mln_precondition(objects.is_valid());
       mln_precondition(links.is_valid());
       mln_precondition(filtered_links.is_valid());
 
@@ -106,60 +105,56 @@ namespace scribo
       image2d<value::rgb8>
 	links_decision_image = data::convert(value::rgb8(), input);
 
-      for_all_components(i, objects.bboxes())
-	mln::draw::box(links_decision_image, objects.bbox(i), literal::blue);
+      for_all_comps(c, comps)
+	mln::draw::box(links_decision_image, comps(c).bbox(), literal::blue);
 
-      // Computing mass centers.
-      mln::util::array<mln_result(accu::center<mln_psite(I)>)>
-	mass_centers = labeling::compute(accu::meta::center(),
-					 objects, objects.nlabels());
-
-      for (unsigned i = 1; i < links.size(); ++i)
+      for_all_links(l, links)
       {
-
-	if (links[i] != i)
+	if (links(l) != l)
 	{
 	  value::rgb8 value = literal::green;
-	  if (links[i] != filtered_links[i])
+	  if (links(l) != filtered_links(l))
 	    value = literal::red;
 
-	  mln_site(L) c = objects.bbox(i).center();
+	  mln_site(L) c = comps(l).bbox().pcenter();
 
 	  // Right link from the top anchor.
 	  mln_site(L) a1 = c;
-	  a1.row() = objects.bbox(i).pmin().row()
-	    + (c.row() - objects.bbox(i).pmin().row()) / 4;
+	  a1.row() = comps(l).bbox().pmin().row()
+	    + (c.row() - comps(l).bbox().pmin().row()) / 4;
 
 	  // Right link from the central site
-	  mln_site(I) p1 = mass_centers[i];
+	  mln_site(I) p1 = comps(l).mass_center();
 
 	  // Right link from the bottom anchor.
 	  mln_site(L) a2 = c;
-	  a2.row() = objects.bbox(i).pmax().row()
-	    - (c.row() - objects.bbox(i).pmin().row()) / 4;
+	  a2.row() = comps(l).bbox().pmax().row()
+	    - (c.row() - comps(l).bbox().pmin().row()) / 4;
 
 	  mln_site(L)
 	    a1_bak = a1,
 	    a2_bak = a2;
 
+	  const L& lbl_ima = comps.labeled_image();
+
 	  mln_site(L) tmp;
-	  while(objects.domain().has(a1)
-		|| objects.domain().has(a2)
-		|| objects.domain().has(p1))
+	  while(lbl_ima.domain().has(a1)
+		|| lbl_ima.domain().has(a2)
+		|| lbl_ima.domain().has(p1))
 	  {
-	    if (internal::draw_line(objects, links_decision_image, links[i],
+	    if (internal::draw_line(lbl_ima, links_decision_image, links(l),
 				    a1_bak, a1, value))
 	      break;
 	    else
 	      ++a1.col();
 
-	    if (internal::draw_line(objects, links_decision_image, links[i],
-				    mass_centers[i], p1, value))
+	    if (internal::draw_line(lbl_ima, links_decision_image, links(l),
+				    comps(l).mass_center(), p1, value))
 	      break;
 	    else
 	      ++p1.col();
 
-	    if (internal::draw_line(objects, links_decision_image, links[i],
+	    if (internal::draw_line(lbl_ima, links_decision_image, links(l),
 				    a2_bak, a2, value))
 	      break;
 	    else

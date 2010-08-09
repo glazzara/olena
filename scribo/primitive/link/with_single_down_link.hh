@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,7 +44,6 @@
 
 
 # include <scribo/core/macros.hh>
-# include <scribo/core/object_image.hh>
 # include <scribo/core/object_links.hh>
 
 # include <scribo/primitive/link/internal/find_link.hh>
@@ -63,7 +63,7 @@ namespace scribo
 
       /// \brief Link objects with their down neighbor if exists.
       ///
-      /// \param[in] objects An object image.
+      /// \param[in] comps A component set.
       /// \param[in] neighb_max_distance The maximum distance allowed
       ///                                to seach a neighbor object.
       /// \param[in] anchor The neighborhod lookup start point.
@@ -73,7 +73,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_down_link(const object_image(L)& objects,
+      with_single_down_link(const component_set<L>& comps,
 			    unsigned neighb_max_distance,
 			    anchor::Type anchor);
 
@@ -83,7 +83,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_down_link(const object_image(L)& objects,
+      with_single_down_link(const component_set<L>& comps,
 			    unsigned neighb_max_distance);
 
 
@@ -92,7 +92,7 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_down_link(const object_image(L)& objects);
+      with_single_down_link(const component_set<L>& comps);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -113,8 +113,8 @@ namespace scribo
 	public:
 	  typedef mln_site(L) P;
 
-	  single_down_functor(const object_image(L)& objects, unsigned dmax)
-	    : sdowner_(objects, dmax, anchor::Vertical)
+	  single_down_functor(const component_set<L>& comps, unsigned dmax)
+	    : sdowner_(comps, dmax, anchor::Vertical)
 	  {
 	  }
 
@@ -134,16 +134,14 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_down_link(const object_image(L)& objects,
+      with_single_down_link(const component_set<L>& comps,
 			    unsigned neighb_max_distance,
 			    anchor::Type anchor)
       {
 	trace::entering("scribo::primitive::link::with_single_down_link");
 
-	mln_precondition(objects.is_valid());
-
 	internal::single_down_functor<L>
-	  functor(objects, neighb_max_distance);
+	  functor(comps, neighb_max_distance);
 
 	object_links<L> output = compute(functor, anchor);
 
@@ -155,10 +153,10 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_down_link(const object_image(L)& objects,
+      with_single_down_link(const component_set<L>& comps,
 			    unsigned neighb_max_distance)
       {
-	return with_single_down_link(objects, neighb_max_distance,
+	return with_single_down_link(comps, neighb_max_distance,
 				     anchor::MassCenter);
       }
 
@@ -166,9 +164,9 @@ namespace scribo
       template <typename L>
       inline
       object_links<L>
-      with_single_down_link(const object_image(L)& objects)
+      with_single_down_link(const component_set<L>& comps)
       {
-	return with_single_down_link(objects, mln_max(unsigned));
+	return with_single_down_link(comps, mln_max(unsigned));
       }
 
 

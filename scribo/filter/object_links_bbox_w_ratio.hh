@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,8 +29,10 @@
 
 /// \file
 ///
-/// Invalidate links between two objects with too different height or
-/// width.
+/// Invalidate links between two objects with too different width.
+///
+/// \todo rename to object_links_bbox_h_ratio (h for horizontal) to be
+/// consistent with other routine names.
 
 
 # include <mln/util/array.hh>
@@ -50,7 +53,6 @@ namespace scribo
     /*! \brief Invalidate links between two objects with too different
         width.
 
-	\param[in] objects     An object image.
 	\param[in] links       Link objects information.
 	\param[in] min_w_ratio The minimum width ratio of two linked
                                bounding boxes.
@@ -59,8 +61,7 @@ namespace scribo
     */
     template <typename L>
     object_links<L>
-    object_links_bbox_w_ratio(const object_image(L)& objects,
-			      const object_links<L>& links,
+    object_links_bbox_w_ratio(const object_links<L>& links,
 			      float min_w_ratio);
 
 
@@ -69,17 +70,15 @@ namespace scribo
 
     template <typename L>
     object_links<L>
-    object_links_bbox_w_ratio(const object_image(L)& objects,
-			      const object_links<L>& links,
+    object_links_bbox_w_ratio(const object_links<L>& links,
 			      float min_w_ratio)
     {
       trace::entering("scribo::filter::object_links_bbox_w_ratio");
 
-      mln_precondition(objects.is_valid());
       mln_precondition(links.is_valid());
 
       object_links<L>
-	output = object_links_bbox_ratio(objects, links, 1, min_w_ratio);
+	output = object_links_bbox_ratio(links, 1, min_w_ratio);
 
       trace::exiting("scribo::filter::object_links_bbox_w_ratio");
       return output;

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -33,10 +34,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 
-# include <mln/util/array.hh>
-
-# include <scribo/core/object_image.hh>
-# include <scribo/primitive/extract/objects.hh>
+# include <scribo/core/component_set.hh>
 # include <scribo/filter/internal/compute.hh>
 
 
@@ -48,12 +46,12 @@ namespace scribo
 
     using namespace mln;
 
-    /// Remove objects horizontaly thicker or equal to \p max_thickness.
+    /// Remove objects horizontaly thicker or equal to \p min_thickness.
     ///
     /// \param[in] input_ A binary image.
     /// \param[in] nbh_ A neighborhood used in labeling algorithms.
     /// \param[in] label_type The label type used for labeling.
-    /// \param[in] max_thickness The maximum thickness value.
+    /// \param[in] min_thickness The maximum thickness value.
     ///
     /// \result A binary image without thick objects.
     //
@@ -63,21 +61,21 @@ namespace scribo
     objects_h_thick(const Image<I>& input_,
 		    const Neighborhood<N>& nbh_,
 		    const V& label_type,
-		    unsigned max_thickness);
+		    unsigned min_thickness);
 
 
-    /// Remove objects horizontaly thicker or equal to \p max_thickness.
+    /// Remove objects horizontaly thicker or equal to \p min_thickness.
     ///
-    /// \param[in] objects An object image.
-    /// \param[in] max_thickness The maximum thickness value.
+    /// \param[in] comps Component data.
+    /// \param[in] min_thickness The minimum thickness value.
     ///
-    /// \result An object image without too thick objects.
+    /// \result A component data set without too thick components.
     //
     template <typename L>
     inline
-    object_image(L)
-    objects_h_thick(const object_image(L)& objects,
-		    unsigned max_thickness);
+    component_set<L>
+    objects_h_thick(const component_set<L>& comps,
+		    unsigned min_thickness);
 
 
 
@@ -87,8 +85,8 @@ namespace scribo
     namespace internal
     {
 
-      /// Filter Functor. Return false for all objects which are too
-      /// large.
+      /// Filter Functor. Return false for all components which are
+      /// thick.
       template <typename L>
       struct h_thick_object_filter
 	: Function_v2b< h_thick_object_filter<L> >
@@ -96,48 +94,48 @@ namespace scribo
 
 	/// Constructor
 	///
-	/// \param[in] objects An object image.
-	/// \param[in] max_thickness the maximum thickness allowed.
+	/// \param[in] comps Component data.
+	/// \param[in] min_thickness the minimum thickness allowed.
 	//
-	h_thick_object_filter(const object_image(L)& objects,
-			    unsigned max_thickness)
-	  : objects_(objects), max_thickness_(max_thickness)
+	h_thick_object_filter(const component_set<L>& comps,
+			      unsigned min_thickness)
+	  : comps_(comps), min_thickness_(min_thickness)
 	{
 	}
 
 	/// Constructor
 	///
-	/// \param[in] max_thickness the maximum thickness allowed.
+	/// \param[in] min_thickness the minimum thickness allowed.
 	//
-	h_thick_object_filter(unsigned max_thickness)
-	  : max_thickness_(max_thickness)
+	h_thick_object_filter(unsigned min_thickness)
+	  : min_thickness_(min_thickness)
 	{
 	}
 
 	/// Set the underlying object image.
 	//
-	void update_objects(const object_image(L)& objects)
+	void update_objects(const component_set<L>& comps)
 	{
-	  objects_ = objects;
+	  comps_ = comps;
 	}
 
-	/// Return false if the objects is thicker than
-	/// \p max_thickness_.
+	/// Return false if the component is thicker than
+	/// \p min_thickness_.
 	///
 	/// \param[in] l An image value.
 	bool operator()(const mln_value(L)& l) const
 	{
 	  if (l == literal::zero)
 	    return true;
-	  return objects_.bbox(l).nrows() < max_thickness_;
+	  return comps_(l).bbox().height() > min_thickness_;
 	}
 
 
-	/// An object image.
-	object_image(L) objects_;
+	/// Components data.
+	component_set<L> comps_;
 
-	/// The maximum thickness.
-	unsigned max_thickness_;
+	/// The minimum thickness.
+	unsigned min_thickness_;
       };
 
 
@@ -150,7 +148,7 @@ namespace scribo
     objects_thick(const Image<I>& input_,
 		  const Neighborhood<N>& nbh_,
 		  const V& label_type,
-		  unsigned max_thickness)
+		  unsigned min_thickness)
     {
       trace::entering("scribo::filter::objects_h_thick");
 
@@ -160,7 +158,7 @@ namespace scribo
       mln_precondition(input.is_valid());
       mln_precondition(nbh.is_valid());
 
-      internal::h_thick_object_filter<V> functor(max_thickness);
+      internal::h_thick_object_filter<V> functor(min_thickness);
       mln_concrete(I)
 	output = internal::compute(input, nbh, label_type, functor);
 
@@ -171,16 +169,14 @@ namespace scribo
 
     template <typename L>
     inline
-    object_image(L)
-    objects_h_thick(const object_image(L)& objects,
-		    unsigned max_thickness)
+    component_set<L>
+    objects_h_thick(const component_set<L>& comps,
+		    unsigned min_thickness)
     {
       trace::entering("scribo::filter::objects_h_thick");
 
-      mln_precondition(objects.is_valid());
-
-      internal::h_thick_object_filter<L> functor(objects, max_thickness);
-      object_image(L) output = internal::compute(objects, functor);
+      internal::h_thick_object_filter<L> functor(comps, min_thickness);
+      component_set<L> output = internal::compute(comps, functor);
 
       trace::exiting("scribo::filter::objects_h_thick");
       return output;

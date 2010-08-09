@@ -1,5 +1,35 @@
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Replace the use of object_image with component_set.
+
+	* core/erase_objects.hh,
+	* debug/several_links_decision_image.hh,
+	* filter/object_groups_size_ratio.hh,
+	* filter/object_links_bbox_w_ratio.hh,
+	* filter/object_links_center_aligned.hh,
+	* filter/object_links_left_aligned.hh,
+	* filter/object_links_right_aligned.hh,
+	* filter/objects_h_thick.hh,
+	* filter/objects_h_thin.hh,
+	* filter/objects_size_ratio.hh,
+	* filter/objects_v_thick.hh,
+	* filter/objects_v_thin.hh,
+	* primitive/extract/lines_h_thick_and_single.hh,
+	* primitive/extract/lines_v_thick_and_single.hh,
+	* primitive/group/from_graph.hh,
+	* primitive/internal/find_graph_link.hh,
+	* primitive/link/with_graph.hh,
+	* primitive/link/with_rag.hh,
+	* primitive/link/with_several_graphes.hh,
+	* primitive/link/with_several_left_links.hh,
+	* primitive/link/with_several_right_closest_links.hh,
+	* primitive/link/with_several_right_links.hh,
+	* primitive/link/with_single_down_link.hh,
+	* primitive/link/with_single_up_link.hh: Replace the use of
+	object_image with component_set.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes in Scribo.
 
 	* core/component_info.hh (is_valid): Check the bounding box
