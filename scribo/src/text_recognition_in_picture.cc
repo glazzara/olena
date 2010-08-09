@@ -74,8 +74,10 @@
 #include <scribo/primitive/group/from_single_link.hh>
 
 #include <scribo/primitive/regroup/from_single_left_link.hh>
+#include <scribo/primitive/regroup/from_single_left_link_wrt_h_ratio.hh>
 
-//#include <scribo/filter/objects_with_holes.hh>
+#include <scribo/filter/objects_size_ratio.hh>
+
 #include <scribo/filter/object_groups_with_holes.hh>
 
 #include <scribo/filter/object_links_bbox_h_ratio.hh>
@@ -95,6 +97,7 @@
 #include <scribo/debug/usage.hh>
 
 #include <scribo/preprocessing/split_bg_fg.hh>
+#include <scribo/preprocessing/rotate_90.hh>
 
 #include <scribo/make/debug_filename.hh>
 
@@ -104,7 +107,6 @@
 
 #include <scribo/src/afp/components.hh>
 #include <scribo/src/afp/link.hh>
-#include <scribo/src/afp/regroup.hh>
 
 #include <scribo/core/line_set.hh>
 #include <scribo/text/recognition.hh>
@@ -116,11 +118,15 @@
 
 const char *args_desc[][2] =
 {
-  { "input.ppm", "A color image." },
+  { "input.*", "An image." },
   { "ouput.ppm", "A color image where the text is highlighted." },
   { "out.txt", "Text recognized text with its position." },
-  { "max_dim_size", "The highest dimension size of the image used for computation. It is used to find a resize factor and impacts on the performance. (1024 by default)" },
-  { "lbl.ppm", "A color image with the labeled text components. (Considered as optional debug)" },
+  { "max_dim_size", "The highest dimension size of the image used for "
+    "computation. It is used to find a resize factor and impacts on the"
+    " performance. (1024 by default)" },
+  { "lambda", "Lambda value used for foreground extraction." },
+  { "lbl.ppm", "A color image with the labeled text components. (Considered"
+    " as optional debug)" },
   {0, 0}
 };
 
@@ -132,6 +138,7 @@ namespace mln
   {
     config()
     {
+      min_size_ratio = 0.2f;
       max_dim_size = 1024;
 
       sauvola_s = 2u; // 3?
@@ -145,6 +152,9 @@ namespace mln
       regroup_dmax = 30;
       group_min_holes = 3;
     }
+
+    // Component filtering
+    double min_size_ratio;
 
     // Image resizing factor
     unsigned max_dim_size;
@@ -173,51 +183,6 @@ mln::config conf;
 namespace mln
 {
 
-  template <typename I, typename L>
-  mln_concrete(I)
-  compute_text_image(const I& input_rgb,
-		     const scribo::component_set<L>& grouped_objects)
-  {
-    unsigned shift = 5;
-    float height = 1, width = 0;
-    for_all_comps(i, grouped_objects)
-      if (grouped_objects(i).is_valid())
-      {
-	height += grouped_objects(i).bbox().nrows() + shift;
-	width = math::max(static_cast<float>(grouped_objects(i).bbox().ncols()),
-			  width);
-      }
-    if (width == 0)
-      width = 1;
-
-    I output(height, width);
-    data::fill(output, literal::black);
-
-    algebra::vec<2, float> dv;
-    dv[0] = 0;
-    dv[1] = 0;
-    for_all_comps(i, grouped_objects)
-      if (grouped_objects(i).is_valid())
-      {
-	mln_VAR(tmp, duplicate(input_rgb | grouped_objects(i).bbox()));
-
-	typedef fun::x2x::translation<mln_site_(I)::dim, float> trans_t;
-	trans_t trans(dv - grouped_objects(i).bbox().pmin().to_vec());
-
-	mln_domain(I)
-	  tr_box(grouped_objects(i).bbox().pmin().to_vec() + trans.t(),
-		 grouped_objects(i).bbox().pmax().to_vec() + trans.t());
-
-	tr_image<mln_domain(I), tmp_t, trans_t> tr_ima(tr_box, tmp, trans);
-
-	data::paste(tr_ima, output);
-	dv[0] += grouped_objects(i).bbox().nrows() + shift;
-      }
-
-    return output;
-  }
-
-
   template <typename I>
   unsigned get_factor(const I& ima)
   {
@@ -238,13 +203,17 @@ namespace mln
 int main(int argc, char* argv[])
 {
   using namespace scribo;
+  using namespace scribo::primitive;
   using namespace mln;
 
-  if (argc < 4 || argc > 6)
+  if (argc < 4 || argc > 7)
     return scribo::debug::usage(argv,
-				"Find text in a photo.\n\n\
-Common usage: ./text_in_photo_fast input.ppm output.ppm out.txt [max_dim_size] [lbl.ppm]",
-				"input.ppm output.ppm out.txt [max_dim_size] [lbl.ppm]",
+				"Find text in a photo.\n\n"
+				"Common usage: ./text_recognition_in_picture"
+				" input.* output.ppm out.txt [max_dim_size]"
+				" [lambda] [lbl.ppm]",
+				"input.* output.ppm out.txt [max_dim_size]"
+				" [lambda] [lbl.ppm]",
 				args_desc);
 
 
@@ -266,7 +235,12 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm out.txt [max_dim_size] [
 
   unsigned lambda;
 
-  lambda = 1.2 * (input_rgb.nrows() + input_rgb.ncols());
+  if (argc >= 6)
+    lambda = atoi(argv[5]);
+  else
+    lambda = 1.2 * (input_rgb.nrows() + input_rgb.ncols());
+
+  std::cout << "Using lambda = " << lambda << std::endl;
 
   image2d<value::int_u8> intensity_ima;
 
@@ -274,6 +248,24 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm out.txt [max_dim_size] [
   image2d<value::rgb8>
     fg = preprocessing::split_bg_fg(input_rgb, lambda, 32).second();
   intensity_ima = data::transform(fg, mln::fun::v2v::rgb_to_int_u<8>());
+
+//   // Perform an initial rotation if needed.
+// //   input_rgb = geom::rotate(input_rgb, -45, literal::black);
+//   intensity_ima = geom::rotate(intensity_ima, -45);
+
+//   // Make sure the domain origin is set to (0,0).
+//   box2d rb = intensity_ima.domain();
+//   box2d b(geom::nrows(intensity_ima), geom::ncols(intensity_ima));
+// //   {
+// //     image2d<value::rgb8> tmp(b);
+// //     data::paste_without_localization(input_rgb, tmp);
+// //     input_rgb = tmp;
+// //   }
+//   {
+//     image2d<value::int_u8> tmp(b);
+//     data::paste_without_localization(intensity_ima, tmp);
+//     intensity_ima = tmp;
+//   }
 
 
 
@@ -292,17 +284,18 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm out.txt [max_dim_size] [
   typedef image2d<value::label_16> L;
 
   /// Finding components.
-  typedef component_set<L> Obj;
-  Obj filtered_components;
-
+  component_set<L> filtered_components;
   {
     mln::util::array<std::pair<box2d, std::pair<point2d, unsigned> > > attribs;
 
     value::label_16 ncomponents;
     L components = extract_components(input, ncomponents, attribs);
 
-    filtered_components = Obj(components, ncomponents, attribs);
+    filtered_components = component_set<L>(components, ncomponents, attribs);
   }
+
+  filtered_components = filter::objects_size_ratio(filtered_components,
+						   conf.min_size_ratio);
 
   /// linking potential components
   mln::util::couple<object_links<L>, object_links<L> >
@@ -322,8 +315,6 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm out.txt [max_dim_size] [
   object_links<L>
     hratio_filtered_links = filter::object_links_bbox_h_ratio(merged_links,
 							      conf.bbox_h_ratio);
-
-
 
 
 
@@ -353,22 +344,26 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm out.txt [max_dim_size] [
 
 
   // Grouping groups together if possible.
-  groups = primitive::regroup::from_single_left_link(filtered_thin_groups,
-						     conf.regroup_dmax);
+  groups = regroup::from_single_left_link_wrt_h_ratio(filtered_thin_groups,
+						      conf.regroup_dmax,
+						      conf.bbox_h_ratio);
 
   /// Filter grouped objects not having enough background components.
   groups  = scribo::filter::object_groups_with_holes(groups,
-						       conf.group_min_holes);
+						     conf.group_min_holes);
 
   component_set<L> comps = primitive::group::apply(groups);
 
-  if (argc > 5)
+  if (argc > 6)
     mln::io::ppm::save(mln::labeling::colorize(value::rgb8(),
 					       comps.labeled_image(),
 					       comps.nelements()),
-		       argv[5]);
+		       argv[6]);
+//   mln::io::ppm::save(scribo::debug::highlight_text_area_rotated(input_rgb,
+//  comps, -45, rb),
+// 		argv[2]);
   mln::io::ppm::save(scribo::debug::highlight_text_area(input_rgb, comps),
-		argv[2]);
+		     argv[2]);
 
 
   scribo::line_set<L> lines = scribo::make::line_set(groups);
