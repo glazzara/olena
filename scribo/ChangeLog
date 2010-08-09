@@ -1,5 +1,13 @@
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add missing includes and headers in AFP's dedicated code.
+
+	* src/afp/components.hh,
+	* src/afp/link.hh,
+	* src/afp/regroup.hh: Add missing includes and headers.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new routines in Scribo.
 
 	* debug/highlight_text_area.hh,
