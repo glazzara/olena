@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,18 +32,22 @@
 
 #include <mln/logical/not.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/core/alias/w_window2d_int.hh>
-#include <mln/make/w_window2d_int.hh>
 
+#include <mln/value/int_u16.hh>
 
+#include <scribo/text/merging.hh>
+#include <scribo/primitive/extract/components.hh>
+#include <scribo/primitive/link/with_single_left_link_dmax_ratio.hh>
+#include <scribo/primitive/group/from_single_link.hh>
 #include <scribo/text/clean.hh>
 #include <scribo/debug/usage.hh>
 
+#include <scribo/make/debug_filename.hh>
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image. 'True' for objects, 'False'\
-for the background." },
+  { "input.pbm", "A binary image. 'True' for objects, 'False' for the "
+    "background." },
   { "out.pbm",   "A cleaned up binary image." },
   {0, 0}
 };
@@ -58,22 +63,34 @@ int main(int argc, char* argv[])
     return scribo::debug::usage(argv,
 				"Cleanup text areas.",
 				"input.pbm out.pbm",
-				args_desc,
-				"");
+				args_desc);
 
   trace::entering("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
-  int vals[] = { 0, 9, 0, 9, 0,
-		 9, 6, 4, 6, 9,
-		 0, 4, 0, 4, 0,
-		 9, 6, 4, 6, 9,
-		 0, 9, 0, 9, 0 };
-  w_window2d_int dmap_win = mln::make::w_window2d_int(vals);
+  scribo::make::internal::debug_filename_prefix = argv[2];
 
-  io::pbm::save(scribo::text::clean(logical::not_(input), dmap_win), argv[2]);
+  typedef image2d<value::int_u16> L;
+  value::int_u16 ncomps;
+  component_set<L>
+    comps = primitive::extract::components(input, c8(), ncomps);
+
+  object_links<L>
+    links = primitive::link::with_single_left_link_dmax_ratio(comps, 2);
+
+  object_groups<L>
+    groups = primitive::group::from_single_link(links);
+
+  line_set<L> lines(groups);
+  lines = text::merging(lines);
+
+  logical::not_inplace(input);
+
+  for_all_lines(l, lines)
+    io::pbm::save(scribo::text::clean(lines(l), input),
+		  scribo::make::debug_filename("text.pbm"));
 
   trace::exiting("main");
 }

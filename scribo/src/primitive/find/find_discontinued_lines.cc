@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,13 +50,14 @@ const char *args_desc[][2] =
 int main(int argc, char *argv[])
 {
   using namespace mln;
+  using namespace scribo;
 
   if (argc != 4)
     return scribo::debug::usage(argv,
-				"Extract discontinued horizontal and vertical lines",
+				"Extract discontinued horizontal and "
+				"vertical lines",
 				"input.pbm length output.ppm",
-				args_desc,
-				"A color image. Horizontal lines are in red and vertical lines in green.");
+				args_desc);
 
   trace::entering("main");
 
@@ -68,7 +70,7 @@ int main(int argc, char *argv[])
     nvlines;
 
   typedef image2d<value::label_16> L;
-  object_image(L)
+  component_set<L>
     hlines = scribo::primitive::extract::lines_h_discontinued(input,
 							      c8(),
 							      nhlines,
@@ -80,8 +82,9 @@ int main(int argc, char *argv[])
 							      atoi(argv[2]),
 							      8);
 
-  image2d<value::rgb8> out = debug::superpose(input, hlines, literal::red);
-  out = debug::superpose(out, vlines, literal::green);
+  image2d<value::rgb8>
+    out = mln::debug::superpose(input, hlines.labeled_image(), literal::red);
+  out = mln::debug::superpose(out, vlines.labeled_image(), literal::green);
 
   io::ppm::save(out, argv[3]);
 

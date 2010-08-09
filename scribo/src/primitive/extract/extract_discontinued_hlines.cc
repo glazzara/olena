@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,28 +45,29 @@ const char *args_desc[][2] =
 int main(int argc, char *argv[])
 {
   using namespace mln;
+  using namespace scribo;
 
   if (argc != 5)
     return scribo::debug::usage(argv,
 				"Extract discontinued horizontal lines",
 				"input.pbm length rank output.pbm",
-				args_desc,
-				"A binary image of horizontal lines.");
+				args_desc);
 
   trace::entering("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
-  value::label_16 nlines;
-  image2d<bool> lines
-    = data::convert(bool(),
-		     scribo::primitive::extract::lines_h_discontinued(input,
-								      c8(),
-								      nlines,
-								      atoi(argv[2]),
-								      atoi(argv[3])));
-  io::pbm::save(lines, argv[4]);
+  typedef value::label_16 V;
+  typedef image2d<V> L;
+  V nlines;
+  component_set<L>
+    lines = scribo::primitive::extract::lines_h_discontinued(input,
+							     c8(),
+							     nlines,
+							     atoi(argv[2]),
+							     atoi(argv[3]));
+  io::pbm::save(data::convert(bool(), lines.labeled_image()), argv[4]);
 
   trace::exiting("main");
 }

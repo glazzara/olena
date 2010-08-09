@@ -1,5 +1,55 @@
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix compilation of Scribo tools.
+
+	* src/debug/show_links_bbox_overlap.cc,
+	* src/debug/show_links_center_aligned.cc,
+	* src/debug/show_links_non_h_aligned.cc,
+	* src/debug/show_links_several_right.cc,
+	* src/debug/show_links_several_right_overlap.cc,
+	* src/debug/show_links_single_down.cc,
+	* src/debug/show_links_single_down_left_aligned.cc,
+	* src/debug/show_links_single_down_right_aligned.cc,
+	* src/debug/show_links_single_left.cc,
+	* src/debug/show_links_single_left_dmax_ratio.cc,
+	* src/debug/show_links_single_right.cc,
+	* src/debug/show_links_single_right_dmax_ratio.cc,
+	* src/debug/show_links_single_up.cc,
+	* src/debug/show_links_single_up_left_aligned.cc,
+	* src/debug/show_links_single_up_right_aligned.cc,
+	* src/debug/show_objects_large.cc,
+	* src/debug/show_objects_large_small.cc,
+	* src/debug/show_objects_small.cc,
+	* src/debug/show_objects_thick.cc,
+	* src/debug/show_objects_thin.cc,
+	* src/filter/objects_large.cc,
+	* src/filter/objects_small.cc,
+	* src/filter/objects_thick.cc,
+	* src/filter/objects_thin.cc,
+	* src/filter/objects_with_holes.cc,
+	* src/filter/objects_with_holes_pgm.cc,
+	* src/preprocessing/preprocess.cc,
+	* src/preprocessing/split_bg_fg.cc,
+	* src/preprocessing/unskew.cc,
+	* src/primitive/extract/extract_discontinued_hlines.cc,
+	* src/primitive/extract/extract_discontinued_lines.cc,
+	* src/primitive/extract/extract_discontinued_vlines.cc,
+	* src/primitive/extract/extract_thick_hlines.cc,
+	* src/primitive/extract/extract_thick_vlines.cc,
+	* src/primitive/find/find_discontinued_lines.cc,
+	* src/primitive/find/find_single_lines.cc,
+	* src/primitive/find/find_thick_and_single_lines.cc,
+	* src/primitive/find/find_thick_lines.cc,
+	* src/primitive/group/Makefile.am,
+	* src/primitive/group/group_from_double_link.cc,
+	* src/primitive/group/group_from_double_several_links.cc,
+	* src/primitive/group/group_from_several_left_links.cc,
+	* src/primitive/group/group_from_single_link.cc,
+	* src/table/erase.cc,
+	* src/text/cleantxt.cc: Here.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Catch up with the current interface of scribo::debug::usage.
 
 	* src/debug/show_links_bottom_aligned.cc,

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -25,6 +26,8 @@
 
 #include <mln/core/image/image2d.hh>
 
+#include <mln/data/convert.hh>
+
 #include <mln/value/int_u8.hh>
 #include <mln/value/label_16.hh>
 
@@ -33,8 +36,8 @@
 
 #include <mln/logical/not.hh>
 
-#include <scribo/binarization/simple.hh>
-#include <scribo/preprocessing/unskew.hh>
+#include <scribo/binarization/global_threshold_auto.hh>
+#include <scribo/preprocessing/deskew.hh>
 #include <scribo/filter/objects_small.hh>
 #include <scribo/filter/objects_thin.hh>
 
@@ -54,7 +57,7 @@ int main(int argc, char *argv[])
     return scribo::debug::usage(argv,
 				"Generic image preprocessing",
 				"input.pgm output.pbm",
-				args_desc, "A binary image.");
+				args_desc);
 
   trace::entering("main");
 
@@ -62,13 +65,19 @@ int main(int argc, char *argv[])
   I input;
   io::pgm::load(input, argv[1]);
 
-  image2d<bool> input_bw = scribo::binarization::simple(input);
+  image2d<bool>
+    input_bw = scribo::binarization::global_threshold_auto(input);
 
   logical::not_inplace(input_bw);
-  input_bw = scribo::filter::objects_small(input_bw, c8(), value::label_16(), 3);
-  input_bw = scribo::filter::objects_thin(input_bw, c8(), value::label_16(), 1);
+  input_bw = scribo::filter::components_small(input_bw, c8(),
+					      value::label_16(), 3);
+  input_bw = scribo::filter::components_thin(input_bw, c8(),
+					     value::label_16(), 1);
 
-  input_bw = scribo::preprocessing::unskew(input_bw).first();
+  image2d<value::int_u8>
+    input_gl = data::convert(value::int_u8(), input_bw);
+  input_gl = scribo::preprocessing::deskew(input_gl);
+  input_bw = data::convert(bool(), input_gl);
 
   logical::not_inplace(input_bw);
   io::pbm::save(input_bw, argv[2]);

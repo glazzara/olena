@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,13 +30,14 @@
 #include <mln/io/pbm/all.hh>
 #include <mln/value/label_16.hh>
 
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/filter/objects_with_holes.hh>
 #include <scribo/debug/usage.hh>
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image. 'True' for objects, 'False'\
-for the background." },
+  { "input.pbm", "A binary image. 'True' for objects, 'False' for the "
+    "background." },
   { "min_holes_count", "The minimum holes per objects." },
   {0, 0}
 };
@@ -43,13 +45,13 @@ for the background." },
 int main(int argc, char *argv[])
 {
   using namespace mln;
+  using namespace scribo;
 
   if (argc != 4)
     return scribo::debug::usage(argv,
 				"Filter objects with holes",
 				"input.pbm min_holes_count output.pbm",
-				args_desc,
-				"A binary image.");
+				args_desc);
 
   trace::entering("main");
 
@@ -57,13 +59,16 @@ int main(int argc, char *argv[])
   I input;
   io::pbm::load(input, argv[1]);
 
-  value::label_16 nobjects;
-  typedef object_image(mln_ch_value_(I,value::label_16)) obj_ima_t;
-  obj_ima_t objects
-    = scribo::primitive::extract::objects(input, c8(), nobjects);
+  typedef value::label_16 V;
+  V nobjects;
+  typedef image2d<V> L;
+  component_set<L> comps
+    = scribo::primitive::extract::components(input, c8(), nobjects);
 
-  obj_ima_t filtered = scribo::filter::objects_with_holes(objects, atoi(argv[2]));
-  io::pbm::save(data::convert(bool(), filtered), argv[3]);
+  component_set<L>
+    filtered = scribo::filter::objects_with_holes(comps, atoi(argv[2]), 0);
+
+  io::pbm::save(data::convert(bool(), filtered.valid_comps_image_()), argv[3]);
 
   trace::exiting("main");
 

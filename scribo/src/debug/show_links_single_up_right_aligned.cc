@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +42,7 @@
 
 #include <mln/draw/line.hh>
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/primitive/link/with_single_up_link.hh>
 #include <scribo/primitive/link/compute.hh>
 #include <scribo/filter/object_links_right_aligned.hh>
@@ -54,7 +55,8 @@
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image. True for objects and False for the background." },
+  { "input.pbm", "A binary image. True for objects and False for the "
+    "background." },
   { "dmax", "The maximum lookup distance. (common value : 300)" },
   {0, 0}
 };
@@ -68,10 +70,10 @@ int main(int argc, char* argv[])
 
   if (argc != 4)
     return scribo::debug::usage(argv,
-				"Show sucessful/unsuccessful up links between components.",
+				"Show sucessful/unsuccessful up links "
+				"between components.",
 				"input.pbm dmax output.ppm",
-				args_desc,
-				"A color image. Valid links are drawn in green, invalid ones in red.");
+				args_desc);
 
   typedef image2d<bool> I;
   I input;
@@ -80,19 +82,20 @@ int main(int argc, char* argv[])
   // Finding objects.
   value::label_16 nbboxes;
   typedef image2d<value::label_16> L;
-  object_image(L) objects
-    = scribo::primitive::extract::objects(input, c8(), nbboxes);
+  component_set<L> comps
+    = scribo::primitive::extract::components(input, c8(), nbboxes);
 
   object_links<L>
-    up_links = primitive::link::with_single_up_link(objects,
+    up_links = primitive::link::with_single_up_link(comps,
 						    atof(argv[2]),
 						    anchor::Right);
 
   // Filtering.
-  up_links = filter::object_links_right_aligned(objects, up_links, 5);
+  up_links = filter::object_links_right_aligned(up_links, 5);
 
 
-  scribo::debug::save_linked_bboxes_image(input, objects, up_links,
+  scribo::debug::save_linked_bboxes_image(input, up_links,
 					  literal::blue, literal::green,
-					  argv[3], anchor::ActualRight);
+					  anchor::ActualRight,
+					  argv[3]);
 }

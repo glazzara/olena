@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,7 +41,7 @@
 #include <mln/io/ppm/save.hh>
 
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/primitive/group/apply.hh>
 #include <scribo/primitive/link/with_several_left_links.hh>
 #include <scribo/primitive/group/from_single_link.hh>
@@ -70,33 +71,34 @@ int main(int argc, char* argv[])
 
   value::label_16 nbboxes;
   typedef image2d<value::label_16> L;
-  typedef object_image(L) text_t;
-  text_t text = scribo::primitive::extract::objects(input, c8(), nbboxes);
+  component_set<L>
+    comps = scribo::primitive::extract::components(input, c8(), nbboxes);
 
   {
     std::cout << "* Left grouping" << std::endl;
     object_links<L> left_link
-	= primitive::link::with_several_left_links(text, 30);
+	= primitive::link::with_several_left_links(comps, 30);
 
     std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
     scribo::debug::save_linked_bboxes_image(input,
-					    text, left_link,
+					    left_link,
 					    literal::red, literal::cyan,
 					    scribo::make::debug_filename("left_links.ppm"));
 
 
     object_groups<L>
-      groups = primitive::group::from_single_link(text, left_link);
+      groups = primitive::group::from_single_link(left_link);
 
-    text_t grouped_text = primitive::group::apply(text, groups);
-    std::cout << "AFTER - nbboxes = " << grouped_text.bboxes().nelements() << std::endl;
+    component_set<L> grouped_comps = primitive::group::apply(groups);
+    std::cout << "AFTER - nbboxes = " << grouped_comps.nelements()
+	      << std::endl;
     io::ppm::save(mln::labeling::colorize(value::rgb8(),
-				       grouped_text,
-				       grouped_text.nlabels()),
-				       scribo::make::debug_filename("left_label_color.ppm"));
-    scribo::debug::save_bboxes_image(input, grouped_text.bboxes(),
-				     literal::red,
-				     scribo::make::debug_filename("left_bboxes.ppm"));
+					  grouped_comps.labeled_image(),
+					  grouped_comps.nelements()),
+		  scribo::make::debug_filename("left_label_color.ppm"));
+    scribo::debug::save_bboxes_image(input, grouped_comps,
+				     scribo::make::debug_filename("left_bboxes.ppm"),
+				     literal::red);
   }
 
 }

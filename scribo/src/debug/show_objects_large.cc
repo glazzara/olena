@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,7 +38,7 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/ppm/save.hh>
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/filter/objects_large.hh>
 #include <scribo/draw/bounding_boxes.hh>
 #include <scribo/debug/usage.hh>
@@ -45,7 +46,8 @@
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image. True for objects and False for the background." },
+  { "input.pbm", "A binary image. True for objects and False for the "
+    "background." },
   { "max_card", " Maximum cardinality in a component." },
   {0, 0}
 };
@@ -54,13 +56,14 @@ const char *args_desc[][2] =
 int main(int argc, char *argv[])
 {
   using namespace mln;
+  using namespace scribo;
 
   if (argc != 4)
     return scribo::debug::usage(argv,
-				"Show components having a too high cardinality.",
+				"Show components having a too high "
+				"cardinality.",
 				"input.pbm min_card output.ppm",
-				args_desc,
-				"A color image. Components with high cardinality have their bounding boxes drawn in red, others in green.");
+				args_desc);
 
   trace::entering("main");
 
@@ -69,16 +72,16 @@ int main(int argc, char *argv[])
 
   value::label_16 nbboxes;
   typedef image2d<value::label_16> L;
-  object_image(L) objects
-    = scribo::primitive::extract::objects(input, c8(), nbboxes);
+  component_set<L> comps
+    = scribo::primitive::extract::components(input, c8(), nbboxes);
 
 
   image2d<value::rgb8> output = data::convert(value::rgb8(), input);
-  scribo::draw::bounding_boxes(output, objects, literal::red);
+  scribo::draw::bounding_boxes(output, comps, literal::red);
 
-  object_image(L) filtered_objects
-    = scribo::filter::objects_large(objects, atoi(argv[2]));
-  scribo::draw::bounding_boxes(output, filtered_objects, literal::green);
+  component_set<L> filtered_comps
+    = scribo::filter::components_large(comps, atoi(argv[2]));
+  scribo::draw::bounding_boxes(output, filtered_comps, literal::green);
 
   io::ppm::save(output, argv[3]);
 }

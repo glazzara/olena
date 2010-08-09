@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,38 +46,42 @@ const char *args_desc[][2] =
 int main(int argc, char *argv[])
 {
   using namespace mln;
+  using namespace scribo;
 
   if (argc != 5)
     return scribo::debug::usage(argv,
 				"Extract discontinued horizontal and vertical lines",
 				"input.pbm length rank output.pbm",
-				args_desc,
-				"A binary image of horizontal and vertical lines.");
+				args_desc);
 
   trace::entering("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
-  value::label_16 nhlines;
-  image2d<bool> hlines
-    = data::convert(bool(),
-		     scribo::primitive::extract::lines_h_discontinued(input,
-								      c8(),
-								      nhlines,
-								      atoi(argv[2]),
-								      atoi(argv[3])));
-  value::label_16 nvlines;
-  image2d<bool> vlines
-    = data::convert(bool(),
-		     scribo::primitive::extract::lines_v_discontinued(input,
-								      c8(),
-								      nvlines,
-								      atoi(argv[2]),
-								      atoi(argv[3])));
+  typedef value::label_16 V;
+  typedef image2d<V> L;
 
-  data::fill((hlines | pw::value(vlines)).rw(), true);
-  io::pbm::save(hlines, argv[4]);
+  V nhlines;
+  component_set<L>
+    hlines = scribo::primitive::extract::lines_h_discontinued(input,
+							      c8(),
+							      nhlines,
+							      atoi(argv[2]),
+							      atoi(argv[3]));
+
+  V nvlines;
+  component_set<L> vlines
+    = scribo::primitive::extract::lines_v_discontinued(input,
+						       c8(),
+						       nvlines,
+						       atoi(argv[2]),
+						       atoi(argv[3]));
+
+  L& hlines_ima = hlines.labeled_image_();
+  image2d<bool> output = data::convert(bool(), hlines_ima);
+  data::fill((output | (pw::value(vlines.labeled_image()) != 0u)).rw(), true);
+  io::pbm::save(output, argv[4]);
 
   trace::exiting("main");
 }

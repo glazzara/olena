@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,7 +38,7 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/ppm/save.hh>
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/primitive/link/with_single_right_link.hh>
 #include <scribo/filter/object_links_center_aligned.hh>
 
@@ -62,10 +63,10 @@ int main(int argc, char* argv[])
 
   if (argc != 4)
     return scribo::debug::usage(argv,
-				"Show valid or invalid links according the horizontal alignment (based on center line).",
+				"Show valid or invalid links according the "
+				"horizontal alignment (based on center line).",
 				"input.pbm max_alpha output.ppm",
-				args_desc,
-				"A color image. Valid links are drawn in green, invalid ones in red.");
+				args_desc);
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
@@ -73,17 +74,17 @@ int main(int argc, char* argv[])
   // Finding objects.
   value::label_16 nbboxes;
   typedef image2d<value::label_16> L;
-  object_image(L) objects
-    = scribo::primitive::extract::objects(input, c8(), nbboxes);
+  component_set<L> comps
+    = scribo::primitive::extract::components(input, c8(), nbboxes);
 
 
   // Finding right links.
   object_links<L> right_links
-    = primitive::link::with_single_right_link(objects);
+    = primitive::link::with_single_right_link(comps);
 
   // Filtering.
   object_links<L> filtered_links
-    = filter::object_links_center_aligned(objects, right_links, atof(argv[2]));
+    = filter::object_links_center_aligned(right_links, atof(argv[2]));
 
   // Debug image.
   image2d<value::rgb8> decision_image
