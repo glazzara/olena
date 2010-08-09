@@ -35,6 +35,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/box_runstart_piter.hh>
 
+# include <mln/border/get.hh>
 
 namespace mln
 {

@@ -1,3 +1,14 @@
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small changes in Milena.
+
+	* mln/accu/internal/base.hh,
+	* mln/accu/math/sum.hh: Aesthetic changes.
+
+	* mln/data/paste_without_localization.hh: Add a missing include.
+
+	* mln/geom/rotate.hh: Add a new overload taking a box as argument.
+
 2010-08-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Replace deduced type 'point' by 'site'.
