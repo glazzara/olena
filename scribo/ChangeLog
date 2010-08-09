@@ -1,8 +1,18 @@
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Cleanup Makefiles.
+
+	* src/Makefile.am: Disable tests and remove deprecated ones.
+
+	* src/preprocessing/Makefile.am: Use MAGICKXX_* flags.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Cleanup and improve text recognition.
 
-
+	* src/text_recognition_in_picture.cc: Use new routines. Cleanup
+	useless comments. Use a height ratio filter to improve OCR
+	results.
 
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 

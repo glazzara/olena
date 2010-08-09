@@ -26,14 +26,13 @@ SUBDIRS =					\
   misc 						\
   postprocessing 				\
   preprocessing 				\
-  table 					\
   text
 
-bin_PROGRAMS = 					\
-  pbm_lines_in_doc
+# Disabled for the moment:
+#  table
 
 
-pbm_lines_in_doc_SOURCES = pbm_lines_in_doc.cc
+bin_PROGRAMS =
 
 
 if HAVE_TESSERACT
@@ -46,7 +45,7 @@ if HAVE_TESSERACT
 			       $(TESSERACT_LDFLAGS) \
 			       $(TIFF_LDFLAGS) \
 			       -lpthread
-# -lhpdf
+
     pbm_text_in_doc_SOURCES = pbm_text_in_doc.cc
 
 endif HAVE_TESSERACT
