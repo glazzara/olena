@@ -74,8 +74,8 @@
 #include <scribo/primitive/group/from_single_link.hh>
 
 #include <scribo/primitive/regroup/from_single_left_link.hh>
+// #include <scribo/primitive/regroup/from_single_left_link_wrt_h_ratio.hh>
 
-//#include <scribo/filter/objects_with_holes.hh>
 #include <scribo/filter/object_groups_with_holes.hh>
 
 #include <scribo/filter/object_links_bbox_h_ratio.hh>
@@ -87,6 +87,7 @@
 #include <scribo/filter/object_groups_v_thickness.hh>
 
 #include <scribo/debug/highlight_text_area.hh>
+#include <scribo/debug/text_areas_image.hh>
 
 #include <scribo/debug/decision_image.hh>
 #include <scribo/debug/save_bboxes_image.hh>
@@ -106,13 +107,9 @@
 #include <scribo/src/afp/link.hh>
 #include <scribo/src/afp/regroup.hh>
 
-// #include <scribo/core/line_set.hh>
-// #include <scribo/text/recognition.hh>
-// #include <scribo/text/merging.hh>
-
 const char *args_desc[][2] =
 {
-  { "input.ppm", "A color image." },
+  { "input.*", "A color image." },
   { "ouput.ppm", "A color image where the text is highlighted." },
   { "debug_output_dir", "Directory were debug images will be saved" },
   { "lambda", "Lambda value used for foreground extraction" },
@@ -128,6 +125,8 @@ namespace mln
   {
     config()
     {
+      max_dim_size = 1024;
+
       sauvola_s = 2u; // 3?
       sauvola_min_w = 51u;
 
@@ -140,6 +139,8 @@ namespace mln
       group_min_holes = 3;
     }
 
+    // Image resizing factor
+    unsigned max_dim_size;
 
     // Sauvola ms
     unsigned sauvola_s;
@@ -155,51 +156,16 @@ namespace mln
   };
 
 
+} // end of namespace mln
 
-  template <typename I, typename L>
-  mln_concrete(I)
-  compute_text_image(const I& input_rgb,
-		     const scribo::component_set<L>& grouped_objects)
-  {
-    unsigned shift = 5;
-    float height = 1, width = 0;
-    for_all_comps(i, grouped_objects)
-      if (grouped_objects(i).is_valid())
-      {
-	height += grouped_objects(i).bbox().nrows() + shift;
-	width = math::max(static_cast<float>(grouped_objects(i).bbox().ncols()),
-			  width);
-      }
-    if (width == 0)
-      width = 1;
 
-    I output(height, width);
-    data::fill(output, literal::black);
+// Global config variable.
+mln::config conf;
 
-    algebra::vec<2, float> dv;
-    dv[0] = 0;
-    dv[1] = 0;
-    for_all_comps(i, grouped_objects)
-      if (grouped_objects(i).is_valid())
-      {
-	mln_VAR(tmp, duplicate(input_rgb | grouped_objects(i).bbox()));
 
-	typedef fun::x2x::translation<mln_site_(I)::dim, float> trans_t;
-	trans_t trans(dv - grouped_objects(i).bbox().pmin().to_vec());
 
-	mln_domain(I)
-	  tr_box(grouped_objects(i).bbox().pmin().to_vec() + trans.t(),
-		 grouped_objects(i).bbox().pmax().to_vec() + trans.t());
-
-	tr_image<mln_domain(I), tmp_t, trans_t> tr_ima(tr_box, tmp, trans);
-
-	data::paste(tr_ima, output);
-	dv[0] += grouped_objects(i).bbox().nrows() + shift;
-      }
-
-    return output;
-  }
-
+namespace mln
+{
 
   template <typename I>
   unsigned get_factor(const I& ima)
@@ -208,7 +174,7 @@ namespace mln
       nrows = ima.nrows(),
       ncols = ima.ncols(),
       max_dim = std::max(nrows, ncols),
-      factor = max_dim / 512;
+      factor = max_dim / conf.max_dim_size;
 
     return factor ? factor : 1;
   }
@@ -219,13 +185,20 @@ namespace mln
 int main(int argc, char* argv[])
 {
   using namespace scribo;
+  using namespace scribo::primitive;
   using namespace mln;
 
-  if (argc < 3 || argc > 10)
+  if (argc < 3 || argc > 11)
     return scribo::debug::usage(argv,
-				"Find text in a photo.\n\n\
-Common usage: ./text_in_photo_fast input.ppm output.ppm 1 1 1 1 1",
-				"input.ppm output.ppm <bg/fg enabled> <sauvola_ms enabled> <Bg comp filter enabled> <small group filter enabled> <thin group filter enabled> [debug_output_dir] [lambda]",
+				"Find text in a photo.\n\n"
+				"Common usage: ./text_in_photo_fast input.*"
+				" output.ppm 1 1 1 1 1",
+				"input.ppm output.ppm <bg/fg enabled>"
+				" <sauvola_ms enabled> "
+				"<holes in group filter enabled> "
+				"<small group filter enabled> "
+				"<thin group filter enabled> "
+				"[debug_output_dir] [max_dim_size] [lambda]",
 				args_desc);
 
   std::string out_base_dir;
@@ -239,10 +212,11 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm 1 1 1 1 1",
 
   trace::entering("main");
 
-  config conf;
-
   image2d<value::rgb8> input_rgb;
   io::magick::load(input_rgb, argv[1]);
+
+  if (argc >= 10)
+    conf.max_dim_size = atoi(argv[9]);
 
   unsigned factor = get_factor(input_rgb);
 
@@ -255,8 +229,8 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm 1 1 1 1 1",
   std::cout << "Resized domain: " << input_rgb.domain() << std::endl;
 
   unsigned lambda;
-  if (argc == 10)
-    lambda = atoi(argv[9]);
+  if (argc == 11)
+    lambda = atoi(argv[10]);
   else
     lambda = 1.2 * (input_rgb.nrows() + input_rgb.ncols());
 
@@ -360,7 +334,7 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm 1 1 1 1 1",
   /// linking potential components
   timer_.restart();
   mln::util::couple<object_links<L>, object_links<L> >
-    links = primitive::link::left_right(filtered_components);
+    links = link::left_right(filtered_components);
 
   object_links<L>& left_link = links.first();
   object_links<L>& right_link = links.second();
@@ -383,11 +357,11 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm 1 1 1 1 1",
   {
     std::cerr << "BEFORE - ncomponents = " << filtered_components.nelements() << std::endl;
     scribo::debug::save_linked_bboxes_image(input,
-					    filtered_components,
 					    left_link, right_link,
 					    literal::red, literal::cyan,
 					    literal::yellow,
 					    literal::green,
+					    anchor::MassCenter,
 					    scribo::make::debug_filename("links.ppm"));
   }
 #endif
@@ -397,7 +371,7 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm 1 1 1 1 1",
   // Validating left and right links.
   timer_.restart();
   object_links<L>
-    merged_links = primitive::link::merge_double_link(left_link, right_link);
+    merged_links = link::merge_double_link(left_link, right_link);
   t_ = timer_;
   std::cout << "Right/Left Validation. " << t_ << std::endl;
 
@@ -454,14 +428,14 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm 1 1 1 1 1",
 
   timer_.restart();
   object_groups<L>
-    groups = primitive::group::from_single_link(overlap_filtered_links);
+    groups = group::from_single_link(overlap_filtered_links);
 
 
 
 //  Apply grouping in a temporary image (for debug purpose).
 #ifndef NOUT
   component_set<L>
-    raw_group_image = primitive::group::apply(groups);
+    raw_group_image = group::apply(groups);
 #endif // !NOUT
 
   t_ = timer_;
@@ -569,12 +543,15 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm 1 1 1 1 1",
   g_timer.restart();
 
   // Grouping groups together if possible.
-  groups = primitive::regroup::from_single_left_link(filtered_thin_groups,
-						     conf.regroup_dmax);
+//   filtered_thin_groups = regroup::from_single_left_link_wrt_h_ratio(filtered_thin_groups,
+// 								    conf.regroup_dmax,
+// 								    1.60f);
+  filtered_thin_groups = regroup::from_single_left_link(filtered_thin_groups,
+								   conf.regroup_dmax);
 
 
 //   component_set<L>
-//     grouped_components = primitive::group::apply(groups);
+//     grouped_components = group::apply(groups);
 
 
   t_ = g_timer;
@@ -599,12 +576,14 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm 1 1 1 1 1",
   {
     std::cout << "** Using objects_with_two_holes" << std::endl;
 
-    groups  = scribo::filter::object_groups_with_holes(groups,
+    groups  = scribo::filter::object_groups_with_holes(filtered_thin_groups,
 						       conf.group_min_holes);
 
     t_ = g_timer;
     std::cout << "Objects_with_holes " << t_ << std::endl;
   }
+  else
+    groups = filtered_thin_groups;
 
 
   t_ = timer_;
@@ -639,20 +618,13 @@ Common usage: ./text_in_photo_fast input.ppm output.ppm 1 1 1 1 1",
 
   io::ppm::save(scribo::debug::highlight_text_area(input_rgb, comps),
 		out_base_dir + "_input_with_bboxes.ppm");
-  io::ppm::save(compute_text_image(input_rgb, comps),
+  io::ppm::save(scribo::debug::text_areas_image(input_rgb, comps),
 		out_base_dir + "_out_text.ppm");
 
   t_ = timer_;
   std::cout << "Output saved " << t_ << std::endl;
 
   std::cout << "# objects = " << comps.nelements() << std::endl;
-
-
-
-//   scribo::line_set<L>
-//     lines = scribo::make::line_set(groups);
-//   lines = scribo::text::merging(lines);
-//   text::recognition(lines, "fra", "out.txt");
 
   trace::exiting("main");
   return comps.nelements() != 0;
