@@ -36,7 +36,7 @@
 
 # include <sstream>
 
-# include <mln/core/concept/image.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/routine/extend.hh>
 # include <mln/core/image/dmorph/extended.hh>
@@ -160,7 +160,7 @@ namespace scribo
 	inline
 	object_groups<L>
 	fill_object_holes(const object_groups<L>& groups,
-				 unsigned min_size)
+			  unsigned min_size)
 	{
 	  trace::entering("scribo::postprocessing::impl::generic::fill_object_holes");
 
@@ -178,7 +178,7 @@ namespace scribo
 	  util::array<bool> bg_comps_done(
 	    static_cast<unsigned>(components.nelements()) + 1, false);
 
-	  fun::i2v::array<bool>
+	  mln::fun::i2v::array<bool>
 	    to_keep(static_cast<unsigned>(components.nelements()) + 1,
 		    false);
 
@@ -328,10 +328,11 @@ namespace scribo
     {
       trace::entering("scribo::postprocessing::fill_object_holes");
 
+      const I& input = exact(input_);
+
       mln_precondition(input.is_valid());
       mlc_is(mln_value(I), bool)::check();
 
-      const I& input = exact(input_);
       mln_concrete(I) output = duplicate(input);
 
       typedef value::int_u16 L;

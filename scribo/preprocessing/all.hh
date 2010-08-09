@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,6 +42,22 @@ namespace scribo
 
 } // end of namespace scribo
 
-# include <scribo/preprocessing/unskew.hh>
+
+# include <scribo/preprocessing/crop.hh>
+# include <scribo/preprocessing/crop_without_localization.hh>
+
+# include <scribo/preprocessing/denoise.hh>
+# include <scribo/preprocessing/denoise_fg.hh>
+# include <scribo/preprocessing/denoise_bg.hh>
+
+# include <scribo/preprocessing/homogeneous_contrast.hh>
+
+# include <scribo/preprocessing/rotate_90.hh>
+
+# include <scribo/preprocessing/split_bg_fg.hh>
+
+# include <scribo/preprocessing/deskew.hh>
+# include <scribo/preprocessing/deskew_crop.hh>
+
 
 #endif // ! SCRIBO_PREPROCESSING_ALL_HH

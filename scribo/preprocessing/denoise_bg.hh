@@ -30,7 +30,7 @@
 ///
 /// Denoise image background.
 
-# include <mln/core/concept/image.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/concept/function.hh>
 # include <mln/data/transform.hh>
@@ -112,6 +112,9 @@ namespace scribo
 
   namespace preprocessing
   {
+
+    using namespace mln;
+
 
     template <typename I, typename N>
     mln_concrete(I)

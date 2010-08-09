@@ -39,6 +39,8 @@
 
 # include <mln/data/fill.hh>
 
+# include <mln/border/resize.hh>
+
 
 namespace scribo
 {

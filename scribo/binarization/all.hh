@@ -1,5 +1,4 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,34 +23,33 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef SCRIBO_PRIMITIVE_INTERNAL_ALL_HH
-# define SCRIBO_PRIMITIVE_INTERNAL_ALL_HH
+#ifndef SCRIBO_BINARIZATION_ALL_HH
+# define SCRIBO_BINARIZATION_ALL_HH
 
 /// \file
 ///
-/// Include all headers located in scribo/primitive/internal.
+/// Include all headers located in scribo/binarization.
 
 namespace scribo
 {
 
-  namespace primitive
+  /// Namespace of binarization routines.
+  namespace binarization
   {
 
-    /// Namespace of internal routines grouping text components.
-    namespace internal
-    {
-
-    } // end of namespace scribo::primitive::internal
-
-  } // end of namespace scribo::primitive
+  } // end of namespace scribo::binarization
 
 } // end of namespace scribo
 
 
-# include <scribo/primitive/internal/is_link_valid.hh>
-# include <scribo/primitive/internal/find_root.hh>
-//# include <scribo/primitive/internal/find_graph_link.hh>
-//# include <scribo/primitive/internal/update_graph_link.hh>
+# include <scribo/binarization/global_threshold.hh>
+# include <scribo/binarization/global_threshold_auto.hh>
 
+# include <scribo/binarization/local_threshold.hh>
 
-#endif // ! SCRIBO_PRIMITIVE_INTERNAL_ALL_HH
+# include <scribo/binarization/sauvola.hh>
+# include <scribo/binarization/sauvola_ms.hh>
+# include <scribo/binarization/sauvola_ms_split.hh>
+# include <scribo/binarization/sauvola_threshold_image.hh>
+
+#endif // ! SCRIBO_BINARIZATION_ALL_HH

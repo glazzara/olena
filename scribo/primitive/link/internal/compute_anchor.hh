@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,7 +32,9 @@
 /// Routine providing anchors for neighbor seeking.
 
 # include <mln/math/min.hh>
-# include <mln/util/array.hh>
+
+# include <scribo/core/tag/anchor.hh>
+# include <scribo/core/component_set.hh>
 
 
 namespace scribo

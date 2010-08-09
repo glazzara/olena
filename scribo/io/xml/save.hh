@@ -30,8 +30,12 @@
 ///
 /// \brief Save text line information as XML.
 
-#include <fstream>
-#include <sstream>
+# include <fstream>
+# include <sstream>
+
+# include <map>
+
+# include <scribo/core/line_set.hh>
 
 namespace scribo
 {
@@ -66,8 +70,8 @@ namespace scribo
 
       namespace internal
       {
-	std::string& 
-	html_markups_replace(std::string& input, 
+	std::string&
+	html_markups_replace(std::string& input,
 			     std::map<char, std::string>& map)
 	{
 	  for (unsigned i = 0; i < input.size(); ++i)
@@ -83,7 +87,7 @@ namespace scribo
 	}
 
       } // end of namespace scribo::io::xml::internal
-            
+
       template <typename L>
       void
       save(const std::string& input_name,
@@ -114,7 +118,7 @@ namespace scribo
 	  {
 	    file << "<pcGts xmlns=\"http://schema.primaresearch.org/PAGE/gts/pagecontent/2009-03-16\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://schema.primaresearch.org/PAGE/gts/pagecontent/2009-03-16 http://schema.primaresearch.org/PAGE/gts/pagecontent/2009-03-16/pagecontent.xsd\" pcGtsId=\"" << input_name << "\">" << std::endl;
 	  }
-	
+
 	file << "  <PcMetadata>" << std::endl;
 	file << "    <PcCreator>LRDE</PcCreator>" << std::endl;
 	file << "    <PcCreated/>" << std::endl;
@@ -190,20 +194,20 @@ namespace scribo
 		       << "          <point x=\"" << lines(l).bbox().pmin().col()
 		       << "\" y=\"" << lines(l).bbox().pmax().row() << "\"/>"
 		       << std::endl
-		       << "        </coords>" << std::endl;		  
-		  
+		       << "        </coords>" << std::endl;
+
 		  if (lines(l).has_text())
 		    {
 		      std::string tmp = lines(l).text();
 		      tmp = internal::html_markups_replace(tmp, html_map);
-		      
+
 		      file << "        <line text=\""
 			   << tmp
 			   << "\">" << std::endl;
 		    }
 		  else
 		    file << "        <line>" << std::endl;
-		  
+
 		  file << "          <coords>" << std::endl
 		       << "            <point x=\"" << lines(l).bbox().pmin().col()
 		       << "\" y=\"" << lines(l).bbox().pmin().row() << "\"/>"
@@ -218,12 +222,12 @@ namespace scribo
 		       << "\" y=\"" << lines(l).bbox().pmax().row() << "\"/>"
 		       << std::endl
 		       << "          </coords>" << std::endl;
-		  
+
 		  file << "        </line>" << std::endl;
 
-		  file << "      </paragraph>" << std::endl;  
+		  file << "      </paragraph>" << std::endl;
 		}
-	      
+
 	      file << "    </text_region>" << std::endl;
 	    }
 	  }

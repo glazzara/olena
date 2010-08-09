@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,50 +23,26 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <iostream>
+#ifndef SCRIBO_POSTPROCESSING_ALL_HH
+# define SCRIBO_POSTPROCESSING_ALL_HH
 
-#include <mln/core/image/image2d.hh>
-#include <mln/make/image.hh>
-#include <mln/fun/i2v/array.hh>
+/// \file
+///
+/// Include all headers located in scribo/postprocessing.
 
-#include <scribo/core/object_image.hh>
-
-#include <mln/debug/println.hh>
-
-int main(int argc, char* argv[])
+namespace scribo
 {
-  using namespace mln;
 
-  unsigned data[4][4] = { {1, 0, 0, 0},
-			  {0, 0, 2, 0},
-			  {3, 0, 0, 0},
-			  {0, 0, 4, 0} };
+  /// Namespace of postprocessing routines.
+  namespace postprocessing
+  {
 
-  typedef image2d<unsigned> I;
-  I ima = make::image(data);
+  } // end of namespace scribo::postprocessing
 
-  object_image(I) lbl(ima, 4);
-
-  fun::i2v::array<unsigned> f(5);
-  f(0) = 0;
-  f(1) = 1;
-  f(2) = 4;
-  f(3) = 3;
-  f(4) = 4;
-
-  // { {1, 0, 0, 0},
-  //   {0, 0, 2, 0},
-  //   {3, 0, 0, 0},
-  //   {0, 0, 2, 0} };
-  lbl.relabel(f);
+} // end of namespace scribo
 
 
-  mln_assertion(lbl.bbox(1) == make::box2d(0, 0, 0,0));
-  mln_assertion(lbl.mass_center(1) == point2d(0,0));
+# include <scribo/postprocessing/fill_object_holes.hh>
 
-  mln_assertion(lbl.bbox(2) == make::box2d(1, 2, 3,2));
-  mln_assertion(lbl.mass_center(2) == point2d(2,2));
 
-  mln_assertion(lbl.bbox(3) == make::box2d(2, 0, 2,0));
-  mln_assertion(lbl.mass_center(3) == point2d(2,0));
-}
+#endif // ! SCRIBO_POSTPROCESSING_ALL_HH

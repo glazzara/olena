@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -50,7 +51,7 @@ namespace scribo
 
 # include <scribo/primitive/group/apply.hh>
 # include <scribo/primitive/group/from_double_link.hh>
-# include <scribo/primitive/group/from_graph.hh>
+//# include <scribo/primitive/group/from_graph.hh>
 # include <scribo/primitive/group/from_single_link.hh>
 
 

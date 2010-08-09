@@ -31,6 +31,10 @@
 /// Bilinear subsampling.
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/alias/box2d.hh>
+# include <mln/geom/max_col.hh>
+# include <mln/geom/max_row.hh>
+
 # include <mln/opt/at.hh>
 
 
@@ -40,6 +44,7 @@ namespace scribo
   namespace subsampling
   {
 
+    using namespace mln;
 
     template <typename I>
     mln_concrete(I)

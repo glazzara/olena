@@ -34,9 +34,11 @@
 
 
 # include <queue>
+
 # include <mln/core/image/image2d.hh>
 # include <mln/math/pi.hh>
 # include <mln/geom/rotate.hh>
+# include <mln/value/int_u8.hh>
 
 # define PI 3.1415926535897932384
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,15 +38,16 @@ namespace scribo
 
 } // end of namespace scribo
 
+# include <scribo/binarization/all.hh>
 # include <scribo/core/all.hh>
 # include <scribo/debug/all.hh>
 # include <scribo/draw/all.hh>
 # include <scribo/filter/all.hh>
 # include <scribo/make/all.hh>
+# include <scribo/postprocessing/all.hh>
 # include <scribo/preprocessing/all.hh>
 # include <scribo/primitive/all.hh>
-# include <scribo/table/all.hh>
+//# include <scribo/table/all.hh>
 # include <scribo/text/all.hh>
-# include <scribo/util/all.hh>
 
 #endif // ! SCRIBO_ALL_HH

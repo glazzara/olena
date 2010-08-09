@@ -1,3 +1,57 @@
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix many tests in Scribo.
+
+	* all.hh,
+	* binarization/all.hh,
+	* binarization/internal/first_pass_functor.hh,
+	* convert/from_qimage.hh,
+	* core/tag/component.hh,
+	* core/tag/line.hh,
+	* debug/links_decision_image.hh,
+	* debug/mean_and_base_lines_image.hh,
+	* filter/object_groups_with_holes.hh,
+	* io/xml/save.hh,
+	* make/all.hh,
+	* postprocessing/all.hh,
+	* postprocessing/fill_object_holes.hh,
+	* preprocessing/all.hh,
+	* preprocessing/crop_without_localization.hh,
+	* preprocessing/denoise_bg.hh,
+	* preprocessing/denoise_fg.hh,
+	* preprocessing/deskew.hh,
+	* preprocessing/deskew_crop.hh,
+	* preprocessing/split_bg_fg.hh,
+	* primitive/extract/all.hh,
+	* primitive/extract/lines_h_single.hh,
+	* primitive/extract/lines_pattern.hh,
+	* primitive/extract/lines_v_single.hh,
+	* primitive/group/all.hh,
+	* primitive/internal/all.hh,
+	* primitive/internal/is_link_valid.hh,
+	* primitive/link/all.hh,
+	* primitive/link/internal/compute_anchor.hh,
+	* primitive/link/internal/dmax_functor_base.hh,
+	* primitive/regroup/from_single_left_link.hh,
+	* primitive/remove/separators.hh,
+	* subsampling/bilinear.hh,
+	* text/merging.hh,
+	* toolchain/nepomuk/text_extraction.hh,
+	* upsampling/eagle.hh: Add missing headers in order to fix
+	unit-tests.
+
+	* tests/Makefile.am: Disable "table" directory's tests.
+
+	* tests/core/Makefile.am: Remove object_image test.
+
+	* tests/core/object_image.cc: Remove. Deprecated.
+
+	* tests/filter/objects_with_holes.cc,
+	* tests/filter/small_and_large_bboxes.cc: Write a real test.
+
+	* tests/unit_test/Makefile.am: Add specific flags for unit-tests
+	using tesseract and image magick.
+
 2010-07-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have Tesseract-related parts of Scribo compile again.

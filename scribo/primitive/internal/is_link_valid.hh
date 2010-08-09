@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,11 +30,10 @@
 /// \file
 ///
 /// Validate a link from two different links.
-///
-/// \todo To be deleted ?.
 
-# include <mln/util/array.hh>
 # include <mln/util/couple.hh>
+
+# include <scribo/core/object_links.hh>
 
 namespace scribo
 {

@@ -35,6 +35,7 @@
 
 # include <QtGui/QImage>
 
+# include <mln/core/image/image2d.hh>
 # include <mln/value/qt/rgb32.hh>
 
 # if QT_VERSION < 0x040000

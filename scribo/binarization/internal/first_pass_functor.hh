@@ -26,7 +26,11 @@
 #ifndef SCRIBO_BINARIZATION_INTERNAL_FIRST_PASS_FUNCTOR_HH
 # define SCRIBO_BINARIZATION_INTERNAL_FIRST_PASS_FUNCTOR_HH
 
+# include <mln/core/image/image2d.hh>
+# include <mln/core/alias/neighb2d.hh>
+# include <mln/extension/fill.hh>
 # include <mln/value/int_u8.hh>
+# include <mln/data/fill.hh>
 
 # include <scribo/binarization/sauvola_threshold_image.hh>
 
@@ -95,7 +99,7 @@ namespace scribo
 	  initialize(debug_k_l, input);
 # endif // ! SCRIBO_SAUVOLA_DEBUG
 
-	  extension::fill(msk, false);
+	  mln::extension::fill(msk, false);
 
 	  initialize(card, input);
 	  data::fill(card, 1);
@@ -153,8 +157,6 @@ namespace scribo
 	void finalize()
 	{
  	  mln_assertion(! pxl.is_valid());
-
-// 	  std::cout << std::endl << " ------- " << std::endl;
 	}
       };
 

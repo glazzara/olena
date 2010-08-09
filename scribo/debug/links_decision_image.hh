@@ -35,6 +35,8 @@
 # include <mln/data/convert.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/literal/colors.hh>
+# include <mln/draw/box.hh>
+# include <mln/draw/line.hh>
 
 # include <scribo/core/object_links.hh>
 

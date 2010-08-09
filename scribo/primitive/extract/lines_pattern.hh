@@ -34,10 +34,12 @@
 /// \todo Make a more generic canvas.
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/alias/window2d.hh>
+# include <mln/core/concept/window.hh>
 # include <mln/core/routine/duplicate.hh>
 
 # include <mln/extension/adjust_fill.hh>
+
+# include <mln/geom/ncols.hh>
 
 # include <mln/accu/transform_line.hh>
 # include <mln/accu/count_value.hh>

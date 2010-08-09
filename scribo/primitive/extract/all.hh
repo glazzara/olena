@@ -50,7 +50,7 @@ namespace scribo
 } // end of namespace scribo
 
 # include <scribo/primitive/extract/lines_pattern.hh>
-# include <scribo/primitive/extract/canvas.hh>
+//# include <scribo/primitive/extract/canvas.hh>
 # include <scribo/primitive/extract/lines_h_thick.hh>
 # include <scribo/primitive/extract/lines_h_single.hh>
 # include <scribo/primitive/extract/lines_v_single.hh>
@@ -60,7 +60,7 @@ namespace scribo
 # include <scribo/primitive/extract/lines_v_discontinued.hh>
 # include <scribo/primitive/extract/lines_h_pattern.hh>
 # include <scribo/primitive/extract/components.hh>
-# include <scribo/primitive/extract/cells.hh>
+//# include <scribo/primitive/extract/cells.hh>
 # include <scribo/primitive/extract/lines_thick.hh>
 # include <scribo/primitive/extract/lines_h_discontinued.hh>
 # include <scribo/primitive/extract/lines_v_pattern.hh>

@@ -1,4 +1,5 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -19,9 +20,6 @@
 
 include $(top_srcdir)/scribo/tests/tests.mk
 
-check_PROGRAMS =				\
-  object_image 
-
-object_image_SOURCES = object_image.cc
+check_PROGRAMS =
 
 TESTS = $(check_PROGRAMS)

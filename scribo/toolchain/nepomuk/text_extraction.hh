@@ -32,8 +32,11 @@
 /// Extract text from a document.
 
 
+# include <QtCore/QSet>
 # include <QtCore/QString>
 # include <QtCore/QStringList>
+# include <QtCore/QTextStream>
+# include <QtCore/QTextCodec>
 # include <QtGui/QImage>
 
 # include <mln/core/image/image2d.hh>

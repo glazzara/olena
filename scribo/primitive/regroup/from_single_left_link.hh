@@ -45,7 +45,11 @@
 # include <scribo/core/macros.hh>
 # include <scribo/core/component_set.hh>
 # include <scribo/core/object_links.hh>
+# include <scribo/core/object_groups.hh>
 
+# include <scribo/primitive/group/apply.hh>
+# include <scribo/primitive/group/from_single_link.hh>
+# include <scribo/primitive/link/with_single_left_link.hh>
 # include <scribo/primitive/link/internal/find_link.hh>
 # include <scribo/primitive/link/internal/link_single_dmax_base.hh>
 

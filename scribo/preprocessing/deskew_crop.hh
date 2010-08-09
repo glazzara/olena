@@ -138,7 +138,7 @@ namespace scribo
 //       }
 
 
-//     } // end of namespace scribo::preprocessing::internal
+    } // end of namespace scribo::preprocessing::internal
 
 
     // Facade

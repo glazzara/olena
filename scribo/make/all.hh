@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,7 +43,6 @@ namespace scribo
 } // end of namespace scribo
 
 # include <scribo/make/influence_zone_graph.hh>
-# include <scribo/make/text.hh>
 # include <scribo/make/debug_filename.hh>
 
 

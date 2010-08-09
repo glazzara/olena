@@ -57,7 +57,7 @@
 #include <mln/data/wrap.hh>
 #include <mln/util/timer.hh>
 
-#include <text/look_like_text_lines.hh>
+#include <scribo/text/look_like_text_lines.hh>
 
 
 namespace scribo

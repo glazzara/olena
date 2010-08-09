@@ -33,8 +33,8 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/win/hline2d.hh>
 
+# include <scribo/core/component_set.hh>
 # include <scribo/primitive/extract/components.hh>
 
 

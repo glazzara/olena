@@ -32,6 +32,10 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/def/coord.hh>
+# include <mln/geom/min_row.hh>
+# include <mln/geom/min_col.hh>
+# include <mln/geom/max_row.hh>
+# include <mln/geom/max_col.hh>
 # include <mln/opt/at.hh>
 # include <mln/make/box2d.hh>
 

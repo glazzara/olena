@@ -55,7 +55,8 @@ namespace scribo
      */
     template <typename I>
     mln_concrete(I)
-    crop_without_localization(const Image<I>& input, const mln_box(I)& domain);
+    crop_without_localization(const Image<I>& input,
+			      const mln_box(I)& domain);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -63,7 +64,8 @@ namespace scribo
 
     template <typename I>
     mln_concrete(I)
-    crop_without_localization(const Image<I>& input, const mln_box(I)& domain)
+    crop_without_localization(const Image<I>& input,
+			      const mln_box(I)& domain)
     {
       trace::entering("scribo::preprocessing::crop_without_localization");
       mln_assertion(exact(input).is_valid());

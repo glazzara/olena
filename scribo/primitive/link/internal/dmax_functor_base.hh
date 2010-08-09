@@ -48,6 +48,8 @@ namespace scribo
       namespace internal
       {
 
+	using namespace mln;
+
 
 	/// \brief Base class for dmax functors.
 	template <typename E>

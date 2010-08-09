@@ -37,6 +37,7 @@
 # include <mln/literal/colors.hh>
 
 # include <mln/draw/box.hh>
+# include <mln/draw/line.hh>
 # include <mln/draw/dashed_line.hh>
 
 # include <scribo/core/line_set.hh>
@@ -96,7 +97,8 @@ namespace scribo
       trace::entering("scribo::debug::mean_and_base_lines_image");
       mln_precondition(exact(input).is_valid());
 
-      image2d<value::rgb8> output = data::convert(value::rgb8(), input);
+      mln_ch_value(I, value::rgb8)
+	output = data::convert(value::rgb8(), input);
 
       for_all_lines(l, lines)
       {

@@ -33,6 +33,7 @@
 
 # include <sstream>
 
+# include <mln/core/image/image2d.hh>
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/routine/extend.hh>
@@ -42,6 +43,7 @@
 # include <mln/geom/nrows.hh>
 
 # include <mln/extension/duplicate.hh>
+# include <mln/extension/adjust_fill.hh>
 
 # include <mln/draw/box_plain.hh>
 # include <mln/util/array.hh>
@@ -50,8 +52,12 @@
 
 # include <mln/fun/i2v/array.hh>
 
+
 # include <scribo/core/macros.hh>
 # include <scribo/core/component_set.hh>
+# include <scribo/core/object_groups.hh>
+
+# include <scribo/primitive/group/apply.hh>
 
 
 namespace scribo
@@ -98,7 +104,7 @@ namespace scribo
 	typedef mln_dpsite(P) D;
 
 	const L& lbl = components.labeled_image();
-	extension::adjust_fill(lbl, 1, 0);
+	mln::extension::adjust_fill(lbl, 1, 0);
 
 	mln_concrete(L) output;
 	initialize(output, lbl);
@@ -160,7 +166,7 @@ namespace scribo
 
 	  neighb2d nbh = c8();
 
-	  image2d<unsigned> parent, card;
+	  mln_ch_value(L,unsigned) parent, card;
 	  L bboxes_ima;
 
 	  // Will store the first background component id associated

@@ -42,6 +42,38 @@ $(srcdir)/unit-tests.mk: build_unit_test.sh disabled_tests
 
 include $(srcdir)/unit-tests.mk
 
+
+#FIXME: how to handle that automaticaly during the unit test list
+#generation?
+scribo_convert_from_qimage_CPPFLAGS=\
+	$(QT_CPPFLAGS) $(AM_CPPFLAGS) -I$(srcdir)
+scribo_convert_from_qimage_CXXFLAGS=\
+	$(QT_CXXFLAGS) $(AM_CXXFLAGS)
+scribo_convert_from_qimage_LDFLAGS=\
+	$(QT_LDFLAGS) $(LDFLAGS)
+scribo_convert_from_qimage_LDADD=\
+	$(QT_LIBS) $(LDADD)
+
+scribo_toolchain_nepomuk_text_extraction_CPPFLAGS=\
+	$(QT_CPPFLAGS) $(TESSERACT_CPPFLAGS) $(TIFF_CPPFLAGS) \
+	$(AM_CPPFLAGS) -I$(srcdir)
+scribo_toolchain_nepomuk_text_extraction_CXXFLAGS=\
+	$(QT_CXXFLAGS) $(AM_CXXFLAGS)
+scribo_toolchain_nepomuk_text_extraction_LDFLAGS=\
+	$(QT_LDFLAGS) $(TESSERACT_LDFLAGS) $(TIFF_LDFLAGS) \
+	$(LDFLAGS)
+scribo_toolchain_nepomuk_text_extraction_LDADD=\
+	$(QT_LIBS) $(LDADD)
+
+scribo_text_recognition_CPPFLAGS=\
+	$(TESSERACT_CPPFLAGS) $(TIFF_CPPFLAGS) \
+	$(AM_CPPFLAGS) -I$(srcdir)
+scribo_text_recognition_LDFLAGS=\
+	$(TESSERACT_LDFLAGS) $(TIFF_LDFLAGS) \
+	$(LDFLAGS)
+
+
+
 MAINTAINERCLEANFILES = $(srcdir)/scribo_*.cc
 
 TESTS = $(check_PROGRAMS)

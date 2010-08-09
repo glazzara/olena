@@ -30,10 +30,9 @@
 ///
 /// Denoise image foreground.
 
-# include <mln/core/concept/image.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/concept/function.hh>
-# include <mln/data/transform.hh>
 
 # include <mln/accu/math/count.hh>
 
@@ -42,8 +41,10 @@
 # include <mln/util/array.hh>
 # include <mln/fun/i2v/array.hh>
 
-# include <mln/labeling/foreground.hh>
+# include <mln/data/transform.hh>
+
 # include <mln/labeling/compute.hh>
+# include <mln/labeling/foreground.hh>
 
 # include <scribo/fun/v2b/label_to_bool.hh>
 
@@ -73,19 +74,8 @@ namespace scribo
 	       unsigned min_card);
 
 
-  } // end of namespace scribo::preprocessing
-
-} // end of namespace mln
-
-
 # ifndef MLN_INCLUDE_ONLY
 
-
-namespace scribo
-{
-
-  namespace preprocessing
-  {
 
     template <typename I, typename N>
     mln_concrete(I)
@@ -99,7 +89,6 @@ namespace scribo
       mlc_equal(mln_value(I), bool)::check();
       mln_precondition(input.is_valid());
 
-      // FIXME:
       unsigned nlabels;
       image2d<unsigned> lbl = labeling::foreground(input, nbh, nlabels);
 
@@ -120,12 +109,10 @@ namespace scribo
       return output;
     }
 
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace scribo::preprocessing
 
-} // end of namespace mln
-
-
-# endif // ! MLN_INCLUDE_ONLY
+} // end of namespace scribo
 
 # endif // SCRIBO_PREPROCESSING_DENOISE_FG_HH
