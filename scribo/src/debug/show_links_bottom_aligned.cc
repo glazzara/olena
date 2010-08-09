@@ -65,10 +65,10 @@ int main(int argc, char* argv[])
 
   if (argc != 5)
     return scribo::debug::usage(argv,
-				"Show valid or invalid links according the horizontal alignment (based on bottom line).",
+				"Show valid or invalid links according the"
+				"horizontal alignment (based on bottom line).",
 				"input.pbm max_dist max_alpha output.ppm",
-				args_desc,
-				"A color image. Valid links are drawn in green, invalid ones in red.");
+				args_desc);
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);

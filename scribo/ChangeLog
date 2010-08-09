@@ -1,5 +1,18 @@
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Catch up with the current interface of scribo::debug::usage.
+
+	* src/debug/show_links_bottom_aligned.cc,
+	* src/debug/show_links_top_aligned.cc,
+	* src/misc/negate.cc,
+	* src/misc/superpose.cc,
+	* src/preprocessing/rotate_90.cc,
+	* src/primitive/extract/lines_pattern.cc,
+	* src/primitive/find/find_pattern_lines.cc,
+	* src/table/extract.cc: Here.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Replace the use of object_image with component_set.
 
 	* core/erase_objects.hh,

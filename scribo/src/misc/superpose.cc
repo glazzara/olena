@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -49,9 +50,7 @@ int main(int argc, char *argv[])
     return scribo::debug::usage(argv,
 				"Superpose two binary images",
 				"input.pbm data.pbm output.ppm",
-				args_desc,
-				"A color image. Data from 'data.pbm' is \
-colored in red.");
+				args_desc);
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);

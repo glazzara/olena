@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -48,7 +49,8 @@
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image. True for objects and False for the background." },
+  { "input.pbm", "A binary image. True for objects and False for the "
+    "background." },
   { "max_dist", "Maximum distance lookup (common value 45)" },
   { "max_alpha", "Max angle between two object tops. (common value : 5)" },
   {0, 0}
@@ -63,10 +65,10 @@ int main(int argc, char* argv[])
 
   if (argc != 5)
     return scribo::debug::usage(argv,
-				"Show valid or invalid links according the horizontal alignment (based on top line).",
+				"Show valid or invalid links according the "
+				"horizontal alignment (based on top line).",
 				"input.pbm max_dist max_alpha output.ppm",
-				args_desc,
-				"A color image. Valid links are drawn in green, invalid ones in red.");
+				args_desc);
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
