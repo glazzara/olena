@@ -1,5 +1,16 @@
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new routines in Scribo.
+
+	* debug/highlight_text_area.hh,
+	* debug/save_bboxes_image.hh: Add a new overload.
+
+	* debug/save_comp_diff.hh,
+	* debug/text_areas_image.hh,
+	* primitive/regroup/from_single_left_link_wrt_h_ratio.hh: New.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Remove deprecated files.
 
 	* core/internal/link_functor_base.hh,

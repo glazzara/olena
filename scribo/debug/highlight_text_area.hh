@@ -45,6 +45,7 @@
 # include <scribo/core/component_set.hh>
 # include <scribo/core/line_set.hh>
 
+# include <mln/geom/rotate.hh>
 
 namespace scribo
 {
@@ -238,6 +239,55 @@ namespace scribo
       for_all_comps(i, components)
 	if (components(i).is_valid())
 	  mln::draw::box(output, components(i).bbox(), literal::red);
+
+      trace::exiting("scribo::debug::highlight_text_area");
+      return output;
+    }
+
+
+    template <typename I, typename L>
+    mln_ch_value(I, value::rgb8)
+    highlight_text_area_rotated(const Image<I>& input_,
+				const scribo::component_set<L>& components,
+				double angle, box2d rb)
+    {
+      trace::entering("scribo::debug::highlight_text_area");
+
+      const I& input = exact(input_);
+
+      mln_precondition(input.is_valid());
+      mlc_is(mln_value(I), value::rgb8)::check();
+
+      typedef mln_ch_value(I, bool) mask_t;
+      mask_t mask;
+      initialize(mask, input);
+      data::fill(mask, false);
+
+      mln::util::array<mln_box(I)> bbox(unsigned(components.nelements()) + 1);
+
+      for_all_comps(i, components)
+	if (components(i).is_valid())
+	{
+	  bbox(i) = components(i).bbox();
+	  bbox(i).pmin().row() += rb.pmin().row();
+	  bbox(i).pmin().col() += rb.pmin().col();
+	  bbox(i).pmax().row() += rb.pmin().row();
+	  bbox(i).pmax().col() += rb.pmin().col();
+
+	  bbox(i) = mln::geom::rotate(bbox(i), - angle,
+				      input.domain().pcenter());
+	}
+
+      for_all_comps(i, components)
+	if (components(i).is_valid())
+	  data::fill((mask | bbox(i)).rw(), true);
+
+      internal::mask_non_text<mask_t, mln_value(I)> f(mask);
+      mln_ch_value(I, value::rgb8) output = data::transform(input, f);
+
+      for_all_comps(i, components)
+	if (components(i).is_valid())
+	  mln::draw::box(output, bbox(i), literal::red);
 
       trace::exiting("scribo::debug::highlight_text_area");
       return output;

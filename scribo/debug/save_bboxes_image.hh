@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -76,6 +77,14 @@ namespace scribo
 		      const line_set<L>& lines,
 		      const std::string& filename);
 
+    /// \overload.
+    template <typename I, typename L>
+    inline
+    void
+    save_bboxes_image(const Image<I>& input,
+		      const component_set<L>& comps,
+		      const std::string& filename,
+      		      const value::rgb8& value);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -129,6 +138,29 @@ namespace scribo
 		      const std::string& filename)
     {
       return save_bboxes_image(input, lines, filename, literal::red);
+    }
+
+
+    template <typename I, typename L>
+    inline
+    void
+    save_bboxes_image(const Image<I>& input,
+		      const component_set<L>& comps,
+		      const std::string& filename,
+      		      const value::rgb8& value)
+    {
+      trace::entering("scribo::debug::save_bboxes_image");
+      mln_precondition(exact(input).is_valid());
+
+      mln_ch_value(I, value::rgb8)
+	output = data::convert(value::rgb8(), input);
+
+      for_all_comps(c, comps)
+	if (comps(c).is_valid())
+	  mln::draw::box(output, comps(c).bbox(), value);
+
+      mln::io::ppm::save(output, filename);
+      trace::exiting("scribo::debug::save_bboxes_image");
     }
 
 
