@@ -91,10 +91,10 @@ namespace scribo
 
 	  functor.initialize_link(current_object); // <-- initialize_link
 
-	  for (unsigned anchor_ = 0; anchor_ < functor.nanchors(); ++anchor_) // <-- nanchor
+	  for_all_anchors(a, functor.anchors()) // <-- nanchor && anchors
 	  {
 	    // FIXME : See fixme at the beginning of this file.
-	    anchor::Type anchor = static_cast<anchor::Type>(anchor_);
+	    anchor::Type anchor = functor.anchors()[a];
 
 	    mln_site(scribo_support_(F))
 	      start_point = functor.start_point(current_object, anchor), // <-- start_point
@@ -102,7 +102,7 @@ namespace scribo
 
 	    mln_postcondition(p == start_point);
 
-	    while (functor.objects().domain().has(p)
+	    while (functor.labeled_image().domain().has(p)
 		   && ! functor.is_potential_link(current_object,
 						  start_point, p) // <-- is_potential_link
 		   && functor.verify_link_criterion(current_object,

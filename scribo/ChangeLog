@@ -1,5 +1,53 @@
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes in Scribo.
+
+	* core/component_info.hh (is_valid): Check the bounding box
+	validity.
+
+	* core/macros.hh: Add a new macro.
+
+	* debug/decision_image.hh: Remove deprecated preconditions and add
+	missing includes.
+
+	* draw/bounding_boxes.hh: Check the component validity.
+
+	* filter/object_links_non_aligned_simple.hh: Update doc.
+
+	* filter/objects_with_holes.hh: Remove debug and timers. Add
+	missing includes.
+
+	* primitive/extract/lines_pattern.hh: Use the window template
+	parameter instead of an exact window type.
+
+	* primitive/link/internal/find_several_links.hh: Update code with
+	new interfaces.
+
+	* primitive/link/internal/link_functor_base.hh
+	(nanchors()): Remove this method.
+	(labeled_image()): Add a const version.
+
+	* primitive/link/internal/link_several_dmax_base.hh
+	(nanchors(), anchors()): New methods.
+	Introduce 'direction_' attribute.
+
+	* debug/several_links_decision_image.hh: Remove deprecated
+	preconditions.
+
+	* src/debug/show_links_single_left.cc: Update include.
+
+	* table/internal/align_lines.hh,
+	* table/rebuild.hh: Make use of component_set structure.
+
+	* debug/text_areas_image.hh,
+	* primitive/regroup/from_single_left_link_wrt_h_ratio.hh: Add
+	missing includes.
+
+	* src/contest/hdibco-2010/Makefile.am: Do not consider this tool
+	as a test anymore.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add missing includes and headers in AFP's dedicated code.
 
 	* src/afp/components.hh,

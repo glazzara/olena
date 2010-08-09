@@ -19,9 +19,7 @@
 
 include $(top_srcdir)/scribo/tests/tests.mk
 
-check_PROGRAMS = sauvola_ms_hdibco
+bin_PROGRAMS = sauvola_ms_hdibco
 
 sauvola_ms_hdibco_SOURCES = sauvola_ms_hdibco.cc
 
-
-TESTS = $(check_PROGRAMS)

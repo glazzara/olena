@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -72,14 +73,9 @@ namespace scribo
 	  typedef mln_site(L) P;
 	  typedef mln::util::couple<anchor::Type, P> couple_t;
 
-	  link_functor_base(const component_set<L>& components, unsigned nanchors);
-
 	  /// \overload
-	  /// \p nanchors is set to 1.
 	  link_functor_base(const component_set<L>& components);
 
-
-	  unsigned nanchors() const;
 
 	  const object_links<L>& links() const;
 
@@ -171,11 +167,12 @@ namespace scribo
 	  mln_site(L) start_point_(unsigned current_object,
 				   anchor::Type anchor);
 
+	  const L& labeled_image() const;
+
 	protected:
 	  object_links<L> links_;
 	  const component_set<L> components_;
 	  const L& labeled_image_;
-	  unsigned nanchors_;
 	};
 
 
@@ -186,36 +183,12 @@ namespace scribo
 	template <typename L, typename E>
 	inline
 	link_functor_base<L,E>::link_functor_base(
-	  const component_set<L>& components,
-	  unsigned nanchors)
-	  : links_(components),
-	    components_(components),
-	    labeled_image_(this->components_.labeled_image()),
-	    nanchors_(nanchors)
-	{
-	  links_.init();
-	}
-
-
-	template <typename L, typename E>
-	inline
-	link_functor_base<L,E>::link_functor_base(
 	  const component_set<L>& components)
 	  : links_(components),
 	    components_(components),
-	    labeled_image_(this->components_.labeled_image()),
-	    nanchors_(1)
+	    labeled_image_(this->components_.labeled_image())
 	{
 	  links_.init();
-	}
-
-
-	template <typename L, typename E>
-	inline
-	unsigned
-	link_functor_base<L,E>::nanchors() const
-	{
-	  return nanchors_;
 	}
 
 
@@ -402,6 +375,14 @@ namespace scribo
 	  exact(this)->start_processing_object_(current_object);
 	}
 
+
+	template <typename L, typename E>
+	inline
+	const L&
+	link_functor_base<L,E>::labeled_image() const
+	{
+	  return labeled_image_;
+	}
 
 
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,6 +42,7 @@
 # include <mln/math/round.hh>
 
 # include <scribo/core/macros.hh>
+# include <scribo/core/component_set.hh>
 
 
 namespace scribo
@@ -93,12 +95,13 @@ namespace scribo
       ** and all bboxes referenced in this set are aligned on the same row or col.
       **
       */
-      template <typename P>
+      template <typename L>
       mln::util::array<int>
       align_lines(unsigned nsites,
 		  int min_coord,
 		  int max_coord,
-		  mln::util::array<box<P> >& line_bboxes,
+		  const component_set<L>& lines,
+		  component_set<L>& aligned_lines,
 		  unsigned dim,
 		  unsigned max_alignment_diff);
 
@@ -107,12 +110,13 @@ namespace scribo
 # ifndef MLN_INCLUDE_ONLY
 
 
-      template <typename P>
+      template <typename L>
       mln::util::array<int>
       align_lines(unsigned nsites,
 		  int min_coord,
 		  int max_coord,
-		  mln::util::array<box<P> >& line_bboxes,
+		  const component_set<L>& lines,
+		  component_set<L>& aligned_lines,
 		  unsigned dim,
 		  unsigned max_alignment_diff)
       {
@@ -120,58 +124,57 @@ namespace scribo
 
 	mln_precondition(nsites > 0);
 
-	mln::util::array< mln::util::set<unsigned> > lines;
+	mln::util::array< mln::util::set<unsigned> > rlines;
 	lines.resize(nsites);
 
 	// Map components with actual lines.
-	for_all_comps(i, line_bboxes)
+	for_all_comps(i, lines)
 	{
-	  int minline = line_bboxes[i].pmin()[dim] - max_alignment_diff;
+	  int minline = lines(i).bbox().pmin()[dim] - max_alignment_diff;
 	  minline = (minline < min_coord ? min_coord : minline);
-	  int maxline = line_bboxes[i].pmax()[dim] + max_alignment_diff;
+	  int maxline = lines(i).bbox().pmax()[dim] + max_alignment_diff;
 	  maxline = (maxline > max_coord ? max_coord : maxline);
 
 	  for (int line = minline;
 	      line <= maxline; ++line)
-	    lines[line].insert(i);
+	    rlines[line].insert(i);
 	}
 
 	// Init box2line
-	mln::util::array<int> box2line;
-	box2line.resize(line_bboxes.nelements());
-	for_all_elements(i, box2line)
-	  box2line[i] = -1;
+	mln::util::array<int>
+	  box2line(unsigned(lines.nelements()) + 1, -1);
 
 	// Find the line with the highest element count.
 	unsigned max_nelts = 0;
-	for_all_elements(i, lines)
-	  if (max_nelts < lines[i].nelements())
-	    max_nelts = lines[i].nelements();
+	for_all_elements(i, rlines)
+	  if (max_nelts < rlines[i].nelements())
+	    max_nelts = rlines[i].nelements();
 
 	// Aligning lines
 	// FIXME: not optimal... Make it faster!
 	// We may do too much iterations (while loop) and some of them may
 	// be done for nothing...
+	aligned_lines = duplicate(lines);
 	mln::util::array<int> newlines;
 	math::round<int> round;
 	while (max_nelts > 0)
 	{
-	  for_all_elements(i, lines)
-	    if (lines[i].nelements() == max_nelts)
+	  for_all_elements(i, rlines)
+	    if (rlines[i].nelements() == max_nelts)
 	    {
 	      accu::stat::mean<unsigned> mean;
-	      for_all_elements(j, lines[i])
-		if (box2line[lines[i][j]] == -1)
-		  mean.take(line_bboxes[lines[i][j]].center()[dim]);
+	      for_all_elements(j, rlines[i])
+		if (box2line[rlines[i][j]] == -1)
+		  mean.take(lines(rlines[i][j]).bbox().pcenter()[dim]);
 
 	      if (mean.is_valid())
 	      {
 		for_all_elements(j, lines[i])
-		  if (box2line[lines[i][j]] == -1)
+		  if (box2line[rlines[i][j]] == -1)
 		  {
-		    line_bboxes[lines[i][j]].pmin()[dim] = round(mean.to_result());
-		    line_bboxes[lines[i][j]].pmax()[dim] = round(mean.to_result());
-		    box2line[lines[i][j]] = round(mean.to_result());
+		    lines(rlines[i][j]).bbox().pmin()[dim] = round(mean.to_result());
+		    lines(rlines[i][j]).bbox().pmax()[dim] = round(mean.to_result());
+		    box2line[rlines[i][j]] = round(mean.to_result());
 		  }
 		newlines.append(round(mean.to_result()));
 	      }

@@ -100,8 +100,7 @@ namespace scribo
       mln_precondition(objects.is_valid());
       mln_precondition(links.is_valid());
       mln_precondition(filtered_links.is_valid());
-      mln_precondition(links.size() == filtered_links.size());
-      mln_precondition(links.object_image_() != filtered_links.object_image_());
+
       /// Fixme: check that objects has been computed from input.
 
       image2d<value::rgb8>

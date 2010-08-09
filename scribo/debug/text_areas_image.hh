@@ -45,8 +45,9 @@
 
 # include <mln/math/max.hh>
 
-# include <scribo/core/component_set.hh>
+# include <mln/literal/black.hh>
 
+# include <scribo/core/component_set.hh>
 
 namespace scribo
 {

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -77,10 +78,9 @@ namespace scribo
 
 
     /// Draw left, right and validated lists of bounding box links.
-    /// Draw from the bounding box centers.
+    /// Draw from anchors.
     ///
     /// \param[in,out] input_ An image where to draw.
-    /// \param[in] bboxes Bounding boxes.
     /// \param[in] left_link Bounding box left links.
     /// \param[in] right_link Bounding box right links.
     /// \param[in] left_link_value Value used to draw left links.
@@ -90,34 +90,12 @@ namespace scribo
     inline
     void
     bounding_box_links(Image<I>& input_,
-		       const mln::util::array< box<mln_site(I)> >& bboxes,
 		       const object_links<L>& left_link,
 		       const object_links<L>& right_link,
 		       const mln_value(I)& left_link_value,
 		       const mln_value(I)& right_link_value,
-		       const mln_value(I)& validated_link_value);
-
-
-    /// Draw left, right and validated lists of bounding box links.
-    /// Draw from the bounding box mass centers.
-    ///
-    /// \param[in,out] input_ An image where to draw.
-    /// \param[in] mass_centers Bounding box mass centers.
-    /// \param[in] left_link Bounding box left links.
-    /// \param[in] right_link Bounding box right links.
-    /// \param[in] left_link_value Value used to draw left links.
-    /// \param[in] right_link_value Value used to draw right links.
-    /// \param[in] validated_link_value Value used to draw validated links.
-    template <typename I, typename L>
-    inline
-    void
-    bounding_box_links(Image<I>& input_,
-		       const mln::util::array<mln_site(I)::vec>& mass_centers,
-		       const object_links<L>& left_link,
-		       const object_links<L>& right_link,
-		       const mln_value(I)& left_link_value,
-		       const mln_value(I)& right_link_value,
-		       const mln_value(I)& validated_link_value);
+		       const mln_value(I)& validated_link_value,
+		       anchor::Type anchor);
 
 
     /// Draw a graph of bounding box links.
@@ -131,7 +109,6 @@ namespace scribo
     inline
     void
     bounding_box_links(Image<I>& input_,
-		       const mln::util::array< box<mln_site(I)> >& bboxes,
 		       const Graph<G>& g_,
 		       const mln_value(I)& link_value);
 
@@ -155,28 +132,28 @@ namespace scribo
 
       /// Draw a link graph in an image.
       /// Functor to be passed to depth_first_search.
-      template <typename I>
+      template <typename I, typename G>
       struct draw_graph_edges_functor
       {
 
 	/// Constructor
 	///
 	/// \param[in,out] ima The image where to draw.
-	/// \param[in] textbboxes The line of text bounding boxes.
 	/// \param[in] value The value used to draw the links.
 	draw_graph_edges_functor(I& ima,
-				 const mln::util::array<box<mln_site(I)> >& textbboxes,
 				 const mln_value(I)& value)
-	  : ima_(ima), textbboxes_(textbboxes), value_(value)
+	  : ima_(ima), value_(value)
 	{}
 
 	/// Initialize the functor.
 	///
 	/// \param[in] g The graph this functor will work on.
-	template <typename G>
 	void
 	init(const Graph<G>& g)
-	{ deja_vu.resize(exact(g).v_nmax(), false); }
+	{
+	  g_ = g;
+	  deja_vu.resize(exact(g).v_nmax(), false);
+	}
 
 	/// All components/vertices have been treated.
 	void final()
@@ -196,8 +173,8 @@ namespace scribo
 	void added_to_queue(unsigned id)
 	{
 	  deja_vu[id] = true;
-	  mln::draw::line(ima_, textbboxes_[current_vertex].center(),
-	      textbboxes_[id].center(), value_);
+	  mln::draw::line(ima_, g_.components()(current_vertex).bbox().pcenter(),
+			  g_.components()(id).bbox().pcenter(), value_);
 	}
 
 	/// Treating a new vertex.
@@ -215,9 +192,6 @@ namespace scribo
 	/// The image where to draw.
 	I& ima_;
 
-	/// Line of text bounding boxes.
-	const mln::util::array<box<mln_site(I)> >& textbboxes_;
-
 	/// Value to be used to draw links.
 	mln_value(I) value_;
 
@@ -226,6 +200,8 @@ namespace scribo
 
 	/// Store whether a vertex has been already seen or not.
 	std::vector<bool> deja_vu;
+
+	G g_;
       };
 
     } // end of namespace scribo::draw::internal
@@ -245,13 +221,13 @@ namespace scribo
 
       mln_precondition(input.is_valid());
 
-      const component_set<L>& comp_set = links.components();
+      const component_set<L>& comps = links.components();
       for_all_links(i, links)
 	if (links(i) != i && links(i) != 0)
 	{
 	  mln_site(L)
-	    p1 = primitive::link::internal::compute_anchor(comp_set, i, anchor),
-	    p2 = primitive::link::internal::compute_anchor(comp_set, links(i), anchor);
+	    p1 = primitive::link::internal::compute_anchor(comps, i, anchor),
+	    p2 = primitive::link::internal::compute_anchor(comps, links(i), anchor);
 
 	  mln::draw::line(input, p1, p2, value);
 	}
@@ -275,12 +251,12 @@ namespace scribo
     inline
     void
     bounding_box_links(Image<I>& input_,
-		       const mln::util::array<mln_site(I)::vec>& mass_centers,
 		       const object_links<L>& left_link,
 		       const object_links<L>& right_link,
 		       const mln_value(I)& left_link_value,
 		       const mln_value(I)& right_link_value,
-		       const mln_value(I)& validated_link_value)
+		       const mln_value(I)& validated_link_value,
+		       anchor::Type anchor)
     {
       trace::entering("scribo::draw::bounding_box_links");
 
@@ -288,6 +264,8 @@ namespace scribo
       mln_precondition(input.is_valid());
 
       typedef mln_site(I) P;
+
+      const component_set<L>& comps = left_link.components();
 
       mln_dpsite(P) dleft = literal::zero;
       dleft[0] = 2;
@@ -296,18 +274,25 @@ namespace scribo
       for_all_links(i, left_link)
       {
 	mln::draw::line(input,
-			internal::shift_site(input, mass_centers[i], dleft),
 			internal::shift_site(input,
-					     mass_centers[left_link(i)],
+					     primitive::link::internal::compute_anchor(comps, i, anchor),
+					     dleft),
+			internal::shift_site(input,
+					     primitive::link::internal::compute_anchor(comps, left_link(i), anchor),
 					     dleft),
 			left_link_value);
 
+
+
 	mln::draw::line(input,
-			internal::shift_site(input, mass_centers[i], dright),
 			internal::shift_site(input,
-					     mass_centers[right_link(i)],
-					     dright),
+					     primitive::link::internal::compute_anchor(comps, i, anchor),
+					     dleft),
+			internal::shift_site(input,
+					     primitive::link::internal::compute_anchor(comps, right_link(i), anchor),
+					     dleft),
 			right_link_value);
+
 
 	mln::util::couple<bool, unsigned>
 	  nbh = primitive::internal::is_link_valid(left_link,
@@ -316,78 +301,29 @@ namespace scribo
 
 	if (nbh.first())
 	  mln::draw::line(input,
-			  mass_centers[i],
-			  mass_centers[nbh.second()],
+			  primitive::link::internal::compute_anchor(comps, right_link(i), anchor),
+			  primitive::link::internal::compute_anchor(comps, nbh.second(), anchor),
 			  validated_link_value);
 
-	input(mass_centers[i]) = validated_link_value;
       }
 
       trace::exiting("scribo::draw::bounding_box_links");
     }
 
-    template <typename I, typename L>
-    inline
-    void
-    bounding_box_links(Image<I>& input_,
-		       const mln::util::array< box<mln_site(I)> >& bboxes,
-		       const object_links<L>& left_link,
-		       const object_links<L>& right_link,
-		       const mln_value(I)& left_link_value,
-		       const mln_value(I)& right_link_value,
-		       const mln_value(I)& validated_link_value)
-    {
-      trace::entering("scribo::draw::bounding_box_links");
-
-      I& input = exact(input_);
-      mln_precondition(input.is_valid());
-
-      typedef mln_site(I) P;
-      mln_site(I)::vec dleft = literal::origin;
-      dleft[0] = 2;
-      mln_site(I)::vec dright = literal::origin;
-      dright[0] = -2;
-      for_all_links(i, left_link)
-      {
-	mln::draw::line(input,
-			bboxes[i].center() + dleft,
-			bboxes[left_link(i)].center() + dleft,
-			left_link_value);
-
-	mln::draw::line(input,
-			bboxes[i].center() + dright,
-			bboxes[right_link(i)].center() + dright,
-			right_link_value);
-
-	mln::util::couple<bool, unsigned>
-	  nbh = primitive::internal::is_link_valid(left_link,
-						   right_link,
-						   i);
-
-	if (nbh.first())
-	  mln::draw::line(input,
-			  bboxes[i].center(),
-			  bboxes[nbh.second()].center(),
-			  validated_link_value);
-      }
-
-      trace::exiting("scribo::draw::bounding_box_links");
-    }
 
 
     template <typename I, typename G>
     inline
     void
     bounding_box_links(Image<I>& input,
-		       const mln::util::array< box<mln_site(I)> >& bboxes,
 		       const Graph<G>& g,
 		       const mln_value(I)& link_value)
     {
       trace::entering("scribo::draw::bounding_box_links");
       mln_precondition(exact(input).is_valid());
-      mln_precondition(exact(g).v_nmax() == bboxes.nelements());
 
-      internal::draw_graph_edges_functor<I> f(exact(input), bboxes, link_value);
+
+      internal::draw_graph_edges_functor<I,G> f(exact(input), link_value);
       mln::canvas::browsing::depth_first_search(g, f);
 
       trace::exiting("scribo::draw::bounding_box_links");

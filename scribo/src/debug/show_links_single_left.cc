@@ -41,7 +41,7 @@
 
 #include <scribo/primitive/extract/objects.hh>
 #include <scribo/primitive/link/with_single_left_link.hh>
-#include <scribo/primitive/link/internal/link_ms_dmax_base.hh>
+#include <scribo/primitive/link/internal/link_single_dmax_base.hh>
 #include <scribo/primitive/link/compute.hh>
 
 #include <scribo/draw/bounding_boxes.hh>

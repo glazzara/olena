@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,8 +29,11 @@
 
 /// \file
 ///
-/// Base class for link functors using mass centers and a given max
-/// distance.
+/// Base class for link functors using several anchors and a maximum
+/// lookup distance.
+///
+/// FIXME: make it more generic to support different
+/// anchor::Direction.
 
 
 # include <mln/accu/center.hh>
@@ -60,8 +64,8 @@ namespace scribo
       namespace internal
       {
 
-	/// \brief Base class for link functors using mass centers and
-	/// a given max distance.
+	/// \brief Base class for link functors using several anchors
+	/// and a maximum lookup distance.
 	//
 	template <typename L, typename E>
 	class link_several_dmax_base
@@ -74,14 +78,14 @@ namespace scribo
 
 	public:
 
-	  link_several_dmax_base(const object_image(L)& objects,
-				 unsigned neighb_max_distance,
-				 unsigned nanchors);
+	  link_several_dmax_base(const component_set<L>& comps,
+				 unsigned neighb_max_distance);
 
 
 
 	  bool verify_link_criterion_(unsigned current_object,
-				      const P& start_point, const P& p) const;
+				      const P& start_point,
+				      const P& p) const;
 
 	  void start_processing_object_(unsigned current_object);
 
@@ -91,13 +95,17 @@ namespace scribo
 	  void initialize_link_(unsigned current_object);
 	  couple_t finalize_link_(unsigned current_object);
 
-
+	  unsigned nanchors() const;
+	  const util::array<anchor::Type>& anchors() const;
 
 	protected:
-	  mln::util::array<ms_t> mass_centers_;
+	  mln::util::array<anchor::Type> anchors_;
 	  mln::util::array<couple_t> potential_links_;
 	  float dmax_;
 	  float neighb_max_distance_;
+	  anchor::Direction direction_;
+
+	  using super_::labeled_image_;
 	};
 
 
@@ -107,17 +115,17 @@ namespace scribo
 	template <typename L, typename E>
 	inline
 	link_several_dmax_base<L, E>::link_several_dmax_base(
-	  const object_image(L)& objects,
-	  unsigned neighb_max_distance,
-	  unsigned nanchors)
+	  const component_set<L>& comps,
+	  unsigned neighb_max_distance)
 
-	  : super_(objects, nanchors),
+	  : super_(comps),
 	    dmax_(0),
-	    neighb_max_distance_(neighb_max_distance)
+	    neighb_max_distance_(neighb_max_distance),
+	    direction_(anchor::Horizontal) // FIXME: make it an
+					   // argument when this
+					   // functor is generic
+					   // enough..
 	{
-
-	  mass_centers_ = labeling::compute(accu::meta::center(),
-					    objects, objects.nlabels());
 	}
 
 	template <typename L, typename E>
@@ -130,7 +138,7 @@ namespace scribo
 	{
 	  (void) current_object;
 
-	  float dist = math::abs(p.col() - start_point.col());
+	  float dist = math::abs(p[direction_] - start_point[direction_]);
 	  return dist <= dmax_; // Not too far
 	}
 
@@ -142,8 +150,8 @@ namespace scribo
 	  unsigned current_object)
 	{
 	  float
-	    midcol = (this->objects_.bbox(current_object).pmax().col()
-		      - this->objects_.bbox(current_object).pmin().col()) / 2;
+	    midcol = (this->components_(current_object).bbox().pmax()[direction_]
+		      - this->components_(current_object).bbox().pmin()[direction_]) / 2;
 	  dmax_ = midcol + neighb_max_distance_;
 	}
 
@@ -168,7 +176,6 @@ namespace scribo
 	link_several_dmax_base<L, E>::initialize_link_(unsigned current_object)
 	{
 	  (void) current_object;
-	  this->links_.clear();
 	  this->potential_links_.clear();
 	}
 
@@ -188,8 +195,8 @@ namespace scribo
 	  {
 	    for(unsigned i = 0; i < this->potential_links_.nelements(); ++i)
 	    {
-	      tmp = math::abs(this->objects_.bbox(current_object).pmax().col()
-			      - this->potential_links_(i).second().col());
+	      tmp = math::abs(this->components_(current_object).bbox().pmax()[direction_]
+			      - this->potential_links_(i).second()[direction_]);
 	      dist.append(tmp);
 	      if (tmp < min)
 		min = tmp;
@@ -198,6 +205,9 @@ namespace scribo
 	    mln_assertion(min != mln_max(unsigned));
 
 	    // Keep closest links and compute vertical overlap.
+	    //
+	    // FIXME: not using direction_ attribute. This code is not
+	    // generic enough!
 	    unsigned
 	      nratio = 0,
 	      id_max_ratio = 0;
@@ -207,17 +217,17 @@ namespace scribo
 	      if (dist[i] < (1.2 * min))
 	      {
 		unsigned
-		  other_object = this->objects_(potential_links_(i).second());
+		  other_object = labeled_image_(potential_links_(i).second());
 		nbh_id = other_object;
 
 		float
 		  dr
-		   = math::min(this->objects_.bbox(current_object).pmax().row(),
-			       this->objects_.bbox(other_object).pmax().row())
- 		   - math::min(this->objects_.bbox(current_object).pmin().row(),
-			       this->objects_.bbox(other_object).pmin().row()),
-		  dh = this->objects_.bbox(other_object).pmax().row()
-		      - this->objects_.bbox(other_object).pmin().row(),
+		   = math::min(this->components_(current_object).bbox().pmax().row(),
+			       this->components_(other_object).bbox().pmax().row())
+ 		   - math::min(this->components_(current_object).bbox().pmin().row(),
+			       this->components_(other_object).bbox().pmin().row()),
+		  dh = this->components_(other_object).bbox().pmax().row()
+		      - this->components_(other_object).bbox().pmin().row(),
  		  ratio = dr / dh;
 
 		overlap.append(ratio);
@@ -237,7 +247,7 @@ namespace scribo
 	    if (nratio == 1)
 	    {
 	      this->links_(current_object)
-		= this->objects_(potential_links_(id_max_ratio).second());
+		= labeled_image_(potential_links_(id_max_ratio).second());
 
 	      return potential_links_(id_max_ratio);
 	    }
@@ -246,6 +256,23 @@ namespace scribo
 
 	  this->links_(current_object) = current_object;
 	  return mln::make::couple(anchor::Invalid, P());
+	}
+
+
+	template <typename L, typename E>
+	inline
+	const util::array<anchor::Type>&
+	link_several_dmax_base<L, E>::anchors() const
+	{
+	  return anchors_;
+	}
+
+	template <typename L, typename E>
+	inline
+	unsigned
+	link_several_dmax_base<L,E>::nanchors() const
+	{
+	  return anchors_.nelements();
 	}
 
 

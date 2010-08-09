@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -99,7 +100,7 @@ namespace scribo
       mln_precondition(input.is_valid());
 
       for_all_comps(i, components)
-	if (components(i).bbox().is_valid())
+	if (components(i).is_valid())
 	  mln::draw::box(input, components(i).bbox(), value);
 
       trace::exiting("scribo::draw::bounding_boxes");

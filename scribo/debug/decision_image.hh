@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,9 +36,12 @@
 # include <mln/value/rgb8.hh>
 # include <mln/literal/colors.hh>
 # include <mln/util/array.hh>
+# include <mln/draw/box.hh>
+# include <mln/draw/line.hh>
 
+# include <scribo/core/tag/anchor.hh>
 # include <scribo/core/object_groups.hh>
-# include <scribo/draw/bounding_boxes.hh>
+# include <scribo/primitive/link/internal/compute_anchor.hh>
 
 
 namespace scribo
@@ -105,8 +109,6 @@ namespace scribo
       mln_precondition(input.is_valid());
       mln_precondition(groups.is_valid());
       mln_precondition(filtered_groups.is_valid());
-      mln_precondition(groups.size() == filtered_groups.size());
-      mln_precondition(groups.components_id_() != filtered_groups.components_id_());
       /// Fixme: check that components has been computed from input.
 
       image2d<value::rgb8>
@@ -114,9 +116,11 @@ namespace scribo
 
       for (unsigned i = 1; i < groups.size(); ++i)
 	if (groups(i) != filtered_groups(i))
-	  mln::draw::box(decision_image, components(i).bbox(), literal::red);
+	  mln::draw::box(decision_image, components(i).bbox(),
+			 literal::red);
 	else
-	  mln::draw::box(decision_image, components(i).bbox(), literal::green);
+	  mln::draw::box(decision_image, components(i).bbox(),
+			 literal::green);
 
       trace::exiting("scribo::debug::decision_image");
       return decision_image;
@@ -138,8 +142,6 @@ namespace scribo
       mln_precondition(input.is_valid());
       mln_precondition(links.is_valid());
       mln_precondition(filtered_links.is_valid());
-      mln_precondition(links.size() == filtered_links.size());
-      mln_precondition(links.object_image_() != filtered_links.object_image_());
       /// Fixme: check that components has been computed from input.
 
       image2d<value::rgb8>
@@ -155,7 +157,8 @@ namespace scribo
 	{
 	  mln_site(L)
 	    p1 = primitive::link::internal::compute_anchor(comps, i, anchor),
-	    p2 = primitive::link::internal::compute_anchor(comps, links(i), anchor);
+	    p2 = primitive::link::internal::compute_anchor(comps, links(i),
+							   anchor);
 
 	  value::rgb8 value = literal::green;
 	  if (links(i) != filtered_links(i))

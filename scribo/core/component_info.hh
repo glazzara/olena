@@ -176,7 +176,7 @@ namespace scribo
   bool
   component_info::is_valid() const
   {
-    return tag_ != component::Ignored;
+    return tag_ != component::Ignored && bbox_.is_valid();
   }
 
 

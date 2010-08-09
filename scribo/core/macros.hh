@@ -58,4 +58,7 @@
 # define for_all_lines_info(E, S) \
   for_all_comp_data(E, S)
 
+# define for_all_anchors(E, S) \
+  for_all_elements(E, S)
+
 #endif // ! SCRIBO_CORE_MACROS_HH

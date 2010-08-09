@@ -55,8 +55,7 @@ namespace scribo
         \param[in] max_alpha    Maximum angle value (degrees).
 
 
-	Exemple with dim == 1 and anchor == 1 (bottom
-	horizontal filter):
+	Exemple with anchor == 1 (bottom horizontal filter):
 
 	\verbatim
 

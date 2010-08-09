@@ -58,7 +58,6 @@ namespace scribo
 
       using namespace mln;
 
-
       /// Extract lines with a specific pattern
       ///
       /// \param[in] input_ A binary image.
@@ -109,7 +108,7 @@ namespace scribo
 	    initialize(output, input);
 
 	    mln_piter(I) p(input.domain());
-	    mln_qiter(window2d) q(win, p);
+	    mln_qiter(W) q(win, p);
 	    bool is_foreground;
 	    for_all(p)
 	    {

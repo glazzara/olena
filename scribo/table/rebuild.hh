@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -71,29 +72,29 @@ namespace scribo
     ** cell is labeled. The second argument are the aligned and connected
     ** table line bounding boxes.
     */
-    template <typename I, typename V>
-    mln::util::couple<mln_ch_value(I,V),
-		      mln::util::couple<mln::util::array<box<mln_site(I)> >,
-				   mln::util::array<box<mln_site(I)> > > >
+    template <typename I, typename L>
+    mln::util::couple<L,
+		      mln::util::couple<component_set<L>,
+					component_set<L> > >
     rebuild(const Image<I>& input_,
-	    const mln::util::couple<mln::util::array<box<mln_site(I)> >,
-			       mln::util::array<box<mln_site(I)> > >& linebboxes_,
+	    const component_set<L>& vlines,
+	    const component_set<L>& hlines,
 	    unsigned max_dist_lines,
-	    V& ncells);
+	    mln_value(L)& ncells);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-    template <typename I, typename V>
-    mln::util::couple<mln_ch_value(I,V),
-		      mln::util::couple<mln::util::array<box<mln_site(I)> >,
-			       mln::util::array<box<mln_site(I)> > > >
+    template <typename I, typename L>
+    mln::util::couple<L,
+		      mln::util::couple<component_set<L>,
+					component_set<L> > >
     rebuild(const Image<I>& input_,
-	    const mln::util::couple<mln::util::array<box<mln_site(I)> >,
-			       mln::util::array<box<mln_site(I)> > >& linebboxes_,
+	    const component_set<L>& vlines,
+	    const component_set<L>& hlines,
 	    unsigned max_dist_lines,
-	    V& ncells)
+	    mln_value(L)& ncells)
     {
       trace::entering("scribo::table::rebuild");
       const I& input = exact(input_);
@@ -101,34 +102,33 @@ namespace scribo
       mlc_equal(mln_value(I), bool)::check();
       mln_precondition(input.is_valid());
 
-      mln::util::couple<mln::util::array<box<mln_site(I)> >,
-		   mln::util::array<box<mln_site(I)> > > linebboxes = linebboxes_;
-
-      scribo::debug::save_table_image(input, linebboxes,
+# ifndef SCRIBO_DEBUG
+      scribo::debug::save_table_image(input, vlines, hlines,
 				      literal::red, "table-raw.ppm");
+# endif
 
-      mln::util::array<int> rows = align_lines_horizontaly(input, linebboxes.second(), 5);
-      mln::util::array<int> cols = align_lines_verticaly(input, linebboxes.first(), 5);
+      mln::util::array<int> rows = align_lines_horizontaly(input, vlines, 5);
+      mln::util::array<int> cols = align_lines_verticaly(input, hlines, 5);
 
-# ifndef SCRIBO_NDEBUG
-      scribo::debug::save_table_image(input, linebboxes,
+# ifndef SCRIBO_DEBUG
+      scribo::debug::save_table_image(input, vlines, hlines,
 				      literal::red, "table-aligned.ppm");
 # endif
 
-      repair_vertical_lines(input, linebboxes, 10);
-      repair_horizontal_lines(input, linebboxes, 10);
+      repair_vertical_lines(input, vlines, 10);
+      repair_horizontal_lines(input, hlines, 10);
 
-# ifndef SCRIBO_NDEBUG
-      scribo::debug::save_table_image(input, linebboxes,
+# ifndef SCRIBO_DEBUG
+      scribo::debug::save_table_image(input, vlines, hlines,
 				      literal::red, "table-repaired.ppm");
 # endif
 
       // Connect vertical lines with horizontal lines.
-      connect_vertical_lines(rows, linebboxes, input, max_dist_lines);
-      connect_horizontal_lines(cols, linebboxes, input, max_dist_lines);
+      connect_vertical_lines(rows, vlines, hlines, input, max_dist_lines);
+      connect_horizontal_lines(cols, vlines, hlines, input, max_dist_lines);
 
-# ifndef SCRIBO_NDEBUG
-      scribo::debug::save_table_image(input, linebboxes,
+# ifndef SCRIBO_DEBUG
+      scribo::debug::save_table_image(input, vlines, hlines,
 				      literal::red, "table-connected.ppm");
 # endif
 
@@ -136,15 +136,16 @@ namespace scribo
       mln_ch_value(I,bool) res;
       initialize(res, input);
       data::fill(res, false);
-      for_all_elements(i, linebboxes.first())
-	mln::draw::box(res, linebboxes.first()[i], true);
-      for_all_elements(i, linebboxes.second())
-	mln::draw::box(res, linebboxes.second()[i], true);
+      for_all_comps(i, vlines)
+	mln::draw::box(res, vlines(i).bbox(), true);
+      for_all_comps(i, hlines)
+	mln::draw::box(res, hlines(i).bbox(), true);
 
-      mln_ch_value(I,V) lbl = labeling::background(res, c8(), ncells);
+      L lbl = labeling::background(res, c8(), ncells);
 
       trace::exiting("scribo::table::rebuild");
-      return mln::make::couple(lbl, linebboxes);
+      return mln::make::couple(lbl,
+			       mln::make::couple(vlines, hlines));
     }
 
 
