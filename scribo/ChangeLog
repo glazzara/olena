@@ -1,5 +1,18 @@
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Remove deprecated files.
+
+	* core/internal/link_functor_base.hh,
+	* debug/save_object_diff.hh,
+	* make/text.hh,
+	* primitive/internal/update_link_array.hh,
+	* primitive/link/internal/anchors_3.hh,
+	* primitive/link/internal/link_ms_dmax_base.hh,
+	* primitive/link/internal/link_ms_dmax_ratio_base.hh,
+	* src/pbm_lines_in_doc.cc: Remove.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix many tests in Scribo.
 
 	* all.hh,
