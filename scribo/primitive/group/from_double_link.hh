@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -69,8 +70,7 @@ namespace scribo
       */
       template <typename L>
       object_groups<L>
-      from_double_link(const component_set<L>& components,
-		       const object_links<L>& left_link,
+      from_double_link(const object_links<L>& left_link,
 		       const object_links<L>& right_link);
 
 
@@ -81,19 +81,17 @@ namespace scribo
       template <typename L>
       inline
       object_groups<L>
-      from_double_link(const component_set<L>& components,
-		       const object_links<L>& left_link,
+      from_double_link(const object_links<L>& left_link,
 		       const object_links<L>& right_link)
       {
 	trace::entering("scribo::primitive::group::from_double_link");
 
 	mln_precondition(left_link.nelements() == right_link.nelements());
-	mln_precondition(left_link.components_id_() == components.id_());
-	mln_precondition(right_link.components_id_() == components.id_());
 
-	object_groups<L> parent(components, left_link.nelements());
+
+	object_groups<L> parent(left_link);
 	parent.init();
-	for_all_ncomponents(i, components.nlabels())
+	for_all_comps(i, left_link.components())
 	{
 	  mln::util::couple<bool, unsigned>
 	    nbh = internal::is_link_valid(left_link, right_link, i);
@@ -101,14 +99,14 @@ namespace scribo
 	  {
 	    unsigned par = internal::find_root(parent, nbh.second());
 	    if (par < i)
-	      parent[par] = i;
+	      parent(par) = i;
 	    else
-	      parent[i] = par;
+	      parent(i) = par;
 	  }
 	}
 
 	for (unsigned i = parent.nelements() - 1; i < parent.nelements(); --i)
-	  parent[i] = parent[parent[i]];
+	  parent(i) = parent(parent(i));
 
 	trace::exiting("scribo::primitive::group::from_double_link");
 	return parent;

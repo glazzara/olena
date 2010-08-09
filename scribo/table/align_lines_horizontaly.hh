@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -61,30 +62,34 @@ namespace scribo
     ///
     /// \return A list of the resulting aligned rows. Each integer is actually
     ///		a row number.
-    template <typename I>
+    template <typename I, typename L>
     mln::util::array<int>
     align_lines_horizontaly(const Image<I>& input,
-			    mln::util::array<box<mln_site(I)> >& line_bboxes,
+			    const component_set<L>& lines,
+			    component_set<L>& aligned_lines,
 			    unsigned max_alignment_diff);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-    template <typename I>
+    template <typename I, typename L>
     mln::util::array<int>
     align_lines_horizontaly(const Image<I>& input,
-			    mln::util::array<box<mln_site(I)> >& line_bboxes,
+			    const component_set<L>& lines,
+			    component_set<L>& aligned_lines,
 			    unsigned max_alignment_diff)
     {
       trace::entering("scribo::table::align_lines_horizontaly");
 
       mln_precondition(exact(input).is_valid());
-      mln::util::array<int> res =  internal::align_lines(geom::nrows(input),
-							 geom::min_row(input),
-							 geom::max_row(input),
-							 line_bboxes, 0,
-							 max_alignment_diff);
+      mln::util::array<int>
+	res =  internal::align_lines(geom::nrows(input),
+				     geom::min_row(input),
+				     geom::max_row(input),
+				     lines,
+				     aligned_lines, 0,
+				     max_alignment_diff);
 
       trace::exiting("scribo::table::align_lines_horizontaly");
       return res;

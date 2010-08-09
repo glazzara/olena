@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -36,6 +37,8 @@
 # include <mln/pw/all.hh>
 
 # include <mln/util/array.hh>
+
+# include <mln/data/transform.hh>
 
 # include <scribo/core/component_set.hh>
 # include <scribo/primitive/extract/components.hh>
@@ -111,8 +114,8 @@ namespace scribo
 	{
 	  if (l == literal::zero)
 	    return true;
-	  return components_.bbox(l).nrows() > min_thickness_
-		&& components_.bbox(l).ncols() > min_thickness_;
+	  return components_(l).bbox().nrows() > min_thickness_
+	    && components_(l).bbox().ncols() > min_thickness_;
 	}
 
 	/// Component bounding boxes.
@@ -145,16 +148,13 @@ namespace scribo
 
       V nlabels;
       typedef mln_ch_value(I,V) lbl_t;
-      component_set<lbl_t> components
+      component_set<lbl_t> comps
 	  = primitive::extract::components(input, nbh, nlabels);
 
       typedef internal::components_thin_filter<lbl_t> func_t;
-      func_t fv2b(components, min_thickness);
-      components.relabel(fv2b);
-
-      mln_concrete(I) output = duplicate(input);
-      data::fill((output | (pw::value(components) == pw::cst(literal::zero))).rw(),
-		 false);
+      func_t fv2b(comps, min_thickness);
+      mln_concrete(I)
+	output = mln::data::transform(comps.labeled_image(), fv2b);
 
       trace::exiting("scribo::filter::components_thin");
       return output;
@@ -174,7 +174,8 @@ namespace scribo
       typedef internal::components_thin_filter<L> func_t;
       func_t is_not_too_thin(components, min_thickness);
 
-      component_set<L> output = internal::compute(components, is_not_too_thin);
+      component_set<L> output = components.duplicate();
+      output.update_tags(is_not_too_thin, component::Ignored);
 
       trace::exiting("scribo::filter::components_thin");
       return output;

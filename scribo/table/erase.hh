@@ -54,16 +54,16 @@ namespace scribo
     ///
     /// \param[in]  input	  A binary image from which the table lines
     ///				  are extracted.
-    /// \param[in]  hlines	  An object image with horizontal lines.
-    /// \param[in]  vlines	  An object image with vertical lines.
+    /// \param[in]  hlines	  A component set with horizontal lines.
+    /// \param[in]  vlines	  A component set with vertical lines.
     ///
     ///	\return A copy of \p in where the table lines are removed.
     //
     template <typename I, typename L>
     mln_concrete(I)
     erase(const Image<I>& input,
-	  const Image<L>& hlines,
-	  const Image<L>& vlines);
+	  const component_set<L>& hlines,
+	  const component_set<L>& vlines);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -73,14 +73,12 @@ namespace scribo
     inline
     mln_concrete(I)
     erase(const Image<I>& input,
-	  const Image<L>& hlines,
-	  const Image<L>& vlines)
+	  const component_set<L>& hlines,
+	  const component_set<L>& vlines)
     {
       trace::entering("scribo::internal::erase");
       mlc_equal(mln_value(I),bool)::check();
       mln_precondition(exact(input).is_valid());
-      mln_precondition(exact(hlines).is_valid());
-      mln_precondition(exact(vlines).is_valid());
 
       I output = duplicate(input);
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -36,19 +37,11 @@
 # include <mln/core/concept/function.hh>
 # include <mln/core/image/dmorph/image_if.hh>
 
-# include <mln/labeling/blobs.hh>
-# include <mln/labeling/relabel.hh>
-
-# include <mln/make/relabelfun.hh>
+# include <mln/data/transform.hh>
 
 # include <mln/util/array.hh>
 
 # include <mln/pw/all.hh>
-
-# include <mln/accu/math/count.hh>
-
-# include <mln/set/compute.hh>
-
 
 # include <scribo/core/component_set.hh>
 # include <scribo/fun/v2b/objects_small_filter.hh>
@@ -120,11 +113,8 @@ namespace scribo
 
      typedef fun::v2b::components_small_filter<mln_ch_value(I,V)> func_t;
      func_t fv2b(lbl, min_size);
-     lbl.relabel(fv2b);
-
-     mln_concrete(I) output = duplicate(input);
-     data::fill((output | (pw::value(lbl) == pw::cst(literal::zero))).rw(),
-		false);
+     mln_concrete(I)
+       output = mln::data::transform(lbl.labeled_image(), fv2b);
 
      trace::exiting("scribo::filter::components_small");
      return output;

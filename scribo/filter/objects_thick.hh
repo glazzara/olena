@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -111,8 +112,8 @@ namespace scribo
 	{
 	  if (l == literal::zero)
 	    return true;
-	  return components_.bbox(l).nrows() < max_thickness_
-		&& components_.bbox(l).ncols() < max_thickness_;
+	  return components_(l).bbox().nrows() < max_thickness_
+	    && components_(l).bbox().ncols() < max_thickness_;
 	}
 
 
@@ -173,9 +174,8 @@ namespace scribo
       typedef internal::thick_object_filter<L> func_t;
       func_t is_not_too_thick(components, max_thickness);
 
-      component_set<L> output;
-      output.init_from_(components);
-      output.relabel(is_not_too_thick);
+      component_set<L> output = components.duplicate();
+      output.update_tags(is_not_too_thick, component::Ignored);
 
       trace::exiting("scribo::filter::objects_thick");
       return output;

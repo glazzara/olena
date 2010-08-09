@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -106,7 +107,7 @@ namespace scribo
 	component_set<lbl_t> components
 	  = primitive::extract::components(input, nbh, nlabels);
 
-	filter.update_components(components);
+	filter.update_objects(components);
 	components.relabel(filter);
 
 	mln_concrete(I) output = duplicate(input);
@@ -127,9 +128,8 @@ namespace scribo
 
 	mln_precondition(components.is_valid());
 
-	component_set<L> output;
-	output.init_from_(components);
-	output.relabel(filter);
+	component_set<L> output = components.duplicate();
+	output.update_tags(filter, component::Ignored);
 
 	trace::exiting("scribo::filter::internal::compute");
 	return output;

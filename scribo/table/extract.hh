@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -90,9 +91,11 @@ namespace scribo
 	bvlines = scribo::primitive::extract::lines_v_pattern(input, 51, 3);
 
       V nhlines, nvlines;
-      object_image(mln_ch_value(I,V))
-	hlines = scribo::primitive::extract::objects(bhlines, c8(), nhlines),
-	vlines = scribo::primitive::extract::objects(bvlines, c8(), nvlines);
+      component_set<mln_ch_value(I,V)>
+	hlines = scribo::primitive::extract::components(bhlines, c8(),
+							nhlines),
+	vlines = scribo::primitive::extract::components(bvlines, c8(),
+							nvlines);
 
       typedef mln::util::couple<mln_ch_value(I,V),
 				mln::util::couple<mln::util::array<box<mln_site(I)> >,
@@ -100,8 +103,7 @@ namespace scribo
 	      tables_t;
       tables_t tables
 	= scribo::table::rebuild(input,
-				 mln::make::couple(vlines.bboxes(), hlines.bboxes()),
-				 30, ncells);
+				 vlines, hlines, 30, ncells);
 
       trace::exiting("scribo::table::extract");
       return tables;

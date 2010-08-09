@@ -104,7 +104,7 @@ namespace scribo
       trace::entering("scribo::debug::decision_image");
       const I& input = exact(input_);
 
-      const component_set<L>& components = groups.object_image_();
+      const component_set<L>& components = groups.components();
 
       mln_precondition(input.is_valid());
       mln_precondition(groups.is_valid());

@@ -1,5 +1,19 @@
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make use of the new component_set interface.
+
+	* filter/internal/compute.hh,
+	* filter/objects_small.hh,
+	* filter/objects_thick.hh,
+	* filter/objects_thin.hh,
+	* primitive/group/from_double_link.hh,
+	* primitive/link/compute_several.hh,
+	* table/align_lines_horizontaly.hh,
+	* table/erase.hh,
+	* table/extract.hh: Here.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix compilation of Scribo tools.
 
 	* src/debug/show_links_bbox_overlap.cc,

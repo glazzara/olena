@@ -95,7 +95,7 @@ namespace scribo
 
 	F& functor = exact(functor_);
 
-	for_all_ncomponents(current_object, functor.objects().nlabels())
+	for_all_comps(current_object, functor.components())
 	{
 	  functor.start_processing_object(current_object); //<-- start_processing_object
 	  internal::find_several_links(functor, current_object);
