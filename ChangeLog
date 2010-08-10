@@ -1,5 +1,9 @@
 2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* bootstrap: Update calls to build_unit_test.sh.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* build-aux/build_unit_test.sh: Add support for conditional
 	unit-tests.
 
