@@ -1,5 +1,28 @@
 2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix tests in Milena.
+
+	* tests/geom/rotate.cc: Fix test.
+
+	* mln/labeling/blobs_and_compute.hh: Add comments.
+
+	* mln/labeling/flat_zones.hh: Add missing members to functors.
+
+	* tests/labeling/blobs_and_compute.cc: Fix return type.
+
+	* tests/labeling/flat_zones.cc,
+	* tests/labeling/foreground.cc: Fix functor template parameters.
+
+	* tests/labeling/relabel.cc: The number of components is not
+	updated anymore.
+
+	* tests/labeling/colorize.cc: Fix reference according to last
+	changes in labeling::colorize routine.
+
+	* mln/core/point.hh: Add mln:: namespace prefix.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/io/dicom/get_header.hh: Add missing headers.
 
 2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>

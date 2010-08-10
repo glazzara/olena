@@ -317,7 +317,7 @@ namespace mln
 	enum { dim = G::dim };
 
 	for (unsigned i = 0; i < dim; ++i)
-	  to[i] = internal::convert_data<C2>(from[i]);
+	  to[i] = mln::internal::convert_data<C2>(from[i]);
       }
 
 
@@ -337,9 +337,9 @@ namespace mln
 	else
 	{
 	  for (unsigned i = dim - 2; i < dim; ++i)
-	    to[i]   = internal::convert_data<C2>(from[j++]);
+	    to[i]   = mln::internal::convert_data<C2>(from[j++]);
 	  for (unsigned i = 2; i < dim; ++i, ++j)
-	    to[i-j] = internal::convert_data<C2>(from[j]);
+	    to[i-j] = mln::internal::convert_data<C2>(from[j]);
 	}
       }
 

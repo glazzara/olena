@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -65,7 +65,7 @@ int main()
 
   {
     typedef image2d<int_u8> I;
-    labeling::impl::flat_zones_functor<I> f(lena);
+    labeling::impl::flat_zones_functor<I,unsigned> f(lena);
 
     unsigned nlabels_generic, nlabels_fastest;
     mln_assertion(canvas::labeling::impl::generic::labeling(lena,

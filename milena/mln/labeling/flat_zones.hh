@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -51,7 +51,8 @@ namespace mln
     ///
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
-    flat_zones(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels);
+    flat_zones(const Image<I>& input, const Neighborhood<N>& nbh,
+	       L& nlabels);
 
 
 
@@ -62,7 +63,7 @@ namespace mln
 
       // Flat zone functor for the labeling canvas.
 
-      template <typename I>
+      template <typename I, typename L>
       struct flat_zones_functor
       {
 	const I& input;
@@ -72,24 +73,37 @@ namespace mln
 	typedef mln_psite(I) P;
 
 	void init()                          {}
-	bool handles(const P&) const             { return true; }
-	bool equiv(const P& n, const P& p) const { return input(n) ==
-                                                          input(p); }
+	bool handles(const P&) const         { return true; }
+
+	bool equiv(const P& n, const P& p) const
+	{ return input(n) == input(p); }
+
 	bool labels(const P&) const          { return true;  }
 	void do_no_union(const P&, const P&) {}
 	void init_attr(const P&)             {}
 	void merge_attr(const P&, const P&)  {}
+	void set_new_label(const P& p, const L& l){}
+	void set_label(const P& p, const L& l)    {}
+	void finalize()                           {}
+
 
 	// Fastest implementation.
 
 	void init_()                          {}
-	bool handles_(unsigned) const             { return true; }
-	bool equiv_(unsigned n, unsigned p) const { return input.element(n) ==
-                                                           input.element(p); }
+
+	bool handles_(unsigned) const
+	{ return true; }
+
+	bool equiv_(unsigned n, unsigned p) const
+	{ return input.element(n) == input.element(p); }
+
 	bool labels_(unsigned) const          { return true;  }
 	void do_no_union_(unsigned, unsigned) {}
 	void init_attr_(unsigned)             {}
 	void merge_attr_(unsigned, unsigned)  {}
+	void set_new_label_(unsigned, const L&)   {}
+	void set_label_(unsigned, const L&)       {}
+	void finalize_()                          {}
 
 	// end of requirements.
 
@@ -117,7 +131,7 @@ namespace mln
       mln_precondition(input.is_valid());
 
       // Call the labeling canvas.
-      typedef impl::flat_zones_functor<I> F;
+      typedef impl::flat_zones_functor<I,L> F;
       F f(input);
       mln_ch_value(I, L)
 	output = canvas::labeling::video(input, nbh, nlabels, f);

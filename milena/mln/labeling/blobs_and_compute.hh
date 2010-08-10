@@ -52,6 +52,9 @@ namespace mln
       \param[in,out] nlabels The number of labels found.
       \param[in]     accu    An accumulator to be computed while labeling.
 
+      \return The labeled image, computed attributes for each regions
+              and an array of the accumulators used to compute the
+              attributes.
      */
     template <typename I, typename N, typename L, typename A>
     util::couple<mln_ch_value(I,L),
