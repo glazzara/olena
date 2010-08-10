@@ -17,7 +17,13 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-EXTRA_DIST = disabled_tests
+COND_TESTS = cond_tests_cfitsio 	\
+	     cond_tests_gdcm 		\
+	     cond_tests_magickxx 	\
+	     cond_tests_tiff
+
+EXTRA_DIST = disabled_tests \
+	     $(COND_TESTS)
 
 # Regen files.
 include $(top_srcdir)/build-aux/regen-recursive.mk
@@ -26,7 +32,8 @@ regen-am:
 	&& ./build-aux/build_unit_test.sh 			\
 		milena/mln 					\
 		milena/tests/unit_test 				\
-		milena/tests/unit_test/disabled_tests
+		milena/tests/unit_test/disabled_tests 		\
+		mln
 
 # FIXME: Change build_unit_test.sh so that the action looks like this:
 #
@@ -34,12 +41,13 @@ regen-am:
 #
 # `$(abs_top_srcdir)' is required because of the change of directory
 # at the beginning og the action.
-$(srcdir)/unit-tests.mk: $(top_srcdir)/build-aux/build_unit_test.sh disabled_tests
+$(srcdir)/unit-tests.mk: $(top_srcdir)/build-aux/build_unit_test.sh disabled_tests $(COND_TESTS)
 	cd $(top_srcdir)					\
 	&& ./build-aux/build_unit_test.sh 			\
 		milena/mln 					\
 		milena/tests/unit_test 				\
-		milena/tests/unit_test/disabled_tests
+		milena/tests/unit_test/disabled_tests 		\
+		mln
 
 include $(srcdir)/unit-tests.mk
 

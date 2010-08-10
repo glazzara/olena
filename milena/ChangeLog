@@ -1,3 +1,20 @@
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Setup conditional unit-tests in Milena.
+
+	* tests/unit_test/Makefile.am
+	(regen-am): Update the use of build_unit_test.sh.
+	(EXTRA_DIST): Add cond_tests_* files.
+
+	* tests/unit_test/cond_tests_cfitsio,
+	* tests/unit_test/cond_tests_gdcm,
+	* tests/unit_test/cond_tests_magickxx,
+	* tests/unit_test/cond_tests_tiff: New.
+
+	* tests/unit_test/disabled_tests: Remove some conditional tests.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small changes in Milena.
