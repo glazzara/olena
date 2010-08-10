@@ -1,5 +1,12 @@
 2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Update READMEs.
+
+	* README,
+	* src/README: Add few details about the content.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update Scribo include paths.
 
 	* Makefile.am,

@@ -17,10 +17,12 @@ along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 The complete GNU General Public License Notice can also be found in
 the 'COPYING' file in the root directory.
 
+----------------------------------------------------------------------
 
-======================
- Introduction to Olena
-======================
+
+=======================
+ Introduction to Scribo
+=======================
 
 Scribo aims to provide tools for Document Image Analysis (DIA).
 
@@ -43,9 +45,8 @@ demo/
      Sample GUI used to display text localization in picture results.
 
 
-src/
-  text_in_article_pbm
-     Retrieve text from a document.
+scribo/
+     The C++ headers of Scribo.
 
-  text_in_picture_fast
-     Localize text in pictures.
+src/
+     Various small tools related to DIA. See src/README.
