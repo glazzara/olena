@@ -33,11 +33,18 @@
 # include <iostream>
 # include <fstream>
 
+# include <gdcm-2.0/gdcmReader.h>
+# include <gdcm-2.0/gdcmImageReader.h>
+# include <gdcm-2.0/gdcmWriter.h>
+# include <gdcm-2.0/gdcmDataSet.h>
+# include <gdcm-2.0/gdcmAttribute.h>
+
 # include <mln/core/concept/image.hh>
 # include <mln/core/routine/initialize.hh>
 # include <mln/core/box_runstart_piter.hh>
 # include <mln/core/pixel.hh>
 # include <mln/data/memcpy_.hh>
+# include <mln/util/array.hh>
 
 namespace mln
 {

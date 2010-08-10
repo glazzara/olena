@@ -1,5 +1,9 @@
 2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/io/dicom/get_header.hh: Add missing headers.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Setup conditional unit-tests in Milena.
 
 	* tests/unit_test/Makefile.am
