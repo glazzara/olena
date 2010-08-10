@@ -1,3 +1,23 @@
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Setup conditional unit-tests in Scribo.
+
+	* tests/tests.mk: Add specific flags for external dependencies.
+
+	* tests/unit_test/Makefile.am
+	(EXTRA_DIST): Add const_tests_* files.
+	(regen-am): Use build-aux/build_unit_test.sh.
+	(scribo_*FLAGS): Remove specific flags for conditional unit-tests.
+
+	* tests/unit_test/build_unit_test.sh: Remove. Useless since
+	build-aux/build_unit_test.sh is used instead.
+
+	* tests/unit_test/cond_tests_qt,
+	* tests/unit_test/cond_tests_qt_tesseract_tiff,
+	* tests/unit_test/cond_tests_tesseract_tiff: New.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/unit_test/disabled_tests: Update list of disabled tests.

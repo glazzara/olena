@@ -16,16 +16,23 @@
 
 include $(top_srcdir)/scribo/tests/tests.mk
 
-EXTRA_DIST = build_unit_test.sh disabled_tests
+COND_TESTS = cond_tests_qt 			\
+	     cond_tests_qt_tesseract_tiff	\
+	     cond_tests_tesseract_tiff
+
+EXTRA_DIST = disabled_tests \
+	     $(COND_TESTS)
+
 
 # Regen files.
 include $(top_srcdir)/build-aux/regen-recursive.mk
 regen-am:
 	cd $(top_srcdir)					\
-	&& scribo/tests/unit_test/build_unit_test.sh 		\
+	&& ./build-aux/build_unit_test.sh 			\
 		scribo	 					\
 		scribo/tests/unit_test 				\
-		scribo/tests/unit_test/disabled_tests
+		scribo/tests/unit_test/disabled_tests		\
+		scribo
 
 # FIXME: Change build_unit_test.sh so that the action looks like this:
 #
@@ -33,45 +40,15 @@ regen-am:
 #
 # `$(abs_top_srcdir)' is required because of the change of directory
 # at the beginning og the action.
-$(srcdir)/unit-tests.mk: build_unit_test.sh disabled_tests
+$(srcdir)/unit-tests.mk: build_unit_test.sh disabled_tests $(COND_TESTS)
 	cd $(top_srcdir)					\
-	&& scribo/tests/unit_test/build_unit_test.sh		\
+	&& ./build-aux/build_unit_test.sh			\
 		scribo	 					\
 		scribo/tests/unit_test 				\
-		scribo/tests/unit_test/disabled_tests
+		scribo/tests/unit_test/disabled_tests 		\
+		scribo
 
 include $(srcdir)/unit-tests.mk
-
-
-#FIXME: how to handle that automaticaly during the unit test list
-#generation?
-scribo_convert_from_qimage_CPPFLAGS=\
-	$(QT_CPPFLAGS) $(AM_CPPFLAGS) -I$(srcdir)
-scribo_convert_from_qimage_CXXFLAGS=\
-	$(QT_CXXFLAGS) $(AM_CXXFLAGS)
-scribo_convert_from_qimage_LDFLAGS=\
-	$(QT_LDFLAGS) $(LDFLAGS)
-scribo_convert_from_qimage_LDADD=\
-	$(QT_LIBS) $(LDADD)
-
-scribo_toolchain_nepomuk_text_extraction_CPPFLAGS=\
-	$(QT_CPPFLAGS) $(TESSERACT_CPPFLAGS) $(TIFF_CPPFLAGS) \
-	$(AM_CPPFLAGS) -I$(srcdir)
-scribo_toolchain_nepomuk_text_extraction_CXXFLAGS=\
-	$(QT_CXXFLAGS) $(AM_CXXFLAGS)
-scribo_toolchain_nepomuk_text_extraction_LDFLAGS=\
-	$(QT_LDFLAGS) $(TESSERACT_LDFLAGS) $(TIFF_LDFLAGS) \
-	$(LDFLAGS)
-scribo_toolchain_nepomuk_text_extraction_LDADD=\
-	$(QT_LIBS) $(LDADD)
-
-scribo_text_recognition_CPPFLAGS=\
-	$(TESSERACT_CPPFLAGS) $(TIFF_CPPFLAGS) \
-	$(AM_CPPFLAGS) -I$(srcdir)
-scribo_text_recognition_LDFLAGS=\
-	$(TESSERACT_LDFLAGS) $(TIFF_LDFLAGS) \
-	$(LDFLAGS)
-
 
 
 MAINTAINERCLEANFILES = $(srcdir)/scribo_*.cc
