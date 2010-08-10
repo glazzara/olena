@@ -1,4 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -29,7 +30,7 @@ include $(top_srcdir)/build-aux/regen-recursive.mk
 regen-am:
 	cd $(top_srcdir)					\
 	&& ./build-aux/build_unit_test.sh 			\
-		scribo	 					\
+		scribo/scribo 					\
 		scribo/tests/unit_test 				\
 		scribo/tests/unit_test/disabled_tests		\
 		scribo
@@ -40,16 +41,15 @@ regen-am:
 #
 # `$(abs_top_srcdir)' is required because of the change of directory
 # at the beginning og the action.
-$(srcdir)/unit-tests.mk: build_unit_test.sh disabled_tests $(COND_TESTS)
+$(srcdir)/unit-tests.mk: $(top_srcdir)/build-aux/build_unit_test.sh disabled_tests $(COND_TESTS)
 	cd $(top_srcdir)					\
 	&& ./build-aux/build_unit_test.sh			\
-		scribo	 					\
+		scribo/scribo 					\
 		scribo/tests/unit_test 				\
 		scribo/tests/unit_test/disabled_tests 		\
 		scribo
 
 include $(srcdir)/unit-tests.mk
-
 
 MAINTAINERCLEANFILES = $(srcdir)/scribo_*.cc
 

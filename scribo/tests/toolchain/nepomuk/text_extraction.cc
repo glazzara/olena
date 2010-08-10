@@ -31,7 +31,7 @@
 #include <QtCore>
 #include <scribo/toolchain/nepomuk/text_extraction.hh>
 
-#include <scribo/tests/data.hh>
+#include "tests/data.hh"
 
 int main()
 {

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,7 +38,7 @@
 #include <scribo/table/repair_horizontal_lines.hh>
 #include <scribo/debug/save_table_image.hh>
 
-#include <scribo/tests/data.hh>
+#include "tests/data.hh"
 
 int main(int argc, char *argv[])
 {

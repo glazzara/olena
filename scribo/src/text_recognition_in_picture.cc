@@ -105,8 +105,8 @@
 #include <mln/core/var.hh>
 
 
-#include <scribo/src/afp/components.hh>
-#include <scribo/src/afp/link.hh>
+#include <src/afp/components.hh>
+#include <src/afp/link.hh>
 
 #include <scribo/core/line_set.hh>
 #include <scribo/text/recognition.hh>

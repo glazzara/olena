@@ -103,9 +103,9 @@
 #include <mln/core/var.hh>
 
 
-#include <scribo/src/afp/components.hh>
-#include <scribo/src/afp/link.hh>
-#include <scribo/src/afp/regroup.hh>
+#include <src/afp/components.hh>
+#include <src/afp/link.hh>
+#include <src/afp/regroup.hh>
 
 const char *args_desc[][2] =
 {

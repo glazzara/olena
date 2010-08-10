@@ -29,7 +29,7 @@
 #include <mln/make/image.hh>
 
 #include <scribo/preprocessing/rotate_90.hh>
-#include <scribo/tests/data.hh>
+#include "tests/data.hh"
 
 
 int main(int argc, char *argv[])

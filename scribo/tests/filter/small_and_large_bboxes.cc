@@ -42,7 +42,7 @@
 #include <scribo/debug/save_bboxes_image.hh>
 #include <scribo/debug/save_linked_bboxes_image.hh>
 
-#include <scribo/tests/data.hh>
+#include "tests/data.hh"
 
 int main(int argc, char* argv[])
 {

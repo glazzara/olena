@@ -6,7 +6,7 @@
 TEMPLATE = app
 TARGET =
 DEPENDPATH += . src
-INCLUDEPATH += . ../ ../shared $(OLN)/milena $(OLN)
+INCLUDEPATH += . ../ ../shared $(OLN)/milena $(OLN)/scribo
 
 QMAKE_CXXFLAGS += -g -O0
 

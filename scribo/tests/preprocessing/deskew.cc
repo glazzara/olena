@@ -26,7 +26,7 @@
 
 /// \file
 ///
-/// \fixme Add a better test.....
+///
 
 #include <mln/core/image/image2d.hh>
 #include <mln/io/pgm/all.hh>
@@ -35,7 +35,7 @@
 
 #include <scribo/preprocessing/deskew.hh>
 
-#include <scribo/tests/data.hh>
+#include "tests/data.hh"
 
 int main(int argc, char *argv[])
 {

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,7 +28,7 @@
 #include <mln/data/compare.hh>
 #include <scribo/preprocessing/crop.hh>
 
-#include <scribo/tests/data.hh>
+#include "tests/data.hh"
 
 int main(int argc, char *argv[])
 {

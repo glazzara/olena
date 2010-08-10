@@ -35,7 +35,7 @@
 #include <scribo/filter/objects_with_holes.hh>
 #include <scribo/primitive/extract/components.hh>
 
-#include <scribo/tests/data.hh>
+#include "tests/data.hh"
 
 int main(int argc, char *argv[])
 {
