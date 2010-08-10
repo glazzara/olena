@@ -1,3 +1,8 @@
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* build-aux/build_unit_test.sh: Add support for conditional
+	unit-tests.
+
 2010-08-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* configure.ac: Improve configure's outputs for external library
