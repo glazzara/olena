@@ -1,5 +1,12 @@
 2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add missing traces.
+
+	* mln/convert/to_qimage.hh,
+	* mln/convert/to_qimage_nocopy.hh: Here.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* headers.mk: Regen.
 
 2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>

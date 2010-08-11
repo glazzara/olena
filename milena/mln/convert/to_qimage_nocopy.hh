@@ -27,7 +27,6 @@
 ///
 /// Convert a Milena image to a Qimage.
 
-
 #ifndef MLN_CONVERT_TO_QIMAGE_NOCOPY_HH
 # define MLN_CONVERT_TO_QIMAGE_NOCOPY_HH
 
@@ -162,11 +161,14 @@ namespace mln
     inline
     QImage to_qimage_nocopy(const Image<I>& ima_)
     {
+      trace::entering("convert::to_qimage_nocopy");
+
       const I& ima = exact(ima_);
       mln_precondition(ima.is_valid());
 
       QImage output = internal::to_qimage_nocopy_dispatch(ima);
 
+      trace::exiting("convert::to_qimage_nocopy");
       return output;
     }
 
