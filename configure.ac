@@ -203,7 +203,10 @@ AC_MSG_RESULT([------------------------------------------------------------])
 ### Support for FreeImagePlus has been disabled for Olena 1.0.
 ## OLN_WITH_LIB([FreeImagePlus], [FreeImagePlus.h], [freeimageplus])
 
-# CFITSIO library.
+## ---------------- ##
+## CFITSIO library. ##
+## ---------------- ##
+
 AC_MSG_RESULT([])
 AC_MSG_RESULT([* libcfitsio])
 AC_MSG_RESULT([------------])
@@ -211,7 +214,10 @@ OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 
 
 #------------------------------------------------------------
-# Magick++.
+
+## --------- ##
+## Magick++. ##
+## --------- ##
 
 # FIXME: We should handle Magick++ both with Magick++-config and
 # pkg-config?  instead of OLN_WITH_LIB.  See how other projects handle
@@ -253,8 +259,10 @@ AM_CONDITIONAL(HAVE_MAGICKXX, test "x$have_magickxx" = 'xyes')
 
 #------------------------------------------------------------
 
+## ------------- ##
+## TIFF library. ##
+## ------------- ##
 
-# TIFF library.
 AC_MSG_RESULT([])
 AC_MSG_RESULT([* libtiff])
 AC_MSG_RESULT([---------])
@@ -267,21 +275,32 @@ AC_MSG_RESULT([---------])
 OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm], [GDCM],
 	     [-lgdcmzlib])
 
-# Tesseract.
+## ---------- ##
+## Tesseract. ##
+## ---------- ##
+
 AC_MSG_RESULT([])
 AC_MSG_RESULT([* Tesseract])
 AC_MSG_RESULT([-----------])
-OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
-	     [tesseract], [TESSERACT])
+OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full], [tesseract],
+             [TESSERACT])
 
-# Qt.
+## --- ##
+## Qt. ##
+## --- ##
+
 AC_MSG_RESULT([])
 AC_MSG_RESULT([* Qt])
 AC_MSG_RESULT([----])
 AT_WITH_QT([+xml], [], [],
-	   AC_DEFINE([HAVE_QT], 0, [Define to 1 if we can use Qt]),
-     	   AC_DEFINE([HAVE_QT], 1))
-AM_CONDITIONAL([HAVE_QT], [test x$QT_PATH != x])
+           AC_MSG_WARN([Qt dependent programs will be disabled.]))
+
+if test "x$QT_VERSION_MAJOR" != "x"; then
+   AT_REQUIRE_QT_VERSION([4], AC_MSG_WARN([Your Qt version is too old! Qt dependent programs will be disabled.]),
+	 		 AC_DEFINE([HAVE_QT], 1,
+			 	   [Define to 1 if we can use Qt]))
+fi
+AM_CONDITIONAL([HAVE_QT], [test "x$QT_VERSION_MAJOR" == "x4"])
 
 
 AC_MSG_RESULT([])

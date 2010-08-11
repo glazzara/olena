@@ -1,5 +1,9 @@
 2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* configure.ac: Require Qt 4.x minimum to enable the use of Qt.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* m4/autotroll.m4: Fix an invalid generation of configure with
 	autoconf 2.61.
 
