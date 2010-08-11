@@ -33,8 +33,13 @@
 ## "cond_tests_*" files must be created in the directory where
 ## unit-test.mk is generated (usually the unit-tests directory).
 ##
-## WARNING: don't forget to add "cond_tests_*" files in the COND_TESTS
+## WARNINGS:
+## ---------
+## * Don't forget to add "cond_tests_*" files in the COND_TESTS
 ## variable in the right Makefile.am.
+##
+## * ALWAYS end "cond_tests_*" files with a new line!
+##
 
 ## FIXME: Don't use `echo -n', as echo's options are not portable.
 ##
