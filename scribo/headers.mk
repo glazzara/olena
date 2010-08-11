@@ -128,14 +128,11 @@ scribo/primitive/extract/vertical_separators.hh \
 scribo/primitive/group/all.hh \
 scribo/primitive/group/apply.hh \
 scribo/primitive/group/from_double_link.hh \
-scribo/primitive/group/from_double_link_any.hh \
 scribo/primitive/group/from_graph.hh \
 scribo/primitive/group/from_single_link.hh \
-scribo/primitive/group/from_single_link_robust.hh \
 scribo/primitive/internal/all.hh \
 scribo/primitive/internal/find_graph_link.hh \
 scribo/primitive/internal/find_root.hh \
-scribo/primitive/internal/find_root_robust.hh \
 scribo/primitive/internal/have_link_valid.hh \
 scribo/primitive/internal/is_link_valid.hh \
 scribo/primitive/internal/rd.hh \
@@ -168,7 +165,6 @@ scribo/primitive/link/with_single_left_link_dmax_ratio.hh \
 scribo/primitive/link/with_single_right_link.hh \
 scribo/primitive/link/with_single_right_link_bottom.hh \
 scribo/primitive/link/with_single_right_link_dmax_ratio.hh \
-scribo/primitive/link/with_single_right_link_dmax_ratio_aligned.hh \
 scribo/primitive/link/with_single_right_link_top.hh \
 scribo/primitive/link/with_single_up_link.hh \
 scribo/primitive/regroup/from_single_left_link.hh \
