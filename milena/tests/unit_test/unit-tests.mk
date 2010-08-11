@@ -53,6 +53,20 @@ mln_io_magick_save_SOURCES = mln_io_magick_save.cc
 endif HAVE_MAGICKXX
 
 # Starting a conditional unit test list.
+if HAVE_QT
+check_PROGRAMS +=  \
+mln_convert_to_qimage \
+mln_convert_to_qimage_nocopy
+
+mln_convert_to_qimage_CPPFLAGS= ${QT_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_convert_to_qimage_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
+mln_convert_to_qimage_SOURCES = mln_convert_to_qimage.cc
+mln_convert_to_qimage_nocopy_CPPFLAGS= ${QT_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_convert_to_qimage_nocopy_LDFLAGS= ${QT_LDFLAGS}  ${AM_LDFLAGS}
+mln_convert_to_qimage_nocopy_SOURCES = mln_convert_to_qimage_nocopy.cc
+endif HAVE_QT
+
+# Starting a conditional unit test list.
 if HAVE_TIFF
 check_PROGRAMS +=  \
 mln_io_tiff_all \
@@ -223,8 +237,6 @@ mln_convert_to_fun \
 mln_convert_to_image \
 mln_convert_to_p_array \
 mln_convert_to_p_set \
-mln_convert_to_qimage \
-mln_convert_to_qimage_nocopy \
 mln_convert_to_upper_window \
 mln_convert_to_window \
 mln_core_a_point_of \
@@ -1545,8 +1557,6 @@ mln_convert_to_fun_SOURCES = mln_convert_to_fun.cc
 mln_convert_to_image_SOURCES = mln_convert_to_image.cc
 mln_convert_to_p_array_SOURCES = mln_convert_to_p_array.cc
 mln_convert_to_p_set_SOURCES = mln_convert_to_p_set.cc
-mln_convert_to_qimage_SOURCES = mln_convert_to_qimage.cc
-mln_convert_to_qimage_nocopy_SOURCES = mln_convert_to_qimage_nocopy.cc
 mln_convert_to_upper_window_SOURCES = mln_convert_to_upper_window.cc
 mln_convert_to_window_SOURCES = mln_convert_to_window.cc
 mln_core_a_point_of_SOURCES = mln_core_a_point_of.cc

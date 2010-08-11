@@ -34,7 +34,7 @@
 # include <ctime>
 
 # include <mln/core/concept/function.hh>
-
+# include <mln/math/sqrt.hh>
 
 
 namespace mln
@@ -86,7 +86,7 @@ namespace mln
 	}
 
 	X = X - 25.f;                /* set mean to 0 */
-	X = X * sqrt(12 / 50.f);     /* adjust variance to 1 */
+	X = X * math::sqrt(12 / 50.f);     /* adjust variance to 1 */
 
 	return sigma * X;
       };

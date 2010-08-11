@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,6 +27,10 @@
 
 #ifndef MLN_FUN_V2V_RGB_TO_INT_U_HH
 # define MLN_FUN_V2V_RGB_TO_INT_U_HH
+
+# include <mln/core/concept/function.hh>
+# include <mln/value/int_u8.hh>
+# include <mln/value/rgb8.hh>
 
 namespace mln
 {

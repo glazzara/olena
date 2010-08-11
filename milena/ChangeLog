@@ -1,5 +1,21 @@
 2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix tests in Milena.
+
+	* mln/draw/dashed_line.hh,
+	* mln/fun/n2v/white_gaussian.hh,
+	* mln/fun/v2v/rgb_to_int_u.hh,
+	* mln/io/dump/get_header.hh,
+	* mln/io/raw/get_header.hh: Add missing includes.
+
+	* tests/topo/skeleton/crest.cc: Fix reference results since a bug
+	have been fixed.
+
+	* tests/unit_test/cond_tests_qt
+	* tests/unit_test/unit-tests.mk
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add missing traces.
 
 	* mln/convert/to_qimage.hh,

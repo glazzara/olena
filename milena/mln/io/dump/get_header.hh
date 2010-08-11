@@ -38,6 +38,7 @@
 # include <mln/core/box_runstart_piter.hh>
 # include <mln/core/pixel.hh>
 # include <mln/data/memcpy_.hh>
+# include <mln/util/array.hh>
 
 namespace mln
 {
