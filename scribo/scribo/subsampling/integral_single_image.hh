@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -154,7 +155,7 @@ namespace scribo
 	                  + v21*v21 + v22*v22 + v23*v23
 	                  + v31*v31 + v32*v32 + v33*v33;
 
-	    *p_sub++ = local_sum / 9;
+	    convert::from_to(local_sum / 9, *p_sub++);
 	    h_sum   += local_sum;
 	    h_sum_2 += local_sum_2;
 
@@ -192,7 +193,7 @@ namespace scribo
 	                  + v21*v21 + v22*v22 + v23*v23
 	                  + v31*v31 + v32*v32 + v33*v33;
 
-	    *p_sub++ = local_sum / 9;
+	    convert::from_to(local_sum / 9, *p_sub++);
 	    h_sum   += local_sum;
 	    h_sum_2 += local_sum_2;
 
@@ -283,7 +284,7 @@ namespace scribo
 	    ptr2 += 2;
 	    S local_sum   = v11     + v12     + v21     + v22,
 	      local_sum_2 = v11*v11 + v12*v12 + v21*v21 + v22*v22;
-	    *p_sub++ = local_sum / 4;
+	    convert::from_to(local_sum / 4, *p_sub++);
 	    h_sum   += local_sum;
 	    h_sum_2 += local_sum_2;
 
@@ -318,7 +319,7 @@ namespace scribo
 	    ptr2 += 2;
 	    S local_sum   = v11     + v12     + v21     + v22,
 	      local_sum_2 = v11*v11 + v12*v12 + v21*v21 + v22*v22;
-	    *p_sub++ = local_sum / 4;
+	    convert::from_to(local_sum / 4, *p_sub++);
 	    h_sum   += local_sum;
 	    h_sum_2 += local_sum_2;
 

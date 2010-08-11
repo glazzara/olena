@@ -115,18 +115,21 @@ namespace scribo
 	  unsigned p = pxl.offset();
 
 # ifdef SCRIBO_SAUVOLA_DEBUG
-          value::int_u8
-	    t_p = sauvola_threshold_formula(mean, stddev,
-					    K_,
-					    SCRIBO_DEFAULT_SAUVOLA_R,
-					    debug_k.element(p),
-					    debug_s_n.element(p),
-					    debug_k_l.element(p));
+          value::int_u8 t_p;
+	  convert::from_to(
+	    sauvola_threshold_formula(mean, stddev,
+				      K_,
+				      SCRIBO_DEFAULT_SAUVOLA_R,
+				      debug_k.element(p),
+				      debug_s_n.element(p),
+				      debug_k_l.element(p)),
+	    t_p);
 # else
-          value::int_u8
-	    t_p = sauvola_threshold_formula(mean, stddev,
-					    K_,
-					    SCRIBO_DEFAULT_SAUVOLA_R);
+          value::int_u8 t_p;
+	  convert::from_to(sauvola_threshold_formula(mean, stddev,
+						     K_,
+						     SCRIBO_DEFAULT_SAUVOLA_R),
+			   t_p);
 # endif // SCRIBO_SAUVOLA_DEBUG
 
 

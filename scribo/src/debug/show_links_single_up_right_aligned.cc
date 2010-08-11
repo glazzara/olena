@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
 
   object_links<L>
     up_links = primitive::link::with_single_up_link(comps,
-						    atof(argv[2]),
+						    atoi(argv[2]),
 						    anchor::Right);
 
   // Filtering.

@@ -78,8 +78,8 @@ namespace scribo
 
       for_all(p)
       {
-	int x = round(-0.5 + p.col() * sub_ratio);
-	int y = round(-0.5 + p.row() * sub_ratio);
+	int x = int(round(-0.5 + p.col() * sub_ratio));
+	int y = int(round(-0.5 + p.row() * sub_ratio));
 
 	if (x < 0)
 	  x = 0;

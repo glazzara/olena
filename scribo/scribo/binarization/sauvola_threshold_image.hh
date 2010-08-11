@@ -245,7 +245,6 @@ namespace scribo
       sauvola_threshold_formula(double m_x_y, double s_x_y)
       {
 #  ifdef SCRIBO_SAUVOLA_DEBUG
-#   warning "This overload of sauvola_threshold_formula is disabled in debug mode!"
 	std::cout << "This overload of sauvola_threshold_formula is disabled in debug mode!" << std::endl;
 	return 0;
 #  else
@@ -438,11 +437,12 @@ namespace scribo
 
 	  for(def::coord row = 0; row < nrows; ++row)
 	    for(def::coord col = 0; col < ncols; ++col)
-	      output.at_(row, col)
-		= internal::compute_sauvola_threshold(P(row, col), simple,
-						      squared, window_size,
-						      K,
-						      SCRIBO_DEFAULT_SAUVOLA_R);
+	      convert::from_to(
+		internal::compute_sauvola_threshold(P(row, col), simple,
+						    squared, window_size,
+						    K,
+						    SCRIBO_DEFAULT_SAUVOLA_R),
+		output.at_(row, col));
 
 	  trace::exiting("scribo::binarization::impl::generic::sauvola_threshold");
 	  return output;

@@ -174,13 +174,12 @@ namespace scribo
 	  L bboxes_ima;
 
 	  util::array<unsigned> bg_comps(
-	    static_cast<unsigned>(components.nelements()) + 1, 0);
+	    unsigned(components.nelements()) + 1, 0);
 	  util::array<bool> bg_comps_done(
-	    static_cast<unsigned>(components.nelements()) + 1, false);
+	    unsigned(components.nelements()) + 1, false);
 
 	  mln::fun::i2v::array<bool>
-	    to_keep(static_cast<unsigned>(components.nelements()) + 1,
-		    false);
+	    to_keep(unsigned(components.nelements()) + 1, false);
 
 	  const L& lbl = components.labeled_image();
 
@@ -366,7 +365,7 @@ namespace scribo
 
       util::array<unsigned>& card = res.second().first();
       for (unsigned i = 1; i < card.size(); ++i)
-	card(i) = card(i) * ratio;
+	card(i) = unsigned(round(card(i) * ratio));
 
       mln_ch_value(I, unsigned)
 	thres = data::transform(res.first(), card);

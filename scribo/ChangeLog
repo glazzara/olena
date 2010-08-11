@@ -1,5 +1,30 @@
 2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix warnings with g++-4.1 in Scribo.
+
+	* scribo/binarization/internal/first_pass_functor.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_threshold_image.hh,
+	* scribo/binarization/sauvola_threshold_image_debug.hh,
+	* scribo/postprocessing/fill_object_holes.hh,
+	* scribo/preprocessing/deskew.hh,
+	* scribo/primitive/extract/lines_pattern.hh,
+	* scribo/subsampling/bilinear.hh,
+	* scribo/subsampling/integral_single_image.hh,
+	* scribo/text/clean_inplace.hh,
+	* src/debug/show_links_several_right_overlap.cc,
+	* src/debug/show_links_single_down.cc,
+	* src/debug/show_links_single_down_left_aligned.cc,
+	* src/debug/show_links_single_down_right_aligned.cc,
+	* src/debug/show_links_single_left.cc,
+	* src/debug/show_links_single_right.cc,
+	* src/debug/show_links_single_up.cc,
+	* src/debug/show_links_single_up_left_aligned.cc,
+	* src/debug/show_links_single_up_right_aligned.cc: explicitly
+	convert to a specific type when necessary.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Regen headers.mk and unit-tests.mk in Scribo.
 
 	* headers.mk,

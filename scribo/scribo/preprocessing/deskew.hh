@@ -127,7 +127,7 @@ namespace scribo
 	  height_(height / 2),
 	  max_rho_(sqrt((width * width) + (height * height))),
 	  max_theta_(math::pi),
-	  max_rho_index_(this->max_rho_ + 1),
+	  max_rho_index_(int(this->max_rho_) + 1),
 	  max_theta_index_(500),
 	  acc_(this->max_rho_index_, this->max_theta_index_)
       {
@@ -227,7 +227,7 @@ namespace scribo
 	  double rho_index = (0.5 + (rho / hough.mrho() + 0.5)
 			      * hough.mrhoi());
 
-	  ++(opt::at(hough.acc(), rho_index, i));
+	  ++(opt::at(hough.acc(), static_cast<def::coord>(rho_index), i));
 	}
       }
 
@@ -379,8 +379,8 @@ namespace scribo
 	      if (tanv <= 25.0 || tanv >= 155.0)
 	      {
 		++nb_elm;
-		vote(j, i, hough, (tanv <= 25.0 ? 250.0 - tanv * 10.0 :
-				   (180.0 - tanv) * 10.0 + 250.0));
+		vote(j, i, hough, int((tanv <= 25.0 ? 250.0 - tanv * 10.0 :
+				       (180.0 - tanv) * 10.0 + 250.0)));
 	      }
 	    }
 	  }

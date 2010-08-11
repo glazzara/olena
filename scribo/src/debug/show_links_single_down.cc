@@ -67,7 +67,7 @@ namespace scribo
 
     single_down_link_debug_functor(const I& input,
 				   const component_set<L>& comps,
-				   float dmax)
+				   unsigned dmax)
       : super_(comps, dmax, anchor::Vertical)
     {
       output_ = data::convert(value::rgb8(), input);
@@ -151,7 +151,7 @@ int main(int argc, char* argv[])
     = scribo::primitive::extract::components(input, c8(), nbboxes);
 
   // Write debug image.
-  single_down_link_debug_functor<I, L> functor(input, comps, atof(argv[2]));
+  single_down_link_debug_functor<I, L> functor(input, comps, atoi(argv[2]));
   primitive::link::compute(functor);
 
   io::ppm::save(functor.output_, argv[3]);

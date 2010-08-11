@@ -129,7 +129,7 @@ namespace scribo
       {
 // 	std::cout << "subsampling::bilinear" << " - "
 // 		  << std::ceil(fact) << std::endl;
-	input = subsampling::bilinear(input, std::ceil(fact - 0.5)); // math::floor instead?
+	input = subsampling::bilinear(input, int(std::ceil(fact - 0.5))); // math::floor instead?
 
       }
 //       else

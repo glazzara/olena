@@ -171,8 +171,8 @@ namespace scribo
 
 	  bool is_foreground;
 	  unsigned ncols = geom::ncols(output);
-	  unsigned hit_ratio = 0.2f * length + 1;
-	  unsigned miss_ratio = 0.95f * length + 1;
+	  unsigned hit_ratio = unsigned(0.2f * length + 1);
+	  unsigned miss_ratio = unsigned(0.95f * length + 1);
 
 	  mln_box_runstart_piter(I) p(output.domain());
 	  for_all(p)

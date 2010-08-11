@@ -237,12 +237,13 @@ namespace scribo
 
 	  for(def::coord row = 0; row < nrows; ++row)
 	    for(def::coord col = 0; col < ncols; ++col)
-	      output.at_(row, col)
-		= internal::compute_sauvola_threshold(P(row, col),
-						      mean, stddev, thres,
-						      simple, squared,
-						      window_size, K,
-						      SCRIBO_DEFAULT_SAUVOLA_R);
+	      convert::from_to(
+		internal::compute_sauvola_threshold(P(row, col),
+						    mean, stddev, thres,
+						    simple, squared,
+						    window_size, K,
+						    SCRIBO_DEFAULT_SAUVOLA_R),
+		output.at_(row, col));
 
 	  trace::exiting("scribo::binarization::impl::generic::sauvola_threshold");
 	  return output;
