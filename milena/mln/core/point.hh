@@ -276,7 +276,7 @@ namespace mln
     C
     convert_data_(metal::bool_<true>, const C2& v)
     {
-      return round(v);
+      return static_cast<C>(round(v));
     }
 
     template <typename C, typename C2>

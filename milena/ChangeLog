@@ -1,5 +1,9 @@
 2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* mln/core/point.hh: Fix a warning.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix tests in Milena.
 
 	* mln/draw/dashed_line.hh,
@@ -11,8 +15,9 @@
 	* tests/topo/skeleton/crest.cc: Fix reference results since a bug
 	have been fixed.
 
-	* tests/unit_test/cond_tests_qt
-	* tests/unit_test/unit-tests.mk
+	* tests/unit_test/cond_tests_qt: Add conditional tests.
+
+	* tests/unit_test/unit-tests.mk: Regen.
 
 2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
