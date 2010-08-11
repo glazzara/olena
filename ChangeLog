@@ -1,5 +1,12 @@
 2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Handle libgdcmCommon's dependencies.
+
+	* configure.ac: Pass more libraries to OLN_WITH_LIB when searching
+	for libgdcmCommon.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* configure.ac: Display a summary of the configuration when the
 	build directory is ready.
 

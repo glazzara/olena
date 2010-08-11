@@ -273,7 +273,7 @@ AC_MSG_RESULT([])
 AC_MSG_RESULT([* libgdcm])
 AC_MSG_RESULT([---------])
 OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm], [GDCM],
-	     [-lgdcmzlib])
+	     [-lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib])
 
 ## ---------- ##
 ## Tesseract. ##
