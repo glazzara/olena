@@ -234,7 +234,7 @@ if test "x$with_magickxx" != 'xyes'; then
     DISTCHECK_CONFIG_FLAGS="${DISTCHECK_CONFIG_FLAGS} --with-magickxx=$with_magickxx "
 fi
 
-have_magickxx='no'
+oln_have_magickxx='no'
 MAGICKXX_CFLAGS=""
 MAGICKXX_LIBS=""
 MAGICKXX_PKG=""
@@ -242,11 +242,11 @@ if test "x$with_magickxx" = 'xyes'; then
     AC_MSG_RESULT([])
     AC_MSG_RESULT([* libMagick++])
     AC_MSG_RESULT([---------------])
-    PKG_CHECK_MODULES(MAGICKXX,[ImageMagick++], have_magickxx=yes, have_magickxx=no)
+    PKG_CHECK_MODULES(MAGICKXX,[ImageMagick++], oln_have_magickxx=yes, oln_have_magickxx=no)
     AC_MSG_RESULT([])
 fi
 
-if test "$have_magickxx" = 'yes'; then
+if test "$oln_have_magickxx" = 'yes'; then
    AC_DEFINE([HAVE_MAGICKXX], 1, [Define to 1 if we can use libMagick++])
    # Use standard variable names.
    MAGICKXX_CPPFLAGS="$MAGICKXX_CFLAGS"
@@ -255,7 +255,7 @@ if test "$have_magickxx" = 'yes'; then
    AC_SUBST(MAGICKXX_LDFLAGS)
 fi
 
-AM_CONDITIONAL(HAVE_MAGICKXX, test "x$have_magickxx" = 'xyes')
+AM_CONDITIONAL(HAVE_MAGICKXX, test "x$oln_have_magickxx" = 'xyes')
 
 #------------------------------------------------------------
 
@@ -292,6 +292,8 @@ OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full], [tesseract],
 AC_MSG_RESULT([])
 AC_MSG_RESULT([* Qt])
 AC_MSG_RESULT([----])
+
+oln_have_qt='no'
 AT_WITH_QT([+xml], [], [],
            AC_MSG_WARN([Qt dependent programs will be disabled.]))
 
@@ -299,6 +301,7 @@ if test "x$QT_VERSION_MAJOR" != "x"; then
    AT_REQUIRE_QT_VERSION([4], AC_MSG_WARN([Your Qt version is too old! Qt dependent programs will be disabled.]),
 	 		 AC_DEFINE([HAVE_QT], 1,
 			 	   [Define to 1 if we can use Qt]))
+   oln_have_qt='yes'
 fi
 AM_CONDITIONAL([HAVE_QT], [test "x$QT_VERSION_MAJOR" == "x4"])
 
