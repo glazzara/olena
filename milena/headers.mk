@@ -159,6 +159,8 @@ mln/convert/to_fun.hh \
 mln/convert/to_image.hh \
 mln/convert/to_p_array.hh \
 mln/convert/to_p_set.hh \
+mln/convert/to_qimage.hh \
+mln/convert/to_qimage_nocopy.hh \
 mln/convert/to_upper_window.hh \
 mln/convert/to_window.hh \
 mln/core/a_point_of.hh \
@@ -447,6 +449,7 @@ mln/data/replace.hh \
 mln/data/saturate.hh \
 mln/data/sort_offsets.hh \
 mln/data/sort_psites.hh \
+mln/data/split.hh \
 mln/data/stretch.hh \
 mln/data/to_enc.hh \
 mln/data/transform.hh \
@@ -462,6 +465,7 @@ mln/debug/format.hh \
 mln/debug/histo.hh \
 mln/debug/iota.hh \
 mln/debug/iota.spe.hh \
+mln/debug/mosaic.hh \
 mln/debug/println.hh \
 mln/debug/println.spe.hh \
 mln/debug/println_with_border.hh \
@@ -470,10 +474,13 @@ mln/debug/put_word.hh \
 mln/debug/quiet.hh \
 mln/debug/slices_2d.hh \
 mln/debug/superpose.hh \
+mln/debug/z_order.hh \
 mln/display/all.hh \
 mln/display/essential.hh \
 mln/draw/all.hh \
 mln/draw/box.hh \
+mln/draw/box_plain.hh \
+mln/draw/dashed_line.hh \
 mln/draw/essential.hh \
 mln/draw/line.hh \
 mln/draw/plot.hh \
@@ -507,6 +514,8 @@ mln/fun/internal/resolve.hh \
 mln/fun/internal/selector.hh \
 mln/fun/internal/x2x_linear_impl.hh \
 mln/fun/meta/impl.hh \
+mln/fun/n2v/all.hh \
+mln/fun/n2v/white_gaussian.hh \
 mln/fun/ops.hh \
 mln/fun/p2b/all.hh \
 mln/fun/p2b/antilogy.hh \
@@ -546,6 +555,8 @@ mln/fun/v2v/inc.hh \
 mln/fun/v2v/linear.hh \
 mln/fun/v2v/norm.hh \
 mln/fun/v2v/projection.hh \
+mln/fun/v2v/qt_rgb_to_int_u.hh \
+mln/fun/v2v/rgb_to_int_u.hh \
 mln/fun/v2v/saturate.hh \
 mln/fun/v2v/wrap.hh \
 mln/fun/v2w2v/all.hh \
@@ -591,6 +602,7 @@ mln/geom/chamfer.hh \
 mln/geom/complex_geometry.hh \
 mln/geom/delta.hh \
 mln/geom/essential.hh \
+mln/geom/horizontal_symmetry.hh \
 mln/geom/max_col.hh \
 mln/geom/max_ind.hh \
 mln/geom/max_row.hh \
@@ -612,6 +624,7 @@ mln/geom/size1d.hh \
 mln/geom/size2d.hh \
 mln/geom/size3d.hh \
 mln/geom/translate.hh \
+mln/geom/vertical_symmetry.hh \
 mln/graph/all.hh \
 mln/graph/attribute/card.hh \
 mln/graph/attribute/representative.hh \
@@ -624,6 +637,7 @@ mln/histo/all.hh \
 mln/histo/array.hh \
 mln/histo/compute.hh \
 mln/histo/compute.spe.hh \
+mln/histo/equalize.hh \
 mln/histo/essential.hh \
 mln/histo/point_from_value.hh \
 mln/io/abort.hh \
@@ -632,8 +646,10 @@ mln/io/cloud/all.hh \
 mln/io/cloud/load.hh \
 mln/io/cloud/save.hh \
 mln/io/dicom/all.hh \
+mln/io/dicom/get_header.hh \
 mln/io/dicom/load.hh \
 mln/io/dump/all.hh \
+mln/io/dump/get_header.hh \
 mln/io/dump/load.hh \
 mln/io/dump/save.hh \
 mln/io/essential.hh \
@@ -682,6 +698,10 @@ mln/io/ppm/load.hh \
 mln/io/ppm/save.hh \
 mln/io/ppms/all.hh \
 mln/io/ppms/load.hh \
+mln/io/raw/all.hh \
+mln/io/raw/get_header.hh \
+mln/io/raw/load.hh \
+mln/io/raw/save.hh \
 mln/io/tiff/all.hh \
 mln/io/tiff/load.hh \
 mln/io/txt/all.hh \
@@ -706,6 +726,7 @@ mln/labeling/relabel.hh \
 mln/labeling/superpose.hh \
 mln/labeling/value.hh \
 mln/labeling/value.spe.hh \
+mln/labeling/value_and_compute.hh \
 mln/labeling/wrap.hh \
 mln/linear/all.hh \
 mln/linear/ch_convolve.hh \
@@ -972,6 +993,7 @@ mln/set/inter.hh \
 mln/set/sym_diff.hh \
 mln/set/uni.hh \
 mln/set/unique.hh \
+mln/subsampling/antialiased.hh \
 mln/tag/all.hh \
 mln/tag/essential.hh \
 mln/tag/init.hh \
@@ -1198,6 +1220,7 @@ mln/value/internal/gray_f.hh \
 mln/value/internal/integer.hh \
 mln/value/internal/iterable_set.hh \
 mln/value/internal/limits.hh \
+mln/value/internal/make_generic_name.hh \
 mln/value/internal/value_like.hh \
 mln/value/interval.hh \
 mln/value/label.hh \
@@ -1209,6 +1232,7 @@ mln/value/mixin.hh \
 mln/value/ops.hh \
 mln/value/other.hh \
 mln/value/proxy.hh \
+mln/value/qt/rgb32.hh \
 mln/value/rgb.hh \
 mln/value/rgb16.hh \
 mln/value/rgb8.hh \
@@ -1236,6 +1260,7 @@ mln/win/octagon2d.hh \
 mln/win/rectangle2d.hh \
 mln/win/segment1d.hh \
 mln/win/shift.hh \
+mln/win/sline3d.hh \
 mln/win/sphere3d.hh \
 mln/win/sym.hh \
 mln/win/vline2d.hh \
