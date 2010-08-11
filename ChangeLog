@@ -1,3 +1,8 @@
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* m4/autotroll.m4: Fix an invalid generation of configure with
+	autoconf 2.61.
+
 2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* bootstrap: Update calls to build_unit_test.sh.

@@ -531,7 +531,7 @@ AC_DEFUN([AT_REQUIRE_QT_VERSION],
   fi
   AC_SUBST([QT_VERSION], [$at_cv_QT_VERSION])
   AS_VERSION_COMPARE([$QT_VERSION], [$1],
-    [AX_INSTEAD_IF([$2; break;], [This package requires Qt $1 or above.])])
+    [AX_INSTEAD_IF([$2; break; ], [This package requires Qt $1 or above.])])
 
   # Run the user code
   $3
