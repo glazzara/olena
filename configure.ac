@@ -655,5 +655,87 @@ if test -z "$TOOLS_CXXFLAGS"; then
   fi
 fi
 
-
+AC_MSG_RESULT([-------------------------------------------------------------])
+AC_MSG_RESULT([Update Olena configuration])
 AC_OUTPUT
+
+
+
+AC_MSG_RESULT([
+Olena is configured as follows. Please verify that this configuration
+matches your expectations.
+
+Host system type: $host
+Build system type: $build
+
+================
+| Dependencies |
+================
+
+
+		Option			Value
+-------------------------------------------------------------------------------
+CFITSIO		--with-cfitsio[=DIR]	$oln_have_cfitsio
+GDCM		--with-gdcm[=DIR]		$oln_have_gdcm
+Magick++	--with-magickxx		$oln_have_magickxx
+Qt		--with-qt		$oln_have_qt
+Tesseract	--with-tesseract[=DIR]	$oln_have_tesseract
+TIFF 		--with-tiff[=DIR]		$oln_have_tiff
+Trimesh 	--enable-trimesh	$enable_trimesh
+-------------------------------------------------------------------------------
+
+
+
+
+===========
+| Modules |
+===========
+
+
+		Option			Value
+-------------------------------------------------------------------------------
+Scribo		--enable-scribo		$enable_scribo
+Swilena		--enable-swilena	$enable_swilena
+-------------------------------------------------------------------------------
+
+
+
+
+=============
+| Utilities |
+=============
+
+
+		Option			Value
+-------------------------------------------------------------------------------
+Apps		--enable-apps		$enable_apps
+Tools		--enable-tools		$enable_tools
+-------------------------------------------------------------------------------
+
+
+
+Options used to compile and link:
+  PREFIX          = $PREFIX_DIR
+  EXEC-PREFIX     = $EXEC_PREFIX_DIR
+  VERSION         = $PACKAGE_VERSION
+  CC              = $CC
+  CFLAGS          = $CFLAGS
+  CPPFLAGS        = $MAGICK_CPPFLAGS
+  DEFS            = $DEFS
+  LDFLAGS         = $LDFLAGS
+  LIBS            = $MAGICK_LIBS
+  CXX             = $CXX
+  CXXFLAGS        = $CXXFLAGS
+  PKG_CONFIG	  = $PKG_CONFIG
+  QT_PATH	  = $QT_PATH
+  QMAKE		  = $QMAKE
+  MOC		  = $MOC
+  UIC		  = $UIC
+  RCC		  = $RCC
+  MAGICKXX_CFLAGS = $MAGICKXX_CFLAGS
+  MAGICKXX_LIBS   = $MAGICKXX_LIBS
+  SCRIBO_CXXFLAGS = $SCRIBO_CXXFLAGS
+  APPS_CXXFLAGS   = $APPS_CXXFLAGS
+  TOOLS_CXXFLAGS  = $TOOLS_CXXFLAGS
+
+])

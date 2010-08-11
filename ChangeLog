@@ -1,5 +1,10 @@
 2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* configure.ac: Display a summary of the configuration when the
+	build directory is ready.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* configure.ac: Set oln_with_* variables correctly.
 
 2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
