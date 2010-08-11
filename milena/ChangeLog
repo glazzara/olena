@@ -1,5 +1,13 @@
 2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix warnings with g++-4.1 in Milena.
+
+	* mln/fun/v2v/saturate.hh,
+	* mln/subsampling/antialiased.hh,
+	* mln/value/rgb.hh: Use convert::from_to for type conversions.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* mln/core/point.hh: Fix a warning.
 
 2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>

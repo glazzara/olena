@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -112,7 +113,10 @@ namespace mln
 	  return min_;
 	if (w > max_W)
 	  return max_;
-	return mln::value::cast<W>(w);
+
+	V output;
+	convert::from_to(w, output);
+	return output;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

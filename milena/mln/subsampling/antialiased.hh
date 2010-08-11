@@ -194,7 +194,7 @@ namespace mln
 	      for (unsigned k = 0; k < factor; ++k)
 		s += *ptrs[j]++;
 
-	    *po++ = (s + factor_round) / factor_2;
+	    convert::from_to((s + factor_round) / factor_2, *po++);
 	  }
 
 	  for (unsigned j = 0; j < factor; ++j)
