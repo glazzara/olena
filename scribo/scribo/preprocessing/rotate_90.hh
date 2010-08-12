@@ -88,9 +88,10 @@ namespace scribo
 
       // Initialize output domain and make sure the border size is the
       // same as input's.
+      typedef mln_domain(I) domain_t;
       mln_site(I) pmax(input.domain().pmax().col(),
 		       input.domain().pmax().row());
-      mln_concrete(I) output(mln_domain(I)(input.domain().pmin(), pmax),
+      mln_concrete(I) output(domain_t(input.domain().pmin(), pmax),
 			     input.border());
 
       mln_assertion(output.is_valid());
