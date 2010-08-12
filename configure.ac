@@ -241,9 +241,12 @@ AM_CONDITIONAL([HAVE_BOOST_TUPLE], [test "x$oln_have_boost_tuple" = xyes])
 ## CFITSIO library. ##
 ## ---------------- ##
 
-AC_MSG_RESULT([])
-AC_MSG_RESULT([* libcfitsio])
-AC_MSG_RESULT([------------])
+if test "x$with_cfitsio" != xno; then
+   AC_MSG_RESULT([])
+   AC_MSG_RESULT([* libcfitsio])
+   AC_MSG_RESULT([------------])
+fi
+
 OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 
 
@@ -264,80 +267,102 @@ AC_ARG_WITH([magickxx],
         [with_magickxx=$withval],
         [with_magickxx='yes'])
 
-if test "x$with_magickxx" != 'xyes'; then
-    DISTCHECK_CONFIG_FLAGS="${DISTCHECK_CONFIG_FLAGS} --with-magickxx=$with_magickxx "
-fi
-
-oln_have_magickxx='no'
+oln_have_magickxx=no
 MAGICKXX_CFLAGS=""
 MAGICKXX_LIBS=""
 MAGICKXX_PKG=""
-if test "x$with_magickxx" = 'xyes'; then
-    AC_MSG_RESULT([])
-    AC_MSG_RESULT([* libMagick++])
-    AC_MSG_RESULT([---------------])
+
+if test "x$with_magickxx" != xno; then
+   AC_MSG_RESULT([])
+   AC_MSG_RESULT([* libMagick++])
+   AC_MSG_RESULT([---------------])
+
     PKG_CHECK_MODULES(MAGICKXX,[ImageMagick++], oln_have_magickxx=yes, oln_have_magickxx=no)
     AC_MSG_RESULT([])
+
+    if test "$oln_have_magickxx" = yes; then
+       AC_DEFINE([HAVE_MAGICKXX], 1, [Define to 1 if we can use libMagick++])
+       # Use standard variable names.
+       MAGICKXX_CPPFLAGS="$MAGICKXX_CFLAGS"
+       MAGICKXX_LDFLAGS="$MAGICKXX_LIBS"
+       AC_SUBST(MAGICKXX_CPPFLAGS)
+       AC_SUBST(MAGICKXX_LDFLAGS)
+    fi
 fi
 
-if test "$oln_have_magickxx" = 'yes'; then
-   AC_DEFINE([HAVE_MAGICKXX], 1, [Define to 1 if we can use libMagick++])
-   # Use standard variable names.
-   MAGICKXX_CPPFLAGS="$MAGICKXX_CFLAGS"
-   MAGICKXX_LDFLAGS="$MAGICKXX_LIBS"
-   AC_SUBST(MAGICKXX_CPPFLAGS)
-   AC_SUBST(MAGICKXX_LDFLAGS)
-fi
-
-AM_CONDITIONAL(HAVE_MAGICKXX, test "x$oln_have_magickxx" = 'xyes')
+AM_CONDITIONAL(HAVE_MAGICKXX, test "x$oln_have_magickxx" = xyes)
 
 #------------------------------------------------------------
-
-## ------------- ##
-## TIFF library. ##
-## ------------- ##
-
-AC_MSG_RESULT([])
-AC_MSG_RESULT([* libtiff])
-AC_MSG_RESULT([---------])
-OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
-
-# Grassroots DiCoM (GDCM).
-AC_MSG_RESULT([])
-AC_MSG_RESULT([* libgdcm])
-AC_MSG_RESULT([---------])
-OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm], [GDCM],
-	     [-lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib])
-
-## ---------- ##
-## Tesseract. ##
-## ---------- ##
-
-AC_MSG_RESULT([])
-AC_MSG_RESULT([* Tesseract])
-AC_MSG_RESULT([-----------])
-OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full], [tesseract],
-             [TESSERACT])
 
 ## --- ##
 ## Qt. ##
 ## --- ##
 
-AC_MSG_RESULT([])
-AC_MSG_RESULT([* Qt])
-AC_MSG_RESULT([----])
+oln_have_qt=no
 
-oln_have_qt='no'
-AT_WITH_QT([+xml], [], [],
-           AC_MSG_WARN([Qt dependent programs will be disabled.]))
+if test "x$with_qt" != xno; then
+   AC_MSG_RESULT([])
+   AC_MSG_RESULT([* Qt])
+   AC_MSG_RESULT([----])
 
-if test "x$QT_VERSION_MAJOR" != "x"; then
-   AT_REQUIRE_QT_VERSION([4], AC_MSG_WARN([Your Qt version is too old! Qt dependent programs will be disabled.]),
-	 		 AC_DEFINE([HAVE_QT], 1,
-			 	   [Define to 1 if we can use Qt]))
-   oln_have_qt='yes'
+   AT_WITH_QT([+xml], [], [],
+              AC_MSG_WARN([Qt dependent programs will be disabled.]))
+
+   if test "x$QT_VERSION_MAJOR" != x; then
+      AT_REQUIRE_QT_VERSION([4], AC_MSG_WARN([Your Qt version is too old! Qt dependent programs will be disabled.]),
+	 		    AC_DEFINE([HAVE_QT], 1,
+				      [Define to 1 if we can use Qt]) oln_have_qt=yes)
+      if test "x$QT_VERSION_MAJOR" = x4; then
+      	 oln_have_qt=yes
+      fi
+   fi
 fi
-AM_CONDITIONAL([HAVE_QT], [test "x$QT_VERSION_MAJOR" == "x4"])
+
+AM_CONDITIONAL([HAVE_QT], [test "x$oln_have_qt" = xyes])
+
+
+## ---------- ##
+## Tesseract. ##
+## ---------- ##
+
+if test "x$with_tesseract" != xno; then
+   AC_MSG_RESULT([])
+   AC_MSG_RESULT([* Tesseract])
+   AC_MSG_RESULT([-----------])
+fi
+
+OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
+   	     [tesseract], [TESSERACT])
+
+
+## ------------- ##
+## TIFF library. ##
+## ------------- ##
+
+if test "x$with_tiff" != xno; then
+   AC_MSG_RESULT([])
+   AC_MSG_RESULT([* libtiff])
+   AC_MSG_RESULT([---------])
+fi
+
+OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
+
+
+## -------------------------------- ##
+## GDCM library (Grassroots DiCom). ##
+## -------------------------------- ##
+
+if test "x$with_gdcm" != xno; then
+   AC_MSG_RESULT([])
+   AC_MSG_RESULT([* libgdcm])
+   AC_MSG_RESULT([---------])
+fi
+
+OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm],
+   	     [GDCM],
+	     [-lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib])
+
+
 
 
 AC_MSG_RESULT([])

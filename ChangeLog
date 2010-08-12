@@ -1,3 +1,11 @@
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve configure output.
+
+	* configure.ac: Improve configure output.
+
+	* m4/oln-with-lib.m4: Always set oln_have_* variable.
+
 2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Handle Boost dependency.

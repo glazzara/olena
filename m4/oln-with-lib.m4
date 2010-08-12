@@ -1,6 +1,7 @@
 #                                                       -*- Autoconf -*-
 
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE)
 #
 # This file is part of Olena.
 #
@@ -73,6 +74,7 @@ AC_DEFUN([_OLN_WITH_LIB],
      [use $1 (DIR = prefix for $1 installation)])])
  $5_CPPFLAGS=''
  $5_LDFLAGS=''
+ oln_have_$4=no
  if test "x$with_$4" != xno; then
    if test -n "$with_$4"; then
      $5_CPPFLAGS="-I${with_$4}/include"
@@ -82,7 +84,6 @@ AC_DEFUN([_OLN_WITH_LIB],
    oln_save_LDFLAGS=$LDFLAGS
    CPPFLAGS="$CPPFLAGS $$5_CPPFLAGS"
    LDFLAGS="$LDFLAGS $$5_LDFLAGS"
-   oln_have_$4=no
    AC_CHECK_HEADER([$2],
      [AC_CHECK_LIB([$3],
        [main],
