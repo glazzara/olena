@@ -3,6 +3,18 @@
 check_PROGRAMS =
 
 # Starting a conditional unit test list.
+if HAVE_BOOST_PREPROCESSOR
+if HAVE_BOOST_TUPLE
+check_PROGRAMS +=  \
+mln_accu_tuple
+
+mln_accu_tuple_CPPFLAGS= ${BOOST_TUPLE_CPPFLAGS}  ${BOOST_PREPROCESSOR_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_accu_tuple_LDFLAGS= ${BOOST_TUPLE_LDFLAGS}  ${BOOST_PREPROCESSOR_LDFLAGS}  ${AM_LDFLAGS}
+mln_accu_tuple_SOURCES = mln_accu_tuple.cc
+endif HAVE_BOOST_TUPLE
+endif HAVE_BOOST_PREPROCESSOR
+
+# Starting a conditional unit test list.
 if HAVE_CFITSIO
 check_PROGRAMS +=  \
 mln_io_fits_all \
@@ -152,7 +164,6 @@ mln_accu_transform_directional \
 mln_accu_transform_line \
 mln_accu_transform_snake \
 mln_accu_transform_stop \
-mln_accu_tuple \
 mln_accu_v \
 mln_algebra_all \
 mln_algebra_essential \
@@ -1472,7 +1483,6 @@ mln_accu_transform_directional_SOURCES = mln_accu_transform_directional.cc
 mln_accu_transform_line_SOURCES = mln_accu_transform_line.cc
 mln_accu_transform_snake_SOURCES = mln_accu_transform_snake.cc
 mln_accu_transform_stop_SOURCES = mln_accu_transform_stop.cc
-mln_accu_tuple_SOURCES = mln_accu_tuple.cc
 mln_accu_v_SOURCES = mln_accu_v.cc
 mln_algebra_all_SOURCES = mln_algebra_all.cc
 mln_algebra_essential_SOURCES = mln_algebra_essential.cc

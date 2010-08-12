@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -36,8 +36,7 @@ check_PROGRAMS =				\
   transform_diagonal				\
   transform_directional				\
   transform_line				\
-  transform_snake				\
-  tuple
+  transform_snake
 
 all_accus_SOURCES = all_accus.cc
 compute_SOURCES = compute.cc
@@ -51,6 +50,16 @@ transform_diagonal_SOURCES = transform_diagonal.cc
 transform_directional_SOURCES = transform_directional.cc
 transform_line_SOURCES = transform_line.cc
 transform_snake_SOURCES = transform_snake.cc
+
+
+if HAVE_BOOST_PREPROCESSOR
+if HAVE_BOOST_TUPLE
+
+check_PROGRAMS += tuple
 tuple_SOURCES = tuple.cc
+
+endif HAVE_BOOST_TUPLE
+endif HAVE_BOOST_PREPROCESSOR
+
 
 TESTS = $(check_PROGRAMS)

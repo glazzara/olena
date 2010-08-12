@@ -1,5 +1,15 @@
 2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make Boost dependent tests conditional.
+
+	* tests/accu/Makefile.am (tuple): Add conditions.
+
+	* tests/unit_test/cond_tests_boost-preprocessor_boost-tuple: New.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes in Milena.
 
 	* mln/fun/v2v/saturate.hh: Add mln:: namespace prefix.
