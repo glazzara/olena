@@ -116,7 +116,7 @@ namespace mln
 	  return max_;
 
 	V output;
-	convert::from_to(w, output);
+	mln::convert::from_to(w, output);
 	return output;
       }
 

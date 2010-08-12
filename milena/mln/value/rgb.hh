@@ -37,6 +37,8 @@
 
 # include <mln/value/internal/make_generic_name.hh>
 
+# include <mln/convert/from_to.hh>
+
 // FIXME: should we consider that mln_min may be negative? => wrong
 // color formulae.
 

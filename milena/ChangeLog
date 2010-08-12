@@ -1,5 +1,15 @@
 2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes in Milena.
+
+	* mln/fun/v2v/saturate.hh: Add mln:: namespace prefix.
+
+	* mln/value/rgb.hh: Add a missing include.
+
+	* mln/accu/tuple.hh: Update include directive syntax.
+
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix more warnings in Milena.
 
 	* mln/convert/impl/from_float_to_value.hh: Add an overload for
