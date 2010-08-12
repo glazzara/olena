@@ -1,5 +1,13 @@
 2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Handle Boost dependency.
+
+	* configure.ac: Add tests.
+
+	* m4/boost.m4: New.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* Makefile.am: Fix call to build_unit_test.sh.
 
 2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>

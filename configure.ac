@@ -197,11 +197,45 @@ PKG_PROG_PKG_CONFIG
 AC_MSG_RESULT([])
 AC_MSG_RESULT([])
 AC_MSG_RESULT([Checking external libraries])
-AC_MSG_RESULT([------------------------------------------------------------])
+AC_MSG_RESULT([-------------------------------------------------------------------------------])
 
 
 ### Support for FreeImagePlus has been disabled for Olena 1.0.
 ## OLN_WITH_LIB([FreeImagePlus], [FreeImagePlus.h], [freeimageplus])
+
+## ----- ##
+## Boost ##
+## ----- ##
+
+oln_have_boost_preprocessor=no
+oln_have_boost_tuple=no
+
+if test "x$with_boost" != xno; then
+   AC_MSG_RESULT([])
+   AC_MSG_RESULT([* Boost])
+   AC_MSG_RESULT([-------])
+
+   # Preprocessor
+   BOOST_FIND_HEADER([boost/preprocessor/repetition/repeat.hpp],
+		     oln_have_boost_preprocessor="no",
+		     oln_have_boost_preprocessor="yes")
+   if test "x$oln_have_boost_preprocessor" = xyes; then
+      AC_DEFINE([HAVE_BOOST_PREPROCESSOR], 1, [Define to 1 if we can use Boost Preprocessor.])
+   fi
+
+   # Tuple
+   BOOST_FIND_HEADER([boost/tuple/tuple.hpp],
+		     oln_have_boost_tuple=no,
+		     oln_have_boost_tuple=yes)
+   if test "x$oln_have_boost_tuple" = xyes; then
+      AC_DEFINE([HAVE_BOOST_TUPLE], 1, [Define to 1 if we can use Boost Tuple.])
+   fi
+fi
+
+AM_CONDITIONAL([HAVE_BOOST_PREPROCESSOR],
+	       [test "x$oln_have_boost_preprocessor" = xyes])
+AM_CONDITIONAL([HAVE_BOOST_TUPLE], [test "x$oln_have_boost_tuple" = xyes])
+
 
 ## ---------------- ##
 ## CFITSIO library. ##
@@ -307,7 +341,7 @@ AM_CONDITIONAL([HAVE_QT], [test "x$QT_VERSION_MAJOR" == "x4"])
 
 
 AC_MSG_RESULT([])
-AC_MSG_RESULT([------------------------------------------------------------])
+AC_MSG_RESULT([-------------------------------------------------------------------------------])
 AC_MSG_RESULT([])
 AC_MSG_RESULT([])
 
@@ -655,15 +689,15 @@ if test -z "$TOOLS_CXXFLAGS"; then
   fi
 fi
 
-AC_MSG_RESULT([-------------------------------------------------------------])
+AC_MSG_RESULT([-------------------------------------------------------------------------------])
 AC_MSG_RESULT([Update Olena configuration])
 AC_OUTPUT
 
 
-
 AC_MSG_RESULT([
-Olena is configured as follows. Please verify that this configuration
-matches your expectations.
+-------------------------------------------------------------------------------
+Configuration summary.
+
 
 Host system type: $host
 Build system type: $build
@@ -673,15 +707,17 @@ Build system type: $build
 ================
 
 
-		Option			Value
+			Option			Enabled and available
 -------------------------------------------------------------------------------
-CFITSIO		--with-cfitsio[=DIR]	$oln_have_cfitsio
-GDCM		--with-gdcm[=DIR]		$oln_have_gdcm
-Magick++	--with-magickxx		$oln_have_magickxx
-Qt		--with-qt		$oln_have_qt
-Tesseract	--with-tesseract[=DIR]	$oln_have_tesseract
-TIFF 		--with-tiff[=DIR]		$oln_have_tiff
-Trimesh 	--enable-trimesh	$enable_trimesh
+Boost Preprocessor      --with-boost=[DIR]	$oln_have_boost_preprocessor
+Boost Tuple		--with-boost=[DIR]	$oln_have_boost_tuple
+CFITSIO			--with-cfitsio[=DIR]	$oln_have_cfitsio
+GDCM			--with-gdcm[=DIR]		$oln_have_gdcm
+Magick++		--with-magickxx		$oln_have_magickxx
+Qt			--with-qt		$oln_have_qt
+Tesseract		--with-tesseract[=DIR]	$oln_have_tesseract
+TIFF 			--with-tiff[=DIR]		$oln_have_tiff
+Trimesh 		--enable-trimesh	$enable_trimesh
 -------------------------------------------------------------------------------
 
 
@@ -692,10 +728,10 @@ Trimesh 	--enable-trimesh	$enable_trimesh
 ===========
 
 
-		Option			Value
+			Option			Enabled
 -------------------------------------------------------------------------------
-Scribo		--enable-scribo		$enable_scribo
-Swilena		--enable-swilena	$enable_swilena
+Scribo			--enable-scribo		$enable_scribo
+Swilena			--enable-swilena	$enable_swilena
 -------------------------------------------------------------------------------
 
 
@@ -706,10 +742,10 @@ Swilena		--enable-swilena	$enable_swilena
 =============
 
 
-		Option			Value
+			Option			Enabled
 -------------------------------------------------------------------------------
-Apps		--enable-apps		$enable_apps
-Tools		--enable-tools		$enable_tools
+Apps			--enable-apps		$enable_apps
+Tools			--enable-tools		$enable_tools
 -------------------------------------------------------------------------------
 
 
@@ -732,10 +768,19 @@ Options used to compile and link:
   MOC		  = $MOC
   UIC		  = $UIC
   RCC		  = $RCC
+  BOOST_ROOT 	  = $BOOST_ROOT
   MAGICKXX_CFLAGS = $MAGICKXX_CFLAGS
   MAGICKXX_LIBS   = $MAGICKXX_LIBS
   SCRIBO_CXXFLAGS = $SCRIBO_CXXFLAGS
   APPS_CXXFLAGS   = $APPS_CXXFLAGS
   TOOLS_CXXFLAGS  = $TOOLS_CXXFLAGS
 
+
+
+*******************************************************************************
+Olena is configured as stated above. Please verify that this configuration
+matches your expectations.
+
+Then, type 'make' to build Olena and 'make install' to install it on
+your system.
 ])
