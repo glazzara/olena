@@ -1,5 +1,9 @@
 2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/unit_test/Makefile.am (DIST_FILES): Add missing files.
+
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make Boost dependent tests conditional.
 
 	* tests/accu/Makefile.am (tuple): Add conditions.
