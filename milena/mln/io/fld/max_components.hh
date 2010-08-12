@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,6 +27,11 @@
 #ifndef MLN_IO_FLD_MAX_COMPONENTS_HH
 # define MLN_IO_FLD_MAX_COMPONENTS_HH
 
+/// \file
+///
+/// \fixme Don't we want to change the return type 'unsigned' to a
+/// larger type or make it templated?
+
 # include <mln/algebra/vec.hh>
 # include <mln/value/rgb.hh>
 # include <mln/io/fld/header.hh>
@@ -41,53 +47,53 @@ namespace mln
 
       template <typename V>
       inline
-      unsigned int max_component(const V&);
+      unsigned max_component(const V&);
 
       template <unsigned n, typename V>
       inline
-      unsigned int max_component(const algebra::vec<n, V>& v);
+      unsigned max_component(const algebra::vec<n, V>& v);
 
       template <unsigned n>
       inline
-      unsigned int max_component(const value::rgb<n>&);
+      unsigned max_component(const value::rgb<n>&);
 
       inline
-      unsigned int max_component(const fld::data_type::E& t);
+      unsigned max_component(const fld::data_type::E& t);
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename V>
       inline
-      unsigned int max_component(const V&)
+      unsigned max_component(const V&)
       {
-	return mln_max(V);
+	return unsigned(mln_max(V));
       }
 
 
       template <unsigned n, typename V>
       inline
-      unsigned int max_component(const algebra::vec<n, V>& v)
+      unsigned max_component(const algebra::vec<n, V>& v)
       {
-	return mln_max(V);
+	return unsigned(mln_max(V));
       }
 
       template <unsigned n>
       inline
-      unsigned int max_component(const value::rgb<n>&)
+      unsigned max_component(const value::rgb<n>&)
       {
 	return mln_max(mln::value::int_u<n>);
       }
 
       inline
-      unsigned int max_component(const fld::data_type::E& t)
+      unsigned max_component(const fld::data_type::E& t)
       {
 	switch (t)
 	  {
 	    case data_type::BYTE: return mln_max(unsigned char);
 	    case data_type::SHORT: return mln_max(unsigned short);
 	    case data_type::INTEGER: return mln_max(unsigned);
-	    case data_type::FLOAT: return mln_max(float);
-	    case data_type::DOUBLE: return mln_max(double);
+	    case data_type::FLOAT: return unsigned(mln_max(float));
+	    case data_type::DOUBLE: return unsigned(mln_max(double));
 	    default: return 0;
 	  }
       }

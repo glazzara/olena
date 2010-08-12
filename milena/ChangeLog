@@ -1,3 +1,14 @@
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix more warnings in Milena.
+
+	* mln/convert/impl/from_float_to_value.hh: Add an overload for
+	short int.
+
+	* mln/io/fld/load.hh: Use convert::from_to.
+
+	* mln/io/fld/max_components.hh: Explicitly cast values to unsigned.
+
 2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix more tests in Milena.
