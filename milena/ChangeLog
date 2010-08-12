@@ -1,5 +1,17 @@
 2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix more tests in Milena.
+
+	* mln/fun/v2v/saturate.hh: Add a missing include.
+
+	* mln/subsampling/antialiased.hh: Increment pointer after the call
+	to convert::from_to.
+
+	* tests/subsampling/antialiased.cc: Fix references according to
+	last changes on 'round factor'.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix warnings with g++-4.1 in Milena.
 
 	* mln/fun/v2v/saturate.hh,

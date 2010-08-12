@@ -40,13 +40,13 @@ int main()
   using namespace mln;
   using namespace mln::value;
 
-  int_u8 refgl[3][3] = { { 123, 152, 115 },
+  int_u8 refgl[3][3] = { { 124, 153, 116 },
 			 { 105, 116, 158 },
-			 {  92, 136, 106 } };
+			 {  93, 136, 106 } };
 
-  rgb8 refrgb[3][3] = { { rgb8(197, 93, 91), rgb8(206, 131, 127), rgb8(170, 94, 101) },
-			{ rgb8(163, 78, 95), rgb8(173, 90, 105), rgb8(203, 143, 127) },
-			{ rgb8(135, 70, 96), rgb8(201, 111, 109), rgb8(158, 80, 90) } };
+  rgb8 refrgb[3][3] = { { rgb8(197, 93, 92), rgb8(206, 131, 128), rgb8(171, 94, 101) },
+			{ rgb8(164, 78, 96), rgb8(174, 91, 105), rgb8(204, 143, 128) },
+			{ rgb8(135, 70, 96), rgb8(201, 112, 109), rgb8(159, 80, 90) } };
 
   image2d<int_u8> refgl_ima = make::image(refgl);
   image2d<rgb8> refrgb_ima = make::image(refrgb);

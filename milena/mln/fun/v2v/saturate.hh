@@ -36,6 +36,7 @@
 # include <mln/metal/converts_to.hh>
 # include <mln/trait/value_.hh>
 # include <mln/value/cast.hh>
+# include <mln/convert/from_to.hh>
 
 
 namespace mln
