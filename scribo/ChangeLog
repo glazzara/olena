@@ -1,3 +1,12 @@
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix invalid pointer offset types.
+
+	* scribo/preprocessing/rotate_90.hh
+	(out_next_offset, out_next_p_offset): Fix a wrong type leading to
+	overflows.
+	(output): Add an assertion checking its validity.
+
 2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix warnings with g++-4.1 in Scribo.

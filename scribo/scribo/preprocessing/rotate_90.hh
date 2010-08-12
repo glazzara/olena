@@ -93,6 +93,8 @@ namespace scribo
       mln_concrete(I) output(mln_domain(I)(input.domain().pmin(), pmax),
 			     input.border());
 
+      mln_assertion(output.is_valid());
+
       const mln_value(I)* in_ptr = input.buffer();
 
       unsigned in_ncols = geom::ncols(input) + 2 * input.border();
@@ -101,7 +103,7 @@ namespace scribo
       unsigned out_ncols = geom::ncols(output);
       unsigned out_nrows = geom::nrows(output);
 
-      unsigned
+      int
 	out_next_offset,
 	out_next_p_offset;
 
