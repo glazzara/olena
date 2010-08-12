@@ -33,12 +33,15 @@
 ## "cond_tests_*" files must be created in the directory where
 ## unit-test.mk is generated (usually the unit-tests directory).
 ##
-## WARNINGS:
-## ---------
+## NOTES
+## -----
 ## * Don't forget to add "cond_tests_*" files in the COND_TESTS
 ## variable in the right Makefile.am.
 ##
 ## * ALWAYS end "cond_tests_*" files with a new line!
+##
+## * If the dependency has a composed name use '-' to concatenate the words.
+##   (e.g., boost_tuple -> cond_tests_boost-tuple)
 ##
 
 ## FIXME: Don't use `echo -n', as echo's options are not portable.
@@ -183,7 +186,8 @@ for f in $COND_TESTS; do
     COND_LIST=""
     while true; do
 	name=`echo $fpostfix | cut -s -d '_' -f $i \
-	    | tr "[:lower:]" "[:upper:]"`
+	    | tr "[:lower:]" "[:upper:]" \
+	    | sed -e 's/-/_/g'`
 	i=$(($i+1))
 	if (test -z "$name"); then
 	    break;

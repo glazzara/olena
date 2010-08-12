@@ -1,5 +1,10 @@
 2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* build-aux/build_unit_test.sh: Handle composed dependency names
+	in cond_tests_* files.
+
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve configure output.
 
 	* configure.ac: Improve configure output.
