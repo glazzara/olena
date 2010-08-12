@@ -114,7 +114,9 @@ dist-hook:
 	$(top_srcdir)/build-aux/build_unit_test.sh 	\
 	    $(distdir)/milena/mln 			\
 	    $(distdir)/milena/tests/unit_test 		\
-	    $(top_srcdir)/milena/tests/unit_test/disabled_tests && \
+	    $(top_srcdir)/milena/tests/unit_test/disabled_tests \
+	    mln 					\
+	&& 						\
 	(						\
 	  cd $(distdir);				\
 	  set -evx;					\

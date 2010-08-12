@@ -1,5 +1,9 @@
 2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* Makefile.am: Fix call to build_unit_test.sh.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* build-aux/build_unit_test.sh: Add more comments.
 
 2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
