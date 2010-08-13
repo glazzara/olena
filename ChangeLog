@@ -1,5 +1,10 @@
 2010-08-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* configure.ac: Handle ImageMagick++ dependency with both
+	dpk-config and OLN_WITH_LIB.
+
+2010-08-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* configure.ac: Make Boost dependency optional.
 
 2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>

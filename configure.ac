@@ -267,7 +267,7 @@ OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 # FIXME: We should handle Magick++ both with Magick++-config and
 # pkg-config?  instead of OLN_WITH_LIB.  See how other projects handle
 # this.
-#OLN_WITH_LIB([Magick++], [Magick++.h], [Magick++], [magickxx], [MAGICKXX])
+
 
 AC_ARG_WITH([magickxx],
     [AC_HELP_STRING([--with-magickxx],
@@ -276,26 +276,39 @@ AC_ARG_WITH([magickxx],
         [with_magickxx='yes'])
 
 oln_have_magickxx=no
-MAGICKXX_CFLAGS=""
-MAGICKXX_LIBS=""
-MAGICKXX_PKG=""
 
 if test "x$with_magickxx" != xno; then
    AC_MSG_RESULT([])
    AC_MSG_RESULT([* libMagick++])
    AC_MSG_RESULT([---------------])
 
-    PKG_CHECK_MODULES(MAGICKXX,[ImageMagick++], oln_have_magickxx=yes, oln_have_magickxx=no)
-    AC_MSG_RESULT([])
+   # Try to use ImageMagick from a specified path.
+   if test "x$with_magickxx" != xyes; then
+      AC_MSG_CHECKING([with given path $with_magickxx])
+      AC_MSG_RESULT([])
+      OLN_WITH_LIB([Magick++], [Magick++.h], [Magick++], [magickxx],
+      		   [MAGICKXX])
+   fi
 
-    if test "$oln_have_magickxx" = yes; then
-       AC_DEFINE([HAVE_MAGICKXX], 1, [Define to 1 if we can use libMagick++])
-       # Use standard variable names.
-       MAGICKXX_CPPFLAGS="$MAGICKXX_CFLAGS"
-       MAGICKXX_LDFLAGS="$MAGICKXX_LIBS"
-       AC_SUBST(MAGICKXX_CPPFLAGS)
-       AC_SUBST(MAGICKXX_LDFLAGS)
-    fi
+   # Check with pkg-config if previous test failed or if no path have
+   # been passed through --with-magickxx argument.
+   if test "x$oln_have_magickxx" = xno; then
+      AC_MSG_CHECKING([with pkg-config])
+      AC_MSG_RESULT([])
+      PKG_CHECK_MODULES(MAGICKXX,[ImageMagick++], oln_have_magickxx=yes,
+      						  oln_have_magickxx=no)
+   AC_MSG_RESULT([])
+
+      if test "x$oln_have_magickxx" = xyes; then
+         AC_DEFINE([HAVE_MAGICKXX], 1,
+	 	   [Define to 1 if we can use libMagick++])
+	 # Use standard variable names.
+	 MAGICKXX_CPPFLAGS="$MAGICKXX_CFLAGS"
+	 MAGICKXX_LDFLAGS="$MAGICKXX_LIBS"
+	 AC_SUBST(MAGICKXX_CPPFLAGS)
+	 AC_SUBST(MAGICKXX_LDFLAGS)
+      fi
+   fi
 fi
 
 AM_CONDITIONAL(HAVE_MAGICKXX, test "x$oln_have_magickxx" = xyes)
@@ -802,8 +815,8 @@ Options used to compile and link:
   UIC		  = $UIC
   RCC		  = $RCC
   BOOST_ROOT 	  = $BOOST_ROOT
-  MAGICKXX_CFLAGS = $MAGICKXX_CFLAGS
-  MAGICKXX_LIBS   = $MAGICKXX_LIBS
+  MAGICKXX_CFLAGS = $MAGICKXX_CPPFLAGS
+  MAGICKXX_LIBS   = $MAGICKXX_LDFLAGS
   SCRIBO_CXXFLAGS = $SCRIBO_CXXFLAGS
   APPS_CXXFLAGS   = $APPS_CXXFLAGS
   TOOLS_CXXFLAGS  = $TOOLS_CXXFLAGS
