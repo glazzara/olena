@@ -215,20 +215,28 @@ if test "x$with_boost" != xno; then
    AC_MSG_RESULT([* Boost])
    AC_MSG_RESULT([-------])
 
-   # Preprocessor
-   BOOST_FIND_HEADER([boost/preprocessor/repetition/repeat.hpp],
-		     oln_have_boost_preprocessor="no",
-		     oln_have_boost_preprocessor="yes")
-   if test "x$oln_have_boost_preprocessor" = xyes; then
-      AC_DEFINE([HAVE_BOOST_PREPROCESSOR], 1, [Define to 1 if we can use Boost Preprocessor.])
-   fi
+   # Is Boost installed?
+   BOOST_REQUIRE([], oln_have_boost=no)
 
-   # Tuple
-   BOOST_FIND_HEADER([boost/tuple/tuple.hpp],
-		     oln_have_boost_tuple=no,
-		     oln_have_boost_tuple=yes)
-   if test "x$oln_have_boost_tuple" = xyes; then
-      AC_DEFINE([HAVE_BOOST_TUPLE], 1, [Define to 1 if we can use Boost Tuple.])
+   if test "x$oln_have_boost" != xno; then
+
+      # Preprocessor
+      BOOST_FIND_HEADER([boost/preprocessor/repetition/repeat.hpp],
+			oln_have_boost_preprocessor=no,
+		        oln_have_boost_preprocessor=yes)
+      if test "x$oln_have_boost_preprocessor" = xyes; then
+      	 AC_DEFINE([HAVE_BOOST_PREPROCESSOR], 1,
+	 	   [Define to 1 if we can use Boost Preprocessor.])
+      fi
+
+      # Tuple
+      BOOST_FIND_HEADER([boost/tuple/tuple.hpp],
+		        oln_have_boost_tuple=no,
+		        oln_have_boost_tuple=yes)
+      if test "x$oln_have_boost_tuple" = xyes; then
+      	 AC_DEFINE([HAVE_BOOST_TUPLE], 1,
+	 	   [Define to 1 if we can use Boost Tuple.])
+      fi
    fi
 fi
 
