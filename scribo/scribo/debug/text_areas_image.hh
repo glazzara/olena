@@ -110,7 +110,8 @@ namespace scribo
 	    tr_box(comps(i).bbox().pmin().to_vec() + trans.t(),
 		   comps(i).bbox().pmax().to_vec() + trans.t());
 
-	  tr_image<mln_domain(I), tmp_t, trans_t> tr_ima(tr_box, tmp, trans);
+	  typedef mln_domain(I) domain_t;
+	  tr_image<domain_t, tmp_t, trans_t> tr_ima(tr_box, tmp, trans);
 
 	  data::paste(tr_ima, output);
 	  dv[0] += comps(i).bbox().nrows() + shift;
