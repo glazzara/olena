@@ -26,6 +26,7 @@
 #ifndef MLN_VALUE_QT_RGB32_HH
 # define MLN_VALUE_QT_RGB32_HH
 
+# include <cstring>
 
 # include <mln/value/ops.hh>
 
@@ -174,7 +175,7 @@ namespace mln
 
       static const char* name()
       {
-	static std::string s = std::string("rgb32").append(1, 8 + '0');
+	static std::string s = "qt_rgb32";
 	return s.c_str();
       }
 

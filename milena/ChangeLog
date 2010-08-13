@@ -1,3 +1,10 @@
+2010-08-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation with g++-3.3.
+
+	* mln/value/qt/rgb32.hh: Here.
+	(name()): Change the returned string value.
+
 2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/unit_test/Makefile.am (DIST_FILES): Add missing files.
