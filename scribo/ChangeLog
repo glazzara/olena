@@ -2,7 +2,8 @@
 
 	Add arrows shortcuts.
 
-	* demo/viewer/browser_widget.cc: prev/next binded to Ctrl+Left/Right.
+	* demo/viewer/browser_widget.cc: prev/next binded to
+	Ctrl+Left/Right.
 
 2010-08-06  Arthur Crepin-Leblond  <crepin@lrde.epita.fr>
 
@@ -17,92 +18,96 @@
 
 2010-08-04  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
-	Fix bug in Qt interface.
+	Fix bugs in Qt interface.
 
-	* scribo/demo/viewer/key_widget.cc
-	* scribo/demo/viewer/viewer.cc
+	* demo/viewer/key_widget.cc,
+	* demo/viewer/viewer.cc: Here.
 
 2010-07-21  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
-	Fix Segfault bug in Qt interface.
+	Fix a segfault in Qt interface.
 
-	* demo/viewer/viewer.cc: Clean vectors when load new picture.
+	* demo/viewer/viewer.cc: Clean vectors when loading a new picture.
 
 2010-07-21  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
 	Small changes in xml_transform.
 
-	* scribo/sandbox/arthur/xml_transform/README
+	* sandbox/arthur/xml_transform/README
 
-	* scribo/sandbox/arthur/xml_transform/image_crop.cc: Delete verbose mode.
-	* scribo/sandbox/arthur/xml_transform/main.cc: Small fix.
+	* sandbox/arthur/xml_transform/image_crop.cc: Delete
+	verbose mode.
+
+	* sandbox/arthur/xml_transform/main.cc: Small fix.
 
 2010-07-21  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
 	Files headers change + base64 data hide in xml tree.
 
-	* scribo/demo/viewer/README,
-	* scribo/demo/viewer/browser_widget.cc,
-	* scribo/demo/viewer/browser_widget.hh,
-	* scribo/demo/viewer/common.hh,
-	* scribo/demo/viewer/help_dialog.cc,
-	* scribo/demo/viewer/help_dialog.hh,
-	* scribo/demo/viewer/image_region.cc,
-	* scribo/demo/viewer/image_region.hh,
-	* scribo/demo/viewer/image_scene.cc,
-	* scribo/demo/viewer/image_scene.hh,
-	* scribo/demo/viewer/image_view.cc,
-	* scribo/demo/viewer/image_view.hh,
-	* scribo/demo/viewer/image_widget.cc,
-	* scribo/demo/viewer/image_widget.hh,
-	* scribo/demo/viewer/key_widget.cc,
-	* scribo/demo/viewer/key_widget.hh,
-	* scribo/demo/viewer/main.cc,
-	* scribo/demo/viewer/viewer.cc,
-	* scribo/demo/viewer/viewer.hh,
-	* scribo/demo/viewer/viewer.hxx,
-	* scribo/demo/viewer/xml_widget.cc: Change header (add LRDE copyright)
+	* demo/viewer/README,
+	* demo/viewer/browser_widget.cc,
+	* demo/viewer/browser_widget.hh,
+	* demo/viewer/common.hh,
+	* demo/viewer/help_dialog.cc,
+	* demo/viewer/help_dialog.hh,
+	* demo/viewer/image_region.cc,
+	* demo/viewer/image_region.hh,
+	* demo/viewer/image_scene.cc,
+	* demo/viewer/image_scene.hh,
+	* demo/viewer/image_view.cc,
+	* demo/viewer/image_view.hh,
+	* demo/viewer/image_widget.cc,
+	* demo/viewer/image_widget.hh,
+	* demo/viewer/key_widget.cc,
+	* demo/viewer/key_widget.hh,
+	* demo/viewer/main.cc,
+	* demo/viewer/viewer.cc,
+	* demo/viewer/viewer.hh,
+	* demo/viewer/viewer.hxx,
+	* demo/viewer/xml_widget.cc: Change header (add LRDE copyright)
 
-	* scribo/demo/viewer/xml_widget.hh: Hide data in base 64 to improve loading speed.
+	* demo/viewer/xml_widget.hh: Hide data in base 64 to improve
+	loading speed.
 
 2010-07-20  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
 	Text selectable in Qt interface.
 
-	* scribo/demo/viewer/viewer.cc
+	* demo/viewer/viewer.cc
 
 2010-07-20  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
 	Some changes in XML interface.
 
-	* scribo/demo/viewer/property_widget.cc,
-	* scribo/demo/viewer/property_widget.hh,
-	* scribo/demo/viewer/domitem.cc,
-	* scribo/demo/viewer/domitem.hh,
-	* scribo/demo/viewer/dommodel.cc,
-	* scribo/demo/viewer/dommodel.hh: Delete.
+	* demo/viewer/property_widget.cc,
+	* demo/viewer/property_widget.hh,
+	* demo/viewer/domitem.cc,
+	* demo/viewer/domitem.hh,
+	* demo/viewer/dommodel.cc,
+	* demo/viewer/dommodel.hh: Delete.
 
-	* scribo/demo/viewer/Makefile.am
+	* demo/viewer/Makefile.am: Remove dependencies.
 
-	* scribo/demo/viewer/browser_widget.cc: Fix, xmlc extension instead of xmle.
+	* demo/viewer/browser_widget.cc: Fix, xmlc extension instead of
+	xmle.
 
-	* scribo/demo/viewer/key_widget.cc,
-	* scribo/demo/viewer/step_widget.cc,
-	* scribo/demo/viewer/step_widget.hh,
-	* scribo/demo/viewer/image_scene.cc,
-	* scribo/demo/viewer/image_scene.hh,
-	* scribo/demo/viewer/help_dialog.cc,
-	* scribo/demo/viewer/image_region.cc,
-	* scribo/demo/viewer/image_region.hh,
-	* scribo/demo/viewer/image_region.hxx: Small changes.
+	* demo/viewer/key_widget.cc,
+	* demo/viewer/step_widget.cc,
+	* demo/viewer/step_widget.hh,
+	* demo/viewer/image_scene.cc,
+	* demo/viewer/image_scene.hh,
+	* demo/viewer/help_dialog.cc,
+	* demo/viewer/image_region.cc,
+	* demo/viewer/image_region.hh,
+	* demo/viewer/image_region.hxx: Small changes.
 
-	* scribo/demo/viewer/viewer.cc,
-	* scribo/demo/viewer/viewer.hh: Add base 64 cropped pictures support, text viewer
-	and change XML parsing.
+	* demo/viewer/viewer.cc,
+	* demo/viewer/viewer.hh: Add base 64 cropped pictures support,
+	text viewer and change XML parsing.
 
-	* scribo/demo/viewer/xml_widget.cc,
-	* scribo/demo/viewer/xml_widget.hh: Change widget, tree and attributes are together.
-
+	* demo/viewer/xml_widget.cc,
+	* demo/viewer/xml_widget.hh: Change widget, tree and attributes
+	are together.
 
 2010-07-16  Arthur Crepin-Leblond   <crepin@ptaouchnok.lrde.epita.fr>
 
