@@ -1,5 +1,9 @@
 2010-08-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* src/Makefile.am: Remove useless flags. Aesthetic changes.
+
+2010-08-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/debug/text_areas_image.hh: Add a typedef to help g++-3.3.
 
 2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
