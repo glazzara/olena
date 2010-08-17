@@ -367,9 +367,10 @@ namespace mln
       ss2 << "out_" << prefix << r << ".ppm";
       io::ppm::save(mln::slice(out,0), ss2.str());
 
-      std::cout << "Points removed with the whole set and current d_min/d_max: " << removed << std::endl;
+      std::cout
+	<< "Points removed with the whole set and current d_min/d_max: "
+	<< removed << std::endl;
 #endif
-
     }
 
 

@@ -43,9 +43,9 @@ namespace mln
     namespace internal
     {
 
-      /*--------------------------\
-      | Fibonacci Heap node Class |
-      `--------------------------*/
+      /*---------------------------.
+      | Fibonacci Heap node Class. |
+      `---------------------------*/
 
       template <typename P, typename T>
       class fibonacci_heap_node
@@ -106,9 +106,9 @@ namespace mln
 
 
 
-    /*---------------------\
-    | Fibonacci Heap Class |
-    `---------------------*/
+    /*----------------------.
+    | Fibonacci Heap Class. |
+    `----------------------*/
 
     /// \brief Fibonacci heap.
     ///
@@ -120,11 +120,12 @@ namespace mln
 
       typedef T element;
 
-      /// Default constructor
+      /// Default constructor.
       fibonacci_heap();
 
-      /// Copy constructor
-      /// Be ware that once this heap is constructed, the argument \p node
+      /// Copy constructor.
+      ///
+      /// Beware that once this heap is constructed, the argument \a node
       /// is cleared and all its elements are part of this new heap.
       fibonacci_heap(const fibonacci_heap<P,T>& node);
 
@@ -157,9 +158,11 @@ namespace mln
       void clear();
 
       /// Assignment operator.
-      /// Be ware that this operator do *not* copy the data from \p rhs to this heap.
-      /// It moves all elements which means that afterwards, \p rhs is
-      /// is cleared and all its elements are part of this new heap.
+      ///
+      /// Beware that this operator does <em>not</em> copy data from
+      /// \a rhs to this heap.  It moves all elements which means that
+      /// afterwards, \p rhs is is cleared and all its elements are
+      /// part of this new heap.
       fibonacci_heap<P,T>& operator=(fibonacci_heap<P,T>& rhs);
 
 
@@ -174,16 +177,16 @@ namespace mln
 
 
       /// Allow to change a node value.
-      /// FIXME: cannot use that function efficiently except by passing the
-      /// node pointer. Any idea?
-      /// FIXME: may be part of the public interface.
+      // FIXME: Cannot use that function efficiently except by passing the
+      // node pointer.  Any idea why?
+      // FIXME: May be part of the public interface.
       int decrease_key(internal::fibonacci_heap_node<P,T> *node,
 		       internal::fibonacci_heap_node<P,T>& key);
 
       /// Remove node \p node from the child list of its parent node.
-      /// FIXME: cannot use that function efficiently except by passing the
-      /// node pointer. Any idea?
-      /// FIXME: may be part of the public interface.
+      // FIXME: Cannot use that function efficiently except by passing the
+      // node pointer.  Any idea why?
+      // FIXME: May be part of the public interface.
       int remove(internal::fibonacci_heap_node<P,T> *node);
 
       /// Insert a new node \p node in the heap.
@@ -233,8 +236,8 @@ namespace mln
       /// Clear the heap but do *NOT* delete elements.
       void soft_clear_();
 
-      /// FIXME: ugly but we need to be able to soft_clear() the heap in the
-      /// copy constructor... Any idea how to do without that?
+      /// FIXME: Ugly but we need to be able to soft_clear() the heap in the
+      /// copy constructor...  Any idea how to do it without that?
       mutable internal::fibonacci_heap_node<P,T> *min_root;
       mutable long num_nodes;
       mutable long num_trees;
@@ -256,9 +259,9 @@ namespace mln
     {
 
 
-      /*--------------------\
-      | fibonacci_heap_node |
-      `--------------------*/
+      /*---------------------.
+      | fibonacci_heap_node. |
+      `---------------------*/
 
 
       template <typename P, typename T>
@@ -266,7 +269,7 @@ namespace mln
       fibonacci_heap_node<P,T>::fibonacci_heap_node()
 	: left_(0), right_(0), parent_(0), child_(0),
 	  degree_(0), mark_(0), priority_(0)
-      // FIXME: don't we want to initialize priority with literal::zero?
+      // FIXME: Don't we want to initialize priority with literal::zero?
       {
       }
 
@@ -544,19 +547,19 @@ namespace mln
 	min2->set_right(next1);
 	next1->set_left(min2);
 
-	// Choose the new minimum for the heap
+	// Choose the new minimum for the heap.
 	if (*min2 < *min1)
 	  min_root = min2;
       }
       else
 	min_root = other_heap.min_root;
 
-      // Set the amortized analysis statistics and size of the new heap
+      // Set the amortized analysis statistics and size of the new heap.
       num_nodes += other_heap.num_nodes;
       num_marked_nodes += other_heap.num_marked_nodes;
       num_trees += other_heap.num_trees;
 
-      // Complete the union by setting the other heap to emptiness
+      // Complete the union by setting the other heap to emptiness.
       other_heap.soft_clear_();
 
       mln_postcondition(other_heap.is_empty());
@@ -583,7 +586,7 @@ namespace mln
       internal::fibonacci_heap_node<P,T> *result = min_root;
       fibonacci_heap<P,T> *child_heap = 0;
 
-      // Remove minimum node and set min_root to next node
+      // Remove minimum node and set min_root to next node.
       min_root = result->right();
       result->right()->set_left(result->left());
       result->left()->set_right(result->right());
@@ -599,7 +602,7 @@ namespace mln
       result->set_degree(0);
 
       // Attach child list of minimum node to the root list of the heap
-      // If there is no child list, then do no work
+      // If there is no child list, then do no work.
       if (result->child() == 0)
       {
 	if (min_root == result)
@@ -608,7 +611,7 @@ namespace mln
 
       // If min_root==result then there was only one root tree, so the
       // root list is simply the child list of that node (which is
-      // 0 if this is the last node in the list)
+      // 0 if this is the last node in the list).
       else if (min_root == result)
 	min_root = result->child();
 
@@ -621,21 +624,21 @@ namespace mln
 	child_heap->min_root = result->child();
       }
 
-      // Complete the disassociation of the result node from the heap
+      // Complete the disassociation of the result node from the heap.
       if (result->child() != 0)
 	result->child()->set_parent(0);
       result->set_child(0);
       result->set_parent(0);
 
       // If there was a child list, then we now merge it with the
-      //	rest of the root list
+      // rest of the root list.
       if (child_heap)
       {
 	push(*child_heap);
 	delete child_heap;
       }
 
-      // Consolidate heap to find new minimum and do reorganize work
+      // Consolidate heap to find new minimum and do reorganize work.
       if (min_root != 0)
 	consolidate();
 
@@ -824,7 +827,7 @@ namespace mln
       internal::fibonacci_heap_node<P,T> *a[1 + 8 * sizeof (long)]; // 1+lg(n)
       short dn = 1 + 8 * sizeof (long);
 
-      // Initialize the consolidation detection array
+      // Initialize the consolidation detection array.
       for (int i = 0; i < dn; ++i)
 	a[i] = 0;
 
@@ -879,23 +882,23 @@ namespace mln
     fibonacci_heap<P,T>::link(internal::fibonacci_heap_node<P,T> *y,
 			      internal::fibonacci_heap_node<P,T> *x)
     {
-      // Remove node y from root list
+      // Remove node y from root list.
       if (y->right() != 0)
 	y->right()->set_left(y->left());
       if (y->left() != 0)
 	y->left()->set_right(y->right());
       --num_trees;
 
-      // Make node y a singleton circular list with a parent of x
+      // Make node y a singleton circular list with a parent of x.
       y->set_left(y);
       y->set_right(y);
       y->set_parent(x);
 
-      // If node x has no children, then list y is its new child list
+      // If node x has no children, then list y is its new child list.
       if (x->child() == 0)
 	x->set_child(y);
 
-      // Otherwise, node y must be added to node x's child list
+      // Otherwise, node y must be added to node x's child list.
       else
       {
 	y->set_left(x->child());
@@ -904,10 +907,10 @@ namespace mln
 	y->right()->set_left(y);
       }
 
-      // Increase the degree of node x because it's now a bigger tree
+      // Increase the degree of node x because it's now a bigger tree.
       x->set_degree(x->degree() + 1);
 
-      // node y has just been made a child, so clear its mark
+      // Node y has just been made a child, so clear its mark.
       if (y->mark())
 	--num_marked_nodes;
       y->set_mark(0);
@@ -982,7 +985,7 @@ namespace mln
 	return;
 
       // If the heap is currently empty, then new node becomes singleton
-      // circular root list
+      // circular root list.
       if (min_root == 0)
       {
 	min_root = node;
@@ -992,21 +995,21 @@ namespace mln
       else
       {
 	// Pointers from node set to insert between min_root and
-	// min_root->right()
+	// min_root->right().
 	node->set_right(min_root->right());
 	node->set_left(min_root);
 
-	// Set Pointers to node
+	// Set pointers to node.
 	node->left()->set_right(node);
 	node->right()->set_left(node);
 
 	// The new node becomes new min_root if it is less than current
-	// min_root
+	// min_root.
 	if (*node < *min_root)
 	  min_root = node;
       }
 
-      // We have one more node in the heap, and it is a tree on the root list
+      // We have one more node in the heap, and it is a tree on the root list.
       ++num_nodes;
       ++num_trees;
       node->set_parent(0);

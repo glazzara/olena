@@ -1,3 +1,12 @@
+2010-08-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Aesthetic changes.
+
+	* mln/morpho/tree/data.hh,
+	* mln/registration/icp.hh,
+	* mln/util/fibonacci_heap.hh:
+	Wrap long lines, fix punctuation, etc.
+
 2010-07-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	* mln/io/off/save.hh: Fix documentation.

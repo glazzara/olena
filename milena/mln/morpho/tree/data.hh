@@ -80,10 +80,12 @@ namespace mln
       /// Iterate on tree's sites from roots to leaves.
       template <typename T> struct dn_site_piter;
 
-      /// Iterate on tree's nodes (component representants) from leaves to roots.
+      /// Iterate on tree's nodes (component representants) from
+      /// leaves to roots.
       template <typename T> struct up_node_piter;
 
-      /// Iterate on tree's nodes (component representants) from leaves to roots.
+      /// Iterate on tree's nodes (component representants) from
+      /// leaves to roots.
       template <typename T> struct dn_node_piter;
 
       /// Iterate on tree's leaves in the same way of up_node_piter.
@@ -211,12 +213,13 @@ namespace mln
 	mln_ch_value(I, mln_psite(I))	parent_;	// Parent image.
 	mln_ch_value(I, nodes_t)	children_;	// Children image.
 
-	function	f_; // f image containing values of the tree nodes.
-	sites_t		s_; // Sorted site set of the tree sites. (domain(f_) includes s_).
+	function f_;      // f image containing values of the tree nodes.
+	sites_t s_;       // Sorted site set of the tree sites
+		          // (domain(f_) includes s_).
 
-	nodes_t		nodes_; // Sorted node set.
-	leaves_t	leaves_; // Sorted leaf set.
-	unsigned	nroots_; // For non-contigous domain image purpose.
+	nodes_t nodes_;   // Sorted node set.
+	leaves_t leaves_; // Sorted leaf set.
+	unsigned nroots_; // For non-contigous domain image purpose.
       };
 
 
@@ -379,7 +382,8 @@ namespace mln
 	/// Go to the next point.
 	void next_();
 
-	/// Skip current point children. Next call to next() goes to the brother point.
+	/// Skip current point children. Next call to next() goes to
+	/// the brother point.
 	void skip_children();
 
       protected:
@@ -456,7 +460,7 @@ namespace mln
 	      if (is_a_leaf(p))
 		leaves_.insert(p);
 	    }
-	  else if (parent_(p) == p) //it's a root.
+	  else if (parent_(p) == p) // It's a root.
 	    {
 	      nodes_.insert(p);
 	      if (is_a_leaf(p)) // One pixel image...
