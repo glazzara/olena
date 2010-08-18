@@ -118,31 +118,31 @@ namespace mln
 	    mln_piter(set_t) ps(set);
 	    for_all(ps)
 	    {
-		// Same remark as above.
-		psite p = ps;
+	      // Same remark as above.
+	      psite p = ps;
 
-		/* FIXME: We compute the cell and attachment of P twice:
-		   during the call to is_simple() and within detach().
-		   How could we reuse this elegantly, without breaking
-		   the genericity of the skeleton algorithm?
-		   Also, keep in mind that functors can maintain an
-		   internal state and make side effects, meaning that
-		   e.g. constraint(p) might not be constant for a
-		   given p during the thinning.  */
-		if (constraint(p) && is_simple(p))
+	      /* FIXME: We compute the cell and attachment of P twice:
+		 during the call to is_simple() and within detach().
+		 How could we reuse this elegantly, without breaking
+		 the genericity of the skeleton algorithm?
+		 Also, keep in mind that functors can maintain an
+		 internal state and make side effects, meaning that
+		 e.g. constraint(p) might not be constant for a
+		 given p during the thinning.  */
+	      if (constraint(p) && is_simple(p))
+		{
+		  detach(p, output);
+		  mln_niter(N) n_(nbh, p);
+		  for_all(n_)
 		  {
-		    detach(p, output);
-		    mln_niter(N) n_(nbh, p);
-		    for_all(n_)
-		    {
-		      // Same remark as above regarding P and P_.
-		      psite n = n_;
-		      if (output.domain().has(n)
-			  && output(n) && constraint(n) && is_simple(n))
-			next_set.insert(n);
-		    }
+		    // Same remark as above regarding P and P_.
+		    psite n = n_;
+		    if (output.domain().has(n)
+			&& output(n) && constraint(n) && is_simple(n))
+		      next_set.insert(n);
 		  }
-	      }
+		}
+	    }
 	    set.clear();
 	    std::swap(set, next_set);
 	  }
