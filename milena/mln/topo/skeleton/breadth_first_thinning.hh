@@ -115,20 +115,11 @@ namespace mln
 	  {
 	    set_t next_set;
 
-	    /* FIXME: Using the following code does not work (it does
-	       compiles, but does not behave like the code using a
-	       hand-made loop).  There must be a bug somewhere in
-	       p_set or p_indexed_psite. */
-# if 0
 	    mln_piter(set_t) ps(set);
-	    for_all(ps);
+	    for_all(ps)
 	    {
-	      // Same remark as above.
-	      psite p = p_;
-# endif
-	    for (unsigned i = 0; i < set.nsites(); ++i)
-	      {
-		psite p = set[i];
+		// Same remark as above.
+		psite p = ps;
 
 		/* FIXME: We compute the cell and attachment of P twice:
 		   during the call to is_simple() and within detach().

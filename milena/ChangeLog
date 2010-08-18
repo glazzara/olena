@@ -1,3 +1,11 @@
+2010-08-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix two errors in mln::topo::skeleton::breadth_first_thinning.
+
+	* mln/topo/skeleton/breadth_first_thinning.hh: Remove a stray
+	semicolon at the end of a `for' statement.
+	Create psite using the right iterator.
+
 2010-07-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	Disable the last test case in test-mesh-complex-pinv-curv-skel.
