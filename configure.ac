@@ -594,6 +594,7 @@ AM_CONDITIONAL([ENABLE_APPS], [test "x$enable_apps" = "xyes"])
 AC_CONFIG_FILES([
   milena/apps/Makefile
     milena/apps/constrained-connectivity/Makefile
+    milena/apps/generic-skel/Makefile
     milena/apps/graph-morpho/Makefile
     milena/apps/mesh-segm-skel/Makefile
     milena/apps/morphers/Makefile
