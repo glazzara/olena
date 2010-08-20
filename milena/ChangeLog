@@ -1,3 +1,10 @@
+2011-02-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Small corrections in apps/mesh-segm-skel.
+
+	* apps/mesh-segm-skel/test-mesh-complex-max-curv-extrema.in:
+	Add a missing copyright header.
+
 2011-02-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Exercise topology-related routines.
