@@ -1,3 +1,17 @@
+2010-08-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	New apps on generic skeletonization.
+
+	* apps/generic-skel/image2d-skel-unconstrained.cc,
+	* apps/generic-skel/image2d-skel-with-end-points.cc,
+	* apps/generic-skel/image2d-skel.hh:
+	New.
+	* apps/generic-skel/test-image2d-skel-unconstrained.in,
+	* apps/generic-skel/test-image2d-skel-with-end-points.in:
+	New tests.
+	* apps/generic-skel/Makefile.am: New.
+	* apps/Makefile.am (SUBDIRS): Add generic-skel.
+
 2011-04-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	apps/graph-morpho: Catch up with current mln::topo::is_n_face.
