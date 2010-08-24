@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -53,7 +54,7 @@ namespace mln
   }
 
   namespace literal
-  { 
+  {
     /// \{ Fwd decls.
     struct zero_t;
     struct one_t;
@@ -194,6 +195,9 @@ namespace mln
       static const int min = - max;
       mln_precondition(i >= min);
       mln_precondition(i <= max);
+      (void) min;
+      (void) max;
+
       this->v_ = static_cast<enc_>(i);
     }
 
@@ -206,6 +210,9 @@ namespace mln
       static const int min = - max;
       mln_precondition(i >= min);
       mln_precondition(i <= max);
+      (void) min;
+      (void) max;
+
       this->v_ = static_cast<enc_>(i);
       return *this;
     }
