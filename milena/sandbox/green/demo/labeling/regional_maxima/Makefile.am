@@ -8,6 +8,8 @@
 
 INCLUDES=       -I$(HOME)/svn/oln/trunk/milena/sandbox/green
 CXXFLAGS=       -ggdb -O0 -Wall -W -pedantic -ansi -pipe $(INCLUDES)
+#CXXFLAGS=       -DNDEBUG -O1 -Wall -W -pedantic -ansi -pipe $(INCLUDES)
+#CXXFLAGS=       -DNDEBUG -O3 -Wall -W -pedantic -ansi -pipe $(INCLUDES)
 ECHO=           echo
 RM=             rm
 MKDIR=          mkdir -p

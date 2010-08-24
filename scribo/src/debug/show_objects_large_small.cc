@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,17 +38,18 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/ppm/save.hh>
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/filter/objects_large.hh>
 #include <scribo/filter/objects_small.hh>
 #include <scribo/draw/bounding_boxes.hh>
 #include <scribo/debug/usage.hh>
 
-#include <scribo/debug/save_object_diff.hh>
+#include <scribo/debug/save_comp_diff.hh>
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image. True for objects and False for the background." },
+  { "input.pbm", "A binary image. True for objects and False for the "
+    "background." },
   { "min_card", " Minimum cardinality in a component." },
   { "max_card", " Maximum cardinality in a component." },
   {0, 0}
@@ -57,13 +59,14 @@ const char *args_desc[][2] =
 int main(int argc, char *argv[])
 {
   using namespace mln;
+  using namespace scribo;
 
   if (argc != 5)
     return scribo::debug::usage(argv,
-				"Show components not being too small nor too large.",
+				"Show components not being too small nor too"
+				"large.",
 				"input.pbm min_card max_card output.ppm",
-				args_desc,
-				"A color image. Too small components are drawn in red, too large components in orange and others in green.");
+				args_desc);
 
   trace::entering("main");
 
@@ -72,29 +75,17 @@ int main(int argc, char *argv[])
 
   value::label_16 nbboxes;
   typedef image2d<value::label_16> L;
-  object_image(L) objects
-    = scribo::primitive::extract::objects(input, c8(), nbboxes);
+  component_set<L> comps
+    = scribo::primitive::extract::components(input, c8(), nbboxes);
 
-  object_image(L) filter(objects);
+  component_set<L> filter(comps);
 
   if (atoi(argv[2]) != 0)
-    filter = scribo::filter::objects_small(filter, atoi(argv[2]));
+    filter = scribo::filter::components_small(filter, atoi(argv[2]));
 
   if (atoi(argv[3]) != 0)
-    filter = scribo::filter::objects_large(filter, atoi(argv[3]));
-
-  image2d<value::rgb8> output;
-  initialize(output, objects);
-
-  data::fill(output, literal::black);
-
-  for_all_components(i, objects.bboxes())
-    data::fill(((output | objects.bbox(i)).rw() | (pw::value(objects) == i)).rw(), literal::red);
-
-  for_all_components(i, filter.bboxes())
-    data::fill(((output | filter.bbox(i)).rw() | (pw::value(filter) == i)).rw(), literal::green);
+    filter = scribo::filter::components_large(filter, atoi(argv[3]));
 
 
-
-  io::ppm::save(output, argv[4]);
+  scribo::debug::save_comp_diff(comps, filter, argv[4]);
 }

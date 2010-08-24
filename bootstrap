@@ -217,13 +217,14 @@ if $regen_p; then
 fi
 
 # Generate unit test files.
-run . ./build-aux/build_unit_test.sh `pwd`/milena/mln milena/tests/unit_test milena/tests/unit_test/disabled_tests
+run . ./build-aux/build_unit_test.sh `pwd`/milena/mln milena/tests/unit_test milena/tests/unit_test/disabled_tests mln
 
 # Generate unit test files for Scribo.
-run . scribo/tests/unit_test/build_unit_test.sh	\
-  scribo					\
-  scribo/tests/unit_test			\
-  scribo/tests/unit_test/disabled_tests
+run . ./build-aux/build_unit_test.sh    \
+  scribo/scribo				\
+  scribo/tests/unit_test		\
+  scribo/tests/unit_test/disabled_tests \
+  scribo
 
 # Install the GNU Build System.
 autoreconf -f -v -i

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009,2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,7 +35,7 @@
 
 #include <scribo/debug/usage.hh>
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/primitive/extract/lines_h_single.hh>
 #include <scribo/primitive/extract/lines_v_single.hh>
 
@@ -52,15 +53,16 @@ const char *args_desc[][2] =
 int main(int argc, char *argv[])
 {
   using namespace mln;
+  using namespace scribo;
 
   if (argc != 7)
     return scribo::debug::usage(argv,
-				"Extract single horizontal and vertical lines. \
-\n Common argument values: 100 10 100 10",
-				"<input.pbm> <length> <hbratio> <vbratio>\
- <output.pbm>",
-				args_desc,
-				"A binary image of horizontal and vertical single lines.");
+				"Extract single horizontal and vertical "
+				"lines.\n Common argument values: 100 10 "
+				"100 10",
+				"<input.pbm> <length> <hbratio> <vbratio> "
+				"<output.pbm>",
+				args_desc);
 
   trace::entering("main");
 
@@ -70,22 +72,23 @@ int main(int argc, char *argv[])
   typedef image2d<value::label_16> L;
 
   value::label_16 nhlines;
-  object_image(L)
-    objects = scribo::primitive::extract::objects(input, c8(), nhlines);
+  component_set<L>
+    comps = scribo::primitive::extract::components(input, c8(), nhlines);
 
 
-  object_image(L)
-    hlines = scribo::primitive::extract::lines_h_single(objects,
+  component_set<L>
+    hlines = scribo::primitive::extract::lines_h_single(comps,
 							atoi(argv[2]),
 							atof(argv[3]));
 
-  object_image(L)
-    vlines = scribo::primitive::extract::lines_v_single(objects,
+  component_set<L>
+    vlines = scribo::primitive::extract::lines_v_single(comps,
 							atoi(argv[4]),
 							atof(argv[5]));
 
-  image2d<value::rgb8> out = debug::superpose(input, hlines, literal::red);
-  out = debug::superpose(out, vlines, literal::green);
+  image2d<value::rgb8>
+    out = mln::debug::superpose(input, hlines.labeled_image(), literal::red);
+  out = mln::debug::superpose(out, vlines.labeled_image(), literal::green);
   io::ppm::save(out, argv[6]);
 
   trace::exiting("main");

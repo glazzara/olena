@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,6 +36,7 @@
 # include <mln/metal/converts_to.hh>
 # include <mln/trait/value_.hh>
 # include <mln/value/cast.hh>
+# include <mln/convert/from_to.hh>
 
 
 namespace mln
@@ -112,7 +114,10 @@ namespace mln
 	  return min_;
 	if (w > max_W)
 	  return max_;
-	return mln::value::cast<W>(w);
+
+	V output;
+	mln::convert::from_to(w, output);
+	return output;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

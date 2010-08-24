@@ -28,16 +28,6 @@ mln/debug/iota.spe.hh
 mln/debug/println.spe.hh
 mln/debug/println_with_border.spe.hh
 mln/histo/compute.spe.hh
-mln/io/dicom/all.hh
-mln/io/dicom/load.hh
-mln/io/fits/all.hh
-mln/io/fits/load.hh
-mln/io/magick/all.hh
-mln/io/magick/load.hh
-mln/io/magick/save.hh
-mln/io/tiff/all.hh
-mln/io/tiff/load.hh
-mln/io/tiff/save.hh
 mln/labeling/value.spe.hh
 mln/logical/not.spe.hh
 mln/morpho/general.spe.hh

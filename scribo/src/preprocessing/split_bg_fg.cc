@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,7 +25,8 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/io/ppm/all.hh>
+#include <mln/io/magick/load.hh>
+#include <mln/io/ppm/save.hh>
 
 #include <scribo/preprocessing/split_bg_fg.hh>
 #include <scribo/debug/usage.hh>
@@ -32,9 +34,10 @@
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A color image." },
+  { "input.*", "An image." },
   { "lambda", "Lambda value. (FIX Description)" },
   { "delta", "Delta value. (FIX Description)" },
+  { "fg.ppm", "The foreground image (1st output)." },
   { "bg.ppm", "The background image (2nd output)." },
   {0, 0}
 };
@@ -49,19 +52,19 @@ int main(int argc, char *argv[])
   if (argc != 6)
     return scribo::debug::usage(argv,
 				"Split background and foreground.",
-				"input.pbm bg.ppm fg.ppm",
-				args_desc, "The foreground image.");
+				"input.* lambda delta fg.ppm bg.ppm",
+				args_desc);
 
   typedef image2d<value::rgb8> I;
   I input;
-  io::ppm::load(input, argv[1]);
+  io::magick::load(input, argv[1]);
 
   util::couple<I,I>
     bg_fg = scribo::preprocessing::split_bg_fg(input,
 					       atoi(argv[2]),
 					       atoi(argv[3]));
-  io::ppm::save(bg_fg.first(), argv[4]);
-  io::ppm::save(bg_fg.second(), argv[5]);
+  io::ppm::save(bg_fg.first(), argv[5]);
+  io::ppm::save(bg_fg.second(), argv[4]);
 
   mln::trace::exiting("main");
 }

@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,10 +39,64 @@
 # include <mln/core/image/dmorph/extension_fun.hh>
 # include <mln/core/image/dmorph/extension_val.hh>
 
+# include <mln/trait/undef.hh>
+
+
+# define mln_extension_type(I,J) \
+  typename mln::internal::extension_type<I,J>::result;
+
+# define mln_extension_type_(I,J) \
+  mln::internal::extension_type<I,J>::result;
 
 
 namespace mln
 {
+
+  namespace internal
+  {
+
+    template <typename I, typename J, typename B1, typename B2>
+    struct extension_type_selector
+    {
+      typedef mln::trait::undef result;
+    };
+
+
+    template <typename I, typename J>
+    struct extension_type_selector<I,J,
+				   metal::bool_<false>, metal::bool_<false> >
+    : mlc_converts_to(J, mln_value(I))::check_t
+    {
+      typedef extension_val<I> result;
+    };
+
+
+    template <typename I, typename J>
+    struct extension_type_selector<I,J,
+				   metal::bool_<false>, metal::bool_<true> >
+    {
+      typedef extension_fun<I, J> result;
+    };
+
+
+    template <typename I, typename J>
+    struct extension_type_selector<I,J,
+				   metal::bool_<true>, metal::bool_<false> >
+    {
+      typedef extension_ima<I, J> result;
+    };
+
+
+    template <typename I, typename J>
+    struct extension_type
+      : extension_type_selector<I, J,
+				typename mlc_is_a(J,Image)::eval,
+				typename mlc_is_a(J,Function)::eval>
+    {
+    };
+
+
+  } // end of namespace mln::internal
 
 
   /// Routines for domain extension with a function.

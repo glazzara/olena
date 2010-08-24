@@ -144,6 +144,9 @@ namespace mln
 	internal::save_header(ima, file);
 	internal::save_data(ima, file);
 
+
+	file.close();
+
 	trace::exiting("mln::io::dump::save");
       }
 

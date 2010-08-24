@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -19,6 +19,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
 bbox						\
+horizontal_symmetry 				\
 max_col						\
 max_ind						\
 max_row						\
@@ -31,15 +32,17 @@ ncols						\
 ninds						\
 nrows						\
 nsites						\
-nslis						\
+nslices						\
 pmin_pmax					\
 rotate	 					\
 seed2tiling					\
 seed2tiling_roundness 				\
-translate
+translate 					\
+vertical_symmetry
 
 
 bbox_SOURCES = bbox.cc
+horizontal_symmetry_SOURCES = horizontal_symmetry.cc
 max_col_SOURCES = max_col.cc
 max_ind_SOURCES = max_ind.cc
 max_row_SOURCES = max_row.cc
@@ -52,11 +55,12 @@ ncols_SOURCES = ncols.cc
 ninds_SOURCES = ninds.cc
 nrows_SOURCES = nrows.cc
 nsites_SOURCES = nsites.cc
-nslis_SOURCES = nslis.cc
+nslices_SOURCES = nslices.cc
 pmin_pmax_SOURCES = pmin_pmax.cc
 rotate_SOURCES = rotate.cc
 seed2tiling_SOURCES = seed2tiling.cc
 seed2tiling_roundness_SOURCES = seed2tiling_roundness.cc
 translate_SOURCES = translate.cc
+vertical_symmetry_SOURCES = vertical_symmetry.cc
 
 TESTS = $(check_PROGRAMS)

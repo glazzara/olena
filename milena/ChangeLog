@@ -1,3 +1,751 @@
+2010-08-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation with g++-3.3.
+
+	* mln/value/qt/rgb32.hh: Here.
+	(name()): Change the returned string value.
+
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/unit_test/Makefile.am (DIST_FILES): Add missing files.
+
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make Boost dependent tests conditional.
+
+	* tests/accu/Makefile.am (tuple): Add conditions.
+
+	* tests/unit_test/cond_tests_boost-preprocessor_boost-tuple: New.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Milena.
+
+	* mln/fun/v2v/saturate.hh: Add mln:: namespace prefix.
+
+	* mln/value/rgb.hh: Add a missing include.
+
+	* mln/accu/tuple.hh: Update include directive syntax.
+
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix more warnings in Milena.
+
+	* mln/convert/impl/from_float_to_value.hh: Add an overload for
+	short int.
+
+	* mln/io/fld/load.hh: Use convert::from_to.
+
+	* mln/io/fld/max_components.hh: Explicitly cast values to unsigned.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix more tests in Milena.
+
+	* mln/fun/v2v/saturate.hh: Add a missing include.
+
+	* mln/subsampling/antialiased.hh: Increment pointer after the call
+	to convert::from_to.
+
+	* tests/subsampling/antialiased.cc: Fix references according to
+	last changes on 'round factor'.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix warnings with g++-4.1 in Milena.
+
+	* mln/fun/v2v/saturate.hh,
+	* mln/subsampling/antialiased.hh,
+	* mln/value/rgb.hh: Use convert::from_to for type conversions.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/core/point.hh: Fix a warning.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix tests in Milena.
+
+	* mln/draw/dashed_line.hh,
+	* mln/fun/n2v/white_gaussian.hh,
+	* mln/fun/v2v/rgb_to_int_u.hh,
+	* mln/io/dump/get_header.hh,
+	* mln/io/raw/get_header.hh: Add missing includes.
+
+	* tests/topo/skeleton/crest.cc: Fix reference results since a bug
+	have been fixed.
+
+	* tests/unit_test/cond_tests_qt: Add conditional tests.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add missing traces.
+
+	* mln/convert/to_qimage.hh,
+	* mln/convert/to_qimage_nocopy.hh: Here.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* headers.mk: Regen.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix tests in Milena.
+
+	* tests/geom/rotate.cc: Fix test.
+
+	* mln/labeling/blobs_and_compute.hh: Add comments.
+
+	* mln/labeling/flat_zones.hh: Add missing members to functors.
+
+	* tests/labeling/blobs_and_compute.cc: Fix return type.
+
+	* tests/labeling/flat_zones.cc,
+	* tests/labeling/foreground.cc: Fix functor template parameters.
+
+	* tests/labeling/relabel.cc: The number of components is not
+	updated anymore.
+
+	* tests/labeling/colorize.cc: Fix reference according to last
+	changes in labeling::colorize routine.
+
+	* mln/core/point.hh: Add mln:: namespace prefix.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/io/dicom/get_header.hh: Add missing headers.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Setup conditional unit-tests in Milena.
+
+	* tests/unit_test/Makefile.am
+	(regen-am): Update the use of build_unit_test.sh.
+	(EXTRA_DIST): Add cond_tests_* files.
+
+	* tests/unit_test/cond_tests_cfitsio,
+	* tests/unit_test/cond_tests_gdcm,
+	* tests/unit_test/cond_tests_magickxx,
+	* tests/unit_test/cond_tests_tiff: New.
+
+	* tests/unit_test/disabled_tests: Remove some conditional tests.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small changes in Milena.
+
+	* mln/accu/internal/base.hh,
+	* mln/accu/math/sum.hh: Aesthetic changes.
+
+	* mln/data/paste_without_localization.hh: Add a missing include.
+
+	* mln/geom/rotate.hh: Add a new overload taking a box as argument.
+
+2010-08-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Replace deduced type 'point' by 'site'.
+
+	* mln/geom/max_col.hh,
+	* mln/geom/max_row.hh,
+	* mln/geom/min_col.hh,
+	* mln/geom/min_row.hh: Replace deduced type 'point' by 'site'.
+
+2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in milena.
+
+	* doc/figures/ima2d-rot-2.ppm: Update generated output.
+
+	* mln/core/alias/window2d.hh: Aesthetic changes in the header.
+
+	* mln/core/point.hh: Add mln:: prefix.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Fix the way to convert unsigned to float.
+
+	* mln/convert/from_to.hxx: New conversion utilities.
+	* mln/convert/impl/from_unsigned_to_value.hh: New conversion utilities.
+
+2009-12-02  Yann Jacquelet <jacquelet@lrde.epita.fr>
+
+	Fix the outside template use case for the convolve macros.
+
+	* mln/linear/ch_convolve.hh (mln_ch_convolve_, mln_ch_convolve_grad_):
+	Define new macros to work outside templates.
+
+2010-06-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Revamp and fix a bug in io::magick::*.
+
+	* mln/io/magick/load.hh: Revamp.
+
+	* mln/io/magick/save.hh: Fix a bug while saving. RGB values must
+	be between 0 and 1.
+
+	* tests/io/magick/save.cc: Remove useless output.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new tests.
+
+	* tests/convert/Makefile.am,
+	* tests/subsampling/Makefile.am: Add targets for these new tests.
+
+	* tests/convert/to_qimage.cc,
+	* tests/convert/to_qimage_nocopy.cc,
+	* tests/subsampling/antialiased.cc: New.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix conversion routines towards qimage.
+
+	* mln/convert/to_qimage.hh: Fix invalid conversions.
+
+	* mln/convert/to_qimage_nocopy.hh: Avoid a warning.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/accu/count_value.hh: Add properties.
+
+2010-06-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix a bug in conversions from vec to point.
+
+	* milena/mln/core/concept/gpoint.hh: Fix comment.
+
+	* milena/mln/core/image/image1d.hh: Share a dpoint value.
+
+	* milena/mln/core/point.hh: Handle point1d.
+
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce labeling::value_and_compute.
+
+	* mln/canvas/labeling/video.hh: Call more functor members.
+
+	* mln/labeling/value.hh: Provide new members to the functor.
+
+	* mln/labeling/value_and_compute.hh: New functor computing
+	attributes while labeling.
+
+2010-05-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/io/magick/load.hh: set minimum resolution for PDF files to
+	300DPI.
+
+2010-07-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix a few tests.
+
+	* tests/core/other/box_runstart_piter.cc,
+	* tests/geom/translate.cc: Fix test.
+
+2010-07-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update generated images included in the doc.
+
+	* doc/figures/fill-subdomain-3.ppm,
+	* doc/figures/ima2d-rot-2.ppm,
+	* doc/figures/labeling-compute-2.ppm,
+	* doc/figures/tuto3_colorize-2.ppm,
+	* doc/figures/tuto4_genericity_and_algorithms-5.ppm: Update
+	generated images.
+
+2010-07-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add from_to overloads for conversions from algebra::vec to point.
+
+	* mln/convert/from_to.hxx: Add new prototypes.
+
+	* mln/core/point.hh: Add new from_to overloads. Remove specialized
+	constructors causing ambiguities.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a function to convert qt::rgb32 values to int_u8.
+
+	* mln/fun/v2v/qt_rgb_to_int_u.hh: New.
+
+	* tests/fun/v2v/Makefile.am,
+	* tests/fun/v2v/qt_rgb_to_int_u.cc: New test.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use sites instead of pixels in canvas::labeling::blobs functors.
+
+	* mln/canvas/labeling/blobs.hh,
+	* mln/labeling/blobs.hh: Update members prototypes.
+
+	* mln/labeling/blobs_and_compute.hh: Do not construct on-the-fly
+	pixels anymore.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* mln/labeling/compute.hh: Add a missing include.
+
+	* mln/literal/colors.hh: Revamp header.
+
+	* mln/value/internal/make_generic_name.hh: Add a missing inline.
+
+	* mln/value/qt/rgb32.hh: Add a missing inline and a useless
+	literal.
+
+	* mln/value/rgb.hh: Add a fixme.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/subsampling/antialiased.hh: Fix an invalid output buffer
+	size which may lead to a segfault.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new meta tool to deduce an extension type.
+
+	mln/core/routine/extend.hh: Introduce a new macro
+	mln_extension_type.
+
+	mln/geom/rotate.hh: Make use of this new macro.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Reduce precision issues in transformations.
+
+	* mln/core/image/imorph/interpolated.hh: Make the vector type more
+	generic.
+
+	* mln/core/point.hh: Provide specific conversion operators for
+	float and double.
+
+	* mln/fun/internal/x2x_linear_impl.hh: Allow to set the matrix
+	value type.
+
+	* mln/fun/x2x/composed.hh,
+	* mln/fun/x2x/rotation.hh,
+	* mln/fun/x2x/translation.hh: Introduce data_t typedef passed to
+	x2x_linear_impl.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add some code in my sandbox.
+
+	* sandbox/lazzara/scribo/binarization_naive/main.cc,
+	* sandbox/lazzara/scribo/binarization_naive/toto.cc,
+	* sandbox/lazzara/scribo/fill_holes/main.cc,
+	* sandbox/lazzara/scribo/separateurs_materialises/lines_pattern.cc,
+	* sandbox/lazzara/scribo/skeleton_crest/main.cc,
+	* sandbox/lazzara/skeleton_crest/main.cc: New.
+
+2010-05-21  edwin carlinet  <carlinet@lrde.epita.fr>
+
+	Add MLN_WO_GLOBAL_VARS directive that prevents globals vars to be
+	included.
+
+	* mln/border/thickness.hh,
+	* mln/core/alias/dpoint1d.hh,
+	* mln/core/alias/dpoint2d.hh,
+	* mln/core/alias/dpoint3d.hh,
+	* mln/fun/v2v/hsl_to_rgb.hh,
+	* mln/literal/black.hh,
+	* mln/literal/colors.hh,
+	* mln/literal/identity.hh,
+	* mln/literal/one.hh,
+	* mln/literal/origin.hh,
+	* mln/literal/white.hh,
+	* mln/literal/zero.hh,
+	* mln/tag/init.hh,
+	* mln/trace/entering.hh,
+	* mln/trace/quiet.hh,
+	* mln/value/sign.hh: Add MLN_WO_GLOBAL_VARS define.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add some code in my sandbox.
+
+	* milena/sandbox/lazzara/scribo/binarization_naive/main.cc,
+	* milena/sandbox/lazzara/scribo/binarization_naive/toto.cc,
+	* milena/sandbox/lazzara/scribo/fill_holes/main.cc,
+	* milena/sandbox/lazzara/scribo/separateurs_materialises/lines_pattern.cc,
+	* milena/sandbox/lazzara/scribo/skeleton_crest/main.cc,
+	* milena/sandbox/lazzara/skeleton_crest/main.cc: New.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add fastest implementations in labeling::compute.
+
+	* mln/labeling/compute.hh: New fastest implementations.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Milena.
+
+	* mln/canvas/labeling/blobs.hh: Fill extension.
+
+	* mln/data/paste_without_localization.hh: Check whether the
+	two images have the same domain.
+
+	* mln/labeling/blobs_and_compute.hh: Rename members.
+
+	* mln/labeling/colorize.hh: Add missing includes.
+
+	* mln/world/binary_2d/enlarge.hh: use def::coord.
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/labeling/blobs_and_compute.hh: Fix an invalid size of
+	reserved memory.
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/subsampling/antialiased.hh: Fix the use of 'factor round'.
+
+2010-04-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rename nslis to nslices.
+
+	* mln/geom/nslis.hh,
+	* tests/geom/nslis.cc: Rename as...
+
+	* mln/geom/nslices.hh,
+	* tests/geom/nslices.cc: ... this.
+
+	* mln/core/image/image3d.hh,
+	* mln/core/internal/box_impl.hh,
+	* mln/core/site_set/box.hh,
+	* mln/debug/slices_2d.hh,
+	* mln/geom/all.hh,
+	* mln/geom/size3d.hh,
+	* mln/linear/gaussian.hh,
+	* mln/linear/gaussian/impl.hh,
+	* mln/make/box3d.hh,
+	* mln/make/image.hh,
+	* mln/registration/icp.hh,
+	* tests/core/alias/box3d.cc,
+	* tests/core/image/image3d.cc,
+	* tests/geom/Makefile.am,
+	* tests/io/pbms/load.cc,
+	* tests/io/pgms/load.cc,
+	* tests/io/ppms/load.cc,
+	* tests/transform/bench_closest_point_geodesic.cc: Rename nslis to
+	nslices.
+
+2010-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* img/picasso.ppm: Add a ppm version.
+
+2010-04-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/value/qt/rgb32.hh: Explicitly cast float values to unsigned.
+
+2010-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/debug/mosaic.hh: New. Construct a single image from a set of
+	images.
+
+2010-04-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/histo/equalize.hh: New. Add histogram equalization.
+
+2010-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add vertical/horizontal symmetry.
+
+	* mln/labeling/relabel.hh: Fix an invalid 'const'.
+
+	* mln/geom/horizontal_symmetry.hh,
+	* mln/geom/vertical_symmetry.hh: New routines.
+
+	* tests/geom/Makefile.am,
+	* tests/geom/horizontal_symmetry.cc,
+	* tests/geom/vertical_symmetry.cc: New tests.
+
+2010-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/debug/z_order.hh: New image data initializer.
+
+2010-03-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve antialiased subsampling.
+
+	* mln/subsampling/antialiased.hh: Add support for any factors and
+	for RGB images.
+
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new routine to split a color image into three grayscale
+	images.
+
+	* mln/data/split.hh: New.
+
+	* tests/data/split.cc: New test.
+
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new implementations of paste_without_localization.
+
+	* mln/data/paste_without_localization.hh: Add new implementations.
+
+	* tests/data/Makefile.am,
+	* tests/data/paste_without_localization.cc: New tests.
+
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve to_qimage routines.
+
+	* mln/convert/to_qimage.hh: rename namespace.
+
+	* mln/convert/to_qimage_nocopy.hh: Add a new implementation and
+	improve existing ones.
+
+2010-03-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/subsampling/antialiased.hh: Add support for reduction factor
+	different from 2 or 3.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/labeling/colorize.hh: Add support for value::qt::rgb32.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Milena.
+
+	* mln/accu/center.hh: Add nsites() member.
+
+	* mln/accu/pair.hh: Provide access to the underlying accus.
+
+	* mln/accu/stat/variance.hh: Use literal::zero.
+
+	* mln/core/internal/labeled_image_base.hh: Indent.
+
+	* mln/core/site_set/box.hh: Rename center() as pcenter().
+
+	* mln/labeling/blobs_and_compute.hh: Return the array of
+	accumulators.
+
+	* mln/labeling/colorize.hh: Make sure a color is not used
+	twice in the same image.
+
+	* mln/labeling/compute.hh: Add a new overload.
+
+	* mln/transform/influence_zone_geodesic.hh: Fix a
+	segmentation fault when an image had a border.
+
+2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add rbg_to_int_u function.
+
+	* mln/fun/v2v/all.hh: Include the new header.
+
+	* mln/fun/v2v/rgb_to_int_u.hh: New.
+
+2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add an antialiased subsampling.
+
+	* mln/subsampling/antialiased.hh: New.
+
+2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add hooks for subclasses in labeled_image_base.
+
+	* mln/core/internal/labeled_image_base.hh: New methods which can
+	be overridden in subclasses.
+
+	* mln/core/image/imorph/labeled_image.hh: Add a missing header.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* mln/accu/count_value.hh: Fix doc.
+
+	* mln/convert/from_to.hxx,
+	* mln/value/int_u.hh,
+	* mln/value/qt/rgb32.hhL: Add new from_to overloads.
+
+	* mln/convert/to_qimage.hh: Add a missing include.
+
+	* mln/convert/to_qimage_nocopy.hh: Rename an overload.
+
+	* mln/core/concept/function.hh: Add new concept n2v.
+
+	* mln/geom/rotate.hh: rename center() to pcenter().
+
+	* mln/histo/compute.hh: Fix a namespace ambiguity.
+
+	* mln/io/magick/save.hh: Handle qt::rgb32.
+
+	* mln/io/plot/save.hh: Add an overload for histograms.
+
+	* mln/labeling/relabel.hh: Make 'nlabels' const.
+
+	* mln/topo/skeleton/crest.hh: Fix a bug.
+
+	* tests/core/other/box_runstart_piter.cc: Write a valid test.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/draw/dashed_line.hh: New draw line routine.
+
+2010-02-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add white gaussian noise function.
+
+	* mln/fun/all.hh: Include a new file.
+
+	* mln/fun/n2v/all.hh,
+	* mln/fun/n2v/white_gaussian.hh: New.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup to_qimage convertion routines.
+
+	* mln/convert/to_qimage.hh: Remove useless comments and move a
+	specific implementation...
+
+	* mln/convert/to_qimage_nocopy.hh: ... in this new file.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a routine to convert to a QImage.
+
+	* mln/convert/to_qimage.hh: New.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add box<>::merge.
+
+	* mln/core/site_set/box.hh: New member 'merge()'.
+
+	* tests/core/site_set/Makefile.am,
+	* tests/core/site_set/box.cc: New test.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rename image3d<>::nslices to image3d<>::nslis.
+
+	* mln/core/image/image3d.hh,
+	* mln/debug/slices_2d.hh,
+	* tests/io/pbms/load.cc,
+	* tests/io/pgms/load.cc,
+	* tests/io/ppms/load.cc: Rename nslices to nslis.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Various small fixes.
+
+	* doc/tutorial/tutorial.tex: Add more contacts.
+
+	* mln/accu/label_used.hh: Do not use label<>::next().
+
+	* mln/draw/line.hh: Add a fixme.
+
+	* mln/io/dump/save.hh: Close the file.
+
+	* mln/io/plot/save.hh: Fix an invalid prototype.
+
+	* mln/io/pnm/load.hh: Fix an invalid static check.
+
+	* mln/io/raw/get_header.hh: Fix comment.
+
+	* mln/labeling/pack.hh: Disable a static check on symbolic values.
+
+	* mln/math/diff_abs.hh: Add a fixme.
+
+	* mln/world/inter_pixel/full2image.hh: Use mln_concrete().
+
+	* mln/data/fill_with_value.hh,
+	* mln/io/raw/load.hh,
+	* mln/io/raw/save.hh,
+	* mln/labeling/compute.hh,
+	* mln/registration/icp.hh: Aesthetic changes.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* mln/topo/skeleton/crest.hh: Fix invalid PSI values for component
+	edge sites.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a routine to read dump files header.
+
+	* mln/io/dump/all.hh: Include a new file.
+
+	* mln/io/dump/get_header.hh: New.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a routine to read DICOM files header.
+
+	* mln/io/dicom/all.hh: Include a new file.
+
+	* mln/io/dicom/get_header.hh: New.
+
+	* mln/io/dicom/load.hh: Add more doc.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add A new routine to draw plain boxes.
+
+	* mln/draw/all.hh: Include new file.
+
+	* mln/draw/box.hh: Add a fixme.
+
+	* mln/draw/box_plain.hh: New.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add more implementations for box specializations.
+
+	* mln/core/internal/box_impl.hh: Add width, height and depth.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	First draft of raw format support.
+
+	* mln/io/raw/all.hh,
+	* mln/io/raw/get_header.hh,
+	* mln/io/raw/load.hh,
+	* mln/io/raw/save.hh: New.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new 3D neighborhoods and windows.
+
+	* mln/core/alias/neighb3d.hh,
+	* mln/win/sline3d.hh: New.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new rgb32 type for Qt compatibility.
+
+	* mln/convert/from_to.hxx: Declare conversion routines.
+
+	* mln/value/qt/rgb32.hh: New.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix invalid value type names in dump format.
+
+	* mln/value/internal/make_generic_name.hh: New.
+
+	* mln/value/int_u.hh,
+	* mln/value/label.hh,
+	* mln/value/rgb.hh: Make use of the new routine to print a
+	correct type names in dump format.
+
 2010-07-19  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix and improve the Magick++ I/O API wrapper.
@@ -1753,15 +2501,15 @@
 
 	Small fixes.
 
-	* milena/mln/data/paste.spe.hh,
-	* milena/mln/data/stretch.hh,
-	* milena/mln/fun/x2v/bilinear.hh,
-	* milena/mln/morpho/erosion.hh,
-	* milena/mln/value/mixin.hh: Fix layout.
+	* mln/data/paste.spe.hh,
+	* mln/data/stretch.hh,
+	* mln/fun/x2v/bilinear.hh,
+	* mln/morpho/erosion.hh,
+	* mln/value/mixin.hh: Fix layout.
 
-	* milena/mln/debug/filename.hh: Update doc.
+	* mln/debug/filename.hh: Update doc.
 
-	* milena/mln/subsampling/subsampling.hh: Fix invalid min rows and
+	* mln/subsampling/subsampling.hh: Fix invalid min rows and
 	cols.
 
 2009-10-16  Edwin Carlinet  <carlinet@lrde.epita.fr>
@@ -2901,8 +3649,8 @@
 
 	* mln/labeling/blobs_and_compute.hh: New routine.
 
-	* milena/tests/labeling/Makefile.am,
-	* milena/tests/labeling/blobs_and_compute.cc: New test.
+	* tests/labeling/Makefile.am,
+	* tests/labeling/blobs_and_compute.cc: New test.
 
 2009-08-21  Guillaume Lazzara  <lazzara@lrde.epita.fr>
 
@@ -3107,7 +3855,7 @@
 
 	Have transform_line fastest.
 
-	* milena/mln/accu/transform_line.hh: Add documentation.
+	* mln/accu/transform_line.hh: Add documentation.
 	(todo): Remove, done:
 	The specialization for fastest images is now up.
 	(todo): New.  A version that ignores extensions should
@@ -3120,29 +3868,29 @@
 	(transform_line_dispatch): Revamp to take into account
 	accumulator properties.
 	(transform_line): Call properly the dispatch mechanism.
-	* milena/tests/accu/transform_line.cc: Test both generic and
+	* tests/accu/transform_line.cc: Test both generic and
 	fastest versions.
 
 	Fix missing properties for some accumulators.
 
-	* milena/mln/accu/stat/min.hh,
-	* milena/mln/accu/stat/max.hh (set_value): New method.
-	* milena/mln/accu/stat/max_h.hh (invariant_): New method.
+	* mln/accu/stat/min.hh,
+	* mln/accu/stat/max.hh (set_value): New method.
+	* mln/accu/stat/max_h.hh (invariant_): New method.
 	(max_h): Add calls to invariant_.
 	(debug_print_): Augment.
-	* milena/mln/accu/math/count.hh,
-	* milena/mln/accu/logic/lor.hh,
-	* milena/mln/accu/logic/lor_basic.hh,
-	* milena/mln/accu/logic/land.hh,
-	* milena/mln/accu/logic/land_basic.hh,
-	* milena/mln/accu/stat/min.hh,
-	* milena/mln/accu/stat/max.hh,
-	* milena/mln/accu/stat/min_h.hh,
-	* milena/mln/accu/stat/max_h.hh (trait): Add missing traits.
+	* mln/accu/math/count.hh,
+	* mln/accu/logic/lor.hh,
+	* mln/accu/logic/lor_basic.hh,
+	* mln/accu/logic/land.hh,
+	* mln/accu/logic/land_basic.hh,
+	* mln/accu/stat/min.hh,
+	* mln/accu/stat/max.hh,
+	* mln/accu/stat/min_h.hh,
+	* mln/accu/stat/max_h.hh (trait): Add missing traits.
 
 	Misc.
 
-	* milena/mln/morpho/general.spe.hh: Fix layout.
+	* mln/morpho/general.spe.hh: Fix layout.
 	Remove useless includes.
 
 2009-08-13  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
@@ -3572,8 +4320,8 @@
 
 	Regen headers.mk and unit-tests.mk.
 
-	* milena/headers.mk,
-	* milena/tests/unit_test/unit-tests.mk: regen.
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: regen.
 
 2009-06-30  Guillaume Lazzara  <guillaume.lazzara@lrde.epita.fr>
 
@@ -5125,7 +5873,7 @@
 	Complete the installation of the Make rule `tests' in Milena.
 
 	* Makefile.am (tests): New phony target.
-	* tests/world/Makefile.am: Include milena/tests/tests.mk.
+	* tests/world/Makefile.am: Include tests/tests.mk.
 
 2009-06-10  Roland Levillain  <roland@lrde.epita.fr>
 

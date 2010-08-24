@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -39,9 +40,9 @@
 
 #include <mln/draw/line.hh>
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/primitive/link/with_single_right_link.hh>
-#include <scribo/primitive/link/internal/link_ms_dmax_base.hh>
+#include <scribo/primitive/link/internal/link_single_dmax_base.hh>
 #include <scribo/primitive/link/compute.hh>
 
 #include <scribo/draw/bounding_boxes.hh>
@@ -55,30 +56,30 @@ namespace scribo
 
   template <typename I, typename L>
   struct single_right_link_debug_functor
-    : primitive::link::internal::link_ms_dmax_base<L,
+    : primitive::link::internal::link_single_dmax_base<L,
 						   single_right_link_debug_functor<I, L> >
   {
     typedef single_right_link_debug_functor<I, L> self_t;
     typedef
-      primitive::link::internal::link_ms_dmax_base<L, self_t> super_;
+      primitive::link::internal::link_single_dmax_base<L, self_t> super_;
 
   public:
     typedef mln_site(L) P;
 
     single_right_link_debug_functor(const I& input,
-				   const object_image(L)& objects,
-				   float dmax)
-      : super_(objects, dmax)
+				   const component_set<L>& components,
+				   unsigned dmax)
+      : super_(components, dmax, anchor::Horizontal)
     {
       output_ = data::convert(value::rgb8(), input);
-      scribo::draw::bounding_boxes(output_, objects, literal::blue);
+      scribo::draw::bounding_boxes(output_, components, literal::blue);
       mln_postcondition(output_.is_valid());
     }
 
     void validate_link_(unsigned current_object,
 			const P& start_point,
 			const P& p,
-			unsigned anchor)
+			anchor::Type anchor)
     {
       mln::draw::line(output_, start_point, p, literal::green);
 
@@ -90,7 +91,7 @@ namespace scribo
     void invalidate_link_(unsigned current_object,
 			  const P& start_point,
 			  const P& p,
-			  unsigned anchor)
+			  anchor::Type anchor)
     {
       if (output_.domain().has(p))
 	mln::draw::line(output_, start_point, p, literal::red);
@@ -121,7 +122,8 @@ namespace scribo
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image. True for objects and False for the background." },
+  { "input.pbm", "A binary image. True for objects and False for the "
+    "background." },
   { "max_nbh_dist", "The maximum lookup distance. (common value : 30)" },
   {0, 0}
 };
@@ -135,10 +137,10 @@ int main(int argc, char* argv[])
 
   if (argc != 4)
     return scribo::debug::usage(argv,
-				"Show sucessful/unsuccessful right links between components.",
+				"Show sucessful/unsuccessful right links "
+				"between components.",
 				"input.pbm max_nbh_dist output.ppm",
-				args_desc,
-				"A color image. Valid links are drawn in green, invalid ones in red.");
+				args_desc);
 
   typedef image2d<bool> I;
   I input;
@@ -147,12 +149,13 @@ int main(int argc, char* argv[])
   // Finding objects.
   value::label_16 nbboxes;
   typedef image2d<value::label_16> L;
-  object_image(L) objects
-    = scribo::primitive::extract::objects(input, c8(), nbboxes);
+  component_set<L> components
+    = scribo::primitive::extract::components(input, c8(), nbboxes);
 
   // Write debug image.
-  single_right_link_debug_functor<I, L> functor(input, objects, atof(argv[2]));
-  primitive::link::compute(functor);
+  single_right_link_debug_functor<I, L>
+    functor(input, components, atoi(argv[2]));
+  primitive::link::compute(functor, anchor::MassCenter);
 
   io::ppm::save(functor.output_, argv[3]);
 }

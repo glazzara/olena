@@ -1,3 +1,2321 @@
+2010-08-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/debug/text_areas_image.hh: Add a typedef to help g++-3.3.
+
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/preprocessing/rotate_90.hh: Add a typedef to help
+	g++-3.3.
+
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix invalid pointer offset types.
+
+	* scribo/preprocessing/rotate_90.hh
+	(out_next_offset, out_next_p_offset): Fix a wrong type leading to
+	overflows.
+	(output): Add an assertion checking its validity.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix warnings with g++-4.1 in Scribo.
+
+	* scribo/binarization/internal/first_pass_functor.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_threshold_image.hh,
+	* scribo/binarization/sauvola_threshold_image_debug.hh,
+	* scribo/postprocessing/fill_object_holes.hh,
+	* scribo/preprocessing/deskew.hh,
+	* scribo/primitive/extract/lines_pattern.hh,
+	* scribo/subsampling/bilinear.hh,
+	* scribo/subsampling/integral_single_image.hh,
+	* scribo/text/clean_inplace.hh,
+	* src/debug/show_links_several_right_overlap.cc,
+	* src/debug/show_links_single_down.cc,
+	* src/debug/show_links_single_down_left_aligned.cc,
+	* src/debug/show_links_single_down_right_aligned.cc,
+	* src/debug/show_links_single_left.cc,
+	* src/debug/show_links_single_right.cc,
+	* src/debug/show_links_single_up.cc,
+	* src/debug/show_links_single_up_left_aligned.cc,
+	* src/debug/show_links_single_up_right_aligned.cc: explicitly
+	convert to a specific type when necessary.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Regen headers.mk and unit-tests.mk in Scribo.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update READMEs.
+
+	* README,
+	* src/README: Add few details about the content.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update Scribo include paths.
+
+	* Makefile.am,
+	* tests/unit_test/Makefile.am: Fix path of generated header list.
+
+	* src/text_in_picture.cc,
+	* src/text_recognition_in_picture.cc,
+	* tests/filter/objects_with_holes.cc,
+	* tests/filter/small_and_large_bboxes.cc,
+	* tests/preprocessing/crop.cc,
+	* tests/preprocessing/crop_without_localization.cc,
+	* tests/preprocessing/deskew.cc,
+	* tests/preprocessing/rotate_90.cc,
+	* tests/table/extract_lines_with_rank.cc,
+	* tests/table/repair_lines.cc,
+	* tests/toolchain/nepomuk/text_extraction.cc: Fix path to data.hh.
+
+	* demo/demat/demat.pro,
+	* demo/wizard/wizard.pro,
+	* scribo.mk,
+	* tests/tests.mk: Set correct path to Scribo includes.
+
+	* headers.mk,
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Move Scribo includes in a specific directory.
+
+	* all.hh,
+	* binarization/all.hh,
+	* binarization/global_threshold.hh,
+	* binarization/global_threshold_auto.hh,
+	* binarization/internal/first_pass_functor.hh,
+	* binarization/local_threshold.hh,
+	* binarization/sauvola.hh,
+	* binarization/sauvola_ms.hh,
+	* binarization/sauvola_ms_split.hh,
+	* binarization/sauvola_threshold_image.hh,
+	* binarization/sauvola_threshold_image_debug.hh,
+	* canvas/integral_browsing.hh,
+	* convert/from_qimage.hh,
+	* core/all.hh,
+	* core/central_sites.hh,
+	* core/component_info.hh,
+	* core/component_set.hh,
+	* core/concept/dmax_functor.hh,
+	* core/concept/link_functor.hh,
+	* core/def/lbl_type.hh,
+	* core/erase_objects.hh,
+	* core/init_integral_image.hh,
+	* core/line_info.hh,
+	* core/line_set.hh,
+	* core/macros.hh,
+	* core/object_groups.hh,
+	* core/object_links.hh,
+	* core/tag/anchor.hh,
+	* core/tag/component.hh,
+	* core/tag/line.hh,
+	* debug/alignment_decision_image.hh,
+	* debug/all.hh,
+	* debug/bboxes_enlarged_image.hh,
+	* debug/char_space_image.hh,
+	* debug/decision_image.hh,
+	* debug/highlight_text_area.hh,
+	* debug/line_info_image.hh,
+	* debug/links_decision_image.hh,
+	* debug/looks_like_a_text_line_image.hh,
+	* debug/mean_and_base_lines_image.hh,
+	* debug/save_bboxes_image.hh,
+	* debug/save_comp_diff.hh,
+	* debug/save_label_image.hh,
+	* debug/save_linked_bboxes_image.hh,
+	* debug/save_table_image.hh,
+	* debug/several_links_decision_image.hh,
+	* debug/text_areas_image.hh,
+	* debug/usage.hh,
+	* draw/all.hh,
+	* draw/bounding_box_links.hh,
+	* draw/bounding_boxes.hh,
+	* draw/groups_bboxes.hh,
+	* estim/object_groups_v_thickness.hh,
+	* filter/all.hh,
+	* filter/common/objects_photo.hh,
+	* filter/internal/alignment_angle.hh,
+	* filter/internal/component_aligned.hh,
+	* filter/internal/compute.hh,
+	* filter/object_groups_size_ratio.hh,
+	* filter/object_groups_small.hh,
+	* filter/object_groups_v_thickness.hh,
+	* filter/object_groups_with_holes.hh,
+	* filter/object_links_bbox_h_ratio.hh,
+	* filter/object_links_bbox_overlap.hh,
+	* filter/object_links_bbox_ratio.hh,
+	* filter/object_links_bbox_w_ratio.hh,
+	* filter/object_links_bottom_aligned.hh,
+	* filter/object_links_center_aligned.hh,
+	* filter/object_links_left_aligned.hh,
+	* filter/object_links_non_aligned_simple.hh,
+	* filter/object_links_right_aligned.hh,
+	* filter/object_links_top_aligned.hh,
+	* filter/objects_h_thick.hh,
+	* filter/objects_h_thin.hh,
+	* filter/objects_large.hh,
+	* filter/objects_size_ratio.hh,
+	* filter/objects_small.hh,
+	* filter/objects_thick.hh,
+	* filter/objects_thin.hh,
+	* filter/objects_v_thick.hh,
+	* filter/objects_v_thin.hh,
+	* filter/objects_with_holes.hh,
+	* fun/v2b/label_to_bool.hh,
+	* fun/v2b/objects_large_filter.hh,
+	* fun/v2b/objects_small_filter.hh,
+	* io/text_boxes/save.hh,
+	* io/xml/save.hh,
+	* make/all.hh,
+	* make/debug_filename.hh,
+	* make/influence_zone_graph.hh,
+	* postprocessing/all.hh,
+	* postprocessing/fill_object_holes.hh,
+	* preprocessing/all.hh,
+	* preprocessing/crop.hh,
+	* preprocessing/crop_without_localization.hh,
+	* preprocessing/denoise.hh,
+	* preprocessing/denoise_bg.hh,
+	* preprocessing/denoise_fg.hh,
+	* preprocessing/deskew.hh,
+	* preprocessing/deskew_crop.hh,
+	* preprocessing/homogeneous_contrast.hh,
+	* preprocessing/rotate_90.hh,
+	* preprocessing/split_bg_fg.hh,
+	* primitive/all.hh,
+	* primitive/extract/all.hh,
+	* primitive/extract/canvas.hh,
+	* primitive/extract/cells.hh,
+	* primitive/extract/components.hh,
+	* primitive/extract/horizontal_separators.hh,
+	* primitive/extract/lines_discontinued.hh,
+	* primitive/extract/lines_h_discontinued.hh,
+	* primitive/extract/lines_h_pattern.hh,
+	* primitive/extract/lines_h_single.hh,
+	* primitive/extract/lines_h_thick.hh,
+	* primitive/extract/lines_h_thick_and_single.hh,
+	* primitive/extract/lines_pattern.hh,
+	* primitive/extract/lines_thick.hh,
+	* primitive/extract/lines_v_discontinued.hh,
+	* primitive/extract/lines_v_pattern.hh,
+	* primitive/extract/lines_v_single.hh,
+	* primitive/extract/lines_v_thick.hh,
+	* primitive/extract/lines_v_thick_and_single.hh,
+	* primitive/extract/separators.hh,
+	* primitive/extract/vertical_separators.hh,
+	* primitive/group/all.hh,
+	* primitive/group/apply.hh,
+	* primitive/group/from_double_link.hh,
+	* primitive/group/from_graph.hh,
+	* primitive/group/from_single_link.hh,
+	* primitive/internal/all.hh,
+	* primitive/internal/find_graph_link.hh,
+	* primitive/internal/find_root.hh,
+	* primitive/internal/have_link_valid.hh,
+	* primitive/internal/is_link_valid.hh,
+	* primitive/internal/rd.hh,
+	* primitive/internal/update_graph_link.hh,
+	* primitive/link/all.hh,
+	* primitive/link/compute.hh,
+	* primitive/link/compute_several.hh,
+	* primitive/link/internal/compute_anchor.hh,
+	* primitive/link/internal/dmax_default.hh,
+	* primitive/link/internal/dmax_functor_base.hh,
+	* primitive/link/internal/dmax_width_and_height.hh,
+	* primitive/link/internal/dmax_width_only.hh,
+	* primitive/link/internal/find_link.hh,
+	* primitive/link/internal/find_several_links.hh,
+	* primitive/link/internal/link_functor_base.hh,
+	* primitive/link/internal/link_several_dmax_base.hh,
+	* primitive/link/internal/link_single_dmax_base.hh,
+	* primitive/link/internal/link_single_dmax_ratio_base.hh,
+	* primitive/link/merge_double_link.hh,
+	* primitive/link/with_graph.hh,
+	* primitive/link/with_rag.hh,
+	* primitive/link/with_several_graphes.hh,
+	* primitive/link/with_several_left_links.hh,
+	* primitive/link/with_several_right_closest_links.hh,
+	* primitive/link/with_several_right_links.hh,
+	* primitive/link/with_several_right_links_overlap.hh,
+	* primitive/link/with_single_down_link.hh,
+	* primitive/link/with_single_left_link.hh,
+	* primitive/link/with_single_left_link_dmax_ratio.hh,
+	* primitive/link/with_single_right_link.hh,
+	* primitive/link/with_single_right_link_bottom.hh,
+	* primitive/link/with_single_right_link_dmax_ratio.hh,
+	* primitive/link/with_single_right_link_top.hh,
+	* primitive/link/with_single_up_link.hh,
+	* primitive/regroup/from_single_left_link.hh,
+	* primitive/regroup/from_single_left_link_wrt_h_ratio.hh,
+	* primitive/remove/separators.hh,
+	* subsampling/bilinear.hh,
+	* subsampling/integral.hh,
+	* subsampling/integral_single_image.hh,
+	* table/align_lines_horizontaly.hh,
+	* table/align_lines_verticaly.hh,
+	* table/all.hh,
+	* table/connect_horizontal_lines.hh,
+	* table/connect_vertical_lines.hh,
+	* table/erase.hh,
+	* table/extract.hh,
+	* table/internal/align_lines.hh,
+	* table/internal/all.hh,
+	* table/internal/connect_lines.hh,
+	* table/internal/repair_lines.hh,
+	* table/rebuild.hh,
+	* table/repair_horizontal_lines.hh,
+	* table/repair_vertical_lines.hh,
+	* text/all.hh,
+	* text/clean.hh,
+	* text/clean_inplace.hh,
+	* text/extract_lines.hh,
+	* text/look_like_text_lines.hh,
+	* text/merging.hh,
+	* text/recognition.hh,
+	* toolchain/nepomuk/text_extraction.hh,
+	* toolchain/text_in_doc.hh,
+	* upsampling/bs2x.hh,
+	* upsampling/eagle.hh: Move...
+
+	* scribo/all.hh,
+	* scribo/binarization/all.hh,
+	* scribo/binarization/global_threshold.hh,
+	* scribo/binarization/global_threshold_auto.hh,
+	* scribo/binarization/internal/first_pass_functor.hh,
+	* scribo/binarization/local_threshold.hh,
+	* scribo/binarization/sauvola.hh,
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_ms_split.hh,
+	* scribo/binarization/sauvola_threshold_image.hh,
+	* scribo/binarization/sauvola_threshold_image_debug.hh,
+	* scribo/canvas/integral_browsing.hh,
+	* scribo/convert/from_qimage.hh,
+	* scribo/core/all.hh,
+	* scribo/core/central_sites.hh,
+	* scribo/core/component_info.hh,
+	* scribo/core/component_set.hh,
+	* scribo/core/concept/dmax_functor.hh,
+	* scribo/core/concept/link_functor.hh,
+	* scribo/core/def/lbl_type.hh,
+	* scribo/core/erase_objects.hh,
+	* scribo/core/init_integral_image.hh,
+	* scribo/core/line_info.hh,
+	* scribo/core/line_set.hh,
+	* scribo/core/macros.hh,
+	* scribo/core/object_groups.hh,
+	* scribo/core/object_links.hh,
+	* scribo/core/tag/anchor.hh,
+	* scribo/core/tag/component.hh,
+	* scribo/core/tag/line.hh,
+	* scribo/debug/alignment_decision_image.hh,
+	* scribo/debug/all.hh,
+	* scribo/debug/bboxes_enlarged_image.hh,
+	* scribo/debug/char_space_image.hh,
+	* scribo/debug/decision_image.hh,
+	* scribo/debug/highlight_text_area.hh,
+	* scribo/debug/line_info_image.hh,
+	* scribo/debug/links_decision_image.hh,
+	* scribo/debug/looks_like_a_text_line_image.hh,
+	* scribo/debug/mean_and_base_lines_image.hh,
+	* scribo/debug/save_bboxes_image.hh,
+	* scribo/debug/save_comp_diff.hh,
+	* scribo/debug/save_label_image.hh,
+	* scribo/debug/save_linked_bboxes_image.hh,
+	* scribo/debug/save_table_image.hh,
+	* scribo/debug/several_links_decision_image.hh,
+	* scribo/debug/text_areas_image.hh,
+	* scribo/debug/usage.hh,
+	* scribo/draw/all.hh,
+	* scribo/draw/bounding_box_links.hh,
+	* scribo/draw/bounding_boxes.hh,
+	* scribo/draw/groups_bboxes.hh,
+	* scribo/estim/object_groups_v_thickness.hh,
+	* scribo/filter/all.hh,
+	* scribo/filter/common/objects_photo.hh,
+	* scribo/filter/internal/alignment_angle.hh,
+	* scribo/filter/internal/component_aligned.hh,
+	* scribo/filter/internal/compute.hh,
+	* scribo/filter/object_groups_size_ratio.hh,
+	* scribo/filter/object_groups_small.hh,
+	* scribo/filter/object_groups_v_thickness.hh,
+	* scribo/filter/object_groups_with_holes.hh,
+	* scribo/filter/object_links_bbox_h_ratio.hh,
+	* scribo/filter/object_links_bbox_overlap.hh,
+	* scribo/filter/object_links_bbox_ratio.hh,
+	* scribo/filter/object_links_bbox_w_ratio.hh,
+	* scribo/filter/object_links_bottom_aligned.hh,
+	* scribo/filter/object_links_center_aligned.hh,
+	* scribo/filter/object_links_left_aligned.hh,
+	* scribo/filter/object_links_non_aligned_simple.hh,
+	* scribo/filter/object_links_right_aligned.hh,
+	* scribo/filter/object_links_top_aligned.hh,
+	* scribo/filter/objects_h_thick.hh,
+	* scribo/filter/objects_h_thin.hh,
+	* scribo/filter/objects_large.hh,
+	* scribo/filter/objects_size_ratio.hh,
+	* scribo/filter/objects_small.hh,
+	* scribo/filter/objects_thick.hh,
+	* scribo/filter/objects_thin.hh,
+	* scribo/filter/objects_v_thick.hh,
+	* scribo/filter/objects_v_thin.hh,
+	* scribo/filter/objects_with_holes.hh,
+	* scribo/fun/v2b/label_to_bool.hh,
+	* scribo/fun/v2b/objects_large_filter.hh,
+	* scribo/fun/v2b/objects_small_filter.hh,
+	* scribo/io/text_boxes/save.hh,
+	* scribo/io/xml/save.hh,
+	* scribo/make/all.hh,
+	* scribo/make/debug_filename.hh,
+	* scribo/make/influence_zone_graph.hh,
+	* scribo/postprocessing/all.hh,
+	* scribo/postprocessing/fill_object_holes.hh,
+	* scribo/preprocessing/all.hh,
+	* scribo/preprocessing/crop.hh,
+	* scribo/preprocessing/crop_without_localization.hh,
+	* scribo/preprocessing/denoise.hh,
+	* scribo/preprocessing/denoise_bg.hh,
+	* scribo/preprocessing/denoise_fg.hh,
+	* scribo/preprocessing/deskew.hh,
+	* scribo/preprocessing/deskew_crop.hh,
+	* scribo/preprocessing/homogeneous_contrast.hh,
+	* scribo/preprocessing/rotate_90.hh,
+	* scribo/preprocessing/split_bg_fg.hh,
+	* scribo/primitive/all.hh,
+	* scribo/primitive/extract/all.hh,
+	* scribo/primitive/extract/canvas.hh,
+	* scribo/primitive/extract/cells.hh,
+	* scribo/primitive/extract/components.hh,
+	* scribo/primitive/extract/horizontal_separators.hh,
+	* scribo/primitive/extract/lines_discontinued.hh,
+	* scribo/primitive/extract/lines_h_discontinued.hh,
+	* scribo/primitive/extract/lines_h_pattern.hh,
+	* scribo/primitive/extract/lines_h_single.hh,
+	* scribo/primitive/extract/lines_h_thick.hh,
+	* scribo/primitive/extract/lines_h_thick_and_single.hh,
+	* scribo/primitive/extract/lines_pattern.hh,
+	* scribo/primitive/extract/lines_thick.hh,
+	* scribo/primitive/extract/lines_v_discontinued.hh,
+	* scribo/primitive/extract/lines_v_pattern.hh,
+	* scribo/primitive/extract/lines_v_single.hh,
+	* scribo/primitive/extract/lines_v_thick.hh,
+	* scribo/primitive/extract/lines_v_thick_and_single.hh,
+	* scribo/primitive/extract/separators.hh,
+	* scribo/primitive/extract/vertical_separators.hh,
+	* scribo/primitive/group/all.hh,
+	* scribo/primitive/group/apply.hh,
+	* scribo/primitive/group/from_double_link.hh,
+	* scribo/primitive/group/from_graph.hh,
+	* scribo/primitive/group/from_single_link.hh,
+	* scribo/primitive/internal/all.hh,
+	* scribo/primitive/internal/find_graph_link.hh,
+	* scribo/primitive/internal/find_root.hh,
+	* scribo/primitive/internal/have_link_valid.hh,
+	* scribo/primitive/internal/is_link_valid.hh,
+	* scribo/primitive/internal/rd.hh,
+	* scribo/primitive/internal/update_graph_link.hh,
+	* scribo/primitive/link/all.hh,
+	* scribo/primitive/link/compute.hh,
+	* scribo/primitive/link/compute_several.hh,
+	* scribo/primitive/link/internal/compute_anchor.hh,
+	* scribo/primitive/link/internal/dmax_default.hh,
+	* scribo/primitive/link/internal/dmax_functor_base.hh,
+	* scribo/primitive/link/internal/dmax_width_and_height.hh,
+	* scribo/primitive/link/internal/dmax_width_only.hh,
+	* scribo/primitive/link/internal/find_link.hh,
+	* scribo/primitive/link/internal/find_several_links.hh,
+	* scribo/primitive/link/internal/link_functor_base.hh,
+	* scribo/primitive/link/internal/link_several_dmax_base.hh,
+	* scribo/primitive/link/internal/link_single_dmax_base.hh,
+	* scribo/primitive/link/internal/link_single_dmax_ratio_base.hh,
+	* scribo/primitive/link/merge_double_link.hh,
+	* scribo/primitive/link/with_graph.hh,
+	* scribo/primitive/link/with_rag.hh,
+	* scribo/primitive/link/with_several_graphes.hh,
+	* scribo/primitive/link/with_several_left_links.hh,
+	* scribo/primitive/link/with_several_right_closest_links.hh,
+	* scribo/primitive/link/with_several_right_links.hh,
+	* scribo/primitive/link/with_several_right_links_overlap.hh,
+	* scribo/primitive/link/with_single_down_link.hh,
+	* scribo/primitive/link/with_single_left_link.hh,
+	* scribo/primitive/link/with_single_left_link_dmax_ratio.hh,
+	* scribo/primitive/link/with_single_right_link.hh,
+	* scribo/primitive/link/with_single_right_link_bottom.hh,
+	* scribo/primitive/link/with_single_right_link_dmax_ratio.hh,
+	* scribo/primitive/link/with_single_right_link_top.hh,
+	* scribo/primitive/link/with_single_up_link.hh,
+	* scribo/primitive/regroup/from_single_left_link.hh,
+	* scribo/primitive/regroup/from_single_left_link_wrt_h_ratio.hh,
+	* scribo/primitive/remove/separators.hh,
+	* scribo/subsampling/bilinear.hh,
+	* scribo/subsampling/integral.hh,
+	* scribo/subsampling/integral_single_image.hh,
+	* scribo/table/align_lines_horizontaly.hh,
+	* scribo/table/align_lines_verticaly.hh,
+	* scribo/table/all.hh,
+	* scribo/table/connect_horizontal_lines.hh,
+	* scribo/table/connect_vertical_lines.hh,
+	* scribo/table/erase.hh,
+	* scribo/table/extract.hh,
+	* scribo/table/internal/align_lines.hh,
+	* scribo/table/internal/all.hh,
+	* scribo/table/internal/connect_lines.hh,
+	* scribo/table/internal/repair_lines.hh,
+	* scribo/table/rebuild.hh,
+	* scribo/table/repair_horizontal_lines.hh,
+	* scribo/table/repair_vertical_lines.hh,
+	* scribo/text/all.hh,
+	* scribo/text/clean.hh,
+	* scribo/text/clean_inplace.hh,
+	* scribo/text/extract_lines.hh,
+	* scribo/text/look_like_text_lines.hh,
+	* scribo/text/merging.hh,
+	* scribo/text/recognition.hh,
+	* scribo/toolchain/nepomuk/text_extraction.hh,
+	* scribo/toolchain/text_in_doc.hh,
+	* scribo/upsampling/bs2x.hh,
+	* scribo/upsampling/eagle.hh: ... here.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Setup conditional unit-tests in Scribo.
+
+	* tests/tests.mk: Add specific flags for external dependencies.
+
+	* tests/unit_test/Makefile.am
+	(EXTRA_DIST): Add const_tests_* files.
+	(regen-am): Use build-aux/build_unit_test.sh.
+	(scribo_*FLAGS): Remove specific flags for conditional unit-tests.
+
+	* tests/unit_test/build_unit_test.sh: Remove. Useless since
+	build-aux/build_unit_test.sh is used instead.
+
+	* tests/unit_test/cond_tests_qt,
+	* tests/unit_test/cond_tests_qt_tesseract_tiff,
+	* tests/unit_test/cond_tests_tesseract_tiff: New.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* tests/unit_test/disabled_tests: Update list of disabled tests.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new rotation tool.
+
+	* src/preprocessing/Makefile.am: Add a new target.
+
+	* src/preprocessing/rotate.cc: New.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove deprecated references to object_image.
+
+	* core/object_image.hh: Remove.
+
+	* filter/object_groups_size_ratio.hh,
+	* filter/object_links_bbox_w_ratio.hh,
+	* filter/object_links_left_aligned.hh,
+	* filter/object_links_right_aligned.hh,
+	* primitive/extract/lines_h_thick_and_single.hh,
+	* primitive/extract/lines_v_thick_and_single.hh,
+	* primitive/link/internal/find_several_links.hh,
+	* primitive/link/internal/link_several_dmax_base.hh,
+	* primitive/link/with_single_up_link.hh,
+	* src/debug/show_links_left_right_links_validation.cc,
+	* src/primitive/find/find_discontinued_lines.cc,
+	* src/primitive/find/find_pattern_lines.cc,
+	* tests/filter/small_and_large_bboxes.cc,
+	* src/primitive/group/group_from_double_link_filter_non_aligned.cc:
+	Remove include of object_image.hh.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup Makefiles.
+
+	* src/Makefile.am: Disable tests and remove deprecated ones.
+
+	* src/preprocessing/Makefile.am: Use MAGICKXX_* flags.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup and improve text recognition.
+
+	* src/text_recognition_in_picture.cc: Use new routines. Cleanup
+	useless comments. Use a height ratio filter to improve OCR
+	results.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup and make use of the new routines.
+
+	* src/text_in_picture.cc: Here.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make use of the new component_set interface.
+
+	* filter/internal/compute.hh,
+	* filter/objects_small.hh,
+	* filter/objects_thick.hh,
+	* filter/objects_thin.hh,
+	* primitive/group/from_double_link.hh,
+	* primitive/link/compute_several.hh,
+	* table/align_lines_horizontaly.hh,
+	* table/erase.hh,
+	* table/extract.hh: Here.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation of Scribo tools.
+
+	* src/debug/show_links_bbox_overlap.cc,
+	* src/debug/show_links_center_aligned.cc,
+	* src/debug/show_links_non_h_aligned.cc,
+	* src/debug/show_links_several_right.cc,
+	* src/debug/show_links_several_right_overlap.cc,
+	* src/debug/show_links_single_down.cc,
+	* src/debug/show_links_single_down_left_aligned.cc,
+	* src/debug/show_links_single_down_right_aligned.cc,
+	* src/debug/show_links_single_left.cc,
+	* src/debug/show_links_single_left_dmax_ratio.cc,
+	* src/debug/show_links_single_right.cc,
+	* src/debug/show_links_single_right_dmax_ratio.cc,
+	* src/debug/show_links_single_up.cc,
+	* src/debug/show_links_single_up_left_aligned.cc,
+	* src/debug/show_links_single_up_right_aligned.cc,
+	* src/debug/show_objects_large.cc,
+	* src/debug/show_objects_large_small.cc,
+	* src/debug/show_objects_small.cc,
+	* src/debug/show_objects_thick.cc,
+	* src/debug/show_objects_thin.cc,
+	* src/filter/objects_large.cc,
+	* src/filter/objects_small.cc,
+	* src/filter/objects_thick.cc,
+	* src/filter/objects_thin.cc,
+	* src/filter/objects_with_holes.cc,
+	* src/filter/objects_with_holes_pgm.cc,
+	* src/preprocessing/preprocess.cc,
+	* src/preprocessing/split_bg_fg.cc,
+	* src/preprocessing/unskew.cc,
+	* src/primitive/extract/extract_discontinued_hlines.cc,
+	* src/primitive/extract/extract_discontinued_lines.cc,
+	* src/primitive/extract/extract_discontinued_vlines.cc,
+	* src/primitive/extract/extract_thick_hlines.cc,
+	* src/primitive/extract/extract_thick_vlines.cc,
+	* src/primitive/find/find_discontinued_lines.cc,
+	* src/primitive/find/find_single_lines.cc,
+	* src/primitive/find/find_thick_and_single_lines.cc,
+	* src/primitive/find/find_thick_lines.cc,
+	* src/primitive/group/Makefile.am,
+	* src/primitive/group/group_from_double_link.cc,
+	* src/primitive/group/group_from_double_several_links.cc,
+	* src/primitive/group/group_from_several_left_links.cc,
+	* src/primitive/group/group_from_single_link.cc,
+	* src/table/erase.cc,
+	* src/text/cleantxt.cc: Here.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Catch up with the current interface of scribo::debug::usage.
+
+	* src/debug/show_links_bottom_aligned.cc,
+	* src/debug/show_links_top_aligned.cc,
+	* src/misc/negate.cc,
+	* src/misc/superpose.cc,
+	* src/preprocessing/rotate_90.cc,
+	* src/primitive/extract/lines_pattern.cc,
+	* src/primitive/find/find_pattern_lines.cc,
+	* src/table/extract.cc: Here.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Replace the use of object_image with component_set.
+
+	* core/erase_objects.hh,
+	* debug/several_links_decision_image.hh,
+	* filter/object_groups_size_ratio.hh,
+	* filter/object_links_bbox_w_ratio.hh,
+	* filter/object_links_center_aligned.hh,
+	* filter/object_links_left_aligned.hh,
+	* filter/object_links_right_aligned.hh,
+	* filter/objects_h_thick.hh,
+	* filter/objects_h_thin.hh,
+	* filter/objects_size_ratio.hh,
+	* filter/objects_v_thick.hh,
+	* filter/objects_v_thin.hh,
+	* primitive/extract/lines_h_thick_and_single.hh,
+	* primitive/extract/lines_v_thick_and_single.hh,
+	* primitive/group/from_graph.hh,
+	* primitive/internal/find_graph_link.hh,
+	* primitive/link/with_graph.hh,
+	* primitive/link/with_rag.hh,
+	* primitive/link/with_several_graphes.hh,
+	* primitive/link/with_several_left_links.hh,
+	* primitive/link/with_several_right_closest_links.hh,
+	* primitive/link/with_several_right_links.hh,
+	* primitive/link/with_single_down_link.hh,
+	* primitive/link/with_single_up_link.hh: Replace the use of
+	object_image with component_set.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Scribo.
+
+	* core/component_info.hh (is_valid): Check the bounding box
+	validity.
+
+	* core/macros.hh: Add a new macro.
+
+	* debug/decision_image.hh: Remove deprecated preconditions and add
+	missing includes.
+
+	* draw/bounding_boxes.hh: Check the component validity.
+
+	* filter/object_links_non_aligned_simple.hh: Update doc.
+
+	* filter/objects_with_holes.hh: Remove debug and timers. Add
+	missing includes.
+
+	* primitive/extract/lines_pattern.hh: Use the window template
+	parameter instead of an exact window type.
+
+	* primitive/link/internal/find_several_links.hh: Update code with
+	new interfaces.
+
+	* primitive/link/internal/link_functor_base.hh
+	(nanchors()): Remove this method.
+	(labeled_image()): Add a const version.
+
+	* primitive/link/internal/link_several_dmax_base.hh
+	(nanchors(), anchors()): New methods.
+	Introduce 'direction_' attribute.
+
+	* debug/several_links_decision_image.hh: Remove deprecated
+	preconditions.
+
+	* src/debug/show_links_single_left.cc: Update include.
+
+	* table/internal/align_lines.hh,
+	* table/rebuild.hh: Make use of component_set structure.
+
+	* debug/text_areas_image.hh,
+	* primitive/regroup/from_single_left_link_wrt_h_ratio.hh: Add
+	missing includes.
+
+	* src/contest/hdibco-2010/Makefile.am: Do not consider this tool
+	as a test anymore.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add missing includes and headers in AFP's dedicated code.
+
+	* src/afp/components.hh,
+	* src/afp/link.hh,
+	* src/afp/regroup.hh: Add missing includes and headers.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new routines in Scribo.
+
+	* debug/highlight_text_area.hh,
+	* debug/save_bboxes_image.hh: Add a new overload.
+
+	* debug/save_comp_diff.hh,
+	* debug/text_areas_image.hh,
+	* primitive/regroup/from_single_left_link_wrt_h_ratio.hh: New.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove deprecated files.
+
+	* core/internal/link_functor_base.hh,
+	* debug/save_object_diff.hh,
+	* make/text.hh,
+	* primitive/internal/update_link_array.hh,
+	* primitive/link/internal/anchors_3.hh,
+	* primitive/link/internal/link_ms_dmax_base.hh,
+	* primitive/link/internal/link_ms_dmax_ratio_base.hh,
+	* src/pbm_lines_in_doc.cc: Remove.
+
+2010-08-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix many tests in Scribo.
+
+	* all.hh,
+	* binarization/all.hh,
+	* binarization/internal/first_pass_functor.hh,
+	* convert/from_qimage.hh,
+	* core/tag/component.hh,
+	* core/tag/line.hh,
+	* debug/links_decision_image.hh,
+	* debug/mean_and_base_lines_image.hh,
+	* filter/object_groups_with_holes.hh,
+	* io/xml/save.hh,
+	* make/all.hh,
+	* postprocessing/all.hh,
+	* postprocessing/fill_object_holes.hh,
+	* preprocessing/all.hh,
+	* preprocessing/crop_without_localization.hh,
+	* preprocessing/denoise_bg.hh,
+	* preprocessing/denoise_fg.hh,
+	* preprocessing/deskew.hh,
+	* preprocessing/deskew_crop.hh,
+	* preprocessing/split_bg_fg.hh,
+	* primitive/extract/all.hh,
+	* primitive/extract/lines_h_single.hh,
+	* primitive/extract/lines_pattern.hh,
+	* primitive/extract/lines_v_single.hh,
+	* primitive/group/all.hh,
+	* primitive/internal/all.hh,
+	* primitive/internal/is_link_valid.hh,
+	* primitive/link/all.hh,
+	* primitive/link/internal/compute_anchor.hh,
+	* primitive/link/internal/dmax_functor_base.hh,
+	* primitive/regroup/from_single_left_link.hh,
+	* primitive/remove/separators.hh,
+	* subsampling/bilinear.hh,
+	* text/merging.hh,
+	* toolchain/nepomuk/text_extraction.hh,
+	* upsampling/eagle.hh: Add missing headers in order to fix
+	unit-tests.
+
+	* tests/Makefile.am: Disable "table" directory's tests.
+
+	* tests/core/Makefile.am: Remove object_image test.
+
+	* tests/core/object_image.cc: Remove. Deprecated.
+
+	* tests/filter/objects_with_holes.cc,
+	* tests/filter/small_and_large_bboxes.cc: Write a real test.
+
+	* tests/unit_test/Makefile.am: Add specific flags for unit-tests
+	using tesseract and image magick.
+
+2010-07-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have Tesseract-related parts of Scribo compile again.
+
+	* scribo/debug/bboxes_enlarged_image.hh,
+	* scribo/debug/looks_like_a_text_line_image.hh,
+	* scribo/debug/mean_and_base_lines_image.hh,
+	* scribo/debug/save_bboxes_image.hh:
+	Catch up with scribo::line_info<L>'s current interface.
+	Reported by Olivier Grisel <ogrisel@nuxeo.com>.
+
+2010-08-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* core/component_set.hh: Add a new internal member
+	valid_comps_image_().
+
+2010-08-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* filter/object_groups_with_holes.hh: Fix an invalid mismatch
+	between groups ids and their related component ids and add more
+	comments.
+
+2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Compilation related fixes in Scribo.
+
+	* core/line_info.hh: Rename hidden as is_hidden.
+
+	* core/object_links.hh: Add duplicate().
+
+	* filter/object_links_bbox_ratio.hh: Use object_links::duplicate.
+
+	* debug/links_decision_image.hh,
+	* src/debug/show_info_median_inter_characters.cc,
+	* src/debug/show_info_x_height.cc,
+	* src/debug/show_links_bbox_h_ratio.cc,
+	* src/debug/show_links_left_right_links_validation.cc: Make
+	compile again.
+
+	* tests/unit_test/unit-tests.mk: Regen.
+
+	* text/extract_lines.hh: Update with latest changes.
+
+	* text/recognition.hh: Check whether a line is hidden or not.
+
+2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new debug routines.
+
+	* debug/char_space_image.hh,
+	* debug/line_info_image.hh: New.
+
+2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Disable some debug output.
+
+	* text/clean_inplace.hh,
+	* text/recognition.hh: Disable some debug output.
+
+2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a tool for text recognition in natural pictures.
+
+	* src/Makefile.am: Add a new rule.
+
+	* src/text_recognition_in_picture.cc: New.
+
+2010-07-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add text::look_like_text_lines.
+
+	* text/look_like_text_lines.hh: New.
+
+	* text/merging.hh: Make use of
+	text::look_like_text_lines.
+
+2010-06-30  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
+
+	Extended XML mode support.
+
+	* scribo/demo/viewer/Makefile.am
+
+	* demo/viewer/image_region.cc,
+	* viewer/image_region.hh,
+	* viewer/image_region.hxx: Change regions depths to have a
+	hierarchy.
+
+	* demo/viewer/image_scene.cc,
+	* demo/viewer/image_scene.hh: Change mouse click behaviour.
+
+	* demo/viewer/key_widget.cc,
+	* demo/viewer/key_widget.hh: Add new items (text line and
+	paragraph)
+
+	* demo/viewer/viewer.cc,
+	* demo/viewer/viewer.hh: Change XML parsing to support extended
+	format.
+
+	* scribo/demo/viewer/common.hh: Add new RegionId's.
+
+2010-06-30  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
+
+	New features in Qt interface.
+
+	* demo/viewer/browser_widget.hh: Improve picture browser.
+
+	* demo/viewer/step_widget.cc: Add a "step chooser" to load several
+	XML files related to one picture.
+
+2010-06-30  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
+
+	Change XML output (replacement of html markups).
+
+	* io/xml/save.hh: Add internal::html_markups_replace.
+
+2010-06-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add text::clean_inplace.
+
+	* text/clean.hh: Make use of text::clean_inplace.
+
+	* text/clean_inplace.hh: New.
+
+	* text/recognition.hh: Include text::clean_inplace.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small Fixes in Scribo build system.
+
+	* demo/Makefile.am: Enabled demos only if QT is configured.
+
+	* src/Makefile.am: Make use of MAGICKCXX flags.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve text recognition.
+
+	* text/clean.hh: Use upsampling::eagle.
+
+	* text/recognition.hh: Make sure there is a border around the
+	text even after having resized images.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* binarization/sauvola_ms.hh: Fix an invalid test.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* upsampling/eagle.hh: Add a new upsampling algorithm.
+
+2010-06-23  Arthur Crepin-Leblond   <crepin@stockholm.lrde.epita.fr>
+
+	Add extensions to ICDAR XML format.
+
+	* io/xml/save_text_lines.hh: Rename as...
+	* io/xml/save.hh: ...this.
+
+	* src/pbm_text_in_doc.cc: Update call to io::xml::save.
+
+2010-06-18  green  <jacquelet@lrde.epita.fr>
+
+	Prepare green's sandbox.
+
+	* sandbox: New experimental directory.
+	* sandbox/green: New green'work.
+	* sandbox/green/ChangeLog: New ChangeLog file.
+
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* debug/save_linked_bboxes_image.hh: Fix namespace ambiguity.
+
+	* src/pbm_text_in_doc.cc: Fix comment.
+
+	* src/text_in_picture: Change few settings.
+
+	* text/recognition.hh: Fix invalid default arguments.
+
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove deprecated code.
+
+	* util/all.hh,
+	* util/text.hh: Remove.
+
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new Makefiles in Scribo demo directories.
+
+	* Makefile.am,
+	* demo/Makefile.am: Add new Makefiles.
+
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* primitive/extract/components.hh: Use labeling::value_and_compute.
+
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a fast rotation tool.
+
+	* src/preprocessing/Makefile.am,
+	* src/preprocessing/rotate_90.cc: New.
+
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new routine to highlight text areas in an image.
+
+	* debug/highlight_text_area.hh: New.
+
+	* src/debug/Makefile.am,
+	* src/debug/highlight_text_area.cc: New tool.
+
+	* src/text_in_picture.cc: Make use of this new routine.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/README: New.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve Scribo demo.
+
+	* demo/demat/demat.pro: Add new flags.
+
+	* demo/demat/src/main.cc: Make use of MLN_WO_GLOBALS_VARS.
+
+	* demo/demat/src/main_window.cc,
+	* demo/demat/src/main_window.hh: Cropping is not required
+	anymore. Improve visualization speed.
+
+	* demo/demat/src/preprocessing_task.hh,
+	* demo/demat/src/runner.cc,
+	* demo/demat/src/runner.hh,
+	* demo/demat/ui/main_window.ui: Add a new task for Sauvola ms
+	split.
+
+	* demo/review/src/main.cc,
+	* demo/review/src/mainwindow.cc,
+	* demo/review/src/mainwindow.hh: Start updating executable names
+	and arguments.
+
+	* demo/shared/src/crop_item.cc,
+	* demo/shared/src/crop_item.hh,
+	* demo/shared/src/image_viewer.cc,
+	* demo/shared/src/image_viewer.hh,
+	* demo/shared/src/image_viewer.hxx,
+	* demo/shared/src/internal/interactive_scene.cc,
+	* demo/shared/src/internal/interactive_scene.hh,
+	* demo/shared/ui/image_viewer.ui: Improve look and feel and
+	drawing speed of these components.
+
+	* demo/wizard/src/load_page.cc,
+	* demo/wizard/src/main_window.cc,
+	* demo/wizard/src/runner.cc: Fix compilation.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* binarization/sauvola_threshold_image.hh: Add ifdefs.
+
+	* core/object_groups.hh: Fix a wrong assertion.
+
+	* postprocessing/fill_object_holes.hh: Disable debug output.
+
+	* preprocessing/denoise_bg.hh: Do not negate the image anymore.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add the binarization tool submitted to H-DIBCO 2010.
+
+	* src/Makefile.am,
+	* src/contest/Makefile.am,
+	* src/contest/hdibco-2010/Makefile.am: New.
+
+	* src/contest/hdibco-2010/sauvola_ms_hdibco.cc: New. Source code
+	of the submitted program for H-DIBCO 2010.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update tools in scribo/src.
+
+	* src/Makefile.am: Add postprocessing subdir.
+
+	* src/postprocessing/Makefile.am,
+	* src/postprocessing/fill_object_holes.cc: New.
+
+	* src/preprocessing/denoise.cc: Remove.
+
+	* src/preprocessing/denoise_bg.cc,
+	* src/preprocessing/denoise_fg.cc: New.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a specific toolchain for Nepomuk integration.
+
+	* convert/from_qimage.hh: New. convert an image2d to a QImage.
+
+	* core/line_info.hh: Add a new member has_text.
+
+	* text/recognition.hh: Remove an invalid precondition.
+
+	* toolchain/nepomuk/text_extraction.hh: New. Specific toolchain
+	for Nepomuk.
+
+	* tests/Makefile.am: Add toolchain/* subdirs.
+
+	* tests/toolchain/Makefile.am,
+	* tests/toolchain/nepomuk/Makefile.am: New.
+
+	* tests/img/wildly.pbm: New. New test image.
+
+	* tests/toolchain/nepomuk/text_extraction.cc: New. New test.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup sample tools.
+
+	* src/preprocessing/Makefile.am,
+	* src/text/Makefile.am,
+	* src/Makefile.am: Update.
+
+	* src/multi_scale/Makefile.am,
+	* src/multi_scale/find_lines.cc
+	* src/text/pbm_recognition.cc
+	* src/text/recognition.cc
+	* src/text_in_article_preprocess.cc
+	* src/text_in_doc.cc
+	* src/text_in_doc_ppm.cc
+	* src/text_in_photo.cc
+	* src/text_in_photo_invert.cc
+	* src/text_in_photo_pbm_fast.cc
+	* src/text_in_photo_ppm.cc
+	* test.cc: Remove. Deprecated.
+
+	* src/text_in_article_pbm.cc: Rename as...
+	* src/pbm_text_in_doc.cc: ... this. Make use of the new toolchain
+	routines.
+
+	* src/text/pbm_lines_recognition.cc,
+	* src/text_in_doc_preprocess.cc: New.
+
+	* src/text_in_photo_fast.cc: Rename as...
+	* src/text_in_picture.cc: ... this.
+
+	* src/preprocessing/subsample.cc: Make use of io::magick.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* toolchain/text_in_doc.hh: Introduce a new routine for extracting
+	text in a document.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* core/def/lbl_type.hh: Introduce a global label type.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve line detection.
+
+	* primitive/extract/lines_h_pattern.hh,
+	* primitive/extract/lines_v_pattern.hh: Use reconstruction
+	algorithm.
+
+	* primitive/extract/lines_pattern.hh: Add a fast implementation.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* io/text_boxes/save.hh: New. Save text boxes information.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new deskew algorithm.
+
+	* preprocessing/deskew.hh,
+	* preprocessing/deskew_crop.hh: New.
+
+	* preprocessing/unskew.hh: Remove. Deprecated.
+
+	* tests/preprocessing/unskew.cc: Rename as...
+	* tests/preprocessing/deskew.cc: ... this.
+
+	* tests/preprocessing/Makefile.am: Update.
+
+	* tests/img/text_to_group.pgm: New test image.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add crop tools.
+
+	* preprocessing/crop.hh,
+	* preprocessing/crop_without_localization.hh: new routines.
+
+	* tests/preprocessing/Makefile.am,
+	* tests/preprocessing/crop.cc,
+	* tests/preprocessing/crop_without_localization.cc: Associated
+	tests.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* core/object_groups.hh: Fix an invalid size.
+
+	* debug/save_bboxes_image.hh,
+	* filter/object_links_non_aligned_simple.hh,
+	* primitive/group/from_single_link.hh,
+	* subsampling/bilinear.hh,
+	* text/merging.hh,
+	* upsampling/bs2x.hh: Fix namespace ambiguities.
+
+	* primitive/group/from_double_link.hh: Fix comment.
+
+	* primitive/internal/find_root.hh: Fix guards.
+
+	* primitive/link/with_single_right_link_dmax_ratio.hh: Add a
+	missing include.
+
+	* primitive/remove/separators.hh: Improve computation time.
+
+	* preprocessing/rotate_90.hh: Add a fixme.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Store OCR results in the line_info structure.
+
+	* core/line_info.hh: Add a new attribute 'text'.
+
+	* text/recognition.hh: Store results in the line_info structure.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve debug outputs in Sauvola and make binarization tools
+	compile again.
+
+	* binarization/internal/first_pass_functor.hh,
+	* binarization/sauvola_ms.hh,
+	* binarization/sauvola_threshold_image.hh: Add debug outputs if
+	SCRIBO_SAUVOLA_DEBUG flag is set.
+
+	* binarization/sauvola_ms_split.hh: Remove lambda argument.
+
+	* binarization/sauvola_threshold_image_debug.hh: Add the threshold
+	image as debug output.
+
+	* src/binarization/Makefile.am: Add sauvola_ms_debug.
+	* src/binarization/sauvola_ms_debug.cc: New.
+
+	* src/binarization/fg_sauvola_ms.cc,
+	* src/binarization/pgm_sauvola_ms.cc,
+	* src/binarization/ppm_fg_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola_ms_split.cc,
+	* src/binarization/sauvola_debug.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_ms_split.cc: Make compile again.
+
+2010-05-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes for Nuxeo/XWiki.
+
+	* src/text_in_article_preprocess.cc: Fix use of program
+	arguments.
+
+	* core/line_set.hh,
+	* text/clean.hh,
+	* text/merging.hh: Fix compilation.
+
+	* text/recognition.hh: Update output format.
+
+2010-05-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* text/merging.hh: Disable some debug.
+
+2010-05-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Prepare DIA tools for Nuxeo/XWiki.
+
+	* src/Makefile.am: Add a new target.
+
+	* src/text_in_article_preprocess.cc: New.
+
+	* src/text_in_article_pbm.cc: Add optional cropping and makes the
+	debug optionnal.
+
+	* text/clean.hh: Improve cleanup.
+
+	* text/recognition.hh: Remove last '\n' in Tesseract's output.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve OCR recognition.
+
+	* src/text_in_article_pbm.cc: Update call to text::recognition.
+
+	* text/clean.hh: Resize text lines according to their x_height.
+
+	* text/extract_lines.hh: Update call to extract::components.
+
+	* text/merging.hh: Remove Debug.
+
+	* text/recognition.hh: Update call to text::clean and do
+	recognition only on lines considered as text.
+
+	* subsampling/bilinear.hh,
+	* upsampling/bs2x.hh: New.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* postprocessing/fill_object_holes.hh: New routine.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new routines to detect separators.
+
+	* primitive/extract/horizontal_separators.hh,
+	* primitive/extract/separators.hh,
+	* primitive/extract/vertical_separators.hh,
+	* primitive/remove/separators.hh: New.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add A first draft of a README in Scribo.
+
+	* README: New.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Move AFP's GUI into Scribo's demo directory.
+
+	* ../milena/sandbox/lazzara/afp/photos/gui/gui.pro,
+	* ../milena/sandbox/lazzara/afp/photos/gui/gui.qrc,
+	* ../milena/sandbox/lazzara/afp/photos/gui/icons/next.png,
+	* ../milena/sandbox/lazzara/afp/photos/gui/icons/ok.png,
+	* ../milena/sandbox/lazzara/afp/photos/gui/icons/photos.png,
+	* ../milena/sandbox/lazzara/afp/photos/gui/icons/prev.png,
+	* ../milena/sandbox/lazzara/afp/photos/gui/icons/remove.png,
+	* ../milena/sandbox/lazzara/afp/photos/gui/src/custom_delegate.cc,
+	* ../milena/sandbox/lazzara/afp/photos/gui/src/custom_delegate.hh,
+	* ../milena/sandbox/lazzara/afp/photos/gui/src/launch_dialog.cc,
+	* ../milena/sandbox/lazzara/afp/photos/gui/src/launch_dialog.hh,
+	* ../milena/sandbox/lazzara/afp/photos/gui/src/main.cc,
+	* ../milena/sandbox/lazzara/afp/photos/gui/src/main_window.cc,
+	* ../milena/sandbox/lazzara/afp/photos/gui/src/main_window.hh,
+	* ../milena/sandbox/lazzara/afp/photos/gui/ui/launch_dialog.ui,
+	* ../milena/sandbox/lazzara/afp/photos/gui/ui/main_window.ui: Move...
+
+	* demo/tip/gui.pro,
+	* demo/tip/gui.qrc,
+	* demo/tip/icons/next.png,
+	* demo/tip/icons/ok.png,
+	* demo/tip/icons/photos.png,
+	* demo/tip/icons/prev.png,
+	* demo/tip/icons/remove.png,
+	* demo/tip/src/custom_delegate.cc,
+	* demo/tip/src/custom_delegate.hh,
+	* demo/tip/src/launch_dialog.cc,
+	* demo/tip/src/launch_dialog.hh,
+	* demo/tip/src/main.cc,
+	* demo/tip/src/main_window.cc,
+	* demo/tip/src/main_window.hh,
+	* demo/tip/ui/launch_dialog.ui,
+	* demo/tip/ui/main_window.ui: ... here.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce dmax_functor concept.
+
+	* core/concept/dmax_functor.hh,
+	* primitive/link/internal/dmax_default.hh,
+	* primitive/link/internal/dmax_functor_base.hh,
+	* primitive/link/internal/dmax_width_and_height.hh,
+	* primitive/link/internal/dmax_width_only.hh: New.
+
+	* primitive/link/internal/link_single_dmax_ratio_base.hh,
+	* primitive/link/with_single_left_link_dmax_ratio.hh,
+	* primitive/link/with_single_right_link_dmax_ratio.hh: Make use of
+	the new functors.
+
+2010-04-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Scribo.
+
+	* binarization/sauvola_ms.hh,
+	* binarization/sauvola_threshold_image_debug.hh: Update prototypes.
+
+	* primitive/internal/rd.hh,
+	* primitive/group/apply.hh,
+	* debug/save_bboxes_image.hh: Add missing mln:: namespace prefix.
+
+	* filter/objects_large.hh: Split into a routine and a functor.
+
+	* fun/v2b/objects_large_filter.hh: New.
+
+	* io/xml/save_text_lines.hh: Save line type.
+
+	* table/internal/repair_lines.hh,
+	* table/internal/align_lines.hh,
+	* make/text.hh: Update macro name.
+
+	* core/erase_objects.hh,
+	* primitive/extract/lines_discontinued.hh,
+	* primitive/extract/lines_h_discontinued.hh,
+	* primitive/extract/lines_h_pattern.hh,
+	* primitive/extract/lines_h_single.hh,
+	* primitive/extract/lines_h_thick.hh,
+	* primitive/extract/lines_thick.hh,
+	* primitive/extract/lines_v_discontinued.hh,
+	* primitive/extract/lines_v_single.hh,
+	* primitive/extract/lines_v_thick.hh,
+	* primitive/group/from_graph.hh,
+	* primitive/internal/find_graph_link.hh,
+	* primitive/link/with_graph.hh,
+	* primitive/link/with_several_graphes.hh,
+	* primitive/link/with_several_left_links.hh,
+	* primitive/link/with_several_right_links.hh,
+	* table/erase.hh,
+	* table/extract.hh: Remove any references to object_image.
+
+	* table/internal/connect_lines.hh: use
+	influence_zone_geodesic_saturated
+
+	* filter/objects_small.hh: Duplicate component set.
+
+	* primitive/internal/all.hh,
+	* primitive/extract/all.hh,
+	* filter/all.hh,
+	* core/all.hh: Remove non existing includes.
+
+	* core/macros.hh: New macro.
+
+	* core/line_info.hh: Fix stats.
+
+	* filter/object_links_non_aligned.hh,
+	* filter/object_links_non_h_aligned.hh,
+	* filter/object_links_non_v_aligned.hh: Removed.
+
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve dematerialization wizard.
+
+	* demo/wizard/src/crop_widget.cc,
+	* demo/wizard/src/main.cc,
+	* demo/wizard/src/main_window.cc,
+	* demo/wizard/src/main_window.hh,
+	* demo/wizard/src/preprocessing_widget.cc,
+	* demo/wizard/src/process_page.cc,
+	* demo/wizard/src/result_page.cc,
+	* demo/wizard/src/result_page.hh,
+	* demo/wizard/src/result_widget.cc,
+	* demo/wizard/src/result_widget.hh,
+	* demo/wizard/src/runner.cc,
+	* demo/wizard/ui/preprocessing_widget.ui,
+	* demo/wizard/wizard.pro: Add support for text recognition and
+	display results.
+
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new demo in Scribo.
+
+	* demo/demat/demat.pro,
+	* demo/demat/demat.qrc,
+	* demo/demat/src/doc_type.hh,
+	* demo/demat/src/main.cc,
+	* demo/demat/src/main_window.cc,
+	* demo/demat/src/main_window.hh,
+	* demo/demat/src/mln_widgets.cc,
+	* demo/demat/src/preprocessing_task.hh,
+	* demo/demat/src/process_args.hh,
+	* demo/demat/src/runner.cc,
+	* demo/demat/src/runner.hh,
+	* demo/demat/ui/main_window.ui: New.
+
+	* demo/shared/src/crop_item.cc,
+	* demo/shared/src/crop_item.hh,
+	* demo/shared/src/image_viewer.cc,
+	* demo/shared/src/image_viewer.hh,
+	* demo/shared/ui/image_viewer.ui: Update according the needs of
+	this new demo.
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* io/xml/save_text_lines.hh: Fix XML output.
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* debug/decision_image.hh: Add the anchor::Type as argument.
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use anchor::Type in alignment routines' dispatch.
+
+	* filter/object_links_bottom_aligned.hh,
+	* filter/object_links_center_aligned.hh,
+	* filter/object_links_left_aligned.hh,
+	* filter/object_links_non_aligned_simple.hh,
+	* filter/object_links_right_aligned.hh,
+	* filter/object_links_top_aligned.hh: Use anchor::Type.
+
+	* filter/internal/alignment_angle.hh,
+	* filter/internal/component_aligned.hh: New.
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes related to object_groups.
+
+	* core/object_groups.hh: Add more preconditions.
+
+	* filter/object_groups_small.hh: Call duplicate().
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add init() member to object_links structure.
+
+	* core/object_links.hh: New init() member.
+
+	* filter/object_groups_v_thickness.hh,
+	* filter/object_groups_with_holes.hh,
+	* primitive/group/from_double_link.hh,
+	* primitive/link/internal/link_functor_base.hh,
+	* primitive/link/merge_double_link.hh,
+	* src/afp/link.hh,
+	* src/afp/regroup.hh: Call init() on object_links instances.
+
+	* primitive/internal/init_link_array.hh: Remove.
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/text_in_photo_fast.cc: Group routine parameters in a global
+	structure.
+
+2010-04-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new Sauvola overloads and update examples.
+
+	* binarization/internal/first_pass_functor.hh,
+	* binarization/local_threshold.hh,
+	* binarization/sauvola.hh,
+	* binarization/sauvola_ms.hh,
+	* binarization/sauvola_ms_split.hh,
+	* binarization/sauvola_threshold_image.hh,
+	* canvas/integral_browsing.hh: Add more parameters to Sauvola
+	routines.
+
+	* binarization/sauvola_threshold_image_debug.hh: New. New overload
+	providing debug outputs.
+
+	* debug/usage.hh: Remove a parameter.
+
+	* src/binarization/Makefile.am,
+	* src/binarization/pgm_global_threshold_auto.cc,
+	* src/binarization/pgm_sauvola.cc,
+	* src/binarization/pgm_sauvola_ms.cc,
+	* src/binarization/ppm_fg_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola.cc,
+	* src/binarization/ppm_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola_ms_split.cc: Add new program
+	  arguments.
+
+	* src/binarization/fg_sauvola_ms.cc,
+        * src/binarization/sauvola.cc,
+        * src/binarization/sauvola_ms.cc,
+        * src/binarization/sauvola_ms_split.cc,
+	* src/binarization/sauvola_debug.cc: New.
+
+2010-03-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add support for various image types in text_in_photo_fast.
+
+	* src/Makefile.am: Add ImageMagick CPPFLAGS and LDFLAGS.
+
+	* src/text_in_photo_ppm_fast.cc: Rename as...
+	* src/text_in_photo_fast.cc: ... this. Use ImageMagick to load images.
+
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve dematerialization wizard.
+
+	* demo/wizard/src/crop_widget.cc,
+	* demo/wizard/src/main.cc,
+	* demo/wizard/src/main_window.cc,
+	* demo/wizard/src/main_window.hh,
+	* demo/wizard/src/preprocessing_widget.cc,
+	* demo/wizard/src/process_page.cc,
+	* demo/wizard/src/result_page.cc,
+	* demo/wizard/src/result_page.hh,
+	* demo/wizard/src/result_widget.cc,
+	* demo/wizard/src/result_widget.hh,
+	* demo/wizard/src/runner.cc,
+	* demo/wizard/ui/preprocessing_widget.ui,
+	* demo/wizard/wizard.pro: Add support for text recognition and
+	display results.
+
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new demo in Scribo.
+
+	* demo/demat/demat.pro,
+	* demo/demat/demat.qrc,
+	* demo/demat/src/doc_type.hh,
+	* demo/demat/src/main.cc,
+	* demo/demat/src/main_window.cc,
+	* demo/demat/src/main_window.hh,
+	* demo/demat/src/mln_widgets.cc,
+	* demo/demat/src/preprocessing_task.hh,
+	* demo/demat/src/process_args.hh,
+	* demo/demat/src/runner.cc,
+	* demo/demat/src/runner.hh,
+	* demo/demat/ui/main_window.ui: New.
+
+	* demo/shared/src/crop_item.cc,
+	* demo/shared/src/crop_item.hh,
+	* demo/shared/src/image_viewer.cc,
+	* demo/shared/src/image_viewer.hh,
+	* demo/shared/ui/image_viewer.ui: Update according the needs of
+	this new demo.
+
+2010-03-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes in Scribo.
+
+	* binarization/sauvola_ms.hh: Fix compilation issues on MacOS X.
+
+	* core/component_set.hh: Add labeled_image_() member.
+
+	* debug/save_bboxes_image.hh: Add a missing include.
+
+	* preprocessing/split_bg_fg.hh,
+	* primitive/extract/components.hh: Fix namespace ambiguities.
+
+	* src/text_in_article.cc: Rename as...
+	* src/text_in_article_pbm.cc: ... this.
+
+	* src/Makefile.am: Update source file names.
+
+2010-03-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup binarization tools.
+
+	* binarization/binarize.hh,
+	* binarization/simple.hh,
+	* binarization/sauvola_threshold.hh,
+	* src/binarization/simple.cc,
+	* src/binarization/sauvola_pgm.cc,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola.cc: Rename as...
+
+
+	* binarization/local_threshold.hh,
+	* binarization/global_threshold_auto.hh,
+	* binarization/sauvola_threshold_image.hh,
+	* src/binarization/pgm_global_threshold_auto.cc,
+	* src/binarization/pgm_sauvola.cc,
+	* src/binarization/pgm_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola.cc: ... this.
+
+	* binarization/global_threshold.hh,
+	* binarization/sauvola_ms_split.hh,
+	* src/binarization/ppm_fg_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola_ms.cc,
+	* src/binarization/ppm_sauvola_ms_split.cc: New.
+
+	* binarization/internal/first_pass_functor.hh: Fix an include.
+
+	* binarization/sauvola.hh: Update code according to last renaming.
+
+	* binarization/sauvola_ms.hh: Invert threshold test and add
+	documentation.
+
+	* src/binarization/Makefile.am: Add new targets.
+
+	* tests/Makefile.am,
+	* tests/binarization/Makefile.am,
+	* tests/binarization/global_threshold.cc,
+	* tests/binarization/local_threshold.cc: New tests.
+
+2010-03-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update AFP's toolchain according to last changes in core classes.
+
+	* core/object_groups.hh: Add duplicate().
+
+	* primitive/group/apply.hh: Preserve components ids.
+
+	* draw/groups_bboxes.hh,
+	* filter/object_groups_with_holes.hh,
+	* primitive/regroup/from_single_left_link.hh: New.
+
+	* src/text_in_photo_ppm_fast.cc: Make it work with the new core
+	classes. Fix component ids issues when relabeling.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new example for finding text in pictures.
+
+	* src/Makefile.am: Add new target.
+
+	* src/text_in_photo_pbm_fast.cc: New.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	First draft of the dematerialization wizard.
+
+	* demo/shared/icons/Symbols-Delete-icon.png,
+	* demo/shared/icons/accept-icon.png,
+	* demo/shared/icons/close.gif,
+	* demo/shared/icons/crop-icon.png,
+	* demo/shared/icons/image-add-icon.png,
+	* demo/shared/icons/image-edit-icon.png,
+	* demo/shared/icons/image-multi-icon.png,
+	* demo/shared/icons/image-next-icon.png,
+	* demo/shared/icons/image-remove-icon.png,
+	* demo/shared/icons/next-icon.png,
+	* demo/shared/icons/page-down-icon.png,
+	* demo/shared/icons/page-search-icon.png,
+	* demo/shared/icons/rotate_ccw.png,
+	* demo/shared/icons/rotate_cw.png,
+	* demo/shared/icons/search-add-icon.png,
+	* demo/shared/icons/search-remove-icon.png,
+	* demo/shared/shared.qrc,
+	* demo/shared/src/bak/crop_item.cc,
+	* demo/shared/src/bak/crop_item.hh,
+	* demo/shared/src/bak/image_viewer.cc,
+	* demo/shared/src/bak/image_viewer.hh,
+	* demo/shared/src/bak/types.hh,
+	* demo/shared/src/browse_widget.cc,
+	* demo/shared/src/browse_widget.hh,
+	* demo/shared/src/crop_item.cc,
+	* demo/shared/src/crop_item.hh,
+	* demo/shared/src/image_viewer.cc,
+	* demo/shared/src/image_viewer.hh,
+	* demo/shared/src/internal.bak/interactive_scene.cc,
+	* demo/shared/src/internal.bak/interactive_scene.hh,
+	* demo/shared/src/internal.bak/selection_rectangle.cc,
+	* demo/shared/src/internal.bak/selection_rectangle.hh,
+	* demo/shared/src/internal/interactive_scene.cc,
+	* demo/shared/src/internal/interactive_scene.hh,
+	* demo/shared/src/internal/selection_rectangle.cc,
+	* demo/shared/src/internal/selection_rectangle.hh,
+	* demo/shared/src/to_mln_image.hh,
+	* demo/shared/src/types.hh,
+	* demo/shared/ui/browse_widget.ui,
+	* demo/shared/ui/crop_widget.ui,
+	* demo/shared/ui/image_viewer.ui,
+	* demo/shared/ui/interactive_scene.cc,
+	* demo/shared/ui/interactive_scene.hh,
+	* demo/shared/ui/rotate_widget.ui,
+	* demo/wizard/images/dematerialization.png,
+	* demo/wizard/src/crop_page.cc,
+	* demo/wizard/src/crop_page.hh,
+	* demo/wizard/src/crop_widget.cc,
+	* demo/wizard/src/crop_widget.hh,
+	* demo/wizard/src/doc_type.hh,
+	* demo/wizard/src/doc_type_page.cc,
+	* demo/wizard/src/doc_type_page.hh,
+	* demo/wizard/src/doc_type_widget.cc,
+	* demo/wizard/src/doc_type_widget.hh,
+	* demo/wizard/src/load_page.cc,
+	* demo/wizard/src/load_page.hh,
+	* demo/wizard/src/load_widget.cc,
+	* demo/wizard/src/load_widget.hh,
+	* demo/wizard/src/main.cc,
+	* demo/wizard/src/main_window.cc,
+	* demo/wizard/src/main_window.hh,
+	* demo/wizard/src/mln_widgets.cc,
+	* demo/wizard/src/preprocessing_page.cc,
+	* demo/wizard/src/preprocessing_page.hh,
+	* demo/wizard/src/preprocessing_task.hh,
+	* demo/wizard/src/preprocessing_widget.cc,
+	* demo/wizard/src/preprocessing_widget.hh,
+	* demo/wizard/src/process_page.cc,
+	* demo/wizard/src/process_page.hh,
+	* demo/wizard/src/process_widget.cc,
+	* demo/wizard/src/process_widget.hh,
+	* demo/wizard/src/rotate_page.cc,
+	* demo/wizard/src/rotate_page.hh,
+	* demo/wizard/src/rotate_widget.cc,
+	* demo/wizard/src/rotate_widget.hh,
+	* demo/wizard/src/runner.cc,
+	* demo/wizard/src/runner.hh,
+	* demo/wizard/src/test.cc,
+	* demo/wizard/ui/doc_type_widget.ui,
+	* demo/wizard/ui/load_widget.ui,
+	* demo/wizard/ui/main_window.ui,
+	* demo/wizard/ui/preprocessing_widget.ui,
+	* demo/wizard/wizard.pro,
+	* demo/wizard/wizard.qrc: New.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update examples.
+
+	* src/text_in_photo_ppm_fast.cc,
+	* src/debug/show_links_bottom_aligned.cc,
+	* src/debug/show_links_top_aligned.cc: Update calls to routines.
+
+	* src/preprocessing/trash.cc,
+	* src/text_in_photo_ppm_fast_2.cc,
+	* src/preprocessing/split_bg_fg_ms.cc,
+	* src/preprocessing/denoising.cc: Removed.
+
+	* src/preprocessing/denoise.cc,
+	* src/preprocessing/homogeneous_contrast.ccm,
+	* src/preprocessing/subsample.cc: New.
+
+	* src/preprocessing/Makefile.am: Add new files as target.
+
+	* src/preprocessing/split_bg_fg.cc: Fix usage.
+
+	* src/text_in_article.cc: Update processing chain.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve text line merging algorithm.
+
+	* text/merging.hh: Change merge rules and improve integration with
+	Scribo line structures.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a reconstruction algorithm.
+
+	* primitive/internal/rd.hh: New.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* binarization/sauvola_ms.hh: Add a missing include.
+
+	* binarization/sauvola_threshold.hh: Remove debug and useless
+	comments.
+
+	* preprocessing/unskew.hh: Fix invalid guards.
+
+	* primitive/extract/components.hh: Fill image extension.
+
+	* primitive/extract/lines_pattern.hh: Adjust and fill image
+	extension.
+
+	* primitive/extract/lines_v_thick.hh: Fix traces.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new preprocessing routines.
+
+	* preprocessing/denoise.hh,
+	* preprocessing/denoise_bg.hh,
+	* preprocessing/denoise_fg.hh,
+	* preprocessing/homogeneous_contrast.hh,
+	* preprocessing/rotate_90.hh: New routines.
+
+	* fun/v2b/label_to_bool.hh: New function.
+
+	* tests/preprocessing/Makefile.am,
+	* tests/preprocessing/rotate_90.cc: New test.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update code according to last changes in Scribo core classes.
+
+	* draw/bounding_box_links.hh,
+	* primitive/internal/init_link_array.hh,
+	* primitive/internal/is_link_valid.hh,
+	* primitive/link/internal/link_single_dmax_base.hh,
+	* src/afp/link.hh: Update the use of object_link class.
+
+	* draw/bounding_boxes.hh,
+	* filter/objects_with_holes.hh,
+	* src/afp/regroup.hh: Update for_all macro.
+
+	* estim/object_groups_v_thickness.hh,
+	* filter/object_groups_small.hh,
+	* filter/object_groups_v_thickness.hh,
+	* text/recognition.hh: Update access to component_set.
+
+	* filter/object_links_bbox_h_ratio.hh,
+	* filter/object_links_bbox_overlap.hh,
+	* filter/object_links_bbox_ratio.hh,
+	* filter/object_links_bottom_aligned.hh,
+	* filter/object_links_non_aligned_simple.hh,
+	* filter/object_links_top_aligned.hh,
+	* primitive/group/apply.hh,
+	* primitive/group/from_single_link.hh,
+	* primitive/link/merge_double_link.hh,
+	* primitive/link/with_single_right_link_bottom.hh,
+	* primitive/link/with_single_right_link_dmax_ratio.hh,
+	* primitive/link/with_single_right_link_top.hh: Improve routine
+	prototypes.
+
+	* primitive/link/internal/link_functor_base.hh: Make use of
+	separators if exist.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve debug routines in Scribo.
+
+	* debug/bboxes_enlarged_image.hh,
+	* debug/looks_like_a_text_line_image.hh,
+	* debug/mean_and_base_lines_image.hh: New routines.
+
+	* debug/alignment_decision_image.hh,
+	* debug/decision_image.hh,
+	* debug/save_bboxes_image.hh: Update code according to last
+	changes in core classes.
+
+	* debug/usage.hh: Make the description optional.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve core classes in Scribo.
+
+	* core/component_info.hh,
+	* core/component_set.hh: Add new methods and an output operator.
+
+	* core/line_info.hh: Add new methods and improve stats computation.
+
+	* core/line_set.hh: Add new methods.
+
+	* core/macros.hh: Add more specific macros.
+
+	* core/tag/component.hh,
+	* core/tag/line.hh: Add output operators.
+
+2010-03-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Share internal data in groups and links structures.
+
+	* core/object_groups.hh,
+	* core/object_links.hh: Share internal data using a tracked
+	pointer.
+
+2010-03-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* text/merging.hh (scribo): Update code with lastest Theo's
+	changes.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a small tool to recognize text in a binary image.
+
+	* src/text/Makefile.am: New target.
+
+	* src/text/pbm_recognition.cc: New.
+
+	* text/recognition.hh: Add an overload taking an image as
+	argument.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a subsampling algorithm.
+
+	* subsampling/integral.hh: New. Compute a subsample image and an
+	integral image at the same time.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a first draft of a text line merging algorithm.
+
+	* text/merging.hh: New.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add and update examples.
+
+	* src/Makefile.am,
+	* src/binarization/Makefile.am,
+	* src/preprocessing/Makefile.am: Add new targets.
+
+	* src/preprocessing/denoising.cc: New.
+
+	* src/preprocessing/split_bg_fg.cc: Fix usage.
+
+	* src/text_in_article.cc,
+	* src/text_in_photo_ppm_fast.cc: Update code according last
+	changes in core classes.
+
+	* src/text_in_photo_ppm_fast_2.cc: New example.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Small fixes.
+
+	* binarization/sauvola_ms.hh: Remove a useless include.
+
+	* debug/usage.hh: Move description output.
+
+	* io/xml/save_text_lines.hh: Fix invalid xml output.
+
+	* primitive/link/internal/link_ms_dmax_ratio_base.hh,
+	* primitive/link/internal/link_single_dmax_ratio_base.hh: update
+	distance criterion.
+
+	* scribo.mk: Change compilation flags.
+
+	* src/afp/components.hh: Merge data in only one array.
+
+	* tests/filter/Makefile.am,
+	* tests/filter/objects_with_holes.cc: New test.
+
+	* text/clean.hh: use upsampling::hq4x instead of upsampling::hq2x.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Keep updating code according to last changed in core classes.
+
+	* debug/decision_image.hh,
+	* debug/save_linked_bboxes_image.hh,
+	* draw/bounding_boxes.hh,
+	* estim/object_groups_v_thickness.hh,
+	* filter/common/objects_photo.hh,
+	* filter/internal/compute.hh,
+	* filter/object_groups_size_ratio.hh,
+	* filter/object_groups_small.hh,
+	* filter/object_groups_v_thickness.hh,
+	* filter/object_links_bbox_overlap.hh,
+	* filter/object_links_bottom_aligned.hh,
+	* filter/object_links_non_aligned_simple.hh,
+	* filter/objects_thick.hh,
+	* filter/objects_thin.hh,
+	* filter/objects_with_holes.hh,
+	* primitive/group/apply.hh,
+	* primitive/group/from_double_link.hh,
+	* primitive/group/from_single_link.hh,
+	* primitive/link/internal/link_single_dmax_base.hh,
+	* primitive/link/with_single_left_link.hh,
+	* primitive/link/with_single_right_link.hh,
+	* src/afp/link.hh,
+	* src/afp/regroup.hh,
+	* text/recognition.hh: Update the use of core classes. Replace the
+	use of object_image with component_set.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve core classes.
+
+	* core/component_info.hh,
+	* core/component_set.hh,
+	* core/line_info.hh,
+	* core/line_set.hh,
+	* core/object_groups.hh: Add more methods and constructors.
+
+	* core/macros.hh: Add a new macro.
+
+	* core/tag/line.hh: Add more enums.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* io/xml/save_text_lines.hh: New. Add partial support for
+	PageContent XML format.
+
+2010-03-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Introduce new Scribo core classes and start using them.
+
+	* core/component_info.hh,
+	* core/component_set.hh,
+	* core/line_info.hh,
+	* core/line_set.hh,
+	* core/macros.hh,
+	* core/object_groups.hh,
+	* core/object_links.hh,
+	* core/tag/anchor.hh,
+	* core/tag/component.hh,
+	* core/tag/line.hh: New core classes.
+
+	* core/object_image.hh: Remove.
+
+	* core/anchors.hh
+	* primitive/extract/objects.hh: Rename as...
+
+	* primitive/link/internal/compute_anchor.hh,
+	* primitive/extract/components.hh: ... this.
+
+	* draw/bounding_box_links.hh,
+	* filter/object_links_bbox_h_ratio.hh,
+	* filter/object_links_bbox_ratio.hh,
+	* filter/objects_small.hh,
+	* fun/v2b/objects_small_filter.hh,
+	* primitive/group/apply.hh,
+	* primitive/group/from_single_link.hh,
+	* primitive/internal/find_root.hh,
+	* primitive/internal/init_link_array.hh,
+	* primitive/link/compute.hh,
+	* primitive/link/internal/find_link.hh,
+	* primitive/link/internal/find_several_links.hh,
+	* primitive/link/internal/link_functor_base.hh,
+	* primitive/link/internal/link_several_dmax_base.hh,
+	* primitive/link/internal/link_single_dmax_base.hh,
+	* primitive/link/internal/link_single_dmax_ratio_base.hh,
+	* primitive/link/merge_double_link.hh,
+	* primitive/link/with_single_left_link_dmax_ratio.hh,
+	* primitive/link/with_single_right_link_bottom.hh,
+	* primitive/link/with_single_right_link_dmax_ratio.hh,
+	* primitive/link/with_single_right_link_top.hh: Make use of
+	the new core classes.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add anchor support in debug routines.
+
+	* debug/alignment_decision_image.hh,
+	* debug/links_decision_image.hh,
+	* debug/save_linked_bboxes_image.hh,
+	* draw/bounding_box_links.hh: Make use of anchor points to
+	draw debug outputs.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new link filters.
+
+	* filter/object_links_non_aligned_simple.hh: Handle new
+	cases.
+
+	* filter/object_links_left_aligned.hh,
+	* filter/object_links_right_aligned.hh: New filters.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve object linking backend.
+
+	* primitive/internal/find_left_link.hh,
+	* primitive/internal/find_right_link.hh,
+	* primitive/internal/is_invalid_link.hh: Remove.
+
+	* primitive/link/internal/compute_anchor.hh,
+	* primitive/link/internal/link_ms_dmax_base.hh,
+	* primitive/link/internal/link_ms_dmax_ratio_base.hh,
+	* primitive/link/internal/link_single_dmax_base.hh,
+	* primitive/link/internal/link_single_dmax_ratio_base.hh,
+	* primitive/link/with_single_down_link.hh,
+	* primitive/link/with_single_left_link.hh,
+	* primitive/link/with_single_left_link_dmax_ratio.hh,
+	* primitive/link/with_single_right_link.hh,
+	* primitive/link/with_single_right_link_dmax_ratio.hh,
+	* primitive/link/with_single_up_link.hh: Introduce the
+	anchor concept and make use of it.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* filter/objects_with_holes.hh: New component filter.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* draw/bounding_boxes.hh: Do not draw box centers anymore.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add dedicated routines for AFP's use case.
+
+	* src/afp/components.hh,
+	* src/afp/link.hh,
+	* src/afp/regroup.hh: New.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new tools in Scribo.
+
+	* src/preprocessing/Makefile.am,
+	* src/filter/Makefile.am,
+	* src/debug/Makefile.am: Add new targets.
+
+	* src/debug/show_info_median_inter_characters.cc,
+	* src/debug/show_info_x_height.cc,
+	* src/debug/show_links_single_down.cc,
+	* src/debug/show_links_single_down_left_aligned.cc,
+	* src/debug/show_links_single_down_right_aligned.cc,
+	* src/debug/show_links_single_up.cc,
+	* src/debug/show_links_single_up_left_aligned.cc,
+	* src/debug/show_links_single_up_right_aligned.cc,
+	* src/filter/objects_with_holes.cc,
+	* src/filter/objects_with_holes_pgm.cc,
+	* src/pbm_lines_in_doc.cc,
+	* src/preprocessing/split_bg_fg_ms.cc,
+	* src/text_in_article.cc,
+	* src/text_in_photo_ppm_fast.cc: New tools.
+
+	* src/debug/show_left_right_links_validation.cc: Rename as...
+	* src/debug/show_links_left_right_links_validation.cc: ...this.
+
+	* src/debug/show_links_bbox_h_ratio.cc: Add a missing argument.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/text_in_photo_ppm.cc: Improve output.
+
+2010-02-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup and avoid warnings in Sauvola related files.
+
+	* binarization/sauvola_ms.hh,
+	* binarization/sauvola_threshold.hh,
+	* canvas/integral_browsing.hh,
+	* src/binarization/sauvola_ms.cc,
+	* src/binarization/sauvola_pgm.cc,x
+	* subsampling/integral_single_image.hh: Cleanup and avoir
+	warnings.
+
+2009-12-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new test for object_image.
+
+	* tests/Makefile.am,
+	* tests/core/Makefile.am: Update build system.
+
+	* tests/core/object_image.cc: New test.
+
+2009-12-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* primitive/extract/objects.hh: Compute and store mass centers.
+
+2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix object links filters.
+
+	* filter/object_links_bottom_aligned.hh,
+	* filter/object_links_center_aligned.hh,
+	* filter/object_links_non_aligned_simple.hh,
+	* filter/object_links_top_aligned.hh: Pass the proper dimension as
+	routine argument.
+
+2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup Sauvola's binarization code.
+
+	* binarization/sauvola_threshold.hh,
+	* binarization/sauvola.hh: Use fun::v2v::rgb_to_int_u8.
+
+	* binarization/sauvola_ms.hh: New. Sauvola multi-scale routine.
+
+	* src/binarization/sauvola.cc: Make the window size a program
+	argument.
+
+	* src/binarization/sauvola_ms.cc: Use Sauvola multi-scale routine.
+
+2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* core/object_image.hh: Make use of mln::labeled_image_base.
+
+2009-12-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve linking routines.
+
+	* core/anchors.hh: New. Add anchor types.
+
+	* filter/objects_thin.hh: Use filter::internal::compute.
+
+	* primitive/link/internal/find_several_links.hh,
+	* primitive/link/internal/find_link.hh,
+	* primitive/link/compute.hh: Update functor interface in order to
+	specify anchors.
+
+	* primitive/link/compute_several.hh: Fix an invalid namespace.
+
+	* primitive/link/internal/anchors_3.hh: Move...
+
+	* primitive/link/internal/compute_anchor.hh: ... here.
+
+	* primitive/link/internal/link_functor_base.hh: Use anchor type.
+
+	* primitive/link/internal/link_several_dmax_base.hh: New.
+
+	* primitive/link/internal/link_center_dmax_base.hh,
+	* primitive/link/internal/link_center_dmax_ratio_base.hh: Removed.
+
+	* primitive/link/with_several_right_links_overlap.hh: Fix includes.
+
+	* primitive/link/with_single_right_link_bottom.hh,
+	* primitive/link/with_single_right_link_top.hh,
+	* primitive/link/with_single_left_link.hh,
+	* primitive/link/with_single_right_link.hh: Use
+	link_single_dmax_base functor.
+
+	* src/debug/show_links_several_right_overlap.cc,
+	* src/debug/show_links_single_left.cc,
+	* src/debug/show_links_single_left_dmax_ratio.cc,
+	* src/debug/show_links_single_right.cc,
+	* src/debug/show_links_single_right_dmax_ratio.cc: Update functor
+	interface.
+
+2009-12-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve Sauvola Multi-scale.
+
+	* binarization/internal/first_pass_functor.hh: Use
+	sauvola_threshold routine.
+
+	* binarization/sauvola_threshold.hh: Remove debug and fix invalid
+	read in integral image.
+
+	* canvas/integral_browsing.hh,
+	* subsampling/integral_single_image.hh: Fix stats computation.
+
+	* src/binarization/sauvola_ms.cc: Fix window parameter and make
+	debug output optional.
+
+2009-12-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Optimize Sauvola's multiscale binarization.
+
+	* core/init_integral_image.hh: New.
+
+	* src/binarization/sauvola_ms.cc: Optimize and make it more
+	robust.
+
+	* canvas/integral_browsing.hh: New canvas to browse and compute
+	data in an integral image.
+
+	* binarization/internal/first_pass_functor.hh: New functor to be
+	used in the integral browsing.
+
+	* binarization/sauvola_threshold.hh: Add new overloads.
+
+	* subsampling/integral_single_image.hh: Subsample an image and
+	compute integral images at the same time.
+
 2010-07-31  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix Scribo's dependencies w.r.t. libraries.
@@ -125,17 +2443,17 @@
 
 	Add a new example in Scribo.
 
-	* scribo/src/primitive/extract/Makefile.am: Add a new target.
+	* src/primitive/extract/Makefile.am: Add a new target.
 
-	* scribo/src/primitive/extract/lines_pattern.cc: New.
+	* src/primitive/extract/lines_pattern.cc: New.
 
 2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	First draft of multiscale Sauvola's binarization.
 
-	* scribo/src/binarization/Makefile.am: Add new target.
+	* src/binarization/Makefile.am: Add new target.
 
-	* scribo/src/binarization/sauvola_ms.cc: New.
+	* src/binarization/sauvola_ms.cc: New.
 
 2009-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 

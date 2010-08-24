@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -152,6 +153,8 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
     const red_t& red = red_t();
 
     const green_t& green = green_t();
@@ -179,6 +182,8 @@ namespace mln
     const yellow_t& yellow = yellow_t();
 
     const olive_t& olive = olive_t();
+
+#  endif
 
 # endif
 

@@ -53,9 +53,12 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
     std::stack<std::clock_t> start_times;
     std::stack<std::string>  scopes;
 
+#  endif // !MLN_WO_GLOBAL_VARS
 
     inline
     void entering(const std::string& scope)

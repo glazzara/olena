@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -29,6 +30,8 @@
 /// \file
 ///
 /// Define diff_abs routine.
+///
+/// \fixme Do we want a specific version for vectorial types?
 
 
 namespace mln

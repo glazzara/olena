@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -36,7 +37,7 @@
 #include <mln/literal/colors.hh>
 #include <mln/util/array.hh>
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/primitive/group/apply.hh>
 #include <scribo/primitive/link/with_several_left_links.hh>
 #include <scribo/primitive/link/with_several_right_links.hh>
@@ -71,46 +72,47 @@ int main(int argc, char* argv[])
   value::label_16 nbboxes;
   typedef image2d<value::label_16> L;
   std::cout << "extract bboxes" << std::endl;
-  typedef object_image(L) text_t;
-  text_t text = scribo::primitive::extract::objects(input, c8(), nbboxes);
+  component_set<L>
+    comps = scribo::primitive::extract::components(input, c8(), nbboxes);
 
 
   std::cout << "Remove small components" << std::endl;
-  text = filter::objects_small(text,4);
+  comps = filter::components_small(comps, 4);
 
   std::cout << "Group with left link" << std::endl;
   object_links<L> left_link
-	= primitive::link::with_several_left_links(text, 30);
+	= primitive::link::with_several_left_links(comps, 30);
 
   std::cout << "Group with right link" << std::endl;
   object_links<L> right_link
-	= primitive::link::with_several_right_links(text, 30);
+	= primitive::link::with_several_right_links(comps, 30);
 
   std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
 
   scribo::debug::save_linked_bboxes_image(input,
-					  text, left_link, right_link,
+					  left_link, right_link,
 					  literal::red, literal::cyan, literal::yellow,
 					  literal::green,
+					  anchor::Center,
 					  scribo::make::debug_filename("links.ppm"));
 
   // With validation.
   std::cout << "Group from double link" << std::endl;
 
   object_groups<L> groups
-    = primitive::group::from_double_link(text, left_link, right_link);
+    = primitive::group::from_double_link(left_link, right_link);
 
-  text_t grouped_text = primitive::group::apply(text, groups);
+  component_set<L> grouped_comps = primitive::group::apply(groups);
 
   io::ppm::save(mln::labeling::colorize(value::rgb8(),
-				     grouped_text,
-				     grouped_text.nlabels()),
+					grouped_comps.labeled_image(),
+					grouped_comps.nelements()),
 		scribo::make::debug_filename("label_color.ppm"));
 
-  std::cout << "AFTER double grouping - nbboxes = " << grouped_text.bboxes().nelements() << std::endl;
+  std::cout << "AFTER double grouping - nbboxes = " << grouped_comps.nelements() << std::endl;
 
-  scribo::debug::save_bboxes_image(input, grouped_text.bboxes(),
-				   literal::red,
-				   scribo::make::debug_filename("bboxes.ppm"));
+  scribo::debug::save_bboxes_image(input, grouped_comps,
+				   scribo::make::debug_filename("bboxes.ppm"),
+				   literal::red);
 
 }

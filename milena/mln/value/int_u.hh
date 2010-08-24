@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,6 +42,7 @@
 # include <mln/trait/value_.hh>
 # include <mln/debug/format.hh>
 
+# include <mln/value/internal/make_generic_name.hh>
 
 
 namespace mln
@@ -98,13 +100,37 @@ namespace mln
 
       static const char* name()
       {
-	static std::string s = std::string("int_u").append(1, n + '0');
+	static std::string
+	  s = mln::value::internal::make_generic_name("int_u", n);
 	return s.c_str();
       }
 
     };
 
   } // end of namespace mln::trait
+
+
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      // int_u -> unsigned.
+      template <unsigned n>
+      void
+      from_to_(const value::int_u<n>& from, unsigned& to_);
+
+
+      // int_u -> bool.
+      template <unsigned n>
+      void
+      from_to_(const value::int_u<n>& from, bool& to_);
+
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
 
 
 
@@ -178,8 +204,42 @@ namespace mln
     template <unsigned n>
     std::istream& operator>>(std::istream& istr, int_u<n>& i);
 
+  } // end of namespace mln::value
 
 # ifndef MLN_INCLUDE_ONLY
+
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      // int_u -> unsigned.
+      template <unsigned n>
+      inline
+      void
+      from_to_(const value::int_u<n>& from, unsigned& to_)
+      {
+	to_ = from;
+      }
+
+      // int_u -> bool.
+      template <unsigned n>
+      inline
+      void
+      from_to_(const value::int_u<n>& from, bool& to_)
+      {
+	to_ = (from != 0u);
+      }
+
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
+
+
+  namespace value
+  {
 
     template <unsigned n>
     inline
@@ -277,11 +337,12 @@ namespace mln
       return istr >> i.handle_();
     }
 
-# endif // ! MLN_INCLUDE_ONLY
-
   } // end of namespace mln::value
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
 
 #endif // ! MLN_VALUE_INT_U_HH
+

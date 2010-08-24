@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -58,22 +59,22 @@ int main(int argc, char* argv[])
     return scribo::debug::usage(argv,
 				"Remove tables from a binary image.",
 				"input.pbm output.pbm",
-				args_desc,
-				"A binary image without tables.");
+				args_desc);
 
   trace::entering("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
-  typedef image2d<label_16> lbl_t;
+  typedef value::label_16 V;
+  typedef image2d<V> L;
 
   /// Extracting vertical and horizontal lines.
-  label_16 nhlines, nvlines;
-  object_image(lbl_t)
+  V nhlines, nvlines;
+  component_set<L>
     lbl_v = primitive::extract::lines_v_discontinued(input, c8(),
 						     nvlines, 51, 8);
-  object_image(lbl_t)
+  component_set<L>
     lbl_h = primitive::extract::lines_h_discontinued(input, c8(),
 						     nhlines, 51, 6);
 

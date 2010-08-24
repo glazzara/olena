@@ -64,7 +64,11 @@ namespace mln
       return 0;
     }
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
     const zero_t& zero = zero_t();
+
+#  endif // !MLN_GLOBAL_VARS
 
 # endif // ! MLN_INCLUDE_ONLY
 

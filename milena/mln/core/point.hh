@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,6 +36,7 @@
 /// second there is a room for the couple of methods (in the
 /// subject_impl specializations defined in core/alias/point*d.hh).
 
+# include <cmath>
 # include <mln/core/def/coord.hh>
 # include <mln/core/concept/proxy.hh>
 # include <mln/core/concept/gpoint.hh>
@@ -72,6 +74,14 @@ namespace mln
       template <typename G, typename C1, typename C2>
       void from_to_(const point<G,C1>& from, point<G,C2>& to);
 
+      template <unsigned n, typename C1, typename G, typename C2>
+      void
+      from_to_(const mln::algebra::vec<n,C1>& from, point<G,C2>& to);
+
+      template <unsigned n, typename C1, typename G>
+      void
+      from_to_(const mln::algebra::vec<n,C1>& from, point<G,C1>& to);
+
     } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
@@ -85,8 +95,9 @@ namespace mln
     template <typename G, typename C>
     struct vec_of_point
     {
-      typedef algebra::vec<G::dim, float> ret;
+      typedef mln::algebra::vec<G::dim, float> ret;
     };
+
   }
 
   /// Generic point class.
@@ -120,10 +131,10 @@ namespace mln
     typedef C coord;
 
     /// Algebra vector (vec) associated type.
-    typedef algebra::vec<G::dim, float> vec;
+    typedef mln::algebra::vec<G::dim, float> vec;
 
     /// Algebra hexagonal vector (hvec) associated type.
-    typedef algebra::h_vec<G::dim, float> h_vec;
+    typedef mln::algebra::h_vec<G::dim, float> h_vec;
 
     /// Read-only access to the \p i-th coordinate value.
     /// \param[in] i The coordinate index.
@@ -148,7 +159,10 @@ namespace mln
 
     /// Constructor from an algebra vector.
     template <typename C2>
-    point(const algebra::vec<dim,C2>& v);
+    point(const mln::algebra::vec<dim,C2>& v);
+
+    point(const mln::algebra::vec<dim,C>& v);
+
 
     /// \{ Constructors with different numbers of arguments
     /// (coordinates) w.r.t. the dimension.
@@ -203,8 +217,11 @@ namespace mln
     /// Point with all coordinates set to the mininum value.
     static const point<G,C>& minus_infty();
 
+    /// Return the underlying vector storing the coordinates.
+    mln::algebra::vec<G::dim, C>& hook_coord_();
+
   protected:
-    algebra::vec<G::dim, C> coord_;
+    mln::algebra::vec<G::dim, C> coord_;
   };
 
   namespace internal
@@ -233,7 +250,7 @@ namespace mln
 
   /// FIXME...
   template <typename G, typename C>
-  const algebra::vec<point<G,C>::dim - 1, C>& cut_(const point<G,C>& p);
+  const mln::algebra::vec<point<G,C>::dim - 1, C>& cut_(const point<G,C>& p);
 
   template <typename C>
   const util::yes& cut_(const point<grid::tick,C>& p);
@@ -241,6 +258,49 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+
+  namespace internal
+  {
+
+    template <typename C, typename C2>
+    inline
+    C
+    convert_data_(metal::bool_<false>, const C2& v)
+    {
+      return static_cast<C>(v);
+    }
+
+    template <typename C, typename C2>
+    inline
+    C
+    convert_data_(metal::bool_<true>, const C2& v)
+    {
+      return static_cast<C>(round(v));
+    }
+
+    template <typename C, typename C2>
+    inline
+    C
+    convert_data(const C2& v)
+    {
+      // If (C != float && C != double) && (C2 == float || C2 == double)
+      // => We want to round the value.
+      // Otherwise we can just statically cast.
+      //
+      return convert_data_<C>(
+	typename mlc_and(
+	  mlc_and(mlc_is_not(C,float),
+		  mlc_is_not(C,double)),
+	  mlc_or(mlc_is(C2,float),
+		 mlc_is(C2, double)))::eval(), v);
+    }
+
+
+
+  } // end of namespace mln::internal
+
+
 
   namespace convert
   {
@@ -254,8 +314,56 @@ namespace mln
       from_to_(const point<G,C1>& from, point<G,C2>& to)
       {
 	mlc_converts_to(C1,C2)::check();
-	to = point<G,C2>(from.to_vec());
+	enum { dim = G::dim };
+
+	for (unsigned i = 0; i < dim; ++i)
+	  to[i] = mln::internal::convert_data<C2>(from[i]);
       }
+
+
+      template <unsigned n, typename C1, typename G, typename C2>
+      inline
+      void
+      from_to_(const mln::algebra::vec<n,C1>& from, point<G,C2>& to)
+      {
+	mlc_converts_to(C1, C2)::check();
+	enum { dim = G::dim };
+	mlc_bool(G::dim == n)::check();
+
+	unsigned j = 0;
+	//FIXME: to be improved while adding a conversion routine.
+	if (dim < 3)
+	  to.hook_coord_() = from;
+	else
+	{
+	  for (unsigned i = dim - 2; i < dim; ++i)
+	    to[i]   = mln::internal::convert_data<C2>(from[j++]);
+	  for (unsigned i = 2; i < dim; ++i, ++j)
+	    to[i-j] = mln::internal::convert_data<C2>(from[j]);
+	}
+      }
+
+      template <unsigned n, typename C1, typename G>
+      inline
+      void
+      from_to_(const mln::algebra::vec<n,C1>& from, point<G,C1>& to)
+      {
+	enum { dim = G::dim };
+	mlc_bool(G::dim == n)::check();
+
+	unsigned j = 0;
+	//FIXME: to be improved while adding a conversion routine.
+	if (dim < 3)
+	  to.hook_coord_() = from;
+	else
+	{
+	  for (unsigned i = dim - 2; i < dim; ++i)
+	    to[i]   = from[j++];
+	  for (unsigned i = 2; i < dim; ++i, ++j)
+	    to[i-j] = from[j];
+	}
+      }
+
 
     } // end of namespace mln::convert::over_load
 
@@ -306,21 +414,19 @@ namespace mln
   template <typename G, typename C>
   template <typename C2>
   inline
-  point<G,C>::point(const algebra::vec<dim,C2>& v)
+  point<G,C>::point(const mln::algebra::vec<dim,C2>& v)
   {
-    mlc_converts_to(C2, C)::check();
-    unsigned j = 0;
-    //FIXME: to be improved while adding a conversion routine.
-    if (dim < 3)
-      coord_ = v;
-    else
-    {
-      for (unsigned i = dim - 2; i < dim; ++i)
-	coord_[i]   = static_cast<C>(v[j++]);
-      for (unsigned i = 2; i < dim; ++i, ++j)
-	coord_[i-j] = static_cast<C>(v[j]);
-    }
+    convert::over_load::from_to_(v, *this);
   }
+
+
+  template <typename G, typename C>
+  inline
+  point<G,C>::point(const mln::algebra::vec<dim,C>& v)
+  {
+    convert::over_load::from_to_(v, *this);
+  }
+
 
   template <typename G, typename C>
   inline
@@ -457,7 +563,7 @@ namespace mln
     //FIXME: to be improved.
     if (dim > 2)
     {
-      algebra::vec<G::dim, float> tmp;
+      mln::algebra::vec<G::dim, float> tmp;
       unsigned j = 0;
       for (unsigned i = dim - 2; i < dim; ++i)
 	tmp[j++] = coord_[i];
@@ -475,7 +581,7 @@ namespace mln
   typename point<G,C>::h_vec
   point<G,C>::to_h_vec() const
   {
-    algebra::h_vec<G::dim, float> tmp;
+    mln::algebra::h_vec<G::dim, float> tmp;
 
     //FIXME: to be improved.
     if (dim == 1)
@@ -514,6 +620,14 @@ namespace mln
     return the_;
   }
 
+  template <typename G, typename C>
+  inline
+  mln::algebra::vec<G::dim, C>&
+  point<G,C>::hook_coord_()
+  {
+    return coord_;
+  }
+
   namespace internal
   {
 
@@ -544,10 +658,10 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  const algebra::vec<point<G,C>::dim - 1, C>&
+  const mln::algebra::vec<point<G,C>::dim - 1, C>&
   cut_(const point<G,C>& p)
   {
-    return *(algebra::vec<point<G,C>::dim - 1, C>*)(& p.to_vec());
+    return *(mln::algebra::vec<point<G,C>::dim - 1, C>*)(& p.to_vec());
   }
 
   template <typename C>

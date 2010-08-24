@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,27 +44,29 @@ const char *args_desc[][2] =
 int main(int argc, char *argv[])
 {
   using namespace mln;
+  using namespace scribo;
 
   if (argc != 4)
     return scribo::debug::usage(argv,
 				"Extract thick vertical lines",
 				"input.pbm length output.pbm",
-				args_desc,
-				"A binary image of vertical lines.");
+				args_desc);
 
   trace::entering("main");
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
-  value::label_16 nlines;
-  image2d<bool> lines
-    = data::convert(bool(),
-		     scribo::primitive::extract::lines_v_thick(input,
-							       c8(),
-							       nlines,
-							       atoi(argv[2])));
-  io::pbm::save(lines, argv[3]);
+  typedef value::label_16 V;
+  V nlines;
+  typedef image2d<V> L;
+
+  component_set<L>
+    lines = scribo::primitive::extract::lines_v_thick(input,
+						      c8(),
+						      nlines,
+						      atoi(argv[2]));
+  io::pbm::save(data::convert(bool(), lines.labeled_image()), argv[3]);
 
   trace::exiting("main");
 }

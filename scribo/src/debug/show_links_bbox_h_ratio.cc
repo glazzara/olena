@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,7 +38,7 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/ppm/save.hh>
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/primitive/link/with_single_right_link.hh>
 #include <scribo/primitive/link/with_single_left_link.hh>
 #include <scribo/filter/object_links_bbox_h_ratio.hh>
@@ -52,6 +53,7 @@ const char *args_desc[][2] =
 {
   { "input.pbm", "A binary image. True for objects and False for the background." },
   { "height_ratio", "Min height ratio between two bboxes. (common value : 2)" },
+  { "max_dist", "Max neighborhood lookup distance (default 30)" },
   {0, 0}
 };
 
@@ -62,12 +64,11 @@ int main(int argc, char* argv[])
   using namespace scribo::primitive::internal;
   using namespace mln;
 
-  if (argc != 4)
+  if (argc != 4 && argc != 5)
     return scribo::debug::usage(argv,
 				"Show valid or invalid links according the bboxes height ratio.",
-				"input.pbm height_ratio output.ppm",
-				args_desc,
-				"A color image. Valid links are drawn in green, invalid ones in red.");
+				"input.pbm height_ratio output.ppm <max_dist>",
+				args_desc);
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
@@ -75,17 +76,20 @@ int main(int argc, char* argv[])
   // Finding objects.
   value::label_16 nbboxes;
   typedef image2d<value::label_16> L;
-  object_image(L) objects
-    = scribo::primitive::extract::objects(input, c8(), nbboxes);
+  component_set<L> comps
+    = scribo::primitive::extract::components(input, c8(), nbboxes);
 
+  unsigned max_dist = 30;
+  if (argc == 5)
+    max_dist = atoi(argv[4]);
 
   // Finding right links.
   object_links<L> right_links
-    = primitive::link::with_single_right_link(objects);
+    = primitive::link::with_single_right_link(comps, max_dist);
 
   // Filtering.
   object_links<L> hratio_filtered_links
-    = filter::object_links_bbox_h_ratio(objects, right_links, atof(argv[2]));
+    = filter::object_links_bbox_h_ratio(right_links, atof(argv[2]));
 
 
   // Debug image.

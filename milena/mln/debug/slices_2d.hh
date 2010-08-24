@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -132,27 +133,27 @@ namespace mln
 	return n;
       }
 
-      void slices2d_helper(float nslis, float nrows, float ncols,
+      void slices2d_helper(float nslices, float nrows, float ncols,
 			   float ratio_hv,
 			   unsigned& n_horizontal,
 			   unsigned& n_vertical)
       {
 	if (ratio_hv > 1.f)
 	  {
-	    float n_v = std::sqrt(nslis * ncols / ratio_hv / nrows);
+	    float n_v = std::sqrt(nslices * ncols / ratio_hv / nrows);
 	    n_vertical = internal::round_up(n_v);
-	    float n_h = nslis / float(n_vertical);
+	    float n_h = nslices / float(n_vertical);
 	    n_horizontal = internal::round_up(n_h);
 	  }
 	else
 	  {
-	    float n_h = std::sqrt(nrows * nslis * ratio_hv / ncols);
+	    float n_h = std::sqrt(nrows * nslices * ratio_hv / ncols);
 	    n_horizontal = internal::round_up(n_h);
-	    float n_v = nslis / float(n_horizontal);
+	    float n_v = nslices / float(n_horizontal);
 	    n_vertical = internal::round_up(n_v);
 	  }
       }
-      
+
     } // end of namespace mln::debug::internal
 
 

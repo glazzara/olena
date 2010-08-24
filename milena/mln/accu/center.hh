@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -72,6 +73,9 @@ namespace mln
 
       /// Check whether this accu is able to return a result.
       bool is_valid() const;
+
+      /// Return the number of sites taken in consideration.
+      unsigned nsites() const;
 
     protected:
       algebra::vec<P::dim, mln_sum(mln_coord(P))> center_;
@@ -156,6 +160,14 @@ namespace mln
     center<P,V>::is_valid() const
     {
       return nsites_ > 0;
+    }
+
+    template <typename P, typename V>
+    inline
+    unsigned
+    center<P,V>::nsites() const
+    {
+      return nsites_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

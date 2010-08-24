@@ -1,4 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -14,12 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-include $(top_srcdir)/scribo/scribo.mk
+if HAVE_QT
 
-.PHONY : demo
+SUBDIRS = review viewer
 
-Makefile.demo:
-	qmake-qt4 $(srcdir)/demo/demo.pro -o Makefile.demo
+endif HAVE_QT
 
-demo: Makefile.demo
-	make -f Makefile.demo all

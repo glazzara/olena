@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -54,7 +54,7 @@ int main()
     // which calls  canvas::labeling_video  and its generic dispatch
     // leads to  canvas::impl::generic::labeling.
 
-    labeling::impl::value_functor<I> f(pic, true);
+    labeling::impl::value_functor<I,unsigned> f(pic, true);
 
     unsigned n_;
     ref = canvas::labeling::impl::generic::labeling(pic, nbh, n_,

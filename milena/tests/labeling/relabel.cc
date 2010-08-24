@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -26,7 +27,6 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/labeling/relabel.hh>
 #include <mln/value/label_16.hh>
-#include <mln/debug/println.hh>
 
 
 struct not_to_remove : public mln::Function_v2b< not_to_remove >
@@ -76,11 +76,9 @@ int main()
   }
 
   {
-    label_16 new_nlabels;
     labeling::relabel_inplace(lbl,
 			      nlabels,
 			      not_to_remove());
-    mln_assertion(nlabels == 2u);
     mln_piter_(image2d<label_16>) p(lbl.domain());
     for_all(p)
       mln_assertion(is_valid(lbl(p)));

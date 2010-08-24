@@ -17,8 +17,11 @@
 include $(top_srcdir)/scribo/tests/tests.mk
 
 check_PROGRAMS =				\
+  objects_with_holes 				\
   small_and_large_bboxes
 
+
+objects_with_holes_SOURCES = objects_with_holes.cc
 small_and_large_bboxes_SOURCES = small_and_large_bboxes.cc
 
 TESTS = $(check_PROGRAMS)

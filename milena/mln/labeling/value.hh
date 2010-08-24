@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -73,7 +73,7 @@ namespace mln
 		  L& nlabels)
       {
 	mln_precondition(exact(input).is_valid());
-	// mln_precondition(exact(nbh).is_valid());
+	mln_precondition(exact(nbh).is_valid());
 
 	(void) input;
 	(void) val;
@@ -90,7 +90,7 @@ namespace mln
 
       // Generic functor.
 
-      template <typename I>
+      template <typename I, typename L>
       struct value_functor
       {
 	typedef mln_psite(I) P;
@@ -108,9 +108,12 @@ namespace mln
 	bool handles(const P& p) const		  { return input(p) == val; }
 	bool equiv(const P& n, const P&) const	  { return input(n) == val; }
 	bool labels(const P&) const		  { return true; }
-	void do_no_union(const P&, const P&)  {}
+	void do_no_union(const P&, const P&)      {}
 	void init_attr(const P&)		  {}
 	void merge_attr(const P&, const P&)	  {}
+	void set_new_label(const P& p, const L& l){}
+	void set_label(const P& p, const L& l)    {}
+	void finalize()                           {}
 
 	// Fastest implementation
 
@@ -121,6 +124,9 @@ namespace mln
 	void do_no_union_(unsigned, unsigned)	  {}
 	void init_attr_(unsigned)		  {}
 	void merge_attr_(unsigned, unsigned)	  {}
+	void set_new_label_(unsigned, const L&)   {}
+	void set_label_(unsigned, const L&)       {}
+	void finalize_()                          {}
 
 	// end of Requirements.
 
@@ -148,7 +154,7 @@ namespace mln
       internal::value_tests(input, val, nbh, nlabels);
 
       mln_ch_value(I, L) output;
-      impl::value_functor<I> f(input, val);
+      impl::value_functor<I,L> f(input, val);
       output = canvas::labeling::video(input, nbh, nlabels, f);
 
       trace::exiting("labeling::value");

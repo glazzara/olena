@@ -1,4 +1,5 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -18,28 +19,61 @@ include $(top_srcdir)/scribo/scribo.mk
 
 SUBDIRS =					\
   binarization 					\
+  contest 					\
   debug 					\
   primitive 					\
   filter 					\
   misc 						\
-  multi_scale 					\
+  postprocessing 				\
   preprocessing 				\
-  table 					\
   text
 
-bin_PROGRAMS = 				\
-  text_in_photo 			\
-  text_in_photo_ppm 			\
-  text_in_photo_invert
+# Disabled for the moment:
+#  table
 
 
-text_in_photo_SOURCES = text_in_photo.cc
-text_in_photo_ppm_SOURCES = text_in_photo_ppm.cc
-text_in_photo_invert_SOURCES = text_in_photo_invert.cc
-
+bin_PROGRAMS =
 
 
 if HAVE_TESSERACT
+
+    bin_PROGRAMS	+= pbm_text_in_doc
+    pbm_text_in_doc_CPPFLAGS = $(AM_CPPFLAGS) -g -ggdb \
+			       $(TESSERACT_CPPFLAGS) \
+			       $(TIFF_CPPFLAGS)
+    pbm_text_in_doc_LDFLAGS  = $(AM_LDFLAGS) -g -ggdb\
+			       $(TESSERACT_LDFLAGS) \
+			       $(TIFF_LDFLAGS) \
+			       -lpthread
+
+    pbm_text_in_doc_SOURCES = pbm_text_in_doc.cc
+
+endif HAVE_TESSERACT
+
+
+if HAVE_MAGICKXX
+
+    bin_PROGRAMS	+= text_in_doc_preprocess
+    text_in_doc_preprocess_CPPFLAGS = $(AM_CPPFLAGS) \
+				      $(MAGICKXX_CPPFLAGS)
+    text_in_doc_preprocess_LDFLAGS  = $(AM_LDFLAGS) \
+			      	      -lpthread \
+				      $(MAGICKXX_LDFLAGS)
+
+    text_in_doc_preprocess_SOURCES = text_in_doc_preprocess.cc
+
+
+
+    bin_PROGRAMS	+= text_in_picture
+    text_in_picture_SOURCES = text_in_picture.cc
+    text_in_picture_CPPFLAGS = $(AM_CPPFLAGS) \
+			       $(MAGICKXX_CPPFLAGS)
+    text_in_picture_LDFLAGS  = $(AM_LDFLAGS) \
+		      	       -lpthread \
+			       $(MAGICKXX_LDFLAGS)
+
+if HAVE_TESSERACT
+
 if HAVE_TIFF
 
     bin_PROGRAMS 	+= text_in_doc
@@ -63,4 +97,7 @@ if HAVE_TIFF
 			   -lpthread
 
 endif HAVE_TIFF
+
 endif HAVE_TESSERACT
+
+endif HAVE_MAGICKXX

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,7 +38,7 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/ppm/save.hh>
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/primitive/link/with_single_right_link_top.hh>
 #include <scribo/filter/object_links_top_aligned.hh>
 
@@ -48,7 +49,9 @@
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image. True for objects and False for the background." },
+  { "input.pbm", "A binary image. True for objects and False for the "
+    "background." },
+  { "max_dist", "Maximum distance lookup (common value 45)" },
   { "max_alpha", "Max angle between two object tops. (common value : 5)" },
   {0, 0}
 };
@@ -60,30 +63,30 @@ int main(int argc, char* argv[])
   using namespace scribo::primitive::internal;
   using namespace mln;
 
-  if (argc != 4)
+  if (argc != 5)
     return scribo::debug::usage(argv,
-				"Show valid or invalid links according the horizontal alignment (based on top line).",
-				"input.pbm max_alpha output.ppm",
-				args_desc,
-				"A color image. Valid links are drawn in green, invalid ones in red.");
+				"Show valid or invalid links according the "
+				"horizontal alignment (based on top line).",
+				"input.pbm max_dist max_alpha output.ppm",
+				args_desc);
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);
 
-  // Finding objects.
+  // Finding components.
   value::label_16 nbboxes;
   typedef image2d<value::label_16> L;
-  object_image(L) objects
-    = scribo::primitive::extract::objects(input, c8(), nbboxes);
+  component_set<L> components
+    = scribo::primitive::extract::components(input, c8(), nbboxes);
 
 
   // Finding right links.
   object_links<L> right_links
-    = primitive::link::with_single_right_link_top(objects);
+    = primitive::link::with_single_right_link_top(components, atoi(argv[2]));
 
   // Filtering.
   object_links<L> filtered_links
-    = filter::object_links_top_aligned(objects, right_links, atof(argv[2]));
+    = filter::object_links_top_aligned(right_links, atof(argv[3]));
 
 
   // Debug image.
@@ -91,7 +94,8 @@ int main(int argc, char* argv[])
     = scribo::debug::alignment_decision_image(input,
 					      right_links,
 					      filtered_links,
-					      scribo::debug::top);
-  io::ppm::save(decision_image, argv[3]);
+					      scribo::debug::top,
+					      atoi(argv[2]));
+  io::ppm::save(decision_image, argv[4]);
 
 }

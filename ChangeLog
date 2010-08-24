@@ -1,3 +1,120 @@
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* build-aux/build_unit_test.sh: Handle composed dependency names
+	in cond_tests_* files.
+
+2010-08-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve configure output.
+
+	* configure.ac: Improve configure output.
+
+	* m4/oln-with-lib.m4: Always set oln_have_* variable.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Handle Boost dependency.
+
+	* configure.ac: Add tests.
+
+	* m4/boost.m4: New.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* Makefile.am: Fix call to build_unit_test.sh.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* build-aux/build_unit_test.sh: Add more comments.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Handle libgdcmCommon's dependencies.
+
+	* configure.ac: Pass more libraries to OLN_WITH_LIB when searching
+	for libgdcmCommon.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Display a summary of the configuration when the
+	build directory is ready.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Set oln_with_* variables correctly.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Require Qt 4.x minimum to enable the use of Qt.
+
+2010-08-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* m4/autotroll.m4: Fix an invalid generation of configure with
+	autoconf 2.61.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* bootstrap: Update calls to build_unit_test.sh.
+
+2010-08-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* build-aux/build_unit_test.sh: Add support for conditional
+	unit-tests.
+
+2010-08-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Improve configure's outputs for external library
+	checks.
+
+2010-08-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Handle libMagick++ dependency with pkg-config.
+
+	* configure.ac: Use PKG_* macros to find Magick++ path and
+	libraries.
+
+	* m4/pkg.m4: New macros to use pkg-config.
+
+2010-07-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* m4/autotroll.m4: Fix invalid configuration when Qt is missing.
+
+2010-06-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Set HAVE_QT correctly.
+
+2010-06-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Configure scribo/demo.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Configure several directories in scribo/.
+
+2010-07-01  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* m4/autotroll.m4: Fix invalid configuration when Qt is missing.
+
+2010-06-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Check for Qt library using AutoTroll.
+
+2010-05-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Do not configure scribo/src/multi_scale anymore.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Configure scribo/tests/binarization.
+
+2010-02-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Configure scribo/demo/review.
+
+2009-12-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Configure scribo/tests/core.
+
 2010-07-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	* AUTHORS: Update.

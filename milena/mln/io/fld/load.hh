@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,6 +44,9 @@
 ///
 /// FIXME: pnm::load uses special implementation if sizeof(int_u8) != 1 ?? what ??
 
+# include <fstream>
+# include <iostream>
+
 # include <mln/core/concept/image.hh>
 # include <mln/io/fld/header.hh>
 # include <mln/io/fld/load_header.hh>
@@ -54,8 +58,7 @@
 
 # include <mln/geom/nsites.hh>
 
-# include <fstream>
-# include <iostream>
+# include <mln/convert/from_to.hh>
 
 namespace mln
 {
@@ -220,8 +223,8 @@ namespace mln
 	box<mln_site(I)> bbox;
 	for (int i = 0; i < hder.ndim; ++i)
 	  {
-	    bbox.pmin()[i] = hder.min_ext[i];
-	    bbox.pmax()[i] = hder.max_ext[i];
+	    convert::from_to(hder.min_ext[i], bbox.pmin()[i]);
+	    convert::from_to(hder.max_ext[i], bbox.pmax()[i]);
 	  }
 
 	ima.init_(bbox);

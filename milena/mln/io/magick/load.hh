@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -153,6 +154,7 @@ namespace mln
 	int ncols = magick_ima.columns();
 	mln_site(I) pmin(0, 0);
 	mln_site(I) pmax(nrows - 1, ncols - 1);
+
 	mln_concrete(I) result(box<mln_site(I)>(pmin, pmax));
 	initialize(ima, result);
 

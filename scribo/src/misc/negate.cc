@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -46,7 +47,7 @@ int main(int argc, char *argv[])
     return scribo::debug::usage(argv,
 				"Negate a binary image",
 				"input.pbm output.pbm",
-				args_desc, "A binary image.");
+				args_desc);
 
   image2d<bool> input;
   io::pbm::load(input, argv[1]);

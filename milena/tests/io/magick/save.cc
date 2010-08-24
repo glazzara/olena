@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +42,7 @@
 
 #include "tests/data.hh"
 
- 
+
 using namespace mln;
 
 

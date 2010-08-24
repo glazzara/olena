@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,6 +36,7 @@
 #include <mln/labeling/colorize.hh>
 #include <mln/data/compare.hh>
 
+#include <mln/debug/println.hh>
 
 int main()
 {
@@ -44,7 +46,7 @@ int main()
 				{ 0, 0 } };
 
   typedef value::rgb8 rgb_t;
-  value::rgb8 ref_data[][2] = { { rgb_t(171,46,231), rgb_t(171,46,231) },
+  value::rgb8 ref_data[][2] = { { rgb_t(220,80,117), rgb_t(220,80,117) },
 				{ rgb_t(0,0,0),	   rgb_t(0,0,0)    } };
 
   image2d<value::int_u8> ima = make::image(values);

@@ -108,6 +108,13 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+#  ifndef MLN_WO_GLOBAL_VARS
+
+    const sign sign::zero = 0;
+    const sign sign::one = 1;
+
+#  endif // !MLN_WO_GLOBAL_VARS
+
     inline
     sign::sign()
     {
@@ -172,9 +179,6 @@ namespace mln
       return *this;
     }
 
-    const sign sign::zero = 0;
-
-    const sign sign::one = 1;
 
     inline
     std::ostream& operator<<(std::ostream& ostr, const sign& i)

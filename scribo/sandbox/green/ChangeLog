@@ -1,0 +1,264 @@
+2010-06-30  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Add some futur materials on regional maxima.
+
+	* test_labelling_2.cc: New file.
+	* test_labelling_3.cc: New file.
+
+2010-06-28  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Implement the kmean algorithh and start to optimize it.
+
+	Implement the first version with vectors and matrices.
+
+	* mln/clustering/k_mean.hh: New library component.
+
+	* use/clustering/k_mean: New directory.
+	* use/clustering/k_mean/Makefile.am: New makefile.
+	* use/clustering/k_mean/k_mean.cc: New source file.
+
+	* tests/clustering/k_mean: New directory.
+	* tests/clustering/k_mean/Makefile.am: New makefile.
+	* tests/clustering/k_mean/k_mean.cc: New source file.
+
+	Implement the second version with image and working in 1d.
+
+	* mln/clustering/kmean1d.hh: New library component.
+
+	* use/clustering/kmean1d: New directory.
+	* use/clustering/kmean1d/Makefile.am: New makefile.
+	* use/clustering/kmean1d/kmean1d.cc: New source file.
+
+	* demo/clustering/kmean1d: New directory.
+	* demo/clustering/kmean1d/Makefile.am: New makefile.
+	* demo/clustering/kmean1d/kmean1d.cc: New source file.
+
+	Implement transformation between RG space and RGB space.
+
+	* mln/fun/v2v/rg_to_rgb.hh: New library component.
+	* use/fun/v2v/rg_to_rgb: New directory.
+	* use/fun/v2v/rg_to_rgb/Makefile.am: New makefile.
+	* use/fun/v2v/rg_to_rgb/rg_to_rgb.cc: New source file.
+
+	Implement the third version working in 2d (r/g).
+
+	* mln/clustering/kmean2d.hh: New library component.
+
+	* use/clustering/kmean2d: New directory.
+	* use/clustering/kmean2d/Makefile.am: New makefile.
+	* use/clustering/kmean2d/kmean2d.cc: New source file.
+
+	* demo/clustering/kmean2d: New directory.
+	* demo/clustering/kmean2d/Makefile.am: New makefile.
+	* demo/clustering/kmean2d/kmean2d.cc: New source file.
+
+	Implement the fourth version working in 3d (rgb).
+
+	* mln/clustering/kmean3d.hh: New library component.
+
+	* use/clustering/kmean3d: New directory.
+	* use/clustering/kmean3d/Makefile.am: New makefile.
+	* use/clustering/kmean3d/kmean3d.cc: New source file.
+
+	* demo/clustering/kmean3d: New directory.
+	* demo/clustering/kmean3d/Makefile.am: New makefile.
+	* demo/clustering/kmean3d/kmean3d.cc: New source file.
+
+	Implement the fith version as a function (working in rgb space).
+
+	* mln/clustering/kmean_rgb.hh: New library component.
+
+	* use/clustering/kmean_rgb: New directory.
+	* use/clustering/kmean_rgb/Makefile.am: New makefile.
+	* use/clustering/kmean_rgb/kmean_rgb.cc: New source file.
+
+	* demo/clustering/kmean_rgb: New directory.
+	* demo/clustering/kmean_rgb/Makefile.am: New makefile.
+	* demo/clustering/kmean_rgb/kmean_rgb.cc: New source file.
+
+	Benchmark distance algorithm for the kmean algorithm.
+
+	* bench/clustering/distance: New directory.
+	* bench/clustering/distance/Makefile.am: New makefile.
+	* bench/clustering/distance/distance.cc: New source file.
+
+2010-06-24  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Define documentation files.
+
+	* README: Delete this file and replace it by README.green.
+	* README.green: New index for source files in scribo/sandbox/green.
+	* README.img: New index for image database.
+	* README.result: New index for histogram database.
+
+2010-06-23  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Define gnuplot shell export format.
+
+	* mln/io/plot/save_image_sh.hh: New header file.
+
+	Give an example of code.
+
+	* use/io/plot/save_image_sh: New directory.
+	* use/io/plot/save_image_sh/Makefile.am: New makefile.
+	* use/io/plot/save_image_sh/save_image_sh.cc: New source file.
+
+	Make some unitary tests on gnuplot shell export.
+
+	* tests/io/plot/save_image_sh: New directory.
+	* tests/io/plot/save_image_sh/Makefile.am: New makefile.
+	* tests/io/plot/save_image_sh/save_image_sh.cc: New source file.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Define accumulator which computes histogram view as image.
+
+	* mln/img_path.hh: New header file.
+
+	Define the 1d component version of the the library.
+
+	* mln/accu/stat/histo1d.hh: New header file.
+
+	Give an example of code.
+
+	* use/accu/stat/histo1d: New directory.
+	* use/accu/stat/histo1d/Makefile.am: New makefile.
+	* use/accu/stat/histo1d/histo1d.cc: New source.
+
+	Make some unitary tests on histo1d library.
+
+	* tests/accu/stat/histo1d: New directory.
+	* tests/accu/stat/histo1d/Makefile.am: New makefile.
+	* tests/accu/stat/histo1d/histo1d.cc: New source.
+
+	Define the 2d component version of the the library.
+
+	* mln/accu/stat/histo2d.hh: New header file.
+	* mln/value/rg.hh: New header file.
+	* mln/fun/v2v/rgb_to_rg.hh: New header file.
+
+	Give an example of code.
+
+	* use/accu/stat/histo2d: New directory.
+	* use/accu/stat/histo2d/Makefile.am: New makefile.
+	* use/accu/stat/histo2d/histo2d.cc: New source.
+
+	* use/value/rg: New directory.
+	* use/value/rg/Makefile.am: New makefile.
+	* use/value/rg/rg.cc: New source.
+
+	* use/fun/v2v/rgb_to_rg: New directory.
+	* use/fun/v2v/rgb_to_rg/Makefile.am: New makefile.
+	* use/fun/v2v/rgb_to_rg/rgb_to_rg.cc: New source.
+
+	Define the RGB 3d component version of the the library.
+
+	* mln/accu/stat/histo3d_rgb.hh: New header file.
+	* mln/fun/v2v/rgb8_to_rgbn.hh: New header file.
+
+	Give an example of code.
+
+	* use/accu/stat/histo3_rgb: New directory.
+	* use/accu/stat/histo3d_rgb/Makefile.am: New makefile.
+	* use/accu/stat/histo3d_rgb/histo3d_rgb.cc: New source.
+
+	* use/fun/v2v/rgb8_to_rgbn: New directory.
+	* use/fun/v2v/rgb8_to_rgbn/Makefile.am: New makefile.
+	* use/fun/v2v/rgb8_to_rgbn/rgb8_to_rgbn.cc: New source.
+
+	Make some unitary tests on histo3d library.
+
+	* tests/accu/stat/histo3d_rgb: New directory.
+	* tests/accu/stat/histo3d_rgb/Makefile.am: New makefile.
+	* tests/accu/stat/histo3d_rgb/histo3d_rgb.cc: New source.
+
+
+	Define the HSL 3d component version of the the library.
+
+	* mln/accu/stat/histo3d_hsl.hh: New header file.
+
+	Give an example of code.
+
+	* use/accu/stat/histo3_hsl: New directory.
+	* use/accu/stat/histo3d_hsl/Makefile.am: New makefile.
+	* use/accu/stat/histo3d_hsl/histo3d_hsl.cc: New source.
+
+	Make some unitary tests on histo3d library.
+
+	* tests/accu/stat/histo3d_hsl: New directory.
+	* tests/accu/stat/histo3d_hsl/Makefile.am: New makefile.
+	* tests/accu/stat/histo3d_hsl/histo3d_hsl.cc: New source.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Import files from milena/sandbox/green.
+
+	* gaussian.sh: New gnuplot shell file.
+	* guassian2d.sh: New gnuplot shell file.
+	* test_labelling.cc: New source.
+	* tests/clustering/k_mean/Makefile.am: New makefile.
+	* tests/clustering/k_mean/k_mean.cc: New source.
+	* tests/clustering/kmean1d/Makefile.am: New makefile.
+	* tests/clustering/kmean1d/kmean1d.cc: New source.
+	* tests/io/plot/save_image_sh/Makefile.am: New makefile.
+	* tests/io/plot/save_image_sh/save_image_sh.cc: New source.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Import files from milena/sandbox/green.
+
+	* mln/accu/stat/histo1d.hh: New header file.
+	* mln/accu/stat/histo2d.hh: New header file.
+	* mln/accu/stat/histo3d_hsl.hh: New header file.
+	* mln/accu/stat/histo3d_rgb.hh: New header file.
+	* mln/clustering/k_mean.hh: New header file.
+	* mln/clustering/kmean1d.hh: New header file.
+	* mln/clustering/kmean2d.hh: New header file.
+	* mln/clustering/kmean3d.hh: New header file.
+	* mln/clustering/kmean_rgb.hh: New header file.
+	* mln/display/display_histo.hh: New header file.
+	* mln/display/project_histo.hh: New header file.
+	* mln/fun/p2b/achromatic.hh: New header file.
+	* mln/fun/p2b/component_equals.hh: New header file.
+	* mln/fun/v2v/achromatism.hh: New header file.
+	* mln/fun/v2v/hue_concentration.hh: New header file.
+	* mln/fun/v2v/int_u16_to_int_u14.hh: New header file.
+	* mln/fun/v2v/int_u16_to_int_u14.hh: New header file.
+	* mln/fun/v2v/log.hh: New header file.
+	* mln/fun/v2v/rg_to_rgb.hh: New header file.
+	* mln/fun/v2v/rgb8_to_int_u8: New header file.
+	* mln/fun/v2v/rgb_to_achromastism_map.hh: New header file.
+	* mln/fun/v2v/rgb_to_hsv.hh: New header file.
+	* mln/fun/v2v/rgb_to_hue_map.hh: New header file.
+	* mln/fun/v2v/rgb_to_saturation_map.hh: New header file.
+	* mln/fun/v2v/rgb_to_value_map.hh: New header file.
+	* mln/img_path.hh: New header file.
+	* mln/io/plot/save_image_sh.hh: New header file.
+	* mln/math/cell.hh: New header file.
+	* mln/math/floor.hh: New header file.
+	* tests/accu/stat/histo1d/Makefile.am: New makefile.
+	* tests/accu/stat/histo1d/histo1d.cc: New source.
+	* tests/accu/stat/histo2d/Makefile.am: New makefile.
+	* tests/accu/stat/histo2d/histo2d.cc: New source.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Save histogram library.
+
+	* mln/accu/histo/histo1d.hh: New header file.
+	* mln/accu/histo/histo2d.hh: New header file.
+	* mln/accu/histo/histo3d_rgb.hh: New header file.
+	* mln/accu/histo/histo3d_hsl.hh: New header file.
+
+2010-06-21  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Simple integration test.
+
+	* README: New text file.
+	* ok/mln/img_path.hh: New header file.
+	* ok/mln/accu/histo/histo1d.hh: New header file.
+	* ok/mln/accu/histo/histo2d.hh: New header file.
+	* ok/mln/accu/histo/histo3d.hh: New header file.
+	* ok/test/accu/histo/gaussian.sh: New gnuplot script file.
+	* ok/test/accu/histo/histo1d.cc: New source file.
+

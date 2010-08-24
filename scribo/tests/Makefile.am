@@ -17,11 +17,17 @@
 include $(srcdir)/tests.mk
 
 SUBDIRS = 		\
+  binarization 		\
+  core 			\
   filter 		\
   preprocessing 	\
-  table 		\
   text 			\
+  toolchain 		\
   unit_test
+
+# Disabled directories:
+#
+#  table
 
 # Regen files recursively.
 include $(top_srcdir)/build-aux/regen-recursive.mk

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -41,7 +42,7 @@
 #include <scribo/primitive/extract/lines_h_discontinued.hh>
 #include <scribo/primitive/extract/lines_v_discontinued.hh>
 
-#include <scribo/tests/data.hh>
+#include "tests/data.hh"
 
 
 int main(int argc, char *argv[])

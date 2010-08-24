@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,7 +35,6 @@
 
 #include <scribo/debug/usage.hh>
 
-#include <scribo/core/object_image.hh>
 #include <scribo/primitive/extract/lines_h_pattern.hh>
 #include <scribo/primitive/extract/lines_v_pattern.hh>
 
@@ -52,10 +52,10 @@ int main(int argc, char *argv[])
 
   if (argc != 4)
     return scribo::debug::usage(argv,
-				"Extract discontinued horizontal and vertical lines",
+				"Extract discontinued horizontal and "
+				"vertical lines",
 				"input.pbm length output.ppm",
-				args_desc,
-				"A color image. Horizontal lines are in red and vertical lines in green.");
+				args_desc);
 
   trace::entering("main");
 

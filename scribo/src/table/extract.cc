@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -55,9 +56,7 @@ int main(int argc, char* argv[])
     return scribo::debug::usage(argv,
 				"Extract tables from a binary image.",
 				"input.pbm output.dump output.ppm",
-				args_desc,
-				"A color images. 'White' color means \
-the background, other colors indicates cells.");
+				args_desc);
 
   trace::entering("main");
 

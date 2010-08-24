@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -30,6 +31,8 @@
 
 #include <mln/data/convert.hh>
 
+#include <mln/util/couple.hh>
+
 #include <mln/value/rgb8.hh>
 #include <mln/value/label_16.hh>
 #include <mln/literal/colors.hh>
@@ -39,9 +42,9 @@
 
 #include <mln/draw/line.hh>
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/primitive/link/internal/link_several_dmax_base.hh>
-#include <scribo/primitive/link/internal/anchors_3.hh>
+#include <scribo/primitive/link/internal/compute_anchor.hh>
 #include <scribo/primitive/link/compute_several.hh>
 
 #include <scribo/draw/bounding_boxes.hh>
@@ -61,53 +64,49 @@ namespace scribo
     typedef
       primitive::link::internal::link_several_dmax_base<L, self_t> super_;
 
-    typedef
-      mln::util::array<mln::util::couple<unsigned, mln_site(L)>
-      potential_links_t;
-
-    public:
+  public:
     typedef mln_site(L) P;
 
     several_right_overlap_debug_functor(const I& input,
-					const object_image(L)& objects,
-					float dmax)
-      : super_(objects, dmax, 3)
+					const component_set<L>& comps,
+					unsigned dmax)
+      : super_(comps, dmax)
     {
+      this->anchors_.append(anchor::Top);
+      this->anchors_.append(anchor::Bottom);
+      this->anchors_.append(anchor::Center);
+
       output_ = data::convert(value::rgb8(), input);
-      scribo::draw::bounding_boxes(output_, objects, literal::blue);
+      scribo::draw::bounding_boxes(output_, comps, literal::blue);
       mln_postcondition(output_.is_valid());
     }
 
 
-    void validate_link_(unsigned current_object,
-			const P& start_point,
-			const P& p,
-			unsigned anchor)
+    mln::util::couple<anchor::Type, mln_site(L)>
+    finalize_link_(unsigned current_object)
     {
-      mln::draw::line(output_, start_point, p, literal::green);
+      mln::util::couple<anchor::Type, mln_site(L)>
+	c = super_::finalize_link_(current_object);
 
-      super_::validate_link_(current_object, start_point, p, anchor);
-    }
-
-
-
-    void invalidate_link_(unsigned current_object,
-			  const P& start_point,
-			  const P& p,
-			  unsigned anchor)
-    {
-      if (output_.domain().has(p))
-	mln::draw::line(output_, start_point, p, literal::red);
-      else
+      if (c.first() != anchor::Invalid)
       {
-	P tmp = p;
-	++tmp.col();
-	mln::draw::line(output_, start_point, tmp, literal::red);
+	mln_site(L)
+	  p = primitive::link::internal::compute_anchor(this->components_,
+							current_object,
+							c.first());
+	mln::draw::line(output_, p, c.second(), literal::green);
       }
 
-      super_::invalidate_link_(current_object, start_point, p, anchor);
+      return c;
     }
 
+    mln_site(L)
+    start_point_(unsigned current_object, anchor::Type anchor)
+    {
+      return primitive::link::internal::compute_anchor(this->components_,
+						       current_object,
+						       anchor);
+    }
 
 
     void compute_next_site_(P& p)
@@ -139,10 +138,10 @@ int main(int argc, char* argv[])
 
   if (argc != 4)
     return scribo::debug::usage(argv,
-				"Show sucessful/unsuccessful right links between components.",
+				"Show sucessful/unsuccessful right links "
+				"between components.",
 				"input.pbm max_nbh_dist output.ppm",
-				args_desc,
-				"A color image. Valid links are drawn in green, invalid ones in red.");
+				args_desc);
 
   typedef image2d<bool> I;
   I input;
@@ -151,12 +150,12 @@ int main(int argc, char* argv[])
   // Finding objects.
   value::label_16 nbboxes;
   typedef image2d<value::label_16> L;
-  object_image(L) objects
-    = scribo::primitive::extract::objects(input, c8(), nbboxes);
+  component_set<L> comps
+    = scribo::primitive::extract::components(input, c8(), nbboxes);
 
   // Write debug image.
   several_right_overlap_debug_functor<I, L> functor(input,
-						    objects, atof(argv[2]));
+						    comps, atoi(argv[2]));
   primitive::link::compute_several(functor);
 
   io::ppm::save(functor.output_, argv[3]);

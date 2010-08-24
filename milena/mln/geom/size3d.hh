@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,7 +32,7 @@
  * \brief Facade to include 3D size access routines.
  */
 
-# include <mln/geom/nslis.hh>
+# include <mln/geom/nslices.hh>
 # include <mln/geom/nrows.hh>
 # include <mln/geom/ncols.hh>
 

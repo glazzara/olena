@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,19 +45,18 @@ namespace mln
     namespace internal
     {
 
-      template <typename V, typename E>
+      template <typename V, typename C, typename E>
       struct x2x_linear_impl_
       {
         static const unsigned dim = V::dim; // To please g++ when comparing dim in metal bexpr.
 
 	typedef V argument;
 	typedef V result;
-	typedef typename V::coord coord;
-	typedef algebra::h_mat<dim, coord> matrix;
+	typedef algebra::h_mat<dim, C> matrix;
 
 	V operator()(const V& x) const
 	{
-	  algebra::h_vec<dim, coord> tmp = m_ * x.to_h_vec();
+	  algebra::h_vec<dim, C> tmp = m_ * x.to_h_vec();
 	  return tmp.to_vec();
 	}
 
@@ -72,17 +72,17 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename V, typename E>
+      template <typename V, typename C, typename E>
       inline
-      x2x_linear_impl_<V,E>::x2x_linear_impl_()
+      x2x_linear_impl_<V,C,E>::x2x_linear_impl_()
       {
       }
 
 
-      template <typename V, typename E>
+      template <typename V, typename C, typename E>
       inline
-      const typename x2x_linear_impl_<V,E>::matrix&
-      x2x_linear_impl_<V,E>::mat() const
+      const typename x2x_linear_impl_<V,C,E>::matrix&
+      x2x_linear_impl_<V,C,E>::mat() const
       {
 	return m_;
       }

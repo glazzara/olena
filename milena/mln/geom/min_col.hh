@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 // Laboratory (LRDE)
 //
 // This file is part of Olena.
@@ -47,7 +47,7 @@ namespace mln
 
     /// Give the minimum column of an box 2d or 3d.
     template <typename B>
-    mln_deduce(B, point, coord) min_col(const Box<B>& b);
+    mln_deduce(B, site, coord) min_col(const Box<B>& b);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -65,10 +65,10 @@ namespace mln
 
     template <typename B>
     inline
-    mln_deduce(B, point, coord) min_col(const Box<B>& b)
+    mln_deduce(B, site, coord) min_col(const Box<B>& b)
     {
       metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
-      mln_deduce(B, point, coord) mincol = exact(b).pmin().col();
+      mln_deduce(B, site, coord) mincol = exact(b).pmin().col();
 
       return mincol;
     }

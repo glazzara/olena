@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,59 +24,19 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#include <mln/core/alias/box1d.hh>
 #include <mln/core/alias/box2d.hh>
-#include <mln/core/alias/box3d.hh>
 #include <mln/core/box_runstart_piter.hh>
+
 
 int main()
 {
   using namespace mln;
 
-  /// Test with box1d
-  {
-    box1d b1(point1d(40), point1d(42));
-    box_runstart_piter<point1d> p1(b1);
-    for_all(p1)
-    {
-      mln_assertion(p1[0] == 40);
-      std::cout << p1 <<std::endl;
-    }
-    std::cout << "run_len : " << p1.run_length()<<std::endl;
-    mln_assertion(p1.run_length() == 3);
-  }
+  box2d b(3,3);
+  box_runstart_piter<point2d> p(b);
+  unsigned i = 0;
+  for_all(p)
+    mln_assertion(p == point2d(i++, 0));
 
-
-  /// Test with box2d
-  {
-    box2d b2(point2d(1,2), point2d(5,8));
-    box_runstart_piter<point2d> p2(b2);
-    int i = 1;
-    for_all(p2)
-    {
-      mln_assertion(p2[1] == 2 && p2[0] == i++);
-      std::cout << p2 <<std::endl;
-    }
-    std::cout << "run_len : " << p2.run_length()<<std::endl;
-    mln_assertion(p2.run_length() == 7);
-  }
-
-//   Test with image 3d
-  {
-    box3d b3(point3d(1,2,3), point3d(5,8,7));
-    box_runstart_piter<point3d> p3(b3);
-    int i = 1;
-    int j = 2;
-    for_all(p3)
-    {
-      std::cout << p3 << std::endl;
-       if (i++ == 5)
- 	i = 1;
-       if (j++ == 8)
- 	j = 2;
-    }
-    std::cout << "run_len : " << p3.run_length() << std::endl;
-    mln_assertion(p3.run_length() == 5);
-  }
-
+  mln_assertion(p.run_length() == 3);
 }

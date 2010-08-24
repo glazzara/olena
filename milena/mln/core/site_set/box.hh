@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -124,7 +125,7 @@ namespace mln
     /// (sizes) w.r.t. the dimension.
     explicit box(mln_coord(P) ninds);
     box(mln_coord(P) nrows, mln_coord(P) ncols);
-    box(mln_coord(P) nslis, mln_coord(P) nrows, mln_coord(P) ncols);
+    box(mln_coord(P) nslices, mln_coord(P) nrows, mln_coord(P) ncols);
     /// \}
 
     /*! \brief Test if \p p belongs to the box.
@@ -143,7 +144,7 @@ namespace mln
     box<P> to_larger(unsigned b) const;
 
     /// Return the approximated central site of this box.
-    P center() const;
+    P pcenter() const;
 
     /// Test that the box owns valid data, i.e., is initialized and
     /// with pmin being 'less-than' pmax.
@@ -151,6 +152,9 @@ namespace mln
 
     /// Crop this bbox in order to fit in the reference box \p b.
     void crop_wrt(const box<P>& b);
+
+    /// Merge inplace with another box.
+    void merge(const box<P>& b);
 
     /// Return the size of this site set in memory.
     std::size_t memory_size() const;
@@ -208,6 +212,27 @@ namespace mln
       pmax_.col() = ref.pmax().col();
     if (pmax_.row() > ref.pmax().row())
       pmax_.row() = ref.pmax().row();
+  }
+
+  template <typename P>
+  inline
+  void
+  box<P>::merge(const box<P>& b)
+  {
+    mln_precondition(is_valid());
+    if (! b.is_valid())
+    {
+      // no-op
+      return;
+    }
+
+    for (unsigned i = 0; i < P::dim; ++i)
+    {
+      if (b.pmin()[i] < pmin_[i])
+	pmin_[i] = b.pmin()[i];
+      if (b.pmax()[i] > pmax_[i])
+	pmax_[i] = b.pmax()[i];
+    }
   }
 
   template <typename P>
@@ -285,11 +310,11 @@ namespace mln
 
   template <typename P>
   inline
-  box<P>::box(mln_coord(P) nslis, mln_coord(P) nrows, mln_coord(P) ncols)
+  box<P>::box(mln_coord(P) nslices, mln_coord(P) nrows, mln_coord(P) ncols)
   {
     metal::bool_<(dim == 3)>::check();
     pmin_ = literal::origin;
-    pmax_ = P(nslis - 1, nrows - 1, ncols - 1);
+    pmax_ = P(nslices - 1, nrows - 1, ncols - 1);
     mln_postcondition(is_valid());
   }
 
@@ -366,7 +391,7 @@ namespace mln
   template <typename P>
   inline
   P
-  box<P>::center() const
+  box<P>::pcenter() const
   {
     mln_precondition(is_valid());
     P center;

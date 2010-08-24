@@ -1,4 +1,5 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -14,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Olena.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = tests src
+SUBDIRS = demo tests src
 
 .PHONY: bin
 
@@ -28,7 +29,7 @@ REGEN_SUBDIRS += tests
 regen-am:
 	cd $(srcdir)							\
 	  && $(abs_top_srcdir)/build-aux/generate_dist_headers.sh	\
-	       . headers.mk nodist-headers scribo scribo
+	       scribo headers.mk nodist-headers scribo scribo
 
 # FIXME: Change generate_dist_headers.sh so that the action looks like this:
 #
@@ -37,6 +38,6 @@ regen-am:
 $(srcdir)/headers.mk: $(top_srcdir)/build-aux/generate_dist_headers.sh
 	cd $(srcdir)							\
 	  && $(abs_top_srcdir)/build-aux/generate_dist_headers.sh	\
-	       . headers.mk nodist-headers scribo scribo
+	       scribo headers.mk nodist-headers scribo scribo
 
 include $(srcdir)/headers.mk

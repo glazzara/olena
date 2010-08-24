@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -31,80 +32,52 @@
 #include <mln/value/label_16.hh>
 #include <mln/io/pbm/load.hh>
 #include <mln/literal/colors.hh>
-
-#include <scribo/core/object_image.hh>
-
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/primitive/group/apply.hh>
-#include <scribo/primitive/link/with_graph.hh>
-#include <scribo/primitive/group/from_graph.hh>
+#include <scribo/primitive/link/with_single_left_link.hh>
+#include <scribo/primitive/group/from_single_link.hh>
 #include <scribo/filter/objects_small.hh>
-#include <scribo/util/text.hh>
 
 #include <scribo/make/debug_filename.hh>
 #include <scribo/debug/save_bboxes_image.hh>
 #include <scribo/debug/save_linked_bboxes_image.hh>
 
-#include <scribo/tests/data.hh>
-
-int usage(const char *name)
-{
-  std::cout << "Usage: " << name << " <input.pbm> " << std::endl;
-  return 1;
-}
+#include "tests/data.hh"
 
 int main(int argc, char* argv[])
 {
   using namespace scribo;
   using namespace mln;
 
-  std::string img;
-  if (argc < 2)
-  {
-    usage(argv[0]);
-    img = SCRIBO_IMG_DIR "/text_to_group_and_clean.pbm";
-  }
-  else
-    img = argv[1];
-
-  scribo::make::internal::debug_filename_prefix = argv[0];
+  std::string img = SCRIBO_IMG_DIR "/text_to_group_and_clean.pbm";
 
   image2d<bool> input;
   io::pbm::load(input, img.c_str());
 
   value::label_16 nbboxes;
   typedef image2d<value::label_16> L;
-  typedef object_image(L) text_t;
-  text_t text = primitive::extract::objects(input, c8(), nbboxes);
+  component_set<L>
+    text = primitive::extract::components(input, c8(), nbboxes);
 
-  mln::util::graph g = primitive::link::with_graph(text, 30);
+  object_links<L> links = primitive::link::with_single_left_link(text, 30);
 
 
   mln_assertion(nbboxes == 12u);
-//  std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
-//  scribo::debug::save_linked_bboxes_image(input,
-//					      text, g,
-//					      literal::red, literal::cyan,
-//					      "test_graph_left_linked.ppm");
 
-  object_groups<L> groups = primitive::group::from_graph(text, g);
+  object_groups<L> groups = primitive::group::from_single_link(links);
 
-  text_t grouped_text = primitive::group::apply(text, groups);
-//  std::cout << "AFTER - nbboxes = " << grouped_text.nbboxes().next() << std::endl;
-//
-//  scribo::debug::save_bboxes_image(input, grouped_text.bboxes(),
-//				       literal::red,
-//				       "test_graph_grouped_text.ppm");
+  component_set<L> grouped_comps = primitive::group::apply(groups);
 
-  mln_assertion(grouped_text.nlabels() == 6u);
+  mln_assertion(grouped_comps.nelements() == 6u);
 
-  text_t
-    filtered_text = scribo::filter::objects_small(grouped_text, 20);
+  component_set<L>
+    filtered_comps = scribo::filter::components_small(grouped_comps, 20);
 
-  mln_assertion(filtered_text.nlabels() == 2u);
+  unsigned valid_comps = 0;
+  for_all_comps(c, filtered_comps)
+    if (filtered_comps(c).is_valid())
+      ++valid_comps;
 
-//  scribo::debug::save_bboxes_image(input, filtered_text.bboxes(),
-//				       literal::red,
-//				       "test_graph_filtered_text.ppm");
+  mln_assertion(valid_comps == 2u);
 
 }

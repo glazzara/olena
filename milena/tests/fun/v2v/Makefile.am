@@ -26,6 +26,15 @@ norm_SOURCES = norm.cc
 projection_SOURCES = projection.cc
 wrap_SOURCES = wrap.cc
 
+
+if HAVE_QT
+
+check_PROGRAMS += qt_rgb_to_int_u
+qt_rgb_to_int_u_SOURCES = qt_rgb_to_int_u.cc
+
+endif HAVE_QT
+
+
 #<<lrde
 # FIXME: Not distributed (yet).
 check_PROGRAMS +=				\

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,12 +46,16 @@ int main()
 
   typedef image2d<value::label_8> L;
   typedef util::array<point2d> arr_t;
-  typedef util::couple<L,arr_t> res_t;
+  typedef accu::center<point2d,point2d> accu_t;
+  typedef util::array<accu_t> accu_arr_t;
+  typedef util::couple<L,util::couple<arr_t, accu_arr_t> > res_t;
   res_t result = labeling::blobs_and_compute(pic, c4(), n,
-					     accu::center<point2d,point2d>());
+					     accu_t());
 
-  mln_assertion(result.second().size() == 34);
-  mln_assertion(result.second()[1] == point2d(10,30));
-  mln_assertion(result.second()[33] == point2d(310,66));
+
+  mln_assertion(result.second().first().size() == 34);
+  mln_assertion(result.second().second().size() == 34);
+  mln_assertion(result.second().first()[1] == point2d(10,30));
+  mln_assertion(result.second().second()[33] == point2d(310,66));
   mln_assertion(n == 33);
 }

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -28,7 +29,7 @@
 
 /// \file
 ///
-/// Define an accumulator that counts the number of different value.
+/// \brief Define an accumulator that counts the occurrence of a given value.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
@@ -37,10 +38,33 @@
 namespace mln
 {
 
+  // Forward declaration.
+  namespace accu {
+    template <typename V> struct count_value;
+  }
+
+
+  // Traits.
+
+  namespace trait
+  {
+
+    template <typename V>
+    struct accumulator_< accu::count_value<V> >
+    {
+      typedef accumulator::has_untake::yes     has_untake;
+      typedef accumulator::has_set_value::yes has_set_value;
+      typedef accumulator::has_stop::no       has_stop;
+      typedef accumulator::when_pix::use_v    when_pix;
+    };
+
+  } // end of namespace mln::trait
+
+
   namespace accu
   {
 
-    /// \brief Count a given value.
+    /// \brief Define an accumulator that counts the occurrence of a given value.
     ///
     /// \ingroup modaccuvalues
     //

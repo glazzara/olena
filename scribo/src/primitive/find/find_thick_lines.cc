@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -34,7 +35,6 @@
 
 #include <scribo/debug/usage.hh>
 
-#include <scribo/core/object_image.hh>
 #include <scribo/primitive/extract/lines_h_thick.hh>
 #include <scribo/primitive/extract/lines_v_thick.hh>
 
@@ -54,15 +54,14 @@ const char *args_desc[][2] =
 int main(int argc, char *argv[])
 {
   using namespace mln;
+  using namespace scribo;
 
   if (argc != 5)
     return scribo::debug::usage(argv,
-				"Extract thick horizontal and vertical lines.\
-\n Common argument values: 150 150.",
+				"Extract thick horizontal and vertical "
+				"lines.\n Common argument values: 150 150.",
 				"<input.pbm> <vlength> <hlength> <output.ppm>",
-				args_desc,
-				"A color image. Horizontal lines are in red\
- and vertical lines in green.");
+				args_desc);
 
   trace::entering("main");
 
@@ -76,14 +75,15 @@ int main(int argc, char *argv[])
     nhlines,
     nvlines;
 
-  object_image(L)
+  component_set<L>
     hlines = scribo::primitive::extract::lines_h_thick(input, c8(),
 						       nhlines, atoi(argv[2])),
     vlines = scribo::primitive::extract::lines_v_thick(input, c8(),
 						       nvlines, atoi(argv[3]));
 
-  image2d<value::rgb8> out = debug::superpose(input, hlines, literal::red);
-  out = debug::superpose(out, vlines, literal::green);
+  image2d<value::rgb8>
+    out = mln::debug::superpose(input, hlines.labeled_image(), literal::red);
+  out = mln::debug::superpose(out, vlines.labeled_image(), literal::green);
 
   io::ppm::save(out, argv[4]);
 

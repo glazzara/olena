@@ -1,4 +1,5 @@
-# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -16,16 +17,23 @@
 
 include $(top_srcdir)/scribo/tests/tests.mk
 
-EXTRA_DIST = build_unit_test.sh disabled_tests
+COND_TESTS = cond_tests_qt 			\
+	     cond_tests_qt_tesseract_tiff	\
+	     cond_tests_tesseract_tiff
+
+EXTRA_DIST = disabled_tests \
+	     $(COND_TESTS)
+
 
 # Regen files.
 include $(top_srcdir)/build-aux/regen-recursive.mk
 regen-am:
 	cd $(top_srcdir)					\
-	&& scribo/tests/unit_test/build_unit_test.sh 		\
-		scribo	 					\
+	&& ./build-aux/build_unit_test.sh 			\
+		scribo/scribo 					\
 		scribo/tests/unit_test 				\
-		scribo/tests/unit_test/disabled_tests
+		scribo/tests/unit_test/disabled_tests		\
+		scribo
 
 # FIXME: Change build_unit_test.sh so that the action looks like this:
 #
@@ -33,12 +41,13 @@ regen-am:
 #
 # `$(abs_top_srcdir)' is required because of the change of directory
 # at the beginning og the action.
-$(srcdir)/unit-tests.mk: build_unit_test.sh disabled_tests
+$(srcdir)/unit-tests.mk: $(top_srcdir)/build-aux/build_unit_test.sh disabled_tests $(COND_TESTS)
 	cd $(top_srcdir)					\
-	&& scribo/tests/unit_test/build_unit_test.sh		\
-		scribo	 					\
+	&& ./build-aux/build_unit_test.sh			\
+		scribo/scribo 					\
 		scribo/tests/unit_test 				\
-		scribo/tests/unit_test/disabled_tests
+		scribo/tests/unit_test/disabled_tests 		\
+		scribo
 
 include $(srcdir)/unit-tests.mk
 

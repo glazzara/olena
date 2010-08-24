@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -51,8 +52,7 @@ int main(int argc, char *argv[])
     return scribo::debug::usage(argv,
 				"Extract horizontal lines patterns",
 				"input.pbm length delta output.pbm",
-				args_desc,
-				"A binary image of lines.");
+				args_desc);
 
   trace::entering("main");
 

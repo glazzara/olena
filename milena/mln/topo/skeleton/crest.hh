@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -47,10 +48,13 @@ namespace mln
 
       /// Compute skeletization constraints.
       ///
-      /// \param[in] input_	A binary image.
-      /// \param[in] dist_map_	A distance map of \p input. Contains the
-      ///			inner object distance map.
-      /// \param[in] nbh_	A neighborhood.
+      /// \param[in] input	   A binary image.
+      /// \param[in] dist_map      A distance map of \p input. Contains the
+      ///                          inner object distance map.
+      /// \param[in] nbh	   A neighborhood.
+      /// \param[in] psi_threshold Keep sites having a Point
+      ///                          Superiority Index greated or equal
+      ///                          to \p psi_threshold.
       ///
       /// \result A binary image.
       //
@@ -77,7 +81,7 @@ namespace mln
        *  p.val().
        *
        *  This algorithm keeps sites having their pixel superiority index
-       *  greater than 5.
+       *  greater than \p psi_threshold (6 by default).
        *
        *  For good results with 2D images, we advice you to use c8() as
        *  neighborhood.
@@ -85,8 +89,15 @@ namespace mln
        */
       template <typename I, typename D, typename N>
       mln_concrete(I)
-      crest(const Image<I>& input_, const Image<D>& dist_map_,
-	    const Neighborhood<N>& nbh_);
+      crest(const Image<I>& input, const Image<D>& dist_map,
+	    const Neighborhood<N>& nbh, unsigned psi_threshold);
+
+      /// \overload
+      /// psi_threshold is set to 6.
+      template <typename I, typename D, typename N>
+      mln_concrete(I)
+      crest(const Image<I>& input, const Image<D>& dist_map,
+	    const Neighborhood<N>& nbh);
 
 
 
@@ -96,7 +107,7 @@ namespace mln
       template <typename I, typename D, typename N>
       mln_concrete(I)
       crest(const Image<I>& input_, const Image<D>& dist_map_,
-	    const Neighborhood<N>& nbh_)
+	    const Neighborhood<N>& nbh_, unsigned psi_threshold)
       {
 	trace::entering("topo::skeleton::crest");
 	const I& input = exact(input_);
@@ -120,20 +131,22 @@ namespace mln
 	    continue;
 
 	  unsigned nb_eq = 0;
-	  unsigned nb_gt = 0;
 	  unsigned nb_lt = 0;
 	  for_all(n)
-	    if (input.domain().has(n))
+	    if (input.domain().has(n)
+		// We want to only consider sites which are part of
+		// the skeleton. If this test is removed, sometimes
+		// edge sites are considered as sites with a high PSI
+		// which is wrong.
+	      && dist_map(n) > static_cast<mln_value(D)>(0))
 	    {
 	      if (dist_map(n) == dist_map(p))
 		++nb_eq;
-	      else if (dist_map(n) > dist_map(p))
-		++nb_gt;
-	      else
+	      else if (dist_map(n) < dist_map(p))
 		++nb_lt;
 	    }
 
-	  if ((nb_lt + nb_eq) > 5) // Pixel Superiority index
+	  if ((nb_lt + nb_eq) >= psi_threshold) // Pixel Superiority index
 	    is_crest(p) = true;
 	}
 
@@ -141,6 +154,14 @@ namespace mln
 	return is_crest;
       }
 
+
+      template <typename I, typename D, typename N>
+      mln_concrete(I)
+      crest(const Image<I>& input, const Image<D>& dist_map,
+	    const Neighborhood<N>& nbh)
+      {
+	return crest(input, dist_map, nbh, 6);
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 

@@ -136,10 +136,13 @@ namespace mln
       template <unsigned n, typename C>
       struct rotation
 	:
-	fun::internal::x2x_linear_impl_< algebra::vec<n,C>, rotation<n,C> >
+	fun::internal::x2x_linear_impl_< algebra::vec<n,C>, C, rotation<n,C> >
 	,
 	public Function_v2v< rotation<n,C> >
       {
+	/// Type of the underlying data stored in vectors and matrices.
+	typedef C data_t;
+
 	/// Type of the inverse function.
 	typedef rotation<n,C> invert;
 	/// Return the invere function.

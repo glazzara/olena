@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -35,9 +36,8 @@
 #include <mln/value/label_16.hh>
 
 #include <scribo/core/object_links.hh>
-#include <scribo/core/object_image.hh>
 
-#include <scribo/primitive/extract/objects.hh>
+#include <scribo/primitive/extract/components.hh>
 #include <scribo/primitive/group/apply.hh>
 #include <scribo/primitive/link/with_single_left_link.hh>
 #include <scribo/primitive/link/with_single_right_link.hh>
@@ -53,10 +53,12 @@
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image. 'True' for objects, 'False'\
-for the background." },
-  { "hlmax", "Maximum distance between two grouped objects while browsing on the left." },
-  { "hrmax", "Maximum distance between two grouped objects while browsing on the right." },
+  { "input.pbm", "A binary image. 'True' for objects, 'False' for the "
+    "background." },
+  { "hlmax", "Maximum distance between two grouped objects while browsing "
+    "on the left." },
+  { "hrmax", "Maximum distance between two grouped objects while browsing "
+    "on the right." },
   { "prefix", "Output names prefix" },
   {0, 0}
 };
@@ -68,10 +70,10 @@ int main(int argc, char *argv[])
 
   if (argc != 5)
     return scribo::debug::usage(argv,
-				"Group potential text objects using a double validation link.",
+				"Group potential text objects using a double"
+				"validation link.",
 				"input.pbm hlmax hrmax prefix",
-				args_desc,
-				"Several images showing the process.");
+				args_desc);
 
 
   scribo::make::internal::debug_filename_prefix = argv[4];
@@ -81,10 +83,10 @@ int main(int argc, char *argv[])
 
   value::label_16 nbboxes;
   typedef image2d<value::label_16> L;
-  typedef object_image(L) text_t;
-  text_t text = primitive::extract::objects(input, c8(), nbboxes);
+  component_set<L>
+    text = primitive::extract::components(input, c8(), nbboxes);
 
-  text = filter::objects_small(text, 4);
+  text = filter::components_small(text, 4);
 
   object_links<L> left_link
     = primitive::link::with_single_left_link(text, atoi(argv[2]));
@@ -93,41 +95,29 @@ int main(int argc, char *argv[])
 
   std::cout << "BEFORE - nbboxes = " << nbboxes << std::endl;
 
-//  scribo::debug::save_linked_textbboxes_image(input,
-//					      text, left_link,
-//					      literal::red, literal::cyan,
-//					      scribo::make::debug_filename("left_linked.ppm"));
-//  scribo::debug::save_linked_textbboxes_image(input,
-//					      text, right_link,
-//					      literal::red, literal::cyan,
-//					      scribo::make::debug_filename("right_linked.ppm"));
-
   scribo::debug::save_linked_bboxes_image(input,
-					  text, left_link, right_link,
+					  left_link, right_link,
 					  literal::red, literal::cyan, literal::yellow,
 					  literal::green,
+					  anchor::MassCenter,
 					  scribo::make::debug_filename("links.ppm"));
-
-//  io::ppm::save(mln::labeling::colorize(value::rgb8(),
-//				     text.label_image(),
-//				     text.nlabels()),
-//		scribo::make::debug_filename("lbl_before.ppm"));
 
   // With validation.
   object_groups<L> groups
-	= primitive::group::from_double_link(text, left_link, right_link);
+    = primitive::group::from_double_link(left_link, right_link);
 
-  text_t grouped_text = primitive::group::apply(text, groups);
+  component_set<L> grouped_text = primitive::group::apply(groups);
 
   io::ppm::save(mln::labeling::colorize(value::rgb8(),
-				     grouped_text,
-				     grouped_text.nlabels()),
+					grouped_text.labeled_image(),
+					grouped_text.nelements()),
 		scribo::make::debug_filename("label_color.ppm"));
 
-  std::cout << "AFTER double grouping - nbboxes = " << grouped_text.bboxes().nelements() << std::endl;
+  std::cout << "AFTER double grouping - nbboxes = "
+	    << grouped_text.nelements() << std::endl;
 
-  scribo::debug::save_bboxes_image(input, grouped_text.bboxes(),
-				   literal::red,
-				   scribo::make::debug_filename("bboxes.ppm"));
+  scribo::debug::save_bboxes_image(input, grouped_text,
+				   scribo::make::debug_filename("bboxes.ppm"),
+				   literal::red);
 
 }

@@ -182,7 +182,7 @@ namespace mln
    * topology and with the same type of coordinates; otherwise this
    * test does not compile.
    *
-   * \post The result, \p dp, is such as \p lhs == \p rhs + \p dp. 
+   * \post The result, \p dp, is such as \p lhs == \p rhs + \p dp.
    *
    * \return A delta point (temporary object).
    *

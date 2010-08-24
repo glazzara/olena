@@ -143,6 +143,16 @@ namespace mln
 	  to = math::round<int>()(from);
 	}
 
+	// float-> short
+	inline
+	void
+	from_to_(const float&	    from,
+		 short&		    to)
+	{
+	  to = math::round<short>()(from);
+	}
+
+
       } // end of namespace mln::convert::over_load
 
 # endif // ! MLN_INCLUDE_ONLY

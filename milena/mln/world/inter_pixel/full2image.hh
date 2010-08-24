@@ -52,7 +52,7 @@ namespace mln
       /// \return A classical image without inter-pixel data.
       //
       template <typename I>
-      I
+      mln_concrete(I)
       full2image(const Image<I>& input);
 
 
@@ -60,7 +60,7 @@ namespace mln
 
 
       template <typename I>
-      I
+      mln_concrete(I)
       full2image(const Image<I>& input_)
       {
 	trace::entering("world::inter_pixel::full2image");

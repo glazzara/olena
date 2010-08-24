@@ -51,9 +51,13 @@ namespace mln
       template <unsigned n, typename C>
       struct translation
         :
-	fun::internal::x2x_linear_impl_< algebra::vec<n,C>, translation<n,C> >,
+	fun::internal::x2x_linear_impl_< algebra::vec<n,C>, C,
+					 translation<n,C> >,
         public Function_v2v< translation<n,C> >
       {
+	/// Type of the underlying data stored in vectors and matrices.
+	typedef C data_t;
+
         /// Type of the inverse function.
         typedef translation<n,C> invert;
         /// Return the inverse function.

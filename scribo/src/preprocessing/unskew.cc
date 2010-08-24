@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -24,15 +25,16 @@
 // executable file might be covered by the GNU General Public License.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/io/pbm/all.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/io/pgm/all.hh>
 
-#include <scribo/preprocessing/unskew.hh>
+#include <scribo/preprocessing/deskew.hh>
 #include <scribo/debug/usage.hh>
 
 
 const char *args_desc[][2] =
 {
-  { "input.pbm", "A binary image. 'True' for objects, 'false' for background." },
+  { "input.pgm", "A gray level image." },
   {0, 0}
 };
 
@@ -45,14 +47,14 @@ int main(int argc, char *argv[])
 
   if (argc != 3)
     return scribo::debug::usage(argv,
-				"Unskew a binary image",
-				"input.pbm output.pbm",
-				args_desc, "A binary image.");
+				"Unskew a gray level image",
+				"input.pgm output.pgm",
+				args_desc);
 
-  image2d<bool> input;
-  io::pbm::load(input, argv[1]);
+  image2d<value::int_u8> input;
+  io::pgm::load(input, argv[1]);
 
-  io::pbm::save(scribo::preprocessing::unskew(input).first(), argv[2]);
+  io::pgm::save(scribo::preprocessing::deskew(input), argv[2]);
 
   mln::trace::exiting("main");
 }

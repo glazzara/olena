@@ -1,4 +1,5 @@
-// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -45,6 +46,7 @@
 
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
+# include <mln/value/qt/rgb32.hh>
 
 
 namespace mln
@@ -118,7 +120,8 @@ namespace mln
 	// Turn this into a static check?
 	if (!(mln::metal::equal<mln_value(I), bool>::value ||
 	    mln::metal::equal<mln_value(I), value::int_u8>::value ||
-	    mln::metal::equal<mln_value(I), value::rgb8>::value))
+	    mln::metal::equal<mln_value(I), value::rgb8>::value ||
+	      mln::metal::equal<mln_value(I), value::qt::rgb32>::value))
 	{
 	  std::cerr <<
 	    "error: trying to save an unsupported format\n"
