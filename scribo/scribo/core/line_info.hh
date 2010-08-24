@@ -33,12 +33,17 @@
 ///
 /// \fixme The meanline should not be stored! The user can deduce it
 /// from the x_height and the baseline.
+///
+/// \fixme The way the meanline and the baseline are computed is not
+/// optimal and does not work is the components are too high (because
+/// of the median accumulator and int_u12 overflows).
 
 
 # include <mln/core/alias/box2d.hh>
 # include <mln/core/alias/point2d.hh>
 # include <mln/accu/stat/median_h.hh>
 # include <mln/accu/shape/bbox.hh>
+# include <mln/math/min.hh>
 # include <mln/util/object_id.hh>
 # include <mln/value/int_u.hh>
 
@@ -340,10 +345,10 @@ namespace scribo
 
      \endverbatim
 
-    The baseline, the meanline, the ascent and the descent are defined
-    as an absolute row index.
+    The baseline and the meanline are defined as an absolute row
+    index.
 
-    All other metrics, such as x_height, are computed relatively to
+    All other metrics, such as a_height, are computed relatively to
     the Baseline.
 
   */
@@ -792,10 +797,6 @@ namespace scribo
     typedef mln_site(L) P;
     const component_set<L>& comp_set = holder_.components();
 
-    // FIXME: int_u<12> may not be enought but we can't use unsigned
-    // or any other larger types since there is no median
-    // implementation for high quantification types...
-
     // Init.
     typedef mln::value::int_u<12> median_data_t;
     typedef mln::accu::stat::median_h<median_data_t> median_t;
@@ -806,6 +807,24 @@ namespace scribo
       char_width;
 
     mln::accu::shape::bbox<P> bbox;
+
+    mln::def::coord ref_line = mln_max(mln::def::coord);
+
+    // Find a reference line to compute baselines and other attributes.
+    // Workaround to avoid overflow with int_u<12> in median accumulators.
+    //
+    // FIXME: not optimal...
+    for_all_elements(i, components_)
+    {
+      unsigned c = components_(i);
+
+      // Ignore punctuation for stats computation but not for bbox
+      // computation.
+      if (holder_.components()(c).type() == component::Punctuation)
+	continue;
+
+      ref_line = mln::math::min(comp_set(c).bbox().pmin().row(), ref_line);
+    }
 
     for_all_elements(i, components_)
     {
@@ -833,16 +852,18 @@ namespace scribo
 
       // Character width
       // -- Ignore too large components.
+      //
+      // FIXME: should not be a constant?
       if (bb.width() <= 1000)
 	char_width.take(bb.width());
 
       // Meanline (compute an absolute value, from the top left
       // corner of the image).
-      absolute_meanline.take(bb.pmin().row());
+      absolute_meanline.take(bb.pmin().row() - ref_line);
 
       // Baseline (compute an absolute value, from the top left
       // corner of the image).
-      absolute_baseline.take(bb.pmax().row());
+      absolute_baseline.take(bb.pmax().row() - ref_line);
     }
 
     // Finalization
@@ -863,14 +884,15 @@ namespace scribo
       else
 	char_width_ = char_width.to_result();
 
-      // FIXME: There is a bug here when the input document is too
-      // large. The baselines indexes are too high for the type used
-      // in the median accumulator!
-      baseline_ = absolute_baseline.to_result();
-      meanline_ = absolute_meanline.to_result();
-      x_height_ = absolute_baseline - absolute_meanline + 1;
-      d_height_ = absolute_baseline - bbox.to_result().pmax().row() + 1;
-      a_height_ = absolute_baseline - bbox.to_result().pmin().row() + 1;
+      mln::def::coord
+	absolute_baseline_r = absolute_baseline.to_result() + ref_line,
+	absolute_meanline_r = absolute_meanline.to_result() + ref_line;
+
+      baseline_ = absolute_baseline_r;
+      meanline_ = absolute_meanline_r;
+      x_height_ = baseline_ - meanline_ + 1;
+      d_height_ = baseline_ - bbox.to_result().pmax().row() + 1;
+      a_height_ = baseline_ - bbox.to_result().pmin().row() + 1;
 
       //FIXME
       //

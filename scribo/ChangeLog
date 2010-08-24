@@ -1,3 +1,8 @@
+2010-08-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/core/line_info.hh: Make stats computation more robust
+	with large documents.
+
 2010-08-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* src/Makefile.am: Remove useless flags. Aesthetic changes.
