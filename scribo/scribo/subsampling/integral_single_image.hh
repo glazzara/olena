@@ -32,6 +32,8 @@
 /// Both subsampling and integral image computation.
 
 #include <mln/core/concept/image.hh>
+#include <mln/core/concept/box.hh>
+#include <mln/make/box2d.hh>
 #include <mln/metal/equal.hh>
 #include <mln/extension/fill.hh>
 #include <mln/debug/println.hh>
@@ -440,8 +442,9 @@ namespace scribo
       mln_precondition(input.domain().pmin() == literal::origin);
       mln_precondition(scale > 1);
 
-      box<mln_site(I)> b = make::box2d((input.nrows() + scale - 1) / scale,
-				       (input.ncols() + scale - 1) / scale);
+      box<mln_site(I)>
+	b = mln::make::box2d((input.nrows() + scale - 1) / scale,
+			     (input.ncols() + scale - 1) / scale);
       mln_concrete(I) output;
       output = integral(input_, scale, integral_sum_sum_2,
 			b, mln::border::thickness);

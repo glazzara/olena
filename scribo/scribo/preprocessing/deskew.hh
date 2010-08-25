@@ -227,7 +227,8 @@ namespace scribo
 	  double rho_index = (0.5 + (rho / hough.mrho() + 0.5)
 			      * hough.mrhoi());
 
-	  ++(opt::at(hough.acc(), static_cast<def::coord>(rho_index), i));
+	  ++(opt::at(hough.acc(),
+		     static_cast<mln::def::coord>(rho_index), i));
 	}
       }
 
@@ -420,8 +421,8 @@ namespace scribo
 	output = geom::rotate(input_gl, - angle,
 			      //mln_max(mln_value(I)),
 			      extend(input_gl, mln_max(mln_value(I))),
-			      make::box2d(input_gl.nrows(),
-					  input_gl.ncols()));
+			      mln::make::box2d(input_gl.nrows(),
+					       input_gl.ncols()));
 
       trace::exiting("scribo::preprocessing::deskew");
       return output;

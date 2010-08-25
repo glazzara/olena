@@ -1,3 +1,12 @@
+2010-08-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix namespace ambiguities.
+
+	* scribo/binarization/sauvola_ms.hh,
+	* scribo/binarization/sauvola_threshold_image.hh,
+	* scribo/preprocessing/deskew.hh,
+	* scribo/subsampling/integral_single_image.hh: Add mln:: prefix.
+
 2010-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/filter/object_links_bbox_w_ratio.hh: Rename arguments.

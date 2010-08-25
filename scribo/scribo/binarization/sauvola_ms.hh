@@ -755,25 +755,27 @@ namespace scribo
       {
 	util::array<util::couple<unsigned, unsigned> > n(n_scales + 2);
 
-	n(1) = make::couple(ima.nrows(), ima.ncols());
-	n(2) = make::couple(sub(n(1).first(), s),
-			    sub(n(1).second(), s));
+	n(1) = mln::make::couple(ima.nrows(), ima.ncols());
+	n(2) = mln::make::couple(sub(n(1).first(), s),
+				 sub(n(1).second(), s));
 	for (unsigned i = 3; i <= n_scales + 1; ++i)
-	  n(i) = make::couple(sub(n(i - 1).first(), 2),
-			      sub(n(i - 1).second(), 2));
+	  n(i) = mln::make::couple(sub(n(i - 1).first(), 2),
+				   sub(n(i - 1).second(), 2));
 
 
 	util::array<util::couple<mln_domain(I), unsigned> > out(n.size());
-	out(0) = make::couple(make::box2d(1,1), 1u);
-	out(1) = make::couple(make::box2d(ima.nrows(), ima.ncols()), 2u);
-	out(n_scales + 1) = make::couple(make::box2d(n(n_scales + 1).first(),
-						     n(n_scales + 1).second()),
-					 1u);
+	out(0) = mln::make::couple(mln::make::box2d(1,1), 1u);
+	out(1) = mln::make::couple(mln::make::box2d(ima.nrows(),
+						    ima.ncols()), 2u);
+	out(n_scales + 1) = mln::make::couple(
+	  mln::make::box2d(n(n_scales + 1).first(),
+			   n(n_scales + 1).second()), 1u);
 
 	for (unsigned i = n_scales; i > 1; --i)
-	  out(i) = make::couple(make::box2d(2 * out(i + 1).first().nrows(),
-					    2 * out(i + 1).first().ncols()),
-				2 * out(i + 1).second());
+	  out(i) = mln::make::couple(
+	    mln::make::box2d(2 * out(i + 1).first().nrows(),
+			     2 * out(i + 1).first().ncols()),
+	    2 * out(i + 1).second());
 
 	out(1).second() = std::max(out(2).first().ncols() * s - ima.ncols(),
 				   out(2).first().nrows() * s - ima.nrows());

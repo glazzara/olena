@@ -432,8 +432,10 @@ namespace scribo
 	  mln_concrete(I) output;
 	  initialize(output, input);
 
-	  const def::coord nrows = static_cast<def::coord>(input.nrows());
-	  const def::coord ncols = static_cast<def::coord>(input.ncols());
+	  const mln::def::coord
+	    nrows = static_cast<mln::def::coord>(input.nrows()),
+	    ncols = static_cast<mln::def::coord>(input.ncols());
+
 
 	  for(def::coord row = 0; row < nrows; ++row)
 	    for(def::coord col = 0; col < ncols; ++col)
