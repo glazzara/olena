@@ -1,5 +1,13 @@
 2010-08-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a preprocessing toolchain.
+
+	* scribo/toolchain/text_in_doc_preprocess.hh: New.
+
+	* src/text_in_doc_preprocess.cc: Make use of this new toolchain.
+
+2010-08-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix namespace ambiguities.
 
 	* scribo/binarization/sauvola_ms.hh,

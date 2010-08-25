@@ -34,17 +34,9 @@
 
 #include <mln/value/rgb8.hh>
 
-#include <mln/logical/not.hh>
-
-#include <scribo/binarization/sauvola_ms.hh>
-
 #include <scribo/debug/usage.hh>
 
-#include <scribo/preprocessing/split_bg_fg.hh>
-#include <scribo/preprocessing/deskew.hh>
-
-
-#include <mln/io/pgm/all.hh>
+#include <scribo/toolchain/text_in_doc_preprocess.hh>
 
 
 const char *args_desc[][2] =
@@ -74,28 +66,17 @@ int main(int argc, char* argv[])
   unsigned lambda;
   if (argc == 5)
     lambda = atoi(argv[4]);
+
+  bool remove_bg = false;
+  if (argc >= 4)
+    remove_bg = (atoi(argv[3]) == 1);
+
+  image2d<bool> output;
+
+  if (argc == 5 && remove_bg)
+    output = toolchain::text_in_doc_preprocess(input_rgb, lambda);
   else
-    lambda = 1.2 * (input_rgb.nrows() + input_rgb.ncols());
+    output = toolchain::text_in_doc_preprocess(input_rgb, remove_bg);
 
-  // Extract foreground
-  if (argc >= 4 && atoi(argv[3]) == 1)
-  {
-    std::cout << "Extracting foreground..." << std::endl;
-    input_rgb = preprocessing::split_bg_fg(input_rgb, lambda, 32).second();
-  }
-
-  // Convert to Gray level image.
-  image2d<value::int_u8>
-    input_gl = data::transform(input_rgb, mln::fun::v2v::rgb_to_int_u<8>());
-
-
-  // Deskewing
-  std::cout << "Deskew if needed..." << std::endl;
-  input_gl = preprocessing::deskew(input_gl);
-
-  // Binarize foreground to use it in the processing chain.
-  std::cout << "Binarizing foreground..." << std::endl;
-  image2d<bool> input_bin = scribo::binarization::sauvola_ms(input_gl, 101, 3);
-
-  mln::io::pbm::save(input_bin, argv[2]);
+  mln::io::pbm::save(output, argv[2]);
 }
