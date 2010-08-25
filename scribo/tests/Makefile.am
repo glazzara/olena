@@ -17,14 +17,14 @@
 
 include $(srcdir)/tests.mk
 
-EXTRA_DIST = 			\
-  table_to_be_repaired.pbm	\
-  table_to_be_repaired2.pbm	\
-  table_to_be_repaired3.pbm	\
-  text_to_group.pbm		\
-  text_to_group.pgm		\
-  text_to_group_and_clean.pbm	\
-  wildly.pbm
+EXTRA_DIST = 				\
+  img/table_to_be_repaired.pbm		\
+  img/table_to_be_repaired2.pbm		\
+  img/table_to_be_repaired3.pbm		\
+  img/text_to_group.pbm			\
+  img/text_to_group.pgm			\
+  img/text_to_group_and_clean.pbm	\
+  img/wildly.pbm
 
 SUBDIRS = 		\
   binarization 		\

@@ -1,5 +1,9 @@
 2010-08-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* tests/Makefile.am (EXTRA_DIST): Fix path to files.
+
+2010-08-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* tests/Makefile.am (EXTRA_DIST): Add new files.
 
 2010-08-25  Guillaume Lazzara  <z@lrde.epita.fr>
