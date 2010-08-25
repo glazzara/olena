@@ -17,6 +17,15 @@
 
 include $(srcdir)/tests.mk
 
+EXTRA_DIST = 			\
+  table_to_be_repaired.pbm	\
+  table_to_be_repaired2.pbm	\
+  table_to_be_repaired3.pbm	\
+  text_to_group.pbm		\
+  text_to_group.pgm		\
+  text_to_group_and_clean.pbm	\
+  wildly.pbm
+
 SUBDIRS = 		\
   binarization 		\
   core 			\
