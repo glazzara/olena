@@ -1,3 +1,13 @@
+2010-08-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Re-enable 'table' directory in SUBDIRS.
+
+	* src/Makefile.am,
+	* tests/Makefile.am (SUBDIRS): Add table.
+
+	* src/table/Makefile.am,
+	* tests/table/Makefile.am: Disable tests.
+
 2010-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes in Scribo

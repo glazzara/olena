@@ -1,4 +1,4 @@
-# Copyright (C) 2009 2010 EPITA Research and Development Laboratory
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
 # (LRDE).
 #
 # This file is part of Olena.
@@ -23,13 +23,10 @@ SUBDIRS = 		\
   filter 		\
   preprocessing 	\
   primitive 		\
+  table 		\
   text 			\
   toolchain 		\
   unit_test
-
-# Disabled directories:
-#
-#  table
 
 # Regen files recursively.
 include $(top_srcdir)/build-aux/regen-recursive.mk

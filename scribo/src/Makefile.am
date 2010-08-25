@@ -26,11 +26,10 @@ SUBDIRS =					\
   misc 						\
   postprocessing 				\
   preprocessing 				\
+  table	 					\
   text 						\
   toolchain
 
-# Disabled for the moment:
-#  table
 
 
 bin_PROGRAMS =

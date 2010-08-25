@@ -16,11 +16,13 @@
 
 include $(top_srcdir)/scribo/tests/tests.mk
 
-check_PROGRAMS =				\
-  extract_lines_with_rank 			\
-  repair_lines
+check_PROGRAMS =
 
-extract_lines_with_rank_SOURCES = extract_lines_with_rank.cc
-repair_lines_SOURCES = repair_lines.cc
+# check_PROGRAMS =				\
+#   extract_lines_with_rank 			\
+#   repair_lines
+
+# extract_lines_with_rank_SOURCES = extract_lines_with_rank.cc
+# repair_lines_SOURCES = repair_lines.cc
 
 TESTS = $(check_PROGRAMS)
