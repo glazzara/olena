@@ -196,6 +196,7 @@ scribo/text/merging.hh \
 scribo/text/recognition.hh \
 scribo/toolchain/nepomuk/text_extraction.hh \
 scribo/toolchain/text_in_doc.hh \
+scribo/toolchain/text_in_doc_preprocess.hh \
 scribo/upsampling/bs2x.hh \
 scribo/upsampling/eagle.hh
 

@@ -1,3 +1,7 @@
+2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* headers.mk: Regen.
+
 2010-08-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a preprocessing toolchain.
