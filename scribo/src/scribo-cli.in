@@ -1,0 +1,135 @@
+# Copyright (C) 2010 EPITA Research and Development Laboratory (LRDE).
+#
+# This file is part of Olena.
+#
+# Olena is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, version 2 of the License.
+#
+# Olena is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Olena.  If not, see <http://www.gnu.org/licenses/>.
+#
+#!/bin/sh
+
+bdir="@utilexecdir@"
+bin=`basename $0`
+
+version()
+{
+    cat <<EOF
+SCRIBO Command LIne tool, version 1.0
+Copyright (C) 2010 LRDE/EPITA
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+EOF
+}
+
+usage()
+{
+    cat <<EOF
+Usage: $bin [version] [help] COMMAND [ARGS]
+
+List of available COMMAND argument:
+
+  Full Toolchains
+  ---------------
+
+
+   * On documents
+
+     doc-ppc	       Common preprocessing before looking for text.
+
+     doc-ocr           Find and recognize text.
+
+
+
+   * On pictures
+
+     pic-loc           Try to localize text if there's any.
+
+     pic-ocr           Localize and try to recognize text.
+
+
+  Algorithms
+  ----------
+
+
+   * Binarization
+
+     sauvola           Sauvola's algorithm.
+
+     sauvola-ms        Multi-scale Sauvola's algorithm.
+
+     sauvola-ms-fg     Extract foreground objects and run multi-scale
+                       Sauvola's algorithm.
+
+     sauvola-ms-split  Run multi-scale Sauvola's algorithm on each color
+                       component and merge results.
+
+---------------------------------------------------------------------------
+See '$bin COMMAND --help' for more information on a specific command.
+EOF
+}
+
+
+run_cmd()
+{
+    cmd="$1";
+    shift;
+
+    case $cmd in
+
+	doc-ppc)
+	    $bdir/text_in_doc_preprocess $@
+	    ;;
+
+	doc-ocr)
+	    $bdir/pbm_text_in_doc $@
+	    ;;
+
+	pic-loc)
+	    $bdir/text_in_picture $@
+	    ;;
+
+	pic-ocr)
+	    $bdir/text_recognition_in_picture $@
+	    ;;
+
+	*)
+	    cmd_bin=`echo $cmd | sed -e 's/-/_/g'`
+	    if test -f $bdir/$cmd_bin; then
+		$bdir/$cmd_bin $@
+	    else
+		echo "Error: Invalid command!"
+		usage
+	    fi
+    esac
+}
+
+
+case $1 in
+
+    version | --version)
+	version
+	;;
+
+
+    help | --help)
+
+	usage
+	;;
+
+    help)
+
+	;;
+
+    *)
+	run_cmd $1
+	;;
+
+esac

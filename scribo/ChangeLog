@@ -1,5 +1,13 @@
 2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add scribo-cli script.
+
+	* src/Makefile.am: Add new rules to generate scribo-cli.
+
+	* src/scribo-cli.in: New.
+
+2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Setup what to install with Scribo.
 
 	* demo/viewer/Makefile.am: Do not install includes.
