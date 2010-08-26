@@ -1,5 +1,17 @@
 2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make use of autotroll in demo/review.
+
+	* demo/review/Makefile.am: Make use of autotroll.
+
+	* demo/review/src/mainwindow.cc: Remove useless includes.
+
+	* demo/review/src/mainwindow.hh: Update include.
+
+	* demo/review/review.pro: Remove since useless.
+
+2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Install Scribo headers in include/scribo.
 
 	* Makefile.am: Update call to generate_dist_headers.sh.

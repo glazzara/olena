@@ -31,7 +31,7 @@
 # include <QProcess>
 # include <QtGui/QWidget>
 # include <QProgressDialog>
-# include <ui_mainwindow.h>
+# include <mainwindow.ui.h>
 
 namespace scribo
 {

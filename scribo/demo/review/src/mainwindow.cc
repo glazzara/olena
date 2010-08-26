@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -25,10 +26,6 @@
 
 #include <QtCore>
 #include <QtGui>
-
-#include <mln/core/image/image2d.hh>
-#include <mln/logical/not.hh>
-#include <mln/io/pbm/all.hh>
 
 #include <src/mainwindow.hh>
 
