@@ -1,3 +1,11 @@
+2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Install Scribo headers in include/scribo.
+
+	* Makefile.am: Update call to generate_dist_headers.sh.
+
+	* headers.mk: Regen.
+
 2010-08-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* tests/Makefile.am (EXTRA_DIST): Fix path to files.
