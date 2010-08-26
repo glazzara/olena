@@ -38,5 +38,4 @@ noinst_HEADERS = src/mainwindow.hh
 
 
 EXTRA_DIST = 	\
-  README	\
   review.qrc

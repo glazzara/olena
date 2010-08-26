@@ -19,7 +19,7 @@
 
 include $(top_srcdir)/scribo/scribo.mk
 
-bin_PROGRAMS = 				\
+noinst_PROGRAMS = 		\
   fill_object_holes
 
 

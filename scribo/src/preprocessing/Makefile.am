@@ -17,7 +17,7 @@
 
 include $(top_srcdir)/scribo/scribo.mk
 
-bin_PROGRAMS = 				\
+noinst_PROGRAMS = 			\
   denoise_bg 				\
   denoise_fg 				\
   homogeneous_contrast 			\
@@ -32,49 +32,44 @@ unskew_SOURCES = unskew.cc
 
 if HAVE_MAGICKXX
 
-    bin_PROGRAMS += split_bg_fg
-    split_bg_fg_SOURCES = split_bg_fg.cc
+    noinst_PROGRAMS    	+= split_bg_fg
+    split_bg_fg_SOURCES  = split_bg_fg.cc
     split_bg_fg_CPPFLAGS = $(AM_CPPFLAGS) \
 		           $(MAGICKXX_CPPFLAGS)
+    split_bg_fg_LDFLAGS  = $(AM_LDFLAGS) \
+			   $(MAGICKXX_LDFLAGS) \
+			   -lpthread
 
-    split_bg_fg_LDFLAGS = $(AM_LDFLAGS) \
-			  $(MAGICKXX_LDFLAGS) \
-			  -lpthread
-
-    bin_PROGRAMS += rotate
-    rotate_SOURCES = rotate.cc
+    noinst_PROGRAMS += rotate
+    rotate_SOURCES  = rotate.cc
     rotate_CPPFLAGS = $(AM_CPPFLAGS) \
 	              $(MAGICKXX_CPPFLAGS)
+    rotate_LDFLAGS  = $(AM_LDFLAGS) \
+		      $(MAGICKXX_LDFLAGS) \
+		      -lpthread
 
-    rotate_LDFLAGS = $(AM_LDFLAGS) \
-		     $(MAGICKXX_LDFLAGS) \
-		     -lpthread
-
-    bin_PROGRAMS += rotate_90
-    rotate_90_SOURCES = rotate_90.cc
+    noinst_PROGRAMS   += rotate_90
+    rotate_90_SOURCES  = rotate_90.cc
     rotate_90_CPPFLAGS = $(AM_CPPFLAGS) \
 	                 $(MAGICKXX_CPPFLAGS)
+    rotate_90_LDFLAGS  = $(AM_LDFLAGS) \
+		         $(MAGICKXX_LDFLAGS) \
+			 -lpthread
 
-    rotate_90_LDFLAGS = $(AM_LDFLAGS) \
-		        $(MAGICKXX_LDFLAGS) \
-			-lpthread
+    noinst_PROGRAMS += to_pgm
+    to_pgm_SOURCES   = to_pgm.cc
+    to_pgm_CPPFLAGS  = $(AM_CPPFLAGS) \
+		       $(MAGICKXX_CPPFLAGS)
+    to_pgm_LDFLAGS   = $(AM_LDFLAGS) \
+		       $(MAGICKXX_LDFLAGS) \
+		       -lpthread
 
-    bin_PROGRAMS += to_pgm
-    to_pgm_SOURCES = to_pgm.cc
-    to_pgm_CPPFLAGS = $(AM_CPPFLAGS) \
-		      $(MAGICKXX_CPPFLAGS)
-
-    to_pgm_LDFLAGS = $(AM_LDFLAGS) \
-		     $(MAGICKXX_LDFLAGS) \
-		     -lpthread
-
-    bin_PROGRAMS += subsample
-    subsample_SOURCES = subsample.cc
+    noinst_PROGRAMS   += subsample
+    subsample_SOURCES  = subsample.cc
     subsample_CPPFLAGS = $(AM_CPPFLAGS) \
 			 $(MAGICKXX_CPPFLAGS)
-
-    subsample_LDFLAGS = $(AM_LDFLAGS) \
-		        $(MAGICKXX_LDFLAGS) \
-		        -lpthread
+    subsample_LDFLAGS  = $(AM_LDFLAGS) \
+		         $(MAGICKXX_LDFLAGS) \
+		         -lpthread
 
 endif HAVE_MAGICKXX

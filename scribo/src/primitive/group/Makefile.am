@@ -17,7 +17,7 @@
 
 include $(top_srcdir)/scribo/scribo.mk
 
-bin_PROGRAMS = 					\
+noinst_PROGRAMS = 				\
   group_from_double_link           		\
   group_from_double_several_links  		\
   group_from_several_left_links    		\

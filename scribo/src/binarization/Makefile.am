@@ -17,7 +17,7 @@
 
 include $(top_srcdir)/scribo/scribo.mk
 
-bin_PROGRAMS = 				\
+noinst_PROGRAMS = 			\
   pgm_global_threshold_auto 		\
   pgm_sauvola 				\
   pgm_sauvola_ms			\
@@ -37,51 +37,56 @@ ppm_sauvola_ms_split_SOURCES = ppm_sauvola_ms_split.cc
 
 
 if HAVE_MAGICKXX
-  bin_PROGRAMS +=                       \
-   sauvola_ms_fg 			\
+
+  noinst_PROGRAMS +=  			\
+   sauvola_debug 			\
+   sauvola_ms_debug
+
+  utilexec_PROGRAMS =                   \
    sauvola 				\
-   sauvola_debug			\
    sauvola_ms                           \
-   sauvola_ms_debug                     \
+   sauvola_ms_fg 			\
    sauvola_ms_split
 
-  sauvola_ms_fg_SOURCES = sauvola_ms_fg.cc
-  sauvola_ms_fg_CPPFLAGS = $(AM_CPPFLAGS) \
-			   $(MAGICKXX_CPPFLAGS)
-  sauvola_ms_fg_LDFLAGS = $(AM_LDFLAGS) \
-			  $(MAGICKXX_LDFLAGS)
 
-  sauvola_SOURCES = sauvola.cc
-  sauvola_CPPFLAGS = $(AM_CPPFLAGS) \
+  sauvola_ms_fg_SOURCES  = sauvola_ms_fg.cc
+  sauvola_ms_fg_CPPFLAGS = $(AM_CPPFLAGS) 	\
+			   $(MAGICKXX_CPPFLAGS)
+  sauvola_ms_fg_LDFLAGS  = $(AM_LDFLAGS) 	\
+			   $(MAGICKXX_LDFLAGS)
+
+  sauvola_SOURCES  = sauvola.cc
+  sauvola_CPPFLAGS = $(AM_CPPFLAGS) 		\
 		     $(MAGICKXX_CPPFLAGS)
-  sauvola_LDFLAGS = $(AM_LDFLAGS) \
-		    $(MAGICKXX_LDFLAGS)
+  sauvola_LDFLAGS  = $(AM_LDFLAGS) 		\
+		     $(MAGICKXX_LDFLAGS)
 
-  sauvola_debug_SOURCES = sauvola_debug.cc
-  sauvola_debug_CPPFLAGS = $(AM_CPPFLAGS) \
+  sauvola_debug_SOURCES  = sauvola_debug.cc
+  sauvola_debug_CPPFLAGS = $(AM_CPPFLAGS) 	\
 			   $(MAGICKXX_CPPFLAGS)
-  sauvola_debug_LDFLAGS = $(AM_LDFLAGS) \
-			  $(MAGICKXX_LDFLAGS)
+  sauvola_debug_LDFLAGS  = $(AM_LDFLAGS) 	\
+			   $(MAGICKXX_LDFLAGS)
 
 
-  sauvola_ms_SOURCES = sauvola_ms.cc
-  sauvola_ms_CPPFLAGS = $(AM_CPPFLAGS) \
+  sauvola_ms_SOURCES  = sauvola_ms.cc
+  sauvola_ms_CPPFLAGS = $(AM_CPPFLAGS) 		\
 			$(MAGICKXX_CPPFLAGS)
-  sauvola_ms_LDFLAGS = $(AM_LDFLAGS) \
-		       $(MAGICKXX_LDFLAGS)
+  sauvola_ms_LDFLAGS  = $(AM_LDFLAGS) 		\
+		        $(MAGICKXX_LDFLAGS)
 
-  sauvola_ms_debug_SOURCES = sauvola_ms_debug.cc
-  sauvola_ms_debug_CPPFLAGS = $(AM_CPPFLAGS) -DSCRIBO_SAUVOLA_DEBUG \
+  sauvola_ms_debug_SOURCES  = sauvola_ms_debug.cc
+  sauvola_ms_debug_CPPFLAGS = $(AM_CPPFLAGS) 		\
+			      -DSCRIBO_SAUVOLA_DEBUG 	\
 			      $(MAGICKXX_CPPFLAGS)
-  sauvola_ms_debug_LDFLAGS = $(AM_LDFLAGS) \
-		             $(MAGICKXX_LDFLAGS)
+  sauvola_ms_debug_LDFLAGS  = $(AM_LDFLAGS) 		\
+		              $(MAGICKXX_LDFLAGS)
 
 
-  sauvola_ms_split_SOURCES = sauvola_ms_split.cc
-  sauvola_ms_split_CPPFLAGS = $(AM_CPPFLAGS) \
+  sauvola_ms_split_SOURCES  = sauvola_ms_split.cc
+  sauvola_ms_split_CPPFLAGS = $(AM_CPPFLAGS) 		\
 			      $(MAGICKXX_CPPFLAGS)
-  sauvola_ms_split_LDFLAGS = $(AM_LDFLAGS) \
-			     $(MAGICKXX_LDFLAGS)
+  sauvola_ms_split_LDFLAGS  = $(AM_LDFLAGS) 		\
+			      $(MAGICKXX_LDFLAGS)
 
 
 endif HAVE_MAGICKXX

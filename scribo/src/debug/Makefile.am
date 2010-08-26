@@ -17,7 +17,7 @@
 
 include $(top_srcdir)/scribo/scribo.mk
 
-bin_PROGRAMS = 					\
+noinst_PROGRAMS = 				\
   show_info_x_height 				\
   show_info_median_inter_characters		\
   show_links_left_right_links_validation 	\
@@ -75,8 +75,8 @@ show_objects_thin_SOURCES = show_objects_thin.cc
 
 if HAVE_MAGICKXX
 
-  bin_PROGRAMS += highlight_text_area
-  highlight_text_area_SOURCES = highlight_text_area.cc
+  noinst_PROGRAMS 	      += highlight_text_area
+  highlight_text_area_SOURCES  = highlight_text_area.cc
   highlight_text_area_CPPFLAGS = $(AM_CPPFLAGS) \
 				`Magick++-config --cppflags`
   highlight_text_area_LDFLAGS  = $(AM_LDFLAGS) \

@@ -1,5 +1,29 @@
 2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Setup what to install with Scribo.
+
+	* demo/viewer/Makefile.am: Do not install includes.
+
+	* scribo.mk (utilexecdir): New variable.
+
+	* src/Makefile.am,
+	* src/binarization/Makefile.am: Install usefull binaries in
+	utilexecdir.
+
+	* src/contest/hdibco-2010/Makefile.am,
+	* src/debug/Makefile.am,
+	* src/filter/Makefile.am,
+	* src/misc/Makefile.am,
+	* src/postprocessing/Makefile.am,
+	* src/preprocessing/Makefile.am,
+	* src/primitive/extract/Makefile.am,
+	* src/primitive/find/Makefile.am,
+	* src/primitive/group/Makefile.am,
+	* src/table/Makefile.am,
+	* src/text/Makefile.am: Do not install theses binaries.
+
+2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make use of autotroll in demo/review.
 
 	* demo/review/Makefile.am: Make use of autotroll.

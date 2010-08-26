@@ -32,12 +32,12 @@ SUBDIRS =					\
 
 
 
-bin_PROGRAMS =
+utilexec_PROGRAMS =
 
 
 if HAVE_TESSERACT
 
-    bin_PROGRAMS	    += pbm_text_in_doc
+    utilexec_PROGRAMS	    += pbm_text_in_doc
     pbm_text_in_doc_SOURCES  = pbm_text_in_doc.cc
     pbm_text_in_doc_CPPFLAGS = $(AM_CPPFLAGS) \
 			       $(TESSERACT_CPPFLAGS) \
@@ -53,7 +53,7 @@ endif HAVE_TESSERACT
 
 if HAVE_MAGICKXX
 
-    bin_PROGRAMS		   += text_in_doc_preprocess
+    utilexec_PROGRAMS		   += text_in_doc_preprocess
     text_in_doc_preprocess_SOURCES  = text_in_doc_preprocess.cc
     text_in_doc_preprocess_CPPFLAGS = $(AM_CPPFLAGS) \
 				      $(MAGICKXX_CPPFLAGS)
@@ -62,7 +62,7 @@ if HAVE_MAGICKXX
 				      $(MAGICKXX_LDFLAGS)
 
 
-    bin_PROGRAMS	    += text_in_picture
+    utilexec_PROGRAMS	    += text_in_picture
     text_in_picture_SOURCES  = text_in_picture.cc
     text_in_picture_CPPFLAGS = $(AM_CPPFLAGS) \
 			       $(MAGICKXX_CPPFLAGS)
@@ -72,7 +72,7 @@ if HAVE_MAGICKXX
 
 if HAVE_TESSERACT
 
-    bin_PROGRAMS			+= text_recognition_in_picture
+    utilexec_PROGRAMS			+= text_recognition_in_picture
     text_recognition_in_picture_SOURCES  = text_recognition_in_picture.cc
     text_recognition_in_picture_CPPFLAGS = $(AM_CPPFLAGS) \
 	  			           $(TESSERACT_CPPFLAGS) \

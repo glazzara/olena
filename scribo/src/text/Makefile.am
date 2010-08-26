@@ -1,4 +1,5 @@
-# Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE).
+# Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+# (LRDE).
 #
 # This file is part of Olena.
 #
@@ -16,7 +17,7 @@
 
 include $(top_srcdir)/scribo/scribo.mk
 
-bin_PROGRAMS = 					\
+noinst_PROGRAMS = 	\
   cleantxt
 
 
@@ -26,7 +27,7 @@ cleantxt_SOURCES = cleantxt.cc
 if HAVE_TESSERACT
 if HAVE_TIFF
 
-    bin_PROGRAMS 	 	  += pbm_lines_recognition
+    noinst_PROGRAMS 	  	  += pbm_lines_recognition
     pbm_lines_recognition_SOURCES  = pbm_lines_recognition.cc
     pbm_lines_recognition_CPPFLAGS = $(AM_CPPFLAGS) \
 		  		     $(TESSERACT_CPPFLAGS) \
@@ -37,7 +38,7 @@ if HAVE_TIFF
 				     $(TIFF_LDFLAGS) \
 				     -lpthread
 
-    bin_PROGRAMS 	     += pbm_recognition
+    noinst_PROGRAMS	     += pbm_recognition
     pbm_recognition_SOURCES   = pbm_recognition.cc
     pbm_recognition_CPPFLAGS  = $(AM_CPPFLAGS) \
 			        $(TESSERACT_CPPFLAGS) \

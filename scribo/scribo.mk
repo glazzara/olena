@@ -25,3 +25,5 @@ AM_CPPFLAGS = 			\
 
 SCRIBO_CXXFLAGS = @SCRIBO_CXXFLAGS@
 AM_CXXFLAGS = $(SCRIBO_CXXFLAGS)
+
+utilexecdir = $(libexecdir)/scribo
