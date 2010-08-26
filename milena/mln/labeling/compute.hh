@@ -530,6 +530,20 @@ namespace mln
       template <typename A, typename I, typename L>
       inline
       util::array<mln_result(A)>
+      compute_dispatch(mln::trait::image::value_storage::any,
+		       mln::trait::image::value_storage::any,
+		       const Accumulator<A>& a,
+		       const Image<I>& input,
+		       const Image<L>& label,
+		       const mln_value(L)& nlabels)
+      {
+          return impl::generic::compute(a, input, label, nlabels);
+      }
+
+
+      template <typename A, typename I, typename L>
+      inline
+      util::array<mln_result(A)>
       compute_dispatch(mln::trait::image::value_storage::one_block,
 		       mln::trait::image::value_storage::one_block,
 		       const Accumulator<A>& a,
