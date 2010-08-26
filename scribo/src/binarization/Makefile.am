@@ -22,7 +22,7 @@ bin_PROGRAMS = 				\
   pgm_sauvola 				\
   pgm_sauvola_ms			\
   ppm_sauvola 				\
-  ppm_fg_sauvola_ms 			\
+  ppm_sauvola_ms_fg 			\
   ppm_sauvola_ms 			\
   ppm_sauvola_ms_split
 
@@ -31,24 +31,24 @@ pgm_global_threshold_auto_SOURCES = pgm_global_threshold_auto.cc
 pgm_sauvola_SOURCES = pgm_sauvola.cc
 pgm_sauvola_ms_SOURCES = pgm_sauvola_ms.cc
 ppm_sauvola_SOURCES = ppm_sauvola.cc
-ppm_fg_sauvola_ms_SOURCES = ppm_fg_sauvola_ms.cc
+ppm_sauvola_ms_fg_SOURCES = ppm_sauvola_ms_fg.cc
 ppm_sauvola_ms_SOURCES = ppm_sauvola_ms.cc
 ppm_sauvola_ms_split_SOURCES = ppm_sauvola_ms_split.cc
 
 
 if HAVE_MAGICKXX
   bin_PROGRAMS +=                       \
-   fg_sauvola_ms 			\
+   sauvola_ms_fg 			\
    sauvola 				\
    sauvola_debug			\
    sauvola_ms                           \
    sauvola_ms_debug                     \
    sauvola_ms_split
 
-  fg_sauvola_ms_SOURCES = fg_sauvola_ms.cc
-  fg_sauvola_ms_CPPFLAGS = $(AM_CPPFLAGS) \
+  sauvola_ms_fg_SOURCES = sauvola_ms_fg.cc
+  sauvola_ms_fg_CPPFLAGS = $(AM_CPPFLAGS) \
 			   $(MAGICKXX_CPPFLAGS)
-  fg_sauvola_ms_LDFLAGS = $(AM_LDFLAGS) \
+  sauvola_ms_fg_LDFLAGS = $(AM_LDFLAGS) \
 			  $(MAGICKXX_LDFLAGS)
 
   sauvola_SOURCES = sauvola.cc

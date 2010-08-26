@@ -1,5 +1,17 @@
 2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rename examples.
+
+	* src/binarization/Makefile.am: Rename targets.
+
+	* src/binarization/fg_sauvola_ms.cc,
+	* src/binarization/ppm_fg_sauvola_ms.cc: Rename as...
+
+	* src/binarization/ppm_sauvola_ms_fg.cc,
+	* src/binarization/sauvola_ms_fg.cc: ...this.
+
+2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* headers.mk: Regen.
 
 2010-08-25  Guillaume Lazzara  <z@lrde.epita.fr>
