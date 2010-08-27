@@ -104,6 +104,6 @@ scribo-cli: $(srcdir)/scribo-cli.in Makefile
 	chmod a-w $@.tmp
 	mv $@.tmp $@
 
-CLEANFILES = $(bin_SCRIPTS)
+CLEANFILES = $(dist_bin_SCRIPTS)
 
 EXTRA_DIST = scribo-cli.in

@@ -1,3 +1,7 @@
+2010-08-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* src/Makefile.am (CLEANFILES): Fix invalid variable name.
+
 2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add scribo-cli script.
