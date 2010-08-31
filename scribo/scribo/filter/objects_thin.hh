@@ -113,7 +113,7 @@ namespace scribo
 	bool operator()(const mln_value(L)& l) const
 	{
 	  if (l == literal::zero)
-	    return true;
+	    return false;
 	  return components_(l).bbox().nrows() > min_thickness_
 	    && components_(l).bbox().ncols() > min_thickness_;
 	}

@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -86,6 +87,9 @@ namespace scribo
 
 	/// The component set to filter.
 	const component_set<L> components_;
+
+	/// The number of labels remaining after filtering.
+	mln_value(L) nlabels_;
       };
 
 
@@ -99,7 +103,7 @@ namespace scribo
       components_small_filter<L>::components_small_filter(
 	const component_set<L>& components,
 	unsigned min_size)
-	: min_size_(min_size), components_(components)
+	: min_size_(min_size), components_(components), nlabels_(0)
       {
       }
 
@@ -111,8 +115,13 @@ namespace scribo
       components_small_filter<L>::operator()(const mln_value(L)& l) const
       {
 	if (l == literal::zero)
+	  return false;
+	if (components_.info(l).card() >= min_size_)
+	{
+	  ++nlabels_;
 	  return true;
-	return components_.info(l).card() >= min_size_;
+	}
+	return false;
       }
 
 

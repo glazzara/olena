@@ -86,6 +86,9 @@ namespace scribo
 
 	/// The component set to filter.
 	const component_set<L> components_;
+
+	/// The number of labels remaining after filtering.
+	mln_value(L) nlabels_;
       };
 
 
@@ -111,8 +114,13 @@ namespace scribo
       components_large_filter<L>::operator()(const mln_value(L)& l) const
       {
 	if (l == literal::zero)
+	  return false;
+	if (components_.info(l).card() <= max_size_)
+	{
+	  ++nlabels_;
 	  return true;
-	return components_.info(l).card() <= max_size_;
+	}
+	return false;
       }
 
 

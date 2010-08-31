@@ -1,5 +1,22 @@
 2010-08-31  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Change return value for background in filtering functions.
+
+	* scribo/filter/objects_h_thick.hh,
+	* scribo/filter/objects_h_thin.hh,
+	* scribo/filter/objects_size_ratio.hh,
+	* scribo/filter/objects_small.hh,
+	* scribo/filter/objects_thick.hh,
+	* scribo/filter/objects_thin.hh,
+	* scribo/filter/objects_v_thick.hh,
+	* scribo/filter/objects_v_thin.hh: Here.
+
+	* scribo/fun/v2b/objects_large_filter.hh,
+	* scribo/fun/v2b/objects_small_filter.hh: Here. Count the non
+	filtered objects.
+
+2010-08-31  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/toolchain/text_in_doc_preprocess.hh: Add a new overload.
 
 2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>

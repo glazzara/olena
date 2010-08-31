@@ -94,7 +94,7 @@ namespace scribo
    mln_concrete(I)
    components_small(const Image<I>& input_,
 		    const Neighborhood<N>& nbh_,
-		    const V& label_type,
+		    V& nlabels,
 		    unsigned min_size)
    {
      trace::entering("scribo::filter::components_small");
@@ -115,6 +115,7 @@ namespace scribo
      func_t fv2b(lbl, min_size);
      mln_concrete(I)
        output = mln::data::transform(lbl.labeled_image(), fv2b);
+     nlabels = fv2b.nlabels_;
 
      trace::exiting("scribo::filter::components_small");
      return output;

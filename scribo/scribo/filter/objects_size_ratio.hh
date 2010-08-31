@@ -80,7 +80,7 @@ namespace scribo
 	bool operator()(const mln_value(L)& l) const
 	{
 	  if (l == literal::zero)
-	    return true;
+	    return false;
 	  return (comps_(l).bbox().height() / static_cast<float>(comps_(l).bbox().width())) >= min_size_ratio_;
 	}
 
