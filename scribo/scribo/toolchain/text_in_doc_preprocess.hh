@@ -76,6 +76,22 @@ namespace scribo
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input, unsigned lambda);
 
+    /*! \brief Preprocess a document before looking for its content.
+
+      \param[in] input An image.
+      \param[in] lambda Parameter to the background removal.
+      \param[in,out] fg The foreground layer of \p input.
+
+      If lambda is set to '0' no background removal is
+      performed. Otherwise, a background removal is performed with the
+      given \p lambda value.
+
+     */
+    template <typename I>
+    mln_ch_value(I,bool)
+    text_in_doc_preprocess(const Image<I>& input, unsigned lambda,
+			   Image<I>& fg);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -84,8 +100,6 @@ namespace scribo
     mln_ch_value(I,bool)
     text_in_doc_preprocess(const Image<I>& input_, bool enable_fg_bg)
     {
-      trace::entering("scribo::toolchain::text_in_doc_preprocess");
-
       const I& input = exact(input_);
       mln_precondition(input.is_valid());
 
@@ -95,18 +109,27 @@ namespace scribo
 
       mln_ch_value(I,bool) output = text_in_doc_preprocess(input, lambda);
 
-      trace::exiting("scribo::toolchain::text_in_doc_preprocess");
       return output;
+    }
+
+    template <typename I>
+    mln_ch_value(I,bool)
+    text_in_doc_preprocess(const Image<I>& input, unsigned lambda)
+    {
+      I tmp;
+      return text_in_doc_preprocess(input, lambda, tmp);
     }
 
 
     template <typename I>
     mln_ch_value(I,bool)
-    text_in_doc_preprocess(const Image<I>& input_, unsigned lambda)
+    text_in_doc_preprocess(const Image<I>& input_, unsigned lambda,
+			   Image<I>& fg_)
     {
       trace::entering("scribo::toolchain::text_in_doc_preprocess");
 
       const I& input = exact(input_);
+            I& fg = exact(fg_);
       mln_precondition(input.is_valid());
 
       mln_concrete(I) input_rgb = input;
@@ -116,6 +139,7 @@ namespace scribo
       {
 	std::cout << "Extracting foreground..." << std::endl;
 	input_rgb = preprocessing::split_bg_fg(input, lambda, 32).second();
+	fg = input_rgb;
       }
 
       // Convert to Gray level image.

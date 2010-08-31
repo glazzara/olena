@@ -1,3 +1,7 @@
+2010-08-31  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/toolchain/text_in_doc_preprocess.hh: Add a new overload.
+
 2010-08-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Rename examples.
