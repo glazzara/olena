@@ -39,7 +39,8 @@ const char *args_desc[][2] =
 {
   { "input.pbm", "A binary image." },
   { "length", "   Minimum line length. (Common value : 51)" },
-  { "delta", "    Distance between the object pixel and the background pixel (Common value : 5)" },
+  { "delta", "    Distance between the object pixel and the background pixel"
+    "(Common value : 4)" },
   {0, 0}
 };
 
@@ -63,6 +64,7 @@ int main(int argc, char *argv[])
     h_lines = scribo::primitive::extract::lines_h_pattern(input,
 							  atoi(argv[2]),
 							  atoi(argv[3]));
+
   image2d<bool>
     v_lines = scribo::primitive::extract::lines_v_pattern(input,
 							  atoi(argv[2]),
