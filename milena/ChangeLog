@@ -1,3 +1,11 @@
+2010-09-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add more documentation on the detach procedure.
+
+	* mln/make/detachment.hh: Here.
+	Typo.
+	* mln/topo/detach.hh: Typo.
+
 2010-07-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	Regen Milena's Makefile helpers.

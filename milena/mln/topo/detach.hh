@@ -27,7 +27,7 @@
 # define MLN_TOPO_DETACH_HH
 
 /// \file
-/// \brief Detachin a cell from a binary complex-based image.
+/// \brief Detaching a cell from a binary complex-based image.
 
 # include <mln/core/site_set/p_set.hh>
 # include <mln/core/image/complex_image.hh>
@@ -41,10 +41,10 @@ namespace mln
   {
 
     /** Detach the cell corresponding to \a f from \a ima.
-       
-        \pre \a f is a facet (it does not belong to any face of higher
-              dimension).
-        \pre \a ima is an image of Boolean values.  */
+
+	\pre \a f is a facet (it does not belong to any face of higher
+	      dimension).
+	\pre \a ima is an image of Boolean values.  */
     template <unsigned D, typename G>
     void
     detach(const complex_psite<D, G>& f, complex_image<D, G, bool>& ima);

@@ -41,7 +41,7 @@ namespace mln
   {
 
     /** \brief Compute the detachment of the cell corresponding to the
-	facet \a f to the image \a ima.
+	facet \a f from the image \a ima.
 
 	\pre \a f is a facet (it does not belong to any face of higher
 	     dimension).
@@ -53,7 +53,13 @@ namespace mln
 	couprie.08.pami).  We use the following (equivalent) definition:
 	an N-face F in CELL is not in the detachment of CELL from IMA if
 	it is adjacent to at least an (N-1)-face or an (N+1)-face that
-	does not belong to CELL.  */
+	does not belong to CELL.
+
+	Moreover, the term detachment does not correspond to the
+	complex resulting from the collapsing of CELL onto IMA, but
+	the part that is removed, i.e., the detached part CELL -
+	ATTACHMENT.  It would be wise to rename this routine to
+	something else.  */
     template <unsigned D, typename G, typename V>
     p_set< complex_psite<D, G> >
     detachment(const complex_psite<D, G>& f,
