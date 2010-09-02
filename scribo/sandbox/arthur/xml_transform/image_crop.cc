@@ -37,10 +37,11 @@
 #include <mln/io/magick/load.hh>
 #include <mln/io/ppm/all.hh>
 
-ImageCrop::ImageCrop(QString xml, QString img, QString output) :
-  xml_(xml),
-  image_(img),
-  output_dir_(output)
+ImageCrop::ImageCrop(const QString& xml, const QString& img,
+		     const QString& output)
+  : xml_(xml),
+    image_(img),
+    output_dir_(output)
 {
 }
 
@@ -48,8 +49,9 @@ ImageCrop::~ImageCrop()
 {
 }
 
+
 /* Save image to PNG format in output_dir/img. */
-void ImageCrop::save_image(QString out)
+void ImageCrop::save_image(const QString& out)
 {
   using namespace mln;
 
@@ -72,8 +74,10 @@ QString ImageCrop::img_to_base64()
   return file_content.toBase64();
 }
 
-/* Decode the base 64 string str and save into output_dir_/img/img_name. */
-bool ImageCrop::img_from_base64(QString str, QString img)
+
+/* Decode the base 64 string str and save into
+ * output_dir_/img/img_name. */
+bool ImageCrop::img_from_base64(const QString& str, const QString& img)
 {
   QByteArray ba;
 
@@ -84,7 +88,8 @@ bool ImageCrop::img_from_base64(QString str, QString img)
   return ima.save(output_dir_ + img);
 }
 
-/* Read all regions of the XML file and save all base 64 data into output_dir/img */
+/* Read all regions of the XML file and save all base 64 data into
+ * output_dir/img */
 void ImageCrop::from_base64()
 {
   QFile f_in(xml_);
@@ -125,7 +130,7 @@ void ImageCrop::from_base64()
 
 /* Tranfsorm the input XML file associated with images into a single
    XML output containing datas if images in base 64. */
-void ImageCrop::to_base64(QString out_file, bool no_crop)
+void ImageCrop::to_base64(const QString& out_file, bool no_crop)
 {
   QFile file(xml_);
   file.open(QIODevice::ReadOnly);

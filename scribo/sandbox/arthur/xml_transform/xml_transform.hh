@@ -37,7 +37,8 @@ class XmlTransform : public QObject
   Q_OBJECT
   public:
 
-  XmlTransform(QString xml_file, QString image_file, QString output, QString file = QString::Null());
+  XmlTransform(const QString& xml_file, const QString& image_file,
+	       const QString& output, const QString& file = QString::Null());
   ~XmlTransform();
 
   QString out() { return output_dir_; }

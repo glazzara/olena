@@ -9,8 +9,8 @@ class Common : public QObject
 public:
   Common() {}
   ~Common() {}
-  static QString get_file_name(QString image);
-  static QString get_file_ext(QString image);
+  static QString get_file_name(const QString& image);
+  static QString get_file_ext(const QString& image);
 };
 
 #endif // ! COMMON_HH

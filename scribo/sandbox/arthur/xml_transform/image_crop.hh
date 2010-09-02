@@ -36,6 +36,7 @@ class ImageCrop : public QObject
   Q_OBJECT
   public:
 
+<<<<<<< HEAD
   ImageCrop(QString, QString, QString);
   ~ImageCrop();
 
@@ -45,6 +46,17 @@ class ImageCrop : public QObject
   QString img_to_base64();
   bool img_from_base64(QString, QString);
   void to_base64(QString, bool);
+=======
+  ImageCrop(const QString&, const QString&, const QString&);
+  ~ImageCrop();
+
+  void save_image(const QString&);
+  bool crop_regions(bool temp = false);
+
+  QString img_to_base64();
+  bool img_from_base64(const QString&, const QString&);
+  void to_base64(const QString&, bool);
+>>>>>>> 6f0918c... Add missing const references to function arguments.
 
   void from_base64();
 

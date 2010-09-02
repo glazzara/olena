@@ -2,10 +2,12 @@
 #include <string>
 #include <string>
 #include <cstdlib>
+#include <Magick++.h>
 #include "xml_transform.hh"
 
 int main(int argc, char **argv)
 {
+  Magick::InitializeMagick(argv[0]);
 
   std::string man;
   man = "xml_transform\n"

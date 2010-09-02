@@ -29,7 +29,7 @@
 # include "common.hh"
 # include <iostream>
 
-XmlTransform::XmlTransform(QString xml_file, QString image_file, QString output, QString file) :
+XmlTransform::XmlTransform(const QString& xml_file, const QString& image_file, const QString& output, const QString& file) :
   xml_file_(xml_file),
   image_(image_file),
   loader_(new Loader()),

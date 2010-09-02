@@ -23,11 +23,11 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef         LOADER_HH
-# define   	LOADER_HH
+#ifndef LOADER_HH
+# define LOADER_HH
 
 # include <QtCore>
-#include <QDomDocument>
+# include <QDomDocument>
 
 class Loader : public QObject
 {
@@ -37,14 +37,15 @@ class Loader : public QObject
   Loader();
   ~Loader();
 
-  //  void merge(QString in, QString other, QString output = "output.xml");
-  bool xml_output(QString xml_file, bool html, QString output);
-  QDomDocument* xml_to_dom(QString xml_file);
+  //  void merge(const QString& in, const QString& other, const
+  //  QString& output = "output.xml");
+  bool xml_output(const QString& xml_file, bool html, const QString& output);
+  QDomDocument* xml_to_dom(const QString& xml_file);
   bool set_output(QString& output);
-  void add_pdf_templates(bool crop, bool base64, QString output);
-  void add_svg_templates(QString output);
-  void add_open_templates(QString output);
-  void add_html_templates(bool base64, QString output);
+  void add_pdf_templates(bool crop, bool base64, const QString& output);
+  void add_svg_templates(const QString& output);
+  void add_open_templates(const QString& output);
+  void add_html_templates(bool base64, const QString& output);
 };
 
-#endif	    /* !LOADER_HH  */
+#endif /* !LOADER_HH  */

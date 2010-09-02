@@ -33,7 +33,7 @@ Loader::~Loader()
 {
 }
 
-QDomDocument* Loader::xml_to_dom(QString xml_file)
+QDomDocument* Loader::xml_to_dom(const QString& xml_file)
 {
   QFile file(xml_file);
 
@@ -68,7 +68,7 @@ bool Loader::set_output(QString& output)
 }
 
 
-void Loader::add_html_templates(bool base64, QString output)
+void Loader::add_html_templates(bool base64, const QString& output)
 {
   QFile gen("templates/html/html_generator.sh");
   gen.copy(output + "html_generator.sh");
@@ -88,7 +88,7 @@ void Loader::add_html_templates(bool base64, QString output)
     }
 }
 
-void Loader::add_pdf_templates(bool crop, bool base64, QString output)
+void Loader::add_pdf_templates(bool crop, bool base64, const QString& output)
 {
   if (base64)
     {
@@ -126,7 +126,7 @@ void Loader::add_pdf_templates(bool crop, bool base64, QString output)
     }
 }
 
-void Loader::add_svg_templates(QString output)
+void Loader::add_svg_templates(const QString& output)
 {
   QFile regions("templates/pdf/regions_svg.xsl");
   regions.copy(output + "regions.xsl");
@@ -141,7 +141,7 @@ void Loader::add_svg_templates(QString output)
   xsl.copy(output + "main.xsl");
 }
 
-void Loader::add_open_templates(QString output)
+void Loader::add_open_templates(const QString& output)
 {
   QFile css("templates/opendoc/css.css");
   css.copy(output + "css.css");
@@ -153,7 +153,7 @@ void Loader::add_open_templates(QString output)
   xsl.copy(output + "xsl.xsl");
 }
 
-bool Loader::xml_output(QString xml_file, bool html, QString output)
+bool Loader::xml_output(const QString& xml_file, bool html, const QString& output)
 {
   QFile file(xml_file);
 
