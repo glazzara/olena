@@ -7,6 +7,7 @@ TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
 QMAKE_CXXFLAGS += -I/amd/beyrouth/home/lrde/stage/crepin/git/olena/milena -I/amd/beyrouth/home/lrde/stage/crepin/git/olena/
+DEFINES += NDEBUG
 QT += xml
 LIBS += `Magick++-config --libs`
 HEADERS += common.hh image_crop.hh loader.hh xml_transform.hh

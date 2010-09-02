@@ -1,5 +1,10 @@
 2010-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* arthur/xml_transform/xml_transform.pro: Define NDEBUG at compile
+	time.
+
+2010-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add missing const references to function arguments.
 
 	* arthur/xml_transform/common.cc,
