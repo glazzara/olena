@@ -685,21 +685,6 @@ rechercher dans les derniers répertoires mp00042c et mp00307c.
 * doc/labeling/mp00307c: Test sur la representativité des couleurs trouvées.
 
 
-Faire le changelog, il y a de l'aide dans git/doc/Changelog
-... et commiter
-
-
-XI ANNOTATING
---------------
-
-==> to do
-
-
-
-* doc/annotating
-
-
-
 XI AUTRES ASPECTS DOCUMENTAIRES
 -------------------------------
 
@@ -732,3 +717,495 @@ l'effort.
 * doc/formulae: LaTex directory.
 * doc/quick_tour: LaTex directory.
 
+
+XII ANNOTATING
+--------------
+
+Tout d'abord, voici les notes documentaires qui ont été réalisées sur
+la problématique d'annotation d'image. On trouvera un fichier
+class.txt qui a pour but de poser quelques réflexions sur les types de
+classes de document. Les informations ne sont pas abouties mais
+permettent de défricher un peu le terrain. Le document
+syntheseMillet2008 est un compte-rendu de lecture des parties
+relatives à nos travaux dans la thèse de Millet. Pour bien comprendre
+mon travail, il est impératif de lire les travaux de Millet, ou
+simplement ce compte-rendu. Le dernier document est moins intéressant,
+il s'agit d'une note de travail sur les indicateurs de Millet bruts de
+fonderie (testMillet2008). Cette note n'est ni achevée, ni
+aboutie. Elle conclue sur le fait que les indicateurs et les seuils
+donnés par Millet dans sa thèse sont complètement à revoir pour nos
+besoins. Notemment, des tests sur la détection des images par rapport
+aux cliparts nous ont convaincu que certaines images AFP contiennent
+des de grandes zones homogènes qui induisent des erreurs dans les
+prédicteurs de Millet. Néanmoins, les cas particuliers qui
+contredisent les aspects opérationnnels de Millet n'enlèvent pas sa
+réflexion: Les images noir/blanc (ou monochromes) ont une très faible
+saturation, et/ou une forte concentration de la teinte. Les cliparts
+ont une forte concentration de niveaux de gris autour d'un pic.
+
+* doc/annotating: La documentation relative à l'annotation.
+
+
+Après la lecture des descripteurs de Millet, un des premiers réflexe a
+été d'en implémenter plusieurs pour voir ce qu'ils pouvaient ressortir
+sur les images que nous avions. Le descripteur BIC sépare une image en
+deux ensembles de pixels, les points intérieurs et les points
+extérieurs. Les points intérieurs ont la propriété d'être de même
+couleur que leur 4-voisins. Attention, la couleur est évaluée dans un
+espace RGB à 3 bits.
+
+* demo/annotating/bic: Histogrammes des points intérieurs et extérieurs.
+
+
+Le descripteur LEP, lui, propose de seuiller par sobel l'image et de
+faire l'histogramme des configurations du voisinage des points
+seuillés. Pour ce faire, on utilise une convolution un peu spéciale
+qui va attribué un unique id en fonction du voisinage.
+
+* demo/annotating/lep: Histogramme des configurations des voisinages des pixels.
+
+
+Un autre descripteur simple est le nombre de couleur dans une
+image. Pour cela, il est possible de construire l'histogramme des
+couleurs et de compter les cellules pleines. On peut éventuellement
+appliquer une quantification sur l'espace des couleurs.  La
+compilation laisse place à d'étranges warnings sur une comparaison
+entre entiers signés et non signés, mais je n'ai pas la main dans mon
+code (ou je ne sais pas comment faire) pour enlever ces warnings. Ils
+sont récents, je n'avais pas souvenir de les avoir eu.
+
+* demo/annotating/nb_color: Compte le nombre de couleurs dans une image.
+* exp/annotating/nb_color: Adaptation pour fonctionner sur une base d'image.
+
+
+L'histogramme RGB-64 est un descripteur simple qui quantifie les
+couleurs sur 2 bits et réalise l'histogramme dans cet espace. C'est
+bien sûr une classification gros grain, mais ajouté au reste ... La
+version RGB-64-9 ajoute une phase de division de l'image en 9 sous
+images. De cette manière, l'histogramme RGB-64 est construit sur les 9
+sous images. Pour former le descripteur final, on fusionne les neufs
+histogrammes.
+
+* demo/annotating/rgb_64: Histogramme couleur dans l'espace RGB-64 (2 bits/axe).
+* demo/annotating/rgb_64_9: Histogramme RGB-64 sur les 9 sous images.
+
+
+Le descripteur de projection relaté par Millet est particulier. En
+premier lieu l'image est sous échantillonnée pour réduire sa dimension
+à 100 x 100 de manière à borner la taille des vecteurs obtenus au
+final. Puis l'image est seuillée par sobel (threshold = 100). L'image
+est d'abord divisée horizontalement en deux. Puis on établit la
+projecton perpendiculairement à la séparation de manière à obtenir
+deux vecteurs de 100 valeurs chacunes. On recommence l'opération en
+divisant maintenant l'image verticalement. L'union des 4 vecteurs
+forme le descripteur de projection. L'information condensée dans ces
+vecteurs est simplement la répartition des contours de manière
+horizontale ou verticale.
+
+* demo/annotating/project: Répartition des contours horizontaux et verticaux.
+
+
+La reconnaissance des cliparts s'appuie sur une analyse d'histogramme
+qui est fournie dans le code suivant. L'idée est de dire qu'une image
+de type clipart va être reconnaissable surtout à l'aide de ces
+contours. La couleur existe mais est très grossière. Le faitde
+dessiner à la main implique de simplifier énormément, de caricaturer,
+le remplissage. Du coup, une analyse en niveau de gris de
+l'histogramme révèle très peu de nuances. Il peut cependant en avoir
+un peu. Néanmoins, il existe des logiciels pour aider à la fabrication
+des cliparts qui proposent l'usage de dégradé, ce qui nuit à cette
+méthode de reconnaissance. Millet analyze l'histogramme normalisé
+(histogramme divisé par son pic) et regarde si son energie ne serait
+pas concentrée autour du pic (5 pixels de chaque côté
+maximum). Parfois cette méthode ne fonctionne pas correctement sur des
+photographies qui ont un cadre uniforme. La méthode trouve un pic (le
+cadre) et vérifie alors qu'une proportion non négligeable des pixels
+sont bien autour de ce pic (tout dépend de l'épaisseur du cadre). Pour
+palier à cet inconvénient, Millet propose d'utiliser ce test, non plus
+sur l'image entière, mais sur chacune des 16 sous images après un
+découpage géométrique régulier. De facto, la contribution du cadre
+diminue suffisemment pour repasser en dessous du seuil de
+reconnaissance.
+
+* demo/annotating/stddev_color: Descripteur utilisé reconnaitre des cliparts.
+* exp/annotating/stddev_color_16: Adaptation pour le travail sur base.
+* demo/annotating/stddev_color_16: Descripteur pour cliparts avec 16 imagettes.
+* exp/annotating/stddev_color: Adaptation pour le travail sur une base d'image.
+
+
+A partir de maintenant, tous les morceaux de codes réalisés préparent
+directement ou indirectement le résultat de la classification des
+bases (exp/annotating/bench).
+
+Plus de temps pour faire le code use correspondant aux fichiers
+librairies. Tout le code pour le faire est dans hsv. Rien de
+compliqué, mais allons à l'essentiel.
+
+Le but du code HSV est d'effectuer les tests de Millet ou des
+améliorations sur ces tests. Le premier test proposé par Millet est
+l'achromaticité. Il s'agit de regarder s'il existe une faible
+variation entre les trois canaux (R/G/B) pour un grand nombre de
+pixels. Si c'est le cas, c'est que l'image est presque en niveau de
+gris et peut être remplacée facilement par une image grisée sans trop
+de distorsions au niveau de la couleur. Nous avons essayer de
+généraliser un peu le test de manière à produire, non pas seulement
+une réponse sur l'achromaticité de l'image, mais aussi avoir une vue
+d'ensemble (sous forme d'image) des variations entre les cannaux pour
+chaque pixel. Il n'est pas utile d'analyser les différences sur chacun
+des canaux, prendre la différence absolue entre le canal min et le
+canal max suffit pour définir le test d'achromaticité.
+
+Les autres tests de Millet sont la faible saturation et la dominance
+de la teinte. Pour savoir si la saturation est faible, il faut
+utiliser un histogramme du canal dédié à la saturation. Si 95% des
+pixels sont en dessous de 100, alors l'image est faiblement saturée,
+elle est en noir et blanc. De la même manière, on regarde la dominance
+de la teinte. Pour ce faire, il faut voir si l'histogramme de la
+teinte ne possède pas un pic avec une très faible variance (tout
+rapproché autour du pic). Si c'est le cas, la dominance de la teinte
+est avérée et l'on peut calculé la couleur dominante. L'image est en
+niveau de gris, mais colorisé autour d'une couleur (par cepia, vert
+...).
+
+Ce programme est très très sujet à changements, il m'a servit de test
+et je ne peux pas juré qu'il est complètement sain au niveau du
+traitement. D'autres versions sont potentiellement plus
+stables. Notemment celle dans exp/annotating/hsv.
+
+* mln/fun/v2v/rgb_to_achromatism_map.hh : Distance pour l'achromaticité.
+* mln/fun/v2v/achromatic.hh : Define the achromatic map.
+* mln/fun/v2v/hue_concentration.hh : Define the distance hue/peak map.
+* mln/fun/p2b/achromatic.hh : Say if a site is achromatic.
+* demo/annotating/hsv: Code des différents tests de Millet.
+
+
+Dans le répertoire exp/annotating/hue, on trouve 3 fichiers textes qui
+rassemblent des classes d'images. Tout d'abord les images ICDAR
+n'ayant que du texte et des traces de couleurs (lettrine de couleur,
+trait, petit bandeau), un fichier où il n'y a que du texte noir &
+blanc et un fichier contenant les images couleurs (avec photographies
+ou dessins). Cette classification a été effectuée de manière manuelle.
+Le code hue test la proportion de pixels étant autour du pic de
+teinte. Il s'agit de savoir si la dominance d'une teinte est
+avérée. Le code renvoit la proportion de pixels agglomérés autour du
+pic. Le but est de généralisé les tests de millets pour qu'ils se
+ressemblent le plus possible.
+
+* exp/annotating/hue: Implémentation de la généralisation du test de Millet.
+* mln/fun/v2v/rgb_to_hue_map.hh : Construction de la map de teinte.
+
+
+On retrouve les trois fichiers permettant de classifier la base ICDAR
+en trois sous populations. Le test de saturation consiste simplement à
+regarder si une certaine quantité de la population de l'histogramme de
+saturation est en dessous d'un certain seuil. La généralisation du
+test ne porte pas sur le test en lui-même, mais sur la forme dans
+lequel le test est fait.
+
+* exp/annotating/saturation: Implémentation de la généralisation du test.
+* mln/fun/v2v/rgb_to_saturation_map.hh : Construction de la map de saturation.
+
+
+Le test de value a déjà été décrit précédemment dans
+stddev_color. L'idée est toujours la même, mais cette fois il est
+effectué dans l'espace des valeurs (HSV). Cela ne change pas grand
+chose, puisqu'il était utilisé sur des images en niveau de gris. C'est
+l'un des tests importants car il réagit à la différentiation entre une
+image type photographie et une image plus stylisée comme un
+clipart. Ce test a aussi des vertus pour la distinction entre du noir
+& blanc et de la couleur. Il s'avère que les images type photographie
+avec pleins de couleurs ont un histogramme moins sujet aux pics que
+les histogrammes noir & blanc. De facto, l'énergie de l'histogramme
+est distribué sur l'ensemble de la plage contrairement aux images noir
+& blanc où il y a une concentration de chaque côté de l'histogramme
+(bipolarité).
+
+* exp/annotating/value: Implémentation de la généralisation du test de Millet.
+* mln/fun/v2v/rgb_to_value_map.hh : Transformation d'espace.
+
+
+Le programme hsv reprend les tests préalablement élaborés auparavant
+sur les plans H, S puis V. Il combine tout en un seul programme pour
+avoir une vision plus synthétique de ce qui se passe sur les 3 espaces
+simultanément.
+
+Les tests incorpore mes transformations. C'est à dire que l'on
+effectue une série de test équivalent à ceux de Millet (au moins dans
+l'idée et le plus souvent, il s'agit d'une réecriture sous une autre
+forme) en partant des histogrammes normalisés. Un histogramme
+normalisé est un histogramme de flottant qui contient l'histogramme
+classique divisé par le nombre total de pixels. En faisant cela, on se
+déplace dans l'espace des distributions. Si l'histogramme n'a qu'un
+seul pic et que ce dernier contient tous les pixels (pic de dirac par
+exemple), alors l'histogramme normalisé donnera 1 comme valeur de
+proportion à ce pic. En fait, l'intégrale d'une distribution vaut
+1. Le but des distributions est de s'affranchir des caractéristiques
+de taille de l'image, ce qui permet de comparer les histogrammes entre
+eux. On peut ainsi comparer les histogrammes d'une photo AFP petit
+format avec celui d'une image grand format de la base ICDAR. Le but du
+jeu est de garder les idées de Millet dans ce nouvel espace. Les tests
+obtenus sont équivalents mais pas identiques.
+
+Pour la teinte, une fois l'histogramme normalisé obtenu, on cherche à
+savoir s'il existe un pic avec une forte proportion de l'histogramme
+autour de ce pic. Plutôt que le pic, nous prenons la moyenne qui est
+un opérateur un peu plus robuste et nous calculons la proportion de
+l'histogramme autour (un seuil donné en paramètre défini le périmètre
+du calcul). L'expression sous forme de proportion plutôt que sous la
+forme d'une variance rend le test homogène avec les autres tests.
+
+Pour la saturation, après normalisation, on regarde la proportion de
+l'histogramme en dessous d'un certain seuil. Il n'y a pas de
+changement significatif par rapport au test de Millet. Le seuil
+initialement proposé par Millet était 100, il a été adapté car nos
+bases sont différentes des siennes (le notre est à 25).
+
+Le test sur les valeurs (cliparts contre photos) a vraiment un intérêt
+au delà de ce cas d'utilisation. Il nous renseigne sur la
+concentration autour d'un pic de l'histogramme ou non. Nous préferrons
+la mesure de similarité à l'équi-répartition des densités, mais l'idée
+est exactement la même. Est-ce que notre histogramme est plat ou
+inversement, est-ce que les contributions sont rassemblées autour d'un
+pic? Si une image est noir et blanc, il existera un pic correspondant
+au fond et la densité s'éloignera fortement de la distribution
+équiprobable. Dans le cas maintenant d'une image couleur, la
+répartition est plus homogène, couvrant un large spectre dans le
+domaine de l'histogramme. Du coup, la distribution semblera davantage
+equi-répartie. On notera que nous prenons le test à l'envers de ce que
+propose Millet. Il essaye de voir si il y a un pic et calcule une
+forme de contribution normalisée autour de ce pic. Nous au contraire,
+on regarde l'absence de pic et on calcule la différence entre la
+densité et cette absence de pic. Notre avantage par rapport à Millet
+est démontré particulièrement dans les cas où il existe plusieurs
+grosses distributions. A contrario, notre test souffre des cas où il
+existe de nombreuses petites distributions.
+
+
+Voici un premier retour sur les expériementations:
+La discrimination entre la base AFP et la base ICDAR peut se faire en
+étudiant la forme des densités des niveaux de gris.  Les images
+naturelles semblent avoir un spectre recouvrant en général les 256
+niveaux de gris alors que les images de documents ont une présence
+importante du fond. Dans le cadre d'une densité, ce qui est alloué sur
+le fond ne peut se retrouver ailleurs. Une comparaison avec la densité
+équiprobable nous renseigne donc sur la nature des images.  Il semble
+néanmoins qu'un certain nombre d'images défient ce dispositif.  Par
+exemple des gros plans sur des zones mono-teintée (ski, voile,site
+web).
+
+* exp/annotating/hsv: Code unifiant les trois tests sur chacun des plans HSV.
+* mln/fun/v2v/rgb_to_hue_map.hh : Transformation d'espace.
+* mln/fun/v2v/rgb_to_saturation_map.hh : Transformation d'espace.
+* mln/fun/v2v/rgb_to_value_map.hh : Transformation d'espace.
+
+
+Le test sur l'achromatisme des images est décrit dans le code
+suivant. Il a été purement et simplement abandonné dans la mesure où
+c'est un cas très particulier qui est repris par une saturation très
+faible. La saturation s'exprime comme 1 - min(channel)/max(channel),
+mais dans le cas où le min(channel) == max(channel), la saturation
+vaut 0. Le problème vient plutôt du calcul de la teine qui ne peut pas
+admettre que le min soit égal au max. Pour ce calcul, on se débrouille
+pour gérer le cas et renvoyer une valeur standardisée, Millet
+proposait -1.
+
+* exp/annotating/achromatism: Détection d'image couleur en niveau de gris.
+* mln/fun/v2v/rgb_to_achromatism_map.hh : Transformation d'espace.
+
+
+Ce programme a pour but de créer les histogrammes normalisés en rafale
+pour les bases AFP et ICDAR. Il assure leur création dans les six
+plans possibles R,G,B,H,S,V. De cette manière il est possible de
+vérifier les corrélations éventuelles entre le canal B et G. Par
+ailleurs, après visionnement de tous les histogrammes, on note des
+spécificités dans les deux bases sur les plans S et V. Certaines
+images ont des réactions très fortes sur le plan H, mais ce n'est pas
+une caractéristique pour une base (seulement pour ces images en
+question). Les résultats ont déjà été sauvegardés dans le répertoire
+image du LRDE. Des infos sont notés à ce  sujet dans README.result. Le
+seul but de ce calcul est de maîtriser csujet dans README.result. Le
+seul but de ce calcul est de maîtriser ce qui se passe dans ces
+espaces, pas simplement de supposer ce qu'il pourrait s'y passer. La
+comparaison des images est rendu possible quelque soit la base
+d'origine par le fait qu'elles sont normalisées. Chaque fréquence des
+histogrammes est divisée par la somme des fréquences. On obtient donc
+une version discrète des densitées. La somme des nouvelles fréquences
+vaut 1.  On voit davantage si les densités se rapprochent d'une
+équi-répartition ou non. La négative implique un ou plusieurs pics. Le
+cas défavorable dans mon approche (qui existe pour certaines images)
+est une multitude de tout petits pics autour de l'équi-répartition. Ce
+n'est pas équi-répartie pour les calculs mais ce n'est clairement pas
+la manisfestation d'une concentration de l'énergie quelque part.
+
+* exp/annotating/histo: Creation des histogrammes normalisés.
+* mln/fun/v2v/rgb_to_hue_map.hh: Transformation d'espace.
+* mln/fun/v2v/rgb_to_saturation_map.hh: Transformation d'espace.
+* mln/fun/v2v/rgb_to_value_map.hh: Transformation d'espace.
+
+
+Dans le programme erreur, on teste l'idée de jonathan. Une référence à
+ce sujet peut être trouvée dans README.img. Les bases AFP et ICDAR
+sont retravaillées à l'aide de ImageMagick et de Gimp pour diminuer le
+nombre de couleurs initiales. On oblige à n'avoir que 30, 20 ou 10
+couleurs pour chaque base. Il y a donc 4 versions de chacune des bases
+en comptant la version originale des images. Les algorithmes utilisés
+par Gimp et ImageMagick sont très différents. L'idée de Jonathan était
+de dire que lorsqu'une image est couleur, plus on réduit le nombre de
+couleur, plus elle change vis-à-vis de l'image originale. Inversement,
+si une image possède peu de couleurs (noir & blanc), sa dégradation ne
+l'altérera pas tant que cela. Prenons une image d'un skieur de la base
+AFP, en réduisant le nombre de couleurs, la combinaison marron va
+devenir marron strictement homogène et la perception que nous en avons
+est visuellement très altérée. A contrario, une image en noir & blanc
+ne semble pas bouger d'un pouce. La comparaison avec la discrimination
+sur la saturation ou la valeur montrera des résultats un peu meilleur
+plus tard mais il impossible de préjuger a priori des résultats
+futurs. L'erreur entre l'image initiale et l'image dégradée est
+calculée avec le PNSNR (compression p278 Handbook Color). Le programme
+calcule la dégradation et essaie de trouver automatiquement des seuils
+de séparation pour les deux bases. 4 détection de seuils sont testées.
+Ces seuils sont calculées avec deux bases représentatives des bases à
+discriminer. En mode production, le seuil est vu comme une constante
+pour le programme. Les deux premières classifications renvoient un
+seuil calculée comme une moyenne pondérée des moyennes des populations
+à discriminer. Le premier détecteur pondère par la déviation standard
+et le second par la variance. Le troisième simule deux populations
+gaussiennes de variances différentes et résoud l'équation de second
+degré qui en résulte. Enfin, le dernier test ne préjuge pas des
+distributions statistiques et réalise la minimisation de l'erreur de
+classification. Pour cela, il suffit de compter le nombre d'images
+bien classées et mal classées sur les bases d'apprentissage des
+populations. On utilise pour cela la méthode Otsu. Le détecteur PNSRN
+renvoie une valeur. Pour chaque population (AFP, ICDAR), on construit
+l'histogramme de des valeurs obtenues. A noter, qu'il faut que les
+valeurs du PNSNR soient ramenées entre 0 et 255. En pratique ce n'est
+pas un problème, mais il faut le mettre en oeuvre, dans mon code, ce
+n'est pas fait (les valeurs ne posaient pas de problème). Donc, pour
+chaque seuil possible (de 0 à 256), on étudie la matrice de classement
+(groupe 1 - détecté groupe 1, groupe 1 - détecté groupe 2, groupe 2 -
+détecté groupe 1, groupe 2 - détecté groupe 2). L'erreur est
+simplement la somme des quantités groupe x - détecté groupe y avec x
+!= y. Finalement, pour chaque seuil, il est possible de connaitre
+l'erreur. Le processus de minimisation de l'erreur revient à chercher
+le seuil associé à l'erreur minimale. C'est ce dernier test que nous
+préconisons. Il faut mettre en lumière que ces quatre tests renvoient
+à peu près les mêmes seuils. La minimisation de l'erreur étant le
+meilleur de tous puisqu'il minimise directement l'erreur de
+classification et c'est ce que nous cherchions en fin de compte. Un
+cinquième test a été fait avec une analyse de fisher sur l'histogramme
+des populations mélangées, mais c'est une idée saugrenue car nous
+disposons à ce niveau des populations séparées et évidemment les
+résultats sont moins bons.
+
+Petit rappel. Un vieux problème a été mis à jour ici. Lorsqu'on
+calcule des informations sur un histogramme, le type temporaire qui
+contient les résultats ne doit pas être le type qui encode les valeurs
+des résultats. Par exemple, un histogramme de byte, un calcul de
+variance tout simple où il faut stocker la valeur des pixels au carré
+multiplié par leur occurrence tiendra facilement dans un long mais pas
+dans un byte. Le sucre avec les acesseurs des itérateurs tend à
+mélanger les genres. Une solution simple est de stocker la valeur de
+l'histogramme dans un type pouvant effectuer les calculs et ensuite
+retravailler avec ce type. Nous avions déjà discuté de ce problème et
+je ne sais pas si tu avais pu corriger le problème. Si la
+classification renvoit n'importe quoi, il se peut que cela provienne
+de ce problème. Le problème ne se voit pas sur des calculs de
+moyennes, il ne s'observe que sur certains calculs de variance (dépend
+de la formule utilisée).
+
+* exp/annotating/error: Test de l'idée de jonathan (dégradation des couleurs)
+
+
+Le travail dans bench.cc reprend toute sorte de travaux déjà réalisés
+dans d'autres fichiers. Il a pour but de comparer ensemble tous les
+descripteurs pour la reconnaissance de base de données entre l'AFP et
+l'ICDAR.
+
+Le travail commence avec un certain nombres de routines travaillant
+sur les histogrammes permettant de trouver le pic, la moyenne, la
+variance et d'autres éléments. Les routines étaient éparpillées dans
+le code, du coup je les ai regroupées au même endroit. Il y a des
+redondances de code correspondant à des copier/coller ou à différents
+essais. Prendre les versions les plus génériques et en faire des
+accumulateurs serait un riche idée.
+
+Huit détecteurs sont comparés ensembles:
+- hue1, détection d'un pic de teinte très dense par la méthode de Millet.
+- sat1, détection d'une densité importante dans les saturations basses (Millet).
+- lvl0, comptage du nombre de niveau de gris (idée de Millet).
+- hue0, détection d'un pic de teinte par la méthode des densités.
+- sat0, détection d'une forte basse saturation par la méthode des densités.
+- val0, détection d'un pic de niveau de gris par la méthode des densités.
+- val1, détection d'un pic de niveau de gris par la méthode de Millet.
+- err, PNSNR (idée de jonathan).
+
+FIXME: Attention, le PNSNR n'est pas borné, il faut le faire, il doit avoir
+au maximum 255 comme valeur.
+
+Tous les détecteurs ont été expliqués en large, en long et en travers
+dans les sources précédentes. LIRE le chapitre XII (ANNOTATING) de ce fichier
+en entier.
+
+Ensuite vient les séparateurs de population statistiques qui ont été
+déjà introduit dans le fichier error. Bien que tous soient présent,
+c'est la minimisation de l'erreur qui est utilisée.
+
+Enfin vient le front end, l'un des plus complexes que j'ai écrit cette
+année.  Le main lui même, n'est pas la partie la plus complexe. Il
+définit les actions fonctionnelles à réaliser et la structure de
+donnée réalisée pour garder la trace de tous les résultats.
+- File_name : Cette variable retient le nom des fichiers. C'est un tableau
+de la taille du nombre d'images rencontrées toute base confondue. Comme on
+ne parcourt qu'une fois les répertoires, il faut pouvoir retenir cette
+information qui servira éventuellement pour la nomenclature des dumps
+par la suite.
+- Result : Cette variable contient toutes les informations du traitement.
+C'est un tableau à deux dimensions, une pour les images et une autre pour
+les descripteurs. L'index d'image est le même que pour file_name.
+- Size : Cette variable contient le nombre d'images par database.
+- Threshold : Cette variable va stocker les seuils calculés sur chacun
+des descripteurs. Ces seuils sont sensés effectuer la séparation entre les
+deux bases.
+- Cxx : variables de comptage des images bien ou mal classées relativement
+à la position des seuils et à l'appartenance d'origine des images. Cette
+appartenance d'origine est calculée à l'aide Size qui contient le nombre
+d'image par base de données. Comme les images sont vues dans l'ordre, les X
+premières appartiennent à la base ICDAR et les Y suivantes à la base AFP.
+- histo : Variable servant à effectuer par database et par descripteur un
+histogramme utilisé ensuite lors de la discrimination des bases.
+
+La partie compute_descriptors a pour mission de passer une fois sur
+toutes les images et de calculer les descripteurs associés. A l'issue
+de cette passe file_name, result et size sont remplis et pourront être
+utilisés par les autres routines.
+
+La partie dump_descriptors a pour but de réaliser un tracé en gnuplot,
+avec une couleur différente pour chaque base. Le graphe montre les
+valeurs utilisées par chaque descripteur pour toutes les images de la
+base.
+
+La partie correction des descripteurs est optionnelle et force un
+certain nombre de valeurs pour être inférieures à 256. Le but était de
+pouvoir travaillé, même si les descripteurs n'étaient pas complètement
+opérationnels. Elle sert donc pour le debug.
+
+La partie calcul des histogrammes sert à obtenir la distribution des
+valeurs de chacun des descripteurs en fonction des bases
+utilisées. C'est une étape préliminaire à l'analyse des populations et
+au calcul des seuils.
+
+La partie calcul des seuils repose sur la minimisation des erreurs de
+classification. Cette méthode ne fonctionne bien si la classe zéro à
+une moyenne inférieure à la classe un. Du coup, il n'est pas possible
+de déterminer de manière simple si la classe 0 correspond à l'AFP ou à
+l'ICDAR. Pour chaque descripteur, les cartes sont rebattues.
+
+Enfin, tous les histogrammes sont sauvés pour pouvoir comprendre et
+visualiser les résultats.
+
+Le main2 ne sert à rien, juste pour des essais.
+
+Attention, modification VAL0/VAL1, vérifiez que le bon descripteur est
+au bon endroit dans le tableau.
+
+* exp/annotating/bench: Comparaison des détecteurs pour la classif. ICDAR/AFP.

@@ -150,7 +150,7 @@ namespace mln
     {
       /// Type definitions.
       /// \brief A few type definitions to limit the refactoring impact.
-      ///{
+      /// \{
       typedef value::rgb<8>                      t_rgb;
       typedef value::label<8>                    t_label;
       typedef value::rg<n>                       t_value;
@@ -179,7 +179,7 @@ namespace mln
       typedef util::array<t_mean_set>            t_mean_cnv;
       typedef image1d<t_result1d>                t_variance_val;
       typedef util::array<t_variance_val>        t_variance_cnv;
-      ///}
+      /// \}
 
       /// \brief Constructor.
       /// \param[in] point     : the image as the population of pixels.

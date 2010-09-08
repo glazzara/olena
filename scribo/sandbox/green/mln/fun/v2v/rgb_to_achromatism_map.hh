@@ -49,6 +49,11 @@ namespace mln
 
       /// \brief Convert rgb value to achromatism map.
       ///
+      /// Convert rgb value to binary achromastism map using the
+      /// rebuilded Millet phd formulae [millet.phd.2008.pdf]. The
+      /// idea is to look at the minimum and maximum of the channels
+      /// and to return the difference.
+      ///
       /// \ingroup modfunv2v
 
       template <unsigned n>

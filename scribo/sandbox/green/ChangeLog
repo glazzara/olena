@@ -1,3 +1,67 @@
+2010-09-08  Yann Jacquelet  <jacquelet@lrde.epita.fr>
+
+	Import annotating sources from milena green's sandbox.
+
+	* README.green: New.
+	* demo/annotating/bic/Makefile.am: New.
+	* demo/annotating/bic/bic.cc: New.
+	* demo/annotating/hsv/Makefile.am: New.
+	* demo/annotating/hsv/hsv.cc: New.
+	* demo/annotating/lep/Makefile.am: New.
+	* demo/annotating/lep/lep.cc: New.
+	* demo/annotating/nb_color/Makefile.am: New.
+	* demo/annotating/nb_color/nb_color.cc: New.
+	* demo/annotating/project/Makefile.am: New.
+	* demo/annotating/project/project.cc: New.
+	* demo/annotating/rgb_64/Makefile.am: New.
+	* demo/annotating/rgb_64/rgb_64.cc: New.
+	* demo/annotating/rgb_64_9/Makefile.am: New.
+	* demo/annotating/rgb_64_9/rgb_64_9.cc: New.
+	* demo/annotating/stddev_color/Makefile.am: New.
+	* demo/annotating/stddev_color/stddev_color.cc: New.
+	* demo/annotating/stddev_color_16/Makefile.am: New.
+	* demo/annotating/stddev_color_16/stddev_color_16.cc: New.
+	* exp/annotating/achromastism/Makefile.am: New.
+	* exp/annotating/achromastism/achromastism.cc: New.
+	* exp/annotating/achromastism/text-color.txt: New.
+	* exp/annotating/achromastism/text-img.txt: New.
+	* exp/annotating/achromastism/text-only.txt: New.
+	* exp/annotating/bench/Makefile.am: New.
+	* exp/annotating/bench/bench.cc: New.
+	* exp/annotating/error/Makefile.am: New.
+	* exp/annotating/error/error.cc: New.
+	* exp/annotating/histo/Makefile.am: New.
+	* exp/annotating/histo/histo.cc: New.
+	* exp/annotating/hsv/Makefile.am: New.
+	* exp/annotating/hsv/hsv.cc: New.
+	* exp/annotating/hue/Makefile.am: New.
+	* exp/annotating/hue/hue.cc: New.
+	* exp/annotating/hue/text-color.txt: New.
+	* exp/annotating/hue/text-img.txt: New.
+	* exp/annotating/hue/text-only.txt: New.
+	* exp/annotating/nb_color/Makefile.am: New.
+	* exp/annotating/nb_color/nb_color.cc: New.
+	* exp/annotating/saturation/Makefile.am: New.
+	* exp/annotating/saturation/saturation.cc: New.
+	* exp/annotating/saturation/text-color.txt: New.
+	* exp/annotating/saturation/text-img.txt: New.
+	* exp/annotating/saturation/text-only.txt: New.
+	* exp/annotating/stddev_color/Makefile.am: New.
+	* exp/annotating/stddev_color/stddev_color.cc: New.
+	* exp/annotating/stddev_color_16/Makefile.am: New.
+	* exp/annotating/stddev_color_16/stddev_color_16.cc: New.
+	* exp/annotating/value/Makefile.am: New.
+	* exp/annotating/value/text-color.txt: New.
+	* exp/annotating/value/text-img.txt: New.
+	* exp/annotating/value/text-only.txt: New.
+	* exp/annotating/value/value.cc: New.
+	* mln/clustering/kmean2d.hh: New.
+	* mln/fun/p2b/achromatic.hh: New.
+	* mln/fun/v2v/hue_concentration.hh: New.
+	* mln/fun/v2v/rgb_to_achromatism_map.hh: New.
+	* mln/fun/v2v/rgb_to_hsv.hh: New.
+
+
 2010-07-07  Yann Jacquelet  <jacquelet@lrde.epita.fr>
 
 	Import regional maxima sources from milena green's sandbox.
