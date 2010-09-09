@@ -1,3 +1,14 @@
+2010-09-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Make the 5th argument of breadth_first_thinning truly optional.
+
+	* mln/topo/skeleton/breadth_first_thinning.hh
+	(mln::topo::skeleton::breadth_first_thinning):
+	Disable the default value of the 5th argument, which cannot be
+	used in practice, since it depends on the parameter H.
+	Add a 4-argument overloading to make the `constraint' argument
+	optional.
+
 2010-09-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add more documentation on the detach procedure.

@@ -70,8 +70,27 @@ namespace mln
 			     const Neighborhood<N>& nbh,
 			     Function_v2b<F>& is_simple,
 			     G detach,
-			     const Function_v2b<H>& constraint =
-			       fun::p2b::tautology());
+			     const Function_v2b<H>& constraint);
+
+
+      /** \brief Skeleton by Breadth-First Thinning with no constraint.
+
+	  A generic implementation of the computation of a skeleton
+	  using a breadth-first thinning on a binary.
+
+          \param input      The input image.
+          \param nbh        The adjacency relation between triangles.
+          \param is_simple  The predicate on the simplicity of points
+                            (sites).  This functor must provide a method
+                            <tt>void set_image(const Image<I>&)</tt>.
+	  \param detach     A function used to detach a cell from
+                            \a input.  */
+      template <typename I, typename N, typename F, typename G>
+      mln_concrete(I)
+      breadth_first_thinning(const Image<I>& input,
+			     const Neighborhood<N>& nbh,
+			     Function_v2b<F>& is_simple,
+			     G detach);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -147,6 +166,19 @@ namespace mln
 	    std::swap(set, next_set);
 	  }
 	return output;
+      }
+
+
+      template <typename I, typename N, typename F, typename G>
+      inline
+      mln_concrete(I)
+      breadth_first_thinning(const Image<I>& input,
+			     const Neighborhood<N>& nbh,
+			     Function_v2b<F>& is_simple,
+			     G detach)
+      {
+	return breadth_first_thinning(input, nbh, is_simple, detach,
+				      fun::p2b::tautology());
       }
 
 # endif // MLN_INCLUDE_ONLY
