@@ -282,6 +282,7 @@ mln/core/image/dmorph/hexa.hh \
 mln/core/image/dmorph/hexa_piter.hh \
 mln/core/image/dmorph/image2d_h.hh \
 mln/core/image/dmorph/image_if.hh \
+mln/core/image/dmorph/mutable_extension_ima.hh \
 mln/core/image/dmorph/p2p_image.hh \
 mln/core/image/dmorph/slice_image.hh \
 mln/core/image/dmorph/sub_image.hh \
