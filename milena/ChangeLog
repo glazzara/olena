@@ -1,5 +1,14 @@
 2010-09-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use mln::data::paste to simplify mesh skeleton applications.
+
+	* apps/mesh-segm-skel/mesh-complex-skel.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-skel.cc,
+	* apps/mesh-segm-skel/mesh-complex-pinv-curv-skel.cc:
+	Here.
+
+2010-09-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update mesh skeleton applications.
 
 	* apps/mesh-segm-skel/mesh-complex-skel.cc,

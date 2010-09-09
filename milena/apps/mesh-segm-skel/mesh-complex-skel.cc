@@ -37,6 +37,7 @@
 #include <mln/core/image/dmorph/image_if.hh>
 #include <mln/core/image/dmorph/mutable_extension_ima.hh>
 #include <mln/core/routine/mutable_extend.hh>
+#include <mln/data/paste.hh>
 
 #include <mln/value/label_16.hh>
 
@@ -223,9 +224,6 @@ main(int argc, char* argv[])
   // to triangles.
   typedef mln::mutable_extension_ima<bin_triangle_only_ima_t, bin_ima_t>
     bin_triangle_ima_t;
-  // FIXME: Find a shorter name (skel_ima ?  Careful, there is already a `skel' image below).
-  bin_triangle_ima_t bin_triangle_ima =
-    mln::mutable_extend((surface | is_a_triangle).rw(), surface);
 
   // ------------------------ //
   // Simple point predicate.  //
@@ -258,11 +256,15 @@ main(int argc, char* argv[])
   // Functor detaching a cell.
   mln::topo::detach_cell<bin_triangle_ima_t, adj_nbh_t> detach(adj_nbh);
 
-  mln_concrete_(bin_triangle_ima_t) skel =
-    mln::topo::skeleton::breadth_first_thinning(bin_triangle_ima,
-						nbh,
-						is_simple_triangle,
-						detach);
+  mln_concrete_(bin_ima_t) skel;
+  mln::initialize(skel, surface);
+  mln::data::paste
+    (mln::topo::skeleton::breadth_first_thinning
+     (mln::mutable_extend((surface | is_a_triangle).rw(), surface),
+      nbh,
+      is_simple_triangle,
+      detach),
+     skel);
 
 
   /*---------.
@@ -280,7 +282,5 @@ main(int argc, char* argv[])
   mln::io::off::save(skel | mln::pw::value(skel) == mln::pw::cst(true),
 		     output_filename);
 #endif
-  // FIXME: We have to ``unmorph'' (twice!) SKEL first, since save_bin_alt only
-  // handles complex_image's.
-  mln::io::off::save_bin_alt(skel.unmorph_().unmorph_(), output_filename);
+  mln::io::off::save_bin_alt(skel, output_filename);
 }
