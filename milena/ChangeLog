@@ -1,5 +1,12 @@
 2010-09-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Introduce a helper to build an mln::mutable_extension_ima.
+
+	* mln/core/routine/mutable_extend.hh: New.
+	* headers.mk: Regen.
+
+2010-09-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Introduce an extension-by-mutable-image morpher.
 
 	* mln/core/image/dmorph/mutable_extension_ima.hh: New.

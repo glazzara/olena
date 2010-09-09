@@ -377,6 +377,7 @@ mln/core/routine/extend.hh \
 mln/core/routine/init.hh \
 mln/core/routine/init.hxx \
 mln/core/routine/initialize.hh \
+mln/core/routine/mutable_extend.hh \
 mln/core/routine/ops.hh \
 mln/core/routine/primary.hh \
 mln/core/site_set/all.hh \
