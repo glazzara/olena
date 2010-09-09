@@ -1,5 +1,20 @@
 2010-09-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	More generic breadth-first-thinning-based skeleton transformations.
+
+	* mln/topo/is_simple_cell.hh: Make this functor more generic.
+	* mln/topo/detach_cell.hh (detach): Turn this function into a
+	more generic functor.
+	* mln/make/attachment.hh (mln::make::attachment)
+	* mln/make/detachment.hh (mln::make::detachment):
+	Make these routines more generic.
+	* mln/topo/skeleton/breadth_first_thinning.hh
+	(mln::topo::skeleton::breadth_first_thinning):
+	Adjust.
+	* headers.mk: Regen.
+
+2010-09-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Introduce a helper to build an mln::mutable_extension_ima.
 
 	* mln/core/routine/mutable_extend.hh: New.

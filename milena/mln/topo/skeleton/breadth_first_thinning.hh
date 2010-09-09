@@ -61,9 +61,13 @@ namespace mln
 			    (sites).  This functor must provide a method
 			    <tt>void set_image(const Image<I>&)</tt>.
 	  \param detach     A function used to detach a cell from \a input.
+			    This functor must provide a method
+			    <tt>void set_image(const Image<I>&)</tt>.
 	  \param constraint A constraint on point (site); if it
 			    returns \c false for a point, this point
-			    will not be removed.  */
+			    will not be removed.
+
+	  Keywords: skeletons, simple points.  */
       template <typename I, typename N, typename F, typename G, typename H>
       mln_concrete(I)
       breadth_first_thinning(const Image<I>& input,
@@ -83,8 +87,11 @@ namespace mln
 	  \param is_simple  The predicate on the simplicity of points
 			    (sites).  This functor must provide a method
 			    <tt>void set_image(const Image<I>&)</tt>.
-	  \param detach     A function used to detach a cell from
-			    \a input.  */
+	  \param detach     A function used to detach a cell from \a input.
+			    This functor must provide a method
+			    <tt>void set_image(const Image<I>&)</tt>.
+
+	  Keywords: skeletons, simple points.  */
       template <typename I, typename N, typename F, typename G>
       mln_concrete(I)
       breadth_first_thinning(const Image<I>& input,
@@ -112,8 +119,9 @@ namespace mln
 	const H& constraint = exact(constraint_);
 
 	mln_concrete(I) output = duplicate(input);
-	// Attach the work image to IS_SIMPLE.
+	// Attach the work image to IS_SIMPLE and DETACH.
 	is_simple.set_image(output);
+	detach.set_image(output);
 
 	typedef mln_psite(I) psite;
 	typedef p_queue_fast<psite> queue_t;
@@ -131,7 +139,7 @@ namespace mln
 	    psite p = queue.pop_front();
 	    if (output(p) && constraint(p) && is_simple(p))
 	      {
-		detach(p, output);
+		detach(p);
 		mln_niter(N) n(nbh, p);
 		for_all(n)
 		{

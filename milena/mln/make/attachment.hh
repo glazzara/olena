@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -43,52 +43,58 @@ namespace mln
     /** \brief Compute the attachment of the cell corresponding to the
 	facet \a f to the image \a ima.
 
+	\param ima  The input image to which the facet is attached.
+	\param f    The psite corresponding to the attached facet.
+	\param nbh  An adjacency relationship between faces
+		    (should return the set of (n-1)- and (n+1)-faces
+		    adjacent to an n-face).
+
+	\return     A set of faces containing the attachment.
+
+	\pre ima is an image of Boolean values.
 	\pre \a f is a facet (it does not belong to any face of higher
 	     dimension).
-	\pre ima is an image of Boolean values.
-
-	\return a set of faces containing the attachment.
 
 	We do not use the fomal definition of the attachment here (see
 	couprie.08.pami).  We use the following (equivalent) definition:
 	an N-face F in CELL is in the attachment of CELL to IMA if it is
 	adjacent to at least an (N-1)-face or an (N+1)-face that does not
 	belong to CELL.  */
-    template <unsigned D, typename G, typename V>
-    p_set< complex_psite<D, G> >
-    attachment(const complex_psite<D, G>& f,
-	       const complex_image<D, G, V>& ima);
+    template <typename I, typename N>
+    p_set<mln_psite(I)>
+    attachment(const Image<I>& ima, const mln_psite(I)& f,
+	       const Neighborhood<N>& nbh);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <unsigned D, typename G, typename V>
+    template <typename I, typename N>
     inline
-    p_set< complex_psite<D, G> >
-    attachment(const complex_psite<D, G>& f,
-	       const complex_image<D, G, V>& ima)
+    p_set<mln_psite(I)>
+    attachment(const Image<I>& ima_, const mln_psite(I)& f,
+	       const Neighborhood<N>& nbh_)
     {
       mln_precondition(topo::is_facet(f));
-      mlc_equal(V, bool)::check();
+      mlc_equal(mln_value(I), bool)::check();
 
-      typedef complex_psite<D, G> psite;
-      typedef p_set<psite> faces_t;
+      I ima = exact(ima_);
+      N nbh = exact(nbh_);
+
+      typedef p_set<mln_psite(I)> faces_t;
 
       faces_t f_hat = make::cell(f);
-      faces_t att_f;
+      faces_t attach_f;
 
-      typedef complex_lower_higher_neighborhood<D, G> adj_nbh_t;
-      adj_nbh_t adj_nbh;
       mln_piter(faces_t) g(f_hat);
-      mln_niter(adj_nbh_t) n(adj_nbh, g);
+      mln_niter(N) n(nbh, g);
       for_all(g)
 	for_all(n)
 	if (ima(n) && !f_hat.has(n))
 	  {
-	    att_f.insert(g);
+	    attach_f.insert(g);
 	    break;
 	  }
-      return att_f;
+      return attach_f;
     }
 
 # endif // MLN_INCLUDE_ONLY

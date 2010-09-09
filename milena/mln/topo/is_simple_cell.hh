@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -27,7 +27,6 @@
 # define MLN_TOPO_IS_SIMPLE_CELL_HH
 
 /// \file
-///
 /// \brief Testing whether a facet is a simple cell.
 
 # include <mln/core/concept/function.hh>
@@ -48,22 +47,29 @@ namespace mln
   namespace topo
   {
 
+    /* FIXME: Maybe we could add traits to deduce N from NL and NH (or
+       the converse).  Anyway, the part of the code where neighborhood
+       are used should be moved into another functor
+       (`is_collapsible', see below), thus pushing away this
+       issue.  */
+
     /** \brief A predicate for the simplicity of a point based on the
 	collapse property of the attachment.
 
 	The functor does not actually take a cell as input, but a face
-	that is expected to be a D-facet.  */
-    template <typename I>
-    class is_simple_cell : public mln::Function_v2b< is_simple_cell<I> >
+	that is expected to be a D-facet.
+
+	\tparam I   The type of the image.
+	\tparam N   The neighborhood type returning the set of
+		    (n-1)- and (n+1)-faces adjacent to a an n-face.
+	\tparam NL  The neighborhood type returning the set of
+		    (n-1)-faces adjacent to a an n-face.
+	\tparam NH  The neighborhood type returning the set of
+		    (n+1)-faces adjacent to a an n-face.  */
+    template <typename I, typename N, typename NL, typename NH>
+    class is_simple_cell : public mln::Function_v2b< is_simple_cell<I, N, NL, NH> >
     {
     public:
-      /// Dimension of the image (and therefore of the complex).
-      static const unsigned D = I::dim;
-      /// Geometry of the image.
-      typedef mln_geom(I) G;
-      /// Psite type.
-      typedef mln::complex_psite<D, G> psite;
-
       /// Result type of the functor.
       typedef bool result;
 
@@ -76,8 +82,11 @@ namespace mln
       void set_image(const mln::Image<I>& ima);
 
       /// Based on the algorithm A2 from couprie.08.pami.
-      bool operator()(const mln::complex_psite<I::dim,mln_geom(I)>& p) const;
-      // Tech note: The argument type above is explicit to help g++-3.3.
+      /* FIXME: We probably broke the compatiblity with g++ 3.3, as it
+	 seems this compiler does not like an indirect type like the
+	 one of the following operator's argument.  Check and possibly
+	 improve this.  */
+      bool operator()(const mln_psite(I)& p) const;
 
     private:
       const I* ima_;
@@ -87,44 +96,44 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I>
+    template <typename I, typename N, typename NL, typename NH>
     inline
-    is_simple_cell<I>::is_simple_cell()
+    is_simple_cell<I, N, NL, NH>::is_simple_cell()
       : ima_(0)
     {
     }
 
-    template <typename I>
+    template <typename I, typename N, typename NL, typename NH>
     inline
-    is_simple_cell<I>::is_simple_cell(const mln::Image<I>& ima)
-      : ima_(mln::exact(&ima))
+    is_simple_cell<I, N, NL, NH>::is_simple_cell(const mln::Image<I>& ima)
+      : ima_(exact(&ima))
     {
     }
 
-    template <typename I>
+    template <typename I, typename N, typename NL, typename NH>
     inline
     void
-    is_simple_cell<I>::set_image(const mln::Image<I>& ima)
+    is_simple_cell<I, N, NL, NH>::set_image(const mln::Image<I>& ima)
     {
-      ima_ = mln::exact(&ima);
+      ima_ = exact(&ima);
     }
 
-    template <typename I>
+    template <typename I, typename N, typename NL, typename NH>
     inline
     bool
-    is_simple_cell<I>::operator()(const mln::complex_psite<I::dim,mln_geom(I)>& p) const
-    // Tech note: The argument type above is explicit to help g++-3.3.
+    is_simple_cell<I, N, NL, NH>::operator()(const mln_psite(I)& p) const
     {
       mln_precondition(ima_);
 
-      typedef p_set<psite> faces_t;
+      typedef p_set<mln_psite(I)> faces_t;
 
-      // Compute the attachment of the cell corresponding to P to he
+      // Compute the attachment of the cell corresponding to P to the
       // domain of *IMA_.
-      faces_t att = make::attachment(p, *ima_);
+      N adj_nbh;
+      faces_t att = make::attachment(*ima_, p, adj_nbh);
 
       // A cell with an empty attachment is not simple.
-      /* FIXME: Why does p_set not provide an empty() predicate?  */
+      /* FIXME: Why p_set does not provide an empty() predicate?  */
       if (att.nsites() == 0)
 	return false;
 
@@ -134,10 +143,8 @@ namespace mln
 	 routine.  */
       // Try to collapse the attachment (to a single point).
       {
-	typedef complex_lower_neighborhood<D, G> lower_adj_nbh_t;
-	typedef complex_higher_neighborhood<D, G> higher_adj_nbh_t;
-	lower_adj_nbh_t lower_adj_nbh;
-	higher_adj_nbh_t higher_adj_nbh;
+	NL lower_adj_nbh;
+	NH higher_adj_nbh;
 	while (att.nsites() > 1)
 	  {
 
@@ -149,11 +156,11 @@ namespace mln
 	    for_all(g)
 	      /* G cannot have dimension 0, since we later look for an
 		 adjacent face H of lower dimension.  */
-	      if (static_cast<psite>(g).n() > 0)
+	      if (static_cast<mln_psite(I)>(g).n() > 0)
 		{
 		  // Check whether G is a facet within ATT.
 		  bool g_is_facet = true;
-		  mln_niter(higher_adj_nbh_t) f(higher_adj_nbh, g);
+		  mln_niter(NH) f(higher_adj_nbh, g);
 		  for_all(f)
 		    if (att.has(f))
 		      {
@@ -165,13 +172,13 @@ namespace mln
 
 		  // Look for a face H stricly included in G.
 		  bool gh_is_simple_pair = false;
-		  mln_niter(lower_adj_nbh_t) h(lower_adj_nbh, g);
+		  mln_niter(NL) h(lower_adj_nbh, g);
 		  for_all(h)
 		  {
 		    bool h_strictly_in_g = true;
 		    if (att.has(h))
 		      {
-			mln_niter(higher_adj_nbh_t) i(higher_adj_nbh, h);
+			mln_niter(NH) i(higher_adj_nbh, h);
 			for_all(i)
 			  if (i != g && att.has(i))
 			    {
