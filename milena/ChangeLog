@@ -1,5 +1,15 @@
 2010-09-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update mesh skeleton applications.
+
+	* apps/mesh-segm-skel/mesh-complex-skel.cc,
+	* apps/mesh-segm-skel/mesh-complex-max-curv-skel.cc,
+	* apps/mesh-segm-skel/mesh-complex-pinv-curv-skel.cc:
+	Catch up with the new interface of breadth-first thinning and
+	auxiliary routines.
+
+2010-09-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	More generic breadth-first-thinning-based skeleton transformations.
 
 	* mln/topo/is_simple_cell.hh: Make this functor more generic.
