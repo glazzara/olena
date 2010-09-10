@@ -81,7 +81,12 @@ namespace mln
       /// Set the underlying image.
       void set_image(const mln::Image<I>& ima);
 
-      /// Based on the algorithm A2 from couprie.08.pami.
+      /** \brief Test whether a face (expected to be facet) is a
+	  simple cell.
+
+	  If \a p is not a facet, return false.
+
+	  Based on the algorithm A2 from couprie.08.pami.  */
       /* FIXME: We probably broke the compatiblity with g++ 3.3, as it
 	 seems this compiler does not like an indirect type like the
 	 one of the following operator's argument.  Check and possibly
@@ -124,6 +129,25 @@ namespace mln
     is_simple_cell<I, N, NL, NH>::operator()(const mln_psite(I)& p) const
     {
       mln_precondition(ima_);
+      // FIXME: Introduce `const I& ima = *ima_;' and use it instead of
+      // `ima_'.  Or introduce an `ima()' accessor?
+
+      // FIXME: We should be using topo::is_facet, but this routine is
+      // too naive, and does not take the values of the image into
+      // account.
+      {
+	// This (part of) ``algorithm'' considers that looking for
+	// faces of dimension n+1 is enough (which is the case
+	// if the image is a complex).
+	NH higher_adj_nbh;
+	mln_niter(NH) n(higher_adj_nbh, p);
+	for_all(n)
+	  // If the higher-dim-faces neighborhood is not empty, then P
+	  // is included in a face of higher dimension.
+	  if (ima_->has(n) && (*ima_)(n))
+	    return false;
+	// Otherwise, F is a facet; continue.
+      }
 
       typedef p_set<mln_psite(I)> faces_t;
 

@@ -52,6 +52,8 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    // FIXME: Too naive: this code does not take the values of the
+    // image into account.
     template <unsigned D, typename G>
     inline
     bool

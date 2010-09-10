@@ -1,3 +1,10 @@
+2011-02-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	State a cell is not simple if it does not correspond to a facet.
+
+	* mln/topo/is_simple_cell.hh
+	(mln::topo::is_simple_cell<I, N, NL, NH>::operator()): Here.
+
 2010-09-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use mln::data::paste to simplify mesh skeleton applications.

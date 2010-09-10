@@ -74,6 +74,8 @@ namespace mln
     attachment(const Image<I>& ima_, const mln_psite(I)& f,
 	       const Neighborhood<N>& nbh_)
     {
+      // FIXME: The current implementation of topo::is_facet is too
+      // naive: it does not take the values of the image into account.
       mln_precondition(topo::is_facet(f));
       mlc_equal(mln_value(I), bool)::check();
 

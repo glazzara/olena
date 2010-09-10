@@ -131,6 +131,8 @@ namespace mln
     detach_cell<I, N>::operator()(const mln_psite(I)& f)
     {
       mln_precondition(ima_);
+      // FIXME: The current implementation of topo::is_facet is too
+      // naive: it does not take the values of the image into account.
       mln_precondition(topo::is_facet(f));
 
       typedef p_set<mln_psite(I)> faces_t;
