@@ -1,3 +1,10 @@
+2010-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Small fix in breadth-first thinning.
+
+	* mln/topo/skeleton/breadth_first_thinning.hh: Do not try to
+	detach an aldready processed site.
+
 2010-09-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Make the 5th argument of breadth_first_thinning truly optional.

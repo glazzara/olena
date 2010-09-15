@@ -148,7 +148,7 @@ namespace mln
 		 internal state and make side effects, meaning that
 		 e.g. constraint(p) might not be constant for a
 		 given p during the thinning.  */
-	      if (constraint(p) && is_simple(p))
+	      if (output(p) && constraint(p) && is_simple(p))
 		{
 		  detach(p, output);
 		  mln_niter(N) n_(nbh, p);
