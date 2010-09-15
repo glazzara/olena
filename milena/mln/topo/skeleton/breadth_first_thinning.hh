@@ -53,17 +53,17 @@ namespace mln
       /** \brief Skeleton by Breadth-First Thinning.
 
 	  A generic implementation of the computation of a skeleton
-	  using a breadth-first thinning on a binary.
+	  using a breadth-first thinning on a binary image.
 
-          \param input      The input image.
-          \param nbh        The adjacency relation between triangles.
-          \param is_simple  The predicate on the simplicity of points
-                            (sites).  This functor must provide a method
-                            <tt>void set_image(const Image<I>&)</tt>.
+	  \param input      The input image.
+	  \param nbh        The adjacency relation between triangles.
+	  \param is_simple  The predicate on the simplicity of points
+			    (sites).  This functor must provide a method
+			    <tt>void set_image(const Image<I>&)</tt>.
 	  \param detach     A function used to detach a cell from \a input.
-          \param constraint A constraint on point (site); if it
-       	                    returns \c false for a point, this point
-                            will not be removed.  */
+	  \param constraint A constraint on point (site); if it
+			    returns \c false for a point, this point
+			    will not be removed.  */
       template <typename I, typename N, typename F, typename G, typename H>
       mln_concrete(I)
       breadth_first_thinning(const Image<I>& input,
@@ -76,15 +76,15 @@ namespace mln
       /** \brief Skeleton by Breadth-First Thinning with no constraint.
 
 	  A generic implementation of the computation of a skeleton
-	  using a breadth-first thinning on a binary.
+	  using a breadth-first thinning on a binary image.
 
-          \param input      The input image.
-          \param nbh        The adjacency relation between triangles.
-          \param is_simple  The predicate on the simplicity of points
-                            (sites).  This functor must provide a method
-                            <tt>void set_image(const Image<I>&)</tt>.
+	  \param input      The input image.
+	  \param nbh        The adjacency relation between triangles.
+	  \param is_simple  The predicate on the simplicity of points
+			    (sites).  This functor must provide a method
+			    <tt>void set_image(const Image<I>&)</tt>.
 	  \param detach     A function used to detach a cell from
-                            \a input.  */
+			    \a input.  */
       template <typename I, typename N, typename F, typename G>
       mln_concrete(I)
       breadth_first_thinning(const Image<I>& input,
@@ -104,6 +104,8 @@ namespace mln
 			     G detach,
 			     const Function_v2b<H>& constraint_)
       {
+	trace::entering("topo::skeleton::breadth_first_thinning");
+
 	const I& input = exact(input_);
 	const N& nbh = exact(nbh_);
 	F& is_simple = exact(is_simple_);
@@ -165,6 +167,8 @@ namespace mln
 	    set.clear();
 	    std::swap(set, next_set);
 	  }
+
+	trace::exiting("topo::skeleton::breadth_first_thinning");
 	return output;
       }
 
