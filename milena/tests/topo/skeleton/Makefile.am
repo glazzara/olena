@@ -17,8 +17,18 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
+  breadth_first_thinning			\
+  breadth_first_thinning_constrained		\
   crest 					\
-  is_simple_point
+  is_simple_point				\
+  priority_driven_thinning			\
+  priority_driven_thinning_constrained
 
 
 TESTS = $(check_PROGRAMS)
+
+MOSTLYCLEANFILES =					\
+  breadth_first_thinning-small.pbm			\
+  breadth_first_thinning_constrained-small.pbm		\
+  priority_driven_thinning-small.pbm			\
+  priority_driven_thinning_constrained-small.pbm

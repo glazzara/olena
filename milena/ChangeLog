@@ -1,5 +1,27 @@
 2010-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise breadth-first and priority-driven thinnings.
+
+	* tests/topo/skeleton/breadth_first_thinning.cc,
+	* tests/topo/skeleton/breadth_first_thinning_constrained.cc,
+	* tests/topo/skeleton/priority_driven_thinning.cc,
+	* tests/topo/skeleton/priority_driven_thinning_constrained.cc:
+	New.
+	* tests/topo/skeleton/Makefile.am (check_PROGRAMS): Add 
+	breadth_first_thinning, breadth_first_thinning_constrained,
+	priority_driven_thinning and priority_driven_thinning_constrained.
+	(breadth_first_thinning_SOURCES)
+	(breadth_first_thinning_constrained_SOURCES)
+	(priority_driven_thinning_SOURCES)
+	(priority_driven_thinning_constrained_SOURCES):
+	New.
+	(MOSTLYCLEANFILES): Add breadth_first_thinning-small.pbm,
+	breadth_first_thinning_constrained-small.pbm,
+	priority_driven_thinning-small.pbm and
+	priority_driven_thinning_constrained-small.pbm.
+
+2010-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	New skeletonization algorithm: priority-driven thinning.
 
 	* mln/topo/skeleton/priority_driven_thinning.hh: New.
