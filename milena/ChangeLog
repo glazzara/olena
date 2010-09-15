@@ -1,5 +1,12 @@
 2010-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	New skeletonization algorithm: priority-driven thinning.
+
+	* mln/topo/skeleton/priority_driven_thinning.hh: New.
+	* headers.mk: Regen.
+
+2010-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add helpers to compute skeletons by thinning on regular 2D images.
 
 	* mln/topo/is_simple_point2d.hh,

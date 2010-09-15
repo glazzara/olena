@@ -1075,6 +1075,7 @@ mln/topo/n_faces_set.hh \
 mln/topo/skeleton/breadth_first_thinning.hh \
 mln/topo/skeleton/crest.hh \
 mln/topo/skeleton/is_simple_point.hh \
+mln/topo/skeleton/priority_driven_thinning.hh \
 mln/topo/static_n_face_iter.hh \
 mln/trait/accumulator/print.hh \
 mln/trait/accumulator/props.hh \
