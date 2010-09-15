@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -42,7 +43,7 @@
 
 #include <mln/topo/is_n_face.hh>
 #include <mln/topo/is_simple_cell.hh>
-#include <mln/topo/detach.hh>
+#include <mln/topo/detach_cell.hh>
 #include <mln/topo/skeleton/breadth_first_thinning.hh>
 
 #include <mln/io/off/load.hh>
@@ -220,7 +221,7 @@ main(int argc, char* argv[])
   bin_ima_t skel =
     mln::topo::skeleton::breadth_first_thinning(surface, nbh,
 						is_simple_p,
-						mln::topo::detach<D, G>,
+						mln::topo::detach_cell<D, G>,
 						constraint_p);
 
   /*---------.

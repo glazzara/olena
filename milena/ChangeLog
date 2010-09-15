@@ -1,5 +1,14 @@
 2010-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Catch up with the renaming to detach_cell.
+
+	* apps/mesh-segm-skel/mesh-complex-max-curv-skel.cc,
+	* apps/mesh-segm-skel/mesh-complex-pinv-curv-skel.cc,
+	* apps/mesh-segm-skel/mesh-complex-skel.cc:
+	s/detach/detach_cell/.
+
+2010-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename topo::detach as topo::detach_cell.
 
 	* mln/topo/detach.hh (detach): Rename as...
