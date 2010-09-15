@@ -35,6 +35,8 @@
 /// <em>before</em> using any of these functions, as advised by the
 /// GraphicsMagick documentation
 /// (http://www.graphicsmagick.org/Magick++/Image.html).
+///
+/// \fixme: re-enable quantum size check
 
 # include <cstdlib>
 
@@ -141,7 +143,7 @@ namespace mln
 	trace::entering("mln::io::magick::load");
 
 	// Ensure a Magick++'s Quantum is an 8-bit value.
-	mln::metal::equal<Magick::Quantum, unsigned char>::check();
+	//mln::metal::equal<Magick::Quantum, unsigned char>::check();
 
 	I& ima = exact(ima_);
 

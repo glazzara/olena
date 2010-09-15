@@ -1,3 +1,10 @@
+2010-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Temporarily disable static tests on Magick::Quantum type size.
+
+	* mln/io/magick/load.hh,
+	* mln/io/magick/save.hh: Here.
+
 2010-08-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* mln/value/int_s.hh: Fix warnings.
