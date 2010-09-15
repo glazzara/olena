@@ -1054,6 +1054,7 @@ mln/topo/centered_iter_adapter.hh \
 mln/topo/complex.hh \
 mln/topo/complex_iterators.hh \
 mln/topo/detach.hh \
+mln/topo/detach_point.hh \
 mln/topo/essential.hh \
 mln/topo/face.hh \
 mln/topo/face_data.hh \
@@ -1064,8 +1065,10 @@ mln/topo/internal/complex_relative_iterator_sequence.hh \
 mln/topo/internal/complex_set_iterator_base.hh \
 mln/topo/is_facet.hh \
 mln/topo/is_n_face.hh \
+mln/topo/is_not_end_point.hh \
 mln/topo/is_simple_2d.hh \
 mln/topo/is_simple_cell.hh \
+mln/topo/is_simple_point2d.hh \
 mln/topo/n_face.hh \
 mln/topo/n_face_iter.hh \
 mln/topo/n_faces_set.hh \

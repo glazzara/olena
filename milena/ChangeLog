@@ -1,5 +1,15 @@
 2010-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add helpers to compute skeletons by thinning on regular 2D images.
+
+	* mln/topo/is_simple_point2d.hh,
+	* mln/topo/detach_point.hh,
+	* mln/topo/is_not_end_point.hh:
+	New.
+	* headers.mk: Regen.
+
+2010-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add tracing mechanism to breadth-first thinning.
 
 	* mln/topo/skeleton/breadth_first_thinning.hh: Here.
