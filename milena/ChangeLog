@@ -1,5 +1,14 @@
 2010-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename topo::detach as topo::detach_cell.
+
+	* mln/topo/detach.hh (detach): Rename as...
+	* mln/topo/detach_cell.hh (detach_cell): ...this, to prevent
+	confusions with detach_point.
+	* headers.mk: Regen.
+
+2010-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Exercise breadth-first and priority-driven thinnings.
 
 	* tests/topo/skeleton/breadth_first_thinning.cc,

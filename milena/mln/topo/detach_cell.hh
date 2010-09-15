@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -23,8 +23,8 @@
 // exception does not however invalidate any other reasons why the
 // executable file might be covered by the GNU General Public License.
 
-#ifndef MLN_TOPO_DETACH_HH
-# define MLN_TOPO_DETACH_HH
+#ifndef MLN_TOPO_DETACH_CELL_HH
+# define MLN_TOPO_DETACH_CELL_HH
 
 /// \file
 /// \brief Detaching a cell from a binary complex-based image.
@@ -47,7 +47,7 @@ namespace mln
 	\pre \a ima is an image of Boolean values.  */
     template <unsigned D, typename G>
     void
-    detach(const complex_psite<D, G>& f, complex_image<D, G, bool>& ima);
+    detach_cell(const complex_psite<D, G>& f, complex_image<D, G, bool>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -55,7 +55,7 @@ namespace mln
     template <unsigned D, typename G>
     inline
     void
-    detach(const complex_psite<D, G>& f, complex_image<D, G, bool>& ima)
+    detach_cell(const complex_psite<D, G>& f, complex_image<D, G, bool>& ima)
     {
       mln_precondition(topo::is_facet(f));
 
@@ -80,4 +80,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_TOPO_DETACH_HH
+#endif // ! MLN_TOPO_DETACH_CELL_HH

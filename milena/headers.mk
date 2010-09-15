@@ -1053,7 +1053,7 @@ mln/topo/center_only_iter.hh \
 mln/topo/centered_iter_adapter.hh \
 mln/topo/complex.hh \
 mln/topo/complex_iterators.hh \
-mln/topo/detach.hh \
+mln/topo/detach_cell.hh \
 mln/topo/detach_point.hh \
 mln/topo/essential.hh \
 mln/topo/face.hh \
