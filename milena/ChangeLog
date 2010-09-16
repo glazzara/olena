@@ -1,3 +1,9 @@
+2010-09-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Split interface and implementation of topo::is_not_end_point.
+
+	* mln/topo/is_not_end_point.hh: Here.
+
 2010-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Catch up with the renaming to detach_cell.

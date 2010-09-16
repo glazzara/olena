@@ -35,7 +35,6 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 
-
 namespace mln
 {
 
@@ -50,24 +49,10 @@ namespace mln
       ///
       /// \param  nbh_fg  The foreground neighborhood.
       /// \apram  ima     The image.
-      is_not_end_point(const Neighborhood<N>& nbh,
-		       const Image<I>& ima)
-	: nbh_(exact(nbh)),
-	  ima_(exact(ima))
-      {
-      }
+      is_not_end_point(const Neighborhood<N>& nbh, const Image<I>& ima);
 
-      // Is \a p not na end point?
-      bool operator()(const mln_psite(I)& p) const
-      {
-	// Number of foreground neighbors pixels.
-	unsigned nneighbs = 0;
-	mln_niter(N) n(nbh_, p);
-	for_all(n)
-	  if (ima_.has(n) && ima_(n))
-	    ++nneighbs;
-	return nneighbs != 1;
-      }
+      // Is \a p not an end point?
+      bool operator()(const mln_psite(I)& p) const;
 
     private:
       /// The foreground neighborhood.
@@ -76,8 +61,32 @@ namespace mln
       const I& ima_;
     };
 
+
+
 # ifndef MLN_INCLUDE_ONLY
 
+    template <typename I, typename N>
+    inline
+    is_not_end_point<I, N>::is_not_end_point(const Neighborhood<N>& nbh,
+					     const Image<I>& ima)
+      : nbh_(exact(nbh)),
+	ima_(exact(ima))
+    {
+    }
+
+    template <typename I, typename N>
+    inline
+    bool 
+    is_not_end_point<I, N>::operator()(const mln_psite(I)& p) const
+    {
+      // Number of foreground neighbors pixels.
+      unsigned nneighbs = 0;
+      mln_niter(N) n(nbh_, p);
+      for_all(n)
+	if (ima_.has(n) && ima_(n))
+	  ++nneighbs;
+      return nneighbs != 1;
+    }
 
 # endif // MLN_INCLUDE_ONLY
 
