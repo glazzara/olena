@@ -1,3 +1,11 @@
+2010-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the processing order in topo::breadth_first_thinning.
+
+	* mln/topo/skeleton/breadth_first_thinning.hh: Use a p_queue_fast
+	site set instead of a pair of p_set's to ensure an actual
+	breadth-first processing of sites.
+
 2010-09-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	Split interface and implementation of topo::is_not_end_point.

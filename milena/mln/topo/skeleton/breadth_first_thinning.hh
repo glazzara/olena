@@ -37,7 +37,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 
-# include <mln/core/site_set/p_set.hh>
+# include <mln/core/site_set/p_queue_fast.hh>
 
 # include <mln/fun/p2b/tautology.hh>
 
@@ -116,9 +116,9 @@ namespace mln
 	is_simple.set_image(output);
 
 	typedef mln_psite(I) psite;
-	typedef p_set<psite> set_t;
-	set_t set;
-	// Populate SET with candidate simple points.
+	typedef p_queue_fast<psite> queue_t;
+	queue_t queue;
+	// Populate QUEUE with candidate simple points.
 	mln_piter(I) p_(output.domain());
 	for_all(p_)
 	{
@@ -129,43 +129,34 @@ namespace mln
 	     the compiler and pass an actual, explicit psite.  */
 	  psite p = p_;
 	  if (output(p) && constraint(p) && is_simple(p))
-	    set.insert(p);
+	    queue.push(p);
 	}
 
-	while (!set.is_empty())
+	while (!queue.is_empty())
 	  {
-	    set_t next_set;
+	    psite p = queue.pop_front();
 
-	    mln_piter(set_t) ps(set);
-	    for_all(ps)
-	    {
-	      // Same remark as above.
-	      psite p = ps;
-
-	      /* FIXME: We compute the cell and attachment of P twice:
-		 during the call to is_simple() and within detach().
-		 How could we reuse this elegantly, without breaking
-		 the genericity of the skeleton algorithm?
-		 Also, keep in mind that functors can maintain an
-		 internal state and make side effects, meaning that
-		 e.g. constraint(p) might not be constant for a
-		 given p during the thinning.  */
-	      if (output(p) && constraint(p) && is_simple(p))
+	    /* FIXME: We compute the cell and attachment of P twice:
+	       during the call to is_simple() and within detach().
+	       How could we reuse this elegantly, without breaking
+	       the genericity of the skeleton algorithm?
+	       Also, keep in mind that functors can maintain an
+	       internal state and make side effects, meaning that
+	       e.g. constraint(p) might not be constant for a
+	       given p during the thinning.  */
+	    if (output(p) && constraint(p) && is_simple(p))
+	      {
+		detach(p, output);
+		mln_niter(N) n_(nbh, p);
+		for_all(n_)
 		{
-		  detach(p, output);
-		  mln_niter(N) n_(nbh, p);
-		  for_all(n_)
-		  {
-		    // Same remark as above regarding P and P_.
-		    psite n = n_;
-		    if (output.domain().has(n)
-			&& output(n) && constraint(n) && is_simple(n))
-		      next_set.insert(n);
-		  }
+		  // Same remark as above regarding P and P_.
+		  psite n = n_;
+		  if (output.domain().has(n)
+		      && output(n) && constraint(n) && is_simple(n))
+		    queue.push(n);
 		}
-	    }
-	    set.clear();
-	    std::swap(set, next_set);
+	      }
 	  }
 
 	trace::exiting("topo::skeleton::breadth_first_thinning");
