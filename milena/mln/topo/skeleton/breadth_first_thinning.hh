@@ -135,15 +135,6 @@ namespace mln
 	while (!queue.is_empty())
 	  {
 	    psite p = queue.pop_front();
-
-	    /* FIXME: We compute the cell and attachment of P twice:
-	       during the call to is_simple() and within detach().
-	       How could we reuse this elegantly, without breaking
-	       the genericity of the skeleton algorithm?
-	       Also, keep in mind that functors can maintain an
-	       internal state and make side effects, meaning that
-	       e.g. constraint(p) might not be constant for a
-	       given p during the thinning.  */
 	    if (output(p) && constraint(p) && is_simple(p))
 	      {
 		detach(p, output);

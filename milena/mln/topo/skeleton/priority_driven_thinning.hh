@@ -126,9 +126,9 @@ namespace mln
 
 	typedef mln_psite(I) psite;
 	typedef p_queue_fast<psite> queue_t;
-	typedef p_priority<mln_value(J), queue_t> p_queue_t;
-	p_queue_t p_queue;
-	// Populate P_QUEUE with candidate simple points.
+	typedef p_priority<mln_value(J), queue_t> priority_queue_t;
+	priority_queue_t queue;
+	// Populate QUEUE with candidate simple points.
 	mln_piter(I) p_(output.domain());
 	for_all(p_)
 	{
@@ -139,21 +139,12 @@ namespace mln
 	     the compiler and pass an actual, explicit psite.  */
 	  psite p = p_;
 	  if (output(p) && constraint(p) && is_simple(p))
-	    p_queue.push(priority(p), p);
+	    queue.push(priority(p), p);
 	}
 
-	while (!p_queue.is_empty())
+	while (!queue.is_empty())
 	  {
-	    psite p = p_queue.pop_front();
-
-	    /* FIXME: We compute the cell and attachment of P twice:
-	       during the call to is_simple() and within detach().
-	       How could we reuse this elegantly, without breaking
-	       the genericity of the skeleton algorithm?
-	       Also, keep in mind that functors can maintain an
-	       internal state and make side effects, meaning that
-	       e.g. constraint(p) might not be constant for a
-	       given p during the thinning.  */
+	    psite p = queue.pop_front();
 	    if (output(p) && constraint(p) && is_simple(p))
 	      {
 		detach(p, output);
@@ -164,7 +155,7 @@ namespace mln
 		  psite n = n_;
 		  if (output.domain().has(n)
 		      && output(n) && constraint(n) && is_simple(n))
-		    p_queue.push(priority(n), n);
+		    queue.push(priority(n), n);
 		}
 	      }
 	  }

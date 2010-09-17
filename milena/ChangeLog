@@ -1,5 +1,14 @@
 2010-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Aesthetic changes in thinning algorithms.
+
+	* mln/topo/skeleton/breadth_first_thinning.hh: Remove a comment.
+	* mln/topo/skeleton/priority_driven_thinning.hh: Likewise.
+	Rename p_queue to queue to avoid confusions with mln::p_queue and
+	improve uniformity w.r.t. topo::breadth_first_thinning.
+
+2010-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the processing order in topo::breadth_first_thinning.
 
 	* mln/topo/skeleton/breadth_first_thinning.hh: Use a p_queue_fast
