@@ -129,15 +129,9 @@ namespace mln
 	typedef p_priority<mln_value(J), queue_t> priority_queue_t;
 	priority_queue_t queue;
 	// Populate QUEUE with candidate simple points.
-	mln_piter(I) p_(output.domain());
-	for_all(p_)
+	mln_piter(I) p(output.domain());
+	for_all(p)
 	{
-	  /* CONSTRAINTS and IS_SIMPLE are site-to-boolean (p2b)
-	     predicate functors; passing an iterator as argument might
-	     not be possible (C++ cannot resolve template routines if
-	     an implicit conversion of the argument is needed).  Help
-	     the compiler and pass an actual, explicit psite.  */
-	  psite p = p_;
 	  if (output(p) && constraint(p) && is_simple(p))
 	    queue.push(priority(p), p);
 	}
@@ -148,11 +142,9 @@ namespace mln
 	    if (output(p) && constraint(p) && is_simple(p))
 	      {
 		detach(p, output);
-		mln_niter(N) n_(nbh, p);
-		for_all(n_)
+		mln_niter(N) n(nbh, p);
+		for_all(n)
 		{
-		  // Same remark as above regarding P and P_.
-		  psite n = n_;
 		  if (output.domain().has(n)
 		      && output(n) && constraint(n) && is_simple(n))
 		    queue.push(priority(n), n);

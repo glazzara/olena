@@ -1,5 +1,13 @@
 2010-09-19  Roland Levillain  <roland@lrde.epita.fr>
 
+	Get rid of intermediate psites in thinning algorithms.
+
+	* mln/topo/skeleton/breadth_first_thinning.hh,
+	* mln/topo/skeleton/priority_driven_thinning.hh:
+	Here.
+
+2010-09-19  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have topo::is_n_face take a psite type as class parameter.
 
 	* mln/topo/is_n_face.hh: Here, so that the argument of this
