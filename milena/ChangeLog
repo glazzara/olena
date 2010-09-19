@@ -1,3 +1,15 @@
+2010-09-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have topo::is_n_face take a psite type as class parameter.
+
+	* mln/topo/is_n_face.hh: Here, so that the argument of this
+	functor (e.g., an iterator) is always converted to the psite
+	type.
+	* apps/mesh-segm-skel/mesh-complex-max-curv-skel.cc,
+	* apps/mesh-segm-skel/mesh-complex-pinv-curv-skel.cc,
+	* apps/mesh-segm-skel/mesh-complex-skel.cc:
+	Adjust.
+
 2010-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
 	Aesthetic changes in thinning algorithms.

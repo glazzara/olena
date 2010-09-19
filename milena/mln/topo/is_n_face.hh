@@ -41,26 +41,26 @@ namespace mln
   {
 
     // Forward declaration.
-    template <unsigned N> struct is_n_face;
+    template <typename P, unsigned N>
+    struct is_n_face;
 
-    /// A functor testing wheter a mln::complex_psite is an \p N -face.
-    template <unsigned N>
-    struct is_n_face : public mln::Function_v2b< is_n_face<N> >
+    /// A functor testing wheter a psite (presumably an
+    /// mln::complex_psite) is an \p N -face.
+    template <typename P, unsigned N>
+    struct is_n_face : public mln::Function_v2b< is_n_face<P, N> >
     {
       typedef bool result;
 
-      template <typename P>
       bool operator()(const P& p) const;
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <unsigned N> 
-    template <typename P>
+    template <typename P, unsigned N>
     inline
     bool
-    is_n_face<N>::operator()(const P& p) const
+    is_n_face<P, N>::operator()(const P& p) const
     {
       return p.n() == N;
     }

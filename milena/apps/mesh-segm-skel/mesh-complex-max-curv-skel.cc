@@ -261,7 +261,7 @@ main(int argc, char* argv[])
 
        As a workaround, we use the constraint predicate of the
        skeleton routine to restrict the iteration to 2-cells.  */
-  mln::topo::is_n_face<bin_ima_t::dim> constraint_p;
+  mln::topo::is_n_face<mln_psite_(bin_ima_t), bin_ima_t::dim> constraint_p;
   bin_ima_t skel =
     mln::topo::skeleton::breadth_first_thinning(surface, nbh,
 						is_simple_p,
