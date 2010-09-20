@@ -1,3 +1,7 @@
+2010-09-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	* mln/canvas/all.hh: Sort #include directives.
+
 2010-08-17  Roland Levillain  <roland@lrde.epita.fr>
 
 	Aesthetic changes.

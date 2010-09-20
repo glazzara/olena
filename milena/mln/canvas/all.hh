@@ -46,11 +46,11 @@ namespace mln
 
 
 # include <mln/canvas/browsing/all.hh>
-# include <mln/canvas/morpho/all.hh>
 # include <mln/canvas/chamfer.hh>
 # include <mln/canvas/distance_front.hh>
 # include <mln/canvas/distance_geodesic.hh>
 # include <mln/canvas/labeling/all.hh>
+# include <mln/canvas/morpho/all.hh>
 
 
 #endif // ! MLN_CANVAS_ALL_HH
