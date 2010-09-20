@@ -72,7 +72,7 @@ namespace mln
       priority_driven_thinning(const Image<I>& input,
 			       const Neighborhood<N>& nbh,
 			       Function_v2b<F>& is_simple,
-			       G detach,
+			       G& detach,
 			       const Image<J>& priority,
 			       const Function_v2b<H>& constraint);
 
@@ -95,7 +95,7 @@ namespace mln
       priority_driven_thinning(const Image<I>& input,
 			       const Neighborhood<N>& nbh,
 			       Function_v2b<F>& is_simple,
-			       G detach,
+			       G& detach,
 			       const Image<J>& priority);
 
 
@@ -108,7 +108,7 @@ namespace mln
       priority_driven_thinning(const Image<I>& input_,
 			       const Neighborhood<N>& nbh_,
 			       Function_v2b<F>& is_simple_,
-			       G detach,
+			       G& detach,
 			       const Image<J>& priority_,
 			       const Function_v2b<H>& constraint_)
       {
@@ -163,7 +163,7 @@ namespace mln
       priority_driven_thinning(const Image<I>& input,
 			       const Neighborhood<N>& nbh,
 			       Function_v2b<F>& is_simple,
-			       G detach,
+			       G& detach,
 			       const Image<J>& priority)
       {
 	return priority_driven_thinning(input, nbh, is_simple, detach,

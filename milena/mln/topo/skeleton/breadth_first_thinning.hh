@@ -69,7 +69,7 @@ namespace mln
       breadth_first_thinning(const Image<I>& input,
 			     const Neighborhood<N>& nbh,
 			     Function_v2b<F>& is_simple,
-			     G detach,
+			     G& detach,
 			     const Function_v2b<H>& constraint);
 
 
@@ -90,7 +90,7 @@ namespace mln
       breadth_first_thinning(const Image<I>& input,
 			     const Neighborhood<N>& nbh,
 			     Function_v2b<F>& is_simple,
-			     G detach);
+			     G& detach);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -101,7 +101,7 @@ namespace mln
       breadth_first_thinning(const Image<I>& input_,
 			     const Neighborhood<N>& nbh_,
 			     Function_v2b<F>& is_simple_,
-			     G detach,
+			     G& detach,
 			     const Function_v2b<H>& constraint_)
       {
 	trace::entering("topo::skeleton::breadth_first_thinning");
@@ -153,7 +153,7 @@ namespace mln
       breadth_first_thinning(const Image<I>& input,
 			     const Neighborhood<N>& nbh,
 			     Function_v2b<F>& is_simple,
-			     G detach)
+			     G& detach)
       {
 	return breadth_first_thinning(input, nbh, is_simple, detach,
 				      fun::p2b::tautology());

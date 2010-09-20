@@ -1,3 +1,13 @@
+2010-09-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Get the `detach' argument of thinning algorithms by reference.
+
+	* mln/topo/skeleton/breadth_first_thinning.hh
+	(topo::skeleton::breadth_first_thinning)
+	* mln/topo/skeleton/priority_driven_thinning.hh
+	(topo::skeleton::priority_driven_thinning):
+	Here.
+
 2010-09-19  Roland Levillain  <roland@lrde.epita.fr>
 
 	Get rid of intermediate psites in thinning algorithms.
