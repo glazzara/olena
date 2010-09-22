@@ -70,6 +70,16 @@ if HAVE_MAGICKXX
 		      	       -lpthread \
 			       $(MAGICKXX_LDFLAGS)
 
+
+    utilexec_PROGRAMS	    	+= text_in_picture_neg
+    text_in_picture_neg_SOURCES  = text_in_picture_neg.cc
+    text_in_picture_neg_CPPFLAGS = $(AM_CPPFLAGS) \
+			       	   $(MAGICKXX_CPPFLAGS)
+    text_in_picture_neg_LDFLAGS  = $(AM_LDFLAGS) \
+		      		   -lpthread \
+			       	   $(MAGICKXX_LDFLAGS)
+
+
 if HAVE_TESSERACT
 
     utilexec_PROGRAMS			+= text_recognition_in_picture
