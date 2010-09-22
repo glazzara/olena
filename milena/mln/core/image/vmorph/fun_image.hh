@@ -132,8 +132,6 @@ namespace mln
     /// Mutable access is for reading only.
     mln_result(F) operator()(const mln_psite(I)& p);
     // lvalue operator()(const mln_psite(I)& p);  De-activated for 1.0
-
-    F f;
   };
 
 
@@ -211,7 +209,7 @@ namespace mln
   fun_image<F,I>::operator()(const mln_psite(I)& p) const
   {
     mln_precondition(this->data_->ima_.has(p));
-    return f( this->data_->ima_(p) );
+    return this->data_->f_( this->data_->ima_(p) );
   }
 
   template <typename F, typename I>
@@ -220,7 +218,7 @@ namespace mln
   fun_image<F,I>::operator()(const mln_psite(I)& p)
   {
     mln_precondition(this->data_->ima_.has(p));
-    return f( this->data_->ima_(p) );
+    return this->data_->f_( this->data_->ima_(p) );
 //     return mln::value::shell<F, I>( this->data_->ima_, p );  De-activated for 1.0
   }
 

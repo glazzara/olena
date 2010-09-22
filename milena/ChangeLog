@@ -1,3 +1,8 @@
+2010-09-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* milena/mln/core/image/vmorph/fun_image.hh: Fix an invalid
+	function call.
+
 2010-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	* headers.mk, tests/unit_test/unit-tests.mk: Regen.
