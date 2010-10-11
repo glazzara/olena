@@ -155,7 +155,7 @@ namespace scribo
 	                  + v21*v21 + v22*v22 + v23*v23
 	                  + v31*v31 + v32*v32 + v33*v33;
 
-	    convert::from_to(local_sum / 9, *p_sub++);
+	    mln::convert::from_to(local_sum / 9, *p_sub++);
 	    h_sum   += local_sum;
 	    h_sum_2 += local_sum_2;
 
@@ -193,7 +193,7 @@ namespace scribo
 	                  + v21*v21 + v22*v22 + v23*v23
 	                  + v31*v31 + v32*v32 + v33*v33;
 
-	    convert::from_to(local_sum / 9, *p_sub++);
+	    mln::convert::from_to(local_sum / 9, *p_sub++);
 	    h_sum   += local_sum;
 	    h_sum_2 += local_sum_2;
 
@@ -284,7 +284,7 @@ namespace scribo
 	    ptr2 += 2;
 	    S local_sum   = v11     + v12     + v21     + v22,
 	      local_sum_2 = v11*v11 + v12*v12 + v21*v21 + v22*v22;
-	    convert::from_to(local_sum / 4, *p_sub++);
+	    mln::convert::from_to(local_sum / 4, *p_sub++);
 	    h_sum   += local_sum;
 	    h_sum_2 += local_sum_2;
 
@@ -319,7 +319,7 @@ namespace scribo
 	    ptr2 += 2;
 	    S local_sum   = v11     + v12     + v21     + v22,
 	      local_sum_2 = v11*v11 + v12*v12 + v21*v21 + v22*v22;
-	    convert::from_to(local_sum / 4, *p_sub++);
+	    mln::convert::from_to(local_sum / 4, *p_sub++);
 	    h_sum   += local_sum;
 	    h_sum_2 += local_sum_2;
 

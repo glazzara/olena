@@ -126,9 +126,9 @@ namespace scribo
 	    t_p);
 # else
           value::int_u8 t_p;
-	  convert::from_to(sauvola_threshold_formula(mean, stddev,
-						     K_,
-						     SCRIBO_DEFAULT_SAUVOLA_R),
+	  mln::convert::from_to(sauvola_threshold_formula(mean, stddev,
+							  K_,
+							  SCRIBO_DEFAULT_SAUVOLA_R),
 			   t_p);
 # endif // SCRIBO_SAUVOLA_DEBUG
 

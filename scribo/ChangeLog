@@ -1,3 +1,11 @@
+2010-10-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix namespace ambiguities.
+
+	* scribo/binarization/internal/first_pass_functor.hh,
+	* scribo/binarization/sauvola_threshold_image.hh,
+	* scribo/subsampling/integral_single_image.hh: Add mln:: prefix.
+
 2010-08-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* scribo/core/line_info.hh: Make stats computation more robust

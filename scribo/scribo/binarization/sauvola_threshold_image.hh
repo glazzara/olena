@@ -437,7 +437,7 @@ namespace scribo
 
 	  for(def::coord row = 0; row < nrows; ++row)
 	    for(def::coord col = 0; col < ncols; ++col)
-	      convert::from_to(
+	      mln::convert::from_to(
 		internal::compute_sauvola_threshold(P(row, col), simple,
 						    squared, window_size,
 						    K,
