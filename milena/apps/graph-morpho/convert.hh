@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -115,7 +115,7 @@ namespace convert
   }
 
 
-  /// Convert an mln::bin_1complex_image2d to an mln::image2d<bool>.
+  /// Convert an mln::image2d<bool> to an mln::bin_1complex_image2d.
   inline
   mln::bin_1complex_image2d
   to_complex_image(const mln::image2d<bool>& input)

@@ -1,4 +1,4 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -73,7 +73,7 @@ namespace make
 	    vertex_t v1(c, row * ncols + col - 1);
 	    // Second vertex.
 	    vertex_t v2(c, row * ncols + col);
-	    // Edge bewteen V1 and V2.
+	    // Edge between V1 and V2.
 	    c.add_face(v1 + v2);
 	  }
 
@@ -85,7 +85,7 @@ namespace make
 	      vertex_t v1(c, (row - 1) * ncols + col);
 	      // Second vertex.
 	      vertex_t v2(c, row * ncols + col);
-	      // Edge bewteen V1 and V2.
+	      // Edge between V1 and V2.
 	      c.add_face(v1 + v2);
 	    }
       }

@@ -1,3 +1,11 @@
+2010-10-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Typos and aesthetic changes in Milena apps.
+
+	* apps/graph-morpho/make.hh (make::complex1d_image)
+	* apps/graph-morpho/convert.hh (convert::to_complex_image)
+	Here.
+
 2010-09-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	* mln/canvas/all.hh: Sort #include directives.
