@@ -1,5 +1,11 @@
 2010-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Ensure paths passed to `--with-*' options are visited before others.
+
+	* m4/oln-with-lib.m4 (OLN_WITH_LIB): Here.
+
+2010-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	* m4/oln-with-lib.m4: Revert the previous changes.
 
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
