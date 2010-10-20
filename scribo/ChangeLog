@@ -1,3 +1,10 @@
+2010-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix `link' name lookup in Scribo.
+
+	* src/text_in_picture.cc: Help the C++ compiler not to mix up
+	scribo::primitive::link with unistd.h's link(2).
+
 2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes in Scribo
