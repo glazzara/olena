@@ -157,6 +157,18 @@ environment CONFIG_SITE to set up a configuration environment (see
 Autoconf's manual).
 
 
+Verbose Display
+===============
+
+A more verbose display can be turned on by passing the
+`--enable-verbose' flag to configure:
+
+     % ../configure --enable-verbose
+
+Before configuring files, configure will display a summary of the
+configuration step.
+
+
 Installation Path
 =================
 

@@ -1,5 +1,16 @@
 2010-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have configure be terser.
+
+	* configure.ac: Remove intermediate messages.
+	Add option `--enable-verbose', and show the final summary only
+	when it is turned on.
+	Use escaped version of `[' and `]' in message.
+	Document this option...
+	* README (Verbose Display): ...here.
+
+2010-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Ensure paths passed to `--with-*' options are visited before others.
 
 	* m4/oln-with-lib.m4 (OLN_WITH_LIB): Here.

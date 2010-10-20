@@ -194,11 +194,6 @@ AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 # Prepare calls to pkg-config
 PKG_PROG_PKG_CONFIG
 
-AC_MSG_RESULT([])
-AC_MSG_RESULT([])
-AC_MSG_RESULT([Checking external libraries])
-AC_MSG_RESULT([-------------------------------------------------------------------------------])
-
 
 ### Support for FreeImagePlus has been disabled for Olena 1.0.
 ## OLN_WITH_LIB([FreeImagePlus], [FreeImagePlus.h], [freeimageplus])
@@ -211,10 +206,6 @@ oln_have_boost_preprocessor=no
 oln_have_boost_tuple=no
 
 if test "x$with_boost" != xno; then
-   AC_MSG_RESULT([])
-   AC_MSG_RESULT([* Boost])
-   AC_MSG_RESULT([-------])
-
    # Is Boost installed?
    BOOST_REQUIRE([], oln_have_boost=no)
 
@@ -249,12 +240,6 @@ AM_CONDITIONAL([HAVE_BOOST_TUPLE], [test "x$oln_have_boost_tuple" = xyes])
 ## CFITSIO library. ##
 ## ---------------- ##
 
-if test "x$with_cfitsio" != xno; then
-   AC_MSG_RESULT([])
-   AC_MSG_RESULT([* libcfitsio])
-   AC_MSG_RESULT([------------])
-fi
-
 OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 
 
@@ -278,14 +263,9 @@ AC_ARG_WITH([magickxx],
 oln_have_magickxx=no
 
 if test "x$with_magickxx" != xno; then
-   AC_MSG_RESULT([])
-   AC_MSG_RESULT([* libMagick++])
-   AC_MSG_RESULT([---------------])
-
    # Try to use ImageMagick from a specified path.
    if test "x$with_magickxx" != xyes; then
       AC_MSG_CHECKING([with given path $with_magickxx])
-      AC_MSG_RESULT([])
       OLN_WITH_LIB([Magick++], [Magick++.h], [Magick++], [magickxx],
       		   [MAGICKXX])
    fi
@@ -293,11 +273,8 @@ if test "x$with_magickxx" != xno; then
    # Check with pkg-config if previous test failed or if no path have
    # been passed through --with-magickxx argument.
    if test "x$oln_have_magickxx" = xno; then
-      AC_MSG_CHECKING([with pkg-config])
-      AC_MSG_RESULT([])
       PKG_CHECK_MODULES(MAGICKXX,[ImageMagick++], oln_have_magickxx=yes,
       						  oln_have_magickxx=no)
-   AC_MSG_RESULT([])
 
       if test "x$oln_have_magickxx" = xyes; then
          AC_DEFINE([HAVE_MAGICKXX], 1,
@@ -322,10 +299,6 @@ AM_CONDITIONAL(HAVE_MAGICKXX, test "x$oln_have_magickxx" = xyes)
 oln_have_qt=no
 
 if test "x$with_qt" != xno; then
-   AC_MSG_RESULT([])
-   AC_MSG_RESULT([* Qt])
-   AC_MSG_RESULT([----])
-
    AT_WITH_QT([+xml], [], [],
               AC_MSG_WARN([Qt dependent programs will be disabled.]))
 
@@ -346,12 +319,6 @@ AM_CONDITIONAL([HAVE_QT], [test "x$oln_have_qt" = xyes])
 ## Tesseract. ##
 ## ---------- ##
 
-if test "x$with_tesseract" != xno; then
-   AC_MSG_RESULT([])
-   AC_MSG_RESULT([* Tesseract])
-   AC_MSG_RESULT([-----------])
-fi
-
 OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
    	     [tesseract], [TESSERACT])
 
@@ -360,12 +327,6 @@ OLN_WITH_LIB([TESSERACT], [tesseract/baseapi.h], [tesseract_full],
 ## TIFF library. ##
 ## ------------- ##
 
-if test "x$with_tiff" != xno; then
-   AC_MSG_RESULT([])
-   AC_MSG_RESULT([* libtiff])
-   AC_MSG_RESULT([---------])
-fi
-
 OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
 
 
@@ -373,23 +334,9 @@ OLN_WITH_LIB([TIFF], [tiff.h], [tiff])
 ## GDCM library (Grassroots DiCom). ##
 ## -------------------------------- ##
 
-if test "x$with_gdcm" != xno; then
-   AC_MSG_RESULT([])
-   AC_MSG_RESULT([* libgdcm])
-   AC_MSG_RESULT([---------])
-fi
-
 OLN_WITH_LIB([GDCM], [gdcm-2.0/gdcmReader.h], [gdcmCommon], [gdcm],
    	     [GDCM],
 	     [-lgdcmDICT -lgdcmDSED -lgdcmIOD -lgdcmMSFF -lgdcmexpat -lgdcmjpeg12 -lgdcmjpeg16 -lgdcmjpeg8 -lgdcmopenjpeg -lgdcmuuid -lgdcmzlib])
-
-
-
-
-AC_MSG_RESULT([])
-AC_MSG_RESULT([-------------------------------------------------------------------------------])
-AC_MSG_RESULT([])
-AC_MSG_RESULT([])
 
 
 ## ---------------------------- ##
@@ -735,12 +682,19 @@ if test -z "$TOOLS_CXXFLAGS"; then
   fi
 fi
 
-AC_MSG_RESULT([-------------------------------------------------------------------------------])
-AC_MSG_RESULT([Update Olena configuration])
-AC_OUTPUT
 
+## ----------------- ##
+## Verbose display.  ##
+## ----------------- ##
 
-AC_MSG_RESULT([
+# Do not print this information by default, since `configure' outputs
+# should be kept short.  Longer explanations are always available in
+# config.log.
+
+AC_ARG_ENABLE([verbose],
+  [AS_HELP_STRING([--enable-verbose], [enable verbose display])],
+  [if test "x$enable_verbose" != xno; then
+     AC_MSG_RESULT([
 -------------------------------------------------------------------------------
 Configuration summary.
 
@@ -753,17 +707,17 @@ Build system type: $build
 ================
 
 
-			Option			Enabled and available
+                        Option                  Enabled and available
 -------------------------------------------------------------------------------
-Boost Preprocessor      --with-boost=[DIR]	$oln_have_boost_preprocessor
-Boost Tuple		--with-boost=[DIR]	$oln_have_boost_tuple
-CFITSIO			--with-cfitsio[=DIR]	$oln_have_cfitsio
-GDCM			--with-gdcm[=DIR]		$oln_have_gdcm
-Magick++		--with-magickxx		$oln_have_magickxx
-Qt			--with-qt		$oln_have_qt
-Tesseract		--with-tesseract[=DIR]	$oln_have_tesseract
-TIFF 			--with-tiff[=DIR]		$oln_have_tiff
-Trimesh 		--enable-trimesh	$enable_trimesh
+Boost Preprocessor      --with-boost=@<:@=DIR@:>@     $oln_have_boost_preprocessor
+Boost Tuple             --with-boost=@<:@=DIR@:>@     $oln_have_boost_tuple
+CFITSIO                 --with-cfitsio@<:@=DIR@:>@    $oln_have_cfitsio
+GDCM                    --with-gdcm@<:@=DIR@:>@       $oln_have_gdcm
+Magick++                --with-magickxx         $oln_have_magickxx
+Qt                      --with-qt               $oln_have_qt
+Tesseract               --with-tesseract@<:@=DIR@:>@  $oln_have_tesseract
+TIFF                    --with-tiff@<:@=DIR@:>@       $oln_have_tiff
+Trimesh                 --enable-trimesh        $enable_trimesh
 -------------------------------------------------------------------------------
 
 
@@ -774,10 +728,10 @@ Trimesh 		--enable-trimesh	$enable_trimesh
 ===========
 
 
-			Option			Enabled
+                        Option                  Enabled
 -------------------------------------------------------------------------------
-Scribo			--enable-scribo		$enable_scribo
-Swilena			--enable-swilena	$enable_swilena
+Scribo                  --enable-scribo         $enable_scribo
+Swilena                 --enable-swilena        $enable_swilena
 -------------------------------------------------------------------------------
 
 
@@ -788,10 +742,10 @@ Swilena			--enable-swilena	$enable_swilena
 =============
 
 
-			Option			Enabled
+                        Option                  Enabled
 -------------------------------------------------------------------------------
-Apps			--enable-apps		$enable_apps
-Tools			--enable-tools		$enable_tools
+Apps                    --enable-apps           $enable_apps
+Tools                   --enable-tools          $enable_tools
 -------------------------------------------------------------------------------
 
 
@@ -808,13 +762,13 @@ Options used to compile and link:
   LIBS            = $MAGICK_LIBS
   CXX             = $CXX
   CXXFLAGS        = $CXXFLAGS
-  PKG_CONFIG	  = $PKG_CONFIG
-  QT_PATH	  = $QT_PATH
-  QMAKE		  = $QMAKE
-  MOC		  = $MOC
-  UIC		  = $UIC
-  RCC		  = $RCC
-  BOOST_ROOT 	  = $BOOST_ROOT
+  PKG_CONFIG      = $PKG_CONFIG
+  QT_PATH         = $QT_PATH
+  QMAKE           = $QMAKE
+  MOC             = $MOC
+  UIC             = $UIC
+  RCC             = $RCC
+  BOOST_ROOT      = $BOOST_ROOT
   MAGICKXX_CFLAGS = $MAGICKXX_CPPFLAGS
   MAGICKXX_LIBS   = $MAGICKXX_LDFLAGS
   SCRIBO_CXXFLAGS = $SCRIBO_CXXFLAGS
@@ -824,9 +778,17 @@ Options used to compile and link:
 
 
 *******************************************************************************
-Olena is configured as stated above. Please verify that this configuration
+Olena is configured as stated above.  Please verify that this configuration
 matches your expectations.
 
 Then, type 'make' to build Olena and 'make install' to install it on
 your system.
 ])
+fi])
+
+
+## -------- ##
+## Output.  ##
+## -------- ##
+
+AC_OUTPUT
