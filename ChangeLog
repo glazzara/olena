@@ -1,3 +1,7 @@
+2010-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	* m4/oln-with-lib.m4: Revert the previous changes.
+
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update HACKING.
