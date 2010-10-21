@@ -1,5 +1,9 @@
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/fun/x2x/rotation.hh: Aesthetic changes.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Ensure non implemented rotation code stops the execution.
 
 	* mln/fun/x2x/rotation.hh
