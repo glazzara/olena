@@ -199,38 +199,10 @@ AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 ## Boost ##
 ## ----- ##
 
-oln_have_boost_preprocessor=no
-oln_have_boost_tuple=no
+BOOST_TUPLE
+AM_CONDITIONAL([HAVE_BOOST_TUPLE],
+               [test "x$ac_cv_header_boost_tuple_tuple_hpp" = xyes])
 
-if test "x$with_boost" != xno; then
-   # Is Boost installed?
-   BOOST_REQUIRE([], oln_have_boost=no)
-
-   if test "x$oln_have_boost" != xno; then
-
-      # Preprocessor
-      BOOST_FIND_HEADER([boost/preprocessor/repetition/repeat.hpp],
-			oln_have_boost_preprocessor=no,
-		        oln_have_boost_preprocessor=yes)
-      if test "x$oln_have_boost_preprocessor" = xyes; then
-      	 AC_DEFINE([HAVE_BOOST_PREPROCESSOR], 1,
-	 	   [Define to 1 if we can use Boost Preprocessor.])
-      fi
-
-      # Tuple
-      BOOST_FIND_HEADER([boost/tuple/tuple.hpp],
-		        oln_have_boost_tuple=no,
-		        oln_have_boost_tuple=yes)
-      if test "x$oln_have_boost_tuple" = xyes; then
-      	 AC_DEFINE([HAVE_BOOST_TUPLE], 1,
-	 	   [Define to 1 if we can use Boost Tuple.])
-      fi
-   fi
-fi
-
-AM_CONDITIONAL([HAVE_BOOST_PREPROCESSOR],
-	       [test "x$oln_have_boost_preprocessor" = xyes])
-AM_CONDITIONAL([HAVE_BOOST_TUPLE], [test "x$oln_have_boost_tuple" = xyes])
 
 
 ## ---------------- ##
@@ -669,7 +641,6 @@ Build system type: $build
 
                         Option                  Enabled and available
 -------------------------------------------------------------------------------
-Boost Preprocessor      --with-boost=@<:@=DIR@:>@     $oln_have_boost_preprocessor
 Boost Tuple             --with-boost=@<:@=DIR@:>@     $oln_have_boost_tuple
 CFITSIO                 --with-cfitsio@<:@=DIR@:>@    $oln_have_cfitsio
 GDCM                    --with-gdcm@<:@=DIR@:>@       $oln_have_gdcm
