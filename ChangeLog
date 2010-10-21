@@ -1,5 +1,12 @@
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix configure option `--enable-all'.
+
+	* configure.ac: Check the value of `enable_all' before triggering
+	optional modules.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Revamp the handling of Qt.
 
 	* configure.ac: Here.

@@ -161,17 +161,16 @@ fi
 # ``--disable-apps''), then the disable flag has priority.
 
 AC_ARG_ENABLE([all],
-              [AS_HELP_STRING([--enable-all],
-                              [enable maintainer mode])],
-              [
-               enable_trimesh=yes
-               enable_swilena=yes
+  [AS_HELP_STRING([--enable-all], [enable maintainer mode])],
+  [if test "x$enable_all" != xno; then
+     enable_trimesh=yes
+     enable_swilena=yes
 dnl<<lrde
-               enable_scribo=yes
+     enable_scribo=yes
 dnl>>
-               enable_apps=yes
-               enable_tools=yes
-              ])
+     enable_apps=yes
+     enable_tools=yes
+   fi])
 
 
 ## ------------------ ##
