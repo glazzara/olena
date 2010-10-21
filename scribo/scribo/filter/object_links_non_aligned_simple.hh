@@ -109,10 +109,11 @@ namespace scribo
       float max_alpha_rad = (max_alpha / 180.0f) * math::pi;
 
       for_all_comps(i, comps)
-	if (!::scribo::filter::internal::component_aligned_rad(comps, i, links(i),
-							     anchor,
-							     max_alpha_rad))
-	  output(i) = i;
+	if (comps(i).is_valid() && links(i))
+	  if (!::scribo::filter::internal::component_aligned_rad(comps, i, links(i),
+								 anchor,
+								 max_alpha_rad))
+	    output(i) = i;
 
 
       trace::exiting("scribo::filter::object_links_non_aligned_simple");

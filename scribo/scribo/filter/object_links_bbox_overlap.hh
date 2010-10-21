@@ -81,7 +81,7 @@ namespace scribo
       object_links<L> output(links);
 
       for_all_comps(i, components)
-	if (components(i).is_valid() && links(i) != i)
+	if (components(i).is_valid() && links(i) && links(i) != i)
 	{
 	  bool has_intersection = true;
 	  mln_site(L) pmin, pmax;

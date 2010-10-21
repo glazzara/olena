@@ -1,5 +1,14 @@
 2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix issues with object_links and ignored components.
+
+	* scribo/filter/object_links_bbox_overlap.hh,
+	* scribo/filter/object_links_bbox_ratio.hh,
+	* scribo/filter/object_links_non_aligned_simple.hh,
+	* scribo/primitive/link/merge_double_link.hh: Ignore invalid links.
+
+2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	* scribo/core/component_set.hh: Fix component_set id type.
 
 2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>

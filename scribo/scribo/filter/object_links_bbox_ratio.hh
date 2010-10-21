@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -79,8 +80,8 @@ namespace scribo
       const component_set<L>& components = links.components();
 
       object_links<L> output = links.duplicate();
-      for (unsigned i = 1; i < links.nelements(); ++i)
-	if (links(i) != i)
+      for_all_links(i, links)
+	if (links(i) && links(i) != i)
 	{
 	  float
 	    lmin = components(i).bbox().pmax()[dim]
