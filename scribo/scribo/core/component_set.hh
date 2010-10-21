@@ -115,6 +115,9 @@ namespace scribo
 
     typedef mln_result(center_accu_t) center_t;
 
+    typedef internal::component_set_data<L> data_t;
+    typedef data_t* id_t;
+
   public:
 
     /// Constructors
@@ -190,7 +193,7 @@ namespace scribo
     const mln::util::array<scribo::component_info>& infos_() const;
 
     /// Unique set Id.
-    unsigned id_() const;
+    id_t id_() const;
 
 
     /// Read/Write access to the underlying labeled image.
@@ -212,7 +215,7 @@ namespace scribo
     /// Duplicate the underlying image and create a new component_set.
     void init_(const component_set<L>& model);
 
-    mln::util::tracked_ptr< internal::component_set_data<L> > data_;
+    mln::util::tracked_ptr<data_t> data_;
   };
 
 
@@ -312,7 +315,7 @@ namespace scribo
     {
       typedef mln_site(L) P;
 
-      infos_.reserve(static_cast<unsigned>(ncomps_) + 1);
+      infos_.reserve(value::next(ncomps_));
 
       infos_.append(component_info()); // Component 0, i.e. the background.
       for_all_comp_data(i, attribs)
@@ -330,7 +333,7 @@ namespace scribo
     {
       typedef mln_site(L) P;
 
-      infos_.reserve(static_cast<unsigned>(ncomps_) + 1);
+      infos_.reserve(value::next(ncomps_));
 
       infos_.append(component_info()); // Component 0, i.e. the background.
       for_all_comp_data(i, attribs)
@@ -485,10 +488,10 @@ namespace scribo
 
   template <typename L>
   inline
-  unsigned
+  typename component_set<L>::id_t
   component_set<L>::id_() const
   {
-    return (unsigned)data_.ptr_;
+    return data_.ptr_;
   }
 
 
@@ -506,7 +509,7 @@ namespace scribo
   mln_concrete(L)
   component_set<L>::valid_comps_image_() const
   {
-    mln::util::array<bool> f(unsigned(this->data_->ncomps_) + 1);
+    mln::util::array<bool> f(value::next(this->data_->ncomps_));
     f(0) = true;
 
     for_all_comps(c, (*this))

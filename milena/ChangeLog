@@ -1,3 +1,11 @@
+2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add value::next routine.
+
+	* mln/value/label.hh: Include next routine.
+
+	* mln/value/next.hh: New.
+
 2010-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Temporarily disable static tests on Magick::Quantum type size.
