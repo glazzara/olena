@@ -1,3 +1,12 @@
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update README.
+
+	* README: Aesthetic changes.
+	(Overview): Fix an URL.
+	(Other libraries): New section.
+	(Bibliography): Add publications of 2010.
+
 2010-08-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* m4/oln-with-lib.m4: Force headers lookup in specified path.

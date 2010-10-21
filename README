@@ -19,9 +19,9 @@ The complete GNU General Public License Notice can also be found in
 the 'COPYING' file in the root directory.
 
 
-======================
- Introduction to Olena
-======================
+=====================
+Introduction to Olena
+=====================
 
 Olena_, a platform dedicated to image processing.
 
@@ -53,14 +53,14 @@ expertise from the library development.
 Yet, Olena is an ongoing development project.  Few algorithms or
 definitions may change in a near future.  A list of potential changes
 is maintained here :
-https://olena.lrde.epita.fr/FeaturesSubjectToChange.
+http://olena.lrde.epita.fr/FeaturesSubjectToChange.
 
 Likewise, the documentation does not cover the whole project yet.  In the
 `doc/' directory you will find the first draft of a reference
 manual.  It includes a quick reference guide and a tutorial.  This is a
 good start.  In `milena/tools' and `milena/doc/examples' few sample
 programs are available.  Most of them are already used to illustrate
-the tutorial.   For the rest, we're afraid you will have to dig the
+the tutorial.  For the rest, we're afraid you will have to dig the
 code or e-mail us.
 
    Please direct any question or comments to <olena@lrde.epita.fr>, or
@@ -147,7 +147,7 @@ tree.
      % ../configure
 
    The build process can be altered by a number of options you can pass
-to the `configure' script. The following sections describe them.
+to the `configure' script.  The following sections describe them.
 
    Additionally, if you are an Olena maintainer (a person who runs
 `make distcheck'), _prefer setting `CXXFLAGS' as an environment
@@ -161,7 +161,7 @@ Installation Path
 =================
 
 By default, Olena is installed in the standard "local" directory of
-your system. This is usually `/usr/local' under Unix.
+your system.  This is usually `/usr/local' under Unix.
 
    You can change this path with the following flag:
 
@@ -172,10 +172,10 @@ Compiler Selection and Compilation Flags
 ========================================
 
 By default, `configure' will try to use the first C++ compiler it
-encounters on your system. If `CXX' is not set, it will look, in order,
+encounters on your system.  If `CXX' is not set, it will look, in order,
 for:
 
-   - the value of the `CCC' environment variable,
+   - the value of the `CXX' environment variable,
 
    - the GNU C++ compiler (`g++'),
 
@@ -198,7 +198,7 @@ compiler name to `configure', as follows:
 
 
    For some compilers (GNU g++ and Intel's icpc to some extent) ,
-`configure' will use default CXXFLAGS. You can override the default
+`configure' will use default CXXFLAGS.  You can override the default
 C++ flags by giving `configure' your selection of flags:
 
      % ../configure CXXFLAGS="<your-favorite-flags>"
@@ -235,7 +235,7 @@ To enable the installation of this module use::
 Tools
 -----
 
-Sample tools are shipped with the tarball. To enable the installation of
+Sample tools are shipped with the tarball.  To enable the installation of
 these tools use::
 
        ./configure --enable-tools
@@ -276,6 +276,15 @@ other optional dependencies, you can specify where it is located (if
 needed) at configuration time::
 
        ./configure --with-magickxx=/usr/local/
+
+Other libraries
+---------------
+
+The Boost Tuple library is used to implement a tuple accumulator
+class.  This project is a part of the Boost libraries; you can help
+configure find these libraries using the `--with-boost flag':
+
+       ./configure --with-boost=/usr/local/
 
 
 --------
@@ -335,6 +344,7 @@ And optionally:
 from the build directory (if you have kept it).  We recommend the use
 of GNU Stow (or any similar program) during the installation of Olena,
 to make the uninstallation of Olena easier.
+
 
 =====================
 Layout of the Tarball
@@ -470,11 +480,26 @@ papers.
 
 About Image Processing Programming:
 
+   * `Why and How to Design a Generic and Efficient Image Processing
+     Framework: The Case of the Milena Library`.  Roland Levillain,
+     Thierry Géraud, Laurent Najman.  In the proceedings of the 2010
+     International Conference on Image Processing (ICIP)
+     http://www.icip2010.org/
+     Hong Kong, September 26 - 29, 2010.
+
+   * `Writing Reusable Digital Geometry Algorithms in a Generic Image
+     Processing Framework`.  Roland Levillain, Thierry Géraud, Laurent
+     Najman.  In the proceedings of the Workshop on Applications of
+     Digital Geometry and Mathematical Morphology (WADGMM)
+     http://mdigest.jrc.ec.europa.eu/wadgmm2010/
+     Istanbul, Turkey, August 22, 2010.
+
    * `Milena: Write Generic Morphological Algorithms Once, Run on Many
      Kinds of Images`.  Roland Levillain, Thierry Géraud, Laurent
      Najman.  In the proceedings of the 9th International Symposium on
-     Mathematical Morphology (ISMM) http://www.cs.rug.nl/~ISMM09/
-     Groningen, The Netherlands August 24 - 27, 2009.
+     Mathematical Morphology (ISMM)
+     http://www.cs.rug.nl/~ISMM09/
+     Groningen, The Netherlands, August 24 - 27, 2009.
 
    * `Generic Algorithmic Blocks Dedicated to Image Processing`,
      Jérôme Darbon, Thierry Géraud, Patrick Bellot.  In the proceedings
