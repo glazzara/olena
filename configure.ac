@@ -191,9 +191,6 @@ AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 ## External libraries.  ##
 ## -------------------- ##
 
-# Prepare calls to pkg-config
-PKG_PROG_PKG_CONFIG
-
 
 ### Support for FreeImagePlus has been disabled for Olena 1.0.
 ## OLN_WITH_LIB([FreeImagePlus], [FreeImagePlus.h], [freeimageplus])
@@ -249,45 +246,8 @@ OLN_WITH_LIB([CFITSIO], [fitsio.h], [cfitsio])
 ## Magick++. ##
 ## --------- ##
 
-# FIXME: We should handle Magick++ both with Magick++-config and
-# pkg-config?  instead of OLN_WITH_LIB.  See how other projects handle
-# this.
-
-
-AC_ARG_WITH([magickxx],
-    [AC_HELP_STRING([--with-magickxx],
-                    [enable magickxx support (default)])],
-        [with_magickxx=$withval],
-        [with_magickxx='yes'])
-
-oln_have_magickxx=no
-
-if test "x$with_magickxx" != xno; then
-   # Try to use ImageMagick from a specified path.
-   if test "x$with_magickxx" != xyes; then
-      AC_MSG_CHECKING([with given path $with_magickxx])
-      OLN_WITH_LIB([Magick++], [Magick++.h], [Magick++], [magickxx],
-      		   [MAGICKXX])
-   fi
-
-   # Check with pkg-config if previous test failed or if no path have
-   # been passed through --with-magickxx argument.
-   if test "x$oln_have_magickxx" = xno; then
-      PKG_CHECK_MODULES(MAGICKXX,[ImageMagick++], oln_have_magickxx=yes,
-      						  oln_have_magickxx=no)
-
-      if test "x$oln_have_magickxx" = xyes; then
-         AC_DEFINE([HAVE_MAGICKXX], 1,
-	 	   [Define to 1 if we can use libMagick++])
-	 # Use standard variable names.
-	 MAGICKXX_CPPFLAGS="$MAGICKXX_CFLAGS"
-	 MAGICKXX_LDFLAGS="$MAGICKXX_LIBS"
-	 AC_SUBST(MAGICKXX_CPPFLAGS)
-	 AC_SUBST(MAGICKXX_LDFLAGS)
-      fi
-   fi
-fi
-
+OLN_WITH_LIB_PKG_CONFIG([Magick++], [Magick++.h], [Magick++], [magickxx],
+                        [MAGICKXX], [], [ImageMagick++])
 AM_CONDITIONAL(HAVE_MAGICKXX, test "x$oln_have_magickxx" = xyes)
 
 #------------------------------------------------------------

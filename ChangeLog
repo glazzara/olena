@@ -1,3 +1,12 @@
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revamp the handling of Magick++.
+
+	* m4/oln-with-lib.m4 (_OLN_WITH_LIB): Make all arguments
+	mandatory.
+	(OLN_WITH_LIB_PKG_CONFIG, _OLN_WITH_LIB_PKG_CONFIG): New macros.
+	* configure.ac: Use OLN_WITH_LIB_PKG_CONFIG to handle Magick++
+
 2010-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have configure be terser.
