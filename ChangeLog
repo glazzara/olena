@@ -1,5 +1,12 @@
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Revamp the handling of Qt.
+
+	* configure.ac: Here.
+	Use autotroll.m4's features instead of duplicating them.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Revamp the handling of Boost libraries.
 
 	* configure.ac: Here.

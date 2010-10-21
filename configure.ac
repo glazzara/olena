@@ -228,23 +228,14 @@ AM_CONDITIONAL(HAVE_MAGICKXX, test "x$oln_have_magickxx" = xyes)
 ## Qt. ##
 ## --- ##
 
-oln_have_qt=no
-
-if test "x$with_qt" != xno; then
-   AT_WITH_QT([+xml], [], [],
-              AC_MSG_WARN([Qt dependent programs will be disabled.]))
-
-   if test "x$QT_VERSION_MAJOR" != x; then
-      AT_REQUIRE_QT_VERSION([4], AC_MSG_WARN([Your Qt version is too old! Qt dependent programs will be disabled.]),
-	 		    AC_DEFINE([HAVE_QT], 1,
-				      [Define to 1 if we can use Qt]) oln_have_qt=yes)
-      if test "x$QT_VERSION_MAJOR" = x4; then
-      	 oln_have_qt=yes
-      fi
-   fi
+AT_WITH_QT([xml], [], [], [], [oln_have_qt=yes])
+if test $oln_have_qt = yes; then
+  AT_REQUIRE_QT_VERSION([4],
+    AC_MSG_WARN([Qt-dependent programs will be disabled.]),
+    oln_have_expected_qt_version=yes)
 fi
+AM_CONDITIONAL([HAVE_QT], [test "x$oln_have_expected_qt_version" = xyes])
 
-AM_CONDITIONAL([HAVE_QT], [test "x$oln_have_qt" = xyes])
 
 
 ## ---------- ##
