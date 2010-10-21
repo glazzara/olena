@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -44,10 +45,13 @@
 /// Type trait for value sum.
 # define mln_trait_value_sum_product(T, U)			\
    typename mln::trait::value_< mln_trait_op_times(T,U) >::sum
+# define mln_trait_value_sum_product_(T, U)			\
+   mln::trait::value_< mln_trait_op_times_(T,U) >::sum
 
 
 /// Shortcut for type trait for value sum.
 # define mln_sum_product(T, U)  mln_trait_value_sum_product(T, U)
+# define mln_sum_product_(T, U)  mln_trait_value_sum_product_(T, U)
 
 
 // FIXME: In the definitions below, is that equiv or interop?

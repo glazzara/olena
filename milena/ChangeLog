@@ -1,5 +1,12 @@
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add macros for non-template contexts in mln/value/ops.hh.
+
+	* mln/value/ops.hh (mln_trait_value_sum_product_)
+	(mln_sum_product_): New macros.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve the genericity of vector normalization.
 
 	* mln/algebra/vec.hh (mln::algebra::vec<n,T>::normalize): Use
