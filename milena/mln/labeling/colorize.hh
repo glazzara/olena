@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,6 +40,7 @@
 # include <mln/accu/stat/max.hh>
 # include <mln/util/array.hh>
 # include <mln/util/set.hh>
+# include <mln/value/next.hh>
 
 
 namespace mln
@@ -192,7 +193,7 @@ namespace mln
       // mlc_is_a(mln_value(L), mln::value::Symbolic)::check();
       (void) value;
 
-      unsigned label_count = static_cast<unsigned>(nlabels) + 1;
+      unsigned label_count = value::next(nlabels);
       static fun::i2v::array<V> f(0);
       int diff_size = f.size() - label_count;
       if (diff_size < 0)

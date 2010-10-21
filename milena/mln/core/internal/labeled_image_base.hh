@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -40,6 +41,7 @@
 # include <mln/labeling/relabel.hh>
 
 # include <mln/util/array.hh>
+# include <mln/value/next.hh>
 
 # include <mln/pw/cst.hh>
 # include <mln/pw/value.hh>
@@ -279,7 +281,7 @@ namespace mln
   labeled_image_base<I,E>::update_data(const fun::i2v::array<mln_value(I)>& relabel_fun)
   {
     util::array<accu::shape::bbox<mln_psite(I)> >
-      new_bboxes(static_cast<unsigned>(this->data_->nlabels_) + 1);
+      new_bboxes(mln::value::next(this->data_->nlabels_));
 
     exact(this)->init_update_data_();
 

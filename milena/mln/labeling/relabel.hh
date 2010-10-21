@@ -1,5 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -38,8 +38,6 @@
 
 # include <mln/data/transform.hh>
 # include <mln/data/transform_inplace.hh>
-
-# include <mln/value/label.hh>
 
 
 

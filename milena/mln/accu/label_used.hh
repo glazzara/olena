@@ -34,6 +34,7 @@
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/math/max.hh>
+# include <mln/value/next.hh>
 # include <mln/fun/i2v/array.hh>
 
 
@@ -117,7 +118,7 @@ namespace mln
     label_used<L>::take(const argument& l)
     {
       if (label_used_.size() <= l)
-	label_used_.resize(unsigned(l) + 1, false);
+	label_used_.resize(value::next(l), false);
 
       label_used_(l) = true;
     }

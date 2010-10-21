@@ -51,6 +51,7 @@
 # include <mln/util/array.hh>
 # include <mln/convert/from_to.hh>
 # include <mln/geom/ncols.hh>
+# include <mln/value/next.hh>
 
 
 namespace mln
@@ -210,7 +211,7 @@ namespace mln
 	  const A& a = exact(a_);
 	  const L& label = exact(label_);
 
-	  util::array<A> accus(static_cast<unsigned>(nlabels) + 1, a);
+	  util::array<A> accus(value::next(nlabels), a);
 
 	  mln_piter(L) p(label.domain());
 	  for_all(p)
@@ -244,12 +245,12 @@ namespace mln
 	  trace::entering("labeling::impl::generic::compute");
 	  internal::compute_tests(A(), label_, nlabels);
 
-	  if (static_cast<unsigned>(nlabels) + 1 != accus.size())
+	  if (value::next(nlabels) != accus.size())
 	  {
 	    accus.resize(0); // Make sure all the accumulators are
 			     // re-initialized when resizing on next
 			     // line.
-	    accus.resize(static_cast<unsigned>(nlabels) + 1);
+	    accus.resize(value::next(nlabels));
 	  }
 
 	  const L& label = exact(label_);
@@ -291,7 +292,7 @@ namespace mln
 	  const I& input = exact(input_);
 	  const L& label = exact(label_);
 
-	  util::array<A> accus(static_cast<unsigned>(nlabels) + 1, a);
+	  util::array<A> accus(value::next(nlabels), a);
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
@@ -330,12 +331,12 @@ namespace mln
 	  const L& label = exact(label_);
 	  (void) nlabels;
 
-	  if (static_cast<unsigned>(nlabels) + 1 != accus.size())
+	  if (value::next(nlabels) != accus.size())
 	  {
 	    accus.resize(0); // Make sure all the accumulators are
 			     // re-initialized when resizing on next
 			     // line.
-	    accus.resize(static_cast<unsigned>(nlabels) + 1);
+	    accus.resize(value::next(nlabels));
 	  }
 
 	  mln_piter(I) p(input.domain());
@@ -383,7 +384,7 @@ namespace mln
 
 	// FIXME: check image properties + add doc.
 
-	util::array<A> accus(static_cast<unsigned>(nlabels) + 1, a);
+	util::array<A> accus(value::next(nlabels), a);
 
 	unsigned ncols = geom::ncols(label);
 
@@ -438,12 +439,12 @@ namespace mln
 	const L& label = exact(label_);
 	(void) nlabels;
 
-	if (static_cast<unsigned>(nlabels) + 1 != accus.size())
+	if (value::next(nlabels) != accus.size())
 	{
 	  accus.resize(0); // Make sure all the accumulators are
 	  // re-initialized when resizing on next
 	  // line.
-	  accus.resize(static_cast<unsigned>(nlabels) + 1);
+	  accus.resize(value::next(nlabels));
 	}
 
 	unsigned ncols = geom::ncols(label);
@@ -742,7 +743,7 @@ namespace mln
       typedef util::array<mln_result(A)> R;
       R res = internal::compute_dispatch(accus, label, nlabels);
 
-      mln_postcondition(res.nelements() == static_cast<unsigned>(nlabels) + 1);
+      mln_postcondition(res.nelements() == value::next(nlabels));
 
       trace::exiting("labeling::compute");
       return res;
@@ -764,7 +765,7 @@ namespace mln
       typedef util::array<mln_result(A)> R;
       R res = internal::compute_dispatch(a, label, nlabels);
 
-      mln_postcondition(res.nelements() == static_cast<unsigned>(nlabels) + 1);
+      mln_postcondition(res.nelements() == value::next(nlabels));
 
       trace::exiting("labeling::compute");
       return res;

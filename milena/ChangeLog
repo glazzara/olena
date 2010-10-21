@@ -1,5 +1,17 @@
 2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make use of value::next in Milena.
+
+	* mln/accu/label_used.hh,
+	* mln/core/internal/labeled_image_base.hh,
+	* mln/labeling/colorize.hh,
+	* mln/labeling/compute.hh,
+	* mln/labeling/superpose.hh,
+	* mln/make/relabelfun.hh,
+	* mln/set/compute_with_weights.hh: Make use of value::next.
+
+2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add value::next routine.
 
 	* mln/value/label.hh: Include next routine.

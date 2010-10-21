@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -32,7 +33,7 @@
 
 # include <mln/core/concept/function.hh>
 # include <mln/fun/i2v/array.hh>
-# include <mln/value/label.hh>
+# include <mln/value/next.hh>
 
 namespace mln
 {
@@ -87,7 +88,7 @@ namespace mln
 
       const F& fv2b = exact(fv2b_);
 
-      unsigned nlabels_i = static_cast<unsigned>(nlabels) + 1;
+      unsigned nlabels_i = value::next(nlabels);
       V tmp_nlabels = literal::zero;
       fun::i2v::array<V> fi2v(nlabels_i, literal::zero);
       for (V i = 1; i < nlabels_i; ++i)
@@ -110,7 +111,7 @@ namespace mln
 
       const F& fv2v = exact(fv2v_);
 
-      unsigned nlabels_i = static_cast<unsigned>(nlabels) + 1;
+      unsigned nlabels_i = value::next(nlabels);
 
       util::array<V> new_labels(nlabels_i, mln_max(V));
       new_labels(0) = literal::zero;

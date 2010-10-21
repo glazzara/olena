@@ -1,4 +1,5 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -37,6 +38,7 @@
 # include <mln/core/concept/site_set.hh>
 # include <mln/util/array.hh>
 # include <mln/convert/from_to.hh>
+# include <mln/value/next.hh>
 
 
 namespace mln
@@ -187,7 +189,7 @@ namespace mln
 
 	  internal::compute_with_weights_tests(a, w, label);
 
-	  util::array<A> accus(static_cast<unsigned>(nlabels) + 1, a);
+	  util::array<A> accus(value::next(nlabels), a);
 
 	  mln_piter(I) p(w.domain());
 	  for_all(p)

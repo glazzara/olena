@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -36,6 +37,9 @@
 # include <mln/labeling/relabel.hh>
 # include <mln/data/paste.hh>
 # include <mln/pw/all.hh>
+
+# include <mln/value/next.hh>
+# include <mln/value/equiv.hh>
 
 namespace mln
 {
@@ -94,18 +98,18 @@ namespace mln
       mln_concrete(I) output = duplicate(lhs);
 
       util::array<mln_value(J)>
-	rebase_lbl(static_cast<unsigned>(rhs_nlabels) + 1);
+	rebase_lbl(value::next(rhs_nlabels));
 
       rebase_lbl(0) = 0;
       for (unsigned i = 1; i <= rhs_nlabels; ++i)
-	rebase_lbl(i) = i + static_cast<unsigned>(lhs_nlabels);
+	rebase_lbl(i) = i + value::equiv(lhs_nlabels);
 
       data::paste(labeling::relabel(rhs, rhs_nlabels, rebase_lbl)
 		  | (pw::value(rhs) != pw::cst(literal::zero)),
 		  output);
 
-      new_nlabels = static_cast<unsigned>(lhs_nlabels)
-	            + static_cast<unsigned>(rhs_nlabels) + 1;
+      new_nlabels = value::equiv(lhs_nlabels)
+	            + value::equiv(rhs_nlabels) + 1;
 
       trace::exiting("mln::labeling::superpose");
       return output;
