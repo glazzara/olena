@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of Olena.
 //
@@ -101,7 +102,7 @@ namespace mln
           m_(1,3) = 0;
 
           m_(2,0) = u * w * (1 - cos_a) - v * sin_a;
-          m_(2,1) = u * w * (1 - cos_a) + u * sin_a;
+          m_(2,1) = v * w * (1 - cos_a) + u * sin_a;
           m_(2,2) = w2 + (1 - w2) * cos_a;
           m_(2,3) = 0;
 

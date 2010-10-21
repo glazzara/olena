@@ -1,5 +1,13 @@
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix 3D rotations.
+
+	* mln/fun/x2x/rotation.hh
+	(fun::x2x::internal::get_rot_h_mat(const C, const algebra::vec<3,C>&)):
+	Fix the definition of the (2,1) coefficient.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Catch up with Boost-related changes in configure.ac.
 
 	* tests/accu/Makefile.am: Remove uses of the old
