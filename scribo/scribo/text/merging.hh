@@ -778,14 +778,14 @@ namespace scribo
 	}
 
 
-	std::cout
-	  << "   new txtline        = " << count_new_txtline        << std::endl
-	  << "   comp IN txtline    = " << count_comp_IN_txtline    << std::endl
-	  << "   2 lines merge      = " << count_two_lines_merge    << std::endl
-	  << "   comp HITS txtline  = " << count_comp_HITS_txtline  << std::endl
-	  << "   txtline IN junk    = " << count_txtline_IN_junk    << std::endl
-	  << "   txtline IN txtline = " << count_txtline_IN_txtline << std::endl
-	  << "   WTF!               = " << count_WTF << std::endl;
+// 	std::cout
+// 	  << "   new txtline        = " << count_new_txtline        << std::endl
+// 	  << "   comp IN txtline    = " << count_comp_IN_txtline    << std::endl
+// 	  << "   2 lines merge      = " << count_two_lines_merge    << std::endl
+// 	  << "   comp HITS txtline  = " << count_comp_HITS_txtline  << std::endl
+// 	  << "   txtline IN junk    = " << count_txtline_IN_junk    << std::endl
+// 	  << "   txtline IN txtline = " << count_txtline_IN_txtline << std::endl
+// 	  << "   WTF!               = " << count_WTF << std::endl;
 
 
 	(void) ith_pass;
@@ -854,7 +854,7 @@ namespace scribo
 	// Sort lines by bbox.nelements() and ids.
 	std::sort(v.begin(), v.end(), func);
 
-	mln::util::timer t;
+// 	mln::util::timer t;
 
 
 	// Setting lines as text lines according to specific criterions.
@@ -864,10 +864,10 @@ namespace scribo
 
 
 	// First pass
-	t.start();
+// 	t.start();
 	one_merge_pass(1, input_domain, v, lines, parent);
-	float ts = t.stop();
-	std::cout << "time " << ts << std::endl;
+// 	float ts = t.stop();
+// 	std::cout << "time " << ts << std::endl;
 
 
 //	lines.force_stats_update();
@@ -878,10 +878,10 @@ namespace scribo
 
 
 	// Second pass
-	t.start();
+// 	t.start();
 	one_merge_pass(2, input_domain, v, lines, parent); // <- last pass
-	ts = t.stop();
-	std::cout << "time " << ts << std::endl;
+// 	ts = t.stop();
+// 	std::cout << "time " << ts << std::endl;
 
 
 	lines.force_stats_update();
@@ -901,14 +901,14 @@ namespace scribo
     {
       using namespace mln;
 
-      mln::util::timer t;
-      t.start();
+//       mln::util::timer t;
+//       t.start();
 
       scribo::line_set<L> output
 	= internal::draw_boxes(lines.components().labeled_image().domain(),
 			       lines);
-      float ts = t.stop();
-      std::cout << ts << std::endl;
+//       float ts = t.stop();
+//       std::cout << ts << std::endl;
 
       return output;
     }

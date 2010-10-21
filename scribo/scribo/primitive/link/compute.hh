@@ -1,4 +1,5 @@
-// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009, 2010 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of Olena.
 //
@@ -83,7 +84,7 @@ namespace scribo
       compute(Link_Functor<F>& functor, anchor::Type anchor);
 
       /// \overload
-      /// The default anchor is set to 0, the mass center.
+      /// The default anchor is set to anchor::MassCenter.
       template <typename F>
       object_links<scribo_support(F)>
       compute(Link_Functor<F>& functor);

@@ -83,9 +83,6 @@ namespace scribo
 	  bool verify_link_criterion_(unsigned current_object,
 				      const P& start_point, const P& p) const;
 
-	  mln_site(L) start_point_(unsigned current_object,
-				   anchor::Type anchor);
-
 	  void start_processing_object_(unsigned current_object);
 
 	private:
@@ -125,17 +122,6 @@ namespace scribo
 
 	  float dist = math::abs(p[direction_] - start_point[direction_]);
 	  return dist <= dmax_; // Not too far
-	}
-
-
-	template <typename L, typename E>
-	inline
-	mln_site(L)
-	link_single_dmax_base<L, E>::start_point_(unsigned current_object,
-						  anchor::Type anchor)
-	{
-	  return internal::compute_anchor(this->components_,
-					  current_object, anchor);
 	}
 
 

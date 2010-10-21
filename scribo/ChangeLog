@@ -1,5 +1,22 @@
 2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes in Scribo
+
+	* scribo/primitive/link/compute.hh: Update doc.
+
+	* scribo/primitive/link/internal/link_single_dmax_base.hh
+	(start_point_): Remove useless overload.
+
+	* scribo/primitive/link/with_single_left_link_dmax_ratio.hh:
+	Remove useless template parameter.
+
+	* scribo/text/merging.hh: Disable debug.
+
+	* scribo/toolchain/nepomuk/text_extraction.hh: Enable denoising
+	and reduce Sauvola's window size.
+
+2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix issues with object_links and ignored components.
 
 	* scribo/filter/object_links_bbox_overlap.hh,

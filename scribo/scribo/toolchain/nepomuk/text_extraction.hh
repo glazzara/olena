@@ -104,7 +104,7 @@ namespace scribo
 	  input_gl = preprocessing::deskew(input_gl);
 
 	  // Binarize foreground to use it in the processing chain.
-	  input_bin = scribo::binarization::sauvola_ms(input_gl, 101, 3);
+	  input_bin = scribo::binarization::sauvola_ms(input_gl, 51, 3);
 	}
 
 
@@ -114,13 +114,13 @@ namespace scribo
 	// Process
 	{
 	  // Run document toolchain.
-	  lines_bg = scribo::toolchain::text_in_doc(input_bin, false, false);
+	  lines_bg = scribo::toolchain::text_in_doc(input_bin, true, false);
 
 	  // Negate document.
 	  logical::not_inplace(input_bin);
 
 	  // Run document toolchain.
-	  lines_fg = scribo::toolchain::text_in_doc(input_bin, false, false);
+	  lines_fg = scribo::toolchain::text_in_doc(input_bin, true, false);
 	}
 
 

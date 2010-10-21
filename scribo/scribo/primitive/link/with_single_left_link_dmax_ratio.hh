@@ -174,7 +174,7 @@ namespace scribo
       }
 
 
-      template <typename L, typename F>
+      template <typename L>
       inline
       object_links<L>
       with_single_left_link_dmax_ratio(const component_set<L>& components,
