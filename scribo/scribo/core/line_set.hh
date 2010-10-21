@@ -244,7 +244,7 @@ namespace scribo
 
     // FIXME: object_groups should store the relation 'group -> comp'.
     mln::util::array< mln::util::array<component_id_t> >
-      group_to_comps(unsigned(n_groups) + 1);
+      group_to_comps(value::next(n_groups));
 
 
     // 1st pass - Compute data.

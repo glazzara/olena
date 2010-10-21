@@ -174,12 +174,12 @@ namespace scribo
 	  L bboxes_ima;
 
 	  util::array<unsigned> bg_comps(
-	    unsigned(components.nelements()) + 1, 0);
+	    value::next(components.nelements()), 0);
 	  util::array<bool> bg_comps_done(
-	    unsigned(components.nelements()) + 1, false);
+	    value::next(components.nelements()), false);
 
 	  mln::fun::i2v::array<bool>
-	    to_keep(unsigned(components.nelements()) + 1, false);
+	    to_keep(value::next(components.nelements()), false);
 
 	  const L& lbl = components.labeled_image();
 

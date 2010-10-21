@@ -172,13 +172,12 @@ namespace scribo
 	  // Will store the first background component id associated
 	  // to a group.
 	  util::array<unsigned> bg_comps(
-	    static_cast<unsigned>(components.nelements()) + 1, 0);
+	    value::next(components.nelements()), 0);
 
 	  // Will 'True' if a group has at least two background
 	  // components.
 	  fun::i2v::array<bool>
-	    to_keep(static_cast<unsigned>(components.nelements()) + 1,
-		    false);
+	    to_keep(value::next(components.nelements()), false);
 
 	  const L& lbl = components.labeled_image();
 

@@ -1,3 +1,17 @@
+2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make use of value::next routine in Scribo.
+
+	* scribo/core/component_set.hh,
+	* scribo/core/line_set.hh,
+	* scribo/core/object_links.hh,
+	* scribo/debug/highlight_text_area.hh,
+	* scribo/filter/object_groups_with_holes.hh,
+	* scribo/filter/objects_with_holes.hh,
+	* scribo/postprocessing/fill_object_holes.hh,
+	* scribo/table/internal/align_lines.hh: Use value::next to replace
+	evil casts.
+
 2010-10-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix namespace ambiguities.

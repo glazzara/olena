@@ -148,7 +148,7 @@ namespace scribo
   template <typename L>
   object_links<L>::object_links(const component_set<L>& components)
   {
-    data_ = new data_t(components, unsigned(components.nelements()) + 1);
+    data_ = new data_t(components, value::next(components.nelements()));
   }
 
 
@@ -156,7 +156,7 @@ namespace scribo
   object_links<L>::object_links(const component_set<L>& components,
 				unsigned value)
   {
-    data_ = new data_t(components, unsigned(components.nelements()) + 1,
+    data_ = new data_t(components, value::next(components.nelements()),
 		       value);
   }
 

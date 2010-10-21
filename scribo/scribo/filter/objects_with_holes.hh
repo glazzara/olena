@@ -173,10 +173,10 @@ namespace scribo
       L bboxes_ima;
 
       util::array<util::set<unsigned> > bg_comps(
-	static_cast<unsigned>(components.nelements()) + 1);
+	value::next(components.nelements()));
 
       fun::i2v::array<bool>
-	to_keep(static_cast<unsigned>(components.nelements()) + 1,
+	to_keep(value::next(components.nelements()),
 		false);
 
       const L& lbl = components.labeled_image();
@@ -337,13 +337,12 @@ namespace scribo
       L bboxes_ima;
 
       util::array<unsigned> bg_comps(
-	static_cast<unsigned>(components.nelements()) + 1, 0);
+	value::next(components.nelements()), 0);
       util::array<bool> bg_comps_done(
-	static_cast<unsigned>(components.nelements()) + 1, false);
+	value::next(components.nelements()), false);
 
       fun::i2v::array<bool>
-	to_keep(static_cast<unsigned>(components.nelements()) + 1,
-		false);
+	to_keep(value::next(components.nelements()), false);
 
       const L& lbl = components.labeled_image();
 

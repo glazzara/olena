@@ -142,7 +142,7 @@ namespace scribo
 
 	// Init box2line
 	mln::util::array<int>
-	  box2line(unsigned(lines.nelements()) + 1, -1);
+	  box2line(value::next(lines.nelements()), -1);
 
 	// Find the line with the highest element count.
 	unsigned max_nelts = 0;

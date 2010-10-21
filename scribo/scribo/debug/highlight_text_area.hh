@@ -263,7 +263,7 @@ namespace scribo
       initialize(mask, input);
       data::fill(mask, false);
 
-      mln::util::array<mln_box(I)> bbox(unsigned(components.nelements()) + 1);
+      mln::util::array<mln_box(I)> bbox(value::next(components.nelements()));
 
       for_all_comps(i, components)
 	if (components(i).is_valid())

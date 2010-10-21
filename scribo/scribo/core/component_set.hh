@@ -37,6 +37,7 @@
 # include <mln/data/fill.hh>
 
 # include <mln/util/array.hh>
+# include <mln/value/next.hh>
 
 # include <mln/accu/pair.hh>
 # include <mln/accu/center.hh>
@@ -315,7 +316,7 @@ namespace scribo
     {
       typedef mln_site(L) P;
 
-      infos_.reserve(value::next(ncomps_));
+      infos_.reserve(mln::value::next(ncomps_));
 
       infos_.append(component_info()); // Component 0, i.e. the background.
       for_all_comp_data(i, attribs)
@@ -333,7 +334,7 @@ namespace scribo
     {
       typedef mln_site(L) P;
 
-      infos_.reserve(value::next(ncomps_));
+      infos_.reserve(mln::value::next(ncomps_));
 
       infos_.append(component_info()); // Component 0, i.e. the background.
       for_all_comp_data(i, attribs)
@@ -509,7 +510,7 @@ namespace scribo
   mln_concrete(L)
   component_set<L>::valid_comps_image_() const
   {
-    mln::util::array<bool> f(value::next(this->data_->ncomps_));
+    mln::util::array<bool> f(mln::value::next(this->data_->ncomps_));
     f(0) = true;
 
     for_all_comps(c, (*this))
