@@ -1,5 +1,13 @@
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve the genericity of vector normalization.
+
+	* mln/algebra/vec.hh (mln::algebra::vec<n,T>::normalize): Use
+	mln_sum_product(T,T) instead of the hard-coded type `float' as
+	return value of mln::norm::l2.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/fun/x2x/rotation.hh: Aesthetic changes.
 
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
