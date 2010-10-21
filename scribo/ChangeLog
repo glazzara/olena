@@ -1,5 +1,9 @@
 2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* scribo/core/component_set.hh: Fix component_set id type.
+
+2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make use of value::next routine in Scribo.
 
 	* scribo/core/component_set.hh,
