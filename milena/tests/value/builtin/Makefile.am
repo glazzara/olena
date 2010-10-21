@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -18,9 +18,11 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  builtin
+  builtin					\
+  floatings
 
 # FIXME: Rename this test, as `builtin' is not enough relevant.
 builtin_SOURCES = builtin.cc
+floatings_SOURCES = floatings.cc
 
 TESTS = $(check_PROGRAMS)

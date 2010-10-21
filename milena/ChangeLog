@@ -1,5 +1,13 @@
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a test on built-in floating point value's traits.
+
+	* tests/value/builtin/floatings.cc: New.
+	* tests/value/builtin/Makefile.am (check_PROGRAMS): Add floatings.
+	(floatings_SOURCES): New.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add macros for non-template contexts in mln/value/ops.hh.
 
 	* mln/value/ops.hh (mln_trait_value_sum_product_)
