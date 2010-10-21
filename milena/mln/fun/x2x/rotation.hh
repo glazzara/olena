@@ -37,6 +37,7 @@
 /// Conversion from Quaternion to (angle,axis), Source:
 ///   http://jeux.developpez.com/faq/matquat/?page=quaternions#Q56
 
+# include <cstdlib>
 # include <cmath>
 
 # include <mln/core/concept/function.hh>
@@ -64,7 +65,12 @@ namespace mln
         algebra::h_mat<n, C>
         get_rot_h_mat(const C alpha_, const algebra::vec<n,C>& axis_)
         {
-          mln_assertion(!"get_h_mat : n not implemented");
+	  std::cerr
+	    << __FILE__ << ":" << __LINE__ << ": error:"
+	    << " generic mln::fun::x2x::internal::get_rot_h_mat<n, C>"
+	    << " not implemented."
+	    << std::endl;
+	  std::abort();
         }
 
         template <typename C >

@@ -1,5 +1,14 @@
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Ensure non implemented rotation code stops the execution.
+
+	* mln/fun/x2x/rotation.hh
+	(fun::x2x::internal::get_rot_h_mat(const C, const algebra::vec<n,C>&)):
+	Use std::abort instead of a precondition to stop the execution,
+	since preconditions can be skipped by defining NDEBUG.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix test fun/x2x/composed.
 
 	* tests/fun/x2x/composed.cc: Fix the initialization of the axis
