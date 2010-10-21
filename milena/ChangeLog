@@ -1,3 +1,16 @@
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Catch up with Boost-related changes in configure.ac.
+
+	* tests/accu/Makefile.am: Remove uses of the old
+	HAVE_BOOST_PREPROCESSOR conditional.
+	* tests/unit_test/cond_tests_boost-preprocessor_boost-tuple:
+	Rename as...
+	* milena/tests/unit_test/cond_tests_boost-tuple: ...this.
+	* tests/unit_test/Makefile.am (COND_TESTS):
+	s/cond_tests_boost-preprocessor_boost-tuple/cond_tests_boost-tuple/.
+	* tests/unit_test/unit-tests.mk: Regen.
+
 2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Make use of value::next in Milena.

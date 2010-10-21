@@ -3,16 +3,14 @@
 check_PROGRAMS =
 
 # Starting a conditional unit test list.
-if HAVE_BOOST_PREPROCESSOR
 if HAVE_BOOST_TUPLE
 check_PROGRAMS +=  \
 mln_accu_tuple
 
-mln_accu_tuple_CPPFLAGS= ${BOOST_TUPLE_CPPFLAGS}  ${BOOST_PREPROCESSOR_CPPFLAGS}  ${AM_CPPFLAGS}
-mln_accu_tuple_LDFLAGS= ${BOOST_TUPLE_LDFLAGS}  ${BOOST_PREPROCESSOR_LDFLAGS}  ${AM_LDFLAGS}
+mln_accu_tuple_CPPFLAGS= ${BOOST_TUPLE_CPPFLAGS}  ${AM_CPPFLAGS}
+mln_accu_tuple_LDFLAGS= ${BOOST_TUPLE_LDFLAGS}  ${AM_LDFLAGS}
 mln_accu_tuple_SOURCES = mln_accu_tuple.cc
 endif HAVE_BOOST_TUPLE
-endif HAVE_BOOST_PREPROCESSOR
 
 # Starting a conditional unit test list.
 if HAVE_CFITSIO
