@@ -75,37 +75,13 @@ AC_DEFUN([_OLN_WITH_LIB],
  $5_CPPFLAGS=''
  $5_LDFLAGS=''
  if test "x$with_$4" != xno; then
-   if test -n "$with_$4"; then
-     $5_CPPFLAGS="-I${with_$4}/include"
-     $5_LDFLAGS="-L${with_$4}/lib"
-   fi
-   oln_save_CPPFLAGS=$CPPFLAGS
-   oln_save_LDFLAGS=$LDFLAGS
-   CPPFLAGS="$$5_CPPFLAGS $CPPFLAGS"
-   LDFLAGS="$$5_LDFLAGS $LDFLAGS"
-   oln_have_$4=no
-   AC_CHECK_HEADER([$2],
-     [AC_CHECK_LIB([$3],
-       [main],
-       [oln_have_$4=yes
-         $5_LDFLAGS="$$5_LDFLAGS -l$3 $6"
-         AC_DEFINE([HAVE_$5], 1, [Define to 1 if we can use $1])],
-       [], [$6]
-     )]
-   )
-   CPPFLAGS=$oln_save_CPPFLAGS
-   LDFLAGS=$oln_save_LDFLAGS
-   TOOLS_LDFLAGS="$TOOLS_LDFLAGS $$5_LDFLAGS"
+   _OLN_WITH_LIB_SHARED_IMPL([$1], [$2], [$3], [$4], [$5], [$6])
  fi
  AC_SUBST([$5_CPPFLAGS])
  AC_SUBST([$5_LDFLAGS])
  AM_CONDITIONAL([HAVE_$5], [test x$oln_have_$4 = xyes])
  AC_LANG_POP([C++])
 ])# _OLN_WITH_LIB
-
-
-
-# FIXME: Factor the following macros with the previous ones.
 
 
 # OLN_WITH_LIB_PKG_CONFIG(PACKAGE, HEADER, LIBRARY, [SHELL_NAME], [CPP_NAME],
@@ -165,27 +141,7 @@ AC_DEFUN([_OLN_WITH_LIB_PKG_CONFIG],
    else
      # `pkg-config' is absent, unusable or is unable to find the library;
      # use our fall-back code.
-     if test -n "$with_$4"; then
-       $5_CPPFLAGS="-I${with_$4}/include"
-       $5_LDFLAGS="-L${with_$4}/lib"
-     fi
-     oln_save_CPPFLAGS=$CPPFLAGS
-     oln_save_LDFLAGS=$LDFLAGS
-     CPPFLAGS="$$5_CPPFLAGS $CPPFLAGS"
-     LDFLAGS="$$5_LDFLAGS $LDFLAGS"
-     oln_have_$4=no
-     AC_CHECK_HEADER([$2],
-       [AC_CHECK_LIB([$3],
-         [main],
-         [oln_have_$4=yes
-           $5_LDFLAGS="$$5_LDFLAGS -l$3 $6"
-           AC_DEFINE([HAVE_$5], 1, [Define to 1 if we can use $1])],
-         [], [$6]
-       )]
-     )
-     CPPFLAGS=$oln_save_CPPFLAGS
-     LDFLAGS=$oln_save_LDFLAGS
-     TOOLS_LDFLAGS="$TOOLS_LDFLAGS $$5_LDFLAGS"
+     _OLN_WITH_LIB_SHARED_IMPL([$1], [$2], [$3], [$4], [$5], [$6])
    fi
  fi
  AC_SUBST([$5_CPPFLAGS])
@@ -193,3 +149,33 @@ AC_DEFUN([_OLN_WITH_LIB_PKG_CONFIG],
  AM_CONDITIONAL([HAVE_$5], [test x$oln_have_$4 = xyes])
  AC_LANG_POP([C++])
 ])# _OLN_WITH_LIB_PKG_CONFIG
+
+
+# _OLN_WITH_LIB_SHARED_IMPL(PACKAGE, HEADER, LIBRARY, SHELL_NAME, CPP_NAME,
+#                           OTHER-LIBRARIES)
+# --------------------------------------------------------------------------
+# Shared implementation of _OLN_WITH_LIB and _OLN_WITH_LIB_PKG_CONFIG.
+AC_DEFUN([_OLN_WITH_LIB_SHARED_IMPL],
+[dnl
+ if test -n "$with_$4"; then
+   $5_CPPFLAGS="-I${with_$4}/include"
+   $5_LDFLAGS="-L${with_$4}/lib"
+ fi
+ oln_save_CPPFLAGS=$CPPFLAGS
+ oln_save_LDFLAGS=$LDFLAGS
+ CPPFLAGS="$$5_CPPFLAGS $CPPFLAGS"
+ LDFLAGS="$$5_LDFLAGS $LDFLAGS"
+ oln_have_$4=no
+ AC_CHECK_HEADER([$2],
+   [AC_CHECK_LIB([$3],
+     [main],
+     [oln_have_$4=yes
+       $5_LDFLAGS="$$5_LDFLAGS -l$3 $6"
+       AC_DEFINE([HAVE_$5], 1, [Define to 1 if we can use $1])],
+     [], [$6]
+   )]
+ )
+ CPPFLAGS=$oln_save_CPPFLAGS
+ LDFLAGS=$oln_save_LDFLAGS
+ TOOLS_LDFLAGS="$TOOLS_LDFLAGS $$5_LDFLAGS"]dnl
+)# _OLN_WITH_LIB_SHARED_IMPL

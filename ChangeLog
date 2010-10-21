@@ -1,5 +1,13 @@
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor the implementations of OLN_WITH_LIB and OLN_WITH_LIB_PKG_CONFIG.
+
+	* m4/oln-with-lib.m4 (_OLN_WITH_LIB_SHARED_IMPL): New macro.
+	Use it to factor...
+	(_OLN_WITH_LIB, _OLN_WITH_LIB_PKG_CONFIG): ...these.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	* configure.ac: Aesthetic changes.
 
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
