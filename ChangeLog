@@ -1,5 +1,12 @@
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update HACKING.
+
+	* HACKING (Required Software): Update.
+	(Useful Tools): New section.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update README.
 
 	* README: Aesthetic changes.
