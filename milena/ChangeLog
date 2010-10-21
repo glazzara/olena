@@ -1,5 +1,12 @@
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix test fun/x2x/composed.
+
+	* tests/fun/x2x/composed.cc: Fix the initialization of the axis
+	vector.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix 3D rotations.
 
 	* mln/fun/x2x/rotation.hh
