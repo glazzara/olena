@@ -1,5 +1,9 @@
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	* configure.ac: Aesthetic changes.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix configure option `--enable-all'.
 
 	* configure.ac: Check the value of `enable_all' before triggering
