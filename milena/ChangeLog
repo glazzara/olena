@@ -1,5 +1,12 @@
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Disable the non deterministic test on mln::labeling::colorize.
+
+	* tests/labeling/Makefile.am (check_PROGRAMS): Remove colorize.
+	(colorize_SOURCES): Disable.
+
+2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a test on built-in floating point value's traits.
 
 	* tests/value/builtin/floatings.cc: New.

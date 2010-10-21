@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+# Copyright (C) 2007, 2008, 2009, 2010 EPITA Research and Development
 # Laboratory (LRDE).
 #
 # This file is part of Olena.
@@ -21,7 +21,6 @@ check_PROGRAMS =				\
   background					\
   blobs						\
   blobs_and_compute				\
-  colorize 					\
   compute 					\
   fill_holes					\
   flat_zones					\
@@ -38,7 +37,6 @@ check_PROGRAMS =				\
 background_SOURCES = background.cc
 blobs_SOURCES = blobs.cc
 blobs_and_compute_SOURCES = blobs_and_compute.cc
-colorize_SOURCES = colorize.cc
 compute_SOURCES = compute.cc
 fill_holes_SOURCES = fill_holes.cc
 flat_zones_SOURCES = flat_zones.cc
@@ -51,5 +49,12 @@ regional_minima_SOURCES = regional_minima.cc
 relabel_SOURCES = relabel.cc
 value_SOURCES = value.cc
 wrap_SOURCES = wrap.cc
+
+### FIXME: Disable this test, since labeling::colorize depends on
+### rand(), which does not behave uniformly among the various targeted
+### platforms.
+## check_PROGRAMS +=				\
+##   colorize 					\
+## colorize_SOURCES = colorize.cc
 
 TESTS = $(check_PROGRAMS)
