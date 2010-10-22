@@ -1,3 +1,9 @@
+2010-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a warning about Python 2.6 and greater regarding Swilena.
+
+	* configure.ac: Here.
+
 2010-10-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	Factor the implementations of OLN_WITH_LIB and OLN_WITH_LIB_PKG_CONFIG.
