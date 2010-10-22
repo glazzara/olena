@@ -1,5 +1,12 @@
 2010-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have AutoTroll always restore the initial ``current directory''.
+
+	* m4/autotroll.m4 (AT_WITH_QT): Always come back to the top-level
+	directory upon failure.
+
+2010-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a warning about Python 2.6 and greater regarding Swilena.
 
 	* configure.ac: Here.
