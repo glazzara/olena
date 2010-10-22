@@ -110,7 +110,7 @@ namespace scribo
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
-	    output(p) = (input(p) >= threshold(p));
+	    output(p) = (input(p) <= threshold(p));
 
 
 	  trace::exiting("scribo::binarization::impl::generic::local_threshold");
@@ -140,7 +140,7 @@ namespace scribo
 	mln_pixter(const T) pt(threshold);
 	mln_pixter(O) po(output);
 	for_all_3(pi, pt, po)
-	  po.val() = pi.val() >= pt.val();
+	  po.val() = pi.val() <= pt.val();
 
 	trace::exiting("scribo::binarization::impl::generic::local_threshold_fastest");
 	return output;

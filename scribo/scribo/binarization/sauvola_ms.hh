@@ -330,20 +330,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 	      }
 
@@ -354,20 +354,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1b; ptr__in += delta1b;
 	      }
 
@@ -378,20 +378,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 
 	      }
@@ -403,20 +403,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1c; ptr__in += delta1c;
 	      }
 
@@ -432,20 +432,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 	      }
 
@@ -456,20 +456,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1b; ptr__in += delta1b;
 	      }
 
@@ -480,20 +480,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 	      }
 
@@ -504,20 +504,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1d; ptr__in += delta1d;
 	      }
 
@@ -533,20 +533,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 	      }
 
@@ -557,20 +557,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1b; ptr__in += delta1b;
 	      }
 
@@ -581,20 +581,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 	      }
 
@@ -605,20 +605,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1c; ptr__in += delta1c;
 	      }
 
@@ -634,20 +634,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 	      }
 
@@ -658,20 +658,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1b; ptr__in += delta1b;
 	      }
 
@@ -682,20 +682,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1f; ptr__in += delta1f;
 	      }
 
@@ -706,20 +706,20 @@ namespace scribo
 		{
 		  for (unsigned j = 1; j < s; ++j)
 		  {
-		    *ptr__out = *ptr__in >= threshold;
+		    *ptr__out = *ptr__in <= threshold;
 		    ++ptr__out; ++ptr__in;
 		  }
 
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ptr__out += delta1; ptr__in += delta1;
 		}
 
 		for (unsigned j = 1; j < s; ++j)
 		{
-		  *ptr__out = *ptr__in >= threshold;
+		  *ptr__out = *ptr__in <= threshold;
 		  ++ptr__out; ++ptr__in;
 		}
-		*ptr__out = *ptr__in >= threshold;
+		*ptr__out = *ptr__in <= threshold;
 		ptr__out += delta1e; ptr__in += delta1e;
 	      }
 	    }

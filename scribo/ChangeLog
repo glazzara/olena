@@ -1,3 +1,12 @@
+2010-10-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Negate Sauvola's result.
+
+	* scribo/binarization/local_threshold.hh,
+	* scribo/binarization/sauvola_ms.hh: Invert threshold test.
+
+	* src/text_in_picture.cc: Do not negate Sauvola's output anymore.
+
 2010-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes in Scribo

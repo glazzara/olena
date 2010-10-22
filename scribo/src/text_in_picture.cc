@@ -298,8 +298,6 @@ int main(int argc, char* argv[])
 
 #endif // !NOUT
 
-    logical::not_inplace(input);
-
 //   if (debug)
 //     io::pbm::save(input, "input.pbm");
   t_ = timer_;
