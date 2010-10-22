@@ -1353,6 +1353,7 @@ mln_value_label_32 \
 mln_value_label_8 \
 mln_value_lut_vec \
 mln_value_mixin \
+mln_value_next \
 mln_value_ops \
 mln_value_other \
 mln_value_proxy \
@@ -2672,6 +2673,7 @@ mln_value_label_32_SOURCES = mln_value_label_32.cc
 mln_value_label_8_SOURCES = mln_value_label_8.cc
 mln_value_lut_vec_SOURCES = mln_value_lut_vec.cc
 mln_value_mixin_SOURCES = mln_value_mixin.cc
+mln_value_next_SOURCES = mln_value_next.cc
 mln_value_ops_SOURCES = mln_value_ops.cc
 mln_value_other_SOURCES = mln_value_other.cc
 mln_value_proxy_SOURCES = mln_value_proxy.cc
